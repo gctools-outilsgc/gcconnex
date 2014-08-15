@@ -24,7 +24,7 @@ function search_init() {
 	// tags and comments are a bit different.
 	// register a search types and a hooks for them.
 	elgg_register_plugin_hook_handler('search_types', 'get_types', 'search_custom_types_tags_hook');
-	elgg_register_plugin_hook_handler('search', 'tags', 'search_tags_hook');
+	//elgg_register_plugin_hook_handler('search', 'tags', 'search_tags_hook');
 
 	elgg_register_plugin_hook_handler('search_types', 'get_types', 'search_custom_types_comments_hook');
 	elgg_register_plugin_hook_handler('search', 'comments', 'search_comments_hook');

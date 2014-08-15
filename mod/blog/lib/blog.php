@@ -106,9 +106,15 @@ function blog_get_page_content_list($container_guid = NULL) {
 			$show_only_published = false;
 		}
 	}
+
 	if ($show_only_published) {
 		$options['metadata_name_value_pairs'] = array(
 			array('name' => 'status', 'value' => 'published'),
+		);
+
+		
+		$options['metadata_name_value_pairs'] .= array(
+			array('name' => 'status', 'value' => 'draft', 'owner_guid' => $current_user->guid),
 		);
 	}
 

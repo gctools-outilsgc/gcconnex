@@ -4,6 +4,7 @@
 	<description>The default profile plugin.</description>
 	<author>Core developers</author>
 	<version>1.8</version>
+	<category>GC Custom</category>
 	<category>bundled</category>
 	<category>social</category>
 	<website>http://elgg.org/</website>

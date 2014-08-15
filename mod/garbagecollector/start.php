@@ -46,18 +46,18 @@ function garbagecollector_cron($hook, $entity_type, $returnvalue, $params) {
 	elgg_trigger_plugin_hook('gc', 'system', array('period' => $period));
 
 	// Now we optimize all tables
-	$tables = get_db_tables();
-	foreach ($tables as $table) {
-		echo elgg_echo('garbagecollector:optimize', array($table));
-
-		if (optimize_table($table) !== false) {
-			echo elgg_echo('garbagecollector:ok');
-		} else {
-			echo elgg_echo('garbagecollector:error');
-		}
-
-		echo "\n";
-	}
+//	$tables = get_db_tables();
+//	foreach ($tables as $table) {
+//		echo elgg_echo('garbagecollector:optimize', array($table));
+//
+//		if (optimize_table($table) !== false) {
+//			echo elgg_echo('garbagecollector:ok');
+//		} else {
+//			echo elgg_echo('garbagecollector:error');
+//		}
+//
+//		echo "\n";
+//	}
 
 	echo elgg_echo('garbagecollector:done');
 }

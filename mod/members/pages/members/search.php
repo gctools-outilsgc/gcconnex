@@ -3,6 +3,8 @@
  * Members search page
  *
  */
+$offset = $_GET["offset"];
+$limit = 10;
 
 if ($vars['search_type'] == 'tag') {
 	$tag = get_input('tag');
@@ -11,12 +13,32 @@ if ($vars['search_type'] == 'tag') {
 
 	$options = array();
 	$options['query'] = $tag;
-	$options['type'] = "user";
+	//echo "<script>console.log( 'Tag: ".$tag."' );</script>";
+	$options['search_type'] = "tags";
 	$options['offset'] = $offset;
+	$options['sort'] = "relevance";
+	$options['order'] = "desc";
+	//echo "<script>console.log( 'offset: ".$offset."' );</script>";
 	$options['limit'] = $limit;
+	//echo "<script>console.log( 'limit: ".$limit."' );</script>";
 	$results = elgg_trigger_plugin_hook('search', 'tags', $options, array());
+	//echo "<script>console.log( 'results: ".count($results)."' );</script>";
 	$count = $results['count'];
 	$users = $results['entities'];
+	//echo "<script>console.log( 'count: ".$count."' );</script>";
+	//echo "<script>console.log( 'users: ".count($users)."' );</script>";
+
+	elgg_log('cyu - offset:'.$offset, 'NOTICE');
+	elgg_log('cyu - limit:'.$limit, 'NOTICE');
+	
+	foreach ($users as $user)
+	{
+		elgg_log('cyu -'.$user->username, 'NOTICE');
+
+	}
+
+	
+
 	$content = elgg_view_entity_list($users, array(
 		'count' => $count,
 		'offset' => $offset,
@@ -37,6 +59,7 @@ if ($vars['search_type'] == 'tag') {
 		'joins' => array("JOIN {$db_prefix}users_entity u ON e.guid=u.guid"),
 		'wheres' => array("(u.name LIKE \"%{$name}%\" OR u.username LIKE \"%{$name}%\")"),
 	);
+
 	$content .= elgg_list_entities($params);
 }
 

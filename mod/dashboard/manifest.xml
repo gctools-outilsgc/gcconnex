@@ -3,6 +3,7 @@
 	<name>User Dashboard</name>
 	<author>Core developers</author>
 	<version>1.8</version>
+	<category>GC Custom</category>
 	<category>bundled</category>
 	<description>A widget-based dashboard for your users</description>
 	<website>http://www.elgg.org/</website>

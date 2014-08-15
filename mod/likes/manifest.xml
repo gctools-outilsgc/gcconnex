@@ -3,6 +3,7 @@
 	<name>Likes</name>
 	<author>Core developers</author>
 	<version>1.8</version>
+	<category>GC Custom</category>
 	<category>bundled</category>
 	<category>social</category>
 	<description>Enables users to like content on the site.</description>

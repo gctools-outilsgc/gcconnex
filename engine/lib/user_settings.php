@@ -168,6 +168,46 @@ function elgg_set_user_language() {
 	return false;
 }
 
+
+/* CYU - CHECKS IF THE EMAIL THE USER ENTERS IN THE SYSTEM IS VALID OR NOT */
+function domainNotValid($dom) 
+{
+	//elgg_log('cyu - checkInvalidDomain invoked | domain:'.$dom, 'NOTICE');
+	elgg_load_library('c_ext_lib');
+	$isNotValid = true;
+
+	$result = getExtension();
+	if (count($result) > 0)
+	{
+		while ($row = mysqli_fetch_array($result))
+		{
+			if ($row['ext'] === $dom)
+			{
+				//elgg_log('cyu - domain found in database!', 'NOTICE');
+				$isNotValid = false;
+				break;
+			}
+		}
+	}
+
+	if ($isNotValid)
+	{
+		$domain_addr = explode('.', $dom);
+		$domain_len = count($domain_addr) - 1;
+
+		if ($domain_addr[$domain_len - 1].'.'.$domain_addr[$domain_len] === 'gc.ca')
+		{
+			//elgg_log('cyu - domain:'.$dom. ' this is a valid domain', 'NOTICE');
+			$isNotValid = false;
+		} else {
+			//elgg_log('cyu - domain:'.$dom. ' this is an invalid domain', 'NOTICE');
+			$isNotValid = true;
+		}
+	}
+
+	return $isNotValid;
+}
+
 /**
  * Set a user's email address
  *
@@ -189,6 +229,21 @@ function elgg_set_user_email() {
 		register_error(elgg_echo('email:save:fail'));
 		return false;
 	}
+
+	
+	$domain = explode('@', $email);
+
+	// cyu - we want the 2nd half of the email
+	//elgg_log('cyu - checking email...'.$domain[1], 'NOTICE');
+	if (domainNotValid($domain[1]))
+	{
+		//elgg_log('cyu - this domain is not valid...', 'NOTICE');
+		//throw new RegistrationException(elgg_echo('Not a Government Email Address'));
+		register_error('Not a Government email address...');
+		return false;
+	}
+
+
 
 	if ($user) {
 		if (strcmp($email, $user->email) != 0) {

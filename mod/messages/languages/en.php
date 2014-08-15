@@ -9,7 +9,7 @@ $english = array(
 	/**
 	* Menu items and titles
 	*/
-
+	'messages:displayposts' => "Display %s posts",
 	'messages' => "Messages",
 	'messages:unreadcount' => "%s unread",
 	'messages:back' => "back to messages",

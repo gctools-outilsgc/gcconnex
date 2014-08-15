@@ -17,13 +17,15 @@
 
 // Get dataroot
 require_once(dirname(dirname(__FILE__)) . '/settings.php');
-$mysql_dblink = mysql_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, true);
+//$mysql_dblink = mysql_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, true);
+$mysql_dblink = mysqli_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, $CONFIG->dbname);
 if (!$mysql_dblink) {
 	echo 'Cache error: unable to connect to database server';
 	exit;
 }
 
-if (!mysql_select_db($CONFIG->dbname, $mysql_dblink)) {
+//if (!mysql_select_db($CONFIG->dbname, $mysql_dblink)) {
+if (!mysqli_select_db($mysql_dblink, $CONFIG->dbname)) {
 	echo 'Cache error: unable to connect to Elgg database';
 	exit;
 }
@@ -31,15 +33,16 @@ if (!mysql_select_db($CONFIG->dbname, $mysql_dblink)) {
 $query = "select name, value from {$CONFIG->dbprefix}datalists
 		where name in ('dataroot', 'simplecache_enabled')";
 
-$result = mysql_query($query, $mysql_dblink);
+$result = mysqli_query($mysql_dblink, $query);
 if (!$result) {
 	echo 'Cache error: unable to get the data root';
 	exit;
 }
-while ($row = mysql_fetch_object($result)) {
+//while ($row = mysql_fetch_object($result)) {
+while ($row = mysqli_fetch_object($result)) {
 	${$row->name} = $row->value;
 }
-mysql_free_result($result);
+mysqli_free_result($result);
 
 
 $dirty_request = $_GET['request'];

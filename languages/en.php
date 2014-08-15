@@ -319,7 +319,7 @@ $english = array(
 	'friends' => "Friends",
 	'friends:yours' => "Your friends",
 	'friends:owned' => "%s's friends",
-	'friend:add' => "Add friend",
+	'friendprofile:add' => "Add friend",
 	'friend:remove' => "Remove friend",
 
 	'friends:add:successful' => "You have successfully added %s as a friend.",

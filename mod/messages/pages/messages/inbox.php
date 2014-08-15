@@ -24,13 +24,18 @@ elgg_register_title_button();
 
 $title = elgg_echo('messages:user', array($page_owner->name));
 
-$list = elgg_list_entities_from_metadata(array(
+$list = elgg_echo('messages:displayposts', array('<a href="?num=10">10</a> | <a href="?num=25">25</a> | <a href="?num=100">100</a>'));
+$display_num_post = $_GET['num'];
+if (!isset($display_num_post)) $display_num_post = 10;
+
+$list .= elgg_list_entities_from_metadata(array(
 	'type' => 'object',
 	'subtype' => 'messages',
 	'metadata_name' => 'toId',
 	'metadata_value' => elgg_get_page_owner_guid(),
 	'owner_guid' => elgg_get_page_owner_guid(),
 	'full_view' => false,
+	'limit' => $display_num_post,
 ));
 
 $body_vars = array(

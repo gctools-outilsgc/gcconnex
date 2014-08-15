@@ -3,6 +3,7 @@
 	<name>The Wire</name>
 	<author>JHU/APL and core developers</author>
 	<version>1.8</version>
+	<category>GC Custom</category>
 	<category>bundled</category>
 	<category>content</category>
 	<description>Microblogging for Elgg</description>

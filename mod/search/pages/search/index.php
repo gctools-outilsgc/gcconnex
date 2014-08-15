@@ -5,7 +5,7 @@
  * @todo much of this code should be pulled out into a library of functions
  */
 
-// Search supports RSS
+// Search supports RSS 
 global $autofeed;
 $autofeed = true;
 
@@ -16,6 +16,26 @@ $search_type = get_input('search_type', 'all');
 // @todo is there an example query to demonstrate ^
 // XSS protection is more important that searching for HTML.
 $query = stripslashes(get_input('q', get_input('tag', '')));
+
+//$query = mysqli_real_escape_string($conn,$query);
+$query = str_replace('*',' ',$query);
+$query = str_replace('<','',$query);
+$query = str_replace('>','',$query);
+$query = str_replace('-',' ',$query);
+$query = str_replace('+',' ',$query);
+$query = str_replace('%',' ', $query);
+$query = str_replace('\'','',$query);
+$query = str_replace('"','',$query);
+
+//$query = utf8_encode($query);
+//$query = htmlentities($query);
+//$query = strip_tags($query);
+//$query = preg_replace('/[\W]/',' ',$query);
+$query = preg_replace('/\s[\s]+/',' ',$query);
+$query = trim($query);
+//$query = preg_replace('/\-[\-]+/','-',$query);
+
+error_log('cyu - cleansed query: |'.$query.'| contains this many characters: '.strlen($query).' ascii code: '.ord($query));
 
 // @todo - create function for sanitization of strings for display in 1.8
 // encode <,>,&, quotes and characters above 127
@@ -87,6 +107,9 @@ $params = array(
 
 $types = get_registered_entity_types();
 $custom_types = elgg_trigger_plugin_hook('search_types', 'get_types', $params, array());
+
+// cyu - 2014-07-04
+
 
 // add sidebar items for all and native types
 // @todo should these maintain any existing type / subtype filters or reset?

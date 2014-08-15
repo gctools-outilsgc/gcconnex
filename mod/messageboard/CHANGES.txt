@@ -1,0 +1,5 @@
+= Version History =
+
+GC Changes
+
+GC 1.0 - French and English Language files updated 

@@ -3,6 +3,7 @@
 	<name>Message Board</name>
 	<author>Core developers</author>
 	<version>1.8</version>
+	<category>GC Custom</category>
 	<category>bundled</category>
 	<category>widget</category>
 	<description>This plugin allows users to put a message board on their profile for other users to post comments.</description>
