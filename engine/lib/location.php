@@ -42,7 +42,9 @@ function elgg_geocode_location($location) {
 		$long = (float)$return['long'];
 
 		// Put into cache at the end of the page since we don't really care that much
-		$query = "INSERT INTO {$CONFIG->dbprefix}geocode_cache "
+		
+		// replaced "insert delayed into" -> "insert into" - insert delayed not supported with InnoDB - CdG
+				$query = "INSERT INTO {$CONFIG->dbprefix}geocode_cache "
 			. " (location, lat, `long`) VALUES ('$location', '{$lat}', '{$long}')"
 			. " ON DUPLICATE KEY UPDATE lat='{$lat}', `long`='{$long}'";
 		execute_delayed_write_query($query);

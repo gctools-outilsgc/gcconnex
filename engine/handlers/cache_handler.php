@@ -15,6 +15,9 @@
  * @subpackage Cache
  */
 
+ // all instances of mysql where changed to mysqli to address depricated calls with php5.5  - CdG
+ 
+ 
 // Get dataroot
 require_once(dirname(dirname(__FILE__)) . '/settings.php');
 //$mysql_dblink = mysql_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, true);
