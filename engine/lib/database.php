@@ -108,6 +108,7 @@ function establish_db_link($dblinkname = "readwrite") {
 
 	// Connect to database
 	if (!$dblink[$dblinkname] = mysql_connect($dbhost, $dbuser, $dbpass, true)) {
+	//if (!$dblink[$dblinkname] = mysqli_connect('elgg-prod', $CONFIG->dbuser, $CONFIG->dbpass, $CONFIG->dbname)) {
 		$msg = elgg_echo('DatabaseException:WrongCredentials',
 				array($dbuser, $dbhost, "****"));
 		throw new DatabaseException($msg);
