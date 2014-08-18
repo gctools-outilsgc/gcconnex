@@ -191,7 +191,14 @@ function get_access_array($user_id = 0, $site_id = 0, $flush = false) {
  *
  * @return int default access id (see ACCESS defines in elgglib.php)
  * @link http://docs.elgg.org/Access
+ *  
  */
+
+/** 
+  * Patch applied to allow for default access wit group tools  - CDG
+  * https://github.com/jeabakker/Elgg/commit/a39fced4556b3f2cf0d6d2952de19dec35578566
+*/
+ 
 function get_default_access(ElggUser $user = null) {
 	global $CONFIG;
 
