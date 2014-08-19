@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+	<name>Group Operators</name>
+	<author>Lorea</author>
+	<version>1.3.2</version>
+	<category>enhancement</category>
+	<category>admin</category>
+	<description>Allows to have several group operators</description>
+	<website>https://lorea.cc/</website>
+	<copyright>See COPYRIGHT.txt</copyright>
+	<license>GNU General Public License version 2</license>
+	<requires>
+		<type>elgg_release</type>
+		<version>1.8</version>
+	</requires>
+	<requires>
+		<type>plugin</type>
+		<name>groups</name>
+	</requires>
+	<requires>
+		<type>priority</type>
+		<priority>after</priority>
+		<plugin>groups</plugin>
+	</requires>
+	<activate_on_install>true</activate_on_install>
+</plugin_manifest>

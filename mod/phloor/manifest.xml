@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+	<name>phloorFramework</name>
+	<author>Alois Leitner</author>
+	<version>1.8-12.01.25b</version>
+	<category>PHLOOR</category>
+	<blurb>Enables the core phloor environment.</blurb>
+	<description>The phloor environment for your Elgg site.</description>
+	<website>http://phloor.13net.at</website>
+	<copyright>See COPYRIGHT.txt</copyright>
+	<license>GNU Public License version 2</license>
+	<requires>
+		<type>elgg_release</type>
+		<version>1.8</version>
+	</requires>	
+	<activate_on_install>false</activate_on_install>
+	<admin_interface>simple</admin_interface>
+			
+</plugin_manifest>

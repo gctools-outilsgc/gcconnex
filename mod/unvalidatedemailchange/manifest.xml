@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+        <name>Unvalidatedemailchange</name>
+        <author>iionly / Pjotr Savitski</author>
+        <version>1.8.1</version>
+        <category>enhancement</category>
+        <description>Allows to change the email address of unvalidated users.</description>
+        <website>https://github.com/iionly</website>
+        <copyright>(C) iionly 2012, (C) Pjotr Savitski 2010</copyright>
+        <license>GNU General Public License version 2</license>
+        <requires>
+                <type>elgg_release</type>
+                <version>1.8.3</version>
+        </requires>
+        <requires>
+                <type>plugin</type>
+                <name>uservalidationbyemail</name>
+        </requires>
+        <requires>
+                <type>priority</type>
+                <plugin>uservalidationbyemail</plugin>
+                <priority>after</priority>
+        </requires>
+        <activate_on_install>false</activate_on_install>
+</plugin_manifest>

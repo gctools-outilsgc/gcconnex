@@ -1,0 +1,46 @@
+= Version history =
+
+2.2 (2013-03-18):
+
+- added: plugin setting to change the max length of a wire post
+- added: wire add form to the group activity page #4
+- changed: README.txt to README.md for better layout in GitHub
+- Applied Elgg coding standards
+
+2.1 (2013-04-05):
+
+- added: plugin setting to extend the activity page with a wire post form
+- added: widget title url for default thewire widget
+- added: runonce for migration Elgg 1.7 -> 1.8
+- changed: thewire reply link now visible in river events
+- changed: entity menu for wire post will show up in widgets
+- changed: setting page_owner on reply and thread page in case of group
+- fixed: problem with object notifications
+- fixed: possible SQL injection in widgets
+- fixed: not correctly presenting user setting
+
+2.0 (2012-04-10):
+
+- changed: updated for Elgg 1.8
+
+1.2 (2011-12-05):
+
+- added: group tool option to disable The Wire on a group
+- changed: moved changelog to CHANGES.txt in preparation for Elgg 1.8
+- changed: moved features and todo to README.txt in preparation for Elgg 1.8
+
+1.1.1 (2011-09-16):
+
+- fixed: potential multiple loading of autocomplete js
+- fixed: user autocomplete showed friends of all sites instead of this site (only in multi site setup)
+- fixed: coding error in widgets views
+- fixed: access pulldown layout error in widgets
+
+1.1 (2011-08-17):
+
+- added: filtering to index, group and default wire widget
+- changed: add form submit button
+
+1.0:
+
+- initial version

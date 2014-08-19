@@ -1,0 +1,82 @@
+= Version History =
+
+GC Changes
+
+GC1.0 - Added French Language File
+
+
+1.1.2 (2013-04-05):
+
+- fixed: files lost their folder if the access of the folder was updated (thanks to Tauvic Ritter for reporting)
+- fixed: uploading a zip could create an empty folder
+- changed: layout of the upload page, now with tabs for the different option (single file, multi file, zip file)
+- removed: old css file
+- removed: tags from multi upload form
+
+1.1.1 (2012-11-14):
+
+- fixed: critical bug in upgrade script when you first enable file_tools (thanks to Sergiy Kamolov http://community.elgg.org/profile/sergiy.kamolov)
+- changed: disabled notifications of new file on zip upload
+- changed: README.txt to README.md for better markup
+
+1.1 (2012-11-06):
+
+- added: breadcrumb folderstructure on file full view
+- added: upgrade script to fix disappeared folders
+- fixed: mine tab highlighted when showing files from a friend
+- fixed: call to undefined function
+- fixed: language keys in index_file widget
+- fixed: layout issues and old code in filerepo widget
+- fixed: more link in file_tree widget
+- fixed: deadloop issue when deleting a folder
+- fixed: setting wrong parent on folders
+- fixed: css error in uploadify styling
+- fixed: missing zip upload button on some pages
+- changed: group_files widget redone
+- changed: better validation of folder listing
+
+1.0 (2012-07-31):
+
+- added: option to show folder content in the widget
+- fixed: depricated notices
+- fixed: max file upload size now listens to PHP setting
+- fixed: page_handler logic
+- fixed: edit a file moving to main folder
+- fixed: dropping files on the tree works again
+- fixed: layout of group settings
+- fixed: encoding problem in zip upload
+- fixed: problem with zip upload not creating folders
+- fixed: gracefully fallback for upload form
+- fixed: JS error when your site is in a subfolder (thanks to SehLax http://community.elgg.org/profile/SehLax)
+- changed: only show empty queue when needed
+- changed: better handling of file extensions
+- changed: file title is download link in full view
+- changed: layout of start.php to be more inline with Elgg
+- removed: unused javascript function
+
+1.0 beta (2012-05-23):
+
+- added: group_files widget (from widget_manager)
+- added: index_file widget (from widget_maanger)
+- changed: plugin made Elgg 1.8.3 compatible
+
+0.3.1 (2012-01-31):
+
+- fixed: incorrect forward after zip upload in group 
+- fixed: incorrect access for zip uploaded files
+- fixed: incorrect forward after multiupload
+
+0.3 (2012-01-24):
+
+- added: default sorting options for site and group admins
+- added: more loading indicator moments (sorting, folder change)
+- changed: only postfix file when zip downloading if file already exists in zip
+- removed: some obsolete js and css
+- fixed: invalid file_tree widget title link
+- fixed: some untranslatable language keys
+- fixed: 2 functions that were not namespaced (to prevent conflicts)
+- fixed: preferred date time notation in folder details
+
+0.2 (2012-01-20):
+
+- initial release

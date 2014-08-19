@@ -1,0 +1,95 @@
+.ui-button {
+     cursor: pointer;
+     display: inline-block;
+     margin-right: 0.1em;
+     overflow: visible;
+     padding: 0pt;
+     position: relative;
+     text-align: center;
+     text-decoration: none ! important;
+}
+
+.ui-button-icon-only {
+     width: 2.2em;
+}
+
+button.ui-button-icon-only {
+     width: 2.4em;
+}
+
+.ui-button-icons-only {
+     width: 3.4em;
+}
+
+button.ui-button-icons-only {
+     width: 3.7em;
+}
+
+.ui-button .ui-button-text {
+     display: block;
+     line-height: 1.4;
+}
+
+.ui-button-text-only .ui-button-text {
+     padding: 0.4em 1em;
+}
+
+.ui-button-icon-only .ui-button-text, .ui-button-icons-only .ui-button-text {
+     padding: 0.4em;
+     text-indent: -1e+7px;
+}
+
+.ui-button-text-icon-primary .ui-button-text, .ui-button-text-icons .ui-button-text {
+     padding: 0.4em 1em 0.4em 2.1em;
+}
+
+.ui-button-text-icon-secondary .ui-button-text, .ui-button-text-icons .ui-button-text {
+     padding: 0.4em 2.1em 0.4em 1em;
+}
+
+.ui-button-text-icons .ui-button-text {
+     padding-left: 2.1em;
+     padding-right: 2.1em;
+}
+
+input.ui-button {
+     padding: 0.4em 1em;
+}
+
+.ui-button-icon-only .ui-icon, .ui-button-text-icon-primary .ui-icon, .ui-button-text-icon-secondary .ui-icon, .ui-button-text-icons .ui-icon, .ui-button-icons-only .ui-icon {
+     margin-top: -8px;
+     position: absolute;
+     top: 50%;
+}
+
+.ui-button-icon-only .ui-icon {
+     left: 50%;
+     margin-left: -8px;
+}
+
+.ui-button-text-icon-primary .ui-button-icon-primary, .ui-button-text-icons .ui-button-icon-primary, .ui-button-icons-only .ui-button-icon-primary {
+     left: 0.5em;
+}
+
+.ui-button-text-icon-secondary .ui-button-icon-secondary, .ui-button-text-icons .ui-button-icon-secondary, .ui-button-icons-only .ui-button-icon-secondary {
+     right: 0.5em;
+}
+
+.ui-button-text-icons .ui-button-icon-secondary, .ui-button-icons-only .ui-button-icon-secondary {
+     right: 0.5em;
+}
+
+.ui-buttonset {
+     margin-right: 7px;
+}
+
+.ui-buttonset .ui-button {
+     margin-left: 0pt;
+     margin-right: -0.3em;
+}
+
+button.ui-button::-moz-focus-inner {
+     border: 0pt none;
+     padding: 0pt;
+}
+

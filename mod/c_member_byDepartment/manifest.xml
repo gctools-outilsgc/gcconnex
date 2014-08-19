@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+	<name>Department Binning</name>
+	<author>Christine Yu</author>
+	<version>1.8.16</version>
+	<category>GC Custom</category>
+	<category>communication</category>
+	<description>Bins all the users to respective department/domain, and "caches" them in a .json file</description>
+	<website>http://www.elgg.org/</website>
+	<copyright>See COPYRIGHT.txt</copyright>
+	<license>GNU General Public License version 2</license>
+	<requires>
+		<type>elgg_release</type>
+		<version>1.8.16</version>
+	</requires>
+	<requires>
+		<type>plugin</type>
+		<name>members</name>
+	</requires>
+	<requires>
+		<type>priority</type>
+		<priority>after</priority>
+		<plugin>members</plugin>
+	</requires>
+</plugin_manifest>

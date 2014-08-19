@@ -1,0 +1,83 @@
+@CHARSET "UTF-8";
+
+ul.checklist {
+	list-style: none;
+	margin: 0;
+	padding: 10px;
+}
+
+ul.checklist li.checklist-item {
+	float: left;
+	margin: 3px;
+	background: url(img/checkboxbg.png) no-repeat 0 0;
+	width: 105px;
+	height: 150px;
+	position: relative;
+	font: normal 11px/1.3 "Lucida Grande", "Lucida", "Arial", Sans-serif;
+	border-radius: 10px 10px 10px 10px;
+    box-shadow: 2px 2px 2px 0 #444;
+}
+
+ul.checklist li.checklist-item.selected {
+	background-position: -105px 0;
+}
+
+
+ul.checklist li.checklist-item.selected label,
+ul.checklist li.checklist-item.selected label a, 
+ul.checklist li.checklist-item.selected .checkbox-description {
+	color: white;
+}
+
+ul.checklist li.checklist-item.selected .checkbox-select {
+	display: none;
+}
+
+ul.checklist li.checklist-item input {
+	display: none;
+}
+
+ul.checklist li.checklist-item.selected a.checkbox-deselect {
+	display: block;
+}
+
+ul.checklist li.checklist-item label {
+	display: block;
+	text-align: center;
+	padding: 8px 2px;
+}
+
+li.checklist-item .checkbox-image-container {
+	clear: both;
+	overflow: hidden;
+	padding: 3px 0 3px 0;
+}
+
+ul.checklist li.checklist-item a.checkbox-select {
+	display: block;
+	float: left;
+	position: absolute;
+	top: 118px;
+	left: 10px;
+	width: 85px;
+	height: 23px;
+	background: url(img/select.png) no-repeat 0 0;
+	text-indent: -9999px;
+}
+
+ul.checklist li.checklist-item a.checkbox-deselect {
+	display: none;
+	color: white;
+	font-weight: bold;
+	text-decoration: none;
+	right: 10px;
+	top: 120px;
+	position: absolute;
+}
+
+ul.checklist li.checklist-item .checkbox-description {
+	max-height: 55px;
+	padding: 1px 5px;
+	overflow: hidden;
+	color: #2d2d2d;
+}

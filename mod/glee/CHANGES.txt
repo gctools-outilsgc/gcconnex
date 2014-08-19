@@ -1,0 +1,25 @@
+/**
+ * Change Log
+ */
+
+/**
+ * @version 1.8-12.05.03b
+ */
+- removed support for less
+- slight adaptions for some themes
+
+/**
+ * @version 1.8-12.04.24b
+ */
+- upgrade bootstrap (2.0.3)
+- integrate "bootswatch" themes
+
+/**
+ * @version 1.8-12.03.21b
+ */
+- upgrade bootstrap (2.0.2)
+
+/**
+ * @version 1.8-12.03.13b
+ */
+- initial release

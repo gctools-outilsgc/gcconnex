@@ -1,0 +1,13 @@
+1.8.1
+- Fixes: last row of the uploaded CSV file is missing
+- Fixes: css overflow
+- Adds: mapping capabilities (change table headers with custom metadata names)
+- Adds: integration with Profile Manager, mapping against Profile Manager fields
+- Adds: integration with Roles, assign user roles on upload
+- Adds: plugin hook 'header:custom_method', 'upload_users' for custom processing of headers
+
+1.8.2
+- Modifies: use fgestcsv for CSV parsing
+- Modifies: store uploaded files on Elgg's filestore and use file entities to store upload related metadata
+- Adds: more charset options
+- Improves: better UI

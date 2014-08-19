@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+	<name>Unvalidated user cleanup</name>
+	<author>Ilia Salem</author>
+	<version>0.2</version>
+	<category>user</category>
+	<category>admin</category>
+	<description>Automatically delete all unvalidated users older than x days every (selected time period)</description>
+	<requires>
+		<type>elgg_release</type>
+		<version>1.8</version>
+	</requires>
+	<activate_on_install>true</activate_on_install>
+</plugin_manifest>

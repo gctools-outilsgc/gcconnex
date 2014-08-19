@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+	<name>phloorFavicon</name>
+	<author>Alois Leitner</author>
+	<version>1.8-12.01.19</version>
+	<category>PHLOOR</category>
+	<description>Your own Favicon for your Elgg site. </description>
+	<description>Enables a custom favicon for your Elgg site. 
+	You are able to upload an image which will be scaled down to 16x16 and used as favicon.
+	</description>
+	<website>http://phloor.13net.at</website>
+	<copyright>See COPYRIGHT.txt</copyright>
+	<license>GNU Public License version 2</license>
+	<requires>
+		<type>elgg_release</type>
+		<version>1.8</version>
+	</requires>
+	<activate_on_install>false</activate_on_install>
+	<admin_interface>simple</admin_interface>
+	
+	<screenshot>
+		<description>Phloor Custom Favicon Admin Interface [1]</description>
+		<path>screenshots/screenshot.png</path>
+	</screenshot>
+	
+	<screenshot>
+		<description>Phloor Custom Favicon In Action - Chromium [2]</description>
+		<path>screenshots/screenshot-0.png</path>
+	</screenshot>
+		
+	<screenshot>
+		<description>Phloor Custom Favicon In Action - Firefox [3]</description>
+		<path>screenshots/screenshot-1.png</path>
+	</screenshot>
+		
+	<requires>	
+		<type>plugin</type>
+		<name>phloor</name>
+		<version>1.8</version>
+	</requires>
+	
+	<requires>	
+		<type>priority</type>
+		<plugin>phloor</plugin>
+		<priority>after</priority>
+	</requires>
+	
+</plugin_manifest>

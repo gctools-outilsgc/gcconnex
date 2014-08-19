@@ -1,0 +1,167 @@
+= Version History =
+
+2.8 (2013-10-31):
+
+- added: option to allow group members to invite more members
+- added: Portuguese-Brazilian translation (thanks to brunovb)
+- added: tags to quickstart discussion widget
+- added: suggested groups (based on profile information)
+- added: group admins are notified upon membership request #31 (thanks to Matt Beckett)
+- fixed: crash when listing a forum topic of a hidden group
+- fixed: email invites are not cleaned up on register
+- fixed: group owner should not be group admin #26
+- changed: better group selection in quickstart discussion widget
+- changed: showing group status (open/closed) is a plugin setting #3
+- changed: group index widget to include popular groups option #28
+
+2.7 (2013-06-27):
+
+- added: status icon when discussion is closed and fast action to close/open a topic
+- added: a widget to quickly start a discussion (index, dashboard and group context)
+- fixed: no tab selected in group listing when group_tools is first activated
+- fixed: group admin transfer no longer working for non admins
+- changed: performance improvement in group admin transfer
+- changed: discussion list now shows in which group the discussion takes place (if not already clear)
+
+2.6 (2013-05-06):
+
+- added: option to hide the My Status sidebar
+- fixed: using new cache functions
+- changed: index groups widget now optionally respects group ordering
+
+2.5 (2013-04-05):
+
+- added: auto join groups based on email invitation when joining the site
+- added: different group ACL fixes
+- fixed: problem with email invites from hidden groups
+- fixed: in some cases email invites weren't saved
+- changed: auto notifications now listen to $NOTIFICATION_HANDLERS
+- changed: handling of invitations page
+- changed: layout of actions
+- removed: group creation limited to admins (Elgg core now offers this option)
+
+2.4 (2012-11-06):
+
+- added: filter groups based on a tag field in index_group widget
+- fixed: problem with group invite autocomplete on subfolder Elgg installations (thanks to Bruno Grossmann http://community.elgg.org/profile/bruno)
+- fixed: unable to edit a group as a normal user when limiting group creation (thanks to buraddo http://community.elgg.org/profile/buraddo)
+- changed: group invitations (and add) no always goto mail
+- changed: some logic when (re)inviting for better system messages to the users 
+- changed: discussion dasboard widget ordering to be inline with default Elgg
+- changed: layout of start.php to be more inline with Elgg
+
+2.3 (2012-07-31):
+
+- added: discussion widget from widget manager
+- added: group_forum_topics widget from widget manager
+- added: group_news widget from widget manager
+- added: index_groups widget from widget manager
+- added: group sidebar cleanup feature
+- added: group profile fallback handling (error on old group profile link & redirect)
+- added: group default access (if https://github.com/Elgg/Elgg/pull/253 is applied)
+- added: admin action to enable/disable group notifications
+- added: option to show the group members in the group related index widgets
+- removed: index_discussions widget
+- fixed: deprecated notice in invitations overview
+- fixed: url error in invitation
+- fixed: PHP wanring in group_river_widget
+- fixed: pagination in group members sidebar
+- fixed: invite autocomplete not using default autocomplete features
+- fixed: forum topics widget ordering
+- changed: plugin settings layout
+
+2.2 (2012-05-07):
+
+- added: featured group widget
+- added: a index widget (for Widget Manager) to show the latest discussions
+- added: widget title link for group membership (in combination with Widget Manager)
+- added: option to invite all friends or all site members (admin only)
+- fixed: outstanding invitations and membership request not always cleaned up
+- fixed: incorrect widget title for group members
+- fixed: deprecated notices in combination with widget_manager
+- fixed: pagination in group members widget
+- fixed: wrong action link in remove invitation
+- fixed: bug with creating group invitations
+- fixed: PHP notices and warnings
+- changed: sending of group invite e-mails to be more generic
+- changed: restored limited functionality of group activity river
+
+2.1 (2012-04-16):
+
+- added: option to limit group creation to site administrators
+- fixed: language error in group sorting (thanks to LeeUK)
+- fixed: depricated notice getOwner() => getOwnerGUID()
+
+2.0 BETA 1 (2012-01-17):
+
+- changed: migrated the plugin to Elgg 1.8
+
+1.9 (2011-12-05):
+
+- added: option for group admins to show group widgets to non members in case of a closed group
+- changed: activity filter in group river widget (now more advanced)
+- changed: group status (open/closed) CSS
+- changed: moved changelog to CHANGES.txt in preperation for Elgg 1.8
+- changed: plugin information to README.txt in preperation for Elgg 1.8
+
+1.8 (2011-11-11):
+
+- added: activity filter in group river widget
+- added: group listing filter: open and closed
+- added: group status (open/closed) in owner_block and group stats
+- changed: group search listing
+
+1.7 (2011-10-17):
+
+- added: option to make all site users a member of an auto join group
+- changed: moved some functions
+- changed: transfer group ownership now show members alphabeticly
+- changed: group edit now has tabs
+
+1.6 (2011-10-05):
+
+- added: option to resend invites to already invited users
+- changed: name of robots view to be less generic
+
+1.5.1 (2011-09-28):
+
+- changed: group mail form to support member selection
+
+1.5 (2011-09-23):
+
+- added: admin option to manage if closed groups are indexed by search engines (default no)
+- added: admin option to automaticly enable group notifications on group join
+- added: option to mark a group for auto join (on registration of a new user)
+
+1.4 (2011-07-27):
+
+- added: notification on group transfer to the new owner
+- fixed: transfer pulldown showing up empty in some cases
+- fixed: transfer pulldown not showing for admins in some cases
+
+1.3 (2011-07-11):
+
+- added: dutch translation
+- added: option to invite users by CVS upload
+- fixed: some errors in engish translation
+- fixed: invite from CSV now check hidden entities
+- fixed: when adding a user to a group, the user wasn't added to the acl is some cases 
+- fixed: when transfering group ownership the new owner wasn't added to the group acl in some cases
+- fixed: when removing a member from a group the user wasn't removed from the group acl is some cases  
+- changed: moved some code from action to functions for reusability
+
+1.2 (2011-06-27):
+
+- added: alfabetical group sorting
+- added: plugin setting which group listing is default (admin option)
+- added: option to invite users to a group by e-mail address (admin option)
+- changed: banned users no longer show in in group invite
+
+1.1 (2011-06-17):
+
+- added: group activity widget: support for more groups
+- fixed: accept membership request link
+- fixed: manage membership approval always visible
+
+1.0 (2011-06-10):
+- initial version

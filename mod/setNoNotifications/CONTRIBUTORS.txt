@@ -1,0 +1,25 @@
+MAIN DEVELOPER
+
+Gustavo Bellino <gustavobellino@keetup.com>
+http://twitter.com/gushbellino
+
+CONTRIBUTING DEVELOPERS
+
+Pedro Prez <pedroprez@keetup.com>
+http://twitter.com/pedroprez
+
+Diego Gallardo <dgallardo@keetup.com>
+http://twitter.com/demege
+
+
+THANKS
+Thanks to Keetup Development <http://www.keetup.com/> for allowing to publish this plugin.
+http://twitter.com/keetup_com
+
+
+-------------------
+
+ELGG 1.8 VERSION
+
+iionly <iionly@gmx.de>
+https://github.com/iionly

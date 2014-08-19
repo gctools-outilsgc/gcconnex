@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+	<name>Advanced Notifications</name>
+	<author>ColdTrick IT Solutions</author>
+	<version>1.3</version>
+	<description>Changes the way some notifications are handled.</description>
+	<website>http://www.coldtrick.com/</website>
+	<repository>https://github.com/ColdTrick/advanced_notifications</repository>
+	<bugtracker>https://github.com/ColdTrick/advanced_notifications/issues</bugtracker>
+	<copyright>(C) ColdTrick IT Solutions 2012 - 2013</copyright>
+	<license>GNU General Public License version 2</license>
+ 	
+ 	<requires>
+		<type>elgg_release</type>
+		<version>1.8.15</version>
+	</requires>
+	
+	<requires>
+		<type>priority</type>
+		<plugin>blog</plugin>
+		<priority>after</priority>
+	</requires>
+	<requires>
+		<type>priority</type>
+		<plugin>groups</plugin>
+		<priority>after</priority>
+	</requires>
+	<requires>
+		<type>priority</type>
+		<plugin>messages</plugin>
+		<priority>after</priority>
+	</requires>
+	
+	<suggests>
+		<type>plugin</type>
+		<name>notifications</name>
+	</suggests>
+	<suggests>
+		<type>plugin</type>
+		<name>html_email_handler</name>
+	</suggests>
+	
+	<category>ColdTrick</category>
+</plugin_manifest>

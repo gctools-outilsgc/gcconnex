@@ -1,0 +1,41 @@
+= Version history =
+2.3.1 (2013-04-05):
+
+- fixed: problem with pagesetupdone on some Elgg installations
+- fixed: mail message language now set correctly
+
+2.3 (2012-11-06):
+
+- added: custom send date option (thanks to migrax https://github.com/migrax)
+- fixed: error in getting extra sendmail options
+- fixed: PHP notices
+- fixed: subject and to/from encoding (thanks to migrax https://github.com/migrax)
+- fixed: CC and BCC not working due to wrong placement of some headers (thanks to migrax https://github.com/migrax)
+- changed: registration of menu items
+- changed: some code cleanup
+
+2.2 (2012-03-02):
+
+- added: now also handling emails send by elgg_send_email
+- added: option to configure sendmail options
+
+2.1 (2011-11-28):
+
+- added: extra command option in mail, to better prevent mails being marked as spam (mainly on shared hosts)
+- fixed: page_handler issue with Elgg 1.8.1
+- changed: moved version history to CHANGES.txt
+
+2.0 (2011-10-12):
+
+- changed: Elgg 1.8 modifications
+- changed: suppresed DOMDocument warnings
+
+1.1 (2011-04-14):
+
+- added: a link to notification settings in footer of message
+- changed: layout of default message
+- fixed: links not clickable in email clients
+
+1.0 (2011-04-04):
+
+- initial version 

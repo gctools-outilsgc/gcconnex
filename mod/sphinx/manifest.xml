@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+	<name>Sphinx Search</name>
+	<author>Evan Winslow</author>
+	<version>1.0a</version>
+	<description>Power your site's search using the Sphinx open-source search engine</description>
+	<website>https://github.com/ewinslow/elgg-sphinx</website>
+	<copyright>(C) CourseWare 2011</copyright>
+	<license>GNU Public License version 2</license>
+	
+	<requires>
+		<type>plugin</type>
+		<name>search</name>
+		<version>1.8</version>
+	</requires>
+	<requires>
+		<type>priority</type>
+		<plugin>search</plugin>
+		<priority>after</priority>
+	</requires>
+	<requires>
+		<type>elgg_version</type>
+		<version>2011061200</version>
+	</requires>
+</plugin_manifest>

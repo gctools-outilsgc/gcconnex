@@ -1,0 +1,63 @@
+White screen when uploading images
+==================================
+Tidypics tries to calculate the maximum size of an image that your server will support. If it
+guesses incorrectly and someone uploads a photo that is too large, the script may crash when
+resizing the image if you are using GD. The easiest way to test this is to set display_errors
+to 1 in your .htaccess file and upload large images. If this causes a problem, a php memory error
+should display on the screen. You can increased your php memory limit. A better option is to use
+imagick if your server supports it (again see the docs directory).
+
+If it is not a memory issue, you should see some other error appear. Once you have fixed the error,
+change display_error back to 0.
+
+
+Question mark images appear
+===========================
+If you see question mark images when you look at your albums, this means the resizing of the images
+failed. This could be due to the memory limits as described above. There are other causes. Tidypics
+tries to detect these problems and write the cause to the error log. You should check your server
+error log right after an upload that results in a question mark for these error messages. The messages
+will begin with "Tidypics warning:". It is possible if you have turned off php warnings that you will
+not see these warnings.
+
+Another possible cause is using command line ImageMagick when your server does not
+support it or specifying the wrong path to the ImageMagick executables.
+
+
+Unable to save settings
+=======================
+If you are unable to settings, Apache may be configured to block pages that use
+file paths as Tidypics does when setting the location of the ImageMagick executable.
+In this case, leave that field blank.
+
+
+Latest photos and latest albums widgets on index page
+=====================================================
+You can either use the Widget Manager plugin to add these widgets to the index page or in case you
+don't use this plugin you can also add them with customizing the Custom Index plugin index page. For
+adding the widgets with the Custom Index you need to add the following code to the file
+mod/custom_index/views/default/page/layouts/custom_index.php:
+
+<pre><code>// Tidypics latest photos
+if (elgg_is_active_plugin('tidypics')) {
+    $latest_photos = tp_get_latest_photos(6);
+    $latest_images .= elgg_view('output/url', array('href' => "/photos/siteimagesall",
+                                                    'text' => elgg_echo('link:view:all'),
+                                                    'is_trusted' => true,
+                               ));
+    echo elgg_view_module('featured', elgg_echo("tidypics:mostrecent"), $latest_photos, $mod_params);
+}</code></pre>
+
+<pre><code>// Tidypics latest albums
+if (elgg_is_active_plugin('tidypics')) {
+    $latest_albums = tp_get_latest_albums(6);
+    $latest_albums .= elgg_view('output/url', array('href' => "/photos/all",
+                                                    'text' => elgg_echo('link:view:all'),
+                                                    'is_trusted' => true,
+                               ));
+    echo elgg_view_module('featured', elgg_echo("tidypics:albums_mostrecent"), $latest_albums, $mod_params);
+}</code></pre>
+
+Where to add these lines depends on where you want the widgets to appear on your index page. You can also adjust
+the number of photos or albums respectively that will shown in the widgets by changing the parameter of
+tp_get_latest_photos() and tp_get_latest_albums() to the desired number.

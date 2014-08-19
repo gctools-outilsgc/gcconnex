@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+	<name>CSV User Import</name>
+	<author>Jaakko Naakka / Mediamaisteri Group</author>
+	<author>Ismayil Khayredinov / Arck Interactive</author>
+	<version>1.8.2</version>
+	<category>users</category>
+	<category>administration</category>
+	<category>import</category>
+	<description>Generate user accounts from imported CSV file.</description>
+	<website>http://www.mediamaisteri.com/</website>
+	<website>http://www.arckinteractive.com/</website>
+	<copyright>v1.8.1(c) Mediamaisteri Group 2009</copyright>
+	<copyright>v1.8.2(c) ArckInteractive 2013</copyright>
+	<license>GNU General Public License version 2</license>
+	<requires>
+		<type>elgg_release</type>
+		<version>1.8</version>
+	</requires>
+	<suggests>
+		<type>plugin</type>
+		<name>profile_manager</name>
+	</suggests>
+	<suggests>
+		<type>plugin</type>
+		<name>roles</name>
+	</suggests>
+	<activate_on_install>true</activate_on_install>
+</plugin_manifest>

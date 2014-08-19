@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest>
+	<field key="author" value="Environment Canada" />
+	<field key="version" value="GC1.0" />
+	<field key="description" value="This plugin will add a language toggle link accessible to all users." />
+	<field key="website" value="http://www.ec.gc.ca/" />
+	<field key="copyright" value="" />
+	<field key="licence" value="" />
+	<field key="elgg_version" value="2009031301" />
+</plugin_manifest>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+	<name>phloorLogoManager</name>
+	<author>Alois Leitner</author>
+	<version>1.8-12.01.14</version>
+	<category>PHLOOR</category>
+	<description>Logo Manager lets you manage custom logos on your Elgg site. </description>
+	<blurb>
+	This is a dependency plugin for other logo related plugins.
+	Required plugins are: Logo for 1.8, Favicon for 1.8, Topbar Logo for 1.8	
+	</blurb>
+	<website>http://phloor.13net.at</website>
+	<copyright>See COPYRIGHT.txt</copyright>
+	<license>GNU Public License version 2</license>
+	<requires>
+		<type>elgg_release</type>
+		<version>1.8</version>
+	</requires>	
+	<activate_on_install>false</activate_on_install>
+	<admin_interface>simple</admin_interface>
+		
+	<screenshot>
+		<description>Phloor Logo Manager - Admin Settings [1]</description>
+		<path>screenshots/screenshot.png</path>
+	</screenshot>	
+		
+	<screenshot>
+		<description>Phloor Logo Manager - Admin Settings [2]</description>
+		<path>screenshots/screenshot-0.png</path>
+	</screenshot>	
+	
+	<requires>	
+		<type>plugin</type>
+		<name>phloor</name>
+		<version>1.8</version>
+	</requires>
+	
+	<requires>	
+		<type>priority</type>
+		<plugin>phloor</plugin>
+		<priority>after</priority>
+	</requires>	
+	
+	<requires>	
+		<type>plugin</type>
+		<name>phloor_custom_logo</name>
+		<version>1.8</version>
+	</requires>
+	
+	<requires>	
+		<type>priority</type>
+		<plugin>phloor_custom_logo</plugin>
+		<priority>after</priority>
+	</requires>	
+	
+	<requires>	
+		<type>plugin</type>
+		<name>phloor_custom_favicon</name>
+		<version>1.8</version>
+	</requires>
+	
+	<requires>	
+		<type>priority</type>
+		<plugin>phloor_custom_favicon</plugin>
+		<priority>after</priority>
+	</requires>	
+		
+	<requires>	
+		<type>plugin</type>
+		<name>phloor_custom_topbar_logo</name>
+		<version>1.8</version>
+	</requires>
+	
+	<requires>	
+		<type>priority</type>
+		<plugin>phloor_custom_topbar_logo</plugin>
+		<priority>after</priority>
+	</requires>	
+		
+</plugin_manifest>

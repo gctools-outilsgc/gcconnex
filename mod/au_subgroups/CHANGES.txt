@@ -1,0 +1,35 @@
+== VERSION HISTORY ==
+
+
+GC Change 
+
+GC 1.0 - Updated French language file - Charles de Grasse October 29, 2013
+
+1.5 (11/19/2012):
+ - added create subgroup link to parent group title menu again (make up your minds!)
+ - removes 'join' and 'request membership' title buttons for subgroups when the viewer isn't a member of the parent
+ - requires 1.8.9 due to changes in groups library
+
+1.4 (11/01/2012):
+ - fixed incorrect behavior for groups with subgroups disabled
+
+1.3 (10/25/2012):
+ - removed menu block links in favour of sidebar mini view
+ - removed 'add subgroup' link from sidebar
+ - added 'add subgroup' link to header menu
+
+1.2 (10/24/2012):
+ - fixed an issue with subgroup members-only visibility
+ - fixed an issue with subgroup acls
+ - added subgroup preview in sidebar
+
+1.1 (10/06/2012):
+ - added option to show featured groups on personal listing pages
+ - prevents users from being invited to subgroups when they're not members of the parent group
+ - fixes subgroup creation link on default group module
+ - added some visibility control for subgroups
+ - fixed issue with 'priority' settings in manifest
+ - added screenshots
+
+1.0 (10/02/2012):
+ - initial release

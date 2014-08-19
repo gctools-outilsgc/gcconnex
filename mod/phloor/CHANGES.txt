@@ -1,0 +1,42 @@
+/**
+ * Change Log
+ */
+
+/**
+ * @version 1.8-12.01.25b
+ */
+- "init" event instead of "plugins_boot" (deprecated)
+- added colorpicker
+- removed fluid960gs library (externalized)
+
+
+/**
+ * @version 1.8-12.01.19b
+ */
+- add phloorlib.js
+- finally fixed icon issue
+- "lazy load" prettyboxes css file
+
+/**
+ * @version 1.8-12.01.14b
+ */
+- reordered boot process - hooks into "plugins_boot"
+- added fluid960gs library
+- added prettycheckboxes library
+- added qtip2 library
+
+/**
+ * @version 1.8-12.01.11b
+ */
+- added masonry library
+- added infinitescroll library
+
+/**
+ * @version 1.8-11.12.31b
+ */
+- added some functions
+
+/**
+ * @version 1.8-11.12.15b
+ */
+- Initial release

@@ -1,0 +1,33 @@
+= Version history =
+2.0 (2011-11-28):
+
+- fixed: page_handler issue with Elgg 1.8.1
+
+2.0 beta 1 (2011-10-25):
+
+- changed: made plugin Elgg 1.8 compatible
+
+1.3 (2010-10-28):
+
+- added: plugin hook to filter tracking of actions => trigger_plugin_hook("track_action", "analytics", array("action" => $action))
+- added: plugin hook to filter tracking of events => trigger_plugin_hook("track_event", "analytics", array("category" => $category, "action" => $action, "label" => $label))
+- fixed: results of ajax calls not sent to Google Analytics
+	
+1.2 (2010-10-26):
+
+- added: option to flag adminitrators
+	
+1.1.1 (2010-10-25):
+
+- fixed: timing issue on AJAX calls
+	
+1.1 (2010-10-05):
+
+- added: option to track Elgg actions as pageview
+- added: option to track Elgg events as event
+- changed: using new Google Asynchronous tracking code
+- changed: plugin layout 
+
+1.0:
+
+- initial version

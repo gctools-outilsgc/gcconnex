@@ -1,7 +1,6 @@
 # ignore Elgg configuration
 /engine/settings.php
 /.htaccess
-/mod/*
 
 # don't ignore bundled plugins
 !/mod/blog/
