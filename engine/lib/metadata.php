@@ -430,7 +430,7 @@ function elgg_get_entities_from_metadata(array $options = array()) {
 		'metadata_name_value_pairs'          => ELGG_ENTITIES_ANY_VALUE,
 
 		'metadata_name_value_pairs_operator' => 'AND',
-		'metadata_case_sensitive'            => FALSE,
+		'metadata_case_sensitive'            => FALSE,	// cyu - metadata should be case insensitive (for search)
 		'order_by_metadata'                  => array(),
 
 		'metadata_owner_guids'               => ELGG_ENTITIES_ANY_VALUE,
