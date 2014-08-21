@@ -1,0 +1,82 @@
+Mod list in the order they appear / load on production
+
+** indicates disabled mod
+
+Garbage Collector
+Groups
+Log Rotate
+Group Tools
+Blog
+Bookmarks
+phloorLogo
+User Dashboard
+**Elgg Developer Tools
+phloorFramework
+Diagnostics
+Site Pages
+File
+Embed
+GC Registration
+Glee Theme Framework
+GC_Glee_Theme
+Groups Operators
+HTMLawed
+Invite Friends
+Likes
+Log Browser
+Members
+**Message Boards
+Messages
+Mobalize GC
+MSOffice Mime Types Patch 1.0 - GC
+Notifications
+**OAuth API
+phloorFavicon
+phloorTopbarLogo
+phloorLogoManager
+Polls
+Profile
+Rename Friends
+**Reported Content
+Search
+**TagCloud
+Tasks Fx
+TheWire
+Toggle Language
+Twitter Widget
+User Validation by Email
+Unvalidatedemailchange
+Widget Manager
+Zaudio
+galliStatus
+GC_Help
+AU Sub-Groups
+Custom index widgets
+File Tools
+Event Calendar
+Login As
+HTML Email Handler
+Blueprint 2020 Ideas -GC
+Maintenance
+**Set No Notifications
+**Unvalidated user cleanup
+**Site-wide Categories
+**Custom Index
+Pages
+**TinyMCE
+**Twitter API
+Group Duscussion Sort
+Google Analytics
+Bulk User Admin
+Tidypics Photo Gallery
+Sphinx Search
+CSV User Import
+**Notification Manager
+Translation Editor
+GC Profile Picture Badges
+Domain Manager
+Module Dump
+**TheWire Tools
+Extended TinyMCE
+Advanced Notifications
+**Department Binning
