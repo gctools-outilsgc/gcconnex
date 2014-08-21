@@ -1,6 +1,7 @@
 # ignore Elgg configuration
 /engine/settings.php
 /.htaccess
+/cometchat/*
 
 # don't ignore bundled plugins
 !/mod/blog/
