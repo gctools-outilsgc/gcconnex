@@ -1186,7 +1186,7 @@ function event_calendar_format_time($date,$time1,$time2='') {
 		if (is_numeric($time2)) {
 			$t .= " - ".event_calendar_convert_time($time2);
 		}
-		return "$t, $date";
+		return "<strong>$t, $date</strong>";
 	} else {
 		return $date;
 	}
@@ -1850,9 +1850,9 @@ function event_calendar_generate_listing_params($page_type,$container_guid,$orig
 	} else if ($event_calendar_listing_format == 'full') {
 		$title = elgg_echo('event_calendar:show_events_title');
 	} else if ($page_type == 'group') {
-		$title = elgg_echo('event_calendar:group'). ' ('.$subtitle.')';
+		$title = elgg_echo('event_calendar:group'). ' ('.utf8_encode($subtitle).')';
 	} else {
-		$title = elgg_echo('event_calendar:listing_title:'.$filter). ' ('.$subtitle.')';
+		$title = elgg_echo('event_calendar:listing_title:'.$filter). ' ('.utf8_encode($subtitle).')';
 	}
 
 	$params = array('title' => $title, 'content' => $content, 'filter_override'=>$filter_override);
