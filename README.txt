@@ -1,3 +1,24 @@
+GCconnex is a project forked from Elgg by the federal government of Canada.
+
+For more information about Elgg visit http://elgg.org/ or see the original Elgg
+README below.
+
+
+GCconnex BRANCHES ON GITHUB:
+
+GCconnex: Stable version that is used in production environments. This is
+likely the branch that you want. Use this for contributing to development, and
+for production environments.
+
+Staging: Pre-release version used by TBS-SCT employees for development (not stable)
+1.* branches that are previous versions of Elgg and don't contain modifications
+devel-* branches used by TBS-SCT employees to share code with each other
+
+
+
+
+====== Elgg README ======
+
 Elgg
 Copyright (c) 2008-2013 See COPYRIGHT.txt
 
