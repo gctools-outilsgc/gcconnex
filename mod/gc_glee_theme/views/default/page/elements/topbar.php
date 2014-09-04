@@ -74,7 +74,7 @@ HTML;
 $fip = <<<HTML
 <div style="position:relative; top:0px; width:940px; background-color:#333; height:27px;">
 
-<div style="vertical-align:top; position:absolute; left:0px;"><img src='$site_url/_graphics/sig-eng-bg.gif'></div>
+<div style="vertical-align:top; position:absolute; left:0px;"><img src='$site_url/_graphics/sig-eng-bg.gif' /></div>
 
 <div style="vertical-align:top;padding-top: 5px; position:absolute; right:0px;"><b><a href='http://gcpedia.gc.ca' style='color:white;'>GCpedia</a> |  <a href='http://elgg.srv.gc.ca/elgg/' style='color:white;'>GCconnex</a>  |  <a href='http://www.gcforums.gc.ca/' style='color:white;'>GCforums</a></b></div>
 
