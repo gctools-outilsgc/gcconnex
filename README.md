@@ -6,14 +6,14 @@ README below.
 
 
 <h1>GCconnex Branches on Github</h1>
-
-<strong>GCconnex:</strong> Stable version that is used in production environments. This is
+<ul>
+<li><strong>GCconnex:</strong> Stable version that is used in production environments. This is
 likely the branch that you want. Use this for contributing to development, and
-for production environments.<br>
-<strong>Staging:</strong> Pre-release version used by TBS-SCT employees for development (not stable).<br>
-<strong>1.*</strong> branches that are previous versions of Elgg and don't contain modifications.<br>
-<strong>devel-*</strong> branches used by TBS-SCT employees to share code with each other.
-
+for production environments.
+<li><strong>Staging:</strong> Pre-release version used by TBS-SCT employees for development (not stable).
+<li><strong>1.*</strong> branches that are previous versions of Elgg and don't contain modifications.
+<li><strong>devel-*</strong> branches used by TBS-SCT employees to share code with each other.
+</ul>
 
 
 <h1>Elgg README</h1>
