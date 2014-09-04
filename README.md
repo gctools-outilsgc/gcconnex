@@ -11,8 +11,8 @@ README below.
 likely the branch that you want. Use this for contributing to development, and
 for production environments.
 
-<strong>Staging:</strong> Pre-release version used by TBS-SCT employees for development (not stable)
-<strong>1.*</strong> branches that are previous versions of Elgg and don't contain modifications
+<strong>Staging:</strong> Pre-release version used by TBS-SCT employees for development (not stable).
+<strong>1.*</strong> branches that are previous versions of Elgg and don't contain modifications.
 <strong>devel-*</strong> branches used by TBS-SCT employees to share code with each other
 
 
