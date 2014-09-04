@@ -5,16 +5,14 @@ For more information about Elgg visit http://elgg.org/ or see the original Elgg
 README below.
 
 
-<h1>GCconnex BRANCHES ON GITHUB</h1>
+<h1>GCconnex Branches on Github</h1>
 
 <strong>GCconnex:</strong> Stable version that is used in production environments. This is
 likely the branch that you want. Use this for contributing to development, and
-for production environments.
-
-<strong>Staging:</strong> Pre-release version used by TBS-SCT employees for development (not stable).
-<strong>1.*</strong> branches that are previous versions of Elgg and don't contain modifications.
-<strong>devel-*</strong> branches used by TBS-SCT employees to share code with each other
-
+for production environments.<br>
+<strong>Staging:</strong> Pre-release version used by TBS-SCT employees for development (not stable).<br>
+<strong>1.*</strong> branches that are previous versions of Elgg and don't contain modifications.<br>
+<strong>devel-*</strong> branches used by TBS-SCT employees to share code with each other.
 
 
 
