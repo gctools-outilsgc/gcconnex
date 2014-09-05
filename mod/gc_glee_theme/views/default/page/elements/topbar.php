@@ -65,7 +65,7 @@ $output = <<<HTML
         $content_right
 	</div>
 	<!--This adds the GCconnex maple leaf in the center of the page-->
-	<div style="width:150px; margin-left:275px; margin-right:auto; margin-top:-6px;"><a href="$site_url" class="brand"><img src="$site_url/mod/gc_glee_theme/graphics/flag.gif"></img></a>	</div>
+	<div style="width:150px; margin-left:275px; margin-right:auto; margin-top:-6px;"><a href="$site_url" class="brand"><img src="$site_url/mod/gc_glee_theme/graphics/flag.gif" alt='GCconnex' title='GCconnex' /></img></a>	</div>
 
 </div>
 HTML;
