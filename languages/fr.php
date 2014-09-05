@@ -904,7 +904,7 @@ $french = array(
 	'tagcloud' => "Nuage de tags",
 	'tagcloud:allsitetags' => "Tous les tags du site",
 	
-	'on' => 'sur',
+	'on' => 'Oui',
 	'off' => 'Non',
 
 
