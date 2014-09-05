@@ -4,7 +4,7 @@
 	?>
 
 	<div class="lang_toggle">
-	<script language="javascript" type="text/javascript">
+	<script type="text/javascript">
 		function form_submit(language_selected) {
 			//document.getElementById('formtoggle').submit();
 
