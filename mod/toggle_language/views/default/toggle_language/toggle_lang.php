@@ -70,7 +70,7 @@
 		
 	
 	</script>
-		<form action="<?php echo $vars['url']; ?>action/toggle_language/toggle" method="post" name="formtoggle" id="formtoggle">
+		<form action="<?php echo $vars['url']; ?>action/toggle_language/toggle" method="post" id="formtoggle">
 			
 		<?php
 		// security tokens.
