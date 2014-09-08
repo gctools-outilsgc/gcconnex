@@ -16,7 +16,7 @@ $french = array(
 	'blog:title:all_blogs' => 'Tous les blogs du site',
 	'blog:title:friends' => 'Blogues de collègues',
 
-	'blog:group' => 'Blog de groupe',
+	'blog:group' => 'Blogues de groupe',
 	'blog:enableblog' => 'Activer le blogue du groupe',
 	'blog:write' => 'Write a blog post',
 
