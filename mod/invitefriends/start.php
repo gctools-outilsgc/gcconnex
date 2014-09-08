@@ -31,7 +31,10 @@ function invitefriends_init() {
  */
 function invitefriends_page_handler($page) {
 	gatekeeper();
-
+	
+	// GCchange - Ilia: fix colleague circles link in menu not appearing on this page
+	collections_submenu_items();
+	
 	elgg_set_context('friends');
 	elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 
