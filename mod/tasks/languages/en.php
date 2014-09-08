@@ -13,7 +13,7 @@ $english = array(
 
 	'tasks' => "Tasks",
 	'tasks:owner' => "%s's tasks",
-	'tasks:friends' => "Friends' tasks",
+	'tasks:friends' => "Colleagues' tasks",
 	'tasks:all' => "All site tasks",
 	'tasks:add' => "Add task",
 
