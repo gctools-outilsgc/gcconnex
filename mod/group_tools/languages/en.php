@@ -18,7 +18,7 @@
 		'group_tools:joinrequest:already:tooltip' => "You already requested to join this group, click here to revoke this request",
 
 		// menu
-		'group_tools:menu:mail' => "E-Mail Members",
+		'group_tools:menu:mail' => "Email Members",
 		'group_tools:menu:invitations' => "Manage invitations",
 
 		// plugin settings

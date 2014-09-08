@@ -16,7 +16,7 @@
 		'group_tools:joinrequest:already:tooltip' => "Vous avez déjà demandé à vous joindre à ce groupe; cliquez ici pour révoquer cette demande",
 
 		// menu
-		'group_tools:menu:mail' => "Envoi un courriel aux membres",
+		'group_tools:menu:mail' => "Courriel aux membres",
 		'group_tools:menu:invitations' => "Gérer les invitations",
 
 		// plugin settings
