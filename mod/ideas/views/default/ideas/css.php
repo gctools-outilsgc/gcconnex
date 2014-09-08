@@ -41,6 +41,11 @@
 	margin-top: 10px;
 }
 
+// GC Addition - reduces text box size to prevent it from being longer than the available space.
+#ideas-textarea{
+	width: 95%;
+}
+
 /*
  * Object idea
  */
