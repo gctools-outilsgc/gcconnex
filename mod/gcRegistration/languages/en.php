@@ -2,10 +2,10 @@
 $english = array(
 	// labels
 	'gcRegister:email_initial' => 'Enter your e-mail',
-	'gcRegister:email_secondary' => 'Your e-mail again (again for verification)',
+	'gcRegister:email_secondary' => 'Confirm your e-mail',
 	'gcRegister:username' => 'Your username (auto-generated)',
 	'gcRegister:password_initial' => 'Password',
-	'gcRegister:password_secondary' => 'Password (again for verification)',
+	'gcRegister:password_secondary' => 'Confirm your Password',
 	'gcRegister:display_name' => 'Display name <br/>Please enter your first and last name, as you are known in the workplace. As per the Terms and Conditions, your display name must reflect your real name. Pseudonyms are not allowed.',
 	'gcRegister:please_enter_email' => 'Please enter email',
 	'gcRegister:department_name' => 'Enter your Department',
