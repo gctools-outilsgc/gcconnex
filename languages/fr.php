@@ -360,7 +360,7 @@ $french = array(
 	'friends:collectiondeletefailed' => "Le groupement de contacts n'a pas été supprimer. Vous n'avez pas de droits suffisants, ou un autre problème peut-être en cause.",
 	'friends:collectionadded' => "Votre groupement de contact a été créé avec succès",
 	'friends:nocollectionname' => "Vous devez nommer votre groupement de contact avant qu'il puisse être créé.",
-	'friends:collections:members' => "Membres du groupement",
+	'friends:collections:members' => "Membres du cercle",
 	'friends:collections:edit' => "Modifier le groupement de contacts",
 
 	'friends:river:add' => "est maintenant dans les contacts de %s",
