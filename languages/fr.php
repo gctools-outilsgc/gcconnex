@@ -487,7 +487,7 @@ $french = array(
  */
 
 	'account' => "Compte",
-	'settings' => "Votre compte",
+	'settings' => "Paramètres",
 	'tools' => "Outils",
 
 	'register' => "S'enregistrer",
