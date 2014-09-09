@@ -27,7 +27,7 @@ $french = array(
 	'groups:invitations' => 'Invitations de groupe',
 
 	'groups:icon' => 'Icône de groupe (laisser tel quel ou laisser en blanc)',
-	'groups:name' => 'Nom de groupe',
+	'groups:name' => 'Nom de groupe <strong style="color:red;">*</strong>',
 	'groups:username' => 'Nom de groupe abrégé (affiché dans les URL, caractères alphanumériques seulement)',
 	'groups:description' => 'Description',
 	'groups:briefdescription' => 'Description brève',
