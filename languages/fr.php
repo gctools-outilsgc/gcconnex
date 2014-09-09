@@ -742,7 +742,7 @@ $french = array(
 
 	'usersettings:statistics' => "Vos statistiques",
 	'usersettings:statistics:opt:description' => "VVisualiser les statistiques des utilisateurs et des objets sur votre espace.",
-	'usersettings:statistics:opt:linktext' => "Statistiques de votre compte.",
+	'usersettings:statistics:opt:linktext' => "Information sur votre compte",
 
 	'usersettings:user' => "Vos paramètres",
 	'usersettings:user:opt:description' => "Ceci vous permet de contrôler vos paramètres.",

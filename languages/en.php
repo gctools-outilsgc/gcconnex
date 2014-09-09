@@ -798,7 +798,7 @@ $english = array(
 
 	'usersettings:statistics' => "Your statistics",
 	'usersettings:statistics:opt:description' => "View statistical information about users and objects on your site.",
-	'usersettings:statistics:opt:linktext' => "Account statistics",
+	'usersettings:statistics:opt:linktext' => "Account Information",
 
 	'usersettings:user' => "Your settings",
 	'usersettings:user:opt:description' => "This allows you to control user settings.",
