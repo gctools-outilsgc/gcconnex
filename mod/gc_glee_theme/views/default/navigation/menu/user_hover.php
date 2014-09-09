@@ -34,6 +34,7 @@ if (elgg_is_logged_in() && $actions) {
 }
 
 // main
+$main['email'] = new ElggMenuItem('email', $user->email, 'mailto:' . $user->email);
 if ($main) {
 	echo '<li>';
 	
