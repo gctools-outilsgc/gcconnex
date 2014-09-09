@@ -155,6 +155,8 @@
 		'widget_manager:widgets:image_slider:direction:right' => "Right",
 		'widget_manager:widgets:image_slider:direction:bottom' => "Bottom",
 		'widget_manager:widgets:image_slider:direction:left' => "Left",
+		
+		'widget_manager:filter_widgets' => "Filtrer des widgets",
 	);
 	add_translation("fr", $french);
 
