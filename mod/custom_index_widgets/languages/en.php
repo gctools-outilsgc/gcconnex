@@ -16,7 +16,7 @@
 		'custom_index_widgets:latest_news_index' => "Latest news",
 		'custom_index_widgets:latest_pages_index' => "Latest pages",
 		'custom_index_widgets:latest_events_index' => 'Incomming events',
-		'custom_index_widgets:latest_wire_index' => 'Latest wire posts',
+		'custom_index_widgets:latest_wire_index' => 'Latest wire posts on GCconnex',
 		'custom_index_widgets:inline_content_index' => 'Free html',
 		'custom_index_widgets:html_content' => 'Your text',
 		'custom_index_widgets:latest_generic_index'=>"Generic content",
