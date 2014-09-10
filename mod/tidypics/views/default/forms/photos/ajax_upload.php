@@ -32,7 +32,7 @@ if (!$maxfilesize) {
 				1. <?php echo elgg_echo('tidypics:uploader:choose'); ?>
 			</a>
 			<div id="tidypics-flash-uploader">
-				<input type="file" id="uploadify" name="uploadify" class="hidden" />
+				<input type="file" id="uploadify" name="uploadify" class="hidden wb-invisible" />
 				<input type="hidden" name="album_guid" value="<?php echo $album->getGUID(); ?>" />
 				<input type="hidden" name="batch" value="<?php echo $batch; ?>" />
 				<input type="hidden" name="tidypics_token" value="<?php echo $tidypics_token; ?>" />

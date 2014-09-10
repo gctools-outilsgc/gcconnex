@@ -135,4 +135,4 @@ echo elgg_view('input/hidden', $params);
 		$module_type = "inline";
 	} 
 
-	echo "<div class='elgg-widgets-add-panel hidden'>" . elgg_view_module($module_type, $title, $body, array("id" => "widget_manager_widgets_select")) . "</div>";
+	echo "<div class='elgg-widgets-add-panel hidden wb-invisible'>" . elgg_view_module($module_type, $title, $body, array("id" => "widget_manager_widgets_select")) . "</div>";

@@ -20,7 +20,7 @@ header("Content-type: text/html; charset=UTF-8");
 <div class="elgg-page elgg-page-default">
 	<div class="elgg-page-messages">
 		<ul class="elgg-system-messages">
-			<li class="hidden"></li>
+			<li class="hidden wb-invisible"></li>
 		</ul>
 	</div>
 	<div class="elgg-page-header">

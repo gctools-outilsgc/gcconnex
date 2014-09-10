@@ -35,7 +35,7 @@ $css_id = preg_replace('/[^a-z0-9-]/i', '-', $plugin->getID());
 			?>
 		</div>
 
-		<div class="hidden elgg-plugin-more" id="elgg-plugin-manifest-<?php echo $css_id; ?>">
+		<div class="hidden wb-invisible elgg-plugin-more" id="elgg-plugin-manifest-<?php echo $css_id; ?>">
 			<p><?php echo elgg_echo('admin:plugins:label:location') . ": " . $path; ?></p>
 		</div>
 	</div>

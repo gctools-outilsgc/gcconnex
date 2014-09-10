@@ -279,7 +279,7 @@ if (elgg_view_exists($settings_view_old) || elgg_view_exists($settings_view_new)
 			</div>
 		</div>
 	</div>
-	<div class="elgg-plugin-more hidden" id="elgg-plugin-manifest-<?php echo $css_id; ?>">
+	<div class="elgg-plugin-more hidden wb-invisible" id="elgg-plugin-manifest-<?php echo $css_id; ?>">
 
 		<?php
 		if ($screenshots_html) {

@@ -75,7 +75,7 @@ if ($report->state == 'archived') {
 			?>
 		</p>
 	</div>
-	<div class="report-details hidden" id="report-<?php echo $report->getGUID();?>">
+	<div class="report-details hidden wb-invisible" id="report-<?php echo $report->getGUID();?>">
 		<p>
 			<b><?php echo elgg_echo('reportedcontent:reason'); ?>:</b>
 			<?php echo $report->description; ?>
