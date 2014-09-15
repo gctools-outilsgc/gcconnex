@@ -371,7 +371,7 @@ function groups_entity_menu_setup($hook, $type, $return, $params) {
 	}
 
 	foreach ($return as $index => $item) {
-		if (in_array($item->getName(), array('access', 'likes', 'edit', 'delete'))) {
+		if (in_array($item->getName(), array('access', 'likes', 'edit'))) {
 			unset($return[$index]);
 		}
 	}
