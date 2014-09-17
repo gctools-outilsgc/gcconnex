@@ -19,7 +19,7 @@
 		'help:url' => "http://www.gcpedia.gc.ca/wiki/GCconnex_help",
 		'help:url-desc' => "GCpedia help pages",
 		'help:contact' => "Contact us: ",
-		'help:body' => "<a href='#top'>Password</a></br>
+		'help:body' => "<a href='#password'>Password</a></br>
 				<a href='#username'>Username</a></br>
 				<a href='#generalhelp'>General Help</a></br>
 				<a href='#helpDesk'>Help Desk</a></br>
