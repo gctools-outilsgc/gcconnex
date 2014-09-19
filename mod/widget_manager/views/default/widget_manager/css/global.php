@@ -53,6 +53,16 @@
 	filter: alpha(opacity=60);
 }
 
+#widget_manager_widgets_select > .elgg-head {
+    position: fixed;
+    width: 575px;
+    z-index: 1;
+}
+
+#widget_manager_widgets_select > .elgg-body {
+    background-color: white;
+}
+
 .elgg-module-widget.widget_manager_disable_widget_content_style > .elgg-body,
 .widget_manager_hide_header > .elgg-body {
 	border-top: 0px;
