@@ -51,6 +51,8 @@ elgg.ui.widgets.add = function(event) {
 		$(this).addClass('elgg-state-unavailable');
 		$(this).removeClass('elgg-state-available');
 		$(this).unbind('click', elgg.ui.widgets.add);
+        // bind the widge to the remove function instead
+        $(this).bind('click', elgg.ui.widgets.remove);
 	}
 
 	elgg.action('widgets/add', {
@@ -112,23 +114,40 @@ elgg.ui.widgets.remove = function(event) {
 		event.preventDefault();
 		return;
 	}
-	
-	var $widget = $(this).closest('.elgg-module-widget');
+    var $widget;
+	if ($(this).hasClass('elgg-widget-single')) {
+        $widget = $(this).closest('.widget_manager_widgets_lightbox_wrapper');
 
-	// if widget type is single instance type, enable the add buton
-	var type = $widget.attr('class');
-	// elgg-widget-instance-<type>
-	type = type.substr(type.indexOf('elgg-widget-instance-') + "elgg-widget-instance-".length);
-	$button = $('#elgg-widget-type-' + type);
-	var multiple = $button.attr('class').indexOf('elgg-widget-multiple') != -1;
-	if (multiple == false) {
-		$button.addClass('elgg-state-available');
-		$button.removeClass('elgg-state-unavailable');
-		$button.unbind('click', elgg.ui.widgets.add); // make sure we don't bind twice
-		$button.click(elgg.ui.widgets.add);
-	}
+        // find the name of the widget
+        var name = $widget.attr('class');
+        $name = name.substr(name.indexOf('widget_manager_widgets_lightbox_wrapper_') + "widget_manager_widgets_lightbox_wrapper_".length);
 
-	$widget.remove();
+        //$button.addClass('elgg-state-available');
+        //$button.removeClass('elgg-state-unavailable');
+        //$button.unbind('click', elgg.ui.widgets.add); // make sure we don't bind twice
+        //$button.click(elgg.ui.widgets.add);
+
+        var $widget_dashboard = $(this).closest('.elgg-widget-instance-' + $name);
+        $widget_dashboard = $widget_dashboard.closest('.elgg-module-widget');
+        $widget_dashboard.remove();
+    }
+    else {
+        $widget = $(this).closest('.elgg-module-widget');
+
+        // if widget type is single instance type, enable the add button
+        var type = $widget.attr('class');
+        // elgg-widget-instance-<type>
+        type = type.substr(type.indexOf('elgg-widget-instance-') + "elgg-widget-instance-".length);
+        $button = $('#elgg-widget-type-' + type);
+        var multiple = $button.attr('class').indexOf('elgg-widget-multiple') != -1;
+        if (multiple == false) {
+            $button.addClass('elgg-state-available');
+            $button.removeClass('elgg-state-unavailable');
+            $button.unbind('click', elgg.ui.widgets.add); // make sure we don't bind twice
+            $button.click(elgg.ui.widgets.add);
+        }
+        $widget.remove();
+    }
 
 	// delete the widget through ajax
 	elgg.action($(this).attr('href'));

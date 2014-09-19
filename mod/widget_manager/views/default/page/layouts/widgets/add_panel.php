@@ -94,8 +94,7 @@ echo elgg_view('input/hidden', $params);
 			$hide = widget_manager_get_widget_setting($handler, "hide", $widget_context);
 			
 			if($can_add && !$hide){
-				$body .= "<div class='widget_manager_widgets_lightbox_wrapper'>";
-				
+
 				if(!$allow_multiple && in_array($handler, $current_handlers)){
 					$class = 'elgg-state-unavailable';
 				} else {
@@ -107,11 +106,12 @@ echo elgg_view('input/hidden', $params);
 				} else {
 					$class .= ' elgg-widget-single';
 				}
-				
+                $body .= "<div class='widget_manager_widgets_lightbox_wrapper widget_manager_widgets_lightbox_wrapper_" . $handler . "'>";
 				$body .= "<span class='widget_manager_widgets_lightbox_actions'>";
-				$body .= '<ul><li class="' . $class . '" id="elgg-widget-type-'. $handler . '">';
-				$body .= "<span class='elgg-quiet'>" . elgg_echo('widget:unavailable') . "</span>";
-				$body .= elgg_view("input/button", array("class" => "elgg-button-submit", "value" => elgg_echo("widget_manager:button:add")));
+				$body .= '<ul><li class="' . $class . '" id="elgg-widget-type-' . $handler . '">';
+			//	$body .= "<span class='elgg-quiet'>" . elgg_echo('widget:unavailable') . "</span>";
+                $body .= elgg_view("input/button", array("class" => "elgg-button-submit widget-added", "value" => elgg_echo("widget:unavailable")));
+				$body .= elgg_view("input/button", array("class" => "elgg-button-submit widget-to-add", "value" => elgg_echo("widget_manager:button:add")));
 				$body .= "</li></ul>";
 				$body .= "</span>";
 				

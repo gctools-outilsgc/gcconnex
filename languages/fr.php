@@ -291,7 +291,7 @@ $french = array(
 	'widgets:add' => "Ajouter des widgets",
 	'widgets:add:description' => "Cliquez sur n'importe quel widget ci-dessous pour l'ajouter à la page.",
 	'widgets:position:fixed' => "(Position modifiée sur la page)",
-	'widget:unavailable' => "Vous avez déjà ajouté ce widget",
+	'widget:unavailable' => "Déjà ajouté",
 	'widget:numbertodisplay' => "Nombre d'éléments à afficher ",
 
 	'widget:delete' => "Supprimer %s",
