@@ -24,7 +24,7 @@ elgg.ui.widgets.init = function() {
 	});
 
 	$('.elgg-widgets-add-panel li.elgg-state-available').click(elgg.ui.widgets.add);
-
+    $('.elgg-widgets-add-panel li.elgg-state-unavailable').click(elgg.ui.widgets.remove);
 	$('a.elgg-widget-delete-button').live('click', elgg.ui.widgets.remove);
 	$('.elgg-widget-edit > form ').live('submit', elgg.ui.widgets.saveSettings);
 	$('a.elgg-widget-collapse-button').live('click', elgg.ui.widgets.collapseToggle);
@@ -117,19 +117,25 @@ elgg.ui.widgets.remove = function(event) {
     var $widget;
 	if ($(this).hasClass('elgg-widget-single')) {
         $widget = $(this).closest('.widget_manager_widgets_lightbox_wrapper');
-
         // find the name of the widget
         var name = $widget.attr('class');
         $name = name.substr(name.indexOf('widget_manager_widgets_lightbox_wrapper_') + "widget_manager_widgets_lightbox_wrapper_".length);
 
-        //$button.addClass('elgg-state-available');
-        //$button.removeClass('elgg-state-unavailable');
-        //$button.unbind('click', elgg.ui.widgets.add); // make sure we don't bind twice
-        //$button.click(elgg.ui.widgets.add);
+        $button = $('#elgg-widget-type-' + $name);
 
-        var $widget_dashboard = $(this).closest('.elgg-widget-instance-' + $name);
+        $button.addClass('elgg-state-available');
+        $button.removeClass('elgg-state-unavailable');
+        $button.unbind('click', elgg.ui.widgets.remove); // make sure we don't bind twice
+        $button.click(elgg.ui.widgets.add);
+
+        var $widget_dashboard = $('.elgg-widget-instance-' + $name);
         $widget_dashboard = $widget_dashboard.closest('.elgg-module-widget');
+
+         to_delete = $widget_dashboard.find('.elgg-widget-delete-button');
         $widget_dashboard.remove();
+
+        elgg.action((to_delete).attr('href'));
+
     }
     else {
         $widget = $(this).closest('.elgg-module-widget');
@@ -147,10 +153,10 @@ elgg.ui.widgets.remove = function(event) {
             $button.click(elgg.ui.widgets.add);
         }
         $widget.remove();
+        elgg.action($(this).attr('href'));
     }
 
 	// delete the widget through ajax
-	elgg.action($(this).attr('href'));
 
 	event.preventDefault();
 };
