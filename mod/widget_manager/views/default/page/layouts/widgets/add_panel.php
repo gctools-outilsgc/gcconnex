@@ -22,11 +22,12 @@ echo elgg_view('input/hidden', $params);
 
 	$(document).ready(function(){
 		$("#widgets-add-panel").fancybox({ 
-			autoDimensions: false, 
-			width: 600, 
+			autoDimensions: false,
+			width: 600,
+            scrolling: 'no',
 			height: "80%"
-		});	
-	});
+		});
+    });
 
 	function widget_manager_widget_add_init(){
 		
