@@ -3,6 +3,7 @@
 /* lightbox */
 #widget_manager_widgets_select {
 	margin: 0;
+    width: inherit;
 }
 
 #widget_manager_widgets_select .widget_manager_widgets_lightbox_wrapper {
@@ -55,12 +56,26 @@
 
 #widget_manager_widgets_select > .elgg-head {
     position: fixed;
-    width: 575px;
+    width: inherit;
     z-index: 1;
+    padding: 0px;
+    background: none;
+}
+
+#widget_manager_widgets_select > .elgg-head > h3 {
+    padding: 5px;
+    background: #F1F1F1;
+    margin-right: 15px;
 }
 
 #widget_manager_widgets_select > .elgg-body {
     background-color: white;
+    width: 97%;
+    padding-top: 40px;
+}
+
+.elgg-module-inline > .elgg-head h3 {
+    color: black;
 }
 
 .elgg-module-widget.widget_manager_disable_widget_content_style > .elgg-body,
