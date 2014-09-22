@@ -70,7 +70,6 @@
 
 #widget_manager_widgets_select > .elgg-body {
     background-color: white;
-    width: 97%;
     padding-top: 40px;
 }
 
