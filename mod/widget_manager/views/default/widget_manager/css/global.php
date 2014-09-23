@@ -25,11 +25,9 @@
 }
 
 #widget_manager_widgets_select .widget_manager_widgets_lightbox_actions li.elgg-state-available span ,
+#widget_manager_widgets_select .widget_manager_widgets_lightbox_actions li.elgg-state-available input ,
 #widget_manager_widgets_select .widget_manager_widgets_lightbox_actions li.elgg-state-unavailable input {
-    /* display: none; */
-    /* position: absolute; */
-    /* z-index: -1; */
-    /* width: 100px; */
+    width: 140px;
 }
 
 #widget_manager_widgets_select .widget_manager_widgets_lightbox_actions li.elgg-state-available input.btn.elgg-button.elgg-button-submit.widget-added {
@@ -55,6 +53,77 @@
 	font-size: 100%;
 	height: 100%;
 }
+
+/* bootstrap overrides */
+
+.btn-primary,
+.btn-primary:hover {
+    color: #ffffff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.btn-primary.active {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.widget-to-add.btn-primary {
+    background-color: #7FFF00;
+    *background-color: #66cd00;
+    background-image: -ms-linear-gradient(top, #76EE00, #66cd00);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#76EE00), to(#66cd00));
+    background-image: -webkit-linear-gradient(top, #76EE00, #66cd00);
+    background-image: -o-linear-gradient(top, #76EE00, #66cd00);
+    background-image: -moz-linear-gradient(top, #76EE00, #66cd00);
+    background-image: linear-gradient(top, #76EE00, #66cd00);
+    background-repeat: repeat-x;
+    border-color: #66cd00 #66cd00 #458B00;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    filter: progid:dximagetransform.microsoft.gradient(startColorstr='#76EE00', endColorstr='#66cd00', GradientType=0);
+    filter: progid:dximagetransform.microsoft.gradient(enabled=false);
+}
+
+.widget-to-add.btn-primary:hover,
+.widget-to-add.btn-primary:active,
+.widget-to-add.btn-primary.active,
+.widget-to-add.btn-primary.disabled,
+.widget-to-add.btn-primary[disabled] {
+    background-color: #66cd00;
+    *background-color: #458B00;
+}
+
+.widget-added.btn-primary {
+    background-color: #FF3232;
+    *background-color: #e50000;
+    background-image: -ms-linear-gradient(top, #b20000, #e50000);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#b20000), to(#e50000));
+    background-image: -webkit-linear-gradient(top, #b20000, #e50000);
+    background-image: -o-linear-gradient(top, #b20000, #e50000);
+    background-image: -moz-linear-gradient(top, #b20000, #e500000);
+    background-image: linear-gradient(top, #b20000, #e50000);
+    background-repeat: repeat-x;
+    border-color: #e50000 #e50000 #458B00;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    filter: progid:dximagetransform.microsoft.gradient(startColorstr='#b20000', endColorstr='#e50000', GradientType=0);
+    filter: progid:dximagetransform.microsoft.gradient(enabled=false);
+}
+
+.widget-added.btn-primary:hover,
+.widget-added.btn-primary:active,
+.widget-added.btn-primary.active,
+.widget-added.btn-primary.disabled,
+.widget-added.btn-primary[disabled] {
+    background-color: #e50000;
+    *background-color: #458B00;
+}
+
+
+.btn-primary:active,
+.btn-primary.active {
+    background-color: #458B00 \9;
+}
+
+
+/* end of bootstrap overrides */
 
 .elgg-module-widget a.widget-manager-widget-title-link {
 	width: auto;
