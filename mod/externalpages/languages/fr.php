@@ -10,9 +10,9 @@ $french = array(
 	 */
 	'expages' => "Pages du site",
 	'admin:appearance:expages' => "Site Pages",
-	'expages:about-a_propos' => "À propos",
-	'expages:terms' => "Termes",
-	'expages:privacy' => "Confidentialité",
+	'expages:about-a_propos' => "À propos",		// GCChange change - Ilia: Bilingual page url
+	'expages:terms-termes' => "Termes",		// GCChange change - Ilia: Bilingual page url
+	'expages:privacy-confidentialite' => "Confidentialité",		// GCChange change - Ilia: Bilingual page url
 	'expages:contact' => "Contacter",
 
 	'expages:notset' => "Cette page n'a pas encore été créée.",
