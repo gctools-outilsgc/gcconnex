@@ -10,7 +10,7 @@ $english = array(
 	 */
 	'expages' => "Site pages",
 	'admin:appearance:expages' => "Site Pages",
-	'expages:about' => "About",
+	'expages:about-a_propos' => "About",
 	'expages:terms' => "Terms",
 	'expages:privacy' => "Privacy",
 	'expages:contact' => "Contact",

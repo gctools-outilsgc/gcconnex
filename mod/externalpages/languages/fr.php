@@ -10,7 +10,7 @@ $french = array(
 	 */
 	'expages' => "Pages du site",
 	'admin:appearance:expages' => "Site Pages",
-	'expages:about' => "À propos",
+	'expages:about-a_propos' => "À propos",
 	'expages:terms' => "Termes",
 	'expages:privacy' => "Confidentialité",
 	'expages:contact' => "Contacter",
