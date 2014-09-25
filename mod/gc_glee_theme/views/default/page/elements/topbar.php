@@ -51,7 +51,8 @@ if (elgg_is_logged_in()) {
 */
 $output = <<<HTML
 
-<div style="width:940px;">
+<!--variable width topbar with a minimum-->
+<div style="min-width:940px; width: 95%;">
 	
     <div class="pull-left"  >
 		
@@ -72,7 +73,7 @@ HTML;
 
 #gc changes, tamara, lines 65-75
 $fip = <<<HTML
-<div style="position:relative; top:0px; width:940px; background-color:#333; height:27px;">
+<div style="position:relative; top:0px; min-width:940px; width:94%; background-color:#333; height:27px;">
 
 <div style="vertical-align:top; position:absolute; left:0px;"><img src='$site_url/_graphics/sig-eng-bg.gif' alt='Government of Canada | Gouvenrement du Canada' title='Government of Canada | Gouvenrement du Canada' /></div>
 
