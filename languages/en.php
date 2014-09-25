@@ -285,7 +285,7 @@ $english = array(
 	'widget:unavailable' => 'You have already added this widget',
 	'widget:numbertodisplay' => 'Number of items to display',
 
-	'widget:delete' => 'Remove %s',
+	'widget:delete' => 'Remove "%s" widget',		// GCchange - Ilia: Specified that it is the widget that is being deleted
 	'widget:edit' => 'Customize this widget',
 
 	'widgets' => "Widgets",
