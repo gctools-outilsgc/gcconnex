@@ -1250,6 +1250,11 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 			$item = new ElggMenuItem('avatar:edit', elgg_echo('avatar:edit'), $url);
 			$item->setSection('action');
 			$return[] = $item;
+			
+			/*$url = "#widget_manager_widgets_select";
+			$item = new ElggMenuItem('widgets:add', elgg_echo('widgets:add'), $url);
+			$item->setSection('action');
+			$return[] = $item;*/
 		}
 	}
 
