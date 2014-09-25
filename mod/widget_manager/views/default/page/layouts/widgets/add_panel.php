@@ -108,14 +108,15 @@ echo elgg_view('input/hidden', $params);
 					$class .= ' elgg-widget-single';
 				}
                 $body .= "<div class='widget_manager_widgets_lightbox_wrapper widget_manager_widgets_lightbox_wrapper_" . $handler . "'>";
-				$body .= "<span class='widget_manager_widgets_lightbox_actions'>";
-				$body .= '<ul><li class="' . $class . '" id="elgg-widget-type-' . $handler . '">';
+                $body .= "<span class='widget_manager_widgets_lightbox_actions'>";
+                $body .= '<ul><li class="' . $class . '" id="elgg-widget-type-' . $handler . '">';
 			//	$body .= "<span class='elgg-quiet'>" . elgg_echo('widget:unavailable') . "</span>";
                 $body .= elgg_view("input/button", array("class" => "elgg-button-submit widget-added", "value" => elgg_echo("widget:unavailable")));
 				$body .= elgg_view("input/button", array("class" => "elgg-button-submit widget-to-add", "value" => elgg_echo("widget_manager:button:add")));
 				$body .= "</li></ul>";
-				$body .= "</span>";
-				
+                $body .= "</span>";
+                $body .= "<span class='multi-widget-count'>";
+                $body .= "</span>";
 				$description = $widget->description;
 				if(empty($description)){
 					$description = "&nbsp;"; // need to fill up for correct layout

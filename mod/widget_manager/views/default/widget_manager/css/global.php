@@ -66,33 +66,27 @@
     color: rgba(255, 255, 255, 0.75);
 }
 
-.widget-to-add.btn-primary {
-    background-color: #7FFF00;
-    *background-color: #66cd00;
-    background-image: -ms-linear-gradient(top, #76EE00, #66cd00);
-    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#76EE00), to(#66cd00));
-    background-image: -webkit-linear-gradient(top, #76EE00, #66cd00);
-    background-image: -o-linear-gradient(top, #76EE00, #66cd00);
-    background-image: -moz-linear-gradient(top, #76EE00, #66cd00);
-    background-image: linear-gradient(top, #76EE00, #66cd00);
-    background-repeat: repeat-x;
-    border-color: #66cd00 #66cd00 #458B00;
-    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-    filter: progid:dximagetransform.microsoft.gradient(startColorstr='#76EE00', endColorstr='#66cd00', GradientType=0);
-    filter: progid:dximagetransform.microsoft.gradient(enabled=false);
+.multi-widget-count {
+    float: right;
+    padding: 5px;
+    height: 0.75em;
+    width: 15px;
+    margin: 11px -11px 0px 6px;
+    border-radius: 5px;
+    line-height: 0.75em;
+    text-shadow: 1px 1px gray;
+    color: white;
 }
 
-.widget-to-add.btn-primary:hover,
-.widget-to-add.btn-primary:active,
-.widget-to-add.btn-primary.active,
-.widget-to-add.btn-primary.disabled,
-.widget-to-add.btn-primary[disabled] {
-    background-color: #66cd00;
-    *background-color: #458B00;
+.multi-widget-count-activated {
+    -webkit-box-shadow: 3px 3px 2px -2px black;
+    box-shadow: 3px 3px 2px -2px black;
+    background-color: lightgray;
 }
 
 .widget-added.btn-primary {
     background-color: #FF3232;
+    background-image: -moz-linear-gradient(center top , #b20000, #e50000);
     *background-color: #e50000;
     background-image: -ms-linear-gradient(top, #b20000, #e50000);
     background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#b20000), to(#e50000));
