@@ -114,6 +114,7 @@ echo elgg_view('input/hidden', $params);
                 $body .= elgg_view("input/button", array("class" => "elgg-button-submit widget-added", "value" => elgg_echo("widget:unavailable")));
 				$body .= elgg_view("input/button", array("class" => "elgg-button-submit widget-to-add", "value" => elgg_echo("widget_manager:button:add")));
 				$body .= "</li></ul>";
+                $body .= "<span class='hidden wb-invisible'>Number of " . $widget->name . " widgets currently on the dashboad: </span>";
                 $body .= "</span>";
                 $body .= "<span class='multi-widget-count'>";
                 $body .= "</span>";
