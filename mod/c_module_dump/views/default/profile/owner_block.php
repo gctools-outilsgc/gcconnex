@@ -45,7 +45,7 @@ if (elgg_is_logged_in() && $actions) {
 	foreach ($actions as $action) {
 		$profile_actions .= '<li>' . $action->getContent(array('class' => 'elgg-button elgg-button-action')) . '</li>';
 	}
-	$profile_actions .= '<li>' . elgg_view('page/layouts/widgets/add_button') . '</li>';
+	$profile_actions .= '<li style="margin-left:-4px;">' . elgg_view('page/layouts/widgets/add_button') . '</li>';			// add widgets button
 	$profile_actions .= '</ul>';
 }
 
