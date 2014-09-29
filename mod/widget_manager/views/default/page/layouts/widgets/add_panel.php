@@ -59,7 +59,7 @@ echo elgg_view('input/hidden', $params);
 	elgg.register_hook_handler('init', 'system', widget_manager_widget_add_init);
 
 </script>
-<?php 
+<?php
 	
 	$widget_context = str_replace("default_", "", $context);
 	

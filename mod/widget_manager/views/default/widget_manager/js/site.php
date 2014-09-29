@@ -8,9 +8,25 @@ jQuery.expr[':'].Contains = function(a,i,m){
 function widget_manager_widgets_search(q){
 	if(q === ""){
 		$("#widget_manager_widgets_select .widget_manager_widgets_lightbox_wrapper").show();
-	} else {
+	}
+    else {
 		$("#widget_manager_widgets_select .widget_manager_widgets_lightbox_wrapper").hide();
 		$("#widget_manager_widgets_select .widget_manager_widgets_lightbox_wrapper:Contains('" + q + "')").show();
+
+        if (("#widget_manager_widgets_select .widget_manager_widgets_lightbox_wrapper:Contains('" + q + "')")) {
+            console.log('yup it worked');
+            var $element = $('#widget_manager_widgets_select .filter-no-results').length ? $('#widget_manager_widgets_select .filter-no-results').text('No results mat ch') : $('<div class="filter-no-results"></div>').appendTo('#elgg_widgets_manager_widgets_select .elgg-body');
+            $("#widget_manager_widgets_select .elgg-body").append("<div>We can't seem to find anything like that...</div>");
+        }
+        else {
+            console.log('nope it did not');
+        }
+
+//        if ( !$(".widget_manager_widgets_lightbox_wrapper").is('visible') ) {
+//            $();
+//            $(this).css('display', 'inherit');
+//            $(this).append("<span>We can't seem to find anything like that...</span>");
+//        }
 	}
 }
 
