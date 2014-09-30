@@ -24,7 +24,10 @@ function widget_manager_widgets_search(q){
 }
 
 function widget_manager_init(){
-	// reset draggable functionality to pointer
+    // hide the div that contains the "no results found" error
+    $('#widget_manager_widgets_select .filter-no-results').hide();
+
+    // reset draggable functionality to pointer
 	$(".elgg-widgets").sortable("option", "tolerance", "pointer");
 	
 	$(".elgg-widgets").bind({
