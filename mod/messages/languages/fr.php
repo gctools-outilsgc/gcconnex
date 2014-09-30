@@ -12,6 +12,7 @@ $french = array(
 	'messages:displayposts' => "Affiches %s postes",
 	'messages' => "Messages",
 	'messages:unreadcount' => "%s non lus",
+	'messages:unreadmessages' => "message(s) non lus",
 	'messages:back' => "retourner au messages",
 	'messages:user' => "%s's inbox",
 	'messages:posttitle' => "%s's messages: %s",
