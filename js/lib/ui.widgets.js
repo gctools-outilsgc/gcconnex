@@ -83,6 +83,8 @@ elgg.ui.widgets.add = function(event) {
         $(this).unbind('click', elgg.ui.widgets.add);
         // bind the widge to the remove function instead
         $(this).bind('click', elgg.ui.widgets.remove);
+		$(this).children('input.widget-to-add').attr('disabled', "disabled");		// disable add widget button
+		$(this).children('input.widget-added').removeAttr('disabled');				// enable remove widget button
     }
 
 	elgg.action('widgets/add', {
@@ -157,6 +159,8 @@ elgg.ui.widgets.remove = function(event) {
         $button.removeClass('elgg-state-unavailable');
         $button.unbind('click', elgg.ui.widgets.remove); // make sure we don't bind twice
         $button.click(elgg.ui.widgets.add);
+		$(this).children('input.widget-added').attr('disabled', "true");		// disable remove widget button
+		$(this).children('input.widget-to-add').removeAttr('disabled');			// enable add widget button
 
         var $widget_dashboard = $('.elgg-widget-instance-' + $name);
         $widget_dashboard = $widget_dashboard.closest('.elgg-module-widget');
