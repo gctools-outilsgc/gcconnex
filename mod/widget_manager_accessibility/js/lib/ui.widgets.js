@@ -23,8 +23,14 @@ elgg.ui.widgets.init = function() {
 		stop:                 elgg.ui.widgets.move
 	});
 
+	// the widgets available to be added
 	$('.elgg-widgets-add-panel li.elgg-state-available').click(elgg.ui.widgets.add);
+	$('.elgg-widgets-add-panel li.elgg-state-available').children('input.widget-added').attr('disabled', "disabled");		// disable remove widget button
+
+	// the present widgets with remove widget buttons active
     $('.elgg-widgets-add-panel li.elgg-state-unavailable').click(elgg.ui.widgets.remove);
+    $('.elgg-widgets-add-panel li.elgg-state-unavailable').children('input.widget-to-add').attr('disabled', "disabled");		// disable add widget button
+
 	$('a.elgg-widget-delete-button').live('click', elgg.ui.widgets.remove);
 	$('.elgg-widget-edit > form ').live('submit', elgg.ui.widgets.saveSettings);
 	$('a.elgg-widget-collapse-button').live('click', elgg.ui.widgets.collapseToggle);
@@ -103,37 +109,6 @@ elgg.ui.widgets.add = function(event) {
 };
 
 /**
- * Persist the widget's new position
- *
- * @param {Object} event
- * @param {Object} ui
- *
- * @return void
- */
-elgg.ui.widgets.move = function(event, ui) {
-
-	// elgg-widget-<guid>
-	var guidString = ui.item.attr('id');
-	guidString = guidString.substr(guidString.indexOf('elgg-widget-') + "elgg-widget-".length);
-
-	// elgg-widget-col-<column>
-	var col = ui.item.parent().attr('id');
-	col = col.substr(col.indexOf('elgg-widget-col-') + "elgg-widget-col-".length);
-
-	elgg.action('widgets/move', {
-		data: {
-			widget_guid: guidString,
-			column: col,
-			position: ui.item.index()
-		}
-	});
-
-	// @hack fixes jquery-ui/opera bug where draggable elements jump
-	ui.item.css('top', 0);
-	ui.item.css('left', 0);
-};
-
-/**
  * Removes a widget from the layout
  *
  * Event callback the uses Ajax to delete the widget and removes its HTML
@@ -196,76 +171,6 @@ elgg.ui.widgets.remove = function(event) {
 	// delete the widget through ajax
 
 	event.preventDefault();
-};
-
-/**
- * Toggle the collapse state of the widget
- *
- * @param {Object} event
- * @return void
- */
-elgg.ui.widgets.collapseToggle = function(event) {
-	$(this).toggleClass('elgg-widget-collapsed');
-	$(this).parent().parent().find('.elgg-body').slideToggle('medium');
-	event.preventDefault();
-};
-
-/**
- * Save a widget's settings
- *
- * Uses Ajax to save the settings and updates the HTML.
- *
- * @param {Object} event
- * @return void
- */
-elgg.ui.widgets.saveSettings = function(event) {
-	$(this).parent().slideToggle('medium');
-	var $widgetContent = $(this).parent().parent().children('.elgg-widget-content');
-
-	// stick the ajax loader in there
-	var $loader = $('#elgg-widget-loader').clone();
-	$loader.attr('id', '#elgg-widget-active-loader');
-	$loader.removeClass('hidden');
-	$widgetContent.html($loader);
-
-	var default_widgets = $("input[name='default_widgets']").val() || 0;
-	if (default_widgets) {
-		$(this).append('<input type="hidden" name="default_widgets" value="1">');
-	}
-
-	elgg.action('widgets/save', {
-		data: $(this).serialize(),
-		success: function(json) {
-			$widgetContent.html(json.output);
-		}
-	});
-	event.preventDefault();
-};
-
-/**
- * Set the min-height so that all widget column bottoms are the same
- *
- * This addresses the issue of trying to drag a widget into a column that does
- * not have any widgets or many fewer widgets than other columns.
- *
- * @param {String} selector
- * @return void
- */
-elgg.ui.widgets.setMinHeight = function(selector) {
-	var maxBottom = 0;
-	$(selector).each(function() {
-		var bottom = parseInt($(this).offset().top + $(this).height());
-		if (bottom > maxBottom) {
-			maxBottom = bottom;
-		}
-	})
-	$(selector).each(function() {
-		var bottom = parseInt($(this).offset().top + $(this).height());
-		if (bottom < maxBottom) {
-			var newMinHeight = parseInt($(this).height() + (maxBottom - bottom));
-			$(this).css('min-height', newMinHeight + 'px');
-		}
-	})
 };
 
 elgg.register_hook_handler('init', 'system', elgg.ui.widgets.init);

@@ -1,7 +1,8 @@
-What this mod does:
-
-
+Overrides functions from file js/lib/ui.widgets.js:
+	elgg.ui.widgets.init
+	elgg.ui.widgets.add
+	elgg.ui.widgets.remove
 
 
 Accessibility / Usability issues addressed:
-		(Github #22, #23, )
+		(Github #22, #23, #68, #71)
