@@ -8,3 +8,4 @@
 	}
 	// register default Elgg events
 	elgg_register_event_handler("init", "system", "widget_manager_accessibility_init");
+	?>
