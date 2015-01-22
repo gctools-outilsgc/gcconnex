@@ -76,7 +76,7 @@ $fip = <<<HTML
 
 <div style="vertical-align:top; position:absolute; left:0px;"><img src='$site_url/_graphics/sig-eng-bg.gif' alt='Government of Canada | Gouvenrement du Canada' title='Government of Canada | Gouvenrement du Canada' /></div>
 
-<div style="vertical-align:top;padding-top: 5px; position:absolute; right:0px;"><b><a href='http://gcpedia.gc.ca' style='color:white;'>GCpedia</a> |  <a href='http://elgg.srv.gc.ca/elgg/' style='color:white;'>GCconnex</a>  |  <a href='http://www.gcforums.gc.ca/' style='color:white;'>GCforums</a></b></div>
+<div style="vertical-align:top;padding-top: 5px; position:absolute; right:0px; color:white;"><b><a href='http://gcpedia.gc.ca' style='color:white;'>GCpedia</a> |  <strong style="font-size:110%;">GCconnex</strong>  |  <a href='http://www.gcforums.gc.ca/' style='color:white;'>GCforums</a></b></div>
 
 </div>
 HTML;
