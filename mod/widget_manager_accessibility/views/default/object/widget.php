@@ -87,7 +87,7 @@ if(($widget->widget_manager_hide_header != "yes") || elgg_is_admin_logged_in()){
 HEADER;
 } 
 
-if ( $widget->minimized ) $minimized = 'style="display:none;"';
+if ( $widget->widget_manager_collapse_state === "closed" ) $minimized = 'style="display:none;"';		// using the same metadata name, etc as in widget manager 5.0
 else $minimized = '';
 
 $widget_body = <<<BODY

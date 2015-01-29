@@ -28,7 +28,7 @@ elgg.ui.widgets.init = function() {
 
 	$('a.elgg-widget-delete-button').live('click', elgg.ui.widgets.remove);
 	$('.elgg-widget-edit > form ').live('submit', elgg.ui.widgets.saveSettings);
-	$('a.elgg-widget-collapse-button').live('click', elgg.ui.widgets.collapseToggle);
+	//$('a.elgg-widget-collapse-button').live('click', elgg.ui.widgets.collapseToggle);
 
 
 

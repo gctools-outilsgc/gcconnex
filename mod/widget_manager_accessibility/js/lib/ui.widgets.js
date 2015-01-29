@@ -56,6 +56,34 @@ elgg.ui.widgets.init = function() {
 };
 
 /**
+ * Toggle the collapse state of the widget
+ *
+ * @param {Object} event
+ * @return void
+ */
+elgg.ui.widgets.collapseToggle = function(event) {
+    $(this).toggleClass('elgg-widget-collapsed');
+    $(this).parent().parent().find('.elgg-body').slideToggle('medium');
+    event.preventDefault();
+
+    if (elgg.is_logged_in()) {
+            var collapsed = 0;
+            if ($(this).hasClass("elgg-widget-collapsed")) {
+                collapsed = 1;
+            }
+
+            var guid = $(this).attr("href").replace("#elgg-widget-content-", "");
+    
+            elgg.action('widget_manager/widgets/toggle_collapse', {
+                data:{
+                    collapsed: collapsed,
+                    guid: guid
+                }
+            });
+        }
+};
+
+/**
  * Adds a new widget
  *
  * Makes Ajax call to persist new widget and inserts the widget html
