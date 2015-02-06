@@ -85,14 +85,27 @@ if(($widget->widget_manager_hide_header != "yes") || elgg_is_admin_logged_in()){
 		$controls
 		</div>
 HEADER;
-} 
+}
+// check if the widget is collapsed
+$widget_body_class = "elgg-widget-content";
+$widget_is_collapsed = false;
+$widget_is_open = true;
+	
+	if (elgg_is_logged_in()) {
+		$widget_is_collapsed = widget_manager_check_collapsed_state($widget->guid, "widget_state_collapsed");
+		$widget_is_open = widget_manager_check_collapsed_state($widget->guid, "widget_state_open");
+	}
 
-if ( $widget->widget_manager_collapse_state === "closed" ) $minimized = 'style="display:none;"';		// using the same metadata name, etc as in widget manager 5.0
-else $minimized = '';
+// set collapsed
+if ( $widget_is_collapsed && !$widget_is_open ){	// using the same relationship names, etc as in widget manager 5.0
+//	$minimized = 'style="display:none;"';
+	$widget_body_class .= " hidden";
+} 
+//else $minimized = '';
 
 $widget_body = <<<BODY
 	$edit_area
-	<div class="elgg-widget-content" id="elgg-widget-content-$widget->guid" $minimized >
+	<div class="$widget_body_class" id="elgg-widget-content-$widget->guid" >
 		$content
 	</div>
 BODY;
