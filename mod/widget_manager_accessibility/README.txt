@@ -12,5 +12,5 @@ Overrides:
 
 
 Accessibility / Usability issues addressed:
-		(Github #22, #23, #68)
+		(Github #22, #23, #68, #35)
 		 #71 fixed separately in widget manager mod.
