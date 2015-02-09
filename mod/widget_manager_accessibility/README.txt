@@ -8,7 +8,9 @@ Overrides:
  	page/layouts/widgets/add_button.php
 
 
-
+#34:
+Requires removal of line 31 in js/lib/ui.widget.js core:
+$('a.elgg-widget-collapse-button').live('click', elgg.ui.widgets.collapseToggle);
 
 
 Accessibility / Usability issues addressed:
