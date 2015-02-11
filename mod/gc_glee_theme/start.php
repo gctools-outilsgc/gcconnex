@@ -24,12 +24,12 @@ function glee_theme_draft_one_init() {
     elgg_load_js('glee-theme-draft-one:init');
 
 
-	elgg_register_menu_item('site', array(
+	/*elgg_register_menu_item('site', array(
          'name' => 'EmailUs',
          'href' => 'mailto:GCCONNEX@tbs-sct.gc.ca',
          'text' => elgg_echo('emailus'),
          'priority' => 101,
-    ) ); 
+    ) ); */
     return true;
 }
 
