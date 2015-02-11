@@ -8,7 +8,9 @@ $english = array(
 
 	'contactus' => 'Contact Us',
 	'contactus:pagecontent' => 'Contact Us...<br />
-								<a href="mailto:GCCONNEX@tbs-sct.gc.ca">Email Us</a>
+								<ul>
+								<li>By email: <a href="mailto:GCCONNEX@tbs-sct.gc.ca">GCCONNEX@tbs-sct.gc.ca</a></li>
+								</ul>
 								',
 );
 
