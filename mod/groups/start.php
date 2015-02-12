@@ -110,8 +110,8 @@ function groups_init() {
 function groups_fields_setup() {
 
 	$profile_defaults = array(
+		'briefdescription' => 'text',			// GCConnex change - Ilia: Moved brief description above the long description for Issue#60 (https://github.com/tbs-sct/gcconnex/issues/60)
 		'description' => 'longtext',
-		'briefdescription' => 'text',
 		'interests' => 'tags',
 		//'website' => 'url',
 	);
