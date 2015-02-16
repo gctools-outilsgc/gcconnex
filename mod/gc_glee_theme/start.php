@@ -65,7 +65,7 @@ function glee_theme_draft_one_pagesetup() {
     elgg_register_menu_item('topbar', array(
                     'name' => 'logout',
                     'href' => "action/logout",
-                    'text' => elgg_view_icon('user') .elgg_echo('logout'),
+                    'text' => '<img src="' .elgg_get_site_url(). '_graphics/logout.png" alt="Elgg" />' .elgg_echo('logout'),
                     'is_action' => TRUE,
                     'priority' => 1000,
                     'section' => 'alt',
