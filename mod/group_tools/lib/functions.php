@@ -45,6 +45,9 @@
 				
 				if($res = notify_user($user->getGUID(), $group->getOwnerGUID(), $subject, $msg, null, "email")){
 					$result = true;
+
+					// send the same notification as an elgg message
+					$resultm = messages_send($subject, $msg, $user->getGUID() );
 				}
 			}
 		}
