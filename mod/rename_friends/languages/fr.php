@@ -236,7 +236,7 @@ You will automatically add them as a {$lsingle} when you create your account.",
 /*
  * General / multi-mod
  */
-'friends:filterby' => "De mes {$uplural}",
+'friends:filterby' => "De {$uplural}",
 
 );
 

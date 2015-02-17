@@ -231,7 +231,7 @@ You will automatically add them as a {$lsingle} when you create your account.",
 /*
  * General / multi-mod
  */
-'friends:filterby' => "My {$uplural}'",
+'friends:filterby' => "{$uplural}'",
 
 );
 
