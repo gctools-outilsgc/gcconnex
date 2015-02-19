@@ -124,7 +124,7 @@ echo elgg_view('input/hidden', $params);
 				}
 				
 				$body .= "<div><b>" . $widget->name . "</b></div>";
-				$body .= "<div class='elgg-quiet'>" . $description . "</div>";
+				$body .= "<div class='elgg-quiet'><img src='" .elgg_get_site_url(). "_graphics/logout.png' alt='More info' title='more info' /> " . $description . "</div>";
 				
 				$body .= "</div>";
 			}
