@@ -20,14 +20,14 @@ function contactus_init() {
 		$href = "/contactus";
 		
 		// register footer menu item
-		elgg_register_menu_item('footer', array(
+		/*elgg_register_menu_item('footer', array(
 			'name' => 'contact',
 			'href' => $href,
 			'title' => elgg_echo('contactus'),
 			'text' => elgg_echo('contactus'),
 			'priority' => 500,
 			'section' => 'alt',
-		));
+		));*/
 
 		// register sidebar menu item
 		elgg_register_menu_item('site', array(
