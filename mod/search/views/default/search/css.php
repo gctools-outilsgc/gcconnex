@@ -26,7 +26,7 @@ Search plugin
 	border-radius: 10px;
 	
 	border: 1px solid #71b9f7;
-	color: white;
+	color: #0088cc;
 	font-size: 12px;
 	font-weight: bold;
 	padding: 2px 4px 2px 26px;
