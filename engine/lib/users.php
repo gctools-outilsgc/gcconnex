@@ -1157,6 +1157,16 @@ function set_last_action($user_guid) {
 	global $CONFIG;
 	$time = time();
 
+	// invalidate memcache for this user
+	static $newentity_cache;
+	if ((!$newentity_cache) && (is_memcache_available())) {
+		$newentity_cache = new ElggMemcache('new_entity_cache');
+	}
+	
+	if ($newentity_cache) {
+		$newentity_cache->delete($user_guid);
+	}
+
 	$query = "UPDATE {$CONFIG->dbprefix}users_entity
 		set prev_last_action = last_action,
 		last_action = {$time} where guid = {$user_guid}";
