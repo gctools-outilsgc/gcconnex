@@ -26,8 +26,7 @@ if ($ideas) {
     echo elgg_echo('ideas:group:newideas');
     echo "</h4>";
 
-    echo elgg_list_entities(array(
-        'items' => $ideas,
+    echo elgg_view_entity_list( $ideas, array(
         'full_view' => 'sidebar',
         'item_class' => 'elgg-item-idea pts pbs',
         'list_class' => 'sidebar-idea-list',
