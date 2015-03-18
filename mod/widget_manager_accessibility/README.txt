@@ -20,41 +20,41 @@ $('a.elgg-widget-collapse-button').live('click', elgg.ui.widgets.collapseToggle)
 Also requires patch to engine/lib/navigation.php:
 
 function widget_check_collapsed_state($widget_guid, $state) {
-+	static $collapsed_widgets_state;
-+	$user_guid = elgg_get_logged_in_user_guid();
-+	//return $widget_guid;
-+	if (empty($user_guid)) {
-+	return false;
-+	}
-+	
-+	if (!isset($collapsed_widgets_state)) {
-+	$collapsed_widgets_state = array();
-+	$dbprefix = elgg_get_config("dbprefix");
-+	
-+	$query = "SELECT * FROM {$dbprefix}entity_relationships WHERE guid_one = $user_guid AND relationship IN ('widget_state_collapsed', 'widget_state_open')";
-+	$result = get_data($query);
-+	$i=0;
-+	if ($result) {
-+	foreach ($result as $row) {
-+	if (!isset($collapsed_widgets_state[$row->guid_two])) {
-+	$collapsed_widgets_state[$row->guid_two] = array();
-+	}
-+	$collapsed_widgets_state[$row->guid_two][] = $row->relationship;
-+	$ids[$i++] = $row->guid_two;
-+	}
-+	}
-+	}
-+	
-+	if (!array_key_exists($widget_guid, $collapsed_widgets_state)) {
-+	return -1;
-+	}
-+	
-+	if (in_array($state, $collapsed_widgets_state[$widget_guid])) {
-+	return true;
-+	}
-+	
-+	return false;
-+}
+	static $collapsed_widgets_state;
+	$user_guid = elgg_get_logged_in_user_guid();
+	//return $widget_guid;
+	if (empty($user_guid)) {
+	return false;
+	}
+	
+	if (!isset($collapsed_widgets_state)) {
+	$collapsed_widgets_state = array();
+	$dbprefix = elgg_get_config("dbprefix");
+	
+	$query = "SELECT * FROM {$dbprefix}entity_relationships WHERE guid_one = $user_guid AND relationship IN ('widget_state_collapsed', 'widget_state_open')";
+	$result = get_data($query);
+	$i=0;
+	if ($result) {
+	foreach ($result as $row) {
+	if (!isset($collapsed_widgets_state[$row->guid_two])) {
+	$collapsed_widgets_state[$row->guid_two] = array();
+	}
+	$collapsed_widgets_state[$row->guid_two][] = $row->relationship;
+	$ids[$i++] = $row->guid_two;
+	}
+	}
+	}
+	
+	if (!array_key_exists($widget_guid, $collapsed_widgets_state)) {
+	return -1;
+	}
+	
+	if (in_array($state, $collapsed_widgets_state[$widget_guid])) {
+	return true;
+	}
+	
+	return false;
+}
 /**
 * Widget menu is a set of widget controls
 * @access private
