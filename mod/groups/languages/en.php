@@ -29,6 +29,7 @@ $english = array(
 	'groups:username' => 'Group short name (displayed in URLs, alphanumeric characters only)',
 	'groups:description' => 'Long description',
 	'groups:briefdescription' => 'Brief description',
+	'groups:brief:charcount' => ' | Character count: ',
 	'groups:interests' => 'Tags',
 	'groups:website' => 'Website',
 	'groups:members' => 'Group members',
