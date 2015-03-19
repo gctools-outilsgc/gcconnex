@@ -371,9 +371,15 @@ function groups_entity_menu_setup($hook, $type, $return, $params) {
 	}
 
 	foreach ($return as $index => $item) {
-		if (in_array($item->getName(), array('access', 'likes', 'edit'))) {
-			unset($return[$index]);
-		}
+		if ( get_group_members($entity->guid, 10, 0, 0, true) > 1 )
+			if (in_array($item->getName(), array('access', 'likes', 'edit', 'delete'))) {
+				unset($return[$index]);
+			}
+
+		if ( get_group_members($entity->guid, 10, 0, 0, true) == 1 )
+			if (in_array($item->getName(), array('access', 'likes', 'edit'))) {
+				unset($return[$index]);
+			}
 	}
 
 	// membership type
