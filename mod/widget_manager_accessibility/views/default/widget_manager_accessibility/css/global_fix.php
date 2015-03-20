@@ -25,7 +25,7 @@
 
 #widget_manager_widgets_select > .elgg-head {
     position: fixed;
-    /*width: inherit;*/
+    width: inherit;
     z-index: 1;
     padding: 0px;
     background: none;
