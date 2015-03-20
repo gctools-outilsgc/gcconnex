@@ -3,6 +3,7 @@
 	$french = array(
 		'widget:unavailable' => 'Supprimer le Widget',
 		'widgets:addButton:title' => "Afficher la fenêtre pour ajouter des widgets",
+		'widget_manager:widgets:lightbox:filter:no-results' => "Aucun résultat ne correspond aux critères de votre filtre.",
 
 		// additional widget descriptions
 		"widget-accessibility:info:Activity" => "",

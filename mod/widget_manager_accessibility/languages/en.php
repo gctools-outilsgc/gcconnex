@@ -3,6 +3,7 @@
 	$english = array(
 		'widget:unavailable' => 'Remove Widget',
 		'widgets:addButton:title' => "Display the add widgets window",
+		'widget_manager:widgets:lightbox:filter:no-results' => "No results match the criteria of your filter.",
 
 		// additional widget descriptions
 		"widget-accessibility:info:Activity" => "",

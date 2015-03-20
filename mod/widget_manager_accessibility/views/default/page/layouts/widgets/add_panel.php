@@ -130,7 +130,8 @@ echo elgg_view('input/hidden', $params);
 				$body .= "</div>";
 			}
 			
-		}	
+		}
+		$body .= '<div class="filter-no-results">' . elgg_echo("widget_manager:widgets:lightbox:filter:no-results") . '</div>';	// message for when there are no results: usability issue #76 (https://github.com/tbs-sct/gcconnex/issues/76)
 		
 	} else {
 		$body = elgg_echo("notfound");
