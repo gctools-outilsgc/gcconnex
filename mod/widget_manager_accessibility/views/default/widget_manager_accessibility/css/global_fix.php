@@ -6,6 +6,44 @@
     width: 140px;
 }
 
+/**/
+#widget_manager_widgets_select > .elgg-body {
+    background-color: white;
+}
+
+#widget_manager_widgets_select > .elgg-head {
+    position: fixed;
+    width: 575px;
+    z-index: 1;
+}
+
+
+#widget_manager_widgets_select {
+ overflow-y: scroll;
+ height: inherit;
+}
+
+#widget_manager_widgets_select > .elgg-head {
+    position: fixed;
+    /*width: inherit;*/
+    z-index: 1;
+    padding: 0px;
+    background: none;
+}
+#widget_manager_widgets_select > .elgg-head > h3 {
+    padding: 5px;
+    background: #F1F1F1;
+    margin-right: 15px;
+}
+
+#widget_manager_widgets_select > .elgg-body {
+    background-color: white;
+    padding-top: 60px;
+}
+
+.elgg-module-inline > .elgg-head h3 {
+    color: black;
+}
 
 
 /* bootstrap overrides */

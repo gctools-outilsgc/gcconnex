@@ -83,18 +83,15 @@ $jquery_path = elgg_get_site_url() . 'vendors/jquery/';
 	width: 100%;
 	height: 100%;
 	background: #fff;
-/* testing */
-/*    padding-right: 15px; */
 }
 
 #fancybox-content {
 	width: 0;
 	height: 0;
-/*    top: 30px; */
 	padding: 0;
 	outline: none;
 	position: relative;
-    overflow: hidden;
+	overflow: hidden;
 	z-index: 1102;
 	border: 0px solid #fff;
 }
@@ -199,11 +196,6 @@ $jquery_path = elgg_get_site_url() . 'vendors/jquery/';
 #fancybox-right:hover span {
 	left: auto;
 	right: 20px;
-}
-
-#widget_manager_widgets_select {
-    overflow-y: scroll;
-    height: inherit;
 }
 
 .fancybox-bg {

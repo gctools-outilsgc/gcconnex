@@ -1,6 +1,6 @@
 
 Accessibility / Usability issues addressed:
-		(Github #22, #23, #68, #34)
+		(Github #22, #23, #68, #34, #71, #76, #69)
 		 #71 fixed separately in widget manager mod.
 
 Overrides:
