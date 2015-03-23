@@ -69,7 +69,7 @@ $jquery_path = elgg_get_site_url() . 'vendors/jquery/';
 }
 
 #fancybox-wrap {
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 	padding: 20px;

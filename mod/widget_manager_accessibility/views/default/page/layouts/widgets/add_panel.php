@@ -23,6 +23,7 @@ echo elgg_view('input/hidden', $params);
 	$(document).ready(function(){
 		$("#widgets-add-panel").fancybox({ 
 			autoDimensions: false,
+			titleShow: false,
 			width: 600,
             scrolling: 'no',
 			height: "80%"

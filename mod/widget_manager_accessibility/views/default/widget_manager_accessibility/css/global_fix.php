@@ -4,7 +4,38 @@
 #widget_manager_widgets_select .widget_manager_widgets_lightbox_actions li.elgg-state-available input ,
 #widget_manager_widgets_select .widget_manager_widgets_lightbox_actions li.elgg-state-unavailable input {
     width: 140px;
+    list-style: none;
+    display:block;
 }
+
+#widget_manager_widgets_select {
+    margin: 0;
+    width: inherit;
+}
+
+#widget_manager_widgets_select > .elgg-head {
+    position: fixed;
+    width: inherit;
+    z-index: 1;
+    padding: 0px;
+    background: none;
+}
+
+#widget_manager_widgets_select > .elgg-head > h3 {
+    padding: 5px;
+    background: #F1F1F1;
+    margin-right: 15px;
+}
+
+#widget_manager_widgets_select > .elgg-body {
+    background-color: white;
+    padding-top: 40px;
+}
+
+.elgg-module-inline > .elgg-head h3 {
+    color: black;
+}
+
 
 /**/
 #widget_manager_widgets_select > .elgg-body {
@@ -110,3 +141,8 @@
 
 
 /* end of bootstrap overrides */
+
+body #fancybox-wrap { 
+/*position: fixed;*/
+top: 28px !important;
+}
