@@ -11,6 +11,7 @@ Overrides:
 
  View:
  	page/layouts/widgets/add_button.php
+ 	page/layouts/widgets/add_panel.php
 
 
 #34:
