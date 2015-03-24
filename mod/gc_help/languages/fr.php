@@ -3,7 +3,7 @@
 	 * Elgg MyCustomText plugin
 	 *
 	 * @package ElggMyCustomText
-	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+	 * @license http://gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
 	 * @author Untamed
 	 * @copyright Untamed 2008-2010
 	 */
@@ -14,44 +14,66 @@
 	 * My CustomText
 	 */
 
-		'help_menu_item' => "Aide",
+		'help_menu_item' => "Aide / Contactez-nous",
 		'help:message' => "Pour obtenir de l'aide sur GCconnex, s'il vous plaît consultez la page suivante de GCpedia: ",
-		'help:url' => "http://www.gcpedia.gc.ca/wiki/Gouvernement_du_Canada_pilote/GCconnex_utilisateur_aide_et_FAQ_de_r%C3%A9seautage_professionne",
+		'help:url' => "http://gcpedia.gc.ca/wiki/Gouvernement_du_Canada_pilote/GCconnex_utilisateur_aide_et_FAQ_de_r%C3%A9seautage_professionne",
 		'help:url-desc' => "Pages d'aide GCPEDIA",
 		'help:contact' => "Contactez-nous: ",
-		'help:body' => "<a href='#password'>Mot de passe</a></br>
-						<a href='#username'>Nom d’utilisateur </a></br>
-						<a href='#generalhelp'>Aide générale </a></br>
-						<a href='#helpDesk'>Dépannage</a></br>
-						</br>
-						<h3><a id='password'>Mot de passe</a></h3>
-						<p>
-						Pour récupérer votre <b>mot de passe GCconnex</b>, allez à la <a href='http://www.gcconnex.gc.ca'>page principale de GCconnex</a> ou ouvrez la fenêtre de <b><u>Ouvrir une session</u></b> qui se trouve dans le coin supérieur gauche. Cliquez sur le lien <b><u>Mot de passe perdu?</u></b> et entrez votre nom d’utilisateur ou adresse de courrier électronique et cliquez ensuite sur <b><u>Requête</u></b>. Un lien vous permettant de réinitialiser votre mot de passe sera envoyé à l’adresse courriel associée à votre compte GCconnex. Cliquez sur ce lien, puis sur <b><u>Réinitialiser mot de passe.</u></b> Le système vous enverra un nouveau mot de passe généré au hasard.
-						</p></br>
-						<p>
-						Une fois que vous avez ouvert une session à l’aide du nouveau mot de passe, suivez le lien <b><u>Votre compte</u></b> qui se trouve dans le coin supérieur droit. Sous la rubrique <b><u>Mot de passe,</u></b> entrez votre <b><u>mot de passe actuel</u></b> (le mot de passe généré aléatoirement reçu par courriel) et <b><u>votre nouveau  mot de passe</u></b> (le mot de passe que vous voulez utiliser dorénavant) deux fois, et ensuite cliquez sur <b><u>Enregistrer</u></b>.
-						</p></br>
-						<h3><a id='username'>Nom d’utilisateur</a></h3>
-						<p>
-						Si vous avez oublié votre <b><u>nom d’utilisateur</u></b>, ne vous inquiétez pas; il n’est pas nécessaire de le récupérer. Vous pouvez utiliser votre adresse de courrier électronique pour ouvrir une session, soit à la <a href='http://www.gcconnex.gc.ca'>page principale de GCconnex</a> ou la fenêtre de <b><u>Ouvrir une session</u></b> qui se trouve dans le coin supérieur gauche. 
-						</p></br>
-						<p>
-						Par contre, si votre courriel a changé depuis que vous avez activé votre compte GCconnex, vous ne pouvez pas utiliser votre nouveau courriel à moins d’avoir déjà fait les changements dans les paramètre de <a href='http://www.gcpedia.gc.ca/wiki/GCconnex_utilisateur_aide/Cr%C3%A9ation_et_personnalisation_d%E2%80%99un_compte_GCconnex#Modification_de_vos_courriel'>votre compte</a>. Envoyez un courriel à <a href='mailto:gcconnex@tbs-sct.gc.ca'>gcconnex@tbs-sct.gc.ca</a> et mentionnez que vous n’avez plus accès à l’adresse courriel qui est associée à votre compte. Nous vous répondrons dans les deux jours ouvrables suivants. 
-						</p></br>
-						<h3><a id='generalhelp'>Aide générale</a></h3>
-						<p>
-						Pour obtenir de l’<b><u>aide générale</u></b>, consultez les pages <a href='http://www.gcpedia.gc.ca/wiki/GCconnex/Indexe_FAQ'>GCconnex/Indexe FAQ</a> et <a href='http://www.gcpedia.gc.ca/wiki/Tutorials_on_GC2.0_Tools_/_Tutoriels_sur_les_outils_GC2.0'>Tutoriels sur les outils GC2.0</a> sur GCpédia. Il n’est pas nécessaire d’avoir un compte sur GCpédia pour les consulter.
-						</p></br>
-						<p>
-						Pour obtenir de l’aide pour la <b><u>création et l’adaptation de votre compte GCconnex</u></b>, consultez la rubrique <a href='http://www.gcpedia.gc.ca/wiki/GCconnex_utilisateur_aide'>GCconnex Aide utilisateur</a> sur GCpédia. Il n’est pas nécessaire d’avoir un compte sur GCpédia pour les consulter. 
-						</p></br>
-						<p>
-						Pour obtenir de l’aide pour comprendre les différentes <b><u>fonctions de GCconnex</u></b>, consultez la page <a href='http://www.gcpedia.gc.ca/wiki/GCconnex_utilisateur_aide/Fonctions_de_GCconnex'>Fonctions de GCconnex</a> sur GCpédia. Il n’est pas nécessaire d’avoir un compte sur GCpédia pour la consulter
-						</p></br>
-						<h3><a id='helpDesk'>Dépannage</a></h3>
-						<p>
-						Pour toute autre question, veuillez envoyer un courriel à <a href='mailto:gcconnex@tbs-sct.gc.ca'>gcconnex@tbs-sct.gc.ca</a>. Nous vous répondrons dans les deux jours ouvrables suivant la réception de votre message.
-						</p>",
+		'help:body' => " <div class='elgg-output'>
+				<h2 style='border-bottom: solid 3px; padding-bottom: 2px;'>Contactez-nous</h2>
+					<p style = 'padding: 8px 0 8px'>
+					Vous ne trouvez pas la réponse à votre question dans les Questions fréquemment posées ou les ressources d'aide? <br /> <br />
+					<b>Communiquez avec le <a href='mailto:gcconnex@tbs-sct.gc.ca'>Soutien technique</a> de GCconnex!</b> Veuillez fournir le plus de détails possible lorsque vous décrirez votre problème ou question, et fournissez également des captures d'écran si possible.
+					</p> <br />
+
+				<h2 style='border-bottom: solid 3px; padding-bottom: 2px;'>Aide</h2>
+					<br />
+					<h3><u>Pages d'aide de GCconnex</u></h3><br />
+						<ul style='list-style-type: disc;'>
+						<li> <a href='http://gcpedia.gc.ca/wiki/Tutorials_on_GC2.0_Tools_/_Tutoriels_sur_les_outils_GC2.0'>Conseils pratiques/Vidéos/Tutoriels</a> </li>
+						<li> <a href='http://gcconnex.gc.ca/file/view/6133688/intro-to-gcconnex-learn-the-how-to-in-6-easy-steps-and-start-using-gcconnex-today'>6 étapes pour utiliser GCconnex</a> </li>
+						<li> <a href='http://gcconnex.gc.ca/file/view/390515/en-managing-your-email-notifications-on-gcconnexpdf'>Gestion des avis par courriel</a> </li>
+						</ul><br />
+
+					<h3><u>Questions fréquemment posées</u></h3><br />
+						<ul>
+						<li>
+						<h4>Mot de passe perdu:</h4>
+						Pour récupérer votre <u>Mot de passe pour GCconnex</u>, allez sur la <a href='http://gcconnex.gc.ca/'>page d'accueil de GCconnex</a> ou cliquez dans la fenêtre contextuelle <u>Ouverture de session</u> qui se trouve dans le coin gauche supérieur de chaque page de GCconnex. Cliquez sur le lien <u>Mot de passe perdu</u> et saisissez votre nom d'utilisateur ou vous adresse de courriel, puis cliquez sur <u>Demande</u>. Un lien vous permettant de réinitialiser votre mot de passe sera envoyé à l'adresse de courriel associée à votre compte GCconnex. Suivez ce lien, puis cliquez sur <u>Réinitialiser mon mot de passe</u> pour qu'un nouveau mot de passe généré aléatoirement soit envoyé à votre adresse de courriel.
+						<br /><br />
+						Une fois que vous aurez ouvert une session avec le nouveau mot de passe, cliquez sur le lien <u>Paramètres</u> qui se trouve dans le coin droit supérieur de chaque page de GCconnex. Dans la section <u>Mot de passe du compte</u>, saisissez votre <u>Mot de passe actuel</u> (le mot de passe généré aléatoirement qui vous a été envoyé par courriel) et <u>Votre nouveau mot de passe</u> (le mot de passe que vous souhaitez utiliser désormais) deux fois, puis cliquez sur <u>Enregistrer</u>.
+						</li> <br />
+
+						<li>
+						<h4>Nom d'utilisateur perdu :</h4>
+						Si vous avez oublié votre <u>Nom d'utilisateur pour GCconnex</u>, ne vous en faites pas; il n'est pas nécessaire de le récupérer. Vous pouvez utiliser l'adresse de courriel associée à votre compte GCconnex pour ouvrir une session, soit sur la <a href='http://gcconnex.gc.ca/'>Page d'accueil de GCconnex</a> ou en allant dans la fenêtre contextuelle d'<u>Ouverture de session</u> dans le coin gauche supérieur de chaque page de GCconnex. 
+						<br /><br />
+						Toutefois, si vous avez changé d'adresse de courriel depuis que vous avez créé votre compte GCconnex, vous ne pouvez pas utiliser votre nouvelle adresse pour ouvrir une session à moins que vous ayez <a href='http://gcconnex.gc.ca/settings/'>mis à jour votre adresse de courriel dans vos paramètres</a>. Veuillez envoyer un courriel à <a href='mailto:gcconnex@tbs-sct.gc.ca'>gcconnex@tbs-sct.gc.ca</a> et indiquer que vous n'avez plus accès à l'adresse de courriel qui est associée à votre compte GCconnex. Nous vous répondrons dans les deux jours ouvrables qui suivent. 
+						</li> <br />
+
+						<li>
+						<h4>Créer un compte :</h4>
+						Rendez-vous sur <a href='http://gcconnex.gc.ca/'>GCconnex.gc.ca</a> et cliquez sur « Inscription » (sous « Ouvrir une session »). Vous pourrez alors saisir votre adresse de courriel du travail et choisir un mot de passe. Ensuite, lisez et acceptez les Conditions générales et cliquez sur « Inscription ». 
+						</li> <br />
+
+						<li>
+						<h4>Télécharger une photo de profil :</h4>
+						Cliquez sur l'icône de Profil dans le coin supérieur gauche (vous verrez soit votre photo de profil actuel ou une silhouette générique). Vous serez dirigé vers une autre page où vous pourrez « Modifier votre avatar ». Cliquez sur « Parcourir » et sélectionnez la photo que vous souhaitez utiliser, puis cliquez sur « Télécharger ». Vous pourrez ensuite cadrer votre photo (s'il y a lieu) en utilisant la section de prévisionnement.
+						</li> <br />
+
+						<li>
+						<h4>Et plus encore… </h4>
+						</li> <br />
+
+						</ul> <br />
+
+					<h3><u>Groupes GCconnex qui pourraient vous être utiles :</u></h3><br />
+						<ul>
+						<li> <a href=''>Clics et conseils</a> </li>
+						<li> <a href='http://gcconnex.gc.ca/groups/profile/226392/gc20-tools-outils-gc20'>Outils GC2.0</a> </li>
+						</ul>
+
+						</div>",
 	);
 
 	add_translation("fr",$french);
