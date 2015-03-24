@@ -31,7 +31,7 @@
 					<h3><u>Pages d'aide de GCconnex</u></h3><br />
 						<ul style='list-style-type: disc;'>
 						<li> <a href='http://gcpedia.gc.ca/wiki/Tutorials_on_GC2.0_Tools_/_Tutoriels_sur_les_outils_GC2.0'>Conseils pratiques/Vidéos/Tutoriels</a> </li>
-						<li> <a href='http://gcconnex.gc.ca/file/view/6133688/intro-to-gcconnex-learn-the-how-to-in-6-easy-steps-and-start-using-gcconnex-today'>6 étapes pour utiliser GCconnex</a> </li>
+						<li> <a href='http://gcconnex.gc.ca/file/view/6352643/intro-a-gcconnex-savoir-le-%C2%ABcomment%C2%BB-en-6-etapes-faciles-et-commencer-a-utiliser-gcconnex-aujourdhui'>6 étapes pour utiliser GCconnex</a> </li>
 						<li> <a href='http://gcconnex.gc.ca/file/view/390515/en-managing-your-email-notifications-on-gcconnexpdf'>Gestion des avis par courriel</a> </li>
 						</ul><br />
 
