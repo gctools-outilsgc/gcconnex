@@ -126,7 +126,7 @@ echo elgg_view('input/hidden', $params);
 				
 				$wname = str_ireplace(" ", "_", $widget->name);
 				$body .= "<div><b>" . $widget->name . "</b></div>";
-				$body .= "<div class='elgg-quiet'><img src='" .elgg_get_site_url(). "_graphics/logout.png' alt=\"" . elgg_echo("widget-accessibility:info:$widget_context:$wname") . "\" title=\"". elgg_echo("widget-accessibility:info:$widget_context:$wname") ."\" /> " . $description . "</div>";
+				$body .= "<div class='elgg-quiet'><abbr style='border-bottom: 1px dotted;' alt=\"" . elgg_echo("widget-accessibility:info:$widget_context:$wname") . "\" title=\"". elgg_echo("widget-accessibility:info:$widget_context:$wname") ."\" >?</abbr> " . $description . "</div>";
 				
 				$body .= "</div>";
 			}

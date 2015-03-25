@@ -11,7 +11,7 @@
 #widget_manager_widgets_select .widget_manager_widgets_lightbox_actions li.elgg-state-available span ,
 #widget_manager_widgets_select .widget_manager_widgets_lightbox_actions li.elgg-state-available input ,
 #widget_manager_widgets_select .widget_manager_widgets_lightbox_actions li.elgg-state-unavailable input {
-    width: 140px;
+    width: 150px;
     list-style: none;
     display:block;
 }
