@@ -20,11 +20,6 @@
 		'help:url-desc' => "Pages d'aide GCPEDIA",
 		'help:contact' => "Contactez-nous: ",
 		'help:body' => " <div class='elgg-output'>
-				<h2 style='border-bottom: solid 3px; padding-bottom: 2px;'>Contactez-nous</h2>
-					<p style = 'padding: 8px 0 8px'>
-					Vous ne trouvez pas la réponse à votre question dans les Questions fréquemment posées ou les ressources d'aide? <br /> <br />
-					<b>Communiquez avec le <a href='mailto:gcconnex@tbs-sct.gc.ca'>Soutien technique</a> de GCconnex!</b> Veuillez fournir le plus de détails possible lorsque vous décrirez votre problème ou question, et fournissez également des captures d'écran si possible.
-					</p> <br />
 
 				<h2 style='border-bottom: solid 3px; padding-bottom: 2px;'>Aide</h2>
 					<br />
@@ -72,6 +67,12 @@
 						<li> <a href=''>Clics et conseils</a> </li>
 						<li> <a href='http://gcconnex.gc.ca/groups/profile/226392/gc20-tools-outils-gc20'>Outils GC2.0</a> </li>
 						</ul>
+
+				<h2 style='border-bottom: solid 3px; padding-bottom: 2px;'>Contactez-nous</h2>
+					<p style = 'padding: 8px 0 8px'>
+					Vous ne trouvez pas la réponse à votre question dans les Questions fréquemment posées ou les ressources d'aide? <br /> <br />
+					<b>Communiquez avec le <a href='mailto:gcconnex@tbs-sct.gc.ca'>Soutien technique</a> de GCconnex!</b> Veuillez fournir le plus de détails possible lorsque vous décrirez votre problème ou question, et fournissez également des captures d'écran si possible.
+					</p> <br />
 
 						</div>",
 	);
