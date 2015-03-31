@@ -14,7 +14,7 @@ Overrides:
 
 
 #34:
-Requires removal of line 31 in js/lib/ui.widget.js core:
+Requires removal of lines 30 in js/lib/ui.widget.js core:
 $('a.elgg-widget-collapse-button').live('click', elgg.ui.widgets.collapseToggle);
 
 Also requires patch to engine/lib/navigation.php:

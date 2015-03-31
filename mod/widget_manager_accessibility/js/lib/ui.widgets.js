@@ -24,15 +24,15 @@ elgg.ui.widgets.init = function() {
 	});
 
 	// the widgets available to be added
-	$('.elgg-widgets-add-panel li.elgg-state-available').click(elgg.ui.widgets.add);
+	// don't need to change       $('.elgg-widgets-add-panel li.elgg-state-available').click(elgg.ui.widgets.add);
 	$('.elgg-widgets-add-panel li.elgg-state-available').children('input.widget-added').attr('disabled', "disabled");		// disable remove widget button
 
 	// the present widgets with remove widget buttons active
     $('.elgg-widgets-add-panel li.elgg-state-unavailable').click(elgg.ui.widgets.remove);
     $('.elgg-widgets-add-panel li.elgg-state-unavailable').children('input.widget-to-add').attr('disabled', "disabled");		// disable add widget button
 
-	$('a.elgg-widget-delete-button').live('click', elgg.ui.widgets.remove);
-	$('.elgg-widget-edit > form ').live('submit', elgg.ui.widgets.saveSettings);
+	//$('a.elgg-widget-delete-button').live('click', elgg.ui.widgets.remove);
+	// don't need to change        $('.elgg-widget-edit > form ').live('submit', elgg.ui.widgets.saveSettings);
 	$('a.elgg-widget-collapse-button').live('click', elgg.ui.widgets.collapseToggleA);
 
 
