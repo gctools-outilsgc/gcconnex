@@ -28,10 +28,10 @@ elgg.ui.widgets.init = function() {
 	$('.elgg-widgets-add-panel li.elgg-state-available').children('input.widget-added').attr('disabled', "disabled");		// disable remove widget button
 
 	// the present widgets with remove widget buttons active
-    $('.elgg-widgets-add-panel li.elgg-state-unavailable').click(elgg.ui.widgets.remove);
+    $('.elgg-widgets-add-panel li.elgg-state-unavailable').click(elgg.ui.widgets.removebtn);
     $('.elgg-widgets-add-panel li.elgg-state-unavailable').children('input.widget-to-add').attr('disabled', "disabled");		// disable add widget button
 
-	//$('a.elgg-widget-delete-button').live('click', elgg.ui.widgets.remove);
+	$('a.elgg-widget-delete-button').live('click', elgg.ui.widgets.toggleremove);
 	// don't need to change        $('.elgg-widget-edit > form ').live('submit', elgg.ui.widgets.saveSettings);
 	$('a.elgg-widget-collapse-button').live('click', elgg.ui.widgets.collapseToggleA);
 
@@ -116,7 +116,7 @@ elgg.ui.widgets.add = function(event) {
         $(this).removeClass('elgg-state-available');
         $(this).unbind('click', elgg.ui.widgets.add);
         // bind the widge to the remove function instead
-        $(this).bind('click', elgg.ui.widgets.remove);
+        $(this).bind('click', elgg.ui.widgets.removebtn);
 		$(this).children('input.widget-to-add').attr('disabled', "disabled");		// disable add widget button
 		$(this).children('input.widget-added').removeAttr('disabled');				// enable remove widget button
     }
@@ -136,6 +136,28 @@ elgg.ui.widgets.add = function(event) {
 	event.preventDefault();
 };
 
+
+
+elgg.ui.widgets.toggleremove = function(event) {
+    $('.elgg-widgets-add-panel li.elgg-widget-single.elgg-state-available').children('input.widget-added').attr('disabled', "disabled");       // disable remove widget button
+    $('.elgg-widgets-add-panel li.elgg-widget-single.elgg-state-available').children('input.widget-to-add').removeAttr('disabled');         // enable add widget button
+
+    // bind the button to the remove function instead
+    $('.elgg-widgets-add-panel li.elgg-widget-single.elgg-state-available').unbind('click', elgg.ui.widgets.removebtn);
+    $('.elgg-widgets-add-panel li.elgg-widget-single.elgg-state-available').unbind('click', elgg.ui.widgets.add);      // make sure we're not binding the same function multiple times
+    $('.elgg-widgets-add-panel li.elgg-widget-single.elgg-state-available').bind('click', elgg.ui.widgets.add);
+
+    // for widgets that allow multiple instances
+    $('.elgg-widget-multiple').each(function() {
+        var name = $(this).attr('id');
+        name = name.substr(name.indexOf('elgg-widget-type-') + "elgg-widget-type-".length);
+
+        var counter = $(this).closest('.widget_manager_widgets_lightbox_wrapper').find('.multi-widget-count');
+        counter.text($('.elgg-widget-instance-' + name).length);
+        counter.addClass('multi-widget-count-activated');
+
+    });
+}
 /**
  * Removes a widget from the layout
  *
@@ -144,7 +166,7 @@ elgg.ui.widgets.add = function(event) {
  * @param {Object} event
  * @return void
  */
-elgg.ui.widgets.remove = function(event) {
+elgg.ui.widgets.removebtn = function(event) {
 	if (confirm(elgg.echo('deleteconfirm')) == false) {
 		event.preventDefault();
 		return;
@@ -160,7 +182,7 @@ elgg.ui.widgets.remove = function(event) {
 
         $button.addClass('elgg-state-available');
         $button.removeClass('elgg-state-unavailable');
-        $button.unbind('click', elgg.ui.widgets.remove); // make sure we don't bind twice
+        $button.unbind('click', elgg.ui.widgets.removebtn); // make sure we don't bind twice
         $button.click(elgg.ui.widgets.add);
 		$(this).children('input.widget-added').attr('disabled', "true");		// disable remove widget button
 		$(this).children('input.widget-to-add').removeAttr('disabled');			// enable add widget button
@@ -187,7 +209,7 @@ elgg.ui.widgets.remove = function(event) {
         if (multiple == false) {
             $button.addClass('elgg-state-available');
             $button.removeClass('elgg-state-unavailable');
-            $button.unbind('click', elgg.ui.widgets.remove); // make sure we don't bind twice
+            $button.unbind('click', elgg.ui.widgets.removebtn); // make sure we don't bind twice
             $button.click(elgg.ui.widgets.add);
         }
 
@@ -200,5 +222,7 @@ elgg.ui.widgets.remove = function(event) {
 
 	event.preventDefault();
 };
+
+
 
 elgg.register_hook_handler('init', 'system', elgg.ui.widgets.init);
