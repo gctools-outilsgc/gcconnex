@@ -61,8 +61,9 @@ function glee_theme_draft_one_pagesetup() {
   //   }
 
     // GCconnex change - Ilia: re-register top menu items without their icons for consistency - for Issue #52 (https://github.com/tbs-sct/gcconnex/issues/52)
-    elgg_unregister_menu_item( 'topbar', 'usersettings' );
-    elgg_register_menu_item('topbar', array(
+    if ( elgg_is_logged_in() ){
+        elgg_unregister_menu_item( 'topbar', 'usersettings' );
+        elgg_register_menu_item('topbar', array(
             'name' => 'usersettings',
             'href' => "settings/user/{$viewer->username}",
             'text' => elgg_echo('settings'),
@@ -70,7 +71,7 @@ function glee_theme_draft_one_pagesetup() {
             'section' => 'alt',
         ));
 
-    if ( elgg_is_logged_in() ){
+    
         elgg_unregister_menu_item( 'topbar', 'dashboard' );
          elgg_register_menu_item('topbar', array(
             'name' => 'dashboard',
