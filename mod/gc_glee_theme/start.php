@@ -24,12 +24,12 @@ function glee_theme_draft_one_init() {
     elgg_load_js('glee-theme-draft-one:init');
 
 
-	elgg_register_menu_item('site', array(
+	/*elgg_register_menu_item('site', array(
          'name' => 'EmailUs',
          'href' => 'mailto:GCCONNEX@tbs-sct.gc.ca',
          'text' => elgg_echo('emailus'),
          'priority' => 101,
-    ) ); 
+    ) ); */
     return true;
 }
 
@@ -59,7 +59,17 @@ function glee_theme_draft_one_pagesetup() {
 // 			'section' => 'alt',
  //        ));
   //   }
-    
+
+    // GCconnex change - Ilia: re-register log out menu item with an icon for Issue #52 (https://github.com/tbs-sct/gcconnex/issues/52)
+    elgg_unregister_menu_item( 'topbar', 'logout' );
+    elgg_register_menu_item('topbar', array(
+                    'name' => 'logout',
+                    'href' => "action/logout",
+                    'text' => '<img src="' .elgg_get_site_url(). '_graphics/logout.png" alt="Elgg" />' .elgg_echo('logout'),
+                    'is_action' => TRUE,
+                    'priority' => 1000,
+                    'section' => 'alt',
+        ));
     
     glee_load_bootstrap_style();
       

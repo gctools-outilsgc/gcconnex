@@ -27,7 +27,7 @@ $english = array(
 	'groups:icon' => 'Group icon (leave blank to leave unchanged)',
 	'groups:name' => 'Group name <strong style="color:red;">*</strong>',
 	'groups:username' => 'Group short name (displayed in URLs, alphanumeric characters only)',
-	'groups:description' => 'Description',
+	'groups:description' => 'Long description',
 	'groups:briefdescription' => 'Brief description',
 	'groups:interests' => 'Tags',
 	'groups:website' => 'Website',

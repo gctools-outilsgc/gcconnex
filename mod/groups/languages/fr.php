@@ -29,7 +29,7 @@ $french = array(
 	'groups:icon' => 'Icône de groupe (laisser tel quel ou laisser en blanc)',
 	'groups:name' => 'Nom de groupe <strong style="color:red;">*</strong>',
 	'groups:username' => 'Nom de groupe abrégé (affiché dans les URL, caractères alphanumériques seulement)',
-	'groups:description' => 'Description',
+	'groups:description' => 'Description Longue',
 	'groups:briefdescription' => 'Description brève',
 	'groups:interests' => 'Intérêts',
 	'groups:website' => 'Site Web',
