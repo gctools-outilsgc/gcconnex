@@ -44,8 +44,11 @@
 /***** PAGE MESSAGES ******/
 .elgg-system-messages {
 	position: fixed;
-	top: 44px;
-	right: 20px;
+	/*top: 44px;
+	right: 20px;*/
+	/** GCConnex change - Ilia: Moves the messages to more visible position near the center of the page, for issue #74 (https://github.com/tbs-sct/gcconnex/issues/74) **/
+	top: 40%;
+	right: 40%;
 	max-width: 500px;
 	z-index: 2000;
 }
