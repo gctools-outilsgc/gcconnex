@@ -31,6 +31,7 @@ $french = array(
 	'groups:username' => 'Nom de groupe abrégé (affiché dans les URL, caractères alphanumériques seulement)',
 	'groups:description' => 'Description Longue',
 	'groups:briefdescription' => 'Description brève',
+	'groups:brief:charcount' => ' | Nombre de caractères: ',
 	'groups:interests' => 'Intérêts',
 	'groups:website' => 'Site Web',
 	'groups:members' => 'Membres du groupe',

@@ -37,14 +37,14 @@ if ($group_profile_fields > 0) {
 			echo '<div><label id="briefdescr-lbl">';
 		else
 			echo '<div><label>';
-		echo elgg_echo("groups:{$shortname}"); if ( $shortname == 'briefdescription' ) echo " | Character count: 0/" . $briefmaxlength;
+		echo elgg_echo("groups:{$shortname}"); if ( $shortname == 'briefdescription' ) echo elgg_echo('groups:brief:charcount') . "0/" . $briefmaxlength;
 		echo "</label>$line_break";
 		if ( $shortname == 'briefdescription' )			// Brief description with character limit, count
 			echo elgg_view("input/{$valtype}", array(
 			'name' => $shortname,
 			'value' => elgg_extract($shortname, $vars),
 			'maxlength' => $briefmaxlength,
-			'onkeyup' => "document.getElementById('briefdescr-lbl').innerHTML = '" . elgg_echo("groups:{$shortname}") . " | Character count: ' + this.value.length + '/" . $briefmaxlength . "';"
+			'onkeyup' => "document.getElementById('briefdescr-lbl').innerHTML = '" . elgg_echo("groups:{$shortname}") . elgg_echo('groups:brief:charcount') . " | Character count: ' + this.value.length + '/" . $briefmaxlength . "';"
 			));
 		else
 			echo elgg_view("input/{$valtype}", array(
