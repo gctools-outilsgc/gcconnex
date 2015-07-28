@@ -17,7 +17,7 @@ if ($user = elgg_get_page_owner_entity()) {
 	}
 	
 	if(count($translations ) > 1){
-	?>
+	/*?>
 	<div class="elgg-module elgg-module-info">
 		<div class="elgg-head">
 			<h3><?php echo elgg_echo('user:set:language'); ?></h3>
@@ -35,7 +35,7 @@ if ($user = elgg_get_page_owner_entity()) {
 			</p>
 		</div>
 	</div>
-	<?php
+	<?php*/
 	} else {
 		echo elgg_view("input/hidden", array("name" => "language", "value" => $value));
 	}
