@@ -189,14 +189,18 @@ a:hover {
   margin-left: 12px;
 }
 
+/*GC Edit - Ilia: streching*/
 .container,
 .navbar-fixed-top .container,
 .navbar-fixed-bottom .container {
-  width: 1000px;
+  min-width: 1000px;
+  width:  90%;
 }
 
+/*GC Edit - Ilia: streching*/
 .span12 {
-  width: 995px;
+  min-width: 995px;
+  width: 95%;
   margin-top:20px;
 }
 
@@ -204,8 +208,10 @@ a:hover {
   width: 860px;
 }
 
+/*GC Edit - Ilia: streching*/
 .span10 {
   width: 810px;
+  width:  79%;
 }
 
 .span9 {
@@ -3749,9 +3755,11 @@ input[type="submit"].btn.btn-mini {
           border-radius: 0;
 }
 
+/*  Edit - stretching*/
 .navbar-fixed-top .container,
 .navbar-fixed-bottom .container {
   width: 1010px;
+  width: 90%;
 }
 
 .navbar-fixed-top {
