@@ -6,16 +6,28 @@ jQuery.expr[':'].Contains = function(a,i,m){
 };
 
 function widget_manager_widgets_search(q){
-	if(q === ""){
+	if (q === "") {
 		$("#widget_manager_widgets_select .widget_manager_widgets_lightbox_wrapper").show();
-	} else {
+        $('#widget_manager_widgets_select .filter-no-results').hide();
+	}
+    else {
 		$("#widget_manager_widgets_select .widget_manager_widgets_lightbox_wrapper").hide();
-		$("#widget_manager_widgets_select .widget_manager_widgets_lightbox_wrapper:Contains('" + q + "')").show();
+        $('#widget_manager_widgets_select .filter-no-results').hide();
+
+        $("#widget_manager_widgets_select .widget_manager_widgets_lightbox_wrapper:Contains('" + q + "')").show();
+
+        if ($("#widget_manager_widgets_select .widget_manager_widgets_lightbox_wrapper:Contains('" + q + "')").length == 0) {
+            $('#widget_manager_widgets_select .filter-no-results').show();
+            //$('<div class="filter-no-results"><?php elgg_echo("widget_manager:widgets:lightbox:filter:no-results"); ?></div>').appendTo('#widget_manager_widgets_select .elgg-body');
+        }
 	}
 }
 
 function widget_manager_init(){
-	// reset draggable functionality to pointer
+    // hide the div that contains the "no results found" error
+    $('#widget_manager_widgets_select .filter-no-results').hide();
+
+    // reset draggable functionality to pointer
 	$(".elgg-widgets").sortable("option", "tolerance", "pointer");
 	
 	$(".elgg-widgets").bind({

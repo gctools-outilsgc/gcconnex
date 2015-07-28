@@ -60,7 +60,7 @@ echo elgg_view('input/hidden', $params);
 	elgg.register_hook_handler('init', 'system', widget_manager_widget_add_init);
 
 </script>
-<?php 
+<?php
 	
 	$widget_context = str_replace("default_", "", $context);
 	
@@ -128,7 +128,8 @@ echo elgg_view('input/hidden', $params);
 				
 				$body .= "</div>";
 			}
-		}		
+		}
+        $body .= '<div class="filter-no-results">' . elgg_echo("widget_manager:widgets:lightbox:filter:no-results") . '</div>';
 	} else {
 		$body = elgg_echo("notfound");
 	}
