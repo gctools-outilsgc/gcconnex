@@ -3193,11 +3193,6 @@ input[type="submit"].btn.btn-mini {
   margin-top: 5px;
 }
 
-/*GCchange - Ilia: Usability - make logout link align with the rest of the top menu links. */
-.elgg-menu-item-logout{
-	top:2px;
-}
-
 /*GCchange - Troy: spacing for strapline*/
 .nav {
   margin-bottom: 5px;

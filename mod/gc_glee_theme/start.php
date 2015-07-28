@@ -60,16 +60,29 @@ function glee_theme_draft_one_pagesetup() {
  //        ));
   //   }
 
-    // GCconnex change - Ilia: re-register log out menu item with an icon for Issue #52 (https://github.com/tbs-sct/gcconnex/issues/52)
-    elgg_unregister_menu_item( 'topbar', 'logout' );
-    elgg_register_menu_item('topbar', array(
-                    'name' => 'logout',
-                    'href' => "action/logout",
-                    'text' => '<img src="' .elgg_get_site_url(). '_graphics/logout.png" alt="Elgg" />' .elgg_echo('logout'),
-                    'is_action' => TRUE,
-                    'priority' => 1000,
-                    'section' => 'alt',
+    // GCconnex change - Ilia: re-register top menu items without their icons for consistency - for Issue #52 (https://github.com/tbs-sct/gcconnex/issues/52)
+    if ( elgg_is_logged_in() ){
+        elgg_unregister_menu_item( 'topbar', 'usersettings' );
+        elgg_register_menu_item('topbar', array(
+            'name' => 'usersettings',
+            'href' => "settings/user/{$viewer->username}",
+            'text' => elgg_echo('settings'),
+            'priority' => 500,
+            'section' => 'alt',
         ));
+
+    
+        elgg_unregister_menu_item( 'topbar', 'dashboard' );
+         elgg_register_menu_item('topbar', array(
+            'name' => 'dashboard',
+            'href' => 'dashboard',
+            'text' => elgg_echo('dashboard'),
+            'priority' => 450,
+            'section' => 'alt',
+        ));
+    }
+
+
     
     glee_load_bootstrap_style();
       
