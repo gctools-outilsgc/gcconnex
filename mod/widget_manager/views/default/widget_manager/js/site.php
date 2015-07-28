@@ -6,51 +6,39 @@ jQuery.expr[':'].Contains = function(a,i,m){
 };
 
 function widget_manager_widgets_search(q){
-	if (q === "") {
-		$("#widget_manager_widgets_select .widget_manager_widgets_lightbox_wrapper").show();
-        $('#widget_manager_widgets_select .filter-no-results').hide();
-	}
-    else {
-		$("#widget_manager_widgets_select .widget_manager_widgets_lightbox_wrapper").hide();
-        $('#widget_manager_widgets_select .filter-no-results').hide();
-
-        $("#widget_manager_widgets_select .widget_manager_widgets_lightbox_wrapper:Contains('" + q + "')").show();
-
-        if ($("#widget_manager_widgets_select .widget_manager_widgets_lightbox_wrapper:Contains('" + q + "')").length == 0) {
-            $('#widget_manager_widgets_select .filter-no-results').show();
-            //$('<div class="filter-no-results"><?php elgg_echo("widget_manager:widgets:lightbox:filter:no-results"); ?></div>').appendTo('#widget_manager_widgets_select .elgg-body');
-        }
-	}
+  if(q === ""){
+    $("#widget_manager_widgets_select .widget_manager_widgets_lightbox_wrapper").show();
+  } else {
+    $("#widget_manager_widgets_select .widget_manager_widgets_lightbox_wrapper").hide();
+    $("#widget_manager_widgets_select .widget_manager_widgets_lightbox_wrapper:Contains('" + q + "')").show();
+  }
 }
 
 function widget_manager_init(){
-    // hide the div that contains the "no results found" error
-    $('#widget_manager_widgets_select .filter-no-results').hide();
+  // reset draggable functionality to pointer
+  $(".elgg-widgets").sortable("option", "tolerance", "pointer");
+  
+  $(".elgg-widgets").bind({
+    sortstart: function(event, ui){
+      $(".widget-manager-groups-widgets-top-row").addClass("widget-manager-groups-widgets-top-row-highlight");
+    },
+    sortstop: function(event, ui){
+      $(".widget-manager-groups-widgets-top-row").removeClass("widget-manager-groups-widgets-top-row-highlight");
+    }
+  });
+  
 
-    // reset draggable functionality to pointer
-	$(".elgg-widgets").sortable("option", "tolerance", "pointer");
-	
-	$(".elgg-widgets").bind({
-		sortstart: function(event, ui){
-			$(".widget-manager-groups-widgets-top-row").addClass("widget-manager-groups-widgets-top-row-highlight");
-		},
-		sortstop: function(event, ui){
-			$(".widget-manager-groups-widgets-top-row").removeClass("widget-manager-groups-widgets-top-row-highlight");
-		}
-	});
-	
-
-	// live update of widget titles
+  // live update of widget titles
     $('.elgg-form-widgets-save input.elgg-button-submit').live('click', function() {
  
       var widgetId = $(this).siblings('input:hidden[name="guid"]').val();
       var customTitle = $('#widget-manager-widget-edit-advanced-'+widgetId+' input:text[name="params[widget_manager_custom_title]"]').val();
       
       var customUrl = $('#widget-manager-widget-edit-advanced-'+widgetId+' input:text[name="params[widget_manager_custom_url]"]').val();
-	  
-	  // clean custom title, prevent scripting
-	  var cleanText = $('<div class="stripHTMLClass">text</div>');
-	  customTitle = cleanText.text(customTitle).html();
+    
+    // clean custom title, prevent scripting
+    var cleanText = $('<div class="stripHTMLClass">text</div>');
+    customTitle = cleanText.text(customTitle).html();
       
       if (customTitle.length == 0) {
         return;

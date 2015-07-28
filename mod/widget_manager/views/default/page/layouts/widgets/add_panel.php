@@ -129,7 +129,6 @@ echo elgg_view('input/hidden', $params);
 				$body .= "</div>";
 			}
 		}
-        $body .= '<div class="filter-no-results">' . elgg_echo("widget_manager:widgets:lightbox:filter:no-results") . '</div>';
 	} else {
 		$body = elgg_echo("notfound");
 	}
