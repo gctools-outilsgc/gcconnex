@@ -104,7 +104,7 @@ $english = array(
 	
 	'tasks:start_date' => "Start",
 	 'tasks:end_date' => "End",
-	 'tasks:percent_done' => " done",
+	 'tasks:percent_done' => " Done",
 	 'tasks:work_remaining' => "Remain.",
 	 
 

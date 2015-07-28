@@ -86,7 +86,7 @@
 		"widget-accessibility:info:groups:Sous-groupes" => "Une liste des sous-groupes d’un groupe",
 		"widget-accessibility:info:groups:Commencer_une_discussion" => "Permet aux membres du groupe de lancer rapidement une discussion au sein du groupe",
 		"widget-accessibility:info:groups:Twitter" => "",
-
+		
 	);
 	add_translation("fr", $french);
 	

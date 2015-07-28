@@ -49,8 +49,8 @@ $french = array(
 	 * Form fields
 	 */
 
-	'tasks:title' => 'titre de la tâche',
-	'tasks:description' => 'texte de la tâche',
+	'tasks:title' => 'Titre de la tâche',
+	'tasks:description' => 'Texte de la tâche',
 	'tasks:tags' => 'Mots-clés',
 	'tasks:access_id' => 'Accès en lecture',
 	'tasks:write_access_id' => 'Accès en écriture',

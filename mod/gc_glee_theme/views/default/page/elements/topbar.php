@@ -34,7 +34,8 @@ if (!elgg_is_logged_in()) {
     $login_dropdown =  elgg_view('core/account/login_dropdown');
     
     // add it to the left
-    $content_left .= $login_dropdown;
+    // GCConnex change - Ilia: For Issue #24 (https://github.com/tbs-sct/gcconnex/issues/24) move to the right to coincide with log out link location
+    $content_right .= $login_dropdown;
 }
 /*
 // LOGIN TEXT

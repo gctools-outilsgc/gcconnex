@@ -440,7 +440,7 @@ function widget_check_collapsed_state($widget_guid, $state) {
 	$user_guid = elgg_get_logged_in_user_guid();
 	//return $widget_guid;
 	if (empty($user_guid)) {
-	return false;
+		return false;
 	}
 	
 	if (!isset($collapsed_widgets_state)) {
@@ -462,11 +462,11 @@ function widget_check_collapsed_state($widget_guid, $state) {
 	}
 	
 	if (!array_key_exists($widget_guid, $collapsed_widgets_state)) {
-	return -1;
+		return -1;
 	}
 	
 	if (in_array($state, $collapsed_widgets_state[$widget_guid])) {
-	return true;
+		return true;
 	}
 	
 	return false;
