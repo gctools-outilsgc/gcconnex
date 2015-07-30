@@ -139,7 +139,7 @@
 
 <?php 
 
-	$body = "<div id='file-tools-folder-tree' class='clearfix hidden'>";
+	$body = "<div id='file-tools-folder-tree' class='clearfix hidden wb-invisible'>";
 	$body .= elgg_view_menu("file_tools_folder_sidebar_tree", array(
 		"container" => $page_owner,
 		"sort_by" => "priority"

@@ -189,14 +189,18 @@ a:hover {
   margin-left: 12px;
 }
 
+/*GC Edit - Ilia: streching*/
 .container,
 .navbar-fixed-top .container,
 .navbar-fixed-bottom .container {
-  width: 1000px;
+  min-width: 1000px;
+  width:  90%;
 }
 
+/*GC Edit - Ilia: streching*/
 .span12 {
-  width: 995px;
+  min-width: 995px;
+  width: 95%;
   margin-top:20px;
 }
 
@@ -204,8 +208,10 @@ a:hover {
   width: 860px;
 }
 
+/*GC Edit - Ilia: streching*/
 .span10 {
   width: 810px;
+  width:  79%;
 }
 
 .span9 {
@@ -3186,6 +3192,7 @@ input[type="submit"].btn.btn-mini {
 .alert-block p + p {
   margin-top: 5px;
 }
+
 /*GCchange - Troy: spacing for strapline*/
 .nav {
   margin-bottom: 5px;
@@ -3743,9 +3750,11 @@ input[type="submit"].btn.btn-mini {
           border-radius: 0;
 }
 
+/*  Edit - stretching*/
 .navbar-fixed-top .container,
 .navbar-fixed-bottom .container {
   width: 1010px;
+  width: 90%;
 }
 
 .navbar-fixed-top {
@@ -3783,7 +3792,7 @@ input[type="submit"].btn.btn-mini {
   float: none;
   padding: 5px 10px 0px 5px;
   line-height: 19px;
-  color: #999999;
+  color: #cccccc;		/* GCchange - Ilia: Usability - Increased contrast between link text and background */
   text-decoration: none;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 }

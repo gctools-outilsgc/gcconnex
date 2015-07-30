@@ -106,10 +106,17 @@ $french = array(
 	'friends:of:none:you' => "Nobody has added you as a {$lsingle} yet. Start adding content and fill in your profile to let people find you!",
 	'friends:of:owned' => "People who have made %s a {$lsingle}",
 	'friends:of' => "{$uplural} of",
-	'friends:collections' => "Cercles de {$usingle}",
-	'friends:collections:add' => "New {$lplural} circle",
+	'collections:add' => "Nouveau cercle de {$lplural}",
+	'friends:collections' => "Cercles de {$lplural}",
+	'friends:collections:add' => "Nouveau cercle de {$lplural}",
 	'friends:addfriends' => "Select {$lplural}",
-	'friends:collectionfriends' => "{$uplural} in circle",
+	'friends:collectionfriends' => "{$uplural} dans le cercle",
+	'friends:nocollections' => "Vous n'avez pas encore de cercle de {$lplural}.",
+	'friends:collectiondeleted' => "Votre cercle de {$lplural} a été supprimé.",
+	'friends:collectiondeletefailed' => "Le cercle de {$lplural} n'a pas été supprimer. Vous n'avez pas de droits suffisants, ou un autre problème peut-être en cause.",
+	'friends:collectionadded' => "Votre cercle de {$lplural} a été créé avec succès",
+	'friends:nocollectionname' => "Vous devez nommer votre cercle de {$lplural} avant qu'il puisse être créé.",
+	'friends:collections:edit' => "Modifier le cercle de {$lplural}",
 	'river:friend:user:default' => "%s est maintenant {$lsingle} avec %s",
 	'river:widgets:friends' => "{$uplural} activity",
 	'userpicker:only_friends' => "Only {$lplural}",
@@ -225,6 +232,11 @@ You will automatically add them as a {$lsingle} when you create your account.",
 'river_addon:option:default' => "All, Mine, {$uplural}",
 'river_addon:option:friend'	=> "{$uplural}, Mine, All",
 'river_addon:option:mine' => "Mine, {$uplural}, All",
+
+/*
+ * General / multi-mod
+ */
+'friends:filterby' => "De {$uplural}",
 
 );
 

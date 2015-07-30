@@ -4,7 +4,7 @@
 	?>
 
 	<div class="lang_toggle">
-	<script language="javascript" type="text/javascript">
+	<script type="text/javascript">
 		function form_submit(language_selected) {
 			//document.getElementById('formtoggle').submit();
 
@@ -70,7 +70,7 @@
 		
 	
 	</script>
-		<form action="<?php echo $vars['url']; ?>action/toggle_language/toggle" method="post" name="formtoggle" id="formtoggle">
+		<form action="<?php echo $vars['url']; ?>action/toggle_language/toggle" method="post" id="formtoggle">
 			
 		<?php
 		// security tokens.
@@ -87,16 +87,16 @@
 				//fwrite($log, "session is in english" . "\r\n" );
 
 		?>
-				<span class="active">English</span>
-				<a class="not_active" href="javascript:form_submit('French')">Fran&ccedil;ais</a>
+				<span class="active"><lan=en>English</span>
+				<a class="not_active" href="javascript:form_submit('French')"><lan=fr>Fran&ccedil;ais<lan=en></a>
 
 
 		<?php
 			} else { //if ($SESSION['language'] == 'fr') {
 				//fwrite($log, "session is in french" . "\r\n" );
 		?>
-				<a class="not_active" href="javascript:form_submit('English')">English</a>
-				<span class="active">Fran&ccedil;ais</span>
+				<a class="not_active" href="javascript:form_submit('English')"><lan=en>English</a>
+				<span class="active"><lan=fr>Fran&ccedil;ais</span>
 
 		<?php
 			}

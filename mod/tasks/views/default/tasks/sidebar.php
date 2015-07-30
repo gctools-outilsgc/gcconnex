@@ -2,7 +2,7 @@
 /**
  * Pages sidebar
  */
-echo "<a href=http://198.103.103.111/gcconnex/>Task help</a>";
+echo "<a href='". elgg_get_site_url() ."gc_help#tasks'>Task help</a>";
 
 echo elgg_view('task/elements/comments_block', array(
 	'subtypes' => array('task', 'task_top'),

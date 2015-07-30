@@ -48,7 +48,7 @@ if (elgg_get_config('allow_registration')) {
 	));
 
 	echo <<<__HTML
-<div id="elgg-walledgarden-registration" class="hidden clearfix">
+<div id="elgg-walledgarden-registration" class="hidden wb-invisible clearfix">
 	<div class="elgg-hiddenform-body" class="clearfix">
 		<h2>$title</h2>
 		$body
@@ -61,7 +61,7 @@ __HTML;
 $title = elgg_echo('user:password:lost');
 $body = elgg_view_form('user/requestnewpassword');
 echo <<<__HTML
-<div id="elgg-walledgarden-lostpassword" class="hidden clearfix">
+<div id="elgg-walledgarden-lostpassword" class="hidden wb-invisible clearfix">
 	<div class="elgg-hiddenform-body" class="clearfix">
 		<h2>$title</h2>
 		$body

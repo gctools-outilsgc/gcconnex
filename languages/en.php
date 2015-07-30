@@ -282,10 +282,10 @@ $english = array(
 	'widgets:add' => 'Add widgets',
 	'widgets:add:description' => "Click on any widget button below to add it to the page.",
 	'widgets:position:fixed' => '(Fixed position on page)',
-	'widget:unavailable' => 'You have already added this widget',
+	'widget:unavailable' => 'Remove Widget',
 	'widget:numbertodisplay' => 'Number of items to display',
 
-	'widget:delete' => 'Remove %s',
+	'widget:delete' => 'Remove "%s" widget',		// GCchange - Ilia: Specified that it is the widget that is being deleted
 	'widget:edit' => 'Customize this widget',
 
 	'widgets' => "Widgets",
@@ -340,21 +340,21 @@ $english = array(
 
 	'friends:of' => "Friends of",
 	'friends:collections' => "Friend collections",
-	'collections:add' => "New collection",
+	'collections:add' => "New circle",
 	'friends:collections:add' => "New friends collection",
 	'friends:addfriends' => "Select friends",
-	'friends:collectionname' => "Collection name",
-	'friends:collectionfriends' => "Friends in collection",
-	'friends:collectionedit' => "Edit this collection",
-	'friends:nocollections' => "You do not have any collections yet.",
-	'friends:collectiondeleted' => "Your collection has been deleted.",
-	'friends:collectiondeletefailed' => "We were unable to delete the collection. Either you don't have permission, or some other problem has occurred.",
-	'friends:collectionadded' => "Your collection was successfully created",
-	'friends:nocollectionname' => "You need to give your collection a name before it can be created.",
-	'friends:collections:members' => "Collection members",
-	'friends:collections:edit' => "Edit collection",
-	'friends:collections:edited' => "Saved collection",
-	'friends:collection:edit_failed' => 'Could not save collection.',
+	'friends:collectionname' => "Circle name",
+	'friends:collectionfriends' => "Friends in circle",
+	'friends:collectionedit' => "Edit this circle",
+	'friends:nocollections' => "You do not have any circles yet.",
+	'friends:collectiondeleted' => "Your circle has been deleted.",
+	'friends:collectiondeletefailed' => "We were unable to delete the circle. Either you don't have permission, or some other problem has occurred.",
+	'friends:collectionadded' => "Your circle was successfully created",
+	'friends:nocollectionname' => "You need to give your circle a name before it can be created.",
+	'friends:collections:members' => "Circle members",
+	'friends:collections:edit' => "Edit circle",
+	'friends:collections:edited' => "Saved circle",
+	'friends:collection:edit_failed' => 'Could not save circle.',
 
 	'friendspicker:chararray' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
 
@@ -798,7 +798,7 @@ $english = array(
 
 	'usersettings:statistics' => "Your statistics",
 	'usersettings:statistics:opt:description' => "View statistical information about users and objects on your site.",
-	'usersettings:statistics:opt:linktext' => "Account statistics",
+	'usersettings:statistics:opt:linktext' => "Account Information",
 
 	'usersettings:user' => "Your settings",
 	'usersettings:user:opt:description' => "This allows you to control user settings.",

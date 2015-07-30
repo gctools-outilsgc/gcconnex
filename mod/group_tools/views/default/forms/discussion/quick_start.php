@@ -21,7 +21,7 @@
 	));
 
 	// start the form
-	echo "<div id='group-tools-discussion-quick-start-wrapper-" . $form_count . "' class='hidden'>";
+	echo "<div id='group-tools-discussion-quick-start-wrapper-" . $form_count . "' class='hidden wb-invisible'>";
 
 	echo "<div>";
 	echo "<label for='group-tools-discussion-quick-start-group'>" . elgg_echo("group_tools:forms:discussion:quick_start:group") . "</label>";
@@ -29,7 +29,7 @@
 	echo elgg_view("input/dropdown", array("name" => "container_guid", "options_values" => $group_selection_options, "value" => $selected_group, "id" => "group-tools-discussion-quick-start-group"));
 	echo "</div>";
 
-	echo "<div class='hidden'>";
+	echo "<div class='hidden wb-invisible'>";
 	echo "<label for='group-tools-discussion-quick-start-access_id'>" . elgg_echo("access") . "</label>";
 	echo "<br />";
 	echo elgg_view("input/dropdown", array("name" => "access_id", "options_values" => $group_access_options, "id" => "group-tools-discussion-quick-start-access_id"));

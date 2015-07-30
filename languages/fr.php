@@ -291,10 +291,10 @@ $french = array(
 	'widgets:add' => "Ajouter des widgets",
 	'widgets:add:description' => "Cliquez sur n'importe quel widget ci-dessous pour l'ajouter à la page.",
 	'widgets:position:fixed' => "(Position modifiée sur la page)",
-	'widget:unavailable' => "Vous avez déjà ajouté ce widget",
+	'widget:unavailable' => "Déjà ajouté",
 	'widget:numbertodisplay' => "Nombre d'éléments à afficher ",
 
-	'widget:delete' => "Supprimer %s",
+	'widget:delete' => "Supprimer le widget <<%s>>",		// GCchange - Ilia: Specified that it is the widget that is being deleted
 	'widget:edit' => "Personnaliser ce widget",
 
 	'widgets' => "Widgets",
@@ -352,15 +352,15 @@ $french = array(
 	'collections:add' => "Nouvelle collection",
 	'friends:collections:add' => "Nouveau groupement de contacts",
 	'friends:addfriends' => "Sélectionner des contacts",
-	'friends:collectionname' => "Nom du groupement",
+	'friends:collectionname' => "Nom du cercle",
 	'friends:collectionfriends' => "Contacts dans le groupement",
-	'friends:collectionedit' => "Modifier ce groupement",
-	'friends:nocollections' => "Vous n'avez pas encore de groupement de contacts.",
+	'friends:collectionedit' => "Modifier ce cercle",
+	'friends:nocollections' => "Vous n'avez pas encore de cercle de contacts.",
 	'friends:collectiondeleted' => "Votre groupement de contacts a été supprimé.",
 	'friends:collectiondeletefailed' => "Le groupement de contacts n'a pas été supprimer. Vous n'avez pas de droits suffisants, ou un autre problème peut-être en cause.",
 	'friends:collectionadded' => "Votre groupement de contact a été créé avec succès",
 	'friends:nocollectionname' => "Vous devez nommer votre groupement de contact avant qu'il puisse être créé.",
-	'friends:collections:members' => "Membres du groupement",
+	'friends:collections:members' => "Membres du cercle",
 	'friends:collections:edit' => "Modifier le groupement de contacts",
 
 	'friends:river:add' => "est maintenant dans les contacts de %s",
@@ -487,7 +487,7 @@ $french = array(
  */
 
 	'account' => "Compte",
-	'settings' => "Votre compte",
+	'settings' => "Paramètres",
 	'tools' => "Outils",
 
 	'register' => "S'enregistrer",
@@ -742,7 +742,7 @@ $french = array(
 
 	'usersettings:statistics' => "Vos statistiques",
 	'usersettings:statistics:opt:description' => "VVisualiser les statistiques des utilisateurs et des objets sur votre espace.",
-	'usersettings:statistics:opt:linktext' => "Statistiques de votre compte.",
+	'usersettings:statistics:opt:linktext' => "Information sur votre compte",
 
 	'usersettings:user' => "Vos paramètres",
 	'usersettings:user:opt:description' => "Ceci vous permet de contrôler vos paramètres.",
@@ -904,7 +904,7 @@ $french = array(
 	'tagcloud' => "Nuage de tags",
 	'tagcloud:allsitetags' => "Tous les tags du site",
 	
-	'on' => 'sur',
+	'on' => 'Oui',
 	'off' => 'Non',
 
 

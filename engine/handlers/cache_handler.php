@@ -97,7 +97,7 @@ if (file_exists($filename)) {
 	readfile($filename);
 } else {
 	// someone trying to access a non-cached file or a race condition with cache flushing
-	mysql_close($mysql_dblink);
+	mysqli_close($mysql_dblink);
 	require_once(dirname(dirname(__FILE__)) . "/start.php");
 
 	global $CONFIG;

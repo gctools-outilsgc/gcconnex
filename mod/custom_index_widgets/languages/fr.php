@@ -16,7 +16,7 @@
 		'custom_index_widgets:latest_news_index' => "Dernieres news",
 		'custom_index_widgets:latest_pages_index' => "Dernieres pages",
 		'custom_index_widgets:latest_events_index' => 'Prochains evenements',
-		'custom_index_widgets:latest_wire_index' => 'Derniers messages',
+		'custom_index_widgets:latest_wire_index' => 'Derniers articles sur le fil sur GCconnex',
 		'custom_index_widgets:inline_content_index' => 'Texte libre',
 		'custom_index_widgets:html_content' => 'Votre texte',
 		'custom_index_widgets:latest_generic_index'=>"Contenu générique",

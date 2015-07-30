@@ -13,7 +13,7 @@ $english = array(
 
 	'tasks' => "Tasks",
 	'tasks:owner' => "%s's tasks",
-	'tasks:friends' => "Friends' tasks",
+	'tasks:friends' => "Colleagues' tasks",
 	'tasks:all' => "All site tasks",
 	'tasks:add' => "Add task",
 
@@ -104,7 +104,7 @@ $english = array(
 	
 	'tasks:start_date' => "Start",
 	 'tasks:end_date' => "End",
-	 'tasks:percent_done' => " done",
+	 'tasks:percent_done' => " Done",
 	 'tasks:work_remaining' => "Remain.",
 	 
 

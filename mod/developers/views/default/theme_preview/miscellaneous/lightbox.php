@@ -12,7 +12,7 @@ $link = elgg_view('output/url', array(
 ));
 
 echo $link;
-echo '<div class="hidden">';
+echo '<div class="hidden wb-invisible">';
 echo elgg_view_module('aside', 'Lightbox Test', $ipsum, array(
 	'id' => 'elgg-lightbox-test'
 ));

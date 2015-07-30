@@ -22,11 +22,12 @@ echo elgg_view('input/hidden', $params);
 
 	$(document).ready(function(){
 		$("#widgets-add-panel").fancybox({ 
-			autoDimensions: false, 
-			width: 600, 
+			autoDimensions: false,
+			width: 600,
+            scrolling: 'no',
 			height: "80%"
-		});	
-	});
+		});
+    });
 
 	function widget_manager_widget_add_init(){
 		
@@ -59,7 +60,7 @@ echo elgg_view('input/hidden', $params);
 	elgg.register_hook_handler('init', 'system', widget_manager_widget_add_init);
 
 </script>
-<?php 
+<?php
 	
 	$widget_context = str_replace("default_", "", $context);
 	
@@ -81,7 +82,7 @@ echo elgg_view('input/hidden', $params);
 	}
 	
 	$title = "<div id='widget_manager_widgets_search'>";
-	$title .= "<input title='" . elgg_echo("search") . "' type='text' value='" . elgg_echo("search") . "' onfocus='if($(this).val() == \"" . elgg_echo("search") .  "\"){ $(this).val(\"\"); }' onkeyup='widget_manager_widgets_search($(this).val());'></input>";
+	$title .= "<input title='" . elgg_echo("search") . "' type='text' value='" . elgg_echo("widget_manager:filter_widgets") . "' onfocus='if($(this).val() == \"" . elgg_echo("widget_manager:filter_widgets") .  "\"){ $(this).val(\"\"); }' onkeyup='widget_manager_widgets_search($(this).val());'></input>";
 	$title .= "</div>";
 	$title .= elgg_echo("widget_manager:widgets:lightbox:title:" . $context);
 	
@@ -94,8 +95,7 @@ echo elgg_view('input/hidden', $params);
 			$hide = widget_manager_get_widget_setting($handler, "hide", $widget_context);
 			
 			if($can_add && !$hide){
-				$body .= "<div class='widget_manager_widgets_lightbox_wrapper'>";
-				
+
 				if(!$allow_multiple && in_array($handler, $current_handlers)){
 					$class = 'elgg-state-unavailable';
 				} else {
@@ -107,14 +107,17 @@ echo elgg_view('input/hidden', $params);
 				} else {
 					$class .= ' elgg-widget-single';
 				}
-				
-				$body .= "<span class='widget_manager_widgets_lightbox_actions'>";
-				$body .= '<ul><li class="' . $class . '" id="elgg-widget-type-'. $handler . '">';
-				$body .= "<span class='elgg-quiet'>" . elgg_echo('widget:unavailable') . "</span>";
-				$body .= elgg_view("input/button", array("class" => "elgg-button-submit", "value" => elgg_echo("widget_manager:button:add")));
+                $body .= "<div class='widget_manager_widgets_lightbox_wrapper widget_manager_widgets_lightbox_wrapper_" . $handler . "'>";
+                $body .= "<span class='widget_manager_widgets_lightbox_actions'>";
+                $body .= '<ul><li class="' . $class . '" id="elgg-widget-type-' . $handler . '">';
+			//	$body .= "<span class='elgg-quiet'>" . elgg_echo('widget:unavailable') . "</span>";
+                $body .= elgg_view("input/button", array("class" => "elgg-button-submit widget-added", "value" => elgg_echo("widget:unavailable")));
+				$body .= elgg_view("input/button", array("class" => "elgg-button-submit widget-to-add", "value" => elgg_echo("widget_manager:button:add")));
 				$body .= "</li></ul>";
-				$body .= "</span>";
-				
+                $body .= "<span class='hidden wb-invisible'>Number of " . $widget->name . " widgets currently on the dashboad: </span>";
+                $body .= "</span>";
+                $body .= "<span class='multi-widget-count'>";
+                $body .= "</span>";
 				$description = $widget->description;
 				if(empty($description)){
 					$description = "&nbsp;"; // need to fill up for correct layout
@@ -125,7 +128,7 @@ echo elgg_view('input/hidden', $params);
 				
 				$body .= "</div>";
 			}
-		}		
+		}
 	} else {
 		$body = elgg_echo("notfound");
 	}
@@ -135,4 +138,4 @@ echo elgg_view('input/hidden', $params);
 		$module_type = "inline";
 	} 
 
-	echo "<div class='elgg-widgets-add-panel hidden'>" . elgg_view_module($module_type, $title, $body, array("id" => "widget_manager_widgets_select")) . "</div>";
+	echo "<div class='elgg-widgets-add-panel hidden wb-invisible'>" . elgg_view_module($module_type, $title, $body, array("id" => "widget_manager_widgets_select")) . "</div>";

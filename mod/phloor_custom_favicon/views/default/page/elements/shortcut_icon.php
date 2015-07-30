@@ -29,7 +29,7 @@ $href = "{$site_url}favicon/favicon.ico";
 // http://en.wikipedia.org/wiki/Favicon#Standardization
 //<link rel="shortcut icon" type="{$params['mime']}" href="{$params['href']}">
 $content = <<<HTML
-<link rel="shortcut icon" href="$href">
+<link rel="shortcut icon" href="$href" />
 HTML;
 
 // display content

@@ -25,10 +25,11 @@ $english = array(
 	'groups:invitations:pending' => 'Group invitations (%s)',
 
 	'groups:icon' => 'Group icon (leave blank to leave unchanged)',
-	'groups:name' => 'Group name',
+	'groups:name' => 'Group name <strong style="color:red;">*</strong>',
 	'groups:username' => 'Group short name (displayed in URLs, alphanumeric characters only)',
-	'groups:description' => 'Description',
+	'groups:description' => 'Long description',
 	'groups:briefdescription' => 'Brief description',
+	'groups:brief:charcount' => ' | Character count: ',
 	'groups:interests' => 'Tags',
 	'groups:website' => 'Website',
 	'groups:members' => 'Group members',

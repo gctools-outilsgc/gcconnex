@@ -55,7 +55,7 @@ Voir et commenter le nouveau signet:
 
 	'item:object:bookmarks' => 'Éléments mis en signet',
 
-	'bookmarks:group' => 'signets de groupe',
+	'bookmarks:group' => 'Signets de groupe',
 	'bookmarks:enablebookmarks' => 'Activer les signets de groupe',
 	'bookmarks:nogroup' => "Ce groupe n'a pas encore de signets",
 	'bookmarks:more' => 'Plus signets',

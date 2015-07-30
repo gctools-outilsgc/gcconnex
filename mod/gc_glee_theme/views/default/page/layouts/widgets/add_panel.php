@@ -22,7 +22,7 @@ foreach ($widgets as $column_widgets) {
 }
 
 ?>
-<div class="elgg-widgets-add-panel hidden clearfix" id="widgets-add-panel">
+<div class="elgg-widgets-add-panel hidden wb-invisible clearfix" id="widgets-add-panel">
 	<p>
 		<?php echo elgg_echo('widgets:add:description'); ?>
 	</p>

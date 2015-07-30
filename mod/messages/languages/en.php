@@ -12,6 +12,7 @@ $english = array(
 	'messages:displayposts' => "Display %s posts",
 	'messages' => "Messages",
 	'messages:unreadcount' => "%s unread",
+	'messages:unreadmessages' => "unread message(s)",
 	'messages:back' => "back to messages",
 	'messages:user' => "%s's inbox",
 	'messages:posttitle' => "%s's messages: %s",

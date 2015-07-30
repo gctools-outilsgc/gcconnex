@@ -12,12 +12,12 @@ $question = elgg_echo('ideas:search');
 echo elgg_view('output/longtext', array('value' => $description));
 
 echo '<h3 class="mvm">' . $question . '</h3>';
-
-echo elgg_view('input/text', array(
+// GCchange - Ilia: encased text box in a div to prevent it from overflowing the available space in the central column.
+echo "<div style='width:97%;'>". elgg_view('input/text', array(
 	'name' => 'body',
 	'class' => 'mbm',
 	'id' => 'ideas-textarea',
-));
+))  ."</div>";
 
 ?>
 

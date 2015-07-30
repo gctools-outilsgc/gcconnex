@@ -24,12 +24,12 @@ function glee_theme_draft_one_init() {
     elgg_load_js('glee-theme-draft-one:init');
 
 
-	elgg_register_menu_item('site', array(
+	/*elgg_register_menu_item('site', array(
          'name' => 'EmailUs',
          'href' => 'mailto:GCCONNEX@tbs-sct.gc.ca',
          'text' => elgg_echo('emailus'),
          'priority' => 101,
-    ) ); 
+    ) ); */
     return true;
 }
 
@@ -59,7 +59,30 @@ function glee_theme_draft_one_pagesetup() {
 // 			'section' => 'alt',
  //        ));
   //   }
+
+    // GCconnex change - Ilia: re-register top menu items without their icons for consistency - for Issue #52 (https://github.com/tbs-sct/gcconnex/issues/52)
+    if ( elgg_is_logged_in() ){
+        elgg_unregister_menu_item( 'topbar', 'usersettings' );
+        elgg_register_menu_item('topbar', array(
+            'name' => 'usersettings',
+            'href' => "settings/user/{$viewer->username}",
+            'text' => elgg_echo('settings'),
+            'priority' => 500,
+            'section' => 'alt',
+        ));
+
     
+        elgg_unregister_menu_item( 'topbar', 'dashboard' );
+         elgg_register_menu_item('topbar', array(
+            'name' => 'dashboard',
+            'href' => 'dashboard',
+            'text' => elgg_echo('dashboard'),
+            'priority' => 450,
+            'section' => 'alt',
+        ));
+    }
+
+
     
     glee_load_bootstrap_style();
       

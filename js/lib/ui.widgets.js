@@ -25,9 +25,10 @@ elgg.ui.widgets.init = function() {
 
 	$('.elgg-widgets-add-panel li.elgg-state-available').click(elgg.ui.widgets.add);
 
+
 	$('a.elgg-widget-delete-button').live('click', elgg.ui.widgets.remove);
 	$('.elgg-widget-edit > form ').live('submit', elgg.ui.widgets.saveSettings);
-	$('a.elgg-widget-collapse-button').live('click', elgg.ui.widgets.collapseToggle);
+//	$('a.elgg-widget-collapse-button').live('click', elgg.ui.widgets.collapseToggle);
 
 	elgg.ui.widgets.setMinHeight(".elgg-widgets");
 };
@@ -51,7 +52,9 @@ elgg.ui.widgets.add = function(event) {
 		$(this).addClass('elgg-state-unavailable');
 		$(this).removeClass('elgg-state-available');
 		$(this).unbind('click', elgg.ui.widgets.add);
+
 	}
+
 
 	elgg.action('widgets/add', {
 		data: {
@@ -113,7 +116,12 @@ elgg.ui.widgets.remove = function(event) {
 		return;
 	}
 	
+
+
 	var $widget = $(this).closest('.elgg-module-widget');
+
+
+
 
 	// if widget type is single instance type, enable the add buton
 	var type = $widget.attr('class');

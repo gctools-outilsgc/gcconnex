@@ -6,7 +6,7 @@ elgg.provide('glee');
 glee.createModal = function(name, file) {
  id = "#" + name;
  if ($(id).length == 0) {
-  registration_modal = $('<div class="modal fade hidden" id="' + name + '"></div>');
+  registration_modal = $('<div class="modal fade hidden wb-invisible" id="' + name + '"></div>');
   $("body").append(registration_modal);
 
   $(id).css("padding", "20px"); 

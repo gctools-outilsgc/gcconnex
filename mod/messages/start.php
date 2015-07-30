@@ -140,7 +140,7 @@ function messages_notifier() {
 		// get unread messages
 		$num_messages = (int)messages_count_unread();
 		if ($num_messages != 0) {
-			$text .= "<span class=\"messages-new\">$num_messages</span>";
+			$text .= "<span class=\"messages-new\">$num_messages<div class='hidden wb-invisible'>". elgg_echo("messages:unreadmessages" ) ."</div></span>";
 			$tooltip .= " (" . elgg_echo("messages:unreadcount", array($num_messages)) . ")";
 		}
 

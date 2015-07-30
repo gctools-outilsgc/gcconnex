@@ -97,7 +97,7 @@ header("Content-type: text/html; charset=UTF-8");
 		</div>	
 	</div>
 	
-	<div class="hidden" id=gleeModalContainer></div>
+	<div class="hidden wb-invisible" id='gleeModalContainer'></div>
 	
 <?php echo elgg_view('page/elements/foot'); ?>
 

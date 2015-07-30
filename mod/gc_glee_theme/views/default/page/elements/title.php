@@ -11,7 +11,7 @@ if (isset($vars['class'])) {
 	$class = " class=\"{$vars['class']}\"";
 }
 
-echo "<h2{$class}>{$vars['title']}</h2></br>";
+echo "<h1{$class}>{$vars['title']}</h1></br>";
 
 if (strpos($vars['title'], "events")!==false||strpos($vars['title'], "Tous les événement")!==false||strpos($vars['title'], "Calendriers ")!==false||
 strpos($vars['title'], "calendrier")!==false||

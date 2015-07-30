@@ -10,7 +10,7 @@ function dashboard_init() {
 
 	elgg_extend_view('css/elgg', 'dashboard/css');
 
-	elgg_register_menu_item('topbar', array(
+	if ( elgg_is_logged_in() ) elgg_register_menu_item('topbar', array(
 		'name' => 'dashboard',
 		'href' => 'dashboard',
 		'text' => elgg_view_icon('home') . elgg_echo('dashboard'),

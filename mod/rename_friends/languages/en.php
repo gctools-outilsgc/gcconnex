@@ -107,9 +107,11 @@ $english = array(
 	'friends:of:owned' => "People who have made %s a {$lsingle}",
 	'friends:of' => "{$uplural} of",
 	'friends:collections' => "{$usingle} circles",
+	'collections:add' => "New {$lplural} circle",
 	'friends:collections:add' => "New {$lplural} circle",
 	'friends:addfriends' => "Select {$lplural}",
 	'friends:collectionfriends' => "{$uplural} in circle",
+	'friends:collections:members' => "Circle {$lplural}",
 	'river:friend:user:default' => "%s is now a {$lsingle} with %s",
 	'river:widgets:friends' => "{$uplural} activity",
 	'userpicker:only_friends' => "Only {$lplural}",
@@ -225,6 +227,11 @@ You will automatically add them as a {$lsingle} when you create your account.",
 'river_addon:option:default' => "All, Mine, {$uplural}",
 'river_addon:option:friend'	=> "{$uplural}, Mine, All",
 'river_addon:option:mine' => "Mine, {$uplural}, All",
+
+/*
+ * General / multi-mod
+ */
+'friends:filterby' => "{$uplural}'",
 
 );
 
