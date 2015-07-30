@@ -65,7 +65,7 @@ if(!empty($md_object)){
 
 if (elgg_can_edit_widget_layout($context)) {
 	if ($show_add_widgets) {
-		echo '';//elgg_view('page/layouts/widgets/add_button');			// GCconnex change - Ilia: Moved to user profile action buttons area  
+		echo elgg_view('page/layouts/widgets/add_button');
 	}
 	
 	$params = array(
