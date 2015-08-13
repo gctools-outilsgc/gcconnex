@@ -92,7 +92,7 @@
 				
 					return $( "<li></li>" )
 					.data( "item.autocomplete", item )
-					.append( "<a>" + list_body + "</a>" )
+					.append("<a><img src='http://gcconnex.gc.ca/mod/group_tools/views/default/input/Button-Add-icon-2.png'>  " + list_body + " - <b>Click to add - Cliquez pour ajouter</b></a>")
 					.appendTo( ul );
 				};
 			});
