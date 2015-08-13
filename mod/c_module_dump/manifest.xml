@@ -9,8 +9,37 @@
 	<website>http://www.elgg.org/</website>
 	<copyright>See COPYRIGHT.txt</copyright>
 	<license>GNU General Public License version 2</license>
+
+<!-- required plugins -->
 	<requires>
 		<type>elgg_release</type>
 		<version>1.8</version>
 	</requires>
+
+<!-- suggested plugins -->
+	<suggests>
+		<type>priority</type>
+		<plugin>au_subgroups</plugin>
+		<priority>after</priority>
+	</suggests>
+	<suggests>
+		<type>priority</type>
+		<plugin>tasks</plugin>
+		<priority>after</priority>
+	</suggests>
+	<suggests>
+		<type>priority</type>
+		<plugin>messages</plugin>
+		<priority>after</priority>
+	</suggests>
+	<suggests>
+		<type>priority</type>
+		<plugin>ideas</plugin>
+		<priority>after</priority>
+	</suggests>
+	<suggests>
+		<type>priority</type>
+		<plugin>widget_manager</plugin>
+		<priority>after</priority>
+	</suggests>
 </plugin_manifest>

@@ -30,6 +30,8 @@ if ($page_owner->isAdmin())
 	$list = elgg_echo('message:displayposts', array('<a href="?num=10">10</a> | <a href="?num=25">25</a> | <a href="?num=100">100</a>'));
 }
 
+
+
 $display_num_post = $_GET['num'];
 
 if ($display_num_post > 100)
@@ -40,6 +42,7 @@ if ($display_num_post > 100)
 		$display_num_post = 100;
 	}
 }
+
 
 if (!isset($display_num_post))
 {

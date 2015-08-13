@@ -15,9 +15,7 @@ echo '<div id="group-replies" class="mtl">';
 
 $display = $_GET['num'];
 if (!isset($display))
-{
 	$display = 25;
-}
 
 $options = array(
 	'guid' => $vars['entity']->getGUID(),
