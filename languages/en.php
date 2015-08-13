@@ -255,8 +255,8 @@ $english = array(
 	'name' => "Display name",
 	'email' => "Email address",
 	'username' => "Username",
-	'loginusername' => "Username or email",
-	'password' => "Password",
+	'loginusername' => "GCconnex username or email",
+	'password' => "GCconnex password",
 	'passwordagain' => "Password (again for verification)",
 	'admin_option' => "Make this user an admin?",
 
@@ -282,10 +282,10 @@ $english = array(
 	'widgets:add' => 'Add widgets',
 	'widgets:add:description' => "Click on any widget button below to add it to the page.",
 	'widgets:position:fixed' => '(Fixed position on page)',
-	'widget:unavailable' => 'Remove Widget',
+	'widget:unavailable' => 'You have already added this widget',
 	'widget:numbertodisplay' => 'Number of items to display',
 
-	'widget:delete' => 'Remove "%s" widget',		// GCchange - Ilia: Specified that it is the widget that is being deleted
+	'widget:delete' => 'Remove "%s" widget', // GCchange - Ilia: Specified that it is the widget that is being deleted
 	'widget:edit' => 'Customize this widget',
 
 	'widgets' => "Widgets",
@@ -543,11 +543,13 @@ $english = array(
 	'user:username:notfound' => 'Username %s not found.',
 
 	'user:password:lost' => 'Lost password',
-	'user:password:resetreq:success' => 'Successfully requested a new password, email sent',
+	'user:password:resetreq:success' => 'Password reset successful. You will receive an email shortly.',
 	'user:password:resetreq:fail' => 'Could not request a new password.',
 
-	'user:password:text' => 'To request a new password, enter your username or email address below and click the Request button.',
-
+	//GCchange: more detailed password reset text - Troy T. Lawson
+	//'user:password:text' => 'To request a new password, enter your username or email address below and click the Request button.',
+	'user:password:text' => 'To request a new password, enter your username or email address below and click the Request button. An email will be sent to you with your temporary password. </br></br><b>Note:</b> It may take several minutes to receive the email due to your departmental firewall. To avoid further delays, do not resend another request - please be patient.',
+	
 	'user:persistent' => 'Remember me',
 
 	'walled_garden:welcome' => 'Welcome to',
