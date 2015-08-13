@@ -234,9 +234,9 @@ You will automatically add them as a {$lsingle} when you create your account.",
 'river_addon:option:mine' => "Mine, {$uplural}, All",
 
 /*
- * General / multi-mod
- */
-'friends:filterby' => "De {$uplural}",
+* General / multi-mod
+*/
+'friends:filterby' => "De mes {$lplural}",
 
 );
 
