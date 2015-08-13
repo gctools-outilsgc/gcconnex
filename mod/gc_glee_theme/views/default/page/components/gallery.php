@@ -63,14 +63,12 @@ if ($position == 'before' || $position == 'both') {
 				$id = "item-{$item->getType()}-{$item->id}";
 			}
 			echo "<li id=\"$id\" class=\"$item_class\">";
-			
 			if ( $item->getType() == "user" ){
 				$username = get_user( $item->getGUID() )->username;
 				echo str_replace( "</a>", "<div class='hidden wb-invisible'>{$username}</div></a>", elgg_view_list_item($item, $vars) );
 			}
 			else
 				echo elgg_view_list_item($item, $vars);
-			
 			echo "</li>";
 		}
 	?>
