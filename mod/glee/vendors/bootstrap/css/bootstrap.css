@@ -194,7 +194,7 @@ a:hover {
 .navbar-fixed-top .container,
 .navbar-fixed-bottom .container {
   min-width: 1000px;
-  width:  90%;
+  width: 90%;
 }
 
 /*GC Edit - Ilia: streching*/
@@ -210,8 +210,8 @@ a:hover {
 
 /*GC Edit - Ilia: streching*/
 .span10 {
-  width: 810px;
-  width:  79%;
+  min-width: 810px;
+  width: 79%;
 }
 
 .span9 {
@@ -3750,10 +3750,10 @@ input[type="submit"].btn.btn-mini {
           border-radius: 0;
 }
 
-/*  Edit - stretching*/
+/*GC Edit - Ilia: streching*/
 .navbar-fixed-top .container,
 .navbar-fixed-bottom .container {
-  width: 1010px;
+  min-width: 1010px;
   width: 90%;
 }
 
