@@ -87,7 +87,7 @@ $english = array(
 			'tidypics:stats' => 'Stats',
 			'tidypics:nophotosingroup' => 'This groups does not have any photos yet.',
 			'tidypics:upgrade' => 'Upgrade',
-			'tidypics:sort' => 'Sorting the %s album',
+			'tidypics:sort' => 'Sort %s album',
 			'tidypics:none' => 'No photo albums',
 
 		//settings

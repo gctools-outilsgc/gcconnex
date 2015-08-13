@@ -81,7 +81,7 @@ $french = array(
               'tidypics:highestvotecount:nosuccess' => "Aucune photo notée pour l’instant.", 
               'tidypics:recentlyvoted' => "Notées récemment ", 
               'tidypics:recentlyvoted:nosuccess' => "Aucune photo notée pour l’instant.", 
- 
+			  'tidypics:sort' => "Trier l'album de %s",
 
   //settings
               'tidypics:settings' => 'Paramètres',  
