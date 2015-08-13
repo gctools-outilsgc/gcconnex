@@ -1,0 +1,92 @@
+= Version History =
+
+3.3.1 (2014-11-10):
+
+- changed: restored the default events, couldn't find the reason for the removal (fixes #4)
+- applied Elgg coding standards
+
+3.3 (2013-04-05):
+
+- added: Spanish translation (thanks to Iknaxio Marx http://community.elgg.org/profile/iknaxio)
+- added: notification on friend accept
+- added: French translation (thanks to https://github.com/GeekShadow PR #3)
+- changed: layout and code cleanup
+- changed: styling of topbar icon (inspired by https://github.com/minhtinh2604 PR #1)
+- removed: CSS because it's no longer needed
+
+3.2 (2012-06-11):
+
+- added: direct link to add/remove friend in member listing
+- added: Dutch translation
+- added: river view now works both ways
+- added: river cleanup
+- fixed: small error in Englisch language file (thanks to Matt Beckett http://community.elgg.org/pg/profile/Beck24)
+- fixed: old link in notification
+- changed: small code optimalizations
+
+3.1 (2012-03-02):
+
+- added: german translation (thanks to Opteron http://community.elgg.org/pg/profile/Opteron)
+- fixed: wrong link in new request notify (thanks to Lee http://community.elgg.org/pg/profile/8toenails)
+
+3.0.2 (2011-12-23):
+
+- fixed: river events in Elgg 1.8.1+
+- changed: required Elgg version to 1.8.1
+
+3.0.1 (2011-11-28):
+
+- fixed: page_handler issue with Elgg 1.8.1
+- changed: moved version history from README.txt to CHANGES.txt
+
+3.0 (2011-11-08):
+
+- changed: Elgg 1.8 compatibility
+
+2.3 (2011-09-23):
+
+- added: dutch translation
+- fixed: link on profile actions when pending friend request
+
+2.2.4 (2011-09-19):
+
+- fixed: elgg depricated functions
+- changed: used more elgg functions
+- changed: user profile menu now shows pending request
+
+2.2.3 (2011-08-10):
+
+- fixed: conflict with invitefriends (thanks to AV-2 http://community.elgg.org/pg/profile/vectorraster)
+
+2.2.2 (2011-06-21):
+
+- fixed: depricated notice in start.php
+	
+2.2.1 (2011-06-15):
+
+- changed: layout of listings
+- fixed: depricated notice in topbar
+
+2.2:
+
+- changed: removed action_gatekeepers from actions
+	
+2.1:
+
+- added: CSS fix to hide friendsof on profile and user pulldown menu
+- added: friends menu no longer showing friendsof
+- fixed: collections links now showing
+- changed: menu title language handling
+- changed: CSS for topbar
+	
+2.0:
+
+- added: menu options in friends and messages
+- added: option to revoke a request
+- added: listing of sent requests
+- changed: listing of received friend requests
+- changed: Elgg topbar icon
+	
+1.5:
+
+- latest release by Bosssumon and Zac Hopkinson
