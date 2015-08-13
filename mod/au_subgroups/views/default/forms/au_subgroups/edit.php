@@ -29,8 +29,7 @@ if ($au_subgroup) {
 
 <script>
   $(document).ready( function() {
-    $('.elgg-form-groups-edit select[name=vis]').prepend('<option value="parent_group_acl"><?php echo elgg_echo('au_subgroups:option:parent:members'); ?></option>');
-    
+    $('.elgg-form-groups-edit select[name=vis]').prepend('<option value="parent_group_acl"><?php echo elgg_echo('au_subgroups:option:parent:members'); ?></option>');   
     <?php
     if ($parent->access_id != ACCESS_PUBLIC) {
      // remove public access option 
@@ -59,8 +58,11 @@ if ($au_subgroup) {
     $('.elgg-form-groups-edit select[name=vis] option:last').attr('selected', 'selected');
     <?php
     } elseif ($group->access_id == $parent->group_acl) {
-    ?>
-    $('.elgg-form-groups-edit select[name=vis] option[value=parent_group_acl]').attr('selected', 'selected');
+  
+?>
+    //$('.elgg-form-groups-edit select[name=vis] option[value="parent_group_acl"]').attr('selected', 'selected');
+    // cyu - 04/07/2015: issue with visibility reverting back to group members
+    $('.elgg-form-groups-edit select[name=vis] option[value="parent_group_acl"]').attr('selected', 'selected');
     <?php
     }
     ?>
