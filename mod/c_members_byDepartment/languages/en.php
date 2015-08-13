@@ -26,6 +26,7 @@ $english = array(
 	'c_bin:last_page' => 'Last page',
 	'c_bin:regenerate_notice' => 'Regenerate records',
 	'c_bin:tag_notice' => 'Tag users',
+	'c_bin:missing_requirements' => 'Missing Requirements',
 );
 
 add_translation('en', $english);

@@ -3,6 +3,7 @@
  * Members navigation
  */
 
+// cyu - modified 02-13-2015: overwrites the existing view to include the navigation option tab in members page
 $tabs = array(
 	'newest' => array(
 		'title' => elgg_echo('members:label:newest'),

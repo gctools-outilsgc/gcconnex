@@ -24,6 +24,7 @@ $french = array(
 	'c_bin:previous' => 'Précédent',
 	'c_bin:next' => 'Suivant',
 	'c_bin:last_page' => 'Dernière page',
+	'c_bin:missing_requirements' => 'Fichiers manquants',
 );
 
 add_translation("fr",$french);
