@@ -137,6 +137,7 @@ elgg.ui.widgets.add = function(event) {
 };
 
 
+
 elgg.ui.widgets.toggleremove = function(event) {
     $('.elgg-widgets-add-panel li.elgg-widget-single.elgg-state-available').children('input.widget-added').attr('disabled', "disabled");       // disable remove widget button
     $('.elgg-widgets-add-panel li.elgg-widget-single.elgg-state-available').children('input.widget-to-add').removeAttr('disabled');         // enable add widget button
@@ -221,5 +222,7 @@ elgg.ui.widgets.removebtn = function(event) {
 
 	event.preventDefault();
 };
+
+
 
 elgg.register_hook_handler('init', 'system', elgg.ui.widgets.init);

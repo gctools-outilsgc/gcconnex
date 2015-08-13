@@ -97,7 +97,6 @@
 		"widget-accessibility:info:groups:The_Wire" => "Your most recent wire posts",
 		"widget-accessibility:info:groups:Twitter"	=> "",
 		"widget-accessibility:info:groups:Twitter_search" => "",
-
 	);
 	add_translation("en", $english);
 	

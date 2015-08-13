@@ -68,8 +68,10 @@ $jquery_path = elgg_get_site_url() . 'vendors/jquery/';
 	display: none;
 }
 
+/* cyu - this affects the functionality to embed content, the lightbox gets cut off and user cannot see the bottom portion (create discussion -> embed) */
 #fancybox-wrap {
-	position: fixed;
+	//position: fixed;
+	position: absolute;
 	top: 0;
 	left: 0;
 	padding: 20px;
