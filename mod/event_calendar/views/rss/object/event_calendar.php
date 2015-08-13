@@ -12,6 +12,8 @@
 	 */
 
 	$title = $vars['entity']->title;
+
+	elgg_load_library('elgg:event_calendar');
 	
 	$event_items = event_calendar_get_formatted_full_items($vars['entity']);
 	$items = array();

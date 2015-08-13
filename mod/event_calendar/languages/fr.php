@@ -1,7 +1,6 @@
 <?php
 $language = array (
 
-
 'event_calendar:month:01'=>" Janvier ",
 'event_calendar:month:02'=>" Février ",
 'event_calendar:month:03'=>" Mars ",
