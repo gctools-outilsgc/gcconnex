@@ -18,7 +18,20 @@ if (!isset($_GET['joindate']) || !isset($_GET['guid'])) {
 }
 
 $join_date = (int)$_GET['joindate'];
-$last_cache = (int)$_GET['lastcache']; // icontime
+
+
+//$last_cache = (int)$_GET['lastcache']; // icontime
+if (((int)$_GET['lastcache']) == null)
+{
+	$last_cache = 0;
+} else {
+	$last_cache = (int)$_GET['lastcache'];
+}
+
+
+
+
+
 $guid = (int)$_GET['guid'];
 
 // If is the same ETag, content didn't changed.
