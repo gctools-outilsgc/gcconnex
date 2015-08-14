@@ -34,17 +34,17 @@ $invitecode = get_input('invitecode');
 if (get_input('noscript') !== 'retired' && get_input('form_type') === 'standard')
 {
 	$username = get_input('username');
-	$email = trim(get_input('email'));
+	$email = str_replace(' ','',trim(get_input('email')));
 	$password = trim(get_input('password', null, false));
 	$password2 = trim(get_input('password2', null, false));
 	$name = get_input('name');
-	$email2 = get_input('initial_email');
+	$email2 = str_replace(' ','',get_input('initial_email'));
 	$toc = get_input('toc2');
 
 } else {
 
-	$email = trim(get_input('c_email'));
-	$email2 = trim(get_input('c_email2'));
+	$email = str_replace(' ', '',trim(get_input('c_email')));
+	$email2 = str_replace(' ', '', trim(get_input('c_email2')));
 	$password = trim(get_input('c_password', null, false));
 	$password2 = trim(get_input('c_password2', null, false));
 	$toc = get_input('toc1');

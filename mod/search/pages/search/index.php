@@ -35,7 +35,7 @@ $query = preg_replace('/\s[\s]+/',' ',$query);
 $query = trim($query);
 //$query = preg_replace('/\-[\-]+/','-',$query);
 
-error_log('cyu - cleansed query: |'.$query.'| contains this many characters: '.strlen($query).' ascii code: '.ord($query));
+//error_log('cyu - cleansed query: |'.$query.'| contains this many characters: '.strlen($query).' ascii code: '.ord($query));
 
 // @todo - create function for sanitization of strings for display in 1.8
 // encode <,>,&, quotes and characters above 127

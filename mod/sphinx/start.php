@@ -25,7 +25,7 @@ function sphinx_init() {
 function sphinx_query($params, $index) {
 	$cl = new SphinxClient();
 	$cl->SetServer("localhost", 9312);
-	$cl->SetMatchMode(SPH_MATCH_ANY);
+	$cl->SetMatchMode(SPH_MATCH_ALL);
 	$cl->SetLimits($params['offset'], $params['limit']);
 	
 	if (isset($params['subtype'])) {
@@ -196,9 +196,9 @@ function sphinx_tags_hook($hook, $type, $value, $params) {
 
 	if (!is_array($tags))
 	{
-		error_log('cyu - tags is not an array');
+		//error_log('cyu - tags is not an array');
 	} else {
-		error_log('cyu - tags is an array and it contains...['.count($tags).']');
+		//error_log('cyu - tags is an array and it contains...['.count($tags).']');
 	}
 	$valid_tag_names = elgg_get_registered_tag_metadata_names();
 

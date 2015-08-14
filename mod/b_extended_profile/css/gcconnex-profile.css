@@ -1,0 +1,812 @@
+.b_extended_profile {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.gcconnex-profile-name {
+/*    padding-bottom: 20px; */
+    height: 36px;
+}
+
+#english_expiry,
+#french_expiry {
+    width: 100px;
+    margin-right: 10px;
+}
+
+.gcconnex-profile-name h1 {
+    float: left;
+}
+
+.gcconnex-basic-profile-actions,
+.gcconnex-basic-profile-edit {
+    margin-left: 10px;
+}
+
+.gcconnex-profile-social-media-links {
+    padding-top: 10px;
+}
+
+.gcconnex-profile-contact-info {
+    padding-top: 5px;
+}
+
+.gcconnex-profile-button {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0px;
+    font-family: Arial;
+    color: #ffffff;
+    background: #3c698e;
+    padding: 10px 20px 10px 20px;
+    text-decoration: none;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.gcconnex-profile-button:hover {
+    background: #507D9E;
+    text-decoration: none;
+}
+
+
+.gcconnex-profile-wire-post {
+    margin-top: 15px;
+}
+
+.gcconnex-profile-wire-post .elgg-border-plain {
+    border: none;
+}
+.gcconnex-profile-wire-post img {
+    float: left;
+    height: 50px;
+    width: 50px;
+}
+/*
+ * Styling for the message box that displays old skills to users for re-entry
+ */
+
+.gcconnex-old-skills {
+    min-height: 20px;
+    padding: 19px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    background-color: #FAEBCC;
+    border: 1px solid #E3E3E3;
+    border-radius: 10px;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05) inset;
+
+}
+
+.gcconnex-old-skills-display {
+    padding-left: 15px;
+}
+
+.gcconnex-old-skills-message {
+    padding-bottom: 10px;
+}
+
+.gcconnex-endorsements-count {
+    float: left;
+    width: 20px;
+    background-color: #3C698E;
+    font-family: arial, sans-serif;
+    color: white;
+    padding: 3px 3px 3px 3px;
+    text-align: center;
+    border: 0px solid cornflowerblue;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-right: 1px solid lightgray;
+    box-shadow: 7px 3px 5px #888888;
+    text-shadow: 1px 1px #888888;
+}
+
+.gcconnex-skill-entry {
+    display: inline-block;
+    width: 100%;
+    height: 28px;
+}
+
+.gcconnex-skill-limit {
+    padding-bottom: 20px;
+}
+
+.gcconnex-profile-skills-display,
+.gcconnex-profile-languages-display {
+    padding-top: 20px;
+}
+
+.gcconnex-profile-language-official-languages {
+    margin: 10px;
+}
+
+.gcconnex-skill-endorsements {
+    float: right;
+}
+
+.gcconnex-endorsements-skill {
+    float: left;
+    min-width: 75px;
+    max-width: 255px;
+    height: 18px;
+    overflow-x: hidden;
+    -ms-overflow-x: hidden;
+    overflow-y: hidden;
+    -ms-overflow-y: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: arial, sans-serif;
+    background-color: darkgray;
+    color: white;
+    padding: 3px 6px 3px 3px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    box-shadow: 5px 3px 5px #888888;
+    margin-left: 0px;
+}
+
+.gcconnex-endorsement-add {
+    margin-left: 10px;
+}
+
+.gcconnex-endorsement-retract {
+    margin-left: 10px;
+}
+
+.gcconnex-endorsement-add.elgg-button,
+.gcconnex-endorsement-retract.elgg-button {
+    padding: 3px;
+}
+.gcconnex-endorsements-add-skill {
+    color: #3C698E;
+    text-shadow: 1px 1px #888888;
+    font-family: arial;
+    font-size: 12px;
+    clear: left;
+    padding: 3px 3px 3px 5px;
+    margin: 0px;
+    cursor: pointer;
+}
+
+.gcconnex-edit-profile {
+    margin-left: 10px;
+}
+
+.gcconnex-education-entry,
+.gcconnex-work-experience-entry,
+.gcconnex-languages-entry,
+.gcconnex-portfolio-entry {
+    margin: 15px;
+    background-color: lightgray;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+
+input.gcconnex-endorsements-input-skill,
+input.userfind {
+    display: block;
+    clear: left;
+    border: 1px solid lightgray;
+    box-shadow: 1px 1px darkgray;
+    border-radius: 5px;
+    width: 300px;
+}
+
+.gcconnex-endorsements-input-wrapper {
+    margin-top: 10px;
+}
+
+.gcconnex-endorsements-skill-wrapper {
+    padding-top: 10px;
+}
+
+.delete-skill {
+    font-family: arial, sans-serif;
+    font-size: 12px;
+    color: cornflowerblue;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.delete-skill-img {
+    height: 15px;
+    width: 15px;
+    position: relative;
+    top: 3px;
+    padding-left: 10px;
+    padding-right: 5px;
+}
+
+.temporarily-added .gcconnex-endorsements-skill {
+    background-color: #FFA500;
+}
+
+/*
+.edit-png {
+    background: url('../img/edit.png');
+    background-size: 20px 20px;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+}*/
+
+
+
+/* about me */
+.about-me-longtext {
+    width: 98%;
+}
+
+.gcconnex-profile-about-me-display {
+    padding-top: 10px;
+}
+
+.nav.elgg-menu.elgg-menu-longtext.elgg-menu-hz.elgg-menu-longtext-default {
+    display: none;
+}
+
+.gcconnex-about-me-edit-wrapper {
+    padding-top: 10px;
+}
+
+
+
+/* education */
+
+.gcconnex-profile-education-display,
+.gcconnex-profile-work-experience-display,
+.gcconnex-profile-languages-display,
+.gcconnex-profile-portfolio-display {
+    padding-bottom: 10px;
+}
+
+.work-experience-title,
+.education-school {
+    padding-top: 5px;
+    font-size: 18px;
+    padding-bottom: 2px;
+}
+
+.work-experience-dates,
+.education-dates {
+    font-size: 10px;
+    width: auto;
+    border-bottom: 1px solid #d3d3d3;
+    line-height: 12px;
+    padding-top: 7px;
+}
+
+.education-degree ul {
+    padding-left: 15px;
+}
+
+.education-degree li {
+    list-style: disc;
+    padding-left: 0px;
+    font-weight: bold;
+}
+
+.education-field {
+    padding-left: 20px;
+    font-style: italic;
+}
+
+.gcconnex-work-experience-organization,
+.gcconnex-work-experience-title {
+    width: 300px;
+}
+
+.gcconnex-work-experience-responsibilities {
+    width: 98%;
+}
+
+.work-experience-organization {
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+.gcconnex-profile-section-frame-wrapper {
+    position: relative;
+    padding: 10px;
+    padding-top: 20px;
+    background-color: #eeeeee;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.gcconnex-profile-title {
+    font-family: arial, sans-serif;
+    font-size: 12px;
+    text-align: center;
+    text-shadow: 1px 1px darkgray;
+    padding: 5px;
+    background-color: #3C698E;
+    border: 1px solid lightgray;
+    min-width: 100px;
+    left: 10px;
+    color: white;
+    z-index: 1;
+    position: absolute;
+    margin-top: -32px;
+}
+
+.edit-control img,
+.save-control img,
+.cancel-control img {
+    height: 15px;
+    width: 15px;
+    padding-right: 10px;
+    position: relative;
+    top: 2px;
+}
+
+.cancel-control.cancel-hover {
+    background-color: #FFA500;
+    color: #FFF;
+}
+
+.save-control.save-hover {
+    background-color: #78ab46;
+    color: white;
+}
+
+.edit-control.edit-hover {
+    background-color: #C1CDCD;
+}
+
+.gcconnex-profile-edit-controls {
+    float: right;
+    position: relative;
+    margin-top: -20px;
+    margin-right: -11px;
+}
+
+.edit-control,
+.save-control,
+.cancel-control {
+    font-family: arial, sans-serif;
+    font-size: 12px;
+    color: #3C698E;
+    font-weight: bold;
+    z-index: 1;
+    cursor: pointer;
+    padding: 5px 15px 5px 5px;
+    position: relative;
+    background-color: rgb(208, 208, 208);
+    border-left: 1px solid darkgray;
+}
+
+.edit-control,
+.cancel-control {
+    border-top-right-radius: 5px;
+    border-bottom: 1px solid darkgray;
+}
+
+.save-control {
+    border-top: 1px solid darkgray;
+    border-bottom-right-radius: 5px;
+}
+
+
+.b-user-menu {
+    display: inline;
+    float: right;
+    border-left: 3px solid #EEE;
+    height: 250px;
+    padding-top: 5px;
+}
+
+.b-user-menu-title {
+    background: none repeat scroll 0% 0% #3C698E;
+    color: #FFF;
+    text-decoration: none;
+    border-radius: 0 5px 0 0;
+    margin-top: -5px;
+    padding: 5px 15px;
+}
+
+.profile-content-menu a {
+    color: #808080;
+}
+.profile-content-menu li > a:hover {
+    border-left: 3px solid #3C698E;
+    text-decoration: none;
+    border-radius: 0px;
+    background: none repeat scroll 0% 0% #EEE;
+    color: black;
+}
+
+.profile {
+    float: none;
+}
+
+#profile-details {
+    padding-bottom: 5px;
+    float: left;
+    display: inline;
+    width: 45%;
+}
+
+.elgg-input-text[name='education'] {
+    width: 300px;
+}
+
+.gcconnex-work-experience-startdate,
+.gcconnex-work-experience-enddate,
+.gcconnex-work-experience-start-year,
+.gcconnex-work-experience-end-year,
+.gcconnex-education-startdate,
+.gcconnex-education-enddate,
+.gcconnex-education-start-year,
+.gcconnex-education-end-year
+{
+    width: 100px;
+}
+
+.elgg-input-text[name='startdate'],
+.elgg-input-text[name='enddate'] {
+    width: 100px;
+}
+.elgg-input-text[name='program'] {
+    width: 300px;
+}
+.elgg-input-text[name='fieldofstudy'] {
+    width: 300px;
+}
+.elgg-input-text[name='degree'] {
+    width: 300px;
+}
+/*
+ Colouring and styling for the "font-awesome" social media links on gcconnex profiles.
+ */
+.profile-icons {
+    width: 17px;
+    height: 17px;
+}
+
+.profile-detail-icon {
+    vertical-align: bottom;
+    padding-top: 5px;
+    padding-right: 5px;
+}
+
+.social-media-icons {
+    padding-right: 5px;
+}
+
+.fa {
+}
+.fa-google-plus {
+    color: #DD4939;
+}
+
+.fa-facebook {
+    color: #3C5B98;
+}
+
+.fa-instagram {
+    color: #6C5245
+}
+
+.fa-twitter {
+    color: #55AEEE;
+}
+
+.fa-linkedin {
+    color: #1A86BC;
+}
+
+.fa-tumblr {
+    color: #34465D;
+}
+
+.fa-pinterest {
+    color: #CB1F28;
+}
+
+.fa-flickr {
+    color: #0061C9;
+}
+
+.fa-youtube {
+    color: #D82A27;
+}
+
+.fa-github {
+    color: #333;
+}
+
+#textarea {
+    width: 99%;
+}
+/*
+ * Twitter typeahead.js styling
+ */
+
+.tt-suggestion-username {
+    padding-bottom: 5px;
+}
+
+.tt-query, /* UPDATE: newer versions use tt-input instead of tt-query */
+.tt-hint {
+    width: 396px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+}
+
+.tt-query { /* UPDATE: newer versions use tt-input instead of tt-query */
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.tt-hint {
+    color: #999
+}
+
+.tt-dropdown-menu {
+    width: 310px;
+    padding: 8px 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
+.tt-suggest-username-wrapper {
+    padding-top: 3px;
+}
+
+.tt-suggestion {
+    padding: 3px 20px;
+    font-size: 18px;
+    line-height: 24px;
+}
+
+.tt-suggestion.tt-is-under-cursor,
+.tt-suggestion.tt-cursor { /* UPDATE: newer versions use .tt-suggestion.tt-cursor */
+    color: #fff;
+    background-color: #0097cf;
+}
+
+.tt-suggest-username {
+    float: left;
+    padding-left: 15px;
+    width: 220px;
+    height: 24px;
+    overflow: hidden;
+}
+.tt-suggest-avatar {
+    float: left;
+    height: 20px;
+}
+
+.colleague-suggest-field .tt-suggestion {
+    margin: 0;
+    overflow: hidden;
+    height: 30px;
+}
+
+.gcconnex-avatar-in-list {
+    float: right;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.gcconnex-avatars-expand {
+    float: right;
+    height: 12px;
+    width: 12px;
+    padding: 4px;
+}
+
+.list-avatars {
+    overflow: hidden;
+
+}
+
+.work-experience-colleagues {
+    margin-top: 10px;
+}
+
+.work-experience-colleagues .gcconnex-avatar-in-list,
+.colleagues-list .list-avatars .gcconnex-avatar-in-list {
+    float: left;
+}
+
+.work-experience-colleagues .gcconnex-avatars-expand {
+    float: none;
+}
+
+.remove-colleague-from-list {
+    position: absolute;
+    z-index: 1;
+    font-size: 24px;
+    display: none;
+    cursor: pointer;
+}
+
+.first-col {
+    width: 200px;
+}
+
+td.left-col {
+    text-align: right;
+}
+
+.gcconnex-profile-language-official-languages td {
+    vertical-align: middle;
+}
+
+.colleague-suggest-field {
+    float: left;
+    margin-right: 20px;
+}
+
+.gcconnex-profile-languages-display {
+    padding-right: 20px;
+}
+
+#profile-owner-block {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    width: 250px;
+    height: 250px;
+}
+
+.avatar-profile-page {
+    width: 255px;
+    height: 255px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.avatar-hover-edit {
+    background-color: rgba(3,3,3, 0.5);
+    bottom: 25px;
+    color: white;
+    display: none;
+    font-weight: bold;
+    padding-bottom: 6px;
+    padding-top: 6px;
+    position: absolute;
+    text-align: center;
+    text-decoration: none;
+    width: 100%;
+}
+
+.gcconnex-profile-field-title {
+    width: 150px;
+    display: inline-block;
+    text-align: right;
+    padding-right: 10px;
+    font-weight: bold;
+}
+
+.gcconnex-portfolio-title {
+    width: 300px;
+}
+
+.gcconnex-portfolio-entry .hasDatepicker {
+    width: 100px;
+    margin-bottom: 0;
+}
+
+.gcconnex-portfolio-description {
+    max-width: 500px;
+    height: 100px;
+}
+
+.gcconnex-portfolio-label-datestamped {
+    position: relative;
+    left: 165px;
+    padding-bottom: 10px;
+}
+
+.gcconnex-portfolio-link {
+    width: 300px;
+}
+
+.portfolio-title,
+.portfolio-publicationdate,
+.portfolio-link,
+.portfolio-description {
+    display: inline;
+}
+
+.gcconnex-profile-portfolio-display {
+    padding-top: 10px;
+}
+
+.gcconnex-basic-department.tt-hint,
+.manager.tt-query,
+.manager.tt-hint {
+    width: 100%;
+}
+
+#manager-id {
+    display: none;
+}
+
+.basic-profile-label {
+    margin: 5px;
+    float: left;
+    text-align: right;
+    width: 120px;
+    padding-top: 4px;
+}
+
+
+.basic-profile-field {
+    margin: 3px;
+    float: left;
+}
+
+
+.basic-profile-standard-field-wrapper,
+.basic-profile-social-media-wrapper,
+.basic-profile-micro-assignments {
+    float: left;
+}
+
+.basic-profile-field-wrapper,
+.basic-profile-social-media-wrapper {
+    width: 375px;
+}
+
+body #editProfile {
+    width: 800px;
+    margin-left: -400px;
+}
+
+.input-group-addon {
+    padding: 6px 0px 6px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    color: #555;
+    text-align: center;
+    background-color: #EEE;
+    border: 1px solid #CCC;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    display: table-cell;
+    white-space: nowrap;
+    vertical-align: middle;
+    float: left;
+}
+
+.input-group {
+    border-collapse: separate;
+}
+
+.social-media-label {
+    float: inherit;
+    text-align: left;
+}
+
+.elgg-input-text.form-control.gcconnex-basic-field.gcconnex-social-media {
+    height: 16px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.gcconnex-basic-field {
+    width: 150px;
+    height: 28px;
+    margin-left: -1px;
+    border: 1px solid lightgray;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+::-webkit-input-placeholder { color:#ccc; }
+::-moz-placeholder { color:#ccc; } /* firefox 19+ */
+:-ms-input-placeholder { color:#ccc; } /* ie */
+input:-moz-placeholder { color:#ccc; }

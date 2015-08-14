@@ -26,7 +26,7 @@ extract($vars, EXTR_IF_EXISTS);
 
 $group_profile_fields = elgg_get_config('group');
 /** GCconnex change: character limit, count for Brief discription for Issue #61. **/
-$briefmaxlength = 250;					// Maximum length for brief description character count
+$briefmaxlength = 350;					// Maximum length for brief description character count
 if ($group_profile_fields > 0) {
 	foreach ($group_profile_fields as $shortname => $valtype) {
 		$line_break = '<br />';
@@ -44,7 +44,7 @@ if ($group_profile_fields > 0) {
 			'name' => $shortname,
 			'value' => elgg_extract($shortname, $vars),
 			'maxlength' => $briefmaxlength,
-			'onkeyup' => "document.getElementById('briefdescr-lbl').innerHTML = '" . elgg_echo("groups:{$shortname}") . elgg_echo('groups:brief:charcount') . " | Character count: ' + this.value.length + '/" . $briefmaxlength . "';"
+			'onkeyup' => "document.getElementById('briefdescr-lbl').innerHTML = '" . elgg_echo("groups:{$shortname}") . elgg_echo('groups:brief:charcount') . " ' + this.value.length + '/" . $briefmaxlength . "';"
 			));
 		else
 			echo elgg_view("input/{$valtype}", array(

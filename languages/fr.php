@@ -263,8 +263,8 @@ $french = array(
 	'name' => "Nom à afficher",
 	'email' => "Adresse e-mail",
 	'username' => "Nom d'utilisateur",
-	'loginusername' => "Nom d'utilisateur ou e-mail",
-	'password' => "Mot de passe",
+	'loginusername' => "Nom d'utilisateur GCconnex ou adresse courriel",
+	'password' => "Mot de passe GCconnex",
 	'passwordagain' => "Confirmation du mot de passe",
 	'admin_option' => "Définir cet utilisateur comme administrateur ?",
 	'email-in-use' => "courriel-déjà-enregistré",
@@ -291,10 +291,10 @@ $french = array(
 	'widgets:add' => "Ajouter des widgets",
 	'widgets:add:description' => "Cliquez sur n'importe quel widget ci-dessous pour l'ajouter à la page.",
 	'widgets:position:fixed' => "(Position modifiée sur la page)",
-	'widget:unavailable' => "Déjà ajouté",
+	'widget:unavailable' => "Vous avez déjà ajouté ce widget",
 	'widget:numbertodisplay' => "Nombre d'éléments à afficher ",
 
-	'widget:delete' => "Supprimer le widget <<%s>>",		// GCchange - Ilia: Specified that it is the widget that is being deleted
+	'widget:delete' => "Supprimer le widget <<%s>>", // GCchange - Ilia: Specified that it is the widget that is being deleted
 	'widget:edit' => "Personnaliser ce widget",
 
 	'widgets' => "Widgets",
@@ -535,11 +535,13 @@ $french = array(
 	'user:username:notfound' => "Nom d'utilisateur %s non trouvé.",
 
 	'user:password:lost' => "Mot de passe perdu ?",
-	'user:password:resetreq:success' => "Vous avez demandé un nouveau mot de passe, un e-mail vous a été envoyé",
+	'user:password:resetreq:success' => "Réinitialisation de mot de passe réussi. Vous recevrez un courriel bientôt.",
 	'user:password:resetreq:fail' => "Impossible de demander un nouveau mot de passe.",
 
-	'user:password:text' => "Pour générer un nouveau mot de passe, entrez votre nom d'utilisateur ci-dessous. Puis cliquez sur le bouton de demande.",
-
+	//gcchange: descriptive password reset -  Troy T. Lawson
+	//'user:password:text' => "Pour générer un nouveau mot de passe, entrez votre nom d'utilisateur ci-dessous. Puis cliquez sur le bouton de demande.",
+	'user:password:text' => "Pour générer un nouveau mot de passe, entrez votre nom d'utilisateur ou adresse courriel ci-dessous,  puis cliquez sur le bouton Requête. Un courriel vous sera envoyé pour réinitialiser votre mot de passe.</br></br><b>Nota :</b> Cela peut prendre plusieurs minutes avant de recevoir le courriel en raison de votre pare-feu ministériel. Pour éviter des délais supplémentaires, ne pas soumettre une autre requête – veuillez être patient.",
+	
 	'user:persistent' => "Se souvenir de moi",
 
 	'walled_garden:welcome' => "Bienvenue à",

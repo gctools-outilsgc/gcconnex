@@ -69,9 +69,8 @@
 		'widget_manager:widgets:lightbox:title:index' => "Add widgets to the index",
 		'widget_manager:widgets:lightbox:title:groups' => "Add widgets to the group profile",
 		'widget_manager:widgets:lightbox:title:admin' => "Add widgets to your admin dashboard",
-        'widget_manager:widgets:lightbox:filter:no-results' => "Aucun résultat ne correspond aux critères de votre filtre.",
-
-        // multi dashboard
+		
+		// multi dashboard
 		'widget_manager:multi_dashboard:add' => "Nouvel onglet",
 		'widget_manager:multi_dashboard:extras' => "Ajouter en tant qu’onglet du tableau de bord",
 		

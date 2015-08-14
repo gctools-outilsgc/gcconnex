@@ -34,7 +34,6 @@ if (!elgg_is_logged_in()) {
     $login_dropdown =  elgg_view('core/account/login_dropdown');
     
     // add it to the left
-    // GCConnex change - Ilia: For Issue #24 (https://github.com/tbs-sct/gcconnex/issues/24) move to the right to coincide with log out link location
     $content_right .= $login_dropdown;
 }
 /*
@@ -52,8 +51,7 @@ if (elgg_is_logged_in()) {
 */
 $output = <<<HTML
 
-<!--variable width topbar with a minimum-->
-<div style="min-width:940px; width: 95%;">
+<div style="width:940px;">
 	
     <div class="pull-left"  >
 		
@@ -74,11 +72,11 @@ HTML;
 
 #gc changes, tamara, lines 65-75
 $fip = <<<HTML
-<div style="position:relative; top:0px; min-width:940px; width:94%; background-color:#333; height:27px;">
+<div style="position:relative; top:0px; width:940px; background-color:#333; height:27px;">
 
 <div style="vertical-align:top; position:absolute; left:0px;"><img src='$site_url/_graphics/sig-eng-bg.gif' alt='Government of Canada | Gouvenrement du Canada' title='Government of Canada | Gouvenrement du Canada' /></div>
 
-<div style="vertical-align:top;padding-top: 5px; position:absolute; right:0px; color:white;"><b><a href='http://gcpedia.gc.ca' style='color:white;'>GCpedia</a> |  <strong style="font-size:110%;">GCconnex</strong>  |  <a href='http://www.gcforums.gc.ca/' style='color:white;'>GCforums</a></b></div>
+<div style="vertical-align:top;padding-top: 5px; position:absolute; right:0px; color:white;"><b><a href='http://gcpedia.gc.ca' style='color:white;'>GCpedia</a> |  <strong style="font-size:110%;">GCconnex</strong> <!-- |  <a href='http://www.gcforums.gc.ca/' style='color:white;'>GCforums</a> --> </b></div>
 
 </div>
 HTML;

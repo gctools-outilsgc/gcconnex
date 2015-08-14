@@ -1186,7 +1186,12 @@ function event_calendar_format_time($date,$time1,$time2='') {
 		if (is_numeric($time2)) {
 			$t .= " - ".event_calendar_convert_time($time2);
 		}
-		return "<strong>$t, $date</strong>";
+		
+		// cyu - request to bold the times for useability
+		if (strpos($_SERVER['REQUEST_URI'],'event_calendar/list') || strpos($_SERVER['REQUEST_URI'],'event_calendar/group'))
+			return "<strong>$t,$date</strong>";
+		else
+			return "$t, $date";
 	} else {
 		return $date;
 	}
@@ -1276,6 +1281,7 @@ function event_calendar_get_formatted_full_items($event) {
 }
 
 function event_calendar_get_formatted_time($event) {
+	// cyu - issue regarding displaying event time, does not display all day events
 	if (!$event->start_date) {
 		return '';
 	}
@@ -1286,17 +1292,18 @@ function event_calendar_get_formatted_time($event) {
 	if ($event->end_date) {
 		$end_date = date($date_format,$event->end_date);
 	}
+
 	if ((!$event->end_date) || ($end_date == $start_date)) {
-		if (!$event->all_day && $event_calendar_times) {
+		if (/*!$event->all_day*/ $event->schedule_type !== 'all_day' && $event_calendar_times) {
 			$start_date = event_calendar_format_time($start_date,$event->start_time,$event->end_time);
 		}
-		$time_bit = $start_date;
+		$time_bit = '<strong>'.$start_date.'</strong>';
 	} else {
-		if (!$event->all_day && $event_calendar_times) {
+		if (/*!$event->all_day*/ $event->schedule_type !== 'all_day' && $event_calendar_times) {
 			$start_date = event_calendar_format_time($start_date,$event->start_time);
 			$end_date = event_calendar_format_time($end_date,$event->end_time);
 		}
-		$time_bit = "$start_date - $end_date";
+		$time_bit = "<strong>$start_date - $end_date</strong>";
 	}
 	
 	if ($event->repeats == 'yes') {
@@ -1315,7 +1322,7 @@ function event_calendar_get_formatted_time($event) {
 			$week_bit .= ' '.elgg_echo('event_calendar:repeated_event:week_single');
 		}
 		$time_bit = elgg_echo('event_calendar:repeated_event:format',array($time_bit, $week_bit));
-	}
+	} // end if repeats..
 
 	return $time_bit;
 }
@@ -1525,8 +1532,12 @@ function event_calendar_get_page_content_list($page_type,$container_guid,$start_
 	$menu_item = ElggMenuItem::factory($menu_options);
 	elgg_register_menu_item('extras', $menu_item);
 
-	$body = elgg_view_layout("content", $params);
 
+	$passed_vars = $params['pass_vars'];	// cyu - 02/17/2015: modified to put pagination in to display ALL events
+	$params['pass_vars'] = '';	// cyu - 02/17/2015: modified to put pagination in to display ALL events
+
+	$body = elgg_view_layout("content", $params);
+	$body .= elgg_view_entity_list('event_calendar/filter_menu',$passed_vars);	// cyu - 02/17/2015: modified to put pagination in to display ALL events
 	return elgg_view_page($title,$body);
 }
 
@@ -1855,7 +1866,14 @@ function event_calendar_generate_listing_params($page_type,$container_guid,$orig
 		$title = elgg_echo('event_calendar:listing_title:'.$filter). ' ('.utf8_encode($subtitle).')';
 	}
 
-	$params = array('title' => $title, 'content' => $content, 'filter_override'=>$filter_override);
+	$params = array(
+		'title' => $title, 
+		'content' => $content, 
+		'filter_override'=>$filter_override,
+		// cyu - 02/17/2015: modified to pass the $vars to another function to do pagination
+		'pass_vars' => $vars,
+	);
+
 	elgg_set_ignore_access($access_status);
 	return $params;
 }

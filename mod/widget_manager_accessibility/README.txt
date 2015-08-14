@@ -1,6 +1,7 @@
 
 Accessibility / Usability issues addressed:
 		(Github #22, #23, #68, #34, #71, #76, #69)
+		 #71 fixed separately in widget manager mod.
 
 Overrides:
  functions from file js/lib/ui.widgets.js:
@@ -10,11 +11,10 @@ Overrides:
 
  View:
  	page/layouts/widgets/add_button.php
- 	page/layouts/widgets/add_panel.php
 
 
 #34:
-Requires removal of lines 30 in js/lib/ui.widget.js core:
+Requires removal of line 31 in js/lib/ui.widget.js core:
 $('a.elgg-widget-collapse-button').live('click', elgg.ui.widgets.collapseToggle);
 
 Also requires patch to engine/lib/navigation.php:

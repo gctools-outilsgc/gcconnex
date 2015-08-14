@@ -70,7 +70,7 @@ function tasks_init() {
 		'status' => 'text',
 		'assigned_to' => 'assign_to',
 		'percent_done' => 'text',
-//		'work_remaining' => 'text',		// GCConnex change - Ilia: Issue 48 (https://github.com/tbs-sct/gcconnex/issues/48) Removed due to redundancy as it is simply [1 - done]
+	//	'work_remaining' => 'text',		// GCConnex change - Ilia: Issue 48 (https://github.com/tbs-sct/gcconnex/issues/48) Removed due to redundancy as it is simply [1 - done]
 		
 		'tags' => 'tags',
 		'access_id' => 'access',

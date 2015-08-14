@@ -69,8 +69,7 @@
 		'widget_manager:widgets:lightbox:title:index' => "Add widgets to the index",
 		'widget_manager:widgets:lightbox:title:groups' => "Add widgets to the group profile",
 		'widget_manager:widgets:lightbox:title:admin' => "Add widgets to your admin dashboard",
-		'widget_manager:widgets:lightbox:filter:no-results' => "No results match the criteria of your filter.",
-
+		
 		// multi dashboard
 		'widget_manager:multi_dashboard:add' => "New Tab",
 		'widget_manager:multi_dashboard:extras' => "Add as dashboard tab",

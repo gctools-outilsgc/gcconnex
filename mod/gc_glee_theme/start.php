@@ -22,8 +22,8 @@ function glee_theme_draft_one_init() {
     $url = elgg_get_simplecache_url('js', 'glee_theme_draft_one/init');
     elgg_register_js('glee-theme-draft-one:init', $url, 'footer');
     elgg_load_js('glee-theme-draft-one:init');
-
-
+	
+	// Removed in favor of a combined help / contact us page.
 	/*elgg_register_menu_item('site', array(
          'name' => 'EmailUs',
          'href' => 'mailto:GCCONNEX@tbs-sct.gc.ca',
@@ -60,7 +60,7 @@ function glee_theme_draft_one_pagesetup() {
  //        ));
   //   }
 
-    // GCconnex change - Ilia: re-register top menu items without their icons for consistency - for Issue #52 (https://github.com/tbs-sct/gcconnex/issues/52)
+// GCconnex change - Ilia: re-register top menu items without their icons for consistency - for Issue #52 (https://github.com/tbs-sct/gcconnex/issues/52)
     if ( elgg_is_logged_in() ){
         elgg_unregister_menu_item( 'topbar', 'usersettings' );
         elgg_register_menu_item('topbar', array(
@@ -81,8 +81,6 @@ function glee_theme_draft_one_pagesetup() {
             'section' => 'alt',
         ));
     }
-
-
     
     glee_load_bootstrap_style();
       

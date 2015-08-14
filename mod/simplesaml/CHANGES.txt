@@ -1,0 +1,29 @@
+= Version History =
+
+1.3 (2013.01.13):
+
+- added: support for IDP provided username #2
+- added: support for CAS #6
+- added: support for force authentication #4
+- added: a setting to automaticly create accounts based on the IDP information #3
+- added: support for automaticly linking IDP accounts to existing Elgg accounts #5
+
+1.2 (2013-10-14):
+
+- added: saving of the SAML attributes on login
+- added: listing of saved SAML attributes in the user settings (only for admins)
+- added: IDentity Provider support
+- changed: no longer outputting the Exception during the registration process because of confusing errors
+- changed: plugin settings only lists Service Provider configurations
+
+1.1 (2013-04-05):
+
+- added: index widget to show only SAML logins
+- added: Dutch translation
+- changed: layout of the no account linked page
+- fixed: SAML icon now loads correctly
+- fixed: auto generation of username now always makes valid usernames
+
+1.0 (2012-12-27):
+
+- first release

@@ -14,7 +14,7 @@
  * TLaw/ISal 	n/a 			GC Changes
  * CYu 			March 5 2014 	Second Email field for verification & code clean up & validate email addresses
  * CYu 			July 16 2014	clearer messages & code cleanup						
- *
+ * CYu 			Sept 19 2014 	adjusted textfield rules (no spaces for emails)
  ***********************************************************************/
 
 $password = $password2 = '';
@@ -61,8 +61,9 @@ if (elgg_is_sticky_form('register')) {
 		var password1 = document.getElementById('password').value;
 		var password2 = document.getElementById('password2').value;
 		var d_name = document.getElementById('name').value;
-		var toc_val = $('#toc2:checked').val();
-
+		var toc_val = $('#toc2 input:checkbox:checked').val();
+		
+		//console.log('cyu - '+ toc_val);
 		var is_valid = false;
 		var pop_up_msg = "";
 
@@ -202,6 +203,18 @@ if (elgg_is_sticky_form('register')) {
 		return is_valid;
 	}
 
+
+	$("input").on("focus", function() {
+		$('#email_initial').on("keydown",function(e) {
+			return e.which !== 32;
+		});
+
+		$('#email').on("keydown",function(e) {
+			return e.which !== 32;
+		});
+	});
+
+
 	$('input').on("focus", function() {
 	    $('#email_initial').on("keyup", function() {
 	    	enable_submit(validForm());
@@ -219,8 +232,8 @@ if (elgg_is_sticky_form('register')) {
 	            }
 	        }
 	    });
-
-	    $('#toc2').click(function() {
+	
+		$('#toc2').click(function() {
 	    	if ($('#toc2:checked').val() == 1)
 	    	{
 	    		enable_submit(validForm());
@@ -388,6 +401,9 @@ echo elgg_view('input/checkboxes', array(
 	echo elgg_view('input/hidden', array('name' => 'invitecode', 'value' => $vars['invitecode']));
 	echo elgg_view('input/submit', array('name' => 'submit2', 'value' => elgg_echo('register')));
 	echo '</div>';
+	
+	echo '<center>'.elgg_echo('gcRegister:tutorials_notice').'</center>';
+	echo '<br/>';
 ?>
 
 <?php
@@ -410,6 +426,7 @@ echo elgg_view('input/checkboxes', array(
 	echo '<div>'. elgg_echo('gcRegister:email_notice') .'</div>';
 	echo '</td></tr></table></center>';
 	echo '<br/>';
+
 	$js_disabled = false;
 ?>
 
@@ -475,7 +492,7 @@ echo elgg_view('input/checkboxes', array(
 
 
 <div class="mtm">
-	<label><?php echo elgg_echo('gcRegister:display_name'); ?></label><br />
+	<label><?php echo elgg_echo('gcRegister:display_name'); ?> *</label><br />
 	<?php
 	echo elgg_view('input/text', array(
 		'name' => 'name',
@@ -483,6 +500,7 @@ echo elgg_view('input/checkboxes', array(
 		'value' => $name,
 	));
 	?>
+	<i>* <?php echo elgg_echo('gcRegister:display_name_notice'); ?></i>
 </div>
 <br/>
 <?php
@@ -511,6 +529,9 @@ echo elgg_view('input/checkboxes', array(
 		'onclick' => 'return check_fields2();'));
 
 	echo '</div>';
+	
+	echo '<center>'.elgg_echo('gcRegister:tutorials_notice').'</center>';
+	
 	echo '<br/>';
 ?>
 

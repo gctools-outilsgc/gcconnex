@@ -15,5 +15,10 @@
 		<type>elgg_release</type>
 		<version>1.8.3</version>
 	</requires>
+	<provides>
+		<type>plugin</type>
+		<name>tasks</name>
+		<version>2.0</version>
+	</provides>
 	<activate_on_install>true</activate_on_install>
 </plugin_manifest>

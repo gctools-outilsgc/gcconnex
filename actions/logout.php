@@ -12,7 +12,7 @@ $result = logout();
 // Set the system_message as appropriate
 if ($result) {
 	system_message(elgg_echo('logoutok'));
-	forward();
+	forward("http://gcconnex.gc.ca/simplesaml/saml2/idp/SingleLogoutService.php?ReturnTo=http://gcconnex.gc.ca");
 } else {
 	register_error(elgg_echo('logouterror'));
 }

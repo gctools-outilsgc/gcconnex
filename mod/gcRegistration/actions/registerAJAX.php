@@ -18,7 +18,7 @@
  * TLaw/ISal 	n/a 			created registerAJAX.php
  * CYu 			March 5 2014 	ajaxify the email verification & code clean up
  * CYu 			March 13 2014	restricts the email extension
- *
+ * CYu 			Sept 19 2014 	modifies so that checks are not case sensitive
  ***********************************************************************/
 
 global $CONFIG;
@@ -144,12 +144,13 @@ function checkInvalidDomain($dom)
 	elgg_load_library('c_ext_lib');
 	$isNotValid = true;
 
+	error_log('cyu - domain:'.$dom);
 	$result = getExtension();
 	if (count($result) > 0)
 	{
 		while ($row = mysqli_fetch_array($result))
 		{
-			if ($row['ext'] === $dom)
+			if (strtolower($row['ext']) === strtolower($dom))
 			{
 				//elgg_log('cyu - domain found in database!', 'NOTICE');
 				$isNotValid = false;
