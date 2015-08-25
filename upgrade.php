@@ -11,7 +11,10 @@
  *
  * Upgrades use a table {db_prefix}upgrade_lock as a mutex to prevent concurrent upgrades.
  *
- * @package Elgg.Core
+ * The URL to forward to after upgrades are complete can be specified by setting $_GET['forward']
+ * to a relative URL.
+ *
+ * @package    Elgg.Core
  * @subpackage Upgrade
  */
 
@@ -21,32 +24,59 @@ ini_set('display_errors', 1);
 define('UPGRADING', 'upgrading');
 require_once(dirname(__FILE__) . "/engine/start.php");
 
+$site_url = elgg_get_config('url');
+$site_host = parse_url($site_url, PHP_URL_HOST) . '/';
+
+// turn any full in-site URLs into absolute paths
+$forward_url = get_input('forward', '/admin', false);
+$forward_url = str_replace(array($site_url, $site_host), '/', $forward_url);
+
+if (strpos($forward_url, '/') !== 0) {
+	$forward_url = '/' . $forward_url;
+}
+
 if (get_input('upgrade') == 'upgrade') {
-	// prevent someone from running the upgrade script in parallel (see #4643)
-	if (!_elgg_upgrade_lock()) {
-		register_error(elgg_echo('upgrade:locked'));
-		forward();
+
+	$upgrader = new \Elgg\UpgradeService();
+	$result = $upgrader->run();
+	if ($result['failure'] == true) {
+		register_error($result['reason']);
+		forward($forward_url);
 	}
-	
-	// disable the system log for upgrades to avoid exceptions when the schema changes.
-	elgg_unregister_event_handler('log', 'systemlog', 'system_log_default_logger');
-	elgg_unregister_event_handler('all', 'all', 'system_log_listener');
-	
-	if (elgg_get_unprocessed_upgrades()) {
-		version_upgrade();
+} else {
+	// test the URL rewrite rules
+	if (!class_exists('ElggRewriteTester')) {
+		require dirname(__FILE__) . '/install/ElggRewriteTester.php';
+	}
+	$rewriteTester = new \ElggRewriteTester();
+	$url = elgg_get_site_url() . "__testing_rewrite?__testing_rewrite=1";
+	if (!$rewriteTester->runRewriteTest($url)) {
+		// see if there is a problem accessing the site at all
+		// due to ip restrictions for example
+		if (!$rewriteTester->runLocalhostAccessTest()) {
+			// note: translation may not be available until after upgrade
+			$msg = elgg_echo("installation:htaccess:localhost:connectionfailed");
+			if ($msg === "installation:htaccess:localhost:connectionfailed") {
+				$msg = "Elgg cannot connect to itself to test rewrite rules properly. Check "
+						. "that curl is working and there are no IP restrictions preventing "
+						. "localhost connections.";
+			}
+			echo $msg;
+			exit;
+		}
+		
+		// note: translation may not be available until after upgrade
+		$msg = elgg_echo("installation:htaccess:needs_upgrade");
+		if ($msg === "installation:htaccess:needs_upgrade") {
+			$msg = "You must update your .htaccess file so that the path is injected "
+				. "into the GET parameter __elgg_uri (you can use install/config/htaccess.dist as a guide).";
+		}
+		echo $msg;
+		exit;
 	}
 
-	// turn off time limit so plugins that have upgrade scripts aren't interrupted
-	set_time_limit(0);
-	elgg_trigger_event('upgrade', 'system', null);
-	elgg_invalidate_simplecache();
-	elgg_reset_system_cache();
-	
-	_elgg_upgrade_unlock();
-	
-} else {
 	// if upgrading from < 1.8.0, check for the core view 'welcome' and bail if it's found.
-	// see http://trac.elgg.org/ticket/3064
+	// see https://github.com/elgg/elgg/issues/3064
 	// we're not checking the view itself because it's likely themes will override this view.
 	// we're only concerned with core files.
 	$welcome = dirname(__FILE__) . '/views/default/welcome.php';
@@ -60,8 +90,15 @@ if (get_input('upgrade') == 'upgrade') {
 		exit;
 	}
 
-	echo elgg_view_page(elgg_echo('upgrading'), '', 'upgrade');
+	$vars = array(
+		'forward' => $forward_url
+	);
+
+	// reset cache to have latest translations available during upgrade
+	elgg_reset_system_cache();
+	
+	echo elgg_view_page(elgg_echo('upgrading'), '', 'upgrade', $vars);
 	exit;
 }
 
-forward();
+forward($forward_url);

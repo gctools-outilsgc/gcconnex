@@ -3,7 +3,7 @@
 * Bookmarks English language file
 */
 
-$french = array(
+return array(
 
 	/**
 	* Menu items and titles
@@ -28,6 +28,18 @@ $french = array(
 	'bookmarks:via' => "au moyen de signets",
 	'bookmarks:address' => "Adresse de la ressource à mettre en signet",
 	'bookmarks:none' => 'Pas de signets',
+
+	'bookmarks:notify:summary' => 'Nouveau signet nommé %s',
+	'bookmarks:notify:subject' => 'Nouveau signet: %s',
+	'bookmarks:notify:body' =>
+'%s a ajouté un nouveau signet:
+
+%s - %s
+%s
+
+Voir et commenter le nouveau signet:
+%s
+',
 
 	'bookmarks:notification' =>
 '%s a ajouté un nouveau signet:
@@ -87,6 +99,7 @@ Voir et commenter le nouveau signet:
 	'bookmarks:save:failed' => "Impossible d'enregistrer le signet. Veuillez réessayer.",
 	'bookmarks:save:invalid' => "L'adresse du signet n'est pas valide et ne peut pas être enregistré.",
 	'bookmarks:delete:failed' => "Impossible de supprimer le signet. Veuillez réessayer.",
+	'bookmarks:unknown_bookmark' => 'Impossible de trouver le signet spécifié',
 
 	/**
 	 * Email
@@ -100,5 +113,3 @@ Vous pouvez voir votre boîte de réception de signets à l'adresse suivante:
 %s",
 
 );
-
-add_translation("fr",$french);

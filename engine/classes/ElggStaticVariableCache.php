@@ -1,13 +1,13 @@
 <?php
 /**
- * ElggStaticVariableCache
+ * \ElggStaticVariableCache
  * Dummy cache which stores values in a static array. Using this makes future
  * replacements to other caching back ends (eg memcache) much easier.
  *
  * @package    Elgg.Core
  * @subpackage Cache
  */
-class ElggStaticVariableCache extends ElggSharedMemoryCache {
+class ElggStaticVariableCache extends \ElggSharedMemoryCache {
 	/**
 	 * The cache.
 	 *
@@ -24,7 +24,7 @@ class ElggStaticVariableCache extends ElggSharedMemoryCache {
 	 * @param string $namespace The namespace for this cache to write to.
 	 * @warning namespaces of the same name are shared!
 	 */
-	function __construct($namespace = 'default') {
+	public function __construct($namespace = 'default') {
 		$this->setNamespace($namespace);
 		$this->clear();
 	}
@@ -40,7 +40,7 @@ class ElggStaticVariableCache extends ElggSharedMemoryCache {
 	public function save($key, $data) {
 		$namespace = $this->getNamespace();
 
-		ElggStaticVariableCache::$__cache[$namespace][$key] = $data;
+		\ElggStaticVariableCache::$__cache[$namespace][$key] = $data;
 
 		return true;
 	}
@@ -57,8 +57,8 @@ class ElggStaticVariableCache extends ElggSharedMemoryCache {
 	public function load($key, $offset = 0, $limit = null) {
 		$namespace = $this->getNamespace();
 
-		if (isset(ElggStaticVariableCache::$__cache[$namespace][$key])) {
-			return ElggStaticVariableCache::$__cache[$namespace][$key];
+		if (isset(\ElggStaticVariableCache::$__cache[$namespace][$key])) {
+			return \ElggStaticVariableCache::$__cache[$namespace][$key];
 		}
 
 		return false;
@@ -74,7 +74,7 @@ class ElggStaticVariableCache extends ElggSharedMemoryCache {
 	public function delete($key) {
 		$namespace = $this->getNamespace();
 
-		unset(ElggStaticVariableCache::$__cache[$namespace][$key]);
+		unset(\ElggStaticVariableCache::$__cache[$namespace][$key]);
 
 		return true;
 	}
@@ -87,10 +87,10 @@ class ElggStaticVariableCache extends ElggSharedMemoryCache {
 	public function clear() {
 		$namespace = $this->getNamespace();
 
-		if (!isset(ElggStaticVariableCache::$__cache)) {
-			ElggStaticVariableCache::$__cache = array();
+		if (!isset(\ElggStaticVariableCache::$__cache)) {
+			\ElggStaticVariableCache::$__cache = array();
 		}
 
-		ElggStaticVariableCache::$__cache[$namespace] = array();
+		\ElggStaticVariableCache::$__cache[$namespace] = array();
 	}
 }

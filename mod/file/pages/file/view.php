@@ -5,14 +5,15 @@
  * @package ElggFile
  */
 
-$file = get_entity(get_input('guid'));
-if (!$file) {
-	register_error(elgg_echo('noaccess'));
-	$_SESSION['last_forward_from'] = current_page_url();
-	forward('');
-}
+$guid = get_input('guid');
+
+elgg_entity_gatekeeper($guid, 'object', 'file');
+
+$file = get_entity($guid);
 
 $owner = elgg_get_page_owner_entity();
+
+elgg_group_gatekeeper();
 
 elgg_push_breadcrumb(elgg_echo('file'), 'file/all');
 
@@ -32,7 +33,7 @@ $content .= elgg_view_comments($file);
 
 elgg_register_menu_item('title', array(
 	'name' => 'download',
-	'text' => elgg_echo('file:download'),
+	'text' => elgg_echo('download'),
 	'href' => "file/download/$file->guid",
 	'link_class' => 'elgg-button elgg-button-action',
 ));

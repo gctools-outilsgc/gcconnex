@@ -6,17 +6,33 @@
  * @subpackage Plugins
  * @since      1.8
  */
-class ElggPluginManifestParser18 extends ElggPluginManifestParser {
+class ElggPluginManifestParser18 extends \ElggPluginManifestParser {
 	/**
 	 * The valid top level attributes and defaults for a 1.8 manifest array.
 	 *
 	 * @var array
 	 */
 	protected $validAttributes = array(
-		'name', 'author', 'version', 'blurb', 'description','website',
-		'repository', 'bugtracker', 'donations', 'copyright', 'license',
-		'requires', 'suggests', 'conflicts', 'provides',
-		'screenshot', 'category', 'activate_on_install'
+		'name',
+		'author',
+		'version',
+		'blurb',
+		'description',
+		'id',
+		'website',
+		'copyright',
+		'license',
+		'requires',
+		'suggests',
+		'screenshot',
+		'contributor',
+		'category',
+		'conflicts',
+		'provides',
+		'activate_on_install',
+		'repository',
+		'bugtracker',
+		'donations',
 	);
 
 	/**
@@ -31,7 +47,9 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 	/**
 	 * Parse a manifest object from 1.8 and later
 	 *
-	 * @return void
+	 * @return bool
+	 *
+	 * @throws PluginException
 	 */
 	public function parse() {
 		$parsed = array();
@@ -43,6 +61,7 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 				case 'name':
 				case 'author':
 				case 'version':
+				case 'id':
 				case 'website':
 				case 'copyright':
 				case 'license':
@@ -60,6 +79,7 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 
 				// 3d arrays
 				case 'screenshot':
+				case 'contributor':
 				case 'provides':
 				case 'conflicts':
 				case 'requires':
@@ -81,7 +101,7 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 		// check we have all the required fields
 		foreach ($this->requiredAttributes as $attr) {
 			if (!array_key_exists($attr, $parsed)) {
-				throw new PluginException(elgg_echo('PluginException:ParserErrorMissingRequiredAttribute',
+				throw new \PluginException(_elgg_services()->translator->translate('PluginException:ParserErrorMissingRequiredAttribute',
 							array($attr, $this->caller->getPluginID())));
 			}
 		}

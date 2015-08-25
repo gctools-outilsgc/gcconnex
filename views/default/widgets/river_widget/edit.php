@@ -16,7 +16,7 @@ if (elgg_in_context('dashboard')) {
 			'all' => elgg_echo('river:widgets:all'),
 		),
 	);
-	$type_dropdown = elgg_view('input/dropdown', $params);
+	$type_dropdown = elgg_view('input/select', $params);
 	?>
 	<div>
 		<?php echo elgg_echo('river:widget:type'); ?>:
@@ -25,18 +25,18 @@ if (elgg_in_context('dashboard')) {
 	<?php
 }
 
-
-// set default value for number to display
-if (!isset($vars['entity']->num_display)) {
-	$vars['entity']->num_display = 8;
+$num_display = sanitize_int($vars['entity']->num_display, false);
+// set default value for display number
+if (!$num_display) {
+	$num_display = 8;
 }
 
 $params = array(
 	'name' => 'params[num_display]',
-	'value' => $vars['entity']->num_display,
+	'value' => $num_display,
 	'options' => array(5, 8, 10, 12, 15, 20),
 );
-$num_dropdown = elgg_view('input/dropdown', $params);
+$num_dropdown = elgg_view('input/select', $params);
 
 ?>
 <div>

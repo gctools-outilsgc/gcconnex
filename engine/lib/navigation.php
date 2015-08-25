@@ -40,9 +40,10 @@
  *     owner_block Links shown for a user or group in their owner block.
  *     filter      The tab filter for content (all, mine, friends)
  *     title       The buttons shown next to a content title.
- *     long-text   The links shown above the input/longtext view.
+ *     longtext    The links shown above the input/longtext view.
+ *     login       Menu of links at bottom of login box
  *
- * @package Elgg.Core
+ * @package    Elgg.Core
  * @subpackage Navigation
  */
 
@@ -59,11 +60,14 @@
  * @see elgg_view_menu() for the plugin hooks available for modifying a menu as
  * it is being rendered.
  *
+ * @see ElggMenuItem::factory() is used to turn an array value of $menu_item into an
+ * ElggMenuItem object.
+ *
  * @param string $menu_name The name of the menu: site, page, userhover,
  *                          userprofile, groupprofile, or any custom menu
- * @param mixed  $menu_item A ElggMenuItem object or an array of options in format:
+ * @param mixed  $menu_item A \ElggMenuItem object or an array of options in format:
  *                          name        => STR  Menu item identifier (required)
- *                          text        => STR  Menu item display text (required)
+ *                          text        => STR  Menu item display text as HTML (required)
  *                          href        => STR  Menu item URL (required) (false for non-links.
  *                                              @warning If you disable the href the <a> tag will
  *                                              not appear, so the link_class will not apply. If you
@@ -79,12 +83,10 @@
  *                          item_class  => STR  A class or classes for the <li> tag
  *
  *                          Additional options that the view output/url takes can be
- *							passed in the array. If the 'confirm' key is passed, the
- *							menu link uses the 'output/confirmlink' view. Custom
- *							options can be added by using the 'data' key with the
- *							value being an associative array.
+ *							passed in the array. Custom options can be added by using
+ *							the 'data' key with the	value being an associative array.
  *
- * @return bool
+ * @return bool False if the item could not be added
  * @since 1.8.0
  */
 function elgg_register_menu_item($menu_name, $menu_item) {
@@ -95,10 +97,9 @@ function elgg_register_menu_item($menu_name, $menu_item) {
 	}
 
 	if (is_array($menu_item)) {
-		$item = ElggMenuItem::factory($menu_item);
+		$item = \ElggMenuItem::factory($menu_item);
 		if (!$item) {
 			elgg_log("Unable to add menu item '{$menu_item['name']}' to '$menu_name' menu", 'WARNING');
-			elgg_log(print_r($menu_item, true), 'DEBUG');
 			return false;
 		}
 	} else {
@@ -115,25 +116,26 @@ function elgg_register_menu_item($menu_name, $menu_item) {
  * @param string $menu_name The name of the menu
  * @param string $item_name The unique identifier for this menu item
  *
- * @return bool
+ * @return \ElggMenuItem|null
  * @since 1.8.0
  */
 function elgg_unregister_menu_item($menu_name, $item_name) {
 	global $CONFIG;
 
 	if (!isset($CONFIG->menus[$menu_name])) {
-		return false;
+		return null;
 	}
 
 	foreach ($CONFIG->menus[$menu_name] as $index => $menu_object) {
-		/* @var ElggMenuItem $menu_object */
+		/* @var \ElggMenuItem $menu_object */
 		if ($menu_object->getName() == $item_name) {
+			$item = $CONFIG->menus[$menu_name][$index];
 			unset($CONFIG->menus[$menu_name][$index]);
-			return true;
+			return $item;
 		}
 	}
 
-	return false;
+	return null;
 }
 
 /**
@@ -153,7 +155,7 @@ function elgg_is_menu_item_registered($menu_name, $item_name) {
 	}
 
 	foreach ($CONFIG->menus[$menu_name] as $menu_object) {
-		/* @var ElggMenuItem $menu_object */
+		/* @var \ElggMenuItem $menu_object */
 		if ($menu_object->getName() == $item_name) {
 			return true;
 		}
@@ -163,7 +165,33 @@ function elgg_is_menu_item_registered($menu_name, $item_name) {
 }
 
 /**
- * Convenience function for registering a button to title menu
+ * Get a menu item registered for a menu
+ *
+ * @param string $menu_name The name of the menu
+ * @param string $item_name The unique identifier for this menu item
+ *
+ * @return ElggMenuItem|null
+ * @since 1.9.0
+ */
+function elgg_get_menu_item($menu_name, $item_name) {
+	global $CONFIG;
+
+	if (!isset($CONFIG->menus[$menu_name])) {
+		return null;
+	}
+
+	foreach ($CONFIG->menus[$menu_name] as $index => $menu_object) {
+		/* @var \ElggMenuItem $menu_object */
+		if ($menu_object->getName() == $item_name) {
+			return $CONFIG->menus[$menu_name][$index];
+		}
+	}
+
+	return null;
+}
+
+/**
+ * Convenience function for registering a button to the title menu
  *
  * The URL must be $handler/$name/$guid where $guid is the guid of the page owner.
  * The label of the button is "$handler:$name" so that must be defined in a
@@ -203,56 +231,88 @@ function elgg_register_title_button($handler = null, $name = 'add') {
 /**
  * Adds a breadcrumb to the breadcrumbs stack.
  *
- * @param string $title The title to display
- * @param string $link  Optional. The link for the title.
+ * See elgg_get_breadcrumbs() and the navigation/breadcrumbs view.
+ *
+ * @param string $title The title to display. During rendering this is HTML encoded.
+ * @param string $link  Optional. The link for the title. During rendering links are
+ *                      normalized via elgg_normalize_url().
  *
  * @return void
  * @since 1.8.0
- *
- * @link http://docs.elgg.org/Tutorials/UI/Breadcrumbs
+ * @see elgg_get_breadcrumbs
  */
-function elgg_push_breadcrumb($title, $link = NULL) {
+function elgg_push_breadcrumb($title, $link = null) {
 	global $CONFIG;
 	if (!isset($CONFIG->breadcrumbs)) {
 		$CONFIG->breadcrumbs = array();
 	}
 
-	// avoid key collisions.
-	$CONFIG->breadcrumbs[] = array('title' => elgg_get_excerpt($title, 100), 'link' => $link);
+	$CONFIG->breadcrumbs[] = array('title' => $title, 'link' => $link);
 }
 
 /**
  * Removes last breadcrumb entry.
  *
- * @return array popped item.
+ * @return array popped breadcrumb array or empty array
  * @since 1.8.0
- * @link http://docs.elgg.org/Tutorials/UI/Breadcrumbs
  */
 function elgg_pop_breadcrumb() {
 	global $CONFIG;
 
-	if (is_array($CONFIG->breadcrumbs)) {
-		return array_pop($CONFIG->breadcrumbs);
+	if (empty($CONFIG->breadcrumbs) || !is_array($CONFIG->breadcrumbs)) {
+		return array();
 	}
-
-	return FALSE;
+	return array_pop($CONFIG->breadcrumbs);
 }
 
 /**
- * Returns all breadcrumbs as an array of array('title' => 'Readable Title', 'link' => 'URL')
+ * Returns all breadcrumbs as an array of array('title' => 'Title', 'link' => 'URL')
+ *
+ * Since 1.11, breadcrumbs are filtered through the plugin hook [prepare, breadcrumbs] before
+ * being returned.
  *
  * @return array Breadcrumbs
  * @since 1.8.0
- * @link http://docs.elgg.org/Tutorials/UI/Breadcrumbs
+ * @see elgg_prepare_breadcrumbs
  */
 function elgg_get_breadcrumbs() {
 	global $CONFIG;
 
+	// if no crumbs set, still allow hook to populate it
 	if (isset($CONFIG->breadcrumbs) && is_array($CONFIG->breadcrumbs)) {
-		return $CONFIG->breadcrumbs;
+		$breadcrumbs = $CONFIG->breadcrumbs;
+	} else {
+		$breadcrumbs = array();
 	}
 
-	return array();
+	$params = array(
+		'breadcrumbs' => $breadcrumbs,
+	);
+	$breadcrumbs = elgg_trigger_plugin_hook('prepare', 'breadcrumbs', $params, $breadcrumbs);
+	if (!is_array($breadcrumbs)) {
+		return array();
+	}
+
+	return $breadcrumbs;
+}
+
+/**
+ * Hook handler to turn titles into 100-character excerpts. To remove this behavior, unregister this
+ * function from the [prepare, breadcrumbs] hook.
+ *
+ * @param string $hook        "prepare"
+ * @param string $type        "breadcrumbs"
+ * @param array  $breadcrumbs Breadcrumbs to be altered
+ * @param array  $params      Hook parameters
+ *
+ * @return array
+ * @since 1.11
+ */
+function elgg_prepare_breadcrumbs($hook, $type, $breadcrumbs, $params) {
+	foreach (array_keys($breadcrumbs) as $i) {
+		$breadcrumbs[$i]['title'] = elgg_get_excerpt($breadcrumbs[$i]['title'], 100);
+	}
+	return $breadcrumbs;
 }
 
 /**
@@ -260,14 +320,9 @@ function elgg_get_breadcrumbs() {
  *
  * Handles default, featured, and custom menu items
  *
- * @param string $hook
- * @param string $type
- * @param array $return Menu array
- * @param array $params
- * @return array
  * @access private
  */
-function elgg_site_menu_setup($hook, $type, $return, $params) {
+function _elgg_site_menu_setup($hook, $type, $return, $params) {
 
 	$featured_menu_names = elgg_get_config('site_featured_menu_names');
 	$custom_menu_items = elgg_get_config('site_custom_menu_items');
@@ -275,6 +330,7 @@ function elgg_site_menu_setup($hook, $type, $return, $params) {
 		// we have featured or custom menu items
 
 		$registered = $return['default'];
+		/* @var \ElggMenuItem[] $registered */
 
 		// set up featured menu items
 		$featured = array();
@@ -290,7 +346,7 @@ function elgg_site_menu_setup($hook, $type, $return, $params) {
 		// add custom menu items
 		$n = 1;
 		foreach ($custom_menu_items as $title => $url) {
-			$item = new ElggMenuItem("custom$n", $title, $url);
+			$item = new \ElggMenuItem("custom$n", $title, $url);
 			$featured[] = $item;
 			$n++;
 		}
@@ -314,6 +370,8 @@ function elgg_site_menu_setup($hook, $type, $return, $params) {
 	// check if we have anything selected
 	$selected = false;
 	foreach ($return as $section) {
+		/* @var \ElggMenuItem[] $section */
+
 		foreach ($section as $item) {
 			if ($item->getSelected()) {
 				$selected = true;
@@ -349,14 +407,13 @@ function elgg_site_menu_setup($hook, $type, $return, $params) {
  * Add the comment and like links to river actions menu
  * @access private
  */
-function elgg_river_menu_setup($hook, $type, $return, $params) {
+function _elgg_river_menu_setup($hook, $type, $return, $params) {
 	if (elgg_is_logged_in()) {
 		$item = $params['item'];
-		/* @var ElggRiverItem $item */
+		/* @var \ElggRiverItem $item */
 		$object = $item->getObjectEntity();
-		// comments and non-objects cannot be commented on or liked
-		if (!elgg_in_context('widgets') && $item->annotation_id == 0) {
-			// comments
+		// add comment link but annotations cannot be commented on
+		if ($item->annotation_id == 0) {
 			if ($object->canComment()) {
 				$options = array(
 					'name' => 'comment',
@@ -366,7 +423,7 @@ function elgg_river_menu_setup($hook, $type, $return, $params) {
 					'rel' => 'toggle',
 					'priority' => 50,
 				);
-				$return[] = ElggMenuItem::factory($options);
+				$return[] = \ElggMenuItem::factory($options);
 			}
 		}
 		
@@ -375,11 +432,11 @@ function elgg_river_menu_setup($hook, $type, $return, $params) {
 				'name' => 'delete',
 				'href' => elgg_add_action_tokens_to_url("action/river/delete?id=$item->id"),
 				'text' => elgg_view_icon('delete'),
-				'title' => elgg_echo('delete'),
+				'title' => elgg_echo('river:delete'),
 				'confirm' => elgg_echo('deleteconfirm'),
 				'priority' => 200,
 			);
-			$return[] = ElggMenuItem::factory($options);
+			$return[] = \ElggMenuItem::factory($options);
 		}
 	}
 
@@ -390,25 +447,27 @@ function elgg_river_menu_setup($hook, $type, $return, $params) {
  * Entity menu is list of links and info on any entity
  * @access private
  */
-function elgg_entity_menu_setup($hook, $type, $return, $params) {
+function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 	if (elgg_in_context('widgets')) {
 		return $return;
 	}
 	
 	$entity = $params['entity'];
-	/* @var ElggEntity $entity */
+	/* @var \ElggEntity $entity */
 	$handler = elgg_extract('handler', $params, false);
 
 	// access
-	$access = elgg_view('output/access', array('entity' => $entity));
-	$options = array(
-		'name' => 'access',
-		'text' => $access,
-		'href' => false,
-		'priority' => 100,
-	);
-	$return[] = ElggMenuItem::factory($options);
-
+	if (elgg_is_logged_in()) {
+		$access = elgg_view('output/access', array('entity' => $entity));
+		$options = array(
+			'name' => 'access',
+			'text' => $access,
+			'href' => false,
+			'priority' => 100,
+		);
+		$return[] = \ElggMenuItem::factory($options);
+	}
+	
 	if ($entity->canEdit() && $handler) {
 		// edit link
 		$options = array(
@@ -418,7 +477,7 @@ function elgg_entity_menu_setup($hook, $type, $return, $params) {
 			'href' => "$handler/edit/{$entity->getGUID()}",
 			'priority' => 200,
 		);
-		$return[] = ElggMenuItem::factory($options);
+		$return[] = \ElggMenuItem::factory($options);
 
 		// delete link
 		$options = array(
@@ -429,7 +488,7 @@ function elgg_entity_menu_setup($hook, $type, $return, $params) {
 			'confirm' => elgg_echo('deleteconfirm'),
 			'priority' => 300,
 		);
-		$return[] = ElggMenuItem::factory($options);
+		$return[] = \ElggMenuItem::factory($options);
 	}
 
 	return $return;
@@ -476,33 +535,21 @@ function widget_check_collapsed_state($widget_guid, $state) {
  * Widget menu is a set of widget controls
  * @access private
  */
-function elgg_widget_menu_setup($hook, $type, $return, $params) {
-	
-	// For Widget Manager collapse state storage function from elgg1.9 version of Widget Manager
-	$widget_is_collapsed = false;
-	$widget_is_open = true;
+function _elgg_widget_menu_setup($hook, $type, $return, $params) {
 
 	$widget = $params['entity'];
-
-	if (elgg_is_logged_in()) {
-		$widget_is_collapsed = widget_check_collapsed_state($widget->guid, "widget_state_collapsed");
-		$widget_is_open = widget_check_collapsed_state($widget->guid, "widget_state_open");
-	}
-	if ( $widget_is_collapsed && !$widget_is_open ) $collapse_class = "elgg-widget-collapse-button elgg-state-active elgg-widget-collapsed";
-	else $collapse_class = "elgg-widget-collapse-button";
-
-	/* @var ElggWidget $widget */
+	/* @var \ElggWidget $widget */
 	$show_edit = elgg_extract('show_edit', $params, true);
 
 	$collapse = array(
 		'name' => 'collapse',
 		'text' => ' ',
 		'href' => "#elgg-widget-content-$widget->guid",
-		'class' => $collapse_class,
+		'link_class' => 'elgg-widget-collapse-button',
 		'rel' => 'toggle',
-		'priority' => 1
+		'priority' => 1,
 	);
-	$return[] = ElggMenuItem::factory($collapse);
+	$return[] = \ElggMenuItem::factory($collapse);
 
 	if ($widget->canEdit()) {
 		$delete = array(
@@ -511,11 +558,12 @@ function elgg_widget_menu_setup($hook, $type, $return, $params) {
 			'title' => elgg_echo('widget:delete', array($widget->getTitle())),
 			'href' => "action/widgets/delete?widget_guid=$widget->guid",
 			'is_action' => true,
-			'class' => 'elgg-widget-delete-button',
+			'link_class' => 'elgg-widget-delete-button',
 			'id' => "elgg-widget-delete-button-$widget->guid",
-			'priority' => 900
+			'data-elgg-widget-type' => $widget->handler,
+			'priority' => 900,
 		);
-		$return[] = ElggMenuItem::factory($delete);
+		$return[] = \ElggMenuItem::factory($delete);
 
 		if ($show_edit) {
 			$edit = array(
@@ -523,11 +571,11 @@ function elgg_widget_menu_setup($hook, $type, $return, $params) {
 				'text' => elgg_view_icon('settings-alt'),
 				'title' => elgg_echo('widget:edit'),
 				'href' => "#widget-edit-$widget->guid",
-				'class' => "elgg-widget-edit-button",
+				'link_class' => "elgg-widget-edit-button",
 				'rel' => 'toggle',
 				'priority' => 800,
 			);
-			$return[] = ElggMenuItem::factory($edit);
+			$return[] = \ElggMenuItem::factory($edit);
 		}
 	}
 
@@ -535,27 +583,26 @@ function elgg_widget_menu_setup($hook, $type, $return, $params) {
 }
 
 /**
- * Adds a delete link to "generic_comment" annotations
+ * Add the register and forgot password links to login menu
  * @access private
  */
-function elgg_annotation_menu_setup($hook, $type, $return, $params) {
-	$annotation = $params['annotation'];
-	/* @var ElggAnnotation $annotation */
+function _elgg_login_menu_setup($hook, $type, $return, $params) {
 
-	if ($annotation->name == 'generic_comment' && $annotation->canEdit()) {
-		$url = elgg_http_add_url_query_elements('action/comments/delete', array(
-			'annotation_id' => $annotation->id,
+	if (elgg_get_config('allow_registration')) {
+		$return[] = \ElggMenuItem::factory(array(
+			'name' => 'register',
+			'href' => 'register',
+			'text' => elgg_echo('register'),
+			'link_class' => 'registration_link',
 		));
-
-		$options = array(
-			'name' => 'delete',
-			'href' => $url,
-			'text' => "<span class=\"elgg-icon elgg-icon-delete\"></span>",
-			'confirm' => elgg_echo('deleteconfirm'),
-			'encode_text' => false
-		);
-		$return[] = ElggMenuItem::factory($options);
 	}
+
+	$return[] = \ElggMenuItem::factory(array(
+		'name' => 'forgotpassword',
+		'href' => 'forgotpassword',
+		'text' => elgg_echo('user:password:lost'),
+		'link_class' => 'forgot_link',
+	));
 
 	return $return;
 }
@@ -565,12 +612,48 @@ function elgg_annotation_menu_setup($hook, $type, $return, $params) {
  * Navigation initialization
  * @access private
  */
-function elgg_nav_init() {
-	elgg_register_plugin_hook_handler('prepare', 'menu:site', 'elgg_site_menu_setup');
-	elgg_register_plugin_hook_handler('register', 'menu:river', 'elgg_river_menu_setup');
-	elgg_register_plugin_hook_handler('register', 'menu:entity', 'elgg_entity_menu_setup');
-	elgg_register_plugin_hook_handler('register', 'menu:widget', 'elgg_widget_menu_setup');
-	elgg_register_plugin_hook_handler('register', 'menu:annotation', 'elgg_annotation_menu_setup');
+function _elgg_nav_init() {
+	elgg_register_plugin_hook_handler('prepare', 'breadcrumbs', 'elgg_prepare_breadcrumbs');
+
+	elgg_register_plugin_hook_handler('prepare', 'menu:site', '_elgg_site_menu_setup');
+	elgg_register_plugin_hook_handler('register', 'menu:river', '_elgg_river_menu_setup');
+	elgg_register_plugin_hook_handler('register', 'menu:entity', '_elgg_entity_menu_setup');
+	elgg_register_plugin_hook_handler('register', 'menu:widget', '_elgg_widget_menu_setup');
+	elgg_register_plugin_hook_handler('register', 'menu:login', '_elgg_login_menu_setup');
+
+	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', '_elgg_nav_public_pages');
+
+	elgg_register_menu_item('footer', \ElggMenuItem::factory(array(
+		'name' => 'powered',
+		'text' => elgg_echo("elgg:powered"),
+		'href' => 'http://elgg.org',
+		'title' => 'Elgg ' . elgg_get_version(true),
+		'section' => 'meta',
+	)));
+
+	elgg_register_ajax_view('navigation/menu/user_hover/contents');
 }
 
-elgg_register_event_handler('init', 'system', 'elgg_nav_init');
+/**
+ * Extend public pages
+ *
+ * @param string   $hook_name    "public_pages"
+ * @param string   $entity_type  "walled_garden"
+ * @param string[] $return_value Paths accessible outside the "walled garden"
+ * @param mixed    $params       unused
+ *
+ * @return string[]
+ * @access private
+ * @since 1.11.0
+ */
+function _elgg_nav_public_pages($hook_name, $entity_type, $return_value, $params) {
+	if (is_array($return_value)) {
+		$return_value[] = 'navigation/menu/user_hover/contents';
+	}
+
+	return $return_value;
+}
+
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$events->registerHandler('init', 'system', '_elgg_nav_init');
+};

@@ -5,12 +5,14 @@
  *  @uses $vars['entity']
  */
 
-
-$list = '';
-$num_of_likes = likes_count($vars['entity']);
-$guid = $vars['entity']->getGUID();
+$num_of_likes = \Elgg\Likes\DataService::instance()->getNumLikes($vars['entity']);
+$guid = $vars['entity']->guid;
 
 if ($num_of_likes) {
+	
+	elgg_load_js('lightbox');
+	elgg_load_css('lightbox');
+	
 	// display the number of likes
 	if ($num_of_likes == 1) {
 		$likes_string = elgg_echo('likes:userlikedthis', array($num_of_likes));
@@ -20,17 +22,12 @@ if ($num_of_likes) {
 	$params = array(
 		'text' => $likes_string,
 		'title' => elgg_echo('likes:see'),
-		'rel' => 'popup',
-		'href' => "#likes-$guid"
+		'class' => 'elgg-lightbox elgg-non-link',
+		'href' => '#',
+		'data-colorbox-opts' => json_encode([
+			'maxHeight' => '85%',
+			'href' => elgg_normalize_url("ajax/view/likes/popup?guid=$guid") 
+		]),
 	);
-	$list = elgg_view('output/url', $params);
-	$list .= "<div class='elgg-module elgg-module-popup elgg-likes hidden wb-invisible clearfix' id='likes-$guid'>";
-	$list .= elgg_list_annotations(array(
-		'guid' => $guid,
-		'annotation_name' => 'likes',
-		'limit' => 99,
-		'list_class' => 'elgg-list-likes'
-	));
-	$list .= "</div>";
-	echo $list;
+	echo elgg_view('output/url', $params);
 }

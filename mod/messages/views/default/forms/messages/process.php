@@ -25,6 +25,7 @@ echo elgg_view('input/submit', array(
 	'name' => 'delete',
 	'class' => 'btn-primary elgg-requires-confirmation',
 	'title' => elgg_echo('deleteconfirm:plural'),
+	'data-confirm' => elgg_echo('deleteconfirm:plural')
 ));
 
 if ($vars['folder'] == "inbox") {

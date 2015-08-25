@@ -7,7 +7,7 @@
  */
 
 // Only logged in users
-gatekeeper();
+elgg_gatekeeper();
 
 // Make sure we don't open a security hole ...
 if ((!elgg_get_page_owner_entity()) || (!elgg_get_page_owner_entity()->canEdit())) {
@@ -15,7 +15,7 @@ if ((!elgg_get_page_owner_entity()) || (!elgg_get_page_owner_entity()->canEdit()
 	forward('/');
 }
 
-$title = elgg_echo('usersettings:user');
+$title = elgg_echo('usersettings:user', array(elgg_get_page_owner_entity()->name));
 
 $content = elgg_view('core/settings/account');
 

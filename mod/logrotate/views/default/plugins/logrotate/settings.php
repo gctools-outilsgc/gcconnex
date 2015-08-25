@@ -13,18 +13,18 @@ if (!$period) {
 
 if (!$delete) {
 	$delete = 'monthly';
-}		
+}
 ?>
 <div>
 	<?php
 
 		echo elgg_echo('logrotate:period') . ' ';
-		echo elgg_view('input/dropdown', array(
+		echo elgg_view('input/select', array(
 			'name' => 'params[period]',
 			'options_values' => array(
-				'weekly' => elgg_echo('logrotate:weekly'),
-				'monthly' => elgg_echo('logrotate:monthly'),
-				'yearly' => elgg_echo('logrotate:yearly'),
+				'weekly' => elgg_echo('interval:weekly'),
+				'monthly' => elgg_echo('interval:monthly'),
+				'yearly' => elgg_echo('interval:yearly'),
 			),
 			'value' => $period,
 		));
@@ -34,7 +34,7 @@ if (!$delete) {
 	<?php
 
 		echo elgg_echo('logrotate:delete') . ' ';
-		echo elgg_view('input/dropdown', array(
+		echo elgg_view('input/select', array(
 			'name' => 'params[delete]',
 			'options_values' => array(
 				'weekly' => elgg_echo('logrotate:week'),

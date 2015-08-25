@@ -84,7 +84,7 @@ function twitter_api_pagehandler($page) {
 			twitter_api_login();
 			break;
 		case 'interstitial':
-			gatekeeper();
+			elgg_gatekeeper();
 			// only let twitter users do this.
 			$guid = elgg_get_logged_in_user_guid();
 			$twitter_name = elgg_get_plugin_user_setting('twitter_name', $guid, 'twitter_api');
@@ -111,16 +111,16 @@ function twitter_api_pagehandler($page) {
  */
 function twitter_api_tweet($hook, $type, $returnvalue, $params) {
 
-	if (!elgg_instanceof($params['user'])) {
+	if (!$params['user'] instanceof ElggUser) {
 		return;
 	}
 
 	// @todo - allow admin to select origins?
 
 	// check user settings
-	$user_id = $params['user']->getGUID();
-	$access_key = elgg_get_plugin_user_setting('access_key', $user_id, 'twitter_api');
-	$access_secret = elgg_get_plugin_user_setting('access_secret', $user_id, 'twitter_api');
+	$user_guid = $params['user']->getGUID();
+	$access_key = elgg_get_plugin_user_setting('access_key', $user_guid, 'twitter_api');
+	$access_secret = elgg_get_plugin_user_setting('access_secret', $user_guid, 'twitter_api');
 	if (!($access_key && $access_secret)) {
 		return;
 	}

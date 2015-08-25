@@ -7,7 +7,7 @@
 
 $owner = elgg_get_page_owner_entity();
 if (!$owner) {
-	forward('file/all');
+	forward('', '404');
 }
 
 elgg_push_breadcrumb(elgg_echo('file'), "file/all");
@@ -18,11 +18,17 @@ elgg_register_title_button();
 
 $title = elgg_echo("file:friends");
 
-// offset is grabbed in list_user_friends_objects
-$content = list_user_friends_objects($owner->guid, 'file', 10, false);
-if (!$content) {
-	$content = elgg_echo("file:none");
-}
+$content = elgg_list_entities_from_relationship(array(
+	'type' => 'object',
+	'subtype' => 'file',
+	'full_view' => false,
+	'relationship' => 'friend',
+	'relationship_guid' => $owner->guid,
+	'relationship_join_on' => 'container_guid',
+	'no_results' => elgg_echo("file:none"),
+	'preload_owners' => true,
+	'preload_containers' => true,
+));
 
 $sidebar = file_get_type_cloud($owner->guid, true);
 

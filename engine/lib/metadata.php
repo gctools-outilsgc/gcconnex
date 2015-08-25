@@ -8,19 +8,19 @@
  */
 
 /**
- * Convert a database row to a new ElggMetadata
+ * Convert a database row to a new \ElggMetadata
  *
- * @param stdClass $row An object from the database
+ * @param \stdClass $row An object from the database
  *
- * @return stdClass|ElggMetadata
+ * @return \stdClass|\ElggMetadata
  * @access private
  */
 function row_to_elggmetadata($row) {
-	if (!($row instanceof stdClass)) {
+	if (!($row instanceof \stdClass)) {
 		return $row;
 	}
 
-	return new ElggMetadata($row);
+	return new \ElggMetadata($row);
 }
 
 /**
@@ -30,10 +30,10 @@ function row_to_elggmetadata($row) {
  *
  * @param int $id The id of the metadata object being retrieved.
  *
- * @return ElggMetadata|false  FALSE if not found
+ * @return \ElggMetadata|false  false if not found
  */
 function elgg_get_metadata_from_id($id) {
-	return elgg_get_metastring_based_object_from_id($id, 'metadata');
+	return _elgg_services()->metadataTable->get($id);
 }
 
 /**
@@ -43,102 +43,30 @@ function elgg_get_metadata_from_id($id) {
  * @return bool
  */
 function elgg_delete_metadata_by_id($id) {
-	$metadata = elgg_get_metadata_from_id($id);
-	if (!$metadata) {
-		return false;
-	}
-	return $metadata->delete();
+	return _elgg_services()->metadataTable->delete($id);
 }
 
 /**
  * Create a new metadata object, or update an existing one.
  *
- * Metadata can be an array by setting allow_multiple to TRUE, but it is an
+ * Metadata can be an array by setting allow_multiple to true, but it is an
  * indexed array with no control over the indexing.
  *
  * @param int    $entity_guid    The entity to attach the metadata to
  * @param string $name           Name of the metadata
  * @param string $value          Value of the metadata
  * @param string $value_type     'text', 'integer', or '' for automatic detection
- * @param int    $owner_guid     GUID of entity that owns the metadata
+ * @param int    $owner_guid     GUID of entity that owns the metadata. Default is logged in user.
  * @param int    $access_id      Default is ACCESS_PRIVATE
- * @param bool   $allow_multiple Allow multiple values for one key. Default is FALSE
+ * @param bool   $allow_multiple Allow multiple values for one key. Default is false
  *
- * @return int|false id of metadata or FALSE if failure
+ * @return int|false id of metadata or false if failure
  */
 function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_guid = 0,
-	$access_id = ACCESS_PRIVATE, $allow_multiple = false) {
+		$access_id = ACCESS_PRIVATE, $allow_multiple = false) {
 
-	global $CONFIG;
-
-	$entity_guid = (int)$entity_guid;
-	// name and value are encoded in add_metastring()
-	//$name = sanitise_string(trim($name));
-	//$value = sanitise_string(trim($value));
-	$value_type = detect_extender_valuetype($value, sanitise_string(trim($value_type)));
-	$time = time();
-	$owner_guid = (int)$owner_guid;
-	$allow_multiple = (boolean)$allow_multiple;
-
-	if (!isset($value)) {
-		return FALSE;
-	}
-
-	if ($owner_guid == 0) {
-		$owner_guid = elgg_get_logged_in_user_guid();
-	}
-
-	$access_id = (int)$access_id;
-
-	$query = "SELECT * from {$CONFIG->dbprefix}metadata"
-		. " WHERE entity_guid = $entity_guid and name_id=" . add_metastring($name) . " limit 1";
-
-	$existing = get_data_row($query);
-	if ($existing && !$allow_multiple) {
-		$id = (int)$existing->id;
-		$result = update_metadata($id, $name, $value, $value_type, $owner_guid, $access_id);
-
-		if (!$result) {
-			return false;
-		}
-	} else {
-		// Support boolean types
-		if (is_bool($value)) {
-			$value = (int) $value;
-		}
-
-		// Add the metastrings
-		$value_id = add_metastring($value);
-		if (!$value_id) {
-			return false;
-		}
-
-		$name_id = add_metastring($name);
-		if (!$name_id) {
-			return false;
-		}
-
-		// If ok then add it
-		$query = "INSERT into {$CONFIG->dbprefix}metadata"
-			. " (entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id)"
-			. " VALUES ($entity_guid, '$name_id','$value_id','$value_type', $owner_guid, $time, $access_id)";
-
-		$id = insert_data($query);
-
-		if ($id !== false) {
-			$obj = elgg_get_metadata_from_id($id);
-			if (elgg_trigger_event('create', 'metadata', $obj)) {
-
-				elgg_get_metadata_cache()->save($entity_guid, $name, $value, $allow_multiple);
-
-				return $id;
-			} else {
-				elgg_delete_metadata_by_id($id);
-			}
-		}
-	}
-
-	return $id;
+	return _elgg_services()->metadataTable->create($entity_guid, $name, $value,
+		$value_type, $owner_guid, $access_id, $allow_multiple);
 }
 
 /**
@@ -154,78 +82,15 @@ function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_g
  * @return bool
  */
 function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_id) {
-	global $CONFIG;
-
-	$id = (int)$id;
-
-	if (!$md = elgg_get_metadata_from_id($id)) {
-		return false;
-	}
-	if (!$md->canEdit()) {
-		return false;
-	}
-
-	// If memcached then we invalidate the cache for this entry
-	static $metabyname_memcache;
-	if ((!$metabyname_memcache) && (is_memcache_available())) {
-		$metabyname_memcache = new ElggMemcache('metabyname_memcache');
-	}
-
-	if ($metabyname_memcache) {
-		// @todo fix memcache (name_id is not a property of ElggMetadata)
-		$metabyname_memcache->delete("{$md->entity_guid}:{$md->name_id}");
-	}
-
-	$value_type = detect_extender_valuetype($value, sanitise_string(trim($value_type)));
-
-	$owner_guid = (int)$owner_guid;
-	if ($owner_guid == 0) {
-		$owner_guid = elgg_get_logged_in_user_guid();
-	}
-
-	$access_id = (int)$access_id;
-
-	// Support boolean types (as integers)
-	if (is_bool($value)) {
-		$value = (int) $value;
-	}
-
-	// Add the metastring
-	$value_id = add_metastring($value);
-	if (!$value_id) {
-		return false;
-	}
-
-	$name_id = add_metastring($name);
-	if (!$name_id) {
-		return false;
-	}
-
-	// If ok then add it
-	$query = "UPDATE {$CONFIG->dbprefix}metadata"
-		. " set name_id='$name_id', value_id='$value_id', value_type='$value_type', access_id=$access_id,"
-		. " owner_guid=$owner_guid where id=$id";
-
-	$result = update_data($query);
-	if ($result !== false) {
-
-		elgg_get_metadata_cache()->save($md->entity_guid, $name, $value);
-
-		// @todo this event tells you the metadata has been updated, but does not
-		// let you do anything about it. What is needed is a plugin hook before
-		// the update that passes old and new values.
-		$obj = elgg_get_metadata_from_id($id);
-		elgg_trigger_event('update', 'metadata', $obj);
-	}
-
-	return $result;
+	return _elgg_services()->metadataTable->update($id, $name, $value,
+		$value_type, $owner_guid, $access_id);
 }
 
 /**
  * This function creates metadata from an associative array of "key => value" pairs.
  *
  * To achieve an array for a single key, pass in the same key multiple times with
- * allow_multiple set to TRUE. This creates an indexed array. It does not support
+ * allow_multiple set to true. This creates an indexed array. It does not support
  * associative arrays and there is no guarantee on the ordering in the array.
  *
  * @param int    $entity_guid     The entity to attach the metadata to
@@ -233,21 +98,16 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
  * @param string $value_type      'text', 'integer', or '' for automatic detection
  * @param int    $owner_guid      GUID of entity that owns the metadata
  * @param int    $access_id       Default is ACCESS_PRIVATE
- * @param bool   $allow_multiple  Allow multiple values for one key. Default is FALSE
+ * @param bool   $allow_multiple  Allow multiple values for one key. Default is false
  *
  * @return bool
  */
 function create_metadata_from_array($entity_guid, array $name_and_values, $value_type, $owner_guid,
-$access_id = ACCESS_PRIVATE, $allow_multiple = false) {
+		$access_id = ACCESS_PRIVATE, $allow_multiple = false) {
 
-	foreach ($name_and_values as $k => $v) {
-		$result = create_metadata($entity_guid, $k, $v, $value_type, $owner_guid,
-			$access_id, $allow_multiple);
-		if (!$result) {
-			return false;
-		}
-	}
-	return true;
+	return _elgg_services()->metadataTable->createFromArray($entity_guid, $name_and_values,
+		$value_type, $owner_guid, $access_id, $allow_multiple);
+
 }
 
 /**
@@ -264,33 +124,24 @@ $access_id = ACCESS_PRIVATE, $allow_multiple = false) {
  *
  * @param array $options Array in format:
  *
- * metadata_names               => NULL|ARR metadata names
- * metadata_values              => NULL|ARR metadata values
- * metadata_ids                 => NULL|ARR metadata ids
+ * metadata_names               => null|ARR metadata names
+ * metadata_values              => null|ARR metadata values
+ * metadata_ids                 => null|ARR metadata ids
  * metadata_case_sensitive      => BOOL Overall Case sensitive
- * metadata_owner_guids         => NULL|ARR guids for metadata owners
+ * metadata_owner_guids         => null|ARR guids for metadata owners
  * metadata_created_time_lower  => INT Lower limit for created time.
  * metadata_created_time_upper  => INT Upper limit for created time.
  * metadata_calculation         => STR Perform the MySQL function on the metadata values returned.
  *                                   The "metadata_calculation" option causes this function to
  *                                   return the result of performing a mathematical calculation on
  *                                   all metadata that match the query instead of returning
- *                                   ElggMetadata objects.
+ *                                   \ElggMetadata objects.
  *
- * @return ElggMetadata[]|mixed
+ * @return \ElggMetadata[]|mixed
  * @since 1.8.0
  */
 function elgg_get_metadata(array $options = array()) {
-
-	// @todo remove support for count shortcut - see #4393
-	// support shortcut of 'count' => true for 'metadata_calculation' => 'count'
-	if (isset($options['count']) && $options['count']) {
-		$options['metadata_calculation'] = 'count';
-		unset($options['count']);
-	}
-
-	$options['metastring_type'] = 'metadata';
-	return elgg_get_metastring_based_objects($options);
+	return _elgg_services()->metadataTable->getAll($options);
 }
 
 /**
@@ -300,22 +151,12 @@ function elgg_get_metadata(array $options = array()) {
  *          This requires at least one constraint: metadata_owner_guid(s),
  *          metadata_name(s), metadata_value(s), or guid(s) must be set.
  *
- * @param array $options An options array. {@see elgg_get_metadata()}
+ * @param array $options An options array. {@link elgg_get_metadata()}
  * @return bool|null true on success, false on failure, null if no metadata to delete.
  * @since 1.8.0
  */
 function elgg_delete_metadata(array $options) {
-	if (!elgg_is_valid_options_for_batch_operation($options, 'metadata')) {
-		return false;
-	}
-	$options['metastring_type'] = 'metadata';
-	$result = elgg_batch_metastring_based_objects($options, 'elgg_batch_delete_callback', false);
-
-	// This moved last in case an object's constructor sets metadata. Currently the batch
-	// delete process has to create the entity to delete its metadata. See #5214
-	elgg_get_metadata_cache()->invalidateByOptions('delete', $options);
-
-	return $result;
+	return _elgg_services()->metadataTable->deleteAll($options);
 }
 
 /**
@@ -323,19 +164,12 @@ function elgg_delete_metadata(array $options) {
  *
  * @warning Unlike elgg_get_metadata() this will not accept an empty options array!
  *
- * @param array $options An options array. {@See elgg_get_metadata()}
+ * @param array $options An options array. {@link elgg_get_metadata()}
  * @return bool|null true on success, false on failure, null if no metadata disabled.
  * @since 1.8.0
  */
 function elgg_disable_metadata(array $options) {
-	if (!elgg_is_valid_options_for_batch_operation($options, 'metadata')) {
-		return false;
-	}
-
-	elgg_get_metadata_cache()->invalidateByOptions('disable', $options);
-
-	$options['metastring_type'] = 'metadata';
-	return elgg_batch_metastring_based_objects($options, 'elgg_batch_disable_callback', false);
+	return _elgg_services()->metadataTable->disableAll($options);
 }
 
 /**
@@ -346,23 +180,16 @@ function elgg_disable_metadata(array $options) {
  * @warning In order to enable metadata, you must first use
  * {@link access_show_hidden_entities()}.
  *
- * @param array $options An options array. {@See elgg_get_metadata()}
+ * @param array $options An options array. {@link elgg_get_metadata()}
  * @return bool|null true on success, false on failure, null if no metadata enabled.
  * @since 1.8.0
  */
 function elgg_enable_metadata(array $options) {
-	if (!$options || !is_array($options)) {
-		return false;
-	}
-
-	elgg_get_metadata_cache()->invalidateByOptions('enable', $options);
-
-	$options['metastring_type'] = 'metadata';
-	return elgg_batch_metastring_based_objects($options, 'elgg_batch_enable_callback');
+	return _elgg_services()->metadataTable->enableAll($options);
 }
 
 /**
- * ElggEntities interfaces
+ * \ElggEntities interfaces
  */
 
 /**
@@ -392,62 +219,55 @@ function elgg_enable_metadata(array $options) {
  *
  * @param array $options Array in format:
  *
- * 	metadata_names => NULL|ARR metadata names
+ * 	metadata_names => null|ARR metadata names
  *
- * 	metadata_values => NULL|ARR metadata values
+ * 	metadata_values => null|ARR metadata values
  *
- * 	metadata_name_value_pairs => NULL|ARR (
+ * 	metadata_name_value_pairs => null|ARR (
  *                                         name => 'name',
  *                                         value => 'value',
  *                                         'operand' => '=',
- *                                         'case_sensitive' => TRUE
+ *                                         'case_sensitive' => true
  *                                        )
- * 	                             Currently if multiple values are sent via
+ *                               Currently if multiple values are sent via
  *                               an array (value => array('value1', 'value2')
  *                               the pair's operand will be forced to "IN".
+ *                               If passing "IN" as the operand and a string as the value, 
+ *                               the value must be a properly quoted and escaped string.
  *
- * 	metadata_name_value_pairs_operator => NULL|STR The operator to use for combining
+ * 	metadata_name_value_pairs_operator => null|STR The operator to use for combining
  *                                        (name = value) OPERATOR (name = value); default AND
  *
  * 	metadata_case_sensitive => BOOL Overall Case sensitive
  *
- *  order_by_metadata => NULL|ARR array(
+ *  order_by_metadata => null|ARR array(
  *                                      'name' => 'metadata_text1',
  *                                      'direction' => ASC|DESC,
  *                                      'as' => text|integer
  *                                     )
  *                                Also supports array('name' => 'metadata_text1')
  *
- *  metadata_owner_guids => NULL|ARR guids for metadata owners
+ *  metadata_owner_guids => null|ARR guids for metadata owners
  *
- * @return ElggEntity[]|mixed If count, int. If not count, array. false on errors.
+ * @return \ElggEntity[]|mixed If count, int. If not count, array. false on errors.
  * @since 1.7.0
  */
 function elgg_get_entities_from_metadata(array $options = array()) {
-	$defaults = array(
-		'metadata_names'                     => ELGG_ENTITIES_ANY_VALUE,
-		'metadata_values'                    => ELGG_ENTITIES_ANY_VALUE,
-		'metadata_name_value_pairs'          => ELGG_ENTITIES_ANY_VALUE,
+	return _elgg_services()->metadataTable->getEntities($options);
+}
 
-		'metadata_name_value_pairs_operator' => 'AND',
-		'metadata_case_sensitive'            => FALSE,	// cyu - metadata should be case insensitive (for search)
-		'order_by_metadata'                  => array(),
-
-		'metadata_owner_guids'               => ELGG_ENTITIES_ANY_VALUE,
-	);
-
-	$options = array_merge($defaults, $options);
-
-	$singulars = array('metadata_name', 'metadata_value',
-		'metadata_name_value_pair', 'metadata_owner_guid');
-
-	$options = elgg_normalise_plural_options_array($options, $singulars);
-
-	if (!$options = elgg_entities_get_metastrings_options('metadata', $options)) {
-		return FALSE;
-	}
-
-	return elgg_get_entities($options);
+/**
+ * Returns a list of entities filtered by provided metadata.
+ *
+ * @see elgg_get_entities_from_metadata
+ *
+ * @param array $options Options array
+ *
+ * @return array
+ * @since 1.7.0
+ */
+function elgg_list_entities_from_metadata($options) {
+	return elgg_list_entities($options, 'elgg_get_entities_from_metadata');
 }
 
 /**
@@ -473,321 +293,11 @@ function elgg_get_entities_from_metadata(array $options = array()) {
  * @since 1.7.0
  * @access private
  */
-function elgg_get_entity_metadata_where_sql($e_table, $n_table, $names = NULL, $values = NULL,
-$pairs = NULL, $pair_operator = 'AND', $case_sensitive = TRUE, $order_by_metadata = NULL,
-$owner_guids = NULL) {
-
-	global $CONFIG;
-
-	// short circuit if nothing requested
-	// 0 is a valid (if not ill-conceived) metadata name.
-	// 0 is also a valid metadata value for FALSE, NULL, or 0
-	// 0 is also a valid(ish) owner_guid
-	if ((!$names && $names !== 0)
-		&& (!$values && $values !== 0)
-		&& (!$pairs && $pairs !== 0)
-		&& (!$owner_guids && $owner_guids !== 0)
-		&& !$order_by_metadata) {
-		return '';
-	}
-
-	// join counter for incremental joins.
-	$i = 1;
-
-	// binary forces byte-to-byte comparision of strings, making
-	// it case- and diacritical-mark- sensitive.
-	// only supported on values.
-	$binary = ($case_sensitive) ? ' BINARY ' : '';
-
-	$access = get_access_sql_suffix('n_table');
-
-	$return = array (
-		'joins' => array (),
-		'wheres' => array(),
-		'orders' => array()
-	);
-
-	// will always want to join these tables if pulling metastrings.
-	$return['joins'][] = "JOIN {$CONFIG->dbprefix}{$n_table} n_table on
-		{$e_table}.guid = n_table.entity_guid";
-
-	$wheres = array();
-
-	// get names wheres and joins
-	$names_where = '';
-	if ($names !== NULL) {
-		if (!is_array($names)) {
-			$names = array($names);
-		}
-
-		$sanitised_names = array();
-		foreach ($names as $name) {
-			// normalise to 0.
-			if (!$name) {
-				$name = '0';
-			}
-			$sanitised_names[] = '\'' . sanitise_string($name) . '\'';
-		}
-
-		if ($names_str = implode(',', $sanitised_names)) {
-			$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msn on n_table.name_id = msn.id";
-			$names_where = "(msn.string IN ($names_str))";
-		}
-	}
-
-	// get values wheres and joins
-	$values_where = '';
-	if ($values !== NULL) {
-		if (!is_array($values)) {
-			$values = array($values);
-		}
-
-		$sanitised_values = array();
-		foreach ($values as $value) {
-			// normalize to 0
-			if (!$value) {
-				$value = 0;
-			}
-			$sanitised_values[] = '\'' . sanitise_string($value) . '\'';
-		}
-
-		if ($values_str = implode(',', $sanitised_values)) {
-			$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msv on n_table.value_id = msv.id";
-			$values_where = "({$binary}msv.string IN ($values_str))";
-		}
-	}
-
-	if ($names_where && $values_where) {
-		$wheres[] = "($names_where AND $values_where AND $access)";
-	} elseif ($names_where) {
-		$wheres[] = "($names_where AND $access)";
-	} elseif ($values_where) {
-		$wheres[] = "($values_where AND $access)";
-	}
-
-	// add pairs
-	// pairs must be in arrays.
-	if (is_array($pairs)) {
-		// check if this is an array of pairs or just a single pair.
-		if (isset($pairs['name']) || isset($pairs['value'])) {
-			$pairs = array($pairs);
-		}
-
-		$pair_wheres = array();
-
-		// @todo when the pairs are > 3 should probably split the query up to
-		// denormalize the strings table.
-
-		foreach ($pairs as $index => $pair) {
-			// @todo move this elsewhere?
-			// support shortcut 'n' => 'v' method.
-			if (!is_array($pair)) {
-				$pair = array(
-					'name' => $index,
-					'value' => $pair
-				);
-			}
-
-			// must have at least a name and value
-			if (!isset($pair['name']) || !isset($pair['value'])) {
-				// @todo should probably return false.
-				continue;
-			}
-
-			// case sensitivity can be specified per pair.
-			// default to higher level setting.
-			if (isset($pair['case_sensitive'])) {
-				$pair_binary = ($pair['case_sensitive']) ? ' BINARY ' : '';
-			} else {
-				$pair_binary = $binary;
-			}
-
-			if (isset($pair['operand'])) {
-				$operand = sanitise_string($pair['operand']);
-			} else {
-				$operand = ' = ';
-			}
-
-			// for comparing
-			$trimmed_operand = trim(strtolower($operand));
-
-			$access = get_access_sql_suffix("n_table{$i}");
-			// if the value is an int, don't quote it because str '15' < str '5'
-			// if the operand is IN don't quote it because quoting should be done already.
-			if (is_numeric($pair['value'])) {
-				$value = sanitise_string($pair['value']);
-			} else if (is_bool($pair['value'])) {
-				$value = (int) $pair['value'];
-			} else if (is_array($pair['value'])) {
-				$values_array = array();
-
-				foreach ($pair['value'] as $pair_value) {
-					if (is_numeric($pair_value)) {
-						$values_array[] = sanitise_string($pair_value);
-					} else {
-						$values_array[] = "'" . sanitise_string($pair_value) . "'";
-					}
-				}
-
-				if ($values_array) {
-					$value = '(' . implode(', ', $values_array) . ')';
-				}
-
-				// @todo allow support for non IN operands with array of values.
-				// will have to do more silly joins.
-				$operand = 'IN';
-			} else if ($trimmed_operand == 'in') {
-				$value = "({$pair['value']})";
-			} else {
-				$value = "'" . sanitise_string($pair['value']) . "'";
-			}
-
-			$name = sanitise_string($pair['name']);
-
-			// @todo The multiple joins are only needed when the operator is AND
-			$return['joins'][] = "JOIN {$CONFIG->dbprefix}{$n_table} n_table{$i}
-				on {$e_table}.guid = n_table{$i}.entity_guid";
-			$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msn{$i}
-				on n_table{$i}.name_id = msn{$i}.id";
-			$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msv{$i}
-				on n_table{$i}.value_id = msv{$i}.id";
-
-			$pair_wheres[] = "(msn{$i}.string = '$name' AND {$pair_binary}msv{$i}.string
-				$operand $value AND $access)";
-
-			$i++;
-		}
-
-		if ($where = implode(" $pair_operator ", $pair_wheres)) {
-			$wheres[] = "($where)";
-		}
-	}
-
-	// add owner_guids
-	if ($owner_guids) {
-		if (is_array($owner_guids)) {
-			$sanitised = array_map('sanitise_int', $owner_guids);
-			$owner_str = implode(',', $sanitised);
-		} else {
-			$owner_str = sanitise_int($owner_guids);
-		}
-
-		$wheres[] = "(n_table.owner_guid IN ($owner_str))";
-	}
-
-	if ($where = implode(' AND ', $wheres)) {
-		$return['wheres'][] = "($where)";
-	}
-
-	if (is_array($order_by_metadata)) {
-		if ((count($order_by_metadata) > 0) && !isset($order_by_metadata[0])) {
-			// singleton, so fix
-			$order_by_metadata = array($order_by_metadata);
-		}
-		foreach ($order_by_metadata as $order_by) {
-			if (is_array($order_by) && isset($order_by['name'])) {
-				$name = sanitise_string($order_by['name']);
-				if (isset($order_by['direction'])) {
-					$direction = sanitise_string($order_by['direction']);
-				} else {
-					$direction = 'ASC';
-				}
-				$return['joins'][] = "JOIN {$CONFIG->dbprefix}{$n_table} n_table{$i}
-					on {$e_table}.guid = n_table{$i}.entity_guid";
-				$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msn{$i}
-					on n_table{$i}.name_id = msn{$i}.id";
-				$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msv{$i}
-					on n_table{$i}.value_id = msv{$i}.id";
-
-				$access = get_access_sql_suffix("n_table{$i}");
-
-				$return['wheres'][] = "(msn{$i}.string = '$name' AND $access)";
-				if (isset($order_by['as']) && $order_by['as'] == 'integer') {
-					$return['orders'][] = "CAST(msv{$i}.string AS SIGNED) $direction";
-				} else {
-					$return['orders'][] = "msv{$i}.string $direction";
-				}
-				$i++;
-			}
-		}
-	}
-
-	return $return;
-}
-
-/**
- * Returns a list of entities filtered by provided metadata.
- *
- * @see elgg_get_entities_from_metadata
- *
- * @param array $options Options array
- *
- * @return array
- * @since 1.7.0
- */
-function elgg_list_entities_from_metadata($options) {
-	return elgg_list_entities($options, 'elgg_get_entities_from_metadata');
-}
-
-/**
- * Other functions
- */
-
-/**
- * Handler called by trigger_plugin_hook on the "export" event.
- *
- * @param string $hook        export
- * @param string $entity_type all
- * @param mixed  $returnvalue Value returned from previous hook
- * @param mixed  $params      Params
- *
- * @return array
- * @access private
- *
- * @throws InvalidParameterException
- */
-function export_metadata_plugin_hook($hook, $entity_type, $returnvalue, $params) {
-	// Sanity check values
-	if ((!is_array($params)) && (!isset($params['guid']))) {
-		throw new InvalidParameterException(elgg_echo('InvalidParameterException:GUIDNotForExport'));
-	}
-
-	if (!is_array($returnvalue)) {
-		throw new InvalidParameterException(elgg_echo('InvalidParameterException:NonArrayReturnValue'));
-	}
-
-	$result = elgg_get_metadata(array(
-		'guid' => (int)$params['guid'],
-		'limit' => 0,
-	));
-
-	if ($result) {
-		/* @var ElggMetadata[] $result */
-		foreach ($result as $r) {
-			$returnvalue[] = $r->export();
-		}
-	}
-
-	return $returnvalue;
-}
-
-/**
- * Takes in a comma-separated string and returns an array of tags
- * which have been trimmed
- *
- * @param string $string Comma-separated tag string
- *
- * @return array|false An array of strings, or false on failure
- */
-function string_to_tag_array($string) {
-	if (is_string($string)) {
-		$ar = explode(",", $string);
-		$ar = array_map('trim', $ar);
-		$ar = array_filter($ar, 'is_not_null');
-		$ar = array_map('strip_tags', $ar);
-		return $ar;
-	}
-	return false;
+function _elgg_get_entity_metadata_where_sql($e_table, $n_table, $names = null, $values = null,
+		$pairs = null, $pair_operator = 'AND', $case_sensitive = true, $order_by_metadata = null,
+		$owner_guids = null) {
+	return _elgg_services()->metadataTable->getEntityMetadataWhereSql($e_table, $n_table, $names,
+		$values, $pairs, $pair_operator, $case_sensitive, $order_by_metadata, $owner_guids);
 }
 
 /**
@@ -820,12 +330,7 @@ function metadata_array_to_values($array) {
  * @return mixed
  */
 function get_metadata_url($id) {
-	$id = (int)$id;
-
-	if ($extender = elgg_get_metadata_from_id($id)) {
-		return get_extender_url($extender);
-	}
-	return false;
+	return _elgg_services()->metadataTable->getUrl($id);
 }
 
 /**
@@ -838,11 +343,7 @@ function get_metadata_url($id) {
  * @return void
  */
 function register_metadata_as_independent($type, $subtype = '*') {
-	global $CONFIG;
-	if (!isset($CONFIG->independents)) {
-		$CONFIG->independents = array();
-	}
-	$CONFIG->independents[$type][$subtype] = true;
+	_elgg_services()->metadataTable->registerMetadataAsIndependent($type, $subtype);
 }
 
 /**
@@ -855,15 +356,7 @@ function register_metadata_as_independent($type, $subtype = '*') {
  * @return bool
  */
 function is_metadata_independent($type, $subtype) {
-	global $CONFIG;
-	if (empty($CONFIG->independents)) {
-		return false;
-	}
-	if (!empty($CONFIG->independents[$type][$subtype])
-		|| !empty($CONFIG->independents[$type]['*'])) {
-			return true;
-		}
-	return false;
+	return _elgg_services()->metadataTable->isMetadataIndependent($type, $subtype);
 }
 
 /**
@@ -871,48 +364,13 @@ function is_metadata_independent($type, $subtype) {
  *
  * @param string     $event       The name of the event
  * @param string     $object_type The type of object
- * @param ElggEntity $object      The entity itself
+ * @param \ElggEntity $object      The entity itself
  *
  * @return true
+ * @access private Set as private in 1.9.0
  */
 function metadata_update($event, $object_type, $object) {
-	if ($object instanceof ElggEntity) {
-		if (!is_metadata_independent($object->getType(), $object->getSubtype())) {
-			$db_prefix = elgg_get_config('dbprefix');
-			$access_id = (int) $object->access_id;
-			$guid = (int) $object->getGUID();
-			$query = "update {$db_prefix}metadata set access_id = {$access_id} where entity_guid = {$guid}";
-			update_data($query);
-		}
-	}
-	return true;
-}
-
-/**
- * Register a metadata url handler.
- *
- * @param string $extender_name The name, default 'all'.
- * @param string $function      The function name.
- *
- * @return bool
- */
-function elgg_register_metadata_url_handler($extender_name, $function) {
-	return elgg_register_extender_url_handler('metadata', $extender_name, $function);
-}
-
-/**
- * Get the global metadata cache instance
- *
- * @return ElggVolatileMetadataCache
- *
- * @access private
- */
-function elgg_get_metadata_cache() {
-	global $CONFIG;
-	if (empty($CONFIG->local_metadata_cache)) {
-		$CONFIG->local_metadata_cache = new ElggVolatileMetadataCache();
-	}
-	return $CONFIG->local_metadata_cache;
+	return _elgg_services()->metadataTable->handleUpdate($event, $object_type, $object);
 }
 
 /**
@@ -921,37 +379,12 @@ function elgg_get_metadata_cache() {
  * @param string $action  Action performed on metadata. "delete", "disable", or "enable"
  * @param array  $options Options passed to elgg_(delete|disable|enable)_metadata
  * @return void
+ * @access private
+ * @todo not used
  */
-function elgg_invalidate_metadata_cache($action, array $options) {
-	// remove as little as possible, optimizing for common cases
-	$cache = elgg_get_metadata_cache();
-	if (empty($options['guid'])) {
-		// safest to clear everything unless we want to make this even more complex :(
-		$cache->flush();
-	} else {
-		if (empty($options['metadata_name'])) {
-			// safest to clear the whole entity
-			$cache->clear($options['guid']);
-		} else {
-			switch ($action) {
-				case 'delete':
-					$cache->markEmpty($options['guid'], $options['metadata_name']);
-					break;
-				default:
-					$cache->markUnknown($options['guid'], $options['metadata_name']);
-			}
-		}
-	}
+function _elgg_invalidate_metadata_cache($action, array $options) {
+	_elgg_services()->metadataCache->invalidateByOptions($options);
 }
-
-/** Register the hook */
-elgg_register_plugin_hook_handler("export", "all", "export_metadata_plugin_hook", 2);
-
-/** Call a function whenever an entity is updated **/
-elgg_register_event_handler('update', 'all', 'metadata_update');
-
-// unit testing
-elgg_register_plugin_hook_handler('unit_test', 'system', 'metadata_test');
 
 /**
  * Metadata unit test
@@ -964,9 +397,16 @@ elgg_register_plugin_hook_handler('unit_test', 'system', 'metadata_test');
  * @return array
  * @access private
  */
-function metadata_test($hook, $type, $value, $params) {
+function _elgg_metadata_test($hook, $type, $value, $params) {
 	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/api/metadata.php';
-	$value[] = $CONFIG->path . 'engine/tests/api/metadata_cache.php';
+	$value[] = $CONFIG->path . 'engine/tests/ElggCoreMetadataAPITest.php';
+	$value[] = $CONFIG->path . 'engine/tests/ElggCoreMetadataCacheTest.php';
 	return $value;
 }
+
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	/** Call a function whenever an entity is updated **/
+	$events->registerHandler('update', 'all', 'metadata_update');
+
+	$hooks->registerHandler('unit_test', 'system', '_elgg_metadata_test');
+};

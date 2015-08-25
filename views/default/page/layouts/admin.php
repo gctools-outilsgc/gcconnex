@@ -7,7 +7,7 @@
  *
  * @uses $vars['content'] Content string
  * @uses $vars['sidebar'] Optional sidebar content
- * @uses $vars['title']   Title string
+ * @uses $vars['title']   Optional title string
  */
 
 ?>
@@ -27,7 +27,9 @@
 			));
 
 			if (isset($vars['title'])) {
+				echo '<div class="elgg-head clearfix">';
 				echo elgg_view_title($vars['title']);
+				echo '</div>';
 			}
 		?>
 		</div>

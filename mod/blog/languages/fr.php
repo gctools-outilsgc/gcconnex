@@ -1,10 +1,11 @@
 <?php
+<<<<<<< HEAD
 /**
  * Blog English language file.
  *
  */
 
-$french = array(
+return array(
 	'blog' => 'Blogue',
 	'blog:blogs' => 'Blogues',
 	'blog:revisions' => 'Révisions',
@@ -42,6 +43,8 @@ $french = array(
 	'blog:error:cannot_save' => "Impossible d'enregistrer blogue.",
 	'blog:error:cannot_write_to_container' => "L'accès insuffisant pour enregistrer blogue pour le groupe.",
 	'blog:error:post_not_found' => "Ce message a été supprimé, n'est pas valide, ou vous n'avez pas la permission de le voir.",
+	'blog:error:cannot_auto_save' => 'Impossible de sauvegarder automatiquement l\'article de blog. ',
+	'blog:error:cannot_write_to_container' => 'Droits d\'accès insuffisants pour enregistrer l\'article pour ce groupe.',
 	'blog:messages:warning:draft' => 'Il ya une édition non enregistrées de ce blogue!',
 	'blog:edit_revision_notice' => '(Ancienne version)',
 	'blog:message:deleted_post' => 'Blogue supprimé.',
@@ -57,6 +60,17 @@ $french = array(
 	'river:comment:object:blog' => '%s a commenté sur le blogue %s',
 
 	// notifications
+	'blog:notify:summary' => 'Nouvel article de blog nommé %s',
+	'blog:notify:subject' => 'Nouvel article de blog: %s',
+	'blog:notify:body' =>
+'
+%s a publié un nouvel article de blog: %s
+
+%s
+
+Voir et commenter cet article de blog:
+%s
+',
 	'blog:newpost' => 'Un nouveau blogue',
 	'blog:notification' =>
 '
@@ -75,5 +89,3 @@ View and comment on the new blog post:
 	'blog:numbertodisplay' => 'Number of blog posts to display',
 	'blog:noblogs' => 'Aucun billet de blogue'
 );
-
-add_translation('fr', $french);

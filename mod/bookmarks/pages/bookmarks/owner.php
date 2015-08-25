@@ -7,7 +7,7 @@
 
 $page_owner = elgg_get_page_owner_entity();
 if (!$page_owner) {
-	forward('bookmarks/all');
+	forward('', '404');
 }
 
 elgg_push_breadcrumb($page_owner->name);
@@ -19,12 +19,11 @@ $content .= elgg_list_entities(array(
 	'subtype' => 'bookmarks',
 	'container_guid' => $page_owner->guid,
 	'full_view' => false,
-	'view_toggle_type' => false
+	'view_toggle_type' => false,
+	'no_results' => elgg_echo('bookmarks:none'),
+	'preload_owners' => true,
+	'distinct' => false,
 ));
-
-if (!$content) {
-	$content = elgg_echo('bookmarks:none');
-}
 
 $title = elgg_echo('bookmarks:owner', array($page_owner->name));
 

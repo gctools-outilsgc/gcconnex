@@ -24,9 +24,9 @@ elgg_load_js('jquery.easing');
 <?php
 
 // Get friends and subscriptions
-$friends = get_user_friends($user->guid, '', 9999, 0);
+$friends = $user->getFriends(array('limit' => 0));
 		
-global $NOTIFICATION_HANDLERS;
+$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
 foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 	$subsbig[$method] = elgg_get_entities_from_relationship(array(
 		'relationship' => 'notify' . $method,

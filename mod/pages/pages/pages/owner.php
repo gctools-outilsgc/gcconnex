@@ -7,11 +7,11 @@
 
 $owner = elgg_get_page_owner_entity();
 if (!$owner) {
-	forward('pages/all');
+	forward('', '404');
 }
 
 // access check for closed groups
-group_gatekeeper();
+elgg_group_gatekeeper();
 
 $title = elgg_echo('pages:owner', array($owner->name));
 
@@ -24,10 +24,9 @@ $content = elgg_list_entities(array(
 	'subtype' => 'page_top',
 	'container_guid' => elgg_get_page_owner_guid(),
 	'full_view' => false,
+	'no_results' => elgg_echo('pages:none'),
+	'preload_owners' => true,
 ));
-if (!$content) {
-	$content = '<p>' . elgg_echo('pages:none') . '</p>';
-}
 
 $filter_context = '';
 if (elgg_get_page_owner_guid() == elgg_get_logged_in_user_guid()) {

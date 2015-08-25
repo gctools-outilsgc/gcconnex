@@ -4,7 +4,7 @@
  *
  */
 
-$french = array(
+return array(
 	'embed:embed' => 'Incorporer',
 	'embed:media' => 'Incorporer du contenu',
 	'embed:instructions' => "Cliquez sur un fichier pour l'intégrer dans votre contenu.",
@@ -17,5 +17,3 @@ $french = array(
 
 	'embed:no_sections' => "Aucun plugin soutenus trouvé. Demandez à l'administrateur du site afin de permettre un plugin avec un support intégré.",
 );
-
-add_translation("fr", $french);

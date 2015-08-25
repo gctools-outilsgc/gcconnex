@@ -8,7 +8,7 @@
 	 * @link http://elgg.com/
 	 */
 
-	$french = array(
+return array(
 	
 		/**
 		* Menu items and titles
@@ -31,23 +31,28 @@
 		'file:user:gallery'=>'Afficher la galerie %s',
 		'file:via' => 'via les fichiers',
 		'file:upload' => "Téléverser un fichier",
+		'file:replace' => 'Remplacer le contenu du fichier (laisser en blanc pour ne rien changer)',
+		'file:list:title' => "de %s %s %s",
+		'file:title:friends' => "Amis",
+
 
 		'file:add' => 'Téléverser un fichier',
 		'river:create:object:file' => '%s a téléchargé le fichier %s',
-
-		'file:list:list' => 'Switch to the list view',
-		'file:list:gallery' => 'Passer à l’affichage de la galerie',
-
+		'river:comment:object:file' => '%s a commenté le fichier %s',
 
 		'file:newupload' => 'Téléversement de nouveau fichier',
 
 		'file:file' => "Fichier",
+
+		'file:list:list' => 'Switch to the list view',
+		'file:list:gallery' => 'Passer à l’affichage de la galerie',
+
 		'file:title' => "Titre",
 		'file:desc' => "Description",
 		'file:tags' => "Mots-clés",
 
 		'file:types' => "Types de fichiers téléversés",
-
+		'file:type:' => 'Fichiers',
 		'file:type:all' => "Tous les fichiers",
 		'file:type:Video' => "Vidéos",
 		'file:type:document' => "Documents",
@@ -72,7 +77,11 @@
 
 		'file:download' => "Télécharger ceci",
 
+		'groups:enablefiles' => 'Activer les fichiers de groupes',
+
 		'file:delete:confirm' => "Êtes-vous certain de vouloir supprimer ce fichier?",
+
+		'file:upload_limit' => 'La taille de fichier maximale autorisée est de %s',
 
 		'file:tagcloud' => "Nuage de mots-clés",
 
@@ -91,6 +100,18 @@
 		'file:embed' => "Incorporer média",
 		'file:embedall' => "Tous",
 
+		'file:notify:summary' => 'Nouveau fichier nommé %s',
+		'file:notify:subject' => 'Nouveau fichier: %s',
+		'file:notify:body' =>
+'%s à publié un nouveau fichier: %s
+
+%s
+
+Accéder à ce fichier et le commenter:
+%s
+',
+
+
 		/**
 		* Status messages
 		*/
@@ -106,9 +127,8 @@
 		'file:uploadfailed' => "Désolé; impossible d'enregistrer votre fichier.",
 		'file:downloadfailed' => "Désolé; ce fichier n'est actuellement pas accessible.",
 		'file:deletefailed' => "Impossible de supprimer votre fichier en ce moment.",
+		'file:noaccess' => "Vous n'avez pas la permission de modifier ce fichier",
+		'file:nofile' => "Vous devez choisir un fichier",
 
 	
-	);
-					
-	add_translation("fr",$french);
-?>
+);

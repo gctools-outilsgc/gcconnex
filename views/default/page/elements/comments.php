@@ -6,37 +6,42 @@
  * @uses $vars['show_add_form'] Display add form or not
  * @uses $vars['id']            Optional id for the div
  * @uses $vars['class']         Optional additional class for the div
+ * @uses $vars['limit']         Optional limit value (default is 25)
+ * 
+ * @todo look into restructuring this so we are not calling elgg_list_entities()
+ * in this view
  */
 
 $show_add_form = elgg_extract('show_add_form', $vars, true);
-
-$id = '';
-if (isset($vars['id'])) {
-	$id = "id=\"{$vars['id']}\"";
+$full_view = elgg_extract('full_view', $vars, true);
+$limit = elgg_extract('limit', $vars, get_input('limit', 0));
+if (!$limit) {
+	$limit = elgg_trigger_plugin_hook('config', 'comments_per_page', [], 25);
 }
 
-$class = 'elgg-comments';
-if (isset($vars['class'])) {
-	$class = "$class {$vars['class']}";
-}
+$attr = [
+	'id' => elgg_extract('id', $vars, 'comments'),
+	'class' => (array) elgg_extract('class', $vars, []),
+];
+$attr['class'][] = 'elgg-comments';
 
 // work around for deprecation code in elgg_view()
 unset($vars['internalid']);
 
-echo "<div $id class=\"$class\">";
-
-$options = array(
-	'guid' => $vars['entity']->getGUID(),
-	'annotation_name' => 'generic_comment'
-);
-$html = elgg_list_annotations($options);
-if ($html) {
-	echo '<h3>' . elgg_echo('comments') . '</h3>';
-	echo $html;
-}
+$content = elgg_list_entities(array(
+	'type' => 'object',
+	'subtype' => 'comment',
+	'container_guid' => $vars['entity']->guid,
+	'reverse_order_by' => true,
+	'full_view' => true,
+	'limit' => $limit,
+	'preload_owners' => true,
+	'distinct' => false,
+	'url_fragment' => $attr['id'],
+));
 
 if ($show_add_form) {
-	echo elgg_view_form('comments/add', array(), $vars);
+	$content .= elgg_view_form('comment/save', array(), $vars);
 }
 
-echo '</div>';
+echo elgg_format_element('div', $attr, $content);

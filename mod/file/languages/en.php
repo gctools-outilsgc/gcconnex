@@ -1,11 +1,5 @@
 <?php
-/**
- * Elgg file plugin language pack
- *
- * @package ElggFile
- */
-
-$english = array(
+return array(
 
 	/**
 	 * Menu items and titles
@@ -30,9 +24,6 @@ $english = array(
 	'file:add' => 'Upload a file',
 
 	'file:file' => "File",
-	'file:title' => "Title",
-	'file:desc' => "Description",
-	'file:tags' => "Tags",
 
 	'file:list:list' => 'Switch to the list view',
 	'file:list:gallery' => 'Switch to the gallery view',
@@ -64,9 +55,9 @@ $english = array(
 
 	'groups:enablefiles' => 'Enable group files',
 
-	'file:download' => "Download this",
-
 	'file:delete:confirm' => "Are you sure you want to delete this file?",
+
+	'file:upload_limit' => 'Maximum allowed file size is %s',
 
 	'file:tagcloud' => "Tag cloud",
 
@@ -77,42 +68,32 @@ $english = array(
 
 	'item:object:file' => 'Files',
 
-	'file:newupload' => 'A new file has been uploaded',
-	'file:notification' =>
-'%s uploaded a new file:
+	'file:notify:summary' => 'New file called %s',
+	'file:notify:subject' => 'New file: %s',
+	'file:notify:body' =>
+'%s uploaded a new file: %s
 
 %s
-%s
 
-View and comment on the new file:
+View and comment on the file:
 %s
 ',
-
-	/**
-	 * Embed media
-	 **/
-
-		'file:embed' => "Embed media",
-		'file:embedall' => "All",
 
 	/**
 	 * Status messages
 	 */
 
-		'file:saved' => "Your file was successfully saved.",
-		'file:deleted' => "Your file was successfully deleted.",
+	'file:saved' => "Your file was successfully saved.",
+	'file:deleted' => "Your file was successfully deleted.",
 
 	/**
 	 * Error messages
 	 */
 
-		'file:none' => "No files.",
-		'file:uploadfailed' => "Sorry; we could not save your file.",
-		'file:downloadfailed' => "Sorry; this file is not available at this time.",
-		'file:deletefailed' => "Your file could not be deleted at this time.",
-		'file:noaccess' => "You do not have permissions to change this file",
-		'file:cannotload' => "There was an error uploading the file",
-		'file:nofile' => "You must select a file",
+	'file:none' => "No files.",
+	'file:uploadfailed' => "Sorry; we could not save your file.",
+	'file:downloadfailed' => "Sorry; this file is not available at this time.",
+	'file:deletefailed' => "Your file could not be deleted at this time.",
+	'file:noaccess' => "You do not have permissions to change this file",
+	'file:nofile' => "You must select a file",
 );
-
-add_translation("en", $english);

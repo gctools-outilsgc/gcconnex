@@ -32,7 +32,7 @@ if ($owner) {
 	));
 }
 
-$date = elgg_view_friendly_time($vars['entity']->time_created);
+$date = elgg_view_friendly_time($vars['entity']->getTimeCreated());
 
 $subtitle = "$owner_link $date";
 
@@ -41,7 +41,6 @@ $params = array(
 	'title' => $title,
 	'metadata' => $metadata,
 	'subtitle' => $subtitle,
-	'tags' => $vars['entity']->tags,
 );
 $params = $params + $vars;
 $body = elgg_view('object/elements/summary', $params);

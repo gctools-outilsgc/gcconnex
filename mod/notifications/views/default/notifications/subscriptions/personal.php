@@ -6,7 +6,7 @@
 /* @var ElggUser $user */
 $user = $vars['user'];
 
-global $NOTIFICATION_HANDLERS;
+$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
 
 ?>
 <div class="notification_personal">
@@ -47,7 +47,7 @@ $fields = '';
 $i = 0;
 foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 	if ($notification_settings = get_user_notification_settings($user->guid)) {
-		if ($notification_settings->$method) {
+		if (isset($notification_settings->$method) && $notification_settings->$method) {
 			$personalchecked[$method] = 'checked="checked"';
 		} else {
 			$personalchecked[$method] = '';

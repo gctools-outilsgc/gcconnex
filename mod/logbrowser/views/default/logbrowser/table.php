@@ -35,7 +35,7 @@ $log_entries = $vars['log_entries'];
 				'is_trusted' => true,
 			));
 			$user_guid_link = elgg_view('output/url', array(
-				'href' => "admin/overview/logbrowser?user_guid=$user->guid",
+				'href' => "admin/administer_utilities/logbrowser?user_guid={$user->guid}",
 				'text' => $user->getGUID(),
 				'is_trusted' => true,
 			));
@@ -43,7 +43,7 @@ $log_entries = $vars['log_entries'];
 			$user_guid_link = $user_link = '&nbsp;';
 		}
 
-		$object = get_object_from_log_entry($entry->id);
+		$object = get_object_from_log_entry($entry);
 		if (is_callable(array($object, 'getURL'))) {
 			$object_link = elgg_view('output/url', array(
 				'href' => $object->getURL(),
@@ -85,6 +85,6 @@ $log_entries = $vars['log_entries'];
 </table>
 <?php
 if (!$log_entries) {
-	echo elgg_echo('logbrowser:no_result');
+	echo elgg_echo('notfound');
 	return true;
 }

@@ -3,7 +3,7 @@
  * External pages French language file
  */
 
-$french = array(
+return array(
 
 	/**
 	 * Menu items and titles
@@ -23,5 +23,3 @@ $french = array(
 	'expages:posted' => "Votre page a été mise à jour avec succès.",
 	'expages:error' => "Impossible d'enregistrer cette page.",
 );
-
-add_translation("fr", $french);

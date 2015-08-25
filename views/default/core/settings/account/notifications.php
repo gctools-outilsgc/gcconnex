@@ -6,7 +6,7 @@
  * @subpackage Core
  */
 
-global $NOTIFICATION_HANDLERS;
+$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
 $notification_settings = get_user_notification_settings(elgg_get_page_owner_guid());
 
 $title = elgg_echo('notifications:usersettings');
@@ -37,8 +37,7 @@ foreach ($NOTIFICATION_HANDLERS as $k => $v) {
 	$rows .= "<tr>$cells</tr>";
 }
 
-
-$content = elgg_echo('notifications:methods');
+$content = '';
 $content .= "<table>$rows</table>";
 
 echo elgg_view_module('info', $title, $content);

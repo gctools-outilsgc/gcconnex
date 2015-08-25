@@ -5,14 +5,14 @@
 * @package ElggMessages
 */
 
-$french = array(
+return array(
 	/**
 	* Menu items and titles
 	*/
 	'messages:displayposts' => "Affiches %s postes",
+	'messages:unreadmessages' => "message(s) non lus",
 	'messages' => "Messages",
 	'messages:unreadcount' => "%s non lus",
-	'messages:unreadmessages' => "message(s) non lus",
 	'messages:back' => "retourner au messages",
 	'messages:user' => "%s's inbox",
 	'messages:posttitle' => "%s's messages: %s",
@@ -21,6 +21,7 @@ $french = array(
 	'messages:sent' => "envoyer",
 	'messages:message' => "Message",
 	'messages:title' => "sujet",
+	'messages:to:help' => "Saisissez le nom d'utilisateur du destinataire ici",
 	'messages:to' => "À ",
 	'messages:from' => "à partir de",
 	'messages:fly' => "envoyer",
@@ -90,9 +91,8 @@ $french = array(
 	'messages:nomessages' => "Il n'y a aucun message.",
 	'messages:user:nonexist' => "We could not find the recipient in the user database.",
 	'messages:user:blank' => "Vous n'avez pas choisir quelqu'un d'envoyer á .",
+	'messages:user:self' => "Vous ne pouvez pas vous envoyer un message à vous-même.",
 
 	'messages:deleted_sender' => 'utilisateur supprimé',
 
 );
-		
-add_translation("fr", $french);

@@ -1,6 +1,6 @@
 <?php
 
-$french = array(
+return array(
 
 	'friends:all' => "Tous vos contacts",
 
@@ -22,5 +22,3 @@ $french = array(
 	'notifications:subscriptions:success' => "Vos paramètres de notifications ont été enregistrées.",
 
 );
-
-	add_translation("fr", $french);

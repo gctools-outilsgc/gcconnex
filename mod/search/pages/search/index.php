@@ -17,43 +17,17 @@ $search_type = get_input('search_type', 'all');
 // XSS protection is more important that searching for HTML.
 $query = stripslashes(get_input('q', get_input('tag', '')));
 
-//$query = mysqli_real_escape_string($conn,$query);
-$query = str_replace('*',' ',$query);
-$query = str_replace('<','',$query);
-$query = str_replace('>','',$query);
-$query = str_replace('-',' ',$query);
-$query = str_replace('+',' ',$query);
-$query = str_replace('%',' ', $query);
-$query = str_replace('\'','',$query);
-$query = str_replace('"','',$query);
-
-//$query = utf8_encode($query);
-//$query = htmlentities($query);
-//$query = strip_tags($query);
-//$query = preg_replace('/[\W]/',' ',$query);
-$query = preg_replace('/\s[\s]+/',' ',$query);
-$query = trim($query);
-//$query = preg_replace('/\-[\-]+/','-',$query);
-
-//error_log('cyu - cleansed query: |'.$query.'| contains this many characters: '.strlen($query).' ascii code: '.ord($query));
-
-// @todo - create function for sanitization of strings for display in 1.8
-// encode <,>,&, quotes and characters above 127
-if (function_exists('mb_convert_encoding')) {
-	$display_query = mb_convert_encoding($query, 'HTML-ENTITIES', 'UTF-8');
-} else {
-	// if no mbstring extension, we just strip characters
-	$display_query = preg_replace("/[^\x01-\x7F]/", "", $query);
-}
-$display_query = htmlspecialchars($display_query, ENT_QUOTES, 'UTF-8', false);
+$display_query = _elgg_get_display_query($query);
 
 // check that we have an actual query
-if (!$query) {
+if (empty($query) && $query != "0") {
 	$title = sprintf(elgg_echo('search:results'), "\"$display_query\"");
 	
-	$body  = elgg_view_title(elgg_echo('search:search_error'));
-	$body .= elgg_echo('search:no_query');
-	$layout = elgg_view_layout('one_sidebar', array('content' => $body));
+	$body = elgg_echo('search:no_query');
+	$layout = elgg_view_layout('one_sidebar', array(
+		'title' => elgg_echo('search:search_error'),
+		'content' => $body
+	));
 	echo elgg_view_page($title, $layout);
 
 	return;
@@ -61,7 +35,7 @@ if (!$query) {
 
 // get limit and offset.  override if on search dashboard, where only 2
 // of each most recent entity types will be shown.
-$limit = ($search_type == 'all') ? 2 : get_input('limit', 10);
+$limit = ($search_type == 'all') ? 2 : get_input('limit', elgg_get_config('default_limit'));
 $offset = ($search_type == 'all') ? 0 : get_input('offset', 0);
 
 $entity_type = get_input('entity_type', ELGG_ENTITIES_ANY_VALUE);
@@ -106,17 +80,16 @@ $params = array(
 );
 
 $types = get_registered_entity_types();
+$types = elgg_trigger_plugin_hook('search_types', 'get_queries', $params, $types);
+
 $custom_types = elgg_trigger_plugin_hook('search_types', 'get_types', $params, array());
 
 // cyu - 2014-07-04
 
 
 // add sidebar items for all and native types
-// @todo should these maintain any existing type / subtype filters or reset?
 $data = htmlspecialchars(http_build_query(array(
 	'q' => $query,
-	'entity_subtype' => $entity_subtype,
-	'entity_type' => $entity_type,
 	'owner_guid' => $owner_guid,
 	'search_type' => 'all',
 	//'friends' => $friends
@@ -287,19 +260,19 @@ if ($search_type == 'tags') {
 }
 $highlighted_query = search_highlight_words($searched_words, $display_query);
 
-$body = elgg_view_title(elgg_echo('search:results', array("\"$highlighted_query\"")));
+$highlighted_title = elgg_echo('search:results', array("\"$highlighted_query\""));
 
 if (!$results_html) {
-	$body .= elgg_view('search/no_results');
+	$body = elgg_view('search/no_results');
 } else {
-	$body .= $results_html;
+	$body = $results_html;
 }
 
 // this is passed the original params because we don't care what actually
 // matched (which is out of date now anyway).
 // we want to know what search type it is.
 $layout_view = search_get_search_view($params, 'layout');
-$layout = elgg_view($layout_view, array('params' => $params, 'body' => $body));
+$layout = elgg_view($layout_view, array('params' => $params, 'body' => $body, 'title' => $highlighted_title));
 
 $title = elgg_echo('search:results', array("\"$display_query\""));
 

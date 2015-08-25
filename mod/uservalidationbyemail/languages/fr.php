@@ -6,7 +6,7 @@
  * @subpackage ElggUserValidationByEmail
  */
 
-$french = array(
+return array(
 	'admin:users:unvalidated' => 'non validées',
 	
 	'email:validate:subject' => "%s s'il vous plaît confirmer votre adresse e-mail pour %s!",
@@ -23,9 +23,11 @@ Si vous ne pouvez pas cliquer sur le lien, copier et coller dans votre navigateu
 %s
 %s
 ",
+
 	'email:confirm:success' => "Vous avez confirmé votre adresse de courriel!",
 	'email:confirm:fail' => "Votre adresse de courriel n'a pas pu être vérifiée...",
 
+	'uservalidationbyemail:emailsent' => "E-mail envoyé à <em>%s</em>",
 	'uservalidationbyemail:registerok' => "Pour activer votre compte, s'il vous plaît confirmer votre adresse courriel en cliquant sur le lien que nous venons de vous envoyer..",
 	'uservalidationbyemail:login:fail' => "Votre compte n'est pas validé donc la tentative de connexion a échoué. Un autre courriel de validation a été envoyé.",
 
@@ -60,5 +62,3 @@ Si vous ne pouvez pas cliquer sur le lien, copier et coller dans votre navigateu
 	'uservalidationbyemail:messages:resent_validations' => 'Demandes de validation renvoyé à tous les utilisateurs vérifiés.'
 
 );
-
-add_translation("fr", $french);

@@ -19,13 +19,12 @@ if (empty($body)) {
 
 $guid = thewire_save_post($body, elgg_get_logged_in_user_guid(), $access_id, $parent_guid, $method);
 if (!$guid) {
-	register_error(elgg_echo("thewire:error"));
+	register_error(elgg_echo("thewire:notsaved"));
 	forward(REFERER);
 }
 
-// Send response to original poster if not already registered to receive notification
+// if reply, forward to thread display page
 if ($parent_guid) {
-	thewire_send_response_notification($guid, $parent_guid, $user);
 	$parent = get_entity($parent_guid);
 	forward("thewire/thread/$parent->wire_thread");
 }

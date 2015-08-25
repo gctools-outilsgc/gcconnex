@@ -11,7 +11,9 @@
 elgg_load_js('lightbox');
 elgg_load_css('lightbox');
 
-elgg_generate_plugin_entities();
+// @todo this should occur in the controller code
+_elgg_generate_plugin_entities();
+
 $installed_plugins = elgg_get_plugins('any');
 $show_category = get_input('category', 'all');
 $sort = get_input('sort', 'priority');
@@ -135,9 +137,9 @@ $category_form = elgg_view_form('admin/plugins/filter', array(
 
 
 $sort_options = array(
-	'priority' => elgg_echo('admin:plugins:sort:priority'),
-	'alpha' => elgg_echo('admin:plugins:sort:alpha'),
-	'date' => elgg_echo('admin:plugins:sort:date'),
+	'priority' => elgg_echo('sort:priority'),
+	'alpha' => elgg_echo('sort:alpha'),
+	'date' => elgg_echo('sort:newest'),
 );
 // security - only want a defined option
 if (!array_key_exists($sort, $sort_options)) {

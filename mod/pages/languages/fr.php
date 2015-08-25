@@ -5,7 +5,7 @@
  * @package ElggPages
  */
 
-$french = array(
+return array(
 
 	/**
 	 * Menu items and titles
@@ -20,6 +20,7 @@ $french = array(
 	'pages:group' => "Pages de groupe",
 	'groups:enablepages' => 'Activer pages de groupe',
 
+	'pages:new' => "Une nouvelle page",
 	'pages:edit' => "Modifier cette page",
 	'pages:delete' => "Supprimer cette page",
 	'pages:history' => "Historique",
@@ -29,7 +30,6 @@ $french = array(
 	'pages:revert' => "Revenir",
 
 	'pages:navigation' => "Navigation",
-	'pages:new' => "Une nouvelle page",
 	'pages:notification' =>
 '%s added a new page:
 
@@ -37,6 +37,17 @@ $french = array(
 %s
 
 View and comment on the new page:
+%s
+',
+
+	'pages:notify:summary' => 'Nouvelle page nommée %s',
+	'pages:notify:subject' => "Une nouvelle page: %s",
+	'pages:notify:body' =>
+'%s a ajouté une nouvelle page: %s
+
+%s
+
+Voir et commenter cette page:
 %s
 ',
 	'item:object:page_top' => 'Pages de niveau supérieur',
@@ -77,9 +88,9 @@ View and comment on the new page:
 	'pages:error:no_title' => 'Vous devez spécifier un titre pour cette page.',
 	'pages:delete:success' => 'La page a été supprimée.',
 	'pages:delete:failure' => "Cette page n'a pas pu être supprimé.",
-	'pages:revision:delete:success' => 'The page revision was successfully deleted.',
-	'pages:revision:delete:failure' => 'The page revision could not be deleted.',
-	'pages:revision:not_found' => 'Cannot find this revision.',
+	'pages:revision:delete:success' => 'La version de la page a bien été supprimée.',
+	'pages:revision:delete:failure' => 'La version de la page n\'a pas pu être supprimée.',
+	'pages:revision:not_found' => 'Impossible de trouver cette révision.',
 
 	/**
 	 * Page
@@ -110,10 +121,8 @@ View and comment on the new page:
 	 */
 	'pages:sidebar:this' => "Cette page",
 	'pages:sidebar:children' => "Sous-pages",
-	'pages:sidebar:parent' => "Parent",
+	'pages:sidebar:parent' => "Parente",
 
 	'pages:newchild' => "Créer une sous-page",
 	'pages:backtoparent' => "Retour à '%s'",
 );
-
-add_translation("fr", $french);

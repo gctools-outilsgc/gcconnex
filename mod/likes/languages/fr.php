@@ -3,7 +3,7 @@
  * Likes French language file
  */
 
-$french = array(
+return array(
 	'likes:this' => "J'aime",
 	'likes:deleted' => 'Votre aime a été supprimé',
 	'likes:see' => 'Voir qui aime',
@@ -41,5 +41,3 @@ Merci,
 ',
 	
 );
-
-add_translation('fr', $french);

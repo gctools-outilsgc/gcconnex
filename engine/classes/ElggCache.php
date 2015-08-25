@@ -1,12 +1,12 @@
 <?php
 /**
- * ElggCache The elgg cache superclass.
+ * \ElggCache The elgg cache superclass.
  * This defines the interface for a cache (wherever that cache is stored).
  *
  * @package    Elgg.Core
  * @subpackage Cache
  */
-abstract class ElggCache implements ArrayAccess {
+abstract class ElggCache implements \ArrayAccess {
 	/**
 	 * Variables for the cache object.
 	 *
@@ -17,7 +17,7 @@ abstract class ElggCache implements ArrayAccess {
 	/**
 	 * Set the constructor.
 	 */
-	function __construct() {
+	public function __construct() {
 		$this->variables = array();
 	}
 
@@ -30,10 +30,10 @@ abstract class ElggCache implements ArrayAccess {
 	 *
 	 * @return void
 	 *
-	 * @deprecated 1.8 Use ElggCache:setVariable()
+	 * @deprecated 1.8 Use \ElggCache:setVariable()
 	 */
 	public function set_variable($variable, $value) {
-		elgg_deprecated_notice('ElggCache::set_variable() is deprecated by ElggCache::setVariable()', 1.8);
+		elgg_deprecated_notice('\ElggCache::set_variable() is deprecated by \ElggCache::setVariable()', 1.8);
 		$this->setVariable($variable, $value);
 	}
 	// @codingStandardsIgnoreEnd
@@ -62,10 +62,10 @@ abstract class ElggCache implements ArrayAccess {
 	 *
 	 * @return mixed The value or null;
 	 *
-	 * @deprecated 1.8 Use ElggCache::getVariable()
+	 * @deprecated 1.8 Use \ElggCache::getVariable()
 	 */
 	public function get_variable($variable) {
-		elgg_deprecated_notice('ElggCache::get_variable() is deprecated by ElggCache::getVariable()', 1.8);
+		elgg_deprecated_notice('\ElggCache::get_variable() is deprecated by \ElggCache::getVariable()', 1.8);
 		return $this->getVariable($variable);
 	}
 	// @codingStandardsIgnoreEnd
@@ -92,7 +92,7 @@ abstract class ElggCache implements ArrayAccess {
 	 *
 	 * @return mixed
 	 */
-	function __get($key) {
+	public function __get($key) {
 		return $this->load($key);
 	}
 
@@ -102,10 +102,10 @@ abstract class ElggCache implements ArrayAccess {
 	 * @param string $key   Name
 	 * @param mixed  $value Value
 	 *
-	 * @return mixed
+	 * @return void
 	 */
-	function __set($key, $value) {
-		return $this->save($key, $value);
+	public function __set($key, $value) {
+		$this->save($key, $value);
 	}
 
 	/**
@@ -115,7 +115,7 @@ abstract class ElggCache implements ArrayAccess {
 	 *
 	 * @return bool
 	 */
-	function __isset($key) {
+	public function __isset($key) {
 		return (bool)$this->load($key);
 	}
 
@@ -126,7 +126,7 @@ abstract class ElggCache implements ArrayAccess {
 	 *
 	 * @return bool
 	 */
-	function __unset($key) {
+	public function __unset($key) {
 		return $this->delete($key);
 	}
 
@@ -144,7 +144,7 @@ abstract class ElggCache implements ArrayAccess {
 	 * Load data from the cache using a given key.
 	 *
 	 * @todo $offset is a horrible variable name because it creates confusion
-	 * with the ArrayAccess methods
+	 * with the \ArrayAccess methods
 	 *
 	 * @param string $key    Name
 	 * @param int    $offset Offset
@@ -193,40 +193,40 @@ abstract class ElggCache implements ArrayAccess {
 	/**
 	 * Assigns a value for the specified key
 	 *
-	 * @see ArrayAccess::offsetSet()
+	 * @see \ArrayAccess::offsetSet()
 	 *
 	 * @param mixed $key   The key (offset) to assign the value to.
 	 * @param mixed $value The value to set.
 	 *
 	 * @return void
 	 */
-	function offsetSet($key, $value) {
+	public function offsetSet($key, $value) {
 		$this->save($key, $value);
 	}
 
 	/**
 	 * Get the value for specified key
 	 *
-	 * @see ArrayAccess::offsetGet()
+	 * @see \ArrayAccess::offsetGet()
 	 *
 	 * @param mixed $key The key (offset) to retrieve.
 	 *
 	 * @return mixed
 	 */
-	function offsetGet($key) {
+	public function offsetGet($key) {
 		return $this->load($key);
 	}
 
 	/**
 	 * Unsets a key.
 	 *
-	 * @see ArrayAccess::offsetUnset()
+	 * @see \ArrayAccess::offsetUnset()
 	 *
 	 * @param mixed $key The key (offset) to unset.
 	 *
 	 * @return void
 	 */
-	function offsetUnset($key) {
+	public function offsetUnset($key) {
 		if (isset($this->$key)) {
 			unset($this->$key);
 		}
@@ -235,13 +235,13 @@ abstract class ElggCache implements ArrayAccess {
 	/**
 	 * Does key exist
 	 *
-	 * @see ArrayAccess::offsetExists()
+	 * @see \ArrayAccess::offsetExists()
 	 *
 	 * @param mixed $key A key (offset) to check for.
 	 *
 	 * @return bool
 	 */
-	function offsetExists($key) {
+	public function offsetExists($key) {
 		return isset($this->$key);
 	}
 }

@@ -12,13 +12,19 @@ if (elgg_instanceof($blog, 'object', 'blog') && $blog->canEdit()) {
 	$owner = $blog->getOwnerEntity();
 	$revisions = array();
 
-	$auto_save_annotations = $blog->getAnnotations('blog_auto_save', 1);
+	$auto_save_annotations = $blog->getAnnotations(array(
+		'annotation_name' => 'blog_auto_save',
+		'limit' => 1,
+	));
 	if ($auto_save_annotations) {
 		$revisions[] = $auto_save_annotations[0];
 	}
 
 	// count(FALSE) == 1!  AHHH!!!
-	$saved_revisions = $blog->getAnnotations('blog_revision', 10, 0, 'time_created DESC');
+	$saved_revisions = $blog->getAnnotations(array(
+		'annotation_name' => 'blog_revision',
+		'reverse_order_by' => true,
+	));
 	if ($saved_revisions) {
 		$revision_count = count($saved_revisions);
 	} else {
@@ -39,7 +45,7 @@ if (elgg_instanceof($blog, 'object', 'blog') && $blog->canEdit()) {
 		if ($blog->status == 'published') {
 			$load = elgg_view('output/url', array(
 				'href' => $load_base_url,
-				'text' => elgg_echo('blog:status:published'),
+				'text' => elgg_echo('status:published'),
 				'is_trusted' => true,
 			));
 

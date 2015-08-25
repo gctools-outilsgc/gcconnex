@@ -96,7 +96,7 @@ function get_entities_from_access_collection($collection_id, $entity_type = "", 
  * @param int    $timelower      Lower time limit
  * @param int    $timeupper      Upper time limit
  *
- * @return unknown_type
+ * @return ElggEntity[]|int
  */
 function get_entities_from_annotations($entity_type = "", $entity_subtype = "", $name = "",
 $value = "", $owner_guid = 0, $group_guid = 0, $limit = 10, $offset = 0, $order_by = "asc",
@@ -225,7 +225,7 @@ $listtypetoggle = false) {
 
 	$options['full_view'] = $fullview;
 	$options['list_type_toggle'] = $listtypetoggle;
-	$options['pagination'] = $pagination;
+	$options['pagination'] = true;
 
 	return elgg_list_entities_from_annotations($options);
 }
@@ -510,7 +510,7 @@ function search_for_group($criteria, $limit = 10, $offset = 0, $order_by = "", $
 	$offset = (int)$offset;
 	$order_by = sanitise_string($order_by);
 
-	$access = get_access_sql_suffix("e");
+	$access = _elgg_get_access_where_sql();
 
 	if ($order_by == "") {
 		$order_by = "e.time_created desc";
@@ -590,7 +590,7 @@ function list_group_search($tag, $limit = 10) {
 	$count = (int) search_for_group($tag, 10, 0, '', true);
 	$entities = search_for_group($tag, $limit, $offset);
 
-	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, false);
+	return elgg_view_entity_list($entities, $count, $offset, $limit, true, false);
 
 }
 
@@ -749,7 +749,7 @@ $count = false, $meta_array_operator = 'and') {
  * @param string $menu_name The name of the menu item
  * @param string $menu_url  Its URL
  *
- * @return stdClass|false Depending on success
+ * @return \stdClass|false Depending on success
  * @deprecated 1.7
  */
 function menu_item($menu_name, $menu_url) {
@@ -782,9 +782,8 @@ function search_for_object($criteria, $limit = 10, $offset = 0, $order_by = "", 
 	$limit = (int)$limit;
 	$offset = (int)$offset;
 	$order_by = sanitise_string($order_by);
-	$container_guid = (int)$container_guid;
 
-	$access = get_access_sql_suffix("e");
+	$access = _elgg_get_access_where_sql();
 
 	if ($order_by == "") {
 		$order_by = "e.time_created desc";
@@ -937,7 +936,7 @@ function search_for_site($criteria, $limit = 10, $offset = 0, $order_by = "", $c
 	$offset = (int)$offset;
 	$order_by = sanitise_string($order_by);
 
-	$access = get_access_sql_suffix("e");
+	$access = _elgg_get_access_where_sql();
 
 	if ($order_by == "") {
 		$order_by = "e.time_created desc";
@@ -984,7 +983,7 @@ function search_for_user($criteria, $limit = 10, $offset = 0, $order_by = "", $c
 	$offset = (int)$offset;
 	$order_by = sanitise_string($order_by);
 
-	$access = get_access_sql_suffix("e");
+	$access = _elgg_get_access_where_sql();
 
 	if ($order_by == "") {
 		$order_by = "e.time_created desc";
@@ -1031,7 +1030,7 @@ function list_user_search($tag, $limit = 10) {
 	$count = (int) search_for_user($tag, 10, 0, '', true);
 	$entities = search_for_user($tag, $limit, $offset);
 
-	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, false);
+	return elgg_view_entity_list($entities, $count, $offset, $limit, true, false);
 }
 
 /**
@@ -1110,7 +1109,7 @@ function get_views($dir, $base) {
  * @param mixed  $register_value The value of the register
  * @param array  $children_array Optionally, an array of children
  *
- * @return false|stdClass Depending on success
+ * @return false|\stdClass Depending on success
  * @deprecated 1.7 Use {@link add_submenu_item()}
  */
 function make_register_object($register_name, $register_value, $children_array = array()) {
@@ -1119,7 +1118,7 @@ function make_register_object($register_name, $register_value, $children_array =
 		return false;
 	}
 
-	$register = new stdClass;
+	$register = new \stdClass;
 	$register->name = $register_name;
 	$register->value = $register_value;
 	$register->children = $children_array;
@@ -1137,6 +1136,7 @@ function make_register_object($register_name, $register_value, $children_array =
  * @param int $guid GUID
  *
  * @return 1
+ * @deprecated 1.7
  */
 function delete_object_entity($guid) {
 	system_message(elgg_echo('deprecatedfunction', array('delete_user_entity')));
@@ -1154,6 +1154,7 @@ function delete_object_entity($guid) {
  * @param int $guid User GUID
  *
  * @return 1
+ * @deprecated 1.7
  */
 function delete_user_entity($guid) {
 	system_message(elgg_echo('deprecatedfunction', array('delete_user_entity')));

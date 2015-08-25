@@ -26,19 +26,7 @@
  * @since 1.8.0
  */
 function elgg_get_site_url($site_guid = 0) {
-	if ($site_guid == 0) {
-		global $CONFIG;
-		return $CONFIG->wwwroot;
-	}
-
-	$site = get_entity($site_guid);
-
-	if (!$site instanceof ElggSite) {
-		return false;
-	}
-	/* @var ElggSite $site */
-
-	return $site->url;
+	return _elgg_services()->config->getSiteUrl($site_guid);
 }
 
 /**
@@ -48,8 +36,7 @@ function elgg_get_site_url($site_guid = 0) {
  * @since 1.8.0
  */
 function elgg_get_plugins_path() {
-	global $CONFIG;
-	return $CONFIG->pluginspath;
+	return _elgg_services()->config->getPluginsPath();
 }
 
 /**
@@ -59,8 +46,7 @@ function elgg_get_plugins_path() {
  * @since 1.8.0
  */
 function elgg_get_data_path() {
-	global $CONFIG;
-	return $CONFIG->dataroot;
+	return _elgg_services()->config->getDataPath();
 }
 
 /**
@@ -70,51 +56,20 @@ function elgg_get_data_path() {
  * @since 1.8.0
  */
 function elgg_get_root_path() {
-	global $CONFIG;
-	return $CONFIG->path;
+	return _elgg_services()->config->getRootPath();
 }
 
 /**
  * Get an Elgg configuration value
  *
  * @param string $name      Name of the configuration value
- * @param int    $site_guid NULL for installation setting, 0 for default site
+ * @param int    $site_guid null for installation setting, 0 for default site
  *
  * @return mixed Configuration value or null if it does not exist
  * @since 1.8.0
  */
 function elgg_get_config($name, $site_guid = 0) {
-	global $CONFIG;
-
-	$name = trim($name);
-
-	if (isset($CONFIG->$name)) {
-		return $CONFIG->$name;
-	}
-
-	if ($site_guid === null) {
-		// installation wide setting
-		$value = datalist_get($name);
-	} else {
-		// hit DB only if we're not sure if value exists or not
-		if (!isset($CONFIG->site_config_loaded)) {
-			// site specific setting
-			if ($site_guid == 0) {
-				$site_guid = (int) $CONFIG->site_id;
-			}
-			$value = get_config($name, $site_guid);
-		} else {
-			$value = null;
-		}
-	}
-
-	// @todo document why we don't cache false
-	if ($value === false) {
-		return null;
-	}
-
-	$CONFIG->$name = $value;
-	return $value;
+	return _elgg_services()->config->get($name, $site_guid);
 }
 
 /**
@@ -129,11 +84,7 @@ function elgg_get_config($name, $site_guid = 0) {
  * @since 1.8.0
  */
 function elgg_set_config($name, $value) {
-	global $CONFIG;
-
-	$name = trim($name);
-
-	$CONFIG->$name = $value;
+	return _elgg_services()->config->set($name, $value);
 }
 
 /**
@@ -141,79 +92,19 @@ function elgg_set_config($name, $value) {
  *
  * @param string $name      Configuration name (cannot be greater than 255 characters)
  * @param mixed  $value     Configuration value. Should be string for installation setting
- * @param int    $site_guid NULL for installation setting, 0 for default site
+ * @param int    $site_guid null for installation setting, 0 for default site
  *
  * @return bool
  * @since 1.8.0
  */
 function elgg_save_config($name, $value, $site_guid = 0) {
-	global $CONFIG;
-
-	$name = trim($name);
-
-	if (strlen($name) > 255) {
-		elgg_log("The name length for configuration variables cannot be greater than 255", "ERROR");
-		return false;
-	}
-
-	elgg_set_config($name, $value);
-
-	if ($site_guid === NULL) {
-		if (is_array($value) || is_object($value)) {
-			return false;
-		}
-		return datalist_set($name, $value);
-	} else {
-		if ($site_guid == 0) {
-			$site_guid = (int) $CONFIG->site_id;
-		}
-		return set_config($name, $value, $site_guid);
-	}
+	return _elgg_services()->config->save($name, $value, $site_guid);
 }
-
-/**
- * Check that installation has completed and the database is populated.
- *
- * @throws InstallationException|DatabaseException
- * @return void
- * @access private
- */
-function verify_installation() {
-	global $CONFIG;
-
-	if (isset($CONFIG->installed)) {
-		return;
-	}
-
-	try {
-		$dblink = get_db_link('read');
-		if (!$dblink) {
-			throw new DatabaseException();
-		}
-
-		mysql_query("SELECT value FROM {$CONFIG->dbprefix}datalists WHERE name = 'installed'", $dblink);
-		if (mysql_errno($dblink) > 0) {
-			throw new DatabaseException();
-		}
-
-		$CONFIG->installed = true;
-
-	} catch (DatabaseException $e) {
-		throw new InstallationException(elgg_echo('InstallationException:SiteNotInstalled'));
-	}
-}
-
-/**
- * An array of key value pairs from the datalists table.
- *
- * Used as a cache in datalist functions.
- *
- * @global array $DATALIST_CACHE
- */
-$DATALIST_CACHE = array();
 
 /**
  * Get the value of a datalist element.
+ * 
+ * Plugin authors should use elgg_get_config() and pass null for the site GUID.
  *
  * @internal Datalists are stored in the datalist table.
  *
@@ -224,59 +115,19 @@ $DATALIST_CACHE = array();
  * @access private
  */
 function datalist_get($name) {
-	global $CONFIG, $DATALIST_CACHE;
-
-	$name = trim($name);
-
-	// cannot store anything longer than 255 characters in db, so catch here
-	if (elgg_strlen($name) > 255) {
-		elgg_log("The name length for configuration variables cannot be greater than 255", "ERROR");
-		return false;
-	}
-
-	$name = sanitise_string($name);
-	if (isset($DATALIST_CACHE[$name])) {
-		return $DATALIST_CACHE[$name];
-	}
-
-	// If memcache enabled then cache value in memcache
-	$value = null;
-	static $datalist_memcache;
-	if ((!$datalist_memcache) && (is_memcache_available())) {
-		$datalist_memcache = new ElggMemcache('datalist_memcache');
-	}
-	if ($datalist_memcache) {
-		$value = $datalist_memcache->load($name);
-	}
-	if ($value) {
-		return $value;
-	}
-
-	// [Marcus Povey 20090217 : Now retrieving all datalist values on first
-	// load as this saves about 9 queries per page]
-	// This also causes OOM problems when the datalists table is large
-	// @todo make a list of datalists that we want to get in one grab
-	$result = get_data("SELECT * from {$CONFIG->dbprefix}datalists");
-	if ($result) {
-		foreach ($result as $row) {
-			$DATALIST_CACHE[$row->name] = $row->value;
-
-			// Cache it if memcache is available
-			if ($datalist_memcache) {
-				$datalist_memcache->save($row->name, $row->value);
-			}
-		}
-
-		if (isset($DATALIST_CACHE[$name])) {
-			return $DATALIST_CACHE[$name];
-		}
-	}
-
-	return null;
+	return _elgg_services()->datalist->get($name);
 }
 
 /**
  * Set the value for a datalist element.
+ * 
+ * Plugin authors should use elgg_save_config() and pass null for the site GUID.
+ * 
+ * @warning Names should be selected so as not to collide with the names for the
+ * site config.
+ * 
+ * @warning Values set through datalist_set() are not available in $CONFIG until
+ * next page load.
  *
  * @param string $name  The name of the datalist
  * @param string $value The new value
@@ -285,37 +136,7 @@ function datalist_get($name) {
  * @access private
  */
 function datalist_set($name, $value) {
-	global $CONFIG, $DATALIST_CACHE;
-
-	// cannot store anything longer than 255 characters in db, so catch before we set
-	if (elgg_strlen($name) > 255) {
-		elgg_log("The name length for configuration variables cannot be greater than 255", "ERROR");
-		return false;
-	}
-
-	$sanitised_name = sanitise_string($name);
-	$sanitised_value = sanitise_string($value);
-
-	// If memcache is available then invalidate the cached copy
-	static $datalist_memcache;
-	if ((!$datalist_memcache) && (is_memcache_available())) {
-		$datalist_memcache = new ElggMemcache('datalist_memcache');
-	}
-
-	if ($datalist_memcache) {
-		$datalist_memcache->delete($name);
-	}
-
-	$success = insert_data("INSERT into {$CONFIG->dbprefix}datalists"
-		. " set name = '{$sanitised_name}', value = '{$sanitised_value}'"
-		. " ON DUPLICATE KEY UPDATE value='{$sanitised_value}'");
-
-	if ($success !== FALSE) {
-		$DATALIST_CACHE[$name] = $value;
-		return true;
-	} else {
-		return false;
-	}
+	return _elgg_services()->datalist->set($name, $value);
 }
 
 /**
@@ -343,114 +164,68 @@ function datalist_set($name, $value) {
  *                                     this function will be run again.
  *
  * @return bool
+ * @todo deprecate
  */
 function run_function_once($functionname, $timelastupdatedcheck = 0) {
-	$lastupdated = datalist_get($functionname);
-	if ($lastupdated) {
-		$lastupdated = (int) $lastupdated;
-	} elseif ($lastupdated !== false) {
-		$lastupdated = 0;
-	} else {
-		// unable to check datalist
-		return false;
-	}
-	if (is_callable($functionname) && $lastupdated <= $timelastupdatedcheck) {
-		$functionname();
-		datalist_set($functionname, time());
-		return true;
-	} else {
-		return false;
-	}
+	return _elgg_services()->datalist->runFunctionOnce($functionname, $timelastupdatedcheck);
 }
 
 /**
  * Removes a config setting.
  *
- * @internal
- * These settings are stored in the dbprefix_config table and read during system
- * boot into $CONFIG.
+ * @note Internal: These settings are stored in the dbprefix_config table and read
+ * during system boot into $CONFIG.
  *
  * @param string $name      The name of the field.
- * @param int    $site_guid Optionally, the GUID of the site (current site is assumed by default).
+ * @param int    $site_guid Optionally, the GUID of the site (default: current site).
  *
- * @return int|false The number of affected rows or false on error.
+ * @return bool Success or failure
  *
  * @see get_config()
  * @see set_config()
  */
 function unset_config($name, $site_guid = 0) {
-	global $CONFIG;
-
-	if (isset($CONFIG->$name)) {
-		unset($CONFIG->$name);
-	}
-
-	$name = sanitise_string($name);
-	$site_guid = (int) $site_guid;
-	if ($site_guid == 0) {
-		$site_guid = (int) $CONFIG->site_id;
-	}
-
-	$query = "delete from {$CONFIG->dbprefix}config where name='$name' and site_guid=$site_guid";
-	return delete_data($query);
+	return _elgg_services()->configTable->remove($name, $site_guid);
 }
 
 /**
  * Add or update a config setting.
+ * 
+ * Plugin authors should use elgg_set_config().
  *
  * If the config name already exists, it will be updated to the new value.
  *
- * @internal
- * These settings are stored in the dbprefix_config table and read during system
- * boot into $CONFIG.
+ * @warning Names should be selected so as not to collide with the names for the
+ * datalist (application configuration)
+ * 
+ * @internal These settings are stored in the dbprefix_config table and read 
+ * during system boot into $CONFIG.
+ * 
+ * @internal The value is serialized so we maintain type information.
  *
  * @param string $name      The name of the configuration value
- * @param string $value     Its value
+ * @param mixed  $value     Its value
  * @param int    $site_guid Optionally, the GUID of the site (current site is assumed by default)
  *
  * @return bool
- * @todo The config table doens't have numeric primary keys so insert_data returns 0.
- * @todo Use "INSERT ... ON DUPLICATE KEY UPDATE" instead of trying to delete then add.
  * @see unset_config()
  * @see get_config()
  * @access private
  */
 function set_config($name, $value, $site_guid = 0) {
-	global $CONFIG;
-
-	$name = trim($name);
-
-	// cannot store anything longer than 255 characters in db, so catch before we set
-	if (elgg_strlen($name) > 255) {
-		elgg_log("The name length for configuration variables cannot be greater than 255", "ERROR");
-		return false;
-	}
-
-	// Unset existing
-	unset_config($name, $site_guid);
-
-	$site_guid = (int) $site_guid;
-	if ($site_guid == 0) {
-		$site_guid = (int) $CONFIG->site_id;
-	}
-	$CONFIG->$name = $value;
-	$value = sanitise_string(serialize($value));
-
-	$query = "insert into {$CONFIG->dbprefix}config"
-		. " set name = '{$name}', value = '{$value}', site_guid = {$site_guid}";
-	$result = insert_data($query);
-	return $result !== false;
+	return _elgg_services()->configTable->set($name, $value, $site_guid);
 }
 
 /**
  * Gets a configuration value
+ * 
+ * Plugin authors should use elgg_get_config().
  *
- * @internal
- * These settings are stored in the dbprefix_config table and read during system
- * boot into $CONFIG.
+ * @internal These settings are stored in the dbprefix_config table and read 
+ * during system boot into $CONFIG.
  *
  * @param string $name      The name of the config value
- * @param int    $site_guid Optionally, the GUID of the site (current site is assumed by default)
+ * @param int    $site_guid Optionally, the GUID of the site (default: current site)
  *
  * @return mixed|null
  * @see set_config()
@@ -458,94 +233,18 @@ function set_config($name, $value, $site_guid = 0) {
  * @access private
  */
 function get_config($name, $site_guid = 0) {
-	global $CONFIG;
-
-	$name = sanitise_string($name);
-	$site_guid = (int) $site_guid;
-
-	// check for deprecated values.
-	// @todo might be a better spot to define this?
-	$new_name = false;
-	switch($name) {
-		case 'viewpath':
-			$new_name = 'view_path';
-			$dep_version = 1.8;
-			break;
-
-		case 'pluginspath':
-			$new_name = 'plugins_path';
-			$dep_version = 1.8;
-			break;
-
-		case 'sitename':
-			$new_name = 'site_name';
-			$dep_version = 1.8;
-			break;
-	}
-
-	// @todo these haven't really been implemented in Elgg 1.8. Complete in 1.9.
-	// show dep message
-	if ($new_name) {
-		//	$msg = "Config value $name has been renamed as $new_name";
-		$name = $new_name;
-		//	elgg_deprecated_notice($msg, $dep_version);
-	}
-
-	// decide from where to return the value
-	if (isset($CONFIG->$name)) {
-		return $CONFIG->$name;
-	}
-
-	if ($site_guid == 0) {
-		$site_guid = (int) $CONFIG->site_id;
-	}
-
-	$result = get_data_row("SELECT value FROM {$CONFIG->dbprefix}config
-		WHERE name = '{$name}' and site_guid = {$site_guid}");
-
-	if ($result) {
-		$result = $result->value;
-		$result = unserialize($result->value);
-		$CONFIG->$name = $result;
-		return $result;
-	}
-
-	return null;
-}
-
-/**
- * Loads all configuration values from the dbprefix_config table into $CONFIG.
- *
- * @param int $site_guid Optionally, the GUID of the site (current site is assumed by default)
- *
- * @return bool
- * @access private
- */
-function get_all_config($site_guid = 0) {
-	global $CONFIG;
-
-	$site_guid = (int) $site_guid;
-
-	if ($site_guid == 0) {
-		$site_guid = (int) $CONFIG->site_guid;
-	}
-
-	if ($result = get_data("SELECT * FROM {$CONFIG->dbprefix}config WHERE site_guid = $site_guid")) {
-		foreach ($result as $r) {
-			$name = $r->name;
-			$value = $r->value;
-			$CONFIG->$name = unserialize($value);
-		}
-
-		return true;
-	}
-	return false;
+	return _elgg_services()->configTable->get($name, $site_guid);
 }
 
 /**
  * Loads configuration related to this site
  *
- * This loads from the config database table and the site entity
+ * This runs on engine boot and loads from the config database table and the 
+ * site entity. It runs after the application configuration is loaded by
+ * _elgg_load_application_config().
+ * 
+ * @see _elgg_engine_boot()
+ * 
  * @access private
  */
 function _elgg_load_site_config() {
@@ -553,9 +252,9 @@ function _elgg_load_site_config() {
 
 	$CONFIG->site_guid = (int) datalist_get('default_site');
 	$CONFIG->site_id = $CONFIG->site_guid;
-	$CONFIG->site = get_entity($CONFIG->site_guid);
+	$CONFIG->site = _elgg_services()->entityTable->get($CONFIG->site_guid, 'site');
 	if (!$CONFIG->site) {
-		throw new InstallationException(elgg_echo('InstallationException:SiteNotInstalled'));
+		throw new \InstallationException("Unable to handle this request. This site is not configured or the database is down.");
 	}
 
 	$CONFIG->wwwroot = $CONFIG->site->url;
@@ -564,15 +263,24 @@ function _elgg_load_site_config() {
 	$CONFIG->siteemail = $CONFIG->site->email;
 	$CONFIG->url = $CONFIG->wwwroot;
 
-	get_all_config();
+	_elgg_services()->configTable->loadAll();
+
 	// gives hint to elgg_get_config function how to approach missing values
 	$CONFIG->site_config_loaded = true;
+
+	if (!empty($CONFIG->debug)) {
+		_elgg_services()->logger->setLevel($CONFIG->debug);
+		_elgg_services()->logger->setDisplay(true);
+	}
 }
 
 /**
  * Loads configuration related to Elgg as an application
  *
- * This loads from the datalists database table
+ * This runs on the engine boot and loads from the datalists database table.
+ * 
+ * @see _elgg_engine_boot()
+ * 
  * @access private
  */
 function _elgg_load_application_config() {
@@ -580,14 +288,14 @@ function _elgg_load_application_config() {
 
 	$install_root = str_replace("\\", "/", dirname(dirname(dirname(__FILE__))));
 	$defaults = array(
-		'path'			=>	"$install_root/",
-		'view_path'		=>	"$install_root/views/",
-		'plugins_path'	=>	"$install_root/mod/",
-		'language'		=>	'en',
+		'path' => "$install_root/",
+		'view_path' => "$install_root/views/",
+		'plugins_path' => "$install_root/mod/",
+		'language' => 'en',
 
 		// compatibility with old names for plugins not using elgg_get_config()
-		'viewpath'		=>	"$install_root/views/",
-		'pluginspath'	=>	"$install_root/mod/",
+		'viewpath' => "$install_root/views/",
+		'pluginspath' => "$install_root/mod/",
 	);
 
 	foreach ($defaults as $name => $value) {
@@ -596,20 +304,50 @@ function _elgg_load_application_config() {
 		}
 	}
 
-	$path = datalist_get('path');
-	if (!empty($path)) {
-		$CONFIG->path = $path;
+	// set cookie values for session and remember me
+	if (!isset($CONFIG->cookies)) {
+		$CONFIG->cookies = array();
 	}
-	$dataroot = datalist_get('dataroot');
-	if (!empty($dataroot)) {
-		$CONFIG->dataroot = $dataroot;
+	if (!isset($CONFIG->cookies['session'])) {
+		$CONFIG->cookies['session'] = array();
 	}
-	$simplecache_enabled = datalist_get('simplecache_enabled');
-	if ($simplecache_enabled !== false) {
-		$CONFIG->simplecache_enabled = $simplecache_enabled;
+	$session_defaults = session_get_cookie_params();
+	$session_defaults['name'] = 'Elgg';
+	$CONFIG->cookies['session'] = array_merge($session_defaults, $CONFIG->cookies['session']);
+	if (!isset($CONFIG->cookies['remember_me'])) {
+		$CONFIG->cookies['remember_me'] = array();
+	}
+	$session_defaults['name'] = 'elggperm';
+	$session_defaults['expire'] = strtotime("+30 days");
+	$CONFIG->cookies['remember_me'] = array_merge($session_defaults, $CONFIG->cookies['remember_me']);
+
+	if (!is_memcache_available()) {
+		_elgg_services()->datalist->loadAll();
+	}
+
+	// allow sites to set dataroot and simplecache_enabled in settings.php
+	if (isset($CONFIG->dataroot)) {
+		$CONFIG->dataroot = sanitise_filepath($CONFIG->dataroot);
+		$CONFIG->dataroot_in_settings = true;
 	} else {
-		$CONFIG->simplecache_enabled = 1;
+		$dataroot = datalist_get('dataroot');
+		if (!empty($dataroot)) {
+			$CONFIG->dataroot = $dataroot;
+		}
+		$CONFIG->dataroot_in_settings = false;
 	}
+	if (isset($CONFIG->simplecache_enabled)) {
+		$CONFIG->simplecache_enabled_in_settings = true;
+	} else {
+		$simplecache_enabled = datalist_get('simplecache_enabled');
+		if ($simplecache_enabled !== false) {
+			$CONFIG->simplecache_enabled = $simplecache_enabled;
+		} else {
+			$CONFIG->simplecache_enabled = 1;
+		}
+		$CONFIG->simplecache_enabled_in_settings = false;
+	}
+
 	$system_cache_enabled = datalist_get('system_cache_enabled');
 	if ($system_cache_enabled !== false) {
 		$CONFIG->system_cache_enabled = $system_cache_enabled;
@@ -617,16 +355,24 @@ function _elgg_load_application_config() {
 		$CONFIG->system_cache_enabled = 1;
 	}
 
-	// initialize context here so it is set before the get_input call
-	$CONFIG->context = array();
-
 	// needs to be set before system, init for links in html head
-	$viewtype = get_input('view', 'default');
-	$lastcached = datalist_get("simplecache_lastcached_$viewtype");
-	$CONFIG->lastcache = $lastcached;
+	$CONFIG->lastcache = (int)datalist_get("simplecache_lastupdate");
 
 	$CONFIG->i18n_loaded_from_cache = false;
 
 	// this must be synced with the enum for the entities table
 	$CONFIG->entity_types = array('group', 'object', 'site', 'user');
 }
+
+/**
+ * @access private
+ */
+function _elgg_config_test($hook, $type, $tests) {
+	global $CONFIG;
+	$tests[] = "{$CONFIG->path}engine/tests/ElggCoreConfigTest.php";
+	return $tests;
+}
+
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$hooks->registerHandler('unit_test', 'system', '_elgg_config_test');
+};

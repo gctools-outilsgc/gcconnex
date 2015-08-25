@@ -6,38 +6,37 @@
  * @package ElggInviteFriends
  */
 
-$french = array(
+return array(
 
-	'friends:invite' => 'Invite friends',
+	'friends:invite' => 'Inviter des contacts',
 	
-	'invitefriends:registration_disabled' => 'New user registration has been disabled on this site; you are unable to invite new users.',
+	'invitefriends:registration_disabled' => 'L\'enregistrement des nouveaux utilisateurs a été désactivé sur ce site, vous ne pouvez pas inviter de nouveaux utilisateurs.',
 	
-#	'invitefriends:introduction' => 'To invite friends to join you on this network, enter their email addresses below (one per line):',
+#	'invitefriends:introduction' => 'Pour inviter des amis à vous rejoindre sur ce réseau, saisissez leurs adresses emails et un message pour qu\'ils puissent recevoir votre invitation.',
+	'invitefriends:emails' => 'Adresses email (une par ligne)',
 	'invitefriends:message' => 'Écrivez le message qui accompagnera votre invitation:',
 	'invitefriends:subject' => 'Invitation to join %s',
 
-	'invitefriends:success' => 'Your friends were invited.',
-	'invitefriends:invitations_sent' => 'Invites sent: %s. There were the following problems:',
-	'invitefriends:email_error' => 'The following addresses are not valid: %s',
-	'invitefriends:already_members' => 'The following are already members: %s',
-	'invitefriends:noemails' => 'No email addresses were entered.',
+	'invitefriends:success' => 'Vos contacts ont été invités.',
+	'invitefriends:invitations_sent' => 'Invitations envoyés: %s. Il y a eu les problèmes suivants:',
+	'invitefriends:email_error' => 'Les invitations ont été envoyées, mais les adresses suivantes comportent des erreurs: %s',
+	'invitefriends:already_members' => 'Les invités suivants sont déja membres: %s',
+	'invitefriends:noemails' => 'Aucune adresse email a été renseignée.',
 	
 	'invitefriends:message:default' => '
 Bonjour,
 
 je vous invite à vous joindre à mon réseau, ici, sur %s.',
 
-	'invitefriends:email' => '
-You have been invited to join %s by %s. They included the following message:
+	'invitefriends:email' => 'Vous avez été invité à rejoindre %s par %s. Le message suivant a été ajouté pour vous:
 
 %s
 
-To join, click the following link:
+Pour vous inscrire et nous rejoindre, cliquez sur le lien suivant:
 
 %s
 
-You will automatically add them as a friend when you create your account.',
+P.S. 
+Vous serez automatiquement ajouté(e) comme ami(e) lorsque vous créez votre compte.',
 	
-	);
-					
-add_translation("fr", $french);
+);

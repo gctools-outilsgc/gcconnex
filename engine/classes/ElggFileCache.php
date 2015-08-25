@@ -1,12 +1,12 @@
 <?php
 /**
- * ElggFileCache
+ * \ElggFileCache
  * Store cached data in a file store.
  *
  * @package    Elgg.Core
  * @subpackage Caches
  */
-class ElggFileCache extends ElggCache {
+class ElggFileCache extends \ElggCache {
 	/**
 	 * Set the Elgg cache.
 	 *
@@ -16,13 +16,13 @@ class ElggFileCache extends ElggCache {
 	 *
 	 * @throws ConfigurationException
 	 */
-	function __construct($cache_path, $max_age = 0, $max_size = 0) {
+	public function __construct($cache_path, $max_age = 0, $max_size = 0) {
 		$this->setVariable("cache_path", $cache_path);
 		$this->setVariable("max_age", $max_age);
 		$this->setVariable("max_size", $max_size);
 
 		if ($cache_path == "") {
-			throw new ConfigurationException(elgg_echo('ConfigurationException:NoCachePath'));
+			throw new \ConfigurationException("Cache path set to nothing!");
 		}
 	}
 
@@ -30,7 +30,7 @@ class ElggFileCache extends ElggCache {
 	/**
 	 * Create and return a handle to a file.
 	 *
-	 * @deprecated 1.8 Use ElggFileCache::createFile()
+	 * @deprecated 1.8 Use \ElggFileCache::createFile()
 	 *
 	 * @param string $filename Filename to save as
 	 * @param string $rw       Write mode
@@ -38,7 +38,7 @@ class ElggFileCache extends ElggCache {
 	 * @return mixed
 	 */
 	protected function create_file($filename, $rw = "rb") {
-		elgg_deprecated_notice('ElggFileCache::create_file() is deprecated by ::createFile()', 1.8);
+		elgg_deprecated_notice('\ElggFileCache::create_file() is deprecated by ::createFile()', 1.8);
 
 		return $this->createFile($filename, $rw);
 	}
@@ -78,7 +78,7 @@ class ElggFileCache extends ElggCache {
 	/**
 	 * Create a sanitised filename for the file.
 	 *
-	 * @deprecated 1.8 Use ElggFileCache::sanitizeFilename()
+	 * @deprecated 1.8 Use \ElggFileCache::sanitizeFilename()
 	 *
 	 * @param string $filename The filename
 	 *
@@ -163,7 +163,7 @@ class ElggFileCache extends ElggCache {
 		if (file_exists($dir . $key)) {
 			return unlink($dir . $key);
 		}
-		return TRUE;
+		return true;
 	}
 
 	/**
@@ -207,7 +207,7 @@ class ElggFileCache extends ElggCache {
 
 		$files = scandir($dir);
 		if (!$files) {
-			throw new IOException(elgg_echo('IOException:NotDirectory', array($dir)));
+			throw new \IOException($dir . " is not a directory.");
 		}
 
 		// Perform cleanup

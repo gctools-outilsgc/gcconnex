@@ -25,8 +25,8 @@ if (($guid != "") && ($type == "") && ($id_or_name == "")) {
 	$entity = get_entity($guid);
 
 	if (!$entity) {
-		$query = elgg_echo('InvalidParameterException:GUIDNotFound', array($guid));
-		throw new InvalidParameterException($query);
+		$query = "GUID:" . $guid . " could not be found, or you can not access it.";
+		throw new \InvalidParameterException($query);
 	}
 
 	$title = "GUID:$guid";
@@ -37,8 +37,8 @@ if (($guid != "") && ($type == "") && ($id_or_name == "")) {
 	// Get a uuid
 	$entity = get_entity($guid);
 	if (!$entity) {
-		$msg = elgg_echo('InvalidParameterException:GUIDNotFound', array($guid));
-		throw new InvalidParameterException($msg);
+		$msg = "GUID:" . $guid . " could not be found, or you can not access it.";
+		throw new \InvalidParameterException($msg);
 	}
 
 	$uuid = guid_to_uuid($entity->getGUID()) . "$type/$id_or_name/";
@@ -47,11 +47,11 @@ if (($guid != "") && ($type == "") && ($id_or_name == "")) {
 		case 'attr' : // @todo: Do this better? - This is a bit of a hack...
 			$v = $entity->get($id_or_name);
 			if (!$v) {
-				$msg = elgg_echo('InvalidParameterException:IdNotExistForGUID', array($id_or_name, $guid));
-				throw new InvalidParameterException($msg);
+				$msg = "Sorry, '" . $id_or_name . "' does not exist for guid:" . $guid;
+				throw new \InvalidParameterException($msg);
 			}
 
-			$m = new ElggMetadata();
+			$m = new \ElggMetadata();
 
 			$m->value = $v;
 			$m->name = $id_or_name;
@@ -79,19 +79,19 @@ if (($guid != "") && ($type == "") && ($id_or_name == "")) {
 			break;
 
 		default :
-			$msg = elgg_echo('InvalidParameterException:CanNotExportType', array($type));
-			throw new InvalidParameterException($msg);
+			$msg = "Sorry, I don't know how to export '" . $type . "'";
+			throw new \InvalidParameterException($msg);
 	}
 
 	// Render metadata or relationship
 	if ((!$m) && (!$r)) {
-		throw new InvalidParameterException(elgg_echo('InvalidParameterException:NoDataFound'));
+		throw new \InvalidParameterException("Could not find any data.");
 	}
 
 	// Exporting metadata?
 	if ($m) {
 		if ($m->entity_guid != $entity->guid) {
-			throw new InvalidParameterException(elgg_echo('InvalidParameterException:DoesNotBelong'));
+			throw new \InvalidParameterException("Does not belong to entity.");
 		}
 
 		$title = "$type:$id_or_name";
@@ -101,7 +101,7 @@ if (($guid != "") && ($type == "") && ($id_or_name == "")) {
 	// Exporting relationship
 	if ($r) {
 		if (($r->guid_one != $entity->guid) && ($r->guid_two != $entity->guid)) {
-			throw new InvalidParameterException(elgg_echo('InvalidParameterException:DoesNotBelongOrRefer'));
+			throw new \InvalidParameterException("Does not belong to entity or refer to entity.");
 		}
 
 		$title = "$type:$id_or_name";
@@ -110,9 +110,11 @@ if (($guid != "") && ($type == "") && ($id_or_name == "")) {
 
 	// Something went wrong
 } else {
-	throw new InvalidParameterException(elgg_echo('InvalidParameterException:MissingParameter'));
+	throw new \InvalidParameterException("Missing parameter, you need to provide a GUID.");
 }
 
-$content = elgg_view_title($title) . $body;
-$body = elgg_view_layout('one_sidebar', array('content' => $content));
+$body = elgg_view_layout('one_sidebar', array(
+	'title' => $title,
+	'content' => $body
+));
 echo elgg_view_page($title, $body);

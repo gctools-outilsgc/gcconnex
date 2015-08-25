@@ -6,14 +6,19 @@
  * @subpackage User.Authentication
  */
 
+$session = elgg_get_session();
+
 // set forward url
-if (!empty($_SESSION['last_forward_from'])) {
-	$forward_url = $_SESSION['last_forward_from'];
+if ($session->has('last_forward_from')) {
+	$forward_url = $session->get('last_forward_from');
+	$forward_source = 'last_forward_from';
 } elseif (get_input('returntoreferer')) {
 	$forward_url = REFERER;
+	$forward_source = 'return_to_referer';
 } else {
 	// forward to main index page
 	$forward_url = '';
+	$forward_source = null;
 }
 
 $username = get_input('username');
@@ -61,9 +66,11 @@ if ($user->language) {
 	$message = elgg_echo('loginok');
 }
 
-if (isset($_SESSION['last_forward_from'])) {
-	unset($_SESSION['last_forward_from']);
-}
+// clear after login in case login fails
+$session->remove('last_forward_from');
+
+$params = array('user' => $user, 'source' => $forward_source);
+$forward_url = elgg_trigger_plugin_hook('login:forward', 'user', $params, $forward_url);
 
 system_message($message);
 forward($forward_url);

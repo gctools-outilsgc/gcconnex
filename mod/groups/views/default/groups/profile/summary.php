@@ -17,7 +17,7 @@ $owner = $group->getOwnerEntity();
 
 if (!$owner) {
 	// not having an owner is very bad so we throw an exception
-	$msg = elgg_echo('InvalidParameterException:IdNotExistForGUID', array('group owner', $group->guid));
+	$msg = "Sorry, '" . 'group owner' . "' does not exist for guid:" . $group->guid;
 	throw new InvalidParameterException($msg);
 }
 
@@ -47,7 +47,8 @@ if (!$owner) {
 			</p>
 			<p>
 			<?php
-				echo elgg_echo('groups:members') . ": " . $group->getMembers(0, 0, TRUE);
+				$num_members = $group->getMembers(array('count' => true));
+				echo elgg_echo('groups:members') . ": " . $num_members;
 			?>
 			</p>
 		</div>
@@ -59,6 +60,3 @@ if (!$owner) {
 		?>
 	</div>
 </div>
-<?php
-?>
-

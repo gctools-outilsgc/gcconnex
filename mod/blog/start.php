@@ -30,20 +30,15 @@ function blog_init() {
 	// add to the main css
 	elgg_extend_view('css/elgg', 'blog/css');
 
-	// register the blog's JavaScript
-	$blog_js = elgg_get_simplecache_url('js', 'blog/save_draft');
-	elgg_register_simplecache_view('js/blog/save_draft');
-	elgg_register_js('elgg.blog', $blog_js);
-
 	// routing of urls
 	elgg_register_page_handler('blog', 'blog_page_handler');
 
 	// override the default url to view a blog object
-	elgg_register_entity_url_handler('object', 'blog', 'blog_url_handler');
+	elgg_register_plugin_hook_handler('entity:url', 'object', 'blog_set_url');
 
-	// notifications - need to register for unique event because of draft/published status
-	elgg_register_event_handler('publish', 'object', 'object_notifications');
-	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'blog_notify_message');
+	// notifications
+	elgg_register_notification_event('object', 'blog', array('publish'));
+	elgg_register_plugin_hook_handler('prepare', 'notification:publish:object:blog', 'blog_prepare_notification');
 
 	// add blog link to
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'blog_owner_block_menu');
@@ -99,9 +94,6 @@ function blog_page_handler($page) {
 
 	elgg_load_library('elgg:blog');
 
-	// forward to correct URL for blog pages pre-1.8
-	blog_url_forwarder($page);
-
 	// push all blogs breadcrumb
 	elgg_push_breadcrumb(elgg_echo('blog:blogs'), "blog/all");
 
@@ -113,33 +105,42 @@ function blog_page_handler($page) {
 	switch ($page_type) {
 		case 'owner':
 			$user = get_user_by_username($page[1]);
+			if (!$user) {
+				forward('', '404');
+			}
 			$params = blog_get_page_content_list($user->guid);
 			break;
 		case 'friends':
 			$user = get_user_by_username($page[1]);
+			if (!$user) {
+				forward('', '404');
+			}
 			$params = blog_get_page_content_friends($user->guid);
 			break;
 		case 'archive':
 			$user = get_user_by_username($page[1]);
+			if (!$user) {
+				forward('', '404');
+			}
 			$params = blog_get_page_content_archive($user->guid, $page[2], $page[3]);
 			break;
 		case 'view':
 			$params = blog_get_page_content_read($page[1]);
 			break;
-		case 'read': // Elgg 1.7 compatibility
-			register_error(elgg_echo("changebookmark"));
-			forward("blog/view/{$page[1]}");
-			break;
 		case 'add':
-			gatekeeper();
+			elgg_gatekeeper();
 			$params = blog_get_page_content_edit($page_type, $page[1]);
 			break;
 		case 'edit':
-			gatekeeper();
+			elgg_gatekeeper();
 			$params = blog_get_page_content_edit($page_type, $page[1], $page[2]);
 			break;
 		case 'group':
-			if ($page[2] == 'all') {
+			$group = get_entity($page[1]);
+			if (!elgg_instanceof($group, 'group')) {
+				forward('', '404');
+			}
+			if (!isset($page[2]) || $page[2] == 'all') {
 				$params = blog_get_page_content_list($page[1]);
 			} else {
 				$params = blog_get_page_content_archive($page[1], $page[3], $page[4]);
@@ -167,18 +168,18 @@ function blog_page_handler($page) {
 /**
  * Format and return the URL for blogs.
  *
- * @param ElggObject $entity Blog object
+ * @param string $hook
+ * @param string $type
+ * @param string $url
+ * @param array  $params
  * @return string URL of blog.
  */
-function blog_url_handler($entity) {
-	if (!$entity->getOwnerEntity()) {
-		// default to a standard view if no owner.
-		return FALSE;
+function blog_set_url($hook, $type, $url, $params) {
+	$entity = $params['entity'];
+	if (elgg_instanceof($entity, 'object', 'blog')) {
+		$friendly_title = elgg_get_friendly_title($entity->title);
+		return "blog/view/{$entity->guid}/$friendly_title";
 	}
-
-	$friendly_title = elgg_get_friendly_title($entity->title);
-
-	return "blog/view/{$entity->guid}/$friendly_title";
 }
 
 /**
@@ -222,7 +223,7 @@ function blog_entity_menu_setup($hook, $type, $return, $params) {
 			}
 		}
 
-		$status_text = elgg_echo("blog:status:{$entity->status}");
+		$status_text = elgg_echo("status:{$entity->status}");
 		$options = array(
 			'name' => 'published_status',
 			'text' => "<span>$status_text</span>",
@@ -236,30 +237,31 @@ function blog_entity_menu_setup($hook, $type, $return, $params) {
 }
 
 /**
- * Set the notification message body
- * 
- * @param string $hook    Hook name
- * @param string $type    Hook type
- * @param string $message The current message body
- * @param array  $params  Parameters about the blog posted
- * @return string
+ * Prepare a notification message about a published blog
+ *
+ * @param string                          $hook         Hook name
+ * @param string                          $type         Hook type
+ * @param Elgg\Notifications\Notification $notification The notification to prepare
+ * @param array                           $params       Hook parameters
+ * @return Elgg\Notifications\Notification
  */
-function blog_notify_message($hook, $type, $message, $params) {
-	$entity = $params['entity'];
-	$to_entity = $params['to_entity'];
+function blog_prepare_notification($hook, $type, $notification, $params) {
+	$entity = $params['event']->getObject();
+	$owner = $params['event']->getActor();
+	$recipient = $params['recipient'];
+	$language = $params['language'];
 	$method = $params['method'];
-	if (elgg_instanceof($entity, 'object', 'blog')) {
-		$descr = $entity->excerpt;
-		$title = $entity->title;
-		$owner = $entity->getOwnerEntity();
-		return elgg_echo('blog:notification', array(
-			$owner->name,
-			$title,
-			$descr,
-			$entity->getURL()
-		));
-	}
-	return null;
+
+	$notification->subject = elgg_echo('blog:notify:subject', array($entity->title), $language);
+	$notification->body = elgg_echo('blog:notify:body', array(
+		$owner->name,
+		$entity->title,
+		$entity->getExcerpt(),
+		$entity->getURL()
+	), $language);
+	$notification->summary = elgg_echo('blog:notify:summary', array($entity->title), $language);
+
+	return $notification;
 }
 
 /**

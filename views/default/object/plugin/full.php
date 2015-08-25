@@ -12,13 +12,15 @@
  * @subpackage Plugins
  */
 
+/* @var ElggPlugin $plugin */
 $plugin = $vars['entity'];
+
 $reordering = elgg_extract('display_reordering', $vars, false);
 $priority = $plugin->getPriority();
 $active = $plugin->isActive();
 
 $can_activate = $plugin->canActivate();
-$max_priority = elgg_get_max_plugin_priority();
+$max_priority = _elgg_get_max_plugin_priority();
 $actions_base = '/action/admin/plugins/';
 $css_id = preg_replace('/[^a-z0-9-]/i', '-', $plugin->getID());
 
@@ -153,11 +155,17 @@ if ($screenshots) {
 	foreach ($screenshots as $screenshot) {
 		$desc = elgg_echo($screenshot['description']);
 		$alt = htmlentities($desc, ENT_QUOTES, 'UTF-8');
-		$screenshot_full = "{$vars['url']}admin_plugin_screenshot/{$plugin->getID()}/full/{$screenshot['path']}";
-		$screenshot_src = "{$vars['url']}admin_plugin_screenshot/{$plugin->getID()}/thumbnail/{$screenshot['path']}";
+		$screenshot_img = elgg_view('output/img', array(
+			'src' => "admin_plugin_screenshot/{$plugin->getID()}/thumbnail/{$screenshot['path']}",
+			'alt' => $alt,
+		));
+		$screenshot_link = elgg_view('output/url', array(
+			'href' => "admin_plugin_screenshot/{$plugin->getID()}/full/{$screenshot['path']}",
+			'text' => $screenshot_img,
+			'class' => 'elgg-lightbox',
+		));
 
-		$screenshots_html .= "<li class=\"elgg-plugin-screenshot prm ptm\"><a class=\"elgg-lightbox\" href=\"$screenshot_full\">"
-							. "<img src=\"$screenshot_src\" alt=\"$alt\"></a></li>";
+		$screenshots_html .= "<li class=\"elgg-plugin-screenshot prm ptm\">$screenshot_link</li>";
 	}
 }
 
@@ -200,7 +208,7 @@ $files = $plugin->getAvailableTextFiles();
 
 $docs = '';
 if ($files) {
-	$docs = '<ul>';
+	$docs = '<ul class="elgg-menu elgg-menu-hz">';
 	foreach ($files as $file => $path) {
 		$url = 'admin_plugin_text_file/' . $plugin->getID() . "/$file";
 		$link = elgg_view('output/url', array(
@@ -235,6 +243,8 @@ $settings_view_new = 'plugins/' . $plugin->getID() . '/settings';
 if (elgg_view_exists($settings_view_old) || elgg_view_exists($settings_view_new)) {
 	$link = elgg_get_site_url() . "admin/plugin_settings/" . $plugin->getID();
 	$settings_link = "<a class='elgg-plugin-settings' href='$link'>[" . elgg_echo('settings') . "]</a>";
+} else {
+	$settings_link = '';
 }
 ?>
 			<div class="elgg-head">
@@ -298,6 +308,14 @@ if (elgg_view_exists($settings_view_old) || elgg_view_exists($settings_view_new)
 		<div><?php echo elgg_echo('admin:plugins:label:copyright') . ": " . $copyright; ?></div>
 		<div><?php echo elgg_echo('admin:plugins:label:licence') . ": " . $license; ?></div>
 		<div><?php echo elgg_echo('admin:plugins:label:location') . ": " . htmlspecialchars($plugin->getPath()) ?></div>
+		<?php
+			$contributors = elgg_view('object/plugin/elements/contributors', array('plugin' => $plugin));
+			if (!empty($contributors)) {
+				echo '<div>' . elgg_echo('admin:plugins:label:contributors') . ':';
+				echo $contributors;
+				echo '</div>';
+			}
+		?>
 
 		<div><?php echo elgg_echo('admin:plugins:label:dependencies'); ?>:
 		<?php

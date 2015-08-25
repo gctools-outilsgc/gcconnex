@@ -5,12 +5,12 @@
  * @package ElggPages
  */
 
-gatekeeper();
+elgg_gatekeeper();
 
 $page_guid = (int)get_input('guid');
 $revision = (int)get_input('annotation_id');
 $page = get_entity($page_guid);
-if (!$page) {
+if (!pages_is_page($page)) {
 	register_error(elgg_echo('noaccess'));
 	forward('');
 }

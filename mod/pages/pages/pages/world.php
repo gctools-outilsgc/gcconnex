@@ -16,10 +16,10 @@ $content = elgg_list_entities(array(
 	'type' => 'object',
 	'subtype' => 'page_top',
 	'full_view' => false,
+	'no_results' => elgg_echo('pages:none'),
+	'preload_owners' => true,
+	'preload_containers' => true,
 ));
-if (!$content) {
-	$content = '<p>' . elgg_echo('pages:none') . '</p>';
-}
 
 $body = elgg_view_layout('content', array(
 	'filter_context' => 'all',
