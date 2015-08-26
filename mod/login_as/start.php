@@ -65,10 +65,6 @@ function login_as_add_topbar_link() {
 		get_entity($original_user_guid)->username
 	));
 
-	// hack to work around bug in Elgg 1.8.0 and fixed in Elgg 1.8.1
-	global $CONFIG;
-	$CONFIG->pagesetupdone = true;
-
 	$html = elgg_view('login_as/topbar_return', array('user_guid' => $original_user_guid));
 	elgg_register_menu_item('topbar', array(
 		'name' => 'login_as_return',
@@ -76,7 +72,7 @@ function login_as_add_topbar_link() {
 		'href' => 'action/logout_as',
 		'is_action' => true,
 		'title' => $title,
-		'class' => 'login-as-topbar',
+		'link_class' => 'login-as-topbar',
 		'priority' => 700,
 	));
 }

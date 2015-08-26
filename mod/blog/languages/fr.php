@@ -1,5 +1,4 @@
 <?php
-<<<<<<< HEAD
 /**
  * Blog English language file.
  *

@@ -6,7 +6,7 @@
  */
 
 $user_guid = get_input('user_guid', 0);
-$original_user = get_loggedin_user();
+$original_user = elgg_get_logged_in_user_entity();
 $original_user_guid = $original_user->guid;
 
 if (!$user = get_entity($user_guid)) {
@@ -24,12 +24,22 @@ if (isset($_COOKIE['elggperm'])) {
 	}
 }
 
-if (login($user)) {
-	$_SESSION['login_as_original_user_guid'] = $original_user_guid;
-	$_SESSION['login_as_original_persistent'] = $persistent;
+$_SESSION['login_as_original_user_guid'] = $original_user_guid;
+$_SESSION['login_as_original_persistent'] = $persistent;
+
+try {
+	login($user);
 	system_message(elgg_echo('login_as:logged_in_as_user', array($user->username)));
-} else {
+} catch (Exception $exc) {
+	unset($_SESSION['login_as_original_user_guid']);
+	unset($_SESSION['login_as_original_persistent']);
 	register_error(elgg_echo('login_as:could_not_login_as_user', array($user->username)));
+	
+	try {
+		login($original_user);
+	} catch (Exception $ex) {
+		// we can't log back in as ourselves?  just leave us logged out then...
+	}
 }
 
 forward(REFERER);
