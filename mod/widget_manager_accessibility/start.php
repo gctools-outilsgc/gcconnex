@@ -13,6 +13,4 @@
 	// regiser actions
 	elgg_register_action("widget_manager/widgets/toggle_collapse", dirname(__FILE__) . "/actions/widgets/toggle_collapse.php");
 
-	// additional function
-	require_once( dirname(__FILE__) . "/lib/add_functions.php" );
 	?>
