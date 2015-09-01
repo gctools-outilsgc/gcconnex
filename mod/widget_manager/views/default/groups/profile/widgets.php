@@ -1,13 +1,28 @@
 <?php
 /**
 * Profile widgets/tools
-* 
-*/ 
-	
-if(elgg_get_plugin_setting("group_enable", "widget_manager") == "yes" && $vars["entity"]->widget_manager_enable == "yes"){
+*
+*/
+
+$show_widgets = false;
+$group_enable = elgg_get_plugin_setting("group_enable", "widget_manager");
+if ($group_enable == "forced") {
+	// forced enabled
+	$show_widgets = true;
+} elseif ($group_enable == "yes") {
+	// managed by group tool option
+	$group_enable_tool = $vars["entity"]->widget_manager_enable;
+	if ($group_enable_tool == "yes") {
+		$show_widgets = true;
+	} elseif (empty($group_enable_tool) && (elgg_get_plugin_setting("group_option_default_enabled", "widget_manager") == "yes")) {
+		$show_widgets = true;
+	}
+}
+
+if ($show_widgets) {
 	$params = array(
-				'num_columns' => 2, //GCChange - from['num_columns' => 3] -> to['num_columns' => 2]
-				'exact_match' => true
+		'num_columns' => 2,
+		'exact_match' => true
 	);
 	
 	// need context = groups to fix the issue with the new group_profile context

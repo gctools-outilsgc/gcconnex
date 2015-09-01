@@ -1,9 +1,9 @@
 <?php
 
-	$max_messages = sanitise_int($vars["entity"]->max_messages, false);
-	if(empty($max_messages)){
-		$max_messages = 5;
-	}
+$max_messages = sanitise_int($vars["entity"]->max_messages, false);
+if (empty($max_messages)) {
+	$max_messages = 5;
+}
 
 ?>
 <div>

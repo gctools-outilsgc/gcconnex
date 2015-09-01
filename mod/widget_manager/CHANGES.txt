@@ -1,4 +1,101 @@
-= Version history: =
+Version history
+===============
+
+5.1 (2015-07-08):
+
+- added: mechanisme to permanently cache widgets based on their handler
+- added: support for object/thewire entities
+- added: composer support
+- added: widget edit and delete icon now only show when hovering widget
+- changed: reorganized javascript
+- changed: Simplepie library is now loaded by composer
+- changed: delayed loading of the AMD modules to document ready to prevent conflicts
+- fixed: correctly ajax load search results for user_search widget
+- fixed: performance of rss server widget
+- fixed: replaced deprecate ->get calls with variable variables
+- fixed: replaced deprecated use of class in ElggMenuItem::factory
+- fixed: output/confirmlink deprecation notices
+- fixed: content by tag widget case insensitive tag search
+- fixed: moved favorites toggle action file to correct location
+- fixed: non admins can not correctly manage widgets on landing pages
+- fixed: twitter search embed code parsing failed
+- fixed: use input/text view to output search input on addpanel
+
+5.0 (2014-12-08):
+
+- added: widget collapsed state is remember for logged in users in the database
+- added: widget advanced setting to set default collapse state 
+- added: widget advanced setting to set availability of collapse toggle button
+- added: custom more link for widgets
+- added: group forum topics added to content by tag widget
+- added: content by tag support multi tag search link if search_advanced is available
+- added: widget setting is showed in a lightbox
+- added: support for bookmark_tools link setting
+- added: extra css class to widget layout so there is more styling control
+- added: client side rss widget using Google Feed API
+- added: plugin setting to force use of group widgets
+- added: hooks to have widgets added/removed when related group tool option is toggled
+- added: admin action to update widgets on all groups to verify group tool option
+- added: single column layout
+- added: iframe widget
+- added: rss widget now has option to show feed contents in lightbox
+- added: per rss widget setting of feed timeout
+- added: content by tag widget now also has an exclusion list of tags
+- added: extra context pages now also support top row config
+- changed: hide header widget option also hides for admins
+- changed: free html widget now uses long text so there is an editor
+- changed: updated for Elgg 1.9
+- changed: split css views
+- changed: updated to Elgg coding standards
+- changed: replaced some language keys with core versions
+- changed: relocated widgets code
+- changed: plugin settings view only shows applicable
+- fixed: widgets created in groups get unusable access #25
+- fixed: ability to globally hide a widget on the widgets manage page
+- fixed: issue with extra minus sign in content by tag widget #31
+- deprecated: widgets url hook is no longer usable, use the entity url hook if you want to set widget title links
+- removed: widget url links for non core plugins (plugins should provide themselves) 
+
+4.8 (2014-03-07):
+
+- added: ability to add custom pages with index widgets
+- added: content_by_tag widget now support multiple content_types selected
+- added: plugin setting to control default dashboard column layout
+- added: content_by_tag now also support event_manager, tasks and videolist entities
+- added: rss widget excerpt added to title of rss post link 
+- changed: applied Elgg coding standards on almost all code
+- removed: obsolete group_news widget code (was already moved to group_tools)
+- fixed: content_by_tag widget bookmarks entities now have direct address link
+
+4.7 (2013-08-30):
+
+- added: group default widget support (thanks to Connecting Conservation)
+- added: show avatar and show timestamp options to content_by_tag widget
+- fixed: respect limit set in tagcloud widget settings
+
+4.6 (2013-06-27):
+
+- added: content_by_tag widget also support bookmarks
+- added: content_by_tag widget has an optional search link
+- added: optional fixed widget height
+- changed: twitter_search widget now uses twitters new widget embed code
+- changed: rss widget uses new version of SimplePie library
+- fixed: memcache reset on widget settings save
+
+4.5 (2013-05-06):
+
+- added: admin users search widget (also searches disabled/blocked/unvalidated users and by email)
+- fixed: incorrect has_widget check for favorites widget
+- fixed: some php notices
+
+4.4 (2013-04-05):
+
+- added: experimental likes widget
+- changed: use system cache for some widget settings
+- removed: widget statistics in favor of advanced_statistics plugin
+- fixed: access options should not show up after adding a widget to dashboard
+- fixed: tags are stripped from dashboard title
+- fixed: slider output not closing anchor when using link
 
 4.3 (2012-07-26):
 

@@ -1,9 +1,9 @@
-<?php 
+<?php
 
-	$count = sanitise_int($vars["entity"]->bookmark_count, false);
-	if(empty($count)){
-		$count = 8;
-	}
+$count = sanitise_int($vars["entity"]->bookmark_count, false);
+if (empty($count)) {
+	$count = 8;
+}
 
 ?>
 <div>

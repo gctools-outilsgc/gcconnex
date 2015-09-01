@@ -1,10 +1,10 @@
-<?php 
-	$widget = $vars["entity"];
-	
-	$count = sanitise_int($widget->num_entities);
-	if(empty($count)){
-		$count = 10;
-	}
+<?php
+$widget = $vars["entity"];
+
+$count = sanitise_int($widget->num_entities);
+if (empty($count)) {
+	$count = 10;
+}
 ?>
 <div>
 	<?php echo elgg_echo("widget:numbertodisplay"); ?><br />
