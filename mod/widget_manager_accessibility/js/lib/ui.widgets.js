@@ -172,11 +172,9 @@ elgg.ui.widgets.removebtn = function(event) {
 	if ($(this).hasClass('elgg-widget-single')) {
         $widget = $(this).closest('.widget_manager_widgets_lightbox_wrapper');
         // find the name of the widget
-        var name = $widget.attr('class');
-        $name = name.substr(name.indexOf('widget_manager_widgets_lightbox_wrapper_') + "widget_manager_widgets_lightbox_wrapper_".length);
-
-        $button = $('#elgg-widget-type-' + $name);
-
+        var name = $(this).data('elgg-widget-type');
+        
+        $button = $(this);
         $button.addClass('elgg-state-available');
         $button.removeClass('elgg-state-unavailable');
         $button.unbind('click', elgg.ui.widgets.removebtn); // make sure we don't bind twice
@@ -184,7 +182,7 @@ elgg.ui.widgets.removebtn = function(event) {
 		$(this).children('input.widget-added').attr('disabled', "true");		// disable remove widget button
 		$(this).children('input.widget-to-add').removeAttr('disabled');			// enable add widget button
 
-        var $widget_dashboard = $('.elgg-widget-instance-' + $name);
+        var $widget_dashboard = $('.elgg-widget-instance-' + name);
         $widget_dashboard = $widget_dashboard.closest('.elgg-module-widget');
 
         to_delete = $widget_dashboard.find('.elgg-widget-delete-button');
@@ -197,9 +195,7 @@ elgg.ui.widgets.removebtn = function(event) {
         $widget = $(this).closest('.elgg-module-widget');
 
         // if widget type is single instance type, enable the add button
-        var type = $widget.attr('class');
-        // elgg-widget-instance-<type>
-        type = type.substr(type.indexOf('elgg-widget-instance-') + "elgg-widget-instance-".length);
+        var type = $(this).data('elgg-widget-type');
         $button = $('#elgg-widget-type-' + type);
         var multiple = $button.attr('class').indexOf('elgg-widget-multiple') != -1;
 
@@ -214,8 +210,6 @@ elgg.ui.widgets.removebtn = function(event) {
 
         elgg.action($(this).attr('href'));
     }
-
-	// delete the widget through ajax
 
 	event.preventDefault();
 };
