@@ -8,7 +8,7 @@ elgg.provide('elgg.ui.widgets');
 elgg.ui.widgets.init = function() {
 
 	// widget layout?
-	if ($(".elgg-widgets").length == 0) {
+	if ($(".elgg-widgets").length === 0) {
 		return;
 	}
 
@@ -33,12 +33,11 @@ elgg.ui.widgets.init = function() {
 
 	$('a.elgg-widget-delete-button').live('click', elgg.ui.widgets.toggleremove);
 	// don't need to change        $('.elgg-widget-edit > form ').live('submit', elgg.ui.widgets.saveSettings);
-	$('a.elgg-widget-collapse-button').live('click', elgg.ui.widgets.collapseToggleA);
+	//$('a.elgg-widget-collapse-button').live('click', elgg.ui.widgets.collapseToggleA);
 
 
     $('.elgg-widget-multiple').each(function() {
-        var name = $(this).attr('id');
-        name = name.substr(name.indexOf('elgg-widget-type-') + "elgg-widget-type-".length);
+        var name = $(this).attr('data-elgg-widget-type');
 
         var counter = $(this).closest('.widget_manager_widgets_lightbox_wrapper').find('.multi-widget-count');
         counter.text($('.elgg-widget-instance-' + name).length);
@@ -60,7 +59,7 @@ elgg.ui.widgets.init = function() {
  *
  * @param {Object} event
  * @return void
- */
+ 
 elgg.ui.widgets.collapseToggleA = function(event) {
     $(this).toggleClass('elgg-widget-collapsed');
     $(this).parent().parent().find('.elgg-body').slideToggle('medium');
@@ -82,7 +81,7 @@ elgg.ui.widgets.collapseToggleA = function(event) {
             });
         }
 };
-
+*/
 /**
  * Adds a new widget
  *
@@ -93,8 +92,7 @@ elgg.ui.widgets.collapseToggleA = function(event) {
  */
 elgg.ui.widgets.add = function(event) {
 	// elgg-widget-type-<type>
-	var type = $(this).attr('id');
-	type = type.substr(type.indexOf('elgg-widget-type-') + "elgg-widget-type-".length);
+	var type = $(this).data('elgg-widget-type');
 
 	// if multiple instances not allow, disable this widget type add button
 	var multiple = $(this).attr('class').indexOf('elgg-widget-multiple') != -1;
@@ -124,7 +122,7 @@ elgg.ui.widgets.add = function(event) {
 	elgg.action('widgets/add', {
 		data: {
 			handler: type,
-			owner_guid: elgg.get_page_owner_guid(),
+			page_owner_guid: elgg.get_page_owner_guid(),
 			context: $("input[name='widget_context']").val(),
 			show_access: $("input[name='show_access']").val(),
 			default_widgets: $("input[name='default_widgets']").val() || 0
@@ -149,8 +147,7 @@ elgg.ui.widgets.toggleremove = function(event) {
 
     // for widgets that allow multiple instances
     $('.elgg-widget-multiple').each(function() {
-        var name = $(this).attr('id');
-        name = name.substr(name.indexOf('elgg-widget-type-') + "elgg-widget-type-".length);
+        var name = $(this).data('elgg-widget-type');
 
         var counter = $(this).closest('.widget_manager_widgets_lightbox_wrapper').find('.multi-widget-count');
         counter.text($('.elgg-widget-instance-' + name).length);
