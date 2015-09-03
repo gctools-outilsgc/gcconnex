@@ -1,10 +1,10 @@
 <?php ?>
 
-#widget_manager_widgets_select .widget_manager_widgets_lightbox_actions li.elgg-state-available input.btn.elgg-button.elgg-button-submit.widget-added {
+#widget_manager_widgets_select .widget_manager_widgets_lightbox_actions li.elgg-state-available input.elgg-button.elgg-button-submit.widget-added {
     display: none;
 }
 
-#widget_manager_widgets_select .widget_manager_widgets_lightbox_actions li.elgg-state-unavailable input.btn.elgg-button.elgg-button-submit.widget-to-add {
+#widget_manager_widgets_select .widget_manager_widgets_lightbox_actions li.elgg-state-unavailable input.elgg-button.elgg-button-submit.widget-to-add {
     display: none;
 }
 
@@ -102,7 +102,7 @@
     padding: 5px;
     height: 0.75em;
     width: 15px;
-    margin: 11px -11px 0px 6px;
+    margin: 8px -11px 0px 6px;
     border-radius: 5px;
     line-height: 0.75em;
     text-shadow: 1px 1px gray;

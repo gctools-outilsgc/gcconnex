@@ -41,6 +41,7 @@
 		'widget_manager:settings:widget_layout:50|50' => "Two column (50%, 50%)",
 		'widget_manager:settings:widget_layout:40|60' => "Two column (40%, 60%)",
 		'widget_manager:settings:widget_layout:25|75' => "Two column (25%, 75%)",
+	'widget_manager:settings:widget_layout:100' => "Single column (100%)",
 		
 		'widget_manager:settings:index_top_row' => "Show a top row on the index page",
 		'widget_manager:settings:index_top_row:none' => "No top row",
@@ -50,11 +51,27 @@
 		'widget_manager:settings:disable_free_html_filter' => "Disable HTML filtering for Free HTML widgets on index (ADMIN ONLY)",
 		
 		'widget_manager:settings:group:enable' => "Enable Widget Manager for groups",
+	'widget_manager:settings:group:enable:yes' => "Yes, managable by group tool option",
+	'widget_manager:settings:group:enable:forced' => "Yes, always on",
 		'widget_manager:settings:group:option_default_enabled' => "Widget management for groups default enabled",
 		'widget_manager:settings:group:option_admin_only' => "Only administrator can enable group widgets",
+	'widget_manager:settings:group:force_tool_widgets' => "Enforce group tool widgets",
+	'widget_manager:settings:group:force_tool_widgets:confirm' => "Are you sure? This will add/remove all widgets specific to a tool option for all groups (where widget management is enabled).",
 
+	'widget_manager:settings:dashboard' => "Dashboard",
+	'widget_manager:settings:dashboard:multi_dashboard' => "Enable multiple dashboards",
+	'widget_manager:settings:dashboard:dashboard_widget_layout' => "Dashboard widget layout",
+	'widget_manager:settings:dashboard:dashboard_widget_layout:info' => "This widget layout only applies to the default dashboard and not to extra dashboards created with the multidashboard option",
 		'widget_manager:settings:multi_dashboard' => "Multi Dashboard",
 		'widget_manager:settings:multi_dashboard:enable' => "Enable multiple dashboards",
+
+	'widget_manager:settings:extra_contexts' => "Extra widget contexts",
+	'widget_manager:settings:extra_contexts:add' => "Add a page",
+	'widget_manager:settings:extra_contexts:description' => "Enter the page handler name of the new page which will get a layout similar to the index page. You can add as much pages as you need. Be sure not to add a page handler that is already in use. You can also configure the column layout for that page and optionally assign non-admin users as manager of the page by entering their username. You can have multiple managers by seperating their username by a comma.",
+	'widget_manager:settings:extra_contexts:page' => "Page",
+	'widget_manager:settings:extra_contexts:layout' => "Layout",
+	'widget_manager:settings:extra_contexts:top_row' => "Extra Top Row",
+	'widget_manager:settings:extra_contexts:manager' => "Manager",
 
 		// views
 		// settings
