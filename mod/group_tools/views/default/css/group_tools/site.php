@@ -11,52 +11,26 @@
 	margin: 0 5px 5px 0;
 }
 
-#group_tools_group_invite_users,
-#group_tools_group_invite_email,
-#group_tools_group_invite_csv {
+#invite_to_group .ui-helper-hidden-accessible {
 	display: none;
-	margin-bottom: 10px;
 }
 
-#group_tools_group_invite_users .group_tools_group_invite_autocomplete_result,
-#group_tools_group_invite_email .group_tools_group_invite_autocomplete_email_result {
+#invite_to_group .group_tools_group_invite_autocomplete_autocomplete_result {
 	border: 1px solid transparent;
+	border-radius: 5px;
+	padding: 3px;
 }
 
-#group_tools_group_invite_users .group_tools_group_invite_autocomplete_result img,
-#group_tools_group_invite_email .group_tools_group_invite_autocomplete_email_result img {
+#invite_to_group .group_tools_group_invite_autocomplete_autocomplete_result:hover {
+	border: 1px solid #CCCCCC;
+}
+
+#invite_to_group .group_tools_group_invite_autocomplete_autocomplete_result img {
 	vertical-align: middle;
 }
 
-#group_tools_group_invite_users .group_tools_group_invite_autocomplete_result .elgg-icon,
-#group_tools_group_invite_email .group_tools_group_invite_autocomplete_email_result .elgg-icon {
-	vertical-align: text-top;
-	margin-left: 10px;
-	display: none;
+.group_tools_group_invite_autocomplete_autocomplete_result .elgg-icon-delete-alt {
 	cursor: pointer;
-}
-
-#group_tools_group_invite_users .group_tools_group_invite_autocomplete_result:hover,
-#group_tools_group_invite_email .group_tools_group_invite_autocomplete_email_result:hover {
-	border-color: #cecece;
-}
-
-#group_tools_group_invite_users .group_tools_group_invite_autocomplete_result:hover .elgg-icon,
-#group_tools_group_invite_email .group_tools_group_invite_autocomplete_email_result:hover .elgg-icon {
-	display: inline-block;
-}
-
-#group_tools_group_invite_autocomplete_autocomplete_results,
-#group_tools_group_invite_autocomplete_email_autocomplete_results {
-	margin-top: 10px;
-}
-
-#group_tools_mail_member_options input[type=button] {
-	margin-right: 5px;
-}
-
-#group_tools_mail_member_selection {
-	display: none;
 }
 
 #group_tools_status_open {
@@ -89,4 +63,21 @@
 }
 .group-tools-suggested-groups .elgg-item > div {
 	padding: 10px;
+}
+
+.elgg-icon-invisible-group {
+	background: transparent url(<?php echo elgg_get_site_url(); ?>mod/group_tools/_graphics/invisible_group2.png) no-repeat left;
+	vertical-align: top;
+}
+
+#group-tools-related-groups-form input.elgg-input-autocomplete {
+	width: 80%;
+}
+
+.group-tools-group-edit-section > div {
+	margin-bottom: 15px;
+}
+
+.group-tools-group-edit-section .elgg-input-radios {
+	white-space: nowrap;
 }

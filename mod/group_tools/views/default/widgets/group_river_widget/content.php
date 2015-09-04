@@ -58,11 +58,11 @@ if (!empty($group_guid)) {
 		}
 	}
 	
-	$sql .= " AND " . get_access_sql_suffix("entities1");
+	$sql .= " AND " . _elgg_get_access_where_sql(array("table_alias" => "entities1"));
 	$sql .= " ORDER BY {$dbprefix}river.posted DESC";
 	$sql .= " LIMIT {$offset},{$limit}";
-
-	$items = get_data($sql, "elgg_row_to_elgg_river_item");
+	
+	$items = get_data($sql, "_elgg_row_to_elgg_river_item");
 
 	// cyu - tasks are not of a river item
 	if (sanitise_string($subtype) === 'task') {
@@ -109,26 +109,24 @@ if (!empty($group_guid)) {
 		));
 	} else {
 
-		if (!empty($items)) {
-
-			$options = array(
-				"pagination" => false,
-				"count" => count($items),
-				"items" => $items,
-				"list_class" => "elgg-list-river elgg-river",
-				"limit" => $limit,
-				"offset" => $offset
-			);
-			
-			$river_items = elgg_view("page/components/list", $options);
-		} else {
-			$river_items = elgg_echo("widgets:group_river_widget:view:noactivity");
-		}
-			// display
-			echo $river_items;
-	}
-} else 
-		{
-			echo elgg_echo("widgets:group_river_widget:view:not_configured");
-		}
+	if (!empty($items)) {
+		$options = array(
+			"pagination" => false,
+			"count" => count($items),
+			"items" => $items,
+			"list_class" => "elgg-list-river elgg-river",
+			"limit" => $limit,
+			"offset" => $offset
+		);
 		
+		$river_items = elgg_view("page/components/list", $options);
+	} else {
+		$river_items = elgg_echo("widgets:group_river_widget:view:noactivity");
+	}
+	
+	// display
+	echo $river_items;
+	}
+} else {
+	echo elgg_echo("widgets:group_river_widget:view:not_configured");
+}

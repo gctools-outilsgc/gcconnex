@@ -1,0 +1,17 @@
+{
+	"name": "coldtrick/group_tools",
+	"description": "Combines different group additions into one plugin",
+	"type": "elgg-plugin",
+	"keywords": ["elgg", "plugin", "groups"],
+	"license": "GPL-2.0",
+	"support": {
+		"source": "https://github.com/ColdTrick/group_tools",
+		"issues": "https://github.com/ColdTrick/group_tools/issues"
+	},
+	"require": {
+		"composer/installers": "^1.0.8"
+	},
+	"require-dev": {
+		"coldtrick/sniffs": "dev-master"
+	}
+}

@@ -1,4 +1,8 @@
 <?php
+/**
+ * List all suggested groups
+ */
+
 $groups = elgg_extract("groups", $vars);
 
 if (!empty($groups)) {
