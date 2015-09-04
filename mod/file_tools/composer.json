@@ -1,0 +1,15 @@
+{
+	"name": "coldtrick/file_tools",
+	"description": "Extend the functionality of the core file plugin",
+	"type": "elgg-plugin",
+	"keywords": ["elgg", "plugin", "tools"],
+	"license": "GPL-2.0",
+	"homepage": "https://community.elgg.org/plugins/874513",
+	"support": {
+		"source": "https://github.com/ColdTrick/file_tools",
+		"issues": "https://github.com/ColdTrick/file_tools/issues"
+	},
+	"require": {
+		"composer/installers": "^1.0.8"
+	}
+}

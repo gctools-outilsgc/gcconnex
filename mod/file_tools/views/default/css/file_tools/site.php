@@ -13,6 +13,7 @@
 
 #file_tools_list_files_container {
 	position: relative;
+	min-height: 50px;
 }
 
 #file_tools_list_files_container .elgg-ajax-loader {
