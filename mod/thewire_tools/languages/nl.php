@@ -1,5 +1,20 @@
 <?php
-$language = array (
+/**
+ * This file was created by Translation Editor v4.0
+ * On 2015-06-12 11:46
+ */
+
+return array (
+  'admin:upgrades:thewire_tools_mentions' => 'TheWire Tools vermeldingen',
+  'thewire_tools:settings:description' => 'Ontvang een notificatie als je wordt vermeld in een Wire post',
+  'thewire_tools:reshare:count' => 'Wie heeft dit gedeeld',
+  'thewire_tools:reshare:list' => '%s deelde dit %s',
+  'thewire_tools:groups:mentions' => 'Vermeldingen zijn beperkt tot groepsleden',
+  'thewire_tools:settings:mention_display' => 'Hoe moeten vermeldingen worden weergegeven in een Wire post',
+  'thewire_tools:settings:mention_display:username' => '@gebruikersnaam',
+  'thewire_tools:settings:mention_display:displayname' => '@weegavenaam',
+  'thewire_tools:reshare' => 'Deel op The Wire',
+  'thewire_tools:reshare:source' => 'Bron',
   'thewire_tools:settings:wire_length' => 'Configureer de maximale lengte van een Wire post',
   'thewire_tools:settings:extend_activity' => 'Voeg het The Wire formulier toe aan de activiteiten pagina',
   'thewire_tools:login_required' => 'Je moet zijn aangemeld om deze functionaliteit te kunnen gebruiken',
@@ -31,4 +46,3 @@ Om je vermeldingen op The Wire te bekijken klik op onderstaande link:
   'widgets:thewire_post:title' => 'Plaats op The Wire',
   'widgets:thewire_post:description' => 'Werk je status op The Wire bij via deze widget',
 );
-add_translation("nl", $language);

@@ -2,17 +2,18 @@
 <plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
 	<name>TheWire Tools</name>
 	<author>ColdTrick IT Solutions</author>
-	<version>2.2</version>
+	<version>4.0</version>
 	<description>Provides additional features for The Wire</description>
+	<id>thewire_tools</id>
 	<website>http://www.coldtrick.com/</website>
 	<repository>https://github.com/ColdTrick/thewire_tools</repository>
 	<bugtracker>https://github.com/ColdTrick/thewire_tools/issues</bugtracker>
-	<copyright>(C) ColdTrick IT Solutions 2011 - 2011</copyright>
+	<copyright>(C) ColdTrick IT Solutions 2011 - 2015</copyright>
 	<license>GNU General Public License version 2</license>
  	
  	<requires>
 		<type>elgg_release</type>
-		<version>1.8</version>
+		<version>1.10</version>
 	</requires>
 
 	<requires>
@@ -25,6 +26,12 @@
 		<plugin>thewire</plugin>
 		<priority>after</priority>
 	</requires>
+	
+	<suggests>
+		<type>plugin</type>
+		<name>notifications</name>
+		<version>1.9</version>
+	</suggests>
 	
  	<category>ColdTrick</category>
  	<category>content</category>

@@ -1,4 +1,30 @@
-= Version history =
+Version history
+===============
+
+4.0 (2015-07-08):
+
+- Elgg requirement set to 1.10
+- added: composer support
+- added: option to view who shared content on thewire
+- fixed: only check for double reshare if it is a wire post
+- fixed: potential sql query error
+
+3.1 (2014-11-17):
+
+- added: ajax loaded thread
+- added: support for group to be shared on thewire
+- fixed: no thread link if in thread #8
+- changed: autocomplete for site no longer limited to friends
+- changed: moved mention settings to notification page #7
+- changed: don't reshare comments and discussion replies
+- removed: previous entity menu item
+
+3.0 (2014-09-25):
+
+- made compatible with Elgg 1.9
+- added: option to share content on TheWire
+- added: support for widget_manager group tool based widgets
+- added: admin option how to show mentions in wire posts
 
 2.2 (2013-03-18):
 
