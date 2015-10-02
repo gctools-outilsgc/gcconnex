@@ -11,8 +11,14 @@ if (!empty($friend)) {
 		$message = elgg_echo("friend_request:decline:message", array($friend->name, $user->name));
 		
 		// cyu - small change, no notifications if 2nd party decides to decline
-		//notify_user($friend->getGUID(), $user->getGUID(), $subject, $message);
+		/*
+		$params = array(
+			"action" => "friend_request_decline",
+			"object" => $user
+		);
 		
+		notify_user($friend->getGUID(), $user->getGUID(), $subject, $message, $params);
+		*/
 		system_message(elgg_echo("friend_request:decline:success"));
 	} else {
 		register_error(elgg_echo("friend_request:decline:fail"));
