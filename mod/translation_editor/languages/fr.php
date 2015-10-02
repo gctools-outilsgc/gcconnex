@@ -5,7 +5,6 @@ $language = array (
 	
 		// global
   'translation_editor:language' => 'Langage',
-  'translation_editor:disabled' => 'Indisponible',
 	
 		// menu
   'translation_editor:menu:title' => 'Editeur de traduction',
@@ -50,7 +49,6 @@ $language = array (
 	
 		// actions
 		'translation_editor:action:translate:error:input' => 'Une entrée incorrecte revient à ajouter une traduction',
-		'translation_editor:action:translate:no_changed_values' => 'Aucune traduction n\'a besoin d\'être ajouté',
 		'translation_editor:action:translate:error:write' => 'Erreur pendant l\'écriture des traductions',
 		'translation_editor:action:translate:error:not_authorized' => 'Vous n\'êtes pas autorisé à traduire',
 		'translation_editor:action:translate:success' => 'Les traduction ont été sauvegardée avec succès',

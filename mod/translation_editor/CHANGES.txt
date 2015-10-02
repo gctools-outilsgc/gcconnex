@@ -1,4 +1,42 @@
-=  Version history =
+Version history
+===============
+
+4.0 (2015-07-08):
+
+- changes for Elgg 1.11
+- added: composer support
+- fixed: calling non static functions as static
+- fixed: custom language were not manageable (could not delete or add) #10
+
+3.0 (2015-07-08):
+
+- small changes for Elgg 1.10
+- changed: using classes for callback function 
+
+2.0.1 (2015-02-02):
+
+- changed: only load js when needed
+
+2.0 (2014-11-17):
+
+- prepared for Elgg 1.9
+- changed: language file format to prefered Elgg 1.9 format
+- changed saving of translations a single input a time #6
+- fixed: invalidate translation cache when adding custom keys #1
+- fixed: translation editor pages available for normal users #3
+- fixed: disabled languages are not manageable with system cache enabled
+- fixed: PHP warning
+- fixed: a caching issue which prevented translating while system_cache was enabled
+
+1.3 (2013-04-05):
+
+- added: german translation (thanks to Originalhardy http://community.elgg.org/pg/profile/Originalhardy)
+- changed: internal function for better performance
+- changed: code cleanup and PHP warning fixes
+- changed: README.txt to README.md for GitHub
+- fixed: incorrect result in function
+- removed: some legacy code
+
 1.2.1 (2012-03-02):
 
 - fixed: CSS issue on plugin edit

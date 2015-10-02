@@ -2,15 +2,18 @@
 <plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
 	<name>Translation Editor</name>
 	<author>ColdTrick IT Solutions</author>
-	<version>1.2.1</version>
+	<version>4.0</version>
 	<description>Translation Editor provides an easy way to edit translations.</description>
+	<id>translation_editor</id>
 	<website>http://www.coldtrick.com/</website>
-	<copyright>(C) ColdTrick IT Solutions 2009 - 2011</copyright>
-	<license>GNU Public License version 2</license>
+	<repository>https://github.com/ColdTrick/translation_editor</repository>
+	<bugtracker>https://github.com/ColdTrick/translation_editor/issues</bugtracker>
+	<copyright>(C) ColdTrick IT Solutions 2009 - 2015</copyright>
+	<license>GNU General Public License version 2</license>
 	
 	<requires>
-		<type>elgg_version</type>
-		<version>2011061200</version>
+		<type>elgg_release</type>
+		<version>1.11</version>
 	</requires>
 	
  	<category>ColdTrick</category>
