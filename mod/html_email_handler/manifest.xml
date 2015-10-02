@@ -2,19 +2,26 @@
 <plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
 	<name>HTML Email Handler</name>
 	<author>ColdTrick IT Solutions</author>
-	<version>2.3.1</version>
+	<version>3.1</version>
+	<id>html_email_handler</id>
 	<description>Allows to send out full HTML mails / notifications</description>
 	<website>http://www.coldtrick.com/</website>
-	<copyright>(C) ColdTrick IT Solutions 2009 - 2013</copyright>
-	<license>GNU Public License version 2</license>
+	<repository>https://github.com/ColdTrick/html_email_handler</repository>
+	<bugtracker>https://github.com/ColdTrick/html_email_handler/issues</bugtracker>
+	<copyright>(C) ColdTrick IT Solutions 2011 - 2015</copyright>
+	<license>GNU General Public License version 2</license>
 	
 	<requires>
 		<type>elgg_release</type>
-		<version>1.8.3</version>
+		<version>1.9</version>
 	</requires>
 	<requires>
 		<type>php_extension</type>
 		<name>dom</name>
+	</requires>
+	<requires>
+		<type>php_version</type>
+		<version>5.3</version>
 	</requires>
 	
 	<suggests>

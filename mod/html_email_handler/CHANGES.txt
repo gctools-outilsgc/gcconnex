@@ -1,4 +1,47 @@
-= Version history =
+Version history
+===============
+
+3.1 (2015-07-08):
+
+- added: composer support
+- added: normalize all URL's in the outgoing mail
+- added: option to embed images directly in the outgoing e-mail #20
+- added: option to send the test page to email
+- changed: get emogrifier by using composer
+- changed: test page uses inline CSS, normalized urls and embedded images
+- changed: extended the embed options with a choice between base64 and attachments
+- changed: reduce redundancy by using only one function to handle all outgoing HTML mail #26 #27
+- fixed: also pass recipient into mail body to be used in message body
+- fixed: invalid image urls in some cases
+- fixed: possibility for encoded html subjects
+- fixed: recipient not available in message body #32
+- fixed: to and from email address for notifcations in RFC822 format
+- fixed: travis syntax error
+- fixed: usage of deprecated functions
+- fixed: URLs found from notification body now get converted into formatted links
+
+3.0 (2014-09-25):
+
+- changes for Elgg 1.9
+- updated the version of Emogrifier
+
+2.6 (2014-07-01):
+
+- added: file attachment support #10 thanks to Facyla
+- fixed: content from a WYSIWYG-editor has a different result in the e-mail
+
+2.5 (2013-12-24):
+
+- added: Spanish translation thanks to Gonzalo (http://community.elgg.org/profile/GEARinvent)
+- changed: html_email_handler_make_rfc822_address() always return an email address, now falls back to site email
+
+2.4 (2013-10-31):
+
+- added: French translation thanks to Facyla (https://github.com/Facyla)(#6)
+- changed: README.txt to README.md for better readability on GitHub
+- changed: CSS definitions of font-size from em to px, for better detection by SpamAssasin
+- changed: encoding of the subject moved to a later stage for more support #7
+
 2.3.1 (2013-04-05):
 
 - fixed: problem with pagesetupdone on some Elgg installations
