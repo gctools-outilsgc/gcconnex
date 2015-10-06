@@ -1,0 +1,39 @@
+Changelog
+=========
+
+1.10.3
+------
+
+- Tested to make sure that it works on Elgg 2.0 (that means it should also work on any future Elgg 2.X version),
+- composer.json added.
+
+1.10.2
+------
+
+- Based on version 1.9.2,
+- Fix of deprecation issues occuring on Elgg 1.10 (namely changing output/confirmlink view to output/url view).
+
+1.9.2
+-----
+
+- Updated version 1.8.2 for Elgg 1.9.
+
+1.8.2
+-----
+
+- show IP addresses used when registering the unvalidated accounts.
+
+1.9.1
+-----
+
+- Updated version 1.8.1 for Elgg 1.9.
+
+1.8.1
+-----
+
+- French translation added (thank to emanwebdev),
+
+1.8.0
+-----
+
+- Initial release.
