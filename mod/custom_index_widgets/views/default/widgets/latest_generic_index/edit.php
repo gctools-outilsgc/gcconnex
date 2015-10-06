@@ -5,7 +5,7 @@
 	$widget_group = $vars["entity"]->widget_group;
   	if (!isset($widget_group)) $widget_group = 0;
 	
-  	$site_categories = $vars['config']->site->categories;
+  	$site_categories = elgg_get_site_entity()->categories;
   	$widget_categorie = $vars['entity']->widget_categorie;
 	$widget_context_mode = $vars['entity']->widget_context_mode;
 	if (!isset($widget_context_mode)) $widget_context_mode = 'search';
@@ -32,13 +32,7 @@
       : 
       <?php
 
-	  $subtypes = get_data("SELECT subtype from {$CONFIG->dbprefix}entity_subtypes");
-      $subtype_list = array();
-      if ($subtypes) {
-          foreach ($subtypes as $data) {
-              $subtype_list[$data->subtype] = $data->subtype;
-          }
-      }
+	  $subtype_list = custom_index_list_all_subtypes();
       echo elgg_view('input/dropdown', array('name'=>'params[widget_subtype]', 'options_values'=>$subtype_list, 'value'=>$widget_subtype));
       ?>
   </p>

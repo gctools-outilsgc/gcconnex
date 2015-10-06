@@ -9,10 +9,9 @@
  
   $widget_datas = elgg_list_entities(array(
 		'type'=>'group',
-		// 'offset' => 0, //GCChange - set to 0 in order to ignore pagination of activity index widget
 		'limit'=>$num_items,
 		'full_view' => false,
-		'view_type_toggle' => false,
+		'list_type_toggle' => false,
 		'pagination' => false));
 	
    

@@ -33,9 +33,10 @@ if (elgg_can_edit_widget_layout($context)) {
 }
 
 echo $vars['content'];
+echo '<div class="elgg-layout-widgets">';
 
 $widget_class = "elgg-col-1of{$num_columns}";
-for ($column_index = $num_columns; $column_index >= 1; $column_index--) {
+for ($column_index = 1; $column_index <= $num_columns; $column_index++) {
 	if (isset($widgets[$column_index])) {
 		$column_widgets = $widgets[$column_index];
 	} else {
@@ -52,5 +53,5 @@ for ($column_index = $num_columns; $column_index >= 1; $column_index--) {
 	}
 	echo '</div>';
 }
-
+echo '</div>';
 

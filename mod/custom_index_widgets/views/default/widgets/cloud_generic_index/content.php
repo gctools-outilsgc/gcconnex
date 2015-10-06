@@ -22,8 +22,7 @@ $widget_group = $vars["entity"]->widget_group;
 if (!isset($widget_group)) $widget_group = "";
 
 
-
-$body = elgg_view_tagcloud($threshold, $num_items, $metadata_name, $maintype, $subtype, $widget_group , -1);;
+$body = elgg_view_tagcloud( array("threshold"=>$threshold, "limit"=>$num_items, "type"=>$maintype, "subtypes"=>$subtype, "container_guids"=>$widget_group ));
 echo $body;
 	
 ?>

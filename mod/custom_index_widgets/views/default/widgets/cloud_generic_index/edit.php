@@ -32,18 +32,8 @@
       <?php echo elgg_echo('custom_index_widgets:widget_subtype'); ?>
       : 
       <?php
-
-	  $subtypes = get_data("SELECT subtype from {$CONFIG->dbprefix}entity_subtypes");
-      $subtype_list = array();
-	  $subtype_list['All'] = '';
-	  $subtype_list['user'] = 'user';
-	  $subtype_list['group'] = 'group';
-	  
-      if ($subtypes) {
-          foreach ($subtypes as $data) {
-              $subtype_list[$data->subtype] = $data->subtype;
-          }
-      }
+       $subtype_list = custom_index_list_all_subtypes();
+	 
       echo elgg_view('input/dropdown', array('name'=>'params[widget_subtype]', 'options_values'=>$subtype_list, 'value'=>$widget_subtype));
       ?>
   </p>
