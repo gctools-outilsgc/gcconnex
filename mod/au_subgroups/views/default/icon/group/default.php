@@ -1,4 +1,7 @@
 <?php
+
+namespace AU\SubGroups;
+
 /**
  * Generic icon view.
  *
@@ -22,7 +25,7 @@ if (!in_array($vars['size'], $sizes)) {
 $class = elgg_extract('img_class', $vars, '');
 
 $span = '';
-$parent = au_subgroups_get_parent_group($entity);
+$parent = get_parent_group($entity);
 if ($parent) {
   if ($class) {
     $class .= ' ';
@@ -47,7 +50,7 @@ $icon_sizes = elgg_get_config('icon_sizes');
 $size = $vars['size'];
 
 // maintain aspect ratio
-$filehandler = new ElggFile();
+$filehandler = new \ElggFile();
 $filehandler->owner_guid = $entity->owner_guid;
 $filehandler->setFilename("groups/" . $entity->guid . $size . ".jpg");
 
