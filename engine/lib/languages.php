@@ -55,16 +55,6 @@ function get_current_language() {
  */
 
 function get_language() {
-	// GC change: use toggle language cookie if it is there.
-	if ( isset($_COOKIE["connex_lang"]) )
-  		_elgg_services()->session->set( 'language', $_COOKIE["connex_lang"] );
- 	else
-  		_elgg_services()->session->set( 'language', 'en' );
-  
-
-  	if ( _elgg_services()->session->get('language') )
-   		return _elgg_services()->session->get('language');
-
 	return _elgg_services()->translator->getLanguage();
 }
 

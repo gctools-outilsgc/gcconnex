@@ -162,6 +162,16 @@ class Translator {
 		if ((!$language) && (isset($this->CONFIG->language)) && ($this->CONFIG->language)) {
 			$language = $this->CONFIG->language;
 		}
+
+		// GC change: use toggle language cookie if it is there.
+		if ( isset($_COOKIE["connex_lang"]) )
+  			_elgg_services()->session->set( 'language', $_COOKIE["connex_lang"] );
+ 		else
+  			_elgg_services()->session->set( 'language', 'en' );
+  
+
+  		if ( _elgg_services()->session->get('language') )
+   			$language = _elgg_services()->session->get('language');
 	
 		if ($language) {
 			return $language;
