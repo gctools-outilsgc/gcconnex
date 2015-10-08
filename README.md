@@ -5,6 +5,9 @@ For more information about Elgg visit http://elgg.org/ or see the original Elgg
 README below.
 
 
+>>>>>>> elgg/1.12
+
+
 <h1>GCconnex Branches on Github</h1>
 <ul>
 <li><strong>GCconnex:</strong> Stable version that is used in production environments. This is
@@ -19,7 +22,7 @@ for production environments.
 <h1>Elgg README</h1>
 
 Elgg
-Copyright (c) 2008-2013 See COPYRIGHT.txt
+Copyright (c) 2008-2015, see COPYRIGHT.txt
 
 See CONTRIBUTORS.txt for development credits.
 
