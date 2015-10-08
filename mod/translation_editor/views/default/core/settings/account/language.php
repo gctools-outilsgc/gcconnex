@@ -22,10 +22,12 @@ if (empty($value)) {
 
 if (count($translations) > 1) {
 	// there are languages to choose from
-	$title = elgg_echo("user:set:language");
+
+	// GCpatch - Ilia: remove language selection in settings
+	//$title = elgg_echo("user:set:language");
 	
-	$body = elgg_echo("user:language:label");
-	$body .= elgg_view("input/hidden", array(		// changed to hidden, not needed (and not usable) with the language selector
+	//$body = elgg_echo("user:language:label");
+	$body = elgg_view("input/hidden", array(		// changed to hidden, not needed (and not usable) with the language selector
 		"name" => "language",
 		"value" => $value,
 		"options_values" => $translations,
