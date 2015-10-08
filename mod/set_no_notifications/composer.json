@@ -1,0 +1,24 @@
+{
+    "name": "iionly/set_no_notifications",
+    "description": "This plugin disables the email notifications settings when a user logs in the first time.",
+    "type": "elgg-plugin",
+    "keywords": [
+        "elgg",
+        "plugin"
+    ],
+    "homepage": "https://github.com/iionly/set_no_notifications",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "iionly",
+            "homepage": "https://github.com/iionly",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+            "issues": "https://github.com/iionly/set_no_notifications/issues"
+    },
+    "require": {
+        "composer/installers": ">=1.0.8"
+    }
+}

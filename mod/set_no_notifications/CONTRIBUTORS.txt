@@ -19,7 +19,7 @@ http://twitter.com/keetup_com
 
 -------------------
 
-ELGG 1.8 VERSION
+ELGG 1.8 AND NEWER VERSIONS
 
 iionly <iionly@gmx.de>
 https://github.com/iionly

@@ -1,0 +1,35 @@
+Changelog
+=========
+
+1.9.3
+-----
+
+- Verified that it works on Elgg 1.9 - 1.12 and Elgg 2.0 (therefore should also work on any future Elgg 2.X versions),
+- Renaming of plugin folder (and plugin id) from setNoNotifications to set_no_notifications because Packagist doesn't allow upper case letter in repo names (without renaming a composer based install wouldn't have been possible to offer),
+- composer.json added.
+
+1.9.2.1
+-------
+
+- Fixed a deprecation issue on Elgg 1.9 with 'login', 'user' event. It's now 'login:after', 'user'.
+
+1.9.2
+-----
+
+- Updated for Elgg 1.9
+
+1.8.2
+-----
+
+- Fixed an (php) error in German language file.
+
+1.8.1
+-----
+
+- French translation added (thank to emanwebdev),
+- German translation added.
+
+1.8.0 (by iionly)
+-----------------
+
+- Initial release for Elgg 1.8.
