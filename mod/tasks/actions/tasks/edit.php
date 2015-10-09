@@ -2,7 +2,7 @@
 /**
  * Create or edit a task
  *
- * @package ElggPages
+ * @package ElggTasks
  */
 
 $variables = elgg_get_config('tasks');
@@ -32,7 +32,7 @@ if (!$input['title']) {
 if ($task_guid) {
 	$task = get_entity($task_guid);
 	if (!$task || !$task->canEdit()) {
-		register_error(elgg_echo('tasks:error:no_save'));
+		register_error(elgg_echo('tasks:cantedit'));
 		forward(REFERER);
 	}
 	$new_task = false;
@@ -48,8 +48,7 @@ if ($task_guid) {
 
 if (sizeof($input) > 0) {
 	foreach ($input as $name => $value) {
-		$task->$name = $value;
-		//echo "$task->$name = $value";
+		$task->$name = $value; echo $name.',';
 	}
 }
 
@@ -75,6 +74,6 @@ if ($task->save()) {
 
 	forward($task->getURL());
 } else {
-	register_error(elgg_echo('tasks:error:no_save'));
+	register_error(elgg_echo('tasks:notsaved'));
 	forward(REFERER);
 }

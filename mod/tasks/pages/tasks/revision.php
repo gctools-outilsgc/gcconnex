@@ -2,7 +2,7 @@
 /**
  * View a revision of task
  *
- * @package ElggPages
+ * @package ElggTasks
  */
 
 $id = get_input('id');

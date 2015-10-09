@@ -1,8 +1,8 @@
 <?php
 /**
- * Page view
+ * Task view
  *
- * @package ElggPages
+ * @package ElggTasks
  */
 
 echo elgg_view('object/task_top', $vars);

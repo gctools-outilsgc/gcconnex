@@ -2,7 +2,7 @@
 /**
  * Group tasks
  *
- * @package ElggPages
+ * @package ElggTasks
  */
 
 

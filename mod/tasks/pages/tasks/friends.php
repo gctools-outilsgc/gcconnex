@@ -2,7 +2,7 @@
 /**
  * List a user's friends' tasks
  *
- * @package ElggPages
+ * @package ElggTasks
  */
 
 $owner = elgg_get_page_owner_entity();
@@ -24,6 +24,7 @@ if (!$content) {
 
 $params = array(
 	'filter_context' => 'friends',
+	'filter_override' => elgg_view('filter_override/taskspagefilter',array("filter_context"=>'friends')),
 	'content' => $content,
 	'title' => $title,
 );

@@ -2,7 +2,7 @@
 /**
  * History of revisions of a task
  *
- * @package ElggPages
+ * @package ElggTasks
  */
 
 $task_guid = get_input('guid');
@@ -30,7 +30,12 @@ elgg_push_breadcrumb(elgg_echo('tasks:history'));
 
 $title = $task->title . ": " . elgg_echo('tasks:history');
 
-$content = list_annotations($task_guid, 'task', 20, false);
+$content = elgg_list_annotations(array(
+	'guid' => $task_guid,
+	'annotation_name' => 'task',
+	'limit' => 20,
+	'order_by' => "n_table.time_created desc"
+));
 
 $body = elgg_view_layout('content', array(
 	'filter' => '',

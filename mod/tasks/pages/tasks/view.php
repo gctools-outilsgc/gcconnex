@@ -2,7 +2,7 @@
 /**
  * View a single task
  *
- * @package ElggPages
+ * @package ElggTasks
  */
 
 $task_guid = get_input('guid');

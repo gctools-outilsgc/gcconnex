@@ -76,7 +76,8 @@ if (elgg_in_context('widgets') || $revision) {
 }
 
 if ($full) {
-	$body = elgg_view('output/longtext', array('value' => $annotation->value));
+	//$body = elgg_view('output/longtext', array('value' => $annotation->value));
+	
 
 	$params = array(
 		'entity' => $task,
@@ -85,6 +86,9 @@ if ($full) {
 		'tags' => $tags,
 	);
 	$params = $params + $vars;
+	
+	$body = elgg_view('object/task/summary', $params);
+	
 	$summary = elgg_view('object/elements/summary', $params);
 
 	echo elgg_view('object/elements/full', array(
@@ -108,7 +112,7 @@ if ($full) {
 		'content' => $excerpt,
 	);
 	$params = $params + $vars;
-	$list_body = elgg_view('object/elements/summary', $params);
+	$list_body = elgg_view('object/task/widget', $params);
 
 	echo elgg_view_image_block($task_icon, $list_body);
 }
