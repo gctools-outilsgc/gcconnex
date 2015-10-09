@@ -73,6 +73,7 @@ function c_module_dump_init() {
  * cyu - 02/10/2015: modified to work with displaying the tasks assigned to user
  */
 function c_tasks_page_handler($task) {
+
 	elgg_load_library('elgg:tasks');
 	
 	// add the jquery treeview files for navigation
