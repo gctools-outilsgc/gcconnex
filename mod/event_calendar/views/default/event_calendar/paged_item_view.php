@@ -1,4 +1,5 @@
 <?php
+
 $event = $vars['event'];
 $time_bit = '';
 if (is_numeric($event->start_time)) {
@@ -7,7 +8,7 @@ if (is_numeric($event->start_time)) {
 
 $date_bit = event_calendar_get_formatted_date($event->start_date);
 
-if (event_calendar_has_personal_event($event->guid,elgg_get_logged_in_user_guid())) {
+if (event_calendar_has_personal_event($event->guid, elgg_get_logged_in_user_guid())) {
 	$calendar_bit = 'checked = "checked"';
 } else {
 	$calendar_bit = '';
@@ -24,4 +25,3 @@ if ($vars['personal_manage'] != 'no') {
 $info .= '</tr>';
 
 echo $info;
-?>

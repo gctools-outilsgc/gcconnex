@@ -1,9 +1,10 @@
 <?php
+
 elgg_load_library('elgg:event_calendar');
 
-$event_guid = get_input('guid',0);
+$event_guid = get_input('guid', 0);
 $event = get_entity($event_guid);
-if (elgg_instanceof($event,'object','event_calendar')) {
+if (elgg_instanceof($event, 'object', 'event_calendar')) {
 	$user_guid = elgg_get_logged_in_user_guid();
 	if (!event_calendar_has_personal_event($event_guid,$user_guid)) {
 		if (event_calendar_add_personal_event($event_guid,$user_guid)) {

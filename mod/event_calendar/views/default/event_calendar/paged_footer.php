@@ -1,4 +1,3 @@
 <?php
-echo '</tbody></table></div>';
-?>
 
+echo '</tbody></table></div>';

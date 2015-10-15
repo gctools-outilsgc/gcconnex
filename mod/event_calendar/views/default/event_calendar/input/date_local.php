@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Elgg date input
  * Displays a text field with a popup date picker.

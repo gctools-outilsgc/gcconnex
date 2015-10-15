@@ -3,14 +3,14 @@ elgg.provide('elgg.event_calendar');
 
 elgg.event_calendar.init = function () {
 	$('.event_calendar_paged_checkbox').click(elgg.event_calendar.handlePagedPersonalCalendarToggle);
-	$('.event-calendar-personal-calendar-toggle').click(elgg.event_calendar.handleDisplayPagePersonalCalendarToggle);
+	$('.event-calendar-personal-calendar-toggle').click(elgg.event_calendar.toggleDisplayPagePersonalCalendar);
 	$('#event-calendar-region').change(elgg.event_calendar.handleRegionChange);
 	$('#event-calendar-ical-link').click(elgg.event_calendar.handleIcalPopup);
 	$('.event-calendar-repeating-unselected').each(elgg.event_calendar.setRepeatingClass);
 	$('.event-calendar-repeating-unselected').live('click',elgg.event_calendar.handleRepeatingSelect);
 	$('.event-calendar-repeating-selected').live('click',elgg.event_calendar.handleRepeatingUnselect);
 	$('#event-calendar-edit').submit(elgg.event_calendar.handleEditFormSubmit);
-	$('#event-calendar-edit-schedule-type').click(elgg.event_calendar.handleScheduleType);
+	$('.event-calendar-edit-schedule-type').click(elgg.event_calendar.handleScheduleType);
 	elgg.event_calendar.handleScheduleType();
 
 	var all_day_field = $('[name="all_day"][type="checkbox"]');
@@ -24,23 +24,27 @@ elgg.event_calendar.init = function () {
 }
 
 elgg.event_calendar.handleScheduleType = function(e) {
-	var st = $('#event-calendar-edit-schedule-type:checked').val();
+	var st = $("[name='schedule_type']:checked").val();
 	if (st == 'poll') {
 		$(".event-calendar-edit-date-wrapper").hide();
 		$(".event-calendar-edit-reminder-wrapper").hide();
 		$(".event-calendar-edit-form-membership-block").hide();
 		$(".event-calendar-edit-form-share-block").hide();
+		$("[name='start_date_for_all_day']").hide();
 	} else {
-		$(".event-calendar-edit-date-wrapper").show();
 		$(".event-calendar-edit-reminder-wrapper").show();
 		$(".event-calendar-edit-form-membership-block").show();
 		$(".event-calendar-edit-form-share-block").show();
 		if (st == 'all_day') {
+			$(".event-calendar-edit-date-wrapper").hide();
 			$("#event-calendar-start-time-wrapper").hide();
 			$("#event-calendar-end-time-wrapper").hide();
+			$(".event-calendar-edit-all-day-date-wrapper").show();
 		} else {
+			$(".event-calendar-edit-date-wrapper").show();
 			$("#event-calendar-start-time-wrapper").show();
 			$("#event-calendar-end-time-wrapper").show();
+			$(".event-calendar-edit-all-day-date-wrapper").hide();
 		}
 	}
 }
@@ -127,31 +131,27 @@ elgg.event_calendar.togglePagedPersonalCalendar = function(guid) {
 	);
 }
 
-elgg.event_calendar.handleDisplayPagePersonalCalendarToggle = function() {
-	var guidBit = $(this).attr('id').substring('event_calendar_user_data_'.length);
-	var guids = guidBit.split('_');
-	var event_guid = parseInt(guids[0]);
-	var user_guid = parseInt(guids[1]);
-	elgg.event_calendar.toggleDisplayPagePersonalCalendar(event_guid,user_guid);
-}
+/**
+ * Add/Remove an event from users personal calendar
+ */
+elgg.event_calendar.toggleDisplayPagePersonalCalendar = function() {
+	var event_guid = $(this).attr('data-event-guid');
+	var user_guid = $(this).attr('data-user-guid');
 
-elgg.event_calendar.toggleDisplayPagePersonalCalendar = function(event_guid,user_guid) {
-	elgg.action('event_calendar/toggle_personal_calendar',
-			{
-				data: {event_guid: event_guid,user_guid: user_guid, other: 'yes'},
-				success: function (res) {
-							var success = res.success;
-							var msg = res.message;
-							if (success) {
-								var button_text = res.button_text;
-								$('#event_calendar_user_data_'+event_guid+'_'+user_guid).val(button_text);
-								//elgg.system_message(msg,2000);
-							} else {
-								elgg.register_error(msg,2000);
-							}
-					    }
+	elgg.action('event_calendar/toggle_personal_calendar', {
+		data: {
+			event_guid: event_guid,
+			user_guid: user_guid,
+			other: 'yes'
+		},
+		success: function (json) {
+			if (json.success) {
+				$('[data-user-guid=' + user_guid + ']').toggle();
+			} else {
+				elgg.register_error(json.message, 2000);
 			}
-	);
+	    }
+	});
 }
 
 elgg.register_hook_handler('init', 'system', elgg.event_calendar.init);

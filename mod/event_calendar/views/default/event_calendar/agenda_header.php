@@ -9,4 +9,3 @@ $header .= '<th class="agenda_header">'.elgg_echo('event_calendar:agenda:column:
 $header .= '</td></thead><tbody>';
 
 echo $header;
-?>

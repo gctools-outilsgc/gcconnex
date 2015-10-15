@@ -1,4 +1,5 @@
 <?php
+
 $header .= '<div class="event_calendar_paged_header_section">';
 $header .= '<div class="event_calendar_paged_month">'.$vars['date'].'</div>';
 $header .= '<table class="event_calendar_paged_table"><thead><tr>';
@@ -12,4 +13,3 @@ if ($vars['personal_manage'] != 'no') {
 $header .= '</td></thead><tbody>';
 
 echo $header;
-?>
