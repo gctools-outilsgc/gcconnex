@@ -1,22 +1,24 @@
-<h1>GCconnex</h1>
-GCconnex is a project forked from Elgg by the federal government of Canada.
+<h1>GCconnex & How to Install</h1>
+This project is forked from Elgg[^footnote] by the Federal Government of Canada. This branch contains the main version of Elgg for 1.12 which is currently in development for future launch of the new GCconnex.
 
-For more information about Elgg visit http://elgg.org/ or see the original Elgg
-README below.
-
-
->>>>>>> elgg/1.12
+All dependencies is included in this branch for Elgg v1.12, please note that some modules are included as submodules[^footnote], you may need to pull from submodule.
 
 
-<h1>GCconnex Branches on Github</h1>
-<ul>
-<li><strong>GCconnex:</strong> Stable version that is used in production environments. This is
-likely the branch that you want. Use this for contributing to development, and
-for production environments.
-<li><strong>Staging:</strong> Pre-release version used by TBS-SCT employees for development (not stable).
-<li><strong>1.*</strong> branches that are previous versions of Elgg and don't contain modifications.
-<li><strong>devel-*</strong> branches used by TBS-SCT employees to share code with each other.
-</ul>
+```
+git submodule foreach git pull origin master
+```
+
+
+[^footnote]: Elgg is an open source framework  for social networking and collaboration, for more information about Elgg visit http://elgg.org/ or see the original Elgg README below.
+[^footnote]: WET4 is currently in development to comply with the standards of UX within the Government
+
+<h1>GCconnex branches explained</h1>
+<strong>1.*</strong> - Older version of Elgg codebase
+
+<strong>GCconnex</strong> - Codebase for main production copy of GCconnex, any changes made or additional functionality that is developed will be merged into this branch.
+
+<strong>Staging</strong> - Pre release version used by TBS-SCT developers for development and testing
+<strong>devel-*</strong> - Branches used by TBS-SCT developers
 
 
 <h1>Elgg README</h1>
