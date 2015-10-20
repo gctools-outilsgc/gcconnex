@@ -9,11 +9,9 @@ git submodule foreach git pull origin master
 ```
 
 
-<sub>
-<a name="fn1">1</a>: Elgg is an open source framework  for social networking and collaboration, for more information about Elgg visit http://elgg.org/ or see the original Elgg README below.
+<sub><a name="fn1">1</a>: Elgg is an open source framework  for social networking and collaboration, for more information about Elgg visit http://elgg.org/ or see the original Elgg README below.</sub>
 
-<a name="fn2">2</a>: WET4 is currently in development to comply with the standards of UX within the Government
-</sub>
+<sub><a name="fn2">2</a>: WET4 is currently in development to comply with the standards of UX within the Government</sub>
 
 <h1>GCconnex branches explained</h1>
 <strong>1.*</strong> - Older version of Elgg codebase
