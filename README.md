@@ -1,5 +1,5 @@
 <h1>GCconnex & How to Install</h1>
-This project is forked from Elgg[^footnote] by the Federal Government of Canada. This branch contains the main version of Elgg for 1.12 which is currently in development for future launch of the new GCconnex.
+This project is forked from Elgg<sup>[1](#fn1)</sup> by the Federal Government of Canada. This branch contains the main version of Elgg for 1.12 which is currently in development for future launch of the new GCconnex.
 
 All dependencies is included in this branch for Elgg v1.12, please note that some modules are included as submodules[^footnote], you may need to pull from submodule.
 
@@ -7,6 +7,8 @@ All dependencies is included in this branch for Elgg v1.12, please note that som
 ```
 git submodule foreach git pull origin master
 ```
+
+<a name="fn1">1</a>:Elgg is an open source framework  for social networking and collaboration, for more information about Elgg visit http://elgg.org/ or see the original Elgg README below.
 
 
 [^footnote]: Elgg is an open source framework  for social networking and collaboration, for more information about Elgg visit http://elgg.org/ or see the original Elgg README below.
@@ -18,6 +20,7 @@ git submodule foreach git pull origin master
 <strong>GCconnex</strong> - Codebase for main production copy of GCconnex, any changes made or additional functionality that is developed will be merged into this branch.
 
 <strong>Staging</strong> - Pre release version used by TBS-SCT developers for development and testing
+
 <strong>devel-*</strong> - Branches used by TBS-SCT developers
 
 
