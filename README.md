@@ -11,6 +11,7 @@ git submodule foreach git pull origin master
 
 <sub>
 <a name="fn1">1</a>: Elgg is an open source framework  for social networking and collaboration, for more information about Elgg visit http://elgg.org/ or see the original Elgg README below.
+
 <a name="fn2">2</a>: WET4 is currently in development to comply with the standards of UX within the Government
 </sub>
 
@@ -23,6 +24,7 @@ git submodule foreach git pull origin master
 
 <strong>devel-*</strong> - Branches used by TBS-SCT developers
 
+<strong>gcconnex-upgrade</strong> - Current (and future release) for GCconnex using Elgg v1.12
 
 <h1>Elgg README</h1>
 
