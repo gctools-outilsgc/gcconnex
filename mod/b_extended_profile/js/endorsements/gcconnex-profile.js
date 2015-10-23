@@ -67,7 +67,7 @@ function initFancyProfileBox() {
 
 
 $(document).ready(function() {
-        $(".gcconnex-basic-profile-edit").fancybox({
+        $(".gcconnex-basic-profile-edit").colorbox({
             'autoDimensions': false,
             'width': '800',
             'height': '580',
