@@ -1,25 +1,40 @@
-<h1>GCconnex</h1>
-GCconnex is a project forked from Elgg by the federal government of Canada.
+<h1>GCconnex & How to Install</h1>
+This project is forked from Elgg<sup>[1](#fn1)</sup> by the Federal Government of Canada. This branch contains the main version of Elgg for 1.8 which is currently being maintained.
 
-For more information about Elgg visit http://elgg.org/ or see the original Elgg
-README below.
+All dependencies is included in this branch for Elgg v1.8, please note that some modules are included as submodules<sup>[2](#fn2)</sup>, you may need to pull from submodule.
 
 
-<h1>GCconnex Branches on Github</h1>
-<ul>
-<li><strong>GCconnex:</strong> Stable version that is used in production environments. This is
-likely the branch that you want. Use this for contributing to development, and
-for production environments.
-<li><strong>Staging:</strong> Pre-release version used by TBS-SCT employees for development (not stable).
-<li><strong>1.*</strong> branches that are previous versions of Elgg and don't contain modifications.
-<li><strong>devel-*</strong> branches used by TBS-SCT employees to share code with each other.
-</ul>
+```
+git submodule foreach git pull origin master
+```
 
+<strong>Sphinx Search Installation</strong><br/>
+The default search engine for Elgg had been causing performance issues, we have had to swap it out with Sphinx Search<sup>[3](#fn3)</sup>.
+
+Please follow instructions to install Sphinx Search on the server here https://github.com/tbs-sct/gcconnex/tree/gcconnex/mod/sphinx
+
+<i>For better performance, we implemented Sphinx Search Delta Index (optional)</i>
+
+<br/><sub><a name="fn1">1</a>: Elgg is an open source framework  for social networking and collaboration, for more information about Elgg visit http://elgg.org/ or see the original Elgg README below.</sub>
+<br/><sub><a name="fn2">2</a>: HypeFramework and HypeForum are no longer being maintained and developed by the original developer, this project is being hosted and maintained in one of the in-house developer's repository</sub>
+<br/><sub><a name="fn3">3</a>: Sphinx Search is an Open Source Search Server. For more information visit http://sphinxsearch.com/
+
+
+<h1>GCconnex branches explained</h1>
+<strong>1.*</strong> - Older version of Elgg codebase
+
+<strong>gcconnex</strong> - Codebase for main production copy of GCconnex, any changes made or additional functionality that is developed will be merged into this branch.
+
+<strong>Staging</strong> - Pre release version used by TBS-SCT developers for development and testing
+
+<strong>devel-*</strong> - Branches used by TBS-SCT developers
+
+<strong>gcconnex-upgrade</strong> - Current (and future release) for GCconnex using Elgg v1.12
 
 <h1>Elgg README</h1>
 
 Elgg
-Copyright (c) 2008-2013 See COPYRIGHT.txt
+Copyright (c) 2008-2013, see COPYRIGHT.txt
 
 See CONTRIBUTORS.txt for development credits.
 
