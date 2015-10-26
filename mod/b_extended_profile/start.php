@@ -128,14 +128,14 @@ function init_ajax_block($title, $section, $user) {
         echo '<span class="gcconnex-profile-edit-controls">';
         echo '<span class="edit-control edit-' . $section . '"><img src="' . elgg_get_site_url() . 'mod/b_extended_profile/img/edit.png">' . elgg_echo('gcconnex_profile:edit') . '</span>';
 //        echo '<span class="save-control save-' . $section . ' hidden"><img src="' . elgg_get_site_url() . 'mod/b_extended_profile/img/save.png">' . elgg_echo('gcconnex_profile:save') . '</span>';
-        echo '<span class="cancel-control cancel-' . $section . ' hidden"><img src="' . elgg_get_site_url() . 'mod/b_extended_profile/img/cancel.png">' . elgg_echo('gcconnex_profile:cancel') . '</span>';
+        echo '<span class="cancel-control cancel-' . $section . ' hidden wb-invisible"><img src="' . elgg_get_site_url() . 'mod/b_extended_profile/img/cancel.png">' . elgg_echo('gcconnex_profile:cancel') . '</span>';
         echo '</span>';
     }
 }
 
 function finit_ajax_block($section) {
     echo '</div>';
-    echo '<span class="gcconnex-profile-edit-controls save-control save-' . $section . ' hidden"><img src="' . elgg_get_site_url() . 'mod/b_extended_profile/img/save.png">' . elgg_echo('gcconnex_profile:save') . '</span>';
+    echo '<span class="gcconnex-profile-edit-controls save-control save-' . $section . ' hidden wb-invisible"><img src="' . elgg_get_site_url() . 'mod/b_extended_profile/img/save.png">' . elgg_echo('gcconnex_profile:save') . '</span>';
     echo '</div>';
 }
 

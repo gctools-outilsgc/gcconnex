@@ -68,10 +68,10 @@ function initFancyProfileBox() {
 
 $(document).ready(function() {
         $(".gcconnex-basic-profile-edit").colorbox({
-            'autoDimensions': false,
-            'width': '800',
-            'height': '580',
-            'onComplete': initFancyProfileBox
+            autoDimensions: false,
+            width: '800',
+            height: '580',
+            onComplete: initFancyProfileBox
         });
 
     /*
@@ -220,7 +220,12 @@ function editProfile(event) {
 
     // toggle the edit, save, cancel buttons
     $('.edit-' + $section).hide();
+    $('.edit-' + $section).addClass('hidden');
+    $('.edit-' + $section).addClass('wb-invisible');
+
     $('.cancel-' + $section).show();
+    $('.cancel-' + $section).removeClass('hidden');
+    $('.cancel-' + $section).removeClass('wb-invisible');
 
     switch ($section) {
         case 'about-me':
@@ -232,6 +237,8 @@ function editProfile(event) {
                 function(data) {
                     $('.gcconnex-about-me').append('<div class="gcconnex-about-me-edit-wrapper">' + data + '</div>');
                     $('.save-' + $section).show();
+                    $('.save-' + $section).removeClass('hidden');
+                    $('.save-' + $section).removeClass('wb-invisible');
                 });
             $('.gcconnex-profile-about-me-display').hide();
             break;
@@ -245,6 +252,8 @@ function editProfile(event) {
                     // Output in a DIV with id=somewhere
                     $('.gcconnex-education').append('<div class="gcconnex-education-edit-wrapper">' + data + '</div>');
                     $('.save-' + $section).show();
+                    $('.save-' + $section).removeClass('hidden');
+                    $('.save-' + $section).removeClass('wb-invisible');
                 });
             $('.gcconnex-profile-education-display').hide();
             break;
@@ -267,6 +276,8 @@ function editProfile(event) {
                     });
                     $('.gcconnex-profile-work-experience-display').hide();
                     $('.save-' + $section).show();
+                    $('.save-' + $section).removeClass('hidden');
+                    $('.save-' + $section).removeClass('wb-invisible');
                 });
             break;
 
@@ -316,6 +327,8 @@ function editProfile(event) {
                 $(this).after('<img class="delete-skill-img" src="' + elgg.get_site_url() + 'mod/b_extended_profile/img/delete.png"><span class="delete-skill" onclick="deleteEntry(this)" data-type="skill">' + 'Delete / Supprimer' + '</span>'); //goes in here i think..
             });
             $('.save-' + $section).show();
+            $('.save-' + $section).removeClass('hidden');
+            $('.save-' + $section).removeClass('wb-invisible');
             $('.gcconnex-skill-limit').show();
 
             //$('.delete-skill').show();
@@ -333,6 +346,8 @@ function editProfile(event) {
                     $('.gcconnex-languages').append('<div class="gcconnex-languages-edit-wrapper">' + data + '</div>');
                     $('.gcconnex-profile-languages-display').hide();
                     $('.save-' + $section).show();
+                    $('.save-' + $section).removeClass('hidden');
+                    $('.save-' + $section).removeClass('wb-invisible');
                 });
             break;
         case 'portfolio':
@@ -345,6 +360,8 @@ function editProfile(event) {
                 $('.gcconnex-portfolio').append('<div class="gcconnex-portfolio-edit-wrapper">' + data + '</div>');
                 $('.gcconnex-profile-portfolio-display').hide();
                 $('.save-' + $section).show();
+                $('.save-' + $section).removeClass('hidden');
+                $('.save-' + $section).removeClass('wb-invisible');
             });
         default:
             break;
@@ -434,8 +451,15 @@ function saveProfile(event) {
     // toggle the edit, save, cancel buttons
     if ($section != "profile") {
         $('.edit-' + $section).show();
+        $('.edit-' + $section).removeClass('hidden');
+        $('.edit-' + $section).removeClass('wb-invisible');
+
         $('.save-' + $section).hide();
+        $('.save-' + $section).addClass('hidden');
+        $('.save-' + $section).addClass('wb-invisible');
         $('.cancel-' + $section).hide();
+        $('.cancel-' + $section).addClass('hidden');
+        $('.cancel-' + $section).addClass('wb-invisible');
     }
 
     switch ($section) {
