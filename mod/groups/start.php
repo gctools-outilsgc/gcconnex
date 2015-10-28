@@ -177,7 +177,7 @@ function groups_setup_sidebar_menus() {
 			));
 		}
 	}
-	if (elgg_get_context() == 'groups' && !elgg_instanceof($page_owner, 'group')) {
+	/*if (elgg_get_context() == 'groups' && !elgg_instanceof($page_owner, 'group')) {
 		elgg_register_menu_item('page', array(
 			'name' => 'groups:all',
 			'text' => elgg_echo('groups:all'),
@@ -206,7 +206,7 @@ function groups_setup_sidebar_menus() {
 			$item = new ElggMenuItem('groups:user:invites', $text, $url);
 			elgg_register_menu_item('page', $item);
 		}
-	}
+	}*/
 }
 
 /**
