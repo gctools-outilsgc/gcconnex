@@ -9,12 +9,16 @@ $task_guid = get_input('guid');
 
 $task = get_entity($task_guid);
 if (!$task) {
-
+    register_error(elgg_echo('noaccess'));
+    $_SESSION['last_forward_from'] = current_page_url();
+    forward('');
 }
 
 $container = $task->getContainerEntity();
 if (!$container) {
-
+    register_error(elgg_echo('noaccess'));
+    $_SESSION['last_forward_from'] = current_page_url();
+    forward('');
 }
 
 elgg_set_page_owner_guid($container->getGUID());

@@ -8,12 +8,16 @@
 $id = get_input('id');
 $annotation = elgg_get_annotation_from_id($id);
 if (!$annotation) {
-	forward();
+    register_error(elgg_echo('noaccess'));
+    $_SESSION['last_forward_from'] = current_page_url();
+    forward('');
 }
 
 $task = get_entity($annotation->entity_guid);
 if (!$task) {
-	
+    register_error(elgg_echo('noaccess'));
+    $_SESSION['last_forward_from'] = current_page_url();
+    forward('');
 }
 
 elgg_set_page_owner_guid($task->getContainerGUID());
