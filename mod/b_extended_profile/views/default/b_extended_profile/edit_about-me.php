@@ -54,10 +54,10 @@ else {  // In case this view will be called via elgg_view()
     echo 'ERROR: Tell sys admin to grep for: AFJ367FAXB'; // random alphanumeric string to grep later if needed
 }
 ?>
-<!-- initialize and load the longtext wysiwyg editor -->
+<!-- initialize and load the longtext wysiwyg editor 
 <script type="text/javascript">
     tinyMCE.init({
         mode : "exact",
         elements: "aboutme"
     });
-</script>
+</script>-->

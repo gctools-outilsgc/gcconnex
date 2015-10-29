@@ -509,7 +509,7 @@ function saveProfile(event) {
 
             break;
         case "about-me":
-            var $about_me = tinyMCE.activeEditor.getContent();
+            var $about_me = $('#aboutme').val();
             var access = $('.gcconnex-about-me-access').val();
             // save the information the user just edited
             elgg.action('b_extended_profile/edit_profile', {
@@ -836,8 +836,15 @@ function cancelChanges(event) {
     var $section = event.data.section;
 
     $('.edit-' + $section).show();
+    $('.edit-' + $section).removeClass('hidden');
+    $('.edit-' + $section).removeClass('wb-invisible');
+
     $('.save-' + $section).hide();
+    $('.save-' + $section).addClass('hidden');
+    $('.save-' + $section).addClass('wb-invisible');
     $('.cancel-' + $section).hide();
+    $('.cancel-' + $section).addClass('hidden');
+    $('.cancel-' + $section).addClass('wb-invisible');
 
     switch ($section) {
         case "about-me":
