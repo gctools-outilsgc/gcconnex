@@ -995,13 +995,20 @@ Hi %s, <br/>
 %s has requested to join the '%s' group. Click below to view their profile:
 %s <br/>
 or click below to view the group's join requests:
-%s
-
+%s <br />
+<br />
+this is his request for joining:<br />
+%s <br />
+<br />
 <div style='border-top: 1px dotted #999999;'>&nbsp;</div>Bonjour %s, <br/>
 %s a demandé à se joindre au groupe '%s' . Cliquez ci-dessous pour consulter son profil :
 %s <br/>
 ou cliquez ci-dessous pour afficher les demandes d'adhésion à du groupe :
-%s
+%s <br />
+<br />
+this is his request for joining:<br />
+%s <br />
+<br />
 
 ",
 
@@ -1048,6 +1055,9 @@ Pour changer vos notifications de groupe, cliquez ici :
 %s
 
 ",
+
+'groups:join:justification' => 'Request membership to %s',
+'groups:join:justification:explanation' => 'Please provide additional information so the administrator of the group can evaluate your request'
 
 );
 

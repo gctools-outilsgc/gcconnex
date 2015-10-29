@@ -33,6 +33,7 @@ function c_notification_messages() {
 	
 	if (elgg_is_active_plugin('likes')) elgg_register_action('likes/add',"$action_path/likes/add.php");
 	if (elgg_is_active_plugin('groups')) {
+		elgg_register_plugin_hook_handler("route", "groups", "c_groups_route_groups_handler");
 		elgg_register_action('groups/addtogroup',"$action_path/groups/membership/add.php");
 		elgg_register_action('groups/invite',"$action_path/groups/membership/invite.php");
 		elgg_register_action("groups/join", "$action_path/groups/membership/join.php");
@@ -288,4 +289,19 @@ function c_email_notify_handler(ElggEntity $from, ElggUser $to, $subject, $messa
 	}
 
 	return elgg_send_email($from, $to, $subject, $message);
+}
+
+function c_groups_route_groups_handler($hook, $type, $return_value, $params) {
+		$page = $return_value['segments'];
+		$result = $return_value;
+
+		if(!empty($return_value) && is_array($return_value)) {
+			if ($page[0] == "join") {
+				set_input("group_guid", $page[1]);
+				include(dirname(__FILE__) . "/pages/groups/join.php");
+				$result = false;
+			}
+		}
+
+		return $result;
 }
