@@ -5,8 +5,8 @@
  * Purpose: Display the about-me section of the current user's profile
  * Requires: extended_tinymce plugin, and requires us to load the extended_tinymce js files
  */
-elgg_load_js('extended_tinymce');
-elgg_load_js('elgg.extended_tinymce');
+//elgg_load_js('extended_tinymce');
+//elgg_load_js('elgg.extended_tinymce');
 
 
 if (elgg_is_xhr()) {

@@ -67,11 +67,12 @@ function initFancyProfileBox() {
 
 
 $(document).ready(function() {
-        $(".gcconnex-basic-profile-edit").colorbox({
-            autoDimensions: false,
-            width: '800',
-            height: '580',
-            onComplete: initFancyProfileBox
+        initFancyProfileBox();
+        /*$(".gcconnex-basic-profile-edit").fancybox({
+            'autoDimensions': false,
+            'width': '800',
+            'height': '580',
+            'onComplete': initFancyProfileBox
         });
 
     /*

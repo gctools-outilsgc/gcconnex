@@ -10,9 +10,62 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
         case "profile":
             $profile_fields = get_input('profile');
             $social_media = get_input('social_media');
+            $error_message = '';
 
             foreach ( $profile_fields as $f => $v ) {
-                $user->set($f, $v);
+
+                // cyu - check if email field is empty
+                if ($f === "email") {
+                    trim($v);   // remove white spaces from both sides of string
+
+                    if (!$v) {
+                        register_error(elgg_echo('gcc_profile:error').elgg_echo('gcc_profile:missingemail'));
+                        return true;
+                    }
+                    
+                    elgg_load_library('c_ext_lib');
+                    $isValid = false;
+
+                    
+                    if ($v) {
+                        // cyu - check if the email is in the list of exceptions
+                        $user_email = explode('@',$v);
+                        $list_of_domains = getExtension();
+
+                        if (count($list_of_domains) > 0) {
+                            while ($row = mysqli_fetch_array($list_of_domains)) {
+                                if (strtolower($row['ext']) === strtolower($user_email[1])) {
+                                    $isValid = true;
+                                    break;
+                                }
+                            }
+                            $error_message = elgg_echo('gcc_profile:error').elgg_echo('gcc_profile:notaccepted');
+                        }
+
+                        // cyu - check if domain is gc.ca
+                        if (!$isValid) {
+                            $govt_domain = explode('.',$user_email[1]);
+                            $govt_domain_len = count($govt_domain) - 1;                           
+
+                            if ($govt_domain[$govt_domain_len - 1].'.'.$govt_domain[$govt_domain_len] === 'gc.ca') {
+                                $isValid = true;
+                            } else {
+                                $isValid = false;
+                                $error_message = elgg_echo('gcc_profile:error').elgg_echo('gcc_profile:notaccepted');
+                            }
+                        }
+                    }
+
+                    if (!$isValid) {
+                        register_error($error_message);
+                        return true;
+                    }
+
+                    $user->set($f, $v);
+                }
+                else {
+                    $user->set($f, $v);
+                }
             }
 
             foreach ( $social_media as $f => $v ) {
@@ -21,6 +74,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                     $user->set($f, $link);
                 }
             }
+
 
             //$user->micro = get_input('micro');
             $user->save();

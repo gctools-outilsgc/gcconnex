@@ -18,10 +18,10 @@ echo '<div class="gcconnex-profile-name">';
 echo '<h1><span>' . $user->name . '</span></h1>';
 
 if ($user->canEdit()) {
-    echo '<button type="button" class="elgg-button btn gcconnex-edit-profile" data-toggle="modal" data-target="#editProfile">' . elgg_echo('gcconnex_profile:edit_profile') . '</button>';
+    echo '<button type="button" class="elgg-button btn gcconnex-edit-profile" data-toggle="modal" data-target="#editProfile" data-colorbox-opts = \'{"inline":true, "href":"#editProfile", "innerWidth": 800, "maxHeight": "80%"}\'>' . elgg_echo('gcconnex_profile:edit_profile') . '</button>';
     echo '<!-- Modal -->
-<div class="modal hidden" id="editProfile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal" id="editProfile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:100%;">
         <div class="modal-content">
             <div class="modal-header">';
     echo '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';

@@ -762,7 +762,8 @@ td.left-col {
 
 body #editProfile {
     width: 800px;
-    margin-left: -400px;
+    background-color: #FFF;
+ /*   margin-left: -400px;*/
 }
 
 .input-group-addon {
