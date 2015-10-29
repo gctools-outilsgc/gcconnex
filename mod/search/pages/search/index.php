@@ -108,8 +108,49 @@ $params = array(
 $types = get_registered_entity_types();
 $custom_types = elgg_trigger_plugin_hook('search_types', 'get_types', $params, array());
 
-// cyu - 2014-07-04
 
+// bjp - 2015-10-29
+// resort the types and subtypes according to a specified order
+$types_order = array('group', 'user', 'object');
+$subtypes_order = array('groupforumtopic');
+
+uksort($types, function($a, $b) use ($types_order) {
+	$a = array_search($a, $types_order);
+	if ($a === false) {
+		$a = count($types_order);
+	}
+
+	$b = array_search($b, $types_order);
+	if ($b === false) {
+		$b = count($types_order);
+	}
+
+	if ($a == $b) {
+		return 0;
+	}
+
+	return ($a < $b) ? -1 : 1;
+});
+
+usort($types['object'], function($a, $b) use ($subtypes_order) {
+	$a = array_search($a, $subtypes_order);
+	if ($a === false) {
+		$a = count($subtypes_order);
+	}
+
+	$b = array_search($b, $subtypes_order);
+	if ($b === false) {
+		$b = count($subtypes_order);
+	}
+
+	if ($a == $b) {
+		return 0;
+	}
+
+	return ($a < $b) ? -1 : 1;
+});
+
+// cyu - 2014-07-04
 
 // add sidebar items for all and native types
 // @todo should these maintain any existing type / subtype filters or reset?
@@ -126,6 +167,7 @@ $menu_item = new ElggMenuItem('all', elgg_echo('all'), $url);
 elgg_register_menu_item('page', $menu_item);
 
 foreach ($types as $type => $subtypes) {
+
 	// @todo when using index table, can include result counts on each of these.
 	if (is_array($subtypes) && count($subtypes)) {
 		foreach ($subtypes as $subtype) {
@@ -141,6 +183,7 @@ foreach ($types as $type => $subtypes) {
 			)));
 
 			$url = elgg_get_site_url()."search?$data";
+
 			$menu_item = new ElggMenuItem($label, elgg_echo($label), $url);
 			elgg_register_menu_item('page', $menu_item);
 		}
