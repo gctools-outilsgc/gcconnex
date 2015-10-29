@@ -1884,8 +1884,9 @@ function event_calendar_get_page_content_view($event_guid,$light_box = FALSE) {
 	$event = get_entity($event_guid);
 
 	if (!elgg_instanceof($event, 'object', 'event_calendar')) {
-		$content = elgg_echo('event_calendar:error_nosuchevent');
-		$title = elgg_echo('event_calendar:generic_error_title');
+		register_error(elgg_echo('noaccess'));
+		$_SESSION['last_forward_from'] = current_page_url();
+		forward('');
 	} else {
 		$title = htmlspecialchars($event->title);
 		$event_container = get_entity($event->container_guid);

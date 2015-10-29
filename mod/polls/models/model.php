@@ -344,11 +344,9 @@ function polls_get_page_view($guid) {
 		}
 		elgg_push_breadcrumb($poll->title);
 	} else {			
-		// Display the 'post not found' page instead
-		$title = elgg_echo("polls:notfound");	
-		$content = elgg_view("polls/notfound");	
-		elgg_push_breadcrumb(elgg_echo('item:object:poll'), "polls/all");
-		elgg_push_breadcrumb($title);
+		register_error(elgg_echo('noaccess'));
+		$_SESSION['last_forward_from'] = current_page_url();
+		forward('');
 	}
 	
 	$params = array('title' =>$title,'content' => $content,'filter'=>'');
