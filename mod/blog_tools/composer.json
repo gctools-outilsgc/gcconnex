@@ -1,0 +1,17 @@
+{
+	"name": "coldtrick/blog_tools",
+	"description": "Offers additional functionality for Blogs",
+	"type": "elgg-plugin",
+	"keywords": ["elgg", "plugin", "content"],
+	"license": "GPL-2.0",
+	"support": {
+		"source": "https://github.com/ColdTrick/blog_tools",
+		"issues": "https://github.com/ColdTrick/blog_tools/issues"
+	},
+	"require": {
+		"composer/installers": "^1.0.8"
+	},
+	"require-dev": {
+		"coldtrick/sniffs": "dev-master"
+	}
+}
