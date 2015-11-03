@@ -40,6 +40,7 @@ $french = array(
     'gcconnex_profile:basic:name' => 'Nom : ',
     'gcconnex_profile:basic:job' => 'Titre : ',
     'gcconnex_profile:basic:department' => 'Ministère : ',
+    'gcconnex_profile:basic:location' => 'Adresse: ',
     'gcconnex_profile:basic:phone' => 'Téléphone : ',
     'gcconnex_profile:basic:mobile' => 'Cellulaire : ',
     'gcconnex_profile:basic:email' => 'Courriel : ',

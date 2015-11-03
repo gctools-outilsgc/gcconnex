@@ -471,6 +471,7 @@ function saveProfile(event) {
             profile.name = $(".gcconnex-basic-name").val();
             profile.job = $(".gcconnex-basic-job").val();
             profile.department = $('.gcconnex-basic-department.tt-input').val();
+            profile.location = $(".gcconnex-basic-location").val();
             profile.phone = $(".gcconnex-basic-phone").val();
             profile.mobile = $(".gcconnex-basic-mobile").val();
             profile.email = $(".gcconnex-basic-email").val();

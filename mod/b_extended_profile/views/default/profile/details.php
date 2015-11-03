@@ -31,7 +31,7 @@ if ($user->canEdit()) {
             '<div class="modal-body">';
     echo '<div class="basic-profile-standard-field-wrapper">'; // container for css styling, used to group profile content and display them seperately from other fields
 
-    $fields = array('Name', 'Job', 'Department', 'Phone', 'Mobile', 'Email', 'Website');
+    $fields = array('Name', 'Job', 'Department', 'Location', 'Phone', 'Mobile', 'Email', 'Website');
 
     foreach ($fields as $field) { // create a label and input box for each field on the basic profile (see $fields above)
         echo '<div class="basic-profile-field-wrapper">'; // field wrapper for css styling

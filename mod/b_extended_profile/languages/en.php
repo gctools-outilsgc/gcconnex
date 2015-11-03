@@ -40,6 +40,7 @@ $english = array(
     'gcconnex_profile:basic:name' => 'Name: ',
     'gcconnex_profile:basic:job' => 'Title: ',
     'gcconnex_profile:basic:department' => 'Department: ',
+    'gcconnex_profile:basic:location' => 'Location: ',
     'gcconnex_profile:basic:phone' => 'Phone: ',
     'gcconnex_profile:basic:mobile' => 'Mobile: ',
     'gcconnex_profile:basic:email' => 'Email: ',
