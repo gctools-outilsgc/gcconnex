@@ -210,6 +210,7 @@ echo elgg_view('profile/owner_block');
 echo '<div class="pull-left mrgn-lft-md clearfix">';
 echo '<h3 class="mrgn-tp-0">' . $user->job . '</h3>';
 echo '<div class="gcconnex-profile-dept">' . $user->department . '</div>';
+echo '<div class="gcconnex-profile-location">' . $user->location . '</div>';
 echo '<div class="gcconnex-profile-contact-info">';
 
 if ($user->phone != null) {
