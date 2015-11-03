@@ -108,8 +108,9 @@ function extended_profile_page_handler($page) {
         'num_columns' => 3,
     );
     $content = elgg_view_layout('profile_widgets', $params);
+    $sidebar = elgg_view('profile/sidebar', array('entity' => $user));
 
-    $body = elgg_view_layout('one_column', array('content' => $content));
+    $body = elgg_view_layout('one_sidebar', array('content' => $content, 'sidebar' => $sidebar,));
     echo elgg_view_page($user->name, $body);
     return true;
 }

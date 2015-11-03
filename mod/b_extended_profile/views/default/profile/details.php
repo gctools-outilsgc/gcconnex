@@ -13,12 +13,12 @@ $profile_fields = elgg_get_config('profile_fields');
 
 // display the username, title, phone, mobile, email, website
 // fa classes are the font-awesome icons
-echo '<div id="profile-details" class="elgg-body pll">';
-echo '<div class="gcconnex-profile-name">';
-echo '<h1><span>' . $user->name . '</span></h1>';
+//echo '<div id="profile-details" class="pll">';
+echo '<div class="panel-heading clearfix"><div class="pull-right clearfix">';
 
+//edit button
 if ($user->canEdit()) {
-    echo '<button type="button" class="elgg-button btn gcconnex-edit-profile" data-toggle="modal" data-target="#editProfile" data-colorbox-opts = \'{"inline":true, "href":"#editProfile", "innerWidth": 800, "maxHeight": "80%"}\'>' . elgg_echo('gcconnex_profile:edit_profile') . '</button>';
+    echo '<button type="button" class="btn btn-primary gcconnex-edit-profile" data-toggle="modal" data-target="#editProfile" data-colorbox-opts = \'{"inline":true, "href":"#editProfile", "innerWidth": 800, "maxHeight": "80%"}\'>' . elgg_echo('gcconnex_profile:edit_profile') . '</button>';
     echo '<!-- Modal -->
 <div class="modal" id="editProfile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width:100%;">
@@ -143,8 +143,8 @@ if ($user->canEdit()) {
     echo $content;
 */
 }
-echo '</div>'; // close div class="gcconnex-profile-name"
 
+//actions dropdown
 if (elgg_get_page_owner_guid() != elgg_get_logged_in_user_guid()) {
     $menu = elgg_trigger_plugin_hook('register', "menu:user_hover", array('entity' => $user), array());
     $builder = new ElggMenuBuilder($menu);
@@ -154,39 +154,88 @@ if (elgg_get_page_owner_guid() != elgg_get_logged_in_user_guid()) {
 
     $profile_actions = '';
     if (elgg_is_logged_in() && $actions) {
+        
         foreach ($actions as $action) {
-            $profile_actions .= $action->getContent(array('class' => 'gcconnex-basic-profile-actions elgg-button'));
+            
+            //remove add/remove actions when they are not needed
+            if($user->isFriend() && strpos($action->getContent(), "Add colleague") == true){
+                
+            } else if(!$user->isFriend() && strpos($action->getContent(), "Remove colleague") == true){
+                
+            } else {
+                $profile_actions .= '<li>' . $action->getContent(array('class' => 'gcconnex-basic-profile-actions')) . '</li>';
+            }
         }
+        
     }
-    echo $profile_actions;
+    if(elgg_is_logged_in()){
+        echo '<div class="btn-group"><button type="button" class="btn btn-custom mrgn-rght-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Actions <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu pull-right clearfix">';
+        echo $profile_actions;
+        echo '</ul></div>';
+    }
 }
 
-echo '<h3>' . $user->job . '</h3>';
+// if admin, display admin links
+$admin_links = '';
+if (elgg_is_admin_logged_in() && elgg_get_logged_in_user_guid() != elgg_get_page_owner_guid()) {
+    $text = elgg_echo('admin:options');
+
+    //$admin_links = '<ul class="profile-admin-menu-wrapper">';
+    //$admin_links .= "<li><a rel=\"toggle\" href=\"#profile-menu-admin\">$text&hellip;</a>";
+    //$admin_links .= '<ul class="profile-admin-menu" id="profile-menu-admin">';
+    foreach ($admin as $menu_item) {
+        $admin_links .= '<li>' . elgg_view('navigation/menu/elements/item', array('item' => $menu_item)) . '</li>';
+    }
+    //$admin_links .= '</ul>';
+    //$admin_links .= '</li>';
+    //$admin_links .= '</ul>';
+    
+    echo '<div class="pull-right btn-group"><button type="button" class="btn btn-custom pull-right dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' .
+                $text .  '<span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu pull-right clearfix">' . $admin_links . '</ul></div>';
+}
+
+
+
+echo '</div>'; //closes btn-group
+
+echo '<h1 class="pull-left">' . $user->name . '</h1>';
+echo '</div>'; // close div class="panel-heading"
+
+echo elgg_view('profile/owner_block');
+echo '<div class="pull-left mrgn-lft-md clearfix">';
+echo '<h3 class="mrgn-tp-0">' . $user->job . '</h3>';
 echo '<div class="gcconnex-profile-dept">' . $user->department . '</div>';
 echo '<div class="gcconnex-profile-contact-info">';
 
 if ($user->phone != null) {
-    echo '<img class="profile-icons profile-detail-icon" src="' . elgg_get_site_url() . 'mod/b_extended_profile/img/telephone.png">' . $user->phone . '<br>';
+    echo '<p class="mrgn-bttm-sm"><i class="fa fa-phone fa-lg"></i> ' . $user->phone . '</p>';
 }
 
 if ($user->mobile != null) {
-    echo '<img class="profile-icons profile-detail-icon" src="' . elgg_get_site_url() . 'mod/b_extended_profile/img/mobile.png">' . $user->mobile . '<br>';
+    echo '<p class="mrgn-bttm-sm"><i class="fa fa-mobile fa-lg"></i> ' . $user->mobile . '</p>';
 }
 
 if ($user->email != null) {
-    echo '<img class="profile-icons profile-detail-icon" src="' . elgg_get_site_url() . 'mod/b_extended_profile/img/envelope.png"><a href="mailto:' . $user->email . '">' . $user->email . '</a><br>';
+    echo '<p class="mrgn-bttm-sm"><i class="fa fa-envelope fa-lg"></i> <a href="mailto:' . $user->email . '">' . $user->email . '</a></p>';
 }
 
 if ($user->website != null) {
-    echo '<img class="profile-icons profile-detail-icon" src="' . elgg_get_site_url() . 'mod/b_extended_profile/img/globe.png">';
+    echo '<p class="mrgn-bttm-sm"><i class="fa fa-globe fa-lg"></i> ';
     echo elgg_view('output/url', array(
         'href' => $user->website,
         'text' => $user->website
     ));
-    echo '<br>';
+    echo '</p>';
 }
 
 echo '</div>'; // close div class="gcconnex-profile-contact-info"
+
+
 
 // pre-populate the social media links that we may or may not display depending on whether the user has entered anything for each one..
 $social = array('facebook', 'google', 'github', 'twitter', 'linkedin', 'pinterest', 'tumblr', 'instagram', 'flickr', 'youtube');
@@ -211,7 +260,7 @@ foreach ($social as $media) {
     }
 }
 echo '</div>'; // close div class="gcconnex-profile-social-media-links"
-
+echo '</div>';
 
 
 
@@ -237,22 +286,6 @@ if (elgg_is_logged_in() && $actions) {
     $profile_actions .= '</ul>';
 }
 
-// if admin, display admin links
-$admin_links = '';
-if (elgg_is_admin_logged_in() && elgg_get_logged_in_user_guid() != elgg_get_page_owner_guid()) {
-    $text = elgg_echo('admin:options');
-
-    $admin_links = '<ul class="profile-admin-menu-wrapper">';
-    $admin_links .= "<li><a rel=\"toggle\" href=\"#profile-menu-admin\">$text&hellip;</a>";
-    $admin_links .= '<ul class="profile-admin-menu" id="profile-menu-admin">';
-    foreach ($admin as $menu_item) {
-        $admin_links .= elgg_view('navigation/menu/elements/item', array('item' => $menu_item));
-    }
-    $admin_links .= '</ul>';
-    $admin_links .= '</li>';
-    $admin_links .= '</ul>';
-}
-
 // content links
 $content_menu_title = elgg_echo('gcconnex_profile:user_content');
 $content_menu = elgg_view_menu('owner_block', array(
@@ -260,7 +293,7 @@ $content_menu = elgg_view_menu('owner_block', array(
     'class' => 'profile-content-menu',
 ));
 
-echo '</div>';
+//echo '</div>';
 
-echo '<div class="b-user-menu"><div class="b-user-menu-title">' . $content_menu_title . '</div>' . $content_menu . '</div>';
-echo '<div class="b-admin-menu">' . $admin_links . '</div>';
+//echo '<div class="b-user-menu"><div class="b-user-menu-title">' . $content_menu_title . '</div>' . $content_menu . '</div>';
+
