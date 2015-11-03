@@ -70,10 +70,8 @@ else {
 //$profile_actions
 echo <<<HTML
 
-<div id="profile-owner-block">
+<div class="mrgn-lft-md mrgn-bttm-md" id="profile-owner-block">
 	$icon
-
-	$admin_links
 </div>
 
 HTML;

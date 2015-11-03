@@ -19,8 +19,8 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
 ?>
 
 <div class="profile elgg-col-3of3">
-    <div class="elgg-inner clearfix">
-        <?php echo elgg_view('profile/owner_block'); ?>
+    <div class="clearfix panel-custom panel">
+        <?php //echo elgg_view('profile/owner_block'); ?>
         <?php echo elgg_view('profile/details'); ?>
     </div>
 
@@ -90,7 +90,7 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
 
             echo '<div role="tabpanel" class="tab-pane" id="splashboard">';
 
-                $num_columns = elgg_extract('num_columns', $vars, 3);
+                $num_columns = elgg_extract('num_columns', $vars, 2);
                 $show_add_widgets = elgg_extract('show_add_widgets', $vars, true);
                 $exact_match = elgg_extract('exact_match', $vars, false);
                 $show_access = elgg_extract('show_access', $vars, true);
@@ -134,7 +134,7 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
                         $column_widgets = array();
                     }
 
-                    echo "<div class=\"$widget_class elgg-widgets\" id=\"elgg-widget-col-$column_index\">";
+                    echo "<div class=\"$widget_class elgg-widgets col-sm-6\" id=\"elgg-widget-col-$column_index\">";
                     if (sizeof($column_widgets) > 0) {
                         foreach ($column_widgets as $widget) {
                             if (array_key_exists($widget->handler, $widget_types)) {

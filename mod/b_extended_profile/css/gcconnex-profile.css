@@ -17,12 +17,12 @@
 .gcconnex-profile-name h1 {
     float: left;
 }
-
+/*
 .gcconnex-basic-profile-actions,
 .gcconnex-basic-profile-edit {
     margin-left: 10px;
 }
-
+*/
 .gcconnex-profile-social-media-links {
     padding-top: 10px;
 }
@@ -424,13 +424,13 @@ input.userfind {
 .profile {
     float: none;
 }
-
+/*
 #profile-details {
     padding-bottom: 5px;
     float: left;
     display: inline;
     width: 45%;
-}
+}*/
 
 .elgg-input-text[name='education'] {
     width: 300px;
@@ -654,19 +654,18 @@ td.left-col {
 
 #profile-owner-block {
     position: relative;
-    margin: 0;
     padding: 0;
-    width: 250px;
-    height: 250px;
-}
+    
 
+}
+/*
 .avatar-profile-page {
     width: 255px;
     height: 255px;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
 }
-
+*/
 .avatar-hover-edit {
     background-color: rgba(3,3,3, 0.5);
     bottom: 25px;
