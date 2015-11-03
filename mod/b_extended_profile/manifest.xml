@@ -15,7 +15,7 @@
     </requires>
     <requires>
         <type>plugin</type>
-        <name>profile</name>
+        <name>c_email_extensions</name>
     </requires>
     <requires>
         <type>priority</type>
