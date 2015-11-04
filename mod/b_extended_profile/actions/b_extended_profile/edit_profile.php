@@ -325,6 +325,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             $user->skillsupgraded = TRUE;
             break;
         case 'languages':
+            $firstlang = get_input('firstlang', '');
             $french = get_input('french', 'ERROR: Ask your admin to grep: ASFDJKGJKG333616.');
             $english = get_input('english', 'ERROR: Ask your admin to grep: SDFANLVNVNVNVNVNAA31566.');
             $languagesToAdd = get_input('langadded', 'ERROR: Ask your admin to grep: 5FH13FFSSGAHHHS0021.');
@@ -333,6 +334,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
 
             $user->english = $english;
             $user->french = $french;
+            $user->officialLanguage = $firstlang;
 
             $user->save();
             break;

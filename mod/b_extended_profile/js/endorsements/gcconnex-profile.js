@@ -738,6 +738,7 @@ function saveProfile(event) {
 
             var english = [];
             var french = [];
+            var firstlang = $('.gcconnex-languages-edit-wrapper').find('.gcconnex-first-official-language').val();
 
             $official_langs = $('.gcconnex-profile-language-official-languages');
 
@@ -745,14 +746,18 @@ function saveProfile(event) {
                 'writtencomp': $official_langs.find('.gcconnex-languages-english-writtencomp').val(),
                 'writtenexp': $official_langs.find('.gcconnex-languages-english-writtenexp').val(),
                 'oral': $official_langs.find('.gcconnex-languages-english-oral').val(),
-                'expiry': $official_langs.find('#english_expiry').val()
+                'expiry_writtencomp': $official_langs.find('#english_expiry_writtencomp').val(),
+                'expiry_writtenexp': $official_langs.find('#english_expiry_writtenexp').val(),
+                'expiry_oral': $official_langs.find('#english_expiry_oral').val()
             };
 
             french = {
                 'writtencomp': $official_langs.find('.gcconnex-languages-french-writtencomp').val(),
                 'writtenexp': $official_langs.find('.gcconnex-languages-french-writtenexp').val(),
                 'oral': $official_langs.find('.gcconnex-languages-french-oral').val(),
-                'expiry': $official_langs.find('#french_expiry').val()
+                'expiry_writtencomp': $official_langs.find('#french_expiry_writtencomp').val(),
+                'expiry_writtenexp': $official_langs.find('#french_expiry_writtenexp').val(),
+                'expiry_oral': $official_langs.find('#french_expiry_oral').val()
             };
 
             // save the information the user just edited
@@ -761,7 +766,8 @@ function saveProfile(event) {
                     'guid': elgg.get_logged_in_user_guid(),
                     'section': 'languages',
                     'english': english,
-                    'french': french
+                    'french': french,
+                    'firstlang': firstlang
                 },
                 success: function() {
                     $.get(elgg.normalize_url('ajax/view/b_extended_profile/languages'),

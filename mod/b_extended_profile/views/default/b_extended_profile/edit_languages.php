@@ -29,18 +29,30 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
     $english = $user->english;
     $french = $user->french;
 
+    // first official language
+    echo "<label for='first_official_language'>First official language</label>";
+    $params = array(
+        'name' => 'first_official_language',
+        'class' => 'gcconnex-first-official-language',
+        'options' => array('-', 'ENG', 'FRA'),
+        'value' => $user->officialLanguage
+    );
+    echo elgg_view("input/pulldown", $params);
 
     echo '<table class="gcconnex-profile-language-official-languages table table-bordered">';
         echo '<thead>';
             echo '<tr>';
                 echo '<th class="first-col"></th>';
                 echo '<th>' . elgg_echo('gcconnex_profile:languages:english') . '</th>';
+                echo '<th>' . elgg_echo('gcconnex_profile:languages:expiry') . '</th>';
                 echo '<th>' . elgg_echo('gcconnex_profile:languages:french') . '</th>';
+                echo '<th>' . elgg_echo('gcconnex_profile:languages:expiry') . '</th>';
             echo '</tr>';
         echo '</thead>';
         echo '<tbody>';
             echo '<tr>';
                 echo '<td class="left-col">' . elgg_echo('gcconnex_profile:languages:writtencomp') . '</td>';
+                // English level
                 $params = array(
                     'name' => 'english_writtencomp',
                     'class' => 'gcconnex-languages-english-writtencomp gcconnex-languages-english-writtencomp-' . $english->guid,
@@ -48,6 +60,14 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                     'value' => $english[0]
                 );
                 echo '<td>' . elgg_view("input/pulldown", $params) . '</td>';
+                // English expiry
+                $params = array(
+                    'name' => 'english_expiry_writtencomp',
+                    'class' => 'gcconnex-languages-english-expiry gcconnex-languages-english-expiry-' . $english->guid,
+                    'value' => $english[3]
+                );
+                echo '<td>' . elgg_view("input/datepicker_popup", $params) . '</td>';
+                // French level
                 $params = array(
                     'name' => 'french_writtencomp',
                     'class' => 'gcconnex-languages-french-writtencomp gcconnex-languages-french-writtencomp-' . $french->guid,
@@ -55,10 +75,18 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                     'value' => $french[0]
                 );
                 echo '<td>' . elgg_view("input/pulldown", $params) . '</td>';
+                // French expiry
+                $params = array(
+                    'name' => 'french_expiry_writtencomp',
+                    'class' => 'gcconnex-languages-french-expiry gcconnex-languages-french-expiry-' . $english->guid,
+                    'value' => $french[3]
+                );
+                echo '<td>' . elgg_view("input/datepicker_popup", $params) . '</td>';
             echo '</tr>';
 
             echo '<tr>';
                 echo '<td class="left-col">' . elgg_echo('gcconnex_profile:languages:writtenexp') . '</td>';
+                // English level
                 $params = array(
                     'name' => 'english_writtenexp',
                     'class' => 'gcconnex-languages-english-writtenexp gcconnex-languages-english-writtenexp-' . $english->guid,
@@ -66,6 +94,14 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                     'value' => $english[1]
                 );
                 echo '<td>' . elgg_view("input/pulldown", $params) . '</td>';
+                // English expiry
+                $params = array(
+                    'name' => 'english_expiry_writtenexp',
+                    'class' => 'gcconnex-languages-english-expiry gcconnex-languages-english-expiry-' . $english->guid,
+                    'value' => $english[4]
+                );
+                echo '<td>' . elgg_view("input/datepicker_popup", $params) . '</td>';
+                // French level
                 $params = array(
                     'name' => 'french_writtenexp',
                     'class' => 'gcconnex-languages-french-writtenexp gcconnex-languages-french-writtenexp-' . $french->guid,
@@ -73,10 +109,18 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                     'value' => $french[1]
                 );
                 echo '<td>' . elgg_view("input/pulldown", $params) . '</td>';
+                // French expiry
+                $params = array(
+                    'name' => 'french_expiry_writtenexp',
+                    'class' => 'gcconnex-languages-french-expiry gcconnex-languages-french-expiry-' . $english->guid,
+                    'value' => $french[4]
+                );
+                echo '<td>' . elgg_view("input/datepicker_popup", $params) . '</td>';
             echo '</tr>';
 
             echo '<tr>';
                 echo '<td class="left-col">' . elgg_echo('gcconnex_profile:languages:oral') . '</td>';
+                // English level
                 $params = array(
                     'name' => 'english_oral',
                     'class' => 'gcconnex-languages-english-oral gcconnex-languages-english-oral-' . $english->guid,
@@ -84,6 +128,14 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                     'value' => $english[2]
                 );
                 echo '<td>' . elgg_view("input/pulldown", $params) . '</td>';
+                // English expiry
+                $params = array(
+                    'name' => 'english_expiry_oral',
+                    'class' => 'gcconnex-languages-english-expiry gcconnex-languages-english-expiry-' . $english->guid,
+                    'value' => $english[5]
+                );
+                echo '<td>' . elgg_view("input/datepicker_popup", $params) . '</td>';
+                // French level
                 $params = array(
                     'name' => 'french_oral',
                     'class' => 'gcconnex-languages-french-oral gcconnex-languages-french-oral-' . $french->guid,
@@ -91,9 +143,17 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                     'value' => $french[2]
                 );
                 echo '<td>' . elgg_view("input/pulldown", $params) . '</td>';
+                // French expiry
+                $params = array(
+                    'name' => 'french_expiry_oral',
+                    'class' => 'gcconnex-languages-french-expiry gcconnex-languages-french-expiry-' . $english->guid,
+                    'value' => $french[5]
+                );
+                echo '<td>' . elgg_view("input/datepicker_popup", $params) . '</td>';
             echo '</tr>';
 
-            echo '<tr>';
+            // removed in lanugage section redesign
+            /*echo '<tr>';
                 echo '<td class="left-col">' . elgg_echo('gcconnex_profile:languages:expiry') . '</td>';
                 $params = array(
                     'name' => 'english_expiry',
@@ -107,7 +167,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                     'value' => $french[3]
                 );
                 echo '<td>' . elgg_view("input/datepicker_popup", $params) . '</td>';
-            echo '</tr>';
+            echo '</tr>';*/
 
         echo '</tbody>';
     echo '</table>'; // close table class="gcconnex-profile-language-official-languages table-bordered"
