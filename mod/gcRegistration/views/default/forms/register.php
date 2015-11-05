@@ -189,7 +189,7 @@ if (elgg_is_sticky_form('register')) {
 		var is_valid = false;
 		
 		$('input').each(function() {
-			if ( $(this).attr('id') !== undefined ) {
+			if ( $(this).attr('id') == "email_initial" || $(this).attr('id') == "email" || $(this).attr('id') == "username" || $(this).attr('id') == "password" || $(this).attr('id') == "password2" || $(this).attr('id') == "name") {
 				var val = $(this).attr('value');
 
 				if ( $(this).attr('value').length == 0) {
@@ -202,106 +202,6 @@ if (elgg_is_sticky_form('register')) {
 		});
 		return is_valid;
 	}
-
-
-	$("input").on("focus", function() {
-		$('#email_initial').on("keydown",function(e) {
-			return e.which !== 32;
-		});
-
-		$('#email').on("keydown",function(e) {
-			return e.which !== 32;
-		});
-	});
-
-
-	$('input').on("focus", function() {
-	    $('#email_initial').on("keyup", function() {
-	    	enable_submit(validForm());
-	    	var val = $(this).attr('value');
-	        if ( val === '' ) {
-	        	var c_err_msg = "<?php echo elgg_echo('gcRegister:empty_field') ?>";
-	            document.getElementById('email_initial_error').innerHTML = c_err_msg;
-	        }
-	        else if ( val !== '' ) {
-	            document.getElementById('email_initial_error').innerHTML = '';
-
-	            if (!validateEmail(val)) {
-	            	var c_err_msg = "<?php echo elgg_echo('gcRegister:invalid_email') ?>";
-	            	document.getElementById('email_initial_error').innerHTML = c_err_msg;
-	            }
-	        }
-	    });
-	
-		$('#toc2').click(function() {
-	    	if ($('#toc2:checked').val() == 1)
-	    	{
-	    		enable_submit(validForm());
-	    	}
-	    });
-
-	    $('#email').on("keyup", function() {
-	    	enable_submit(validForm());
-	    	var val = $(this).attr('value');
-		    if ( val === '' ) {
-		    	var c_err_msg = "<?php echo elgg_echo('gcRegister:empty_field') ?>";
-		        document.getElementById('email_secondary_error').innerHTML = c_err_msg;
-		    }
-		    else if ( val !== '' ) {
-		        document.getElementById('email_secondary_error').innerHTML = '';
-
-		        var val2 = $('#email_initial').attr('value');
-		        if (val2.toLowerCase() != val.toLowerCase())
-		        {
-		        	var c_err_msg = "<?php echo elgg_echo('gcRegister:mismatch') ?>";
-		        	document.getElementById('email_secondary_error').innerHTML = c_err_msg;
-		        }
-		    }
-		});
-
-	    $('#password').on("keyup", function() {
-	    	enable_submit(validForm());
-	    	var val = $(this).attr('value');
-		    if ( val === '' ) {
-		    	var c_err_msg = "<?php echo elgg_echo('gcRegister:empty_field') ?>";
-		        document.getElementById('password_initial_error').innerHTML = c_err_msg;
-		    }
-		    else if ( val !== '' ) {
-		        document.getElementById('password_initial_error').innerHTML = '';
-		    }
-		});	
-	    
-	    $('#password2').on("keyup", function() {
-	    	enable_submit(validForm());
-	    	var val = $(this).attr('value');
-		    if ( val === '' ) {
-		    	var c_err_msg = "<?php echo elgg_echo('gcRegister:empty_field') ?>";
-		        document.getElementById('password_secondary_error').innerHTML = c_err_msg;
-		    }
-		    else if ( val !== '' ) {
-		        document.getElementById('password_secondary_error').innerHTML = '';
-		        
-		        var val2 = $('#password').attr('value');
-		        if (val2 != val)
-		        {
-		        	var c_err_msg = "<?php echo elgg_echo('gcRegister:mismatch') ?>";
-		        	document.getElementById('password_secondary_error').innerHTML = c_err_msg;
-		        }
-		    }
-		});
-
-	    $('#department_name').on("keyup", function() {
-	    	enable_submit(validForm());
-	    	var val = $(this).attr('value');
-		    if ( val === '' ) {
-		    	var c_err_msg = "<?php echo elgg_echo('gcRegister:empty_field') ?>";
-		        document.getElementById('department_error').innerHTML = c_err_msg;
-		    }
-		    else if ( val !== '' ) {
-		        document.getElementById('department_error').innerHTML = '';
-		    }
-		});
-	});
 
 </script>
 
@@ -545,4 +445,105 @@ echo elgg_view('input/checkboxes', array(
 	echo '</td></tr></table></center>';
 	echo '<br/>';
 ?>
+<script>
+	//$("<input>").on("focus", function() {
+		$('#email_initial').on("keydown",function(e) {
+			return e.which !== 32;
+		});
+
+		$('#email').on("keydown",function(e) {
+			return e.which !== 32;
+		});
+	//});
+
+
+	//$('<input>').on("focus", function() {
+	    $('#email_initial').on("keyup", function() {
+	    	enable_submit(validForm());
+	    	var val = $(this).attr('value');
+	        if ( val === '' ) {
+	        	var c_err_msg = "<?php echo elgg_echo('gcRegister:empty_field') ?>";
+	            document.getElementById('email_initial_error').innerHTML = c_err_msg;
+	        }
+	        else if ( val !== '' ) {
+	            document.getElementById('email_initial_error').innerHTML = '';
+
+	            if (!validateEmail(val)) {
+	            	var c_err_msg = "<?php echo elgg_echo('gcRegister:invalid_email') ?>";
+	            	document.getElementById('email_initial_error').innerHTML = c_err_msg;
+	            }
+	        }
+	    });
+	
+		$('#toc2').click(function() {
+	    	if ($('#toc2:checked').val() == 1)
+	    	{
+	    		enable_submit(validForm());
+	    	}
+	    });
+
+	    $('#email').on("keyup", function() {
+	    	enable_submit(validForm());
+	    	var val = $(this).attr('value');
+		    if ( val === '' ) {
+		    	var c_err_msg = "<?php echo elgg_echo('gcRegister:empty_field') ?>";
+		        document.getElementById('email_secondary_error').innerHTML = c_err_msg;
+		    }
+		    else if ( val !== '' ) {
+		        document.getElementById('email_secondary_error').innerHTML = '';
+
+		        var val2 = $('#email_initial').attr('value');
+		        if (val2.toLowerCase() != val.toLowerCase())
+		        {
+		        	var c_err_msg = "<?php echo elgg_echo('gcRegister:mismatch') ?>";
+		        	document.getElementById('email_secondary_error').innerHTML = c_err_msg;
+		        }
+		    }
+		});
+
+	    $('#password').on("keyup", function() {
+	    	enable_submit(validForm());
+	    	var val = $(this).attr('value');
+		    if ( val === '' ) {
+		    	var c_err_msg = "<?php echo elgg_echo('gcRegister:empty_field') ?>";
+		        document.getElementById('password_initial_error').innerHTML = c_err_msg;
+		    }
+		    else if ( val !== '' ) {
+		        document.getElementById('password_initial_error').innerHTML = '';
+		    }
+		});	
+	    
+	    $('#password2').on("keyup", function() {
+	    	enable_submit(validForm());
+	    	var val = $(this).attr('value');
+		    if ( val === '' ) {
+		    	var c_err_msg = "<?php echo elgg_echo('gcRegister:empty_field') ?>";
+		        document.getElementById('password_secondary_error').innerHTML = c_err_msg;
+		    }
+		    else if ( val !== '' ) {
+		        document.getElementById('password_secondary_error').innerHTML = '';
+		        
+		        var val2 = $('#password').attr('value');
+		        if (val2 != val)
+		        {
+		        	var c_err_msg = "<?php echo elgg_echo('gcRegister:mismatch') ?>";
+		        	document.getElementById('password_secondary_error').innerHTML = c_err_msg;
+		        }
+		    }
+		});
+
+	    $('#department_name').on("keyup", function() {
+	    	enable_submit(validForm());
+	    	var val = $(this).attr('value');
+		    if ( val === '' ) {
+		    	var c_err_msg = "<?php echo elgg_echo('gcRegister:empty_field') ?>";
+		        document.getElementById('department_error').innerHTML = c_err_msg;
+		    }
+		    else if ( val !== '' ) {
+		        document.getElementById('department_error').innerHTML = '';
+		    }
+		});
+	//});
+
+</script>
 </div>
