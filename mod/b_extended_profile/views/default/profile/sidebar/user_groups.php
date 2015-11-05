@@ -21,10 +21,6 @@ $groups = elgg_get_entities_from_relationship(array(
 
 $content = elgg_view_entity_list($groups, $options);
 
-if($groups == ''){
-    $groups = 'Nope';
-}
-
 $groupCount = '(' . count($owner->getGroups()) . ')';
 
 $all_link = elgg_view('output/url', array(

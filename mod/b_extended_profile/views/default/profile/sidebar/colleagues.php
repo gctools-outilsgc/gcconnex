@@ -15,7 +15,7 @@ $friends = $owner->listFriends('', $num, array(
         'limit' => '14',
         ));
 
-$friendCount = '(' . count($friends) . ')';
+$friendCount = '(' . count($owner->getFriends()) . ')';
 
 $all_link = elgg_view('output/url', array(
 	'href' => 'friends/' . $owner->username,
