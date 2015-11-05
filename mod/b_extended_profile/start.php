@@ -120,23 +120,27 @@ function extended_profile_page_handler($page) {
  */
 function init_ajax_block($title, $section, $user) {
 
-    echo '<div class="gcconnex-profile-section-frame-wrapper">';
-    echo '<div class="gcconnex-profile-section-wrapper gcconnex-' . $section . '">'; // create the profile section wrapper div for css styling
-    echo '<div class="gcconnex-profile-title">' . $title . '</div>'; // create the profile section title
-
+    echo '<div class="panel panel-custom">';
+        echo '<div class="panel-heading profile-heading clearfix"><h3 class="profile-info-head pull-left clearfix">' . $title . '</h3>'; // create the profile section title
+    
     if ($user->canEdit()) {
         // create the edit/save/cancel toggles for this section
         echo '<span class="gcconnex-profile-edit-controls">';
-        echo '<span class="edit-control edit-' . $section . '"><img src="' . elgg_get_site_url() . 'mod/b_extended_profile/img/edit.png">' . elgg_echo('gcconnex_profile:edit') . '</span>';
+        echo '<a  class="btn btn-custom edit-' . $section . '"><i class="fa fa-pencil"></i> ' . elgg_echo('gcconnex_profile:edit') . '</a>';
 //        echo '<span class="save-control save-' . $section . ' hidden"><img src="' . elgg_get_site_url() . 'mod/b_extended_profile/img/save.png">' . elgg_echo('gcconnex_profile:save') . '</span>';
-        echo '<span class="cancel-control cancel-' . $section . ' hidden wb-invisible"><img src="' . elgg_get_site_url() . 'mod/b_extended_profile/img/cancel.png">' . elgg_echo('gcconnex_profile:cancel') . '</span>';
+        echo '<a  class="btn btn-custom cancel-control cancel-' . $section . ' hidden wb-invisible"><i class="fa fa-ban"></i> ' . elgg_echo('gcconnex_profile:cancel') . '</a>';
         echo '</span>';
     }
+    echo '</div>';
+    echo '<div id="edit-' . $section . '" class="gcconnex-profile-section-wrapper panel-body gcconnex-' . $section . '">'; // create the profile section wrapper div for css styling
+
+
+    
 }
 
 function finit_ajax_block($section) {
     echo '</div>';
-    echo '<span class="gcconnex-profile-edit-controls save-control save-' . $section . ' hidden wb-invisible"><img src="' . elgg_get_site_url() . 'mod/b_extended_profile/img/save.png">' . elgg_echo('gcconnex_profile:save') . '</span>';
+    echo '<div class="panel-footer clearfix save-' . $section . ' hidden wb-invisible"><a  class="btn btn-custom gcconnex-profile-edit-controls save-control save-' . $section . ' hidden wb-invisible"><i class="fa fa-floppy-o"></i> ' . elgg_echo('gcconnex_profile:save') . '</a></div>';
     echo '</div>';
 }
 

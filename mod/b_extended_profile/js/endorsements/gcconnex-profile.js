@@ -325,7 +325,7 @@ function editProfile(event) {
 
             // create a "delete this skill" link for each skill
             $('.gcconnex-endorsements-skill').each(function(){
-                $(this).after('<img class="delete-skill-img" src="' + elgg.get_site_url() + 'mod/b_extended_profile/img/delete.png"><span class="delete-skill" onclick="deleteEntry(this)" data-type="skill">' + 'Delete / Supprimer' + '</span>'); //goes in here i think..
+                $(this).after('<i class="fa fa-trash-o delete-skill-img"></i><span class="delete-skill" onclick="deleteEntry(this)" data-type="skill">' + 'Delete / Supprimer' + '</span>'); //goes in here i think..
             });
             $('.save-' + $section).show();
             $('.save-' + $section).removeClass('hidden');
@@ -985,7 +985,7 @@ function addNewSkill(newSkill) {
     $('.gcconnex-skills-skills-list-wrapper').append('<div class="gcconnex-skill-entry temporarily-added" data-skill="' + newSkill + '">' +
     '<span title="Number of endorsements" class="gcconnex-endorsements-count" data-skill="' + newSkill + '">0</span>' +
     '<span data-skill="' + newSkill + '" class="gcconnex-endorsements-skill">' + newSkill + '</span>' +
-    '<img class="delete-skill-img" src="' + elgg.get_site_url() + 'mod/b_extended_profile/img/delete.png">' +
+    '<i class="fa fa-trash-o delete-skill-img">' +
     '<span class="delete-skill" data-type="skill" onclick="deleteEntry(this)">' + 'Delete / Supprimer' + '</span></div>');
     $('.gcconnex-endorsements-input-skill').val('');                                 // clear the text box
     $('.gcconnex-endorsements-input-skill').typeahead('val', '');                                           // clear the typeahead box

@@ -89,7 +89,7 @@
 .gcconnex-endorsements-count {
     float: left;
     width: 20px;
-    background-color: #3C698E;
+    background-color: #055959;
     font-family: arial, sans-serif;
     color: white;
     padding: 3px 3px 3px 3px;
@@ -98,14 +98,15 @@
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     border-right: 1px solid lightgray;
-    box-shadow: 7px 3px 5px #888888;
-    text-shadow: 1px 1px #888888;
+    /*box-shadow: 7px 3px 5px #888888;
+    text-shadow: 1px 1px #888888;*/
 }
 
 .gcconnex-skill-entry {
     display: inline-block;
     width: 100%;
     height: 28px;
+    margin-bottom: 3px;
 }
 
 .gcconnex-skill-limit {
@@ -129,7 +130,7 @@
     float: left;
     min-width: 75px;
     max-width: 255px;
-    height: 18px;
+    height: 29px;
     overflow-x: hidden;
     -ms-overflow-x: hidden;
     overflow-y: hidden;
@@ -137,13 +138,16 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     font-family: arial, sans-serif;
-    background-color: darkgray;
-    color: white;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid lightgrey;
+    border-right: 1px solid lightgrey;
+    color: #335075;
     padding: 3px 6px 3px 3px;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
-    box-shadow: 5px 3px 5px #888888;
+    /*box-shadow: 5px 3px 5px #888888;*/
     margin-left: 0px;
+    margin-right: 5px;
 }
 
 .gcconnex-endorsement-add {
@@ -211,11 +215,9 @@ input.userfind {
 }
 
 .delete-skill-img {
-    height: 15px;
-    width: 15px;
     position: relative;
-    top: 3px;
-    padding-left: 10px;
+    top: 1px;
+
     padding-right: 5px;
 }
 
@@ -232,7 +234,15 @@ input.userfind {
     position: absolute;
 }*/
 
+.profile-info-head {
+    margin: 5px 0;
+    border-bottom: 1px solid #af3c43;
+}
 
+.profile-heading {
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
 
 /* about me */
 .about-me-longtext {
@@ -265,7 +275,7 @@ input.userfind {
 .work-experience-title,
 .education-school {
     padding-top: 5px;
-    font-size: 18px;
+    font-size: 20px;
     padding-bottom: 2px;
 }
 
@@ -298,13 +308,17 @@ input.userfind {
     width: 300px;
 }
 
+.work-experience-responsibilities {
+
+}
+
 .gcconnex-work-experience-responsibilities {
     width: 98%;
 }
 
 .work-experience-organization {
-    font-weight: bold;
-    padding-bottom: 10px;
+    
+
 }
 
 .gcconnex-profile-section-frame-wrapper {
@@ -362,8 +376,8 @@ input.userfind {
 .gcconnex-profile-edit-controls {
     float: right;
     position: relative;
-    margin-top: -20px;
-    margin-right: -11px;
+    /*margin-top: -20px;
+    margin-right: -11px;*/
 }
 
 .edit-control,
@@ -477,6 +491,10 @@ input.userfind {
 
 .social-media-icons {
     padding-right: 5px;
+}
+
+.socialMediaIcons {
+    margin-right: 8px;
 }
 
 .fa {
@@ -752,26 +770,37 @@ td.left-col {
 .basic-profile-social-media-wrapper,
 .basic-profile-micro-assignments {
     float: left;
+    margin-bottom: 10px;
 }
 
 .basic-profile-field-wrapper,
 .basic-profile-social-media-wrapper {
-    width: 375px;
+    margin-left: 15px;
+    width: auto;
+    
 }
 
 body #editProfile {
-    width: 800px;
-    background-color: #FFF;
+    width: 100%;
+    background-color: rgba(125,125,125,0.3);
  /*   margin-left: -400px;*/
+    padding-left: 0 10px 0;
+}
+
+.dialog-box {
+    background: #fff;
+    width: 100%;
+    max-width: 1000px;
 }
 
 .input-group-addon {
+    width: auto;
     padding: 6px 0px 6px 12px;
     font-size: 14px;
     font-weight: 400;
     line-height: 1;
     color: #555;
-    text-align: center;
+    text-align: left;
     background-color: #EEE;
     border: 1px solid #CCC;
     border-top-left-radius: 4px;
@@ -792,13 +821,15 @@ body #editProfile {
 }
 
 .elgg-input-text.form-control.gcconnex-basic-field.gcconnex-social-media {
-    height: 16px;
+    height: 28px;
+    width: auto;
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
+    margin-bottom: 10px;
 }
 
 .gcconnex-basic-field {
-    width: 150px;
+    width: 75px;
     height: 28px;
     margin-left: -1px;
     border: 1px solid lightgray;

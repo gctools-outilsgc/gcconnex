@@ -21,14 +21,13 @@ if ($user->canEdit()) {
     echo '<button type="button" class="btn btn-primary gcconnex-edit-profile" data-toggle="modal" data-target="#editProfile" data-colorbox-opts = \'{"inline":true, "href":"#editProfile", "innerWidth": 800, "maxHeight": "80%"}\'>' . elgg_echo('gcconnex_profile:edit_profile') . '</button>';
     echo '<!-- Modal -->
 <div class="modal" id="editProfile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="width:100%;">
-        <div class="modal-content">
-            <div class="modal-header">';
+    <div class="modal-dialog dialog-box">
+        <div class="panel panel-custom">
+            <div class="panel-heading">';
     echo '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
-    echo '<div class="modal-title"><h3>' . elgg_echo('gcconnex_profile:basic:header') . '</h3></div>';
+    echo '<h2>' . elgg_echo('gcconnex_profile:basic:header') . '</h2>';
     echo '</div>';
-    echo
-            '<div class="modal-body">';
+    echo '<div class="panel-body">';
     echo '<div class="basic-profile-standard-field-wrapper">'; // container for css styling, used to group profile content and display them seperately from other fields
 
     $fields = array('Name', 'Job', 'Department', 'Location', 'Phone', 'Mobile', 'Email', 'Website');
@@ -88,7 +87,7 @@ if ($user->canEdit()) {
 
         echo '<div class="input-group">'; // input wrapper for prepended link and input box, excludes the input label
 
-        echo '<span class="input-group-addon">' . $field_link . "</span>"; // prepended link
+        echo '<span class="input-group-addon clearfix">' . $field_link . "</span>"; // prepended link
 
         // setup the input for this field
         $placeholder = "test";
@@ -123,7 +122,7 @@ if ($user->canEdit()) {
     echo '
 
     </div>
-            <div class="modal-footer">
+            <div class="panel-footer text-right">
                 <button type="button" class="btn btn-default" data-dismiss="modal">' . elgg_echo('gcconnex_profile:cancel') . '</button>
                 <button type="button" class="btn btn-primary save-profile">' . elgg_echo('gcconnex_profile:basic:save') . '</button>
             </div>
@@ -241,30 +240,29 @@ echo '</div>'; // close div class="gcconnex-profile-contact-info"
 // pre-populate the social media links that we may or may not display depending on whether the user has entered anything for each one..
 $social = array('facebook', 'google', 'github', 'twitter', 'linkedin', 'pinterest', 'tumblr', 'instagram', 'flickr', 'youtube');
 
-echo '<div class="gcconnex-profile-social-media-links">';
+echo '<div class="gcconnex-profile-social-media-links mrgn-bttm-sm">';
 foreach ($social as $media) {
 
     if ($link = $user->get($media)) {
-        if ($media == 'facebook') { $link = "http://www.facebook.com/" . $link; }
-        if ($media == 'google') { $link = "http://plus.google.com/" . $link; }
-        if ($media == 'github') { $link = "https://github.com/" . $link; }
-        if ($media == 'twitter') { $link = "https://twitter.com/" . $link; }
-        if ($media == 'linkedin') { $link = "http://ca.linkedin.com/in/" . $link; }
-        if ($media == 'pinterest') { $link = "http://www.pinterest.com/" . $link; }
-        if ($media == 'tumblr') { $link = "https://www.tumblr.com/blog/" . $link; }
-        if ($media == 'instagram') { $link = "http://instagram.com/" . $link; }
-        if ($media == 'flickr') { $link = "http://flickr.com/" . $link; }
-        if ($media == 'youtube') { $link = "http://www.youtube.com/" . $link; }
+        if ($media == 'facebook') { $link = "http://www.facebook.com/" . $link; $class = "fa-facebook";}
+        if ($media == 'google') { $link = "http://plus.google.com/" . $link; $class = "fa-google-plus";}
+        if ($media == 'github') { $link = "https://github.com/" . $link; $class = "fa-github";}
+        if ($media == 'twitter') { $link = "https://twitter.com/" . $link; $class = "fa-twitter";}
+        if ($media == 'linkedin') { $link = "http://ca.linkedin.com/in/" . $link; $class = "fa-linkedin";}
+        if ($media == 'pinterest') { $link = "http://www.pinterest.com/" . $link; $class = "fa-pinterest";}
+        if ($media == 'tumblr') { $link = "https://www.tumblr.com/blog/" . $link; $class = "fa-tumblr";}
+        if ($media == 'instagram') { $link = "http://instagram.com/" . $link; $class = "fa-instagram";}
+        if ($media == 'flickr') { $link = "http://flickr.com/" . $link; $class = "fa-flickr"; }
+        if ($media == 'youtube') { $link = "http://www.youtube.com/" . $link; $class = "fa-youtube";}
 
         if ($media == 'google') { $media = 'google-plus'; } // the google font-awesome class is called "google-plus", so convert "google" to that..
-        echo '<a href="' . $link . '" target="_blank"><img class="profile-icons social-media-icons" src="' . elgg_get_site_url() . 'mod/b_extended_profile/img/social-media/' . $media . '.png"></a>';
+        
+        echo '<a href="' . $link . '" target="_blank"><i class="socialMediaIcons fa ' . $class . ' fa-2x"></i></a>';
+        
     }
 }
 echo '</div>'; // close div class="gcconnex-profile-social-media-links"
 echo '</div>';
-
-
-
 
 
 
