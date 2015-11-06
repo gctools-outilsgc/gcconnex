@@ -84,7 +84,7 @@ function notifications_plugin_pagesetup() {
 			$user = elgg_get_logged_in_user_entity();
 		}
 
-		$params = array(
+	/*	$params = array(
 			'name' => '2_a_user_notify',
 			'text' => elgg_echo('notifications:subscriptions:changesettings'),
 			'href' => "notifications/personal/{$user->username}",
@@ -100,7 +100,7 @@ function notifications_plugin_pagesetup() {
 				'section' => "notifications",
 			);
 			elgg_register_menu_item('page', $params);
-		}
+		}*/
 	}
 }
 

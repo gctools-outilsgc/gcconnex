@@ -1,0 +1,134 @@
+Version History
+===============
+
+4.0:
+
+- added: canComment hook for consistency
+- added: composer support
+- changed: comments count now in entity menu and no longer in subtitle
+- fixed: correct tagcloud depending on page owner
+- fixed: deprecated confirm link
+- fixed: blog icons crash in Elgg 1.10 #21
+- fixed: incorrect loading of draft JS
+- fixed: incorrect loading of draft JS
+- fixed: class callback functions should be static
+- fixed: wrong handling of the blog route hook #26
+- removed: unused function
+
+3.2 (2015-02-17):
+
+- fixed: use of a private function
+- removed: left over code from owner transfer
+
+3.1 (2014-11-17):
+
+- added: link to the comments section in the entity menu
+- changed: admin option to feature a blog now toggles ajax based
+- changed: blog thumbnails can be cached better
+
+3.0 (2014-09-25):
+
+- prepared for Elgg 1.9
+- added: support for widget_manager group tool based widgets
+
+2.5 (2013-10-25):
+
+- added: related blogs on full view (sidebar or blog footer)
+- added: owner information below blog
+- added: blog container navigation (previous/next blog) on full view
+- added: settings to control new full view views
+- added: "in group" text added to subtitle of a blog
+- added: featured blogs page
+- added: new image size support
+- added: support for the blog image in the river
+- changed: CSS cleanup
+- changed: moved blog image to own view
+- removed: owner transfer code (replaced by ColdTrick/entity_tools plugin)
+
+2.4 (2013-04-05):
+
+- added: publication and expiration date on blogs (cron based)
+- changed: cleaned up blog/save action
+- changed: requirements for plugin to Elgg 1.8.9
+- fixed: security issue in blog tools save form
+
+2.3 (2012-07-31):
+
+- added: widget title links for blog widget
+- added: index_blog widget simple mode
+- added: alt tag on blog image (at the request of ghumanz http://community.elgg.org/profile/harinderghumanz)
+- fixed: incorrect context in index_blog widget
+- fixed: blog widget more link in widget
+- fixed: deprecated notices in combination with widget_manager
+- fixed: crash (WSOD) while removing blog icon (#7)
+- fixed: PHP warnings and notices
+- fixed: wrong link in blog widget when used in groups
+- fixed: depricated notice in blog save action
+- fixed: index_blog widget slider mode
+- fixed: index_blog widget preview mode
+- fixed: index_blog widget showing unpublished blogs
+- fixed: blog widget showing unpublished blogs
+
+2.2 (2012-03-02):
+
+- added: dutch translation
+- fixed: depricated notice with widget_manager
+- fixed: depricated notice on blog save form (thanks to ZigZag http://community.elgg.org/pg/profile/zigzag)
+- fixed: categories no displaying the same as in core
+- fixed: image align issue in full view
+- changed: language file cleanup, use more core language keys
+- changed: icon upload / remove handling
+- changed: legacy Elgg 1.7 page_handlers overrule to use Elgg 1.8 route hook
+
+2.1.2 (2012-01-23):
+
+- fixed: blog listing not showing description on older blogs (#6) (again)
+
+2.1.1 (2012-01-18):
+
+- fixed: blog title showing twice (#5)
+- fixed: blog listing not showing description on older blogs (#6)
+- fixed: breadcrumb issue on bloag add/edit
+- changed: updated required Elgg version to 1.8.3
+
+2.1 (2011-12-05):
+
+- added: advanced gatekeeper, to more easily allow user to access blogs
+
+2.0.1 (2011-11-28):
+
+- fixed: page_handler issue with Elgg 1.8.1
+
+2.0 (2011-11-18):
+
+- fixed: css depricated notice
+- fixed: IE7 blog image outlining
+- changed: making the plugin Elgg 1.8 compatible
+
+1.2.1 (2011-10-13):
+
+- fixed: blog slider widget
+- fixed: delete thumbnail on delete blog (#2)
+- changed: moved some functions
+
+1.2 (2011-09-12):
+
+- added: widget slider view (#4)
+	
+1.1.1 (2011-08-18):
+
+- fixed: broken preview mode
+- fixed: preview/draft not cleaning up correctly in edit mode
+
+1.1 (2011-07-25):
+
+- added: plugin setting to control strapline in listing
+- added: index widget for blog
+
+1.0.1 (2011-05-25) :
+
+- fixed: full blog layout without tags
+
+1.0 (2011-05-24):
+
+- initial version
