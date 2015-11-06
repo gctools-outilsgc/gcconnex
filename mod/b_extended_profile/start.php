@@ -126,9 +126,9 @@ function init_ajax_block($title, $section, $user) {
     if ($user->canEdit()) {
         // create the edit/save/cancel toggles for this section
         echo '<span class="gcconnex-profile-edit-controls">';
-        echo '<a  class="btn btn-custom edit-' . $section . '"><i class="fa fa-pencil"></i> ' . elgg_echo('gcconnex_profile:edit') . '</a>';
+        echo '<button class="btn btn-custom edit-' . $section . '"><i class="fa fa-pencil"></i> ' . elgg_echo('gcconnex_profile:edit') . '</button>';
 //        echo '<span class="save-control save-' . $section . ' hidden"><img src="' . elgg_get_site_url() . 'mod/b_extended_profile/img/save.png">' . elgg_echo('gcconnex_profile:save') . '</span>';
-        echo '<a  class="btn btn-custom cancel-control cancel-' . $section . ' hidden wb-invisible"><i class="fa fa-ban"></i> ' . elgg_echo('gcconnex_profile:cancel') . '</a>';
+        echo '<button  class="btn btn-custom cancel-control cancel-' . $section . ' hidden wb-invisible"><i class="fa fa-ban"></i> ' . elgg_echo('gcconnex_profile:cancel') . '</button>';
         echo '</span>';
     }
     echo '</div>';
@@ -140,7 +140,7 @@ function init_ajax_block($title, $section, $user) {
 
 function finit_ajax_block($section) {
     echo '</div>';
-    echo '<div class="panel-footer clearfix save-' . $section . ' hidden wb-invisible"><a  class="btn btn-custom gcconnex-profile-edit-controls save-control save-' . $section . ' hidden wb-invisible"><i class="fa fa-floppy-o"></i> ' . elgg_echo('gcconnex_profile:save') . '</a></div>';
+    echo '<div class="panel-footer clearfix save-' . $section . ' hidden wb-invisible"><button class="btn btn-custom gcconnex-profile-edit-controls save-control save-' . $section . ' hidden wb-invisible"><i class="fa fa-floppy-o"></i> ' . elgg_echo('gcconnex_profile:save') . '</button></div>';
     echo '</div>';
 }
 

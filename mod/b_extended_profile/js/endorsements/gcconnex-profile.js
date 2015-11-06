@@ -188,6 +188,32 @@ $(document).ready(function() {
     $('.save-profile').on('click', { section: "profile" }, saveProfile);
 
     $('.gcconnex-education-add-another').on("click", {section: "education"}, addMore);
+    
+    
+    //adding focus to click events to allow tabbing easy tabbing
+    $('.edit-education').on("click", function(){$('.cancel-education').focus()});
+    $('.save-education').on("click", function(){$('.edit-education').focus()});
+    $('.cancel-education').on("click", function(){$('.edit-education').focus()});
+    
+    $('.edit-about-me').on("click", function(){$('.cancel-about-me').focus()});
+    $('.save-about-me').on("click", function(){$('.edit-about-me').focus()});
+    $('.cancel-about-me').on("click", function(){$('.edit-about-me').focus()});
+    
+    $('.edit-work-experience').on("click", function(){$('.cancel-work-experience').focus()});
+    $('.save-work-experience').on("click", function(){$('.edit-work-experience').focus()});
+    $('.cancel-work-experience').on("click", function(){$('.edit-work-experience').focus()});
+    
+    $('.edit-skills').on("click", function(){$('.cancel-skills').focus()});
+    $('.save-skills').on("click", function(){$('.edit-skills').focus()});
+    $('.cancel-skills').on("click", function(){$('.edit-skills').focus()});
+    
+    $('.edit-languages').on("click", function(){$('.cancel-languages').focus()});
+    $('.save-languages').on("click", function(){$('.edit-languages').focus()});
+    $('.cancel-languages').on("click", function(){$('.edit-languages').focus()});
+    
+    $('.edit-portfolio').on("click", function(){$('.cancel-portfolio').focus()});
+    $('.save-portfolio').on("click", function(){$('.edit-portfolio').focus()});
+    $('.cancel-portfolio').on("click", function(){$('.edit-portfolio').focus()});
 
 
     // when a user clicks outside of the input text box (the one for entering new skills in the endorsements area), make it disappear elegantly

@@ -142,7 +142,7 @@
     border-bottom: 1px solid lightgrey;
     border-right: 1px solid lightgrey;
     color: #335075;
-    padding: 3px 6px 3px 3px;
+    padding: 3px 6px 3px 5px;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     /*box-shadow: 5px 3px 5px #888888;*/
@@ -397,13 +397,13 @@ input.userfind {
 
 .edit-control,
 .cancel-control {
-    border-top-right-radius: 5px;
+    /*border-top-right-radius: 5px;*/
     border-bottom: 1px solid darkgray;
 }
 
 .save-control {
     border-top: 1px solid darkgray;
-    border-bottom-right-radius: 5px;
+    /*border-bottom-right-radius: 5px;*/
 }
 
 
