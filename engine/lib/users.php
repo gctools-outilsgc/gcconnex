@@ -699,7 +699,7 @@ function users_pagesetup() {
 	$owner = elgg_get_page_owner_entity();
 	$viewer = elgg_get_logged_in_user_entity();
 
-	if ($owner) {
+/*	if ($owner) {
 		elgg_register_menu_item('page', array(
 			'name' => 'edit_avatar',
 			'href' => "avatar/edit/{$owner->username}",
@@ -716,7 +716,7 @@ function users_pagesetup() {
 			'contexts' => array('settings'),
 		));
 	}
-
+*/
 	// topbar
 	if ($viewer) {
 		elgg_register_menu_item('topbar', array(

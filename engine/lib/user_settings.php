@@ -334,7 +334,24 @@ function _elgg_user_settings_menu_setup() {
 		'section' => 'configure',
 	);
 	elgg_register_menu_item('page', $params);
-	
+	$params = array(
+			'name' => '2_a_user_notify',
+			'text' => elgg_echo('notifications:subscriptions:changesettings'),
+			'href' => "notifications/personal/{$user->username}",
+			'section' => "configure",
+            );
+    
+		elgg_register_menu_item('page', $params);
+		
+		if (elgg_is_active_plugin('groups')) {
+			$params = array(
+            'name' => '2_group_notify',
+			'text' => elgg_echo('notifications:subscriptions:changesettings:groups'),
+			'href' => "notifications/group/{$user->username}",
+			'section' => "configure",
+			);
+			elgg_register_menu_item('page', $params);
+		}
 	// register plugin user settings menu items
 	$active_plugins = elgg_get_plugins();
 	
