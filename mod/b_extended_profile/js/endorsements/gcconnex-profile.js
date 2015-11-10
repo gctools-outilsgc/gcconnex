@@ -314,7 +314,7 @@ function editProfile(event) {
                 var christineFix = elgg.echo("gcconnex_profile:gc_skill:add", null, 'en');
                 $('.gcconnex-skills').append('<div class="gcconnex-endorsements-input-wrapper">' +
                 '<input type="text" class="gcconnex-endorsements-input-skill" onkeyup="checkForEnter(event)"/>' +
-                '<span class="gcconnex-endorsements-add-skill">' + ' + add skill / ajouter des compétences ' + '</span>' +
+                '<button class="gcconnex-endorsements-add-skill">' + ' + add skill / ajouter des compétences ' + '</button>' +
                 '</div>');
             }
 
@@ -351,7 +351,7 @@ function editProfile(event) {
 
             // create a "delete this skill" link for each skill
             $('.gcconnex-endorsements-skill').each(function(){
-                $(this).after('<i class="fa fa-trash-o delete-skill-img"></i><span class="delete-skill" onclick="deleteEntry(this)" data-type="skill">' + 'Delete / Supprimer' + '</span>'); //goes in here i think..
+                $(this).after('<button class="delete-skill" onclick="deleteEntry(this)" data-type="skill">' + '<i class="fa fa-trash-o delete-skill-img"></i>Delete / Supprimer' + '</button>'); //goes in here i think..
             });
             $('.save-' + $section).show();
             $('.save-' + $section).removeClass('hidden');
@@ -928,7 +928,11 @@ function checkForEnter(event) {
         var newSkill = $('.gcconnex-endorsements-input-skill').typeahead('val');
         // @todo: do data validation to ensure css class-friendly naming (ie: no symbols)
         // @todo: add a max length to newSkill
-        addNewSkill(newSkill);
+        
+        //dont allow user to sumit nothing as skill
+        if(newSkill.trim().length > 0){
+            addNewSkill(newSkill);
+        } 
     }
 }
 
@@ -1011,8 +1015,7 @@ function addNewSkill(newSkill) {
     $('.gcconnex-skills-skills-list-wrapper').append('<div class="gcconnex-skill-entry temporarily-added" data-skill="' + newSkill + '">' +
     '<span title="Number of endorsements" class="gcconnex-endorsements-count" data-skill="' + newSkill + '">0</span>' +
     '<span data-skill="' + newSkill + '" class="gcconnex-endorsements-skill">' + newSkill + '</span>' +
-    '<i class="fa fa-trash-o delete-skill-img">' +
-    '<span class="delete-skill" data-type="skill" onclick="deleteEntry(this)">' + 'Delete / Supprimer' + '</span></div>');
+    '<button class="delete-skill" data-type="skill" onclick="deleteEntry(this)">' + '<i class="fa fa-trash-o delete-skill-img"></i>Delete / Supprimer' + '</button></div>');
     $('.gcconnex-endorsements-input-skill').val('');                                 // clear the text box
     $('.gcconnex-endorsements-input-skill').typeahead('val', '');                                           // clear the typeahead box
     $('.gcconnex-endorsements-input-skill').hide();                                  // hide the text box

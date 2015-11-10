@@ -126,9 +126,9 @@ function init_ajax_block($title, $section, $user) {
     if ($user->canEdit()) {
         // create the edit/save/cancel toggles for this section
         echo '<span class="gcconnex-profile-edit-controls">';
-        echo '<button class="btn btn-custom edit-' . $section . '"><i class="fa fa-pencil"></i> ' . elgg_echo('gcconnex_profile:edit') . '</button>';
+        echo '<button title="Edit ' . $section . '" class="btn btn-custom edit-' . $section . '"><i class="fa fa-pencil"></i> ' . elgg_echo('gcconnex_profile:edit') . '</button>';
 //        echo '<span class="save-control save-' . $section . ' hidden"><img src="' . elgg_get_site_url() . 'mod/b_extended_profile/img/save.png">' . elgg_echo('gcconnex_profile:save') . '</span>';
-        echo '<button  class="btn btn-custom cancel-control cancel-' . $section . ' hidden wb-invisible"><i class="fa fa-ban"></i> ' . elgg_echo('gcconnex_profile:cancel') . '</button>';
+        echo '<button title="Cancel ' . $section . '"  class="btn btn-custom cancel-control cancel-' . $section . ' hidden wb-invisible"><i class="fa fa-ban"></i> ' . elgg_echo('gcconnex_profile:cancel') . '</button>';
         echo '</span>';
     }
     echo '</div>';
@@ -140,7 +140,7 @@ function init_ajax_block($title, $section, $user) {
 
 function finit_ajax_block($section) {
     echo '</div>';
-    echo '<div class="panel-footer clearfix save-' . $section . ' hidden wb-invisible"><button class="btn btn-custom gcconnex-profile-edit-controls save-control save-' . $section . ' hidden wb-invisible"><i class="fa fa-floppy-o"></i> ' . elgg_echo('gcconnex_profile:save') . '</button></div>';
+    echo '<div class="panel-footer clearfix save-' . $section . ' hidden wb-invisible"><button title="Save ' . $section . '" class="btn btn-custom gcconnex-profile-edit-controls save-control save-' . $section . ' hidden wb-invisible"><i class="fa fa-floppy-o"></i> ' . elgg_echo('gcconnex_profile:save') . '</button></div>';
     echo '</div>';
 }
 
@@ -305,7 +305,7 @@ function list_avatars($options) {
         $options['limit'] = 999;
     }
     else {
-        $list .= '<a class="btn gcconnex-avatars-expand" data-toggle="modal" href="#' . $options['id'] . '" >...</a>';
+
         $link = elgg_view('output/url', array(
             'href' => 'ajax/view/b_extended_profile/edit_basic',
             'class' => 'elgg-lightbox gcconnex-basic-profile-edit elgg-button',
@@ -341,6 +341,7 @@ function list_avatars($options) {
                         'href' => false
                     ));
                     $list .= '</div>'; // close div class="gcconnex-avatar-in-list"
+                            $list .= '<a class="btn gcconnex-avatars-expand" data-toggle="modal" href="#' . $options['id'] . '" >...</a>';
                 }
                 else {
                     $list .= '<div class="gcconnex-avatar-in-list" data-guid="' . $guids[$i] . '">';
@@ -348,6 +349,7 @@ function list_avatars($options) {
                         'use_hover' => $options['use_hover'],
                     ));
                     $list .= '</div>'; // close div class="gcconnex-avatar-in-list"
+                            $list .= '<a class="btn gcconnex-avatars-expand" data-toggle="modal" href="#' . $options['id'] . '" >...</a>';
                 }
             }
             else {

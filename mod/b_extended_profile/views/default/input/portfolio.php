@@ -59,6 +59,6 @@ echo '<div class="gcconnex-portfolio-entry well" data-guid="' . $guid . '">'; //
             'value' => $portfolio->description));
 
     // create a delete button for each education entry
-    echo '<br><div class="elgg-button elgg-button-action btn" onclick="deleteEntry(this)" data-type="portfolio">' . elgg_echo('gcconnex_profile:portfolio:delete') . '</div>';
+    echo '<br><button class="elgg-button elgg-button-action btn" onclick="deleteEntry(this)" data-type="portfolio">' . elgg_echo('gcconnex_profile:portfolio:delete') . '</button>';
 
 echo '</div>'; // close div class="gcconnex-education-entry"

@@ -164,9 +164,10 @@
 }
 .gcconnex-endorsements-add-skill {
     color: #3C698E;
-    text-shadow: 1px 1px #888888;
+    /*text-shadow: 1px 1px #888888;*/
     font-family: arial;
     font-size: 12px;
+    font-weight: bold;
     clear: left;
     padding: 3px 3px 3px 5px;
     margin: 0px;
@@ -611,7 +612,7 @@ input.userfind {
 }
 
 .gcconnex-avatar-in-list {
-    float: right;
+    float: left;
     padding-left: 2px;
     padding-right: 2px;
 }

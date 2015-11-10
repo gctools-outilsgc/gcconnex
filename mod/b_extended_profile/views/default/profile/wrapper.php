@@ -41,21 +41,26 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
         ?>
     </div>
     
-   <?php //echo elgg_get_context(); ?>
+   <?php //echo elgg_get_context(); 
+    
+    
+
+?>
     
     <div class="b_extended_profile">
         <?php
 
-        //echo elgg_view('groups/profile/tab_menu');
-
         echo '<div role="tabpanel">';
+/* Old Tab Menu
+        
         echo '<ul class="nav nav-tabs" role="tablist">';
         echo '<li role="presentation" class="active"><a href="#profile-display" aria-controls="profile-display" role="tab" data-toggle="tab">' . elgg_echo('gcconnex_profile:profile') . '</a></li>';
         echo '<li role="presentation" ><a href="#splashboard" aria-controls="splashboard" role="tab" data-toggle="tab">' . elgg_echo('gcconnex_profile:widgets') . '</a></li>';
         echo '<li role="presentation"><a href="#portfolio" aria-controls="portfolio" role="tab" data-toggle="tab">' . elgg_echo('gcconnex_profile:portfolio') . '</a></li>';
         echo '</ul>';
+        */
 
-
+echo elgg_view('groups/profile/tab_menu');
 
         echo '<div class="tab-content">';
             echo '<div role="tabpanel" class="tab-pane active" id="profile-display">';
@@ -162,6 +167,7 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
                 finit_ajax_block('portfolio');
             echo '</div>'; // close div id="#portfolio"
 
+            echo elgg_view('profile/tab-content');
 
             echo '</div>'; // close div class="tab-content'
         echo '</div>'; // close div role="tabpanel"

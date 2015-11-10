@@ -46,7 +46,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
     echo '</div>';
 
     // create an "add more" button at the bottom of the education input fields so that the user can continue to add more education entries as needed
-    echo '<div class="gcconnex-portfolio-add-another elgg-button elgg-button-action btn" data-type="portfolio" onclick="addMore(this)">' . elgg_echo('gcconnex_profile:portfolio:add') . '</div>';
+    echo '<button class="gcconnex-portfolio-add-another elgg-button elgg-button-action btn mrgn-tp-sm" data-type="portfolio" onclick="addMore(this)">' . elgg_echo('gcconnex_profile:portfolio:add') . '</button>';
 }
 
 else {  // In case this view will be called via elgg_view()

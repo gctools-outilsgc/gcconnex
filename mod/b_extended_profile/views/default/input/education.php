@@ -130,6 +130,6 @@ echo elgg_view("input/text", array(
             'value' => $education->field));
 
     // create a delete button for each education entry
-    echo '<br><div class="elgg-button elgg-button-action btn" onclick="deleteEntry(this)" data-type="education">' . elgg_echo('gcconnex_profile:education:delete') . '</div>';
+    echo '<br><button class="elgg-button elgg-button-action btn" onclick="deleteEntry(this)" data-type="education">' . elgg_echo('gcconnex_profile:education:delete') . '</button>';
 
 echo '</div>'; // close div class="gcconnex-education-entry"
