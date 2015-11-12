@@ -118,7 +118,9 @@ $french = array(
     'gcconnex_profile:languages:writtenexp' => 'Expression écrite',
     'gcconnex_profile:languages:oral' => 'Compétence orale',
     'gcconnex_profile:languages:english' => 'Anglais',
+    'gcconnex_profile:languages:ENG' => 'Anglais',
     'gcconnex_profile:languages:french' => 'Français',
+    'gcconnex_profile:languages:FRA' => 'Français',
     'gcconnex_profile:languages:expiry' => 'Expiration',
 
     // PORTFOLIO

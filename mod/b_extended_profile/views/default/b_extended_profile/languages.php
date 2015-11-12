@@ -37,7 +37,7 @@ else {
     }
 }
 
-echo "First official language: " . $user->officialLanguage . "<br />";
+echo "First official language: " . ( isset( $user->officialLanguage ) ? elgg_echo( "gcconnex_profile:languages:".$user->officialLanguage ) : '' ) . "<br />";
 
 echo '<table class="gcconnex-profile-language-official-languages table table-bordered">';
     echo '<thead>';
