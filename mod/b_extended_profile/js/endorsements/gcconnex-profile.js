@@ -1122,6 +1122,16 @@ function deleteEntry(identifier) {
         // mark the entry for deletion and hide it from view
         $(identifier).closest('.gcconnex-' + entryType + '-entry').hide();
     }
+    console.log(entryType);
+    
+    //for tabbing users
+    //add additional 's' to skill to grab right class
+    if(entryType == 'skill'){
+        $('.cancel-' + entryType + 's').focus();
+    } else {
+        $('.cancel-' + entryType).focus();
+    }
+        
 }
 
 /*

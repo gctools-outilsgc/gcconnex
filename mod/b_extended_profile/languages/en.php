@@ -66,7 +66,8 @@ $english = array(
     // EDUCATION
     'gcconnex_profile:education:school' => 'Institution Name: ',
     'gcconnex_profile:education:start_month' => 'Start Month: ',
-    'gcconnex_profile:education:year' => 'Year: ',
+    'gcconnex_profile:education:start_year' => 'Start Year: ',
+    'gcconnex_profile:education:end_year' => 'End Year: ',
     'gcconnex_profile:education:end_month' => 'End Month: ',
     'gcconnex_profile:education:ongoing' => 'Present',
     'gcconnex_profile:education:degree' => 'Degree: ',

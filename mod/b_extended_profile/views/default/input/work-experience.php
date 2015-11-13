@@ -62,7 +62,7 @@ echo elgg_view("input/pulldown", array(
         'value' => $work_experience->startdate)
 );
 
-echo '<span class="wb-inv">' . elgg_echo('gcconnex_profile:education:start') . '</span><label for="start-year">' . elgg_echo('gcconnex_profile:experience:year') . '</label>';
+echo '<label for="start-year">' . elgg_echo('gcconnex_profile:education:start_year') . '</label>';
 echo elgg_view("input/text", array(
         'name' => 'start-year',
         'id' => 'start-year',
@@ -118,7 +118,7 @@ if ($work_experience->ongoing == 'true') {
 }
 
 
-echo '<span class="wb-inv">' . elgg_echo('gcconnex_profile:education:end') . '</span><label for="end-year">' . elgg_echo('gcconnex_profile:experience:year') . '</label>' . elgg_view("input/text", $params);
+echo '<label for="end-year">' . elgg_echo('gcconnex_profile:education:start_year') . '</label>' . elgg_view("input/text", $params);
 
 unset($params);
 

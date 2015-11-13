@@ -74,7 +74,7 @@ echo '<div class="gcconnex-education-entry" data-guid="' . $guid . '">'; // educ
             'id' => 'startdate',
             'value' => $education->startdate));
 
-    echo '<span class="wb-inv">' . elgg_echo('gcconnex_profile:education:start') . '</span><label for="start-year">' . elgg_echo('gcconnex_profile:education:year') . '</label>' . elgg_view("input/text", array(
+    echo '<label for="start-year">' . elgg_echo('gcconnex_profile:education:start_year') . '</label>' . elgg_view("input/text", array(
             'name' => 'start-year',
             'id' => 'start-year',
             'class' => 'gcconnex-education-start-year',
@@ -123,7 +123,7 @@ echo '<div class="gcconnex-education-entry" data-guid="' . $guid . '">'; // educ
         $params['disabled'] = 'true';
     }
 
-    echo '<span class="wb-inv">' . elgg_echo('gcconnex_profile:education:end') . '</span><label for="end-year">' . elgg_echo('gcconnex_profile:education:year') . '</label>' .  elgg_view("input/text", $params);
+    echo '<label for="end-year">' . elgg_echo('gcconnex_profile:education:end_year') . '</label>' .  elgg_view("input/text", $params);
 
     unset($params);
 

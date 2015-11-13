@@ -66,7 +66,8 @@ $french = array(
     // EDUCATION
     'gcconnex_profile:education:school' => 'Nom de l\'établissement : ',
     'gcconnex_profile:education:start_month' => 'Mois de début : ',
-    'gcconnex_profile:education:year' => 'Année : ',
+    'gcconnex_profile:education:start_year' => 'Année de début: ',
+    'gcconnex_profile:education:end_year' => 'Année de fin: ',
     'gcconnex_profile:education:end_month' => 'Mois de fin : ',
     'gcconnex_profile:education:ongoing' => 'J\'étudie encore dans cet établissement d\'enseignement',
     'gcconnex_profile:education:degree' => 'Diplôme obtenu : ',
