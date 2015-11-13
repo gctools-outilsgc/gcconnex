@@ -77,6 +77,8 @@ $english = array(
     'gcconnex_profile:education:access' => 'Who can see my education entries:',
     'gcconnex_profile:education:present' => 'Present',
     'gcconnex_profile:education:empty' => 'Begin entering your education details by clicking "Edit" in the top right corner of this box.',
+    'gcconnex_profile:education:start' => 'Start',
+    'gcconnex_profile:education:end' => 'End',
 
     // WORK EXPERIENCE
     'gcconnex_profile:experience:organization' => 'Name of Organization: ',

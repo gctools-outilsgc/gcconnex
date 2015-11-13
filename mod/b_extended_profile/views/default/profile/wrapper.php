@@ -60,7 +60,8 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
         echo '</ul>';
         */
 
-echo elgg_view('groups/profile/tab_menu');
+        //add additional tabs
+        echo elgg_view('groups/profile/tab_menu');
 
         echo '<div class="tab-content">';
             echo '<div role="tabpanel" class="tab-pane active" id="profile-display">';
@@ -167,6 +168,7 @@ echo elgg_view('groups/profile/tab_menu');
                 finit_ajax_block('portfolio');
             echo '</div>'; // close div id="#portfolio"
 
+            //add tab panels with preview content
             echo elgg_view('profile/tab-content');
 
             echo '</div>'; // close div class="tab-content'

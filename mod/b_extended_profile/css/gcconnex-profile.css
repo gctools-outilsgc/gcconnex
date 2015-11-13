@@ -163,8 +163,8 @@
     padding: 3px;
 }
 .gcconnex-endorsements-add-skill {
-    color: #3C698E;
-    /*text-shadow: 1px 1px #888888;*/
+    /*color: #3C698E;
+    text-shadow: 1px 1px #888888;*/
     font-family: arial;
     font-size: 12px;
     font-weight: bold;
@@ -183,9 +183,9 @@
 .gcconnex-languages-entry,
 .gcconnex-portfolio-entry {
     margin: 15px;
-    background-color: lightgray;
+    background-color: #f9f9f9;
     padding: 15px;
-    border-radius: 5px;
+    /*border-radius: 5px;*/
 }
 
 
@@ -460,7 +460,7 @@ input.userfind {
 .gcconnex-education-start-year,
 .gcconnex-education-end-year
 {
-    width: 100px;
+    width: 130px;
 }
 
 .elgg-input-text[name='startdate'],
@@ -674,8 +674,9 @@ td.left-col {
 #profile-owner-block {
     position: relative;
     padding: 0;
-    
-
+    width: auto;
+    max-width: 200px;
+    min-width: 100px;
 }
 /*
 .avatar-profile-page {
@@ -700,9 +701,9 @@ td.left-col {
 }
 
 .gcconnex-profile-field-title {
-    width: 150px;
+   /* width: 150px;*/
     display: inline-block;
-    text-align: right;
+    text-align: left;
     padding-right: 10px;
     font-weight: bold;
 }

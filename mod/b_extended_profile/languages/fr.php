@@ -77,6 +77,8 @@ $french = array(
     'gcconnex_profile:education:access' => 'Qui peut voir les renseignements sur mon éducation : ',
     'gcconnex_profile:education:present' => 'à présent',
     'gcconnex_profile:education:empty' => 'Ajoutez les renseignements sur vos études en cliquant sur "Modifier" dans le coin supérieur droit de cette zone de saisie.',
+    'gcconnex_profile:education:start' => 'Début',
+    'gcconnex_profile:education:end' => 'Fin',
 
     // WORK EXPERIENCE
     'gcconnex_profile:experience:organization' => 'Nom de l’organisation : ',

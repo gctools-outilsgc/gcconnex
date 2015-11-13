@@ -10,36 +10,40 @@ $work_experience = get_entity($vars['guid']); // get the guid of the work experi
 
 $guid = ($work_experience != NULL)? $vars['guid'] : "new"; // if the work experience guid isn't given, this must be a new entry
 
-echo '<div class="gcconnex-work-experience-entry ' . $guid . ' well" data-guid="' . $guid . '">'; // work experience entry wrapper for css styling
+echo '<div class="gcconnex-work-experience-entry ' . $guid . '" data-guid="' . $guid . '">'; // work experience entry wrapper for css styling
 
 // enter organization name
-echo '<span class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:experience:title') . '</span>';
+echo '<label for="title" class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:experience:title') . '</label>';
 
 echo elgg_view("input/text", array(
     'name' => 'title',
+    'id' => 'title',
     'class' => 'gcconnex-work-experience-title',
     'value' => $work_experience->title));
 
 
 // enter title
 echo '<br>';
-echo '<span class="gcconnex-profile-field-title">';
+echo '<label for="work-experience" class="gcconnex-profile-field-title">';
 
-echo elgg_echo('gcconnex_profile:experience:organization') . '</span>';
+echo elgg_echo('gcconnex_profile:experience:organization') . '</label>';
 
 echo '<span class="gcconnex-profile-field-input">';
 
 echo elgg_view("input/text", array(
     'name' => 'work-experience',
+    'id' => 'work-experience',
     'class' => 'gcconnex-work-experience-organization',
     'value' => $work_experience->organization));
 echo '</span>';
 
 // enter start date
-echo '<br><span class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:experience:start_month') .  '</span>';
+echo '<div class="col-xs-6"><h4>' . elgg_echo('gcconnex_profile:education:start') . '</h4>';
+echo '<label for="startdate" class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:experience:start_month') .  '</label>';
 
 echo elgg_view("input/pulldown", array(
         'name' => 'startdate',
+        'id' => 'startdate',
         'class' => 'gcconnex-work-experience-startdate',
         'options_values' => array(
             1 => elgg_echo('gcconnex_profile:month:january'),
@@ -58,9 +62,10 @@ echo elgg_view("input/pulldown", array(
         'value' => $work_experience->startdate)
 );
 
-echo elgg_echo('gcconnex_profile:experience:year');
+echo '<span class="wb-inv">' . elgg_echo('gcconnex_profile:education:start') . '</span><label for="start-year">' . elgg_echo('gcconnex_profile:experience:year') . '</label>';
 echo elgg_view("input/text", array(
         'name' => 'start-year',
+        'id' => 'start-year',
         'class' => 'gcconnex-work-experience-start-year',
         'maxlength' => 4,
         'onkeypress' => "return isNumberKey(event)",
@@ -70,6 +75,7 @@ echo elgg_view("input/text", array(
 
 $params = array(
     'name' => 'enddate',
+    'id' => 'enddate',
     'class' => 'gcconnex-work-experience-enddate gcconnex-work-experience-enddate-' . $work_experience->guid,
     'options_values' => array(
         1 => elgg_echo('gcconnex_profile:month:january'),
@@ -91,15 +97,18 @@ $params = array(
 if ($work_experience->ongoing == 'true') {
         $params['disabled'] = 'true';
 }
+echo '</div>';
 
-echo '<br><span class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:experience:end_month') . '</span>';
+//end date
+echo '<div class="col-xs-6"><h4>' . elgg_echo('gcconnex_profile:education:end') . '</h4>';
+echo '<label for="enddate" class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:experience:end_month') . '</label>';
 
 echo elgg_view("input/pulldown", $params);
 
 unset($params);
 
 
-$params = array('name' => 'end-year',
+$params = array('name' => 'end-year','id' => 'end-year',
         'class' => 'gcconnex-work-experience-end-year gcconnex-work-experience-end-year-' . $work_experience->guid,
         'maxlength' => 4,
         'onkeypress' => "return isNumberKey(event)",
@@ -108,7 +117,8 @@ if ($work_experience->ongoing == 'true') {
         $params['disabled'] = 'true';
 }
 
-echo 'Year: ' . elgg_view("input/text", $params);
+
+echo '<span class="wb-inv">' . elgg_echo('gcconnex_profile:education:end') . '</span><label for="end-year">' . elgg_echo('gcconnex_profile:experience:year') . '</label>' . elgg_view("input/text", $params);
 
 unset($params);
 
@@ -125,9 +135,12 @@ if ($work_experience->ongoing == 'true') {
 
 echo  '<label>' . elgg_view('input/checkbox', $params);
 echo elgg_echo('gcconnex_profile:experience:ongoing') . '</label>';
+echo '</div>';
+
+
 
 // enter responsibilities
-echo '<br>' . elgg_echo('gcconnex_profile:experience:responsibilities') . elgg_view("input/textarea", array(
+echo '<br><label for="textarea">' . elgg_echo('gcconnex_profile:experience:responsibilities') . '</label>' . elgg_view("input/textarea", array(
         'name' => 'responsibilities',
         'id' => 'textarea',
         'class' => 'gcconnex-work-experience-responsibilities',
@@ -166,7 +179,7 @@ echo '<span>' . elgg_echo('gcconnex_profile:experience:colleague_suggest') . '</
 echo '</div>';
 
 // create a delete button for each work experience entry
-echo '<br><button class="elgg-button elgg-button-action btn" onclick="deleteEntry(this)" data-type="work-experience">' . elgg_echo('gcconnex_profile:experience:delete') . '</button>';
+echo '<br><button class="workDeleteButton btn btn-danger" onclick="deleteEntry(this)" data-type="work-experience">' . elgg_echo('gcconnex_profile:experience:delete') . '</button>';
 
 echo '</div>'; // close div class="gcconnex-work-experience-entry"
 ?>

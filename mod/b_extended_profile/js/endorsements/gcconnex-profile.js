@@ -190,7 +190,7 @@ $(document).ready(function() {
     $('.gcconnex-education-add-another').on("click", {section: "education"}, addMore);
     
     
-    //adding focus to click events to allow tabbing easy tabbing
+    //add focus to click events to allow easy tabbing through edit content
     $('.edit-education').on("click", function(){$('.cancel-education').focus()});
     $('.save-education').on("click", function(){$('.edit-education').focus()});
     $('.cancel-education').on("click", function(){$('.edit-education').focus()});
@@ -314,7 +314,7 @@ function editProfile(event) {
                 var christineFix = elgg.echo("gcconnex_profile:gc_skill:add", null, 'en');
                 $('.gcconnex-skills').append('<div class="gcconnex-endorsements-input-wrapper">' +
                 '<input type="text" class="gcconnex-endorsements-input-skill" onkeyup="checkForEnter(event)"/>' +
-                '<button class="gcconnex-endorsements-add-skill">' + ' + add skill / ajouter des compétences ' + '</button>' +
+                '<button class="btn btn-primary gcconnex-endorsements-add-skill">' + ' + add skill / ajouter des compétences ' + '</button>' +
                 '</div>');
             }
 
