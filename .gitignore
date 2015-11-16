@@ -7,6 +7,10 @@
 /composer.phar
 /cache
 
+# ignore Single Signon mods
+/mod/saml_link/
+/mod/simplesaml/
+
 # don't ignore bundled plugins
 !/mod/aalborg_theme/
 !/mod/blog/
