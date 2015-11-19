@@ -12,11 +12,12 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
     $user = get_user($user_guid);
 
     // allow the user to edit the access settings for work experience entries
-    echo elgg_echo('gcconnex_profile:experience:access');
+    echo '<label for="workAccess">' . elgg_echo('gcconnex_profile:experience:access') . '</label>';
 
     $access_id = $user->work_access;
     $params = array(
         'name' => "accesslevel['work']",
+        'id' => "workAccess",
         'class' => "gcconnex-work-experience-access",
         'value' => $access_id
     );

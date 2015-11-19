@@ -39,14 +39,13 @@ else {
 
 echo "First official language: " . ( isset( $user->officialLanguage ) ? elgg_echo( "gcconnex_profile:languages:".$user->officialLanguage ) : '' ) . "<br />";
 
-echo '<table class="gcconnex-profile-language-official-languages table table-bordered">';
+echo '<table id="engTable" class="gcconnex-profile-language-official-languages table table-bordered">';
     echo '<thead>';
         echo '<tr>';
-            echo '<th class="first-col"></th>';
-            echo '<th>' . elgg_echo('gcconnex_profile:languages:english') . '</th>';
+            echo '<th class="first-col text-right">' . elgg_echo('gcconnex_profile:languages:english') . '</th>';
+            echo '<th>' . elgg_echo('gcconnex_profile:languages:level') . '</th>';
             echo '<th>' . elgg_echo('gcconnex_profile:languages:expiry') . '</th>';
-            echo '<th>' . elgg_echo('gcconnex_profile:languages:french') . '</th>';
-            echo '<th>' . elgg_echo('gcconnex_profile:languages:expiry') . '</th>';
+
         echo '</tr>';
     echo '</thead>';
     echo '<tbody>';
@@ -54,22 +53,55 @@ echo '<table class="gcconnex-profile-language-official-languages table table-bor
             echo '<td class="left-col">' . elgg_echo('gcconnex_profile:languages:writtencomp') . '</td>';
             echo '<td>' . $english[0] . '</td>';
             echo '<td>' . $english[3] . '</td>';
-            echo '<td>' . $french[0] . '</td>';
-            echo '<td>' . $french[3] . '</td>';
+
         echo '</tr>';
 
         echo '<tr>';
             echo '<td class="left-col">' . elgg_echo('gcconnex_profile:languages:writtenexp') . '</td>';
             echo '<td>' . $english[1] . '</td>';
             echo '<td>' . $english[4] . '</td>';
-            echo '<td>' . $french[1] . '</td>';
-            echo '<td>' . $french[4] . '</td>';
+
         echo '</tr>';
 
         echo '<tr>';
             echo '<td class="left-col">' . elgg_echo('gcconnex_profile:languages:oral') . '</td>';
             echo '<td>' . $english[2] . '</td>';
             echo '<td>' . $english[5] . '</td>';
+
+        echo '</tr>';
+
+        /*echo '<tr>';
+            echo '<td class="left-col">' . elgg_echo('gcconnex_profile:languages:expiry') . '</td>';
+            echo '<td>' . $english[3] . '</td>';
+            echo '<td>' . $french[3] . '</td>';
+        echo '</tr>';*/
+
+    echo '</tbody>';
+echo '</table>'; // close table class="gcconnex-profile-language-official-languages table-bordered"
+
+echo '<table id="fraTable" class="gcconnex-profile-language-official-languages table table-bordered">';
+    echo '<thead>';
+        echo '<tr>';
+            echo '<th class="first-col text-right">' . elgg_echo('gcconnex_profile:languages:french') . '</th>';
+            echo '<th>' . elgg_echo('gcconnex_profile:languages:level') . '</th>';
+            echo '<th>' . elgg_echo('gcconnex_profile:languages:expiry') . '</th>';
+        echo '</tr>';
+    echo '</thead>';
+    echo '<tbody>';
+        echo '<tr>';
+            echo '<td class="left-col">' . elgg_echo('gcconnex_profile:languages:writtencomp') . '</td>';
+            echo '<td>' . $french[0] . '</td>';
+            echo '<td>' . $french[3] . '</td>';
+        echo '</tr>';
+
+        echo '<tr>';
+            echo '<td class="left-col">' . elgg_echo('gcconnex_profile:languages:writtenexp') . '</td>';
+            echo '<td>' . $french[1] . '</td>';
+            echo '<td>' . $french[4] . '</td>';
+        echo '</tr>';
+
+        echo '<tr>';
+            echo '<td class="left-col">' . elgg_echo('gcconnex_profile:languages:oral') . '</td>';
             echo '<td>' . $french[2] . '</td>';
             echo '<td>' . $french[5] . '</td>';
         echo '</tr>';

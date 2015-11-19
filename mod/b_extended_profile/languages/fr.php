@@ -125,6 +125,7 @@ $french = array(
     'gcconnex_profile:languages:french' => 'Français',
     'gcconnex_profile:languages:FRA' => 'Français',
     'gcconnex_profile:languages:expiry' => 'Expiration',
+    'gcconnex_profile:languages:level' => 'Level',
 
     // PORTFOLIO
     'gcconnex_profile:portfolio' => 'Portfolio',
