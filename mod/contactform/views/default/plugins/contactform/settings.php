@@ -97,18 +97,21 @@ $add_btn = elgg_view('output/confirmlink', array(
 	'class' => 'elgg-button'));
 
 $add_ext_field = elgg_view('input/text', array(
-	'name' => 'params[db_add_ext]',
+	'name' => 'eng',
+    'id' => 'eng',
 	'value' => $vars['entity']->db_add_ext));
 
 $add_dept_field = elgg_view('input/text', array(
-	'name' => 'params[db_add_dept]',
+	'name' => 'fr',
+    'id' => 'fr',
 	'value' => $vars['entity']->db_add_dept));
+    
 
 echo "<table name='add_extensions' width='100%' cellpadding='0' cellspacing='0' class='db-table'>";
 echo '<tr> <th>'.elgg_echo('setting:field').'</th> </tr>';
 echo '<tr><td>';
-echo elgg_echo('setting:eng').':'.$add_ext_field.'<br/>';
-echo elgg_echo('setting:fr').':'.$add_dept_field.'<br/>';
+echo '<label for="eng">'.elgg_echo('setting:eng').'</label>:'.$add_ext_field.'<br/>';
+echo '<label for="fr">'.elgg_echo('setting:fr').'</label>:'.$add_dept_field.'<br/>';
 //echo $add_btn.'<br/>';
 echo '</td></tr>';
 echo '<br/>';
