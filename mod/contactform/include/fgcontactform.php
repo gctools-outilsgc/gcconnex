@@ -181,8 +181,10 @@ class FGContactForm
         $this->mailer->From = $this->GetFromAddress();
 
         $this->mailer->FromName = $this->name;
-
+        
         $this->mailer->AddReplyTo($this->email);
+
+        $this->mailer->AddCC($this->email);
 
         $message = $this->ComposeFormtoEmail();
 
