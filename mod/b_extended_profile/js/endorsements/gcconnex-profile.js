@@ -375,6 +375,17 @@ function editProfile(event) {
                     $('.save-' + $section).show();
                     $('.save-' + $section).removeClass('hidden');
                     $('.save-' + $section).removeClass('wb-invisible');
+                
+                    //hide creds for chosen language
+                    if($('#first_official_language').val() == "ENG"){
+                        $('#engCred').hide();
+                    } else if($('#first_official_language').val() == "FRA") {
+                        $('#fraCred').hide();
+                    } else {
+                        
+                    }
+                
+                //$official_langs.find('.gcconnex-languages-english-writtencomp').val(),
                 });
             break;
         case 'portfolio':
@@ -392,6 +403,20 @@ function editProfile(event) {
             });
         default:
             break;
+    }
+}
+
+function hideLanguage() {
+    //hide creds for chosen language
+    if($('#first_official_language').val() == "ENG"){
+        $('#fraCred').show();
+        $('#engCred').hide();
+    } else if($('#first_official_language').val() == "FRA") {
+        $('#engCred').show();
+        $('#fraCred').hide();
+    } else {
+        $('#engCred').show();          
+        $('#fraCred').show();          
     }
 }
 
@@ -807,7 +832,7 @@ function saveProfile(event) {
                         });
                 }
             });
-            $('.gcconnex-languages-edit-wrapper').remove();
+            $('.gcconnex-languages-edit-wrapper').remove();  
             break;
         case 'portfolio':
             // Save the portfolio

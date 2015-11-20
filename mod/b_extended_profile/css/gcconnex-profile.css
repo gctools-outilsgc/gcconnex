@@ -1,3 +1,7 @@
+#ui-datepicker-div {
+    background: white;
+}
+
 .b_extended_profile {
     margin-top: 20px;
     margin-bottom: 20px;
@@ -182,7 +186,7 @@
 .gcconnex-work-experience-entry,
 .gcconnex-languages-entry,
 .gcconnex-portfolio-entry {
-    margin: 15px;
+    margin-top: 15px;
     background-color: #f9f9f9;
     padding: 15px;
     /*border-radius: 5px;*/
@@ -262,6 +266,10 @@ input.userfind {
     padding-top: 10px;
 }
 
+.language-expiry {
+    width: 100%;
+    max-width: 100px;
+}
 
 
 /* education */
