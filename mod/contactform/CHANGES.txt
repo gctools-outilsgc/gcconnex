@@ -1,0 +1,7 @@
+V1.0
+- enabled internationalization, added language files for en/es/de
+- admin can configure if contact form is available to the public (default: no)
+- thank-you page replaced with system-message
+
+Known issues
+-none-
