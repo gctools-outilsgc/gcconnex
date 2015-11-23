@@ -111,6 +111,8 @@ $english = array(
 
     // LANGUAGES
     'gcconnex_profile:langs' => 'Languages',
+    'gcconnex_profile:fol' => 'First official language',
+    'gcconnex_profile:sle' => 'Second Language Evaluation',
     'gcconnex_profile:languages:access' => 'Who can see my language entries:',
     'gcconnex_profile:languages:language' => 'Language:',
     'gcconnex_profile:languages:add' => '+ add more languages',

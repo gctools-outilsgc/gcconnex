@@ -382,7 +382,8 @@ function editProfile(event) {
                     } else if($('#first_official_language').val() == "FRA") {
                         $('#fraCred').hide();
                     } else {
-                        
+                        $('#fraCred').hide();
+                        $('#engCred').hide();
                     }
                 
                 //$official_langs.find('.gcconnex-languages-english-writtencomp').val(),
@@ -415,8 +416,8 @@ function hideLanguage() {
         $('#engCred').show();
         $('#fraCred').hide();
     } else {
-        $('#engCred').show();          
-        $('#fraCred').show();          
+        $('#engCred').hide();          
+        $('#fraCred').hide();          
     }
 }
 

@@ -62,7 +62,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                     'name' => 'english_writtencomp',
                     'id' => 'english_writtencomp',
                     'class' => 'gcconnex-languages-english-writtencomp gcconnex-languages-english-writtencomp-' . $english->guid,
-                    'options' => array('-', 'A', 'B', 'C', 'E', 'X', 'P'),
+                    'options' => array('-', 'X', 'A', 'B', 'C', 'E', 'P'),
                     'value' => $english[0]
                 );
                 echo elgg_view("input/pulldown", $params);
@@ -93,7 +93,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                     'name' => 'english_writtenexp',
                     'id' => 'english_writtenexp',
                     'class' => 'gcconnex-languages-english-writtenexp gcconnex-languages-english-writtenexp-' . $english->guid,
-                    'options' => array('-', 'A', 'B', 'C', 'E', 'X', 'P'),
+                    'options' => array('-', 'X', 'A', 'B', 'C', 'E', 'P'),
                     'value' => $english[1]
                 );
                 echo elgg_view("input/pulldown", $params);
@@ -123,7 +123,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                     'name' => 'english_oral',
                     'id' => 'english_oral',
                     'class' => 'gcconnex-languages-english-oral gcconnex-languages-english-oral-' . $english->guid,
-                    'options' => array('-', 'A', 'B', 'C', 'E', 'X', 'P'),
+                    'options' => array('-', 'X', 'A', 'B', 'C', 'E', 'P'),
                     'value' => $english[2]
                 );
                 echo elgg_view("input/pulldown", $params);
@@ -159,7 +159,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                     'name' => 'french_writtencomp',
                     'id' => 'french_writtencomp',
                     'class' => 'gcconnex-languages-french-writtencomp gcconnex-languages-french-writtencomp-' . $french->guid,
-                    'options' => array('-', 'A', 'B', 'C', 'E', 'X', 'P'),
+                    'options' => array('-', 'X', 'A', 'B', 'C', 'E', 'P'),
                     'value' => $french[0]
                 );
                 echo elgg_view("input/pulldown", $params);
@@ -190,7 +190,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                     'name' => 'french_writtenexp',
                     'id' => 'french_writtenexp',
                     'class' => 'gcconnex-languages-french-writtenexp gcconnex-languages-french-writtenexp-' . $french->guid,
-                    'options' => array('-', 'A', 'B', 'C', 'E', 'X', 'P'),
+                    'options' => array('-', 'X', 'A', 'B', 'C', 'E', 'P'),
                     'value' => $french[1]
                 );
                 echo elgg_view("input/pulldown", $params);
@@ -220,7 +220,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                     'name' => 'french_oral',
                     'id' => 'french_oral',
                     'class' => 'gcconnex-languages-french-oral gcconnex-languages-french-oral-' . $french->guid,
-                    'options' => array('-', 'A', 'B', 'C', 'E', 'X', 'P'),
+                    'options' => array('-', 'X', 'A', 'B', 'C', 'E', 'P'),
                     'value' => $french[2]
                 );
                 echo elgg_view("input/pulldown", $params);

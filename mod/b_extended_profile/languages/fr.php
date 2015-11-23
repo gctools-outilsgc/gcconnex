@@ -112,6 +112,8 @@ $french = array(
 
     // LANGUAGES
     'gcconnex_profile:langs' => 'Langues',
+    'gcconnex_profile:fol' => 'Première langue officiel',
+    'gcconnex_profile:sle' => 'Évaluation de la langue seconde',
     'gcconnex_profile:languages:access' => 'Qui peut voir mes renseignements sur les langues : ',
     'gcconnex_profile:languages:language' => 'Langue :',
     'gcconnex_profile:languages:add' => '+ ajouter d\'autres langues',
