@@ -304,7 +304,7 @@ class FGContactForm
     {
         $header = $this->GetHTMLHeaderPart();
         $formsubmission = $this->FormSubmissionToMail();
-        $extra_info = $this->ExtraInfoToMail();
+       // $extra_info = $this->ExtraInfoToMail();
         $footer = $this->GetHTMLFooterPart();
 
         $message = $header."Submission from 'contact us' form:<p>$formsubmission</p><hr/>$extra_info".$footer;
@@ -364,7 +364,7 @@ class FGContactForm
         }
         
         //select validations
-        if(($_POST['text']) =='Select a reason')
+        if((($_POST['reason']) =='Select...') || (($_POST['reason']) == "Choisir..."))
         {
             $this->add_error();
             register_error("Choose a reason");

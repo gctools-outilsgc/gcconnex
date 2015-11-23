@@ -36,7 +36,7 @@ $english = array(
 	'contactform:validator:answer' => "Please answer the Anti-SPAM question",
 	'contactform:validator:failed' => "Failed the Anti-SPAM question",
     'contactform:select' => 'Please select a reason',
-    'contactform:reason' => 'Select a reason',
+    'contactform:reason' => 'Select...',
     //setting page
     
     'setting:delete' => 'Delete',

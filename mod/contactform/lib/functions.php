@@ -4,7 +4,7 @@ function requirements_check2()
 {
 	global $CONFIG;
 
-	$query = "CREATE TABLE IF NOT EXISTS contact_list (id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY (id), ext char(30), dept char(255))";
+	$query = "CREATE TABLE IF NOT EXISTS contact_list (id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY (id), english char(30), francais char(255))";
 
 	$connection = mysqli_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, $CONFIG->dbname);
 	if (mysqli_connect_errno($connection)) elgg_log("cyu - Failed to connect to MySQL: ".mysqli_connect_errno(), 'NOTICE');
@@ -33,7 +33,7 @@ function addExtension2($ext, $dept)
 {
 	global $CONFIG;
 
-	$query = "INSERT INTO contact_list (ext, dept) VALUES ('".$ext."','".$dept."')";
+	$query = "INSERT INTO contact_list (english, francais) VALUES ('".$ext."','".$dept."')";
 	//elgg_log('cyu - query:'.$query, 'NOTICE');
 
 	$connection = mysqli_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, $CONFIG->dbname);

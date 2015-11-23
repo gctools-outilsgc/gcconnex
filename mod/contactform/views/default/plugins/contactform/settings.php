@@ -67,7 +67,7 @@ $result = getExtension2();
 if (count($result) > 0)
 {
 	echo "<table name='display_extensions' width='100%' cellpadding='0' cellspacing='0' class='db-table'>";
-	echo '<tr> <th></th> <th width="16%">'.elgg_echo('setting:id').'</th> <th>'.elgg_echo('setting:eng').'</th> <th>'.elgg_echo('setting:fr').'</th></tr>';
+	echo '<tr> <th></th> <th>'.elgg_echo('setting:eng').'</th> <th>'.elgg_echo('setting:fr').'</th></tr>';
 	while ($row = mysqli_fetch_array($result))
 	{
 		$delete_from_db = "action/contactform/delete?id=".$row['id'];
@@ -78,9 +78,9 @@ if (count($result) > 0)
 
 		echo '<tr>'; 
 		echo '<td> '.''.$delete_btn.' </td>';
-		echo '<td> '.$row['id'].' </td>';
-		echo '<td> '.$row['ext'].' </td>';
-		echo '<td> '.$row['dept'].' </td>';
+		
+		echo '<td> '.$row['english'].' </td>';
+		echo '<td> '.$row['francais'].' </td>';
 		echo '</tr>';
 	}
 	echo "</table>";
@@ -97,12 +97,12 @@ $add_btn = elgg_view('output/confirmlink', array(
 	'class' => 'elgg-button'));
 
 $add_ext_field = elgg_view('input/text', array(
-	'name' => 'eng',
+	'name' => 'params[db_add_ext]',
     'id' => 'eng',
 	'value' => $vars['entity']->db_add_ext));
 
 $add_dept_field = elgg_view('input/text', array(
-	'name' => 'fr',
+	'name' => 'params[db_add_dept]',
     'id' => 'fr',
 	'value' => $vars['entity']->db_add_dept));
     
