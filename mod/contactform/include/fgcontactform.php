@@ -35,7 +35,6 @@ class FGContactForm
     var $name;
     var $email;
     var $message;
-    var $select;
     var $from_address;
     var $form_random_key;
     var $conditional_field;
