@@ -24,12 +24,12 @@ does not require any modules to run
 -------------------
 + [enhance] places a notice on every edit/add pages, to inform users that documents must not be secret
 + [issue] adds a new tab in the Tasks section, displays the tasks assigned to user 						- after tasks
-X [enhance] removed avatar update and friend request in the activity feed (activity feed + widgets)
++ [enhance] ??? removed avatar update and friend request in the activity feed (activity feed + widgets)
 + [enhance] inbox username will direct user to said user's pages 										- after messages
 + [issue] default number of replies to a discussion thread will be 25 that will be displayed			- after groups
 + [issue] fix to the memcache problem																	- after au_subgroups
-X [issue] uservalidation page within the administrative rights does not display correctly				- after uservalidationbyemail
-X [enhance] displays the last login/activity on the user profile page, under their avatar				- after profile
+X [issue] ??? uservalidation page within the administrative rights does not display correctly			- after uservalidationbyemail
++ [enhance] displays the last login/activity on the user profile page, under their avatar				- after profile
 + [issue] fix to the ideas widget where it displays max of 3											- after ideas
 
 

@@ -1,25 +1,23 @@
 <?php
 /**
- * List a user's friends' tasks
+ * List a user's or group's tasks
  *
- * @package ElggTasks
+ * @package ElggPages
  */
 
-$owner = elgg_get_page_owner_entity();
-if (!$owner) {
-	forward('tasks/all');
-}
+// grab the username of the page
+$username_page = get_input('username');
+$owner = get_user_by_username($username_page);
 
-elgg_push_breadcrumb($owner->name, "tasks/owner/$owner->username");
-elgg_push_breadcrumb(elgg_echo('my task'));
+if (!$owner) 
+	forward('tasks/all');
+
+$title = elgg_echo('tasks:owner', array($owner->name));
+elgg_push_breadcrumb($owner->name);
 
 elgg_register_title_button();
 
-$title = elgg_echo('my task');
-
-//$content = list_user_friends_objects($owner->guid, 'task_top', 10, false);
-
-// cyu - 09/08/2015 : configured to get the tasks based on the current worker
+// cyu - configured to get the tasks based on the current worker
 $content = elgg_list_entities_from_metadata(array(
 	'metadata_names' => 'assigned_to',
 	'metadata_values' => $owner->guid,
@@ -29,15 +27,21 @@ $content = elgg_list_entities_from_metadata(array(
 	'full_view' => false,
 ));
 
-if (!$content) {
-	$content = elgg_echo('tasks:none');
-}
+if (!$content)
+	$content = '<p>'.elgg_echo('tasks:none') . '</p>';
+
+$filter_context = '';
+if ($owner->guid == elgg_get_logged_in_user_guid())
+	$filter_context = 'my_tasks';
+
+$sidebar = elgg_view('tasks/sidebar/navigation');
+$sidebar .= elgg_view('tasks/sidebar');
 
 $params = array(
-	'filter_context' => 'my_task',
-	'filter_override' => elgg_view('filter_override/taskspagefilter',array("filter_context"=>'my_task')),
+	'filter_context' => '',
 	'content' => $content,
 	'title' => $title,
+	'sidebar' => $sidebar,
 );
 
 $body = elgg_view_layout('content', $params);
