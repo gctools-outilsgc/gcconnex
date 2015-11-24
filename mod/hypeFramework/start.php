@@ -63,3 +63,7 @@ function hj_framework_init() {
 		elgg_register_library('framework:dompdf', $dompdf);
 	}
 }
+
+function elgg_clean_vars($var) {
+	return _elgg_clean_vars($var);
+}

@@ -64,47 +64,51 @@ $list_options = array(
 // X cyu - 12/22/2014: only want group owner to have access to this menu, users only need to reply to topic
 // cyu - 01/22/2014: pageowner returns bool, check if entity is a user
 // cyu - 02/02/2015 modified: we want owner, group admin, admin and operator to manage forums
-$group_owner_guid = $group->getOwnerEntity()->guid;
-$allow_group_access = false;
 
-// load the library so we can get a list of operators
-elgg_register_library('group_operator', elgg_get_plugins_path().'group_operators/lib/group_operators.php');
-elgg_load_library('group_operator');	// load the library so we can use the functions
+// cyu - must check if group is not null
+if ($group->getOwnerEntity()->guid) {
+	$group_owner_guid = $group->getOwnerEntity()->guid;
+	$allow_group_access = false;
 
-// get a list of group operators
-$group_operator_list = get_group_operators($group);
+	// load the library so we can get a list of operators
+	elgg_register_library('group_operator', elgg_get_plugins_path().'group_operators/lib/group_operators.php');
+	elgg_load_library('group_operator');	// load the library so we can use the functions
 
-// check if user is a group operator
-foreach ($group_operator_list as $groupOperator_user)
-	if ($groupOperator_user->guid == get_loggedin_user()->guid)
+	// get a list of group operators
+	$group_operator_list = get_group_operators($group);
+
+	// check if user is a group operator
+	foreach ($group_operator_list as $groupOperator_user)
+		if ($groupOperator_user->guid == get_loggedin_user()->guid)
+			$allow_group_access = true;
+
+	// extract the list of group admins
+	$group_admin_list = elgg_get_entities_from_relationship(array(
+		"relationship" => "group_admin",
+		"relationship_guid" => $group->guid,
+		"inverse_relationship" => true,
+		"type" => "user",
+		"limit" => false,
+		"wheres" => array("e.guid <> ".$group_owner_guid)
+	));
+
+	// check if user is a group administrator
+	foreach ($group_admin_list as $group_admin_user)
+		if ($group_admin_user->guid == get_loggedin_user()->guid)
+			$allow_group_access = true;
+
+	// check if user is a site administrator
+	if (get_loggedin_user()) {
+		if (get_loggedin_user()->isAdmin())
+			$allow_group_access = true;
+	}
+
+	if (get_loggedin_user()->guid == $group_owner_guid)
 		$allow_group_access = true;
 
-// extract the list of group admins
-$group_admin_list = elgg_get_entities_from_relationship(array(
-	"relationship" => "group_admin",
-	"relationship_guid" => $group->guid,
-	"inverse_relationship" => true,
-	"type" => "user",
-	"limit" => false,
-	"wheres" => array("e.guid <> ".$group_owner_guid)
-));
-
-// check if user is a group administrator
-foreach ($group_admin_list as $group_admin_user)
-	if ($group_admin_user->guid == get_loggedin_user()->guid)
-		$allow_group_access = true;
-
-// check if user is a site administrator
-if (get_loggedin_user()) {
-	if (get_loggedin_user()->isAdmin())
-		$allow_group_access = true;
+	if (!$allow_group_access)
+		unset($list_options['list_view_options']['table']['head']['menu']);
 }
-
-if (get_loggedin_user()->guid == $group_owner_guid)
-	$allow_group_access = true;
-
-if (!$allow_group_access)
-	unset($list_options['list_view_options']['table']['head']['menu']);
 
 $viewer_options = array(
 	'full_view' => true
