@@ -10196,7 +10196,7 @@ header .brand {
       font-weight: 800; }
   #wb-info .brand {
     background: #f8f8f8;
-    border-top: 4px solid #055959;
+    border-top: 4px solid #047177;
     line-height: 30px; }
     #wb-info .brand object,
     #wb-info .brand img {
@@ -11117,7 +11117,7 @@ details.elgg-state-success:before {
     top:35px;   
 }
 
-.tools-navigator-menu:after{
+.tools-navigator-menu:before{
        content: '';
     display: block;
     position: absolute;
@@ -11131,7 +11131,7 @@ details.elgg-state-success:before {
 	border-bottom: 12px solid #fff;
     clear: both;    
 }
-.tools-navigator-menu:before{
+.tools-navigator-menu:after{
        content: '';
     display: block;
     position: absolute;
