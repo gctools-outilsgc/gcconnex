@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+	<name>GoC - WET 4 Elgg Theme</name>
+	<id>wet4</id>
+	<author>Government of Canada</author>
+	<version>1.0.0.0</version>
+	<category>theme</category>
+	<description>Web Experience Toolkit (WET) includes reusable components for building and maintaining innovative Web sites that are accessible, usable, and interoperable. These reusable components are open source software and free for use by departments and external Web communities</description>
+	<website>http://www.canada.ca</website>
+	<copyright>Her Majesty the Queen in Right of Canada, 2015</copyright>
+	<license>Creative Commons Attribution 3.0 Unported License</license>
+	<requires>
+		<type>elgg_release</type>
+		<version>1.9</version>
+	</requires>
+    <requires>
+		<type>plugin</type>
+		<name>group_tools</name>
+	</requires>
+    <requires>
+		<type>plugin</type>
+		<name>b_extended_profile</name>
+	</requires>
+    <requires>
+		<type>plugin</type>
+		<name>au_subgroups</name>
+	</requires>
+	<requires>
+		<type>priority</type>
+		<priority>after</priority>
+		<plugin>search</plugin>
+	</requires>
+	<requires>
+		<type>priority</type>
+		<priority>after</priority>
+		<plugin>profile</plugin>
+	</requires>
+	<activate_on_install>true</activate_on_install>
+</plugin_manifest>
