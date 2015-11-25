@@ -38,21 +38,21 @@ echo "</div>";
 
 
 
-// elgg_log('cyu - add ext:'.$vars['entity']->db_add_ext, 'NOTICE');
-// elgg_log('cyu - add dept:'.$vars['entity']->db_add_dept, 'NOTICE');
+// elgg_log('cyu - add ext:'.$vars['entity']->db_add_eng, 'NOTICE');
+// elgg_log('cyu - add dept:'.$vars['entity']->db_add_fr, 'NOTICE');
 
-if (($vars['entity']->db_add_ext === '' || !isset($vars['entity']->db_add_ext)) 
-	&& ($vars['entity']->db_add_dept === '' || !isset($vars['entity']->db_add_dept)))
+if (($vars['entity']->db_add_eng === '' || !isset($vars['entity']->db_add_eng)) 
+	&& ($vars['entity']->db_add_fr === '' || !isset($vars['entity']->db_add_fr)))
 {
 	//system_message('c_ext:missing_param');
 } else {
-	addExtension2($vars['entity']->db_add_ext, $vars['entity']->db_add_dept);
+	addExtension2($vars['entity']->db_add_eng, $vars['entity']->db_add_fr);
 	//system_message('c_ext:successfully_added');
 }
 
 
-$vars['entity']->db_add_ext = '';
-$vars['entity']->db_add_dept = '';
+$vars['entity']->db_add_eng = '';
+$vars['entity']->db_add_fr = '';
 
 
 elgg_load_library('contact_lib');
@@ -97,14 +97,14 @@ $add_btn = elgg_view('output/confirmlink', array(
 	'class' => 'elgg-button'));
 
 $add_ext_field = elgg_view('input/text', array(
-	'name' => 'params[db_add_ext]',
+	'name' => 'params[db_add_eng]',
     'id' => 'eng',
-	'value' => $vars['entity']->db_add_ext));
+	'value' => $vars['entity']->db_add_eng));
 
 $add_dept_field = elgg_view('input/text', array(
-	'name' => 'params[db_add_dept]',
+	'name' => 'params[db_add_fr]',
     'id' => 'fr',
-	'value' => $vars['entity']->db_add_dept));
+	'value' => $vars['entity']->db_add_fr));
     
 
 echo "<table name='add_extensions' width='100%' cellpadding='0' cellspacing='0' class='db-table'>";

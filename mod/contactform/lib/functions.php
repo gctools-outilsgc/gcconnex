@@ -61,11 +61,14 @@ function getExtension2()
 	return $result;
 }
 
-function addExtension2($ext, $dept)
+function addExtension2($english, $french)
 {
 	global $CONFIG;
-
-	$query = "INSERT INTO contact_list (english, francais) VALUES ('".$ext."','".$dept."')";
+    
+    $eng = mysql_real_escape_string($english);
+    $fr = mysql_real_escape_string($french);
+    
+	$query = "INSERT INTO contact_list (english, francais) VALUES ('".$eng."','".$fr."')";
 	//elgg_log('cyu - query:'.$query, 'NOTICE');
 
 	$connection = mysqli_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, $CONFIG->dbname);

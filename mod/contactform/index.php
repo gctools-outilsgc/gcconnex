@@ -14,9 +14,11 @@ $content = elgg_view_title($title);
 
 // Add the form to this section
 $content .= elgg_view("contactform/contactform");
+$sidebar = elgg_view("contactform/form");
 
 // layout the page
-		$body = elgg_view_layout('one_sidebar', array(
+		$body = elgg_view_layout('two_column', array(
+                //'title' => $second_title,
    				'content' => $content,
    				'sidebar' => $sidebar,
    				
