@@ -148,7 +148,7 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
                         $column_widgets = array();
                     }
 
-                    echo "<div class=\"$widget_class elgg-widgets col-sm-6\" id=\"elgg-widget-col-$column_index\">";
+                    echo "<div class=\"$widget_class elgg-widgets col-sm-6 col-xs-12 widget-area-col\" id=\"elgg-widget-col-$column_index\">";
                     if (sizeof($column_widgets) > 0) {
                         foreach ($column_widgets as $widget) {
                             if (array_key_exists($widget->handler, $widget_types)) {

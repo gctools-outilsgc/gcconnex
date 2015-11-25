@@ -679,12 +679,14 @@ td.left-col {
     padding-right: 20px;
 }
 
-#profile-owner-block {
-    position: relative;
-    padding: 0;
-    width: auto;
-    max-width: 200px;
+#profile-owner-block-wet4 {
+    /*position: relative;
+        
     min-width: 100px;
+    */
+    padding: 0;
+    max-width: 200px;
+    
 }
 /*
 .avatar-profile-page {

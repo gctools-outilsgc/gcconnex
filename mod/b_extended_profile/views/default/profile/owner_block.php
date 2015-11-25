@@ -45,12 +45,12 @@ if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
     ));
     */
     $iconimg = '<div class="avatar-hover-edit">' . elgg_echo('gcconnex_profile:profile:edit_avatar') . '</div><img src="';
-    $iconimg .= $user->getIcon('large') . '" class="avatar-profile-page">';
+    $iconimg .= $user->getIcon('large') . '" class="avatar-profile-page img-responsive ">';
 
     $icon = elgg_view('output/url', array(
             'text' => $iconimg,
             'href' => 'avatar/edit/' . $user->username,
-            'class' => "avatar-profile-edit"
+            'class' => "avatar-profile-edit img-responsive"
         )
     );
 
@@ -58,7 +58,7 @@ if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
 }
 else {
     $icon = '<img src="';
-    $icon .= $user->getIcon('large') . '" class="avatar-profile-page">';
+    $icon .= $user->getIcon('large') . '" class="avatar-profile-page img-responsive">';
 
     /*
     $icon = elgg_view_entity_icon($user, 'large', array(
@@ -70,7 +70,7 @@ else {
 //$profile_actions
 echo <<<HTML
 
-<div class="mrgn-lft-md mrgn-bttm-md" id="profile-owner-block">
+<div class="col-xs-3 col-md-4 mrgn-bttm-md" id="profile-owner-block-wet4">
 	$icon
 </div>
 
