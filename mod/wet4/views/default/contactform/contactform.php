@@ -17,14 +17,18 @@
 	<details class="acc-group">
 		<summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'><?php echo elgg_echo('contactform:title:lostpwd'); ?></summary>
 		<div class="tgl-panel">
+             <div class='mrgn-lft-md mrgn-tp-md mrgn-bttn-md mrgn-rght-md'>
 			<?php echo elgg_echo('contactform:content:lostpwd'); ?>
+            </div>
 		</div>
 	</details>
 	<!-- Accordion section 2 -->
 	<details class="acc-group">
 		<summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'><?php echo elgg_echo('contactform:title:lostuser'); ?></summary>
 		<div class="tgl-panel">
-		<?php echo elgg_echo('contactform:content:lostuser'); ?>	
+             <div class='mrgn-lft-md mrgn-tp-md mrgn-bttn-md mrgn-rght-md'>
+		<?php echo elgg_echo('contactform:content:lostuser'); ?>
+            </div>
 						
 		</div>
 	</details>
@@ -32,8 +36,9 @@
     <details class="acc-group">
 		<summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'><?php echo elgg_echo('contactform:title:create'); ?></summary>
 		<div class="tgl-panel">
+            <div class='mrgn-lft-md mrgn-tp-md mrgn-bttn-md mrgn-rght-md'>
 			<?php echo elgg_echo('contactform:content:create'); ?>
-						
+			</div>			
 		</div>
 	</details>
                             
@@ -41,7 +46,9 @@
 	<details class="acc-group">
 		<summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'><?php echo elgg_echo('contactform:title:picture'); ?></summary>
         <div class="tgl-panel">
+             <div class='mrgn-lft-md mrgn-tp-md mrgn-bttn-md mrgn-rght-md'>
 		 <?php echo elgg_echo('contactform:content:picture'); ?>
+            </div>
         </div>
 	</details>
 
@@ -55,11 +62,8 @@
 						<li> <a href='http://gcconnex.gc.ca/groups/profile/226392/gc20-tools-outils-gc20'>GC2.0 Tools</a> </li>
 						</ul>
 
-				<h2 style='border-bottom: solid 3px; padding-bottom: 2px;'>Contact Us</h2>
-					<p style = 'padding: 8px 0 8px'>
-					Can't find the answer you're looking for in the FAQ or help resources? <br /> <br />
-					<b>Contact the GCconnex <a href='mailto:gcconnex@tbs-sct.gc.ca'>Help Desk</a>!</b> Please be as clear as possible in describing your issue or question, and provide screen shots if and where possible.
-					</p> <br />
+				
+					
 
 						</div>
 

@@ -26,10 +26,10 @@ if (isset($vars['class'])) {
 		//echo elgg_extract('nav', $vars, elgg_view('navigation/breadcrumbs'));
 echo $vars['title'];
 		//echo elgg_view('page/layouts/elements/header', $vars);
-echo '<div class="col-md-5">';
+echo '<div class="col-md-6">';
 		echo $vars['content'];
 echo '</div>';
-echo '<div class="col-md-6 col-md-offset-1">';
+echo '<div class="col-md-6">';
         echo $vars['sidebar'];
 echo '</div>';
 		

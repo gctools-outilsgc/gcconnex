@@ -1335,6 +1335,12 @@ Please do not reply to this email.",
     
     'contactform:content:picture' => "Click on the Profile icon in the top left corner (it will either look like your current profile picture or the default silhouette). You will be directed to a new page that you can then click \"Edit Avatar\". Then click \"Browse\" and select the picture you would like to use and press \"Upload\". You can then crop your picture (if necessary) using the preview section.",
     
+    'contactform:title:form' => "Contact Us",
+    
+    'contactform:content:form' => "<p style = 'padding: 8px 0 8px'>
+					Can't find the answer you're looking for in the FAQ or help resources? <br /> <br />
+					<b>Contact the GCconnex <a href='mailto:gcconnex@tbs-sct.gc.ca'>Help Desk</a>!</b> Please be as clear as possible in describing your issue or question, and provide screen shots if and where possible.
+					</p> <br />",
 /**
  * Entities
  */

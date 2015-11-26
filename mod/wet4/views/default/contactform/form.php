@@ -47,11 +47,14 @@ if(isset($_POST['submitted']))
 </head>
 <body>
     <div><?php echo $formproc->GetErrorMessage(); ?></div>
-<!-- Form Code Start -->
-<!-- FAQ PART-->
-<?php //echo elgg_echo("contactform:body"); ?>
-<!-- END FAQ PART-->
 
+    
+    <section class="panel panel-default mrgn-lft-md">
+	<header class="panel-heading">
+		<h3 class="panel-title"><?php echo elgg_echo('contactform:title:form'); ?></h3>
+	</header>
+        <div class="panel-body mrgn-lft-md">
+<?php echo elgg_echo('contactform:content:form'); ?>
 <form id='contactus' action='<?php echo $formproc->GetSelfScript(); ?>' enctype="multipart/form-data" method='post' accept-charset='UTF-8'>
 <fieldset >
 <!--<legend><?php //echo elgg_echo('contactform:menu'); ?></legend>-->
@@ -60,21 +63,21 @@ if(isset($_POST['submitted']))
 <!--<input type='text'  class='spmhidip' name='<?php //echo $formproc->GetSpamTrapInputName(); ?>' />-->
 
 <!--<div class='short_explanation'><?php //echo elgg_echo('contactform:requiredfields'); ?></div>-->
-    <div class='col-md-6'>
+    
 <div class='form-group'>
     <label for='name' class="required"><span class="field-name"><?php echo elgg_echo('contactform:fullname'); ?></span><strong class="required"> (required)</strong></label><br/>
     <input type='text' name='name' id='name' class="form-control"  value='<?php if (elgg_is_logged_in()){ echo $sender_name;}else{echo $formproc->SafeDisplay('name');} ?>' /><br/>
     <span id='contactus_name_errorloc' class='error'></span>
 </div>
-        </div>
-    <div class='col-md-6'>
+      
+    
 <div class='form-group'>
     <label for='email' class="required"><span class="field-name"><?php echo elgg_echo('contactform:email'); ?></span><strong class="required"> (required)</strong></label><br/>
     
     <input type='text' name='email' class="form-control"  id='email' value='<?php if (elgg_is_logged_in()){ echo $sender_email;}else{echo $formproc->SafeDisplay('email');}  ?>'/><br/>
     <span id='contactus_email_errorloc' class='error'></span>
 </div>
-    </div>
+    
     
     <div class='form-group'>
     <label for='subject' class="required"><span class="field-name"><?php echo elgg_echo('contactform:subject'); ?></span><strong class="required"> (required)</strong></label><br/>
@@ -147,6 +150,8 @@ echo '</select>';
 
 </fieldset>
 </form>
+    	</div>
+</section>
 <!-- client-side Form Validations:
 Uses the excellent form validation script from JavaScript-coder.com-->
 
