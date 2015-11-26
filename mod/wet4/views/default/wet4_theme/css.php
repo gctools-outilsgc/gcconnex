@@ -3972,7 +3972,7 @@ tbody.collapse.in {
     .pagination > li > span {
       position: relative;
       float: left;
-      padding: 6px 12px;
+      padding: 10px 16px;
       line-height: 1.4375;
       text-decoration: none;
       color: #335075;
@@ -10196,7 +10196,7 @@ header .brand {
       font-weight: 800; }
   #wb-info .brand {
     background: #f8f8f8;
-    border-top: 4px solid #055959;
+    border-top: 4px solid #047177;
     line-height: 30px; }
     #wb-info .brand object,
     #wb-info .brand img {
@@ -10432,7 +10432,7 @@ a.shr-opn, a.shr-opn:hover {
  * Site menu
  */
 #wb-sm {
-  background: #055959; }
+  background: #606060; }
   #wb-sm .menu {
     display: table;
     margin-bottom: 0;
@@ -10828,6 +10828,15 @@ a.shr-opn, a.shr-opn:hover {
     }  
 
 /*Here are my custom styles for this prototype*/
+
+.elgg-menu-hz .removeMe {
+    display: none;
+}
+
+.thewire-characters-remaining {
+    background: none;
+}
+
 .img-tn{
     width:60px;
     height: 60px;
@@ -11057,6 +11066,110 @@ details.elgg-state-success:before {
 .panel-body-gallery {
  padding:7px;   
 }
+
+/****** New Header style stuff *******/
+#app-brand{
+    background-color: #047177; 
+    color: #fff;
+    min-height: 45px;
+    /*padding-top: 5px;*/
+}
+
+#app-brand a{
+   text-decoration: none;
+    color: #fff;
+}
+
+#app-brand li a{
+   text-decoration: none;
+    color: black;
+    padding: 30px 35px;
+}
+.app-name{
+    font-size: 1.6em;
+    padding-top:5px;
+    padding-left: 20px;
+    background-color: #055959;
+    min-height: 45px;
+    max-width: 165px;
+   margin-left:-5px;
+}
+
+.app-name:before{
+       content: '';
+    display: block;
+    position: absolute;
+    left: 165px;
+    top: 0;
+    width: 0;
+    height: 0;
+	border-top: 22.5px solid transparent;
+	border-bottom: 22.5px solid transparent;
+	
+	border-left: 20px solid #055959;
+    clear: both;     
+}
+
+
+.bold-gc{
+    font-weight: 800;   
+}
+
+
+.tools-navigator{
+    font-size: 1.1em;
+    margin-top:10px;
+    
+}
+
+.tools-navigator-menu{
+    top:35px;   
+}
+
+.tools-navigator-menu:before{
+       content: '';
+    display: block;
+    position: absolute;
+    left: 80%;
+    top: -10px;
+    width: 0;
+    height: 0;
+	border-left: 12px solid transparent;
+	border-right: 12px solid transparent;
+	
+	border-bottom: 12px solid #fff;
+    clear: both;    
+}
+.tools-navigator-menu:after{
+       content: '';
+    display: block;
+    position: absolute;
+    left: 80%;
+    top: -12px;
+    width: 0;
+    height: 0;
+	border-left: 12px solid transparent;
+	border-right: 12px solid transparent;
+	
+	border-bottom: 12px solid rgba(0, 0, 0, 0.15) ;
+    clear: both;     
+}
+
+#tools-dropdown{
+    cursor: pointer;
+}
+
+.tools-dropdown-holder{
+    min-width: 300px;
+    color: black;
+    padding: 10px;
+}
+.tools-navigator-menu li a{
+    color:black;   
+}
+
+
+
 /*
  * Mobile panel
  */

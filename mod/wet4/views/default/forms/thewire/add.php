@@ -35,7 +35,7 @@ if ($char_limit == 0) {
 
 $post_input = elgg_view('input/plaintext', array(
 	'name' => 'body',
-	'class' => 'mtm',
+	'class' => 'mtm thewire-textarea',
     
 	'id' => 'thewire-textarea',
 	'rows' => $num_lines,
@@ -45,13 +45,15 @@ $post_input = elgg_view('input/plaintext', array(
 $submit_button = elgg_view('input/submit', array(
 	'value' => $text,
 	'id' => 'thewire-submit-button',
-    'class' => 'btn-primary mrgn-tp-sm',
+    'class' => 'btn-primary mrgn-tp-sm thewire-submit-button',
 ));
 
+$label = elgg_echo('thewire:post');
+
 echo <<<HTML
-<label for="thewire-textarea">Create a Wire Post:</label>
+<label for="thewire-textarea">$label:</label>
 	$post_input
-<div id="thewire-characters-remaining">
+<div id="thewire-characters-remaining" class="thewire-characters-remaining">
 	$count_down
 </div>
 <div class="elgg-foot mts mrgn-bttm-md mrgn-tp-sm">

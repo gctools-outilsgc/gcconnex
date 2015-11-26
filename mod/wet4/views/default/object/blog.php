@@ -102,7 +102,7 @@ if ($full) {
 	));
        
 
-    echo '<h2 class="panel-title mrgn-lft-sm mrgn-bttm-md mrgn-tp-md">Replies</h2>';
+    echo '<h2 class="panel-title mrgn-lft-sm mrgn-bttm-md mrgn-tp-md">' . elgg_echo('comments') . '</h2>';
 
     echo '<div id="group-replies" class="elgg-comments mrgn-rght-md mrgn-lft-md clearfix">';
     

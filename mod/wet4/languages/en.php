@@ -1,7 +1,11 @@
 <?php
 return array(
+   
+/**
+ * The Wire
+ */
     
-    
+    'thewire:post' => "Create a Wire Post",
     
 /**
  * User Menu

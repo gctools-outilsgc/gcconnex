@@ -39,6 +39,7 @@ $footer = elgg_view('page/elements/footer', $vars);
 //$acion
 $topcanbar = elgg_view('page/elements/topcanbar', $vars);
 $wavyblue = elgg_view('page/elements/wavyblue', $vars);
+$site_brand = elgg_view('page/elements/site-brand', $vars);
 $tabskip = elgg_view('page/elements/tabskip', $vars);
 
 $breadcrumbs = elgg_view('navigation/breadcrumbs');
@@ -67,6 +68,7 @@ $body .= <<<__BODY
 		</div>
     	<div id="wb-bnr">
             $wavyblue
+            $site_brand
 	   </div>   
     
 		

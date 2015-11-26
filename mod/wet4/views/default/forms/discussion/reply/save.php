@@ -70,7 +70,7 @@ FORM;
 	));
 
 echo <<<FORM
-<div class="panel-footer">
+<div class="">
 	<div>
 		<label for="box-$reply->guid">$reply_label </label>
 		$description_input

@@ -202,11 +202,20 @@ if (elgg_is_admin_logged_in() && elgg_get_logged_in_user_guid() != elgg_get_page
 
 echo '</div>'; //closes btn-group
 
+
+
+
+
 echo '<h1 class="pull-left">' . $user->name . '</h1>';
 echo '</div>'; // close div class="panel-heading"
 
+
+
+
+
+echo '<div class="row mrgn-lft-md mrgn-rght-sm">';
 echo elgg_view('profile/owner_block');
-echo '<div class="pull-left mrgn-lft-md clearfix">';
+echo '<div class="col-xs-9 col-md-8 clearfix">';
 echo '<h3 class="mrgn-tp-0">' . $user->job . '</h3>';
 echo '<div class="gcconnex-profile-dept">' . $user->department . '</div>';
 echo '<div class="gcconnex-profile-location">' . $user->location . '</div>';
@@ -263,6 +272,7 @@ foreach ($social as $media) {
 }
 echo '</div>'; // close div class="gcconnex-profile-social-media-links"
 echo '</div>';
+echo '</div>'; //closes row class
 
 
 

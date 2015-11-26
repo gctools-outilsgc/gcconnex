@@ -32,6 +32,8 @@ $entity_title = $entity->title ? $entity->title : elgg_echo('untitled');
 $entity_link = "<a href=\"{$entity->getURL()}\">$entity_title</a>";
 
 if ($full_view) {
+    
+    echo '<h2 class="panel-title mrgn-lft-sm mrgn-bttm-md mrgn-tp-lg">' . elgg_echo("comments") . '</h2>';
 	$anchor = "<a name=\"comment-{$comment->getGUID()}\"></a>";
 
 	$menu = elgg_view_menu('entity', array(
@@ -39,6 +41,7 @@ if ($full_view) {
 		'handler' => 'comment',
 		'sort_by' => 'priority',
 		'class' => 'elgg-menu-hz float-alt',
+        'item_class' => 'mrgn-lft-sm',
 	));
 	
 	if (elgg_in_context('activity')) {
