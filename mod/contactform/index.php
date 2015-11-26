@@ -10,7 +10,7 @@ if( $loginreq == "yes" ) { gatekeeper(); }
 $title = elgg_echo('contactform:help_menu_item');
 elgg_push_breadcrumb($title);
 // start building the main column of the page
-$content = elgg_view_title($title);
+$title2 = elgg_view_title($title);
 
 // Add the form to this section
 $content .= elgg_view("contactform/contactform");
@@ -18,7 +18,7 @@ $sidebar = elgg_view("contactform/form");
 
 // layout the page
 		$body = elgg_view_layout('two_column', array(
-                //'title' => $second_title,
+                'title' => $title2,
    				'content' => $content,
    				'sidebar' => $sidebar,
    				
