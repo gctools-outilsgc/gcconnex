@@ -124,8 +124,10 @@ echo '</select>';
     
     <div class='form-group'>
         <label for='message' class="required"><span class="field-name"><?php echo elgg_echo('contactform:message');?></span><strong class="required"> (required)</strong></label>
-    <?php echo elgg_view('input/longtext', array('name' => 'message', 'class' => 'form-control', 'id'=>'message', 'value' => $formproc->SafeDisplay('message') ));?>
+    <?php echo elgg_view('input/plaintext', array('name' => 'message', 'class' => 'form-control', 'id'=>'message', 'value' => $formproc->SafeDisplay('message') ));?>
     </div>
+    
+
 <!--
     
 <fieldset id='antispam'>
