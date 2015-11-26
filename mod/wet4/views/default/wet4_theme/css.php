@@ -10186,7 +10186,7 @@ header .brand {
  Site information
 */
 #wb-info {
-  background: #e1e4e7;
+  background: #f5f5f5;
   position: relative;
   z-index: 5; }
   #wb-info a {
@@ -10195,7 +10195,7 @@ header .brand {
     #wb-info a.wb-navcurr {
       font-weight: 800; }
   #wb-info .brand {
-    background: #f8f8f8;
+    background: #fcfcfc;
     border-top: 4px solid #047177;
     line-height: 30px; }
     #wb-info .brand object,
