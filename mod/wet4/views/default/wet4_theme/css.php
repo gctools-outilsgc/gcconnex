@@ -3972,7 +3972,7 @@ tbody.collapse.in {
     .pagination > li > span {
       position: relative;
       float: left;
-      padding: 6px 12px;
+      padding: 10px 16px;
       line-height: 1.4375;
       text-decoration: none;
       color: #335075;
@@ -10828,6 +10828,11 @@ a.shr-opn, a.shr-opn:hover {
     }  
 
 /*Here are my custom styles for this prototype*/
+
+.elgg-menu-hz .removeMe {
+    display: none;
+}
+
 .img-tn{
     width:60px;
     height: 60px;

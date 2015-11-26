@@ -33,7 +33,8 @@ if (elgg_in_context('widgets')) {
 		'entity' => $vars['entity'],
 		'handler' => 'discussion_reply',
 		'sort_by' => 'priority',
-		'class' => 'elgg-menu-hz',
+		'class' => 'elgg-menu-hz pull-right clearfix',
+        'item_class' => 'mrgn-lft-sm',
 	));
 }
 
@@ -60,6 +61,6 @@ $params = array(
     '' => $title_link,
 );
 $params = $params + $vars;
-$list_body = elgg_view('object/elements/summary', $params);
+$list_body = elgg_view('object/elements/discussionreply_summary', $params);
 
 echo elgg_view_image_block($poster_icon, $list_body);

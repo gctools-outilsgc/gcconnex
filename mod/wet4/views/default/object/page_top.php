@@ -85,7 +85,7 @@ if (!elgg_in_context('widgets')) {
 			'handler' => 'pages',
 			'sort_by' => 'priority',
 			'class' => 'elgg-menu-hz ',
-            'item_class' => 'mrgn-lft-sm',
+            'item_class' => 'mrgn-rght-sm',
 		));
 	}
 }

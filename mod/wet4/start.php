@@ -29,6 +29,7 @@ function wet4_theme_init() {
 	
 	elgg_register_plugin_hook_handler('head', 'page', 'wet4_theme_setup_head');
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'my_owner_block_handler');
+	elgg_register_plugin_hook_handler('register', 'menu:river', 'river_handler');
     
     //replace files lost while removing require.js
     elgg_register_js('elgg/dev', elgg_get_site_url() . 'mod/wet4/views/default/js/elgg/dev.js', 'footer');
@@ -49,6 +50,7 @@ function wet4_theme_pagesetup() {
     
     //elgg_load_js('elgg/dev');
     //elgg_load_js('elgg/reportedcontent');
+    
     
 	if (elgg_is_logged_in()) {
 
@@ -743,5 +745,14 @@ function my_owner_block_handler($hook, $type, $menu, $params){
     
 }
 
-
+function river_handler($hook, $type, $menu, $params){
+    foreach ($menu as $key => $item){
+             
+            switch ($item->getName()) {
+                case 'comment':
+                    $item->setItemClass('removeMe');
+            }
+        
+    }
+}
 

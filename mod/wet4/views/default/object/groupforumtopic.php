@@ -99,6 +99,7 @@ if ($full) {
 
 	$params = array(
 		'entity' => $topic,
+        'title' => false,
 		'metadata' => $metadata,
 		'subtitle' => $subtitle,
 		'tags' => $tags,
