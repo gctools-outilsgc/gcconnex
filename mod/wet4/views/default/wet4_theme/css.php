@@ -10833,6 +10833,10 @@ a.shr-opn, a.shr-opn:hover {
     display: none;
 }
 
+.thewire-characters-remaining {
+    background: none;
+}
+
 .img-tn{
     width:60px;
     height: 60px;
