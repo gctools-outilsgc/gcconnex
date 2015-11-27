@@ -9,15 +9,19 @@
  * @uses $vars['object'] The array of message registers
  */
 
-echo '<ul class="elgg-system-messages custom-message">';
+//echo '<ul class="elgg-system-messages custom-message">';
 
 // hidden li so we validate
-echo '<li class="hidden wb-invisible"></li>';
+//echo '<li class="hidden wb-invisible"></li>';
 
 if (isset($vars['object']) && is_array($vars['object']) && sizeof($vars['object']) > 0) {
 	foreach ($vars['object'] as $type => $list ) {
+        echo '<ul class="alert alert-'.$type.'" style="list-style:disc; padding-left:30px;">';
+
+// hidden li so we validate
+echo '<li class="hidden wb-invisible"></li>';
 		foreach ($list as $message) {
-			echo "<li class=\"alert alert-$type\">";
+			echo "<li>";
 			echo elgg_autop($message);
 			echo '</li>';
 		}
