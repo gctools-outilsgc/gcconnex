@@ -22,6 +22,10 @@ if (!array_key_exists($size, $icon_sizes)) {
 	$size = 'medium';
 }
 
+if(elgg_get_context() == 'friends'){
+    $size = 'medium';
+}
+
 if (!($user instanceof ElggUser)) {
 	return;
 }

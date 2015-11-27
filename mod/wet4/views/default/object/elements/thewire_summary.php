@@ -53,7 +53,7 @@ echo "<div class=\"tags\">$tags</div>";
 echo elgg_view('object/summary/extend', $vars);
 
 if ($content) {
-	echo "<div class=\"elgg-content mrgn-tp-sm mrgn-lft-md\">$content</div>";
+	echo "<div class=\"elgg-content mrgn-tp-sm mrgn-lft-sm\">$content</div>";
 }
 
 if ($metadata) {
