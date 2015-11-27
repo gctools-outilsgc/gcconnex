@@ -31,6 +31,13 @@ $formproc = new FGContactForm();
 $formproc->SetFormRandomKey('CnRrspl1FyEylUj');
 
 $formproc->AddFileUploadField('photo','jpg,jpeg,gif,png,pdf,doc,docx,rar.zip,',5120);
+// Get post_max_size and upload_max_filesize
+$post_max_size = elgg_get_ini_setting_in_bytes('post_max_size');
+$upload_max_filesize = elgg_get_ini_setting_in_bytes('upload_max_filesize');
+
+// Determine the correct value
+$max_upload = $upload_max_filesize > $post_max_size ? $post_max_size : $upload_max_filesize;
+$upload_limit = elgg_echo('file:upload_limit', array(elgg_format_bytes($max_upload)));
 
 if(isset($_POST['submitted']))
 {
@@ -50,10 +57,10 @@ if(isset($_POST['submitted']))
     $(document).ready(function (){
             $("#reason").change(function() {
                 // foo is the id of the other select box 
-                if ($(this).val() != "Other question") {
-                    $("#subject").hide();
-                }else{
+                if (($(this).val() == "Other question") || ($(this).val() == "Autre question" )) {
                     $("#subject").show();
+                }else{
+                    $("#subject").hide();
                 } 
             });
         });
@@ -131,6 +138,10 @@ echo '</select>';
     
     <input type='text' name='subject' class="form-control"  id='subject' value='<?php echo $formproc->SafeDisplay('subject');  ?>'/><br/>
     <span id='contactus_subject_errorloc' class='error'></span>
+</div>
+    
+    <div class="mbm elgg-text-help alert alert-info">
+	<?php echo $upload_limit; ?>
 </div>
     
     <div class='container'>
