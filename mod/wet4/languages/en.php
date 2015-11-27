@@ -1307,7 +1307,7 @@ Please do not reply to this email.",
 /**
 *Contact page / FAQ
 */
-    
+    'contactform:form:subject' => "Subject",
     'contactform:title' => "GCconnex Help Pages",
     'contactform:list' => "<ul>
 						<li> <a href='http://gcpedia.gc.ca/wiki/Tutorials_on_GC2.0_Tools_/_Tutoriels_sur_les_outils_GC2.0'>How-Tos/Videos/Tutorials</a> </li>

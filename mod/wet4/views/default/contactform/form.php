@@ -44,6 +44,21 @@ if(isset($_POST['submitted']))
 
 ?>
 <script type='text/javascript' src='scripts/gen_validatorv31.js'></script>
+
+<script>
+
+    $(document).ready(function (){
+            $("#reason").change(function() {
+                // foo is the id of the other select box 
+                if ($(this).val() != "Other question") {
+                    $("#subject").hide();
+                }else{
+                    $("#subject").show();
+                } 
+            });
+        });
+
+</script>
 </head>
 <body>
     <div><?php echo $formproc->GetErrorMessage(); ?></div>
@@ -76,14 +91,6 @@ if(isset($_POST['submitted']))
     
     <input type='text' name='email' class="form-control"  id='email' value='<?php if (elgg_is_logged_in()){ echo $sender_email;}else{echo $formproc->SafeDisplay('email');}  ?>'/><br/>
     <span id='contactus_email_errorloc' class='error'></span>
-</div>
-    
-    
-    <div class='form-group'>
-    <label for='subject' class="required"><span class="field-name"><?php echo elgg_echo('contactform:subject'); ?></span><strong class="required"> (required)</strong></label><br/>
-    
-    <input type='text' name='subject' class="form-control"  id='subject' value='<?php echo $formproc->SafeDisplay('subject');  ?>'/><br/>
-    <span id='contactus_subject_errorloc' class='error'></span>
 </div>
     
 <div class='form-group'>
@@ -119,8 +126,15 @@ echo '</select>';
     <span id='contactus_text_errorloc' class='error'></span>
 </div>
     
+     <div class='form-group' id='subject' style="display:none;">
+    <label for='subject' class="required"><span class="field-name"><?php echo elgg_echo('contactform:form:subject'); ?></span><strong class="required"> (required)</strong></label><br/>
+    
+    <input type='text' name='subject' class="form-control"  id='subject' value='<?php echo $formproc->SafeDisplay('subject');  ?>'/><br/>
+    <span id='contactus_subject_errorloc' class='error'></span>
+</div>
+    
     <div class='container'>
-    <label for='photo' >Upload your photo:</label><br/>
+    <label for='photo' >Upload your file:</label><br/>
     <input type="file" name='photo' id='photo' /><br/>
     <span id='contactus_photo_errorloc' class='error'></span>
 </div>
@@ -155,8 +169,10 @@ echo '</select>';
 <!-- client-side Form Validations:
 Uses the excellent form validation script from JavaScript-coder.com-->
 
+
 <script type='text/javascript'>
 // <![CDATA[
+
 
     var frmvalidator  = new Validator("contactus");
     frmvalidator.EnableOnPageErrorDisplay();
@@ -166,7 +182,6 @@ Uses the excellent form validation script from JavaScript-coder.com-->
     frmvalidator.addValidation("email","email",<?php echo elgg_echo('contactform:validator:emailvalid'); ?>);
     frmvalidator.addValidation("message","maxlen=2048",<?php echo elgg_echo('contactform:validator:msgtoolong'); ?>);
       frmvalidator.addValidation("photo","file_extn=jpg;jpeg;gif;png;bmp","Upload images only. Supported file types are: jpg,gif,png,bmp");
-
 // ]]>
 </script>
 </body>
