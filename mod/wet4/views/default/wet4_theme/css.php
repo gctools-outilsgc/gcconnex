@@ -4580,10 +4580,10 @@ a.list-group-item-danger {
 .panel-title {
   margin-top: 0;
   margin-bottom: 0;
-  font-size: 18px;
+  font-size: 20px;
   color: inherit; }
   .panel-title > a {
-    color: inherit; }
+    color: #055959; }
 
 .panel-footer {
   padding: 10px 15px;
@@ -10504,6 +10504,14 @@ a.shr-opn, a.shr-opn:hover {
     min-height:50px;
 }
     
+.list-break{
+    border-bottom: 1px solid #d6eae6;   
+}
+
+.list-break:last-child{
+    border-bottom:none;   
+}
+
     /****************************************/
     
     /******************** user menu ********************/
