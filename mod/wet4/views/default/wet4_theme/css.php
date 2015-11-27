@@ -10833,6 +10833,16 @@ a.shr-opn, a.shr-opn:hover {
     display: none;
 }
 
+/* Red Flag */
+.red {
+    background: red;
+}
+
+.replyContainer {
+    max-width: 510px;
+    margin: 0 auto;
+}
+
 .thewire-characters-remaining {
     background: none;
 }

@@ -10,5 +10,5 @@ $poster_details = array(
 	htmlspecialchars($poster->username,  ENT_QUOTES, 'UTF-8'),
 );
 ?>
-<b><?php echo elgg_echo('thewire:replying', $poster_details); ?>: </b>
-<?php echo $post->description;
+<b><?php echo elgg_echo('thewire:replying', $poster_details); ?>: </b><br>
+<div class="replyContainer"><?php echo $post->description; ?></div>
