@@ -362,21 +362,35 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 		);
 		$return[] = \ElggMenuItem::factory($options);   
         
-        $options = array(
-			'name' => 'reply',
-			'text' => elgg_echo('reply'),
-			'title' => elgg_echo('reply'),
-			'href' => 'ajax/view/thewire_tools/reply?guid=' . $entity->getGUID(),
-			'link_class' => 'elgg-lightbox',
-			'is_trusted' => true,
-			'priority' => 100
-		);
-		$return[] = \ElggMenuItem::factory($options); 
+        if($entity->getSubtype() == 'thewire' && elgg_is_logged_in()){
+            $options = array(
+                'name' => 'reply',
+                'text' => elgg_echo('reply'),
+                'title' => elgg_echo('reply'),
+                'href' => 'ajax/view/thewire_tools/reply?guid=' . $entity->getGUID(),
+                'link_class' => 'elgg-lightbox',
+                'is_trusted' => true,
+                'priority' => 100
+            );
+            $return[] = \ElggMenuItem::factory($options); 
+        }
         
+            
+            
+ 
 
-    }
-    
-	
+    }   
+	if (($entity->countEntitiesFromRelationship("parent") || $entity->countEntitiesFromRelationship("parent", true))) {
+                $options = array(
+                    'name' => 'thread',
+                    'text' => elgg_echo('thewire:thread'),
+                    'href' => 'ajax/view/thewire_tools/thread?thread_id=' . $entity->wire_thread,
+                    'link_class' => 'elgg-lightbox',
+                    'is_trusted' => true,
+                    'priority' => 170,
+                );
+                $return[] = ElggMenuItem::factory($options);
+            }
 	if ($entity->canEdit() && $handler) {
 		// edit link
         /*
