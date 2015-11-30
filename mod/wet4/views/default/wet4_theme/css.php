@@ -10599,9 +10599,16 @@ a.shr-opn, a.shr-opn:hover {
 .user-menu{
     min-width: 400px;
 
-   
+
+    
     /*position: relative;*/
 }
+
+/** Sizing the Images to make medium images slightly smaller. They scale with the responsive class so it's all good **/
+ .elgg-avatar-medium-wet4{
+     max-width:80px;  
+     padding-left:5px;
+ }
 
 .elgg-menu-user-menu-subMenu {
     padding: 0;
