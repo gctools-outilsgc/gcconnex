@@ -162,27 +162,27 @@ $(document).ready(function() {
 
     //link the edit/save/cancel buttons with the appropriate functions on click..
     $('.edit-about-me').on("click", {section: "about-me"}, editProfile);
-    $('.save-about-me').on("click", {section: "about-me"}, saveProfile);
+    $('.save-about-me .save-about-me').on("click", {section: "about-me"}, saveProfile);
     $('.cancel-about-me').on("click", {section: "about-me"}, cancelChanges);
 
     $('.edit-education').on("click", {section: "education"}, editProfile);
-    $('.save-education').on("click", {section: "education"}, saveProfile);
+    $('.save-education.save-education').on("click", {section: "education"}, saveProfile);
     $('.cancel-education').on("click", {section: "education"}, cancelChanges);
 
     $('.edit-work-experience').on("click", {section: "work-experience"}, editProfile);
-    $('.save-work-experience').on("click", {section: "work-experience"}, saveProfile);
+    $('.save-work-experience .save-work-experience').on("click", {section: "work-experience"}, saveProfile);
     $('.cancel-work-experience').on("click", {section: "work-experience"}, cancelChanges);
 
     $('.edit-skills').on("click", {section: "skills"}, editProfile);
-    $('.save-skills').on("click", {section: "skills"}, saveProfile);
+    $('.save-skills .save-skills').on("click", {section: "skills"}, saveProfile);
     $('.cancel-skills').on("click", {section: "skills"}, cancelChanges);
 
     $('.edit-languages').on("click", {section: "languages"}, editProfile);
-    $('.save-languages').on("click", {section: "languages"}, saveProfile);
+    $('.save-languages .save-languages').on("click", {section: "languages"}, saveProfile);
     $('.cancel-languages').on("click", {section: "languages"}, cancelChanges);
 
     $('.edit-portfolio').on("click", {section: "portfolio"}, editProfile);
-    $('.save-portfolio').on("click", {section: "portfolio"}, saveProfile);
+    $('.save-portfolio .save-portfolio').on("click", {section: "portfolio"}, saveProfile);
     $('.cancel-portfolio').on("click", {section: "portfolio"}, cancelChanges);
 
     $('.save-profile').on('click', { section: "profile" }, saveProfile);

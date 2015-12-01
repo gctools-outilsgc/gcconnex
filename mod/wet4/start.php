@@ -15,8 +15,11 @@ function wet4_theme_init() {
 	elgg_register_event_handler('pagesetup', 'system', 'wet4_theme_pagesetup', 1000);
     elgg_register_event_handler('pagesetup', 'system', 'wet4_riverItem_remove');
     elgg_register_event_handler('pagesetup', 'system', 'messages_notifier');
+    
     elgg_register_plugin_hook_handler('register', 'menu:entity', 'wet4_elgg_entity_menu_setup');
     elgg_register_plugin_hook_handler('register', 'menu:river', 'wet4_elgg_river_menu_setup');
+    
+    elgg_unregister_plugin_hook_handler("register", "menu:entity", array('\ColdTrick\TheWireTools\EntityMenu', 'registerReshare'));
     
     elgg_register_plugin_hook_handler('register', 'menu:entity', 'wet4_likes_entity_menu_setup', 400);
     //elgg_register_plugin_hook_handler('register', 'menu:entity', 'wet4_delete_entity_menu', 400);
@@ -26,12 +29,15 @@ function wet4_theme_init() {
 
 	//elgg_unextend_view('page/elements/header', 'search/header');
 	//elgg_extend_view('page/elements/sidebar', 'search/header', 0);
+    
+    
+    //the wire reply and thread
+    elgg_register_ajax_view("thewire_tools/reply");
+	elgg_register_ajax_view("thewire_tools/thread");
 	
 	elgg_register_plugin_hook_handler('head', 'page', 'wet4_theme_setup_head');
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'my_owner_block_handler');
 	elgg_register_plugin_hook_handler('register', 'menu:river', 'river_handler');
-    
-    //elgg_register_plugin_hook_handler("register", "menu:entity", array('\ColdTrick\TheWireTools\EntityMenu', 'registerReshare'));
     
     //replace files lost while removing require.js
     elgg_register_js('elgg/dev', elgg_get_site_url() . 'mod/wet4/views/default/js/elgg/dev.js', 'footer');
@@ -346,6 +352,40 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 	$handler = elgg_extract('handler', $params, false);
     
     if($entity->canAnnotate()){
+        
+        $blocked_subtypes = array('comment', 'discussion_reply');
+        if(in_array($entity->getSubtype(), $blocked_subtypes)){
+            
+            //do not let comments or discussion replies to be reshared on the wire
+            
+        } else {
+        
+        // check is this item was shared on thewire
+			$count = $entity->getEntitiesFromRelationship(array(
+				'type' => 'object',
+				'subtype' => 'thewire',
+				'relationship' => 'reshare',
+				'inverse_relationship' => true,
+				'count' => true
+			));
+			
+			if ($count) {
+				// show counter
+				$return[] = \ElggMenuItem::factory(array(
+					'name' => 'thewire_tools_reshare_count',
+					'text' => $count,
+					'title' => elgg_echo('thewire_tools:reshare:count'),
+					'href' => 'ajax/view/thewire_tools/reshare_list?entity_guid=' . $entity->getGUID(),
+					'link_class' => 'elgg-lightbox',
+					'is_trusted' => true,
+					'priority' => 501,
+					'data-colorbox-opts' => json_encode(array(
+						'maxHeight' => '85%'
+					))
+				));
+			}
+        
+        //reshare on the wire
         $options = array(
 			'name' => 'thewire_tools_reshare',
 			'text' => '<i class="fa fa-share-alt fa-lg icon-unsel"><span class="wb-inv">Share this on the Wire</span></i>',
@@ -356,9 +396,38 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 			'priority' => 500
 		);
 		$return[] = \ElggMenuItem::factory($options);   
-    }
-    
-	
+        }
+        
+        //only show reply on the wire with logged in user
+        if($entity->getSubtype() == 'thewire' && elgg_is_logged_in()){
+            $options = array(
+                'name' => 'reply',
+                'text' => elgg_echo('reply'),
+                'title' => elgg_echo('reply'),
+                'href' => 'ajax/view/thewire_tools/reply?guid=' . $entity->getGUID(),
+                'link_class' => 'elgg-lightbox',
+                'is_trusted' => true,
+                'priority' => 100
+            );
+            $return[] = \ElggMenuItem::factory($options); 
+        }
+        
+            
+            
+ 
+
+    }   
+	if (($entity->countEntitiesFromRelationship("parent") || $entity->countEntitiesFromRelationship("parent", true))) {
+                $options = array(
+                    'name' => 'thread',
+                    'text' => elgg_echo('thewire:thread'),
+                    'href' => 'ajax/view/thewire_tools/thread?thread_id=' . $entity->wire_thread,
+                    'link_class' => 'elgg-lightbox',
+                    'is_trusted' => true,
+                    'priority' => 170,
+                );
+                $return[] = ElggMenuItem::factory($options);
+            }
 	if ($entity->canEdit() && $handler) {
 		// edit link
         /*

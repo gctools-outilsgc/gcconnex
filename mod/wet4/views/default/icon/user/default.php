@@ -56,7 +56,8 @@ $js = elgg_extract('js', $vars, '');
 if ($js) {
 	elgg_deprecated_notice("Passing 'js' to icon views is deprecated.", 1.8, 5);
 }
-
+//trying out circle images, because medium is too big and small is too small. Life is hard sometimes.
+//the circles are almost too modern and out of place. There arn't as many circular elements in the interface for it to make sense.
 $img_class = 'img-responsive';
 if (isset($vars['img_class'])) {
 	$img_class = $vars['img_class'];

@@ -4580,10 +4580,10 @@ a.list-group-item-danger {
 .panel-title {
   margin-top: 0;
   margin-bottom: 0;
-  font-size: 18px;
+  font-size: 20px;
   color: inherit; }
   .panel-title > a {
-    color: inherit; }
+    color: #055959; }
 
 .panel-footer {
   padding: 10px 15px;
@@ -10504,6 +10504,14 @@ a.shr-opn, a.shr-opn:hover {
     min-height:50px;
 }
     
+.list-break{
+    border-bottom: 1px solid #d6eae6;   
+}
+
+.list-break:last-child{
+    border-bottom:none;   
+}
+
     /****************************************/
     
     /******************** user menu ********************/
@@ -10591,9 +10599,16 @@ a.shr-opn, a.shr-opn:hover {
 .user-menu{
     min-width: 400px;
 
-   
+
+    
     /*position: relative;*/
 }
+
+/** Sizing the Images to make medium images slightly smaller. They scale with the responsive class so it's all good **/
+ .elgg-avatar-medium-wet4{
+     max-width:80px;  
+     padding-left:5px;
+ }
 
 .elgg-menu-user-menu-subMenu {
     padding: 0;
@@ -10831,6 +10846,16 @@ a.shr-opn, a.shr-opn:hover {
 
 .elgg-menu-hz .removeMe {
     display: none;
+}
+
+/* Red Flag */
+.red {
+    background: red;
+}
+
+.replyContainer {
+    max-width: 510px;
+    margin: 0 auto;
 }
 
 .thewire-characters-remaining {

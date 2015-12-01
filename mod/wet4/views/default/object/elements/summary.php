@@ -50,7 +50,7 @@ if ($title_link) {
 if($entity->getType() == 'group'){
    echo '';
 }else{
-  echo "<div class=\" mrgn-bttm-sm mrgn-tp-md timeStamp clearfix\">$subtitle</div>";   
+  echo "<div class=\" mrgn-bttm-sm mrgn-tp-sm timeStamp clearfix\">$subtitle</div>";   
 }
 
 

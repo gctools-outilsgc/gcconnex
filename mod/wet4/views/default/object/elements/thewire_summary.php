@@ -47,7 +47,7 @@ if ($title_link) {
 	echo "<h3 class=\"mrgn-bttm-0 panel-title\">$title_link</h3>";
 }
 
-echo "<div class=\"elgg-subtext mrgn-tp-sm mrgn-lft-sm clearfix\">$subtitle</div>";
+echo "<div class=\"elgg-subtext  mrgn-lft-sm clearfix\">$subtitle</div>";
 echo "<div class=\"tags\">$tags</div>";
 
 echo elgg_view('object/summary/extend', $vars);

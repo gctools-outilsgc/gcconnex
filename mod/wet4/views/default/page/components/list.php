@@ -66,7 +66,11 @@ foreach ($items as $item) {
 
 		$li_attrs['id'] = "elgg-$type-$guid";
 
-		$li_attrs['class'][] = "elgg-item-$type";
+        
+        
+		$li_attrs['class'][] = "elgg-item-$type list-break mrgn-tp-md clearfix";
+        
+        
 		if ($subtype) {
                                                           
 			$li_attrs['class'][] = "elgg-item-$type-$subtype clearfix";
