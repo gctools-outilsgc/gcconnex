@@ -66,41 +66,33 @@ if(isset($_POST['submitted']))
         });
 
 </script>
-</head>
-<body>
-    <div><?php echo $formproc->GetErrorMessage(); ?></div>
 
-    
-    <section class="panel panel-default mrgn-lft-md">
-	<header class="panel-heading">
+<div><?php echo $formproc->GetErrorMessage(); ?></div>
+
+<section class="panel panel-default" style="width:550px; margin-left:35px;">
+    <header class="panel-heading">
 		<h3 class="panel-title"><?php echo elgg_echo('contactform:title:form'); ?></h3>
 	</header>
-        <div class="panel-body mrgn-lft-md">
-<?php echo elgg_echo('contactform:content:form'); ?>
-<form id='contactus' action='<?php echo $formproc->GetSelfScript(); ?>' enctype="multipart/form-data" method='post' accept-charset='UTF-8'>
-<fieldset >
-<!--<legend><?php //echo elgg_echo('contactform:menu'); ?></legend>-->
-<input type='hidden' name='submitted' id='submitted' value='1'/>
-<input type='hidden' name='<?php echo $formproc->GetFormIDInputName(); ?>' value='<?php echo $formproc->GetFormIDInputValue(); ?>'/>
-<!--<input type='text'  class='spmhidip' name='<?php //echo $formproc->GetSpamTrapInputName(); ?>' />-->
-
-<!--<div class='short_explanation'><?php //echo elgg_echo('contactform:requiredfields'); ?></div>-->
     
-<div class='form-group'>
+    <div class="panel-body mrgn-lft-md">
+        <?php echo elgg_echo('contactform:content:form'); ?>
+        <form id='contactus' action='<?php echo $formproc->GetSelfScript(); ?>' enctype="multipart/form-data" method='post' accept-charset='UTF-8'>
+            <?php echo elgg_echo('contactform:menu'); ?>
+            <input type='hidden' name='submitted' id='submitted' value='1'/>
+<input type='hidden' name='<?php echo $formproc->GetFormIDInputName(); ?>' value='<?php echo $formproc->GetFormIDInputValue(); ?>'/>
+            <div class='form-group'>
     <label for='name' class="required"><span class="field-name"><?php echo elgg_echo('contactform:fullname'); ?></span><strong class="required"> (required)</strong></label><br/>
     <input type='text' name='name' id='name' class="form-control"  value='<?php if (elgg_is_logged_in()){ echo $sender_name;}else{echo $formproc->SafeDisplay('name');} ?>' /><br/>
     <span id='contactus_name_errorloc' class='error'></span>
 </div>
-      
-    
-<div class='form-group'>
+            
+            <div class='form-group'>
     <label for='email' class="required"><span class="field-name"><?php echo elgg_echo('contactform:email'); ?></span><strong class="required"> (required)</strong></label><br/>
     
     <input type='text' name='email' class="form-control"  id='email' value='<?php if (elgg_is_logged_in()){ echo $sender_email;}else{echo $formproc->SafeDisplay('email');}  ?>'/><br/>
     <span id='contactus_email_errorloc' class='error'></span>
 </div>
-    
-<div class='form-group'>
+            <div class='form-group'>
     <label for='reason' class="required"><span class="field-name"><?php echo elgg_echo('contactform:select'); ?></span><strong class="required"> (required)</strong></label><br/>   
   <?php  
 	global $SESSION;
@@ -132,52 +124,38 @@ echo '</select>';
    
     <span id='contactus_text_errorloc' class='error'></span>
 </div>
-    
-     <div class='form-group' id='subject' style="display:none;">
+                
+                     <div class='form-group' id='subject' style="display:none;">
     <label for='subject' class="required"><span class="field-name"><?php echo elgg_echo('contactform:form:subject'); ?></span><strong class="required"> (required)</strong></label><br/>
     
     <input type='text' name='subject' class="form-control"  id='subject' value='<?php echo $formproc->SafeDisplay('subject');  ?>'/><br/>
     <span id='contactus_subject_errorloc' class='error'></span>
 </div>
-    
-    <div class="mbm elgg-text-help alert alert-info">
+                
+                <div class="mbm elgg-text-help alert alert-info">
 	<?php echo $upload_limit; ?>
 </div>
-    
-    <div class='container'>
+                
+                <div class='form-group'>
     <label for='photo' >Upload your file:</label><br/>
     <input type="file" name='photo' id='photo' /><br/>
     <span id='contactus_photo_errorloc' class='error'></span>
 </div>
-    
-    <div class='form-group'>
+                <div class='form-group'>
         <label for='message' class="required"><span class="field-name"><?php echo elgg_echo('contactform:message');?></span><strong class="required"> (required)</strong></label>
     <?php echo elgg_view('input/plaintext', array('name' => 'message', 'class' => 'form-control', 'id'=>'message', 'value' => $formproc->SafeDisplay('message') ));?>
     </div>
-    
-
-<!--
-    
-<fieldset id='antispam'>
-<legend ><?php //echo elgg_echo('contactform:antispammsg'); ?></legend>
-<span class='short_explanation'><?php //echo elgg_echo('contactform:antispamhint'); ?></span>
-<div class='container'>
-    <label for='scaptcha' ><?php //echo $sim_captcha->GetSimpleCaptcha(); ?></label>
-    <input type='text' name='scaptcha' id='scaptcha' maxlength="10" /><br/>
-    <span id='contactus_scaptcha_errorloc' class='error'></span>
-</div>
-</fieldset>
--->
-
+            
 <div class='container pull-right'>
     <input type='submit' class="btn btn-default pull-right" name='Submit' value='Send' />
 </div>
-
-</fieldset>
-</form>
-    	</div>
+                
+        </form>
+        
+    </div>
 </section>
-<!-- client-side Form Validations:
+    
+    <!-- client-side Form Validations:
 Uses the excellent form validation script from JavaScript-coder.com-->
 
 
@@ -195,5 +173,3 @@ Uses the excellent form validation script from JavaScript-coder.com-->
       frmvalidator.addValidation("photo","file_extn=jpg;jpeg;gif;png;bmp","Upload images only. Supported file types are: jpg,gif,png,bmp");
 // ]]>
 </script>
-</body>
-</html>

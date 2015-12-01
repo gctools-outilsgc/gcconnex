@@ -5,7 +5,7 @@
 <?php //echo elgg_echo("contactform:body"); ?>
 <!-- END FAQ PART-->
 
-<h2 style='border-bottom: solid 3px; padding-bottom: 2px;'>Help</h2>
+<h2 style='border-bottom: solid 3px; padding-bottom: 2px; width:550px;'>Help</h2>
 					<br />
 					<h3><u><?php echo elgg_echo('contactform:title'); ?></u></h3><br />
 						<?php echo elgg_echo('contactform:list'); ?>
@@ -65,7 +65,7 @@
 				
 					
 
-						</div>
+					
 
 </body>
 </html>

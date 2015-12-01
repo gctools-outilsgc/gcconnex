@@ -1,3 +1,4 @@
+
 <?php
 /**
  * Elgg one-column layout
@@ -13,25 +14,29 @@
  * @uses $vars['footer']  Optional footer
  */
 
+
+
 $class = 'elgg-layout elgg-layout-one-column clearfix';
 if (isset($vars['class'])) {
 	$class = "$class {$vars['class']}";
 }
 
 ?>
-<div class="<?php echo $class; ?>">
-	<div class="elgg-main">
+<!--<div class="<?php echo $class; ?>">-->
+<!--	<div class="elgg-main">-->
 	<?php
 
 		//echo elgg_extract('nav', $vars, elgg_view('navigation/breadcrumbs'));
 echo $vars['title'];
 		//echo elgg_view('page/layouts/elements/header', $vars);
-echo '<div class="col-md-6">';
+echo '<table><tr><td>';
+
 		echo $vars['content'];
-echo '</div>';
-echo '<div class="col-md-6">';
+echo '</td><td>';
+
         echo $vars['sidebar'];
-echo '</div>';
+echo '</td></tr></table>';
+
 		
 		// @deprecated 1.8
 		if (isset($vars['area1'])) {
@@ -40,5 +45,5 @@ echo '</div>';
 
 		echo elgg_view('page/layouts/elements/footer', $vars);
 	?>
-	</div>
-</div>
+<!--	</div>-->
+<!--</div>-->
