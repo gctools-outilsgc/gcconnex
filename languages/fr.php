@@ -73,6 +73,9 @@ return array(
 	'DatabaseException:ScriptNotFound' => "Elgg n'a pas pu trouver le script de la base de données a %s.",
 	'DatabaseException:InvalidQuery' => "Requête non valide",
 
+	'ajax:error' => 'Une erreur est survenue lors d\'un appel Ajax. Peut-être que la connection avec le serveur est perdue.',
+	'ajax:not_is_xhr' => 'You cannot access AJAX views directly', 		// NEEDS TRANSLATION
+
 	'IOException:FailedToLoadGUID' => "Echec du chargement du nouveau %s avec le GUID:%d",
 	'InvalidParameterException:NonElggObject' => "Passage d'un objet de type non-Elgg vers un constructeur d'objet Elgg !",
 	'InvalidParameterException:UnrecognisedValue' => "Valeur non reconnue passés au constructeur.",
@@ -265,6 +268,9 @@ return array(
 	'ElggPlugin:Dependencies:PhpVersion' => 'PHP version',
 	'ElggPlugin:Dependencies:ActiveDependent' => 'Il existe d\'autres plugins répertoriant %s en tant que dépendance. Vous devez désactiver les plugins suivants avant de désactiver celui-ci: %s',
 
+	'ElggMenuBuilder:Trees:NoParents' => 'Une entrée de menu a été trouvé sans lien avec un parent',
+	'ElggMenuBuilder:Trees:OrphanedChild' => 'L\'entrée de menu [%s] a été trouvée avec un parent manquant [%s]',
+	'ElggMenuBuilder:Trees:DuplicateChild' => 'L\'entrée de menu [%s] est enregistrée plusieurs fois',
 
 	'LoginException:ChangePasswordFailure' => 'Echec vérification mot de passe courant.',
 	'LoginException:Unknown' => 'Nous ne pouvons pas vous connecter à cause d\'une erreur inconnue.',
@@ -277,6 +283,10 @@ return array(
 
 	'error:default:title' => 'Oups...',
 	'error:default:content' => 'Oups... quelque chose est allé de travers.',
+	'error:400:title' => 'Bad request',
+	'error:400:content' => 'Sorry. The request is invalid or incomplete.',
+	'error:403:title' => 'Forbidden',
+	'error:403:content' => 'Sorry. You are not allowed to access the requested page.',
 	'error:404:title' => 'Page non trouvée',
 	'error:404:content' => 'Désolé. Nous n\'arrivons pas à trouver la page que vous demandez.',
 
@@ -318,6 +328,8 @@ return array(
 	'access:read' => "Accès en lecture",
 	'access:write' => "Accès en écriture",
 	'access:admin_only' => "Seulement pour les administrateurs",
+	'access:missing_name' => "Le nom du niveau d'accès est manquant",
+	'access:comments:change' => "Cette discussion a actuellement des droits d'accès limités. Faites attention lorsque vous la partagez.",
 
 /**
  * Dashboard and widgets
@@ -689,8 +701,12 @@ return array(
 	'admin:widget:online_users:help' => "Affiche la liste des utilisateurs actuellement sur le site",
 	'admin:widget:new_users' => "Nouveaux utilisateurs",
 	'admin:widget:new_users:help' => "Affiche la liste des nouveaux utilisateurs",
+	'admin:widget:banned_users' => 'Utilisateurs bannis',
+	'admin:widget:banned_users:help' => 'Liste des utilisateurs bannis',
 	'admin:widget:content_stats' => "Statistiques",
 	'admin:widget:content_stats:help' => "Gardez une trace du contenu créé par vos utilisateurs",
+	'admin:widget:cron_status' => 'Status du cron',
+	'admin:widget:cron_status:help' => 'Afficher les statuts du dernier cron finit',
 	'widget:content_stats:type' => "Type de contenu",
 	'widget:content_stats:number' => "Nombre",
 
@@ -886,6 +902,7 @@ return array(
 	'admin:robots.txt:instructions' => "Editez le fichier robots.txt du site ci-dessous",
 	'admin:robots.txt:plugins' => "Les plugins ajoutent les lignes suivantes au fichier robots.txt ",
 	'admin:robots.txt:subdir' => "L'outil pour robots.txt ne fonctionnera peut-être pas car Elgg est installé dans un sous-répertoire",
+	'admin:robots.txt:physical' => "The robots.txt tool will not work because a physical robots.txt is present",
 
 	'admin:maintenance_mode:default_message' => 'Le site est fermé pour cause de maintenance',
 	'admin:maintenance_mode:instructions' => 'Le mode maintenance devrait être utilisé pour les mises à jour et les autres changements sur le site. 
@@ -932,6 +949,7 @@ return array(
 	'river:friends' => "Activités des Amis",
 	'river:select' => "Afficher %s",
 	'river:comments:more' => "+%u plus",
+	'river:comments:all' => 'Voir tous les %u commentaires',
 	'river:generic_comment' => "commenté sur %s",
 
 	'friends:widget:description' => "Affiche certains de vos amis.",
@@ -1310,6 +1328,7 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
 	'installation:systemcache:description' => "Le cache système diminue le temps de chargement du moteur Elgg en mettant en cache les données dans des fichiers.",
 	'installation:systemcache:label' => "Utiliser le cache système (recommandé)",
 
+	'admin:legend:system' => 'Système',
 	'admin:legend:caching' => 'Mise en cache',
 	'admin:legend:content_access' => 'Accès au contenu',
 	'admin:legend:site_access' => 'Accès au site',
@@ -1358,6 +1377,7 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
 	// Strings specific for the comments upgrade
 	'admin:upgrades:comments' => 'Mise à jour des commentaires',
 	'upgrade:comment:create_failed' => 'Impossible de convertir le commentaire id %s en une entité.',
+	'admin:upgrades:commentaccess' => 'Mise à jour des commentaires',
 
 	// Strings specific for the datadir upgrade
 	'admin:upgrades:datadirs' => 'Répertoire de données mis à jour',
@@ -1464,6 +1484,7 @@ Si vous êtes à l'origine de cette demande, cliquez sur le lien ci-dessous. Sin
 	'generic_comment:deleted' => "Votre commentaire a été correctement supprimé.",
 	'generic_comment:blank' => "Désolé; vous devez remplir votre commentaire avant de pouvoir l'enregistrer.",
 	'generic_comment:notfound' => "Désolé; l'élément recherché n'a pas été trouvé.",
+	'generic_comment:notfound_fallback' => "Désolé, le commentaire demandé n'a pas été trouvé. Vous avez été redirigé sur la page précédente.",
 	'generic_comment:notdeleted' => "Désolé; le commentaire n'a pu être supprimé.",
 	'generic_comment:failure' => "Une erreur est survenue lors de l'ajout de votre commentaire. Veillez réessayer.",
 	'generic_comment:none' => "Pas de commentaires",
@@ -1498,6 +1519,7 @@ Ne répondez pas à cet e-mail.",
 
 	'entity:delete:success' => "L'entité %s a été effacée",
 	'entity:delete:fail' => "L'entité %s n'a pas pu être effacée",
+	'entity:can_delete:invaliduser' => 'Can not check canDelete for user_guid [%s] as the user does not exist.',		// NEEDS TRANSLATION
 
 /**
  * Action gatekeeper
@@ -1572,6 +1594,7 @@ Ne répondez pas à cet e-mail.",
 	"es" => "Espagnol",
 	"et" => "Estonien",
 	"eu" => "Basque",
+	"eu_es" => "Basque (Spain)",
 	"fa" => "Persan",
 	"fi" => "Finnois",
 	"fj" => "Fidjien",
@@ -1636,11 +1659,12 @@ Ne répondez pas à cet e-mail.",
 	"pl" => "Polonais",
 	"ps" => "Pachto",
 	"pt" => "Portugais",
-	"pt_br" => 'Portugais Brésilien',
+	"pt_br" => "Portuguese (Brazil)",
 	"qu" => "Quechua",
 	"rm" => "Romanche",
 	"rn" => "Kirundi",
 	"ro" => "Roumain",
+	"ro_ro" => "Romanian (Romania)",
 	"ru" => "Russe",
 	"rw" => "Kinyarwanda",
 	"sa" => "Sanskrit",
@@ -1655,6 +1679,7 @@ Ne répondez pas à cet e-mail.",
 	"so" => "Somalien",
 	"sq" => "Albanais",
 	"sr" => "Serbe",
+	"sr_latin" => "Serbian (Latin)",
 	"ss" => "Siswati",
 	"st" => "Sotho",
 	"su" => "Soundanais",
@@ -1686,5 +1711,6 @@ Ne répondez pas à cet e-mail.",
 	"yo" => "Yoruba",
 	"za" => "Zhuang",
 	"zh" => "Chinois",
+	"zh_hans" => "Chinese Simplified",
 	"zu" => "Zoulou",
 );

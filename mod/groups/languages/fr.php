@@ -69,6 +69,7 @@ return array(
 	'groups:cantcreate' => 'Vous ne pouvez créer un groupe. Seul les administrateurs peuvent.',
 	'groups:cantedit' => 'Vous ne pouvez pas modifier ce groupe',
 	'groups:saved' => 'Groupe enregistré',
+	'groups:save_error' => 'Group could not be saved',				// NEEDS TRANSLATION
 	'groups:featured' => 'Groupes en vedette',
 	'groups:makeunfeatured' => 'Supprimer des groupes en vedette',
 	'groups:makefeatured' => 'Mettre un groupe en vedette',
@@ -215,8 +216,15 @@ Afficher et répondre à la discussion:
 	'discussion:reply:edit' => 'Modifier la réponse',
 	'discussion:reply:deleted' => 'Réponse de discussion a été supprimé.',
 	'discussion:reply:error:notfound' => 'La réponse à cette discussion n\'a pas été trouvée',
+<<<<<<< HEAD
 	'discussion:reply:error:notdeleted' => 'Impossible de supprimer la réponse de discussion',
+=======
+	'discussion:reply:error:notfound_fallback' => "Désolé, le message spécifié n'a pu être trouvé. Vous avez été redirigé vers le sujet de discussion original.",
+	'discussion:reply:error:notdeleted' => 'Impossible de supprimer la réponse de la discussion',
+>>>>>>> elgg/1.12
 
+	'discussion:search:title' => 'Répondre au sujet: %s',
+	
 	'admin:groups' => 'Groupes',
 
 	'reply:this' => 'Répondre à çà',
