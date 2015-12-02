@@ -10843,6 +10843,9 @@ a.shr-opn, a.shr-opn:hover {
     }  
 
 /*Here are my custom styles for this prototype*/
+#thewire-tools-reshare-wrapper {
+    max-width: 600px;
+}
 
 .elgg-menu-hz .removeMe {
     display: none;
