@@ -216,12 +216,8 @@ Afficher et répondre à la discussion:
 	'discussion:reply:edit' => 'Modifier la réponse',
 	'discussion:reply:deleted' => 'Réponse de discussion a été supprimé.',
 	'discussion:reply:error:notfound' => 'La réponse à cette discussion n\'a pas été trouvée',
-<<<<<<< HEAD
-	'discussion:reply:error:notdeleted' => 'Impossible de supprimer la réponse de discussion',
-=======
 	'discussion:reply:error:notfound_fallback' => "Désolé, le message spécifié n'a pu être trouvé. Vous avez été redirigé vers le sujet de discussion original.",
-	'discussion:reply:error:notdeleted' => 'Impossible de supprimer la réponse de la discussion',
->>>>>>> elgg/1.12
+	'discussion:reply:error:notdeleted' => 'Impossible de supprimer la réponse de discussion',
 
 	'discussion:search:title' => 'Répondre au sujet: %s',
 	
