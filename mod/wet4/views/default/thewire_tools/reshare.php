@@ -11,7 +11,7 @@ if (!empty($reshare) && !(elgg_instanceof($reshare, "object") || elgg_instanceof
 
 //echo elgg_view_entity($reshare, $vars);
 
-echo "<div id='thewire-tools-reshare-wrapper' class='ui-front'>";
+echo "<div id='thewire-tools-reshare-wrapper-wet4' class='ui-front'>";
 
 echo elgg_view_title(elgg_echo("thewire_tools:reshare"));
 
