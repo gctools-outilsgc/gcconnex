@@ -19,7 +19,7 @@ function wet4_theme_init() {
     elgg_register_plugin_hook_handler('register', 'menu:entity', 'wet4_elgg_entity_menu_setup');
     elgg_register_plugin_hook_handler('register', 'menu:river', 'wet4_elgg_river_menu_setup');
     
-    elgg_unregister_plugin_hook_handler("register", "menu:entity", array('\ColdTrick\TheWireTools\EntityMenu', 'registerReshare'));
+    //elgg_unregister_plugin_hook_handler("register", "menu:entity", array('\ColdTrick\TheWireTools\EntityMenu', 'registerReshare'));
     
     elgg_register_plugin_hook_handler('register', 'menu:entity', 'wet4_likes_entity_menu_setup', 400);
     //elgg_register_plugin_hook_handler('register', 'menu:entity', 'wet4_delete_entity_menu', 400);
@@ -299,7 +299,7 @@ function wet4_likes_entity_menu_setup($hook, $type, $return, $params) {
 			'href' => elgg_add_action_tokens_to_url("/action/likes/delete?guid={$entity->guid}"),
 			'text' => '<i class="fa fa-thumbs-up fa-lg icon-sel"></i><span class="wb-inv">Like This</span>',
 			'title' => elgg_echo('likes:remove'),
-			'item_class' => $hasLiked ? '' : 'hidden',
+			'item_class' => $hasLiked ? 'pad-rght-xs' : 'hidden',
 			'priority' => 1000,
 		));
 	}
@@ -332,6 +332,7 @@ function wet4_likes_entity_menu_setup($hook, $type, $return, $params) {
 			'text' => $count,
 			'href' => false,
 			'priority' => 1001,
+            'item_class' => 'pad-lft-0',
 		);
 		$return[] = ElggMenuItem::factory($options);
 	}
@@ -351,7 +352,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 	/* @var \ElggEntity $entity */
 	$handler = elgg_extract('handler', $params, false);
     
-    if($entity->canAnnotate()){
+    
         
         $blocked_subtypes = array('comment', 'discussion_reply');
         if(in_array($entity->getSubtype(), $blocked_subtypes)){
@@ -370,13 +371,21 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 			));
 			
 			if ($count) {
+                
+                if($count >=2){
+                    $share = elgg_echo('thewire:shares');
+                } else {
+                    $share = elgg_echo('thewire:share');
+                }
+                
 				// show counter
 				$return[] = \ElggMenuItem::factory(array(
 					'name' => 'thewire_tools_reshare_count',
-					'text' => $count,
+					'text' => $count . $share,
 					'title' => elgg_echo('thewire_tools:reshare:count'),
 					'href' => 'ajax/view/thewire_tools/reshare_list?entity_guid=' . $entity->getGUID(),
 					'link_class' => 'elgg-lightbox',
+                    'item_class' => 'pad-lft-0',
 					'is_trusted' => true,
 					'priority' => 501,
 					'data-colorbox-opts' => json_encode(array(
@@ -385,17 +394,30 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 				));
 			}
         
-        //reshare on the wire
-        $options = array(
-			'name' => 'thewire_tools_reshare',
-			'text' => '<i class="fa fa-share-alt fa-lg icon-unsel"><span class="wb-inv">Share this on the Wire</span></i>',
-			'title' => elgg_echo('thewire_tools:reshare'),
-			'href' => 'ajax/view/thewire_tools/reshare?reshare_guid=' . $entity->getGUID(),
-			'link_class' => 'elgg-lightbox',
-			'is_trusted' => true,
-			'priority' => 500
-		);
-		$return[] = \ElggMenuItem::factory($options);   
+            
+            if(elgg_is_logged_in()){
+                //reshare on the wire
+                $options = array(
+                    'name' => 'thewire_tools_reshare',
+                    'text' => '<i class="fa fa-share-alt fa-lg icon-unsel"><span class="wb-inv">Share this on the Wire</span></i>',
+                    'title' => elgg_echo('thewire_tools:reshare'),
+                    'href' => 'ajax/view/thewire_tools/reshare?reshare_guid=' . $entity->getGUID(),
+                    'link_class' => 'elgg-lightbox',
+                    'item_class' => 'pad-rght-xs',
+                    'is_trusted' => true,
+                    'priority' => 500
+                );
+                $return[] = \ElggMenuItem::factory($options);   
+            } else {
+                $options = array(
+                    'name' => 'thewire_tools_reshare',
+                    'text' => '',
+                    'item_class' => 'removeMe',
+                );
+                $return[] = \ElggMenuItem::factory($options); 
+                
+                elgg_unregister_menu_item('entity', 'thewire_tools_reshare');
+            }
         }
         
         //only show reply on the wire with logged in user
@@ -416,7 +438,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
             
  
 
-    }   
+     
 	if (($entity->countEntitiesFromRelationship("parent") || $entity->countEntitiesFromRelationship("parent", true))) {
                 $options = array(
                     'name' => 'thread',

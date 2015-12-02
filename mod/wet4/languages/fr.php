@@ -7,6 +7,8 @@ return array(
  */
     
     'thewire:post' => "Create a Wire Post",
+    'thewire:share' => ' Share',
+    'thewire:shares' => ' Shares',
     
 /**
  * User Menu

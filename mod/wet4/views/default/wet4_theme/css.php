@@ -10847,6 +10847,45 @@ a.shr-opn, a.shr-opn:hover {
 .elgg-menu-hz .removeMe {
     display: none;
 }
+.list-inline .removeMe {
+    display: none;
+}
+/******Padding Classes********/
+/*
+.pad-lft-0 {
+    padding-left: 0;
+}
+.pad-lft-xs {
+    padding-left: 5px;
+}
+.pad-lft-sm {
+    padding-left: 10px;
+}
+.pad-lft-md {
+    padding-left: 15px;
+}
+
+.pad-rght-0 {
+    padding-right: 0;
+}
+.pad-rght-xs {
+    padding-right: 5px;
+}
+.pad-rght-sm {
+    padding-right: 10px;
+}
+.pad-rght-md {
+    padding-right: 15px;
+}
+*/
+.list-inline .pad-rght-xs {
+    padding-right: 5px;
+}
+
+.list-inline .pad-lft-0 {
+    padding-left: 0;
+}
+
 
 /* Red Flag */
 .red {
