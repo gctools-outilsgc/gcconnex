@@ -9,6 +9,9 @@ return array(
     'thewire:post' => "Create a Wire Post",
     'thewire:share' => ' Share',
     'thewire:shares' => ' Shares',
+    'thewire:contentwarning' => 'This content may not be viewable to all users due to access permissions.',
+    'thewire:groupwarning' => 'This content is only viewable to members of: ',
+    'thewire:userwarning' => 'This content is only viewable to: ',
     
 /**
  * User Menu

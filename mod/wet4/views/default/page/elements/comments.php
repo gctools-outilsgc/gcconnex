@@ -28,6 +28,19 @@ $attr['class'][] = 'elgg-comments testing';
 // work around for deprecation code in elgg_view()
 unset($vars['internalid']);
 
+//check how many comments topic has
+    $num_replies = elgg_get_entities(array(
+        'type' => 'object',
+        'subtype' => 'comment',
+        'container_guid' => $vars['entity']->guid,
+        'count' => true,
+        'distinct' => false,
+    ));
+    
+    if($num_replies != 0){
+        echo '<h2 class="panel-title mrgn-lft-sm mrgn-bttm-md mrgn-tp-md">' . elgg_echo('comments') . '</h2>';
+    }
+
 $content = elgg_list_entities(array(
 	'type' => 'object',
 	'subtype' => 'comment',

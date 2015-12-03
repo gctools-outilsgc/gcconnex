@@ -10843,7 +10843,7 @@ a.shr-opn, a.shr-opn:hover {
     }  
 
 /*Here are my custom styles for this prototype*/
-#thewire-tools-reshare-wrapper {
+#thewire-tools-reshare-wrapper-wet4 {
     max-width: 600px;
 }
 
@@ -10897,7 +10897,7 @@ a.shr-opn, a.shr-opn:hover {
 
 .replyContainer {
     max-width: 510px;
-    margin: 0 auto;
+
 }
 
 .thewire-characters-remaining {

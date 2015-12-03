@@ -8,14 +8,6 @@
 
 $show_add_form = elgg_extract('show_add_form', $vars, true);
 
-
-
-echo '<h2 class="panel-title mrgn-lft-sm mrgn-bttm-md mrgn-tp-md">' . elgg_echo('group:replies') . '</h2>';
-
-echo '<div id="group-replies" class="elgg-comments mrgn-rght-md mrgn-lft-md clearfix">';
-
-
-
 $replies = elgg_list_entities(array(
 	'type' => 'object',
 	'subtype' => 'discussion_reply',
@@ -24,6 +16,24 @@ $replies = elgg_list_entities(array(
 	'distinct' => false,
 	'url_fragment' => 'group-replies',
 ));
+
+//check how many replies topic has
+$num_replies = elgg_get_entities(array(
+	'type' => 'object',
+	'subtype' => 'discussion_reply',
+	'container_guid' => $vars['topic']->getGUID(),
+	'count' => true,
+	'distinct' => false,
+));
+
+
+echo '<div id="group-replies" class="elgg-comments mrgn-rght-md mrgn-lft-md clearfix">';
+//if topic has replies show replies header
+if($num_replies != 0){
+
+    echo '<h2 class="panel-title mrgn-lft-sm mrgn-bttm-md mrgn-tp-md">' . elgg_echo('group:replies') . '</h2>';
+    
+}
 
 echo $replies;
 

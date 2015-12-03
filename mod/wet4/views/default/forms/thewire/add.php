@@ -35,17 +35,34 @@ if (!empty($reshare)) {
 	
     //display warning to user if resharing content that is not public on the wire
 	$reshare_input .= elgg_view("thewire_tools/reshare_source", array("entity" => $reshare));
-    if($reshare->access_id != 2){
-        $access = elgg_view('output/access', array(
-            'name' => 'access',
-            'entity' => $reshare,
-            ));
-        echo '<div class="alert alert-warning">
-            <p>This content may not be viewable to all users due to access permissions.</p>
-            <p>This content is only viewable to: <b><i>' . $access . '</i></b></p>
+    
+    //see if entity is within a group
+    $owner = $reshare->getContainerEntity();
+
+        //check access mode of group
+        if(elgg_instanceof($owner, "group") && $owner->getContentAccessMode() == 'members_only'){
+            
+            echo '<div class="alert alert-warning">
+            <p>' . elgg_echo('thewire:contentwarning') . '</p>
+            <p>' . elgg_echo('thewire:groupwarning') . '<b><i>' . $owner->name . '</i></b></p>
             </div>';
+            
+        } else if($reshare->access_id != 2){
+            
+            $access = elgg_view('output/access', array(
+                'name' => 'access',
+                'entity' => $reshare,
+                ));
+            
+            echo '<div class="alert alert-warning">
+            <p>' . elgg_echo('thewire:contentwarning') . '</p>
+            <p>' . elgg_echo('thewire:userwarning') . '<b><i>' . $access . '</i></b></p>
+            </div>';
+        }
         
-    }
+        
+        
+    
 
 	if (!empty($reshare->title)) {
 		$post_value = $reshare->title;

@@ -100,9 +100,6 @@ if ($full) {
 		"icon" => $owner_icon,
 		"body" => $blog_icon . $body,
 	));
-       
-
-    echo '<h2 class="panel-title mrgn-lft-sm mrgn-bttm-md mrgn-tp-md">' . elgg_echo('comments') . '</h2>';
 
     echo '<div id="group-replies" class="elgg-comments mrgn-rght-md mrgn-lft-md clearfix">';
     
