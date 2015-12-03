@@ -132,6 +132,46 @@ function wet4_theme_pagesetup() {
                 }*/
         
         
+        //style colleague requests tab
+        $context = elgg_get_context();
+        $page_owner = elgg_get_page_owner_entity();
+
+        // Show menu link in the correct context
+        if (in_array($context, array("friends", "friendsof", "collections", "messages"))) {
+            $options = array(
+                "type" => "user",
+                "count" => true,
+                "relationship" => "friendrequest",
+                "relationship_guid" => $page_owner->getGUID(),
+                "inverse_relationship" => true
+            );
+
+            $count = elgg_get_entities_from_relationship($options);
+            $extra = "";
+            if (!empty($count)) {
+                if($count >= 10){
+                    $count = '9+';
+                }
+                $extra = '<span class="notif-badge">' . $count . '</span>';
+            }
+            
+            // add menu item
+            $menu_item = array(
+                "name" => "friend_request",
+                "text" => elgg_echo("friend_request:menu") . $extra,
+                "href" => "friend_request/" . $page_owner->username,
+                "contexts" => array("friends", "friendsof", "collections", "messages")
+            );
+
+            elgg_register_menu_item("page", $menu_item);
+            
+            
+        }
+        
+        if(elgg_in_context('messages')){
+                elgg_unregister_menu_item("page", "friend_request");
+            }
+        
 	}
     
     
@@ -342,7 +382,6 @@ function wet4_likes_entity_menu_setup($hook, $type, $return, $params) {
 	return $return;
 }
 
-
 function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 	if (elgg_in_context('widgets')) {
 		return $return;
@@ -355,7 +394,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
     
         
         $blocked_subtypes = array('comment', 'discussion_reply');
-        if(in_array($entity->getSubtype(), $blocked_subtypes)){
+        if(in_array($entity->getSubtype(), $blocked_subtypes) || elgg_instanceof($entity, 'user')){
             
             //do not let comments or discussion replies to be reshared on the wire
             
@@ -849,4 +888,6 @@ function river_handler($hook, $type, $menu, $params){
         
     }
 }
+
+
 
