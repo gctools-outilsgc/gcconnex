@@ -1216,11 +1216,11 @@ ol {
 .list-inline {
   padding-left: 0;
   list-style: none;
-  margin-left: -5px; }
+  margin-left: -10px; }
   .list-inline > li {
     display: inline-block;
-    padding-left: 15px;
-    padding-right: 15px; }
+    padding-left: 10px;
+    padding-right: 10px; }
 
 dl {
   margin-top: 0;

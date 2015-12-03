@@ -50,7 +50,7 @@ if ($title_link) {
 if($entity->getType() == 'group'){
    echo '';
 }else{
-  echo "<div class=\" mrgn-bttm-sm mrgn-tp-sm timeStamp clearfix\">$subtitle</div>";   
+  echo "<div class=\" mrgn-bttm-sm  timeStamp clearfix\">$subtitle</div>";   
 }
 
 
@@ -63,7 +63,7 @@ if ($metadata) {
 echo elgg_view('object/summary/extend', $vars);
 
 if ($content) {
-	echo "<div class=\"elgg-content mrgn-tp-sm\">$content</div>";
+	echo "<div class=\"elgg-content mrgn-tp-md\">$content</div>";
 }
 
 if($entity->getType() == 'group'){
