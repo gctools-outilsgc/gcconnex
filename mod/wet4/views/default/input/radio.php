@@ -40,7 +40,7 @@ $id = elgg_extract('id', $vars, '');
 unset($vars['id']);
 
 $list_class = (array) elgg_extract('class', $vars, []);
-$list_class[] = 'elgg-input-radios';
+$list_class[] = 'elgg-input-radios ';
 $list_class[] = "elgg-{$vars['align']}";
 
 unset($vars['class']);
