@@ -11236,6 +11236,11 @@ details.elgg-state-success:before {
 }
 
 
+/****** Polls Custom stuff ******/
+.polls-table th{
+       font-weight: bold;
+}
+
 
 /*
  * Mobile panel
