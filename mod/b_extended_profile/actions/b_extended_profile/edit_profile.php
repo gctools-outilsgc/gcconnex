@@ -330,7 +330,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             $english = get_input('english', 'ERROR: Ask your admin to grep: SDFANLVNVNVNVNVNAA31566.');
             $languagesToAdd = get_input('langadded', 'ERROR: Ask your admin to grep: 5FH13FFSSGAHHHS0021.');
             $languagesToRemove = get_input('langremoved', 'ERROR: Ask your admin to grep: 5AAAAGGFH13GAH0022.');
-            $access = get_input('access');
+            //$access = get_input('access');    // not used
 
             $user->english = $english;
             $user->french = $french;
