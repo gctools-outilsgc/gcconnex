@@ -5,61 +5,61 @@ All dependencies is included in this branch for Elgg v1.12, <s>please note that 
 
 <h2>Mod list</h2>
 (helpful for testing / development)
-Elgg Developer Tools
-Diagnostics
-Log Browser
-Login As
-CSV User Import
+*Elgg Developer Tools
+*Diagnostics
+*Log Browser
+*Login As
+*CSV User Import
 
-(for the site itself)
-Tidypics Photo Gallery
-Groups
-Group Tools
-Group Operators
-AU Sub-Groups
-Group Deletion
-Blog
-Blog Tools
-Bookmarks
-User Dashboard
-Members
-Search
-Sphinx Search	(needs sphinx search service running to connect to if you want to use it)
-Site Pages
-File
-File Tools
-Domain Manager
-GC Registration
-Invite Friends
-Friend request
-Likes
-Message Board
-Messages
-Notifications
-Profile
-The Wire
-TheWire Tools
-Toggle Language
-User Validation by Email
-Unvalidatedemailchange
-Zaudio
-GC_Help
-Custom index widgets
-Event Calendar
-Pages
-Blueprint 2020 Ideas
-GC Profile Picture Badges
-Translation Editor
-Advanced Notifications
-Polls
-Widget Manager
-Widget Manager Accessibility Patch
-Module dump
-Extended Profile
-CKEditor
-Department Binning
-GoC - WET 4 Elgg Theme
-Rename Friends
+(for the site itself) <br />
+*Tidypics Photo Gallery
+*Groups
+*Group Tools
+*Group Operators
+*AU Sub-Groups
+*Group Deletion
+*Blog
+*Blog Tools
+*Bookmarks
+*User Dashboard
+*Members
+*Search
+*Sphinx Search	(needs sphinx search service running to connect to if you want to use it)
+*Site Pages
+*File
+*File Tools
+*Domain Manager
+*GC Registration
+*Invite Friends
+*Friend request
+*Likes
+*Message Board
+*Messages
+*Notifications
+*Profile
+*The Wire
+*TheWire Tools
+*Toggle Language
+*User Validation by Email
+*Unvalidatedemailchange
+*Zaudio
+*GC_Help
+*Custom index widgets
+*Event Calendar
+*Pages
+*Blueprint 2020 Ideas
+*GC Profile Picture Badges
+*Translation Editor
+*Advanced Notifications
+*Polls
+*Widget Manager
+*Widget Manager Accessibility Patch
+*Module dump
+*Extended Profile
+*CKEditor
+*Department Binning
+*GoC - WET 4 Elgg Theme
+*Rename Friends
 
 <sub><a name="fn1">1</a>: Elgg is an open source framework  for social networking and collaboration, for more information about Elgg visit http://elgg.org/ or see the original Elgg README below.</sub>
 
