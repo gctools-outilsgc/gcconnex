@@ -1,13 +1,65 @@
 <h1>GCconnex & How to Install</h1>
 This project is forked from Elgg<sup>[1](#fn1)</sup> by the Federal Government of Canada. This branch contains the main version of Elgg for 1.12 which is currently in development for future launch of the new GCconnex.
 
-All dependencies is included in this branch for Elgg v1.12, please note that some modules are included as submodules<sup>[2](#fn2)</sup>, you may need to pull from submodule.
+All dependencies is included in this branch for Elgg v1.12, <s>please note that some modules are included as submodules<sup>[2](#fn2)</sup>, you may need to pull from submodule</s>.
 
+<h2>Mod list</h2>
+(helpful for testing / development)
+Elgg Developer Tools
+Diagnostics
+Log Browser
+Login As
+CSV User Import
 
-```
-git submodule foreach git pull origin master
-```
-
+(for the site itself)
+Tidypics Photo Gallery
+Groups
+Group Tools
+Group Operators
+AU Sub-Groups
+Group Deletion
+Blog
+Blog Tools
+Bookmarks
+User Dashboard
+Members
+Search
+Sphinx Search	(needs sphinx search service running to connect to if you want to use it)
+Site Pages
+File
+File Tools
+Domain Manager
+GC Registration
+Invite Friends
+Friend request
+Likes
+Message Board
+Messages
+Notifications
+Profile
+The Wire
+TheWire Tools
+Toggle Language
+User Validation by Email
+Unvalidatedemailchange
+Zaudio
+GC_Help
+Custom index widgets
+Event Calendar
+Pages
+Blueprint 2020 Ideas
+GC Profile Picture Badges
+Translation Editor
+Advanced Notifications
+Polls
+Widget Manager
+Widget Manager Accessibility Patch
+Module dump
+Extended Profile
+CKEditor
+Department Binning
+GoC - WET 4 Elgg Theme
+Rename Friends
 
 <sub><a name="fn1">1</a>: Elgg is an open source framework  for social networking and collaboration, for more information about Elgg visit http://elgg.org/ or see the original Elgg README below.</sub>
 
