@@ -11235,6 +11235,21 @@ details.elgg-state-success:before {
     color:black;   
 }
 
+.legend{
+    margin: 15px 0;   
+}
+
+figcaption{
+    margin: 10px 0;
+    font-weight:bold;
+}
+
+
+.wb-graph figure:first-child{
+    width: 250px;
+    margin: 0 auto;
+    text-align: center;
+}
 
 /****** Polls Custom stuff ******/
 .polls-table th{

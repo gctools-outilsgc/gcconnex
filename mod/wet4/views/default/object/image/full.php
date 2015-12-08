@@ -72,5 +72,5 @@ if ($photo->description) {
 		'class' => 'mbl mrgn-tp-md mrgn-bttm-md',
 	));
 }
-echo '<h2 class="panel-title mrgn-lft-sm mrgn-bttm-md mrgn-tp-lg">' . elgg_echo("comments") . '</h2>';
+//echo '<h2 class="panel-title mrgn-lft-sm mrgn-bttm-md mrgn-tp-lg">' . elgg_echo("comments") . '</h2>';
 echo elgg_view_comments($photo);

@@ -11,7 +11,8 @@
 
 
 if (isset($vars['entity'])) {
-    echo '<table class="wb-charts wb-charts-pie table mrgn-tp-md polls-table ">';
+    $chartHeight = "data-flot='{ \"legend\": {\"show\":\"false\"}}'";
+    echo '<table class="wb-charts wb-charts-pie wb-charts-nolegend table mrgn-tp-md polls-table" '. $chartHeight .' >';
 
 	//set img src
 	$img_src = $vars['url'] . "mod/polls/graphics/poll.gif";
