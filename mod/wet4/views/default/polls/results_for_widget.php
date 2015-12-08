@@ -11,6 +11,7 @@
 
 
 if (isset($vars['entity'])) {
+    echo '<table class="wb-charts wb-charts-pie table mrgn-tp-md polls-table ">';
 
 	//set img src
 	$img_src = $vars['url'] . "mod/polls/graphics/poll.gif";
@@ -31,6 +32,8 @@ if (isset($vars['entity'])) {
 
 
 	//populate array
+    echo '<tr>';
+    echo '<td class="wb-inv"></td>';
 	foreach($responses as $response)
 	{
 		//get count per response
@@ -45,22 +48,49 @@ if (isset($vars['entity'])) {
 			
 		//html
 		?>
-<div class="progress_indicator mrgn-tp-md">
-	<div class="poll-result-response"><?php echo $response . " (" . $response_count . ")"; ?> </div><br>
-	<div class="progressBarContainer" align="left">
-		<div class="polls-filled-bar"
-			style="width: <?php echo $response_percentage; ?>%"></div>
-	</div>
-</div>
-<br>
+
+    <th class="text-center">
+        <?php echo $response; ?>
+    </th>
+
+
+
+
 		<?php
 	}
-	?>
+        echo '</tr>';
+        echo '<tr>';
+        echo '<th class="wb-inv">'.$question.'</th>';
+    	foreach($responses as $response)
+	{
+		//get count per response
+		$response_count = polls_get_response_count($response, $user_responses);
+			
+		//calculate %
+		if ($response_count && $user_responses_count) {
+			$response_percentage = round(100 / ($user_responses_count / $response_count));
+		} else {
+			$response_percentage = 0;
+		}
+			
+		//html
+		?>
+
+
+
+    <td class="text-center">
+        <?php echo $response_count; ?>
+    </td>
+
+    <?php
+        }
+    echo '</tr>';
+            ?>
 
 <p>
 <?php echo elgg_echo('polls:totalvotes') . $user_responses_count; ?>
 </p>
-
+</table>
 <?php
 
 }
@@ -69,3 +99,5 @@ else
 	register_error(elgg_echo("polls:blank"));
 	forward("mod/polls/all");
 }
+
+
