@@ -6,6 +6,7 @@
  */
 
 $group_guid = elgg_get_page_owner_entity();
+$group = $vars['entity'];		// $groups seems to require re-assignment
 
 if ($group->ideas_enable == "no") {
 	return true;
