@@ -53,7 +53,7 @@ $content = elgg_list_entities(array(
 	'url_fragment' => $attr['id'],
 ));
 
-
+if ($show_add_form)
 	$content .= elgg_view_form('comment/save', array(), $vars);
 
 
