@@ -7,5 +7,5 @@ require.config({
 
 
 requirejs( ["datatables"], function() {
-  $('#example').dataTable();
+  $('#dataTable').dataTable();
 } );
