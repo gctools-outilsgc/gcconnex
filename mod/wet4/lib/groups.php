@@ -114,6 +114,7 @@ function groups_search_page() {
  */
 function groups_handle_owned_page() {
 
+    set_context('my_groups');
 	$page_owner = elgg_get_page_owner_entity();
 
 	if ($page_owner->guid == elgg_get_logged_in_user_guid()) {
@@ -125,7 +126,9 @@ function groups_handle_owned_page() {
 	elgg_push_breadcrumb($title);
 
 	if (elgg_get_plugin_setting('limited_groups', 'groups') != 'yes' || elgg_is_admin_logged_in()) {
+        elgg_push_context('groups');
 		elgg_register_title_button();
+        elgg_pop_context();
 	}
     
 	$dbprefix = elgg_get_config('dbprefix');
@@ -148,7 +151,7 @@ $sidebar = elgg_view('groups/sidebar/suggested');
 		'filter' => $filter,
 	);
 	$body = elgg_view_layout('content',  $params);
-
+    elgg_pop_context();
 	echo elgg_view_page($title, $body);
 }
 
@@ -156,7 +159,7 @@ $sidebar = elgg_view('groups/sidebar/suggested');
  * List groups the user is memober of
  */
 function groups_handle_mine_page() {
-
+    set_context('my_groups');
 	$page_owner = elgg_get_page_owner_entity();
 
 	if ($page_owner->guid == elgg_get_logged_in_user_guid()) {
@@ -167,7 +170,9 @@ function groups_handle_mine_page() {
 	elgg_push_breadcrumb($title);
 
 	if (elgg_get_plugin_setting('limited_groups', 'groups') != 'yes' || elgg_is_admin_logged_in()) {
+        elgg_push_context('groups');
 		elgg_register_title_button();
+        elgg_pop_context();
 	}
 
 	$dbprefix = elgg_get_config('dbprefix');
@@ -194,7 +199,7 @@ function groups_handle_mine_page() {
 		'filter' => $filter,
 	);
 	$body = elgg_view_layout('content', $params);
-
+    elgg_pop_context();
 	echo elgg_view_page($title, $body);
 }
 
@@ -388,6 +393,7 @@ function groups_handle_activity_page($guid) {
  */
 function groups_handle_members_page($guid) {
 
+    elgg_push_context('groups_members');
 	elgg_entity_gatekeeper($guid, 'group');
 
 	$group = get_entity($guid);
@@ -418,7 +424,7 @@ function groups_handle_members_page($guid) {
 		'filter' => '',
 	);
 	$body = elgg_view_layout('content', $params);
-
+    elgg_pop_context();
 	echo elgg_view_page($title, $body);
 }
 

@@ -19,6 +19,8 @@
  * @uses $vars['item_view']    Alternative view to render list items
  * @uses $vars['no_results']   Message to display if no results (string|Closure)
  */
+
+
 $items = $vars['items'];
 $count = elgg_extract('count', $vars);
 $pagination = elgg_extract('pagination', $vars, true);
@@ -51,7 +53,74 @@ if (isset($vars['item_class'])) {
 $nav = ($pagination) ? elgg_view('navigation/pagination', $vars) : '';
 
 $list_items = '';
+
+////////////////
+///DATATABLES///
+////////////////
+
+if(elgg_in_context('friends') || elgg_in_context('my_groups') || elgg_in_context('groups_members')){ //datatable for colleagues, group members, my groups
+
 foreach ($items as $item) {
+	$item_view = elgg_view_list_item($item, $vars);
+	if (!$item_view) {
+		continue;
+	}
+    
+    $heading = $item->getType();
+
+	$li_attrs = ['class' => $item_classes];
+
+	if ($item instanceof \ElggEntity) {
+		$guid = $item->getGUID();
+		$type = $item->getType();
+		$subtype = $item->getSubtype();
+
+		$li_attrs['id'] = "elgg-$type-$guid";
+
+		$li_attrs['class'][] = "elgg-item-$type";
+		if ($subtype) {
+            //                                               
+			$li_attrs['class'][] = "elgg-item-$type-$subtype clearfix";
+		}
+	} else if (is_callable(array($item, 'getType'))) {
+		$li_attrs['id'] = "item-{$item->getType()}-{$item->id}";
+	}
+
+    //stick items in <td> element
+	$list_items = elgg_format_element('td', ['class' => ''], $item_view);
+    //stick <td> elements in <tr>
+    $tR .= elgg_format_element('tr', ['class' => '',], $list_items);
+}
+
+if ($position == 'before' || $position == 'both') {
+	echo $nav;
+}
+    
+//determine what to put in table head based on item subtype
+if($heading == 'user' && elgg_in_context('friends')){ //friends
+    $heading = elgg_echo('friends');   
+} else if($heading == 'user' && elgg_in_context('groups_members')){ //group members
+    $heading = elgg_echo('groups:members');   
+} else if($heading == 'group' && elgg_in_context('my_groups')){ //my groups
+    $heading = elgg_echo('groups');   
+} 
+
+//create table body
+$tBody = elgg_format_element('tbody', ['class' => ''], $tR);
+
+//create table head
+$tHead = elgg_format_element('thead', ['class' => ''], '<tr> <th> ' . $heading . '</th> </tr>');
+
+//pull it all together and display table
+echo elgg_format_element('table', ['class' => '', 'id' => 'example'], $tHead . $tBody);
+
+if ($position == 'after' || $position == 'both') {
+	echo $nav;
+}
+
+} else { //normal list for everything else
+    
+    foreach ($items as $item) {
 	$item_view = elgg_view_list_item($item, $vars);
 	if (!$item_view) {
 		continue;
@@ -90,4 +159,5 @@ echo elgg_format_element('ul', ['class' => $list_classes], $list_items);
 
 if ($position == 'after' || $position == 'both') {
 	echo $nav;
+}
 }
