@@ -20,8 +20,11 @@ $metadata = elgg_view_menu('entity', array(
 	'class' => 'list-inline',
 ));
 
+
+
 if (elgg_in_context('owner_block') || elgg_in_context('widgets')) {
-	$metadata = '';
+	//Give widget stuff entity menu
+    //$metadata = '';
 }
 
 

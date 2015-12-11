@@ -315,8 +315,9 @@ function wet4_theme_setup_head($hook, $type, $data) {
 
 
 function wet4_likes_entity_menu_setup($hook, $type, $return, $params) {
-	if (elgg_in_context('widgets')) {
-		return $return;
+	// make the widget view produce the same entity menu as the other objects
+    if (elgg_in_context('widgets')) {
+		//return $return;
 	}
 
 	$entity = $params['entity'];
@@ -372,7 +373,7 @@ function wet4_likes_entity_menu_setup($hook, $type, $return, $params) {
 			'text' => $count,
 			'href' => false,
 			'priority' => 1001,
-            'item_class' => 'pad-lft-0',
+            'item_class' => 'entity-menu-bubble',
 		);
 		$return[] = ElggMenuItem::factory($options);
 	}
@@ -383,8 +384,9 @@ function wet4_likes_entity_menu_setup($hook, $type, $return, $params) {
 }
 
 function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
-	if (elgg_in_context('widgets')) {
-		return $return;
+	//Have widgets show the same entity menu
+    if (elgg_in_context('widgets')) {
+		//return $return;
 	}
 	
 	$entity = $params['entity'];
@@ -392,7 +394,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 	$handler = elgg_extract('handler', $params, false);
     
     
-        
+       
         $blocked_subtypes = array('comment', 'discussion_reply');
         if(in_array($entity->getSubtype(), $blocked_subtypes) || elgg_instanceof($entity, 'user')){
             
@@ -424,7 +426,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 					'title' => elgg_echo('thewire_tools:reshare:count'),
 					'href' => 'ajax/view/thewire_tools/reshare_list?entity_guid=' . $entity->getGUID(),
 					'link_class' => 'elgg-lightbox',
-                    'item_class' => 'pad-lft-0',
+                    'item_class' => ' entity-menu-bubble',
 					'is_trusted' => true,
 					'priority' => 501,
 					'data-colorbox-opts' => json_encode(array(
@@ -435,6 +437,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
         
             
             if(elgg_is_logged_in()){
+
                 //reshare on the wire
                 $options = array(
                     'name' => 'thewire_tools_reshare',
@@ -446,7 +449,15 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
                     'is_trusted' => true,
                     'priority' => 500
                 );
-                $return[] = \ElggMenuItem::factory($options);   
+                $return[] = \ElggMenuItem::factory($options); 
+                
+                $options = array(
+			'name' => 'access',
+                    'text' => '',
+                    'item_class' => 'removeMe',
+		);
+		$return[] = \ElggMenuItem::factory($options);
+                
             } else {
                 $options = array(
                     'name' => 'thewire_tools_reshare',
@@ -455,7 +466,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
                 );
                 $return[] = \ElggMenuItem::factory($options); 
                 
-                elgg_unregister_menu_item('entity', 'thewire_tools_reshare');
+                //elgg_unregister_menu_item('entity', 'thewire_tools_reshare');
             }
         }
         
@@ -491,16 +502,16 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
             }
 	if ($entity->canEdit() && $handler) {
 		// edit link
-        /*
+    
 		$options = array(
 			'name' => 'edit',
-			'text' => '<i class="fa fa-edit fa-lg"></i>',
+			'text' => '<i class="fa fa-edit fa-lg icon-unsel"><span class="wb-inv">Edit This</span></i>',
 			'title' => elgg_echo('edit:this'),
 			'href' => "$handler/edit/{$entity->getGUID()}",
 			'priority' => 200,
 		);
 		$return[] = \ElggMenuItem::factory($options);
-        */
+   
 		// delete link
 		$options = array(
 			'name' => 'delete',
