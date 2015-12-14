@@ -19,6 +19,15 @@ echo elgg_view('groups/profile/tab_menu');
 ?>
 
 <div id="groups-tools" class="tab-content clearfix">
+    
+    <div id="search" class="collapse panel panel-custom">
+    <div class="panel-body">
+        <?php 
+            echo  '<h3>' .   elgg_echo('groups:search_in_group') . '</h3>';
+            echo elgg_view("groups/sidebar/search", $vars); 
+        ?>
+    </div>
+</div>
 
     <div id="<?php echo elgg_echo('gprofile:about') ?>" class="tab-pane fade-in active">
 
@@ -34,11 +43,6 @@ echo elgg_view('groups/profile/tab_menu');
     echo elgg_view("groups/tool_latest", $vars);
     ?>
     
-    <div id="search" class="tab-pane fade-in">
-        <?php 
-            echo  '<h3>' .   elgg_echo('groups:search_in_group') . '</h3>';
-            echo elgg_view("groups/sidebar/search", $vars); 
-        ?>
-    </div>
+    
 
 </div>

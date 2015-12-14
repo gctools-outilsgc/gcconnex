@@ -84,10 +84,13 @@ elgg_register_menu_item('owner_block', array(
 if(elgg_get_context() == 'group_profile'){
     elgg_register_menu_item('owner_block', array(
         'name' => 'search',
+        'id' => 'searchTab',
         'href' => '#search',
-        'text' => '<i class="fa fa-search"></i>',
+        'text' => '<i class="fa fa-search"><span class="wb-inv">' . elgg_echo('groups:search_in_group') . '</span></i>',
         'title' => 'search',
-        'data-toggle' => 'tab',
+        'data-toggle' => 'collapse',
+        'aria-expanded' => false,
+        'aria-controls' => 'search',
         'class' => '',
         'priority' => '101',
         ));
@@ -122,6 +125,8 @@ $(document).ready( function(){
     <?php if(elgg_get_context() == 'group_profile' || elgg_get_context() == 'profile'){ ?>
     //add tab data to li's
     $('.tabMenuGroup .elgg-menu-content').attr('data-toggle', 'tab');
+    //add collapse to search
+    $('.tabMenuGroup #searchTab').attr('data-toggle', 'collapse');
     <?php } ?>
     //add dropdown data to li
     $('.tabMenuGroup .dropdown a').attr('data-toggle', 'dropdown');

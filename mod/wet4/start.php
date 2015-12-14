@@ -34,6 +34,8 @@ function wet4_theme_init() {
     //load datatables
     elgg_require_js("wet4/test");
     
+    elgg_register_js('removeMe', elgg_get_plugins_path() . 'wet4/js/removeMe.js');
+    
     //the wire reply and thread
     elgg_register_ajax_view("thewire_tools/reply");
 	elgg_register_ajax_view("thewire_tools/thread");
@@ -64,7 +66,7 @@ function wet4_theme_pagesetup() {
     
     //elgg_load_js('elgg/dev');
     //elgg_load_js('elgg/reportedcontent');
-    
+    //elgg_load_js('removeMe');
     
 	if (elgg_is_logged_in()) {
 
@@ -505,12 +507,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
             );
             $return[] = \ElggMenuItem::factory($options); 
         }
-        
-            
-            
- 
-
-     
+          
 	if (($entity->countEntitiesFromRelationship("parent") || $entity->countEntitiesFromRelationship("parent", true))) {
                 $options = array(
                     'name' => 'thread',
@@ -530,7 +527,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 			'text' => '<i class="fa fa-edit fa-lg icon-unsel"><span class="wb-inv">Edit This</span></i>',
 			'title' => elgg_echo('edit:this'),
 			'href' => "$handler/edit/{$entity->getGUID()}",
-			'priority' => 200,
+			'priority' => 299,
 		);
 		$return[] = \ElggMenuItem::factory($options);
    
@@ -545,7 +542,6 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 		);
 		$return[] = \ElggMenuItem::factory($options);
         
-
 	}
     
     if($entity->getSubType() == 'file'){

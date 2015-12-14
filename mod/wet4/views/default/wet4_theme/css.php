@@ -10716,6 +10716,14 @@ a.shr-opn, a.shr-opn:hover {
         background: #047177;
         color: white;
     }
+
+    .btn-endorse {
+          color: #335075;
+          background-color: #efefef;
+        border: 1px solid #dcdee1;
+
+        border-radius: 0;
+    }
     
     /****************************************/
     
