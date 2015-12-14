@@ -17,6 +17,11 @@
  * @uses $vars['content']   HTML for the entity content (optional)
  */
 
+$checkPage = elgg_get_context();
+
+//Checking the context of the summary so I can modify the specific summaries and stuff
+//echo $checkPage;
+
 $entity = $vars['entity'];
 
 $title_link = elgg_extract('title', $vars, '');
@@ -47,7 +52,7 @@ if ($title_link) {
     echo "<h3 class=\"mrgn-bttm-0 panel-title\">$title_link</h3>";
 }
 //This tests to see if you are looking at a group list and does't outpout the subtitle variable here, It's called at the end of this file
-if($entity->getType() == 'group'){
+if($entity->getType() == 'group' || $checkPage == 'friends' || $checkPage == 'groups_members'){
    echo '';
 }else{
   echo "<div class=\" mrgn-bttm-sm  timeStamp clearfix\">$subtitle</div>";   
@@ -62,13 +67,14 @@ if ($content) {
 	echo "<div class=\"elgg-content mrgn-tp-md mrgn-lft-sm\">$content</div>";
 }
 
-if($entity->getType() == 'group'){
+if($entity->getType() == 'group'|| $checkPage == 'friends' || $checkPage == 'groups_members'){
 
     if ($metadata) {
 	   echo '<div class="mrgn-tp-sm"><div class="">' .$metadata . '</div></div>';
 }
     
    echo "<div class=\" mrgn-bttm-sm mrgn-tp-md timeStamp clearfix\">$subtitle</div>"; 
+    
 }else{
   
 echo '<div class="row mrgn-tp-md">';

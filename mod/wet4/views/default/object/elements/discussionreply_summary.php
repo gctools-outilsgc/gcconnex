@@ -71,5 +71,6 @@ if ($content) {
 
 if($entity->getType() == 'group'){
    echo "<div class=\" mrgn-bttm-sm mrgn-tp-md timeStamp clearfix\">$subtitle</div>"; 
+
 }
 

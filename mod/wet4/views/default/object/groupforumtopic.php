@@ -80,15 +80,21 @@ if ($num_replies != 0) {
 	));
 }
 
-// do not show the metadata and controls in widget view
+// We are showing the meta data and the ability to share and like from the widget view 
 if (elgg_in_context('widgets')) {
-	$metadata = '';
+	$metadata = elgg_view_menu('entity', array(
+		'entity' => $vars['entity'],
+		'handler' => 'discussion',
+		'sort_by' => 'priority',
+		'class' => 'list-inline',
+        'item_class' => 'mrgn-rght-sm',
+	));
 } else {
 	$metadata = elgg_view_menu('entity', array(
 		'entity' => $vars['entity'],
 		'handler' => 'discussion',
 		'sort_by' => 'priority',
-		'class' => 'elgg-menu-hz',
+		'class' => 'list-inline',
         'item_class' => 'mrgn-rght-sm',
 	));
 }

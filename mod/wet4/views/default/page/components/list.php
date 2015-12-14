@@ -87,9 +87,9 @@ foreach ($items as $item) {
 	}
 
     //stick items in <td> element
-	$list_items = elgg_format_element('td', ['class' => ''], $item_view);
+	$list_items = elgg_format_element('td', ['class' => 'data-table-list-item '], $item_view);
     //stick <td> elements in <tr>
-    $tR .= elgg_format_element('tr', ['class' => '',], $list_items);
+    $tR .= elgg_format_element('tr', ['class' => 'testing',], $list_items);
 }
 
 if ($position == 'before' || $position == 'both') {
@@ -109,10 +109,10 @@ if($heading == 'user' && elgg_in_context('friends')){ //friends
 $tBody = elgg_format_element('tbody', ['class' => ''], $tR);
 
 //create table head
-$tHead = elgg_format_element('thead', ['class' => ''], '<tr> <th> ' . $heading . '</th> </tr>');
+$tHead = elgg_format_element('thead', ['class' => ''], '<tr> <th class="data-table-head"> ' . $heading . '</th> </tr>');
 
 //pull it all together and display table
-echo elgg_format_element('table', ['class' => '', 'id' => 'dataTable'], $tHead . $tBody);
+echo elgg_format_element('table', ['class' => 'panel panel-custom wb-tables table', 'id' => ''], $tHead . $tBody);
 
 if ($position == 'after' || $position == 'both') {
 	echo $nav;

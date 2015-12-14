@@ -4580,7 +4580,7 @@ a.list-group-item-danger {
 .panel-title {
   margin-top: 0;
   margin-bottom: 0;
-  font-size: 20px;
+  font-size: 22px;
   color: inherit; }
   .panel-title > a {
     color: #055959; }
@@ -11261,7 +11261,7 @@ figcaption{
 /******* Entity Menu Style ********/
 
 .entity-menu-bubble{
-    padding: 6px;
+    padding: 3px;
     background-color: #efefef;
     border: 1px solid transparent;
 
@@ -11273,7 +11273,7 @@ figcaption{
     display: block;
     position: absolute;
     left: -10px;
-    top: 8px;
+    top: 5px;
     width: 0;
     height: 0;
 	border-top: 10px solid transparent;
@@ -11283,6 +11283,15 @@ figcaption{
     clear: both;    
 }
 
+
+.data-table-list-item{
+    padding:10px;  
+    border-bottom: 1px solid #d6eae6;
+}
+
+.data-table-head{
+    padding:10px;   
+}
 
 
 /*
