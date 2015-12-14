@@ -66,7 +66,48 @@ if ($alt_image) {
 HTML;
     
     
-}else{
+}else if(elgg_in_context('file_tools_selector')){ //for files and folders
+    
+
+
+if ($image) {
+	$image = "<div class=\"mrgn-tp-sm col-xs-2\">$image</div>";
+}
+
+if ($alt_image) {
+	$alt_image = '<div class="elgg-image-alt  col-xs-1 mrgn-tp-md">' . $alt_image . '</div>';
+}
+    
+    //see if entity is file or folder
+$entity = elgg_extract('subtype', $vars, '');
+$guid = elgg_extract('guid', $vars, '');
+
+
+    
+
+//only display move link on files
+if($entity == 'file' && elgg_is_logged_in() && elgg_get_logged_in_user_entity()->canEdit()){
+    $body = "<div class=\"mrgn-tp-sm col-xs-8\">$body</div>";
+    $move_link = '<div class="col-xs-1"><a class=" elgg-lightbox" href="' . elgg_get_site_url() . 'ajax/view/file_tools/move?guid=' . $guid . '">Move File</a></div>';
+} else {
+    $body = "<div class=\"mrgn-tp-sm col-xs-9\">$body</div>";
+    $move_link = '';
+}
+ 
+
+
+
+echo <<<HTML
+
+<div class="$class clearfix mrgn-bttm-md" $id>
+	$alt_image$image$body$move_link
+    <div class=" elgg-body clearfix edit-comment">
+    
+    </div>
+</div>
+HTML;
+    
+} else{
     
     $body = "<div class=\"mrgn-tp-sm col-xs-10\">$body</div>";
 

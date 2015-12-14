@@ -11,3 +11,6 @@ foreach ($js as $script) { ?>
 $deps = _elgg_services()->amdConfig->getDependencies();
 ?>
 
+<script>
+require(<?= json_encode($deps, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); ?>);
+</script>

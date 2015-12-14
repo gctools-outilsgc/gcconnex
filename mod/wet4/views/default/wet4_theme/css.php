@@ -11257,6 +11257,34 @@ figcaption{
 }
 
 
+
+/******* Entity Menu Style ********/
+
+.entity-menu-bubble{
+    padding: 6px;
+    background-color: #efefef;
+    border: 1px solid transparent;
+
+}
+
+
+.entity-menu-bubble:before{
+       content: '';
+    display: block;
+    position: absolute;
+    left: -10px;
+    top: 8px;
+    width: 0;
+    height: 0;
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent; 
+	
+	border-right:10px solid #efefef; 
+    clear: both;    
+}
+
+
+
 /*
  * Mobile panel
  */

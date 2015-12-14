@@ -103,6 +103,7 @@ $params = array(
     'subtitle' => $subtitle,
 	"content" => $content,
 	"tags" => false,
+	"title" => false,
 );
 $params = $params + $vars;
 $list_body = elgg_view("object/elements/thewire_summary", $params);

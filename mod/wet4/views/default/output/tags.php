@@ -32,7 +32,7 @@ if (!is_array($tags)) {
 	$tags = array($tags);
 }
 
-$list_class = "list-inline tags";
+$list_class = "list-inline tags mrgn-lft-sm mrgn-tp-sm";
 if (isset($vars['list_class'])) {
 	$list_class = "$list_class {$vars['list_class']}";
 	unset($vars['list_class']);

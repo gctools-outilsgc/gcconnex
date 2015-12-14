@@ -54,19 +54,34 @@ if($entity->getType() == 'group'){
 }
 
 
-echo "<div class=\"tags\">$tags</div>";
 
-if ($metadata) {
-	echo $metadata;
-}
 
 echo elgg_view('object/summary/extend', $vars);
 
 if ($content) {
-	echo "<div class=\"elgg-content mrgn-tp-md\">$content</div>";
+	echo "<div class=\"elgg-content mrgn-tp-md mrgn-lft-sm\">$content</div>";
 }
 
 if($entity->getType() == 'group'){
-   echo "<div class=\" mrgn-bttm-sm mrgn-tp-md timeStamp clearfix\">$subtitle</div>"; 
+
+    if ($metadata) {
+	   echo '<div class="mrgn-tp-sm"><div class="">' .$metadata . '</div></div>';
 }
+    
+   echo "<div class=\" mrgn-bttm-sm mrgn-tp-md timeStamp clearfix\">$subtitle</div>"; 
+}else{
+  
+echo '<div class="row mrgn-tp-md">';
+
+echo "<div class=\"tags col-sm-6 col-xs-12\">$tags</div>";
+
+if ($metadata) {
+	echo '<div class="col-sm-6 col-xs-12"><div class="pull-right">' .$metadata . '</div></div>';
+}
+
+echo '</div>';  
+}
+
+
+
 

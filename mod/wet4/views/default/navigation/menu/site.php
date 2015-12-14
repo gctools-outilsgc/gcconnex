@@ -16,7 +16,7 @@ foreach ($default_items as $menu_item) {
 
 // Wet 4 more menu items - You can un-comment this code below to add the more menu back in
 
-/*
+
 if ($more_items) {
     
 	echo '<li class="elgg-more ">';
@@ -35,4 +35,3 @@ if ($more_items) {
 	echo '</li>';
 }
 echo '</ul>';
-*/
