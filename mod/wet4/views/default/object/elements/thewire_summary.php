@@ -56,6 +56,6 @@ if ($content) {
 	echo "<div class=\"elgg-content mrgn-tp-sm mrgn-lft-sm\">$content</div>";
 }
 
-if ($metadata) {
+if ( $metadata && !(elgg_in_context('widgets')) ) {
 	echo $metadata;
 }

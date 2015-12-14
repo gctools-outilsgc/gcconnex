@@ -19,29 +19,35 @@ function wet4_theme_init() {
     elgg_register_plugin_hook_handler('register', 'menu:entity', 'wet4_elgg_entity_menu_setup');
     elgg_register_plugin_hook_handler('register', 'menu:river', 'wet4_elgg_river_menu_setup');
     
-    //elgg_unregister_plugin_hook_handler("register", "menu:entity", array('\ColdTrick\TheWireTools\EntityMenu', 'registerReshare'));
-    
     elgg_register_plugin_hook_handler('register', 'menu:entity', 'wet4_likes_entity_menu_setup', 400);
     //elgg_register_plugin_hook_handler('register', 'menu:entity', 'wet4_delete_entity_menu', 400);
     
 	// theme specific CSS
 	elgg_extend_view('css/elgg', 'wet4_theme/css');
+    
+    //datatables css file
+	elgg_extend_view('css/elgg', '//cdn.datatables.net/1.10.10/css/jquery.dataTables.css');
 
 	//elgg_unextend_view('page/elements/header', 'search/header');
 	//elgg_extend_view('page/elements/sidebar', 'search/header', 0);
     
+    //load datatables
+    elgg_require_js("wet4/test");
     
     //the wire reply and thread
     elgg_register_ajax_view("thewire_tools/reply");
 	elgg_register_ajax_view("thewire_tools/thread");
+    
+    //file tools 
+	elgg_register_ajax_view("file_tools/move");
 	
 	elgg_register_plugin_hook_handler('head', 'page', 'wet4_theme_setup_head');
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'my_owner_block_handler');
 	elgg_register_plugin_hook_handler('register', 'menu:river', 'river_handler');
     
-    //replace files lost while removing require.js
-    elgg_register_js('elgg/dev', elgg_get_site_url() . 'mod/wet4/views/default/js/elgg/dev.js', 'footer');
-    elgg_register_js('elgg/reportedcontent', elgg_get_site_url() . 'mod/wet4/views/default/js/elgg/reportedcontent.js', 'footer');
+    elgg_register_simplecache_view('wet4/test.js');
+    
+	elgg_register_action("file/move_folder", elgg_get_plugins_path() . "/wet4/actions/file/move.php");
     
 	// non-members do not get visible links to RSS feeds
 	if (!elgg_is_logged_in()) {
@@ -279,9 +285,25 @@ function wet4_theme_pagesetup() {
 		);
 		elgg_register_menu_item('page', $params);
 	}
-	
-	
     
+    
+    //new folder button for files
+    
+    if(elgg_is_logged_in()){
+        $user = elgg_get_logged_in_user_entity();
+        if($user->canEdit()){
+            $params = array(
+                'name' => 'new_folder',
+                'text' => elgg_echo("file_tools:new:title"),
+                'href' => "#",
+                "id" => "file_tools_list_new_folder_toggle",
+                'item_class' => 'mrgn-lft-sm',
+                'context' => 'file',
+            );
+            elgg_register_menu_item('title', $params);
+        }
+    }
+
     
 }
 
@@ -515,7 +537,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 		// delete link
 		$options = array(
 			'name' => 'delete',
-			'text' => '<i class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">Delete This</span></i>',
+			'text' => '<i class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">' . elgg_echo('delete:this') . '</span></i>',
 			'title' => elgg_echo('delete:this'),
 			'href' => "action/$handler/delete?guid={$entity->getGUID()}",
 			'confirm' => elgg_echo('deleteconfirm'),
@@ -525,6 +547,19 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
         
 
 	}
+    
+    if($entity->getSubType() == 'file'){
+        // download link
+		$options = array(
+			'name' => 'download',
+			'text' => '<i class="fa fa-download fa-lg icon-unsel"><span class="wb-inv">Download File</span></i>',
+			'title' => 'Download File',
+			'href' => "file/download/{$entity->getGUID()}",
+			'priority' => 299,
+            'context' => array('file_tools_selector', 'file'),
+		);
+		$return[] = \ElggMenuItem::factory($options);
+    }
 
 	return $return;
 }

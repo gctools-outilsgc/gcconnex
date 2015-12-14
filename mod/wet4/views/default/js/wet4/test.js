@@ -1,3 +1,4 @@
+//For Datatables creation
 require.config({
     paths: {
         "jquery":    "//ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.0.min",
@@ -5,7 +6,7 @@ require.config({
     }
 });
 
-
+// { "dom": '<"top"ilf>' }
 requirejs( ["datatables"], function() {
-  $('#dataTable').dataTable();
+  $('#dataTable').dataTable( { "dom": '<"top"ilf>' } );
 } );
