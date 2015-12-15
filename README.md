@@ -5,62 +5,64 @@ All dependencies is included in this branch for Elgg v1.12, <s>please note that 
 
 <h2>Mod list</h2>
 (helpful for testing / development)
--Elgg Developer Tools
--Diagnostics
--Log Browser
--Login As
--CSV User Import
-
+<ul>
+<li>Elgg Developer Tools</li>
+<li>Diagnostics</li>
+<li>Log Browser</li>
+<li>Login As</li>
+<li>CSV User Import</li>
+</ul>
 (for the site itself) <br />
--Tidypics Photo Gallery
--Groups
--Group Tools
--Group Operators
--AU Sub-Groups
--Group Deletion
--Blog
--Blog Tools
--Bookmarks
--User Dashboard
--Members
--Search
--Sphinx Search	(needs sphinx search service running to connect to if you want to use it)
--Site Pages
--File
--File Tools
--Domain Manager
--GC Registration
--Invite Friends
--Friend request
--Likes
--Message Board
--Messages
--Notifications
--Profile
--The Wire
--TheWire Tools
--Toggle Language
--User Validation by Email
--Unvalidatedemailchange
--Zaudio
--GC_Help
--Custom index widgets
--Event Calendar
--Pages
--Blueprint 2020 Ideas
--GC Profile Picture Badges
--Translation Editor
--Advanced Notifications
--Polls
--Widget Manager
--Widget Manager Accessibility Patch
--Module dump
--Extended Profile
--CKEditor
--Department Binning
--GoC - WET 4 Elgg Theme
--Rename Friends
-
+<ul>
+<li>Tidypics Photo Gallery<li>
+<li>Groups<li>
+<li>Group Tools<li>
+<li>Group Operators<li>
+<li>AU Sub-Groups<li>
+<li>Group Deletion<li>
+<li>Blog<li>
+<li>Blog Tools<li>
+<li>Bookmarks<li>
+<li>User Dashboard<li>
+<li>Members<li>
+<li>Search<li>
+<li>Sphinx Search	(needs sphinx search service running to connect to if you want to use it)<li>
+<li>Site Pages<li>
+<li>File<li>
+<li>File Tools<li>
+<li>Domain Manager<li>
+<li>GC Registration<li>
+<li>Invite Friends<li>
+<li>Friend request<li>
+<li>Likes<li>
+<li>Message Board<li>
+<li>Messages<li>
+<li>Notifications<li>
+<li>Profile<li>
+<li>The Wire<li>
+<li>TheWire Tools<li>
+<li>Toggle Language<li>
+<li>User Validation by Email<li>
+<li>Unvalidatedemailchange<li>
+<li>Zaudio<li>
+<li>GC_Help<li>
+<li>Custom index widgets<li>
+<li>Event Calendar<li>
+<li>Pages<li>
+<li>Blueprint 2020 Ideas<li>
+<li>GC Profile Picture Badges<li>
+<li>Translation Editor<li>
+<li>Advanced Notifications<li>
+<li>Polls<li>
+<li>Widget Manager<li>
+<li>Widget Manager Accessibility Patch<li>
+<li>Module dump<li>
+<li>Extended Profile<li>
+<li>CKEditor<li>
+<li>Department Binning<li>
+<li>GoC - WET 4 Elgg Theme<li>
+<li>Rename Friends<li>
+</ul>
 <sub><a name="fn1">1</a>: Elgg is an open source framework  for social networking and collaboration, for more information about Elgg visit http://elgg.org/ or see the original Elgg README below.</sub>
 
 <sub><a name="fn2">2</a>: WET4 is currently in development to comply with the standards of UX within the Government</sub>
