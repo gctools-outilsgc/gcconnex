@@ -1910,13 +1910,13 @@ th {
   .table > tbody > tr > td,
   .table > tfoot > tr > th,
   .table > tfoot > tr > td {
-    padding: 8px;
+    padding: 10px 3px 3px 0;
     line-height: 1.4375;
     vertical-align: top;
-    border-top: 1px solid #ddd; }
+    border-top: 1px solid #d6eae6; }
   .table > thead > tr > th {
     vertical-align: bottom;
-    border-bottom: 2px solid #ddd; }
+    }
   .table > caption + thead > tr:first-child > th,
   .table > caption + thead > tr:first-child > td,
   .table > colgroup + thead > tr:first-child > th,
@@ -5979,8 +5979,12 @@ fieldset {
 [dir=rtl] .pager [rel="next"]:before, .dataTables_wrapper .dataTables_paginate .paginate_button.previous:before, [dir=rtl] .dataTables_wrapper .dataTables_paginate .paginate_button.next:before, .pagination > li:last-child [rel="next"]:after,
 .pager > li:last-child [rel="next"]:after, [dir=rtl] .pagination [rel="prev"]:after,
 [dir=rtl] .pager [rel="prev"]:after, .dataTables_wrapper .dataTables_paginate .paginate_button.next:after, [dir=rtl] .dataTables_wrapper .dataTables_paginate .paginate_button.previous:after, table.dataTable thead .sorting-icons:before, table.dataTable thead .sorting-icons:after {
-  content: " ";
-  font-family: "Glyphicons Halflings";
+ content: " ";
+      display: inline-block;
+    font: normal normal normal 20px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
   font-weight: 400;
   line-height: 1em;
   position: relative;
@@ -8400,10 +8404,11 @@ table.dataTable thead th:active, table.dataTable thead td:active {
   font-weight: 400; }
 
 table.dataTable thead th, table.dataTable tfoot th {
-  font-weight: 700; }
+  font-weight: 700;
+ font-size: 1.2em; }
 
 table.dataTable thead th, table.dataTable thead td, table.dataTable tfoot th, table.dataTable tfoot td, table.dataTable.no-footer, .dataTables_wrapper.no-footer .dataTables_scrollBody {
-  border-bottom: 1px solid #111; }
+  border-bottom: none; }
 
 table.dataTable th.right, table.dataTable td.right {
   text-align: right; }
@@ -8468,7 +8473,8 @@ table.dataTable.display tbody tr.even.selected > .sorting_3, table.dataTable.ord
   background-color: #afbdd8; }
 
 table.dataTable thead .sorting_asc, table.dataTable thead .sorting_desc {
-  background-color: #e7e7e7; }
+    background-color: transparent;
+color:#055959; }
 
 table.dataTable.display tbody tr:hover > .sorting_1, table.dataTable.display tbody tr.odd:hover > .sorting_1, table.dataTable.display tbody tr.even:hover > .sorting_1, table.dataTable.order-column.hover tbody tr:hover > .sorting_1, table.dataTable.order-column.hover tbody tr.odd:hover > .sorting_1, table.dataTable.order-column.hover tbody tr.even:hover > .sorting_1 {
   background-color: #eaeaea; }
@@ -8503,14 +8509,14 @@ table.dataTable, table.dataTable th, table.dataTable td {
           box-sizing: content-box; }
 
 table.dataTable thead .sorting_asc .sorting-icons:before, table.dataTable thead .sorting_desc .sorting-icons:after {
-  background: #ccc;
-  border: 1px solid #111; }
+  background: transparent;
+  border: none; }
 
 table.dataTable thead .sorting .sorting-icons:before,
 table.dataTable thead .sorting .sorting-icons:after, table.dataTable thead .sorting_asc .sorting-icons:after, table.dataTable thead .sorting_desc .sorting-icons:before {
-  background: #fff;
-  border: 1px solid #aaa;
-  color: #757575; }
+  background: transparent;
+  border: none;
+  color: #b6b6b6; }
 
 table.dataTable thead .sorting, table.dataTable thead .sorting_asc, table.dataTable thead .sorting_desc {
   cursor: pointer; }
@@ -8533,13 +8539,13 @@ table.dataTable {
   table.dataTable thead .sorting-icons {
     margin-top: 2px; }
     table.dataTable thead .sorting-icons:before {
-      content: "\e093";
-      padding: 0 0.1em 0 0; }
+      content: "\f0d7";
+      padding: 0 0.2em 0 0.2em; }
     table.dataTable thead .sorting-icons:after {
-      content: "\e094";
+      content: "\f0d8";
       padding: 0 0.04em 0 0.06em; }
   table.dataTable tbody tr {
-    background-color: #fff; }
+    background-color: transparent; }
     table.dataTable tbody tr.selected {
       background-color: #b0bed9; }
 
@@ -10752,7 +10758,7 @@ a.shr-opn, a.shr-opn:hover {
     
     .timeStamp {
         color: #606060;
-        font-size: 14px;
+        font-size: 16px;
     }
     
     /****************************************/

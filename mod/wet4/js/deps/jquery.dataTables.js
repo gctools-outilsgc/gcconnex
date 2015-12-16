@@ -2663,7 +2663,8 @@
 		var language = settings.oLanguage;
 		var previousSearch = settings.oPreviousSearch;
 		var features = settings.aanFeatures;
-		var input = '<input type="search" class="'+classes.sFilterInput+'"/>';
+        //table change
+		var input = '<input type="search" class="form-control '+classes.sFilterInput+'"/>';
 	
 		var str = language.sSearch;
 		str = str.match(/_INPUT_/) ?
@@ -2672,7 +2673,8 @@
 	
 		var filter = $('<div/>', {
 				'id': ! features.f ? tableId+'_filter' : null,
-				'class': classes.sFilter
+            //table change
+				'class': classes.sFilter + ' form-inline'
 			} )
 			.append( $('<label/>' ).append( str ) );
 	
@@ -3284,9 +3286,10 @@
 			language = d2 ? menu[1] : menu;
 	
 		var select = $('<select/>', {
+            //table change
 			'name':          tableId+'_length',
 			'aria-controls': tableId,
-			'class':         classes.sLengthSelect
+			'class':         classes.sLengthSelect 
 		} );
 	
 		for ( var i=0, ien=lengths.length ; i<ien ; i++ ) {
@@ -14216,7 +14219,7 @@
 					.addClass( classes.sSortJUIWrapper )
 					.append( cell.contents() )
 					.append( $('<span/>')
-						.addClass( classes.sSortIcon+' '+column.sSortingClassJUI )
+						.addClass( classes.sSortIcon+' testing '+column.sSortingClassJUI )
 					)
 					.appendTo( cell );
 	

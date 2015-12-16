@@ -52,10 +52,10 @@ if ($title_link) {
     echo "<h3 class=\"mrgn-bttm-0 panel-title\">$title_link</h3>";
 }
 //This tests to see if you are looking at a group list and does't outpout the subtitle variable here, It's called at the end of this file
-if($entity->getType() == 'group' || $checkPage == 'friends' || $checkPage == 'groups_members'){
+if($entity->getType() == 'group'){
    echo '';
 }else{
-  echo "<div class=\" mrgn-bttm-sm  timeStamp clearfix\">$subtitle</div>";   
+  echo "<div class=\" mrgn-bttm-sm mrgn-tp-sm  timeStamp clearfix\">$subtitle</div>";   
 }
 
 
@@ -67,7 +67,7 @@ if ($content) {
 	echo "<div class=\"elgg-content mrgn-tp-md mrgn-lft-sm\">$content</div>";
 }
 
-if($entity->getType() == 'group'|| $checkPage == 'friends' || $checkPage == 'groups_members'){
+if($entity->getType() == 'group' ){
 
     if ($metadata) {
 	   echo '<div class="mrgn-tp-sm"><div class="">' .$metadata . '</div></div>';
@@ -75,6 +75,8 @@ if($entity->getType() == 'group'|| $checkPage == 'friends' || $checkPage == 'gro
     
    echo "<div class=\" mrgn-bttm-sm mrgn-tp-md timeStamp clearfix\">$subtitle</div>"; 
     
+}else if($checkPage == 'friends' || $checkPage == 'groups_members'){
+    echo '<div class=""><div class="">' .$metadata . '</div></div>';
 }else{
   
 echo '<div class="row mrgn-tp-md">';
@@ -82,7 +84,9 @@ echo '<div class="row mrgn-tp-md">';
 echo "<div class=\"tags col-sm-6 col-xs-12\">$tags</div>";
 
 if ($metadata) {
-	echo '<div class="col-sm-6 col-xs-12"><div class="pull-right">' .$metadata . '</div></div>';
+
+     	echo '<div class="col-sm-6 col-xs-12"><div class="pull-right">' .$metadata . '</div></div>';   
+
 }
 
 echo '</div>';  

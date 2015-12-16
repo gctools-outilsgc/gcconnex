@@ -112,7 +112,7 @@ $tBody = elgg_format_element('tbody', ['class' => ''], $tR);
 $tHead = elgg_format_element('thead', ['class' => ''], '<tr> <th class="data-table-head"> ' . $heading . '</th> </tr>');
 
 //pull it all together and display table
-echo elgg_format_element('table', ['class' => 'panel panel-custom wb-tables table', 'id' => ''], $tHead . $tBody);
+echo elgg_format_element('table', ['class' => ' wb-tables table', 'id' => ''], $tHead . $tBody);
 
 if ($position == 'after' || $position == 'both') {
 	echo $nav;
