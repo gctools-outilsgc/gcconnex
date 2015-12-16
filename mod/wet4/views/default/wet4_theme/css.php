@@ -10596,6 +10596,10 @@ a.shr-opn, a.shr-opn:hover {
         margin-right: 7px;
     }
 
+    #file_tools_list_files .ui-draggable, .file-tools-file.ui-draggable {
+        background: none;
+    }
+
 .user-menu{
     min-width: 400px;
 

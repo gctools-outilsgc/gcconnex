@@ -932,4 +932,25 @@ function river_handler($hook, $type, $menu, $params){
 }
 
 
-
+function new_file_page_handler($page) {
+    
+    switch ($page[0]) {
+           
+            case "file":
+                if ($page[1] == "new") {
+                    if (!empty($page[2])) {
+                        elgg_set_page_owner_guid($page[2]);
+                    }
+                    $path = elgg_get_plugins_path();
+                    //$include_file = elgg_get_plugins_path() . "/wet4/pages/file/new.php";
+                    include "$path/wet4/pages/file/new.php";
+                    //include($include_file);
+                } 
+			break;
+            
+    }
+    
+		
+		return true;
+    
+}

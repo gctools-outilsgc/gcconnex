@@ -5,7 +5,7 @@
  * @package ElggFile
  */
 
-// once elgg_view stops throwing all sorts of junk into $vars, we can use 
+// once elgg_view stops throwing all sorts of junk into $vars, we can use
 $title = elgg_extract('title', $vars, '');
 $desc = elgg_extract('description', $vars, '');
 $tags = elgg_extract('tags', $vars, '');
@@ -24,36 +24,44 @@ if ($guid) {
 	$submit_label = elgg_echo('upload');
 }
 
-// Get post_max_size and upload_max_filesize
-$post_max_size = elgg_get_ini_setting_in_bytes('post_max_size');
-$upload_max_filesize = elgg_get_ini_setting_in_bytes('upload_max_filesize');
-
-// Determine the correct value
-$max_upload = $upload_max_filesize > $post_max_size ? $post_max_size : $upload_max_filesize;
-
-$upload_limit = elgg_echo('file:upload_limit', array(elgg_format_bytes($max_upload)));
+elgg_unregister_menu_item('title', 'new_folder');
 
 ?>
-<div class="mbm elgg-text-help alert alert-info">
-	<?php echo $upload_limit; ?>
-</div>
-<div class="mrgn-bttm-md">
+<div>
 	<label for="upload"><?php echo $file_label; ?></label><br />
 	<?php echo elgg_view('input/file', array('name' => 'upload', 'id' => 'upload')); ?>
 </div>
-<div class="mrgn-bttm-md">
+<div>
 	<label for="title"><?php echo elgg_echo('title'); ?></label><br />
-	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title, 'id' => 'title')); ?>
+	<?php echo elgg_view('input/text', array('name' => 'title', 'id' => 'title', 'value' => $title)); ?>
 </div>
-<div class="mrgn-bttm-md">
+<div>
 	<label for="description"><?php echo elgg_echo('description'); ?></label>
-	<?php echo elgg_view('input/longtext', array('name' => 'description', 'value' => $desc, 'id' => 'description')); ?>
+	<?php echo elgg_view('input/longtext', array('name' => 'description', 'id' => 'description', 'value' => $desc)); ?>
 </div>
-<div class="mrgn-bttm-md">
+<div>
 	<label for="tags"><?php echo elgg_echo('tags'); ?></label>
-	<?php echo elgg_view('input/tags', array('name' => 'tags', 'value' => $tags, 'id' => 'tags')); ?>
+	<?php echo elgg_view('input/tags', array('name' => 'tags', 'id' => 'tags', 'value' => $tags)); ?>
 </div>
+
 <?php
+if (file_tools_use_folder_structure()) {
+	$parent_guid = 0;
+	if ($file = elgg_extract("entity", $vars)) {
+		if ($folders = $file->getEntitiesFromRelationship(FILE_TOOLS_RELATIONSHIP, true, 1)) {
+			$parent_guid = $folders[0]->getGUID();
+		}
+	}
+	?>
+	<div>
+		<label for="folder_guid"><?php echo elgg_echo("file_tools:forms:edit:parent"); ?><br />
+		<?php
+			echo elgg_view("input/folder_select", array("name" => "folder_guid", "id" => "folder_guid", "value" => $parent_guid));
+		?>
+		</label>
+	</div>
+<?php
+}
 
 $categories = elgg_view('input/categories', $vars);
 if ($categories) {
@@ -61,16 +69,9 @@ if ($categories) {
 }
 
 ?>
-<div class="mrgn-bttm-md">
+<div>
 	<label for="access_id"><?php echo elgg_echo('access'); ?></label><br />
-	<?php echo elgg_view('input/access', array(
-		'name' => 'access_id',
-		'value' => $access_id,
-        'id' => 'access_id',
-		'entity' => get_entity($guid),
-		'entity_type' => 'object',
-		'entity_subtype' => 'file',
-	)); ?>
+	<?php echo elgg_view('input/access', array('name' => 'access_id', 'id' => 'access_id', 'value' => $access_id)); ?>
 </div>
 <div class="elgg-foot">
 <?php

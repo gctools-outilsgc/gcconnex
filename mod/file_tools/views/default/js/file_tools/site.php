@@ -363,12 +363,12 @@ elgg.file_tools.initialize_file_draggable = function() {
 	
 	$("#file_tools_list_files .file-tools-file").draggable({
 		revert: "invalid",
-		opacity: 0.8,
+		opacity: 1,
 		appendTo: "body",
 		helper: "clone",
 		start: function(event, ui) {
 			$(this).css("visibility", "hidden");
-			$(ui.helper).width($(this).width());
+			$(ui.helper).width($(this).width()).css("background", "white");
 		},
 		stop: function(event, ui) {
 			$(this).css("visibility", "visible");
