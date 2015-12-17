@@ -63,7 +63,7 @@ else {
                     'limit' => 10,
                     'id' => "myModal" . $i
                 ));
-                echo '<div class="modal hide" id="myModal' . $i . '">
+                echo '<div class="modal" id="myModal' . $i . '">
                       <div class="modal-header">
                         <button class="close" data-dismiss="modal">×</button>
                         <h3>Endorsements</h3>
