@@ -25,6 +25,11 @@ function wet4_theme_init() {
 	// theme specific CSS
 	elgg_extend_view('css/elgg', 'wet4_theme/css');
     
+    //register a page handler for friends
+    elgg_unregister_page_handler('friends'); //unregister core page handler
+    elgg_register_page_handler('friends', '_wet4_friends_page_handler'); //register new page handler for data tables
+	elgg_register_page_handler('friendsof', '_wet4_friends_page_handler');
+    
     //datatables css file
 	elgg_extend_view('css/elgg', '//cdn.datatables.net/1.10.10/css/jquery.dataTables.css');
 
@@ -407,6 +412,9 @@ function wet4_likes_entity_menu_setup($hook, $type, $return, $params) {
 	return $return;
 }
 
+
+
+
 function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 	//Have widgets show the same entity menu
     if (elgg_in_context('widgets')) {
@@ -559,6 +567,35 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 
 	return $return;
 }
+
+function _wet4_friends_page_handler($page, $handler) {
+    //change the page handler for friends to user our own pages. This increases the limit of friends for data table parsing and such :)
+	elgg_set_context('friends');
+
+	if (isset($page[0]) && $user = get_user_by_username($page[0])) {
+		elgg_set_page_owner_guid($user->getGUID());
+	}
+
+	if (!elgg_get_page_owner_guid()) {
+		return false;
+	}
+    $plugin_path = elgg_get_plugins_path();
+    //echo $plugin_path;
+	switch ($handler) {
+		case 'friends':
+            //use the pages in our theme instead of the core pages
+			require($plugin_path ."wet4/pages/friends/index.php");
+			break;
+		case 'friendsof':
+        
+			require($plugin_path ."wet4/pages/friends/of.php");
+			break;
+		default:
+			return false;
+	}
+	return true;
+}
+
 
 function wet4_riverItem_remove(){
     elgg_unregister_menu_item('river', 'comment'); 
@@ -932,25 +969,3 @@ function river_handler($hook, $type, $menu, $params){
 }
 
 
-function new_file_page_handler($page) {
-    
-    switch ($page[0]) {
-           
-            case "file":
-                if ($page[1] == "new") {
-                    if (!empty($page[2])) {
-                        elgg_set_page_owner_guid($page[2]);
-                    }
-                    $path = elgg_get_plugins_path();
-                    //$include_file = elgg_get_plugins_path() . "/wet4/pages/file/new.php";
-                    include "$path/wet4/pages/file/new.php";
-                    //include($include_file);
-                } 
-			break;
-            
-    }
-    
-		
-		return true;
-    
-}
