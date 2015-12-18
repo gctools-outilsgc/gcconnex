@@ -12,7 +12,7 @@ return array(
 	
 	'invitefriends:registration_disabled' => 'L\'enregistrement des nouveaux utilisateurs a été désactivé sur ce site, vous ne pouvez pas inviter de nouveaux utilisateurs.',
 	
-#	'invitefriends:introduction' => 'Pour inviter des amis à vous rejoindre sur ce réseau, saisissez leurs adresses emails et un message pour qu\'ils puissent recevoir votre invitation.',
+	'invitefriends:introduction' => 'Pour inviter des collègues à vous rejoindre sur ce réseau, saisissez leurs adresses emails et un message pour qu\'ils puissent recevoir votre invitation.',
 	'invitefriends:emails' => 'Adresses email (une par ligne)',
 	'invitefriends:message' => 'Écrivez le message qui accompagnera votre invitation:',
 	'invitefriends:subject' => 'Invitation to join %s',

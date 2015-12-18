@@ -286,7 +286,7 @@ function wet4_theme_pagesetup() {
 		$params = array(
 			'name' => 'invite',
 			'text' => elgg_echo('friends:invite'),
-			'href' => "invite",
+			'href' => "invite/". $user->username,
 			'contexts' => array('friends'),
             'priority' => 300,
 		);

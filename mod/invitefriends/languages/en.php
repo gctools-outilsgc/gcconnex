@@ -5,7 +5,7 @@ return array(
 	
 	'invitefriends:registration_disabled' => 'New user registration has been disabled on this site; you are unable to invite new users.',
 	
-	'invitefriends:introduction' => 'To invite friends to join you on this network, enter their email addresses and a message they will receive with your invitation',
+	'invitefriends:introduction' => 'To invite colleagues to join you on this network, enter their email addresses and a message they will receive with your invitation',
 	'invitefriends:emails' => 'Email addresses (one per line)',
 	'invitefriends:message' => 'Message',
 	'invitefriends:subject' => 'Invitation to join %s',
