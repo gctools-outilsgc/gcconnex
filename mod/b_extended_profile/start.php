@@ -311,6 +311,7 @@ function list_avatars($options) {
             'class' => 'elgg-lightbox gcconnex-basic-profile-edit elgg-button',
             'text' => elgg_echo('gcconnex_profile:edit_profile')
         ));
+        $list .= '<a class="btn gcconnex-avatars-expand" data-toggle="modal" href="#' . $options['id'] . '" >...</a>';
     }
 
 
@@ -349,7 +350,7 @@ function list_avatars($options) {
                         'use_hover' => $options['use_hover'],
                     ));
                     $list .= '</div>'; // close div class="gcconnex-avatar-in-list"
-                            $list .= '<a class="btn gcconnex-avatars-expand" data-toggle="modal" href="#' . $options['id'] . '" >...</a>';
+                            
                 }
             }
             else {
