@@ -44,7 +44,7 @@ if(isset($_POST['submitted']))
    if($formproc->ProcessForm())
    {
 	system_messages(elgg_echo('contactform:thankyoumsg'));
-	forward("mod/contactform/index.php");
+	forward("mod/contactform");
    // forward(elgg_get_site_url());
    }
 }
@@ -77,7 +77,7 @@ if(isset($_POST['submitted']))
     <div class="panel-body mrgn-lft-md">
         <?php echo elgg_echo('contactform:content:form'); ?>
         <form id='contactus' action='<?php echo $formproc->GetSelfScript(); ?>' enctype="multipart/form-data" method='post' accept-charset='UTF-8'>
-            <?php echo elgg_echo('contactform:menu'); ?>
+           
             <input type='hidden' name='submitted' id='submitted' value='1'/>
 <input type='hidden' name='<?php echo $formproc->GetFormIDInputName(); ?>' value='<?php echo $formproc->GetFormIDInputValue(); ?>'/>
             <div class='form-group'>

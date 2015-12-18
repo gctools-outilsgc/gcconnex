@@ -23,7 +23,9 @@
  elgg_register_library('contact_lib', elgg_get_plugins_path().'contactform/lib/functions.php');
     
     elgg_load_library('contact_lib');
-    requirements_check2();
+   $action_path = elgg_get_plugins_path() . 'contactform/actions/contactform';
+	elgg_register_action('contactform/delete', "$action_path/delete.php");
+                requirements_check2();
 			 elgg_register_page_handler('gc_help','gc_help_page_handler');
 				
 			// Add menu link
