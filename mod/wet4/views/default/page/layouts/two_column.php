@@ -195,7 +195,7 @@ if (isset($vars['class'])) {
 
 ?>
 <div class="<?php echo $class; ?>">
-<div class="elgg-main">
+<div class="elgg-main" id="wb-cont">
 	<?php
 
 		//echo elgg_extract('nav', $vars, elgg_view('navigation/breadcrumbs'));

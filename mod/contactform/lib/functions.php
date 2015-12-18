@@ -35,7 +35,7 @@ function baseText_check2()
 {
 	global $CONFIG;
 
-	$query = "INSERT INTO contact_list (english, francais) VALUES ('J\'ai Général','Bye'), ('hola','Adios')";
+	$query = "INSERT INTO contact_list (english, francais) VALUES ('I have a general question','J\’ai une question d’ordre général'), (' I have an issue logging in','J\’ai un problème de connexion'), (' I have a group-related issue', 'J\’ai un problème relatif aux groupes'), ('I have a technical question', 'Je veux signaler un problème technique'), (' I want to share my comments and feedback','J\’ai un commentaire et/ou suggestion à partager'),(' I need information about the Email transformation Initiative (@canada.ca)','J\’ai besoin d’information concernant l\’initiative de transformation des services de courriel (@canada.ca)'),('Other question','Autre question')";
     
 	//elgg_log('cyu - query:'.$query, 'NOTICE');
 

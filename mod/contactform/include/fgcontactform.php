@@ -248,7 +248,7 @@ class FGContactForm
     function FormSubmissionToMail()
     {
         $ret_str='';
-        foreach($_POST as $key=>$value)
+     /*   foreach($_POST as $key=>$value)
         {
             if(!$this->IsInternalVariable($key))
             {
@@ -257,7 +257,160 @@ class FGContactForm
                 $key = ucfirst($key);
                 $ret_str .= "<div class='label'>$key :</div><div class='value'>$value </div>\n";
             }
-        }
+        }*/
+        
+                        $name = $_POST['name'];
+                $email = $_POST['email'];
+                $reason = $_POST['reason'];
+                 if(empty($_POST['subject']))
+           {
+           $subject = "$this->name contact you about ". $_POST['reason'];
+           
+           }else{
+           $subject = $_POST['subject'];
+           
+           }
+        
+                $message = $_POST['message'];
+        
+        $name=htmlentities($name, ENT_QUOTES, "UTF-8");
+        $email=htmlentities($email, ENT_QUOTES, "UTF-8");
+        $reason=htmlentities($reason, ENT_QUOTES, "UTF-8");
+        $subject=htmlentities($subject, ENT_QUOTES, "UTF-8");
+        $message=htmlentities($message, ENT_QUOTES, "UTF-8");
+      
+                $value = htmlentities($value,ENT_QUOTES,"UTF-8");
+                $value = nl2br($value);
+                $key = ucfirst($key);
+                $ret_str .= '<table width="100%" bgcolor="#fcfcfc" border="0" cellpadding="0" cellspacing="0">
+<tr>
+  <td>
+    <!--[if (gte mso 9)|(IE)]>
+      <table width="600" align="center" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td>
+    <![endif]-->     
+    <table bgcolor="#ffffff" class="content" align="center" cellpadding="0" cellspacing="0" border="0" style="width: 100%; max-width: 800px;">
+      <tr>
+        <td bgcolor="#047177" class="header" style="padding: 12px 0 10px 30px;">
+          <table width="70" align="left" border="0" cellpadding="0" cellspacing="0">  
+            <tr>
+                            <td height="50" style="padding: 0 0 0 20px; color: #ffffff; font-family: sans-serif; font-size: 45px; line-height: 38px; font-weight: bold;">
+                GC<span style="padding: 0 0 0 3px; font-size: 25px; color: #ffffff; font-family: sans-serif; ">connex</span>
+              </td>
+            </tr>
+          </table>
+        </td>
+               
+      <tr>
+        <td class="innerpadding" style="padding: 30px 30px 30px 30px; font-size: 16px; line-height: 22px; border-bottom: 1px solid #f2eeed; font-family: sans-serif;">
+          Bacon ipsum dolor amet shank pig beef cupim, pork loin sausage pancetta bresaola corned beef meatball biltong pork chop ball tip ham. Picanha sausage pig brisket sirloin ground round ham hock short loin pork belly landjaeger t-bone hamburger.<br/><br/> Biltong pork tongue, pancetta fatback kevin meatball beef turducken sausage pig tri-tip pork loin bresaola corned beef. Ball tip brisket shoulder flank. Pastrami landjaeger shankle drumstick filet mignon.
+
+             
+        </td>
+      </tr>
+      </tr>
+      <tr>
+        <td class="innerpadding borderbottom" style="padding: 30px 30px 30px 30px; border-bottom: 1px solid #f2eeed;">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td class="h2" style="color: #153643; font-family: sans-serif; padding: 0 0 15px 0; font-size: 24px; line-height: 28px; font-weight: bold;">
+                <span style="font-size:15px; font-weight: normal;">(Le fran&ccedil;ais suit)</span><br/>
+                  GCconnex contact form
+              </td>
+            </tr>
+            <tr>
+              <td class="bodycopy" style="color: #153643; font-family: sans-serif; font-size: 16px; line-height: 22px;">
+                <b>Name:</b> '.$name.'<br/>
+                  <b>Email:</b> '.$email.'<br/>
+                  <b>Reason:</b> '.$reason.' <br/>
+                  <b>Subject:</b> '.$subject.'<br/>
+                  <b>message:</b>
+                  '.$message .'<br/>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td class="innerpadding borderbottom" style="padding: 30px 30px 30px 30px; border-bottom: 1px solid #f2eeed;">
+<!--          <table width="115" align="left" border="0" cellpadding="0" cellspacing="0">  
+            <tr>
+              <td height="115" style="padding: 0 20px 20px 0;">
+                <img class="fix" src="images/article1.png" width="115" height="115" border="0" alt="" />
+              </td>
+            </tr>
+          </table>-->
+          <!--[if (gte mso 9)|(IE)]>
+            <table width="380" align="left" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td>
+          <![endif]-->
+          
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+             
+               
+                  <tr>
+                    <td class="bodycopy" style="color: #153643; font-family: sans-serif; padding: 0 0 15px 0; font-size: 24px; line-height: 28px; font-weight: bold;">
+                        
+                  Formulaire de contact GCconnex
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 20px 0 0 0;font-family: sans-serif; color: #153643; font-size: 16px; line-height: 22px;">
+                           <b>Nom:</b> '.$name.'<br/> 
+                  <b>Email:</b> '.$email.'<br/>
+                  <b>Raison:</b> '.$reason.'<br/>
+                  <b>Sujet:</b> '.$subject.'<br/>
+                  <b>Message:</b>
+                  '.$message.'<br/>
+                    </td>
+                  </tr>
+               
+              </table>
+          
+          <!--[if (gte mso 9)|(IE)]>
+                </td>
+              </tr>
+          </table>
+          <![endif]-->
+        </td>
+      </tr>
+
+      <tr>
+        <td class="footer" bgcolor="#f5f5f5" style="padding: 20px 30px 15px 30px;">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td align="center" class="footercopy" style="font-family: sans-serif; font-size: 14px; color: #055959">
+                &reg; Contact form 2015<br/>
+                
+                <span class="hide">Thanks contacting us</span>
+              </td>
+            </tr>
+            <tr>
+              <td align="center" style="padding: 20px 0 0 0;">
+                <table border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td width="150" style="text-align: center; padding: 0 10px 0 10px;">
+                   DO NOT REPLY
+                    </td>
+                   
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <!--[if (gte mso 9)|(IE)]>
+          </td>
+        </tr>
+    </table>
+    <![endif]-->
+    </td>
+  </tr>
+</table>';
         foreach($this->fileupload_fields as $upload_field)
         {
             $field_name = $upload_field["name"];
@@ -283,7 +436,7 @@ class FGContactForm
         return $ret_str;
     }
 
-    function GetMailStyle()
+   /* function GetMailStyle()
     {
         $retstr = "\n<style>".
         "body,.label,.value { font-family:Arial,Verdana; } ".
@@ -292,14 +445,44 @@ class FGContactForm
         "</style>\n";
 
         return $retstr;
-    }
+    }*/
     function GetHTMLHeaderPart()
     {
          $retstr = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">'."\n".
-                   '<html><head><title></title>'.
+                   '<html><head><title></title><style type="text/css">
+  body {margin: 0; padding: 0; min-width: 100%!important;}
+  img {height: auto;}
+  .content {width: 100%; max-width: 600px;}
+  .header {padding: 40px 30px 20px 30px;}
+  .innerpadding {padding: 30px 30px 30px 30px;}
+  .borderbottom {border-bottom: 1px solid #f2eeed;}
+  .subhead {font-size: 15px; color: #ffffff; font-family: sans-serif; }
+  .h1, .h2, .bodycopy {color: #153643; font-family: sans-serif;}
+  .h1 {font-size: 33px; line-height: 38px; font-weight: bold;}
+  .h2 {padding: 0 0 15px 0; font-size: 24px; line-height: 28px; font-weight: bold;}
+  .bodycopy {font-size: 16px; line-height: 22px;}
+  .button {text-align: center; font-size: 18px; font-family: sans-serif; font-weight: bold; padding: 0 30px 0 30px;}
+  .button a {color: #ffffff; text-decoration: none;}
+  .footer {padding: 20px 30px 15px 30px;}
+  .footercopy {font-family: sans-serif; font-size: 14px; color: #ffffff;}
+  .footercopy a {color: #ffffff; text-decoration: underline;}
+  @media only screen and (max-width: 550px), screen and (max-device-width: 550px) {
+  body[yahoo] .hide {display: none!important;}
+  body[yahoo] .buttonwrapper {background-color: transparent!important;}
+  body[yahoo] .button {padding: 0px!important;}
+  body[yahoo] .button a {background-color: #e05443; padding: 15px 15px 13px!important;}
+  body[yahoo] .unsubscribe {display: block; margin-top: 20px; padding: 10px 50px; background: #2f3942; border-radius: 5px; text-decoration: none!important; font-weight: bold;}
+  }
+  /*@media only screen and (min-device-width: 601px) {
+    .content {width: 600px !important;}
+    .col425 {width: 425px!important;}
+    .col380 {width: 380px!important;}
+    }*/
+  </style>'.
                    '<meta http-equiv=Content-Type content="text/html; charset=utf-8">';
-         $retstr .= $this->GetMailStyle();
-         $retstr .= '</head><body>';
+       
+        //$retstr .= $this->GetMailStyle();
+         $retstr .= '</head><body yahoo bgcolor="#fcfcfc" style="margin: 0; padding: 0; min-width: 100%!important;">';
          return $retstr;
     }
     function GetHTMLFooterPart()
