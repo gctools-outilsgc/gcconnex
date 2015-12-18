@@ -13,7 +13,7 @@ function invitefriends_init() {
 	elgg_register_action('invitefriends/invite', elgg_get_plugins_path() . 'invitefriends/actions/invite.php');
 
 	elgg_register_plugin_hook_handler('register', 'user', 'invitefriends_add_friends');
-
+$filter_context = elgg_extract('filter_context', $vars, 'all');
 	if (elgg_is_logged_in() && elgg_get_config('allow_registration')) {
 		$params = array(
 			'name' => 'invite',
@@ -32,10 +32,10 @@ function invitefriends_init() {
  * @return bool
  */
 function invitefriends_page_handler($page) {
-	gatekeeper();
+	elgg_gatekeeper();
 	
 	// GCchange - Ilia: fix colleague circles link in menu not appearing on this page
-	collections_submenu_items();
+	//collections_submenu_items();
 
 	if (!elgg_get_config('allow_registration')) {
 		return false;
