@@ -34,10 +34,10 @@ if ($liked_entities) {
 		$item = elgg_view('activity/entity', array('entity' => $entity));
 		$items .= "<li id=\"$id\" class=\"elgg-item\">$item</li>";
 	}
-	//$html = "<ul class=\"elgg-list\">$items</ul>";
+	$html = "<ul class=\"elgg-list\">$items</ul>";
 } else {
 	$text = elgg_echo('activity:module:weekly_likes:none');
 	$html = "<p>$text</p>";
 }
 
-echo elgg_view_module('aside', /*elgg_echo('activity:module:weekly_likes'),*/ $html);
+//echo elgg_view_module('aside', /*elgg_echo('activity:module:weekly_likes'),*/ $html);

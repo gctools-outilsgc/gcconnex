@@ -1309,6 +1309,12 @@ Please do not reply to this email.",
     
     'blog:title:all_blogs' => 'Blogs', 
     
+    /**
+    *Activity module
+    */
+    'activity:module:weekly_likes' => 'Most liked of last week',
+	'activity:module:weekly_likes:none' => 'No likes',
+    
 /**
 *Contact page / FAQ
 */
