@@ -194,7 +194,9 @@ class FGContactForm
         $this->mailer->AddCC($this->email);
 
         $message = $this->ComposeFormtoEmail();
-
+        
+        $this->mailer->ConfirmReadingTo = $this->email;
+        
         $textMsg = trim(strip_tags(preg_replace('/<(head|title|style|script)[^>]*>.*?<\/\\1>/s','',$message)));
         $this->mailer->AltBody = @html_entity_decode($textMsg,ENT_QUOTES,"UTF-8");
         $this->mailer->MsgHTML($message);
@@ -382,9 +384,9 @@ class FGContactForm
           <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
               <td align="center" class="footercopy" style="font-family: sans-serif; font-size: 14px; color: #055959">
-                &reg; Contact form 2015<br/>
+                GCconnex contact form / Formulaire de contact GCconnex<br/>
                 
-                <span class="hide">Thanks contacting us</span>
+                <span class="hide">Thanks contacting us / Merci de nous avoir contacter</span>
               </td>
             </tr>
             <tr>
@@ -392,7 +394,7 @@ class FGContactForm
                 <table border="0" cellspacing="0" cellpadding="0">
                   <tr>
                     <td width="150" style="text-align: center; padding: 0 10px 0 10px;">
-                   DO NOT REPLY
+                  Do not reply /<br/> Ne pas r&#233;pondre
                     </td>
                    
                   </tr>
@@ -496,7 +498,7 @@ class FGContactForm
         $formsubmission = $this->FormSubmissionToMail();
        // $extra_info = $this->ExtraInfoToMail();
         $footer = $this->GetHTMLFooterPart();
-       $message = $header."Submission from 'contact us' form:<p>$formsubmission</p><hr/>$extra_info".$footer;
+     $message = $header."<p>$formsubmission</p><hr/>$extra_info".$footer;
 
         return $message;
     }
