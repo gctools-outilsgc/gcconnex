@@ -5,7 +5,7 @@
 <?php //echo elgg_echo("contactform:body"); ?>
 <!-- END FAQ PART-->
 
-<h2 class="size" style='border-bottom: solid 3px; padding-bottom: 2px;'>Help</h2>
+<h2 class="size" style='border-bottom: solid 3px; padding-bottom: 2px;'><?php echo elgg_echo('contactform:help'); ?></h2>
 					<br />
 					<h3><u><?php echo elgg_echo('contactform:title'); ?></u></h3><br />
 						<?php echo elgg_echo('contactform:list'); ?>
@@ -56,10 +56,10 @@
 				
 						
 
-					<h3><u>GCconnex Groups that may be useful to you:</u></h3><br />
+					<h3><u>?php echo elgg_echo('contactform:useful'); ?></u></h3><br />
 						<ul>
-						<li> <a href='http://gcconnex.gc.ca/groups/profile/211647/clicks-and-tips'>Clicks and Tips</a> </li>
-						<li> <a href='http://gcconnex.gc.ca/groups/profile/226392/gc20-tools-outils-gc20'>GC2.0 Tools</a> </li>
+						<li> <a href='http://gcconnex.gc.ca/groups/profile/211647/clicks-and-tips'><?php echo elgg_echo('contactform:clickandtips'); ?></a> </li>
+						<li> <a href='http://gcconnex.gc.ca/groups/profile/226392/gc20-tools-outils-gc20'><?php echo elgg_echo('contactform:gc20'); ?></a> </li>
 						</ul>
 
 				
