@@ -69,7 +69,7 @@ if(isset($_POST['submitted']))
 
 <div><?php echo $formproc->GetErrorMessage(); ?></div>
 
-<section class="panel panel-default" style="width:550px; margin-left:35px;">
+<section class="panel panel-default">
     <header class="panel-heading">
 		<h3 class="panel-title"><?php echo elgg_echo('contactform:title:form'); ?></h3>
 	</header>
