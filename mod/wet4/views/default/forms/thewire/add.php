@@ -84,7 +84,8 @@ if ($char_limit == 0) {
 
 $post_input = elgg_view("input/plaintext", array(
 	"name" => "body",
-	"class" => "mtm thewire-textarea",
+    "id"=>"wire-body",
+	"class" => "mtm thewire-textarea form-control",
 	"rows" => $num_lines,
 	"value" => $post_value,
 	"data-max-length" => $char_limit,
@@ -123,9 +124,11 @@ if (thewire_tools_groups_enabled()) {
 		}
 	}
 }
+$createWire = elgg_echo('thewire:post');
 
 echo <<<HTML
 	$reshare_input
+    <label for="wire-body">$createWire</label>
 	$post_input
 <div class="thewire-characters-remaining">
 	$count_down

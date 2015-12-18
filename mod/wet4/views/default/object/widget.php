@@ -28,12 +28,12 @@ if ($can_edit) {
 		'widget' => $widget,
 		'show_access' => $show_access,
 	));
-}
+//don't make a list if the user can't edit the widget, this would make empty links for users who can't edit the widget, and its visually unappealing 
 $controls = elgg_view('object/widget/elements/controls', array(
 	'widget' => $widget,
 	'show_edit' => $edit_area != '',
 ));
-
+}
 $content = elgg_view('object/widget/elements/content', $vars);
 
 $widget_id = "elgg-widget-$widget->guid";
