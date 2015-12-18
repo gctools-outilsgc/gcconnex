@@ -56,10 +56,18 @@ switch ($upload_type) {
 }
 
 // build different forms
-$body = "<div id='file-tools-upload-wrapper' class='tab-content'>";
-$body .= '<div id="single" role="tabpanel" class="tab-pane fade-in active">' . elgg_view_form("file/upload", $single_vars, $body_vars) . '</div>';
-$body .= '<div id="multi" role="tabpanel" class="tab-pane fade-in">' . elgg_view_form("file_tools/upload/multi", $multi_vars) . '</div>';
-$body .= '<div id="zip" role="tabpanel" class="tab-pane fade-in">' . elgg_view_form("file_tools/upload/zip", $zip_vars) . '</div>';
+
+if(elgg_is_active_plugin('wet4')){
+    $body = "<div id='file-tools-upload-wrapper' class='tab-content'>";
+    $body .= '<div id="single" role="tabpanel" class="tab-pane fade-in active">' . elgg_view_form("file/upload", $single_vars, $body_vars) . '</div>';
+    $body .= '<div id="multi" role="tabpanel" class="tab-pane fade-in">' . elgg_view_form("file_tools/upload/multi", $multi_vars) . '</div>';
+    $body .= '<div id="zip" role="tabpanel" class="tab-pane fade-in">' . elgg_view_form("file_tools/upload/zip", $zip_vars) . '</div>';
+} else {
+    $body = "<div id='file-tools-upload-wrapper'>";
+    $body .= elgg_view_form("file/upload", $single_vars, $body_vars);
+    $body .= elgg_view_form("file_tools/upload/multi", $multi_vars);
+    $body .= elgg_view_form("file_tools/upload/zip", $zip_vars);
+}
 $body .= "</div>";
 
 $tabs = elgg_view("file_tools/upload_tabs", array("upload_type" => $upload_type));
