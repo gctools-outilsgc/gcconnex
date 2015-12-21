@@ -3434,7 +3434,8 @@ tbody.collapse.in {
     .nav-tabs > li.active > a:hover,
     .nav-tabs > li.active > a:focus {
       color: #555555;
-      background-color: #fff;
+        font-weight:bold;
+      background-color: #fcfcfc;
       border: 1px solid #ddd;
       border-bottom-color: transparent;
       cursor: default; }
@@ -10971,7 +10972,7 @@ a.shr-opn, a.shr-opn:hover {
 }
 
 .nav-tabs {
-    border-bottom: none;
+    /*border-bottom: none;*/
 }
 
 .tags {
@@ -11311,6 +11312,12 @@ figcaption{
     padding:10px;   
 }
 
+
+/** Widget Stuff **/
+
+.elgg-widget-title{
+        border-bottom: 1px solid #af3c43;   
+}
 
 /*
  * Mobile panel
