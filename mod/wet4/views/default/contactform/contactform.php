@@ -11,7 +11,7 @@
 						<?php echo elgg_echo('contactform:list'); ?>
 
 					<h3><u><?php echo elgg_echo('contactform:faq'); ?></u></h3><br />
-						<br /><br />
+						
 						<div class="accordion">
 	<!-- Accordion section 1 -->
 	<details class="acc-group">

@@ -233,9 +233,9 @@ $site_url = elgg_get_site_url();
 <div class="active-links">
     <div id="session">
     <a id="signin-link" href="#" style='text-decoration:none;'>
-    <strong>Login |</strong>
+    <strong><?php echo elgg_echo('login'); ?> |</strong>
     </a>
-    <strong><a  href="<?php echo $site_url; ?>register">  Register</a></li></strong>
+    <strong><a  href=" <?php echo $site_url; ?>register">  <?php echo elgg_echo('register'); ?></a></li></strong>
     
     </div>
         <div id="signin-dropdown" class='login-menu'>

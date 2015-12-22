@@ -37,6 +37,7 @@ echo "</div>";
 <?php
 
 
+elgg_load_library('contact_lib');
 
 // elgg_log('cyu - add ext:'.$vars['entity']->db_add_eng, 'NOTICE');
 // elgg_log('cyu - add dept:'.$vars['entity']->db_add_fr, 'NOTICE');
@@ -57,7 +58,7 @@ $vars['entity']->db_add_fr = '';
 
 elgg_load_library('contact_lib');
 
-$delete_from_db = "action/c_email_extensions/delete";
+$delete_from_db = "action/contactform/delete";
 $delete_btn = elgg_view('output/confirmlink', array(
 	'name' => 'c_delete_from_db',
 	'text' => elgg_echo('setting:delete'),
@@ -67,7 +68,7 @@ $result = getExtension2();
 if (count($result) > 0)
 {
 	echo "<table name='display_extensions' width='100%' cellpadding='0' cellspacing='0' class='db-table'>";
-	echo '<tr> <th></th> <th>'.elgg_echo('setting:eng').'</th> <th>'.elgg_echo('setting:fr').'</th></tr>';
+	echo '<tr> <th></th> <th>'.elgg_echo('setting:fr').'</th> <th>'.elgg_echo('setting:eng').'</th></tr>';
 	while ($row = mysqli_fetch_array($result))
 	{
 		$delete_from_db = "action/contactform/delete?id=".$row['id'];
@@ -79,8 +80,8 @@ if (count($result) > 0)
 		echo '<tr>'; 
 		echo '<td> '.''.$delete_btn.' </td>';
 		
-		echo '<td> '.$row['english'].' </td>';
 		echo '<td> '.$row['francais'].' </td>';
+		echo '<td> '.$row['english'].' </td>';
 		echo '</tr>';
 	}
 	echo "</table>";
