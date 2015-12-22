@@ -57,7 +57,7 @@ if(isset($_POST['submitted']))
     $(document).ready(function (){
             $("#reason").change(function() {
                 // foo is the id of the other select box 
-                if (($(this).val() == "Other question") || ($(this).val() == "Autre question" )) {
+                if ($(this).val() == "Autre question$Other question") {
                     $("#subject").show();
                 }else{
                     $("#subject").hide();
@@ -112,9 +112,9 @@ $r = $db->query('SELECT * FROM contact_list');
 
 foreach ($r as $row) {
     if ($SESSION['language'] == 'fr'){
-       echo '<option>'.$row['francais'].'</option>';
+       echo "<option value=\"".$row['francais']."$".$row['francais']."\">".$row['english']."</option>\n  ";
 }else{
-    echo '<option>'.$row['english'].'</option>';
+   echo "<option value=\"".$row['francais']."$".$row['english']."\">".$row['english']."</option>\n  ";
     }
 }
 echo '</select>';

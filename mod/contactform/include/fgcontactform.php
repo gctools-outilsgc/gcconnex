@@ -171,9 +171,13 @@ class FGContactForm
 
     function SendFormSubmission()
     {
+        $reason = $_POST['reason'];
+                $option = explode("$", $_POST['reason']);
+                    $french = $option[0];
+                    $english = $option[1]; 
         if(empty($_POST['subject']))
            {
-           $subject = "$this->name contact you about ". $_POST['reason'];
+           $subject = "$this->name contact you about ". $english." / $this->name vous a contacter à propos de ".$french;
            }else{
            $subject = $_POST['subject'];
            }
@@ -261,17 +265,18 @@ class FGContactForm
             }
         }*/
         
-                        $name = $_POST['name'];
+                $name = $_POST['name'];
                 $email = $_POST['email'];
                 $reason = $_POST['reason'];
-                 if(empty($_POST['subject']))
-           {
-           $subject = "$this->name contact you about ". $_POST['reason'];
-           
-           }else{
-           $subject = $_POST['subject'];
-           
-           }
+                $option = explode("$", $_POST['reason']);
+                    $french = $option[0];
+                    $english = $option[1]; 
+                if(empty($_POST['subject']))
+                {
+                    $subject = "$this->name contact you about ". $english." / $this->name vous a contacter à propos de ".$french;
+                }else{
+                    $subject = $_POST['subject'];
+                }
         
                 $message = $_POST['message'];
         
@@ -325,7 +330,7 @@ class FGContactForm
               <td class="bodycopy" style="color: #153643; font-family: sans-serif; font-size: 16px; line-height: 22px;">
                 <b>Name:</b> '.$name.'<br/>
                   <b>Email:</b> '.$email.'<br/>
-                  <b>Reason:</b> '.$reason.' <br/>
+                  <b>Reason:</b> '.$english.' <br/>
                   <b>Subject:</b> '.$subject.'<br/>
                   <b>message:</b>
                   '.$message .'<br/>
@@ -362,7 +367,7 @@ class FGContactForm
                     <td style="padding: 20px 0 0 0;font-family: sans-serif; color: #153643; font-size: 16px; line-height: 22px;">
                            <b>Nom:</b> '.$name.'<br/> 
                   <b>Email:</b> '.$email.'<br/>
-                  <b>Raison:</b> '.$reason.'<br/>
+                  <b>Raison:</b> '.$french.'<br/>
                   <b>Sujet:</b> '.$subject.'<br/>
                   <b>Message:</b>
                   '.$message.'<br/>
@@ -562,7 +567,7 @@ class FGContactForm
             $ret = false;
         }
         
-        if (($_POST['reason'] == 'Other question')|| ($_POST['reason'] == 'Autre question'))
+        if ($_POST['reason'] == 'Autre question$Other question"')
         {
             if (empty($_POST['subject']))
             {
