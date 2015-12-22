@@ -11,6 +11,7 @@ All dependencies is included in this branch for Elgg v1.12, <s>please note that 
 <li>Log Browser</li>
 <li>Login As</li>
 <li>CSV User Import</li>
+<li>Bulk User Admin</li>
 </ul>
 (for the site itself) <br />
 <ul>
