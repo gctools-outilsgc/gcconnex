@@ -14,6 +14,13 @@ All dependencies is included in this branch for Elgg v1.12, <s>please note that 
 </ul>
 (for the site itself) <br />
 <ul>
+<li>Notifications</li>
+<li>HTML Email Handler</li>
+<li>Advanced Notifications</li>
+<li>Notification Email Messages		--> upgrade work in progress</li>
+<li>Log Rotate</li>
+<li>Garbage Collector</li>
+<li>HTMLawed</li>
 <li>Tidypics Photo Gallery</li>
 <li>Groups</li>
 <li>Group Tools</li>
@@ -25,6 +32,8 @@ All dependencies is included in this branch for Elgg v1.12, <s>please note that 
 <li>Bookmarks</li>
 <li>User Dashboard</li>
 <li>Members</li>
+<li>hypeFramework		--> upgrade work in progress</li>
+<li>hypeForum		--> upgrade work in progress</li>
 <li>Search</li>
 <li>Sphinx Search	(needs sphinx search service running to connect to if you want to use it)</li>
 <li>Site Pages</li>
@@ -35,10 +44,10 @@ All dependencies is included in this branch for Elgg v1.12, <s>please note that 
 <li>Invite Friends</li>
 <li>Friend request</li>
 <li>Likes</li>
-<li>Message Board</li>
 <li>Messages</li>
 <li>Notifications</li>
 <li>Profile</li>
+<li>Tasks Fx</li>
 <li>The Wire</li>
 <li>TheWire Tools</li>
 <li>Toggle Language</li>
