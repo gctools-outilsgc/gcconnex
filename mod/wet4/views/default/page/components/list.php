@@ -58,7 +58,7 @@ $list_items = '';
 ///DATATABLES///
 ////////////////
 
-if(elgg_in_context('friends') || elgg_in_context('my_groups') || elgg_in_context('groups_members')){ //datatable for colleagues, group members, my groups
+if(elgg_in_context('friends') || elgg_in_context('my_groups') || elgg_in_context('groups_members') ||elgg_in_context('messages')){ //datatable for colleagues, group members, my groups, messages
 
 foreach ($items as $item) {
 	$item_view = elgg_view_list_item($item, $vars);
@@ -111,8 +111,15 @@ $tBody = elgg_format_element('tbody', ['class' => ''], $tR);
 //create table head
 $tHead = elgg_format_element('thead', ['class' => ''], '<tr> <th class="data-table-head"> ' . $heading . '</th> </tr>');
 
-//pull it all together and display table
+    if(elgg_get_context() == 'messages'){
+        //make it so that messages won't be in alphabetical order. Need to pass a JSON array, but elgg is being mean :(
+echo elgg_format_element('table', ['class' => ' wb-tables table', 'id' => '', "data-wb-tables"=>"{ \"ordering\" : false }"], $tHead . $tBody);
+    }else{
+        //pull it all together and display table
 echo elgg_format_element('table', ['class' => ' wb-tables table', 'id' => ''], $tHead . $tBody);
+    }
+    
+
 
 if ($position == 'after' || $position == 'both') {
 	echo $nav;
