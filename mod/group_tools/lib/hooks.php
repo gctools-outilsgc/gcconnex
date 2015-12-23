@@ -421,19 +421,21 @@ function group_tools_menu_entity_handler($hook, $type, $return_value, $params) {
 		} elseif (elgg_instanceof($entity, "object", "groupforumtopic") && $entity->canEdit()) {
 			$result[] = ElggMenuItem::factory(array(
 				"name" => "status_change_open",
-				"text" => elgg_echo("open"),
+				"text" => '<i class="fa fa-lock fa-lg icon-unsel"><span class="wb-inv">Open</span></i>', //elgg_echo("open");,
 				"confirm" => elgg_echo("group_tools:discussion:confirm:open"),
 				"href" => "action/discussion/toggle_status?guid=" . $entity->getGUID(),
 				"is_trusted" => true,
+                 "title" => "Open the topic",
 				"priority" => 200,
 				"item_class" => ($entity->status == "closed") ? "" : "hidden"
 			));
 			$result[] = ElggMenuItem::factory(array(
 				"name" => "status_change_close",
-				"text" => elgg_echo("close"),
+				"text" => '<i class="fa fa-unlock fa-lg icon-unsel"><span class="wb-inv">Close</span></i>', //elgg_echo("close");,
 				"confirm" => elgg_echo("group_tools:discussion:confirm:close"),
 				"href" => "action/discussion/toggle_status?guid=" . $entity->getGUID(),
 				"is_trusted" => true,
+                "title" => "Close the topic",
 				"priority" => 201,
 				"item_class" => ($entity->status == "closed") ? "hidden" : ""
 			));
