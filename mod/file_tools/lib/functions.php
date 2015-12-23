@@ -183,6 +183,60 @@ function file_tools_build_select_options($folders, $depth = 0) {
 	return $result;
 }
 
+
+/**
+ * Make sure you can't move folders into itself or it's children
+ *
+ * @param array $folders folders to make the options for
+ * @param int   $depth   current depth
+ * @param int   $folder_guid current folder being indexed
+ * @param int   $removed guid of folder just removed
+ *
+ *
+ * @return string
+ */
+function file_tools_get_child($folders, $depth = 0, $folder_guid, $removed) {
+	$result = array();
+    
+    $bool = $removed;
+	
+	if (!empty($folders)) {
+		foreach ($folders as $index => $level) {
+
+			if ($folder = elgg_extract("folder", $level)) {
+                
+                //check to see if current foldr being indexed
+                if($folder->getGUID() != $folder_guid) {
+                    
+                    //check to see if parent has been removed from list
+                    if($folder->parent_guid != $bool){
+
+                        //add guid/name to list
+                        $result[$folder->getGUID()] = str_repeat("-", $depth) . $folder->title;
+
+                    } else {
+                        
+                        //update removed guid
+                        $bool = $folder->getGUID();
+                    }
+                } else {
+                    
+                    //update removed guid
+                    $bool = $folder->getGUID();
+                }
+                
+			}
+			
+			if ($childen = elgg_extract("children", $level)) {
+				$result += file_tools_get_child($childen, $depth + 1, $folder->getGUID(), $bool);
+			}
+		}
+	}
+	
+	return $result;
+}
+
+
 /**
  * Get folder selection options for widgets
  *
