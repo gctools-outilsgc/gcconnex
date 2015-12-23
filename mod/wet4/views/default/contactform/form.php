@@ -112,7 +112,7 @@ $r = $db->query('SELECT * FROM contact_list');
 
 foreach ($r as $row) {
     if ($SESSION['language'] == 'fr'){
-       echo "<option value=\"".$row['francais']."$".$row['francais']."\">".$row['english']."</option>\n  ";
+       echo "<option value=\"".$row['francais']."$".$row['english']."\">".$row['francais']."</option>\n  ";
 }else{
    echo "<option value=\"".$row['francais']."$".$row['english']."\">".$row['english']."</option>\n  ";
     }

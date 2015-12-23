@@ -311,7 +311,11 @@ class FGContactForm
                
       <tr>
         <td class="innerpadding" style="padding: 30px 30px 30px 30px; font-size: 16px; line-height: 22px; border-bottom: 1px solid #f2eeed; font-family: sans-serif;">
-          Bacon ipsum dolor amet shank pig beef cupim, pork loin sausage pancetta bresaola corned beef meatball biltong pork chop ball tip ham. Picanha sausage pig brisket sirloin ground round ham hock short loin pork belly landjaeger t-bone hamburger.<br/><br/> Biltong pork tongue, pancetta fatback kevin meatball beef turducken sausage pig tri-tip pork loin bresaola corned beef. Ball tip brisket shoulder flank. Pastrami landjaeger shankle drumstick filet mignon.
+          Thank you for contacting the GCconnex Help desk. This email is sent to you to have a copy of your request. You will receive an acknowledgment of receipt by email shortly. Shouldn’t you receive the acknowledgment of receipt, please contact the GCconnex Help Desk at: gcconnex@tbs-sct.gc.ca.<br/>
+
+Thank you<br/><br/> Merci d\'avoir communiquer avec le bureau de soutien de GCconnex. Ce courriel vous est envoyé afin d’avoir une copie de votre demande dans vos dossiers. Vous recevrez un accusé de réception sous peu. Si vous ne recevez pas cet accusé de réception, prière de communiquer avec le bureau de soutien de GCconnex à l’adresse suivante : gcconnex@tbs-sct.gc.ca<br/>
+
+Merci
 
              
         </td>
@@ -323,7 +327,7 @@ class FGContactForm
             <tr>
               <td class="h2" style="color: #153643; font-family: sans-serif; padding: 0 0 15px 0; font-size: 24px; line-height: 28px; font-weight: bold;">
                 <span style="font-size:15px; font-weight: normal;">(Le fran&ccedil;ais suit)</span><br/>
-                  GCconnex contact form
+                  GCconnex Contact Form
               </td>
             </tr>
             <tr>
@@ -360,7 +364,7 @@ class FGContactForm
                   <tr>
                     <td class="bodycopy" style="color: #153643; font-family: sans-serif; padding: 0 0 15px 0; font-size: 24px; line-height: 28px; font-weight: bold;">
                         
-                  Formulaire de contact GCconnex
+                  Formulaire en ligne de demande
                     </td>
                   </tr>
                   <tr>
@@ -567,7 +571,7 @@ class FGContactForm
             $ret = false;
         }
         
-        if ($_POST['reason'] == 'Autre question$Other question"')
+        if ($_POST['reason'] == 'Autre question$Other question')
         {
             if (empty($_POST['subject']))
             {
