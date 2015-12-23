@@ -91,7 +91,7 @@ if (!$owner) {
                     $user = get_loggedin_user()->getGUID();
                            
                     //see if user is a member
-                    if($group->isFriendOf($user)){
+                    if($group->isFriendOf($user) || elgg_is_admin_logged_in()){
             
                         //load action buttons in dropdown
                         $buttons = elgg_view_menu('title', array(
@@ -102,7 +102,7 @@ if (!$owner) {
                         ));
 
                         //display different title on button for group owner/mods
-                        if($owner == get_loggedin_user()){
+                        if($owner == get_loggedin_user() || elgg_is_admin_logged_in()){
                             $buttonTitle = "Settings";
                         }
                 ?>
