@@ -17,8 +17,6 @@ include dirname(__FILE__) . "/watermark.php";
  * @return bool    TRUE on success
  */
 function tp_create_gd_thumbnails($file, $prefix, $filestorename) {
-	global $CONFIG;
-
 	$image_sizes = elgg_get_plugin_setting('image_sizes', 'tidypics');
 	if (!$image_sizes) {
 		// move this out of library
@@ -51,8 +49,6 @@ function tp_create_gd_thumbnails($file, $prefix, $filestorename) {
 	$file->thumbnail = $prefix."thumb".$filestorename;
 
 	// album thumbnail
-	global $CONFIG;
-	$CONFIG->debug = 'WARNING';
 	$thumb->setFilename($prefix."smallthumb".$filestorename);
 	$thumbname = $thumb->getFilenameOnFilestore();
 	$rtn_code = tp_gd_resize(	$file->getFilenameOnFilestore(),
@@ -65,7 +61,6 @@ function tp_create_gd_thumbnails($file, $prefix, $filestorename) {
 		return FALSE;
 	}
 	$file->smallthumb = $prefix."smallthumb".$filestorename;
-	unset($CONFIG->debug);
 
 	// main image
 	$thumb->setFilename($prefix."largethumb".$filestorename);
@@ -449,7 +444,17 @@ function tp_im_cmdline_resize($input_name, $output_name, $maxwidth, $maxheight, 
 
 	// see imagemagick web site for explanation of these parameters
 	// the ^ in the resize means those are minimum width and height values
-	$command = $im_path . "convert \"$input_name\" -resize ".$newwidth."x".$newheight."^ -gravity center -extent ".$newwidth."x".$newheight." \"$output_name\"";
+	$thumbnail_optimized = elgg_get_plugin_setting('thumbnail_optimization', 'tidypics');
+	switch($thumbnail_optimized) {
+		case "complex":
+			$command = $im_path . "convert \"$input_name\" -filter Triangle -define filter:support=2 -thumbnail ".$newwidth."x".$newheight."^ -gravity center -extent ".$newwidth."x".$newheight." -unsharp 0.25x0.25+8+0.065 -dither None -posterize 136 -quality 82 -define jpeg:fancy-upsampling=off -define png:compression-filter=5 -define png:compression-level=9 -define png:compression-strategy=1 -define png:exclude-chunk=all -interlace none -colorspace sRGB -strip \"$output_name\"";
+			break;
+		case "simple":
+			$command = $im_path . "convert \"$input_name\"  -quality 87 -filter Lanczos -thumbnail ".$newwidth."x".$newheight."^ -gravity center -extent ".$newwidth."x".$newheight." \"$output_name\"";
+			break;
+		default:
+			$command = $im_path . "convert \"$input_name\" -resize ".$newwidth."x".$newheight."^ -gravity center -extent ".$newwidth."x".$newheight." \"$output_name\"";
+	}
 	$output = array();
 	$ret = 0;
 	exec($command, $output, $ret);

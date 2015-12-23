@@ -6,7 +6,7 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
 
-gatekeeper();
+elgg_gatekeeper();
 
 $album_guid = (int) get_input('guid');
 if (!$album_guid) {
@@ -29,6 +29,7 @@ if (!$album->getContainerEntity()->canWriteToContainer()) {
 // set page owner based on container (user or group)
 elgg_set_page_owner_guid($album->getContainerGUID());
 $owner = elgg_get_page_owner_entity();
+elgg_group_gatekeeper();
 
 $title = elgg_echo('album:addpix');
 
@@ -43,8 +44,12 @@ $uploader = get_input('uploader');
 if ($uploader == 'basic') {
 	$content = elgg_view('forms/photos/basic_upload', array('entity' => $album));
 } else {
-	elgg_load_js('jquery.uploadify-tp');
-	elgg_load_js('tidypics:uploading');
+	elgg_load_js('jquery.plupload-tp');
+	elgg_load_js('jquery.plupload.ui-tp');
+	elgg_load_js('jquery.plupload.ui.lang-tp');
+	elgg_load_css('jquery.plupload.jqueryui-theme');
+	elgg_load_css('jquery.plupload.ui');
+	elgg_require_js('tidypics/uploading');
 	$content = elgg_view('forms/photos/ajax_upload', array('entity' => $album));
 }
 
@@ -52,7 +57,7 @@ $body = elgg_view_layout('content', array(
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',
-	'sidebar' => elgg_view('photos/sidebar', array('page' => 'upload')),
+	'sidebar' => elgg_view('photos/sidebar_im', array('page' => 'upload')),
 ));
 
 echo elgg_view_page($title, $body);

@@ -16,10 +16,10 @@ $params = array(
 	'value' => $vars['entity']->num_display,
 	'options' => array(4, 8, 12, 16, 20),
 );
-$dropdown = elgg_view('input/dropdown', $params);
+$select = elgg_view('input/select', $params);
 
 ?>
 <div>
 	<?php echo elgg_echo('tidypics:widget:num_latest'); ?>:
-	<?php echo $dropdown; ?>
+	<?php echo $select; ?>
 </div>

@@ -14,12 +14,19 @@
 $album = $vars['entity'];
 
 $maxfilesize = (float) elgg_get_plugin_setting('maxfilesize', 'tidypics');
+if (!$maxfilesize) {
+	$maxfilesize = 5;
+}
+$max_uploads = (int) elgg_get_plugin_setting('max_uploads', 'tidypics');
+if (!$max_uploads) {
+	$max_uploads = 10;
+}
 
 $instructions = elgg_echo("tidypics:uploader:upload");
-$max = elgg_echo('tidypics:uploader:basic', array($maxfilesize));
+$max = elgg_echo('tidypics:uploader:basic', array($max_uploads, $maxfilesize));
 
 $list = '';
-for ($x = 0; $x < 10; $x++) {
+for ($x = 0; $x < $max_uploads; $x++) {
 	$list .= '<li>' . elgg_view('input/file', array('name' => 'images[]')) . '</li>';
 }
 

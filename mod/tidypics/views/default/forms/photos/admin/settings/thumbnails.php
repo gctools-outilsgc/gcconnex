@@ -5,7 +5,7 @@
 
 $plugin = $vars['plugin'];
 
-echo '<span class="elgg-text-help">' . elgg_echo('tidypics:settings:sizes:instructs') . '</span>';
+echo '<span class="elgg-text-help mbm">' . elgg_echo('tidypics:settings:sizes:instructs') . '</span>';
 $image_sizes = unserialize($plugin->image_sizes);
 echo '<table>';
 $sizes = array('large', 'small', 'tiny');

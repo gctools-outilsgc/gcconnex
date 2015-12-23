@@ -5,6 +5,8 @@
 
 elgg_load_library('tidypics:upload');
 
+set_input('tidypics_action_name', 'tidypics_photo_upload');
+
 $album_guid = (int) get_input('album_guid');
 $file_var_name = get_input('file_var_name', 'Image');
 $batch = get_input('batch');
@@ -24,18 +26,9 @@ if (empty($_FILES)) {
 
 $file = $_FILES[$file_var_name];
 
-$mime = tp_upload_get_mimetype($file['name']);
-if ($mime == 'unknown') {
-	echo 'Not an image';
-	exit;
-}
-
-// we have to override the mime type because uploadify sends everything as application/octet-string
-$file['type'] = $mime;
-
 $image = new TidypicsImage();
 $image->container_guid = $album->getGUID();
-$image->setMimeType($mime);
+$image->setMimeType($file['type']);
 $image->access_id = $album->access_id;
 $image->batch = $batch;
 
@@ -44,17 +37,23 @@ try {
 
 } catch (Exception $e) {
 	// remove the bits that were saved
-	delete_entity($image->getGUID());
+	$image->delete();
 	$result = false;
 	echo $e->getMessage();
 }
 
 if ($result) {
-        $album->prependImageList(array($image->guid));
+	$album->prependImageList(array($image->guid));
 
-        if (elgg_get_plugin_setting('img_river_view', 'tidypics') === "all") {
-                add_to_river('river/object/image/create', 'create', $image->getOwnerGUID(), $image->getGUID());
-        }
+	if (elgg_get_plugin_setting('img_river_view', 'tidypics') === "all") {
+		elgg_create_river_item(array(
+			'view' => 'river/object/image/create',
+			'action_type' => 'create',
+			'subject_guid' => $image->getOwnerGUID(),
+			'object_guid' => $image->getGUID(),
+			'target_guid' => $album->getGUID(),
+		));
+	}
 }
 
 exit;

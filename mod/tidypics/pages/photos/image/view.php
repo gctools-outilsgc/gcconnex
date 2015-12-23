@@ -6,15 +6,13 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
 
-group_gatekeeper();
-
 // get the photo entity
 $photo_guid = (int) get_input('guid');
 $photo = get_entity($photo_guid);
 if (!$photo) {
-        register_error(elgg_echo('noaccess'));
-        $_SESSION['last_forward_from'] = current_page_url();
-        forward('');
+	register_error(elgg_echo('noaccess'));
+	$_SESSION['last_forward_from'] = current_page_url();
+	forward('');
 }
 $album = $photo->getContainerEntity();
 $album_container = $album->getContainerEntity();
@@ -24,18 +22,19 @@ if (!$album_container) {
 	forward('');
 }
 
-$photo->addView();
-
-if (elgg_get_plugin_setting('tagging', 'tidypics')) {
-	elgg_load_js('tidypics:tagging');
-	elgg_load_js('jquery.imgareaselect');
-}
-
 // set page owner based on owner of photo album
 if ($album) {
 	elgg_set_page_owner_guid($album->getContainerGUID());
 }
 $owner = elgg_get_page_owner_entity();
+elgg_group_gatekeeper();
+
+$photo->addView();
+
+if (elgg_get_plugin_setting('tagging', 'tidypics')) {
+	elgg_load_js('jquery.imgareaselect');
+	elgg_require_js('tidypics/tagging');
+}
 
 // set up breadcrumbs
 elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
@@ -49,15 +48,23 @@ elgg_push_breadcrumb($album->getTitle(), $album->getURL());
 elgg_push_breadcrumb($photo->getTitle());
 
 if (elgg_is_logged_in()) {
-        if (elgg_instanceof($owner, 'group')) {
-                $logged_in_guid = $owner->guid;
-        } else {
-                $logged_in_guid = elgg_get_logged_in_user_guid();
-        }
-        elgg_register_menu_item('title', array('name' => 'addphotos',
-                                               'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $logged_in_guid,
-                                               'text' => elgg_echo("photos:addphotos"),
-                                               'link_class' => 'elgg-button elgg-button-action elgg-lightbox'));
+	if ($owner instanceof ElggGroup) {
+		if ($owner->isMember(elgg_get_logged_in_user_entity())) {
+			elgg_register_menu_item('title', array(
+				'name' => 'addphotos',
+				'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $owner->getGUID(),
+				'text' => elgg_echo("photos:addphotos"),
+				'link_class' => 'elgg-button elgg-button-action elgg-lightbox'
+			));
+		}
+	} else {
+		elgg_register_menu_item('title', array(
+			'name' => 'addphotos',
+			'href' => "ajax/view/photos/selectalbum/?owner_guid=" . elgg_get_logged_in_user_guid(),
+			'text' => elgg_echo("photos:addphotos"),
+			'link_class' => 'elgg-button elgg-button-action elgg-lightbox'
+		));
+	}
 }
 
 if (elgg_get_plugin_setting('download_link', 'tidypics')) {
@@ -76,7 +83,7 @@ $body = elgg_view_layout('content', array(
 	'filter' => false,
 	'content' => $content,
 	'title' => $photo->getTitle(),
-	'sidebar' => elgg_view('photos/sidebar', array(
+	'sidebar' => elgg_view('photos/sidebar_im', array(
 		'page' => 'tp_view',
 		'image' => $photo,
 	)),

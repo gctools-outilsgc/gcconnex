@@ -61,9 +61,7 @@ function tp_upload_memory_check($image_lib, $mem_required) {
 		return true;
 	}
 
-	$mem_avail = ini_get('memory_limit');
-	$mem_avail = rtrim($mem_avail, 'M');
-	$mem_avail = $mem_avail * 1024 * 1024;
+	$mem_avail = elgg_get_ini_setting_in_bytes('memory_limit');
 	$mem_used = memory_get_usage();
 
 	$mem_avail = $mem_avail - $mem_used - 2097152; // 2 MB buffer

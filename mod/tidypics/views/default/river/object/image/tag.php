@@ -3,6 +3,10 @@
  * Image tag river view
  */
 
+elgg_require_js('tidypics/tidypics');
+elgg_load_js('lightbox');
+elgg_load_css('lightbox');
+
 $tagger = $vars['item']->getSubjectEntity();
 $tagged_user = $vars['item']->getObjectEntity();
 $annotation = $vars['item']->getAnnotation();
@@ -14,7 +18,15 @@ $image = get_entity($annotation->entity_guid);
 if (!$image) {
 	return;
 }
-$attachments = elgg_view_entity_icon($image, 'tiny');
+$preview_size = elgg_get_plugin_setting('river_thumbnails_size', 'tidypics');
+if(!$preview_size) {
+	$preview_size = 'tiny';
+}
+$attachments = elgg_view_entity_icon($image, $preview_size, array(
+	'href' => $image->getIconURL('master'),
+	'img_class' => 'tidypics-photo',
+	'link_class' => 'tidypics-lightbox',
+));
 
 $tagger_link = elgg_view('output/url', array(
 	'href' => $tagger->getURL(),

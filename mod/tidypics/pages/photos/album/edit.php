@@ -21,8 +21,8 @@ if (!$entity->canEdit()) {
 elgg_set_page_owner_guid($entity->getContainerGUID());
 $owner = elgg_get_page_owner_entity();
 
-gatekeeper(); 
-group_gatekeeper();
+elgg_gatekeeper();
+elgg_group_gatekeeper();
 
 $title = elgg_echo('album:edit');
 
@@ -44,7 +44,7 @@ $body = elgg_view_layout('content', array(
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',
-	'sidebar' => elgg_view('photos/sidebar', array('page' => 'album')),
+	'sidebar' => elgg_view('photos/sidebar_al', array('page' => 'upload')),
 ));
 
 echo elgg_view_page($title, $body);
