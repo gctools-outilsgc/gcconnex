@@ -6703,7 +6703,7 @@ var componentName = "wb-menu",
 			drizzleAria( $menu );
 			$menu
 				.filter( "[aria-haspopup=true]" )
-					.append( "<span class='expicon glyphicon glyphicon-chevron-down'></span>" );
+					/*.append( "<span class='expicon glyphicon glyphicon-chevron-down'></span>" )*/;
 		}
 
 		// Replace elements

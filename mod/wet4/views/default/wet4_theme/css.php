@@ -7822,7 +7822,7 @@ img.mfp-img {
         cursor: default; }
 
 .wb-menu .sm-open .expicon {
-  z-index: -1; }
+  z-index: 1; }
 
 #mb-pnl nav a.wb-navcurr, #mb-pnl nav summary.wb-navcurr {
   outline: 1px solid; }

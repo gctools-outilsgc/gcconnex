@@ -18,7 +18,7 @@
    /* width: 780px;*/
     margin: 0 auto;
     position: relative;
-    z-index:999;
+    z-index:499;
     margin-bottom:40px;
 }
 

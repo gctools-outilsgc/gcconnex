@@ -22,7 +22,7 @@ if ($more_items) {
 	echo '<li class="elgg-more ">';
 
 	$more = elgg_echo('more');
-	echo '<a href="#moreCont" class="item" role="menuItem" aria-haspopup="true" >More</a>';
+	echo '<a href="#moreCont" class="item" role="menuItem" aria-haspopup="true" >More<span class="expicon glyphicon glyphicon-chevron-down"></span></a>';
 	
 	echo elgg_view('navigation/menu/elements/section', array(
 		'class' => ' sm list-unstyled ', 
