@@ -5675,7 +5675,7 @@ a {
   white-space: normal; }
 
 .dropdown-menu > li > a:visited {
-  color: #333333; }
+  /*color: #333333;*/ }
 
 .nav > li > a:visited {
   color: #295376; }
