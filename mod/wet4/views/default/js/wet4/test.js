@@ -9,5 +9,5 @@ require.config({
 
 // { "dom": '<"top"ilf>' }
 requirejs( ["datatables"], function() {
-  $('#dataTable').dataTable( { "dom": '<"top"ilf>' } );
+  $('.wb-tables').dataTable();
 } );

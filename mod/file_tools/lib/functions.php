@@ -199,42 +199,37 @@ function file_tools_get_child($folders, $depth = 0, $folder_guid, $removed) {
 	$result = array();
     
     $bool = $removed;
+    $targetFolder = $folder_guid;
 	
 	if (!empty($folders)) {
 		foreach ($folders as $index => $level) {
 
 			if ($folder = elgg_extract("folder", $level)) {
                 
-                //check to see if current foldr being indexed
-                if($folder->getGUID() != $folder_guid) {
-                    
-                    //check to see if parent has been removed from list
-                    if($folder->parent_guid != $bool){
-
-                        //add guid/name to list
-                        $result[$folder->getGUID()] = str_repeat("-", $depth) . $folder->title;
-
-                    } else {
+                //check to see if current folder being indexed or if parent folder
+                    if($folder->getGUID() == $targetFolder || $folder->parent_guid == $bool || $folder->parent_guid == $targetFolder){
                         
-                        //update removed guid
-                        $bool = $folder->getGUID();
-                    }
-                } else {
-                    
                     //update removed guid
                     $bool = $folder->getGUID();
-                }
+                        
+                    } else {
+                        
+                        //add guid/name to list
+                        $result[$folder->getGUID()] = str_repeat("-", $depth) . $folder->title;
+                        
+                    }
                 
 			}
 			
 			if ($childen = elgg_extract("children", $level)) {
-				$result += file_tools_get_child($childen, $depth + 1, $folder->getGUID(), $bool);
+				$result += file_tools_get_child($childen, $depth + 1, $folder_guid, $bool);
 			}
 		}
 	}
 	
 	return $result;
 }
+
 
 
 /**

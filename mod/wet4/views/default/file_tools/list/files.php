@@ -14,7 +14,7 @@ if (empty($offset)) {
 	if (!($sub_folders = file_tools_get_sub_folders($folder))) {
 		$sub_folders = array();
 	}
-	
+
 	$entities = array_merge($sub_folders, $files);
 } else {
 	$entities = $files;
@@ -61,6 +61,10 @@ if (empty($files_content)) {
 		}
 		
 		$files_content .= "<a id='file_tools_action_bulk_download' href='javascript:void(0);'>" . elgg_echo("file_tools:list:download_selected") . "</a>";
+        
+        if (elgg_get_page_owner_entity()->canEdit()) {
+            $files_content .= ' | <a id="file_tools_action_move_selected" class="elgg-lightbox" href="' . elgg_get_site_url() . 'ajax/view/file_tools/move?guids=">Move selected</a>';
+        }
 		
 		$files_content .= "<a id='file_tools_select_all' class='float-alt' href='javascript:void(0);'>";
 		$files_content .= "<span>" . elgg_echo("file_tools:list:select_all") . "</span>";
@@ -82,6 +86,7 @@ echo "</div>";
 $page_owner = elgg_get_page_owner_entity();
 
 if ($page_owner->canEdit() || (elgg_instanceof($page_owner, "group") && $page_owner->isMember())) { ?>
+
 <script type="text/javascript">
 
 	$(function(){
@@ -89,6 +94,29 @@ if ($page_owner->canEdit() || (elgg_instanceof($page_owner, "group") && $page_ow
 		elgg.file_tools.initialize_file_draggable();
 		elgg.file_tools.initialize_folder_droppable();
 		
+        
+        //add guids to move selected link when checked
+        $(':checkbox').change(function() {
+            if($(this).is(":checked")) {
+                
+                var guid = $(this).val();
+                
+                $('#file_tools_action_move_selected').attr("href", function(i, href) {
+                  return href + guid + ',';
+                });
+                
+              return;
+                
+           } else {
+               //remove guid if unchecked
+               var guid = $(this).val();
+               
+               $('#file_tools_action_move_selected').attr("href", function(i, href) {
+                  return href.replace(guid + ',', '');
+                });
+           }
+        });
+        
 	});
 
 </script>

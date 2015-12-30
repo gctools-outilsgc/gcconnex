@@ -25,9 +25,9 @@ $folders = file_tools_get_folders($container_guid);
 $options = array(
 	0 => elgg_echo("file_tools:input:folder_select:main")
 );
-
+echo("<script>console.log('PHP: ". $folder_guid ."');</script>");
 if (!empty($folders)) {
-	$options = $options + file_tools_build_select_options($folders, 1);
+	$options = $options + file_tools_get_child($folders, 1, $folder_guid, '-1');
 }
 
 $vars["options_values"] = $options;
