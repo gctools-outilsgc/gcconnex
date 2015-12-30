@@ -106,11 +106,6 @@ ob_start();
 		<td><?php echo (is_callable('exif_read_data')) ? elgg_echo('tidypics:enabled') : elgg_echo('tidypics:disabled'); ?></td>
 		<td></td>
 	</tr>
-	<tr>
-		<td><?php echo elgg_echo('tidypics:server_info:use_only_cookies'); ?></td>
-		<td><?php echo (ini_get('session.use_only_cookies')) ? elgg_echo('tidypics:enabled') : elgg_echo('tidypics:disabled'); ?></td>
-		<td><?php echo elgg_echo('tidypics:server_info:use_only_cookies_desc'); ?></td>
-	</tr>
 </table>
 
 <?php

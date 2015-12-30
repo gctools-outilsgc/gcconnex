@@ -6,12 +6,12 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
 
-group_gatekeeper();
+elgg_group_gatekeeper();
 
 $owner = elgg_get_page_owner_entity();
 
 if (!$owner) {
-        forward(REFERER);
+	forward(REFERER);
 }
 
 $title = elgg_echo('album:user', array($owner->name));
@@ -40,15 +40,23 @@ if (!$content) {
 }
 
 if (elgg_is_logged_in()) {
-        if ($owner instanceof ElggGroup) {
-                $logged_in_guid = $owner->getGUID();
-        } else {
-                $logged_in_guid = elgg_get_logged_in_user_guid();
-        }
-        elgg_register_menu_item('title', array('name' => 'addphotos',
-                                               'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $logged_in_guid,
-                                               'text' => elgg_echo("photos:addphotos"),
-                                               'link_class' => 'elgg-button elgg-button-action elgg-lightbox'));
+	if ($owner instanceof ElggGroup) {
+		if ($owner->isMember(elgg_get_logged_in_user_entity())) {
+			elgg_register_menu_item('title', array(
+				'name' => 'addphotos',
+				'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $owner->getGUID(),
+				'text' => elgg_echo("photos:addphotos"),
+				'link_class' => 'elgg-button elgg-button-action elgg-lightbox'
+			));
+		}
+	} else {
+		elgg_register_menu_item('title', array(
+			'name' => 'addphotos',
+			'href' => "ajax/view/photos/selectalbum/?owner_guid=" . elgg_get_logged_in_user_guid(),
+			'text' => elgg_echo("photos:addphotos"),
+			'link_class' => 'elgg-button elgg-button-action elgg-lightbox'
+		));
+	}
 }
 
 elgg_register_title_button();
@@ -57,7 +65,7 @@ $params = array(
 	'filter_context' => 'mine',
 	'content' => $content,
 	'title' => $title,
-	'sidebar' => elgg_view('photos/sidebar', array('page' => 'owner')),
+	'sidebar' => elgg_view('photos/sidebar_al', array('page' => 'owner')),
 );
 
 // don't show filter if out of filter context

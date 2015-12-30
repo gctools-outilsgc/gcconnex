@@ -77,6 +77,7 @@ $messageLink = $message->getURL();
 
 $body = <<<HTML
 
+
 <div class="mrgn-bttm-md clearfix">
 
 <div class="messages-chkbx">$checkbox</div>
@@ -86,6 +87,7 @@ $body = <<<HTML
 <div class="messages-delete">$delete_link</div>
 
 </div>
+
 
 HTML;
 

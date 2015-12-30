@@ -18,24 +18,30 @@ $attributes = elgg_format_attributes(array(
 	'data-height' => $coords->height,
 ));
 
+$annotation = elgg_get_annotation_from_id($vars['tag']->annotation_id);
+
 if ($vars['tag']->type == 'user') {
 	$user = get_entity($vars['tag']->value);
-	$label = elgg_view('output/url', array(
+	$user_link = elgg_view('output/url', array(
 		'text' => $user->name,
 		'href' => $user->getURL(),
 	));
+	$tagger = get_entity($annotation->owner_guid);
+	$tagger_link = elgg_view('output/url', array(
+		'text' => $tagger->name,
+		'href' => $tagger->getURL(),
+	));
+	$label = elgg_echo('tidypics:tags:membertag') . $user_link . elgg_echo('tidypics:tags:taggedby', array($tagger_link));
 } else {
-	$label = $vars['tag']->value;
+	$label = elgg_echo('tidypics:tags:wordtags') . $vars['tag']->value;
 }
 
 $delete = '';
-$annotation = elgg_get_annotation_from_id($vars['tag']->annotation_id);
-
 if ($annotation->canEdit()) {
 	$url = elgg_http_add_url_query_elements('action/photos/image/untag', array(
 		'annotation_id' => $vars['tag']->annotation_id
 	));
-	$delete = elgg_view('output/confirmlink', array(
+	$delete = elgg_view('output/url', array(
 		'href' => $url,
 		'text' => elgg_view_icon('delete', 'float mas'),
 		'confirm' => elgg_echo('tidypics:phototagging:delete:confirm')

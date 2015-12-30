@@ -63,7 +63,7 @@ function tidypics_migrate_pics() {
  * @return bool on success
  */
 function tidypics_migrate_user_pics(ElggUser $user) {
-	global $CONFIG, $filestore;
+	global $filestore;
 
 	$user_guid = $user->getGUID();
 
@@ -185,10 +185,10 @@ function tidypics_migrate_user_pics(ElggUser $user) {
  * @return bool on success
  */
 function tidypics_set_random_cover_pic($album_guid) {
-	global $CONFIG;
+	$db_prefix = elgg_get_config('dbprefix');
 
 	if ($album = get_entity($album_guid) AND $album instanceof TidypicsAlbum) {
-		$q = "SELECT guid FROM {$CONFIG->dbprefix}entities WHERE container_guid = $album_guid ORDER BY RAND() limit 1";
+		$q = "SELECT guid FROM {$db_prefix}entities WHERE container_guid = $album_guid ORDER BY RAND() limit 1";
 		$pic = get_data($q);
 
 		return $album->cover = $pic[0]->guid;
@@ -202,7 +202,7 @@ function tidypics_set_random_cover_pic($album_guid) {
  * @return bool on succes.
  */
 function tidypics_migrate_pic_from_files($pic, $album_guid) {
-	global $CONFIG, $filestore;
+	global $filestore;
 
 	// get the subtype id.
 	$image_subtype_id = get_subtype_id('object', 'image');
@@ -217,8 +217,8 @@ function tidypics_migrate_pic_from_files($pic, $album_guid) {
 
 	// figure out where to move the files.
 	$matrix = $filestore->make_file_matrix($user->username);
-	$user_fs_path = $CONFIG->dataroot . $matrix;
-	$album_fs_path = $CONFIG->dataroot . $matrix . "image/$album_guid/";
+	$user_fs_path = elgg_get_data_path() . $matrix;
+	$album_fs_path = elgg_get_data_path() . $matrix . "image/$album_guid/";
 	if (!is_dir($album_fs_path)) {
 		if (!mkdir($album_fs_path, 0700, true)) {
 			return false;
@@ -254,7 +254,8 @@ function tidypics_migrate_pic_from_files($pic, $album_guid) {
 	// delete old one.
 	unlink($user_fs_path . $old_file);
 
-	$q = "UPDATE {$CONFIG->dbprefix}entities SET subtype = $image_subtype_id, container_guid = $album_guid WHERE guid = {$pic->getGUID()}";
+	$db_prefix = elgg_get_config('dbprefix');
+	$q = "UPDATE {$db_prefix}entities SET subtype = $image_subtype_id, container_guid = $album_guid WHERE guid = {$pic->getGUID()}";
 	//echo "Finished moving {$user_fs_path}{$old_file} to {$user_fs_path}{$new_file}\n";
 
 	return update_data($q);
@@ -266,15 +267,15 @@ function tidypics_migrate_pic_from_files($pic, $album_guid) {
  * return mixed. False on fail, array of GUIDs on success.
  */
 function tidypics_get_user_guids_with_pics_in_files($offset, $limit) {
-	global $CONFIG;
+	$db_prefix = elgg_get_config('dbprefix');
 
 	//$simpletype_ms_id = add_metastring('simple_type');
 	//$image_ms_id = add_metastring('image');
 
 	$q = "SELECT DISTINCT e.owner_guid
 		FROM
-			{$CONFIG->dbprefix}entities as e,
-			{$CONFIG->dbprefix}entity_subtypes as st
+			{$db_prefix}entities as e,
+			{$db_prefix}entity_subtypes as st
 
 		WHERE st.subtype = 'file'
 		AND e.subtype = st.id

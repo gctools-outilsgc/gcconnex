@@ -29,11 +29,13 @@ if (!$content) {
 $title = elgg_echo('album:all');
 
 if (elgg_is_logged_in()) {
-        $logged_in_guid = elgg_get_logged_in_user_guid();
-        elgg_register_menu_item('title', array('name' => 'addphotos',
-                                               'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $logged_in_guid,
-                                               'text' => elgg_echo("photos:addphotos"),
-                                               'link_class' => 'elgg-button elgg-button-action elgg-lightbox'));
+	$logged_in_guid = elgg_get_logged_in_user_guid();
+	elgg_register_menu_item('title', array(
+		'name' => 'addphotos',
+		'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $logged_in_guid,
+		'text' => elgg_echo("photos:addphotos"),
+		'link_class' => 'elgg-button elgg-button-action elgg-lightbox'
+	));
 }
 
 elgg_register_title_button('photos');
@@ -42,7 +44,7 @@ $body = elgg_view_layout('content', array(
 	'filter_context' => 'all',
 	'content' => $content,
 	'title' => $title,
-	'sidebar' => elgg_view('photos/sidebar', array('page' => 'all')),
+	'sidebar' => elgg_view('photos/sidebar_al', array('page' => 'all')),
 ));
 
 echo elgg_view_page($title, $body);

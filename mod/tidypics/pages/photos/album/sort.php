@@ -5,8 +5,8 @@
  * This displays a listing of all the photos so that they can be sorted
  */
 
-gatekeeper();
-group_gatekeeper();
+elgg_gatekeeper();
+elgg_group_gatekeeper();
 
 // get the album entity
 $album_guid = (int) get_input('guid');
@@ -44,7 +44,7 @@ $body = elgg_view_layout('content', array(
 	'filter' => false,
 	'content' => $content,
 	'title' => $title,
-	'sidebar' => elgg_view('photos/sidebar', array('page' => 'album')),
+	'sidebar' => elgg_view('photos/sidebar_al', array('page' => 'upload')),
 ));
 
 echo elgg_view_page($title, $body);

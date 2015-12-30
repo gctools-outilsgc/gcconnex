@@ -10,17 +10,17 @@
 
 echo '<p>';
 echo elgg_view('input/autocomplete', array(
-        'name' => 'username',
-        'match_on' => 'friends',
+	'name' => 'username',
+	'match_on' => 'users',
 ));
 
 echo elgg_view('input/hidden', array(
-        'name' => 'guid',
-        'value' => $vars['entity']->getGUID(),
+	'name' => 'guid',
+	'value' => $vars['entity']->getGUID(),
 ));
 
 echo elgg_view('input/hidden', array(
-        'name' => 'coordinates',
+	'name' => 'coordinates',
 ));
 echo '</p>';
 

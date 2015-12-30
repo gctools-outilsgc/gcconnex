@@ -332,17 +332,22 @@ class TidypicsAlbum extends ElggObject {
 
 	/**
 	 * Delete all the images in this album
-	 *
-	 * @todo ElggBatch?
 	 */
 	protected function deleteImages() {
-		$images = elgg_get_entities(array(
+		$images_count = elgg_get_entities(array(
 			"type" => "object",
 			"subtype" => "image",
 			"container_guid" => $this->guid,
-			"limit" => ELGG_ENTITIES_NO_VALUE,
+			"count" => true,
 		));
-		if ($images) {
+		if ($images_count > 0) {
+			$images = new ElggBatch('elgg_get_entities', array(
+				"type" => "object",
+				"subtype" => "image",
+				"container_guid" => $this->guid,
+				"limit" => ELGG_ENTITIES_NO_VALUE,
+			));
+			$images->setIncrementOffset(false);
 			foreach ($images as $image) {
 				if ($image) {
 					$image->delete();
