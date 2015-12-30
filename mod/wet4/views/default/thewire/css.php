@@ -35,3 +35,8 @@ The Wire
 .thewire-post .elgg-content {
 	margin: 10px 5px;
 }
+
+.ui-menu-item a:hover {
+	color: #047177;
+}
+
