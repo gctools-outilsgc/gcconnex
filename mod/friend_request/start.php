@@ -82,7 +82,7 @@ function friend_request_pagesetup() {
 		}
 	}
 	
-	// Show menu link in the correct context
+/*	// Show menu link in the correct context
 	if (in_array($context, array("friends", "friendsof", "collections", "messages")) && !empty($page_owner) && $page_owner->canEdit()) {
 		$options = array(
 			"type" => "user",
@@ -107,6 +107,6 @@ function friend_request_pagesetup() {
 		);
 		
 		elgg_register_menu_item("page", $menu_item);
-	}
+	}*/
 }
 	
