@@ -2676,8 +2676,8 @@ select[multiple].input-lg, .input-group-lg > select[multiple].form-control,
 
 .btn-primary {
   color: #fff;
-  background-color: #2572b4;
-  border-color: #143c5f; }
+  background-color: #055959;
+  border-color: #055959; }
   .btn-primary:hover,
   .btn-primary:focus,
   .btn-primary.focus,
@@ -2709,8 +2709,8 @@ select[multiple].input-lg, .input-group-lg > select[multiple].form-control,
   fieldset[disabled] .btn-primary.focus,
   fieldset[disabled] .btn-primary:active,
   fieldset[disabled] .btn-primary.active {
-    background-color: #2572b4;
-    border-color: #143c5f; }
+    background-color: #055959;
+    border-color: #055959; }
   .btn-primary .badge {
     color: #2572b4;
     background-color: #fff; }
