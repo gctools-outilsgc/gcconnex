@@ -249,7 +249,7 @@ if ($event_calendar_region_display == 'yes' || $event_calendar_type_display == '
 	$body .= '</div>';
 }
 
-$body .= '<br>'.elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('event_calendar:submit')));
+$body .= '<br>'.elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('event_calendar:submit'), 'class' => 'btn btn-primary'));
 
 $body .= '</div>';
 

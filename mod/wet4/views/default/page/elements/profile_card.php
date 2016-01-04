@@ -19,7 +19,7 @@ $department = get_loggedin_user()->get('department');
         <h4><?php echo $displayName?></h4>
         <div><?php echo  $email ?></div>
         <div><?php echo $department; ?></div>
-        <a href="<?php echo  $site_url ?>profile/<?php echo  $user ?>" class="btn btn-default mrgn-tp-sm"><?php echo elgg_echo('userMenu:profile') ?></a>
+        <a href="<?php echo  $site_url ?>profile/<?php echo  $user ?>" class="btn btn-primary mrgn-tp-sm" style='color:white;'><?php echo elgg_echo('userMenu:profile') ?></a>
     </div>
     </div>
     

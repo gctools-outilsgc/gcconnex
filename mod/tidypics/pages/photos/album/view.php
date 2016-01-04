@@ -70,7 +70,7 @@ if ($album->getContainerEntity()->canWriteToContainer()) {
 
 // only show sort button if there are images
 if ($album->canEdit() && $album->getSize() > 0) {
-	elgg_register_menu_item('title', array(
+	elgg_register_menu_item('title2', array(
 		'name' => 'sort',
 		'href' => "photos/sort/" . $album->getGUID(),
 		'text' => elgg_echo('album:sort'),
