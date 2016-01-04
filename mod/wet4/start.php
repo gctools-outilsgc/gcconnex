@@ -552,7 +552,12 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 		);
 		$return[] = \ElggMenuItem::factory($options);
         
+
+
+
+        
 	}
+
     
     if($entity->getSubType() == 'file'){
         // download link
@@ -564,8 +569,20 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 			'priority' => 299,
             'context' => array('file_tools_selector', 'file'),
 		);
-		$return[] = \ElggMenuItem::factory($options);
+		
     }
+    
+    
+            if($entity->getSubType() == 'page_top'){
+                //history icon
+            $options = array(
+                'name' => 'history',
+                'text' => '<i class="fa fa-history fa-lg icon-unsel"><span class="wb-inv">' . elgg_echo('pages:history') . '</span></i>',
+                'href' => "pages/history/$entity->guid",
+                'priority' => 150,
+            );
+            $return[] = \ElggMenuItem::factory($options);      
+        }
 
 	return $return;
 }
