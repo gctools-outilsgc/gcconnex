@@ -87,7 +87,7 @@ $guid = elgg_extract('guid', $vars, '');
 
 //only display move link on files
 if($entity == 'file' && elgg_is_logged_in() && elgg_get_logged_in_user_entity()->canEdit()){
-    $body = '<div class="mrgn-tp-sm col-xs-9"><a class="pull-right clearfix elgg-lightbox" href="' . elgg_get_site_url() . 'ajax/view/file_tools/move?guid=' . $guid . '">Move File</a>' . $body . '</div>';
+    $body = '<div class="mrgn-tp-sm col-xs-9">' . $body . '</div>';
 } else {
     $body = "<div class=\"mrgn-tp-sm col-xs-9\">$body</div>";
     $move_link = '';

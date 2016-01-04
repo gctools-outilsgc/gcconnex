@@ -2673,11 +2673,19 @@ select[multiple].input-lg, .input-group-lg > select[multiple].form-control,
   .btn-default .badge {
     color: #eaebed;
     background-color: #055959; }
+    .btn-default>a {
+        color: #335075;
+        text-decoration: none;
+    }
+
+.btn-default>a:visited {
+        color: #335075;
+    }
 
 .btn-primary {
   color: #fff;
-  background-color: #2572b4;
-  border-color: #143c5f; }
+  background-color: #055959;
+  border-color: #055959; }
   .btn-primary:hover,
   .btn-primary:focus,
   .btn-primary.focus,
@@ -2709,8 +2717,8 @@ select[multiple].input-lg, .input-group-lg > select[multiple].form-control,
   fieldset[disabled] .btn-primary.focus,
   fieldset[disabled] .btn-primary:active,
   fieldset[disabled] .btn-primary.active {
-    background-color: #2572b4;
-    border-color: #143c5f; }
+    background-color: #055959;
+    border-color: #055959; }
   .btn-primary .badge {
     color: #2572b4;
     background-color: #fff; }
@@ -5675,7 +5683,7 @@ a {
   white-space: normal; }
 
 .dropdown-menu > li > a:visited {
-  color: #333333; }
+  /*color: #333333;*/ }
 
 .nav > li > a:visited {
   color: #295376; }

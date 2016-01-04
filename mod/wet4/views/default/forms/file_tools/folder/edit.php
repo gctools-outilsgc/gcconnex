@@ -53,7 +53,11 @@ $form_data .= "</div>";
 $form_data .= "<div>";
 $form_data .= "<label for='file_tools_parent_guid'>" . elgg_echo("file_tools:forms:edit:parent") . "</label>";
 $form_data .= "<br />";
-$form_data .= elgg_view("input/folder_select", array("name" => "file_tools_parent_guid", "id" => "file_tools_parent_guid", "folder" => $folder, "value" => $parent, "container_guid" => $page_owner->getGUID(), 'type' => 'folder'));
+if (!empty($folder)) {
+$form_data .= elgg_view("input/folder_select_move", array("name" => "file_tools_parent_guid", "id" => "file_tools_parent_guid", "folder" => $folder, "value" => $parent, "container_guid" => $page_owner->getGUID(), 'type' => 'folder'));
+} else {
+    $form_data .= elgg_view("input/folder_select", array("name" => "file_tools_parent_guid", "id" => "file_tools_parent_guid", "folder" => $folder, "value" => $parent, "container_guid" => $page_owner->getGUID(), 'type' => 'folder'));
+}
 $form_data .= "</div>";
 
 // set context to influence access

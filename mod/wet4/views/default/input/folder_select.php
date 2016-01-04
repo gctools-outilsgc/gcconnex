@@ -27,7 +27,7 @@ $options = array(
 );
 
 if (!empty($folders)) {
-	$options = $options + file_tools_get_child($folders, 1, $folder_guid, '-1');
+	$options = $options + file_tools_build_select_options($folders, 1, $folder_guid, '-1');
 }
 
 $vars["options_values"] = $options;
