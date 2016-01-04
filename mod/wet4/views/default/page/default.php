@@ -44,6 +44,9 @@ $tabskip = elgg_view('page/elements/tabskip', $vars);
 
 $breadcrumbs = elgg_view('navigation/breadcrumbs');
 
+//get version of wet4 theme
+$wet4plugin = elgg_get_plugin_from_id('wet4');
+$version = elgg_echo('admin:plugins:label:version') . ': ' . $wet4plugin->getManifest()->getVersion();
 
 //WIP development banner
 if(elgg_is_active_plugin('GoC_dev_banner')){
@@ -100,7 +103,13 @@ $body .= <<<__BODY
         
 			$content
 		</div>
+        
+        <p class="mrgn-bttm-md">$version</p>
+        
 	</main>
+    
+    
+    
 	<footer role="contentinfo" id="wb-info" class="visible-sm visible-md visible-lg wb-navcurr">
 		
 			$footer
