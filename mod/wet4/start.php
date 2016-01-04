@@ -569,7 +569,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 			'priority' => 299,
             'context' => array('file_tools_selector', 'file'),
 		);
-		
+		$return[] = \ElggMenuItem::factory($options); 
     }
     
     
