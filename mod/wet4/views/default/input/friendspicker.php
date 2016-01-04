@@ -15,7 +15,7 @@
  * @uses $vars['callback']
  */
 
-elgg_load_js('elgg.friendspicker');
+//elgg_load_js('elgg.friendspicker');
 elgg_load_js('jquery.easing');
 
 
@@ -101,7 +101,7 @@ foreach ($users as $letter => $letter_users) {
 if (!$callback) {
 	?>
 
-	<div class="friends-picker-main-wrapper">
+	<div class="friends-picker-main-wrapper container">
 
 	<?php
 
@@ -119,29 +119,7 @@ if (!isset($vars['replacement'])) {
 	if ($formtarget) {
 ?>
 <?php //@todo JS 1.8: no ?>
-<script language="text/javascript">
-	$(function() { // onload...do
-		$('#collectionMembersForm<?php echo $friendspicker; ?>').submit(function() {
-			var inputs = [];
-			$(':input', this).each(function() {
-				if (this.type != 'checkbox' || (this.type == 'checkbox' && this.checked != false)) {
-					inputs.push(this.name + '=' + escape(this.value));
-				}
-			});
-			jQuery.ajax({
-				type: "POST",
-				data: inputs.join('&'),
-				url: this.action,
-				success: function(){
-					$('a.collectionmembers<?php echo $friendspicker; ?>').click();
-				}
 
-			});
-			return false;
-		})
-	})
-
-	</script>
 
 <!-- Collection members form -->
 <form id="collectionMembersForm<?php echo $friendspicker; ?>" action="<?php echo $formtarget; ?>" method="post"> <!-- action="" method=""> -->
@@ -158,6 +136,11 @@ if (!isset($vars['replacement'])) {
 <div class="friends-picker-wrapper">
 <div id="friends-picker<?php echo $friendspicker; ?>">
 	<div class="friends-picker-container">
+        <!-- Trying data tables 
+        <table class=" wb-tables table">
+        <thead>Testing</thead>
+        <tbody>
+        -->
 <?php
 
 // Initialise letters
@@ -166,24 +149,25 @@ if (!isset($vars['replacement'])) {
 	$letpos = 0;
 	while (1 == 1) {
 		?>
-		<div class="panel" title="<?php	echo $letter; ?>">
-			<div class="wrapper">
-				<h3><?php echo $letter; ?></h3>
+         
+		<!-- <div class="" title="<?php	//echo $letter; ?>"> -->
+		
+				<!-- <h3><?php //echo $letter; ?></h3> -->
 		<?php
 
 		if (isset($users[$letter])) {
 			ksort($users[$letter]);
 
-			echo "<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">";
+			echo "<div class=\"\">";
 			$col = 0;
 
 			foreach($users[$letter] as $friend) {
 				if ($col == 0) {
-					echo "<tr>";
+					echo "<div>";
 				}
 
 				//echo "<p>" . $user->name . "</p>";
-				$label = elgg_view_entity_icon($friend, 'tiny', array('use_hover' => false));
+				$label = elgg_view_entity_icon($friend, 'small', array('use_hover' => false));
 				$options[$label] = $friend->getGUID();
 
 				if ($vars['highlight'] == 'all' && !in_array($letter,$activeletters)) {
@@ -201,41 +185,41 @@ if (!isset($vars['replacement'])) {
 				}
 				?>
 
-				<td>
+				<div class="col-sm-1">
 
 					<input type="checkbox" <?php echo $checked; ?> name="<?php echo $name; ?>[]" value="<?php echo $options[$label]; ?>" />
 
-				</td>
+				</div>
 
-				<td>
+				<div class="col-sm-2">
 
-					<div style="width: 25px; margin-bottom: 15px;">
+					<div style="">
 				<?php
 					echo $label;
 				?>
 					</div>
-				</td>
-				<td style="width: 200px; padding: 5px;">
+				</div>
+				<div class="col-sm-3">
 					<?php echo $friend->name; ?>
-				</td>
+				</div>
 				<?php
 				$col++;
 				if ($col == 3){
-					echo "</tr>";
+					echo "</div>";
 					$col = 0;
 				}
 			}
 			if ($col < 3) {
-				echo "</tr>";
+				echo "</div>";
 			}
 
-			echo "</table>";
+			echo "</div>";
 		}
 
 ?>
 
-			</div>
-		</div>
+			
+		<!-- </div> -->
 <?php
 
 			$substr = elgg_substr($chararray, elgg_strlen($chararray) - 1, 1);
@@ -248,8 +232,11 @@ if (!isset($vars['replacement'])) {
 		}
 
 ?>
+        <!--
+            </tbody>
+               </table>
 	</div>
-
+    -->
 <?php
 
 if ($formtarget) {
