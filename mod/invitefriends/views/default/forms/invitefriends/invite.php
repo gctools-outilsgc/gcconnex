@@ -29,7 +29,7 @@ $message_textarea = elgg_view('input/plaintext', array(
 	'value' => $message,
 		));
 
-$action_button = elgg_view('input/submit', array('value' => elgg_echo('send')));
+$action_button = elgg_view('input/submit', array('value' => elgg_echo('send'), 'class' => 'mrgn-tp-sm btn btn-primary'));
 
 echo <<< HTML
 <p class="mbm elgg-text-help">$introduction</p>

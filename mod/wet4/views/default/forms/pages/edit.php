@@ -90,6 +90,6 @@ if (!$vars['guid']) {
 	));
 }
 
-echo elgg_view('input/submit', array('value' => 'Create Page'));
+echo elgg_view('input/submit', array('value' => 'Create Page', 'class' => 'btn btn-primary'));
 
 echo '</div>';

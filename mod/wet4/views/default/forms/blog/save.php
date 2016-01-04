@@ -40,6 +40,7 @@ if (!$vars['guid'] || ($blog && $blog->status != 'published')) {
 $save_button = elgg_view('input/submit', array(
 	'value' => elgg_echo('publish'),
 	'name' => 'save',
+    'class' => 'btn btn-primary',
 ));
 $action_buttons = $save_button . $preview_button . $delete_link;
 

@@ -23,7 +23,7 @@ $form_body .= "</div>";
 
 $form_body .= "<div class='elgg-foot'>";
 $form_body .= elgg_view("input/hidden", array("name" => "container_guid", "value" => $page_owner->getGUID()));
-$form_body .= elgg_view("input/submit", array("value" => elgg_echo("upload")));
+$form_body .= elgg_view("input/submit", array("value" => elgg_echo("upload"), 'class' => 'btn btn-primary mrgn-tp-md'));
 $form_body .= "</div>";
 
 echo $form_body;

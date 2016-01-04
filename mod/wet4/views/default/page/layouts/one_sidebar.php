@@ -54,8 +54,16 @@ if (isset($vars['class'])) {
                            'class' => 'list-inline pull-right',
                             'item_class' => 'btn btn-primary btn-md',
                             ));
+                        
+                        $buttons2 = elgg_view_menu('title2', array(
+                           'sort_by' => 'priority',
+                           'class' => 'list-inline pull-right',
+                            'item_class' => 'btn btn-default btn-md mrgn-rght-md',
+                            ));
+                        
                         echo '<div class="clearfix mrgn-tp-sm mrgn-bttm-sm">';
                         echo $buttons;
+                        echo $buttons2;
                         echo '</div>';
                     }
                 }

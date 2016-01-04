@@ -29,5 +29,5 @@ foreach ($images as $image) {
 echo '</ul>';
 
 echo '<div class="elgg-foot">';
-echo elgg_view('input/submit', array('value' => elgg_echo('save')));
+echo elgg_view('input/submit', array('value' => elgg_echo('save'), 'class' => 'btn btn-primary'));
 echo '</div>';

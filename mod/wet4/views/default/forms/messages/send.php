@@ -45,5 +45,5 @@ $recipient_autocomplete = elgg_view('input/autocomplete', array(
 	?>
 </div>
 <div class="elgg-foot">
-	<?php echo elgg_view('input/submit', array('value' => elgg_echo('send'))); ?>
+	<?php echo elgg_view('input/submit', array('value' => elgg_echo('send'), 'class' => 'btn btn-primary')); ?>
 </div>

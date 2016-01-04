@@ -42,7 +42,7 @@ if (!$content) {
 if (elgg_is_logged_in()) {
 	if ($owner instanceof ElggGroup) {
 		if ($owner->isMember(elgg_get_logged_in_user_entity())) {
-			elgg_register_menu_item('title', array(
+			elgg_register_menu_item('title2', array(
 				'name' => 'addphotos',
 				'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $owner->getGUID(),
 				'text' => elgg_echo("photos:addphotos"),
@@ -50,7 +50,7 @@ if (elgg_is_logged_in()) {
 			));
 		}
 	} else {
-		elgg_register_menu_item('title', array(
+		elgg_register_menu_item('title2', array(
 			'name' => 'addphotos',
 			'href' => "ajax/view/photos/selectalbum/?owner_guid=" . elgg_get_logged_in_user_guid(),
 			'text' => elgg_echo("photos:addphotos"),

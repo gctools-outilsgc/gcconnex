@@ -62,7 +62,7 @@ elgg_load_css("jquery.uploadify");
 			echo elgg_view("input/hidden", array("name" => "container_guid", "value" => $container_guid));
 			echo elgg_view("input/hidden", array("name" => "PHPSESSID", "value" => session_id()));
 							
-			echo elgg_view("input/submit", array("value" => elgg_echo("upload")));
+			echo elgg_view("input/submit", array("value" => elgg_echo("upload"), 'class' => 'btn btn-primary'));
 		?>
 	</div>
 </fieldset>

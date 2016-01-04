@@ -59,7 +59,7 @@ if ($guid) {
 	echo elgg_view('input/hidden', array('name' => 'topic_guid', 'value' => $guid));
 }
 
-echo elgg_view('input/submit', array('value' => 'Create Discussion'));
+echo elgg_view('input/submit', array('value' => 'Create Discussion', 'class' => 'btn btn-primary'));
 
 ?>
 </div>

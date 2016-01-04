@@ -307,7 +307,9 @@ function wet4_theme_pagesetup() {
                 'item_class' => 'mrgn-lft-sm',
                 'context' => 'file',
             );
-            elgg_register_menu_item('title', $params);
+            elgg_register_menu_item('title2', $params);
+            
+            
         }
     }
 

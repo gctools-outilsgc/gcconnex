@@ -49,5 +49,5 @@ if (isset($vars['collection'])) {
 		'value' => $vars['collection']->id,
 	));
 }
-echo elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('save')));
+echo elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('save'), 'class' => 'btn btn-primary'));
 echo '</div>';

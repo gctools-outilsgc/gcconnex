@@ -84,7 +84,7 @@ if (!elgg_in_context('widgets')) {
 			'entity' => $vars['entity'],
 			'handler' => 'pages',
 			'sort_by' => 'priority',
-			'class' => 'elgg-menu-hz ',
+			'class' => 'elgg-menu-hz list-inline',
             'item_class' => 'mrgn-rght-sm',
 		));
 	}
