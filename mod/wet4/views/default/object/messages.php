@@ -63,7 +63,7 @@ $subject_info = elgg_view('output/url', array(
 
 $delete_link = elgg_view("output/url", array(
 						'href' => "action/messages/delete?guid=" . $message->getGUID() . "&full=$full",
-						'text' => '<i class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">'. elgg_echo('delete:this').'</span></i>',
+						'text' => '<i class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">Delete This</span></i>',
 						'confirm' => elgg_echo('deleteconfirm'),
 						'encode_text' => false,
 					));

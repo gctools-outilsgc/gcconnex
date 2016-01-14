@@ -41,8 +41,11 @@ if (!is_array($items) || count($items) == 0) {
 if((elgg_get_context() == 'photos')){
   $photoContext = true;  
 }
+if ((elgg_get_context() != 'event_calendar')){
 
-elgg_push_context('gallery');
+	elgg_push_context('gallery');
+}
+
 echo $items->getType;
 $list_classes = ['clearfix'];
 if (isset($vars['gallery_class'])) {
@@ -51,7 +54,9 @@ if (isset($vars['gallery_class'])) {
 
 //if the boolean is false (not photo context) stack them normally
 if(!$photoContext){
-   $item_classes = ['pull-left  elgg-item clearfix '];
+	if(elgg_get_context() != 'event_calendar'){
+   $item_classes = ['pull-left elgg-item clearfix '];
+   }
 }else{
  //if the boolean is true (is photo context) add col class :)
     $item_classes = ['  elgg-item clearfix col-xs-6 col-sm-3  '];

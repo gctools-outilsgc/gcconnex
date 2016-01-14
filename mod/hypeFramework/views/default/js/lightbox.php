@@ -16,13 +16,15 @@
  *
  * @todo add support for passing options: $('#myplugin-lightbox').elgg.ui.lightbox(options);
  */
+
+ // cyu - 01/07/2015: removed the include of lightbox, causes issues (Elgg doesn't use lightbox anymore)
 if (0) {
 	?><script><?php }
 ?>
 	<?php
 	$js_path = elgg_get_config('path');
-	$js_path = "{$js_path}vendors/jquery/fancybox/jquery.fancybox-1.3.4.pack.js";
-	include $js_path;
+	//$js_path = "{$js_path}vendors/jquery/fancybox/jquery.fancybox-1.3.4.pack.js";
+	//include $js_path;
 	?>
 
 	/**
@@ -32,4 +34,4 @@ if (0) {
 		$(".elgg-lightbox").fancybox();
 	}
 
-	elgg.register_hook_handler('init', 'system', elgg.ui.lightbox_init);
+	//elgg.register_hook_handler('init', 'system', elgg.ui.lightbox_init);

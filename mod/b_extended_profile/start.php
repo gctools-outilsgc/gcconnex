@@ -46,6 +46,9 @@ function b_extended_profile_init() {
     elgg_register_ajax_view('b_extended_profile/edit_languages');
     elgg_register_ajax_view('b_extended_profile/edit_portfolio');
 
+    // endorsement lightbox
+    elgg_register_ajax_view('endorse/endorsement');
+
     // input views
     elgg_register_ajax_view('input/education');
     elgg_register_ajax_view('input/work-experience');
@@ -126,9 +129,9 @@ function init_ajax_block($title, $section, $user) {
     if ($user->canEdit()) {
         // create the edit/save/cancel toggles for this section
         echo '<span class="gcconnex-profile-edit-controls">';
-        echo '<button title="Edit ' . $section . '" class="btn btn-custom edit-' . $section . '"><i class="fa fa-pencil"></i> ' . elgg_echo('gcconnex_profile:edit') . '</button>';
+        echo '<button title="Edit ' . $section . '" class="btn btn-default edit-' . $section . '"><i class="fa fa-pencil"></i> ' . elgg_echo('gcconnex_profile:edit') . '</button>';
 //        echo '<span class="save-control save-' . $section . ' hidden"><img src="' . elgg_get_site_url() . 'mod/b_extended_profile/img/save.png">' . elgg_echo('gcconnex_profile:save') . '</span>';
-        echo '<button title="Cancel ' . $section . '"  class="btn btn-custom cancel-control cancel-' . $section . ' hidden wb-invisible"><i class="fa fa-ban"></i> ' . elgg_echo('gcconnex_profile:cancel') . '</button>';
+        echo '<button title="Cancel ' . $section . '"  class="btn btn-default cancel-control cancel-' . $section . ' hidden wb-invisible"><i class="fa fa-ban"></i> ' . elgg_echo('gcconnex_profile:cancel') . '</button>';
         echo '</span>';
     }
     echo '</div>';
@@ -140,7 +143,7 @@ function init_ajax_block($title, $section, $user) {
 
 function finit_ajax_block($section) {
     echo '</div>';
-    echo '<div class="panel-footer clearfix save-' . $section . ' hidden wb-invisible"><button title="Save ' . $section . '" class="btn btn-custom gcconnex-profile-edit-controls save-control save-' . $section . ' hidden wb-invisible"><i class="fa fa-floppy-o"></i> ' . elgg_echo('gcconnex_profile:save') . '</button></div>';
+    echo '<div class="panel-footer clearfix save-' . $section . ' hidden wb-invisible"><button title="Save ' . $section . '" class="btn btn-primary gcconnex-profile-edit-controls save-control save-' . $section . ' hidden wb-invisible"><i class="fa fa-floppy-o"></i> ' . elgg_echo('gcconnex_profile:save') . '</button></div>';
     echo '</div>';
 }
 
@@ -311,7 +314,9 @@ function list_avatars($options) {
             'class' => 'elgg-lightbox gcconnex-basic-profile-edit elgg-button',
             'text' => elgg_echo('gcconnex_profile:edit_profile')
         ));
-        $list .= '<a class="btn gcconnex-avatars-expand" data-toggle="modal" href="#' . $options['id'] . '" >...</a>';
+        //$list .= '<a class="btn gcconnex-avatars-expand" data-toggle="modal" href="#' . $options['id'] . '" >...</a>';
+
+        //$list .= '<a class="btn gcconnex-avatars-expand elgg-lightbox" href="' . elgg_get_site_url() . 'ajax/view/endorse/endorsement" >...</a>';
     }
 
 
@@ -343,8 +348,11 @@ function list_avatars($options) {
                     ));
                     $list .= '</div>'; // close div class="gcconnex-avatar-in-list"
                             $list .= '<a class="btn gcconnex-avatars-expand" data-toggle="modal" href="#' . $options['id'] . '" >...</a>';
+
+                            
                 }
                 else {
+                    $passedGuids .= $guids[$i] .  ',';
                     $list .= '<div class="gcconnex-avatar-in-list" data-guid="' . $guids[$i] . '">';
                     $list .= elgg_view_entity_icon($user, $options['size'], array(
                         'use_hover' => $options['use_hover'],
@@ -358,7 +366,9 @@ function list_avatars($options) {
             }
         }
     }
-
+    if($options['id']){
+        $list .= '<a class="btn gcconnex-avatars-expand elgg-lightbox" href="' . elgg_get_site_url() . 'ajax/view/endorse/endorsement?guids=' . $passedGuids .'" >...</a>';
+    }
     $list .= '</div>'; // close div class="list-avatars"
     return $list;
 }

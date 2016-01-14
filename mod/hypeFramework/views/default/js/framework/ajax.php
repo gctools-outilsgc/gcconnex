@@ -156,7 +156,7 @@
 		.live('change', function() {
 			$(this).closest('form').trigger('submit');
 		});
-		
+
 		$('.elgg-button-create-entity')
 		.live('click', framework.ajax.scenarios.createEntity);
 
@@ -330,7 +330,7 @@
 		if (!confirm(confirmText)) {
 			return false;
 		}
-		
+
 		elgg.action(action, {
 			dataType : 'json',
 			beforeSend : function() {
@@ -341,7 +341,7 @@
 				$element.removeClass('elgg-state-loading')
 			},
 			success : function(response) {
-				
+
 				if (response.status >= 0) {
 					var uid = response.output.guid;
 					$('[data-uid="' + uid + '"], [id="elgg-object-' + uid + '"]')
@@ -431,8 +431,9 @@
 			elgg.register_error(params.response.system_messages.error);
 			elgg.system_message(params.response.system_messages.success);
 		}
-		if (elgg.tinymce) {
-			elgg.tinymce.init();
+		// cyu - modified 01/07/2015: changed from using tinymce to ckeditor
+		if (elgg.ckeditor) {
+			elgg.ckeditor.init();
 		}
 	}
 
@@ -465,7 +466,7 @@
 		} else {
 			var href = window.location.href;
 		}
-		
+
 		elgg.post(href, {
 			beforeSend : function() {
 				$element.addClass('elgg-state-loading');
@@ -496,7 +497,7 @@
 					}
 
 					elgg.trigger_hook('refresh:lists:' + listType, 'framework', listParams);
-									
+
 				})
 
 //				if (params.pushState !== false && !$element.closest('#dialog').length) {
@@ -636,7 +637,7 @@
 	// JS and CSS fetching
 	elgg.register_hook_handler('init', 'system', framework.ajax.fetchOnSystemInit, 999);
 	elgg.register_hook_handler('ajax:success', 'framework', framework.ajax.fetchOnAjaxSuccess, 999);
-	
+
 	elgg.register_hook_handler('init', 'system', framework.ajax.init);
 
 	elgg.register_hook_handler('ajax:success', 'framework', framework.ajax.success);

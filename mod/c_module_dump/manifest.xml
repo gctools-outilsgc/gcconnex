@@ -19,11 +19,6 @@
 <!-- suggested plugins -->
 	<suggests>
 		<type>priority</type>
-		<plugin>au_subgroups</plugin>
-		<priority>after</priority>
-	</suggests>
-	<suggests>
-		<type>priority</type>
 		<plugin>tasks</plugin>
 		<priority>after</priority>
 	</suggests>

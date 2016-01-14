@@ -52,6 +52,21 @@ if ($au_subgroup) {
 		?>
 
 		<?php
+
+
+	    // cyu -  06/15/2015: check if memcache is enabled on the server
+		if (class_exists('Memcache')) {
+			if ($group) {
+				// cyu - 06/15/2015: the elgg doesn't look up the value from the database, it takes the value off of memcache which is not updated....
+				$query = "SELECT access_id FROM ".elgg_get_config('dbprefix')."entities WHERE guid = {$group->guid}";
+				$group_entity = get_data($query);
+				$group_access_id = $group_entity[0]->access_id;
+			}
+		} else {
+			$group_access_id = $group->access_id;
+		}
+
+
 		// set the selected option after options have been determined
 		// public, logged in, and members only take care of themselves
 		// need to forcefully switch on parent group acl

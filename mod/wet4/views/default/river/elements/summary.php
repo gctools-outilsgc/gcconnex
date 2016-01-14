@@ -13,7 +13,7 @@ $object = $item->getObjectEntity();
 $subject_link = elgg_view('output/url', array(
 	'href' => $subject->getURL(),
 	'text' => $subject->name,
-	'class' => 'elgg-river-subject',
+	'class' => 'elgg-river-subject normal-font',
 	'is_trusted' => true,
 ));
 

@@ -68,10 +68,11 @@ if ($container instanceof ElggGroup && $container->guid != elgg_get_page_owner_g
 //removed $responses
 echo <<<RIVER
 
-<div class="elgg-river-summary mrgn-bttm-sm">$summary $group_string </div>
-<div class="pull-right">$menu</div>
+<div class="elgg-river-summary  mrgn-bttm-sm">$summary $group_string </div>
+
 <div class="elgg-river-timestamp mrgn-bttm-sm timeStamp"><i>$timestamp</i></div>
 $message
 $attachments
+<div class="pull-right">$menu</div>
 
 RIVER;

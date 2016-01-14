@@ -50,6 +50,7 @@ if ($tags === '') {
 
 if ($title_link) {
     echo "<h3 class=\"mrgn-bttm-0 panel-title\">$title_link</h3>";
+    echo elgg_in_context($context);
 }
 //This tests to see if you are looking at a group list and does't outpout the subtitle variable here, It's called at the end of this file
 if($entity->getType() == 'group'){
@@ -84,9 +85,9 @@ echo '<div class="row mrgn-tp-md">';
 echo "<div class=\"tags col-sm-6 col-xs-12\">$tags</div>";
 
 if ($metadata) {
-
+	if ($checkPage != 'widgets_calendar'){
      	echo '<div class="col-sm-6 col-xs-12"><div class="pull-right">' .$metadata . '</div></div>';   
-
+     }
 }
 
 echo '</div>';  

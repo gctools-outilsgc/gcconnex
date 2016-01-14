@@ -4569,6 +4569,23 @@ a.list-group-item-danger {
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.09);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.09); }
 
+  .panel-river{
+    padding:15px;
+}
+ .river-font{
+    font-size: 1.2em;
+}
+
+.elgg-river-summary{
+    font-weight:bold;
+    font-style: italic;
+}
+
+.elgg-river-summary a{
+    font-weight:normal;
+    font-style: normal;
+}
+
 .panel-body {
   padding: 15px; }
   .panel-body:before,
@@ -10850,6 +10867,9 @@ a.shr-opn, a.shr-opn:hover {
     
     /****************************************/
 
+    .ideaPoints {
+        font-size: 1.25em;
+    }
 
     #linkedIn {
         width: 32px;
@@ -11778,7 +11798,7 @@ Carousel
   @title: All screen views
  */
   body {
-    background: #fcfcfc; }
+    background: #f7f7f7; }
   .overlay-def .modal-header {
     background: #2e5274; }
   .wb-sl {

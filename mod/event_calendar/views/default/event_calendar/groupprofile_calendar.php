@@ -14,7 +14,7 @@
 elgg_load_library('elgg:event_calendar');
 
 $page_owner_entity = elgg_get_page_owner_entity();
-
+	echo elgg_view('event_calendar/full_calendar_view', $vars);
 if (event_calendar_activated_for_group($page_owner_entity)) {
 	$num = 4;
 	// Get the upcoming events
@@ -29,4 +29,7 @@ if (event_calendar_activated_for_group($page_owner_entity)) {
 			echo elgg_view("object/event_calendar", array('entity' => $event['event']));
 		}
 	}
+
 }
+
+

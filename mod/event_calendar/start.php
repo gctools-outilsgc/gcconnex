@@ -307,7 +307,7 @@ function event_calendar_page_handler($page) {
  * Add particular event calendar links/info to entity menu
  */
 function event_calendar_entity_menu_setup($hook, $type, $return, $params) {
-	if (elgg_in_context('widgets')) {
+	if (elgg_in_context('widgets_calendar')) {
 		return $return;
 	}
 
