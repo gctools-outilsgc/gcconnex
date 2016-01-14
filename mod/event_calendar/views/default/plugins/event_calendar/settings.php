@@ -75,7 +75,7 @@ $body .= '<br />';
 
 $event_calendar_listing_format = elgg_get_plugin_setting('listing_format', 'event_calendar');
 if (!$event_calendar_listing_format) {
-	$event_calendar_listing_format = 'month';
+	$event_calendar_listing_format = 'full';
 }
 
 $body .= elgg_echo('event_calendar:settings:listing_format:title');

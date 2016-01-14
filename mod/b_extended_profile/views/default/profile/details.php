@@ -215,7 +215,7 @@ echo '</div>'; // close div class="panel-heading"
 
 echo '<div class="row mrgn-lft-md mrgn-rght-sm">';
 echo elgg_view('profile/owner_block');
-echo '<div class="col-xs-9 col-md-8 clearfix">';
+echo '<div class="col-xs-9 col-md-8 clearfix"><div class="mrgn-lft-md">';
 echo '<h3 class="mrgn-tp-0">' . $user->job . '</h3>';
 echo '<div class="gcconnex-profile-dept">' . $user->department . '</div>';
 echo '<div class="gcconnex-profile-location">' . $user->location . '</div>';
@@ -242,7 +242,7 @@ if ($user->website != null) {
     echo '</p>';
 }
 
-echo '</div>'; // close div class="gcconnex-profile-contact-info"
+echo '</div></div>'; // close div class="gcconnex-profile-contact-info"
 
 
 

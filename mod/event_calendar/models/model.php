@@ -1351,7 +1351,8 @@ function event_calendar_get_page_content_list($page_type, $container_guid, $star
 	$passed_vars = $params['pass_vars'];	// cyu - 02/17/2015: modified to put pagination in to display ALL events
 	$params['pass_vars'] = '';	// cyu - 02/17/2015: modified to put pagination in to display ALL events
 
-	$body = elgg_view_layout("content", $params);
+	$body = elgg_view_layout("two_column_2", $params);
+	
 	$body .= elgg_view_entity_list('event_calendar/filter_menu',$passed_vars);	// cyu - 02/17/2015: modified to put pagination in to display ALL events
 	
 	return elgg_view_page($title, $body);

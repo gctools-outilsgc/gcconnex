@@ -78,9 +78,9 @@ $body .= elgg_view('input/hidden', array('name' => 'event_guid', 'value' => $eve
 
 $body .= '<div class="event-calendar-edit-form-block">';
 
-$body .= '<p><label>'.elgg_echo("event_calendar:title_label").'</label>';
-$body .= elgg_view("input/text", array('name' => 'title', 'value' => $title));
-$body .= '</p>';
+$body .= '<div class="form-group"><label for="calendar-title">'.elgg_echo("event_calendar:title_label").'</label>';
+$body .= elgg_view("input/text", array('name' => 'title', 'value' => $title, 'id' => 'calendar-title', 'class' => 'form-control'));
+$body .= '</div>';
 $body .= '<p class="event-calendar-description">'.$prefix['title'].elgg_echo('event_calendar:title_description').'</p>';
 
 $body .= '<p><label>'.elgg_echo("event_calendar:venue_label").'</label>';

@@ -10,7 +10,7 @@ if ($group->event_calendar_enable == "no") {
 	return true;
 }
 
-elgg_push_context('widgets');
+elgg_push_context('widgets_calendar');
 $content = elgg_view('event_calendar/groupprofile_calendar');
 elgg_pop_context();
 

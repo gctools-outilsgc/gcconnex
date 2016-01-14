@@ -63,7 +63,7 @@ else {
                         'limit' => 10,
                         'id' => "myModal" . $i
                     ));
-                    echo '<div class="modal" id="myModal' . $i . '">
+                    /*echo '<div class="modal" id="myModal' . $i . '">
                           <div class="modal-header">
                             <button class="close" data-dismiss="modal">×</button>
                             <h3>Endorsements</h3>
@@ -80,7 +80,7 @@ else {
                           <div class="modal-footer">
                             <a href="#" class="btn" data-dismiss="modal">Close</a>
                           </div>
-                        </div>';
+                        </div>';*/
                     echo '</div>'; // close div class="gcconnex-skill-endorsements"
                 echo '</div>'; // close div class=gcconnex-skill-entry
             }

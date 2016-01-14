@@ -7,7 +7,7 @@
  */
 
 $session = elgg_get_session();
-
+//break
 // set forward url
 if ($session->has('last_forward_from')) {
 	$forward_url = $session->get('last_forward_from');
@@ -73,4 +73,5 @@ $params = array('user' => $user, 'source' => $forward_source);
 $forward_url = elgg_trigger_plugin_hook('login:forward', 'user', $params, $forward_url);
 
 system_message($message);
+//comment oout for SSO
 forward($forward_url);

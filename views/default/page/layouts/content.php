@@ -46,7 +46,7 @@ if (!isset($vars['filter']) && elgg_is_logged_in() && $context) {
 			'priority' => 300,
 		),
 		'friend' => array(
-			'text' => elgg_echo('friendddddds'),
+			'text' => elgg_echo('friends'),
 			'href' => (isset($vars['friend_link'])) ? $vars['friend_link'] : "$context/friends/$username",
 			'selected' => ($filter_context == 'friends'),
 			'priority' => 400,
