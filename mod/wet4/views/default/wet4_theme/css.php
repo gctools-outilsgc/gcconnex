@@ -1036,7 +1036,7 @@ h1, h2, h3, h4, h5, h6,
 h1, .h1,
 h2, .h2,
 h3, .h3 {
-  margin-top: 23px;
+
   margin-bottom: 11.5px; }
   h1 small,
   h1 .small, .h1 small,
@@ -1130,9 +1130,14 @@ mark,
 
 .text-muted {
   color: #767676; }
-
+.text-warning2 {
+    color:#fcc306;
+    text-shadow:#333 1px 1px;
+    }
 .text-primary {
-  color: #2572b4; }
+ /* color: #2572b4; */
+ color:#055959 !important;
+}
 
 a.text-primary:hover {
   color: #1c578a; }
@@ -1162,10 +1167,11 @@ a.text-danger:hover {
   color: #843534; }
 
 .bg-primary {
+   // background-color:#047177 !important;
   color: #fff; }
 
 .bg-primary {
-  background-color: #2572b4; }
+  background-color: #055959 !important; }
 
 a.bg-primary:hover {
   background-color: #1c578a; }
@@ -2504,6 +2510,14 @@ select[multiple].input-lg, .input-group-lg > select[multiple].form-control,
   margin-top: 5px;
   margin-bottom: 10px;
   color: #737373; }
+
+
+/*
+Profile Completness
+
+*/
+.pc-large-text{font-size:300% !important;font-weight:700 !important;}
+
 
 @media (min-width: 768px) {
   .form-inline .form-group {
@@ -4319,6 +4333,12 @@ a.thumbnail.active {
   to {
     background-position: 0 0; } }
 
+.center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+ }
+progress { padding-right:5px;}
 .progress {
   overflow: hidden;
   height: 23px;
@@ -4344,8 +4364,9 @@ a.thumbnail.active {
 
 .progress-striped .progress-bar,
 .progress-bar-striped {
-  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+
+  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent) !important;
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent) !important;
   -webkit-background-size: 40px 40px;
           background-size: 40px 40px; }
 
@@ -4587,7 +4608,7 @@ a.list-group-item-danger {
 }
 
 .panel-body {
-  padding: 15px; }
+      padding: 0px 15px 15px 15px; }
   .panel-body:before,
   .panel-body:after {
     content: " ";
@@ -5847,7 +5868,7 @@ h1,
 h1,
 .h1, h2,
 .h2 {
-  margin-top: 38px; }
+  margin-top: 3px; }
 
 h3,
 .h3 {
@@ -6958,6 +6979,10 @@ details[open] {
   margin-left: 0;
   margin-right: 1.1em; }
 
+  details > summary.bg-primary:hover,details > summary.bg-primary:focus
+{
+    color:#fff !important;
+}
 /*
  Plugins
  */
@@ -9811,7 +9836,7 @@ h1 {
   border-bottom: 1px solid #af3c43;
   font-size: 34px;
   margin-bottom: 0.2em;
-  margin-top: 1.25em;
+  margin-top: 0.25em;
   padding-bottom: 0.2em; }
 
 h2,
@@ -10646,6 +10671,12 @@ a.shr-opn, a.shr-opn:hover {
      padding-left:5px;
  }
 
+ .au_subgroups_group_icon-medium-wet4{
+        max-width:80px;
+        padding-left:5px;
+
+ }
+
 .elgg-menu-user-menu-subMenu {
     padding: 0;
 }
@@ -10900,6 +10931,42 @@ a.shr-opn, a.shr-opn:hover {
 .list-inline .removeMe {
     display: none;
 }
+
+
+/*****Custom index classes***/
+
+.col-md-8 .custom-index-panel:first-of-type{
+    background:transparent;
+    border:none;
+    box-shadow:none;
+
+}
+
+.elgg-widget-title{
+    cursor:move;
+
+}
+
+.elgg-button-action{
+    cursor:pointer;
+
+}
+
+.elgg-module-widget .elgg-menu-widget .elgg-menu-item-settings, .elgg-module-widget .elgg-menu-widget .elgg-menu-item-delete{
+    display:inline-block;
+
+}
+
+.wet-widget-menu li{
+    padding: 2px 6px 0 0;
+
+}
+
+.elgg-widget-placeholder{
+    border: dashed 2px #DDDDDD;
+
+}
+
 /******Padding Classes********/
 /*
 .pad-lft-0 {
@@ -11344,7 +11411,8 @@ figcaption{
 /** Widget Stuff **/
 
 .elgg-widget-title{
-        border-bottom: 1px solid #af3c43;   
+        border-bottom: 1px solid #af3c43;
+        margin:5px 0;   
 }
 
 /*

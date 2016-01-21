@@ -9,6 +9,6 @@
  */
 
 $vars['type'] = 'submit';
-$vars['class'] = elgg_extract('class', $vars, 'elgg-button-submit');
+$vars['class'] = elgg_extract('class', $vars, 'elgg-button-submit btn btn-primary');
 
 echo elgg_view('input/button', $vars);

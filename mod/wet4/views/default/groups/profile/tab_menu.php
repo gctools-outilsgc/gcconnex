@@ -57,6 +57,18 @@ if(elgg_get_context() == 'groupSubPage'){
     'class' => '',
     'priority' => '0',
     ));
+	
+	if ($owner->orgStruct){
+    	elgg_register_menu_item('owner_block', array(
+    		'name' => 'orgs',
+    		'href' => '#org',
+    		'text' => elgg_echo('geds:org:orgTab'),
+    		'data-toggle' => 'tab',
+    		'class' => '',
+    		'priority' => '0',
+    	));
+  	}
+	
     
     elgg_register_menu_item('owner_block', array(
     'name' => 'widgets',

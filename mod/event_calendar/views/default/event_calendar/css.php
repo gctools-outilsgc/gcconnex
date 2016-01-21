@@ -179,8 +179,8 @@ li.event-calendar-filter-menu-show-only {
 
 .event-calendar-edit-form-block {
 	width: 98%;
-	background-color: #DDDDDD;
-	border-width:1px;
+	<!-- background-color: #DDDDDD; -->
+	<!-- border-width:1px; -->
 	border-style:solid;
 	border-color:#bfbfbf;
 	padding: 5px;

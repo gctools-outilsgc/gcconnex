@@ -79,10 +79,29 @@ if($entity->getType() == 'group' ){
 }else if($checkPage == 'friends' || $checkPage == 'groups_members'){
     echo '<div class=""><div class="">' .$metadata . '</div></div>';
 }else{
+
+	if (($entity->getSubtype() == 'event_calendar') && (elgg_get_context() == 'widgets')){
+
+echo '<div class="row mrgn-tp-md">';
+
+echo "<div class=\"tags col-sm-12 col-xs-12\">$tags</div>";
+
+
+if ($metadata) {
+	if ($checkPage != 'widgets_calendar'){
+     	echo '<div class="col-sm-12 col-xs-12"><div class="pull-left">' .$metadata . '</div></div>';   
+     }
+}
+
+	}else{
+
+
+	
   
 echo '<div class="row mrgn-tp-md">';
 
 echo "<div class=\"tags col-sm-6 col-xs-12\">$tags</div>";
+
 
 if ($metadata) {
 	if ($checkPage != 'widgets_calendar'){
@@ -91,6 +110,7 @@ if ($metadata) {
 }
 
 echo '</div>';  
+}
 }
 
 

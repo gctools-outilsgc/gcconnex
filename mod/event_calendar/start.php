@@ -366,9 +366,11 @@ function event_calendar_entity_menu_setup($hook, $type, $return, $params) {
 
 		$count = event_calendar_get_users_for_event($entity->guid, 0, 0, true);
 		if ($count == 1) {
-			$calendar_text = elgg_echo('event_calendar:personal_event_calendars_link_one');
+			$calendar_text = '<i class="fa fa-calendar fa-lg icon-unsel"><span class="wb-inv"></span></i> (1)';
 		} else {
-			$calendar_text = elgg_echo('event_calendar:personal_event_calendars_link', array($count));
+			//$calendar_text = elgg_echo('event_calendar:personal_event_calendars_link', array($count));
+			$number = $count;
+			$calendar_text = '<i class="fa fa-calendar fa-lg icon-unsel"><span class="wb-inv"></span></i> ('. $number.')';
 		}
 
 		$options = array(

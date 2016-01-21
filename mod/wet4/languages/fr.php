@@ -1,7 +1,16 @@
 <?php
 return array(
     
-    
+/**
+ * Profile Strength
+ */
+     'ps:basicprofile' => "Profil de base",
+     'ps:access' => "Afficher: ",
+    'ps:details' => "Voir en détail",
+    'ps:education' => "Éducation",
+    'ps:work' => "Expérience de travail",
+
+
 /**
  * The Wire
  */
@@ -21,6 +30,13 @@ return array(
     'userMenu:account' => "Paramètres",
     'userMenu:messages' => "Mes messages",
     'userMenu:colleagues' => "Mes collègues",
+
+        /**
+      * Custom Activity Widget
+      */
+     'wetActivity:nocollorgroup'=>"(translate me) Welcome to GCconnex. To get started you can browse or search for groups related to your work and interests.",
+     'wetActivity:welcome'=>"(translate me) Welcome to GCconnex",
+     'wetActivity:browsegroups'=>"(translate me) Start Browsing Groups",
     
   /**
  * Group Profile
@@ -220,6 +236,7 @@ return array(
 	'widgets:add:failure' => "Nous n'avons pas pu ajouter votre widget.",
 	'widgets:move:failure' => "Nous n'avons pas pu enregistrer la position du nouveau widget.",
 	'widgets:remove:failure' => "Impossible de supprimer ce widget",
+    'wet4:colandgroupactivity'=>'Activités de vos Groupes et Collègues',
 
 /**
  * Groups
@@ -245,6 +262,7 @@ return array(
  */
 
 	'friends' => "Mes collègues",//Contacts
+    'friend:river' => "collègue", //Friends
 	'friends:yours' => "Vos contacts",
 	'friends:owned' => "Les contacts de %s",
 	'friend:add' => "Ajouter un contact",

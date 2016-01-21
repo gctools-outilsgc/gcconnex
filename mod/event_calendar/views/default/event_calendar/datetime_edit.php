@@ -4,6 +4,11 @@ $event_calendar_times = elgg_get_plugin_setting('times', 'event_calendar');
 $event_calendar_hide_end = elgg_get_plugin_setting('hide_end', 'event_calendar');
 $prefix = $vars['prefix'];
 $body = '';
+//$choix = $vars['choix'];
+
+
+
+//$body .= $choix;
 
 if ($event_calendar_times != 'no') {
 	if ($event_calendar_hide_end != 'yes') {
@@ -11,7 +16,7 @@ if ($event_calendar_times != 'no') {
 	}
 	$body .= elgg_view("event_calendar/input/date_local", array(
 		'autocomplete' => 'off',
-		'class' => 'event-calendar-compressed-date',
+		'class' => 'event-calendar-compressed-date clearfix',
 		'name' => 'start_date',
 		'value' => $vars['start_date'],
 	));
@@ -22,6 +27,7 @@ if ($event_calendar_times != 'no') {
 		'hours' => $vars['fd']['start_time_hour'],
 		'minutes' => $vars['fd']['start_time_minute'],
 		'meridian' => $vars['fd']['start_time_meridian'],
+		'class' => 'pull-left'
 	));
 	$body .= '</span>';
 	if ($event_calendar_hide_end != 'yes') {
@@ -39,6 +45,7 @@ if ($event_calendar_times != 'no') {
 			'hours' => $vars['fd']['end_time_hour'],
 			'minutes' => $vars['fd']['end_time_minute'],
 			'meridian' => $vars['fd']['end_time_meridian'],
+			'class' => 'pull-left'
 		));
 		$body .= '</span>';
 	}

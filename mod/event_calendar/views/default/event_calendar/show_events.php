@@ -46,7 +46,21 @@ if ($vars['events']) {
 	}
 }
 if ($listing_format == 'paged' || $listing_format == 'full') {
+	$vars['events'] = event_calendar_flatten_event_structure($vars['events']);
+		$options = array(
+			'list_class' => 'elgg-list-entity',
+			'full_view' => false,
+			'pagination' => true,
+			'list_type' => 'listing',
+			'list_type_toggle' => false,
+			'offset' => $vars['offset'],
+			'limit' => $vars['limit'],
+		);
+		$event_list = elgg_view_entity_list($vars['events'], $options);
+	echo elgg_view('event_calendar/full_calendar_view', $vars);
+	echo'<h3>Title</h3>';
 	echo $event_list;
+	
 } else {
 ?>
 	<div style="width:100%">

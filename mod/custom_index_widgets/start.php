@@ -114,8 +114,13 @@
 	function custom_index_show_widget_area($areawidgets){
 		if (is_array($areawidgets) && sizeof($areawidgets) > 0)
 			foreach($areawidgets as $widget) {
+            /*Adding a check if widget is set to access ID 2 to show*/
+            if($widget->access_id == 1 && !elgg_is_logged_in()){
+            
+            }else{
 			 if ($widget instanceof ElggWidget){
 					$vars['entity'] = $widget;
+                    
 					$handler = $widget->handler;
 					if (elgg_view_exists("widgets/$handler/content")) {
 						$content = elgg_view("widgets/$handler/content", $vars);
@@ -127,6 +132,7 @@
 				}
 				else
 					echo $widget;
+            }
 		}
 	}
 	

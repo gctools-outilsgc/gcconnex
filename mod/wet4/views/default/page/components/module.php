@@ -92,8 +92,14 @@ if($checkPage == 'group_profile' && $type == 'GPmod'){
     
     
 }else{ //Normal Style Below
+
+    if($checkPage =='custom_index_widgets'){
+        $attrs['class'][] = 'panel panel-custom custom-index-panel';
+    }else{
+        $attrs['class'][] = 'panel panel-custom';
+    }
     
-    $attrs['class'][] = 'panel panel-custom';
+
     if ($type) {
         $attrs['class'][] = "elgg-module-$type";
     }

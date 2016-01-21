@@ -36,6 +36,7 @@ if ($summary === false) {
 		'class' => 'elgg-river-subject',
 		'is_trusted' => true,
 	));
+    
 }
 
 $message = elgg_extract('message', $vars);
@@ -56,6 +57,24 @@ if ($responses) {
 $group_string = '';
 $object = $item->getObjectEntity();
 $container = $object->getContainerEntity();
+
+$subtype_test = $object->getSubtype();
+
+if($subtype_test == 'comment' || $subtype_test =='discussion_reply'){
+
+
+    //$test = $subtype_test->getContainerEntity();
+    //get the container of the container if it's a comment or reply
+    $container = $container->getContainerEntity();
+    $test = 'You need to find the group I am in.';
+    $commentordiscuss = true;
+    
+    //$subtype_test2 = $subtype_test->getContainerEntity();
+}else{
+    $test = '';
+    $commentordiscuss = false;
+}
+
 if ($container instanceof ElggGroup && $container->guid != elgg_get_page_owner_guid()) {
 	$group_link = elgg_view('output/url', array(
 		'href' => $container->getURL(),
@@ -63,16 +82,53 @@ if ($container instanceof ElggGroup && $container->guid != elgg_get_page_owner_g
 		'is_trusted' => true,
 	));
 	$group_string = elgg_echo('river:ingroup', array($group_link));
+    $group_image = elgg_view_entity_icon($container, 'medium');
+
+   // $group_testing = elgg_view_image_block($group_image, $group_link);
+
+    
 }
+//so when the activity happens in a group then display the users icon and stuff
+$subject = $item->getSubjectEntity();
+$user_icon = elgg_view_entity_icon($subject, 'small');
+
 
 //removed $responses
-echo <<<RIVER
+
+if($group_string || $commentordiscuss){
+    $identify_activity = elgg_echo('group');
+    echo <<<RIVER
+<div class="mrgn-bttm-md">
+
+
+<div class="elgg-river-summary mrgn-bttm-sm">$summary $group_string</div>
+<div class="elgg-river-timestamp mrgn-bttm-md timeStamp "><i>$timestamp</i></div>
+
+</div>
+<div class="  mrgn-bttm-sm mrgn-tp-sm">
+
+$message 
+$attachments 
+
+</div>
+
+<div class="pull-right">$menu</div>
+
+RIVER;
+
+}else{
+    $identify_activity = elgg_echo('friend:river');
+    echo <<<RIVER
 
 <div class="elgg-river-summary  mrgn-bttm-sm">$summary $group_string </div>
 
 <div class="elgg-river-timestamp mrgn-bttm-sm timeStamp"><i>$timestamp</i></div>
+
 $message
 $attachments
 <div class="pull-right">$menu</div>
 
 RIVER;
+
+}
+

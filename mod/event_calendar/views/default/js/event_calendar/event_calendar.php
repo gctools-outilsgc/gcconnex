@@ -36,10 +36,10 @@ elgg.event_calendar.handleScheduleType = function(e) {
 		$(".event-calendar-edit-form-membership-block").show();
 		$(".event-calendar-edit-form-share-block").show();
 		if (st == 'all_day') {
-			$(".event-calendar-edit-date-wrapper").hide();
+			$(".event-calendar-edit-date-wrapper").show();
 			$("#event-calendar-start-time-wrapper").hide();
 			$("#event-calendar-end-time-wrapper").hide();
-			$(".event-calendar-edit-all-day-date-wrapper").show();
+			$(".event-calendar-edit-all-day-date-wrapper").hide();
 		} else {
 			$(".event-calendar-edit-date-wrapper").show();
 			$("#event-calendar-start-time-wrapper").show();

@@ -137,16 +137,19 @@ else{
 
 if ($image) {
 	$image = "<div class=\"mrgn-tp-sm col-xs-2\">$image</div>";
+     //$echo = elgg_get_context();
 }
 
 if ($alt_image) {
 	$alt_image = "<div class=\"elgg-image-alt\">$alt_image</div>";
+   
 }
 
 echo <<<HTML
 
 <div class="$class clearfix mrgn-bttm-md" $id>
-	$image$alt_image$body
+
+	$image$alt_image$body$echo
     <div class=" elgg-body clearfix edit-comment">
    
     </div>
