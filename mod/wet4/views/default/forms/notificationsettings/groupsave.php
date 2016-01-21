@@ -27,6 +27,18 @@ foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
 	$subsbig[$method] = $tmparray;
 }
 
+
+//grab groups user is a member of
+$dbprefix = elgg_get_config('dbprefix');
+$groupmemberships = elgg_get_entities_from_relationship(array(
+	'relationship' => 'member',
+	'relationship_guid' => $user->guid,
+	'type' => 'group',
+	'joins' => array("JOIN {$dbprefix}groups_entity ge ON e.guid = ge.guid"),
+	'order_by' => 'ge.name ASC',
+	'limit' => false,
+));
+
 ?>
 
 
@@ -36,7 +48,11 @@ foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
 
         	<?php
 		echo elgg_view('notifications/subscriptions/jsfuncs',$vars);
-	?>
+            ?>
+        <h3 class="well mrgn-tp-sm">
+            <?php echo elgg_echo('notifications:subscriptions:changesettings:groups'); ?>
+        </h3>
+
 		<div class="mrgn-bttm-lg">
 		<?php
 			echo elgg_echo('notifications:subscriptions:groups:description');
@@ -44,11 +60,10 @@ foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
 		</div>
         <?php
 
-        if (isset($vars['groups']) && !empty($vars['groups'])) {
-
+        if (isset($groupmemberships) && !empty($groupmemberships)) {
 ?>
         <?php
-	       foreach($vars['groups'] as $group) {
+            foreach($groupmemberships as $group) {
 		
 		$fields = '';
 		$i = 0;
@@ -86,8 +101,14 @@ END;
     
     <?php 
         }
+
     	echo elgg_view('input/hidden', array('name' => 'guid', 'value' => $user->guid));
-	   echo elgg_view('input/submit', array('value' => elgg_echo('save')));
+	   echo elgg_view('input/submit', array('value' => elgg_echo('save'), 'class' => 'btn btn-primary'));
+
+
+       //remove group notifications tab
+       elgg_unregister_menu_item('page', '2_group_notify');
+       elgg_unregister_menu_item('page', '1_plugins');
     ?>
 </div>
 

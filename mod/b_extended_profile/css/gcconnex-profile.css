@@ -807,7 +807,7 @@ body #editProfile {
 
 .input-group-addon {
     width: auto;
-    padding: 6px 0px 6px 12px;
+    padding: 9px 5px 6px 9px;
     font-size: 14px;
     font-weight: 400;
     line-height: 1;
@@ -833,7 +833,7 @@ body #editProfile {
 }
 
 .elgg-input-text.form-control.gcconnex-basic-field.gcconnex-social-media {
-    height: 28px;
+    height: 32px;
     width: auto;
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
@@ -853,3 +853,10 @@ body #editProfile {
 ::-moz-placeholder { color:#ccc; } /* firefox 19+ */
 :-ms-input-placeholder { color:#ccc; } /* ie */
 input:-moz-placeholder { color:#ccc; }
+
+
+.load-spinner {
+    margin: 0 auto;
+    height: 70px;
+    background: #fff url(../img/loading.gif) no-repeat center center;
+}

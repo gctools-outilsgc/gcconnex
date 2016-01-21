@@ -136,7 +136,7 @@ foreach($schedule_options as $label => $key) {
     $body .= elgg_view("event_calendar/input/date_local",array(
 		'autocomplete' => 'off',
 		'class' => 'event-calendar-compressed-date',
-		'name' => 'start_date_for_all_day',
+		'name' => 'start_date',
 		'value' => $fd['start_date']));
     $body .= '</div>';
   }

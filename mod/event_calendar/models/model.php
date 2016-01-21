@@ -86,14 +86,15 @@ function event_calendar_set_event_from_form($event_guid, $group_guid) {
 
 	if ($e->schedule_type != 'poll') {
 		if ($e->schedule_type == 'all_day') {
-			$start_date_text = trim(get_input('start_date_for_all_day'));
+			$start_date_text = trim(get_input('start_date'));
+		//	$end_date_text = trim(get_input('end_date'));
 		} else {
 			$start_date_text = trim(get_input('start_date'));
 		}
 		// TODO: is the timezone bit necessary?
 		$e->start_date = strtotime($start_date_text." ".date_default_timezone_get());
-		$end_date_text = trim(get_input('end_date', ''));
-		if ($end_date_text && ($e->schedule_type != 'all_day')) {
+		$end_date_text = trim(get_input('end_date', ""));
+		if ($end_date_text/* && ($e->schedule_type != 'all_day')*/) {
 			$e->end_date = strtotime($end_date_text." ".date_default_timezone_get());
 		} else {
 			$e->end_date = '';
@@ -132,6 +133,8 @@ function event_calendar_set_event_from_form($event_guid, $group_guid) {
 	$e->description = get_input('description');
 	$e->venue = get_input('venue');
 	$e->fees = get_input('fees');
+	$e->language = get_input('language');
+	$e->teleconference = get_input('teleconference_text');
 	$e->contact = get_input('contact');
 	$e->organiser = get_input('organiser');
 	$e->tags = string_to_tag_array(get_input('tags'));
@@ -167,6 +170,8 @@ function event_calendar_set_event_from_form($event_guid, $group_guid) {
 		'end_time',
 		'venue',
 		'fees',
+		'language',
+		'teleconference',
 		'contact',
 		'organiser',
 		'tags',
@@ -1033,6 +1038,27 @@ function event_calendar_get_formatted_full_items($event) {
 	$item->title = elgg_echo('event_calendar:venue_label');
 	$item->value = htmlspecialchars($event->venue);
 	$event_items[] = $item;
+
+	$item = new stdClass();
+	$item->title = elgg_echo('langue');
+	if (htmlspecialchars($event->language) == 0 ){
+
+		$item->value = 'Français';
+	}else if(htmlspecialchars($event->language) == 1 ){
+		$item->value = 'English';
+	}else{
+
+		$item->value = 'Bilingue';
+	}
+$event_items[] = $item;
+		$item = new stdClass();
+	$item->title = elgg_echo('teleconference');
+	$item->value = htmlspecialchars($event->teleconference);
+	$event_items[] = $item;
+
+	
+	
+
 	if ($event_calendar_region_display == 'yes') {
 		$item = new stdClass();
 		$item->title = elgg_echo('event_calendar:region_label');
@@ -1073,9 +1099,10 @@ function event_calendar_get_formatted_time($event) {
 	$event_calendar_times = elgg_get_plugin_setting('times', 'event_calendar') != 'no';
 
 	$start_date = date($date_format, $event->start_date);
-	if ($event->schedule_type == 'all_day') {
-	  $time_bit = $start_date . ' ' . elgg_echo('event_calendar:all_day_bit');
-	} else {
+	
+/*	if ($event->schedule_type == 'all_day') {
+	$time_bit = $start_date . ' ' . elgg_echo('event_calendar:all_day_bit');
+	} else {*/
 		if ($event->end_date) {
 			$end_date = date($date_format, $event->end_date);
 		}
@@ -1086,12 +1113,20 @@ function event_calendar_get_formatted_time($event) {
 			$time_bit = $start_date;
 		} else {
 			if (!$event->all_day && $event_calendar_times) {
-				$start_date = event_calendar_format_time($start_date, $event->start_time);
+				 if(event_calendar_format_time($event->start_time) != '0:00,'){
+
+				 	$start_date = event_calendar_format_time($start_date, $event->start_time);
 				$end_date = event_calendar_format_time($end_date, $event->end_time);
+				 }else{
+
+				 	$end_date = event_calendar_format_time($end_date, $event->end_time);
+				 	
+				 }
+				
 			}
 			$time_bit = "$start_date - $end_date";
 		}
-	}
+	//}
 
 	if ($event->repeats == 'yes') {
 		$dow = array('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday');
@@ -1542,12 +1577,12 @@ function event_calendar_generate_listing_params($page_type, $container_guid, $or
 		$day = 60*60*24;
 		$week = 7*$day;
 		$month = 31*$day;
-
+		
 		$mode = trim($display_mode);
 		if (!$mode) {
-			$mode = 'month';
+			$mode = 'test';
 		}
-
+//$mode = "test";
 		if ($mode == "day") {
 			$start_date = $original_start_date;
 			$end_date = $start_date;
@@ -1561,7 +1596,14 @@ function event_calendar_generate_listing_params($page_type, $container_guid, $or
 
 			$start_date = date('Y-m-d', $start_ts);
 			$end_date = date('Y-m-d', $end_ts);
-		} else {
+		} else if($mode == "test"){
+			$start_ts = strtotime($original_start_date);
+			$start_ts -= date("m", $start_ts)*$day;
+			$end_ts = $start_ts + 365*$day;
+
+			$start_date = date('Y-m-d', $start_ts);
+			$end_date = date('Y-m-d', $end_ts);
+		}else {
 			$start_ts = strtotime($original_start_date);
 			$month = date('m', $start_ts);
 			$year = date('Y', $start_ts);
@@ -1629,7 +1671,7 @@ function event_calendar_generate_listing_params($page_type, $container_guid, $or
 	}
 
 	$offset = get_input('offset');
-	$limit = get_input('limit',15);
+	$limit = get_input('limit',5);
 
 	if (!$filter) {
 			$filter = 'all';
@@ -1666,8 +1708,10 @@ function event_calendar_generate_listing_params($page_type, $container_guid, $or
 				'region' => $region,
 				'listing_format' => $event_calendar_listing_format,
 	);
-
+$other = elgg_view('event_calendar/groupprofile_calendar', $vars);
 	$content = elgg_view('event_calendar/show_events', $vars);
+	
+	//$content2 = elgg_view('event_calendar/show_events_calendar', $vars);
 
 	if ($page_type == 'group') {
 		$filter_override = '';
@@ -1730,6 +1774,8 @@ function event_calendar_generate_listing_params($page_type, $container_guid, $or
 	$params = array(
 		'title' => $title,
 		'content' => $content,
+		//'content2' => $content2,
+		'other' => $other,
 		'filter_override' => $filter_override,
 		'pass_vars' => $vars,		// cyu - 02/17/2015: modified to pass the $vars to another function to do pagination
 		'sidebar' => elgg_view('event_calendar/sidebar', array('page' => $sidebar))
@@ -2147,7 +2193,7 @@ function event_calendar_get_page_content_fullcalendar_events($start_date, $end_d
 			} else {
 				$event_item['id'] = $event->guid;
 				$event_item['is_event_poll'] = false;
-				$event_item['url'] = elgg_get_site_url().'ajax/view/event_calendar/popup?guid='.$event->guid;
+				$event_item['url'] = elgg_get_site_url().'event_calendar/view/'.$event->guid;
 			}
 
 			// Allow other plugins to modify the data

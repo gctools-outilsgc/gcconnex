@@ -72,7 +72,7 @@ if ($full) {
 		'entity' => $event,
 		'handler' => 'event_calendar',
 		'sort_by' => 'priority',
-		'class' => 'elgg-menu-hz',
+		'class' => 'elgg-menu-hz list-inline',
 	));
 
 	$params = array(
@@ -119,7 +119,7 @@ if ($full) {
 			'entity' => $event,
 			'handler' => 'event_calendar',
 			'sort_by' => 'priority',
-			'class' => 'elgg-menu-hz',
+			'class' => 'elgg-menu-hz list-inline',
 		));
 	}
 

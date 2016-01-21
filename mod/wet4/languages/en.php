@@ -1,6 +1,14 @@
 <?php
 return array(
-   
+
+/**
+  * Profile Strength
+  */
+     'ps:basicprofile' => "Basic profile",
+     'ps:access' => "Access: ",
+     'ps:details' => "See details",
+     'ps:education' => "Education",
+     'ps:work' => "Work experience",
 /**
  * The Wire
  */
@@ -21,7 +29,13 @@ return array(
     'userMenu:messages' => "My Messages",
     'userMenu:colleagues' => "My Colleagues",
     
-    
+    /**
+     * Custom Activity Widget
+     */
+     'wetActivity:nocollorgroup'=>"To get started you can browse or search for groups related to your work and interests. Join some groups to start seeing activity.",
+     'wetActivity:welcome'=>"Welcome to GCconnex",
+     'wetActivity:browsegroups'=>"Start Browsing Groups",
+
  /**
  * Group Profile
  */   
@@ -233,6 +247,8 @@ return array(
 	'widgets:move:failure' => "We could not store the new widget position.",
 	'widgets:remove:failure' => "Unable to remove this widget",
 
+    'wet4:colandgroupactivity'=>'Colleague and Group Activity',
+
 /**
  * Groups
  */
@@ -257,6 +273,7 @@ return array(
  */
 
 	'friends' => "My Colleagues", //Friends
+    'friend:river' => "Colleague", //Friends
 	'friends:yours' => "Your friends",
 	'friends:owned' => "%s's friends",
 	'friend:add' => "Add friend",

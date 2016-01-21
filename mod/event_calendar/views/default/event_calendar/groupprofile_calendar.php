@@ -14,6 +14,9 @@
 elgg_load_library('elgg:event_calendar');
 
 $page_owner_entity = elgg_get_page_owner_entity();
+
+
+
 	echo elgg_view('event_calendar/full_calendar_view', $vars);
 if (event_calendar_activated_for_group($page_owner_entity)) {
 	$num = 4;
@@ -27,9 +30,15 @@ if (event_calendar_activated_for_group($page_owner_entity)) {
 
 		foreach($events as $event) {
 			echo elgg_view("object/event_calendar", array('entity' => $event['event']));
+			print_r($vars['start_date']);
 		}
+	}else{
+
+		echo elgg_echo('event_calendar:no_events_found');
 	}
 
 }
+
+
 
 

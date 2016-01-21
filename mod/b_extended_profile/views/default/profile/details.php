@@ -15,7 +15,7 @@ $profile_fields = elgg_get_config('profile_fields');
 // fa classes are the font-awesome icons
 //echo '<div id="profile-details" class="pll">';
 echo '<div class="panel-heading clearfix"><div class="pull-right clearfix">';
-
+echo '<div class="gcconnex-profile-name">';
 //edit button
 if ($user->canEdit()) {
     echo '<button type="button" class="btn btn-primary gcconnex-edit-profile" data-toggle="modal" data-target="#editProfile" data-colorbox-opts = \'{"inline":true, "href":"#editProfile", "innerWidth": 800, "maxHeight": "80%"}\'>' . elgg_echo('gcconnex_profile:edit_profile') . '</button>';
@@ -36,12 +36,13 @@ if ($user->canEdit()) {
         echo '<div class="basic-profile-field-wrapper">'; // field wrapper for css styling
 
         $field = strtolower($field);
-        echo '<div class="basic-profile-label ' . $field . '-label">' . elgg_echo('gcconnex_profile:basic:' . $field) . '</div>'; // field label
+        echo '<label for="' . $field . '" class="basic-profile-label ' . $field . '-label">' . elgg_echo('gcconnex_profile:basic:' . $field) . '</label>'; // field label
 
         $value = $user->get($field);
         // setup the input for this field
         $params = array(
             'name' => $field,
+            'id' => $field,
             'class' => 'gcconnex-basic-' . $field,
             'value' => $value,
         );
@@ -63,16 +64,20 @@ if ($user->canEdit()) {
     echo '<div class="basic-profile-social-media-wrapper">'; // container for css styling, used to group profile content and display them seperately from other fields
 
 // pre-populate the social media fields and their prepended link for user profiles
+   
+
+
     $fields = array('Facebook' => "http://www.facebook.com/",
-        'Google Plus' => "http://www.google.com/",
-        'GitHub' => "https://github.com/",
-        'Twitter' => "https://twitter.com/",
-        'Linkedin' => "http://ca.linkedin.com/in/",
-        'Pinterest' => "http://www.pinterest.com/",
-        'Tumblr' => "https://www.tumblr.com/blog/",
-        'Instagram' => "http://instagram.com/",
-        'Flickr' => "http://flickr.com/",
-        'Youtube' => "http://www.youtube.com/");
+    'Google Plus' => "http://www.google.com/",
+    'GitHub' => "https://github.com/",
+    'Twitter' => "https://twitter.com/",
+    'Linkedin' => "http://ca.linkedin.com/in/",
+    'Pinterest' => "http://www.pinterest.com/",
+    'Tumblr' => "https://www.tumblr.com/blog/",
+    'Instagram' => "http://instagram.com/",
+    'Flickr' => "http://flickr.com/",
+    'Youtube' => "http://www.youtube.com/");
+     
 
     foreach ($fields as $field => $field_link) { // create a label and input box for each social media field on the basic profile
 
@@ -87,7 +92,7 @@ if ($user->canEdit()) {
 
         echo '<div class="input-group">'; // input wrapper for prepended link and input box, excludes the input label
 
-        echo '<span class="input-group-addon clearfix">' . $field_link . "</span>"; // prepended link
+        echo '<label for="' . $field . 'Input" class="input-group-addon clearfix">' . $field_link . "</label>"; // prepended link
 
         // setup the input for this field
         $placeholder = "test";
@@ -104,11 +109,12 @@ if ($user->canEdit()) {
 
         $params = array(
             'name' => $field,
-            'class' => 'form-control gcconnex-basic-field gcconnex-social-media gcconnex-basic-' . $field,
+            'id' => $field . 'Input',
+            'class' => 'editProfileFields gcconnex-basic-field gcconnex-social-media gcconnex-basic-' . $field,
             'placeholder' => $placeholder,
             'value' => $value
         );
-
+       
         echo elgg_view("input/text", $params); // input field
 
         echo '</div>'; // close div class="input-group"
@@ -142,7 +148,7 @@ if ($user->canEdit()) {
     echo $content;
 */
 }
-
+echo '</div>'; // close div class="gcconnex-profile-name"
 //actions dropdown
 if (elgg_get_page_owner_guid() != elgg_get_logged_in_user_guid()) {
     $menu = elgg_trigger_plugin_hook('register', "menu:user_hover", array('entity' => $user), array());
@@ -249,10 +255,11 @@ echo '</div></div>'; // close div class="gcconnex-profile-contact-info"
 // pre-populate the social media links that we may or may not display depending on whether the user has entered anything for each one..
 $social = array('facebook', 'google', 'github', 'twitter', 'linkedin', 'pinterest', 'tumblr', 'instagram', 'flickr', 'youtube');
 
-echo '<div class="gcconnex-profile-social-media-links mrgn-bttm-sm">';
+echo '<div class="gcconnex-profile-social-media-links mrgn-bttm-sm mrgn-lft-md">';
 foreach ($social as $media) {
 
     if ($link = $user->get($media)) {
+
         if ($media == 'facebook') { $link = "http://www.facebook.com/" . $link; $class = "fa-facebook";}
         if ($media == 'google') { $link = "http://plus.google.com/" . $link; $class = "fa-google-plus";}
         if ($media == 'github') { $link = "https://github.com/" . $link; $class = "fa-github";}
@@ -263,8 +270,7 @@ foreach ($social as $media) {
         if ($media == 'instagram') { $link = "http://instagram.com/" . $link; $class = "fa-instagram";}
         if ($media == 'flickr') { $link = "http://flickr.com/" . $link; $class = "fa-flickr"; }
         if ($media == 'youtube') { $link = "http://www.youtube.com/" . $link; $class = "fa-youtube";}
-
-        if ($media == 'google') { $media = 'google-plus'; } // the google font-awesome class is called "google-plus", so convert "google" to that..
+        
         
         echo '<a href="' . $link . '" target="_blank"><i class="socialMediaIcons fa ' . $class . ' fa-2x"></i></a>';
         

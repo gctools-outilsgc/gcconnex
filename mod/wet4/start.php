@@ -15,8 +15,10 @@ function wet4_theme_init() {
 	elgg_register_event_handler('pagesetup', 'system', 'wet4_theme_pagesetup', 1000);
     elgg_register_event_handler('pagesetup', 'system', 'wet4_riverItem_remove');
     elgg_register_event_handler('pagesetup', 'system', 'messages_notifier');
-    
+
     elgg_register_plugin_hook_handler('register', 'menu:entity', 'wet4_elgg_entity_menu_setup');
+    elgg_register_plugin_hook_handler('register', 'menu:widget', 'wet4_widget_menu_setup');
+    elgg_register_plugin_hook_handler('register', 'menu:page', 'wet4_elgg_page_menu_setup');
     elgg_register_plugin_hook_handler('register', 'menu:river', 'wet4_elgg_river_menu_setup');
     
     elgg_register_plugin_hook_handler('register', 'menu:entity', 'wet4_likes_entity_menu_setup', 400);
@@ -24,9 +26,13 @@ function wet4_theme_init() {
     
 	// theme specific CSS
 	elgg_extend_view('css/elgg', 'wet4_theme/css');
-    
+
+    elgg_extend_view('forms/notificationsettings/save', 'forms/notificationsettings/groupsave');
+
     //register a page handler for friends
     elgg_unregister_page_handler('friends'); //unregister core page handler
+    elgg_unregister_page_handler('dashboard'); //unregister dashboard handler to make our own
+    elgg_register_page_handler('dashboard', 'wet4_dashboard_page_handler');
     elgg_register_page_handler('friends', '_wet4_friends_page_handler'); //register new page handler for data tables
 	elgg_register_page_handler('friendsof', '_wet4_friends_page_handler');
     
@@ -60,9 +66,28 @@ function wet4_theme_init() {
 	if (!elgg_is_logged_in()) {
 		elgg_unregister_plugin_hook_handler('output:before', 'layout', 'elgg_views_add_rss_link');
 	}
+
+    // new widgets
+    //registering wet 4 activity widget
+    elgg_register_widget_type('wet_activity', elgg_echo('wet4:colandgroupactivity'), 'GCconnex Group and Colleague Activity', array('custom_index_widgets'),true);
+    elgg_register_widget_type('profile_completness', 'Profile Strength', 'The "Profile Strength" widget', array('custom_index_widgets'),false);
+
     
-    
+    //extend views of plugin files to remove unwanted menu items
+    $active_plugins = elgg_get_plugins();
+    foreach ($active_plugins as $plugin) {
+		$plugin_id = $plugin->getID();
+		if (elgg_view_exists("usersettings/$plugin_id/edit") || elgg_view_exists("plugins/$plugin_id/usersettings")) {
+
+            elgg_extend_view("usersettings/$plugin_id/edit", "forms/usersettings/menus");
+            elgg_extend_view("plugins/$plugin_id/usersettings", "forms/usersettings/menus");
+
+		}
+	}
+    elgg_extend_view("core/settings/statistics", "forms/usersettings/menus");
 }
+
+
 
 /**
  * Rearrange menu items
@@ -414,8 +439,51 @@ function wet4_likes_entity_menu_setup($hook, $type, $return, $params) {
 	return $return;
 }
 
+//Setup page menu for user settings
+function wet4_elgg_page_menu_setup($hook, $type, $return, $params) {
+
+    if(elgg_in_context('settings')){
+
+        $user = elgg_get_page_owner_entity();
+
+        $dropdown = '<ul class="dropdown-menu pull-right subMenu">';
+
+        $active_plugins = elgg_get_plugins();
+
+        foreach ($active_plugins as $plugin) {
+            $plugin_id = $plugin->getID();
+            if (elgg_view_exists("usersettings/$plugin_id/edit") || elgg_view_exists("plugins/$plugin_id/usersettings")) {
+                $params = array(
+                    'name' => $plugin_id,
+                    'text' => $plugin->getFriendlyName(),
+                    'href' => "settings/plugins/{$user->username}/$plugin_id",
+                );
+
+                $dropdown .= '<li><a href="' . elgg_get_site_url() . 'settings/plugins/' . $user->username . '/' . $plugin_id . '">' . $plugin->getFriendlyName() . '</a></li>';
+            }
+        }
+
+        $dropdown .= '</ul>';
+        
+        $options = array(
+                   'name' => 'plugin_tools',
+                   'text' => elgg_echo('usersettings:plugins:opt:linktext') . '<b class="caret"></b>' . $dropdown,
+                   
+                   'priority' => 150,
+                   'section' => 'configure',
+                   'item_class' => 'dropdown',
+                   'data-toggle' => 'dropdown',
+                   'aria-expanded' => 'false',
+                   'class' => 'dropdown-toggle  dropdownToggle',
+               );
+        $return[] = \ElggMenuItem::factory($options);
 
 
+        return $return;
+
+    }
+
+}
 
 function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 	//Have widgets show the same entity menu
@@ -985,6 +1053,75 @@ function river_handler($hook, $type, $menu, $params){
             }
         
     }
+}
+
+function wet4_dashboard_page_handler() {
+	// Ensure that only logged-in users can see this page
+	elgg_gatekeeper();
+
+	// Set context and title
+	elgg_set_context('dashboard');
+	elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
+	$title = elgg_echo('dashboard');
+
+	// wrap intro message in a div
+	$intro_message = elgg_view('dashboard/blurb');
+
+	$params = array(
+		'content' => $intro_message,
+		'num_columns' => 2,
+		'show_access' => false,
+	);
+    //use our own layouts for dashboard and stuff
+	$widgets = elgg_view_layout('db_widgets', $params);
+
+	$body = elgg_view_layout('dashboard', array(
+		'title' => false,
+		'content' => $widgets
+	));
+
+	echo elgg_view_page($title, $body);
+	return true;
+}
+
+
+function wet4_widget_menu_setup($hook, $type, $return, $params) {
+
+	$widget = $params['entity'];
+	/* @var \ElggWidget $widget */
+	$show_edit = elgg_extract('show_edit', $params, true);
+
+
+
+	if ($widget->canEdit()) {
+		$options = array(
+			'name' => 'delete',
+			'text' => '<i class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">Delete This</span></i>',
+			'title' => elgg_echo('widget:delete', array($widget->getTitle())),
+			'href' => "action/widgets/delete?widget_guid=$widget->guid",
+			'is_action' => true,
+			'link_class' => 'elgg-widget-delete-button',
+			'id' => "elgg-widget-delete-button-$widget->guid",
+			'data-elgg-widget-type' => $widget->handler,
+			'priority' => 900,
+		);
+		$return[] = \ElggMenuItem::factory($options);
+
+		if ($show_edit) {
+			$options = array(
+				'name' => 'settings',
+				'text' => '<i class="fa fa-cog fa-lg icon-unsel"><span class="wb-inv">Edit This</span></i>',
+				'title' => elgg_echo('widget:edit'),
+				'href' => "#widget-edit-$widget->guid",
+				'link_class' => "elgg-widget-edit-button",
+				'rel' => 'toggle',
+				'priority' => 800,
+			);
+			$return[] = \ElggMenuItem::factory($options);
+		}
+	}
+
+	return $return;
 }
 
 

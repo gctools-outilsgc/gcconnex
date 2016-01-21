@@ -52,9 +52,9 @@ for($m=0;$m<60;$m=$m+5) {
 	$minutes[$m] = $mt;
 }
 
-echo elgg_view('input/dropdown', array('name' => $vars['name'].'_hour', 'value' => $hour, 'options_values' => $hours));
+echo elgg_view('input/dropdown', array('name' => $vars['name'].'_hour', 'value' => $hour, 'options_values' => $hours, 'style' => 'display:inline'));
 echo " <b>:</b> ";
-echo elgg_view('input/dropdown', array('name' => $vars['name'].'_minute', 'value' => $minute, 'options_values' => $minutes));
+echo elgg_view('input/dropdown', array('name' => $vars['name'].'_minute', 'value' => $minute, 'options_values' => $minutes, 'style' => 'display:inline'));
 if ($time_format == '12') {
 	echo elgg_view('input/dropdown', array('name' => $vars['name'].'_meridian', 'value' => $meridian, 'options_values' => $meridians));
 }

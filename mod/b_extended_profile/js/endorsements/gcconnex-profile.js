@@ -250,12 +250,13 @@ function editProfile(event) {
     $('.edit-' + $section).addClass('hidden');
     $('.edit-' + $section).addClass('wb-invisible');
 
-    $('.cancel-' + $section).show();
-    $('.cancel-' + $section).removeClass('hidden');
-    $('.cancel-' + $section).removeClass('wb-invisible');
+    $('#edit-' + $section).append('<div id="" class="load-spinner"></div>');
 
     switch ($section) {
         case 'about-me':
+
+            
+
             // Edit the About Me blurb
             $.get(elgg.normalize_url('ajax/view/b_extended_profile/edit_about-me'),
                 {
@@ -266,6 +267,13 @@ function editProfile(event) {
                     $('.save-' + $section).show();
                     $('.save-' + $section).removeClass('hidden');
                     $('.save-' + $section).removeClass('wb-invisible');
+
+                    $('.cancel-' + $section).show();
+                    $('.cancel-' + $section).removeClass('hidden');
+                    $('.cancel-' + $section).removeClass('wb-invisible');
+
+                    $('load-spinner').addClass('hidden');
+                    $('.load-spinner').addClass('wb-invisible');
                 });
             $('.gcconnex-profile-about-me-display').hide();
             break;
@@ -281,6 +289,13 @@ function editProfile(event) {
                     $('.save-' + $section).show();
                     $('.save-' + $section).removeClass('hidden');
                     $('.save-' + $section).removeClass('wb-invisible');
+
+                    $('.cancel-' + $section).show();
+                    $('.cancel-' + $section).removeClass('hidden');
+                    $('.cancel-' + $section).removeClass('wb-invisible');
+
+                    $('load-spinner').addClass('hidden');
+                    $('.load-spinner').addClass('wb-invisible');
                 });
             $('.gcconnex-profile-education-display').hide();
             break;
@@ -305,6 +320,13 @@ function editProfile(event) {
                     $('.save-' + $section).show();
                     $('.save-' + $section).removeClass('hidden');
                     $('.save-' + $section).removeClass('wb-invisible');
+
+                    $('.cancel-' + $section).show();
+                    $('.cancel-' + $section).removeClass('hidden');
+                    $('.cancel-' + $section).removeClass('wb-invisible');
+
+                    $('load-spinner').addClass('hidden');
+                    $('.load-spinner').addClass('wb-invisible');
                 });
             break;
 
@@ -358,6 +380,13 @@ function editProfile(event) {
             $('.save-' + $section).removeClass('wb-invisible');
             $('.gcconnex-skill-limit').show();
 
+            $('.cancel-' + $section).show();
+            $('.cancel-' + $section).removeClass('hidden');
+            $('.cancel-' + $section).removeClass('wb-invisible');
+
+            $('load-spinner').addClass('hidden');
+            $('.load-spinner').addClass('wb-invisible');
+
             //$('.delete-skill').show();
 
             break;
@@ -376,6 +405,13 @@ function editProfile(event) {
                     $('.save-' + $section).removeClass('hidden');
                     $('.save-' + $section).removeClass('wb-invisible');
                 
+                    $('.cancel-' + $section).show();
+                    $('.cancel-' + $section).removeClass('hidden');
+                    $('.cancel-' + $section).removeClass('wb-invisible');
+
+                    $('load-spinner').addClass('hidden');
+                    $('.load-spinner').addClass('wb-invisible');
+
                     //hide creds for chosen language
                     if($('#first_official_language').val() == "ENG"){
                         $('#engCred').hide();
@@ -401,6 +437,13 @@ function editProfile(event) {
                 $('.save-' + $section).show();
                 $('.save-' + $section).removeClass('hidden');
                 $('.save-' + $section).removeClass('wb-invisible');
+
+                $('.cancel-' + $section).show();
+                $('.cancel-' + $section).removeClass('hidden');
+                $('.cancel-' + $section).removeClass('wb-invisible');
+
+                $('load-spinner').addClass('hidden');
+                $('.load-spinner').addClass('wb-invisible');
             });
         default:
             break;
