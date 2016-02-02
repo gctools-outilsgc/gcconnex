@@ -78,6 +78,11 @@ function group_tools_route_groups_handler($hook, $type, $return_value, $params) 
 				
 				include(dirname(dirname(__FILE__)) . "/pages/groups/suggested.php");
 				break;
+			case "featured":
+				$result = false;
+				
+				include(dirname(dirname(__FILE__)) . "/pages/groups/featured.php");
+				break;
 			case "search":
 				$result = false;
 					

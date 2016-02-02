@@ -1,6 +1,22 @@
 <?php
 return array(
-    
+
+/**
+  * WET specific
+  */
+  'wet:skiptomain'=>"Passer au contenu principal",
+  'wet:aboutsite'=>"Passer à « À propos de ce site »",
+  'wet:LangSel'=>"Sélection de la langue",
+  'wet:gc'=>"Gouvernement du Canada",
+  'wet:search'=>"Recherche et menus",
+  'wet:searchHead'=>"Recherche",
+  'wet:searchweb'=>"Recherchez le site Web",
+   'wet:searchgctools'=>"Rechercher GCconnex",
+   'wet:more'=>"Autres",
+   'wet:topicmenu'=>"Menu des sujets",
+   'wet:youarehere'=>"Vous êtes ici :",
+   'wet:errmess' => "<h3 class='h3'>Le formulaire n'a pu être soumis car une ou des erreurs ont été trouvées.</h3>",
+   'wet:feedbackText'=>"Rétroaction<span class='wb-inv'> sur ce site Web</span>",
 /**
  * Profile Strength
  */
@@ -9,7 +25,21 @@ return array(
     'ps:details' => "Voir en détail",
     'ps:education' => "Éducation",
     'ps:work' => "Expérience de travail",
+    'ps:profilestrength' => "Profil",
+     'ps:all-star' =>"Félicitations! Vous êtes une étoiles.",
+     'ps:beginner' =>"Débutant",
+     'ps:advanced' =>"Avancé",
+     'ps:expert' =>"Expert",
+     'ps:optingin' =>"Avez-vous penser à adhérer aux Micro-mission?",
+     'ps:optin' =>"Adhérer",
 
+/*
+       * Suggested Friends
+       */
+
+      'sf:title' => "Voyez-vous quelqu'un que vous connaissez ? Connectez-vous avec eux.",
+      'sf:connect' => "Connecter",
+      'sf:alttext' => "L'avatar de",
 
 /**
  * The Wire
@@ -225,6 +255,7 @@ return array(
 	'widget:numbertodisplay' => 'Nombre d\'éléments à afficher ',
 
 	'widget:delete' => 'Supprimer %s',
+    'widget:remove' => 'Supprimer widget',
 	'widget:edit' => 'Personnaliser ce widget',
 
 	'widgets' => "Widgets",
@@ -236,7 +267,10 @@ return array(
 	'widgets:add:failure' => "Nous n'avons pas pu ajouter votre widget.",
 	'widgets:move:failure' => "Nous n'avons pas pu enregistrer la position du nouveau widget.",
 	'widgets:remove:failure' => "Impossible de supprimer ce widget",
-    'wet4:colandgroupactivity'=>'Activités de vos Groupes et Collègues',
+    'wet4:colandgroupactivity'=>'Activités de vos groupes et collègues',
+    'wet4:colandgroupactivitynolog'=>'Bienvenue à GCconnex',
+    'wet4:noticetitle' => 'Avis',
+    'wet4:homenotice' => 'Bienvenue à GCconnex, la plateforme de réseautage social professionnelle du gouvernement du Canada. GCconnex a pour objet de permettre aux fonctionnaires de tisser des liens et de collaborer selon leurs connaissances, leurs expériences et leurs intérêts communs. GCconnex devrait servir à mener des activités relatives au milieu de travail, et il ne devrait pas remplacer les réseaux sociaux personnels (comme Facebook).',
 
 /**
  * Groups
@@ -447,6 +481,7 @@ return array(
 	'tools' => "Outils",
 	'settings:edit' => 'Editer les paramètres',
 
+    'gcconnex:registerText' => '(translate me)New to GCconnex? Get started connecting and collaborating with other public servants all accross Canada.',
 	'register' => "S'enregistrer",
 	'registerok' => "Vous vous êtes enregistré avec succès sur %s.",
 	'registerbad' => "Votre création de compte n'a pas fonctionné pour une raison inconnue.",
@@ -1348,9 +1383,7 @@ Ne répondez pas à cet e-mail.",
     'contactform:title' => "Pages d'aide de GCconnex",
     'contactform:help' => 'Aide',
 	'contactform:list' => "<ul>	
-						<li> <a href='http://gcpedia.gc.ca/wiki/Tutorials_on_GC2.0_Tools_/_Tutoriels_sur_les_outils_GC2.0'>Conseils pratiques/Vidéos/Tutoriels</a> </li>
-						<li> <a href='http://gcconnex.gc.ca/file/view/6352643/intro-a-gcconnex-savoir-le-%C2%ABcomment%C2%BB-en-6-etapes-faciles-et-commencer-a-utiliser-gcconnex-aujourdhui'>6 étapes pour utiliser GCconnex</a> </li>
-						<li> <a href='http://gcconnex.gc.ca/file/view/390515/en-managing-your-email-notifications-on-gcconnexpdf'>Gestion des avis par courriel</a> </li>
+						<li> <a href='http://www.gcpedia.gc.ca/wiki/GC2.0_Tools_Help_Centre/GCconnex'>Pages d'aide</a> </li>
 						</ul><br />",
     'contactform:faq' => "FAQ",
     'contactform:title:lostpwd' => "Mot de passe perdu:",
@@ -1376,19 +1409,27 @@ Ne répondez pas à cet e-mail.",
     
     'contactform:title:form' => "Contactez-nous",
     
-    'contactform:content:form' => "<p style = 'padding: 8px 0 8px'>
-					Vous ne trouvez pas la réponse à votre question dans les Questions fréquemment posées ou les ressources d'aide? <br /> <br />
-					<b>Communiquez avec le Soutien technique de GCconnex!</b> Veuillez fournir le plus de détails possible lorsque vous décrirez votre problème ou question, et fournissez également des captures d'écran si possible.
-					</p> <br />",
+    'contactform:content:form' => "<p>
+					Veuillez voir la FAQ et le Centre d’aide pour obtenir rapidement des réponses aux questions les plus fréquentes et apprenez à utiliser GCconnex comme un pro! </p>
+					<p>Vous ne trouvez pas la réponse que vous cherchez? Communiquez avec le Soutien technique de GCconnex en remplissant le formulaire ci-dessous. SVP fournissez le plus de détails possible lorsque vous décrirez votre problème ou question, et fournissez également une capture d’écran si possible.</p>",
       'contactform:useful' => 'Groupes GCconnex qui pourraient vous être utiles :',
     'contactform:clickandtips' => 'Clics et conseils',
     'contactform:gc20' => 'Outils GC2.0',
     'contactform:fullname' => "Votre nom complet",
 	'contactform:email' => "Votre courriel",
 	'contactform:message' => "Votre message",
-    'contactform:select' => 'Veuillez selectionner une raison',
+    'contactform:select' => 'Veuillez selectionner une catégorie',
     'contactform:upload' => 'Téléverser un fichier',
-    'contactform:required' => 'requis',
+    'contactform:required' => 'obligatoire',
+    'contactform:department' => 'Ministère',
+
+
+    /*
+  * Contact Form Validation
+   *Message - Ce champ est obligatoire.
+  * */
+
+ 'contactform:Errreason'=>"<span class='prefix'>Erreur [#] :</span> Vous devez choisir une raison - Ce champ est obligatoire.",
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */

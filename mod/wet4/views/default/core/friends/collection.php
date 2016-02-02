@@ -16,15 +16,17 @@ if (is_array($vars['collection']->members)) {
 	$count = 0;
 }
 
-echo "<li><h2>";
+echo "<li><h2 title='Colleague circle' tabIndex='0'>";
 
 //as collections are private, check that the logged in user is the owner
 if ($coll->owner_guid == elgg_get_logged_in_user_guid()) {
 	echo "<div class=\"friends_collections_controls\">";
-	echo elgg_view('output/url', array(
+
+    echo elgg_view('output/url', array(
 			'href' => 'action/friends/collections/delete?collection=' . $coll->id,
 			'class' => 'delete_collection',
-			'text' => elgg_view_icon('delete'),
+			'text' => '<span class="wb-invisible">' . elgg_echo("delete") . '</span><i class="fa fa-trash-o fa-2x icon-unsel"></i>',
+            'title' => elgg_echo('delete'),
 			'encode_text' => false,
 			'confirm' => true,
 		));
@@ -54,7 +56,7 @@ if ($friends) {
 	<script type="text/javascript">
 	$(function () {
 
-			$('#friends-picker_placeholder<?php echo $vars['friendspicker']; ?>').load(elgg.config.wwwroot + 'pages/friends/collections/pickercallback.php?username=<?php echo elgg_get_logged_in_user_entity()->username; ?>&type=list&collection=<?php echo $vars['collection']->id; ?>');
+			$('#friends-picker_placeholder<?php echo $vars['friendspicker']; ?>').load(elgg.config.wwwroot + 'mod/wet4/pages/friends/collections/pickercallback.php?username=<?php echo elgg_get_logged_in_user_entity()->username; ?>&type=list&collection=<?php echo $vars['collection']->id; ?>');
 
 	});
 	</script>
@@ -63,3 +65,4 @@ if ($friends) {
 
 // close friends-picker div and the accordian list item
 echo "</li>";
+

@@ -12,19 +12,20 @@
 
 $site_url = elgg_get_site_url();
 ?>
-<div class="col-sm-6 mrgn-bttm-md clearfix">
+<div class="col-sm-5 mrgn-bttm-md clearfix">
 <div>
-	<label><?php echo elgg_echo('loginusername'); ?></label>
+	<label for="username_home"><?php echo elgg_echo('loginusername'); ?></label>
 	<?php echo elgg_view('input/text', array(
 		'name' => 'username',
+        'id' => 'username_home',
 		'autofocus' => true,
-        'placeholder' => 'Username or Email',
+        'placeholder' => elgg_echo('loginusername'),
 		));
 	?>
 </div>
-<div>
-	<label><?php echo elgg_echo('password'); ?></label>
-	<?php echo elgg_view('input/password', array('name' => 'password', 'placeholder' => 'Password')); ?>
+<div class="mrgn-bttm-sm">
+	<label for="password_home"><?php echo elgg_echo('password'); ?></label>
+        <?php echo elgg_view('input/password', array('name' => 'password', 'id' => 'password_home', 'placeholder' => elgg_echo('password'))); ?>
 </div>
 
 <?php echo elgg_view('login/extend', $vars); ?>
@@ -34,8 +35,10 @@ $site_url = elgg_get_site_url();
 		<input type="checkbox" name="persistent" value="true" />
 		<?php echo elgg_echo('user:persistent'); ?>
 	</label>
+	<div>
+        <?php echo elgg_view('input/submit', array('value' => elgg_echo('login'), 'class' => 'btn-custom-cta',)); ?>
+    </div>
 	
-	<?php echo elgg_view('input/submit', array('value' => elgg_echo('login'), 'class' => 'btn-custom-cta',)); ?>
 	
 	<?php 
 	if (isset($vars['returntoreferer'])) {
@@ -55,15 +58,15 @@ $site_url = elgg_get_site_url();
 ?>
 </div>
 
-<div class="col-sm-6 clearfix">
-    
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pulvinar scelerisque ligula in imperdiet.</p>
-    <hr>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur pulvinar scelerisque ligula in imperdiet.</p>
+<div class="col-sm-6 col-sm-offset-1 clearfix">
+
+    <div>
+        <?php echo elgg_echo('gcconnex:registerText');?> </div>
+
 
     <div class="text-center">
         <?php
-        echo '<a href="' . $site_url . 'register" class="btn btn-custom">Register</a>';
+        echo '<a href="' . $site_url . 'register" class="btn btn-custom">'.elgg_echo('register').'</a>';
         ?>
     </div>
 </div>

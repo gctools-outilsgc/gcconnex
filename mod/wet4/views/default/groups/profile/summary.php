@@ -29,7 +29,7 @@ if (!$owner) {
         
     
     
-        <div class="panel-heading col-xs-12 mrgn-lft-sm"> 
+        <div class="panel-heading col-xs-12"> 
             
             <div class="btn-group pull-right mrgn-rght-sm">
                 
@@ -93,6 +93,14 @@ if (!$owner) {
                     //see if user is a member
                     if($group->isFriendOf($user) || elgg_is_admin_logged_in()){
             
+                        if ($page_owner->canEdit() && (elgg_get_plugin_setting("mail", "group_tools") == "yes")) {
+                            elgg_register_menu_item("title", array(
+                                "name" => "mail",
+                                "text" => elgg_echo("group_tools:menu:mail"),
+                                "href" => "groups/mail/" . $page_owner->getGUID(),
+                            ));
+                        }
+
                         //load action buttons in dropdown
                         $buttons = elgg_view_menu('title', array(
                             'sort_by' => 'priority',

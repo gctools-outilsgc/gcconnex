@@ -21,7 +21,9 @@ $password = $password2 = '';
 $username = get_input('e');
 $email = get_input('e');
 $name = get_input('n');
+$site_url = elgg_get_site_url();
 
+$lostpassword = '<a href="'.$site_url .'forgotpassword'.'">Get Password';
 if (elgg_is_sticky_form('register')) {
 	extract(elgg_get_sticky_values('register'));
 	elgg_clear_sticky_form('register');
@@ -58,8 +60,8 @@ if (elgg_is_sticky_form('register')) {
 		var invalid_email = document.getElementById('email_initial_error').innerHTML;
 		var email1 = document.getElementById('email_initial').value;
 		var email2 = document.getElementById('email').value;
-		var password1 = document.getElementById('password').value;
-		var password2 = document.getElementById('password2').value;
+		var password1 = $('.password_test').val();
+		var password2 = $('.password2_test').val();
 		var d_name = document.getElementById('name').value;
 		var toc_val = $('#toc2 input:checkbox:checked').val();
 		
@@ -170,19 +172,19 @@ if (elgg_is_sticky_form('register')) {
 	}
 
 	function enable_submit(the_state)
-	{
+	{/*
 		// we want to enable
 		if (the_state)
 		{
-			if (document.getElementById('submit').disabled)
-            	document.getElementById('submit').disabled = false;
+		    if ($(".submit_test").prop('disabled', true))
+		        $(".submit_test").prop('disabled', false);
 		// we don't want to enable
 		} else {
 
-			if (!document.getElementById('submit').disabled)
-            	document.getElementById('submit').disabled = true;
+		    if ($(".submit_test").prop('disabled', false))
+		        $(".submit_test").prop('disabled', true);
 		}
-	}
+	*/}
 
 	function validForm()
 	{
@@ -282,6 +284,7 @@ var usingIE7 = <?php echo $isIE7; ?>;
 	?>
 </div>
 
+
 <?php
 echo elgg_view('input/checkboxes', array(
 	'name' => 'toc1',
@@ -333,33 +336,55 @@ echo elgg_view('input/checkboxes', array(
 </div>
 
 <div>
-	<label><?php echo elgg_echo('gcRegister:email_initial'); ?></label>
+	<label for="email_initial"><?php echo elgg_echo('gcRegister:email_initial'); ?></label>
 	<font id="email_initial_error" color="red"></font><br />	
-	<input type="text" name="email_initial" id="email_initial" value='<?php echo $email ?>' />
+	<input type="text" name="email_initial" id="email_initial" value='<?php echo $email ?>' class="form-control"/>
 </div>
 
 <div>
-	<label><?php echo elgg_echo('gcRegister:email_secondary'); ?></label>
+	<label for="email"><?php echo elgg_echo('gcRegister:email_secondary'); ?></label>
 	<font id="email_secondary_error" color="red"></font><br />
 
-	<input id="email" class="elgg-input-text" type="text" value='<?php echo $email ?>' name="email" 
+	<input id="email" class="elgg-input-text form-control" type="text" value='<?php echo $email ?>' name="email" 
 	onBlur="elgg.action( 'register/ajax', {
 		data: {
 			args: document.getElementById('email').value 
 		}, 
 		success: function( x ) {
-				document.getElementById('username').value = '' + x.output;
+				//document.getElementById('username').value = 'wow' + x.output;
+		    $('.username_test').val(x.output);
+				//$('.return_message').append(x.output);
+				
+    
+		    
 				fieldFill();
+				if(x.output == '> invalid email'){
+                $('.return_message').html(x.output);
+           $('.return_message').addClass('alert alert-error');
+				}else if(x.output == '> This email address has already been registered'){
+				    var link = '';
+           $('.return_message').html(x.output);
+           $('.return_message').addClass('alert alert-error');
+}else{
+           $('.return_message').html('');
+           $('.return_message').removeClass('alert alert-error');
+}   
 			}
 	});">
 </div>
 
+    <div class="return_message">
+
+
+    </div>
+
 <div>
-	<label><?php echo elgg_echo('gcRegister:username'); ?></label><br />
+	<label for="username"><?php echo elgg_echo('gcRegister:username'); ?></label><br />
 	<?php
 	echo elgg_view('input/text', array(
 		'name' => 'username',
 		'id' => 'username',
+        'class' => 'username_test',
 		'readonly' => 'readonly',
 		'value' => $username,
 	));
@@ -367,32 +392,34 @@ echo elgg_view('input/checkboxes', array(
 </div>
 
 <div>
-	<label><?php echo elgg_echo('gcRegister:password_initial'); ?></label>
+	<label for="password"><?php echo elgg_echo('gcRegister:password_initial'); ?></label>
 	<font id="password_initial_error" color="red"></font><br />
 	<?php
 	echo elgg_view('input/password', array(
 		'name' => 'password',
 		'id' => 'password',
+        'class'=>'password_test',
 		'value' => $password,
 	));
 	?>
 </div>
 
 <div>
-	<label><?php echo elgg_echo('gcRegister:password_secondary'); ?></label>
+	<label for="password2"><?php echo elgg_echo('gcRegister:password_secondary'); ?></label>
 	<font id="password_secondary_error" color="red"></font><br />
 	<?php
 	echo elgg_view('input/password', array(
 		'name' => 'password2',
 		'value' => $password2,
-		'id' => 'password2'
+		'id' => 'password2',
+        'class'=>'password2_test',
 	));
 	?>
 </div>
 
 
 <div class="mtm">
-	<label><?php echo elgg_echo('gcRegister:display_name'); ?> *</label><br />
+	<label for="name"><?php echo elgg_echo('gcRegister:display_name'); ?> *</label><br />
 	<?php
 	echo elgg_view('input/text', array(
 		'name' => 'name',
@@ -426,6 +453,7 @@ echo elgg_view('input/checkboxes', array(
 		'name' => 'submit', 
 		'value' => elgg_echo('gcRegister:register'),
 		'id' => 'submit',
+        'class'=>'submit_test btn-primary',
 		'onclick' => 'return check_fields2();'));
 
 	echo '</div>';
@@ -503,7 +531,7 @@ echo elgg_view('input/checkboxes', array(
 
 	    $('#password').on("keyup", function() {
 	    	enable_submit(validForm());
-	    	var val = $(this).attr('value');
+	    	var val = $(this).val();
 		    if ( val === '' ) {
 		    	var c_err_msg = "<?php echo elgg_echo('gcRegister:empty_field') ?>";
 		        document.getElementById('password_initial_error').innerHTML = c_err_msg;
@@ -515,7 +543,7 @@ echo elgg_view('input/checkboxes', array(
 	    
 	    $('#password2').on("keyup", function() {
 	    	enable_submit(validForm());
-	    	var val = $(this).attr('value');
+	    	var val = $(this).val();
 		    if ( val === '' ) {
 		    	var c_err_msg = "<?php echo elgg_echo('gcRegister:empty_field') ?>";
 		        document.getElementById('password_secondary_error').innerHTML = c_err_msg;
@@ -523,18 +551,18 @@ echo elgg_view('input/checkboxes', array(
 		    else if ( val !== '' ) {
 		        document.getElementById('password_secondary_error').innerHTML = '';
 		        
-		        var val2 = $('#password').attr('value');
+		        var val2 = $('.password_test').val();
 		        if (val2 != val)
 		        {
 		        	var c_err_msg = "<?php echo elgg_echo('gcRegister:mismatch') ?>";
-		        	document.getElementById('password_secondary_error').innerHTML = c_err_msg;
+		        	document.getElementById('password_secondary_error').innerHTML = c_err_msg + val2 + ' ' + val;
 		        }
 		    }
 		});
 
 	    $('#department_name').on("keyup", function() {
 	    	enable_submit(validForm());
-	    	var val = $(this).attr('value');
+	    	var val = $(this).val();
 		    if ( val === '' ) {
 		    	var c_err_msg = "<?php echo elgg_echo('gcRegister:empty_field') ?>";
 		        document.getElementById('department_error').innerHTML = c_err_msg;

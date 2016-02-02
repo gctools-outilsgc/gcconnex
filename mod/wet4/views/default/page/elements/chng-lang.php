@@ -9,9 +9,9 @@
 $site_url = elgg_get_site_url();
 ?>
 
-<div class="container">
+
     <section id="wb-lng" class="visible-md visible-lg text-right">
-            <h2 class="wb-inv">Language selection</h2>
+            <h2 class="wb-inv"><?php echo elgg_echo('wet:LangSel')?></h2>
             <div class="row">
                 <div class="col-md-12">
                     
@@ -21,4 +21,3 @@ $site_url = elgg_get_site_url();
                 </div>
             </div>
     </section>
-</div>

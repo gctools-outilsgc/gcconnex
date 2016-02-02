@@ -16,8 +16,8 @@ $ownerid = $vars['owner']->getGUID();
 
 ?>
 
-<ul class="elgg-tabs">
-	<li class="elgg-state-selected">
+<ul class="nav nav-tabs">
+	<li class="active">
 		<a href="#" class="collectionmembers<?php echo $friendspicker; ?>">
 			<?php echo elgg_echo('friends:collections:members'); ?>
 		</a>
@@ -35,26 +35,27 @@ $(function () {
 
 	$('a.collectionmembers<?php echo $friendspicker; ?>').click(function () {
 		// load collection members pane
-		$('#friends-picker_placeholder<?php echo $friendspicker; ?>').load('<?php echo elgg_get_site_url(); ?>pages/friends/collections/pickercallback.php?username=<?php echo elgg_get_logged_in_user_entity()->username; ?>&type=list&collection=<?php echo $collectionid; ?>&friendspicker=<?php echo $friendspicker; ?>');
+	    $('#friends-picker_placeholder<?php echo $friendspicker; ?>').load('<?php echo elgg_get_site_url(); ?>mod/wet4/pages/friends/collections/pickercallback.php?username=<?php echo elgg_get_logged_in_user_entity()->username; ?>&type=list&collection=<?php echo $collectionid; ?>&friendspicker=<?php echo $friendspicker; ?>');
 
 		// remove selected state from previous tab
-		$(this).parent().parent().find("li.elgg-state-selected").removeClass("elgg-state-selected");
+		$(this).parent().parent().find("li.active").removeClass("active");
 		// add selected class to current tab
-		$(this).parent().addClass("elgg-state-selected");
+		$(this).parent().addClass("active");
+
 
 		return false;
 	});
 
 	$('a.editmembers<?php echo $friendspicker; ?>').click(function () {
 		// load friends picker pane
-		$('#friends-picker_placeholder<?php echo $friendspicker; ?>').load('<?php echo elgg_get_site_url(); ?>pages/friends/collections/pickercallback.php?username=<?php echo elgg_get_logged_in_user_entity()->username; ?>&type=picker&collection=<?php echo $collectionid; ?>&friendspicker=<?php echo $friendspicker; ?>');
+		$('#friends-picker_placeholder<?php echo $friendspicker; ?>').load('<?php echo elgg_get_site_url(); ?>mod/wet4/pages/friends/collections/pickercallback.php?username=<?php echo elgg_get_logged_in_user_entity()->username; ?>&type=picker&collection=<?php echo $collectionid; ?>&friendspicker=<?php echo $friendspicker; ?>');
 
 		// remove selected state from previous tab
-		$(this).parent().parent().find("li.elgg-state-selected").removeClass("elgg-state-selected");
+	    $(this).parent().parent().find("li.active").removeClass("active");
 		// add selected class to current tab
-		$(this).parent().addClass("elgg-state-selected");
+	    $(this).parent().addClass("active");
 
-		return false;
+	    return false;
 	});
 
 

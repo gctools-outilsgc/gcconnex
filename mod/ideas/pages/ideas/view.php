@@ -28,7 +28,7 @@ $body = elgg_view_layout('content', array(
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',
-	'sidebar' => '<h3 class="mbm">' . elgg_echo('ideas:same_group') . '</h3>' . elgg_view('ideas/sidebar')
+	'sidebar' => elgg_view('ideas/sidebar')
 ));
 
 echo elgg_view_page($title, $body);

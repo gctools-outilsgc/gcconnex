@@ -52,7 +52,7 @@ if($checkPage == 'group_profile' && $type == 'GPmod'){
 
     $body = elgg_format_element('div', ['class' => 'clearfix'], $body);
     if ($footer) {
-        $footer = elgg_format_element('div', ['class' => 'text-right panel-footer clearfix'], $footer);
+        $footer = elgg_format_element('div', ['class' => 'text-center panel-footer clearfix'], $footer);
     }
 
     $contents = $header . $body . $footer;

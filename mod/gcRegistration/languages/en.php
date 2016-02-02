@@ -1,4 +1,5 @@
 <?php
+
 $english = array(
 	// labels
 	'gcRegister:email_initial' => 'Enter your e-mail',

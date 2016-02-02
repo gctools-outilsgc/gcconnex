@@ -1,6 +1,23 @@
 <?php
-return array(
+$site_url = elgg_get_site_url();
 
+return array(
+/**
+   * WET specific
+   */
+  'wet:skiptomain'=>"Skip to main content",
+  'wet:aboutsite'=>"Skip to \"About this site\"",
+  'wet:LangSel'=>"Language selection",
+  'wet:gc'=>"Government of Canada",
+  'wet:search'=>"Search and menus",
+  'wet:searchHead'=>"Search",
+  'wet:searchweb'=>"Search website",
+  'wet:searchgctools'=>"Search GCconnex",
+  'wet:more'=>"More",
+  'wet:topicmenu'=>"Topic menu",
+  'wet:youarehere'=>"You are here:",
+  'wet:errmess' => "<h3 class='h3'>The form could not be submitted because errors were found.</h3>",
+  'wet:feedbackText'=>"Feedback<span class='wb-inv'> about this web site</span>",
 /**
   * Profile Strength
   */
@@ -9,6 +26,20 @@ return array(
      'ps:details' => "See details",
      'ps:education' => "Education",
      'ps:work' => "Work experience",
+     'ps:profilestrength' => "Profile Strength",
+     'ps:all-star' =>"Congrats! You are an All-star.",
+     'ps:beginner' =>"Beginner",
+     'ps:advanced' =>"Advanced",
+     'ps:expert' =>"Expert",
+     'ps:optingin' =>"Have you looked into opting-in to a Micro-mission?",
+     'ps:optin' =>"Opt-In",
+
+     /*
+      * Suggested Friends*/
+
+      'sf:title' => "See anyone you know? Connect with them.",
+      'sf:connect' => "Connect",
+      'sf:alttext' => "Avatar image of",
 /**
  * The Wire
  */
@@ -236,7 +267,7 @@ return array(
 
 	'widget:delete' => 'Remove %s',
 	'widget:edit' => 'Customize this widget',
-
+    'widget:remove' => 'Remove widget',
 	'widgets' => "Widgets",
 	'widget' => "Widget",
 	'item:object:widget' => "Widgets",
@@ -248,6 +279,10 @@ return array(
 	'widgets:remove:failure' => "Unable to remove this widget",
 
     'wet4:colandgroupactivity'=>'Colleague and Group Activity',
+    'wet4:colandgroupactivitynolog'=>'Welcome to GCconnex',
+    'wet4:noticetitle' => 'Notice',
+    'wet4:homenotice' => 'Welcome to GCconnex, the Government of Canada&#39;s professional social networking platform. The purpose of GCconnex is to enable public servants to connect and collaborate based on shared interests, knowledge, and experience. GCconnex is to be used for activities related to the workplace and should not be used as a replacement for personal social networks (such as Facebook).',
+
 
 /**
  * Groups
@@ -458,6 +493,7 @@ return array(
 	'tools' => "Tools",
 	'settings:edit' => 'Edit settings',
 
+    'gcconnex:registerText' => '<b>Someone please write something better :3</b><br>New to GCconnex? Get started connecting and collaborating with other public servants all accross Canada.',
 	'register' => "Register",
 	'registerok' => "You have successfully registered for %s.",
 	'registerbad' => "Your registration was unsuccessful because of an unknown error.",
@@ -465,7 +501,7 @@ return array(
 	'register:fields' => 'All fields are required',
 
 	'registration:notemail' => 'The email address you provided does not appear to be a valid email address.',
-	'registration:userexists' => 'That username already exists',
+	'registration:userexists' => 'That username already exists. <a href="'.$site_url.'forgotpassword">Retrieve your password</a>',
 	'registration:usernametooshort' => 'Your username must be a minimum of %u characters long.',
 	'registration:usernametoolong' => 'Your username is too long. It can have a maximum of %u characters.',
 	'registration:passwordtooshort' => 'The password must be a minimum of %u characters long.',
@@ -841,8 +877,8 @@ These changes will only affect new users on the site.',
 	'friends:tiny' => "tiny",
 	'friends:small' => "small",
     
-    'custom_index_widgets:latest_groups_index' => "My Groups",
-
+    'wet_mygroups:my_groups' => "My Groups",
+    'wet_mygroups:my_groups_nolog' => "New Groups",
 /**
  * Icons
  */
@@ -1341,10 +1377,9 @@ Please do not reply to this email.",
     'contactform:form:subject' => "Subject",
     'contactform:title' => "GCconnex Help Pages",
     'contactform:list' => "<ul>
-						<li> <a href='http://gcpedia.gc.ca/wiki/Tutorials_on_GC2.0_Tools_/_Tutoriels_sur_les_outils_GC2.0'>How-Tos/Videos/Tutorials</a> </li>
-						<li> <a href='http://gcconnex.gc.ca/file/view/6133688/intro-to-gcconnex-learn-the-how-to-in-6-easy-steps-and-start-using-gcconnex-today'>6 Steps to Using GCconnex</a> </li>
-						<li> <a href='http://gcconnex.gc.ca/file/view/390515/en-managing-your-email-notifications-on-gcconnexpdf'>Managing Email Notifications</a> </li>
-						</ul><br />",
+						<li> <a href='http://www.gcpedia.gc.ca/wiki/GC2.0_Tools_Help_Centre/GCconnex'>Help pages</a> </li>
+					
+						</ul>",
     'contactform:faq' => "FAQ",
     'contactform:title:lostpwd' => "Lost Password:",
     
@@ -1368,14 +1403,23 @@ Please do not reply to this email.",
     
     'contactform:title:form' => "Contact Us",
     
-    'contactform:content:form' => "<p style = 'padding: 8px 0 8px'>
-					Can't find the answer you're looking for in the FAQ or help resources? <br /> <br />
-					<b>Contact the GCconnex Help Desk!</b> Please be as clear as possible in describing your issue or question, and provide screen shots if and where possible.
-					</p> <br />",
+    'contactform:content:form' => "<p>
+					Please see the FAQ and the Help Centre to get instant answers for the most common questions and learn how to use GCconnex like a pro!</p>
+					<p>Can’t find the answer you are looking for? Contact the GCconnex Help Desk by filling out the form below. Please be clear as possible in describing your question or issue, and provide a screenshot where possible.
+					</p>",
         'contactform:useful' => 'GCconnex Groups that may be useful to you:',
     'contactform:clickandtips' => 'Clicks and Tips',
     'contactform:gc20' => 'GC2.0 Tools',
+
+    'contactform:department' => 'Department',
+    'contactform:select' => 'Please select a category',
     
+/*
+ * Contact Form Validation
+  *Message - Ce champ est obligatoire.
+ * */
+
+ 'contactform:Errreason'=>"<span class='prefix'>Error [#]:</span> You must choose a reason - This field is required.",
 /**
  * Entities
  */
@@ -1575,3 +1619,4 @@ Please do not reply to this email.",
 	"zh" => "Chinese",
 	"zu" => "Zulu",
 );
+

@@ -25,6 +25,7 @@ $all_link = elgg_view('output/url', array(
 	'href' => 'groups/members/' . $vars['entity']->guid,
 	'text' => elgg_echo('groups:members:more') . $membersCount,
 	'is_trusted' => true,
+    'class' => 'text-center btn btn-default center-block',
 ));
 
 $body = elgg_list_entities_from_relationship(array(
@@ -40,6 +41,6 @@ $body = elgg_list_entities_from_relationship(array(
 
 
 
-$footer = "<div class='text-right'>$all_link</div>";
+$footer = "<div class=''>$all_link</div>";
 
 echo elgg_view_module('aside', elgg_echo('groups:members'), $body, array('footer' => $footer));

@@ -11,7 +11,7 @@ header("Content-type: text/html; charset=UTF-8");
 
 $lang = get_current_language();
 
-$attrs = "";
+$attrs = " vocab='http://schema.org/' typeof='WebPage'";
 if (isset($vars['body_attrs'])) {
 	$attrs = elgg_format_attributes($vars['body_attrs']);
 	if ($attrs) {
@@ -19,12 +19,13 @@ if (isset($vars['body_attrs'])) {
 	}
 }
 ?>
-<!DOCTYPE html>
-<html class="no-js" xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $lang; ?>" lang="<?php echo $lang; ?>" dir="ltr">
-	<head>
-		<?php echo $vars["head"]; ?>
-	</head>
-	<body<?php echo $attrs ?>>
-		<?php echo $vars["body"]; ?>
-	</body>
+<!DOCTYPE html><!--[if lt IE 9]><html class="no-js lt-ie9" lang="<?php echo $lang; ?>" dir="ltr"><![endif]--><!--[if gt IE 8]><!-->
+<html class="no-js" lang="<?php echo $lang; ?>" dir="ltr">
+<!--<![endif]-->
+<head>
+    <?php echo $vars["head"]; ?>
+</head>
+<body<?php echo $attrs ?>>
+    <?php echo $vars["body"]; ?>
+    </body>
 </html>

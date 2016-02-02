@@ -10,9 +10,9 @@ if (!isset($vars['title'])) {
 	return;
 }
 
-$class= '';
-if (isset($vars['class'])) {
-	$class = " class=\"{$vars['class']}\"";
-}
+//$class= '';
+//if (isset($vars['class'])) {
+//    $class = " class=\"{$vars['class']}\"";
+//}
 
-echo "<h1{$class}>{$vars['title']}</h1>";
+echo "<h1 property='name' id='wb-cont'{$class}>{$vars['title']}</h1>";

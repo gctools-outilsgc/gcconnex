@@ -101,7 +101,7 @@ foreach ($users as $letter => $letter_users) {
 if (!$callback) {
 	?>
 
-	<div class="friends-picker-main-wrapper container">
+	<div class="friends-picker-main-wrapper">
 
 	<?php
 
@@ -147,27 +147,26 @@ if (!isset($vars['replacement'])) {
 	$chararray .= "*";
 	$letter = elgg_substr($chararray, 0, 1);
 	$letpos = 0;
+
+            
+    $collTable = '';
+    
 	while (1 == 1) {
-		?>
-         
-		<!-- <div class="" title="<?php	//echo $letter; ?>"> -->
-		
-				<!-- <h3><?php //echo $letter; ?></h3> -->
-		<?php
+
+        unset($collRow);
 
 		if (isset($users[$letter])) {
 			ksort($users[$letter]);
 
-			echo "<div class=\"\">";
 			$col = 0;
 
 			foreach($users[$letter] as $friend) {
 				if ($col == 0) {
-					echo "<div>";
+					$collRow .= "<div class='col-xs-12'>";
 				}
 
 				//echo "<p>" . $user->name . "</p>";
-				$label = elgg_view_entity_icon($friend, 'small', array('use_hover' => false));
+				$label = elgg_view_entity_icon($friend, 'small', array('use_hover' => false, 'class' => 'img-responsive'));
 				$options[$label] = $friend->getGUID();
 
 				if ($vars['highlight'] == 'all' && !in_array($letter,$activeletters)) {
@@ -183,44 +182,47 @@ if (!isset($vars['replacement'])) {
 				} else {
 					$checked = "";
 				}
-				?>
 
-				<div class="col-sm-1">
 
-					<input type="checkbox" <?php echo $checked; ?> name="<?php echo $name; ?>[]" value="<?php echo $options[$label]; ?>" />
+				$collRow .= '<div class="col-xs-1">';
 
+                $collRow .= '<div  class="mrgn-tp-sm"><input type="checkbox"' . $checked . 'name="' . $name . '[]" value="' . $options[$label] . '" /></div>';
+
+				$collRow .= '</div>
+
+				<div class="col-xs-2">
+
+					<div style="">';
+				
+					$collRow .= $label;
+				
+				$collRow .=	'</div>
 				</div>
-
-				<div class="col-sm-2">
-
-					<div style="">
-				<?php
-					echo $label;
-				?>
-					</div>
-				</div>
-				<div class="col-sm-3">
-					<?php echo $friend->name; ?>
-				</div>
-				<?php
+				<div class="col-xs-9">';
+                $collRow .= $friend->name;
+				$collRow .= '</div>';
+				
 				$col++;
 				if ($col == 3){
-					echo "</div>";
+					$collRow .= "</div>";
 					$col = 0;
 				}
 			}
 			if ($col < 3) {
-				echo "</div>";
+				$collRow .= "</div>";
 			}
 
-			echo "</div>";
 		}
 
-?>
+        if(isset($collRow)){
 
-			
-		<!-- </div> -->
-<?php
+            //$collTable .= '<tr><td>' . $collRow . '</tr></td>';
+
+            //stick items in <td> element
+            $list_items = elgg_format_element('td', ['class' => 'data-table-list-item '], $collRow);
+            //stick <td> elements in <tr>
+            $tR .= elgg_format_element('tr', ['class' => 'testing',], $list_items);
+        }
 
 			$substr = elgg_substr($chararray, elgg_strlen($chararray) - 1, 1);
 			if ($letter == $substr) {
@@ -229,15 +231,21 @@ if (!isset($vars['replacement'])) {
 			//$letter++;
 			$letpos++;
 			$letter = elgg_substr($chararray, $letpos, 1);
+
+            
 		}
 
-?>
-        <!--
-            </tbody>
-               </table>
-	</div>
-    -->
-<?php
+    //create table body
+    $tBody = elgg_format_element('tbody', ['class' => ''], $tR);
+
+    //create table head
+    $tHead = elgg_format_element('thead', ['class' => ''], '<tr> <th class="data-table-head"> ' . elgg_echo('friends') . '</th> </tr>');
+    
+    echo elgg_format_element('table', ['class' => ' wb-tables table', 'id' => ''], $tHead . $tBody);
+
+
+
+
 
 if ($formtarget) {
 
@@ -245,10 +253,14 @@ if ($formtarget) {
 		echo $vars['formcontents'];
 
 ?>
-	<div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
 	<div class="friendspicker-savebuttons">
-		<input type="submit" class="elgg-button elgg-button-submit" value="<?php echo elgg_echo('save'); ?>" />
-		<input type="button" class="elgg-button elgg-button-cancel" value="<?php echo elgg_echo('cancel'); ?>" onclick="$('a.collectionmembers<?php echo $friendspicker; ?>').click();" />
+		<input type="submit" class="mrgn-lft-sm mrgn-bttm-sm btn btn-primary" value="<?php echo elgg_echo('save'); ?>" />
+		<input type="button" class="mrgn-bttm-sm btn btn-default" value="<?php echo elgg_echo('cancel'); ?>" onclick="$('a.collectionmembers<?php echo $friendspicker; ?>').click();" />
 	<br /></div>
 	</form>
 
@@ -269,10 +281,6 @@ if (!$callback) {
 
 ?>
 
-</div>
-</div>
-
-
 <?php
 
 }
@@ -280,26 +288,7 @@ if (!$callback) {
 if (!isset($vars['replacement'])) {
 ?>
 <?php //@todo JS 1.8: no ?>
-<script type="text/javascript">
-	// initialise picker
-	$("div#friends-picker<?php echo $friendspicker; ?>").friendsPicker(<?php echo $friendspicker; ?>);
-</script>
-<script type="text/javascript">
-$(document).ready(function () {
-// manually add class to corresponding tab for panels that have content
-<?php
-if (sizeof($activeletters) > 0)
-	//$chararray = elgg_echo('friendspicker:chararray');
-	foreach($activeletters as $letter) {
-		$tab = elgg_strpos($chararray, $letter) + 1;
-?>
-$("div#friends-picker-navigation<?php echo $friendspicker; ?> li.tab<?php echo $tab; ?> a").addClass("tabHasContent");
-<?php
-	}
 
-?>
-});
-</script>
 
 <?php
 

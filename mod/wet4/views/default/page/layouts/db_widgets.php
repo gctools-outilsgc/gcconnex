@@ -34,15 +34,15 @@ if (elgg_can_edit_widget_layout($context)) {
 		'context' => $context,
 		'exact_match' => $exact_match,
 		'show_access' => $show_access,
-        'class' => 'testing',
+        'class' => 'btn btn-primary mrgn-bttm-sm',
 	);
 	echo elgg_view('page/layouts/widgets/add_panel', $params);
 }
-
+/*
 if (isset($vars['content'])) {
 	echo $vars['content'];
 }
-
+*/
 //$widget_class = "elgg-col-1of{$num_columns}";
 $widget_class = "col-sm-6";
 for ($column_index = 1; $column_index <= $num_columns; $column_index++) {

@@ -96,7 +96,7 @@ if(elgg_is_logged_in()){
             //$activity = elgg_echo('river:none');
             //placeholder panel 
             $activity .= '<div class="panel panel-custom"><div class="panel-body">';
-            $activity .= '<h3 class="panel-title">'.elgg_echo('wetActivity:welcome').'</h3>';
+            $activity .= '<h3 class="panel-title mrgn-tp-md">'.elgg_echo('wetActivity:welcome').'</h3>';
             $activity .= '<div class="mrgn-bttm-md mrgn-tp-sm">'.elgg_echo('wetActivity:nocollorgroup').'</div>';
             $activity .= '<div>'.$featuredGroupButton.'</div>';
             $activity .= '</div></div>';
@@ -104,7 +104,19 @@ if(elgg_is_logged_in()){
             //we can put a link here (or suggested groups and stuff) as well to invite users to join groups or have colleagues and stuff
         }
 
-    }
+    }else{
+        //if the user is not logged in then display a login thing to invite users to login and register :3
+        $title = elgg_echo('login');
+        $body = elgg_view_form('login');
+        $login_ = elgg_view_module('index',$title, $body);
+        
+        //display the notice message on the home page only when not logged in, and in the language user wants
+        $notice_title = elgg_echo('wet4:noticetitle');
+        $notice_body = elgg_echo('wet4:homenotice');
+        $notice_ = elgg_view_module('index', $notice_title, $notice_body);
+        echo $notice_;
+        echo $login_;
+}
 
 
 //echo out the yolo code

@@ -60,7 +60,7 @@ elgg_register_menu_item('tabs_menu', array(
 
 elgg_register_menu_item('tabs_menu', array(
     'name' => 'feature1',
-    "href" => "groups/all?filter=feature",
+    "href" => "groups/featured",
     'text' => elgg_echo('groups:feature'),
     'title' => elgg_echo('groups:feature') . $title,
     'priority' => '1',

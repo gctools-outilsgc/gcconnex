@@ -173,13 +173,18 @@ class FGContactForm
     {
         $reason = $_POST['reason'];
                 $option = explode("$", $_POST['reason']);
-                    $french = $option[0];
-                    $english = $option[1]; 
+                    $categoryfr = $option[0];
+                    $categoryen = $option[1]; 
+
+        $depart = $_POST['depart'];
+              
+
+
         if(empty($_POST['subject']))
            {
-           $subject = "$this->name contact you about ". $english." / $this->name vous a contacter à propos de ".$french;
+           $subject = $categoryen." - ".$depart. " - $this->name  / ".$categoryfr." - ".$depart. " - $this->name";
            }else{
-           $subject = $_POST['subject'];
+            $ubject = "GCconnex contact form";
            }
         
         
@@ -193,7 +198,7 @@ class FGContactForm
 
         $this->mailer->FromName = $this->name;
         
-        $this->mailer->AddReplyTo($this->email);
+        //$this->mailer->AddReplyTo($this->email);
 
         $this->mailer->AddCC($this->email);
 
@@ -267,6 +272,7 @@ class FGContactForm
         
                 $name = $_POST['name'];
                 $email = $_POST['email'];
+                $depart = $_POST['depart'];
                 $reason = $_POST['reason'];
                 $option = explode("$", $_POST['reason']);
                     $french = $option[0];
@@ -282,6 +288,7 @@ class FGContactForm
         
         $name=htmlentities($name, ENT_QUOTES, "UTF-8");
         $email=htmlentities($email, ENT_QUOTES, "UTF-8");
+        $depart=htmlentities($depart, ENT_QUOTES, "UTF-8");
         $reason=htmlentities($reason, ENT_QUOTES, "UTF-8");
         $subject=htmlentities($subject, ENT_QUOTES, "UTF-8");
         $message=htmlentities($message, ENT_QUOTES, "UTF-8");
@@ -334,7 +341,8 @@ Merci
               <td class="bodycopy" style="color: #153643; font-family: sans-serif; font-size: 16px; line-height: 22px;">
                 <b>Name:</b> '.$name.'<br/>
                   <b>Email:</b> '.$email.'<br/>
-                  <b>Reason:</b> '.$english.' <br/>
+                  <b>Department:</b> '.$depart.'<br/>
+                  <b>Category:</b> '.$english.' <br/>
                   <b>Subject:</b> '.$subject.'<br/>
                   <b>message:</b>
                   '.$message .'<br/>
@@ -371,7 +379,8 @@ Merci
                     <td style="padding: 20px 0 0 0;font-family: sans-serif; color: #153643; font-size: 16px; line-height: 22px;">
                            <b>Nom:</b> '.$name.'<br/> 
                   <b>Email:</b> '.$email.'<br/>
-                  <b>Raison:</b> '.$french.'<br/>
+                  <b>Ministère:</b> '.$depart.'<br/>
+                  <b>Catégorie:</b> '.$french.'<br/>
                   <b>Sujet:</b> '.$subject.'<br/>
                   <b>Message:</b>
                   '.$message.'<br/>
@@ -567,7 +576,7 @@ Merci
         if((($_POST['reason']) =='Select...') || (($_POST['reason']) == "Choisir..."))
         {
             $this->add_error();
-            register_error("Choose a reason");
+            register_error("Choose a category");
             $ret = false;
         }
         
@@ -615,6 +624,21 @@ Merci
         {
             $this->add_error();
             register_error("Please provide a valid email address");
+            $ret = false;
+        }
+
+               //department validaions
+         if(empty($_POST['depart']))
+        {
+            $this->add_error();
+             register_error("Please provide a departement");
+            $ret = false;
+        }
+        else
+        if(strlen($_POST['depart'])>100)
+        {
+            $this->add_error();
+            register_error("Department is too big!");
             $ret = false;
         }
 

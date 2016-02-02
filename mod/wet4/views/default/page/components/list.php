@@ -40,7 +40,7 @@ if (!is_array($items) || count($items) == 0) {
 	return;
 }
 
-$list_classes = ['elgg-list'];
+$list_classes = ['list-unstyled elgg-list'];
 if (isset($vars['list_class'])) {
 	$list_classes[] = $vars['list_class'];
 }

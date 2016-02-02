@@ -99,6 +99,7 @@ foreach($fields as $field){
             'href' => $url,
             'text' => elgg_echo('link:view:all'),
             'is_trusted' => true,
+            'class' => 'text-center btn btn-default center-block',
         ));
 
         echo '<div class="panel-footer text-right">' . $more_link . '</div>';
@@ -120,13 +121,16 @@ echo '<div role="tabpanel" class="tab-pane fade-in" id="events">';
     
     foreach($events as $event) {
 		echo elgg_view("object/event_calendar", array('entity' => $event));
+        echo '</div>';
 	}
-
-    $event_url = "event_calendar/owner/" . elgg_get_page_owner_entity()->username;
+    
+    $date = date('Y-m-d'/*, strtotime("-1 days")*/);
+    $event_url = "event_calendar/owner/". elgg_get_page_owner_entity()->username;
 	$viewall_link = elgg_view('output/url', array(
 		'href' => $event_url,
 		'text' => elgg_echo('link:view:all'),
 		'is_trusted' => true,
+        'class' => 'text-center btn btn-default center-block',
 	));
     echo '</div>';
 	echo "<div class=\"elgg-widget-more  panel-footer text-right\">$viewall_link</div>";

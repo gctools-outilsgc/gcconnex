@@ -20,6 +20,7 @@ $all_link = elgg_view('output/url', array(
 	'href' => 'groups/members/' . $vars['entity']->guid,
 	'text' => elgg_echo('groups:members:more') . $membersCount,
 	'is_trusted' => true,
+    'class' => 'text-center btn btn-default center-block',
 ));
 
 $body = elgg_list_entities_from_relationship(array(

@@ -52,6 +52,7 @@ switch($type) {
 			'collection_id' => $collection,
 			'formtarget' => $site_url . 'action/friends/collections/edit',
 		));
+
 		break;
 }
 

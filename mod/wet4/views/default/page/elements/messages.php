@@ -9,19 +9,34 @@
  * @uses $vars['object'] The array of message registers
  */
 
-echo '<ul class="elgg-system-messages custom-message">';
+//echo '<ul class="elgg-system-messages custom-message alert alert-">';
 
 // hidden li so we validate
-echo '<li class="hidden wb-invisible"></li>';
+//echo '<li class="hidden wb-invisible"></li>';
 
 if (isset($vars['object']) && is_array($vars['object']) && sizeof($vars['object']) > 0) {
-	foreach ($vars['object'] as $type => $list ) {
+    $num=0;
+    foreach ($vars['object'] as $type => $list ) {
+        if($num==0){
+            echo '<div class="elgg-system-messages custom-message alert alert-'.$type.' alert-dismissible" role="alert">';
+            echo '<a class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></a>';
+            if($type=='error')
+            {
+                echo elgg_echo('wet:errmess');
+            }
+            echo '<ul class="list-unstyled">';
+        }
 		foreach ($list as $message) {
-			echo "<li class=\"alert alert-$type\">";
+            $num=$num+1;
+			echo "<li>";
 			echo elgg_autop($message);
 			echo '</li>';
 		}
 	}
+    if($num>0){
+        echo '</ul>';
+        echo '</div>';
+    }
 }
 
-echo '</ul>';
+//echo '</ul>';

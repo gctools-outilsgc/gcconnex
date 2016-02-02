@@ -55,7 +55,7 @@ text-decoration:none;
 
 
 #signin-dropdown {
-    background-color: #FCFCFC;
+    background-color: #fff;
     box-shadow: 0 1px 2px #666666;
     -webkit-box-shadow: 0 1px 2px #666666;
     min-height: 200px;
@@ -166,17 +166,17 @@ form.signin .remb .remember {
     display: block;
     position: absolute;
     left: 67%;
-    top: -10px;
+    top: -12px;
     width: 0;
     height: 0;
 	border-left: 12px solid transparent;
 	border-right: 12px solid transparent;
 	
-	border-bottom: 12px solid #fff;
+	border-bottom: 12px solid #666666;
     clear: both;    
 }
 .login-menu:after{
-       content: '';
+    content: '';
     display: block;
     position: absolute;
     left: 67%;
@@ -186,7 +186,7 @@ form.signin .remb .remember {
 	border-left: 12px solid transparent;
 	border-right: 12px solid transparent;
 	
-	border-bottom: 12px solid rgba(240, 240, 240, 1) ;
+	border-bottom: 12px solid #fff ;
     clear: both;     
 }
 </style>

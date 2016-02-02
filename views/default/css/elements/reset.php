@@ -45,7 +45,7 @@ img {
 	outline: 0 none;
 }*/
 ol, ul {
-	list-style: none;
+	/*list-style: none;*/
 }
 em, i {
 	font-style:italic;

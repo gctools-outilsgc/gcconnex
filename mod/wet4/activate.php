@@ -1,7 +1,7 @@
 <?php
 try{
     run_sql_script(__DIR__ . '/sql/activate.sql');
-    
+    run_sql_script(__DIR__ . '/sql/profile_strength.sql');
     //mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
     //$DBprefix=elgg_get_config('dbprefix');
     //$DBname=elgg_get_config('dbname');
@@ -24,7 +24,11 @@ try{
 }
 catch (Exception $e)
 {
-    echo 'Caught exception: ',  $e->getMessage(), "\n";
+    $errMess=$e->getMessage();
+    $errStack=$e->getTraceAsString();
+    $errType=$e->getCode();
+    gc_err_logging($errMess,$errStack,'WET4 Theme Activation',$errType);
+    //echo 'Caught exception: ',  $e->getMessage(), "\n";
     //$mysqli->close();
 }
 ?>

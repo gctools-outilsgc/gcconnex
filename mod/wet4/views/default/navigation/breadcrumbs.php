@@ -27,7 +27,7 @@ if ($additional_class) {
 
 if (is_array($breadcrumbs) && count($breadcrumbs) > 0) {
     echo '<nav role="navigation" id="wb-bc" property="breadcrumb">';
-    echo '<h2>You are here:</h2>';
+    echo '<h2>'.elgg_echo('wet:youarehere').'</h2>';
     echo '<div class="container">';
     echo '<div class="row">';
 	echo "<ol class=\"$class\">";

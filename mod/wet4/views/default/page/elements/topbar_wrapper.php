@@ -30,7 +30,7 @@
 
 
 if (!elgg_is_logged_in()) {
-    echo '<nav role="navigation" class="text-right col-md-12 mrgn-tp-sm">';
+    echo '<nav role="navigation" class="text-right col-md-12 mrgn-tp-sm user-z-index">';
         
     echo elgg_view('page/elements/login_menu', $vars);
 
@@ -41,7 +41,7 @@ if (!elgg_is_logged_in()) {
 ?>
 
 
-<nav role="navigation" class="text-right col-md-12 mrgn-tp-sm">
+<nav role="navigation" class="text-right col-md-12 mrgn-tp-sm user-z-index">
     <?php
         //echo elgg_view('page/elements/topbar', $vars);
 		echo elgg_view('page/elements/user_menu', $vars);

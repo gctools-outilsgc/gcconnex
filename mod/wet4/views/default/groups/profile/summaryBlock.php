@@ -33,7 +33,7 @@ if (!$owner) {
 			?>
 		</div>
     
-        <div class="panel-heading col-xs-10 col-md-11"> 
+        <div class=" col-xs-10 col-md-11 group-block-head"> 
                 
             <h2 class="pull-left mrgn-tp-0 mrgn-bttm-0"><a href="<?php echo $group->getURL(); ?>"><?php echo $group->name; ?></a></h2>
         </div>

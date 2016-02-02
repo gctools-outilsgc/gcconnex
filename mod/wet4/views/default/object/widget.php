@@ -50,7 +50,7 @@ if ($additional_class) {
 }
 
 $widget_header = <<<HEADER
-	<div class="elgg-widget-handle clearfix"><h3 class="elgg-widget-title">$title</h3>
+	<div class="elgg-widget-handle clearfix"><h3 class="elgg-widget-title pull-left">$title</h3>
 	$controls
 	</div>
 HEADER;

@@ -32,7 +32,7 @@ foreach ($NOTIFICATION_HANDLERS as $k => $v) {
 	));
 
 	$cells = '<td class="prm pbl">' . elgg_echo("notification:method:$k") . ': </td>';
-	$cells .= "<td class=""><label>$radio</label></td>";
+	$cells .= "<td class=''><label>$radio</label></td>";
 
 	$rows .= "<tr>$cells</tr>";
 }

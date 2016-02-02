@@ -5,14 +5,13 @@
 <?php //echo elgg_echo("contactform:body"); ?>
 <!-- END FAQ PART-->
 
-<h2 class="size" style='border-bottom: solid 3px; padding-bottom: 2px;'><?php echo elgg_echo('contactform:help'); ?></h2>
-					<br />
-					<h3><u><?php echo elgg_echo('contactform:title'); ?></u></h3><br />
+<h2 class="h2"><?php echo elgg_echo('contactform:help'); ?></h2>
+					<h3><?php echo elgg_echo('contactform:title'); ?></h3>
 						<?php echo elgg_echo('contactform:list'); ?>
 
-					<h3><u><?php echo elgg_echo('contactform:faq'); ?></u></h3><br />
+					<h3><?php echo elgg_echo('contactform:faq'); ?></h3>
 						
-						<div class="accordion">
+					<div class="accordion">
 	<!-- Accordion section 1 -->
 	<details class="acc-group">
 		<summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'><?php echo elgg_echo('contactform:title:lostpwd'); ?></summary>
@@ -56,16 +55,8 @@
 				
 						
 
-					<h3><u><?php echo elgg_echo('contactform:useful'); ?></u></h3><br />
+					<h3><?php echo elgg_echo('contactform:useful'); ?></h3>
 						<ul>
 						<li> <a href='http://gcconnex.gc.ca/groups/profile/211647/clicks-and-tips'><?php echo elgg_echo('contactform:clickandtips'); ?></a> </li>
 						<li> <a href='http://gcconnex.gc.ca/groups/profile/226392/gc20-tools-outils-gc20'><?php echo elgg_echo('contactform:gc20'); ?></a> </li>
 						</ul>
-
-				
-					
-
-					
-
-</body>
-</html>

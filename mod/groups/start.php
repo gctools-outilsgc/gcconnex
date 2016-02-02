@@ -21,7 +21,7 @@ function groups_init() {
 	elgg_register_entity_type('group', '');
 
 	// Set up the menu
-	$item = new ElggMenuItem('groups', elgg_echo('groups'), 'groups/all?filter=feature');
+	$item = new ElggMenuItem('groups', elgg_echo('groups'), 'groups/featured');
 	elgg_register_menu_item('site', $item);
 
 	// Register a page handler, so we can have nice URLs

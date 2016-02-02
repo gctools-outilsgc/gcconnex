@@ -51,16 +51,15 @@ $english = array(
       'contactform:help_menu_item' => "Help / Contact Us",
     'contactform:body' => "<div class='elgg-output'>
 
-				<h2 style='border-bottom: solid 3px; padding-bottom: 2px;'>Help</h2>
-					<br />
-					<h3><u>GCconnex Help Pages</u></h3><br />
+				<h2 class='h2'>Help</h2>
+					<h3>GCconnex Help Pages</h3>
 						<ul>
 						<li> <a href='http://gcpedia.gc.ca/wiki/Tutorials_on_GC2.0_Tools_/_Tutoriels_sur_les_outils_GC2.0'>How-Tos/Videos/Tutorials</a> </li>
 						<li> <a href='http://gcconnex.gc.ca/file/view/6133688/intro-to-gcconnex-learn-the-how-to-in-6-easy-steps-and-start-using-gcconnex-today'>6 Steps to Using GCconnex</a> </li>
 						<li> <a href='http://gcconnex.gc.ca/file/view/390515/en-managing-your-email-notifications-on-gcconnexpdf'>Managing Email Notifications</a> </li>
-						</ul><br />
+						</ul>
 
-					<h3><u>FAQ</u></h3><br />
+					<h3>FAQ</h3>
 						<h4>Lost Password:</h4>
 						To recover your <b>GCconnex Password</b>, go to the <a href='http://gcconnex.gc.ca/'>GCconnex main page</a> or access the <b>Log in</b> pop-up found in the upper left corner of every GCconnex page. Follow the <b>Lost password</b> link and enter your username or email address, then click <b>Request</b>. A link to reset your password will be sent to email address you associated with your GCconnex account. Follow this link, and then click <b>Reset password</b> to have a new, randomly generated password emailed to your email address. 
 						<br /><br />

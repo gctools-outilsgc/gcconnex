@@ -11,7 +11,14 @@ function wet4_theme_init() {
     
     //reload groups library to have our sidebar changes
     elgg_register_library('elgg:groups', elgg_get_plugins_path() . 'wet4/lib/groups.php');
-    
+    elgg_register_library('GCconnex logging', elgg_get_plugins_path() . 'wet4/lib/logging.php');
+
+    //get rid of reply icon on river menu
+    elgg_unregister_plugin_hook_handler('register', 'menu:river', 'discussion_add_to_river_menu');
+
+    elgg_unregister_plugin_hook_handler("register", "menu:entity", array("\ColdTrick\BlogTools\EntityMenu", "register"));
+    elgg_register_plugin_hook_handler("register", "menu:entity", 'wet4_blog_entity_menu');
+
 	elgg_register_event_handler('pagesetup', 'system', 'wet4_theme_pagesetup', 1000);
     elgg_register_event_handler('pagesetup', 'system', 'wet4_riverItem_remove');
     elgg_register_event_handler('pagesetup', 'system', 'messages_notifier');
@@ -35,9 +42,10 @@ function wet4_theme_init() {
     elgg_register_page_handler('dashboard', 'wet4_dashboard_page_handler');
     elgg_register_page_handler('friends', '_wet4_friends_page_handler'); //register new page handler for data tables
 	elgg_register_page_handler('friendsof', '_wet4_friends_page_handler');
-    
+
     //datatables css file
 	elgg_extend_view('css/elgg', '//cdn.datatables.net/1.10.10/css/jquery.dataTables.css');
+
 
 	//elgg_unextend_view('page/elements/header', 'search/header');
 	//elgg_extend_view('page/elements/sidebar', 'search/header', 0);
@@ -45,14 +53,17 @@ function wet4_theme_init() {
     //load datatables
     elgg_require_js("wet4/test");
     
-    elgg_register_js('removeMe', elgg_get_plugins_path() . 'wet4/js/removeMe.js');
+    //elgg_register_js('removeMe', elgg_get_plugins_path() . 'wet4/js/removeMe.js');
     
     //the wire reply and thread
     elgg_register_ajax_view("thewire_tools/reply");
 	elgg_register_ajax_view("thewire_tools/thread");
-    
+
+    elgg_register_ajax_view("friend_circle/edit");
+
     //file tools 
 	elgg_register_ajax_view("file_tools/move");
+
 	
 	elgg_register_plugin_hook_handler('head', 'page', 'wet4_theme_setup_head');
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'my_owner_block_handler');
@@ -61,6 +72,7 @@ function wet4_theme_init() {
     elgg_register_simplecache_view('wet4/test.js');
     
 	elgg_register_action("file/move_folder", elgg_get_plugins_path() . "/wet4/actions/file/move.php");
+    elgg_register_action("friends/collections/add", elgg_get_plugins_path() . "/wet4/actions/friends/collections/add.php");
     
 	// non-members do not get visible links to RSS feeds
 	if (!elgg_is_logged_in()) {
@@ -69,8 +81,19 @@ function wet4_theme_init() {
 
     // new widgets
     //registering wet 4 activity widget
-    elgg_register_widget_type('wet_activity', elgg_echo('wet4:colandgroupactivity'), 'GCconnex Group and Colleague Activity', array('custom_index_widgets'),true);
-    elgg_register_widget_type('profile_completness', 'Profile Strength', 'The "Profile Strength" widget', array('custom_index_widgets'),false);
+
+    if(elgg_is_logged_in()){//for my the my groups widget on the home page
+        $mygroups_title = elgg_echo('wet_mygroups:my_groups');
+        $wet_activity_title = elgg_echo('wet4:colandgroupactivity');
+    }else{
+        $mygroups_title = elgg_echo('wet_mygroups:my_groups_nolog');
+        $wet_activity_title = elgg_echo('wet4:colandgroupactivitynolog');
+    }
+    elgg_register_widget_type('wet_activity', $wet_activity_title, 'GCconnex Group and Colleague Activity', array('custom_index_widgets'),true);
+    elgg_register_widget_type('profile_completness', elgg_echo('ps:profilestrength'), 'The "Profile Strength" widget', array('custom_index_widgets'),false);
+
+    //WET my groups widget
+    elgg_register_widget_type('wet_mygroups_index', $mygroups_title, 'My Groups Index', array('custom_index_widgets'),true);
 
     
     //extend views of plugin files to remove unwanted menu items
@@ -484,6 +507,67 @@ function wet4_elgg_page_menu_setup($hook, $type, $return, $params) {
     }
 
 }
+
+
+function wet4_blog_entity_menu($hook, $entity_type, $returnvalue, $params) {
+    if (empty($params) || !is_array($params)) {
+        return $returnvalue;
+    }
+
+    $entity = elgg_extract("entity", $params);
+    if (empty($entity) || !elgg_instanceof($entity, "object", "blog")) {
+        return $returnvalue;
+    }
+
+    // only published blogs
+    if ($entity->status == "draft") {
+        return $returnvalue;
+    }
+
+    if (!elgg_in_context("widgets") && elgg_is_admin_logged_in()) {
+        $returnvalue[] = \ElggMenuItem::factory(array(
+            "name" => "blog-feature",
+            "text" => elgg_echo("blog_tools:toggle:feature"),
+            "href" => "action/blog_tools/toggle_metadata?guid=" . $entity->getGUID() . "&metadata=featured",
+            "item_class" => empty($entity->featured) ? "" : "hidden",
+            "is_action" => true,
+            "priority" => 175
+        ));
+        $returnvalue[] = \ElggMenuItem::factory(array(
+            "name" => "blog-unfeature",
+            "text" => elgg_echo("blog_tools:toggle:unfeature"),
+            "href" => "action/blog_tools/toggle_metadata?guid=" . $entity->getGUID() . "&metadata=featured",
+            "item_class" => empty($entity->featured) ? "hidden" : "",
+            "is_action" => true,
+            "priority" => 176
+        ));
+    }
+
+    if ($entity->canComment()) {
+        $returnvalue[] = \ElggMenuItem::factory(array(
+            "name" => "comments",
+            "text" => '<i class="fa fa-lg fa-comment icon-unsel"><span class="wb-inv">' . elgg_echo("comment:this") . '</span></i>',
+            "title" => elgg_echo("comment:this"),
+            "href" => $entity->getURL() . "#comments"
+        ));
+
+        /*
+        $comment_count = $entity->countComments();
+        if ($comment_count) {
+            $returnvalue[] = \ElggMenuItem::factory(array(
+                "name" => "comments_count",
+                "text" => $comment_count,
+                "title" => elgg_echo("comments"),
+                "href" => false
+            ));
+        }
+        */
+    }
+
+    return $returnvalue;
+}
+
+
 
 function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 	//Have widgets show the same entity menu

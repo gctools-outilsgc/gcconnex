@@ -1,6 +1,6 @@
 <?php
 
-expose_function("get.blog","get_api_entity", array("id" => array('type' => 'integer')),
+elgg_ws_expose_function("get.blog","get_api_entity", array("id" => array('type' => 'integer')),
 	'Takes a blog id and returns the Title, exerpt, and body of the blog',
                'GET', false, false);
 
@@ -88,7 +88,7 @@ function get_comments($entity){
 	foreach ($annotations as $comment){
 		if ($comment->name == 'generic_comment'){
  			$comments['count']++;
- 			$comments['comment_'.$comments['count']] = array('comment_user'=>get_userBlock($comment->getOwner()),'comment_text'=>$comment->value);
+ 			$comments['comment_'.$comments['count']] = array('comment_user'=>get_userBlock($comment->getOwner()),'comment_text'=>$comment->value,'comment_date'=>date("Y-m-d H:i:s",$comment->time_created));
  		}
 	}
 	return $comments;

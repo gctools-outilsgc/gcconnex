@@ -47,7 +47,7 @@ if ($reply) {
 	));
 }
 
-$submit_input = elgg_view('input/submit', array('value' => $submit_text, 'class' => 'btn-custom-cta mrgn-tp-sm'));
+$submit_input = elgg_view('input/submit', array('value' => $submit_text, 'class' => 'btn-primary mrgn-tp-sm'));
 
 if ($inline) {
 	$description_input = elgg_view('input/text', array(

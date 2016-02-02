@@ -11,5 +11,13 @@
 		<type>elgg_release</type>
 		<version>1.8</version>
 	</requires>
+	<requires>
+    	<type>plugin</type>
+    	<name>web_services</name>
+  	</requires>
+  	<requires>
+  		<type>plugin</type>
+  		<name>data_views</name>
+  	</requires>
 	<activate_on_install>true</activate_on_install>
 </plugin_manifest>

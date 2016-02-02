@@ -15,12 +15,21 @@ $friends = $owner->listFriends('', $num, array(
         'limit' => '14',
         ));
 
-$friendCount = '(' . count($owner->getFriends()) . ')';
+$count = elgg_get_entities_from_relationship(array(
+    'relationship'=> 'friend',
+    'relationship_guid'=> $owner->guid,
+    'inverse_relationship'=> FALSE,
+    'limit'=> false
+));
+
+
+$friendCount = '(' . count($count) . ')';
 
 $all_link = elgg_view('output/url', array(
 	'href' => 'friends/' . $owner->username,
 	'text' => elgg_echo('View All Colleagues') . $friendCount,
 	'is_trusted' => true,
+    'class' => 'text-center btn btn-default center-block',
 ));
 
 $footer = "<div class='text-right'>$all_link</div>";

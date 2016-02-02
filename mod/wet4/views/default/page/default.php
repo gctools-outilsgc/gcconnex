@@ -46,7 +46,8 @@ $breadcrumbs = elgg_view('navigation/breadcrumbs');
 
 //get version of wet4 theme
 $wet4plugin = elgg_get_plugin_from_id('wet4');
-$version = elgg_echo('admin:plugins:label:version') . ': ' . $wet4plugin->getManifest()->getVersion();
+$version = $wet4plugin->getManifest()->getVersion();
+//elgg_echo('admin:plugins:label:version') . ': '
 
 //WIP development banner
 if(elgg_is_active_plugin('GoC_dev_banner')){
@@ -64,47 +65,43 @@ __BODY;
 $userMenu = elgg_view('page/elements/topbar_wrapper', $vars);
 
 $body .= <<<__BODY
-	<header class="" role="banner">
+	<header role="banner">
     $alert
-    <div class="elgg-inner">
-			$lang
-		</div>
-    	<div id="wb-bnr">
+   <!-- <div class="elgg-inner">-->
+			
+		<!-- </div>-->
+    	<div id="wb-bnr" class="container">
+            $lang
             $wavyblue
-            $site_brand
-	   </div>   
-    
-		
-        
-        
-        <nav role="navigation" id="wb-sm"  data-trgt="mb-pnl" class="wb-menu visible-md visible-lg" typeof="SiteNavigationElement">
-    
-            <div class="container nvbar">
+</div>
+$site_brand
 
-                <div class="row">
-                   $navbar
-                </div>
-            </div>
+$navbar
 
-        </nav>
-        
-        $breadcrumbs
+$breadcrumbs
         
 	</header>
-	
-    
     
 	<main role="main" property="mainContentOfPage" class="container">
 		<div class="elgg-page-messages">
 		$messages
 	   </div>
-        <div class="elgg-inner">
+        <!--<div class="elgg-inner">-->
             $userMenu
-        
+        <!--<section>-->
 			$content
-		</div>
-        
-        <p class="mrgn-bttm-md">$version</p>
+<!--</section>
+		</div>-->
+        <div class="row pagedetails">
+<div class="col-sm-5 col-xs-12 datemod">
+<dl id="wb-dtmd">
+<dt>Version</dt>
+<dd>$version</dd>
+</dl>
+</div>
+<div class="clear visible-xs"></div>
+</div>
+
         
 	</main>
     

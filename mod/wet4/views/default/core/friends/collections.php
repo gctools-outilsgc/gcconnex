@@ -10,7 +10,7 @@
  */
 
 if (is_array($vars['collections']) && sizeof($vars['collections'])) {
-	echo "<ul id=\"friends_collections_accordian\">";
+	echo "<ul id=\"friends_collections_accordian\" class=\"list-unstyled\">";
 
 	$friendspicker = 0;
 	foreach ($vars['collections'] as $collection) {
@@ -31,9 +31,20 @@ if (is_array($vars['collections']) && sizeof($vars['collections'])) {
 <?php //@todo JS 1.8: no ?>
 <script>
 $(function(){
-	$('#friends_collections_accordian h2').click(function () {
+    $('#friends_collections_accordian h2').click(function () {
+
 		$(this.parentNode).children("[class=friends-picker-main-wrapper]").slideToggle("fast");
 		//return false;
+	});
+
+	$('#friends_collections_accordian h2').bind('keyup', function (e) {
+
+	    if (e.keyCode === 13) { // 13 is enter key
+
+	        $(this.parentNode).children("[class=friends-picker-main-wrapper]").slideToggle("fast");
+
+	    }
+
 	});
 });
 </script>

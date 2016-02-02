@@ -7,6 +7,8 @@
  * List all groups
  */
 function groups_handle_all_page() {
+	$display_subgroups = elgg_get_plugin_setting('display_subgroups', 'au_subgroups');
+	$db_prefix = elgg_get_config('dbprefix');
 
 	// all groups doesn't get link to self
 	elgg_pop_breadcrumb();
@@ -20,53 +22,56 @@ function groups_handle_all_page() {
 
 	switch ($selected_tab) {
 		case 'popular':
-			$content = elgg_list_entities_from_relationship_count(array(
+			$options = array(
 				'type' => 'group',
 				'relationship' => 'member',
 				'inverse_relationship' => false,
 				'full_view' => false,
 				'no_results' => elgg_echo('groups:none'),
-			));
+			);
+
+			if ($display_subgroups != 'yes') {
+                $options['wheres'] = array("NOT EXISTS ( SELECT 1 FROM {$db_prefix}entity_relationships WHERE guid_one = e.guid AND relationship = 'au_subgroup_of' )");
+			}
+
+			$content = elgg_list_entities_from_relationship_count($options);
 			break;
 		case 'discussion':
-			$content = elgg_list_entities(array(
+			$options = array(
 				'type' => 'object',
 				'subtype' => 'groupforumtopic',
 				'order_by' => 'e.last_action desc',
 				'limit' => 40,
 				'full_view' => false,
 				'no_results' => elgg_echo('discussion:none'),
-				'distinct' => false,
-				'preload_containers' => true,
-			));
-			break;
-		case 'featured':
-			$content = elgg_list_entities_from_metadata(array(
-				'type' => 'group',
-				'metadata_name' => 'featured_group',
-				'metadata_value' => 'yes',
-				'full_view' => false,
-			));
-			if (!$content) {
-				$content = elgg_echo('groups:nofeatured');
+			);
+
+			if ($display_subgroups != 'yes') {
+                $options['wheres'] = array("NOT EXISTS ( SELECT 1 FROM {$db_prefix}entity_relationships WHERE guid_one = e.guid AND relationship = 'au_subgroup_of' )");
 			}
+
+			$content = elgg_list_entities($options);
 			break;
 		case 'newest':
 		default:
-			$content = elgg_list_entities(array(
+			$options = array(
 				'type' => 'group',
 				'full_view' => false,
 				'no_results' => elgg_echo('groups:none'),
-				'distinct' => false,
-			));
+			);
+
+			if ($display_subgroups != 'yes') {
+                $options['wheres'] = array("NOT EXISTS ( SELECT 1 FROM {$db_prefix}entity_relationships WHERE guid_one = e.guid AND relationship = 'au_subgroup_of' )");
+			}
+
+			$content = elgg_list_entities($options);
 			break;
 	}
 
 	$filter = elgg_view('groups/group_sort_menu', array('selected' => $selected_tab));
 
 	$sidebar = elgg_view('groups/sidebar/find');
-	//$sidebar .= elgg_view('groups/sidebar/featured');
-    $sidebar .= elgg_view('groups/sidebar/suggested');
+	$sidebar .= elgg_view('groups/sidebar/featured');
 
 	$params = array(
 		'content' => $content,
@@ -183,6 +188,7 @@ function groups_handle_mine_page() {
 		'relationship_guid' => elgg_get_page_owner_guid(),
 		'inverse_relationship' => false,
 		'full_view' => false,
+        'limit' => false,
 		'joins' => array("JOIN {$dbprefix}groups_entity ge ON e.guid = ge.guid"),
 		'order_by' => 'ge.name ASC',
 		'no_results' => elgg_echo('groups:none'),

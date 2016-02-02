@@ -109,10 +109,33 @@ $body .= elgg_view("input/text", array('name' => 'venue', 'id' => 'calendar-venu
 $body .= '</p>';
 $body .= '<p class="wb-inv">'.$prefix['venue'].elgg_echo('event_calendar:venue_description').'</p>';
 
-$body .= '<p><label for="calendar-description">'.elgg_echo("event_calendar:brief_description_label").'</label>';
+$briefmaxlength = 350;					// Maximum length for brief description character count
+$shortname = 'briefdescription';
+
+	$line_break = ($valtype == "longtext") ? "" : "<br />";
+	$label = elgg_echo("groups:{$shortname}");
+
+					// Brief description with character limit, count
+
+					// Brief description with character limit, count
+		$label .= elgg_echo('groups:brief:charcount') . "0/" . $briefmaxlength;	// additional text for max length
+		$input = elgg_view("input/text", array(
+			'name' => 'description',
+            'id' => 'calendar-description',
+			'value' => $brief_description,
+			'maxlength' => $briefmaxlength,
+			'onkeyup' => "document.getElementById('briefdescr-lbl').innerHTML = '" . elgg_echo("groups:{$shortname}") . elgg_echo('groups:brief:charcount') . " ' + this.value.length + '/" . $briefmaxlength . "';"
+		));
+	
+	
+			// Brief description with character limit, count
+        $body .= "<div><label id='briefdescr-lbl' for='calendar-description'>{$label}</label>{$line_break}{$input}</div>";
+	
+
+/*$body .= '<p><label for="calendar-description">'.elgg_echo("event_calendar:brief_description_label").'</label>';
 $body .= elgg_view("input/text", array('name' => 'description', 'id' => 'calendar-description', 'value' => $brief_description));
 $body .= '</p>';
-$body .= '<p class="wb-inv">'.$prefix['brief_description'].elgg_echo('event_calendar:brief_description_description').'</p>';
+$body .= '<p class="wb-inv">'.$prefix['brief_description'].elgg_echo('event_calendar:brief_description_description').'</p>';*/
 
 $body .= '<p><label for="calendar-tags">'.elgg_echo("event_calendar:event_tags_label").'</label>';
 $body .= elgg_view("input/tags", array('name' => 'tags', 'id' => 'calendar-tags', 'value' => $event_tags));
@@ -130,7 +153,7 @@ $body .= '</p>';
 $body .= '<p class="wb-inv">'.$prefix['brief_description'].elgg_echo('event_calendar:brief_description_description').'</p>';
 
 
- $body .= '<ul id="date" style="display:none">
+ $body .= '<ul id="date" class="list-unstyled" style="display:none">
     <li><input name="teleconference_text" type="text" class="small form-control" /></li>
     
 </ul>';
@@ -159,7 +182,7 @@ $body .= '</div>';
 
 $body .= '<div class="event-calendar-edit-form-block">';
 $body .= '<h2>'.elgg_echo('event_calendar:schedule:header').'</h2>';
-$body .= '<ul class="elgg-input-radios elgg-vertical event-calendar-edit-schedule-type">';
+$body .= '<ul class="elgg-input-radios elgg-vertical event-calendar-edit-schedule-type list-unstyled">';
 foreach($schedule_options as $label => $key) {
   if ($key == $schedule_type) {
     $checked = "checked \"checked\"";
