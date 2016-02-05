@@ -553,10 +553,12 @@ Merci
     function Validate()
     {
         $ret = true;
+        $numErr=0;
         //security validations
         if(empty($_POST[$this->GetFormIDInputName()]) ||
           $_POST[$this->GetFormIDInputName()] != $this->GetFormIDInputValue() )
         {
+            $numErr=$numErr+1;
             //The proper error is not given intentionally
             $this->add_error();
             register_error("Automated submission prevention: case 1 failed");
@@ -566,6 +568,7 @@ Merci
         //This is a hidden input field. Humans won't fill this field.
         if(!empty($_POST[$this->GetSpamTrapInputName()]) )
         {
+            $numErr=$numErr+1;
             //The proper error is not given intentionally
             $this->add_error();
             register_error("Automated submission prevention: case 2 failed");
@@ -575,8 +578,9 @@ Merci
         //select validations
         if((($_POST['reason']) =='Select...') || (($_POST['reason']) == "Choisir..."))
         {
+            $numErr=$numErr+1;
             $this->add_error();
-            register_error("Choose a category");
+            register_error(str_replace('[#]',$numErr,elgg_echo('contactform:Errreason')));
             $ret = false;
         }
         
@@ -584,6 +588,7 @@ Merci
         {
             if (empty($_POST['subject']))
             {
+             $numErr=$numErr+1;
             $this->add_error();
            register_error("Please provide a subject");
             $ret = false;

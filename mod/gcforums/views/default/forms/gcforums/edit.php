@@ -45,6 +45,40 @@ if ($object->getSubtype() === 'hjforum') {
 			$gcf_enable_posting_label => 1),
 		'value' => $object->enable_posting,
 		));
+
+	$query = "SELECT guid_two
+				FROM elggentity_relationships
+				WHERE guid_one = {$vars['forum_guid']} AND relationship = 'filed_in'";
+	$shelved_in = get_data($query);
+	
+	echo print_r($shelved_in);
+	echo " // {$shelved_in[0]->guid_two}";
+
+
+	// get
+	//$container_object = get_entity($object->getContainerGUID());
+	//if ($container_object->enable_subcategories) {
+
+		if ($vars['forum_guid'] && $vars['forum_guid'] != 0) { // this is within the nested forums
+			$query = "SELECT  oe.guid, oe.title
+					FROM elggentities e, elggentity_relationships r, elggobjects_entity oe
+					WHERE e.subtype = 28 AND e.guid = r.guid_one AND e.container_guid = {$object->getContainerGUID()} AND e.guid = oe.guid";
+		}
+
+	 	$categories = get_data($query);
+
+	 	$category_list = array();
+	 	foreach ($categories as $category)
+	 		$category_list[$category->guid] = $category->title;
+
+		$gcf_file_under_category_label = elgg_echo('gcforums:file_under_category_label');
+		$gcf_file_under_category_input = elgg_view('input/dropdown', array(
+			'options_values' => $category_list,
+			'name' => 'gcf_file_in_category',
+			'value' => $shelved_in[0]->guid_two,
+		));
+
+	//}
 }
 
 // hidden field for guid
@@ -87,7 +121,10 @@ echo <<<___HTML
 	<label for="gcf_description_input">$gcf_description_label</label>
 	$gcf_description_input
 </div>
-
+<div>
+ 	<label for="gcf_file_under_category_input">$gcf_file_under_category_label</label>
+ 	$gcf_file_under_category_input
+</div>
 <div>
 	$gcf_enable_categories_input
 </div>

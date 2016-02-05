@@ -15,4 +15,4 @@ if (!isset($vars['title'])) {
 //    $class = " class=\"{$vars['class']}\"";
 //}
 
-echo "<h1 property='name' id='wb-cont'{$class}>{$vars['title']}</h1>";
+echo "<h1 property='name' {$class}>{$vars['title']}</h1>";

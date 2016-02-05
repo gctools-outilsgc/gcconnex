@@ -5,12 +5,10 @@
  *@package ElggGroups
  * Sidebar
  */
-$groups = group_tools_get_suggested_groups(elgg_get_logged_in_user_entity(), 9);
-
+$groups = group_tools_get_suggested_groups(elgg_get_logged_in_user_entity());
 if (!empty($groups)) {
-	echo "<ul class='elgg-gallery group-tools-suggested-groups'>";
-	
-	foreach ($groups as $group) {
+elgg_push_context('widgets');
+foreach ($groups as $group) {
 		
 		$group_url = $group->getURL();
 		
@@ -40,7 +38,7 @@ if (!empty($groups)) {
 	$return[] = ElggMenuItem::factory($options); 
         
         
-		$content = "<li><div>";
+		$content = "<ul class='list-unstyled mrgn-tp-sm'><li><div>";
 		
 		$content .= '<div class="mrgn-lft-md mrgn-rght-md pull-left">'.elgg_view("output/url", array("text" => elgg_view_entity_icon($group, "small"), "href" => $group_url)).'</div>';
         
@@ -48,9 +46,9 @@ if (!empty($groups)) {
         $content .= '<div class=""><cite><i>'.$mem.' '.$num_members.' '.$members_string.'</i></cite></div>'; 
 		$content .= "<div class='mrgn-lft-xl'><p class='clearfix mrgn-tp-lg'>" . elgg_view("output/text", array("value" => $group->briefdescription)) . "</p></div>";  
 		$content .= "<div>" . elgg_view("output/url", array("text" => $join_text, "href" => $join_url, "is_action" => true, "class" => "elgg-button elgg-button-action")) . "</div>";
-		$content .= "</div></li>";
+		$content .= "</div></li></ul>";
 	}
-		
-	$content .= "</ul>";
-}
+	
 echo elgg_view_module('aside', elgg_echo("group_tools:groups:sorting:suggested"), $content);
+
+}

@@ -38,6 +38,20 @@ $english = array(
 	"gcforums:enable_categories_label" => "[en] Enable Subcategories",
 	"gcforums:file_under_category_label" => "[en] File under Category",
 	"gcforums:new_hjforum" => "[en] New Forum",
+	"gcforums:new_hjforumtopic" => "[en] New Forum Topic",
+	"gcforums:new_hjforumcategory" => "[en] New Category",
+	"gcforums:edit_hjforum" => "[en] Edit Forum",
+	"gcforums:delete_hjforumtopic" => "[en] Delete Forum",
+
+
+	"gcforums:total_topics" => "[en] Total Topics",
+	"gcforums:total_posts" => "[en] Total Posts",
+	"gcforums:latest_posts" => "[en] Latest Posts",
+
+	"gcforums:no_posts" => "[en] None",
+	"gcforums:sticky_topic" => "[en] Sticky Topics",
+
+	"gcforums:not_available" => "[en] <i>Currently No Forums Available</i>",
 
 	);
 

@@ -107,7 +107,7 @@ elgg.thewire_tools.show_tread = function (event) {
 
 elgg.thewire_tools.init = function() {
 	$('.elgg-form-thewire-add textarea[name="body"]').each(function(i) {
-		elgg.thewire_tools.init_autocomplete(this);
+		//elgg.thewire_tools.init_autocomplete(this);
 	});
 
 	$(document).on("click", ".elgg-menu-item-thread a", elgg.thewire_tools.show_tread);

@@ -12,7 +12,7 @@ elgg.ui.widgets.init = function() {
 		return;
 	}
 
-	$(".elgg-widgets").sortable({
+	$(".elgg-widgets").sortable({//Here is the jquery ui function that lets you drag and drop to sort widgets
 		items:                'div.elgg-module-widget.elgg-state-draggable',
 		connectWith:          '.elgg-widgets',
 		handle:               '.elgg-widget-handle',
@@ -22,6 +22,111 @@ elgg.ui.widgets.init = function() {
 		revert:               500,
 		stop:                 elgg.ui.widgets.move
 	});
+    // making widgets move with the keyboard maybe? :3
+    //All widgets you can edit now have aria attributes to know if they can be draggable. They also have a tabindex so they can be tabbed to.
+	$('.elgg-state-draggable').focus(function () { //focus pokus ;3
+	    //add selecting class
+        
+	    $(this).addClass("ui-selecting", function () { 
+	        $('.ui-selecting').bind('keydown', function (event) {
+	            if (event.which == 13) { //Enter to move it
+	                //alert('Enter');
+	                $(this).addClass('widget-enter-selected');
+	                $(this).attr('aria-grabbed', 'true'); //it's selected to be moved
+	                $(this).on('keydown', function (event) {
+
+	                    //add keybinding to object :3
+	                    var pcurrent = $(this).position(); //get position of current widget
+	                    var widgetParent = $(this).parent().attr('id'); //The column it's in
+	                    var widgetindex = $('#' + widgetParent + ' .elgg-state-draggable').index(this); // get it's index ( I don't think this will help)
+	                    var nextwidget;  // get the index of the next widget (this i think would go in the down arrow)
+	                    var pnext = $('.elgg-state-draggable').eq(nextwidget).position(); //try to get the position of the next widget (kind of works :3)
+	                    var nextWidgetIndex;
+	                    if (event.which == 38) {//up arrow
+	                        var nextwidget = widgetindex - 1; //get the index of widget before it
+	                        var nextWidgetIndex = $('#' + widgetParent + ' .elgg-state-draggable').eq(nextwidget);
+	                        $(this).after($(nextWidgetIndex)); //move the widget
+	                        var thisWidget = $(this);
+
+	                        //call the move function here when it's done!
+	                        keyboardUpdatePosition(thisWidget); //Save the location of the widget
+	                    }
+
+	                    if (event.which == 40) { //down arrow
+	                        var nextwidget = widgetindex + 1;
+	                        //alert($(this).attr('id'));
+	                        var nextWidgetIndex = $('#' + widgetParent + ' .elgg-state-draggable').eq(nextwidget);
+	                        $(this).before($(nextWidgetIndex));
+	                        var thisWidget = $(this);
+
+	                        //YOLO code! You only YOLO once :3
+	                        // This saves the location of the widget
+	                    
+	                        keyboardUpdatePosition(thisWidget);
+	                    }
+
+	                    if (event.which == 39) { //right arrow
+	                        var thisWidget = $(this);
+	                        //alert('Trying to move right eh?');
+	                        if (widgetParent == 'elgg-widget-col-1') {
+	                            //alert('im in the col 1');
+	                            //$(this).clone($('#elgg-widget-col-2'));
+	                            $('#elgg-widget-col-2').prepend(this);
+	                            keyboardUpdatePosition(thisWidget);
+	                            $(this).focus();
+	                        }
+	                    }
+
+	                    if (event.which == 37) { //left arrow
+	                        var thisWidget = $(this);
+	                        //alert('Trying to move right eh?');
+	                        if (widgetParent == 'elgg-widget-col-2') {
+	                            //alert('im in the col 1');
+	                            //$(this).clone($('#elgg-widget-col-2'));
+	                            $('#elgg-widget-col-1').prepend(this);
+	                            keyboardUpdatePosition(thisWidget);
+	                            $(this).focus();
+	                        }
+	                    }
+
+	                    if (event.which == 13) {
+	                        $(this).removeClass('widget-enter-selected');
+	                        var thisWidget = $(this);
+	                        //keyboardUpdatePosition(thisWidget);
+	                        $(this).attr('aria-grabbed', 'false');//change the aria attribute for screen readers to know it is picked up
+	                    }
+	                });
+	                //keyboardMove();
+	            };
+	            })
+	                
+
+	    $('.elgg-state-draggable').focusout(function () {
+	        $(this).removeClass("ui-selecting"); // when you stop focusing remove the class from DOM
+	       // $(this).focusout();
+	    });
+	    });
+	});
+	keyboardMove = function (y) {
+	    //this doesn't do nothing :3
+	}
+	keyboardUpdatePosition = function (x) {
+        //function to save the widget location in the database
+	    var guidString = $(x).attr('id');
+	    guidString = guidString.substr(guidString.indexOf('elgg-widget-') + "elgg-widget-".length);
+
+	    // elgg-widget-col-<column>
+	    var col = $(x).parent().attr('id');
+	    col = col.substr(col.indexOf('elgg-widget-col-') + "elgg-widget-col-".length);
+
+	    elgg.action('widgets/move', {
+	        data: {
+	            widget_guid: guidString,
+	            column: col,
+	            position: $(x).index()
+	        }
+	    });
+	}
 
 	// the widgets available to be added
 	// don't need to change       $('.elgg-widgets-add-panel li.elgg-state-available').click(elgg.ui.widgets.add);

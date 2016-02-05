@@ -1,6 +1,5 @@
 <?php
-if (elgg_is_logged_in()) {
-    
+if (elgg_is_logged_in()) { 
 try{
 $user_guid = elgg_get_logged_in_user_guid();
 $userEnt = get_user ( $user_guid );

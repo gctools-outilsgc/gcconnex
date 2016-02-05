@@ -76,7 +76,7 @@ if($entity->getType() == 'group' ){
     
    echo "<div class=\" mrgn-bttm-sm mrgn-tp-md timeStamp clearfix\">$subtitle</div>"; 
     
-}else if($checkPage == 'friends' || $checkPage == 'groups_members'){
+}else if($checkPage == 'friends' || $checkPage == 'groups_members' || $checkPage == 'members'){
     echo '<div class=""><div class="">' .$metadata . '</div></div>';
 }else{
 

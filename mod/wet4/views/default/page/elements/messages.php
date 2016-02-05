@@ -18,11 +18,16 @@ if (isset($vars['object']) && is_array($vars['object']) && sizeof($vars['object'
     $num=0;
     foreach ($vars['object'] as $type => $list ) {
         if($num==0){
-            echo '<div class="elgg-system-messages custom-message alert alert-'.$type.' alert-dismissible" role="alert">';
-            echo '<a class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></a>';
+            
+            // alert-dismissible" role="alert">';
+            //echo '<a class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></a>';
             if($type=='error')
             {
+                echo '<div class="alert alert-'.$type.'">'; //elgg-system-messages custom-message
                 echo elgg_echo('wet:errmess');
+            }else
+            {
+                echo '<div class="elgg-system-messages custom-message alert alert-'.$type.'">'; //
             }
             echo '<ul class="list-unstyled">';
         }

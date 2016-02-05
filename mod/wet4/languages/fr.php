@@ -90,9 +90,15 @@ return array(
     'gprofile:more' => "Plus",
     
     'gprofile:create' => "Create Group",
-    
+
+        /**
+   * Group invite
+   */
+
+  'group:invite:clicktoadd' => "Cliquez pour ajouter",
+
 /**
- * Sites
+  * Sites
  */
 
 	'item:site' => 'Sites',

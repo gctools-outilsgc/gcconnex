@@ -264,6 +264,8 @@ if ($formtarget) {
 	<br /></div>
 	</form>
 
+        
+
 <?php
 
 }
@@ -292,4 +294,41 @@ if (!isset($vars['replacement'])) {
 
 <?php
 
-}
+}?>
+
+    <div id="storedArea" class="hidden">
+            <script>
+                $(function () {
+
+
+
+                    //add guids to move selected link when checked
+                    $(':checkbox').change(function () {
+                        if ($(this).is(":checked")) {
+
+                            $(this).clone().appendTo('#storedArea');
+
+                            return;
+
+                        } else {
+
+                            var checkBoxes = $('#storedArea input').toArray();
+                            for (var i = 0; i < checkBoxes.length; i++) {
+
+                                if (checkBoxes[i].getAttribute("value") == $(this).val()) {
+
+                                    checkBoxes[i].parentNode.removeChild(checkBoxes[i]);
+
+                                }
+                            }
+
+                        }
+                    });
+
+
+
+                });
+
+            </script>
+
+        </div>

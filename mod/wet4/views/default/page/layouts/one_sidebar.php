@@ -29,7 +29,7 @@
 
     //main section
     ?>
-    <section class="col-md-8 mrgn-bttm-md">
+    <section class="col-md-8 mrgn-bttm-md" id="wb-cont">
         <!--<div class=" clearfix">-->
 		<?php
 			

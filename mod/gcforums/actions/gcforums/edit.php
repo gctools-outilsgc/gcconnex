@@ -53,6 +53,8 @@ switch ($gcf_type) {
 		$forum_object->access_id;
 		$forum_object->enable_subcategories = $enable_categories;
 		$forum_object->enable_posting = $enable_posting;
+
+		// TODO: categories change
 		$forum_object->save();
 
 		forward($gcf_forward_url);

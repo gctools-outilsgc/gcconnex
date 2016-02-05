@@ -16,6 +16,7 @@ function wet4_theme_init() {
     //get rid of reply icon on river menu
     elgg_unregister_plugin_hook_handler('register', 'menu:river', 'discussion_add_to_river_menu');
 
+    //change icons for blog entity
     elgg_unregister_plugin_hook_handler("register", "menu:entity", array("\ColdTrick\BlogTools\EntityMenu", "register"));
     elgg_register_plugin_hook_handler("register", "menu:entity", 'wet4_blog_entity_menu');
 
@@ -899,6 +900,11 @@ function my_owner_block_handler($hook, $type, $menu, $params){
                     $item->setHref('#' . strtolower(elgg_echo('gprofile:discussion')));
                     $item->setPriority('1');
                     break;
+                case 'related_groups':
+                    $item->setHref('#related');
+
+                    $item->setPriority('20');
+                    break;
                 case 'file':
                     $item->setText(elgg_echo('gprofile:files'));
                     $item->setHref('#' . strtolower(elgg_echo('gprofile:files')));
@@ -979,6 +985,11 @@ function my_owner_block_handler($hook, $type, $menu, $params){
                     $item->setText(elgg_echo('gprofile:discussion'));
 
                     $item->setPriority('1');
+                    break;
+                case 'related_groups':
+
+
+                    $item->setPriority('20');
                     break;
                 case 'file':
                     $item->setText(elgg_echo('gprofile:files'));
@@ -1190,7 +1201,20 @@ function wet4_widget_menu_setup($hook, $type, $return, $params) {
 			'priority' => 900,
 		);
 		$return[] = \ElggMenuItem::factory($options);
-
+        /* This is to maybe have a move button on widgets to move them with the keyboard.
+        $options = array(
+            'name' => 'move',
+            'text' => '<i class="fa fa-arrows fa-lg icon-unsel"><span class="wb-inv">Delete This</span></i>',
+            'title' => elgg_echo('widget:delete', array($widget->getTitle())),
+            'href' => "action/widgets/move?widget_guid=$widget->guid",
+            'is_action' => true,
+            'link_class' => 'elgg-widget-move-button',
+            'id' => "elgg-widget-move-button-$widget->guid",
+            'data-elgg-widget-type' => $widget->handler,
+            'priority' => 700,
+        );
+		$return[] = \ElggMenuItem::factory($options);
+        */
 		if ($show_edit) {
 			$options = array(
 				'name' => 'settings',

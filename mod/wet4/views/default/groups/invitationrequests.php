@@ -11,7 +11,7 @@ $email_invites = elgg_extract("email_invitations", $vars, false);
 
 if ((!empty($invitations) && is_array($invitations)) || (!empty($email_invites) && is_array($email_invites))) {
 	
-	echo "<ul class='elgg-list mbm'>";
+	echo "<ul class='elgg-list mbm list-unstyled'>";
 	
 	// normal invites
 	if (!empty($invitations)) {

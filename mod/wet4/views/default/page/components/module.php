@@ -27,10 +27,14 @@ $body = elgg_extract('body', $vars, '');
 $footer = elgg_extract('footer', $vars, '');
 $show_inner = elgg_extract('show_inner', $vars, false);
 $item_class = elgg_extract('item_class', $vars, '');
+
 $attrs = [
 	'id' => elgg_extract('id', $vars),
 	'class' => (array) elgg_extract('class', $vars, []),
     //'item_class' => (array) elgg_extract('item_class', $vars, []),
+    'aria-grabbed' => elgg_extract('aria-grabbed', $vars), //this is for accessible drag and drop
+    'draggable' => elgg_extract('draggable', $vars),
+    'tabindex' => elgg_extract('tabindex', $vars),
     
 ];
 
@@ -94,9 +98,9 @@ if($checkPage == 'group_profile' && $type == 'GPmod'){
 }else{ //Normal Style Below
 
     if($checkPage =='custom_index_widgets'){
-        $attrs['class'][] = 'panel panel-custom custom-index-panel';
+        $attrs['class'][] = 'panel panel-default custom-index-panel';
     }else{
-        $attrs['class'][] = 'panel panel-custom';
+        $attrs['class'][] = 'panel panel-default';
     }
     
 
@@ -106,11 +110,12 @@ if($checkPage == 'group_profile' && $type == 'GPmod'){
 
     $header = elgg_extract('header', $vars);
     if ($title) {
-        $header = elgg_format_element('h2', ['class' => ''], $title);
+        $header = elgg_format_element('h3', ['class' => 'panel-title'], $title);
     }
 
     if ($header !== null) {
-        $header = elgg_format_element('div', ['class' => 'panel-heading'], $header);
+       // $header = elgg_format_element('div', ['class' => 'panel-heading'], $header);
+        $header = elgg_format_element('header', ['class' => 'panel-heading'], $header);
     }
     $body = elgg_format_element('div', ['class' => 'panel-body clearfix'], $body);
     if ($footer) {

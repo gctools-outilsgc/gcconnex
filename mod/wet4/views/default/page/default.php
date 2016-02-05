@@ -54,6 +54,7 @@ if(elgg_is_active_plugin('GoC_dev_banner')){
     $alert = elgg_view('banner/dev_banner');
 }
 
+$feedbackText= elgg_echo('wet:feedbackText');
 $body = <<<__BODY
     $tabskip
 <div class="elgg-page elgg-page-default">
@@ -93,13 +94,15 @@ $breadcrumbs
 <!--</section>
 		</div>-->
         <div class="row pagedetails">
-<div class="col-sm-5 col-xs-12 datemod">
+<div class="col-sm-6 col-xs-12 datemod">
 <dl id="wb-dtmd">
 <dt>Version</dt>
 <dd>$version</dd>
 </dl>
 </div>
-<div class="clear visible-xs"></div>
+<div class="col-xs-6 text-right">
+<a href="/mod/contactform/" class="btn btn-primary"><span class="glyphicon glyphicon-comment mrgn-rght-sm"></span>$feedbackText</a>
+</div>
 </div>
 
         

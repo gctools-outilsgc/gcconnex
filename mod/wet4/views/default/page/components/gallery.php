@@ -47,7 +47,7 @@ if ((elgg_get_context() != 'event_calendar')){
 }
 
 echo $items->getType;
-$list_classes = ['clearfix'];
+$list_classes = ['list-unstyled clearfix'];
 if (isset($vars['gallery_class'])) {
 	$list_classes[] = $vars['gallery_class'];
 }

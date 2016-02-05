@@ -40,8 +40,14 @@ $widget_id = "elgg-widget-$widget->guid";
 $widget_instance = preg_replace('/[^a-z0-9-]/i', '-', "elgg-widget-instance-$handler");
 if ($can_edit) {
 	$widget_class = "elgg-state-draggable $widget_instance";
+    $aria_dnd = 'false'; //allows for accessible drag and drop aria control
+    $aria_draggable = 'true';
+    $tabindex = '0';
 } else {
 	$widget_class = "elgg-state-fixed $widget_instance";
+    $aria_dnd ='';
+    $aria_dnd = '';
+    $tabindex = '';
 }
 
 $additional_class = elgg_extract('class', $vars, '');
@@ -66,4 +72,7 @@ echo elgg_view_module('widget', '', $widget_body, array(
 	'class' => $widget_class,
 	'id' => $widget_id,
 	'header' => $widget_header,
+    'aria-grabbed' => $aria_dnd,
+    'draggable' => $aria_draggable,
+    'tabindex' => $tabindex,
 ));

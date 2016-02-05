@@ -89,6 +89,13 @@ return array(
     'gprofile:more' => "More",
     
     'gprofile:create' => "Create Group",
+
+
+    /**
+  * Group invite
+  */
+
+  'group:invite:clicktoadd' => "Click to add",
     
 /**
  * Sites
@@ -1405,7 +1412,7 @@ Please do not reply to this email.",
     
     'contactform:content:form' => "<p>
 					Please see the FAQ and the Help Centre to get instant answers for the most common questions and learn how to use GCconnex like a pro!</p>
-					<p>Can’t find the answer you are looking for? Contact the GCconnex Help Desk by filling out the form below. Please be clear as possible in describing your question or issue, and provide a screenshot where possible.
+					<p>Can't find the answer you are looking for? Contact the GCconnex Help Desk by filling out the form below. Please be clear as possible in describing your question or issue, and provide a screenshot where possible.
 					</p>",
         'contactform:useful' => 'GCconnex Groups that may be useful to you:',
     'contactform:clickandtips' => 'Clicks and Tips',

@@ -12,12 +12,8 @@ if (!$entity_guid) {
 }
 if (!$entity_guid) $entity_guid = 0;
 
-
-
-
-
 $entity = get_entity($entity_guid); // entity guid may not be present
-echo "This is Group GUID: {$group->guid} / The Entity GUID is: {$entity_guid} <br/><br/>";
+//echo "This is Group GUID: {$group->guid} / The Entity GUID is: {$entity_guid} <br/><br/>";
 
 // check if the current entity is a forum-topic subtype then display topic and comments
 if ($entity_guid && $entity->getSubtype() === 'hjforumtopic') {
@@ -28,6 +24,13 @@ if ($entity_guid && $entity->getSubtype() === 'hjforumtopic') {
 
 	echo gcforums_menu_buttons($nested_forum, $group->guid);
 	$entity = get_entity($nested_forum); // TODO: check this out..
+
+	// check if there are sticky topics
+	if ($nested_forum && !$entity->enable_posting) 	// this was unexpectedly inverted
+		echo "<div class='gcforums-display-topics'>".gcforums_topics_list($nested_forum, true)."</div>";	// display sticky topics
+
+	if ($nested_forum && !$entity->enable_posting) 	// this was unexpectedly inverted
+		echo "<div class='gcforums-display-topics'>".gcforums_topics_list($nested_forum, false)."</div>";	// display unstickied topics
 
 	// check if subcategories is enabled OR this is the first page of forums
 	if ($entity->enable_subcategories || !$entity) {
@@ -40,6 +43,5 @@ if ($entity_guid && $entity->getSubtype() === 'hjforumtopic') {
 		echo gcforums_forum_list($entity->getGUID(),$group->guid);
 
 
-	if ($nested_forum && !$entity->enable_posting) 	// this was unexpectedly inverted
-		echo "<div class='gcforums-display-topics'>".gcforums_topics_list($nested_forum)."</div>";
+
 }

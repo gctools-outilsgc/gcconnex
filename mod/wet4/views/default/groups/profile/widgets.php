@@ -41,6 +41,7 @@ echo elgg_view('groups/profile/tab_menu');
 
     <?php  // Load other widgets to create tabs
     echo elgg_view("groups/tool_latest", $vars);
+    echo elgg_view('groups/profile/related');
     ?>
     
     

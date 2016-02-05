@@ -78,13 +78,12 @@ if(isset($_POST['submitted']))
     <div class="panel-body mrgn-lft-md">
         <?php echo elgg_echo('contactform:content:form'); ?>
         <form id='contactus' action='<?php echo $formproc->GetSelfScript(); ?>' enctype="multipart/form-data" method='post' accept-charset='UTF-8'>
-            <fieldset>
                 <input type='hidden' name='submitted' id='submitted' value='1' />
                 <input type='hidden' name='<?php echo $formproc->GetFormIDInputName(); ?>' value='<?php echo $formproc->GetFormIDInputValue(); ?>' />
                 <div class='form-group'>
                     <label for='name' class="required"><span class="field-name"><?php echo elgg_echo('contactform:fullname'); ?></span><strong class="required"> (<?php echo elgg_echo('contactform:required'); ?>)</strong></label>
                         <input type='text' name='name' id='name' class="form-control" value='<?php if (elgg_is_logged_in()){ echo $sender_name;}else{echo $formproc->SafeDisplay('name');} ?>' /><br />
-                        <span id='contactus_name_errorloc' class='error'></span>
+                        <!--<span id='contactus_name_errorloc' class='error'></span>-->
                  </div>
 
                 <div class='form-group'>
@@ -154,7 +153,6 @@ echo '</select>';
                 <div class='container pull-right'>
                     <input type='submit' class="btn btn-primary pull-right" name='Submit' value='<?php echo elgg_echo('send');?>' />
                 </div>
-                </fieldset>
 </form>
         
     </div>
