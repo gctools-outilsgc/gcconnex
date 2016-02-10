@@ -133,6 +133,8 @@ if ($full_view && !elgg_in_context("gallery")) {
 			"summary" => $summary,
 			"body" => $body
 	));
+    elgg_unregister_menu_item('title2', 'new_folder');
+
 } elseif (elgg_in_context("gallery")) {
 	// gallery view of the file
 	echo "<div class='file-gallery-item'>";

@@ -3,7 +3,6 @@
  * List featured groups
  */
 
-gatekeeper();
 
 // for consistency with other tabs
 elgg_push_breadcrumb(elgg_echo("groups"));
@@ -22,10 +21,12 @@ $featured_groups = elgg_get_entities_from_metadata(array(
 ));
 if ($featured_groups) {
 
-	$body = '';
+	//$body = '';
+    $content = '<div class="clearfix">';
 	foreach ($featured_groups as $group) {
-		$content .= elgg_view_entity($group, array('full_view' => false));
+		$content .= elgg_view_entity($group, array('full_view' => false, 'class' => 'list-break '));
 	}
+    $content .= '</div>';
 }else{
 	$content = elgg_echo("group_tools:suggested_groups:none");
 }

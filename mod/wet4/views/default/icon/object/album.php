@@ -24,7 +24,7 @@ if ($cover_guid) {
 	$url = elgg_normalize_url($url);
 	$img = elgg_view('output/img', array(
 		'src' => $url,
-		'class' => 'center-block',
+		'class' => 'center-block img-responsive',
 		'title' => $album->getTitle(),
 		'alt' => $album->getTitle(),
 	));

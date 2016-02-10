@@ -15,6 +15,8 @@
  * CYu 			March 5 2014 	Second Email field for verification & code clean up & validate email addresses
  * CYu 			July 16 2014	clearer messages & code cleanup						
  * CYu 			Sept 19 2014 	adjusted textfield rules (no spaces for emails)
+ * MBlondin 	Jan 25 2016 	Layout change
+ * * MBlondin 	Feb 08 2016 	Delete IE7 form
  ***********************************************************************/
 
 $password = $password2 = '';
@@ -31,7 +33,7 @@ if (elgg_is_sticky_form('register')) {
 
 ?>
 
-<style>
+<!--<style>
 	#submit:disabled {
 		background-color: grey;
 	}
@@ -46,7 +48,7 @@ if (elgg_is_sticky_form('register')) {
 		padding:10px;
 		text-align: center;
 	}
-</style>
+</style>-->
 
 <!-- +++ jquery/javascript stuff +++++++++++++++++++++++++++++++++++++++++++ -->
 <script type="text/javascript">
@@ -209,143 +211,33 @@ if (elgg_is_sticky_form('register')) {
 
 <!-- +++ jquery/javascript stuff +++++++++++++++++++++++++++++++++++++++++++ -->
 
-<!-- check if browser is IE7 -->
-<?php 
-	$isIE7 = false;
-	$u = $_SERVER['HTTP_USER_AGENT'];
-	$isIE7 = (bool)preg_match('/msie 7./i', $u);
-
-	if (!$isIE7) $isIE7 = 0;
-?>
-
-<!-- check if browser has javascript enabled -->
-<script type="text/javascript">
-var usingIE7 = <?php echo $isIE7; ?>;
-
-	$(document).ready (function() {
-		if (!usingIE7) {
-			document.getElementById('retired_version').style.display="none";
-			document.getElementById('form_type').value = "standard"; 
-		}
-		else {
-			document.getElementById('standard_version').style.display="none"; 
-			document.getElementById('form_type').value = "retired"; 
-		}
-	});
-</script>
-
-<!-- check if browser has javascript disabled -->
-<noscript>
-	<style>
-		#standard_version { display:none; }
-	</style>
-	<input type="hidden" name="noscript" value="retired"></input>
-</noscript>
-
-<!-- hidden field that determines whether we should use standard/retired -->
-<input type="hidden" name="form_type" id="form_type" value=""></input>
-
-<!-- form that doesn't require javascript or IE7 -->
-<div id="retired_version">
-<div>
-	<label><?php echo elgg_echo('gcRegister:email_initial'); ?></label><br />
-	<?php
-		echo elgg_view('input/text', array(
-			'name' => 'c_email',
-			'value' => $email,
-		));
-	?>
-</div>
-<div>
-	<label><?php echo elgg_echo('gcRegister:email_secondary'); ?></label><br />
-	<?php
-		echo elgg_view('input/text', array(
-			'name' => 'c_email2',
-			'value' => $email,
-		));
-	?>
-</div>
-<div>
-	<label><?php echo elgg_echo('password'); ?></label><br />
-	<?php
-		echo elgg_view('input/password', array(
-			'name' => 'c_password',
-			'value' => $password,
-		));
-	?>
-</div>
-<div>
-	<label><?php echo elgg_echo('passwordagain'); ?></label><br />
-	<?php
-		echo elgg_view('input/password', array(
-			'name' => 'c_password2',
-			'value' => $password2,
-		));
-	?>
-</div>
-
-
-<?php
-echo elgg_view('input/checkboxes', array(
-	'name' => 'toc1',
-	'id' => 'toc1',
-	'options' => array(elgg_echo('gcRegister:terms_and_conditions') => 1)));
-?>
-
-<br/>
-<?php
-	// view to extend to add more fields to the registration form
-	echo elgg_view('register/extend', $vars);
-
-	// Add captcha hook
-	echo elgg_view('input/captcha', $vars);
-	echo '<div class="elgg-foot">';
-	echo elgg_view('input/hidden', array('name' => 'friend_guid', 'value' => $vars['friend_guid']));
-	echo elgg_view('input/hidden', array('name' => 'invitecode', 'value' => $vars['invitecode']));
-	echo elgg_view('input/submit', array('name' => 'submit2', 'value' => elgg_echo('register')));
-	echo '</div>';
-	
-	echo '<center>'.elgg_echo('gcRegister:tutorials_notice').'</center>';
-	echo '<br/>';
-?>
-
-<?php
-	echo '<center><table class="c_table"><tr class="c_tr2"><td class="c_td2">';
-	echo '<div>'. '<font size="5">This page is compatible with/Cette page est compatible avec : <br/><font color="blue"> Internet Explorer 7 | Javascript disabled/désactivé</font></font>' .'</div>';
-	echo '</td></tr></table></center>';
-?>
-
-</div>
-<!-- end of "retired form" -->
-
-
-
 <!-- start of standard form -->
-<div id="standard_version">
+<div id="standard_version" class="row">
 
-<div>
+<section class="col-md-6">
 <?php
-	echo '<center><table class="c_table"><tr><td>';
-	echo '<div>'. elgg_echo('gcRegister:email_notice') .'</div>';
-	echo '</td></tr></table></center>';
-	echo '<br/>';
+
+	echo elgg_echo('gcRegister:email_notice') ;
 
 	$js_disabled = false;
 ?>
 
+</section>
+<section class="col-md-6">
+<div class="panel panel-default">
+<header class="panel-heading">
+    <h3 class="panel-title">Registration form</h3>
+</header>
+<div class="panel-body mrgn-lft-md">
+<div class="form-group">
+    <label for="email_initial" class="required"><span class="field-name"><?php echo elgg_echo('gcRegister:email_initial'); ?></span><strong class="required">(required)</strong></label>	
+    <font id="email_initial_error" color="red"></font><br />
+    <input type="text" name="email_initial" id="email_initial" value='<?php echo $email ?>' class="form-control"/>
 </div>
 
-<div>
-	<label for="email_initial"><?php echo elgg_echo('gcRegister:email_initial'); ?></label>
-	<font id="email_initial_error" color="red"></font><br />	
-	<input type="text" name="email_initial" id="email_initial" value='<?php echo $email ?>' class="form-control"/>
-</div>
-
-<div>
-	<label for="email"><?php echo elgg_echo('gcRegister:email_secondary'); ?></label>
-	<font id="email_secondary_error" color="red"></font><br />
-
-	<input id="email" class="elgg-input-text form-control" type="text" value='<?php echo $email ?>' name="email" 
+<div class="form-group">
+	<label for="email" class="required"><span class="field-name"><?php echo elgg_echo('gcRegister:email_secondary'); ?></span><strong class="required">(required)</strong></label>
+	<input id="email" class="form-control" type="text" value='<?php echo $email ?>' name="email" 
 	onBlur="elgg.action( 'register/ajax', {
 		data: {
 			args: document.getElementById('email').value 
@@ -354,9 +246,6 @@ echo elgg_view('input/checkboxes', array(
 				//document.getElementById('username').value = 'wow' + x.output;
 		    $('.username_test').val(x.output);
 				//$('.return_message').append(x.output);
-				
-    
-		    
 				fieldFill();
 				if(x.output == '> invalid email'){
                 $('.return_message').html(x.output);
@@ -378,101 +267,93 @@ echo elgg_view('input/checkboxes', array(
 
     </div>
 
-<div>
-	<label for="username"><?php echo elgg_echo('gcRegister:username'); ?></label><br />
+<div class="form-group">
+	<label for="username" class="required"><span class="field-name"><?php echo elgg_echo('gcRegister:username'); ?></span><strong class="required">(required)</strong></label>
 	<?php
 	echo elgg_view('input/text', array(
 		'name' => 'username',
 		'id' => 'username',
-        'class' => 'username_test',
+        //'disabled'=>'disabled',
+        'class' => 'username_test form-control',
 		'readonly' => 'readonly',
 		'value' => $username,
 	));
 	?>
 </div>
 
-<div>
-	<label for="password"><?php echo elgg_echo('gcRegister:password_initial'); ?></label>
+<div class="form-group">
+	<label for="password" class="required"><span class="field-name"><span class="field-name"><?php echo elgg_echo('gcRegister:password_initial'); ?></span><strong class="required">(required)</strong></label>
 	<font id="password_initial_error" color="red"></font><br />
 	<?php
 	echo elgg_view('input/password', array(
 		'name' => 'password',
 		'id' => 'password',
-        'class'=>'password_test',
+        'class'=>'password_test form-control',
 		'value' => $password,
 	));
 	?>
 </div>
 
-<div>
-	<label for="password2"><?php echo elgg_echo('gcRegister:password_secondary'); ?></label>
-	<font id="password_secondary_error" color="red"></font><br />
+<div class="form-group">
+	<label for="password2" class="required"><span class="field-name"><?php echo elgg_echo('gcRegister:password_secondary'); ?></span><strong class="required">(required)</strong></label>
 	<?php
 	echo elgg_view('input/password', array(
 		'name' => 'password2',
 		'value' => $password2,
 		'id' => 'password2',
-        'class'=>'password2_test',
+        'class'=>'password2_test form-control',
 	));
 	?>
 </div>
 
 
-<div class="mtm">
-	<label for="name"><?php echo elgg_echo('gcRegister:display_name'); ?> *</label><br />
+<div class="form-group">
+	<label for="name" class="required"><span class="field-name"><?php echo elgg_echo('gcRegister:display_name'); ?></span><strong class="required">(required)</strong> </label>
 	<?php
 	echo elgg_view('input/text', array(
 		'name' => 'name',
 		'id' => 'name',
+        'class' => 'form-control',
 		'value' => $name,
 	));
 	?>
-	<i>* <?php echo elgg_echo('gcRegister:display_name_notice'); ?></i>
+
 </div>
-<br/>
+    <div class="alert alert-info"><?php echo elgg_echo('gcRegister:display_name_notice'); ?></div>
 <?php
-echo elgg_view('input/checkboxes', array(
-	'name' => 'toc2',
-	'id' => 'toc2',
-	'options' => array(elgg_echo('gcRegister:terms_and_conditions') => 1)));
+//echo elgg_view('input/checkboxes', array(
+//    'name' => 'toc2',
+//    'id' => 'toc2',
+//    'options' => array(elgg_echo('gcRegister:terms_and_conditions') => 1)));
 ?>
-<br/><br/>
+    <div class="checkbox">
+        <label><input type="checkbox" value="1" name="toc2" id="toc2" /><?php echo elgg_echo('gcRegister:terms_and_conditions')?></label>
+    </div>
 <?php
-	// view to extend to add more fields to the registration form
-	echo elgg_view('register/extend', $vars);
-
-	// Add captcha hook
-	echo elgg_view('input/captcha', $vars);
-
-	echo '<div class="elgg-foot">';
-	echo elgg_view('input/hidden', array('name' => 'friend_guid', 'value' => $vars['friend_guid']));
-	echo elgg_view('input/hidden', array('name' => 'invitecode', 'value' => $vars['invitecode']));
-
-	// note: disable
-	echo elgg_view('input/submit', array(
-		'name' => 'submit', 
-		'value' => elgg_echo('gcRegister:register'),
-		'id' => 'submit',
-        'class'=>'submit_test btn-primary',
-		'onclick' => 'return check_fields2();'));
-
-	echo '</div>';
-	
-	echo '<center>'.elgg_echo('gcRegister:tutorials_notice').'</center>';
-	
-	echo '<br/>';
+// view to extend to add more fields to the registration form
+echo elgg_view('register/extend', $vars);
+// Add captcha hook
+echo elgg_view('input/captcha', $vars);
+echo '<div class="elgg-foot">';
+echo elgg_view('input/hidden', array('name' => 'friend_guid', 'value' => $vars['friend_guid']));
+echo elgg_view('input/hidden', array('name' => 'invitecode', 'value' => $vars['invitecode']));
+// note: disable
+echo elgg_view('input/submit', array(
+    'name' => 'submit',
+    'value' => elgg_echo('gcRegister:register'),
+    'id' => 'submit',
+    'class'=>'submit_test btn-primary',
+    'onclick' => 'return check_fields2();'));
+echo '</div>';
+echo '<center>'.elgg_echo('gcRegister:tutorials_notice').'</center>';
+echo '<br/>';
 ?>
+            </div>
+        </div>
+</section>
 
-<?php
-	echo '<center><table class="c_table"><tr class="c_tr2"><td class="c_td2">';
-	echo '<div>'. '<font size="5">This page is compatible with/Cette page est compatible avec : <br/><font color="blue">Mozilla Firefox | Google Chrome | Internet Explorer 8+</font></font>' .'</div>';
-?>
-	<!-- don't use this anymore, just tells users that their javascript is disabled -->
-	<noscript><div><font color="red">Warning/Avertissement : Javascript disabled/désactivé</font></div></noscript>
-<?php
-	echo '</td></tr></table></center>';
-	echo '<br/>';
-?>
+
+
 <script>
 	//$("<input>").on("focus", function() {
 		$('#email_initial').on("keydown",function(e) {

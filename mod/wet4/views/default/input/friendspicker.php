@@ -161,9 +161,12 @@ if (!isset($vars['replacement'])) {
 			$col = 0;
 
 			foreach($users[$letter] as $friend) {
+               
 				if ($col == 0) {
 					$collRow .= "<div class='col-xs-12'>";
 				}
+
+                
 
 				//echo "<p>" . $user->name . "</p>";
 				$label = elgg_view_entity_icon($friend, 'small', array('use_hover' => false, 'class' => 'img-responsive'));
@@ -203,14 +206,24 @@ if (!isset($vars['replacement'])) {
 				$collRow .= '</div>';
 				
 				$col++;
-				if ($col == 3){
+				//if ($col == 3){
 					$collRow .= "</div>";
 					$col = 0;
-				}
+				//}
+
+                    if ($col < 3) {
+                        $collRow .= "</div>";
+                    }
+
+                    //stick items in <td> element
+                    $list_items = elgg_format_element('td', ['class' => 'data-table-list-item '], $collRow);
+                    //stick <td> elements in <tr>
+                    $tR .= elgg_format_element('tr', ['class' => 'testing',], $list_items);
+
+                    $collRow = '';
+
 			}
-			if ($col < 3) {
-				$collRow .= "</div>";
-			}
+			
 
 		}
 
@@ -219,9 +232,9 @@ if (!isset($vars['replacement'])) {
             //$collTable .= '<tr><td>' . $collRow . '</tr></td>';
 
             //stick items in <td> element
-            $list_items = elgg_format_element('td', ['class' => 'data-table-list-item '], $collRow);
+            //$list_items = elgg_format_element('td', ['class' => 'data-table-list-item '], $collRow);
             //stick <td> elements in <tr>
-            $tR .= elgg_format_element('tr', ['class' => 'testing',], $list_items);
+            //$tR .= elgg_format_element('tr', ['class' => 'testing',], $list_items);
         }
 
 			$substr = elgg_substr($chararray, elgg_strlen($chararray) - 1, 1);

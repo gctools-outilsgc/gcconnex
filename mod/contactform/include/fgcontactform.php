@@ -173,18 +173,13 @@ class FGContactForm
     {
         $reason = $_POST['reason'];
                 $option = explode("$", $_POST['reason']);
-                    $categoryfr = $option[0];
-                    $categoryen = $option[1]; 
-
-        $depart = $_POST['depart'];
-              
-
-
+                    $french = $option[0];
+                    $english = $option[1]; 
         if(empty($_POST['subject']))
            {
-           $subject = $categoryen." - ".$depart. " - $this->name  / ".$categoryfr." - ".$depart. " - $this->name";
+           $subject = "$this->name contact you about ". $english." / $this->name vous a contacter à propos de ".$french;
            }else{
-            $ubject = "GCconnex contact form";
+           $subject = $_POST['subject'];
            }
         
         
@@ -272,7 +267,6 @@ class FGContactForm
         
                 $name = $_POST['name'];
                 $email = $_POST['email'];
-                $depart = $_POST['depart'];
                 $reason = $_POST['reason'];
                 $option = explode("$", $_POST['reason']);
                     $french = $option[0];
@@ -288,7 +282,6 @@ class FGContactForm
         
         $name=htmlentities($name, ENT_QUOTES, "UTF-8");
         $email=htmlentities($email, ENT_QUOTES, "UTF-8");
-        $depart=htmlentities($depart, ENT_QUOTES, "UTF-8");
         $reason=htmlentities($reason, ENT_QUOTES, "UTF-8");
         $subject=htmlentities($subject, ENT_QUOTES, "UTF-8");
         $message=htmlentities($message, ENT_QUOTES, "UTF-8");
@@ -341,8 +334,7 @@ Merci
               <td class="bodycopy" style="color: #153643; font-family: sans-serif; font-size: 16px; line-height: 22px;">
                 <b>Name:</b> '.$name.'<br/>
                   <b>Email:</b> '.$email.'<br/>
-                  <b>Department:</b> '.$depart.'<br/>
-                  <b>Category:</b> '.$english.' <br/>
+                  <b>Reason:</b> '.$english.' <br/>
                   <b>Subject:</b> '.$subject.'<br/>
                   <b>message:</b>
                   '.$message .'<br/>
@@ -379,8 +371,7 @@ Merci
                     <td style="padding: 20px 0 0 0;font-family: sans-serif; color: #153643; font-size: 16px; line-height: 22px;">
                            <b>Nom:</b> '.$name.'<br/> 
                   <b>Email:</b> '.$email.'<br/>
-                  <b>Ministère:</b> '.$depart.'<br/>
-                  <b>Catégorie:</b> '.$french.'<br/>
+                  <b>Raison:</b> '.$french.'<br/>
                   <b>Sujet:</b> '.$subject.'<br/>
                   <b>Message:</b>
                   '.$message.'<br/>
@@ -574,7 +565,7 @@ Merci
             register_error("Automated submission prevention: case 2 failed");
             $ret = false;
         }
-        
+
         //select validations
         if((($_POST['reason']) =='Select...') || (($_POST['reason']) == "Choisir..."))
         {
@@ -583,101 +574,114 @@ Merci
             register_error(str_replace('[#]',$numErr,elgg_echo('contactform:Errreason')));
             $ret = false;
         }
-        
+
         if ($_POST['reason'] == 'Autre question$Other question')
         {
             if (empty($_POST['subject']))
             {
-             $numErr=$numErr+1;
-            $this->add_error();
-           register_error("Please provide a subject");
-            $ret = false;
+                $numErr=$numErr+1;
+                $this->add_error();
+                register_error(str_replace('[#]',$numErr,elgg_echo('contactform:Errsubject')));
+                $ret = false;
             }
         }
 
         //name validations
         if(empty($_POST['name']))
         {
+            $numErr=$numErr+1;
             $this->add_error();
-           register_error("Please provide your name");
+            //'contactform:Errname'
+            register_error(str_replace('[#]',$numErr,elgg_echo('contactform:Errname')));
             $ret = false;
         }
         else
-        if(strlen($_POST['name'])>50)
-        {
-            $this->add_error();
-            register_error("Name is too big!");
-            $ret = false;
-        }
+            if(strlen($_POST['name'])>75)
+            {
+                $numErr=$numErr+1;
+                $this->add_error();
+                //'contactform:Errnamebig'
+                register_error(str_replace('[#]',$numErr,elgg_echo('contactform:Errnamebig')));
+                $ret = false;
+            }
 
         //email validations
         if(empty($_POST['email']))
         {
+            $numErr=$numErr+1;
             $this->add_error();
-            register_error("Please provide your email address");
+            register_error(str_replace('[#]',$numErr,elgg_echo('contactform:Erremail')));
             $ret = false;
         }
         else
-        if(strlen($_POST['email'])>50)
-        {
-            $this->add_error();
-            register_error("Email address is too big!");
-            $ret = false;
-        }
-        else
-        if(!$this->validate_email($_POST['email']))
-        {
-            $this->add_error();
-            register_error("Please provide a valid email address");
-            $ret = false;
-        }
-
-               //department validaions
-         if(empty($_POST['depart']))
-        {
-            $this->add_error();
-             register_error("Please provide a departement");
-            $ret = false;
-        }
-        else
-        if(strlen($_POST['depart'])>100)
-        {
-            $this->add_error();
-            register_error("Department is too big!");
-            $ret = false;
-        }
-
-        //message validaions
-         if(empty($_POST['message']))
-        {
-            $this->add_error();
-             register_error("Please provide a message");
-            $ret = false;
-        }
-        else
-        if(strlen($_POST['message'])>2048)
-        {
-            $this->add_error();
-            register_error("Message is too big!");
-            $ret = false;
-        }
-
-        //captcha validaions
-       /* if(isset($this->captcha_handler))
-        {
-            if(!$this->captcha_handler->Validate())
+            if(strlen($_POST['email'])>100)
             {
-                $this->add_error($this->captcha_handler->GetError());
+                $numErr=$numErr+1;
+                $this->add_error();
+                register_error(str_replace('[#]',$numErr,elgg_echo('contactform:Erremailbig')));
                 $ret = false;
             }
+            else
+                if(!$this->validate_email($_POST['email']))
+                {
+                    $numErr=$numErr+1;
+                    $this->add_error();
+                    //'contactform:Erremailvalid'
+                    register_error(str_replace('[#]',$numErr,elgg_echo('contactform:Erremailvalid')));
+                    $ret = false;
+                }
+
+        //department validaions
+        if(empty($_POST['depart']))
+        {
+            $numErr=$numErr+1;
+            $this->add_error();
+            register_error(str_replace('[#]',$numErr,elgg_echo('contactform:Errdepart')));
+            $ret = false;
+        }
+        else
+            if(strlen($_POST['depart'])>255)
+            {
+                $numErr=$numErr+1;
+                $this->add_error();
+                register_error(str_replace('[#]',$numErr,elgg_echo('contactform:Errdepartbig')));
+                $ret = false;
+            }
+
+        //message validaions
+        if(empty($_POST['message']))
+        {
+            $numErr=$numErr+1;
+            $this->add_error();
+            register_error(str_replace('[#]',$numErr,elgg_echo('contactform:Errmess')));
+            $ret = false;
+        }
+        else
+            if(strlen($_POST['message'])>2048)
+            {
+                $numErr=$numErr+1;
+                $this->add_error();
+                register_error(str_replace('[#]',$numErr,elgg_echo('contactform:Errmessbig')));
+                $ret = false;
+            }
+
+        //captcha validaions
+        /* if(isset($this->captcha_handler))
+        {
+        if(!$this->captcha_handler->Validate())
+        {
+        $this->add_error($this->captcha_handler->GetError());
+        $ret = false;
+        }
         }*/
         //file upload validations
         if(!empty($this->fileupload_fields))
         {
-         if(!$this->ValidateFileUploads())
-         {
-            $ret = false;
-         }
+            $numErr=$numErr+1;
+            if(!$this->ValidateFileUploads($numErr))
+            {
+                $ret = false;
+            }
         }
         return $ret;
     }

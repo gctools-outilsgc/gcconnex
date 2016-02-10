@@ -11,7 +11,7 @@ $entity = elgg_extract('entity', $vars);
 $size = elgg_extract('size', $vars, 'tiny');
 $group = elgg_extract('group', $vars);
 
-$icon = elgg_view_entity_icon($entity, $size);
+$icon = elgg_view_entity_icon($entity, 'medium');
 
 $title = "<a href=\"" . $entity->getUrl() . "\" $rel>" . $entity->name . "</a>";
 
@@ -34,3 +34,4 @@ $params = array(
 
 	echo elgg_view_image_block($icon, $list_body);
 
+    elgg_unregister_menu_item('entity', 'edit');

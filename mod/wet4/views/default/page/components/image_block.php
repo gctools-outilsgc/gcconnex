@@ -99,7 +99,7 @@ if($entity == 'file' && elgg_is_logged_in() && elgg_get_logged_in_user_entity()-
 
 echo <<<HTML
 
-<div class="$class clearfix mrgn-bttm-md" $id>
+<div class="$class clearfix mrgn-bttm-sm" $id>
 	$alt_image$image$body
     <div class=" elgg-body clearfix edit-comment">
     
@@ -107,31 +107,7 @@ echo <<<HTML
 </div>
 HTML;
     
- }else if(elgg_in_context('widgets_calendar')){ //for files and folders
-    
-    
-    $body = "<div class=\"mrgn-tp-sm col-xs-6\">$body</div>";
-
-if ($image) {
-    $image = "<div class=\"mrgn-tp-sm col-xs-6\">$image</div>";
-}
-
-if ($alt_image) {
-    $alt_image = "<div class=\"elgg-image-alt\">$alt_image</div>";
-}
-
-echo <<<HTML
-
-<div class="$class clearfix mrgn-bttm-md" $id>
-    $body$image$alt_image
-    <div class=" elgg-body clearfix edit-comment">
-    
-    </div>
-</div>
-HTML;
-    
-}
-else{
+ }else{
     
     $body = "<div class=\"mrgn-tp-sm col-xs-10\">$body</div>";
 
@@ -147,7 +123,7 @@ if ($alt_image) {
 
 echo <<<HTML
 
-<div class="$class clearfix mrgn-bttm-md" $id>
+<div class="$class clearfix mrgn-bttm-sm" $id>
 
 	$image$alt_image$body$echo
     <div class=" elgg-body clearfix edit-comment">

@@ -23,7 +23,7 @@ if(intval($_SESSION['Suggested_friends'])==5 && elgg_is_logged_in())
         $result = mysqli_query($connection, "call GET_suggestedFriends({$user_guid}, 3);");
 
         if(intval($result->num_rows)>0){
-            $htmloutput='<div class="col-xs-12 mrgn-tp-sm  col-xs-12  panel panel-river clearfix mrgn-bttm-md">';
+            $htmloutput='<div class="col-xs-12 mrgn-tp-sm  col-xs-12  panel panel-river clearfix mrgn-bttm-xs">';
             
             $htmloutput=$htmloutput.'<div class="elgg-body clearfix edit-comment">';
             $htmloutput=$htmloutput.'<h4 class="h4 mrgn-tp-0 text-primary">'.elgg_echo('sf:title').'</h3>';

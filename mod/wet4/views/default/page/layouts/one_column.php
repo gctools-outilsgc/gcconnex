@@ -23,9 +23,14 @@
 	<div class="elgg-main">-->
 <section>
 	<?php
+	if($params['event_page'] == true){
 		echo elgg_extract('nav', $vars, elgg_view('navigation/breadcrumbs'));
-
 		echo elgg_view('page/layouts/elements/header', $vars);
+}else{
+
+	echo $vars['title'];
+}
+		
 
 		echo $vars['content'];
 		

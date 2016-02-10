@@ -85,3 +85,5 @@ $form_data .= elgg_view("input/submit", array("value" => $submit_text));
 $form_data .= "</div>";
 
 echo $form_data;
+
+elgg_unregister_menu_item('title2', 'new_folder');

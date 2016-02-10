@@ -1,19 +1,14 @@
 <?php
 
-
-//http://gcconnex12.gc.ca/gcforums/save/gcforums/edit?__elgg_ts=1452790650&__elgg_token=aNWe4jtIMgI09YVfS8hdXA
 $gcf_type = get_input('gcf_type');
-error_log('TYPE:'.$gcf_type);
-
 $gcf_forward_url = str_replace("amp;","",get_input('gcf_forward_url'));
-error_log("FORWARD TO...".$gcf_forward_url);
 $object = get_entity($gcf_guid);
+$gcf_group = get_input('gcf_group');
 
+error_log("ljkdskfdjslkfjdlskjfldsk GROUP: {$gcf_group}");
 
-// TODO: clean up functions
 switch ($gcf_type) {
 	case 'hjforumcategory':
-		error_log("Edit Category");
 
 		$title = get_input('gcf_title');
 		$description = get_input('gcf_description');
@@ -30,9 +25,7 @@ switch ($gcf_type) {
 		$forum_object->save();
 
 		forward($gcf_forward_url);
-
 		break;
-
 	case 'hjforum':
 
 		$title = get_input('gcf_title');
@@ -45,21 +38,35 @@ switch ($gcf_type) {
 		$gcf_container = get_input('gcf_container');
 		$gcf_type = get_input('gcf_type');
 
+		$gcf_file_in_category = get_input('gcf_file_in_category');	// TODO: file under a category if required
+
 		// TODO: validate data (check for empty field)
 		// TODO: if error forward back to form
 		$forum_object = get_entity($gcf_guid);
 		$forum_object->title = $title;
 		$forum_object->description = $description;
-		$forum_object->access_id;
+		$forum_object->access_id = $access;
 		$forum_object->enable_subcategories = $enable_categories;
 		$forum_object->enable_posting = $enable_posting;
+
+		//error_log("--> file in: {$gcf_file_in_category}");
+
+		$query = "SELECT *
+				FROM elggentity_relationships
+				WHERE relationship = 'filed_in' AND guid_one = {$gcf_guid}";
+
+		$filed_in = get_data($query);
+		
+		//error_log("this is filed in: ID: {$filed_in[0]->id} / relationship: {$filed_in[0]->relationship}");
+
+		if (delete_relationship($filed_in[0]->id))
+			add_entity_relationship($gcf_guid, 'filed_in', $gcf_file_in_category);
 
 		// TODO: categories change
 		$forum_object->save();
 
 		forward($gcf_forward_url);
 		break;
-
 	case 'hjforumtopic':
 		error_log("Edit Topic");
 
@@ -70,24 +77,28 @@ switch ($gcf_type) {
 		$gcf_guid = get_input('gcf_guid');
 		$gcf_container = get_input('gcf_container');
 		$gcf_type = get_input('gcf_type');
+		$gcf_sticky = get_input('gcf_sticky');
 
 		$forum_object = get_entity($gcf_guid);
 		$forum_object->title = $title;
 		$forum_object->description = $description;
-		$forum_object->access_id;
+		$forum_object->access_id = $access;
+		$forum_object->sticky = $gcf_sticky;
 		$forum_object->save();
 
 		forward($gcf_forward_url);
 		break;
-
 	case 'hjforumpost':
-		error_log("Edit Post (Comments)");
+
+		$gcf_guid = get_input('gcf_guid');
+		$post_object = get_entity($gcf_guid);
+		$description = get_input('gcf_description');
+
+		$post_object->description = $description;
+		$post_object->save();
+		forward($gcf_forward_url);
+
 		break;
-	
 	default:
 		return false;
 }
-
-
-// TODO: move to lib folder
-

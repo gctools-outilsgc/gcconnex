@@ -1919,7 +1919,7 @@ th {
     padding: 10px 3px 3px 0;
     line-height: 1.4375;
     vertical-align: top;
-    border-top: 1px solid #d6eae6; }
+    border-top: 1px solid #ddd; }
   .table > thead > tr > th {
     vertical-align: bottom;
     }
@@ -4583,7 +4583,7 @@ a.list-group-item-danger {
   line-height: 1.3; }
 
 .panel {
-  margin-bottom: 23px;
+  margin-bottom: 10px;
   background-color: #fff;
   border: 1px solid transparent;
   /*border-radius: 4px;*/
@@ -9913,7 +9913,7 @@ h6,
 .h4,
 .h5,
 .h6 {
-  border: 0; }
+  border: none; }
 
 aside.site-related h2 {
   font-size: 28px;
@@ -10615,11 +10615,13 @@ a.shr-opn, a.shr-opn:hover {
 }
     
 .list-break{
-    border-bottom: 1px solid #d6eae6;   
+    margin-top: 5px !important;
+    padding-bottom: 5px !important;
+    border-bottom: 1px solid #ddd !important;  
 }
 
 .list-break:last-child{
-    border-bottom:none;   
+    border-bottom:none !important;   
 }
 
 /*Place Holder color in user profile fields*/
@@ -10634,6 +10636,11 @@ a.shr-opn, a.shr-opn:hover {
     /****************************************/
     
     /******************** user menu ********************/
+
+    .dropdown .elgg-menu {
+        padding: 0;
+    }
+
 
     .subMenu .dropdownToggle {
         display: none;
@@ -10734,13 +10741,12 @@ a.shr-opn, a.shr-opn:hover {
 
 /** Sizing the Images to make medium images slightly smaller. They scale with the responsive class so it's all good **/
  .elgg-avatar-medium-wet4{
-     max-width:80px;  
-     padding-left:5px;
+     max-width:75%;  
+     
  }
 
  .au_subgroups_group_icon-medium-wet4{
-        max-width:80px;
-        padding-left:5px;
+        max-width:75%;  
 
  }
 
@@ -10916,6 +10922,10 @@ a.shr-opn, a.shr-opn:hover {
         border-radius: 0;
         margin-bottom: 0;
     }
+
+    .ui-autocomplete {
+        padding-left: 0;
+    }
     
     /****************************************/
     
@@ -11044,6 +11054,17 @@ a.shr-opn, a.shr-opn:hover {
 .elgg-widget-placeholder{
     border: dashed 2px #DDDDDD;
 
+}
+
+.elgg-widget-content ul li .panel-river{
+    border:none;
+    box-shadow:none;
+    -webkit-box-shadow:none;
+}
+.col-md-4 .panel ul li .panel-river{
+border:none;
+    box-shadow:none;
+    -webkit-box-shadow:none;
 }
 
 /******Padding Classes********/
@@ -11495,7 +11516,7 @@ figcaption{
 
 .data-table-list-item{
     padding:10px;  
-    border-bottom: 1px solid #d6eae6;
+    border-bottom: 1px solid #ddd;
 }
 
 .data-table-head{
@@ -11506,7 +11527,7 @@ figcaption{
 /** Widget Stuff **/
 
 .elgg-widget-title{
-        border-bottom: 1px solid #af3c43;
+       
         margin:5px 0;   
 }
 

@@ -1440,10 +1440,11 @@ function event_calendar_get_page_content_list($page_type, $container_guid, $star
 			));
 		}
 	}
+	
 
 	$params = event_calendar_generate_listing_params($page_type, $container_guid, $start_date, $display_mode, $filter, $region);
 	$title = $params['title2'];
-
+$event_page = $params['event_page'];
 	$url = current_page_url();
 	if (substr_count($url, '?')) {
 		$url .= "&view=ical";
@@ -1465,9 +1466,14 @@ function event_calendar_get_page_content_list($page_type, $container_guid, $star
 
 
 	$passed_vars = $params['pass_vars'];	// cyu - 02/17/2015: modified to put pagination in to display ALL events
-	$params['pass_vars'] = '';	// cyu - 02/17/2015: modified to put pagination in to display ALL events
+	$params['pass_vars'] = '';	// cyu - 02/17/2015: modified to put pagination in to display ALL events$params['sidebar']
+	
+if ($event_page == false){
 
+	$body = elgg_view_layout("one_column", $params);
+}else{
 	$body = elgg_view_layout("two_column", $params);
+	}
 	
 	$body .= elgg_view_entity_list('event_calendar/filter_menu',$passed_vars);	// cyu - 02/17/2015: modified to put pagination in to display ALL events
 	
@@ -1758,6 +1764,10 @@ function event_calendar_generate_listing_params($page_type, $container_guid, $or
 			$filter = 'all';
 	}
 
+if (($filter == 'all') && ($page_type != 'group')) {
+			$limit = 10;
+	}
+
 	if (($filter == 'all') || ($filter == 'owner')) {
 		$count = event_calendar_get_events_between($start_ts, $end_ts, true, $limit, $offset, $container_guid, $region);
 		$events = event_calendar_get_events_between($start_ts, $end_ts, false, $limit, $offset, $container_guid, $region);
@@ -1792,10 +1802,7 @@ function event_calendar_generate_listing_params($page_type, $container_guid, $or
 
 	);
 $other = elgg_view('event_calendar/groupprofile_calendar', $vars);
-	$content = elgg_view('event_calendar/show_events', $vars);
-		
-	
-
+$content = elgg_view('event_calendar/show_events', $vars);
 	if ($page_type == 'group') {
 		$filter_override = '';
 		$sidebar = 'group';
@@ -1853,6 +1860,20 @@ $other = elgg_view('event_calendar/groupprofile_calendar', $vars);
 					}
 			}
 	}
+$logged_in_user = elgg_get_logged_in_user_entity();
+	if ($container->name == $logged_in_user->name) {
+
+		$title = elgg_echo('event_calendar:mine', array($container->name));
+
+	}
+	if (($filter != "all") || ($page_type == 'group')){
+	$sidebar = elgg_view('event_calendar/show_events_calendar', $vars);
+	$event_page = true;
+}else{
+	$event_page = false;
+
+	$sidebar = "";
+}
 elgg_push_breadcrumb($title);
 $title2 = elgg_view_title($title);
 
@@ -1863,7 +1884,8 @@ $title2 = elgg_view_title($title);
 		'other' => $other,
 		'filter_override' => $filter_override,
 		'pass_vars' => $vars,		// cyu - 02/17/2015: modified to pass the $vars to another function to do pagination
-		'sidebar' => elgg_view('event_calendar/show_events_calendar', $vars),
+		'sidebar' => $sidebar,
+		'event_page' => $event_page,
 		//'sidebar' => elgg_view('event_calendar/sidebar', array('page' => $sidebar)),
 	);
 

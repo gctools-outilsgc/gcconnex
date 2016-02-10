@@ -32,6 +32,7 @@ return array(
      'ps:expert' =>"Expert",
      'ps:optingin' =>"Avez-vous penser à adhérer aux Micro-mission?",
      'ps:optin' =>"Adhérer",
+     'ps:psErr'=>"Une erreur est survenue durant l'obtentions de vos informations de profil . Nous travaillons pour résoudre le problème .",
 
 /*
        * Suggested Friends
@@ -96,6 +97,7 @@ return array(
    */
 
   'group:invite:clicktoadd' => "Cliquez pour ajouter",
+  'group:invite:email' => "(translate me) Enter a valid email and press enter to submit it to the list",
 
 /**
   * Sites
@@ -182,8 +184,8 @@ return array(
 	'ElggPlugin:Dependencies:ActiveDependent' => 'Il existe d\'autres plugins répertoriant %s en tant que dépendance. Vous devez désactiver les plugins suivants avant de désactiver celui-ci: %s',
 
 
-	'RegistrationException:EmptyPassword' => 'Les champs du mot de passe ne peut pas être vide',
-	'RegistrationException:PasswordMismatch' => 'Les mots de passe doivent correspondre',
+	'RegistrationException:EmptyPassword' => '<a href="#password">Les champs du mot de passe ne peut pas être vide</a>',
+	'RegistrationException:PasswordMismatch' => '<a href="#password">Les mots de passe doivent correspondre</a>',
 	'LoginException:BannedUser' => 'Vous avez été banni de ce site et ne pouvez plus vous connecter',
 	'LoginException:UsernameFailure' => 'Nous n\'avons pas pu vous connecter ! Vérifiez votre nom d\'utilisateur et mot de passe.',
 	'LoginException:PasswordFailure' => 'Nous n\'avons pas pu vous connecter ! Vérifiez votre nom d\'utilisateur et mot de passe.',
@@ -1388,7 +1390,7 @@ Ne répondez pas à cet e-mail.",
     'contactform:form:subject' => "Sujet",
     'contactform:title' => "Pages d'aide de GCconnex",
     'contactform:help' => 'Aide',
-	'contactform:list' => "<ul>	
+	'contactform:list' => "<ul class='list-unstyled'>	
 						<li> <a href='http://www.gcpedia.gc.ca/wiki/GC2.0_Tools_Help_Centre/GCconnex'>Pages d'aide</a> </li>
 						</ul><br />",
     'contactform:faq' => "FAQ",
@@ -1435,7 +1437,17 @@ Ne répondez pas à cet e-mail.",
    *Message - Ce champ est obligatoire.
   * */
 
- 'contactform:Errreason'=>"<span class='prefix'>Erreur [#] :</span> Vous devez choisir une raison - Ce champ est obligatoire.",
+ 
+/**
+ * Event calendar
+ */
+
+'event_calendar:comming' => "Événements à venir",
+'event_calendar:language' => 'Langue de l\'événement',
+'event_calendar:mine' => 'Mes événements',
+'event_calendar:listing_title:user' => "Les événements de %s",
+'event_calendar:submit' => 'Sauvegarder',
+
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */

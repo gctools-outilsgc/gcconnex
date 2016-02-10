@@ -17,12 +17,12 @@ $content .= elgg_view("contactform/contactform");
 $sidebar = elgg_view("contactform/form");
 
 // layout the page
-		$body = elgg_view_layout('two_column', array(
-                'title' => $title2,
-   				'content' => $content,
-   				'sidebar' => $sidebar,
-   				
-				));
+$body = elgg_view_layout('two_column', array(
+        'title' => $title2,
+           'content' => $content,
+           'sidebar' => $sidebar,
+
+        ));
 
 // draw the page
 echo elgg_view_page($title, $body);

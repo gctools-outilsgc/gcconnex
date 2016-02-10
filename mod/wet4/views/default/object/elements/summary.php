@@ -56,16 +56,17 @@ if ($title_link) {
 if($entity->getType() == 'group'){
    echo '';
 }else{
-  echo "<div class=\" mrgn-bttm-sm mrgn-tp-sm  timeStamp clearfix\">$subtitle</div>";   
+  echo "<div class=\" mrgn-bttm-sm mrgn-tp-sm  timeStamp clearfix\">$subtitle</div>";
+
 }
 
-
+echo "<div class=\"tags col-xs-12\">$tags</div>";
 
 
 echo elgg_view('object/summary/extend', $vars);
 
 if ($content) {
-	echo "<div class=\"elgg-content mrgn-tp-md mrgn-lft-sm\">$content</div>";
+	echo "<div class=\"elgg-content mrgn-tp-sm mrgn-lft-sm\">$content</div>";
 }
 
 if($entity->getType() == 'group' ){
@@ -74,7 +75,7 @@ if($entity->getType() == 'group' ){
 	   echo '<div class="mrgn-tp-sm"><div class="">' .$metadata . '</div></div>';
 }
     
-   echo "<div class=\" mrgn-bttm-sm mrgn-tp-md timeStamp clearfix\">$subtitle</div>"; 
+   echo "<div class=\" mrgn-bttm-sm mrgn-tp-sm timeStamp clearfix\">$subtitle</div>"; 
     
 }else if($checkPage == 'friends' || $checkPage == 'groups_members' || $checkPage == 'members'){
     echo '<div class=""><div class="">' .$metadata . '</div></div>';
@@ -89,7 +90,7 @@ echo "<div class=\"tags col-sm-12 col-xs-12\">$tags</div>";
 
 if ($metadata) {
 	if ($checkPage != 'widgets_calendar'){
-     	echo '<div class="col-sm-12 col-xs-12"><div class="pull-left">' .$metadata . '</div></div>';   
+        echo '<div class="col-sm-12 col-xs-12"><div class="mrgn-lft-sm">' .$metadata . '</div></div>';   
      }
 }
 
@@ -98,16 +99,17 @@ if ($metadata) {
 
 	
   
-echo '<div class="row mrgn-tp-md">';
-
-echo "<div class=\"tags col-sm-6 col-xs-12\">$tags</div>";
-
-
+echo '<div class="row mrgn-tp-sm">';
 if ($metadata) {
-	if ($checkPage != 'widgets_calendar'){
-     	echo '<div class="col-sm-6 col-xs-12"><div class="pull-right">' .$metadata . '</div></div>';   
-     }
+    if ($checkPage != 'widgets_calendar'){
+        echo '<div class="col-xs-12 mrgn-lft-md ">' .$metadata . '</div>';
+    }
 }
+
+
+
+
+
 
 echo '</div>';  
 }

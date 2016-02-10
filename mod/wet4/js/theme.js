@@ -2,70 +2,80 @@
  * Web Experience Toolkit (WET) / Boîte à outils de l'expérience Web (BOEW)
  * wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licence-fr.html
  */
-(function( $, wb ) {
+(function( $, document, wb ) {
 "use strict";
 
-/*
- * Variable and function definitions.
- * These are global to the plugin - meaning that they will be initialized once per page,
- * not once per instance of plugin on the page. So, this is a good place to define
- * variables that are common to all instances of the plugin on a page.
- */
 var $document = wb.doc,
+	searchSelector = "#wb-srch-q",
+	$search = $(searchSelector),
+	$searchDataList = $( "#" + $search.attr( "list" ) ),
 
-	onXXSmallView = function() {
-		return;
-	},
-
-	onXSmallView = function() {
-		return;
-	},
-
-	onSmallView = function() {
-		return;
-	},
-
-	onMediumView = function() {
-		return;
-	},
-
-	onLargeView = function() {
-		return;
-	},
-
-	onXLargeView = function() {
-		return;
+//Search Autocomplete
+	queryAutoComplete = function( query ) {
+		if ( query.length > 0 ) {
+			$( this ).trigger({
+				type: "ajax-fetch.wb",
+				fetch: {
+					url: wb.pageUrlParts.protocol + "//clients1.google.com/complete/search?client=partner&sugexp=gsnos%2Cn%3D13&gs_rn=25&gs_ri=partner&partnerid=" + window.encodeURIComponent("008724028898028201144:knjjdikrhq0+lang:" + wb.lang) + "&types=t&ds=cse&cp=3&gs_id=b&hl=" + wb.lang + "&q=" + encodeURI( query ),
+					dataType: "jsonp",
+					jsonp: "callback"
+				}
+			});
+		}
 	};
 
-$document.on( "xxsmallview.wb xsmallview.wb smallview.wb mediumview.wb largeview.wb xlargeview.wb", function( event ) {
-	var eventType = event.type;
+//Queries  the autocomplete API
+$document.on( "change keyup", searchSelector, function( event ) {
+	var target = event.target,
+		query = event.target.value,
+		which = event.which;
 
-	switch ( eventType ) {
-
-	case "xxsmallview":
-		onXXSmallView();
+	switch ( event.type ){
+	case "change":
+		queryAutoComplete.call( target, query );
 		break;
+	case "keyup":
+		if ( !( event.ctrlKey || event.altKey || event.metaKey ) ) {
 
-	case "xsmallview":
-		onXSmallView();
-		break;
-
-	case "smallview":
-		onSmallView();
-		break;
-
-	case "mediumview":
-		onMediumView();
-		break;
-
-	case "largeview":
-		onLargeView();
-		break;
-
-	case "xlargeview":
-		onXLargeView();
-		break;
+			// Spacebar, a - z keys, 0 - 9 keys punctuation, and symbols
+			if ( which === 32 || ( which > 47 && which < 91 ) ||
+				( which > 95 && which < 112 ) || ( which > 159 && which < 177 ) ||
+				( which > 187 && which < 223 ) ) {
+				queryAutoComplete.call( target, query );
+			}
+		}
 	}
 });
 
-})( jQuery, wb );
+//Processes the autocomplete API results
+$document.on( "ajax-fetched.wb", searchSelector, function( event ) {
+	var suggestions = event.fetch.response[ 1 ],
+		lenSuggestions = suggestions.length,
+		options = "",
+		indIssue, issue;
+
+	$searchDataList.empty();
+
+	for ( indIssue = 0; indIssue < lenSuggestions; indIssue += 1 ) {
+		issue = suggestions[ indIssue ];
+
+		options += "<option label=\"" + issue[0] + "\" value=\"" + issue[0] + "\"></option>";
+	}
+
+	if ( wb.ielt10 ) {
+		options = "<select>" + options + "</select>";
+	}
+
+	$searchDataList.append( options );
+
+	$search.trigger( "wb-update.wb-datalist" );
+});
+
+window["wb-data-ajax"] = {
+	corsFallback: function( fetchObj ) {
+		fetchObj.url = fetchObj.url.replace(".html", ".htmlp");
+		return fetchObj;
+	}
+};
+
+})( jQuery, document, wb );

@@ -7,17 +7,9 @@
     http://www.html-form-guide.com/contact-form/creating-a-contact-form.html
 */
 
-if (elgg_is_logged_in()) {
-	$user = elgg_get_logged_in_user_entity();
-	$sender_name = $user->name;
-	$sender_email = $user->email;
-
-}
-
 require_once("./include/fgcontactform.php");
 require_once("./include/simple-captcha.php");
 $email=elgg_get_plugin_setting('email','contactform');
-$list=elgg_get_plugin_setting('list','contactform');
 $formproc = new FGContactForm();
 $sim_captcha = new FGSimpleCaptcha('scaptcha');
 
@@ -42,12 +34,16 @@ if(isset($_POST['submitted']))
 }
 
 ?>
-   
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US">
+
+
+<head>
+      <meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
+      <title>Contact us</title>
+      <link rel="STYLESHEET" type="text/css" href="contactform.css" />
       <script type='text/javascript' src='scripts/gen_validatorv31.js'></script>
 </head>
-
 <body>
-    <div><?php echo $formproc->GetErrorMessage(); ?></div>
 <!-- Form Code Start -->
 
 &nbsp;
@@ -57,41 +53,31 @@ if(isset($_POST['submitted']))
 
 <input type='hidden' name='submitted' id='submitted' value='1'/>
 <input type='hidden' name='<?php echo $formproc->GetFormIDInputName(); ?>' value='<?php echo $formproc->GetFormIDInputValue(); ?>'/>
-<!--<input type='text'  class='spmhidip' name='<?php //echo $formproc->GetSpamTrapInputName(); ?>' />-->
+<input type='text'  class='spmhidip' name='<?php echo $formproc->GetSpamTrapInputName(); ?>' />
 
 <div class='short_explanation'><?php echo elgg_echo('contactform:requiredfields'); ?></div>
-<div class='form-group'>
+
+<div><span class='error'><?php echo $formproc->GetErrorMessage(); ?></span></div>
+<div class='container'>
     <label for='name' ><?php echo elgg_echo('contactform:fullname'); ?></label><br/>
-    <input type='text' name='name' id='name' value='<?php if (elgg_is_logged_in()){ echo $sender_name;}else{echo $formproc->SafeDisplay('name');} ?>' maxlength="50" /><br/>
+    <input type='text' name='name' id='name' value='<?php echo $formproc->SafeDisplay('name') ?>' maxlength="50" /><br/>
     <span id='contactus_name_errorloc' class='error'></span>
 </div>
-<div class='form-group'>
+<div class='container'>
     <label for='email' >*&nbsp;<?php echo elgg_echo('contactform:email'); ?></label><br/>
-    <input type='text' name='email' id='email' value='<?php if (elgg_is_logged_in()){ echo $sender_email;}else{echo $formproc->SafeDisplay('name');}  ?>' maxlength="50" /><br/>
+    <input type='text' name='email' id='email' value='<?php echo $formproc->SafeDisplay('email') ?>' maxlength="50" /><br/>
     <span id='contactus_email_errorloc' class='error'></span>
 </div>
-    
-<div class='form-group'>
-    <label for='text' ><?php echo elgg_echo('SecondMessage'); ?></label><br/>
-    <select class="form-control" id='text' name='text' value='<?php echo $formproc->SafeDisplay('text') ?>'>
-<option>--</option>
-<option>1</option>
-<option >2</option>
-<option>3</option>
-<option>4</option>
-<option>5</option>
-</select>
-   
-    <span id='contactus_text_errorloc' class='error'></span>
-</div>  
-    
-    
-    
-    <div class='form-group'>
-        <label for='message'> <?php echo elgg_echo('contactform:message');?></label>
-    <?php echo elgg_view('input/longtext', array('name' => 'message', 'id'=>'message', 'value' => $formproc->SafeDisplay('message') ));?>
-    </div>
-    
+<div class='container'>
+    <label for='phone' ><?php echo elgg_echo('contactform:phone'); ?></label><br/>
+    <input type='text' name='phone' id='phone' value='<?php echo $formproc->SafeDisplay('phone') ?>' maxlength="15" /><br/>
+    <span id='contactus_phone_errorloc' class='error'></span>
+</div>
+<div class='container'>
+    <label for='message' ><?php echo elgg_echo('contactform:message'); ?></label><br/>
+    <span id='contactus_message_errorloc' class='error'></span>
+    <textarea rows="10" cols="50" name='message' id='message'><?php echo $formproc->SafeDisplay('message') ?></textarea>
+</div>
 <fieldset id='antispam'>
 <legend ><?php echo elgg_echo('contactform:antispammsg'); ?></legend>
 <span class='short_explanation'><?php echo elgg_echo('contactform:antispamhint'); ?></span>

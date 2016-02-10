@@ -5,13 +5,21 @@
 $object = get_entity($vars['forum_guid']);
 $vars['entity'] = $object;
 
-
 // category | topic
-$gcf_title_label = elgg_echo('gforums:title_label');
-$gcf_title_input = elgg_view('input/text', array(
-	'name' => 'gcf_title',
-	'value' => $object->title,
-));
+if ($object->getSubtype() !== 'hjforumpost') {
+	$gcf_title_label = elgg_echo('gforums:title_label');
+	$gcf_title_input = elgg_view('input/text', array(
+		'name' => 'gcf_title',
+		'value' => $object->title,
+	));
+
+	$gcf_access_label = elgg_echo('gforums:access_label');
+	$gcf_access_input = elgg_view('input/access', array(
+	'name' => 'gcf_access_id',
+	'id' => 'gcf_access_id',
+	'value' => $object->access_id
+	));
+}
 
 $gcf_description_label = elgg_echo('gforums:description_label');
 $gcf_description_input = elgg_view('input/longtext', array(
@@ -20,12 +28,16 @@ $gcf_description_input = elgg_view('input/longtext', array(
 	'value' => $object->description,
 ));
 
-$gcf_access_label = elgg_echo('gforums:access_label');
-$gcf_access_input = elgg_view('input/access', array(
-	'name' => 'gcf_access_id',
-	'id' => 'gcf_access_id',
-	'value' => $object->access_id
-));
+if ($object->getSubtype() === 'hjforumtopic') {
+	$gcf_sticky_topic_label = elgg_echo('gcforums:is_sticky');
+	$gcf_sticky_topic_input = elgg_view('input/checkboxes', array(
+		'name' => 'gcf_sticky',
+		'id' => 'gcf_sticky',
+		'options' => array(
+			$gcf_sticky_topic_label => 1),
+		'value' => $object->sticky,
+	));
+}
 
 if ($object->getSubtype() === 'hjforum') {
 	$gcf_enable_categories_label = elgg_echo('gforums:enable_categories_label');
@@ -97,6 +109,12 @@ $gcf_type_input = elgg_view('input/hidden', array(
 	'value' => $object->getSubtype()
 	));
 
+// hidden field for group guid
+$gcf_group_input = elgg_view('input/hidden', array(
+	'name' => 'gcf_group',
+	'value' => $gcf_group
+	));
+
 // hidden field for forward url
 $gcf_forward = trim($_SERVER['HTTP_REFERER']);
 $gcf_forward_url_input = elgg_view('input/hidden', array(
@@ -125,6 +143,11 @@ echo <<<___HTML
  	<label for="gcf_file_under_category_input">$gcf_file_under_category_label</label>
  	$gcf_file_under_category_input
 </div>
+
+<div>
+	$gcf_sticky_topic_input
+</div>
+
 <div>
 	$gcf_enable_categories_input
 </div>
@@ -139,6 +162,7 @@ echo <<<___HTML
 </div>
 
 	<!-- hidden input fields -->
+	$gcf_group_input
 	$gcf_guid_input
 	$gcf_container_input
 	$gcf_type_input

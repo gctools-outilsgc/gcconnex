@@ -66,6 +66,7 @@ if ($full_view) {
 		"summary" => $summary,
 		"body" => elgg_view("output/longtext", array("value" => $folder->description))
 	));
+    elgg_unregister_menu_item('title2', 'new_folder');
 } else {
 	// summary view
 	$icon = elgg_view_entity_icon($folder, "small");

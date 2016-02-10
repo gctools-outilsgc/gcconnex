@@ -28,12 +28,12 @@ if ($user->canEdit()) {
     echo '<h2>' . elgg_echo('gcconnex_profile:basic:header') . '</h2>';
     echo '</div>';
     echo '<div class="panel-body">';
-    echo '<div class="basic-profile-standard-field-wrapper">'; // container for css styling, used to group profile content and display them seperately from other fields
+    echo '<div class="basic-profile-standard-field-wrapper col-sm-6 col-xs-12">'; // container for css styling, used to group profile content and display them seperately from other fields
 
     $fields = array('Name', 'Job', 'Department', 'Location', 'Phone', 'Mobile', 'Email', 'Website');
 
     foreach ($fields as $field) { // create a label and input box for each field on the basic profile (see $fields above)
-        echo '<div class="basic-profile-field-wrapper">'; // field wrapper for css styling
+        echo '<div class="basic-profile-field-wrapper col-xs-12">'; // field wrapper for css styling
 
         $field = strtolower($field);
         echo '<label for="' . $field . '" class="basic-profile-label ' . $field . '-label">' . elgg_echo('gcconnex_profile:basic:' . $field) . '</label>'; // field label
@@ -61,7 +61,7 @@ if ($user->canEdit()) {
     }
 
     echo '</div>'; // close div class="basic-profile-standard-field-wrapper"
-    echo '<div class="basic-profile-social-media-wrapper">'; // container for css styling, used to group profile content and display them seperately from other fields
+    echo '<div class="basic-profile-social-media-wrapper col-sm-6 col-xs-12">'; // container for css styling, used to group profile content and display them seperately from other fields
 
 // pre-populate the social media fields and their prepended link for user profiles
    

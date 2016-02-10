@@ -56,7 +56,7 @@ class FGSimpleCaptcha extends FG_CaptchaHandler
         $ret=false;
         if(empty($_POST[$this->captcha_varname]))
         {
-            $this->error_str = register_error(elgg_echo('Please answer the Anti-SPAM question'));
+            $this->error_str = elgg_echo('contactform:validator:answer');
             $ret = false;
         }
         else
@@ -70,7 +70,7 @@ class FGSimpleCaptcha extends FG_CaptchaHandler
 
             if($user_answer != $_SESSION['FGCF_Captcha_Answer'])
             {
-                $this->error_str = register_error (elgg_echo('contactform:validator:failed'));
+                $this->error_str = elgg_echo('contactform:validator:failed');
                 $ret = false;
             }
             else

@@ -11,8 +11,9 @@ function wet4_theme_init() {
     
     //reload groups library to have our sidebar changes
     elgg_register_library('elgg:groups', elgg_get_plugins_path() . 'wet4/lib/groups.php');
-    elgg_register_library('GCconnex logging', elgg_get_plugins_path() . 'wet4/lib/logging.php');
+    elgg_register_library('GCconnex_logging', elgg_get_plugins_path() . 'wet4/lib/logging.php');
 
+    elgg_load_library('GCconnex_logging');
     //get rid of reply icon on river menu
     elgg_unregister_plugin_hook_handler('register', 'menu:river', 'discussion_add_to_river_menu');
 
@@ -685,6 +686,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 	if ($entity->canEdit() && $handler) {
 		// edit link
     
+        if($handler != 'group_operators'){
 		$options = array(
 			'name' => 'edit',
 			'text' => '<i class="fa fa-edit fa-lg icon-unsel"><span class="wb-inv">Edit This</span></i>',
@@ -704,8 +706,8 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 			'priority' => 300,
 		);
 		$return[] = \ElggMenuItem::factory($options);
-        
 
+        }
 
 
         

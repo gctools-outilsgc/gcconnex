@@ -39,7 +39,7 @@ return array (
   'event_calendar:optional' => "Optionnel.",
   'event_calendar:required' => "Obligatoire.",
   'event_calendar:add' => "Ajouter événement",
-  'event_calendar:listing_title:all' => "Tous les événement",
+  'event_calendar:listing_title:all' => "Tous les événements",
   'event_calendar:listing_title:mine' => "My calendar",   // translate
   'event_calendar:listing_title:friends' => "Friends' calendars",   // translate
   'event_calendar:all' => "Tous",

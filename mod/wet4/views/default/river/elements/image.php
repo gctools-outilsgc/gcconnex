@@ -50,9 +50,9 @@ if(elgg_get_context() !== 'widgets'){
 }  
 }else{
  if (elgg_in_context('widgets')) {
-	echo elgg_view_entity_icon($subject, 'small');
+     echo elgg_view_entity_icon($subject, 'medium');
 } else {
-	echo elgg_view_entity_icon($subject, 'small');
+	echo elgg_view_entity_icon($subject, 'medium');
 }   
 }
 

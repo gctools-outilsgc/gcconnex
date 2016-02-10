@@ -11,13 +11,13 @@ $email_invites = elgg_extract("email_invitations", $vars, false);
 
 if ((!empty($invitations) && is_array($invitations)) || (!empty($email_invites) && is_array($email_invites))) {
 	
-	echo "<ul class='elgg-list mbm list-unstyled'>";
+	echo "<ul class='elgg-list clearfix mbm list-unstyled'>";
 	
 	// normal invites
 	if (!empty($invitations)) {
 		foreach ($invitations as $group) {
 			if ($group instanceof ElggGroup) {
-				$icon = elgg_view_entity_icon($group, "tiny", array("use_hover" => "true"));
+				$icon = elgg_view_entity_icon($group, "medium", array("use_hover" => "true", 'class' => 'img-responsive'));
 	
 				$group_title = elgg_view("output/url", array(
 					"href" => $group->getURL(),
@@ -41,14 +41,16 @@ if ((!empty($invitations) && is_array($invitations)) || (!empty($email_invites) 
 					"text" => elgg_echo("delete"),
 					"class" => "elgg-button elgg-button-delete mlm",
 				));
-	
-				$body = "<h4>$group_title</h4>";
-				$body .= "<p class='elgg-subtext'>$group->briefdescription</p>";
+
+				$body = "<div class='col-xs-9'><h4>$group_title</h4>";
+				$body .= "<p class='elgg-subtext'>$group->briefdescription</p></div>";
 	
 				$alt = $accept_button . $delete_button;
-	
+
+                $body .= "<div class='col-xs-3'>" . $alt . "</div>"; 
+
 				echo "<li class='pvs'>";
-				echo elgg_view_image_block($icon, $body, array("image_alt" => $alt));
+				echo elgg_view_image_block($icon, $body, array());
 				echo "</li>";
 			}
 		}
@@ -57,7 +59,7 @@ if ((!empty($invitations) && is_array($invitations)) || (!empty($email_invites) 
 	// auto detected email invitations
 	if (!empty($email_invites)) {
 		foreach ($email_invites as $group) {
-			$icon = elgg_view_entity_icon($group, "tiny", array("use_hover" => "true"));
+			$icon = elgg_view_entity_icon($group, "medium", array("use_hover" => "true", 'class' => 'img-responsive'));
 		
 			$group_title = elgg_view("output/url", array(
 				"href" => $group->getURL(),
@@ -81,14 +83,16 @@ if ((!empty($invitations) && is_array($invitations)) || (!empty($email_invites) 
 				"text" => elgg_echo("delete"),
 				"class" => "elgg-button elgg-button-delete mlm",
 			));
-		
-			$body = "<h4>$group_title</h4>";
-			$body .= "<p class='elgg-subtext'>$group->briefdescription</p>";
+
+			$body = "<div class='col-xs-9'><h4>$group_title</h4>";
+			$body .= "<p class='elgg-subtext'>$group->briefdescription</p></div>";
 		
 			$alt = $accept_button . $delete_button;
+
+            $body .= "<div class='col-xs-3'>" . $alt . "</div>";
 		
 			echo "<li class='pvs'>";
-			echo elgg_view_image_block($icon, $body, array("image_alt" => $alt));
+			echo elgg_view_image_block($icon, $body, array());
 			echo "</li>";
 		}
 	}
@@ -109,7 +113,7 @@ if (elgg_get_context() == "groups") {
 		$content = "<ul class='elgg-list'>";
 		
 		foreach ($requests as $group) {
-			$icon = elgg_view_entity_icon($group, "tiny", array("use_hover" => "true"));
+			$icon = elgg_view_entity_icon($group, "medium", array("use_hover" => "true", 'class' => 'img-responsive'));
 			
 			$group_title = elgg_view("output/url", array(
 				"href" => $group->getURL(),
@@ -124,14 +128,14 @@ if (elgg_get_context() == "groups") {
 				"text" => elgg_echo("group_tools:revoke"),
 				"class" => "elgg-button elgg-button-delete mlm",
 			));
-			
-			$body = "<h4>$group_title</h4>";
-			$body .= "<p class='elgg-subtext'>$group->briefdescription</p>";
-			
-			$alt = $delete_button;
+
+			$body = "<div class='col-xs-10'><h4>$group_title</h4>";
+			$body .= "<p class='elgg-subtext'>$group->briefdescription</p></div>";
+
+			$body .= "<div class='col-xs-2'>" . $delete_button . "</div>";
 			
 			$content .= "<li class='pvs'>";
-			$content .= elgg_view_image_block($icon, $body, array("image_alt" => $alt));
+			$content .= elgg_view_image_block($icon, $body, array());
 			$content .= "</li>";
 		}
 		

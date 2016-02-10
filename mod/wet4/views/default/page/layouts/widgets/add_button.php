@@ -12,7 +12,8 @@ $options = array(
 	'id' => 'widgets-add-panel',
 	'text' => elgg_echo('widgets:add'),
 	'class' => 'elgg-button elgg-button-action elgg-lightbox btn btn-default mrgn-bttm-md mrgn-tp-sm',
-	'data-colorbox-opts' => '{"inline":true, "href":"#widget_manager_widgets_select", "innerWidth": 600, "maxHeight": "80%"}'
+	'data-colorbox-opts' => '{"inline":true, "href":"#widget_manager_widgets_select", "innerWidth": 600, "maxHeight": "80%"}',
+    'tabindex' => '1',
 );
 
 if (elgg_in_context("iframe_dashboard")) {

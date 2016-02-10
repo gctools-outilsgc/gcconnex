@@ -98,11 +98,11 @@ $user_icon = elgg_view_entity_icon($subject, 'small');
 if($group_string || $commentordiscuss){
     $identify_activity = elgg_echo('group');
     echo <<<RIVER
-<div class="mrgn-bttm-md">
+<div class="">
 
 
 <div class="elgg-river-summary mrgn-bttm-sm">$summary $group_string</div>
-<div class="elgg-river-timestamp mrgn-bttm-md timeStamp "><i>$timestamp</i></div>
+<div class="elgg-river-timestamp mrgn-bttm-md timeStamp "><i>$timestamp</i><div class="pull-right">$menu</div></div>
 
 </div>
 <div class="  mrgn-bttm-sm mrgn-tp-sm">
@@ -112,7 +112,7 @@ $attachments
 
 </div>
 
-<div class="pull-right">$menu</div>
+
 
 RIVER;
 
@@ -122,11 +122,11 @@ RIVER;
 
 <div class="elgg-river-summary  mrgn-bttm-sm">$summary $group_string </div>
 
-<div class="elgg-river-timestamp mrgn-bttm-sm timeStamp"><i>$timestamp</i></div>
+<div class="elgg-river-timestamp mrgn-bttm-sm timeStamp"><i>$timestamp</i> <div class="pull-right">$menu</div></div>
 
 $message
 $attachments
-<div class="pull-right">$menu</div>
+
 
 RIVER;
 

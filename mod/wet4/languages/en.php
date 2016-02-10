@@ -33,7 +33,7 @@ return array(
      'ps:expert' =>"Expert",
      'ps:optingin' =>"Have you looked into opting-in to a Micro-mission?",
      'ps:optin' =>"Opt-In",
-
+     'ps:psErr'=>"An error occured getting your profile information.  We are working to resolve the issue.",
      /*
       * Suggested Friends*/
 
@@ -96,6 +96,7 @@ return array(
   */
 
   'group:invite:clicktoadd' => "Click to add",
+  'group:invite:email' => "Enter a valid email and press enter to submit it to the list",
     
 /**
  * Sites
@@ -188,8 +189,8 @@ return array(
 	'ElggMenuBuilder:Trees:OrphanedChild' => 'Menu item [%s] found with a missing parent[%s]',
 	'ElggMenuBuilder:Trees:DuplicateChild' => 'Duplicate registration found for menu item [%s]',
 
-	'RegistrationException:EmptyPassword' => 'The password fields cannot be empty',
-	'RegistrationException:PasswordMismatch' => 'Passwords must match',
+	'RegistrationException:EmptyPassword' => '<a href="#password">The password fields cannot be empty</a>',
+	'RegistrationException:PasswordMismatch' => '<a href="#password">Passwords must match</a>',
 	'LoginException:BannedUser' => 'You have been banned from this site and cannot log in',
 	'LoginException:UsernameFailure' => 'We could not log you in. Please check your username/email and password.',
 	'LoginException:PasswordFailure' => 'We could not log you in. Please check your username/email and password.',
@@ -1383,7 +1384,7 @@ Please do not reply to this email.",
       'contactform:required' => 'required',
     'contactform:form:subject' => "Subject",
     'contactform:title' => "GCconnex Help Pages",
-    'contactform:list' => "<ul>
+    'contactform:list' => "<ul class='list-unstyled'>
 						<li> <a href='http://www.gcpedia.gc.ca/wiki/GC2.0_Tools_Help_Centre/GCconnex'>Help pages</a> </li>
 					
 						</ul>",
@@ -1420,13 +1421,14 @@ Please do not reply to this email.",
 
     'contactform:department' => 'Department',
     'contactform:select' => 'Please select a category',
+    'contactform:reason' => 'Select...',
     
 /*
  * Contact Form Validation
   *Message - Ce champ est obligatoire.
  * */
 
- 'contactform:Errreason'=>"<span class='prefix'>Error [#]:</span> You must choose a reason - This field is required.",
+ 
 /**
  * Entities
  */
@@ -1475,6 +1477,15 @@ Please do not reply to this email.",
  * Miscellaneous
  */
 	'elgg:powered' => "Powered by Elgg",
+
+/**
+ * Event Calendar
+ */
+	'event_calendar:comming' => "Upcomming events",
+	'event_calendar:language' => "Event language",
+	'event_calendar:mine' => 'My events',
+
+
 
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)

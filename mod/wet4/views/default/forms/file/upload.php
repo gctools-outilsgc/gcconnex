@@ -80,6 +80,7 @@ echo elgg_view('input/hidden', array('name' => 'container_guid', 'value' => $con
 
 if ($guid) {
 	echo elgg_view('input/hidden', array('name' => 'file_guid', 'value' => $guid));
+    elgg_unregister_menu_item('title2', 'new_folder');
 }
 
 echo elgg_view('input/submit', array('value' => $submit_label, 'class' => 'btn btn-primary mrgn-tp-md'));

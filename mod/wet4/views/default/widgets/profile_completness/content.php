@@ -139,9 +139,10 @@ catch (Exception $e)
     $errMess=$e->getMessage();
     $errStack=$e->getTraceAsString();
     $errType=$e->getCode();
-    //gc_err_logging($errMess,$errStack,'Profile Strength',$errType);
+    gc_err_logging($errMess,$errStack,'Profile Strength',$errType);
 
     $connection->close();
+    echo "<div class='alert alert-danger'><h3>Oops!</h3>".elgg_echo('ps:psErr')."</div>";
 }
 
 } 

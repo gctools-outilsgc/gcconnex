@@ -66,11 +66,19 @@ if ($listing_format == 'paged' || $listing_format == 'full') {
         'text' => elgg_echo('event_calendar:new'),
         'class' => 'btn btn-primary pull-right',
     ));
+		 echo'<h3>'.elgg_echo('event_calendar:comming').'</h3>';
+		 echo $new_link;
+	if (empty($event_list)) {
+		// show the empty calendar
+		$event_list = '<p>'.elgg_echo('event_calendar:no_events_found').'</p>';
+		echo $event_list;
+	} else {
+		echo $event_list;
+		
+	}
 
+	
 
-	echo'<h3>Upcoming events</h3>';
-	echo $new_link;
-	echo $event_list;
 
 	
 } else {

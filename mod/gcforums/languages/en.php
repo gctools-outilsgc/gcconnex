@@ -4,6 +4,7 @@ $english = array(
 
 	"gcforums:group_forum_title" => "[en] Group Forum",
 	"gcforums:forum_edit" => "[en] Edit Forum",
+	"gcforums:forum_delete" => "[en] Delete Forum",
 	"gcforums:forum_title" => "[en] Forum",
 	"gcforums:group_nav_label" => "[en] Group Forums",
 
@@ -51,8 +52,13 @@ $english = array(
 	"gcforums:no_posts" => "[en] None",
 	"gcforums:sticky_topic" => "[en] Sticky Topics",
 
-	"gcforums:not_available" => "[en] <i>Currently No Forums Available</i>",
+	"gcforums:forums_not_available" => "[en] <i>Currently No Forums Available</i>",
+	"gcforums:topics_not_available" => "[en] <i>Currently No Topics Available</i>",
+	"gcforums:no_comments" => "[en] <i>No comments have been made yet... Be the first!</i>",
+	"gcforums:categories_not_available" => "[en] <i>Currently No Categories Available</i>",
 
+	"gcforums:jmp_menu" => "[en] Jobs Marketplace",
+	"gcforums:jmp_url" => "http://jmp.com",
 	);
 
 add_translation("en", $english);
