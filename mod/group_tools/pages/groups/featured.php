@@ -37,6 +37,7 @@ $sidebar = elgg_view("groups/sidebar/find");
 $sidebar .= elgg_view("groups/sidebar/suggested");
 
 $params = array(
+    "title" => elgg_echo('groups'),
 	"content" => $content,
 	"sidebar" => $sidebar,
 	"filter" => $filter,

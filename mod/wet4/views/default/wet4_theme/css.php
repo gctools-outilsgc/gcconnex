@@ -11035,7 +11035,7 @@ a.shr-opn, a.shr-opn:hover {
 
 }
 
-.elgg-module-widget .elgg-menu-widget .elgg-menu-item-settings, .elgg-module-widget .elgg-menu-widget .elgg-menu-item-delete, .elgg-module-widget .elgg-menu-widget .elgg-menu-item-move{
+.elgg-module-widget .elgg-menu-widget .elgg-menu-item-settings, .elgg-module-widget .elgg-menu-widget .elgg-menu-item-delete, .elgg-module-widget .elgg-menu-widget .elgg-menu-item-collapse{
     display:inline-block;
 
 }
@@ -11533,6 +11533,11 @@ figcaption{
 
 .widget-enter-selected{
     background-color: #eaebed;
+}
+
+.wet-hidden{
+    display:none;
+
 }
 /*
  * Mobile panel

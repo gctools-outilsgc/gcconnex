@@ -29,6 +29,7 @@ $content = elgg_list_entities_from_relationship($options);
 $params = array(
 	'content' => $content,
 	'title' => $title,
+    'sidebar'=>elgg_view('widgets/suggested_friends/content'),
 );
 $body = elgg_view_layout('one_sidebar', $params);
 

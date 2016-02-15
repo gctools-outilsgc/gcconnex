@@ -41,7 +41,7 @@ return array(
       'sf:title' => "Voyez-vous quelqu'un que vous connaissez ? Connectez-vous avec eux.",
       'sf:connect' => "Connecter",
       'sf:alttext' => "L'avatar de",
-
+      'sf:suggcolleagues'=> "Suggestion de collègue",
 /**
  * The Wire
  */
@@ -89,8 +89,11 @@ return array(
     'gprofile:albumsCatch' => "Albums",
     'gprofile:ideas' => "Idées",
     'gprofile:more' => "Plus",
-    
+
     'gprofile:create' => "Create Group",
+
+    'gprofile:edit:content' => "Options pour le contenu",
+    'gprofile:edit:admin' => "Option pour l'administrateur",
 
         /**
    * Group invite
@@ -1430,6 +1433,17 @@ Ne répondez pas à cet e-mail.",
     'contactform:upload' => 'Téléverser un fichier',
     'contactform:required' => 'obligatoire',
     'contactform:department' => 'Ministère',
+    'contactform:reason' => 'Choisir...',
+    'contactform:helpful' => 'Communautés utiles',
+    'contactform:learn' => 'Apprenez advantage sur les médias sociaux ',
+    'contactform:ambassadors' => 'Groupe GCconnex du Réseau des ambassadeurs des Outils GC 2.0',
+    'contactform:clicks' => 'Groupe GCconnex des Clic et conseils',
+    'contactform:groupgcconnex' => 'Groupe GCconnex des Outils GC 2.0',
+    'contactform:teamgcpedia' => 'Équipe des Outils GC 2.0 dans GCpédia',
+    'contactform:collaborating' => 'Collaboration au moyen de GCpédia de l’EFPC (B171)',
+    'contactform:collaborating:link' => '"http://www.csps-efpc.gc.ca/forlearners/coursesandprograms/CourseDetail-fra.aspx?courseno=b171%7C"', 
+    'contactform:socialmedia' => 'Les médias sociaux au gouvernement du Canada (B334) de l’EFPC',
+    'contactform:socialmedia:link' => '"http://www.csps-efpc.gc.ca/forlearners/coursesandprograms/CourseDetail-fra.aspx?courseno=B334"',
 
 
     /*
@@ -1447,6 +1461,7 @@ Ne répondez pas à cet e-mail.",
 'event_calendar:mine' => 'Mes événements',
 'event_calendar:listing_title:user' => "Les événements de %s",
 'event_calendar:submit' => 'Sauvegarder',
+'event_calendar:personal_event_calendars_link' => 'Sur (%s) calendrier',
 
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)

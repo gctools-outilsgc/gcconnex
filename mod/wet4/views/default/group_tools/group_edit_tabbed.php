@@ -13,7 +13,7 @@ $tabs = array(
 	),
 
 	"tools" => array(
-		"text" => elgg_echo("group_tools:group:edit:tools"),
+		"text" => elgg_echo('gprofile:edit:content'),
         'data-toggle' => 'tab',
 		"href" => "#group-tools-group-edit-tools",
 		"priority" => 200,
@@ -22,7 +22,7 @@ $tabs = array(
 
 if (!empty($vars["entity"])) {
 	$tabs["other"] = array(
-		"text" => elgg_echo("group_tools:group:edit:other"),
+		"text" => elgg_echo('gprofile:edit:admin'),
 		"href" => "#other",
 		"priority" => 300
 	);

@@ -69,9 +69,15 @@ function wet4_theme_init() {
 	
 	elgg_register_plugin_hook_handler('head', 'page', 'wet4_theme_setup_head');
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'my_owner_block_handler');
+    elgg_register_plugin_hook_handler('register', 'menu:title', 'my_title_menu_handler');
+    elgg_register_plugin_hook_handler('register', 'menu:filter', 'my_filter_menu_handler');
+    elgg_register_plugin_hook_handler('register', 'menu:site', 'my_site_menu_handler');
 	elgg_register_plugin_hook_handler('register', 'menu:river', 'river_handler');
     
     elgg_register_simplecache_view('wet4/test.js');
+
+    //added since goups didnt have this action but called it
+    elgg_register_action("discussion_reply/delete", elgg_get_plugins_path() . "/wet4/actions/discussion/reply/delete.php");
     
 	elgg_register_action("file/move_folder", elgg_get_plugins_path() . "/wet4/actions/file/move.php");
     elgg_register_action("friends/collections/add", elgg_get_plugins_path() . "/wet4/actions/friends/collections/add.php");
@@ -93,9 +99,11 @@ function wet4_theme_init() {
     }
     elgg_register_widget_type('wet_activity', $wet_activity_title, 'GCconnex Group and Colleague Activity', array('custom_index_widgets'),true);
     elgg_register_widget_type('profile_completness', elgg_echo('ps:profilestrength'), 'The "Profile Strength" widget', array('custom_index_widgets'),false);
+    elgg_register_widget_type('suggested_friends', elgg_echo('sf:suggcolleagues'), elgg_echo('sf:suggcolleagues'), array('custom_index_widgets'),false);
 
     //WET my groups widget
     elgg_register_widget_type('wet_mygroups_index', $mygroups_title, 'My Groups Index', array('custom_index_widgets'),true);
+    elgg_register_widget_type('most_liked', elgg_echo('activity:module:weekly_likes'), elgg_echo('activity:module:weekly_likes'), array('custom_index_widgets'),true);
 
     
     //extend views of plugin files to remove unwanted menu items
@@ -686,16 +694,18 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 	if ($entity->canEdit() && $handler) {
 		// edit link
     
+        //checks so the edit icon is not placed on incorrect entities
         if($handler != 'group_operators'){
-		$options = array(
-			'name' => 'edit',
-			'text' => '<i class="fa fa-edit fa-lg icon-unsel"><span class="wb-inv">Edit This</span></i>',
-			'title' => elgg_echo('edit:this'),
-			'href' => "$handler/edit/{$entity->getGUID()}",
-			'priority' => 299,
-		);
-		$return[] = \ElggMenuItem::factory($options);
-   
+            if($entity->getSubtype() != 'thewire'){
+                $options = array(
+                    'name' => 'edit',
+                    'text' => '<i class="fa fa-edit fa-lg icon-unsel"><span class="wb-inv">Edit This</span></i>',
+                    'title' => elgg_echo('edit:this'),
+                    'href' => "$handler/edit/{$entity->getGUID()}",
+                    'priority' => 299,
+                );
+                $return[] = \ElggMenuItem::factory($options);
+            }
 		// delete link
 		$options = array(
 			'name' => 'delete',
@@ -876,6 +886,73 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params){
 	return $return;
 }
 
+//arrange filter menu menu
+function my_filter_menu_handler($hook, $type, $menu, $params){
+    foreach ($menu as $key => $item){
+        if(elgg_in_context('thewire')){
+        switch ($item->getName()) {
+           
+                case 'all':
+                    $item->setPriority('1');
+
+                    break;
+                case 'friend':
+                    $item->setPriority('2');
+
+                    break;
+                case 'mention':
+                    $item->setText(elgg_echo('search'));
+                    $item->setPriority('4');
+
+                    break;
+                case 'mine':
+                    $item->setPriority('3');
+
+                    break;
+            }
+        }
+    }
+}
+
+//fix site menu
+function my_site_menu_handler($hook, $type, $menu, $params){
+    foreach ($menu as $key => $item){
+
+            switch ($item->getName()) {
+
+                case 'groups':
+                    if(elgg_is_logged_in()){
+                        $item->setHref('groups/all?filter=yours');
+                    } else {
+                        $item->setHref('groups/all?filter=popular');
+                    }
+
+                    break;
+                
+            }
+        }
+    
+}
+
+//arrange title menu on photo album
+function my_title_menu_handler($hook, $type, $menu, $params){
+    foreach ($menu as $key => $item){
+        switch ($item->getName()) {
+
+            case 'slideshow':
+                $item->setText(elgg_echo('album:slideshow'));
+
+
+                break;
+            case 'addphotos':
+                $item->setItemClass('mrgn-rght-sm');
+
+
+                break;
+        }
+    }
+}
+
 
 //arrange owner block menu
 function my_owner_block_handler($hook, $type, $menu, $params){
@@ -901,6 +978,10 @@ function my_owner_block_handler($hook, $type, $menu, $params){
                     $item->setText(elgg_echo('gprofile:discussion'));
                     $item->setHref('#' . strtolower(elgg_echo('gprofile:discussion')));
                     $item->setPriority('1');
+                    break;
+                case 'gcforums':
+                    $item->setPriority('1');
+                    $item->setLinkClass('forums');
                     break;
                 case 'related_groups':
                     $item->setHref('#related');
@@ -987,6 +1068,10 @@ function my_owner_block_handler($hook, $type, $menu, $params){
                     $item->setText(elgg_echo('gprofile:discussion'));
 
                     $item->setPriority('1');
+                    break;
+                case 'gcforums':
+                    $item->setPriority('1');
+                    $item->setLinkClass('forums');
                     break;
                 case 'related_groups':
 
@@ -1119,6 +1204,10 @@ function my_owner_block_handler($hook, $type, $menu, $params){
                     $item->addItemClass('removeMe');
                     $item->setPriority('12');
                     break;
+
+                case 'orgs':
+                    $item->setPriority('13');
+                    break;
                 case 'thewire':
                     //$item->setText(elgg_echo('The Wire'));
                     $item->setHref('#thewire');
@@ -1188,8 +1277,16 @@ function wet4_widget_menu_setup($hook, $type, $return, $params) {
 	/* @var \ElggWidget $widget */
 	$show_edit = elgg_extract('show_edit', $params, true);
 
+    $options = array(
+		'name' => 'collapse',
+		'text' => '<i class="fa fa-chevron-down fa-lg icon-unsel"><span class="wb-inv">Delete This</span></i> ',
+		'href' => "#elgg-widget-content-$widget->guid",
+		'link_class' => 'elgg-widget-collapse-button ',
+		'rel' => 'toggle',
+		'priority' => 1,
+	);
 
-
+    $return[] = \ElggMenuItem::factory($options);
 	if ($widget->canEdit()) {
 		$options = array(
 			'name' => 'delete',
@@ -1203,20 +1300,22 @@ function wet4_widget_menu_setup($hook, $type, $return, $params) {
 			'priority' => 900,
 		);
 		$return[] = \ElggMenuItem::factory($options);
-        /* This is to maybe have a move button on widgets to move them with the keyboard.
+        // This is to maybe have a move button on widgets to move them with the keyboard.
+        /*
         $options = array(
-            'name' => 'move',
-            'text' => '<i class="fa fa-arrows fa-lg icon-unsel"><span class="wb-inv">Delete This</span></i>',
+            'name' => 'collapse',
+            'text' => '<i class="fa fa-chevron-down fa-lg icon-unsel"><span class="wb-inv">Delete This</span></i>',
             'title' => elgg_echo('widget:delete', array($widget->getTitle())),
-            'href' => "action/widgets/move?widget_guid=$widget->guid",
-            'is_action' => true,
-            'link_class' => 'elgg-widget-move-button',
-            'id' => "elgg-widget-move-button-$widget->guid",
-            'data-elgg-widget-type' => $widget->handler,
+            'href' => "#elgg-widget-content-$widget->guid",
+            //'is_action' => true,
+            'link_class' => 'elgg-menu-content elgg-widget-collapse-button',
+            //'id' => "elgg-widget-move-button-$widget->guid",
+         'rel' => 'toggle',
+            
             'priority' => 700,
         );
 		$return[] = \ElggMenuItem::factory($options);
-        */
+       */
 		if ($show_edit) {
 			$options = array(
 				'name' => 'settings',

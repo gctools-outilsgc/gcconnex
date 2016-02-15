@@ -15,7 +15,7 @@ $entity = get_entity($entity_guid); // entity guid may not be present
 // check if the current entity is a forum-topic subtype then display topic and comments
 if ($entity_guid && $entity->getSubtype() === 'hjforumtopic') {
 	echo gcforums_menu_buttons($nested_forum, $group->guid, true);
-	echo gcforums_topic_content($entity_guid);
+	echo gcforums_topic_content($entity_guid, $group->guid);
 } else {
 
 	echo gcforums_menu_buttons($nested_forum, $group->guid);

@@ -42,20 +42,20 @@ $content = elgg_view_entity($album, array('full_view' => true));
 if (elgg_is_logged_in()) {
 	if ($owner instanceof ElggGroup) {
 		if ($owner->isMember(elgg_get_logged_in_user_entity())) {
-			elgg_register_menu_item('title2', array(
+			/*elgg_register_menu_item('title2', array(
 				'name' => 'addphotos',
 				'href' => "ajax/view/photos/selectalbum/?owner_guid=" . $owner->getGUID(),
 				'text' => elgg_echo("photos:addphotos"),
 				'link_class' => 'elgg-button elgg-button-action elgg-lightbox'
-			));
+			));*/
 		}
 	} else {
-		elgg_register_menu_item('title2', array(
+		/*elgg_register_menu_item('title2', array(
 			'name' => 'addphotos',
 			'href' => "ajax/view/photos/selectalbum/?owner_guid=" . elgg_get_logged_in_user_guid(),
 			'text' => elgg_echo("photos:addphotos"),
 			'link_class' => 'elgg-button elgg-button-action elgg-lightbox'
-		));
+		));*/
 	}
 }
 
@@ -65,6 +65,7 @@ if ($album->getContainerEntity()->canWriteToContainer()) {
 			'href' => 'photos/upload/' . $album->getGUID(),
 			'text' => elgg_echo('images:upload'),
 			'link_class' => 'elgg-button elgg-button-action',
+            'item_class' => 'mrgn-rght-sm',
 	));
 }
 
@@ -75,6 +76,7 @@ if ($album->canEdit() && $album->getSize() > 0) {
 		'href' => "photos/sort/" . $album->getGUID(),
 		'text' => elgg_echo('album:sort'),
 		'link_class' => 'elgg-button elgg-button-action',
+        'item_class' => 'mrgn-rght-0',
 		'priority' => 200,
 	));
 }
@@ -90,7 +92,7 @@ if (elgg_get_plugin_setting('slideshow', 'tidypics') && $album->getSize() > 0) {
 		'id' => 'slideshow',
 		'data-slideshowurl' => $url,
 		'href' => '#',
-		'text' => "<img src=\"".elgg_get_site_url() ."mod/tidypics/graphics/slideshow.png\" alt=\"".elgg_echo('album:slideshow')."\">",
+		'text' => elgg_echo('album:slideshow'),//"<img src=\"".elgg_get_site_url() ."mod/tidypics/graphics/slideshow.png\" alt=\"".elgg_echo('album:slideshow')."\">",
 		'title' => elgg_echo('album:slideshow'),
 		'link_class' => 'elgg-button elgg-button-action',
 		'priority' => 300

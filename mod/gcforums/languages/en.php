@@ -59,6 +59,13 @@ $english = array(
 
 	"gcforums:jmp_menu" => "[en] Jobs Marketplace",
 	"gcforums:jmp_url" => "http://jmp.com",
+
+	"gcforums:notification_subject_topic" => "New forum topic / Nouveau sujet",
+	"gcforums:notification_body_topic" => "%s has started a New Forum Topic '%s' with the following content... <br/> %s <br/> You can view this item here: %s <br/>",
+
+	"gcforums:notification_subject_post" => "New forum post / Nouveau post sur le forum",
+	"gcforums:notification_body_post" => "%s made a reply in the Forum Topic '%s' with the following content... <br/> %s <br/> You can view this item here: %s <br/>",
+
 	);
 
 add_translation("en", $english);

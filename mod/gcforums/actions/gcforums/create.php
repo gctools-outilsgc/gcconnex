@@ -103,8 +103,8 @@ switch ($gcf_subtype) {
 		create_hjforumtopic_relationships($new_guid, $new_guid);
 
 		$forward_url = elgg_get_site_url()."gcforums/group/{$gcf_group}/{$new_guid}/hjforumtopic";
-
-		gcforums_notify_subscribed_users($gcf_container);
+		
+		gcforums_notify_subscribed_users($gcf_new_topic, $forward_url);
 
 		//error_log("topic url: {$gcf_new_topic->getURL()}");
 		forward($forward_url);
@@ -134,9 +134,9 @@ switch ($gcf_subtype) {
 			system_message(elgg_echo("Entity entitled '{$gcf_new_post->title}' has been created successfully"));
 	
 		create_hjforumtopic_relationships($new_guid, $new_guid);
-		//$forward_url = elgg_get_site_url()."gcforums/group/{$gcf_group}/{$gcf_container}/hjforumtopic";
+		$forward_url = elgg_get_site_url()."gcforums/group/{$gcf_group}/{$gcf_container}/hjforumtopic";
 
-		gcforums_notify_subscribed_users($gcf_container);
+		gcforums_notify_subscribed_users($gcf_new_post, $forward_url);
 
 		break;
 	default:
@@ -144,8 +144,15 @@ switch ($gcf_subtype) {
 }
 
 
+// TODO: move to lib directory
+function gcforums_notify_subscribed_users($hjobject, $hjlink) {
+	$hjobject_subtype = $hjobject->subtype;
+	if ($hjobject->getSubtype() === 'hjforumpost')
+		$hjobject_guid = $hjobject->getContainerGUID();
+	else 
+		$hjobject_guid = $hjobject->guid;
 
-function gcforums_notify_subscribed_users($hjobject_guid) {
+	error_log("subtype: $hjobject_subtype / guid: $hjobject_guid");
 	$options = array(
 		'type' => 'user',
 		'relationship' => 'subscribed',
@@ -162,15 +169,25 @@ function gcforums_notify_subscribed_users($hjobject_guid) {
 		$subscribers[] = (string)$user->guid;
 	}
 
+	$name = $hjobject->getOwnerEntity()->name;
+	$content = $hjobject->description;
+	$link = $hjlink;
+	$topic_name = $hjobject->title;
+
 	$from = elgg_get_site_entity()->guid;
-	$subject = "new item made!";
-	$message = "message";
+	if ($hjobject_subtype === 'hjforumtopic') { // when a forum topic is made
+		$subject = elgg_echo('gcforums:notification_subject_topic');
+		$message = elgg_echo('gcforums:notification_body_topic', array($name, $topic_name, $content, $link));
+	} else { // when a forum post is made
+		$subject = elgg_echo('gcforums:notification_subject_post');
+		$message = elgg_echo('gcforums:notification_body_post', array($name, $topic_name, $content, $link));
+	}
+	// $subject = "Hello!";
+	// $message = "World :-)";
 
 	notify_user($subscribers, $from, $subject, $message);
 }
 
-
-// TODO: move to lib directory
 // new entity guid / container guid
 function create_hjforumtopic_relationships($static_guid, $e_guid) {
 	$entity = get_entity($e_guid);

@@ -31,7 +31,7 @@ if (elgg_is_logged_in()) {
 
 	// debug error_log (will be displayed above forms) comment-out for production!
 	if ($gcf_subtype === "hjforumpost")
-		echo "create.php :: subtype: {$gcf_subtype} / topic_access: {$gcf_topic_access} / topic_guid: {$gcf_topic_guid} / container: {$gcf_container} / title: {$hjforumpost_title}";
+		echo "create.php :: group: {$gcf_group} / subtype: {$gcf_subtype} / topic_access: {$gcf_topic_access} / topic_guid: {$gcf_topic_guid} / container: {$gcf_container} / title: {$hjforumpost_title}";
 	else
 		echo "create.php :: subtype: {$gcf_subtype} / group: {$gcf_group} / container: {$gcf_container}";
 
@@ -78,7 +78,7 @@ if (elgg_is_logged_in()) {
 		}
 
 
-//		if ($gcf_subtype === 'hjforum' && get_entity($gcf_container)->enable_subcategories) {
+		if ($gcf_subtype === 'hjforum' && get_entity($gcf_container)->enable_subcategories) {
 
 			if ($gcf_container && $gcf_container != 0) { // this is within the nested forums
 				$query = "SELECT  oe.guid, oe.title
@@ -101,9 +101,9 @@ if (elgg_is_logged_in()) {
 			$gcf_file_under_category_input = elgg_view('input/dropdown', array(
 				'options_values' => $category_list,
 				'name' => 'gcf_file_in_category',
-				//'value' => 
+
 			));
-//		}
+		}
 	}
 
 	if (!$gcf_subtype || $gcf_subtype === 'hjforumpost')

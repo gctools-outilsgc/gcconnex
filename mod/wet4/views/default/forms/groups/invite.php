@@ -90,7 +90,7 @@ if (in_array("yes", array($invite_site_members, $invite_email, $invite_csv))) {
 																			"relationship" => "email",
                                                                             'class' => 'noSubmit'));
 
-        $form_data .= '<div id="group_tools_group_invite_autocomplete_email_autocomplete_results">  </div>';
+        $form_data .= '<div id="group_tools_group_invite_autocomplete_email_autocomplete_results"> <div class="group_tools_group_invite_autocomplete_autocomplete_result elgg-discover_result elgg-discover"><input type="hidden" value="" name="user_guid_email[]"></div>  </div>';
 
 		$form_data .= "</div>";
 

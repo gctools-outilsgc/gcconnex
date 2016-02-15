@@ -139,6 +139,7 @@ $(document).ready( function(){
     $('.tabMenuGroup .elgg-menu-content').attr('data-toggle', 'tab');
     //add collapse to search
     $('.tabMenuGroup #searchTab').attr('data-toggle', 'collapse');
+    $('.tabMenuGroup .forums').attr('data-toggle', '');
     <?php } ?>
     //add dropdown data to li
     $('.tabMenuGroup .dropdown a').attr('data-toggle', 'dropdown');

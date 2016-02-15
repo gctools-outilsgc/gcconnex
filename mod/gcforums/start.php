@@ -109,7 +109,7 @@ function gcforums_page_handler($page) {
 /* Display Topic and the corresponding comments
  * @params topic
  */
-function gcforums_topic_content($topic_guid) {
+function gcforums_topic_content($topic_guid, $group_guid) {
 	elgg_load_css('gcforums-css');
 	$dbprefix = elgg_get_config('dbprefix');
 
@@ -196,6 +196,7 @@ function gcforums_topic_content($topic_guid) {
 	$topic_content .= "</table>";
 	$topic_content .= "<br/><br/><br/>";
 
+	$vars['group_guid'] = $group_guid;
 	$vars['topic_guid'] = $topic_guid;
 	$vars['topic_access'] = $topic->access_id;
 	$vars['subtype'] = 'hjforumpost';

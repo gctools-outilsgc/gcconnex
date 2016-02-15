@@ -66,11 +66,8 @@ if ($object->getSubtype() === 'hjforum') {
 	echo print_r($shelved_in);
 	echo " // {$shelved_in[0]->guid_two}";
 
-
-	// get
-	//$container_object = get_entity($object->getContainerGUID());
-	//if ($container_object->enable_subcategories) {
-
+	// this is forum object then check to see if categories is enabled
+	if ($object->enable_subcategories) {
 		if ($vars['forum_guid'] && $vars['forum_guid'] != 0) { // this is within the nested forums
 			$query = "SELECT  oe.guid, oe.title
 					FROM elggentities e, elggentity_relationships r, elggobjects_entity oe
@@ -89,8 +86,7 @@ if ($object->getSubtype() === 'hjforum') {
 			'name' => 'gcf_file_in_category',
 			'value' => $shelved_in[0]->guid_two,
 		));
-
-	//}
+	}
 }
 
 // hidden field for guid

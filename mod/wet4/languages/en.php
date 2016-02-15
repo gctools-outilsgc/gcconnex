@@ -40,6 +40,7 @@ return array(
       'sf:title' => "See anyone you know? Connect with them.",
       'sf:connect' => "Connect",
       'sf:alttext' => "Avatar image of",
+      'sf:suggcolleagues'=> "Colleague suggestion",
 /**
  * The Wire
  */
@@ -90,6 +91,8 @@ return array(
     
     'gprofile:create' => "Create Group",
 
+    'gprofile:edit:content' => "Content options",
+    'gprofile:edit:admin' => "Admin options",
 
     /**
   * Group invite
@@ -1415,13 +1418,21 @@ Please do not reply to this email.",
 					Please see the FAQ and the Help Centre to get instant answers for the most common questions and learn how to use GCconnex like a pro!</p>
 					<p>Can't find the answer you are looking for? Contact the GCconnex Help Desk by filling out the form below. Please be clear as possible in describing your question or issue, and provide a screenshot where possible.
 					</p>",
-        'contactform:useful' => 'GCconnex Groups that may be useful to you:',
-    'contactform:clickandtips' => 'Clicks and Tips',
-    'contactform:gc20' => 'GC2.0 Tools',
-
+	'contactform:useful' => 'GCconnex Groups that may be useful to you:',
+    'contactform:helpful' => 'Helpful communities',
+    'contactform:learn' => 'Learn more about social media',
+    'contactform:ambassadors' => 'Ambassadors Network for the GC 2.0 Tools GCconnex Group',
+    'contactform:clicks' => 'Clicks and Tips GCconnex Group',
+    'contactform:groupgcconnex' => 'GC 2.0 Tools GCconnex Group',
+    'contactform:teamgcpedia' => 'GC 2.0 Tools Team on GCpedia',
+    'contactform:collaborating' => ' CSPS’s Collaborating Using GCpedia (B171) ',
+    'contactform:collaborating:link' => '"http://www.csps-efpc.gc.ca/forlearners/coursesandprograms/CourseDetail-eng.aspx?courseno=b171%7C"', 
+    'contactform:socialmedia' => 'CSPS’s Social Media in the Government of Canada (B334)',
+    'contactform:socialmedia:link' => '"http://www.csps-efpc.gc.ca/forlearners/coursesandprograms/CourseDetail-eng.aspx?courseno=B334"',
     'contactform:department' => 'Department',
     'contactform:select' => 'Please select a category',
     'contactform:reason' => 'Select...',
+    'contactform:help_menu_item' => "Help / Contact Us",
     
 /*
  * Contact Form Validation
@@ -1481,7 +1492,7 @@ Please do not reply to this email.",
 /**
  * Event Calendar
  */
-	'event_calendar:comming' => "Upcomming events",
+	'event_calendar:comming' => "Upcoming events",
 	'event_calendar:language' => "Event language",
 	'event_calendar:mine' => 'My events',
 

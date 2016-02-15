@@ -55,6 +55,27 @@ if ($additional_class) {
 	$widget_class = "$widget_class $additional_class";
 }
 
+// check if the widget is collapsed
+$widget_body_class = "elgg-widget-content";
+$widget_is_collapsed = false;
+$widget_is_open = true;
+
+if (elgg_is_logged_in()) {
+    $widget_is_collapsed = widget_manager_check_collapsed_state($widget->guid, "widget_state_collapsed");
+    $widget_is_open = widget_manager_check_collapsed_state($widget->guid, "widget_state_open");
+}
+/*
+if (($widget->widget_manager_collapse_state === "closed" || $widget_is_collapsed) && !$widget_is_open) {
+//$item->addLinkClass("elgg-widget-collapsed");
+$widget_body_class .= " hidden wet-hidden";
+}*/
+// set collapsed
+//it's not even taking this file :|
+if ( $widget_is_collapsed && !$widget_is_open ){	// using the same relationship names, etc as in widget manager 5.0
+    //	$minimized = 'style="display:none;"';
+	$widget_body_class .= "  wet-hidden";
+}
+
 $widget_header = <<<HEADER
 	<div class="elgg-widget-handle clearfix"><h3 class="elgg-widget-title pull-left">$title</h3>
 	$controls
@@ -63,7 +84,7 @@ HEADER;
 
 $widget_body = <<<BODY
 	$edit_area
-	<div class="elgg-widget-content" id="elgg-widget-content-$widget->guid">
+	<div class="elgg-widget-content $widget_body_class" id="elgg-widget-content-$widget->guid">
 		$content
 	</div>
 BODY;
