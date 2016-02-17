@@ -35,7 +35,7 @@ if ($event) {
 		if (!$event_calendar_autopersonal || ($event_calendar_autopersonal == 'yes')) {
 			event_calendar_add_personal_event($event->guid, $user_guid);
 		}
-
+		event_email($event);
 		system_message(elgg_echo('event_calendar:add_event_response'));
 	}
 

@@ -28,7 +28,8 @@ Si vous ne pouvez pas cliquer sur le lien, copier et coller dans votre navigateu
 	'email:confirm:fail' => "Votre adresse de courriel n'a pas pu être vérifiée...",
 
 	'uservalidationbyemail:emailsent' => "E-mail envoyé à <em>%s</em>",
-	'uservalidationbyemail:registerok' => "Pour activer votre compte, s'il vous plaît confirmer votre adresse courriel en cliquant sur le lien que nous venons de vous envoyer..",
+	//'uservalidationbyemail:registerok' => "Pour activer votre compte, s'il vous plaît confirmer votre adresse courriel en cliquant sur le lien que nous venons de vous envoyer..",
+    'uservalidationbyemail:registerok' => "Votre compte a été créé, mais avant de pouvoir ouvrir une session vous devez d'abord vérifier votre adresse électronique. Un message a été envoyé à l'adresse que vous avez fournie. Veuillez suivre les instructions que contient le message pour vérifier votre compte.",
 	'uservalidationbyemail:login:fail' => "Votre compte n'est pas validé donc la tentative de connexion a échoué. Un autre courriel de validation a été envoyé.",
 
 	'uservalidationbyemail:admin:no_unvalidated_users' => 'Pas de utilisateurs non validées.',

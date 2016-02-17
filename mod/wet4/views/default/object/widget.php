@@ -74,10 +74,13 @@ $widget_body_class .= " hidden wet-hidden";
 if ( $widget_is_collapsed && !$widget_is_open ){	// using the same relationship names, etc as in widget manager 5.0
     //	$minimized = 'style="display:none;"';
 	$widget_body_class .= "  wet-hidden";
+    $widget_head_class ="wet-collapsed";
+}else{
+    $widget_head_class = "wet-open";
 }
 
 $widget_header = <<<HEADER
-	<div class="elgg-widget-handle clearfix"><h3 class="elgg-widget-title pull-left">$title</h3>
+	<div class="elgg-widget-handle clearfix $widget_head_class"><h3 class="elgg-widget-title pull-left">$title</h3>
 	$controls
 	</div>
 HEADER;

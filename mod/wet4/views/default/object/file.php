@@ -40,7 +40,7 @@ if ($time_preference == "date") {
 } else {
 	$date = elgg_view_friendly_time($file->time_created);
 }
-
+$date = date(elgg_echo("friendlytime:date_format"), $file->time_created);
 // count comments
 $comments_link = "";
 $comment_count = (int) $file->countComments();
@@ -159,11 +159,13 @@ if ($full_view && !elgg_in_context("gallery")) {
 		$file_icon = elgg_view_entity_icon($file, "small");
 		$excerpt = elgg_get_excerpt($file->description);
 	}
-	
+
+
+
 	$params = array(
 		"entity" => $file,
 		"metadata" => $entity_menu,
-		"subtitle" => $subtitle,
+		"subtitle" => $subtitle . $author_text . ' ' . $date,
 		"tags" => $tags,
 		"content" => $excerpt
 	);

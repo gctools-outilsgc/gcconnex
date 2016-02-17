@@ -1364,6 +1364,291 @@ function event_calendar_personal_can_manage($event, $user_id) {
 	return $status;
 }
 
+function event_email($event) {
+
+$time = event_calendar_get_formatted_time($event);
+$name = get_loggedin_user()->username;
+$date = explode("-", $time);
+$startdate = $date[0]; 
+$enddate = $date[1]; 
+$title = $event->title;
+$description = $event->description;
+$venue = $event->venue;
+$language = $event->language;
+if (htmlspecialchars($event->language) == 0 ){
+	$language = 'Français';
+}else if(htmlspecialchars($event->language) == 1 ){
+	$language = 'English';
+}else{
+	$language = 'Bilingue';
+}
+
+$teleconference = $event->teleconference;
+$fees = $event->fees;
+$organiser = $event->organiser;
+$contact = $event->contact;
+$long_description = $event->long_description;
+
+
+$from_name = "Gcconnex";        
+$from_address = "gcconnex@gcconnex.gc.ca";        
+$to_name = $name;        
+$to_address = get_loggedin_user()->email;        
+$startTime = $startdate;        
+$endTime = $enddate;        
+$subject = $title;        
+$description = $description;        
+$location = $venue;
+sendIcalEvent($from_name, $from_address, $to_name, $to_address, $startTime, $endTime, $subject, $description, $location,$long_description,$contact,$organiser,$fees,$teleconference,$language,$venue);
+
+
+}
+
+
+
+function sendIcalEvent($from_name, $from_address, $to_name, $to_address, $startTime, $endTime, $subject, $description, $location,$long_description,$contact,$organiser,$fees,$teleconference,$language,$venue)
+{
+    $domain = 'gcconnex.com';
+
+    //Create Email Headers
+    $mime_boundary = "----Meeting Booking----".MD5(TIME());
+
+    $headers = "From: ".$from_name." <".$from_address.">\n";
+    $headers .= "Reply-To: ".$from_name." <".$from_address.">\n";
+    $headers .= "MIME-Version: 1.0\n";
+    $headers .= "Content-Type: multipart/alternative; boundary=\"$mime_boundary\"\n";
+    $headers .= "Content-class: urn:content-classes:calendarmessage\n";
+    
+    //Create Email Body (HTML)
+    $message = "--$mime_boundary\r\n";
+    $message .= "Content-Type: text/html; charset=UTF-8\n";
+    $message .= "Content-Transfer-Encoding: 8bit\n\n";
+    $message .= "<html>\n";
+    $message .= "<body>\n";
+   // $message .= '<p>Dear '.$to_name.',</p>';
+    //$message .= '<p>description='.$description.'</br>long_description='.$long_description.'</br>contact='.$contact.'</br>organiser='.$organiser.'</br>fees='.$fees.'</br>teleconference='.$teleconference.'</br>language='.$language.'</p>';
+    $message .= '<table width="100%" bgcolor="#fcfcfc" border="0" cellpadding="0" cellspacing="0">
+<tr>
+  <td>
+    <!--[if (gte mso 9)|(IE)]>
+      <table width="600" align="center" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td>
+    <![endif]-->     
+    <table bgcolor="#ffffff" class="content" align="center" cellpadding="0" cellspacing="0" border="0" style="width: 100%; max-width: 800px;">
+      <tr>
+        <td bgcolor="#047177" class="header" style="padding: 12px 0 10px 30px;">
+          <table width="70" align="left" border="0" cellpadding="0" cellspacing="0">  
+            <tr>
+                            <td height="50" style="padding: 0 0 0 20px; color: #ffffff; font-family: sans-serif; font-size: 45px; line-height: 38px; font-weight: bold;">
+                GC<span style="padding: 0 0 0 3px; font-size: 25px; color: #ffffff; font-family: sans-serif; ">connex</span>
+              </td>
+            </tr>
+          </table>
+        </td>
+               
+      <tr>
+        <td class="innerpadding" style="padding: 30px 30px 30px 30px; font-size: 16px; line-height: 22px; border-bottom: 1px solid #f2eeed; font-family: sans-serif;">
+         
+Ceci est un évènement qui s\'est ajouter à votre calendrier GCconnex. Si vous acceptez cet évènement, il sera ajouter à votre calendrier Outlook. Si vous refusez ou souhaitez ne plus faire partie de cet évènement, il faudra aller dans votre calendrier de GCconnex et aller retirer cet évènement de votre calendrier.<br/>
+Merci<br/><br/>
+
+Ceci est un évènement qui s\'est ajouter à votre calendrier GCconnex. Si vous acceptez cet évènement, il sera ajouter à votre calendrier Outlook. Si vous refusez ou souhaitez ne plus faire partie de cet évènement, il faudra aller dans votre calendrier de GCconnex et aller retirer cet évènement de votre calendrier.<br/>
+Merci
+
+             
+        </td>
+      </tr>
+      </tr>
+      <tr>
+        <td class="innerpadding borderbottom" style="padding: 30px 30px 30px 30px; border-bottom: 1px solid #f2eeed;">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td class="h2" style="color: #153643; font-family: sans-serif; padding: 0 0 15px 0; font-size: 24px; line-height: 28px; font-weight: bold;">
+                <span style="font-size:15px; font-weight: normal;">(Le fran&ccedil;ais suit)</span><br/>
+                  GCconnex event
+              </td>
+            </tr>
+            <tr>
+              <td class="bodycopy" style="color: #153643; font-family: sans-serif; font-size: 16px; line-height: 22px;">
+                <b>When:</b> '.$startTime.' to '.$endTime.'<br/>
+                 <b>Title:</b> '.$subject.'<br/>';
+                 if ($venue){
+                 	$message .= '<b>Venue:</b> '.$venue.'<br/>';
+                 }
+                  if ($language){
+                 	$message .= '<b>language:</b> '.$language.'<br/>';
+                 }  if ($teleconference){
+                 	$message .= '<b>teleconference:</b> '.$teleconference.'<br/>';
+                 }  if ($contact){
+                 	$message .= '<b>contact:</b> '.$contact.'<br/>';
+                 }  if ($organiser){
+                 	$message .= '<b>organiser:</b> '.$organiser.'<br/>';
+                 }  if ($fees){
+                 	$message .= '<b>fees:</b> '.$fees.'<br/>';
+                 }  if ($description){
+                 	$message .= '<b>description:</b> '.$description.'<br/>';
+                 } if ($long_description){
+                 	$message .= '<b>long_description:</b> '.$long_description.'<br/>';
+                 }
+                    
+             $message .=' <br/> </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td class="innerpadding borderbottom" style="padding: 30px 30px 30px 30px; border-bottom: 1px solid #f2eeed;">
+<!--          <table width="115" align="left" border="0" cellpadding="0" cellspacing="0">  
+            <tr>
+              <td height="115" style="padding: 0 20px 20px 0;">
+                <img class="fix" src="images/article1.png" width="115" height="115" border="0" alt="" />
+              </td>
+            </tr>
+          </table>-->
+          <!--[if (gte mso 9)|(IE)]>
+            <table width="380" align="left" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td>
+          <![endif]-->
+          
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+             
+               
+                  <tr>
+                    <td class="bodycopy" style="color: #153643; font-family: sans-serif; padding: 0 0 15px 0; font-size: 24px; line-height: 28px; font-weight: bold;">
+                        
+                  Formulaire en ligne de demande
+                    </td>
+                  </tr>
+                  <tr>
+                   <td class="bodycopy" style="color: #153643; font-family: sans-serif; font-size: 16px; line-height: 22px;">
+                <b>Quand:</b> '.$startTime.' to '.$endTime.'<br/>
+                 <b>Titre:</b> '.$subject.'<br/>';
+                 if ($venue){
+                 	$message .= '<b>Lieu:</b> '.$venue.'<br/>';
+                 }
+                  if ($language){
+                 	$message .= '<b>Langue:</b> '.$language.'<br/>';
+                 }  if ($teleconference){
+                 	$message .= '<b>teleconference:</b> '.$teleconference.'<br/>';
+                 }  if ($contact){
+                 	$message .= '<b>Contact:</b> '.$contact.'<br/>';
+                 }  if ($organiser){
+                 	$message .= '<b>Organisateur:</b> '.$organiser.'<br/>';
+                 }  if ($fees){
+                 	$message .= '<b>Prix:</b> '.$fees.'<br/>';
+                 }  if ($description){
+                 	$message .= '<b>Description:</b> '.$description.'<br/>';
+                 } if ($long_description){
+                 	$message .= '<b>Longue description:</b> '.$long_description.'<br/>';
+                 }
+                    
+             $message .=' </td>
+                  </tr>
+               
+              </table>
+          
+          <!--[if (gte mso 9)|(IE)]>
+                </td>
+              </tr>
+          </table>
+          <![endif]-->
+        </td>
+      </tr>
+
+      <tr>
+        <td class="footer" bgcolor="#f5f5f5" style="padding: 20px 30px 15px 30px;">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td align="center" class="footercopy" style="font-family: sans-serif; font-size: 14px; color: #055959">
+                GCconnex calendar / Calendrier de GCconnex<br/>
+              </td>
+            </tr>
+            <tr>
+              <td align="center" class="footercopy" style="font-family: sans-serif; font-size: 14px; color: #055959"">  
+                  Do not reply /<br/> Ne pas r&#233;pondre<br>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <!--[if (gte mso 9)|(IE)]>
+          </td>
+        </tr>
+    </table>
+    <![endif]-->
+    </td>
+  </tr>
+</table>';
+    $message .= "</body>\n";
+    $message .= "</html>\n";
+    $message .= "--$mime_boundary\r\n";
+
+    $ical = 'BEGIN:VCALENDAR' . "\r\n" .
+    'PRODID:-//Microsoft Corporation//Outlook 10.0 MIMEDIR//EN' . "\r\n" .
+    'METHOD:REQUEST' . "\r\n" .
+    'VERSION:2.0' . "\r\n" .
+    'BEGIN:VTIMEZONE' . "\r\n" .
+    'TZID:Eastern Time' . "\r\n" .
+    'BEGIN:STANDARD' . "\r\n" .
+    'DTSTART:20091101T020000' . "\r\n" .
+    'RRULE:FREQ=YEARLY;INTERVAL=1;BYDAY=1SU;BYMONTH=11' . "\r\n" .
+    'TZOFFSETFROM:-0400' . "\r\n" .
+    'TZOFFSETTO:-0500' . "\r\n" .
+    'TZNAME:EST' . "\r\n" .
+    'END:STANDARD' . "\r\n" .
+    'BEGIN:DAYLIGHT' . "\r\n" .
+    'DTSTART:20090301T020000' . "\r\n" .
+    'RRULE:FREQ=YEARLY;INTERVAL=1;BYDAY=2SU;BYMONTH=3' . "\r\n" .
+    'TZOFFSETFROM:-0500' . "\r\n" .
+    'TZOFFSETTO:-0400' . "\r\n" .
+    'TZNAME:EDST' . "\r\n" .
+    'END:DAYLIGHT' . "\r\n" .
+    'END:VTIMEZONE' . "\r\n" .	
+    'BEGIN:VEVENT' . "\r\n" .
+    'ORGANIZER;CN="'.$from_name.'":MAILTO:'.$from_address. "\r\n" .
+    'ATTENDEE;CN="'.$to_name.'";ROLE=REQ-PARTICIPANT;RSVP=TRUE:MAILTO:'.$to_address. "\r\n" .
+    'LAST-MODIFIED:' . date("Ymd\TGis") . "\r\n" .
+    'UID:'.date("Ymd\TGis", strtotime($startTime))."@".$domain."\r\n" .
+    'DTSTAMP:'.date("Ymd\TGis"). "\r\n" .
+    'DTSTART;TZID="Eastern Time":'.date("Ymd\THis", strtotime($startTime)). "\r\n" .
+    'DTEND;TZID="Eastern Time":'.date("Ymd\THis", strtotime($endTime)). "\r\n" .
+    'TRANSP:OPAQUE'. "\r\n" .
+    'SEQUENCE:1'. "\r\n" .
+    'SUMMARY:' . $subject . "\r\n" .
+    'LOCATION:' . $location . "\r\n" .
+    'CLASS:PUBLIC'. "\r\n" .
+    'PRIORITY:5'. "\r\n" .
+    'BEGIN:VALARM' . "\r\n" .
+    'TRIGGER:-PT15M' . "\r\n" .
+    'ACTION:DISPLAY' . "\r\n" .
+    'DESCRIPTION:Reminder' . "\r\n" .
+    'END:VALARM' . "\r\n" .
+    'END:VEVENT'. "\r\n" .
+    'END:VCALENDAR'. "\r\n";
+    'STATUS:CONFIRMED'. "\r\n";
+   
+    $message .= 'Content-Type: text/calendar;name="meeting.ics";method=REQUEST'."\n";
+    $message .= "Content-Transfer-Encoding: 8bit\n\n";
+    $message .= $ical;
+
+    $mailsent = mail($to_address, $subject, $message, $headers);
+
+    return ($mailsent)?(true):(false);
+}
+
+
+
+
+
+
+
+
+
+
+
 function event_calendar_send_event_request($event, $user_guid) {
 	$result = false;
 	if(add_entity_relationship($user_guid, 'event_calendar_request', $event->guid)) {

@@ -7,6 +7,8 @@
  * MBlondin 	2016-02-14 		Creation of widget
 
  ***********************************************************************/
+
+
 try{
     $user_guid = elgg_get_logged_in_user_guid();
     $site_url = elgg_get_site_url();
@@ -31,12 +33,15 @@ try{
             while ($row = $result->fetch_assoc()) {
                 if($count==0 || $count==2)
                 {
-                    $htmloutput=$htmloutput.'<div class="row">';
+                    $htmloutput=$htmloutput.'<div class="row mrgn-tp-sm">';
                 }
+                $userGUID=$row['guid_two'];
+                $job=get_user($userGUID)->job;
                 $htmloutput=$htmloutput.'<div class="col-xs-6 text-center">';
                 $htmloutput=$htmloutput.'<img src="'.get_user($row['guid_two'])->getIcon('small') . '" class="avatar-profile-page img-responsive center-block " alt="'.elgg_echo('sf:alttext').' '.get_user($row['guid_two'])->getDisplayName().'">';
-                $htmloutput=$htmloutput.'<h4 class="h4 mrgn-tp-sm"><span class="text-primary">'.get_user($row['guid_two'])->getDisplayName().'</span></p>';
-                $htmloutput=$htmloutput.'<a href="'.  $site_url. 'profile/'. get_user($row['guid_two'])->username.'" class="btn btn-primary btn-small mrgn-tp-sm">'.elgg_echo('sf:connect').'</a>';
+                $htmloutput=$htmloutput.'<h4 class="h4 mrgn-tp-sm mrgn-bttm-0"><span class="text-primary">'.get_user($row['guid_two'])->getDisplayName().'</span></h4>';
+                $htmloutput=$htmloutput.'<p class="small mrgn-tp-0">'.$job.'</p>';
+                $htmloutput=$htmloutput.'<a href="'.  $site_url. 'profile/'. get_user($row['guid_two'])->username.'" class="btn btn-primary btn-sm mrgn-tp-sm">'.elgg_echo('sf:connect').'</a>';
                 $htmloutput=$htmloutput.'</div>';
                 if($count==1 || $count==3)
                 {

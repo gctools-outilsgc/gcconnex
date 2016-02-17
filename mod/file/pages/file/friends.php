@@ -34,7 +34,7 @@ $sidebar = file_get_type_cloud($owner->guid, true);
 
 $body = elgg_view_layout('content', array(
 	'filter_context' => 'friends',
-	'content' => $content,
+	'content' => $content  . elgg_unregister_menu_item('title2', 'new_folder'),
 	'title' => $title,
 	'sidebar' => $sidebar,
 ));

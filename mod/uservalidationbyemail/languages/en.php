@@ -20,7 +20,8 @@ If you can't click on the link, copy and paste it to your browser manually.
 	'email:confirm:fail' => "Your email address could not be verified...",
 
 	'uservalidationbyemail:emailsent' => "Email sent to <em>%s</em>",
-	'uservalidationbyemail:registerok' => "To activate your account, please confirm your email address by clicking on the link we just sent you.",
+	//'uservalidationbyemail:registerok' => "To activate your account, please confirm your email address by clicking on the link we just sent you.",
+    'uservalidationbyemail:registerok' =>"Your account has been created, but before you can sign in you must first verify your email address. A message has been sent to the email address you specified. Please follow the instructions in that email to verify your account.",
 	'uservalidationbyemail:login:fail' => "Your account is not validated so the log in attempt failed. Another validation email has been sent.",
 
 	'uservalidationbyemail:admin:no_unvalidated_users' => 'No unvalidated users.',

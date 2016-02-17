@@ -12,8 +12,10 @@ function wet4_theme_init() {
     //reload groups library to have our sidebar changes
     elgg_register_library('elgg:groups', elgg_get_plugins_path() . 'wet4/lib/groups.php');
     elgg_register_library('GCconnex_logging', elgg_get_plugins_path() . 'wet4/lib/logging.php');
+    elgg_register_library('GCconnex_display_in_language', elgg_get_plugins_path() . 'wet4/lib/translate_display.php');
 
     elgg_load_library('GCconnex_logging');
+    elgg_load_library('GCconnex_display_in_language');
     //get rid of reply icon on river menu
     elgg_unregister_plugin_hook_handler('register', 'menu:river', 'discussion_add_to_river_menu');
 
@@ -29,6 +31,7 @@ function wet4_theme_init() {
     elgg_register_plugin_hook_handler('register', 'menu:widget', 'wet4_widget_menu_setup');
     elgg_register_plugin_hook_handler('register', 'menu:page', 'wet4_elgg_page_menu_setup');
     elgg_register_plugin_hook_handler('register', 'menu:river', 'wet4_elgg_river_menu_setup');
+    elgg_register_plugin_hook_handler('register', 'menu:site', 'career_menu_hander');
     
     elgg_register_plugin_hook_handler('register', 'menu:entity', 'wet4_likes_entity_menu_setup', 400);
     //elgg_register_plugin_hook_handler('register', 'menu:entity', 'wet4_delete_entity_menu', 400);
@@ -118,9 +121,100 @@ function wet4_theme_init() {
 		}
 	}
     elgg_extend_view("core/settings/statistics", "forms/usersettings/menus");
+    elgg_extend_view('forms/account/settings', 'core/settings/account/landing_page');
+
+    //menu item for career dropdown
+    elgg_register_menu_item('site', array(
+    		'name' => 'career',
+    		'href' => '#career_menu',
+    		'text' => elgg_echo('career') . '<span class="expicon glyphicon glyphicon-chevron-down"></span>'
+    ));
+
+    //set up metadata for user's landing page preference
+    if(elgg_is_logged_in()){
+        $user = elgg_get_logged_in_user_entity();
+        if(!isset($user->landingpage)){
+            $user->landingpage = 'news';
+        }
+    }
+
+    //save new user settings on landing page
+    elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_landing_page');
+
+    // Replace the default index page with redirect
+    elgg_register_plugin_hook_handler('index', 'system', 'new_index');
+    elgg_register_page_handler('newsfeed', 'newsfeed_page_handler');
+
+}
+
+/*
+ *  Create news feed page
+ */
+
+function newsfeed_page_handler(){
+    @include (dirname ( __FILE__ ) . "/pages/newsfeed.php");
+    return true;
+}
+
+/*
+ *  Set new index page to sort user's landing page preference
+ */
+
+function new_index() {
+    return !include_once(dirname(__FILE__) . "/pages/index.php");
+}
+
+/*
+ * Set landing page in user settings
+ */
+
+function _elgg_set_landing_page() {
+	$page = strip_tags(get_input('landingpage'));
+	$user_guid = get_input('guid');
+
+	if ($user_guid) {
+		$user = get_user($user_guid);
+	} else {
+		$user = elgg_get_logged_in_user_entity();
+	}
+
+	if ($user && $user->canEdit() && $page) {
+		if ($page != $user->name) {
+			$user->landingpage = $page;
+			if ($user->save()) {
+				
+				return true;
+			} else {
+				
+			}
+		} else {
+			// no change
+			return null;
+		}
+	} else {
+		
+	}
+	return false;
 }
 
 
+// function that handles moving jobs marketplace and micro missions into drop down menu
+function career_menu_hander($hook, $type, $menu, $params){
+    foreach ($menu as $key => $item){
+
+        switch ($item->getName()) {
+            case 'career':
+                if(elgg_is_active_plugin('gcforums')){
+                    $item->addChild(elgg_get_menu_item('site', 'Forum'));
+                }
+                if(elgg_is_active_plugin('missions')){
+                    $item->addChild(elgg_get_menu_item('site', 'mission_main'));
+                }
+                $item->setLinkClass('item');
+                break;
+        }
+    }
+}
 
 /**
  * Rearrange menu items
@@ -1279,7 +1373,7 @@ function wet4_widget_menu_setup($hook, $type, $return, $params) {
 
     $options = array(
 		'name' => 'collapse',
-		'text' => '<i class="fa fa-chevron-down fa-lg icon-unsel"><span class="wb-inv">Delete This</span></i> ',
+		'text' => '<i class="fa fa-lg icon-unsel"><span class="wb-inv">Delete This</span></i> ',
 		'href' => "#elgg-widget-content-$widget->guid",
 		'link_class' => 'elgg-widget-collapse-button ',
 		'rel' => 'toggle',

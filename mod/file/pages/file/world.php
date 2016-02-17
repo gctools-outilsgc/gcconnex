@@ -26,7 +26,7 @@ $sidebar .= elgg_view('file/sidebar');
 
 $body = elgg_view_layout('content', array(
 	'filter_context' => 'all',
-	'content' => $content,
+	'content' => $content . elgg_unregister_menu_item('title2', 'new_folder'),
 	'title' => $title,
 	'sidebar' => $sidebar,
 ));

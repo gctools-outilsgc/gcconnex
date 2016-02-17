@@ -138,7 +138,7 @@ elgg.ui.widgets.init = function() {
 
 	$('a.elgg-widget-delete-button').live('click', elgg.ui.widgets.toggleremove);
 	// don't need to change        $('.elgg-widget-edit > form ').live('submit', elgg.ui.widgets.saveSettings);
-	//$('a.elgg-widget-collapse-button').live('click', elgg.ui.widgets.collapseToggleA);
+	$('a .elgg-widget-collapse-button').live('click', elgg.ui.widgets.collapseToggle);
 
 
     $('.elgg-widget-multiple').each(function() {
@@ -150,6 +150,9 @@ elgg.ui.widgets.init = function() {
 
     });
 
+   
+    $('.wet-collapsed').find('.elgg-menu-item-collapse').find('i').addClass('fa-expand');
+    $('.wet-open').find('.elgg-menu-item-collapse').find('i').addClass('fa-compress');
 
     //var name = $('.elgg-widget-multiple').attr('id');
 
@@ -164,12 +167,27 @@ elgg.ui.widgets.init = function() {
  *
  * @param {Object} event
  * @return void
- 
-elgg.ui.widgets.collapseToggleA = function(event) {
+  */
+elgg.ui.widgets.collapseToggle = function(event) {
     $(this).toggleClass('elgg-widget-collapsed');
     $(this).parent().parent().find('.elgg-body').slideToggle('medium');
+    //toggle the collapse and expand icon
+    var expandClass = $(this).children('i').attr('class');
+    //alert(expandClass);
+    if (expandClass == 'fa fa-lg icon-unsel fa-expand') {
+        $(this).find('i').removeClass('fa-expand');
+        $(this).find('i').addClass('fa-compress');
+ 
+    }else{
+        $(this).find('i').addClass('fa-expand');
+        $(this).find('i').removeClass('fa-compress');
+        
+        
+    }
+    //alert('im collapsing!');
+    //$(this).children('i').addClass('fa-expand');
     event.preventDefault();
-
+    /*
     if (elgg.is_logged_in()) {
             var collapsed = 0;
             if ($(this).hasClass("elgg-widget-collapsed")) {
@@ -184,9 +202,9 @@ elgg.ui.widgets.collapseToggleA = function(event) {
                     guid: guid
                 }
             });
-        }
+        }*/
 };
-*/
+
 /**
  * Adds a new widget
  *

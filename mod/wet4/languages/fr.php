@@ -26,7 +26,7 @@ return array(
     'ps:education' => "Éducation",
     'ps:work' => "Expérience de travail",
     'ps:profilestrength' => "Profil",
-     'ps:all-star' =>"Félicitations! Vous êtes une étoiles.",
+     'ps:all-star' =>"Félicitations! Vous êtes une étoile.",
      'ps:beginner' =>"Débutant",
      'ps:advanced' =>"Avancé",
      'ps:expert' =>"Expert",
@@ -102,10 +102,14 @@ return array(
   'group:invite:clicktoadd' => "Cliquez pour ajouter",
   'group:invite:email' => "(translate me) Enter a valid email and press enter to submit it to the list",
 
+  'groups:eng'=>"Anglais",
+  'groups:fra'=>"Français",
 /**
   * Sites
  */
-
+    'landingPage' => '(translate me) Set Landing Page',
+    'career' => '(translate me) Career',
+    'newsfeed' => '(translate me) News Feed',
 	'item:site' => 'Sites',
 
 /**
@@ -278,7 +282,7 @@ return array(
 	'widgets:add:failure' => "Nous n'avons pas pu ajouter votre widget.",
 	'widgets:move:failure' => "Nous n'avons pas pu enregistrer la position du nouveau widget.",
 	'widgets:remove:failure' => "Impossible de supprimer ce widget",
-    'wet4:colandgroupactivity'=>'Activités de vos groupes et collègues',
+    'wet4:colandgroupactivity'=>'Your Newsfeed (translate me)',
     'wet4:colandgroupactivitynolog'=>'Bienvenue à GCconnex',
     'wet4:noticetitle' => 'Avis',
     'wet4:homenotice' => 'Bienvenue à GCconnex, la plateforme de réseautage social professionnelle du gouvernement du Canada. GCconnex a pour objet de permettre aux fonctionnaires de tisser des liens et de collaborer selon leurs connaissances, leurs expériences et leurs intérêts communs. GCconnex devrait servir à mener des activités relatives au milieu de travail, et il ne devrait pas remplacer les réseaux sociaux personnels (comme Facebook).',

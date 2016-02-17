@@ -23,14 +23,17 @@ if(intval($_SESSION['Suggested_friends'])==5 && elgg_is_logged_in())
         $result = mysqli_query($connection, "call GET_suggestedFriends({$user_guid}, 3);");
 
         if(intval($result->num_rows)>0){
-            $htmloutput='<div class="col-xs-12 mrgn-tp-sm  col-xs-12  panel panel-river clearfix mrgn-bttm-xs">';
+            $htmloutput='<div class="col-xs-12 mrgn-tp-sm  col-xs-12 panel panel-river clearfix mrgn-bttm-xs">';
             
             $htmloutput=$htmloutput.'<div class="elgg-body clearfix edit-comment">';
             $htmloutput=$htmloutput.'<h4 class="h4 mrgn-tp-0 text-primary">'.elgg_echo('sf:title').'</h3>';
             while ($row = $result->fetch_assoc()) {
+                 $userGUID=$row['guid_two'];
+                $job=get_user($userGUID)->job;
                 $htmloutput=$htmloutput.'<div class="col-xs-4 text-center">';
                 $htmloutput=$htmloutput.'<img src="'.get_user($row['guid_two'])->getIcon('medium') . '" class="avatar-profile-page img-responsive center-block " alt="'.elgg_echo('sf:alttext').' '.get_user($row['guid_two'])->getDisplayName().'">';
-                $htmloutput=$htmloutput.'<h4 class="h4 mrgn-tp-sm"><span class="text-primary">'.get_user($row['guid_two'])->getDisplayName().'</span></p>';
+                $htmloutput=$htmloutput.'<h4 class="h4 mrgn-tp-sm"><span class="text-primary">'.get_user($row['guid_two'])->getDisplayName().'</span></h4>';
+                $htmloutput=$htmloutput.'<p class="small mrgn-tp-0">'.$job.'</p>';
                 $htmloutput=$htmloutput.'<a href="'.  $site_url. 'profile/'. get_user($row['guid_two'])->username.'" class="btn btn-primary mrgn-tp-sm">'.elgg_echo('sf:connect').'</a>';
                 $htmloutput=$htmloutput.'</div>';
                // $htmloutput=$htmloutput. $row['guid_two'].'-';

@@ -39,7 +39,7 @@ echo elgg_view_menu_item($item);
 if ($children) {
 	echo elgg_view('navigation/menu/elements/section', array(
 		'items' => $children,
-		'class' => 'elgg-menu elgg-child-menu',
+		'class' => ' elgg-child-menu sm list-unstyled',
 	));
 }
 echo '</li>';
