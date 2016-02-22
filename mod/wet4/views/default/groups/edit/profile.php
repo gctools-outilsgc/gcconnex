@@ -10,6 +10,9 @@
 
 $name = elgg_extract("name", $vars);
 $group_profile_fields = elgg_get_config("group");
+$group = elgg_extract("entity", $vars);
+
+/*
 $DBprefix=$CONFIG->dbprefix;
 
 //$group = get_data('Select guid, name from '.$DBprefix.'groups_entity');
@@ -39,18 +42,34 @@ catch (Exception $e)
         $errType=$e->getCode();
         gc_err_logging($errMess,$errStack,'Suggested Friends',$errType);
          $connection->close();
-}
+}*/
+
+
 ?>
 
 <div>
-	<label for="name"><?php echo elgg_echo("groups:name"); ?></label><br />
+    <label for="name">
+        <?php echo elgg_echo("groups:name"); ?>
+    </label>
+    <br />
+    <div id="suggestedText"></div>
+    <?php
+        //if creating a group
+    if(empty($group)){
+        echo elgg_view("input/groups_autocomplete", array(
+				'name' => 'name',
+				'value' => elgg_extract('name', $vars),
+		));
+    } else {
+    ?>
+
 	<?php echo elgg_view("input/text", array(
 		"name" => "name",
 		"value" => $name,
         'id' => 'name',
         'class' => 'ui-autocomplete-input',
 	));
-	?>
+    }?>
 </div>
 <div>
 <label for="icon"><?php echo elgg_echo("groups:icon"); ?></label><br />

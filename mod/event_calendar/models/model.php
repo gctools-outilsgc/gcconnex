@@ -1364,13 +1364,23 @@ function event_calendar_personal_can_manage($event, $user_id) {
 	return $status;
 }
 
-function event_email($event) {
+function event_email($event,$request,$email_users) {
 
 $time = event_calendar_get_formatted_time($event);
 $name = get_loggedin_user()->username;
 $date = explode("-", $time);
 $startdate = $date[0]; 
 $enddate = $date[1]; 
+if (!$enddate){
+
+	$enddate = date('j M Y g:i A', strtotime($startdate)+86340);
+	$oneday=true;
+	
+}else{
+
+	$oneday=false;
+}
+
 $title = $event->title;
 $description = $event->description;
 $venue = $event->venue;
@@ -1388,28 +1398,52 @@ $fees = $event->fees;
 $organiser = $event->organiser;
 $contact = $event->contact;
 $long_description = $event->long_description;
-
-
+$email = $email_users;
 $from_name = "Gcconnex";        
 $from_address = "gcconnex@gcconnex.gc.ca";        
 $to_name = $name;        
-$to_address = get_loggedin_user()->email;        
+$users = event_calendar_get_users_for_event($entity->guid, $limit, $offset, false);
+    
 $startTime = $startdate;        
+$UID = $event->guid;
 $endTime = $enddate;        
 $subject = $title;        
 $description = $description;        
 $location = $venue;
-sendIcalEvent($from_name, $from_address, $to_name, $to_address, $startTime, $endTime, $subject, $description, $location,$long_description,$contact,$organiser,$fees,$teleconference,$language,$venue);
+$type_email = $request;
+sendIcalEvent($email,$UID,$users,$oneday,$from_name, $from_address, $to_name, $to_address, $startTime, $endTime, $subject, $description, $location,$long_description,$contact,$organiser,$fees,$teleconference,$language,$venue,$type_email);
 
 
 }
 
 
 
-function sendIcalEvent($from_name, $from_address, $to_name, $to_address, $startTime, $endTime, $subject, $description, $location,$long_description,$contact,$organiser,$fees,$teleconference,$language,$venue)
+function sendIcalEvent($email,$UID,$users,$oneday,$from_name, $from_address, $to_name, $to_address, $startTime, $endTime, $subject, $description, $location,$long_description,$contact,$organiser,$fees,$teleconference,$language,$venue,$type_email)
 {
+	
     $domain = 'gcconnex.com';
+    if($oneday){
+    	$endTime2 = date('j M Y', strtotime($endTime));
+    }else{
+    	$endTime2 = $endTime;
+    }
 
+//Check how much value is in the array (How much email)
+    $count = count($email);
+    if ($count == 1){
+     	foreach($email as $result) {
+    		$email=$result['email'];
+    }
+	
+	}else{
+ 		foreach($email as $result) {
+    		$array_email[] = $result['email'];
+    }
+		$email = implode(",", $array_email);
+    }
+
+    
+	$to_address = $email; 
     //Create Email Headers
     $mime_boundary = "----Meeting Booking----".MD5(TIME());
 
@@ -1471,7 +1505,7 @@ Merci
             </tr>
             <tr>
               <td class="bodycopy" style="color: #153643; font-family: sans-serif; font-size: 16px; line-height: 22px;">
-                <b>When:</b> '.$startTime.' to '.$endTime.'<br/>
+                <b>When:</b> '.$startTime.' to '.$endTime2.'<br/>
                  <b>Title:</b> '.$subject.'<br/>';
                  if ($venue){
                  	$message .= '<b>Venue:</b> '.$venue.'<br/>';
@@ -1490,9 +1524,9 @@ Merci
                  	$message .= '<b>description:</b> '.$description.'<br/>';
                  } if ($long_description){
                  	$message .= '<b>long_description:</b> '.$long_description.'<br/>';
-                 }
-                    
-             $message .=' <br/> </td>
+                 }    
+ 
+             $message .='<br/> </td>
             </tr>
           </table>
         </td>
@@ -1523,7 +1557,7 @@ Merci
                   </tr>
                   <tr>
                    <td class="bodycopy" style="color: #153643; font-family: sans-serif; font-size: 16px; line-height: 22px;">
-                <b>Quand:</b> '.$startTime.' to '.$endTime.'<br/>
+                <b>Quand:</b> '.$startTime.' to '.$endTime2.'<br/>
                  <b>Titre:</b> '.$subject.'<br/>';
                  if ($venue){
                  	$message .= '<b>Lieu:</b> '.$venue.'<br/>';
@@ -1588,7 +1622,7 @@ Merci
 
     $ical = 'BEGIN:VCALENDAR' . "\r\n" .
     'PRODID:-//Microsoft Corporation//Outlook 10.0 MIMEDIR//EN' . "\r\n" .
-    'METHOD:REQUEST' . "\r\n" .
+    'METHOD:'.$type_email . "\r\n" .
     'VERSION:2.0' . "\r\n" .
     'BEGIN:VTIMEZONE' . "\r\n" .
     'TZID:Eastern Time' . "\r\n" .
@@ -1611,7 +1645,7 @@ Merci
     'ORGANIZER;CN="'.$from_name.'":MAILTO:'.$from_address. "\r\n" .
     'ATTENDEE;CN="'.$to_name.'";ROLE=REQ-PARTICIPANT;RSVP=TRUE:MAILTO:'.$to_address. "\r\n" .
     'LAST-MODIFIED:' . date("Ymd\TGis") . "\r\n" .
-    'UID:'.date("Ymd\TGis", strtotime($startTime))."@".$domain."\r\n" .
+    'UID:'.date("Ymd\TGis", strtotime($startTime)).$UID."@".$domain . "\r\n" .
     'DTSTAMP:'.date("Ymd\TGis"). "\r\n" .
     'DTSTART;TZID="Eastern Time":'.date("Ymd\THis", strtotime($startTime)). "\r\n" .
     'DTEND;TZID="Eastern Time":'.date("Ymd\THis", strtotime($endTime)). "\r\n" .
@@ -1638,15 +1672,6 @@ Merci
 
     return ($mailsent)?(true):(false);
 }
-
-
-
-
-
-
-
-
-
 
 
 function event_calendar_send_event_request($event, $user_guid) {

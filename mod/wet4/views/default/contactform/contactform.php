@@ -11,47 +11,13 @@
 
 					<h3><?php echo elgg_echo('contactform:faq'); ?></h3>
 						
-					<div class="accordion">
-	<!-- Accordion section 1 -->
-	<details class="acc-group">
-		<summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'><?php echo elgg_echo('contactform:title:lostpwd'); ?></summary>
-		<div class="tgl-panel">
-             <div class='mrgn-lft-md mrgn-tp-md mrgn-bttn-md mrgn-rght-md'>
-			<?php echo elgg_echo('contactform:content:lostpwd'); ?>
-            </div>
-		</div>
-	</details>
-	<!-- Accordion section 2 -->
-	<details class="acc-group">
-		<summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'><?php echo elgg_echo('contactform:title:lostuser'); ?></summary>
-		<div class="tgl-panel">
-             <div class='mrgn-lft-md mrgn-tp-md mrgn-bttn-md mrgn-rght-md'>
-		<?php echo elgg_echo('contactform:content:lostuser'); ?>
-            </div>
-						
-		</div>
-	</details>
-                            <!-- Accordion section 3 -->
-    <details class="acc-group">
-		<summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'><?php echo elgg_echo('contactform:title:create'); ?></summary>
-		<div class="tgl-panel">
-            <div class='mrgn-lft-md mrgn-tp-md mrgn-bttn-md mrgn-rght-md'>
-			<?php echo elgg_echo('contactform:content:create'); ?>
-			</div>			
-		</div>
-	</details>
-                            
-                            	<!-- Accordion section 4 -->
-	<details class="acc-group">
-		<summary class="wb-toggle tgl-tab" data-toggle='{"parent": ".accordion", "group": ".acc-group"}'><?php echo elgg_echo('contactform:title:picture'); ?></summary>
-        <div class="tgl-panel">
-             <div class='mrgn-lft-md mrgn-tp-md mrgn-bttn-md mrgn-rght-md'>
-		 <?php echo elgg_echo('contactform:content:picture'); ?>
-            </div>
-        </div>
-	</details>
-
-</div>
+<ul class='list-unstyled'>
+<li><?php echo elgg_echo('contactform:title:lostpwd'); ?></li>
+<li><?php echo elgg_echo('contactform:title:lostuser'); ?></li>
+<li><?php echo elgg_echo('contactform:title:create'); ?></li>
+<li><?php echo elgg_echo('contactform:title:picture'); ?></li>
+<li><?php echo elgg_echo('contactform:title:sign-on'); ?></li>
+</ul>
 				
 						
 
@@ -79,6 +45,7 @@
 					<ul class='list-unstyled'>
 <li><a href= <?php echo elgg_echo('contactform:collaborating:link'); ?>><?php echo elgg_echo('contactform:collaborating'); ?></a></li>
 <li><a href= <?php echo elgg_echo('contactform:socialmedia:link'); ?>><?php echo elgg_echo('contactform:socialmedia'); ?></a></li>
+<li><?php echo elgg_echo('contactform:guidance'); ?></li>
 
             </div>
 						

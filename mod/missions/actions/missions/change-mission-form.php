@@ -32,7 +32,13 @@ if ($err != '') {
 	$mission->description = $edit_form['description'];
 	
 	$mission->name = $edit_form['name'];
-	$mission->department = $edit_form['department'];
+	
+	$department_string = mo_get_last_input_node($edit_form);
+	$department_paths = mo_string_all_ancestors($department_string);
+	$mission->department = $department_string;
+	$mission->department_path_english = $department_paths['english_path'];
+	$mission->department_path_french = $department_paths['french_path'];
+	
 	$mission->email = $edit_form['email'];
 	$mission->phone = $edit_form['phone'];
 	$mission->job_title = $edit_form['job_title'];

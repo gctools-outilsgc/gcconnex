@@ -45,7 +45,13 @@ if ($err != '') {
     
     // Attaches the form data as metadata to the object
     $mission->name = $first_form['name'];
-    $mission->department = $first_form['department'];
+    
+   	$department_string = mo_get_last_input_node($first_form);
+	$department_paths = mo_string_all_ancestors($department_string);
+	$mission->department = $department_string;
+	$mission->department_path_english = $department_paths['english_path'];
+	$mission->department_path_french = $department_paths['french_path'];
+    
     $mission->email = $first_form['email'];
     $mission->phone = $first_form['phone'];
     

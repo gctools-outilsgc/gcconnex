@@ -26,8 +26,11 @@ if ($event) {
 	$user_guid = elgg_get_logged_in_user_guid();
 	if ($event_guid) {
 		$action = 'update';
+	$email_users = event_calendar_get_users_for_event($event_guid, $limit, $offset, false);
+
 
 		system_message(elgg_echo('event_calendar:manage_event_response'));
+		event_email($event, $resquest='REQUEST', $email_users);
 	} else {
 		$action = 'create';
 
@@ -35,7 +38,8 @@ if ($event) {
 		if (!$event_calendar_autopersonal || ($event_calendar_autopersonal == 'yes')) {
 			event_calendar_add_personal_event($event->guid, $user_guid);
 		}
-		event_email($event);
+		$email_users = get_loggedin_user()->email; 
+		event_email($event, $resquest='REQUEST',$email_users);
 		system_message(elgg_echo('event_calendar:add_event_response'));
 	}
 

@@ -1,4 +1,5 @@
 <?php
+$site_url = elgg_get_site_url();
 $french = array(
 	// labels
 	'gcRegister:email_initial' => 'Addresse courriel',
@@ -15,6 +16,7 @@ $french = array(
 	// error messages on the form
 	'gcRegister:failedMySQLconnection' => 'Impossible de se connecter à la base de données',
 	'gcRegister:invalid_email' => '<a href="#email_initial">Adresse courriel non valide</a>',
+    'gcRegister:invalid_email2' => 'Adresse courriel non valide',
 	'gcRegister:empty_field' => 'champ vide',
 	'gcRegister:mismatch' => 'inadéquation',
 
@@ -38,6 +40,7 @@ $french = array(
 	'gcRegister:password_too_short' => '<a href="#password">Le mot de passe doit contenir au moins 6 caractères</a>',
 	'gcRegister:email_mismatch' => '<a href="#email_initial">Les adresses courriel ne sont pas identiques</a>',
 	'gcRegister:display_name_is_empty' => '<a href="#name">Le nom à afficher ne peut être vide</a>',
+    'registration:userexists' => 'That username already exists. <a href="'.$site_url.'forgotpassword">Retrieve your password</a>(translate me)',
 );
  
 add_translation("fr", $french);

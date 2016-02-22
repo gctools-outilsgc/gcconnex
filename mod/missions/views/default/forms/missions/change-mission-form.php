@@ -11,6 +11,7 @@
  * Form which allows a manager to modify their mission.
  * This form includes all the same input fields as the post opportunity forms and they are formatted similarly..
  */
+ 
 $mission = $vars['entity'];
 $unpacked = mm_unpack_mission($mission);
 $vars['mission_metadata'] = $unpacked;
@@ -26,11 +27,11 @@ $input_name = elgg_view('input/text', array(
 	    'value' => $mission->name,
 	    'id' => 'edit-mission-name-text-input'
 ));
-$input_department = elgg_view('input/text', array(
-	    'name' => 'department',
-	    'value' => $mission->department,
-	    'id' => 'edit-mission-department-text-input'
+
+$input_department = elgg_view('page/elements/organization-input', array(
+		'organization_string' => $mission->department
 ));
+
 $input_email = elgg_view('input/text', array(
 	    'name' => 'email',
 	    'value' => $mission->email,
@@ -189,7 +190,7 @@ $button_set = mm_create_button_set_full($mission);
 		<label class="col-sm-3" for="edit-mission-department-text-input" style="text-align:right;">
 			<?php echo elgg_echo('missions:department')  . ':';?>
 		</label> 
-		<div>
+		<div class="col-sm-7">
 			<?php echo $input_department;?>
 		</div>
 	</div>

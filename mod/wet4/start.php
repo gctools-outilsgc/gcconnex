@@ -145,7 +145,19 @@ function wet4_theme_init() {
     elgg_register_plugin_hook_handler('index', 'system', 'new_index');
     elgg_register_page_handler('newsfeed', 'newsfeed_page_handler');
 
+    elgg_register_page_handler('groups_autocomplete', 'groups_autocomplete');
+
 }
+
+/*
+ *  load lib for suggested group text input
+ */
+
+function groups_autocomplete() {
+    require_once elgg_get_plugins_path() . 'wet4/lib/groups_autocomplete.php';
+    return true;
+}
+
 
 /*
  *  Create news feed page

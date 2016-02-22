@@ -2627,6 +2627,7 @@ Profile Completness
     outline: 5px auto -webkit-focus-ring-color;
     outline-offset: -2px; }
   .btn:hover,
+ 
   .btn:focus,
   .btn.focus {
     color: #335075;
@@ -2652,6 +2653,7 @@ Profile Completness
   background-color: #eaebed;
   border-color: #dcdee1; }
   .btn-default:hover,
+
   .btn-default:focus,
   .btn-default.focus,
   .btn-default:active,
@@ -2695,6 +2697,8 @@ Profile Completness
 .btn-default>a:visited {
         color: #335075;
     }
+
+
 
 .btn-primary {
   color: #fff;
@@ -11065,6 +11069,11 @@ a.shr-opn, a.shr-opn:hover {
 border:none;
     box-shadow:none;
     -webkit-box-shadow:none;
+}
+
+.elgg-foot{
+    margin-bottom: 5px;
+
 }
 
 /******Padding Classes********/

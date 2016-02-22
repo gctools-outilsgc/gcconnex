@@ -1,6 +1,6 @@
 .gcforums-table {
     border-collapse: collapse;
-    border: 1px solid black;
+    border: 1px solid #dddddd;
     width: 100%;
 }
 
@@ -12,41 +12,43 @@
 }
 
 .gcforums-td-topic, .gcforums-th-topic {
-    border: 1px solid black;
+    border: 1px solid #dddddd;
     padding: 5px 5px 5px 5px;
 }
 
 .gcforums-tr {
-    border: 1px solid black;
+    border: 1px solid #dddddd;
 }
 
 .gcforums-td {
-    border: 1px solid black;
+    border: 1px solid #dddddd;
     text-align: center;
     vertical-align: middle;
+    padding: 5px;
 }
 
 .gcforums-th {
-    border: 1px solid black;
+    border: 1px solid #dddddd;
     padding: 5px 5px 5px 15px;
     background-color: #e6e6e6;
     vertical-align: middle;
+    font-weight:bold;
 }
 
 .gcforums-td-forums, .gcforums-td-category  {
-    border: 1px solid black;
+    border: 1px solid #dddddd;
     padding: 5px 5px 5px 15px;
     vertical-align: middle;
 }
 
 .gcforums-td-topics {
-    border: 1px solid black;
+    border: 1px solid #dddddd;
     padding: 5px 5px 5px 15px;
     vertical-align: middle;
 }
 
 .gcforums-th-category {
-    border: 1px solid black;
+    border: 1px solid #dddddd;
     padding: 5px 5px 5px 5px;
     vertical-align: middle;
 }
@@ -58,7 +60,7 @@
 }
 
 .gcforums-td-forums-options {
-    border: 1px solid black;
+    border: 1px solid #dddddd;
     padding: 5px 5px 5px 5px;
     text-align: left;
     font-size: 75%;
@@ -87,7 +89,7 @@
 }
 
 .gcforums-comment-tr {
-    //border: 1px solid black;
+    
 }
 
 .gcforums-comment-td {

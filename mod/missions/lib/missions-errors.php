@@ -180,9 +180,9 @@ function mm_validate_time($day, $input_array)
  	}
  	
  	// Checks if the department is empty.
- 	if (empty($input_array['department'])) {
+ 	/*if (empty($input_array['department'])) {
  		$err .= elgg_echo('missions:error:department_needs_input') . "\n";
- 	}
+ 	}*/
  	
  	// Checks if the email a valid email address according to a function defined above.
  	if (! filter_var($input_array['email'], FILTER_VALIDATE_EMAIL)) {

@@ -37,15 +37,13 @@
  <div class="<?php echo $bordering; ?>" id="<?php echo $field_id; ?>" style="display:none;padding:8px;">
  	<?php echo $content; ?>
  </div>
- <div>
+ <!--<div>
  	<div>
- 	<!--  
  		<noscript>
  			<?php //echo $content; ?>
  		</noscript>
- 	-->
  	</div>
- </div>
+ </div>-->
  
  <script>
 	function hidden_field_toggle(toggle) {

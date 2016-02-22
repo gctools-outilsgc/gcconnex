@@ -93,3 +93,114 @@
     margin-right: -1px; }
   .input-group-btn:last-child > .btn, .input-group-btn:last-child > .btn-group {
     margin-left: -1px; }
+
+
+
+  
+
+  /***************
+
+      Dont know how much of this is useful
+      Taken from group suggestions
+
+    ****************  */
+     .text-unstyled {
+        text-decoration:none !important;
+        color: #333333;
+    }
+
+     .text-unstyled span {
+        text-decoration:underline;
+        color:#055959;
+    }
+
+     .text-unstyled:hover {
+        text-decoration:none !important;
+        color: #333333;
+    }
+
+     .text-unstyled:visited {
+        text-decoration:none !important;
+        color: #333333;
+    }
+
+
+
+
+
+
+/* ***************************************
+	Form Elements
+*************************************** */
+
+
+input[type=file], input[type=text] {
+	font-family: "Lucida Grande", Tahoma, Verdana, Arial, sans-serif;
+	border: 1px solid #BDC7D8;
+	padding: .5em;
+	width: 100%;
+
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+
+
+
+
+
+
+/* ***************************************
+	AUTOCOMPLETE
+*************************************** */
+
+<?php //autocomplete will expand to fullscreen without max-width ?>
+
+
+.elgg-autocomplete-item .elgg-body {
+	max-width: 800px;
+    width: 100%;
+}
+.ui-autocomplete {
+    width: 770px;
+	background-color: white;
+	border: 1px solid #ddd !important;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.09);
+	padding-bottom: 5px;
+}
+.ui-autocomplete .ui-menu-item {
+	padding: 0px 4px;
+    width: auto;
+}
+
+.ui-menu-item a {
+    width: 100%;
+}
+.ui-autocomplete .ui-menu-item:hover {
+	background-color: #eee;
+}
+.ui-autocomplete a:hover {
+	text-decoration: none;
+	color: #4690D6;
+}
+.ui-autocomplete a.ui-state-hover {
+	background-color: #eee;
+	display: block;
+}
+
+
+/* ***************************************
+	USER PICKER
+*************************************** */
+
+.user-picker .user-picker-entry {
+	clear:both;
+	height:25px;
+	padding:5px;
+	margin-top:5px;
+	border-bottom:1px solid #cccccc;
+}
+.user-picker-entry .elgg-button-delete {
+	margin-right:10px;
+}

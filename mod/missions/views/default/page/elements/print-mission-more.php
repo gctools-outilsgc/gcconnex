@@ -42,6 +42,11 @@ if(! empty($mission->remotely)) {
 	$clean_remotely = elgg_echo('missions:yes');
 }
 
+$department_path = $mission->department_path_english;
+if(get_current_language() == 'fr') {
+	$department_path = $mission->department_path_french;
+}
+
 // Unpacks all language and time metadata attached to the mission.
 $unpacked_array = mm_unpack_mission($mission);
 
@@ -184,7 +189,7 @@ if(!$vars['override_buttons']) {
 	</div>
 	<div class="col-sm-offset-1">
 		<h5><?php echo elgg_echo('missions:department')  . ':';?></h5> 
-		<?php echo $mission->department;?>
+		<?php echo $department_path;?>
 	</div>
 	<div class="col-sm-offset-1">
 		<h5><?php echo elgg_echo('missions:manager_email') . ':';?></h5> 

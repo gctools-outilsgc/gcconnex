@@ -419,7 +419,7 @@ function groups_handle_members_page($guid) {
 		'relationship_guid' => $group->guid,
 		'inverse_relationship' => true,
 		'type' => 'user',
-		'limit' => (int)get_input('limit', max(20, elgg_get_config('default_limit')), false),
+		'limit' => 0,
 		'joins' => array("JOIN {$db_prefix}users_entity u ON e.guid=u.guid"),
 		'order_by' => 'u.name ASC',
 	));

@@ -31,10 +31,10 @@ $input_simple_text = elgg_view('input/text', array(
 
 <div class="form-group">
 	<h4><label for="search-mission-simple-text-input"><?php echo $label . ':'; ?></label></h4>
-	<div style="display:inline-block;">
+	<div style="display:inline-block;vertical-align:middle;">
 		<?php echo $input_simple_text; ?> 
 	</div>
-	<div style="display:inline-block;">
+	<div style="display:inline-block;vertical-align:middle;">
 		<?php echo elgg_view('input/submit', array('value' => elgg_echo('missions:search'))); ?>
 	</div>
 </div>

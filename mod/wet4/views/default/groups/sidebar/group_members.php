@@ -12,7 +12,7 @@ $limit = elgg_extract('limit', $vars, 14);
 
 
 
-$members = $vars['entity']->getMembers();
+$members = $vars['entity']->getMembers(array('limit' => 0));
 
 $membersCount = '(' . count($members) . ')';
 

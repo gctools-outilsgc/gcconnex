@@ -34,7 +34,7 @@ function c_module_dump_init() {
 					//elgg_log('cyu - form_file:'.$form_file, 'NOTICE');
 					$remove_php = explode('.',$form_file);
 					//elgg_log('cyu - << replacing ...:'.'forms/'.$plugin_form['title'].'/'.$remove_php[0].' >>' , 'NOTICE');
-					elgg_extend_view('forms/'.$plugin_form['title'].'/'.$remove_php[0], 'forms/save2', 100);
+					elgg_extend_view('forms/'.$plugin_form['title'].'/'.$remove_php[0], 'forms/save2', 600);
 
 					if ($plugin_form['title'] === 'polls')
 					{
@@ -46,13 +46,14 @@ function c_module_dump_init() {
 	}
 
 	// everything below are rebels
-	elgg_extend_view('forms/photos/image/save', 'forms/save2', 100);
-	elgg_extend_view('forms/photos/batch/edit', 'forms/save2', 100);
+    // nick p -2016-02-18: changed priority to have friendly message at bottom of content
+	elgg_extend_view('forms/photos/image/save', 'forms/save2', 900);
+	elgg_extend_view('forms/photos/batch/edit', 'forms/save2', 900);
 	//elgg_extend_view('forms/photos/batch/edit/image', 'forms/save2', 600);
-	elgg_extend_view('forms/photos/album/save', 'forms/save2', 100);
-	elgg_extend_view('forms/discussion/save', 'forms/save2', 100);
-	elgg_extend_view('forms/file_tools/upload/multi', 'forms/save2', 100);
-	elgg_extend_view('forms/file_tools/upload/zip', 'forms/save2', 100);
+	elgg_extend_view('forms/photos/album/save', 'forms/save2', 900);
+	elgg_extend_view('forms/discussion/save', 'forms/save2', 900);
+	elgg_extend_view('forms/file_tools/upload/multi', 'forms/save2', 900);
+	elgg_extend_view('forms/file_tools/upload/zip', 'forms/save2', 900);
 
 	// cyu - 02/12/2015: fixes to the group visibility
 	$action_base = elgg_get_plugins_path().'c_module_dump/actions/groups';

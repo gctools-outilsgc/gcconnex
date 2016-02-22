@@ -20,7 +20,6 @@ $metadata = $vars['mission_metadata'];
 $_SESSION['mm_metadata_array'] = $metadata;*/
 
 $mission = $vars['entity'];
-elgg_load_js('mission-mask');
 
 if (elgg_is_sticky_form('tdropfill')) {
     extract(elgg_get_sticky_values('tdropfill'));
@@ -105,12 +104,12 @@ $no_weekend_button = elgg_view('output/url', array(
 ?>
 
 <div style="display:inline-block;">
-	<div>
+	<div style="height:35px;">
 	</div>
-	<div style="font-weight:bold;">
+	<div style="font-weight:bold;height:37px;">
     	<?php echo elgg_echo('missions:start_time'); ?>
     </div>
-    <div style="font-weight:bold;">
+    <div style="font-weight:bold;height:37px;">
     	<?php echo elgg_echo('missions:duration'); ?>
     </div>
 </div>

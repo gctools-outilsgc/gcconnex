@@ -16,7 +16,6 @@ elgg_register_event_handler('init', 'system', missions_init);
  */
 function missions_init()
 {
-	//elgg_register_js('mission-mask', 'mod/missions/vendors/mask-master/dist/jquery.mask.min.js');
 	elgg_register_js('typeahead', 'mod/missions/vendors/typeahead/dist/typeahead.bundle.min.js');
 	
     // Register the custom library of methods for use in the plugin
@@ -26,6 +25,10 @@ function missions_init()
     elgg_load_library('elgg:missions');
     elgg_load_library('elgg:missions-searching');
     elgg_load_library('elgg:missions-errors');
+
+    if(elgg_is_active_plugin('missions_organization')) {
+   		elgg_load_library('elgg:missions-organization');
+    }
 
     //Register to run unit tests
 	register_plugin_hook('unit_test', 'system', 'missions_unit_tests');

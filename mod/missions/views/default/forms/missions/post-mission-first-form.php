@@ -13,7 +13,9 @@ $phone = get_input('fp');
 $disclaimer = get_input('fd');
 
 if (elgg_is_sticky_form('firstfill')) {
-    extract(elgg_get_sticky_values('firstfill'));
+	$temp_form = elgg_get_sticky_values('firstfill');
+	$extracted_org = mo_get_last_input_node($temp_form);
+    extract($temp_form);
     // elgg_clear_sticky_form('firstfill');
 }
 
@@ -43,11 +45,11 @@ $input_name = elgg_view('input/text', array(
     'value' => $name,
     'id' => 'post-mission-name-text-input'
 ));
-$input_department = elgg_view('input/text', array(
-    'name' => 'department',
-    'value' => $department,
-    'id' => 'post-mission-department-text-input'
+
+$input_department = elgg_view('page/elements/organization-input', array(
+		'organization_string' => $extracted_org
 ));
+
 $input_email = elgg_view('input/text', array(
     'name' => 'email',
     'value' => $email,
@@ -58,7 +60,7 @@ $input_phone = elgg_view('input/text', array(
     'value' => $phone,
     'id' => 'post-mission-phone-text-input'
 ));
-$input_dislaimer = elgg_view('input/checkbox', array(
+$input_disclaimer = elgg_view('input/checkbox', array(
 		'name' => 'disclaimer',
 		'value' => 'YES',
 		'checked' => $disclaimer,
@@ -104,7 +106,7 @@ $input_dislaimer = elgg_view('input/checkbox', array(
 </div>
 <div class="form-group">
 	<label for='post-mission-phone-text-input' class="col-sm-1" style="text-align:right;">
-		<?php echo $input_dislaimer;?>
+		<?php echo $input_disclaimer;?>
 	</label>
 	<div class="col-sm-11">
 		<?php echo elgg_echo('missions:post_disclaimer'); ?>

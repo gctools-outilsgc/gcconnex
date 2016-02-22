@@ -63,7 +63,7 @@ $input_start = elgg_view('input/text', array(
 		'style' => 'width:100px;',
 		'id' => 'time-' . $day . '-start-text-input',
 		'placeholder' => 'HH:mm',
-		'class' => 'timepicker-start'
+		'class' => 'timepicker'
 ));
 
 $input_duration = elgg_view('input/text', array(
@@ -72,7 +72,8 @@ $input_duration = elgg_view('input/text', array(
 		'style' => 'width:100px;',
 		'id' => 'time-' . $day . '-duration-text-input',
 		'placeholder' => 'HH:mm',
-		'class' => 'timepicker-duration'
+		'class' => 'timepicker'//,
+		//'pattern' => '[0-9]:[0-5][0-9]'
 ));
 ?>
 
@@ -103,3 +104,46 @@ $input_duration = elgg_view('input/text', array(
 		<?php echo $input_duration; ?>
 	</div>
 </div>
+
+<script>
+	$(document).ready(function() {
+		$('.timepicker').keydown(function(event) {
+			if(event.which != 8 && event.which != 46) {
+				var input = $(this).val();
+				var length = input.length;
+				switch(length) {
+					case 0:
+						if((event.which > 50 || event.which < 48) && (event.which > 98 || event.which < 96)) {
+							event.preventDefault();
+						}
+						break;
+					case 1:
+						if(input == 2 && (event.which > 51 || event.which < 48) && (event.which > 99 || event.which < 96)) {
+							event.preventDefault();
+						}
+						else if((event.which > 57 || event.which < 48) && (event.which > 105 || event.which < 96))  {
+							event.preventDefault();
+						}
+						break;
+					case 2:
+						if(event.which != 58 && !event.shiftKey) {
+							event.preventDefault();
+						}
+						break;
+					case 3:
+						if((event.which > 53 || event.which < 48) && (event.which > 101 || event.which < 96)) {
+							event.preventDefault();
+						}
+						break;
+					case 4:
+						if((event.which > 57 || event.which < 48) && (event.which > 105 || event.which < 96)) {
+							event.preventDefault();
+						}
+						break;
+					default:
+						event.preventDefault();
+				}
+			}
+		});
+	});
+</script>

@@ -57,7 +57,7 @@ if (strlen( $email ) > 0)
 
 	// make sure selected domain is not the example domain (this is already checked for in the JS, but do it anyway)
 	} else if( checkInvalidDomain($domain) ) {
-		echo '> ' . elgg_echo('gcRegister:invalid_email');
+		echo '> ' . elgg_echo('gcRegister:invalid_email2');
 	
 	} else {
 

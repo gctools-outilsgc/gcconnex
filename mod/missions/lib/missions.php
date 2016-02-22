@@ -194,11 +194,12 @@ function mm_create_button_set_base($mission, $full_view=false) {
 			
 			// Handles the case where a complete button is needed.
 			if(!$full_view && $candidate_total == $mission->number) {
-				$button_three = elgg_view('output/confirmlink', array(
+				$button_three = elgg_view('output/url', array(
 						'href' => elgg_get_site_url() . 'action/missions/complete-mission?mission_guid=' . $mission->guid,
 						'text' => elgg_echo('missions:complete'),
 		            	'is_action' => true,
-						'class' => 'elgg-button btn btn-success'
+						'class' => 'elgg-button btn btn-success',
+						'confirm' => true
 				));
 			}
 		}
@@ -271,19 +272,21 @@ function mm_create_button_set_base($mission, $full_view=false) {
  			$disabled = false;
  		}
  		
- 		$returner['complete_button'] = elgg_view('output/confirmlink', array(
+ 		$returner['complete_button'] = elgg_view('output/url', array(
 				'href' => elgg_get_site_url() . 'action/missions/complete-mission?mission_guid=' . $mission->guid,
 				'text' => elgg_echo('missions:complete'),
 		        'is_action' => true,
 				'class' => 'elgg-button btn btn-success',
- 				'disabled' => $disabled
+ 				'disabled' => $disabled,
+ 				'confirm' => true
 		));
  		
- 		$returner['cancel_button'] = elgg_view('output/confirmlink', array(
+ 		$returner['cancel_button'] = elgg_view('output/url', array(
  				'href' => elgg_get_site_url() . 'action/missions/cancel-mission?mission_guid=' . $mission->guid,
  				'text' => elgg_echo('missions:cancel'),
  				'is_action' => true,
- 				'class' => 'elgg-button btn btn-danger'
+ 				'class' => 'elgg-button btn btn-danger',
+ 				'confirm' => true
  		));
  	}
  	

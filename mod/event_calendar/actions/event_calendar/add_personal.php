@@ -9,7 +9,8 @@ if (elgg_instanceof($event, 'object', 'event_calendar')) {
 	if (!event_calendar_has_personal_event($event_guid,$user_guid)) {
 		if (event_calendar_add_personal_event($event_guid,$user_guid)) {
 			// the message
-			event_email($event);
+			$email_users = get_loggedin_user()->email; 
+			event_email($event, $resquest='REQUEST', $email_users);
 			system_message(elgg_echo('event_calendar:add_to_my_calendar_response'));
 
 		} else {

@@ -1,5 +1,5 @@
 <?php
-
+$site_url = elgg_get_site_url();
 $english = array(
 
 	"gcforums:group_forum_title" => "[en] Group Forum",
@@ -58,7 +58,8 @@ $english = array(
 	"gcforums:categories_not_available" => "[en] <i>Currently No Categories Available</i>",
 
 	"gcforums:jmp_menu" => "[en] Jobs Marketplace",
-	"gcforums:jmp_url" => "http://jmp.com",
+	//"gcforums:jmp_url" => "http://jmp.com",
+    "gcforums:jmp_url" => $site_url . "groups/profile/7617072",
 
 	"gcforums:notification_subject_topic" => "New forum topic / Nouveau sujet",
 	"gcforums:notification_body_topic" => "%s has started a New Forum Topic '%s' with the following content... <br/> %s <br/> You can view this item here: %s <br/>",

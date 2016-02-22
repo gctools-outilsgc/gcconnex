@@ -12,14 +12,14 @@
  * to run the tests integrated into the core tests:
  *    - Administration page | Develop | Tools | Unit Tests | (press Run)
  *			-- or --
- *    - http://127.0.0.1/gcconnex/engine/tests/suite.php
+ *    - [GCconnex base URL]/engine/tests/suite.php
  *
  * to run independently of the core tests:
  *    - requires install and activate ufcoe_testable plugin from
  *     		git clone git@github.com:ufcoe/Elgg-ufcoe_testable.git ufcoe_testable
  *    - Administration page  | Develop | Plugin Tests | (click Micro Missions Run tests!)
  *			-- or --
- *	  - http://127.0.0.1/gcconnex/testable/run/missions
+ *	  - [GCconnex base URL]/testable/run/missions
  */
 class MissionLibraryTest extends ElggCoreUnitTest {
 
@@ -32,41 +32,6 @@ class MissionLibraryTest extends ElggCoreUnitTest {
     function tearDown() {
         $_SESSION['language'] = $this->session_language;
 		$this->session_language = null;
-    }
-
-    public function testWriteFirstTabLinks() {
-		$expected = array(
-			array('Step 1: Manager', 'post-mission-first-tab'),
-			array('Step 2: Opportunity details', ''),
-			array('Step 3: Requirements', '')
-		);
-     	$actual = mm_write_tab_links('firstpost', '');
-		$this->assertIdentical(serialize($expected), serialize($actual));
-    }
-
-    public function testWriteSecondTabLinks() {
-		$expected = array(
-			array('Step 1: Manager', 'post-mission-first-tab'),
-			array('Step 2: Opportunity details', 'post-mission-second-tab'),
-			array('Step 3: Requirements', '')
-		);
-     	$actual = mm_write_tab_links('secondpost', '');
-		$this->assertIdentical($expected, $actual);
-    }
-
-    public function testWriteThirdTabLinks() {
-		$expected = array(
-			array('Step 1: Manager', 'post-mission-first-tab'),
-			array('Step 2: Opportunity details', 'post-mission-second-tab'),
-			array('Step 3: Requirements', 'post-mission-third-tab')
-		);
-     	$actual = mm_write_tab_links('thirdpost', '');
-		$this->assertIdentical($expected, $actual);
-    }
-
-    public function testWriteTabLinksInvalidInput() {
-     	$actual = mm_write_tab_links('nosuchtab', '');
-		$this->assertNull($actual);
     }
 
     public function testIsValidPhoneNumber() {
@@ -104,80 +69,6 @@ class MissionLibraryTest extends ElggCoreUnitTest {
      	$this->assertFalse(mm_is_guid_number('532K351'));
      	$this->assertFalse(mm_is_guid_number('@578532)'));
      	$this->assertFalse(mm_is_guid_number('578(532)'));
-    }
-
-    public function testIsValidTime() {
-        $_SESSION['language'] = 'en';
-        $day = 'mon';
-
-		$expected = '';
-		$form_input = array();
-		$form_input[$day . '_start_hour'] = '9';
-		$form_input[$day . '_start_min'] = '0';
-		$form_input[$day . '_duration_hour'] = '2';
-		$form_input[$day . '_duration_min'] = '30';
-		$actual = mm_validate_time($day, $form_input);
-		$this->assertIdentical($expected, $actual);
-
-		$expected = '';
-		$form_input = array();
-		$form_input[$day . '_start_hour'] = '9';
-		$form_input[$day . '_start_min'] = '';
-		$form_input[$day . '_duration_hour'] = '2';
-		$form_input[$day . '_duration_min'] = '';
-		$actual = mm_validate_time($day, $form_input);
-		$this->assertIdentical($expected, $actual);
-
-		$expected = '';
-		$form_input = array();
-		$form_input[$day . '_start_hour'] = '';
-		$form_input[$day . '_start_min'] = '';
-		$form_input[$day . '_duration_hour'] = '';
-		$form_input[$day . '_duration_min'] = '';
-		$actual = trim(mm_validate_time($day, $form_input));
-		$this->assertIdentical($expected, $actual);
-
-		$expected = 'Start time must be set for Monday.';
-		$form_input = array();
-		$form_input[$day . '_start_hour'] = '';
-		$form_input[$day . '_start_min'] = '';
-		$form_input[$day . '_duration_hour'] = '3';
-		$form_input[$day . '_duration_min'] = '00';
-		$actual = trim(mm_validate_time($day, $form_input));
-		$this->assertIdentical($expected, $actual);
-
-		$expected = 'Duration must be set for Monday.';
-		$form_input = array();
-		$form_input[$day . '_start_hour'] = '9';
-		$form_input[$day . '_start_min'] = '';
-		$form_input[$day . '_duration_hour'] = '';
-		$form_input[$day . '_duration_min'] = '';
-		$actual = trim(mm_validate_time($day, $form_input));
-		$this->assertIdentical($expected, $actual);
-
-		//NOTE DURATION CAN BE NEGATIVE
-		$expected = '';
-		$form_input = array();
-		$form_input[$day . '_start_hour'] = '19';
-		$form_input[$day . '_start_min'] = '0';
-		$form_input[$day . '_duration_hour'] = '-2';
-		$form_input[$day . '_duration_min'] = '';
-		$actual = trim(mm_validate_time($day, $form_input));
-		$this->assertIdentical($expected, $actual);
-
-		//NOTE DURATION CAN BE NON_NUMERIC
-		$expected = '';
-		$form_input = array();
-		$form_input[$day . '_start_hour'] = '19';
-		$form_input[$day . '_start_min'] = '0';
-		$form_input[$day . '_duration_hour'] = 'X';
-		$form_input[$day . '_duration_min'] = '';
-		$actual = trim(mm_validate_time($day, $form_input));
-		$this->assertIdentical($expected, $actual);
-
-		$expected_language = 'en';
-		$actual_language = $_SESSION['language'];
-		$this->assertIdentical($expected, $actual);
     }
 
 	public function testPackLanguage() {

@@ -1,6 +1,7 @@
 This plugin adds micro mission functionality to the GCConnex webpage. 
 Current functionality includes posting a job opportunity, displaying the job opportunity, searching for a job opportunity or candidate with a simple and advanced search, editing a mission, 
 inviting a candidate to a mission, completing or cancelling a mission and providing feedback for a completed mission.
+This plugin currently must be placed after missions_organization and requries that plugin to be active.
 
 --------------------------------------------------------------------------------------------------------------
 
@@ -83,6 +84,8 @@ Posting, viewing and editing an opportunity are all the same as in previous vers
 Clicking on the invite button for a mission will take the user to a candidate search page with simple and advanced searches.
 Completing a mission or clicking on an unfinished feedback link will take the user to a page with all the unfinished feedback forms for that mission.
 
+5)
+Micro mission edit and post opportunity first form now use the new organization path input found in missions_organization.
 
 --------------------------------------------------------------------------------------------------------------
 

@@ -1,4 +1,5 @@
 <?php
+    $site_url = elgg_get_site_url();
 return array(
 
 /**
@@ -94,6 +95,8 @@ return array(
 
     'gprofile:edit:content' => "Options pour le contenu",
     'gprofile:edit:admin' => "Option pour l'administrateur",
+
+    'groups:suggestedGroups' => '(translate me) Engagement team desc on what is happening',
 
         /**
    * Group invite
@@ -504,7 +507,7 @@ return array(
 	'register:fields' => 'Tous les champs sont requis',
 
 	'registration:notemail' => 'L\'adresse e-mail que vous avez renseigné n\'apparaît pas comme valide.',
-	'registration:userexists' => 'Ce nom d\'utilisateur existe déjà',
+	'registration:userexists' => 'That username already exists. <a href="'.$site_url.'forgotpassword">Retrieve your password</a>',
 	'registration:usernametooshort' => 'Le nom d\'utilisateur doit faire %u caractères au minimum.',
 	'registration:usernametoolong' => 'Votre nom d\'utilisateur est trop long. Il peut comporter au maximum %u caractères.',
 	'registration:passwordtooshort' => 'Le mot de passe doit comporter un minimum de %u caractères.',
@@ -1397,31 +1400,16 @@ Ne répondez pas à cet e-mail.",
     'contactform:form:subject' => "Sujet",
     'contactform:title' => "Pages d'aide de GCconnex",
     'contactform:help' => 'Aide',
-	'contactform:list' => "<ul class='list-unstyled'>	
-						<li> <a href='http://www.gcpedia.gc.ca/wiki/GC2.0_Tools_Help_Centre/GCconnex'>Pages d'aide</a> </li>
-						</ul><br />",
+	'contactform:list' => '<ul class="list-unstyled">	
+						<li> <a href="http://www.gcpedia.gc.ca/gcwiki/index.php?title=Centre d\'aide pour les outils GC2.0/GCconnex&setlang=fr&uselang=fr">Pages d\'aide</a> </li>
+						</ul><br />',
     'contactform:faq' => "FAQ",
-    'contactform:title:lostpwd' => "Mot de passe perdu:",
-    
-    'contactform:content:lostpwd' => "Mot de passe perdu:</h4>
-						Pour récupérer votre <u>Mot de passe pour GCconnex</u>, allez sur la <a href='http://gcconnex.gc.ca/'>page d'accueil de GCconnex</a> ou cliquez dans la fenêtre contextuelle <u>Ouverture de session</u> qui se trouve dans le coin gauche supérieur de chaque page de GCconnex. Cliquez sur le lien <u>Mot de passe perdu</u> et saisissez votre nom d'utilisateur ou vous adresse de courriel, puis cliquez sur <u>Demande</u>. Un lien vous permettant de réinitialiser votre mot de passe sera envoyé à l'adresse de courriel associée à votre compte GCconnex. Suivez ce lien, puis cliquez sur <u>Réinitialiser mon mot de passe</u> pour qu'un nouveau mot de passe généré aléatoirement soit envoyé à votre adresse de courriel.
-						<br /><br />
-						Une fois que vous aurez ouvert une session avec le nouveau mot de passe, cliquez sur le lien <u>Paramètres</u> qui se trouve dans le coin droit supérieur de chaque page de GCconnex. Dans la section <u>Mot de passe du compte</u>, saisissez votre <u>Mot de passe actuel</u> (le mot de passe généré aléatoirement qui vous a été envoyé par courriel) et <u>Votre nouveau mot de passe</u> (le mot de passe que vous souhaitez utiliser désormais) deux fois, puis cliquez sur <u>Enregistrer</u>.",
-    
-    'contactform:title:lostuser' => "Nom d'utilisateur perdu :",
-    
-    'contactform:content:lostuser' => "Si vous avez oublié votre <u>Nom d'utilisateur pour GCconnex</u>, ne vous en faites pas; il n'est pas nécessaire de le récupérer. Vous pouvez utiliser l'adresse de courriel associée à votre compte GCconnex pour ouvrir une session, soit sur la <a href='http://gcconnex.gc.ca/'>Page d'accueil de GCconnex</a> ou en allant dans la fenêtre contextuelle d'<u>Ouverture de session</u> dans le coin gauche supérieur de chaque page de GCconnex. 
-						<br /><br />
-						Toutefois, si vous avez changé d'adresse de courriel depuis que vous avez créé votre compte GCconnex, vous ne pouvez pas utiliser votre nouvelle adresse pour ouvrir une session à moins que vous ayez <a href='http://gcconnex.gc.ca/settings/'>mis à jour votre adresse de courriel dans vos paramètres</a>. Veuillez envoyer un courriel à <a href='mailto:gcconnex@tbs-sct.gc.ca'>gcconnex@tbs-sct.gc.ca</a> et indiquer que vous n'avez plus accès à l'adresse de courriel qui est associée à votre compte GCconnex. Nous vous répondrons dans les deux jours ouvrables qui suivent. ",
-    
-    'contactform:title:create' => "Créer un compte :",
-    
-    'contactform:content:create' => "Rendez-vous sur <a href='http://gcconnex.gc.ca/'>GCconnex.gc.ca</a> et cliquez sur « Inscription » (sous « Ouvrir une session »). Vous pourrez alors saisir votre adresse de courriel du travail et choisir un mot de passe. Ensuite, lisez et acceptez les Conditions générales et cliquez sur « Inscription ». ",
-    
-    'contactform:title:picture' => "Télécharger une photo de profil :",
-    
-    'contactform:content:picture' => "Cliquez sur l'icône de Profil dans le coin supérieur gauche (vous verrez soit votre photo de profil actuel ou une silhouette générique). Vous serez dirigé vers une autre page où vous pourrez « Modifier votre avatar ». Cliquez sur « Parcourir » et sélectionnez la photo que vous souhaitez utiliser, puis cliquez sur « Télécharger ». Vous pourrez ensuite cadrer votre photo (s'il y a lieu) en utilisant la section de prévisionnement.",
-    
+    'contactform:title:lostpwd' => "<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_-_Aide_%C3%A0_l%27utilisater/Comment_retrouver_votre_mot_de_passe'>Mot de passe perdu</a>",
+    'contactform:title:lostuser' => "<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_-_Aide_%C3%A0_l%27utilisateur/Comment_retrouver_votre_nom_d%27utilisateur'>Nom d'utilisateur perdu</a> ",
+    'contactform:title:create' => "Créer un compte ",
+    'contactform:title:picture' => "<a href=' http://www.gcpedia.gc.ca/wiki/GCconnex_-_Aide_%C3%A0_l%27utilisateur/Comment_modifier_votre_profil_personnel#R.C3.A9viser_votre_profil_personnel
+'>Télécharger une photo de profil</a>",
+    'contactform:title:sign-on' => "<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_-_Aide_%C3%A0_l%27utilisateur/_Comment_utiliser_la_Connexion_simplifi%C3%A9e'>Connexion simplifiée</a>",
     'contactform:title:form' => "Contactez-nous",
     
     'contactform:content:form' => "<p>
@@ -1448,6 +1436,8 @@ Ne répondez pas à cet e-mail.",
     'contactform:collaborating:link' => '"http://www.csps-efpc.gc.ca/forlearners/coursesandprograms/CourseDetail-fra.aspx?courseno=b171%7C"', 
     'contactform:socialmedia' => 'Les médias sociaux au gouvernement du Canada (B334) de l’EFPC',
     'contactform:socialmedia:link' => '"http://www.csps-efpc.gc.ca/forlearners/coursesandprograms/CourseDetail-fra.aspx?courseno=B334"',
+    'contactform:guidance' => '<a href="http://www.gcpedia.gc.ca/gcwiki/images/e/ee/Les_medias_sociaux_au_sein_du_GC.jpg">Orientation à l’intention des employés : Les médias sociaux au sein du GC
+</a>',
 
 
     /*

@@ -142,10 +142,10 @@ if (elgg_is_sticky_form('register')) {
 	function fieldFill()
 	{
 		var dName = document.getElementById('email').value;
-		if(dName.indexOf("@")!= false) {
-			dName = dName.substring(0, dName.indexOf("@"));
+		if(dName.indexOf('@')!= false) {
+			dName = dName.substring(0, dName.indexOf('@'));
 		}
-		if(dName.indexOf(".")!= false) {
+		if(dName.indexOf('.')!= false) {
 			dName = dName.replace(/\./g,' ');
 		}
 
@@ -169,7 +169,8 @@ if (elgg_is_sticky_form('register')) {
 			return str.charAt(0).toUpperCase() + str.substr(1);
 		}
 		
-		document.getElementById('name').value = toProperCase(dName);
+		//document.getElementById('name').value = toProperCase(dName);
+		$('.display_name').val(toProperCase(dName));
 		name.value = dName;
 	}
 
@@ -242,24 +243,23 @@ if (elgg_is_sticky_form('register')) {
 		data: {
 			args: document.getElementById('email').value 
 		}, 
-		success: function( x ) {
-				//document.getElementById('username').value = 'wow' + x.output;
+		success: function (x) {
+		    //create username
 		    $('.username_test').val(x.output);
-				//$('.return_message').append(x.output);
-				fieldFill();
-				if(x.output == '> invalid email'){
-                $('.return_message').html(x.output);
-           $('.return_message').addClass('alert alert-error');
-				}else if(x.output == '> This email address has already been registered'){
-				    var link = '';
-           $('.return_message').html(x.output);
-           $('.return_message').addClass('alert alert-error');
-}else{
-           $('.return_message').html('');
-           $('.return_message').removeClass('alert alert-error');
-}   
-			}
-	});">
+		    
+		    generateDisplayName();
+		    function generateDisplayName() {
+            //generate display name (remove '.' in name)	
+                var dName = $('.username_test').val();
+		            
+		            if(dName.indexOf('.')!= false) {
+			            dName = dName.replace(/\./g,' ');
+		            }
+
+		            $('.display_name').val(dName);
+           
+		    }
+		},   });" />
 </div>
 
     <div class="return_message">
@@ -313,7 +313,7 @@ if (elgg_is_sticky_form('register')) {
 	echo elgg_view('input/text', array(
 		'name' => 'name',
 		'id' => 'name',
-        'class' => 'form-control',
+        'class' => 'form-control display_name',
 		'value' => $name,
 	));
 	?>
@@ -454,5 +454,6 @@ echo '<br/>';
 		});
 	//});
 
+    
 </script>
 </div>

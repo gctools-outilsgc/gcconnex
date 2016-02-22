@@ -16,6 +16,7 @@ $english = array(
 	// error messages on the form
 	'gcRegister:failedMySQLconnection' => 'Unable to connect to the database',
 	'gcRegister:invalid_email' => '<a href="#email_initial">Invalid email</a>',
+    'gcRegister:invalid_email2' => 'Invalid email',
 	'gcRegister:empty_field' => 'empty field',
 	'gcRegister:mismatch' => 'mismatch',
 
@@ -41,6 +42,7 @@ $english = array(
 	'gcRegister:password_too_short' => '<a href="#password">Password must contain minimum of 6 characters</a>',
 	'gcRegister:email_mismatch' => '<a href="#email_initial">Emails do not match</a>',
 	'gcRegister:display_name_is_empty' => '<a href="#name">Display name cannot be empty</a>',
+    
 );
 
 add_translation("en", $english);

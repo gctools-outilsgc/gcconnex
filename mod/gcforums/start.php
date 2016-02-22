@@ -57,7 +57,7 @@ function gcforums_page_handler($page) {
 			$vars['container_guid'] = $page[3]; // when we're not in the main page for the forums in the group
 			$title = elgg_echo("gcforums:new_{$page[1]}");
 			$content = elgg_view_form('gcforums/create', array(), $vars); // pass some variables to the form (2nd param is empty)
-			$body = elgg_view_layout('content',array(
+			$body = elgg_view_layout('forum-full',array(
 				'content' => $content,
 				'title' => $title,
 				'filter' => '',	// removes the owner, mine, friends tabs
@@ -71,7 +71,7 @@ function gcforums_page_handler($page) {
 			$entity = get_entity($page[1]);
 			$title = $entity->title;
 			$content = elgg_view_form('gcforums/edit', array(),$vars);	
-			$body = elgg_view_layout('content',array(
+			$body = elgg_view_layout('forum-full',array(
 				'content' => $content,
 				'title' => $entity->title,
 				'filter' => '',					
@@ -86,7 +86,7 @@ function gcforums_page_handler($page) {
 			$title = $entity->title;
 
 			$content = elgg_view('gcforums/gcforums_content', $vars);
-			$body = elgg_view_layout('content',array(
+			$body = elgg_view_layout('forum-full',array(
 				'content' => $content,
 				'title' => $title,
 				'filter' => '',
@@ -596,22 +596,22 @@ function gcforums_menu_buttons($forum_guid,$group_guid, $is_topic=false) { // ma
 		if (!$is_topic) { // if object is a hjforumtopic, then do not display menu
 			// new category
 			if ($forum_object->enable_subcategories || !$forum_guid) // check if subcategories is enabled or this is the main forum page in group
-				$new_category_button = elgg_view('output/url', array("text" => elgg_echo('gcforums:new_hjforumcategory'), "href" => "gcforums/create/hjforumcategory/{$group_guid}/{$forum_guid}", 'class' => 'elgg-button elgg-button-action'));
+				$new_category_button = elgg_view('output/url', array("text" => elgg_echo('gcforums:new_hjforumcategory'), "href" => "gcforums/create/hjforumcategory/{$group_guid}/{$forum_guid}", 'class' => 'elgg-button elgg-button-action btn btn-default'));
 			// new topic
 			if (!$forum_object->enable_posting && $forum_guid) // check if postings is enabled and this is not the main first page of forum in group
-				$new_forum_topic_button = elgg_view('output/url', array("text" => elgg_echo('gcforums:new_hjforumtopic'), "href" => "gcforums/create/hjforumtopic/{$group_guid}/{$forum_guid}", 'class' => 'elgg-button elgg-button-action'));
+				$new_forum_topic_button = elgg_view('output/url', array("text" => elgg_echo('gcforums:new_hjforumtopic'), "href" => "gcforums/create/hjforumtopic/{$group_guid}/{$forum_guid}", 'class' => 'elgg-button elgg-button-action btn btn-default'));
 			// new current forum
-			$new_forum_button = elgg_view('output/url', array("text" => elgg_echo('gcforums:new_hjforum'), "href" => "gcforums/create/hjforum/{$group_guid}/{$forum_guid}", 'class' => 'elgg-button elgg-button-action'));
+			$new_forum_button = elgg_view('output/url', array("text" => elgg_echo('gcforums:new_hjforum'), "href" => "gcforums/create/hjforum/{$group_guid}/{$forum_guid}", 'class' => 'elgg-button elgg-button-action btn btn-default'));
 			
 			if ($forum_guid != 0) {
 				// edit current forum
-				$edit_forum_button = elgg_view('output/url', array("text" => elgg_echo('gcforums:edit_hjforum'), "href" => "gcforums/edit/{$forum_guid}", 'class' => 'elgg-button elgg-button-action'));
+				$edit_forum_button = elgg_view('output/url', array("text" => elgg_echo('gcforums:edit_hjforum'), "href" => "gcforums/edit/{$forum_guid}", 'class' => 'elgg-button elgg-button-action btn btn-default'));
 				
 				// delete current forum
 				elgg_view('output/url', array('is_action' => TRUE));
 				elgg_view('input/securitytoken');
 				$url = elgg_add_action_tokens_to_url(elgg_get_site_url()."action/gcforums/delete?guid={$forum_guid}");
-				$delete_forum_button = elgg_view('output/url', array("text" => elgg_echo('gcforums:forum_delete'), "href" => $url, 'class' => 'elgg-button elgg-button-action'));
+				$delete_forum_button = elgg_view('output/url', array("text" => elgg_echo('gcforums:forum_delete'), "href" => $url, 'class' => 'elgg-button elgg-button-action btn btn-default'));
 				
 				$separator = " | ";
 			}
