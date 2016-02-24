@@ -26,7 +26,7 @@ $form_vars = array(
 	"class" => $additional_class,
 );
 
-echo "<div class='widget-manager-lightbox-edit' id='widget-edit-" . $widget->getGUID() . "'>";
+echo "<div class='widget-manager-lightbox-edit TESTING' id='widget-edit-" . $widget->getGUID() . "'>";
 echo elgg_view_form("widgets/save", $form_vars, $body_vars);
 echo "</div>";
 

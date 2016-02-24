@@ -48,6 +48,9 @@ function wet4_theme_init() {
     elgg_register_page_handler('friends', '_wet4_friends_page_handler'); //register new page handler for data tables
 	elgg_register_page_handler('friendsof', '_wet4_friends_page_handler');
 
+    elgg_unregister_page_handler('messages', 'messages_page_handler');
+    elgg_register_page_handler('messages', 'wet4_messages_page_handler');
+
     //datatables css file
 	elgg_extend_view('css/elgg', '//cdn.datatables.net/1.10.10/css/jquery.dataTables.css');
 
@@ -144,6 +147,7 @@ function wet4_theme_init() {
     // Replace the default index page with redirect
     elgg_register_plugin_hook_handler('index', 'system', 'new_index');
     elgg_register_page_handler('newsfeed', 'newsfeed_page_handler');
+    elgg_register_page_handler('splash', 'splash_page_handler');
 
     elgg_register_page_handler('groups_autocomplete', 'groups_autocomplete');
 
@@ -165,6 +169,11 @@ function groups_autocomplete() {
 
 function newsfeed_page_handler(){
     @include (dirname ( __FILE__ ) . "/pages/newsfeed.php");
+    return true;
+}
+//Create splash page
+function splash_page_handler(){
+    @include (dirname ( __FILE__ ) . "/pages/splash.php");
     return true;
 }
 
@@ -1440,3 +1449,55 @@ function wet4_widget_menu_setup($hook, $type, $return, $params) {
 }
 
 
+function wet4_messages_page_handler($page) {
+
+	$current_user = elgg_get_logged_in_user_entity();
+	if (!$current_user) {
+		register_error(elgg_echo('noaccess'));
+		elgg_get_session()->set('last_forward_from', current_page_url());
+		forward('');
+	}
+
+	elgg_load_library('elgg:messages');
+
+	elgg_push_breadcrumb(elgg_echo('messages'), 'messages/inbox/' . $current_user->username);
+
+	if (!isset($page[0])) {
+		$page[0] = 'inbox';
+	}
+
+	// Support the old inbox url /messages/<username>, but only if it matches the logged in user.
+	// Otherwise having a username like "read" on the system could confuse this function.
+	if ($current_user->username === $page[0]) {
+		$page[1] = $page[0];
+		$page[0] = 'inbox';
+	}
+
+	if (!isset($page[1])) {
+		$page[1] = $current_user->username;
+	}
+
+	$base_dir = elgg_get_plugins_path() . 'wet4/pages/messages';
+
+	switch ($page[0]) {
+		case 'inbox':
+			set_input('username', $page[1]);
+			include("$base_dir/inbox.php");
+			break;
+		case 'sent':
+			set_input('username', $page[1]);
+			include("$base_dir/sent.php");
+			break;
+		case 'read':
+			set_input('guid', $page[1]);
+			include("$base_dir/read.php");
+			break;
+		case 'compose':
+		case 'add':
+			include("$base_dir/send.php");
+			break;
+		default:
+			return false;
+	}
+	return true;
+}

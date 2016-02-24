@@ -67,9 +67,9 @@ return array(
       * Custom Activity Widget
       */
      'wetActivity:nocollorgroup'=>"(translate me) Welcome to GCconnex. To get started you can browse or search for groups related to your work and interests.",
-     'wetActivity:welcome'=>"(translate me) Welcome to GCconnex",
+     'wetActivity:welcome'=>"Bienvenu sur GCconnex",
      'wetActivity:browsegroups'=>"(translate me) Start Browsing Groups",
-    
+     
   /**
  * Group Profile
  */     
@@ -110,9 +110,9 @@ return array(
 /**
   * Sites
  */
-    'landingPage' => '(translate me) Set Landing Page',
-    'career' => '(translate me) Career',
-    'newsfeed' => '(translate me) News Feed',
+    'landingPage' => 'Fixer votre page d’atterrissage',
+    'career' => 'Carrière',
+    'newsfeed' => 'Fils de nouvelle',
 	'item:site' => 'Sites',
 
 /**
@@ -285,7 +285,7 @@ return array(
 	'widgets:add:failure' => "Nous n'avons pas pu ajouter votre widget.",
 	'widgets:move:failure' => "Nous n'avons pas pu enregistrer la position du nouveau widget.",
 	'widgets:remove:failure' => "Impossible de supprimer ce widget",
-    'wet4:colandgroupactivity'=>'Your Newsfeed (translate me)',
+    'wet4:colandgroupactivity'=>'Votre fils de nouvelle',
     'wet4:colandgroupactivitynolog'=>'Bienvenue à GCconnex',
     'wet4:noticetitle' => 'Avis',
     'wet4:homenotice' => 'Bienvenue à GCconnex, la plateforme de réseautage social professionnelle du gouvernement du Canada. GCconnex a pour objet de permettre aux fonctionnaires de tisser des liens et de collaborer selon leurs connaissances, leurs expériences et leurs intérêts communs. GCconnex devrait servir à mener des activités relatives au milieu de travail, et il ne devrait pas remplacer les réseaux sociaux personnels (comme Facebook).',
@@ -499,7 +499,7 @@ return array(
 	'tools' => "Outils",
 	'settings:edit' => 'Editer les paramètres',
 
-    'gcconnex:registerText' => '(translate me)New to GCconnex? Get started connecting and collaborating with other public servants all accross Canada.',
+    'gcconnex:registerText' => 'Élargissez votre réseau, mobilisez vos collègues.',
 	'register' => "S'enregistrer",
 	'registerok' => "Vous vous êtes enregistré avec succès sur %s.",
 	'registerbad' => "Votre création de compte n'a pas fonctionné pour une raison inconnue.",
@@ -552,6 +552,7 @@ return array(
 	'user:password:text' => 'Pour générer un nouveau mot de passe, entrez votre nom d\'utilisateur ci-dessous. Puis cliquez sur le bouton de demande.',
 
 	'user:persistent' => 'Se souvenir de moi',
+	'user:forgot' => 'Mot de passe perdu?',
 
 	'walled_garden:welcome' => 'Bienvenue à',
 
@@ -1456,7 +1457,8 @@ Ne répondez pas à cet e-mail.",
 'event_calendar:listing_title:user' => "Les événements de %s",
 'event_calendar:submit' => 'Sauvegarder',
 'event_calendar:personal_event_calendars_link' => 'Sur (%s) calendrier',
-
+'event_calendar:meeting' => 'Réunion en ligne et téléconférence',
+'event_calendar:info' => 'Information(s) supplémentaire(s)',
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */

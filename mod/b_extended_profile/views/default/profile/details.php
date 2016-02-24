@@ -28,8 +28,10 @@ if ($user->canEdit()) {
     echo '<h2>' . elgg_echo('gcconnex_profile:basic:header') . '</h2>';
     echo '</div>';
     echo '<div class="panel-body">';
+    $editAvatar = elgg_get_site_url(). 'avatar/edit/' . $user->username;
+    echo '<div><a href='.$editAvatar.' class="btn btn-primary">'. elgg_echo('gcconnex_profile:profile:edit_avatar') .'</a></div>';
     echo '<div class="basic-profile-standard-field-wrapper col-sm-6 col-xs-12">'; // container for css styling, used to group profile content and display them seperately from other fields
-
+   
     $fields = array('Name', 'Job', 'Department', 'Location', 'Phone', 'Mobile', 'Email', 'Website');
 
     foreach ($fields as $field) { // create a label and input box for each field on the basic profile (see $fields above)
@@ -64,7 +66,7 @@ if ($user->canEdit()) {
     echo '<div class="basic-profile-social-media-wrapper col-sm-6 col-xs-12">'; // container for css styling, used to group profile content and display them seperately from other fields
 
 // pre-populate the social media fields and their prepended link for user profiles
-   
+    
 
 
     $fields = array('Facebook' => "http://www.facebook.com/",

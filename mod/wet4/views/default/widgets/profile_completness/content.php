@@ -30,6 +30,9 @@ $getResult = mysqli_fetch_assoc($res);
 
 
 echo "<script>$(document).ready(function() {
+ var ua = window.navigator.userAgent;
+
+if(ua.indexOf('MSIE ')<=0 || ua.indexOf('Trident/')<=0){
     var progressbar = $('#progressbar'),
         max = progressbar.attr('value'),
         //max=80,
@@ -41,7 +44,7 @@ echo "<script>$(document).ready(function() {
         value += 1;
         addValue = progressbar.val(value);
          
-        $('.progress-value').html(value + '%');
+        $('.progress-value').html(value+'%');
  
         if (value == max) {
             clearInterval(animate);                    
@@ -51,9 +54,10 @@ echo "<script>$(document).ready(function() {
     var animate = setInterval(function() {
         loading();
     }, time);
+}
 });</script>";
 
-echo '<p class="center progress-value pc-large-text">'.$getResult['@total'].'</p>';
+echo '<p class="center progress-value pc-large-text">'.$getResult['@total'].'%</p>';
 
 echo '<meter id="progressbar" class="progress-bar-striped col-xs-12 col-sm-12 col-md-12 col-lg-12 mrgn-bttm-sm" low="45" high="75" optimum="85" value="'.$getResult['@total'].'" max="100"></meter>';
 echo '<div class="clearfix"></div>';

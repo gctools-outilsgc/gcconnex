@@ -18,7 +18,7 @@ echo '<div class="messages-container">';
 echo $messages;
 echo '</div>';
 
-echo '<div class="elgg-foot messages-buttonbank">';
+echo '<div class="elgg-foot messages-buttonbank mrgn-tp-md">';
 
 echo elgg_view('input/submit', array(
 	'value' => elgg_echo('delete'),
@@ -34,11 +34,12 @@ if ($vars['folder'] == "inbox") {
 		'name' => 'read',
 	));
 }
-
+ 
+/* Removed for checkbox column
 echo elgg_view('input/button', array(
 	'value' => elgg_echo('messages:toggle'),
 	'class' => 'elgg-button btn-default',
 	'id' => 'messages-toggle',
 ));
-
+*/
 echo '</div>';

@@ -134,7 +134,9 @@ function event_calendar_set_event_from_form($event_guid, $group_guid) {
 	$e->venue = get_input('venue');
 	$e->fees = get_input('fees');
 	$e->language = get_input('language');
+	$e->teleconference_radio = get_input('teleconference_radio');
 	$e->teleconference = get_input('teleconference_text');
+	$e->calendar_additional = get_input('calendar_additional');
 	$e->contact = get_input('contact');
 	$e->organiser = get_input('organiser');
 	$e->tags = string_to_tag_array(get_input('tags'));
@@ -171,7 +173,9 @@ function event_calendar_set_event_from_form($event_guid, $group_guid) {
 		'venue',
 		'fees',
 		'language',
+		'teleconference_radio',
 		'teleconference',
+		'calendar_additional',
 		'contact',
 		'organiser',
 		'tags',
@@ -1112,7 +1116,7 @@ function event_calendar_get_formatted_full_items($event) {
 	$event_items[] = $item;
 
 	$item = new stdClass();
-	$item->title = elgg_echo('langue');
+	$item->title = elgg_echo('event_calendar:language');
 	if (htmlspecialchars($event->language) == 0 ){
 
 		$item->value = 'Français';
@@ -1124,11 +1128,14 @@ function event_calendar_get_formatted_full_items($event) {
 	}
 $event_items[] = $item;
 		$item = new stdClass();
-	$item->title = elgg_echo('teleconference');
+	$item->title = elgg_echo('event_calendar:meeting');
 	$item->value = htmlspecialchars($event->teleconference);
 	$event_items[] = $item;
 
-	
+	$item = new stdClass();
+	$item->title = elgg_echo('event_calendar:info');
+	$item->value = htmlspecialchars($event->calendar_additional);
+	$event_items[] = $item;
 	
 
 	if ($event_calendar_region_display == 'yes') {
@@ -1394,6 +1401,7 @@ if (htmlspecialchars($event->language) == 0 ){
 }
 
 $teleconference = $event->teleconference;
+$additional = $event->additional;
 $fees = $event->fees;
 $organiser = $event->organiser;
 $contact = $event->contact;
@@ -1411,14 +1419,14 @@ $subject = $title;
 $description = $description;        
 $location = $venue;
 $type_email = $request;
-sendIcalEvent($email,$UID,$users,$oneday,$from_name, $from_address, $to_name, $to_address, $startTime, $endTime, $subject, $description, $location,$long_description,$contact,$organiser,$fees,$teleconference,$language,$venue,$type_email);
+sendIcalEvent($additional,$email,$UID,$users,$oneday,$from_name, $from_address, $to_name, $to_address, $startTime, $endTime, $subject, $description, $location,$long_description,$contact,$organiser,$fees,$teleconference,$language,$venue,$type_email);
 
 
 }
 
 
 
-function sendIcalEvent($email,$UID,$users,$oneday,$from_name, $from_address, $to_name, $to_address, $startTime, $endTime, $subject, $description, $location,$long_description,$contact,$organiser,$fees,$teleconference,$language,$venue,$type_email)
+function sendIcalEvent($additional,$email,$UID,$users,$oneday,$from_name, $from_address, $to_name, $to_address, $startTime, $endTime, $subject, $description, $location,$long_description,$contact,$organiser,$fees,$teleconference,$language,$venue,$type_email)
 {
 	
     $domain = 'gcconnex.com';
@@ -1504,26 +1512,34 @@ Merci
               </td>
             </tr>
             <tr>
-              <td class="bodycopy" style="color: #153643; font-family: sans-serif; font-size: 16px; line-height: 22px;">
-                <b>When:</b> '.$startTime.' to '.$endTime2.'<br/>
-                 <b>Title:</b> '.$subject.'<br/>';
+              <td class="bodycopy" style="color: #153643; font-family: sans-serif; font-size: 16px; line-height: 22px;">';
+              if (date('j M Y', strtotime($startTime)) == date('j M Y', strtotime($endTime))){
+                 	$message .= '<b>When:</b> '.$startTime.'<br/>';
+                 }else{
+
+                 	 $message .= '<b>When:</b> '.$startTime.' to '.$endTime2.'<br/>';
+                 }
+               
+                $message .= ' <b>Title:</b> '.$subject.'<br/>';
                  if ($venue){
                  	$message .= '<b>Venue:</b> '.$venue.'<br/>';
                  }
                   if ($language){
-                 	$message .= '<b>language:</b> '.$language.'<br/>';
+                 	$message .= '<b>Event language:</b> '.$language.'<br/>';
                  }  if ($teleconference){
-                 	$message .= '<b>teleconference:</b> '.$teleconference.'<br/>';
+                 	$message .= '<b>Online meeting and teleconference:</b> '.$teleconference.'<br/>';
+                 }  if ($additional){
+                 	$message .= '<b>Additional information:</b> '.$additional.'<br/>';
                  }  if ($contact){
-                 	$message .= '<b>contact:</b> '.$contact.'<br/>';
+                 	$message .= '<b>Contact:</b> '.$contact.'<br/>';
                  }  if ($organiser){
-                 	$message .= '<b>organiser:</b> '.$organiser.'<br/>';
+                 	$message .= '<b>Organiser:</b> '.$organiser.'<br/>';
                  }  if ($fees){
-                 	$message .= '<b>fees:</b> '.$fees.'<br/>';
+                 	$message .= '<b>Fees:</b> '.$fees.'<br/>';
                  }  if ($description){
-                 	$message .= '<b>description:</b> '.$description.'<br/>';
+                 	$message .= '<b>Description:</b> '.$description.'<br/>';
                  } if ($long_description){
-                 	$message .= '<b>long_description:</b> '.$long_description.'<br/>';
+                 	$message .= '<b>Long description:</b> '.$long_description.'<br/>';
                  }    
  
              $message .='<br/> </td>
@@ -1556,16 +1572,24 @@ Merci
                     </td>
                   </tr>
                   <tr>
-                   <td class="bodycopy" style="color: #153643; font-family: sans-serif; font-size: 16px; line-height: 22px;">
-                <b>Quand:</b> '.$startTime.' to '.$endTime2.'<br/>
-                 <b>Titre:</b> '.$subject.'<br/>';
+                   <td class="bodycopy" style="color: #153643; font-family: sans-serif; font-size: 16px; line-height: 22px;">';
+                   if (date('j M Y', strtotime($startTime)) == date('j M Y', strtotime($endTime))){
+                 	$message .= '<b>Quand:</b> '.$startTime.'<br/>';
+                 }else{
+
+                 	 $message .= '<b>Quand:</b> '.$startTime.' to '.$endTime2.'<br/>';
+                 }
+               
+                 $message .= '<b>Titre:</b> '.$subject.'<br/>';
                  if ($venue){
                  	$message .= '<b>Lieu:</b> '.$venue.'<br/>';
                  }
                   if ($language){
-                 	$message .= '<b>Langue:</b> '.$language.'<br/>';
+                 	$message .= '<b>Langue de l\'événement</b> '.$language.'<br/>';
                  }  if ($teleconference){
-                 	$message .= '<b>teleconference:</b> '.$teleconference.'<br/>';
+                 	$message .= '<b>Réunion en ligne et téléconférence:</b> '.$teleconference.'<br/>';
+                 }  if ($additional){
+                 	$message .= '<b>Information additionnelle:</b> '.$additional.'<br/>';
                  }  if ($contact){
                  	$message .= '<b>Contact:</b> '.$contact.'<br/>';
                  }  if ($organiser){
@@ -1645,7 +1669,7 @@ Merci
     'ORGANIZER;CN="'.$from_name.'":MAILTO:'.$from_address. "\r\n" .
     'ATTENDEE;CN="'.$to_name.'";ROLE=REQ-PARTICIPANT;RSVP=TRUE:MAILTO:'.$to_address. "\r\n" .
     'LAST-MODIFIED:' . date("Ymd\TGis") . "\r\n" .
-    'UID:'.date("Ymd\TGis", strtotime($startTime)).$UID."@".$domain . "\r\n" .
+    'UID:'.$UID."@".$domain . "\r\n" .
     'DTSTAMP:'.date("Ymd\TGis"). "\r\n" .
     'DTSTART;TZID="Eastern Time":'.date("Ymd\THis", strtotime($startTime)). "\r\n" .
     'DTEND;TZID="Eastern Time":'.date("Ymd\THis", strtotime($endTime)). "\r\n" .
@@ -1877,6 +1901,9 @@ function event_calendar_prepare_edit_form_vars($event = null, $page_type = '', $
 	$values = array(
 		'title' => null,
 		'description' => null,
+		'teleconference' => null,
+		'teleconference_radio' => 'open',
+		'calendar_additional' => null,
 		'venue' => null,
 		'start_date' => $start_date,
 		'end_date' => $start_date+60*60,

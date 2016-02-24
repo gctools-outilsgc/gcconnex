@@ -58,72 +58,152 @@ $list_items = '';
 ///DATATABLES///
 ////////////////
 
-if(elgg_in_context('friends') || elgg_in_context('my_groups') || elgg_in_context('groups_members') ||elgg_in_context('messages')){ //datatable for colleagues, group members, my groups, messages
+if(elgg_in_context('friends') || elgg_in_context('my_groups') || elgg_in_context('groups_members')){ //datatable for colleagues, group members, my groups, messages
 
-foreach ($items as $item) {
-	$item_view = elgg_view_list_item($item, $vars);
-	if (!$item_view) {
-		continue;
-	}
+    foreach ($items as $item) {
+	    $item_view = elgg_view_list_item($item, $vars);
+	    if (!$item_view) {
+		    continue;
+	    }
     
-    $heading = $item->getType();
+        $heading = $item->getType();
 
-	$li_attrs = ['class' => $item_classes];
+	    $li_attrs = ['class' => $item_classes];
 
-	if ($item instanceof \ElggEntity) {
-		$guid = $item->getGUID();
-		$type = $item->getType();
-		$subtype = $item->getSubtype();
+	    if ($item instanceof \ElggEntity) {
+		    $guid = $item->getGUID();
+		    $type = $item->getType();
+		    $subtype = $item->getSubtype();
 
-		$li_attrs['id'] = "elgg-$type-$guid";
+		    $li_attrs['id'] = "elgg-$type-$guid";
 
-		$li_attrs['class'][] = "elgg-item-$type";
-		if ($subtype) {
-            //                                               
-			$li_attrs['class'][] = "elgg-item-$type-$subtype clearfix";
-		}
-	} else if (is_callable(array($item, 'getType'))) {
-		$li_attrs['id'] = "item-{$item->getType()}-{$item->id}";
-	}
+		    $li_attrs['class'][] = "elgg-item-$type";
+		    if ($subtype) {
+                //                                               
+			    $li_attrs['class'][] = "elgg-item-$type-$subtype clearfix";
+		    }
+	    } else if (is_callable(array($item, 'getType'))) {
+		    $li_attrs['id'] = "item-{$item->getType()}-{$item->id}";
+	    }
 
-    //stick items in <td> element
-	$list_items = elgg_format_element('td', ['class' => 'data-table-list-item '], $item_view);
-    //stick <td> elements in <tr>
-    $tR .= elgg_format_element('tr', ['class' => 'testing',], $list_items);
-}
+        //stick items in <td> element
+	    $list_items = elgg_format_element('td', ['class' => 'data-table-list-item '], $item_view);
+        //stick <td> elements in <tr>
+        $tR .= elgg_format_element('tr', ['class' => 'testing',], $list_items);
+    }
 
-if ($position == 'before' || $position == 'both') {
-	echo $nav;
-}
-    
-//determine what to put in table head based on item subtype
-if($heading == 'user' && elgg_in_context('friends')){ //friends
-    $heading = elgg_echo('friends');   
-} else if($heading == 'user' && elgg_in_context('groups_members')){ //group members
-    $heading = elgg_echo('groups:members');   
-} else if($heading == 'group' && elgg_in_context('my_groups')){ //my groups
-    $heading = elgg_echo('groups');   
-} 
-
-//create table body
-$tBody = elgg_format_element('tbody', ['class' => ''], $tR);
-
-//create table head
-$tHead = elgg_format_element('thead', ['class' => ''], '<tr> <th class="data-table-head"> ' . $heading . '</th> </tr>');
-
-    if(elgg_get_context() == 'messages'){
-        //make it so that messages won't be in alphabetical order. Need to pass a JSON array, but elgg is being mean :(
-echo elgg_format_element('table', ['class' => ' wb-tables table', 'id' => '', "data-wb-tables"=>"{ \"ordering\" : false }"], $tHead . $tBody);
-    }else{
-        //pull it all together and display table
-echo elgg_format_element('table', ['class' => ' wb-tables table', 'id' => ''], $tHead . $tBody);
+    if ($position == 'before' || $position == 'both') {
+	    echo $nav;
     }
     
+    //determine what to put in table head based on item subtype
+    if($heading == 'user' && elgg_in_context('friends')){ //friends
+        $heading = elgg_echo('friends');   
+    } else if($heading == 'user' && elgg_in_context('groups_members')){ //group members
+        $heading = elgg_echo('groups:members');   
+    } else if($heading == 'group' && elgg_in_context('my_groups')){ //my groups
+        $heading = elgg_echo('groups');   
+    } 
+
+    //create table body
+    $tBody = elgg_format_element('tbody', ['class' => ''], $tR);
+
+    //create table head
+    $tHead = elgg_format_element('thead', ['class' => ''], '<tr> <th class=""> ' . $heading . '</th> </tr>');
+
+        if(elgg_get_context() == 'messages'){
+            //make it so that messages won't be in alphabetical order. Need to pass a JSON array, but elgg is being mean :(
+    echo elgg_format_element('table', ['class' => ' wb-tables table', 'id' => '', "data-wb-tables"=>"{ \"ordering\" : false }"], $tHead . $tBody);
+        }else{
+            //pull it all together and display table
+    echo elgg_format_element('table', ['class' => ' wb-tables table', 'id' => ''], $tHead . $tBody);
+        }
+    
 
 
-if ($position == 'after' || $position == 'both') {
-	echo $nav;
-}
+    if ($position == 'after' || $position == 'both') {
+	    echo $nav;
+    }
+
+} else if(elgg_in_context('messages')) {
+
+    foreach ($items as $item) {
+	    $item_view = elgg_view_list_item($item, $vars);
+	    if (!$item_view) {
+		    continue;
+	    }
+
+        $heading = $item->getType();
+
+	    $li_attrs = ['class' => $item_classes];
+
+	    if ($item instanceof \ElggEntity) {
+		    $guid = $item->getGUID();
+		    $type = $item->getType();
+		    $subtype = $item->getSubtype();
+
+		    $li_attrs['id'] = "elgg-$type-$guid";
+
+		    $li_attrs['class'][] = "elgg-item-$type";
+		    if ($subtype) {
+                //
+			    $li_attrs['class'][] = "elgg-item-$type-$subtype clearfix";
+		    }
+	    } else if (is_callable(array($item, 'getType'))) {
+		    $li_attrs['id'] = "item-{$item->getType()}-{$item->id}";
+	    }
+
+        $mess_check = elgg_view('input/checkbox', array(
+			'name' => 'message_id[]',
+			'value' => $item->guid,
+
+		));
+
+
+        //stick items in <td> element
+        $list_items = elgg_format_element('td', ['class' => 'data-table-list-item '], $mess_check);
+	    $list_items .= elgg_format_element('td', ['class' => 'data-table-list-item '], $item_view);
+        //stick <td> elements in <tr>
+        $tR .= elgg_format_element('tr', ['class' => 'testing',], $list_items);
+    }
+
+    if ($position == 'before' || $position == 'both') {
+	    echo $nav;
+    }
+        $heading = elgg_echo('messages');
+
+
+    //create table body
+    $tBody = elgg_format_element('tbody', ['class' => ''], $tR);
+
+    //create table head
+    $tHead = elgg_format_element('thead', ['class' => ''], '<tr><th><input type="checkbox" name="select_all" value="Toggle All" id="table-select-all"></th> <th class=""> ' . $heading . '</th> </tr>');
+
+
+        //make it so that messages won't be in alphabetical order. Need to pass a JSON array, but elgg is being mean :(
+        echo elgg_format_element('table', ['class' => ' wb-tables table', 'id' => '', "data-wb-tables"=>"{ \"ordering\" : false }"], $tHead . $tBody);
+
+        ?>
+        
+        <script>
+        $('#table-select-all').on('click', function(){
+            $('input[type="checkbox"]').prop('checked', this.checked);
+        });
+
+        $('div .message').on('hover', function(){
+            $(this).css('cursor', 'pointer');
+            $(this).on('click', function(){
+               var link = $(this).find("a:first").attr('href');
+               window.location.href = link;
+            });
+        });
+        </script>
+        
+        <?php
+
+    if ($position == 'after' || $position == 'both') {
+	    echo $nav;
+    }
 
 } else { //normal list for everything else
     

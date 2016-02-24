@@ -21,8 +21,8 @@ if ($event_calendar_reminders == 'yes') {
 		60*24 => elgg_echo('event_calendar:interval:day'),
 	);
 	
-	$body .= elgg_view('input/dropdown', array('name' => 'reminder_number', 'options_values' => $numbers, 'value' => $fd['reminder_number'], 'style' => 'display:inline; width:initial'));
-	$body .= elgg_view('input/dropdown', array('name' => 'reminder_interval', 'options_values' => $intervals, 'value' => $fd['reminder_interval'], 'style' => 'display:inline; width:initial'));
+	$body .= elgg_view('input/dropdown', array('name' => 'reminder_number', 'options_values' => $numbers, 'value' => $fd['reminder_number'], 'style' => 'display:inline-block; width:auto'));
+	$body .= elgg_view('input/dropdown', array('name' => 'reminder_interval', 'options_values' => $intervals, 'value' => $fd['reminder_interval'], 'style' => 'display:inline-block; width:auto'));
 	$body .= elgg_echo('elgg_calendar:send_reminder_before');
 	$body .= '</div>';
 }

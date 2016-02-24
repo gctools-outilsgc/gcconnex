@@ -9,6 +9,7 @@ $english = array(
 
 To see the full post, click on the link below:
 %s
+
 ',
 	'mentions:notification_types:object:blog' => 'a blog post',
 	'mentions:notification_types:object:bookmarks' => 'a bookmark',

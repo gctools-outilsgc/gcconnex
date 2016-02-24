@@ -7,7 +7,7 @@
 
 if(elgg_is_logged_in()){
     $user = elgg_get_logged_in_user_entity();
-
+    
     //set metadata if not set
     if(!isset($user->landingpage)){
         $user->landingpage = 'news';
@@ -25,5 +25,12 @@ if(elgg_is_logged_in()){
     }
     
 }
+else{
+
+    //if not logged in go to splash
+    $url = elgg_get_site_url()."splash/";
+    forward($url);
+    //Splash will forward them to login
     
+}
     ?>

@@ -510,7 +510,7 @@ return array(
 	'tools' => "Tools",
 	'settings:edit' => 'Edit settings',
 
-    'gcconnex:registerText' => '<b>Someone please write something better :3</b><br>New to GCconnex? Get started connecting and collaborating with other public servants all accross Canada.',
+    'gcconnex:registerText' => 'Grow your network, engage your colleagues.',
 	'register' => "Register",
 	'registerok' => "You have successfully registered for %s.",
 	'registerbad' => "Your registration was unsuccessful because of an unknown error.",
@@ -563,6 +563,7 @@ return array(
 	'user:password:text' => 'To request a new password, enter your username or email address below and click the Request button.',
 
 	'user:persistent' => 'Remember me',
+	'user:forgot' => 'Forgot your password?',
 
 	'walled_garden:welcome' => 'Welcome to',
 
@@ -1488,6 +1489,8 @@ Please do not reply to this email.",
 	'event_calendar:comming' => "Upcoming events",
 	'event_calendar:language' => "Event language",
 	'event_calendar:mine' => 'My events',
+	'event_calendar:meeting' => 'Online meeting and teleconference',
+	'event_calendar:info' => 'Additional information',
 
 
 

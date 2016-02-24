@@ -135,7 +135,7 @@
 
 
 input[type=file], input[type=text] {
-	font-family: "Lucida Grande", Tahoma, Verdana, Arial, sans-serif;
+
 	border: 1px solid #BDC7D8;
 	padding: .5em;
 	width: 100%;

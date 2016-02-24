@@ -167,19 +167,31 @@ function mentions_notification_handler($event, $event_type, $object) {
 
 					$link = $object->getURL();
 					$type_key = "mentions:notification_types:$type:$subtype";
-					$type_str = elgg_echo($type_key);
+
+                    $type_str = array();
+
+					$type_str[0] = elgg_echo($type_key, array(), 'en');
+                    $type_str[1] = elgg_echo($type_key, array(), 'fr');
 					if ($type_str == $type_key) {
 						// plugins can add to the list of mention objects by defining
 						// the language string 'mentions:notification_types:<type>:<subtype>'
 						continue;
 					}
-					$subject = elgg_echo('mentions:notification:subject', array($owner->name, $type_str));
+					$subject = elgg_echo('mentions:notification:subject', array($owner->name, $type_str[0]), 'en');
+
+                    $subject .= ' / ' . elgg_echo('mentions:notification:subject', array($owner->name, $type_str[1]), 'fr');
 
 					$body = elgg_echo('mentions:notification:body', array(
 						$owner->name,
-						$type_str,
+						$type_str[0],
 						$link,
-					));
+					), 'en');
+
+                    $body .= elgg_echo('mentions:notification:body', array(
+						$owner->name,
+						$type_str[1],
+						$link,
+					), 'fr');
 
 					$params = array(
 						'object' => $object,

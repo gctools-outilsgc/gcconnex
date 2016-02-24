@@ -23,6 +23,7 @@ if ($message->toId == elgg_get_page_owner_guid()) {
 			'text' => $user->name,
 			'is_trusted' => true,
 		));
+        $user_link = '<span>' .  $user->name . '</span>';
 	} else {
 		$icon = '';
 		$user_link = elgg_echo('messages:deleted_sender');
@@ -40,11 +41,14 @@ if ($message->toId == elgg_get_page_owner_guid()) {
 
 	if ($user) {
 		$icon = elgg_view_entity_icon($user, 'small');
+        /*
 		$user_link = elgg_view('output/url', array(
 			'href' => "messages/compose?send_to=$user->guid",
 			'text' => elgg_echo('messages:to_user', array($user->name)),
 			'is_trusted' => true,
 		));
+        */
+        $user_link = '<span>' .  elgg_echo('messages:to_user', array($user->name)) . '</span>';
 	} else {
 		$icon = '';
 		$user_link = elgg_echo('messages:deleted_sender');
@@ -75,12 +79,14 @@ $checkbox = elgg_view('input/checkbox', array(
 		));
 $messageLink = $message->getURL();
 
+//<div class="messages-chkbx">$checkbox</div>
+
 $body = <<<HTML
 
 
 <div class="mrgn-bttm-md clearfix">
 
-<div class="messages-chkbx">$checkbox</div>
+
 <div class="messages-owner">$user_link</div>
 <div class="messages-subject">$subject_info</div>
 <div class="messages-timestamp">$timestamp</div>
@@ -93,9 +99,27 @@ HTML;
 
 if ($full) {
     //echo '<a href="'.$messageLink.'">';
+
+        $user_link = '<b>' . $user->name . '</b>';
+
+    
+    $subject_info = '<b>' . elgg_echo('messages:title') . ':</b> ' . $message->title;
+
+    //lets redo the body here
+    $body = <<<HTML
+<div class=" clearfix">
+<div class="messages-owner">$user_link</div>
+<div class="mrgn-rght-md pull-right">$delete_link</div>
+<div class="mrgn-rght-md pull-right">$timestamp</div>
+
+<div class="col-xs-12 pad-lft-0 mrgn-bttm-sm">$subject_info</div>
+</div>
+
+
+HTML;
   
-	echo   elgg_view_image_block($icon, $body, array('class' => $class));
-	echo elgg_view('output/longtext', array('value' => $message->description));
+	echo   elgg_view_image_block($icon, $body, array('class' => 'brdr-bttm mrgn-bttm-md'));
+	echo elgg_view('output/longtext', array('value' => $message->description, 'class' => 'mrgn-lft-sm'));
     //echo '</a>';
 
 } else {
@@ -109,11 +133,15 @@ if ($full) {
 			'value' => $message->guid,
 			'default' => false,
 		));
+
+        $tBody = elgg_format_element('a', ['href' => $message->getURL()], $body);
 	
 		$entity_listing = elgg_view_image_block($icon, $body, array('class' => $class));
 		
 		echo  $entity_listing;
 	} else {
+
+        
         
         //echo elgg_view_image_block($checkbox, $entity_listing);
 		echo elgg_view_image_block( $icon, $body, array('class' => $class));

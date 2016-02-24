@@ -1136,7 +1136,7 @@ mark,
     }
 .text-primary,details summary, details summary:focus, details summary:hover {
  /* color: #2572b4; */
- color:#055959 !important;
+ color:#055959;
 }
 
 a.text-primary:hover {
@@ -10637,6 +10637,11 @@ a.shr-opn, a.shr-opn:hover {
  #editProfile .form-control::-webkit-input-placeholder {
     color: #bbb !important; }
 
+ .gcconnex-profile-name button:last-child{
+     border-bottom: solid 3px #055959;
+
+ }
+
     /****************************************/
     
     /******************** user menu ********************/
@@ -10814,6 +10819,29 @@ a.shr-opn, a.shr-opn:hover {
 .icon-sel:hover{
     color: #b6b6b6; 
 }
+
+    .unread-custom span {
+            color: #055959;
+        font-weight: bold;
+    }
+
+    .message:hover {
+       background: #F5F5F5;
+        
+    }
+
+        .message:hover span {
+            text-decoration: underline;
+        }
+
+    .table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td {
+        padding: 0;
+    }
+
+    .data-table-list-item input[type="checkbox"] {
+
+        margin-top: 15px;
+    }
 
 /*This is where the elgg icons get loaded!*/
 <?php echo elgg_view('css/elements/icons - Copy', $vars); ?> 
@@ -11077,10 +11105,10 @@ border:none;
 }
 
 /******Padding Classes********/
-/*
+
 .pad-lft-0 {
     padding-left: 0;
-}
+}/*
 .pad-lft-xs {
     padding-left: 5px;
 }
@@ -11548,6 +11576,120 @@ figcaption{
     display:none;
 
 }
+
+
+/* SPLASH PAGE */
+
+.splash object {
+  height: auto;
+  max-width: 100%; }
+
+.splash #bg {
+    background: url(<?php echo $site_url ?>/mod/wet4/graphics/splash_bg.gif) no-repeat center center fixed;
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  
+  
+  position: fixed;
+    left: 0;
+  top: 0;
+  min-width: 100%;
+min-height: 100%;}
+  .splash #bg img {
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    min-height: 50%;
+    min-width: 50%;
+    position: absolute;
+    right: 0;
+    top: 0; }
+
+.splash_identifier{
+    font-size: 1.6em;
+    display: block;
+    clear: both;
+    float: right;
+    margin: 12% 12% 2% 0; 
+}
+
+.splash .sp-bx {
+  background-color: #f8f8f8;
+  padding: 30px 30px 19px; }
+  .splash .sp-bx .btn {
+    -webkit-box-shadow: 0 4px #ddd;
+            box-shadow: 0 4px #ddd;
+    margin: 35px 0 14px;
+    min-width: 110px; }
+    @media (min-width: 768px) {
+      .splash .sp-bx .btn {
+        -webkit-box-shadow: 0 4px #ddd;
+                box-shadow: 0 4px #ddd;
+        margin: 35px 0 14px;
+        min-width: 110px; } }
+    @media (min-width: 992px) {
+      .splash .sp-bx .btn {
+        -webkit-box-shadow: 0 4px #ddd;
+                box-shadow: 0 4px #ddd;
+        margin: 35px 0 14px;
+        min-width: 138px;
+        padding: .5em 1.5em; } }
+    @media (min-width: 1200px) {
+      .splash .sp-bx .btn {
+        -webkit-box-shadow: 0 4px #ddd;
+                box-shadow: 0 4px #ddd;
+        margin: 35px 0 14px;
+        min-width: 138px;
+        padding: .5em 1.5em; } }
+
+.splash .glyphicon {
+  color: #9e9e9e;
+  font-size: 5px;
+  top: -3px; }
+
+.splash .sp-lk:link, .splash .sp-lk:visited {
+  color: #335075;
+  text-decoration: none; }
+
+.splash .sp-lk:hover, .splash .sp-lk:active {
+  color: #335075;
+  text-decoration: underline; }
+
+.splash .sp-hb {
+  margin: 50px auto;
+  width: 300px; }
+  @media (min-width: 768px) {
+    .splash .sp-hb {
+      margin: 50px auto;
+      width: 300px; } }
+  @media (min-width: 992px) {
+    .splash .sp-hb {
+      margin: 175px auto;
+      width: 500px; } }
+  @media (min-width: 1200px) {
+    .splash .sp-hb {
+      margin: 175px auto;
+      width: 500px; } }
+
+.splash .sp-bx-bt {
+  background-color: #e1e4e7;
+  padding: 30px; }
+  @media (min-width: 768px) {
+    .splash .sp-bx-bt {
+      background-color: #e1e4e7;
+      padding: 30px; } }
+  @media (min-width: 992px) {
+    .splash .sp-bx-bt {
+      background-color: #e1e4e7;
+      padding: 30px 30px 13px; } }
+  @media (min-width: 1200px) {
+    .splash .sp-bx-bt {
+      background-color: #e1e4e7;
+      padding: 30px 30px 13px; } }
+
+
 /*
  * Mobile panel
  */
@@ -11587,7 +11729,7 @@ figcaption{
       margin-top: 1px;
       padding: 9px; }
   #mb-pnl .modal-body {
-    background: #0097A7;
+    background: #047177; /*0097A7*/
     margin-left: 0;
     padding-bottom: 0;
     padding-left: 0;
@@ -11646,7 +11788,7 @@ figcaption{
     padding-right: 30px;
     text-align: right; }
   #mb-pnl .sm-pnl {
-    background: #055959;
+    /*background: #055959;*/
     padding-left: 15px; }
   #mb-pnl .info-pnl {
     background: #047177;

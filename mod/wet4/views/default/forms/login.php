@@ -54,7 +54,7 @@ $site_url = elgg_get_site_url();
 	));
     */
 
-    echo '<a href="' . $site_url . 'forgotpassword" class="col-xs-12 mrgn-tp-md">Forgot your password?</a>';
+    echo '<a href="' . $site_url . 'forgotpassword" class="col-xs-12 mrgn-tp-md">'.elgg_echo('user:forgot').'</a>';
 ?>
 </div>
 

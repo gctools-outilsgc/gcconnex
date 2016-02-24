@@ -25,6 +25,7 @@ $site_url = elgg_get_site_url();
                     
                 </div>
                 <div class="col-sm-2 col-sm-offset-7 hidden-xs">
+                    <!--
                     <div class="dropdown  pull-right tools-navigator ">
                         <a  href="#" class=" dropdown-toggle" type="button" id="tools-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         GCTools
@@ -39,7 +40,7 @@ $site_url = elgg_get_site_url();
                             <li class="col-xs-6"><a href="#"><i class="fa fa-globe fa-4x"></i><div>Intranet</div></a></li>
 
                     </ul>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

@@ -94,7 +94,7 @@ $breadcrumbs
 <!--</section>
 		</div>-->
         <div class="row pagedetails">
-<div class="col-sm-6 col-xs-12 datemod">
+<div class="col-sm-6 col-xs-6 datemod">
 <dl id="wb-dtmd">
 <dt>Version</dt>
 <dd>$version</dd>
