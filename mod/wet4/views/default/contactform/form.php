@@ -58,7 +58,7 @@ if(isset($_POST['submitted']))
     $(document).ready(function (){
             $("#reason").change(function() {
                 // foo is the id of the other select box 
-                if ($(this).val() == "Autre question$Other question") {
+                if ($(this).val() == "Autres$Other") {
                     $("#subject").show();
                 }else{
                     $("#subject").hide();

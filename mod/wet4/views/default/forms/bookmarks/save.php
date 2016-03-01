@@ -59,7 +59,10 @@ if ($guid) {
 	echo elgg_view('input/hidden', array('name' => 'guid', 'value' => $guid));
 }
 
-echo elgg_view('input/submit', array('value' => 'Add Bookmark', 'class'=>'btn btn-primary'));
-
+if($guid){
+    echo elgg_view('input/submit', array('value' => elgg_echo('save'), 'class'=>'btn btn-primary'));
+} else {
+    echo elgg_view('input/submit', array('value' => elgg_echo('bookmarks:add'), 'class'=>'btn btn-primary'));
+}
 ?>
 </div>

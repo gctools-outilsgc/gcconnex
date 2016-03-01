@@ -1,6 +1,8 @@
 <?php
 
 elgg_load_library('elgg:event_calendar');
+$fd = $vars['event'];
+$group_id = $vars['group_guid'];
 $site_calendar = elgg_get_plugin_setting('site_calendar', 'event_calendar');
 $group_calendar = elgg_get_plugin_setting('group_calendar', 'event_calendar');
 $admin = elgg_is_admin_logged_in();
@@ -23,10 +25,18 @@ foreach ($groups as $group) {
 		}
 	}
 }
-
+$value = $vars['container_guid'];
 if ($vars['container_guid']) {
 	$value = $vars['container_guid'];
+
 } else {
 	$value = 0;
 }
-echo elgg_view('input/dropdown', array('name' => 'group_guid', 'value' => $vars['container_guid'], 'options_values' => $containers));
+
+/*print_r($containers);
+
+foreach ($containers as $k => $v) {
+    echo $v. '='.$k;
+}
+echo'----->'.$group_id;*/
+echo elgg_view('input/select', array('name' => 'group_guid', 'value' => 'group_guid', 'options_values' => $containers));

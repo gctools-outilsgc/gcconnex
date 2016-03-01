@@ -16,12 +16,12 @@ layout
 echo '<div role="tabpanel" class="tab-pane fade-in" id="badgeProgress">';
     echo '<div class="clearfix">';
 
-        //view likes badge
-        echo elgg_view('badges/likes', $vars);
-        echo elgg_view('badges/discussion', $vars);
-        echo elgg_view('badges/colleagues', $vars);
-        echo elgg_view('badges/comments', $vars);
-        echo elgg_view('badges/bookmarks', $vars);
+    $badges = get_badges();
+
+    foreach($badges as $badge){
+        echo elgg_view('badges/' . $badge, $vars);
+    }
+
 
     echo '</div>';
 echo '</div>';

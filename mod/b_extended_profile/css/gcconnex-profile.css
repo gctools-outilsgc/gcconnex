@@ -8,8 +8,12 @@
 }
 
 .gcconnex-profile-name {
-/*    padding-bottom: 20px; */
-    height: 36px;
+/*    padding-bottom: 20px; 
+    height: 36px;*/
+}
+
+.img-responsive img {
+    width: 100%;
 }
 
 #english_expiry,

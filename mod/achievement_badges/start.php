@@ -36,3 +36,29 @@ function gcBadges_init() {
     
 }
 
+/*
+ * 
+ * Grab all badge names
+ * When adding new badge make sure everything shares this spelling of badge (ex: discussion)
+ * To add new badge add name to $badges array below
+ * 
+ */
+
+
+function get_badges(){
+
+    $badges = array('bookmrk', 'likes', 'discussion', 'colleague', 'comment');
+
+    return $badges;
+}
+
+
+/*
+ * Function to notify user
+ * 
+ *
+ */
+
+function notif_level_up($name, $level, $user){
+    //_elgg_notify_user
+}

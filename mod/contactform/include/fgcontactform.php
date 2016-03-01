@@ -575,7 +575,7 @@ Merci
             $ret = false;
         }
 
-        if ($_POST['reason'] == 'Autre question$Other question')
+        if ($_POST['reason'] == 'Autres$Other')
         {
             if (empty($_POST['subject']))
             {

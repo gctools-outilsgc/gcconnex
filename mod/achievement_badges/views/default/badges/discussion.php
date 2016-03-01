@@ -14,6 +14,8 @@ if(!isset($user->discussionBadge)){
     $user->discussionBadge = 0;
 }
 
+$name = 'discussion';
+
 //get badge images
 $badges[0] = 'mod/achievement_badges/graphics/discussionBadgeLvl00.png';
 $badges[1] = 'mod/achievement_badges/graphics/discussionBadgeLvl01.png';
@@ -27,10 +29,6 @@ $currentBadge = $badges[0];
 
 //set level to zero
 $level = '1';
-
-//static
-$title = 'Discussions Badge';
-$description = 'Created discussions in groups';
 
 //set goals for badge
 $goals[0] = 1;
@@ -115,6 +113,10 @@ if($user->discussionCount > $count){
     $user->discussionCount = $count;
 }
 */
+
+
+$title = elgg_echo('badge:' . $name . ':name');
+$description =  elgg_echo('badge:' . $name . ':objective', array($currentGoal));
 
 if(elgg_is_logged_in() && elgg_get_logged_in_user_guid() == $user->getGUID()){
 

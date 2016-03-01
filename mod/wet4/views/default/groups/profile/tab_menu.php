@@ -29,7 +29,7 @@ if(elgg_get_context() == 'groupSubPage'){
     
     elgg_register_menu_item('owner_block', array(
     'name' => 'about',
-    'href' => '#' . elgg_echo('gprofile:about'),
+    'href' => '#about',
     'text' => elgg_echo('gprofile:about'),
     'title' => elgg_echo('gprofile:about'),
     'item_class' => 'active',

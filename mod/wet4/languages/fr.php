@@ -18,6 +18,14 @@ return array(
    'wet:youarehere'=>"Vous êtes ici :",
    'wet:errmess' => "<h3 class='h3'>Le formulaire n'a pu être soumis car une ou des erreurs ont été trouvées.</h3>",
    'wet:feedbackText'=>"Rétroaction<span class='wb-inv'> sur ce site Web</span>",
+   'wet:footAbout' => 'About GCconnex (translate me)',
+  'wet:footTerms' => 'Terms and Conditions (translate me)',
+  'wet:footPrivacy' => 'Privacy Policy (translate me)',
+  'wet:footTutorials' => 'GCconnex Tutorials (translate me)',
+  'wet:footTitleAbout' => 'About (translate me)',
+  'wet:footTitleNews' => 'News (translate me)',
+  'wet:footTitleSocial' => 'Stay Connected (translate me)',
+  'wet:collapseWidget' => '(translate me) Collapse / Open %s',
 /**
  * Profile Strength
  */
@@ -35,6 +43,12 @@ return array(
      'ps:optin' =>"Adhérer",
      'ps:psErr'=>"Une erreur est survenue durant l'obtentions de vos informations de profil . Nous travaillons pour résoudre le problème .",
 
+     /*
+       * Content Creation
+       */
+
+      'page:create' => '(translate me) Create Page',
+
 /*
        * Suggested Friends
        */
@@ -43,16 +57,34 @@ return array(
       'sf:connect' => "Connecter",
       'sf:alttext' => "L'avatar de",
       'sf:suggcolleagues'=> "Suggestion de collègue",
+
+      /*Friendly Time*/
+      	'friendlytime:weeks' => "il y a environ 2 semaines",
+	'friendlytime:weeks:singular' => "la semaine dernière",
+	'friendlytime:date' => "j F Y",
+
+	'friendlytime:month:01' => 'Janvier',
+	'friendlytime:month:02' => 'Février',
+	'friendlytime:month:03' => 'Mars',
+	'friendlytime:month:04' => 'Avril',
+	'friendlytime:month:05' => 'Mai',
+	'friendlytime:month:06' => 'Juin',
+	'friendlytime:month:07' => 'Juillet',
+	'friendlytime:month:08' => 'Août',
+	'friendlytime:month:09' => 'Septembre',
+	'friendlytime:month:10' => 'Octobre',
+	'friendlytime:month:11' => 'Novembre',
+	'friendlytime:month:12' => 'Décembre',
 /**
  * The Wire
  */
-    
-    'thewire:post' => "Create a Wire Post",
-    'thewire:share' => ' Share',
-    'thewire:shares' => ' Shares',
-    'thewire:contentwarning' => 'This content may not be viewable to all users due to access permissions.',
-    'thewire:groupwarning' => 'This content is only viewable to members of: ',
-    'thewire:userwarning' => 'This content is only viewable to: ',
+
+    'thewire:post' => "(translate me) Create a Wire Post",
+    'thewire:share' => '(translate me)  Share',
+    'thewire:shares' => '(translate me)  Shares',
+    'thewire:contentwarning' => '(translate me) This content may not be viewable to all users due to access permissions.',
+    'thewire:groupwarning' => '(translate me) This content is only viewable to members of: ',
+    'thewire:userwarning' => '(translate me) This content is only viewable to: ',
     
 /**
  * User Menu
@@ -90,13 +122,20 @@ return array(
     'gprofile:albumsCatch' => "Albums",
     'gprofile:ideas' => "Idées",
     'gprofile:more' => "Plus",
+    'gprofile:settings' => 'Paramètres',
 
-    'gprofile:create' => "Create Group",
+    'gprofile:create' => "(translate me) Create Group",
 
     'gprofile:edit:content' => "Options pour le contenu",
     'gprofile:edit:admin' => "Option pour l'administrateur",
 
-    'groups:suggestedGroups' => '(translate me) Engagement team desc on what is happening',
+    'groups:suggestedGroups' => '(translate me) The group you are creating may already exist, check out these suggestions to find what you are looking for.',
+
+    'groups:creatediscussion' => '(translate me) Create Discussion',
+
+    'profile:actions' => '(translate me) Actions',
+    'profile:viewall:coll' => '(translate me) View All Colleagues',
+    'profile:viewall:groups' => '(translate me) View All Groups',
 
         /**
    * Group invite
@@ -274,7 +313,7 @@ return array(
 
 	'widget:delete' => 'Supprimer %s',
     'widget:remove' => 'Supprimer widget',
-	'widget:edit' => 'Personnaliser ce widget',
+	'widget:edit' => 'Personnaliser ce widget: %s',
 
 	'widgets' => "Widgets",
 	'widget' => "Widget",
@@ -1459,6 +1498,7 @@ Ne répondez pas à cet e-mail.",
 'event_calendar:personal_event_calendars_link' => 'Sur (%s) calendrier',
 'event_calendar:meeting' => 'Réunion en ligne et téléconférence',
 'event_calendar:info' => 'Information(s) supplémentaire(s)',
+'river:create:object:event_calendar' => "%s a ajouté l'événement' %s",
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */

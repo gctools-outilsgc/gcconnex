@@ -7,7 +7,7 @@ $site_url = elgg_get_site_url();
 $user = get_loggedin_user()->username;
 $currentPage=$_SERVER[ "REQUEST_URI" ];
 $OptedIn=FALSE;
-
+ 
 //echo $user_guid;
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 

@@ -177,7 +177,7 @@ if (elgg_get_page_owner_guid() != elgg_get_logged_in_user_guid()) {
     }
     if(elgg_is_logged_in()){
         echo '<div class="btn-group"><button type="button" class="btn btn-custom mrgn-rght-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Actions <span class="caret"></span>
+                    ' . elgg_echo('profile:actions') . ' <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu pull-right clearfix">';
         echo $profile_actions;

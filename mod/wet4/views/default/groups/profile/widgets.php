@@ -29,7 +29,7 @@ echo elgg_view('groups/profile/tab_menu');
     </div>
 </div>
 
-    <div id="<?php echo elgg_echo('gprofile:about') ?>" class="tab-pane fade-in active">
+    <div id="about" class="tab-pane fade-in active">
 
         <?php 
     echo elgg_view('groups/profile/fields', $vars);

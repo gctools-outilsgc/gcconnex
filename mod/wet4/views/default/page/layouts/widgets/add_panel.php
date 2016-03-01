@@ -56,42 +56,47 @@ if (!empty($widgets)) {
 		$allow_multiple = $widget->multiple;
 		$hide = widget_manager_get_widget_setting($handler, "hide", $widget_context);
 		
-		if ($can_add && !$hide) {
-			$body .= "<div class='widget_manager_widgets_lightbox_wrapper clearfix mrgn-bttm-md'>";
-			
+		
+
+        //Add Yolo Code
+
+        if ($can_add && !$hide) {
+			$body .= "<div class='widget_manager_widgets_lightbox_wrapper clearfix'>";
+
 			if (!$allow_multiple && in_array($handler, $current_handlers)) {
 				$class = 'elgg-state-unavailable';
                 //changing what the button says to manage the widgets
                 $button_value = elgg_echo('widget:remove');
 			} else {
 				$class = 'elgg-state-available';
-                $button_value = elgg_echo("widget_manager:button:add");
 			}
-			
+
 			if ($allow_multiple) {
 				$class .= ' elgg-widget-multiple';
 			} else {
 				$class .= ' elgg-widget-single';
 			}
-			
-			$body .= "<span class='widget_manager_widgets_lightbox_actions'>";
-			$body .= '<ul class="list-unstyled"><li class="' . $class . '" data-elgg-widget-type="' . $handler . '">';
-			if (!$allow_multiple) {
-				//$body .= "<span class='elgg-quiet'>" . elgg_echo('widget:unavailable') . "</span>";
 
-			}
-			$body .= elgg_view("input/button", array("class" => "elgg-button-submit", "value" => $button_value,));
+            $body .= "<span class='widget_manager_widgets_lightbox_actions'>";
+            $body .= '<ul class="list-unstyled"><li class="' . $class . '" data-elgg-widget-type="' . $handler . '">';
+
+            $body .= elgg_view("input/button", array("class" => "elgg-button-submit widget-added", "value" => elgg_echo('widget:remove')));
+			$body .= elgg_view("input/button", array("class" => "elgg-button-submit widget-to-add", "value" => elgg_echo("widget_manager:button:add")));
 			$body .= "</li></ul>";
-			$body .= "</span>";
-			
+            $body .= "<span class='hidden wb-invisible'>Number of " . $widget->name . " widgets currently on the dashboad: </span>";
+            $body .= "</span>";
+            //trying to add the count, sometimes it works, sometimes it doesn't :(
+            $body .= "<span class='multi-widget-count'>";
+            $body .= "</span>";
 			$description = $widget->description;
-			if (empty($description)) {
-				$description = "&nbsp;"; // need to fill up for correct layout
+			if(empty($description)){
+				$description = "&nbsp;"; 	// need to fill up for correct layout
 			}
-			
+
+			$wname = str_ireplace(" ", "_", $widget->name);
 			$body .= "<div><b>" . $widget->name . "</b></div>";
-			$body .= "<div class='elgg-quiet'>" . $description . "</div>";
-			
+			$body .= "<div class='elgg-quiet'><abbr style='border-bottom: 1px dotted;' alt=\"" . elgg_echo("widget-accessibility:info:$widget_context:$wname") . "\" title=\"". elgg_echo("widget-accessibility:info:$widget_context:$wname") ."\" > " . $description . "</abbr></div>";
+
 			$body .= "</div>";
 		}
 	}

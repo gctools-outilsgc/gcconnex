@@ -7,6 +7,9 @@
 // footer
 
 $site_url = elgg_get_site_url();
+$about = $site_url .'about-a_propos';
+$terms = $site_url .'terms-termes';
+$priv = $site_url .'privacy-confidentialite';
 ?>
 
 
@@ -26,35 +29,33 @@ $site_url = elgg_get_site_url();
 
 
 			<div class="row">
-				 <!--
-				<section class="col-sm-3">
-	               <h3>Contact us</h3>
-	                   <ul class="list-unstyled">
-		                  <li><a href="#">Report an Issue</a></li>
-                           <li><a href="#">Send Feedback</a></li>
-	                   </ul>
-                </section>
--->
+
                 <section class="col-sm-4">
-	               <h3>About</h3>
-	                   <ul class="list-unstyled">
-		                  <li><a href="#">About GCconnex</a></li>
-                           <li><a href="#">GCconnex Tutorials</a></li>
-                           <li><a href="#">Privacy Policy</a></li>
-                           <li><a href="#">Terms and Conditions</a></li>
+                <h3>
+                    <?php echo elgg_echo('wet:footTitleAbout');?>
+                </h3>
+                <ul class="list-unstyled">
+		                  <li><a href="<?php echo $about;?>"><?php echo elgg_echo('wet:footAbout');?></a></li>
+                           <li><a href="#"><?php echo elgg_echo('wet:footTutorials');?></a></li>
+                           <li><a href="<?php echo $priv;?>"><?php echo elgg_echo('wet:footPrivacy');?></a></li>
+                           <li><a href="<?php echo $terms;?>"><?php echo elgg_echo('wet:footTerms');?></a></li>
                            <li><a href="<?php echo elgg_get_site_url() . 'mod/contactform/'; ?>"><?php echo elgg_echo('contactform:help_menu_item'); ?></a></li>
 	                   </ul>
                 </section>
                 <section class="col-sm-4">
-	               <h3>News</h3>
-	                   <ul class="list-unstyled">
+                <h3>
+                    <?php echo elgg_echo('wet:footTitleNews');?>
+                </h3>
+                <ul class="list-unstyled">
 		                  <li><a href="#">GCconnex News</a></li>
 		                  <li><a href="#">GCconnex Stats</a></li>
 	                   </ul>
                 </section>
                 <section class="col-sm-4">
-	               <h3>Stay connected</h3>
-	                   <ul class="list-unstyled">
+                <h3>
+                    <?php echo elgg_echo('wet:footTitleSocial');?>
+                </h3>
+                <ul class="list-unstyled">
 		                  <li><a href="https://twitter.com/gcconnex">Twitter</a></li>
 	                   </ul>
                 </section>

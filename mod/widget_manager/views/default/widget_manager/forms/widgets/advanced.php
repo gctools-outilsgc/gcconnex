@@ -9,7 +9,7 @@ $yesno_options = array(
 
 $noyes_options = array_reverse($yesno_options, true);
 
-$advanced = "<div class='hidden' id='widget-manager-widget-edit-advanced-" . $widget->getGUID() . "'>";
+$advanced = "<div class='wet-hidden' id='widget-manager-widget-edit-advanced-" . $widget->getGUID() . "'>";
 
 $advanced .= "<h3>" . elgg_echo("widget_manager:widgets:edit:advanced") . "</h3>";
 $advanced .= "<fieldset>";

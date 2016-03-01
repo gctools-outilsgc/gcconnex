@@ -111,7 +111,7 @@ if (!$owner) {
 
                         //display different title on button for group owner/mods
                         if($owner == get_loggedin_user() || elgg_is_admin_logged_in()){
-                            $buttonTitle = "Settings";
+                            $buttonTitle = elgg_echo('gprofile:settings');
                         }
                 ?>
                 

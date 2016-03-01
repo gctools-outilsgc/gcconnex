@@ -25,7 +25,7 @@ try{
         
         if(intval($result->num_rows)>0){
             $count=0;
-            $htmloutput='<div class="panel panel-custom elgg-module-aside">';
+            $htmloutput='<div class="panel clearfix panel-custom elgg-module-aside">';
             
             $htmloutput=$htmloutput.'<div class="panel-heading">';
             $htmloutput=$htmloutput.'<h3 class="panel-title">'.elgg_echo('sf:suggcolleagues').'</h3>';
@@ -52,7 +52,7 @@ try{
             }
             $htmloutput=$htmloutput.'</div></div>';
             $htmloutput=$htmloutput.'<div class="clearfix"></div>';
-            $htmloutput=$htmloutput.'</div>';
+            //$htmloutput=$htmloutput.'</div>';
             echo $htmloutput;
         }
         $connection->close();

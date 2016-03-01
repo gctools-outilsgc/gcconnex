@@ -11093,6 +11093,29 @@ a.shr-opn, a.shr-opn:hover {
     box-shadow:none;
     -webkit-box-shadow:none;
 }
+
+#widget_manager_widgets_select .panel-heading{
+    position: absolute;
+    z-index: 44444;
+    width: 91%;
+}
+
+#widget_manager_widgets_select .panel-body{
+   margin-top:70px;
+}
+
+.multi-widget-count{
+    -webkit-box-shadow:none;
+    box-shadow:none;
+    height:1em;
+    color:#333333;
+    margin:10px 0 0 0;
+    text-shadow:none;
+    border-radius:0px;
+    padding:10px;
+    background-color: #fff;
+}
+
 .col-md-4 .panel ul li .panel-river{
 border:none;
     box-shadow:none;
@@ -11585,7 +11608,7 @@ figcaption{
   max-width: 100%; }
 
 .splash #bg {
-    background: url(<?php echo $site_url ?>/mod/wet4/graphics/splash_bg.gif) no-repeat center center fixed;
+    background: url(<?php echo $site_url ?>/mod/wet4/graphics/splash_bg_2.gif) no-repeat center center fixed;
     -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -11608,14 +11631,19 @@ min-height: 100%;}
     top: 0; }
 
 .splash_identifier{
-    font-size: 1.6em;
+    font-size: 4.0em;
     display: block;
     clear: both;
     float: right;
     margin: 12% 12% 2% 0; 
+    color: #055959;
 }
 
 .splash .sp-bx {
+    border: solid 1px #dddddd;
+    border-bottom: none;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.09);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.09);
   background-color: #f8f8f8;
   padding: 30px 30px 19px; }
   .splash .sp-bx .btn {
@@ -11658,22 +11686,30 @@ min-height: 100%;}
   text-decoration: underline; }
 
 .splash .sp-hb {
-  margin: 50px auto;
+    padding: 50px 0;
+  margin: 0 auto;
   width: 300px; }
   @media (min-width: 768px) {
     .splash .sp-hb {
-      margin: 50px auto;
+        padding: 50px 0;
+      margin: 0 auto;
       width: 300px; } }
   @media (min-width: 992px) {
     .splash .sp-hb {
-      margin: 175px auto;
+        padding: 175px 0;
+      margin: 0 auto;
       width: 500px; } }
   @media (min-width: 1200px) {
     .splash .sp-hb {
-      margin: 175px auto;
+        padding: 175px 0;
+      margin: 0 auto;
       width: 500px; } }
 
 .splash .sp-bx-bt {
+    border: solid 1px #dddddd;
+    border-top: none;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.09);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.09);
   background-color: #e1e4e7;
   padding: 30px; }
   @media (min-width: 768px) {

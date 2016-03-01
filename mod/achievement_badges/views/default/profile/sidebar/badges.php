@@ -11,9 +11,24 @@ $owner = elgg_get_page_owner_entity();
 //get user levels for badges, display badges for levels above 0
 $content = '<ul class="elgg-gallery" style="padding-left:0">';
 
+$badges = get_badges();
 
+foreach($badges as $badg){
+    $currentBadge = $badg . 'Badge';
 
+    if($owner->$currentBadge > 0){
+        $content .= '<li class="mrgn-rght-sm" style="width:62px" >';
+        $content .= elgg_view('output/img', array(
+                            'src' => 'mod/achievement_badges/graphics/' . $currentBadge . 'Lvl0' . $owner->$currentBadge . '.png',
+                            'class' => 'img-responsive mrgn-rght',
+                            'title' => elgg_echo('badge:' . $badg . ':achieved:' . $owner->$currentBadge, array($owner->getDisplayName())),
+                            'alt' => $currentBadge,
+                            ));
+        $content .= '</li>';
+    }
+}
 
+/*
 if($owner->likesBadge > 0){
     $content .= '<li class="mrgn-rght-sm" style="width:62px" >';
     $content .= elgg_view('output/img', array(
@@ -61,13 +76,13 @@ if($owner->commentBadge > 0){
 if($owner->discussionBadge > 0){
     $content .= '<li class="mrgn-rght-sm" style="width:62px" >';
     $content .= elgg_view('output/img', array(
-                            'src' => 'mod/achievement_badges/graphics/bookmrkBadgeLvl0' . $owner->discussionBadge . '.png',
+                            'src' => 'mod/achievement_badges/graphics/discussionBadgeLvl0' . $owner->discussionBadge . '.png',
                             'alt' => 'Comment Badge',
                             'class' => 'img-responsive',
         'title' => $owner->getDisplayName() . ' created %s discussions'
                         ));
     $content .= '</li>';
-}
+}*/
 
 $content .= '</ul>';
 
@@ -76,6 +91,6 @@ $content .= '</ul>';
 $footer = "<br>";
 
 
-echo elgg_view_module('aside', 'Achievements', $content, array('footer' => $footer));
+echo elgg_view_module('aside', elgg_echo('badge:achievements'), $content, array('footer' => false));
 
 ?>

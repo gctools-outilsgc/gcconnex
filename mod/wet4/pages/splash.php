@@ -73,11 +73,21 @@ $body .= <<<__BODY
 
 				parent.location.href= "$frenchLink";
 			} else {
+//Just force language on splash
+				//if (c_value == "en"){
+				//	set_cookie(c_name,"en");
+				//} else if(c_value == "fr") {
+				//	set_cookie(c_name, "fr");
+				//}
 
-				if (c_value == "en"){
-					set_cookie(c_name,"fr");
-				} else {
+if (language_selected == "English")
+				{
 					set_cookie(c_name, "en");
+
+				} else
+				if (language_selected == "French")
+				{
+					set_cookie(c_name,"fr");
 				}
 				parent.location.href= "$frenchLink";
 			}
@@ -88,13 +98,10 @@ $body .= <<<__BODY
 			expires = 1000 * 60 * 60 * 24;
 			var expires_date = new Date( today.getTime() + (expires) );
 			document.cookie = name + "=" +escape( value ) + ";path=/" + ";expires=" + expires_date.toGMTString();
-//document.cookie = "splashLang=true;";
-//splashLang();
+
 		}
 
-        function splashLang(){
-            document.cookie = "splashLanguage=true; path=/; ";
-        }
+
 
 
 	</script>
@@ -148,13 +155,13 @@ $body .= <<<__BODY
 
 </div>
 __BODY;
-
+/*
 $CONFIG->splashLang;
 //Pretty sure this doesn't do the thing I want it to do
 if ($CONFIG->splashLang) {
     _elgg_services()->session->set( 'splashLang', 'true' );
 } 
-
+*/
 $body .= elgg_view('page/elements/foot');
 $headparams = array(
     'title' => 'GCconnex',

@@ -145,12 +145,19 @@ function event_calendar_set_event_from_form($event_guid, $group_guid) {
 	$e->reminder_number = get_input('reminder_number');
 	$e->reminder_interval = get_input('reminder_interval');
 	$e->web_conference = get_input('web_conference');
+	$e->group_guid = get_input('group_guid');
 	$e->real_end_time = event_calendar_get_end_time($e);
 
 	// sanity check
 	if ($e->schedule_type == 'fixed' && $e->real_end_time <= $e->start_date) {
 		register_error(elgg_echo('event_calander:end_before_start:error'));
 		return false;
+	}
+
+	if ($e->teleconference_radio == 'no'){
+		$e->teleconference = '';
+		$e->calendar_additional = '';
+
 	}
 
 	foreach ($required_fields as $fn) {
@@ -186,6 +193,7 @@ function event_calendar_set_event_from_form($event_guid, $group_guid) {
 		'web_conference',
 		'real_end_time',
 		'schedule_type',
+		'group_guid',
 	);
 
 	foreach ($keys as $key) {
@@ -1117,17 +1125,10 @@ function event_calendar_get_formatted_full_items($event) {
 
 	$item = new stdClass();
 	$item->title = elgg_echo('event_calendar:language');
-	if (htmlspecialchars($event->language) == 0 ){
+	$item->value = htmlspecialchars($event->language);
+	$event_items[] = $item;
 
-		$item->value = 'Français';
-	}else if(htmlspecialchars($event->language) == 1 ){
-		$item->value = 'English';
-	}else{
-
-		$item->value = 'Bilingue';
-	}
-$event_items[] = $item;
-		$item = new stdClass();
+	$item = new stdClass();
 	$item->title = elgg_echo('event_calendar:meeting');
 	$item->value = htmlspecialchars($event->teleconference);
 	$event_items[] = $item;
@@ -1136,6 +1137,11 @@ $event_items[] = $item;
 	$item->title = elgg_echo('event_calendar:info');
 	$item->value = htmlspecialchars($event->calendar_additional);
 	$event_items[] = $item;
+
+/*	$item = new stdClass();
+	$item->title = elgg_echo('event_calendar:group_guid');
+	$item->value = htmlspecialchars($event->group_guid);
+	$event_items[] = $item;*/
 	
 
 	if ($event_calendar_region_display == 'yes') {
@@ -1903,6 +1909,7 @@ function event_calendar_prepare_edit_form_vars($event = null, $page_type = '', $
 		'description' => null,
 		'teleconference' => null,
 		'teleconference_radio' => 'open',
+		'language' => 'open',
 		'calendar_additional' => null,
 		'venue' => null,
 		'start_date' => $start_date,

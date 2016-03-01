@@ -27,7 +27,7 @@ $friendCount = '(' . count($count) . ')';
 
 $all_link = elgg_view('output/url', array(
 	'href' => 'friends/' . $owner->username,
-	'text' => elgg_echo('View All Colleagues') . $friendCount,
+	'text' => elgg_echo('profile:viewall:coll') . $friendCount,
 	'is_trusted' => true,
     'class' => 'text-center btn btn-default center-block',
 ));

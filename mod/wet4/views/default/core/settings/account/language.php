@@ -7,7 +7,7 @@
  */
 
 $user = elgg_get_page_owner_entity();
-/* nick p - removing language from account settings. It doesn't really work, users should just use lang toggle
+// nick p - removing language from account settings. It doesn't really work, users should just use lang toggle
 if ($user) {
 	$title = elgg_echo('user:set:language');
 	$content = '<label for="language">' . elgg_echo('user:language:label') . ': </label>';
@@ -19,4 +19,3 @@ if ($user) {
 	));
 	echo elgg_view_module('info', $title, $content);
 }
-*/

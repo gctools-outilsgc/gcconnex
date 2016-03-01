@@ -14,6 +14,8 @@ if(!isset($user->likesBadge)){
     $user->likesBadge = 0;
 }
 
+$name = 'likes';
+
 //get badge images
 $badges[0] = 'mod/achievement_badges/graphics/likesBadgeLvl00.png';
 $badges[1] = 'mod/achievement_badges/graphics/likesBadgeLvl01.png';
@@ -30,6 +32,7 @@ $level = '1';
 //static
 $title = 'Likes Badge';
 $description = 'People liked your content';
+$description = 'Receive likes on your content';
 
 //set goals for badge
 $goals[0] = 2;
@@ -43,12 +46,12 @@ $currentGoal = $goals[0];
 //current count
 $count = '0';
 
-$entities = elgg_get_entities(array('owner_guids' => $user->getGUID(),));
+$entities = elgg_get_entities(array('owner_guids' => $user->getGUID(), 'limit' => 0));
 
 if($entities){
     
     foreach($entities as $ent){
-        $likeCount = $likeCount + $ent->countAnnotations('likes');
+        $likeCount = $likeCount + $ent->countAnnotations(array('name' => 'likes', 'limit' => 0));
     }
     
     //echo $likeCount;
@@ -100,11 +103,9 @@ if(!isset($user->likeCount)){
     $user->likeCount = $count;
 }
 
-if($user->likeCount > $count){
-    //keep count the same to not lose progress
-} else {
-    $user->likeCount = $count;
-}
+
+$title = elgg_echo('badge:' . $name . ':name');
+$description =  elgg_echo('badge:' . $name . ':objective', array($currentGoal));
 
 if(elgg_is_logged_in() && elgg_get_logged_in_user_guid() == $user->getGUID()){
 
