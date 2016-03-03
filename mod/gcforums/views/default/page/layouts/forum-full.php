@@ -15,11 +15,16 @@ $class = 'elgg-layout elgg-layout-one-tabbar clearfix';
 if (isset($vars['class'])) {
     $class = "$class {$vars['class']}";
 }
+
+if (isset($vars['title'])){
+    $theTitle ='<h1>'.$vars['title'].'</h1>';
+}
 ?>
 
 <div class="<?php echo $class; ?>">
+
 	<div>
-		<h1> <?php echo $vars['title']; ?> </h1>
+		 <?php echo $theTitle; ?>
 	</div>
 
 	<div class="elgg-main elgg-body">

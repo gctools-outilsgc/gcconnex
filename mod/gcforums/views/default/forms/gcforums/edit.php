@@ -164,7 +164,7 @@ echo <<<___HTML
 	$gcf_type_input
 	$gcf_forward_url_input
 
-<div>
+<div class="mrgn-tp-md">
 	$gcf_save_button
 </div>
 

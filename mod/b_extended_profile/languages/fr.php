@@ -7,8 +7,18 @@
  */
 
 $french = array(
+
+    //user Settings Details
+    'item:object:MySkill' => '(translate me) Profile skill',
+    'item:object:experience' => '(translate me) Profile experience',
+    'item:object:education' => '(translate me) Profile education',
+
+    //profile sidebar
+    'gcprofile:nocoll' => '(translate me) %s has not connected with any colleagues yet.',
+    'gcprofile:nogroups' => '(translate me) %s has not joined any groups yet.',
+
     // Email Verification
-    "gcc_profile:error" => "La modification n’a pas été enregistrée : ",
+    "gcc_profile:error" => "La modification n'a pas été enregistrée : ",
     "gcc_profile:missingemail" => "adresse courriel manquante",
     "gcc_profile:notaccepted" => "une adresse courriel du Gouvernement du Canada est requise",
 

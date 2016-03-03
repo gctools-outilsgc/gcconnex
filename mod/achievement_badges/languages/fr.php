@@ -82,15 +82,24 @@ return array(
 
 
     //bookmark badge
-    'badge:bookmrk:name' => 'Bookmark Badge',
+    'badge:bookmark:name' => 'Bookmark Badge',
 
     //Goals
-    'badge:bookmrk:objective' => 'Create %s bookmarks',
+    'badge:bookmark:objective' => 'Create %s bookmarks',
 
     //Achieved
-    'badge:bookmrk:achieved:1' => '%s created # bookmarks',
-    'badge:bookmrk:achieved:2' => '%s created # bookmarks',
-    'badge:bookmrk:achieved:3' => '%s created # bookmarks',
-    'badge:bookmrk:achieved:4' => '%s created # bookmarks',
-    'badge:bookmrk:achieved:5' => '%s created # bookmarks',
+    'badge:bookmark:achieved:1' => '%s created # bookmarks',
+    'badge:bookmark:achieved:2' => '%s created # bookmarks',
+    'badge:bookmark:achieved:3' => '%s created # bookmarks',
+    'badge:bookmark:achieved:4' => '%s created # bookmarks',
+    'badge:bookmark:achieved:5' => '%s created # bookmarks',
+
+    //bookmark badge
+    'badge:complete:name' => 'Profile Strength Badge',
+
+    //Goals
+    'badge:complete:objective' => 'Have a profile strength of 100%',
+
+    //Achieved
+    'badge:complete:achieved:1' => '%s has a complete profile',
     );

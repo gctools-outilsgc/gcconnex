@@ -1,5 +1,6 @@
 #ui-datepicker-div {
     background: white;
+        border: 1px solid #ddd;
 }
 
 .b_extended_profile {
@@ -627,6 +628,16 @@ input.userfind {
     float: left;
     padding-left: 2px;
     padding-right: 2px;
+}
+
+.gcconnex-avatar-in-list .elgg-avatar {
+    width: 30px;
+    height: 30px;
+}
+
+.gcconnex-avatar-in-list img {
+    width: 30px;
+    height: 30px;
 }
 
 .gcconnex-avatars-expand {

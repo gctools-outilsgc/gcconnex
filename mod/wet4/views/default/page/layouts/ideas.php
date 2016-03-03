@@ -48,7 +48,7 @@ if ($page_owner->canEdit() || elgg_is_admin_logged_in()) {
         'link_class' => 'btn btn-default gwfb group_admin_only pull-right',
     ));
 
-    $header .= '<div class="clearfix mrgn-bttm-sm">' . elgg_view_menu('idea-title') . '</div>';
+    $header .= '<div class="clearfix mrgn-bttm-sm">' . elgg_view_menu('idea-title', array('class' => 'list-unstyled')) . '</div>';
 }
 
 // allow page handlers to override the default filter

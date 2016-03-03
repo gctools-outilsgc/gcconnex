@@ -11,7 +11,7 @@ if (empty($entity) || !(elgg_instanceof($entity, "object") || elgg_instanceof($e
 
 $icon = "";
 if ($entity->icontime) {
-	$icon = elgg_view_entity_icon($entity, "tiny");
+	$icon = elgg_view_entity_icon($entity, "small");
 }
 
 $url = $entity->getURL();
@@ -46,4 +46,4 @@ if (!empty($url)) {
 }
 $content .= "</div>";
 
-echo elgg_view_image_block($icon, $content, array("class" => "mbn"));
+echo elgg_view_image_block($icon, $content, array("class" => "mbn", 'reshare' => true));

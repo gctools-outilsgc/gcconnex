@@ -247,7 +247,7 @@ function career_menu_hander($hook, $type, $menu, $params){
         switch ($item->getName()) {
             case 'career':
                 if(elgg_is_active_plugin('gcforums')){
-                    $item->addChild(elgg_get_menu_item('site', 'Forum'));
+                    $item->addChild(elgg_get_menu_item('subSite', 'Forum'));
                 }
                 if(elgg_is_active_plugin('missions')){
                     $item->addChild(elgg_get_menu_item('site', 'mission_main'));

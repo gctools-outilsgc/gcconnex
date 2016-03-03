@@ -347,12 +347,11 @@ function list_avatars($options) {
                         'href' => false
                     ));
                     $list .= '</div>'; // close div class="gcconnex-avatar-in-list"
-                            $list .= '<a class="btn gcconnex-avatars-expand" data-toggle="modal" href="#' . $options['id'] . '" >...</a>';
+                            //$list .= '<a class="btn gcconnex-avatars-expand" data-toggle="modal" href="#' . $options['id'] . '" >...</a>';
 
                             
                 }
                 else {
-                    $passedGuids .= $guids[$i] .  ',';
                     $list .= '<div class="gcconnex-avatar-in-list" data-guid="' . $guids[$i] . '">';
                     $list .= elgg_view_entity_icon($user, $options['size'], array(
                         'use_hover' => $options['use_hover'],
@@ -366,8 +365,8 @@ function list_avatars($options) {
             }
         }
     }
-    if($options['id']){
-        $list .= '<a class="btn gcconnex-avatars-expand elgg-lightbox" href="' . elgg_get_site_url() . 'ajax/view/endorse/endorsement?guids=' . $passedGuids .'" >...</a>';
+    if($options['id'] && $options['skill_guid']){
+        $list .= '<a class="btn gcconnex-avatars-expand elgg-lightbox" href="' . elgg_get_site_url() . 'ajax/view/endorse/endorsement?guid=' . $options['skill_guid'] .'" >...</a>';
     }
     $list .= '</div>'; // close div class="list-avatars"
     return $list;

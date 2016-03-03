@@ -21,20 +21,20 @@ $title = elgg_echo('usersettings:statistics:yourdetails');
 $content = <<<__HTML
 <table class="elgg-table-alt">
 	<tr class="odd">
-		<td class="column-one">$label_name</td>
-		<td>$user->name</td>
+		<td class="column-one"><b>$label_name:</b></td>
+		<td style="padding-left:10px">$user->name</td>
 	</tr>
 	<tr class="even">
-		<td class="column-one">$label_email</td>
-		<td>$user->email</td>
+		<td class="column-one"><b>$label_email:</b></td>
+		<td style="padding-left:10px">$user->email</td>
 	</tr>
 	<tr class="odd">
-		<td class="column-one">$label_member_since</td>
-		<td>$time_created</td>
+		<td class="column-one"><b>$label_member_since:</b></td>
+		<td style="padding-left:10px">$time_created</td>
 	</tr>
 	<tr class="even">
-		<td class="column-one">$label_last_login</td>
-		<td>$last_login</td>
+		<td class="column-one"><b>$label_last_login:</b></td>
+		<td style="padding-left:10px">$last_login</td>
 	</tr>
 </table>
 __HTML;

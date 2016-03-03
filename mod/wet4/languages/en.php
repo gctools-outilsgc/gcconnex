@@ -1437,7 +1437,7 @@ Please do not reply to this email.",
     'contactform:form:subject' => "Subject",
     'contactform:title' => "GCconnex Help Pages",
     'contactform:list' => "<ul class='list-unstyled'>
-						<li> <a href='http://www.gcpedia.gc.ca/wiki/GC2.0_Tools_Help_Centre/GCconnex'>Help pages</a> </li>
+						<li> <a href='http://www.gcpedia.gc.ca/wiki/GC2.0_Tools_Help_Centre/GCconnex'>Help centre</a> </li>
 					
 						</ul>",
     'contactform:faq' => "FAQ",

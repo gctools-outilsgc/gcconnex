@@ -57,10 +57,10 @@ if(!$photoContext){
 	if(elgg_get_context() != 'event_calendar'){
    $item_classes = ['pull-left elgg-item clearfix '];
    }
-}else{
+}else if($photoContext){
  //if the boolean is true (is photo context) add col class :)
-    $item_classes = ['  elgg-item clearfix col-xs-6 col-sm-3  '];
-        $list_classes = ['clearfix wb-eqht'];
+    $item_classes = ['  elgg-item clearfix col-xs-6 col-sm-3 hght-inhrt'];
+        $list_classes = 'clearfix wb-eqht';
 }
 
 if (isset($vars['item_class'])) {

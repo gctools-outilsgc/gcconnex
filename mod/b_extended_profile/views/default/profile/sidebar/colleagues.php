@@ -34,6 +34,13 @@ $all_link = elgg_view('output/url', array(
 
 $footer = "<div class='text-right'>$all_link</div>";
 
+
+if(!($friends)) {
+
+    $friends = elgg_echo('gcprofile:nocoll', array($owner->getDisplayName()));
+    $footer='';
+
+}
 echo elgg_view_module('aside', elgg_echo('friends'), $friends, array('footer' => $footer));
 
 ?>

@@ -47,7 +47,7 @@ function gcBadges_init() {
 
 function get_badges(){
 
-    $badges = array('bookmrk', 'likes', 'discussion', 'colleague', 'comment');
+    $badges = array('complete', 'bookmark', 'likes', 'discussion', 'colleague', 'comment');
 
     return $badges;
 }

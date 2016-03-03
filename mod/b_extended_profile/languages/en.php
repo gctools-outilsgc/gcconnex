@@ -7,6 +7,16 @@
  */
 
 $english = array(
+
+    //user Settings Details
+    'item:object:MySkill' => 'Profile skill',
+    'item:object:experience' => 'Profile experience',
+    'item:object:education' => 'Profile education',
+
+    //profile sidebar
+    'gcprofile:nocoll' => '%s has not connected with any colleagues yet.',
+    'gcprofile:nogroups' => '%s has not joined any groups yet.',
+
     // Email Verification
     'gcc_profile:error' => 'Did not save: ',
     'gcc_profile:missingemail' => 'Email address is missing',

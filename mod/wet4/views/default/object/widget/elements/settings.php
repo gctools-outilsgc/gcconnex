@@ -23,5 +23,5 @@ $form = elgg_view('input/form', array(
 ?>
 
 <div class="elgg-widget-edit" id="widget-edit-<?php echo $widget->guid; ?>">
-	<?php echo $form; ?>
+	<?php // echo $form; ?>
 </div>

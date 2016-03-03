@@ -22,7 +22,7 @@ if (elgg_in_context('dashboard')) {
 	$type_dropdown = elgg_view('input/select', $params);
 	?>
 	<div>
-		<?php echo '<label for"activity-'.$widgetId.'">'.elgg_echo('river:widget:type').'</label>'; ?>:
+		<?php echo '<label for="activity-'.$widgetId.'">'.elgg_echo('river:widget:type').'</label>'; ?>:
 		<?php echo $type_dropdown; ?>
 	</div>
 	<?php
@@ -36,7 +36,7 @@ if (!$num_display) {
 
 $params = array(
 	'name' => 'params[num_display]',
-    'id' => 'activity-'.$widgetId,
+    'id' => 'activity2-'.$widgetId,
 	'value' => $num_display,
 	'options' => array(5, 8, 10, 12, 15, 20),
 );
@@ -44,7 +44,7 @@ $num_dropdown = elgg_view('input/select', $params);
 
 ?>
 <div>
-	<?php echo '<label for="activity-'.$widgetId.'">'.elgg_echo('widget:numbertodisplay').'</label>'; ?>:
+	<?php echo '<label for="activity2-'.$widgetId.'">'.elgg_echo('widget:numbertodisplay').'</label>'; ?>:
 	<?php echo $num_dropdown; ?>
 </div>
 

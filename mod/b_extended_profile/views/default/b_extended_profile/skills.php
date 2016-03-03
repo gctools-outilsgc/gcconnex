@@ -60,8 +60,9 @@ else {
                     echo list_avatars(array(
                         'guids' => $skill->endorsements,
                         'size' => 'tiny',
-                        'limit' => 10,
-                        'id' => "myModal" . $i
+                        'limit' => 8,
+                        'id' => "myModal" . $i,
+                        'skill_guid' => $skill_guid
                     ));
                     /*echo '<div class="modal" id="myModal' . $i . '">
                           <div class="modal-header">

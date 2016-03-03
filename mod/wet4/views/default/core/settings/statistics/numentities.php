@@ -31,8 +31,8 @@ if ($entity_stats) {
 			}
 			$rows .= <<< END
 				<tr class="{$even_odd}">
-					<td class="column-one"><b>{$a}:</b></td>
-					<td>{$b}</td>
+					<td class="column-one mrgn-rght-sm"><b>{$a}:</b></td>
+					<td style="padding-left:10px">{$b}</td>
 				</tr>
 END;
 		}

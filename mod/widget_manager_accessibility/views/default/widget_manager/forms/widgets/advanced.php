@@ -39,6 +39,6 @@ if (is_array($advanced_context) && in_array($widget_context, $advanced_context))
 
 $advanced .= "</fieldset>";
 $advanced .= "</div>";
-$advanced .= "<a rel='toggle' class='elgg-button elgg-button-action float-alt' href='#widget-manager-widget-edit-advanced-" . $widget->getGUID() . "'>" . elgg_echo("widget_manager:widgets:edit:advanced") . "</a>";
+//$advanced .= "<a rel='toggle' class='elgg-button elgg-button-action float-alt' href='#widget-manager-widget-edit-advanced-" . $widget->getGUID() . "'>" . elgg_echo("widget_manager:widgets:edit:advanced") . "</a>";
 
 echo $advanced;

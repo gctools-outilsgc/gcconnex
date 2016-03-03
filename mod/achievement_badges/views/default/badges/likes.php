@@ -103,6 +103,11 @@ if(!isset($user->likeCount)){
     $user->likeCount = $count;
 }
 
+if($user->likeCount > $count){
+    //keep count the same to not lose progress
+} else {
+    $user->likeCount = $count;
+}
 
 $title = elgg_echo('badge:' . $name . ':name');
 $description =  elgg_echo('badge:' . $name . ':objective', array($currentGoal));

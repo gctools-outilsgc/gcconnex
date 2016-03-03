@@ -48,7 +48,7 @@
 }
 
 .gcforums-th-category {
-    border: 1px solid #dddddd;
+   
     padding: 5px 5px 5px 5px;
     vertical-align: middle;
 }
@@ -72,9 +72,9 @@
 }
 
 .gcforums-menu {
-    right: 25px;
-    position: absolute;
-    padding-bottom: 50px;
+    float:right;
+    display:block;
+    padding-bottom:5px;
 }
 
 .gcforums-display-topics {

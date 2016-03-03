@@ -66,6 +66,7 @@ $english = array(
 
 	"gcforums:notification_subject_post" => "New forum post",
 	"gcforums:notification_body_post" => "%s made a reply in the Forum Topic '%s' with the following content... <br/> %s <br/> You can view this item here: %s <br/>",
+    'gcforums:time'=>'on',
 
 	);
 

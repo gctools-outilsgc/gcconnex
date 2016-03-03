@@ -27,6 +27,9 @@ $alt_image = elgg_extract('image_alt', $vars, '');
 $test = $_SESSION[idpage];
 $class = 'col-xs-12 mrgn-tp-sm ';
 $additional_class = elgg_extract('class', $vars, '');
+
+$reshared = elgg_extract('reshare', $vars, '');
+
 if ($additional_class) {
 	$class = "$class $additional_class";
 }
@@ -106,8 +109,30 @@ echo <<<HTML
     </div>
 </div>
 HTML;
-    
- }else{
+
+}else if($reshared == true){ //for reshared items
+
+
+
+    if ($image) {
+        $image = "<div class=\"mrgn-tp-sm col-xs-1\">$image</div>";
+    }
+
+
+
+        $body = '<div class="col-xs-11">' . $body . '</div>';
+
+
+
+
+    echo <<<HTML
+
+<div class="$class clearfix mrgn-bttm-sm" $id>
+	$image$body
+</div>
+HTML;
+
+}else{
     
     $body = "<div class=\"mrgn-tp-sm col-xs-10\">$body</div>";
 

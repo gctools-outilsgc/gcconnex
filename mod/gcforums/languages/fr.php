@@ -57,7 +57,7 @@ $french = array(
 	"gcforums:no_comments" => "<i>Aucun commentaire n'a encore été posée ... Soyez le premier!</i>",
 	"gcforums:categories_not_available" => "<i>Actuellement aucun catégories disponibles</i>",
 
-	"gcforums:jmp_menu" => "Carrefour d’emploi",
+	"gcforums:jmp_menu" => "Carrefour d'emploi",
 	//"gcforums:jmp_url" => "http://jmp.com",
     "gcforums:jmp_url" => $site_url . "groups/profile/7617072",
 
@@ -66,6 +66,7 @@ $french = array(
 
 	"gcforums:notification_subject_post" => "Nouveau post sur le forum",
 	"gcforums:notification_body_post" => "[tbt] %s made a reply in the Forum Topic '%s' with the following content... <br/> %s <br/> You can view this item here: %s <br/>",
+    'gcforums:time'=>'on',
 
 	);
 

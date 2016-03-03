@@ -23,7 +23,8 @@ function gcforums_init() {
 	elgg_register_action('gcforums/subscribe',$action_path.'/subscribe.php');
 
 	// put a menu item in the site navigation (JMP request)
-	elgg_register_menu_item('site', array(
+    //moved to menu subSite to place in Career dropdown
+	elgg_register_menu_item('subSite', array(
 		'name' => 'Forum',
 		'text' => elgg_echo('gcforums:jmp_menu'),
 		'href' => elgg_echo('gcforums:jmp_url'),
@@ -134,7 +135,7 @@ function gcforums_topic_content($topic_guid, $group_guid) {
 						<tr class='gcforums-tr'>
 							<th class='gcforums-th-topic' width='25%'> <strong>".$user_information->email."</strong> </th>
 							<th class='gcforums-th-topic'> <strong>".elgg_echo('gcforums:posted_on',array( date('Y-m-d H:i:s', $topic->time_created) ))."</strong> </th>
-							<th class='gcforums-th-topic-options'>".gcforums_category_edit_options($topic->guid)." | {$subscribe_url}"."</th>
+							<th class='gcforums-th-topic-options'>".gcforums_category_edit_options($topic->guid)."  {$subscribe_url}"."</th>
 						</tr>
 						<tr class='gcforums-tr'>
 							<td class='gcforums-td-topic'>".gcforums_display_user($user_information)."</td>
@@ -231,8 +232,8 @@ function get_total_topics($container_guid) {
 	return $num_topic;
 }
 
-function get_recent_post($container_guid) {
-	$query = "SELECT r.guid_one, r.relationship, r.guid_two, e.subtype, es.subtype, max(e.time_created) AS time_created, ue.email, ue.username
+function get_recent_post($container_guid) {//also grabbed display name - Nick
+	$query = "SELECT r.guid_one, r.relationship, r.guid_two, e.subtype, es.subtype, max(e.time_created) AS time_created, ue.email, ue.username, ue.name
 			FROM elggentity_relationships r, elggentities e, elggentity_subtypes es, elggusers_entity ue
 			WHERE r.guid_one = e.guid AND e.subtype = es.id AND r.guid_two = {$container_guid} AND es.subtype = 'hjforumtopic' AND ue.guid = e.owner_guid";
 	$post = get_data($query);
@@ -240,7 +241,7 @@ function get_recent_post($container_guid) {
 	$recent_poster = elgg_echo("gcforums:no_posts");
 	if ($post[0]->email) {
 		$timestamp = date('Y-m-d',$post[0]->time_created);
-		$recent_poster = "{$post[0]->username} @ {$timestamp}";
+		$recent_poster = "{$post[0]->name} ". elgg_echo('gcforums:time')." {$timestamp}"; //Output display name - nick
 	}
 	return $recent_poster;
 }
@@ -372,7 +373,7 @@ function gcforums_topics_list($forum_guid, $group_guid, $is_sticky) {
 					$url = "<strong><a href='".elgg_get_site_url()."gcforums/group/{$group_guid}/{$topic->guid}/hjforumtopic'>{$topic->title}</a></strong>";
 					$forum_topic .=	"<tr class='gcforums-tr'>
 										<td class='gcforums-td-topics'>{$url}</td>
-										<td class='gcforums-td'>{$user->username}</td>
+										<td class='gcforums-td'>{$user->name} ".elgg_echo('gcforums:time')." ".elgg_view_friendly_time($topic->time_created)." </td>
 										<td class='gcforums-td'>{$num_replies}</td>
 										<td class='gcforums-td'>{$last_post_info}</td>
 										<td class='gcforums-td-forums-options'>{$subscribe_url}</td>
@@ -407,7 +408,9 @@ function gcforums_category_content($guid, $group_guid, $forums=false) {
 		$edit_option_string = ' - ';
 
 	$forum_category = '';
-	$forum_category .= "<table class='gcforums-table'>
+    $forum_category2 = '';
+    $forum_category3 = '';
+	$forum_category3 .= "
 						<tr class='gcforums-tr'>
 							<th class='gcforums-th' width='60%'>".elgg_echo('gcforums:forum_title')."</th>
 							<th class='gcforums-th'>".elgg_echo('gcforums:topics')."</th>
@@ -417,16 +420,16 @@ function gcforums_category_content($guid, $group_guid, $forums=false) {
 						</tr>";
 
 	if (!$categories) { // check if there are forums filed under category
-		$forum_category .= "<tr class='gcforums-tr'>
+		$forum_category2 .= "<tr class='gcforums-tr'>
 								<th colspan='5' class='gcforums-td-category'>".elgg_echo('gcforums:categories_not_available')."</th>
 							</tr>";
 	} else {
 		// display the category title and description
-		foreach ($categories as $category) {
-			$forum_category .= "<tr class='gcforums-tr'>
-							<th class='gcforums-th-category'><strong> {$category->title} </strong> {$category->description} </th>
-							<th colspan='4' class='gcforums-th-category-options'>".gcforums_category_edit_options($category->guid)."</th>
-						</tr>";
+		foreach ($categories as $category) { //putting this in a div outside of the table - nick
+			$forum_category2 = "<div>
+							<div class='gcforums-th-category'><h1> {$category->title}</h1> {$category->description} </div>
+							<div colspan='4' class='gcforums-th-category-options'>".gcforums_category_edit_options($category->guid)."</div>
+						</div>";
 
 			$forums = elgg_get_entities_from_relationship(array(
 				'relationship' => 'filed_in',
@@ -435,8 +438,8 @@ function gcforums_category_content($guid, $group_guid, $forums=false) {
 				'inverse_relationship' => true,
 			));
 
-			if (!$forums) {
-				$forum_category .= "<tr class='gcforums-tr'>
+			if (!$forums) {//table
+				$forum_category3 .= "<tr class='gcforums-tr'>
 						<th colspan='5' class='gcforums-td-forums'>".elgg_echo('gcforums:forums_not_available')."</th>
 					</tr>";
 			} else {
@@ -444,7 +447,7 @@ function gcforums_category_content($guid, $group_guid, $forums=false) {
 				foreach ($forums as $forum) {
 					$url = "<strong><a href='".elgg_get_site_url()."gcforums/group/{$group_guid}/{$forum->guid}'>{$forum->title}</a></strong>";
 
-					$forum_category .= "<tr class='gcforums-tr'>
+					$forum_category3 .= "<tr class='gcforums-tr'>
 						<th class='gcforums-td-forums'>{$url}{$forum->description}</th>
 						<th class='gcforums-td'>".get_total_topics($forum->guid)."</th>
 						<th class='gcforums-td'>".get_total_posts($forum->guid)."</th>
@@ -455,8 +458,12 @@ function gcforums_category_content($guid, $group_guid, $forums=false) {
 			}
 		}
 	}
+    //putting the table together with the category out of the table - nick
+    $forum_category .= $forum_category2;
+    $forum_category .= "<table class='gcforums-table'>";
+    $forum_category .= $forum_category3;
 	$forum_category .= "</table>";
-
+    
 	return $forum_category;
 }
 
@@ -613,10 +620,11 @@ function gcforums_menu_buttons($forum_guid,$group_guid, $is_topic=false) { // ma
 				$url = elgg_add_action_tokens_to_url(elgg_get_site_url()."action/gcforums/delete?guid={$forum_guid}");
 				$delete_forum_button = elgg_view('output/url', array("text" => elgg_echo('gcforums:forum_delete'), "href" => $url, 'class' => 'elgg-button elgg-button-action btn btn-default'));
 				
-				$separator = " | ";
+				$separator = "  ";
 			}
-		}	
-		return "<div class='gcforums-menu'>{$new_category_button} {$new_forum_button} {$new_forum_topic_button} {$separator} {$edit_forum_button} {$delete_forum_button}</div> <br/><br/>";
+		}
+        //styled this positioning with CSS - Nick
+		return "<div class='gcforums-menu'>{$new_category_button} {$new_forum_button} {$new_forum_topic_button} {$separator} {$edit_forum_button} {$delete_forum_button}</div> ";
 	}
 
 	return "";

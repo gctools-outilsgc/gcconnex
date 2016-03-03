@@ -52,7 +52,7 @@ if ($album->description) {
 $body .= $album->viewImages();
 
 if (elgg_get_plugin_setting('album_comments', 'tidypics')) {
-	$body .= elgg_view_comments($album);
+	//$body .= elgg_view_comments($album);
 }
 
 echo elgg_view('object/elements/full', array(

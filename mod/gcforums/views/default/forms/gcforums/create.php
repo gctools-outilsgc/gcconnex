@@ -44,6 +44,7 @@ if (elgg_is_logged_in()) {
 			$gcf_sticky_topic_input = elgg_view('input/checkboxes', array(
 				'name' => 'gcf_sticky',
 				'id' => 'gcf_sticky',
+                'class' => 'list-unstyled mrgn-tp-sm',
 				'options' => array(
 					$gcf_sticky_topic_label => 1),
 			));
@@ -64,6 +65,7 @@ if (elgg_is_logged_in()) {
 			$gcf_enable_categories_input = elgg_view('input/checkboxes', array(
 				'name' => 'gcf_allow_categories',
 				'id' => 'categories_id',
+                'class' => 'list-unstyled mrgn-tp-sm',
 				'options' => array(
 					$gcf_enable_categories_label => 1),
 			));
@@ -72,6 +74,7 @@ if (elgg_is_logged_in()) {
 			$gcf_enable_posting_input = elgg_view('input/checkboxes', array(
 				'name' => 'gcf_allow_posting',
 				'id' => 'posting_id',
+                'class' => 'list-unstyled mrgn-tp-sm',
 				'options' => array(
 					$gcf_enable_posting_label => 1),
 			));
@@ -253,7 +256,7 @@ ___HTML;
 	$gcf_forward_url_input
 	$gcf_owner_input
 
-<div>
+<div class="mrgn-tp-md">
 	$gcf_submit_button
 </div>
 

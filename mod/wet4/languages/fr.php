@@ -1441,7 +1441,7 @@ Ne répondez pas à cet e-mail.",
     'contactform:title' => "Pages d'aide de GCconnex",
     'contactform:help' => 'Aide',
 	'contactform:list' => '<ul class="list-unstyled">	
-						<li> <a href="http://www.gcpedia.gc.ca/gcwiki/index.php?title=Centre d\'aide pour les outils GC2.0/GCconnex&setlang=fr&uselang=fr">Pages d\'aide</a> </li>
+						<li> <a href="http://www.gcpedia.gc.ca/gcwiki/index.php?title=Centre d\'aide pour les outils GC2.0/GCconnex&setlang=fr&uselang=fr">Centre d\'aide</a> </li>
 						</ul><br />',
     'contactform:faq' => "FAQ",
     'contactform:title:lostpwd' => "<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_-_Aide_%C3%A0_l%27utilisater/Comment_retrouver_votre_mot_de_passe'>Mot de passe perdu</a>",
@@ -1467,7 +1467,7 @@ Ne répondez pas à cet e-mail.",
     'contactform:department' => 'Ministère',
     'contactform:reason' => 'Choisir...',
     'contactform:helpful' => 'Communautés utiles',
-    'contactform:learn' => 'Apprenez advantage sur les médias sociaux ',
+    'contactform:learn' => 'Apprenez dadvantage sur les médias sociaux ',
     'contactform:ambassadors' => 'Groupe GCconnex du Réseau des ambassadeurs des Outils GC 2.0',
     'contactform:clicks' => 'Groupe GCconnex des Clic et conseils',
     'contactform:groupgcconnex' => 'Groupe GCconnex des Outils GC 2.0',

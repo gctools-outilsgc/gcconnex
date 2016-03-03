@@ -89,7 +89,7 @@ if (elgg_is_logged_in() && !elgg_in_context("thewire_tools_thread")) {
 		"id" => "thewire-tools-reply-" . $post->getGUID(),
 		"class" => "hidden"
 	);
-	$content .= elgg_view_form("thewire/add", $form_vars, array("post" => $post));
+	//$content .= elgg_view_form("thewire/add", $form_vars, array("post" => $post));
 }
 
 $author_text = elgg_echo($owner_link);

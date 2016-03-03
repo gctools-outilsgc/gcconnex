@@ -42,7 +42,7 @@ if ($container) {
 $params = array(
 	'footer' => $footer,
     'class' => 'clearfix test',
-    'item_class' => 'col-sm-4',
+    'item_class' => 'col-sm-4 ',
 );
 echo elgg_view_module('tidypics-album-wet', $header, $album_cover, $params);
 /*
