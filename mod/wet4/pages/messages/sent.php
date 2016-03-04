@@ -30,6 +30,8 @@ $list = elgg_list_entities_from_metadata(array(
 	'metadata_name' => 'fromId',
 	'metadata_value' => elgg_get_page_owner_guid(),
 	'owner_guid' => elgg_get_page_owner_guid(),
+    'limit' => 0,
+    'pagination' => false,
 	'full_view' => false,
 	'bulk_actions' => true
 ));

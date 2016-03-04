@@ -189,9 +189,9 @@ echo $form_data;
 
              });
 
-            $('#chosen_email .elgg-icon-delete-alt').live("click", function() {
-			$(this).parent('div').remove();
-		});
+             $('#group_tools_group_invite_email .elgg-icon-delete-alt').live("click", function () {
+			    $(this).parent('div').remove();
+		    });
 
 
 </script>

@@ -9,9 +9,10 @@
 }
 
 .active-links {
-    position: absolute;
+  /*  position: absolute; */
     right: 8px;
     top: 0;
+    margin-bottom: 20px;
 }
 
 #container {
@@ -19,7 +20,7 @@
     margin: 0 auto;
     position: relative;
     z-index:499;
-    margin-bottom:40px;
+   /* margin-bottom:40px; */
 }
 
 #topnav {
