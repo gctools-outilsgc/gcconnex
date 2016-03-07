@@ -74,7 +74,7 @@ else {
 	'src' => $user->getIconURL($size),
 	'alt' => $name,
 	'title' => $name,
-	'class' => $img_class,
+	'class' => $img_class . ' img-responsive',
 ));
 
     /*

@@ -42,8 +42,12 @@ if(elgg_get_context() !== 'widgets'){
 
 	
 } else {
-    if($container){
+    if($container && $subtype_test){//happens in group
         echo elgg_view_entity_icon($container, 'medium');
+        //echo $subtype_test;
+    }else if($container){
+        //if user joins group show their photo, not group owner's image
+        echo elgg_view_entity_icon($subject, 'medium');
     }else{
         echo elgg_view_entity_icon($subject, 'medium');
     }

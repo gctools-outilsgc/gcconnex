@@ -34,7 +34,7 @@ $content = elgg_view_entity($message, array('full_view' => true));
 if ($inbox) {
 	$form_params = array(
 		'id' => 'messages-reply-form',
-		'class' => 'hidden mtl',
+		'class' => 'wet-hidden mtl',
 		'action' => 'action/messages/send',
 	);
 	$body_params = array('message' => $message);

@@ -88,7 +88,7 @@ if(elgg_is_logged_in()){
             //if the user doesn't have any friends or activity display this message
             $site_url = elgg_get_site_url();
             $featuredGroupButton = elgg_view('output/url', array(
-		        'href' => $site_url .'groups/all?filter=feature',
+		        'href' => $site_url .'groups/all?filter=popular',
 		        'text' => elgg_echo('wetActivity:browsegroups'),
 		        'class' => 'btn btn-primary',
 		        'is_trusted' => true,

@@ -426,8 +426,9 @@ function gcforums_category_content($guid, $group_guid, $forums=false) {
 	} else {
 		// display the category title and description
 		foreach ($categories as $category) { //putting this in a div outside of the table - nick
-			$forum_category2 = "<div>
-							<div class='gcforums-th-category'><h1> {$category->title}</h1> {$category->description} </div>
+			$forum_category2 = "<div class='panel panel-custom'>
+							<div class='gcforums-th-category panel-heading'><h1> {$category->title}</h1>  </div>
+                            <div class=' panel-body'> {$category->description}</div>
 							<div colspan='4' class='gcforums-th-category-options'>".gcforums_category_edit_options($category->guid)."</div>
 						</div>";
 

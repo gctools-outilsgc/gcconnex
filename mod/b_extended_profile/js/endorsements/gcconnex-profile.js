@@ -203,9 +203,9 @@ $(document).ready(function() {
     $('.save-work-experience').on("click", function(){$('.edit-work-experience').focus()});
     $('.cancel-work-experience').on("click", function(){$('.edit-work-experience').focus()});
     
-    $('.edit-skills').on("click", function(){$('.cancel-skills').focus()});
-    $('.save-skills').on("click", function(){$('.edit-skills').focus()});
-    $('.cancel-skills').on("click", function(){$('.edit-skills').focus()});
+    $('.edit-skills').on("click", function () { $('.cancel-skills').focus(); $('.gcconnex-skill-limit').removeClass('hidden');});
+    $('.save-skills').on("click", function () { $('.edit-skills').focus(); $('.gcconnex-skill-limit').addClass('hidden'); });
+    $('.cancel-skills').on("click", function () { $('.edit-skills').focus(); $('.gcconnex-skill-limit').addClass('hidden'); });
     
     $('.edit-languages').on("click", function(){$('.cancel-languages').focus()});
     $('.save-languages').on("click", function(){$('.edit-languages').focus()});
@@ -213,8 +213,24 @@ $(document).ready(function() {
     
     $('.edit-portfolio').on("click", function(){$('.cancel-portfolio').focus()});
     $('.save-portfolio').on("click", function(){$('.edit-portfolio').focus()});
-    $('.cancel-portfolio').on("click", function(){$('.edit-portfolio').focus()});
+    $('.cancel-portfolio').on("click", function () { $('.edit-portfolio').focus() });
 
+
+    //allow use of keyboard to endorse skills
+    $('.skill-container').bind('keypress', function (e) {
+
+        if (e.keyCode == 13) {
+
+            if ($(this).hasClass('gcconnex-endorsement-add')) {
+
+                addEndorsement($(this))
+            } else {
+               retractEndorsement($(this))
+
+            }
+        }
+
+    });
 
     // when a user clicks outside of the input text box (the one for entering new skills in the endorsements area), make it disappear elegantly
     $(document).click(function(event) {
@@ -1082,8 +1098,8 @@ function addNewSkill(newSkill) {
     newSkill = escapeHtml(newSkill);
     // inject HTML for newly added skill
     $('.gcconnex-skills-skills-list-wrapper').append('<div class="gcconnex-skill-entry temporarily-added" data-skill="' + newSkill + '">' +
-    '<span title="Number of endorsements" class="gcconnex-endorsements-count" data-skill="' + newSkill + '">0</span>' +
-    '<span data-skill="' + newSkill + '" class="gcconnex-endorsements-skill">' + newSkill + '</span>' +
+    '<div title="Number of endorsements" class="gcconnex-endorsements-count" data-skill="' + newSkill + '">0</div>' +
+    '<div data-skill="' + newSkill + '" class="gcconnex-endorsements-skill">' + newSkill + '</div>' +
     '<button class="delete-skill" data-type="skill" onclick="deleteEntry(this)">' + '<i class="fa fa-trash-o delete-skill-img"></i>Delete / Supprimer' + '</button></div>');
     $('.gcconnex-endorsements-input-skill').val('');                                 // clear the text box
     $('.gcconnex-endorsements-input-skill').typeahead('val', '');                                           // clear the typeahead box
@@ -1108,7 +1124,6 @@ function addEndorsement(identifier) {
         skill: skill_guid
     });
 
-
     var targetSkill = $(identifier).data('skill');
     var targetSkillDashed = targetSkill.replace(/\s+/g, '-').toLowerCase(); // replace spaces with '-' for css classes
 
@@ -1117,8 +1132,12 @@ function addEndorsement(identifier) {
     endorse_count++;
     $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.gcconnex-endorsements-count').text(endorse_count);
 
-    $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').append('<button class="gcconnex-endorsement-retract btn-endorse" onclick="retractEndorsement(this)" data-guid="' + skill_guid + '" data-skill="' + targetSkill + '">Retract</button>')
-    $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.gcconnex-endorsement-add').remove();
+    $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.skill-container').removeClass('gcconnex-endorsement-add').addClass('gcconnex-endorsement-retract');
+    $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.skill-container').attr('onclick', 'retractEndorsement(this)'); 
+    $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.skill-container').attr('title', 'Retract');
+
+   // $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').append('<button class="gcconnex-endorsement-retract btn-endorse" onclick="retractEndorsement(this)" data-guid="' + skill_guid + '" data-skill="' + targetSkill + '">Retract</button>')
+    //$('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.gcconnex-endorsement-add').remove();
     //$('.add-endorsement-' + targetSkillDashed).remove();
 }
 
@@ -1143,10 +1162,14 @@ function retractEndorsement(identifier) {
     endorse_count--;
     $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.gcconnex-endorsements-count').text(endorse_count);
 
-    $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').append('<button class="gcconnex-endorsement-add btn-endorse" onclick="addEndorsement(this)" data-guid="' + skill_guid + '" data-skill="' + targetSkill + '">Endorse</button>')
+    $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.skill-container').removeClass('gcconnex-endorsement-retract').addClass('gcconnex-endorsement-add');
+    $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.skill-container').attr('onclick', 'addEndorsement(this)'); 
+    $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.skill-container').attr('title', 'Endorse / Valider');
+
+    //$('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').append('<button class="gcconnex-endorsement-add btn-endorse" onclick="addEndorsement(this)" data-guid="' + skill_guid + '" data-skill="' + targetSkill + '">Endorse</button>')
 
     //$(identifier).after('<span class="gcconnex-endorsement-add add-endorsement-' + targetSkillDashed + '" onclick="addEndorsement(this)" data-guid="' + skill_guid + '" data-skill="' + targetSkill + '">+</span>');
-    $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.gcconnex-endorsement-retract').remove();
+    //$('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.gcconnex-endorsement-retract').remove();
 }
 
 /*

@@ -194,8 +194,9 @@ function groups_handle_mine_page() {
 		'no_results' => elgg_echo('groups:none'),
 	));
 
+    $sidebar = elgg_view('groups/sidebar/find');
     $filter = elgg_view("groups/group_sort_menu", array("selected" => $selected_tab));
-    $sidebar = elgg_view('groups/sidebar/suggested');
+   // $sidebar = elgg_view('groups/sidebar/suggested');
     $sidebar .= elgg_view('groups/sidebar/featured');
     
 	$params = array(

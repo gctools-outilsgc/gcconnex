@@ -51,6 +51,12 @@
    
     padding: 5px 5px 5px 5px;
     vertical-align: middle;
+    
+}
+
+.gcforums-th-category h1{
+
+    font-size:1.4em;
 }
 
 .gcforums-th-category-options, .gcforums-th-topic-options {
@@ -74,7 +80,7 @@
 .gcforums-menu {
     float:right;
     display:block;
-    padding-bottom:5px;
+    padding:5px;
 }
 
 .gcforums-display-topics {
@@ -100,4 +106,9 @@
 .gcforums-comments-menu {
     word-spacing:10px;
     text-align: right;
+}
+
+.forum-clear{
+    clear:both;
+
 }

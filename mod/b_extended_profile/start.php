@@ -302,7 +302,7 @@ function has_content($user, $section) {
 function list_avatars($options) {
 
     $list = "";
-    $list .= '<div class="list-avatars' . $options['class'] . '">';
+    $list .= '<div class="list-avatars clearfix' . $options['class'] . '">';
 
     if ( $options['limit'] == 0 ) {
         $options['limit'] = 999;
@@ -366,7 +366,7 @@ function list_avatars($options) {
         }
     }
     if($options['id'] && $options['skill_guid']){
-        $list .= '<a class="btn gcconnex-avatars-expand elgg-lightbox" href="' . elgg_get_site_url() . 'ajax/view/endorse/endorsement?guid=' . $options['skill_guid'] .'" >...</a>';
+        $list .= '<a class="btn gcconnex-avatars-expand elgg-lightbox" title="Endorsements" href="' . elgg_get_site_url() . 'ajax/view/endorse/endorsement?guid=' . $options['skill_guid'] .'" >...</a>';
     }
     $list .= '</div>'; // close div class="list-avatars"
     return $list;

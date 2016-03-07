@@ -32,7 +32,7 @@ $getResult = mysqli_fetch_assoc($res);
 echo "<script>$(document).ready(function() {
  var ua = window.navigator.userAgent;
 
-if(ua.indexOf('MSIE ')<=0 || ua.indexOf('Trident/')<=0){
+if(ua.indexOf('MSIE ') > 0 || ua.indexOf('Trident/') > 0){
     var progressbar = $('#progressbar'),
         max = progressbar.attr('value'),
         //max=80,

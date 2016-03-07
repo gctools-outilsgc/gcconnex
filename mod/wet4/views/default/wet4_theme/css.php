@@ -11116,6 +11116,11 @@ a.shr-opn, a.shr-opn:hover {
     background-color: #fff;
 }
 
+.elgg-layout-one-column #widgets-add-panel{
+    margin-top: -15px;
+
+}
+
 .col-md-4 .panel ul li .panel-river{
 border:none;
     box-shadow:none;
