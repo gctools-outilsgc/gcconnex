@@ -56,7 +56,7 @@
 
 .gcforums-th-category h1{
 
-    font-size:1.4em;
+    
 }
 
 .gcforums-th-category-options, .gcforums-th-topic-options {
@@ -110,5 +110,10 @@
 
 .forum-clear{
     clear:both;
+
+}
+
+.forum-clear h1{
+    font-size:1.4em;
 
 }

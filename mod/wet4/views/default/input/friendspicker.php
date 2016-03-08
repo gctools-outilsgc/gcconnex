@@ -179,6 +179,7 @@ if (!isset($vars['replacement'])) {
 
 				if (in_array($friend->getGUID(),$vars['value'])) {
 					$checked = "checked = \"checked\"";
+                    $checkedValues .= '<input type="checkbox"' . $checked . 'name="' . $name . '[]" value="' . $options[$label] . '" />';
 					if (!in_array($letter,$activeletters) && $vars['highlight'] == 'default') {
 						$activeletters[] = $letter;
 					}
@@ -310,6 +311,7 @@ if (!isset($vars['replacement'])) {
 }?>
 
     <div id="storedArea" class="hidden">
+        <?php echo $checkedValues;?>
             <script>
                 $(function () {
 
@@ -319,7 +321,7 @@ if (!isset($vars['replacement'])) {
                     $(':checkbox').change(function () {
                         if ($(this).is(":checked")) {
 
-                            $(this).clone().appendTo('#storedArea');
+                            $(this).clone().attr('checked', 'checked').appendTo('#storedArea');
 
                             return;
 

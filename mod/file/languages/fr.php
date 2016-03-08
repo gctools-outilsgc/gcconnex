@@ -19,7 +19,7 @@ return array(
 		'file:yours' => "Vos fichiers",
 		'file:yours:friends' => "Les fichiers de vos collègues",
 		'file:user' => "Les fichiers de %s",
-		'file:friends' => "Les fichiers des collègues de %s",
+		'file:friends' => "Les fichiers des collègues",
 		'file:all' => "Tous les fichiers du site",
 		'file:edit' => "Modifier un fichier",
 		'file:more' => "Plus de fichiers",

@@ -4992,6 +4992,7 @@ a.list-group-item-danger {
   border-radius: 3px; }
 
 .close {
+    z-index:5555;
   float: right;
   font-size: 24px;
   font-weight: bold;
@@ -11354,8 +11355,8 @@ border:none;
     position:fixed;
     z-index: 100000;
    
-   margin-left: 5%;
-    width: 50%;
+   margin: 0 auto;
+    width: 70%;
     border-left: solid 5px #2b542c;
    }
   .elgg-state-success hr {
@@ -11382,8 +11383,8 @@ details.elgg-state-success:before {
       position:fixed;
     z-index: 100000;
     
-   margin-left:5%;
-    width: 50%;
+   margin: 0 auto;
+    width: 70%;
     border-left: solid 5px #843534;
 }
   .elgg-state-error hr {

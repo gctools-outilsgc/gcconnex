@@ -28,7 +28,7 @@ $OptedIn=FALSE;
 }
 $getResult = mysqli_fetch_assoc($res);
 
-
+/******
 echo "<script>$(document).ready(function() {
  var ua = window.navigator.userAgent;
 
@@ -56,6 +56,7 @@ if(ua.indexOf('MSIE ') > 0 || ua.indexOf('Trident/') > 0){
     }, time);
 }
 });</script>";
+*/
 
 echo '<p class="center progress-value pc-large-text">'.$getResult['@total'].'%</p>';
 
