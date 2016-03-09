@@ -118,7 +118,7 @@ if ($work_experience->ongoing == 'true') {
 }
 
 
-echo '<label for="end-year-' . $guid . '">' . elgg_echo('gcconnex_profile:education:start_year') . '</label>' . elgg_view("input/text", $params);
+echo '<label for="end-year-' . $guid . '">' . elgg_echo('gcconnex_profile:education:end_year') . '</label>' . elgg_view("input/text", $params);
 
 unset($params);
 

@@ -44,6 +44,8 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
         'value' => $value,
     );
 
+    echo '<label class="mrgn-tp-sm" for="aboutme">' . elgg_echo('description') . ':</label>';
+
     // about-me longtext input
     echo elgg_view("input/longtext", $params);
 
