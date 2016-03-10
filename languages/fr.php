@@ -47,7 +47,7 @@ return array(
 	'loggedinrequired' => "Vous devez être connecté pour voir cette page.",
 	'adminrequired' => "Vous devez être administrateur pour voir cette page.",
 	'membershiprequired' => "Vous devez être membre de ce groupe pour voir cette page.",
-	'limited_access' => "Vous n'avez pas la permission de consulter la page demandée.",
+	'limited_access' => "Vous n'avez pas la permission de consulter cette page.",
 
 /**
  * Errors
@@ -85,6 +85,7 @@ return array(
 	'PluginException:MisconfiguredPlugin' => "%s (guid : %s) est un plugin non configuré. Il a été désactivé. Veuillez chercher dans le wiki d'Elgg pour connaître les cause possibles (http://docs.elgg.org/wiki/).",
 	'PluginException:CannotStart' => "%s (guid : %s) ne peut pas démarrer. Raison : %s",
 	'PluginException:InvalidID' => "%s est un ID de plugin invalide.",
+
 	'PluginException:InvalidPath' => "%s est un chemin invalide pour le plugin.",
 	'PluginException:InvalidManifest' => "Fichier manifest.xml invalide pour le plugin %s",
 	'PluginException:InvalidPlugin' => "%s n'est pas un plugin valide.",
@@ -262,6 +263,7 @@ return array(
 
 	
 	'PluginException:NullInstantiated' => 'ElggPlugin ne peut pas être laissé vide. Vous devez passer un GUID, un ID de plugin, ou un chemin complet.',
+
 	'ElggPluginPackage:InvalidPlugin:InvalidId' => 'Le dossier du plugin doit être renommé en "%s" pour correspondre à l\'identifiant spécifié dans le manifeste. ',
 	'ElggPlugin:InvalidAndDeactivated' => '%s est un plugin invalide et a été désactivé.',
 
@@ -283,10 +285,10 @@ return array(
 
 	'error:default:title' => 'Oups...',
 	'error:default:content' => 'Oups... quelque chose est allé de travers.',
-	'error:400:title' => 'Bad request',
-	'error:400:content' => 'Sorry. The request is invalid or incomplete.',
-	'error:403:title' => 'Forbidden',
-	'error:403:content' => 'Sorry. You are not allowed to access the requested page.',
+	'error:400:title' => 'Mauvaise requête',
+	'error:400:content' => 'Désolé, la requête est invalide ou incomplète.',
+	'error:403:title' => 'Interdit',
+	'error:403:content' => 'Désolé, vous n\'avez pas la permission de consulter la page demandée.',
 	'error:404:title' => 'Page non trouvée',
 	'error:404:content' => 'Désolé. Nous n\'arrivons pas à trouver la page que vous demandez.',
 
@@ -902,7 +904,7 @@ return array(
 	'admin:robots.txt:instructions' => "Editez le fichier robots.txt du site ci-dessous",
 	'admin:robots.txt:plugins' => "Les plugins ajoutent les lignes suivantes au fichier robots.txt ",
 	'admin:robots.txt:subdir' => "L'outil pour robots.txt ne fonctionnera peut-être pas car Elgg est installé dans un sous-répertoire",
-	'admin:robots.txt:physical' => "The robots.txt tool will not work because a physical robots.txt is present",
+	'admin:robots.txt:physical' => "La configuration de robots.txt ne fonctionnera pas car un fichier robots.txt est physiquement présent",
 
 	'admin:maintenance_mode:default_message' => 'Le site est fermé pour cause de maintenance',
 	'admin:maintenance_mode:instructions' => 'Le mode maintenance devrait être utilisé pour les mises à jour et les autres changements sur le site. 
@@ -1227,9 +1229,10 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
 	'friendlytime:minutes:singular' => "il y a une minute",
 	'friendlytime:hours' => "il y a %s heures",
 	'friendlytime:hours:singular' => "il y a une heure",
-	'friendlytime:days' => "Il y a %s jours",
+	'friendlytime:days' => "il y a %s jours",
 	'friendlytime:days:singular' => "hier",
 	'friendlytime:date_format' => "j F Y @ g:ia",
+	/*'friendlytime:date_format' => 'j F Y @ G:i',*/
 	
 	'friendlytime:future:minutes' => "dans %s minutes",
 	'friendlytime:future:minutes:singular' => "dans une minute",
@@ -1251,23 +1254,23 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
 	'date:month:11' => "Novembre %s",
 	'date:month:12' => "Décembre %s",
 
-	'date:weekday:0' => 'dimanche',
-	'date:weekday:1' => 'lundi',
-	'date:weekday:2' => 'mardi',
-	'date:weekday:3' => 'mercredi',
-	'date:weekday:4' => 'jeudi',
-	'date:weekday:5' => 'vendredi',
-	'date:weekday:6' => 'samedi',
+	'date:weekday:0' => 'Dimanche',
+	'date:weekday:1' => 'Lundi',
+	'date:weekday:2' => 'Mardi',
+	'date:weekday:3' => 'Mercredi',
+	'date:weekday:4' => 'Jeudi',
+	'date:weekday:5' => 'Vendredi',
+	'date:weekday:6' => 'Samedi',
 	
-	'interval:minute' => 'chaque minute',
-	'interval:fiveminute' => 'chaque cinq minutes',
-	'interval:fifteenmin' => 'toutes les 15 minutes',
-	'interval:halfhour' => 'toutes les demi-heures',
-	'interval:hourly' => 'toutes les heures',
-	'interval:daily' => 'tous les jours',
-	'interval:weekly' => 'chaque semaine',
-	'interval:monthly' => 'tous les mois',
-	'interval:yearly' => 'chaque année',
+	'interval:minute' => 'Chaque minute',
+	'interval:fiveminute' => 'Chaque 5 minutes',
+	'interval:fifteenmin' => 'Chaque 15 minutes',
+	'interval:halfhour' => 'Chaque demi-heure',
+	'interval:hourly' => 'Chaque heure',
+	'interval:daily' => 'Chaque jour',
+	'interval:weekly' => 'Chaque semaine',
+	'interval:monthly' => 'Chaque mois',
+	'interval:yearly' => 'Chaque année',
 	'interval:reboot' => 'Au redémarrage',
 
 /**
@@ -1312,8 +1315,9 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
 	'installation:allow_user_default_access:description' => "Si coché, les utilisateurs pourront modifier leur niveau d'accés par défaut et pourront surpasser le niveau d'accés mis en place par défaut dans le système.",
 	'installation:allow_user_default_access:label' => "Autoriser un niveau d'accés par défaut pour l'utilisateur",
 
-	'installation:simplecache:description' => "Le cache simple augmente les performances en mettant en cache du contenu statique comme des CSS et des fichiers Javascripts. Normalement vous ne devriez pas avoir besoin de l'activer.",
-	'installation:simplecache:label' => "Utiliser un cache simple (recommandé)",
+	'installation:simplecache:description' => "Le cache simple augmente les performances en mettant en cache du contenu statique comme des fichiers CSS et Javascript.",
+	'installation:simplecache:label' => "Utiliser le cache simple (recommandé)",
+
 
 	'installation:viewpathcache:description' => "Le cache utilisé pour stocker les chemins vers les vues des greffons réduit le temps de chargement de ces derniers.",
 	'installation:viewpathcache:label' => "Utiliser le cache de stockage des chemins vers les vues des greffons (recommandé)",
@@ -1322,8 +1326,8 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
 	'installation:minify_js:label' => "Compresser le JavaScript (recommandé)",
 	'installation:minify_css:label' => "Compresser les CSS (recommandé)",
 
-	'installation:htaccess:needs_upgrade' => "Vous devez mettre à jour votre fichier .htaccess afin que le chemin soit ajouté au paramètre GET __elgg_uri (vous pouvez vous aider de htaccess_dist)",
-	'installation:htaccess:localhost:connectionfailed' => "Elgg ne peut pas se connecter à lui-même pour tester les règles de réécriture. Veuillez vérifier si l'extension curl fonctionne, et qu'il n'y a pas de restriction au niveau des IP interdisant de se connecter depuis localhost.",
+	'installation:htaccess:needs_upgrade' => "Vous devez mettre à jour votre fichier .htaccess afin que le chemin soit injecté dans le paramètre GET __elgg_uri (vous pouvez utiliser le fichier install/config/htaccess_dist comme modèle)",
+	'installation:htaccess:localhost:connectionfailed' => "Elgg ne peut pas se connecter à lui-même pour tester les règles de réécriture correctement. Veuillez vérifier que curl fonctionne, et qu'il n'y a pas de restriction au niveau des IP interdisant les connexions depuis localhost.",
 	
 	'installation:systemcache:description' => "Le cache système diminue le temps de chargement du moteur Elgg en mettant en cache les données dans des fichiers.",
 	'installation:systemcache:label' => "Utiliser le cache système (recommandé)",
@@ -1340,6 +1344,7 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
 	'upgrade:unlock' => 'Déverrouiller la mise à jour',
 	'upgrade:unlock:confirm' => "La base de données est verrouillée par une autre mise à jour. Exécuter des mises à jours concurrentes est dangereux. Vous devriez continuer seulement si vous savez qu'il n'y a pas d'autre mise à jour en cours d'exécution. Déverrouiller ?",
 	'upgrade:locked' => "Impossible de mettre à jour. Une autre mise à jour est en cours. Pour effacer le verrouillage de la mise à jour, visiter la partie administrateur.",
+	'upgrade:unlock:success' => "Mise à niveau débloquée.",
 	'upgrade:unable_to_upgrade' => "Impossible de mettre à jour.",
 	'upgrade:unable_to_upgrade_info' =>
 		'This installation cannot be upgraded because legacy views
@@ -1360,14 +1365,14 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
 	'deprecated:function' => "%s() a été déclaré obsolète par %s()",
 
 	'admin:pending_upgrades' => 'Le site a des mises à niveau en attente qui nécessitent votre attention immédiate.',
-	'admin:view_upgrades' => 'Afficher les mises à jour en attente.',
+	'admin:view_upgrades' => 'Afficher les mises à niveau en attente.',
  	'admin:upgrades' => 'Mise à niveau',
-	'item:object:elgg_upgrade' => 'Site mis à jour',
-	'admin:upgrades:none' => 'Votre traduction est à jour !',
+	'item:object:elgg_upgrade' => 'Mises à niveau du site',
+	'admin:upgrades:none' => 'Votre installation est à jour !',
 
-	'upgrade:item_count' => 'Il y a <b>%s</b> éléments qui doivent être mis à niveau.',
-	'upgrade:warning' => '<b>Attention :</b> Sur un site volumineux cette mise à jour peut prendre un temps significatif (voire très long) !',
-	'upgrade:success_count' => 'Mise à jour :',
+	'upgrade:item_count' => '<b>%s</b> éléments ont besoin d\'être mis à niveau.',
+	'upgrade:warning' => '<b>Attention :</b> Sur un grand site cette mise à jour peut prendre un temps significativement long !',
+	'upgrade:success_count' => 'Mis à niveau :',
 	'upgrade:error_count' => 'Erreurs :',
 	'upgrade:river_update_failed' => 'Impossible de mettre à jour l\'entrée du flux de l\'élément d\'identifiant id %s',
 	'upgrade:timestamp_update_failed' => 'Impossible de mettre à jour l\'horodatage de l\'élément d\'identifiant id %s',
@@ -1376,15 +1381,15 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
 
 	// Strings specific for the comments upgrade
 	'admin:upgrades:comments' => 'Mise à jour des commentaires',
-	'upgrade:comment:create_failed' => 'Impossible de convertir le commentaire id %s en une entité.',
-	'admin:upgrades:commentaccess' => 'Mise à jour des commentaires',
+	'upgrade:comment:create_failed' => 'Impossible de convertir le commentaire d\'id %s en une entité.',
+	'admin:upgrades:commentaccess' => 'Mise à jour du niveau d\'accès des commentaires',
 
 	// Strings specific for the datadir upgrade
 	'admin:upgrades:datadirs' => 'Répertoire de données mis à jour',
 
 	// Strings specific for the discussion reply upgrade
 	'admin:upgrades:discussion_replies' => 'Réponse à la discussion mise à jour',
-	'discussion:upgrade:replies:create_failed' => 'Impossible de convertir la discussion id %s en une entité.',
+	'discussion:upgrade:replies:create_failed' => 'Impossible de convertir la réponse à la discussion d\'id %s en une entité.',
 
 /**
  * Welcome
@@ -1405,7 +1410,7 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
 	'email:body' => 'Corps de l\'article',
 
 	'email:settings' => "Paramètres e-mail",
-	'email:address:label' => "Votre adresse e-mail",
+	'email:address:label' => "Adresse e-mail",
 
 	'email:save:success' => "Votre nouvelle adresse e-mail a été enregistrée, vous allez recevoir un e-mail de confirmation.",
 	'email:save:fail' => "Votre nouvelle adresse e-mail n'a pas pu être enregistrée.",
@@ -1594,7 +1599,7 @@ Ne répondez pas à cet e-mail.",
 	"es" => "Espagnol",
 	"et" => "Estonien",
 	"eu" => "Basque",
-	"eu_es" => "Basque (Spain)",
+	"eu_es" => "Basque (Espagne)",
 	"fa" => "Persan",
 	"fi" => "Finnois",
 	"fj" => "Fidjien",
@@ -1659,12 +1664,12 @@ Ne répondez pas à cet e-mail.",
 	"pl" => "Polonais",
 	"ps" => "Pachto",
 	"pt" => "Portugais",
-	"pt_br" => "Portuguese (Brazil)",
+	"pt_br" => "Portugais (Brésil)",
 	"qu" => "Quechua",
 	"rm" => "Romanche",
 	"rn" => "Kirundi",
 	"ro" => "Roumain",
-	"ro_ro" => "Romanian (Romania)",
+	"ro_ro" => "Roumain (Roumanie)",
 	"ru" => "Russe",
 	"rw" => "Kinyarwanda",
 	"sa" => "Sanskrit",
@@ -1679,10 +1684,10 @@ Ne répondez pas à cet e-mail.",
 	"so" => "Somalien",
 	"sq" => "Albanais",
 	"sr" => "Serbe",
-	"sr_latin" => "Serbian (Latin)",
+	"sr_latin" => "Serbe (Latin)",
 	"ss" => "Siswati",
 	"st" => "Sotho",
-	"su" => "Soundanais",
+	"su" => "Soudanais",
 	"sv" => "Suédois",
 	"sw" => "Swahili",
 	"ta" => "Tamoul",
@@ -1711,6 +1716,6 @@ Ne répondez pas à cet e-mail.",
 	"yo" => "Yoruba",
 	"za" => "Zhuang",
 	"zh" => "Chinois",
-	"zh_hans" => "Chinese Simplified",
+	"zh_hans" => "Chinois simplifié",
 	"zu" => "Zoulou",
 );

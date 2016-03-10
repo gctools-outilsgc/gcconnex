@@ -59,15 +59,15 @@ return array(
 	'river:comment:object:blog' => '%s a commenté sur le blogue %s',
 
 	// notifications
-	'blog:notify:summary' => 'Nouvel article de blog nommé %s',
-	'blog:notify:subject' => 'Nouvel article de blog: %s',
+	'blog:notify:summary' => 'Nouvel article de blog intitulé %s',
+	'blog:notify:subject' => 'Nouvel article de blog : %s',
 	'blog:notify:body' =>
 '
-%s a publié un nouvel article de blog: %s
+%s a publié un nouvel article de blog : %s
 
 %s
 
-Voir et commenter cet article de blog:
+Voir et commenter cet article de blog :
 %s
 ',
 	'blog:newpost' => 'Un nouveau blogue',

@@ -75,6 +75,9 @@ return array(
 	'groups:makefeatured' => 'Mettre un groupe en vedette',
 	'groups:featuredon' => 'Vous avez fait de ce groupe un groupe en vedette.',
 	'groups:unfeature' => 'Vous avez supprimé ce groupe de la liste des groupes en vedette',
+
+	'groups:unfeatured' => 's% a été enlevé par les groupes à la une.',		// New variable?
+
 	'groups:featured_error' => 'Groupe invalide.',
 	'groups:nofeatured' => 'Pas de groupes à la une',
 	'groups:joinrequest' => 'Demander de devenir membre',
