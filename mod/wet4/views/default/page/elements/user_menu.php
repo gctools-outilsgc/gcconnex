@@ -15,7 +15,7 @@ echo elgg_view_deprecated("navigation/topbar_tools", array(), "Extend the topbar
 $site_url = elgg_get_site_url();
 $user = get_loggedin_user()->username;
 $displayName = get_loggedin_user()->name;
-$user_avatar = get_loggedin_user()->geticonURL('medium');
+$user_avatar = get_loggedin_user()->geticonURL('small');
 $email = get_loggedin_user()->email;
 
 
@@ -87,16 +87,24 @@ if(elgg_is_admin_logged_in()){
 
 $breakup = explode('.', $email);
 $initials = substr($breakup[0], 0, 1) . substr($breakup[1], 0, 1);
+if($user_avatar){//show avatar if they have one
+    $dropdown_avatar = '<span><img class="img-circle mrgn-rght-sm" src="'.$user_avatar.'"></span>';
+}else{ // show initials if the don't
+    $dropdown_avatar = '<span class="init-badge">' . strtoupper($initials) . '</span>';
+}
+
 
 //create user menu
 elgg_register_menu_item('user_menu', array(
     'name' => 'Profile',
-    'text' => '<span class="init-badge">' . strtoupper($initials) . '</span><span class="hidden-xs">' . $displayName . '</span>' . $dropdown,
-    'title' => elgg_echo('userMenu:profile'),
+    'text' => $dropdown_avatar. '<span class="hidden-xs">' . $displayName . '</span><i class="fa fa-caret-down fa-lg mrgn-lft-sm"></i>' . $dropdown,
+    'title' => elgg_echo('userMenu:usermenuTitle'),
     'item_class' => 'brdr-lft dropdown',
     'data-toggle' => 'dropdown',
     'class' => 'dropdown-toggle  dropdownToggle',
     'priority' => '3',
+    'tab-index'=>'0', //If the tab index is gone perhaps the screen reader will skip it? What about sighted people with out mouse, need to test, just an idea :3
+    //Google has some kind of tab loop when the the card is open, so when the user tabs they only tab through the options in the card
     ));
 
 

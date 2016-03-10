@@ -86,7 +86,7 @@ $img = '<div class="au_subgroups_group_icon au_subgroups_group_icon-' . $vars['s
 $img .= elgg_view('output/img', array(
 	'src' => $entity->getIconURL($vars['size']),
 	'alt' => $title,
-	'class' => $class . 'img-responsive',
+	'class' => $class . 'img-responsive img-circle',
 	'width' => $img_width,
 	'height' => $img_height,
 ));

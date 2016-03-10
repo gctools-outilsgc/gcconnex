@@ -10805,6 +10805,10 @@ a.shr-opn, a.shr-opn:hover {
     clear: both;     
 }
 
+    .elgg-gallery li {
+        border: 0px;
+    }
+
 .icon-unsel{
     color: #b6b6b6;   
 }

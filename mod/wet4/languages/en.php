@@ -1,6 +1,8 @@
 <?php
 $site_url = elgg_get_site_url();
-
+if(elgg_is_logged_in()){
+    $displayName = get_loggedin_user()->name;
+}
 return array(
 /**
    * WET specific
@@ -95,6 +97,7 @@ return array(
     'userMenu:account' => "Account Settings",
     'userMenu:messages' => "My Messages",
     'userMenu:colleagues' => "My Colleagues",
+    'userMenu:usermenuTitle' =>'User Card - Click here for links to your profile, account settings and logout', /*NEW*/
     
     /**
      * Custom Activity Widget
@@ -160,7 +163,7 @@ return array(
  */
 
 	'login' => "Log in",
-	'loginok' => "You have been logged in.",
+	'loginok' => "Welcome ".$displayName." to GCconnex.", /*NEW but doesn't work :3*/
 	'loginerror' => "We couldn't log you in. Please check your credentials and try again.",
 	'login:empty' => "Username/email and password are required.",
 	'login:baduser' => "Unable to load your user account.",

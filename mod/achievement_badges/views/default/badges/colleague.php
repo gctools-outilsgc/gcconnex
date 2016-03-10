@@ -35,11 +35,11 @@ $title = 'Colleague Badge';
 $description = 'You are connecting with your colleagues';
 
 //set goals for badge
-$goals[0] = 1;
-$goals[1] = 2;
-$goals[2] = 3;
-$goals[3] = 4;
-$goals[4] = 5;
+$goals[0] = 5;
+$goals[1] = 15;
+$goals[2] = 25;
+$goals[3] = 50;
+$goals[4] = 150;
 
 
 $currentGoal = $goals[0];

@@ -12,6 +12,8 @@ $name = elgg_extract("name", $vars);
 $group_profile_fields = elgg_get_config("group");
 
 ?>
+
+
 <div>
 <label><?php echo elgg_echo("groups:icon"); ?></label><br />
 	<?php echo elgg_view("input/file", array("name" => "icon")); ?>

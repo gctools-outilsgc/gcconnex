@@ -22,6 +22,7 @@ $badges[1] = 'mod/achievement_badges/graphics/likesBadgeLvl01.png';
 $badges[2] = 'mod/achievement_badges/graphics/likesBadgeLvl02.png';
 $badges[3] = 'mod/achievement_badges/graphics/likesBadgeLvl03.png';
 $badges[4] = 'mod/achievement_badges/graphics/likesBadgeLvl04.png';
+$badges[5] = 'mod/achievement_badges/graphics/likesBadgeLvl05.png';
 
 //set current badge
 $currentBadge = $badges[0];
@@ -35,10 +36,11 @@ $description = 'People liked your content';
 $description = 'Receive likes on your content';
 
 //set goals for badge
-$goals[0] = 2;
-$goals[1] = 4;
-$goals[2] = 6;
-$goals[3] = 8;
+$goals[0] = 1;
+$goals[1] = 20;
+$goals[2] = 40;
+$goals[3] = 80;
+$goals[4] = 150;
 
 
 $currentGoal = $goals[0];
@@ -88,13 +90,21 @@ if($count < $goals[0]){ //no badge
     $currentBadge = $badges[3];
     $currentGoal = $goals[3];
     $level = '3';
-    
-} else if($count >= $goals[3]){ //lvl4
-    
-    $user->likesBadge = 4;
-    $count = $goals[3];
-    $currentBadge = $badges[4];
+
+} else if($count >= $goals[3] && $count < $goals[4] ){ //lvl4
+
+    $user->likesBadge = 3;
+    $count = $goals[2];
+    $currentBadge = $badges[3];
     $currentGoal = $goals[3];
+    $level = '3';
+
+} else if($count >= $goals[4]){ //lvl5
+    
+    $user->likesBadge = 5;
+    $count = $goals[4];
+    $currentBadge = $badges[5];
+    $currentGoal = $goals[4];
     $level = 'Completed';
     
 }

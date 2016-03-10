@@ -30,7 +30,7 @@ elgg_register_event_handler('init', 'system', 'gcBadges_init');
 
 function gcBadges_init() {
 
-    elgg_extend_view('profile/sidebar', 'profile/sidebar_widget');
+    elgg_extend_view('profile/sidebar', 'profile/sidebar_widget', 450);
     elgg_extend_view('profile/tab-content', 'profile/badge_progress');
     elgg_extend_view('groups/profile/tab_menu', 'profile/tab_menu', 451);
     

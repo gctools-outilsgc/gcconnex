@@ -35,7 +35,7 @@ $currentGoal = $goals[0];
 $count = '0';
 
 try{
-$user_guid = elgg_get_logged_in_user_guid();
+   $user_guid = elgg_get_page_owner_guid();
 $userEnt = get_user ( $user_guid );
 $site_url = elgg_get_site_url();
 $userName = get_loggedin_user()->username;

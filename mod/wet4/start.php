@@ -128,6 +128,10 @@ function wet4_theme_init() {
     elgg_extend_view("core/settings/statistics", "forms/usersettings/menus");
     elgg_extend_view('forms/account/settings', 'core/settings/account/landing_page');
 
+
+    //add profile strength to sidebar
+    elgg_extend_view('profile/sidebar', 'profile/sidebar/profile_strength', 449);
+
     //menu item for career dropdown
     elgg_register_menu_item('site', array(
     		'name' => 'career',

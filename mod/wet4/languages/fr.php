@@ -94,6 +94,7 @@ return array(
     'userMenu:account' => "Paramètres",
     'userMenu:messages' => "Mes messages",
     'userMenu:colleagues' => "Mes collègues",
+    'userMenu:usermenuTitle' =>'User Card - Click here for links to your profile, account settings and logout(translate me)', /*NEW*/
 
         /**
       * Custom Activity Widget

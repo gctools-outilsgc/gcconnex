@@ -22,6 +22,7 @@ $badges[1] = 'mod/achievement_badges/graphics/commentBadgeLvl01.png';
 $badges[2] = 'mod/achievement_badges/graphics/commentBadgeLvl02.png';
 $badges[3] = 'mod/achievement_badges/graphics/commentBadgeLvl03.png';
 $badges[4] = 'mod/achievement_badges/graphics/commentBadgeLvl04.png';
+$badges[5] = 'mod/achievement_badges/graphics/commentBadgeLvl05.png';
 
 //set current badge
 $currentBadge = $badges[0];
@@ -35,10 +36,10 @@ $description = 'Providing your comments to the community';
 
 //set goals for badge
 $goals[0] = 1;
-$goals[1] = 2;
-$goals[2] = 3;
-$goals[3] = 4;
-
+$goals[1] = 25;
+$goals[2] = 75;
+$goals[3] = 200;
+$goals[3] = 500;
 
 
 $currentGoal = $goals[0];
@@ -47,7 +48,7 @@ $currentGoal = $goals[0];
 $count = '0';
 
 /////
-$entities =  elgg_get_entities(array('type' => 'object', 'subtype' => 'comment', 'owner_guid' => $user->getGUID()));
+$entities =  elgg_get_entities(array('type' => 'object', 'subtype' => 'comment', 'owner_guid' => $user->getGUID(), 'limit' => 0));
 
 if($entities){
 
@@ -88,14 +89,22 @@ if($count < $goals[0]){ //no badge
     $currentBadge = $badges[3];
     $currentGoal = $goals[3];
     $level = '4';
-    
-} else if($count >= $goals[3]){ //lvl 4
-    
+
+} else if($count >= $goals[3]  && $count < $goals[4]){ //lvl 4
+
     //$count = $goals[2];
     $user->commentBadge = 4;
-    $count = $goals[3];
     $currentBadge = $badges[4];
-    $currentGoal = $goals[3];
+    $currentGoal = $goals[4];
+    $level = '4';
+
+} else if($count >= $goals[4]){ //lvl 5
+    
+    //$count = $goals[2];
+    $user->commentBadge = 5;
+    $count = $goals[4];
+    $currentBadge = $badges[5];
+    $currentGoal = $goals[4];
     $level = 'Completed';
     
 }

@@ -35,11 +35,11 @@ $title = 'Bookmarks Badge';
 $description = 'Created bookmarks';
 
 //set goals for badge
-$goals[0] = 1;
-$goals[1] = 2;
-$goals[2] = 3;
-$goals[3] = 4;
-$goals[4] = 5;
+$goals[0] = 5;
+$goals[1] = 10;
+$goals[2] = 30;
+$goals[3] = 45;
+$goals[4] = 75;
 
 
 $currentGoal = $goals[0];

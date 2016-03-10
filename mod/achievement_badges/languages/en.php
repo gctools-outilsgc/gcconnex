@@ -3,7 +3,8 @@ return array(
 
     //General
 
-    'badge:achievements' => 'Achievements',
+    'badge:badges' => 'Badges',
+    'badge:progress' => 'Badge Progress',
     'badge:start' => 'Start',
     'badge:completed' => 'Completed',
     'badge:level' => 'Level %s',
