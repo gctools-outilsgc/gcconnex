@@ -3,7 +3,7 @@
  * English language translation.
  */
 
-$english = array(
+return array(
 	'mentions:notification:subject' => '%s mentioned you in %s',
 	'mentions:notification:body' => '%s mentioned you in %s.
 
@@ -24,5 +24,3 @@ To see the full post, click on the link below:
 
 	'mentions:settings:failed' => 'Could not save mentions settings.'
 );
-
-add_translation("en", $english);

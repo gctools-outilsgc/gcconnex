@@ -11,12 +11,13 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
     $user = get_user($user_guid);
 
     // allow the user to edit the access settings for portfolio entries
-    echo elgg_echo('gcconnex_profile:portfolio:access');
+    echo '<label for="portfolioAccess">' . elgg_echo('gcconnex_profile:portfolio:access') . '</label>';
 
     $access_id = $user->portfolio_access;
 
     $params = array(
         'name' => "accesslevel['portfolio']",
+        'id' => 'portfolioAccess',
         'value' => $access_id,
         'class' => 'gcconnex-portfolio-access'
     );
@@ -46,7 +47,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
     echo '</div>';
 
     // create an "add more" button at the bottom of the education input fields so that the user can continue to add more education entries as needed
-    echo '<button class="gcconnex-portfolio-add-another elgg-button elgg-button-action btn mrgn-tp-sm" data-type="portfolio" onclick="addMore(this)">' . elgg_echo('gcconnex_profile:portfolio:add') . '</button>';
+    echo '<button class="gcconnex-portfolio-add-another elgg-button elgg-button-action btn btn-primary mrgn-tp-md" data-type="portfolio" onclick="addMore(this)">' . elgg_echo('gcconnex_profile:portfolio:add') . '</button>';
 }
 
 else {  // In case this view will be called via elgg_view()

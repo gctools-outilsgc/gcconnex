@@ -164,6 +164,7 @@ return array(
 
 	'login' => "Log in",
 	'loginok' => "Welcome ".$displayName." to GCconnex.", /*NEW but doesn't work :3*/
+    'wet:loginok' => "Welcome ".$displayName." to GCconnex.", /*NEW*/
 	'loginerror' => "We couldn't log you in. Please check your credentials and try again.",
 	'login:empty' => "Username/email and password are required.",
 	'login:baduser' => "Unable to load your user account.",

@@ -8,6 +8,9 @@
 
 $french = array(
 
+    //edit profile message
+    'profile:notsaved' => 'Not all information could be saved, empty fields are not allowed', /* NEW */
+
     //user Settings Details
     'item:object:MySkill' => '(translate me) Profile skill',
     'item:object:experience' => '(translate me) Profile experience',

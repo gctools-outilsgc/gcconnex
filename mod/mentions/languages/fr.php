@@ -3,7 +3,7 @@
  * French language translation.
  */
 
-$french = array(
+return array(
 	'mentions:notification:subject' => '%s vous a cité dans %s',
 	'mentions:notification:body' => '%s vous a cité dans %s.
 
@@ -23,5 +23,3 @@ Pour voir la publication entière, cliquez sur le lien ci-dessous:
 
 	'mentions:settings:failed' => 'Could not save mentions settings.'
 );
-
-add_translation("fr", $french);

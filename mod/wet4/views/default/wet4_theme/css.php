@@ -4595,7 +4595,7 @@ a.list-group-item-danger {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.09); }
 
   .panel-river{
-    padding:15px;
+    padding:6px;
     border: 1px solid #f7f7f7;
 }
  .river-font{

@@ -5,7 +5,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
     $user = get_user($user_guid);
 
     $section = get_input('section');
-
+    $error = false;
     switch ($section) {
         case "profile":
             $profile_fields = get_input('profile');
@@ -139,32 +139,56 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             //create new education entries
             if (is_array($eguid)) {
                 foreach ($eguid as $k => $v) {
-                    if ($v == "new") {
-                        $education = new ElggObject();
-                        $education->subtype = "education";
-                        $education->owner_guid = $user_guid;
-                    } else {
-                        $education = get_entity($v);
+
+
+                    $validInput = true;
+
+                    if($ongoing[$k] == true){
+                        $endyear[$k] = $startyear[$k];
                     }
 
-                    $education->title = htmlentities($school[$k]);
-                    $education->description = htmlentities($degree[$k]);
+                    if(trim( htmlentities($school[$k])) == '' || trim( htmlentities($degree[$k])) == '' || trim( htmlentities($field[$k])) == ''){
+                        $validInput = false;
+                        $error == true;
+                    }
 
-                    $education->school = htmlentities($school[$k]);
-                    $education->startdate = $startdate[$k];
-                    $education->startyear = $startyear[$k];
-                    $education->enddate = $enddate[$k];
-                    $education->endyear = $endyear[$k];
-                    $education->ongoing = $ongoing[$k];
-                    //$education->program = htmlentities($program[$k]);
-                    $education->degree = htmlentities($degree[$k]);
-                    $education->field = htmlentities($field[$k]);
-                    $education->access_id = $access;
+                    if(trim( $endyear[$k]) < trim($startyear[$k])){
+                        $validInput = false;
+                        $error == true;
+                    }
 
-                    if ($v == "new") {
-                        $education_guids[] = $education->save();
-                    } else {
-                        $education->save();
+                    if($validInput == true){
+
+
+                        if ($v == "new") {
+                            $education = new ElggObject();
+                            $education->subtype = "education";
+                            $education->owner_guid = $user_guid;
+                        } else {
+                            $education = get_entity($v);
+                        }
+
+                        $education->title = htmlentities($school[$k]);
+                        $education->description = htmlentities($degree[$k]);
+
+                        $education->school = htmlentities($school[$k]);
+                        $education->startdate = $startdate[$k];
+                        $education->startyear = $startyear[$k];
+                        $education->enddate = $enddate[$k];
+                        $education->endyear = $endyear[$k];
+                        $education->ongoing = $ongoing[$k];
+                        //$education->program = htmlentities($program[$k]);
+                        $education->degree = htmlentities($degree[$k]);
+                        $education->field = htmlentities($field[$k]);
+                        $education->access_id = $access;
+
+                        if ($v == "new") {
+                            $education_guids[] = $education->save();
+                        } else {
+                            $education->save();
+                        }
+
+
                     }
                 }
             }
@@ -219,34 +243,62 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             if ($edit != null && !is_array($edit)) {
                 $edit = array( $edit );
             }
+
+           
+
             //create new work experience entries
             if ( is_array($edit) ) {
                 foreach ($edit as $work) {
-                    if ($work['eguid'] == "new") {
-                        $experience = new ElggObject();
-                        $experience->subtype = "experience";
-                        $experience->owner_guid = $user_guid;
-                    } else {
-                        $experience = get_entity($work['eguid']);
+
+                    $validInput = true;
+
+                    if($work['ongoing'] == true){
+                        $work['endyear'] = $work['startyear'];
                     }
 
-                    $experience->title = htmlentities($work['title']);
-                    $experience->description = htmlentities($work['responsibilities']);
+                    //validation of work experience entry
+                    if(trim($work['title']) == '' || trim($work['organization']) == ''){
+                        $validInput = false;
+                        $error = true;
+                    }
 
-                    $experience->organization = htmlentities($work['organization']);
-                    $experience->startdate = $work['startdate'];
-                    $experience->startyear = $work['startyear'];
-                    $experience->enddate = $work['enddate'];
-                    $experience->endyear = $work['endyear'];
-                    $experience->ongoing = $work['ongoing'];
-                    $experience->responsibilities = $work['responsibilities'];
-                    $experience->colleagues = $work['colleagues'];
-                    $experience->access_id = $access;
+                    if(trim($work['endyear']) < trim($work['startyear'])){
+                        $validInput = false;
+                        $error = true;
+                    }
 
-                    if ($work['eguid'] == "new") {
-                        $work_experience_guids[] = $experience->save();
-                    } else {
-                        $experience->save();
+                    if($validInput == true) {
+
+
+                        if ($work['eguid'] == "new") {
+                            $experience = new ElggObject();
+                            $experience->subtype = "experience";
+                            $experience->owner_guid = $user_guid;
+                        } else {
+                            $experience = get_entity($work['eguid']);
+                        }
+
+                        $experience->title = htmlentities($work['title']);
+                        $experience->description = htmlentities($work['responsibilities']);
+
+                        $experience->organization = htmlentities($work['organization']);
+                        $experience->startdate = $work['startdate'];
+                        $experience->startyear = $work['startyear'];
+                        $experience->enddate = $work['enddate'];
+                        $experience->endyear = $work['endyear'];
+                        $experience->ongoing = $work['ongoing'];
+                        $experience->responsibilities = trim($work['responsibilities']);
+                        $experience->colleagues = $work['colleagues'];
+                        $experience->access_id = $access;
+
+                        if ($work['eguid'] == "new") {
+                            $work_experience_guids[] = $experience->save();
+                        } else {
+                            $experience->save();
+                        }
+
+
+
                     }
                 }
             }
@@ -370,29 +422,45 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
 
             //create new work experience entries
             foreach ($edit as $portfolio_edit) {
-                if ($portfolio_edit['eguid'] == "new") {
-                    $entry = new ElggObject();
-                    $entry->subtype = "portfolio";
-                    $entry->owner_guid = $user_guid;
+
+                $validInput = true;
+
+                if(trim($portfolio_edit['title']) == '' || trim($portfolio_edit['description']) == '' || trim($portfolio_edit['link']) == ''){
+                    $validInput = false;
+                    $error = true;
                 }
-                else {
-                    $entry = get_entity($portfolio_edit['eguid']);
+
+                if($portfolio_edit['datestamped'] == false && trim( $portfolio_edit['pubdate']) == ''){
+                    $validInput = false;
+                    $error = true;
                 }
 
-                $entry->title = htmlentities($portfolio_edit['title']);
-                $entry->description = htmlentities($portfolio_edit['description']);
+                if($validInput == true){
 
-                $entry->link = $portfolio_edit['link'];
-                $entry->pubdate = $portfolio_edit['pubdate'];
-                $entry->datestamped = $portfolio_edit['datestamped'];
+                    if ($portfolio_edit['eguid'] == "new") {
+                        $entry = new ElggObject();
+                        $entry->subtype = "portfolio";
+                        $entry->owner_guid = $user_guid;
+                    }
+                    else {
+                        $entry = get_entity($portfolio_edit['eguid']);
+                    }
 
-                $entry->access_id = $access;
+                    $entry->title = htmlentities($portfolio_edit['title']);
+                    $entry->description = htmlentities($portfolio_edit['description']);
 
-                if($portfolio_edit['eguid'] == "new") {
-                    $portfolio_list_guids[] = $entry->save();
-                }
-                else {
-                    $entry->save();
+                    $entry->link = $portfolio_edit['link'];
+                    $entry->pubdate = $portfolio_edit['pubdate'];
+                    $entry->datestamped = $portfolio_edit['datestamped'];
+
+                    $entry->access_id = $access;
+
+                    if($portfolio_edit['eguid'] == "new") {
+                        $portfolio_list_guids[] = $entry->save();
+                    }
+                    else {
+                        $entry->save();
+                    }
                 }
             }
 
@@ -418,7 +486,12 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
 
     }
 
-    system_message(elgg_echo("profile:saved"));
+    //system_message(elgg_echo("profile:saved"));
+    if($error == true){
+       register_error(elgg_echo('Not all information could be saved, empty fields are not allowed'));
+    } else {
+        system_message(elgg_echo("profile:saved"));
+    }
 
 }
 else {  // In case this view will be called via the elgg_view_form() action, then we know it's the basic profile only

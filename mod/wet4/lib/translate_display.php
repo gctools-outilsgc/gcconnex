@@ -11,6 +11,14 @@
  * MBlondin 	2016-02-14 		Creation of library
 
  ***********************************************************************/
+ /**
+ * GCconnex combine English and French text into one string
+ *
+ *
+ * @uses string    $english_txt            English text
+ * @uses string  $french_txt          French Text
+ *
+ */
 function gc_implode_translation($english_txt,$french_txt)
 {
     $value="[:en]".$english_txt."[:fr]".$french_txt."[:]";
@@ -23,6 +31,7 @@ function gc_explode_translation($imploded_txt, $lang)
     $text_ar=explode('[:',$imploded_txt);
     $en='';
     $fr='';
+    if(count($text_ar)>0){
     foreach($text_ar as $value){
         if(strpos($value, "en]")!==false){
             $en=substr($value,3,strlen($value));
@@ -32,23 +41,21 @@ function gc_explode_translation($imploded_txt, $lang)
             $fr=substr($value,3,strlen($value));
         }
     }
-    if($lang=='en' && trim($en)<>''){
-        $value=$en;
-    }
-    elseif($lang=='fr' && trim($fr)<>''){
+        if($lang=='en' && trim($en)<>''){
             $value=$en;
-     }
-    else
-    {
-        if($lang=='en'){
-            $value='No entries found.';
         }
+        elseif($lang=='fr' && trim($fr)<>''){
+                $value=$fr;
+         }
         else
         {
-            $value='Aucune information fut trouvé.';
+            $value=$imploded_txt;
         }
     }
-
+    else
+    {
+        $value=$imploded_txt;
+    }
     return $value;
 
 }

@@ -621,7 +621,8 @@ function saveProfile(event) {
 
             break;
         case "about-me":
-            var $about_me = $('#aboutme').val();
+            var area = $('#cke_aboutme').val();
+            var $about_me = $.trim(area);
             var access = $('.gcconnex-about-me-access').val();
             // save the information the user just edited
             elgg.action('b_extended_profile/edit_profile', {

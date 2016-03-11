@@ -1,5 +1,8 @@
 <?php
     $site_url = elgg_get_site_url();
+    if(elgg_is_logged_in()){
+        $displayName = get_loggedin_user()->name;
+    }
 return array(
 
 /**
@@ -161,6 +164,7 @@ return array(
 
 	'login' => "Connexion",
 	'loginok' => "Vous êtes connecté(e).",
+    'wet:loginok' => "Welcome ".$displayName." to GCconnex.", /*NEW*/
 	'loginerror' => "Nous n'avons pas pu vous identifier. Assurez-vous que les informations que vous avez entrées sont correctes et réessayez.",
 	'login:empty' => "Nom d'utilisateur et mot de passe sont requis.",
 	'login:baduser' => "Impossible de charger votre compte d'utilisateur.",

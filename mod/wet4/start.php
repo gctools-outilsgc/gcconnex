@@ -89,7 +89,8 @@ function wet4_theme_init() {
     
 	elgg_register_action("file/move_folder", elgg_get_plugins_path() . "/wet4/actions/file/move.php");
     elgg_register_action("friends/collections/add", elgg_get_plugins_path() . "/wet4/actions/friends/collections/add.php");
-    
+    elgg_register_action("login", elgg_get_plugins_path() . "/wet4/actions/login.php", "public");
+    elgg_register_action("user/requestnewpassword", elgg_get_plugins_path() . "/wet4/actions/user/requestnewpassword.php", "public");
 	// non-members do not get visible links to RSS feeds
 	if (!elgg_is_logged_in()) {
 		elgg_unregister_plugin_hook_handler('output:before', 'layout', 'elgg_views_add_rss_link');
@@ -108,6 +109,7 @@ function wet4_theme_init() {
     elgg_register_widget_type('wet_activity', $wet_activity_title, 'GCconnex Group and Colleague Activity', array('custom_index_widgets'),true);
     elgg_register_widget_type('profile_completness', elgg_echo('ps:profilestrength'), 'The "Profile Strength" widget', array('custom_index_widgets'),false);
     elgg_register_widget_type('suggested_friends', elgg_echo('sf:suggcolleagues'), elgg_echo('sf:suggcolleagues'), array('custom_index_widgets'),false);
+    elgg_register_widget_type('user_summary_panel', 'user_summary_panel', 'user_summary_panel', array('custom_index_widgets'),false);
 
     //WET my groups widget
     elgg_register_widget_type('wet_mygroups_index', $mygroups_title, 'My Groups Index', array('custom_index_widgets'),true);
@@ -163,7 +165,7 @@ function wet4_theme_init() {
     if($lang == 'en'){
         elgg_register_menu_item('subSite', array(
             'name' => 'jobs',
-            'text' => 'jobs.gc.ca',
+            'text' => 'jobs.gc.ca <i class="fa fa-external-link mrgn-lft-sm"></i>',
             'href' => 'http://jobs-emplois.gc.ca/index-eng.htm',
             'target' => '_blank',
             ));
