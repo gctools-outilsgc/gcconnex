@@ -80,10 +80,10 @@ if (!empty($widgets)) {
             $body .= "<span class='widget_manager_widgets_lightbox_actions'>";
             $body .= '<ul class="list-unstyled"><li class="' . $class . '" data-elgg-widget-type="' . $handler . '">';
 
-            $body .= elgg_view("input/button", array("class" => "elgg-button-submit widget-added", "value" => elgg_echo('widget:remove')));
-			$body .= elgg_view("input/button", array("class" => "elgg-button-submit widget-to-add", "value" => elgg_echo("widget_manager:button:add")));
+            $body .= elgg_view("input/button", array("class" => "elgg-button-submit widget-added", "value" => elgg_echo('widget:remove'),'title' => elgg_echo('widget:remove').' '. $widget->name ));
+			$body .= elgg_view("input/button", array("class" => "elgg-button-submit widget-to-add", "value" => elgg_echo("widget_manager:button:add"),'title' => elgg_echo("widget_manager:button:add").' '. $widget->name ));
 			$body .= "</li></ul>";
-            $body .= "<span class='hidden wb-invisible'>Number of " . $widget->name . " widgets currently on the dashboad: </span>";
+            $body .= "<span class='hidden wb-invisible'>Number of " . $widget->name . " widgets currently on the dashboard: </span>";
             $body .= "</span>";
             //trying to add the count, sometimes it works, sometimes it doesn't :(
             $body .= "<span class='multi-widget-count'>";

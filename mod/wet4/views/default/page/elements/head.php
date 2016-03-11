@@ -63,7 +63,7 @@ foreach ($js as $url) {
     }
     
     if (strpos($url,'require-2.1.10.min.js') !== false) {
-        
+        //$url= str_replace($url,'require-2.1.10.min.js','require-2.1.20.min.js');
     }
     
 	echo elgg_format_element('script', array('src' => $url));
