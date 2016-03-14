@@ -52,11 +52,73 @@ if (elgg_is_sticky_form('register')) {
 
 <!-- +++ jquery/javascript stuff +++++++++++++++++++++++++++++++++++++++++++ -->
 <script type="text/javascript">
-
+var frDepartmentsGeds = {};//new Array();
+var departmentList = new Array();
+var enDepartments = {};//new Array();
 	$(document).ready(function() {
-		enable_submit(false);
+		//enable_submit(false);
+		
+		var searchObj = "{\"requestID\" : \"B01\", \"authorizationID\" : \"X4GCCONNEX\"}";
+          
+        var frDepartments;
+        
+		$.ajax({
+			type: 'POST',
+            contentType: "application/json",
+            url: 'https://api.sage-geds.gc.ca',
+            data: searchObj,
+            dataType: 'json',
+            success: function (feed) {
+            	
+            	var departments = feed.requestResults.departmentList;
+            	for (i=0;i<departments.length; i++){
+            		enDepartments[departments[i].dn] = departments[i].desc;
+            	
+            	}
+ 
+            	frDepartments = gedsFrDept();
+            	
+            },// feed - JS object - GEDS result
+			error: function(){
+				
+			},
+			
+		});
+		
 	});
-
+	function gedsFrDept(){
+		
+		var searchObj = "{\"requestID\" : \"B01\", \"authorizationID\" : \"X4GCCONNEX\"}";
+		
+		$.ajax({
+        	type: 'POST',
+            contentType: "application/json",
+            url: 'https://api.sage-geds.gc.ca/fr/GAPI/',
+            data: searchObj,
+            dataType: 'json',
+            success: function (feed) {
+            	
+            	var departments = feed.requestResults.departmentList;
+            	for (i=0;i<departments.length; i++){
+            		frDepartmentsGeds[departments[i].dn] = departments[i].desc;
+            	}
+            	
+            },complete: function(){
+				        		
+        		elgg.action('saveDept',{
+        			data: {
+        				listEn: JSON.stringify(enDepartments),
+        				listFr: JSON.stringify(frDepartmentsGeds),	
+        			},
+        			success: function (feed){
+        				
+        			}
+        		})
+        		
+			},
+         });
+         
+	}
 	function check_fields2()
 	{
 		var invalid_email = document.getElementById('email_initial_error').innerHTML;
@@ -65,8 +127,9 @@ if (elgg_is_sticky_form('register')) {
 		var password1 = $('.password_test').val();
 		var password2 = $('.password2_test').val();
 		var d_name = document.getElementById('name').value;
-		var toc_val = $('#toc2 input:checkbox:checked').val();
-		
+		//var toc_val = $('#toc2').checked;
+		var toc_val = $('#toc2').attr("checked");
+		//alert($('#toc2').attr("checked"));
 		//console.log('cyu - '+ toc_val);
 		var is_valid = false;
 		var pop_up_msg = "";
@@ -92,31 +155,31 @@ if (elgg_is_sticky_form('register')) {
 
 		if (email1 != email2)
 		{
-			pop_up_msg += "<?php echo elgg_echo('gcRegister:email_mismatch'); ?>\n";
+			pop_up_msg += '<?php echo elgg_echo('gcRegister:email_mismatch'); ?>\n';
 			is_valid = false;
 		}
 
 		if (password1 != password2)
 		{
-			pop_up_msg += "<?php echo elgg_echo('gcRegister:password_mismatch'); ?>\n";
+			pop_up_msg += '<?php echo elgg_echo('gcRegister:password_mismatch'); ?>\n';
 			is_valid = false;
 		}
 
 		if (password1 == password2 && password1.length < 6)
 		{
-			pop_up_msg += "<?php echo elgg_echo('gcRegister:password_too_short'); ?>\n";
+			pop_up_msg += '<?php echo elgg_echo('gcRegister:password_too_short'); ?>\n';
 			is_valid = false;
 		}
 		
 		if (d_name == "")
 		{
-			pop_up_msg += "<?php echo elgg_echo('gcRegister:display_name_is_empty'); ?>\n";
+			pop_up_msg += '<?php echo elgg_echo('gcRegister:display_name_is_empty'); ?>\n';
 			is_valid = false;
 		}
 
-		if (toc_val != 1)
+		if (toc_val != "checked")
 		{
-			pop_up_msg += "<?php echo elgg_echo('gcRegister:toc_error'); ?>"+"\n";
+			pop_up_msg += '<?php echo elgg_echo('gcRegister:toc_error'); ?>\n';
 			is_valid = false;
 		}
 
@@ -266,7 +329,32 @@ if (elgg_is_sticky_form('register')) {
 
 
     </div>
-
+<div class="form-group">
+	<label for="department" class="required"><span class="field-name"><?php echo elgg_echo('gcRegister:department'); ?></span><strong class="required">(required)</strong></label>
+	<?php
+	$obj = elgg_get_entities(array(
+   		'type' => 'object',
+   		'subtype' => 'dept_list',
+   		'owner_guid' => elgg_get_logged_in_user_guid()
+	));
+	if (get_current_language()=='en'){
+		//$metaname = "deptsEn";
+		$departments = $obj[0]->deptsEn;
+	}else{
+		//$metaname = "deptsFr";
+		$departments = $obj[0]->deptsFr;
+	}
+	//echo "lang".get_current_language();
+	//$departments = $meta[0]->value;//array(1, 2, 3);
+	echo elgg_view('input/select', array(
+		'name' => 'department',
+		'id' => 'department',
+        //'disabled'=>'disabled',
+        'class' => 'department_test form-control',
+		'options_values' => json_decode($departments, true),
+	));
+	?>
+</div>
 <div class="form-group">
 	<label for="username" class="required"><span class="field-name"><?php echo elgg_echo('gcRegister:username'); ?></span><strong class="required">(required)</strong></label>
 	<?php
@@ -371,14 +459,14 @@ echo '<br/>';
 	    	enable_submit(validForm());
 	    	var val = $(this).attr('value');
 	        if ( val === '' ) {
-	        	var c_err_msg = "<?php echo elgg_echo('gcRegister:empty_field') ?>";
+	        	var c_err_msg = '<?php echo elgg_echo('gcRegister:empty_field') ?>';
 	            document.getElementById('email_initial_error').innerHTML = c_err_msg;
 	        }
 	        else if ( val !== '' ) {
 	            document.getElementById('email_initial_error').innerHTML = '';
 
 	            if (!validateEmail(val)) {
-	            	var c_err_msg = "<?php echo elgg_echo('gcRegister:invalid_email') ?>";
+	            	var c_err_msg = '<?php echo elgg_echo('gcRegister:invalid_email') ?>';
 	            	document.getElementById('email_initial_error').innerHTML = c_err_msg;
 	            }
 	        }

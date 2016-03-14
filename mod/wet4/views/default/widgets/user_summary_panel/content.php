@@ -22,12 +22,12 @@ try{
 ?>
 <div class="col-xs-12 col-md-12 col-lg-12 panel">
     <div class="col-lg-2 elgg-avatar elgg-avatar-medium-wet4">
-        <img src="<?php echo $avatar;?>" />
+        <img src="<?php echo $avatar;?>" alt="Avatar of <?php echo $dipName;?>" class="img-circle img-responsive" />
     </div>
     <div class="col-lg-7 brdr-rght">
         <h2 class="h2"><?php echo $dipName;?></h2>
         <p class="text-muted"><?php echo $title . ' at '.$dept?></p>
-        <a href="<?php echo $site_url. 'profile/'. $Uname?>" alt="Avatar of <?php echo $dipName;?>" class="btn btn-primary btn-sm mrgn-bttm-sm">Improve your profile</a>
+        <a href="<?php echo $site_url. 'profile/'. $Uname?>" class="btn btn-primary btn-sm mrgn-bttm-sm">Improve your profile</a>
     </div>
     <div class="col-lg-3">
         <small><p class="brdr-bttm">You are a member of <a href="<?php echo $site_url. '/groups/all?filter=yours'?>"><?php echo $num_group?></a> groups.</p>

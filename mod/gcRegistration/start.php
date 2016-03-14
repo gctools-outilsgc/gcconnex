@@ -22,6 +22,9 @@
 		elgg_register_simplecache_view('js/gcRegistration/registration_js');
 		$url = elgg_get_simplecache_url('js','gcRegistration/registration_js');
 		elgg_register_js('gcRegistration', $url);
+		//////////////Troy
+		elgg_register_action('saveDept', elgg_get_plugins_path() . 'gcRegistration/actions/saveDept.php', 'public');
+		
 
 	}
 	

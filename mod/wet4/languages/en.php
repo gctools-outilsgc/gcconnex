@@ -21,13 +21,23 @@ return array(
   'wet:errmess' => "<h3 class='h3'>The form could not be submitted because errors were found.</h3>",
   'wet:feedbackText'=>"Feedback<span class='wb-inv'> about this web site</span>",
   'wet:footAbout' => 'About GCconnex',
-  'wet:footTerms' => 'Terms and Conditions',
+  'wet:footTerms' => 'Terms and Conditions of Use',
   'wet:footPrivacy' => 'Privacy Policy',
   'wet:footTutorials' => 'GCconnex Tutorials',
   'wet:footTitleAbout' => 'About',
   'wet:footTitleNews' => 'News',
   'wet:footTitleSocial' => 'Stay Connected',
   'wet:collapseWidget' => 'Collapse / Open %s',
+/**
+*notice section
+*/
+'notice:title' => 'GCconnex... re-imagined for you!',
+'notice:paragraphe' => '<p>Over the next few weeks, you may notice changes on GCconnex as we try-out the new features and tweak current functionalities to make your online collaboration and networking easier, faster and more fun.</p>
+
+<p>We would like to thank you in advance for your understanding as we work through any bugs or issues that may arise.  We are extremely excited about the new GCconnex and hope you are too.</p>
+
+<p>Please join us for discussions regarding the upgrades in the <a href="https://gcconnex.gc.ca/groups/profile/226392/gc20-tools-outils-gc20">GC2.0 Tools Group </a> and we hope you can attend the official launch of the GCTools at the <a href="http://www.gcpedia.gc.ca/wiki/Blueprint_2020/Innovation_Fair_2016">Blueprint 2020 Innovation Fair</a> on April 20, 2016. </p>',
+
 
 /**
   * Profile Strength
@@ -556,7 +566,10 @@ return array(
 	'tools' => "Tools",
 	'settings:edit' => 'Edit settings',
 
-    'gcconnex:registerText' => 'Grow your network, engage your colleagues.',
+    'gcconnex:registerText' => '<h3 class="text-right">Connecting People and Ideas</h3>
+<h3>Welcome to GCconnex! </h3>
+GCconnex is an professional networking and collaborative workspace for all public service, allowing people to connect and share information, leveraging the power of networking towards a more effective and efficient public service.<br>
+<a ="https://www.canada.ca/en/transparency/terms.html">Terms and Conditions of Use</a>',
 	'register' => "Register",
 	'registerok' => "You have successfully registered for %s.",
 	'registerbad' => "Your registration was unsuccessful because of an unknown error.",
@@ -1473,6 +1486,7 @@ Please do not reply to this email.",
     'contactform:select' => 'Please select a category',
     'contactform:reason' => 'Select...',
     'contactform:help_menu_item' => "Help / Contact Us",
+    'contactform:newsletter' => 'Subscribe to the GC Tools Newsletter',
     
 /*
  * Contact Form Validation

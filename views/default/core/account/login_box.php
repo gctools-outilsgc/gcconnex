@@ -1,3 +1,12 @@
+<section class="panel panel-info">
+	<header class="panel-heading">
+		<h3 class="panel-title "><span class='glyphicon glyphicon-info-sign mrgn-rght-sm'></span><?php echo elgg_echo('notice:title') ?></h3>
+	</header>
+	<div class="panel-body">
+		<?php echo elgg_echo('notice:paragraphe') ?>
+		</div>
+</section>
+
 <?php
 /**
  * Elgg login box

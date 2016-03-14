@@ -36,7 +36,10 @@ $site_url = elgg_get_site_url();
 		<?php echo elgg_echo('user:persistent'); ?>
 	</label>
 	<div>
-        <?php echo elgg_view('input/submit', array('value' => elgg_echo('login'), 'class' => 'btn-custom-cta',)); ?>
+        <?php echo elgg_view('input/submit', array('value' => elgg_echo('login'), 'class' => 'btn-custom-cta mrgn-rght-lg',)); ?>
+          <?php
+        echo '<a href="' . $site_url . 'register" class="btn btn-custom">'.elgg_echo('register').'</a>';
+        ?>
     </div>
 	
 	
@@ -63,10 +66,4 @@ $site_url = elgg_get_site_url();
     <div>
         <?php echo elgg_echo('gcconnex:registerText');?> </div>
 
-
-    <div class="text-center">
-        <?php
-        echo '<a href="' . $site_url . 'register" class="btn btn-custom">'.elgg_echo('register').'</a>';
-        ?>
-    </div>
 </div>

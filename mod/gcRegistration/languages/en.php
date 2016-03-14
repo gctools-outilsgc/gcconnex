@@ -42,6 +42,7 @@ $english = array(
 	'gcRegister:password_too_short' => '<a href="#password">Password must contain minimum of 6 characters</a>',
 	'gcRegister:email_mismatch' => '<a href="#email_initial">Emails do not match</a>',
 	'gcRegister:display_name_is_empty' => '<a href="#name">Display name cannot be empty</a>',
+	'gcRegister:department' => 'Department',
     
 );
 

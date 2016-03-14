@@ -8,9 +8,19 @@
 
 if (elgg_is_xhr()) {  //This is an Ajax call!
     // allow the user to edit the access settings for languages entries
+    $user_guid = $_GET["guid"];
+    $user = get_user($user_guid);
     echo '<label for="langAccess">' . elgg_echo('gcconnex_profile:languages:access') . '</label>';
 
-    $access_id = $user->languages_access;
+	$metadata = elgg_get_metadata(array(
+                'metadata_names' => array('english'),
+                'entity_guid' => elgg_get_logged_in_user_guid(),
+
+    ));
+	
+	$access_id = $metadata[0]->access_id;
+    //$access_id = $user->languages_access;
+    
     //echo 'Access: ';
     //var_dump($access_id);
     $params = array(

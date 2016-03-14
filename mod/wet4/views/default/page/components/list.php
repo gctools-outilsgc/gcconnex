@@ -125,7 +125,7 @@ if(elgg_in_context('friends') || elgg_in_context('my_groups') || elgg_in_context
 	    echo $nav;
     }
 
-}
+} else
 if(elgg_in_context('groups') && get_input("filter") == 'yours'){ //datatable for groups/all?filter=yours page
 
     foreach ($items as $item) {
