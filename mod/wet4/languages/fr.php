@@ -22,13 +22,23 @@ return array(
    'wet:errmess' => "<h3 class='h3'>Le formulaire n'a pu être soumis car une ou des erreurs ont été trouvées.</h3>",
    'wet:feedbackText'=>"Rétroaction<span class='wb-inv'> sur ce site Web</span>",
    'wet:footAbout' => 'About GCconnex (translate me)',
-  'wet:footTerms' => 'Terms and Conditions (translate me)',
+  'wet:footTerms' => 'Conditions d\'utilisation',
   'wet:footPrivacy' => 'Privacy Policy (translate me)',
   'wet:footTutorials' => 'GCconnex Tutorials (translate me)',
   'wet:footTitleAbout' => 'About (translate me)',
   'wet:footTitleNews' => 'News (translate me)',
   'wet:footTitleSocial' => 'Stay Connected (translate me)',
   'wet:collapseWidget' => '(translate me) Collapse / Open %s',
+  /**
+*notice section
+*/
+'notice:title' => 'GCconnex est ré-imaginé pour vous! ',
+'notice:paragraphe' => '<p>Au cours des prochaines semaines, vous remarquerez peut-être des changements sur GCconnex au fur et à mesure que nous essayons les nouvelles fonctionnalités et effectuons des ajustements pour rendre vos activités de réseautage et de collaboration en ligne, plus facile, plus rapide et plus amusantes!</p>
+
+<p>Nous aimerions vous remercier à l\'avance pour votre compréhension alors que nous travaillons à remédier les bogues ou les problèmes qui pourraient survenir. Nous sommes très excités  pour la nouvelle GCconnex et j\'espère que vous l’êtes aussi. </p>
+
+<p>Joignez-vous à nous pour des discussions concernant les mises à jour dans le <a href="https://gcconnex.gc.ca/groups/profile/226392/gc20-tools-outils-gc20">groupe des Outils GC2.0</a> et nous espérons que vous pourrez assister au lancement officiel des OutilsGC au <a href="http://www.gcpedia.gc.ca/wiki/Objectif2020/Salon_innovation_2016">Salon interministériel de l’innovation pour Objectif 2020</a> le 20 avril 2016.</p>',
+
 /**
  * Profile Strength
  */
@@ -543,7 +553,10 @@ return array(
 	'tools' => "Outils",
 	'settings:edit' => 'Editer les paramètres',
 
-    'gcconnex:registerText' => 'Élargissez votre réseau, mobilisez vos collègues.',
+    'gcconnex:registerText' => '<h3 class="text-right">Branchez-vous, maximisez vos idées</h3>
+<h3>Bienvenue à GCconnex! </h3>
+GCconnex est un espace de travail collaboratif pour le réseautage professionnel à l\'ensemble de la fonction publique. Celle-ci vous permet de vous brancher, de partager de l\'information et tirer profit du pouvoir de réseautage pour accroître l\'efficacité et la productivité de la fonction publique.<br>
+<a href="https://www.canada.ca/fr/transparence/avis.html">Conditions d’utilisation</a>',
 	'register' => "S'enregistrer",
 	'registerok' => "Vous vous êtes enregistré avec succès sur %s.",
 	'registerbad' => "Votre création de compte n'a pas fonctionné pour une raison inconnue.",
@@ -1483,6 +1496,7 @@ Ne répondez pas à cet e-mail.",
     'contactform:socialmedia:link' => '"http://www.csps-efpc.gc.ca/forlearners/coursesandprograms/CourseDetail-fra.aspx?courseno=B334"',
     'contactform:guidance' => '<a href="http://www.gcpedia.gc.ca/gcwiki/images/e/ee/Les_medias_sociaux_au_sein_du_GC.jpg">Orientation à l’intention des employés : Les médias sociaux au sein du GC
 </a>',
+'contactform:newsletter' => 'Abonnez à l’Infolettre des Outils GC',
 
 
     /*

@@ -64,7 +64,26 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                     $user->set($f, $v);
                 }
                 else {
-                    $user->set($f, $v);
+                	if($f=='department'){
+                		$obj = elgg_get_entities(array(
+   							'type' => 'object',
+   							'subtype' => 'dept_list',
+   							'owner_guid' => 0
+						));
+						$departmentsEn = json_decode($obj[0]->deptsEn, true);
+						$departmentsFr = json_decode($obj[0]->deptsFr, true);
+						if (get_current_language()=='en'){
+							$deptString = $departmentsEn[$v]." / ".$departmentsFr[$v];
+						}else{
+							$deptString = $departmentsFr[$v]." / ".$departmentsEn[$v];
+						}
+			
+						$user->set('department',$deptString);
+                	}else{
+                		$user->set($f, $v);
+                	}
+                	//register_error($f);
+                    
                 }
             }
 
@@ -383,12 +402,50 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             $languagesToAdd = get_input('langadded', 'ERROR: Ask your admin to grep: 5FH13FFSSGAHHHS0021.');
             $languagesToRemove = get_input('langremoved', 'ERROR: Ask your admin to grep: 5AAAAGGFH13GAH0022.');
             //$access = get_input('access');    // not used
-
+			$access = get_input('access_id');
             $user->english = $english;
             $user->french = $french;
             $user->officialLanguage = $firstlang;
 
             $user->save();
+			
+			$metadata = elgg_get_metadata(array(
+                'metadata_names' => array('english'),
+                'entity_guid' => elgg_get_logged_in_user_guid(),
+
+            ));
+            if ($metadata){
+                foreach ($metadata as $data){
+
+                    update_metadata($data->id, $data->name, $data->value, $data->value_type, $data->owner_guid, $access);
+                }
+                //$metadata[0]->save();
+            }
+            $metadata = elgg_get_metadata(array(
+                'metadata_names' => array('french'),
+                'entity_guid' => elgg_get_logged_in_user_guid(),
+
+            ));
+            if ($metadata){
+                foreach ($metadata as $data){
+                    
+                    update_metadata($data->id, $data->name, $data->value, $data->value_type, $data->owner_guid, $access);
+                }
+                //$metadata[0]->save();
+            }
+			$metadata = elgg_get_metadata(array(
+                'metadata_names' => array('officialLanguage'),
+                'entity_guid' => elgg_get_logged_in_user_guid(),
+
+            ));
+            if ($metadata){
+                foreach ($metadata as $data){
+                    
+                    update_metadata($data->id, $data->name, $data->value, $data->value_type, $data->owner_guid, $access);
+                }
+                //$metadata[0]->save();
+            }
+			
             break;
         case 'portfolio':
             $portfolio = get_input('portfolio');

@@ -97,9 +97,29 @@ function group_tools_invite_user(ElggGroup $group, ElggUser $user, $text = "", $
 				$url
 			));
 			
-			if (notify_user($user->getGUID(), $group->getOwnerGUID(), $subject, $msg, array(), "email")) {
-				$result = true;
+
+
+			// cyu - 03/07/2016: modified to improve notifications
+			if (elgg_is_active_plugin('cp_notifications')) {
+				$message = array(
+					'cp_invitee' => $user,
+					'cp_inviter' => $logged_in_user,
+					'cp_invite_to_group' => $group,
+					'cp_invitation_url' => $url,
+					'cp_invite_msg' => $text,
+					'cp_msg_type' => 'cp_group_invite'
+					);
+				$result = elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
+
+			} else {
+
+				// send notification...
+				if (notify_user($user->getGUID(), $group->getOwnerGUID(), $subject, $msg, array(), "email")) {
+					$result = true;
+				}
+
 			}
+
 		}
 	}
 	
@@ -144,10 +164,27 @@ function group_tools_add_user(ElggGroup $group, ElggUser $user, $text = "") {
 				"inviter" => $loggedin_user,
 				"invitee" => $user
 			);
-			$msg = elgg_trigger_plugin_hook("invite_notification", "group_tools", $params, $msg);
+			
+
+			// cyu - 03/07/2016: modified to improve notifications
+			if (elgg_is_active_plugin('cp_notifications')) {
+				$message = array(
+					'cp_user_added' => $user,
+					'cp_user' => $logged_in_user,
+					'cp_group' => $group,
+					'cp_added_msg' => $text,
+					'cp_msg_type' => 'cp_group_add'
+					);
+				$result = elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
+
+			} else {
+
+
+				$msg = elgg_trigger_plugin_hook("invite_notification", "group_tools", $params, $msg);
 				
-			if (notify_user($user->getGUID(), $group->getOwnerGUID(), $subject, $msg, array(), "email")) {
-				$result = true;
+				if (notify_user($user->getGUID(), $group->getOwnerGUID(), $subject, $msg, array(), "email")) {
+					$result = true;
+				}
 			}
 		}
 		
@@ -223,7 +260,29 @@ function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend 
 				);
 				$body = elgg_trigger_plugin_hook("invite_notification", "group_tools", $params, $body);
 				
-				$result = elgg_send_email($site_from, $email, $subject, $body);
+
+				// cyu - 03/07/2016: modified to improve notifications
+				if (elgg_is_active_plugin('cp_notifications')) {
+					
+					$message = array(
+						'cp_invitee' => $email,
+						'cp_inviter' => $loggedin_user,
+						'cp_group_invite' => $group,
+						'cp_invitation_nonuser_url' => elgg_get_site_url()."register?group_invitecode={$invite_code}",
+						'cp_invitation_url' => elgg_get_site_url()."groups/invitations/?invitecode={$invite_code}",
+						'cp_invitation_code' => $invite_code,
+						'cp_invitation_msg' => $text,
+						'cp_msg_type' => 'cp_group_invite_email'
+						);
+					$result = elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
+
+				} else {
+
+					// send notification...
+					$result = elgg_send_email($site_from, $email, $subject, $body);
+				
+				}
+
 			} else {
 				$result = null;
 			}

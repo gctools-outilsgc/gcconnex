@@ -20,9 +20,26 @@ if (!empty($group_guid) && !empty($body) && !empty($user_guids)) {
 			
 			$body .= PHP_EOL . PHP_EOL;
 			$body .= elgg_echo("group_tools:mail:message:from") . ": " . $group->name . " [" . $group->getURL() . "]";
-				
-			foreach ($user_guids as $guid) {
-				notify_user($guid, $group->getGUID(), $subject, $body, NULL, "email");
+			
+			// cyu - 03/07/2016: we need to use the cp_notifications module to handle the improved notifications
+			if (elgg_is_active_plugin('cp_notifications')) {
+
+				$message = array(
+					'cp_group' => $group,
+					'cp_group_subject' => $subject,
+					'cp_group_message' => $message,
+					'cp_group_mail_users' => $user_guids,
+					'cp_msg_type' => 'cp_group_mail',
+					);
+				$result = elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
+
+			} else {
+
+				// send notification...
+				foreach ($user_guids as $guid) {
+					notify_user($guid, $group->getGUID(), $subject, $body, NULL, "email");
+				}
+
 			}
 			
 			system_message(elgg_echo("group_tools:action:mail:success"));

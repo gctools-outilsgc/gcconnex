@@ -83,4 +83,10 @@ foreach ($tabs as $name => $tab) {
 	}
 }
 
+elgg_register_menu_item('filter', array(
+    'name' => 'owned',
+    'priority' => 275,
+    'text' => elgg_echo('groups:owned'),
+    'href' => 'groups/owner/' . $user->username));
+
 echo elgg_view_menu("filter", array("sort_by" => "priority", "class" => "elgg-menu-hz"));

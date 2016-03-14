@@ -5,7 +5,6 @@
  * @package Elgg
  * @subpackage Core
  *
- *Add username1 for accessibility, without 1, its not working
  */
 ?>
 
@@ -17,7 +16,7 @@
 	<?php echo elgg_view('input/text', array(
 		'name' => 'username',
 		'autofocus' => true,
-     'id' => 'username1',
+     	'id' => 'username',
 		));
 	?>
 </div>

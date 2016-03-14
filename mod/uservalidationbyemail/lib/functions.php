@@ -61,9 +61,22 @@ function uservalidationbyemail_request_validation($user_guid, $admin_requested =
 			), $user->language
 		);
 
-		// Send validation email
-		$result = notify_user($user->guid, $site->guid, $subject, $body, array(), 'email');
+		// cyu - 03/08/2016: improving notifications, redirect to notification manager module
+		if (elgg_is_active_plugin('cp_notifications')) {
 
+			$message = array(
+				'cp_validate_user' => $user,
+				'cp_validate_url' => $link,
+				'cp_msg_type' => 'cp_validate_user'
+				);
+			$result = elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
+
+		} else {
+
+			// Send validation email
+			$result = notify_user($user->guid, $site->guid, $subject, $body, array(), 'email');
+		
+		}
 		return $result;
 	}
 

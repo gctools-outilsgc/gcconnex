@@ -48,9 +48,34 @@ if ($user->canEdit()) {
             'class' => 'gcconnex-basic-' . $field,
             'value' => $value,
         );
-
+		/////////////Troy	
         if ($field == 'department') {
-            echo '<div id="bloodhound" class="basic-profile-field">'; // field wrapper for css styling
+            /////////////Troy	
+            //echo '<div id="bloodhound" class="basic-profile-field">'; // field wrapper for css styling
+            echo '<div class="basic-profile-field">';
+			$obj = elgg_get_entities(array(
+   				'type' => 'object',
+   				'subtype' => 'dept_list',
+   				'owner_guid' => 0
+			));
+			if (get_current_language()=='en'){
+				//$metaname = "deptsEn";
+				$departments = $obj[0]->deptsEn;
+			}else{
+				//$metaname = "deptsFr";
+				$departments = $obj[0]->deptsFr;
+			}
+			//echo "lang".get_current_language();
+			//$departments = $meta[0]->value;//array(1, 2, 3);
+			echo elgg_view('input/select', array(
+				'name' => $field,
+				'id' => $field,
+        		//'disabled'=>'disabled',
+        		'class' => 'gcconnex-basic-' . $field,
+				'options_values' => json_decode($departments, true),
+				'style' => 'width:204px;height:37px;'
+				
+			));
         }
         else {
             echo '<div class="basic-profile-field">'; // field wrapper for css styling

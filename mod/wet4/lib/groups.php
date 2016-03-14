@@ -121,6 +121,7 @@ function groups_handle_owned_page() {
 
     set_context('my_groups');
 	$page_owner = elgg_get_page_owner_entity();
+    $selected_tab = get_input("filter");
 
 	if ($page_owner->guid == elgg_get_logged_in_user_guid()) {
 		$title = elgg_echo('groups:owned');
@@ -140,14 +141,15 @@ function groups_handle_owned_page() {
 	$content = elgg_list_entities(array(
 		'type' => 'group',
 		'owner_guid' => elgg_get_page_owner_guid(),
-		'joins' => array("JOIN {$dbprefix}groups_entity ge ON e.guid = ge.guid"),
-		'order_by' => 'ge.name ASC',
+		//'joins' => array("JOIN {$dbprefix}groups_entity ge ON e.guid = ge.guid"),
+		//'order_by' => 'ge.name ASC',
 		'full_view' => false,
 		'no_results' => elgg_echo('groups:none'),
 		'distinct' => false,
 	));
 $filter = elgg_view("groups/group_sort_menu", array("selected" => $selected_tab));
-$sidebar = elgg_view('groups/sidebar/suggested');
+$sidebar = elgg_view("groups/sidebar/find");
+$sidebar .= elgg_view("groups/sidebar/featured");
     
 	$params = array(
 		'content' => $content,

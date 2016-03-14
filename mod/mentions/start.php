@@ -110,7 +110,7 @@ function mentions_preg_callback($matches) {
  */
 function mentions_notification_handler($event, $event_type, $object) {
 	// excludes messages - otherwise an endless loop of notifications occur!
-	if (elgg_instanceof($object, 'object', 'messages')) {
+	if (elgg_instanceof($object, 'object', 'messages') || elgg_instanceof($object, 'object', 'message')) {
 		return;
 	}
 
@@ -198,7 +198,7 @@ function mentions_notification_handler($event, $event_type, $object) {
 						'action' => 'mention',
 					);
 
-					notify_user($user->getGUID(), $owner->getGUID(), $subject, $body, $params);
+					notify_user($user->getGUID(), $owner->getGUID(), utf8_encode($subject), utf8_encode($body), $params);
 				}
 			}
 		}

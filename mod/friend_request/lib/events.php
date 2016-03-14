@@ -13,7 +13,6 @@
  * @return void
  */
 function friend_request_event_create_friendrequest($event, $object_type, $object) {
-	
 	if (($object instanceof ElggRelationship)) {
 		$user_one = get_user($object->guid_one);
 		$user_two = get_user($object->guid_two);
@@ -28,6 +27,22 @@ function friend_request_event_create_friendrequest($event, $object_type, $object
 			"action" => "friend_request",
 			"object" => $user_one
 		);
-		notify_user($object->guid_two, $object->guid_one, $subject, $message, $params);
+
+		// cyu - 03/08/2016: modified to improve notifications
+		if (elgg_is_active_plugin('cp_notifications')) {
+			$message = array(
+				'cp_friend_requester' => $user_one,
+				'cp_friend_receiver' => $user_two,
+				'cp_friend_invite_url' => $view_friends_url,
+				'cp_msg_type' => 'cp_friend_request'
+			);
+			$result = elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
+
+		} else {
+
+			notify_user($object->guid_two, $object->guid_one, $subject, $message, $params);
+		
+		}
+
 	}
 }

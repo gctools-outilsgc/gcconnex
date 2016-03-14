@@ -30,6 +30,10 @@ $name = get_input('name');
 $friend_guid = (int) get_input('friend_guid', 0);
 $invitecode = get_input('invitecode');
 
+
+//////////////////////////// Troy
+$deptNum = get_input('department');
+
 // since the retired form has been removed and the type used is no longer passed, this check and the handling of the retired form input should not be here anymore
 // check which version the form is (retired vs standard) & must trim everything
 //if (get_input('noscript') !== 'retired' && get_input('form_type') === 'standard')
@@ -188,7 +192,22 @@ if (elgg_get_config('allow_registration')) {
 			} catch (LoginException $e) {
 				// do nothing
 			}
-
+			/////// Troy
+			$obj = elgg_get_entities(array(
+   				'type' => 'object',
+   				'subtype' => 'dept_list',
+   				'owner_guid' => elgg_get_logged_in_user_guid()
+			));
+			$departmentsEn = json_decode($obj[0]->deptsEn, true);
+			$departmentsFr = json_decode($obj[0]->deptsFr, true);
+			if (get_current_language()=='en'){
+				$deptString = $departmentsEn[$deptNum]." / ".$departmentsFr[$deptNum];
+			}else{
+				$deptString = $departmentsFr[$deptNum]." / ".$departmentsEn[$deptNum];
+			}
+			
+			$new_user->set('department',$deptString);
+			
 			// Forward on success, assume everything else is an error...
 			forward();
 		} else {

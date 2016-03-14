@@ -854,6 +854,8 @@ function saveProfile(event) {
 
             $official_langs = $('.gcconnex-profile-language-official-languages');
 
+			var access = $('.gcconnex-languages-access').val();
+
             english = {
                 'writtencomp': $official_langs.find('.gcconnex-languages-english-writtencomp').val(),
                 'writtenexp': $official_langs.find('.gcconnex-languages-english-writtenexp').val(),
@@ -877,6 +879,7 @@ function saveProfile(event) {
                 data: {
                     'guid': elgg.get_logged_in_user_guid(),
                     'section': 'languages',
+                    'access_id': access,
                     'english': english,
                     'french': french,
                     'firstlang': firstlang

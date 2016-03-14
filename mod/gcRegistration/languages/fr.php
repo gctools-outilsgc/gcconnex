@@ -41,6 +41,7 @@ $french = array(
 	'gcRegister:email_mismatch' => '<a href="#email_initial">Les adresses courriel ne sont pas identiques</a>',
 	'gcRegister:display_name_is_empty' => '<a href="#name">Le nom à afficher ne peut être vide</a>',
     'registration:userexists' => 'That username already exists. <a href="'.$site_url.'forgotpassword">Retrieve your password</a>(translate me)',
+    'gcRegister:department' => 'Ministère',
 );
  
 add_translation("fr", $french);
