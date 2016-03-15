@@ -24,23 +24,22 @@ $site_url = elgg_get_site_url();
                     
                     
                 </div>
-                <div class="col-sm-2 col-sm-offset-7 hidden-xs">
-                    <!--
-                    <div class="dropdown  pull-right tools-navigator ">
-                        <a  href="#" class=" dropdown-toggle" type="button" id="tools-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        GCTools
-                    <i class="fa fa-chevron-down"></i>
-                        </a>
-                    <ul class="dropdown-menu tools-navigator-menu tools-dropdown-holder clearfix" aria-labelledby="tools-dropdown">
-                       
-                            
-                            <li class="col-xs-6 clearfix"><a href="#"><div class=" img-responsive"><i class="fa fa-file-text-o fa-4x center-block"></i><div>GCpedia</div></div></a></li>
-                            <li class="col-xs-6"><a href="#"><i class="fa fa-share-alt fa-4x"></i><div>GCconnex</div></a></li>
-                            <li class="col-xs-6"><a href="#"><i class="fa fa-video-camera fa-4x"></i><div>GCVideo</div></a></li>
-                            <li class="col-xs-6"><a href="#"><i class="fa fa-globe fa-4x"></i><div>Intranet</div></a></li>
+                <div class="col-sm-6 col-sm-offset-3 hidden-xs">
+                    <div class="pull-right">
+                    <div class="pull-right tool-link">
+                        <a href="<?php echo elgg_echo('wet:gcintranetLink');?>">
+                        <img class="tool-link-icon" src="<?php echo $site_url.'/mod/wet4/graphics/gc_intranet_icon.gif';?>" alt="GCintranet"/><span class="bold-gc">GC</span>intranet</a>
+                        
+                    </div>
+                    <div class="pull-right tool-link">
+                        <a href="<?php echo elgg_echo('wet:gcpediaLink');?>">
+                        <img class="tool-link-icon" src="<?php echo $site_url.'/mod/wet4/graphics/gc_pedia_icon.gif';?>" alt="GCintranet" /><span class="bold-gc">GC</span>pedia</a>
+                        
+                        
+                    </div>
 
-                    </ul>
-                    </div> -->
+                    </div>
+                   
                 </div>
             </div>
         </div>

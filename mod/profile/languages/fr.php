@@ -5,6 +5,6 @@
 
 return array(
 	'profile' => 'Profil',
-	'profile:notfound' => 'Désolé. Nous ne pouvions pas trouver le profil demandé.',
+	'profile:notfound' =>  'Désolé. Il nous est impossible de trouver le profil demandé.',
 
 );

@@ -17,7 +17,7 @@
 	<requires>
 		<type>plugin</type>
 		<name>file_uploading</name>
-		<version>1.8.1 - GC1.0</version>
+		
 	</requires>
 	<activate_on_install>true</activate_on_install>
 </plugin_manifest>

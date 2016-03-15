@@ -114,7 +114,7 @@ function extended_profile_page_handler($page) {
     $sidebar = elgg_view('profile/sidebar', array('entity' => $user));
 
     $body = elgg_view_layout('one_sidebar', array('content' => $content, 'sidebar' => $sidebar,));
-    echo elgg_view_page($user->name, $body);
+    echo elgg_view_page(elgg_echo('profile:title', array($user->name)), $body);
     return true;
 }
 
@@ -123,15 +123,36 @@ function extended_profile_page_handler($page) {
  */
 function init_ajax_block($title, $section, $user) {
 
+    switch($section){
+        case 'about-me':
+            $field = elgg_echo('gcconnex_profile:about_me');
+            break;
+        case 'education':
+            $field = elgg_echo('gcconnex_profile:education');
+            break;
+        case 'work-experience':
+            $field = elgg_echo('gcconnex_profile:experience');
+            break;
+        case 'skills':
+            $field = elgg_echo('gcconnex_profile:gc_skills');
+            break;
+        case 'languages':
+            $field = elgg_echo('gcconnex_profile:langs');
+            break;
+        case 'portfolio':
+            $field = elgg_echo('gcconnex_profile:portfolio');
+            break;
+    }
+
     echo '<div class="panel panel-custom">';
         echo '<div class="panel-heading profile-heading clearfix"><h3 class="profile-info-head pull-left clearfix">' . $title . '</h3>'; // create the profile section title
     
     if ($user->canEdit()) {
         // create the edit/save/cancel toggles for this section
         echo '<span class="gcconnex-profile-edit-controls">';
-        echo '<button title="Edit ' . $section . '" class="btn btn-default edit-' . $section . '">' . elgg_echo('gcconnex_profile:edit') . '</button>';
+        echo '<button title="Edit ' . $section . '" class="btn btn-default edit-' . $section . '">' . elgg_echo('gcconnex_profile:edit') . ' <span class="wb-inv">' . $field . '</span></button>';
 //        echo '<span class="save-control save-' . $section . ' hidden"><img src="' . elgg_get_site_url() . 'mod/b_extended_profile/img/save.png">' . elgg_echo('gcconnex_profile:save') . '</span>';
-        echo '<button title="Cancel ' . $section . '"  class="btn btn-default cancel-control cancel-' . $section . ' hidden wb-invisible">' . elgg_echo('gcconnex_profile:cancel') . '</button>';
+        echo '<button title="Cancel ' . $section . '"  class="btn btn-default cancel-control cancel-' . $section . ' hidden wb-invisible">' . elgg_echo('gcconnex_profile:cancel') . ' <span class="wb-inv">' . $field . '</span></button>';
         echo '</span>';
     }
     echo '</div>';
@@ -143,7 +164,7 @@ function init_ajax_block($title, $section, $user) {
 
 function finit_ajax_block($section) {
     echo '</div>';
-    echo '<div class="panel-footer clearfix save-' . $section . ' hidden wb-invisible"><button title="Save ' . $section . '" class="btn btn-primary gcconnex-profile-edit-controls save-control save-' . $section . ' hidden wb-invisible">' . elgg_echo('gcconnex_profile:save') . '</button></div>';
+    echo '<div class="panel-footer clearfix save-' . $section . ' hidden wb-invisible"><button title="Save ' . $section . '" class="btn btn-primary gcconnex-profile-edit-controls save-control save-' . $section . ' hidden wb-invisible">' . elgg_echo('gcconnex_profile:save') . ' <span class="wb-inv">' . $field . '</span></button></div>';
     echo '</div>';
 }
 

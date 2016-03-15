@@ -98,7 +98,7 @@ if ($current_page < $total_pages) {
 
 
 //echo '<div class="">';
-echo '<ul class="pagination ">';
+echo '<ul class=" elgg-pagination pagination">';
 
 if ($pages->prev['href']) {
 	$link = elgg_view('output/url', $pages->prev);

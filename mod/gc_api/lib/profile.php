@@ -40,7 +40,7 @@ function get_api_profile($id){
 	$user['username'] = $user_entity->username;
 
 	//get and store user display name
-	$user['dispalyName'] = $user_entity->name;
+	$user['displayName'] = $user_entity->name;
 
 	//get and store URL for profile
 	$user['profileURL'] = $user_entity->getURL();
@@ -124,6 +124,7 @@ function get_api_profile($id){
 		'type' => 'object',
 		'limit' => 0
 		));
+	usort($experienceEntity, "sortDate");
 	$i=0;
 	foreach ($experienceEntity as $job){
 		//$user['job'.$i++] = "test";
@@ -217,13 +218,16 @@ function get_api_profile($id){
 	/////////////////////////////////////////////////////////////////////////////////////////
 	//Language
 	////////////////////////////////////////////////////////////////////
-	$user['language']["format"] = "Written Comprehension / Written Expression / Oral Proficiency";
+	//$user['language']["format"] = "Written Comprehension / Written Expression / Oral Proficiency";
 	$languageMetadata =  elgg_get_metadata(array(
 		'guid'=>$user['id'],
 		'limit'=>0,
 		'metadata_name'=>'english'
 		));
 	if (!is_null($languageMetadata)){
+		if($languageMetadata[0]->access_id == 2){
+			$user['language']["format"] = "Written Comprehension / Written Expression / Oral Proficiency";
+		}
 		$i = 0;
 		foreach($languageMetadata as $grade){
 			if($grade->access_id == 2){
@@ -294,28 +298,40 @@ function buildDate($month, $year){
 	switch($month){
 		case 1:
 			$string = "01/";
+			break;
 		case 2:
 			$string = "02/";
+			break;
 		case 3:
 			$string = "03/";
+			break;
 		case 4:
 			$string = "04/";
+			break;
 		case 5:
 			$string = "05/";
+			break;
 		case 6:
 			$string = "06/";
+			break;
 		case 7:
 			$string = "07/";
+			break;
 		case 8:
 			$string = "08/";
+			break;
 		case 9:
 			$string = "09/";
+			break;
 		case 10:
 			$string = "10/";
+			break;
 		case 11:
 			$string = "11/";
+			break;
 		case 12:
 			$string = "12/";
+			break;
 	}	
 	return $string.$year;
 

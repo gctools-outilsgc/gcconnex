@@ -5,7 +5,7 @@
 
 return array(
 	'members:label:online' => 'en ligne',
-	'members:search' => 'Rechercher des membres',
+	'members:search' => 'Rechercher des utilisateurs',
 	'members:title:search' => 'Recherche de membres pour %s',
 	'members:total' => 'Nombre total de membres: %s',
 	'members:searchname' => "Rechercher des utilisateurs par leur nom.",

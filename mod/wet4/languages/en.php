@@ -28,6 +28,8 @@ return array(
   'wet:footTitleNews' => 'News',
   'wet:footTitleSocial' => 'Stay Connected',
   'wet:collapseWidget' => 'Collapse / Open %s',
+  'wet:gcintranetLink' => 'http://intranet.canada.ca/index-eng.asp',
+  'wet:gcpediaLink' => 'http://www.gcpedia.gc.ca/wiki/?setlang=en',
 /**
 *notice section
 */
@@ -1460,7 +1462,7 @@ Please do not reply to this email.",
     'contactform:faq' => "FAQ",
     'contactform:title:lostpwd' => "<a href=' http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/How_to_retrieve_my_password'>Lost password</a>",
     'contactform:title:lostuser' => "<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/How_to_retrieve_your_username'>Lost username</a>",
-    'contactform:title:create' => "Create account",
+    'contactform:title:create' => "<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/How_to_create_an_account_on_GCconnex'>Create account</a>",
     'contactform:title:picture' => "<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/How_to_edit_your_personal_profile#Editing_your_personal_profile
 '>Upload profile picture</a>",
     'contactform:title:sign-on' => "<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help_/_How_to_use_Simplified_Sign-on'>Simplified Sign-on</a>",

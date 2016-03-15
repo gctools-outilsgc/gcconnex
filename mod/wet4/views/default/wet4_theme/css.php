@@ -11435,6 +11435,8 @@ details.elgg-state-success:before {
     color: #fff;
 }
 
+
+
 #app-brand li a{
    text-decoration: none;
     color: black;
@@ -11465,6 +11467,19 @@ details.elgg-state-success:before {
     clear: both;     
 }
 
+.tool-link{
+    padding:11px 0 0 30px;
+}
+
+.tool-link:hover{
+    text-decoration: underline;
+}
+
+.tool-link-icon{
+    width: 20px;
+    margin:0 5px 3px 0;
+
+}
     #friends_collections_accordian li h2 {
         background: white;
         border: none;
@@ -11618,7 +11633,7 @@ figcaption{
   max-width: 100%; }
 
 .splash #bg {
-    background: url(<?php echo $site_url ?>/mod/wet4/graphics/splash_bg_2.gif) no-repeat center center fixed;
+    background: url(<?php echo $site_url ?>/mod/wet4/graphics/splash_bg_3.gif) no-repeat center center fixed;
     -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
