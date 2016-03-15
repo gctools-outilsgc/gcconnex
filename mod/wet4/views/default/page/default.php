@@ -28,6 +28,8 @@ if (elgg_get_context() == 'admin') {
 
 $site_url = elgg_get_site_url();
 $jsLocation = $site_url . "mod/wet4/views/default/js/wet-boew.js";
+$bootstrap = $site_url . "mod/wet4/views/default/js/bootstrap.min.js";
+//$bootstrap_tour = $site_url . "mod/wet4/views/default/js/bootstrap-tour.min.js";
 
 $messages = elgg_view('page/elements/messages', array('object' => $vars['sysmessages']));
 
@@ -116,7 +118,7 @@ $breadcrumbs
 		
 	</footer>
     
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="$bootstrap"></script>
     <script src=" $jsLocation "></script>
     
     

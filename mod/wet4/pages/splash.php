@@ -144,7 +144,7 @@ if (language_selected == "English")
 </div>
 </div>
 </div>
-    <div class="splash_identifier"><span class="bold-gc">GC</span>connex</div>
+    <div class="splash_identifier wb-inv"><span class="bold-gc">GC</span>connex</div>
 </main>
 <div>
 

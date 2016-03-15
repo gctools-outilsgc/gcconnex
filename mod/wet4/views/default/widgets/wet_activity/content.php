@@ -21,6 +21,13 @@
 
 
 if(elgg_is_logged_in()){
+?>
+<script>
+    $(document).ready(function () {
+        $('.elgg-list-river').parent().parent().attr('id','activity');
+    });
+</script>
+<?PHP
         $_SESSION['Suggested_friends']=0;
         $title = elgg_echo('river:all');
         $user = elgg_get_logged_in_user_entity();
@@ -39,13 +46,13 @@ if(elgg_is_logged_in()){
                     $group_guids[] = $group->getGUID();
                 }
             }
-           
+
         }
         if(!$hasgroups && !$hasfriends){
             //no friends and no groups :(
             $activity = '';
         }else if(!$hasgroups && $hasfriends){
-            //has friends but no groups 
+            //has friends but no groups
             $optionsf['relationship_guid'] = elgg_get_logged_in_user_guid();
             $optionsf['relationship'] = 'friend';
             $optionsf['pagination'] = true;
@@ -94,7 +101,7 @@ if(elgg_is_logged_in()){
 		        'is_trusted' => true,
 	        ));
             //$activity = elgg_echo('river:none');
-            //placeholder panel 
+            //placeholder panel
             $activity .= '<div class="panel panel-custom"><div class="panel-body">';
             $activity .= '<h3 class="panel-title mrgn-tp-md">'.elgg_echo('wetActivity:welcome').'</h3>';
             $activity .= '<div class="mrgn-bttm-md mrgn-tp-sm">'.elgg_echo('wetActivity:nocollorgroup').'</div>';
@@ -109,7 +116,7 @@ if(elgg_is_logged_in()){
         $title = elgg_echo('login');
         $body = elgg_view_form('login');
         $login_ = elgg_view_module('index',$title, $body);
-        
+
         //display the notice message on the home page only when not logged in, and in the language user wants
         $notice_title = elgg_echo('wet4:noticetitle');
         $notice_body = elgg_echo('wet4:homenotice');

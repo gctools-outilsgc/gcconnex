@@ -11,6 +11,10 @@ $english = array(
     //edit profile message
     'profile:notsaved' => 'Not all information could be saved, empty fields are not allowed', /* NEW */
 
+    'profile:title' => "%s's Profile",
+
+    'profile:contactinfo' => 'Contact Info',
+
     //user Settings Details
     'item:object:MySkill' => 'Profile skill',
     'item:object:experience' => 'Profile experience',

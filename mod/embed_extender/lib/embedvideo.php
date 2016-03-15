@@ -341,18 +341,19 @@ function videoembed_vimeo_parse_url($url) {
 	}
 
 	if (strpos($url, 'groups') != false) {
-		if (!preg_match('/(http:\/\/)(www\.)?(vimeo\.com\/groups)(.*)(\/videos\/)([0-9]*)/', $url, $matches)) {
+		if (!preg_match('/(https:\/\/)(www\.)?(vimeo\.com\/groups)(.*)(\/videos\/)([0-9]*)/', $url, $matches)) {
 			//echo "malformed vimeo group url";
 			return;
 		}
 
 		$hash = $matches[6];
 	} else {
-		if (!preg_match('/(http:\/\/)(www\.)?(vimeo.com\/)([0-9]*)/', $url, $matches)) {
+        
+		if (!preg_match('/(https:\/\/)(www\.)?(vimeo.com\/)([0-9]*)/', $url, $matches)) {
 			//echo "malformed vimeo url";
 			return;
 		}
-
+       
 		$hash = $matches[4];
 	}
 
@@ -520,6 +521,7 @@ function videoembed_veoh_parse_embed($url) {
  * @return string css style, video div, and flash <object>
  */
 function videoembed_dm_handler($url, $guid, $videowidth) {
+
 	// this extracts the core part of the url needed for embeding
 	$videourl = videoembed_dm_parse_url($url);
 	if (!isset($videourl)) {

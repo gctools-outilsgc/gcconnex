@@ -247,7 +247,7 @@ $site_url = elgg_get_site_url();
 	<?php echo elgg_view('input/text', array(
 		'name' => 'username',
 		'autofocus' => true,
-        'placeholder' => 'Username or Email',
+        'placeholder' => elgg_echo('loginusername'),
         'id' => 'username',
         'class' => 'form-control',
 		));
@@ -255,7 +255,7 @@ $site_url = elgg_get_site_url();
 </div>
 <div class="form-group">
 	<label for='password'><?php echo elgg_echo('password'); ?></label>
-	<?php echo elgg_view('input/password', array('name' => 'password', 'id' => 'password', 'placeholder' => 'Password', 'class' => 'form-control')); ?>
+	<?php echo elgg_view('input/password', array('name' => 'password', 'id' => 'password', 'placeholder' => elgg_echo('password'), 'class' => 'form-control')); ?>
 </div>
 
 <?php echo elgg_view('login/extend', $vars); ?>

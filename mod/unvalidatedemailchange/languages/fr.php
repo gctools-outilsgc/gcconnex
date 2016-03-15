@@ -15,11 +15,11 @@
 
 return array(
 'unvalidatedemailchange:no_user_guid_provided' => 'Il manque le GUID de l\'utilisateur.',
-'unvalidatedemailchange:user_email_changed_to' => 'Adresse e-mail de l\'utilisateur %s changée en %s.',
-'unvalidatedemailchange:email_address_invalid' => 'L\'adresse email fournie %s n\'est pas valide.',
-'unvalidatedemailchange:new_user_email' => 'Entrez l\'adresse e-mail pour %s: ',
-'unvalidatedemailchange:change_email' => 'Modifier l\'adresse e-mail',
+'unvalidatedemailchange:user_email_changed_to' =>  'Adresse courriel de l\'utilisateur %s modifiée pour %s.',
+'unvalidatedemailchange:email_address_invalid' => 'L\'adresse courriel fournie %s n\'est pas valide.',
+'unvalidatedemailchange:new_user_email' => 'Entrez l\'adresse courriel pour %s: ',
+'unvalidatedemailchange:change_email' => 'Modifier l\'adresse courriel',
 
-'unvalidatedemailchange:ip_address' => 'Adresse ip: ',
+'unvalidatedemailchange:ip_address' => 'Adresse IP: ',
 'unvalidatedemailchange:no_ip_address' => 'Pas d\'adresse IP enregistrée.'
 );

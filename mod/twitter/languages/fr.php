@@ -11,7 +11,7 @@ $french = array(
 	'twitter:visit' => 'visitez mon twitter',
 	'twitter:notset' => "Ce widget doit être configuré. Pour afficher vos derniers gazouillis, cliquez sur l’icône de personnalisation et entrez votre nom d’utilisateur Twitter.",
 	'twitter:invalid' => "Ce widget est configuré avec un nom d'utilisateur Twitter invalide. Cliquez sur l'icône de personnalisation pour corriger.",
-	'twitter:apibug' => "*Due to a bug in the Twitter 1.0 API, you may see fewer tweets than you ask for.",
+	'twitter:apibug' =>  "*En raison d'une erreur dans le API de Twitter, vous pouvez voir moins de gazouillis que vous demandez.",
 );
 
 add_translation("fr", $french);
