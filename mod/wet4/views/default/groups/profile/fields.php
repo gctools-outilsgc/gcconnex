@@ -32,7 +32,7 @@ if (is_array($profile_fields) && count($profile_fields) > 0) {
         if($key == 'description'){
             echo "<div class=\"{$even_odd} panel panel-custom\">";
                 echo '<div class="panel-heading clearfix">';
-                    echo '<h3 class="profile-info-head pull-left clearfix">Description</h3>';
+                    echo '<h2 class="panel-title profile-info-head pull-left clearfix">Description</h2>';
                 echo "</div>";
                 echo '<div class="panel-body">';
             

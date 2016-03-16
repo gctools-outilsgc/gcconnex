@@ -149,10 +149,10 @@ if ($page_owner->canEdit() || ($page_owner instanceof ElggGroup && $page_owner->
 	elgg_load_js("lightbox");
 	elgg_load_css("lightbox");
 	
-	$body .= "<div class='mtm'>";
-	$body .= elgg_view("input/button", array("value" => elgg_echo("file_tools:new:title"), "id" => "file_tools_list_new_folder_toggle", "class" => "elgg-button-action"));
-	$body .= "</div>";
+	//$body .= "<div class='mtm'>";
+	//$body .= elgg_view("input/button", array("value" => elgg_echo("file_tools:new:title"), "id" => "file_tools_list_new_folder_toggle", "class" => "elgg-button-action"));
+	//$body .= "</div>";
 }
 
 // output file tree
-echo elgg_view_module("aside", "", $body, array("id" => "file_tools_list_tree_container"));
+echo elgg_view_module("aside", elgg_echo("file:folderstruct"), $body, array("id" => "file_tools_list_tree_container"));

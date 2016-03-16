@@ -49,7 +49,7 @@ if ($tags === '') {
 }
 
 if ($title_link) {
-    echo "<h3 class=\"mrgn-bttm-0 panel-title\">$title_link</h3>";
+    echo "<span class=\"mrgn-bttm-0 summary-title\">$title_link</span>"; //put in span because some links would not take classes
     echo elgg_in_context($context);
 }
 //This tests to see if you are looking at a group list and does't outpout the subtitle variable here, It's called at the end of this file

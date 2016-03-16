@@ -145,7 +145,7 @@ function init_ajax_block($title, $section, $user) {
     }
 
     echo '<div class="panel panel-custom">';
-        echo '<div class="panel-heading profile-heading clearfix"><h3 class="profile-info-head pull-left clearfix">' . $title . '</h3>'; // create the profile section title
+        echo '<div class="panel-heading profile-heading clearfix"><h2 class="profile-info-head panel-title pull-left clearfix">' . $title . '</h2>'; // create the profile section title
     
     if ($user->canEdit()) {
         // create the edit/save/cancel toggles for this section

@@ -10776,6 +10776,11 @@ a.shr-opn, a.shr-opn:hover {
     color:#FFF;   
 }
 
+#file-tools-folder-tree {
+
+    padding-top:5px;
+}
+
 .user-menu:after{
        content: '';
     display: block;
@@ -10837,6 +10842,25 @@ a.shr-opn, a.shr-opn:hover {
 
         .message:hover span {
             text-decoration: underline;
+        }
+
+
+        .panel-heading h2 {
+
+            border-bottom: none;
+        }
+
+        .elgg-module-widget {
+            overflow: hidden;
+
+        }
+
+        .summary-title a {
+            font-size: 22px;
+        }
+
+        .group-title {
+        font-size: 26px;
         }
 
     .table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td {
@@ -11256,6 +11280,16 @@ border:none;
     margin-top: 10px;
 }
 
+.search-dropdown{
+    padding:5px;
+
+}
+
+.gsa-filter-text{
+    margin:8px;
+    font-weight:bold;
+
+}
 .gallery-margin li{
     margin:5px;
     border:none;
@@ -12481,6 +12515,20 @@ Carousel
     
 */ }
 
+
+.panel-notice {
+  border-color: #ddd; }
+  .panel-notice > .panel-heading {
+    color: #047177;
+    background-color: #EAEBED;
+    border-color: #ccc; }
+    .panel-notice > .panel-heading + .panel-collapse > .panel-body {
+      border-top-color: #bce8f1; }
+    .panel-notice > .panel-heading .badge {
+      color: #d9edf7;
+      background-color: #31708f; }
+  .panel-notice > .panel-footer + .panel-collapse > .panel-body {
+    border-bottom-color: #bce8f1; }
       
       
      

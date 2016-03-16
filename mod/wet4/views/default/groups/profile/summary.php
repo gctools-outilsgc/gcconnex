@@ -144,7 +144,7 @@ if (!$owner) {
             </div>
 
                 
-            <h2 class="pull-left"><?php echo $group->name; ?></h2>
+            <h1 class="pull-left group-title"><?php echo $group->name; ?></h1>
         </div>
     <div class="row mrgn-lft-sm mrgn-rght-sm">
 		<div class="groups-profile-icon col-xs-2 col-md-2 mrgn-tp-sm">

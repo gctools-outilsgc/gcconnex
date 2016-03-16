@@ -66,7 +66,7 @@ if (!elgg_in_context("widgets")) {
 		"entity" => $file,
 		"handler" => "file",
 		"sort_by" => "priority",
-		"class" => "elgg-menu-hz",
+		"class" => "list-inline",
 		"item_class" => "mrgn-rght-sm"
 	));
 }

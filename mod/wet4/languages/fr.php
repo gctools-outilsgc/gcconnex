@@ -35,7 +35,7 @@ return array(
   /**
 *notice section
 */
-'notice:title' => 'GCconnex est ré-imaginé pour vous! ',
+'notice:title' => 'GCconnex... ré-imaginé pour vous! ',
 'notice:paragraphe' => '<p>Au cours des prochaines semaines, vous remarquerez peut-être des changements sur GCconnex au fur et à mesure que nous essayons les nouvelles fonctionnalités et effectuons des ajustements pour rendre vos activités de réseautage et de collaboration en ligne, plus facile, plus rapide et plus amusantes!</p>
 
 <p>Nous aimerions vous remercier à l\'avance pour votre compréhension alors que nous travaillons à remédier les bogues ou les problèmes qui pourraient survenir. Nous sommes très excités  pour la nouvelle GCconnex et j\'espère que vous l’êtes aussi. </p>
@@ -103,10 +103,15 @@ return array(
     'thewire:contentwarning' => 'Il est possible que les utilisateurs ne puissent pas tous voir ce contenu en raison des permissions d\'accès.',
     'thewire:groupwarning' => 'Ce contenu peut être consulté par les membres de : ',
     'thewire:userwarning' => 'Seuls les utilisateurs suivants peuvent consulter ce contenu : ',
-    
-    
+
+    /**
+   * Files
+   */
+
+  'file:folderstruct' => 'Folder structure (translate me)', /* NEW */
+
 /**
- * User Menu
+  * User Menu
  */
     
     'userMenu:profile' => "Mon profil",
@@ -540,7 +545,7 @@ return array(
 'settings:edit' => 'Modifier les paramètres',
 
 
-    'gcconnex:registerText' => '<h3 class="text-right">Branchez-vous, maximisez vos idées</h3>
+    'gcconnex:registerText' => '<h3 class="text-right"><i>Branchez-vous, maximisez vos idées</i></h3>
 <h3>Bienvenue à GCconnex! </h3>
 GCconnex est un espace de travail collaboratif pour le réseautage professionnel à l\'ensemble de la fonction publique. Celle-ci vous permet de vous brancher, de partager de l\'information et tirer profit du pouvoir de réseautage pour accroître l\'efficacité et la productivité de la fonction publique.<br>
 <a href="https://www.canada.ca/fr/transparence/avis.html">Conditions d’utilisation</a>',
@@ -1365,8 +1370,17 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
   * Contact Form Validation
    *Message - Ce champ est obligatoire.
   * */
+  /*new for tour*/
+  'gcTour:next' => 'Suivant ',
+  'gcTour:close' => 'Fermer',
+ 'gcTour:step1' => 'Votre fil de nouvelle ',
+ 'gcTour:step1txt' => 'Vous vous demandez ce que vos collègues font en ce moment? Vous trouverez réponse à cette question ici, et même les vidéos de leur chat! <i class="fa fa-paw"></i>',
+ 'gcTour:step2' => 'Liens vers les outils ',
+ 'gcTour:step2txt' => "Les outils GC est une superbe suite d`outils. Accéder-les d`ici.",
+ 'gcTour:step3' => 'Carte de profil',
+ 'gcTour:step3txt' => "Zut! Mes informations ne sont pas à jour, comment les changer? En cliquant sur votre nom, une carte de profile inspiré de Google s`ouvrira et vous pourrez accéder votre profile.",
 
- 
+
 /**
  * Event calendar
  */

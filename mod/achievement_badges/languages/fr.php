@@ -1,106 +1,125 @@
 <?php
-return array(
 
-    //General
+    $english = array(
+ //General          
+            
+'badge:achievements' => 'Objectifs atteints',
+'badge:start' => 'Début',
+'badge:completed' => 'Tous les objectifs atteints',
+'badge:level' => 'Niveau %s',
+'badge:of' => '%s de %s',
+            
+//Badge Specific            
+            
+'badge:BADGENAME:name' => 'Nom',
+            
+//Goals         
+            
+'badge:BADGENAME:objective' => 'Objectif %s',
+            
+//Achieved          
+            
+'badge:BADGENAME:achieved:1' => 'Niveau 1',
+'badge:BADGENAME:achieved:2' => 'Niveau 2',
+'badge:BADGENAME:achieved:3' => 'Niveau 3',
+'badge:BADGENAME:achieved:4' => 'Niveau 4',
+'badge:BADGENAME:achieved:5' => 'Niveau 5',
+            
+//likes badge           
+            
+'badge:likes:name' =>   'Écusson des mentions « J\'aime »',
+            
+//Goals         
+            
+'badge:likes:objective' => 'Recevoir %s mentions « J\'aime » pour votre contenu',
+            
+//Achieved          
+            
+'badge:likes:achieved:1' => '%s a obtenu # mention « J\'aime » pour son contenu',
+'badge:likes:achieved:2' => '%s a obtenu # mention « J\'aime » pour son contenu',
+'badge:likes:achieved:3' => '%s a obtenu # mention « J\'aime » pour son contenu',
+'badge:likes:achieved:4' => '%s a obtenu # mention « J\'aime » pour son contenu',
+'badge:likes:achieved:5' => '%s a obtenu # mention « J\'aime » pour son contenu',
+            
+            
+//discussion badge          
+            
+'badge:discussion:name' => 'Écusson des discussions',
+            
+//Goals         
+            
+'badge:discussion:objective' => 'Lancer %s discussions dans des groupes',
+            
+//Achieved          
+            
+'badge:discussion:achieved:1' => '%s a lancé # discussions dans des groupes',
+'badge:discussion:achieved:2' => '%s a lancé # discussions dans des groupes',
+'badge:discussion:achieved:3' => '%s a lancé # discussions dans des groupes',
+'badge:discussion:achieved:4' => '%s a lancé # discussions dans des groupes',
+'badge:discussion:achieved:5' => '%s a lancé # discussions dans des groupes',
+            
+            
+//colleague badge           
+            
+'badge:colleague:name' => 'Écusson des collègues',
+            
+//Goals         
+            
+'badge:colleague:objective' => 'Prendre contact avec %s collègues',
+            
+//Achieved          
+            
+'badge:colleague:achieved:1' => '%s a pris contact avec # collègues',
+'badge:colleague:achieved:2' => '%s a pris contact avec # collègues',
+'badge:colleague:achieved:3' => '%s a pris contact avec # collègues',
+'badge:colleague:achieved:4' => '%s a pris contact avec # collègues',
+'badge:colleague:achieved:5' => '%s a pris contact avec # collègues',
+            
+            
+//comment badge         
+            
+'badge:comment:name' => 'Écusson des commentaires',
+            
+//Goals         
+            
+'badge:comment:objective' => 'Faire %s commentaires',
+            
+//Achieved          
+            
+'badge:comment:achieved:1' => '%s a fait un commentaire sur # éléments',
+'badge:comment:achieved:2' => '%s a fait un commentaire sur # éléments',
+'badge:comment:achieved:3' => '%s a fait un commentaire sur # éléments',
+'badge:comment:achieved:4' => '%s a fait un commentaire sur # éléments',
+'badge:comment:achieved:5' => '%s a fait un commentaire sur # éléments',
+            
+//bookmark badge            
+            
+'badge:bookmark:name' =>    'Écusson des signets',
+            
+//Goals         
+            
+'badge:bookmark:objective' => 'Créer %s signets',
+            
+    //Achieved          
+            
+'badge:bookmark:achieved:1' => '%s a créé # signets',
+'badge:bookmark:achieved:2' => '%s a créé # signets',
+'badge:bookmark:achieved:3' => '%s a créé # signets',
+'badge:bookmark:achieved:4' => '%s a créé # signets',
+'badge:bookmark:achieved:5' => '%s a créé # signets',
+            
+//bookmark badge            
+            
+'badge:complete:name' => 'Écusson de la qualité du profil',
+            
+//Goals         
+            
+'badge:complete:objective' => 'Avoir un profil d\'une qualité 100&#37',
+            
+//Achieved          
+            
+'badge:complete:achieved:1' => '%s a un profil complet',
 
-    'badge:badges' => 'Badges',
-    'badge:progress' => 'Badge Progress',
-    'badge:start' => 'Start',
-    'badge:completed' => 'Completed',
-    'badge:level' => 'Level %s',
-    'badge:of' => '%s of %s',
-
-    //Badge Specific
-
-    'badge:BADGENAME:name' => 'Name',
-
-    //Goals
-    'badge:BADGENAME:objective' => 'Objective %s',
-
-    //Achieved
-    'badge:BADGENAME:achieved:1' => 'Achieved1',
-    'badge:BADGENAME:achieved:2' => 'Achieved2',
-    'badge:BADGENAME:achieved:3' => 'Achieved3',
-    'badge:BADGENAME:achieved:4' => 'Achieved4',
-    'badge:BADGENAME:achieved:5' => 'Achieved5',
-
-
-    //likes badge
-    'badge:likes:name' => 'Likes Badge',
-
-    //Goals
-    'badge:likes:objective' => 'Recieve %s likes on your content',
-
-    //Achieved
-    'badge:likes:achieved:1' => '%s achieved # likes on their content',
-    'badge:likes:achieved:2' => '%s achieved # likes on their content',
-    'badge:likes:achieved:3' => '%s achieved # likes on their content',
-    'badge:likes:achieved:4' => '%s achieved # likes on their content',
-    'badge:likes:achieved:5' => '%s achieved # likes on their content',
-
-
-    //discussion badge
-    'badge:discussion:name' => 'Discussion Badge',
-
-    //Goals
-    'badge:discussion:objective' => 'Start %s discussions in groups',
-
-    //Achieved
-    'badge:discussion:achieved:1' => '%s started # discussions in groups',
-    'badge:discussion:achieved:2' => '%s started # discussions in groups',
-    'badge:discussion:achieved:3' => '%s started # discussions in groups',
-    'badge:discussion:achieved:4' => '%s started # discussions in groups',
-    'badge:discussion:achieved:5' => '%s started # discussions in groups',
-
-
-    //colleague badge
-    'badge:colleague:name' => 'Colleague Badge',
-
-    //Goals
-    'badge:colleague:objective' => 'Connect with %s colleagues',
-
-    //Achieved
-    'badge:colleague:achieved:1' => '%s connected with # colleagues',
-    'badge:colleague:achieved:2' => '%s connected with # colleagues',
-    'badge:colleague:achieved:3' => '%s connected with # colleagues',
-    'badge:colleague:achieved:4' => '%s connected with # colleagues',
-    'badge:colleague:achieved:5' => '%s connected with # colleagues',
-
-
-    //comment badge
-    'badge:comment:name' => 'Comment Badge',
-
-    //Goals
-    'badge:comment:objective' => 'Submit %s comments',
-
-    //Achieved
-    'badge:comment:achieved:1' => '%s commented on # items',
-    'badge:comment:achieved:2' => '%s commented on # items',
-    'badge:comment:achieved:3' => '%s commented on # items',
-    'badge:comment:achieved:4' => '%s commented on # items',
-    'badge:comment:achieved:5' => '%s commented on # items',
-
-
-
-    //bookmark badge
-    'badge:bookmark:name' => 'Bookmark Badge',
-
-    //Goals
-    'badge:bookmark:objective' => 'Create %s bookmarks',
-
-    //Achieved
-    'badge:bookmark:achieved:1' => '%s created # bookmarks',
-    'badge:bookmark:achieved:2' => '%s created # bookmarks',
-    'badge:bookmark:achieved:3' => '%s created # bookmarks',
-    'badge:bookmark:achieved:4' => '%s created # bookmarks',
-    'badge:bookmark:achieved:5' => '%s created # bookmarks',
-
-    //bookmark badge
-    'badge:complete:name' => 'Profile Strength Badge',
-
-    //Goals
-    'badge:complete:objective' => 'Have a profile strength of 100%',
-
-    //Achieved
-    'badge:complete:achieved:1' => '%s has a complete profile',
     );
+    
+    add_translation("en", $english);

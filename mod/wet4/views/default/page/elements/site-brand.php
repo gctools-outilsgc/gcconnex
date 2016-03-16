@@ -25,7 +25,7 @@ $site_url = elgg_get_site_url();
                     
                 </div>
                 <div class="col-sm-6 col-sm-offset-3 hidden-xs">
-                    <div class="pull-right">
+                    <div id="tool-link" class="pull-right">
                     <div class="pull-right tool-link">
                         <a href="<?php echo elgg_echo('wet:gcintranetLink');?>">
                         <img class="tool-link-icon" src="<?php echo $site_url.'/mod/wet4/graphics/gc_intranet_icon.gif';?>" alt="GCintranet"/><span class="bold-gc">GC</span>intranet</a>

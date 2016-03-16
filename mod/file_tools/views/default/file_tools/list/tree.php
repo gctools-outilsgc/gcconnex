@@ -155,4 +155,4 @@ if ($page_owner->canEdit() || ($page_owner instanceof ElggGroup && $page_owner->
 }
 
 // output file tree
-echo elgg_view_module("aside", "", $body, array("id" => "file_tools_list_tree_container"));
+echo elgg_view_module("aside", "tree", $body, array("id" => "file_tools_list_tree_container"));

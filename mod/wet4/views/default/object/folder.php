@@ -34,7 +34,7 @@ if (!elgg_in_context("widgets")) {
 		"entity" => $folder,
 		"handler" => "file_tools/folder",
 		"sort_by" => "priority",
-		"class" => "elgg-menu-hz",
+		"class" => "list-inline",
         'item_class' => 'mrgn-rght-sm',
 	));
 }

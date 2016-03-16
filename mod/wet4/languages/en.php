@@ -100,7 +100,14 @@ return array(
     'thewire:contentwarning' => 'This content may not be viewable to all users due to access permissions.',
     'thewire:groupwarning' => 'This content is only viewable to members of: ',
     'thewire:userwarning' => 'This content is only viewable to: ',
-    
+
+
+    /**
+  * Files
+  */
+
+  'file:folderstruct' => 'Folder structure',
+
 /**
  * User Menu
  */
@@ -568,7 +575,7 @@ return array(
 	'tools' => "Tools",
 	'settings:edit' => 'Edit settings',
 
-    'gcconnex:registerText' => '<h3 class="text-right">Connecting People and Ideas</h3>
+    'gcconnex:registerText' => '<h3 class="text-right"><i>Connecting People and Ideas</i></h3>
 <h3>Welcome to GCconnex! </h3>
 GCconnex is an professional networking and collaborative workspace for all public service, allowing people to connect and share information, leveraging the power of networking towards a more effective and efficient public service.<br>
 <a ="https://www.canada.ca/en/transparency/terms.html">Terms and Conditions of Use</a>',
@@ -1554,7 +1561,15 @@ Please do not reply to this email.",
 	'event_calendar:meeting' => 'Online meeting and teleconference',
 	'event_calendar:info' => 'Additional information',
 
-
+    /*new for tour*/
+'gcTour:next' => 'Next ',
+'gcTour:close' => 'Close',
+ 'gcTour:step1' => 'Your News Feed ',
+ 'gcTour:step1txt' => 'What are my colleagues up to? You will see their activities here, even their cat videos. <i class="fa fa-paw"></i>',
+ 'gcTour:step2' => 'Tool links ',
+ 'gcTour:step2txt' => 'GCtools is a sweet suite.  Navigate to them from here.',
+ 'gcTour:step3' => 'Profile card',
+ 'gcTour:step3txt' => "Oops! I need to change my personnal information but how to go about it? By clicking on your name, a Google inspired profile card will open to access my profile.",
 
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)

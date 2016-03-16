@@ -115,12 +115,12 @@ $(document).ready(function() {
 
     departments.initialize();
 
-    $('.gcconnex-basic-department').typeahead(null, {
+   /* $('.gcconnex-basic-department').typeahead(null, {
         name: 'department',
         displayKey: 'value',
         limit: 10,
         source: departments.ttAdapter()
-    });
+    });*/
 
     // show "edit profile picture" overlay on hover
     $('.avatar-profile-edit').hover(
@@ -581,7 +581,7 @@ function saveProfile(event) {
 
             profile.name = $(".gcconnex-basic-name").val();
             profile.job = $(".gcconnex-basic-job").val();
-            profile.department = $('.gcconnex-basic-department.tt-input').val();
+            profile.department = $('.gcconnex-basic-department').val();
             profile.location = $(".gcconnex-basic-location").val();
             profile.phone = $(".gcconnex-basic-phone").val();
             profile.mobile = $(".gcconnex-basic-mobile").val();
@@ -621,7 +621,7 @@ function saveProfile(event) {
 
             break;
         case "about-me":
-            var area = $('#cke_aboutme').val();
+            var area = $('#aboutme').val();
             var $about_me = $.trim(area);
             var access = $('.gcconnex-about-me-access').val();
             // save the information the user just edited

@@ -65,6 +65,14 @@ if ($user->canEdit()) {
 				//$metaname = "deptsFr";
 				$departments = $obj[0]->deptsFr;
 			}
+			
+			$value = explode(" / ", $value);
+			//error_log("test".array_search($value[0], json_decode($departments, true)));
+			$key = array_search($value[0], json_decode($departments, true));
+			if ($key === false){
+				$key = array_search($value[1], json_decode($departments, true));
+			}
+			//error_log('value: '.$key);
 			//echo "lang".get_current_language();
 			//$departments = $meta[0]->value;//array(1, 2, 3);
 			echo elgg_view('input/select', array(
@@ -72,15 +80,16 @@ if ($user->canEdit()) {
 				'id' => $field,
         		//'disabled'=>'disabled',
         		'class' => 'gcconnex-basic-' . $field,
+        		'value' => $key,
 				'options_values' => json_decode($departments, true),
-				'style' => 'width:204px;height:37px;'
 				
 			));
         }
         else {
             echo '<div class="basic-profile-field">'; // field wrapper for css styling
-        }
-        echo elgg_view("input/text", $params); // input field
+        
+       		 echo elgg_view("input/text", $params); 
+		}// input field
         echo '</div>'; //close div class = basic-profile-field
 
         echo '</div>'; //close div class = basic-profile-field-wrapper
