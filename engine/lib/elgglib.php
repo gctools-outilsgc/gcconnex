@@ -881,6 +881,16 @@ function _elgg_php_exception_handler($exception) {
  * @todo Replace error_log calls with elgg_log calls.
  */
 function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
+
+	// Elgg 2.0 no longer uses ext/mysql, so these warnings are just a nuisance for 1.x site
+	// owners and plugin devs.
+	if (0 === strpos($errmsg, "mysql_connect(): The mysql extension is deprecated")) {
+		// only suppress core's usage
+		if (preg_match('~/classes/Elgg/Database\.php$~', strtr($filename, '\\', '/'))) {
+			return true;
+		}
+	}
+
 	$error = date("Y-m-d H:i:s (T)") . ": \"$errmsg\" in file $filename (line $linenum)";
 
 	switch ($errno) {
@@ -1407,6 +1417,8 @@ function _elgg_normalize_plural_options_array($options, $singulars) {
  *
  * @see http://www.php.net/register-shutdown-function
  *
+ * @internal This is registered in engine/start.php
+ *
  * @return void
  * @see register_shutdown_hook()
  * @access private
@@ -1415,6 +1427,7 @@ function _elgg_shutdown_hook() {
 	global $START_MICROTIME;
 
 	try {
+		_elgg_services()->logger->setDisplay(false);
 		elgg_trigger_event('shutdown', 'system');
 
 		$time = (float)(microtime(true) - $START_MICROTIME);
@@ -1497,10 +1510,10 @@ function _elgg_ajax_page_handler($segments) {
 			// Try to guess the mime-type
 			switch ($segments[1]) {
 				case "js":
-					header("Content-Type: text/javascript");
+					header("Content-Type: text/javascript;charset=utf-8");
 					break;
 				case "css":
-					header("Content-Type: text/css");
+					header("Content-Type: text/css;charset=utf-8");
 					break;
 			}
 
@@ -1602,7 +1615,7 @@ function _elgg_cacheable_view_page_handler($page, $type) {
 		}
 		$return = elgg_view($view);
 
-		header("Content-type: $content_type");
+		header("Content-type: $content_type;charset=utf-8");
 
 		// @todo should js be cached when simple cache turned off
 		//header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime("+10 days")), true);
@@ -1886,7 +1899,7 @@ function _elgg_init() {
 	elgg_register_page_handler('manifest.json', function() {
 		$site = elgg_get_site_entity();
 		$resource = new \Elgg\Http\WebAppManifestResource($site);
-		header('Content-Type: application/json');
+		header('Content-Type: application/json;charset=utf-8');
 		echo json_encode($resource->get());
 		return true;
 	});
@@ -1916,10 +1929,7 @@ function _elgg_init() {
 	elgg_register_js('elgg.ui.river', 'js/lib/ui.river.js');
 
 	elgg_register_css('jquery.imgareaselect', 'vendors/jquery/jquery.imgareaselect/css/imgareaselect-deprecated.css');
-	
-	// Trigger the shutdown:system event upon PHP shutdown.
-	register_shutdown_function('_elgg_shutdown_hook');
-	
+
 	// Sets a blacklist of words in the current language.
 	// This is a comma separated list in word:blacklist.
 	// @todo possibly deprecate
