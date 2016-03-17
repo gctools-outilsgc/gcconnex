@@ -64,7 +64,7 @@ To view your mentions on the wire click here:
 	'widgets:thewire_post:description' => "Update your status on the wire from this widget",
 
 	// the wire (default widget)
-	'widgets:thewire:owner' => "Whos wire post to show",
+	'widgets:thewire:owner' => "Whose wire post to show",
 	'widgets:thewire:filter' => "Filter wire posts (optional)",
 		
 );

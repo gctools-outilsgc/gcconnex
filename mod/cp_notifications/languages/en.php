@@ -1,12 +1,18 @@
 <?php
 
 	$english = array(
+		"cp_notify:panel_title" => "Subscription settings (click to edit email: %s)",
+		"cp_notify:quicklinks" => "Subscription Quick Links",
+		"cp_notify:content_name" => "Content Name",
 		"cp_notify:email" => "Notify by e-mail",
 		"cp_notify:site_mail" => "Notify by site mail",
 		"cp_notify:subscribe" => "Subscribe",
 		"cp_notify:unsubscribe" => "Unsubscribe",
+		"cp_notify:not_subscribed" => "Not Subscribed",
 
-		"cp_notification:email_header" => "This is a system-generated message from GCconnex. Please do not reply to this message",
+		"cp_notification:email_header_en" => "This is a system-generated message from GCconnex. Please do not reply to this message",
+		"cp_notification:email_header_fr" => "Cela ici c'est un message automatique de GCconnex. SVP repondre pas ca message",
+
 		"cp_notification:email_header_msg_en" => "This is a system-generated message from GCconnex, you're receiving this notification because there has been an update or reply to the content that you have been subscribed to. If you have any questions or concerns please consult the contact us page here: %s <br/>
 												Should you have any questions or concerns, please contact our Helpdesk at gcconnex@tbs-sct.gc.ca or learn more about GCconnex and its features here: %s <br/>
 												Thank you",
@@ -28,6 +34,9 @@
 		"cp_notify:subject:site_message" => "%s has sent you a new message '%s'",
 		"cp_notify:subject:new_content" => "%s has posted something new entitled '%s'",
 		"cp_notify:subject:mention" => "%s has mentioned you in their new post or reply",
+
+		"cp_notify:body_likes:title" => "%s has liked your post called '%s'",
+		"cp_notify:body_likes:description" => "You can view your content by clicking on this link: %s",
 
 		"cp_notify:body_comments:title" => "%s posted a comment or reply to %s by %s",
 		"cp_notify:body_comments:description" => "Their comment or reply as follows... <br/>
@@ -76,8 +85,16 @@
 		"cp_notify:body_validate_user:title" => "Please validate your new account",
 		"cp_notify:body_validate_user:description" => "Welcome to GCconnex, to complete your registration, please validate the account registered under %s by going to this link: %s",
 
-		"cp_notify:footer" => "<p>If you do not want to receive this notification, please manage your subscription settings here: - http link -</p>",
+		"cp_notify:footer" => "<p>If you do not want to receive this notification, please manage your subscription settings here: %s</p>",
+		"cp_notify:footer2" => "<p>This is an automated message, please do not reply</p>",
 
+
+		"cp_notify:no_group_sub" => "You have not subscribed to any Group content",
+		"cp_notify:no_sub" => "You have not subscribed to any content",
+
+		"cp_notify:sidebar:no_subscriptions" => "<i>No Subscriptions Available</i>",
+		"cp_notify:sidebar:group_title" => "Group + Content Subscriptions",
+		"cp_notify:sidebar:subs_title" => "Personal Subscriptions",
 	);
 
 add_translation("en", $english);

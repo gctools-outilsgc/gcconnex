@@ -21,91 +21,89 @@ $cp_req_group = $vars['cp_group_req_group'];
 
 $msg_type = $vars['cp_msg_type'];
 switch ($msg_type) {
+	case 'cp_likes_type': // likes
+		$cp_notify_msg_title = elgg_echo('cp_notify:body_likes:title',array($vars['cp_liked_by'],$cp_topic_title,));
+		$cp_notify_msg_description = elgg_echo('cp_notify:body_likes:description',array($cp_topic_url));
+		$cp_notify_msg_footer = elgg_echo('cp_notify:footer2');
+		break;
 	case 'cp_reply_type': // comments or replies
 
-		$cp_notify_msg_title = "{$cp_comment_author->name} posted a comment or reply to {$cp_topic_title} by {$cp_topic_author->name}";
-		$cp_notify_msg_description = "Their Comment or Reply as follows... <br/>
-									{$cp_comment_description} <br/>
-									You can view or reply to this by clicking on this link: {$cp_topic_url}";
-		$cp_notify_msg_footer = "<p>If you do not want to receive this notification, please manage your subscription settings here: - http link -</p>";
+		$cp_notify_msg_title = elgg_echo('cp_notify:body_comments:title', array($cp_comment_author->name,$cp_topic_title,$cp_topic_author->name));
+		$cp_notify_msg_description = elgg_echo('cp_notify:body_comments:description',array($cp_comment_description,$cp_topic_url));
+		$cp_notify_msg_footer = elgg_echo('cp_notify:footer',array(elgg_get_site_url().'/settings/plugins/admin/cp_notifications'));
 
 		break;
 	case 'cp_new_type': // new blogs or other entities
 
-		$cp_notify_msg_title = "{$cp_topic_author->name} has created something new entitled '{$cp_topic_title}'";
-		$cp_notify_msg_description = "The description of their new posting as follows... <br/>
-									{$cp_topic_description} <br/>
-									You can view or reply to this by clicking on this link: {$cp_topic_url}";
-		$cp_notify_msg_footer = "<p>If you do not want to receive this notification, please manage your subscription settings here: - http link -</p>";
+		$cp_notify_msg_title = elgg_echo('cp_notify:body_new_content:title',array($cp_topic_author->name,$cp_topic_title));
+		$cp_notify_msg_description = elgg_echo('cp_notify:body_new_content:description',array($cp_topic_description,$cp_topic_url));
+		$cp_notify_msg_footer = elgg_echo('cp_notify:footer',array(elgg_get_site_url().'/settings/plugins/admin/cp_notifications'));
 
 		break;
 	case 'cp_mention_type': // mentions
 
-		$cp_notify_msg_title = "{$cp_topic_author->name} has mentioned your name in their post or reply entitled '{$cp_topic_title}'";
-		$cp_notify_msg_description = "The posting you were mentioned in as follows... <br/>
-									{$cp_topic_description} <br/>
-									You can view or reply to this by clicking on this link: {$cp_topic_url}";
-		$cp_notify_msg_footer = "<p>If you do not want to receive this notification, please manage your subscription settings here: - http link -</p>";
+		$cp_notify_msg_title = elgg_echo('cp_notify:body_mention:title',array($cp_topic_author->name,$cp_topic_title));
+		$cp_notify_msg_description = elgg_echo('cp_notify:body_mention:description', array($cp_topic_description,$cp_topic_url));
+		$cp_notify_msg_footer = elgg_echo('cp_notify:footer',array(elgg_get_site_url().'/settings/plugins/admin/cp_notifications'));
 
 		break;
 	case 'cp_site_msg_type': // new messages
 
-		$cp_notify_msg_title = "{$cp_topic_author->name} has sent you a site message entitled '{$cp_topic_title}'";
-		$cp_notify_msg_description = "The content of the message as follows... <br/>
-									{$cp_topic_description} <br/>
-									You can view or reply to this by clicking on this link: {$cp_topic_url}";
-		$cp_notify_msg_footer = "<p>If you do not want to receive this notification, please manage your subscription settings here: - http link -</p>";
+		$cp_notify_msg_title = elgg_echo('cp_notify:body_site_msg:title',array($cp_topic_author->name,$cp_topic_title));
+		$cp_notify_msg_description = elgg_echo('cp_notify:body_site_msg:description',array($cp_topic_description,$cp_topic_url));
+		$$cp_notify_msg_footer = elgg_echo('cp_notify:footer',array(elgg_get_site_url().'/settings/plugins/admin/cp_notifications'));
 
 		break;
 	case 'cp_closed_grp_req_type':
 
 		$cp_notify_msg_title = "{$cp_req_user->name} has sent you a join request to your group '{$cp_req_group->title}'";
 		$cp_notify_msg_description = "Please see the request by clicking on this link - link - ";
-		$cp_notify_msg_footer = "<p>This is an automated message, please do not reply</p>";
+		$cp_notify_msg_footer = elgg_echo('cp_notify:footer2');
 
 		break;
-	case 'cp_helpdesk_req_type': // helpdesk
+	case 'cp_helpdesk_req_type': // helpdesk - has its own mailing system....
 		break;
 
 	case 'cp_group_add': // adding user to group
 
 		$cp_notify_msg_title = elgg_echo('cp_notify:body_group_add:title',array('p1','p2'));
 		$cp_notify_msg_description = elgg_echo('cp_notify:body_group_add:description',array('p1'));
-		$cp_notify_msg_footer = "footer";
+		$cp_notify_msg_footer = elgg_echo('cp_notify:footer2');
 
 		break;
 
 	case 'cp_group_invite':	// inviting user to group
 		$cp_notify_msg_title = elgg_echo('cp_notify:body_group_invite:title',array('p1','p2'));
 		$cp_notify_msg_description = elgg_echo('cp_notify:body_group_invite:description',array('p1','p2'));
-		$cp_notify_msg_footer = "footer";
+		$cp_notify_msg_footer = elgg_echo('cp_notify:footer2');
 		break;
 
 	case 'cp_group_invite_email':	// inviting non user to group
 		$cp_notify_msg_title = elgg_echo('cp_notify:body_group_invite_email:title');
 		$cp_notify_msg_description = elgg_echo('cp_notify:body_group_invite_email:description');
-		$cp_notify_msg_footer = "footer";
+		$cp_notify_msg_footer = elgg_echo('cp_notify:footer2');
 		break;
 
 
 	case 'cp_group_mail': // sending out group mail to all members
 		$cp_notify_msg_title = elgg_echo('cp_notify:body_group_mail:title', array('p1','p2'));
 		$cp_notify_msg_description = elgg_echo('cp_notify:body_group_mail:description');
-		$cp_notify_msg_footer = "footer";
+		$cp_notify_msg_footer = elgg_echo('cp_notify:footer2');
 		break;
 
 
 	case 'cp_friend_request': // send friend request
-		$cp_notify_msg_footer = "footer";
+		$cp_notify_msg_title = elgg_echo('cp_notify:body_friend_req:title');
+		$cp_notify_msg_footer = elgg_echo('cp_notify:footer2');
 		break;
 
 	case 'cp_forgot_password': // requesting new password/ password reset
-		$cp_notify_msg_footer = "footer";
+		$cp_notify_msg_footer = elgg_echo('cp_notify:footer2');
 		break;
 
 
 	case 'cp_validate_user': // validating new user account
-		$cp_notify_msg_footer = "footer";
+		$cp_notify_msg_footer = elgg_echo('cp_notify:footer2');
 		break;
 
 	default:
@@ -116,8 +114,11 @@ switch ($msg_type) {
 
 
 
-// TODO: anchor link to french follows...
+$email_notification_header = elgg_echo('cp_notification:email_header_en') . ' / ' . elgg_echo('cp_notification:email_header_fr');
+$french_follows = '<a href="#gcc_fr_suit">Le francais suit</a>';
 
+$email_notification_header_msg_en = elgg_echo('cp_notification:email_header_msg_en');
+$email_notification_header_msg_fr = elgg_echo('cp_notification:email_header_msg_fr');
 echo <<<___HTML
 
 	<!-- beginning of email template -->
@@ -127,7 +128,7 @@ echo <<<___HTML
 
 				<!-- email header -->
 		        <div align='center' width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 12px; color: #055959'>
-		        	This is a system-generated message from GCconnex. Please do not reply to this message / Ce message est genere automatiquement par GCconnex. SVP ne pas y repondre
+		        	{$email_notification_header}
 		        </div>
 				
 
@@ -145,16 +146,16 @@ echo <<<___HTML
 
 
 
+<!-- english -->
+
+
 		        <!-- main content of the notification (ENGLISH) -->
 		       	<!-- *optional* email message (DO NOT REPLY) -->
 		     	<div width='100%' style='padding:30px 30px 10px 30px; font-size:12px; line-height:22px; font-family:sans-serif;'>
 
-	        	<!-- The French Follows... -->
-	        	<span style='font-size:12px; font-weight: normal;'><i>(<a href='#gcc_fr_suit'>Le francais suit</a>)</i></span><br/>
-        	   
-        	   		This is a system-generated message from GCconnex, you're receiving this notification because there has been an update or reply to the content that you have been subscribed to. Please do not reply to this message, if you have any questions please consult the contact us/help page -link- <br/>
-					Should you have any questions or concerns please contact our Helpdesk: gcconnex@tbs-sct.gc.ca or learn more about GCconnex and its features here -link-<br/>
-                  	Thank you
+	        		<!-- The French Follows... -->
+	        		<span style='font-size:12px; font-weight: normal;'><i>({$french_follows})</i></span><br/>
+        	   		{$email_notification_header_msg_en}
 		        </div>
 
 		     
@@ -170,17 +171,12 @@ echo <<<___HTML
 
 		        </div>
 
-
-
-
-
+<!-- french -->
 
 		        <!-- main content of the notification (FRENCH) -->
 		       	<!-- *optional* email message (DO NOT REPLY) -->
-		     	<div id='gcc_fr_suit' name='gcc_fr_suit' width='100%' style='padding:30px 30px 10px 30px; font-size:12px; line-height:22px; font-family:sans-serif;'>
-					Ceci est un message généré par le système de GCconnex , vous recevez cette notification, parce qu'il ya eu une mise à jour ou de répondre au contenu que vous avez été abonné. S'il vous plaît ne pas répondre à ce message, si vous avez des questions s'il vous plaît consulter le contactez-nous / page d'aide -link- <br/>
-					Si vous avez des questions ou des préoccupations s'il vous plaît contacter notre Helpdesk : . Gcconnex@tbs-sct.gc.ca ou pour plus d'information clickez ici -link- <br/>
-                  	Je vous remercie
+		     	<div id="gcc_fr_suit" name="gcc_fr_suit" width='100%' style='padding:30px 30px 10px 30px; font-size:12px; line-height:22px; font-family:sans-serif;'>
+		     		{$email_notification_header_msg_fr}
 		        </div>
 
 		       	<div width='100%' style='padding:30px 30px 30px 30px; color:#153643; font-family:sans-serif; font-size:12px; line-height:22px; border-bottom:1px solid #f2eeed;'>

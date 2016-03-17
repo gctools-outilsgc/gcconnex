@@ -66,6 +66,12 @@ return array(
             'page:create' => 'Créer la page',
 
 
+            /*
+        * Misc
+        * */
+
+       'bookmark' => 'signet',
+
 /*
        * Suggested Friends
        */
@@ -96,7 +102,7 @@ return array(
 /**
  * The Wire
  */
-
+    'wire:post' => 'message sur le fil',
     'thewire:post' => "Créer un article sur le fil",
     'thewire:share'	=> 'Partage',
     'thewire:shares' => 'Partages',
@@ -167,6 +173,7 @@ return array(
  	'groups:eng' => "Anglais",
   	'groups:fra' => "Français",
 
+      'group:replyitem' => 'réponse',
 /**
   * Sites
  */
@@ -499,7 +506,7 @@ return array(
 	'river:widget:type' => "Type d'activité",
 	'river:widgets:friends' => 'Activité des amis',
 	'river:widgets:all' => 'Toute activité sur le site',
-
+  'river:create:object:default' => '%s a téléchargé le fichier %s',
 /**
  * Notifications
  */

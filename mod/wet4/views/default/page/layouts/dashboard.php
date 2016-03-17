@@ -20,7 +20,7 @@ if (isset($vars['class'])) {
 
 ?>
 <div class="<?php echo $class; ?>" >
-    <main class="elgg-main">
+    
 	<?php
 		echo elgg_extract('nav', $vars, elgg_view('navigation/breadcrumbs'));
 
@@ -39,5 +39,5 @@ if (isset($vars['class'])) {
         echo '</section>';
 		echo elgg_view('page/layouts/elements/footer', $vars);
 	?>
-	</main>
+	
 </div>

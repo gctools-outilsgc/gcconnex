@@ -11,7 +11,7 @@
  *	Copyright : Team Webgalli 2011-2015
  */
 $french = array(
-	'gcProfilePictureBadges:badgeselectdesc' => 'Ajouter insigne de groupe: ',
+	'gcProfilePictureBadges:badgeselectdesc' => 'Ajouter le badge d\'un groupe: ',
 );
 
 add_translation('fr', $french);

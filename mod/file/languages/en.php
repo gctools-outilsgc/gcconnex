@@ -68,6 +68,7 @@ return array(
 'file:tagcloud' => "Tag cloud",
 	
 'file:display:number' => "Number of files to display",
+'river:create:object:file' => '%s uploaded the file %s',
 'river:comment:object:file' => '%s commented on the file %s',
 'file:river:created' => "%s uploaded",
 'file:river:item' => "a file",

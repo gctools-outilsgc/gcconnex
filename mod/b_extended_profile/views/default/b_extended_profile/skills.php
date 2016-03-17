@@ -60,7 +60,7 @@ else {
                     } else {
                         // user has endorsed this skill for this user.. present the option to retract endorsement
 
-                        echo '<div class="gcconnex-skill-entry clearfix" data-guid="' . $skill_guid . '">        <div class="skill-container pointer gcconnex-endorsement-retract clearfix" tabIndex="0" onclick="retractEndorsement(this)" title="RETRACT!"  style="display:inline-block" data-guid="' . $skill->guid . '" data-skill="' . $skill->title . '">';
+                        echo '<div class="gcconnex-skill-entry clearfix" data-guid="' . $skill_guid . '">        <div class="skill-container pointer gcconnex-endorsement-retract clearfix" tabIndex="0" onclick="retractEndorsement(this)" title="Retract"  style="display:inline-block" data-guid="' . $skill->guid . '" data-skill="' . $skill->title . '">';
                         echo '<div class="gcconnex-endorsements-count gcconnex-endorsements-count-' . $skill_class . '">' . count($skill->endorsements) . '</div><div class="gcconnex-endorsements-skill" data-type="skill">' . $skill->title . '</div>';
 
                         //echo '<button style="display:inline-block" class="gcconnex-endorsement-retract btn-endorse" onclick="retractEndorsement(this)" data-guid="' . $skill->guid . '" data-skill="' . $skill->title . '">Retract</button>';

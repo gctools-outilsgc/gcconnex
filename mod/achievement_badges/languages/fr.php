@@ -1,6 +1,6 @@
 <?php
 
-    $english = array(
+    $french = array(
  //General          
             
 'badge:achievements' => 'Objectifs atteints',

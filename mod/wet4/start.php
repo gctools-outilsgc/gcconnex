@@ -556,6 +556,13 @@ function wet4_likes_entity_menu_setup($hook, $type, $return, $params) {
 	$entity = $params['entity'];
 	/* @var ElggEntity $entity */
 
+    $entContext = $entity->getType();
+    if($entContext == 'object'){
+        $entContext =  proper_subtypes($entity->getSubtype());//$entity->getSubtype();
+    } else if($entContext == 'group'){
+        $entContext = elgg_echo('group');
+    }
+
 	if ($entity->canAnnotate(0, 'likes')) {
 		$hasLiked = \Elgg\Likes\DataService::instance()->currentUserLikesEntity($entity->guid);
 		
@@ -564,7 +571,7 @@ function wet4_likes_entity_menu_setup($hook, $type, $return, $params) {
 			'name' => 'likes',
 			'href' => elgg_add_action_tokens_to_url("/action/likes/add?guid={$entity->guid}"),
 			'text' => '<i class="fa fa-thumbs-up fa-lg icon-unsel"></i><span class="wb-inv">Like This</span>',
-			'title' => elgg_echo('likes:likethis'),
+			'title' => elgg_echo('likes:likethis') . ' ' . $entContext,
 			'item_class' => $hasLiked ? 'hidden' : '',
 			'priority' => 1000,
 		));
@@ -572,7 +579,7 @@ function wet4_likes_entity_menu_setup($hook, $type, $return, $params) {
 			'name' => 'unlike',
 			'href' => elgg_add_action_tokens_to_url("/action/likes/delete?guid={$entity->guid}"),
 			'text' => '<i class="fa fa-thumbs-up fa-lg icon-sel"></i><span class="wb-inv">Like This</span>',
-			'title' => elgg_echo('likes:remove'),
+			'title' => elgg_echo('likes:remove') . ' ' . $entContext,
 			'item_class' => $hasLiked ? 'pad-rght-xs' : 'hidden',
 			'priority' => 1000,
 		));
@@ -732,6 +739,15 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 	$entity = $params['entity'];
 	/* @var \ElggEntity $entity */
 	$handler = elgg_extract('handler', $params, false);
+
+
+
+    $entContext = $entity->getType();
+    if($entContext == 'object'){
+        $entContext =  proper_subtypes($entity->getSubtype());//$entity->getSubtype();
+    } else if($entContext == 'group'){
+        $entContext = elgg_echo('group');
+    }
     
     
        
@@ -843,18 +859,21 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
             if($entity->getSubtype() != 'thewire'){
                 $options = array(
                     'name' => 'edit',
-                    'text' => '<i class="fa fa-edit fa-lg icon-unsel"><span class="wb-inv">Edit This</span></i>',
-                    'title' => elgg_echo('edit:this'),
+                    'text' => '<i class="fa fa-edit fa-lg icon-unsel"><span class="wb-inv">' . elgg_echo('edit:this') . '</span></i>',
+                    'title' => elgg_echo('edit:this') . ' ' . $entContext,
                     'href' => "$handler/edit/{$entity->getGUID()}",
                     'priority' => 299,
                 );
                 $return[] = \ElggMenuItem::factory($options);
             }
 		// delete link
+
+
+
 		$options = array(
 			'name' => 'delete',
 			'text' => '<i class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">' . elgg_echo('delete:this') . '</span></i>',
-			'title' => elgg_echo('delete:this'),
+			'title' => elgg_echo('delete:this') . ' ' . $entContext,
 			'href' => "action/$handler/delete?guid={$entity->getGUID()}",
 			'confirm' => elgg_echo('deleteconfirm'),
 			'priority' => 300,
@@ -980,6 +999,13 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params){
 		return;
 	}
 
+    $entContext = $object->getType();
+    if($entContext == 'object'){
+        $entContext =  proper_subtypes($object->getSubtype());//$entity->getSubtype();
+    } else if($entContext == 'group'){
+        $entContext = elgg_echo('group');
+    }
+
 	$hasLiked = \Elgg\Likes\DataService::instance()->currentUserLikesEntity($object->guid);
 
 	// Always register both. That makes it super easy to toggle with javascript
@@ -987,7 +1013,7 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params){
 		'name' => 'likes',
 		'href' => elgg_add_action_tokens_to_url("/action/likes/add?guid={$object->guid}"),
 		'text' => '<i class="fa fa-thumbs-up fa-lg icon-unsel"></i><span class="wb-inv">Like This</span>',
-		'title' => elgg_echo('likes:likethis'),
+		'title' => elgg_echo('likes:likethis') . ' ' . $entContext,
 		'item_class' => $hasLiked ? 'hidden' : '',
 		'priority' => 100,
 	));
@@ -995,7 +1021,7 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params){
 		'name' => 'unlike',
 		'href' => elgg_add_action_tokens_to_url("/action/likes/delete?guid={$object->guid}"),
 		'text' => '<i class="fa fa-thumbs-up fa-lg icon-sel"></i><span class="wb-inv">Like This</span>',
-		'title' => elgg_echo('likes:remove'),
+		'title' => elgg_echo('likes:remove') . ' ' . $entContext,
 		'item_class' => $hasLiked ? '' : 'hidden',
 		'priority' => 100,
 	));
@@ -1145,6 +1171,7 @@ function my_owner_block_handler($hook, $type, $menu, $params){
                 case 'event_calendar':
                     $item->setText(elgg_echo('gprofile:events'));
                     $item->setHref('#' . strtolower(elgg_echo('gprofile:calendar')));
+                    if(get_language() == 'fr'){ $item->setHref('#agenda');} //quick fix for issue 
                     $item->setPriority('5');
                     break;
                 case 'pages':
@@ -1582,4 +1609,67 @@ function enhanced_friendly_time_hook($hook, $type, $return, $params) {
 	$attrs = elgg_format_attributes($attributes);
 
 	return "<time $attrs>$friendly_time</time>";
+}
+
+function proper_subtypes($type){
+
+    switch ($type) {
+        case 'page_top':
+            $subtype = elgg_echo('page');
+            break;
+
+        case 'thewire':
+            $subtype = elgg_echo('wire:post');
+            break;
+
+        case 'blog':
+            $subtype = elgg_echo('blog:blog');
+            break;
+
+        case 'comment':
+            $subtype = elgg_echo('comment');
+            break;
+
+        case 'groupforumtopic':
+            $subtype = elgg_echo('discussion');
+            break;
+
+        case 'discussion_reply':
+            $subtype = elgg_echo('group:replyitem');
+            break;
+
+        case 'file':
+            $subtype = elgg_echo('file:file');
+            break;
+
+        case 'folder':
+            $subtype = elgg_echo('item:object:folder');
+            break;
+
+        case 'event_calendar':
+            $subtype = elgg_echo('event_calendar:agenda:column:session');
+            break;
+
+        case 'bookmarks':
+            $subtype = elgg_echo('bookmark');
+            break;
+
+        case 'poll':
+            $subtype = elgg_echo('poll');
+            break;
+
+        case 'album':
+            $subtype = elgg_echo('album');
+            break;
+
+        case 'image':
+            $subtype = elgg_echo('image');
+            break;
+
+        case 'idea':
+            $subtype = elgg_echo('item:object:idea');
+            break;
+    }
+
+    return $subtype;
 }

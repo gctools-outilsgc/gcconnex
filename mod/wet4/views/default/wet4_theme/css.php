@@ -10639,7 +10639,7 @@ a.shr-opn, a.shr-opn:hover {
     color: #bbb !important; }
 
  .gcconnex-profile-name button:last-child{
-     border-bottom: solid 3px #055959;
+     border: solid 1px #055959;
 
  }
 
@@ -10815,7 +10815,7 @@ a.shr-opn, a.shr-opn:hover {
     }
 
 .icon-unsel{
-    color: #b6b6b6;   
+    color: #a0a0a0;   
 }
 
 .icon-unsel:hover{
@@ -11086,7 +11086,7 @@ a.shr-opn, a.shr-opn:hover {
 
 }
 
-.elgg-widget-title{
+.elgg-state-draggable .elgg-widget-handle{
     cursor:move;
     border:none;
 }
@@ -11298,6 +11298,47 @@ border:none;
 .removeMe {
     display: none;
 }
+
+
+/*Color box - Nick */
+
+/* 
+    User Style:
+    Change the following styles to modify the appearance of Colorbox.  They are
+    ordered & tabbed in a way that represents the nesting of the generated HTML.
+*/
+#cboxOverlay{background:#efefef;}
+#colorbox{outline:0;}
+    #cboxTopLeft{width:25px; height:25px; background:none}
+    #cboxTopCenter{height:25px; background:none;}
+    #cboxTopRight{width:25px; height:25px; background:none;}
+    #cboxBottomLeft{width:25px; height:25px; background:none;}
+    #cboxBottomCenter{height:25px; background:none;}
+    #cboxBottomRight{width:25px; height:25px; background:none;}
+    #cboxMiddleLeft{width:25px; background:none;}
+    #cboxMiddleRight{width:25px; background:none;}
+    #cboxContent{background:#fff; overflow:hidden; border: solid 2px #ddd;
+                         -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+
+    }
+        .cboxIframe{background:#fff;}
+        #cboxError{padding:50px; border:1px solid #ccc;}
+        #cboxLoadedContent{margin-bottom:20px; padding: 35px;}
+        #cboxTitle{position:absolute; bottom:0px; left:0; text-align:center; width:100%; color:#999;}
+        #cboxCurrent{position:absolute; bottom:0px; left:100px; color:#999;}
+        #cboxLoadingOverlay{background:#fff url(<?php echo $site_url.'vendors/jquery/colorbox/theme/images/loading.gif';?>) no-repeat center center;}
+
+        /* these elements are buttons, and may need to have additional styles reset to avoid unwanted base styles */
+        #cboxPrevious, #cboxNext, #cboxSlideshow, #cboxClose {border:0; padding:0; margin:0; overflow:visible; width:auto; background:none; }
+        
+        /* avoid outlines on :active (mouseclick), but preserve outlines on :focus (tabbed navigating) */
+        #cboxPrevious:active, #cboxNext:active, #cboxSlideshow:active, #cboxClose:active {outline:0;}
+
+        #cboxSlideshow{position:absolute; bottom:0px; right:42px; color:#444;}
+        #cboxPrevious{position:absolute; bottom:0px; left:0; color:#444;}
+        #cboxNext{position:absolute; bottom:0px; left:63px; color:#444;}
+        #cboxClose{position:absolute; bottom:100%; top:8px; right:20px; display:block; color:#444;}
 
 /*** Messages ***/
 

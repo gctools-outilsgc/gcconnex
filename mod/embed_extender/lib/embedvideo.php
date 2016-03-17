@@ -59,6 +59,8 @@ function videoembed_create_embed_object($url, $guid, $videowidth=0, $input) {
 		return videoembed_teachertube_handler($url, $guid, $videowidth);
 	} else if (strpos($url, 'hulu.com') != false) {
 		return videoembed_hulu_handler($url, $guid, $videowidth);
+	}  else if (strpos($url, 'soundcloud.com') != false) {
+		return videoembed_soundcloud_handler($url, $guid, $videowidth);
 	}
 
 	if (!$input) {
@@ -130,6 +132,23 @@ function videoembed_add_object($type, $url, $guid, $width, $height) {
 		case 'hulu':
 			$videodiv .= "<object width=\"{$width}\" height=\"{$height}\"><param name=\"movie\" value=\"http://www.hulu.com/embed/{$url}\"></param><param name=\"allowFullScreen\" value=\"true\"></param><embed src=\"http://www.hulu.com/embed/{$url}\" type=\"application/x-shockwave-flash\" allowFullScreen=\"true\"  width=\"{$width}\" height=\"{$height}\"></embed></object>";
 			break;
+
+        case 'soundcloud':
+			$videodiv .= '<div class="soundcloud-' . $guid . '">
+<script> 
+
+    $.getJSON("http://soundcloud.com/oembed", 
+          {url: "' . $url . '", format: "json"},
+    function(data) {
+        // Stick the html content returned in the object into the page
+        $(".soundcloud-' . $guid . '").html(data["html"]);
+    });
+
+    
+</script>
+
+</div>';
+			break;
 	}
 
 	$videodiv .= "</div>";
@@ -152,6 +171,91 @@ function videoembed_calc_size(&$width, &$height, $aspect_ratio, $toolbar_height)
 
 	$height = round($width / $aspect_ratio) + $toolbar_height;
 }
+
+
+
+
+
+
+/**
+ * main youtube interface
+ *
+ * @param string $url
+ * @param integer $guid unique identifier of the widget
+ * @param integer $videowidth  optional override of admin set width
+ * @return string css style, video div, and flash <object>
+ */
+function videoembed_soundcloud_handler($url, $guid, $videowidth) {
+	// this extracts the core part of the url needed for embeding
+	//$videourl = videoembed_youtube_parse_url($url);
+	//if (!isset($videourl)) {
+		//return '<p><b>' . elgg_echo('embedvideo:parseerror', array('red')) . '</b></p>';
+	//
+
+	videoembed_calc_size($videowidth, $videoheight, 425/320, 24);
+
+	$embed_object = videoembed_add_css($guid, $videowidth, $videoheight);
+
+	$embed_object .= videoembed_add_object('soundcloud', $url, $guid, $videowidth, $videoheight);
+
+	return $embed_object;
+}
+
+/**
+ * parse youtube url
+ *
+ * @param string $url
+ * @return string subdomain.youtube.com/v/hash
+ */
+function videoembed_soundcloud_parse_url($url) {
+
+	if (strpos($url, 'feature=hd') != false) {
+		// this is high def with a different aspect ratio
+	}
+
+	// This provides some security against inserting bad content.
+	// Divides url into http://, www or localization, domain name, path.
+	if (!preg_match('/(https?:\/\/)([a-zA-Z]{2,3}\.)(youtube\.com\/)(.*)/', $url, $matches)) {
+		//echo "malformed youtube url";
+		return;
+	}
+
+	$domain = $matches[2] . $matches[3];
+	$path = $matches[4];
+
+	$parts = parse_url($url);
+	parse_str($parts['query'], $vars);
+	$hash = $vars['v'];
+
+	return $domain . 'v/' . $hash;
+}
+
+/**
+ * parse youtu.be url
+ *
+ * @param string $url
+ * @return string youtube.com/v/hash
+ */
+function videoembed_soundcloud_shortener_parse_url($url, $guid, $videowidth) {
+	$path = parse_url($url, PHP_URL_PATH);
+	$videourl = 'youtube.com/v' . $path;
+
+	videoembed_calc_size($videowidth, $videoheight, 425/320, 24);
+
+	$embed_object = videoembed_add_css($guid, $videowidth, $videoheight);
+
+	$embed_object .= videoembed_add_object('youtube', $videourl, $guid, $videowidth, $videoheight);
+
+	return $embed_object;
+}
+
+
+
+
+
+
+
+
 
 /**
  * main youtube interface

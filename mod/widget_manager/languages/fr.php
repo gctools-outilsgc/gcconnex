@@ -221,20 +221,30 @@
 	
 	$content_by_tag = array(
 		// content_by_tag
-		'widgets:content_by_tag:name' => "Contenu trié par mot-clé",
-		'widgets:content_by_tag:description' => "Trouver du contenu au moyen d’un mot-clé",				
-		'widgets:content_by_tag:owner_guids' => "Auteurs de l'élément",
-		'widgets:content_by_tag:group_only' => "N'afficher que le contenu produit par ce groupe",
-		'widgets:content_by_tag:entities' => "Entités à afficher",
-		'widgets:content_by_tag:tags' => "Mots-clés (séparés par des virgules)",
-		'widgets:content_by_tag:tags_option' => "Utilisation des mots-clés",
-		'widgets:content_by_tag:tags_option:and' => "ET",
-		'widgets:content_by_tag:tags_option:or' => "OU",
-		'widgets:content_by_tag:display_option' => "Apparence de la liste du contenu",
-		'widgets:content_by_tag:display_option:normal' => "Normal",
-		'widgets:content_by_tag:display_option:simple' => "Simple",
-		'widgets:content_by_tag:display_option:slim' => "Sur une seule ligne",
-		'widgets:content_by_tag:highlight_first' => "Nombre d'éléments en surbrillance (affichage sur une seule ligne seulement)",
+'widgets:content_by_tag:name' => "Contenu trié par mot-clé",
+'widgets:content_by_tag:description' => "Ce widget permet de trouver du contenu à l'aide de mots-clés",
+			
+'widgets:content_by_tag:owner_guids' => "Limiter la recherche au contenu produit par les auteurs suivants",
+'widgets:content_by_tag:owner_guids:description' => "Rechercher l'utilisateur qui est l'auteur du contenu. Laissez le champ vide si vous ne souhaitez pas limiter la recherche en fonction de l'auteur.",
+'widgets:content_by_tag:container_guids' => "N'afficher que le contenu produit par les groupes suivants",
+'widgets:content_by_tag:container_guids:description' => "Rechercher un groupe dans lequel le contenu a été placé. Laissez le champ vide si vous ne souhaitez pas limiter la recherche en fonction des groupes.",
+'widgets:content_by_tag:group_only' => "N'afficher que le contenu produit par ce groupe",
+'widgets:content_by_tag:entities' => "Entités à afficher",
+'widgets:content_by_tag:tags' => "Mots-clés (séparés par des virgules)",
+'widgets:content_by_tag:tags_option' => "Utilisation des mots-clés",
+'widgets:content_by_tag:tags_option:and' => "ET",
+'widgets:content_by_tag:tags_option:or' => "OU",
+'widgets:content_by_tag:excluded_tags' => "Mots-clés exclus",
+'widgets:content_by_tag:display_option' => "Affichage du contenu",
+'widgets:content_by_tag:display_option:normal' => "Normal",
+'widgets:content_by_tag:display_option:simple' => "Simple",
+'widgets:content_by_tag:display_option:slim' => "Sur une seule ligne",
+'widgets:content_by_tag:highlight_first' => "Nombre d'éléments en surbrillance (affichage sur une seule ligne seulement)",
+'widgets:content_by_tag:show_search_link' => "Afficher le lien de la recherche",
+'widgets:content_by_tag:show_search_link:disclaimer' => "Les résultats de la recherche peuvent être différents du contenu apparaîssant dans le widget",
+'widgets:content_by_tag:show_avatar' => "Afficher l'avatar des utilisateurs",
+'widgets:content_by_tag:show_timestamp'	=> "Afficher l'horodatage du contenu",
+
 
 	);
 	add_translation("fr", $content_by_tag);

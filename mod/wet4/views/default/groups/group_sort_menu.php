@@ -89,4 +89,44 @@ elgg_register_menu_item('filter', array(
     'text' => elgg_echo('groups:owned'),
     'href' => 'groups/owner/' . $user->username));
 
+?>
+
+<script type="text/javascript">
+
+    //place additional group tools in dropdown menu
+    $(document).ready( function(){
+
+        //grab all list items
+        var listItems = $('.elgg-menu-filter li').toArray();
+
+        //if filter menu has six items
+        if (listItems.length >= 6) {
+            $('.elgg-menu-filter').append('<li class="elgg-menu-item-more dropdown"><a href="" data-toggle="dropdown" class="elgg-menu-content dropdown-toggle"><?php echo elgg_echo('gprofile:more') ?><b class="caret"></b></a></li>');
+            $('.elgg-menu-filter .dropdown').append('<ul class="dropdown-menu pull-right"></ul>');
+            var items;
+            for (var i = 0; i < listItems.length; i++) {
+                if (i >= 4) {
+                    items = $(listItems[i]).clone();
+                    $('.elgg-menu-filter .dropdown-menu').append(items);
+                    listItems[i].parentNode.removeChild(listItems[i]);
+
+                }
+            }
+
+            //working out css changes
+            $('.elgg-menu-filter .dropdown li a').css('padding', '3px 20px');
+            $('.elgg-menu-filter .dropdown .active a').css('color', 'white');
+
+
+        }
+
+});
+
+
+</script>
+
+
+<?php
+
+
 echo elgg_view_menu("filter", array("sort_by" => "priority", "class" => "elgg-menu-hz"));

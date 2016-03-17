@@ -33,7 +33,7 @@ return array(
 /**
 *notice section
 */
-'notice:title' => 'GCconnex... re-imagined for you!',
+'notice:title' => 'GCconnex... reimagined for you!',
 'notice:paragraphe' => '<p>Over the next few weeks, you may notice changes on GCconnex as we try-out the new features and tweak current functionalities to make your online collaboration and networking easier, faster and more fun.</p>
 
 <p>We would like to thank you in advance for your understanding as we work through any bugs or issues that may arise.  We are extremely excited about the new GCconnex and hope you are too.</p>
@@ -64,6 +64,12 @@ return array(
 
       'page:create' => 'Create Page',
 
+      /*
+       * Misc
+       * */
+
+       'bookmark' => 'bookmark',
+
      /*
       * Suggested Friends*/
 
@@ -93,7 +99,7 @@ return array(
 /**
  * The Wire
  */
-    
+    'wire:post' => 'wire post',
     'thewire:post' => "Create a Wire Post",
     'thewire:share' => ' Share',
     'thewire:shares' => ' Shares',
@@ -169,6 +175,8 @@ return array(
   
   'groups:eng'=>"Anglais",
   'groups:fra'=>"Français",
+
+  'group:replyitem' => 'reply',
 /**
  * Sites
  */
@@ -526,6 +534,7 @@ return array(
 	'river:widget:type' => "Type of activity",
 	'river:widgets:friends' => 'Friends activity',
 	'river:widgets:all' => 'All site activity',
+	'river:create:object:default' => '%s uploaded the file %s',
 
 /**
  * Notifications

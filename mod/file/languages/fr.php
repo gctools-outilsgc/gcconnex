@@ -88,6 +88,7 @@ return array(
 'file:tagcloud' => "Nuage de mots-clés",
 		
 'file:display:number' => "Nombre de fichiers à afficher",
+'river:create:object:file' => '%s a téléchargé le fichier %s',
 'river:comment:object:file' => '%s a commenté le fichier %s',
 'file:river:created' => "%s a téléversé",
 
