@@ -5,12 +5,14 @@
  */
 
 return array(
-		'Blog' => 'Blogue',
+
+		'blog' => 'Blogues',
 		'blog:blogs' => 'Blogues',
 		'blog:revisions' => 'Révisions',
 		'blog:archives' => 'Archives',
 		'blog:blog' =>  'Blogue',
 		'item:object:blog' => 'Les blogues',
+		'blog:mine' => 'Mes blogues',
 					
 		'blog:title:user_blogs' => 'Les blogues de %s',
 		'blog:title:all_blogs' => 'Tous les blogues du site',
@@ -71,6 +73,9 @@ return array(
 		'blog:widget:description' => 'Ce widget sert à afficher votre plus récent billet',
 		'blog:moreblogs' => 'Plus de billets',
 		'blog:numbertodisplay' => 'Nombre de billets à afficher',
-		'blog:noblogs' => 'Aucun billet '
+		'blog:noblogs' => 'Aucun billet ',
+
+		//sidebar
+	'blog:recent' => 'Récents billets',
 
 );

@@ -63,8 +63,8 @@ if ($object->getSubtype() === 'hjforum') {
 				WHERE guid_one = {$vars['forum_guid']} AND relationship = 'filed_in'";
 	$shelved_in = get_data($query);
 	
-	echo print_r($shelved_in);
-	echo " // {$shelved_in[0]->guid_two}";
+	//echo print_r($shelved_in);
+	//echo " // {$shelved_in[0]->guid_two}";
 
 	// this is forum object then check to see if categories is enabled
 	if ($object->enable_subcategories) {

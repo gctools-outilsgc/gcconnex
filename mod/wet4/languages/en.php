@@ -27,6 +27,7 @@ return array(
   'wet:footTitleAbout' => 'About',
   'wet:footTitleNews' => 'News',
   'wet:footTitleSocial' => 'Stay Connected',
+  'wet:footGCtools' => 'GCTools',
   'wet:collapseWidget' => 'Collapse / Open %s',
   'wet:gcintranetLink' => 'http://intranet.canada.ca/index-eng.asp',
   'wet:gcpediaLink' => 'http://www.gcpedia.gc.ca/wiki/?setlang=en',
@@ -584,10 +585,10 @@ return array(
 	'tools' => "Tools",
 	'settings:edit' => 'Edit settings',
 
-    'gcconnex:registerText' => '<h3 class="text-right"><i>Connecting People and Ideas</i></h3>
+    'gcconnex:registerText' => '
 <h3>Welcome to GCconnex! </h3>
 GCconnex is an professional networking and collaborative workspace for all public service, allowing people to connect and share information, leveraging the power of networking towards a more effective and efficient public service.<br>
-<a ="https://www.canada.ca/en/transparency/terms.html">Terms and Conditions of Use</a>',
+<a href="'.$site_url.'terms-termes">Terms and Conditions of Use</a>',
 	'register' => "Register",
 	'registerok' => "You have successfully registered for %s.",
 	'registerbad' => "Your registration was unsuccessful because of an unknown error.",

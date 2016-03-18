@@ -103,7 +103,7 @@ function group_tools_invite_user(ElggGroup $group, ElggUser $user, $text = "", $
 			if (elgg_is_active_plugin('cp_notifications')) {
 				$message = array(
 					'cp_invitee' => $user,
-					'cp_inviter' => $logged_in_user,
+					'cp_inviter' => $loggedin_user,
 					'cp_invite_to_group' => $group,
 					'cp_invitation_url' => $url,
 					'cp_invite_msg' => $text,

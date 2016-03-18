@@ -11,8 +11,26 @@
  */
 
 $site_url = elgg_get_site_url();
+//english or french graphic to display
+if( _elgg_services()->session->get('language') == 'en'){
+    $gcconnexGraphic = '<img src="'.$site_url.'/mod/wet4/graphics/gcconnex_icon_slogan_Eng.png" alt="GCconnex. Connecting people and ideas." width="85%" class="mrgn-tp-sm">';
+}else{
+    $gcconnexGraphic = '<img src="'.$site_url.'/mod/wet4/graphics/gcconnex_icon_slogan_Fra.png" alt="GCconnex. Branchez-vous, maximisez vos idées." width="85%" class="mrgn-tp-sm">';;
+}
+
 ?>
-<div class="col-sm-5 mrgn-bttm-md clearfix">
+<div class="col-sm-2">
+    <?php echo $gcconnexGraphic;?>
+
+</div>
+<div class="col-sm-4  clearfix">
+
+    <div>
+        <?php echo elgg_echo('gcconnex:registerText');?>
+    </div>
+
+</div>
+<div class="col-sm-5 col-sm-offset-1  mrgn-bttm-md clearfix">
 <div>
 	<label for="username_home"><?php echo elgg_echo('loginusername'); ?></label>
 	<?php echo elgg_view('input/text', array(
@@ -61,9 +79,4 @@ $site_url = elgg_get_site_url();
 ?>
 </div>
 
-<div class="col-sm-6 col-sm-offset-1 clearfix">
 
-    <div>
-        <?php echo elgg_echo('gcconnex:registerText');?> </div>
-
-</div>

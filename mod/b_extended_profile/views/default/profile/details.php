@@ -52,7 +52,7 @@ if ($user->canEdit()) {
         if ($field == 'department') {
             /////////////Troy	
             //echo '<div id="bloodhound" class="basic-profile-field">'; // field wrapper for css styling
-            echo '<div class="basic-profile-field">';
+            echo '<div class="basic-profile-field department-test">';
 			$obj = elgg_get_entities(array(
    				'type' => 'object',
    				'subtype' => 'dept_list',
@@ -79,7 +79,7 @@ if ($user->canEdit()) {
 				'name' => $field,
 				'id' => $field,
         		//'disabled'=>'disabled',
-        		'class' => 'gcconnex-basic-' . $field,
+        		'class' => ' gcconnex-basic-' . $field,
         		'value' => $key,
 				'options_values' => json_decode($departments, true),
 				
@@ -248,7 +248,7 @@ echo '</div>'; //closes btn-group
 
 
 
-echo '<h1 class="pull-left">' . $user->name . '</h1>';
+echo '<h1 class="pull-left group-title">' . $user->name . '</h1>';
 echo '</div>'; // close div class="panel-heading"
 
 

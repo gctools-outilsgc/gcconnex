@@ -14,8 +14,7 @@ return array(
 		* Menu items and titles
 		*/
 
-'files' => "Fichiers",
-
+'file' => "Fichiers",
 'file:user' => "Les fichiers de %s",
 'file:friends' => "Les fichiers de collègues",
 'file:all' => "Tous les fichiers du site",

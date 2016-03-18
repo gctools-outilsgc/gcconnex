@@ -32,7 +32,7 @@ function file_init() {
 	elgg_register_page_handler('file', 'file_page_handler');
 
 	// Add a new file widget
-	elgg_register_widget_type('filerepo', elgg_echo("file"), elgg_echo("file:widget:description"));
+	elgg_register_widget_type('filerepo', elgg_echo("file:file"), elgg_echo("file:widget:description"));
 
 	// Register URL handlers for files
 	elgg_register_plugin_hook_handler('entity:url', 'object', 'file_set_url');

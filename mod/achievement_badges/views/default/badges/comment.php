@@ -39,7 +39,7 @@ $goals[0] = 1;
 $goals[1] = 25;
 $goals[2] = 75;
 $goals[3] = 200;
-$goals[3] = 500;
+$goals[4] = 500;
 
 
 $currentGoal = $goals[0];
@@ -96,7 +96,7 @@ if($count < $goals[0]){ //no badge
     $user->commentBadge = 4;
     $currentBadge = $badges[4];
     $currentGoal = $goals[4];
-    $level = '4';
+    $level = '5';
 
 } else if($count >= $goals[4]){ //lvl 5
     
@@ -120,7 +120,7 @@ if($user->commentCount > $count){
 }
 
 $title = elgg_echo('badge:' . $name . ':name');
-$description =  elgg_echo('badge:' . $name . ':objective', array($currentGoal));
+$description =  elgg_echo('badge:' . $name . ':objective:' . $user->commentBadge);
 
 if(elgg_is_logged_in() && elgg_get_logged_in_user_guid() == $user->getGUID()){
 
@@ -132,6 +132,7 @@ if(elgg_is_logged_in() && elgg_get_logged_in_user_guid() == $user->getGUID()){
         'goal' => $currentGoal,
         'count' => $count,
         'level' => $level,
+        'name' => $name,
     );
 
     echo elgg_view('badges/layout/layout', $options);

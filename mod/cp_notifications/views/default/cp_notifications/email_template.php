@@ -73,8 +73,8 @@ switch ($msg_type) {
 		break;
 
 	case 'cp_group_invite':	// inviting user to group
-		$cp_notify_msg_title = elgg_echo('cp_notify:body_group_invite:title',array('p1','p2'));
-		$cp_notify_msg_description = elgg_echo('cp_notify:body_group_invite:description',array('p1','p2'));
+		$cp_notify_msg_title = elgg_echo('cp_notify:body_group_invite:title',array($vars['cp_group_invite_from']['name'],$vars['cp_group']['name']));
+		$cp_notify_msg_description = elgg_echo('cp_notify:body_group_invite:description',array($vars['cp_group']['name'],$vars['cp_invitation_msg'],$vars['cp_invitation_url']));
 		$cp_notify_msg_footer = elgg_echo('cp_notify:footer2');
 		break;
 
@@ -86,14 +86,15 @@ switch ($msg_type) {
 
 
 	case 'cp_group_mail': // sending out group mail to all members
-		$cp_notify_msg_title = elgg_echo('cp_notify:body_group_mail:title', array('p1','p2'));
-		$cp_notify_msg_description = elgg_echo('cp_notify:body_group_mail:description');
+		$cp_notify_msg_title = elgg_echo('cp_notify:body_group_mail:title', array($vars['cp_group']['name'],$vars['cp_group_subject']));
+		$cp_notify_msg_description = elgg_echo('cp_notify:body_group_mail:description',array($vars['cp_group_message']));
 		$cp_notify_msg_footer = elgg_echo('cp_notify:footer2');
 		break;
 
 
 	case 'cp_friend_request': // send friend request
-		$cp_notify_msg_title = elgg_echo('cp_notify:body_friend_req:title');
+		$cp_notify_msg_title = elgg_echo('cp_notify:body_friend_req:title',array($vars['cp_friend_request_from']['name']));
+		$cp_notify_msg_description = elgg_echo('cp_notify:body_friend_req:description',array($vars['cp_friend_request_from']['name'],$vars['cp_friend_invitation_url']));
 		$cp_notify_msg_footer = elgg_echo('cp_notify:footer2');
 		break;
 

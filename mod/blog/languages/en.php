@@ -6,6 +6,7 @@ return array(
 	'blog:archives' => 'Archives',
 	'blog:blog' => 'Blog',
 	'item:object:blog' => 'Blogs',
+	'blog:mine' => 'My blog',
 
 	'blog:title:user_blogs' => '%s\'s blogs',
 	'blog:title:all_blogs' => 'All site blogs',
@@ -62,5 +63,8 @@ View and comment on the blog post:
 	'blog:widget:description' => 'Display your latest blog posts',
 	'blog:moreblogs' => 'More blog posts',
 	'blog:numbertodisplay' => 'Number of blog posts to display',
-	'blog:noblogs' => 'No blog posts'
+	'blog:noblogs' => 'No blog posts',
+
+	//sidebar
+	'blog:recent' => 'Recent Blogs',
 );

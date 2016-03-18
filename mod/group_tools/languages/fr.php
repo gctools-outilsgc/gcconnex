@@ -1,6 +1,6 @@
 <?php
 
-$french = array(
+return array(
 
 // general
 'group_tools:decline' => "Refuser",

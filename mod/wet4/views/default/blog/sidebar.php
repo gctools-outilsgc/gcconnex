@@ -75,7 +75,7 @@ $options = array(
     'pagination' => FALSE,
     );
 $content = elgg_list_entities($options);
-echo elgg_view_module('featured',  elgg_echo("Recent Blogs"), $content);
+echo elgg_view_module('featured',  elgg_echo("blog:recent"), $content);
 elgg_pop_context();
 }
 

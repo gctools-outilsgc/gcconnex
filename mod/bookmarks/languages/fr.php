@@ -13,7 +13,7 @@ return array(
 		'bookmarks:edit' => "Modifier le signet",
 		'bookmarks:read' => "Liste des signets",
 		'bookmarks:owner' => "Signets de '%s'",
-		'bookmarks:friends' => "Signets des contacts",
+		'bookmarks:friends' => "Signets des collègues",
 		'bookmarks:everyone' => "Tous les signets de site",
 		'bookmarks:this' => "Mettre en signet",
 		'bookmarks:this:group' => "Signet dans %s",

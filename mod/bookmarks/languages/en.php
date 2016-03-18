@@ -8,7 +8,7 @@ return array(
 	'bookmarks:add' => "Add a bookmark",
 	'bookmarks:edit' => "Edit bookmark",
 	'bookmarks:owner' => "%s's bookmarks",
-	'bookmarks:friends' => "Friends' bookmarks",
+	'bookmarks:friends' => "Colleague's bookmarks",
 	'bookmarks:everyone' => "All site bookmarks",
 	'bookmarks:this' => "Bookmark this page",
 	'bookmarks:this:group' => "Bookmark in %s",

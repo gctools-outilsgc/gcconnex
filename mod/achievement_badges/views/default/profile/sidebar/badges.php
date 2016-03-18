@@ -24,7 +24,7 @@ foreach($badges as $badg){
                             'src' => 'mod/achievement_badges/graphics/' . $currentBadge . 'Lvl0' . $owner->$currentBadge . '.png',
                             'class' => 'img-responsive mrgn-rght',
                             'title' => elgg_echo('badge:' . $badg . ':achieved:' . $owner->$currentBadge, array($owner->getDisplayName())),
-                            'alt' => $badg . ' ' . $owner->$currentBadge,
+                            'alt' => $badg . ' ' . elgg_echo('badge:level', array($owner->$currentBadge)),
                             ));
         $content .= '</li>';
     //}

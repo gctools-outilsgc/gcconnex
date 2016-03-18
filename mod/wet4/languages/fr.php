@@ -28,6 +28,7 @@ return array(
   'wet:footTutorials' => 'Tutoriels de GCconnex',
   'wet:footTitleAbout' => 'Infos',
   'wet:footTitleNews' =>  'Nouvelles',
+  'wet:footGCtools' => 'OutilsGC',
   'wet:footTitleSocial' => 'Rester connecté',
   'wet:collapseWidget' => 'Réduire / Ouvrir %s',
     'wet:gcintranetLink' => 'http://intranet.canada.ca/index-fra.asp',
@@ -552,10 +553,10 @@ return array(
 'settings:edit' => 'Modifier les paramètres',
 
 
-    'gcconnex:registerText' => '<h3 class="text-right"><i>Branchez-vous, maximisez vos idées</i></h3>
+    'gcconnex:registerText' => '
 <h3>Bienvenue à GCconnex! </h3>
 GCconnex est un espace de travail collaboratif pour le réseautage professionnel à l\'ensemble de la fonction publique. Celle-ci vous permet de vous brancher, de partager de l\'information et tirer profit du pouvoir de réseautage pour accroître l\'efficacité et la productivité de la fonction publique.<br>
-<a href="https://www.canada.ca/fr/transparence/avis.html">Conditions d’utilisation</a>',
+<a href="'.$site_url.'terms-termes">Conditions d’utilisation</a>',
 'register' => "S'inscrire",
 'registerok' => "Vous vous êtes inscrit avec succès dans %s.",
 'registerbad' => "Votre inscription a échoué pour une raison inconnue.",
@@ -723,10 +724,10 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
  */
 
 'plugins:disabled' => 'Les modules d\'extension ne seront pas lu, car un fichier nommé \'disabled\' (désactivée) est dans le répertoire mod.',
-'plugins:settings:save:ok' => "Les paramètres du module d'\extension %s ont été sauvegardé.",
-'plugins:settings:save:fail' => "Il y a eu un problème lors de la sauvegarde des paramètres du module d'\extension %s.",
-'plugins:usersettings:save:ok' => "Les paramètres du module d'\extension ont été sauvegardé avec succès.",
-'plugins:usersettings:save:fail' => "Il y a eu un problème lors de la sauvegarde des paramètres de l'\utilisateur pour le module d'\extension %s.",
+'plugins:settings:save:ok' => "Les paramètres du module d'extension %s ont été sauvegardé.",
+'plugins:settings:save:fail' => "Il y a eu un problème lors de la sauvegarde des paramètres du module d'extension %s.",
+'plugins:usersettings:save:ok' => "Les paramètres du module d'extension ont été sauvegardé avec succès.",
+'plugins:usersettings:save:fail' => "Il y a eu un problème lors de la sauvegarde des paramètres de l'utilisateur pour le module d'\extension %s.",
 'item:object:plugin' => 'Modules d\'extension',			
 'admin:plugins' => "Modules d'extension",
 'admin:plugins:activate_all' => 'Tout activer',

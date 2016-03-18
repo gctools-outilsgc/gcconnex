@@ -23,7 +23,6 @@ $count = elgg_extract('count', $vars);
 $badgeSrc = elgg_extract('src', $vars);
 $level = elgg_extract('level', $vars);
 $name = elgg_extract('name', $vars);
-
 ?>
 
 
@@ -48,7 +47,7 @@ $name = elgg_extract('name', $vars);
                     <div class="col-xs-9">
                         <h3 class="mrgn-tp-md"><?php echo $title; ?></h3>
                     <p>
-                        <?php if($level != 'Completed'){ echo $description;} ?></p>
+                        <?php if($level != 'Completed'){ echo $description; }?></p>
                     </div>
                 <div class="col-xs-3">
                     <h4 class="pull-right clearfix mrgn-tp-md">
@@ -83,7 +82,7 @@ $name = elgg_extract('name', $vars);
                 <div class="pull-right">
                     <p class="mrgn-bttm-sm  text-right">
                         <b class="mrgn-rght-sm">
-                            <?php echo elgg_echo('badge:level', array($level)); ?>
+                            <?php echo elgg_echo('complete'); ?>
                         </b>
 
                     </p>
@@ -118,7 +117,7 @@ $name = elgg_extract('name', $vars);
 
                   } else {
                       echo '<div class="alert alert-success">';
-                      echo '<p>' . elgg_echo('badge:' . $name . ':objective:5') . '</p>';
+                      echo '<p>' . elgg_echo('badge:' . $name . ':objective:1') . '</p>';
                       echo '</div></div>';
                   }?>
 

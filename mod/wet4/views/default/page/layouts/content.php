@@ -44,13 +44,13 @@ if (!isset($vars['filter']) && elgg_is_logged_in() && $context) {
                 'priority' => 200,
             ),
             'mine' => array(
-                'text' => elgg_echo('My blog'),
+                'text' => elgg_echo('blog:mine'),
                 'href' => (isset($vars['mine_link'])) ? $vars['mine_link'] : "$context/owner/$username",
                 'selected' => ($filter_context == 'mine'),
                 'priority' => 300,
             ),
             'champions' => array(
-                'text' => elgg_echo('Friends'), //GCconnex Champions
+                'text' => elgg_echo('friends'), //GCconnex Champions
                 'href' => (isset($vars['friend_link'])) ? $vars['friend_link'] : "$context/friends/$username",
                 'selected' => ($filter_context == 'friends'),
                 'priority' => 400,

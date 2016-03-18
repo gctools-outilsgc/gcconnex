@@ -22,7 +22,11 @@
 
 		"cp_notify:subject:group_add_user" => "%s has added you into their group %s",
 		"cp_notify:subject:group_invite_user" => "%s has invited you to join their group %s",
+
 		"cp_notify:subject:group_invite_user_by_email" => "%s has invited you to join their group %s",
+
+		"cp_notify:subject:group_request" => "%s has requested to join the group %s",
+		
 		"cp_notify:subject:group_mail" => "%s has sent out a group message '%s'",
 		"cp_notify:subject:friend_request" => "%s has sent you a friend request",
 		"cp_notify:subject:forgot_password" => "You have requested a password reset",
@@ -68,7 +72,8 @@
 
 		"cp_notify:body_group_invite:title" => "%s has invited you to join their group '%s'",
 		"cp_notify:body_group_invite:description" => "You have been invited to join the group '%s' with the following message... <br/>
-													%s",
+													%s <br/>
+													You can view your invitation by clicking here: %s",
 
 		"cp_notify:body_group_mail:title" => "%s has sent out a message to all its members '%s'",
 		"cp_notify:body_group_mail:description" => "The group owner or administrator has sent out a message to all its members with the following message... <br/>
@@ -82,7 +87,7 @@
 		"cp_notify:body_forgot_password:description" => "There was a request to have a password reset from this user's IP:<code> %s </code> <br/>
 														Please go to this link to have your password resetted for %s's account: %s",
 
-		"cp_notify:body_validate_user:title" => "Please validate your new account",
+		"cp_notify:body_validate_user:title" => "Please validate your new account for %s",
 		"cp_notify:body_validate_user:description" => "Welcome to GCconnex, to complete your registration, please validate the account registered under %s by going to this link: %s",
 
 		"cp_notify:footer" => "<p>If you do not want to receive this notification, please manage your subscription settings here: %s</p>",

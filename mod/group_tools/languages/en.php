@@ -1,6 +1,6 @@
 <?php
 
-$english = array(
+return array(
 
 // general
 'group_tools:decline' => "Decline",

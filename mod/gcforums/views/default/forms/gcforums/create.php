@@ -6,7 +6,7 @@ if (elgg_is_logged_in()) {
 	if (!elgg_get_page_owner_guid())
 		elgg_set_page_owner_guid($vars['group_guid']);
 
-	error_log('page owner:'.elgg_get_page_owner_guid());
+	//error_log('page owner:'.elgg_get_page_owner_guid());
 
 	$gcf_subtype = $vars['subtype'];
 	$gcf_group = $vars['group_guid'];
@@ -30,10 +30,10 @@ if (elgg_is_logged_in()) {
 		$gcf_container = $gcf_topic_guid;
 
 	// debug error_log (will be displayed above forms) comment-out for production!
-	if ($gcf_subtype === "hjforumpost")
-		echo "create.php :: group: {$gcf_group} / subtype: {$gcf_subtype} / topic_access: {$gcf_topic_access} / topic_guid: {$gcf_topic_guid} / container: {$gcf_container} / title: {$hjforumpost_title}";
-	else
-		echo "create.php :: subtype: {$gcf_subtype} / group: {$gcf_group} / container: {$gcf_container}";
+	//if ($gcf_subtype === "hjforumpost")
+	//	echo "create.php :: group: {$gcf_group} / subtype: {$gcf_subtype} / topic_access: {$gcf_topic_access} / topic_guid: {$gcf_topic_guid} / container: {$gcf_container} / title: {$hjforumpost_title}";
+	//else
+	//	echo "create.php :: subtype: {$gcf_subtype} / group: {$gcf_group} / container: {$gcf_container}";
 
 
 	// title, description and access (visible)

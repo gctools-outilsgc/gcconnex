@@ -47,19 +47,19 @@ if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
     $iconimg = '<div class="avatar-hover-edit">' . elgg_echo('gcconnex_profile:profile:edit_avatar') . '</div><img src="';
     $iconimg .= $user->getIcon('large') . '" class="avatar-profile-page img-responsive ">';
 
-    $size = 'large';
+    $size = 'medium';
     $icon = elgg_view('output/img', array(
         
 	'src' => $user->getIconURL($size),
 	'alt' => $name,
 	'title' => $name,
-	'class' => $img_class,
+	'class' => $img_class .'img-responsive img-circle',
 ));
 
     $iconfinal = elgg_view('output/url', array(
             'text' => $icon,
             'href' => 'avatar/edit/' . $user->username,
-            'class' => "avatar-profile-edit img-responsive"
+            'class' => " img-responsive img-circle"
         )
     );
 
@@ -68,13 +68,13 @@ if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
 else {
    // $icon = '<img src="';
    // $icon .= $user->getIcon('large') . '" class="avatar-profile-page img-responsive">';
-    $size = 'large';
+    $size = 'medium';
     $iconfinal = elgg_view('output/img', array(
         'text' => $iconimg,
 	'src' => $user->getIconURL($size),
 	'alt' => $name,
 	'title' => $name,
-	'class' => $img_class . ' img-responsive img-circle',
+	'class' => $img_class . ' img-responsive img-circle medium-avatar-plus',
 ));
 
     /*

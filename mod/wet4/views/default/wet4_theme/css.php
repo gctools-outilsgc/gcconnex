@@ -10751,12 +10751,31 @@ a.shr-opn, a.shr-opn:hover {
 
 /** Sizing the Images to make medium images slightly smaller. They scale with the responsive class so it's all good **/
  .elgg-avatar-medium-wet4{
-     max-width:75%;  
+     max-width:65%; 
+     margin: 0 auto;
+     display: block !important; 
      
  }
 
  .au_subgroups_group_icon-medium-wet4{
-        max-width:75%;  
+        max-width:65%;
+        margin: 0 auto;
+     display: block !important;   
+
+ }
+
+ .elgg-avatar-wet4-sf{
+        width:37%;
+
+ }
+ .medium-avatar-plus{
+    margin: 0;
+    width: 110%;
+
+ }
+
+ .department-test{
+     width: 43%;
 
  }
 
@@ -10973,6 +10992,7 @@ a.shr-opn, a.shr-opn:hover {
     
     .pagination {
         margin: 0;
+        left: 25%;
     }
     
     .pagination li {
@@ -11700,6 +11720,10 @@ figcaption{
 
 }
 
+.pager-wet-hidden{
+    display:none !important;
+
+}
 
 /* SPLASH PAGE */
 

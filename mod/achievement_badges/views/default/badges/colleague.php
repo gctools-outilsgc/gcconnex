@@ -127,7 +127,7 @@ if($user->colleagueCount > $count){
 }
 
 $title = elgg_echo('badge:' . $name . ':name');
-$description =  elgg_echo('badge:' . $name . ':objective', array($currentGoal));
+$description =  elgg_echo('badge:' . $name . ':objective:' . $user->colleagueBadge);
 
 if(elgg_is_logged_in() && elgg_get_logged_in_user_guid() == $user->getGUID()){
 
@@ -139,6 +139,7 @@ if(elgg_is_logged_in() && elgg_get_logged_in_user_guid() == $user->getGUID()){
         'goal' => $currentGoal,
         'count' => $count,
         'level' => $level,
+        'name' => $name,
     );
 
     echo elgg_view('badges/layout/layout', $options);

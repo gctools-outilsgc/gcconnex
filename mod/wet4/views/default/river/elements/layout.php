@@ -32,7 +32,7 @@ if(intval($_SESSION['Suggested_friends'])==5 && elgg_is_logged_in())
                 $job=get_user($userGUID)->job;
                 $htmloutput=$htmloutput.'<div class="col-xs-4 text-center">'; // suggested friend link to profile
                 $htmloutput .= '<a href="'.  $site_url. 'profile/'. get_user($row['guid_two'])->username.'" class="">';
-                $htmloutput=$htmloutput.'<img src="'.get_user($row['guid_two'])->getIcon('medium') . '" class="avatar-profile-page img-responsive center-block img-circle" alt="'.elgg_echo('sf:alttext').' '.get_user($row['guid_two'])->getDisplayName().'">';
+                $htmloutput=$htmloutput.'<img src="'.get_user($row['guid_two'])->getIcon('medium') . '" class="avatar-profile-page img-responsive center-block img-circle elgg-avatar-wet4-sf" alt="'.elgg_echo('sf:alttext').' '.get_user($row['guid_two'])->getDisplayName().'">';
                 $htmloutput=$htmloutput.'<h4 class="h4 mrgn-tp-sm"><span class="text-primary">'.get_user($row['guid_two'])->getDisplayName().'</span></h4></a>';
                 $htmloutput=$htmloutput.'<p class="small mrgn-tp-0">'.$job.'</p>';
                 //changed connect button to send a friend request we should change the wording

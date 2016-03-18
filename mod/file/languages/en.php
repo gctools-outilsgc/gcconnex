@@ -6,7 +6,7 @@ return array(
 		* Menu items and titles
 		*/
 
-'files' => "Files",
+'file' => "Files",
 'file:user' => "%s's files",
 'file:friends' => "Colleagues\'  files",
 'file:all' => "All site files",

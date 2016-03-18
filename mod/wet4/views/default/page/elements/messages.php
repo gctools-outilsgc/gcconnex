@@ -36,7 +36,7 @@ if (isset($vars['object']) && is_array($vars['object']) && sizeof($vars['object'
         }
 		foreach ($list as $message) {
             $num=$num+1;
-			echo '<li class="col-sm-11"';
+			echo '<li class="col-sm-11" onclick=" event.stopPropagation();">'; //this stops users from clicking system alert
 			echo '<span role="alert">'.elgg_autop($message) .'</span>';
 			echo '</li>';
 		}

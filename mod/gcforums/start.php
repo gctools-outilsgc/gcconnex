@@ -359,7 +359,7 @@ function gcforums_topics_list($forum_guid, $group_guid, $is_sticky) {
 					if ($last_post_info === ' / ') 
 						$last_post_info = elgg_echo('gcforums:no_posts');
 
-					$user = elgg_get_logged_in_user_entity();
+					//$user = elgg_get_logged_in_user_entity();
 					if (check_entity_relationship($user->guid, 'subscribed', $topic->guid))
 						$subscribe_text = 'Unsubscribe';
 					else
