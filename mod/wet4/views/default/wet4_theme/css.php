@@ -11143,6 +11143,10 @@ a.shr-opn, a.shr-opn:hover {
     -webkit-box-shadow:none;
 }
 
+.wet-river-album{
+    margin: 0 !important;
+
+}
 #widget_manager_widgets_select .panel-heading{
     position: absolute;
     z-index: 44444;
@@ -11167,6 +11171,7 @@ a.shr-opn, a.shr-opn:hover {
 
 .elgg-layout-one-column #widgets-add-panel{
     margin-top: -15px;
+        z-index: 9999999;
 
 }
 
@@ -11309,6 +11314,10 @@ border:none;
     margin:8px;
     font-weight:bold;
 
+}
+
+.gsa-search-title{
+    font-size:1.3em;
 }
 .gallery-margin li{
     margin:5px;
@@ -12597,3 +12606,90 @@ Carousel
       
       
      
+    /*cometchat*/
+.cometchat_userstabtitle,.cometchat_traytitle {
+    background:#055959!important;
+    text-shadow:none;
+    border-color:#055959!important;
+    }
+.invitebutton {
+     background-color:#055959!important;
+}
+.cometchat_tab {
+    padding-left:2px;
+    }
+#cometchat_hide {
+    background:none;
+    width: 30px!important;
+    padding-top:3px !important;   
+}
+#cometchat_hide:before {
+    content:"\f057";
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    color:#055959!important;
+    font-size: 18px;
+    padding-right: 0.5em;
+
+}
+#cometchat_optionsbutton_icon {
+    background:none;
+}
+#cometchat_optionsbutton_icon:before {
+        content:"\f013";
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    color:#055959!important;
+    font-size: 18px;
+    padding-right: 0.5em;
+}
+#cometchat_hidden_content {
+   /* background-position: 2px -24px!important;*/
+    background:none;
+    width: 30px!important;
+}
+#cometchat_hidden_content:before {
+
+    content:"\f075";
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    color:#055959!important;
+    padding-right: 0.5em;
+}
+#cometchat_trayicon_scrolltotop .cometchat_trayiconimage {
+    padding-top:0;
+}
+#cometchat_trayicon_scrolltotop .cometchat_trayiconimage img{
+    display:none;
+    }
+
+#cometchat_trayicon_scrolltotop .cometchat_trayiconimage:before {
+    font-size: 18px;
+    content:"\f062";
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    color:#055959!important;
+    padding-right: 0.5em;
+
+}
+#cometchat_trayicon_chatrooms .cometchat_trayiconimage img{
+    display:none;
+    }
+#cometchat_trayicon_chatrooms .cometchat_trayiconimage:before {
+        font-size: 18px;
+    content:"\f24d";
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    color:#055959!important;
+    padding-right: 0.5em;
+}

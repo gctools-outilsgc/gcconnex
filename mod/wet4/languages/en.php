@@ -31,6 +31,7 @@ return array(
   'wet:collapseWidget' => 'Collapse / Open %s',
   'wet:gcintranetLink' => 'http://intranet.canada.ca/index-eng.asp',
   'wet:gcpediaLink' => 'http://www.gcpedia.gc.ca/wiki/?setlang=en',
+  'wet:tutorialLink'=>'http://www.gcpedia.gc.ca/wiki/GC2.0_Tools_Help_Centre/GCconnex',
 /**
 *notice section
 */
@@ -191,8 +192,8 @@ return array(
  */
 
 	'login' => "Log in",
-	'loginok' => "Welcome ".$displayName." to GCconnex.", /*NEW but doesn't work :3*/
-    'wet:loginok' => "Welcome ".$displayName." to GCconnex.", /*NEW*/
+	'loginok' => "Welcome to GCconnex ".$displayName.".", /*NEW but doesn't work :3*/
+    'wet:loginok' => "Welcome  to GCconnex ".$displayName.".", /*NEW*/
 	'loginerror' => "We couldn't log you in. Please check your credentials and try again.",
 	'login:empty' => "Username/email and password are required.",
 	'login:baduser' => "Unable to load your user account.",
@@ -1487,7 +1488,7 @@ Please do not reply to this email.",
     
     'contactform:content:form' => "<p>
 					Please see the FAQ and the Help Centre to get instant answers for the most common questions and learn how to use GCconnex like a pro!</p>
-					<p>Can't find the answer you are looking for? Contact the GCconnex Help Desk by filling out the form below. Please be clear as possible in describing your question or issue, and provide a screenshot where possible.
+					<p>Can't find the answer you are looking for? Contact the GCconnex Help Desk by filling out the form below. Please be clear as possible in describing your question or issue, and provide a screenshot where possible. A GCTools Unit Support Officer will respond to your inquiry within two (2) business days.
 					</p>",
 	'contactform:useful' => 'GCconnex Groups that may be useful to you:',
     'contactform:helpful' => 'Helpful communities',
@@ -1574,12 +1575,15 @@ Please do not reply to this email.",
     /*new for tour*/
 'gcTour:next' => 'Next ',
 'gcTour:close' => 'Close',
- 'gcTour:step1' => 'Your News Feed ',
- 'gcTour:step1txt' => 'What are my colleagues up to? You will see their activities here, even their cat videos. <i class="fa fa-paw"></i>',
- 'gcTour:step2' => 'Tool links ',
- 'gcTour:step2txt' => 'GCtools is a sweet suite.  Navigate to them from here.',
- 'gcTour:step3' => 'Profile card',
- 'gcTour:step3txt' => "Oops! I need to change my personnal information but how to go about it? By clicking on your name, a Google inspired profile card will open to access my profile.",
+'gcTour:step1' => 'Your News Feed ',
+'gcTour:step1txt' => 'See what your colleagues are up to and keep track of your groups’ activities, including their latest videos!',
+'gcTour:step2' => 'GCTools Navigation ',
+'gcTour:step2txt' => 'GCTools is an sweet suite. Navigate easily from one tool to another using these links.',
+'gcTour:step3' => 'Profile card',
+'gcTour:step3txt' => "Need to update your profile? Click on your name to open your profile card and easily access your profile page and account settings.",
+
+ 'gcTour:step4' => 'Groups',
+ 'gcTour:step4txt' => "Reach your groups easier and faster from here.",
 
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)

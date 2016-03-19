@@ -61,7 +61,7 @@ try {
 // @todo we need to use the config object to store this so that the current language
 // can be changed. Refs #4171
 if ($user->language) {
-	$message = elgg_echo('wet:loginok', array(), $user->language);
+	$message = elgg_echo('wet:loginok');
 } else {
 	$message = elgg_echo('wet:loginok');
 }

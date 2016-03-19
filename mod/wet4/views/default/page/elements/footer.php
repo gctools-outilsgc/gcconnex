@@ -48,7 +48,7 @@ $priv = $site_url .'privacy-confidentialite';
                 </h3>
                 <ul class="list-unstyled">
                     <li>
-                        <a href="#">
+                        <a href="<?php echo elgg_echo('wet:tutorialLink');?>" target="_blank">
                             <?php echo elgg_echo('wet:footTutorials');?>
                         </a>
                     </li>

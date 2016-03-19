@@ -110,7 +110,8 @@ if($checkPage == 'group_profile' && $type == 'GPmod'){
 
     $header = elgg_extract('header', $vars);
     if ($title) {
-        $header = elgg_format_element('h2', ['class' => 'panel-title'], gc_explode_translation($title,get_current_language()));
+        //$header = elgg_format_element('h2', ['class' => 'panel-title'], gc_explode_translation($title,get_current_language()));
+        $header = elgg_format_element('h2', ['class' => 'panel-title'], $title);
     }
 
     if ($header !== null) {

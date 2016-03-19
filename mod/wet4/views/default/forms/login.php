@@ -13,9 +13,9 @@
 $site_url = elgg_get_site_url();
 //english or french graphic to display
 if( _elgg_services()->session->get('language') == 'en'){
-    $gcconnexGraphic = '<img src="'.$site_url.'/mod/wet4/graphics/gcconnex_icon_slogan_Eng.png" alt="GCconnex. Connecting people and ideas." width="85%" class="mrgn-tp-sm">';
+    $gcconnexGraphic = '<img src="'.$site_url.'mod/wet4/graphics/gcconnex_icon_slogan_Eng.png" alt="GCconnex. Connecting people and ideas." width="85%" class="mrgn-tp-sm">';
 }else{
-    $gcconnexGraphic = '<img src="'.$site_url.'/mod/wet4/graphics/gcconnex_icon_slogan_Fra.png" alt="GCconnex. Branchez-vous, maximisez vos idées." width="85%" class="mrgn-tp-sm">';;
+    $gcconnexGraphic = '<img src="'.$site_url.'mod/wet4/graphics/gcconnex_icon_slogan_Fra.png" alt="GCconnex. Branchez-vous, maximisez vos idées." width="85%" class="mrgn-tp-sm">';;
 }
 
 ?>

@@ -365,7 +365,7 @@ function wet4_theme_pagesetup() {
             $extra = "";
             if (!empty($count)) {
                 if($count >= 10){
-                    $count = '9+';
+                    //$count = '9+';
                 }
                 $extra = '<span class="notif-badge">' . $count . '</span>';
             }

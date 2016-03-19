@@ -23,7 +23,7 @@ $content = elgg_list_entities_from_metadata(array(
 $body = elgg_view_layout('one_column', array(
 
 	'content' => $content,
-	'title' => false,
+	'title' => $title,
 ));
 echo '<div class="replyContainer">' . $body . '</div>';
 

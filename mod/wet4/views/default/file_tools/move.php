@@ -44,7 +44,7 @@ if(!empty($fileGUIDs)){
     }
     $form = '';
     $form .= '<div style="width:300px">';
-    $form .= '<h2>Move File</h2>';
+    
     $form .= '<p>Move into which folder?</p>';
     
             $form .= elgg_view('output/url', array(
@@ -67,6 +67,7 @@ if(!empty($fileGUIDs)){
     $body = elgg_view_layout('one_column', array(
         'filter' => false,
         'content' => $form,
+        'title' => 'Move Selected'
     ));
     echo $body;
 } else {

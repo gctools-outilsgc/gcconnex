@@ -120,7 +120,7 @@ if(elgg_is_active_plugin('messages')){
     
     //display 9+ insted of huge numbers in notif badge
     if($unread >= 10){
-        $unread = '9+';
+        //$unread = '9+';
     }
     
     $msgbadge = "<span class='notif-badge'>" . $unread . "</span>";

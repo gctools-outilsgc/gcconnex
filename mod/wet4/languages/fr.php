@@ -33,6 +33,7 @@ return array(
   'wet:collapseWidget' => 'Réduire / Ouvrir %s',
     'wet:gcintranetLink' => 'http://intranet.canada.ca/index-fra.asp',
   'wet:gcpediaLink' => 'http://www.gcpedia.gc.ca/wiki/?setlang=fr',
+  'wet:tutorialLink'=>'http://www.gcpedia.gc.ca/wiki/Centre_d%27aide_pour_les_outils_GC2.0/GCconnex',
   /**
 *notice section
 */
@@ -189,7 +190,8 @@ return array(
  */
 
 	'login' => "Ouvrir une session",
-	'loginok' => "Ouverture de session réussie.",
+	'loginok' => "Bienvenue à GCconnex ".$displayName.".", /*NEW*/
+    'wet:loginok' => "Bienvenue à GCconnex ".$displayName.".", /*NEW*/
 	'loginerror' => "Nous n'avons pas pu vous identifier. Vérifiez les renseignements que vous avez saisis et réessayez.",
 	'login:empty' => "Votre nom d'utilisateur ou votre adresse de courriel et votre mot de passe sont requis.",
 	'login:baduser' => "Impossible de charger votre compte d'utilisateur.",
@@ -1356,7 +1358,7 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
     'contactform:title:picture' => "<a href=' http://www.gcpedia.gc.ca/wiki/GCconnex_-_Aide_%C3%A0_l%27utilisateur/Comment_modifier_votre_profil_personnel#R.C3.A9viser_votre_profil_personnel'>Télécharger une photo de profil</a>",
     'contactform:title:sign-on' => "<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_-_Aide_%C3%A0_l%27utilisateur/_Comment_utiliser_la_Connexion_simplifi%C3%A9e'>Connexion simplifiée</a>",
     'contactform:title:form' => "Contactez-nous",
-    'contactform:content:form' => "<p>Veuillez consulter la FAQ et le Centre d’aide pour obtenir rapidement des réponses aux questions les plus courantes et apprendre à utiliser GCconnex comme un pro! </p><p>Vous ne trouvez pas la réponse que vous cherchez? Communiquez avec le Soutien technique de GCconnex en remplissant le formulaire ci-dessous. Veuillez décrire votre problème ou énoncer votre question le plus clairement possible et fournir une saisie d’écran si vous le pouvez.</p>",
+    'contactform:content:form' => "<p>Veuillez consulter la FAQ et le Centre d’aide pour obtenir rapidement des réponses aux questions les plus courantes et apprendre à utiliser GCconnex comme un pro! </p><p>Vous ne trouvez pas la réponse que vous cherchez? Communiquez avec le Soutien technique de GCconnex en remplissant le formulaire ci-dessous. Veuillez décrire votre problème ou énoncer votre question le plus clairement possible et fournir une saisie d’écran si vous le pouvez. Un agent de soutien des Outils GCrépondra à votre demande d’ici deux (2) jours ouvrables.</p>",
       'contactform:useful' => 'Groupes GCconnex qui pourraient vous être utiles :',
     'contactform:helpful' => 'Communautés utiles',
      'contactform:learn' => 'Pour en savoir plus sur les médias sociaux ',
@@ -1381,13 +1383,15 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
   /*new for tour*/
   'gcTour:next' => 'Suivant ',
   'gcTour:close' => 'Fermer',
- 'gcTour:step1' => 'Votre fil de nouvelle ',
- 'gcTour:step1txt' => 'Vous vous demandez ce que vos collègues font en ce moment? Vous trouverez réponse à cette question ici, et même les vidéos de leur chat! <i class="fa fa-paw"></i>',
- 'gcTour:step2' => 'Liens vers les outils ',
- 'gcTour:step2txt' => "Les outils GC est une superbe suite d`outils. Accéder-les d`ici.",
- 'gcTour:step3' => 'Carte de profil',
- 'gcTour:step3txt' => "Zut! Mes informations ne sont pas à jour, comment les changer? En cliquant sur votre nom, une carte de profile inspiré de Google s`ouvrira et vous pourrez accéder votre profile.",
+'gcTour:step1' => 'Votre fil de nouvelles ',
+'gcTour:step1txt' => "Consulter les dernières activités de vos collègues et de vos groupes, y compris leurs plus récents vidéos!",
+'gcTour:step2' => 'Navigation des OutilsGC',
+'gcTour:step2txt' => "Les OutilsGC sont une superbe suite d'outils. Accédez-les d'ici.",
+'gcTour:step3' => 'Carte de profil',
+'gcTour:step3txt' => "Besoin de mettre à jour votre profil? Cliquez sur votre nom pour ouvrir votre carte de profil et accéder facilement à votre page de profil et aux paramètres de votre compte.",
 
+ 'gcTour:step4' => 'Groupes',
+ 'gcTour:step4txt' => "Accéder vos groupes plus rapidement par ici.",
 
 /**
  * Event calendar

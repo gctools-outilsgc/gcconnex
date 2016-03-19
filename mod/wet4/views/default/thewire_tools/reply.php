@@ -11,7 +11,7 @@ elgg_gatekeeper();
 
 $post = get_entity(get_input('guid'));
 
-$title = '<h1>' . elgg_echo('reply') . '</h1>';
+$title = elgg_echo('reply');
 
 //elgg_push_breadcrumb(elgg_echo('thewire'), 'thewire/all');
 //elgg_push_breadcrumb($title);

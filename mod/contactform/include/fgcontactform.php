@@ -175,11 +175,11 @@ class FGContactForm
                 $option = explode("$", $_POST['reason']);
                     $french = $option[0];
                     $english = $option[1]; 
-        if(empty($_POST['subject']))
+         if(empty($_POST['subject']))
            {
-           $subject = "$this->name contact you about ". $english." / $this->name vous a contacter à propos de ".$french;
+           $subject = $categoryen." - ".$depart. " - $this->name  / ".$categoryfr." - ".$depart. " - $this->name";
            }else{
-           $subject = $_POST['subject'];
+            $ubject = "GCconnex contact form";
            }
         
         

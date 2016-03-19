@@ -54,7 +54,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_msg_type' => $cp_msg_type
 			);
 			$subject = elgg_echo('cp_notify:subject:group_add_user',array($params['cp_user']['name'],$params['cp_group']['name']));
-			
+
 			break;
 		
 		case 'cp_group_invite': // group_tools/lib/functions.php
@@ -179,7 +179,6 @@ function cp_create_annotation_notification($event, $type, $object) {
 	foreach ($to_recipients as $to_recipient) {
 		$from_user = elgg_get_site_entity()->name.' <'."GCconnex@tbs-sct.gc.ca".'>';
 		elgg_send_email($from_user,$to_recipient->email,$subject,$template);
-		error_log("from: $from_user");
 		if (elgg_is_active_plugin('messages')) {
 			messages_send($subject, $template, $to_recipient->guid, $site->email);
 		}

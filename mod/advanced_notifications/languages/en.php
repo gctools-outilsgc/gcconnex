@@ -16,8 +16,8 @@
 		
 		'advanced_notifications:discussion:reply:subject' => "New group discussion reply",
 		
-		'advanced_notifications:notification:email:body' => "To view the content click here
-%s",
+		'advanced_notifications:notification:email:body' => "To view the content click here",
+
 	);
 	
 	add_translation("en", $english);

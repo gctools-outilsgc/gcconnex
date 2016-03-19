@@ -190,10 +190,11 @@ function groups_handle_mine_page() {
 		'relationship_guid' => elgg_get_page_owner_guid(),
 		'inverse_relationship' => false,
 		'full_view' => false,
-        'limit' => false,
+        
 		'joins' => array("JOIN {$dbprefix}groups_entity ge ON e.guid = ge.guid"),
 		'order_by' => 'ge.name ASC',
 		'no_results' => elgg_echo('groups:none'),
+        'limit' => false, //this should work but it doesn't
 	));
 
     $sidebar = elgg_view('groups/sidebar/find');

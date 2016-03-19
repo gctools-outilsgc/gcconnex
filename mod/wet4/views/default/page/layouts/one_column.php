@@ -32,6 +32,7 @@
         echo elgg_view_menu('page', array('sort_by' => 'priority'));
         echo elgg_view_menu('title', array('sort_by' => 'priority', 'class' => 'list-unstyled text-right', 'item_class' => 'btn btn-primary'));
     } else {
+
         echo '<h1>' . $vars['title'] . '</h1>';
 }
 }

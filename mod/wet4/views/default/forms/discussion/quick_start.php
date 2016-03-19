@@ -14,7 +14,7 @@ if (empty($form_count)) {
 // show a button to expend the form
 echo elgg_view("output/url", array(
 	"text" => elgg_echo("discussion:add"),
-	"href" => "discussion/add/111",
+	"href" => "discussion/add/" . $selected_group,
 
 	"class" => "elgg-button elgg-button-action btn btn-primary pull-right"
 ));

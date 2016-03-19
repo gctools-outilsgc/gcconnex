@@ -93,7 +93,7 @@ return array(
     'badge:comment:objective:1' => "Have you heard? You've leveled up your Comment badge! Any comments?",
     'badge:comment:objective:2' => 'Wow, another level up? Thanks for participating in the discussions!',
     'badge:comment:objective:3' => 'Every new comment you post adds new interest and nuance to the discussion. Way to go!',
-    'badge:comment:objective:4' => "Way to go! You have officially posted 500 comments to GCconnex. We're proud of you!",
+    'badge:comment:objective:4' => "Way to go! Continue to share your comments. We're proud of you!",
     'badge:comment:objective:5' => 'Congratulations! You have unlocked the Comment badge! Your contributions helped spark new ideas and inspired your colleagues. Keep it up!',
 
     //Achieved
