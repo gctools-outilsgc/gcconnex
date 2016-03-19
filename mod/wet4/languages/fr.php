@@ -1374,6 +1374,7 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
     'contactform:select' => 'Veuillez sélectionner une catégorie',
     'contactform:reason' => 'Choisir...',
     'contactform:help_menu_item' => "Aide / Contactez-nous",
+      'contactform:newsletter' => 'Abonnez à l’Infolettre des Outils GC',
 
     /*
   * Contact Form Validation

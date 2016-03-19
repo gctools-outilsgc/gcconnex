@@ -1,11 +1,11 @@
 <?php
 $language = array (
 
-'friend_request' => "Demande d\'ajout à ma liste de collègues",
-'friend_request:menu' => "Demande d\'ajout à ma liste de collègues",
-'friend_request:title' => "Demandes d\'ajout à ma liste de collègues pour : %s",     
-'friend_request:new' => "Nouvelle demande d\'ajout à ma liste de collègues",     
-'friend_request:friend:add:pending' => "Demande d\ajout à ma liste de collègues en attente",
+'friend_request' => "Demande d'ajout à ma liste de collègues",
+'friend_request:menu' => "Demande d'ajout à ma liste de collègues",
+'friend_request:title' => "Demandes d'ajout à ma liste de collègues pour : %s",     
+'friend_request:new' => "Nouvelle demande d'ajout à ma liste de collègues",     
+'friend_request:friend:add:pending' => "Demande dajout à ma liste de collègues en attente",
       
 /************* FRIEND REQUEST *************/      
       
@@ -30,15 +30,15 @@ To view their profile, click here: %s
 // Actions      
 // Add request      
       
-'friend_request:add:failure' => "Désolé, nous n\'avons pas pu traiter votre demande à cause d\'une erreur système . S\'il vous plaît essayez de nouveau.",
+'friend_request:add:failure' => "Désolé, nous n'avons pas pu traiter votre demande à cause d'une erreur système . S'il vous plaît essayez de nouveau.",
 'friend_request:add:successful' => "Vous avez demandé à %s de faire partie de vos collègues. Votre demande doit être acceptée avant que son nom apparaisse dans votre liste de collègues.",
-'friend_request:add:exists' => "Vous avez déjà demandé d\'être collègues avec %s.",
+'friend_request:add:exists' => "Vous avez déjà demandé d'être collègues avec %s.",
       
 // Approve request      // Accepter la demande
       
 'friend_request:approve' => "Accepter",
-'friend_request:approve:subject' => " %s a accepté votre demande d\’ajout à votre liste de collègue / %s has accepted your colleague request",
-'friend_request:approve:message' => "%s, %s a accepté votre demande d\'ajout à votre liste de collègue.",
+'friend_request:approve:subject' => " %s a accepté votre demande d’ajout à votre liste de collègue / %s has accepted your colleague request",
+'friend_request:approve:message' => "%s, %s a accepté votre demande d'ajout à votre liste de collègue.",
       
       
       
@@ -52,25 +52,25 @@ To view their profile, click here: %s
 'friend_request:decline:message' => "Cher %s, %s a refusé votre invitation pour devenir un de ses collègues.",
       
       
-'friend_request:decline:success' => "Demande d\'ajout à la liste des collègues refusée avec succès",
-'friend_request:decline:fail' => "Erreur lors du refus de la demande d\'ajout à la liste de collègues, merci de réessayer.",
+'friend_request:decline:success' => "Demande d'ajout à la liste des collègues refusée avec succès",
+'friend_request:decline:fail' => "Erreur lors du refus de la demande d'ajout à la liste de collègues, merci de réessayer.",
       
 // Revoke request     
       
 'friend_request:revoke' => "Annuler",
-'friend_request:revoke:success' => "Demande d\'ajout à la liste de collègues annulée avec succès",
-'friend_request:revoke:fail' => "Erreur lors de l\'annulation de la demande d\'ajout à la liste de collègues, veuillez réessayer",
+'friend_request:revoke:success' => "Demande d'ajout à la liste de collègues annulée avec succès",
+'friend_request:revoke:fail' => "Erreur lors de l'annulation de la demande d'ajout à la liste de collègues, veuillez réessayer",
       
 // Views      
 // Received     
       
-'friend_request:received:title' => "Demandes d\'ajout à une liste de collègues reçues",
-'friend_request:received:none' => "Aucune demandes en attente d\'approbation",
+'friend_request:received:title' => "Demandes d'ajout à une liste de collègues reçues",
+'friend_request:received:none' => "Aucune demandes en attente d'approbation",
       
 // Sent     
       
-'friend_request:sent:title' => "Demandes d\'ajout à ma liste de collègues envoyées",
-'friend_request:sent:none' => "Aucune demandes envoyées en attente d\'approbation",
+'friend_request:sent:title' => "Demandes d'ajout à ma liste de collègues envoyées",
+'friend_request:sent:none' => "Aucune demandes envoyées en attente d'approbation",
 
 );
 add_translation("fr", $language);

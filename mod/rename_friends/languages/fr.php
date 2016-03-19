@@ -134,8 +134,8 @@ $french = array(
 //Friend Request		
 				
 'friend_request' => "Demande de {$usingle}",
-'friend_request:menu' => "Demandes de {$usingle} Requests",
-'friend_request:title' => "Demande de {$usingle} pour : %s",
+'friend_request:menu' => "Demandes de {$lsingle}",
+'friend_request:title' => "Demande de {$lsingle} pour : %s",
 'friend_request:new' => "Nouvelle demande de {$lsingle}",
 'friend_request:friend:add:pending' => "Demande de {$lsingle} en attente",
 'friend_request:newfriend:subject' => "%s veut être votre {$lsingle}!",
@@ -149,7 +149,7 @@ $french = array(
 // Approve request
 		// Approve request
 		
-'friend_request:approve:successful' => "%s est maintenant {lsingle}",
+'friend_request:approve:successful' => "%s est maintenant {$lsingle} avec vous",
 'friend_request:approve:fail' =>  "Une erreur est survenue lorsque vous avez tenté de devenir {$lsingle} avec %s",
 		
 // Decline request
@@ -166,10 +166,10 @@ $french = array(
 		
 // Views		
 // Received		
-'friend_request:received:title' => "Received {$usingle} requests",
+'friend_request:received:title' => "Demande de {$lplural} reçues",
 		
 // Sent		// Sent
-'friend_request:sent:title' => "Demande de {$usingle} envoyée",
+'friend_request:sent:title' => "Demande de {$lsingle} envoyée",
 		
 // HypeEvents		
 		
