@@ -1171,7 +1171,7 @@ function my_owner_block_handler($hook, $type, $menu, $params){
                 case 'event_calendar':
                     $item->setText(elgg_echo('gprofile:events'));
                     $item->setHref('#' . strtolower(elgg_echo('gprofile:calendar')));
-                    if(get_language() == 'fr'){ $item->setHref('#agenda');} //quick fix for issue 
+                    if(get_language() == 'fr'){ $item->setHref('#' . elgg_echo('gprofile:calendar'));} //quick fix for issue 
                     $item->setPriority('5');
                     break;
                 case 'pages':
@@ -1202,7 +1202,7 @@ function my_owner_block_handler($hook, $type, $menu, $params){
                     break;
                 case 'photo_albums':
                     $item->setText(elgg_echo('gprofile:albumsCatch'));
-                    $item->setHref('#' . strtolower(elgg_echo('gprofile:albums')));
+                    $item->setHref('#les');
                     $item->setPriority('11');
                     break;
                 case 'ideas':

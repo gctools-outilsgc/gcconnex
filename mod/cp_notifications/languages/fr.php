@@ -11,7 +11,7 @@
 'cp_notify:not_subscribed' => "Pas abonné",
 		
 'cp_notification:email_header_en' => "Ceci est un message généré par le système de GCconnex. Veuillez ne pas répondre à ce message",
-'cp_notification:email_header_fr' =>  "This is a system-generated message from GCconnex. Please do not reply to this message,"
+'cp_notification:email_header_fr' =>  "This is a system-generated message from GCconnex. Please do not reply to this message",
 		
 'cp_notification:email_header_msg_en ' => "Ceci est un message généré par le système de GCconnex. Vous recevez cette notification parce qu'il y a une mise à jour ou une réponse en lien au contenu que vous êtes abonné. Si vous avez des questions, veuillez consulter la page Contactez-vous :%s
 		Si vous avez des questions, veuillez communiquer avec le Soutien technique à : GCconnex@tbs-sct.gc.ca. Pour de plus amples renseignements sur GCconnex et ses fonctionnalités consultez : %s<br/> 
@@ -39,7 +39,7 @@
 'cp_notify:subject:new_content' => "%s a publié un nouvel item intitulé '%s'",
 'cp_notify:subject:mention' => "%s vous a mentionné dans sa publication ou réponse",
 		
-'cp_notify:body_likes:title' => "%s a aimé votre publication '%'"
+'cp_notify:body_likes:title' => "%s a aimé votre publication '%'",
 'cp_notify:body_likes:description' => "Vous pouvez consulter votre contenu en cliquant sur ce lien: %s",
 		
 'cp_notify:body_comments:title' => "%s a publié un commentaire ou une réponse à %s par %s",

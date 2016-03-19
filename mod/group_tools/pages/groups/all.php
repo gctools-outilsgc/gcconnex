@@ -46,6 +46,7 @@ switch ($selected_tab) {
 		$group_options["relationship"] = "member";
 		$group_options["relationship_guid"] = elgg_get_logged_in_user_guid();
 		$group_options["inverse_relationship"] = false;
+        $group_options["limit"] = 0;
 
 		break;
 	case "open":

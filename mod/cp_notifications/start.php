@@ -39,12 +39,26 @@ function cp_notifications_init() {
 
 // these notifications cannot be set from the settings page for the user, MUST be sent out
 function cp_overwrite_notification_hook($hook, $type, $value, $params) {
+	error_log("=== cp_overwrite_notification_hook === msg-type: {$cp_msg_type}");
 	$cp_msg_type = trim($params['cp_msg_type']);
+	$subject = "";
 	$to_recipients = array();
 	$email_only = false;
 	error_log("overwriting... {$cp_msg_type}");
 	$to_recipients = array();
 	switch($cp_msg_type) {
+		case 'cp_site_msg_type':
+			$to_recipients[] = get_user($params['cp_to']['guid']);
+			$subject = elgg_echo('cp_notify:subject:site_message',array($params['cp_from']['name'],$params['cp_topic_title']));
+			$message = array('cp_topic_title' => $params['cp_topic_title'],
+								'cp_topic_description' => $params['cp_topic_description'],
+								'cp_topic_author' => get_user($params['cp_from']),
+								'cp_topic_url' => $params['cp_topic_url'],
+								'cp_msg_type' => 'cp_site_msg_type',
+						);
+			$template = elgg_view('cp_notifications/email_template', $message);
+			break;
+
 		case 'cp_group_add':
 			$message = array(
 				'cp_user_added' => $params['cp_user_added'],
@@ -131,6 +145,8 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$email_only = true;
 			$subject = elgg_echo('cp_notify:subject:validate_user',array($cp_validate_user->email));
 			break;
+		default:
+			break;
 	}
 
 	$template = elgg_view('cp_notifications/email_template', $message);
@@ -150,6 +166,8 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 
 function cp_create_annotation_notification($event, $type, $object) {
+	error_log("=== cp_create_annotation_notification === msg-type: {$$object->getSubtype()}");
+	$subject = "";
 	$site = elgg_get_site_entity();
 	$do_not_subscribe_list = array('blog_revision','discussion_reply','task','vote');	// we dont need to be notified so many times
 	if (in_array($object->getSubtype(), $do_not_subscribe_list))
@@ -172,6 +190,8 @@ function cp_create_annotation_notification($event, $type, $object) {
 								'cp_msg_type' => 'cp_likes_type',
 						);
 			break;
+		default:
+			break;
 	} // end switch case
 
 	$template = elgg_view('cp_notifications/email_template', $message); // pass in the information into the template to prepare the notification
@@ -190,6 +210,8 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 
 function cp_create_notification($event, $type, $object) {
+	error_log("=== cp_create_notification === msg-type: {$object->getSubtype()}");
+	$subject = "";
 	$do_not_subscribe_list = array('poll_choice','blog_revision');
 	if (in_array($object->getSubtype(), $do_not_subscribe_list))
 		return $return;
@@ -229,22 +251,6 @@ function cp_create_notification($event, $type, $object) {
 								'cp_topic_url' => $container_entity->getURL(),
 								'cp_msg_type' => 'cp_reply_type',
 						);
-			break;
-
-
-		case 'messages':	// sending site mail to another user
-			
-			$to_username = get_input('recipient_username');
-			$to_recipients[] = get_user_by_username($to_username)->email;
-			$from_user = get_user($object->owner_guid);
-			$subject = elgg_echo('cp_notify:subject:site_message',array($from_user->name,$object->title));
-			$message = array('cp_topic_title' => $object->title,
-								'cp_topic_description' => $object->description,
-								'cp_topic_author' => $object->owner_guid,
-								'cp_topic_url' => $object->getURL(),
-								'cp_msg_type' => 'cp_site_msg_type',
-						);
-			$template = elgg_view('cp_notifications/email_template', $message);
 			break;
 
 		default:	// creating entities such as blogs, topics, bookmarks, etc...
@@ -315,7 +321,7 @@ function cp_create_notification($event, $type, $object) {
 			$template_mention = elgg_view('cp_notifications/email_template', $message_mention);
 			messages_send($subject_mention, $template_mention, $user_mentioned->guid, 0);
 			$from_user = elgg_get_site_entity()->name.' <'."GCconnex@tbs-sct.gc.ca".'>';
-			elgg_send_email($from_user,$to_recipient,$subject,$template);
+			elgg_send_email($from_user,$user_mentioned->email,$subject,$template);
 		}
 	}
 

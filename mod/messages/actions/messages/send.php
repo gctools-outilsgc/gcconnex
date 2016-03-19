@@ -38,16 +38,15 @@ if (!$body || !$subject) {
 if (elgg_is_active_plugin('cp_notifications')) {
 	$from_user = elgg_get_logged_in_user_entity();
 	$message = array(
-		'cp_topic_author' => $from_user->guid,
+		'cp_from' => $from_user,
+		'cp_to' => $user,
 		'cp_topic_title' => $subject,
 		'cp_topic_description' => $body,
 		'cp_msg_type' => 'cp_site_msg_type',
 		'cp_topic_url' => elgg_get_site_url().'/messages/inbox/',
 		);
-	$template = elgg_view('cp_notifications/email_template', $message);
-	
-	$subject = elgg_echo('cp_notify:subject:site_message',array($from_user->name,$subject));
-	$result = messages_send($subject, $template, $user->guid, 0, $original_msg_guid);
+	$result = elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
+	$result = true;
 } else 
 	// Otherwise, 'send' the message 
 	$result = messages_send($subject, $body, $user->guid, 0, $original_msg_guid);

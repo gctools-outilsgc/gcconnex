@@ -1,7 +1,7 @@
 <?php 
 	$num_items = $vars['entity']->num_items;
 	if (!isset($num_items)) $num_items = 10;
-	elgg_set_context('custom_index_widgets');
+	elgg_set_context('custom_index_widgets wire');
  	
 	$widget_datas = elgg_list_entities(array(
 		'type'=>'object',

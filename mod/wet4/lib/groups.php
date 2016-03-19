@@ -146,6 +146,7 @@ function groups_handle_owned_page() {
 		'full_view' => false,
 		'no_results' => elgg_echo('groups:none'),
 		'distinct' => false,
+        'limit' => 0,
 	));
 $filter = elgg_view("groups/group_sort_menu", array("selected" => $selected_tab));
 $sidebar = elgg_view("groups/sidebar/find");

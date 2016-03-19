@@ -419,4 +419,4 @@ When a user creates a group he/she gets to choose one of the presets in order to
 
 );
 
-add_translation("en", $english);
+add_translation("fr", $french);

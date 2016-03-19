@@ -97,6 +97,11 @@
 'cp_notify:no_group_sub' => "You have not subscribed to any Group content",
 'cp_notify:no_sub' => "You have not subscribed to any content",
 
+
+"cp_notify:sidebar:no_subscriptions" => "<i>No Subscriptions Available</i>",
+"cp_notify:sidebar:group_title" => "Group + Content Subscriptions",
+"cp_notify:sidebar:subs_title" => "Personal Subscriptions",
+
 	);
 
 add_translation("en", $english);

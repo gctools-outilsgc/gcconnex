@@ -8,7 +8,7 @@
 $item = $vars['item'];
 
 /*If this is the 3rd item in the River, lets call for suggestions*/
-
+/* Commented out Friend of friend for now 
 $_SESSION['Suggested_friends']=intval($_SESSION['Suggested_friends'])+1;
 
 if(intval($_SESSION['Suggested_friends'])==5 && elgg_is_logged_in())
@@ -57,7 +57,7 @@ if(intval($_SESSION['Suggested_friends'])==5 && elgg_is_logged_in())
         $connection->close();
     }
 }
-
+*/
 echo elgg_view('page/components/image_block', array(
 	'image' => elgg_view('river/elements/image', $vars),
 	'body' => elgg_view('river/elements/body', $vars),

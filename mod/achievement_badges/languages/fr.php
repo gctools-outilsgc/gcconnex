@@ -3,7 +3,7 @@ return array(
  //General          
             
 'badge:badges' => 'Écussons',           
-'badge:achievements' => 'Objectifs atteints',
+'badge:progress' => 'Objectifs atteints',
 'badge:start' => 'Début',
 'badge:completed' => 'Tous les objectifs atteints',
 'badge:level' => 'Niveau %s',

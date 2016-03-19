@@ -1,13 +1,12 @@
 <?php
     $site_url = elgg_get_site_url();
-    if(elgg_is_logged_in()){
-        $displayName = get_loggedin_user()->name;
-    }
+
 return array(
 
 /**
   * WET specific
   */
+  'breadcrum:home' => 'Accueil',
 
   'wet:skiptomain' => "Passer au contenu principal",
   'wet:aboutsite' => "Passer à « Informations sur le site »",
@@ -153,7 +152,7 @@ return array(
     'gprofile:photos' => "Photos",
     'gprofile:photoCatch' => "Images",
     'gprofile:albums' => "Albums",
-    'gprofile:albumsCatch' => "Albums de photos",
+    'gprofile:albumsCatch' => "Albums d'image",
     'gprofile:ideas' => "Idées",
     'gprofile:more' => "Plus",
     'gprofile:settings' => 'Paramètres',
@@ -190,8 +189,8 @@ return array(
  */
 
 	'login' => "Ouvrir une session",
-	'loginok' => "Bienvenue à GCconnex ".$displayName.".", /*NEW*/
-    'wet:loginok' => "Bienvenue à GCconnex ".$displayName.".", /*NEW*/
+	'loginok' => "Bienvenue à GCconnex %s.", /*NEW*/
+    'wet:loginok' => "Bienvenue à GCconnex %s.", /*NEW*/
 	'loginerror' => "Nous n'avons pas pu vous identifier. Vérifiez les renseignements que vous avez saisis et réessayez.",
 	'login:empty' => "Votre nom d'utilisateur ou votre adresse de courriel et votre mot de passe sont requis.",
 	'login:baduser' => "Impossible de charger votre compte d'utilisateur.",
@@ -1392,6 +1391,8 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 
  'gcTour:step4' => 'Groupes',
  'gcTour:step4txt' => "Accéder vos groupes plus rapidement par ici.",
+ 'gcTour:step5' => 'Le fil',
+ 'gcTour:step5txt' => "Publier sur le fil plus souvent par ici.",
 
 /**
  * Event calendar

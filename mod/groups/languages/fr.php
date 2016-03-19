@@ -271,3 +271,4 @@ return array(
 'groups:ecml:groupprofile' => 'Les profils de groupe',
 
 );
+add_translation("fr", $french);

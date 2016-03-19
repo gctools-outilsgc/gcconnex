@@ -1,12 +1,12 @@
 <?php
 $site_url = elgg_get_site_url();
-if(elgg_is_logged_in()){
-    $displayName = get_loggedin_user()->name;
-}
+
 return array(
 /**
    * WET specific
    */
+	'breadcrum:home' => 'Home',
+
   'wet:skiptomain'=>"Skip to main content",
   'wet:aboutsite'=>"Skip to \"About this site\"",
   'wet:LangSel'=>"Language selection",
@@ -192,8 +192,8 @@ return array(
  */
 
 	'login' => "Log in",
-	'loginok' => "Welcome to GCconnex ".$displayName.".", /*NEW but doesn't work :3*/
-    'wet:loginok' => "Welcome  to GCconnex ".$displayName.".", /*NEW*/
+	'loginok' => "Welcome to GCconnex %s.", /*NEW but doesn't work :3*/
+    'wet:loginok' => "Welcome  to GCconnex %s.", /*NEW*/
 	'loginerror' => "We couldn't log you in. Please check your credentials and try again.",
 	'login:empty' => "Username/email and password are required.",
 	'login:baduser' => "Unable to load your user account.",
@@ -1584,7 +1584,8 @@ Please do not reply to this email.",
 
  'gcTour:step4' => 'Groups',
  'gcTour:step4txt' => "Reach your groups easier and faster from here.",
-
+ 'gcTour:step5' => 'The Wire',
+ 'gcTour:step5txt' => "Post on the Wire more frequently from here.",
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */

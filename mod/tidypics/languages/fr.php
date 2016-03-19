@@ -16,7 +16,7 @@ return array(
 'admin:settings:photos' => 'Tidypics',
 		
 'photos:add' => "Créer un album",
-'photos:addphotos' => "Télécharger des images",
+'photos:addphotos' => "Téléverser des images",
 'images:upload' => "Télécharger des images dans cet album", 
 		
 'album:slideshow' => "Diaporama",

@@ -33,7 +33,7 @@ if (is_array($breadcrumbs) && count($breadcrumbs) > 0) {
 	echo "<ol class=\"$class\">";
     
     //home breadcrumb
-    echo '<li><a href="' . $site_url . '" title="Home">Home</a></li>';
+    echo '<li><a href="' . $site_url . '" title="Home">'.elgg_echo('breadcrum:home').'</a></li>';
     
 	foreach ($breadcrumbs as $breadcrumb) {
 		// We have to escape text (without double-encoding). Titles in core plugins are HTML escaped

@@ -255,3 +255,4 @@ return array(
 'groups:ecml:groupprofile' => 'Group profiles',
 
 );
+add_translation("en", $english);

@@ -60,10 +60,12 @@ try {
 // elgg_echo() caches the language and does not provide a way to change the language.
 // @todo we need to use the config object to store this so that the current language
 // can be changed. Refs #4171
+$display_name = $user->name;
 if ($user->language) {
-	$message = elgg_echo('wet:loginok');
+//give user a custom welcome message
+	$message = elgg_echo('wet:loginok', array($display_name));
 } else {
-	$message = elgg_echo('wet:loginok');
+	$message = elgg_echo('wet:loginok', array($display_name));
 }
 
 // clear after login in case login fails

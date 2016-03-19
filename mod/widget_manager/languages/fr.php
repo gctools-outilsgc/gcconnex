@@ -285,7 +285,7 @@
 
 	// widget edit wrapper
 		'widget_manager:widgets:edit:custom_title' => "Titre personnalisé",
-		'widget_manager:widgets:edit:custom_url' => "lien du titre personnalisé",
+		'widget_manager:widgets:edit:custom_url' => "Lien du titre personnalisé",
 		'widget_manager:widgets:edit:custom_more_title' => 'Plus de texte personnalisé',
 		'widget_manager:widgets:edit:custom_more_url' => 'Plus de lien personnalisé',
 		'widget_manager:widgets:edit:hide_header' => "Masquer l'en-tête",

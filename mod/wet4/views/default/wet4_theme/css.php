@@ -12607,7 +12607,7 @@ Carousel
       
      
     /*cometchat*/
-.cometchat_userstabtitle,.cometchat_traytitle {
+.cometchat_userstabtitle,.cometchat_traytitle,.cometchat_tabtitle {
     background:#055959!important;
     text-shadow:none;
     border-color:#055959!important;
