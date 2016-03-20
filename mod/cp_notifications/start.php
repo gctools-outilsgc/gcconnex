@@ -166,7 +166,8 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 
 function cp_create_annotation_notification($event, $type, $object) {
-	error_log("=== cp_create_annotation_notification === msg-type: {$$object->getSubtype()}");
+    //Nick - Temporary Fix for blog/ saving, group invite by email
+	//error_log("=== cp_create_annotation_notification === msg-type: {$$object->getSubtype()}");
 	$subject = "";
 	$site = elgg_get_site_entity();
 	$do_not_subscribe_list = array('blog_revision','discussion_reply','task','vote');	// we dont need to be notified so many times
