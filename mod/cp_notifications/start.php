@@ -392,40 +392,42 @@ function notify_entity_menu_setup($hook, $type, $return, $params) {
 		return $return;
 
 	if ($entity->getContainerEntity() instanceof ElggGroup || $entity instanceof ElggGroup || $entity->getContainerEntity() instanceof ElggUser) {	// only want to receive notification if it's in group or by user
-		if (check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $entity->getGUID())) {
-			// TODO: implement site mail notification too
+        if(elgg_is_logged_in()){
+		    if (check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $entity->getGUID())) {
+			    // TODO: implement site mail notification too
 
-			if (elgg_is_active_plugin('wet4')) 
-				$bell_status = '<i class="fa fa-bell-slash-o"></i>';
-			else
-				$bell_status = 'Stop Subscribing';
+			    if (elgg_is_active_plugin('wet4')) 
+				    $bell_status = '<i class="icon-unsel fa fa-lg fa-bell-slash-o"></i>';
+			    else
+				    $bell_status = 'Stop Subscribing';
 			
-			$return[] = ElggMenuItem::factory(array(
-				'name' => 'unset_notify',
-				'href' => elgg_add_action_tokens_to_url("/action/cp_notify/unsubscribe?guid={$entity->guid}"),
-				'text' => $bell_status,
-				'title' => 'Stop Subscribing',
-				'priority' => 1000,
-				'class' => '',
-				'item_class' => ''
-			));
-		} else {
+			    $return[] = ElggMenuItem::factory(array(
+				    'name' => 'unset_notify',
+				    'href' => elgg_add_action_tokens_to_url("/action/cp_notify/unsubscribe?guid={$entity->guid}"),
+				    'text' => $bell_status,
+				    'title' => 'Stop Subscribing',
+				    'priority' => 1000,
+				    'class' => '',
+				    'item_class' => ''
+			    ));
+		    } else {
 
-			if (elgg_is_active_plugin('wet4')) 
-				$bell_status = '<i class="fa fa-bell-o"></i>';
-			else
-				$bell_status = 'Subscribe Now!';
+			    if (elgg_is_active_plugin('wet4'))
+				    $bell_status = '<i class="icon-unsel fa fa-lg fa-bell-o"></i>';
+			    else
+				    $bell_status = 'Subscribe Now!';
 
-			$return[] = ElggMenuItem::factory(array(
-				'name' => 'set_notify',
-				'href' => elgg_add_action_tokens_to_url("/action/cp_notify/subscribe?guid={$entity->guid}"),
-				'text' => $bell_status,	
-				'title' => 'Subscribe Now!',
-				'priority' => 1000,
-				'class' => '',
-				'item_class' => ''
-			));
-		}
+			    $return[] = ElggMenuItem::factory(array(
+				    'name' => 'set_notify',
+				    'href' => elgg_add_action_tokens_to_url("/action/cp_notify/subscribe?guid={$entity->guid}"),
+				    'text' => $bell_status,	
+				    'title' => 'Subscribe Now!',
+				    'priority' => 1000,
+				    'class' => '',
+				    'item_class' => ''
+			    ));
+		    }
+        }
 	}
 
 	return $return;

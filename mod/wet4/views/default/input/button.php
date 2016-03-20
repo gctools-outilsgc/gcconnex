@@ -10,7 +10,7 @@
  */
 
 if (isset($vars['class'])) {
-	$vars['class'] = "elgg-button  btn btn-default {$vars['class']}";
+	$vars['class'] = "elgg-button only-one-click btn btn-default {$vars['class']}";
 } else {
 	$vars['class'] = "elgg-button";
 }
