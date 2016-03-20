@@ -301,29 +301,29 @@ function cp_create_notification($event, $type, $object) {
 
 	$template = elgg_view('cp_notifications/email_template', $message); // pass in the information into the template to prepare the notification
 	
-	if ($cp_mentioned_users) {
-		foreach ($cp_mentioned_users as $cp_mentioned_user) {
+    //if ($cp_mentioned_users) {
+    //    foreach ($cp_mentioned_users as $cp_mentioned_user) {
 
-			$user_mentioned = preg_replace('/[^A-Za-z1-9\.\-]/','',$cp_mentioned_user);	// there will always be that extra special character to remove
-			$user_mentioned = get_user_by_username($user_mentioned);
+    //        $user_mentioned = preg_replace('/[^A-Za-z1-9\.\-]/','',$cp_mentioned_user);	// there will always be that extra special character to remove
+    //        $user_mentioned = get_user_by_username($user_mentioned);
 
-			$user_mentioner = $object->getOwnerGUID();
-			$user_mentioner = get_user($user_mentioner);
-			$subject_mention = elgg_echo('cp_notify:subject:mention',array($user_mentioner->name));
+    //        $user_mentioner = $object->getOwnerGUID();
+    //        $user_mentioner = get_user($user_mentioner);
+    //        $subject_mention = elgg_echo('cp_notify:subject:mention',array($user_mentioner->name));
 
-			$message_mention = array('cp_topic_title' => $object->getContainerEntity()->title,
-										'cp_topic_author' => $object->owner_guid,
-										'cp_topic_description' => $object->description,
-										'cp_topic_url' => $object->getURL(),
-										'cp_msg_type' => 'cp_mention_type'
-						);
+    //        $message_mention = array('cp_topic_title' => $object->getContainerEntity()->title,
+    //                                    'cp_topic_author' => $object->owner_guid,
+    //                                    'cp_topic_description' => $object->description,
+    //                                    'cp_topic_url' => $object->getURL(),
+    //                                    'cp_msg_type' => 'cp_mention_type'
+    //                    );
 
-			$template_mention = elgg_view('cp_notifications/email_template', $message_mention);
-			messages_send($subject_mention, $template_mention, $user_mentioned->guid, 0);
-			$from_user = elgg_get_site_entity()->name.' <'."GCconnex@tbs-sct.gc.ca".'>';
-			elgg_send_email($from_user,$user_mentioned->email,$subject,$template);
-		}
-	}
+    //        $template_mention = elgg_view('cp_notifications/email_template', $message_mention);
+    //        messages_send($subject_mention, $template_mention, $user_mentioned->guid, 0);
+    //        $from_user = elgg_get_site_entity()->name.' <'."GCconnex@tbs-sct.gc.ca".'>';
+    //        elgg_send_email($from_user,$user_mentioned->email,$subject,$template);
+    //    }
+    //}
 
 
 	foreach ($to_recipients as $to_recipient) { 
