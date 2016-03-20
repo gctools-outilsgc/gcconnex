@@ -16,6 +16,8 @@
  * @uses $vars['metas'] Array of meta elements
  * @uses $vars['links'] Array of links
  */
+$agent = strtolower($_SERVER['HTTP_USER_AGENT']);
+if (strpos($agent, 'gsa-crawler') != 0) {
 
 $site_url = elgg_get_site_url();
 
@@ -103,3 +105,4 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
 
 
         <noscript><link rel="stylesheet" href="./css/noscript.css" /></noscript>
+}

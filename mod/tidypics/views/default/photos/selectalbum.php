@@ -43,6 +43,6 @@ $body .= elgg_view('input/select', array(
 ));
 $body .= "<br><br>";
 
-$body .= elgg_view('input/submit', array('value' => elgg_echo('tidypics:continue'), 'class' => 'btn btn-primary')).'</div>';
+$body .= elgg_view('input/submit', array('value' => elgg_echo('tidypics:continue'))).'</div>';
 
 echo elgg_view('input/form', array('action' => $action, 'body' => $body));

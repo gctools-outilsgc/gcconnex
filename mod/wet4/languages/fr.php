@@ -182,7 +182,7 @@ return array(
 	'career' =>	'Carrière',
 	'newsfeed' => 'Fil de nouvelles',
 	'item:site' => 'Sites',
-
+    'notifications:subscriptions:changesettings' => "Notifications",
 
 /**
  * Sessions

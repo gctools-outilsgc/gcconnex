@@ -1,16 +1,25 @@
 <?php
 /**
- * WET 4 Footer
+ * WET 4 Header , Canada branding and search
  * 
  */
 
 // footer
 //echo elgg_view('core/account/login_dropdown');
 $site_url = elgg_get_site_url();
+//check lang of current user and change Canada graphic based on language
+if( _elgg_services()->session->get('language') == 'en'){
+    $graphic_lang = 'en';
+}else{
+    $graphic_lang = 'fr';
+}
+
+
+
 ?>
         <div class="row">
             <div class="brand col-xs-8 col-sm-9 col-md-6">
-               <object type="image/svg+xml" tabindex="-1" data="<?php echo $site_url ?>/mod/wet4/graphics/sig-blk-en.svg"></object>
+               <object type="image/svg+xml" tabindex="-1" data="<?php echo $site_url ?>/mod/wet4/graphics/sig-blk-<?php echo $graphic_lang ?>.svg"></object>
                 <span class="wb-inv"><?php echo elgg_echo('wet:gc');?></span>
             </div>
             

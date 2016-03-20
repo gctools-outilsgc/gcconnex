@@ -171,6 +171,12 @@ class FGContactForm
 
     function SendFormSubmission()
     {
+              $reason = $_POST['reason'];
+                $option = explode("$", $_POST['reason']);
+                    $categoryfr = $option[0];
+                    $categoryen = $option[1]; 
+
+        $depart = $_POST['depart'];
         $reason = $_POST['reason'];
                 $option = explode("$", $_POST['reason']);
                     $french = $option[0];

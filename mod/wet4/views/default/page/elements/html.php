@@ -11,7 +11,7 @@ header("Content-type: text/html; charset=UTF-8");
 
 $lang = get_current_language();
 
-$attrs = " vocab='http://schema.org/' typeof='WebPage'";
+$attrs = " vocab='https://schema.org/' typeof='WebPage'";
 if (isset($vars['body_attrs'])) {
 	$attrs = elgg_format_attributes($vars['body_attrs']);
 	if ($attrs) {
@@ -23,6 +23,8 @@ if (isset($vars['body_attrs'])) {
 <html class="no-js" lang="<?php echo $lang; ?>" dir="ltr">
 <!--<![endif]-->
 <head>
+    <!--link type="text/css" href="/cometchat/cometchatcss.php" rel="stylesheet" charset="utf-8">
+    <script type="text/javascript" src="/cometchat/cometchatjs.php" charset="utf-8"></script>-->
     <?php echo $vars["head"]; ?>
 </head>
 <body<?php echo $attrs ?>>

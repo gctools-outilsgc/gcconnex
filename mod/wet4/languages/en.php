@@ -186,7 +186,7 @@ return array(
     'career' => 'Career',
     'newsfeed' => 'News Feed',
 	'item:site' => 'Sites',
-
+    'notifications:subscriptions:changesettings' => 'Notifications',
 /**
  * Sessions
  */

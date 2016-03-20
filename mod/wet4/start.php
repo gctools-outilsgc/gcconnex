@@ -13,7 +13,9 @@ function wet4_theme_init() {
     elgg_register_library('elgg:groups', elgg_get_plugins_path() . 'wet4/lib/groups.php');
     elgg_register_library('GCconnex_logging', elgg_get_plugins_path() . 'wet4/lib/logging.php');
     elgg_register_library('GCconnex_display_in_language', elgg_get_plugins_path() . 'wet4/lib/translate_display.php');
+    //elgg_register_library('elgg:user_settings', elgg_get_plugins_path(). 'wet4/lib/user_settings.php');
 
+    //elgg_load_library('user_settings');
     elgg_load_library('GCconnex_logging');
     elgg_load_library('GCconnex_display_in_language');
     //get rid of reply icon on river menu
@@ -415,7 +417,22 @@ function wet4_theme_pagesetup() {
 	
 	// Remove link to friendsof
 	elgg_unregister_menu_item("page", "friends:of");
-	
+    //Settings notifications stuff
+	elgg_unregister_menu_item('page', '2_a_user_notify');
+
+
+    $params = array(
+				"name" => "2_a_user_notify",
+				"href" => "/settings/plugins/" . $user->username . "/cp_notifications",
+				"text" =>  elgg_echo('notifications:subscriptions:changesettings'),
+				'section' => 'configure',
+                "class" => 'TESTING',
+                'item_class' => '',
+				'priority' => '100',
+                'context' => 'settings',
+			);
+
+    elgg_register_menu_item("page", $params);
 	
 	if (!empty($user)) {
 		$options = array(

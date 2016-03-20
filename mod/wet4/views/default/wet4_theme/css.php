@@ -1219,6 +1219,10 @@ ol {
   padding-left: 0;
   list-style: none; }
 
+.list-unstyled li{
+    list-style: none;
+}
+
 .list-inline {
   padding-left: 0;
   list-style: none;
@@ -10556,7 +10560,8 @@ a.shr-opn, a.shr-opn:hover {
     #wb-sm .menu .active,
     #wb-sm .menu .selected,
     #wb-sm .menu .wb-navcurr {
-      background: #047177 !important;
+      /*background: #047177 !important;*/
+      background: #484848 !important;
       color: #fff !important; }
     #wb-sm .menu > li {
       border-left: 1px solid #999;
@@ -11172,6 +11177,11 @@ a.shr-opn, a.shr-opn:hover {
 .elgg-layout-one-column #widgets-add-panel{
     margin-top: -15px;
         z-index: 9999999;
+
+}
+
+.min-height-cs{
+    min-height: 15px;
 
 }
 
@@ -12693,3 +12703,4 @@ Carousel
     color:#055959!important;
     padding-right: 0.5em;
 }
+

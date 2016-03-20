@@ -193,9 +193,14 @@ function elgg_entity_gatekeeper($guid, $type = null, $subtype = null) {
 			elgg_gatekeeper();
 		} else {
 			// user is logged in but still does not have access to it
-			register_error(elgg_echo('limited_access'));
-			forward();
-		}		
+			if (strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'secmgr') === 0) {
+				header('HTTP/1.1 403 Forbidden');
+				exit();
+			} else {
+				register_error(elgg_echo('limited_access'));
+				forward();
+			}
+		}
 	}
 
 	if ($type) {

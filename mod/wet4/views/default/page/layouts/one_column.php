@@ -23,6 +23,7 @@
 	<div class="elgg-main">-->
 <section id="wb-cont">
 	<?php
+
 	if($params['event_page'] == true){
 		echo elgg_extract('nav', $vars, elgg_view('navigation/breadcrumbs'));
 		echo elgg_view('page/layouts/elements/header', $vars);
@@ -31,11 +32,15 @@
         echo elgg_view('page/layouts/elements/header', $vars);
         echo elgg_view_menu('page', array('sort_by' => 'priority'));
         echo elgg_view_menu('title', array('sort_by' => 'priority', 'class' => 'list-unstyled text-right', 'item_class' => 'btn btn-primary'));
-    } else {
-
+    } else if(elgg_in_context('search')){
+        echo ''; // remove double h1 for gsa search - Nick
+    }else{
         echo '<h1>' . $vars['title'] . '</h1>';
+    }
+
+        
 }
-}
+
 		
 
 		echo $vars['content'];
