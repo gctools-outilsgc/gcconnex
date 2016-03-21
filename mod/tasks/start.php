@@ -1,8 +1,8 @@
 <?php
 /**
- * Elgg Pages
+ * Elgg Tasks
  *
- * @package ElggPages
+ * @package ElggTasks
  */
 
 elgg_register_event_handler('init', 'system', 'tasks_init');
@@ -16,11 +16,17 @@ function tasks_init() {
 	// register a library of helper functions
 	elgg_register_library('elgg:tasks', elgg_get_plugins_path() . 'tasks/lib/tasks.php');
 
-	$item = new ElggMenuItem('tasks', elgg_echo('tasks'), 'tasks/all');
-	elgg_register_menu_item('site', $item);
+	
+	elgg_register_menu_item('site', array(
+		'name' => 'tasks',
+		'text' => elgg_echo('tasks'),
+		'href' => "tasks/all"
+		
+	));
 
 	// Register a task handler, so we can have nice URLs
 	elgg_register_page_handler('tasks', 'tasks_page_handler');
+	elgg_register_page_handler('calendars', 'calendars_page_handler');
 
 	// Register a url handler
 	elgg_register_entity_url_handler('object', 'task_top', 'tasks_url');
@@ -56,8 +62,22 @@ function tasks_init() {
 	elgg_extend_view('groups/tool_latest', 'tasks/group_module');
 
 	//add a widget
-	elgg_register_widget_type('tasks', elgg_echo('tasks'), elgg_echo('tasks:widget:description'));
+	elgg_register_widget_type('tasks', elgg_echo('tasks'), elgg_echo('tasks:widget:description'), 'dashboard,profile,index,groups');
+	elgg_register_plugin_hook_handler("widget_url", "widget_manager", "tasks_widget_url_handler");
 
+	
+	$css_fullcalendar = 'mod/tasks/vendors/fullcalendar/fullcalendar.css';
+	$css_fullcalendar_print ='mod/tasks/vendors/fullcalendar/fullcalendar.print.css';
+	$js_fullcalendar_moment='mod/tasks/vendors/fullcalendar/lib/moment.min.js';
+	$js_fullcalendar='mod/tasks/vendors/fullcalendar/fullcalendar.for.elgg.js';
+	
+	elgg_register_js('fullcalendar_moment.js', $js_fullcalendar_moment);
+	elgg_register_js('fullcalendar.js', $js_fullcalendar);
+	
+	elgg_register_css('fullcalendar.css', $css_fullcalendar);
+	elgg_register_css('fullcalendar.css.print', $css_fullcalendar_print);
+	
+	
 	// Language short codes must be of the form "tasks:key"
 	// where key is the array key below
 	elgg_set_config('tasks', array(
@@ -70,11 +90,11 @@ function tasks_init() {
 		'status' => 'text',
 		'assigned_to' => 'assign_to',
 		'percent_done' => 'text',
-	//	'work_remaining' => 'text',		// GCConnex change - Ilia: Issue 48 (https://github.com/tbs-sct/gcconnex/issues/48) Removed due to redundancy as it is simply [1 - done]
+		'work_remaining' => 'text',
 		
 		'tags' => 'tags',
 		'access_id' => 'access',
-		'write_access_id' => 'write_access',
+		'write_access_id' => 'write_access'
 	));
 
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'tasks_owner_block_menu');
@@ -133,6 +153,7 @@ function tasks_page_handler($task) {
 
 	$base_dir = elgg_get_plugins_path() . 'tasks/pages/tasks';
 
+	
 	$task_type = $task[0];
 	switch ($task_type) {
 		case 'owner':
@@ -167,15 +188,58 @@ function tasks_page_handler($task) {
 		case 'all':
 			include "$base_dir/world.php";
 			break;
+		case 'get-tasks':
+			tasks_get_json(array(
+
+				"owner"=>get_input('owner', elgg_get_logged_in_user_entity()->guid), 
+				"filter"=>get_input('filter', 'all'),
+				"start_date"=>get_input('start', date('Y-m-01')),
+				"end_date"=>get_input('end',date('Y-m-t'))
+			));
+			break;
 		default:
 			return false;
 	}
 	return true;
 }
 
+function calendars_page_handler($task) {
+
+	elgg_load_library('elgg:tasks');
+	
+	// add the jquery treeview files for navigation
+	elgg_load_js('jquery-treeview');
+	elgg_load_css('jquery-treeview');
+
+	if (!isset($task[0])) {
+		$task[0] = 'all';
+	}
+	elgg_push_breadcrumb(elgg_echo('tasks'). " Calendar", 'tasks/all');
+	$base_dir = elgg_get_plugins_path() . 'tasks/pages/calendar';
+
+
+	$task_type = $task[0];
+	switch ($task_type) {
+		case 'group':
+		case 'owner':
+			include "$base_dir/owner.php";
+			break;
+		case 'all':
+			include "$base_dir/world.php";
+			break;
+		case 'friends':
+			include "$base_dir/friends.php";
+			break;
+		default:
+			return false;
+	}
+	
+	return true;
+}
+
 /**
  * Override the task url
- * 
+ *
  * @param ElggObject $entity Page object
  * @return string
  */
@@ -237,6 +301,7 @@ function tasks_owner_block_menu($hook, $type, $return, $params) {
  * Add links/info to entity menu particular to tasks plugin
  */
 function tasks_entity_menu_setup($hook, $type, $return, $params) {
+
 	if (elgg_in_context('widgets')) {
 		return $return;
 	}
@@ -298,6 +363,7 @@ function task_notify_message($hook, $entity_type, $returnvalue, $params) {
  * @param unknown_type $returnvalue
  * @param unknown_type $params
  */
+ /*
 function tasks_write_permission_check($hook, $entity_type, $returnvalue, $params)
 {
 	
@@ -318,6 +384,43 @@ function tasks_write_permission_check($hook, $entity_type, $returnvalue, $params
 			
 		}
 	}
+}*/
+function tasks_write_permission_check($hook, $entity_type, $returnvalue, $params) {
+	if (!tasks_is_task($params['entity'])) {
+		return null;
+	}
+	$entity = $params['entity'];
+	/* @var ElggObject $entity */
+
+	$write_permission = $entity->write_access_id;
+	$user = $params['user'];
+
+	if ($write_permission && $user) {
+		switch ($write_permission) {
+			case ACCESS_PRIVATE:
+				// Elgg's default decision is what we want
+				return null;
+				break;
+			case ACCESS_FRIENDS:
+				$owner = $entity->getOwnerEntity();
+				if (($owner instanceof ElggUser) && $owner->isFriendsWith($user->guid)) {
+					return true;
+				}
+				break;
+			default:
+				$list = get_access_array($user->guid);
+				if (in_array($write_permission, $list)) {
+					// user in the access collection
+					return true;
+				}
+				break;
+		}
+	}
+}
+
+
+function tasks_is_task($value) {
+	return ($value instanceof ElggObject) && in_array($value->getSubtype(), array('task', 'task_top'));
 }
 
 /**
@@ -364,4 +467,39 @@ function tasks_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 	$return_value['object/task_top'] = elgg_echo('item:object:task_top');
 
 	return $return_value;
+}
+
+/**
+ * Return an URL to put on the widget title (for Widget Manager)
+ *
+ * @param string $hook
+ * @param stirng $entity_type
+ * @param string $return_value
+ * @param array $params
+ */
+function tasks_widget_url_handler($hook, $entity_type, $return_value, $params) {
+	$result = $return_value;
+	
+	if (!$result && !empty($params) && is_array($params)) {
+		$widget = elgg_extract("entity", $params);
+	
+		if (!empty($widget) && elgg_instanceof($widget, "object", "widget")) {
+			switch ($widget->handler) {
+				case "tasks":
+					$owner = $widget->getOwnerEntity();
+					
+					if (elgg_instanceof($owner, "site")) {
+						$result = "tasks/all";
+					} elseif (elgg_instanceof($owner, "user")) {
+						$result = "tasks/owner/" . $owner->username;
+					} elseif (elgg_instanceof($owner, "group")) {
+						$result = "tasks/group/" . $owner->getGUID() . "/all";
+					}
+					
+					break;
+			}
+		}
+	}
+	
+	return $result;
 }

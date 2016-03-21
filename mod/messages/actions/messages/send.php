@@ -7,18 +7,22 @@
 
 $subject = strip_tags(get_input('subject'));
 $body = get_input('body');
-$recipient_guid = get_input('recipient_guid');
+$recipient_username = get_input('recipient_username');
+$original_msg_guid = (int)get_input('original_guid');
 
 elgg_make_sticky_form('messages');
 
-//$reply = get_input('reply',0); // this is the guid of the message replying to
-
-if (!$recipient_guid) {
+if (!$recipient_username) {
 	register_error(elgg_echo("messages:user:blank"));
 	forward("messages/compose");
 }
 
-$user = get_user($recipient_guid);
+if ($recipient_username == elgg_get_logged_in_user_entity()->username) {
+	register_error(elgg_echo("messages:user:self"));
+	forward("messages/compose");	
+}
+
+$user = get_user_by_username($recipient_username);
 if (!$user) {
 	register_error(elgg_echo("messages:user:nonexist"));
 	forward("messages/compose");
@@ -30,8 +34,24 @@ if (!$body || !$subject) {
 	forward("messages/compose");
 }
 
-// Otherwise, 'send' the message 
-$result = messages_send($subject, $body, $recipient_guid, 0, $reply);
+// cyu - 03/16/2016: modified to improve notifications
+if (elgg_is_active_plugin('cp_notifications')) {
+	$from_user = elgg_get_logged_in_user_entity();
+	$message = array(
+		'cp_from' => $from_user,
+		'cp_to' => $user,
+		'cp_topic_title' => $subject,
+		'cp_topic_description' => $body,
+		'cp_msg_type' => 'cp_site_msg_type',
+		'cp_topic_url' => elgg_get_site_url().'/messages/inbox/',
+		);
+	$result = elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
+	$result = true;
+} else 
+	// Otherwise, 'send' the message 
+	$result = messages_send($subject, $body, $user->guid, 0, $original_msg_guid);
+
+
 
 // Save 'send' the message
 if (!$result) {

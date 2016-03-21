@@ -37,8 +37,8 @@ if ($new_topic) {
 	$topic->subtype = 'groupforumtopic';
 } else {
 	// load original file object
-	$topic = new ElggObject($guid);
-	if (!$topic || !$topic->canEdit()) {
+	$topic = get_entity($guid);
+	if (!elgg_instanceof($topic, 'object', 'groupforumtopic') || !$topic->canEdit()) {
 		register_error(elgg_echo('discussion:topic:notfound'));
 		forward(REFERER);
 	}
@@ -50,8 +50,7 @@ $topic->status = $status;
 $topic->access_id = $access_id;
 $topic->container_guid = $container_guid;
 
-$tags = explode(",", $tags);
-$topic->tags = $tags;
+$topic->tags = string_to_tag_array($tags);
 
 $result = $topic->save();
 
@@ -67,7 +66,12 @@ elgg_clear_sticky_form('topic');
 // handle results differently for new topics and topic edits
 if ($new_topic) {
 	system_message(elgg_echo('discussion:topic:created'));
-	add_to_river('river/object/groupforumtopic/create', 'create', elgg_get_logged_in_user_guid(), $topic->guid);
+	elgg_create_river_item(array(
+		'view' => 'river/object/groupforumtopic/create',
+		'action_type' => 'create',
+		'subject_guid' => elgg_get_logged_in_user_guid(),
+		'object_guid' => $topic->guid,
+	));
 } else {
 	system_message(elgg_echo('discussion:topic:updated'));
 }

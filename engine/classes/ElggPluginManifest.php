@@ -2,12 +2,12 @@
 /**
  * Parses Elgg manifest.xml files.
  *
- * Normalizes the values from the ElggManifestParser object.
+ * Normalizes the values from the \ElggManifestParser object.
  *
- * This requires an ElggPluginManifestParser class implementation
+ * This requires an \ElggPluginManifestParser class implementation
  * as $this->parser.
  *
- * To add new parser versions, name them ElggPluginManifestParserXX
+ * To add new parser versions, name them \ElggPluginManifestParserXX
  * where XX is the version specified in the top-level <plugin_manifest>
  * tag's XML namespace.
  *
@@ -19,6 +19,8 @@ class ElggPluginManifest {
 
 	/**
 	 * The parser object
+	 *
+	 * @var \ElggPluginManifestParser18
 	 */
 	protected $parser;
 
@@ -51,6 +53,15 @@ class ElggPluginManifest {
 	 * The expected structure of elgg_version and elgg_release requires element
 	 */
 	private $depsStructElgg = array(
+		'type' => '',
+		'version' => '',
+		'comparison' => 'ge'
+	);
+	
+	/**
+	 * The expected structure of a requires php_version dependency element
+	 */
+	private $depsStructPhpVersion = array(
 		'type' => '',
 		'version' => '',
 		'comparison' => 'ge'
@@ -102,6 +113,17 @@ class ElggPluginManifest {
 		'description' => '',
 		'path' => ''
 	);
+	
+	/**
+	 * The expected structure of a contributor element
+	 */
+	private $contributorStruct = array(
+		'name' => '',
+		'email' => '',
+		'website' => '',
+		'username' => '',
+		'description' => '',
+	);
 
 	/**
 	 * The API version of the manifest.
@@ -123,6 +145,8 @@ class ElggPluginManifest {
 	 * @param mixed  $manifest  A string, XmlElement, or path of a manifest file.
 	 * @param string $plugin_id Optional ID of the owning plugin. Used to
 	 *                          fill in some values automatically.
+	 *
+	 * @throws PluginException
 	 */
 	public function __construct($manifest, $plugin_id = null) {
 		if ($plugin_id) {
@@ -130,9 +154,10 @@ class ElggPluginManifest {
 		}
 
 		// see if we need to construct the xml object.
-		if ($manifest instanceof ElggXMLElement) {
+		if ($manifest instanceof \ElggXMLElement) {
 			$manifest_obj = $manifest;
 		} else {
+			$raw_xml = '';
 			if (substr(trim($manifest), 0, 1) == '<') {
 				// this is a string
 				$raw_xml = $manifest;
@@ -140,12 +165,15 @@ class ElggPluginManifest {
 				// this is a file
 				$raw_xml = file_get_contents($manifest);
 			}
-
-			$manifest_obj = xml_to_object($raw_xml);
+			if ($raw_xml) {
+				$manifest_obj = new \ElggXMLElement($raw_xml);
+			} else {
+				$manifest_obj = null;
+			}
 		}
 
 		if (!$manifest_obj) {
-			throw new PluginException(elgg_echo('PluginException:InvalidManifest',
+			throw new \PluginException(_elgg_services()->translator->translate('PluginException:InvalidManifest',
 						array($this->getPluginID())));
 		}
 
@@ -159,7 +187,7 @@ class ElggPluginManifest {
 
 		$this->apiVersion = $version;
 
-		$parser_class_name = 'ElggPluginManifestParser' . str_replace('.', '', $this->apiVersion);
+		$parser_class_name = '\ElggPluginManifestParser' . str_replace('.', '', $this->apiVersion);
 
 		// @todo currently the autoloader freaks out if a class doesn't exist.
 		try {
@@ -171,16 +199,14 @@ class ElggPluginManifest {
 		if ($class_exists) {
 			$this->parser = new $parser_class_name($manifest_obj, $this);
 		} else {
-			throw new PluginException(elgg_echo('PluginException:NoAvailableParser',
+			throw new \PluginException(_elgg_services()->translator->translate('PluginException:NoAvailableParser',
 							array($this->apiVersion, $this->getPluginID())));
 		}
 
 		if (!$this->parser->parse()) {
-			throw new PluginException(elgg_echo('PluginException:ParserError',
+			throw new \PluginException(_elgg_services()->translator->translate('PluginException:ParserError',
 						array($this->apiVersion, $this->getPluginID())));
 		}
-
-		return true;
 	}
 
 	/**
@@ -201,7 +227,7 @@ class ElggPluginManifest {
 		if ($this->pluginID) {
 			return $this->pluginID;
 		} else {
-			return elgg_echo('unknown');
+			return _elgg_services()->translator->translate('unknown');
 		}
 	}
 
@@ -234,6 +260,16 @@ class ElggPluginManifest {
 		}
 
 		return $name;
+	}
+
+	/**
+	 * Return the plugin ID required by the author. If getPluginID() does
+	 * not match this, the plugin should not be started.
+	 *
+	 * @return string empty string if not empty/not defined
+	 */
+	public function getID() {
+		return trim((string) $this->parser->getAttribute('id'));
 	}
 
 
@@ -345,14 +381,43 @@ class ElggPluginManifest {
 	 * @return array
 	 */
 	public function getCategories() {
-		$bundled_plugins = array('blog', 'bookmarks', 'categories',
-			'custom_index', 'dashboard', 'developers', 'diagnostics',
-			'embed', 'externalpages', 'file', 'garbagecollector',
-			'groups', 'htmlawed', 'invitefriends', 'likes',
-			'logbrowser', 'logrotate', 'members', 'messageboard',
-			'messages', 'notifications', 'oauth_api', 'pages', 'profile',
-			'reportedcontent', 'search', 'tagcloud', 'thewire', 'tinymce',
-			'twitter', 'twitter_api', 'uservalidationbyemail', 'zaudio',
+		$bundled_plugins = array(
+			'aalborg_theme',
+			'blog',
+			'bookmarks',
+			'categories',
+			'ckeditor',
+			'custom_index',
+			'dashboard',
+			'developers',
+			'diagnostics',
+			'embed',
+			'externalpages',
+			'file',
+			'garbagecollector',
+			'groups',
+			'htmlawed',
+			'invitefriends',
+			'legacy_urls',
+			'likes',
+			'logbrowser',
+			'login_as',
+			'logrotate',
+			'members',
+			'messageboard',
+			'messages',
+			'notifications',
+			'pages',
+			'profile',
+			'reportedcontent',
+			'search',
+			'site_notifications',
+			'tagcloud',
+			'thewire',
+			'twitter_api',
+			'uservalidationbyemail',
+			'web_services',
+			'zaudio',
 		);
 
 		$cats = $this->parser->getAttribute('category');
@@ -383,6 +448,26 @@ class ElggPluginManifest {
 		$normalized = array();
 		foreach ($ss as $s) {
 			$normalized[] = $this->buildStruct($this->screenshotStruct, $s);
+		}
+
+		return $normalized;
+	}
+	
+	/**
+	 * Return the contributors listed.
+	 *
+	 * @return array
+	 */
+	public function getContributors() {
+		$ss = $this->parser->getAttribute('contributor');
+
+		if (!$ss) {
+			$ss = array();
+		}
+
+		$normalized = array();
+		foreach ($ss as $s) {
+			$normalized[] = $this->buildStruct($this->contributorStruct, $s);
 		}
 
 		return $normalized;
@@ -500,6 +585,10 @@ class ElggPluginManifest {
 				$struct = $this->depsStructPriority;
 				break;
 
+			case 'php_version':
+				$struct = $this->depsStructPhpVersion;
+				break;
+			
 			case 'php_extension':
 				$struct = $this->depsStructPhpExtension;
 				break;
@@ -532,6 +621,7 @@ class ElggPluginManifest {
 				return $dep;
 		}
 
+		// @todo $struct may not have been defined...
 		$normalized_dep = $this->buildStruct($struct, $dep);
 
 		// normalize comparison operators
@@ -641,12 +731,12 @@ class ElggPluginManifest {
 	 * localization is found, returns the category with _ and - converted to ' '
 	 * and then ucwords()'d.
 	 *
-	 * @param str $category The category as defined in the manifest.
-	 * @return str A human-readable category
+	 * @param string $category The category as defined in the manifest.
+	 * @return string A human-readable category
 	 */
 	static public function getFriendlyCategory($category) {
 		$cat_raw_string = "admin:plugins:category:$category";
-		$cat_display_string = elgg_echo($cat_raw_string);
+		$cat_display_string = _elgg_services()->translator->translate($cat_raw_string);
 		if ($cat_display_string == $cat_raw_string) {
 			$category = str_replace(array('-', '_'), ' ', $category);
 			$cat_display_string = ucwords($category);

@@ -1,2 +1,3 @@
 <?php
-	update_subtype("object", "widget", "ElggWidget");
+
+update_subtype("object", "widget", "ElggWidget");

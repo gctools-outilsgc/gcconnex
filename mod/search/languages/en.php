@@ -1,6 +1,6 @@
 <?php
 
-$english = array(
+return array(
 	'search:enter_term' => 'Enter a search term:',
 	'search:no_results' => 'No results.',
 	'search:matched' => 'Matched: ',
@@ -16,6 +16,5 @@ $english = array(
 	'search:comment_on' => 'Comment on "%s"',
 	'search:comment_by' => 'by',
 	'search:unavailable_entity' => 'Unavailable Entity',
+	'search:unknown_entity' => 'Unknown Entity type',
 );
-
-add_translation('en', $english);

@@ -95,11 +95,16 @@ $widget_is_open = true;
 		$widget_is_collapsed = widget_manager_check_collapsed_state($widget->guid, "widget_state_collapsed");
 		$widget_is_open = widget_manager_check_collapsed_state($widget->guid, "widget_state_open");
 	}
-
+    /*
+    if (($widget->widget_manager_collapse_state === "closed" || $widget_is_collapsed) && !$widget_is_open) {
+        //$item->addLinkClass("elgg-widget-collapsed");
+        $widget_body_class .= " hidden wet-hidden";
+    }*/
 // set collapsed
+    //it's not even taking this file :|
 if ( $widget_is_collapsed && !$widget_is_open ){	// using the same relationship names, etc as in widget manager 5.0
 //	$minimized = 'style="display:none;"';
-	$widget_body_class .= " hidden";
+	$widget_body_class .= " hidden wet-hidden";
 } 
 //else $minimized = '';
 

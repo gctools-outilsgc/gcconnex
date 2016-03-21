@@ -3,10 +3,8 @@
  * Elgg profile plugin language pack
  */
 
-$french = array(
-	'profile' => 'Profile',
-	'profile:notfound' => 'Désolé. Nous ne pouvions pas trouver le profil demandé.',
+return array(
+	'profile' => 'Profil',
+	'profile:notfound' =>  'Désolé. Il nous est impossible de trouver le profil demandé.',
 
 );
-
-add_translation('fr', $french);

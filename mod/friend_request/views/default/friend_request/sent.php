@@ -4,7 +4,7 @@ $content = "";
 
 $entities = elgg_extract("entities", $vars, false);
 if (!empty($entities)) {
-	$content .= "<ul class='elgg-list'>";
+	$content .= "<ul class='elgg-list elgg-list-entity'>";
 	
 	foreach ($entities as $entity) {
 		$icon = elgg_view_entity_icon($entity, "small");
@@ -20,7 +20,7 @@ if (!empty($entities)) {
 			"is_action" => true
 		));
 		
-		$content .= "<li class='elgg-item'>";
+		$content .= "<li class='elgg-item elgg-item-user'>";
 		$content .= elgg_view_image_block($icon, $info);
 		$content .= "</li>";
 	}

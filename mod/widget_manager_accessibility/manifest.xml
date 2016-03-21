@@ -8,9 +8,12 @@
  	
  	<requires>
 		<type>elgg_release</type>
-		<version>1.8.2</version>
+		<version>1.9</version>
 	</requires>
-	
+  <requires>
+    <type>plugin</type>
+    <name>widget_manager</name>
+  </requires>
 	<requires>
 		<type>priority</type>
 		<plugin>widget_manager</plugin>

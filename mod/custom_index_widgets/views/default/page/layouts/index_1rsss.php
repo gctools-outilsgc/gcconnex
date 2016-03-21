@@ -1,30 +1,25 @@
 <?php
-		$area1widgets = $vars['area1'];
-		$area2widgets = $vars['area2'];
-		$area3widgets = $vars['area3'];
+		$leftcolumn_widgets = $vars['area3'];
+		$middlecolumn_widgets = $vars['area2'];
+		$rightcolumn_widgets = $vars['area1'];
 		$layoutmode   = $vars['layoutmode']; //edit, index
 ?>
-
-    <table cellspacing="10" cellpadding="10" width="100%" class="<?php echo elgg_echo($layoutmode); ?>">
-      <tr>
-        <td align="left" valign="top" class="half">
+    <div class="first full col <?php echo elgg_echo($layoutmode); ?>">
+		<div class="first onethird col">
 			<div id="leftcolumn_widgets" class="half_<?php echo elgg_echo($layoutmode); ?>_box">
-			<?php custom_index_show_widget_area($area1widgets) ?>
+			<?php custom_index_show_widget_area($leftcolumn_widgets) ?>
 			</div>
-        </td>
-        <td align="left" valign="top" class="half">
+		</div>
+		<div class="onethird col">
 			<div id="middlecolumn_widgets" class="half_<?php echo elgg_echo($layoutmode); ?>_box">
-			<?php custom_index_show_widget_area($area2widgets) ?>
+			<?php custom_index_show_widget_area($middlecolumn_widgets) ?>
 			</div>
-        </td>
-      </tr>
-	  <tr >
-	  	<td colspan="2" align="left" valign="top" class="big">
-			<div id="rightcolumn_widgets" class="big_<?php echo elgg_echo($layoutmode); ?>_box">
-			<?php custom_index_show_widget_area($area3widgets) ?>
+		</div>
+		<div class="onethird col">
+			<div id="rightcolumn_widgets" class="half_<?php echo elgg_echo($layoutmode); ?>_box">
+			<?php custom_index_show_widget_area($rightcolumn_widgets) ?>
 			</div>
-        </td>
-      </tr>
-    </table>
+        </div>
+    </div>
 
 

@@ -1,12 +1,12 @@
 <?php
+
 /**
  * Elgg reported content plugin language pack
  *
  * @package ElggReportedContent
  */
 
-$french = array(
-
+return array(
 	'item:object:reported_content' => 'Éléments rapportés',
 	'admin:administer_utilities:reportedcontent' => 'Éléments rapportés',
 	'reportedcontent' => 'Éléments rapportés',
@@ -30,6 +30,7 @@ $french = array(
 	'reportedcontent:address' => "Emplacement de l'élément",
 	'reportedcontent:success' => "Votre rapport a été envoyé à l'administrateur du site",
 	'reportedcontent:failing' => "Votre rapport n'a pas pu être envoyé",
+	'reportedcontent:refresh' => 'Actualiser la liste',
 	'reportedcontent:report' => 'Signaler ce',
 	'reportedcontent:moreinfo' => "Plus d'info",
 	'reportedcontent:instructions' => 'Ce rapport sera envoyé aux administrateurs de ce site.',
@@ -40,5 +41,3 @@ $french = array(
 	'reportedcontent:failed' => 'Désolé, la tentative de signaler ce contenu a échoué.',
 	'reportedcontent:notarchived' => "Nous n'avons pas été en mesure d'archiver ce rapport",
 );
-
-add_translation("fr", $french);

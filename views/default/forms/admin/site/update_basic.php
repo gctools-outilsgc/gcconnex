@@ -4,7 +4,7 @@
  */
 $form_body = "";
 
-foreach (array('sitename','sitedescription', 'siteemail') as $field) {
+foreach (array('sitename','sitedescription', 'siteemail', 'default_limit') as $field) {
 	$form_body .= "<div>";
 	$form_body .= elgg_echo('installation:' . $field) . "<br />";
 	$warning = elgg_echo('installation:warning:' . $field);
@@ -18,7 +18,7 @@ foreach (array('sitename','sitedescription', 'siteemail') as $field) {
 
 $languages = get_installed_translations();
 $form_body .= "<div>" . elgg_echo('installation:language');
-$form_body .= elgg_view("input/dropdown", array(
+$form_body .= elgg_view("input/select", array(
 	'name' => 'language',
 	'value' => elgg_get_config('language'),
 	'options_values' => $languages,

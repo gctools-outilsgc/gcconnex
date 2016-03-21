@@ -2,23 +2,15 @@
 <plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
 	<name>Tasks Fx</name>
 	<author>Fx</author>
-	<version>2.0</version>
-	<category>bundled</category>
-	<category>GC Custom</category>
+	<version>2.2</version>
 	<category>content</category>
 	<category>widget</category>
-	<description>Elgg Tasks</description>
-	<website>http://www.elgg.org</website>
+	<description>Elgg Tasks, with hierarchical tasks and planning capabilities</description>
+	<website>http://fxnion.free.fr/</website>
 	<copyright>See COPYRIGHT.txt</copyright>
 	<license>GNU General Public License version 2</license>
 	<requires>
 		<type>elgg_release</type>
-		<version>1.8.3</version>
+		<version>1.8.19</version>
 	</requires>
-	<provides>
-		<type>plugin</type>
-		<name>tasks</name>
-		<version>2.0</version>
-	</provides>
-	<activate_on_install>true</activate_on_install>
 </plugin_manifest>

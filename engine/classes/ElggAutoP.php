@@ -69,24 +69,6 @@ class ElggAutoP {
 	}
 
 	/**
-	 * Intance of class for singleton pattern.
-	 * @var ElggAutoP
-	 */
-	private static $instance;
-	
-	/**
-	 * Singleton pattern.
-	 * @return ElggAutoP
-	 */
-	public static function getInstance() {
-		$className = __CLASS__;
-		if (!(self::$instance instanceof $className)) {
-			self::$instance = new $className();
-		}
-		return self::$instance;
-	}
-	
-	/**
 	 * Create wrapper P and BR elements in HTML depending on newlines. Useful when
 	 * users use newlines to signal line and paragraph breaks. In all cases output
 	 * should be well-formed markup.
@@ -110,11 +92,18 @@ class ElggAutoP {
 		// http://www.php.net/manual/en/domdocument.loadhtml.php#95463
 		libxml_use_internal_errors(true);
 
+		// Do not load entities. May be unnecessary, better safe than sorry
+		$disable_load_entities = libxml_disable_entity_loader(true);
+
 		if (!$this->_doc->loadHTML("<html><meta http-equiv='content-type' " 
 				. "content='text/html; charset={$this->encoding}'><body>{$html}</body>"
 				. "</html>")) {
+
+			libxml_disable_entity_loader($disable_load_entities);
 			return false;
 		}
+
+		libxml_disable_entity_loader($disable_load_entities);
 
 		$this->_xpath = new DOMXPath($this->_doc);
 		// start processing recursively at the BODY element
@@ -128,16 +117,23 @@ class ElggAutoP {
 
 		// split AUTOPs into multiples at /\n\n+/
 		$html = preg_replace('/(' . $this->_unique . 'NL){2,}/', '</autop><autop>', $html);
-		$html = str_replace(array($this->_unique . 'BR', $this->_unique . 'NL', '<br>'), 
+		$html = str_replace(array($this->_unique . 'BR', $this->_unique . 'NL', '<br>'),
 				'<br />',
 				$html);
 		$html = str_replace('<br /></autop>', '</autop>', $html);
 
 		// re-parse so we can handle new AUTOP elements
 
+		// Do not load entities. May be unnecessary, better safe than sorry
+		$disable_load_entities = libxml_disable_entity_loader(true);
+
 		if (!$this->_doc->loadHTML($html)) {
+			libxml_disable_entity_loader($disable_load_entities);
 			return false;
 		}
+
+		libxml_disable_entity_loader($disable_load_entities);
+
 		// must re-create XPath object after DOM load
 		$this->_xpath = new DOMXPath($this->_doc);
 

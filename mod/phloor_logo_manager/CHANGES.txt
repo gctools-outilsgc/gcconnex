@@ -1,8 +1,0 @@
-/**
- * Change Log
- */
- 
-/**
- * @version 1.8-12.01.14
- */
-- Initial release

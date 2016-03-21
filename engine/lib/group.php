@@ -25,270 +25,6 @@ function get_group_entity_as_row($guid) {
 }
 
 /**
- * Create or update the entities table for a given group.
- * Call create_entity first.
- *
- * @param int    $guid        GUID
- * @param string $name        Name
- * @param string $description Description
- *
- * @return bool
- * @access private
- */
-function create_group_entity($guid, $name, $description) {
-	global $CONFIG;
-
-	$guid = (int)$guid;
-	$name = sanitise_string($name);
-	$description = sanitise_string($description);
-
-	$row = get_entity_as_row($guid);
-
-	if ($row) {
-		// Exists and you have access to it
-		$exists = get_data_row("SELECT guid from {$CONFIG->dbprefix}groups_entity WHERE guid = {$guid}");
-		if ($exists) {
-			$query = "UPDATE {$CONFIG->dbprefix}groups_entity set"
-				. " name='$name', description='$description' where guid=$guid";
-			$result = update_data($query);
-			if ($result != false) {
-				// Update succeeded, continue
-				$entity = get_entity($guid);
-				if (elgg_trigger_event('update', $entity->type, $entity)) {
-					return $guid;
-				} else {
-					$entity->delete();
-				}
-			}
-		} else {
-			// Update failed, attempt an insert.
-			$query = "INSERT into {$CONFIG->dbprefix}groups_entity"
-				. " (guid, name, description) values ($guid, '$name', '$description')";
-
-			$result = insert_data($query);
-			if ($result !== false) {
-				$entity = get_entity($guid);
-				if (elgg_trigger_event('create', $entity->type, $entity)) {
-					return $guid;
-				} else {
-					$entity->delete();
-				}
-			}
-		}
-	}
-
-	return false;
-}
-
-/**
- * Add an object to the given group.
- *
- * @param int $group_guid  The group to add the object to.
- * @param int $object_guid The guid of the elgg object (must be ElggObject or a child thereof)
- *
- * @return bool
- * @throws InvalidClassException
- */
-function add_object_to_group($group_guid, $object_guid) {
-	$group_guid = (int)$group_guid;
-	$object_guid = (int)$object_guid;
-
-	$group = get_entity($group_guid);
-	$object = get_entity($object_guid);
-
-	if ((!$group) || (!$object)) {
-		return false;
-	}
-
-	if (!($group instanceof ElggGroup)) {
-		$msg = elgg_echo('InvalidClassException:NotValidElggStar', array($group_guid, 'ElggGroup'));
-		throw new InvalidClassException($msg);
-	}
-
-	if (!($object instanceof ElggObject)) {
-		$msg = elgg_echo('InvalidClassException:NotValidElggStar', array($object_guid, 'ElggObject'));
-		throw new InvalidClassException($msg);
-	}
-
-	$object->container_guid = $group_guid;
-	return $object->save();
-}
-
-/**
- * Remove an object from the given group.
- *
- * @param int $group_guid  The group to remove the object from
- * @param int $object_guid The object to remove
- *
- * @return bool
- * @throws InvalidClassException
- */
-function remove_object_from_group($group_guid, $object_guid) {
-	$group_guid = (int)$group_guid;
-	$object_guid = (int)$object_guid;
-
-	$group = get_entity($group_guid);
-	$object = get_entity($object_guid);
-
-	if ((!$group) || (!$object)) {
-		return false;
-	}
-
-	if (!($group instanceof ElggGroup)) {
-		$msg = elgg_echo('InvalidClassException:NotValidElggStar', array($group_guid, 'ElggGroup'));
-		throw new InvalidClassException($msg);
-	}
-
-	if (!($object instanceof ElggObject)) {
-		$msg = elgg_echo('InvalidClassException:NotValidElggStar', array($object_guid, 'ElggObject'));
-		throw new InvalidClassException($msg);
-	}
-
-	$object->container_guid = $object->owner_guid;
-	return $object->save();
-}
-
-/**
- * Return a list of this group's members.
- *
- * @param int  $group_guid The ID of the container/group.
- * @param int  $limit      The limit
- * @param int  $offset     The offset
- * @param int  $site_guid  The site
- * @param bool $count      Return the users (false) or the count of them (true)
- *
- * @return mixed
- */
-function get_group_members($group_guid, $limit = 10, $offset = 0, $site_guid = 0, $count = false) {
-
-	// in 1.7 0 means "not set."  rewrite to make sense.
-	if (!$site_guid) {
-		$site_guid = ELGG_ENTITIES_ANY_VALUE;
-	}
-
-	return elgg_get_entities_from_relationship(array(
-		'relationship' => 'member',
-		'relationship_guid' => $group_guid,
-		'inverse_relationship' => TRUE,
-		'type' => 'user',
-		'limit' => $limit,
-		'offset' => $offset,
-		'count' => $count,
-		'site_guid' => $site_guid
-	));
-}
-
-/**
- * Return whether a given user is a member of the group or not.
- *
- * @param int $group_guid The group ID
- * @param int $user_guid  The user guid
- *
- * @return bool
- */
-function is_group_member($group_guid, $user_guid) {
-	$object = check_entity_relationship($user_guid, 'member', $group_guid);
-	if ($object) {
-		return true;
-	} else {
-		return false;
-	}
-}
-
-/**
- * Join a user to a group.
- *
- * @param int $group_guid The group GUID.
- * @param int $user_guid  The user GUID.
- *
- * @return bool
- */
-function join_group($group_guid, $user_guid) {
-	$result = add_entity_relationship($user_guid, 'member', $group_guid);
-
-	if ($result) {
-		$params = array('group' => get_entity($group_guid), 'user' => get_entity($user_guid));
-		elgg_trigger_event('join', 'group', $params);
-	}
-
-	return $result;
-}
-
-/**
- * Remove a user from a group.
- *
- * @param int $group_guid The group.
- * @param int $user_guid  The user.
- *
- * @return bool
- */
-function leave_group($group_guid, $user_guid) {
-	// event needs to be triggered while user is still member of group to have access to group acl
-	$params = array('group' => get_entity($group_guid), 'user' => get_entity($user_guid));
-
-	elgg_trigger_event('leave', 'group', $params);
-	$result = remove_entity_relationship($user_guid, 'member', $group_guid);
-	return $result;
-}
-
-/**
- * Return all groups a user is a member of.
- *
- * @param int $user_guid GUID of user
- *
- * @return array|false
- */
-function get_users_membership($user_guid) {
-	$options = array(
-		'type' => 'group',
-		'relationship' => 'member',
-		'relationship_guid' => $user_guid,
-		'inverse_relationship' => false,
-		'limit' => false,
-	);
-	return elgg_get_entities_from_relationship($options);
-}
-
-/**
- * May the current user access item(s) on this page? If the page owner is a group,
- * membership, visibility, and logged in status are taken into account.
- *
- * @param boolean $forward If set to true (default), will forward the page;
- *                         if set to false, will return true or false.
- *
- * @return bool If $forward is set to false.
- */
-function group_gatekeeper($forward = true) {
-
-	$page_owner_guid = elgg_get_page_owner_guid();
-	if (!$page_owner_guid) {
-		return true;
-	}
-	$visibility = ElggGroupItemVisibility::factory($page_owner_guid);
-
-	if (!$visibility->shouldHideItems) {
-		return true;
-	}
-	if ($forward) {
-		// only forward to group if user can see it
-		$group = get_entity($page_owner_guid);
-		$forward_url = $group ? $group->getURL() : '';
-
-		if (!elgg_is_logged_in()) {
-			$_SESSION['last_forward_from'] = current_page_url();
-			$forward_reason = 'login';
-		} else {
-			$forward_reason = 'member';
-		}
-
-		register_error(elgg_echo($visibility->reasonHidden));
-		forward($forward_url, $forward_reason);
-	}
-
-	return false;
-}
-
-/**
  * Adds a group tool option
  *
  * @see remove_group_tool_option().
@@ -307,7 +43,7 @@ function add_group_tool_option($name, $label, $default_on = true) {
 		$CONFIG->group_tool_options = array();
 	}
 
-	$group_tool_option = new stdClass;
+	$group_tool_option = new \stdClass;
 
 	$group_tool_option->name = $name;
 	$group_tool_option->label = $label;
@@ -339,3 +75,55 @@ function remove_group_tool_option($name) {
 		}
 	}
 }
+
+/**
+ * Allow group members to write to the group container
+ *
+ * @param string $hook   Hook name
+ * @param string $type   Hook type
+ * @param bool   $result The value of the hook
+ * @param array  $params Parameters related to the hook
+ * @return bool
+ * @access private
+ */
+function _elgg_groups_container_override($hook, $type, $result, $params) {
+	$container = $params['container'];
+	$user = $params['user'];
+	if (elgg_instanceof($container, 'group') && $user) {
+		/* @var \ElggGroup $container */
+		if ($container->isMember($user)) {
+			return true;
+		}
+	}
+
+	return $result;
+}
+
+/**
+ * Runs unit tests for the group entities.
+ *
+ * @param string $hook  Hook name
+ * @param string $type  Hook type
+ * @param array  $value Array of unit test locations
+ *
+ * @return array
+ * @access private
+ */
+function _elgg_groups_test($hook, $type, $value) {
+	global $CONFIG;
+	$value[] = $CONFIG->path . 'engine/tests/ElggGroupTest.php';
+	return $value;
+}
+
+/**
+ * init the groups library
+ * @access private
+ */
+function _elgg_groups_init() {
+	elgg_register_plugin_hook_handler('container_permissions_check', 'all', '_elgg_groups_container_override');
+	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_groups_test');
+}
+
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$events->registerHandler('init', 'system', '_elgg_groups_init');
+};

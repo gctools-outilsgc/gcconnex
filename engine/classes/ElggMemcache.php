@@ -5,7 +5,14 @@
  * @package    Elgg.Core
  * @subpackage Memcache
  */
-class ElggMemcache extends ElggSharedMemoryCache {
+class ElggMemcache extends \ElggSharedMemoryCache {
+	/**
+	 * Global Elgg configuration
+	 * 
+	 * @var \stdClass
+	 */
+	private $CONFIG;
+
 	/**
 	 * Minimum version of memcached needed to run
 	 *
@@ -35,35 +42,36 @@ class ElggMemcache extends ElggSharedMemoryCache {
 	 *
 	 * @throws ConfigurationException
 	 */
-	function __construct($namespace = 'default') {
+	public function __construct($namespace = 'default') {
 		global $CONFIG;
+		$this->CONFIG = $CONFIG;
 
 		$this->setNamespace($namespace);
 
 		// Do we have memcache?
 		if (!class_exists('Memcache')) {
-			throw new ConfigurationException('PHP memcache module not installed, you must install php5-memcache');
+			throw new \ConfigurationException('PHP memcache module not installed, you must install php5-memcache');
 		}
 
 		// Create memcache object
 		$this->memcache	= new Memcache;
 
 		// Now add servers
-		if (!$CONFIG->memcache_servers) {
-			throw new ConfigurationException('No memcache servers defined, please populate the $CONFIG->memcache_servers variable');
+		if (!$this->CONFIG->memcache_servers) {
+			throw new \ConfigurationException('No memcache servers defined, please populate the $this->CONFIG->memcache_servers variable');
 		}
 
 		if (is_callable(array($this->memcache, 'addServer'))) {
-			foreach ($CONFIG->memcache_servers as $server) {
+			foreach ($this->CONFIG->memcache_servers as $server) {
 				if (is_array($server)) {
 					$this->memcache->addServer(
 						$server[0],
 						isset($server[1]) ? $server[1] : 11211,
-						isset($server[2]) ? $server[2] : FALSE,
+						isset($server[2]) ? $server[2] : false,
 						isset($server[3]) ? $server[3] : 1,
 						isset($server[4]) ? $server[4] : 1,
 						isset($server[5]) ? $server[5] : 15,
-						isset($server[6]) ? $server[6] : TRUE
+						isset($server[6]) ? $server[6] : true
 					);
 
 				} else {
@@ -71,12 +79,12 @@ class ElggMemcache extends ElggSharedMemoryCache {
 				}
 			}
 		} else {
-			// don't use elgg_echo() here because most of the config hasn't been loaded yet
-			// and it caches the language, which is hard coded in $CONFIG->language as en.
+			// don't use _elgg_services()->translator->translate() here because most of the config hasn't been loaded yet
+			// and it caches the language, which is hard coded in $this->CONFIG->language as en.
 			// overriding it with real values later has no effect because it's already cached.
-			elgg_log("This version of the PHP memcache API doesn't support multiple servers.", 'ERROR');
+			_elgg_services()->logger->error("This version of the PHP memcache API doesn't support multiple servers.");
 
-			$server = $CONFIG->memcache_servers[0];
+			$server = $this->CONFIG->memcache_servers[0];
 			if (is_array($server)) {
 				$this->memcache->connect($server[0], $server[1]);
 			} else {
@@ -86,19 +94,22 @@ class ElggMemcache extends ElggSharedMemoryCache {
 
 		// Get version
 		$this->version = $this->memcache->getVersion();
-		if (version_compare($this->version, ElggMemcache::$MINSERVERVERSION, '<')) {
+		if (version_compare($this->version, \ElggMemcache::$MINSERVERVERSION, '<')) {
 			$msg = vsprintf('Memcache needs at least version %s to run, you are running %s',
-				array(ElggMemcache::$MINSERVERVERSION,
+				array(\ElggMemcache::$MINSERVERVERSION,
 				$this->version
 			));
 
-			throw new ConfigurationException($msg);
+			throw new \ConfigurationException($msg);
 		}
 
 		// Set some defaults
-		if (isset($CONFIG->memcache_expires)) {
-			$this->expires = $CONFIG->memcache_expires;
+		if (isset($this->CONFIG->memcache_expires)) {
+			$this->expires = $this->CONFIG->memcache_expires;
 		}
+		
+		// make sure memcache is reset
+		_elgg_services()->events->registerHandler('cache:flush', 'system', array($this, 'clear'));
 	}
 
 	/**
@@ -148,7 +159,9 @@ class ElggMemcache extends ElggSharedMemoryCache {
 
 		$result = $this->memcache->set($key, $data, null, $expires);
 		if ($result === false) {
-			elgg_log("MEMCACHE: FAILED TO SAVE $key", 'ERROR');
+			_elgg_services()->logger->error("MEMCACHE: SAVE FAIL $key");
+		} else {
+			_elgg_services()->logger->info("MEMCACHE: SAVE SUCCESS $key");
 		}
 
 		return $result;
@@ -168,7 +181,9 @@ class ElggMemcache extends ElggSharedMemoryCache {
 
 		$result = $this->memcache->get($key);
 		if ($result === false) {
-			elgg_log("MEMCACHE: FAILED TO LOAD $key", 'ERROR');
+			_elgg_services()->logger->info("MEMCACHE: LOAD MISS $key");
+		} else {
+			_elgg_services()->logger->info("MEMCACHE: LOAD HIT $key");
 		}
 
 		return $result;
@@ -188,15 +203,21 @@ class ElggMemcache extends ElggSharedMemoryCache {
 	}
 
 	/**
-	 * Clears the entire cache?
-	 *
-	 * @todo write or remove.
+	 * Clears the entire cache
 	 *
 	 * @return true
 	 */
 	public function clear() {
-		// DISABLE clearing for now - you must use delete on a specific key.
-		return true;
+		$result = $this->memcache->flush();
+		if ($result === false) {
+			_elgg_services()->logger->info("MEMCACHE: failed to flush {$this->getNamespace()}");
+		} else {
+			sleep(1); // needed because http://php.net/manual/en/memcache.flush.php#81420
+			
+			_elgg_services()->logger->info("MEMCACHE: flushed {$this->getNamespace()}");
+		}
+		
+		return $result;
 
 		// @todo Namespaces as in #532
 	}

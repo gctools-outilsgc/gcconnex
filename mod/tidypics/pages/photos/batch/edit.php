@@ -6,7 +6,7 @@
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
 
-gatekeeper();
+elgg_gatekeeper();
 
 $guid = (int) get_input('guid');
 
@@ -39,7 +39,7 @@ $body = elgg_view_layout('content', array(
 	'filter' => false,
 	'content' => $content,
 	'title' => elgg_echo('tidypics:editprops'),
-	'sidebar' => elgg_view('photos/sidebar', array('page' => 'album')),
+	'sidebar' => elgg_view('photos/sidebar_al', array('page' => 'upload')),
 ));
 
 echo elgg_view_page($title, $body);

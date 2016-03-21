@@ -42,7 +42,7 @@ switch($type) {
 		));
 		break;
 	default:
-		$friends = $pageowner->getFriends('', 9999);
+		$friends = $pageowner->getFriends(array('limit' => 0));
 
 		$content = elgg_view('input/friendspicker', array(
 			'entities' => $friends,
@@ -52,6 +52,7 @@ switch($type) {
 			'collection_id' => $collection,
 			'formtarget' => $site_url . 'action/friends/collections/edit',
 		));
+
 		break;
 }
 

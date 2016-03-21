@@ -1,6 +1,6 @@
 <?php
 
-$french = array(
+return array(
 
 	/**
 	 * Menu items and titles
@@ -21,19 +21,19 @@ $french = array(
 	'messageboard:history' => "histoire",
 
 	'messageboard:owner' => '%s\'s panneau de message',
-	'messageboard:owner_history' => '%s\'s posts on %s\'s message board',
+	'messageboard:owner_history' => '%s a envoyé un message sur le forum de %s',
 
 	/**
 	 * Message board widget river
 	 */
-	'river:messageboard:user:default' => "%s posted on %s's message board",
+	'river:messageboard:user:default' => "%s a envoyé un message sur le forum de %s",
 
 	/**
 	 * Status messages
 	 */
 
-	'messageboard:posted' => "You successfully posted on the message board.",
-	'messageboard:deleted' => "You successfully deleted the message.",
+	'messageboard:posted' => "Votre message a bien été envoyé sur le forum.",
+	'messageboard:deleted' => "Votre message a bien été supprimé.",
 
 	/**
 	 * Email messages
@@ -46,27 +46,25 @@ $french = array(
 %s
 
 
-To view your message board comments, click here:
+Pour voir vos messages de forum, cliquez sur :
 
 	%s
 
-To view %s's profile, click here:
+Pour voir le profil de %s, cliquez sur :
 
 	%s
 
-You cannot reply to this email.",
+Vous ne pouvez pas répondre à cet email.",
 
 	/**
 	 * Error messages
 	 */
 
-	'messageboard:blank' => "Sorry; you need to actually put something in the message area before we can save it.",
-	'messageboard:notfound' => "Sorry; we could not find the specified item.",
-	'messageboard:notdeleted' => "Sorry; we could not delete this message.",
-	'messageboard:somethingwentwrong' => "Something went wrong when trying to save your message, make sure you actually wrote a message.",
+	'messageboard:blank' => "Désolé, vous devez écrire quelque chose dans le corps du message avant de pouvoir l'enregistrer.",
+	'messageboard:notfound' => "Désolé, l'élément spécifié n'a pu être trouvé.",
+	'messageboard:notdeleted' => "Désolé, ce message n'a pu être effacé.",
+	'messageboard:somethingwentwrong' => "Quelque chose a tourné court lors de l'enregistrement de votre message, veuillez vérifier que vous avez bien écrit un message.",
 
-	'messageboard:failure' => "An unexpected error occurred when adding your message. Please try again.",
+	'messageboard:failure' => "Une erreur imprévue s'est produite lors de l'ajout de votre message. Veuillez réeessayer.",
 
 );
-
-add_translation("fr", $french);

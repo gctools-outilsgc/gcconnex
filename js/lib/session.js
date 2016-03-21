@@ -9,10 +9,10 @@ elgg.provide('elgg.session');
  * @param {string} value
  * @param {Object} options
  * 
- *  {number|Date} options[expires]
- * 	{string} options[path]
- * 	{string} options[domain]
- * 	{boolean} options[secure]
+ * {number|Date} options[expires]
+ * {string} options[path]
+ * {string} options[domain]
+ * {boolean} options[secure]
  * 
  * @return {string|undefined} The value of the cookie, if only name is specified. Undefined if no value set
  */
@@ -121,3 +121,9 @@ elgg.is_admin_logged_in = function() {
  * @deprecated Use elgg.session.cookie instead
  */
 jQuery.cookie = elgg.session.cookie;
+
+// This just has to happen after ElggUser is defined, however it's probably
+// better to have this procedural code here than in ElggUser.js
+if (elgg.session.user) {
+	elgg.session.user = new elgg.ElggUser(elgg.session.user);
+}

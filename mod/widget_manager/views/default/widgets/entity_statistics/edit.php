@@ -10,8 +10,9 @@ foreach ($entity_stats as $k => $entry) {
 		
 		if ($a == "__base__") {
 			$a = elgg_echo("item:{$k}");
-			if (empty($a))
+			if (empty($a)) {
 				$a = $k;
+			}
 		} else {
 			if (empty($a)) {
 				$a = elgg_echo("item:{$k}");
@@ -30,5 +31,5 @@ foreach ($entity_stats as $k => $entry) {
 
 $selected_entities = $vars["entity"]->selected_entities;
 
-echo elgg_echo("widgets:entity_statistics:settings:selected_entities"); 
+echo elgg_echo("widgets:entity_statistics:settings:selected_entities");
 echo elgg_view("input/checkboxes", array("name" => "params[selected_entities]", "options" => $options_values, "value" => $selected_entities));

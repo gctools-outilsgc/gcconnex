@@ -1,9 +1,9 @@
 <?php
 /**
  * Elgg wire plugin
- * 
+ *
  * Forked from Curverider's version
- * 
+ *
  * JHU/APL Contributors:
  * Cash Costello
  * Clark Updike
@@ -21,7 +21,6 @@ function thewire_init() {
 
 	// register the wire's JavaScript
 	$thewire_js = elgg_get_simplecache_url('js', 'thewire');
-	elgg_register_simplecache_view('js/thewire');
 	elgg_register_js('elgg.thewire', $thewire_js, 'footer');
 
 	elgg_register_ajax_view('thewire/previous');
@@ -39,27 +38,24 @@ function thewire_init() {
 	// Extend system CSS with our own styles, which are defined in the thewire/css view
 	elgg_extend_view('css/elgg', 'thewire/css');
 
-	//extend views
-	elgg_extend_view('activity/thewire', 'thewire/activity_view');
+	// Add a user's latest wire post to profile
 	elgg_extend_view('profile/status', 'thewire/profile_status');
-	elgg_extend_view('js/initialise_elgg', 'thewire/js/textcounter');
 
 	// Register a page handler, so we can have nice URLs
 	elgg_register_page_handler('thewire', 'thewire_page_handler');
 
 	// Register a URL handler for thewire posts
-	elgg_register_entity_url_handler('object', 'thewire', 'thewire_url');
+	elgg_register_plugin_hook_handler('entity:url', 'object', 'thewire_set_url');
 
 	elgg_register_widget_type('thewire', elgg_echo('thewire'), elgg_echo("thewire:widget:desc"));
 
 	// Register for search
 	elgg_register_entity_type('object', 'thewire');
 
-	// Register granular notification for this type
-	register_notification_object('object', 'thewire', elgg_echo('thewire:notify:subject'));
-
-	// Listen to notification events and supply a more useful message
-	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'thewire_notify_message');
+	// Register for notifications
+	elgg_register_notification_event('object', 'thewire');
+	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:thewire', 'thewire_prepare_notification');
+	elgg_register_plugin_hook_handler('get', 'subscriptions', 'thewire_add_original_poster');
 
 	// Register actions
 	$action_base = elgg_get_plugins_path() . 'thewire/actions';
@@ -150,46 +146,61 @@ function thewire_page_handler($page) {
 
 /**
  * Override the url for a wire post to return the thread
- * 
- * @param ElggObject $thewirepost Wire post object
+ *
+ * @param string $hook
+ * @param string $type
+ * @param string $url
+ * @param array  $params
+ * @return string
  */
-function thewire_url($thewirepost) {
-	global $CONFIG;
-	return $CONFIG->url . "thewire/view/" . $thewirepost->guid;
+function thewire_set_url($hook, $type, $url, $params) {
+	$entity = $params['entity'];
+	if (elgg_instanceof($entity, 'object', 'thewire')) {
+		return "thewire/view/" . $entity->guid;
+	}
 }
 
 /**
- * Returns the notification body
+ * Prepare a notification message about a new wire post
  *
- * @return $string
+ * @param string                          $hook         Hook name
+ * @param string                          $type         Hook type
+ * @param Elgg\Notifications\Notification $notification The notification to prepare
+ * @param array                           $params       Hook parameters
+ * @return Elgg\Notifications\Notification
  */
-function thewire_notify_message($hook, $entity_type, $returnvalue, $params) {
-	global $CONFIG;
-	
-	$entity = $params['entity'];
-	if (($entity instanceof ElggEntity) && ($entity->getSubtype() == 'thewire')) {
-		$descr = $entity->description;
-		$owner = $entity->getOwnerEntity();
-		if ($entity->reply) {
-			// have to do this because of poor design of Elgg notification system
-			$parent_post = get_entity(get_input('parent_guid'));
-			if ($parent_post) {
-				$parent_owner = $parent_post->getOwnerEntity();
-			}
-			$body = sprintf(elgg_echo('thewire:notify:reply'), $owner->name, $parent_owner->name);
-		} else {
-			$body = sprintf(elgg_echo('thewire:notify:post'), $owner->name);
+function thewire_prepare_notification($hook, $type, $notification, $params) {
+
+	$entity = $params['event']->getObject();
+	$owner = $params['event']->getActor();
+	$recipient = $params['recipient'];
+	$language = $params['language'];
+	$method = $params['method'];
+	$descr = $entity->description;
+
+	$subject = elgg_echo('thewire:notify:subject', array($owner->name), $language);
+	if ($entity->reply) {
+		$parent = thewire_get_parent($entity->guid);
+		if ($parent) {
+			$parent_owner = $parent->getOwnerEntity();
+			$body = elgg_echo('thewire:notify:reply', array($owner->name, $parent_owner->name), $language);
 		}
-		$body .= "\n\n" . $descr . "\n\n";
-		$body .= elgg_echo('thewire') . ": {$CONFIG->url}thewire";
-		return $body;
+	} else {
+		$body = elgg_echo('thewire:notify:post', array($owner->name), $language);
 	}
-	return $returnvalue;
+	$body .= "\n\n" . $descr . "\n\n";
+	$body .= elgg_echo('thewire:notify:footer', array($entity->getURL()), $language);
+
+	$notification->subject = $subject;
+	$notification->body = $body;
+	$notification->summary = elgg_echo('thewire:notify:summary', array($descr), $language);
+
+	return $notification;
 }
 
 /**
  * Get an array of hashtags from a text string
- * 
+ *
  * @param string $text The text of a post
  * @return array
  */
@@ -203,7 +214,7 @@ function thewire_get_hashtags($text) {
 
 /**
  * Replace urls, hash tags, and @'s by links
- * 
+ *
  * @param string $text The text of a post
  * @return string
  */
@@ -255,8 +266,11 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
 	$post->owner_guid = $userid;
 	$post->access_id = $access_id;
 
-	// only 200 characters allowed
-	$text = elgg_substr($text, 0, 200);
+	// Character limit is now from config
+	$limit = elgg_get_plugin_setting('limit', 'thewire');
+	if ($limit > 0) {
+		$text = elgg_substr($text, 0, $limit);
+	}
 
 	// no html tags allowed so we escape
 	$post->description = htmlspecialchars($text, ENT_NOQUOTES, 'UTF-8');
@@ -288,7 +302,12 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
 	}
 
 	if ($guid) {
-		add_to_river('river/object/thewire/create', 'create', $post->owner_guid, $post->guid);
+		elgg_create_river_item(array(
+			'view' => 'river/object/thewire/create',
+			'action_type' => 'create',
+			'subject_guid' => $post->owner_guid,
+			'object_guid' => $post->guid,
+		));
 
 		// let other plugins know we are setting a user status
 		$params = array(
@@ -305,49 +324,45 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
 }
 
 /**
- * Send notification to poster of parent post if not notified already
+ * Add temporary subscription for original poster if not already registered to
+ * receive a notification of reply
  *
- * @param int      $guid        The guid of the reply wire post
- * @param int      $parent_guid The guid of the original wire post
- * @param ElggUser $user        The user who posted the reply
- * @return void
+ * @param string $hook          Hook name
+ * @param string $type          Hook type
+ * @param array  $subscriptions Subscriptions for a notification event
+ * @param array  $params        Parameters including the event
+ * @return array
  */
-function thewire_send_response_notification($guid, $parent_guid, $user) {
-	$parent_owner = get_entity($parent_guid)->getOwnerEntity();
-	$user = elgg_get_logged_in_user_entity();
-
-	// check to make sure user is not responding to self
-	if ($parent_owner->guid != $user->guid) {
-		// check if parent owner has notification for this user
-		$send_response = true;
-		global $NOTIFICATION_HANDLERS;
-		foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
-			if (check_entity_relationship($parent_owner->guid, 'notify' . $method, $user->guid)) {
-				$send_response = false;
+function thewire_add_original_poster($hook, $type, $subscriptions, $params) {
+	$event = $params['event'];
+	$entity = $event->getObject();
+	if ($entity && elgg_instanceof($entity, 'object', 'thewire')) {
+		$parent = $entity->getEntitiesFromRelationship(array('relationship' => 'parent'));
+		if ($parent) {
+			$parent = $parent[0];
+			// do not add a subscription if reply was to self
+			if ($parent->getOwnerGUID() !== $entity->getOwnerGUID()) {
+				if (!array_key_exists($parent->getOwnerGUID(), $subscriptions)) {
+					$personal_methods = (array)get_user_notification_settings($parent->getOwnerGUID());
+					$methods = array();
+					foreach ($personal_methods as $method => $state) {
+						if ($state) {
+							$methods[] = $method;
+						}
+					}
+					if ($methods) {
+						$subscriptions[$parent->getOwnerGUID()] = $methods;
+						return $subscriptions;
+					}
+				}
 			}
-		}
-
-		// create the notification message
-		if ($send_response) {
-			// grab same notification message that goes to everyone else
-			$params = array(
-				'entity' => get_entity($guid),
-				'method' => "email",
-			);
-			$msg = thewire_notify_message("", "", "", $params);
-
-			notify_user(
-					$parent_owner->guid,
-					$user->guid,
-					elgg_echo('thewire:notify:subject'),
-					$msg);
 		}
 	}
 }
 
 /**
  * Get the latest wire guid - used for ajax update
- * 
+ *
  * @return guid
  */
 function thewire_latest_guid() {
@@ -365,9 +380,9 @@ function thewire_latest_guid() {
 
 /**
  * Get the parent of a wire post
- * 
+ *
  * @param int $post_guid The guid of the reply
- * @return ElggObject or null 
+ * @return ElggObject or null
  */
 function thewire_get_parent($post_guid) {
 	$parents = elgg_get_entities_from_relationship(array(
@@ -409,7 +424,7 @@ function thewire_setup_entity_menu_items($hook, $type, $value, $params) {
 	if (elgg_is_logged_in()) {
 		$options = array(
 			'name' => 'reply',
-			'text' => elgg_echo('thewire:reply'),
+			'text' => elgg_echo('reply'),
 			'href' => "thewire/reply/$entity->guid",
 			'priority' => 150,
 		);
@@ -419,7 +434,7 @@ function thewire_setup_entity_menu_items($hook, $type, $value, $params) {
 	if ($entity->reply) {
 		$options = array(
 			'name' => 'previous',
-			'text' => elgg_echo('thewire:previous'),
+			'text' => elgg_echo('previous'),
 			'href' => "thewire/previous/$entity->guid",
 			'priority' => 160,
 			'link_class' => 'thewire-previous',

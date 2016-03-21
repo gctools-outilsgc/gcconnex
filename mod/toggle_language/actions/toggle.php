@@ -10,10 +10,10 @@
     // Toggle language 
 	global $SESSION;
 	
-	if ($SESSION['language'] == 'en') {
-		$_SESSION['language'] = "fr";
+	if (_elgg_services()->session->get('language') == 'en') {
+		_elgg_services()->session->set( 'language', 'fr' );
 	} else {
-		$_SESSION['language'] = "en";
+		_elgg_services()->session->set( 'language', 'en' );
 	}
 	
 	forward($_SERVER['HTTP_REFERER']);

@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 $event = $vars['entity'];
 if ($event->organizer) {
 	$organizer = "\nORGANIZER;CN={$event->organizer}\n";
@@ -8,12 +9,12 @@ if ($event->organizer) {
 
 if ($event->description) {
 	// make sure that we are using Unix line endings
-	$description = str_replace("\r\n","\n",$event->description);
-	$description = str_replace("\r","\n",$description);
+	$description = str_replace("\r\n", "\n", $event->description);
+	$description = str_replace("\r", "\n", $description);
 	
 	// now convert to icalendar format
-	$description = str_replace("\n",'\n',$description);
-	$description = wordwrap($description,75,"\r\n ",TRUE);
+	$description = str_replace("\n", '\n', $description);
+	$description = wordwrap($description, 75, "\r\n", true);
 } else {
 	$description = '';
 }
@@ -39,6 +40,6 @@ DESCRIPTION:<?php echo $description;  ?>
 
 LOCATION:<?php echo $event->venue;  ?><?php echo $organizer;  ?>
 
-CATEGORIES:<?php implode(",",$event->tags);  ?>
+CATEGORIES:<?php implode(",", $event->tags);  ?>
 
 END:VEVENT

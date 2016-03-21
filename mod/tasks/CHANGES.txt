@@ -1,5 +1,27 @@
 = Version History =
 
-GC Changes
+2.2 (2014-08-14)
 
-GC 1.0 - French Language file added  
+- fixed: edit link on list
+- fixed: navigation bug on require
+- added: calendar capabilities
+
+
+2.1 (2014-08-08)
+
+- fixed: tons of bug with the page plugin
+- fixed: layouts design (widget, summary, lists)
+- added: 1.9.x compatibility
+
+x.x: ColdTricks IT, many thanks to them
+
+- added: support for Widget Manager
+- added: Dutch translation
+- fixed: PHP warnings and notices
+- fixed: Elgg depricated notice
+- fixed: some views not correctly renamed from pages
+- removed: unused views/images
+
+2.0 (2013-04-02):
+
+- latest version of the plugin by FX Nion

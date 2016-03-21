@@ -1,38 +1,35 @@
 <?php
-/**
- * Bookmarks English language file
- */
-
-$english = array(
+return array(
 
 	/**
 	 * Menu items and titles
 	 */
 	'bookmarks' => "Bookmarks",
-	'bookmarks:add' => "Add bookmark",
+	'bookmarks:add' => "Add a bookmark",
 	'bookmarks:edit' => "Edit bookmark",
 	'bookmarks:owner' => "%s's bookmarks",
-	'bookmarks:friends' => "Friends' bookmarks",
+	'bookmarks:friends' => "Colleague's bookmarks",
 	'bookmarks:everyone' => "All site bookmarks",
 	'bookmarks:this' => "Bookmark this page",
 	'bookmarks:this:group' => "Bookmark in %s",
 	'bookmarks:bookmarklet' => "Get bookmarklet",
 	'bookmarks:bookmarklet:group' => "Get group bookmarklet",
 	'bookmarks:inbox' => "Bookmarks inbox",
-	'bookmarks:morebookmarks' => "More bookmarks",
-	'bookmarks:more' => "More",
 	'bookmarks:with' => "Share with",
 	'bookmarks:new' => "A new bookmark",
 	'bookmarks:address' => "Address of the bookmark",
 	'bookmarks:none' => 'No bookmarks',
 
-	'bookmarks:notification' =>
-'%s added a new bookmark:
+	'bookmarks:notify:summary' => 'New bookmark called %s',
+	'bookmarks:notify:subject' => 'New bookmark: %s',
+	'bookmarks:notify:body' =>
+'%s added a new bookmark: %s
 
-%s - %s
+Address: %s
+
 %s
 
-View and comment on the new bookmark:
+View and comment on the bookmark:
 %s
 ',
 
@@ -54,23 +51,20 @@ View and comment on the new bookmark:
 	'bookmarks:group' => 'Group bookmarks',
 	'bookmarks:enablebookmarks' => 'Enable group bookmarks',
 	'bookmarks:nogroup' => 'This group does not have any bookmarks yet',
-	'bookmarks:more' => 'More bookmarks',
-
-	'bookmarks:no_title' => 'No title',
-
+	
 	/**
 	 * Widget and bookmarklet
 	 */
 	'bookmarks:widget:description' => "Display your latest bookmarks.",
 
 	'bookmarks:bookmarklet:description' =>
-			"The bookmarks bookmarklet allows you to share any resource you find on the web with your friends, or just bookmark it for yourself. To use it, simply drag the following button to your browser's links bar:",
+			"A bookmarklet is a special kind of button you save to your browser's links bar. This allows you to save any resource you find on the web to your bookmarks, and optionally share it with your friends. To set it up, drag the button below to your browser's links bar:",
 
 	'bookmarks:bookmarklet:descriptionie' =>
 			"If you are using Internet Explorer, you will need to right click on the bookmarklet icon, select 'add to favorites', and then the Links bar.",
 
 	'bookmarks:bookmarklet:description:conclusion' =>
-			"You can then save any page you visit by clicking it at any time.",
+			"You can then bookmark any page you visit by clicking the button in your browser at any time.",
 
 	/**
 	 * Status messages
@@ -86,6 +80,5 @@ View and comment on the new bookmark:
 	'bookmarks:save:failed' => "Your bookmark could not be saved. Make sure you've entered a title and address and then try again.",
 	'bookmarks:save:invalid' => "The address of the bookmark is invalid and could not be saved.",
 	'bookmarks:delete:failed' => "Your bookmark could not be deleted. Please try again.",
+	'bookmarks:unknown_bookmark' => 'Cannot find specified bookmark',
 );
-
-add_translation('en', $english);

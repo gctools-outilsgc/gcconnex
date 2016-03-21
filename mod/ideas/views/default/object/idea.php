@@ -94,13 +94,15 @@ if ( $sum == '' ) $sum = 0;
 $likes = elgg_get_annotations(array(
     'guids' => $idea->guid,
     'annotation_names' => array('point'),
-    'annotation_values' => 1
+    'annotation_values' => 1,
+	'limit' => 0
 ));
 
 $dislikes = elgg_get_annotations(array(
     'guids' => $idea->guid,
     'annotation_names' => array('point'),
-    'annotation_values' => -1
+    'annotation_values' => -1,
+	'limit' => 0
 ));
 
 // current users votes for idea

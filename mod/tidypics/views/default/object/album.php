@@ -20,3 +20,5 @@ if ($full_view) {
 		echo elgg_view('object/album/gallery', $vars);
 	}
 }
+
+return true;

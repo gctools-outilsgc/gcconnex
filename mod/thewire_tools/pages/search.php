@@ -56,7 +56,8 @@ $body_vars = array(
 $form = elgg_view_form("thewire/search", $form_vars , $body_vars);
 
 // build page
-$body = elgg_view_layout("one_sidebar", array(
+$body = elgg_view_layout("content", array(
+    'filter_context' => 'mentions',
 	"title" => $title_text,
 	"content" => $form . $result
 ));

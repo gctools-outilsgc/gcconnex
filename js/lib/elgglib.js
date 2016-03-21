@@ -12,6 +12,13 @@ var elgg = elgg || {};
 elgg.global = this;
 
 /**
+ * Duplicate of the server side ACCESS_PRIVATE access level.
+ *
+ * This is a temporary hack to prevent having to mix up js and PHP in js views.
+ */
+elgg.ACCESS_PRIVATE = 0;
+
+/**
  * Convenience reference to an empty function.
  *
  * Save memory by not generating multiple empty functions.
@@ -244,13 +251,12 @@ elgg.inherit = function(Child, Parent) {
  *
  * @param {String} url The url to normalize
  * @return {String} The extended url
- * @private
  */
 elgg.normalize_url = function(url) {
 	url = url || '';
 	elgg.assertTypeOf('string', url);
 
-	validated = (function(url) {
+	function validate(url) {
 		url = elgg.parse_url(url);
 		if (url.scheme){
 			url.scheme = url.scheme.toLowerCase();
@@ -269,10 +275,18 @@ elgg.normalize_url = function(url) {
 			return false;
 		}
 		return true;
-	})(url);
+	};
+
+	// ignore anything with a recognized scheme
+	if (url.indexOf('http:') === 0 ||
+		url.indexOf('https:') === 0 ||
+		url.indexOf('javascript:') === 0 ||
+		url.indexOf('mailto:') === 0 ) {
+		return url;
+	}
 
 	// all normal URLs including mailto:
-	if (validated) {		
+	else if (validate(url)) {
 		return url;
 	}
 
@@ -282,10 +296,6 @@ elgg.normalize_url = function(url) {
 		return url;
 	}
 
-	// 'javascript:'
-	else if (url.indexOf('javascript:') === 0 || url.indexOf('mailto:') === 0 ) {
-		return url;
-	}
 
 	// watch those double escapes in JS.
 
@@ -374,6 +384,32 @@ elgg.register_error = function(errors, delay) {
 };
 
 /**
+ * Logs a notice about use of a deprecated function or capability
+ * @param {String} msg         The deprecation message to display
+ * @param {Number} dep_version The version the function was deprecated for
+ * @since 1.9
+ */
+elgg.deprecated_notice = function(msg, dep_version) {
+	if (elgg.is_admin_logged_in()) {
+		var parts = elgg.release.split('.');
+		var elgg_major_version = parseInt(parts[0], 10);
+		var elgg_minor_version = parseInt(parts[1], 10);
+		var dep_major_version = Math.floor(dep_version);
+		var dep_minor_version = 10 * (dep_version - dep_major_version);
+
+		msg = "Deprecated in Elgg " + dep_version + ": " + msg;
+
+		if ((dep_major_version < elgg_major_version) || (dep_minor_version < elgg_minor_version)) {
+			elgg.register_error(msg);
+		} else {
+			if (typeof console !== "undefined") {
+				console.warn(msg);
+			}
+		}
+	}
+};
+
+/**
  * Meant to mimic the php forward() function by simply redirecting the
  * user to another page.
  *
@@ -396,24 +432,23 @@ elgg.parse_url = function(url, component, expand) {
 	// Adapted from http://blog.stevenlevithan.com/archives/parseuri
 	// which was release under the MIT
 	// It was modified to fix mailto: and javascript: support.
-	var
-	expand = expand || false,
-	component = component || false,
+	expand = expand || false;
+	component = component || false;
 	
-	re_str =
-		// scheme (and user@ testing)
-		'^(?:(?![^:@]+:[^:@/]*@)([^:/?#.]+):)?(?://)?'
-		// possibly a user[:password]@
-		+ '((?:(([^:@]*)(?::([^:@]*))?)?@)?'
-		// host and port
-		+ '([^:/?#]*)(?::(\\d*))?)'
-		// path
-		+ '(((/(?:[^?#](?![^?#/]*\\.[^?#/.]+(?:[?#]|$)))*/?)?([^?#/]*))'
-		// query string
-		+ '(?:\\?([^#]*))?'
-		// fragment
-		+ '(?:#(.*))?)',
-	keys = {
+	var re_str =
+			// scheme (and user@ testing)
+			'^(?:(?![^:@]+:[^:@/]*@)([^:/?#.]+):)?(?://)?'
+			// possibly a user[:password]@
+			+ '((?:(([^:@]*)(?::([^:@]*))?)?@)?'
+			// host and port
+			+ '([^:/?#]*)(?::(\\d*))?)'
+			// path
+			+ '(((/(?:[^?#](?![^?#/]*\\.[^?#/.]+(?:[?#]|$)))*/?)?([^?#/]*))'
+			// query string
+			+ '(?:\\?([^#]*))?'
+			// fragment
+			+ '(?:#(.*))?)',
+		keys = {
 			1: "scheme",
 			4: "user",
 			5: "pass",
@@ -422,8 +457,8 @@ elgg.parse_url = function(url, component, expand) {
 			9: "path",
 			12: "query",
 			13: "fragment"
-	},
-	results = {};
+		},
+		results = {};
 
 	if (url.indexOf('mailto:') === 0) {
 		results['scheme'] = 'mailto';
@@ -467,16 +502,27 @@ elgg.parse_url = function(url, component, expand) {
  * @return {Object} The parsed object string
  */
 elgg.parse_str = function(string) {
-	var params = {};
-	var result,
+	var params = {},
+		result,
 		key,
 		value,
-		re = /([^&=]+)=?([^&]*)/g;
+		re = /([^&=]+)=?([^&]*)/g,
+		re2 = /\[\]$/;
 
+	// assignment intentional
 	while (result = re.exec(string)) {
 		key = decodeURIComponent(result[1].replace(/\+/g, ' '));
 		value = decodeURIComponent(result[2].replace(/\+/g, ' '));
-		params[key] = value;
+
+		if (re2.test(key)) {
+			key = key.replace(re2, '');
+			if (!params[key]) {
+				params[key] = [];
+			}
+			params[key].push(value);
+		} else {
+			params[key] = value;
+		}
 	}
 	
 	return params;
@@ -523,7 +569,7 @@ elgg.push_to_object_array = function(object, parent, value) {
 	elgg.assertTypeOf('string', parent);
 
 	if (!(object[parent] instanceof Array)) {
-		object[parent] = []
+		object[parent] = [];
 	}
 
 	if ($.inArray(value, object[parent]) < 0) {
@@ -545,19 +591,4 @@ elgg.is_in_object_array = function(object, parent, value) {
 	elgg.assertTypeOf('string', parent);
 
 	return typeof(object[parent]) != 'undefined' && $.inArray(value, object[parent]) >= 0;
-};
-
-/**
- * Triggers the init hook when the library is ready
- *
- * Current requirements:
- * - DOM is ready
- * - languages loaded
- *
- */
-elgg.initWhenReady = function() {
-	if (elgg.config.languageReady && elgg.config.domReady) {
-		elgg.trigger_hook('init', 'system');
-		elgg.trigger_hook('ready', 'system');
-	}
 };

@@ -12,7 +12,9 @@ function invitefriends_init() {
 
 	elgg_register_action('invitefriends/invite', elgg_get_plugins_path() . 'invitefriends/actions/invite.php');
 
-	if (elgg_is_logged_in()) {
+	elgg_register_plugin_hook_handler('register', 'user', 'invitefriends_add_friends');
+$filter_context = elgg_extract('filter_context', array(), 'all');
+	if (elgg_is_logged_in() && elgg_get_config('allow_registration')) {
 		$params = array(
 			'name' => 'invite',
 			'text' => elgg_echo('friends:invite'),
@@ -30,10 +32,14 @@ function invitefriends_init() {
  * @return bool
  */
 function invitefriends_page_handler($page) {
-	gatekeeper();
+	elgg_gatekeeper();
 	
 	// GCchange - Ilia: fix colleague circles link in menu not appearing on this page
-	collections_submenu_items();
+	//collections_submenu_items();
+
+	if (!elgg_get_config('allow_registration')) {
+		return false;
+	}
 	
 	elgg_set_context('friends');
 	elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
@@ -50,4 +56,30 @@ function invitefriends_page_handler($page) {
 
 	echo elgg_view_page($title, $body);
 	return true;
+}
+
+/**
+ * Add friends if invite code was set
+ *
+ * @param string $hook   Hook name
+ * @param string $type   Hook type
+ * @param bool   $result Whether to allow registration
+ * @param array  $params Hook params
+ * @return void
+ */
+function invitefriends_add_friends($hook, $type, $result, $params) {
+	$user = $params['user'];
+	/* @var ElggUser $user */
+	$friend_guid = $params['friend_guid'];
+	$invite_code = $params['invitecode'];
+
+	// If $friend_guid has been set, make mutual friends
+	if ($friend_guid) {
+		if ($friend_user = get_user($friend_guid)) {
+			if (elgg_validate_invite_code($friend_user->username, $invite_code)) {
+				$user->addFriend($friend_guid, true);
+				$friend_user->addFriend($user->guid, true);
+			}
+		}
+	}
 }

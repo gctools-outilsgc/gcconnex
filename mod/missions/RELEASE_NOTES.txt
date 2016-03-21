@@ -1,0 +1,98 @@
+This plugin adds micro mission functionality to the GCConnex webpage. 
+Current functionality includes posting a job opportunity, displaying the job opportunity, searching for a job opportunity or candidate with a simple and advanced search, editing a mission, 
+inviting a candidate to a mission, completing or cancelling a mission and providing feedback for a completed mission.
+This plugin currently must be placed after missions_organization and requries that plugin to be active.
+
+--------------------------------------------------------------------------------------------------------------
+
+OVERVIEW:
+1)
+This plugin adds a menu item to the left hand side menu on GCConnex.
+This menu item leads the user to the missions front page where they can see a river of the most recently created missions or nothing if no missions have been posted yet.
+On this page, there is a right hand side menu which the user can follow to the plugin's other pages.
+
+Post opportunity will lead the user to a form. When they are done filling out that form and submit it they will have a second form to complete.
+Once that form is complete and submitted they will have one final form to complete. 
+Upon submission their mission will be created and they will be forwarded to a display of the mission information.
+The design of these pages was guided by the given wireframes.
+
+Search will give the user a single text input search field.
+Upon submission, the missions title, type and description will be searched for the given input.
+
+Advanced search will allow users to customize the search behavior by selecting a certain number of search parameters.
+Upon selection, input fields will be generated accordingly.
+Upon submission, the search will check the given parameters and use logic appropriate to each.
+
+Browse latest will display the latest missions.
+Searches will display missions in an abbreviated format.
+Missions display design was guided by the given wireframes.
+
+Posting an opportunity, clicking on the title link in the river or clicking the read more button from the search display will take the user to a display of the mission information.
+From here, the user who created the mission may delete it.
+
+In the administration panel and under settings, there is a Micro Missions page.
+
+2)
+Both search and advanced search can search for candidates according to some of their profile information (education, experience, skills and portfolio).
+Search and advanced search now have two buttons which allow users to switch between mission and candidate searching.
+Functionality is otherwise the same.
+
+Candidates can be invited to a mission from the mission display page (fill button) or the candidate search result page (invite button).
+Inviting a user sends them a notification with a link to an invitation page from which they can accept or deny the invitation.
+Either choice will also message back the mission owner.
+
+Candidates can also apply to a mission through the mission display.
+This will allow them to write a block of text to which their profile information (education, experience and skills) will be appended.
+This information is then send to the mission owner through a notification.
+
+My Missions will display missions which are related to the logged in user whether the user generated the missions or has accepted a posting to one of those missions.
+
+3)
+Plugins now work with GCconnex 1.12.
+Some aesthetic changes were made to improve visual design.
+
+Mission managers can now edit their missions by clicking the edit button in the mission view.
+This allows them to change all the same field values from the post opportunity forms.
+
+Candidates can be removed from a mission from the mission view by pressing the remove button next to the candidates name.
+
+Some functionality is inactive if a user has not opted in to micro missions from their profile.
+Users may opt in or opt out directly from the micro missions main page.
+Users who have not opted in can not be invited to micro missions.
+Users who have opted in will be displayed first in a candidate search.
+Users who have not opted in can not post a mission.
+Users who apply to a missions are opted in if they were not previously.
+
+4)
+Layout changes were made to comply with wireframes provided by TBS.
+
+Mission manager can now complete or cancel their missions by clicking the appropriate button in the mission view.
+Missions can not be completed unless there is at least one user who has accepted an invitation to the mission.
+
+When a mission is completed, managers can provide feedback to the mission participants and the participants can provide feedback to the manager.
+This feedback consists of a text input which will send a message to the target and a checkbox for endorsing the target.
+The feedback message can only be sent once to the target.
+
+Key skill inputs now have autocomplete features that match those found in b_extended_profile.
+Some larger page elements (time table and language inputs and advanced search) are now contained within hidden fields which are displayed by a click on the field title.
+
+Users who are not opted in will be directed to a splash page where they can search for missions, view a sample of missions and opt in to Micro Missions.
+Once opted in, users will be taken to a main page with two tabs and both these tabs have a create opportunity button.
+The first tab (the default tab) will have simple and advanced searches for missions as well as a selection of the latest posted missions.
+The second tab will have a list of missions related to the user as well as a section which displays unfinished feedback (this section does not appear if there is no unfinished feedback.
+Posting, viewing and editing an opportunity are all the same as in previous versions.
+Clicking on the invite button for a mission will take the user to a candidate search page with simple and advanced searches.
+Completing a mission or clicking on an unfinished feedback link will take the user to a page with all the unfinished feedback forms for that mission.
+
+5)
+Micro mission edit and post opportunity first form now use the new organization path input found in missions_organization.
+
+--------------------------------------------------------------------------------------------------------------
+
+SOLUTIONS:
+
+If the dropdown fields are not populated in any of the forms, go to the Micro Missions setting page in the administration panel and save the settings.
+
+Micro Missions CSS is still a work in progress so a smaller screen (like a laptops) might have some display issues.
+
+If notifications are not appearing to a user then they will have to go to the /notifications/personal/{username} page and check the site checkbox under personal notifications.

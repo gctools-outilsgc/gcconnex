@@ -4,18 +4,17 @@
  *
  */
 
-$french = array(
-	'embed:embed' => 'Incorporer',
-	'embed:media' => 'Incorporer du contenu',
-	'embed:instructions' => "Cliquez sur un fichier pour l'intégrer dans votre contenu.",
-	'embed:upload' => 'Envoyez médias',
-	'embed:upload_type' => 'type de transfert: ',
+return array(
+'embed:embed' => 'Intégrer',
+'embed:media' => 'Intégrer du contenu',
+'embed:instructions' => "Cliquez sur un fichier pour l'intégrer à votre contenu.",
+'embed:upload' => 'Téléverser le contenu média',
+'embed:upload_type' => 'Type de téléversement: ',
+			
+// messages			
+			
+'embed:no_upload_content' => 'Aucun contenu téléversé!',
+'embed:no_section_content' => 'Aucun élément trouvé.',		
+'embed:no_sections'	=> "Aucun module d'extension supportés n'a été trouvé. Demandez à l'administrateur du site d\'activer un module d\'extension qui supporte l'intégration.",
 
-	// messages
-	'embed:no_upload_content' => 'Aucun contenu de téléchargement!',
-	'embed:no_section_content' => 'Aucun article trouvé.',
-
-	'embed:no_sections' => "Aucun plugin soutenus trouvé. Demandez à l'administrateur du site afin de permettre un plugin avec un support intégré.",
 );
-
-add_translation("fr", $french);

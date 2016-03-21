@@ -36,6 +36,7 @@ function search_objects_hook($hook, $type, $value, $params) {
 	
 	$params['count'] = FALSE;
 	$params['order_by'] = search_get_order_by_sql('e', 'oe', $params['sort'], $params['order']);
+	$params['preload_owners'] = true;
 	$entities = elgg_get_entities($params);
 
 	// add the volatile data for why these entities have been returned.
@@ -69,6 +70,7 @@ function search_groups_hook($hook, $type, $value, $params) {
 
 	$join = "JOIN {$db_prefix}groups_entity ge ON e.guid = ge.guid";
 	$params['joins'] = array($join);
+	
 	$fields = array('name', 'description');
 
 	$where = search_get_where_sql('ge', $fields, $params);
@@ -123,8 +125,6 @@ function search_users_hook($hook, $type, $value, $params) {
 
 	$params['joins'] = array(
 		"JOIN {$db_prefix}users_entity ue ON e.guid = ue.guid",
-		"JOIN {$db_prefix}metadata md on e.guid = md.entity_guid",
-		"JOIN {$db_prefix}metastrings msv ON n_table.value_id = msv.id"
 	);
 		
 	// username and display name
@@ -134,19 +134,34 @@ function search_users_hook($hook, $type, $value, $params) {
 	// profile fields
 	$profile_fields = array_keys(elgg_get_config('profile_fields'));
 	
-	// get the where clauses for the md names
-	// can't use egef_metadata() because the n_table join comes too late.
-	$clauses = elgg_entities_get_metastrings_options('metadata', array(
-		'metadata_names' => $profile_fields,
-	));
+	if (!empty($profile_fields)) {
+		$params['joins'][] = "JOIN {$db_prefix}metadata md on e.guid = md.entity_guid";
+		$params['joins'][] = "JOIN {$db_prefix}metastrings msv ON n_table.value_id = msv.id";
+		
+		// get the where clauses for the md names
+		// can't use egef_metadata() because the n_table join comes too late.
+		$clauses = _elgg_entities_get_metastrings_options('metadata', array(
+			'metadata_names' => $profile_fields,
 
-	$params['joins'] = array_merge($clauses['joins'], $params['joins']);
-	// no fulltext index, can't disable fulltext search in this function.
-	// $md_where .= " AND " . search_get_where_sql('msv', array('string'), $params, FALSE);
-	$md_where = "(({$clauses['wheres'][0]}) AND msv.string LIKE '%$query%')";
+			// avoid notices
+			'metadata_values' => null,
+			'metadata_name_value_pairs' => null,
+			'metadata_name_value_pairs_operator' => null,
+			'metadata_case_sensitive' => null,
+			'order_by_metadata' => null,
+			'metadata_owner_guids' => null,
+		));
 	
-	$params['wheres'] = array("(($where) OR ($md_where))");
-
+		$params['joins'] = array_merge($clauses['joins'], $params['joins']);
+		// no fulltext index, can't disable fulltext search in this function.
+		// $md_where .= " AND " . search_get_where_sql('msv', array('string'), $params, FALSE);
+		$md_where = "(({$clauses['wheres'][0]}) AND msv.string LIKE '%$query%')";
+		
+		$params['wheres'] = array("(($where) OR ($md_where))");
+	} else {
+		$params['wheres'] = array("$where");
+	}
+	
 	// override subtype -- All users should be returned regardless of subtype.
 	$params['subtype'] = ELGG_ENTITIES_ANY_VALUE;
 	$params['count'] = true;
@@ -174,25 +189,27 @@ function search_users_hook($hook, $type, $value, $params) {
 
 		$entity->setVolatileData('search_matched_title', $title);
 
-		$matched = '';
-		foreach ($profile_fields as $md_name) {
-			$metadata = $entity->$md_name;
-			if (is_array($metadata)) {
-				foreach ($metadata as $text) {
-					if (stristr($text, $query)) {
+		if (!empty($profile_fields)) {
+			$matched = '';
+			foreach ($profile_fields as $md_name) {
+				$metadata = $entity->$md_name;
+				if (is_array($metadata)) {
+					foreach ($metadata as $text) {
+						if (stristr($text, $query)) {
+							$matched .= elgg_echo("profile:{$md_name}") . ': '
+									. search_get_highlighted_relevant_substrings($text, $query);
+						}
+					}
+				} else {
+					if (stristr($metadata, $query)) {
 						$matched .= elgg_echo("profile:{$md_name}") . ': '
-								. search_get_highlighted_relevant_substrings($text, $query);
+								. search_get_highlighted_relevant_substrings($metadata, $query);
 					}
 				}
-			} else {
-				if (stristr($metadata, $query)) {
-					$matched .= elgg_echo("profile:{$md_name}") . ': '
-							. search_get_highlighted_relevant_substrings($metadata, $query);
-				}
 			}
+	
+			$entity->setVolatileData('search_matched_description', $matched);
 		}
-
-		$entity->setVolatileData('search_matched_description', $matched);
 	}
 
 	return array(
@@ -250,7 +267,7 @@ function search_tags_hook($hook, $type, $value, $params) {
 	$params['joins'][] = "JOIN {$db_prefix}metastrings msn on md.name_id = msn.id";
 	$params['joins'][] = "JOIN {$db_prefix}metastrings msv on md.value_id = msv.id";
 
-	$access = get_access_sql_suffix('md');
+	$access = _elgg_get_access_where_sql(array('table_alias' => 'md'));
 	$sanitised_tags = array();
 
 	foreach ($search_tag_names as $tag) {
@@ -345,134 +362,5 @@ function search_tags_hook($hook, $type, $value, $params) {
  */
 function search_custom_types_tags_hook($hook, $type, $value, $params) {
 	$value[] = 'tags';
-	return $value;
-}
-
-
-/**
- * Get comments that match the search parameters.
- *
- * @param string $hook   Hook name
- * @param string $type   Hook type
- * @param array  $value  Empty array
- * @param array  $params Search parameters
- * @return array
- */
-function search_comments_hook($hook, $type, $value, $params) {
-	$db_prefix = elgg_get_config('dbprefix');
-
-	$query = sanitise_string($params['query']);
-	$limit = sanitise_int($params['limit']);
-	$offset = sanitise_int($params['offset']);
-	$params['annotation_names'] = array('generic_comment', 'group_topic_post');
-
-	$params['joins'] = array(
-		"JOIN {$db_prefix}annotations a on e.guid = a.entity_guid",
-		"JOIN {$db_prefix}metastrings msn on a.name_id = msn.id",
-		"JOIN {$db_prefix}metastrings msv on a.value_id = msv.id"
-	);
-
-	$fields = array('string');
-
-	// force IN BOOLEAN MODE since fulltext isn't
-	// available on metastrings (and boolean mode doesn't need it)
-	$search_where = search_get_where_sql('msv', $fields, $params, FALSE);
-
-	$container_and = '';
-	if ($params['container_guid'] && $params['container_guid'] !== ELGG_ENTITIES_ANY_VALUE) {
-		$container_and = 'AND e.container_guid = ' . sanitise_int($params['container_guid']);
-	}
-
-	$e_access = get_access_sql_suffix('e');
-	$a_access = get_access_sql_suffix('a');
-	// @todo this can probably be done through the api..
-	$q = "SELECT count(DISTINCT a.id) as total FROM {$db_prefix}annotations a
-		JOIN {$db_prefix}metastrings msn ON a.name_id = msn.id
-		JOIN {$db_prefix}metastrings msv ON a.value_id = msv.id
-		JOIN {$db_prefix}entities e ON a.entity_guid = e.guid
-		WHERE msn.string IN ('generic_comment', 'group_topic_post')
-			AND ($search_where)
-			AND $e_access
-			AND $a_access
-			$container_and
-		";
-
-	if (!$result = get_data($q)) {
-		return FALSE;
-	}
-	
-	$count = $result[0]->total;
-	
-	// don't continue if nothing there...
-	if (!$count) {
-		return array ('entities' => array(), 'count' => 0);
-	}
-	
-	$order_by = search_get_order_by_sql('e', null, $params['sort'], $params['order']);
-	if ($order_by) {
-		$order_by = "ORDER BY $order_by";
-	}
-	
-	$q = "SELECT DISTINCT a.*, msv.string as comment FROM {$db_prefix}annotations a
-		JOIN {$db_prefix}metastrings msn ON a.name_id = msn.id
-		JOIN {$db_prefix}metastrings msv ON a.value_id = msv.id
-		JOIN {$db_prefix}entities e ON a.entity_guid = e.guid
-		WHERE msn.string IN ('generic_comment', 'group_topic_post')
-			AND ($search_where)
-			AND $e_access
-			AND $a_access
-			$container_and
-		
-		$order_by
-		LIMIT $offset, $limit
-		";
-
-	$comments = get_data($q);
-
-	// @todo if plugins are disabled causing subtypes
-	// to be invalid and there are comments on entities of those subtypes,
-	// the counts will be wrong here and results might not show up correctly,
-	// especially on the search landing page, which only pulls out two results.
-
-	// probably better to check against valid subtypes than to do what I'm doing.
-
-	// need to return actual entities
-	// add the volatile data for why these entities have been returned.
-	$entities = array();
-	foreach ($comments as $comment) {
-		$entity = get_entity($comment->entity_guid);
-
-		// hic sunt dracones
-		if (!$entity) {
-			//continue;
-			$entity = new ElggObject();
-			$entity->setVolatileData('search_unavailable_entity', TRUE);
-		}
-
-		$comment_str = search_get_highlighted_relevant_substrings($comment->comment, $query);
-		$entity->setVolatileData('search_match_annotation_id', $comment->id);
-		$entity->setVolatileData('search_matched_comment', $comment_str);
-		$entity->setVolatileData('search_matched_comment_owner_guid', $comment->owner_guid);
-		$entity->setVolatileData('search_matched_comment_time_created', $comment->time_created);
-		$entities[] = $entity;
-	}
-
-	return array(
-		'entities' => $entities,
-		'count' => $count,
-	);
-}
-
-/**
- * Register comments as a custom search type.
- *
- * @param string $hook   Hook name
- * @param string $type   Hook type
- * @param array  $value  Array of custom search types
- * @param array  $params Search parameters
- * @return array
- */
-function search_custom_types_comments_hook($hook, $type, $value, $params) {
-	$value[] = 'comments';
 	return $value;
 }

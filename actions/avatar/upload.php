@@ -11,8 +11,9 @@ if (!$owner || !($owner instanceof ElggUser) || !$owner->canEdit()) {
 	forward(REFERER);
 }
 
-if ($_FILES['avatar']['error'] != 0) {
-	register_error(elgg_echo('avatar:upload:fail'));
+$error = elgg_get_friendly_upload_error($_FILES['avatar']['error']);
+if ($error) {
+	register_error($error);
 	forward(REFERER);
 }
 
@@ -56,7 +57,12 @@ if (elgg_trigger_event('profileiconupdate', $owner->type, $owner)) {
 
 	$view = 'river/user/default/profileiconupdate';
 	elgg_delete_river(array('subject_guid' => $owner->guid, 'view' => $view));
-	add_to_river($view, 'update', $owner->guid, $owner->guid);
+	elgg_create_river_item(array(
+		'view' => $view,
+		'action_type' => 'update',
+		'subject_guid' => $owner->guid,
+		'object_guid' => $owner->guid,
+	));
 }
 
 forward(REFERER);

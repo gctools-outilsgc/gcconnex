@@ -2,7 +2,7 @@
 /**
  * Create a new task
  *
- * @package ElggPages
+ * @package ElggTasks
  */
 
 gatekeeper();

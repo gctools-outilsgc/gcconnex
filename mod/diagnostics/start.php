@@ -28,8 +28,8 @@ function diagnostics_init() {
 function diagnostics_basic_hook($hook, $entity_type, $returnvalue, $params) {
 
 	// Get version information
-	$version = get_version();
-	$release = get_version(true);
+	$version = elgg_get_version();
+	$release = elgg_get_version(true);
 
 	$returnvalue .= elgg_echo('diagnostics:report:basic', array($release, $version));
 
@@ -66,7 +66,7 @@ function diagnostics_md5_dir($dir) {
 		$handle = opendir($dir);
 		while ($file = readdir($handle)) {
 			if (($file != '.') && ($file != '..')) {
-				$buffer .= diagnostics_md5_dir($dir . $file. "/", $buffer);
+				$buffer .= diagnostics_md5_dir($dir . $file. "/");
 			}
 		}
 

@@ -12,11 +12,12 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
     $user = get_user($user_guid);
 
     // allow the user to edit the access settings for work experience entries
-    echo elgg_echo('gcconnex_profile:experience:access');
+    echo '<label for="workAccess">' . elgg_echo('gcconnex_profile:experience:access') . '</label>';
 
     $access_id = $user->work_access;
     $params = array(
         'name' => "accesslevel['work']",
+        'id' => "workAccess",
         'class' => "gcconnex-work-experience-access",
         'value' => $access_id
     );
@@ -45,7 +46,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
     echo '</div>';
 
     // create an "add more" button at the bottom of the work experience input fields so that the user can continue to add more work experience entries as needed
-    echo '<br><div class="gcconnex-work-experience-add-another elgg-button elgg-button-action btn" data-type="work-experience" onclick="addMore(this)">' . elgg_echo('gcconnex_profile:experience:add') . '</div>';
+    echo '<br><button class="gcconnex-work-experience-add-another elgg-button elgg-button-action btn btn-primary" data-type="work-experience" onclick="addMore(this)">' . elgg_echo('gcconnex_profile:experience:add') . '</button>';
 }
 
 else {  // In case this view will be called via elgg_view()

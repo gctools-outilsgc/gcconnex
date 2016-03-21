@@ -1,0 +1,20 @@
+== Version History ==
+
+x.x:
+
+2.0.0 (10/17/2015):
+ - Upgrade for Elgg 1.9+
+ - Numerous performance enhancements
+
+1.2 (06/14/2012):
+- Added group display option
+
+
+1.1 (06/04/2012):
+
+- Added optional user activity
+
+
+1.0:
+
+- Initial Release

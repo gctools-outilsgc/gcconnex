@@ -7,7 +7,7 @@
 	<description>A longer, more interesting description.</description>
 	<website>http://www.elgg.org/</website>
 	<repository>https://github.com/Elgg/Elgg</repository>
-	<bugtracker>http://trac.elgg.org</bugtracker>
+	<bugtracker>https://github.com/elgg/elgg/issues</bugtracker>
 	<donations>http://elgg.org/supporter.php</donations>
 	<copyright>(C) Elgg Foundation 2011</copyright>
 	<license>GNU General Public License version 2</license>
@@ -33,6 +33,20 @@
 		<path>graphics/plugin_ss2.png</path>
 	</screenshot>
 
+	<contributor>
+		<name>Evan Winslow</name>
+		<email>evan@elgg.org</email>
+		<website>http://evanwinslow.com/</website>
+		<username>ewinslow</username> <!-- Elgg community username -->
+		<description>Description of Evan's role in the project</description>
+	</contributor>
+
+	<contributor>
+		<name>Cash Costello</name>
+		<email>cash@elgg.org</email>
+		<description>Description of Cash's role in the project</description>
+	</contributor>
+
 	<category>Admin</category>
 
 	<category>ServiceAPI</category>
@@ -46,6 +60,11 @@
 		<type>php_ini</type>
 		<name>short_open_tag</name>
 		<value>off</value>
+	</requires>
+	
+	<requires>
+		<type>php_version</type>
+		<version>5.6</version>
 	</requires>
 
 	<requires>

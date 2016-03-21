@@ -15,11 +15,11 @@
     </requires>
     <requires>
         <type>plugin</type>
-        <name>extended_tinymce</name>
+        <name>c_email_extensions</name>
     </requires>
     <requires>
         <type>priority</type>
         <priority>after</priority>
-        <plugin>extended_tinymce</plugin>
+        <plugin>profile</plugin>
     </requires>
 </plugin_manifest>

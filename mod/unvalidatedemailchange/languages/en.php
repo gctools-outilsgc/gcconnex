@@ -13,11 +13,13 @@
  * @link http://code.google.com/p/simpleusermanagement/
  **/
 
-$english = array(
+return array(
 'unvalidatedemailchange:no_user_guid_provided' => 'User-GUID not provided.',
 'unvalidatedemailchange:user_email_changed_to' => 'Email address of user %s changed to %s.',
 'unvalidatedemailchange:email_address_invalid' => 'Provided email address %s is invalid.',
 'unvalidatedemailchange:new_user_email' => 'Enter the new email address for %s: ',
 'unvalidatedemailchange:change_email' => 'Change email',
+
+'unvalidatedemailchange:ip_address' => 'IP address: ',
+'unvalidatedemailchange:no_ip_address' => 'No IP address logged.'
 );
-add_translation("en",$english);

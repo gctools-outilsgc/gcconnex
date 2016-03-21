@@ -1,0 +1,19 @@
+{
+    "name": "au/au_subgroups",
+    "type": "elgg-plugin",
+    "description": "Allows creation of groups within groups",
+    "homepage": "https://github.com/AU-Landing-Project/au_subgroups",
+    "keywords": ["elgg", "plugin", "subgroups"],
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Matt Beckett"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/AU-Landing-Project/au_subgroups/issues"
+    },
+    "require": {
+        "composer/installers": ">=1.0.8"
+    }
+}

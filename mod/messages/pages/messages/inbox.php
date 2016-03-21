@@ -5,7 +5,7 @@
  * @package ElggMessages
 */
 
-gatekeeper();
+elgg_gatekeeper();
 
 $page_owner = elgg_get_page_owner_entity();
 
@@ -36,6 +36,8 @@ $list .= elgg_list_entities_from_metadata(array(
 	'owner_guid' => elgg_get_page_owner_guid(),
 	'full_view' => false,
 	'limit' => $display_num_post,
+	'preload_owners' => true,
+	'bulk_actions' => true
 ));
 
 $body_vars = array(

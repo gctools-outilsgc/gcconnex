@@ -2,19 +2,21 @@
 /**
  * The wire's JavaScript
  */
-
-$wire_length = thewire_tools_get_wire_length()
-
 ?>
 //<script>
 elgg.provide('elgg.thewire');
 
 elgg.thewire.init = function() {
-	$("#thewire-textarea").live('keydown', function() {
-		elgg.thewire.textCounter(this, $("#thewire-characters-remaining span"), <?php echo $wire_length; ?>);
-	});
-	$("#thewire-textarea").live('keyup', function() {
-		elgg.thewire.textCounter(this, $("#thewire-characters-remaining span"), <?php echo $wire_length; ?>);
+	var callback = function() {
+		var maxLength = $(this).data('max-length');
+		if (maxLength) {
+			elgg.thewire.textCounter(this, $(this).siblings(".thewire-characters-remaining").find("span"), maxLength);
+		}
+	};
+
+	$(".thewire-textarea").live({
+		input: callback,
+		onpropertychange: callback
 	});
 
 	$(".thewire-previous").live('click', elgg.thewire.viewPrevious);
@@ -32,15 +34,16 @@ elgg.thewire.textCounter = function(textarea, status, limit) {
 
 	var remaining_chars = limit - $(textarea).val().length;
 	status.html(remaining_chars);
-
+	var $submit = $(textarea).siblings("div").find(".thewire-submit-button");
+	
 	if (remaining_chars < 0) {
 		status.parent().addClass("thewire-characters-remaining-warning");
-		$("#thewire-submit-button").attr('disabled', 'disabled');
-		$("#thewire-submit-button").addClass('elgg-state-disabled');
+		$submit.attr('disabled', 'disabled');
+		$submit.addClass('elgg-state-disabled');
 	} else {
 		status.parent().removeClass("thewire-characters-remaining-warning");
-		$("#thewire-submit-button").removeAttr('disabled', 'disabled');
-		$("#thewire-submit-button").removeClass('elgg-state-disabled');
+		$submit.removeAttr('disabled', 'disabled');
+		$submit.removeClass('elgg-state-disabled');
 	}
 };
 
@@ -57,15 +60,15 @@ elgg.thewire.viewPrevious = function(event) {
 	var postGuid = $link.attr("href").split("/").pop();
 	var $previousDiv = $("#thewire-previous-" + postGuid);
 
-	if ($link.html() == elgg.echo('thewire:hide')) {
-		$link.html(elgg.echo('thewire:previous'));
+	if ($link.html() == elgg.echo('hide')) {
+		$link.html(elgg.echo('previous'));
 		$link.attr("title", elgg.echo('thewire:previous:help'));
 		$previousDiv.slideUp(400);
 	} else {
-		$link.html(elgg.echo('thewire:hide'));
+		$link.html(elgg.echo('hide'));
 		$link.attr("title", elgg.echo('thewire:hide:help'));
-		
-		$.ajax({type: "GET",
+
+		elgg.get({
 			url: elgg.config.wwwroot + "ajax/view/thewire/previous",
 			dataType: "html",
 			cache: false,

@@ -13,7 +13,6 @@ if (!$blog) {
 }
 
 $owner = $blog->getOwnerEntity();
-$container = $blog->getContainerEntity();
 $categories = elgg_view('output/categories', $vars);
 $excerpt = $blog->excerpt;
 if (!$excerpt) {
@@ -36,7 +35,7 @@ if ($blog->comments_on != 'Off') {
 	if ($comments_count != 0) {
 		$text = elgg_echo("comments") . " ($comments_count)";
 		$comments_link = elgg_view('output/url', array(
-			'href' => $blog->getURL() . '#blog-comments',
+			'href' => $blog->getURL() . '#comments',
 			'text' => $text,
 			'is_trusted' => true,
 		));

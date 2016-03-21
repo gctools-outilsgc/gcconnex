@@ -1,0 +1,22 @@
+{
+	"name": "coldtrick/thewire_tools",
+	"description": "Extend the functionality of The Wire",
+	"type": "elgg-plugin",
+	"keywords": ["elgg", "plugin"],
+	"license": "GPL-2.0",
+	"support": {
+		"source": "https://github.com/ColdTrick/thewire_tools",
+		"issues": "https://github.com/ColdTrick/thewire_tools/issues"
+	},
+	"autoload": {
+		"psr-0": { 
+			"": "classes/" 
+		}
+	},
+	"require": {
+		"composer/installers": "^1.0.8"
+	},
+	"require-dev": {
+		"coldtrick/sniffs": "dev-master"
+	}
+}

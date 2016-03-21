@@ -53,11 +53,11 @@ if (strlen( $email ) > 0)
 	// check if email in use
 	// NOTE: the '>' character is used to make the username invalid.
 	if ( $emailrow[0] > 0 ) {
-		echo "> " . elgg_echo('gcRegister:email_in_use');
+		echo '> ' . elgg_echo('gcRegister:email_in_use');
 
 	// make sure selected domain is not the example domain (this is already checked for in the JS, but do it anyway)
 	} else if( checkInvalidDomain($domain) ) {
-		echo "> " . elgg_echo('gcRegister:invalid_email');
+		echo '> ' . elgg_echo('gcRegister:invalid_email2');
 	
 	} else {
 

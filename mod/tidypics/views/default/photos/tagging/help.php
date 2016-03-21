@@ -14,6 +14,6 @@ $button = elgg_view('output/url', array(
 
 $instructions = elgg_echo('tidypics:taginstruct', array($button));
 ?>
-<div id="tidypics-tagging-help" class="elgg-module elgg-module-popup tidypics-tagging-help pam hidden wb-invisible">
+<div id="tidypics-tagging-help" class="elgg-module elgg-module-popup tidypics-tagging-help pam hidden">
 	<?php echo $instructions; ?>
 </div>

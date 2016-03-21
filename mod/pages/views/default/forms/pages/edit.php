@@ -38,11 +38,35 @@ foreach ($variables as $name => $type) {
 			echo '<br />';
 		}
 
-		echo elgg_view($input_view, array(
+		$view_vars = array(
 			'name' => $name,
 			'value' => $vars[$name],
 			'entity' => ($name == 'parent_guid') ? $vars['entity'] : null,
-		));
+		);
+		if ($input_view === 'input/access' || $input_view === 'input/write_access') {
+			$view_vars['entity'] = $entity;
+			$view_vars['entity_type'] = 'object';
+			$view_vars['entity_subtype'] = $vars['parent_guid'] ? 'page': 'page_top';
+
+			if ($name === 'write_access_id') {
+				$view_vars['purpose'] = 'write';
+				if ($entity) {
+					$view_vars['value'] = $entity->write_access_id;
+					
+					// no access change warning for write access input
+					$view_vars['entity_allows_comments'] = false;
+				}
+			}
+		}
+
+		$output = elgg_view($input_view, $view_vars);
+
+		if ($input_view === 'input/write_access' && strpos($output, "<!-- -->") !== 0) {
+			// a dev has extended input/write_access
+			elgg_deprecated_notice("The input/write_access view is deprecated. The pages plugin now uses the ['access:collections:write', 'user'] hook to alter options.", "1.11");
+		}
+
+		echo $output;
 	?>
 </div>
 <?php

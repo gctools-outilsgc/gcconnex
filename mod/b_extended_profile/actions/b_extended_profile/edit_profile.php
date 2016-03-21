@@ -5,14 +5,86 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
     $user = get_user($user_guid);
 
     $section = get_input('section');
-
+    $error = false;
     switch ($section) {
         case "profile":
             $profile_fields = get_input('profile');
             $social_media = get_input('social_media');
+            $error_message = '';
 
             foreach ( $profile_fields as $f => $v ) {
-                $user->set($f, $v);
+
+                // cyu - check if email field is empty
+                if ($f === "email") {
+                    trim($v);   // remove white spaces from both sides of string
+
+                    if (!$v) {
+                        register_error(elgg_echo('gcc_profile:error').elgg_echo('gcc_profile:missingemail'));
+                        return true;
+                    }
+                    
+                    elgg_load_library('c_ext_lib');
+                    $isValid = false;
+
+                    
+                    if ($v) {
+                        // cyu - check if the email is in the list of exceptions
+                        $user_email = explode('@',$v);
+                        $list_of_domains = getExtension();
+
+                        if (count($list_of_domains) > 0) {
+                            while ($row = mysqli_fetch_array($list_of_domains)) {
+                                if (strtolower($row['ext']) === strtolower($user_email[1])) {
+                                    $isValid = true;
+                                    break;
+                                }
+                            }
+                            $error_message = elgg_echo('gcc_profile:error').elgg_echo('gcc_profile:notaccepted');
+                        }
+
+                        // cyu - check if domain is gc.ca
+                        if (!$isValid) {
+                            $govt_domain = explode('.',$user_email[1]);
+                            $govt_domain_len = count($govt_domain) - 1;                           
+
+                            if ($govt_domain[$govt_domain_len - 1].'.'.$govt_domain[$govt_domain_len] === 'gc.ca') {
+                                $isValid = true;
+                            } else {
+                                $isValid = false;
+                                $error_message = elgg_echo('gcc_profile:error').elgg_echo('gcc_profile:notaccepted');
+                            }
+                        }
+                    }
+
+                    if (!$isValid) {
+                        register_error($error_message);
+                        return true;
+                    }
+
+                    $user->set($f, $v);
+                }
+                else {
+                	if($f=='department'){
+                		$obj = elgg_get_entities(array(
+   							'type' => 'object',
+   							'subtype' => 'dept_list',
+   							'owner_guid' => 0
+						));
+						$departmentsEn = json_decode($obj[0]->deptsEn, true);
+						$departmentsFr = json_decode($obj[0]->deptsFr, true);
+						if (get_current_language()=='en'){
+							$deptString = $departmentsEn[$v]." / ".$departmentsFr[$v];
+						}else{
+							$deptString = $departmentsFr[$v]." / ".$departmentsEn[$v];
+						}
+			
+						$user->set('department',$deptString);
+                	}else{
+                		$user->set($f, $v);
+                	}
+                	//register_error($f);
+                    
+                }
             }
 
             foreach ( $social_media as $f => $v ) {
@@ -21,6 +93,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                     $user->set($f, $link);
                 }
             }
+
 
             //$user->micro = get_input('micro');
             $user->save();
@@ -85,32 +158,56 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             //create new education entries
             if (is_array($eguid)) {
                 foreach ($eguid as $k => $v) {
-                    if ($v == "new") {
-                        $education = new ElggObject();
-                        $education->subtype = "education";
-                        $education->owner_guid = $user_guid;
-                    } else {
-                        $education = get_entity($v);
+
+
+                    $validInput = true;
+
+                    if($ongoing[$k] == true){
+                        $endyear[$k] = $startyear[$k];
                     }
 
-                    $education->title = htmlentities($school[$k]);
-                    $education->description = htmlentities($degree[$k]);
+                    if(trim( htmlentities($school[$k])) == '' || trim( htmlentities($degree[$k])) == '' || trim( htmlentities($field[$k])) == ''){
+                        $validInput = false;
+                        $error == true;
+                    }
 
-                    $education->school = htmlentities($school[$k]);
-                    $education->startdate = $startdate[$k];
-                    $education->startyear = $startyear[$k];
-                    $education->enddate = $enddate[$k];
-                    $education->endyear = $endyear[$k];
-                    $education->ongoing = $ongoing[$k];
-                    //$education->program = htmlentities($program[$k]);
-                    $education->degree = htmlentities($degree[$k]);
-                    $education->field = htmlentities($field[$k]);
-                    $education->access_id = $access;
+                    if(trim( $endyear[$k]) < trim($startyear[$k])){
+                        $validInput = false;
+                        $error == true;
+                    }
 
-                    if ($v == "new") {
-                        $education_guids[] = $education->save();
-                    } else {
-                        $education->save();
+                    if($validInput == true){
+
+
+                        if ($v == "new") {
+                            $education = new ElggObject();
+                            $education->subtype = "education";
+                            $education->owner_guid = $user_guid;
+                        } else {
+                            $education = get_entity($v);
+                        }
+
+                        $education->title = htmlentities($school[$k]);
+                        $education->description = htmlentities($degree[$k]);
+
+                        $education->school = htmlentities($school[$k]);
+                        $education->startdate = $startdate[$k];
+                        $education->startyear = $startyear[$k];
+                        $education->enddate = $enddate[$k];
+                        $education->endyear = $endyear[$k];
+                        $education->ongoing = $ongoing[$k];
+                        //$education->program = htmlentities($program[$k]);
+                        $education->degree = htmlentities($degree[$k]);
+                        $education->field = htmlentities($field[$k]);
+                        $education->access_id = $access;
+
+                        if ($v == "new") {
+                            $education_guids[] = $education->save();
+                        } else {
+                            $education->save();
+                        }
+
+
                     }
                 }
             }
@@ -165,34 +262,62 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             if ($edit != null && !is_array($edit)) {
                 $edit = array( $edit );
             }
+
+           
+
             //create new work experience entries
             if ( is_array($edit) ) {
                 foreach ($edit as $work) {
-                    if ($work['eguid'] == "new") {
-                        $experience = new ElggObject();
-                        $experience->subtype = "experience";
-                        $experience->owner_guid = $user_guid;
-                    } else {
-                        $experience = get_entity($work['eguid']);
+
+                    $validInput = true;
+
+                    if($work['ongoing'] == true){
+                        $work['endyear'] = $work['startyear'];
                     }
 
-                    $experience->title = htmlentities($work['title']);
-                    $experience->description = htmlentities($work['responsibilities']);
+                    //validation of work experience entry
+                    if(trim($work['title']) == '' || trim($work['organization']) == ''){
+                        $validInput = false;
+                        $error = true;
+                    }
 
-                    $experience->organization = htmlentities($work['organization']);
-                    $experience->startdate = $work['startdate'];
-                    $experience->startyear = $work['startyear'];
-                    $experience->enddate = $work['enddate'];
-                    $experience->endyear = $work['endyear'];
-                    $experience->ongoing = $work['ongoing'];
-                    $experience->responsibilities = $work['responsibilities'];
-                    $experience->colleagues = $work['colleagues'];
-                    $experience->access_id = $access;
+                    if(trim($work['endyear']) < trim($work['startyear'])){
+                        $validInput = false;
+                        $error = true;
+                    }
 
-                    if ($work['eguid'] == "new") {
-                        $work_experience_guids[] = $experience->save();
-                    } else {
-                        $experience->save();
+                    if($validInput == true) {
+
+
+                        if ($work['eguid'] == "new") {
+                            $experience = new ElggObject();
+                            $experience->subtype = "experience";
+                            $experience->owner_guid = $user_guid;
+                        } else {
+                            $experience = get_entity($work['eguid']);
+                        }
+
+                        $experience->title = htmlentities($work['title']);
+                        $experience->description = htmlentities($work['responsibilities']);
+
+                        $experience->organization = htmlentities($work['organization']);
+                        $experience->startdate = $work['startdate'];
+                        $experience->startyear = $work['startyear'];
+                        $experience->enddate = $work['enddate'];
+                        $experience->endyear = $work['endyear'];
+                        $experience->ongoing = $work['ongoing'];
+                        $experience->responsibilities = trim($work['responsibilities']);
+                        $experience->colleagues = $work['colleagues'];
+                        $experience->access_id = $access;
+
+                        if ($work['eguid'] == "new") {
+                            $work_experience_guids[] = $experience->save();
+                        } else {
+                            $experience->save();
+                        }
+
+
+
                     }
                 }
             }
@@ -271,16 +396,56 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             $user->skillsupgraded = TRUE;
             break;
         case 'languages':
+            $firstlang = get_input('firstlang', '');
             $french = get_input('french', 'ERROR: Ask your admin to grep: ASFDJKGJKG333616.');
             $english = get_input('english', 'ERROR: Ask your admin to grep: SDFANLVNVNVNVNVNAA31566.');
             $languagesToAdd = get_input('langadded', 'ERROR: Ask your admin to grep: 5FH13FFSSGAHHHS0021.');
             $languagesToRemove = get_input('langremoved', 'ERROR: Ask your admin to grep: 5AAAAGGFH13GAH0022.');
-            $access = get_input('access');
-
+            //$access = get_input('access');    // not used
+			$access = get_input('access_id');
             $user->english = $english;
             $user->french = $french;
+            $user->officialLanguage = $firstlang;
 
             $user->save();
+			
+			$metadata = elgg_get_metadata(array(
+                'metadata_names' => array('english'),
+                'entity_guid' => elgg_get_logged_in_user_guid(),
+
+            ));
+            if ($metadata){
+                foreach ($metadata as $data){
+
+                    update_metadata($data->id, $data->name, $data->value, $data->value_type, $data->owner_guid, $access);
+                }
+                //$metadata[0]->save();
+            }
+            $metadata = elgg_get_metadata(array(
+                'metadata_names' => array('french'),
+                'entity_guid' => elgg_get_logged_in_user_guid(),
+
+            ));
+            if ($metadata){
+                foreach ($metadata as $data){
+                    
+                    update_metadata($data->id, $data->name, $data->value, $data->value_type, $data->owner_guid, $access);
+                }
+                //$metadata[0]->save();
+            }
+			$metadata = elgg_get_metadata(array(
+                'metadata_names' => array('officialLanguage'),
+                'entity_guid' => elgg_get_logged_in_user_guid(),
+
+            ));
+            if ($metadata){
+                foreach ($metadata as $data){
+                    
+                    update_metadata($data->id, $data->name, $data->value, $data->value_type, $data->owner_guid, $access);
+                }
+                //$metadata[0]->save();
+            }
+			
             break;
         case 'portfolio':
             $portfolio = get_input('portfolio');
@@ -314,29 +479,45 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
 
             //create new work experience entries
             foreach ($edit as $portfolio_edit) {
-                if ($portfolio_edit['eguid'] == "new") {
-                    $entry = new ElggObject();
-                    $entry->subtype = "portfolio";
-                    $entry->owner_guid = $user_guid;
+
+                $validInput = true;
+
+                if(trim($portfolio_edit['title']) == '' || trim($portfolio_edit['description']) == '' || trim($portfolio_edit['link']) == ''){
+                    $validInput = false;
+                    $error = true;
                 }
-                else {
-                    $entry = get_entity($portfolio_edit['eguid']);
+
+                if($portfolio_edit['datestamped'] == false && trim( $portfolio_edit['pubdate']) == ''){
+                    $validInput = false;
+                    $error = true;
                 }
 
-                $entry->title = htmlentities($portfolio_edit['title']);
-                $entry->description = htmlentities($portfolio_edit['description']);
+                if($validInput == true){
 
-                $entry->link = $portfolio_edit['link'];
-                $entry->pubdate = $portfolio_edit['pubdate'];
-                $entry->datestamped = $portfolio_edit['datestamped'];
+                    if ($portfolio_edit['eguid'] == "new") {
+                        $entry = new ElggObject();
+                        $entry->subtype = "portfolio";
+                        $entry->owner_guid = $user_guid;
+                    }
+                    else {
+                        $entry = get_entity($portfolio_edit['eguid']);
+                    }
 
-                $entry->access_id = $access;
+                    $entry->title = htmlentities($portfolio_edit['title']);
+                    $entry->description = htmlentities($portfolio_edit['description']);
 
-                if($portfolio_edit['eguid'] == "new") {
-                    $portfolio_list_guids[] = $entry->save();
-                }
-                else {
-                    $entry->save();
+                    $entry->link = $portfolio_edit['link'];
+                    $entry->pubdate = $portfolio_edit['pubdate'];
+                    $entry->datestamped = $portfolio_edit['datestamped'];
+
+                    $entry->access_id = $access;
+
+                    if($portfolio_edit['eguid'] == "new") {
+                        $portfolio_list_guids[] = $entry->save();
+                    }
+                    else {
+                        $entry->save();
+                    }
                 }
             }
 
@@ -362,7 +543,12 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
 
     }
 
-    system_message(elgg_echo("profile:saved"));
+    //system_message(elgg_echo("profile:saved"));
+    if($error == true){
+       register_error(elgg_echo('Not all information could be saved, empty fields are not allowed'));
+    } else {
+        system_message(elgg_echo("profile:saved"));
+    }
 
 }
 else {  // In case this view will be called via the elgg_view_form() action, then we know it's the basic profile only

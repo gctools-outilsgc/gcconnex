@@ -7,7 +7,7 @@
 
 $page_owner = elgg_get_page_owner_entity();
 if (!$page_owner) {
-	forward('bookmarks/all');
+	forward('', '404');
 }
 
 elgg_push_breadcrumb($page_owner->name, "bookmarks/owner/$page_owner->username");
@@ -17,10 +17,17 @@ elgg_register_title_button();
 
 $title = elgg_echo('bookmarks:friends');
 
-$content = list_user_friends_objects($page_owner->guid, 'bookmarks', 10, false);
-if (!$content) {
-	$content = elgg_echo('bookmarks:none');
-}
+$content = elgg_list_entities_from_relationship(array(
+	'type' => 'object',
+	'subtype' => 'bookmarks',
+	'full_view' => false,
+	'relationship' => 'friend',
+	'relationship_guid' => $page_owner->guid,
+	'relationship_join_on' => 'container_guid',
+	'no_results' => elgg_echo('bookmarks:none'),
+	'preload_owners' => true,
+	'preload_containers' => true,
+));
 
 $params = array(
 	'filter_context' => 'friends',

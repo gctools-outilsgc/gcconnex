@@ -14,11 +14,9 @@
  * @return string
  */
 function uservalidationbyemail_generate_code($user_guid, $email_address) {
-
+	// Note: binding to site URL for multisite.
 	$site_url = elgg_get_site_url();
-
-	// Note I bind to site URL, this is important on multisite!
-	return md5($user_guid . $email_address . $site_url . get_site_secret());
+	return elgg_build_hmac([(int)$user_guid, $email_address, $site_url])->getToken();
 }
 
 /**
@@ -29,7 +27,11 @@ function uservalidationbyemail_generate_code($user_guid, $email_address) {
  * @param bool $admin_requested Was it requested by admin
  * @return mixed
  */
-function uservalidationbyemail_request_validation($user_guid, $admin_requested = FALSE) {
+function uservalidationbyemail_request_validation($user_guid, $admin_requested = 'deprecated') {
+
+	if ($admin_requested != 'deprecated') {
+		elgg_deprecated_notice('Second param $admin_requested no more used in uservalidationbyemail_request_validation function', 1.9);
+	}
 
 	$site = elgg_get_site_entity();
 
@@ -41,16 +43,40 @@ function uservalidationbyemail_request_validation($user_guid, $admin_requested =
 		$code = uservalidationbyemail_generate_code($user_guid, $user->email);
 		$link = "{$site->url}uservalidationbyemail/confirm?u=$user_guid&c=$code";
 
+		// Get email to show in the next page
+		elgg_get_session()->set('emailsent', $user->email);
 
-		// Send validation email
-		$subject = elgg_echo('email:validate:subject', array($user->name, $site->name));
-		$body = elgg_echo('email:validate:body', array($user->name, $site->name, $link, $site->name, $site->url));
-		$result = notify_user($user->guid, $site->guid, $subject, $body, NULL, 'email');
+		$subject = elgg_echo('email:validate:subject', array(
+				$user->name,
+				$site->name
+			), $user->language
+		);
 
-		if ($result && !$admin_requested) {
-			system_message(elgg_echo('uservalidationbyemail:registerok'));
+		$body = elgg_echo('email:validate:body', array(
+				$user->name,
+				$site->name,
+				$link,
+				$site->name,
+				$site->url
+			), $user->language
+		);
+
+		// cyu - 03/08/2016: improving notifications, redirect to notification manager module
+		if (elgg_is_active_plugin('cp_notifications')) {
+
+			$message = array(
+				'cp_validate_user' => $user,
+				'cp_validate_url' => $link,
+				'cp_msg_type' => 'cp_validate_user'
+				);
+			$result = elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
+
+		} else {
+
+			// Send validation email
+			$result = notify_user($user->guid, $site->guid, $subject, $body, array(), 'email');
+		
 		}
-
 		return $result;
 	}
 
@@ -66,12 +92,14 @@ function uservalidationbyemail_request_validation($user_guid, $admin_requested =
  */
 function uservalidationbyemail_validate_email($user_guid, $code) {
 	$user = get_entity($user_guid);
+	$site_url = elgg_get_site_url();
 
-	if ($code == uservalidationbyemail_generate_code($user_guid, $user->email)) {
-		return elgg_set_user_validation_status($user_guid, true, 'email');
+	$matches = elgg_build_hmac([(int)$user_guid, $user->email, $site_url])->matchesToken($code);
+	if (!$matches) {
+		return false;
 	}
 
-	return false;
+	return elgg_set_user_validation_status($user_guid, true, 'email');
 }
 
 /**
@@ -84,22 +112,16 @@ function uservalidationbyemail_validate_email($user_guid, $code) {
  * @return array
  */
 function uservalidationbyemail_get_unvalidated_users_sql_where() {
-	global $CONFIG;
+	$db_prefix = elgg_get_config('dbprefix');
 
-	$validated_id = get_metastring_id('validated');
-	if ($validated_id === false) {
-		$validated_id = add_metastring('validated');
-	}
-	$one_id = get_metastring_id('1');
-	if ($one_id === false) {
-		$one_id = add_metastring('1');
-	}
+	$validated_id = elgg_get_metastring_id('validated');
+	$one_id = elgg_get_metastring_id('1');
 
 	// thanks to daveb@freenode for the SQL tips!
 	$wheres = array();
 	$wheres[] = "e.enabled='no'";
 	$wheres[] = "NOT EXISTS (
-			SELECT 1 FROM {$CONFIG->dbprefix}metadata md
+			SELECT 1 FROM {$db_prefix}metadata md
 			WHERE md.entity_guid = e.guid
 				AND md.name_id = $validated_id
 				AND md.value_id = $one_id)";

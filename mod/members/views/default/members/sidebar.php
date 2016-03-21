@@ -3,25 +3,12 @@
  * Members sidebar
  */
 
- // GCchange - Ilia: Usability - Swapped search by name to be the first from the top.
- 
-// name search
 $params = array(
 	'method' => 'get',
-	'action' => elgg_get_site_url() . 'members/search/name',
-	'disable_security' => true,
-);
-$body = elgg_view_form('members/name_search', $params);
-
-echo elgg_view_module('aside', elgg_echo('members:searchname'), $body);
- 
-// Tag search
-$params = array(
-	'method' => 'get',
-	'action' => elgg_get_site_url() . 'members/search/tag',
+	'action' => 'members/search',
 	'disable_security' => true,
 );
 
-$body = elgg_view_form('members/tag_search', $params);
+$body = elgg_view_form('members/search', $params);
 
-echo elgg_view_module('aside', elgg_echo('members:searchtag'), $body);
+echo elgg_view_module('aside', elgg_echo('members:search'), $body);

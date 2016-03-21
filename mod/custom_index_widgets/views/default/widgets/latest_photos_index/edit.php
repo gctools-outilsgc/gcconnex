@@ -7,7 +7,7 @@
 	
   	
 	$widget_title = $vars['entity']->widget_title;
-	$widget_group = $vars["entity"]->widget_group;
+	$widget_album = $vars["entity"]->widget_album;
 	
 	$guest_only = $vars['entity']->guest_only;
 	if (!isset($guest_only)) $guest_only = "no";
@@ -35,6 +35,21 @@
           }
       }
       echo elgg_view('input/dropdown', array('name'=>'params[widget_group]', 'options_values'=>$group_list, 'value'=>$widget_group));
+      ?>
+  </p>
+  <p>
+      <?php echo elgg_echo('album'); ?>
+      : 
+      <?php
+		$albums = elgg_get_entities(array( "types"=>"object", "subtypes"=>"album"));
+		$containers = array();
+		$containers[0] = elgg_echo('all');
+		if ($albums) {
+			foreach($albums as $album){
+				$containers[$album->getGUID()] = $album->getTitle();
+			}
+		}
+      echo elgg_view('input/dropdown', array('name'=>'params[widget_album]', 'options_values'=>$containers, 'value'=>$widget_album));
       ?>
   </p>
   <p>

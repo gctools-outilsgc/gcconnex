@@ -1,11 +1,20 @@
+#ui-datepicker-div {
+    background: white;
+        border: 1px solid #ddd;
+}
+
 .b_extended_profile {
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
 .gcconnex-profile-name {
-/*    padding-bottom: 20px; */
-    height: 36px;
+/*    padding-bottom: 20px; 
+    height: 36px;*/
+}
+
+.img-responsive img {
+    width: 100%;
 }
 
 #english_expiry,
@@ -17,12 +26,12 @@
 .gcconnex-profile-name h1 {
     float: left;
 }
-
+/*
 .gcconnex-basic-profile-actions,
 .gcconnex-basic-profile-edit {
     margin-left: 10px;
 }
-
+*/
 .gcconnex-profile-social-media-links {
     padding-top: 10px;
 }
@@ -88,8 +97,8 @@
 
 .gcconnex-endorsements-count {
     float: left;
-    width: 20px;
-    background-color: #3C698E;
+    width: 34px;
+    background-color: #055959;
     font-family: arial, sans-serif;
     color: white;
     padding: 3px 3px 3px 3px;
@@ -98,14 +107,15 @@
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     border-right: 1px solid lightgray;
-    box-shadow: 7px 3px 5px #888888;
-    text-shadow: 1px 1px #888888;
+    /*box-shadow: 7px 3px 5px #888888;
+    text-shadow: 1px 1px #888888;*/
 }
 
 .gcconnex-skill-entry {
     display: inline-block;
     width: 100%;
     height: 28px;
+    margin-bottom: 8px;
 }
 
 .gcconnex-skill-limit {
@@ -128,8 +138,8 @@
 .gcconnex-endorsements-skill {
     float: left;
     min-width: 75px;
-    max-width: 255px;
-    height: 18px;
+    max-width: 225px;
+    height: 29px;
     overflow-x: hidden;
     -ms-overflow-x: hidden;
     overflow-y: hidden;
@@ -137,13 +147,16 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     font-family: arial, sans-serif;
-    background-color: darkgray;
-    color: white;
-    padding: 3px 6px 3px 3px;
+    background-color: #f0f0f0;
+    border-bottom: 1px solid lightgrey;
+    border-right: 1px solid lightgrey;
+    color: #335075;
+    padding: 3px 6px 3px 5px;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
-    box-shadow: 5px 3px 5px #888888;
+    /*box-shadow: 5px 3px 5px #888888;*/
     margin-left: 0px;
+    margin-right: 5px;
 }
 
 .gcconnex-endorsement-add {
@@ -159,10 +172,11 @@
     padding: 3px;
 }
 .gcconnex-endorsements-add-skill {
-    color: #3C698E;
-    text-shadow: 1px 1px #888888;
+    /*color: #3C698E;
+    text-shadow: 1px 1px #888888;*/
     font-family: arial;
     font-size: 12px;
+    font-weight: bold;
     clear: left;
     padding: 3px 3px 3px 5px;
     margin: 0px;
@@ -177,10 +191,10 @@
 .gcconnex-work-experience-entry,
 .gcconnex-languages-entry,
 .gcconnex-portfolio-entry {
-    margin: 15px;
-    background-color: lightgray;
+    margin-top: 15px;
+    background-color: #f9f9f9;
     padding: 15px;
-    border-radius: 5px;
+    /*border-radius: 5px;*/
 }
 
 
@@ -211,11 +225,9 @@ input.userfind {
 }
 
 .delete-skill-img {
-    height: 15px;
-    width: 15px;
     position: relative;
-    top: 3px;
-    padding-left: 10px;
+    top: 1px;
+
     padding-right: 5px;
 }
 
@@ -232,7 +244,15 @@ input.userfind {
     position: absolute;
 }*/
 
+.profile-info-head {
+    margin: 5px 0;
+    border-bottom: 1px solid #af3c43;
+}
 
+.profile-heading {
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
 
 /* about me */
 .about-me-longtext {
@@ -251,6 +271,10 @@ input.userfind {
     padding-top: 10px;
 }
 
+.language-expiry {
+    width: 100%;
+    max-width: 100px;
+}
 
 
 /* education */
@@ -265,7 +289,7 @@ input.userfind {
 .work-experience-title,
 .education-school {
     padding-top: 5px;
-    font-size: 18px;
+    font-size: 20px;
     padding-bottom: 2px;
 }
 
@@ -298,13 +322,17 @@ input.userfind {
     width: 300px;
 }
 
+.work-experience-responsibilities {
+
+}
+
 .gcconnex-work-experience-responsibilities {
     width: 98%;
 }
 
 .work-experience-organization {
-    font-weight: bold;
-    padding-bottom: 10px;
+    
+
 }
 
 .gcconnex-profile-section-frame-wrapper {
@@ -346,13 +374,13 @@ input.userfind {
 }
 
 .cancel-control.cancel-hover {
-    background-color: #FFA500;
-    color: #FFF;
+    /*background-color: #FFA500;
+    color: #FFF;*/
 }
 
 .save-control.save-hover {
-    background-color: #78ab46;
-    color: white;
+    /*background-color: #78ab46;
+    color: white;*/
 }
 
 .edit-control.edit-hover {
@@ -362,14 +390,14 @@ input.userfind {
 .gcconnex-profile-edit-controls {
     float: right;
     position: relative;
-    margin-top: -20px;
-    margin-right: -11px;
+    /*margin-top: -20px;
+    margin-right: -11px;*/
 }
 
 .edit-control,
 .save-control,
 .cancel-control {
-    font-family: arial, sans-serif;
+   /* font-family: arial, sans-serif;
     font-size: 12px;
     color: #3C698E;
     font-weight: bold;
@@ -378,18 +406,18 @@ input.userfind {
     padding: 5px 15px 5px 5px;
     position: relative;
     background-color: rgb(208, 208, 208);
-    border-left: 1px solid darkgray;
+    border-left: 1px solid darkgray; */
 }
 
 .edit-control,
 .cancel-control {
-    border-top-right-radius: 5px;
+    /*border-top-right-radius: 5px;*/
     border-bottom: 1px solid darkgray;
 }
 
 .save-control {
     border-top: 1px solid darkgray;
-    border-bottom-right-radius: 5px;
+    /*border-bottom-right-radius: 5px;*/
 }
 
 
@@ -424,13 +452,13 @@ input.userfind {
 .profile {
     float: none;
 }
-
+/*
 #profile-details {
     padding-bottom: 5px;
     float: left;
     display: inline;
     width: 45%;
-}
+}*/
 
 .elgg-input-text[name='education'] {
     width: 300px;
@@ -445,7 +473,7 @@ input.userfind {
 .gcconnex-education-start-year,
 .gcconnex-education-end-year
 {
-    width: 100px;
+    width: 130px;
 }
 
 .elgg-input-text[name='startdate'],
@@ -465,8 +493,8 @@ input.userfind {
  Colouring and styling for the "font-awesome" social media links on gcconnex profiles.
  */
 .profile-icons {
-    width: 17px;
-    height: 17px;
+    width: 33px;
+    height: 28px;
 }
 
 .profile-detail-icon {
@@ -477,6 +505,10 @@ input.userfind {
 
 .social-media-icons {
     padding-right: 5px;
+}
+
+.socialMediaIcons {
+    margin-right: 8px;
 }
 
 .fa {
@@ -593,21 +625,46 @@ input.userfind {
 }
 
 .gcconnex-avatar-in-list {
-    float: right;
+    float: left;
     padding-left: 2px;
     padding-right: 2px;
 }
 
+.gcconnex-avatar-in-list .elgg-avatar {
+    width: 30px;
+    height: 30px;
+}
+
+.gcconnex-avatar-in-list img {
+    width: 30px;
+    height: 30px;
+}
+
 .gcconnex-avatars-expand {
-    float: right;
-    height: 12px;
-    width: 12px;
-    padding: 4px;
+        float: right;
+    height: 30px;
+    width: 30px;
+    padding: 0px;
+    color: #335075;
+    background-color: #eaebed;
+    border-color: #dcdee1;
+    text-align: center;
+        min-height: 30px;
+    min-width: 30px;
 }
 
 .list-avatars {
     overflow: hidden;
 
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.pointer .gcconnex-endorsements-skill:hover {
+
+    background: #d0d0d0;
 }
 
 .work-experience-colleagues {
@@ -652,21 +709,23 @@ td.left-col {
     padding-right: 20px;
 }
 
-#profile-owner-block {
-    position: relative;
-    margin: 0;
+#profile-owner-block-wet4 {
+    /*position: relative;
+        
+    min-width: 100px;
+    */
     padding: 0;
-    width: 250px;
-    height: 250px;
+    max-width: 115px;
+    
 }
-
+/*
 .avatar-profile-page {
     width: 255px;
     height: 255px;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
 }
-
+*/
 .avatar-hover-edit {
     background-color: rgba(3,3,3, 0.5);
     bottom: 25px;
@@ -682,9 +741,9 @@ td.left-col {
 }
 
 .gcconnex-profile-field-title {
-    width: 150px;
+   /* width: 150px;*/
     display: inline-block;
-    text-align: right;
+    text-align: left;
     padding-right: 10px;
     font-weight: bold;
 }
@@ -753,25 +812,37 @@ td.left-col {
 .basic-profile-social-media-wrapper,
 .basic-profile-micro-assignments {
     float: left;
+    margin-bottom: 10px;
 }
 
 .basic-profile-field-wrapper,
 .basic-profile-social-media-wrapper {
-    width: 375px;
+    margin-left: 15px;
+    width: auto;
+    
 }
 
 body #editProfile {
-    width: 800px;
-    margin-left: -400px;
+    width: 100%;
+    background-color: rgba(125,125,125,0.3);
+ /*   margin-left: -400px;*/
+    padding-left: 0 10px 0;
+}
+
+.dialog-box {
+    background: #fff;
+    width: 100%;
+    max-width: 1000px;
 }
 
 .input-group-addon {
-    padding: 6px 0px 6px 12px;
+    width: auto;
+    padding: 9px 5px 6px 9px;
     font-size: 14px;
     font-weight: 400;
     line-height: 1;
     color: #555;
-    text-align: center;
+    text-align: left;
     background-color: #EEE;
     border: 1px solid #CCC;
     border-top-left-radius: 4px;
@@ -792,13 +863,15 @@ body #editProfile {
 }
 
 .elgg-input-text.form-control.gcconnex-basic-field.gcconnex-social-media {
-    height: 16px;
+    height: 32px;
+    width: auto;
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
+    margin-bottom: 10px;
 }
 
 .gcconnex-basic-field {
-    width: 150px;
+    width: 75px;
     height: 28px;
     margin-left: -1px;
     border: 1px solid lightgray;
@@ -810,3 +883,17 @@ body #editProfile {
 ::-moz-placeholder { color:#ccc; } /* firefox 19+ */
 :-ms-input-placeholder { color:#ccc; } /* ie */
 input:-moz-placeholder { color:#ccc; }
+
+
+.load-spinner {
+    margin: 0 auto;
+    height: 70px;
+    background: #fff url(../img/loading.gif) no-repeat center center;
+}
+
+@media only screen and (max-width: 500px) {
+
+    #edit-skills .gcconnex-avatar-in-list {
+        display: none;
+    }
+}

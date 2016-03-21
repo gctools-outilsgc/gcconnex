@@ -20,6 +20,9 @@ function uservalidationbyemail_init() {
 	// mark users as unvalidated and disable when they register
 	elgg_register_plugin_hook_handler('register', 'user', 'uservalidationbyemail_disable_new_user');
 
+	// forward to uservalidationbyemail/emailsent page after register
+	elgg_register_plugin_hook_handler('forward', 'system', 'uservalidationbyemail_after_registration_url');
+
 	// canEdit override to allow not logged in code to disable a user
 	elgg_register_plugin_hook_handler('permissions_check', 'user', 'uservalidationbyemail_allow_new_user_can_edit');
 
@@ -30,7 +33,7 @@ function uservalidationbyemail_init() {
 	elgg_register_plugin_hook_handler('action', 'user/requestnewpassword', 'uservalidationbyemail_check_request_password');
 
 	// prevent the engine from logging in users via login()
-	elgg_register_event_handler('login', 'user', 'uservalidationbyemail_check_manual_login');
+	elgg_register_event_handler('login:before', 'user', 'uservalidationbyemail_check_manual_login');
 
 	// make admin users always validated
 	elgg_register_event_handler('make_admin', 'user', 'uservalidationbyemail_validate_new_admin_user');
@@ -103,6 +106,26 @@ function uservalidationbyemail_disable_new_user($hook, $type, $value, $params) {
 }
 
 /**
+ * Override the URL to be forwarded after registration
+ *
+ * @param string $hook
+ * @param string $type
+ * @param bool   $value
+ * @param array  $params
+ * @return string
+ */
+function uservalidationbyemail_after_registration_url($hook, $type, $value, $params) {
+	$url = elgg_extract('current_url', $params);
+	if ($url == elgg_get_site_url() . 'action/register') {
+		$session = elgg_get_session();
+		$email = $session->get('emailsent', '');
+		if ($email) {
+			return elgg_get_site_url() . 'uservalidationbyemail/emailsent';
+		}
+	}
+}
+
+/**
  * Override the canEdit() call for if we're in the context of registering a new user.
  *
  * @param string $hook
@@ -146,6 +169,14 @@ function uservalidationbyemail_check_auth_attempt($credentials) {
 	$access_status = access_get_show_hidden_status();
 	access_show_hidden_entities(TRUE);
 
+	// check if logging in with email address
+	if (strpos($username, '@') !== false) {
+		$users = get_user_by_email($username);
+		if ($users) {
+			$username = $users[0]->username;
+		}
+	}
+
 	$user = get_user_by_username($username);
 	if ($user && isset($user->validated) && !$user->validated) {
 		// show an error and resend validation email
@@ -164,45 +195,15 @@ function uservalidationbyemail_check_auth_attempt($credentials) {
  * @return bool
  */
 function uservalidationbyemail_page_handler($page) {
+	$valid_pages = array('emailsent', 'confirm');
 
-	if (isset($page[0]) && $page[0] == 'confirm') {
-		$code = sanitise_string(get_input('c', FALSE));
-		$user_guid = get_input('u', FALSE);
-
-		// new users are not enabled by default.
-		$access_status = access_get_show_hidden_status();
-		access_show_hidden_entities(true);
-
-		$user = get_entity($user_guid);
-
-		if ($code && $user) {
-			if (uservalidationbyemail_validate_email($user_guid, $code)) {
-
-				elgg_push_context('uservalidationbyemail_validate_user');
-				system_message(elgg_echo('email:confirm:success'));
-				$user = get_entity($user_guid);
-				$user->enable();
-				elgg_pop_context();
-
-				try {
-					login($user);
-				} catch(LoginException $e){
-					register_error($e->getMessage());
-				}
-			} else {
-				register_error(elgg_echo('email:confirm:fail'));
-			}
-		} else {
-			register_error(elgg_echo('email:confirm:fail'));
-		}
-
-		access_show_hidden_entities($access_status);
-	} else {
-		register_error(elgg_echo('email:confirm:fail'));
+	if (empty($page[0]) || !in_array($page[0], $valid_pages)) {
+		forward('', '404');
 	}
 
-	// forward to front page
-	forward('');
+	// note, safe to include based on input because we validated above.
+	require dirname(__FILE__) . "/pages/{$page[0]}.php";
+	return true;
 }
 
 /**
@@ -223,6 +224,7 @@ function uservalidationbyemail_validate_new_admin_user($event, $type, $user) {
  */
 function uservalidationbyemail_public_pages($hook, $type, $return_value, $params) {
 	$return_value[] = 'uservalidationbyemail/confirm';
+	$return_value[] = 'uservalidationbyemail/emailsent';
 	return $return_value;
 }
 

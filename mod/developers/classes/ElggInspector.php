@@ -4,7 +4,19 @@
  *
  */
 
+/**
+ * @deprecated 1.11
+ *
+ * @access private
+ */
 class ElggInspector {
+
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		elgg_deprecated_notice(__CLASS__ . ' is deprecated and should not be used', '1.11');
+	}
 
 	/**
 	 * Get Elgg event information
@@ -12,10 +24,9 @@ class ElggInspector {
 	 * returns [event,type] => array(handlers)
 	 */
 	public function getEvents() {
-		global $CONFIG;
-
 		$tree = array();
-		foreach ($CONFIG->events as $event => $types) {
+		$events = _elgg_services()->events->getAllHandlers();
+		foreach ($events as $event => $types) {
 			foreach ($types as $type => $handlers) {
 				$tree[$event . ',' . $type] = array_values($handlers);
 			}
@@ -32,10 +43,9 @@ class ElggInspector {
 	 * returns [hook,type] => array(handlers)
 	 */
 	public function getPluginHooks() {
-		global $CONFIG;
-
 		$tree = array();
-		foreach ($CONFIG->hooks as $hook => $types) {
+		$hooks = _elgg_services()->hooks->getAllHandlers();
+		foreach ($hooks as $hook => $types) {
 			foreach ($types as $type => $handlers) {
 				$tree[$hook . ',' . $type] = array_values($handlers);
 			}
@@ -94,10 +104,8 @@ class ElggInspector {
 	 * returns [widget] => array(name, contexts)
 	 */
 	public function getWidgets() {
-		global $CONFIG;
-
 		$tree = array();
-		foreach ($CONFIG->widgets->handlers as $handler => $handler_obj) {
+		foreach (_elgg_services()->widgets->getAllTypes() as $handler => $handler_obj) {
 			$tree[$handler] = array($handler_obj->name, implode(',', array_values($handler_obj->context)));
 		}
 
@@ -110,14 +118,18 @@ class ElggInspector {
 	/**
 	 * Get Elgg actions information
 	 *
-	 * returns [action] => array(file, public, admin)
+	 * returns [action] => array(file, access)
 	 */
 	public function getActions() {
-		global $CONFIG;
-
 		$tree = array();
-		foreach ($CONFIG->actions as $action => $info) {
-			$tree[$action] = array($info['file'], ($info['public']) ? 'public' : 'logged in only', ($info['admin']) ? 'admin only' : 'non-admin');
+		$access = array(
+			'public' => 'public',
+			'logged_in' => 'logged in only',
+			'admin' => 'admin only',
+		);
+		foreach (_elgg_services()->actions->getAllActions() as $action => $info) {
+			
+			$tree[$action] = array($info['file'], $access[$info['access']]);
 		}
 
 		ksort($tree);
@@ -134,7 +146,7 @@ class ElggInspector {
 		global $CONFIG;
 
 		$tree = array();
-		foreach ($CONFIG->views->simplecache as $view) {
+		foreach ($CONFIG->views->simplecache as $view => $foo) {
 			$tree[$view] = "";
 		}
 
@@ -168,6 +180,92 @@ class ElggInspector {
 
 		ksort($tree);
 
+		return $tree;
+	}
+	
+	/**
+	 * Get information about registered menus
+	 *
+	 * @returns array [menu name] => array(item name => array(text, href, section, parent))
+	 *
+	 */
+	public function getMenus() {
+		
+		$menus = elgg_get_config('menus');
+		
+		// get JIT menu items
+		// note that 'river' is absent from this list - hooks attempt to get object/subject entities cause problems
+		$jit_menus = array('annotation', 'entity', 'login', 'longtext', 'owner_block', 'user_hover', 'widget');
+		
+		// create generic ElggEntity, ElggAnnotation, ElggUser, ElggWidget
+		$annotation = new ElggAnnotation();
+		$annotation->id = 999;
+		$annotation->name = 'generic_comment';
+		$annotation->value = 'testvalue';
+		
+		$entity = new ElggObject();
+		$entity->guid = 999;
+		$entity->subtype = 'blog';
+		$entity->title = 'test entity';
+		$entity->access_id = ACCESS_PUBLIC;
+
+		$user = new ElggUser();
+		$user->guid = 999;
+		$user->name = "Test User";
+		$user->username = 'test_user';		
+		
+		$widget = new ElggWidget();
+		$widget->guid = 999;
+		$widget->title = 'test widget';
+		
+		// call plugin hooks
+		foreach ($jit_menus as $type) {
+			$params = array('entity' => $entity, 'annotation' => $annotation, 'user' => $user);
+			switch ($type){
+				case 'owner_block':
+				case 'user_hover':
+					$params['entity'] = $user;
+					break;
+				case 'widget':
+					// this does not work because you cannot set a guid on an entity
+					$params['entity'] = $widget;
+					break;
+				default:
+					break;
+			}
+			$menus[$type] = elgg_trigger_plugin_hook('register', 'menu:'.$type, $params, array());
+		}
+		
+		// put the menus in tree form for inspection
+		$tree = array();
+
+		foreach ($menus as $menu_name => $attributes) {
+			foreach ($attributes as $item) {
+				$name = $item->getName();
+				$text = htmlspecialchars($item->getText(), ENT_QUOTES, 'UTF-8', false);
+				$href = $item->getHref();
+				if ($href === false) {
+					$href = 'not a link';
+				} elseif ($href === "") {
+					$href = 'not a direct link - possibly ajax';
+				}
+				$section = $item->getSection();
+				$parent = $item->getParentName();
+				if (!$parent) {
+					$parent = 'none';
+				}
+    
+				$tree[$menu_name][$name] = array(
+					"text: $text",
+					"href: $href",
+					"section: $section",
+					"parent: $parent",
+				);
+			}
+		}
+		
+		ksort($tree);
+		
 		return $tree;
 	}
 

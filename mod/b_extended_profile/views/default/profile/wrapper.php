@@ -18,13 +18,13 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
 //elgg_load_css('bootstrap-tour-css');
 ?>
 
-<div class="profile elgg-col-3of3">
-    <div class="elgg-inner clearfix">
-        <?php echo elgg_view('profile/owner_block'); ?>
+<div class="profile">
+    <div class="clearfix panel-custom panel">
+        <?php //echo elgg_view('profile/owner_block'); ?>
         <?php echo elgg_view('profile/details'); ?>
     </div>
 
-
+    
     <div class="gcconnex-profile-wire-post">
         <?php $user = get_user(elgg_get_page_owner_guid());
             $params = array(
@@ -35,22 +35,34 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
             );
         $latest_wire = elgg_get_entities($params);
         if ($latest_wire && count($latest_wire) > 0) {
-            echo '<img class="profile-icons double-quotes" src="' . elgg_get_site_url() . 'mod/b_extended_profile/img/double-quotes.png">';
-            echo elgg_view("profile/status", array("entity" => $user));
+            //echo '<img class="profile-icons double-quotes" src="' . elgg_get_site_url() . 'mod/b_extended_profile/img/double-quotes.png">';
+            //echo elgg_view("profile/status", array("entity" => $user));
         }
         ?>
     </div>
+    
+   <?php //echo elgg_get_context(); 
+    
+    
 
+?>
+    
     <div class="b_extended_profile">
         <?php
 
-
         echo '<div role="tabpanel">';
+/* Old Tab Menu
+        
         echo '<ul class="nav nav-tabs" role="tablist">';
         echo '<li role="presentation" class="active"><a href="#profile-display" aria-controls="profile-display" role="tab" data-toggle="tab">' . elgg_echo('gcconnex_profile:profile') . '</a></li>';
         echo '<li role="presentation" ><a href="#splashboard" aria-controls="splashboard" role="tab" data-toggle="tab">' . elgg_echo('gcconnex_profile:widgets') . '</a></li>';
         echo '<li role="presentation"><a href="#portfolio" aria-controls="portfolio" role="tab" data-toggle="tab">' . elgg_echo('gcconnex_profile:portfolio') . '</a></li>';
         echo '</ul>';
+        */
+
+        //add additional tabs
+        echo elgg_view('groups/profile/tab_menu');
+
         echo '<div class="tab-content">';
             echo '<div role="tabpanel" class="tab-pane active" id="profile-display">';
 
@@ -72,14 +84,16 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
             finit_ajax_block('work-experience');
         }
 
-        if ( has_content($user, 'gc_skills') ) {
-            init_ajax_block(elgg_echo('gcconnex_profile:gc_skills'), 'skills', $user);
-            echo elgg_view('b_extended_profile/skills');
-            finit_ajax_block('skills');
+        if(elgg_is_logged_in()){
+            if ( has_content($user, 'gc_skills') ) {
+                init_ajax_block(elgg_echo('gcconnex_profile:gc_skills'), 'skills', $user);
+                echo elgg_view('b_extended_profile/skills');
+                finit_ajax_block('skills');
+            }
         }
 
-        if ( has_content($user, 'english' || has_content($user, 'french')) ) {
-            init_ajax_block(elgg_echo('gcconnex_profile:langs'), 'languages', $user);
+        if ( has_content($user, 'english') || has_content($user, 'french') ) {
+            init_ajax_block(elgg_echo('gcconnex_profile:sle'), 'languages', $user);
             echo elgg_view('b_extended_profile/languages');
             finit_ajax_block('languages');
         }
@@ -88,9 +102,9 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
             echo '</div>'; //close div id=#profile-display
 
 
-            echo '<div role="tabpanel" class="tab-pane" id="splashboard">';
+            echo '<div role="tabpanel" class="tab-pane clearfix" id="splashboard">';
 
-                $num_columns = elgg_extract('num_columns', $vars, 3);
+                $num_columns = elgg_extract('num_columns', $vars, 2);
                 $show_add_widgets = elgg_extract('show_add_widgets', $vars, true);
                 $exact_match = elgg_extract('exact_match', $vars, false);
                 $show_access = elgg_extract('show_access', $vars, true);
@@ -134,7 +148,7 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
                         $column_widgets = array();
                     }
 
-                    echo "<div class=\"$widget_class elgg-widgets\" id=\"elgg-widget-col-$column_index\">";
+                    echo "<div class=\"$widget_class elgg-widgets col-sm-6 col-xs-12 widget-area-col\" id=\"elgg-widget-col-$column_index\">";
                     if (sizeof($column_widgets) > 0) {
                         foreach ($column_widgets as $widget) {
                             if (array_key_exists($widget->handler, $widget_types)) {
@@ -154,6 +168,8 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
                 finit_ajax_block('portfolio');
             echo '</div>'; // close div id="#portfolio"
 
+            //add tab panels with preview content
+            echo elgg_view('profile/tab-content');
 
             echo '</div>'; // close div class="tab-content'
         echo '</div>'; // close div role="tabpanel"

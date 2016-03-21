@@ -6,15 +6,23 @@
  * @subpackage UI
  * 
  * To work around subpixel rounding discrepancies, apply .elgg-col-last to
- * the last column (@todo we need broswer-specific test cases for this).
+ * the last column
+ * @todo we need broswer-specific test cases for this
+ * @todo this should go away as soon as Opera switches to Webkit
  */
 ?>
 
 /* ***************************************
-	GRID
+	Grid
 *************************************** */
+
+/*<style>/**/
+
 .elgg-col {
 	float: left;
+}
+.elgg-col-alt {
+	float: right;
 }
 .elgg-col-1of1 {
 	float: none;

@@ -67,6 +67,12 @@ if (empty($error) && !empty($filter)) {
 	$options["wheres"] = array("(oe.description LIKE '%" . implode("%' OR oe.description LIKE '%", $filters) . "%')");
 }
 
+// show add form in widget
+if (elgg_is_logged_in() && (elgg_get_plugin_setting("extend_widgets", "thewire_tools") != "no")) {
+	echo elgg_view_form("thewire/add");
+}
+
+// list content
 $content = elgg_list_entities($options);
 if (empty($error) && !empty($content)) {
 	echo $content;

@@ -14,55 +14,81 @@ function developers_init() {
 	elgg_extend_view('css/admin', 'developers/css');
 	elgg_extend_view('css/elgg', 'developers/css');
 
-	elgg_register_page_handler('theme_preview', 'developers_theme_preview_controller');
+	elgg_register_page_handler('theme_sandbox', 'developers_theme_sandbox_controller');
+	elgg_register_external_view('developers/ajax'); // for lightbox in sandbox
+	$sandbox_css = elgg_get_simplecache_url('css', 'theme_sandbox.css');
+	elgg_register_css('dev.theme_sandbox', $sandbox_css);
 
 	$action_base = elgg_get_plugins_path() . 'developers/actions/developers';
 	elgg_register_action('developers/settings', "$action_base/settings.php", 'admin');
-	elgg_register_action('developers/inspect', "$action_base/inspect.php", 'admin');
 
-	elgg_register_js('jquery.jstree', 'mod/developers/vendors/jsTree/jquery.jstree.js', 'footer');
-	elgg_register_css('jquery.jstree', 'mod/developers/vendors/jsTree/themes/default/style.css');
+	elgg_define_js('jquery.jstree', array(
+		'src' => '/mod/developers/vendors/jsTree/jquery.jstree.js',
+		'exports' => 'jQuery.fn.jstree',
+		'deps' => array('jquery'),
+	));
+	elgg_register_css('jquery.jstree', '/mod/developers/vendors/jsTree/themes/default/style.css');
 
-	elgg_load_js('jquery.form');
-
-	elgg_register_js('elgg.dev', 'js/developers/developers.js', 'footer');
-	elgg_load_js('elgg.dev');
+	elgg_require_js('elgg/dev');
 }
 
 function developers_process_settings() {
-	if (elgg_get_plugin_setting('display_errors', 'developers') == 1) {
-		ini_set('display_errors', 1);
-	} else {
-		ini_set('display_errors', 0);
+	$settings = elgg_get_plugin_from_id('developers')->getAllSettings();
+
+	ini_set('display_errors', (int)!empty($settings['display_errors']));
+
+	if (!empty($settings['screen_log'])) {
+		// don't show in action/simplecache
+		$path = substr(current_page_url(), strlen(elgg_get_site_url()));
+		if (!preg_match('~^(cache|action)/~', $path)) {
+			$cache = new ElggLogCache();
+			elgg_set_config('log_cache', $cache);
+			elgg_register_plugin_hook_handler('debug', 'log', array($cache, 'insertDump'));
+			elgg_register_plugin_hook_handler('view_vars', 'page/elements/html', function($hook, $type, $vars, $params) {
+				$vars['body'] .= elgg_view('developers/log');
+				return $vars;
+			});
+		}
 	}
 
-	if (elgg_get_plugin_setting('screen_log', 'developers') == 1) {
-		$cache = new ElggLogCache();
-		elgg_set_config('log_cache', $cache);
-		elgg_register_plugin_hook_handler('debug', 'log', array($cache, 'insertDump'));
-		elgg_extend_view('page/elements/foot', 'developers/log');
-	}
-
-	if (elgg_get_plugin_setting('show_strings', 'developers') == 1) {
+	if (!empty($settings['show_strings'])) {
 		// first and last in case a plugin registers a translation in an init method
 		elgg_register_event_handler('init', 'system', 'developers_clear_strings', 1000);
 		elgg_register_event_handler('init', 'system', 'developers_clear_strings', 1);
 	}
 
-	if (elgg_get_plugin_setting('wrap_views', 'developers') == 1) {
+	if (!empty($settings['show_modules'])) {
+		elgg_require_js('elgg/dev/amd_monitor');
+	}
+
+	if (!empty($settings['wrap_views'])) {
 		elgg_register_plugin_hook_handler('view', 'all', 'developers_wrap_views');
 	}
 
-	if (elgg_get_plugin_setting('log_events', 'developers') == 1) {
+	if (!empty($settings['log_events'])) {
 		elgg_register_event_handler('all', 'all', 'developers_log_events', 1);
 		elgg_register_plugin_hook_handler('all', 'all', 'developers_log_events', 1);
+	}
+
+	if (!empty($settings['show_gear']) && elgg_is_admin_logged_in() && !elgg_in_context('admin')) {
+		elgg_require_js('elgg/dev/gear');
+		elgg_load_js('lightbox');
+		elgg_load_css('lightbox');
+		elgg_register_ajax_view('developers/gear_popup');
+
+		// TODO use ::class in 2.0
+		$handler = ['Elgg\DevelopersPlugin\Hooks', 'alterMenuSectionVars'];
+		elgg_register_plugin_hook_handler('view_vars', 'navigation/menu/elements/section', $handler);
+
+		$handler = ['Elgg\DevelopersPlugin\Hooks', 'alterMenuSections'];
+		elgg_register_plugin_hook_handler('view', 'navigation/menu/elements/section', $handler);
 	}
 }
 
 function developers_setup_menu() {
 	if (elgg_in_context('admin')) {
-		elgg_register_admin_menu_item('develop', 'inspect', 'develop_tools');
-		elgg_register_admin_menu_item('develop', 'preview', 'develop_tools');
+		elgg_register_admin_menu_item('develop', 'inspect');
+		elgg_register_admin_menu_item('develop', 'sandbox', 'develop_tools');
 		elgg_register_admin_menu_item('develop', 'unit_tests', 'develop_tools');
 
 		elgg_register_menu_item('page', array(
@@ -73,6 +99,18 @@ function developers_setup_menu() {
 			'priority' => 10,
 			'section' => 'develop'
 		));
+		
+		$inspect_options = developers_get_inspect_options();
+		foreach ($inspect_options as $key => $value) {
+			elgg_register_menu_item('page', array(
+				'name' => 'dev_inspect_' . elgg_get_friendly_title($key),
+				'href' => "admin/develop_tools/inspect?inspect_type={$key}",
+				'text' => $value,
+				'context' => 'admin',
+				'section' => 'develop',
+				'parent_name' => 'inspect'
+			));
+		}
 	}
 }
 
@@ -104,7 +142,7 @@ function developers_wrap_views($hook, $type, $result, $params) {
 		return;
 	}
 
-	$excluded_bases = array('css', 'js', 'input', 'output', 'embed', 'icon',);
+	$excluded_bases = array('css', 'js', 'input', 'output', 'embed', 'icon', 'json', 'xml');
 
 	$excluded_views = array(
 		'page/default',
@@ -143,15 +181,28 @@ function developers_log_events($name, $type) {
 		return;
 	}
 
+	// 0 => this function
+	// 1 => call_user_func_array
+	// 2 => hook class trigger
 	$stack = debug_backtrace();
-	if ($stack[2]['function'] == 'elgg_trigger_event') {
+	if (isset($stack[2]['class']) && $stack[2]['class'] == 'Elgg\EventsService') {
 		$event_type = 'Event';
 	} else {
 		$event_type = 'Plugin hook';
 	}
-	$function = $stack[3]['function'] . '()';
-	if ($function == 'require_once' || $function == 'include_once') {
-		$function = $stack[3]['file'];
+
+	if ($stack[3]['function'] == 'elgg_trigger_event' || $stack[3]['function'] == 'elgg_trigger_plugin_hook') {
+		$index = 4;
+	} else {
+		$index = 3;
+	}
+	if (isset($stack[$index]['class'])) {
+		$function = $stack[$index]['class'] . '::' . $stack[$index]['function'] . '()';
+	} else {
+		$function = $stack[$index]['function'] . '()';
+	}
+	if ($function == 'require_once()' || $function == 'include_once()') {
+		$function = $stack[$index]['file'];
 	}
 
 	$msg = elgg_echo('developers:event_log_msg', array(
@@ -160,21 +211,23 @@ function developers_log_events($name, $type) {
 		$type,
 		$function,
 	));
-	elgg_dump($msg, false, 'WARNING');
+	elgg_dump($msg, false);
 
 	unset($stack);
 }
 
 /**
- * Serve the theme preview pages
+ * Serve the theme sandbox pages
  *
  * @param array $page
  * @return bool
  */
-function developers_theme_preview_controller($page) {
+function developers_theme_sandbox_controller($page) {
 	if (!isset($page[0])) {
-		forward('theme_preview/general');
+		forward('theme_sandbox/intro');
 	}
+
+	elgg_load_css('dev.theme_sandbox');
 
 	$pages = array(
 		'buttons',
@@ -182,28 +235,56 @@ function developers_theme_preview_controller($page) {
 		'forms',
 		'grid',
 		'icons',
+		'javascript',
+		'layouts',
 		'modules',
 		'navigation',
 		'typography',
-		'miscellaneous'
 	);
 	
 	foreach ($pages as $page_name) {
-		elgg_register_menu_item('page', array(
+		elgg_register_menu_item('theme_sandbox', array(
 			'name' => $page_name,
-			'text' => elgg_echo("theme_preview:$page_name"),
-			'href' => "theme_preview/$page_name",
+			'text' => elgg_echo("theme_sandbox:$page_name"),
+			'href' => "theme_sandbox/$page_name",
 		));
 	}
 
-	$title = elgg_echo("theme_preview:{$page[0]}");
-	$body =  elgg_view("theme_preview/{$page[0]}");
+	elgg_require_js('elgg/dev/theme_sandbox');
 
-	$layout = elgg_view_layout('one_sidebar', array(
+	$title = elgg_echo("theme_sandbox:{$page[0]}");
+	$body =  elgg_view("theme_sandbox/{$page[0]}");
+
+	$layout = elgg_view_layout('theme_sandbox', array(
 		'title' => $title,
 		'content' => $body,
 	));
-	
-	echo elgg_view_page($title, $layout, 'theme_preview');
+
+	echo elgg_view_page("Theme Sandbox : $title", $layout, 'theme_sandbox');
 	return true;
+}
+
+/**
+ * Get the available inspect options
+ * 
+ * @return array
+ */
+function developers_get_inspect_options() {
+	$options = array(
+		'Actions' => elgg_echo('developers:inspect:actions'),
+		'Events' => elgg_echo('developers:inspect:events'),
+		'Menus' => elgg_echo('developers:inspect:menus'),
+		'Plugin Hooks' => elgg_echo('developers:inspect:pluginhooks'),
+		'Simple Cache' => elgg_echo('developers:inspect:simplecache'),
+		'Views' => elgg_echo('developers:inspect:views'),
+		'Widgets' => elgg_echo('developers:inspect:widgets'),
+	);
+	
+	if (elgg_is_active_plugin('web_services')) {
+		$options['Web Services'] = elgg_echo('developers:inspect:webservices');
+	}
+	
+	ksort($options);
+	
+	return $options;
 }

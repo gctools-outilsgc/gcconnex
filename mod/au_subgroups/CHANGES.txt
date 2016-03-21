@@ -5,6 +5,35 @@ GC Change
 
 GC 1.0 - Updated French language file - Charles de Grasse October 29, 2013
 
+2.1.0 (09/12/2015):
+ - remove hack to workaround https://github.com/Elgg/Elgg/issues/8927
+ - minimum elgg release 1.12.4
+
+2.0 (09/12/2015):
+ - upgrade for 1.9+ compatibility
+ - general code cleanup
+ - no more html output in route hook (you're welcome IK)
+ - fixed bug with content transfer on subgroup delete
+ - better handling of deleted group content
+ - fix javascript error on subgroup move
+ - fix search query for innodb
+ - add packagist composer.json
+
+1.7 (03/14/2013):
+ - adds 'my_status' to group profiles
+
+1.6 (02/14/2013):
+ - fixes potential php fatal error (wsod) under certain conditions
+ - adds ability to move a group and all subgroups to be a subgroup of another
+ - adds group setting to allow any member to create subgroups (enabled by default)
+ - fixes bug with subgroup edit permissions for higher level admins that aren't members
+ - enforce visibility restrictions when moving subgroups to new parents
+
+Notes on subgroup move:
+- must have edit permissions for subgroup and parent group up to the top level
+- cannot make a group a subgroup of itself or it's children
+- users in a moved group that aren't in the new parent group are removed, and invited into the hierarchy
+
 1.5 (11/19/2012):
  - added create subgroup link to parent group title menu again (make up your minds!)
  - removes 'join' and 'request membership' title buttons for subgroups when the viewer isn't a member of the parent

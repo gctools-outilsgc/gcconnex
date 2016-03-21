@@ -14,10 +14,14 @@
  */
 
 // check if there is a theme overriding the old css view and use it, if it exists
-$old_css_view = elgg_get_view_location('css');
-if ($old_css_view != elgg_get_config('viewpath')) {
-	echo elgg_view('css', $vars);
-	return true;
+if (elgg_view_exists('css')) {
+	// note: _elgg_services is private API, DO NOT USE.
+	$old_css_view = _elgg_services()->views->getViewLocation('css');
+
+	if ($old_css_view != elgg_get_config('viewpath')) {
+		echo elgg_view('css', $vars);
+		return true;
+	}
 }
 
 
@@ -58,6 +62,7 @@ echo elgg_view('css/elements/modules', $vars);
 echo elgg_view('css/elements/components', $vars);
 echo elgg_view('css/elements/layout', $vars);
 echo elgg_view('css/elements/misc', $vars);
+echo elgg_view('css/elements/misc/spinner.css', $vars);
 
 
 // included last to have higher priority

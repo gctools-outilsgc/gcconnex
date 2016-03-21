@@ -1,6 +1,6 @@
 <?php
 
-gatekeeper();
+elgg_gatekeeper();
 
 $user = elgg_get_page_owner_entity();
 if (!elgg_instanceof($user, "user")) {
@@ -13,12 +13,7 @@ if (!$user->canEdit()) {
 }
 
 // set the correct context and page owner
-elgg_set_context("friends");
-
-// fix to show collections links
-if ($user->getGUID() == elgg_get_logged_in_user_guid()) {
-	collections_submenu_items();
-}
+elgg_push_context("friends");
 
 // breadcrumb
 elgg_push_breadcrumb(elgg_echo("friends"), "friends/" . $user->username);

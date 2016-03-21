@@ -11,34 +11,48 @@
  * @uses string $_REQUEST['context']         An optional context of the widget. Used to return
  *                                           the correct output if widget content changes
  *                                           depending on context.
+ * @uses string $_REQUEST['title']           Optional title for the widget
  *
  */
-
-elgg_set_context('widgets');
 
 $guid = get_input('guid');
 $params = get_input('params');
 $default_widgets = get_input('default_widgets', 0);
 $context = get_input('context');
+$title = get_input('title');
+
+if ($default_widgets) {
+	elgg_push_context('default_widgets');
+}
+elgg_push_context('widgets');
 
 $widget = get_entity($guid);
 if ($widget && $widget->saveSettings($params)) {
+	if ($title && $title != $widget->title) {
+		$widget->title = $title;
+		$widget->save();
+	}
+
 	elgg_set_page_owner_guid($widget->getContainerGUID());
 	if ($context) {
 		elgg_push_context($context);
 	}
 	
-	if (!$default_widgets) {
-		if (elgg_view_exists("widgets/$widget->handler/content")) {
-			$view = "widgets/$widget->handler/content";
-		} else {
-			elgg_deprecated_notice("widgets use content as the display view", 1.8);
-			$view = "widgets/$widget->handler/view";
-		}
-		echo elgg_view($view, array('entity' => $widget));
+	echo elgg_view('object/widget/elements/content', ['entity' => $widget]);
+	
+	if ($context) {
+		elgg_pop_context();
 	}
+	
 } else {
 	register_error(elgg_echo('widgets:save:failure'));
+}
+
+// widgets context
+elgg_pop_context();
+
+if ($default_widgets) {
+	elgg_pop_context();
 }
 
 forward(REFERER);

@@ -5,8 +5,8 @@
  * @since 1.8
  */
 
-if (0) { ?><script><?php }
 ?>
+//<script>
 elgg.provide('elgg.admin');
 
 elgg.admin.init = function () {
@@ -48,6 +48,13 @@ elgg.admin.init = function () {
 
 	// admin notices delete ajax
 	$('a.elgg-admin-notice').click(elgg.admin.deleteNotice);
+
+	// disable checkboxes (readonly does not work for them)
+	$('input:checkbox.elgg-state-disabled, label.elgg-state-disabled > input:checkbox')
+			.live('click', function() {return false;});
+
+	// disable simple cache compress settings if simple cache is off
+	$('[name=simplecache_enabled]').click(elgg.admin.simplecacheToggle);
 };
 
 /**
@@ -64,12 +71,48 @@ elgg.admin.movePlugin = function(e, ui) {
 
 	elgg.action('admin/plugins/set_priority', {
 		data: {
-				plugin_guid: pluginGuid,
-				// we start at priority 1
-				priority: ui.item.index() + 1
-			}
+			plugin_guid: pluginGuid,
+			// we start at priority 1
+			priority: ui.item.index() + 1
+		},
+		success: function() {
+			// update plugins with priority dependences
+			var priorityDep = new RegExp(elgg.echo('ElggPlugin:Dependencies:Priority'));
+			ui.item.siblings().andSelf().each(function() {
+				if (priorityDep.test($(this).find('.elgg-dependency-requires').text())) {
+					elgg.admin.updatePluginView($(this));
+				}
+			});
+		}
 	});
 };
+
+/**
+ * Update the plugin view.
+ *
+ * @param {Object} pluginView Plugin view element to update
+ * @return void
+ */
+elgg.admin.updatePluginView = function(pluginView) {
+	// get guid from id like elgg-object-<guid>
+	var pluginGuid = pluginView.attr('id');
+	pluginGuid = pluginGuid.replace('elgg-object-', '');
+
+	elgg.get({
+		url: elgg.config.wwwroot + "ajax/view/object/plugin/full",
+		dataType: "html",
+		cache: false,
+		data: {
+			guid: pluginGuid,
+			display_reordering: true
+		},
+		success: function(htmlData) {
+			if (htmlData.length > 0) {
+				pluginView.html(htmlData);
+			}
+		}
+	});
+}
 
 /**
  * In-line editing for custom profile fields
@@ -121,6 +164,24 @@ elgg.admin.deleteNotice = function(e) {
 			$container.slideUp('medium');
 		}
 	});
+};
+
+/**
+ * Toggles the display of the compression settings for simplecache
+ *
+ * @return void
+ */
+elgg.admin.simplecacheToggle = function() {
+	// when the checkbox is disabled, do not toggle the compression checkboxes
+	if (!$(this).hasClass('elgg-state-disabled')) {
+		var names = ['simplecache_minify_js', 'simplecache_minify_css'];
+		for (var i = 0; i < names.length; i++) {
+			var $input = $('input[type!=hidden][name="' + names[i] + '"]');
+			if ($input.length) {
+				$input.parent().toggleClass('elgg-state-disabled');
+			}
+		}
+	}
 };
 
 elgg.register_hook_handler('init', 'system', elgg.admin.init, 1000);

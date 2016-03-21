@@ -9,7 +9,7 @@ else {
 $user = get_user($user_guid);
 $work_experience_guid = $user->work;
 
-echo '<div class="gcconnex-profile-work-experience-display">';
+echo '<div class="gcconnex-profile-work-experience-display pull-left clearfix">';
 
 if ($user->canEdit() && ($work_experience_guid == NULL || empty($work_experience_guid))) {
     echo elgg_echo('gcconnex_profile:experience:empty');
@@ -24,6 +24,10 @@ else {
     foreach ($work_experience_guid as $guid) {
 
         if ($experience = get_entity($guid)) {
+            echo '<div class="gcconnex-profile-label work-experience-title">' . $experience->title . '</div>';
+            echo '<div class="gcconnex-profile-label work-experience-organization">' . $experience->organization . '</div>';
+            
+            
             $cal_month = array(
                 1 => elgg_echo('gcconnex_profile:month:january'),
                 2 => elgg_echo('gcconnex_profile:month:february'),
@@ -39,18 +43,17 @@ else {
                 12 => elgg_echo('gcconnex_profile:month:december')
             );
             echo '<div class="gcconnex-profile-work-experience-display gcconnex-work-experience-' . $experience->guid . '">';
-            echo '<div class="gcconnex-profile-label work-experience-dates">' . $cal_month[$experience->startdate] . ', ' . $experience->startyear . ' - ';
+            echo '<div class="gcconnex-profile-label timeStamp mrgn-tp-sm">' . $cal_month[$experience->startdate] . ' ' . $experience->startyear . ' - ';
 
             if ($experience->ongoing == 'true') {
                 echo elgg_echo('gcconnex_profile:experience:present');
             } else {
-                echo $cal_month[$experience->enddate] . ', ' . $experience->endyear;
+                echo $cal_month[$experience->enddate] . ' ' . $experience->endyear;
             }
 
             echo '</div>';
-            echo '<div class="gcconnex-profile-label work-experience-title">' . $experience->title . '</div>';
-            echo '<div class="gcconnex-profile-label work-experience-organization">' . $experience->organization . '</div>';
-            echo '<div class="gcconnex-profile-label work-experience-responsibilities">' . $experience->responsibilities . '</div>';
+            
+            echo '<div class="gcconnex-profile-label work-experience-responsibilities mrgn-tp-md">' . $experience->responsibilities . '</div>';
 
             echo '<div class="gcconnex-profile-label work-experience-colleagues">';
             $colleagues = $experience->colleagues;

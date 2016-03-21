@@ -30,18 +30,24 @@ $name = get_input('name');
 $friend_guid = (int) get_input('friend_guid', 0);
 $invitecode = get_input('invitecode');
 
+
+//////////////////////////// Troy
+$deptNum = get_input('department');
+
+// since the retired form has been removed and the type used is no longer passed, this check and the handling of the retired form input should not be here anymore
 // check which version the form is (retired vs standard) & must trim everything
-if (get_input('noscript') !== 'retired' && get_input('form_type') === 'standard')
-{
+//if (get_input('noscript') !== 'retired' && get_input('form_type') === 'standard')
+//{
 	$username = get_input('username');
 	$email = str_replace(' ','',trim(get_input('email')));
 	$password = trim(get_input('password', null, false));
 	$password2 = trim(get_input('password2', null, false));
 	$name = get_input('name');
-	$email2 = str_replace(' ','',get_input('initial_email'));
+	$email2 = str_replace(' ','',get_input('email_initial'));
 	$toc = get_input('toc2');
 
-} else {
+
+/*} else {
 
 	$email = str_replace(' ', '',trim(get_input('c_email')));
 	$email2 = str_replace(' ', '', trim(get_input('c_email2')));
@@ -92,7 +98,7 @@ if (get_input('noscript') !== 'retired' && get_input('form_type') === 'standard'
 		// username output
 		$username = $uname;
 	mysqli_close($connection);
-} // end of condition (retired form - js disabled and IE7)
+} */// end of condition (retired form - js disabled and IE7)
 
 
 // check form (incompleteness & validity)
@@ -186,7 +192,22 @@ if (elgg_get_config('allow_registration')) {
 			} catch (LoginException $e) {
 				// do nothing
 			}
-
+			/////// Troy
+			$obj = elgg_get_entities(array(
+   				'type' => 'object',
+   				'subtype' => 'dept_list',
+   				'owner_guid' => elgg_get_logged_in_user_guid()
+			));
+			$departmentsEn = json_decode($obj[0]->deptsEn, true);
+			$departmentsFr = json_decode($obj[0]->deptsFr, true);
+			if (get_current_language()=='en'){
+				$deptString = $departmentsEn[$deptNum]." / ".$departmentsFr[$deptNum];
+			}else{
+				$deptString = $departmentsFr[$deptNum]." / ".$departmentsEn[$deptNum];
+			}
+			
+			$new_user->set('department',$deptString);
+			
 			// Forward on success, assume everything else is an error...
 			forward();
 		} else {

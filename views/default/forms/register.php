@@ -6,60 +6,72 @@
  * @subpackage Core
  */
 
-$password = $password2 = '';
-$username = get_input('u');
-$email = get_input('e');
-$name = get_input('n');
-
 if (elgg_is_sticky_form('register')) {
-	extract(elgg_get_sticky_values('register'));
+	$values = elgg_get_sticky_values('register');
+
+	// Add the sticky values to $vars so views extending
+	// register/extend also get access to them.
+	$vars = array_merge($vars, $values);
+
 	elgg_clear_sticky_form('register');
+} else {
+	$values = array();
 }
 
+$password = $password2 = '';
+$username = elgg_extract('username', $values, get_input('u'));
+$email = elgg_extract('email', $values, get_input('e'));
+$name = elgg_extract('name', $values, get_input('n'));
+
 ?>
-<div class="mtm">
-	<label><?php echo elgg_echo('name'); ?></label><br />
+<div class="mtm form-group">
+	<label for="name"><?php echo elgg_echo('name'); ?></label><br />
 	<?php
 	echo elgg_view('input/text', array(
 		'name' => 'name',
 		'value' => $name,
-		'class' => 'elgg-autofocus',
+		'autofocus' => true,
+        'id' => 'name',
 	));
 	?>
 </div>
-<div>
-	<label><?php echo elgg_echo('email'); ?></label><br />
+<div class="form-group">
+	<label for="email"><?php echo elgg_echo('email'); ?></label><br />
 	<?php
 	echo elgg_view('input/text', array(
 		'name' => 'email',
 		'value' => $email,
+        'id' => 'email',
 	));
 	?>
 </div>
-<div>
-	<label><?php echo elgg_echo('username'); ?></label><br />
+<div class="form-group">
+	<label for="username2"><?php echo elgg_echo('username'); ?></label><br />
 	<?php
 	echo elgg_view('input/text', array(
 		'name' => 'username',
 		'value' => $username,
+        'id' => 'username2',
 	));
 	?>
 </div>
-<div>
-	<label><?php echo elgg_echo('password'); ?></label><br />
+<div class="form-group">
+	<label for="password1"><?php echo elgg_echo('password'); ?></label><br />
 	<?php
 	echo elgg_view('input/password', array(
 		'name' => 'password',
 		'value' => $password,
+        'id' => 'password1',
 	));
 	?>
 </div>
-<div>
-	<label><?php echo elgg_echo('passwordagain'); ?></label><br />
+<div class="form-group">
+	<label for="password2"><?php echo elgg_echo('passwordagain'); ?></label><br />
 	<?php
 	echo elgg_view('input/password', array(
 		'name' => 'password2',
 		'value' => $password2,
+        'id' => 'password2',
 	));
 	?>
 </div>

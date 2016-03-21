@@ -4,20 +4,26 @@
  *
  * Subtasks are not deleted but are moved up a level in the tree
  *
- * @package ElggPages
+ * @package ElggTasks
  */
 
 $guid = get_input('guid');
 $task = get_entity($guid);
 if ($task) {
-	if ($task->canEdit()) {
+	if ($task->canEdit() && (elgg_instanceof($task, "object", "task") || elgg_instanceof($task, "object", "task_top"))) {
 		$container = get_entity($task->container_guid);
 
 		// Bring all child elements forward
 		$parent = $task->parent_guid;
 		$children = elgg_get_entities_from_metadata(array(
-			'metadata_name' => 'parent_guid',
-			'metadata_value' => $task->getGUID()
+			'type' => 'object',
+			'subtype' => 'task',
+			'container_guid' => $task->getContainerGUID(),
+			'limit' => false,
+			'metadata_name_value_pairs' => array(
+				'name' => 'parent_guid',
+				'value' => $task->getGUID()
+			)
 		));
 		if ($children) {
 			foreach ($children as $child) {

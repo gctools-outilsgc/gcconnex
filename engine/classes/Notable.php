@@ -5,7 +5,7 @@
  * @package    Elgg.Core
  * @subpackage DataModel.Notable
  *
- * @todo Implement or remove.
+ * @deprecated 1.9
  */
 interface Notable {
 	/**
@@ -22,8 +22,8 @@ interface Notable {
 	 *
 	 * @return bool
 	 */
-	public function setCalendarTimeAndDuration($hour = NULL, $minute = NULL, $second = NULL,
-		$day = NULL, $month = NULL, $year = NULL, $duration = NULL);
+	public function setCalendarTimeAndDuration($hour = null, $minute = null, $second = null,
+		$day = null, $month = null, $year = null, $duration = null);
 
 	/**
 	 * Return the start timestamp.

@@ -19,9 +19,11 @@ if ($container_guid == 0) {
 
 elgg_make_sticky_form('file');
 
-// check if upload failed
+// check if upload attempted and failed
 if (!empty($_FILES['upload']['name']) && $_FILES['upload']['error'] != 0) {
-	register_error(elgg_echo('file:cannotload'));
+	$error = elgg_get_friendly_upload_error($_FILES['upload']['error']);
+
+	register_error($error);
 	forward(REFERER);
 }
 
@@ -93,33 +95,11 @@ if (isset($_FILES['upload']['name']) && !empty($_FILES['upload']['name'])) {
 	}
 
 	$file->setFilename($prefix . $filestorename);
-	$mime_type = ElggFile::detectMimeType($_FILES['upload']['tmp_name'], $_FILES['upload']['type']);
-
-	// hack for Microsoft zipped formats
-	$info = pathinfo($_FILES['upload']['name']);
-	$office_formats = array('docx', 'xlsx', 'pptx');
-	if ($mime_type == "application/zip" && in_array($info['extension'], $office_formats)) {
-		switch ($info['extension']) {
-			case 'docx':
-				$mime_type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-				break;
-			case 'xlsx':
-				$mime_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-				break;
-			case 'pptx':
-				$mime_type = "application/vnd.openxmlformats-officedocument.presentationml.presentation";
-				break;
-		}
-	}
-
-	// check for bad ppt detection
-	if ($mime_type == "application/vnd.ms-office" && $info['extension'] == "ppt") {
-		$mime_type = "application/vnd.ms-powerpoint";
-	}
+	$file->originalfilename = $_FILES['upload']['name'];
+	$mime_type = $file->detectMimeType($_FILES['upload']['tmp_name'], $_FILES['upload']['type']);
 
 	$file->setMimeType($mime_type);
-	$file->originalfilename = $_FILES['upload']['name'];
-	$file->simpletype = file_get_simple_type($mime_type);
+	$file->simpletype = elgg_get_file_simple_type($mime_type);
 
 	// Open the file to guarantee the directory exists
 	$file->open("write");
@@ -165,6 +145,23 @@ if (isset($_FILES['upload']['name']) && !empty($_FILES['upload']['name'])) {
 			$file->largethumb = $prefix."largethumb".$filestorename;
 			unset($thumblarge);
 		}
+	} elseif ($file->icontime) {
+		// if it is not an image, we do not need thumbnails
+		unset($file->icontime);
+		
+		$thumb = new ElggFile();
+		
+		$thumb->setFilename($prefix . "thumb" . $filestorename);
+		$thumb->delete();
+		unset($file->thumbnail);
+		
+		$thumb->setFilename($prefix . "smallthumb" . $filestorename);
+		$thumb->delete();
+		unset($file->smallthumb);
+		
+		$thumb->setFilename($prefix . "largethumb" . $filestorename);
+		$thumb->delete();
+		unset($file->largethumb);
 	}
 } else {
 	// not saving a file but still need to save the entity to push attributes to database
@@ -180,7 +177,12 @@ if ($new_file) {
 	if ($guid) {
 		$message = elgg_echo("file:saved");
 		system_message($message);
-		add_to_river('river/object/file/create', 'create', elgg_get_logged_in_user_guid(), $file->guid);
+		elgg_create_river_item(array(
+			'view' => 'river/object/file/create',
+			'action_type' => 'create',
+			'subject_guid' => elgg_get_logged_in_user_guid(),
+			'object_guid' => $file->guid,
+		));
 	} else {
 		// failed to save file object - nothing we can do about this
 		$error = elgg_echo("file:uploadfailed");
@@ -202,4 +204,4 @@ if ($new_file) {
 	}
 
 	forward($file->getURL());
-}	
+}

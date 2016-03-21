@@ -1,0 +1,38 @@
+This plugin allows an admin to upload the GEDs CSV into an organization tree.
+Once the tree is built, nodes can have their name and abbreviation changed, change their parent node, add a child node and merge with another node.
+This plugin also has an input field consisting of a variable amount of dropdown menus. Each menu is comprised of the children of the previous menu (or the tree root).
+
+--------------------------------------------------------------------------------------------------------------
+
+OVERVIEW:
+In the administration panel, there is a link in the sidebar under Administer named Organization which takes the admin to the plugin main page.
+On the main page, there is a text input field where the admin can input the path to the GEDs CSV file and then click on the upload button to generate the organization tree.
+There is also a delete all button which will destroy the entire tree. THIS IS A DANGEROUS OPTION.
+The last button, tree root, will take you to the first node in the organization tree.
+
+In the node view, the admin can traverse the tree using the links under Parent and Children.
+The admin can also change the name and abbreviation of the node here. The french or english name and abbreviation will be changed depending on which language the admin is currently using in Elgg.
+The change button will change the parent of the current node to a selected node where selection is done by the node's abbreviation.
+The add button will allow to admin to create a new child attached to the current node.
+The merge this node button will merge the current node with a selected node where selection is done by the node's abbreviation.
+Merging transfers all of the current node's children to the targeted node.
+
+The input field starts with one dropdown menu with options consisting of a blank space, the children of the root element, and an other option.
+Selecting the blank space deletes all dropdown elements below that element.
+Selecting an organization value will delete all dropdown elements below that element and create a new dropdown element with options that correspond to the children of the selected organization.
+Selecting other will create a free text input field which appends the input to the current organization path.
+
+--------------------------------------------------------------------------------------------------------------
+
+HOW TO USE THE INPUT FIELD:
+You can create this new organization path dropdown field by calling "elgg_view('page/elements/organization-input')".
+If you have already saved input then you can pass the view "'organization_string' => {value}" to preload this field.
+
+To save the input from this field, make your form an elgg sticky form or bundle all the values into an associative array ('name' => 'value').
+Next call "mo_get_last_input_node" and save that result. This is what you want to pass the organization-input view as 'organization_string' => {result}.
+You can also call "mo_string_all_ancestors" with the above result to get an array containing 'english_path' and 'french_path' strings. These strings list the entire organization path separate by a comma.
+
+--------------------------------------------------------------------------------------------------------------
+
+A copy of the gedsOpenData.csv can be found at http://open.canada.ca/data/en/dataset/8ec4a9df-b76b-4a67-8f93-cdbc2e040098
+This is what was used to generate the organization tree.

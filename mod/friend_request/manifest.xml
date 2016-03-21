@@ -2,7 +2,8 @@
 <plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
 	<name>Friend request</name>
 	<description>Let users confirm friend requests. Make friends like on Facebook or LinkedIn</description>
-	<version>3.3.1</version>
+	<version>4.0</version>
+	<id>friend_request</id>
 	<author>ColdTrick IT Solutions</author>
 	<website>http://www.coldtrick.com/</website>
 	<repository>https://github.com/ColdTrick/friend_request</repository>
@@ -12,7 +13,7 @@
 	
 	<requires>
 		<type>elgg_release</type>
-		<version>1.8.13</version>
+		<version>1.9</version>
 	</requires>
 	
  	<category>ColdTrick</category>

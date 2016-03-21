@@ -1,7 +1,0 @@
-/**
- * Translations
- */
-Many thanks to:
-- Purusothaman Ramanujam (French translation)
-- Pedro Maia (Portuguese translation)
-- Elkan Roelen (Dutch translation)

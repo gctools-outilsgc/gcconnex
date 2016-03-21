@@ -1,6 +1,6 @@
 <?php
 /**
- * ElggPAM Pluggable Authentication Module
+ * \ElggPAM Pluggable Authentication Module
  *
  * @package    Elgg.Core
  * @subpackage Authentication
@@ -17,7 +17,7 @@ class ElggPAM {
 	protected $messages;
 
 	/**
-	 * ElggPAM constructor
+	 * \ElggPAM constructor
 	 * 
 	 * @param string $policy PAM policy type: user, api, or plugin-defined policies
 	 */
@@ -51,7 +51,7 @@ class ElggPAM {
 
 		$authenticated = false;
 
-		foreach ($_PAM_HANDLERS[$this->policy] as $k => $v) {
+		foreach ($_PAM_HANDLERS[$this->policy] as $v) {
 			$handler = $v->handler;
 			if (!is_callable($handler)) {
 				continue;
@@ -93,13 +93,13 @@ class ElggPAM {
 	 * @return string
 	 */
 	public function getFailureMessage() {
-		$message = elgg_echo('auth:nopams');
+		$message = _elgg_services()->translator->translate('auth:nopams');
 		if (!empty($this->messages['required'])) {
 			$message = $this->messages['required'][0];
 		} elseif (!empty($this->messages['sufficient'])) {
 			$message = $this->messages['sufficient'][0];
 		}
 
-		return elgg_trigger_plugin_hook('fail', 'auth', $this->messages, $message);
+		return _elgg_services()->hooks->trigger('fail', 'auth', $this->messages, $message);
 	}
 }

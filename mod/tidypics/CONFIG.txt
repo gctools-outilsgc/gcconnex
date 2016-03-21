@@ -1,10 +1,8 @@
-
 Troubleshooting
 =================
 If you are experiencing errors, please check your server error log. Tidypics
 writes warnings for most upload related problems. You will see something
 along these lines: "Tidypics warning: user exceeded post limit on image upload"
-
 
 GD PHP Image Library
 =====================

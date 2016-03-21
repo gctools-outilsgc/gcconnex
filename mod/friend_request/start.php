@@ -2,10 +2,10 @@
 	
 require_once(dirname(__FILE__) . "/lib/events.php");
 require_once(dirname(__FILE__) . "/lib/hooks.php");
+require_once(dirname(__FILE__) . "/lib/page_handlers.php");
 
 // Default event handlers
 elgg_register_event_handler("init", "system", "friend_request_init");
-elgg_register_event_handler("pagesetup", "system", "friend_request_pagesetup");
 
 /**
  * Gets called during system initialization
@@ -23,8 +23,9 @@ function friend_request_init() {
 	elgg_register_page_handler('friend_request', 'friend_request_page_handler');
 	
 	// Events
+	elgg_register_event_handler("pagesetup", "system", "friend_request_pagesetup");
 	// unregister default elgg friend handler
-	elgg_unregister_event_handler("create", "friend", "relationship_notification_hook");
+	elgg_unregister_event_handler("create", "friend", "_elgg_send_friend_notification");
 	// Handle our add action event
 	elgg_register_event_handler("create", "friendrequest", "friend_request_event_create_friendrequest");
 	
@@ -42,23 +43,6 @@ function friend_request_init() {
 	elgg_register_action("friend_request/decline", dirname(__FILE__) . "/actions/decline.php");
 	elgg_register_action("friend_request/revoke", dirname(__FILE__) . "/actions/revoke.php");
 	
-}
-
-/**
- * The friends request page handler
- *
- * @param array $page the page elements
- *
- * @return bool
- */
-function friend_request_page_handler($page) {
-	
-	if (isset($page[0])) {
-		set_input("username", $page[0]);
-	}
-	
-	include(dirname(__FILE__) . "/pages/index.php");
-	return true;
 }
 
 /**
@@ -98,7 +82,7 @@ function friend_request_pagesetup() {
 		}
 	}
 	
-	// Show menu link in the correct context
+/*	// Show menu link in the correct context
 	if (in_array($context, array("friends", "friendsof", "collections", "messages")) && !empty($page_owner) && $page_owner->canEdit()) {
 		$options = array(
 			"type" => "user",
@@ -119,11 +103,10 @@ function friend_request_pagesetup() {
 			"name" => "friend_request",
 			"text" => elgg_echo("friend_request:menu") . $extra,
 			"href" => "friend_request/" . $page_owner->username,
-			"contexts" => array("friends", "friendsof", "collections", "messages"),
-			"section" => "friend_request"
+			"contexts" => array("friends", "friendsof", "collections", "messages")
 		);
 		
 		elgg_register_menu_item("page", $menu_item);
-	}
+	}*/
 }
 	

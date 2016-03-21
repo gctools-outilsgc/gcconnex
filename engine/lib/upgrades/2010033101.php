@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Conditional upgrade for UTF8 as described in http://trac.elgg.org/ticket/1928
+ * Conditional upgrade for UTF8 as described in https://github.com/elgg/elgg/issues/1928
  */
 
 // get_version() returns the code version.
@@ -63,7 +63,7 @@ if ($dbversion < 2009100701) {
 
 		foreach ($qs as $q) {
 			if (!update_data($q)) {
-				throw new Exception('Couldn\'t execute upgrade query: ' . $q);
+				throw new \Exception('Couldn\'t execute upgrade query: ' . $q);
 			}
 		}
 	}

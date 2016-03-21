@@ -9,9 +9,9 @@ $event_guid = get_input('event_guid');
 $user = get_entity($user_guid);
 $event = get_entity($event_guid);
 
-if (elgg_instanceof($event, 'object', 'event_calendar') 
-	&& elgg_instanceof($user, 'user') 
-	&& $event->canEdit() 
+if (elgg_instanceof($event, 'object', 'event_calendar')
+	&& elgg_instanceof($user, 'user')
+	&& $event->canEdit()
 	&& check_entity_relationship($user_guid, 'event_calendar_request', $event_guid)) {
 		
 	remove_entity_relationship($user->guid, 'event_calendar_request', $event_guid);
@@ -19,5 +19,5 @@ if (elgg_instanceof($event, 'object', 'event_calendar')
 } else {
 	register_error(elgg_echo('event_calendar:review_requests:error:reject'));
 }
-	
+
 forward(REFERER);

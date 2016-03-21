@@ -1,23 +1,21 @@
-<?php 
-	
-	admin_gatekeeper();
-	
-	$result = false;
-	
-	$user = get_input("user");
-	$role = "translation_editor";
-	
-	$user = get_entity($user);
-	if($user instanceof ElggUser){
-		if(create_metadata($user->guid, $role, true, "integer", $user->guid, ACCESS_PUBLIC)){
-			$result = true;	
-		}
-	}
+<?php
+/**
+ * give a user the right to modify the translations
+ */
 
-	if(!$result){
-		register_error(elgg_echo("translation_editor:action:make_translation_editor:error"));
-	} else {
-		system_message(elgg_echo("translation_editor:action:make_translation_editor:success"));
-	}
-	
+$user_guid = (int) get_input("user");
+$role = "translation_editor";
+
+$user = get_user($user_guid);
+if (empty($user)) {
+	register_error(elgg_echo("translation_editor:action:make_translation_editor:error"));
 	forward(REFERER);
+}
+
+if (create_metadata($user->getGUID(), $role, true, "integer", $user->getGUID(), ACCESS_PUBLIC)) {
+	system_message(elgg_echo("translation_editor:action:make_translation_editor:success"));
+} else {
+	register_error(elgg_echo("translation_editor:action:make_translation_editor:error"));
+}
+
+forward(REFERER);

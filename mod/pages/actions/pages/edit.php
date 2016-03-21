@@ -32,8 +32,8 @@ if (!$input['title']) {
 
 if ($page_guid) {
 	$page = get_entity($page_guid);
-	if (!$page || !$page->canEdit()) {
-		register_error(elgg_echo('pages:error:no_save'));
+	if (!pages_is_page($page) || !$page->canEdit()) {
+		register_error(elgg_echo('pages:cantedit'));
 		forward(REFERER);
 	}
 	$new_page = false;
@@ -105,11 +105,16 @@ if ($page->save()) {
 	system_message(elgg_echo('pages:saved'));
 
 	if ($new_page) {
-		add_to_river('river/object/page/create', 'create', elgg_get_logged_in_user_guid(), $page->guid);
+		elgg_create_river_item(array(
+			'view' => 'river/object/page/create',
+			'action_type' => 'create',
+			'subject_guid' => elgg_get_logged_in_user_guid(),
+			'object_guid' => $page->guid,
+		));
 	}
 
 	forward($page->getURL());
 } else {
-	register_error(elgg_echo('pages:error:notsaved'));
+	register_error(elgg_echo('pages:notsaved'));
 	forward(REFERER);
 }

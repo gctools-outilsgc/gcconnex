@@ -27,7 +27,7 @@
 				//add_menu(elgg_echo('help_menu_item'), $CONFIG->wwwroot . "pg/gc_help/");
 			elgg_register_menu_item('site', array(
 			'name' => 'Help',
-        		'href' => $CONFIG->wwwroot . "pg/gc_help/",
+        		'href' => $CONFIG->wwwroot . "gc_help/",
         		'text' => elgg_echo('help_menu_item'),
         		'priority' => 1000,
      			) );	

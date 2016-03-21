@@ -18,43 +18,29 @@
  * @return array
  */
 function get_entity_statistics($owner_guid = 0) {
-	global $CONFIG;
 
+	$owner_guid = (int) $owner_guid;
 	$entity_stats = array();
-	$owner_guid = (int)$owner_guid;
 
-	$query = "SELECT distinct e.type,s.subtype,e.subtype as subtype_id
-		from {$CONFIG->dbprefix}entities e left
-		join {$CONFIG->dbprefix}entity_subtypes s on e.subtype=s.id";
-
-	$owner_query = "";
-	if ($owner_guid) {
-		$query .= " where owner_guid=$owner_guid";
-		$owner_query = "and owner_guid=$owner_guid ";
-	}
-
-	// Get a list of major types
-
-	$types = get_data($query);
-	foreach ($types as $type) {
-		// assume there are subtypes for now
-		if (!is_array($entity_stats[$type->type])) {
-			$entity_stats[$type->type] = array();
-		}
-
-		$query = "SELECT count(*) as count
-			from {$CONFIG->dbprefix}entities where type='{$type->type}' $owner_query";
-
-		if ($type->subtype) {
-			$query .= " and subtype={$type->subtype_id}";
-		}
-
-		$subtype_cnt = get_data_row($query);
-
-		if ($type->subtype) {
-			$entity_stats[$type->type][$type->subtype] = $subtype_cnt->count;
-		} else {
-			$entity_stats[$type->type]['__base__'] = $subtype_cnt->count;
+	$grouped_entities = elgg_get_entities(array(
+		'selects' => array('COUNT(*) as cnt'),
+		'owner_guids' => ($owner_guid) ? : ELGG_ENTITIES_ANY_VALUE,
+		'group_by' => 'e.type, e.subtype',
+		'limit' => 0,
+		'order_by' => 'cnt DESC',
+	));
+	
+	if (!empty($grouped_entities)) {
+		foreach ($grouped_entities as $entity) {
+			$type = $entity->getType();
+			if (!isset($entity_stats[$type]) || !is_array($entity_stats[$type])) {
+				$entity_stats[$type] = array();
+			}
+			$subtype = $entity->getSubtype();
+			if (!$subtype) {
+				$subtype = '__base__';
+			}
+			$entity_stats[$type][$subtype] = $entity->getVolatileData('select:cnt');
 		}
 	}
 
@@ -74,7 +60,7 @@ function get_number_users($show_deactivated = false) {
 	$access = "";
 
 	if (!$show_deactivated) {
-		$access = "and " . get_access_sql_suffix();
+		$access = "and " . _elgg_get_access_where_sql(array('table_alias' => ''));
 	}
 
 	$query = "SELECT count(*) as count
@@ -90,25 +76,22 @@ function get_number_users($show_deactivated = false) {
 }
 
 /**
- * Return a list of how many users are currently online, rendered as a view.
+ * Render a list of currently online users
+ *
+ * @tip This also support options from elgg_list_entities().
+ *
+ * @param array $options Options array with keys:
+ *
+ *    seconds (int) => Number of seconds (default 600 = 10min)
  *
  * @return string
-  */
-function get_online_users() {
-	$limit = max(0, (int) get_input("limit", 10));
-	$offset = max(0, (int) get_input("offset", 0));
-	
-	$count = find_active_users(600, $limit, $offset, true);
-	$objects = find_active_users(600, $limit, $offset);
+ */
+function get_online_users(array $options = array()) {
+	$options = array_merge(array(
+		'seconds' => 600,
+	), $options);
 
-	if ($objects) {
-		return elgg_view_entity_list($objects, array(
-			'count' => $count,
-			'limit' => $limit,
-			'offset' => $offset
-		));
-	}
-	return '';
+	return elgg_list_entities($options, 'find_active_users');
 }
 
 /**
@@ -122,5 +105,6 @@ function statistics_init() {
 	elgg_extend_view('core/settings/statistics', 'core/settings/statistics/numentities');
 }
 
-/// Register init function
-elgg_register_event_handler('init', 'system', 'statistics_init');
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$events->registerHandler('init', 'system', 'statistics_init');
+};

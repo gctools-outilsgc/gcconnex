@@ -78,7 +78,6 @@ $french = array(
 	'rename_friends:settings' => "Rename Friends for each language",
 	'rename_friends:singular' => "Singular",
 
-
     /*
      * 	Default Notification Settings
      */
@@ -89,154 +88,121 @@ $french = array(
      * Elgg Core
      */
 
-	'access:friends:label' => $uplural,
-	'friends' => $uplural,
-	'friends:yours' => "Your {$lplural}",
-	'friends:owned' => "%s's {$lplural}",
-	'friend:add' => "Ajouter un {$lsingle}",
-	'friend:remove' => "Supprimer {$lsingle}",
-	'friends:add:successful' => "You have successfully added %s as a {$lsingle}.",
-	'friends:add:failure' => "We couldn't add %s as a {$lsingle}. Please try again.",
-	'friends:remove:successful' => "You have successfully removed %s from your {$lplural}.",
-	'friends:remove:failure' => "We couldn't remove %s from your {$lplural}. Please try again.",
-	'friends:none' => "This user hasn't added anyone as a {$lsingle} yet.",
-	'friends:none:you' => "You don't have any {$lplural} yet.",
-	'friends:none:found' => "No {$lplural} were found.",
-	'friends:of:none' => "Nobody has added this user as a {$lsingle} yet.",
-	'friends:of:none:you' => "Nobody has added you as a {$lsingle} yet. Start adding content and fill in your profile to let people find you!",
-	'friends:of:owned' => "People who have made %s a {$lsingle}",
-	'friends:of' => "{$uplural} of",
-	'collections:add' => "Nouveau cercle de {$lplural}",
-	'friends:collections' => "Cercles de {$lplural}",
-	'friends:collections:add' => "Nouveau cercle de {$lplural}",
-	'friends:addfriends' => "Select {$lplural}",
-	'friends:collectionfriends' => "{$uplural} dans le cercle",
-	'friends:nocollections' => "Vous n'avez pas encore de cercle de {$lplural}.",
-	'friends:collectiondeleted' => "Votre cercle de {$lplural} a été supprimé.",
-	'friends:collectiondeletefailed' => "Le cercle de {$lplural} n'a pas été supprimer. Vous n'avez pas de droits suffisants, ou un autre problème peut-être en cause.",
-	'friends:collectionadded' => "Votre cercle de {$lplural} a été créé avec succès",
-	'friends:nocollectionname' => "Vous devez nommer votre cercle de {$lplural} avant qu'il puisse être créé.",
-	'friends:collections:edit' => "Modifier le cercle de {$lplural}",
-	'river:friend:user:default' => "%s est maintenant {$lsingle} avec %s",
-	'river:widgets:friends' => "{$uplural} activity",
-	'userpicker:only_friends' => "Only {$lplural}",
-	'river:friends' => "{$uplural} Activity",
-	'friends:widget:description' => "Displays some of your {$lplural}.",
-	'friends:num_display' => "Number of {$lplural} to display",
-	'friend:newfriend:subject' => "%s has made you a {$lsingle}!",
-	'friend:newfriend:body' => "%s has made you a {$lsingle}!
-
-To view their profile, click here:
-
-%s
-
-You cannot reply to this email.",
-
-    /*
-     * 	Extendafriend
-     */
-
-	'extendafriend:edit:friend' => "Edit {$usingle}",
-	'extendafriend:updated' => "{$usingle} access circles have been updated",
-
-
-    /*
-     * 	Friend Request
-     */
-
-	'friend_request' => "{$usingle} Request",
-	'friend_request:menu' => "{$usingle} Requests",
-	'friend_request:title' => "{$usingle} Requests for: %s",
-	'friend_request:new' => "New {$lsingle} request",
-	'friend_request:friend:add:pending' => "{$usingle} request pending",
-	'friend_request:newfriend:subject' => "%s wants to be your {$lsingle}!",
-	'friend_request:newfriend:body' => "%s wants to be your {$lsingle}! But they are waiting for you to approve the request...so login now so you can approve the request!
-
-You can view your pending {$lsingle} requests at (Make sure you are logged into the website before clicking on the following link otherwise you will be redirected to the login page.):
-
-%s
-
-(You cannot reply to this email.)",
+'access:friends:label' => "$uplural",
+'friends' => "$uplural",
+'friends:yours' => "Vos {$lplural}",
+'friends:owned' => "%s' {$lplural}",
+'friend:add' => "Ajouter un {$lsingle}",
+'friend:remove' => "Supprimer {$lsingle}",
+'friends:add:successful' => "Vous avez ajouté %s avec succès en tant que  {$lsingle}.",
+'friends:add:failure' => "Il nous a été impossible d'ajouter %s en tant que  {$lsingle}. Veuillez essayer à nouveau.",
+'friends:remove:successful' => "Vous avez réuss à supprimé %s de votre liste de  {$lplural}.",
+'friends:remove:failure' => "Il nous a été impossible de supprimer %s de votre liste de  {$lplural}. Veuillez essayer à nouveau.",
+'friends:none' => "Cet utilisateur n'a pas encore ajouter de  {$lplural} à ce jour.", 
+'friends:none:you' => "Vous n'avez pas encore de {$lplural}.",
+'friends:none:found' => "Aucun  {$lplural} n'a été trouvé.",
+'friends:of:none' => "Personne n'a ajouté cet utilisateur en tant que {$lsingle} à ce jour.",
+'friends:of:none:you' => "Personne ne vous encore ajouter en tant que collègue  {$lsingle} jusqu'à maintenant. Commencez à remplir votre profil afin que les gens puissent vous trouver!", 
+'friends:of:owned' => "Les gens qui ont ajouté %s en tant que collègue {$lsingle}",
+'friends:of' => "Les {$lplural} de",
+'friends:collections' => "Cercles de {$lplural}",
+'collections:add' => "Nouveau cercle de {$lplural}",
+'friends:collections:add' => "Nouveau cercle de {$lplural}",
+'friends:addfriends' => "Sélectionner des {$lplural}",
+'friends:collectionfriends' => "{$uplural} dans le cercle",
+'friends:collections:members' =>  "Cercle {$lplural}",
+'river:friend:user:default' => "%s est maintenant {$lsingle} avec %s",
+'river:widgets:friends' => "Activité des {$lplural}",
+'userpicker:only_friends' => "Seulement les {$lplural}",
+'river:friends' => "Activité des {$lplural}",
+'friends:widget:description' => "Afficher certains de vos {$lplural}.",
+'friends:num_display' => "Nombre de {$lplural} à afficher",
+'friend:newfriend:subject' => "%s vous à ajouter en tant que {$lsingle}!",
+'friend:newfriend:body' => "%svous à ajouter en tant que {$lsingle}! Pour consulter son profil, cliquez ici : %s Vous ne pouvez pas répondre à ce courriel..",
+'friends:nocollections' => "Vous n'avez pas encore de cercle de {$lplural}.",
+'friends:collectiondeleted' => "Votre cercle de {$lplural} a été supprimé.",
+'friends:collectiondeletefailed' => "Le cercle de {$lplural} n'a pas été supprimé. Vous n'avez pas suffisamment de droits pour effectuer cette tâche.",
+'friends:collectionadded' => "Votre cercle de {$lplural} a été créé avec succès",
+'friends:nocollectionname' => "Vous devez nommer votre cercle de {$lplural} avant qu'il puisse être créé.",
+'friends:collections:edit' => "Modifier le cercle de {$lplural}",	
 		
-	// Actions
-	// Add request
-	'friend_request:add:successful' => "You have requested to be {$lplural} with %s. They must approve your request before they will show on your {$lplural} list.",
-	'friend_request:add:exists' => "You've already requested to be {$lplural} with %s.",
+//Extendafriend		
+				
+'extendafriend:edit:friend' => "Modifier {$usingle}",
+'extendafriend:updated' => "Les accès à vos cercle de {$usingle} ont été mis à jour",		
 		
-	// Approve request
-	'friend_request:approve:successful' => "%s is now a {$lsingle}",
-	'friend_request:approve:fail' => "Error while creating {$lsingle} relation with %s",
-	
-	// Decline request
-	'friend_request:decline:subject' => "%s has declined your {$lsingle} request",
-	'friend_request:decline:message' => "Dear %s,
-
-%s has declined your request to become a {$lsingle}.",
-	'friend_request:decline:success' => "{$usingle} request successfully declined",
-	'friend_request:decline:fail' => "Error while declining {$usingle} request, please try again",
+//Friend Request		
+				
+'friend_request' => "Demande de {$usingle}",
+'friend_request:menu' => "Demandes de {$lsingle}",
+'friend_request:title' => "Demande de {$lsingle} pour : %s",
+'friend_request:new' => "Nouvelle demande de {$lsingle}",
+'friend_request:friend:add:pending' => "Demande de {$lsingle} en attente",
+'friend_request:newfriend:subject' => "%s veut être votre {$lsingle}!",
+'friend_request:newfriend:body' =>  "%s wants to be your colleague! But he or she is waiting for you to approve the request... So login now so you can approve the request! <br/> You can view your pending colleague requests at: %s <br/> <i> Make sure you are logged into the website before clicking on the following link, otherwise you will be redirected to the login page.</i> To view their profile, click here: %s <div> style 'border-top: 1px dotted #999999;' &nbsp;</div> %s souhaite être votre collègue! Il ou elle attend que vous approuviez sa demande... Connectez-vous pour approuver cette demande! <br/> Vous pouvez afficher les demandes de collègue qui sont en attente : %s <br/> <i> Assurez-vous d'être connecté(e) au site avant de cliquer sur le lien suivant. Si vous n'êtes pas connecté(e), vous serez redirigé(e) vers la page d'ouverture de session.</i> Pour consulter son profil, cliquez ici : %s",
 		
-	// Revoke request
-	'friend_request:revoke:success' => "{$usingle} request successfully revoked",
-	'friend_request:revoke:fail' => "Error while revoking {$usingle} request, please try again",
-	
-	// Views
-	// Received
-	'friend_request:received:title' => "Received {$usingle} requests",
-	
-	// Sent
-	'friend_request:sent:title' => "Sent {$usingle} requests",
+	// Actions		// Actions
+	// Add request		// Add request
+'friend_request:add:successful' => 	"Vous avez demandé d'être {$lsingle} avec %s. Ils doivent accepter votre demande avant d'être affiché dans votre liste de {$lplural}.",
+'friend_request:add:exists' => "Vous avez déjà fait une demande de {$lsinglel} avec %s.",
+		
+// Approve request
+		// Approve request
+		
+'friend_request:approve:successful' => "%s est maintenant {$lsingle} avec vous",
+'friend_request:approve:fail' =>  "Une erreur est survenue lorsque vous avez tenté de devenir {$lsingle} avec %s",
+		
+// Decline request
+		// Decline request
+		
+'friend_request:decline:subject' => "%s a refusé votre demande de {$lsingle}",
+'friend_request:decline:message' => "%s, %s a refusé votre demande à devenir {$lsingle}.",		
+'friend_request:decline:success' => "Demande de {$usingle} refusée",
+'friend_request:decline:fail' => "Une erreur s'est produite lors que vous avez refusé la demande de {$usingle}, veuillez essayer à nouveau",
+		
+// Revoke request		// Revoke request
+'friend_request:revoke:success' => "Demande de {$usingle} annulée avec succès",
+'friend_request:revoke:fail' => "Une erreur s'est produite lorsque vous avez annulé la demande de {$usingle}, veuillez essayer à nouveau",
+		
+// Views		
+// Received		
+'friend_request:received:title' => "Demande de {$lplural} reçues",
+		
+// Sent		// Sent
+'friend_request:sent:title' => "Demande de {$lsingle} envoyée",
+		
+// HypeEvents		
+		
+'hj:events:friendevents' => "Événement des {$uplural}",
+		
+// Invite Friends		
+		
+'friends:invite' => "Inviter des {$lplural}",
+'invitefriends:introduction' => "Pour inviter des {$lplural} à vous joindre sur ce réseau, ajoutez  leurs adresses courriel ci-dessous (une par ligne):",
+'invitefriends:success' => "Vos {$lplural} ont été invités.",
+'invitefriends:email' => "Vous avez été invité à joindre %s par %s. Ils vous ont écrit ce message : Pour joindre %s, cliquez sur le lien suivant : Vous serez automatiquement ajouter en tant que {$lsingle} lorsque vous aller créer votre compte.",
+		
+//Rename Groups		
+		
+'groups:invite' => "Invitez les {$lplural}",
+'groups:invite:title' => "Invitez les {$lplural} à ce {$glsingle}",
+'groups:inviteto' => "Invitez les {$lplural} à '%s'",
+'groups:nofriends' => "Il ne vous reste pu de {$lplural} à inviter à ce {$glsingle}.",
+'groups:nofriendsatall' => "Vous n'avez plus de {$lplural} à inviter!",
+		
+// River Addon		
+		
+'river_addon:label:friends' => "Voulez-vous afficher les {$lplural} dans l'encadré?",
+'river_addon:label:num' => "Nombre de {$lplural} à afficher",
+'river_addon:option:default' => "Tous, Les miens, {$uplural}",
+'river_addon:option:friend' => "{$uplural}, Les miens, Tous",
+'river_addon:option:mine' => "Les miens, {$uplural}, Tous",
+		
+		
+// General / multi-mod		
+		
+'friends:filterby' => "Mes {$lplural}",
 
-
-
-    /*
-     * 	HypeEvents
-     */
-
-    'hj:events:friendevents' => "{$uplural} Events",
-
-    /*
-     * 	Invite Friends
-     */
-	
-	'friends:invite' => "Inviter des {$lplural}",
-	'invitefriends:introduction' => "Pour inviter des {$lplural} à se joindre à vous sur ce réseau, inscrivez  leurs adresses courriel ci-dessous (une par ligne):",
-	'invitefriends:success' => "Vos {$lplural} ont été invité.",
-	'invitefriends:email' => "
-You have been invited to join %s by %s. They included the following message:
-
-%s
-
-To join, click the following link:
-
-%s
-
-You will automatically add them as a {$lsingle} when you create your account.",
-
-
-/*
- * 	Rename Groups
- */
-
-'groups:invite' => "Invite {$lplural}",
-'groups:invite:title' => "Invite {$lplural} to this {$glsingle}",
-'groups:inviteto' => "Invite {$lplural} to '%s'",
-'groups:nofriends' => "You have no {$lplural} left who have not been invited to this {$glsingle}.",
-'groups:nofriendsatall' => "You have no {$lplural} to invite!",
-
-
-/*
- * 	River Addon
- */
-'river_addon:label:friends' => "Do you want to display {$lplural} in sidebar?",
-'river_addon:label:num' => "Number of {$lplural} to display",
-'river_addon:option:default' => "All, Mine, {$uplural}",
-'river_addon:option:friend'	=> "{$uplural}, Mine, All",
-'river_addon:option:mine' => "Mine, {$uplural}, All",
-
-/*
-* General / multi-mod
-*/
-'friends:filterby' => "De mes {$lplural}",
 
 );
 

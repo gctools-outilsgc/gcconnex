@@ -11,10 +11,11 @@
  *
  * @package Elgg.Core
  * @subpackage Actions
- * @link http://docs.elgg.org/Tutorials/Actions
  */
 
 require_once(dirname(dirname(__FILE__)) . "/start.php");
+
+register_error("Update your .htaccess file to remove the action handler");
 
 $action = get_input("action");
 action($action);

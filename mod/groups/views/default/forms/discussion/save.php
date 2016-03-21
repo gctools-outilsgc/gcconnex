@@ -1,7 +1,7 @@
 <?php
 /**
  * Discussion topic add/edit form body
- * 
+ *
  */
 
 $title = elgg_extract('title', $vars, '');
@@ -28,19 +28,25 @@ $guid = elgg_extract('guid', $vars, null);
 <div>
     <label><?php echo elgg_echo("groups:topicstatus"); ?></label><br />
 	<?php
-		echo elgg_view('input/dropdown', array(
+		echo elgg_view('input/select', array(
 			'name' => 'status',
 			'value' => $status,
 			'options_values' => array(
-				'open' => elgg_echo('groups:topicopen'),
-				'closed' => elgg_echo('groups:topicclosed'),
+				'open' => elgg_echo('status:open'),
+				'closed' => elgg_echo('status:closed'),
 			),
 		));
 	?>
 </div>
 <div>
 	<label><?php echo elgg_echo('access'); ?></label><br />
-	<?php echo elgg_view('input/access', array('name' => 'access_id', 'value' => $access_id)); ?>
+	<?php echo elgg_view('input/access', array(
+		'name' => 'access_id',
+		'value' => $access_id,
+		'entity' => get_entity($guid),
+		'entity_type' => 'object',
+		'entity_subtype' => 'groupforumtopic',
+	)); ?>
 </div>
 <div class="elgg-foot">
 <?php

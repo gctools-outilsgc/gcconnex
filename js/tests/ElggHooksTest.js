@@ -1,28 +1,51 @@
-ElggHooksTest = TestCase("ElggHooksTest");
+define(function(require) {
+	
+	var elgg = require('elgg');
+	
+	describe("elgg.hooks", function() {
+	
+		beforeEach(function() {
+			elgg.config.hooks = {};
+			elgg.provide('elgg.config.hooks.all.all');		
+		});
+	
+		describe("elgg.trigger_hook()", function() {
+			it("return value defaults to null", function() {
+				expect(elgg.trigger_hook("fee", "fum")).toBe(null);
+				
+				elgg.register_hook_handler('fee', 'fum', elgg.nullFunction);
+				expect(elgg.trigger_hook("fee", "fum")).toBe(null);
 
-ElggHooksTest.prototype.setUp = function() {
-	elgg.config.hooks = {};
-	elgg.provide('elgg.config.hooks.all.all');
-};
+				expect(elgg.trigger_hook('x', 'y', {}, null)).toBe(null);
+				expect(elgg.trigger_hook('x', 'z', {}, false)).toBe(false);
+			});
 
-ElggHooksTest.prototype.testHookHandlersMustBeFunctions = function () {
-	assertException(function() { elgg.register_hook_handler('str', 'str', 'oops'); });
-};
+			it("handlers returning null/undefined don't change returnvalue", function() {
+				elgg.register_hook_handler('test', 'test', elgg.nullFunction);
+				expect(elgg.trigger_hook('test', 'test', {}, 1984)).toBe(1984);
 
-ElggHooksTest.prototype.testReturnValueDefaultsToTrue = function () {
-	assertTrue(elgg.trigger_hook('fee', 'fum'));
+				elgg.register_hook_handler('test', 'test', function(hook, type, params, value) {
+					return undefined;
+				});
+				expect(elgg.trigger_hook('test', 'test', {}, 42)).toBe(42);
+			});
 
-	elgg.register_hook_handler('fee', 'fum', elgg.nullFunction);
-	assertTrue(elgg.trigger_hook('fee', 'fum'));
-};
-
-ElggHooksTest.prototype.testCanGlomHooksWithAll = function () {
-	elgg.register_hook_handler('all', 'bar', elgg.abstractMethod);
-	assertException("all,bar", function() { elgg.trigger_hook('foo', 'bar'); });
-
-	elgg.register_hook_handler('foo', 'all', elgg.abstractMethod);
-	assertException("foo,all", function() { elgg.trigger_hook('foo', 'baz'); });
-
-	elgg.register_hook_handler('all', 'all', elgg.abstractMethod);
-	assertException("all,all", function() { elgg.trigger_hook('pinky', 'winky'); });
-};
+			it("triggers handlers registered with 'all'", function() {
+				elgg.register_hook_handler('all', 'bar', elgg.abstractMethod);
+				expect(function() { elgg.trigger_hook('foo', 'bar'); }).toThrow();
+			
+				elgg.register_hook_handler('foo', 'all', elgg.abstractMethod);
+				expect(function() { elgg.trigger_hook('foo', 'baz'); }).toThrow();
+			
+				elgg.register_hook_handler('all', 'all', elgg.abstractMethod);
+				expect(function() { elgg.trigger_hook('pinky', 'winky'); }).toThrow();
+			});
+		});
+		
+		describe("elgg.register_hook_handler()", function() {
+			it("only accepts functions as handlers", function() {
+				expect(function() { elgg.register_hook_handler('str', 'str', 'oops'); }).toThrow();
+			});
+		});
+	});
+});

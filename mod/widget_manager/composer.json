@@ -1,0 +1,18 @@
+{
+	"name": "coldtrick/widget_manager",
+	"description": "Manage your widgets",
+	"type": "elgg-plugin",
+	"keywords": ["elgg", "plugin", "widgets"],
+	"license": "GPL-2.0",
+	"support": {
+		"source": "https://github.com/ColdTrick/widget_manager",
+		"issues": "https://github.com/ColdTrick/widget_manager/issues"
+	},
+	"require": {
+		"composer/installers": "^1.0.8",
+		"simplepie/simplepie": "1.3.1"
+	},
+	"require-dev": {
+		"coldtrick/sniffs": "dev-master"
+	}
+}

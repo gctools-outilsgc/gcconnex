@@ -2,21 +2,20 @@
 
 	$french = array(
 		'file_tools' => "Outils de fichier",
-	
 		'file_tools:file:actions' => 'Actions',
-	
 		'file_tools:list:sort:type' => 'Type',
-		'file_tools:list:sort:time_created' => 'Time created',
-		'file_tools:list:sort:asc' => 'Ascending',
-		'file_tools:list:sort:desc' => 'Descending',
+		'file_tools:list:sort:time_created' =>  'Heure de création',
+		'file_tools:list:sort:asc' =>  'Croissant',
+		'file_tools:list:sort:desc' =>  'Décroissant',
 	
 		// object name
-		'item:object:folder' => "File Folder",
+		'item:object:folder' => "Dossier de fichiers",
 	
 		// menu items
-		'file_tools:menu:mine' => "Your folders",
-		'file_tools:menu:user' => "%s's folders",
-		'file_tools:menu:group' => "Group file folders",
+		'file_tools:menu:mine' => "Vos dossiers",
+		'file_tools:menu:user' => "Les dossiers de %s",
+		'file_tools:menu:group' => "Dossiers de fichiers de groupe",
+
 		
 		// group tool option
 		'file_tools:group_tool_option:structure_management' => "Autoriser la gestion des dossiers par les membres",
@@ -24,139 +23,131 @@
 		// views
 	
 		// object
-		'file_tools:object:files' => "%s file(s) in this folder",
-		'file_tools:object:no_files' => "No files in this folder",
-	
-		// input - folder select
+		'file_tools:object:files' => "%s fichier(s) dans ce dossier",
+		'file_tools:object:no_files' => "Aucun fichier dans ce dossier",
+		
+		// input - folder select		
 		'file_tools:input:folder_select:main' => "Dossier principal",
-	
-		// list
-		'file_tools:list:title' => "List file folders",
 		
+		// list		
+		'file_tools:list:title' => "Lister les dossiers de fichiers",		
 		'file_tools:list:folder:main' => "Dossier principal",
-		'file_tools:list:files:none' => "No files found in this folder",
-		'file_tools:list:select_all' => 'Select all',
-		'file_tools:list:deselect_all' => 'Deselect all',
-		'file_tools:list:download_selected' => 'Download selected',
-		'file_tools:list:delete_selected' => 'Delete selected',
-		'file_tools:list:alert:not_all_deleted' => 'Not all files could be deleted',
-		'file_tools:list:alert:none_selected' => 'No items selected',
-		
-	
-		'file_tools:list:tree:info' => "Did you know?",
-		'file_tools:list:tree:info:1' => "You can drag and drop files on to the folders to organize them!",
-		'file_tools:list:tree:info:2' => "You can double click on any folder to expand all of its subfolders!",
-		'file_tools:list:tree:info:3' => "You can reorder folders by dragging them to their new place in the tree!",
-		'file_tools:list:tree:info:4' => "You can move complete folder structures!",
-		'file_tools:list:tree:info:5' => "If you delete a folder, you can optionally choose to delete all files!",
-		'file_tools:list:tree:info:6' => "When you delete a folder, all subfolders will also be deleted!",
-		'file_tools:list:tree:info:7' => "This message is random!",
-		'file_tools:list:tree:info:8' => "When you remove a folder, but not it's files, the files will appear at the top level folder!",
-		'file_tools:list:tree:info:9' => "A newly added folder can be placed directly in the correct subfolder!",
-		'file_tools:list:tree:info:10' => "When uploading or editing a file you can choose in which folder it should appear!",
-		'file_tools:list:tree:info:11' => "Dragging of files is only available in the list view, not in the gallery view!",
-		'file_tools:list:tree:info:12' => "You can update the access level on all subfolders and even (optional) on all files when editing a folder!",
-	
-		'file_tools:list:files:options:sort_title' => 'Sorting',
-		'file_tools:list:files:options:view_title' => 'View',
-	
+		'file_tools:list:files:none' => "Aucun fichier trouvé dans ce dossier",
+		'file_tools:list:select_all' => 'Sélectionner tout',
+		'file_tools:list:deselect_all' => 'Désélectionner tout',
+		'file_tools:list:download_selected' => 'Télécharger les fichiers sélectionnés',
+		'file_tools:list:delete_selected' => 'Supprimer les fichiers sélectionnés',
+		'file_tools:list:alert:not_all_deleted' => 'Tous les fichiers n\'ont pu être supprimés',
+		'file_tools:list:alert:none_selected' => 'Aucun élément sélectionné',				
+		'file_tools:list:tree:info' => "Saviez-vous que?",
+		'file_tools:list:tree:info:1' => "Pour organiser les fichiers, vous pouvez les glisser-déplacer dans les dossiers.",
+		'file_tools:list:tree:info:2' => "Vous pouvez double cliquer sur n'importe quel dossier pour agrandir tous ses sous-dossiers.",
+		'file_tools:list:tree:info:3' => "Vous pouvez réorganiser les dossiers en les faisant glisser vers leur nouvel emplacement dans l'arbre.",
+		'file_tools:list:tree:info:4' => "Vous pouvez déplacer des structures de dossiers complètes.",
+		'file_tools:list:tree:info:5' => "Si vous supprimez un dossier, vous pouvez choisir de supprimer tous les fichiers.",
+		'file_tools:list:tree:info:6' => "Lorsque vous supprimez un dossier, tous les sous-dossiers seront également supprimés.",
+		'file_tools:list:tree:info:7' => "Ce message est aléatoire.",
+		'file_tools:list:tree:info:8' => "Lorsque vous supprimez un dossier, mais pas les fichiers, ces derniers s'afficheront dans le dossier de premier niveau.",
+		'file_tools:list:tree:info:9' => "Un dossier nouvellement ajouté peut être placé directement dans le bon sous-dossier.",
+		'file_tools:list:tree:info:10' => "Lors du téléversement ou de la modification d'un fichier, vous pouvez choisir dans quel dossier il devrait s'afficher.",
+		'file_tools:list:tree:info:11' => "Vous pouvez déplacer des fichiers seulement dans l'affichage de la liste (pas dans l'affichage de la galerie).",
+		'file_tools:list:tree:info:12' => "Vous pouvez mettre à jour le niveau d'accès de tous les sous-dossiers et même de tous les fichiers lors de la modification d'un dossier.",		
+		'file_tools:list:files:options:sort_title' => 'Trier',
+		'file_tools:list:files:options:view_title' => 'Afficher',		
 		'file_tools:usersettings:time' => 'Affichage de l’heure',
 		'file_tools:usersettings:time:description' => 'Modifier la façon dont l’heure du dossier est affichée',
-		'file_tools:usersettings:time:default' => 'Default time display',
+		'file_tools:usersettings:time:default' => 'Affichage de l’heure par défaut',
 		'file_tools:usersettings:time:date' => 'Date',
-		'file_tools:usersettings:time:days' => 'Days ago',
+		'file_tools:usersettings:time:days' => 'Il y a X jours',
 		
-		// new/edit
-		'file_tools:new:title' => "New file folder",
-		'file_tools:edit:title' => "Edit file folder",
-		'file_tools:forms:edit:title' => "Title",
+		// new/edit		
+		'file_tools:new:title' => "Nouveau dossier de fichiers",
+		'file_tools:edit:title' => "Modifier le dossier de fichiers",
+		'file_tools:forms:edit:title' => "Titre",
 		'file_tools:forms:edit:description' => "Description",
 		'file_tools:forms:edit:parent' => "Sélectionner un dossier parent",
-		'file_tools:forms:edit:change_children_access' => "Update access on all subfolders",
-		'file_tools:forms:edit:change_files_access' => "Update access on all files in this folder (and all subfolders if selected)",
-		'file_tools:forms:browse' => 'Parcourir..',
-		'file_tools:forms:empty_queue' => "Vider la file d’attente",
-	
-		'file_tools:folder:delete:confirm_files' => "Do you also wish to delete all files in the removed (sub)folders",
-	
-		// actions
-		// edit
-		'file_tools:action:edit:error:input' => "Incorrect input to create/edit a file folder",
-		'file_tools:action:edit:error:owner' => "Could not find the owner of the file folder",
-		'file_tools:action:edit:error:folder' => "No folder to create/edit",
-		'file_tools:action:edit:error:parent_guid' => "Invalid parent folder, the parent folder can't be the folder itself",
-		'file_tools:action:edit:error:save' => "Unknown error occured while saving the file folder",
-		'file_tools:action:edit:success' => "File folder successfully created/edited",
-	
-		'file_tools:action:move:parent_error' => "Can\'t drop the folder in itself.",
+		'file_tools:forms:edit:change_children_access' => "Mettre à jour l'accès à tous les sous-dossiers",
+		'file_tools:forms:edit:change_files_access' => "Mettre à jour l'accès à tous les fichiers dans ce dossier (et à tous les sous-dossiers sélectionnés)",
+		'file_tools:forms:browse' => 'Parcourir',
+		'file_tools:forms:empty_queue' => "Vider la file d’attente",		
+		'file_tools:folder:delete:confirm_files' => "Voulez-vous également supprimer tous les fichiers qui se trouvent dans les dossiers ou sous-dossiers?",
 		
-		// delete
-		'file_tools:actions:delete:error:input' => "Invalid input to delete a file folder",
-		'file_tools:actions:delete:error:entity' => "The given GUID could not be found",
-		'file_tools:actions:delete:error:subtype' => "The given GUID is not a file folder",
-		'file_tools:actions:delete:error:delete' => "An unknown error occured while deleting the file folder",
-		'file_tools:actions:delete:success' => "The file folder was deleted successfully",
-	
-		'file_tools:upload:new' => 'Télécharger un fichier zip',
-		'file_tools:upload:form:choose' => 'Choose file',
-		'file_tools:upload:form:info' => 'Cliquer sur Parcourir pour télécharger (plusieurs) fichiers',
-		'file_tools:upload:form:zip:info' => "Vous pouvez télécharger un fichier zip. Il sera extrait et chaque fichier sera importé séparément. De plus, si vous avez des dossiers dans votre fichier zip, ils seront importés dans chaque dossier précis. Les types de fichiers non autorisés seront ignorés.",
-	
-		//errors
-		'file_tools:error:pageowner' => 'Error retrieving page owner.',
-		'file_tools:error:nofilesextracted' => 'There were no allowed files found to extract.',
-		'file_tools:error:cantopenfile' => 'Zip file couldn\'t be opened (check if the uploaded file is a .zip file).',
-		'file_tools:error:nozipfilefound' => 'Uploaded file is not a .zip file.',
-		'file_tools:error:nofilefound' => 'Sélectionner un fichier pour Télécharger.',
-	
-		//messages
-		'file_tools:error:fileuploadsuccess' => 'Zip file uploaded and extracted successfully.',
+		// upload		
+		'file_tools:upload:new' => 'Téléverser un fichier zip',
+		'file_tools:upload:tabs:single' => "Fichier unique",
+		'file_tools:upload:tabs:multi' => "Fichiers multiples", 
+		'file_tools:upload:tabs:zip' => "Fichier zip",
+		'file_tools:upload:form:choose' => 'Sélectionner un fichier',
+		'file_tools:upload:form:info' => 'Cliquer sur Parcourir pour téléverser des fichiers (multiples)',
+		'file_tools:upload:form:zip:info' => "Vous pouvez téléverser un fichier zip. Il sera extrait et chaque fichier sera importé séparément. De plus, si vous avez des dossiers dans votre fichier zip, ils seront importés dans chaque dossier précis. Les types de fichiers non autorisés seront ignorés.",
 		
-		// move
-		'file_tools:action:move:success:file' => "The file was moved successfully",
-		'file_tools:action:move:success:folder' => "The folder was moved successfully",
+		// actions		
+		// edit		
+		'file_tools:action:edit:error:input' => "Entrée erronée pour la création ou la modification d'un dossier de fichiers",
+		'file_tools:action:edit:error:owner' => "Impossible de trouver le propriétaire du dossier de fichiers.",
+		'file_tools:action:edit:error:folder' => "Aucun fichier à créer/à modifier",
+		'file_tools:action:edit:error:parent_guid' => "Dossier parent invalide. Le dossier parent ne peut être le dossier lui-même.",
+		'file_tools:action:edit:error:save' => "Une erreur inconnue s'est produite lors de la sauvegarde du dossier de fichiers.",
+		'file_tools:action:edit:success' => "Création/modification du dossier de fichiers réussie",		
+		'file_tools:action:move:parent_error' => "Vous ne pouvez déplacer le dossier dans le dossier du même nom.",
 		
-		// buld delete
-		'file_tools:action:bulk_delete:success:files' => "Successfully removed %s files",
-		'file_tools:action:bulk_delete:error:files' => "There was an error while removing some files",
-		'file_tools:action:bulk_delete:success:folders' => "Successfully removed %s folders",
-		'file_tools:action:bulk_delete:error:folders' => "There was an error while removing some folders",
+		// delete		
+		'file_tools:actions:delete:error:input' => "Entrée erronée pour la suppression d'un dossier de fichiers",
+		'file_tools:actions:delete:error:entity' => "Impossible de trouver le GUID donné.",
+		'file_tools:actions:delete:error:subtype' => "Le GUID donné n'est pas un dossier de fichiers.",
+		'file_tools:actions:delete:error:delete' => "Une erreur inconnue s'est produite lors de la suppression du dossier de fichiers.",
+		'file_tools:actions:delete:success' => "Suppression du dossier de fichiers réussie.",
 		
-		// reorder
-		'file_tools:action:folder:reorder:success' => "Successfully reordered the folder(s)",
+		//errors		
+		'file_tools:error:pageowner' => 'Erreur lors de la récupération du propriétaire de la page.',
+		'file_tools:error:nofilesextracted' => 'Aucun fichier autorisé n\'a été trouvé pour l\'extraction.',
+		'file_tools:error:cantopenfile' => 'Le fichier zip n\'a pu être ouvert (vérifier si le fichier téléversé est un fichier .zip).',
+		'file_tools:error:nozipfilefound' => 'Le fichier téléversé n\'est pas un fichier .zip.',
+		'file_tools:error:nofilefound' => 'Sélectionner un fichier à téléverser.',
 		
-		//settings
-		'file_tools:settings:allowed_extensions' => 'Allowed extensions (comma seperated)',
-		'file_tools:settings:user_folder_structure' => 'Use folder structure',
-		'file_tools:settings:sort:default' => 'Default folder sorting options',
-	
+		//messages		
+		'file_tools:error:fileuploadsuccess' => 'Téléversement et extraction du fichier zip réussis.',
+		
+		// move		
+		'file_tools:action:move:success:file' => "Déplacement du fichier réussi.",
+		'file_tools:action:move:success:folder' => "Déplacement du dossier réussi.",
+		
+		// buld delete		
+		'file_tools:action:bulk_delete:success:files' => "Suppression de %s fichier(s) réussie",
+		'file_tools:action:bulk_delete:error:files' => "Une erreur s'est produite lors de la suppression de certains fichiers.",
+		'file_tools:action:bulk_delete:success:folders' => "Suppression de %s dossier(s) réussie",
+		'file_tools:action:bulk_delete:error:folders' => "Une erreur s'est produite lors de la suppression de certains dossiers.",
+		
+		// reorder		
+		'file_tools:action:folder:reorder:success' => "Réorganisation du dossier ou de l'ensemble des dossiers réussie",
+		
+		//settings		
+		'file_tools:settings:allowed_extensions' => 'Extensions autorisées (séparées par des virgules)',
+		'file_tools:settings:user_folder_structure' => 'Utiliser la structure de dossiers',
+		'file_tools:settings:sort:default' => 'Options de tri de dossiers par défaut',		
 		'file:type:application' => 'Application',
-		'file:type:text' => 'Text',
-
-		// widgets
-		// file tree
+		'file:type:text' => 'Texte',
+		
+		// widgets		
+		// file tree		
 		'widgets:file_tree:title' => "Dossiers",
-		'widgets:file_tree:description' => "Afficher vos dossiers",
-		
-		'widgets:file_tree:edit:select' => "Select which folder(s) to display",
-		'widgets:file_tree:edit:show_content' => "Show the content of the folder(s)",
+		'widgets:file_tree:description' => "Afficher vos dossiers de fichiers",		
+		'widgets:file_tree:edit:select' => "Sélectionner le ou les dossiers à afficher",
+		'widgets:file_tree:edit:show_content' => "Afficher le contenu du ou des dossier(s)",
 		'widgets:file_tree:no_folders' => "Il n’y a aucun dossier configuré",
-		'widgets:file_tree:no_files' => "No files configured",
-		'widgets:file_tree:more' => "More file folders",
-	
-		'widget:file:edit:show_only_featured' => 'Show only featured files',
+		'widgets:file_tree:no_files' => "Il n’y a aucun fichier configuré",
+		'widgets:file_tree:more' =>  "Plus de dossiers de fichiers",		
+		'widget:file:edit:show_only_featured' => 'Afficher seulement les fichiers en vedette',		
+		'widget:file_tools:show_file' => 'Mettre le fichier en vedette',
+		'widget:file_tools:hide_file' => 'Ne plus mettre le fichier en vedette',	
+		'widgets:file_tools:more_files' => 'Plus de fichiers',
 		
-		'widget:file_tools:show_file' => 'Feature file (widget)',
-		'widget:file_tools:hide_file' => 'Unfeature file',
-	
-		'widgets:file_tools:more_files' => 'More files',
+		// Group files		
+		'widgets:group_files:description' => "Afficher les fichiers de groupes les plus récents",
 		
-		// Group files
-		'widgets:group_files:description' => "Show the latest group files",
-		
-		// index_file
-		'widgets:index_file:description' => "Show the latest files on your community",
-	
+		// index_file		
+		'widgets:index_file:description' => "Afficher les fichiers les plus récents sur GCconnex",
+
 	);
 	
 	add_translation("fr", $french);

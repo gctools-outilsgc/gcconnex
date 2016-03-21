@@ -1,17 +1,17 @@
-<?php 
+<?php
 
-	$widget = $vars["entity"];
-	
-	$count = sanitise_int($widget->member_count, false);
-	if(empty($count)){
-		$count = 8;
-	}
-	
-	$user_icon_options_values = array(
-		"no" => elgg_echo("option:no"),
-		"yes" => elgg_echo("option:yes")
-	);
-	
+$widget = $vars["entity"];
+
+$count = sanitise_int($widget->member_count, false);
+if (empty($count)) {
+	$count = 8;
+}
+
+$user_icon_options_values = array(
+	"no" => elgg_echo("option:no"),
+	"yes" => elgg_echo("option:yes")
+);
+
 ?>
 <div>
 	<?php echo elgg_echo("widget_manager:widgets:index_members_online:member_count"); ?><br />

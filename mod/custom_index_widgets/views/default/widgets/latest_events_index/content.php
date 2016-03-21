@@ -22,7 +22,7 @@
 	if (!isset($mode))
 	    $mode = "month";
 	
-	$site_categories = $vars['config']->site->categories;
+	$site_categories = elgg_get_site_entity()->categories;
 	$widget_categorie = $vars['entity']->widget_categorie;
 	$widget_context_mode = $vars['entity']->widget_context_mode;
 	if (!isset($widget_context_mode))
@@ -86,8 +86,7 @@
 			'pagination' => TRUE,
 			'list_type' => 'listing',
 			'list_type_toggle' => FALSE,
-			// 'offset' => $vars['offset'],
-			// 'offset' => 0, //GCChange - set to 0 in order to ignore pagination of activity index widget
+			'offset' => $vars['offset'],
 			'limit' => $vars['limit'],
 		);
 	$widget_datas = elgg_view_entity_list($events, $options);

@@ -1,6 +1,4 @@
 <?php
-//$background_colour = '#EBF1EB';
-//$highlight_colour = '#478787';
 
 $background_colour = '#F5F5F5';
 $highlight_colour = '#3874B7';
@@ -50,13 +48,13 @@ td.ui-datepicker-unselectable {
 }
 
 .river_object_event_calendar_create {
-	background: url(<?php echo $vars['url']; ?>mod/event_calendar/images/river_icon_event.gif) no-repeat left -1px;
+	background: url(<?php echo elgg_get_site_url(); ?>mod/event_calendar/images/river_icon_event.gif) no-repeat left -1px;
 }
 .river_object_event_calendar_update {
-	background: url(<?php echo $vars['url']; ?>mod/event_calendar/images/river_icon_event.gif) no-repeat left -1px;
+	background: url(<?php echo elgg_get_site_url(); ?>mod/event_calendar/images/river_icon_event.gif) no-repeat left -1px;
 }
 #event_list {
-	width:510px;
+	max-width:485px;
 	margin:0;
 	float:left;
 	padding:5px 0 0 0;
@@ -146,15 +144,6 @@ table.event_calendar_paged_table th {
 	padding:3px 3px 3px 3px;
 }
 
-.event_calendar_strapline {
-	font-size: 85%;
-}
-
-.event-calendar-personal-calendar-toggle-wrapper {
-	width: 100%;
-	margin-bottom: 30px;
-}
-
 .event-calendar-personal-calendar-toggle {
 	float: right;
 }
@@ -171,22 +160,17 @@ li.event-calendar-filter-menu-show-only {
 	margin-right: 10px;
 }
 
-.event-calendar-medium-text {
-	width: 500px !important;
+.event-calendar-edit-form-other-block .mceLayout,
+.event-calendar-edit-form-other-block .mce-tinymce  {
+	float:none;
+	clear:both;
+	width: 100% !important;
 }
 
-.event-calendar-edit-form-block label {
-	float: left;
-	width: 90px;
-	margin-top: 5px;
-}
-
-.event-calendar-long-text {
-	width: 500px !important;
-}
-
-.event-calendar-edit-form-other-block .mceLayout  {
-	width: 500px !important;
+.event-calendar-edit-form-share label {
+	float:none;
+	clear:both;
+	width: 100% !important;
 }
 
 .event-calendar-edit-form {
@@ -194,8 +178,11 @@ li.event-calendar-filter-menu-show-only {
 }
 
 .event-calendar-edit-form-block {
-	width: 90%;
-	
+	width: 98%;
+	<!-- background-color: #DDDDDD; -->
+	<!-- border-width:1px; -->
+	border-style:solid;
+	border-color:#bfbfbf;
 	padding: 5px;
 	margin-bottom: 10px;
 	clear: both;
@@ -240,11 +227,6 @@ li.event-calendar-filter-menu-show-only {
 	color: #CCCCCC;
 }
 
-.event-calendar-edit-form-schedule-block ul.elgg-vertical li {
-	display: block !important;
-	clear: both;
-}
-
 .event-calendar-edit-form-block ul.elgg-vertical li label {
 	font-weight: normal;
 	width: 500px;
@@ -255,7 +237,7 @@ li.event-calendar-filter-menu-show-only {
 	color: #000000;
 }
 
-.event-calendar-edit-date-wrapper {
+.event-calendar-edit-date-wrapper, .event-calendar-edit-all-day-date-wrapper {
 	clear: both;
 	margin-left: 20px;
 	display: none;
@@ -284,4 +266,9 @@ li.event-calendar-filter-menu-show-only {
 }
 .elgg-gallery > li {
 	border-bottom:1px dotted rgb(204,204,204);
+}
+
+.event-calendar-repeat-section {
+	padding-top: 15px;
+	clear: both;
 }

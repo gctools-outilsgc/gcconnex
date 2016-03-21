@@ -46,7 +46,7 @@ if ($categories) {
 		echo elgg_view('input/hidden', array('name' => 'guid', 'value' => $guid));
 	}
 
-	echo elgg_view('input/submit', array('value' => elgg_echo("save")));
+	echo elgg_view('input/submit', array('value' => elgg_echo("save"), 'class' => 'btn btn-primary mrgn-tp-md'));
 
 	?>
 </div>

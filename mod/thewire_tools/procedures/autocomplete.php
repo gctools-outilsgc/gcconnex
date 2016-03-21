@@ -9,6 +9,7 @@ if (elgg_is_logged_in()) {
 	$limit = (int) get_input("limit", 50);
 	$page_owner_guid = (int) get_input("page_owner_guid");
 	
+	$site = elgg_get_site_entity();
 	$result = array();
 	
 	if (!empty($q)) {
@@ -30,17 +31,9 @@ if (elgg_is_logged_in()) {
 				$options["relationship_guid"] = $group->getGUID();
 				$options["inverse_relationship"] = true;
 			} else {
-				$options["joins"][] = "JOIN " . elgg_get_config("dbprefix") . "entity_relationships r1 ON r1.guid_one = e.guid";
-				$options["joins"][] = "JOIN " . elgg_get_config("dbprefix") . "entity_relationships r2 ON r2.guid_two = e.guid";
-				$options["joins"][] = "JOIN " . elgg_get_config("dbprefix") . "entity_relationships r3 ON r3.guid_one = e.guid";
-				
-				$options["wheres"][] = "(
-					((r1.relationship = 'friend' AND r1.guid_two = " . elgg_get_logged_in_user_guid() . ")
-					OR
-					(r2.relationship = 'friend' AND r2.guid_one = " . elgg_get_logged_in_user_guid() . "))
-					AND
-					(r3.relationship = 'member_of_site' AND r3.guid_two = " . elgg_get_site_entity()->getGUID() . ")
-				)";
+				$options["relationship"] = "member_of_site";
+				$options["relationship_guid"] = $site->getGUID();
+				$options["inverse_relationship"] = true;
 			}
 			
 			$users = elgg_get_entities_from_relationship($options);
@@ -57,7 +50,7 @@ if (elgg_is_logged_in()) {
 		} elseif (substr($q, 0, 1) == "#") {
 			$tag = substr($q, 1);
 			
-			$tags_id = get_metastring_id("tags");
+			$tags_id = elgg_get_metastring_id("tags");
 			$thewire_id = get_subtype_id("object", "thewire");
 			
 			$query = "SELECT DISTINCT *";

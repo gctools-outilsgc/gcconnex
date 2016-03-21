@@ -1,90 +1,60 @@
 <?php
-	$widget = $vars["entity"];
+$widget = $vars["entity"];
+
+$feed_url = $widget->rssfeed;
+
+$limit = $widget->rss_count;
+if (empty($limit)) {
+	$limit = 4;
+}
+
+$post_date = true;
+if ($widget->post_date == "no") {
+	$post_date = false;
+} 	
+
+$show_feed_title = false;
+if ($widget->show_feed_title == "yes") {
+	$show_feed_title = true;
+}
+$excerpt = false;
+if ($widget->excerpt == "yes") {
+	$excerpt = true;
+}
+
+$show_item_icon = false;
+if ($widget->show_item_icon == "yes") {
+	$show_item_icon = true;
+}
+
+$show_in_lightbox = false;
+if ($widget->show_in_lightbox == "yes") {
+	$show_in_lightbox = true;
+}
+
+if ($feed_url) {
 	
-	$blog_tags = '<a><p><br><b><i><em><del><pre><strong><ul><ol><li>';
-	$feed_url = $widget->rssfeed;
+	$attributes = array(
+		"id" => "widget-manager-rss-" . $widget->guid,
+		"data-feed-url" => $feed_url,
+		"data-limit" => $limit,
+		"data-post-date" => $post_date,
+		"data-show-feed-title" => $show_feed_title,
+		"data-show-excerpt" => $excerpt,
+		"data-show-item-icon" => $show_item_icon,
+		"data-show-in-lightbox" => $show_in_lightbox,
+	);
 	
-	if(!empty($feed_url)){
-		if($widget->excerpt == "yes"){
-			$excerpt = true;
-		} else {
-			$exerpt = false;
-		}
-		
-		if($widget->show_item_icon == "yes"){
-			$show_item_icon = true;
-		} else {
-			$show_item_icon = false;
-		}
-		
-		$rss_count = sanitise_int($widget->rss_count, false);
-		if(empty($rss_count)){
-			$rss_count = 4;
-		}
-		
-		if($widget->post_date == "yes" || $widget->post_date == "friendly"){
-			$post_date = "friendly";
-		} elseif($widget->post_date == "date") {
-			$post_date = "date";
-		} else {
-			$post_date = false;
-		}
-		
-		elgg_load_library("simplepie");
-		
-		$feed = new SimplePie($feed_url, WIDGETS_RSS_CACHE_LOCATION, WIDGETS_RSS_CACHE_DURATION);
-		
-		$num_posts_in_feed = $feed->get_item_quantity($rss_count);
-		
-		if(($feed_title = $feed->get_title()) && ($widget->show_feed_title == "yes")){
-			echo "<h3><a href='" . $feed->get_permalink() . "' target='_blank'>" .$feed_title . "</a></h3>";
-		}
-		
-		$body = "";
-		
-		if (empty($num_posts_in_feed)){
-			$body = elgg_echo('notfound');
-		} else {
-			foreach ($feed->get_items(0, $num_posts_in_feed) as $item){
-				if ($excerpt){
-					$body .= "<div class='widgets_rss_feed_item'>";
-					$body .= "<div><a href='" . $item->get_permalink() . "' target='_blank'>" . $item->get_title() . "</a></div>";
-					
-					if($show_item_icon){
-						if($enclosures = $item->get_enclosures()){
-							foreach($enclosures as $enclosure){
-								if(substr($enclosure->type,0,6) == "image/"){
-									$body .= "<a href='" . $item->get_permalink() . "' target='_blank'><img class='widgets_rss_feed_item_image' src='" . $enclosure->link . "' /></a>";
-									break;			
-								}
-							}
-						}
-					}
-					
-					$body .= strip_tags($item->get_description(true), $blog_tags);
-					if ($post_date == "friendly"){
-						$body .= "<div class='widgets_rss_feed_timestamp'>" . elgg_view_friendly_time($item->get_date('U')) . "</div>";
-					} elseif ($post_date == "date"){
-						$body .= "<div class='widgets_rss_feed_timestamp' title='" . $item->get_date('r') . "'>" . substr($item->get_date('r'),0,16) . "</div>";
-					}
-					
-					$body .= "</div>";	
-				} else {
-					$body .= "<div>";
-					if ($post_date == "friendly"){
-						$body .= "<span>" . elgg_view_friendly_time($item->get_date('U')) . "</span> - ";
-					} elseif ($post_date == "date"){
-						$body .= "<span title='" . $item->get_date('r') . "'>" . substr($item->get_date('r'),0,16) . "</span> - ";
-						
-					}
-					$body .= "<a href='" . $item->get_permalink() . "' target='_blank'>" . $item->get_title() . "</a>";
-					$body .= "</div>";
-				}
-				$body .= "<div class='clearfix'></div>";
-			}
-		}
-		
-		echo $body;      
-	} else {
-		echo elgg_echo('widgets:rss:error:notset');      
-	}
+	?>
+	<div <?php echo elgg_format_attributes($attributes);?>"></div>
+	<script>
+		$(document).ready(function() {
+			require(["widget_manager/widgets/rss"], function (rss) {
+				rss("#widget-manager-rss-<?php echo $widget->guid;?>");
+			});
+		});
+	</script>
+	<?php 
+} else {
+	echo elgg_echo("widgets:rss:error:notset");
+}

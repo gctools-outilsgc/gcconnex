@@ -3,13 +3,13 @@
  * Online users widget
  */
 
-$count = find_active_users(600, 10, 0, true);
-$objects = find_active_users(600, 10);
-
-if ($objects) {
-	echo elgg_view_entity_list($objects, array(
-		'count' => $count,
-		'limit' => 10,
-		'pagination' => false,
-	));
+$num_display = sanitize_int($vars['entity']->num_display, false);
+// set default value for display number
+if (!$num_display) {
+	$num_display = 8;
 }
+
+echo get_online_users(array(
+	'pagination' => false,
+	'limit' => $num_display
+));

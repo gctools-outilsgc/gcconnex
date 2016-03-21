@@ -1,16 +1,13 @@
 <?php
-/**
- * Members English language file
- */
-
-$english = array(
-	'members:label:newest' => 'Newest',
-	'members:label:popular' => 'Popular',
+return array(
 	'members:label:online' => 'Online',
-	'members:searchname' => 'Search members by name',
-	'members:searchtag' => 'Search members by tag',
-	'members:title:searchname' => 'Member search for %s',
-	'members:title:searchtag' => 'Members tagged with %s',
+	'members:search' => 'Search members',
+	'members:title:search' => 'Member search for %s',
+	'members:total' => 'Total members: %s',
+    'members:label:newest' => 'Most recent',
+	'members:label:popular' => 'Popular',
+	'members:title:newest' => 'Newest members',
+	'members:title:popular' => 'Most popular members',
+	'members:title:online' => 'Online members',
+	'members:list:popular:none' => 'No members have any friends.',
 );
-
-add_translation('en', $english);

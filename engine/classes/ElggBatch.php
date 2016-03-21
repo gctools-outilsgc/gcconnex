@@ -34,7 +34,7 @@
  * @example
  * <code>
  * // using foreach
- * $batch = new ElggBatch('elgg_get_entities', array());
+ * $batch = new \ElggBatch('elgg_get_entities', array());
  * $batch->setIncrementOffset(false);
  *
  * foreach ($batch as $entity) {
@@ -47,16 +47,15 @@
  *  return true;
  * }
  *
- * $batch = new ElggBatch('elgg_get_annotations', array('guid' => 2), $callback);
+ * $batch = new \ElggBatch('elgg_get_annotations', array('guid' => 2), $callback);
  * </code>
  *
  * @package    Elgg.Core
  * @subpackage DataModel
- * @link       http://docs.elgg.org/DataModel/ElggBatch
  * @since      1.8
  */
 class ElggBatch
-	implements Iterator {
+	implements \Iterator {
 
 	/**
 	 * The objects to interator over.
@@ -152,7 +151,7 @@ class ElggBatch
 	/**
 	 * Entities that could not be instantiated during a fetch
 	 *
-	 * @var stdClass[]
+	 * @var \stdClass[]
 	 */
 	private $incompleteEntities = array();
 
@@ -183,7 +182,7 @@ class ElggBatch
 	 *                           and hitting the db server too often.
 	 * @param bool   $inc_offset Increment the offset on each fetch. This must be false for
 	 *                           callbacks that delete rows. You can set this after the
-	 *                           object is created with {@see ElggBatch::setIncrementOffset()}.
+	 *                           object is created with {@link \ElggBatch::setIncrementOffset()}.
 	 */
 	public function __construct($getter, $options, $callback = null, $chunk_size = 25,
 			$inc_offset = true) {
@@ -200,21 +199,17 @@ class ElggBatch
 
 		// store these so we can compare later
 		$this->offset = elgg_extract('offset', $options, 0);
-		$this->limit = elgg_extract('limit', $options, 10);
+		$this->limit = elgg_extract('limit', $options, elgg_get_config('default_limit'));
 
-		// if passed a callback, create a new ElggBatch with the same options
+		// if passed a callback, create a new \ElggBatch with the same options
 		// and pass each to the callback.
 		if ($callback && is_callable($callback)) {
-			$batch = new ElggBatch($getter, $options, null, $chunk_size, $inc_offset);
+			$batch = new \ElggBatch($getter, $options, null, $chunk_size, $inc_offset);
 
 			$all_results = null;
 
 			foreach ($batch as $result) {
-				if (is_string($callback)) {
-					$result = $callback($result, $getter, $options);
-				} else {
-					$result = call_user_func_array($callback, array($result, $getter, $options));
-				}
+				$result = call_user_func($callback, $result, $getter, $options);
 
 				if (!isset($all_results)) {
 					if ($result === true || $result === false || $result === null) {
@@ -238,11 +233,11 @@ class ElggBatch
 	/**
 	 * Tell the process that an entity was incomplete during a fetch
 	 *
-	 * @param stdClass $row
+	 * @param \stdClass $row
 	 *
 	 * @access private
 	 */
-	public function reportIncompleteEntity(stdClass $row) {
+	public function reportIncompleteEntity(\stdClass $row) {
 		$this->incompleteEntities[] = $row;
 	}
 
@@ -297,7 +292,10 @@ class ElggBatch
 		$options = array_merge($this->options, $current_options);
 
 		$this->incompleteEntities = array();
-		$this->results = call_user_func_array($this->getter, array($options));
+		$this->results = call_user_func($this->getter, $options);
+
+		// batch result sets tend to be large; we don't want to cache these.
+		_elgg_services()->db->disableQueryCache();
 
 		$num_results = count($this->results);
 		$num_incomplete = count($this->incompleteEntities);
@@ -326,8 +324,10 @@ class ElggBatch
 				// offer at least one row to iterate over, or give up.
 				return $this->getNextResultsChunk();
 			}
+			_elgg_services()->db->enableQueryCache();
 			return true;
 		} else {
+			_elgg_services()->db->enableQueryCache();
 			return false;
 		}
 	}
@@ -428,6 +428,6 @@ class ElggBatch
 			return false;
 		}
 		$key = key($this->results);
-		return ($key !== NULL && $key !== FALSE);
+		return ($key !== null && $key !== false);
 	}
 }

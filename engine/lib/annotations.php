@@ -8,20 +8,20 @@
  */
 
 /**
- * Convert a database row to a new ElggAnnotation
+ * Convert a database row to a new \ElggAnnotation
  *
- * @param stdClass $row Db row result object
+ * @param \stdClass $row Db row result object
  *
- * @return ElggAnnotation
+ * @return \ElggAnnotation
  * @access private
  */
 function row_to_elggannotation($row) {
-	if (!($row instanceof stdClass)) {
+	if (!($row instanceof \stdClass)) {
 		// @todo should throw in this case?
 		return $row;
 	}
 
-	return new ElggAnnotation($row);
+	return new \ElggAnnotation($row);
 }
 
 /**
@@ -31,10 +31,10 @@ function row_to_elggannotation($row) {
  *
  * @param int $id The id of the annotation object being retrieved.
  *
- * @return ElggAnnotation|false
+ * @return \ElggAnnotation|false
  */
 function elgg_get_annotation_from_id($id) {
-	return elgg_get_metastring_based_object_from_id($id, 'annotations');
+	return _elgg_services()->annotations->get($id);
 }
 
 /**
@@ -44,17 +44,13 @@ function elgg_get_annotation_from_id($id) {
  * @return bool
  */
 function elgg_delete_annotation_by_id($id) {
-	$annotation = elgg_get_annotation_from_id($id);
-	if (!$annotation) {
-		return false;
-	}
-	return $annotation->delete();
+	return _elgg_services()->annotations->delete($id);
 }
 
 /**
  * Create a new annotation.
  *
- * @param int    $entity_guid Entity Guid
+ * @param int    $entity_guid GUID of entity to be annotated
  * @param string $name        Name of annotation
  * @param string $value       Value of annotation
  * @param string $value_type  Type of value (default is auto detection)
@@ -64,56 +60,9 @@ function elgg_delete_annotation_by_id($id) {
  * @return int|bool id on success or false on failure
  */
 function create_annotation($entity_guid, $name, $value, $value_type = '',
-$owner_guid = 0, $access_id = ACCESS_PRIVATE) {
-	global $CONFIG;
-
-	$result = false;
-
-	$entity_guid = (int)$entity_guid;
-	//$name = sanitise_string(trim($name));
-	//$value = sanitise_string(trim($value));
-	$value_type = detect_extender_valuetype($value, sanitise_string(trim($value_type)));
-
-	$owner_guid = (int)$owner_guid;
-	if ($owner_guid == 0) {
-		$owner_guid = elgg_get_logged_in_user_guid();
-	}
-
-	$access_id = (int)$access_id;
-	$time = time();
-
-	// Add the metastring
-	$value = add_metastring($value);
-	if (!$value) {
-		return false;
-	}
-
-	$name = add_metastring($name);
-	if (!$name) {
-		return false;
-	}
-
-	$entity = get_entity($entity_guid);
-
-	if (elgg_trigger_event('annotate', $entity->type, $entity)) {
-		// If ok then add it
-		$result = insert_data("INSERT into {$CONFIG->dbprefix}annotations
-			(entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id) VALUES
-			($entity_guid,'$name',$value,'$value_type', $owner_guid, $time, $access_id)");
-
-		if ($result !== false) {
-			$obj = elgg_get_annotation_from_id($result);
-			if (elgg_trigger_event('create', 'annotation', $obj)) {
-				return $result;
-			} else {
-				// plugin returned false to reject annotation
-				elgg_delete_annotation_by_id($result);
-				return FALSE;
-			}
-		}
-	}
-
-	return $result;
+		$owner_guid = 0, $access_id = ACCESS_PRIVATE) {
+	return _elgg_services()->annotations->create(
+		$entity_guid, $name, $value, $value_type, $owner_guid, $access_id);
 }
 
 /**
@@ -129,45 +78,7 @@ $owner_guid = 0, $access_id = ACCESS_PRIVATE) {
  * @return bool
  */
 function update_annotation($annotation_id, $name, $value, $value_type, $owner_guid, $access_id) {
-	global $CONFIG;
-
-	$annotation_id = (int)$annotation_id;
-	$name = (trim($name));
-	$value = (trim($value));
-	$value_type = detect_extender_valuetype($value, sanitise_string(trim($value_type)));
-
-	$owner_guid = (int)$owner_guid;
-	if ($owner_guid == 0) {
-		$owner_guid = elgg_get_logged_in_user_guid();
-	}
-
-	$access_id = (int)$access_id;
-
-	$access = get_access_sql_suffix();
-
-	// Add the metastring
-	$value = add_metastring($value);
-	if (!$value) {
-		return false;
-	}
-
-	$name = add_metastring($name);
-	if (!$name) {
-		return false;
-	}
-
-	// If ok then add it
-	$result = update_data("UPDATE {$CONFIG->dbprefix}annotations
-		set name_id='$name', value_id='$value', value_type='$value_type', access_id=$access_id, owner_guid=$owner_guid
-		where id=$annotation_id and $access");
-
-	if ($result !== false) {
-		// @todo add plugin hook that sends old and new annotation information before db access
-		$obj = elgg_get_annotation_from_id($annotation_id);
-		elgg_trigger_event('update', 'annotation', $obj);
-	}
-
-	return $result;
+	return _elgg_services()->annotations->update($annotation_id, $name, $value, $value_type, $owner_guid, $access_id);
 }
 
 /**
@@ -178,11 +89,11 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
  *
  * @param array $options Array in format:
  *
- * annotation_names              => NULL|ARR Annotation names
- * annotation_values             => NULL|ARR Annotation values
- * annotation_ids                => NULL|ARR annotation ids
+ * annotation_names              => null|ARR Annotation names
+ * annotation_values             => null|ARR Annotation values
+ * annotation_ids                => null|ARR annotation ids
  * annotation_case_sensitive     => BOOL Overall Case sensitive
- * annotation_owner_guids        => NULL|ARR guids for annotation owners
+ * annotation_owner_guids        => null|ARR guids for annotation owners
  * annotation_created_time_lower => INT Lower limit for created time.
  * annotation_created_time_upper => INT Upper limit for created time.
  * annotation_calculation        => STR Perform the MySQL function on the annotation values returned.
@@ -190,30 +101,38 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
  *                                   "calculation" option to elgg_get_entities_from_annotation_calculation().
  *                                   The "annotation_calculation" option causes this function to
  *                                   return the result of performing a mathematical calculation on
- *                                   all annotations that match the query instead of ElggAnnotation
+ *                                   all annotations that match the query instead of \ElggAnnotation
  *                                   objects.
  *                                   See the docs for elgg_get_entities_from_annotation_calculation()
  *                                   for the proper use of the "calculation" option.
  *
  *
- * @return ElggAnnotation[]|mixed
+ * @return \ElggAnnotation[]|mixed
  * @since 1.8.0
  */
 function elgg_get_annotations(array $options = array()) {
+	return _elgg_services()->annotations->find($options);
+}
 
-	// @todo remove support for count shortcut - see #4393
-	if (isset($options['__egefac']) && $options['__egefac']) {
-		unset($options['__egefac']);
-	} else {
-		// support shortcut of 'count' => true for 'annotation_calculation' => 'count'
-		if (isset($options['count']) && $options['count']) {
-			$options['annotation_calculation'] = 'count';
-			unset($options['count']);
-		}		
-	}
-	
-	$options['metastring_type'] = 'annotations';
-	return elgg_get_metastring_based_objects($options);
+/**
+ * Returns a rendered list of annotations with pagination.
+ *
+ * @param array $options Annotation getter and display options.
+ * {@link elgg_get_annotations()} and {@link elgg_list_entities()}.
+ *
+ * @return string The list of entities
+ * @since 1.8.0
+ */
+function elgg_list_annotations($options) {
+	$defaults = array(
+		'limit' => 25,
+		'offset' => (int) max(get_input('annoff', 0), 0),
+		'no_results' => '',
+	);
+
+	$options = array_merge($defaults, $options);
+
+	return elgg_list_entities($options, 'elgg_get_annotations', 'elgg_view_annotation_list');
 }
 
 /**
@@ -223,17 +142,12 @@ function elgg_get_annotations(array $options = array()) {
  *          This requires at least one constraint: annotation_owner_guid(s),
  *          annotation_name(s), annotation_value(s), or guid(s) must be set.
  *
- * @param array $options An options array. {@See elgg_get_annotations()}
+ * @param array $options An options array. {@link elgg_get_annotations()}
  * @return bool|null true on success, false on failure, null if no annotations to delete.
  * @since 1.8.0
  */
 function elgg_delete_annotations(array $options) {
-	if (!elgg_is_valid_options_for_batch_operation($options, 'annotations')) {
-		return false;
-	}
-
-	$options['metastring_type'] = 'annotations';
-	return elgg_batch_metastring_based_objects($options, 'elgg_batch_delete_callback', false);
+	return _elgg_services()->annotations->deleteAll($options);
 }
 
 /**
@@ -241,17 +155,12 @@ function elgg_delete_annotations(array $options) {
  *
  * @warning Unlike elgg_get_annotations() this will not accept an empty options array!
  *
- * @param array $options An options array. {@See elgg_get_annotations()}
+ * @param array $options An options array. {@link elgg_get_annotations()}
  * @return bool|null true on success, false on failure, null if no annotations disabled.
  * @since 1.8.0
  */
 function elgg_disable_annotations(array $options) {
-	if (!elgg_is_valid_options_for_batch_operation($options, 'annotations')) {
-		return false;
-	}
-
-	$options['metastring_type'] = 'annotations';
-	return elgg_batch_metastring_based_objects($options, 'elgg_batch_disable_callback', false);
+	return _elgg_services()->annotations->disableAll($options);
 }
 
 /**
@@ -262,42 +171,13 @@ function elgg_disable_annotations(array $options) {
  * @warning In order to enable annotations, you must first use
  * {@link access_show_hidden_entities()}.
  *
- * @param array $options An options array. {@See elgg_get_annotations()}
+ * @param array $options An options array. {@link elgg_get_annotations()}
  * @return bool|null true on success, false on failure, null if no metadata enabled.
  * @since 1.8.0
  */
 function elgg_enable_annotations(array $options) {
-	if (!$options || !is_array($options)) {
-		return false;
-	}
-
-	$options['metastring_type'] = 'annotations';
-	return elgg_batch_metastring_based_objects($options, 'elgg_batch_enable_callback');
+	return _elgg_services()->annotations->enableAll($options);
 }
-
-/**
- * Returns a rendered list of annotations with pagination.
- *
- * @param array $options Annotation getter and display options.
- * {@see elgg_get_annotations()} and {@see elgg_list_entities()}.
- *
- * @return string The list of entities
- * @since 1.8.0
- */
-function elgg_list_annotations($options) {
-	$defaults = array(
-		'limit' => 25,
-		'offset' => (int) max(get_input('annoff', 0), 0),
-	);
-
-	$options = array_merge($defaults, $options);
-
-	return elgg_list_entities($options, 'elgg_get_annotations', 'elgg_view_annotation_list');
-}
-
-/**
- * Entities interfaces
- */
 
 /**
  * Returns entities based upon annotations.  Also accepts all options available
@@ -311,74 +191,32 @@ function elgg_list_annotations($options) {
  *
  * @param array $options Array in format:
  *
- * 	annotation_names => NULL|ARR annotations names
+ * 	annotation_names => null|ARR annotations names
  *
- * 	annotation_values => NULL|ARR annotations values
+ * 	annotation_values => null|ARR annotations values
  *
- * 	annotation_name_value_pairs => NULL|ARR (name = 'name', value => 'value',
- * 	'operator' => '=', 'case_sensitive' => TRUE) entries.
+ * 	annotation_name_value_pairs => null|ARR (name = 'name', value => 'value',
+ * 	'operator' => '=', 'case_sensitive' => true) entries.
  * 	Currently if multiple values are sent via an array (value => array('value1', 'value2')
  * 	the pair's operator will be forced to "IN".
  *
- * 	annotation_name_value_pairs_operator => NULL|STR The operator to use for combining
+ * 	annotation_name_value_pairs_operator => null|STR The operator to use for combining
  *  (name = value) OPERATOR (name = value); default AND
  *
  * 	annotation_case_sensitive => BOOL Overall Case sensitive
  *
- *  order_by_annotation => NULL|ARR (array('name' => 'annotation_text1', 'direction' => ASC|DESC,
+ *  order_by_annotation => null|ARR (array('name' => 'annotation_text1', 'direction' => ASC|DESC,
  *  'as' => text|integer),
  *
  *  Also supports array('name' => 'annotation_text1')
  *
- *  annotation_owner_guids => NULL|ARR guids for annotaiton owners
+ *  annotation_owner_guids => null|ARR guids for annotaiton owners
  *
  * @return mixed If count, int. If not count, array. false on errors.
  * @since 1.7.0
  */
 function elgg_get_entities_from_annotations(array $options = array()) {
-	$defaults = array(
-		'annotation_names'						=>	ELGG_ENTITIES_ANY_VALUE,
-		'annotation_values'						=>	ELGG_ENTITIES_ANY_VALUE,
-		'annotation_name_value_pairs'			=>	ELGG_ENTITIES_ANY_VALUE,
-
-		'annotation_name_value_pairs_operator'	=>	'AND',
-		'annotation_case_sensitive' 			=>	TRUE,
-		'order_by_annotation'					=>	array(),
-
-		'annotation_created_time_lower'			=>	ELGG_ENTITIES_ANY_VALUE,
-		'annotation_created_time_upper'			=>	ELGG_ENTITIES_ANY_VALUE,
-
-		'annotation_owner_guids'				=>	ELGG_ENTITIES_ANY_VALUE,
-
-		'order_by'								=>	'maxtime desc',
-		'group_by'								=>	'a.entity_guid'
-	);
-
-	$options = array_merge($defaults, $options);
-
-	$singulars = array('annotation_name', 'annotation_value',
-	'annotation_name_value_pair', 'annotation_owner_guid');
-
-	$options = elgg_normalise_plural_options_array($options, $singulars);
-	$options = elgg_entities_get_metastrings_options('annotation', $options);
-
-	if (!$options) {
-		return false;
-	}
-
-	// special sorting for annotations
-	//@todo overrides other sorting
-	$options['selects'][] = "max(n_table.time_created) as maxtime";
-	$options['group_by'] = 'n_table.entity_guid';
-
-	$time_wheres = elgg_get_entity_time_where_sql('a', $options['annotation_created_time_upper'],
-		$options['annotation_created_time_lower']);
-
-	if ($time_wheres) {
-		$options['wheres'] = array_merge($options['wheres'], $time_wheres);
-	}
-
-	return elgg_get_entities_from_metadata($options);
+	return _elgg_services()->annotations->getEntities($options);
 }
 
 /**
@@ -397,7 +235,11 @@ function elgg_list_entities_from_annotations($options = array()) {
 
 /**
  * Get entities ordered by a mathematical calculation on annotation values
- *
+ * 
+ * @tip Note that this function uses { @link elgg_get_annotations() } to return a list of entities ordered by a mathematical
+ * calculation on annotation values, and { @link elgg_get_entities_from_annotations() } to return a count of entities 
+ * if $options['count'] is set to a truthy value
+ * 
  * @param array $options An options array:
  * 	'calculation'            => The calculation to use. Must be a valid MySQL function.
  *                              Defaults to sum.  Result selected as 'annotation_calculation'.
@@ -413,38 +255,18 @@ function elgg_list_entities_from_annotations($options = array()) {
  *
  *	'metadata_names'         => The name of metadata on the entity.
  *	'metadata_values'        => The value of metadata on the entitiy.
+ *	'callback'               => Callback function to pass each row through.
+ *                              @tip This function is different from other ege* functions, 
+ *                              as it uses a metastring-based getter function { @link elgg_get_annotations() },
+ *                              therefore the callback function should be a derivative of { @link entity_row_to_elggstar() } 
+ *                              and not of { @link row_to_annotation() }
  *
- * @return mixed If count, int. If not count, array. false on errors.
+ * @return \ElggEntity[]|int An array or a count of entities
+ * @see elgg_get_annotations()
+ * @see elgg_get_entities_from_annotations()
  */
 function elgg_get_entities_from_annotation_calculation($options) {
-	$db_prefix = elgg_get_config('dbprefix');
-	$defaults = array(
-		'calculation' => 'sum',
-		'order_by' => 'annotation_calculation desc'
-	);
-
-	$options = array_merge($defaults, $options);
-
-	$function = sanitize_string(elgg_extract('calculation', $options, 'sum', false));
-
-	// you must cast this as an int or it sorts wrong.
-	$options['selects'][] = 'e.*';
-	$options['selects'][] = "$function(cast(a_msv.string as signed)) as annotation_calculation";
-
-	// need our own join to get the values because the lower level functions don't
-	// add all the joins if it's a different callback.
-	$options['joins'][] = "JOIN {$db_prefix}metastrings a_msv ON n_table.value_id = a_msv.id";
-
-	// don't need access control because it's taken care of by elgg_get_annotations.
-	$options['group_by'] = 'n_table.entity_guid';
-
-	$options['callback'] = 'entity_row_to_elggstar';
-
-	// see #4393
-	// @todo remove after the 'count' shortcut is removed from elgg_get_annotations()
-	$options['__egefac'] = true;
-
-	return elgg_get_annotations($options);
+	return _elgg_services()->annotations->getEntitiesFromCalculation($options);
 }
 
 /**
@@ -467,64 +289,6 @@ function elgg_list_entities_from_annotation_calculation($options) {
 }
 
 /**
- * Export the annotations for the specified entity
- *
- * @param string $hook        'export'
- * @param string $type        'all'
- * @param mixed  $returnvalue Default return value
- * @param mixed  $params      Parameters determining what annotations to export
- *
- * @elgg_plugin_hook export all
- *
- * @return array
- * @throws InvalidParameterException
- * @access private
- */
-function export_annotation_plugin_hook($hook, $type, $returnvalue, $params) {
-	// Sanity check values
-	if ((!is_array($params)) && (!isset($params['guid']))) {
-		throw new InvalidParameterException(elgg_echo('InvalidParameterException:GUIDNotForExport'));
-	}
-
-	if (!is_array($returnvalue)) {
-		throw new InvalidParameterException(elgg_echo('InvalidParameterException:NonArrayReturnValue'));
-	}
-
-	$guid = (int)$params['guid'];
-	$options = array('guid' => $guid, 'limit' => 0);
-	if (isset($params['name'])) {
-		$options['annotation_name'] = $params['name'];
-	}
-
-	$result = elgg_get_annotations($options);
-
-	if ($result) {
-		foreach ($result as $r) {
-			$returnvalue[] = $r->export();
-		}
-	}
-
-	return $returnvalue;
-}
-
-/**
- * Get the URL for this item of metadata, by default this links to the
- * export handler in the current view.
- *
- * @param int $id Annotation id
- *
- * @return mixed
- */
-function get_annotation_url($id) {
-	$id = (int)$id;
-
-	if ($extender = elgg_get_annotation_from_id($id)) {
-		return get_extender_url($extender);
-	}
-	return false;
-}
-
-/**
  * Check to see if a user has already created an annotation on an object
  *
  * @param int    $entity_guid     Entity guid
@@ -534,54 +298,29 @@ function get_annotation_url($id) {
  * @return bool
  * @since 1.8.0
  */
-function elgg_annotation_exists($entity_guid, $annotation_type, $owner_guid = NULL) {
-	global $CONFIG;
-
-	if (!$owner_guid && !($owner_guid = elgg_get_logged_in_user_guid())) {
-		return FALSE;
-	}
-
-	$entity_guid = sanitize_int($entity_guid);
-	$owner_guid = sanitize_int($owner_guid);
-	$annotation_type = sanitize_string($annotation_type);
-
-	$sql = "SELECT a.id FROM {$CONFIG->dbprefix}annotations a" .
-			" JOIN {$CONFIG->dbprefix}metastrings m ON a.name_id = m.id" .
-			" WHERE a.owner_guid = $owner_guid AND a.entity_guid = $entity_guid" .
-			" AND m.string = '$annotation_type'";
-
-	if (get_data_row($sql)) {
-		return TRUE;
-	}
-
-	return FALSE;
+function elgg_annotation_exists($entity_guid, $annotation_type, $owner_guid = null) {
+	return _elgg_services()->annotations->exists($entity_guid, $annotation_type, $owner_guid);
 }
 
 /**
- * Return the URL for a comment
+ * Set the URL for a comment when called from a plugin hook
  *
- * @param ElggAnnotation $comment The comment object 
+ * @param string $hook   Hook name
+ * @param string $type   Hook type
+ * @param string $url    URL string
+ * @param array  $params Parameters of the hook
  * @return string
  * @access private
  */
-function elgg_comment_url_handler(ElggAnnotation $comment) {
-	$entity = $comment->getEntity();
-	if ($entity) {
-		return $entity->getURL() . '#item-annotation-' . $comment->id;
+function _elgg_set_comment_url($hook, $type, $url, $params) {
+	$annotation = $params['extender'];
+	/* @var \ElggExtender $annotation */
+	if ($annotation->getSubtype() == 'generic_comment') {
+		$entity = $annotation->getEntity();
+		if ($entity) {
+			return $entity->getURL() . '#item-annotation-' . $annotation->id;
+		}
 	}
-	return "";
-}
-
-/**
- * Register an annotation url handler.
- *
- * @param string $extender_name The name, default 'all'.
- * @param string $function_name The function.
- *
- * @return string
- */
-function elgg_register_annotation_url_handler($extender_name = "all", $function_name) {
-	return elgg_register_extender_url_handler('annotation', $extender_name, $function_name);
 }
 
 /**
@@ -589,26 +328,26 @@ function elgg_register_annotation_url_handler($extender_name = "all", $function_
  *
  * @param string $hook
  * @param string $type
- * @param array $value
- * @param array $params
+ * @param array  $tests
  * @return array
  * @access private
  */
-function annotations_test($hook, $type, $value, $params) {
+function _elgg_annotations_test($hook, $type, $tests) {
 	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/api/annotations.php';
-	return $value;
+	$tests[] = $CONFIG->path . 'engine/tests/ElggCoreAnnotationAPITest.php';
+	$tests[] = $CONFIG->path . 'engine/tests/ElggAnnotationTest.php';
+	return $tests;
 }
 
 /**
  * Initialize the annotation library
  * @access private
  */
-function elgg_annotations_init() {
-	elgg_register_annotation_url_handler('generic_comment', 'elgg_comment_url_handler');
-
-	elgg_register_plugin_hook_handler("export", "all", "export_annotation_plugin_hook", 2);
-	elgg_register_plugin_hook_handler('unit_test', 'system', 'annotations_test');
+function _elgg_annotations_init() {
+	elgg_register_plugin_hook_handler('extender:url', 'annotation', '_elgg_set_comment_url');
+	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_annotations_test');
 }
 
-elgg_register_event_handler('init', 'system', 'elgg_annotations_init');
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$events->registerHandler('init', 'system', '_elgg_annotations_init');
+};

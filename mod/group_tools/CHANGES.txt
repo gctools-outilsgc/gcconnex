@@ -1,4 +1,70 @@
-= Version History =
+Version History
+===============
+
+5.0 (2015-07-08):
+
+- changes for Elgg 1.11
+- added: option to give a reason for declining group membership request
+- fixed: group tool presets lost on failed save #73
+
+4.0 (2015-07-08):
+
+- added: composer support
+- fixed: group thumbnails not loading in Elgg 1.10 #78
+- fixed: wrong checks on group default access (thanks to https://community.elgg.org/profile/Josh.Henly)
+- fixed: using output/url instead of output/confirmlink (deprecated) #83
+- fixed: deprecated message for editing a group #84
+- fixed: group icons not showing for older groups #82
+
+3.1 (2014-02-18):
+
+- added: bulk group delete admin page
+- fixed: group invite registration failed when site registration is disabled (#72)
+- fixed: deprecated function usage
+- changed: moved some functions to amd loaded components
+- changed: moved group news to amd loaded module
+
+3.0 (2014-11-17):
+
+- changes for Elgg 1.9
+- added: group tool presets
+- added: grouppicker autocomplete
+- added: filter to group activity page
+- added: option for group admins to export the members to CSV (admin enabled option)
+- added: support for widget_manager group tool based widgets
+- added: user menu items in group member listing
+- fixed: PHP fatal exceptions when using group admins on group join
+- fixed: problem with some tabs shown when logged out
+- fixed: adding pagination to prevent long loading times with large lists #71
+- fixed: hide my status join link depending on cleanup setting #60 
+- fixed: group visibility options in walled garden
+- fixed: problem with some tabs shown when logged out
+- changed: more efficient annotation query for email invitations (thanks to Matt Beckett)
+- changed: improved group thumbnail loading
+
+2.10 (2014-05-15):
+
+- added: users can register if registration is disabled but they have a valid group invite code
+- fixed: no groups to select in groups_river_widget
+- fixed: error during saving of special states
+- fixed: if trying to access a hidden group when logged out, correctly forward after login
+- fixed: the action URL for user membership killrequest (#57)
+
+2.9.1 (2014-03-14):
+
+- removed: debug code which caused errors to appear on screen
+
+2.9 (2014-03-11):
+
+- added: plugin setting to indicate if a group is hidden
+- added: option to configure a group welcome message (#41)
+- added: listing of the email invitations for groups (#42)
+- added: option to join groups based on email domain (#43)
+- added: option to relate groups (#44)
+- fixed: layout issue in plugin settings
+- fixed: you can no join groups you were invited for on the group profile page
+- fixed: misleading translation for a group cleanup setting (#22)
+- fixed: create group button showing up on some pages when setting was disabled (#35)
 
 2.8 (2013-10-31):
 

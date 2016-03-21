@@ -8,7 +8,7 @@
  * @uses $vars['exact_match']      Widgets must match the current context (false)
  * @uses $vars['show_access']      Show the access control (true)
  */
-$num_columns = elgg_extract('num_columns', $vars, 3);
+$num_columns = elgg_extract('num_columns', $vars, 2);
 $show_add_widgets = elgg_extract('show_add_widgets', $vars, true);
 $exact_match = elgg_extract('exact_match', $vars, false);
 $show_access = elgg_extract('show_access', $vars, true);

@@ -19,19 +19,19 @@ function reportedcontent_init() {
 	elgg_extend_view('css/elgg', 'reportedcontent/css');
 	elgg_extend_view('css/admin', 'reportedcontent/admin_css');
 
-	// Extend footer with report content link
+
 	if (elgg_is_logged_in()) {
-		$href = "javascript:elgg.forward('reportedcontent/add'";
-		$href .= "+'?address='+encodeURIComponent(location.href)";
-		$href .= "+'&title='+encodeURIComponent(document.title));";
-		
-		elgg_register_menu_item('footer', array(
+		elgg_require_js('elgg/reportedcontent');
+
+		// Extend footer with report content link
+		elgg_register_menu_item('extras', array(
 			'name' => 'report_this',
-			'href' => $href,
+			'href' => 'reportedcontent/add',
 			'title' => elgg_echo('reportedcontent:this:tooltip'),
-			'text' => elgg_view_icon('report-this') . elgg_echo('reportedcontent:this'),
+			'text' => elgg_view_icon('report-this'),
 			'priority' => 500,
-			'section' => 'alt',
+			'section' => 'default',
+			'link_class' => 'elgg-lightbox',
 		));
 	}
 
@@ -45,7 +45,7 @@ function reportedcontent_init() {
 			'reportedcontent',
 			elgg_echo('reportedcontent'),
 			elgg_echo('reportedcontent:widget:description'),
-			'admin');
+			array('admin'));
 
 	// Register actions
 	$action_path = elgg_get_plugins_path() . "reportedcontent/actions/reportedcontent";
@@ -64,19 +64,26 @@ function reportedcontent_init() {
  */
 function reportedcontent_page_handler($page) {
 	// only logged in users can report things
-	gatekeeper();
+	elgg_gatekeeper();
 
-	$content .= elgg_view_title(elgg_echo('reportedcontent:this'));
-	$content .= elgg_view_form('reportedcontent/add');
+	if (elgg_extract(0, $page) === 'add' && elgg_is_xhr()) {
+		echo elgg_view('resources/reportedcontent/add_form');
+		return true;
+	}
+
+	$title = elgg_echo('reportedcontent:this');
+	
+	$content = elgg_view_form('reportedcontent/add');
 	$sidebar = elgg_echo('reportedcontent:instructions');
 
 	$params = array(
+		'title' => $title,
 		'content' => $content,
 		'sidebar' => $sidebar,
 	);
 	$body = elgg_view_layout('one_sidebar', $params);
 
-	echo elgg_view_page(elgg_echo('reportedcontent:this'), $body);
+	echo elgg_view_page($title, $body);
 	return true;
 }
 
@@ -85,6 +92,7 @@ function reportedcontent_page_handler($page) {
  */
 function reportedcontent_user_hover_menu($hook, $type, $return, $params) {
 	$user = $params['entity'];
+	/* @var ElggUser $user */
 
 	$profile_url = urlencode($user->getURL());
 	$name = urlencode($user->name);
@@ -96,6 +104,7 @@ function reportedcontent_user_hover_menu($hook, $type, $return, $params) {
 				elgg_echo('reportedcontent:user'),
 				$url);
 		$item->setSection('action');
+		$item->addLinkClass('elgg-lightbox');
 		$return[] = $item;
 	}
 

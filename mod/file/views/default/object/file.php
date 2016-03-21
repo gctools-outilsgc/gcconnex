@@ -13,7 +13,6 @@ if (!$file) {
 }
 
 $owner = $file->getOwnerEntity();
-$container = $file->getContainerEntity();
 $categories = elgg_view('output/categories', $vars);
 $excerpt = elgg_get_excerpt($file->description);
 $mime = $file->mimetype;
@@ -26,8 +25,6 @@ $owner_link = elgg_view('output/url', array(
 ));
 $author_text = elgg_echo('byline', array($owner_link));
 
-$file_icon = elgg_view_entity_icon($file, 'small');
-
 $date = elgg_view_friendly_time($file->time_created);
 
 $comments_count = $file->countComments();
@@ -35,7 +32,7 @@ $comments_count = $file->countComments();
 if ($comments_count != 0) {
 	$text = elgg_echo("comments") . " ($comments_count)";
 	$comments_link = elgg_view('output/url', array(
-		'href' => $file->getURL() . '#file-comments',
+		'href' => $file->getURL() . '#comments',
 		'text' => $text,
 		'is_trusted' => true,
 	));
@@ -78,6 +75,8 @@ if ($full && !elgg_in_context('gallery')) {
 	$text = elgg_view('output/longtext', array('value' => $file->description));
 	$body = "$text $extra";
 
+	$file_icon = elgg_view_entity_icon($file, 'small', array('href' => false));
+
 	echo elgg_view('object/elements/full', array(
 		'entity' => $file,
 		'icon' => $file_icon,
@@ -93,6 +92,8 @@ if ($full && !elgg_in_context('gallery')) {
 	echo '</div>';
 } else {
 	// brief view
+
+	$file_icon = elgg_view_entity_icon($file, 'small');
 
 	$params = array(
 		'entity' => $file,

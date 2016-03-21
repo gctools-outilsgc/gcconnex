@@ -10,46 +10,42 @@
 $responses = elgg_extract('responses', $vars, false);
 if ($responses) {
 	echo $responses;
-	return true;
+	return;
 }
 
 $item = $vars['item'];
+/* @var ElggRiverItem $item */
 $object = $item->getObjectEntity();
 
-// annotations do not have comments
-if ($item->annotation_id != 0 || !$object) {
-	return true;
+// annotations and comments do not have responses
+if ($item->annotation_id != 0 || !$object || $object instanceof ElggComment) {
+	return;
 }
 
 $comment_count = $object->countComments();
 
-$options = array(
-	'guid' => $object->getGUID(),
-	'annotation_name' => 'generic_comment',
-	'limit' => 3,
-	'order_by' => 'n_table.time_created desc'
-);
-$comments = elgg_get_annotations($options);
+if ($comment_count) {
+	$comments = elgg_get_entities(array(
+		'type' => 'object',
+		'subtype' => 'comment',
+		'container_guid' => $object->getGUID(),
+		'limit' => 3,
+		'order_by' => 'e.time_created desc',
+		'distinct' => false,
+	));
 
-if ($comments) {
 	// why is this reversing it? because we're asking for the 3 latest
 	// comments by sorting desc and limiting by 3, but we want to display
 	// these comments with the latest at the bottom.
 	$comments = array_reverse($comments);
 
-?>
-	<span class="elgg-river-comments-tab"><?php echo elgg_echo('comments'); ?></span>
-
-<?php
-
-	echo elgg_view_annotation_list($comments, array('list_class' => 'elgg-river-comments'));
+	echo elgg_view_entity_list($comments, array('list_class' => 'elgg-river-comments'));
 
 	if ($comment_count > count($comments)) {
-		$num_more_comments = $comment_count - count($comments);
 		$url = $object->getURL();
 		$params = array(
 			'href' => $url,
-			'text' => elgg_echo('river:comments:more', array($num_more_comments)),
+			'text' => elgg_echo('river:comments:all', array($comment_count)),
 			'is_trusted' => true,
 		);
 		$link = elgg_view('output/url', $params);
@@ -60,4 +56,4 @@ if ($comments) {
 // inline comment form
 $form_vars = array('id' => "comments-add-{$object->getGUID()}", 'class' => 'hidden');
 $body_vars = array('entity' => $object, 'inline' => true);
-echo elgg_view_form('comments/add', $form_vars, $body_vars);
+echo elgg_view_form('comment/save', $form_vars, $body_vars);

@@ -20,15 +20,12 @@ elgg_register_event_handler("pagesetup", "system", "thewire_tools_pagesetup");
  */
 function thewire_tools_init() {
 	
-	elgg_extend_view("js/elgg", "thewire_tools/js/site");
-	elgg_extend_view("css/elgg", "thewire_tools/css/site");
-		
-	// overrule url handler
-	elgg_register_entity_url_handler("thewire_tools_url_handler", "object", "thewire");
+	elgg_extend_view("js/elgg", "js/thewire_tools/site");
+	elgg_extend_view("css/elgg", "css/thewire_tools/site");
 		
 	if (thewire_tools_groups_enabled()) {
 		// add widget (for Widget Manager only)
-		elgg_register_widget_type("thewire_groups", elgg_echo("widgets:thewire_groups:title"), elgg_echo("widgets:thewire_groups:description"), "groups", true);
+		elgg_register_widget_type("thewire_groups", elgg_echo("widgets:thewire_groups:title"), elgg_echo("widgets:thewire_groups:description"), array("groups"), true);
 		
 		// add group tool option
 		add_group_tool_option("thewire", elgg_echo("thewire_tools:groups:tool_option"), true);
@@ -38,27 +35,37 @@ function thewire_tools_init() {
 	}
 	
 	// adds wire post form to the wire widget
-	elgg_extend_view("widgets/thewire/content", "thewire_tools/thewire_post", 400);
-	elgg_extend_view("widgets/index_thewire/content", "thewire_tools/thewire_post", 400);
 	elgg_extend_view("core/river/filter", "thewire_tools/activity_post", 400);
-	elgg_extend_view("page/layouts/content", "thewire_tools/group_activity", 400);
+	elgg_extend_view("page/layouts/elements/filter", "thewire_tools/group_activity", 400);
+	
+	// settings
+	elgg_extend_view("notifications/subscriptions/personal", "thewire_tools/notifications/settings");
+	
+	// register ajax view
+	elgg_register_ajax_view("thewire_tools/reshare");
+	elgg_register_ajax_view("thewire_tools/reshare_list");
+	elgg_register_ajax_view("thewire_tools/thread");
 	
 	// add some extra widgets (for Widget Manager only)
-	elgg_register_widget_type("index_thewire", elgg_echo("widgets:index_thewire:title"), elgg_echo("widgets:index_thewire:description"), "index", true);
-	elgg_register_widget_type("thewire_post", elgg_echo("widgets:thewire_post:title"), elgg_echo("widgets:thewire_post:description"), "index,dashboard", false);
+	elgg_register_widget_type("index_thewire", elgg_echo("widgets:index_thewire:title"), elgg_echo("widgets:index_thewire:description"), array("index"), true);
+	elgg_register_widget_type("thewire_post", elgg_echo("widgets:thewire_post:title"), elgg_echo("widgets:thewire_post:description"), array("index", "dashboard"), false);
 	
 	// register events
 	elgg_register_event_handler("create", "object", "thewire_tools_create_object_event_handler", 100);
+	elgg_register_event_handler("upgrade", "system", "thewire_tools_upgrade_system_event_handler");
 	
 	// register hooks
 	elgg_register_plugin_hook_handler("route", "thewire", "thewire_tools_route_thewire");
 	elgg_register_plugin_hook_handler("access:collections:write", "all", "thewire_tools_access_write_hook", 999);
-	elgg_register_plugin_hook_handler("forward", "all", "thewire_tools_forward_hook");
 	
-	elgg_register_plugin_hook_handler("widget_url", "widget_manager", "thewire_tools_widget_title_url");
+	elgg_register_plugin_hook_handler("entity:url", "object", "thewire_tools_widget_title_url");
+	elgg_register_plugin_hook_handler("group_tool_widgets", "widget_manager", "thewire_tools_tool_widgets_handler");
 	
 	elgg_register_plugin_hook_handler("register", "menu:entity", "thewire_tools_register_entity_menu_items");
+	elgg_register_plugin_hook_handler("register", "menu:entity", array('\ColdTrick\TheWireTools\EntityMenu', 'registerReshare'));
 	elgg_register_plugin_hook_handler("register", "menu:river", "thewire_tools_register_river_menu_items");
+	
+	elgg_register_plugin_hook_handler("action", "notificationsettings/save", "thewire_tools_notifications_settings_save_hook");
 	
 	// upgrade function
 	run_function_once("thewire_tools_runonce");
@@ -66,6 +73,7 @@ function thewire_tools_init() {
 	// overrule default save action
 	elgg_unregister_action("thewire/add");
 	elgg_register_action("thewire/add", dirname(__FILE__) . "/actions/thewire/add.php");
+	elgg_register_action("thewire_tools/mentions_upgrade", dirname(__FILE__) . "/actions/upgrades/mentions.php");
 }
 
 /**
@@ -102,30 +110,13 @@ function thewire_tools_pagesetup() {
 }
 
 /**
- * Custom URL handler for thewire objects
- *
- * @param ElggEntity $entity the entity to make the URL for
- *
- * @return string the URL
- */
-function thewire_tools_url_handler(ElggEntity $entity) {
-	if ($entity->getContainerEntity() instanceof ElggGroup) {
-		$entity_url = elgg_get_site_url() . "thewire/group/" . $entity->getContainer();
-	} else {
-		$entity_url = elgg_get_site_url() . "thewire/owner/" . $entity->getOwnerEntity()->username;
-	}
-	
-	return $entity_url;
-}
-
-/**
  * Runonce to convert the pre Elgg 1.8 wire tools conversations to the new wire_threads
  *
  * @return void
  */
 function thewire_tools_runonce() {
-	$conversation_id = add_metastring("conversation");
-	$wire_thread_id = add_metastring("wire_thread");
+	$conversation_id = elgg_get_metastring_id("conversation");
+	$wire_thread_id = elgg_get_metastring_id("wire_thread");
 	$subtype_id = get_subtype_id("object", "thewire");
 	
 	$query = "UPDATE " . elgg_get_config("dbprefix") . "metadata SET name_id = " . $wire_thread_id;

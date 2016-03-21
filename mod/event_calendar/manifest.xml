@@ -1,19 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
 	<name>Event Calendar</name>
-	<author>Kevin Jardine &lt;kevin@radagast.biz&gt;</author>
-	<version>0.85</version>
-	<category>third-party</category>
+	<id>event_calendar</id>
+	<author>iionly, Juho Jaakkola and Kevin Jardine</author>
+	<version>1.9.0</version>
 	<category>content</category>
 	<category>GC Custom</category>
+	<category>communication</category>
 	<category>widget</category>
-	<blurb>Event calendar</blurb>
 	<description>Adds configurable group and/or site-wide event calendars.</description>
-	<website>http://radagast.biz/</website>
-	<copyright>(C) Radagast Solutions 2009-2011</copyright>
+	<website>https://github.com/juho-jaakkola/elgg-event_calendar</website>
+	<copyright>(C) iionly, Juho Jaakkola 2015, (C) Kevin Jardine (Radagast Solutions) 2008-2015</copyright>
 	<license>GNU Public License version 2</license>
 	<requires>
-		<type>elgg_version</type>
-		<version>2010030101</version>
+		<type>elgg_release</type>
+		<version>1.9</version>
 	</requires>
+	<suggests>
+		<type>plugin</type>
+		<name>event_poll</name>
+	</suggests>
+	<suggests>
+		<type>plugin</type>
+		<name>message_queue</name>
+	</suggests>
+	<suggests>
+		<type>plugin</type>
+		<name>entity_admins</name>
+	</suggests>
+	<suggests>
+		<type>plugin</type>
+		<name>widget_manager</name>
+	</suggests>
 </plugin_manifest>

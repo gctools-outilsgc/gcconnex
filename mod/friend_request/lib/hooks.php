@@ -33,18 +33,33 @@ function friend_request_user_menu_handler($hook, $type, $returnvalue, $params) {
 		return $returnvalue;
 	}
 	
-	if (!check_entity_relationship($user->getGUID(), "friendrequest", $entity->getGUID())) {
-		return $returnvalue;
+	$requested = check_entity_relationship($user->getGUID(), "friendrequest", $entity->getGUID());
+	$is_friend = $entity->isFriend($user->getGUID());
+	
+	foreach ($returnvalue as $index => $item) {
+		// change the text of the button to tell you already requested a friendship
+		switch ($item->getName()) {
+			case "add_friend":
+				if ($requested) {
+					$item->setItemClass("hidden");
+				}
+				
+				break;
+			case "remove_friend":
+				if (!$requested && !$is_friend) {
+					unset($returnvalue[$index]);
+				}
+				break;
+		}
 	}
 	
-	foreach ($returnvalue as $item) {
-		// change the text of the button to tell you already requested a friendship
-		if ($item->getName() == "add_friend") {
-			$item->setText(elgg_echo("friend_request:friend:add:pending"));
-			$item->setHref("friend_request/" . $user->username . "#friend_request_sent_listing");
-			
-			break;
-		}
+	if ($requested) {
+		$returnvalue[] = ElggMenuItem::factory(array(
+			"name" => "friend_request",
+			"text" => elgg_echo("friend_request:friend:add:pending"),
+			"href" => "friend_request/" . $user->username . "#friend_request_sent_listing",
+			"section" => "action"
+		));
 	}
 	
 	return $returnvalue;

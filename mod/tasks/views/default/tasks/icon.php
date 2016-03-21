@@ -4,7 +4,7 @@
  *
  * Uses a separate icon view due to dependency on annotation
  *
- * @package ElggPages
+ * @package ElggTasks
  *
  * @uses $vars['entity']
  * @uses $vars['annotation']

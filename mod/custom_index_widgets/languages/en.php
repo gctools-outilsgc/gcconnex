@@ -29,7 +29,7 @@
 		'custom_index_widgets:latest_izap_videos_index' => 'Latest videos',
 		'custom_index_widgets:display_avatar' => 'Avatar',
 		
-		'custom_index_widgets:rich_media_index' => "Multimédia content",
+		'custom_index_widgets:rich_media_index' => "Multimedia content",
 		'custom_index_widgets:widget_video_width' => "Width (number without px or %)",
 	    'custom_index_widgets:widget_video_height' => "Heigh (number without px or %)",
 	    'custom_index_widgets:widget_video_url' => "Url",
@@ -70,6 +70,13 @@
 		"custom_index_widgets:showdashboard"=>"End index with dashboard",
 		"custom_index_widgets:showdashboard_yes"=>"Yes",
 		"custom_index_widgets:showdashboard_no"=>"No",
+
+		"custom_index_widgets:responsive"=>"Index responsive",
+		"custom_index_widgets:responsive_yes"=>"Yes",
+		"custom_index_widgets:responsive_no"=>"No",
+		
+		"custom_index_widgets:bodywidth"=>"Body width in px(fixed) or % (fluid)",
+
 		"custom_index_widgets:guest_only" => "Guest only",
 		"custom_index_widgets:box_style" => "Box Style",
 		"custom_index_widgets:social_share_index" => "Social Share",

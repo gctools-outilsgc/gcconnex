@@ -139,7 +139,7 @@ function tidypics_is_upgrade_available() {
 	require_once elgg_get_plugins_path() . "tidypics/version.php";
 
 	$local_version = elgg_get_plugin_setting('version', 'tidypics');
-	if ($local_version === false) {
+	if ($local_version === null) {
 		// no version set so either new install or really old one
 		if (!get_subtype_class('object', 'image') || !get_subtype_class('object', 'album')) {
 			$local_version = 0;
@@ -238,109 +238,6 @@ function tp_guid_callback($row) {
  * that could/should exist in the core
  */
 
-function tp_view_entity_list($entities, $count, $offset, $limit, $fullview = true, $viewtypetoggle = false, $pagination = true) {
-	$context = elgg_get_context();
-
-	$html = elgg_view('tidypics/gallery',array(
-			'entities' => $entities,
-			'count' => $count,
-			'offset' => $offset,
-			'limit' => $limit,
-			'baseurl' => $_SERVER['REQUEST_URI'],
-			'fullview' => $fullview,
-			'context' => $context,
-			'viewtypetoggle' => $viewtypetoggle,
-			'viewtype' => get_input('search_viewtype','list'),
-			'pagination' => $pagination
-	));
-
-	return $html;
-}
-
-function tp_get_entities_from_annotations_calculate_x($sum = "sum", $entity_type = "", $entity_subtype = "", $name = "", $mdname = '', $mdvalue = '', $owner_guid = 0, $limit = 10, $offset = 0, $orderdir = 'desc', $count = false) {
-	global $CONFIG;
-
-	$sum = sanitise_string($sum);
-	$entity_type = sanitise_string($entity_type);
-	$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
-	$name = get_metastring_id($name);
-	$limit = (int) $limit;
-	$offset = (int) $offset;
-	$owner_guid = (int) $owner_guid;
-	if (!empty($mdname) && !empty($mdvalue)) {
-		$meta_n = get_metastring_id($mdname);
-		$meta_v = get_metastring_id($mdvalue);
-	}
-
-	if (empty($name)) return 0;
-
-	$where = array();
-
-	if ($entity_type!="")
-		$where[] = "e.type='$entity_type'";
-	if ($owner_guid > 0)
-		$where[] = "e.owner_guid = $owner_guid";
-	if ($entity_subtype)
-		$where[] = "e.subtype=$entity_subtype";
-	if ($name!="")
-		$where[] = "a.name_id='$name'";
-
-	if (!empty($mdname) && !empty($mdvalue)) {
-		if ($mdname!="")
-			$where[] = "m.name_id='$meta_n'";
-		if ($mdvalue!="")
-			$where[] = "m.value_id='$meta_v'";
-	}
-
-	if ($sum != "count")
-		$where[] = "a.value_type='integer'"; // Limit on integer types
-
-	if (!$count) {
-		$query = "SELECT distinct e.*, $sum(ms.string) as sum ";
-	} else {
-		$query = "SELECT count(distinct e.guid) as num, $sum(ms.string) as sum ";
-	}
-	$query .= " from {$CONFIG->dbprefix}entities e JOIN {$CONFIG->dbprefix}annotations a on a.entity_guid = e.guid JOIN {$CONFIG->dbprefix}metastrings ms on a.value_id=ms.id ";
-
-	if (!empty($mdname) && !empty($mdvalue)) {
-		$query .= " JOIN {$CONFIG->dbprefix}metadata m on m.entity_guid = e.guid ";
-	}
-
-	$query .= " WHERE ";
-	foreach ($where as $w)
-		$query .= " $w and ";
-	$query .= get_access_sql_suffix("a"); // now add access
-	$query .= ' and ' . get_access_sql_suffix("e"); // now add access
-	if (!$count) $query .= ' group by e.guid';
-
-	if (!$count) {
-		$query .= ' order by sum ' . $orderdir;
-		$query .= ' limit ' . $offset . ' , ' . $limit;
-		return get_data($query, "entity_row_to_elggstar");
-	} else {
-		if ($row = get_data_row($query)) {
-			return $row->num;
-		}
-	}
-	return false;
-}
-
-/**
- * Is page owner a group - convenience function
- *
- * @return true/false
- */
-function tp_is_group_page() {
-
-	if ($group = elgg_get_page_owner_entity()) {
-		if ($group instanceof ElggGroup)
-			return true;
-	}
-
-	return false;
-}
-
-
 /**
  * Is the request from a known browser
  *
@@ -358,49 +255,4 @@ function tp_is_person() {
 	}
 
 	return false;
-}
-
-/**
- * get a list of people that can be tagged in an image
- *
- * @param $viewer entity
- * @return array of guid->name for tagging
- */
-function tp_get_tag_list($viewer) {
-	$friends = get_user_friends($viewer->getGUID(), '', 999, 0);
-	$friend_list = array();
-	if ($friends) {
-		foreach($friends as $friend) {
-			//error_log("friend $friend->name");
-			$friend_list[$friend->guid] = $friend->name;
-		}
-	}
-
-	// is this a group
-	$is_group = tp_is_group_page();
-	if ($is_group) {
-		$group_guid = elgg_get_page_owner_guid();
-		$viewer_guid = $viewer->guid;
-		$members = get_group_members($group_guid, 999);
-		if (is_array($members)) {
-			foreach ($members as $member) {
-				if ($viewer_guid != $member->guid) {
-					$group_list[$member->guid] = $member->name;
-					//error_log("group $member->name");
-				}
-			}
-
-			// combine group and friends list
-			$intersect = array_intersect_key($friend_list, $group_list);
-			$unique_friends = array_diff_key($friend_list, $group_list);
-			$unique_members = array_diff_key($group_list, $friend_list);
-			//$friend_list = array_merge($friend_list, $group_list);
-			//$friend_list = array_unique($friend_list);
-			$friend_list = $intersect + $unique_friends + $unique_members;
-		}
-	}
-
-	asort($friend_list);
-
-	return $friend_list;
 }

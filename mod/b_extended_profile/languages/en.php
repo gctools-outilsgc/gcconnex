@@ -8,6 +8,27 @@
 
 $english = array(
 
+    //edit profile message
+    'profile:notsaved' => 'Not all information could be saved, empty fields are not allowed', /* NEW */
+
+    'profile:title' => "%s's Profile",
+
+    'profile:contactinfo' => 'Contact Info',
+
+    //user Settings Details
+    'item:object:MySkill' => 'Profile skill',
+    'item:object:experience' => 'Profile experience',
+    'item:object:education' => 'Profile education',
+
+    //profile sidebar
+    'gcprofile:nocoll' => '%s has not connected with any colleagues yet.',
+    'gcprofile:nogroups' => '%s has not joined any groups yet.',
+
+    // Email Verification
+    'gcc_profile:error' => 'Did not save: ',
+    'gcc_profile:missingemail' => 'Email address is missing',
+    'gcc_profile:notaccepted' => 'A Government of Canada email address is required',
+
     // MAIN PROFILE PAGE
     'gcconnex_profile:edit_profile' => 'Edit',
     'gcconnex_profile:user_content' => 'Personal Content',
@@ -36,6 +57,7 @@ $english = array(
     'gcconnex_profile:basic:name' => 'Name: ',
     'gcconnex_profile:basic:job' => 'Title: ',
     'gcconnex_profile:basic:department' => 'Department: ',
+    'gcconnex_profile:basic:location' => 'Location: ',
     'gcconnex_profile:basic:phone' => 'Phone: ',
     'gcconnex_profile:basic:mobile' => 'Mobile: ',
     'gcconnex_profile:basic:email' => 'Email: ',
@@ -61,7 +83,8 @@ $english = array(
     // EDUCATION
     'gcconnex_profile:education:school' => 'Institution Name: ',
     'gcconnex_profile:education:start_month' => 'Start Month: ',
-    'gcconnex_profile:education:year' => 'Year: ',
+    'gcconnex_profile:education:start_year' => 'Start Year: ',
+    'gcconnex_profile:education:end_year' => 'End Year: ',
     'gcconnex_profile:education:end_month' => 'End Month: ',
     'gcconnex_profile:education:ongoing' => 'Present',
     'gcconnex_profile:education:degree' => 'Degree: ',
@@ -72,6 +95,8 @@ $english = array(
     'gcconnex_profile:education:access' => 'Who can see my education entries:',
     'gcconnex_profile:education:present' => 'Present',
     'gcconnex_profile:education:empty' => 'Begin entering your education details by clicking "Edit" in the top right corner of this box.',
+    'gcconnex_profile:education:start' => 'Start',
+    'gcconnex_profile:education:end' => 'End',
 
     // WORK EXPERIENCE
     'gcconnex_profile:experience:organization' => 'Name of Organization: ',
@@ -96,6 +121,7 @@ $english = array(
     'gcconnex_profile:gc_skill:empty' => 'Begin entering your skills by clicking "Edit" in the top right corner of this box.',
     'gcconnex_profile:gc_skill:endorse' => 'Endorse',
     'gcconnex_profile:gc_skill:limit' => 'You can add a maximum of 15 skills',
+    'gcconnex_profile:gc_skill:click' => 'Click on skill to add/retract endorsement',
 
     // leftover skills
     'gcconnex_profile:gc_skill:leftover' => 'You have previously entered skills which may need to be re-entered in the system. Please review your previously entered skills below and re-enter them as needed. When entering or re-entering a skill, <b>please make sure they are actual  skills that you believe you possess, that they are specific, professional and that they provide viewers of your profile with clear, meaningful and useful information</b> (ie: Not "A bunch of things.. " or "Getting things done!").',
@@ -103,6 +129,8 @@ $english = array(
 
     // LANGUAGES
     'gcconnex_profile:langs' => 'Languages',
+    'gcconnex_profile:fol' => 'First official language',
+    'gcconnex_profile:sle' => 'Second Language Evaluation',
     'gcconnex_profile:languages:access' => 'Who can see my language entries:',
     'gcconnex_profile:languages:language' => 'Language:',
     'gcconnex_profile:languages:add' => '+ add more languages',
@@ -112,8 +140,11 @@ $english = array(
     'gcconnex_profile:languages:writtenexp' => 'Written Expression',
     'gcconnex_profile:languages:oral' => 'Oral Proficiency',
     'gcconnex_profile:languages:english' => 'English',
+    'gcconnex_profile:languages:ENG' => 'English',
     'gcconnex_profile:languages:french' => 'French',
+    'gcconnex_profile:languages:FRA' => 'French',
     'gcconnex_profile:languages:expiry' => 'Expiry',
+    'gcconnex_profile:languages:level' => 'Level',
 
     // PORTFOLIO
     'gcconnex_profile:portfolio' => 'Portfolio',

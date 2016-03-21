@@ -50,17 +50,16 @@ function bookmarks_init() {
 			'rel' => 'nofollow',
 		));
 	}
-	// Register granular notification for this type
-	register_notification_object('object', 'bookmarks', elgg_echo('bookmarks:new'));
 
-	// Listen to notification events and supply a more useful message
-	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'bookmarks_notify_message');
+	// Register for notifications
+	elgg_register_notification_event('object', 'bookmarks', array('create'));
+	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:bookmarks', 'bookmarks_prepare_notification');
 
 	// Register bookmarks view for ecml parsing
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'bookmarks_ecml_views_hook');
 
 	// Register a URL handler for bookmarks
-	elgg_register_entity_url_handler('object', 'bookmarks', 'bookmark_url');
+	elgg_register_plugin_hook_handler('entity:url', 'object', 'bookmark_set_url');
 
 	// Register entity type for search
 	elgg_register_entity_type('object', 'bookmarks');
@@ -98,21 +97,6 @@ function bookmarks_page_handler($page) {
 
 	elgg_push_breadcrumb(elgg_echo('bookmarks'), 'bookmarks/all');
 
-	// old group usernames
-	if (substr_count($page[0], 'group:')) {
-		preg_match('/group\:([0-9]+)/i', $page[0], $matches);
-		$guid = $matches[1];
-		if ($entity = get_entity($guid)) {
-			bookmarks_url_forwarder($page);
-		}
-	}
-
-	// user usernames
-	$user = get_user_by_username($page[0]);
-	if ($user) {
-		bookmarks_url_forwarder($page);
-	}
-
 	$pages = dirname(__FILE__) . '/pages/bookmarks';
 
 	switch ($page[0]) {
@@ -132,24 +116,20 @@ function bookmarks_page_handler($page) {
 			set_input('guid', $page[1]);
 			include "$pages/view.php";
 			break;
-		case 'read': // Elgg 1.7 compatibility
-			register_error(elgg_echo("changebookmark"));
-			forward("bookmarks/view/{$page[1]}");
-			break;
 
 		case "add":
-			gatekeeper();
+			elgg_gatekeeper();
 			include "$pages/add.php";
 			break;
 
 		case "edit":
-			gatekeeper();
+			elgg_gatekeeper();
 			set_input('guid', $page[1]);
 			include "$pages/edit.php";
 			break;
 
 		case 'group':
-			group_gatekeeper();
+			elgg_group_gatekeeper();
 			include "$pages/owner.php";
 			break;
 
@@ -167,54 +147,20 @@ function bookmarks_page_handler($page) {
 }
 
 /**
- * Forward to the new style of URLs
- *
- * @param string $page
- */
-function bookmarks_url_forwarder($page) {
-	global $CONFIG;
-
-	if (!isset($page[1])) {
-		$page[1] = 'items';
-	}
-
-	switch ($page[1]) {
-		case "read":
-			$url = "{$CONFIG->wwwroot}bookmarks/view/{$page[2]}/{$page[3]}";
-			break;
-		case "inbox":
-			$url = "{$CONFIG->wwwroot}bookmarks/inbox/{$page[0]}";
-			break;
-		case "friends":
-			$url = "{$CONFIG->wwwroot}bookmarks/friends/{$page[0]}";
-			break;
-		case "add":
-			$url = "{$CONFIG->wwwroot}bookmarks/add/{$page[0]}";
-			break;
-		case "items":
-			$url = "{$CONFIG->wwwroot}bookmarks/owner/{$page[0]}";
-			break;
-		case "bookmarklet":
-			$url = "{$CONFIG->wwwroot}bookmarks/bookmarklet/{$page[0]}";
-			break;
-	}
-
-	register_error(elgg_echo("changebookmark"));
-	forward($url);
-}
-
-/**
  * Populates the ->getUrl() method for bookmarked objects
  *
- * @param ElggEntity $entity The bookmarked object
+ * @param string $hook
+ * @param string $type
+ * @param string $url
+ * @param array  $params
  * @return string bookmarked item URL
  */
-function bookmark_url($entity) {
-	global $CONFIG;
-
-	$title = $entity->title;
-	$title = elgg_get_friendly_title($title);
-	return $CONFIG->url . "bookmarks/view/" . $entity->getGUID() . "/" . $title;
+function bookmark_set_url($hook, $type, $url, $params) {
+	$entity = $params['entity'];
+	if (elgg_instanceof($entity, 'object', 'bookmarks')) {
+		$title = elgg_get_friendly_title($entity->title);
+		return "bookmarks/view/" . $entity->getGUID() . "/" . $title;
+	}
 }
 
 /**
@@ -242,31 +188,35 @@ function bookmarks_owner_block_menu($hook, $type, $return, $params) {
 }
 
 /**
- * Returns the body of a notification message
- *
- * @param string $hook
- * @param string $entity_type
- * @param string $returnvalue
- * @param array  $params
+ * Prepare a notification message about a new bookmark
+ * 
+ * @param string                          $hook         Hook name
+ * @param string                          $type         Hook type
+ * @param Elgg\Notifications\Notification $notification The notification to prepare
+ * @param array                           $params       Hook parameters
+ * @return Elgg\Notifications\Notification
  */
-function bookmarks_notify_message($hook, $entity_type, $returnvalue, $params) {
-	$entity = $params['entity'];
-	$to_entity = $params['to_entity'];
+function bookmarks_prepare_notification($hook, $type, $notification, $params) {
+	$entity = $params['event']->getObject();
+	$owner = $params['event']->getActor();
+	$recipient = $params['recipient'];
+	$language = $params['language'];
 	$method = $params['method'];
-	if (($entity instanceof ElggEntity) && ($entity->getSubtype() == 'bookmarks')) {
-		$descr = $entity->description;
-		$title = $entity->title;
-		$owner = $entity->getOwnerEntity();
 
-		return elgg_echo('bookmarks:notification', array(
-			$owner->name,
-			$title,
-			$entity->address,
-			$descr,
-			$entity->getURL()
-		));
-	}
-	return null;
+	$descr = $entity->description;
+	$title = $entity->title;
+
+	$notification->subject = elgg_echo('bookmarks:notify:subject', array($title), $language); 
+	$notification->body = elgg_echo('bookmarks:notify:body', array(
+		$owner->name,
+		$title,
+		$entity->address,
+		$descr,
+		$entity->getURL()
+	), $language);
+	$notification->summary = elgg_echo('bookmarks:notify:summary', array($entity->title), $language);
+
+	return $notification;
 }
 
 /**

@@ -1,4 +1,0 @@
-/**
- * Translations
- */
-Many thanks to Jean-Baptiste Duclos (French translation)!

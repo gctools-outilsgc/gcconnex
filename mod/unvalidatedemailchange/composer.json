@@ -1,0 +1,24 @@
+{
+    "name": "iionly/unvalidatedemailchange",
+    "description": "Allows to change the email address of unvalidated users.",
+    "type": "elgg-plugin",
+    "keywords": [
+        "elgg",
+        "plugin"
+    ],
+    "homepage": "https://github.com/iionly/unvalidatedemailchange",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "iionly",
+            "homepage": "https://github.com/iionly",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+            "issues": "https://github.com/iionly/unvalidatedemailchange/issues"
+    },
+    "require": {
+        "composer/installers": ">=1.0.8"
+    }
+}

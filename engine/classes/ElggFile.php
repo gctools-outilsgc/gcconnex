@@ -3,7 +3,7 @@
 /**
  * This class represents a physical file.
  *
- * Create a new ElggFile object and specify a filename, and optionally a
+ * Create a new \ElggFile object and specify a filename, and optionally a
  * FileStore (if one isn't specified then the default is assumed.)
  *
  * Open the file using the appropriate mode, and you will be able to
@@ -11,16 +11,15 @@
  *
  * Optionally, you can also call the file's save() method, this will
  * turn the file into an entity in the system and permit you to do
- * things like attach tags to the file etc. This is not done automatically
- * since there are many occasions where you may want access to file data
- * on datastores using the ElggFile interface but do not want to create
- * an Entity reference to it in the system (temporary files for example).
+ * things like attach tags to the file. If you do not save the file, no
+ * entity is created in the database. This is because there are occasions
+ * when you may want access to file data on datastores using the \ElggFile
+ * interface without a need to persist information such as temporary files.
  *
- * @class      ElggFile
  * @package    Elgg.Core
  * @subpackage DataModel.File
  */
-class ElggFile extends ElggObject {
+class ElggFile extends \ElggObject {
 	/** Filestore */
 	private $filestore;
 
@@ -39,12 +38,12 @@ class ElggFile extends ElggObject {
 	}
 
 	/**
-	 * Loads an ElggFile entity.
+	 * Loads an \ElggFile entity.
 	 *
-	 * @param int $guid GUID of the ElggFile object
+	 * @param \stdClass $row Database result or null for new \ElggFile
 	 */
-	public function __construct($guid = null) {
-		parent::__construct($guid);
+	public function __construct($row = null) {
+		parent::__construct($row);
 
 		// Set default filestore
 		$this->filestore = $this->getFilestore();
@@ -93,7 +92,7 @@ class ElggFile extends ElggObject {
 			$container_guid = $this->container_guid;
 		}
 		$fs = $this->getFilestore();
-		// @todo add getSize() to ElggFilestore
+		// @todo add getSize() to \ElggFilestore
 		return $fs->getSize($prefix, $container_guid);
 	}
 
@@ -124,24 +123,26 @@ class ElggFile extends ElggObject {
 	/**
 	 * Detects mime types based on filename or actual file.
 	 *
+	 * @note This method can be called both dynamically and statically
+	 *
 	 * @param mixed $file    The full path of the file to check. For uploaded files, use tmp_name.
 	 * @param mixed $default A default. Useful to pass what the browser thinks it is.
 	 * @since 1.7.12
 	 *
-	 * @note If $file is provided, this may be called statically
-	 *
 	 * @return mixed Detected type on success, false on failure.
+	 * @todo Move this out into a utility class
 	 */
 	public function detectMimeType($file = null, $default = null) {
-		if (!$file) {
-			if (isset($this) && $this->filename) {
-				$file = $this->filename;
-			} else {
-				return false;
-			}
+		$class = __CLASS__;
+		if (!$file && isset($this) && $this instanceof $class) {
+			$file = $this->getFilenameOnFilestore();
 		}
 
-		$mime = false;
+		if (!is_readable($file)) {
+			return false;
+		}
+
+		$mime = $default;
 
 		// for PHP5 folks.
 		if (function_exists('finfo_file') && defined('FILEINFO_MIME_TYPE')) {
@@ -156,12 +157,13 @@ class ElggFile extends ElggObject {
 			$mime = mime_content_type($file);
 		}
 
-		// default
-		if (!$mime) {
-			return $default;
-		}
-
-		return $mime;
+		$original_filename = isset($this) && $this instanceof $class ? $this->originalfilename : basename($file);
+		$params = array(
+			'filename' => $file,
+			'original_filename' => $original_filename, // @see file upload action
+			'default' => $default,
+		);
+		return _elgg_services()->hooks->trigger('mime_type', 'file', $params, $mime);
 	}
 
 	/**
@@ -186,7 +188,7 @@ class ElggFile extends ElggObject {
 	 */
 	public function open($mode) {
 		if (!$this->getFilename()) {
-			throw new IOException(elgg_echo('IOException:MissingFileName'));
+			throw new \IOException("You must specify a name before opening a file.");
 		}
 
 		// See if file has already been saved
@@ -198,8 +200,8 @@ class ElggFile extends ElggObject {
 			($mode != "write") &&
 			($mode != "append")
 		) {
-			$msg = elgg_echo('InvalidParameterException:UnrecognisedFileMode', array($mode));
-			throw new InvalidParameterException($msg);
+			$msg = "Unrecognized file mode '" . $mode . "'";
+			throw new \InvalidParameterException($msg);
 		}
 
 		// Get the filestore
@@ -260,7 +262,7 @@ class ElggFile extends ElggObject {
 		$fs = $this->getFilestore();
 
 		if ($fs->close($this->handle)) {
-			$this->handle = NULL;
+			$this->handle = null;
 
 			return true;
 		}
@@ -295,7 +297,7 @@ class ElggFile extends ElggObject {
 	public function seek($position) {
 		$fs = $this->getFilestore();
 
-		// @todo add seek() to ElggFilestore
+		// @todo add seek() to \ElggFilestore
 		return $fs->seek($this->handle, $position);
 	}
 
@@ -314,9 +316,21 @@ class ElggFile extends ElggObject {
 	 * Return the size of the file in bytes.
 	 *
 	 * @return int
+	 * @since 1.9
+	 */
+	public function getSize() {
+		return $this->filestore->getFileSize($this);
+	}
+
+	/**
+	 * Return the size of the file in bytes.
+	 *
+	 * @return int
+	 * @deprecated 1.8 Use getSize()
 	 */
 	public function size() {
-		return $this->filestore->getFileSize($this);
+		elgg_deprecated_notice("Use \ElggFile::getSize() instead of \ElggFile::size()", 1.9);
+		return $this->getSize();
 	}
 
 	/**
@@ -344,11 +358,11 @@ class ElggFile extends ElggObject {
 	/**
 	 * Set a filestore.
 	 *
-	 * @param ElggFilestore $filestore The file store.
+	 * @param \ElggFilestore $filestore The file store.
 	 *
 	 * @return void
 	 */
-	public function setFilestore(ElggFilestore $filestore) {
+	public function setFilestore(\ElggFilestore $filestore) {
 		$this->filestore = $filestore;
 	}
 
@@ -357,7 +371,7 @@ class ElggFile extends ElggObject {
 	 * This filestore is either a pre-registered filestore,
 	 * a filestore as recorded in metadata or the system default.
 	 *
-	 * @return ElggFilestore
+	 * @return \ElggFilestore
 	 *
 	 * @throws ClassNotFoundException
 	 */
@@ -381,7 +395,7 @@ class ElggFile extends ElggObject {
 
 			$parameters = array();
 			foreach ($mds as $md) {
-				list($foo, $name) = explode("::", $md->name);
+				list( , $name) = explode("::", $md->name);
 				if ($name == 'filestore') {
 					$filestore = $md->value;
 				}
@@ -393,9 +407,8 @@ class ElggFile extends ElggObject {
 		// before the filestore metadata is saved.
 		if (isset($filestore)) {
 			if (!class_exists($filestore)) {
-				$msg = elgg_echo('ClassNotFoundException:NotFoundNotSavedWithFile',
-					array($filestore, $this->guid));
-				throw new ClassNotFoundException($msg);
+				$msg = "Unable to load filestore class " . $filestore . " for file " . $this->guid;
+				throw new \ClassNotFoundException($msg);
 			}
 
 			$this->filestore = new $filestore();
@@ -417,7 +430,7 @@ class ElggFile extends ElggObject {
 	 * Write the file's data to the filestore and save
 	 * the corresponding entity.
 	 *
-	 * @see ElggObject::save()
+	 * @see \ElggObject::save()
 	 *
 	 * @return bool
 	 */
@@ -429,12 +442,38 @@ class ElggFile extends ElggObject {
 		// Save datastore metadata
 		$params = $this->filestore->getParameters();
 		foreach ($params as $k => $v) {
-			$this->setMetaData("filestore::$k", $v);
+			$this->setMetadata("filestore::$k", $v);
 		}
 
 		// Now make a note of the filestore class
-		$this->setMetaData("filestore::filestore", get_class($this->filestore));
+		$this->setMetadata("filestore::filestore", get_class($this->filestore));
 
 		return true;
+	}
+
+	/**
+	 * Get property names to serialize.
+	 *
+	 * @return string[]
+	 */
+	public function __sleep() {
+		return array_diff(array_keys(get_object_vars($this)), array(
+			// Don't persist filestore, which contains CONFIG
+			// https://github.com/Elgg/Elgg/issues/9081#issuecomment-152859856
+			'filestore',
+
+			// a resource
+			'handle',
+		));
+	}
+
+	/**
+	 * Reestablish filestore property
+	 *
+	 * @return void
+	 * @throws ClassNotFoundException
+	 */
+	public function __wakeup() {
+		$this->getFilestore();
 	}
 }
