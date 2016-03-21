@@ -29,6 +29,7 @@ return array(
   'wet:footTitleNews' =>  'Nouvelles',
   'wet:footGCtools' => 'OutilsGC',
   'wet:footTitleSocial' => 'Rester connecté',
+   'wet:barGCpedia'=>'pédia',
   'wet:collapseWidget' => 'Réduire / Ouvrir %s',
     'wet:gcintranetLink' => 'http://intranet.canada.ca/index-fra.asp',
   'wet:gcpediaLink' => 'http://www.gcpedia.gc.ca/wiki/?setlang=fr',
@@ -133,6 +134,7 @@ return array(
     'wetActivity:nocollorgroup' => "Bienvenue sur GCconnex. Pour commencer, vous pouvez parcourir la liste des groupes ou effectuer une recherche pour trouver des groupes liés à votre travail ou à vos intérêts.",
 	'wetActivity:welcome' => "Bienvenue sur GCconnex",
 	'wetActivity:browsegroups' => "Parcourir la liste des groupes",
+    'wet4:filterActivity'=>'Filtre Activité',
      
      
   /**
@@ -1386,14 +1388,15 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 'gcTour:step1' => 'Votre fil de nouvelles ',
 'gcTour:step1txt' => "Consulter les dernières activités de vos collègues et de vos groupes, y compris leurs plus récents vidéos!",
 'gcTour:step2' => 'Navigation des OutilsGC',
-'gcTour:step2txt' => "Les OutilsGC sont une superbe suite d'outils. Accédez-les d'ici.",
+'gcTour:step2txt' => "Les OutilsGC sont une superbe suite d&#39;outils. Accédez-les d&#39;ici.",
 'gcTour:step3' => 'Carte de profil',
 'gcTour:step3txt' => "Besoin de mettre à jour votre profil? Cliquez sur votre nom pour ouvrir votre carte de profil et accéder facilement à votre page de profil et aux paramètres de votre compte.",
-
  'gcTour:step4' => 'Groupes',
  'gcTour:step4txt' => "Accéder vos groupes plus rapidement par ici.",
  'gcTour:step5' => 'Le fil',
  'gcTour:step5txt' => "Publier sur le fil plus souvent par ici.",
+ 'gcTour:step6' => 'Clavardoirs',
+ 'gcTour:step6txt' => "Clavarder en groupe sur un projet ou un document via les clavardoirs en bas de page.",
 
 /**
  * Event calendar

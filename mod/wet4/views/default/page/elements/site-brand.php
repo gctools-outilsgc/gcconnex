@@ -33,7 +33,7 @@ $site_url = elgg_get_site_url();
                     </div>
                     <div class="pull-right tool-link">
                         <a href="<?php echo elgg_echo('wet:gcpediaLink');?>">
-                        <img class="tool-link-icon" src="<?php echo $site_url.'/mod/wet4/graphics/pedia_icon.png';?>" alt="GCintranet" /><span class="bold-gc">GC</span>pedia</a>
+                        <img class="tool-link-icon" src="<?php echo $site_url.'/mod/wet4/graphics/pedia_icon.png';?>" alt="GCpedia" /><span class="bold-gc">GC</span><?php echo elgg_echo('wet:barGCpedia');?></a>
                         
                         
                     </div>

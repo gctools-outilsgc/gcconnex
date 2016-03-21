@@ -981,9 +981,8 @@ function event_calendar_get_personal_events_for_user($user_guid, $limit) {
 		'subtype' => 'event_calendar',
 		'relationship' => 'personal_event',
 		'relationship_guid' => $user_guid,
-		//'limit' => 6,
 		'count' => $vars['count'],
-		'pagination' => true,
+		'limit' => false,
 	));
 
 	$final_events = array();
@@ -1737,7 +1736,7 @@ function event_calendar_get_page_content_list($page_type, $container_guid, $star
 			forward();
 		}
 		$group = get_entity($container_guid);
-		elgg_push_breadcrumb($group->name, 'event_calendar/group/' . $group->getGUID());
+		elgg_push_breadcrumb($group->name, 'event_calendar/group/' . $group->name);
 		elgg_push_context('groups');
 		elgg_set_page_owner_guid($container_guid);
 		if(event_calendar_can_add($container_guid)) {

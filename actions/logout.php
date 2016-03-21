@@ -13,8 +13,8 @@ $result = logout();
 if ($result) {
 	system_message(elgg_echo('logoutok'));
     //forward to login screen on logout - Nick 
-	forward(elgg_get_site_url(). 'login');
-	//forward("http://gcconnex.gc.ca/simplesaml/saml2/idp/SingleLogoutService.php?ReturnTo=http://gcconnex.gc.ca");
+	//forward(elgg_get_site_url(). 'login');
+	forward("http://gcconnex.gc.ca/simplesaml/saml2/idp/SingleLogoutService.php?ReturnTo=https://gcconnex.gc.ca");
 } else {
 	register_error(elgg_echo('logouterror'));
 }

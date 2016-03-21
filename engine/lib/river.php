@@ -309,7 +309,7 @@ function elgg_get_river(array $options = array()) {
 		'limit'                => 20,
 		'offset'               => 0,
 		'count'                => false,
-		'distinct'             => true,
+		'distinct'             => false,
 
 		'order_by'             => 'rv.posted desc',
 		'group_by'             => ELGG_ENTITIES_ANY_VALUE,

@@ -11590,8 +11590,8 @@ details.elgg-state-success:before {
 }
 
 .tool-link-icon{
-    width: 20px;
-    margin:0 5px 3px 0;
+    width: 25px;
+    margin:0 5px 5px 0;
 
 }
     #friends_collections_accordian li h2 {

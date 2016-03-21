@@ -19,12 +19,12 @@ $no_notification_available = array('widget','hjforumcategory','messages','MySkil
 
 // TODO: mentions option to send/receive notification
 
-$content .= "<table id='notificationstable' cellspacing='0' cellpadding='4' width='100%'>";
+$content .= "<section id='notificationstable' cellspacing='0' cellpadding='4' width='100%'>";
 foreach ($groups as $group) {
-	$content .= "<tr>";
-	$content .= "	<td class='namefield'> <strong>".elgg_echo('cp_notify:content_name')."</strong> </td>"; // column: name of the group
-	$content .= "	<td class='namefield'> <strong>".elgg_echo('cp_notify:email')."</strong> </td>"; // column: send notification by e-mail
-	$content .= "	<td class='namefield'> <strong>".elgg_echo('cp_notify:site_mail')."</strong> </td>"; // column: send notification by site mail
+	$content .= "<div class='list-break'>";
+	$content .= "	<div class='namefield col-sm-6'> <strong>".elgg_echo('cp_notify:content_name')."</strong> </div>"; // column: name of the group
+	$content .= "	<div class='namefield col-sm-3'> <strong>".elgg_echo('cp_notify:email')."</strong> </div>"; // column: send notification by e-mail
+	$content .= "	<div class='namefield col-sm-3'> <strong>".elgg_echo('cp_notify:site_mail')."</strong> </div>"; // column: send notification by site mail
 
 
 	$cpn_set_subscription_email = $plugin->getUserSetting("cpn_email_{$group->getGUID()}", $user->getGUID());	// setting email notification
@@ -85,11 +85,11 @@ foreach ($groups as $group) {
 	));
 
 	// GROUP CONTENT SUBSCRIPTIONS
-	$content .= "<tr>";
-	$content .= "<td class='namefield'> <strong> <a href='{$group->getURL()}' id='group-{$group->guid}'>{$group->name}</a> </strong> </td>";
-	$content .= "<td class='togglefield'> {$cpn_grp_email_input} </td>";
-	$content .= "<td class='togglefield'> {$cpn_grp_site_mail_input} </td>";
-	$content .= "</tr>";
+	$content .= "<div class=''>";
+	$content .= "<div class='namefield col-sm-6'> <strong> <a href='{$group->getURL()}' id='group-{$group->guid}'>{$group->name}</a> </strong> </div>";
+	$content .= "<div class='togglefield col-sm-3'> {$cpn_grp_email_input} </div>";
+	$content .= "<div class='togglefield col-sm-3'> {$cpn_grp_site_mail_input} </div>";
+	$content .= "</div>";
 
 	$cp_table_tr_count = 0;
 	foreach ($group_contents as $group_content) {
@@ -129,21 +129,21 @@ foreach ($groups as $group) {
 				'value' => $cpn_set_subscription_site_mail,
 			));
 
-			$content .= "<tr>";
-			$content .= "<td class='togglefield'> <a href='{$group_content->getURL()}'> {$group_content->title} </a> <br/><sup>{$group_content->getSubtype()}</sup> </td>";	// column: content name
-			$content .= "<td class='togglefield'> {$cpn_email_input} </td>";	// column: send by e-mail
-			$content .= "<td class='togglefield'> {$cpn_site_mail_input} </td>";	// column: send by site-mail
-
+			$content .= "<div class='clearfix col-sm-12 list-break'>";
+			$content .= "<div class='togglefield col-sm-6'> <a href='{$group_content->getURL()}'> {$group_content->title} </a> <br/><sup>{$group_content->getSubtype()}</sup> </div>";	// column: content name
+			$content .= "<div class='togglefield col-sm-3'> {$cpn_email_input} </div>";	// column: send by e-mail
+			$content .= "<div class='togglefield col-sm-3'> {$cpn_site_mail_input} </div>";	// column: send by site-mail
+            $content .= "</div>";
 		} // end if
 	} // end foreach loop
 
-	$content .= "</tr>";
-	$content .= "<tr> <td class='spacercolumn' colspan='3'>&nbsp;</td> </tr>";
+	
+	$content .= "<div> <div class='spacercolumn' colspan='3'>&nbsp;</div> </div>";
 }
 
 if ($cp_table_tr_count <= 0)
-	$content .= "<tr><td colspan='3'>".elgg_echo('cp_notify:no_group_sub')."</td></tr>";
-$content .= "</table>";
+	//$content .= "<div><div colspan='3'>".elgg_echo('cp_notify:no_group_sub')."</div></div>";
+$content .= "</section>";
 
 
 
@@ -160,12 +160,12 @@ $options = array(
 $interested_contents = elgg_get_entities_from_relationship($options);
 
 $cp_table_tr_count = 0;
-$content .= "<table id='notificationstable' cellspacing='0' cellpadding='4' width='100%'>";
-$content .= "<tr>";
-$content .= "	<td class='namefield'> <strong> Subscribed Content </strong> </td>"; // column: name of the group
-$content .= "	<td class='namefield'> <strong> E-mail </strong> </td>"; // column: send notification by e-mail
-$content .= "	<td class='namefield'> <strong> Site-mail </strong> </td>"; // column: send notification by site mail
-$content .= "</tr>";
+$content .= "<section id='notificationstable' cellspacing='0' cellpadding='4' width='100%'>";
+$content .= "<div>";
+$content .= "	<div class='namefield col-sm-6'> <strong> Subscribed Content </strong> </div>"; // column: name of the group
+$content .= "	<div class='namefield col-sm-3'> <strong> E-mail </strong> </div>"; // column: send notification by e-mail
+$content .= "	<div class='namefield col-sm-3'> <strong> Site-mail </strong> </div>"; // column: send notification by site mail
+$content .= "</div>";
 foreach ($interested_contents as $interested_content) {
 	if ($interested_content->owner_guid != $user->guid && !in_array($interested_content->getSubtype(), $no_notification_available) && $interested_content->title && $interested_content->getType() === 'object') {
 		$cp_table_tr_count++;
@@ -199,17 +199,17 @@ foreach ($interested_contents as $interested_content) {
 		));
 
 		$content_owner = get_user($interested_content->owner_guid);
-		$content .= "<tr>";
-		$content .= "<td class='namefield'> <a href='{$interested_content->getURL()}'>{$interested_content->title}</a> <br/><sup> Author: {$content_owner->name} / {$interested_content->getSubtype()} </sup> </td>";
-		$content .= "<td class='togglefield'> {$cpn_email_input} </td>";
-		$content .= "<td class='togglefield'> {$cpn_site_mail_input} </td>";
-		$content .= "</tr>";
+		$content .= "<div>";
+		$content .= "<div class='namefield col-sm-6'> <a href='{$interested_content->getURL()}'>{$interested_content->title}</a> <br/><sup> Author: {$content_owner->name} / {$interested_content->getSubtype()} </sup> </div>";
+		$content .= "<div class='togglefield col-sm-3'> {$cpn_email_input} </div>";
+		$content .= "<div class='togglefield col-sm-3'> {$cpn_site_mail_input} </div>";
+		$content .= "</div>";
 	}
 }
 
 if ($cp_table_tr_count <= 0)
-	$content .= "<tr><td colspan='3'>You have not subscribed to any content.</td></tr>";
-$content .= "</table>";
+	$content .= "<div><td colspan='3'>You have not subscribed to any content.</td></div>";
+$content .= "</section>";
 
 
 

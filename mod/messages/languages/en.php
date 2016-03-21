@@ -81,6 +81,6 @@ return array(
 	'messages:user:blank' => "You did not select someone to send this to.",
 	'messages:user:self' => "You cannot send a message to yourself.",
 
-	'messages:deleted_sender' => 'Deleted user',
+	'messages:deleted_sender' => 'Gcconnex',
 
 );

@@ -42,6 +42,8 @@ function wet4_theme_init() {
 	// theme specific CSS
 	elgg_extend_view('css/elgg', 'wet4_theme/css');
 
+    remove_group_tool_option('activity');
+
     elgg_extend_view('forms/notificationsettings/save', 'forms/notificationsettings/groupsave');
 
     //register a page handler for friends
@@ -117,7 +119,11 @@ function wet4_theme_init() {
     //WET my groups widget
     elgg_register_widget_type('wet_mygroups_index', $mygroups_title, 'My Groups Index', array('custom_index_widgets'),true);
     elgg_register_widget_type('most_liked', elgg_echo('activity:module:weekly_likes'), elgg_echo('activity:module:weekly_likes'), array('custom_index_widgets'),true);
+    
 
+    //Temp fix for river widget
+    elgg_unregister_widget_type("group_river_widget");
+    //elgg_register_widget_type("group_river_widget", 'HELLO WORLD', 'GROUP ACTIVITY OVERRIDE');
     
     //extend views of plugin files to remove unwanted menu items
     $active_plugins = elgg_get_plugins();
@@ -847,7 +853,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
         if($entity->getSubtype() == 'thewire' && elgg_is_logged_in()){
             $options = array(
                 'name' => 'reply',
-                'text' => elgg_echo('reply'),
+                'text' => '<i class="fa fa-reply fa-lg icon-unsel"><span class="wb-inv">'.elgg_echo('reply').'</span></i>',
                 'title' => elgg_echo('reply'),
                 'href' => 'ajax/view/thewire_tools/reply?guid=' . $entity->getGUID(),
                 'link_class' => 'elgg-lightbox',

@@ -69,6 +69,6 @@ return array(
 'messages:user:nonexist' => "We could not find the recipient in the user database.",
 'messages:user:blank' => "Vous n'avez pas choisi persone pour l'envoyer à.",
 'messages:user:self' => "Vous ne pouvez pas vous envoyer un message à vous-même.",		
-'messages:deleted_sender' => 'Utilisateur supprimé',
+'messages:deleted_sender' => 'GCconnex',
 
 );

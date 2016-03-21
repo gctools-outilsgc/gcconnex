@@ -21,6 +21,7 @@ if (isset($vars['body_attrs'])) {
 ?>
 <!DOCTYPE html><!--[if lt IE 9]><html class="no-js lt-ie9" lang="<?php echo $lang; ?>" dir="ltr"><![endif]--><!--[if gt IE 8]><!-->
 <html class="no-js" lang="<?php echo $lang; ?>" dir="ltr">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <!--<![endif]-->
 <head>
     <!--link type="text/css" href="/cometchat/cometchatcss.php" rel="stylesheet" charset="utf-8">

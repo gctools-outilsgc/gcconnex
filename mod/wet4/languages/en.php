@@ -28,6 +28,7 @@ return array(
   'wet:footTitleNews' => 'News',
   'wet:footTitleSocial' => 'Stay Connected',
   'wet:footGCtools' => 'GCTools',
+  'wet:barGCpedia'=>'pedia',
   'wet:collapseWidget' => 'Collapse / Open %s',
   'wet:gcintranetLink' => 'http://intranet.canada.ca/index-eng.asp',
   'wet:gcpediaLink' => 'http://www.gcpedia.gc.ca/wiki/?setlang=en',
@@ -976,6 +977,7 @@ These changes will only affect new users on the site.',
     
     'wet_mygroups:my_groups' => "My Groups",
     'wet_mygroups:my_groups_nolog' => "New Groups",
+    'wet4:filterActivity'=>'Filter Activity',
 /**
  * Icons
  */
@@ -1469,7 +1471,7 @@ Please do not reply to this email.",
 *Contact page / FAQ
 */
        'contactform:help' => 'Help',
-    'contactform:upload' => 'Uplaod your file',
+    'contactform:upload' => 'Upload your file',
       'contactform:required' => 'required',
     'contactform:form:subject' => "Subject",
     'contactform:title' => "GCconnex Help Pages",
@@ -1576,7 +1578,7 @@ Please do not reply to this email.",
 'gcTour:next' => 'Next ',
 'gcTour:close' => 'Close',
 'gcTour:step1' => 'Your News Feed ',
-'gcTour:step1txt' => 'See what your colleagues are up to and keep track of your groups’ activities, including their latest videos!',
+'gcTour:step1txt' => 'See what your colleagues are up to and keep track of your groups&#39; activities, including their latest videos!',
 'gcTour:step2' => 'GCTools Navigation ',
 'gcTour:step2txt' => 'GCTools is an sweet suite. Navigate easily from one tool to another using these links.',
 'gcTour:step3' => 'Profile card',
@@ -1586,6 +1588,8 @@ Please do not reply to this email.",
  'gcTour:step4txt' => "Reach your groups easier and faster from here.",
  'gcTour:step5' => 'The Wire',
  'gcTour:step5txt' => "Post on the Wire more frequently from here.",
+  'gcTour:step6' => 'Chatrooms',
+ 'gcTour:step6txt' => "Want to hold a group discussion on a project or a document? Use the chatrooms from the chat bar at the bottom of the screen.",
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */

@@ -34,6 +34,6 @@ if ($selector) {
 	$params['value'] = $selector;
 }
 //adding a label to the filter dropdown to make that happy :)
-echo '<label for="elgg-river-selector" class="mrgn-tp-md">Filter Activity</label>' . elgg_view('input/select', $params);
+echo '<label for="elgg-river-selector" class="mrgn-tp-md">'.elgg_echo('wet4:filterActivity').'</label>' . elgg_view('input/select', $params);
 
 elgg_load_js('elgg.ui.river');

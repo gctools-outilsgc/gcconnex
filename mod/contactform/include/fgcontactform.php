@@ -279,7 +279,7 @@ class FGContactForm
                     $english = $option[1]; 
                 if(empty($_POST['subject']))
                 {
-                    $subject = "$this->name contact you about ". $english." / $this->name vous a contacter à propos de ".$french;
+                    $subject = "$this->name has contacted you about ". $english." / $this->name vous a contacté à propos de ".$french;
                 }else{
                     $subject = $_POST['subject'];
                 }
@@ -317,11 +317,7 @@ class FGContactForm
                
       <tr>
         <td class="innerpadding" style="padding: 30px 30px 30px 30px; font-size: 16px; line-height: 22px; border-bottom: 1px solid #f2eeed; font-family: sans-serif;">
-          Thank you for contacting the GCconnex Help desk. This email is sent to you to have a copy of your request. You will receive an acknowledgment of receipt by email shortly. Shouldn’t you receive the acknowledgment of receipt, please contact the GCconnex Help Desk at: gcconnex@tbs-sct.gc.ca.<br/>
-
-Thank you<br/><br/> Merci d\'avoir communiquer avec le bureau de soutien de GCconnex. Ce courriel vous est envoyé afin d’avoir une copie de votre demande dans vos dossiers. Vous recevrez un accusé de réception sous peu. Si vous ne recevez pas cet accusé de réception, prière de communiquer avec le bureau de soutien de GCconnex à l’adresse suivante : gcconnex@tbs-sct.gc.ca<br/>
-
-Merci
+          Thank you for contacting the GCconnex Help desk. This email is a copy of your request.<br/><br/> Merci d\'avoir communiqué avec le bureau de soutien de GCconnex. Ce courriel est d\'avoir une copie de votre demande.
 
              
         </td>
@@ -333,7 +329,7 @@ Merci
             <tr>
               <td class="h2" style="color: #153643; font-family: sans-serif; padding: 0 0 15px 0; font-size: 24px; line-height: 28px; font-weight: bold;">
                 <span style="font-size:15px; font-weight: normal;">(Le fran&ccedil;ais suit)</span><br/>
-                  GCconnex Contact Form
+                  GCconnex Contact Us Form
               </td>
             </tr>
             <tr>
@@ -342,7 +338,7 @@ Merci
                   <b>Email:</b> '.$email.'<br/>
                   <b>Reason:</b> '.$english.' <br/>
                   <b>Subject:</b> '.$subject.'<br/>
-                  <b>message:</b>
+                  <b>Message:</b>
                   '.$message .'<br/>
               </td>
             </tr>
@@ -370,7 +366,7 @@ Merci
                   <tr>
                     <td class="bodycopy" style="color: #153643; font-family: sans-serif; padding: 0 0 15px 0; font-size: 24px; line-height: 28px; font-weight: bold;">
                         
-                  Formulaire en ligne de demande
+                  Formulaire contactez-nous de GCconnex
                     </td>
                   </tr>
                   <tr>
@@ -399,9 +395,6 @@ Merci
           <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
               <td align="center" class="footercopy" style="font-family: sans-serif; font-size: 14px; color: #055959">
-                GCconnex contact form / Formulaire de contact GCconnex<br/>
-                
-                <span class="hide">Thanks contacting us / Merci de nous avoir contacter</span>
               </td>
             </tr>
             <tr>
@@ -409,7 +402,7 @@ Merci
                 <table border="0" cellspacing="0" cellpadding="0">
                   <tr>
                     <td width="150" style="text-align: center; padding: 0 10px 0 10px;">
-                  Do not reply /<br/> Ne pas r&#233;pondre
+                  Please do not reply /<br/> Prière de ne pas r&#233;pondre
                     </td>
                    
                   </tr>

@@ -10,7 +10,7 @@ if (elgg_instanceof($event, 'object', 'event_calendar')) {
 	event_calendar_remove_personal_event($event_guid, $user_guid);
 	system_message(elgg_echo('event_calendar:remove_from_my_calendar_response'));
 	$email_users = get_loggedin_user()->email; 
-	event_email($event, $resquest='CANCEL',$email_users);
+
 }
 
 forward(REFERER);

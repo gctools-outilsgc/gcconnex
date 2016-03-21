@@ -30,7 +30,7 @@ if ($event) {
 
 
 		system_message(elgg_echo('event_calendar:manage_event_response'));
-		event_email($event, $resquest='REQUEST', $email_users);
+	
 	} else {
 		$action = 'create';
 
@@ -38,8 +38,8 @@ if ($event) {
 		if (!$event_calendar_autopersonal || ($event_calendar_autopersonal == 'yes')) {
 			event_calendar_add_personal_event($event->guid, $user_guid);
 		}
-		$email_users = get_loggedin_user()->email; 
-		event_email($event, $resquest='REQUEST',$email_users);
+		
+		
 		system_message(elgg_echo('event_calendar:add_event_response'));
 	}
 

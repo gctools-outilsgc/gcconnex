@@ -437,6 +437,7 @@ function gcforums_category_content($guid, $group_guid, $forums=false) {
 				'relationship_guid' => $category->guid,
 				'container_guid' => $group->guid,
 				'inverse_relationship' => true,
+				'limit' => false,
 			));
 
 			if (!$forums) {//table
@@ -567,13 +568,32 @@ function gcforums_forum_list($forum_guid, $group_guid) {
 							<th class='gcforums-th'>".elgg_echo('gcforums:edit')."</th>
 						</tr>";
 
+	// cyu 03/20/2016: save array of forums...
+	$list_of_forum_guid = array();
+	foreach ($forums as $forum) {
+		$list_of_forum_guid[] = $forum->guid;
+	}
+	
 	if (!$forums) {
 		$forum_list .= "<tr class='gcforums-tr'>
 						<th colspan='5' class='gcforums-td-forums'>".elgg_echo('gcforums:forums_not_available')."</th>
 					</tr>";
 	} else {
 		foreach ($forums as $forum) {
-				if ($forum->title && !check_entity_relationship($forum->guid, 'descendant', $prev_guid)) {
+
+			// cyu - 03/20/2016: check if forums have another forum within
+			// check if [forum 1] last descendant of [forum 2] first
+			$display_forum = true;
+			foreach ($list_of_forum_guid as $forums_val) {
+				if ($has_it = check_entity_relationship($forum->guid,'descendant',$forums_val)) {
+					//error_log("cyu - forum value: {$forums_val} descended from {$forum->guid} / YES");
+					$display_forum = false;
+					//break;
+				}
+				//error_log("cyu - forum value: {$forums_val} descended from {$forum->guid} / NO ");
+			}
+
+			if (display_forum && $forum->title && !check_entity_relationship($forum->guid, 'descendant', $prev_guid)) {
 					$url = "<strong><a href='".elgg_get_site_url()."gcforums/group/{$group_guid}/{$forum->guid}'>{$forum->title}</a></strong>";
 
 					$forum_list .="	<tr class='gcforums-tr'>
