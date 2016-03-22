@@ -20,11 +20,14 @@ if (!empty($emails)) {
 			"class" => "elgg-button elgg-button-delete mlm",
 		));
 
-		$body = "<h4>$email_title</h4>";
+        $alt = '<div class=" mrgn-tp-sm col-xs-1 text-right">' . $delete_button . '</div>';
 
-		$content .= "<li class='elgg-item'>";
-		$content .= elgg_view_image_block("", $body, array("image_alt" => $delete_button));
-		$content .= "</li>";
+		$body = "<h4 class=' mrgn-tp-sm col-xs-11'>$email_title</h4>";
+
+		$content .= "<div class='clearfix mrgn-tp-sm'>";
+		//$content .= elgg_view_image_block("", $body . $alt);
+        $content .= $body . $alt;
+		$content .= "</div>";
 	}
 
 	$content .= "</ul>";

@@ -12704,3 +12704,6 @@ Carousel
     padding-right: 0.5em;
 }
 
+.fc-event-inner a:hover, a:focus{
+  color:whit !important;
+}

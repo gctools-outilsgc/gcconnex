@@ -6,7 +6,7 @@ if (elgg_is_logged_in()) {
 	if (!elgg_get_page_owner_guid())
 		elgg_set_page_owner_guid($vars['group_guid']);
 
-	//error_log('page owner:'.elgg_get_page_owner_guid());
+	error_log('page owner:'.elgg_get_page_owner_guid());
 
 	$gcf_subtype = $vars['subtype'];
 	$gcf_group = $vars['group_guid'];
@@ -30,11 +30,13 @@ if (elgg_is_logged_in()) {
 		$gcf_container = $gcf_topic_guid;
 
 	// debug error_log (will be displayed above forms) comment-out for production!
-	//if ($gcf_subtype === "hjforumpost")
-	//	echo "create.php :: group: {$gcf_group} / subtype: {$gcf_subtype} / topic_access: {$gcf_topic_access} / topic_guid: {$gcf_topic_guid} / container: {$gcf_container} / title: {$hjforumpost_title}";
-	//else
-	//	echo "create.php :: subtype: {$gcf_subtype} / group: {$gcf_group} / container: {$gcf_container}";
+	if ($gcf_subtype === "hjforumpost")
+		echo "create.php :: group: {$gcf_group} / subtype: {$gcf_subtype} / topic_access: {$gcf_topic_access} / topic_guid: {$gcf_topic_guid} / container: {$gcf_container} / title: {$hjforumpost_title}";
+	else
+		echo "create.php :: subtype: {$gcf_subtype} / group: {$gcf_group} / container: {$gcf_container}";
 
+
+	
 
 	// title, description and access (visible)
 	if ($gcf_subtype === 'hjforum' || $gcf_subtype === 'hjforumcategory' || $gcf_subtype === 'hjforumtopic') {
@@ -81,18 +83,20 @@ if (elgg_is_logged_in()) {
 		}
 
 
-		if ($gcf_subtype === 'hjforum' && get_entity($gcf_container)->enable_subcategories) {
+		if ($gcf_subtype === 'hjforum' && (get_entity($gcf_container)->enable_subcategories || get_entity($gcf_container) instanceof ElggGroup) ) {
 
+			// cyu - patched 03/21/2016
 			if ($gcf_container && $gcf_container != 0) { // this is within the nested forums
 				$query = "SELECT  oe.guid, oe.title
-						FROM elggentities e, elggentity_relationships r, elggobjects_entity oe
-						WHERE e.subtype = 28 AND e.guid = r.guid_one AND e.container_guid = {$gcf_container} AND e.guid = oe.guid";
+						FROM elggentities e, elggentity_relationships r, elggobjects_entity oe, elggentity_subtypes es
+						WHERE e.subtype = es.id AND e.guid = r.guid_one AND e.container_guid = {$gcf_container} AND e.guid = oe.guid AND es.subtype='hjforumcategory'";
 
 			} else { // first page of group
 				$query = "SELECT  oe.guid, oe.title
-						FROM elggentities e, elggentity_relationships r, elggobjects_entity oe
-						WHERE e.subtype = 28 AND e.guid = r.guid_one AND e.container_guid = {$gcf_group} AND e.guid = oe.guid";
+						FROM elggentities e, elggentity_relationships r, elggobjects_entity oe, elggentity_subtypes es
+						WHERE e.subtype = 14 AND e.guid = r.guid_one AND e.container_guid = {$gcf_group} AND e.guid = oe.guid AND es.subtype='hjforumcategory'";
 			}
+
 
 			$categories = get_data($query);
 
@@ -185,6 +189,9 @@ if (elgg_is_logged_in()) {
 
 	if ($gcf_subtype === 'hjforumpost') { // posts
 
+echo "hjforum post!!!!!!";
+
+
 		echo <<<___HTML
 
 		
@@ -211,6 +218,10 @@ if (elgg_is_logged_in()) {
 ___HTML;
 
 	} else { // category, topic and forum
+
+
+echo "other stuff!!!!!!";
+
 
 		echo <<<___HTML
 

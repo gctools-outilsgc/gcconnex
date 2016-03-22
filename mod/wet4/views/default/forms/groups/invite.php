@@ -74,6 +74,26 @@ if (in_array("yes", array($invite_site_members, $invite_email, $invite_csv))) {
 	
 	// invite by email
 	if ($invite_email == "yes") {
+        
+        $tabs["email"] = array(
+			"text" => elgg_echo("group_tools:group:invite:email"),
+			"href" => "#",
+			"rel" => "users",
+			"priority" => 400,
+			"onclick" => "group_tools_group_invite_switch_tab(\"email\");"
+		);
+
+		$form_data .= "<div id='group_tools_group_invite_email' class='hidden wb-invisible mbm'>";
+		$form_data .= "<div>" . elgg_echo("group_tools:group:invite:email:description") . "</div>";
+		$form_data .= elgg_view("input/group_invite_autocomplete", array("name" => "user_guid",
+																			"id" => "group_tools_group_invite_autocomplete_email",
+																			"group_guid" => $group->getGUID(),
+																			"relationship" => "email"));
+		$form_data .= "</div>";
+        /*
+         * New system that doesnt work
+         * 
+         * 
 		$tabs["email"] = array(
 			"text" => elgg_echo("group_tools:group:invite:email"),
 			"href" => "#",
@@ -86,16 +106,33 @@ if (in_array("yes", array($invite_site_members, $invite_email, $invite_csv))) {
 		$form_data .= "<div>" . elgg_echo("group:invite:email") . "</div>";
 		$form_data .= elgg_view("input/text", array("name" => "user_guid",
 																			"id" => "group_tools_group_invite_autocomplete_email",
-																			"group_guid" => $group->getGUID(),
-																			"relationship" => "email",
+																			//"group_guid" => $group->getGUID(),
+																			//"relationship" => "email",
                                                                             'class' => 'noSubmit'));
 
-        $form_data .= '<div id="group_tools_group_invite_autocomplete_email_autocomplete_results"> <div class="group_tools_group_invite_autocomplete_autocomplete_result elgg-discover_result elgg-discover"><input type="hidden" value="" name="user_guid_email[]"></div>  </div>';
-
+        $form_data .= '<div id="group_tools_group_invite_autocomplete_email_autocomplete_results" class="mtm clearfloat"></div>';
+        // <div class="group_tools_group_invite_autocomplete_autocomplete_result elgg-discover_result elgg-discover"><input type="hidden" value=" " name="user_guid_email[]"></div>
 		$form_data .= "</div>";
+         */
+        //<div class="group_tools_group_invite_autocomplete_autocomplete_result elgg-discover_result elgg-discover"><input type="hidden" value="etan154@gmail.com" name="user_guid_email[]">etan154@gmail.com<i class="fa fa-trash-o fa-lg icon-unsel mrgn-lft-sm elgg-icon-delete-alt"><span class="wb-inv">Delete this</span></i></div>
+         
 
-        //<div class="group_tools_group_invite_autocomplete_autocomplete_result elgg-discover_result elgg-discover"><input type="hidden" value="etan154@gmail.com" name="user_guid_email[]">etan154@gmail.com<i class="fa fa-trash-o fa-lg icon-unsel mrgn-lft-sm elgg-icon-delete-alt"><span class="wb-inv">Delete this</span></i></div> 
-	}
+        /*
+
+        <div id="group_tools_group_invite_autocomplete_email_autocomplete_results" class="mtm clearfloat">
+            <div class="group_tools_group_invite_autocomplete_autocomplete_result elgg-discover_result elgg-discover">
+                <input type="hidden" value="test@test.tes" name="user_guid_email[]">test@test.tes<i class="fa fa-trash-o fa-lg icon-unsel mrgn-lft-sm elgg-icon-delete-alt"><span class="wb-inv">Delete this</span></i>
+            </div>
+        </div>
+
+        <div id="group_tools_group_invite_autocomplete_email_autocomplete_results" class="mtm clearfloat">  
+            <div class="group_tools_group_invite_autocomplete_autocomplete_result elgg-discover_result elgg-discover">
+                <input type="hidden" value="test@test.tes" name="user_guid_email[]">test@test.tes<i class="fa fa-trash-o fa-lg icon-unsel mrgn-lft-sm elgg-icon-delete-alt"><span class="wb-inv">Delete this</span></i>
+            </div>
+        </div>
+
+         * */
+    }
 	
 	//invite by cvs upload
 	if ($invite_csv == "yes") {
@@ -232,7 +269,7 @@ echo '</div>';
 				$('#group_tools_group_invite_users').hide();
 				$('#group_tools_group_invite_csv').hide();
 				
-				$('#group_tools_group_invite_email').show();
+				$('#group_tools_group_invite_email').removeClass('hidden wb-invisible').show();;
 				break;
 			case "csv":
 				$('#group_tools_group_invite_friends').hide();

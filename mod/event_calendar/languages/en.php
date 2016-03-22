@@ -294,6 +294,9 @@ return array(
 'event_calendar:river:annotated2' => 'à son agenda personnel.',
 'event_calendar:river:create' => "a new event",
 'event_calendar:river:the_event' => 	"%s takes place at %s. You can visit the event page here: %s",
+'event_calendar:listing_title:user' => "%s's events",
+
+
 	
  // BBB support	
 	

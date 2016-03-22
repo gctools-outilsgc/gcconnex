@@ -67,11 +67,11 @@ if ($object->getSubtype() === 'hjforum') {
 	//echo " // {$shelved_in[0]->guid_two}";
 
 	// this is forum object then check to see if categories is enabled
-	if ($object->enable_subcategories) {
+	if ($object->enable_subcategories || get_entity($object->getContainerGUID()) instanceof ElggGroup) {
 		if ($vars['forum_guid'] && $vars['forum_guid'] != 0) { // this is within the nested forums
 			$query = "SELECT  oe.guid, oe.title
-					FROM elggentities e, elggentity_relationships r, elggobjects_entity oe
-					WHERE e.subtype = 28 AND e.guid = r.guid_one AND e.container_guid = {$object->getContainerGUID()} AND e.guid = oe.guid";
+					FROM elggentities e, elggentity_relationships r, elggobjects_entity oe, elggentity_subtypes es
+					WHERE e.subtype = es.id AND es.subtype = 'hjforumcategory' AND e.guid = r.guid_one AND e.container_guid = {$object->getContainerGUID()} AND e.guid = oe.guid";
 		}
 
 	 	$categories = get_data($query);

@@ -36,7 +36,7 @@ function baseText_check2()
 {
 	global $CONFIG;
 
-	$query = "INSERT INTO {$db_prefix}contact_list (english, francais) VALUES ('Log in credentials','Informations de connexions'), (' Bugs/errors ','Bogues/Erreurs'), (' Group-related', 'Relatif aux groupes'), ('Training', 'Formation'), (' Jobs Marketplace','Jobs Marketplace'),(' Enhancement','Amélioration'),('Other','Autres')";
+	$query = "INSERT INTO {$db_prefix}contact_list (english, francais) VALUES ('Log in credentials','Information de connexions'), (' Bugs/errors ','Bogues/Erreurs'), (' Group-related', 'Relatif aux groupes'), ('Training', 'Formation'), (' Jobs Marketplace','Carrefour d\’emploi'),(' Enhancement','Amélioration'),('Other','Autres')";
     
 	//elgg_log('cyu - query:'.$query, 'NOTICE');
 

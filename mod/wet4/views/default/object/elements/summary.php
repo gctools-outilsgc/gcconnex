@@ -83,16 +83,16 @@ if($entity->getType() == 'group' ){
 
 	if (($entity->getSubtype() == 'event_calendar') && (elgg_get_context() == 'widgets')){
 
-echo '<div class="row mrgn-tp-md">';
+        echo '<div class="row mrgn-tp-md">';
 
-echo "<div class=\"tags col-sm-12 col-xs-12\">$tags</div>";
+        echo "<div class=\"tags col-sm-12 col-xs-12\">$tags</div>";
 
 
-if ($metadata) {
-	if ($checkPage != 'widgets_calendar'){
-        echo '<div class="col-sm-12 col-xs-12"><div class="mrgn-lft-sm">' .$metadata . '</div></div>';   
-     }
-}
+        if ($metadata) {
+	        if ($checkPage != 'widgets_calendar'){
+                echo '<div class="col-sm-12 col-xs-12"><div class="mrgn-lft-sm">' .$metadata . '</div></div>';   
+             }
+        }
 
 	}else{
 

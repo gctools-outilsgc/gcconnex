@@ -197,10 +197,14 @@ When a user creates a group he/she gets to choose one of the presets in order to
 'group_tools:groups:invitation:code:title' => "Group invitation by e-mail",
 'group_tools:groups:invitation:code:description' => "If you have received an invitation to join a group by e-mail, you can enter the invitation code here to accept the invitation. If you click on the link in the invitation e-mail, the code will be entered for you.",
 	
-// group membership requests	
-'group_tools:group:invitations:request' => "Outstanding membership requests",
-'group_tools:group:invitations:request:revoke:confirm' => "Are you sure you wish to revoke your membership request?",
-'group_tools:group:invitations:request:non_found' => "There are no outstanding membership requests at this time",	"There are no outstanding membership requests at this time.",
+// group membership requests
+'group_tools:groups:membershipreq:requests' => "Membership requests",
+	'group_tools:groups:membershipreq:invitations' => "Invited users",
+	'group_tools:groups:membershipreq:invitations:none' => "No pending user invitations",
+	'group_tools:groups:membershipreq:email_invitations' => "Invited e-mail addresses",
+	'group_tools:groups:membershipreq:email_invitations:none' => "No pending e-mail invitations",
+	'group_tools:groups:membershipreq:invitations:revoke:confirm' => "Are you sure you wish to revoke this invitation",
+	'group_tools:groups:membershipreq:kill_request:prompt' => "Are you sure you wish to decline this membership request? Optionaly you can tell the user why you declined the request.",
 	
 // group listing	
 'group_tools:groups:sorting:alphabetical' => "Alphabetical",

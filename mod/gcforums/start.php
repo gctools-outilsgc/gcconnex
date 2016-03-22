@@ -391,47 +391,78 @@ function gcforums_topics_list($forum_guid, $group_guid, $is_sticky) {
 /* Categoried Forums
  */
 function gcforums_category_content($guid, $group_guid, $forums=false) {
-
+	error_log("gcforums category content...");
 	elgg_load_css('gcforums-css');
+
+	// * get all the categories
 	$categories = elgg_get_entities(array(
 		'types' => 'object',
 		'subtypes' => 'hjforumcategory',
 		'limit' => false,	// don't put a limit on it
 		'container_guid' => $guid
 	));
-
 	$group = get_entity($guid);
 
+	// * only show the edit options on the right side of table for group admins/operators/etc
 	if (elgg_is_logged_in()) 
 		$edit_option_string = elgg_echo('gcforums:edit');
 	else 
 		$edit_option_string = ' - ';
 
+
+    $t_forum_category = ''; // testing
+
 	$forum_category = '';
     $forum_category2 = '';
     $forum_category3 = '';
-	$forum_category3 .= "
-						<tr class='gcforums-tr'>
-							<th class='gcforums-th' width='60%'>".elgg_echo('gcforums:forum_title')."</th>
-							<th class='gcforums-th'>".elgg_echo('gcforums:topics')."</th>
-							<th class='gcforums-th'>".elgg_echo('gcforums:posts')."</th>
-							<th class='gcforums-th'>".elgg_echo('gcforums:latest')."</th>
-							<th class='gcforums-th'>{$edit_option_string}</th>
-						</tr>";
+	// $forum_category3 .= "
+	// 					<tr class='gcforums-tr'>
+	// 						<th class='gcforums-th' width='60%'>".elgg_echo('gcforums:forum_title')."</th>
+	// 						<th class='gcforums-th'>".elgg_echo('gcforums:topics')."</th>
+	// 						<th class='gcforums-th'>".elgg_echo('gcforums:posts')."</th>
+	// 						<th class='gcforums-th'>".elgg_echo('gcforums:latest')."</th>
+	// 						<th class='gcforums-th'>{$edit_option_string}</th>
+	// 					</tr>";
 
-	if (!$categories) { // check if there are forums filed under category
-		$forum_category2 .= "<tr class='gcforums-tr'>
+    // * forum header stuff
+
+    $t_forum_category .= "<table class='gcforums-table'>
+    					<tr class='gcforums-tr'>
+    						<th class='gcforums-th' width='60%'>".elgg_echo('gcforums:forum_title')."</th>
+    						<th class='gcforums-th'>".elgg_echo('gcforums:topics')."</th>
+    						<th class='gcforums-th'>".elgg_echo('gcforums:posts')."</th>
+    						<th class='gcforums-th'>".elgg_echo('gcforums:latest')."</th>
+    						<th class='gcforums-th'> - </th> 
+    						<th class='gcforums-th'>{$edit_option_string}</th>
+    					</tr>
+    	";
+
+    // * if there are no categories available, display a message about no categories available
+	if (!$categories) { 
+		$t_forum_category .= "<tr class='gcforums-tr'>
 								<th colspan='5' class='gcforums-td-category'>".elgg_echo('gcforums:categories_not_available')."</th>
 							</tr>";
+
 	} else {
+
+
 		// display the category title and description
 		foreach ($categories as $category) { //putting this in a div outside of the table - nick
-			$forum_category2 = "<div class='panel panel-custom'>
-							<div class='gcforums-th-category panel-heading'><h1> {$category->title}</h1>  </div>
-                            <div class=' panel-body'> {$category->description}</div>
-							<div colspan='4' class='gcforums-th-category-options'>".gcforums_category_edit_options($category->guid)."</div>
-						</div>";
+			// $forum_category2 .= "<div class='panel panel-custom'>
+			// 				<div class='gcforums-th-category panel-heading'><h1> {$category->title}</h1>  </div>
+   //                          <div class=' panel-body'> {$category->description}</div>
+			// 				<div colspan='4' class='gcforums-th-category-options'>".gcforums_category_edit_options($category->guid)."</div>
+			// 			</div>";
 
+
+
+			// * display each category title and description
+			$t_forum_category .= "<tr class='gcforums-tr'>
+									<th class='gcforums-th-category'><h1>{$category->title}</h1> {$category->description} </th>
+									<th colspan='4' class='gcforums-th-category-options'>".gcforums_category_edit_options($category->guid)."</th>
+								</tr>";
+
+			// * for each category, lets display the forums filed under them
 			$forums = elgg_get_entities_from_relationship(array(
 				'relationship' => 'filed_in',
 				'relationship_guid' => $category->guid,
@@ -440,33 +471,51 @@ function gcforums_category_content($guid, $group_guid, $forums=false) {
 				'limit' => false,
 			));
 
+
+			// * if no forums are created, display a message that there are no forums
 			if (!$forums) {//table
-				$forum_category3 .= "<tr class='gcforums-tr'>
+				$t_forum_category .= "<tr class='gcforums-tr'>
 						<th colspan='5' class='gcforums-td-forums'>".elgg_echo('gcforums:forums_not_available')."</th>
 					</tr>";
 			} else {
+
+
 				// display the forum in the category
 				foreach ($forums as $forum) {
 					$url = "<strong><a href='".elgg_get_site_url()."gcforums/group/{$group_guid}/{$forum->guid}'>{$forum->title}</a></strong>";
 
-					$forum_category3 .= "<tr class='gcforums-tr'>
-						<th class='gcforums-td-forums'>{$url}{$forum->description}</th>
-						<th class='gcforums-td'>".get_total_topics($forum->guid)."</th>
-						<th class='gcforums-td'>".get_total_posts($forum->guid)."</th>
-						<th class='gcforums-td'>".get_recent_post($forum->guid)."</th>
-						<th class='gcforums-td-forums-options'>".gcforums_forums_edit_options($forum->guid, $group_guid)."</th>
-					</tr>";
+					// $forum_category3 .= "<tr class='gcforums-tr'>
+					// 	<th class='gcforums-td-forums'>{$url}{$forum->description}</th>
+					// 	<th class='gcforums-td'>".get_total_topics($forum->guid)."</th>
+					// 	<th class='gcforums-td'>".get_total_posts($forum->guid)."</th>
+					// 	<th class='gcforums-td'>".get_recent_post($forum->guid)."</th>
+					// 	<th class='gcforums-td-forums-options'>".gcforums_forums_edit_options($forum->guid, $group_guid)."</th>
+					// </tr>";
+
+					$t_forum_category .= "
+									<tr class='gcforums-tr'>
+										<th class='gcforums-td-forums'>{$url}{$forum->description}</th>
+										<th class='gcforums-td'>".get_total_topics($forum->guid)."</th>
+										<th class='gcforums-td'>".get_total_posts($forum->guid)."</th>
+										<th class='gcforums-td'>".get_total_posts($forum->guid)."</th>
+										<th class='gcforums-td'>".get_recent_post($forum->guid)."</th>
+										<th class='gcforums-td'>".gcforums_forums_edit_options($forum->guid, $group_guid)."</th>
+									</tr>";
 				}
 			}
 		}
 	}
+
+	$t_forum_category .= "</table>";
     //putting the table together with the category out of the table - nick
     $forum_category .= $forum_category2;
     $forum_category .= "<table class='gcforums-table'>";
     $forum_category .= $forum_category3;
 	$forum_category .= "</table>";
     
-	return $forum_category;
+	//return $forum_category;
+
+	return $t_forum_category;
 }
 
 
@@ -593,7 +642,7 @@ function gcforums_forum_list($forum_guid, $group_guid) {
 				//error_log("cyu - forum value: {$forums_val} descended from {$forum->guid} / NO ");
 			}
 
-			if (display_forum && $forum->title && !check_entity_relationship($forum->guid, 'descendant', $prev_guid)) {
+			if ($display_forum && $forum->title && !check_entity_relationship($forum->guid, 'descendant', $prev_guid)) {
 					$url = "<strong><a href='".elgg_get_site_url()."gcforums/group/{$group_guid}/{$forum->guid}'>{$forum->title}</a></strong>";
 
 					$forum_list .="	<tr class='gcforums-tr'>
