@@ -170,12 +170,12 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                         $validInput = false;
                         $error == true;
                     }
-
+                    /*
                     if(trim( $endyear[$k]) < trim($startyear[$k])){
                         $validInput = false;
                         $error == true;
                     }
-
+                    */
                     if($validInput == true){
 
 
@@ -270,22 +270,22 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                 foreach ($edit as $work) {
 
                     $validInput = true;
-
+                    /*
                     if($work['ongoing'] == true){
                         $work['endyear'] = $work['startyear'];
                     }
-
+                    */
                     //validation of work experience entry
                     if(trim($work['title']) == '' || trim($work['organization']) == ''){
                         $validInput = false;
                         $error = true;
                     }
-
+                    /*
                     if(trim($work['endyear']) < trim($work['startyear'])){
                         $validInput = false;
                         $error = true;
                     }
-
+                    */
                     if($validInput == true) {
 
 

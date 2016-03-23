@@ -6,8 +6,8 @@ return array(
 /**
   * WET specific
   */
+'cp_notification:subscribe' => "Abonnez-vous maintenant!",
   'breadcrum:home' => 'Accueil',
-
   'wet:skiptomain' => "Passer au contenu principal",
   'wet:aboutsite' => "Passer à « Informations sur le site »",
   'wet:LangSel' => "Sélection de la langue",
@@ -104,7 +104,7 @@ return array(
 /**
  * The Wire
  */
-    'wire:post' => 'message sur le fil',
+    'wire:post' => 'le message sur le fil',
     'thewire:post' => "Créer un article sur le fil",
     'thewire:share'	=> 'Partage',
     'thewire:shares' => 'Partages',
@@ -1369,14 +1369,15 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
     'contactform:teamgcpedia' => 'Équipe des Outils GC 2.0 dans GCpédia',
     'contactform:collaborating' => 'Collaboration au moyen de GCpédia de l’EFPC (B171)',
     'contactform:collaborating:link' => '"http://www.csps-efpc.gc.ca/forlearners/coursesandprograms/CourseDetail-fra.aspx?courseno=b171%7C"', 
-    'contactform:socialmedia' => 'Cours B336 valide en juillet',
-    'contactform:socialmedia:link' => '"http://www.csps-efpc.gc.ca/forlearners/coursesandprograms/CourseDetail-fra.aspx?courseno=B334"',
+    'contactform:socialmedia' => 'La collaboration au moyen de GCconnex et de GCpédia (B336)',
+    'contactform:socialmedia:link' => '"http://www.csps-efpc.gc.ca/forlearners/coursesandprograms/CourseDetail-fra.aspx?courseno=B336"',
     'contactform:guidance' => '<a href="http://www.gcpedia.gc.ca/gcwiki/images/e/ee/Les_medias_sociaux_au_sein_du_GC.jpg">Lignes directrices à l’intention des employés : Les médias sociaux au sein du GC</a>',
     'contactform:department' => 'Ministère',
     'contactform:select' => 'Veuillez sélectionner une catégorie',
     'contactform:reason' => 'Choisir...',
     'contactform:help_menu_item' => "Aide / Contactez-nous",
-      'contactform:newsletter' => 'Abonnez à l’Infolettre des Outils GC',
+      'contactform:newsletter' => 'Abonnez à l’Infolettre',
+      'contactform:update:alert' => 'Avis : Mise à jour de GCconnnex',
 
     /*
   * Contact Form Validation
@@ -1407,7 +1408,7 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 'event_calendar:mine' => 'Mes événements',
 'event_calendar:listing_title:user' => "Les événements de %s",
 'event_calendar:submit' => 'Sauvegarder',
-'event_calendar:personal_event_calendars_link' => 'Sur (%s) calendrier',
+'event_calendar:personal_event_calendars_link' => 'Dans %s calendriers',
 'event_calendar:meeting' => 'Réunion en ligne et téléconférence',
 'event_calendar:info' => 'Information(s) supplémentaire(s)',
 'river:create:object:event_calendar' => "%s a ajouté l'événement' %s",

@@ -27,6 +27,7 @@ $db_prefix = elgg_get_config('dbprefix');
 $content = elgg_list_river(array(
 	'limit' => 4,
 	'pagination' => false,
+    'distinct' => false,
 	'joins' => array(
 		"JOIN {$db_prefix}entities e1 ON e1.guid = rv.object_guid",
 		"LEFT JOIN {$db_prefix}entities e2 ON e2.guid = rv.target_guid",

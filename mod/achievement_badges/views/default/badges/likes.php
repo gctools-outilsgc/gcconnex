@@ -95,8 +95,8 @@ if($count < $goals[0]){ //no badge
 
     $user->likesBadge = 4;
     $count = $goals[2];
-    $currentBadge = $badges[3];
-    $currentGoal = $goals[3];
+    $currentBadge = $badges[4];
+    $currentGoal = $goals[4];
     $level = '5';
 
 } else if($count >= $goals[4]){ //lvl5

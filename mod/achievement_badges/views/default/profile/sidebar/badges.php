@@ -92,7 +92,11 @@ $content .= '</ul>';
 
 $footer = "<br>";
 
+if(elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()){
+    $knowMore = '<span class="pull-right"><a title="' . elgg_echo('badge:knowmore') . '" target="_blank" href="' . elgg_echo('badge:knowmorelink') . '" style="text-decoration:none; font-size: 20px;">(?)</a></span>';
+}
 
-echo elgg_view_module('aside', elgg_echo('badge:badges'), $content, array('footer' => false));
+
+echo elgg_view_module('aside', elgg_echo('badge:badges') . $knowMore, $content, array('footer' => false));
 
 ?>

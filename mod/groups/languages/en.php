@@ -6,6 +6,7 @@ return array(
 	 */
 
 'groups' => "Groups",
+'group:group' => "Group",
 'groups:owned'	=> "Groups I own",
 'groups:owned:user'	=> 'Groups %s owns',
 'groups:yours' => "My groups",

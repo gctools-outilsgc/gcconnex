@@ -10,7 +10,7 @@ return array(
 		'blog:blogs' => 'Blogues',
 		'blog:revisions' => 'Révisions',
 		'blog:archives' => 'Archives',
-		'blog:blog' =>  'Blogue',
+		'blog:blog' =>  'ce blogue',
 		'item:object:blog' => 'Les blogues',
 		'blog:mine' => 'Mes blogues',
 					
@@ -23,7 +23,7 @@ return array(
 		'blog:write' => 'Rédiger un billet',
 					
 		//Editing			
-		'blog:add' => 'Ajouter un billet',
+		'blog:add' => 'Ajouter un blogue',
 		'blog:edit' => 'Modifier un billet',
 		'blog:excerpt' => 'Extrait',
 		'blog:body' => 'Texte complet',

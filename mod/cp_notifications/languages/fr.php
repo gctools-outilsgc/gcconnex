@@ -97,6 +97,8 @@
 'cp_notify:no_group_sub' => "Vous n'êtes pas abonné au contenu du group",
 'cp_notify:no_sub' => "Vous n'êtes pas abonné à aucun contenu",
 
+'cp_notification:subscribe' => "Abonnez-vous maintenant!",
+
 	);
 
 add_translation("en", $english);

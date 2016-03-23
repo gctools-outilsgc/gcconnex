@@ -48,20 +48,39 @@
 }
 
 .gcforums-th-category {
-   
-    padding: 5px 5px 5px 5px;
+
+    border: 1px solid #ddd;
     vertical-align: middle;
     
 }
 
-.gcforums-th-category h1{
+.category-space{
+    margin-top:5px;
 
+}
+.forum-category-desc{
+       
+        
+}
+
+.forum-category-desc p{
+    padding-left:8px;
+    padding-top: 5px;
+}
+
+.gcforums-th-category h1{
+    border: none;
+    padding:15px;
+        background-color: #f5f5f5;
+            border-bottom: 1px solid transparent;
+    margin: 0;
     
+    border-bottom: 1px solid #ddd;
 }
 
 .gcforums-th-category-options, .gcforums-th-topic-options {
     border-left: hidden;
-    padding: 5px 5px 5px 5px;
+    
     text-align: right;
 }
 

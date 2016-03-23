@@ -5,7 +5,7 @@
 
 $params = array(
 	'method' => 'get',
-	'action' => 'members/search',
+	'action' => 'search', // change form action to search to perform the GSA search action
 	'disable_security' => true,
 );
 

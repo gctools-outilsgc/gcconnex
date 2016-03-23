@@ -52,5 +52,5 @@
 		</div>
 	</details><br>
 
-<a href="mailto:mylene.lafleur@tbs-sct.gc.ca?subject=Subscription%20to%20Newsletter%20/%20Abonnement%20à%20l'infolettre&body=Please%20share%20your%20department's%20name%20/%20Veuillez%20partager%20le%20nom%20de%20votre%20ministère"><?php echo elgg_echo('contactform:newsletter'); ?></a>
+<a href= "mailto:GCTools-OutilsGC@tbs-sct.gc.ca?subject=Subscription%20to%20Newsletter%20/%20Abonnement%20à%20l'infolettre&body=Please%20share%20your%20department's%20name%20/%20Veuillez%20partager%20le%20nom%20de%20votre%20ministère"><?php echo elgg_echo('contactform:newsletter'); ?></a>
 	</div>

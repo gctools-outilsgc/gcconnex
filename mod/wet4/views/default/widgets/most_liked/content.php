@@ -6,6 +6,7 @@ $week_ago = time() - (60 * 60 * 24 * 7);
 $liked_entities = elgg_get_entities_from_annotation_calculation(array(
 	'annotation_names' => 'likes',
 	'calculation' => 'count',
+    'type' => 'blog',
 	'wheres' => array("n_table.time_created > $week_ago"),
 ));
 

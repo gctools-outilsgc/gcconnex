@@ -416,13 +416,13 @@ function notify_entity_menu_setup($hook, $type, $return, $params) {
 			    if (elgg_is_active_plugin('wet4'))
 				    $bell_status = '<i class="icon-unsel fa fa-lg fa-bell-o"></i>';
 			    else
-				    $bell_status = 'Subscribe Now!';
+				    $bell_status = elgg_echo('cp_notification:subscribe');
 
 			    $return[] = ElggMenuItem::factory(array(
 				    'name' => 'set_notify',
 				    'href' => elgg_add_action_tokens_to_url("/action/cp_notify/subscribe?guid={$entity->guid}"),
 				    'text' => $bell_status,	
-				    'title' => 'Subscribe Now!',
+				    'title' => elgg_echo('cp_notification:subscribe'),
 				    'priority' => 1000,
 				    'class' => '',
 				    'item_class' => ''

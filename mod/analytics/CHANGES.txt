@@ -1,4 +1,35 @@
-= Version history =
+Version history
+===============
+
+3.1 (2015-12-18):
+
+- added: Composer support
+- changed: Google Analytics tracking using Universal Analytics
+- fixed: using wrong plugin setting name for anonymize IP
+- chore: code refactoring for coding style and performance
+
+3.0.1 (2015-07-08):
+
+- fixed: mixed up plugin setting values for event and action tracking
+
+3.0 (2014-11-17):
+
+- changes for Elgg 1.9
+- changed: ajaxSuccess binding to prevent JS errors #2
+
+2.2 (2014-11-13):
+
+- applied coding standards
+- added: option for Google Analytics to anonymize lP address
+
+2.1 (2013-04-05):
+
+- added: Piwik support
+- fixed: possible javascript error in footer, when there is no tracking ID
+- changed: handling of footer view
+- changed: moved some functions around
+- changed: README.txt to README.md for GitHub
+
 2.0 (2011-11-28):
 
 - fixed: page_handler issue with Elgg 1.8.1

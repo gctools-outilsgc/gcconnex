@@ -52,7 +52,7 @@ function wet4_theme_init() {
     elgg_register_page_handler('dashboard', 'wet4_dashboard_page_handler');
     elgg_register_page_handler('friends', '_wet4_friends_page_handler'); //register new page handler for data tables
 	elgg_register_page_handler('friendsof', '_wet4_friends_page_handler');
-
+    elgg_register_page_handler('activity', 'activity_page_handler');
     elgg_unregister_page_handler('messages', 'messages_page_handler');
     elgg_register_page_handler('messages', 'wet4_messages_page_handler');
 
@@ -207,6 +207,12 @@ function newsfeed_page_handler(){
     @include (dirname ( __FILE__ ) . "/pages/newsfeed.php");
     return true;
 }
+
+function activity_page_handler(){
+    @include (dirname ( __FILE__ ) . "/pages/river.php");
+    return true;
+}
+
 //Create splash page
 function splash_page_handler(){
     @include (dirname ( __FILE__ ) . "/pages/splash.php");
@@ -583,7 +589,7 @@ function wet4_likes_entity_menu_setup($hook, $type, $return, $params) {
     if($entContext == 'object'){
         $entContext =  proper_subtypes($entity->getSubtype());//$entity->getSubtype();
     } else if($entContext == 'group'){
-        $entContext = elgg_echo('group');
+        $entContext = elgg_echo('group:group');
     }
 
 	if ($entity->canAnnotate(0, 'likes')) {
@@ -596,7 +602,7 @@ function wet4_likes_entity_menu_setup($hook, $type, $return, $params) {
 			'text' => '<i class="fa fa-thumbs-up fa-lg icon-unsel"></i><span class="wb-inv">Like This</span>',
 			'title' => elgg_echo('likes:likethis') . ' ' . $entContext,
 			'item_class' => $hasLiked ? 'hidden' : '',
-			'priority' => 1000,
+			'priority' => 998,
 		));
 		$return[] = ElggMenuItem::factory(array(
 			'name' => 'unlike',
@@ -604,7 +610,7 @@ function wet4_likes_entity_menu_setup($hook, $type, $return, $params) {
 			'text' => '<i class="fa fa-thumbs-up fa-lg icon-sel"></i><span class="wb-inv">Like This</span>',
 			'title' => elgg_echo('likes:remove') . ' ' . $entContext,
 			'item_class' => $hasLiked ? 'pad-rght-xs' : 'hidden',
-			'priority' => 1000,
+			'priority' => 998,
 		));
 	}
     
@@ -635,7 +641,7 @@ function wet4_likes_entity_menu_setup($hook, $type, $return, $params) {
 			'name' => 'likes_count',
 			'text' => $count,
 			'href' => false,
-			'priority' => 1001,
+			'priority' => 999,
             'item_class' => 'entity-menu-bubble',
 		);
 		$return[] = ElggMenuItem::factory($options);
@@ -1691,6 +1697,10 @@ function proper_subtypes($type){
 
         case 'idea':
             $subtype = elgg_echo('item:object:idea');
+            break;
+
+        case 'groups':
+            $subtype = elgg_echo('group:group');
             break;
     }
 

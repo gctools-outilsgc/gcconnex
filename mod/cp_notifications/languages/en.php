@@ -1,7 +1,7 @@
 <?php
 
 	$english = array(
-		'cp_notify:panel_title' => 'Subscription settings (click to edit email: %s)',
+'cp_notify:panel_title' => 'Subscription settings (click to edit email: %s)',
 'cp_notify:quicklinks' => 'Subscription Quick Links',
 'cp_notify:content_name' => 'Content Name',
 'cp_notify:email' => 'Notify by e-mail',
@@ -101,6 +101,8 @@
 "cp_notify:sidebar:no_subscriptions" => "<i>No Subscriptions Available</i>",
 "cp_notify:sidebar:group_title" => "Group + Content Subscriptions",
 "cp_notify:sidebar:subs_title" => "Personal Subscriptions",
+
+'cp_notification:subscribe' => "Subscribe Now!",
 
 	);
 

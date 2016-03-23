@@ -1,7 +1,8 @@
 <?php
 return array(
- //General          
-            
+ //General
+ 'badge:knowmore' => 'Que sont les écussons?',
+'badge:knowmorelink' => 'http://www.gcpedia.gc.ca/wiki/GCconnex_-_Aide_%C3%A0_l%27utilisateur/En_quoi_consiste_un_insigne%3F',            
 'badge:badges' => 'Écussons',           
 'badge:progress' => 'Objectifs atteints',
 'badge:start' => 'Début',

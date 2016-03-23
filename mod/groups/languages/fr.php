@@ -15,6 +15,7 @@ return array(
 	* Menu items and titles
 	*/
 'groups' => "Groupes",
+'group:group' => "ce groupe",
 'groups:owned' => "Groupes dont je suis propriétaire",
 'groups:owned:user' => "Les groupes que %s possède",
 'groups:yours' => "Mes groupes",
@@ -101,9 +102,9 @@ return array(
 'discussion:notification:reply:body' => 	'%s a répondu à la question de discussion %s dans le groupe %s : %s Afficher et répondre à la discussion : %s ',
 'groups:activity' => "L'activité du groupe",
 'groups:enableactivity' => 'Activer le fil d\'activité de groupe',
-'groups:activity:none' => "Il n\'y a pas encore d\'activité dans le groupe",		
+'groups:activity:none' => "Il n'y a pas encore d'activité dans le groupe",		
 'groups:notfound' => "Le groupe n'a pas été trouvé",
-'groups:notfound:details' => "Le groupe que vous recherchez n'existe pas, ou vous n'avez pas la permission d\'y accéder",		
+'groups:notfound:details' => "Le groupe que vous recherchez n'existe pas, ou vous n'avez pas la permission d'y accéder",		
 'groups:requests:none' => "Il n'y a actuellement aucune demande d'adhésion en attente.",		
 'groups:invitations:none' => 'Il n\'y a pas d\'invitations en attente.',
 'item:object:groupforumtopic' => "Sujets de discussion",

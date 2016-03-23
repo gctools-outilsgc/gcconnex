@@ -21,6 +21,13 @@
 //    $class = "$class {$vars['class']}";
 //}
 echo $vars['title'];
+if(elgg_get_context() =='contactform'){
+
+	echo'<section class="alert alert-warning">
+	
+	<h3> <a href="https://gcconnex.gc.ca/pages/view/19984549/gcconnex-updates-march-21-2016-mise-a-jour-de-gcconnnex-21-mars-2016">'.elgg_echo('contactform:update:alert').'</a></h3>
+</section>';
+};
 ?>
 
 <div class="<?php echo $class; ?>row">
@@ -29,6 +36,7 @@ echo $vars['title'];
 		//echo elgg_extract('nav', $vars, elgg_view('navigation/breadcrumbs'));
 
 		//echo elgg_view('page/layouts/elements/header', $vars);
+
     echo '<section class="col-md-6">';
 
 		echo $vars['content'];

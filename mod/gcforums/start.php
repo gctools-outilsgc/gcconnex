@@ -457,11 +457,13 @@ function gcforums_category_content($guid, $group_guid, $forums=false) {
 
 
 			// * display each category title and description
-			$t_forum_category .= "<tr class='gcforums-tr'>
-									<th class='gcforums-th-category'><h1>{$category->title}</h1> {$category->description} </th>
-									<th colspan='4' class='gcforums-th-category-options'>".gcforums_category_edit_options($category->guid)."</th>
-								</tr>";
+			$t_forum_category .= "<tr class='category-space'>
 
+									<td colspan='5' class='gcforums-th-category'><h1>{$category->title}</h1><span class='forum-category-desc'>{$category->description}</span</td></tr>
+
+									<th colspan='5' class='gcforums-th-category-options'>".gcforums_category_edit_options($category->guid)."</th>
+								";
+            //put category in
 			// * for each category, lets display the forums filed under them
 			$forums = elgg_get_entities_from_relationship(array(
 				'relationship' => 'filed_in',

@@ -253,8 +253,8 @@ When a user creates a group he/she gets to choose one of the presets in order to
 // group - invite - action		
 'group_tools:action:invite:error:invite' => "Aucun utilisateur n'a été invité (%s déjà invités, %s déjà membres).",
 'group_tools:action:invite:error:add' => "Aucun utilisateur n'a été ajouté (%s déjà invités, %s déjà membres).",
-'group_tools:action:invite:success:invite' => "Invitation de % utilisateurs réussie (%s déjà invités, %s déjà membres).",
-'group_tools:action:invite:success:add' => "Ajout de % utilisateurs réussi (%s déjà invités, %s déjà membres).",
+'group_tools:action:invite:success:invite' => "Invitation de %s utilisateurs réussie (%s déjà invités, %s déjà membres).",
+'group_tools:action:invite:success:add' => "Ajout de %s utilisateurs réussi (%s déjà invités, %s déjà membres).",
 		
 // group - invite - accept e-mail		
 'group_tools:action:groups:email_invitation:error:input' => "Veuillez entrer un code d'invitation.",
