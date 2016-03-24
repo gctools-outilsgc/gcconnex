@@ -163,14 +163,18 @@ function checkInvalidDomain($dom)
 	{
 		$domain_addr = explode('.', $dom);
 		$domain_len = count($domain_addr) - 1;
-
 		if ($domain_addr[$domain_len - 1].'.'.$domain_addr[$domain_len] === 'gc.ca')
 		{
 			//elgg_log('cyu - domain:'.$dom. ' this is a valid domain', 'NOTICE');
 			$isNotValid = false;
 		} else {
+			//if($domain_addr[$domain_len - 1].'.'.$domain_addr[$domain_len] === 'canada.ca'){
+			//	$isNotValid = false;
+			//}else{
+				$isNotValid = true;
+			//}
 			//elgg_log('cyu - domain:'.$dom. ' this is an invalid domain', 'NOTICE');
-			$isNotValid = true;
+			//$isNotValid = true;
 		}
 	}
 

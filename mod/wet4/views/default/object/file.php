@@ -160,7 +160,15 @@ if ($full_view && !elgg_in_context("gallery")) {
 		$excerpt = elgg_get_excerpt($file->description);
 	}
 
-
+    if(elgg_in_context('group_profile')){
+        $entity_menu = elgg_view_menu("entity", array(
+		"entity" => $file,
+		"handler" => "file",
+		"sort_by" => "priority",
+		"class" => "list-inline",
+		"item_class" => "mrgn-rght-sm"
+	));
+    }
 
 	$params = array(
 		"entity" => $file,

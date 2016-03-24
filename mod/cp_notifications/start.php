@@ -157,7 +157,6 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			);
 			$email_only = true;
 			$subject = elgg_echo('cp_notify:subject:validate_user',array($params['cp_validate_user']['email']));
-			error_log(">>>>>>>>>> >>>> >>> cp_ : {$params['cp_validate_user']['email']}");
 			$to_recipients[] = get_user($params['cp_validate_user']['guid']);
 			break;
 
@@ -172,8 +171,8 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$t_user = $params['cp_subscribers'];
 			foreach ($t_user as $s_uer)
 				$to_recipients[] = get_user($s_uer);
-			$subject = elgg_echo('New Topic had been posted');
-
+			$subject = elgg_echo('cp_notify:subject:hjtopic_en'); // translate
+			$subject .= ' / '.elgg_echo('cp_notify:subject:hjtopic_fr');
 			break;
 
 		case 'cp_hjpost': // gcforums/actions/gcforums/create.php
@@ -187,7 +186,8 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$t_user = $params['cp_subscribers'];
 			foreach ($t_user as $s_uer)
 				$to_recipients[] = get_user($s_uer);
-			$subject = elgg_echo('New Comment has been posted');
+			$subject = elgg_echo('cp_notify:subject:hjpost_en'); // translate
+			$subject .= ' / '.elgg_echo('cp_notify:subject:hjpost_fr');
 			break;
 		
 		default:

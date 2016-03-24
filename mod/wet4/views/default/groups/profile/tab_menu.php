@@ -12,6 +12,15 @@
 
 $owner = elgg_get_page_owner_entity();
 
+     if (empty($_GET['pg']))  {
+$pg = '';
+
+}else{
+
+     $pg = $_GET['pg'];
+
+} 
+
 
 
 if(elgg_get_context() == 'groupSubPage'){
@@ -39,6 +48,19 @@ if(elgg_get_context() == 'groupSubPage'){
     ));
     
 } else if(elgg_get_context() == 'profile'){
+    if ($pg == 'splashboard'){
+
+        elgg_register_menu_item('owner_block', array(
+    'name' => 'profile',
+    'href' => '#profile-display',
+    'text' => elgg_echo('gcconnex_profile:profile'),
+    //'item_class' => 'active',
+    'data-toggle' => 'tab',
+    'class' => '',
+    'priority' => '0',
+    ));
+    }else {
+
     elgg_register_menu_item('owner_block', array(
     'name' => 'profile',
     'href' => '#profile-display',
@@ -47,7 +69,9 @@ if(elgg_get_context() == 'groupSubPage'){
     'data-toggle' => 'tab',
     'class' => '',
     'priority' => '0',
-    ));
+    ));  
+    }
+    
     
     elgg_register_menu_item('owner_block', array(
     'name' => 'portfolio',
@@ -69,16 +93,27 @@ if(elgg_get_context() == 'groupSubPage'){
     	));
   	}
 	
-    
+     if ($pg == 'splashboard'){
     elgg_register_menu_item('owner_block', array(
+    'name' => 'widgets',
+    'href' => '#splashboard',
+    'text' => elgg_echo('gcconnex_profile:widgets'),
+    'data-toggle' => 'tab',
+    'item_class' => 'active',
+    'class' => '',
+    'priority' => '0',
+    ));
+    }else{
+
+          elgg_register_menu_item('owner_block', array(
     'name' => 'widgets',
     'href' => '#splashboard',
     'text' => elgg_echo('gcconnex_profile:widgets'),
     'data-toggle' => 'tab',
     'class' => '',
     'priority' => '0',
-    ));
-    
+    ));  
+    }
     
 }
  

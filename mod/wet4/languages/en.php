@@ -1509,7 +1509,11 @@ Please do not reply to this email.",
     'contactform:reason' => 'Select...',
     'contactform:help_menu_item' => "Help / Contact Us",
     'contactform:newsletter' => 'Subscribe to the Newsletter',
-    'contactform:update:alert' => 'Notice : GCconnex Updates',
+	'contactform:box:message' => 'Show the information box',
+	'conatactform:fr:name' => 'Name of the link in french',
+	'conatactform:eng:name' => 'Name of the link in english',
+	'conatactform:fr:link' => 'French link',
+	'conatactform:eng:link' => 'English link',
     
 /*
  * Contact Form Validation

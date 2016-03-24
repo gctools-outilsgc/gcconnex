@@ -19,7 +19,7 @@
  ***********************************************************************/
 
 elgg_make_sticky_form('register');
-
+global $CONFIG;
 // default code (core)
 $username = get_input('username');
 $email = get_input('email');
@@ -105,14 +105,16 @@ $deptNum = get_input('department');
 if (elgg_get_config('allow_registration')) {
 	try {
 		// check if domain exists in database
-		$connection = mysqli_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, $CONFIG->dbname);
+		$connection = mysqli_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, $CONFIG->dbname)or die(mysqli_error($connection));
 		$emaildomain = explode('@',$email);
 		$query = "SELECT count(*) AS num FROM email_extensions WHERE ext ='".$emaildomain[1]."'";
-		$result = mysqli_query($connection, $query);
+		
+		$result = mysqli_query($connection, $query)or die(mysqli_error($connection));
 		$result = mysqli_fetch_array($result);
-
+		
 		$emailgc = explode('.',$emaildomain[1]);
 		$gcca = $emailgc[count($emailgc) - 2] .".".$emailgc[count($emailgc) - 1];
+		
 		mysqli_close($connection);
 
 		$resulting_error = "";
@@ -122,13 +124,14 @@ if (elgg_get_config('allow_registration')) {
 			//throw new RegistrationException(elgg_echo('gcRegister:toc_error'));
 			$resulting_error .= elgg_echo('gcRegister:toc_error').'<br/>';
 		}
-
+		error_log('num - '.is_null($result));
 		// if domain doesn't exist in database, check if it's a gc.ca domain
 		if ($result['num'][0] <= 0) 
 		{
 			if ($gcca !== 'gc.ca')
 				//throw new RegistrationException(elgg_echo('gcRegister:email_error'));
 				$resulting_error .= '- '.elgg_echo('gcRegister:invalid_email').'<br/>';
+			
 		}
 
 		if (get_input('form_type') !== 'standard')

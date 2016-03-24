@@ -28,7 +28,7 @@ return array(
 		'thewire:newpost' => 'Nouveau message sur le fil',
 		'thewire:addpost' => 'Publier sur le fil',
 		'thewire:tags' => "Messages sur le fil portant le mot-clé : '%s'",
-		'thewire:noposts' => "Aucun message sur le fil pour l\'instant",
+		'thewire:noposts' => "Aucun message sur le fil pour l'instant",
 		'item:object:thewire' => "Messages sur le fil",
 		'thewire:update' => 'Mettre à jour',
 		'thewire:by' => 'Message de %s sur le fil',

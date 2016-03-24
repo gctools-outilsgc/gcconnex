@@ -11012,6 +11012,28 @@ a.shr-opn, a.shr-opn:hover {
     .ui-autocomplete {
         padding-left: 0;
     }
+
+    .elgg-tag {
+
+
+        padding: 2px;
+        border: 1px solid #055959;
+        border-radius: 8px;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        color: white;
+        margin: 1px;
+    }
+
+    .elgg-tag:hover{
+
+        background: #f5f5f5;
+    }
+
+    .elgg-tag a {
+
+        text-decoration: none;
+    }
     
     /****************************************/
     

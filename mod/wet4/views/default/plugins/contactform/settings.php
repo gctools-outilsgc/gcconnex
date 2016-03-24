@@ -1,12 +1,14 @@
 <?php 
 $email = $vars['entity']->email;
-$list1 = $vars['entity']->list1;
+$namefr = $vars['entity']->namefr;
+$nameeng = $vars['entity']->nameeng;
+$linkfr = $vars['entity']->linkfr;
+$linkeng = $vars['entity']->linkeng;
 $loginreq = $vars['entity']->loginreq;
-if (!$loginreq) { $loginreq = 'yes'; }		
-?>
+if (!$loginreq) { $loginreq = 'yes'; }	
+$message = $vars['entity']->message;
+if (!$message) { $message = 'no'; }		
 
-<p>
-<?php
 echo elgg_echo('contactform:enteremail');
 echo elgg_view('input/text', array(
     'name'  => 'params[email]',
@@ -23,9 +25,47 @@ echo "<div>";
 		'value' => $loginreq,
 	));
 echo "</div>";
+
+echo "<div>";
+	echo elgg_echo('contactform:box:message');
+	echo elgg_view('input/dropdown', array(
+		'name' => 'params[message]',
+		'options_values' => array(
+			'no' => elgg_echo('contactform:no'),
+			'yes' => elgg_echo('contactform:yes'),
+		),
+		'value' => $message,
+	));
+
+
+echo "</div>";
+echo elgg_echo('conatactform:eng:link');
+echo elgg_view('input/text', array(
+    'name'  => 'params[linkfr]',
+    'value' => $linkfr,
+));
+echo '<br>';
+echo elgg_echo('conatactform:fr:link');
+echo elgg_view('input/text', array(
+    'name'  => 'params[linkeng]',
+    'value' => $linkeng,
+));
+echo '<br>';
+echo elgg_echo('conatactform:fr:name');
+echo elgg_view('input/text', array(
+    'name'  => 'params[namefr]',
+    'value' => $namefr,
+));
+echo '<br>';
+echo elgg_echo('conatactform:eng:name');
+echo elgg_view('input/text', array(
+    'name'  => 'params[nameeng]',
+    'value' => $nameeng,
+));
+echo '<br>';
 ?>
 <style type="text/css">
-	table.db-table      { border-right:1px solid #ccc; border-bottom:1px solid #ccc; }
+	table.db-table      { border-right:1px solid #ccc; border-bottom:1px solid #ccc; margin-top: 15px;}
 	table.db-table th   { background:#eee; padding:5px; border-left:1px solid #ccc; border-top:1px solid #ccc; }
 	table.db-table td   { padding:5px; border-left:1px solid #ccc; border-top:1px solid #ccc; }
 </style>

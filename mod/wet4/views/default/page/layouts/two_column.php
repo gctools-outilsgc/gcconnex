@@ -22,11 +22,26 @@
 //}
 echo $vars['title'];
 if(elgg_get_context() =='contactform'){
+	$message=elgg_get_plugin_setting('message','contactform');
+	$namefr=elgg_get_plugin_setting('namefr','contactform');
+	$nameeng=elgg_get_plugin_setting('nameeng','contactform');
+	$linkfr=elgg_get_plugin_setting('linkfr','contactform');
+	$linkeng=elgg_get_plugin_setting('linkeng','contactform');
+	$lang = get_current_language();
 
-	echo'<section class="alert alert-warning">
+if( $message == "yes" ) {
+
+	echo'<section class="alert alert-warning">';
+if ($lang == 'fr'){
+
+	echo '<h3> <a href="'.$linkfr.'">'.$namefr.'</a></h3>';
+}else{
+
+	echo '<h3> <a href="'.$linkeng.'">'.$nameeng.'</a></h3>';
+}
 	
-	<h3> <a href="https://gcconnex.gc.ca/pages/view/19984549/gcconnex-updates-march-21-2016-mise-a-jour-de-gcconnnex-21-mars-2016">'.elgg_echo('contactform:update:alert').'</a></h3>
-</section>';
+echo '</section>';
+}
 };
 ?>
 

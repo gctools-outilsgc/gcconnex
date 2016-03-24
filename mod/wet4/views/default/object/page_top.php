@@ -115,6 +115,16 @@ if ($full) {
 
 	$excerpt = elgg_get_excerpt($page->description);
 
+    if(elgg_in_context('group_profile')){
+        $metadata = elgg_view_menu('entity', array(
+			'entity' => $vars['entity'],
+			'handler' => 'pages',
+			'sort_by' => 'priority',
+			'class' => 'elgg-menu-hz list-inline',
+            'item_class' => 'mrgn-rght-sm',
+		));
+    }
+
 	$params = array(
 		'entity' => $page,
 		'metadata' => $metadata,

@@ -55,7 +55,14 @@ $english = array(
 
 	'cp_notify:subject:mention_en' => "%s has mentioned you in their new post or reply",
 	'cp_notify:subject:mention_fr' => "%s vous a mentionné dans sa publication ou réponse",
+
+	'cp_notify:subject:hjtopic_en' => "New Forum Topic had been posted",
+	'cp_notify:subject:hjtopic_fr' => "",
 	
+	'cp_notify:subject:hjpost_en' => "New reply to a Forum Topic",
+	'cp_notify:subject:hjpost_en' => "",
+
+
 	// email notification content (title & corresponding description) 
 	'cp_notify:body_likes:title_en' => "%s has liked your post called '%s'",
 	'cp_notify:body_likes:title_fr' => "%s a aimé votre publication '%s'",
@@ -166,9 +173,24 @@ $english = array(
 		
 	'cp_notify:body_validate_user:title_en' => "Please validate your new account for %s",
 	'cp_notify:body_validate_user:title_fr' => "Veuiller valider votre compte pour %s",
-	
+
 	'cp_notify:body_validate_user:description_en' => "Welcome to GCconnex, to complete your registration, please validate the account registered under %s by going to this link: %s",
 	'cp_notify:body_validate_user:description_fr' => "Bienvenue sur GCconnex. Afin de compléter votre inscription, veuillez valider votre compte enregistré sous le nom %s en cliquant le lien suivant : %s",
+
+
+	'cp_notify:body_hjtopic:title_en' => "New Forum Topic has been posted",
+	'cp_notify:body_hjtopic:title_fr' => "Le Forum Topique a poster",
+
+	'cp_notify:body_hjtopic:description_en' => "",
+	'cp_notify:body_hjtopic:description_fr' => "",
+
+
+	'cp_notify:body_hjforum:title_en' => "New Post in a Forum Topic has been posted",
+	'cp_notify:body_hjforum:title_fr' => "",
+
+	'cp_notify:body_hjforum:description_en' => "",
+	'cp_notify:body_hjforum:description_fr' => "",
+
 
 
 	// email notification footer text (1 and 2)

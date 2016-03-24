@@ -42,7 +42,13 @@ if (isset($vars['base_url']) && $vars['base_url']) {
 } else {
 	$base_url = current_page_url();
 }
-
+////////////
+//fix for unvalidated users page
+$current_url = explode('?',current_page_url());
+if ($current_url[0] === elgg_get_site_url().'admin/users/unvalidated'){
+	$base_url = current_page_url();
+}
+//$base_url = current_page_url();
 $base_url_has_fragment = preg_match('~#.~', $base_url);
 
 $get_href = function ($offset) use ($base_url, $base_url_has_fragment, $offset_key, $url_fragment) {

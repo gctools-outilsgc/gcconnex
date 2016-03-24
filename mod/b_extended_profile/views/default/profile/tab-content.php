@@ -7,6 +7,7 @@
 
 
 //generate content tabs
+
 $fields = array('File', 'Blog', 'page_top', 'Bookmarks', 'Poll', 'Thewire', 'Album', 'task_top');
 
 foreach($fields as $field){

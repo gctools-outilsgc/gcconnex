@@ -113,6 +113,15 @@ HTML;
 
 	$content = '<i class="fa fa-link mrgn-rght-md"></i>' . "$link{$excerpt}";
 
+    if(elgg_in_context('group_profile')){
+        $metadata = elgg_view_menu('entity', array(
+	'entity' => $vars['entity'],
+	'handler' => 'bookmarks',
+	'sort_by' => 'priority',
+	'class' => 'list-inline',
+));
+    }
+
 	$params = array(
 		'entity' => $bookmark,
 		'metadata' => $metadata,

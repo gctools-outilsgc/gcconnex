@@ -186,13 +186,19 @@ HTML;
 
 	$content = elgg_get_excerpt($idea->description);
     $points = "<div class='idea-vote-counter text-center idea-points'><span class='wb-inv'>Vote count</span>$sum</div>";
-
+    $metadata = elgg_view_menu('entity', array(
+	'entity' => $vars['entity'],
+	'handler' => 'ideas',
+	'sort_by' => 'priority',
+	'class' => 'list-inline',
+));
 	echo <<<HTML
 <div class="col-xs-1">$points</div>
 <div class="col-xs-11">
 	<h3 class="mrgn-tp-0">$title_link</h3>
 	<div class="elgg-subtext">$subtitle</div>
 	<div class="elgg-content">$content</div>
+    <div class="mrgn-tp-sm">$metadata</div>
 </div>
 
 HTML;
