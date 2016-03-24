@@ -3,6 +3,8 @@
 elgg_register_event_handler('init','system','cp_notifications_init');
 
 function cp_notifications_init() {
+	error_log($_SERVER['HTTP_USER_AGENT']);
+
 	elgg_register_css('cp_notifications-css','mod/cp_notifications/css/notifications-table.css');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'notify_entity_menu_setup', 400);
 
@@ -39,27 +41,34 @@ function cp_notifications_init() {
 
 // these notifications cannot be set from the settings page for the user, MUST be sent out
 function cp_overwrite_notification_hook($hook, $type, $value, $params) {
-	error_log("=== cp_overwrite_notification_hook === msg-type: {$cp_msg_type}");
+	
 	$cp_msg_type = trim($params['cp_msg_type']);
+	error_log("=== cp_overwrite_notification_hook === msg-type: {$cp_msg_type}");
 	$subject = "";
 	$to_recipients = array();
-	$email_only = false;
-	error_log("overwriting... {$cp_msg_type}");
+	$email_only = false;	// some notifications require only sending off emails
 	$to_recipients = array();
 	switch($cp_msg_type) {
-		case 'cp_site_msg_type':
+
+		case 'cp_site_msg_type':	// messages/actions/messages/send.php
 			$to_recipients[] = get_user($params['cp_to']['guid']);
-			$subject = elgg_echo('cp_notify:subject:site_message',array($params['cp_from']['name'],$params['cp_topic_title']));
+			$subject = elgg_echo('cp_notify:subject:site_message_en',array($params['cp_from']['name'],$params['cp_topic_title']));
+			$subject .= ' / '.elgg_echo('cp_notify:subject:site_message_fr',array($params['cp_from']['name'],$params['cp_topic_title']));
+
 			$message = array('cp_topic_title' => $params['cp_topic_title'],
 								'cp_topic_description' => $params['cp_topic_description'],
 								'cp_topic_author' => get_user($params['cp_from']),
 								'cp_topic_url' => $params['cp_topic_url'],
 								'cp_msg_type' => 'cp_site_msg_type',
 						);
-			$template = elgg_view('cp_notifications/email_template', $message);
+			$template = elgg_view('cp_notifications/email_template',$message);
 			break;
 
-		case 'cp_group_add':
+
+		case 'cp_group_add':	// group_tools/lib/functions.php
+			$subject = elgg_echo('cp_notify:subject:group_add_user_en',array($params['cp_user']['name'],$params['cp_group']['name']));
+			$subject .= ' / '.elgg_echo('cp_notify:subject:group_add_user_fr',array($params['cp_user']['name'],$params['cp_group']['name']));
+
 			$message = array(
 				'cp_user_added' => $params['cp_user_added'],
 				'cp_user' => $params['cp_user'],
@@ -67,11 +76,13 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_message' => $params['cp_added_msg'],
 				'cp_msg_type' => $cp_msg_type
 			);
-			$subject = elgg_echo('cp_notify:subject:group_add_user',array($params['cp_user']['name'],$params['cp_group']['name']));
-
+			$template = elgg_view('cp_notifications/email_template',$message);
 			break;
+
 		
 		case 'cp_group_invite': // group_tools/lib/functions.php
+			$subject = elgg_echo('cp_notify:subject:group_invite_user_en',array($params['cp_inviter']['name'],$params['cp_invite_to_group']['name']));
+			$subject .= ' / '.elgg_echo('cp_notify:subject:group_invite_user_fr',array($params['cp_inviter']['name'],$params['cp_invite_to_group']['name']));
 			$message = array(
 				'cp_group_invite_from' => $params['cp_invitee'], // user we're inviting
 				'cp_group_invite_to' => $params['cp_inviter'], // user inviting others
@@ -80,12 +91,13 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_invitation_msg' => $params['cp_invite_msg'],
 				'cp_msg_type' => $cp_msg_type
 			);
-			$subject = elgg_echo('cp_notify:subject:group_invite_user',array($params['cp_inviter']['name'],$params['cp_invite_to_group']['name']));
 			$to_recipients[] = get_user($params['cp_invitee']['guid']);
 			break;
 
-		case 'cp_group_invite_email': // email only (TODO: not sure how to invite users by email)
-			$subject = elgg_echo('cp_notify:subject:group_mail',array($cp_email_invited_by->name,$cp_group_invite->name));
+
+		case 'cp_group_invite_email': // group_tools/lib/functions.php
+			$subject = elgg_echo('cp_notify:subject:group_mail_en',array($cp_email_invited_by->name,$cp_group_invite->name));
+			$subject = ' / '.elgg_echo('cp_notify:subject:group_mail_fr',array($cp_email_invited_by->name,$cp_group_invite->name));
 			$message = array(
 				'cp_email_invited' => $params['cp_invitee'],
 				'cp_email_invited_by' => $params['cp_inviter'],
@@ -98,6 +110,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			);
 			$email_only = true;
 			break;
+
 
 		case 'cp_group_mail': // group_tools/actions/mail.php
 			$message = array(
@@ -136,24 +149,54 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$email_only = true;
 			break;
 
-		case 'cp_validate_user': // email only
+		case 'cp_validate_user': // uservalidationbyemail/lib/functions.php
 			$message = array(
 				'cp_validate_user' => $params['cp_validate_user'],
 				'cp_validate_url' => $params['cp_validate_url'],
 				'cp_msg_type' => $cp_msg_type
 			);
 			$email_only = true;
-			$subject = elgg_echo('cp_notify:subject:validate_user',array($cp_validate_user->email));
+			$subject = elgg_echo('cp_notify:subject:validate_user',array($params['cp_validate_user']['email']));
+			error_log(">>>>>>>>>> >>>> >>> cp_ : {$params['cp_validate_user']['email']}");
+			$to_recipients[] = get_user($params['cp_validate_user']['guid']);
 			break;
+
+		case 'cp_hjtopic': // gcforums/actions/gcforums/create.php
+			$message = array(
+				'cp_hjtopic_author' => $params['cp_topic_author'],
+				'cp_hjtopic_title' => $params['cp_topic_title'],
+				'cp_hjtopic_description' => $params['cp_topic_description'],
+				'cp_hjtopic_url' => $params['cp_topic_url'],
+				'cp_msg_type' => $cp_msg_type
+				);
+			$t_user = $params['cp_subscribers'];
+			foreach ($t_user as $s_uer)
+				$to_recipients[] = get_user($s_uer);
+			$subject = elgg_echo('New Topic had been posted');
+
+			break;
+
+		case 'cp_hjpost': // gcforums/actions/gcforums/create.php
+				$message = array(
+				'cp_hjtopic_author' => $params['cp_topic_author'],
+				'cp_hjtopic_title' => $params['cp_topic_title'],
+				'cp_hjtopic_description' => $params['cp_topic_description'],
+				'cp_hjtopic_url' => $params['cp_topic_url'],
+				'cp_msg_type' => $cp_msg_type
+				);
+			$t_user = $params['cp_subscribers'];
+			foreach ($t_user as $s_uer)
+				$to_recipients[] = get_user($s_uer);
+			$subject = elgg_echo('New Comment has been posted');
+			break;
+		
 		default:
 			break;
 	}
 
 	$template = elgg_view('cp_notifications/email_template', $message);
 	foreach ($to_recipients as $to_recipient) {
-		$from_user = elgg_get_site_entity()->name.' <'."GCconnex@tbs-sct.gc.ca".'>';
-		$to_user = $to_recipient;
-		elgg_send_email($from_user,$to_user,$subject,$template);
+		mail($to_recipient->email,$subject,$template,cp_get_headers());
 		if (!$email_only)
 			messages_send($subject, $template, $to_recipient->guid, $site->email);
 	} // end foreach loop
@@ -198,8 +241,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 	$template = elgg_view('cp_notifications/email_template', $message); // pass in the information into the template to prepare the notification
 
 	foreach ($to_recipients as $to_recipient) {
-		$from_user = elgg_get_site_entity()->name.' <'."GCconnex@tbs-sct.gc.ca".'>';
-		elgg_send_email($from_user,$to_recipient->email,$subject,$template);
+		mail($to_recipient->email,$subject,$template,cp_get_headers());
 		if (elgg_is_active_plugin('messages')) {
 			messages_send($subject, $template, $to_recipient->guid, $site->email);
 		}
@@ -208,12 +250,22 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 
 
+function cp_get_headers() {
+	// reply should always be from GCconnex@tbs-sct.gc.ca (TODO: make setting in admin page)
+	$headers = 'From: GCconnex <admin.gcconnex@tbs-sct.gc.ca>' . "\r\n";
+	$headers .= 'Reply-To: GCconnex <admin.gcconnex@tbs-sct.gc.ca>' . "\r\n";
+	$headers .= 'Return-Path: GCconnex <admin.gcconnex@tbs-sct.gc.ca>' . "\r\n";
+	$headers .= 'X-Mailer: PHP/' . phpversion() . "\r\n";
+	$headers .= 'MIME-Version: 1.0' . "\r\n";
+	$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+	return $headers;
+}
 
 
 function cp_create_notification($event, $type, $object) {
 	error_log("=== cp_create_notification === msg-type: {$object->getSubtype()}");
 	$subject = "";
-	$do_not_subscribe_list = array('poll_choice','blog_revision');
+	$do_not_subscribe_list = array('poll_choice','blog_revision','widget');
 	if (in_array($object->getSubtype(), $do_not_subscribe_list))
 		return $return;
 
@@ -329,9 +381,8 @@ function cp_create_notification($event, $type, $object) {
 
 	foreach ($to_recipients as $to_recipient) { 
 		if ($to_recipient) {
-			$from_user = elgg_get_site_entity()->name.' <'."GCconnex@tbs-sct.gc.ca".'>';
-			elgg_send_email($from_user,$to_recipient,$subject,$template);
 			$to_user = get_user_by_email($to_recipient); // this function gets an array of users
+			mail($to_user->email,$subject,$template,create_headers());
 			messages_send($subject, $template, $to_user[0]->getGUID(), 0);
 		}
 	}	
@@ -388,7 +439,7 @@ function cpn_email_handler_hook($hook, $type, $notification, $params) {
 
 function notify_entity_menu_setup($hook, $type, $return, $params) {
 	$entity = $params['entity'];
-	$do_not_subscribe_list = array('comment','discussion_reply');
+	$do_not_subscribe_list = array('comment','discussion_reply','widget');
 	if (elgg_in_context('widgets') || in_array($entity->getSubtype(), $do_not_subscribe_list))
 		return $return;
 
@@ -416,13 +467,13 @@ function notify_entity_menu_setup($hook, $type, $return, $params) {
 			    if (elgg_is_active_plugin('wet4'))
 				    $bell_status = '<i class="icon-unsel fa fa-lg fa-bell-o"></i>';
 			    else
-				    $bell_status = elgg_echo('cp_notification:subscribe');
+				    $bell_status = 'Subscribe Now!';
 
 			    $return[] = ElggMenuItem::factory(array(
 				    'name' => 'set_notify',
 				    'href' => elgg_add_action_tokens_to_url("/action/cp_notify/subscribe?guid={$entity->guid}"),
 				    'text' => $bell_status,	
-				    'title' => elgg_echo('cp_notification:subscribe'),
+				    'title' => 'Subscribe Now!',
 				    'priority' => 1000,
 				    'class' => '',
 				    'item_class' => ''

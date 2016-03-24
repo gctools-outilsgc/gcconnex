@@ -83,11 +83,13 @@ foreach ($tabs as $name => $tab) {
 	}
 }
 
-elgg_register_menu_item('filter', array(
-    'name' => 'owned',
-    'priority' => 275,
-    'text' => elgg_echo('groups:owned'),
-    'href' => 'groups/owner/' . $user->username));
+if(elgg_is_logged_in()){
+    elgg_register_menu_item('filter', array(
+        'name' => 'owned',
+        'priority' => 275,
+        'text' => elgg_echo('groups:owned'),
+        'href' => 'groups/owner/' . $user->username));
+}
 
 ?>
 

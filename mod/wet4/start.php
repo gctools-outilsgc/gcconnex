@@ -110,7 +110,7 @@ function wet4_theme_init() {
         $mygroups_title = elgg_echo('wet_mygroups:my_groups_nolog');
         $wet_activity_title = elgg_echo('wet4:colandgroupactivitynolog');
     }
-    elgg_register_widget_type('wet_activity', $wet_activity_title, 'GCconnex Group and Colleague Activity', array('custom_index_widgets'),true);
+    elgg_register_widget_type('wet_activity', $wet_activity_title, 'GCconnex Group and Colleague Activity', array('custom_index_widgets'),false);
     elgg_register_widget_type('profile_completness', elgg_echo('ps:profilestrength'), 'The "Profile Strength" widget', array('custom_index_widgets'),false);
     elgg_register_widget_type('suggested_friends', elgg_echo('sf:suggcolleagues'), elgg_echo('sf:suggcolleagues'), array('custom_index_widgets'),false);
     //elgg_register_widget_type('user_summary_panel', 'user_summary_panel', 'user_summary_panel', array('custom_index_widgets'),false);
@@ -1231,7 +1231,11 @@ function my_owner_block_handler($hook, $type, $menu, $params){
                     break;
                 case 'photo_albums':
                     $item->setText(elgg_echo('gprofile:albumsCatch'));
-                    $item->setHref('#les');
+                    if(get_language() == 'en'){
+                        $item->setHref('#albums');
+                    } else {
+                        $item->setHref('#les');
+                    }
                     $item->setPriority('11');
                     break;
                 case 'ideas':

@@ -5,8 +5,6 @@ $gcf_forward_url = str_replace("amp;","",get_input('gcf_forward_url'));
 $object = get_entity($gcf_guid);
 $gcf_group = get_input('gcf_group');
 
-error_log("ljkdskfdjslkfjdlskjfldsk GROUP: {$gcf_group}");
-
 switch ($gcf_type) {
 	case 'hjforumcategory':
 

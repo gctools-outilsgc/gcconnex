@@ -68,6 +68,7 @@ if ($object->getSubtype() === 'hjforum') {
 
 	// this is forum object then check to see if categories is enabled
 	if ($object->enable_subcategories || get_entity($object->getContainerGUID()) instanceof ElggGroup) {
+		
 		if ($vars['forum_guid'] && $vars['forum_guid'] != 0) { // this is within the nested forums
 			$query = "SELECT  oe.guid, oe.title
 					FROM elggentities e, elggentity_relationships r, elggobjects_entity oe, elggentity_subtypes es
