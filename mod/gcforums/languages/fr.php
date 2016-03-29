@@ -2,6 +2,8 @@
 
 $french = array(
 
+"gcforums:gobacktomain" => "Revenir à forum principal",
+
 "gcforums:group_forum_title" => "Forum du groupe",
 "gcforums:forum_edit" => "Modifier le forum",
 "gcforums:forum_delete" => "Supprimer le forum",

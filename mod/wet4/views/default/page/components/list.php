@@ -113,10 +113,10 @@ if(elgg_in_context('friends') || elgg_in_context('my_groups') || elgg_in_context
 
         if(elgg_get_context() == 'messages'){
             //make it so that messages won't be in alphabetical order. Need to pass a JSON array, but elgg is being mean :(
-    echo elgg_format_element('table', ['class' => ' wb-tables table', 'id' => '', "data-wb-tables"=>"{ \"ordering\" : false }"], $tHead . $tBody);
+            echo elgg_format_element('table', ['class' => ' wb-tables table ', 'id' => '', "data-wb-tables"=>"{ \"ordering\" : false }"], $tHead . $tBody);
         }else{
             //pull it all together and display table
-    echo elgg_format_element('table', ['class' => ' wb-tables table', 'id' => ''], $tHead . $tBody);
+            echo elgg_format_element('table', ['class' => ' wb-tables table table-striped', 'id' => ''], $tHead . $tBody);
         }
     
 

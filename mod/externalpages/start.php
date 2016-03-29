@@ -9,7 +9,7 @@ function expages_init() {
 
 	// Register a page handler, so we can have nice URLs
 	elgg_register_page_handler('about-a_propos', 'expages_page_handler');		// GCChange change - Ilia: Bilingual page url
-	elgg_register_page_handler('terms-termes', 'expages_page_handler');		// GCChange change - Ilia: Bilingual page url
+	elgg_register_page_handler('terms', 'expages_page_handler');		// GCChange change - Ilia: Bilingual page url
 	elgg_register_page_handler('privacy-confidentialite', 'expages_page_handler');		// GCChange change - Ilia: Bilingual page url
 	elgg_register_page_handler('expages', 'expages_page_handler');
 

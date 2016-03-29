@@ -8,7 +8,7 @@ return array(
 	'admin:appearance:expages' => "Site Pages",
 	'expages:edit:viewpage' => "View page on site",
 	'expages:about-a_propos' => "About",		// GCChange change - Ilia: Bilingual page url
-	'expages:terms-termes' => "Terms",		// GCChange change - Ilia: Bilingual page url
+	'expages:terms' => "Terms",		// GCChange change - Ilia: Bilingual page url
 	'expages:privacy-confidentialite' => "Privacy",		// GCChange change - Ilia: Bilingual page url
 	'expages:contact' => "Contact",
 

@@ -220,12 +220,31 @@ function cp_create_annotation_notification($event, $type, $object) {
 	$object_subtype = $object->getSubtype();
 	switch ($object_subtype) {
 		case 'likes':
-			$entity = get_entity($object->entity_guid);
-			$user = get_user($entity->owner_guid);
-			$to_recipients[] = $user;
+		    
+            $entity = get_entity($object->entity_guid);
+            
+            if($entity->type=="user"){
+                $user = get_user($entity->guid);                
+                //$to_recipients[] =  get_user($object->owner_guid);
+                $to_recipients[] =  $user;
+            }
+            else
+            {
+			    $user = get_user($entity->owner_guid);
+                $to_recipients[] = $user;
+			}
+            
 
 			$from_user = get_user($object->owner_guid);
-			$subject = elgg_echo('cp_notify:subject:likes',array($from_user->name,$entity->title));
+            if($entity->type=="user"){
+                $subject = elgg_echo('cp_notify:subject:likes',array($from_user->name, $entity->name),'en');
+                $subject .= ' | '.elgg_echo('cp_notify:subject:likes',array($from_user->name,$entity->name),'fr');
+            }
+            else
+            {
+                $subject = elgg_echo('cp_notify:subject:likes',array($from_user->name,$entity->title),'en');
+                $subject .= ' | '.elgg_echo('cp_notify:subject:likes',array($from_user->name,$entity->title),'fr');
+            }
 			$message = array('cp_topic_title' => $entity->title,
 								'cp_liked_by' => $from_user->name,
 								'cp_topic_description' => $object->description,
@@ -257,7 +276,7 @@ function cp_get_headers() {
 	$headers .= 'Return-Path: GCconnex <admin.gcconnex@tbs-sct.gc.ca>' . "\r\n";
 	$headers .= 'X-Mailer: PHP/' . phpversion() . "\r\n";
 	$headers .= 'MIME-Version: 1.0' . "\r\n";
-	$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+	$headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
 	return $headers;
 }
 
@@ -354,6 +373,7 @@ function cp_create_notification($event, $type, $object) {
 
 	$template = elgg_view('cp_notifications/email_template', $message); // pass in the information into the template to prepare the notification
 	
+   
     //if ($cp_mentioned_users) {
     //    foreach ($cp_mentioned_users as $cp_mentioned_user) {
 

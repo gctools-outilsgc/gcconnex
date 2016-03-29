@@ -151,6 +151,7 @@ function gcforums_topic_content($topic_guid, $group_guid) {
 	$comments = elgg_get_entities(array(
 		'types' => 'object',
 		'container_guids' => $topic->guid,
+		'limit' => 0,
 	));
 
 	$topic_content .= "<br/><br/>"; // TODO: style this
@@ -575,6 +576,7 @@ function gcforums_forum_list($forum_guid, $group_guid) {
 			'relationship_guid' => $forum_guid,
 			'inverse_relationship' => true,
 			'types' => 'object',
+			'limit' => 0,
 		);
 	$forums = elgg_get_entities_from_relationship($options);
 
@@ -635,6 +637,9 @@ function gcforums_forum_list($forum_guid, $group_guid) {
 function gcforums_menu_buttons($forum_guid,$group_guid, $is_topic=false) { // main page if forum_guid is not present
 
 	elgg_load_css('gcforums-css');
+	if (strcmp((string)"/gcforums/group/{$group_guid}",(string)$_SERVER["REQUEST_URI"]) !== 0)
+		$go_back_link = "<a href='".elgg_get_site_url()."gcforums/group/{$group_guid}'>".elgg_echo('gcforums:gobacktomain')."</a>"; // ease of going back to main forum
+	
 	// cyu 03/22/2016: group members need to be able to post!
 	if (elgg_is_logged_in() && check_entity_relationship(elgg_get_logged_in_user_guid(),'member',$group_guid) && !$is_topic) {
 
@@ -676,8 +681,9 @@ function gcforums_menu_buttons($forum_guid,$group_guid, $is_topic=false) { // ma
 			}
 		}
         //styled this positioning with CSS - Nick
-		return "<div class='gcforums-menu'>{$new_category_button} {$new_forum_button} {$new_forum_topic_button} {$separator} {$edit_forum_button} {$delete_forum_button}</div> ";
+		return "{$go_back_link} <div class='gcforums-menu'>{$new_category_button} {$new_forum_button} {$new_forum_topic_button} {$separator} {$edit_forum_button} {$delete_forum_button}</div> ";
 	}
 
-	return "<div class='gcforums-menu'>{$new_forum_topic_button}</div>";
+	
+	return "{$go_back_link} <div class='gcforums-menu'>{$new_forum_topic_button}</div>";
 }

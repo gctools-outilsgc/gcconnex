@@ -175,7 +175,7 @@ if (elgg_is_logged_in()) {
 
 	// hidden field for forward url
 	$gcf_forward = $_SERVER['HTTP_REFERER'];
-	$gcf_forward_url_input = elgg_view('input/text', array(
+	$gcf_forward_url_input = elgg_view('input/hidden', array(
 		'name' => 'gcf_forward_url',
 		'value' => $gcf_forward,
 		));

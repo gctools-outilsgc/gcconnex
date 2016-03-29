@@ -8,7 +8,7 @@
 
 $site_url = elgg_get_site_url();
 $about = $site_url .'about-a_propos';
-$terms = $site_url .'terms-termes';
+$terms = $site_url .'terms';
 $priv = $site_url .'privacy-confidentialite';
 ?>
 
