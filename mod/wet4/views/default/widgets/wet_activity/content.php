@@ -40,7 +40,7 @@ if(elgg_is_logged_in()){
             $hasgroups = $user->getGroups();
             if($hasgroups){
                 //loop through group guids
-                $groups = $user->getGroups(array(), false);
+                $groups = $user->getGroups(array('limit'=>0,)); //increased limit from 10 groups to all
                 $group_guids = array();
                 foreach ($groups as $group) {
                     $group_guids[] = $group->getGUID();
@@ -60,18 +60,25 @@ if(elgg_is_logged_in()){
         }else if(!$hasfriends && $hasgroups){
             //if no friends but groups
             $guids_in = implode(',', array_unique(array_filter($group_guids)));
-            $optionsg['joins'] = array("JOIN {$db_prefix}entities e1 ON e1.guid = rv.object_guid");
-            $optionsg['wheres'] = array("(e1.container_guid IN ($guids_in))");
+            //$optionsg['joins'] = array("JOIN {$db_prefix}entities e1 ON e1.guid = rv.object_guid");
+            //display created content and replies and comments
+            $optionsg['wheres'] = array("( oe.container_guid IN({$guids_in}) 
+         OR te.container_guid IN({$guids_in}) )");
             $optionsg['pagination'] = true;
             $activity = elgg_list_river($optionsg);
         }else{
             //if friends and groups :3
             $guids_in = implode(',', array_unique(array_filter($group_guids)));
-
-            $optionsfg['joins'] = array("JOIN {$db_prefix}entities e ON e.guid = rv.object_guid");
+           //echo $guids_in;
+         /*   $optionsfg['joins'] = array(" {$db_prefix}entities e ON e.guid = rv.object_guid",
+                " {$db_prefix}entities e1 ON e1.guid = rv.target_guid",
+                
+                );*/
             //Groups + Friends activity query
-            $optionsfg['wheres'] = array("
-        e.container_guid IN({$guids_in})
+            //This query grabs new created content and comments and replies in the groups the user is a member of *** te.container_guid grabs comments and replies
+            $optionsfg['wheres'] = array(
+        "( oe.container_guid IN({$guids_in})
+         OR te.container_guid IN({$guids_in}) )
         OR rv.subject_guid IN (SELECT guid_two FROM {$db_prefix}entity_relationships WHERE guid_one=$user->guid AND relationship='friend')
         ");
             $optionsfg['pagination'] = true;
@@ -127,5 +134,6 @@ if(elgg_is_logged_in()){
 
 
 //echo out the yolo code
+
 echo $activity;
 

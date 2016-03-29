@@ -1717,6 +1717,10 @@ table.mceLayout {
 .mvm{margin-top:10px;margin-bottom:10px}
 .mvl{margin-top:20px;margin-bottom:20px}
 
+/****************************
+    Missing WET-BOEW for Admin
+*/
+.wb-inv {display:none;}
 /* ***************************************
 	RESPONSIVE
 *************************************** */
