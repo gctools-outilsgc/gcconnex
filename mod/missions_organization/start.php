@@ -16,7 +16,7 @@ function missions_organization_init() {
     elgg_load_library('elgg:missions-organization');
     
     elgg_register_action("missions_organization/upload-form", elgg_get_plugins_path() . "missions_organization/actions/missions_organization/upload-form.php");
-    elgg_register_action("missions_organization/delete-all", elgg_get_plugins_path() . "missions_organization/actions/missions_organization/delete-all.php");
+    //elgg_register_action("missions_organization/delete-all", elgg_get_plugins_path() . "missions_organization/actions/missions_organization/delete-all.php");
     elgg_register_action("missions_organization/change-values-form", elgg_get_plugins_path() . "missions_organization/actions/missions_organization/change-values-form.php");
     elgg_register_action("missions_organization/add-node-form", elgg_get_plugins_path() . "missions_organization/actions/missions_organization/add-node-form.php");
     elgg_register_action("missions_organization/merge-node-form", elgg_get_plugins_path() . "missions_organization/actions/missions_organization/merge-node-form.php");

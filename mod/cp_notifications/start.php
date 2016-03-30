@@ -171,8 +171,8 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$t_user = $params['cp_subscribers'];
 			foreach ($t_user as $s_uer)
 				$to_recipients[] = get_user($s_uer);
-			$subject = elgg_echo('cp_notify:subject:hjtopic_en'); // translate
-			$subject .= ' / '.elgg_echo('cp_notify:subject:hjtopic_fr');
+			$subject = elgg_echo('cp_notify:subject:hjtopic',array(),'en'); // translate
+			$subject .= ' | '.elgg_echo('cp_notify:subject:hjtopic',array(),'fr');
 			break;
 
 		case 'cp_hjpost': // gcforums/actions/gcforums/create.php
@@ -186,8 +186,8 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$t_user = $params['cp_subscribers'];
 			foreach ($t_user as $s_uer)
 				$to_recipients[] = get_user($s_uer);
-			$subject = elgg_echo('cp_notify:subject:hjpost_en'); // translate
-			$subject .= ' / '.elgg_echo('cp_notify:subject:hjpost_fr');
+			$subject = elgg_echo('cp_notify:subject:hjpost',array(),'en'); // translate
+			$subject .= ' | '.elgg_echo('cp_notify:subject:hjpost',array(),'fr');
 			break;
 		
 		default:
@@ -224,9 +224,16 @@ function cp_create_annotation_notification($event, $type, $object) {
             $entity = get_entity($object->entity_guid);
             
             if($entity->type=="user"){
-                $user = get_user($entity->guid);                
+                $user = get_user($entity->guid);  
+                
+                $options=array(
+                    'relationship'=>'friend',
+                    'relationship_guid'=>$object->entity_guid,
+                    );
+                $recipient=elgg_get_entities_from_relationship($options);
+
                 //$to_recipients[] =  get_user($object->owner_guid);
-                $to_recipients[] =  $user;
+                $to_recipients[] =  $recipient->email;
             }
             else
             {

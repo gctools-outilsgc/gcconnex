@@ -28,7 +28,23 @@ $gcf_description_input = elgg_view('input/longtext', array(
 	'value' => $object->description,
 ));
 
-if ($object->getSubtype() === 'hjforumtopic') {
+
+// cyu - patched that only group owner/moderators/admin can do sticky topics
+$gcf_current_user_guid = elgg_get_logged_in_user_guid();
+$gcf_moderator_users_guid = array();
+
+$gcf_moderator_user[] = get_entity($vars['group_guid'])->owner_guid;
+$group_operators = elgg_get_entities_from_relationship(array(
+	'relationship' => 'operator',
+	'relationship_guid' => $vars['group_guid'],
+	'inverse_relationship' => true
+	));
+
+foreach ($group_operators as $group_operator)
+	$gcf_moderator_user[] = $group_operator->guid;
+
+if ($object->getSubtype() === 'hjforumtopic' && in_array($gcf_current_user_guid, $gcf_moderator_user)) {
+
 	$gcf_sticky_topic_label = elgg_echo('gcforums:is_sticky');
 	$gcf_sticky_topic_input = elgg_view('input/checkboxes', array(
 		'name' => 'gcf_sticky',

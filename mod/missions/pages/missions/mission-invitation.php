@@ -32,6 +32,10 @@ elgg_push_breadcrumb($title);
 
 $content = elgg_view_title($title);
 
+if(elgg_get_logged_in_user_entity()->opt_in_missions != 'gcconnex_profile:opt:yes') {
+	$content .= '<p>' . elgg_echo('missions:you_will_be_opted_in') . '</p>';
+}
+
 $content .= elgg_view_entity($mission, array(
 		'entity' => $mission,
         'mission_full_view' => true,
@@ -43,14 +47,14 @@ $content .= elgg_view('output/url', array(
     'href' => elgg_get_site_url() . 'action/missions/accept-invite?applicant=' . $applicant . '&mission=' . $mission->guid,
     'text' => elgg_echo('missions:accept'),
     'is_action' => true,
-    'class' => 'elgg-button btn btn-default'
+    'class' => 'elgg-button btn btn-success'
 ));
 // Button to decline the mission.
 $content .= elgg_view('output/url', array(
     'href' => elgg_get_site_url() . 'action/missions/decline-invite?applicant=' . $applicant . '&mission=' . $mission->guid,
     'text' => elgg_echo('missions:decline'),
     'is_action' => true,
-    'class' => 'elgg-button btn btn-default'
+    'class' => 'elgg-button btn btn-danger'
 ));
 
 echo elgg_view_page($title, $content);

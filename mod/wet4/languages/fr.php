@@ -61,6 +61,18 @@ return array(
      'ps:optin' => "Adhérer",
      'ps:psErr' => "Une erreur est survenue durant l'obtentions de vos informations de profil . Nous travaillons pour résoudre le problème .",
 
+
+       /**
+    * Message Inbox
+    */
+
+   'msg:to' => 'À',
+   'msg:from' => 'De',
+   'msg:subject' => 'Sujet',
+   'msg:recieved' => 'Reçu',
+   'msg:sent' => 'Envoyer',
+
+
      /*
        * Content Creation
        */

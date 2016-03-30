@@ -34,7 +34,7 @@ foreach($entity_list as $key => $entity) {
 		$entity_display .= '<span style="font-weight:bold;">' . $entity->job_title . '</span> (' . $entity->completion_date . ')</br>' . $entity->department;
 		$entity_display .= '</div><div class="col-sm-5">';
 		foreach($feedback_search as $feedback) {
-			$entity_display .= elgg_view_entity_icon(get_user($feedback->owner_guid), 'tiny');
+			$entity_display .= elgg_view_entity_icon(get_user($feedback->owner_guid), 'small');
 		}
 		$entity_display .= '</div></div>';
 	}

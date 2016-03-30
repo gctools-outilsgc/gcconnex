@@ -74,7 +74,8 @@ $input_email = elgg_view('input/text', array(
 		echo elgg_view('input/submit', array(
 				'value' => elgg_echo('missions:send'),
 				'class' => 'elgg-button btn btn-primary',
-				'style' => 'float:right;'
+				'style' => 'float:right;',
+				'id' => 'mission-application-form-submission-button'
 		)); 
 	?> 
 </div>

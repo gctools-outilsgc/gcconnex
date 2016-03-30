@@ -30,33 +30,48 @@ $selection_ninth = get_input('assn');*/
 // The arrays are different depending on whether the user is searching for missions or candidates.
 if($_SESSION['mission_search_switch'] == 'candidate') {
     $search_fields = array(
-        '',
-        elgg_echo('missions:education'),
-        elgg_echo('missions:experience'),
-        elgg_echo('missions:skill'),
-        elgg_echo('missions:portfolio')
+	        '',
+	        elgg_echo('missions:education'),
+	        elgg_echo('missions:experience'),
+	        elgg_echo('missions:skill'),
+	        elgg_echo('missions:portfolio')
     );
     
+    if(elgg_is_active_plugin('missions_profile_extend')) {
+    	$search_fields[count($search_fields)] = elgg_echo('missions:opt_in');
+    }
+    
     $subtitle = elgg_echo('missions:advanced_search_for_candidates');
+	$limit_options = array(10,25,50,100);
 }
 else {
     $search_fields = array(
-        '',
-        elgg_echo('missions:title'),
-        elgg_echo('missions:type'),
-        elgg_echo('missions:department'),
-        elgg_echo('missions:key_skills'),
-        elgg_echo('missions:security_clearance'),
-        elgg_echo('missions:location'),
-        elgg_echo('missions:language'),
-        elgg_echo('missions:time'),
-        elgg_echo('missions:period'),
-        elgg_echo('missions:start_time'),
-        elgg_echo('missions:duration')
+	        '',
+	        elgg_echo('missions:title'),
+	        elgg_echo('missions:type'),
+	        elgg_echo('missions:department'),
+	        elgg_echo('missions:key_skills'),
+	        elgg_echo('missions:security_clearance'),
+	        elgg_echo('missions:location'),
+	        elgg_echo('missions:language'),
+	        elgg_echo('missions:time'),
+	        elgg_echo('missions:period'),
+	        elgg_echo('missions:start_time'),
+	        elgg_echo('missions:duration'),
+	        elgg_echo('missions:work_remotely'),
+	        elgg_echo('missions:program_area')
     );
     
     $subtitle = elgg_echo('missions:advanced_search_for_opportunities');
+	$limit_options = array(9,18,30,60,120);
 }
+
+$input_advanced_limit = elgg_view('input/dropdown', array(
+		'name' => 'limit',
+		'value' => $limit,
+		'options' => $limit_options,
+		'id' => 'search-mission-limit-dropdown-input'
+));
 
 $number_of_rows = elgg_get_plugin_setting('advanced_element_limit', 'missions');
 $content = '<div class="form-group">';
@@ -83,15 +98,21 @@ for ($i = 0; $i < $number_of_rows; $i ++) {
     $content .= '<noscript>';
     $content .= elgg_view('input/text', array(
         'name' => 'backup_' . $i,
-        'value' => $variable_array[$i],
+        'value' => '',
         'id' => 'search-mission-advanced-selection-' . $i . '-dropdown-input-backup'
     ));
     $content .= '</noscript></div>';
 }
 $content .= '</table>';
+
+$hidden_input = elgg_view('input/hidden', array(
+    'name' => 'hidden_return',
+    'value' => $vars['return_to_referer']
+));
 ?>
 
 <h4><?php echo $subtitle . ':'; ?></h4>
+<?php echo $hidden_input; ?>
 <?php echo $content; ?>
 <p>
 	<?php echo elgg_echo('missions:advanced_note_paragraph_one'); ?>
@@ -102,7 +123,19 @@ $content .= '</table>';
 </p>
 </noscript>
 
-<div style="text-align:right;"> <?php echo elgg_view('input/submit', array('value' => elgg_echo('missions:search'))); ?> </div>
+<label for="search-mission-limit-dropdown-input" style="display:inline-block;"><?php echo elgg_echo('missions:search_limit') . ': '; ?></label>
+<div style="display:inline-block">
+	<?php echo $input_advanced_limit; ?>
+</div>
+
+<div style="text-align:right;"> 
+	<?php
+		echo elgg_view('input/submit', array(
+				'value' => elgg_echo('missions:search'),
+				'id' => 'mission-advanced-search-form-submission-button'
+		)); 
+	?>
+</div>
 
 <script>
 	// Gets called when the dropdown value changes.

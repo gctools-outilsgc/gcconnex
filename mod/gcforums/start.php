@@ -516,7 +516,7 @@ function gcforums_forums_edit_options($object_guid,$group_guid) {
 		elgg_view('output/url', array('is_action' => TRUE));
 		elgg_view('input/securitytoken');
 		$url = elgg_add_action_tokens_to_url(elgg_get_site_url()."action/gcforums/delete?guid={$object_guid}");
-		$edit_options .= "<a href='{$url}'>Delete</a>";
+		$edit_options .= "<a href='{$url}'>Delete</a><br/>";
 	}
 
 	// subscription functionality... users will get notified if any action occurs		

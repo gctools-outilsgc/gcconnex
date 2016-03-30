@@ -65,6 +65,11 @@ else {
 			$subject = $applicant->name . elgg_echo('missions:accepts_invitation', array(), $manager->language);
 			$body = $applicant->name . elgg_echo('missions:accepts_invitation_more', array(), $manager->language) . $mission_link . '.';
 			notify_user($manager->guid, $applicant->guid, $subject, $body);
+			
+			if($applicant->opt_in_missions != 'gcconnex_profile:opt:yes') {
+				$applicant->opt_in_missions = 'gcconnex_profile:opt:yes';
+				$applicant->save();
+			}
 		}
 	}
 }

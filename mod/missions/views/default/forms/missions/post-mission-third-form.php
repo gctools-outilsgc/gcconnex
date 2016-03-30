@@ -38,15 +38,16 @@ $input_remotely = elgg_view('input/checkbox', array(
 	    'checked' => $remotely,
 	    'id' => 'post-mission-remotely-checkbox-input'
 ));
-$input_location = elgg_view('input/text', array(
+$input_location = elgg_view('input/dropdown', array(
 	    'name' => 'location',
 	    'value' => $location,
+	    'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('province_string', 'missions')),
 	    'id' => 'post-mission-location-text-input'
 ));
 $input_security = elgg_view('input/dropdown', array(
 	    'name' => 'security',
 	    'value' => $security,
-	    'options' => explode(',', elgg_get_plugin_setting('security_string', 'missions')),
+	    'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('security_string', 'missions')),
 	    'id' => 'post-mission-security-dropdown-input'
 ));
 $input_timezone = elgg_view('input/dropdown', array(
@@ -65,7 +66,7 @@ $input_time_commit = elgg_view('input/text', array(
 $input_time_interval = elgg_view('input/dropdown', array(
 		'name' => 'time_interval',
 		'value' => $time_interval,
-		'options' => explode(',', elgg_get_plugin_setting('time_rate_string', 'missions')),
+		'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('time_rate_string', 'missions')),
 		'id' => 'post-mission-time-interval-dropdown-input',
 		'style' => 'display:inline-block;margin-left:4px;'
 ));
@@ -82,7 +83,7 @@ $language_field = elgg_view('page/elements/hidden-field', array(
 $time_content = '<div class="form-group"><label for="post-mission-timezone-dropdown-input" class="col-sm-3" style="text-align:right;">';
 $time_content .= elgg_echo('missions:timezone') . ':';
 $time_content .= '</label>';
-$time_content .= '<div class="col-sm-9">';
+$time_content .= '<div class="col-sm-3">';
 $time_content .= $input_timezone;
 $time_content .= '</div></div>';
 $time_content .= elgg_view('page/elements/time-table', $vars);
@@ -120,11 +121,11 @@ $add_skill_button = elgg_view('output/url', array(
 	<label for='post-mission-time-commitment-text-input' class="col-sm-3" style="text-align:right;">
 		<?php echo elgg_echo('missions:time_commitment_in_hours') . '*:';?>
 	</label>
-	<div class="col-sm-9">
-		<?php 
-			echo $input_time_commit;
-			echo $input_time_interval;
-		?>
+	<div class="col-sm-1">
+		<?php echo $input_time_commit; ?>
+	</div>
+	<div class="col-sm-2">
+		<?php echo $input_time_interval; ?>
 	</div>
 </div>
 <div class="form-group">
@@ -134,7 +135,7 @@ $add_skill_button = elgg_view('output/url', array(
 	<label for='post-mission-remotely-checkbox-input' class="col-sm-3" style="text-align:right;">
 		<?php echo elgg_echo('missions:work_remotely') . ':';?>
 	</label>
-	<div class="col-sm-9">
+	<div class="col-sm-3">
 		<?php echo $input_remotely; ?>
 	</div>
 </div>
@@ -142,7 +143,7 @@ $add_skill_button = elgg_view('output/url', array(
 	<label for='post-mission-location-text-input' class="col-sm-3" style="text-align:right;">
 		<?php echo elgg_echo('missions:location') . '*:';?>
 	</label>
-	<div class="col-sm-9">
+	<div class="col-sm-3">
 		<?php echo $input_location; ?>
 	</div>
 </div>
@@ -150,7 +151,7 @@ $add_skill_button = elgg_view('output/url', array(
 	<label for='post-mission-security-dropdown-input' class="col-sm-3" style="text-align:right;">
 		<?php echo elgg_echo('missions:security_level') . ':';?>
 	</label>
-	<div class="col-sm-9">
+	<div class="col-sm-3">
 		<?php echo $input_security; ?>
 	</div>
 </div>
@@ -161,14 +162,16 @@ $add_skill_button = elgg_view('output/url', array(
 <div> 
 	<?php
 		echo elgg_view('output/url', array(
-			'href' => elgg_get_site_url() . 'missions/mission-post/step-one',
-			'text' => elgg_echo('missions:back'),
-			'class' => 'elgg-button btn btn-default'
+				'href' => elgg_get_site_url() . 'missions/mission-post/step-two',
+				'text' => elgg_echo('missions:back'),
+				'class' => 'elgg-button btn btn-default',
+				'id' => 'mission-post-opportunity-third-form-back-button'
 		));
 		echo elgg_view('input/submit', array(
-			'value' => elgg_echo('missions:create_opportunity'),
-			'class' => 'elgg-button btn btn-primary',
-			'style' => 'float:right;'
+				'value' => elgg_echo('missions:create_opportunity'),
+				'class' => 'elgg-button btn btn-primary',
+				'style' => 'float:right;',
+				'id' => 'mission-post-opportunity-third-form-submission-button'
 		)); 
 	?> 
 </div>

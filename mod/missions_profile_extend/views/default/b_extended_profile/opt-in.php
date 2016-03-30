@@ -47,11 +47,16 @@
 				echo '<td>' . elgg_echo($user->opt_in_shadowed) . '</td>';
 				echo '<td class="left-col">' . elgg_echo('gcconnex_profile:opt:shadowing') . '</td>';
 				echo '<td>' . elgg_echo($user->opt_in_shadowing) . '</td>';
-				echo '</tr><tr>';
-			echo '<td class="left-col">' . elgg_echo('gcconnex_profile:opt:peer_coached') . '</td>';
+			echo '</tr><tr>';
+				echo '<td class="left-col">' . elgg_echo('gcconnex_profile:opt:peer_coached') . '</td>';
 				echo '<td>' . elgg_echo($user->opt_in_peer_coached) . '</td>';
 				echo '<td class="left-col">' . elgg_echo('gcconnex_profile:opt:peer_coaching') . '</td>';
 				echo '<td>' . elgg_echo($user->opt_in_peer_coaching) . '</td>';
+			echo '</tr><tr>';
+				echo '<td class="left-col">' . elgg_echo('gcconnex_profile:opt:skill_sharing') . '</td>';
+				echo '<td>' . elgg_echo($user->opt_in_skill_sharing) . '</td>';
+				echo '<td class="left-col">' . elgg_echo('gcconnex_profile:opt:job_sharing') . '</td>';
+				echo '<td>' . elgg_echo($user->opt_in_job_sharing) . '</td>';
 			echo '</tr></tbody></table>';
 	}
 	echo '</div>';

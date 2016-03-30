@@ -34,17 +34,27 @@ foreach($mission_list as $mission) {
 	$participants = get_entity_relationships($mission->guid);
 	
 	if(elgg_get_logged_in_user_guid() == $mission->owner_guid && count($feedback_search) != count($participants)) {
+		$feedback_required .= '<div name="mission-unfinished-feedback-' . $mission->guid . '">';
+		
 		$feedback_required .= elgg_view('output/url', array(
  				'href' => elgg_get_site_url() . 'missions/mission-feedback/' . $mission->guid,
- 				'text' => $mission->job_title
- 		)) . '</br>';
+ 				'text' => $mission->job_title,
+				'id' => 'requires-feedback-link-mission-' . $mission->guid
+ 		));
+		
+		$feedback_required .= '</div>';
 		$count++;
 	}
 	elseif(check_entity_relationship($mission->guid, 'mission_accepted', elgg_get_logged_in_user_guid()) && !count($feedback_search) && elgg_get_logged_in_user_guid() != $mission->owner_guid) {
+		$feedback_required .= '<div name="mission-unfinished-feedback-' . $mission->guid . '">';
+		
 		$feedback_required .= elgg_view('output/url', array(
 				'href' => elgg_get_site_url() . 'missions/mission-feedback/' . $mission->guid,
-				'text' => $mission->job_title
-		)) . '</br>';
+				'text' => $mission->job_title,
+				'id' => 'requires-feedback-link-mission-' . $mission->guid
+		));
+		
+		$feedback_required .= '</div>';
 		$count++;
 	}
 }

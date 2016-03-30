@@ -16,7 +16,7 @@ function mo_get_last_input_node($input_array) {
 	$count = 0;
 	
 	foreach($input_array as $key => $value) {
-		if(strpos($key, 'org-drop') !== false && $value != 1) {
+		if(strpos($key, 'org-drop') !== false && $value != 0 && $value != 1) {
 			$container[$count] = $value;
 			$count++;
 		}
@@ -102,13 +102,21 @@ function mo_string_all_ancestors($node_string) {
 	
 	$other_input = mo_extract_other_input($node_string);
 	if($other_input) {
-		$other_input = ', ' . $other_input;
+		$other_input = ' / ' . $other_input;
 	}
 
-	$returner['english_path'] = implode(', ', $ancestor_names_english) . $other_input;
-	$returner['french_path'] = implode(', ', $ancestor_names_french) . $other_input;
+	$returner['english_path'] = implode(' / ', $ancestor_names_english) . $other_input;
+	$returner['french_path'] = implode(' / ', $ancestor_names_french) . $other_input;
 	
 	return $returner;
+}
+
+/*
+ * Extracts node guid from the stored data.
+ */
+function mo_extract_node_guid($node_string) {
+	$node_array = explode(':', $node_string);
+	return $node_array[1];
 }
 
 /*
@@ -117,4 +125,52 @@ function mo_string_all_ancestors($node_string) {
 function mo_extract_other_input($node_string) {
 	$node_array = explode(':', $node_string);
 	return $node_array[2];
+}
+
+/*
+ * 
+ */
+function mo_array_node_and_all_children($node_string) {
+		$node_guid = mo_extract_node_guid($node_string);
+		$returner = array($node_string);
+		
+		$node_children_relations = get_entity_relationships($node_guid);
+		
+		foreach($node_children_relations as $relation) {
+			$temp_node_string = mo_format_input_node($relation->guid_two);
+			$temp_array = mo_array_node_and_all_children($temp_node_string);
+			$returner = array_merge($returner, $temp_array);
+		}
+		
+		return $returner;
+}
+
+/*
+ * 
+ */
+function mo_node_immediate_children($node_guid) {
+	$node_children_relations = get_entity_relationships($node_guid);
+	$node_children_guid = array();
+	$count = 0;
+	
+	foreach($node_children_relations as $relation) {
+		$node_children_guid[$count] = $relation->guid_two;
+		$count++;
+	}
+	
+	return $node_children_guid;
+}
+
+/*
+ * 
+ */
+function mo_get_tree_root() {
+	$options['type'] = 'object';
+	$options['subtype'] = 'orgnode';
+	$options['metadata_name_value_pairs'] = array(
+			array('name' => 'root', 'value' => true)
+	);
+	$entities_parent = elgg_get_entities_from_metadata($options);
+	
+	return $entities_parent[0];
 }

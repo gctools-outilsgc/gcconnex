@@ -43,6 +43,7 @@ if ($err != '') {
 	$mission->phone = $edit_form['phone'];
 	$mission->job_title = $edit_form['job_title'];
 	$mission->job_type = $edit_form['job_type'];
+	$mission->program_area = $edit_form['job_area'];
     $mission->number = $edit_form['number'];
     $mission->start_date = $edit_form['start_date'];
     $mission->completion_date = $edit_form['completion_date'];

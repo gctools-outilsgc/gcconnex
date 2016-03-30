@@ -204,13 +204,17 @@ if (elgg_get_page_owner_guid() != elgg_get_logged_in_user_guid()) {
             } else if(!$user->isFriend() && strpos($action->getContent(), "Remove colleague") == true){
                 
             } else {
-                $profile_actions .= '<li>' . $action->getContent(array('class' => 'gcconnex-basic-profile-actions')) . '</li>';
+                if(strpos($action->getContent(), "Add colleague")){
+                    $add = $action->getContent(array('class' => 'gcconnex-basic-profile-actions btn btn-primary mrgn-rght-sm'));
+                } else {
+                    $profile_actions .= '<li>' . $action->getContent(array('class' => 'gcconnex-basic-profile-actions')) . '</li>';
+                }
             }
         }
         
     }
     if(elgg_is_logged_in()){
-        echo '<div class="btn-group"><button type="button" class="btn btn-custom mrgn-rght-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        echo $add . '<div class="btn-group"><button type="button" class="btn btn-custom mrgn-rght-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     ' . elgg_echo('profile:actions') . ' <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu pull-right clearfix">';

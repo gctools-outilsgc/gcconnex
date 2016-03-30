@@ -19,15 +19,12 @@ $applicants = get_entity_relationships($mission->guid);
 $applicants_none_accepted = true;
 $applicants_none_tentative = true;
 $accepted = '<h3>' . elgg_echo('missions:filled_by') . ':</h3>';
-$tentative = '<h3>' . elgg_echo('missions:tentative') . ':</h3>';
+$tentative = '<h3>' . elgg_echo('missions:invited_candidates') . ':</h3>';
 
-$i = 0;
 foreach ($applicants as $applicant) {
-	$i += 1;
-	
 	// Candidates which have been accepted into the mission.
 	if ($applicant->relationship == 'mission_accepted') {
-		$accepted .= '<div class="col-sm-9" style="display:inline-block;">' . elgg_view_entity(get_user($applicant->guid_two)) . '</div>';
+		$accepted .= '<div class="col-sm-9" style="display:inline-block;" name="mission-accepted-applicant-' . $applicant->guid_two . '">' . elgg_view_entity(get_user($applicant->guid_two)) . '</div>';
 
 		// Removal button for the candidate.
 		$remove_button = elgg_view('output/url', array(
@@ -36,7 +33,7 @@ foreach ($applicants as $applicant) {
 				'is_action' => true,
 				'class' => 'elgg-button btn btn-default',
 				'style' => 'vertical-align:top;',
-				'id' => 'fill-mission-applicant-' . $i . '-remove-button'
+				'id' => 'fill-mission-applicant-' . $applicant->guid . '-remove-button'
 		));
 		if($mission->state == 'posted' && elgg_get_logged_in_user_guid() == $mission->owner_guid) {
 			$accepted .= '<div class="col-sm-3">' . $remove_button . '</div>';
@@ -46,7 +43,7 @@ foreach ($applicants as $applicant) {
 
 	// Candidates which have been sent an invitation to the mission.
 	if ($applicant->relationship == 'mission_tentative') {
-		$tentative .= '<div class="col-sm-9" style="display:inline-block;">' . elgg_view_entity(get_user($applicant->guid_two)) . '</div>';
+		$tentative .= '<div class="col-sm-9" style="display:inline-block;" name="mission-tentative-applicant-' . $applicant->guid_two . '">' . elgg_view_entity(get_user($applicant->guid_two)) . '</div>';
 
 		// Removal button for the candidate.
 		$remove_button = elgg_view('output/url', array(
@@ -55,7 +52,7 @@ foreach ($applicants as $applicant) {
 				'is_action' => true,
 				'class' => 'elgg-button btn btn-default',
 				'style' => 'vertical-align:top;',
-				'id' => 'fill-mission-applicant-' . $i . '-remove-button'
+				'id' => 'fill-mission-applicant-' . $applicant->guid . '-remove-button'
 		));
 		if($mission->state == 'posted' && elgg_get_logged_in_user_guid() == $mission->owner_guid) {
 			$tentative .= '<div class="col-sm-3">' . $remove_button . '</div>';
@@ -65,11 +62,13 @@ foreach ($applicants as $applicant) {
 }
 // Display something if there are no applicants.
 if ($applicants_none_accepted) {
-	$accepted .= elgg_echo('missions:nobody');
+	$accepted .= '<span name="no-accepted-candidate">' . elgg_echo('missions:nobody') . '</span>';
 }
 if ($applicants_none_tentative) {
-	$tentative .= elgg_echo('missions:nobody');
+	$tentative .= '<span name="no-tentative-candidate">' . elgg_echo('missions:nobody') . '</span>';
 }
 
+echo '<div>';
 echo '<div class="col-sm-5" style="display:inline-block;margin:8px;">' . $accepted . '</div>';
 echo '<div class="col-sm-5" style="display:inline-block;margin:8px;">' . $tentative . '</div>';
+echo '</div>';

@@ -20,22 +20,16 @@ $extracted_other_value = mo_extract_other_input($org_string);
 $display_less_button = 'display:none;';
 
 // Finds the root of the organization tree.
-$options['type'] = 'object';
-$options['subtype'] = 'orgnode';
-$options['metadata_name_value_pairs'] = array(
-		array('name' => 'root', 'value' => true)
-);
-$options['metadata_case_sensitive'] = false;
-$entities_parent = elgg_get_entities_from_metadata($options);
+$root = mo_get_tree_root();
 
 // The organization tree must exist to create this field.
-if($entities_parent[0]) {
+if($root) {
 	$org_path = mo_get_all_ancestors($org_string);
 	
 	// If an organization string was passed to this field.
 	if(!empty($org_path)) {
 		$count = 1;
-		$previous_org = $entities_parent[0]->guid;
+		$previous_org = $root->guid;
 		
 		// Create a dropdown for each tree level found in the organization string.
 		foreach($org_path as $org) {
@@ -70,7 +64,7 @@ if($entities_parent[0]) {
 	}
 	else {
 		// Create a single initial dropdown element for the root of the organization tree.
-		$initial_dropdown = elgg_view('missions_organization/org-dropdown', array('target' => $entities_parent[0]->guid));
+		$initial_dropdown = elgg_view('missions_organization/org-dropdown', array('target' => $root->guid));
 	}
 	
 	// Button to create a dropdown element for the node in the previous dropdown element.

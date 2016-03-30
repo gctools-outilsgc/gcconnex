@@ -57,11 +57,13 @@ if ($err != '') {
     
     $mission->job_title = $second_form['job_title'];
     $mission->job_type = $second_form['job_type'];
+    $mission->program_area = $second_form['job_area'];
     $mission->number = $second_form['number'];
     $mission->start_date = $second_form['start_date'];
     $mission->completion_date = $second_form['completion_date'];
     $mission->deadline = $second_form['deadline'];
     $mission->descriptor = $second_form['description'];
+    $mission->openess = $second_form['openess'];
     
     $mission->remotely = $third_form['remotely'];
     //$mission->flexibility = $third_form['flexibility'];
@@ -73,8 +75,10 @@ if ($err != '') {
     
     $count = 0;
     $key_skills = '';
+    $skill_array = array();
     foreach($third_form as $key => $value) {
     	if(!(strpos($key, 'skill') === false) && $value) {
+    		$skill_array[$count] = $value;
     		if($count == 0) {
     			$key_skills .= $value;
     		}
@@ -135,6 +139,39 @@ if ($err != '') {
     ));
     //add_to_river('river/object/mission/create', 'create', $mission->owner_guid, $mission->getGUID());
     
+    $user_skill_match = array();
+    foreach($skill_array as $skill) {
+    	$options['type'] = 'object';
+    	$options['subtype'] = 'MySkill';
+    	$options['attribute_name_value_pairs'] = array(
+    			'name' => 'title',
+    			'value' => '%' . $skill . '%',
+    			'operand' => 'LIKE',
+    			'case_sensitive' => false
+    	);
+    	$skill_match = elgg_get_entities_from_attributes($options);
+    	
+    	foreach($skill_match as $key => $value) {
+    		$skill_match[$key] = $value->owner_guid;
+    	}
+    	
+    	if(empty($user_skill_match)) {
+    		$user_skill_match = $skill_match;
+    	}
+    	else {
+    		$user_skill_match = array_intersect($user_skill_match, $skill_match);
+    	}
+    }
+    
+    
+    foreach($user_skill_match as $key => $value) {
+    	$user_skill_match[$key] = get_entity($value);
+    }
+    
+    $_SESSION['mission_search_switch'] = 'candidate';
+    $_SESSION['candidate_count'] = count($user_skill_match);
+    $_SESSION['candidate_search_set'] = $user_skill_match;
+    
     // Clears all the sticky forms that have been in use so far.
     elgg_clear_sticky_form('firstfill');
     elgg_clear_sticky_form('secondfill');
@@ -144,5 +181,10 @@ if ($err != '') {
     
     unset($_SESSION['tab_context']);
     
-    forward(elgg_get_site_url() . 'missions/main');
+    if(count($user_skill_match) > 0) {
+    	forward(elgg_get_site_url() . 'missions/display-search-set');
+    }
+    else {
+    	forward(elgg_get_site_url() . 'missions/main');
+    }
 }

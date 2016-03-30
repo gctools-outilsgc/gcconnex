@@ -60,7 +60,18 @@ return array(
      'ps:optingin' =>"Have you looked into opting-in to a Micro-mission?",
      'ps:optin' =>"Opt-In",
      'ps:psErr'=>"An error occured getting your profile information.  We are working to resolve the issue.",
-     
+
+     /**
+   * Message Inbox
+   */
+
+   'msg:to' => 'To',
+   'msg:from' => 'From',
+   'msg:subject' => 'Subject',
+   'msg:recieved' => 'Recieved',
+   'msg:sent' => 'Sent',
+
+
      /*
       * Content Creation
       */

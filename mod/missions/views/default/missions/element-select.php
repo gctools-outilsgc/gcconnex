@@ -16,9 +16,9 @@ $dropdown_value = $vars['caller_value'];
 $second = $vars['caller_second'];
 
 $content = '';
-$array_sec = explode(',', elgg_get_plugin_setting('security_string', 'missions'));
+$array_sec = mm_echo_explode_setting_string(elgg_get_plugin_setting('security_string', 'missions'));
 $array_lang = explode(',', elgg_get_plugin_setting('language_string', 'missions'));
-$array_day = explode(',', elgg_get_plugin_setting('day_string', 'missions'));
+$array_day = mm_echo_explode_setting_string(elgg_get_plugin_setting('day_string', 'missions'));
 $array_hour = explode(',', elgg_get_plugin_setting('hour_string', 'missions'));
 $array_min = explode(',', elgg_get_plugin_setting('minute_string', 'missions'));
 $array_duration = explode(',', elgg_get_plugin_setting('duration_string', 'missions'));
@@ -56,6 +56,26 @@ else {
         case '':
             break;
         
+        case elgg_echo('missions:opt_in'):
+        	$content .= elgg_view('input/dropdown', array(
+        			'name' => $dropdown_name . '_element',
+        			'value' => '',
+        			'options' => array(
+        					'', 
+        					elgg_echo('gcconnex_profile:opt:micro_mission'), 
+        					elgg_echo('gcconnex_profile:opt:job_swap'), 
+        					elgg_echo('gcconnex_profile:opt:mentored'),
+        					elgg_echo('gcconnex_profile:opt:mentoring'),
+        					elgg_echo('gcconnex_profile:opt:shadowed'),
+        					elgg_echo('gcconnex_profile:opt:shadowing'),
+        					elgg_echo('gcconnex_profile:opt:peer_coached'),
+        					elgg_echo('gcconnex_profile:opt:peer_coaching'),
+        					elgg_echo('gcconnex_profile:opt:skill_sharing'),
+        					elgg_echo('gcconnex_profile:opt:job_sharing')
+        			)
+        	));
+        	break;
+            
         case elgg_echo('missions:portfolio'):
             $content .= elgg_view('input/dropdown', array(
                 'name' => $dropdown_name . '_element',
@@ -125,7 +145,7 @@ else {
         	$content .= elgg_view('input/dropdown', array(
         			'name' => $dropdown_name . '_element',
         			'value' => '',
-        			'options' => explode(',', elgg_get_plugin_setting('time_rate_string', 'missions'))
+        			'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('time_rate_string', 'missions'))
         	));
         	break;
         
@@ -163,7 +183,7 @@ else {
             $content .= elgg_view('input/dropdown', array(
                 'name' => $dropdown_name . '_element',
                 'value' => '',
-                'options' => $array_sec
+                'options_values' => $array_sec
             ));
             break;
             
@@ -171,7 +191,29 @@ else {
         	$content .= elgg_view('input/dropdown', array(
         			'name' => $dropdown_name . '_element',
         			'value' => '',
-        			'options' => explode(',', elgg_get_plugin_setting('opportunity_type_string', 'missions'))
+        			'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('opportunity_type_string', 'missions'))
+        	));
+        	break;
+            
+        case elgg_echo('missions:program_area'):
+        	$content .= elgg_view('input/dropdown', array(
+        			'name' => $dropdown_name . '_element',
+        			'value' => '',
+        			'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('program_area_string', 'missions'))
+        	));
+        	break;
+            
+        case elgg_echo('missions:work_remotely'):
+        	$content .= elgg_view('input/checkbox', array(
+        			'name' => $dropdown_name . '_element'
+        	));
+        	break;
+            
+        case elgg_echo('missions:location'):
+        	$content .= elgg_view('input/dropdown', array(
+        			'name' => $dropdown_name . '_element',
+				    'value' => '',
+				    'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('province_string', 'missions')),
         	));
         	break;
         

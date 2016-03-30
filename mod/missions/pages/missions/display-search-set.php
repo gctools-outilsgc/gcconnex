@@ -47,4 +47,6 @@ $content .= elgg_view_entity_list(array_slice($search_set, $offset, $max), array
 		'missions_full_view' => false
 ), $offset, $max);
 
+$content .= '<div hidden name="mission-total-count">' . $count . '</div>';
+
 echo elgg_view_page($title, $content);

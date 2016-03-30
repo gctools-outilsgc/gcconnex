@@ -19,29 +19,41 @@ $entity_list = elgg_get_entities_from_relationship(array(
 		'relationship_guid' => elgg_get_logged_in_user_guid()
 ));
 
+$count = 0;
 foreach($entity_list as $entity) {
-	$count = count(elgg_get_entities_from_relationship(array(
+	$candidates = elgg_get_entities_from_relationship(array(
 			'relationship' => 'mission_accepted',
 			'relationship_guid' => $entity->guid
-	)));
-
+	));
+	$number_of_candidates = count($candidates);
+	
+	$not_invited_already = true;
+	foreach($candidates as $candidate) {
+		if($candidate->guid == $user_guid) {
+			$not_invited_already = false;
+		}
+	}
 
 	// Does not display missions which have filled all the available spots.
-	if($count < $entity->number) {
-		echo '<div>';
-		echo '<div style="display:inline-block;">' . elgg_view('output/url', array(
+	if($number_of_candidates < $entity->number && $not_invited_already) {
+		echo '<div class="col-sm-12">';
+		echo '<div class="col-sm-5">' . elgg_view('output/url', array(
 				'href' => $entity->getURL(),
 				'text' => $entity->job_title,
-				'class' => 'mission-emphasis mission-link-color'
+				'class' => 'mission-emphasis mission-link-color',
+				'id' => 'missions-view-link-' . $entity->guid
 		)) . '</br>';
-		echo $count . '/' . $entity->number . elgg_echo('missions:spots_filled') . '</div>';
+		echo $number_of_candidates . '/' . $entity->number . elgg_echo('missions:spots_filled') . '</div>';
 
-		echo '<div style="display:inline-block;vertical-align:top;margin-top:4px;margin-left:16px;">' . elgg_view('output/url', array(
+		echo '<div class="col-sm-3">' . elgg_view('output/url', array(
 				'href' => elgg_get_site_url() . 'action/missions/invite-user?aid=' . $user_guid . '&mid=' . $entity->guid,
 				'text' => elgg_echo('missions:select'),
 				'is_action' => true,
-				'class' => 'elgg-button btn btn-default'
-		)) . '</div></br>';
+				'class' => 'elgg-button btn btn-default',
+				'id' => 'mission-invitation-link-' . $entity->guid
+		)) . '</div>';
 		echo '</div>';
+		
+		$count++;
 	}
 }

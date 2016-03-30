@@ -12,7 +12,7 @@
  * Sets the resulting array and count of the array to SESSION variables if the count is not 0.
  * Also handles intersecting with any array that currently exists within SESSION.
  */
-function mm_search_database($query_array, $query_operand, $refinement)
+function mm_search_database($query_array, $query_operand, $limit)
 {
     $options = array();
     $mission_count = '';
@@ -34,7 +34,7 @@ function mm_search_database($query_array, $query_operand, $refinement)
     $options['metadata_name_value_pairs'] = $filtered_array;
     $options['metadata_name_value_pairs_operator'] = $query_operand;
     $options['metadata_case_sensitive'] = false;
-    $options['limit'] = elgg_get_plugin_setting('search_limit', 'missions');
+    $options['limit'] = $limit;
     $missions = elgg_get_entities_from_metadata($options);
 
     // Deprecated merge logic
@@ -90,6 +90,47 @@ function mm_analyze_selection($place, $array)
         // Returns an empty array if
         case '':
             break;
+        
+        case elgg_echo('missions:opt_in'):
+        	if($array['selection_' . $place . '_element'] != '') {
+        		$name_option = '';
+	        	switch($array['selection_' . $place . '_element']) {
+	        		case elgg_echo('gcconnex_profile:opt:micro_mission'):
+	        			$name_option = 'opt_in_missions';
+	        			break;
+	        		case elgg_echo('gcconnex_profile:opt:job_swap'):
+	        			$name_option = 'opt_in_swap';
+	        			break;
+	        		case elgg_echo('gcconnex_profile:opt:mentored'):
+	        			$name_option = 'opt_in_mentored';
+	        			break;
+	        		case elgg_echo('gcconnex_profile:opt:mentoring'):
+	        			$name_option = 'opt_in_mentoring';
+	        			break;
+	        		case elgg_echo('gcconnex_profile:opt:shadowed'):
+	        			$name_option = 'opt_in_shadowed';
+	        			break;
+	        		case elgg_echo('gcconnex_profile:opt:shadowing'):
+	        			$name_option = 'opt_in_shadowing';
+	        			break;
+	        		case elgg_echo('gcconnex_profile:opt:peer_coached'):
+	        			$name_option = 'opt_in_peer_coached';
+	        			break;
+	        		case elgg_echo('gcconnex_profile:opt:peer_coaching'):
+	        			$name_option = 'opt_in_peer_coaching';
+	        			break;
+					case elgg_echo('gcconnex_profile:opt:skill_sharing'):
+	        			$name_option = 'opt_in_skill_sharing';
+	        			break;
+	        		case elgg_echo('gcconnex_profile:opt:job_sharing'):
+	        			$name_option = 'opt_in_job_sharing';
+	        			break;
+	        	}
+	        	$returner['name'] = $name_option;
+                $returner['operand'] = '=';
+	        	$returner['value'] = 'gcconnex_profile:opt:yes';
+        	}
+        	break;
             
         case elgg_echo('missions:portfolio'):
             if($array['selection_' . $place . '_element_value'] != '') {
@@ -278,7 +319,7 @@ function mm_analyze_selection($place, $array)
             }
             break;
 
-            // The next 3 are selects elements that require a direct equivalence comparison.
+        // The next 5 are selects elements that require a direct equivalence comparison.
         case elgg_echo('missions:title'):
             if ($array['selection_' . $place . '_element'] != '') {
                 $returner['name'] = 'job_title';
@@ -297,10 +338,32 @@ function mm_analyze_selection($place, $array)
 
         case elgg_echo('missions:department'):
             if ($array['selection_' . $place . '_element'] != '') {
-                $returner['name'] = 'department';
-                $returner['operand'] = '=';
-                $returner['value'] = $array['selection_' . $place . '_element'];
+            	if(get_current_language() == 'fr') {
+            		$returner['name'] = 'department_path_french';
+            	}
+            	else {
+            		$returner['name'] = 'department_path_english';
+            	}
+                $returner['operand'] = 'LIKE';
+                $returner['value'] = '%' . $array['selection_' . $place . '_element'] . '%';
             }
+            break;
+
+        case elgg_echo('missions:work_remotely'):
+            $returner['name'] = 'remotely';
+            $returner['operand'] = '=';
+            if($array['selection_' . $place . '_element']) {
+            	$returner['value'] = 1;
+            }
+            else {
+            	$returner['value'] = 0;
+            }
+            break;
+
+        case elgg_echo('missions:program_area'):
+            $returner['name'] = 'program_area';
+            $returner['operand'] = '=';
+            $returner['value'] = $array['selection_' . $place . '_element'];
             break;
     }
 
@@ -447,6 +510,12 @@ function mm_analyze_backup($place, $array)
                 $value_option = '%' . $array['selection_' . $place . '_element_value'] . '%';
                 $extra_option = 'portfolio';
                 break;
+            case elgg_echo('missions:work_remotely'):
+                $name_option = 'remotely';
+                break;
+            case elgg_echo('missions:program_area'):
+                $name_option = 'program_area';
+                break;
         }
         $returner['name'] = $name_option;
         $returner['operand'] = $operand_option;
@@ -461,7 +530,7 @@ function mm_analyze_backup($place, $array)
  * Basic search functionality for candidate searching.
  * Checks education, experience and skill attributes from user profiles.
  */
-function mm_search_candidate_database($query_array, $query_operand)
+function mm_search_candidate_database($query_array, $query_operand, $limit)
 {
     $options = array();
 
@@ -477,7 +546,7 @@ function mm_search_candidate_database($query_array, $query_operand)
     $options['joins'] = array($temp_string);
     $temp_string = "g." . $filtered_array[0]['name'] . " " . $filtered_array[0]['operand'] . " '" . $filtered_array[0]['value'] . "'";
     $options['wheres'] = array($temp_string);
-    $options['limit'] = elgg_get_plugin_setting('search_limit', 'missions');
+    $options['limit'] = $limit;
     $options['subtypes'] = array('education', 'experience', 'MySkill', 'portfolio');
     $entities = elgg_get_entities($options);
 
@@ -522,7 +591,7 @@ function mm_search_candidate_database($query_array, $query_operand)
  * Advanced search functionality for candidate searching.
  * Checks education, experience and skill attributes and metadata from user profiles.
  */
-function mm_adv_search_candidate_database($query_array, $query_operand) {
+function mm_adv_search_candidate_database($query_array, $query_operand, $limit) {
     $users_returned_by_attribute = array();
     $users_returned_by_metadata = array();
     $is_attribute_searched = false;
@@ -543,7 +612,7 @@ function mm_adv_search_candidate_database($query_array, $query_operand) {
             $options_attribute['subtypes'] = $array['extra_option'];
             $options_attribute['joins'] = array('INNER JOIN ' . elgg_get_config('dbprefix') . 'objects_entity g ON (g.guid = e.guid)');
             $options_attribute['wheres'] = array("g." . $array['name'] . " " . $array['operand'] . " '" . $array['value'] . "'");
-            $options_attribute['limit'] = elgg_get_plugin_setting('search_limit', 'missions');
+            $options_attribute['limit'] = $limit;
             $entities = elgg_get_entities($options_attribute);
 
             $entity_owners = array();
@@ -563,6 +632,31 @@ function mm_adv_search_candidate_database($query_array, $query_operand) {
             // Notes that attributes have been searched during this function call.
             $is_attribute_searched = true;
         }
+        
+        else if(strpos($array['name'], 'opt_in') !== false) {
+        	$options_attribute['type'] = 'user';
+        	$options_metadata['metadata_name_value_pairs'] = array(array('name' => $array['name'], 'operand' => $array['operand'], 'value' => $array['value']));
+        	$options_metadata['limit'] = $limit;
+        	$options_metadata['metadata_case_sensitive'] = false;
+        	$entities = elgg_get_entities_from_metadata($options_metadata);
+        	
+        	$entity_owners = array();
+        	$count = 0;
+        	foreach($entities as $entity) {
+        		$entity_owners[$count] = $entity->guid;
+        		$count++;
+        	}
+        	
+        	// Adds the results of the query to a pool of results.
+        	if(empty($users_returned_by_metadata)) {
+        		$users_returned_by_metadata = array_unique($entity_owners);
+        	}
+        	else {
+        		$users_returned_by_metadata = array_unique(array_intersect($users_returned_by_metadata, $entity_owners));
+        	}
+        	// Notes that metadata have been searched during this function call.
+        	$is_metadata_searched = true;
+        }
 
         // Sets up metadata serach.
         else {
@@ -571,7 +665,7 @@ function mm_adv_search_candidate_database($query_array, $query_operand) {
             $options_metadata['type'] = 'object';
             $options_metadata['subtypes'] = $array['extra_option'];
             $options_metadata['metadata_name_value_pairs'] = array(array('name' => $array['name'], 'operand' => $operand_temp, 'value' => $array['value']));
-            $options_metadata['limit'] = elgg_get_plugin_setting('search_limit', 'missions');
+            $options_metadata['limit'] = $limit;
             $options_metadata['metadata_case_sensitive'] = false;
             $entities = elgg_get_entities_from_metadata($options_metadata);
 
@@ -606,7 +700,7 @@ function mm_adv_search_candidate_database($query_array, $query_operand) {
         $candidates = $users_returned_by_metadata;
     }
     
-    $final_users = mm_guids_to_entities_with_opt($candidates);
+    $final_users = mm_guids_to_entities_with_opt(array_slice($candidates, 0, $limit));
     $final_count = count($final_users);
 
     if ($final_count == 0) {

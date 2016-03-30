@@ -37,19 +37,12 @@
  <div class="<?php echo $bordering; ?>" id="<?php echo $field_id; ?>" style="display:none;padding:8px;">
  	<?php echo $content; ?>
  </div>
- <!--<div>
- 	<div>
- 		<noscript>
- 			<?php //echo $content; ?>
- 		</noscript>
- 	</div>
- </div>-->
  
  <script>
 	function hidden_field_toggle(toggle) {
-		append = toggle.id;
-		field = document.getElementById('hidden-field-'.concat(append));
-		icon = document.getElementById('toggle-icon-'.concat(append));
+		var append = toggle.id;
+		var field = document.getElementById('hidden-field-'.concat(append));
+		var icon = document.getElementById('toggle-icon-'.concat(append));
 		
 		if(field.style.display == 'none') {
 			field.style.display = 'block';

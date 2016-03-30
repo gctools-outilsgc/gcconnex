@@ -20,7 +20,7 @@ $blast_radius = explode('/', $current_uri);
 $_SESSION['mission_that_invites'] = mm_clean_url_segment(array_pop($blast_radius));
 $entity = get_entity($_SESSION['mission_that_invites']);
 
-$title = elgg_echo('missions:candidate_search');
+$title = elgg_echo('missions:share_opportunity');
 
 elgg_push_breadcrumb(elgg_echo('missions:micromissions'), elgg_get_site_url() . 'missions/main');
 elgg_push_breadcrumb($entity->job_title, $entity->getURL());
@@ -33,7 +33,7 @@ $advanced_search_form = elgg_view_form('missions/advanced-search-form', array(
 		'class' => 'form-horizontal'
 ));
 $content .=  elgg_view('page/elements/hidden-field', array(
-		'toggle_text' => elgg_echo('missions:filter_search'),
+		'toggle_text' => elgg_echo('missions:advanced_search'),
 		'toggle_id' => 'advanced-search',
 		'hidden_content' => $advanced_search_form,
 		'field_bordered' => true

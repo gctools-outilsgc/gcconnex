@@ -3,6 +3,7 @@
 $french = array(
 
 "gcforums:gobacktomain" => "Revenir à forum principal",
+"gcforums:categories_requred" => "S'il vous plaît créer des catégories avant de créer une nouvelle Forum",
 
 "gcforums:group_forum_title" => "Forum du groupe",
 "gcforums:forum_edit" => "Modifier le forum",

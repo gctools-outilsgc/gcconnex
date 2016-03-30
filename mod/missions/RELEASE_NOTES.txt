@@ -1,6 +1,7 @@
 This plugin adds micro mission functionality to the GCConnex webpage. 
 Current functionality includes posting a job opportunity, displaying the job opportunity, searching for a job opportunity or candidate with a simple and advanced search, editing a mission, 
 inviting a candidate to a mission, completing or cancelling a mission and providing feedback for a completed mission.
+
 This plugin currently must be placed after missions_organization and requries that plugin to be active.
 
 --------------------------------------------------------------------------------------------------------------
@@ -87,6 +88,42 @@ Completing a mission or clicking on an unfinished feedback link will take the us
 5)
 Micro mission edit and post opportunity first form now use the new organization path input found in missions_organization.
 
+6)
+From the main page, users may now click on the Analytics tab which takes them to the graph interval input page.
+
+The graph interval input page allows the user to decide on the graph type they want whcih currently consist of bar or pie graphs.
+Bar graphs also allow the user to input a time period, a start month and year, and an end month and year.
+Pie graphs don't have time inputs. Pie graphs are always for all existing missions.
+
+Once the user has input their graph type they are taken to page with an empty graph and an organization path input.
+Selecting and submitting an organization department will search for all missions connected to that department and that department's children (within the given time range).
+The user will be returned to the page with the department data in the graph. Up to 5 departments can be added to the bar graph and only 1 department can be added to the pie graph.
+The user may also remove any of the added departments via a set of buttons below the graph.
+The user can also download an image of the graph with another button below the graph.
+
+From the main page, users may now click on the Users by opt-in tab in order to search for users according to which opt-in options they have checked in their profile page.
+
+7)
+The main page now has an additional tab which allows users to search for other users.
+Searches are done across education, experience, skill, portfolio and opt-in information found in the GCconnex profile.
+From the results, the user can invite another user (opted in to micro-missions) to one of their missions which is selected on the subsequent page.
+
+The main page also has an archive tab which will display all completed or cancelled micro-missions stored in the database.
+
+When a user who owns an active micro-mission clicks on it's share button (colored green), they will search for and invite a candidate to that mission.
+When a user who does not own a mission or who owns an inactive mission clicks on it's share button (colored grey), they will message a user of their choice or post a message to the wire.
+
+When a user creates a mission, a search for users will be carried out and displayed according to the required skills.
+
+Missions now have additional information attached to them as metadata.
+This information consists of program area and whether or not the mission is only available to the specified department.
+
+Some additional changes were made in order to match client specifications.
+
+NOTE:
+The metadata job_type, program_area, location, security, and time_commitment are not stored by translation key.
+This means that the above metadata needs to be run through elgg_echo() to display the information correctly.
+
 --------------------------------------------------------------------------------------------------------------
 
 SOLUTIONS:
@@ -96,3 +133,5 @@ If the dropdown fields are not populated in any of the forms, go to the Micro Mi
 Micro Missions CSS is still a work in progress so a smaller screen (like a laptops) might have some display issues.
 
 If notifications are not appearing to a user then they will have to go to the /notifications/personal/{username} page and check the site checkbox under personal notifications.
+
+If some of the mission metadata appears as 'missions:xxxxx' then try using an elgg_echo() to process that string.

@@ -23,7 +23,13 @@ $applicant = get_user($applicant_guid);
 $mission = get_entity($mission_guid);
 
 // Does not allow invitations when the number of opportunities is equaled or exceeded.
-$relationship_count = count(get_entity_relationships($mission->guid));
+$relationship_set = get_entity_relationships($mission->guid);
+foreach($relationship_set as $key => $value) {
+	if($value->relationship != 'mission_accepted') {
+		unset($relationship_set[$key]);
+	}
+}
+$relationship_count = count($relationship_set);
 if($relationship_count >= $mission->number) {
 	register_error('missions:error:opportunity_limit_reached');
 	forward(elgg_get_site_url() . 'missions/main');

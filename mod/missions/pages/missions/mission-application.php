@@ -24,6 +24,11 @@ elgg_push_breadcrumb($entity->job_title, $entity->getURL());
 elgg_push_breadcrumb($title);
 
 $content = elgg_view_title($title);
+
+if(elgg_get_logged_in_user_entity()->opt_in_missions != 'gcconnex_profile:opt:yes') {
+	$content .= '<p>' . elgg_echo('missions:you_will_be_opted_in') . '</p>';
+}
+
 $content .= elgg_echo('missions:application_paragraph');
 $content .= '<div class="col-sm-offset-1">' . elgg_view_form('missions/application-form', array(
     'class' => 'form-horizontal'

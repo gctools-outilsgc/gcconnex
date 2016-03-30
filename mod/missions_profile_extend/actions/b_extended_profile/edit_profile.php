@@ -430,6 +430,8 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             $user->opt_in_shadowing = $opt_in_set[5];
             $user->opt_in_peer_coached = $opt_in_set[6];
             $user->opt_in_peer_coaching = $opt_in_set[7];
+            $user->opt_in_skill_sharing = $opt_in_set[8];
+            $user->opt_in_job_sharing = $opt_in_set[9];
             
             // Not saving this at the moment because it is not in use.
             //$user->optaccess = $access;

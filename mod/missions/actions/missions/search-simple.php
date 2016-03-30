@@ -29,7 +29,7 @@ if ($err != '') {
                 );
             }
             
-            $returned = mm_search_candidate_database($array, 'OR');
+            $returned = mm_search_candidate_database($array, 'OR', $search_form['limit']);
             break;
         default:
             // A broad range search which determines whether the input text exists within the title, type or description of the mission.
@@ -52,13 +52,16 @@ if ($err != '') {
             }
             
             // This function executes the query and returns true or false depending on how succesful that query was.
-            $returned = mm_search_database($array, 'OR', false);
+            $returned = mm_search_database($array, 'OR', $search_form['limit']);
     }
     
     if (! $returned) {
         forward(REFERER);
     } else {
         elgg_clear_sticky_form('searchsimplefill');
+        if($search_form['hidden_return']) {
+        	forward(REFERER);
+        }
         forward(elgg_get_site_url() . 'missions/display-search-set');
     }
 }

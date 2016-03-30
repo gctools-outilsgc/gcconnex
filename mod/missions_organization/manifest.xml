@@ -4,7 +4,7 @@
 	<id>missions_organization</id>
 	<author>National Research Council Canada</author>
 	<website>http://www.nrc-cnrc.gc.ca/eng/rd/ict/</website>
-	<version>5</version>
+	<version>6</version>
 	<description>Tool for uploading an organization tree from GEDs CSV file and navigating the result.</description>
 	<copyright>Her Majesty the Queen in Right of Canada, 2015</copyright>
 	<license>Creative Commons Attribution 3.0 Unported License</license>

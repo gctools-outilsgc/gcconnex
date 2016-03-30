@@ -37,7 +37,21 @@ if (elgg_is_logged_in()) {
 	// title, description and access (visible)
 	if ($gcf_subtype === 'hjforum' || $gcf_subtype === 'hjforumcategory' || $gcf_subtype === 'hjforumtopic') {
 
-		if ($gcf_subtype === 'hjforumtopic') {
+		// cyu - patched that only group owner/moderators/admin can do sticky topics
+		$gcf_current_user_guid = elgg_get_logged_in_user_guid();
+		$gcf_moderator_users_guid = array();
+
+		$gcf_moderator_user[] = get_entity($vars['group_guid'])->owner_guid;
+		$group_operators = elgg_get_entities_from_relationship(array(
+			'relationship' => 'operator',
+			'relationship_guid' => $vars['group_guid'],
+			'inverse_relationship' => true
+			));
+
+		foreach ($group_operators as $group_operator)
+			$gcf_moderator_user[] = $group_operator->guid;
+
+		if ($gcf_subtype === 'hjforumtopic' && in_array($gcf_current_user_guid, $gcf_moderator_user)) {
 			$gcf_sticky_topic_label = elgg_echo('gcforums:sticky_topic');
 			$gcf_sticky_topic_input = elgg_view('input/checkboxes', array(
 				'name' => 'gcf_sticky',
@@ -80,6 +94,7 @@ if (elgg_is_logged_in()) {
 
 
 		if ($gcf_subtype === 'hjforum' && (get_entity($gcf_container)->enable_subcategories || get_entity($gcf_container) instanceof ElggGroup) ) {
+
 			// cyu - patched 03/21/2016
 			if ($gcf_container && $gcf_container != 0) { // this is within the nested forums
 				$query = "SELECT  oe.guid, oe.title
@@ -89,10 +104,16 @@ if (elgg_is_logged_in()) {
 			} else { // first page of group
 				$query = "SELECT  oe.guid, oe.title
 						FROM elggentities e, elggentity_relationships r, elggobjects_entity oe, elggentity_subtypes es
-						WHERE e.subtype = 14 AND e.guid = r.guid_one AND e.container_guid = {$gcf_group} AND e.guid = oe.guid AND es.subtype='hjforumcategory'";
+						WHERE e.subtype = es.id AND e.guid = r.guid_one AND e.container_guid = {$gcf_group} AND e.guid = oe.guid AND es.subtype='hjforumcategory'";
 			}
 
+
 			$categories = get_data($query);
+			// cyu - patched issue with forum without category
+			if (!$categories) {
+				register_error(elgg_echo('gcforums:categories_requred'));
+				forward(REFERER);
+			}
 
 			$category_list = array();
 			foreach ($categories as $category)

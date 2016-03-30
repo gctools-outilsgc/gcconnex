@@ -2,6 +2,8 @@
 $site_url = elgg_get_site_url();
 $english = array(
 	"gcforums:gobacktomain" => "Go back to Main",
+	"gcforums:categories_requred" => "Please create categories before creating new Forum",
+
 	"gcforums:group_forum_title" => "Group Forum",
 	"gcforums:forum_edit" => "Edit Forum",
 	"gcforums:forum_delete" => "Delete Forum",

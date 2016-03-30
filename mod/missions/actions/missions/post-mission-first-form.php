@@ -25,6 +25,7 @@ if(!$first_form['disclaimer']) {
 // If there is an error message it will be posted on the same page that will be reloaded
 // If not then the next page will be loaded
 if ($err == '') {
+	$_SESSION['missions_pass_department_to_second_form'] = mo_get_last_input_node($first_form);
     forward(elgg_get_site_url() . 'missions/mission-post/step-two');
 } else {
     register_error($err);

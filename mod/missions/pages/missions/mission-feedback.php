@@ -50,7 +50,8 @@
 		 				'class' => 'horizontal-form'
 		 		), array(
 				 		'entity' => $mission,
-				 		'feedback_target' => get_user($relation->guid_two)
+				 		'feedback_target' => get_user($relation->guid_two),
+		 				'feedback_count' => $count
 			 	));
  			}
  		}

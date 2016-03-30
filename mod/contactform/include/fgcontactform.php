@@ -185,7 +185,7 @@ class FGContactForm
            {
            $subject = $categoryen." - ".$depart. " - $this->name  / ".$categoryfr." - ".$depart. " - $this->name";
            }else{
-            $ubject = "GCconnex contact form";
+            $subject = "GCconnex contact form";
            }
         
         
@@ -279,7 +279,9 @@ class FGContactForm
                     $english = $option[1]; 
                 if(empty($_POST['subject']))
                 {
-                    $subject = "$this->name has contacted you about ". $english." / $this->name vous a contacté à propos de ".$french;
+                    $subject = "$this->name has contacted you about ". $english." / $this->name vous a
+
+envoyé un message à propos de ".$french;
                 }else{
                     $subject = $_POST['subject'];
                 }
@@ -317,7 +319,9 @@ class FGContactForm
                
       <tr>
         <td class="innerpadding" style="padding: 30px 30px 30px 30px; font-size: 16px; line-height: 22px; border-bottom: 1px solid #f2eeed; font-family: sans-serif;">
-          Thank you for contacting the GCconnex Help desk. This email is a copy of your request.<br/><br/> Merci d\'avoir communiqué avec le bureau de soutien de GCconnex. Ce courriel est d\'avoir une copie de votre demande.
+          Thank you for contacting the GCconnex Help desk. This is a copy of your request.<br/><br/> Merci d\'avoir communiqué avec le bureau de soutien de GCconnex. Ceci est une 
+
+copie de votre requête.
 
              
         </td>
@@ -371,11 +375,11 @@ class FGContactForm
                   </tr>
                   <tr>
                     <td style="padding: 20px 0 0 0;font-family: sans-serif; color: #153643; font-size: 16px; line-height: 22px;">
-                           <b>Nom:</b> '.$name.'<br/> 
-                  <b>Email:</b> '.$email.'<br/>
-                  <b>Raison:</b> '.$french.'<br/>
-                  <b>Sujet:</b> '.$subject.'<br/>
-                  <b>Message:</b>
+                           <b>Nom :</b> '.$name.'<br/> 
+                  <b>Courriel :</b> '.$email.'<br/>
+                  <b>Raison :</b> '.$french.'<br/>
+                  <b>Sujet :</b> '.$subject.'<br/>
+                  <b>Message :</b>
                   '.$message.'<br/>
                     </td>
                   </tr>
@@ -398,11 +402,11 @@ class FGContactForm
               </td>
             </tr>
             <tr>
-              <td align="center" style="padding: 20px 0 0 0;">
+              <td align="center" style="padding: 10px 0 0 0;">
                 <table border="0" cellspacing="0" cellpadding="0">
                   <tr>
-                    <td width="150" style="text-align: center; padding: 0 10px 0 10px;">
-                  Please do not reply /<br/> Prière de ne pas r&#233;pondre
+                    <td style="text-align: center; padding: 0 10px 0 10px;">
+                  Please do not reply to this message | Veuillez ne pas répondre à ce message
                     </td>
                    
                   </tr>

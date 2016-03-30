@@ -19,7 +19,7 @@ $link = elgg_view('output/url', array(
 	'class' => 'mission-emphasis mission-link-color'
 ));
 
-$summary = $link . ', ' . $object->job_type;
+$summary = $link . ', ' . elgg_echo($object->job_type);
 // Shortens the description to 200 characters.
 $message = elgg_get_excerpt($object->descriptor, elgg_get_plugin_setting('river_message_limit', 'missions')) . "\n";
 

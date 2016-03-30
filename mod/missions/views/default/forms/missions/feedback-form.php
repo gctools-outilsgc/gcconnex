@@ -48,13 +48,13 @@ if (elgg_is_sticky_form('applicationfill')) {
 $feedback_body .=  elgg_view('input/plaintext', array(
 	    'name' => 'feedback_body',
 	    'value' => $feedback_body,
-	    'id' => 'mission-feedback-body-text-input'
+	    'id' => 'mission-feedback-body-text-input-' . $feedback_target->guid
 ));
 	
 $input_feedback_rating = elgg_view('input/checkbox', array(
 		'name' => 'feedback_rating',
 		'checked' => $checked,
-		'id' => 'mission-feedback-rating-checkbox-input'
+		'id' => 'mission-feedback-rating-checkbox-input-' . $feedback_target->guid
 ));;
 
 echo elgg_view('input/hidden', array(
@@ -74,7 +74,7 @@ echo elgg_view('input/hidden', array(
 ?>
 
 <div class="form-group">
-	<label for="mission-feedback-body-text-input" style="font-size:x-large;">
+	<label for="mission-feedback-body-text-input-<?php echo $feedback_target->guid; ?>" style="font-size:x-large;">
 		<?php echo elgg_echo('missions:feedback_for') . $feedback_head; ?>
 	</label>
 	<span style="margin-left:8px;">
@@ -87,7 +87,7 @@ echo elgg_view('input/hidden', array(
 		<?php echo $input_feedback_rating; ?>
 	</div>
 	<div style="display:inline-block;">
-		<label for='mission-feedback-rating-checkbox-input'><?php echo elgg_echo('missions:endorse_person', array($feedback_target->name)); ?> </label>
+		<label for='mission-feedback-rating-checkbox-input-<?php echo $feedback_target->guid; ?>'><?php echo elgg_echo('missions:endorse_person', array($feedback_target->name)); ?> </label>
 	</div>
 </div>
 <div>
@@ -95,7 +95,8 @@ echo elgg_view('input/hidden', array(
 		echo elgg_view('input/submit', array(
 				'value' => elgg_echo('missions:submit'),
 				'class' => 'elgg-button btn btn-primary',
-				'style' => 'float:right;'
+				'style' => 'float:right;',
+				'id' => 'mission-feedback-form-submission-button-' . $feedback_target->guid
 		)); 
 	?> 
 </div>

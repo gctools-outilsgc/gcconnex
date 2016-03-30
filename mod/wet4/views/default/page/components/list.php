@@ -171,7 +171,7 @@ if(elgg_in_context('groups') && get_input("filter") == 'yours'){ //datatable for
     }
 
     //create table body
-    $tBody = elgg_format_element('tbody', ['class' => ''], $tR);
+    $tBody = elgg_format_element('tbody', ['class' => 'msgTable'], $tR);
 
     //create table head
     $tHead = elgg_format_element('thead', ['class' => ''], '<tr> <th class=""> ' . $heading . '</th> </tr>');
@@ -221,15 +221,40 @@ if(elgg_in_context('groups') && get_input("filter") == 'yours'){ //datatable for
         $mess_check = elgg_view('input/checkbox', array(
 			'name' => 'message_id[]',
 			'value' => $item->guid,
-
+            'class' => 'mrgn-rght-sm'
 		));
+            /* $item->toId    $item->fromId  $item->title   elgg_view_friendly_time($item->time_created) elgg_extract('metadata_name', $vars) */
 
+        $subject_info = elgg_view('output/url', array(
+	        'href' => $item->getURL(),
+	        'text' => $item->title,
+	        'is_trusted' => true,
+        ));
+
+        if(elgg_extract('metadata_name', $vars) == 'fromId'){
+            $heading1 = elgg_echo('msg:to');
+            $heading2 = elgg_echo('msg:sent');
+            $sender = get_entity($item->toId)->name;
+        } else {
+            $heading1 = elgg_echo('msg:from');
+            $heading2 = elgg_echo('msg:recieved');
+            $sender = get_entity($item->fromId)->name;
+        }
 
         //stick items in <td> element
-        $list_items = elgg_format_element('td', ['class' => 'data-table-list-item '], $mess_check);
-	    $list_items .= elgg_format_element('td', ['class' => 'data-table-list-item '], $item_view);
+        $list_items = elgg_format_element('td', ['class' => 'data-table-list-item ', 'style' => 'padding: 10px 0'], $mess_check);
+        $list_items .= elgg_format_element('td', ['class' => 'data-table-list-item ', 'style' => 'padding: 10px 0'], '<span>' . $sender . '</span>');
+        $list_items .= elgg_format_element('td', ['class' => 'data-table-list-item ', 'style' => 'padding: 10px 0'], $subject_info);
+	    $list_items .= elgg_format_element('td', ['class' => 'data-table-list-item ', 'style' => 'padding: 10px 0'], elgg_view_friendly_time($item->time_created));
         //stick <td> elements in <tr>
-        $tR .= elgg_format_element('tr', ['class' => 'testing',], $list_items);
+
+       
+        if($item->readYet){
+            $read = 'read';
+        } else {
+            $read = 'unread-custom';
+        }
+        $tR .= elgg_format_element('tr', ['class' => $read,], $list_items);
     }
 
     if ($position == 'before' || $position == 'both') {
@@ -242,23 +267,23 @@ if(elgg_in_context('groups') && get_input("filter") == 'yours'){ //datatable for
     $tBody = elgg_format_element('tbody', ['class' => ''], $tR);
 
     //create table head
-    $tHead = elgg_format_element('thead', ['class' => ''], '<tr><th><input type="checkbox" name="select_all" value="Toggle All" id="table-select-all"></th> <th class=""> ' . $heading . '</th> </tr>');
+    $tHead = elgg_format_element('thead', ['class' => ''], '<tr><th><input type="checkbox" name="select_all" value="Toggle All" id="table-select-all"></th> <th class="">' . $heading1 . ' </th><th>' . elgg_echo('msg:subject') . '</th><th>' . $heading2 . '</th> </tr>');
 
 
         //make it so that messages won't be in alphabetical order. Need to pass a JSON array, but elgg is being mean :(
-        echo elgg_format_element('table', ['class' => ' wb-tables table', 'id' => '', "data-wb-tables"=>"{ \"ordering\" : false }"], $tHead . $tBody);
-
-        ?>
+        $tab =  elgg_format_element('table', ['class' => ' wb-tables table inboxTable', 'id' => '', "data-wb-tables"=>"{ \"ordering\" : false, \"bSort\" : false }"], $tHead . $tBody);
+        echo elgg_format_element('div', ['class' => 'table-responsive'], $tab);
+?>
         
         <script>
         $('#table-select-all').on('click', function(){
             $('input[type="checkbox"]').prop('checked', this.checked);
         });
 
-        $('div .message').on('hover', function(){
+        $('table.inboxTable tbody tr td:not(:first-child)').on('hover', function () {
             $(this).css('cursor', 'pointer');
             $(this).on('click', function(){
-               var link = $(this).find("a:first").attr('href');
+               var link = $(this).parent().find("a").attr('href');
                window.location.href = link;
             });
         });

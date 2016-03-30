@@ -7,7 +7,6 @@
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
 $name = get_input('fn');
-$department = get_input('fd');
 $email = get_input('fe');
 $phone = get_input('fp');
 $disclaimer = get_input('fd');
@@ -30,9 +29,9 @@ $user = get_entity(elgg_get_logged_in_user_guid());
 if(!$name) {
 	$name = $user->name;
 }
-if(!$department) {
-	$department = $user->department;
-}
+/*
+ * TODO: If they use the new department input in their profile then extract the department from there?
+ */
 if(!$email) {
 	$email = $user->email;
 }
@@ -115,9 +114,10 @@ $input_disclaimer = elgg_view('input/checkbox', array(
 <div> 
 	<?php 
 		echo elgg_view('input/submit', array(
-			'value' => elgg_echo('missions:next'),
-			'class' => 'elgg-button btn btn-primary',
-			'style' => 'float:right;'
+				'value' => elgg_echo('missions:next'),
+				'class' => 'elgg-button btn btn-primary',
+				'style' => 'float:right;',
+				'id' => 'mission-post-opportunity-first-form-submission-button'
 		)); 
 	?>
 </div>

@@ -162,9 +162,10 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
 
                     $validInput = true;
 
+                    /*
                     if($ongoing[$k] == true){
                         $endyear[$k] = $startyear[$k];
-                    }
+                    }*/
 
                     if(trim( htmlentities($school[$k])) == '' || trim( htmlentities($degree[$k])) == '' || trim( htmlentities($field[$k])) == ''){
                         $validInput = false;

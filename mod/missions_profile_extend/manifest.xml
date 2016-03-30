@@ -4,7 +4,7 @@
 	<id>missions_profile_extend</id>
 	<author>National Research Council Canada</author>
 	<website>http://www.nrc-cnrc.gc.ca/eng/rd/ict/</website>
-	<version>4</version>
+	<version>7</version>
 	<description>Extension of the b_extended_profile mod to allow for opt-ins.</description>
 	<copyright>Her Majesty the Queen in Right of Canada, 2015</copyright>
 	<license>Creative Commons Attribution 3.0 Unported License</license>

@@ -52,7 +52,7 @@ if ($inbox) {
 	}
 }
 
-$body = elgg_view_layout('content', array(
+$body = elgg_view_layout('one_column', array(
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',

@@ -61,11 +61,11 @@ if ($err != '') {
     switch($_SESSION['mission_search_switch']) {
         case 'candidate':
             // Function for candidate searching.
-            $returned = mm_adv_search_candidate_database($array, 'AND');
+            $returned = mm_adv_search_candidate_database($array, 'AND', $advanced_form['limit']);
             break;
         default:
             // Function for mission searching.
-            $returned = mm_search_database($array, 'AND', false);
+            $returned = mm_search_database($array, 'AND', $advanced_form['limit']);
     }
     
     /*
@@ -76,6 +76,9 @@ if ($err != '') {
         forward(REFERER);
     } else {
         elgg_clear_sticky_form('advancedfill');
+        if($advanced_form['hidden_return']) {
+        	forward(REFERER);
+        }
         forward(elgg_get_site_url() . 'missions/display-search-set');
     }
 }

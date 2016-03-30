@@ -10892,9 +10892,33 @@ a.shr-opn, a.shr-opn:hover {
     }
 
     .data-table-list-item input[type="checkbox"] {
-
-        margin-top: 15px;
+        
+        /*margin-top: 15px;*/
+        margin-right: 5px;
+        margin-left: 5px;
     }
+
+    th input[type="checkbox"] {
+        
+        /*margin-top: 15px;*/
+        margin-right: 5px;
+        margin-left: 5px;
+    }
+
+    table.inboxTable .unread-custom {
+        background-color: #f4f4f4;
+        margin: 10px 0;
+    }
+
+    table.inboxTable .unread-custom:hover {
+        background-color: #efefef;
+    }
+
+    table.inboxTable .read:hover {
+        background-color: #efefef;
+    }
+
+
 
 /*This is where the elgg icons get loaded!*/
 <?php echo elgg_view('css/elements/icons - Copy', $vars); ?> 

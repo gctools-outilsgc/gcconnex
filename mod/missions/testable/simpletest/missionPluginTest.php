@@ -111,7 +111,7 @@ class MissionPluginTest extends ElggCoreUnitTest {
 	}
 
 	public function testDayStringsMustBeLoaded_En() {
-		$expected = "Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday";
+		$expected = 'missions:mon,missions:tue,missions:wed,missions:thu,missions:fri,missions:sat,missions:sun';
 		$actual = elgg_get_plugin_setting('day_string', 'missions');
 		$this->assertIdentical($expected, $actual);
 	}
@@ -129,7 +129,7 @@ class MissionPluginTest extends ElggCoreUnitTest {
 	}
 
 	public function testSecurityStringsMustBeLoaded_En() {
-		$expected = " ,Enhanced reliability,Secret,Top Secret";
+		$expected = " ,missions:enhanced_reliability,missions:secret,missions:top_secret";
 		$actual = elgg_get_plugin_setting('security_string', 'missions');
 		$this->assertIdentical($expected, $actual);
 	}

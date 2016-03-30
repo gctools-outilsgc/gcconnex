@@ -37,7 +37,8 @@ $input_closed = elgg_view('input/checkbox', array(
 	<?php
 		echo elgg_view('input/submit', array(
 				'value' => elgg_echo('missions:save'),
-				'class' => 'elgg-button btn btn-primary'
+				'class' => 'elgg-button btn btn-primary',
+				'id' => 'mission-refine-form-submission-button'
 		)); 
 	?> 
 </div>
