@@ -28,12 +28,8 @@ $content = elgg_list_river(array(
 	'limit' => 4,
 	'pagination' => false,
     'distinct' => false,
-	'joins' => array(
-		"JOIN {$db_prefix}entities e1 ON e1.guid = rv.object_guid",
-		"LEFT JOIN {$db_prefix}entities e2 ON e2.guid = rv.target_guid",
-	),
 	'wheres' => array(
-		"(e1.container_guid = $group->guid OR e2.container_guid = $group->guid)",
+		"(oe.container_guid = $group->guid OR te.container_guid = $group->guid)",
 	),
 ));
 elgg_pop_context();

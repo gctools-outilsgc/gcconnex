@@ -92,7 +92,7 @@ if (in_array("yes", array($invite_site_members, $invite_email, $invite_csv))) {
 		$form_data .= "</div>";
         /*
          * New system that doesnt work
-         * 
+         *
          * 
 		$tabs["email"] = array(
 			"text" => elgg_echo("group_tools:group:invite:email"),
@@ -106,12 +106,12 @@ if (in_array("yes", array($invite_site_members, $invite_email, $invite_csv))) {
 		$form_data .= "<div>" . elgg_echo("group:invite:email") . "</div>";
 		$form_data .= elgg_view("input/text", array("name" => "user_guid",
 																			"id" => "group_tools_group_invite_autocomplete_email",
-																			//"group_guid" => $group->getGUID(),
-																			//"relationship" => "email",
+																			"group_guid" => $group->getGUID(),
+																			"relationship" => "email",
                                                                             'class' => 'noSubmit'));
 
         $form_data .= '<div id="group_tools_group_invite_autocomplete_email_autocomplete_results" class="mtm clearfloat"></div>';
-        // <div class="group_tools_group_invite_autocomplete_autocomplete_result elgg-discover_result elgg-discover"><input type="hidden" value=" " name="user_guid_email[]"></div>
+        //$form_data .= '<div class="group_tools_group_invite_autocomplete_autocomplete_result elgg-discover_result elgg-discover"><input type="hidden" value="" name="user_guid_email[]"></div>';
 		$form_data .= "</div>";
          */
         //<div class="group_tools_group_invite_autocomplete_autocomplete_result elgg-discover_result elgg-discover"><input type="hidden" value="etan154@gmail.com" name="user_guid_email[]">etan154@gmail.com<i class="fa fa-trash-o fa-lg icon-unsel mrgn-lft-sm elgg-icon-delete-alt"><span class="wb-inv">Delete this</span></i></div>
@@ -228,7 +228,14 @@ echo $form_data;
 
              $('#group_tools_group_invite_email .elgg-icon-delete-alt').live("click", function () {
 			    $(this).parent('div').remove();
-		    });
+             });
+    
+             $('.elgg-button-submit').live("click", function () {
+
+                 if ($('td input:checked').attr('checked', 'checked')) {
+                     $('td input:checked').remove();
+                 }
+             });
 
 
 </script>

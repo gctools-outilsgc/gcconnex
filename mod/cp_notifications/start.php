@@ -52,8 +52,8 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 		case 'cp_site_msg_type':	// messages/actions/messages/send.php
 			$to_recipients[] = get_user($params['cp_to']['guid']);
-			$subject = elgg_echo('cp_notify:subject:site_message_en',array($params['cp_from']['name'],$params['cp_topic_title']));
-			$subject .= ' / '.elgg_echo('cp_notify:subject:site_message_fr',array($params['cp_from']['name'],$params['cp_topic_title']));
+			$subject = elgg_echo('cp_notify:subject:site_message',array($params['cp_from']['name'],$params['cp_topic_title']),'en');
+			$subject .= ' | '.elgg_echo('cp_notify:subject:site_message',array($params['cp_from']['name'],$params['cp_topic_title']),'fr');
 
 			$message = array('cp_topic_title' => $params['cp_topic_title'],
 								'cp_topic_description' => $params['cp_topic_description'],
@@ -66,8 +66,8 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 
 		case 'cp_group_add':	// group_tools/lib/functions.php
-			$subject = elgg_echo('cp_notify:subject:group_add_user_en',array($params['cp_user']['name'],$params['cp_group']['name']));
-			$subject .= ' / '.elgg_echo('cp_notify:subject:group_add_user_fr',array($params['cp_user']['name'],$params['cp_group']['name']));
+			$subject = elgg_echo('cp_notify:subject:group_add_user',array($params['cp_user']['name'],$params['cp_group']['name']),'en');
+			$subject .= ' | '.elgg_echo('cp_notify:subject:group_add_user',array($params['cp_user']['name'],$params['cp_group']['name']),'fr');
 
 			$message = array(
 				'cp_user_added' => $params['cp_user_added'],
@@ -81,8 +81,8 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 		
 		case 'cp_group_invite': // group_tools/lib/functions.php
-			$subject = elgg_echo('cp_notify:subject:group_invite_user_en',array($params['cp_inviter']['name'],$params['cp_invite_to_group']['name']));
-			$subject .= ' / '.elgg_echo('cp_notify:subject:group_invite_user_fr',array($params['cp_inviter']['name'],$params['cp_invite_to_group']['name']));
+			$subject = elgg_echo('cp_notify:subject:group_invite_user',array($params['cp_inviter']['name'],$params['cp_invite_to_group']['name']),'en');
+			$subject .= ' | '.elgg_echo('cp_notify:subject:group_invite_user',array($params['cp_inviter']['name'],$params['cp_invite_to_group']['name']),'fr');
 			$message = array(
 				'cp_group_invite_from' => $params['cp_invitee'], // user we're inviting
 				'cp_group_invite_to' => $params['cp_inviter'], // user inviting others
@@ -96,8 +96,8 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 
 		case 'cp_group_invite_email': // group_tools/lib/functions.php
-			$subject = elgg_echo('cp_notify:subject:group_mail_en',array($cp_email_invited_by->name,$cp_group_invite->name));
-			$subject = ' / '.elgg_echo('cp_notify:subject:group_mail_fr',array($cp_email_invited_by->name,$cp_group_invite->name));
+			$subject = elgg_echo('cp_notify:subject:group_mail',array($cp_email_invited_by->name,$cp_group_invite->name),'en');
+			$subject = ' | '.elgg_echo('cp_notify:subject:group_mail',array($cp_email_invited_by->name,$cp_group_invite->name),'fr');
 			$message = array(
 				'cp_email_invited' => $params['cp_invitee'],
 				'cp_email_invited_by' => $params['cp_inviter'],
@@ -120,7 +120,8 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_group_user' => $params['cp_group_mail_users'],
 				'cp_msg_type' => $cp_msg_type
 			);
-			$subject = elgg_echo('cp_notify:subject:group_mail',array($params['cp_group']['name'],$params['cp_group_subject']));
+			$subject = elgg_echo('cp_notify:subject:group_mail',array($params['cp_group']['name'],$params['cp_group_subject']),'en');
+            $subject = ' | '.elgg_echo('cp_notify:subject:group_mail',array($params['cp_group']['name'],$params['cp_group_subject']),'fr');
 			foreach ($params['cp_group_mail_users'] as $to_user)
 				$to_recipients[] = get_user($to_user);
 			break;
@@ -156,7 +157,8 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_msg_type' => $cp_msg_type
 			);
 			$email_only = true;
-			$subject = elgg_echo('cp_notify:subject:validate_user',array($params['cp_validate_user']['email']));
+			$subject = elgg_echo('cp_notify:subject:validate_user',array($params['cp_validate_user']['email']),'en');
+            $subject = ' | '. elgg_echo('cp_notify:subject:validate_user',array($params['cp_validate_user']['email']),'fr');
 			$to_recipients[] = get_user($params['cp_validate_user']['guid']);
 			break;
 

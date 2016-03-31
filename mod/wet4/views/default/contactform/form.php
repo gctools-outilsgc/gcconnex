@@ -147,7 +147,7 @@ echo '</select>';
                 </div>
                 <div class='form-group'>
                     <label for='message' class="required"><span class="field-name"><?php echo elgg_echo('contactform:message');?></span><strong class="required"> (<?php echo elgg_echo('contactform:required'); ?>)</strong></label>
-                    <?php echo elgg_view('input/plaintext', array('name' => 'message', 'class' => 'form-control', 'id'=>'message', 'value' => $formproc->SafeDisplay('message') ));?>
+                   <textarea rows="10" cols="50" name='message' id='message'><?php echo $formproc->SafeDisplay('message') ?></textarea>
                 </div>
 
                 <div class='container pull-right'>

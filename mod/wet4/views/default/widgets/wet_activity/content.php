@@ -56,7 +56,7 @@ if(elgg_is_logged_in()){
             $optionsf['relationship_guid'] = elgg_get_logged_in_user_guid();
             $optionsf['relationship'] = 'friend';
             $optionsf['pagination'] = true;
-            $activity = elgg_list_river($optionsf);
+            $activity = newsfeed_list_river($optionsf);
         }else if(!$hasfriends && $hasgroups){
             //if no friends but groups
             $guids_in = implode(',', array_unique(array_filter($group_guids)));
@@ -65,7 +65,7 @@ if(elgg_is_logged_in()){
             $optionsg['wheres'] = array("( oe.container_guid IN({$guids_in}) 
          OR te.container_guid IN({$guids_in}) )");
             $optionsg['pagination'] = true;
-            $activity = elgg_list_river($optionsg);
+            $activity = newsfeed_list_river($optionsg);
         }else{
             //if friends and groups :3
             $guids_in = implode(',', array_unique(array_filter($group_guids)));
@@ -82,7 +82,7 @@ if(elgg_is_logged_in()){
         OR rv.subject_guid IN (SELECT guid_two FROM {$db_prefix}entity_relationships WHERE guid_one=$user->guid AND relationship='friend')
         ");
             $optionsfg['pagination'] = true;
-            $activity = elgg_list_river($optionsfg);
+            $activity = newsfeed_list_river($optionsfg);
         }
         /*
         if($hasfriends){

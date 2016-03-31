@@ -14,10 +14,12 @@ function wet4_theme_init() {
     elgg_register_library('GCconnex_logging', elgg_get_plugins_path() . 'wet4/lib/logging.php');
     elgg_register_library('GCconnex_display_in_language', elgg_get_plugins_path() . 'wet4/lib/translate_display.php');
     //elgg_register_library('elgg:user_settings', elgg_get_plugins_path(). 'wet4/lib/user_settings.php');
+    elgg_register_library('wet:custom_core', elgg_get_plugins_path() . 'wet4/lib/custom_core.php');
 
     //elgg_load_library('user_settings');
     elgg_load_library('GCconnex_logging');
     elgg_load_library('GCconnex_display_in_language');
+    elgg_load_library('wet:custom_core');
     //get rid of reply icon on river menu
     elgg_unregister_plugin_hook_handler('register', 'menu:river', 'discussion_add_to_river_menu');
 
@@ -94,6 +96,7 @@ function wet4_theme_init() {
 	elgg_register_action("file/move_folder", elgg_get_plugins_path() . "/wet4/actions/file/move.php");
     elgg_register_action("friends/collections/add", elgg_get_plugins_path() . "/wet4/actions/friends/collections/add.php");
     elgg_register_action("login", elgg_get_plugins_path() . "/wet4/actions/login.php", "public");
+    elgg_register_action("widgets/delete", elgg_get_plugins_path() . "/wet4/actions/widgets/delete.php");
     elgg_register_action("user/requestnewpassword", elgg_get_plugins_path() . "/wet4/actions/user/requestnewpassword.php", "public");
 	// non-members do not get visible links to RSS feeds
 	if (!elgg_is_logged_in()) {
@@ -830,7 +833,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
                     'title' => elgg_echo('thewire_tools:reshare'),
                     'href' => 'ajax/view/thewire_tools/reshare?reshare_guid=' . $entity->getGUID(),
                     'link_class' => 'elgg-lightbox',
-                    'item_class' => 'pad-rght-xs',
+                    'item_class' => '',
                     'is_trusted' => true,
                     'priority' => 500
                 );
@@ -1499,7 +1502,7 @@ function wet4_widget_menu_setup($hook, $type, $return, $params) {
 			'name' => 'delete',
 			'text' => '<i class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">'.elgg_echo('widget:delete', array($widget->getTitle())).'</span></i>',
 			'title' => elgg_echo('widget:delete', array($widget->getTitle())),
-			'href' => "action/widgets/delete?widget_guid=$widget->guid",
+			'href' => "action/widgets/delete?widget_guid=$widget->guid&context=" . $widget->getContainerGUID(),
 			'is_action' => true,
 			'link_class' => 'elgg-widget-delete-button',
 			'id' => "elgg-widget-delete-button-$widget->guid",

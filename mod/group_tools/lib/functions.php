@@ -109,7 +109,8 @@ function group_tools_invite_user(ElggGroup $group, ElggUser $user, $text = "", $
 					'cp_invite_msg' => $text,
 					'cp_msg_type' => 'cp_group_invite'
 					);
-				$result = elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
+				elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
+                $result = true;
 
 			} else {
 
@@ -274,7 +275,8 @@ function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend 
 						'cp_invitation_msg' => $text,
 						'cp_msg_type' => 'cp_group_invite_email'
 						);
-					$result = elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
+					elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
+                    $result = true;
 
 				} else {
 

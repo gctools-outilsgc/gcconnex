@@ -17,7 +17,7 @@ function embed_extender_parser($input, $view, $context)
 		return $input;
 	}
 
-	if ($context == 'widgets' || $context == 'profile' || $context == 'custom_index_widgets wire'){
+	if ($context == 'widgets' || $context == 'profile' || $context == 'custom_index_widgets wire' || $context == 'groups'){
 		$width = elgg_get_plugin_setting('widget_width', 'embed_extender');
 		if (!isset($width) || !is_numeric($width) || $width < 0) {
 			$width = 240; //Size for widgets and messageboard

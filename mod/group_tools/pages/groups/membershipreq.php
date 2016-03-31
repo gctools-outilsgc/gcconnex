@@ -63,7 +63,7 @@ switch ($subpage) {
 			"offset" => $offset,
 			"limit" => $limit,
 			"count" => true,
-			"order_by" => "ue.name ASC"
+			//"order_by" => "ue.name ASC"
 		);
 		
 		$count = elgg_get_entities_from_relationship($options);
