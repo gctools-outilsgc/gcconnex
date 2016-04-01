@@ -117,7 +117,16 @@ if(elgg_is_logged_in()){
             //$activity .= 'You should join some groups or something dawg.';
             //we can put a link here (or suggested groups and stuff) as well to invite users to join groups or have colleagues and stuff
         }
-
+        else if ( is_null( get_input('offset', null) ) ){
+            // add a "Show All button"
+            $moreButton = elgg_view('output/url', array(
+                'href' => $site_url .'newsfeed/?offset=20',
+                'text' => elgg_echo('wet:more'),
+                'class' => 'btn btn-primary',
+                'is_trusted' => true,
+            ));
+            $activity .= $moreButton;
+        }
     }else{
         //if the user is not logged in then display a login thing to invite users to login and register :3
         $title = elgg_echo('login');

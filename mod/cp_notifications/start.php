@@ -411,7 +411,7 @@ function cp_create_notification($event, $type, $object) {
 	foreach ($to_recipients as $to_recipient) { 
 		if ($to_recipient) {
 			$to_user = get_user_by_email($to_recipient); // this function gets an array of users
-			mail($to_user->email,$subject,$template,create_headers());
+			mail($to_user->email,$subject,$template,cp_get_headers());
 			messages_send($subject, $template, $to_user[0]->getGUID(), 0);
 		}
 	}	

@@ -22,17 +22,17 @@ function newsfeed_list_river(array $options = array()) {
 		$options["pagination"] = false;
 	}
 
-	//$options['count'] = true;
-	//$count = elgg_get_river($options);
+	// get the river items
+	$options['count'] = false;
+	$items = elgg_get_river($options);
 
-	//if ($count > 0) {
-		$options['count'] = false;
-		$items = elgg_get_river($options);
-	/*} else {
-		$items = array();
-	}*/
+	// get the river items count only if we need it for pagination
+	if ( !is_null( get_input('offset', null) ) ){
+		$options['count'] = true;
+		$count = elgg_get_river($options);
+		$options['count'] = $count;
+	}
 
-	//$options['count'] = $count;
 	$options['items'] = $items;
 
 	return elgg_view('page/components/list', $options);

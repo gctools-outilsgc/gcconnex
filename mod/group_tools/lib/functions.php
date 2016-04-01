@@ -176,8 +176,8 @@ function group_tools_add_user(ElggGroup $group, ElggUser $user, $text = "") {
 					'cp_added_msg' => $text,
 					'cp_msg_type' => 'cp_group_add'
 					);
-				$result = elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
-
+				elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
+                $result = true;
 			} else {
 
 

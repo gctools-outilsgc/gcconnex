@@ -8,7 +8,7 @@ $user = elgg_get_logged_in_user_entity();
 
 if ($user->getGuid() == elgg_get_page_owner_entity()->getGuid()) {
 	$title = elgg_echo('landingPage');
-    $options = array('news' => 'News Feed', 'dash' => 'Dashboard');
+    $options = array('news' => elgg_echo('newsfeed'), 'dash' => elgg_echo('dashboard'));
 
 	$content = '<label for="landingpage">' . elgg_echo('landingPage') . ': </label>';
 	$content .= elgg_view("input/select", array(
