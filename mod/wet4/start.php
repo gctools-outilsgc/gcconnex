@@ -368,36 +368,38 @@ function wet4_theme_pagesetup() {
         $context = elgg_get_context();
         $page_owner = elgg_get_page_owner_entity();
 
-        // Show menu link in the correct context
-        if (in_array($context, array("friends", "friendsof", "collections", "messages"))) {
-            $options = array(
-                "type" => "user",
-                "count" => true,
-                "relationship" => "friendrequest",
-                "relationship_guid" => $page_owner->getGUID(),
-                "inverse_relationship" => true
-            );
+        if (!$page_owner) {
+            // Show menu link in the correct context
+            if (in_array($context, array("friends", "friendsof", "collections", "messages"))) {
+                $options = array(
+                    "type" => "user",
+                    "count" => true,
+                    "relationship" => "friendrequest",
+                    "relationship_guid" => $page_owner->getGUID(),
+                    "inverse_relationship" => true
+                );
 
-            $count = elgg_get_entities_from_relationship($options);
-            $extra = "";
-            if (!empty($count)) {
-                if($count >= 10){
-                    //$count = '9+';
+                $count = elgg_get_entities_from_relationship($options);
+                $extra = "";
+                if (!empty($count)) {
+                    if($count >= 10){
+                        //$count = '9+';
+                    }
+                    $extra = '<span class="notif-badge">' . $count . '</span>';
                 }
-                $extra = '<span class="notif-badge">' . $count . '</span>';
-            }
-            
-            // add menu item
-            $menu_item = array(
-                "name" => "friend_request",
-                "text" => elgg_echo("friend_request:menu") . $extra,
-                "href" => "friend_request/" . $page_owner->username,
-                "contexts" => array("friends", "friendsof", "collections", "messages")
-            );
+                
+                // add menu item
+                $menu_item = array(
+                    "name" => "friend_request",
+                    "text" => elgg_echo("friend_request:menu") . $extra,
+                    "href" => "friend_request/" . $page_owner->username,
+                    "contexts" => array("friends", "friendsof", "collections", "messages")
+                );
 
-            elgg_register_menu_item("page", $menu_item);
-            
-            
+                elgg_register_menu_item("page", $menu_item);
+                
+                
+            }
         }
         
         if(elgg_in_context('messages')){

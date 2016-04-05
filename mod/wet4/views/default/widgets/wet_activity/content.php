@@ -122,7 +122,7 @@ if(elgg_is_logged_in()){
             $moreButton = elgg_view('output/url', array(
                 'href' => $site_url .'newsfeed/?offset=20',
                 'text' => elgg_echo('wet:more'),
-                'class' => 'btn btn-primary',
+                'class' => 'btn btn-primary newsfeed-button',
                 'is_trusted' => true,
             ));
             $activity .= $moreButton;

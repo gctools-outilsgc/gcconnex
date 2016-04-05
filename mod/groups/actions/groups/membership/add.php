@@ -36,9 +36,19 @@ if (sizeof($user_guid)) {
 						'object' => $group,
 					];
 
-					// Send welcome notification to user
-					notify_user($user->getGUID(), $group->owner_guid, $subject, $body, $params);
+					if (elgg_is_active_plugin('cp_notifications')) {
+						
+						$message = array(
+							'cp_user_added' => $user,
+							'cp_group' => $group,
+							'cp_msg_type' => 'cp_group_add'
+							);
+						$result = elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
 
+					} else {
+						// Send welcome notification to user
+						notify_user($user->getGUID(), $group->owner_guid, $subject, $body, $params);
+					}
 					system_message(elgg_echo('groups:addedtogroup'));
 				}
 				else {

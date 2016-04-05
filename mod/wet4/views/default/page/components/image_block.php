@@ -113,16 +113,17 @@ HTML;
 }else if($reshared == true){ //for reshared items
 
 
-
-    if ($image) {
-        $image = "<div class=\"mrgn-tp-sm col-xs-1\">$image</div>";
-    }
-
-
-
+    if(elgg_in_context('custom_index_widgets wire') || elgg_in_context('widgets')){
+        if ($image) {
+            $image = "<div class=\"mrgn-tp-sm col-xs-2\">$image</div>";        
+        }
+        $body = '<div class="col-xs-10">' . $body . '</div>';
+    } else {
+        if ($image) {
+            $image = "<div class=\"mrgn-tp-sm col-xs-1\">$image</div>";
+        }
         $body = '<div class="col-xs-11">' . $body . '</div>';
-
-
+    }
 
 
     echo <<<HTML

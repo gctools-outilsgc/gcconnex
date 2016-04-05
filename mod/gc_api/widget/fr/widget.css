@@ -1,0 +1,136 @@
+    body{
+        font-family: sans-serif;
+        color:#333333;
+    }
+    /*clearfix fixes everything, clearly*/
+    .clearfix:before,
+    .clearfix:after {
+        content: " ";
+        display: table; 
+    }
+
+    .clearfix:after {
+        clear: both; 
+    }
+    
+    .example-container{
+        /*This is just a container to hold the widget*/
+        width:450px; 
+        margin: 0 auto;
+        
+    }
+    /*Start of containers */
+    .wire-widget-container{
+        /* actual widget container*/
+        border: 1px solid #ddd;
+       
+        
+        width:100%; /*will respond to any container size*/
+        font-family: sans-serif;
+        color:#333333;
+    }
+    
+    .wire-widget-header{
+        /*positions the background logo image*/
+        background-color:#f5f5f5;
+        background-image: url('imgs/gcconnex_logo_bg.png');
+        background-repeat: no-repeat;
+        background-position: 96%;
+        
+         padding:10px;
+        border-bottom: solid 1px #ddd;
+    }
+    
+    .wire-widget-header h3{
+        margin:0;
+        padding:2px 0 15px 0;
+        font-size: 1.3em;
+    }
+    
+    .wire-widget-body{
+        height:400px; /*you can change this height*/
+        overflow-y: scroll;
+         
+
+    }
+    
+    .wire-widget-list{
+        /* put this class on the ul that holds the list of tweets*/
+        list-style:none;  
+        padding:0;
+        margin:0;
+    }
+    
+    .widget-li{
+       list-style: none;
+       display: block;
+       border-bottom: solid 1px #ddd;
+       padding: 12px 10px;
+    }
+    
+    .widget-li:last-child{
+        border:none;   
+    }
+    
+    .wire-widget-element{
+        clear:both;   
+    }
+    
+    .wire-widget-avatar{
+        width: 17%;
+        float: left;
+        margin-right: 3%;
+    }
+    
+    .wire-widget-content{
+        width: 78%;
+        float: left;
+    }
+    
+    .wire-widget-footer{
+        min-height: 25px; 
+        padding:10px;
+        border-top: 1px solid #ddd;
+    }
+    /* Misc Style Classes*/
+    .timeStamp{
+        color:6d6d6d;
+        font-size: 14px;
+        font-style: italic;
+        margin-left: 6px;
+    }
+    
+    .wire-widget-img{
+        width:100%;
+        border-radius: 50%;
+    }
+    
+    .gcconnex-link{
+        float:right;   
+    }
+    
+    .wire-widget-user{
+        padding-bottom: 6px;   
+    }
+    
+    .wire-widget-container a{
+        color: #047177;  
+    }
+    
+    .wire-widget-filter-text{
+        font-weight: bold;   
+    }
+
+    .wire-widget-load-more{
+       width:100%;
+       border:none;
+       background-color:#f5f5f5 ;
+       min-height: 35px;
+       color:#047177;
+   }
+   
+   .wire-widget-load-more:hover{
+       text-decoration: underline;
+       cursor: pointer;
+       background-color: #f9f9f9;
+   }

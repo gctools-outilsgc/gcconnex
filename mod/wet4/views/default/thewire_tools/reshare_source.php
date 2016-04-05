@@ -32,7 +32,9 @@ if (!empty($entity->title)) {
 }
 
 $content = "<div class='elgg-subtext'>";
-$content .= elgg_echo("thewire_tools:reshare:source") . ": ";
+if(!elgg_instanceof($entity, 'group')){
+    $content .= elgg_echo("thewire_tools:reshare:source") . ": ";
+}
 if (!empty($url)) {
 	$content .= elgg_view("output/url", array(
 		"href" => $url,

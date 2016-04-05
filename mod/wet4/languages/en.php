@@ -1596,7 +1596,7 @@ Please do not reply to this email.",
 'gcTour:step1' => 'Your News Feed ',
 'gcTour:step1txt' => 'See what your colleagues are up to and keep track of your groups&#39; activities, including their latest videos!',
 'gcTour:step2' => 'GCTools Navigation ',
-'gcTour:step2txt' => 'GCTools is an sweet suite. Navigate easily from one tool to another using these links.',
+'gcTour:step2txt' => 'GCTools is a sweet suite. Navigate easily from one tool to another using these links.',
 'gcTour:step3' => 'Profile card',
 'gcTour:step3txt' => "Need to update your profile? Click on your name to open your profile card and easily access your profile page and account settings.",
 

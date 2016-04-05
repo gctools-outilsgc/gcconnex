@@ -10769,6 +10769,12 @@ a.shr-opn, a.shr-opn:hover {
 
  }
 
+ .noWrap {
+     overflow-wrap: break-word;
+  word-wrap: break-word;
+
+ }
+
  .elgg-avatar-wet4-sf{
         width:37%;
 
@@ -11332,6 +11338,13 @@ border:none;
     margin-bottom: 20px;   
 }
 
+
+.newsfeed-button{
+    width: 50%;
+    left: 25%;
+    position: relative;
+    margin-top:8px;
+}
 .tab-content {
     padding: 5px;
     /*border: 1px solid #ddd;*/
@@ -11349,6 +11362,11 @@ border:none;
     font-size: 13px;
 }
 
+
+    .gsa-radio-filter li{
+        float: left !important;
+        padding: 8px;
+    }
 
 
 #userMenu p {
@@ -11384,6 +11402,14 @@ border:none;
 
 .removeMe {
     display: none;
+}
+
+.wet-ajax-loader{
+    width: 31px;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom:20px;
+
 }
 
 
@@ -11425,7 +11451,7 @@ border:none;
         #cboxSlideshow{position:absolute; bottom:0px; right:42px; color:#444;}
         #cboxPrevious{position:absolute; bottom:0px; left:0; color:#444;}
         #cboxNext{position:absolute; bottom:0px; left:63px; color:#444;}
-        #cboxClose{position:absolute; bottom:100%; top:8px; right:20px; display:block; color:#444;}
+        #cboxClose{position:absolute; bottom:100%; height: 25px; top:8px; right:20px; display:block; color:#444;}
 
 /*** Messages ***/
 

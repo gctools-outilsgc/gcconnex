@@ -19,8 +19,20 @@ if (!empty($friend)) {
 			"action" => "add_friend",
 			"object" => $user
 		);
-		notify_user($friend->getGUID(), $user->getGUID(), $subject, $message, $params);
-		
+
+		// cyu - 04/04/2016: use new notification system hook instead (if activated)
+		if (elgg_is_active_plugin('cp_notifications')) {
+			$message = array(
+				'cp_request_guid' => $friend->getGUID(),
+				'cp_approver' => $user->name,
+				'cp_approver_profile' => $user->getURL(),
+				'cp_msg_type' => 'cp_friend_approve'
+			);
+			$result = elgg_trigger_plugin_hook('cp_overwrite_notification','all',$message);
+		} else {
+			notify_user($friend->getGUID(), $user->getGUID(), $subject, $message, $params);
+		}
+
 		system_message(elgg_echo("friend_request:approve:successful", array($friend->name)));
 		
 		// add to river

@@ -1,8 +1,8 @@
 <?php
 
 	$french = array(
-        'cp_notify:footer2' =>  "<p>Ceci est un message automatis&#233;, veuillez ne pas y r&#233;pondre%s</p>",
-// texts that will be displayed in the email notification
+    'cp_notify:footer2' =>  "<p>Ceci est un message automatis&#233;, veuillez ne pas y r&#233;pondre%s</p>",
+	// texts that will be displayed in the email notification
 	
 	'cp_notification:email_header' => "Ceci est un message g&#233;n&#233;r&#233; par le syst&#232;me de GCconnex. Veuillez ne pas r&#233;pondre &#224; ce message",
 		
@@ -11,9 +11,10 @@
 		Si vous avez des questions, veuillez communiquer avec le Soutien technique &#224; : GCconnex@tbs-sct.gc.ca. Pour de plus amples renseignements sur GCconnex et ses fonctionnalit&#233s consultez : %s<br/> 
 	    Merci",
 	
+	
 	// email subject lines	
 	
-	'cp_notify:subject:group_add_user' => "%s vous a ajout&#233 a leur groupe %s",
+	'cp_notify:subject:group_add_user' => "Vous a ajout&#233 a la groupe '%s'",
 
 	'cp_notify:subject:group_invite_user' => "%s vous a invit&#233 a joindre leur groupe %s",
 		
@@ -25,7 +26,7 @@
 
 	'cp_notify:subject:friend_request' => "%s vous a envoy&#233 une demande d&#39;&#234;tre coll&#232;gue",
 
-	'cp_notify:subject:forgot_password' => "Vous avez demand&#233 de r&#233initialiser votre mot de passe",
+	'cp_notify:subject:forgot_password' => "Vous avez demandé de réinitialiser votre mot de passe",
 
 	'cp_notify:subject:validate_user' => "Veuiller valider le compte de %s",
 
@@ -45,8 +46,18 @@
 	
 	'cp_notify:subject:hjpost' => "Nouveau commentaire pour un sujet de forum.",
 
+	'cp_notify:subject:approve_friend' => "%s approver la requets...", // translate pz
+
+	'cp_notify:subject:group_invite_email' => "%s a invitez poiur la groupe '%s'",
+
+
 
 	// email notification content (title & corresponding description) 
+
+	'cp_notify:body_friend_approve:title' => "%s has approved your friend request", // translate pz
+ 
+	'cp_notify:body_friend_approve:description' => "%s has approved your friend request", // translate pz
+
 
 	'cp_notify:body_likes:title' => "%s a aim&#233 votre publication '%s'",
 
@@ -88,6 +99,9 @@
 
 	'cp_notify:body_group_request:description' => "Consultez la demande en cliquant le lien suivant : %s
 		%s",
+
+	'cp_notify:body_group_invite_email:title' => "Invitez par la email", // translate
+	'cp_notify:body_group_invite_email:description' => "Tu es inviter pour la GCconnex dans la groupe de so and so...", // translate
 
 
 	'cp_notify:body_group_add:title' => "%s vous a ajout&#233 &#224; sont groupe '%s'",

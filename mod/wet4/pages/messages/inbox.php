@@ -38,7 +38,8 @@ $list .= elgg_list_entities_from_metadata(array(
 	'limit' => 0,
     'pagination' => false,
 	'preload_owners' => true,
-	'bulk_actions' => true
+	'bulk_actions' => true,
+	'wetcustom:messages' => true
 ));
 
 $body_vars = array(

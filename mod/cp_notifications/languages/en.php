@@ -10,7 +10,7 @@ $english = array(
 		Thank you",
 	
 	// email subject lines	
-	'cp_notify:subject:group_add_user' => '%s has added you into their group %s',
+	'cp_notify:subject:group_add_user' => "You have been added you into the group '%s'",
 	
 	'cp_notify:subject:group_invite_user' => '%s has invited you to join their group %s',
 		
@@ -42,8 +42,19 @@ $english = array(
 	
 	'cp_notify:subject:hjpost' => "New reply to a Forum Topic",
 	
+	'cp_notify:subject:approve_friend' => "%s has approved your friend request",
+
+	'cp_notify:subject:group_invite_email' => "%s invited you to join this group thing called '%s'",
+
+
 
 	// email notification content (title & corresponding description) 
+
+	'cp_notify:body_friend_approve:title' => "%s has approved your friend request",
+
+	'cp_notify:body_friend_approve:description' => "%s has approved your friend request",
+
+
 	'cp_notify:body_likes:title' => "%s has liked your post called '%s'",
 	
 	'cp_notify:body_likes:description' => "You can view your content by clicking on this link: %s",
@@ -84,7 +95,11 @@ $english = array(
 		%s",
 	
 
-	'cp_notify:body_group_add:title' => "%s has added you into their group '%s'",
+	'cp_notify:body_group_invite_email:title' => "Invite by email...",
+	'cp_notify:body_group_invite_email:description' => "You are invited to GCconnex and to such and such group",
+
+
+	'cp_notify:body_group_add:title' => "You have been added you into the group '%s'",
 	
 	'cp_notify:body_group_add:description' => "You have been added to the group %s with the following message... <br/>",
 	
@@ -107,9 +122,9 @@ $english = array(
 	'cp_notify:body_friend_req:description' => "%s has sent you a colleague request and are waiting for you to accept them <br/>
 		To view the colleague request invitation please click on this linke: %s",
 	
-	'cp_notify:body_forgot_password:title' => "There was a password reset request from this IP: <code %s </code>",
+	'cp_notify:body_forgot_password:title' => "There was a password reset request from this IP: <code> %s </code>",
 	
-	'cp_notify:body_forgot_password:description' => "There was a request to have a password reset from this user's IP:<code %s </code> <br/>
+	'cp_notify:body_forgot_password:description' => "There was a request to have a password reset from this user's IP:<code> %s </code> <br/>
 		Please go to this link to have your password resetted for %s's account: %s",
 		
 	'cp_notify:body_validate_user:title' => "Please validate your new account for %s",

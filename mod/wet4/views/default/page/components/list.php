@@ -314,7 +314,7 @@ if(elgg_in_context('groups') && get_input("filter") == 'yours'){ //datatable for
 
         
         
-		$li_attrs['class'][] = "elgg-item-$type list-break mrgn-tp-md clearfix";
+		$li_attrs['class'][] = "elgg-item-$type list-break mrgn-tp-md clearfix noWrap";
         
         
 		if ($subtype) {

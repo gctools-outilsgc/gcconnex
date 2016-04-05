@@ -16,7 +16,7 @@
  * @uses $vars['metas'] Array of meta elements
  * @uses $vars['links'] Array of links
  */
-
+ //Nick - Added IE9 check that will load the wet IE9 JS - This needs to be tested
 $site_url = elgg_get_site_url();
 
 $metas = elgg_extract('metas', $vars, array());
@@ -100,6 +100,18 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
         <meta name="dcterms.language" title="ISO639-2" content="eng" />
     -->            <!-- Meta data-->
         <link href="<?php echo $site_url ?>mod/wet4/graphics/favicon.ico" rel="icon" type="image/x-icon" />
+
+
+<!--[if lt IE 9]>
+
+    
+        <script src="<?php echo $site_url ?>mod/wet4/views/default/js/ie8-wet-boew.min.js"></script>
+        <![endif]-->
+<!--[if lte IE 9]>
+
+
+<![endif]-->
+
 
 
         <noscript><link rel="stylesheet" href="./css/noscript.css" /></noscript>

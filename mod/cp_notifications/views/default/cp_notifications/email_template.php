@@ -24,6 +24,19 @@ $msg_type = $vars['cp_msg_type'];
 $cp_notify_msg_footer = elgg_echo('cp_notify:footer2',array(),'fr') .' | '. elgg_echo('cp_notify:footer2',array(),'en');
 
 switch ($msg_type) {
+
+	case 'cp_friend_approve':
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_friend_approve:title',array($vars['cp_approver']),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_friend_approve:title',array($vars['cp_approver']),'fr');
+
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_friend_approve:description',array($vars['cp_approver']),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_friend_approve:description',array($vars['cp_approver']),'fr');
+
+		$cp_notify_msg_footer_en = elgg_echo('cp_notify:footer2',array(),'en');
+		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer2',array(),'fr');
+		break;
+
+
 	case 'cp_likes_type': // likes
 		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_likes:title',array($vars['cp_liked_by'],$cp_topic_title),'en');
 		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_likes:title',array($vars['cp_liked_by'],$cp_topic_title),'fr');
@@ -35,8 +48,8 @@ switch ($msg_type) {
 		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer2',array(),'fr');
 		break;
 
-	case 'cp_reply_type': // comments or replies
 
+	case 'cp_reply_type': // comments or replies
 		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_comments:title', array($cp_comment_author->name,$cp_topic_title,$cp_topic_author->name),'en');
 		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_comments:title', array($cp_comment_author->name,$cp_topic_title,$cp_topic_author->name),'fr');
 		
@@ -47,8 +60,8 @@ switch ($msg_type) {
 		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer',array(elgg_get_site_url().'/settings/plugins/admin/cp_notifications'),'fr');
 		break;
 
-	case 'cp_new_type': // new blogs or other entities
 
+	case 'cp_new_type': // new blogs or other entities
 		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_new_content:title',array($cp_topic_author->name,$cp_topic_title),'en');
 		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title',array($cp_topic_author->name,$cp_topic_title),'fr');
 
@@ -59,8 +72,8 @@ switch ($msg_type) {
 		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer',array(elgg_get_site_url().'/settings/plugins/admin/cp_notifications'),'fr');
 		break;
 
-	case 'cp_mention_type': // mentions
 
+	case 'cp_mention_type': // mentions
 		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_mention:title',array($cp_topic_author->name,$cp_topic_title),'en');
 		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_mention:title',array($cp_topic_author->name,$cp_topic_title),'fr');
 
@@ -71,20 +84,20 @@ switch ($msg_type) {
 		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer',array(elgg_get_site_url().'/settings/plugins/admin/cp_notifications'),'fr');
 		break;
 
-	case 'cp_site_msg_type': // new messages
 
-		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_site_msg:title',array($cp_topic_author->name,$cp_topic_title),'en');
-		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_site_msg:title',array($cp_topic_author->name,$cp_topic_title),'fr');
+	case 'cp_site_msg_type': // new messages
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_site_msg:title',array($vars['cp_topic_author'],$cp_topic_title),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_site_msg:title',array($vars['cp_topic_author'],$cp_topic_title),'fr');
 
 		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_site_msg:description',array($cp_topic_description,$cp_topic_url),'en');
 		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_site_msg:description',array($cp_topic_description,$cp_topic_url),'fr');
 
 		$cp_notify_msg_footer_en = elgg_echo('cp_notify:footer',array(elgg_get_site_url().'/settings/plugins/admin/cp_notifications'),'en');
-		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer',array(elgg_get_site_url().'/settings/plugins/admin/cp_notifications'),'fr');
-		
+		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer',array(elgg_get_site_url().'/settings/plugins/admin/cp_notifications'),'fr');		
 		break;
-	case 'cp_closed_grp_req_type':
 
+
+	case 'cp_closed_grp_req_type':
 		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_group_request:title', array($cp_req_user->name,$cp_req_group->title),'en');
 		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_group_request:title', array($cp_req_user->name,$cp_req_group->title),'fr');
 
@@ -95,23 +108,24 @@ switch ($msg_type) {
 		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer2',array(),'fr');
 		break;
 
+
 	case 'cp_helpdesk_req_type': // helpdesk - has its own mailing system....
 		break;
 
+
 	case 'cp_group_add': // adding user to group
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_group_add:title',array($vars['cp_group']['name']),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_group_add:title',array($vars['cp_group']['name']),'fr');
 
-		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_group_add:title',array('p1','p2'),'en');
-		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_group_add:title',array('p1','p2'),'fr');
-
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_group_add:description',array('p1'),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_group_add:description',array('p1'),'fr');
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_group_add:description',array($vars['cp_group']['name']),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_group_add:description',array($vars['cp_group']['name']),'fr');
 
 		$cp_notify_msg_footer_en = elgg_echo('cp_notify:footer2',array(),'en');
 		$cp_notify_msg_footer_en = elgg_echo('cp_notify:footer2',array(),'fr');
 		break;
 
-	case 'cp_group_invite':	// inviting user to group
 
+	case 'cp_group_invite':	// inviting user to group
 		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_group_invite:title',array($vars['cp_group_invite_from']['name'],$vars['cp_group']['name']),'en');
 		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_group_invite:title',array($vars['cp_group_invite_from']['name'],$vars['cp_group']['name']),'fr');
 
@@ -122,13 +136,16 @@ switch ($msg_type) {
 		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer2',array(),'fr');
 		break;
 
-	case 'cp_group_invite_email':	// inviting non user to group
 
+	case 'cp_group_invite_email':	// inviting non user to group
 		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_group_invite_email:title',array(),'en');
 		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_group_invite_email:title',array(),'fr');
 
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_group_invite_email:description',array(),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_group_invite_email:description',array(),'fr');
+		//$cp_notify_msg_description_en = elgg_echo('cp_notify:body_group_invite_email:description',array(),'en');
+		//$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_group_invite_email:description',array(),'fr');
+
+		$cp_notify_msg_description_en = elgg_echo("param1: {$params['cp_invitation_nonuser_url']} / param2: {$params['cp_invitation_url']} / param3: {$params['cp_invitation_code']} / param4: {$params['cp_invitation_msg']}");
+		$cp_notify_msg_description_en = elgg_echo("param1: {$params['cp_invitation_nonuser_url']} / param2: {$params['cp_invitation_url']} / param3: {$params['cp_invitation_code']} / param4: {$params['cp_invitation_msg']}");
 
 		$cp_notify_msg_footer_en = elgg_echo('cp_notify:footer2',array(),'en');
 		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer2',array(),'fr');
@@ -159,11 +176,11 @@ switch ($msg_type) {
 		break;
 
 	case 'cp_forgot_password': // requesting new password/ password reset
-		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_forgot_password:title',array(),'en');
-		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_forgot_password:title',array(),'fr');
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_forgot_password:title',array($vars['cp_password_request_ip']),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_forgot_password:title',array($vars['cp_password_request_ip']),'fr');
 
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_forgot_password:description',array(),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_forgot_password:description',array(),'fr');
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_forgot_password:description',array($vars['cp_password_request_ip'],$vars['cp_password_request_user'],$vars['cp_password_request_url']),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_forgot_password:description',array($vars['cp_password_request_ip'],$vars['cp_password_request_user'],$vars['cp_password_request_url']),'fr');
 
 		$cp_notify_msg_footer_en = elgg_echo('cp_notify:footer2',array(),'en');
 		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer2',array(),'fr');
@@ -181,6 +198,7 @@ switch ($msg_type) {
 		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer2',array(),'fr');
 		break;
 
+
 	default:
 		break;
 }
@@ -189,7 +207,7 @@ switch ($msg_type) {
 
 
 
-$email_notification_header = elgg_echo('cp_notification:email_header',array(),'en') . ' / ' . elgg_echo('cp_notification:email_header',array(),'fr');
+$email_notification_header = elgg_echo('cp_notification:email_header',array(),'en') . ' | ' . elgg_echo('cp_notification:email_header',array(),'fr');
 $french_follows = '<a href="#gcc_fr_suit">Le francais suit</a>';
 
 $email_notification_header_msg_en = elgg_echo('cp_notification:email_header_msg', array('https://gcconnex.gc.ca/mod/contactform/','http://www.gcpedia.gc.ca/wiki/GC2.0_Tools_Help_Centre/GCconnex'),'en');
@@ -228,7 +246,7 @@ echo <<<___HTML
 
 	        		<!-- The French Follows... -->
 	        		<span style='font-size:12px; font-weight: normal;'><i>({$french_follows})</i></span><br/>
-        	   		{$email_notification_header_msg_en}
+        	   		
 		        </div>
 
 		     
@@ -250,7 +268,7 @@ echo <<<___HTML
 		        <!-- main content of the notification (FRENCH) -->
 		       	<!-- *optional* email message (DO NOT REPLY) -->
 		     	<div id="gcc_fr_suit" name="gcc_fr_suit" width='100%' style='padding:30px 30px 10px 30px; font-size:12px; line-height:22px; font-family:sans-serif;'>
-		     		{$email_notification_header_msg_fr}
+		     		
 		        </div>
 
 		       	<div width='100%' style='padding:30px 30px 30px 30px; color:#153643; font-family:sans-serif; font-size:12px; line-height:22px; border-bottom:1px solid #f2eeed;'>
