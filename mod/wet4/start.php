@@ -44,7 +44,11 @@ function wet4_theme_init() {
 	// theme specific CSS
 	elgg_extend_view('css/elgg', 'wet4_theme/css');
 
-    remove_group_tool_option('activity');
+    //remove_group_tool_option('activity');
+
+    //extending views to pass metadata to head.php
+    elgg_extend_view("object/elements/full", "wet4_theme/track_page_entity", 451);
+    elgg_extend_view('profile/wrapper', 'wet4_theme/pass');
 
     elgg_extend_view('forms/notificationsettings/save', 'forms/notificationsettings/groupsave');
 
@@ -92,7 +96,11 @@ function wet4_theme_init() {
 
     //added since goups didnt have this action but called it
     elgg_register_action("discussion_reply/delete", elgg_get_plugins_path() . "/wet4/actions/discussion/reply/delete.php");
-    
+
+    if(elgg_is_active_plugin('au_subgroups')){
+        elgg_register_action("groups/invite", elgg_get_plugins_path() . "/wet4/actions/groups/invite.php");
+    }
+
 	elgg_register_action("file/move_folder", elgg_get_plugins_path() . "/wet4/actions/file/move.php");
     elgg_register_action("friends/collections/add", elgg_get_plugins_path() . "/wet4/actions/friends/collections/add.php");
     elgg_register_action("login", elgg_get_plugins_path() . "/wet4/actions/login.php", "public");
@@ -368,9 +376,13 @@ function wet4_theme_pagesetup() {
         $context = elgg_get_context();
         $page_owner = elgg_get_page_owner_entity();
 
-        if (!$page_owner) {
+        if(elgg_is_logged_in()){
+            $user = elgg_get_logged_in_user_guid();
+        }
+
+        if ($page_owner->guid == $user) {
             // Show menu link in the correct context
-            if (in_array($context, array("friends", "friendsof", "collections", "messages"))) {
+            if (in_array($context, array("friends", "friendsof", "collections"))) {
                 $options = array(
                     "type" => "user",
                     "count" => true,
@@ -393,7 +405,7 @@ function wet4_theme_pagesetup() {
                     "name" => "friend_request",
                     "text" => elgg_echo("friend_request:menu") . $extra,
                     "href" => "friend_request/" . $page_owner->username,
-                    "contexts" => array("friends", "friendsof", "collections", "messages")
+                    "contexts" => array("friends", "friendsof", "collections")
                 );
 
                 elgg_register_menu_item("page", $menu_item);

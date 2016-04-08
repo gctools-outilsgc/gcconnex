@@ -43,6 +43,11 @@ return array(
 
 <p>Please join us for discussions regarding the upgrades in the <a href="https://gcconnex.gc.ca/groups/profile/226392/gc20-tools-outils-gc20">GC2.0 Tools Group </a> and we hope you can attend the official launch of the GCTools at the <a href="http://www.gcpedia.gc.ca/wiki/Blueprint_2020/Innovation_Fair_2016">Blueprint 2020 Innovation Fair</a> on April 20, 2016. </p>',
 
+/*
+ *  Metadata
+ */
+
+ 'meta:desc' => 'GCconnex is a professional networking and collaborative workspace for all public service, allowing people to connect and share information, leveraging the power of networking towards a more effective and efficient public service.',
 
 /**
   * Profile Strength
@@ -183,6 +188,8 @@ return array(
     /**
   * Group invite
   */
+
+  'group:invite:cannot' => '<br><br> The following users are not members of the parent group and cannot be invited/added.',
 
   'group:invite:clicktoadd' => "Click to add",
   'group:invite:email' => "Enter a valid email and press enter to submit it to the list",

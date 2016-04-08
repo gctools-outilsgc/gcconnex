@@ -8,7 +8,7 @@
 
 $entity_guid = (int) get_input('entity_guid', 0, false);
 $comment_guid = (int) get_input('comment_guid', 0, false);
-$comment_text = get_input('generic_comment');
+$comment_text = get_input('generic_comment', null, false);
 $is_edit_page = (bool) get_input('is_edit_page', false, false);
 
 if (empty($comment_text)) {

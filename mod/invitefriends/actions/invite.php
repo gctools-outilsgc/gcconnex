@@ -75,7 +75,19 @@ foreach ($emails as $email) {
 		$from = 'noreply@' . $site->getDomain();
 	}
 
-	elgg_send_email($from, $email, $subject, $message);
+	if (elgg_is_active_plugin('cp_notifications')) {
+		$from_user = elgg_get_logged_in_user_entity();
+		$message = array(
+			'cp_from' => $current_user,
+			'cp_msg_type' => 'cp_friend_invite',
+			'cp_email_msg' => $emailmessage,
+			'cp_join_url' => $link,
+			'cp_to' => $email,
+		);
+		$result = elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
+	} else {
+		elgg_send_email($from, $email, $subject, $message);
+	}
 	$sent_total++;
 }
 

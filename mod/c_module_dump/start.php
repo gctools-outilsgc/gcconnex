@@ -57,8 +57,8 @@ function c_module_dump_init() {
 
 	// cyu - 02/12/2015: fixes to the group visibility
 	$action_base = elgg_get_plugins_path().'c_module_dump/actions/groups';
-	elgg_unregister_action("groups/edit");
-	elgg_register_action("groups/edit","$action_base/edit.php");
+	//elgg_unregister_action("groups/edit");
+	//elgg_register_action("groups/edit","$action_base/edit.php");
 
 	// cyu - 01-20-2015 modified: enhancement for the widget manager module, default URL will point to the users profile instead
 	elgg_unregister_plugin_hook_handler('widget_url', 'widget_manager', "widget_manager_widgets_url");

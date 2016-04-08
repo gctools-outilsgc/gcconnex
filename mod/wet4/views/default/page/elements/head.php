@@ -89,22 +89,57 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
 
 
 		<meta content="width=device-width, initial-scale=1" name="viewport" />
-		<!-- Meta data -->
-<!--
-		<meta name="description" content="Web Experience Toolkit (WET) includes reusable components for building and maintaining innovative Web sites that are accessible, usable, and interoperable. These reusable components are open source software and free for use by departments and external Web communities" />
-        <meta name="dcterms.title" content="Government of Canada Web Usability theme - Web Experience Toolkit" />
-        <meta name="dcterms.creator" content="French name of the content author / Nom en français de l'auteur du contenu" />
-        <meta name="dcterms.issued" title="W3CDTF" content="Date published (YYYY-MM-DD) / Date de publication (AAAA-MM-JJ)" />
-        <meta name="dcterms.modified" title="W3CDTF" content="Date modified (YYYY-MM-DD) / Date de modification (AAAA-MM-JJ)" />
-        <meta name="dcterms.subject" title="scheme" content="French subject terms / Termes de sujet en français" />
-        <meta name="dcterms.language" title="ISO639-2" content="eng" />
-    -->            <!-- Meta data-->
-        <link href="<?php echo $site_url ?>mod/wet4/graphics/favicon.ico" rel="icon" type="image/x-icon" />
+<!-- Meta data -->
+<?php 
+    //Load in global variable with entity to create metadata tags
+      global $my_page_entity;
 
+      if($my_page_entity){
+          /*
+          echo elgg_get_excerpt($my_page_entity->title) . '<br>';
+          echo  date ("Y-m-d", elgg_get_excerpt($my_page_entity->time_created)) . '<br>';
+          echo  date ("Y-m-d", elgg_get_excerpt($my_page_entity->time_updated));
+          */
+
+          if(elgg_instanceof($my_page_entity, 'group')){
+              $desc = $my_page_entity->description;
+              $briefdesc = $my_page_entity->briefdescription;
+          } else if(elgg_instanceof($my_page_entity, 'user')) {
+              $desc = elgg_echo('profile:title', array($my_page_entity->name));
+              $briefdesc = elgg_echo('profile:title', array($my_page_entity->name));
+          } else {
+              $desc = $my_page_entity->title;
+              $briefdesc = $my_page_entity->title;
+          }
+
+          $pubDate = date ("Y-m-d", elgg_get_excerpt($my_page_entity->time_created));
+          $lastModDate = date ("Y-m-d", elgg_get_excerpt($my_page_entity->time_updated));
+
+          $datemeta = '<meta name="dcterms.issued" title="W3CDTF" content="Date published (' . $pubDate . ') / Date de publication (' . $pubDate . ')" />';
+          $datemeta .= '<meta name="dcterms.modified" title="W3CDTF" content="Date modified (' . $lastModDate . ') / Date de modification (' . $lastModDate . ')" />';
+      } else {
+          $desc = $vars['title'];
+          $briefdesc = $vars['title'];
+      }
+
+      $creator =  elgg_get_page_owner_entity()->name;
+      if(!$creator){
+          $creator = 'GCconnex';
+      }
+
+
+?>
+        <meta name="description" content="<?php echo $desc; ?>" />
+        <meta name="dcterms.title" content="<?php echo $vars['title']; ?>" />
+        <meta name="dcterms.creator" content="<?php echo $creator; ?>" />
+        <?php echo $datemeta; ?>
+        <meta name="dcterms.subject" title="scheme" content="<?php echo $briefdesc; ?>" />
+        <meta name="dcterms.language" title="ISO639-2" content="<?php echo get_language(); ?>" />
+        <link href="<?php echo $site_url; ?>mod/wet4/graphics/favicon.ico" rel="icon" type="image/x-icon" />
+<!-- Meta data-->
 
 <!--[if lt IE 9]>
 
-    
         <script src="<?php echo $site_url ?>mod/wet4/views/default/js/ie8-wet-boew.min.js"></script>
         <![endif]-->
 <!--[if lte IE 9]>

@@ -128,6 +128,8 @@ $body
 $repliesFoot
 HTML;
 
+    echo elgg_view('wet4_theme/track_page_entity', array('entity' => $topic));
+
 } else {
 	// brief view
 	$subtitle = "<p class=\"mrgn-tp-sm mrgn-bttm-0\">$poster_text $date</p> <p class=\"mrgn-bttm-sm\">$reply_text</p> $replies_link";

@@ -63,7 +63,6 @@ elgg.comments.Comment.prototype = {
 		var that = this,
 			$form = this.getForm(),
 			value = $form.find('textarea[name=generic_comment]').val();
-
 		elgg.action('comment/save', {
 			data: $form.serialize(),
 			success: function(json) {

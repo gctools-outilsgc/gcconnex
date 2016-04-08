@@ -175,7 +175,7 @@ if ($full == 'full' && !elgg_in_context('gallery')) {
 	
 </div>
 HTML;
-
+    echo elgg_view('wet4_theme/track_page_entity', array('entity' => $idea));
 } elseif ($full == 'sidebar') {
 
 	echo <<<HTML

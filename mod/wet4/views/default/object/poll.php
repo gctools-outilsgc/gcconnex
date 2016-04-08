@@ -75,6 +75,8 @@ if (isset($vars['entity'])) {
 		
 		echo elgg_view('polls/body',$vars);
 
+        echo elgg_view('wet4_theme/track_page_entity', array('entity' => $poll));
+
 	} else {
 		// brief view
 	

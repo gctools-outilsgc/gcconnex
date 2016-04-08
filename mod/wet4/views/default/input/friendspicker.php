@@ -188,11 +188,11 @@ if (!isset($vars['replacement'])) {
 				}
 
 
-				$collRow .= '<div class="col-xs-1">';
+				//$collRow .= '<div class="col-xs-1">';
 
-                $collRow .= '<div  class="mrgn-tp-sm"><input type="checkbox"' . $checked . 'name="' . $name . '[]" value="' . $options[$label] . '" /></div>';
+                $checkedBox = '<div  class="mrgn-tp-sm"><input type="checkbox"' . $checked . 'name="' . $name . '[]" value="' . $options[$label] . '" /></div>';
 
-				$collRow .= '</div>
+				$collRow .= '
 
 				<div class="col-xs-2">
 
@@ -202,7 +202,7 @@ if (!isset($vars['replacement'])) {
 				
 				$collRow .=	'</div>
 				</div>
-				<div class="col-xs-9">';
+				<div class="col-xs-10">';
                 $collRow .= $friend->name;
 				$collRow .= '</div>';
 				
@@ -217,9 +217,10 @@ if (!isset($vars['replacement'])) {
                     }
 
                     //stick items in <td> element
-                    $list_items = elgg_format_element('td', ['class' => 'data-table-list-item '], $collRow);
+                    $list_items = elgg_format_element('td', ['class' => 'data-table-list-item '], $checkedBox);
+                    $list_items .= elgg_format_element('td', ['class' => 'data-table-list-item '], $collRow);
                     //stick <td> elements in <tr>
-                    $tR .= elgg_format_element('tr', ['class' => 'testing',], $list_items);
+                    $tR .= elgg_format_element('tr', ['class' => '',], $list_items);
 
                     $collRow = '';
 
@@ -253,11 +254,9 @@ if (!isset($vars['replacement'])) {
     $tBody = elgg_format_element('tbody', ['class' => ''], $tR);
 
     //create table head
-    $tHead = elgg_format_element('thead', ['class' => ''], '<tr> <th class="data-table-head"> ' . elgg_echo('friends') . '</th> </tr>');
-    
-    echo elgg_format_element('table', ['class' => ' wb-tables table', 'id' => ''], $tHead . $tBody);
+    $tHead = elgg_format_element('thead', ['class' => ''], '<tr><th class="thCheck"><input type="checkbox" name="select_all" value="Toggle All" id="table-select-all"></th> <th class="data-table-head"> ' . elgg_echo('friends') . '</th> </tr>');
 
-
+    echo elgg_format_element('table', ['class' => ' wb-tables table friendpickerTable', "data-wb-tables"=>"{ \"ordering\" : false, \"lengthMenu\": [[25, 50, 100, 250], [25, 50, 100, 250]], \"columns\": [ { \"orderable\": false }, null], \"aoColumnDefs\": [ { \"bSearchable\": false, \"aTargets\": [ 0 ] } ] }", 'id' => ''], $tHead . $tBody);
 
 
 
@@ -313,12 +312,18 @@ if (!isset($vars['replacement'])) {
     <div id="storedArea" class="hidden">
         <?php echo $checkedValues;?>
             <script>
+
+        $('#table-select-all').on('click', function(){
+            $('.friendpickerTable input[type="checkbox"]').prop('checked', this.checked);
+            $('.friendpickerTable input[type="checkbox"]').trigger('change');
+        });
+
                 $(function () {
 
 
 
                     //add guids to move selected link when checked
-                    $(':checkbox').change(function () {
+                    $('.friendpickerTable input[type="checkbox"]').change(function () {
                         if ($(this).is(":checked")) {
 
                             $(this).clone().attr('checked', 'checked').appendTo('#storedArea');

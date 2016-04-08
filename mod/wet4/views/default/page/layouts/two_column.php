@@ -32,6 +32,16 @@ if(elgg_get_context() =='contactform'){
 if( $message == "yes" ) {
 
 	echo'<section class="alert alert-warning">';
+	if (empty($linkfr)){
+if ($lang == 'fr'){
+
+	echo '<h3>'.$namefr.'</h3>';
+}else{
+
+	echo '<h3>'.$nameeng.'</h3>';
+}
+
+	}else{
 if ($lang == 'fr'){
 
 	echo '<h3> <a href="'.$linkfr.'">'.$namefr.'</a></h3>';
@@ -39,7 +49,8 @@ if ($lang == 'fr'){
 
 	echo '<h3> <a href="'.$linkeng.'">'.$nameeng.'</a></h3>';
 }
-	
+
+}	
 echo '</section>';
 }
 };

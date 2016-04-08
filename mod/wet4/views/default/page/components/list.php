@@ -58,7 +58,7 @@ $list_items = '';
 ///DATATABLES///
 ////////////////
 
-if(elgg_in_context('friends') || elgg_in_context('my_groups') || elgg_in_context('groups_members')){ //datatable for colleagues, group members, my groups, messages
+if(elgg_in_context('friends') || elgg_in_context('my_groups') || elgg_in_context('groups_members')){ //datatable for colleagues, group members, my groups
 
     foreach ($items as $item) {
 	    $item_view = elgg_view_list_item($item, $vars);
@@ -271,7 +271,7 @@ if(elgg_in_context('groups') && get_input("filter") == 'yours'){ //datatable for
 
 
         //make it so that messages won't be in alphabetical order. Need to pass a JSON array, but elgg is being mean :(
-        $tab =  elgg_format_element('table', ['class' => ' wb-tables table inboxTable', 'id' => '', "data-wb-tables"=>"{ \"ordering\" : false, \"bSort\" : false }"], $tHead . $tBody);
+        $tab =  elgg_format_element('table', ['class' => ' wb-tables table inboxTable', 'id' => '', "data-wb-tables"=>"{ \"ordering\" : false, \"bSort\" : false, \"lengthMenu\": [[25, 50, 100, 250], [25, 50, 100, 250]] }"], $tHead . $tBody);
         echo elgg_format_element('div', ['class' => 'table-responsive'], $tab);
 ?>
         

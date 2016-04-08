@@ -138,7 +138,7 @@ elgg_load_js("jquery.hashchange");
 
 <?php
 
-$body = "<div id='file-tools-folder-tree' class='clearfix'>";
+$body = "<div id='file-tools-folder-tree' class='clearfix noWrap'>";
 $body .= elgg_view_menu("file_tools_folder_sidebar_tree", array(
 	"container" => $page_owner,
 	"sort_by" => "priority"
@@ -156,3 +156,10 @@ if ($page_owner->canEdit() || ($page_owner instanceof ElggGroup && $page_owner->
 
 // output file tree
 echo elgg_view_module("aside", elgg_echo("file:folderstruct"), $body, array("id" => "file_tools_list_tree_container"));
+?>
+<style> .tree li a, .tree li span {
+
+     height: inherit;
+     word-wrap: break-word;
+    white-space: pre-wrap;
+ }</style>

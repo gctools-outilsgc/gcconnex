@@ -2213,7 +2213,7 @@ $logged_in_user = elgg_get_logged_in_user_entity();
 	$sidebar = elgg_view('event_calendar/show_events_calendar', $vars);
 	$event_page = true;
 }else{
-	$event_page = false;
+	$event_page = true;
 
 	$sidebar = "";
 }

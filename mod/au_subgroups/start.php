@@ -56,7 +56,7 @@ function init() {
   elgg_register_plugin_hook_handler('action', 'groups/delete', __NAMESPACE__ . '\\delete_group');
   
   // prevent users from being invited into a subgroup they can't join
-  elgg_register_plugin_hook_handler('action', 'groups/invite', __NAMESPACE__ . '\\group_invite');
+  //elgg_register_plugin_hook_handler('action', 'groups/invite', __NAMESPACE__ . '\\group_invite');
   
   // remove 'join' and 'request membership' title links on subgroups for people not members of the parent
   elgg_register_plugin_hook_handler('register', 'menu:title', __NAMESPACE__ . '\\titlemenu');

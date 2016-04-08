@@ -10702,7 +10702,12 @@ a.shr-opn, a.shr-opn:hover {
         background-position: 0 -951px;
         height: 21px;
     }
-    
+  
+    .notif-ul{
+
+     margin: 0px;   
+    }
+      
     .notif-badge {
       display: inline-block;
       margin-left: -1px;
@@ -10761,6 +10766,18 @@ a.shr-opn, a.shr-opn:hover {
      display: block !important; 
      
  }
+
+ .thCheck {
+
+     width: 25px;
+ }
+
+ .thCheck span {
+
+     display: none;
+ }
+
+
 
  .au_subgroups_group_icon-medium-wet4{
         max-width:65%;

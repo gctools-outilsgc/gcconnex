@@ -44,6 +44,12 @@ return array(
 
 <p>Joignez-vous à nous pour des discussions concernant les mises à jour dans le <a href="https://gcconnex.gc.ca/groups/profile/226392/gc20-tools-outils-gc20">groupe des Outils GC2.0</a> et nous espérons que vous pourrez assister au lancement officiel des OutilsGC au <a href="http://www.gcpedia.gc.ca/wiki/Objectif2020/Salon_innovation_2016">Salon interministériel de l’innovation pour Objectif 2020</a> le 20 avril 2016.</p>',
 
+/*
+  *  Metadata
+  */
+
+ 'meta:desc' => 'GCconnex est un espace de travail collaboratif pour le réseautage professionnel à l\'ensemble de la fonction publique. Celle-ci vous permet de vous brancher, de partager de l\'information et tirer profit du pouvoir de réseautage pour accroître l\'efficacité et la productivité de la fonction publique.',
+
 /**
  * Profile Strength
  */
@@ -182,6 +188,8 @@ return array(
         /**
    * Group invite
    */
+
+     'group:invite:cannot' => '<br><br> Les utilisateurs suivants ne sont pas membres du groupe principal et ne peuvent être invités/ajoutés.',
 
   'group:invite:clicktoadd' => "Cliquez pour ajouter",
   	'group:invite:email' => "Saisir une adresse de courriel valide et appuyer sur « Entrée » pour l'inscrire à la liste",		

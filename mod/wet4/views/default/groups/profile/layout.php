@@ -24,3 +24,5 @@ if (elgg_group_gatekeeper(false)) {
 	}
 }
 
+//for metadata
+echo elgg_view('wet4_theme/track_page_entity', array('entity' => $group));

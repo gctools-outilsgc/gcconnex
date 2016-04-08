@@ -16,12 +16,61 @@ $cp_notify_footer = "-";
 $cp_req_user = $vars['cp_group_req_user'];
 $cp_req_group = $vars['cp_group_req_group'];
 
-
 $msg_type = $vars['cp_msg_type'];
 
-//$test=elgg_language_key_exists('cp_notify:footer2','fr');
+$cp_notify_msg_footer = elgg_echo('cp_notify:footer2',array(),'fr') .'  '. elgg_echo('cp_notify:footer2',array(),'en');
 
-$cp_notify_msg_footer = elgg_echo('cp_notify:footer2',array(),'fr') .' | '. elgg_echo('cp_notify:footer2',array(),'en');
+$event = $vars['event'];
+//$email_users2 = $vars['email_users2'];
+$startdate = $vars['startdate'];
+$enddate = $vars['enddate'];
+$title = $event->title;
+$location =$event->venue;
+$teleconference = $event->teleconference;
+$additional = $event->additional;
+$fees = $event->fees;
+$organiser = $event->organiser;
+$contact = $event->contact;
+$long_description = $event->long_description;
+$description = $event->description;
+$language = $event->language;
+$informationEn = '<h3>Infos</h3>';
+$informationFr = '<h3>Infos</h3>';
+
+if($title){
+	$informationEn .= '<b>Title:</b> '.$title.'<br/>';
+	$informationFr .= '<b>Titre:</b> '.$title.'<br/>';
+}if($startdate){
+	$informationEn .= '<b>When:</b> '.$startdate.' - '.$enddate.'<br/>';
+	$informationFr .= '<b>Quand:</b> '.$startdate.' - '.$enddate.'<br/>';
+}if($location){
+	$informationEn .= '<b>Venue:</b> '.$location.'<br/>';
+	$informationFr .= '<b>Lieu:</b> '.$location.'<br/>';
+}if($contact){
+	$informationEn .= '<b>Contact:</b> '.$contact.'<br/>';
+	$informationFr .= '<b>Personne ressource:</b> '.$contact.'<br/>';
+}if($fees){
+	$informationEn .= '<b>Fees:</b> '.$fees.'<br/>';
+	$informationFr .= '<b>Prix:</b> '.$fees.'<br/>';
+}if($teleconference){
+	$informationEn .= '<b>Online meeting and teleconference:</b> '.$teleconference.'<br/>';
+	$informationFr .= '<b>Réunion en ligne et téléconférence:</b> '.$teleconference.'<br/>';
+}if($additional){
+	$informationEn .= '<b>Additional information:</b> '.$additional.'<br/>';
+	$informationFr .= '<b>Information additionelle:</b> '.$additional.'<br/>';
+}if($organiser){
+	$informationEn .= '<b>Organiser:</b> '.$organiser.'<br/>';
+	$informationFr .= '<b>Organisateur:</b> '.$organiser.'<br/>';
+}if($description){
+	$informationEn .= '<b>Description:</b> '.$description.'<br/>';
+	$informationFr .= '<b>Description:</b> '.$description.'<br/>';
+}if($language){
+	$informationEn .= '<b>Event language:</b> '.$language.'<br/>';
+	$informationFr .= '<b>Langue de \'événement:</b> '.$language.'<br/>';
+}if($long_description){
+	$informationEn .= '<b>Long description:</b> '.$long_description.'<br/>';
+	$informationFr .= '<b>Longue description:</b> '.$long_description.'<br/>';
+}
 
 switch ($msg_type) {
 
@@ -38,11 +87,11 @@ switch ($msg_type) {
 
 
 	case 'cp_likes_type': // likes
-		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_likes:title',array($vars['cp_liked_by'],$cp_topic_title),'en');
-		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_likes:title',array($vars['cp_liked_by'],$cp_topic_title),'fr');
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_likes:title',array($vars['cp_liked_by'],$vars['cp_comment_from']),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_likes:title',array($vars['cp_liked_by'],$vars['cp_comment_from']),'fr');
 
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_likes:description',array($cp_topic_url),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_likes:description',array($cp_topic_url),'fr');
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_likes:description',array($vars['cp_content_url']),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_likes:description',array($vars['cp_content_url']),'fr');
 
 		$cp_notify_msg_footer_en = elgg_echo('cp_notify:footer2',array(),'en');
 		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer2',array(),'fr');
@@ -199,6 +248,101 @@ switch ($msg_type) {
 		break;
 
 
+	case 'cp_likes_comments':
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_likes_comment:title',array($vars['cp_liked_by'],$vars['cp_comment_from']),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_likes_comment:title',array($vars['cp_liked_by'],$vars['cp_comment_from']),'fr');
+
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_likes_comment:description',array($vars['cp_comment_from'],$vars['cp_liked_by']),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_likes_comment:description',array($vars['cp_comment_from'],$vars['cp_liked_by']),'fr');
+
+		$cp_notify_msg_footer_en = elgg_echo('cp_notify:footer2',array(),'en');
+		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer2',array(),'fr');
+		break;
+
+
+	case 'cp_likes_topic_replies': // discussion replies
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_likes_discussion_reply:title',array($vars['cp_liked_by'],$vars['cp_comment_from']),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_likes_discussion_reply:title',array($vars['cp_liked_by'],$vars['cp_comment_from']),'fr');
+
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_likes_discussion_reply:description',array($vars['cp_comment_from'],$vars['cp_liked_by']),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_likes_discussion_reply:description',array($vars['cp_comment_from'],$vars['cp_liked_by']),'fr');
+
+		$cp_notify_msg_footer_en = elgg_echo('cp_notify:footer2',array(),'en');
+		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer2',array(),'fr');
+		break;
+
+
+	case 'cp_likes_user_update':
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_likes_user_update:title',array($vars['cp_liked_by']),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_likes_user_update:title',array($vars['cp_liked_by']),'fr');
+
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_likes_user_update:description',array($vars['cp_liked_by']),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_likes_user_update:description',array($vars['cp_liked_by']),'fr');
+
+		$cp_notify_msg_footer_en = elgg_echo('cp_notify:footer2',array(),'en');
+		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer2',array(),'fr');
+		break;
+
+
+	case 'cp_hjtopic':
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_hjtopic:title',array(),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_hjtopic:title',array(),'fr');
+
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_hjtopic:description',array($vars['cp_hjtopic_description'],$vars['cp_hjtopic_url']),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_hjtopic:description',array($vars['cp_hjtopic_description'],$vars['cp_hjtopic_url']),'fr');
+
+		$cp_notify_msg_footer_en = elgg_echo('cp_notify:footer2',array(),'en');
+		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer2',array(),'fr');
+		break;
+
+
+	case 'cp_hjpost':
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_hjpost:title',array(),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_hjpost:title',array(),'fr');
+
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_hjpost:description',array($vars['cp_hjpost_description'],$vars['cp_hjpost_url']),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_hjpost:description',array($vars['cp_hjpost_description'],$vars['cp_hjpost_url']),'fr');
+
+		$cp_notify_msg_footer_en = elgg_echo('cp_notify:footer2',array(),'en');
+		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer2',array(),'fr');
+		break;
+
+
+	case 'cp_useradd': // username password
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_add_new_user:title',array(),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_add_new_user:title',array(),'fr');
+
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_add_new_user:description',array($vars['cp_username'],$vars['cp_password']),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_add_new_user:description',array($vars['cp_username'],$vars['cp_password']),'fr');
+
+		$cp_notify_msg_footer_en = elgg_echo('cp_notify:footer2',array(),'en');
+		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer2',array(),'fr');
+		break;
+
+
+	case 'cp_friend_invite': // link
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_invite_new_user:title',array(),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_invite_new_user:title',array(),'fr');
+
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_invite_new_user:description',array($vars['cp_join_url']),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_invite_new_user:description',array($vars['cp_hjpost_description']),'fr');
+
+		$cp_notify_msg_footer_en = elgg_echo('cp_notify:footer2',array(),'en');
+		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer2',array(),'fr');
+		break;
+
+
+	case 'cp_event': // validating new user account
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_event:title',array($cp_topic_author->name,$cp_topic_title),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_event:title',array($cp_topic_author->name,$cp_topic_title),'fr');
+
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_event:description',array($cp_topic_description,$informationEn,$email_users2),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_event:description',array($cp_topic_description,$informationFr,$email_users2),'fr');
+
+		$cp_notify_msg_footer_en = elgg_echo('cp_notify:footer',array(elgg_get_site_url().'/settings/plugins/admin/cp_notifications'),'en');
+		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer',array(elgg_get_site_url().'/settings/plugins/admin/cp_notifications'),'fr');
+		break;
+
 	default:
 		break;
 }
@@ -213,14 +357,19 @@ $french_follows = '<a href="#gcc_fr_suit">Le francais suit</a>';
 $email_notification_header_msg_en = elgg_echo('cp_notification:email_header_msg', array('https://gcconnex.gc.ca/mod/contactform/','http://www.gcpedia.gc.ca/wiki/GC2.0_Tools_Help_Centre/GCconnex'),'en');
 $email_notification_header_msg_fr = elgg_echo('cp_notification:email_header_msg', array('https://gcconnex.gc.ca/mod/contactform/','http://www.gcpedia.gc.ca/wiki/Centre_d%27aide_pour_les_outils_GC2.0/GCconnex'),'fr');
 
+$email_notif_footer_msg_fr1 = elgg_echo('cp_notify:contactHelpDesk', array(),'fr');
+$email_notif_footer_msg_fr2 = elgg_echo('cp_notify:visitTutorials', array(),'fr');
+$email_notif_footer_msg_en1 = elgg_echo('cp_notify:contactHelpDesk', array(),'en');
+$email_notif_footer_msg_en2 = elgg_echo('cp_notify:visitTutorials', array(),'en');
+
 
 echo <<<___HTML
 <html>
 <body>
 	<!-- beginning of email template -->
-	<table width='100%' bgcolor='#fcfcfc' border='0' cellpadding='0' cellspacing='0'>
-		<tr>
-			<td>
+	<div width='100%' bgcolor='#fcfcfc'>
+		<div>
+			<div>
 
 				<!-- email header -->
 		        <div align='center' width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 12px; color: #055959'>
@@ -229,8 +378,8 @@ echo <<<___HTML
 				
 
 				<!-- GCconnex banner -->
-		     	<div width='100%' style='padding: 0 0 0 20px; color:#ffffff; font-family: sans-serif; font-size: 45px; line-height:38px; font-weight: bold; background-color:#047177;'>
-		        	<span style='padding: 0 0 0 3px; font-size: 25px; color: #ffffff; font-family: sans-serif;'>GCconnex</span>
+		     	<div width='100%' style='padding: 0 0 0 10px; color:#ffffff; font-family: sans-serif; font-size: 35px; line-height:38px; font-weight: bold; background-color:#047177;'>
+		        	<span style='padding: 0 0 0 3px; font-size: 20px; color: #ffffff; font-family: sans-serif;'>GCconnex</span>
 		        </div>
 
 
@@ -251,7 +400,7 @@ echo <<<___HTML
 
 		     
 
-		        <div width='100%' style='padding:30px 30px 30px 30px; color:#153643; font-family:sans-serif; font-size:12px; line-height:22px; border-bottom:2px solid #f2eeed;'>
+		        <div width='100%' style='padding:30px 30px 30px 30px; color:#153643; font-family:sans-serif; font-size:16px; line-height:22px; '>
 		        	<!-- TITLE OF CONTENT -->
 		        	<h2 style='padding: 0px 0px 15px 0px'>
 		        		<strong> {$cp_notify_msg_title_en} </strong>
@@ -261,7 +410,11 @@ echo <<<___HTML
 		        	{$cp_notify_msg_description_en}
 
 		        </div>
-
+                <div style='margin-top:15px; padding: 5px; color: #6d6d6d; border-bottom: 1px solid #ddd;'>
+                    <div>{$email_notif_footer_msg_en1}</div>
+                    <div>{$email_notif_footer_msg_en2}</div>
+                </div>
+                
 
 <!-- french -->
 
@@ -271,7 +424,7 @@ echo <<<___HTML
 		     		
 		        </div>
 
-		       	<div width='100%' style='padding:30px 30px 30px 30px; color:#153643; font-family:sans-serif; font-size:12px; line-height:22px; border-bottom:1px solid #f2eeed;'>
+		       	<div width='100%' style='padding:30px 30px 30px 30px; color:#153643; font-family:sans-serif; font-size:16px; line-height:22px;'>
 		       		<!-- TITLE OF CONTENT -->
 		       		<h2 style='padding: 0px 0px 15px 0px'>
 		       			<strong> {$cp_notify_msg_title_fr} </strong>
@@ -279,24 +432,32 @@ echo <<<___HTML
 
 		       		<!-- BODY OF CONTENT -->
 		       		{$cp_notify_msg_description_fr}
-
+                    
 		        </div>
-
+                    <div style='margin-top:15px; padding: 5px; color: #6d6d6d;'>
+                    <div>{$email_notif_footer_msg_fr1}</div>
+                    <div>{$email_notif_footer_msg_fr2}</div>
+                   
+                    </div>
 
 		        <!-- email divider -->
 		        <div style='height:1px; background:#bdbdbd; border-bottom:1px solid #ffffff'></div>
 
 		        <!-- email footer -->
-		        <div align='center' width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 12px; color: #055959'>
+		        <div align='center' width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 16px; color: #055959'>
 		        	{$cp_notify_msg_footer}
 		        </div>
 
-			</td>
-		</tr>
-	</table>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
+
 ___HTML;
+
+
+
 
 
 
