@@ -11130,6 +11130,11 @@ a.shr-opn, a.shr-opn:hover {
     
     /****************************************/
 
+    p {
+            margin: 0 0 5.5px;
+
+    }
+
     .ideaPoints {
         font-size: 1.25em;
     }

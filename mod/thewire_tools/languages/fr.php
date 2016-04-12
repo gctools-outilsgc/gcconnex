@@ -46,7 +46,7 @@ return array(
 					
 		// reshare			
 					
-		'thewire_tools:reshare' => "Partager sur le fil1",
+		'thewire_tools:reshare' => "Partager sur le fil",
 		'thewire_tools:reshare:count' => "Qui a partagé ce message",
 		'thewire_tools:reshare:source' => "Source",
 		'thewire_tools:reshare:list' => "%s a partagé ceci %s",

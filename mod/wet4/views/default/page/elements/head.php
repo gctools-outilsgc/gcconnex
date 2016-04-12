@@ -102,7 +102,7 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
           */
 
           if(elgg_instanceof($my_page_entity, 'group')){
-              $desc = $my_page_entity->description;
+              $desc = elgg_strip_tags(elgg_get_excerpt($my_page_entity->description));
               $briefdesc = $my_page_entity->briefdescription;
           } else if(elgg_instanceof($my_page_entity, 'user')) {
               $desc = elgg_echo('profile:title', array($my_page_entity->name));
@@ -115,8 +115,8 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
           $pubDate = date ("Y-m-d", elgg_get_excerpt($my_page_entity->time_created));
           $lastModDate = date ("Y-m-d", elgg_get_excerpt($my_page_entity->time_updated));
 
-          $datemeta = '<meta name="dcterms.issued" title="W3CDTF" content="Date published (' . $pubDate . ') / Date de publication (' . $pubDate . ')" />';
-          $datemeta .= '<meta name="dcterms.modified" title="W3CDTF" content="Date modified (' . $lastModDate . ') / Date de modification (' . $lastModDate . ')" />';
+          $datemeta = '<meta name="dcterms.issued" title="W3CDTF" content="' . $pubDate . '"/>';
+          $datemeta .= '<meta name="dcterms.modified" title="W3CDTF" content="' . $lastModDate . '" />';
       } else {
           $desc = $vars['title'];
           $briefdesc = $vars['title'];

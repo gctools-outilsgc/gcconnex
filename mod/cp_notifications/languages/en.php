@@ -170,7 +170,7 @@ $english = array(
 	'cp_notify:body_invite_new_user:description' => "Join the professionnal networking and collaborative workspace for all public service. You can proceed to your GCconnex registration through this link %s", 
 
 	'cp_notify:body_event:title' => "Add event to your calendar",
-	'cp_notify:body_event:description' => '%s<br>%s - %s', 
+	'cp_notify:body_event:description' => '%s<br>%s', 
 
 
 	// email notification footer text (1 and 2)
@@ -199,9 +199,11 @@ $english = array(
     'cp_notify:contactHelpDesk'=>'Should you have any concerns, please use the <a href="https://gcconnex.gc.ca/mod/contactform/">Contact us form</a>.',
     'cp_notify:visitTutorials'=>'To learn more about GCconnex and its features visit the <a href="http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/See_All">GCconnex User Help</a>.<br/>
 	                             Thank you',
-    'cp_notify:personalLikes'=>'Notify me when someone likes my content',
-    'cp_notify:personalMention'=>'Notify me when someone @mentions me',
-    'cp_notify:personalContent'=>'Notify me when something happens on content I create',
+    'cp_notify:personal_likes'=>'Notify me when someone likes my content',
+    'cp_notify:personal_mentions'=>'Notify me when someone @mentions me',
+    'cp_notify:personal_content'=>'Notify me when something happens on content I create',
+
+    'cp_notify:pickColleagues' => 'Pick colleagues to subscribe', // need translations
     'cp_notify:colleagueContent'=>'Notify me when my colleagues create content',
     'cp_notify:emailsForGroup'=>'Recieve emails about group notifications',
     'cp_notify:groupContent'=>'Group Content',

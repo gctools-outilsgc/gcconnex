@@ -73,7 +73,7 @@ return array(
    'msg:to' => 'To',
    'msg:from' => 'From',
    'msg:subject' => 'Subject',
-   'msg:recieved' => 'Recieved',
+   'msg:recieved' => 'Received',
    'msg:sent' => 'Sent',
 
 

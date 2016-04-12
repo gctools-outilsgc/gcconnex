@@ -416,6 +416,11 @@ When a user creates a group he/she gets to choose one of the presets in order to
 'group_tools:action:bulk_delete:success' => "The selected groups were deleted",
 'group_tools:action:bulk_delete:error' => "An error occured while deleting the groups, please try again",
 
+	// group invitations
+'group_tools:group:invitations:request' => "Outstanding membership requests",
+'group_tools:group:invitations:request:revoke:confirm' => "Are you sure you wish to revoke your membership request?",
+'group_tools:group:invitations:request:non_found' => "There are no outstanding membership requests at this time",
+
 
 );
 

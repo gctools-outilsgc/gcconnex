@@ -26,7 +26,37 @@ if ($event) {
 	$user_guid = elgg_get_logged_in_user_guid();
 	if ($event_guid) {
 		$action = 'update';
-	$email_users = event_calendar_get_users_for_event($event_guid, $limit, $offset, false);
+			$email_users = event_calendar_get_users_for_event($event_guid, $limit, $offset, false);
+			$time = event_calendar_get_formatted_time($event);
+			$date = explode("-", $time);
+			$startdate = $date[0]; 
+			$enddate = $date[1]; 
+			
+			$count = count($email_users);
+    		if ($count == 1){
+     			foreach($email_users as $result) {
+    			$email_users = $result['email'];
+    			}
+			}else{
+ 				foreach($email_users as $result) {
+    			$array_email[] = $result['email'];
+    			}
+			$email_users = implode(",", $array_email);
+    		}
+
+		if (elgg_is_active_plugin('cp_notifications')) {
+			$message = array(
+				'cp_event_receiver' => $email_users,
+				'cp_event_invite_url' => $view_events_url,
+				'startdate' => $startdate,
+				'enddate' => $enddate,
+				'event' => $event,
+				'type_event' => 'REQUEST',
+				'cp_msg_type' => 'cp_event',
+						);
+			$result = elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
+
+		}
 
 
 		system_message(elgg_echo('event_calendar:manage_event_response'));
@@ -37,6 +67,38 @@ if ($event) {
 		$event_calendar_autopersonal = elgg_get_plugin_setting('autopersonal', 'event_calendar');
 		if (!$event_calendar_autopersonal || ($event_calendar_autopersonal == 'yes')) {
 			event_calendar_add_personal_event($event->guid, $user_guid);
+		}
+
+		$email_users = event_calendar_get_users_for_event($event_guid, $limit, $offset, false);
+		$time = event_calendar_get_formatted_time($event);
+		$date = explode("-", $time);
+		$startdate = $date[0]; 
+		$enddate = $date[1]; 
+			
+		$count = count($email_users);
+    	if ($count == 1){
+     		foreach($email_users as $result) {
+    		$email_users = $result['email'];
+    		}
+		}else{
+ 			foreach($email_users as $result) {
+    		$array_email[] = $result['email'];
+    		}
+		$email_users = implode(",", $array_email);
+    	}
+
+    	if (elgg_is_active_plugin('cp_notifications')) {
+			$message = array(
+				'cp_event_receiver' => $email_users,
+				'cp_event_invite_url' => $view_events_url,
+				'startdate' => $startdate,
+				'enddate' => $enddate,
+				'event' => $event,
+				'type_event' => 'REQUEST',
+				'cp_msg_type' => 'cp_event',
+						);
+			$result = elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
+
 		}
 		
 		

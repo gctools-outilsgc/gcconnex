@@ -9,7 +9,6 @@ if (elgg_instanceof($event, 'object', 'event_calendar')) {
 	if (!event_calendar_has_personal_event($event_guid,$user_guid)) {
 		if (event_calendar_add_personal_event($event_guid,$user_guid)) {
 			// the message
-			//$email_users = 'stephanie4104@gmail.com'; 
 			$email_users = get_loggedin_user()->email; 
 			$time = event_calendar_get_formatted_time($event);
 			$date = explode("-", $time);

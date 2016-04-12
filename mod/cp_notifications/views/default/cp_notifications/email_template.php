@@ -21,7 +21,6 @@ $msg_type = $vars['cp_msg_type'];
 $cp_notify_msg_footer = elgg_echo('cp_notify:footer2',array(),'fr') .'  '. elgg_echo('cp_notify:footer2',array(),'en');
 
 $event = $vars['event'];
-//$email_users2 = $vars['email_users2'];
 $startdate = $vars['startdate'];
 $enddate = $vars['enddate'];
 $title = $event->title;
@@ -54,7 +53,7 @@ if($title){
 	$informationFr .= '<b>Prix:</b> '.$fees.'<br/>';
 }if($teleconference){
 	$informationEn .= '<b>Online meeting and teleconference:</b> '.$teleconference.'<br/>';
-	$informationFr .= '<b>Réunion en ligne et téléconférence:</b> '.$teleconference.'<br/>';
+	$informationFr .= '<b>RÃ©union en ligne et tÃ©lÃ©confÃ©rence:</b> '.$teleconference.'<br/>';
 }if($additional){
 	$informationEn .= '<b>Additional information:</b> '.$additional.'<br/>';
 	$informationFr .= '<b>Information additionelle:</b> '.$additional.'<br/>';
@@ -66,7 +65,7 @@ if($title){
 	$informationFr .= '<b>Description:</b> '.$description.'<br/>';
 }if($language){
 	$informationEn .= '<b>Event language:</b> '.$language.'<br/>';
-	$informationFr .= '<b>Langue de \'événement:</b> '.$language.'<br/>';
+	$informationFr .= '<b>Langue de l\'Ã©vÃ©nement:</b> '.$language.'<br/>';
 }if($long_description){
 	$informationEn .= '<b>Long description:</b> '.$long_description.'<br/>';
 	$informationFr .= '<b>Longue description:</b> '.$long_description.'<br/>';
@@ -336,8 +335,8 @@ switch ($msg_type) {
 		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_event:title',array($cp_topic_author->name,$cp_topic_title),'en');
 		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_event:title',array($cp_topic_author->name,$cp_topic_title),'fr');
 
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_event:description',array($cp_topic_description,$informationEn,$email_users2),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_event:description',array($cp_topic_description,$informationFr,$email_users2),'fr');
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_event:description',array($cp_topic_description,$informationEn),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_event:description',array($cp_topic_description,$informationFr),'fr');
 
 		$cp_notify_msg_footer_en = elgg_echo('cp_notify:footer',array(elgg_get_site_url().'/settings/plugins/admin/cp_notifications'),'en');
 		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer',array(elgg_get_site_url().'/settings/plugins/admin/cp_notifications'),'fr');

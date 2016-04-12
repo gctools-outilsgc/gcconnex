@@ -179,7 +179,7 @@
 	'cp_notify:body_invite_new_user:description' => "Joignez-vous à l'espace de travail collaboratif pour le réseautage professionnel pour l'ensemble de la fonction publique. Vous pouvez vous inscrire à GCconnex en cliquant sur le lien suivant %s",
 
 	'cp_notify:body_event:title' => "Évènement ajouté à votre calendrier",
-	'cp_notify:body_event:description' => '%s<br>%s - %s', 
+	'cp_notify:body_event:description' => '%s<br>%s', 
 
 	// email notification footer text (1 and 2)
 	
@@ -207,7 +207,7 @@
 	"cp_notify:sidebar:subs_title" => "Abonnement personnel",
 
 	'cp_notify:contactHelpDesk'=>'Si vous avez des questions, veuillez soumettre votre demande via le <a href="https://gcconnex.gc.ca/mod/contactform/">formlaire Contactez-nous</a>.',
-    'cp_notify:visitTutorials'=>"Pour de plus amples renseignements sur GCconnex et ses fonctionnalités, consultez l'<a href='http://www.gcpedia.gc.ca/wiki/Aide_%C3%A0_l%27utilisateur/Voir_Tout'>aide à l'utilisateur de GCconnex</a>.
+    'cp_notify:visitTutorials'=>"Pour de plus amples renseignements sur GCconnex et ses fonctionnalités, consultez l'<a href='http://www.gcpedia.gc.ca/wiki/Aide_%C3%A0_l%27utilisateur/Voir_Tout'>aide à l'utilisateur de GCconnex</a><br/>.
 	                             Merci",
     'cp_notify:personalLikes'=>'Notify me when someone likes my content (translate me)',
     'cp_notify:personalMention'=>'Notify me when someone @mentions me (translate me)',

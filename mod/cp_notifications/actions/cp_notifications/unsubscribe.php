@@ -17,3 +17,4 @@ $entity_guid = get_input('guid');
 
 
 remove_entity_relationship($user->getGUID(), 'cp_subscribed_to_email', $entity_guid);
+remove_entity_relationship($user->getGUID(), 'cp_subscribed_to_site_mail', $entity_guid);
