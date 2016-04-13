@@ -196,11 +196,11 @@ $body .= '<p class="wb-inv">'.$prefix['brief_description'].elgg_echo('event_cale
 $body .='</p>';
 //print_r($vars['group_guid']);
 if ($event || !$vars['group_guid']) {
-	$body .= '<p><label for="calendar-group">'.elgg_echo("event_calendar:calendar_label").'</label>';
+	/*$body .= '<p><label for="calendar-group">'.elgg_echo("event_calendar:calendar_label").'</label>';
 	$body .= elgg_view('event_calendar/container', array('id' => 'calendar-group', 'container_guid' => $vars['group_guid'], 'value' => $fd['group_guid']));
 	$body .= '</p>';
 	$body .= '<p class="wb-inv">'.$prefix['calendar'].elgg_echo('event_calendar:calendar_description').'</p>';
-} else {
+} else {*/
 	$body .= elgg_view('input/hidden', array('name' => 'group_guid', 'id' => 'calendar-group', 'value' => $vars['group_guid']));
 }
 

@@ -68,8 +68,7 @@ if ($event) {
 		if (!$event_calendar_autopersonal || ($event_calendar_autopersonal == 'yes')) {
 			event_calendar_add_personal_event($event->guid, $user_guid);
 		}
-
-		$email_users = event_calendar_get_users_for_event($event_guid, $limit, $offset, false);
+		$email_users = event_calendar_get_users_for_event($event->guid, $limit, $offset, false);
 		$time = event_calendar_get_formatted_time($event);
 		$date = explode("-", $time);
 		$startdate = $date[0]; 

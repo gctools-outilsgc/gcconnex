@@ -34,6 +34,7 @@ return array(
     'wet:gcintranetLink' => 'http://intranet.canada.ca/index-fra.asp',
   'wet:gcpediaLink' => 'http://www.gcpedia.gc.ca/wiki/?setlang=fr',
   'wet:tutorialLink'=>'http://www.gcpedia.gc.ca/wiki/Aide_%C3%A0_l%27utilisateur/Voir_Tout ',
+  'wet:groupLoading'=>'Loading content(translate)',
   /**
 *notice section
 */

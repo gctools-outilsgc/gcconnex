@@ -73,6 +73,18 @@ if($title){
 
 switch ($msg_type) {
 
+	case 'cp_write_mention':
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_wire_mention:title',array(),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_wire_mention:title',array(),'fr');
+
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_wire_mention:description',array($vars['cp_mention_by'],$vars['cp_view_mention']),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_wire_mention:description',array($vars['cp_mention_by'],$vars['cp_view_mention']),'fr');
+
+		$cp_notify_msg_footer_en = elgg_echo('cp_notify:footer2',array(),'en');
+		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer2',array(),'fr');
+		break;
+
+
 	case 'cp_friend_approve':
 		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_friend_approve:title',array($vars['cp_approver']),'en');
 		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_friend_approve:title',array($vars['cp_approver']),'fr');
@@ -86,8 +98,14 @@ switch ($msg_type) {
 
 
 	case 'cp_likes_type': // likes
-		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_likes:title',array($vars['cp_liked_by'],$vars['cp_comment_from']),'en');
-		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_likes:title',array($vars['cp_liked_by'],$vars['cp_comment_from']),'fr');
+		
+		if ($vars['cp_subtype'] === 'thewire') { 
+			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_likes_wire:title',array($vars['cp_liked_by']),'en');
+			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_likes_wire:title',array($vars['cp_liked_by']),'fr');
+		} else { 
+			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_likes:title',array($vars['cp_liked_by'],$vars['cp_comment_from']),'en');
+			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_likes:title',array($vars['cp_liked_by'],$vars['cp_comment_from']),'fr');
+		}
 
 		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_likes:description',array($vars['cp_content_url']),'en');
 		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_likes:description',array($vars['cp_content_url']),'fr');
@@ -174,8 +192,8 @@ switch ($msg_type) {
 
 
 	case 'cp_group_invite':	// inviting user to group
-		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_group_invite:title',array($vars['cp_group_invite_from']['name'],$vars['cp_group']['name']),'en');
-		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_group_invite:title',array($vars['cp_group_invite_from']['name'],$vars['cp_group']['name']),'fr');
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_group_invite:title',array($vars['cp_group_invite_to']['name'],$vars['cp_group']['name']),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_group_invite:title',array($vars['cp_group_invite_to']['name'],$vars['cp_group']['name']),'fr');
 
 		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_group_invite:description',array($vars['cp_group']['name'],$vars['cp_invitation_msg'],$vars['cp_invitation_url']),'en');
 		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_group_invite:description',array($vars['cp_group']['name'],$vars['cp_invitation_msg'],$vars['cp_invitation_url']),'fr');
@@ -324,7 +342,7 @@ switch ($msg_type) {
 		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_invite_new_user:title',array(),'fr');
 
 		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_invite_new_user:description',array($vars['cp_join_url']),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_invite_new_user:description',array($vars['cp_hjpost_description']),'fr');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_invite_new_user:description',array($vars['cp_join_url']),'fr');
 
 		$cp_notify_msg_footer_en = elgg_echo('cp_notify:footer2',array(),'en');
 		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer2',array(),'fr');

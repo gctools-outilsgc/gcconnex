@@ -19,8 +19,8 @@ function cp_notifications_init() {
 	elgg_register_action('groups/email_invitation', "$actions_base/manual_send.php");
 
 	elgg_register_event_handler('create', 'membership_request', 'cp_membership_request');
-	if (elgg_is_active_plugin('group_tools'))
-		elgg_register_event_handler('group_tools/invite_members', 'group', 'cp_group_join_notification');
+	//if (elgg_is_active_plugin('group_tools'))
+		//elgg_register_event_handler('group_tools/invite_members', 'group', 'cp_group_join_notification');
 
 	if (elgg_is_active_plugin('mentions')) {	// we need to check if the mention plugin is installed and activated because it does notifications differently...
 		elgg_unregister_event_handler('create', 'object','mentions_notification_handler');
@@ -38,6 +38,9 @@ function cp_notifications_init() {
 
     elgg_extend_view("js/elgg", "js/notification");//add some notification js 
 
+    // remove core notification settings portion of the main settings page
+    elgg_unextend_view('forms/account/settings', 'core/settings/account/notifications');
+
 }
 
 
@@ -54,6 +57,17 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 	$senderGUID = elgg_get_site_entity()->guid;		// By default, the sender for notifications is the site
 
 	switch($cp_msg_type) {
+
+		case 'cp_write_mention': // thewire_tools/lib/events.php
+			$message = array(
+				'cp_mention_by' => $params['cp_mention_by'],
+				'cp_view_mention' => $params['cp_view_your_mention'],
+				'cp_msg_type' => $cp_msg_type,
+			);
+			$subject = elgg_echo('cp_notify:subject:wire_mention',array(),'en');
+			$subject .= ' | '.elgg_echo('cp_notify:subject:wire_mention',array(),'fr');
+			$to_recipients[] = $params['cp_send_to'];
+			break;
 
 		case 'cp_useradd': // cp_notifications/actions/useradd.php
 			$message = array(
@@ -357,7 +371,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 	$subject = "";
 	$site = elgg_get_site_entity();
 
-	$do_not_subscribe_list = array('blog_revision','discussion_reply','task','vote');	// we dont need to be notified so many times
+	$do_not_subscribe_list = array('blog_revision','discussion_reply','task','vote','folder');	// we dont need to be notified so many times
 	if (in_array($object->getSubtype(), $do_not_subscribe_list))
 		return $return;
 
@@ -428,14 +442,24 @@ function cp_create_annotation_notification($event, $type, $object) {
 	    			$to_recipients[$liked_content->guid] = $liked_content;
 
 		    	} else {
+
 		    		$liked_by = get_user($object->owner_guid); // get user who liked content
 		    		$content = get_entity($object->entity_guid);
 		    		$content_author = get_user($content->owner_guid);
 
-		    		$subject = elgg_echo('cp_notify:subject:likes',array($liked_by->name,$content->title),'en');
-		    		$subject .= ' | '.elgg_echo('cp_notify:subject:likes',array($liked_by->name,$content->title),'fr');
+		    		// cyu - patching issue #323 (liking wire post)
+		    		if ($content->getSubtype() === 'thewire') {
+		    			$subject = elgg_echo('cp_notify:subject:likes_wire',array($liked_by->name,$content->title),'en');
+		    			$subject .= ' | '.elgg_echo('cp_notify:subject:likes_wire',array($liked_by->name,$content->title),'fr');
+		    			$content_subtype = 'thewire';
+		    		} else {
+		    			$subject = elgg_echo('cp_notify:subject:likes',array($liked_by->name,$content->title),'en');
+		    			$subject .= ' | '.elgg_echo('cp_notify:subject:likes',array($liked_by->name,$content->title),'fr');
+		    			$content_subtype = '';
+		    		}
 
 		    		$message = array(
+		    			'cp_subtype' => $content_subtype,
 						'cp_msg_type' => 'cp_likes_type',
 						'cp_liked_by' => $liked_by->name,
 						'cp_comment_from' => $content->title,
@@ -472,7 +496,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 function cp_create_notification($event, $type, $object) {
 	error_log("=== cp_create_notification === msg-type: {$object->getSubtype()}");
 	$subject = "";
-	$do_not_subscribe_list = array('poll_choice','blog_revision','widget');
+	$do_not_subscribe_list = array('poll_choice','blog_revision','widget','folder');
 	if (in_array($object->getSubtype(), $do_not_subscribe_list))
 		return $return;
 
@@ -545,6 +569,10 @@ function cp_create_notification($event, $type, $object) {
 			break;
 
 		default:	// creating entities such as blogs, topics, bookmarks, etc...
+
+			// the user creating the content is automatically subscribed to it
+			add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_email', $object->getGUID());
+			add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_site_mail', $object->getGUID());
 
 			if (elgg_is_active_plugin('mentions') && $object->getSubtype() !== 'messages') // check to see if there were any mentions
 				$cp_mentioned_users = cp_scan_mentions($object);
@@ -626,12 +654,15 @@ function cp_create_notification($event, $type, $object) {
 				'image' => elgg_echo('cp_notify:subject:new_content_fem',array($user->name,"une image",$object->title),'fr'),
 				'idea' => elgg_echo('cp_notify:subject:new_content_fem',array($user->name,"une idée",$object->title),'fr'),
 				'page' => elgg_echo('cp_notify:subject:new_content_fem',array($user->name,"une page",$object->title),'fr'),
+				'page_top' => elgg_echo('cp_notify:subject:new_content_fem',array($user->name,"une page",$object->title),'fr'),
+				//'folder' => elgg_echo('cp_notify:subject:new_content_mas',array($user->name,"un dossier",$object->title),'fr'),
 			);
 
-			
-			$subject = elgg_echo('cp_notify:subject:new_content',array($user->name,$object->getSubtype(),$object->title),'en');
-			$subject .= ' | '.$subtypes_gender_subject[$object->getSubtype()]; 
-			
+			$subject = elgg_echo('cp_notify:subject:new_content',array($user->name,cp_translate_subtype($object->getSubtype()),$object->title),'en');
+			$subject .= ' | '.$subtypes_gender_subject[$object->getSubtype()];
+			//if (!$object->title)
+			//	$object1 = get_entity(844);
+			//error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> {$object->getGUID()} // ".$object1->title.' /// type: '.gettype($object->getGUID()));
 			$message = array('cp_topic_title' => $object->title, 
 								'cp_topic_author' => $object->owner_guid, 
 								'cp_topic_description' => $object->description, 
@@ -807,44 +838,108 @@ function notify_entity_menu_setup($hook, $type, $return, $params) {
 	if (elgg_in_context('widgets') || in_array($entity->getSubtype(), $do_not_subscribe_list))
 		return $return;
 
-	if ($entity->getContainerEntity() instanceof ElggGroup || $entity instanceof ElggGroup || $entity->getContainerEntity() instanceof ElggUser) {	// only want to receive notification if it's in group or by user
-        if(elgg_is_logged_in()){
-		    if ( check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $entity->getGUID())
-		    	|| check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $entity->getGUID()) ) {
-
-			    if (elgg_is_active_plugin('wet4')) 
-				 	$bell_status = '<i class="icon-unsel fa fa-lg fa-bell-o"></i>';
-			    else
-				    $bell_status = elgg_echo('cp_notify:unsubBell');
-			
-			    $return[] = ElggMenuItem::factory(array(
-				    'name' => 'unset_notify',
-				    'href' => elgg_add_action_tokens_to_url("/action/cp_notify/unsubscribe?guid={$entity->guid}"),
-				    'text' => $bell_status,
-				    'title' => elgg_echo('cp_notify:unsubBell'),
-				    'priority' => 1000,
-				    'class' => '',
-				    'item_class' => ''
-			    ));
-		    } else {
-
-			    if (elgg_is_active_plugin('wet4'))
-				   $bell_status = '<i class="icon-unsel fa fa-lg fa-bell-slash-o"></i>';
-			    else
-				    $bell_status = elgg_echo('cp_notify:subBell');
-
-			    $return[] = ElggMenuItem::factory(array(
-				    'name' => 'set_notify',
-				    'href' => elgg_add_action_tokens_to_url("/action/cp_notify/subscribe?guid={$entity->guid}"),
-				    'text' => $bell_status,
-				    'title' => elgg_echo('cp_notify:subBell'),
-				    'priority' => 1000,
-				    'class' => '',
-				    'item_class' => ''
-			    ));
-		    }
-        }
+	//error_log("group: {$entity->name} / entity: {$entity->title}");
+	// lol check for everything to put the bell thingy
+	$allow_subscription = false;
+	if ( $entity->getContainerEntity() instanceof ElggGroup ) {
+		if ($entity->getContainerEntity()->isMember(elgg_get_logged_in_user_entity()) == 1 ) 
+			$allow_subscription = true;
+	
+	} else if ($entity instanceof ElggGroup) {
+		if ($entity->isMember(elgg_get_logged_in_user_entity()) == 1 )
+			$allow_subscription = true;
+	
+	} else if ( $entity->getContainerEntity() instanceof ElggUser ) {
+		$allow_subscription = true;
+		
 	}
 
+	
+	if ($allow_subscription && elgg_is_logged_in()) {
+
+	    if ( check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $entity->getGUID())
+	    	|| check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $entity->getGUID()) ) {
+
+			if (elgg_is_active_plugin('wet4')) 
+			 	$bell_status = '<i class="icon-unsel fa fa-lg fa-bell"></i>';
+		    else
+			    $bell_status = elgg_echo('cp_notify:unsubBell');
+		
+
+		    $return[] = ElggMenuItem::factory(array(
+			    'name' => 'unset_notify',
+			    'href' => elgg_add_action_tokens_to_url("/action/cp_notify/unsubscribe?guid={$entity->guid}"),
+			    'text' => $bell_status,
+			    'title' => elgg_echo('cp_notify:unsubBell'),
+			    'priority' => 1000,
+			    'class' => 'bell-subbed',
+			    'item_class' => ''
+		    ));
+
+	    } else {
+
+		    if (elgg_is_active_plugin('wet4'))
+			   $bell_status = '<i class="icon-unsel fa fa-lg fa-bell-slash-o"></i>';
+		    else
+			   $bell_status = elgg_echo('cp_notify:subBell');
+
+		    $return[] = ElggMenuItem::factory(array(
+			    'name' => 'set_notify',
+			    'href' => elgg_add_action_tokens_to_url("/action/cp_notify/subscribe?guid={$entity->guid}"),
+			    'text' => $bell_status,
+			    'title' => elgg_echo('cp_notify:subBell'),
+			    'priority' => 1000,
+			    'class' => '',
+			    'item_class' => ''
+		    ));
+
+		}
+
+	}
+ 
+
 	return $return;
+}
+
+
+function cp_translate_subtype($subtype_name) {
+	$label = '';
+	switch($subtype_name) {
+		case 'blog':
+			$label = 'blog';
+			break;
+		case 'bookmarks':
+			$label = 'bookmark';
+			break;
+		case 'file':
+			$label = 'file';
+			break;
+			case 'poll':
+			$label = 'poll';
+			break;
+		case 'event_calendar':
+			$label = 'event';
+			break;
+		case 'album':
+			$label = 'album';
+			break;
+		case 'groupforumtopic':
+			$label = 'discussion topic';
+			break;
+		case 'image':
+			$label = 'photo';
+			break;
+		case 'idea':
+			$label = 'idea';
+			break;
+		case 'page_top':
+		case 'page':
+			$label = 'page';
+			break;
+
+		default:
+			$label = $subtype_name;
+		break;
+	}
+	return $label;
 }

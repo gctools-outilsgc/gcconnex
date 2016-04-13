@@ -142,8 +142,14 @@ if(elgg_get_context() == 'group_profile'){
         'priority' => '101',
         ));
 }
+
+if(elgg_in_context('group_profile')){
+    $group_only_class = 'wet-group-tabs';
+}else{
+    $group_only_class = '';
+}
 //if(elgg_get_context() == 'group_profile'){
-echo elgg_view_menu('owner_block', array('entity' => $owner, 'class' => 'nav nav-tabs tabMenuGroup clearfix', 'sort_by' => 'priority',));
+echo elgg_view_menu('owner_block', array('entity' => $owner, 'class' => 'nav nav-tabs tabMenuGroup clearfix ' .$group_only_class, 'sort_by' => 'priority',));
 //}
 //condition for page
 //see what page we are on for proper js

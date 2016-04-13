@@ -27,7 +27,7 @@ if (!$owner) {
 <div class="groups-profile panel panel-custom clearfix elgg-image-block">
 
         
-    
+
     
         <div class="panel-heading col-xs-12"> 
             

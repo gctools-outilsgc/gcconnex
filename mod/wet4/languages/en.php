@@ -33,6 +33,7 @@ return array(
   'wet:gcintranetLink' => 'http://intranet.canada.ca/index-eng.asp',
   'wet:gcpediaLink' => 'http://www.gcpedia.gc.ca/wiki/?setlang=en',
   'wet:tutorialLink'=>'http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/See_All',
+  'wet:groupLoading'=>'Loading content',
 /**
 *notice section
 */
@@ -607,7 +608,7 @@ return array(
 
     'gcconnex:registerText' => '
 <h3>Welcome to GCconnex! </h3>
-GCconnex is an professional networking and collaborative workspace for all public service, allowing people to connect and share information, leveraging the power of networking towards a more effective and efficient public service.<br>
+GCconnex is a professional networking and collaborative workspace for all public service, allowing people to connect and share information, leveraging the power of networking towards a more effective and efficient public service.<br>
 <a href="'.$site_url.'terms-termes">Terms and Conditions of Use</a>',
 	'register' => "Register",
 	'registerok' => "You have successfully registered for %s.",

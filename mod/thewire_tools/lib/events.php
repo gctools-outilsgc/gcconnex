@@ -52,7 +52,17 @@ function thewire_tools_create_object_event_handler($event, $type, ElggObject $ob
 			elgg_normalize_url("thewire/search/@" . $user->username)
 		));
 		
-		notify_user($user->getGUID(), $object->getOwnerGUID(), $subject, $message, $params, $setting);
+		if (elgg_is_active_plugin('cp_notifications')) {
+			$message = array(
+				'cp_mention_by' => $object->getOwnerEntity()->name,
+				'cp_view_your_mention' => elgg_normalize_url("thewire/search/@" . $user->username),
+				'cp_msg_type' => 'cp_wire_mention',
+				'cp_send_to' => $user,
+			);
+			$result = elgg_trigger_plugin_hook('cp_overwrite_notification','all',$message);
+		} else {
+			notify_user($user->getGUID(), $object->getOwnerGUID(), $subject, $message, $params, $setting);
+		}
 	}
 }
 

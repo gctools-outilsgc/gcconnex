@@ -21,7 +21,7 @@ $content = $vars['content'];
 
 $footer = $vars['all_link'];
 
-if ($group->canWriteToContainer() && isset($vars['add_link'])) {
+if (/*$group->canWriteToContainer() && */isset($vars['add_link'])) {
     
     /*
     Original code

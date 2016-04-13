@@ -13,7 +13,7 @@ if ($object->getSubtype() !== 'hjforumpost') {
 		'value' => $object->title,
 	));
 
-	$gcf_access_label = elgg_echo('gforums:access_label');
+	$gcf_access_label = elgg_echo('gcforums:access_label');
 	$gcf_access_input = elgg_view('input/access', array(
 	'name' => 'gcf_access_id',
 	'id' => 'gcf_access_id',
@@ -56,26 +56,28 @@ if ($object->getSubtype() === 'hjforumtopic' && in_array($gcf_current_user_guid,
 }
 
 if ($object->getSubtype() === 'hjforum') {
-	$gcf_enable_categories_label = elgg_echo('gforums:enable_categories_label');
+	$gcf_enable_categories_label = elgg_echo('gcforums:enable_categories_label');
 	$gcf_enable_categories_input = elgg_view('input/checkboxes', array(
 		'name' => 'gcf_allow_categories',
 		'id' => 'categories_id',
+		'class' => 'list-unstyled',
 		'options' => array(
 			$gcf_enable_categories_label => 1),
 		'value' => $object->enable_subcategories,
 	));
 
-	$gcf_enable_posting_label = elgg_echo('gforums:enable_posting_label');
+	$gcf_enable_posting_label = elgg_echo('gcforums:enable_posting_label');
 	$gcf_enable_posting_input = elgg_view('input/checkboxes', array(
 		'name' => 'gcf_allow_posting',
 		'id' => 'posting_id',
+		'class' => 'list-unstyled',
 		'options' => array(
 			$gcf_enable_posting_label => 1),
 		'value' => $object->enable_posting,
 		));
 
 	$query = "SELECT guid_two
-				FROM elggentity_relationships
+				FROM elgg_entity_relationships
 				WHERE guid_one = {$vars['forum_guid']} AND relationship = 'filed_in'";
 	$shelved_in = get_data($query);
 	
@@ -87,7 +89,7 @@ if ($object->getSubtype() === 'hjforum') {
 		
 		if ($vars['forum_guid'] && $vars['forum_guid'] != 0) { // this is within the nested forums
 			$query = "SELECT  oe.guid, oe.title
-					FROM elggentities e, elggentity_relationships r, elggobjects_entity oe, elggentity_subtypes es
+					FROM elgg_entities e, elgg_entity_relationships r, elgg_objects_entity oe, elgg_entity_subtypes es
 					WHERE e.subtype = es.id AND es.subtype = 'hjforumcategory' AND e.guid = r.guid_one AND e.container_guid = {$object->getContainerGUID()} AND e.guid = oe.guid";
 		}
 

@@ -84,7 +84,11 @@ function wet4_theme_init() {
     //file tools 
 	elgg_register_ajax_view("file_tools/move");
 
-	
+
+    //Group AJAX loading view
+    elgg_register_ajax_view('ajax/grp_ajax_content');
+	elgg_extend_view("js/elgg", "js/wet4/group_ajax");
+
 	elgg_register_plugin_hook_handler('head', 'page', 'wet4_theme_setup_head');
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'my_owner_block_handler');
     elgg_register_plugin_hook_handler('register', 'menu:title', 'my_title_menu_handler');
@@ -1192,7 +1196,7 @@ function my_owner_block_handler($hook, $type, $menu, $params){
             switch ($item->getName()) {
                 case 'discussion':
                     $item->setText(elgg_echo('gprofile:discussion'));
-                    $item->setHref('#' . strtolower(elgg_echo('gprofile:discussion')));
+                    $item->setHref('#groupforumtopic');
                     $item->setPriority('1');
                     break;
                 case 'gcforums':
@@ -1206,7 +1210,7 @@ function my_owner_block_handler($hook, $type, $menu, $params){
                     break;
                 case 'file':
                     $item->setText(elgg_echo('gprofile:files'));
-                    $item->setHref('#' . strtolower(elgg_echo('gprofile:files')));
+                    $item->setHref('#file');
                     $item->setPriority('2');
                     break;
                 case 'blog':
@@ -1222,7 +1226,7 @@ function my_owner_block_handler($hook, $type, $menu, $params){
                     break;
                 case 'pages':
                     $item->setText(elgg_echo('gprofile:pages'));
-                    $item->setHref('#' . strtolower(elgg_echo('gprofile:pages')));
+                    $item->setHref('#page_top');
                     $item->setPriority('6');
                     break;
                 case 'bookmarks':

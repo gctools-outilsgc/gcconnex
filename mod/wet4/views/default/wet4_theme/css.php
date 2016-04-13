@@ -10707,6 +10707,11 @@ a.shr-opn, a.shr-opn:hover {
 
      margin: 0px;   
     }
+
+    .bell-subbed .icon-unsel{
+    color:#047177 !important;
+
+}
       
     .notif-badge {
       display: inline-block;
@@ -11506,16 +11511,45 @@ border:none;
 
 }
 .elgg-menu-hover{
+    z-index: 3;
     background-color:white;
-    padding: 10px;
+    padding: 0;
     border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 4px;
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   -webkit-background-clip: padding-box;
           background-clip: padding-box;
 }
+
+.elgg-menu-hover:before {
+        content: '';
+    display: block;
+    position: absolute;
+    left: 5%;
+    top: -12px;
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid rgba(0, 0, 0, 0.15);
+    clear: both;
+
+}
+
+    .elgg-menu-hover:after {
+            content: '';
+    display: block;
+    position: absolute;
+    left: 5%;
+    top: -10px;
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid #fff;
+    clear: both;
+    }
 
 
 .messages-chkbx{

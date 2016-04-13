@@ -47,10 +47,10 @@ $attrs = [
  *
  */
 
-if($checkPage == 'group_profile' && $type == 'GPmod'){
+if( $type == 'GPmod'){
   
     if ($type) {
-        $attrs['class'][] = "elgg-module-$type ";
+        $attrs['class'][] = "elgg-module-$type";
     }
 
 
@@ -100,7 +100,7 @@ if($checkPage == 'group_profile' && $type == 'GPmod'){
     if($checkPage =='custom_index_widgets'){
         $attrs['class'][] = 'panel panel-default custom-index-panel';
     }else{
-        $attrs['class'][] = 'panel panel-default';
+        $attrs['class'][] = 'panel panel-default TEST';
     }
     
 

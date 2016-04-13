@@ -297,134 +297,103 @@ envoyé un message à propos de ".$french;
                 $value = htmlentities($value,ENT_QUOTES,"UTF-8");
                 $value = nl2br($value);
                 $key = ucfirst($key);
-                $ret_str .= '<table width="100%" bgcolor="#fcfcfc" border="0" cellpadding="0" cellspacing="0">
-<tr>
-  <td>
-    <!--[if (gte mso 9)|(IE)]>
-      <table width="600" align="center" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td>
-    <![endif]-->     
-    <table bgcolor="#ffffff" class="content" align="center" cellpadding="0" cellspacing="0" border="0" style="width: 100%; max-width: 800px;">
-      <tr>
-        <td bgcolor="#047177" class="header" style="padding: 12px 0 10px 30px;">
-          <table width="70" align="left" border="0" cellpadding="0" cellspacing="0">  
-            <tr>
-                            <td height="50" style="padding: 0 0 0 20px; color: #ffffff; font-family: sans-serif; font-size: 45px; line-height: 38px; font-weight: bold;">
-                GC<span style="padding: 0 0 0 3px; font-size: 25px; color: #ffffff; font-family: sans-serif; ">connex</span>
-              </td>
-            </tr>
-          </table>
-        </td>
-               
-      <tr>
-        <td class="innerpadding" style="padding: 30px 30px 30px 30px; font-size: 16px; line-height: 22px; border-bottom: 1px solid #f2eeed; font-family: sans-serif;">
-          Thank you for contacting the GCconnex Help desk. This is a copy of your request.<br/><br/> Merci d\'avoir communiqué avec le bureau de soutien de GCconnex. Ceci est une 
+                $ret_str .= '
+
+<!-- beginning of email template -->
+  <div width="100%" bgcolor="#fcfcfc">
+    <div>
+      <div>
+
+        <!-- email header -->
+            <div align="center" width="100%" style="background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 12px; color: #055959">
+              Thank you for contacting the GCconnex Help desk. This is a copy of your request.<br/><br/> Merci d\'avoir communiqué avec le bureau de soutien de GCconnex. Ceci est une 
 
 copie de votre requête.
+            </div>
+        
 
-             
-        </td>
-      </tr>
-      </tr>
-      <tr>
-        <td class="innerpadding borderbottom" style="padding: 30px 30px 30px 30px; border-bottom: 1px solid #f2eeed;">
-          <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tr>
-              <td class="h2" style="color: #153643; font-family: sans-serif; padding: 0 0 15px 0; font-size: 24px; line-height: 28px; font-weight: bold;">
-                <span style="font-size:15px; font-weight: normal;">(Le fran&ccedil;ais suit)</span><br/>
-                  GCconnex Contact Us Form
-              </td>
-            </tr>
-            <tr>
-              <td class="bodycopy" style="color: #153643; font-family: sans-serif; font-size: 16px; line-height: 22px;">
-                <b>Name:</b> '.$name.'<br/>
+        <!-- GCconnex banner -->
+          <div width="100%" style="padding: 0 0 0 10px; color:#ffffff; font-family: sans-serif; font-size: 35px; line-height:38px; font-weight: bold; background-color:#047177;">
+              <span style="padding: 0 0 0 3px; font-size: 20px; color: #ffffff; font-family: sans-serif;">GCconnex</span>
+            </div>
+
+
+            <!-- email divider -->
+            <div style="height:1px; background:#bdbdbd; border-bottom:1px solid #ffffff"></div>
+
+<!-- english -->
+
+
+            <!-- main content of the notification (ENGLISH) -->
+            <!-- *optional* email message (DO NOT REPLY) -->
+          <div width="100%" style="padding:30px 30px 10px 30px; font-size:12px; line-height:22px; font-family:sans-serif;">
+
+              <!-- The French Follows... -->
+              <span style="font-size:12px; font-weight: normal;"><i>(Le fran&ccedil;ais suit)</i></span><br/>
+                
+            </div>
+
+         
+
+            <div width="100%" style="padding:30px 30px 30px 30px; color:#153643; font-family:sans-serif; font-size:16px; line-height:22px; ">
+              <!-- TITLE OF CONTENT -->
+              <h2 style="padding: 0px 0px 15px 0px">
+                <strong> GCconnex Contact Us Form </strong>
+              </h2>
+
+              <!-- BODY OF CONTENT -->
+                      <b>Name:</b> '.$name.'<br/>
                   <b>Email:</b> '.$email.'<br/>
                   <b>Reason:</b> '.$english.' <br/>
                   <b>Subject:</b> '.$subject.'<br/>
                   <b>Message:</b>
                   '.$message .'<br/>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-      <tr>
-        <td class="innerpadding borderbottom" style="padding: 30px 30px 30px 30px; border-bottom: 1px solid #f2eeed;">
-<!--          <table width="115" align="left" border="0" cellpadding="0" cellspacing="0">  
-            <tr>
-              <td height="115" style="padding: 0 20px 20px 0;">
-                <img class="fix" src="images/article1.png" width="115" height="115" border="0" alt="" />
-              </td>
-            </tr>
-          </table>-->
-          <!--[if (gte mso 9)|(IE)]>
-            <table width="380" align="left" cellpadding="0" cellspacing="0" border="0">
-              <tr>
-                <td>
-          <![endif]-->
-          
-            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-             
-               
-                  <tr>
-                    <td class="bodycopy" style="color: #153643; font-family: sans-serif; padding: 0 0 15px 0; font-size: 24px; line-height: 28px; font-weight: bold;">
-                        
-                  Formulaire contactez-nous de GCconnex
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 20px 0 0 0;font-family: sans-serif; color: #153643; font-size: 16px; line-height: 22px;">
-                           <b>Nom :</b> '.$name.'<br/> 
+
+            </div>
+                <div style="margin-top:15px; padding: 5px; color: #6d6d6d; border-bottom: 1px solid #ddd;">
+                   
+                </div>
+                
+
+<!-- french -->
+
+            <!-- main content of the notification (FRENCH) -->
+            <!-- *optional* email message (DO NOT REPLY) -->
+          <div id="gcc_fr_suit" name="gcc_fr_suit" width="100%" style="padding:30px 30px 10px 30px; font-size:12px; line-height:22px; font-family:sans-serif;">
+            
+            </div>
+
+            <div width="100%" style="padding:30px 30px 30px 30px; color:#153643; font-family:sans-serif; font-size:16px; line-height:22px;">
+              <!-- TITLE OF CONTENT -->
+              <h2 style="padding: 0px 0px 15px 0px">
+                <strong> Formulaire contactez-nous de GCconnex</strong>
+              </h2>
+
+              <!-- BODY OF CONTENT -->
+                                   <b>Nom :</b> '.$name.'<br/> 
                   <b>Courriel :</b> '.$email.'<br/>
                   <b>Raison :</b> '.$french.'<br/>
                   <b>Sujet :</b> '.$subject.'<br/>
                   <b>Message :</b>
                   '.$message.'<br/>
-                    </td>
-                  </tr>
-               
-              </table>
-          
-          <!--[if (gte mso 9)|(IE)]>
-                </td>
-              </tr>
-          </table>
-          <![endif]-->
-        </td>
-      </tr>
-
-      <tr>
-        <td class="footer" bgcolor="#f5f5f5" style="padding: 20px 30px 15px 30px;">
-          <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tr>
-              <td align="center" class="footercopy" style="font-family: sans-serif; font-size: 14px; color: #055959">
-              </td>
-            </tr>
-            <tr>
-              <td align="center" style="padding: 10px 0 0 0;">
-                <table border="0" cellspacing="0" cellpadding="0">
-                  <tr>
-                    <td style="text-align: center; padding: 0 10px 0 10px;">
-                  Please do not reply to this message | Veuillez ne pas répondre à ce message
-                    </td>
+                    
+            </div>
+                    <div style="margin-top:15px; padding: 5px; color: #6d6d6d;">
+                
                    
-                  </tr>
-                </table>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
-    <!--[if (gte mso 9)|(IE)]>
-          </td>
-        </tr>
-    </table>
-    <![endif]-->
-    </td>
-  </tr>
-</table>';
+                    </div>
+
+            <!-- email divider -->
+            <div style="height:1px; background:#bdbdbd; border-bottom:1px solid #ffffff"></div>
+
+            <!-- email footer -->
+            <div align="center" width="100%" style="background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 16px; color: #055959">
+              Please do not reply to this message | Veuillez ne pas répondre à ce message
+            </div>
+
+      </div>
+    </div>
+  </div>';
         foreach($this->fileupload_fields as $upload_field)
         {
             $field_name = $upload_field["name"];

@@ -70,6 +70,12 @@ $english = array(
 	"gcforums:notification_body_post" => "%s made a reply in the Forum Topic '%s' with the following content... <br/> %s <br/> You can view this item here: %s <br/>",
     'gcforums:time'=>'on',
 
+    //edit page
+
+    'gforums:title_label' => "Forum Name",
+    'gforums:description_label' => "Description",
+    'gcforums:save_button' => "Save",
+
 	);
 
 add_translation("en", $english);

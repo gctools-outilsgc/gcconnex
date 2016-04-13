@@ -17,8 +17,8 @@ $options = array(
 
 $groups = elgg_get_entities_from_relationship($options);
 
-$content .= "<ul>";
-$content .= "<li>".elgg_echo('cp_notify:sidebar:group_title')."<ul>";
+$content .= "<ul class='list-unstyled'>";
+$content .= "<li>".elgg_echo('cp_notify:sidebar:group_title')."<ul class='list-unstyled mrgn-lft-sm'>";
 foreach ($groups as $group) {
 	$content .= "<li><a href='#group-{$group->guid}'>{$group->name}</a></li>";
 }
@@ -32,7 +32,7 @@ $options = array(
 );
 $interested_contents = elgg_get_entities_from_relationship($options);
 
-$content .= "<li>".elgg_echo('cp_notify:sidebar:subs_title')."<ul>";
+$content .= "<li>".elgg_echo('cp_notify:sidebar:subs_title')."<ul class='list-unstyled'>";
 $cp_sub_count = 0;
 foreach ($interested_contents as $interested_content) {
 	if ($interested_content->owner_guid != $user->guid && !in_array($interested_content->getSubtype(), $no_notification_available) && $interested_content->title && $interested_content->getType() === 'object') {

@@ -31,6 +31,8 @@
 
 	'cp_notify:subject:likes' => "%s aime votre publication '%s'",
 
+	'cp_notify:subject:likes_wire' => "%s aime votre message sur le fil", 
+
 	'cp_notify:subject:comments' => "%s a publié un commentaire ou une réponse à '%s'",
 
 	'cp_notify:subject:site_message' => "%s vous a envoyé un nouveau message '%s'",
@@ -51,6 +53,7 @@
 
 	'cp_notify:subject:group_invite_email' => "%s vous a invité à joindre le groupe '%s'",
 
+	'cp_notify:subject:wire_mention' => "french french You've been mentioned on the wire", // translate
 
 	'cp_notify:subject:likes_comment' => "%s a aimé votre commentaire sur '%s'",
 	'cp_notify:subject:likes_discussion' => "%s a aimé votre réponse à '%s'",
@@ -67,7 +70,7 @@
 
 
 	'cp_notify:body_likes:title' => "%s a aimé votre publication '%s'",
-
+	'cp_notify:body_likes_wire:title' => "%s aime votre message sur le fil", 
 	'cp_notify:body_likes:description' => "Vous pouvez consulter votre contenu en cliquant sur le lien suivant : %s",
 		
 	'cp_notify:body_comments:title' => "%s a publié un commentaire ou une réponse à %s par %s",
@@ -181,6 +184,24 @@
 	'cp_notify:body_event:title' => "Évènement ajouté à votre calendrier",
 	'cp_notify:body_event:description' => '%s<br>%s', 
 
+
+	'cp_notify:body_friend_req:title' => '%s veut être votre collègue!', 
+	
+	'cp_notify:body_friend_req:description' => "%s veux être votre collègue et attend que vous approuviez sa demande... Connectez-vous pour approuver cette demande<br/>
+		Vous pouvez afficher les demandes de collègue qui sont attente : %s", 
+
+
+	'cp_notify:body_hjpost:title' => "Un nouveau sujet de forum a été affiché", 
+
+	'cp_notify:body_hjpost:description' => "La description du forum est :<br/>
+		%s <br/>
+		Vous pouvez voir ou répondre au nouveau sujet de forum en selectionnant le lien suivant : %s", 
+
+	
+	'cp_notify:body_wire_mention:title' => "french french You've been mentioned on the wire",
+	'cp_notify:body_wire_mention:description' => "%s french french french mentioned you in his/her wire post. <br/>
+		To view your mentions on the wire, click here: %s", // translate
+
 	// email notification footer text (1 and 2)
 	
 	'cp_notify:footer' => "<p>Si vous ne voulez plus recevoir ce type de notification, veuillez modifier vos param?tres d'abonnement en cliquant le lien suivant : - http link -</p>",
@@ -207,16 +228,23 @@
 	"cp_notify:sidebar:subs_title" => "Abonnement personnel",
 
 	'cp_notify:contactHelpDesk'=>'Si vous avez des questions, veuillez soumettre votre demande via le <a href="https://gcconnex.gc.ca/mod/contactform/">formlaire Contactez-nous</a>.',
-    'cp_notify:visitTutorials'=>"Pour de plus amples renseignements sur GCconnex et ses fonctionnalités, consultez l'<a href='http://www.gcpedia.gc.ca/wiki/Aide_%C3%A0_l%27utilisateur/Voir_Tout'>aide à l'utilisateur de GCconnex</a><br/>.
+    'cp_notify:visitTutorials'=>"Pour de plus amples renseignements sur GCconnex et ses fonctionnalités, consultez l'<a href='http://www.gcpedia.gc.ca/wiki/Aide_%C3%A0_l%27utilisateur/Voir_Tout'>aide à l'utilisateur de GCconnex</a>.<br/>
 	                             Merci",
     'cp_notify:personalLikes'=>'Notify me when someone likes my content (translate me)',
     'cp_notify:personalMention'=>'Notify me when someone @mentions me (translate me)',
     'cp_notify:personalContent'=>'Notify me when something happens on content I create (translate me)',
     'cp_notify:colleagueContent'=>'Notify me when my colleagues create content (translate me)',
-    'cp_notify:emailsForGroup'=>'Recieve emails about group notifications (translate me)',
+    'cp_notify:emailsForGroup'=>'Toggle All Email (translate me)',
     'cp_notify:groupContent'=>'Group Content (translate me)',
     'cp_notify:notifNewContent'=>'Notify me when new content is created (Discussion, Files, etc.) (translate me)',
     'cp_notify:notifComments'=>'Notify me when comments are created (translate me)',
+    'cp_notify:siteForGroup'=>'Toggle All Site (translate me)',
+    'cp_notify:unsubBell'=>'You are subscribed to this content. Click to unsubscribe.(translate me)',
+    'cp_notify:subBell'=>'You are not subscribed to this content. Click to subscribe and recieve notifications when things happen to this. (translate me)',
+    'cp_notify:comingSoon'=>'Coming soon(translate me)!',
+        'cp_notify:personalNotif'=>'Personal Notifications(translate me)',
+    'cp_notify:collNotif'=>'Colleague Notifications(translate me)',
+    'cp_notify:groupNotif'=>'Group Notifications(translate me)',
 
 	);
 

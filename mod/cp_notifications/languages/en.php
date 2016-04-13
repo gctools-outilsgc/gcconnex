@@ -29,12 +29,14 @@ $english = array(
 	'cp_notify:subject:group_join_request' => "%s has requested to join your group '%s'",
 	
 	'cp_notify:subject:likes' => "%s has liked your post '%s'",
+
+	'cp_notify:subject:likes_wire' => "%s has liked your wire post", // translate
 	
 	'cp_notify:subject:comments' => "%s has posted a comment or reply to '%s'",
 	
 	'cp_notify:subject:site_message' => "%s has sent you a new message '%s'",
 	
-	'cp_notify:subject:new_content' => "%s has posted a new %s entitled '%s'", // needs to be redone (updated) 398
+	'cp_notify:subject:new_content' => "%s has posted a new %s with the title '%s'", // needs to be redone (updated) #398 #323
 	
 	'cp_notify:subject:mention' => "%s has mentioned you in their new post or reply",
 	
@@ -46,6 +48,7 @@ $english = array(
 
 	'cp_notify:subject:group_invite_email' => "%s invited you to join this group '%s'",
 
+	'cp_notify:subject:wire_mention' => "You've been mentioned on the wire",
 
 	'cp_notify:subject:likes_comment' => "%s has liked your comment from '%s'",
 	'cp_notify:subject:likes_discussion' => "%s liked your reply to '%s'",
@@ -62,6 +65,7 @@ $english = array(
 
 
 	'cp_notify:body_likes:title' => "%s has liked your post called '%s'",
+	'cp_notify:body_likes_wire:title' => "%s has liked your wire post", // translate
 	'cp_notify:body_likes:description' => "You can view your content by clicking on this link: %s",
 		
 
@@ -124,8 +128,8 @@ $english = array(
 	
 	'cp_notify:body_friend_req:title' => '%s wants to be your colleague!',
 	
-	'cp_notify:body_friend_req:description' => "%s wants to be your colleague and is waiting waiting for you to approve the request <br/>
-		View your pending colleague requests here: %s",
+	'cp_notify:body_friend_req:description' => "%s wants to be your colleague and is waiting for you to approve the request... So login now to approve the request!<br/>
+		You can view your pending colleague requests : %s",
 	
 	'cp_notify:body_forgot_password:title' => "There was a password reset request from this IP: <code> %s </code>",
 	
@@ -172,6 +176,10 @@ $english = array(
 	'cp_notify:body_event:title' => "Add event to your calendar",
 	'cp_notify:body_event:description' => '%s<br>%s', 
 
+	'cp_notify:body_wire_mention:title' => "You've been mentioned on the wire",
+	'cp_notify:body_wire_mention:description' => "%s mentioned you in his/her wire post. <br/>
+		To view your mentions on the wire, click here: %s",
+
 
 	// email notification footer text (1 and 2)
 	'cp_notify:footer' => "<p>If you do not want to receive this notification, please manage your subscription settings here: %s</p>",
@@ -205,10 +213,17 @@ $english = array(
 
     'cp_notify:pickColleagues' => 'Pick colleagues to subscribe', // need translations
     'cp_notify:colleagueContent'=>'Notify me when my colleagues create content',
-    'cp_notify:emailsForGroup'=>'Recieve emails about group notifications',
+    'cp_notify:emailsForGroup'=>'Toggle All Email',
     'cp_notify:groupContent'=>'Group Content',
     'cp_notify:notifNewContent'=>'Notify me when new content is created (Discussion, Files, etc.)',
     'cp_notify:notifComments'=>'Notify me when comments are created',
+    'cp_notify:siteForGroup'=>'Toggle All Site',
+    'cp_notify:unsubBell'=>'You are subscribed to this content. Click to unsubscribe.',
+    'cp_notify:subBell'=>'You are not subscribed to this content. Click to subscribe and recieve notifications about this content.',
+    'cp_notify:comingSoon'=>'Coming soon!',
+    'cp_notify:personalNotif'=>'Personal Notifications',
+    'cp_notify:collNotif'=>'Colleague Notifications',
+    'cp_notify:groupNotif'=>'Group Notifications',
 );
 
 add_translation("en", $english);
