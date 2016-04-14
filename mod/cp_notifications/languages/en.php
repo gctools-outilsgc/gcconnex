@@ -56,6 +56,7 @@ $english = array(
 	'cp_notify:subject:add_new_user' => "You have been added as a new user in GCconnex",
 	'cp_notify:subject:invite_new_user' => "You have been invited to join GCconnex",
 
+	'cp_notify:subject:group_admin_transfer' => "The administration of the group %s has been appointed to you", // translate
 
 	// email notification content (title & corresponding description) 
 
@@ -141,7 +142,7 @@ $english = array(
 
 
 
-	'cp_notify:body_hjtopic:title' => "A new forum topic has been posted",
+	'cp_notify:body_hjtopic:title' => "A new forum topic has been posted with title '%s'",
 
 	'cp_notify:body_hjtopic:description' => "The description of the new posting is: <br/>
 		%s <br/>
@@ -180,6 +181,12 @@ $english = array(
 	'cp_notify:body_wire_mention:description' => "%s mentioned you in his/her wire post. <br/>
 		To view your mentions on the wire, click here: %s",
 
+
+	'cp_notify:body_group_admin_transfer:title' => "The administration of the group %s has been appointed to you", // translate
+
+	'cp_notify:body_group_admin_transfer:description' => "%s has appointed you as the new administrator of the group%s.<br/><br/>
+		To visit the group, please click on the following link: <br/> 
+		%s", // translate
 
 	// email notification footer text (1 and 2)
 	'cp_notify:footer' => "<p>If you do not want to receive this notification, please manage your subscription settings here: %s</p>",

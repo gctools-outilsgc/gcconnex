@@ -191,7 +191,7 @@ $body .= '<p class="wb-inv">'.$prefix['brief_description'].elgg_echo('event_cale
  $body .= '<label for="teleconference_text">URL</label><br/>';
  $body .= elgg_view("input/text", array('name' => 'teleconference_text', 'value' => $teleconference_text, 'id' => 'teleconference_text', 'class' => 'form-control'));
  $body .= '<label for="calendar-additional">'.elgg_echo('event_calendar:info').'</label><br/>';
- $body .= elgg_view("input/plaintext", array('name' => 'calendar_additional', 'value' => $calendar_additional, 'id' => 'calendar_additional', 'class' => 'form-control'));
+ $body .= elgg_view("input/text", array('name' => 'calendar_additional', 'value' => $calendar_additional, 'id' => 'calendar_additional', 'class' => 'form-control'));
     
 $body .='</p>';
 //print_r($vars['group_guid']);

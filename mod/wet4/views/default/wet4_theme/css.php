@@ -4600,7 +4600,7 @@ a.list-group-item-danger {
 
   .panel-river{
     padding:6px;
-    border: 1px solid #f7f7f7;
+    border: 1px solid #ddd;
 }
  .river-font{
     font-size: 1.2em;

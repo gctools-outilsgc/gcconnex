@@ -1215,13 +1215,12 @@ function my_owner_block_handler($hook, $type, $menu, $params){
                     break;
                 case 'blog':
                     $item->setText(elgg_echo('gprofile:blogs'));
-                    $item->setHref('#' . strtolower(elgg_echo('gprofile:blogs')));
+                    $item->setHref('#blog');// . strtolower(elgg_echo('gprofile:blogs'))
                     $item->setPriority('3');
                     break;
                 case 'event_calendar':
                     $item->setText(elgg_echo('gprofile:events'));
-                    $item->setHref('#' . strtolower(elgg_echo('gprofile:calendar')));
-                    if(get_language() == 'fr'){ $item->setHref('#' . elgg_echo('gprofile:calendar'));} //quick fix for issue 
+                    $item->setHref('#calendar');// . strtolower(elgg_echo('gprofile:calendar'))if(get_language() == 'fr'){ $item->setHref('#' . elgg_echo('gprofile:calendar'));} //quick fix for issue 
                     $item->setPriority('5');
                     break;
                 case 'pages':
@@ -1231,37 +1230,37 @@ function my_owner_block_handler($hook, $type, $menu, $params){
                     break;
                 case 'bookmarks':
                     $item->setText(elgg_echo('gprofile:bookmarks'));
-                    $item->setHref('#' . strtolower(elgg_echo('gprofile:bookmarks')));
+                    $item->setHref('#bookmarks');// . strtolower(elgg_echo('gprofile:bookmarks'))
                     $item->setPriority('7');
                     break;
                 case 'polls':
                     $item->setText(elgg_echo('gprofile:polls'));
-                    $item->setHref('#' . strtolower(elgg_echo('gprofile:polls')));
+                    $item->setHref('#polls');// . strtolower(elgg_echo('gprofile:polls'))
                     $item->setPriority('8');
                     break;
                 case 'tasks':
                     $item->setText(elgg_echo('gprofile:tasks'));
-                    $item->setHref('#' . strtolower(elgg_echo('gprofile:tasks')));
+                    $item->setHref('#taks');// . strtolower(elgg_echo('gprofile:tasks'))
                     $item->setPriority('9');
                     break;
                 case 'photos':
                     $item->setText(elgg_echo('gprofile:photos'));
-                    $item->setHref('#' . strtolower(elgg_echo('gprofile:photoCatch')));
+                    $item->setHref('#albums');
                     $item->addItemClass('removeMe');
                     $item->setPriority('10');
                     break;
                 case 'photo_albums':
                     $item->setText(elgg_echo('gprofile:albumsCatch'));
                     if(get_language() == 'en'){
-                        $item->setHref('#albums');
+                        $item->setHref('#albums');// . strtolower(elgg_echo('gprofile:photoCatch'))
                     } else {
-                        $item->setHref('#les');
+                        $item->setHref('#albums');//les
                     }
                     $item->setPriority('11');
                     break;
                 case 'ideas':
                     $item->setText(elgg_echo('gprofile:ideas'));
-                    $item->setHref('#' . strtolower(elgg_echo('gprofile:ideas')));
+                    $item->setHref('#ideas');// . strtolower(elgg_echo('gprofile:ideas'))
                     $item->setPriority('12');
                     break;
                 case 'activity':

@@ -58,7 +58,16 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 	switch($cp_msg_type) {
 
-		case 'cp_write_mention': // thewire_tools/lib/events.php
+		case 'cp_grp_admin_transfer':
+		error_log("hey hey hey hey hey");
+			$message = array();
+			$subject = elgg_echo();
+			$subject .= ' | '.elgg_echo();
+			$to_recipients[] = $params['cp_new_owner_user'];
+			break;
+
+
+		case 'cp_wire_mention': // thewire_tools/lib/events.php
 			$message = array(
 				'cp_mention_by' => $params['cp_mention_by'],
 				'cp_view_mention' => $params['cp_view_your_mention'],
@@ -68,6 +77,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$subject .= ' | '.elgg_echo('cp_notify:subject:wire_mention',array(),'fr');
 			$to_recipients[] = $params['cp_send_to'];
 			break;
+
 
 		case 'cp_useradd': // cp_notifications/actions/useradd.php
 			$message = array(
@@ -354,7 +364,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			} else {
 				mail($to_recipient->email,$subject,$template,cp_get_headers($event)); // be careful of this line, event may be null
 			}
-
+			error_log('/ ----> '.$to_recipient->email);
 			if (!$email_only)
 				messages_send($subject, $template, $to_recipient->guid, $senderGUID, 0, true, $add_to_sent);
 		} // end if
@@ -838,7 +848,6 @@ function notify_entity_menu_setup($hook, $type, $return, $params) {
 	if (elgg_in_context('widgets') || in_array($entity->getSubtype(), $do_not_subscribe_list))
 		return $return;
 
-	//error_log("group: {$entity->name} / entity: {$entity->title}");
 	// lol check for everything to put the bell thingy
 	$allow_subscription = false;
 	if ( $entity->getContainerEntity() instanceof ElggGroup ) {
@@ -851,7 +860,6 @@ function notify_entity_menu_setup($hook, $type, $return, $params) {
 	
 	} else if ( $entity->getContainerEntity() instanceof ElggUser ) {
 		$allow_subscription = true;
-		
 	}
 
 	

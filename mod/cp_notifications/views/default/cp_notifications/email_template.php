@@ -73,7 +73,7 @@ if($title){
 
 switch ($msg_type) {
 
-	case 'cp_write_mention':
+	case 'cp_wire_mention':
 		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_wire_mention:title',array(),'en');
 		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_wire_mention:title',array(),'fr');
 
@@ -302,8 +302,8 @@ switch ($msg_type) {
 
 
 	case 'cp_hjtopic':
-		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_hjtopic:title',array(),'en');
-		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_hjtopic:title',array(),'fr');
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_hjtopic:title',array($vars['cp_hjtopic_title']),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_hjtopic:title',array($vars['cp_hjtopic_title']),'fr');
 
 		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_hjtopic:description',array($vars['cp_hjtopic_description'],$vars['cp_hjtopic_url']),'en');
 		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_hjtopic:description',array($vars['cp_hjtopic_description'],$vars['cp_hjtopic_url']),'fr');
@@ -367,12 +367,15 @@ switch ($msg_type) {
 
 
 
-
-$email_notification_header = elgg_echo('cp_notification:email_header',array(),'en') . ' | ' . elgg_echo('cp_notification:email_header',array(),'fr');
+if ($msg_type !== 'cp_site_msg_type' && $msg_type !== 'cp_group_mail') {
+	error_log("this is header: {$msg_type}");
+	$email_notification_header = elgg_echo('cp_notification:email_header',array(),'en') . ' | ' . elgg_echo('cp_notification:email_header',array(),'fr');
+}
 $french_follows = '<a href="#gcc_fr_suit">Le francais suit</a>';
 
-$email_notification_header_msg_en = elgg_echo('cp_notification:email_header_msg', array('https://gcconnex.gc.ca/mod/contactform/','http://www.gcpedia.gc.ca/wiki/GC2.0_Tools_Help_Centre/GCconnex'),'en');
-$email_notification_header_msg_fr = elgg_echo('cp_notification:email_header_msg', array('https://gcconnex.gc.ca/mod/contactform/','http://www.gcpedia.gc.ca/wiki/Centre_d%27aide_pour_les_outils_GC2.0/GCconnex'),'fr');
+// this is not used anywhere
+//$email_notification_header_msg_en = elgg_echo('cp_notification:email_header_msg', array('https://gcconnex.gc.ca/mod/contactform/','http://www.gcpedia.gc.ca/wiki/GC2.0_Tools_Help_Centre/GCconnex'),'en');
+//$email_notification_header_msg_fr = elgg_echo('cp_notification:email_header_msg', array('https://gcconnex.gc.ca/mod/contactform/','http://www.gcpedia.gc.ca/wiki/Centre_d%27aide_pour_les_outils_GC2.0/GCconnex'),'fr');
 
 $email_notif_footer_msg_fr1 = elgg_echo('cp_notify:contactHelpDesk', array(),'fr');
 $email_notif_footer_msg_fr2 = elgg_echo('cp_notify:visitTutorials', array(),'fr');

@@ -17,7 +17,7 @@
 		
 	'cp_notify:subject:group_invite_user_by_email' => "%s vous a invité à joindre le groupe %s",
 		
-	'cp_notify:subject:group_request' => "% a fait une demande à joindre le groupe %s",
+	'cp_notify:subject:group_request' => "% a fait une demande pour joindre le groupe %s",
 
 	'cp_notify:subject:group_mail' => "%s a envoyé un message au groupe '%s'",
 
@@ -53,13 +53,15 @@
 
 	'cp_notify:subject:group_invite_email' => "%s vous a invité à joindre le groupe '%s'",
 
-	'cp_notify:subject:wire_mention' => "french french You've been mentioned on the wire", // translate
+	'cp_notify:subject:wire_mention' => "Vus avez été mentioné sur le fil", 
 
 	'cp_notify:subject:likes_comment' => "%s a aimé votre commentaire sur '%s'",
 	'cp_notify:subject:likes_discussion' => "%s a aimé votre réponse à '%s'",
 	'cp_notify:subject:likes_user_update' => "%s a aimé votre récente mise à jour",
 	'cp_notify:subject:add_new_user' => "Vous avez été ajouté en tant que nouvel utilisateur sur GCconnex",
 	'cp_notify:subject:invite_new_user' => "Vous avez été invité à joindre GCconnex",
+
+	'cp_notify:subject:group_admin_transfer' => "The admfrench frenchinistration of the group %s has been appointed to you", // translate
 
 
 	// email notification content (title & corresponding description) 
@@ -149,7 +151,7 @@
 	'cp_notify:body_validate_user:description' => "Bienvenue sur GCconnex. Afin de compléter votre inscription, veuillez valider votre compte enregistré sous le nom %s en cliquant sur le lien suivant : %s",
 
 
-	'cp_notify:body_hjtopic:title' => "Un nouveau forum de discussion a été publié",
+	'cp_notify:body_hjtopic:title' => "Un nouveau forum de discussion a été publié avec le titre '%s'",
 
 	'cp_notify:body_hjtopic:description' => "La description de leur nouvelle publication ce lit comme suit : <br/> 
 		%s <br/> 
@@ -199,11 +201,17 @@
 
 	
 	'cp_notify:body_wire_mention:title' => "french french You've been mentioned on the wire",
-	'cp_notify:body_wire_mention:description' => "%s french french french mentioned you in his/her wire post. <br/>
-		To view your mentions on the wire, click here: %s", // translate
+	'cp_notify:body_wire_mention:description' => "%s vous a mentioné dans son message sur le fil. <br/>
+		Pour voir tout les message ou vous avez été menioné, selectionnez le lien suivant : %s", 
 
-	// email notification footer text (1 and 2)
+	'cp_notify:body_group_admin_transfer:title' => "french frenchThe administration of the group %s has been appointed to you", // translate
 	
+	'cp_notify:body_group_admin_transfer:description' => "%s has appointed you as the new adfrench frenchministrator of the group%s.<br/><br/>
+		To visit the group, please click on the following link: <br/> 
+		%s", // translate
+
+
+	// email notification footer text (1 and 2)	
 	'cp_notify:footer' => "<p>Si vous ne voulez plus recevoir ce type de notification, veuillez modifier vos param?tres d'abonnement en cliquant le lien suivant : - http link -</p>",
 
 	'cp_notify:footer2' =>  "",//"Ceci est un message automatis?, veuillez ne pas y r?pondre",
@@ -230,9 +238,9 @@
 	'cp_notify:contactHelpDesk'=>'Si vous avez des questions, veuillez soumettre votre demande via le <a href="https://gcconnex.gc.ca/mod/contactform/">formlaire Contactez-nous</a>.',
     'cp_notify:visitTutorials'=>"Pour de plus amples renseignements sur GCconnex et ses fonctionnalités, consultez l'<a href='http://www.gcpedia.gc.ca/wiki/Aide_%C3%A0_l%27utilisateur/Voir_Tout'>aide à l'utilisateur de GCconnex</a>.<br/>
 	                             Merci",
-    'cp_notify:personalLikes'=>'Notify me when someone likes my content (translate me)',
-    'cp_notify:personalMention'=>'Notify me when someone @mentions me (translate me)',
-    'cp_notify:personalContent'=>'Notify me when something happens on content I create (translate me)',
+    'cp_notify:personalLikes'=>'Envoyez moi une notification lorsque quelqu\'un aime mon contenu',
+    'cp_notify:personalMention'=>'Envoyez moi une notification lorsque quelqu\'un me mentionne',
+    'cp_notify:personalContent'=>'Envoyez moi une notification lorsque quelqu\'un changement est fait au contenu que j\'ai creé',
     'cp_notify:colleagueContent'=>'Notify me when my colleagues create content (translate me)',
     'cp_notify:emailsForGroup'=>'Toggle All Email (translate me)',
     'cp_notify:groupContent'=>'Group Content (translate me)',

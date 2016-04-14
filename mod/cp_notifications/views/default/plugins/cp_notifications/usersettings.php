@@ -3,30 +3,22 @@
 gatekeeper();
 
 $user = elgg_get_page_owner_entity();
-$options = array(
-	'relationship' => 'member',
-	'relationship_guid' => $user->guid,
-	'type' => 'group',
-	'limit' => false,
-);
 $plugin = elgg_extract("entity", $vars);
 
-$groups = elgg_get_entities_from_relationship($options);
+
 
 $change_email_link = "<i><a href='".elgg_get_site_url()."settings/user/'> {$user->email}</a></i>";
 $title = elgg_echo('cp_notify:panel_title',array($change_email_link));
 
+// we don't need to have notifications for widget, forum category, skills, etc...
 $no_notification_available = array('widget','hjforumcategory','messages','MySkill','experience','education','hjforumpost','hjforumtopic','hjforum');	// set all the entities that we want to exclude
 
 
-//Nick- adding areas for personal notifications
-
+// Nick- adding areas for personal notifications
 $content .= "<section id='notificationstable' cellspacing='0' cellpadding='4' width='100%' class='clearfix'>";
-
-// Nick - Add personal notification area
 $content .= '<div class="col-sm-12 clearfix"> <h3 class="well">'.elgg_echo('cp_notify:personalNotif').'</h3>';
-$personal_notifications = array('likes','mentions','content'); // likes mentions content (code cleaned up)
 
+$personal_notifications = array('likes','mentions','content'); // likes mentions content (code cleaned up)
 foreach ($personal_notifications as $label) {
 	$email_value = $plugin->getUserSetting("cpn_{$label}_email", $user->getGUID()); // grab the user setting that's been saved
 	$site_value = $plugin->getUserSetting("cpn_{$label}_site", $user->getGUID());
@@ -43,13 +35,11 @@ foreach ($personal_notifications as $label) {
 	$content .= '<div class="col-sm-2">' . elgg_view('input/checkbox', array('name'=>"params[cpn_{$label}_email]",'value'=>"{$label}_email",'default'=>"{$label}_email_none", 'checked'=>$e_chk_value, 'label'=>'Email',)).'</div>';
 	$content .= '<div class="col-sm-2">' . elgg_view('input/checkbox', array('name'=>"params[cpn_{$label}_site]",'value'=>'{$label}_site','default'=>"{$label}_site_none", 'checked'=>$s_chk_value,'label'=>'Site',)).'</div>';
 }
-
 $content .= '</div>';
 
 
 
 //Nick - Add colleague notifications area
-
 $cpn_coll_notif_checkbox = elgg_view('input/checkboxes', array(
     'name' => "params[cpn_notif_{$user->getGUID()}]", //might need to pass something else here to get this to work
     'value'=>'test',
@@ -64,6 +54,7 @@ $colleague_picker = elgg_view('input/friendspicker', array(
 	));
     */
 $content .='<div class="col-sm-12"><h3 class="well">'.elgg_echo('cp_notify:collNotif').'</h3>';
+
 //Nick - Coming soon message added for colleague notifications
 $content .= '<div>'.elgg_echo('cp_notify:comingSoon').'</div>';
 //$content .= '<div class="col-sm-8">' . elgg_echo('cp_notify:colleagueContent').'</div>';
@@ -74,14 +65,26 @@ $content .= '<div>'.elgg_echo('cp_notify:comingSoon').'</div>';
 $content .= '</div>';
 
 
+
+
+// Group notification area
 $content .= '<div class="col-sm-12 group-notification-options"><h3 class="well">'.elgg_echo('cp_notify:groupNotif').'</h3></div>';
-//This checkbox  is if you want to recieve emails about group notifications. it needs to toggle all the email check boxes
+// This checkbox  is if you want to recieve emails about group notifications. it needs to toggle all the email check boxes
 $content .= '<div class="clearfix brdr-bttm mrgn-bttm-sm"><div class="col-sm-2 col-sm-offset-8 mrgn-bttm-md">'.elgg_view('input/checkbox', array('name' => "params[cpn_group_email_{$user->getGUID()}]", 'value'=>'', 'label'=>elgg_echo('cp_notify:emailsForGroup'), 'class'=>'all-email',)).'</div>';
 
 $content .= '<div class="col-sm-2 mrgn-bttm-md">'.elgg_view('input/checkbox', array('name' => "params[cpn_group_site_{$user->getGUID()}]", 'value'=>'', 'label'=>elgg_echo('cp_notify:siteForGroup'), 'class'=>'all-site',)).'</div></div>';
 
 $content .='<script>$(".all-email").click(function(){$(".group-check").prop("checked", this.checked);$(".group-check").trigger("change")})</script>'; //script to check all email group checkboxes
 $content .='<script>$(".all-site").click(function(){$(".group-site").prop("checked", this.checked);$(".group-site").trigger("change")})</script>'; //script to check all site group checkboxes
+
+
+$options = array(
+	'relationship' => 'member',
+	'relationship_guid' => $user->guid,
+	'type' => 'group',
+	'limit' => false,
+);
+$groups = elgg_get_entities_from_relationship($options);
 
 foreach ($groups as $group) {
 	$content .= "<div class='list-break clearfix'>";

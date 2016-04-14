@@ -898,6 +898,7 @@ function group_tools_enable_registration() {
  * @return boolean
  */
 function group_tools_transfer_group_ownership(ElggGroup $group, ElggUser $new_owner) {
+	//error_log()
 	$result = false;
 	
 	if (empty($group) || !elgg_instanceof($group, "group") || !$group->canEdit()) {
@@ -986,7 +987,21 @@ function group_tools_transfer_group_ownership(ElggGroup $group, ElggUser $new_ow
 				$group->getURL())
 			);
 	
-			notify_user($new_owner->getGUID(), $group->getGUID(), $subject, $message);
+			// cyu - work order #323 TFS
+			if (elgg_is_active_plugin('cp_notifications')) {
+				error_log("hi hi hi hi hi");
+				$message = array(
+					'cp_msg_type' => 'cp_grp_admin_transfer',
+					'cp_group_name' => $group->name,
+					'cp_group_url' => $group->getURL(),
+					'cp_new_owner' => $new_owner->name,
+					'cp_appointer' => $loggedin_user->name,
+					'cp_new_owner_user' => $new_owner,
+				);
+				$result = elgg_trigger_plugin_hook('cp_overwrite_notification','all',$message);
+			} else {
+				notify_user($new_owner->getGUID(), $group->getGUID(), $subject, $message);
+			}
 		}
 			
 		$result = true;

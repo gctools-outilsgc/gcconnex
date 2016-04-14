@@ -14,7 +14,7 @@
  
 ?>
 
-if(elgg.is_logged_in()){
+
   // alert('ayyyy LMAO'); //Okay this is loading
 $(document).ready(function() {
     $('.tabMenuGroup li').data("hasLoaded", 'false'); //set data on tabs that say they have not loaded
@@ -39,7 +39,7 @@ $(document).ready(function() {
            
         } else if(sub_type == 'pages'){
             sub_type = 'page_top';
-        }else if(sub_type =='search'){
+        }else if(sub_type =='search' || sub_type == 'about' || sub_type=='gcforums'){
             sub_type ='not going to work';
         }
 
@@ -74,5 +74,5 @@ $(document).ready(function() {
     });
     });
 
-    }
+    
 
