@@ -7,7 +7,7 @@ $plugin = elgg_extract("entity", $vars);
 
 
 
-$change_email_link = "<i><a href='".elgg_get_site_url()."settings/user/'> {$user->email}</a></i>";
+$change_email_link = "<a href='".elgg_get_site_url()."settings/user/'> ".elgg_echo('label:email')." </a>";
 $title = elgg_echo('cp_notify:panel_title',array($change_email_link));
 
 // we don't need to have notifications for widget, forum category, skills, etc...
@@ -33,7 +33,7 @@ foreach ($personal_notifications as $label) {
 		
 	$content .= '<div class="col-sm-8">' . elgg_echo("cp_notify:personal_{$label}").'</div>';
 	$content .= '<div class="col-sm-2">' . elgg_view('input/checkbox', array('name'=>"params[cpn_{$label}_email]",'value'=>"{$label}_email",'default'=>"{$label}_email_none", 'checked'=>$e_chk_value, 'label'=>'Email',)).'</div>';
-	$content .= '<div class="col-sm-2">' . elgg_view('input/checkbox', array('name'=>"params[cpn_{$label}_site]",'value'=>'{$label}_site','default'=>"{$label}_site_none", 'checked'=>$s_chk_value,'label'=>'Site',)).'</div>';
+	$content .= '<div class="col-sm-2">' . elgg_view('input/checkbox', array('name'=>"params[cpn_{$label}_site]",'value'=>"{$label}_site",'default'=>"{$label}_site_none", 'checked'=>$s_chk_value,'label'=>'Site',)).'</div>';
 }
 $content .= '</div>';
 
@@ -139,7 +139,7 @@ foreach ($groups as $group) {
         $cpn_grp_email_checkbox = elgg_view('input/checkbox', array(
         'name' => "params[cpn_email_{$group->getGUID()}]",
         'value'=> 'sub_'.$group->getGUID(),
-        'label'=>'Email',
+        'label'=> elgg_echo('label:email'),
         'default'=>'unSub',
         'checked'=> $cpn_grp_email_checked,
         'class'=> 'group-check',
@@ -241,7 +241,7 @@ $options = array(
 $interested_contents = elgg_get_entities_from_relationship($options);
 
 $cp_table_tr_count = 0;
-//Nick - commented out bottom 'Subscribed Content' 
+// Nick - commented out bottom 'Subscribed Content' 
 $content .= "<section id='notificationstable' cellspacing='0' cellpadding='4' width='100%'>";
 
 foreach ($interested_contents as $interested_content) {

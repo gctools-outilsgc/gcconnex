@@ -12,13 +12,13 @@ $english = array(
 	// email subject lines	
 	'cp_notify:subject:group_add_user' => "You have been added you into the group '%s'",
 	
-	'cp_notify:subject:group_invite_user' => "%s has invited you to join their group %s",
+	'cp_notify:subject:group_invite_user' => "%s invited you to join their group %s",
 		
-	'cp_notify:subject:group_invite_user_by_email' => "%s has invited you to join the group %s",
+	'cp_notify:subject:group_invite_user_by_email' => "%s invited you to join the group %s",
 		
-	'cp_notify:subject:group_request' => '%s has requested to join the group %s',
+	'cp_notify:subject:group_request' => '%s requested to join the group %s',
 	
-	'cp_notify:subject:group_mail' => "%s has sent out a group message '%s'",
+	'cp_notify:subject:group_mail' => "You have received a message entitled '%s' from the group '%s'", // modified both the %
 	
 	'cp_notify:subject:friend_request' => "%s wants to be your colleague!",
 	
@@ -26,64 +26,64 @@ $english = array(
 	
 	'cp_notify:subject:validate_user' => "Please validate account for %s",
 	
-	'cp_notify:subject:group_join_request' => "%s has requested to join your group '%s'",
+	'cp_notify:subject:group_join_request' => "%s requested to join your group '%s'",
 	
-	'cp_notify:subject:likes' => "%s has liked your post '%s'",
+	'cp_notify:subject:likes' => "%s liked your post '%s'",
 
-	'cp_notify:subject:likes_wire' => "%s has liked your wire post", // translate
+	'cp_notify:subject:likes_wire' => "%s liked your wire post", 
 	
-	'cp_notify:subject:comments' => "%s has posted a comment or reply to '%s'",
+	'cp_notify:subject:comments' => "%s posted a comment on '%s'",
 	
-	'cp_notify:subject:site_message' => "%s has sent you a new message '%s'",
+	'cp_notify:subject:site_message' => "%s sent you a new message '%s'",
 	
-	'cp_notify:subject:new_content' => "%s has posted a new %s with the title '%s'", // needs to be redone (updated) #398 #323
+	'cp_notify:subject:new_content' => "%s posted a new %s with the title '%s'", // needs to be redone (updated) #398 #323
 	
-	'cp_notify:subject:mention' => "%s has mentioned you in their new post or reply",
+	'cp_notify:subject:mention' => "%s mentioned you on GCconnex",
 	
-	'cp_notify:subject:hjtopic' => "A new forum topic has been posted",
+	'cp_notify:subject:hjtopic' => "%s posted a new forum topic titled '%s'", // this has been changed to add name of user and topic
 	
-	'cp_notify:subject:hjpost' => "A new reply to a forum topic has been posted",
+	'cp_notify:subject:hjpost' => "%s replied to a the forum topic '%s'", // this has been changed to add name of user and topic
 	
-	'cp_notify:subject:approve_friend' => "%s has approved your colleague's request",
+	'cp_notify:subject:approve_friend' => "%s approved your colleague's request",
 
-	'cp_notify:subject:group_invite_email' => "%s invited you to join this group '%s'",
+	'cp_notify:subject:group_invite_email' => "%s invited you to join the group '%s'",
 
-	'cp_notify:subject:wire_mention' => "You've been mentioned on the wire",
+	'cp_notify:subject:wire_mention' => "%s mentioned you on the wire", // this is changed to add name of person who mentioned you
 
-	'cp_notify:subject:likes_comment' => "%s has liked your comment from '%s'",
+	'cp_notify:subject:likes_comment' => "%s liked your comment from '%s'",
 	'cp_notify:subject:likes_discussion' => "%s liked your reply to '%s'",
 	'cp_notify:subject:likes_user_update' => "%s liked your recent update",
 	'cp_notify:subject:add_new_user' => "You have been added as a new user in GCconnex",
 	'cp_notify:subject:invite_new_user' => "You have been invited to join GCconnex",
 
-	'cp_notify:subject:group_admin_transfer' => "The administration of the group %s has been appointed to you", // translate
+	'cp_notify:subject:group_admin_transfer' => "The administration rights for the group %s have been delegaged to you", 
 
 	// email notification content (title & corresponding description) 
 
-	'cp_notify:body_friend_approve:title' => "%s has approved your colleague's request",
+	'cp_notify:body_friend_approve:title' => "%s approved your colleague's request",
 
-	'cp_notify:body_friend_approve:description' => "%s has approved your colleague's request",
+	'cp_notify:body_friend_approve:description' => "%s approved your colleague's request",
 
 
-	'cp_notify:body_likes:title' => "%s has liked your post called '%s'",
-	'cp_notify:body_likes_wire:title' => "%s has liked your wire post", // translate
+	'cp_notify:body_likes:title' => "%s liked your post called '%s'",
+	'cp_notify:body_likes_wire:title' => "%s liked your wire post '%s'", // Added % for wire post text
 	'cp_notify:body_likes:description' => "You can view your content by clicking on this link: %s",
 		
 
-	'cp_notify:body_comments:title' => "%s posted a comment or reply to %s by %s",
+	'cp_notify:body_comments:title' => "%s posted a comment to '%s' by %s",
 	
-	'cp_notify:body_comments:description' => "Their comment or reply as follows: <br/>
+	'cp_notify:body_comments:description' => "The comment is: <br/>
 		%s <br/>
-		You can view or reply to this by clicking on this link: %s",
+		You can view or reply to this by clicking on the following link: %s",
 	
-	'cp_notify:body_new_content:title' => "%s has posted a new content entitled '%s'", // needs to be revised
+	'cp_notify:body_new_content:title' => "%s posted new content entitled '%s'", // needs to be revised
 	
 	'cp_notify:body_new_content:description' => "The description of the new posting is: <br/>
 		%s <br/>
 		You can view or reply to this by clicking on this link: %s",
 	
 		
-	'cp_notify:body_mention:title' => "%s has mentioned you in their post or reply entitled '%s'",
+	'cp_notify:body_mention:title' => "%s mentioned you in their post or reply entitled '%s'",
 	
 	'cp_notify:body_mention:description' => "Here is the post where you were mentioned: <br/>
 		%s <br/>
@@ -91,7 +91,7 @@ $english = array(
 	
 
 	// site message
-	'cp_notify:body_site_msg:title' => "%s has sent you a site message entitled '%s'",
+	'cp_notify:body_site_msg:title' => "%s sent you a site message entitled '%s'",
 	
 	'cp_notify:body_site_msg:description' => "The content of the message is: <br/>
 		%s <br/>
@@ -99,14 +99,14 @@ $english = array(
 	
 
 	// group requesting membership
-	'cp_notify:body_group_request:title' => "%s has sent you a request to join the group '%s'",
+	'cp_notify:body_group_request:title' => "%s sent you a request to join the group '%s'",
 	
 	'cp_notify:body_group_request:description' => "Please see the request by clicking on this link: %s,
 		%s",
 	
 
 	'cp_notify:body_group_invite_email:title' => "You are invited to join a group on GCconnex",
-	'cp_notify:body_group_invite_email:description' => "You are invited to join the '%s' GCconnex group",
+	'cp_notify:body_group_invite_email:description' => "You are invited to join the '%s' GCconnex group, please register and use this link: %s or use this code: '%s' <br/> %s",
 
 
 	'cp_notify:body_group_add:title' => "You have been added to the group '%s'",
@@ -114,16 +114,16 @@ $english = array(
 	'cp_notify:body_group_add:description' => "You have been added to the group %s: <br/>%s",
 	
 
-	'cp_notify:body_group_invite:title' => "%s has invited you to join the group '%s'",
+	'cp_notify:body_group_invite:title' => "%s invited you to join the group '%s'",
 	
 	'cp_notify:body_group_invite:description' => "You have been invited to join the group '%s'<br/>
 		%s <br/>
 		Click here to view your invitation: %s",
 		
 
-	'cp_notify:body_group_mail:title' => "%s has sent a message to all its members '%s'",
+	'cp_notify:body_group_mail:title' => "You have received a message entitled '%s' from the group '%s'", // modified both the %
 	
-	'cp_notify:body_group_mail:description' => "The group owner or administrator has sent the following message to all its members: <br/>
+	'cp_notify:body_group_mail:description' => "The group owner or administrator has sent the following message: <br/>
 		%s",
 	
 	
@@ -142,7 +142,7 @@ $english = array(
 
 
 
-	'cp_notify:body_hjtopic:title' => "A new forum topic has been posted with title '%s'",
+	'cp_notify:body_hjtopic:title' => "A new forum topic has been posted with the title '%s'",
 
 	'cp_notify:body_hjtopic:description' => "The description of the new posting is: <br/>
 		%s <br/>
@@ -150,15 +150,15 @@ $english = array(
 
 
 
-	'cp_notify:body_hjpost:title' => "A new post in a forum topic has been posted",
+	'cp_notify:body_hjpost:title' => "A new post has been added to the forum topic '%s'", // new % added
 
-	'cp_notify:body_hjpost:description' => "Their post or reply as follows: <br/>
+	'cp_notify:body_hjpost:description' => "The post or reply as follows: <br/>
 		%s <br/>
 		You can view or reply to this by clicking on this link: %s",
 
 
 
-	'cp_notify:body_likes_comment:title' => "%s has liked your comment from '%s'", 
+	'cp_notify:body_likes_comment:title' => "%s liked your comment from '%s'", 
 	'cp_notify:body_likes_comment:description' => "Your comment from '%s' was liked by %s", 
 
 	'cp_notify:body_likes_discussion_reply:title' => "%s liked your reply to '%s'", 
@@ -184,18 +184,23 @@ $english = array(
 
 	'cp_notify:body_group_admin_transfer:title' => "The administration of the group %s has been appointed to you", // translate
 
-	'cp_notify:body_group_admin_transfer:description' => "%s has appointed you as the new administrator of the group%s.<br/><br/>
+	'cp_notify:body_group_admin_transfer:description' => "%s has delegated you as the new administrator of the group%s.<br/><br/>
 		To visit the group, please click on the following link: <br/> 
 		%s", // translate
 
 	// email notification footer text (1 and 2)
-	'cp_notify:footer' => "<p>If you do not want to receive this notification, please manage your subscription settings here: %s</p>",
+	'cp_notify:footer' => "<p>If you do not want to receive these types of notifications, you can change your subscription settings by clicking on this link: %s</p>",
 
     'cp_notify:footer2' => "",//"This is an automated message, please do not reply",
 
 
 	// texts that will be displayed in the site pages
-	'cp_notify:panel_title' => 'Subscription settings (click to edit email: %s)',
+    'cp_notifications:usersettings:title' => 'Notifications Settings',
+
+	'cp_notify:panel_title' => 'Subscription settings<br>
+	Modify your %s)', // % should be the user's email, hyperlinked to the user's settings page 
+    'label:email' => "Email",
+	'cp_notify:panel_title' => 'Subscription settings (click to edit %s)',
 	'cp_notify:quicklinks' => 'Subscription Quick Links',
 	'cp_notify:content_name' => 'Content Name',
 	'cp_notify:email' => 'Notify by e-mail',
@@ -220,11 +225,11 @@ $english = array(
 
     'cp_notify:pickColleagues' => 'Pick colleagues to subscribe', // need translations
     'cp_notify:colleagueContent'=>'Notify me when my colleagues create content',
-    'cp_notify:emailsForGroup'=>'Toggle All Email',
+    'cp_notify:emailsForGroup'=>'Select All',
     'cp_notify:groupContent'=>'Group Content',
     'cp_notify:notifNewContent'=>'Notify me when new content is created (Discussion, Files, etc.)',
     'cp_notify:notifComments'=>'Notify me when comments are created',
-    'cp_notify:siteForGroup'=>'Toggle All Site',
+    'cp_notify:siteForGroup'=>'Select All',
     'cp_notify:unsubBell'=>'You are subscribed to this content. Click to unsubscribe.',
     'cp_notify:subBell'=>'You are not subscribed to this content. Click to subscribe and recieve notifications about this content.',
     'cp_notify:comingSoon'=>'Coming soon!',

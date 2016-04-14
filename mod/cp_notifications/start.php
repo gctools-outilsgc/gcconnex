@@ -191,13 +191,16 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_group' => $params['cp_group'],
 				'cp_group_subject' => $params['cp_group_subject'],
 				'cp_group_message' => $params['cp_group_message'],
-				'cp_group_user' => $params['cp_group_mail_users'],
+				//'cp_group_user' => $params['cp_group_mail_users'],
 				'cp_msg_type' => $cp_msg_type
 			);
 			$subject = elgg_echo('cp_notify:subject:group_mail',array($params['cp_group']['name'],$params['cp_group_subject']),'en');
             $subject .= ' | '.elgg_echo('cp_notify:subject:group_mail',array($params['cp_group']['name'],$params['cp_group_subject']),'fr');
-			foreach ($params['cp_group_mail_users'] as $to_user)
-				$to_recipients[] = get_user($to_user);
+			foreach ($params['cp_group_mail_users'] as $to_user) {
+				//error_log("send to this user ------ {$to_user}");
+				// this is where it seems to duplicate emails
+				$to_recipients[$to_user] = get_user($to_user);
+			}
 			break;
 
 
@@ -473,6 +476,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 						'cp_msg_type' => 'cp_likes_type',
 						'cp_liked_by' => $liked_by->name,
 						'cp_comment_from' => $content->title,
+						'cp_description' => $content->description,
 						'cp_content_url' => $content->getURL(),
 					);
 
@@ -535,9 +539,6 @@ function cp_create_notification($event, $type, $object) {
 			foreach ($users as $user) 
 				$to_recipients_email[$user->guid] = $user;
 			
-		
-			$to_recipients_email[$container_entity->owner_guid] = get_user($container_entity->owner_guid);
-			
 			// Users subscribed to recieve notifications by site message
 			$options = array(
 				'relationship' => 'cp_subscribed_to_site_mail',
@@ -571,12 +572,16 @@ function cp_create_notification($event, $type, $object) {
 			$content_owner = get_user($container_entity->owner_guid);
 			$template = elgg_view('cp_notifications/email_template', $message);
 			if (elgg_get_plugin_user_setting("cpn_content_email", $container_entity->owner_guid, 'cp_notifications') === 'content_email')
-				mail($content_owner->email,$subject,$template,cp_get_headers());
+				//mail($content_owner->email,$subject,$template,cp_get_headers());
+				$to_recipients_email[$content_owner->guid] = $content_owner;
 
 			if (elgg_get_plugin_user_setting("cpn_content_site", $container_entity->owner_guid, 'cp_notifications') === 'content_site')
-				messages_send($subject, $template, $content_owner->getGUID(), $site->guid, 0, true, false);	
+				//messages_send($subject, $template, $content_owner->getGUID(), $site->guid, 0, true, false);
+				$to_recipients_message[$content_owner->guid] = $content_owner;	
 
-			break;
+			return;
+			//break;
+
 
 		default:	// creating entities such as blogs, topics, bookmarks, etc...
 
@@ -670,9 +675,7 @@ function cp_create_notification($event, $type, $object) {
 
 			$subject = elgg_echo('cp_notify:subject:new_content',array($user->name,cp_translate_subtype($object->getSubtype()),$object->title),'en');
 			$subject .= ' | '.$subtypes_gender_subject[$object->getSubtype()];
-			//if (!$object->title)
-			//	$object1 = get_entity(844);
-			//error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> {$object->getGUID()} // ".$object1->title.' /// type: '.gettype($object->getGUID()));
+
 			$message = array('cp_topic_title' => $object->title, 
 								'cp_topic_author' => $object->owner_guid, 
 								'cp_topic_description' => $object->description, 
@@ -717,6 +720,7 @@ function cp_create_notification($event, $type, $object) {
     // send out emails
 	foreach ($to_recipients_email as $to_recipient) { 
 		if ($to_recipient->getGUID() != elgg_get_logged_in_user_guid()) { // prevents notification to be sent to the sender
+				error_log(" ===== {$to_recipient->email} =====");
 			if ($to_recipient instanceof ElggUser)
 				mail($to_recipient->email,$subject,$template,cp_get_headers());
 		}

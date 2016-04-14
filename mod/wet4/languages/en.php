@@ -172,6 +172,7 @@ return array(
     'gprofile:ideas' => "Ideas",
     'gprofile:more' => "More",
     'gprofile:settings' => 'Settings',
+    'photos:none' => 'No image albums',
     
     'gprofile:create' => "Create Group",
 

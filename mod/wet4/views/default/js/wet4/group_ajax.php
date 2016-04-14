@@ -39,7 +39,12 @@ $(document).ready(function() {
            
         } else if(sub_type == 'pages'){
             sub_type = 'page_top';
-        }else if(sub_type =='search' || sub_type == 'about' || sub_type=='gcforums'){
+        } else if (sub_type =='groups'){
+            sub_type ='related';
+            //alert(sub_type);
+        }
+
+        else if(sub_type =='search' || sub_type == 'about' || sub_type=='gcforums'){
             sub_type ='not going to work';
         }
 

@@ -11231,6 +11231,16 @@ a.shr-opn, a.shr-opn:hover {
     margin: 0 !important;
 
 }
+
+
+#albums .elgg-item-object-album {
+    
+    display:inline-block;
+    
+    margin: 5px;
+    clear:both;
+
+}
 #widget_manager_widgets_select .panel-heading{
     position: absolute;
     z-index: 44444;

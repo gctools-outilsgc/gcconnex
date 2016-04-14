@@ -19,7 +19,7 @@
 		
 	'cp_notify:subject:group_request' => "% a fait une demande pour joindre le groupe %s",
 
-	'cp_notify:subject:group_mail' => "%s a envoyé un message au groupe '%s'",
+	'cp_notify:subject:group_mail' => "Vous avez reçu un message intitulé '%s' du groupe '%s'", // modified both the %
 
 	'cp_notify:subject:friend_request' => "%s veut être votre collègue!",
 
@@ -27,13 +27,13 @@
 
 	'cp_notify:subject:validate_user' => "Veuillez valider le compte de %s",
 
-	'cp_notify:subject:group_join_request' => "%s a fait une demande de joindre votre groupe '%s'",
+	'cp_notify:subject:group_join_request' => "%s a fait une demande pour se joindre au groupe '%s'",
 
-	'cp_notify:subject:likes' => "%s aime votre publication '%s'",
+	'cp_notify:subject:likes' => "%s aime votre contenu '%s'",
 
 	'cp_notify:subject:likes_wire' => "%s aime votre message sur le fil", 
 
-	'cp_notify:subject:comments' => "%s a publié un commentaire ou une réponse à '%s'",
+	'cp_notify:subject:comments' => "%s a publié un commentaire sur '%s'",
 
 	'cp_notify:subject:site_message' => "%s vous a envoyé un nouveau message '%s'",
 
@@ -43,25 +43,25 @@
 	'cp_notify:subject:new_content_fem' => "%s a publié une nouvelle %s intitulée '%s'",
 
 
-	'cp_notify:subject:mention' => "%s vous a cité dans sa publication ou réponse",
+	'cp_notify:subject:mention' => "%s vous a mentioné sur GCconnex",
 
-	'cp_notify:subject:hjtopic' => "Un nouveau forum de discussion à été publié.",
+	'cp_notify:subject:hjtopic' => "%s a publié un nouveau forum de discussion intitulé '%s'.", // this has been changed to add name of user and topic
 	
-	'cp_notify:subject:hjpost' => "Une nouvelle réponse au forum de discussion a été publiée.",
+	'cp_notify:subject:hjpost' => "%s a publié une nouvelle réponse au forum de discussion '%s'", // this has been changed to add name of user and topic
 
-	'cp_notify:subject:approve_friend' => "%s a approuvé votre demande à devenir collègue.", 
+	'cp_notify:subject:approve_friend' => "%s a approuvé votre demande pour devenir votre collègue.", 
 
 	'cp_notify:subject:group_invite_email' => "%s vous a invité à joindre le groupe '%s'",
 
-	'cp_notify:subject:wire_mention' => "Vus avez été mentioné sur le fil", 
+	'cp_notify:subject:wire_mention' => "%s vous a mentioné sur le fil", // this is changed to add name of person who mentioned you
 
-	'cp_notify:subject:likes_comment' => "%s a aimé votre commentaire sur '%s'",
-	'cp_notify:subject:likes_discussion' => "%s a aimé votre réponse à '%s'",
+	'cp_notify:subject:likes_comment' => "%s a aimé votre commentaire '%s'",
+	'cp_notify:subject:likes_discussion' => "%s a aimé votre réponse '%s'",
 	'cp_notify:subject:likes_user_update' => "%s a aimé votre récente mise à jour",
 	'cp_notify:subject:add_new_user' => "Vous avez été ajouté en tant que nouvel utilisateur sur GCconnex",
 	'cp_notify:subject:invite_new_user' => "Vous avez été invité à joindre GCconnex",
 
-	'cp_notify:subject:group_admin_transfer' => "The admfrench frenchinistration of the group %s has been appointed to you", // translate
+	'cp_notify:subject:group_admin_transfer' => "Les droits d'administration du groups %s vous ont été délégués", 
 
 
 	// email notification content (title & corresponding description) 
@@ -72,12 +72,12 @@
 
 
 	'cp_notify:body_likes:title' => "%s a aimé votre publication '%s'",
-	'cp_notify:body_likes_wire:title' => "%s aime votre message sur le fil", 
+	'cp_notify:body_likes_wire:title' => "%s aime votre message sur le fil '%s'", // Added % for wire post text
 	'cp_notify:body_likes:description' => "Vous pouvez consulter votre contenu en cliquant sur le lien suivant : %s",
 		
-	'cp_notify:body_comments:title' => "%s a publié un commentaire ou une réponse à %s par %s",
+	'cp_notify:body_comments:title' => "%s a publié un commentaire sur '%s' par %s",
 
-	'cp_notify:body_comments:description' => "Leur commentaire ou réponse ce lit comme suit : <br/>
+	'cp_notify:body_comments:description' => "Le commentaire se lit comme suit : <br/>
 		 %s <br/> 
 		Vous pouvez consulter ou répondre en cliquant sur le lien suivant : %s",
 		
@@ -85,7 +85,7 @@
 	
 	'cp_notify:body_new_content:title' => "%s a publié un nouvel item intitulé '%s'",
 	
-	'cp_notify:body_new_content:description' => "La description de leur nouvelle publication ce lit comme suit : <br/> 
+	'cp_notify:body_new_content:description' => "La description de leur nouvelle publication se lit comme suit : <br/> 
 		%s <br/> 
 		Vous pouvez consulter ou y répondre en cliquant sur le lien suivant : %s",
 
@@ -113,7 +113,7 @@
 		%s",
 
 	'cp_notify:body_group_invite_email:title' => "Vous êtes invité à joindre un groupe sur GCconnex",
-	'cp_notify:body_group_invite_email:description' => "Vous être invité à joindre le groupe '%s' sur GCconnex",
+	'cp_notify:body_group_invite_email:description' => "Vous êtes invité à joindre le groupe '%s' sur GCconnex, please register and use this link: %s or use this code: '%s' <br/> %s", // translate
 
 
 	'cp_notify:body_group_add:title' => "Vous avez été ajouté au groupe '%s'",
@@ -123,14 +123,14 @@
 
 	'cp_notify:body_group_invite:title' => "%s vous a invité à joindre le groupe '%s'",
 
-	'cp_notify:body_group_invite:description' => "Vous avez invité à joindre le groupe %s : <br/> 
+	'cp_notify:body_group_invite:description' => "Vous avez été invité à joindre le groupe %s : <br/> 
 		%s <br/>
 		Cliquez ici pour consulter votre invitation :%s",
 		
 
-	'cp_notify:body_group_mail:title' => "%s a envoyé un message à tous les membres du groupe '%s'",
+	'cp_notify:body_group_mail:title' => "Vous avez reçu un message intitulé '%s' du groupe '%s'", // modified both the %
 
-	'cp_notify:body_group_mail:description' => "Le propriétaire du groupe ou administrateur a envoyé le message suivant à tous les membres : <br/> 
+	'cp_notify:body_group_mail:description' => "Le propriétaire ou l'administrateur du groupe a envoyé le message suivant : <br/> 
 		%s",
 
 	
@@ -153,14 +153,14 @@
 
 	'cp_notify:body_hjtopic:title' => "Un nouveau forum de discussion a été publié avec le titre '%s'",
 
-	'cp_notify:body_hjtopic:description' => "La description de leur nouvelle publication ce lit comme suit : <br/> 
+	'cp_notify:body_hjtopic:description' => "La description de leur nouvelle publication se lit comme suit : <br/> 
 		%s <br/> 
 		Vous pouvez consulter ou y répondre en cliquant sur le lien suivant : %s",
 
 
 	'cp_notify:body_hjforum:title' => "Un nouveau message a été publié dans le forum de discussion.",
 
-	'cp_notify:body_hjforum:description' => "Leur commentaire ou réponse ce lit comme suit : <br/>
+	'cp_notify:body_hjforum:description' => "Leur commentaire ou réponse se lit comme suit : <br/>
 		 %s <br/> 
 		Vous pouvez consulter ou répondre en cliquant sur le lien suivant : %s",
 
@@ -197,18 +197,18 @@
 
 	'cp_notify:body_hjpost:description' => "La description du forum est :<br/>
 		%s <br/>
-		Vous pouvez voir ou répondre au nouveau sujet de forum en selectionnant le lien suivant : %s", 
+		Vous pouvez voir ou répondre au nouveau sujet de forum en cliquant sur le lien suivant : %s", 
 
 	
-	'cp_notify:body_wire_mention:title' => "french french You've been mentioned on the wire",
+	'cp_notify:body_wire_mention:title' => "Vous avez été mentioné sur le Fil",
 	'cp_notify:body_wire_mention:description' => "%s vous a mentioné dans son message sur le fil. <br/>
-		Pour voir tout les message ou vous avez été menioné, selectionnez le lien suivant : %s", 
+		Pour voir tout les message ou vous avez été menioné, cliquez sur le lien suivant : %s", 
 
-	'cp_notify:body_group_admin_transfer:title' => "french frenchThe administration of the group %s has been appointed to you", // translate
+	'cp_notify:body_group_admin_transfer:title' => "Les droits d'administration du groups '%s' vous ont été délégués", 
 	
-	'cp_notify:body_group_admin_transfer:description' => "%s has appointed you as the new adfrench frenchministrator of the group%s.<br/><br/>
-		To visit the group, please click on the following link: <br/> 
-		%s", // translate
+	'cp_notify:body_group_admin_transfer:description' => "%s vous a délégué les droits d'administrateur du groups.<br/><br/>
+		Pour visiter le groupe, veuillez cliquer sur le lien suivant : <br/> 
+		%s", 
 
 
 	// email notification footer text (1 and 2)	
@@ -219,7 +219,12 @@
 
 
 	// texts that will be displayed in the site pages
-	'cp_notify:panel_title' => "Paramètres d'abonnement (cliquer pour modifier votre courriel : %s)",
+	'cp_notifications:usersettings:title' => 'Paramètres des notifications',
+	'label:email' => "Courriel",
+	'cp_notify:panel_title' => "Paramètres d'abonnement (cliquer pour modifier votre %s)",
+
+	'cp_notify:panel_title' => "Paramètres d'abonnement <br>
+	(Modifiez votre %s)", // % should be the user's email, hyperlinked to the user's settings page
 	'cp_notify:quicklinks' => 'Liens rapides aux abonnements',
 	'cp_notify:content_name' => 'Nom du contenu',
 	'cp_notify:email' => 'Informer par courriel',
@@ -238,21 +243,22 @@
 	'cp_notify:contactHelpDesk'=>'Si vous avez des questions, veuillez soumettre votre demande via le <a href="https://gcconnex.gc.ca/mod/contactform/">formlaire Contactez-nous</a>.',
     'cp_notify:visitTutorials'=>"Pour de plus amples renseignements sur GCconnex et ses fonctionnalités, consultez l'<a href='http://www.gcpedia.gc.ca/wiki/Aide_%C3%A0_l%27utilisateur/Voir_Tout'>aide à l'utilisateur de GCconnex</a>.<br/>
 	                             Merci",
-    'cp_notify:personalLikes'=>'Envoyez moi une notification lorsque quelqu\'un aime mon contenu',
-    'cp_notify:personalMention'=>'Envoyez moi une notification lorsque quelqu\'un me mentionne',
-    'cp_notify:personalContent'=>'Envoyez moi une notification lorsque quelqu\'un changement est fait au contenu que j\'ai creé',
-    'cp_notify:colleagueContent'=>'Notify me when my colleagues create content (translate me)',
-    'cp_notify:emailsForGroup'=>'Toggle All Email (translate me)',
-    'cp_notify:groupContent'=>'Group Content (translate me)',
-    'cp_notify:notifNewContent'=>'Notify me when new content is created (Discussion, Files, etc.) (translate me)',
-    'cp_notify:notifComments'=>'Notify me when comments are created (translate me)',
-    'cp_notify:siteForGroup'=>'Toggle All Site (translate me)',
-    'cp_notify:unsubBell'=>'You are subscribed to this content. Click to unsubscribe.(translate me)',
-    'cp_notify:subBell'=>'You are not subscribed to this content. Click to subscribe and recieve notifications when things happen to this. (translate me)',
-    'cp_notify:comingSoon'=>'Coming soon(translate me)!',
-        'cp_notify:personalNotif'=>'Personal Notifications(translate me)',
-    'cp_notify:collNotif'=>'Colleague Notifications(translate me)',
-    'cp_notify:groupNotif'=>'Group Notifications(translate me)',
+    'cp_notify:email'=>'Couriel', //this is new
+    'cp_notify:personal_likes'=>'Envoyez-moi une notification lorsque quelqu\'un aime mon contenu',
+    'cp_notify:personal_mentions'=>'Envoyez-moi une notification lorsque quelqu\'un me mentionne',
+    'cp_notify:personal_content'=>'Envoyez-moi une notification lorsqu\'un changement est fait au contenu que j\'ai crée',
+    'cp_notify:colleagueContent'=>'Envoyez-moi une notification lorsqu\'un(e) collègue crée du nouveau contenu',
+    'cp_notify:emailsForGroup'=>'Sélectionnez tout',
+    'cp_notify:groupContent'=>'Contenu de group',
+    'cp_notify:notifNewContent'=>'Envoyez-moi une notification lorsque du nouveau contenu est crée (discussion, fichier, etc.)',
+    'cp_notify:notifComments'=>'Envoyez-moi une notification lorsqu\'un commentaire est publié',
+    'cp_notify:siteForGroup'=>'Selectionnez tout',
+    'cp_notify:unsubBell'=>'Vous êtes abonné a ce contenu. Cliquez pour vous désabonner',
+    'cp_notify:subBell'=>'Vous n\'êtes pas abonné a ce contenu. Cliquez pour vous abonnez et recevoir des notifications au sujet de ce contenu.',
+    'cp_notify:comingSoon'=>'À venir bientôt!',
+        'cp_notify:personalNotif'=>'Notifications personnel',
+    'cp_notify:collNotif'=>'Notifications de collègues',
+    'cp_notify:groupNotif'=>'Notifications de groupe',
 
 	);
 

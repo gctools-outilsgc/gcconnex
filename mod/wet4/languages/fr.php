@@ -185,6 +185,7 @@ return array(
     'profile:actions' => 	'Actions',
     'profile:viewall:coll' => 	'Voir tous mes collègues',
     'profile:viewall:groups' => 'Voir tous mes groupes',
+    'photos:none' => 'Aucun album d\'image',
 
         /**
    * Group invite
