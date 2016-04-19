@@ -76,7 +76,7 @@ $department = $user->get('department');
 <div class="clearfix mrgn-bttm-sm">
     <div class="row mrgn-lft-0 mrgn-rght-0 mrgn-tp-sm">
         <div class="col-xs-3">
-            <a href="<?php echo $site_url ?>profile/<?php echo $user ?>" title="<?php echo elgg_echo('profile:title', array($user->name))?>">
+            <a href="<?php echo $site_url ?>profile/<?php echo $user->username ?>" title="<?php echo elgg_echo('profile:title', array($user->name))?>">
                
                 <img class="mrgn-lft-sm mrgn-bttm-sm img-circle img-responsive" src="<?php echo $user_avatar?>" alt="<?php echo $displayName ?> Profile Picture" />
             </a>
@@ -87,8 +87,9 @@ $department = $user->get('department');
                 <?php
                 $name_link = elgg_view('output/url', array(
                     'href' => $user->getURL(),
-                    'text' => "<span class=\"elgg-heading-basic\">$user->name</span>&#64;$user->username",
+                    'text' => "<span class=\"elgg-heading-basic\">$user->name</span> &#64; $user->username",
                     'is_trusted' => true,
+                    'style' => 'text-decoration:none;',
                     ));
                 echo "$name_link";
 
@@ -97,7 +98,7 @@ $department = $user->get('department');
             <div>
                 <?php echo  $email ?>
             </div>
-            <div>
+            <div style="max-width:300px;">
                 <?php echo $department; ?>
             </div>
 
@@ -146,6 +147,9 @@ $department = $user->get('department');
     // admin
     if (elgg_is_admin_logged_in() && $admin) {
 
+        echo '<div class="panel-footer coll-' . $user->guid . '"><div class="text-center"><a  role="button" data-toggle="collapse" href="#adminoptions-' . $user->guid . '" aria-expanded="false" aria-controls="collapseExample">' . elgg_echo('gprofile:edit:admin') . ' <i class="fa fa-caret-down fa-lg"></i></a></div>';
+
+        
         foreach($admin as $menu_item){
 
             $items .= elgg_view('navigation/menu/elements/item', array(
@@ -153,13 +157,24 @@ $department = $user->get('department');
                         'item_class' => 'mrgn-rght-sm mrgn-bttm-sm',
                     ));
         }
+        echo '<div class="collapse" id="adminoptions-' . $user->guid . '">';
+        echo elgg_format_element('ul', ['class' => 'list-inline', 'style' => 'max-width:450px; padding: 3px;'], $items);
 
-        echo elgg_format_element('ul', ['class' => 'list-inline', 'style' => 'max-width:500px; padding: 3px;'], $items);
-
-
+        echo '</div></div>';
 
     }
     
         
         ?>
+
+    <script>
+        $('.coll-<?php echo $user->guid ?>').mouseover(function () {
+
+            $('.collapse').collapse('show');
+        }).mouseleave( function () {
+
+            $('.collapse').collapse('hide');
+        });
+
+    </script>
     </div>

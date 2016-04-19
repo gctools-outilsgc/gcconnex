@@ -14,9 +14,7 @@ echo elgg_view_menu('extras', array(
 
 
 //dirty quick fix to remove sidebar content from the wire
-if((elgg_get_context() == 'thewire'))  {
-    echo '';
-}else{
+
     
     //This display page menus in the sidebar right now 
     //It's commented out and moved to page/layout/one_sidebar.php
@@ -39,7 +37,7 @@ if((elgg_get_context() == 'thewire'))  {
     if (isset($vars['area3'])) {
 	   echo $vars['area3'];
     }   
-}
+
 
 
 

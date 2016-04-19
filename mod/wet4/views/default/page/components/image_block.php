@@ -135,7 +135,7 @@ HTML;
 
 }else{
     
-    $body = "<div class=\"mrgn-tp-sm col-xs-10\">$body</div>";
+    $body = "<div class=\"mrgn-tp-sm col-xs-10 noWrap\">$body</div>";
 
 if ($image) {
 	$image = "<div class=\"mrgn-tp-sm col-xs-2\">$image</div>";

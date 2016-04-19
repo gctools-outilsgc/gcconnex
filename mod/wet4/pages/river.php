@@ -49,7 +49,7 @@ switch ($page_type) {
 		break;
 	default:
 		$title = elgg_echo('river:all');
-		$page_filter = 'all';
+		$page_filter = '';
 		break;
 }
 

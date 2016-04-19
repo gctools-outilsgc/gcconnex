@@ -85,7 +85,7 @@ if($entity->getType() == 'group' ){
 
         echo '<div class="row mrgn-tp-md">';
 
-        echo "<div class=\"tags col-sm-12 col-xs-12\">$tags</div>";
+        //echo "<div class=\"tags col-sm-12 col-xs-12\">$tags</div>";
 
 
         if ($metadata) {

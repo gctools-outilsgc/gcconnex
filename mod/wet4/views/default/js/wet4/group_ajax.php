@@ -1,9 +1,9 @@
 <?php
 
 /**
- * group_ajax short summary.
+ * group_ajax - this extends the JS to add a function that will run when group tabs are clicked. 
  *
- * group_ajax description.
+ * group_ajax - When on a group, a user can click a tab and this will perform an ajax call to grp_ajax_content view. This will pass it the sub type (ex: discussion, file, blog etc) and group guid so we know what content to fetch. Each tab has a class that contains it's subtype, when clicked the subtype is cut up and tested if it is a single word, or the word more or active. If what was clicked on is an acutal subtype it will fetch a list of that subtype, add a hidden loading message for screen readers, append it to an empty div, and focus on the add content button.
  *
  * @version 1.0
  * @author Owner
@@ -15,10 +15,9 @@
 ?>
 
 
-  // alert('ayyyy LMAO'); //Okay this is loading
 $(document).ready(function() {
     $('.tabMenuGroup li').data("hasLoaded", 'false'); //set data on tabs that say they have not loaded
-    //Document is ready, Click on the tabs !I need to find tabs that are exclusive to the groups
+    //Document is ready, Click on the tabs
     $('.wet-group-tabs li').on('click', function () {
         var tabName = $(this).attr('class'); // get the tab class
         var sub_type_array = tabName.split('-');
@@ -27,8 +26,6 @@ $(document).ready(function() {
         var params; //declare the params var
         var base_url; //declare base url var
         var group_guid = elgg.get_page_owner_guid();
-        var path = elgg.get_site_url(); //site url stuff?
-        var path_atoms = path.split("/");
 
         
 
@@ -45,7 +42,7 @@ $(document).ready(function() {
         }
 
         else if(sub_type =='search' || sub_type == 'about' || sub_type=='gcforums'){
-            sub_type ='not going to work';
+            sub_type ='not going to work'; //make the string many words to it won't run the ajax call
         }
 
         //$('#' + sub_type).children('.wet-ajax-loader').attr('aria-hidden', 'false');

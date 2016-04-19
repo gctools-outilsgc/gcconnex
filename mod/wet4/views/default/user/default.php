@@ -32,7 +32,7 @@ if (!$title) {
 $metadata = elgg_view_menu('entity', array(
 	'entity' => $entity,
 	'sort_by' => 'priority',
-	'class' => 'list-inline mrgn-tp-sm',
+	'class' => 'list-inline mrgn-tp-sm elgg-menu-hz',
 ));
 
 if (elgg_in_context('owner_block') || elgg_in_context('widgets')) {

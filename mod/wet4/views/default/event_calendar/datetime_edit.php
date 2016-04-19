@@ -19,6 +19,7 @@ if ($event_calendar_times != 'no') {
 		'class' => 'event-calendar-compressed-date clearfix',
 		'name' => 'start_date',
 		'value' => $vars['start_date'],
+		'id' => 'start_date',
 	));
 	$body .= '<span id="event-calendar-start-time-wrapper">';
 	$body .= elgg_view("input/timepicker", array(
@@ -37,6 +38,7 @@ if ($event_calendar_times != 'no') {
 			'class' => 'event-calendar-compressed-date',
 			'name' => 'end_date',
 			'value' => $vars['end_date'],
+			'id' => 'end_date',
 		));
 		$body .= '<span id="event-calendar-end-time-wrapper">';
 		$body .= elgg_view("input/timepicker", array(

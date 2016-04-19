@@ -19,7 +19,8 @@ $count = elgg_get_entities_from_relationship(array(
     'relationship_guid'=> $owner->guid,
     'inverse_relationship'=> FALSE,
     'type'=> 'group',
-    'limit'=> false
+    'limit'=> false,
+    'count'=>true,
 ));
 
 $options = array(
@@ -30,7 +31,7 @@ $options = array(
 
 $content = elgg_view_entity_list($groups, $options);
 
-$groupCount = '(' . count($count) . ')';
+$groupCount = '(' . $count . ')';
 
 $all_link = elgg_view('output/url', array(
 	'href' => 'groups/member/' . $owner->username,

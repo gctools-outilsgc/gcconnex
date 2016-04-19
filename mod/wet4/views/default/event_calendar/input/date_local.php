@@ -1,3 +1,31 @@
+ <script type="text/javascript">
+
+    $( "#start_date" ).datepicker({
+      changeMonth: true,
+      changeYear: true, 
+      dateFormat: 'yy-mm-dd',
+      prevText: '«',
+nextText: '»',
+      minDate: new Date(),
+      onSelect : function(selected_date){
+        var selectedDate = new Date(selected_date);
+        var msecsInADay = 86400000;
+        var endDate = new Date(selectedDate.getTime() + msecsInADay);
+        
+         $("#end_date").datepicker( "option", "minDate", endDate );
+      }
+    });
+  
+
+</script>
+<style> 
+
+.ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled {
+    opacity: .35;
+    filter: Alpha(Opacity=35);
+    background-image: none;
+}
+</style>
 <?php
 
 /**

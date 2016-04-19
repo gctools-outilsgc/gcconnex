@@ -33,8 +33,8 @@ $contact = $event->contact;
 $long_description = $event->long_description;
 $description = $event->description;
 $language = $event->language;
-$informationEn = '<h3>Infos</h3>';
-$informationFr = '<h3>Infos</h3>';
+$informationEn = '<h3 style ="font-family:sans-serif";>Infos</h3>';
+$informationFr = '<h3 style ="font-family:sans-serif";>Infos</h3>';
 
 if($title){
 	$informationEn .= '<b>Title:</b> '.$title.'<br/>';
@@ -419,13 +419,14 @@ echo <<<___HTML
 
 		        <div width='100%' style='padding:30px 30px 30px 30px; color:#153643; font-family:sans-serif; font-size:16px; line-height:22px; '>
 		        	<!-- TITLE OF CONTENT -->
-		        	<h2 style='padding: 0px 0px 15px 0px'>
+		        	<h2 style='padding: 0px 0px 15px 0px; font-family:sans-serif';>
 		        		<strong> {$cp_notify_msg_title_en} </strong>
 		        	</h2>
 
 		        	<!-- BODY OF CONTENT -->
+		        	
 		        	{$cp_notify_msg_description_en}
-
+		        	
 		        </div>
                 <div style='margin-top:15px; padding: 5px; color: #6d6d6d; border-bottom: 1px solid #ddd;'>
                     <div>{$email_notif_footer_msg_en1}</div>
@@ -443,7 +444,7 @@ echo <<<___HTML
 
 		       	<div width='100%' style='padding:30px 30px 30px 30px; color:#153643; font-family:sans-serif; font-size:16px; line-height:22px;'>
 		       		<!-- TITLE OF CONTENT -->
-		       		<h2 style='padding: 0px 0px 15px 0px'>
+		       		<h2 style='padding: 0px 0px 15px 0px; font-family:sans-serif;'>
 		       			<strong> {$cp_notify_msg_title_fr} </strong>
 		       		</h2>
 

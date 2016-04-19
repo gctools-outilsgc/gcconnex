@@ -10,20 +10,24 @@ if ('gsa-crawler' != strtolower($_SERVER['HTTP_USER_AGENT'])) {
 
 	$week_ago = time() - (60 * 60 * 24 * 7);
 
+    
 	// Get entities that have been liked within a week
 	$liked_entities = elgg_get_entities_from_annotation_calculation(array(
 		'annotation_names' => 'likes',
 		'calculation' => 'count',
 		'wheres' => array("n_table.time_created > $week_ago"),
 	));
+   
 
 	if ($liked_entities) {
 		// Order the entities by like count
 		$guids_to_entities = array();
 		$guids_to_like_count = array();
 		foreach ($liked_entities as $entity) {
-			$guids_to_entities[$entity->guid] = $entity;
-			$guids_to_like_count[$entity->guid] = $entity->countAnnotations('likes');
+            if($entity->getSubtype() == 'blog'){
+                $guids_to_entities[$entity->guid] = $entity;
+                $guids_to_like_count[$entity->guid] = $entity->countAnnotations('likes');
+            }
 		}
 		arsort($guids_to_like_count);
 
@@ -45,13 +49,18 @@ if ('gsa-crawler' != strtolower($_SERVER['HTTP_USER_AGENT'])) {
 		$html = "<p>$text</p>";
 	}
 
-	echo elgg_view_module('aside', elgg_echo('activity:module:weekly_likes'), $html);
+
+    $pageOwner = elgg_get_page_owner_entity();
+    if(!$pageOwner){
+        echo elgg_view_module('aside', elgg_echo('activity:module:weekly_likes'), $html);
+    }
+
 	// fetch & display latest comments
 	if ($vars['page'] != 'friends') {
 		echo elgg_view('page/elements/comments_block', array(
 			'subtypes' => 'blog',
 			'container_guid' => elgg_get_page_owner_guid(),
-	         'limit' => 2,//$num,
+	         'limit' => 3,//$num,
 	        
 		));
 	}
@@ -67,7 +76,7 @@ if ('gsa-crawler' != strtolower($_SERVER['HTTP_USER_AGENT'])) {
 			'container_guid' => elgg_get_page_owner_guid(),
 		));
 	}
-
+    /*
 	if (elgg_is_active_plugin('blog')) {
 	elgg_push_context('widgets');
 	$options = array(
@@ -81,5 +90,6 @@ if ('gsa-crawler' != strtolower($_SERVER['HTTP_USER_AGENT'])) {
 	echo elgg_view_module('featured',  elgg_echo("blog:recent"), $content);
 	elgg_pop_context();
 	}
+    */
 	
 }

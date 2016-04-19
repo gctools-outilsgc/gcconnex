@@ -41,7 +41,7 @@ function embed_extender_init()
 	$topicposts_show = elgg_get_plugin_setting('topicposts_show', 'embed_extender');		
 	if($topicposts_show == 'yes'){
 		elgg_register_plugin_hook_handler('view', 'object/groupforumtopic', 'embed_extender_rewrite');
-
+        elgg_register_plugin_hook_handler('view', 'river/object/groupforumtopic/create', 'embed_extender_rewrite');
 	}
 
 	//Check where embed code - Messageboard

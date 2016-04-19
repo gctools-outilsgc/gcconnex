@@ -198,7 +198,20 @@ function mentions_notification_handler($event, $event_type, $object) {
 						'action' => 'mention',
 					);
 
-					notify_user($user->getGUID(), $owner->getGUID(), utf8_encode($subject), utf8_encode($body), $params);
+					// cyu - trigger the hook (we are re-routing the mentions to cp_notifications if it is activated)
+					if (elgg_is_active_plugin('cp_notifications')) {
+						$message = array(
+							'cp_author' => $owner->name,
+							'cp_content' => $type_str[0],
+							'cp_link' => $link,
+							'cp_msg_type' => 'cp_content_mention',
+							'cp_to_user' => $user
+						);
+						elgg_trigger_plugin_hook('cp_overwrite_notification','all',$message);
+					} else {
+
+						notify_user($user->getGUID(), $owner->getGUID(), utf8_encode($subject), utf8_encode($body), $params);
+					}
 				}
 			}
 		}

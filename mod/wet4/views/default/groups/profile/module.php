@@ -16,12 +16,25 @@ $group = elgg_get_page_owner_entity();
 
 //$header = "<span class=\"groups-widget-viewall\">{$vars['all_link']}</span>";
 $header = $vars['title'];
-
+$user_guid = $vars['user_guid'];
 $content = $vars['content'];
 
 $footer = $vars['all_link'];
 
-if (/*$group->canWriteToContainer() && */isset($vars['add_link'])) {
+if(isset($vars['clicked_related'])){ //is the person the group owner, can they add related groups
+    if(get_entity($vars['clicked_related'])->getOwnerGUID() == $user_guid){
+        $addButton = elgg_view('output/url', array(
+            'text' =>  elgg_echo('group_tools:related_groups:form:placeholder'),
+            'class' => 'btn btn-primary mrgn-bttm-sm',
+            'style' => 'color:white',
+            'href' => '/groups/related/'. $vars['clicked_related'], //send them to the page that will work
+   ));
+        $content = '<div class="text-right">' . $addButton . '</div>' . $vars['content'];
+    }
+    
+}
+
+if (/*$group->canWriteToContainer() && */isset($vars['add_link'])) { //we check if the user can add content in grp_ajax_content.php
     
     /*
     Original code
@@ -29,6 +42,8 @@ if (/*$group->canWriteToContainer() && */isset($vars['add_link'])) {
 	$vars['content'] .= "<span class='elgg-widget-more'>{$vars['add_link']}</span>";
     */
     
+
+
     //gather info from $vars['add_link'] to use in our button
     $buttonHREF = explode('"', $vars['add_link']);
     

@@ -34,6 +34,8 @@ return array(
   'wet:gcpediaLink' => 'http://www.gcpedia.gc.ca/wiki/?setlang=en',
   'wet:tutorialLink'=>'http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/See_All',
   'wet:groupLoading'=>'Loading content',
+  'subgroups:parent:need_join' => "Join Parent Group",
+  'event_calendar:none' => "No events found.",
 /**
 *notice section
 */
@@ -186,6 +188,7 @@ return array(
     'profile:actions' => 'Actions',
     'profile:viewall:coll' => 'View All Colleagues',
     'profile:viewall:groups' => 'View All Groups',
+    'gcforums:enable_group_forums' => 'Enable group forums',
 
     /**
   * Group invite

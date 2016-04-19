@@ -35,6 +35,8 @@ return array(
   'wet:gcpediaLink' => 'http://www.gcpedia.gc.ca/wiki/?setlang=fr',
   'wet:tutorialLink'=>'http://www.gcpedia.gc.ca/wiki/Aide_%C3%A0_l%27utilisateur/Voir_Tout ',
   'wet:groupLoading'=>'Loading content(translate)',
+  'subgroups:parent:need_join' => "Joindre le groupe parent",
+  'event_calendar:none' => 'Aucun événement trouvé.',
   /**
 *notice section
 */
@@ -186,6 +188,7 @@ return array(
     'profile:viewall:coll' => 	'Voir tous mes collègues',
     'profile:viewall:groups' => 'Voir tous mes groupes',
     'photos:none' => 'Aucun album d\'image',
+    'gcforums:enable_group_forums' => 'Activé les forums de groupe',
 
         /**
    * Group invite

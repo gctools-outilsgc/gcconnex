@@ -15,15 +15,12 @@ $friends = $owner->listFriends('', $num, array(
         'limit' => '14',
         ));
 
-$count = elgg_get_entities_from_relationship(array(
-    'relationship'=> 'friend',
-    'relationship_guid'=> $owner->guid,
-    'inverse_relationship'=> FALSE,
-    'limit'=> false
-));
 
 
-$friendCount = '(' . count($count) . ')';
+$count2 = $owner->getFriends(array('limit'=>0, 'count'=>true,));
+//$count2 = 'testing';
+
+$friendCount = '(' . $count2 . ')';
 
 $all_link = elgg_view('output/url', array(
 	'href' => 'friends/' . $owner->username,

@@ -217,6 +217,16 @@ elgg.ui.initHoverMenu = function(parent) {
 					// replace all existing placeholders with new menu
 					$all_placeholders.removeClass('elgg-ajax-loader')
 						.html($(data).children());
+                    
+                    //very dirty fix of hover_menu in new GCconnex theme
+                    $all_placeholders.each(function(){
+                        if($(this).parent().is('body')){
+                            //dont do anything with this menu
+                        } else {
+                            //but hide the rest
+                            $(this).hide();
+                        }
+                    });
 				}
 			}
 		});

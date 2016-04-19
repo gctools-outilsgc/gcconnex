@@ -133,7 +133,7 @@ function wet4_theme_init() {
 
     //WET my groups widget
     elgg_register_widget_type('wet_mygroups_index', $mygroups_title, 'My Groups Index', array('custom_index_widgets'),true);
-    elgg_register_widget_type('most_liked', elgg_echo('activity:module:weekly_likes'), elgg_echo('activity:module:weekly_likes'), array('custom_index_widgets'),true);
+    elgg_register_widget_type('most_liked', elgg_echo('activity:module:weekly_likes'), elgg_echo('activity:module:weekly_likes'), array('dashboard','custom_index_widgets'),true);
     
 
     //Temp fix for river widget
@@ -1000,7 +1000,7 @@ function wet4_riverItem_remove(){
 }
 
 function wet4_elgg_river_menu_setup($hook, $type, $return, $params){
-    
+   // $entity = $params['entity'];
     
 	if (elgg_is_logged_in()) {
 		$item = $params['item'];
@@ -1086,7 +1086,25 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params){
 			'priority' => 101,
 		));
 	}
-        
+
+
+           $blocked_subtypes = array('comment', 'discussion_reply');
+           if(in_array($object->getSubtype(), $blocked_subtypes) || elgg_instanceof($object, 'user')){
+
+               //do not let comments or discussion replies to be reshared on the wire
+
+           } else {
+               $return[]= ElggMenuItem::factory(array(
+                   'name' => 'thewire_tools_reshare',
+                   'text' => '<i class="fa fa-share-alt fa-lg icon-unsel"><span class="wb-inv">Share this on the Wire</span></i>',
+                   'title' => elgg_echo('thewire_tools:reshare'),
+                   'href' => 'ajax/view/thewire_tools/reshare?reshare_guid=' . $object->getGUID(),
+                   'link_class' => 'elgg-lightbox',
+                   'item_class' => '',
+                   'is_trusted' => true,
+                   'priority' => 500
+                   ));
+           }
 		
 		if (elgg_is_admin_logged_in()) {
 			$options = array(
@@ -1099,6 +1117,8 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params){
 			);
 			$return[] = \ElggMenuItem::factory($options);
 		}
+
+
         
 
 	}
@@ -1729,4 +1749,28 @@ function proper_subtypes($type){
     }
 
     return $subtype;
+}
+
+
+// Embeding videos in river for discussion items
+
+function embed_discussion_river($desc){
+
+    $patterns = array('#(((https://)?)|(^./))(((www.)?)|(^./))youtube\.com/watch[?]v=([^\[\]()<.,\s\n\t\r]+)#i'
+						,'#(((https://)?)|(^./))(((www.)?)|(^./))youtu\.be/([^\[\]()<.,\s\n\t\r]+)#i'
+						,'/(https:\/\/)?(www\.)?(vimeo\.com\/groups)(.*)(\/videos\/)([0-9]*)(\/)?/'
+						,'/(https:\/\/)(www\.)?(metacafe\.com\/watch\/)([0-9a-zA-Z_-]*)(\/[0-9a-zA-Z_-]*)(\/)/'
+						 ,'/(https:\/\/)?(www\.)?(vimeo.com\/)([^a-zA-Z][0-9]*)(\/)?/','/(https:\/\/)?(www\.)?(dailymotion.com\/video)([^a-zA-Z][0-9]*)(\/)?/');
+
+    //Replace video providers with embebed content
+    foreach($patterns as $pattern){
+	    if(preg_match_all($pattern, $desc, $matches)){
+
+            $strAndPara = $matches[0];
+      
+	    }
+    }
+
+    return $strAndPara;
+
 }

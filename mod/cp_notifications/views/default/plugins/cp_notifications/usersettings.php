@@ -6,12 +6,12 @@ $user = elgg_get_page_owner_entity();
 $plugin = elgg_extract("entity", $vars);
 
 
-
 $change_email_link = "<a href='".elgg_get_site_url()."settings/user/'> ".elgg_echo('label:email')." </a>";
 $title = elgg_echo('cp_notify:panel_title',array($change_email_link));
 
 // we don't need to have notifications for widget, forum category, skills, etc...
 $no_notification_available = array('widget','hjforumcategory','messages','MySkill','experience','education','hjforumpost','hjforumtopic','hjforum');	// set all the entities that we want to exclude
+
 
 
 // Nick- adding areas for personal notifications
@@ -25,15 +25,23 @@ foreach ($personal_notifications as $label) {
 
 	$e_chk_value = false;
 	$s_chk_value = false;
-	if ($email_value !== "{$label}_email_none")
-		$e_chk_value = true;		
+	if ($email_value !== "{$label}_email_none") $e_chk_value = true;		
+	if ($site_value !== "{$label}_site_none") $s_chk_value = true;
 
-	if ($site_value !== "{$label}_site_none")
-		$s_chk_value = true;
+	$content .= '<div class="col-sm-8">'.elgg_echo("cp_notify:personal_{$label}").'</div>';
+	$content .= '<div class="col-sm-2">'.elgg_view('input/checkbox', array(
+												'name'=>"params[cpn_{$label}_email]",
+												'value'=>"{$label}_email",
+												'default'=>"{$label}_email_none", 
+												'checked'=>$e_chk_value, 
+												'label'=> elgg_echo('label:email'))).'</div>';
 		
-	$content .= '<div class="col-sm-8">' . elgg_echo("cp_notify:personal_{$label}").'</div>';
-	$content .= '<div class="col-sm-2">' . elgg_view('input/checkbox', array('name'=>"params[cpn_{$label}_email]",'value'=>"{$label}_email",'default'=>"{$label}_email_none", 'checked'=>$e_chk_value, 'label'=>'Email',)).'</div>';
-	$content .= '<div class="col-sm-2">' . elgg_view('input/checkbox', array('name'=>"params[cpn_{$label}_site]",'value'=>"{$label}_site",'default'=>"{$label}_site_none", 'checked'=>$s_chk_value,'label'=>'Site',)).'</div>';
+	$content .= '<div class="col-sm-2">'.elgg_view('input/checkbox', array(
+												'name'=>"params[cpn_{$label}_site]",
+												'value'=>'{$label}_site',
+												'default'=>"{$label}_site_none", 
+												'checked'=>$s_chk_value,
+												'label'=>'Site',)).'</div>';
 }
 $content .= '</div>';
 

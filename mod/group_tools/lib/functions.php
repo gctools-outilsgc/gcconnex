@@ -180,7 +180,6 @@ function group_tools_add_user(ElggGroup $group, ElggUser $user, $text = "") {
                 $result = true;
 			} else {
 
-
 				$msg = elgg_trigger_plugin_hook("invite_notification", "group_tools", $params, $msg);
 				
 				if (notify_user($user->getGUID(), $group->getOwnerGUID(), $subject, $msg, array(), "email")) {

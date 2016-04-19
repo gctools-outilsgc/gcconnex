@@ -324,9 +324,21 @@ if (!isset($vars['replacement'])) {
 
                     //add guids to move selected link when checked
                     $('.friendpickerTable input[type="checkbox"]').change(function () {
-                        if ($(this).is(":checked")) {
+                        var check = false;
 
-                            $(this).clone().attr('checked', 'checked').appendTo('#storedArea');
+                        if ($(this).is(":checked")) {
+                            var checkBoxes = $('#storedArea input').toArray();
+                            for (var i = 0; i < checkBoxes.length; i++) {
+                                if (checkBoxes[i].getAttribute("value") == $(this).val()) {
+                                    check = true;
+                                }
+                            }
+
+                            //dont want duplicate values stored
+                            if (check == false) {
+                                $(this).clone().attr('checked', 'checked').appendTo('#storedArea');
+                                $('#group_tools_mail_recipients').html($('#storedArea input[name="user_guids[]"]').length);
+                            }
 
                             return;
 
@@ -338,7 +350,7 @@ if (!isset($vars['replacement'])) {
                                 if (checkBoxes[i].getAttribute("value") == $(this).val()) {
 
                                     checkBoxes[i].parentNode.removeChild(checkBoxes[i]);
-
+                                    $('#group_tools_mail_recipients').html($('#storedArea input').length);
                                 }
                             }
 

@@ -1,9 +1,9 @@
 <?php
 
 /**
- * grp_ajax_content short summary.
+ * grp_ajax_content - This is the ajax view that will display lists of content based on the subtype and group guid it is passed.
  *
- * grp_ajax_content description.
+ * grp_ajax_content - This takes the subtype and group guid and creates a list of content. It also tests if the user is a member of the group so they can create content in the group and sends an add button. It then gets formatted in a custom module view and echoed back to the page the ajax call came from.
  *
  * Add this AJAX view in order to load group content
  * @version 1.0
@@ -47,7 +47,7 @@ if($sub_type =='groupforumtopic'){ //some subtypes are different for list_entiti
     $sub_type2 = $sub_type;
     $all_link_location = '/group/';
 }
-$action_view_more = $sub_type2 . $all_link_location . $group;
+$action_view_more = $sub_type2 . $all_link_location . $group; //some view all links are different by content
 
 $all_link = elgg_view('output/url', array(
 	'href' => $action_view_more,
@@ -55,7 +55,7 @@ $all_link = elgg_view('output/url', array(
 	'is_trusted' => true,
 ));
 
-if($sub_type =='related'){
+if($sub_type =='related'){ //related groups
     $dbprefix = elgg_get_config("dbprefix");
     $options = array(
         "type" => "group",
@@ -65,10 +65,10 @@ if($sub_type =='related'){
         "full_view" => false,
         "joins" => array("JOIN " . $dbprefix . "groups_entity ge ON e.guid = ge.guid"),
         "order_by" => "ge.name ASC",
-        'no_results' => elgg_echo('none'),
+        'no_results' => elgg_echo('groups_tools:related_groups:none'),
     );
     $content = elgg_list_entities_from_relationship($options);
-}else{
+}else{ //all other content types
     $options = array(
         'type' => 'object',
         'subtype' => $sub_type,
@@ -83,16 +83,21 @@ if($sub_type =='related'){
     $content = elgg_list_entities($options);
 }
 
-if(check_entity_relationship($user, 'member', $group)){
+if(check_entity_relationship($user, 'member', $group)){ //are they a member?
+
     $action = $sub_type2 . "/add/" . $group;
 
-    $new_link = elgg_view('output/url', array(
+
+
+    if($sub_type =='related'){ //if we want related groups then set the related_group var with the group guid
+        $related_group = $group;
+    }else{ //else put the 'add' content button - permissions are dealt with in the module view below
+        $new_link = elgg_view('output/url', array(
         'href' => $action ,
         'text' => elgg_echo($sub_type2.':add'),
         'is_trusted' => true,
     ));
-}else{
-    $new_link ='';
+    }
 }
 
 
@@ -103,6 +108,8 @@ echo elgg_view('groups/profile/module', array(
 	'content' => $content,
 	'all_link' => $all_link,
 	'add_link' => $new_link,
+    'clicked_related'=>$related_group,
+    'user_guid'=> $user, //passing more vars to the module view 
 ));
 //test if ajax goes through.
 //echo 'Gratz You made an ajax call! Here us the page GUID = ' .$group;

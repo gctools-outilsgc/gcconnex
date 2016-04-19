@@ -58,7 +58,32 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 	switch($cp_msg_type) {
 
-		case 'cp_grp_admin_transfer':
+		case 'cp_content_mention': // mentions/start.php
+			$message = array(
+				'cp_author' => $params['cp_author'],
+				'cp_content' => $params['cp_content'],
+				'cp_link' => $params['cp_link'],
+				'cp_msg_type' => $cp_msg_type,
+			);
+			$subject = elgg_echo('cp_notify:subject:mention',array($params['cp_author']),'en');
+			$subject .= ' | '.elgg_echo('cp_notify:subject:mention',array($params['cp_author']),'fr');
+			$to_recipients[] = $params['cp_to_user'];
+			break;
+
+
+		case 'cp_add_grp_operator': // group_operators/actions/group_operators/add.php (adds group operator)
+			$message = array(
+				'cp_msg_type' => $cp_msg_type,
+				'cp_to_operator' => $params['cp_to_operator'],
+				'cp_who_made_operator' => $params['cp_who_made_operator'], 
+			);
+			$subject = elgg_echo();
+			$subject .= ' | '.elgg_echo();
+			$to_recipients[] = $params['cp_to_user'];
+			break;
+
+
+		case 'cp_grp_admin_transfer': // group_tools/lib/functions.php (this is transfer of group owner)
 		error_log("hey hey hey hey hey");
 			$message = array();
 			$subject = elgg_echo();
@@ -572,12 +597,12 @@ function cp_create_notification($event, $type, $object) {
 			$content_owner = get_user($container_entity->owner_guid);
 			$template = elgg_view('cp_notifications/email_template', $message);
 			if (elgg_get_plugin_user_setting("cpn_content_email", $container_entity->owner_guid, 'cp_notifications') === 'content_email')
-				//mail($content_owner->email,$subject,$template,cp_get_headers());
-				$to_recipients_email[$content_owner->guid] = $content_owner;
+				mail($content_owner->email,$subject,$template,cp_get_headers());
+				//$to_recipients_email[$content_owner->guid] = $content_owner;
 
 			if (elgg_get_plugin_user_setting("cpn_content_site", $container_entity->owner_guid, 'cp_notifications') === 'content_site')
-				//messages_send($subject, $template, $content_owner->getGUID(), $site->guid, 0, true, false);
-				$to_recipients_message[$content_owner->guid] = $content_owner;	
+				messages_send($subject, $template, $content_owner->getGUID(), $site->guid, 0, true, false);
+				//$to_recipients_message[$content_owner->guid] = $content_owner;	
 
 			return;
 			//break;
@@ -589,8 +614,10 @@ function cp_create_notification($event, $type, $object) {
 			add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_email', $object->getGUID());
 			add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_site_mail', $object->getGUID());
 
-			if (elgg_is_active_plugin('mentions') && $object->getSubtype() !== 'messages') // check to see if there were any mentions
+			/*if (elgg_is_active_plugin('mentions') && $object->getSubtype() !== 'messages') { // check to see if there were any mentions
 				$cp_mentioned_users = cp_scan_mentions($object);
+				error_log(">>>>>>>>>> >>>>>>>>>>>>> mentioned :-)");
+			}*/
 
 			if ($object->getContainerEntity() instanceof ElggGroup) {
 				// Users subscribed to recieve notifications by email
@@ -687,8 +714,12 @@ function cp_create_notification($event, $type, $object) {
 
 	$template = elgg_view('cp_notifications/email_template', $message); // pass in the information into the template to prepare the notification
 	
+	/*
     if ($cp_mentioned_users) { // if there are users who are mentioned, send out notifications
 		foreach ($cp_mentioned_users as $cp_mentioned_user) {
+
+			error_log(">>>> >>>>>>>>> >>>>>> >>>>>> cyu - mentions!!!");
+
 			$user_mentioned = preg_replace('/[^A-Za-z1-9\.\-]/','',$cp_mentioned_user);	// there will always be that extra special character to remove
 			$user_mentioned = get_user_by_username($user_mentioned);	// get the user entity through username
 
@@ -715,6 +746,7 @@ function cp_create_notification($event, $type, $object) {
 				messages_send($subject_mention, $template, $user_mentioned->getGUID(), $site->guid, 0, true, false);		
 		}
     }
+    */
 
 
     // send out emails

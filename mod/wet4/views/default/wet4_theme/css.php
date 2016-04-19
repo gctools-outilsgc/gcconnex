@@ -4996,6 +4996,7 @@ a.list-group-item-danger {
   border-radius: 3px; }
 
 .close {
+    text-decoration:none;
     z-index:5555;
   float: right;
   font-size: 24px;

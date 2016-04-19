@@ -18,14 +18,14 @@ if (elgg_is_logged_in()) {
 $info_box = elgg_echo("notice:paragraphe");
 
 $title = elgg_echo('login');
-$content = '<section class="panel panel-notice">
+/*$content = '<section class="panel panel-notice">
 	<header class="panel-heading">
 		<h3 class="panel-title "><span class="glyphicon glyphicon-info-sign mrgn-rght-sm"></span>'.elgg_echo("notice:title").'</h3>
 	</header>
 	<div class="panel-body">'
 	 .elgg_echo("notice:paragraphe").
 		'</div>
-</section>';
+</section>';*/
 $content .= elgg_view('core/account/login_box', array('title' => false));
 
 if (elgg_get_config('walled_garden')) {
