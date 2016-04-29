@@ -47,6 +47,11 @@ switch($switch_segment) {
 			$message_subject = $entity->job_title;
 			$title = elgg_echo('missions:share_with_colleague');
 		}
+		else {
+			$message_body = elgg_echo('missions:check_micro_missions');
+			$message_subject = elgg_echo('missions:invite_to_opt_in');
+			$title = elgg_echo('missions:invite_to_opt_in');
+		}
 		
 		$main_content = '<div class="col-sm-8">' . elgg_view_form('messages/send', array(), array(
 				'recipient_username' => $recipient_username,
@@ -75,10 +80,14 @@ if(elgg_is_active_plugin('thewire')) {
 }
 
 elgg_push_breadcrumb(elgg_echo('missions:micromissions'), elgg_get_site_url() . 'missions/main');
-elgg_push_breadcrumb($entity->job_title, $entity->getURL());
+if($entity_guid != 0) {
+	elgg_push_breadcrumb($entity->job_title, $entity->getURL());
+}
 elgg_push_breadcrumb($title);
 
 $content = elgg_view_title($title);
+
+$content .= elgg_view('page/elements/mission-tabs');
 
 $content .= elgg_view('navigation/tabs', array(
 		'class' => 'elgg-menu elgg-menu-filter list-inline mrgn-lft-sm elgg-menu-filter-default mission-tab',

@@ -25,7 +25,7 @@ if (elgg_instanceof($event, 'object', 'event_calendar') && $event->canEdit()) {
 			$date = explode("-", $time);
 			$startdate = $date[0]; 
 			$enddate = $date[1]; 
-			if (elgg_is_active_plugin('cp_notifications')) {
+/*			if (elgg_is_active_plugin('cp_notifications')) {
 			$message = array(
 				'cp_event_receiver' => $email_users,
 				'cp_event_invite_url' => $view_events_url,
@@ -37,7 +37,7 @@ if (elgg_instanceof($event, 'object', 'event_calendar') && $event->canEdit()) {
 						);
 			$result = elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
 
-		}
+		}*/
 		$container = get_entity($event->container_guid);
 		$event->delete();
 		system_message(elgg_echo('event_calendar:delete_response'));

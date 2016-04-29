@@ -23,7 +23,7 @@ $input_closed = elgg_view('input/checkbox', array(
 ));
 ?>
 
-<div class="form-group" style="display:inline-block;">
+<div style="display:inline-block;">
 	<div style="display:inline;">
 		<?php echo $input_closed; ?>
 	</div>

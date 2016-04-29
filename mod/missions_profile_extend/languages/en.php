@@ -14,7 +14,7 @@ return array(
 		'gcconnex_profile:opt:opt_in_access' => 'Who can see my opt-in choices: ',
 		'gcconnex_profile:opt:yes' => 'Yes',
 		'gcconnex_profile:opt:no' => 'No',
-		'gcconnex_profile:completed_missions' => 'Completed Missions',
+		'gcconnex_profile:completed_missions' => 'Completed Micro-Missions',
 		'gcconnex_profile:opt:skill_sharing' => 'Skill Sharing',
 		'gcconnex_profile:opt:job_sharing' => 'Job Sharing'
 );

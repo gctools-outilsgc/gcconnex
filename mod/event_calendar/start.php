@@ -102,6 +102,7 @@ function event_calendar_init() {
 	elgg_register_action("event_calendar/edit","$action_path/edit.php");
 	elgg_register_action("event_calendar/delete","$action_path/delete.php");
 	elgg_register_action("event_calendar/add_personal","$action_path/add_personal.php");
+	elgg_register_action("event_calendar/add_ics","$action_path/add_ics.php");
 	elgg_register_action("event_calendar/remove_personal","$action_path/remove_personal.php");
 	elgg_register_action("event_calendar/request_personal_calendar","$action_path/request_personal_calendar.php");
 	elgg_register_action("event_calendar/toggle_personal_calendar","$action_path/toggle_personal_calendar.php");

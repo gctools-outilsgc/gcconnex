@@ -15,7 +15,7 @@ return array(
   'wet:search' =>  "Recherche et menus",
   'wet:searchHead' =>  "Recherche",
   'wet:searchweb' =>  "Recherche sur le site Web",
-  'wet:searchgctools' => "Recherche sur GCconnex",
+  'wet:searchgctools' => "Recherche", // cyu - modified as per rajeev's request
   'wet:more' => "Autres",
   'wet:topicmenu' => "Menu des sujets",
   'wet:youarehere' => "Vous êtes ici :",
@@ -31,7 +31,8 @@ return array(
   'wet:footTitleSocial' => 'Restez branchés',
    'wet:barGCpedia'=>'pédia',
   'wet:collapseWidget' => 'Réduire / Ouvrir %s',
-    'wet:gcintranetLink' => 'http://intranet.canada.ca/index-fra.asp',
+    'wet:gcintranetLink-toolsHead' => 'http://intranet.canada.ca/index-fra.asp?utm_source=gcconnex&utm_medium=gctools-banner&utm_campaign=generic',
+    'wet:gcintranetLink-toolsFoot' => 'http://intranet.canada.ca/index-fra.asp?utm_source=gcconnex&utm_medium=gcconnex-footer&utm_campaign=generic',
   'wet:gcpediaLink' => 'http://www.gcpedia.gc.ca/wiki/?setlang=fr',
   'wet:tutorialLink'=>'http://www.gcpedia.gc.ca/wiki/Aide_%C3%A0_l%27utilisateur/Voir_Tout ',
   'wet:groupLoading'=>'Loading content(translate)',

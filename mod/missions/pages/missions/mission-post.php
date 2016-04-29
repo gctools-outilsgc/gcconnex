@@ -87,6 +87,9 @@ elgg_push_breadcrumb(elgg_echo('missions:micromissions'), elgg_get_site_url() . 
 elgg_push_breadcrumb($title);
 
 $content = elgg_view_title($title);
+
+$content .= elgg_view('page/elements/mission-tabs');
+
 $content .= elgg_view('navigation/tabs', array(
 		'class' => 'elgg-menu elgg-menu-filter list-inline mrgn-lft-sm elgg-menu-filter-default mission-tab',
 		'tabs' => $navigation_tabs

@@ -201,8 +201,8 @@ return array(
 'event_calendar:personal_manage:by_event:closed' => "Closed. People can request to add this event to their personal calendars. You can review and approve requests.",
 'event_calendar:personal_manage:by_event:private' => "Private. You or another event administrator must add this event to personal calendars. There is no way for other users to add or request this event.",
 'event_calendar:modify_full_calendar:error' => "Error: could not modify full calendar.",
-'event_calendar:from_label' => "From:",
-'event_calendar:to_label' => "To:",
+'event_calendar:from_label' => "Start time:",
+'event_calendar:to_label' => "End time:",
 'event_calendar:settings:timeformat:title' => "Time format?",
 'event_calendar:time_format:12hour' => "12 hour (am/pm)",
 'event_calendar:time_format:24hour' => "24 hour",
@@ -321,4 +321,5 @@ return array(
 'event_calendar:notify:body' => 	'%s has created a new event: %s %s %s',	
 'event_calendar:notify:summary' => 'New event: %s',
 
+'event_calendar:venue_label' => 'Room',
 );

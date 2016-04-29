@@ -65,7 +65,7 @@ $priv = $site_url .'privacy-confidentialite';
                 </h3>
                 <ul class="list-unstyled">
                     <li>
-                        <a href="<?php echo elgg_echo('wet:gcintranetLink');?>">GCintranet</a></li>
+                        <a href="<?php echo elgg_echo('wet:gcintranetLink-toolsFoot');?>">GCintranet</a></li>
                     <li>
                         <a href="<?php echo elgg_echo('wet:gcpediaLink');?>">GC<?php echo elgg_echo('wet:barGCpedia');?></a></li>
 	                   </ul>

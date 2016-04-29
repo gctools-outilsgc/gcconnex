@@ -14,6 +14,10 @@ $_SESSION['mission_that_invites'] = 0;
 $_SESSION['mission_search_switch'] = 'candidate';
 $result_set = $_SESSION['candidate_search_set'];
 
+if($_SESSION['mission_entities_per_page']) {
+	$entities_per_page = $_SESSION['mission_entities_per_page'];
+}
+
 // Simple search form.
 $simple_search_form = '<div style="display:inline-block;margin-right:16px;">' . elgg_view_form('missions/search-simple', array(), array(
 		'return_to_referer' => true
@@ -36,7 +40,12 @@ if($result_set) {
 	$search_set = '<h4>' . elgg_echo('missions:search_results') . '</h4>';
 	$count = count($result_set);
 	$offset = (int) get_input('offset', 0);
-	$max = elgg_get_plugin_setting('search_result_per_page', 'missions');
+	if($entities_per_page) {
+		$max = $entities_per_page;
+	}
+	else {
+		$max = elgg_get_plugin_setting('search_result_per_page', 'missions');
+	}
 
 	$search_set .= elgg_view_entity_list(array_slice($result_set, $offset, $max), array(
 			'count' => $count,
@@ -45,6 +54,13 @@ if($result_set) {
 			'pagination' => true,
 			'missions_full_view' => false
 	), $offset, $max);
+	
+	$change_entities_per_page_form = elgg_view_form('missions/change-entities-per-page', array(
+			'class' => 'form-horizontal'
+	), array(
+			'entity_type' => 'candidate',
+			'number_per' => $entities_per_page
+	));
 }
 ?>
 
@@ -54,6 +70,9 @@ if($result_set) {
 		echo $advanced_field;
 	?>
 </div>
-<div>
+<div class="col-sm-12">
 	<?php echo $search_set; ?>
+</div>
+<div class="col-sm-12">
+	<?php echo $change_entities_per_page_form; ?>
 </div>

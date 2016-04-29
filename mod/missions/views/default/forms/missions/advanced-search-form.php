@@ -27,6 +27,8 @@ $selection_ninth = get_input('assn');*/
     elgg_clear_sticky_form('advancedfill');
 }*/
 
+elgg_load_js('typeahead');
+
 // The arrays are different depending on whether the user is searching for missions or candidates.
 if($_SESSION['mission_search_switch'] == 'candidate') {
     $search_fields = array(
@@ -34,7 +36,8 @@ if($_SESSION['mission_search_switch'] == 'candidate') {
 	        elgg_echo('missions:education'),
 	        elgg_echo('missions:experience'),
 	        elgg_echo('missions:skill'),
-	        elgg_echo('missions:portfolio')
+	        elgg_echo('missions:portfolio'),
+    		elgg_echo('missions:user_department')
     );
     
     if(elgg_is_active_plugin('missions_profile_extend')) {

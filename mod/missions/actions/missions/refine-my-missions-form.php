@@ -14,9 +14,11 @@
 $check_closed = get_input('check_closed');
 if($check_closed == 'on') {
 	$_SESSION['mission_refine_closed'] = 'SHOW_CLOSED';
+	system_message(elgg_echo('missions:displaying_closed_missions'));
 }
 else {
 	unset($_SESSION['mission_refine_closed']);
+	system_message(elgg_echo('missions:not_displaying_closed_missions'));
 }
 
 forward(REFERER);

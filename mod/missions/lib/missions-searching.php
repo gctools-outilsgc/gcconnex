@@ -90,6 +90,14 @@ function mm_analyze_selection($place, $array)
         // Returns an empty array if
         case '':
             break;
+
+        case elgg_echo('missions:user_department'):
+            if ($array['selection_' . $place . '_element'] != '') {
+            	$returner['name'] = 'department';
+                $returner['operand'] = 'LIKE';
+                $returner['value'] = '%' . $array['selection_' . $place . '_element'] . '%';
+            }
+            break;
         
         case elgg_echo('missions:opt_in'):
         	if($array['selection_' . $place . '_element'] != '') {
@@ -542,13 +550,14 @@ function mm_search_candidate_database($query_array, $query_operand, $limit)
 
     // Setting options with which the query will be built.
     $options['type'] = 'object';
-    $temp_string = 'INNER JOIN ' . elgg_get_config('dbprefix') . 'objects_entity g ON (g.guid = e.guid)';
-    $options['joins'] = array($temp_string);
-    $temp_string = "g." . $filtered_array[0]['name'] . " " . $filtered_array[0]['operand'] . " '" . $filtered_array[0]['value'] . "'";
-    $options['wheres'] = array($temp_string);
-    $options['limit'] = $limit;
     $options['subtypes'] = array('education', 'experience', 'MySkill', 'portfolio');
-    $entities = elgg_get_entities($options);
+    $options['attribute_name_value_pairs'] = array(
+    		'name' => $filtered_array[0]['name'], 
+    		'value' => $filtered_array[0]['value'],
+    		'operand' => $filtered_array[0]['operand'],
+    		'case_sensitive' => false
+    );
+    $entities = elgg_get_entities_from_attributes($options);
 
     $entity_owners = array();
     $search_feedback = array();
@@ -572,6 +581,24 @@ function mm_search_candidate_database($query_array, $query_operand, $limit)
         $count++;
     }
 
+    
+    $options_second['type'] = 'user';
+    $options_second['limit'] = $limit;
+    $options_second['attribute_name_value_pairs'] = array(
+    		'name' => 'name', 
+    		'operand' => $filtered_array[0]['operand'],
+    		'value' => $filtered_array[0]['value']
+    );
+    $users = elgg_get_entities_from_attributes($options_second);
+    
+    foreach($users as $key => $user) {
+    	$users[$key] = $user->guid;
+    	$search_feedback[$user->guid] .= elgg_echo('missions:username') . ': ' . $user->name . ',';
+    	$count++;
+    }
+    
+    $entity_owners = array_merge($entity_owners, $users);
+    
     $unique_owners_entity = mm_guids_to_entities_with_opt(array_unique($entity_owners));
     $candidate_count = count($unique_owners_entity);
 
@@ -633,7 +660,7 @@ function mm_adv_search_candidate_database($query_array, $query_operand, $limit) 
             $is_attribute_searched = true;
         }
         
-        else if(strpos($array['name'], 'opt_in') !== false) {
+        else if(strpos($array['name'], 'opt_in') !== false || strpos($array['name'], 'department') !== false) {
         	$options_attribute['type'] = 'user';
         	$options_metadata['metadata_name_value_pairs'] = array(array('name' => $array['name'], 'operand' => $array['operand'], 'value' => $array['value']));
         	$options_metadata['limit'] = $limit;

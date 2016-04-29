@@ -56,8 +56,9 @@ $english = array(
 	'cp_notify:subject:add_new_user' => "You have been added as a new user in GCconnex",
 	'cp_notify:subject:invite_new_user' => "You have been invited to join GCconnex",
 
-	'cp_notify:subject:group_admin_transfer' => "The administration rights for the group %s have been delegaged to you", 
+	'cp_notify:subject:group_admin_transfer' => "The administration rights for the group '%s' have been delegaged to you", 
 
+	'cp_notify:subject:add_grp_operator' => "The administrator of the group '%s' delegated moderator rights to you", // need translation
 	// email notification content (title & corresponding description) 
 
 	'cp_notify:body_friend_approve:title' => "%s approved your colleague's request",
@@ -184,9 +185,26 @@ $english = array(
 
 	'cp_notify:body_group_admin_transfer:title' => "The administration of the group %s has been appointed to you", // translate
 
-	'cp_notify:body_group_admin_transfer:description' => "%s has delegated you as the new administrator of the group%s.<br/><br/>
+	'cp_notify:body_group_admin_transfer:description' => "%s has delegated you as the new administrator of the group '%s'.<br/><br/>
 		To visit the group, please click on the following link: <br/> 
 		%s", // translate
+
+	'cp_notify:body_add_grp_operator:title' => "The administrator of the group '%s' delegated moderator rights to you", // translate
+	'cp_notify:body_add_grp_operator:description' => "%s has delegated you as the moderator of the group '%s'.<br/><br/>
+		To visit the group, please click on the following link: <br/> 
+		%s", // translate
+
+	'cp_notify:messageboard:subject' => "Someone wrote on your message board", // translate
+	'cp_notify:body_messageboard:title' => "Someone wrote on your message board", // translate
+	'cp_notify:body_messageboard:description' => "%s wrote on your messageboard with the following message: <br/><br/>
+		%s <br/>
+		To view your messageboard, please click on the following link: %s",
+
+
+	'cp_notify:wireshare:subject' => "%s shared your %s with title '%s'",
+	'cp_notify:body_wireshare:title' => "%s shared your %s with title '%s'",
+	'cp_notify:body_wireshare:description' => "%s has shared your %s on the wire, to view or reply to this please click on the following link: %s",
+
 
 	// email notification footer text (1 and 2)
 	'cp_notify:footer' => "<p>If you do not want to receive these types of notifications, you can change your subscription settings by clicking on this link: %s</p>",

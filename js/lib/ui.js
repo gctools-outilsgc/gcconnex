@@ -271,7 +271,7 @@ elgg.ui.initHoverMenu = function(parent) {
 			// @todo Use jQuery-ui position library instead -- much simpler
 			var offset = $avatar.offset();
 			var top = $avatar.height() + 7 + offset.top + 'px';
-			var left = $avatar.width() - 85 + offset.left + 'px';
+			var left = $avatar.width() - 45 + offset.left + 'px';
 
 			$hovermenu.appendTo('body')
 					.css('position', 'absolute')

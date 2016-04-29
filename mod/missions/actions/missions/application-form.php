@@ -18,7 +18,7 @@ $email_manager = get_input('email_manager');
 $manager_email = get_input('email');
 
 if(!$manager_permission) {
-	register_error('missions:error:please_obtain_permission');
+	register_error(elgg_echo('missions:error:please_obtain_permission'));
 	forward(REFERER);
 }
 else {
@@ -52,7 +52,7 @@ else {
 	}
 	
 	// To separate different sections of the email.
-	$divider = "\n" . '--------------------------------------------------' . "\n";
+	$divider = "<br>" . '--------------------------------------------------' . "<br>";
 	
 	// Setting up the email head.
 	$subject = elgg_echo('missions:application_to') . $mission->job_title;
@@ -62,13 +62,13 @@ else {
 	$body .= elgg_view('output/url', array(
 	    'href' => $applicant->getURL(),
 	    'text' => $applicant->username
-	)) . "\n";
+	)) . "<br>";
 	
 	$body .= elgg_echo('missions:see_full_mission') . ': '; 
 	$body .= elgg_view('output/url', array(
 	    'href' => $mission->getURL(),
 	    'text' => $mission->title
-	)) . "\n";
+	)) . "<br>";
 	
 	$body .= $divider;
 	
@@ -90,9 +90,9 @@ else {
 	        $education_beginning = date("F", mktime(null, null, null, $education->startdate)) . ', ' . $education->startyear;
 	        
 	        // TODO: This section should be in the language files eventually.
-	        $body .= '<b><font size="4">' . $education->school . ':</font></b>' . "\n";
-	        $body .= $education_beginning . ' - ' . $education_ending . "\n";
-	        $body .= '<b>' . $education->degree . ':</b> ' . $education->field . "\n";
+	        $body .= '<b><font size="4">' . $education->school . ':</font></b>' . "<br>";
+	        $body .= $education_beginning . ' - ' . $education_ending . "<br>";
+	        $body .= '<b>' . $education->degree . ':</b> ' . $education->field . "<br>";
 	    }
 	    $body .= $divider;
 	}
@@ -112,10 +112,10 @@ else {
 	        $experience_beginning = date("F", mktime(null, null, null, $experience->startdate)) . ', ' . $experience->startyear;
 	        
 	        // TODO: This section should be in the language files eventually.
-	        $body .= '<b><font size="4">' . $experience->organization . ':</font></b>' . "\n";
-	        $body .= $experience_beginning . ' - ' . $experience_ending . "\n";
-	        $body .= '<b>' . $experience->title . '</b>' . "\n";
-	        $body .= $experience->responsibilities . "\n";
+	        $body .= '<b><font size="4">' . $experience->organization . ':</font></b>' . "<br>";
+	        $body .= $experience_beginning . ' - ' . $experience_ending . "<br>";
+	        $body .= '<b>' . $experience->title . '</b>' . "<br>";
+	        $body .= $experience->responsibilities . "<br>";
 	    }
 	    $body .= $divider;
 	}
@@ -128,7 +128,7 @@ else {
 	if(!empty($skill_list)) {
 	    foreach ($skill_list as $skill) {
 	        $skill = get_entity($skill);
-	        $body .= '<b>' . $skill->title . '</b>' . "\n";
+	        $body .= '<b>' . $skill->title . '</b>' . "<br>";
 	    }
 	    $body .= $divider;
 	}
@@ -138,32 +138,37 @@ else {
 	$french_skills = $applicant->french;
 	if(!empty($english_skills)) {
 		// TODO: This section should be in the language files eventually.
-	    $body .= '<b><font size="4">' . elgg_echo('missions:english') . ':</font></b>' . "\n";
+	    $body .= '<b><font size="4">' . elgg_echo('missions:english') . ':</font></b>' . "<br>";
 	    $body .= elgg_echo('missions:written_comprehension') . '(' . $english_skills[0] . ') ';
 	    $body .= elgg_echo('missions:written_expression') . '(' . $english_skills[1] . ') ';
 	    $body .= elgg_echo('missions:oral_proficiency') . '(' . $english_skills[2] . ') ';
 	}
 	if(!empty($french_skills)) {
 		// TODO: This section should be in the language files eventually.
-	    $body .= "\n" . '<b><font size="4">' . elgg_echo('missions:french') . ':</font></b>' . "\n";
+	    $body .= "<br>" . '<b><font size="4">' . elgg_echo('missions:french') . ':</font></b>' . "<br>";
 	    $body .= elgg_echo('missions:written_comprehension') . '(' . $french_skills[0] . ') ';
 	    $body .= elgg_echo('missions:written_expression') . '(' . $french_skills[1] . ') ';
 	    $body .= elgg_echo('missions:oral_proficiency') . '(' . $french_skills[2] . ') ';
 	}
 	
 	$body .= elgg_view('output/url', array(
-	    	'href' => elgg_get_site_url() . 'action/missions/invite-user?aid=' . $applicant->guid . '&mid=' . $mission->guid,
-	    	'text' => elgg_echo('missions:invite'),
-			'is_action' => true
+	    	'href' => elgg_get_site_url() . 'missions/mission-offer/' . $mission->guid . '/' . $applicant->guid,
+	    	'text' => elgg_echo('missions:offer')
 	));
 	
-	notify_user($mission->owner_guid, $applicant->guid, $subject, $body);
+	mm_notify_user($mission->owner_guid, $applicant->guid, $subject, $body);
+	
+	if(!check_entity_relationship($mission->guid, 'mission_accepted', $applicant->guid) && !check_entity_relationship($mission->guid, 'mission_tentative', $applicant->guid)) {
+		add_entity_relationship($mission->guid, 'mission_applied', $applicant->guid);
+	}
 	
 	// Opt in applicant if they are not opted in yet.
 	if($applicant->opt_in_missions != 'gcconnex_profile:opt:yes') {
 		$applicant->opt_in_missions = 'gcconnex_profile:opt:yes';
 		$applicant->save();
 	}
+	
+	system_message(elgg_echo('missions:you_have_applied_to_mission', array($mission->job_title)));
 	
 	elgg_clear_sticky_form('applicationfill');
 	forward(elgg_get_site_url() . 'missions/main');

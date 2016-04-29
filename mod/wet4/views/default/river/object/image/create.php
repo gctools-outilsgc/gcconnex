@@ -24,9 +24,10 @@ if(!$preview_size) {
 }
 $image = $vars['item']->getObjectEntity();
 $attachments = elgg_view_entity_icon($image, $preview_size, array(
-	'href' => $image->getIconURL('master'),
+	//'href' => $image->getIconURL('master'),
+    'href' => 'ajax/view/ajax/photo?guid=' . $image->guid,
 	'img_class' => 'tidypics-photo',
-	'link_class' => 'tidypics-lightbox',
+	'link_class' => 'elgg-lightbox',
 ));
 
 $image_link = elgg_view('output/url', array(

@@ -21,21 +21,8 @@ if($mission == '') {
 	$err .= elgg_echo('missions:error:entity_does_not_exist');
 }
 else {
-	$relationships = elgg_get_entities_from_relationship(array(
-	        'relationship' => 'mission_tentative',
-	        'relationship_guid' => $mission->guid
-	    ));
-	
-	// Finds the tentative relationship which the applicant is a subject of.
-	$target = '';
-	foreach($relationships as $relationship) {
-	    if($relationship->guid_two == $applicant_guid) {
-	        $target = $relationship;
-	    }
-	}
-	
 	// If the relationship has disappeared before the user responds then they must no longer be invited.
-	if($target == '') {
+	if(!check_entity_relationship($mission->guid, 'mission_tentative', $applicant->guid)) {
 	    $err .= elgg_echo('missions:error:no_longer_invited');
 	}
 	else {
@@ -54,7 +41,7 @@ else {
 		}
 		else {
 			// Creates an accepted relationship between mission and applicant.
-			add_entity_relationship($mission->guid, 'mission_accepted', $applicant->guid);
+			add_entity_relationship($mission->guid, 'mission_applied', $applicant->guid);
 	    
 			// Notifies the mission manager of the candidates acceptance.
 			$mission_link = elgg_view('output/url', array(
@@ -62,9 +49,14 @@ else {
 				'text' => $mission->title
 			));
 	    
-			$subject = $applicant->name . elgg_echo('missions:accepts_invitation', array(), $manager->language);
-			$body = $applicant->name . elgg_echo('missions:accepts_invitation_more', array(), $manager->language) . $mission_link . '.';
-			notify_user($manager->guid, $applicant->guid, $subject, $body);
+			$subject =  elgg_echo('missions:accepts_invitation', array($applicant->name), $manager->language);
+			$body = elgg_echo('missions:accepts_invitation_more', array($applicant->name), $manager->language) . $mission_link . '.';
+			$body .= "<br>" . elgg_echo('missions:finalize_offer', array(), $manager->language) . "<br>";
+			$body .= elgg_view('output/url', array(
+			    	'href' => elgg_get_site_url() . 'missions/mission-offer/' . $mission->guid . '/' . $applicant->guid,
+			    	'text' => elgg_echo('missions:offer')
+			));;
+			mm_notify_user($manager->guid, $applicant->guid, $subject, $body);
 			
 			if($applicant->opt_in_missions != 'gcconnex_profile:opt:yes') {
 				$applicant->opt_in_missions = 'gcconnex_profile:opt:yes';
@@ -79,4 +71,5 @@ if ($err != '') {
 }
 // Returns the user to their inbox.
 //forward(elgg_get_site_url() . 'messages/inbox/' . $applicant->username);
+system_message(elgg_echo('missions:acceptance_has_been_sent', array($mission->job_title)));
 forward($mission->getURL());

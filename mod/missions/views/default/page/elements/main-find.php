@@ -9,9 +9,11 @@
 
 /*
  * Page content for finding missions and a link to create them.
- */
-
-$_SESSION['mission_search_switch'] = 'mission';
+ */ 
+if($_SESSION['mission_entities_per_page']) {
+	$entities_per_page = $_SESSION['mission_entities_per_page'];
+	unset($_SESSION['mission_entities_per_page']);
+}
 
 // Simple search form.
 $simple_search_form = '<div style="display:inline-block;margin-right:16px;">' . elgg_view_form('missions/search-simple') . '</div>';
@@ -36,7 +38,12 @@ $entity_list = elgg_get_entities($options);
 
 $count = count($entity_list);
 $offset = (int) get_input('offset', 0);
-$max = elgg_get_plugin_setting('search_result_per_page', 'missions');
+if($entities_per_page) {
+	$max = $entities_per_page;
+}
+else {
+	$max = elgg_get_plugin_setting('search_result_per_page', 'missions');
+}
 
 // Displays the list of mission entities.
 $latest_missions .= elgg_view_entity_list(array_slice($entity_list, $offset, $max), array(
@@ -48,21 +55,31 @@ $latest_missions .= elgg_view_entity_list(array_slice($entity_list, $offset, $ma
 		'gallery_class' => 'mission-gallery',
 		'mission_full_view' => false
 ), $offset, $max);
+
+$change_entities_per_page_form = elgg_view_form('missions/change-entities-per-page', array(
+		'class' => 'form-horizontal'
+), array(
+		'entity_type' => 'mission',
+		'number_per' => $entities_per_page
+));
 ?>
 
-<div>
+<div class="col-sm-12">
 	<?php echo $create_button; ?>
 </div>
-<br>
-<div>
+<div class="col-sm-12">
 	<?php 
 		echo $simple_search_form;
 		echo $advanced_field;
 	?>
 </div>
-<br>
-<div>
+<div class="col-sm-12">
 	<h4><?php echo elgg_echo('missions:latest_opportunities'); ?></h4>
-	<?php echo $latest_missions; ?>
+	<div class="col-sm-12">
+		<?php echo $latest_missions; ?>
+	</div>
 </div>
 <div hidden name="mission-total-count"><?php echo $count; ?></div>
+<div class="col-sm-12">
+	<?php echo $change_entities_per_page_form; ?>
+</div>

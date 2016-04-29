@@ -50,7 +50,7 @@ function htmlawed_filter_tags($hook, $type, $result, $params = null) {
 		'comment' => 1,
 		'cdata' => 1,
 
-		'deny_attribute' => 'class, on*',
+		'deny_attribute' => 'on*',			// using a class whitelist configuration, most classes are still filtered
 		'hook_tag' => 'htmlawed_tag_post_processor',
 
 		'schemes' => '*:http,https,ftp,news,mailto,rtsp,teamspeak,gopher,mms,callto',
@@ -109,8 +109,13 @@ function htmlawed_tag_post_processor($element, $attributes = false) {
 		'margin-right',	'padding', 'float', 'text-decoration'
 	);
 
+	$allowed_classes = array(
+		'table', 'row' 
+	);
+
 	$params = array('tag' => $element);
 	$allowed_styles = elgg_trigger_plugin_hook('allowed_styles', 'htmlawed', $params, $allowed_styles);
+	$allowed_classes = elgg_trigger_plugin_hook('allowed_classes', 'htmlawed', $params, $allowed_classes);
 
 	// must return something.
 	$string = '';
@@ -138,6 +143,25 @@ function htmlawed_tag_post_processor($element, $attributes = false) {
 				$string .= " style=\"$style_str\"";
 			}
 
+		}
+		else if ($attr == 'class') {
+			$classes = explode(' ', $value);
+
+			$class_str = '';
+			foreach ($classes as $class) {
+				if (!trim($class)) {
+					continue;
+				}
+
+				if (in_array($class, $allowed_classes)) {
+					$class_str .= "$class ";
+				}
+			}
+
+			if ($class_str) {
+				$class_str = trim($class_str);
+				$string .= " class=\"$class_str\"";
+			}
 		} else {
 			$string .= " $attr=\"$value\"";
 		}

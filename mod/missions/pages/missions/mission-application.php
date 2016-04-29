@@ -25,6 +25,8 @@ elgg_push_breadcrumb($title);
 
 $content = elgg_view_title($title);
 
+$content .= elgg_view('page/elements/mission-tabs');
+
 if(elgg_get_logged_in_user_entity()->opt_in_missions != 'gcconnex_profile:opt:yes') {
 	$content .= '<p>' . elgg_echo('missions:you_will_be_opted_in') . '</p>';
 }

@@ -23,6 +23,9 @@ elgg_push_breadcrumb(elgg_echo('missions:micromissions'), elgg_get_site_url() . 
 elgg_push_breadcrumb($mission->job_title);
 
 $content = elgg_view_title($title);
+
+$content .= elgg_view('page/elements/mission-tabs');
+
 $content .= elgg_view_form('missions/change-mission-form', array(
     'class' => 'form-horizontal'
 ), array(

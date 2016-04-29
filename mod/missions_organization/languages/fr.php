@@ -17,7 +17,7 @@ return array(
 		'missions_organization:add' => 'Ajouter',
 		'missions_organization:create' => 'Créer',
 		'missions_organization:abbreviation_in_use' => "Votre abréviation d'entrée est déjà en cours d'utilisation.",
-		'admin:missions_organization' => 'Missions organisation',
+		'admin:missions_organization' => 'Micro-Missions Organisation',
 		'admin:missions_organization:main' => 'Principal',
 		'missions_organization:upload' => 'Télécharger',
 		'missions_organization:delete_all' => 'Tout effacer',

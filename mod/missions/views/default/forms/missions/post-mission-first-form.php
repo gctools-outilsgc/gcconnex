@@ -24,19 +24,23 @@ if($disclaimer == 'YES') {
 else {
 	$disclaimer = false;
 }
-
 $user = get_entity(elgg_get_logged_in_user_guid());
 if(!$name) {
 	$name = $user->name;
 }
-/*
- * TODO: If they use the new department input in their profile then extract the department from there?
- */
 if(!$email) {
 	$email = $user->email;
 }
 if(!$phone) {
 	$phone = $user->phone;
+}
+
+$duplicating_entity = get_entity($_SESSION['mission_duplication_id']);
+if(get_subtype_from_id($duplicating_entity->subtype) == 'mission') {
+	$name = $duplicating_entity->name;
+	$extracted_org = $duplicating_entity->department;
+	$email = $duplicating_entity->email;
+	$phone = $duplicating_entity->phone;
 }
 
 $input_name = elgg_view('input/text', array(

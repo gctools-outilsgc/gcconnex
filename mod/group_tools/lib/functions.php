@@ -988,7 +988,6 @@ function group_tools_transfer_group_ownership(ElggGroup $group, ElggUser $new_ow
 	
 			// cyu - work order #323 TFS
 			if (elgg_is_active_plugin('cp_notifications')) {
-				error_log("hi hi hi hi hi");
 				$message = array(
 					'cp_msg_type' => 'cp_grp_admin_transfer',
 					'cp_group_name' => $group->name,

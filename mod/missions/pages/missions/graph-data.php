@@ -56,6 +56,10 @@ elgg_push_breadcrumb($title);
 
 $content = elgg_view_title($title);
 
+$content .= elgg_view('page/elements/mission-tabs', array(
+		'highlight_five' => true
+));
+
 if((count($data_array)-1) < $series_limit) {
 	$content .= elgg_view_form('missions/graph-data-form', array(
 			'class' => 'form-horizontal'

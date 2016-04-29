@@ -79,6 +79,8 @@ function wet4_theme_init() {
     elgg_register_ajax_view("thewire_tools/reply");
 	elgg_register_ajax_view("thewire_tools/thread");
 
+    elgg_register_ajax_view("ajax/photo");
+
     elgg_register_ajax_view("friend_circle/edit");
 
     //file tools 
@@ -126,7 +128,7 @@ function wet4_theme_init() {
         $wet_activity_title = elgg_echo('wet4:colandgroupactivitynolog');
     }
     elgg_register_widget_type('wet_activity', $wet_activity_title, 'GCconnex Group and Colleague Activity', array('custom_index_widgets'),false);
-    elgg_register_widget_type('profile_completness', elgg_echo('ps:profilestrength'), 'The "Profile Strength" widget', array('custom_index_widgets'),false);
+    //elgg_register_widget_type('profile_completness', elgg_echo('ps:profilestrength'), 'The "Profile Strength" widget', array('custom_index_widgets'),false);
     elgg_register_widget_type('suggested_friends', elgg_echo('sf:suggcolleagues'), elgg_echo('sf:suggcolleagues'), array('custom_index_widgets'),false);
     //elgg_register_widget_type('user_summary_panel', 'user_summary_panel', 'user_summary_panel', array('custom_index_widgets'),false);
     elgg_register_widget_type('feature_tour', 'feature_tour', 'feature_tour', array('custom_index_widgets'),false);
@@ -155,8 +157,7 @@ function wet4_theme_init() {
     elgg_extend_view('forms/account/settings', 'core/settings/account/landing_page');
 
 
-    //add profile strength to sidebar
-    elgg_extend_view('profile/sidebar', 'profile/sidebar/profile_strength', 449);
+
 
     //menu item for career dropdown
     elgg_register_menu_item('site', array(
@@ -223,7 +224,22 @@ function newsfeed_page_handler(){
     return true;
 }
 
-function activity_page_handler(){
+function activity_page_handler($page){
+    elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
+
+    // make a URL segment available in page handler script
+    $page_type = elgg_extract(0, $page, 'all');
+    $page_type = preg_replace('[\W]', '', $page_type);
+    if ($page_type == 'owner') {
+        elgg_gatekeeper();
+        $page_username = elgg_extract(1, $page, '');
+        if ($page_username == elgg_get_logged_in_user_entity()->username) {
+            $page_type = 'mine';
+        } else {
+            set_input('subject_username', $page_username);
+        }
+    }
+    set_input('page_type', $page_type);
     @include (dirname ( __FILE__ ) . "/pages/river.php");
     return true;
 }

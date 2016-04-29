@@ -12,6 +12,10 @@
  */
 gatekeeper();
 
+if($_SESSION['mission_entities_per_page']) {
+	$entities_per_page = $_SESSION['mission_entities_per_page'];
+}
+
 $search_typing = $_SESSION['mission_search_switch'];
 
 $title = elgg_echo('missions:search_results_display');
@@ -22,7 +26,12 @@ elgg_push_breadcrumb($title);
 // Variables to help set up pagination
 $count = $_SESSION[$search_typing . '_count'];
 $offset = (int) get_input('offset', 0);
-$max = elgg_get_plugin_setting('search_result_per_page', 'missions');
+if($entities_per_page) {
+	$max = $entities_per_page;
+}
+else {
+	$max = elgg_get_plugin_setting('search_result_per_page', 'missions');
+}
 
 // Calls a limited amount of missions for display
 $search_set = $_SESSION[$search_typing . '_search_set'];
@@ -36,8 +45,10 @@ if($search_typing == 'mission') {
 
 $content = elgg_view_title($title);
 
+$content .= elgg_view('page/elements/mission-tabs');
+
 // Displays the missions as a list with custom class mission-gallery
-$content .= elgg_view_entity_list(array_slice($search_set, $offset, $max), array(
+$content .= '<div class="col-sm-12">' . elgg_view_entity_list(array_slice($search_set, $offset, $max), array(
 	    'count' => $count,
 	    'offset' => $offset,
 	    'limit' => $max,
@@ -45,8 +56,15 @@ $content .= elgg_view_entity_list(array_slice($search_set, $offset, $max), array
 	    'list_type' => $list_typing,
 	    'gallery_class' => $list_class,
 		'missions_full_view' => false
-), $offset, $max);
+), $offset, $max) . '</div>';
 
 $content .= '<div hidden name="mission-total-count">' . $count . '</div>';
+
+$content .= '<div class="col-sm-12">' . elgg_view_form('missions/change-entities-per-page', array(
+		'class' => 'form-horizontal'
+), array(
+		'entity_type' => $search_typing,
+		'number_per' => $entities_per_page
+)) . '</div>';
 
 echo elgg_view_page($title, $content);

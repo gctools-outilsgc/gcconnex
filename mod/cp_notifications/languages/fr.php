@@ -53,7 +53,7 @@
 
 	'cp_notify:subject:group_invite_email' => "%s vous a invité à joindre le groupe '%s'",
 
-	'cp_notify:subject:wire_mention' => "%s vous a mentioné sur le fil", // this is changed to add name of person who mentioned you
+	'cp_notify: subject:wire_mention' => "%s vous a mentioné sur le fil", // this is changed to add name of person who mentioned you
 
 	'cp_notify:subject:likes_comment' => "%s a aimé votre commentaire '%s'",
 	'cp_notify:subject:likes_discussion' => "%s a aimé votre réponse '%s'",
@@ -62,7 +62,7 @@
 	'cp_notify:subject:invite_new_user' => "Vous avez été invité à joindre GCconnex",
 
 	'cp_notify:subject:group_admin_transfer' => "Les droits d'administration du groups %s vous ont été délégués", 
-
+	'cp_notify:subject:add_grp_operator' => "french french french The administrator of the group '%s' delegated moderator rights to you", // translate
 
 	// email notification content (title & corresponding description) 
 
@@ -193,7 +193,7 @@
 		Vous pouvez afficher les demandes de collègue qui sont attente : %s", 
 
 
-	'cp_notify:body_hjpost:title' => "Un nouveau sujet de forum a été affiché", 
+	'cp_notify:body_hjpost:title' => "Un nouveau sujet de forum a été affiché avec le titre '%s'", 
 
 	'cp_notify:body_hjpost:description' => "La description du forum est :<br/>
 		%s <br/>
@@ -206,9 +206,28 @@
 
 	'cp_notify:body_group_admin_transfer:title' => "Les droits d'administration du groups '%s' vous ont été délégués", 
 	
-	'cp_notify:body_group_admin_transfer:description' => "%s vous a délégué les droits d'administrateur du groups.<br/><br/>
+	'cp_notify:body_group_admin_transfer:description' => "%s vous a délégué les droits d'administrateur du groups '%s'.<br/><br/>
 		Pour visiter le groupe, veuillez cliquer sur le lien suivant : <br/> 
 		%s", 
+
+	'cp_notify:body_add_grp_operator:title' => "fr fr fr The administrator of the group '%s' delegated moderator rights to you", // translate
+	'cp_notify:body_add_grp_operator:description' => "fr fr fr fr %s has delegated you as the moderator of the group '%s'.<br/><br/>
+		To visit the group, please click on the following link: <br/> 
+		%s", // translate
+
+
+
+	'cp_notify:messageboard:subject' => "fr fr fr fr Someone wrote on your message board", // translate
+	'cp_notify:body_messageboard:title' => "fr fr fr fr Someone wrote on your message board", // translate
+	'cp_notify:body_messageboard:description' => "%s wrote on your messageboard with the following message: <br/><br/>
+		%s <br/>
+		To view your messageboard, please click on the following link: %s",
+
+	'cp_notify:wireshare:subject' => "french french %s shared your %s with title '%s'",
+	'cp_notify:body_wireshare:title' => "french frehnch %s shared your %s with title '%s'",
+	'cp_notify:body_wireshare:description' => "french fr fr fr %s has shared your %s on the wire, to view or reply to this please click on the following link: %s",
+
+
 
 
 	// email notification footer text (1 and 2)	

@@ -10,6 +10,9 @@
 /*
  * Page content related to the user's missions. 
  */
+if($_SESSION['mission_entities_per_page']) {
+	$entities_per_page = $_SESSION['mission_entities_per_page'];
+}
 
 // List of all accepted and posted relationships the mission has.
 $temp_array_one = elgg_get_entities_from_relationship(array(
@@ -34,9 +37,16 @@ if($_SESSION['mission_refine_closed'] != 'SHOW_CLOSED') {
 	}
 }
 
+usort($entity_list, 'mm_cmp_by_updated');
+
 $count = count($entity_list);
 $offset = (int) get_input('offset', 0);
-$max = elgg_get_plugin_setting('search_result_per_page', 'missions');
+if($entities_per_page) {
+	$max = $entities_per_page;
+}
+else {
+	$max = elgg_get_plugin_setting('search_result_per_page', 'missions');
+}
 
 // Displays the list of mission entities.
 $missions_list = '<div style="display:block;">' . elgg_view_entity_list(array_slice($entity_list, $offset, $max), array(
@@ -57,6 +67,13 @@ $refine_missions_form = elgg_view_form('missions/refine-my-missions-form', array
 $unfinished_feedback = elgg_view('page/elements/unfinished-feedback', array(
 		'entity_list' => $entity_list_original
 ));
+
+$change_entities_per_page_form = elgg_view_form('missions/change-entities-per-page', array(
+		'class' => 'form-horizontal'
+), array(
+		'entity_type' => 'mission',
+		'number_per' => $entities_per_page
+));
 ?>
 
 <div>
@@ -64,9 +81,14 @@ $unfinished_feedback = elgg_view('page/elements/unfinished-feedback', array(
 </div>
 <div>
 	<h4><?php echo elgg_echo('missions:my_opportunities'); ?></h4>
-	<?php echo $missions_list; ?>
+	<div class="col-sm-12">
+		<?php echo $missions_list; ?>
+	</div>
 </div>
-<div class="col-sm-offset-1">
+<div class="col-sm-12">
 	<?php echo $refine_missions_form; ?>
 </div>
 <div hidden name="mission-total-count"><?php echo $count; ?></div>
+<div class="col-sm-12">
+	<?php echo $change_entities_per_page_form; ?>
+</div>

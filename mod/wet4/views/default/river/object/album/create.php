@@ -25,9 +25,10 @@ if ($album_river_view == "set") {
 		foreach($images as $image) {
 			$attachments .= '<li class="tidypics-photo-item">';
 			$attachments .= elgg_view_entity_icon($image, $preview_size, array(
-				'href' => $image->getIconURL('master'),
-				'img_class' => 'tidypics-photo',
-				'link_class' => 'tidypics-lightbox',
+				//'href' => $image->getIconURL('master'),
+				'href' => 'ajax/view/ajax/photo?guid=' . $image->guid,
+	            'img_class' => 'tidypics-photo',
+	            'link_class' => 'elgg-lightbox',
 			));
 			$attachments .= '</li>';
 		}
@@ -37,9 +38,10 @@ if ($album_river_view == "set") {
 	$image = $album->getCoverImage();
 	if ($image) {
 		$attachments = elgg_view_entity_icon($image, $preview_size, array(
-			'href' => $image->getIconURL('master'),
-			'img_class' => 'tidypics-photo wet-river-album',
-			'link_class' => 'tidypics-lightbox',
+			//'href' => $image->getIconURL('master'),
+			'href' => 'ajax/view/ajax/photo?guid=' . $image->guid,
+	            'img_class' => 'tidypics-photo',
+	            'link_class' => 'elgg-lightbox',
 		));
 	}
 }

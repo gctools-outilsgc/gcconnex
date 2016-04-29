@@ -32,6 +32,8 @@ elgg_push_breadcrumb($title);
 
 $content = elgg_view_title($title);
 
+$content .= elgg_view('page/elements/mission-tabs');
+
 if(elgg_get_logged_in_user_entity()->opt_in_missions != 'gcconnex_profile:opt:yes') {
 	$content .= '<p>' . elgg_echo('missions:you_will_be_opted_in') . '</p>';
 }
@@ -42,19 +44,20 @@ $content .= elgg_view_entity($mission, array(
     	'override_buttons' => true
 ));
 
+$content .= '<div class="col-sm-12" style="margin:16px;">';
 // Button to accept the mission.
 $content .= elgg_view('output/url', array(
-    'href' => elgg_get_site_url() . 'action/missions/accept-invite?applicant=' . $applicant . '&mission=' . $mission->guid,
-    'text' => elgg_echo('missions:accept'),
-    'is_action' => true,
-    'class' => 'elgg-button btn btn-success'
+	    'href' => elgg_get_site_url() . 'action/missions/accept-invite?applicant=' . $applicant . '&mission=' . $mission->guid,
+	    'text' => elgg_echo('missions:accept'),
+	    'is_action' => true,
+	    'class' => 'elgg-button btn btn-success'
 ));
 // Button to decline the mission.
 $content .= elgg_view('output/url', array(
-    'href' => elgg_get_site_url() . 'action/missions/decline-invite?applicant=' . $applicant . '&mission=' . $mission->guid,
-    'text' => elgg_echo('missions:decline'),
-    'is_action' => true,
-    'class' => 'elgg-button btn btn-danger'
+	    'href' => elgg_get_site_url() . 'missions/reason-to-decline/' . $mission->guid,
+	    'text' => elgg_echo('missions:decline'),
+	    'class' => 'elgg-button btn btn-danger'
 ));
+$content .= '</div>';
 
 echo elgg_view_page($title, $content);

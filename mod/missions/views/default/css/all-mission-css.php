@@ -1,3 +1,13 @@
+#search-mission-simple-text-input::-webkit-input-placeholder {
+    color: #FF0000;
+    opacity: 0.5 !important;
+}
+
+#search-mission-simple-text-input::-moz-placeholder {
+	opacity: 0.5;
+    color: rgba(0,0,0,0.5);
+}
+
 .missions-tab-bar { 
 	background-color: #047177; 
 	border-style: solid;
@@ -69,7 +79,7 @@
 
 .mission-printer { 
 	border-style: none; 
-	border-width: 4px; 
+	border-width: 3px; 
 	padding: 10px;
 	position: relative;
 } 
@@ -128,6 +138,7 @@
 
 .mission-user-card-info {
 	position:absolute;
+	width: 310px;
 	bottom: 50px;
 	text-align:center;
 }

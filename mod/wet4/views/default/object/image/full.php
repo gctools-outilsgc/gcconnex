@@ -12,9 +12,10 @@ $image = $photo = $vars['entity'];
 $album = $image->getContainerEntity();
 
 $img = elgg_view_entity_icon($image, 'large', array(
-	'href' => $image->getIconURL('master'),
+	//'href' => $image->getIconURL('master'),
+    'href' => 'ajax/view/ajax/photo?guid=' . $image->guid,
 	'img_class' => 'tidypics-photo',
-	'link_class' => 'tidypics-lightbox',
+	'link_class' => 'elgg-lightbox',
     
 ));
 

@@ -14,7 +14,7 @@ return array(
 		'gcconnex_profile:opt:opt_in_access' => "Qui peut voir mes choix d'engagement :",
 		'gcconnex_profile:opt:yes' => 'Oui',
 		'gcconnex_profile:opt:no' => 'Non',
-		'gcconnex_profile:completed_missions' => 'Missions accomplies',
+		'gcconnex_profile:completed_missions' => 'Micro-Missions accomplies',
 		'gcconnex_profile:opt:skill_sharing' => 'Partage des compétences',
 		'gcconnex_profile:opt:job_sharing' => "Partage d'emploi"
 );

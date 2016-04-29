@@ -14,7 +14,7 @@ if ($result) {
 	system_message(elgg_echo('logoutok'));
     //forward to login screen on logout - Nick 
 	//forward(elgg_get_site_url(). 'login');
-	forward("http://gcconnex.gc.ca/simplesaml/saml2/idp/SingleLogoutService.php?ReturnTo=https://gcconnex.gc.ca");
+	forward("http://gcconnex.gc.ca/simplesaml/saml2/idp/SingleLogoutService.php?ReturnTo=".elgg_get_site_url(). 'login'); 
 } else {
 	register_error(elgg_echo('logouterror'));
 }

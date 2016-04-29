@@ -18,7 +18,7 @@ $container = $object->getContainerEntity();
 //trying to get the container of a container for comments on content in a group
 
 $subtype_test = $object->getSubtype();
-if($subtype_test == 'comment' || $subtype_test =='discussion_reply'){
+if($subtype_test == 'comment' || $subtype_test =='discussion_reply' || $subtype_test == 'image'){
 
     //get the container of the container if it's a comment or reply
     $container = $container->getContainerEntity();

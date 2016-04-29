@@ -24,7 +24,7 @@ $day_string = 'missions:mon' . ',' . 'missions:tue' . ',' . 'missions:wed' . ','
 		. 'missions:fri' . ',' . 'missions:sat' . ',' . 'missions:sun';
 elgg_set_plugin_setting('day_string', $day_string, 'missions');
 
-$security_string = ' ,' . 'missions:enhanced_reliability' . ',' . 'missions:secret' . ',' . 'missions:top_secret';
+$security_string = ' ,' . 'missions:reliability' . ',' . 'missions:enhanced_reliability' . ',' . 'missions:secret' . ',' . 'missions:top_secret';
 elgg_set_plugin_setting('security_string', $security_string, 'missions');
 
 $timezone_string = 'Canada/Pacific (-8),Canada/Mountain (-7),Canada/Central (-6),Canada/Eastern (-5),Canada/Atlantic (-4),Canada/Newfoundland (-3.5)';
@@ -53,3 +53,7 @@ $program_area_string = ' ,' . 'missions:science' . ',' . 'missions:information_t
 				. 'missions:security_enforcement' . ',' . 'missions:communications' . ',' . 'missions:policy' . ',' 
 						. 'missions:client_service';
 elgg_set_plugin_setting('program_area_string', $program_area_string, 'missions');
+
+$decline_reason_string = 'missions:decline:workload' . ',' . 'missions:decline:interest' . ',' . 'missions:decline:engagement'  . ',' 
+		. 'missions:decline:approval'  . ',' . 'missions:other';
+elgg_set_plugin_setting('decline_reason_string', $decline_reason_string, 'missions');

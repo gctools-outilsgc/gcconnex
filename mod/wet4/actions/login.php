@@ -56,11 +56,13 @@ try {
 	register_error($e->getMessage());
 	forward(REFERER);
 }
-
+//error_log($_SERVER['HTTP_REFERER']);
+//error_log(elgg_get_site_url()."saml/idp_login");
 // elgg_echo() caches the language and does not provide a way to change the language.
 // @todo we need to use the config object to store this so that the current language
 // can be changed. Refs #4171
 $display_name = $user->name;
+//setcookie('connex_lang', $user->language, time()+(1000 * 60 * 60 * 24), '/');
 if ($user->language) {
 //give user a custom welcome message
 	$message = elgg_echo('wet:loginok', array($display_name));
@@ -72,8 +74,31 @@ if ($user->language) {
 $session->remove('last_forward_from');
 
 $params = array('user' => $user, 'source' => $forward_source);
-$forward_url = elgg_trigger_plugin_hook('login:forward', 'user', $params, $forward_url);
+
+
+
+if (strpos($_SERVER['HTTP_REFERER'], elgg_get_site_url()."saml/idp_login")=== false){
+	$forward_url = elgg_trigger_plugin_hook('login:forward', 'user', $params, $forward_url);
+}else{
+	$obj = elgg_get_entities(array(
+     			'type' => 'object',
+     			'subtype' => 'gcpedia_account',
+     			'owner_guid' => elgg_get_logged_in_user_guid()
+			 ));
+			 $gcpuser = $obj[0]->title;
+			 $gcpemail =$obj[0]->description;
+			 //if (elgg_get_context()=="saml"){
+			 if ($gcpuser == NULL || $gcpuser == ""){
+			 	forward("saml_link/link");
+			 }else{
+			 	$forward_url = "http://gcconnex.gc.ca/simplesaml/saml2/idp/SSOService.php?spentityid=http://www.gcpedia.gc.ca/simplesaml/module.php/saml/sp/metadata.php/elgg-idp&RelayState=http://www.gcpedia.gc.ca";
+		 	
+			 }
+	
+}
 
 system_message($message);
 //comment oout for SSO
+
+
 forward($forward_url);

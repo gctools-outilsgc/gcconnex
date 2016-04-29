@@ -61,7 +61,7 @@
                             'item_class' => 'btn btn-default btn-md mrgn-rght-md',
                             ));
                         
-                        echo '<div class="clearfix mrgn-tp-sm mrgn-bttm-sm">';
+                        echo '<div class="clearfix">';
                         echo $buttons;
                         echo $buttons2;
                         echo '</div>';

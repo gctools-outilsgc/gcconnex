@@ -10,7 +10,7 @@
 /*
  * Layout of the splash page which is shown to users not opted in to micro missions.
  */
- 
+
 // Gets a sample of micro missions of size defined by mission_front_page_limit.
 $options['type'] = 'object';
 $options['subtype'] = 'mission';
@@ -35,7 +35,7 @@ $entity_list = elgg_view_entity_list(array_slice($entity_list, $offset, $max), a
 ), $offset, $max);
 
 // Simple search form.
-$simple_search_form = elgg_view_form('missions/search-simple');
+$simple_search_form = '<div style="display:inline-block;margin-right:16px;">' . elgg_view_form('missions/search-simple') . '</div>';
 
 // Advanced search form which gets hidden.
 $advanced_search_form = elgg_view_form('missions/advanced-search-form', array(
@@ -65,7 +65,7 @@ $advanced_field = elgg_view('page/elements/hidden-field', array(
 		echo $advanced_field;
 	?>
 </div>
-<div>
+<div class="col-sm-12">
 	<?php echo $entity_list; ?>
 </div>
 </br>

@@ -19,6 +19,8 @@ elgg_push_breadcrumb($title);
 
 $content = elgg_view_title($title);
 
+$content .= elgg_view('page/elements/mission-tabs');
+
 $content .= elgg_view_form('missions/users-by-opt-in-form', array(
 		'class' => 'form-horizontal'
 )) . '<br>';

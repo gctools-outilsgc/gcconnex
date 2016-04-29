@@ -27,6 +27,19 @@ if ($owner && !empty($message_content)) {
 		$output = elgg_list_annotations($options);
 		echo $output;
 
+
+		// cyu - if cp notification plugin is active, use that for notifications
+		if (elgg_is_active_plugin('cp_notifications')) {
+			$message = array(
+				'cp_msg_type' => 'cp_messageboard',
+				'cp_recipient' => $owner,
+				'cp_message_content' => $message_content,
+				'cp_writer' => elgg_get_logged_in_user_entity(),
+			);
+			elgg_trigger_plugin_hook('cp_overwrite_notification','all',$message);
+		}
+
+
 	} else {
 		register_error(elgg_echo("messageboard:failure"));
 	}

@@ -209,7 +209,7 @@ function gcforums_notify_subscribed_users($hjobject, $hjlink) {
 				'cp_topic_author' => $hjobject->getOwnerEntity()->name,
 				'cp_topic_description' => $hjobject->description,
 				'cp_topic_url' => $hjlink,
-				'cp_topic_title' => $hjobject->title,
+				'cp_topic_title' => $hjobject->getContainerEntity()->title,
 				'cp_subscribers' => $subscribers,
 				'cp_msg_type' => 'cp_hjpost',
 			);

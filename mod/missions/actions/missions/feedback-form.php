@@ -32,7 +32,7 @@ if(!$feedback) {
 
 // If the feedback message input is not null then send a notification to the feedback target.
 if($feedback_body) {
-	notify_user($target->guid, elgg_get_logged_in_user_guid(), $mission->job_title . ' ' . elgg_echo('missions:feedback'), $feedback_body);
+	mm_notify_user($target->guid, elgg_get_logged_in_user_guid(), $mission->job_title . ' ' . elgg_echo('missions:feedback'), $feedback_body);
 	$feedback->message = 'sent';
 }
 
@@ -41,4 +41,10 @@ $feedback->endorsement = $feedback_rating;
 $feedback->save();
 
 elgg_clear_sticky_form('applicationfill');
+if(elgg_get_logged_in_user_guid() != $mission->owner_guid) {
+	system_message(elgg_echo('missions:feedback_sent_to_manager', array($mission->job_title)));
+}
+else {
+	system_message(elgg_echo('missions:feedback_sent_to_participant', array($mission->job_title, $target->name)));
+}
 forward(REFERER);

@@ -39,7 +39,7 @@ if($root) {
 				$is_disabled = false;
 			}*/
 			
-			$initial_dropdown .= elgg_view('missions_organization/org-dropdown', array(
+			$initial_input .= elgg_view('missions_organization/org-dropdown', array(
 					'given_value' => $org,
 					'target' => $previous_org,
 					'is_disabled' => $is_disabled
@@ -55,7 +55,7 @@ if($root) {
 			$last_given = 1;
 		}
 		
-		$initial_dropdown .= elgg_view('missions_organization/org-dropdown', array(
+		$initial_input .= elgg_view('missions_organization/org-dropdown', array(
 				'given_value' => $last_given,
 				'target' => $previous_org
 		));
@@ -64,7 +64,7 @@ if($root) {
 	}
 	else {
 		// Create a single initial dropdown element for the root of the organization tree.
-		$initial_dropdown = elgg_view('missions_organization/org-dropdown', array('target' => $root->guid));
+		$initial_input = elgg_view('missions_organization/org-dropdown', array('target' => $root->guid));
 	}
 	
 	// Button to create a dropdown element for the node in the previous dropdown element.
@@ -99,13 +99,20 @@ if($root) {
 			'disabled' => $initial_other_disabled
 	));
 }
+else {
+	$initial_input = elgg_view('input/text', array(
+		    'name' => 'department',
+		    'value' => elgg_get_logged_in_user_entity()->department,
+		    'id' => 'org-no-tree-exists-text-input'
+	));
+}
  
 $numerator = $_SESSION['organization_dropdown_input_count'];
 ?>
 
 <div>
 	<div id="org-dropdown-set">
-		<?php echo $initial_dropdown; ?>
+		<?php echo $initial_input; ?>
 	</div>
 	<!-- <div>
 		<div style="display:inline-block;">
@@ -164,7 +171,6 @@ $numerator = $_SESSION['organization_dropdown_input_count'];
 		// Gets all dropdown elements and how many there are.
 		var children = document.getElementById('org-dropdown-set').children;
 		var children_length = children.length;
-
 		
 		if(children_length > 1) {
 			// Selects the element before the last element and re-enables it.

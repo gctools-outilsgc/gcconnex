@@ -31,7 +31,11 @@ for($i=0;$i<$state_number;$i++) {
 $states = array_reverse($states);
 
 $title = elgg_echo('missions:department_pie');
-$content .= elgg_view_title($title);
+$content = elgg_view_title($title);
+	
+$content .= elgg_view('page/elements/mission-tabs', array(
+		'highlight_five' => true
+));
 
 $content .= elgg_view('page/elements/department-pie-graph', array(
 		'department_results' => $results,

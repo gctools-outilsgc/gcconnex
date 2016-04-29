@@ -20,6 +20,8 @@ $user_guid = array_pop($exploded_uri);
 $title = elgg_echo('missions:invite_user_to_mission');
 $content = elgg_view_title($title);
 
+$content .= elgg_view('page/elements/mission-tabs');
+
 $content .= elgg_view('page/elements/invitable-missions', array('candidate_guid' => $user_guid));
 
 echo elgg_view_page($title, $content);

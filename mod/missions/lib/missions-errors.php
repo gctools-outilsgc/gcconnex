@@ -171,10 +171,11 @@ function mm_validate_time($day, $input_array)
  	$err = '';
  	
  	// Checks if the name field is empty then checks to see that there are no numbers in the name.
- 	if (empty($input_array['name'])) {
+ 	if (trim($input_array['name']) == '') {
  		$err .= elgg_echo('missions:error:name_needs_input') . "\n";
- 	} else {
- 		if (! mm_is_valid_person_name($input_array['name'])) {
+ 	} 
+ 	else {
+ 		if (!mm_is_valid_person_name($input_array['name'])) {
  			$err .= elgg_echo('missions:error:name_no_numbers') . "\n";
  		}
  	}
@@ -185,12 +186,12 @@ function mm_validate_time($day, $input_array)
  	}*/
  	
  	// Checks if the email a valid email address according to a function defined above.
- 	if (! filter_var($input_array['email'], FILTER_VALIDATE_EMAIL)) {
+ 	if (!filter_var($input_array['email'], FILTER_VALIDATE_EMAIL)) {
  		$err .= elgg_echo('missions:error:email_invalid') . "\n";
  	}
  	
  	// Checks if the phone number is a valid phone number according to a function defined above.
- 	if (! mm_is_valid_phone_number($input_array['phone']) && ! empty($input_array['phone'])) {
+ 	if (!mm_is_valid_phone_number($input_array['phone']) && ! empty($input_array['phone'])) {
  		$err .= elgg_echo('missions:error:phone_invalid') . "\n";
  	}
  	
@@ -204,19 +205,19 @@ function mm_validate_time($day, $input_array)
  	$err = '';
  	
  	// Checks to see if these input fields are empty.
- 	if (empty($input_array['job_title'])) {
+ 	if (trim($input_array['job_title']) == '') {
  		$err .= elgg_echo('missions:error:opportunity_title_needs_input') . "\n";
  	}
  	if (empty($input_array['job_type'])) {
  		$err .= elgg_echo('missions:error:opportunity_type_needs_input') . "\n";
  	}
- 	if (empty($input_array['start_date'])) {
+ 	if (trim($input_array['start_date']) == '') {
  		$err .= elgg_echo('missions:error:start_date_needs_input') . "\n";
  	}
- 	if (empty($input_array['completion_date'])) {
+ 	if (trim($input_array['completion_date']) == '') {
  		$err .= elgg_echo('missions:error:end_date_needs_input') . "\n";
  	}
- 	if (empty($input_array['deadline'])) {
+ 	if (trim($input_array['deadline']) == '') {
  		$err .= elgg_echo('missions:error:deadline_needs_input') . "\n";
  	}
  	
@@ -229,6 +230,10 @@ function mm_validate_time($day, $input_array)
  		$err .= elgg_echo('missions:error:start_after_end') . "\n";
  	}
  	
+ 	if ($date_end < $date_dead) {
+ 		$err .= elgg_echo('missions:error:deadline_after_end') . "\n";
+ 	}
+ 	
  	return $err;
  }
  
@@ -239,7 +244,7 @@ function mm_validate_time($day, $input_array)
  	$err = '';
  	
  	// Checks to see if time commitment is empty.
- 	if (empty($input_array['time_commitment'])) {
+ 	if (trim($input_array['time_commitment']) == '') {
  		$err .= elgg_echo('missions:error:time_commitment_needs_input') . "\n";
  	}
  	

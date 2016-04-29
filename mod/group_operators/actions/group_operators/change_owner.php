@@ -32,6 +32,19 @@
 		
 		$mygroup->owner_guid = $who_guid;
 		$mygroup->save();
+
+		// cyu - work order #323 TFS
+		if (elgg_is_active_plugin('cp_notifications')) {
+			$message = array(
+				'cp_msg_type' => 'cp_grp_admin_transfer',
+				'cp_group_name' => $mygroup->name,
+				'cp_group_url' => $mygroup->getURL(),
+				'cp_new_owner' => $who->name,
+				'cp_appointer' => elgg_get_logged_in_user_entity()->name,
+				'cp_new_owner_user' => $who,
+			);
+			$result = elgg_trigger_plugin_hook('cp_overwrite_notification','all',$message);
+		}
 		
 		system_message(elgg_echo('group_operators:owner_changed', array($who->name)));
 	} else {

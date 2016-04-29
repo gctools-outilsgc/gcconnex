@@ -26,8 +26,6 @@ if (!$owner) {
 ?>
 <div class="groups-profile panel panel-custom clearfix elgg-image-block">
 
-        
-
     
         <div class="panel-heading col-xs-12"> 
             
@@ -162,7 +160,19 @@ if (!$owner) {
     
     
 		<div class="groups-info col-xs-10 col-md-10 ">
-            
+
+            <p>
+                <?php
+
+                    // cyu - indicate if user has subscribed to the group or not (must have cp notifications enabled)
+                    if (elgg_is_active_plugin('cp_notifications')) {
+                        if (check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $group->getGUID()) || check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $group->getGUID()))
+                            echo "<a href='".elgg_add_action_tokens_to_url("/action/cp_notify/unsubscribe?guid={$group->getGUID()}")."'>".elgg_echo('cp_notify:subscribe')."</a>";
+                        else
+                            echo '<a href="'.elgg_add_action_tokens_to_url("/action/cp_notify/subscribe?guid={$group->getGUID()}").'">'.elgg_echo('cp_notify:not_subscribed').'</a>';
+                    }
+                ?>
+            </p>
             
 			<p class="mrgn-bttm-sm">
 				<b><?php echo elgg_echo("groups:owner"); ?>: </b>

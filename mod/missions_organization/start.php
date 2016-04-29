@@ -39,7 +39,8 @@ function missions_organization_init() {
     		'name' => 'organization_tree',
     		'href' => elgg_get_site_url() . 'admin/missions_organization/main',
     		'text' => elgg_echo('missions_organization:organization'),
-    		'section' => 'administer'
+    		'section' => 'administer',
+    		'contexts' => array('admin')
     ));
 }
 

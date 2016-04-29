@@ -32,7 +32,7 @@ class MissionPluginTest extends ElggCoreUnitTest {
 		$this->assertTrue(array_key_exists('missions/post-mission-third-form', _elgg_services()->actions->getAllActions()));
 		//$this->assertTrue(array_key_exists('missions/search-form', _elgg_services()->actions->getAllActions()));
 		//$this->assertTrue(array_key_exists('missions/display-more', _elgg_services()->actions->getAllActions()));
-		$this->assertTrue(array_key_exists('missions/close-from-display', _elgg_services()->actions->getAllActions()));
+		$this->assertTrue(array_key_exists('missions/delete-mission', _elgg_services()->actions->getAllActions()));
 		$this->assertTrue(array_key_exists('missions/search-simple', _elgg_services()->actions->getAllActions()));
 		//$this->assertTrue(array_key_exists('missions/search-prereq', _elgg_services()->actions->getAllActions()));
 		//$this->assertTrue(array_key_exists('missions/search-language', _elgg_services()->actions->getAllActions()));
@@ -60,7 +60,7 @@ class MissionPluginTest extends ElggCoreUnitTest {
 		$this->assertTrue(elgg_action_exists('missions/post-mission-third-form'));
 		//$this->assertTrue(elgg_action_exists('missions/search-form'));
 		//$this->assertTrue(elgg_action_exists('missions/display-more'));
-		$this->assertTrue(elgg_action_exists('missions/close-from-display'));
+		$this->assertTrue(elgg_action_exists('missions/delete-mission'));
 		$this->assertTrue(elgg_action_exists('missions/search-simple'));
 		//$this->assertTrue(elgg_action_exists('missions/search-prereq'));
 		//$this->assertTrue(elgg_action_exists('missions/search-language'));

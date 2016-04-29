@@ -130,12 +130,13 @@ function gcforums_topic_content($topic_guid, $group_guid) {
 	$url = elgg_add_action_tokens_to_url(elgg_get_site_url()."action/gcforums/subscribe?guid={$topic->guid}");
 	$subscribe_url = "<a href='{$url}'>{$subscribe_text}</a><br/>";
 
+	// cyu - patched TFS #unknown (moderator unable to delete a topic)
 	// get the topic information and display it
 	$topic_content .= "<table class='gcforums-table'>
 						<tr class='gcforums-tr'>
 							<th class='gcforums-th-topic' width='25%'> <strong>".$user_information->email."</strong> </th>
 							<th class='gcforums-th-topic'> <strong>".elgg_echo('gcforums:posted_on',array( date('Y-m-d H:i:s', $topic->time_created) ))."</strong> </th>
-							<th class='gcforums-th-topic-options'>".gcforums_category_edit_options($topic->guid)."  {$subscribe_url}"."</th>
+							<th class='gcforums-th-topic-options'>".gcforums_category_edit_options($topic->guid,$group_guid)."  {$subscribe_url}"."</th> 
 						</tr>
 						<tr class='gcforums-tr'>
 							<td class='gcforums-td-topic'>".gcforums_display_user($user_information)."</td>
@@ -538,10 +539,20 @@ function gcforums_forums_edit_options($object_guid,$group_guid) {
 
 /* Create list of options to modify categories
  */
-function gcforums_category_edit_options($object_guid) {
-
+function gcforums_category_edit_options($object_guid, $group_guid='') {
+	// cyu - patched TFS #unknown (moderators unable to delete posting) 
 	if (elgg_is_logged_in()) {
-		if (elgg_get_logged_in_user_entity()->isAdmin() || get_entity($object_guid)->getOwnerGUID() == elgg_get_logged_in_user_guid()) {
+		if ($group_guid > 0)
+			$is_operator = check_entity_relationship(elgg_get_logged_in_user_guid(),'operator',$group_guid);			
+	
+		$is_topic_access = false;
+		if ($group_guid != '' || $group_guid > 0) {
+			if (get_entity($group_guid)->getOwnerGUID() == elgg_get_logged_in_user_guid()) {
+				$is_topic_access = true;
+			}
+		}
+
+		if (elgg_get_logged_in_user_entity()->isAdmin() || $is_topic_access || !empty($is_operator) || get_entity($object_guid)->getOwnerGUID() == elgg_get_logged_in_user_guid()) {
 			$dbprefix = elgg_get_config('dbprefix');
 			$query = "SELECT access_id
 					FROM {$dbprefix}entities
@@ -651,8 +662,9 @@ function gcforums_menu_buttons($forum_guid,$group_guid, $is_topic=false) { // ma
 
 	}
 
+
 	// user must be logged in AND (either an admin or group owner/admin/operator)
-	if (elgg_is_logged_in() && ( elgg_get_logged_in_user_entity()->isAdmin() || get_entity($group_guid)->getOwnerGUID() == elgg_get_logged_in_user_guid())) {
+	if (elgg_is_logged_in() && ( empty($is_operator) != 1 || elgg_get_logged_in_user_entity()->isAdmin() || get_entity($group_guid)->getOwnerGUID() == elgg_get_logged_in_user_guid())) {
 
 		if (!$forum_guid) $forum_guid = 0;
 		$forum_object = get_entity($forum_guid);

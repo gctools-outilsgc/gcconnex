@@ -19,7 +19,10 @@ if($aid == '') {
     register_error(elgg_echo('missions:error:no_applicant_to_remove'));
 }
 else {
-	// Works on tentative or accepted relationships.
+	// Works on tentative, accepted, or applied relationships.
+	if(check_entity_relationship($mid, 'mission_applied', $aid)) {
+		remove_entity_relationship($mid, 'mission_applied', $aid);
+	}
 	if(check_entity_relationship($mid, 'mission_tentative', $aid)) {
 		remove_entity_relationship($mid, 'mission_tentative', $aid);
 	}
@@ -31,14 +34,18 @@ else {
     // Notifies the manager that the candidate withdrew from the mission.
     if(elgg_get_logged_in_user_guid() == $aid) {
     	$target = $mission->owner_guid;
+    	$sender = $aid;
     	$subject = elgg_echo('missions:withdrew_from_mission', array($user->name, $mission->title), $user->language);
     }
     // Notifies the candidate that they were removed from the mission.
     else {
     	$target = $aid;
+    	$sender = $mission->owner_guid;
     	$subject = elgg_echo('missions:removed_from_mission', array($mission->title), $user->language);
     }
-    notify_user($target, $mission->owner_guid, $subject, $body);
+    mm_notify_user($target, $sender, $subject, $body);
 }
+
+system_message(elgg_echo('missions:user_removed', array($user->name, $mission->job_title)));
 
 forward(REFERER);

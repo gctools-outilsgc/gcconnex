@@ -14,6 +14,7 @@
  
 $mission_guid = get_input('mission_guid');
 $mission = get_entity($mission_guid);
+$from_admin = get_input('MISSION_ADMIN_ACTION_FLAG');
 
 $mission_relation_list = get_entity_relationships($mission->guid);
 
@@ -26,9 +27,9 @@ foreach($mission_relation_list as $relation) {
 	 				'text' => elgg_echo('missions:mission_feedback')
 	 		));
 		
-		$subject = $mission->job_title . elgg_echo('missions:feedback');
-		$body = $mission->job_title . elgg_echo('missions:feedback_message') . "\n" . $feedback_link;
-		notify_user($relation->guid_two, $mission->owner_guid, $subject, $body);
+		$subject = $mission->job_title . ' ' . elgg_echo('missions:feedback');
+		$body = $mission->job_title . ' ' . elgg_echo('missions:feedback_message') . "\n" . $feedback_link;
+		mm_notify_user($relation->guid_two, $mission->owner_guid, $subject, $body);
 		
 		$count++;
 	}
@@ -42,4 +43,9 @@ if($count == 0) {
 $mission->state = 'completed';
 $mission->save;
 
+system_message(elgg_echo('mission:has_been_completed', array($mission->job_title)));
+
+if($from_admin) {
+	forward(REFERER);
+}
 forward(elgg_get_site_url() . 'missions/mission-feedback/' . $mission_guid);

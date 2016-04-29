@@ -18,6 +18,8 @@ $mission_guid = mm_clean_url_segment(array_pop($blast_radius));
 $mission = get_entity($mission_guid);
 
 $title = elgg_echo('missions:mission_view');
-$content = elgg_view_entity($mission);
+$content = elgg_view_title($title);
+$content .= elgg_view('page/elements/mission-tabs');
+$content .= elgg_view_entity($mission);
 
 echo elgg_view_page($title, $content);

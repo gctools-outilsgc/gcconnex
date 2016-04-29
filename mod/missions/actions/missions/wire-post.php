@@ -16,5 +16,7 @@ if(strlen($message) > $char_limit) {
 }
 else {
 	thewire_tools_save_post($message, elgg_get_logged_in_user_guid(), ACCESS_LOGGED_IN);
+	
+	system_message(elgg_echo('missions:posted_to_the_wire'));
 	forward(elgg_get_site_url() . 'missions/main');
 }

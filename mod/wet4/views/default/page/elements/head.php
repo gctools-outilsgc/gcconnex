@@ -82,7 +82,7 @@ echo elgg_view_deprecated('metatags', array(), "Use the 'head', 'page' plugin ho
 ?>
 
 <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">-->
-<link rel="stylesheet" href="<?php echo $site_url ?>mod/wet4/views/default/css/awesome/font-awesome.min.css" />
+<link rel="stylesheet" href="<?php echo $site_url ?>mod/wet4/views/default/css/awesome/font-awesome.min.css" type="text/css" />
 <meta charset="utf-8" />
 		<!-- Web Experience Toolkit (WET) / Boîte à outils de l'expérience Web (BOEW)
 wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licence-fr.html -->
@@ -129,6 +129,39 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
 
 
 ?>
+
+        <?php
+          $no_index_array = array(
+            '/activity/','/activity/all','/activity/owner','/activity/friends/','/activity_tabs/mydept','/activity_tabs/otherdept',
+            '/blog/all','/blog/owner/','/blog/group/','/blog/friends/',
+            '/bookmarks/all','/bookmarks/owner/','/bookmarks/friends/',
+            '/event_calendar/list',
+            '/file/all','/file/owner/','/file/friends/',
+            '/photos/all','photos/owner','photos/friends/',
+            '/members','/members/popular/','/members/online','/members/department',
+            '/polls/all','/polls/owner/','/polls/friends/',
+            '/groups/all','/groups/owner/','/groups/invitation',
+            '/photos/siteimagesowner/',
+            '/thewire/all','/thewire/owner/','/thewire/friends/',
+          ); 
+
+          $can_index = true;
+          foreach ($no_index_array as $partial_url) {
+            $url_result = strpos((string)trim($partial_url), (string)trim($_SERVER['REQUEST_URI']));
+            if ($url_result > -1 && $can_index) {              // cyu - if url is found, don't index
+              $can_index = false;
+              break;
+            }
+          }
+
+          if ($can_index) {
+        ?>
+
+          <!-- cyu - included header meta tags for GSA (limiting pages to index) -->
+          <meta name="robots" content="noindex">
+
+        <?php } ?>
+
         <meta name="description" content="<?php echo $desc; ?>" />
         <meta name="dcterms.title" content="<?php echo $vars['title']; ?>" />
         <meta name="dcterms.creator" content="<?php echo $creator; ?>" />

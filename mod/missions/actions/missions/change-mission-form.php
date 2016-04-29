@@ -33,22 +33,34 @@ if ($err != '') {
 	
 	$mission->name = $edit_form['name'];
 	
-	$department_string = mo_get_last_input_node($edit_form);
-	$department_paths = mo_string_all_ancestors($department_string);
-	$mission->department = $department_string;
-	$mission->department_path_english = $department_paths['english_path'];
-	$mission->department_path_french = $department_paths['french_path'];
+	if(mo_get_tree_root()) {
+		$department_string = mo_get_last_input_node($edit_form);
+		$department_paths = mo_string_all_ancestors($department_string);
+		$mission->department = $department_string;
+		$mission->department_path_english = $department_paths['english_path'];
+		$mission->department_path_french = $department_paths['french_path'];
+	}
+	else {
+		$mission->department = $edit_form['department'];
+		$mission->department_path_english = $edit_form['department'];
+		$mission->department_path_french = $edit_form['department'];
+	}
 	
 	$mission->email = $edit_form['email'];
 	$mission->phone = $edit_form['phone'];
 	$mission->job_title = $edit_form['job_title'];
 	$mission->job_type = $edit_form['job_type'];
-	$mission->program_area = $edit_form['job_area'];
+	if($edit_form['job_area'] != 'missions:other') {
+		$mission->program_area = $edit_form['job_area'];
+	}
+	else {
+		$mission->program_area = $edit_form['other_text'];
+	}
     $mission->number = $edit_form['number'];
     $mission->start_date = $edit_form['start_date'];
     $mission->completion_date = $edit_form['completion_date'];
     $mission->deadline = $edit_form['deadline'];
-    $mission->descriptor = $edit_form['descriptor'];
+    $mission->descriptor = $edit_form['description'];
     $mission->remotely = $edit_form['remotely'];
     $mission->security = $edit_form['security'];
     $mission->location = $edit_form['location'];
@@ -106,5 +118,6 @@ if ($err != '') {
     $mission->save();
     
     elgg_clear_sticky_form('editfill');
+    system_message(elgg_echo('missions:changes_have_been_saved', array($mission->job_title)));
     forward(REFERER);
 }

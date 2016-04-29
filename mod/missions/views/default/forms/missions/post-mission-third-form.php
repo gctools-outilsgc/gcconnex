@@ -15,10 +15,19 @@ $location = get_input('tl');
 $security = get_input('ts');
 $time_commitment = get_input('ttc');
 $time_interval = get_input('tti');
+$key_skills = get_input('tks');
 
 if (elgg_is_sticky_form('thirdfill')) {
-    extract(elgg_get_sticky_values('thirdfill'));
+	$temp_array = elgg_get_sticky_values('thirdfill');
+    extract($temp_array);
     // elgg_clear_sticky_form('thirdfill');
+    
+    foreach($temp_array as $key => $value) {
+    	if(!(strpos($key, 'key_skills') === false)) {
+    		$key_skills .= $value . ', ';
+    	}
+    }
+    $key_skills = substr($key_skills, 0, -2);
 }
 
 if(!$timezone) {
@@ -33,6 +42,26 @@ else {
 	$remotely = false;
 }
 
+$duplicating_entity = get_entity($_SESSION['mission_duplication_id']);
+if(get_subtype_from_id($duplicating_entity->subtype) == 'mission') {
+	$key_skills = $duplicating_entity->key_skills;
+	$time_commitment = $duplicating_entity->time_commitment;
+	$time_interval = $duplicating_entity->time_interval;
+	$remotely = $duplicating_entity->remotely;
+	$security = $duplicating_entity->security;
+	$location = $duplicating_entity->location;
+	$timezone = $duplicating_entity->timezone;
+	
+	$unpacked = mm_unpack_mission($duplicating_entity);
+	$vars['mission_metadata'] = $unpacked;
+	$vars['entity'] = $duplicating_entity;
+}
+
+$skill_set = '';
+$skill_array = explode(', ', $key_skills);
+foreach($skill_array as $skill) {
+	$skill_set .= elgg_view('missions/add-skill', array('value' => $skill));
+}
 $input_remotely = elgg_view('input/checkbox', array(
 	    'name' => 'remotely',
 	    'checked' => $remotely,
@@ -56,7 +85,6 @@ $input_timezone = elgg_view('input/dropdown', array(
 	    'options' => explode(',', elgg_get_plugin_setting('timezone_string', 'missions')),
 	    'id' => 'post-mission-timezone-dropdown-input'
 ));
-$input_skills_0 = elgg_view('missions/add-skill');
 $input_time_commit = elgg_view('input/text', array(
 		'name' => 'time_commitment',
 		'value' => $time_commitment,
@@ -110,7 +138,7 @@ $add_skill_button = elgg_view('output/url', array(
 	</label>
 	<div class="col-sm-9">
 		<div id="mission-skill-container" style="display:inline-block;">
-			<?php echo $input_skills_0; ?>
+			<?php echo $skill_set; ?>
 		</div>
 		<div>
 			<?php echo $add_skill_button; ?>

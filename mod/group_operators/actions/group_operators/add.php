@@ -8,7 +8,7 @@
 action_gatekeeper("group_operators/add");
 $mygroup = get_entity(get_input('mygroup'));
 $who = get_entity(get_input('who'));
-error_log('jdslkfjdlskfjldskfjlsdkLKDSJLFKSDJFLKDSJFLKSDJFLDKSJFL');
+
 $success = false;
 if ($mygroup instanceof ElggGroup && $who instanceof ElggUser && $mygroup->canEdit()) {
 	if ($mygroup->isMember($who) && !check_entity_relationship($who->guid, 'operator', $mygroup->guid)) {
@@ -21,7 +21,9 @@ if ($mygroup instanceof ElggGroup && $who instanceof ElggUser && $mygroup->canEd
 				'cp_msg_type' => 'cp_add_grp_operator',
 				'cp_to_user' => $who,
 				'cp_to_operator' => $who->name,
-				'cp_who_made_operator' => elgg_get_logged_in_user_entity()->name
+				'cp_who_made_operator' => elgg_get_logged_in_user_entity()->name,
+				'cp_group_name' => $mygroup->name,
+				'cp_group_url' => $mygroup->getURL(),
 			);
 			$result = elgg_trigger_plugin_hook('cp_overwrite_notification','all',$message);
 		}

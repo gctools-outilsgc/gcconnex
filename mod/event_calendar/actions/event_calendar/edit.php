@@ -47,7 +47,7 @@ if ($event) {
 		if (elgg_is_active_plugin('cp_notifications')) {
 			$message = array(
 				'cp_event_receiver' => $email_users,
-				'cp_event_invite_url' => $view_events_url,
+				'cp_event_invite_url' => elgg_add_action_tokens_to_url("action/event_calendar/add_ics?guid={$event->guid}"),
 				'startdate' => $startdate,
 				'enddate' => $enddate,
 				'event' => $event,
@@ -89,7 +89,7 @@ if ($event) {
     	if (elgg_is_active_plugin('cp_notifications')) {
 			$message = array(
 				'cp_event_receiver' => $email_users,
-				'cp_event_invite_url' => $view_events_url,
+				'cp_event_invite_url' => elgg_add_action_tokens_to_url("action/event_calendar/add_ics?guid={$event->guid}"),
 				'startdate' => $startdate,
 				'enddate' => $enddate,
 				'event' => $event,

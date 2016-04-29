@@ -54,7 +54,7 @@ function missions_init()
     elgg_register_action("missions/post-mission-third-form", elgg_get_plugins_path() . "missions/actions/missions/post-mission-third-form.php");
     //elgg_register_action("missions/search-form", elgg_get_plugins_path() . "missions/actions/missions/search-form.php");
     //elgg_register_action("missions/display-more", elgg_get_plugins_path() . "missions/actions/missions/display-more.php");
-    elgg_register_action("missions/close-from-display", elgg_get_plugins_path() . "missions/actions/missions/close-from-display.php");
+    elgg_register_action("missions/delete-mission", elgg_get_plugins_path() . "missions/actions/missions/delete-mission.php");
     elgg_register_action("missions/search-simple", elgg_get_plugins_path() . "missions/actions/missions/search-simple.php");
     //elgg_register_action("missions/search-prereq", elgg_get_plugins_path() . "missions/actions/missions/search-prereq.php");
     //elgg_register_action("missions/search-language", elgg_get_plugins_path() . "missions/actions/missions/search-language.php");
@@ -82,6 +82,11 @@ function missions_init()
     elgg_register_action("missions/remove-department-from-graph", elgg_get_plugins_path() . "missions/actions/missions/remove-department-from-graph.php");
     elgg_register_action("missions/users-by-opt-in-form", elgg_get_plugins_path() . "missions/actions/missions/users-by-opt-in-form.php");
     elgg_register_action("missions/wire-post", elgg_get_plugins_path() . "missions/actions/missions/wire-post.php");
+    elgg_register_action("missions/mission-offer", elgg_get_plugins_path() . "missions/actions/missions/mission-offer.php");
+    elgg_register_action("missions/duplicate-mission", elgg_get_plugins_path() . "missions/actions/missions/duplicate-mission.php");
+    elgg_register_action("missions/mission-invite-selector", elgg_get_plugins_path() . "missions/actions/missions/mission-invite-selector.php");
+    elgg_register_action("missions/change-entities-per-page", elgg_get_plugins_path() . "missions/actions/missions/change-entities-per-page.php");
+    elgg_register_action("missions/admin-form", elgg_get_plugins_path() . "missions/actions/missions/admin-form.php");
 
     // Register a new subtype of object for categorizing our mission object.
     elgg_register_entity_type('object', 'mission');
@@ -118,6 +123,14 @@ function missions_init()
     		'name' => 'mission_main',
     		'href' => elgg_get_site_url() . 'missions/main',
     		'text' => elgg_echo('missions:micromissions')
+    ));
+    
+    elgg_register_menu_item('page', array(
+    		'name' => 'mission_admin_tool',
+    		'href' => elgg_get_site_url() . 'admin/missions/main',
+    		'text' => elgg_echo('missions:admin_tool'),
+    		'section' => 'administer',
+    		'contexts' => array('admin')
     ));
     
     // Testing purposes only (so far).
@@ -319,9 +332,15 @@ function missions_main_page_handler($segments)
         case 'users-by-opt-in':
         	include elgg_get_plugins_path() . 'missions/pages/missions/users-by-opt-in.php';
         	break;
-        case 'archive':
-        	include elgg_get_plugins_path() . 'missions/pages/missions/archive.php';
+        case 'mission-offer':
+        	include elgg_get_plugins_path() . 'missions/pages/missions/mission-offer.php';
         	break;
+        case 'reason-to-decline':
+        	include elgg_get_plugins_path() . 'missions/pages/missions/reason-to-decline.php';
+        	break;
+        /*case 'archive':
+        	include elgg_get_plugins_path() . 'missions/pages/missions/archive.php';
+        	break;*/
     }
 }
 
@@ -360,7 +379,10 @@ function alter_mission_user_view($hook, $type, $returnvalue, $params) {
         return $returnvalue;
     }
     else {
-    	if(strpos($current_uri, 'missions/view') === false && strpos($current_uri, 'missions/mission-invitation') === false && strpos($current_uri, 'missions/mission-edit') === false) {
+    	if(strpos($current_uri, 'missions/view') === false && 
+    			strpos($current_uri, 'missions/mission-invitation') === false && 
+    			strpos($current_uri, 'missions/mission-edit') === false && 
+    			strpos($current_uri, 'missions/mission-offer') === false) {
         	return elgg_view('user/mission-candidate', array('user' => $params['vars']['entity']));
     	}
     	else {

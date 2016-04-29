@@ -27,8 +27,10 @@ if (!$full_view && strpos($current_uri, 'view/' . $mission->guid) === false) {
         'override_buttons' => $button_override
     ));
 } else {
-	elgg_push_breadcrumb(elgg_echo('missions:micromissions'), elgg_get_site_url() . 'missions/main');
-	elgg_push_breadcrumb($mission->job_title);
+	if(!$button_override) {
+		elgg_push_breadcrumb(elgg_echo('missions:micromissions'), elgg_get_site_url() . 'missions/main');
+		elgg_push_breadcrumb($mission->job_title);
+	}
 	
     $content = elgg_view('page/elements/print-mission-more', array(
         'entity' => $mission,

@@ -147,6 +147,7 @@ function event_calendar_set_event_from_form($event_guid, $group_guid) {
 	$e->web_conference = get_input('web_conference');
 	$e->group_guid = get_input('group_guid');
 	$e->real_end_time = event_calendar_get_end_time($e);
+	$e->room = get_input('room');
 
 	// sanity check
 	if ($e->schedule_type == 'fixed' && $e->real_end_time <= $e->start_date) {
@@ -194,6 +195,7 @@ function event_calendar_set_event_from_form($event_guid, $group_guid) {
 		'real_end_time',
 		'schedule_type',
 		'group_guid',
+		'room',
 	);
 
 	foreach ($keys as $key) {
@@ -1123,6 +1125,11 @@ function event_calendar_get_formatted_full_items($event) {
 	$event_items[] = $item;
 
 	$item = new stdClass();
+	$item->title = elgg_echo('event_calendar:room_label');
+	$item->value = htmlspecialchars($event->room);
+	$event_items[] = $item;
+
+	$item = new stdClass();
 	$item->title = elgg_echo('event_calendar:language');
 	$item->value = htmlspecialchars($event->language);
 	$event_items[] = $item;
@@ -1162,10 +1169,12 @@ function event_calendar_get_formatted_full_items($event) {
 	$item->title = elgg_echo('event_calendar:fees_label');
 	$item->value = htmlspecialchars($event->fees);
 	$event_items[] = $item;
+
 	$item = new stdClass();
 	$item->title = elgg_echo('event_calendar:organiser_label');
 	$item->value = htmlspecialchars($event->organiser);
 	$event_items[] = $item;
+
 	$item = new stdClass();
 	$item->title = elgg_echo('event_calendar:contact_label');
 	$item->value = htmlspecialchars($event->contact);
@@ -1193,12 +1202,16 @@ function event_calendar_get_formatted_time($event) {
 		if ((!$event->end_date) || ($end_date == $start_date)) {
 			if (!$event->all_day && $event_calendar_times) {
 				if(event_calendar_format_time($event->start_time) != '0:00,'){
-					$start_date = event_calendar_format_time($start_date, $event->start_time, $event->end_time);
+					//$start_date = event_calendar_format_time($start_date, $event->start_time, $event->end_time);
+					
+					$start_date = event_calendar_format_time($start_date, $event->start_time);
+					$end_date = event_calendar_format_time($end_date, $event->end_time);
 
 				}
 				$start_date = event_calendar_format_time($start_date);
 			}
-			$time_bit = $start_date;
+			$time_bit = "$start_date - $end_date";
+
 		} else {
 			if (!$event->all_day && $event_calendar_times) {
 				 
@@ -1376,7 +1389,7 @@ function event_calendar_personal_can_manage($event, $user_id) {
 	return $status;
 }
 
-function event_email($event,$request,$email_users) {
+/*function event_email($event,$request,$email_users) {
 
 $time = event_calendar_get_formatted_time($event);
 $name = get_loggedin_user()->username;
@@ -1701,7 +1714,7 @@ Merci
 
     return ($mailsent)?(true):(false);
 }
-
+*/
 
 function event_calendar_send_event_request($event, $user_guid) {
 	$result = false;
@@ -1947,6 +1960,7 @@ function event_calendar_prepare_edit_form_vars($event = null, $page_type = '', $
 		'long_description' => null,
 		'access_id' => ACCESS_DEFAULT,
 		'group_guid' => null,
+		'room' => null,
 	);
 
 	if ($page_type == 'schedule') {

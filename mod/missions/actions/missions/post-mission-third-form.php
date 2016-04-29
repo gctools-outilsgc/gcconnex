@@ -46,18 +46,30 @@ if ($err != '') {
     // Attaches the form data as metadata to the object
     $mission->name = $first_form['name'];
     
-   	$department_string = mo_get_last_input_node($first_form);
-	$department_paths = mo_string_all_ancestors($department_string);
-	$mission->department = $department_string;
-	$mission->department_path_english = $department_paths['english_path'];
-	$mission->department_path_french = $department_paths['french_path'];
+    if(mo_get_tree_root()) {
+	   	$department_string = mo_get_last_input_node($first_form);
+		$department_paths = mo_string_all_ancestors($department_string);
+		$mission->department = $department_string;
+		$mission->department_path_english = $department_paths['english_path'];
+		$mission->department_path_french = $department_paths['french_path'];
+    }
+    else {
+    	$mission->department = $first_form['department'];
+		$mission->department_path_english = $first_form['department'];
+		$mission->department_path_french = $first_form['department'];
+    }
     
     $mission->email = $first_form['email'];
     $mission->phone = $first_form['phone'];
     
     $mission->job_title = $second_form['job_title'];
     $mission->job_type = $second_form['job_type'];
-    $mission->program_area = $second_form['job_area'];
+    if($second_form['job_area'] != 'missions:other') {
+    	$mission->program_area = $second_form['job_area'];
+    }
+    else {
+    	$mission->program_area = $second_form['other_text'];
+    }
     $mission->number = $second_form['number'];
     $mission->start_date = $second_form['start_date'];
     $mission->completion_date = $second_form['completion_date'];

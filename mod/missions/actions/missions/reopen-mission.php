@@ -13,8 +13,14 @@
 
 $mission_guid = get_input('mission_guid');
 $mission = get_entity($mission_guid);
+$from_admin = get_input('MISSION_ADMIN_ACTION_FLAG');
 
 $mission->state = 'posted';
 $mission->save;
 
+system_message(elgg_echo('missions:has_been_reopened', array($mission->job_title)));
+
+if($from_admin) {
+	forward(REFERER);	
+}
 forward($mission->getURL());

@@ -25,6 +25,8 @@
  $title .= ' (' . $mission->job_title . ')';
  
  $content = elgg_view_title($title);
+
+$content .= elgg_view('page/elements/mission-tabs');
  
  $content .= elgg_echo('missions:feedback_explanation_one') . '</br>';
  $content .= elgg_echo('missions:feedback_explanation_two') . '</br></br>';

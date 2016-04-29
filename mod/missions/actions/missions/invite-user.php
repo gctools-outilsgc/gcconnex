@@ -31,16 +31,49 @@ foreach($relationship_set as $key => $value) {
 }
 $relationship_count = count($relationship_set);
 if($relationship_count >= $mission->number) {
-	register_error('missions:error:opportunity_limit_reached');
-	forward(elgg_get_site_url() . 'missions/main');
+	$err .= elgg_echo('missions:error:opportunity_limit_reached');
 }
 
+if(check_entity_relationship($mission->guid, 'mission_applied', $applicant->guid)) {
+	$err .= elgg_echo('missions:error:user_already_applied', array($applicant->name));
+}
+
+if(check_entity_relationship($mission->guid, 'mission_tentative', $applicant->guid)) {
+	$err .= elgg_echo('missions:error:user_already_invited', array($applicant->name));
+}
+
+if(check_entity_relationship($mission->guid, 'mission_accepted', $applicant->guid)) {
+	$err .= elgg_echo('missions:error:user_already_participating', array($applicant->name));
+}
+	
 // Only users who have opted in to micro missions can be invited.
-if($applicant->opt_in_missions == 'gcconnex_profile:opt:yes') {
-	mm_send_notification_invite($applicant, $mission);
+if($applicant->opt_in_missions != 'gcconnex_profile:opt:yes') {
+	$err .= elgg_echo('missions:error:not_participating_in_missions', array($applicant->name));
+}
+
+if($err == '') {
+	$invitation_link = elgg_view('output/url', array(
+			'href' => elgg_get_site_url() . 'missions/mission-invitation/' . $mission->guid,
+			'text' => elgg_echo('missions:mission_invitation')
+	));
+	
+	$subject = get_user($mission->owner_guid)->name . elgg_echo('missions:invited_you', array(), $applicant->language) . $mission->title;
+	$body = $invitation_link;
+	$params = array(
+			'object' => $mission,
+			'action' => 'invite-user',
+			'summary' => $subject
+	);
+	
+	mm_notify_user($applicant->guid, $mission->owner_guid, $subject, $body);
+	
+	add_entity_relationship($mission->guid, 'mission_tentative', $applicant->guid);
+	
+	system_message(elgg_echo('missions:invited_user_to_mission', array($applicant->name, $mission->job_title)));
+	
 	forward(elgg_get_site_url() . 'missions/main');
 }
 else {
-	register_error(elgg_echo('missions:error:not_participating_in_missions', array($applicant->name)));
+	register_error($err);
 	forward(REFERER);
 }

@@ -17,7 +17,7 @@ return array(
 		'missions_organization:add' => 'Add',
 		'missions_organization:create' => 'Create',
 		'missions_organization:abbreviation_in_use' => 'Your input abbreviation is already in use.',
-		'admin:missions_organization' => 'Missions organization',
+		'admin:missions_organization' => 'Micro-Missions Organization',
 		'admin:missions_organization:main' => 'Main',
 		'missions_organization:upload' => 'Upload',
 		'missions_organization:delete_all' => 'Delete all',

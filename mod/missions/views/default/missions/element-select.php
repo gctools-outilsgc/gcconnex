@@ -11,6 +11,7 @@
  * Name and value of the dropdown box which called this view.
  * The dropdown name indicates which row is being modified.
  */
+
 $dropdown_name = $vars['caller_name'];
 $dropdown_value = $vars['caller_value'];
 $second = $vars['caller_second'];
@@ -214,6 +215,14 @@ else {
         			'name' => $dropdown_name . '_element',
 				    'value' => '',
 				    'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('province_string', 'missions')),
+        	));
+        	break;
+            
+        case elgg_echo('missions:skill'):
+        case elgg_echo('missions:key_skills'):
+        	$content .= elgg_view('missions/add-skill', array(
+        			'name_override' => $dropdown_name . '_element',
+        			'no_delete' => true
         	));
         	break;
         

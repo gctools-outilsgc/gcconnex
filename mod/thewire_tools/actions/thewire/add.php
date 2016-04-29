@@ -18,6 +18,9 @@ if (empty($body)) {
 	forward(REFERER);
 }
 
+error_log("reshare >>>>> {$reshare_guid}");
+
+
 $guid = thewire_tools_save_post($body, elgg_get_logged_in_user_guid(), $access_id, $parent_guid, $method, $reshare_guid);
 if (!$guid) {
 	register_error(elgg_echo("thewire:error"));
@@ -32,4 +35,24 @@ if ($parent_guid) {
 
 
 system_message(elgg_echo("thewire:posted"));
+
+// cyu - send notifications when a user shares your content on the wire
+if ($reshare_guid || $reshare_guid > 0) {
+	$content_owner = get_entity($reshare_guid)->getOwnerEntity();
+	$entity = get_entity($reshare_guid);
+	$wire_entity = get_entity($guid);
+	// cyu - if cp notification plugin is active, use that for notifications
+	if (elgg_is_active_plugin('cp_notifications')) {
+		$message = array(
+			'cp_msg_type' => 'cp_wire_share',
+			'cp_recipient' => $entity->getOwnerEntity(),
+			'cp_shared_by' => elgg_get_logged_in_user_entity(),
+			'cp_content' => $entity,
+			'cp_wire_url' => $wire_entity->getURL(),
+		);
+		elgg_trigger_plugin_hook('cp_overwrite_notification','all',$message);
+	}
+}
+
+
 forward(REFERER);

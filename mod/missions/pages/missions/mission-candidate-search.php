@@ -27,6 +27,9 @@ elgg_push_breadcrumb($entity->job_title, $entity->getURL());
 elgg_push_breadcrumb($title);
 
 $content = elgg_view_title($title);
+
+$content .= elgg_view('page/elements/mission-tabs');
+
 $content .= '<div style="display:inline-block;margin-right:16px;">' . elgg_view_form('missions/search-simple') . '</div>';
 
 $advanced_search_form = elgg_view_form('missions/advanced-search-form', array(

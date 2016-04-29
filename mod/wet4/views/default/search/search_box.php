@@ -40,49 +40,35 @@ $search_attrs = elgg_format_attributes(array(
 	'required' => true,
 	'value' => $display_query,
 ));
+
+$gc_language = $_COOKIE['connex_lang'];
 ?>
 <!-- Basically just moved the search to this file to output the section -->
 
     <section id="wb-srch" class="col-xs-6 text-right visible-md visible-lg">
         <h2><?php echo elgg_echo('wet:searchHead');?></h2>
+        <?php if ($gc_language === '' || $gc_language === 'en' || !$gc_language) { ?>
         <form action="http://intranet.canada.ca/search-recherche/query-recherche-eng.aspx" method="get" name="cse-search-box" class="form-inline mrgn-bttm-sm">
+        <?php } else { ?>
+        <form action="http://intranet.canada.ca/search-recherche/query-recherche-fra.aspx" method="get" name="cse-search-box" class="form-inline mrgn-bttm-sm">
+        <?php } ?>
             <div class="form-group">
                 <label for="wb-srch-q" class="wb-inv">
                     <?php echo elgg_echo('wet:searchweb');?>
                 </label>
-                <!-- search bar -->
                 <input class="wb-srch-q form-control" name="q"  value="" size="27" maxlength="150" placeholder="<?php echo elgg_echo('wet:searchgctools');?>">
-                <!--<datalist id="wb-srch-q-ac"> -->
-                    <!--[if lte IE 9]><select><![endif]-->
-                    <!--[if lte IE 9]></select><![endif]-->
-                <!-- </datalist> -->
 
-                <!-- hidden forms i guess -->
-                <input type="hidden" name="p"  value="1" size="5" maxlength="10">
-                <input type="hidden" name="a"  value="s" size="5" maxlength="10">
-                <input type="hidden" name="sa"  value="" size="5" maxlength="10">
-                <input type="hidden" name="t"  value="b" size="5" maxlength="10">
-                <input type="hidden" name="chk1"  value="False" size="5" maxlength="10">
-                <input type="hidden" name="chk2"  value="False" size="5" maxlength="10">
-                <input type="hidden" name="chk3"  value="True" size="5" maxlength="10">
+                <input type="hidden" name="a"  value="s">
+                <input type="hidden" name="s"  value="3">
+                <input type="hidden" name="chk4"  value="True">
 
             </div>
             <div class="form-group submit">
                 <!-- search button -->
-                <button type="submit" class="btn btn-primary btn-small">
+                <button type="submit" class="btn btn-primary btn-small" name="wb-srch-sub">
                     <span class="glyphicon-search glyphicon"></span>
                     <span class="wb-inv"> <?php echo elgg_echo('wet:searchHead');?> </span>
                 </button>
             </div>
         </form>
     </section>
-
-
-    <!-- 
-
-name="wb-srch-sub"
-http://intranet.canada.ca/search-recherche/query-recherche-eng.aspx?
-p=1&a=s&sa=&t=b&q=christine+yu&
-chk1=False& chk2=False& chk3=True
-
-    -->

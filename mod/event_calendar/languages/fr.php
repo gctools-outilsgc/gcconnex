@@ -388,4 +388,6 @@ return array (
     
 'event_calendar:notify:summary' => 'Nouveaux événements: %s',
 
+'event_calendar:room_label' => 'Salle',
+
 );

@@ -15,9 +15,12 @@ $limit = get_input('sl');
 
 $label = elgg_echo('missions:search_for_opportunities');
 $limit_options = array(9,18,30,60,120);
+$placeholder = elgg_echo('missions:mission_simple_search_placeholder');
+
 if($_SESSION['mission_search_switch'] == 'candidate') {
 	$label = elgg_echo('missions:search_for_candidates');
 	$limit_options = array(10,25,50,100);
+	$placeholder = elgg_echo('missions:candidate_simple_search_placeholder');
 }
 
 if (elgg_is_sticky_form('searchsimplefill')) {
@@ -26,9 +29,11 @@ if (elgg_is_sticky_form('searchsimplefill')) {
 }
 
 $input_simple_text = elgg_view('input/text', array(
-    'name' => 'simple',
-    'value' => $simple,
-    'id' => 'search-mission-simple-text-input'
+	    'name' => 'simple',
+	    'value' => $simple,
+	    'id' => 'search-mission-simple-text-input',
+		'placeholder' => $placeholder,
+		'style' => 'width:400px;'
 ));
 
 $input_simple_limit = elgg_view('input/dropdown', array(

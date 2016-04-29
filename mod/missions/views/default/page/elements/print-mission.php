@@ -51,7 +51,7 @@ $manager_profile = elgg_view('output/url', array(
 			</div>
 		</h2>
 	</div>
-	<div>
+	<div name="mission-job-type">
 		<b><?php echo elgg_echo($mission->job_type); ?></b>
 	</div>
 	<div style="max-height:115px;overflow:hidden;" name="mission-description">
@@ -97,10 +97,10 @@ $manager_profile = elgg_view('output/url', array(
 	</div>
 	</br>
 	<div class="mission-user-card-info">
-		<div style="display:inline-block;margin-right:16px;">
+		<div style="float:left;margin-right:8px;">
 			<?php echo elgg_view_entity_icon($manager, 'small');?>
 		</div>
-		<div style="display:inline-block;" name="mission-manager">
+		<div name="mission-manager" style="text-align:left;">
 			<div>
 				<span name="mission-manager-name"><?php echo $manager_profile;?></span>
 			</div>

@@ -40,10 +40,7 @@ function cp_notifications_init() {
 
     // remove core notification settings portion of the main settings page
     elgg_unextend_view('forms/account/settings', 'core/settings/account/notifications');
-
 }
-
-
 
 // these notifications cannot be set from the settings page for the user, MUST be sent out
 function cp_overwrite_notification_hook($hook, $type, $value, $params) {
@@ -57,6 +54,35 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 	$senderGUID = elgg_get_site_entity()->guid;		// By default, the sender for notifications is the site
 
 	switch($cp_msg_type) {
+
+		case 'cp_wire_share': // thewire_tools/actions/add.php
+			$message = array(
+				'cp_msg_type' => $cp_msg_type,
+				'cp_shared_by' => $params['cp_shared_by'],
+				'cp_content' => $params['cp_content'],
+				'cp_recipient' => $params['cp_recipient'],
+				'cp_wire_url' => $params['cp_wire_url'],
+			);
+			// sharer subtype title
+			$subject = elgg_echo('cp_notify:wireshare:subject',array($params['cp_shared_by']->name,cp_translate_subtype($params['cp_content']->getSubtype()),$params['cp_content']->title),'en');
+			$subject .= ' | '.elgg_echo('cp_notify:wireshare:subject',array($params['cp_shared_by']->name,cp_translate_subtype($params['cp_content']->getSubtype()),$params['cp_content']->title),'fr');
+			$to_recipients[] = $params['cp_recipient'];
+			break;
+
+
+		case 'cp_messageboard': // messageboard/actions/add.php
+		error_log("hey hey hey : {$params['cp_recipient']->name}");
+			$message = array(
+				'cp_msg_type' => $cp_msg_type,
+				'cp_message_content' => $params['cp_message_content'],
+				'cp_writer_name' => $params['cp_writer']->name,
+				'cp_owner_profile' => $params['cp_recipient']->getURL(),
+			);
+			$subject = elgg_echo('cp_notify:messageboard:subject',array(),'en');
+			$subject .= ' | '.elgg_echo('cp_notify:messageboard:subject',array(),'fr');
+			$to_recipients[] = $params['cp_recipient'];
+			break;
+
 
 		case 'cp_content_mention': // mentions/start.php
 			$message = array(
@@ -76,18 +102,26 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_msg_type' => $cp_msg_type,
 				'cp_to_operator' => $params['cp_to_operator'],
 				'cp_who_made_operator' => $params['cp_who_made_operator'], 
+				'cp_group_name' => $params['cp_group_name'],
+				'cp_who_made_operator' => $params['cp_who_made_operator'],
+				'cp_group_url' => $params['cp_group_url'],
 			);
-			$subject = elgg_echo();
-			$subject .= ' | '.elgg_echo();
+			$subject = elgg_echo('cp_notify:subject:add_grp_operator',array($params['cp_group_name']),'en');
+			$subject .= ' | '.elgg_echo('cp_notify:subject:add_grp_operator',array($params['cp_group_name']),'fr');
 			$to_recipients[] = $params['cp_to_user'];
 			break;
 
 
 		case 'cp_grp_admin_transfer': // group_tools/lib/functions.php (this is transfer of group owner)
-		error_log("hey hey hey hey hey");
-			$message = array();
-			$subject = elgg_echo();
-			$subject .= ' | '.elgg_echo();
+			// note: gets called when you change owner through editing group
+			$message = array(
+				'cp_msg_type' => $cp_msg_type,
+				'cp_group_name' => $params['cp_group_name'],
+				'cp_group_url' => $params['cp_group_url'],
+				'cp_appointer' => $params['cp_appointer']
+			);
+			$subject = elgg_echo('cp_notify:subject:group_admin_transfer',array($params['cp_group_name']),'en');
+			$subject .= ' | '.elgg_echo('cp_notify:subject:group_admin_transfer',array($params['cp_group_name']),'fr');
 			$to_recipients[] = $params['cp_new_owner_user'];
 			break;
 
@@ -229,7 +263,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			break;
 
 
-		case 'cp_friend_request':
+		case 'cp_friend_request': // friend_request/lib/events.php
 			$message = array(
 				'cp_friend_request_from' => $params['cp_friend_requester'],
 				'cp_friend_request_to' => $params['cp_friend_receiver'],
@@ -273,15 +307,15 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$t_user = $params['cp_subscribers'];
 			foreach ($t_user as $s_uer)
 				$to_recipients[] = get_user($s_uer);
-			$subject = elgg_echo('cp_notify:subject:hjtopic',array(),'en'); 
-			$subject .= ' | '.elgg_echo('cp_notify:subject:hjtopic',array(),'fr');
+			$subject = elgg_echo('cp_notify:subject:hjtopic',array($params['cp_topic_author'],$params['cp_topic_title']),'en'); 
+			$subject .= ' | '.elgg_echo('cp_notify:subject:hjtopic',array($params['cp_topic_author'],$params['cp_topic_title']),'fr');
 			break;
 
 
 		case 'cp_event': // somewhere
 			$message = array(
 				'cp_event_request_to' => $params['cp_event_receiver'],
-				'cp_topic_url' => $params['cp_event_invite_url'],
+				'cp_event_invite_url' => $params['cp_event_invite_url'],
 				'startdate' => $params['startdate'],
 				'enddate' => $params['enddate'],
 				'event' => $params['event'],
@@ -297,19 +331,12 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$to_recipients[] = $params['cp_event_receiver'];
 
 
-
-			$mime_boundary = "----Meeting Booking----".MD5(TIME());
+			/*$mime_boundary = "----Meeting Booking----".MD5(TIME());
 			$template .= "--$mime_boundary\r\n";
 			$template .= "Content-Type: text/html; charset=UTF-8\n";
 			$template .= elgg_view('cp_notifications/email_template', $message);
-			$template .= "--$mime_boundary\r\n";
-
-			if (!$enddate) {
-				$enddate = date('j M Y g:i A', strtotime($startdate)+86340);
-				$oneday = true;
-			} else {
-				$oneday=false;
-			}
+			$template .= "--$mime_boundary\r\n";	*/
+		
 
 		    $ical = 'BEGIN:VCALENDAR' . "\r\n" .
 		    'PRODID:-//Microsoft Corporation//Outlook 10.0 MIMEDIR//EN' . "\r\n" .
@@ -338,12 +365,88 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 		    'LAST-MODIFIED:' . date("Ymd\TGis") . "\r\n" .
 		    'UID:'.$event->guid . "\r\n" .
 		    'DTSTAMP:'.date("Ymd\TGis"). "\r\n" .
-		    'DTSTART;TZID="Eastern Time":'.date("Ymd\THis", strtotime($startdate)). "\r\n" .
-		    'DTEND;TZID="Eastern Time":'.date("Ymd\THis", strtotime($enddate)). "\r\n" .
+		    'DTSTART;TZID="Eastern Time":'. date("Ymd\THis", strtotime($startdate))."\r\n" .
+		    'DTEND;TZID="Eastern Time":'. date("Ymd\THis", strtotime($enddate))."\r\n" .
 		    'TRANSP:OPAQUE'. "\r\n" .
 		    'SEQUENCE:1'. "\r\n" .
 		    'SUMMARY:'.$event->title."\r\n" .
-		    'LOCATION:'.$event->venue. "\r\n" .
+		    'LOCATION:'.$event->venue."\r\n" .
+		    'CLASS:PUBLIC'. "\r\n" .
+		    'PRIORITY:5'. "\r\n" .
+		    'BEGIN:VALARM' . "\r\n" .
+		    'TRIGGER:-PT15M' . "\r\n" .
+		    'ACTION:DISPLAY' . "\r\n" .
+		    'DESCRIPTION:Reminder' . "\r\n" .
+		    'END:VALARM' . "\r\n" .
+		    'END:VEVENT'. "\r\n" .
+		    'END:VCALENDAR'. "\r\n";
+		    'STATUS:CONFIRMED'. "\r\n";
+		   
+	/*	    $template .= 'Content-Type: text/calendar;name="meeting.ics";method=REQUEST'."\n";
+		    $template .= "Content-Transfer-Encoding: 8bit\n\n";
+		    $template .= $ical;
+		    $event = 'event';*/
+			break;
+
+case 'cp_event_ics': // somewhere
+			$message = array(
+				'cp_event_request_to' => $params['cp_event_receiver'],
+				'cp_event_invite_url' => $params['cp_event_invite_url'],
+				'startdate' => $params['startdate'],
+				'enddate' => $params['enddate'],
+				'event' => $params['event'],
+				'cp_msg_type' => $cp_msg_type
+			);
+			$event = $params['event'];
+			$startdate = $params['startdate'];
+			$enddate = $params['enddate'];
+			$from_user = $params['cp_event_requester'];
+			$to_user = $params['email_users'];
+			$subject = $event->title;
+			$type_event = $params['type_event'];
+			$to_recipients[] = $params['cp_event_receiver'];
+
+
+			$mime_boundary = "----Meeting Booking----".MD5(TIME());
+			$template .= "--$mime_boundary\r\n";
+			$template .= "Content-Type: text/html; charset=UTF-8\n";
+			$template .= elgg_view('cp_notifications/email_template', $message);
+			$template .= "--$mime_boundary\r\n";	
+		
+
+		    $ical = 'BEGIN:VCALENDAR' . "\r\n" .
+		    'PRODID:-//Microsoft Corporation//Outlook 10.0 MIMEDIR//EN' . "\r\n" .
+		    'METHOD:'.$type_event. "\r\n" .
+		    'VERSION:2.0' . "\r\n" .
+		    'BEGIN:VTIMEZONE' . "\r\n" .
+		    'TZID:Eastern Time' . "\r\n" .
+		    'BEGIN:STANDARD' . "\r\n" .
+		    'DTSTART:20091101T020000' . "\r\n" .
+		    'RRULE:FREQ=YEARLY;INTERVAL=1;BYDAY=1SU;BYMONTH=11' . "\r\n" .
+		    'TZOFFSETFROM:-0400' . "\r\n" .
+		    'TZOFFSETTO:-0500' . "\r\n" .
+		    'TZNAME:EST' . "\r\n" .
+		    'END:STANDARD' . "\r\n" .
+		    'BEGIN:DAYLIGHT' . "\r\n" .
+		    'DTSTART:20090301T020000' . "\r\n" .
+		    'RRULE:FREQ=YEARLY;INTERVAL=1;BYDAY=2SU;BYMONTH=3' . "\r\n" .
+		    'TZOFFSETFROM:-0500' . "\r\n" .
+		    'TZOFFSETTO:-0400' . "\r\n" .
+		    'TZNAME:EDST' . "\r\n" .
+		    'END:DAYLIGHT' . "\r\n" .
+		    'END:VTIMEZONE' . "\r\n" .	
+		    'BEGIN:VEVENT' . "\r\n" .
+		    /*'ORGANIZER;CN="steph4104":MAILTO:stephanie.lefebvre@tbs-sct.gc.ca'."\r\n" .
+		    'ATTENDEE;CN="'.get_loggedin_user()->username.'";ROLE=REQ-PARTICIPANT;RSVP=TRUE:MAILTO:stephanie.lefebvre@tbs-sct.gc.ca'. "\r\n" .*/
+		    'LAST-MODIFIED:' . date("Ymd\TGis") . "\r\n" .
+		    'UID:'.$event->guid . "\r\n" .
+		    'DTSTAMP:'.date("Ymd\TGis"). "\r\n" .
+		    'DTSTART;TZID="Eastern Time":'. date("Ymd\THis", strtotime($startdate))."\r\n" .
+		    'DTEND;TZID="Eastern Time":'. date("Ymd\THis", strtotime($enddate))."\r\n" .
+		    'TRANSP:OPAQUE'. "\r\n" .
+		    'SEQUENCE:1'. "\r\n" .
+		    'SUMMARY:'.$event->title."\r\n" .
+		    'LOCATION:'.$event->venue."\r\n" .
 		    'CLASS:PUBLIC'. "\r\n" .
 		    'PRIORITY:5'. "\r\n" .
 		    'BEGIN:VALARM' . "\r\n" .
@@ -361,7 +464,6 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 		    $event = 'event';
 			break;
 
-
 		case 'cp_hjpost': // gcforums/actions/gcforums/create.php
 			$message = array(
 				'cp_hjpost_author' => $params['cp_topic_author'],
@@ -373,8 +475,8 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$t_user = $params['cp_subscribers'];
 			foreach ($t_user as $s_uer)
 				$to_recipients[] = get_user($s_uer);
-			$subject = elgg_echo('cp_notify:subject:hjpost',array(),'en'); 
-			$subject .= ' | '.elgg_echo('cp_notify:subject:hjpost',array(),'fr');
+			$subject = elgg_echo('cp_notify:subject:hjpost',array($params['cp_topic_author'],$params['cp_topic_title']),'en'); 
+			$subject .= ' | '.elgg_echo('cp_notify:subject:hjpost',array($params['cp_topic_author'],$params['cp_topic_title']),'fr');
 			break;
 
 
@@ -387,7 +489,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				
 		if ($to_recipient->guid != elgg_get_logged_in_user_guid()) { 
 
-			if ($cp_msg_type == 'cp_event') { // for now
+			if (($cp_msg_type == 'cp_event') || ($cp_msg_type == 'cp_event_ics') ) { // for now
 				mail($to_recipient,$subject,$template,cp_get_headers($event)); // be careful of this line, event may be null
 			} else {
 				mail($to_recipient->email,$subject,$template,cp_get_headers($event)); // be careful of this line, event may be null
@@ -543,6 +645,10 @@ function cp_create_notification($event, $type, $object) {
 	$to_recipients = array();
 
 	switch ($object->getSubtype()) {
+		case 'thewire':
+			error_log('>>>>>>>>>>> >>>>>>>>> >>>>>>>>>>> reshare:'.$reshare);
+			break;
+
 		case 'discussion_reply':
 		case 'comment':	// when someone makes a comment in an entity
 			if (elgg_is_active_plugin('mentions') && $object->getSubtype() !== 'messages') // if mentions plugin is enabled... check to see if there were any mentions
@@ -561,8 +667,10 @@ function cp_create_notification($event, $type, $object) {
 			// prepare all the emails that needs to be sent
 			$users = elgg_get_entities_from_relationship($options);
 			
-			foreach ($users as $user) 
-				$to_recipients_email[$user->guid] = $user;
+			foreach ($users as $user) {
+				if (has_access_to_entity($container_entity,$$user))	// cyu - check if user has access to this entity (bc can be private or group only)
+					$to_recipients_email[$user->guid] = $user;
+			}
 			
 			// Users subscribed to recieve notifications by site message
 			$options = array(
@@ -575,9 +683,10 @@ function cp_create_notification($event, $type, $object) {
 			// prepare all the emails that needs to be sent
 			$users = elgg_get_entities_from_relationship($options);
 			
-			foreach ($users as $user) 
-				$to_recipients_message[$user->guid] = $user;
-		
+			foreach ($users as $user) {
+				if (has_access_to_entity($container_entity,$user))
+					$to_recipients_message[$user->guid] = $user;
+			}
 			
 			$reply_author = get_user($object->owner_guid);
 			
@@ -630,22 +739,29 @@ function cp_create_notification($event, $type, $object) {
 
 				$users = elgg_get_entities_from_relationship($options);
 
-
-				foreach ($users as $user)
-					$to_recipients_email[$user->guid] = $user;
+				foreach ($users as $user) {
+					if (has_access_to_entity($object,$user)) {
+						error_log("{$user->username} has access to {$object->getGUID()}");
+						$to_recipients_email[$user->guid] = $user;
+					}
+				}
 
 				// Users subscribed to recieve notifications by site message
 				$options = array(
 					'relationship' => 'cp_subscribed_to_site_mail',
-					'relationship_guid' => $object->getContainerGUID(),
+					'relationship_guid' => $object,
 					'inverse_relationship' => true,
 					'limit' => 0	// no limit
 				);
 
 				$users = elgg_get_entities_from_relationship($options);
-				foreach ($users as $user)
-					$to_recipients_message[$user->guid] = $user;
-			}
+
+				foreach ($users as $user) {
+					if (has_access_to_entity($object,$user)) {
+						$to_recipients_message[$user->guid] = $user;
+					}
+				}
+			} // end if instance of object
 
 
 			//*** users subscribed to this user ***//
@@ -661,8 +777,12 @@ function cp_create_notification($event, $type, $object) {
 			// users subscribed to this user
 			$user_subscribers = elgg_get_entities_from_relationship($options_usr);
 		
-			foreach ($user_subscribers as $user)
-				$to_recipients_email[$user->guid] = $user;
+			foreach ($user_subscribers as $user) {
+				if (has_access_to_entity($object,$user)) {
+					error_log("{$user->username} has access to {$object->getGUID()}");
+					$to_recipients_email[$user->guid] = $user;
+				}
+			}
 
 			// site message
 				$options_usr = array(
@@ -676,9 +796,10 @@ function cp_create_notification($event, $type, $object) {
 			// users subscribed to this user
 			$user_subscribers = elgg_get_entities_from_relationship($options_usr);
 		
-			foreach ($user_subscribers as $user)
-				$to_recipients_message[$user->guid] = $user;
-
+			foreach ($user_subscribers as $user) {
+				if (has_access_to_entity($object,$user))
+					$to_recipients_message[$user->guid] = $user;
+			}
 			
 			//*** END of users subscribed to this user code ***//
 
@@ -713,40 +834,6 @@ function cp_create_notification($event, $type, $object) {
 	}
 
 	$template = elgg_view('cp_notifications/email_template', $message); // pass in the information into the template to prepare the notification
-	
-	/*
-    if ($cp_mentioned_users) { // if there are users who are mentioned, send out notifications
-		foreach ($cp_mentioned_users as $cp_mentioned_user) {
-
-			error_log(">>>> >>>>>>>>> >>>>>> >>>>>> cyu - mentions!!!");
-
-			$user_mentioned = preg_replace('/[^A-Za-z1-9\.\-]/','',$cp_mentioned_user);	// there will always be that extra special character to remove
-			$user_mentioned = get_user_by_username($user_mentioned);	// get the user entity through username
-
-			$user_mentioner = $object->getOwnerGUID();
-			$user_mentioner = get_user($user_mentioner);
-
-			$subject_mention = elgg_echo('cp_notify:subject:mention',array($user_mentioner->name));
-			$subject_mention .= ' | '.elgg_echo('cp_notify:subject:mention',array($user_mentioner->name));
-
-			$message_mention = array('cp_topic_title' => $object->getContainerEntity()->title,
-			                       'cp_topic_author' => $object->owner_guid,
-			                       'cp_topic_description' => $object->description,
-			                       'cp_topic_url' => $object->getURL(),
-			                       'cp_msg_type' => 'cp_mention_type'
-			       );
-
-			$template_mention = elgg_view('cp_notifications/email_template', $message_mention);
-
-
-			if (elgg_get_plugin_user_setting("cpn_mentions_email", $user->guid, 'cp_notifications') === 'mentions_email')	// check if user enabled notification for mentions (email notifications)
-				mail($user_mentioned->email,$subject_mention,$template,cp_get_headers());
-		
-			if (elgg_get_plugin_user_setting("cpn_mentions_site", $user->guid, 'cp_notifications') === 'mentions_site') // check if user wants notifications for mentions (site messages)
-				messages_send($subject_mention, $template, $user_mentioned->getGUID(), $site->guid, 0, true, false);		
-		}
-    }
-    */
 
 
     // send out emails

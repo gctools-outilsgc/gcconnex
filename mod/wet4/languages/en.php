@@ -14,7 +14,7 @@ return array(
   'wet:search'=>"Search and menus",
   'wet:searchHead'=>"Search",
   'wet:searchweb'=>"Search website",
-  'wet:searchgctools'=>"Search GCconnex",
+  'wet:searchgctools'=>"Search", // cyu - modified as per rajeev's request
   'wet:more'=>"More",
   'wet:topicmenu'=>"Topic menu",
   'wet:youarehere'=>"You are here:",
@@ -30,7 +30,8 @@ return array(
   'wet:footGCtools' => 'GCTools',
   'wet:barGCpedia'=>'pedia',
   'wet:collapseWidget' => 'Collapse / Open %s',
-  'wet:gcintranetLink' => 'http://intranet.canada.ca/index-eng.asp',
+  'wet:gcintranetLink-toolsHead' => 'http://intranet.canada.ca/index-eng.asp?utm_source=gcconnex&utm_medium=gctools-banner&utm_campaign=generic',
+  'wet:gcintranetLink-toolsFoot' => 'http://intranet.canada.ca/index-eng.asp?utm_source=gcconnex&utm_medium=gcconnex-footer&utm_campaign=generic',
   'wet:gcpediaLink' => 'http://www.gcpedia.gc.ca/wiki/?setlang=en',
   'wet:tutorialLink'=>'http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/See_All',
   'wet:groupLoading'=>'Loading content',

@@ -12,25 +12,34 @@
  */
 elgg_load_js('typeahead'); 
 
+$no_delete = $vars['no_delete'];
+
 $numerator = $_SESSION['mission_skill_input_number'];
 
+$name = 'key_skills_' . $numerator;
+if($vars['name_override']) {
+	$name = $vars['name_override'];
+}
+
 $add_skill_field = elgg_view('input/text', array(
-		'name' => 'key_skills_' . $numerator,
+		'name' => $name,
 		'value' => $vars['value'],
 		'class' => 'mission-auto-skill',
 		'id' => 'mission-skills-text-input-' . $numerator,
 		'style' => 'display:inline;'
 ));
 
-$add_skill_button = elgg_view('output/url', array(
-		'text' => ' ' . elgg_echo('missions:delete'),
-		'class' => 'elgg-button btn fa fa-times-circle',
-		'id' => 'missions-skills-button-delete-' . $numerator,
-		'onclick' => 'delete_skill_field(this)',
-		'style' => 'display:inline;'
-));
-
-echo '<div id="missions-skills-division-' . $numerator . '">' . $add_skill_field . $add_skill_button . '</div>';
+if(!$no_delete) {
+	$delete_skill_button = elgg_view('output/url', array(
+			'text' => ' ' . elgg_echo('missions:delete'),
+			'class' => 'elgg-button btn fa fa-times-circle',
+			'id' => 'missions-skills-button-delete-' . $numerator,
+			'onclick' => 'delete_skill_field(this)',
+			'style' => 'display:inline;'
+	));
+}
+	
+echo '<div id="missions-skills-division-' . $numerator . '">' . $add_skill_field . $delete_skill_button . '</div>';
 
 $_SESSION['mission_skill_input_number'] = $numerator + 1;
 ?>

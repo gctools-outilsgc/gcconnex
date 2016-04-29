@@ -16,10 +16,10 @@ if ($liked_entities) {
 	$guids_to_like_count = array();
 	foreach ($liked_entities as $entity) {
 
-        //if($entity->getSubtype() == 'thewire'){
+        if($entity->getType() != 'group'){
             $guids_to_entities[$entity->guid] = $entity;
             $guids_to_like_count[$entity->guid] = $entity->countAnnotations('likes');
-        //}
+        }
 	}
 	arsort($guids_to_like_count);
 
