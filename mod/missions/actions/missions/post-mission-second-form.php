@@ -13,9 +13,11 @@
 elgg_make_sticky_form('secondfill');
 
 $err = '';
+$first_form = elgg_get_sticky_values('firstfill');
 $second_form = elgg_get_sticky_values('secondfill');
 
 // Error checking function.
+$err .= mm_first_post_error_check($first_form);
 $err .= mm_second_post_error_check($second_form);
 
 if ($err == '') {

@@ -8,7 +8,7 @@
  */
 
 /*
- * Page for messaging the manager of a mission or sharing it with a friend.
+ * Page for messaging the manager of a mission, sharing a mission with a friend, sharing a mission with The Wire, or prompting users to opt in.
  */
 gatekeeper();
 
@@ -21,10 +21,11 @@ $switch_segment = array_pop($blast_radius);
 $highlight_one = false;
 $highlight_two = false;
 
+// Sharing a mission can done with another user or with The Wire
 switch($switch_segment) {
 	case 'wire':
 		if($entity->type == 'user') {
-			
+			// Not in use at the moment.
 		}
 		else if($entity->type == 'object' && get_subtype_from_id($entity->subtype) == 'mission') {
 			$main_content = elgg_view_form('missions/wire-post', array(), array('entity_subject' => $entity)) . '</section>';
@@ -36,21 +37,19 @@ switch($switch_segment) {
 		$recipient_username = '';
 		$message_subject = '';
 		$message_body = '';
-		// If the passed guid corresponds to a user then the manager is being emailed.
+		// If the passed GUID corresponds to a user then it's a message to a user about opting in to Micro-Missions
 		if($entity->type == 'user') {
 			$recipient_username = $entity->username;
-			$title = elgg_echo('missions:email_manager');
-		}
-		// If the passed guid corrseponds to a mission then a mission is being shared.
-		else if($entity->type == 'object' && get_subtype_from_id($entity->subtype) == 'mission') {
-			$message_body = elgg_echo('missions:check_this_mission', array($entity->job_title, $entity->getURL()));
-			$message_subject = $entity->job_title;
-			$title = elgg_echo('missions:share_with_colleague');
-		}
-		else {
+			//$title = elgg_echo('missions:email_manager');
 			$message_body = elgg_echo('missions:check_micro_missions');
 			$message_subject = elgg_echo('missions:invite_to_opt_in');
 			$title = elgg_echo('missions:invite_to_opt_in');
+		}
+		// If the passed GUID corrseponds to a mission then a mission is being shared.
+		else if($entity->type == 'object' && get_subtype_from_id($entity->subtype) == 'mission') {
+			$message_body = elgg_echo('missions:check_this_mission', array(elgg_get_excerpt($entity->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions')), $entity->getURL()));
+			$message_subject = elgg_get_excerpt($entity->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'));
+			$title = elgg_echo('missions:share_with_colleague');
 		}
 		
 		$main_content = '<div class="col-sm-8">' . elgg_view_form('messages/send', array(), array(
@@ -70,6 +69,7 @@ $navigation_tabs = array(
 		)
 );
 
+// Only show The Wire sharing when The Wire plugin is active.
 if(elgg_is_active_plugin('thewire')) {
 	$navigation_tabs[1] = array(
 			'text' => elgg_echo('missions:the_wire_post'),
@@ -81,7 +81,7 @@ if(elgg_is_active_plugin('thewire')) {
 
 elgg_push_breadcrumb(elgg_echo('missions:micromissions'), elgg_get_site_url() . 'missions/main');
 if($entity_guid != 0) {
-	elgg_push_breadcrumb($entity->job_title, $entity->getURL());
+	elgg_push_breadcrumb(elgg_get_excerpt($entity->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions')), $entity->getURL());
 }
 elgg_push_breadcrumb($title);
 

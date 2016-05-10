@@ -6,7 +6,10 @@
  * License: Creative Commons Attribution 3.0 Unported License
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
- 
+
+/*
+ * Button which saves an analytics graph as an image.
+ */
 $save_as_image_button = elgg_view('output/url', array(
 		'text' => ' ' . elgg_echo('missions:save_as_image'),
 		'class' => 'elgg-button btn btn-default',

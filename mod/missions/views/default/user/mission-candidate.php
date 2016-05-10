@@ -59,12 +59,24 @@ if($user->opt_in_missions == 'gcconnex_profile:opt:yes') {
 	if($mission_guid != 0) {
 		$mission = get_entity($mission_guid);
 		if($user->guid != $mission->owner_guid) {
-			$button_content = elgg_view('output/url', array(
-			        'href' => elgg_get_site_url() . 'action/missions/invite-user?aid=' . $user->guid . '&mid=' . $mission_guid,
-			        'text' => elgg_echo('missions:invite_user_to_mission'),
-					'is_action' => true,
-			        'class' => 'elgg-button btn btn-default'
-		    ));
+			if(!check_entity_relationship($mission->guid, 'mission_tentative', $user->guid)
+					&& !check_entity_relationship($mission->guid, 'mission_applied', $user->guid)
+					&& !check_entity_relationship($mission->guid, 'mission_accepted', $user->guid)) {
+				$button_content = elgg_view('output/url', array(
+				        'href' => elgg_get_site_url() . 'action/missions/invite-user?aid=' . $user->guid . '&mid=' . $mission_guid,
+				        'text' => elgg_echo('missions:invite_user_to_mission'),
+						'is_action' => true,
+				        'class' => 'elgg-button btn btn-default'
+			    ));
+			}
+			else {
+				$button_content .= elgg_view('output/url', array(
+				        'href' => '',
+				        'text' => elgg_echo('missions:already_invited'),
+				        'class' => 'elgg-button btn btn-default',
+						'disabled' => true
+			    ));
+			}
 		}
 	}
 	else {
@@ -84,7 +96,7 @@ if($user->opt_in_missions == 'gcconnex_profile:opt:yes') {
 }
 else {
 	$button_content = elgg_view('output/url', array(
-			'href' => elgg_get_site_url() . 'missions/message-share/0',
+			'href' => elgg_get_site_url() . 'missions/message-share/' . $user->guid,
 			'text' => elgg_echo('missions:invite_to_opt_in'),
 			'class' => 'elgg-button btn btn-default'
 	));

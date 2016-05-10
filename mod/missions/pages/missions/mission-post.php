@@ -14,6 +14,12 @@
 // This sends users who are not logged in back to the gcconnex login page
 gatekeeper();
 
+$disclaimer_uncheck = $_SESSION['mission_uncheck_post_mission_disclaimer'];
+
+if(elgg_get_logged_in_user_entity()->opt_in_missions != 'gcconnex_profile:opt:yes') {
+	forward(elgg_get_site_url() . 'missions/main');
+}
+
 // Selects the last section of the current URI.
 $current_uri = $_SERVER['REQUEST_URI'];
 $exploded_uri = explode('/', $current_uri);
@@ -45,7 +51,10 @@ switch($last_segment) {
 			$_SESSION['tab_context'] = 'firstpost';
 		}
 		$highlight_one = true;
-		$form_choice = elgg_view_form('missions/post-mission-first-form', array('class' => 'form-horizontal'));
+		$form_choice = elgg_view_form('missions/post-mission-first-form', 
+				array('class' => 'form-horizontal'),
+				array('disclaimer_uncheck' => $disclaimer_uncheck)
+		);
 }
 
 // Decides which tabs are enabled and disabled.
@@ -89,6 +98,12 @@ elgg_push_breadcrumb($title);
 $content = elgg_view_title($title);
 
 $content .= elgg_view('page/elements/mission-tabs');
+
+/*$skill_match_override = $_SESSION['mission_skill_match_is_interlude'];
+if($skill_match_override) {
+	unset($_SESSION['mission_skill_match_is_interlude']);
+	$content .= elgg_view('page/elements/skill-match-interlude');
+}*/
 
 $content .= elgg_view('navigation/tabs', array(
 		'class' => 'elgg-menu elgg-menu-filter list-inline mrgn-lft-sm elgg-menu-filter-default mission-tab',

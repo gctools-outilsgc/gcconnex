@@ -179,38 +179,66 @@ if (empty($unpacked_time)) {
 if(!$vars['override_buttons']) {
     $button_set = mm_create_button_set_full($mission);
 }
+
+$mission_state = '';
+if($mission->state == 'completed' || $mission->state == 'cancelled') {
+	$mission_state = '(' . $mission->state . ')';
+}
+
+$creator = get_user($mission->owner_guid);
 ?>
 
 <div class="mission-printer">
 	<div>
-		<h2 name="mission-job-title"><?php echo $mission->job_title;?></h2>
+		<h2 name="mission-job-title">
+			<?php echo elgg_get_excerpt($mission->job_title, 200);?>
+			<div style="font-style:italic;font-size:small;display:inline;" name="mission-state">
+				<?php echo $mission_state; ?>
+			</div>
+		</h2>
 	</div>
 	<div>
 		<h5><?php echo elgg_echo('missions:opportunity_type') . ':';?></h5> 
 		<span name="mission-job-type"><?php echo elgg_echo($mission->job_type);?></span>
 	</div>
 	<div name="mission-description">
-		<?php echo $mission->descriptor;?>
+		<?php echo elgg_get_excerpt($mission->descriptor, 2000);?>
 	</div>
 	</br>
 	<div>
-		<h4><?php echo elgg_echo('mission:poster_information') . ':'; ?></h4>
+		<div>
+			<h4><?php echo elgg_echo('mission:creator_information') . ':';?></h4>
+		</div>
+		<div class="col-sm-offset-1">
+			<h5><?php echo elgg_echo('missions:name')  . ':';?></h5> 
+			<span name="creator-name"><?php echo elgg_get_excerpt($creator->name, 100);?></span>
+		</div>
+		<div class="col-sm-offset-1">
+			<h5><?php echo elgg_echo('missions:email')  . ':';?></h5> 
+			<span name="creator-email"><?php echo $creator->email;?></span>
+		</div>
 	</div>
-	<div class="col-sm-offset-1">
-		<h5><?php echo elgg_echo('missions:manager_name')  . ':';?></h5> 
-		<span name="mission-name"><?php echo $mission->name;?></span>
-	</div>
-	<div class="col-sm-offset-1">
-		<h5><?php echo elgg_echo('missions:department')  . ':';?></h5> 
-		<span name="mission-department-path"><?php echo $department_path;?></span>
-	</div>
-	<div class="col-sm-offset-1">
-		<h5><?php echo elgg_echo('missions:manager_email') . ':';?></h5> 
-		<span name="mission-email"><?php echo $mission->email;?></span>
-	</div>
-	<div class="col-sm-offset-1">
-		<h5><?php echo elgg_echo('missions:your_phone') . ':';?></h5> 
-		<span name="mission-phone"><?php echo $clean_phone;?></span>
+	</br>
+	<div>
+		<div>
+			<h4><?php echo elgg_echo('mission:manager_information') . ':'; ?></h4>
+		</div>
+		<div class="col-sm-offset-1">
+			<h5><?php echo elgg_echo('missions:name')  . ':';?></h5> 
+			<span name="mission-name"><?php echo elgg_get_excerpt($mission->name, 100);?></span>
+		</div>
+		<div class="col-sm-offset-1">
+			<h5><?php echo elgg_echo('missions:department')  . ':';?></h5> 
+			<span name="mission-department-path"><?php echo elgg_get_excerpt($department_path, 500);?></span>
+		</div>
+		<div class="col-sm-offset-1">
+			<h5><?php echo elgg_echo('missions:email') . ':';?></h5> 
+			<span name="mission-email"><?php echo elgg_get_excerpt($mission->email, 100);?></span>
+		</div>
+		<div class="col-sm-offset-1">
+			<h5><?php echo elgg_echo('missions:your_phone') . ':';?></h5> 
+			<span name="mission-phone"><?php echo $clean_phone;?></span>
+		</div>
 	</div>
 	</br>
 	<div>
@@ -255,7 +283,7 @@ if(!$vars['override_buttons']) {
 		</div>
 		<div class="col-sm-offset-1">
 			<h5><?php echo elgg_echo('missions:key_skills_opportunity') . ':';?></h5> 
-			<span name="mission-skills"><?php echo $clean_skills;?></span>
+			<span name="mission-skills"><?php echo elgg_get_excerpt($clean_skills, 500);?></span>
 		</div>
 	</div>
 	</br>

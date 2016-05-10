@@ -29,7 +29,7 @@ if (!$full_view && strpos($current_uri, 'view/' . $mission->guid) === false) {
 } else {
 	if(!$button_override) {
 		elgg_push_breadcrumb(elgg_echo('missions:micromissions'), elgg_get_site_url() . 'missions/main');
-		elgg_push_breadcrumb($mission->job_title);
+		elgg_push_breadcrumb(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions')));
 	}
 	
     $content = elgg_view('page/elements/print-mission-more', array(
@@ -41,6 +41,8 @@ if (!$full_view && strpos($current_uri, 'view/' . $mission->guid) === false) {
     $content .= elgg_view('page/elements/related-candidates', array(
     		'entity' => $mission
     ));
+
+    $content .= elgg_view('page/elements/mission-guid-line', array('mission_guid' => $mission->guid));
     
     echo $content;
 }

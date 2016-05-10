@@ -10,15 +10,14 @@
 /*
  * 
  */
-
-$check_closed = true;
-if($_SESSION['mission_refine_closed'] != 'SHOW_CLOSED') {
-	$check_closed = false;
+$check = false;
+if(elgg_get_logged_in_user_entity()->show_closed_missions == 'on') {
+	$checked = true;
 }
 
 $input_closed = elgg_view('input/checkbox', array(
 		'name' => 'check_closed',
-		'checked' => $check_closed,
+		'checked' => $checked,
 		'id' => 'show-my-close-missions-checkbox-input'
 ));
 ?>
@@ -39,6 +38,7 @@ $input_closed = elgg_view('input/checkbox', array(
 				'value' => elgg_echo('missions:save'),
 				'class' => 'elgg-button btn btn-primary',
 				'id' => 'mission-refine-form-submission-button'
-		)); 
+		));
+		echo elgg_view('page/elements/one-click-restrictor', array('restricted_element_id' => 'mission-refine-form-submission-button'));
 	?> 
 </div>

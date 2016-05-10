@@ -23,6 +23,8 @@ $third_form = elgg_get_sticky_values('thirdfill');
 $err = '';
 
 // Error checking function.
+$err .= mm_first_post_error_check($first_form);
+$err .= mm_second_post_error_check($second_form);
 $err .= mm_third_post_error_check($third_form);
 
 // A specialized function for checking for errors in the time fields
@@ -46,6 +48,7 @@ if ($err != '') {
     // Attaches the form data as metadata to the object
     $mission->name = $first_form['name'];
     
+    // If the organization tree is loaded, then the custom dropdown values will be processed and stored.
     if(mo_get_tree_root()) {
 	   	$department_string = mo_get_last_input_node($first_form);
 		$department_paths = mo_string_all_ancestors($department_string);
@@ -53,6 +56,7 @@ if ($err != '') {
 		$mission->department_path_english = $department_paths['english_path'];
 		$mission->department_path_french = $department_paths['french_path'];
     }
+    // If the organization tree is not loaded, then the basic free text entry will be stored.
     else {
     	$mission->department = $first_form['department'];
 		$mission->department_path_english = $first_form['department'];
@@ -64,9 +68,11 @@ if ($err != '') {
     
     $mission->job_title = $second_form['job_title'];
     $mission->job_type = $second_form['job_type'];
+	// Stores the value of program area selected unless it is other.
     if($second_form['job_area'] != 'missions:other') {
     	$mission->program_area = $second_form['job_area'];
     }
+	// When other is selected, the free text entry is stored instead.
     else {
     	$mission->program_area = $second_form['other_text'];
     }
@@ -84,7 +90,8 @@ if ($err != '') {
     $mission->time_commitment = $third_form['time_commitment'];
     $mission->time_interval = $third_form['time_interval'];
     $mission->timezone = $third_form['timezone'];
-    
+
+    // Stores the multiple skill fields in a comma separated string.
     $count = 0;
     $key_skills = '';
     $skill_array = array();
@@ -151,6 +158,26 @@ if ($err != '') {
     ));
     //add_to_river('river/object/mission/create', 'create', $mission->owner_guid, $mission->getGUID());
     
+    $_SESSION['mission_skill_match_array'] = $skill_array;
+    
+    if($third_form['hidden_java_state'] == 'noscript') {
+    	// Required action security tokens.
+    	$ts = time();
+    	$token = generate_action_token($ts);
+    	set_input('__elgg_ts', $ts);
+    	set_input('__elgg_token', $token);
+    	
+    	action('missions/post-mission-skill-match');
+    }
+    else {
+	    $_SESSION['mission_skill_match_is_interlude'] = true;
+	    system_message(elgg_echo('missions:saved_beginning_skill_match', array($key_skills)));
+	    forward(REFERER);
+    }
+    
+    
+    /*
+    // Finds a list of users who have the same skills that were input in the third form.
     $user_skill_match = array();
     foreach($skill_array as $skill) {
     	$options['type'] = 'object';
@@ -175,7 +202,7 @@ if ($err != '') {
     	}
     }
     
-    
+    // Turns the user GUIDs into user entities.
     foreach($user_skill_match as $key => $value) {
     	$user_skill_match[$key] = get_entity($value);
     }
@@ -193,10 +220,13 @@ if ($err != '') {
     
     unset($_SESSION['tab_context']);
     
+    // If the list of users with matching skills returned any results then those results are displayed.
     if(count($user_skill_match) > 0) {
     	forward(elgg_get_site_url() . 'missions/display-search-set');
     }
     else {
     	forward(elgg_get_site_url() . 'missions/main');
     }
+    */
 }
+?>

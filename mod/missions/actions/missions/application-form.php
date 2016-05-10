@@ -156,8 +156,9 @@ else {
 	    	'text' => elgg_echo('missions:offer')
 	));
 	
-	mm_notify_user($mission->owner_guid, $applicant->guid, $subject, $body);
+	mm_notify_user($mission->guid, $applicant->guid, $subject, $body);
 	
+	// Creates an applied relationship between user and mission if there is no relationship there already.
 	if(!check_entity_relationship($mission->guid, 'mission_accepted', $applicant->guid) && !check_entity_relationship($mission->guid, 'mission_tentative', $applicant->guid)) {
 		add_entity_relationship($mission->guid, 'mission_applied', $applicant->guid);
 	}
@@ -168,7 +169,7 @@ else {
 		$applicant->save();
 	}
 	
-	system_message(elgg_echo('missions:you_have_applied_to_mission', array($mission->job_title)));
+	system_message(elgg_echo('missions:you_have_applied_to_mission', array($mission->job_title, $mission->name)));
 	
 	elgg_clear_sticky_form('applicationfill');
 	forward(elgg_get_site_url() . 'missions/main');

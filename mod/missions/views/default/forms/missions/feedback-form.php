@@ -98,5 +98,6 @@ echo elgg_view('input/hidden', array(
 				'style' => 'float:right;',
 				'id' => 'mission-feedback-form-submission-button-' . $feedback_target->guid
 		)); 
+		echo elgg_view('page/elements/one-click-restrictor', array('restricted_element_id' => 'mission-feedback-form-submission-button-' . $feedback_target->guid));
 	?> 
 </div>

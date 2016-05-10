@@ -10,6 +10,8 @@ elgg_set_plugin_setting('search_result_per_page', 9, 'missions');
 elgg_set_plugin_setting('mission_developer_tools_on', 'NO', 'missions');
 elgg_set_plugin_setting('mission_front_page_limit', 3, 'missions');
 
+elgg_set_plugin_setting('mission_job_title_card_cutoff', 50, 'missions');
+
 $hour_string = ' ,00,01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23';
 elgg_set_plugin_setting('hour_string', $hour_string, 'missions');
 

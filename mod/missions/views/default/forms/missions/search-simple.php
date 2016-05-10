@@ -13,7 +13,6 @@
 $simple = get_input('ss');
 $limit = get_input('sl');
 
-$label = elgg_echo('missions:search_for_opportunities');
 $limit_options = array(9,18,30,60,120);
 $placeholder = elgg_echo('missions:mission_simple_search_placeholder');
 
@@ -50,8 +49,7 @@ $hidden_input = elgg_view('input/hidden', array(
 ?>
 
 <?php echo $hidden_input; ?>
-<div class="form-group">
-	<h4><label for="search-mission-simple-text-input"><?php echo $label . ':'; ?></label></h4>
+<div class="form-group" style="display:inline-block;margin-right:16px;">
 	<div style="display:inline-block;vertical-align:middle;">
 		<?php echo $input_simple_text; ?> 
 	</div>
@@ -62,7 +60,8 @@ $hidden_input = elgg_view('input/hidden', array(
 			echo elgg_view('input/submit', array(
 					'value' => elgg_echo('missions:search'),
 					'id' => 'mission-simple-search-form-submission-button'
-			)); 
+			));
+			echo elgg_view('page/elements/one-click-restrictor', array('restricted_element_id' => 'mission-simple-search-form-submission-button'));
 		?>
 	</div>
 </div>

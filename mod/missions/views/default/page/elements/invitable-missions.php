@@ -39,7 +39,7 @@ foreach($entity_list as $entity) {
 		echo '<div class="col-sm-12">';
 		echo '<div class="col-sm-5">' . elgg_view('output/url', array(
 				'href' => $entity->getURL(),
-				'text' => $entity->job_title,
+				'text' => elgg_get_excerpt($entity->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions')),
 				'class' => 'mission-emphasis mission-link-color',
 				'id' => 'missions-view-link-' . $entity->guid
 		)) . '</br>';

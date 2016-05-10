@@ -8,16 +8,16 @@
  */
 
 /*
- * Saves my missions refinement values in the session.
+ * Saves a session value which decides whether or not completed and cancelled missions are displayed in My Opportunities.
  */
- 
 $check_closed = get_input('check_closed');
+$user = elgg_get_logged_in_user_entity();
 if($check_closed == 'on') {
-	$_SESSION['mission_refine_closed'] = 'SHOW_CLOSED';
+	$user->show_closed_missions = true;
 	system_message(elgg_echo('missions:displaying_closed_missions'));
 }
 else {
-	unset($_SESSION['mission_refine_closed']);
+	$user->show_closed_missions = false;
 	system_message(elgg_echo('missions:not_displaying_closed_missions'));
 }
 

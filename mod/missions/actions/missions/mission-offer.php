@@ -7,6 +7,9 @@
 * Copyright: Her Majesty the Queen in Right of Canada, 2015
 */
 
+/*
+ * Action which offers a place in the mission to user with the applied relationship.
+ */
 $applicant = get_user(get_input('aid'));
 $mission = get_entity(get_input('mid'));
 $manager = get_user($mission->owner_guid);
@@ -18,7 +21,7 @@ if($mission == '') {
 }
 else {
 	if(!check_entity_relationship($mission->guid, 'mission_applied', $applicant->guid)) {
-		$err .= elgg_echo('missions:error:applicant_not_applied_to_mission');
+		$err .= elgg_echo('missions:error:applicant_not_applied_to_mission', array($applicant->name));
 	}
 	else {
 		$relationship_count = elgg_get_entities_from_relationship(array(
@@ -41,8 +44,8 @@ else {
 			));
 			 
 			$subject = $applicant->name . ' ' . elgg_echo('missions:participating_in', array($mission->job_title), $applicant->language);
-			$body = $applicant->name . ' ' . elgg_echo('missions:participating_in_more', array(), $applicant->language) . $mission_link . '.';
-			mm_notify_user($applicant->guid, $manager->guid, $subject, $body);
+			$body = $applicant->name . '. ' . elgg_echo('missions:participating_in_more', array(), $applicant->language) . $mission_link . '.';
+			mm_notify_user($applicant->guid, $mission->guid, $subject, $body);
 		}
 	}
 }

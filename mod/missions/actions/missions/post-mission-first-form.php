@@ -11,6 +11,7 @@
  * This action evaluates the data from the form for errors and forwards the user to the next tab.
  */
 elgg_make_sticky_form('firstfill');
+unset($_SESSION['mission_uncheck_post_mission_disclaimer']);
 
 $err = '';
 $first_form = elgg_get_sticky_values('firstfill');

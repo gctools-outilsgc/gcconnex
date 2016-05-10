@@ -32,13 +32,18 @@ foreach($mission_list as $mission) {
 	));
 	
 	$participants = get_entity_relationships($mission->guid);
-	
-	if(elgg_get_logged_in_user_guid() == $mission->owner_guid && count($feedback_search) != count($participants)) {
+	foreach($participants as $key => $relation) {
+		if($relation->relationship != 'mission_accepted') {
+			unset($participants[$key]);
+		}
+	}
+
+	if(elgg_get_logged_in_user_guid() == $mission->owner_guid && count($feedback_search) < count($participants)) {
 		$feedback_required .= '<div name="mission-unfinished-feedback-' . $mission->guid . '">';
 		
 		$feedback_required .= elgg_view('output/url', array(
  				'href' => elgg_get_site_url() . 'missions/mission-feedback/' . $mission->guid,
- 				'text' => $mission->job_title,
+ 				'text' => elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions')),
 				'id' => 'requires-feedback-link-mission-' . $mission->guid
  		));
 		
@@ -50,7 +55,7 @@ foreach($mission_list as $mission) {
 		
 		$feedback_required .= elgg_view('output/url', array(
 				'href' => elgg_get_site_url() . 'missions/mission-feedback/' . $mission->guid,
-				'text' => $mission->job_title,
+				'text' => elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions')),
 				'id' => 'requires-feedback-link-mission-' . $mission->guid
 		));
 		

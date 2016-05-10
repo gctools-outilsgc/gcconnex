@@ -11,6 +11,10 @@
  * Page which allows a user to annotate a mission with feedback.
  */
  gatekeeper();
+
+if(elgg_get_logged_in_user_entity()->opt_in_missions != 'gcconnex_profile:opt:yes') {
+	forward(elgg_get_site_url() . 'missions/main');
+}
  
  $current_uri = $_SERVER['REQUEST_URI'];
  $exploded_uri = explode('/', $current_uri);
@@ -19,10 +23,10 @@
  $title = elgg_echo('missions:submit_feedback');
  
  elgg_push_breadcrumb(elgg_echo('missions:micromissions'), elgg_get_site_url() . 'missions/main');
- elgg_push_breadcrumb($mission->job_title, $mission->getURL());
+ elgg_push_breadcrumb(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions')), $mission->getURL());
  elgg_push_breadcrumb($title);
  
- $title .= ' (' . $mission->job_title . ')';
+ $title .= ' (' . elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions')) . ')';
  
  $content = elgg_view_title($title);
 
@@ -33,6 +37,7 @@ $content .= elgg_view('page/elements/mission-tabs');
  
  // If the user is the mission manager then feedback forms will be generated for each participant.
  if(elgg_get_logged_in_user_guid() == $mission->owner_guid) {
+ 	$no_feedback_necessary = true;
  	$relationships = get_entity_relationships($mission->guid);
  	foreach($relationships as $relation) {
  		if($relation->relationship == 'mission_accepted') {
@@ -42,7 +47,8 @@ $content .= elgg_view('page/elements/mission-tabs');
  					'owner_guid' => elgg_get_logged_in_user_guid(),
  					'metadata_name_value_pairs' => array(
  							array('name' => 'recipient', 'value' => $relation->guid_two),
- 							array('name' => 'mission', 'value' => $mission->guid)
+ 							array('name' => 'mission', 'value' => $mission->guid),
+ 							array('name' => 'message', 'value' => 'sent')
  					)
  			));
  			$feedback = $feedback_search[0];
@@ -55,8 +61,13 @@ $content .= elgg_view('page/elements/mission-tabs');
 				 		'feedback_target' => get_user($relation->guid_two),
 		 				'feedback_count' => $count
 			 	));
+		 		$no_feedback_necessary = false;
  			}
  		}
+ 	}
+ 	if($no_feedback_necessary) {
+ 		system_message(elgg_echo('missions:all_feedback_finished', array($mission->job_title)));
+    	forward(elgg_get_site_url() . 'missions/main');
  	}
  }
  // If the user is a participant then a singled feedback form for the manager will be generated.
@@ -67,7 +78,8 @@ $content .= elgg_view('page/elements/mission-tabs');
  			'owner_guid' => elgg_get_logged_in_user_guid(),
  			'metadata_name_value_pairs' => array(
  					array('name' => 'recipient', 'value' => $mission->owner_guid),
- 					array('name' => 'mission', 'value' => $mission->guid)
+ 					array('name' => 'mission', 'value' => $mission->guid),
+ 					array('name' => 'message', 'value' => 'sent')
  			)
  	));
  	$feedback = $feedback_search[0];
@@ -79,6 +91,10 @@ $content .= elgg_view('page/elements/mission-tabs');
 		 		'entity' => $mission,
 		 		'feedback_target' => get_user($mission->owner_guid)
 		 ));
+ 	}
+ 	else {
+ 		system_message(elgg_echo('missions:all_feedback_finished', array($mission->job_title)));
+    	forward(elgg_get_site_url() . 'missions/main');
  	}
  }
  // If the user is unrelated to the mission then they will be sent away.

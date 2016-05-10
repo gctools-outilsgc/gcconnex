@@ -34,6 +34,9 @@ function mo_get_last_input_node($input_array) {
 		
 		return $return_string;
 	}
+	else if(empty($container) && !empty($input_array['other_node'])) {
+		return 'MOrg:0:' . $input_array['other_node'];
+	}
 	else {
 		return false;
 	}

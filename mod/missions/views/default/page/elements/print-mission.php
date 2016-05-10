@@ -22,9 +22,6 @@ $card_height = '450';
 if(!$vars['override_buttons']) {
     $button_set = mm_create_button_set_base($mission, false);
 }
-else {
-	$card_height = '400';
-}
 
 $mission_state = '';
 if($mission->state == 'completed' || $mission->state == 'cancelled') {
@@ -32,19 +29,25 @@ if($mission->state == 'completed' || $mission->state == 'cancelled') {
 }
 
 // Linking to the mission managers profile.
-$manager = get_entity($mission->owner_guid);
+/*$manager = get_entity($mission->owner_guid);
 $manager_profile = elgg_view('output/url', array(
 		'href' => elgg_get_site_url() . 'profile/' . $manager->username,
-		'text' => $mission->name,
+		'text' => $manager->name,
 		'id' => 'mission-user-link-' . $manager->guid
+));*/
+
+$manager_info = elgg_view('page/elements/mission-manager-info', array(
+		'mission' => $mission,
+		'container_class' => 'mission-user-card-info',
+		'grid_number' => '2'
 ));
 ?>
 
 <div class="mission-printer mission-less" style="height:<?php echo $card_height;?>px;" name="mission-object">
-	<div>
+	<div style="width:100%;overflow-x:auto;">
 		<h2>
-			<div style="display:inline" name="mission-job-title">
-				<?php echo $mission->job_title;?>
+			<div style="display:inline;" name="mission-job-title">
+				<?php echo elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'));?>
 			</div>
 			<div style="font-style:italic;font-size:small;display:inline;" name="mission-state">
 				<?php echo $mission_state; ?>
@@ -54,7 +57,7 @@ $manager_profile = elgg_view('output/url', array(
 	<div name="mission-job-type">
 		<b><?php echo elgg_echo($mission->job_type); ?></b>
 	</div>
-	<div style="max-height:115px;overflow:hidden;" name="mission-description">
+	<div style="max-height:115px;width:100%;overflow:hidden;" name="mission-description">
 		<?php echo $description_string;?>
 	</div>
 	</br>
@@ -96,19 +99,7 @@ $manager_profile = elgg_view('output/url', array(
 		</div>
 	</div>
 	</br>
-	<div class="mission-user-card-info">
-		<div style="float:left;margin-right:8px;">
-			<?php echo elgg_view_entity_icon($manager, 'small');?>
-		</div>
-		<div name="mission-manager" style="text-align:left;">
-			<div>
-				<span name="mission-manager-name"><?php echo $manager_profile;?></span>
-			</div>
-			<div>
-				<span name="mission-manager-department"><?php echo $manager->department;?></span>
-			</div>
-		</div>
-	</div>
+	<?php echo $manager_info; ?>
 	<div class="mission-button-set">
 		<?php
 			if (! $full_view) {

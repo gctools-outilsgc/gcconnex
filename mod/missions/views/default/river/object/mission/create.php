@@ -14,7 +14,7 @@ $object = $vars['item']->getObjectEntity();
 
 // URL to the display for the mission.
 $link = elgg_view('output/url', array(
-    'text' => $object->job_title,
+    'text' => elgg_get_excerpt($object->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions')),
     'href' => $object->getURL(),
 	'class' => 'mission-emphasis mission-link-color'
 ));

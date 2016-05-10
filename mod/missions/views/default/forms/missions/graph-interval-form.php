@@ -6,7 +6,10 @@
  * License: Creative Commons Attribution 3.0 Unported License
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
- 
+
+/*
+ * Form which allows users to designate a time period and interval for the analytics graph.
+ */
 $time_period = get_input('gitp');
 $start_month = get_input('gism');
 $start_year = get_input('gisy');
@@ -145,11 +148,12 @@ $input_graph_type = elgg_view('input/dropdown', array(
 <div style="min-height:150px;">
 	<?php 
 		echo elgg_view('input/submit', array(
-				'value' => elgg_echo('missions:save'),
+				'value' => elgg_echo('missions:graph'),
 				'class' => 'elgg-button btn btn-primary',
 				'style' => 'float:right;',
 				'id' => 'missions-graph-interval-form-submission-button'
 		));
+		echo elgg_view('page/elements/one-click-restrictor', array('restricted_element_id' => 'missions-graph-interval-form-submission-button'));
 	?>
 </div>
 

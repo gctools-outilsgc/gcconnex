@@ -77,7 +77,6 @@ else {
 		$date_array[0][1] = $final_end;
 	}
 	else {
-		
 		while(true) {
 			$new_index = count($date_array);
 			$new_start = date('Y-m-d', strtotime('+1 day', strtotime($date_array[$new_index - 1][1])));

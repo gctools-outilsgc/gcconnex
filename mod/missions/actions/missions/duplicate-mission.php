@@ -7,6 +7,9 @@
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
 
+/*
+ * Action which saves the mission in session for duplication in the post an opportunity forms.
+ */
 $_SESSION['mission_duplication_id'] = get_input('mid');
 $mission = get_entity($_SESSION['mission_duplication_id']);
 

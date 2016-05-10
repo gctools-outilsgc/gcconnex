@@ -10,6 +10,7 @@
 /*
  * Page content related to the user's missions. 
  */
+$user = elgg_get_logged_in_user_entity();
 if($_SESSION['mission_entities_per_page']) {
 	$entities_per_page = $_SESSION['mission_entities_per_page'];
 }
@@ -29,7 +30,7 @@ $temp_array_two = elgg_get_entities_from_relationship(array(
 $entity_list = array_merge($temp_array_one, $temp_array_two);
 $entity_list_original = $entity_list;
 
-if($_SESSION['mission_refine_closed'] != 'SHOW_CLOSED') {
+if(!$user->show_closed_missions) {
 	foreach($entity_list as $key => $entity) {
 		if($entity->state == 'completed' || $entity->state == 'cancelled') {
 			unset($entity_list[$key]);

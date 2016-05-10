@@ -136,7 +136,8 @@ $hidden_input = elgg_view('input/hidden', array(
 		echo elgg_view('input/submit', array(
 				'value' => elgg_echo('missions:search'),
 				'id' => 'mission-advanced-search-form-submission-button'
-		)); 
+		));
+		echo elgg_view('page/elements/one-click-restrictor', array('restricted_element_id' => 'mission-advanced-search-form-submission-button'));
 	?>
 </div>
 

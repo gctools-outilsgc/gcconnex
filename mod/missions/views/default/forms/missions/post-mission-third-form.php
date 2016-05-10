@@ -129,8 +129,19 @@ $add_skill_button = elgg_view('output/url', array(
 		'id' => 'add-skill-button',
 		'onclick' => 'add_skill_field()'
 ));
+
+$skill_match_override = $_SESSION['mission_skill_match_is_interlude'];
+if($skill_match_override) {
+	unset($_SESSION['mission_skill_match_is_interlude']);
+	echo elgg_view('page/elements/skill-match-interlude', array('submit_button_id' => 'mission-post-opportunity-third-form-submission-button'));
+}
 ?>
 
+<noscript>
+	<div>
+		<input name="hidden_java_state" value="noscript" type="hidden">
+	</div>
+</noscript>
 <h4><?php echo elgg_echo('missions:third_post_form_title'); ?></h4></br>
 <div class="form-group">
 	<label for='post-mission-skills-text-input' class="col-sm-3" style="text-align:right;">
@@ -200,7 +211,8 @@ $add_skill_button = elgg_view('output/url', array(
 				'class' => 'elgg-button btn btn-primary',
 				'style' => 'float:right;',
 				'id' => 'mission-post-opportunity-third-form-submission-button'
-		)); 
+		));
+		echo elgg_view('page/elements/one-click-restrictor', array('restricted_element_id' => 'mission-post-opportunity-third-form-submission-button'));
 	?> 
 </div>
 

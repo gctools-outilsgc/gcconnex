@@ -31,7 +31,9 @@ system_message(elgg_echo('missions:has_been_deleted', array($mission->job_title)
 
 $mission->delete();
 
+// If the admin tool is calling the action then the user is returned to the admin tool page.
 if($from_admin) {
 	forward(REFERER);
 }
+
 forward(elgg_get_site_url() . 'missions/main');

@@ -33,6 +33,7 @@ if ($err != '') {
 	
 	$mission->name = $edit_form['name'];
 	
+	// If the organization tree is loaded, then the custom dropdown values will be processed and stored.
 	if(mo_get_tree_root()) {
 		$department_string = mo_get_last_input_node($edit_form);
 		$department_paths = mo_string_all_ancestors($department_string);
@@ -40,6 +41,7 @@ if ($err != '') {
 		$mission->department_path_english = $department_paths['english_path'];
 		$mission->department_path_french = $department_paths['french_path'];
 	}
+	// If the organization tree is not loaded, then the basic free text entry will be stored.
 	else {
 		$mission->department = $edit_form['department'];
 		$mission->department_path_english = $edit_form['department'];
@@ -50,9 +52,11 @@ if ($err != '') {
 	$mission->phone = $edit_form['phone'];
 	$mission->job_title = $edit_form['job_title'];
 	$mission->job_type = $edit_form['job_type'];
+	// Stores the value of program area selected unless it is other.
 	if($edit_form['job_area'] != 'missions:other') {
 		$mission->program_area = $edit_form['job_area'];
 	}
+	// When other is selected, the free text entry is stored instead.
 	else {
 		$mission->program_area = $edit_form['other_text'];
 	}
@@ -68,6 +72,7 @@ if ($err != '') {
     $mission->time_commitment = $edit_form['time_commitment'];
     $mission->time_interval = $edit_form['time_interval'];
     
+    // Stores the multiple skill fields in a comma separated string.
     $count = 0;
     $key_skills = '';
     foreach($edit_form as $key => $value) {

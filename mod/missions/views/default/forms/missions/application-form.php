@@ -76,6 +76,7 @@ $input_email = elgg_view('input/text', array(
 				'class' => 'elgg-button btn btn-primary',
 				'style' => 'float:right;',
 				'id' => 'mission-application-form-submission-button'
-		)); 
+		));
+		echo elgg_view('page/elements/one-click-restrictor', array('restricted_element_id' => 'mission-application-form-submission-button'));
 	?> 
 </div>

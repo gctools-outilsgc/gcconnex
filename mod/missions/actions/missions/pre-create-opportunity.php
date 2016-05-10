@@ -6,12 +6,8 @@
  * License: Creative Commons Attribution 3.0 Unported License
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
- 
-/*
- * Action which switches between mission and candidate searching by changing a session variable.
- */
-$switch = get_input('switch');
 
-$_SESSION['mission_search_switch'] = $switch;
+$_SESSION['mission_uncheck_post_mission_disclaimer'] = true;
+unset($_SESSION['tab_context']);
 
-forward(REFERER);
+forward(elgg_get_site_url() . 'missions/mission-post');

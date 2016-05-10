@@ -39,9 +39,10 @@ $input_action_taken = elgg_view('input/dropdown', array(
 		<?php 
 			echo elgg_view('input/submit', array(
 					'value' => elgg_echo('missions:act'),
-					'id' => 'mission-simple-search-form-submission-button',
+					'id' => 'admin-mission-action-taken-form-submission-button',
 					'confirm' => elgg_echo('missions:correct_action_and_guid')
-			)); 
+			));
+		echo elgg_view('page/elements/one-click-restrictor', array('restricted_element_id' => 'admin-mission-action-taken-form-submission-button'));
 		?>
 	</div>
 </div>

@@ -9,6 +9,10 @@
 
 gatekeeper();
 
+if(elgg_get_logged_in_user_entity()->opt_in_missions != 'gcconnex_profile:opt:yes') {
+	forward(elgg_get_site_url() . 'missions/main');
+}
+
 $current_uri = $_SERVER['REQUEST_URI'];
 $blast_radius = explode('/', $current_uri);
 $department_index = mm_clean_url_segment(array_pop($blast_radius));

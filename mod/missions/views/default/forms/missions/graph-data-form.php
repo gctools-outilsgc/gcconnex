@@ -7,6 +7,9 @@
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
 
+/*
+ * Form which allows users to add a department to the analytics graph.
+ */
 $state_array = array('Open');
 if($vars['state_array']) {
 	$state_array = $vars['state_array'];
@@ -46,9 +49,10 @@ $current_count = count($_SESSION['mission_graph_data_array']);
 				'value' => elgg_echo('missions:add_department'),
 				'class' => 'elgg-button btn btn-primary',
 				'style' => 'float:right;',
-				'id' => 'mission-post-opportunity-first-form-submission-button',
+				'id' => 'mission-graph-data-form-submission-button',
 				'onclick' => 'mission_search_progressing()'
 		));
+		echo elgg_view('page/elements/one-click-restrictor', array('restricted_element_id' => 'mission-graph-data-form-submission-button'));
 	?>
 </div>
 

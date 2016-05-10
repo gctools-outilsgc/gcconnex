@@ -10,7 +10,6 @@
 /*
  * Action which retreats the state of the given mission to posted.
  */
-
 $mission_guid = get_input('mission_guid');
 $mission = get_entity($mission_guid);
 $from_admin = get_input('MISSION_ADMIN_ACTION_FLAG');
@@ -20,7 +19,8 @@ $mission->save;
 
 system_message(elgg_echo('missions:has_been_reopened', array($mission->job_title)));
 
+// If the admin tool is calling the action then the user is returned to the admin tool page.
 if($from_admin) {
 	forward(REFERER);	
-}
+
 forward($mission->getURL());

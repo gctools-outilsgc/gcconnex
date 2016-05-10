@@ -26,9 +26,7 @@ else {
 	    $err .= elgg_echo('missions:error:no_longer_invited');
 	}
 	else {
-		// Removes the tentative relationship.
-	    remove_entity_relationship($mission->guid, 'mission_tentative', $applicant->guid);
-	    
+		// Counts the number of users that are participating in the mission.
 	    $relationship_count = elgg_get_entities_from_relationship(array(
 	        'relationship' => 'mission_accepted',
 			'relationship_guid' => $mission->guid,
@@ -40,6 +38,9 @@ else {
 			$err .= elgg_echo('missions:error:mission_full');
 		}
 		else {
+			// Removes the tentative relationship.
+		    remove_entity_relationship($mission->guid, 'mission_tentative', $applicant->guid);
+		    
 			// Creates an accepted relationship between mission and applicant.
 			add_entity_relationship($mission->guid, 'mission_applied', $applicant->guid);
 	    
@@ -56,8 +57,9 @@ else {
 			    	'href' => elgg_get_site_url() . 'missions/mission-offer/' . $mission->guid . '/' . $applicant->guid,
 			    	'text' => elgg_echo('missions:offer')
 			));;
-			mm_notify_user($manager->guid, $applicant->guid, $subject, $body);
+			mm_notify_user($mission->guid, $applicant->guid, $subject, $body);
 			
+			// Opts in the candidate if they are not opted in already.
 			if($applicant->opt_in_missions != 'gcconnex_profile:opt:yes') {
 				$applicant->opt_in_missions = 'gcconnex_profile:opt:yes';
 				$applicant->save();
@@ -69,7 +71,6 @@ else {
 if ($err != '') {
     register_error($err);
 }
-// Returns the user to their inbox.
-//forward(elgg_get_site_url() . 'messages/inbox/' . $applicant->username);
+
 system_message(elgg_echo('missions:acceptance_has_been_sent', array($mission->job_title)));
 forward($mission->getURL());

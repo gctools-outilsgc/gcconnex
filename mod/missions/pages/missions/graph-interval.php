@@ -12,12 +12,17 @@
  */
 gatekeeper();
 
+if(elgg_get_logged_in_user_entity()->opt_in_missions != 'gcconnex_profile:opt:yes') {
+	forward(elgg_get_site_url() . 'missions/main');
+}
+
 unset($_SESSION['mission_graph_date_array']);
 unset($_SESSION['mission_graph_data_array']);
 unset($_SESSION['mission_graph_name_array']);
 
 $title = elgg_echo('missions:graph_interval');
 
+// If the organization tree is loaded then the user is informed via error.
 if(!mo_get_tree_root()) {
 	register_error(elgg_echo('missions:error:no_departments_loaded'));
 }

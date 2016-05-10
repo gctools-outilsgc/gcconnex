@@ -170,24 +170,41 @@ function mm_validate_time($day, $input_array)
  function mm_first_post_error_check($input_array) {
  	$err = '';
  	
+ 	$name_and_email_limit = 100;
+ 	
  	// Checks if the name field is empty then checks to see that there are no numbers in the name.
  	if (trim($input_array['name']) == '') {
  		$err .= elgg_echo('missions:error:name_needs_input') . "\n";
+ 		
+ 		if(strlen($input_array['name']) > $name_and_email_limit) {
+ 			$err .= elgg_echo('missions:error:exceeds_string_length', array(elgg_echo('missions:your_name'), $name_and_email_limit)) . "\n";
+ 		}
  	} 
- 	else {
+ 	/*else {
  		if (!mm_is_valid_person_name($input_array['name'])) {
  			$err .= elgg_echo('missions:error:name_no_numbers') . "\n";
  		}
- 	}
+ 	}*/
  	
  	// Checks if the department is empty.
- 	/*if (empty($input_array['department'])) {
+ 	if (!mo_get_last_input_node($input_array)) {
  		$err .= elgg_echo('missions:error:department_needs_input') . "\n";
- 	}*/
+ 	}
  	
  	// Checks if the email a valid email address according to a function defined above.
  	if (!filter_var($input_array['email'], FILTER_VALIDATE_EMAIL)) {
  		$err .= elgg_echo('missions:error:email_invalid') . "\n";
+ 	}
+ 	else {
+ 		if(strlen($input_array['email']) > $name_and_email_limit) {
+	 		$err .= elgg_echo('missions:error:exceeds_string_length', array(elgg_echo('missions:your_email'), $name_and_email_limit)) . "\n";
+	 	}
+	 	else {
+	 		$returned_users = get_user_by_email($input_array['email']);
+		 	if(count($returned_users) == 0) {
+		 		$err .= elgg_echo('missions:error:email_not_on_gcconnex', array($input_array['email']));
+		 	}
+	 	}
  	}
  	
  	// Checks if the phone number is a valid phone number according to a function defined above.
@@ -208,15 +225,24 @@ function mm_validate_time($day, $input_array)
  	if (trim($input_array['job_title']) == '') {
  		$err .= elgg_echo('missions:error:opportunity_title_needs_input') . "\n";
  	}
+ 	
+ 	$job_title_limit = 200;
+ 	if(strlen($input_array['job_title']) > $job_title_limit) {
+ 		$err .= elgg_echo('missions:error:exceeds_string_length', array(elgg_echo('missions:opportunity_title'), $job_title_limit)) . "\n";
+ 	}
+ 	
  	if (empty($input_array['job_type'])) {
  		$err .= elgg_echo('missions:error:opportunity_type_needs_input') . "\n";
  	}
+ 	
  	if (trim($input_array['start_date']) == '') {
  		$err .= elgg_echo('missions:error:start_date_needs_input') . "\n";
  	}
+ 	
  	if (trim($input_array['completion_date']) == '') {
  		$err .= elgg_echo('missions:error:end_date_needs_input') . "\n";
  	}
+ 	
  	if (trim($input_array['deadline']) == '') {
  		$err .= elgg_echo('missions:error:deadline_needs_input') . "\n";
  	}
@@ -234,6 +260,11 @@ function mm_validate_time($day, $input_array)
  		$err .= elgg_echo('missions:error:deadline_after_end') . "\n";
  	}
  	
+ 	$description_limit = 2000;
+ 	if(strlen($input_array['description']) > $description_limit) {
+ 		$err .= elgg_echo('missions:error:exceeds_string_length', array(elgg_echo('missions:opportunity_description'), $description_limit)) . "\n";
+ 	}
+ 	
  	return $err;
  }
  
@@ -243,14 +274,28 @@ function mm_validate_time($day, $input_array)
  function mm_third_post_error_check($input_array) {
  	$err = '';
  	
- 	// Checks to see if time commitment is empty.
- 	if (trim($input_array['time_commitment']) == '') {
- 		$err .= elgg_echo('missions:error:time_commitment_needs_input') . "\n";
- 	}
  	
  	// Checks to see if location is empty.
  	if (empty($input_array['location'])) {
  		$err .= elgg_echo('missions:error:location_needs_input') . "\n";
+ 	}
+ 	
+ 	// Checks to see if time commitment is empty.
+ 	if (trim($input_array['time_commitment']) == '') {
+ 		$err .= elgg_echo('missions:error:time_commitment_needs_input') . "\n";
+ 	}
+ 	else {
+ 		if(!is_numeric($input_array['time_commitment'])) {
+	 		$err .= elgg_echo('missions:error:time_commitment_not_number') . "\n";
+	 	}
+	 	else {
+		 	if($input_array['time_commitment'] >= 100) {
+		 		$err .= elgg_echo('missions:error:excessive_time_commitment') . "\n";
+		 	}
+		 	if($input_array['time_commitment'] <= 0) {
+		 		$err .= elgg_echo('missions:error:negative_time_commitment') . "\n";
+		 	}
+	 	}
  	}
  	
  	return $err;

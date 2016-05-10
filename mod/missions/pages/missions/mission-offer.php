@@ -7,7 +7,14 @@
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
 
+/*
+ * Page which allows the mission manager to accept the applicant into their Micro-Mission.
+ */
 gatekeeper();
+
+if(elgg_get_logged_in_user_entity()->opt_in_missions != 'gcconnex_profile:opt:yes') {
+	forward(elgg_get_site_url() . 'missions/main');
+}
 
 $current_uri = $_SERVER['REQUEST_URI'];
 $blast_radius = explode('/', $current_uri);
@@ -16,16 +23,15 @@ $mission = get_entity(array_pop($blast_radius));
 
 $err = '';
 
+// Error checking to make sure that the applicant, manager, and relationship between mission and candidate are correct
 if($applicant->type != 'user') {
 	$err .= elgg_echo('missions:error:entity_not_a_user');
 }
-
 if(elgg_get_logged_in_user_guid() != $mission->owner_guid) {
-	$err .= elgg_echo('missions:error:you_do_not_own_this_mission');
+	$err .= elgg_echo('missions:error:you_do_not_own_this_mission', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))));
 }
-
 if(!check_entity_relationship($mission->guid, 'mission_applied', $applicant->guid)) {
-	$err .= elgg_echo('missions:error:applicant_not_applied_to_mission');
+	$err .= elgg_echo('missions:error:applicant_not_applied_to_mission', array($applicant->name));
 }
 
 if($err != '') {
@@ -44,14 +50,9 @@ else {
 
 	$content .= elgg_view_entity($applicant);
 	
-	$content .= elgg_view('output/url', array(
-			'href' => elgg_get_site_url() . 'action/missions/mission-offer?aid=' . $applicant->guid . '&mid=' . $mission->guid,
-			'text' => elgg_echo('missions:offer'),
-			'is_action' => true,
-			'class' => 'elgg-button btn btn-success',
-			'style' => 'margin:8px;'
-	));
+	$content .= mm_offer_button($mission, $applicant);
 	
+	// Button which removes the relationship between the applicant and the mission.
 	$content .= elgg_view('output/url', array(
 			'href' => elgg_get_site_url() . 'action/missions/remove-applicant?aid=' . $applicant->guid . '&mid=' . $mission->guid,
 			'text' => elgg_echo('missions:remove'),

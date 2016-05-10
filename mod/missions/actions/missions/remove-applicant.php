@@ -33,14 +33,14 @@ else {
     $body = '';
     // Notifies the manager that the candidate withdrew from the mission.
     if(elgg_get_logged_in_user_guid() == $aid) {
-    	$target = $mission->owner_guid;
+    	$target = $mission->guid;
     	$sender = $aid;
     	$subject = elgg_echo('missions:withdrew_from_mission', array($user->name, $mission->title), $user->language);
     }
     // Notifies the candidate that they were removed from the mission.
     else {
     	$target = $aid;
-    	$sender = $mission->owner_guid;
+    	$sender = $mission->guid;
     	$subject = elgg_echo('missions:removed_from_mission', array($mission->title), $user->language);
     }
     mm_notify_user($target, $sender, $subject, $body);

@@ -7,6 +7,9 @@
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
 
+/*
+ * Form which allows users to send a pre-made declination message to the mission manager with an attached reason.
+ */
 $mission = $vars['mission'];
 $applicant = $vars['applicant'];
 
@@ -48,5 +51,6 @@ $hidden_applicant_input = elgg_view('input/hidden', array(
 				'value' => elgg_echo('missions:decline'),
 				'id' => 'mission-reason-to-decline-form-submission-button'
 		)); 
+		echo elgg_view('page/elements/one-click-restrictor', array('restricted_element_id' => 'mission-reason-to-decline-form-submission-button'));
 	?>
 </div>

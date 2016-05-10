@@ -10,6 +10,11 @@
 $mission_guid = get_input('mission_guid');
 $candidate_guid = get_input('hidden_user_guid');
 
+if($mission_guid == '0') {
+	register_error(elgg_echo('missions:error:please_select_mission'));
+	forward(REFERER);
+}
+
 $ts = time();
 $token = generate_action_token($ts);
 

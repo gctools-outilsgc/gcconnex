@@ -11,7 +11,6 @@
  * Form which allows a manager to modify their mission.
  * This form includes all the same input fields as the post opportunity forms and they are formatted similarly..
  */
-
 $mission = $vars['entity'];
 $unpacked = mm_unpack_mission($mission);
 $vars['mission_metadata'] = $unpacked;
@@ -194,6 +193,13 @@ $languages = elgg_view('page/elements/language-dropdown', $vars);
 
 $time_content = elgg_view('page/elements/time-table', $vars);
 
+if($department_abbr) {
+	$openess_string = elgg_echo('missions:openess_sentence', array(strtoupper($department_abbr)));
+}
+else {
+	$openess_string = elgg_echo('missions:openess_sentence_generic');
+}
+
 $hidden_guid = elgg_view('input/hidden', array(
     'name' => 'hidden_guid',
     'value' => $mission->guid
@@ -208,7 +214,7 @@ $button_set = mm_create_button_set_full($mission);
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3" for="edit-mission-title-text-input" style="text-align:right;">
-			<?php echo elgg_echo('missions:opportunity_title') . ':';?>
+			<?php echo elgg_echo('missions:opportunity_title') . '*:';?>
 		</label> 
 		<div class="col-sm-3">
 			<?php echo $input_title;?>
@@ -216,7 +222,7 @@ $button_set = mm_create_button_set_full($mission);
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3" for="edit-mission-type-text-input" style="text-align:right;">
-			<?php echo elgg_echo('missions:opportunity_type') . ':';?>
+			<?php echo elgg_echo('missions:opportunity_type') . '*:';?>
 		</label> 
 		<div class="col-sm-3">
 			<?php echo $input_type;?>
@@ -232,11 +238,11 @@ $button_set = mm_create_button_set_full($mission);
 	</div>
 	</br>
 	<div>
-		<h4><?php echo elgg_echo('mission:poster_information') . ':'; ?></h4>
+		<h4><?php echo elgg_echo('mission:manager_information') . ':'; ?></h4>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3" for="edit-mission-name-text-input" style="text-align:right;">
-			<?php echo elgg_echo('missions:manager_name')  . ':';?>
+			<?php echo elgg_echo('missions:manager_name')  . '*:';?>
 		</label>
 		<div class="col-sm-3">
 			<?php echo $input_name;?>
@@ -244,7 +250,7 @@ $button_set = mm_create_button_set_full($mission);
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3" for="edit-mission-department-text-input" style="text-align:right;">
-			<?php echo elgg_echo('missions:department')  . ':';?>
+			<?php echo elgg_echo('missions:department')  . '*:';?>
 		</label> 
 		<div class="col-sm-5">
 			<?php echo $input_department;?>
@@ -252,7 +258,7 @@ $button_set = mm_create_button_set_full($mission);
 	</div>
 	<div class="form-group">
 		<label class="col-sm-3" for="edit-mission-email-text-input" style="text-align:right;">
-			<?php echo elgg_echo('missions:manager_email') . ':';?>
+			<?php echo elgg_echo('missions:manager_email') . '*:';?>
 		</label>
 		<div class="col-sm-3">
 			<?php echo $input_email;?>
@@ -290,7 +296,7 @@ $button_set = mm_create_button_set_full($mission);
 		</div>
 		<div class="form-group">
 			<label class="col-sm-3" for="edit-mission-start-date-input" style="text-align:right;">
-				<?php echo elgg_echo('missions:ideal_start_date') . ':';?>
+				<?php echo elgg_echo('missions:ideal_start_date') . '*:';?>
 			</label>
 			<div class="col-sm-3">
 				<?php echo $input_start_date;?>
@@ -298,7 +304,7 @@ $button_set = mm_create_button_set_full($mission);
 		</div>
 		<div class="form-group">
 			<label class="col-sm-3" for="edit-mission-completion-date-input" style="text-align:right;">
-				<?php echo elgg_echo('missions:ideal_completion_date') . ':';?>
+				<?php echo elgg_echo('missions:ideal_completion_date') . '*:';?>
 			</label>
 			<div class="col-sm-3">
 				<?php echo $input_completion_date;?>
@@ -306,7 +312,7 @@ $button_set = mm_create_button_set_full($mission);
 		</div>
 		<div class="form-group">
 			<label class="col-sm-3" for="edit-mission-deadline-date-input" style="text-align:right;">
-				<?php echo elgg_echo('missions:deadline') . ':';?>
+				<?php echo elgg_echo('missions:deadline') . '*:';?>
 			</label>
 			<div class="col-sm-3">
 				<?php echo $input_deadline;?>
@@ -322,7 +328,7 @@ $button_set = mm_create_button_set_full($mission);
 		</div>
 		<div class="form-group">
 			<label for='edit-mission-openess-checkbox-input' class="col-sm-3" style="text-align:right;">
-				<?php echo elgg_echo('missions:openess_sentence', array($department_abbr)) . ':';?>
+				<?php echo $openess_string;?>
 			</label>
 			<div class="col-sm-7">
 				<?php echo $input_openess; ?>
@@ -330,7 +336,7 @@ $button_set = mm_create_button_set_full($mission);
 		</div>
 		<div class="form-group">
 			<label class="col-sm-3" for="edit-mission-location-dropdown-input" style="text-align:right;">
-				<?php echo elgg_echo('missions:location') . ':';?>
+				<?php echo elgg_echo('missions:location') . '*:';?>
 			</label> 
 			<div class="col-sm-3">
 				<?php echo $input_location;?>
@@ -370,7 +376,7 @@ $button_set = mm_create_button_set_full($mission);
 		<h5><?php echo elgg_echo('missions:scheduling_requirements') . ':</br>';?></h5>
 		<div class="form-group">
 			<label class="col-sm-3" for="edit-mission-time-commitment-text-input" style="text-align:right;">
-				<?php echo elgg_echo('missions:time_commitment') . ':';?>
+				<?php echo elgg_echo('missions:time_commitment') . '*:';?>
 			</label>
 			<div class="col-sm-1">
 				<?php echo $input_time_commit; ?>
@@ -408,7 +414,7 @@ $button_set = mm_create_button_set_full($mission);
 				'text' => elgg_echo('missions:cancel_changes'),
 				'class' => 'elgg-button btn btn-danger',
 				'id' => 'mission-edit-form-cancel-changes-button',
-				'style' => 'margin-right:10px;'
+				'style' => 'margin-right:8px;'
 		));
 	
 		echo elgg_view('input/submit', array(
@@ -417,6 +423,7 @@ $button_set = mm_create_button_set_full($mission);
 				'style' => 'float:right;',
 				'id' => 'mission-edit-form-submission-button'
 		));
+		echo elgg_view('page/elements/one-click-restrictor', array('restricted_element_id' => 'mission-edit-form-submission-button'));
 	?> 
 </div>
 

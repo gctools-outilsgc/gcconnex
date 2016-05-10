@@ -35,7 +35,7 @@ $entity_list = elgg_view_entity_list(array_slice($entity_list, $offset, $max), a
 ), $offset, $max);
 
 // Simple search form.
-$simple_search_form = '<div style="display:inline-block;margin-right:16px;">' . elgg_view_form('missions/search-simple') . '</div>';
+$simple_search_form = elgg_view_form('missions/search-simple');
 
 // Advanced search form which gets hidden.
 $advanced_search_form = elgg_view_form('missions/advanced-search-form', array(
@@ -43,8 +43,11 @@ $advanced_search_form = elgg_view_form('missions/advanced-search-form', array(
 ));
 $advanced_field = elgg_view('page/elements/hidden-field', array(
 		'toggle_text' => elgg_echo('missions:advanced_search'),
+		'toggle_text_hidden' => elgg_echo('missions:simple_search'),
 		'toggle_id' => 'advanced-search',
-		'hidden_content' => $advanced_search_form
+		'hidden_content' => $advanced_search_form,
+		'hideable_pre_content' => $simple_search_form,
+		'field_bordered' => true
 ));
 ?>
 
@@ -60,8 +63,9 @@ $advanced_field = elgg_view('page/elements/hidden-field', array(
 </br>
 <h4><?php echo elgg_echo('missions:splash:missions_right_now'); ?></h4>
 <div>
+	<h4><?php echo elgg_echo('missions:search_for_opportunities') . ':'; ?></h4>
 	<?php 
-		echo $simple_search_form;
+		//echo $simple_search_form;
 		echo $advanced_field;
 	?>
 </div>

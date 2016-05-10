@@ -158,7 +158,7 @@ function mm_create_button_set_base($mission, $full_view=false) {
 				'href' => $mission->getURL(),
 				'text' => elgg_echo('missions:view'),
 				'class' => 'elgg-button btn btn-default',
- 				'style' => 'margin:2px;'
+ 				'style' => 'margin:4px;'
 		)) . '</div>';	
 		
 		// Handles the case where an edit button is needed.
@@ -168,7 +168,7 @@ function mm_create_button_set_base($mission, $full_view=false) {
 					'href' => elgg_get_site_url() . 'missions/mission-edit/' . $mission->guid,
 					'text' => elgg_echo('missions:edit'),
 					'class' => 'elgg-button btn btn-primary',
- 					'style' => 'margin:2px;'
+ 					'style' => 'margin:4px;'
 			)) . '</div>';
 		}
 	}
@@ -179,7 +179,7 @@ function mm_create_button_set_base($mission, $full_view=false) {
 				'href' => elgg_get_site_url() . 'missions/message-share/' . $mission->guid,
 				'text' => elgg_echo('missions:share'),
 				'class' => 'elgg-button btn btn-default',
- 				'style' => 'margin:2px;'
+ 				'style' => 'margin:4px;'
 		)) . '</div>';
 	//}
 	
@@ -195,7 +195,7 @@ function mm_create_button_set_base($mission, $full_view=false) {
 					'href' => elgg_get_site_url() . 'missions/mission-candidate-search/' . $mission->guid,
 					'text' => elgg_echo('missions:invite'),
 					'class' => 'elgg-button btn btn-success',
- 					'style' => 'margin:2px;'
+ 					'style' => 'margin:4px;'
 			)) . '</div>';
 			
 			// Handles the case where a complete button is needed.
@@ -206,7 +206,7 @@ function mm_create_button_set_base($mission, $full_view=false) {
 		            	'is_action' => true,
 						'class' => 'elgg-button btn btn-success',
 						'confirm' => elgg_echo('missions:confirm:complete_mission'),
- 						'style' => 'margin:2px;'
+ 						'style' => 'margin:4px;'
 				)) . '</div>';
 			}
 		}
@@ -215,7 +215,7 @@ function mm_create_button_set_base($mission, $full_view=false) {
 	 				'href' => elgg_get_site_url() . 'missions/mission-application/' . $mission->guid,
 	 				'text' => elgg_echo('missions:apply'),
 	 				'class' => 'elgg-button btn btn-primary',
- 					'style' => 'margin:2px;'
+ 					'style' => 'margin:4px;'
 	 		)) . '</div>';
 			
 			if(check_entity_relationship($mission->guid, 'mission_tentative', elgg_get_logged_in_user_guid())) {
@@ -224,13 +224,13 @@ function mm_create_button_set_base($mission, $full_view=false) {
 					'text' => elgg_echo('missions:accept'),
 					'is_action' => true,
 					'class' => 'elgg-button btn btn-success',
- 					'style' => 'margin:2px;'
+ 					'style' => 'margin:4px;'
 				)) . '</div>';
 				$button_four = '<div id="decline-button-mission-' . $mission->guid . '" name="decline-button" style="display:inline-block;">' . elgg_view('output/url', array(
 					'href' => elgg_get_site_url() . 'missions/reason-to-decline/' . $mission->guid,
 					'text' => elgg_echo('missions:decline'),
 					'class' => 'elgg-button btn btn-danger',
- 					'style' => 'margin:2px;'
+ 					'style' => 'margin:4px;'
 				)) . '</div>';
 				$button_two = null;
 			}
@@ -242,19 +242,21 @@ function mm_create_button_set_base($mission, $full_view=false) {
 						'text' => elgg_echo('missions:withdraw'),
 						'is_action' => true,
 						'class' => 'elgg-button btn btn-danger',
- 						'style' => 'margin:2px;'
+ 						'style' => 'margin:4px;'
 				)) . '</div>';
 			}
 		}
 	}
 	else {
-		$button_three = '<div id="withdraw-button-mission-' . $mission->guid . '" name="duplicate-button" style="display:inline-block;">' . elgg_view('output/url', array(
-				'href' => elgg_get_site_url() . 'action/missions/duplicate-mission?mid=' . $mission->guid,
-				'text' => elgg_echo('missions:duplicate'),
-				'is_action' => true,
-				'class' => 'elgg-button btn btn-success',
- 				'style' => 'margin:2px;'
-		)) . '</div>';
+		if(elgg_get_logged_in_user_entity()->opt_in_missions == 'gcconnex_profile:opt:yes') {
+			$button_three = '<div id="withdraw-button-mission-' . $mission->guid . '" name="duplicate-button" style="display:inline-block;">' . elgg_view('output/url', array(
+					'href' => elgg_get_site_url() . 'action/missions/duplicate-mission?mid=' . $mission->guid,
+					'text' => elgg_echo('missions:duplicate'),
+					'is_action' => true,
+					'class' => 'elgg-button btn btn-success',
+	 				'style' => 'margin:4px;'
+			)) . '</div>';
+		}
 	}
 	
 	$returner['button_zero'] = $button_zero;
@@ -278,7 +280,7 @@ function mm_create_button_set_base($mission, $full_view=false) {
  				'text' => elgg_echo('missions:reopen'),
  				'is_action' => true,
  				'class' => 'elgg-button btn btn-default',
- 				'style' => 'margin:2px;'
+ 				'style' => 'margin:4px;'
  		)) . '</div>';
  	}
  	
@@ -301,7 +303,7 @@ function mm_create_button_set_base($mission, $full_view=false) {
 				'class' => 'elgg-button btn btn-success',
  				'disabled' => $disabled,
  				'confirm' => elgg_echo('missions:confirm:complete_mission'),
- 				'style' => 'margin:2px;'
+ 				'style' => 'margin:4px;'
 		)) . '</div>';
  		
  		$returner['cancel_button'] = '<div id="cancel-button-mission-' . $mission->guid . '" name="cancel-button" style="display:inline-block;">' . elgg_view('output/url', array(
@@ -310,7 +312,7 @@ function mm_create_button_set_base($mission, $full_view=false) {
  				'is_action' => true,
  				'class' => 'elgg-button btn btn-danger',
  				'confirm' => elgg_echo('missions:confirm:cancel_mission'),
- 				'style' => 'margin:2px;'
+ 				'style' => 'margin:4px;'
  		)) . '</div>';
  	}
  	
@@ -320,7 +322,7 @@ function mm_create_button_set_base($mission, $full_view=false) {
  				'text' => elgg_echo('missions:delete'),
  				'is_action' => true,
  				'class' => 'elgg-button btn btn-danger',
- 				'style' => 'margin:2px;'
+ 				'style' => 'margin:4px;'
  		)) . '</div>';
  	}
  	
@@ -411,7 +413,7 @@ function mm_clean_url_segment($segment) {
 }
 
 /*
- * 
+ * Returns an associative array of 'echo_key' => elgg_echo('echo_key').
  */
 function mm_echo_explode_setting_string($string) {
 	$raw_array = explode(',', $string);
@@ -425,21 +427,35 @@ function mm_echo_explode_setting_string($string) {
 }
 
 /*
- * 
+ * Notify user function which uses messages_send() to send on site notifications and mail() to send e-mail.
+ * This is here because notify_user() is currently not working.
  */
 function mm_notify_user($recipient, $sender, $subject, $body) {
 	//notify_user($recipient, $sender, $subject, $body, array(), 'email');
+	
+	$recipient_entity = get_entity($recipient);
+	$sender_entity = get_entity($sender);
 
 	$headers = 'MIME-Version: 1.0' . "\r\n";
 	$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
-	$headers .= 'From: ' . get_user($sender)->email . "\r\n";
-	mail(get_user($recipient)->email, $subject, $body, $headers);
+	$headers .= 'From: ' . $sender_entity->email . "\r\n";
+	mail($recipient_entity->email, $subject, $body, $headers);
 	
-    messages_send($subject, $body, $recipient, $sender, 0, false);
+	if(get_subtype_from_id($recipient_entity->subtype) == 'mission') {
+		$recipient_set = get_user_by_email($recipient_entity->email);
+		foreach($recipient_set as $recipient_temp) {
+    		messages_send($subject, $body, $recipient_temp->guid, $sender, 0, false);
+		}
+	}
+	else {
+		$sender_set = get_user_by_email($sender_entity->email);
+		$sender_latest = array_pop($sender_set)->guid;
+    	messages_send($subject, $body, $recipient, $sender_latest, 0, false);
+	}
 }
 
 /*
- * 
+ * Compare two entities by their time_updated values.
  */
 function mm_cmp_by_updated($a, $b)  {
 	if($a->time_updated == $b->time_updated) {
@@ -449,7 +465,7 @@ function mm_cmp_by_updated($a, $b)  {
 }
 
 /*
- * 
+ * Returns a list of the manager's missions which still have room to accept candidates.
  */
 function mm_get_invitable_missions($user_guid) {
 	$returner = array();
@@ -461,25 +477,51 @@ function mm_get_invitable_missions($user_guid) {
 
 	$count = 0;
 	foreach($entity_list as $entity) {
-		$candidates = elgg_get_entities_from_relationship(array(
-				'relationship' => 'mission_accepted',
-				'relationship_guid' => $entity->guid
-		));
-		$number_of_candidates = count($candidates);
-	
-		$not_invited_already = true;
-		foreach($candidates as $candidate) {
-			if($candidate->guid == $user_guid) {
-				$not_invited_already = false;
-			}
+		$invited_already = false;
+		if(check_entity_relationship($entity->guid, 'mission_accepted', $user_guid) ||
+				check_entity_relationship($entity->guid, 'mission_applied', $user_guid) ||
+				check_entity_relationship($entity->guid, 'mission_tentative', $user_guid)) {
+			$invited_already = true;
 		}
 		
 		// Does not display missions which have filled all the available spots.
-		if($number_of_candidates < $entity->number && $not_invited_already) {
-			$returner[$entity->guid] = $entity->job_title;
+		if($number_of_candidates < $entity->number && !$invited_already) {
+			$returner[$entity->guid] = elgg_get_excerpt($entity->job_title, 30);
 			$count++;
 		}
 	}
 	
 	return $returner;
+}
+
+/*
+ * Returns an offer button or a disabled button if the mission is full.
+ */
+function mm_offer_button($mission, $applicant) {
+	$relationship_count = elgg_get_entities_from_relationship(array(
+			'relationship' => 'mission_accepted',
+			'relationship_guid' => $mission->guid,
+			'count' => true
+	));
+	
+	if($relationship_count >= $mission->number) {
+		// Disabled button for when the mission is full.
+		return elgg_view('output/url', array(
+				'href' => '',
+				'text' => elgg_echo('missions:mission_full'),
+				'class' => 'elgg-button btn btn-default',
+				'style' => 'margin:4px;width:120px;',
+				'disabled' => true
+		));
+	}
+	else {
+		// Button which turns the applicant into a participant.
+		return elgg_view('output/url', array(
+				'href' => elgg_get_site_url() . 'action/missions/mission-offer?aid=' . $applicant->guid . '&mid=' . $mission->guid,
+				'text' => elgg_echo('missions:offer'),
+				'is_action' => true,
+				'class' => 'elgg-button btn btn-success',
+				'style' => 'margin:4px;width:120px;'
+		));
+	}
 }

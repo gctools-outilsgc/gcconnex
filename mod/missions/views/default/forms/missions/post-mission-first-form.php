@@ -6,6 +6,9 @@
  * License: Creative Commons Attribution 3.0 Unported License
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
+
+$disclaimer_uncheck = $vars['disclaimer_uncheck'];
+
 $name = get_input('fn');
 $email = get_input('fe');
 $phone = get_input('fp');
@@ -18,7 +21,7 @@ if (elgg_is_sticky_form('firstfill')) {
     // elgg_clear_sticky_form('firstfill');
 }
 
-if($disclaimer == 'YES') {
+if($disclaimer == 'YES' && !$disclaimer_uncheck) {
 	$disclaimer = true;
 }
 else {
@@ -37,10 +40,10 @@ if(!$phone) {
 
 $duplicating_entity = get_entity($_SESSION['mission_duplication_id']);
 if(get_subtype_from_id($duplicating_entity->subtype) == 'mission') {
-	$name = $duplicating_entity->name;
+	//$name = $duplicating_entity->name;
 	$extracted_org = $duplicating_entity->department;
-	$email = $duplicating_entity->email;
-	$phone = $duplicating_entity->phone;
+	//$email = $duplicating_entity->email;
+	//$phone = $duplicating_entity->phone;
 }
 
 $input_name = elgg_view('input/text', array(
@@ -122,6 +125,6 @@ $input_disclaimer = elgg_view('input/checkbox', array(
 				'class' => 'elgg-button btn btn-primary',
 				'style' => 'float:right;',
 				'id' => 'mission-post-opportunity-first-form-submission-button'
-		)); 
+		));
 	?>
 </div>

@@ -6,8 +6,15 @@
  * License: Creative Commons Attribution 3.0 Unported License
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
-
+ 
+/*
+ * Page which displays the analytics graph (bar or pie).
+ */
 gatekeeper();
+
+if(elgg_get_logged_in_user_entity()->opt_in_missions != 'gcconnex_profile:opt:yes') {
+	forward(elgg_get_site_url() . 'missions/main');
+}
 
 $current_uri = $_SERVER['REQUEST_URI'];
 $blast_radius = explode('/', $current_uri);
@@ -15,6 +22,7 @@ $graph_type = mm_clean_url_segment(array_pop($blast_radius));
 
 $state_array = array('Posted', 'Completed', 'Cancelled');
 
+// The number of departments that can be added to the graph.
 $series_limit = '';
 if($graph_type == 'pie') {
 	$series_limit = 1;
@@ -32,6 +40,7 @@ if($name_array == '') {
 	$name_array = $_SESSION['mission_graph_name_array'];
 }
 
+// If the data array is empty then an empty dummy array is created so that an empty graph can be displayed.
 if($data_array == '') {
 	$x_axis_labels = array();
 	for($i=0;$i<count($date_array);$i++) {
@@ -60,6 +69,7 @@ $content .= elgg_view('page/elements/mission-tabs', array(
 		'highlight_five' => true
 ));
 
+// Does not display the form to enter a department if the department limit has been reached.
 if((count($data_array)-1) < $series_limit) {
 	$content .= elgg_view_form('missions/graph-data-form', array(
 			'class' => 'form-horizontal'
@@ -68,6 +78,7 @@ if((count($data_array)-1) < $series_limit) {
 	)) . '<br>';
 }
 
+// Decides whether or not the dummy graph logic is needed.
 $is_dummy_graph = false;
 if(count($data_array) == 1) {
 	$is_dummy_graph = true;
@@ -90,6 +101,7 @@ else {
 	)) . '<br><br>';
 }
 
+// For each department, a button to remove that department from the graph is created.
 for($i=1;$i<count($data_array);$i++) {
 	$content .= '<div>';
 	

@@ -7,6 +7,9 @@
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
 
+/*
+ * Removes a department's data from the analytics graph.
+ */
 $position = get_input('dep_pos');
 $state_number = get_input('state_num');
 $data_array = $_SESSION['mission_graph_data_array'];

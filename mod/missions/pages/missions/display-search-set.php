@@ -12,11 +12,11 @@
  */
 gatekeeper();
 
-if($_SESSION['mission_entities_per_page']) {
-	$entities_per_page = $_SESSION['mission_entities_per_page'];
-}
-
 $search_typing = $_SESSION['mission_search_switch'];
+
+if($_SESSION[$search_typing . '_entities_per_page']) {
+	$entities_per_page = $_SESSION[$search_typing . '_entities_per_page'];
+}
 
 $title = elgg_echo('missions:search_results_display');
 

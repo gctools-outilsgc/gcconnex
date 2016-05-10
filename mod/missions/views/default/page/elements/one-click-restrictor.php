@@ -6,11 +6,12 @@
  * License: Creative Commons Attribution 3.0 Unported License
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
+?>
 
-/*
- * Sets the number of mission or candidate entities seen on a single page.
- */
-$typing = get_input('hidden_type');
-$_SESSION[$typing . '_entities_per_page'] = get_input('number_per');
-
-forward(REFERER);
+<script>
+	document.getElementById('<?php echo $vars['restricted_element_id'];?>').onclick = function() {
+		document.body.style.cursor = 'wait';
+		this.disabled = true;
+		this.form.submit();
+	}
+</script> 

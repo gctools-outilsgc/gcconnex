@@ -34,16 +34,17 @@ if($relationship_count >= $mission->number) {
 	$err .= elgg_echo('missions:error:opportunity_limit_reached');
 }
 
+// Throws up an error if a relationship already exists.
 if(check_entity_relationship($mission->guid, 'mission_applied', $applicant->guid)) {
-	$err .= elgg_echo('missions:error:user_already_applied', array($applicant->name));
+	$err .= elgg_echo('missions:error:user_already_applied', array($applicant->name, $mission->job_title));
 }
 
 if(check_entity_relationship($mission->guid, 'mission_tentative', $applicant->guid)) {
-	$err .= elgg_echo('missions:error:user_already_invited', array($applicant->name));
+	$err .= elgg_echo('missions:error:user_already_invited', array($applicant->name, $mission->job_title));
 }
 
 if(check_entity_relationship($mission->guid, 'mission_accepted', $applicant->guid)) {
-	$err .= elgg_echo('missions:error:user_already_participating', array($applicant->name));
+	$err .= elgg_echo('missions:error:user_already_participating', array($applicant->name, $mission->job_title));
 }
 	
 // Only users who have opted in to micro missions can be invited.
@@ -57,7 +58,7 @@ if($err == '') {
 			'text' => elgg_echo('missions:mission_invitation')
 	));
 	
-	$subject = get_user($mission->owner_guid)->name . elgg_echo('missions:invited_you', array(), $applicant->language) . $mission->title;
+	$subject = $mission->name . elgg_echo('missions:invited_you', array(), $applicant->language) . $mission->title;
 	$body = $invitation_link;
 	$params = array(
 			'object' => $mission,
@@ -65,7 +66,7 @@ if($err == '') {
 			'summary' => $subject
 	);
 	
-	mm_notify_user($applicant->guid, $mission->owner_guid, $subject, $body);
+	mm_notify_user($applicant->guid, $mission->guid, $subject, $body);
 	
 	add_entity_relationship($mission->guid, 'mission_tentative', $applicant->guid);
 	

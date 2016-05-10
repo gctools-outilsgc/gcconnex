@@ -10,7 +10,6 @@
 /*
  * Page to search for a candidate.
  */
-
 gatekeeper();
 
 $_SESSION['mission_search_switch'] = 'candidate';
@@ -20,25 +19,29 @@ $blast_radius = explode('/', $current_uri);
 $_SESSION['mission_that_invites'] = mm_clean_url_segment(array_pop($blast_radius));
 $entity = get_entity($_SESSION['mission_that_invites']);
 
-$title = elgg_echo('missions:share_opportunity');
+$title = elgg_echo('missions:invite_to_opportunity');
 
 elgg_push_breadcrumb(elgg_echo('missions:micromissions'), elgg_get_site_url() . 'missions/main');
-elgg_push_breadcrumb($entity->job_title, $entity->getURL());
+elgg_push_breadcrumb(elgg_get_excerpt($entity->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions')), $entity->getURL());
 elgg_push_breadcrumb($title);
 
 $content = elgg_view_title($title);
 
 $content .= elgg_view('page/elements/mission-tabs');
 
-$content .= '<div style="display:inline-block;margin-right:16px;">' . elgg_view_form('missions/search-simple') . '</div>';
+$content .= '<h4>' . elgg_echo('missions:search_for_candidates') . ':' . '</h4>';
+
+$simple_search_form = elgg_view_form('missions/search-simple');
 
 $advanced_search_form = elgg_view_form('missions/advanced-search-form', array(
 		'class' => 'form-horizontal'
 ));
 $content .=  elgg_view('page/elements/hidden-field', array(
 		'toggle_text' => elgg_echo('missions:advanced_search'),
+		'toggle_text_hidden' => elgg_echo('missions:simple_search'),
 		'toggle_id' => 'advanced-search',
 		'hidden_content' => $advanced_search_form,
+		'hideable_pre_content' => $simple_search_form,
 		'field_bordered' => true
 ));
 

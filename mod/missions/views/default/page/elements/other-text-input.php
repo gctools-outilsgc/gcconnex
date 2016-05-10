@@ -7,6 +7,9 @@
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
 
+/*
+ * Text input for dropdown inputs with 'missions:other' as a choice.
+ */
 $parent_id = $vars['parent_id'];
 $final_id = $parent_id . '-other-text-input';
 $container_id = $parent_id . '-other-input-container';

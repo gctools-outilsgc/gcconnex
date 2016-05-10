@@ -1,3 +1,19 @@
+.mission-center-float-text {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	height: 128px;
+	width: 512px;
+	z-index: -1;
+	background-color: rgb(5,89,89);
+	color: rgb(255,255,255);
+	text-align: center;
+}
+
+.mission-center-float-text span {
+	vertical-align: middle;
+}
+
 #search-mission-simple-text-input::-webkit-input-placeholder {
     color: #FF0000;
     opacity: 0.5 !important;
@@ -155,8 +171,9 @@ li.link-disabled a {
 }
 
 .mission-tab > li {
-	width: 20%;
+	min-width: 20%;
 	text-align: center;
+	display:inline-block;
 }
 
 .mission-tab > li a {

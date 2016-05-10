@@ -87,6 +87,9 @@ function missions_init()
     elgg_register_action("missions/mission-invite-selector", elgg_get_plugins_path() . "missions/actions/missions/mission-invite-selector.php");
     elgg_register_action("missions/change-entities-per-page", elgg_get_plugins_path() . "missions/actions/missions/change-entities-per-page.php");
     elgg_register_action("missions/admin-form", elgg_get_plugins_path() . "missions/actions/missions/admin-form.php");
+    elgg_register_action("missions/endorse-user", elgg_get_plugins_path() . "missions/actions/missions/endorse-user.php");
+    elgg_register_action("missions/post-mission-skill-match", elgg_get_plugins_path() . "missions/actions/missions/post-mission-skill-match.php");
+    elgg_register_action("missions/pre-create-opportunity", elgg_get_plugins_path() . "missions/actions/missions/pre-create-opportunity.php");
 
     // Register a new subtype of object for categorizing our mission object.
     elgg_register_entity_type('object', 'mission');
@@ -111,7 +114,7 @@ function missions_init()
     elgg_register_plugin_hook_handler('view', 'page/elements/owner_block', 'alter_mission_owner_block');
     
     // Hook which changes how user entities are displayed.
-    elgg_register_plugin_hook_handler('view', 'annotation/default', 'alter_mission_annotation_view');
+    //elgg_register_plugin_hook_handler('view', 'annotation/default', 'alter_mission_annotation_view');
     
     // Change the profile owner block for visiting users.
     elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'append_profile_owner_block');
@@ -299,9 +302,9 @@ function missions_main_page_handler($segments)
         case 'mission-invitation':
             include elgg_get_plugins_path() . 'missions/pages/missions/mission-invitation.php';
             break;
-        case 'mission-select-invite':
+        /*case 'mission-select-invite':
             include elgg_get_plugins_path() . 'missions/pages/missions/mission-select-invite.php';
-            break;
+            break;*/
         case 'mission-edit':
             include elgg_get_plugins_path() . 'missions/pages/missions/mission-edit.php';
             break;
@@ -326,12 +329,12 @@ function missions_main_page_handler($segments)
         case 'graph-data':
         	include elgg_get_plugins_path() . 'missions/pages/missions/graph-data.php';
         	break;
-        case 'graph-department-pie':
+        /*case 'graph-department-pie':
         	include elgg_get_plugins_path() . 'missions/pages/missions/graph-department-pie.php';
-        	break;
-        case 'users-by-opt-in':
+        	break;*/
+        /*case 'users-by-opt-in':
         	include elgg_get_plugins_path() . 'missions/pages/missions/users-by-opt-in.php';
-        	break;
+        	break;*/
         case 'mission-offer':
         	include elgg_get_plugins_path() . 'missions/pages/missions/mission-offer.php';
         	break;

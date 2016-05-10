@@ -11,14 +11,17 @@
  * Creates a field which can toggled between hidden and displayed using Javascript.
  */
  $text = $vars['toggle_text'];
+ $hidden_content_text = $vars['toggle_text_hidden'];
  $append = $vars['toggle_id'];
  $content = $vars['hidden_content'];
+ $pre_content = $vars['hideable_pre_content'];
  $additional_text = $vars['additional_text'];
  if($vars['field_bordered']) {
  	$bordering = "brdr-tp brdr-rght brdr-bttm brdr-lft";
  }
  
  $field_id = 'hidden-field-' . $append;
+ $pre_field_id = 'hidden-pre-field-' . $append;
  $icon_id = 'toggle-icon-' . $append;
  
  $toggle = elgg_view('output/url', array(
@@ -29,7 +32,10 @@
  ));
  ?>
  
- <div style="display:inline-block;max-width:500px;">
+<div id="<?php echo $pre_field_id; ?>" style="display:inline-block;">
+	<?php echo $pre_content; ?>
+</div>
+<div style="display:inline-block;max-width:500px;">
  	<i class="fa fa-chevron-right" id="<?php echo $icon_id; ?>"></i>
  	<span><?php echo $toggle; ?></span>
  	<span style="font-style:italic;"><?php echo $additional_text; ?></span>
@@ -40,16 +46,23 @@
  
  <script>
 	function hidden_field_toggle(toggle) {
-		var append = toggle.id;
-		var field = document.getElementById('hidden-field-'.concat(append));
-		var icon = document.getElementById('toggle-icon-'.concat(append));
+		var field = document.getElementById('<?php echo $field_id; ?>');
+		var pre_field = document.getElementById('<?php echo $pre_field_id; ?>');
+		var icon = document.getElementById('<?php echo $icon_id; ?>');
+		var text = document.getElementById('<?php echo $append; ?>');
 		
 		if(field.style.display == 'none') {
+			if('<?php echo $hidden_content_text; ?>') {
+				text.innerHTML = '<?php echo $hidden_content_text; ?>';
+			}
 			field.style.display = 'block';
+			pre_field.style.display = 'none';
 			icon.className = 'fa fa-chevron-down';
 		}
 		else {
+			text.innerHTML = '<?php echo $text ?>';
 			field.style.display = 'none';
+			pre_field.style.display = 'inline-block';
 			icon.className = 'fa fa-chevron-right';
 		}
 	}

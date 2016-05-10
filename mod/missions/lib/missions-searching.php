@@ -551,12 +551,8 @@ function mm_search_candidate_database($query_array, $query_operand, $limit)
     // Setting options with which the query will be built.
     $options['type'] = 'object';
     $options['subtypes'] = array('education', 'experience', 'MySkill', 'portfolio');
-    $options['attribute_name_value_pairs'] = array(
-    		'name' => $filtered_array[0]['name'], 
-    		'value' => $filtered_array[0]['value'],
-    		'operand' => $filtered_array[0]['operand'],
-    		'case_sensitive' => false
-    );
+    $options['attribute_name_value_pairs'] = $filtered_array;
+    $options['attribute_name_value_pairs_operator'] = $query_operand;
     $entities = elgg_get_entities_from_attributes($options);
 
     $entity_owners = array();
@@ -581,19 +577,25 @@ function mm_search_candidate_database($query_array, $query_operand, $limit)
         $count++;
     }
 
+    $filtered_array_name = $filtered_array;
+    $filtered_array_email = $filtered_array;
+    foreach($filtered_array as $key => $value) {
+    	$filtered_array_name[$key]['name'] = 'name';
+    	$filtered_array_email[$key]['name'] = 'email';
+    }
+    $filtered_array_total = array_merge($filtered_array_name, $filtered_array_email);
     
+    // Searches user names for the given string. 
     $options_second['type'] = 'user';
     $options_second['limit'] = $limit;
-    $options_second['attribute_name_value_pairs'] = array(
-    		'name' => 'name', 
-    		'operand' => $filtered_array[0]['operand'],
-    		'value' => $filtered_array[0]['value']
-    );
+    $options_second['attribute_name_value_pairs'] = $filtered_array_total;
+    $options_second['attribute_name_value_pairs_operator'] = $query_operand;
     $users = elgg_get_entities_from_attributes($options_second);
     
+    // Turns the user list into a list of GUIDs and sets the search feedback for search by name.
     foreach($users as $key => $user) {
     	$users[$key] = $user->guid;
-    	$search_feedback[$user->guid] .= elgg_echo('missions:username') . ': ' . $user->name . ',';
+    	//$search_feedback[$user->guid] .= elgg_echo('missions:username') . ': ' . $user->name . ',';
     	$count++;
     }
     

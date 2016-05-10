@@ -7,6 +7,9 @@
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
 
+/*
+ * Posts a mission notice to The Wire.
+ */
 $message = get_input('wire_message');
 $char_limit = (int)elgg_get_plugin_setting('limit', 'thewire');
 

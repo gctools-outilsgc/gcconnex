@@ -7,6 +7,9 @@
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
 
+/*
+ * Displays all completed and cancelled missions.
+ */
 if($_SESSION['mission_entities_per_page']) {
 	$entities_per_page = $_SESSION['mission_entities_per_page'];
 }

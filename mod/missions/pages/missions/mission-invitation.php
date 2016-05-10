@@ -27,7 +27,7 @@ else {
 $title = elgg_echo('missions:mission_invitation');
 
 elgg_push_breadcrumb(elgg_echo('missions:micromissions'), elgg_get_site_url() . 'missions/main');
-elgg_push_breadcrumb($mission->job_title, $mission->getURL());
+elgg_push_breadcrumb(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions')), $mission->getURL());
 elgg_push_breadcrumb($title);
 
 $content = elgg_view_title($title);

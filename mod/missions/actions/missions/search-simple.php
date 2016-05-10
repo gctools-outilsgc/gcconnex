@@ -22,11 +22,16 @@ if ($err != '') {
         case 'candidate':
             // A multipurpose query which will be applied to skills, experience and education objects.
             if (! empty($search_form['simple'])) {
-                $array[0] = array(
-                    'name' => 'title',
-                    'operand' => 'LIKE',
-                    'value' => '%' . $search_form['simple'] . '%'
-                );
+            	$string_to_array = explode(',', str_replace(', ', ',', $search_form['simple']));
+            	
+            	foreach($string_to_array as $key => $value) {
+            		$array[$key] = array(
+		                    'name' => 'title',
+		                    'operand' => 'LIKE',
+		                    'value' => '%' . $value . '%',
+	                		'case_sensitive' => false
+	                );
+            	}
             }
             
             $returned = mm_search_candidate_database($array, 'OR', $search_form['limit']);
