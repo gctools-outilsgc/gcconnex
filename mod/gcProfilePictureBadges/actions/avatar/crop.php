@@ -27,8 +27,9 @@ if (!file_exists($filename)) {
 	register_error(elgg_echo('avatar:crop:fail'));
 	forward(REFERER);
 }
-
+//EW - new ambassaador badge doesnt combine images so we removed this functionality but kept the code
 /* START gcProfilePictureBadges addition: add badges to master image */
+/*
 require_once( elgg_get_plugins_path() . "gcProfilePictureBadges/badge_map.php" );	// get array of groups with badges
 global $badgemap;
 
@@ -113,6 +114,7 @@ imagecopyresampled($dest, $src, $d_x1 + 3, $d_y1 + 3, 0, 0, $re_size, $re_size, 
 	$filehandler->setFilename("profile/" . $owner->guid . "master+badge" . ".jpg");
 	$filename = $filehandler->getFilenameOnFilestore();
 }
+*/
 /* END of gcProfilePictureBadges addition */
 
 $icon_sizes = elgg_get_config('icon_sizes');

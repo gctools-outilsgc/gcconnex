@@ -81,7 +81,8 @@ if ($container instanceof ElggGroup && $container->guid != elgg_get_page_owner_g
 		'text' => $container->name,
 		'is_trusted' => true,
 	));
-	$group_string = elgg_echo('river:ingroup', array($group_link));
+    //Nick - Changed "in the group" to just the group link in order to show this is group content. May need some looking at
+	$group_string = $group_link;
     $group_image = elgg_view_entity_icon($container, 'medium');
 
    // $group_testing = elgg_view_image_block($group_image, $group_link);
@@ -94,14 +95,16 @@ $user_icon = elgg_view_entity_icon($subject, 'small');
 
 
 //removed $responses
-
-if($group_string || $commentordiscuss){
+//Nick - commented out comment or discuss var for instances of comments on blogs not within a group.
+//Nick - checking for group activity context so it will use the other layout 
+if($group_string /*|| $commentordiscuss*/ && !elgg_in_context('group_activity_tab')){
     $identify_activity = elgg_echo('group');
     echo <<<RIVER
 <div class="">
 
 
-<div class="elgg-river-summary mrgn-bttm-sm">$summary $group_string</div>
+<div class="elgg-river-summary mrgn-bttm-sm river-group-link"> $group_string</div>
+<div class="elgg-river-summary"> $summary</div>
 <div class="elgg-river-timestamp mrgn-bttm-md timeStamp "><i>$timestamp</i><div class="pull-right">$menu</div></div>
 
 </div>
@@ -120,7 +123,7 @@ RIVER;
     $identify_activity = elgg_echo('friend:river');
     echo <<<RIVER
 
-<div class="elgg-river-summary  mrgn-bttm-sm">$summary $group_string </div>
+<div class="elgg-river-summary  mrgn-bttm-sm river-user-heading"> $summary  </div>
 
 <div class="elgg-river-timestamp mrgn-bttm-sm timeStamp"><i>$timestamp</i> <div class="pull-right">$menu</div></div>
 

@@ -1,8 +1,6 @@
 
 <?php
 
-$title = $vars['title'];
-
 $cp_topic_title = $vars['cp_topic_title'];
 $cp_topic_description = $vars['cp_topic_description'];
 $cp_topic_author = get_user($vars['cp_topic_author']);
@@ -20,23 +18,33 @@ $msg_type = $vars['cp_msg_type'];
 
 $cp_notify_msg_footer = elgg_echo('cp_notify:footer2',array(),'fr') .'  '. elgg_echo('cp_notify:footer2',array(),'en');
 
+//All info for the event_calendar email
+$name =$vars['cp_topic_author'];
 $event = $vars['event'];
 $link = $vars['cp_event_invite_url'];
 $startdate = $vars['startdate'];
 $enddate = $vars['enddate'];
+$type_event =$vars['type_event'];
 $title = $event->title;
 $location =$event->venue;
 $room =$event->room;
 $teleconference = $event->teleconference;
-$additional = $event->additional;
+$additional = $event->calendar_additional;
 $fees = $event->fees;
 $organiser = $event->organiser;
 $contact = $event->contact;
 $long_description = $event->long_description;
 $description = $event->description;
 $language = $event->language;
-$informationEn = '<h3 style ="font-family:sans-serif";>Infos</h3>';
-$informationFr = '<h3 style ="font-family:sans-serif";>Infos</h3>';
+if ($type_event =='CANCEL'){
+	$informationEn .= '<h3 style ="font-family:sans-serif; color:#ff0000;">This event has been cancel!</h3>';
+	$informationFr .= '<h3 style ="font-family:sans-serif; color:#ff0000;">Cet événement à été annulé!</h3>';
+}else{
+	$informationEn .= '<h3 style ="font-family:sans-serif;">New event in your calendar</h3>';
+	$informationFr .= '<h3 style ="font-family:sans-serif;">Nouvel événement dans votre calendrier</h3>';
+}
+$informationEn .= '<h3 style ="font-family:sans-serif";>Infos</h3>';
+$informationFr .= '<h3 style ="font-family:sans-serif";>Infos</h3>';
 
 if($title){
 	$informationEn .= '<b>Title:</b> '.$title.'<br/>';
@@ -74,7 +82,7 @@ if($title){
 }if($long_description){
 	$informationEn .= '<b>Long description:</b> '.$long_description.'<br/>';
 	$informationFr .= '<b>Longue description:</b> '.$long_description.'<br/>';
-}/*if($link){
+}if($link){
 	$informationEn .= '<b>Add to my Outlook calendar:</b> <div><!--[if mso]>
   <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="'.$link.'" style="height:40px;v-text-anchor:middle;width:125px;" arcsize="10%" strokecolor="#1e3650" fillcolor="#047177">
     <w:anchorlock/>
@@ -85,7 +93,8 @@ if($title){
     <w:anchorlock/>
     <center style="color:#ffffff;font-family:sans-serif;font-size:13px;font-weight:bold;">Ajouter à mon calendrier Outlook</center>
   </v:roundrect>';
-}*/
+}
+
 
 switch ($msg_type) {
 
@@ -362,7 +371,7 @@ switch ($msg_type) {
 		break;
 
 
-	case 'cp_event': // validating new user account
+	case 'cp_event': //send event without ics
 		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_event:title',array($cp_topic_author->name,$cp_topic_title),'en');
 		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_event:title',array($cp_topic_author->name,$cp_topic_title),'fr');
 
@@ -373,7 +382,18 @@ switch ($msg_type) {
 		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer',array(elgg_get_site_url().'/settings/plugins/admin/cp_notifications'),'fr');
 		break;
 
-	case 'cp_event_ics': // validating new user account
+	case 'cp_event_request': 
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_event_request:title',array($cp_topic_author->name,$title),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_event_request:title',array($cp_topic_author->name,$title),'fr');
+
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_event_request:description',array($name,$title,$link),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_event_request:description',array($name,$title,$link),'fr');
+
+		$cp_notify_msg_footer_en = elgg_echo('cp_notify:footer',array(elgg_get_site_url().'/settings/plugins/admin/cp_notifications'),'en');
+		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer',array(elgg_get_site_url().'/settings/plugins/admin/cp_notifications'),'fr');
+		break;
+
+	case 'cp_event_ics': // sent event with ics
 		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_event:title',array($cp_topic_author->name,$cp_topic_title),'en');
 		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_event:title',array($cp_topic_author->name,$cp_topic_title),'fr');
 
@@ -439,20 +459,16 @@ switch ($msg_type) {
 
 
 
-if ($msg_type !== 'cp_site_msg_type' && $msg_type !== 'cp_group_mail') {
-	error_log("this is header: {$msg_type}");
+if ($msg_type !== 'cp_site_msg_type' && $msg_type !== 'cp_group_mail') {	// if this was a message sent from a user, this is not system generated
 	$email_notification_header = elgg_echo('cp_notification:email_header',array(),'en') . ' | ' . elgg_echo('cp_notification:email_header',array(),'fr');
 }
 $french_follows = '<a href="#gcc_fr_suit">Le francais suit</a>';
-
-// this is not used anywhere
-//$email_notification_header_msg_en = elgg_echo('cp_notification:email_header_msg', array('https://gcconnex.gc.ca/mod/contactform/','http://www.gcpedia.gc.ca/wiki/GC2.0_Tools_Help_Centre/GCconnex'),'en');
-//$email_notification_header_msg_fr = elgg_echo('cp_notification:email_header_msg', array('https://gcconnex.gc.ca/mod/contactform/','http://www.gcpedia.gc.ca/wiki/Centre_d%27aide_pour_les_outils_GC2.0/GCconnex'),'fr');
 
 $email_notif_footer_msg_fr1 = elgg_echo('cp_notify:contactHelpDesk', array(),'fr');
 $email_notif_footer_msg_fr2 = elgg_echo('cp_notify:visitTutorials', array(),'fr');
 $email_notif_footer_msg_en1 = elgg_echo('cp_notify:contactHelpDesk', array(),'en');
 $email_notif_footer_msg_en2 = elgg_echo('cp_notify:visitTutorials', array(),'en');
+
 
 
 echo <<<___HTML

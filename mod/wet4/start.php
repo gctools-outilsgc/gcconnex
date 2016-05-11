@@ -972,6 +972,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
             $options = array(
                 'name' => 'history',
                 'text' => '<i class="fa fa-history fa-lg icon-unsel"><span class="wb-inv">' . elgg_echo('pages:history') . '</span></i>',
+                'title'=> elgg_echo('pages:history'),
                 'href' => "pages/history/$entity->guid",
                 'priority' => 150,
             );
@@ -1134,7 +1135,6 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params){
 			$return[] = \ElggMenuItem::factory($options);
 		}
 
-
         
 
 	}
@@ -1224,6 +1224,8 @@ function my_owner_block_handler($hook, $type, $menu, $params){
     //rearrange menu items
     if(elgg_get_context() == 'group_profile'){
         
+        //elgg_extend_view('page/layouts/one_sidebar','groups/profile/summary',452);
+
         elgg_unregister_menu_item('owner_block', 'Activity');
         
         //turn owner_block  menu into tabs
@@ -1272,7 +1274,7 @@ function my_owner_block_handler($hook, $type, $menu, $params){
                 case 'polls':
                     $item->setText(elgg_echo('gprofile:polls'));
                     $item->setHref('#polls');// . strtolower(elgg_echo('gprofile:polls'))
-                    $item->setPriority('8');
+                    $item->setPriority('14');
                     break;
                 case 'tasks':
                     $item->setText(elgg_echo('gprofile:tasks'));
@@ -1303,8 +1305,8 @@ function my_owner_block_handler($hook, $type, $menu, $params){
                     elgg_unregister_menu_item('owner_block', 'activity');
                     $item->setText('Activity');
                     $item->setHref('#activity');
-                    $item->setPriority('13');
-                    $item->addItemClass('removeMe');
+                    $item->setPriority('8');
+                   // $item->addItemClass('removeMe');
                     break;
                 
             }
@@ -1561,6 +1563,7 @@ function wet4_widget_menu_setup($hook, $type, $return, $params) {
 			'id' => "elgg-widget-delete-button-$widget->guid",
 			'data-elgg-widget-type' => $widget->handler,
 			'priority' => 900,
+            'data-confirm' => elgg_echo('deleteconfirm'),
 		);
 		$return[] = \ElggMenuItem::factory($options);
         // This is to maybe have a move button on widgets to move them with the keyboard.

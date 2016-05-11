@@ -388,6 +388,8 @@ return array (
     
 'event_calendar:notify:summary' => 'Nouveaux événements: %s',
 
-'event_calendar:room_label' => 'Salle',
+'event_calendar:room_label' => 'Salle', // NEW
+'event_calendar:add_ics' => 'Ajouter à mon calendrier Outlook', //NEW
+'event_calendar:add_to_my_calendar_ics_response' => 'L\'événement à été envoyé à votre outlook.' //NEW
 
 );

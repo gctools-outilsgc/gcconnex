@@ -107,6 +107,16 @@ if (($container instanceof ElggGroup)
 if ($show_override_notice) {
 	$vars['data-group-acl'] = $container->group_acl;
 }
+
+//EW - Made the default access for closed group content set to group not private
+if(!$entity && ($container instanceof ElggGroup)){
+    if($container->getContentAccessMode() == ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED){
+        $vars['value'] = ACCESS_PUBLIC;
+    } else {
+        $vars['value'] = $container->group_acl;
+    }
+}
+
 echo elgg_view('input/select', $vars);
 if ($show_override_notice) {
 	echo elgg_format_element('p', ['class' => 'elgg-text-help'], elgg_echo('access:overridenotice'));

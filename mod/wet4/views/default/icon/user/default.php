@@ -76,12 +76,7 @@ if (isset($vars['hover'])) {
 	$use_hover = $vars['hover'];
 }
 
-$icon = elgg_view('output/img', array(
-	'src' => $user->getIconURL($size),
-	'alt' => $name,
-	'title' => $name,
-	'class' => $img_class,
-));
+
 
 $show_menu = $use_hover && (elgg_is_admin_logged_in() || !$user->isBanned());
 
@@ -99,17 +94,78 @@ if ($show_menu) {
 	echo elgg_view('navigation/menu/user_hover/placeholder', array('entity' => $user));
 }
 
+
+/*
+ * GC tools ambassador badge
+ * loading in the badge based on metadata
+ * placed over user's avatar     
+ */
+
+
+//check if plugin is active
+if(elgg_is_active_plugin('gcProfilePictureBadges')){
+    //see what badge they have
+    if($user->active_badge != 'none' && $user->active_badge != ''){
+
+        //load badge
+        $badge = '<div class="gcProfileBadge">';
+
+        /* Badges
+         * 
+         *  Top left green - amb_badge_v1_2.png
+         *  Top left red - amb_badge_v1_5.png
+         *  Bottom green - amb_badge_1.png
+         *  Bottom red - amb_badge_v1_4.png
+         * 
+         */
+        $badge .= elgg_view('output/img', array(
+            'src' => 'mod/gcProfilePictureBadges/graphics/amb_badge_v1_5.png',
+            'class' => 'img-responsive',
+            'title' => 'GC Tools Ambassador',
+        ));
+        $badge .= '</div>';
+
+        //add border to avatar
+        //ambBorder1 => green border
+        //ambBorder2 => gold border
+        $badgeBorder = ' ambBorder2';
+    }
+}
+
+
+$icon = elgg_view('output/img', array(
+    'src' => $user->getIconURL($size),
+    'alt' => $name,
+    'title' => $name,
+    'class' => $img_class . $badgeBorder,
+));
+
+
+//check to see if we dont want to show badge on this avatar
+//passed to us by the 'show_badge'
+$displayBadge = elgg_extract('show_badge', $vars, true);
+
+//dont have a badge if false was passed to us
+if($displayBadge != true){
+    $badge = '';
+}
+
 if ($use_link) {
 	$class = elgg_extract('link_class', $vars, '');
 	$url = elgg_extract('href', $vars, $user->getURL());
+
+
+
 	echo elgg_view('output/url', array(
 		'href' => $url,
-		'text' => $icon,
+		'text' => $badge . $icon,
 		'is_trusted' => true,
 		'class' => $class,
 	));
+
 } else {
-	echo "<a>$icon</a>";
+
+	echo "<span>$badge  $icon</span>";
 }
 ?>
 </div>

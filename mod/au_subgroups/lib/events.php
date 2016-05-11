@@ -211,11 +211,13 @@ function pagesetup() {
 
 			if (($any_member && $group->isMember()) || $group->canEdit()) {
 				// register our title menu
-				elgg_register_menu_item('title', array(
+                //Nick - Changing the title menu into 'group_ddb' which is a custom menu for groups
+				elgg_register_menu_item('group_ddb', array(
 					'name' => 'add_subgroup',
 					'href' => "groups/subgroups/add/{$group->guid}",
 					'text' => elgg_echo('au_subgroups:add:subgroup'),
-					'link_class' => 'elgg-button elgg-button-action'
+					'link_class' => 'elgg-button elgg-button-action',
+                    'priority'=>450,
 				));
 			}
 		}

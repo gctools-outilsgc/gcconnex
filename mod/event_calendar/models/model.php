@@ -10,7 +10,7 @@
  * @link http://radagast.biz/
  *
  */
-
+elgg_push_context('event_calendar');
 // converts to time in minutes since midnight
 function event_calendar_convert_to_time($hour, $minute, $meridian) {
 	if ($meridian) {
@@ -63,7 +63,7 @@ function event_calendar_set_event_from_form($event_guid, $group_guid) {
 			$required_fields[] = 'spots';
 		}
 	} else {
-		$required_fields = array('title');
+		$required_fields = array('title', 'start_date', 'end_date', 'venue');
 	}
 
 	if ($event_guid) {
@@ -148,6 +148,9 @@ function event_calendar_set_event_from_form($event_guid, $group_guid) {
 	$e->group_guid = get_input('group_guid');
 	$e->real_end_time = event_calendar_get_end_time($e);
 	$e->room = get_input('room');
+	$e->contact_phone = get_input('contact_phone');
+	$e->contact_email = get_input('contact_email');
+	$e->contact_checkbox = get_input('contact_checkbox');
 
 	// sanity check
 	if ($e->schedule_type == 'fixed' && $e->real_end_time <= $e->start_date) {
@@ -196,7 +199,11 @@ function event_calendar_set_event_from_form($event_guid, $group_guid) {
 		'schedule_type',
 		'group_guid',
 		'room',
-	);
+		'email',
+		'contact_phone',
+		'contact_email',
+		'contact_checkbox',
+		);
 
 	foreach ($keys as $key) {
 		$event->$key = $e->$key;
@@ -1129,10 +1136,10 @@ function event_calendar_get_formatted_full_items($event) {
 	$item->value = htmlspecialchars($event->room);
 	$event_items[] = $item;
 
-	$item = new stdClass();
+/*	$item = new stdClass();
 	$item->title = elgg_echo('event_calendar:language');
 	$item->value = htmlspecialchars($event->language);
-	$event_items[] = $item;
+	$event_items[] = $item;*/
 
 	$item = new stdClass();
 	$item->title = elgg_echo('event_calendar:meeting');
@@ -1165,20 +1172,30 @@ function event_calendar_get_formatted_full_items($event) {
 			$event_items[] = $item;
 		}
 	}
-	$item = new stdClass();
+/*	$item = new stdClass();
 	$item->title = elgg_echo('event_calendar:fees_label');
 	$item->value = htmlspecialchars($event->fees);
-	$event_items[] = $item;
+	$event_items[] = $item;*/
 
-	$item = new stdClass();
+/*	$item = new stdClass();
 	$item->title = elgg_echo('event_calendar:organiser_label');
 	$item->value = htmlspecialchars($event->organiser);
-	$event_items[] = $item;
+	$event_items[] = $item;*/
 
-	$item = new stdClass();
+/*	$item = new stdClass();
 	$item->title = elgg_echo('event_calendar:contact_label');
 	$item->value = htmlspecialchars($event->contact);
-	$event_items[] = $item;
+	$event_items[] = $item;*/
+
+/*	$item = new stdClass();
+	$item->title = elgg_echo('event_calendar:email_label');
+	$item->value = htmlspecialchars($event->contact_email);
+	$event_items[] = $item;*/
+
+/*	$item = new stdClass();
+	$item->title = elgg_echo('event_calendar:phone_label');
+	$item->value = htmlspecialchars($event->contact_phone);
+	$event_items[] = $item;	*/
 
 	return $event_items;
 }
@@ -1389,333 +1406,6 @@ function event_calendar_personal_can_manage($event, $user_id) {
 	return $status;
 }
 
-/*function event_email($event,$request,$email_users) {
-
-$time = event_calendar_get_formatted_time($event);
-$name = get_loggedin_user()->username;
-$date = explode("-", $time);
-$startdate = $date[0]; 
-$enddate = $date[1]; 
-if (!$enddate){
-
-	$enddate = date('j M Y g:i A', strtotime($startdate)+86340);
-	$oneday=true;
-	
-}else{
-
-	$oneday=false;
-}
-
-$title = $event->title;
-$description = $event->description;
-$venue = $event->venue;
-$language = $event->language;
-if (htmlspecialchars($event->language) == 0 ){
-	$language = 'Français';
-}else if(htmlspecialchars($event->language) == 1 ){
-	$language = 'English';
-}else{
-	$language = 'Bilingue';
-}
-
-$teleconference = $event->teleconference;
-$additional = $event->additional;
-$fees = $event->fees;
-$organiser = $event->organiser;
-$contact = $event->contact;
-$long_description = $event->long_description;
-$email = $email_users;
-$from_name = "Gcconnex";        
-$from_address = "gcconnex@gcconnex.gc.ca";        
-$to_name = $name;        
-$users = event_calendar_get_users_for_event($entity->guid, $limit, $offset, false);
-    
-$startTime = $startdate;        
-$UID = $event->guid;
-$endTime = $enddate;        
-$subject = $title;        
-$description = $description;        
-$location = $venue;
-$type_email = $request;
-sendIcalEvent($additional,$email,$UID,$users,$oneday,$from_name, $from_address, $to_name, $to_address, $startTime, $endTime, $subject, $description, $location,$long_description,$contact,$organiser,$fees,$teleconference,$language,$venue,$type_email);
-
-
-}
-
-
-
-function sendIcalEvent($additional,$email,$UID,$users,$oneday,$from_name, $from_address, $to_name, $to_address, $startTime, $endTime, $subject, $description, $location,$long_description,$contact,$organiser,$fees,$teleconference,$language,$venue,$type_email)
-{
-	
-    $domain = 'gcconnex.com';
-    if($oneday){
-    	$endTime2 = date('j M Y', strtotime($endTime));
-    }else{
-    	$endTime2 = $endTime;
-    }
-
-//Check how much value is in the array (How much email)
-    $count = count($email);
-    if ($count == 1){
-     	foreach($email as $result) {
-    		$email=$result['email'];
-    }
-	
-	}else{
- 		foreach($email as $result) {
-    		$array_email[] = $result['email'];
-    }
-		$email = implode(",", $array_email);
-    }
-
-    
-	$to_address = $email; 
-    //Create Email Headers
-    $mime_boundary = "----Meeting Booking----".MD5(TIME());
-
-    $headers = "From: ".$from_name." <".$from_address.">\n";
-    $headers .= "Reply-To: ".$from_name." <".$from_address.">\n";
-    $headers .= "MIME-Version: 1.0\n";
-    $headers .= "Content-Type: multipart/alternative; boundary=\"$mime_boundary\"\n";
-    $headers .= "Content-class: urn:content-classes:calendarmessage\n";
-    
-    //Create Email Body (HTML)
-    $message = "--$mime_boundary\r\n";
-    $message .= "Content-Type: text/html; charset=UTF-8\n";
-    $message .= "Content-Transfer-Encoding: 8bit\n\n";
-    $message .= "<html>\n";
-    $message .= "<body>\n";
-   // $message .= '<p>Dear '.$to_name.',</p>';
-    //$message .= '<p>description='.$description.'</br>long_description='.$long_description.'</br>contact='.$contact.'</br>organiser='.$organiser.'</br>fees='.$fees.'</br>teleconference='.$teleconference.'</br>language='.$language.'</p>';
-    $message .= '<table width="100%" bgcolor="#fcfcfc" border="0" cellpadding="0" cellspacing="0">
-<tr>
-  <td>
-    <!--[if (gte mso 9)|(IE)]>
-      <table width="600" align="center" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td>
-    <![endif]-->     
-    <table bgcolor="#ffffff" class="content" align="center" cellpadding="0" cellspacing="0" border="0" style="width: 100%; max-width: 800px;">
-      <tr>
-        <td bgcolor="#047177" class="header" style="padding: 12px 0 10px 30px;">
-          <table width="70" align="left" border="0" cellpadding="0" cellspacing="0">  
-            <tr>
-                            <td height="50" style="padding: 0 0 0 20px; color: #ffffff; font-family: sans-serif; font-size: 45px; line-height: 38px; font-weight: bold;">
-                GC<span style="padding: 0 0 0 3px; font-size: 25px; color: #ffffff; font-family: sans-serif; ">connex</span>
-              </td>
-            </tr>
-          </table>
-        </td>
-               
-      <tr>
-        <td class="innerpadding" style="padding: 30px 30px 30px 30px; font-size: 16px; line-height: 22px; border-bottom: 1px solid #f2eeed; font-family: sans-serif;">
-         
-Ceci est un évènement qui s\'est ajouter à votre calendrier GCconnex. Si vous acceptez cet évènement, il sera ajouter à votre calendrier Outlook. Si vous refusez ou souhaitez ne plus faire partie de cet évènement, il faudra aller dans votre calendrier de GCconnex et aller retirer cet évènement de votre calendrier.<br/>
-Merci<br/><br/>
-
-Ceci est un évènement qui s\'est ajouter à votre calendrier GCconnex. Si vous acceptez cet évènement, il sera ajouter à votre calendrier Outlook. Si vous refusez ou souhaitez ne plus faire partie de cet évènement, il faudra aller dans votre calendrier de GCconnex et aller retirer cet évènement de votre calendrier.<br/>
-Merci
-
-             
-        </td>
-      </tr>
-      </tr>
-      <tr>
-        <td class="innerpadding borderbottom" style="padding: 30px 30px 30px 30px; border-bottom: 1px solid #f2eeed;">
-          <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tr>
-              <td class="h2" style="color: #153643; font-family: sans-serif; padding: 0 0 15px 0; font-size: 24px; line-height: 28px; font-weight: bold;">
-                <span style="font-size:15px; font-weight: normal;">(Le fran&ccedil;ais suit)</span><br/>
-                  GCconnex event
-              </td>
-            </tr>
-            <tr>
-              <td class="bodycopy" style="color: #153643; font-family: sans-serif; font-size: 16px; line-height: 22px;">';
-              if (date('j M Y', strtotime($startTime)) == date('j M Y', strtotime($endTime))){
-                 	$message .= '<b>When:</b> '.$startTime.'<br/>';
-                 }else{
-
-                 	 $message .= '<b>When:</b> '.$startTime.' to '.$endTime2.'<br/>';
-                 }
-               
-                $message .= ' <b>Title:</b> '.$subject.'<br/>';
-                 if ($venue){
-                 	$message .= '<b>Venue:</b> '.$venue.'<br/>';
-                 }
-                  if ($language){
-                 	$message .= '<b>Event language:</b> '.$language.'<br/>';
-                 }  if ($teleconference){
-                 	$message .= '<b>Online meeting and teleconference:</b> '.$teleconference.'<br/>';
-                 }  if ($additional){
-                 	$message .= '<b>Additional information:</b> '.$additional.'<br/>';
-                 }  if ($contact){
-                 	$message .= '<b>Contact:</b> '.$contact.'<br/>';
-                 }  if ($organiser){
-                 	$message .= '<b>Organiser:</b> '.$organiser.'<br/>';
-                 }  if ($fees){
-                 	$message .= '<b>Fees:</b> '.$fees.'<br/>';
-                 }  if ($description){
-                 	$message .= '<b>Description:</b> '.$description.'<br/>';
-                 } if ($long_description){
-                 	$message .= '<b>Long description:</b> '.$long_description.'<br/>';
-                 }    
- 
-             $message .='<br/> </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-      <tr>
-        <td class="innerpadding borderbottom" style="padding: 30px 30px 30px 30px; border-bottom: 1px solid #f2eeed;">
-<!--          <table width="115" align="left" border="0" cellpadding="0" cellspacing="0">  
-            <tr>
-              <td height="115" style="padding: 0 20px 20px 0;">
-                <img class="fix" src="images/article1.png" width="115" height="115" border="0" alt="" />
-              </td>
-            </tr>
-          </table>-->
-          <!--[if (gte mso 9)|(IE)]>
-            <table width="380" align="left" cellpadding="0" cellspacing="0" border="0">
-              <tr>
-                <td>
-          <![endif]-->
-          
-            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-             
-               
-                  <tr>
-                    <td class="bodycopy" style="color: #153643; font-family: sans-serif; padding: 0 0 15px 0; font-size: 24px; line-height: 28px; font-weight: bold;">
-                        
-                  Formulaire en ligne de demande
-                    </td>
-                  </tr>
-                  <tr>
-                   <td class="bodycopy" style="color: #153643; font-family: sans-serif; font-size: 16px; line-height: 22px;">';
-                   if (date('j M Y', strtotime($startTime)) == date('j M Y', strtotime($endTime))){
-                 	$message .= '<b>Quand:</b> '.$startTime.'<br/>';
-                 }else{
-
-                 	 $message .= '<b>Quand:</b> '.$startTime.' to '.$endTime2.'<br/>';
-                 }
-               
-                 $message .= '<b>Titre:</b> '.$subject.'<br/>';
-                 if ($venue){
-                 	$message .= '<b>Lieu:</b> '.$venue.'<br/>';
-                 }
-                  if ($language){
-                 	$message .= '<b>Langue de l\'événement</b> '.$language.'<br/>';
-                 }  if ($teleconference){
-                 	$message .= '<b>Réunion en ligne et téléconférence:</b> '.$teleconference.'<br/>';
-                 }  if ($additional){
-                 	$message .= '<b>Information additionnelle:</b> '.$additional.'<br/>';
-                 }  if ($contact){
-                 	$message .= '<b>Contact:</b> '.$contact.'<br/>';
-                 }  if ($organiser){
-                 	$message .= '<b>Organisateur:</b> '.$organiser.'<br/>';
-                 }  if ($fees){
-                 	$message .= '<b>Prix:</b> '.$fees.'<br/>';
-                 }  if ($description){
-                 	$message .= '<b>Description:</b> '.$description.'<br/>';
-                 } if ($long_description){
-                 	$message .= '<b>Longue description:</b> '.$long_description.'<br/>';
-                 }
-                    
-             $message .=' </td>
-                  </tr>
-               
-              </table>
-          
-          <!--[if (gte mso 9)|(IE)]>
-                </td>
-              </tr>
-          </table>
-          <![endif]-->
-        </td>
-      </tr>
-
-      <tr>
-        <td class="footer" bgcolor="#f5f5f5" style="padding: 20px 30px 15px 30px;">
-          <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tr>
-              <td align="center" class="footercopy" style="font-family: sans-serif; font-size: 14px; color: #055959">
-                GCconnex calendar / Calendrier de GCconnex<br/>
-              </td>
-            </tr>
-            <tr>
-              <td align="center" class="footercopy" style="font-family: sans-serif; font-size: 14px; color: #055959"">  
-                  Do not reply /<br/> Ne pas r&#233;pondre<br>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
-    <!--[if (gte mso 9)|(IE)]>
-          </td>
-        </tr>
-    </table>
-    <![endif]-->
-    </td>
-  </tr>
-</table>';
-    $message .= "</body>\n";
-    $message .= "</html>\n";
-    $message .= "--$mime_boundary\r\n";
-
-    $ical = 'BEGIN:VCALENDAR' . "\r\n" .
-    'PRODID:-//Microsoft Corporation//Outlook 10.0 MIMEDIR//EN' . "\r\n" .
-    'METHOD:'.$type_email . "\r\n" .
-    'VERSION:2.0' . "\r\n" .
-    'BEGIN:VTIMEZONE' . "\r\n" .
-    'TZID:Eastern Time' . "\r\n" .
-    'BEGIN:STANDARD' . "\r\n" .
-    'DTSTART:20091101T020000' . "\r\n" .
-    'RRULE:FREQ=YEARLY;INTERVAL=1;BYDAY=1SU;BYMONTH=11' . "\r\n" .
-    'TZOFFSETFROM:-0400' . "\r\n" .
-    'TZOFFSETTO:-0500' . "\r\n" .
-    'TZNAME:EST' . "\r\n" .
-    'END:STANDARD' . "\r\n" .
-    'BEGIN:DAYLIGHT' . "\r\n" .
-    'DTSTART:20090301T020000' . "\r\n" .
-    'RRULE:FREQ=YEARLY;INTERVAL=1;BYDAY=2SU;BYMONTH=3' . "\r\n" .
-    'TZOFFSETFROM:-0500' . "\r\n" .
-    'TZOFFSETTO:-0400' . "\r\n" .
-    'TZNAME:EDST' . "\r\n" .
-    'END:DAYLIGHT' . "\r\n" .
-    'END:VTIMEZONE' . "\r\n" .	
-    'BEGIN:VEVENT' . "\r\n" .
-    'ORGANIZER;CN="'.$from_name.'":MAILTO:'.$from_address. "\r\n" .
-    'ATTENDEE;CN="'.$to_name.'";ROLE=REQ-PARTICIPANT;RSVP=TRUE:MAILTO:'.$to_address. "\r\n" .
-    'LAST-MODIFIED:' . date("Ymd\TGis") . "\r\n" .
-    'UID:'.$UID."@".$domain . "\r\n" .
-    'DTSTAMP:'.date("Ymd\TGis"). "\r\n" .
-    'DTSTART;TZID="Eastern Time":'.date("Ymd\THis", strtotime($startTime)). "\r\n" .
-    'DTEND;TZID="Eastern Time":'.date("Ymd\THis", strtotime($endTime)). "\r\n" .
-    'TRANSP:OPAQUE'. "\r\n" .
-    'SEQUENCE:1'. "\r\n" .
-    'SUMMARY:' . $subject . "\r\n" .
-    'LOCATION:' . $location . "\r\n" .
-    'CLASS:PUBLIC'. "\r\n" .
-    'PRIORITY:5'. "\r\n" .
-    'BEGIN:VALARM' . "\r\n" .
-    'TRIGGER:-PT15M' . "\r\n" .
-    'ACTION:DISPLAY' . "\r\n" .
-    'DESCRIPTION:Reminder' . "\r\n" .
-    'END:VALARM' . "\r\n" .
-    'END:VEVENT'. "\r\n" .
-    'END:VCALENDAR'. "\r\n";
-    'STATUS:CONFIRMED'. "\r\n";
-   
-    $message .= 'Content-Type: text/calendar;name="meeting.ics";method=REQUEST'."\n";
-    $message .= "Content-Transfer-Encoding: 8bit\n\n";
-    $message .= $ical;
-
-    $mailsent = mail($to_address, $subject, $message, $headers);
-
-    return ($mailsent)?(true):(false);
-}
-*/
-
 function event_calendar_send_event_request($event, $user_guid) {
 	$result = false;
 	if(add_entity_relationship($user_guid, 'event_calendar_request', $event->guid)) {
@@ -1732,6 +1422,7 @@ function event_calendar_send_event_request($event, $user_guid) {
 			'action' => 'request',
 			'summary' => $subject
 		));
+
 		$result = true;
 	}
 	return $result;
@@ -1796,7 +1487,8 @@ function event_calendar_get_page_content_list($page_type, $container_guid, $star
 
 	$params = event_calendar_generate_listing_params($page_type, $container_guid, $start_date, $display_mode, $filter, $region);
 	$title = $params['title2'];
-$event_page = $params['event_page'];
+	$event_page = $params['event_page'];
+	
 	$url = current_page_url();
 	if (substr_count($url, '?')) {
 		$url .= "&view=ical";
@@ -1826,14 +1518,16 @@ if ($event_page == false){
 }else{
 	$body = elgg_view_layout("two_column", $params);
 	}
-	
-	$body .= elgg_view_entity_list('event_calendar/filter_menu',$passed_vars);	// cyu - 02/17/2015: modified to put pagination in to display ALL events
+	//$body = elgg_view_layout("one_column", $params);
+	$body .= elgg_view_entity_list('event_calendar/filter_menu',$params);	// cyu - 02/17/2015: modified to put pagination in to display ALL events
 	
 	return elgg_view_page($title, $body);
+
 }
 
 function event_calendar_get_page_content_edit($page_type, $guid, $start_date='') {
 	elgg_load_js('elgg.event_calendar');
+
 	$vars = array();
 	$vars['id'] = 'event-calendar-edit';
 	$vars['name'] = 'event_calendar_edit';
@@ -1961,6 +1655,8 @@ function event_calendar_prepare_edit_form_vars($event = null, $page_type = '', $
 		'access_id' => ACCESS_DEFAULT,
 		'group_guid' => null,
 		'room' => null,
+		'contact_email' => null,
+		'contact_phone' => null,
 	);
 
 	if ($page_type == 'schedule') {
@@ -2226,6 +1922,9 @@ $logged_in_user = elgg_get_logged_in_user_entity();
 	if (($filter != "all") || ($page_type == 'group')){
 	$sidebar = elgg_view('event_calendar/show_events_calendar', $vars);
 	$event_page = true;
+}else if ($filter == "all"){
+	$event_page = true;
+	$sidebar = elgg_view('event_calendar/sidebar', array('page' => $sidebar));
 }else{
 	$event_page = true;
 
@@ -2239,6 +1938,7 @@ $title2 = elgg_view_title($title);
 		'title2' => $title,
 		'content' => $content,
 		'other' => $other,
+		'context' => 'event_calendar',
 		'filter_override' => $filter_override,
 		'pass_vars' => $vars,		// cyu - 02/17/2015: modified to pass the $vars to another function to do pagination
 		'sidebar' => $sidebar,
@@ -2281,13 +1981,39 @@ function event_calendar_get_page_content_view($event_guid) {
 				event_calendar_handle_menu($event_guid);
 			}
 			elgg_push_breadcrumb($event_container->name, 'event_calendar/owner/' . $event_container->username);
-			if(event_calendar_can_add()) {
+			$user_guid = elgg_get_logged_in_user_guid();
+			$calendar_status = event_calendar_personal_can_manage($event, $user_guid);
+
+			if ($calendar_status == 'open') {
+				if (event_calendar_has_personal_event($event->guid, $user_guid)) {
 				elgg_register_menu_item('title', array(
-					'name' => 'add',
-					'href' => "event_calendar/add",
-					'text' => elgg_echo('event_calendar:add'),
-					'link_class' => 'elgg-button elgg-button-action event-calendar-button-add',
-				));
+						'name' => 'add',
+						'href' => elgg_add_action_tokens_to_url("action/event_calendar/add_ics?guid={$event->guid}"),
+						'text' => elgg_echo('event_calendar:add_ics'),
+						'link_class' => 'elgg-button elgg-button-action event-calendar-button-add',
+					));
+					$return[] = ElggMenuItem::factory($options);
+				} else {
+					if (!event_calendar_is_full($entity->guid) && !event_calendar_has_collision($event->guid, $user_guid)) {
+					elgg_register_menu_item('title', array(
+						'name' => 'add',
+						'href' => elgg_add_action_tokens_to_url("action/event_calendar/add_ics?guid={$event->guid}"),
+						'text' => elgg_echo('event_calendar:add_ics'),
+						'link_class' => 'elgg-button elgg-button-action event-calendar-button-add',
+					));
+						$return[] = ElggMenuItem::factory($options);
+					}
+				}
+			} else if ($calendar_status == 'closed') {
+				if(!check_entity_relationship($user_guid, 'event_calendar_request', $event->guid)){
+					elgg_register_menu_item('title', array(
+								'name' => 'add',
+								'href' => elgg_add_action_tokens_to_url("action/event_calendar/add_ics?guid={$event->guid}"),
+								'text' => elgg_echo('event_calendar:add_ics'),
+								'link_class' => 'elgg-button elgg-button-action event-calendar-button-add',
+							));
+							$return[] = ElggMenuItem::factory($options);
+				}
 			}
 		}
 
@@ -2303,7 +2029,7 @@ function event_calendar_get_page_content_view($event_guid) {
 		'title' => $title,
 		'content' => $content,
 		'filter' => '',
-		'sidebar' => elgg_view('event_calendar/sidebar', array('page' => 'full_view'))
+		'sidebar' => elgg_view('event_calendar/add_info',array('entity' => $event))
 	);
 
 	$body = elgg_view_layout("content", $params);
@@ -2992,3 +2718,4 @@ function event_calendar_is_upgrade_available() {
 		return true;
 	}
 }
+elgg_pop_context();

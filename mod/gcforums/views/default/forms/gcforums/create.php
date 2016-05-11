@@ -1,6 +1,6 @@
 <?php
-
-if (elgg_is_logged_in()) {
+$group = get_entity($vars['group_guid']);
+if (elgg_is_logged_in() && $group->isMember(elgg_get_logged_in_user_entity())) {
 
 	// if this is within a group, set owner to group
 	if (!elgg_get_page_owner_guid())

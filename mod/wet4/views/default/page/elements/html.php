@@ -24,8 +24,8 @@ if (isset($vars['body_attrs'])) {
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <!--<![endif]-->
 <head>
-    <!--link type="text/css" href="/cometchat/cometchatcss.php" rel="stylesheet" charset="utf-8">
-    <script type="text/javascript" src="/cometchat/cometchatjs.php" charset="utf-8"></script>-->
+    <link type="text/css" href="/cometchat/cometchatcss.php" rel="stylesheet" charset="utf-8">
+    <script type="text/javascript" src="/cometchat/cometchatjs.php" charset="utf-8"></script>
     <?php echo $vars["head"]; ?>
 </head>
 <body<?php echo $attrs ?>>

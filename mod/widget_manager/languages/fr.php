@@ -492,7 +492,7 @@
 
 			
 			);
-		add_translation("en", $favorites);
+		add_translation("fr", $favorites);
 
 		$likes = array(
 			// likes widget
@@ -513,7 +513,7 @@
 
 		);
 
-		add_translation("en", $likes);
+		add_translation("fr", $likes);
 
 		$user_search = array(
 			// user search widget
@@ -521,7 +521,7 @@
 		'widgets:user_search:description' => "Rechercher tous les utilisateurs de votre site (y compris les utilisateurs désactivés ou non validés)",
 
 		);
-		add_translation("en", $user_search);
+		add_translation("fr", $user_search);
 		$iframe = array(
 			// iframe widget
 		'widgets:iframe:title' => "iFrame",
@@ -530,5 +530,5 @@
 		'widgets:iframe:settings:iframe_height' => "Inscrire la hauteur (optionnelle) de l'iframe (pixels)",
 
 		);
-		add_translation("en", $iframe);
+		add_translation("fr", $iframe);
 

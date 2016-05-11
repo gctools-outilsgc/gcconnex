@@ -32,6 +32,9 @@ if($subtype_test == 'comment' || $subtype_test =='discussion_reply' || $subtype_
 
 //makes the widget icons small and the main river icons big :)
 if(elgg_get_context() !== 'widgets'){
+    if(elgg_in_context('group_activity_tab')){ //Nick - Show creator of the content when viewing the group activity tab
+        echo elgg_view_entity_icon($subject, 'medium');
+    }
   if (elgg_in_context('widgets')) {
       if($container || $commentordiscuss){
           echo elgg_view_entity_icon($container, 'medium');
@@ -42,20 +45,22 @@ if(elgg_get_context() !== 'widgets'){
 
 	
 } else {
-    if($container && $subtype_test){//happens in group
+    if($container && $subtype_test && !elgg_in_context('group_activity_tab')){//happens in group
         echo elgg_view_entity_icon($container, 'medium');
         //echo $subtype_test;
-    }else if($container){
+    }else if($container && !elgg_in_context('group_activity_tab')){
         //if user joins group show their photo, not group owner's image
         echo elgg_view_entity_icon($subject, 'medium');
-    }else{
+    }else if(!elgg_in_context('group_activity_tab')){ // Nick - do not show additional avatars on group activity tab
         echo elgg_view_entity_icon($subject, 'medium');
     }
-}  
-}else{
+}
+} else{
  if (elgg_in_context('widgets')) {
      echo elgg_view_entity_icon($subject, 'medium');
-} else {
+} else if(elgg_in_context('group_activity_tab')){
+ 
+ }else {
 	echo elgg_view_entity_icon($subject, 'medium');
 }   
 }

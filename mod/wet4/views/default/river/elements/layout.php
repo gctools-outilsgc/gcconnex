@@ -33,7 +33,10 @@ if(intval($_SESSION['Suggested_friends'])==5 && elgg_is_logged_in())
                 $user_department=get_user($userGUID)->department;
                 $htmloutput=$htmloutput.'<div class="col-xs-4 text-center hght-inhrt">'; // suggested friend link to profile
                 $htmloutput .= '<a href="'.  $site_url. 'profile/'. get_user($row['guid_two'])->username.'" class="">';
-                $htmloutput=$htmloutput.'<img src="'.get_user($row['guid_two'])->getIcon('medium') . '" class="avatar-profile-page img-responsive center-block img-circle elgg-avatar-wet4-sf" alt="'.elgg_echo('sf:alttext').' '.get_user($row['guid_two'])->getDisplayName().'">';
+
+                //EW - change to render icon so new ambassador badges can be shown
+                $htmloutput.= elgg_view_entity_icon(get_entity($userGUID), 'medium', array('use_hover' => false, 'use_link' => false, 'class' => 'elgg-avatar-wet4-sf'));
+                //$htmloutput=$htmloutput.'<img src="'.get_user($row['guid_two'])->getIcon('medium') . '" class="avatar-profile-page img-responsive center-block img-circle elgg-avatar-wet4-sf" alt="'.elgg_echo('sf:alttext').' '.get_user($row['guid_two'])->getDisplayName().'">';
                 $htmloutput=$htmloutput.'<h4 class="h4 mrgn-tp-sm"><span class="text-primary">'.get_user($row['guid_two'])->getDisplayName().'</span></h4></a>';
                 if($job){ // Nick - Adding department if no job, if none add a space
                     $htmloutput=$htmloutput.'<p class="small mrgn-tp-0">'.$job.'</p>';

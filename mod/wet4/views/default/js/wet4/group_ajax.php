@@ -28,7 +28,7 @@ $(document).ready(function() {
         var group_guid = elgg.get_page_owner_guid();
 
         
-
+        //alert(sub_type);
         ajax_path = 'ajax/view/ajax/grp_ajax_content'; //here is my ajax view :3
 
         if (sub_type == 'discussion') {//modify certain subtypes so elgg knows what we want 

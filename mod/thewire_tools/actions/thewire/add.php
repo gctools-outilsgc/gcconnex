@@ -18,9 +18,6 @@ if (empty($body)) {
 	forward(REFERER);
 }
 
-error_log("reshare >>>>> {$reshare_guid}");
-
-
 $guid = thewire_tools_save_post($body, elgg_get_logged_in_user_guid(), $access_id, $parent_guid, $method, $reshare_guid);
 if (!$guid) {
 	register_error(elgg_echo("thewire:error"));

@@ -49,6 +49,10 @@ if($sub_type =='groupforumtopic'){ //some subtypes are different for list_entiti
 }
 $action_view_more = $sub_type2 . $all_link_location . $group; //some view all links are different by content
 
+if($sub_type =='activity'){
+    $action_view_more = 'groups/activity/' . $group;
+}
+
 $all_link = elgg_view('output/url', array(
 	'href' => $action_view_more,
 	'text' => elgg_echo('link:view:all'),
@@ -68,6 +72,16 @@ if($sub_type =='related'){ //related groups
         'no_results' => elgg_echo('groups_tools:related_groups:none'),
     );
     $content = elgg_list_entities_from_relationship($options);
+}else if($sub_type =='activity'){
+    elgg_push_context('group_activity_tab'); //force my own context here so I can modify it in the river view
+    $content = elgg_list_river(array(
+	'limit' => 10,
+	'pagination' => false,
+	'wheres' => array(
+		"(oe.container_guid = $group OR te.container_guid = $group)",
+	),
+));
+    elgg_pop_context();
 }else{ //all other content types
     $options = array(
         'type' => 'object',
@@ -91,6 +105,8 @@ if(check_entity_relationship($user, 'member', $group)){ //are they a member?
 
     if($sub_type =='related'){ //if we want related groups then set the related_group var with the group guid
         $related_group = $group;
+    }else if($sub_type =='activity'){
+        //No add activity button, that doesn't make no sense yo
     }else{ //else put the 'add' content button - permissions are dealt with in the module view below
         $new_link = elgg_view('output/url', array(
         'href' => $action ,

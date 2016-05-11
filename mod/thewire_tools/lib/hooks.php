@@ -227,7 +227,8 @@ function thewire_tools_register_river_menu_items($hook_name, $entity_type, $retu
 		}
 		$options = array(
 			"name" => "reply",
-			"text" => '<i class="fa fa-reply fa-lg icon-unsel"><span class="wb-inv">'.elgg_echo('reply').'</span></i>', //Nick P - I put this in here because it won't override in our theme. fight me 
+			"text" => '<i class="fa fa-reply fa-lg icon-unsel"><span class="wb-inv">'.elgg_echo('reply').'</span></i>', //Nick P - I put this in here because it won't override in our theme. fight me
+            'title' => elgg_echo('reply'),
 			"href" => "thewire/reply/" . $entity->getGUID(),
 			"priority" => 150,
 		);

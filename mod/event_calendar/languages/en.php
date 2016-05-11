@@ -9,7 +9,7 @@ return array(
 'event_calendar:new_event' => "New event",
 'event_calendar:add_event_title' => "Add event",
 'event_calendar:manage_event_title' => "Edit event",
-'event_calendar:title_label' => "Title",
+'event_calendar:title_label' => "Title ",
 'event_calendar:title_description' => "One to four words",
 'event_calendar:brief_description_label' => "Description",
 'event_calendar:brief_description_description' => "A short phrase.",
@@ -226,7 +226,7 @@ return array(
 'event_calendar:dow:full:saturday' => "Saturday",
 'event_calendar:dow:full:sunday' => "Sunday",
 'event_calendar:month:01' => 'January',
-'event_calendar:month:02' => 	'February',
+'event_calendar:month:02' => 'February',
 'event_calendar:month:03' => 'March',
 'event_calendar:month:04' => 'April',
 'event_calendar:month:05' => 'May',
@@ -235,7 +235,7 @@ return array(
 'event_calendar:month:08' => 'August',
 'event_calendar:month:09' => 'September',
 'event_calendar:month:10' => 'October',
-'event_calendar:month:11' => 	'November',
+'event_calendar:month:11' => 'November',
 'event_calendar:month:12' => 'December',
 'event_calendar:schedule_type:poll' => "Create poll asking invitees about day/time",
 'event_calendar:schedule_type:fixed' => "Set day/time",
@@ -274,7 +274,7 @@ return array(
 'event_calendar:no_such_event_edit_error' => "Error: Event does not exist or you do not have permission to edit it.",
 'event_calendar:end_date_label' => "Event End Date",
 'event_calendar:end_date_description' => "When will this event end? (If no end date is entered, the start date will be used)",
-'event_calendar:show_events_title' => 	"Event calendar",
+'event_calendar:show_events_title' => "Event calendar",
 'event_calendar:cancel' => "Cancelled",
 'event_calendar:groupprofile' => "Next event",
 'event_calendar:view_calendar' => "View the calendar",
@@ -321,5 +321,9 @@ return array(
 'event_calendar:notify:body' => 	'%s has created a new event: %s %s %s',	
 'event_calendar:notify:summary' => 'New event: %s',
 
-'event_calendar:venue_label' => 'Room',
+'event_calendar:venue_label' => 'Location', //NEW / Change
+'event_calendar:add_ics' => 'Add to my Outlook calendar',// NEW
+'event_calendar:add_to_my_calendar_ics_response' => 'L\'événement à été envoyé à votre outlook.',//NEW
+
+'event_calendar:room_label' => 'Room',//NEW
 );

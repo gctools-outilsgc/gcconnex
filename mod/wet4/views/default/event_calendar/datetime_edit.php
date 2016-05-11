@@ -12,7 +12,7 @@ $body = '';
 
 if ($event_calendar_times != 'no') {
 	if ($event_calendar_hide_end != 'yes') {
-		$body .= '<p><label>'.elgg_echo('event_calendar:from_label').'</label>';
+		$body .= '<p><label class="required">'.elgg_echo('event_calendar:from_label').'</label>';
 	}
 	$body .= elgg_view("event_calendar/input/date_local", array(
 		'autocomplete' => 'off',
@@ -32,7 +32,7 @@ if ($event_calendar_times != 'no') {
 	));
 	$body .= '</span>';
 	if ($event_calendar_hide_end != 'yes') {
-		$body .= '</p><p id="event-calendar-to-time-wrapper"><label>'.elgg_echo('event_calendar:to_label').'</label>';
+		$body .= '</p><p id="event-calendar-to-time-wrapper"><label class="required">'.elgg_echo('event_calendar:to_label').'</label>';
 		$body .= elgg_view("event_calendar/input/date_local", array(
 			'autocomplete' => 'off',
 			'class' => 'event-calendar-compressed-date',

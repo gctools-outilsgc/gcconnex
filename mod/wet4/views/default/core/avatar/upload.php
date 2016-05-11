@@ -5,10 +5,18 @@
  * @uses $vars['entity']
  */
 
+ //EW - converting user avatar to elgg view entity icon to display new Ambassador Badge
+
+/*
 $user_avatar = elgg_view('output/img', array(
 	'src' => $vars['entity']->getIconUrl('large'),
 	'alt' => elgg_echo('avatar'),
+    'class' => 'img-circle',
 ));
+*/
+
+//display avatar with badge
+$user_avatar = elgg_view_entity_icon($vars['entity'], 'large', array('use_hover' => false));
 
 $current_label = elgg_echo('avatar:current');
 

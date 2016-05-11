@@ -552,10 +552,10 @@ function groups_register_profile_buttons($group) {
 			$actions[$url] = 'groups:joinrequest';
 		}
 	}
-
+    //Nick - changed the menu item from 'title' to 'group_ddb' so these links register in our menu
 	if ($actions) {
 		foreach ($actions as $url => $text) {
-			elgg_register_menu_item('title', array(
+			elgg_register_menu_item('group_ddb', array(
 				'name' => $text,
 				'href' => $url,
 				'text' => elgg_echo($text),

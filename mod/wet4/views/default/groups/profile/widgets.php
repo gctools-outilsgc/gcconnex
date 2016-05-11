@@ -15,21 +15,17 @@ if ($right || $left) {
 }
 
 //tool tabs
-echo elgg_view('groups/profile/tab_menu');
+//Nick - removed the group search tab and created the search form directly into the tab menu
+echo '<div class="row clearfix">';
+echo '<div class="col-sm-8">'.elgg_view('groups/profile/tab_menu'). '</div>';
+echo '<div class="col-sm-4">'.elgg_view("groups/sidebar/search", $vars).'</div>';
+echo '</div>';
 $site_url = elgg_get_site_url();
 ?>
 
 <div id="groups-tools" class="tab-content clearfix">
     <?php //Create an empty div for all of the group tools that we can append content to.?>
-    <div id="search" class="collapse panel panel-custom">
-    <div class="panel-body">
-        <?php 
-            
-            echo  '<h3>' .   elgg_echo('groups:search_in_group') . '</h3>';
-            echo elgg_view("groups/sidebar/search", $vars); 
-        ?>
-    </div>
-</div>
+
 
     <div id="about" class="tab-pane fade-in active">
 
@@ -101,6 +97,12 @@ $site_url = elgg_get_site_url();
         </div>
     </div>
     <div id="related" class="tab-pane fade-in ">
+        <div class="wet-ajax-loader" aria-hidden="true">
+            <img src="<?php echo $site_url.'mod/wet4/graphics/loading.gif';?>" alt="loading content" />
+
+        </div>
+    </div>
+    <div id="activity" class="tab-pane fade-in ">
         <div class="wet-ajax-loader" aria-hidden="true">
             <img src="<?php echo $site_url.'mod/wet4/graphics/loading.gif';?>" alt="loading content" />
 

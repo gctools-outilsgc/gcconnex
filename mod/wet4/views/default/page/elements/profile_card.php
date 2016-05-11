@@ -12,8 +12,15 @@ $department = get_loggedin_user()->get('department');
 <div class="clearfix mrgn-bttm-sm">
     <div class="row mrgn-lft-0 mrgn-rght-sm">
     <div class="col-xs-4">
-        <a href="<?php echo $site_url ?>profile/<?php echo $user ?>" title="<?php echo elgg_echo('userMenu:profile') ?>"><img class="mrgn-tp-md mrgn-lft-sm img-circle" src="<?php echo $user_avatar?>" alt="<?php echo $displayName ?> Profile Picture"></a>
+
+        <div class="mrgn-tp-sm">
+            <?php 
+                //EW - change to display new badge
+                echo elgg_view_entity_icon(elgg_get_logged_in_user_entity(), 'large', array('use_hover' => false, 'class' => 'pro-avatar')); 
+                ?>
+           </div>
     </div>
+
 
     <div class="col-xs-8">
         <h4 class="mrgn-tp-sm mrgn-bttm-0"><?php echo $displayName?></h4>

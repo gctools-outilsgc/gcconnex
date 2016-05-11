@@ -22,7 +22,7 @@ if (elgg_is_logged_in()) {
 		'priority' => 200,
 	);
 	$tabs['friend'] = array(
-		'text' => elgg_echo('friends:filterby'),
+		'text' => elgg_echo('friends'),
 		'href' =>  "$url_start/friends",
 		'selected' => ($filter_context == 'friends'),
 		'priority' => 300,

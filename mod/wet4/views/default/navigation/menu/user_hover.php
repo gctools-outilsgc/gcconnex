@@ -16,6 +16,8 @@ $admin = elgg_extract('admin', $vars['menu'], null);
 
 
 /*
+ * 
+ * Previous Hover Menu
 echo '<ul class="elgg-menu elgg-menu-hover hover-custom">';
 
 // name and username
@@ -76,10 +78,13 @@ $department = $user->get('department');
 <div class="clearfix mrgn-bttm-sm">
     <div class="row mrgn-lft-0 mrgn-rght-0 mrgn-tp-sm">
         <div class="col-xs-3">
-            <a href="<?php echo $site_url ?>profile/<?php echo $user->username ?>" title="<?php echo elgg_echo('profile:title', array($user->name))?>">
+            
                
-                <img class="mrgn-lft-sm mrgn-bttm-sm img-circle img-responsive" src="<?php echo $user_avatar?>" alt="<?php echo $displayName ?> Profile Picture" />
-            </a>
+                <?php 
+                    //EW - change image output so badge displays
+                echo elgg_view_entity_icon($user, 'large', array('use_hover' => false, 'class' => 'pro-avatar'));
+                    ?>
+           
         </div>
 
         <div class="col-xs-9">
@@ -116,10 +121,16 @@ $department = $user->get('department');
 
                 $itemName = $menu_item->getName();
 
-                if($itemName == 'friend_request' || $itemName == 'add_friend'){
+                if($itemName == 'friend_request' || $itemName == 'add_friend' || $itemName == 'profile:edit'){
                     $item_class = 'btn btn-primary';
                 } else {
                     $item_class = 'btn btn-default';
+                }
+
+                //change profile edit to my profile
+                if($itemName == 'profile:edit'){
+                    $menu_item->setText(elgg_echo('userMenu:profile'));
+                    $menu_item->setHref('profile/' . $user->username);
                 }
 
                 if($itemName != 'reportuser'){

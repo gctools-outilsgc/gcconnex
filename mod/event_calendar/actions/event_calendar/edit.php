@@ -50,6 +50,7 @@ if ($event) {
 				'cp_event_invite_url' => elgg_add_action_tokens_to_url("action/event_calendar/add_ics?guid={$event->guid}"),
 				'startdate' => $startdate,
 				'enddate' => $enddate,
+				'cp_topic_title' => 'New event to you calendar',
 				'event' => $event,
 				'type_event' => 'REQUEST',
 				'cp_msg_type' => 'cp_event',

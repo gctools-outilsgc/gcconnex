@@ -59,7 +59,7 @@ return array(
 					
 		// river			
 		'river:create:object:blog' => '%s a publié un billet %s',
-		'river:comment:object:blog' => 'a commenté sur le blogue',
+		'river:comment:object:blog' => '%s a commenté sur le blogue %s',
 					
 		// notifications			
 		'blog:notify:summary' => 'Nouveau billet sur le blogue nommé %s',

@@ -122,7 +122,16 @@ if($userEnt->profilestrength != 100){
     echo '<div class="clearfix"></div></details>';
 } else {
     /*Strength is at 100%*/
+    echo '<div class="text-center">';
+    echo elgg_view('output/img', array(
+            'src' => 'mod/GC_profileStrength/graphics/completeBadgeLvl01.png', 
+            'alt' => elgg_echo('badge:complete:achieved:1', array($userEnt->name)), 
+            'title' => elgg_echo('badge:complete:achieved:1', array($userEnt->name)), 
+            'style' => 'width:125px;'
+            ));
     echo '<p>'.elgg_echo('ps:all-star').'</p>';
+    echo '</div>';
+
     if($userEnt->opt_in_missions == 'gcconnex_profile:opt:yes') {
 	    $OptedIn = true;
 	}

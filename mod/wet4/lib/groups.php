@@ -523,7 +523,7 @@ function groups_handle_requests_page($guid) {
  * @param ElggGroup $group
  */
 function groups_register_profile_buttons($group) {
-
+/*
 	$actions = array();
 
 	// group owners
@@ -557,7 +557,7 @@ function groups_register_profile_buttons($group) {
 
 	if ($actions) {
 		foreach ($actions as $url => $text) {
-			elgg_register_menu_item('title', array(
+			elgg_register_menu_item('group_ddb', array(
 				'name' => $text,
 				'href' => $url,
 				'text' => elgg_echo($text),
@@ -565,6 +565,7 @@ function groups_register_profile_buttons($group) {
 			));
 		}
 	}
+    */
 }
 
 /**

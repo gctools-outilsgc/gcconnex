@@ -1,114 +1,226 @@
 <?php
+	$page_mode = get_input('script', 'default');
+	$db_prefix = elgg_get_config('dbprefix');
 
-//echo "hello...";
+	switch ( $page_mode ) {
+		case 'personal':		// Enable all personal notification serrings for all users
+			echo "<br /><h3>Bulk-subscribe users to their content</h3>";
+			echo elgg_view("output/url",
+				array(
+					'href' => elgg_get_site_url().'admin/plugin_settings/cp_notifications',
+					'text' => '<< back to settings page',
+				)
+			);
+			echo "<br />";
 
+			$str_id = elgg_get_metastring_id('set_personal_subscription', true);
+			$val_id = elgg_get_metastring_id('0');
+			$query = "SELECT count(guid) as num_users FROM {$db_prefix}users_entity u LEFT JOIN (SELECT * FROM {$db_prefix}metadata WHERE name_id = {$str_id}) md ON u.guid = md.entity_guid WHERE md.value_id = {$val_id}";
 
-echo "<br/><br/><br/>";
+			$count = get_data_row($query);
 
-// TODO: option to bundle up notification
-// TODO: manual send out notification
-// TODO: option to do cron or limit of x number of notifications
+			echo elgg_view('admin/upgrades/view', array(
+				'count' => $count->num_users,
+				'action' => 'action/cp_notifications/set_personal_subscription',
+			));
+			break;
+		
 
-// development purposes (not intended for production)
+		case 'undo_personal':	// undo the above
+			echo "<br /><h3>Revert bulk-subscription of users to their content</h3>";
+			echo elgg_view("output/url",
+				array(
+					'href' => elgg_get_site_url().'admin/plugin_settings/cp_notifications',
+					'text' => '<< back to settings page',
+				)
+			);
+			echo "<br />";
 
-$user_guid = 124; // sokguan
-$plugin = elgg_get_plugin_from_id('cp_notifications');
+			$personal_degrade_label = "Run Script to ROLL BACK Personal-generated content subscription: ";
 
-$options = array(
-	'container_guid' => 151, // group test
-	'type' => 'object',
-	'limit' => false,
-);
-$grp_items = elgg_get_entities($options);
+			$str_id = elgg_get_metastring_id('set_personal_subscription');
+			$val_id = elgg_get_metastring_id('1');
+			$query = "SELECT count(guid) as num_users FROM {$db_prefix}users_entity u LEFT JOIN (SELECT * FROM {$db_prefix}metadata WHERE name_id = {$str_id}) md ON u.guid = md.entity_guid WHERE md.value_id = {$val_id}";
 
-$notification_setup = "";
+			$count = get_data_row($query);
 
-
-
-foreach ($grp_items as $grp_item) {
-	//$cpn_set_subscription_email = $plugin->getUserSetting("cpn_email_{$grp_item->getGUID()}", $user_guid);
-	$cpn_set_subscription_email = elgg_get_plugin_user_setting("cpn_email_{$grp_item->getGUID()}", $user_guid, "cp_notifications");
-	echo "cpn_set_sub: <strong> {$cpn_set_subscription_email} </strong> @ guid: cpn_email_{$grp_item->getGUID()} <br/>";
-}
-
-echo "<br/>Preview - TEMPLATE ONLY: <br/><br/>";
-echo "<hr>";
-
-$notification_setup .= "
-	<!-- beginning of email template -->
-	<table width='100%' bgcolor='#fcfcfc' border='0' cellpadding='0' cellspacing='0'>
-		<tr>
-			<td>
-
-				<!-- email header -->
-		        <div align='center' width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 12px; color: #055959'>
-		        	GCconnex - This is an automated email notification - Please do not reply
-		        </div>
-				
-
-				<!-- GCconnex banner -->
-		     	<div width='100%' style='padding: 0 0 0 20px; color:#ffffff; font-family: sans-serif; font-size: 45px; line-height:38px; font-weight: bold; background-color:#047177;'>
-		        	<span style='padding: 0 0 0 3px; font-size: 25px; color: #ffffff; font-family: sans-serif;'>GCconnex</span>
-		        </div>
-
-
-		        <!-- email divider -->
-		        <div style='height:1px; background:#bdbdbd; border-bottom:1px solid #ffffff'></div>
+			echo elgg_view('admin/upgrades/view', array(
+				'count' => $count->num_users,
+				'action' => 'action/cp_notifications/reset_personal_subscription',
+			));
+			break;
 
 
-		        <!-- main content of the notification (ENGLISH) -->
-		       	<!-- *optional* email message (DO NOT REPLY) -->
-		     	<div width='100%' style='padding:30px 30px 10px 30px; font-size:12px; line-height:22px; font-family:sans-serif;'>
+		case 'groups':			// Subscribe all users to all content is their groups
+			echo "<br /><h3>Bulk-subscribe users to group content</h3>";
+			echo elgg_view("output/url",
+				array(
+					'href' => elgg_get_site_url().'admin/plugin_settings/cp_notifications',
+					'text' => '<< back to settings page',
+				)
+			);
+			echo "<br />";
+			$access_status = access_get_show_hidden_status();
+			access_show_hidden_entities(true);
 
-	        	<!-- The French Follows... -->
-	        	<span style='font-size:12px; font-weight: normal;'><i>(Le francais suit)</i></span><br/>
-        	   
-        	       Thank you for contacting the GCconnex Help desk. This email is sent to you to have a copy of your request. You will receive an acknowledgment of receipt by email shortly. Shouldn’t you receive the acknowledgment of receipt, please contact the GCconnex Help Desk at: gcconnex@tbs-sct.gc.ca.<br/>
-                   Thank you
-		        </div>
+			$str_id = elgg_get_metastring_id('subscribed_to_all_group_content', true);	// get the metastring id, create the metastring if it does not exist
 
+			
+			$count = get_data_row("SELECT count(*) as users from {$db_prefix}users_entity u LEFT JOIN ( SELECT * from {$db_prefix}metadata WHERE name_id = {$str_id} ) md ON u.guid = md.entity_guid WHERE md.value_id IS NULL");
 
-		        <div width='100%' style='padding:30px 30px 30px 30px; color:#153643; font-family:sans-serif; font-size:12px; line-height:22px; border-bottom:1px solid #f2eeed;'>
-		        	
-		        	<h2 style='padding: 0px 0px 15px 0px'>Entity Title by Entity Owner Name</h2>
+			echo elgg_view('admin/upgrades/view', array(
+				'count' => $count->users,
+				'action' => 'action/cp_notifications/subscribe_users_to_group_content',
+			));
 
-		       		Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
-		       		Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. 
-		       		Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
-		        </div>
-
-		        <!-- main content of the notification (FRENCH) -->
-		       	<!-- *optional* email message (DO NOT REPLY) -->
-		     	<div width='100%' style='padding:30px 30px 10px 30px; font-size:12px; line-height:22px; font-family:sans-serif;'>
-        	       Merci d\'avoir communiquer avec le bureau de soutien de GCconnex. Ce courriel vous est envoyé afin d’avoir une copie de votre demande dans vos dossiers. Vous recevrez un accusé de réception sous peu. Si vous ne recevez pas cet accusé de réception, prière de communiquer avec le bureau de soutien de GCconnex à l’adresse suivante : gcconnex@tbs-sct.gc.ca<br/>
-                   Merci
-		        </div>
-
-		       	<div width='100%' style='padding:30px 30px 30px 30px; color:#153643; font-family:sans-serif; font-size:12px; line-height:22px; border-bottom:1px solid #f2eeed;'>
-
-		       		<h2 style='padding: 0px 0px 15px 0px'>Entiteh Titre de Entity de Quoi</h2>
-
-		       		Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
-		       		Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. 
-		       		Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
-		        </div>
+			access_show_hidden_entities($access_status);
+			break;
 
 
-		        <!-- email divider -->
-		        <div style='height:1px; background:#bdbdbd; border-bottom:1px solid #ffffff'></div>
+		case 'undo_groups':		// undo the above
+			echo "<br /><h3>Revert bulk-subscription of users to group content</h3>";
+			echo elgg_view("output/url",
+				array(
+					'href' => elgg_get_site_url().'admin/plugin_settings/cp_notifications',
+					'text' => '<< back to settings page',
+				)
+			);
+			echo "<br />";
+			$access_status = access_get_show_hidden_status();
+			access_show_hidden_entities(true);
 
-		        <!-- email footer -->
-		        <div align='center' width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 12px; color: #055959'>
-		        	GCconnex - Thanks for contacting us / Merci de nous avoir contacter - Do not Reply / Ne pas repondre
-		        </div>
+			$str_id = elgg_get_metastring_id('subscribed_to_all_group_content', true);	// get the metastring id, create the metastring if it does not exist
 
-			</td>
-		</tr>
-	</table>
+			$db_prefix = elgg_get_config('dbprefix');
+			$count = get_data_row("SELECT count(*) as users from {$db_prefix}users_entity u LEFT JOIN {$db_prefix}metadata md ON u.guid = md.entity_guid WHERE md.name_id = {$str_id}");
+
+			echo elgg_view('admin/upgrades/view', array(
+				'count' => $count->users,
+				'action' => 'action/cp_notifications/undo_subscribe_users_to_group_content',
+			));
+
+			access_show_hidden_entities($access_status);
+			break;
+
+		default:		// the actual settings page
+			// default value
+			if (!isset($vars['entity']->cp_notifications_email_addr))
+				$vars['entity']->cp_notifications_email_addr = 'admin.gcconnex@tbs-sct.gc.ca';
+
+if (!isset($vars['entity']->cp_notifications_email_addr))
+	$vars['entity']->cp_notifications_email_addr = 'admin.gcconnex@tbs-sct.gc.ca';
+
+			if (!isset($vars['entity']->cp_notifications_opt_out))
+				$vars['entity']->cp_notifications_opt_out = 'no';
+
+			if (!isset($vars['entity']->cp_notifications_enable_bulk))
+				$vars['entity']->cp_notifications_enable_bulk = 'no';
+
+if (!isset($vars['entity']->cp_notifications_sidebar))
+	$vars['entity']->cp_notifications_sidebar = 'no';
+
+			echo "<br/><br/>";
+
+			// display and allow admin to change the reply email (will be modified in the header)
+			echo "<div>";
+			echo "Email Address to be used";
+			echo elgg_view('input/text', array(
+				'name' => 'params[cp_notifications_email_addr]',
+				'value' => $vars['entity']->cp_notifications_email_addr,
+			));
+			echo "</div>";
 
 
-";
+			// display option to allow users to opt-out of the auto-subscription
+			echo "<div>";
+			echo "Allow users to opt-out to have all their stuff subscribed : ";
+			echo elgg_view('input/select', array(
+				'name' => 'params[cp_notifications_opt_out]',
+				'options_values' => array(
+					'no' => elgg_echo('option:no'),
+					'yes' => elgg_echo('option:yes')
+				),
+				'value' => $vars['entity']->cp_notifications_opt_out,
+			));
+			echo "</div>";
+
+
+// display quick links for users (in user settings page for notifications)
+echo "<div>";
+echo "Enable Quick links sidebar for users : ";
+echo elgg_view('input/select', array(
+	'name' => 'params[cp_notifications_sidebar]',
+	'options_values' => array(
+		'no' => elgg_echo('option:no'),
+		'yes' => elgg_echo('option:yes')
+	),
+	'value' => $vars['entity']->cp_notifications_sidebar,
+));
+echo "</div>";
+
+
+			// display option to allow users to enable bulk e-mail notifications
+			echo "<div>";
+			echo "Enable Bulk Notifications : ";
+			echo elgg_view('input/select', array(
+				'name' => 'params[cp_notifications_enable_bulk]',
+				'options_values' => array(
+					'no' => elgg_echo('option:no'),
+					'yes' => elgg_echo('option:yes')
+				),
+				'value' => $vars['entity']->cp_notifications_enable_bulk,
+			));
+			echo "</div>";
 
 
 
-echo $notification_setup;
+
+			// admin-option only to run the script auto-subscribe their personal contents
+			echo "<div>";
+			echo "Run Script for Personal-generated content subscription : ";
+			$btn_run_personal_script = elgg_view("output/confirmlink",
+				array(
+					'href' => elgg_get_site_url().'action/cp_notifications/set_personal_subscription',
+					'text' => 'Click to Run Script',
+					'confirm' => 'Are you sure you want to run the script?'
+				)
+			);
+			echo $btn_run_personal_script;
+			echo "<br />";
+			echo elgg_view("output/url",
+				array(
+					'href' => '?script=personal',
+					'text' => 'personal notifications script',
+					'class' => 'btn btn-default elgg-button btn-primary elgg-button-submit only-one-click',
+				)
+			);
+			echo "  ";
+			echo elgg_view("output/url",
+				array(
+					'href' => '?script=undo_personal',
+					'text' => 'undo personal notifications script',
+					'class' => 'btn btn-default elgg-button btn-primary elgg-button-submit only-one-click',
+				)
+			);
+			echo "</div>";
+
+			echo "<div>";
+			echo "Run Script for Group-generated content subscription: <br />";
+			echo elgg_view("output/url",
+				array(
+					'href' => '?script=groups',
+					'text' => 'group script',
+					'class' => 'btn btn-default elgg-button btn-primary elgg-button-submit only-one-click',
+				)
+			);
+			echo "  ";
+			echo elgg_view("output/url",
+				array(
+					'href' => '?script=undo_groups',
+					'text' => 'undo group script',
+					'class' => 'btn btn-default elgg-button btn-primary elgg-button-submit only-one-click',
+				)
+			);
+			echo "</div>";
+			break;
+	}

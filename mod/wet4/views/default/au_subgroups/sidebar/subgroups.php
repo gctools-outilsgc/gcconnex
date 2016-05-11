@@ -48,4 +48,7 @@ $all_link = elgg_view('output/url', array(
 
 $footer = "<div class='text-right'>$all_link</div>";
 
-echo elgg_view_module('aside', $title, $body, array('footer' => $footer,));
+//only show subgroups widget if the group has subgroups
+if($sgCount){
+    echo elgg_view_module('aside', $title, $body, array('footer' => $footer,));
+}

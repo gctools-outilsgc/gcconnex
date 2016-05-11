@@ -48,20 +48,33 @@ if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
     $iconimg .= $user->getIcon('large') . '" class="avatar-profile-page img-responsive ">';
 
     $size = 'medium';
+    /*
     $icon = elgg_view('output/img', array(
         
 	'src' => $user->getIconURL($size),
 	'alt' => $name,
 	'title' => $name,
 	'class' => $img_class .'img-responsive img-circle',
-));
+));*/
+
+
+
+    //Ew - change icon display to show badge if they have one
+    $icon = elgg_view_entity_icon($user, $size, array(
+        'use_hover' => false,
+        'use_link' => false,
+        'class' => 'pro-avatar',
+    ));
 
     $iconfinal = elgg_view('output/url', array(
             'text' => $icon,
             'href' => 'avatar/edit/' . $user->username,
-            'class' => " img-responsive img-circle"
+            'class' => " img-responsive img-circle",
+            'title' => elgg_echo('gcconnex_profile:profile:edit_avatar')
         )
     );
+    
+    
 
 
 }
@@ -69,18 +82,21 @@ else {
    // $icon = '<img src="';
    // $icon .= $user->getIcon('large') . '" class="avatar-profile-page img-responsive">';
     $size = 'medium';
+    /*
     $iconfinal = elgg_view('output/img', array(
         'text' => $iconimg,
 	'src' => $user->getIconURL($size),
 	'alt' => $name,
 	'title' => $name,
 	'class' => $img_class . ' img-responsive img-circle medium-avatar-plus',
-));
+));*/
 
-    /*
-    $icon = elgg_view_entity_icon($user, 'large', array(
+    //Ew - change icon display to show badge if they have one
+    $iconfinal = elgg_view_entity_icon($user, $size, array(
         'use_hover' => false,
-    ));*/
+        'use_link' => false,
+        'class' => 'pro-avatar',
+    ));
 }
 
 

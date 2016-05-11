@@ -24,5 +24,6 @@ echo elgg_view('river/elements/layout', array(
 		'use_hover' => false,
 		'use_link' => false,
         'class' => 'medium-avatar-plus',
+        'show_badge' => false,
 	)),
 ));

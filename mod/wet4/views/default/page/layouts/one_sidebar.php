@@ -27,6 +27,12 @@
         echo elgg_extract('nav', $vars, elgg_view('navigation/breadcrumbs'));
         */
 
+    if(elgg_instanceof(elgg_get_page_owner_entity(), 'group')){
+        //$group = elgg_extract('entity', $vars);
+        elgg_push_context('groups');
+        echo elgg_view('groups/profile/summary');
+        elgg_pop_context('groups');
+    }
     //main section
     ?>
     <section class="col-md-8 mrgn-bttm-md" id="wb-cont">

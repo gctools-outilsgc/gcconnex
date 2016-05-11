@@ -75,6 +75,7 @@ switch ($gcf_subtype) {
 		break;
 	case 'hjforumtopic':
 
+		// cyu - this is a hack job
 		$old_access = elgg_get_ignore_access();
 		elgg_set_ignore_access(true);
 
@@ -121,6 +122,9 @@ switch ($gcf_subtype) {
 		break;
 	case 'hjforumpost':
 
+		$old_access = elgg_get_ignore_access();
+		elgg_set_ignore_access(true);
+
 		$gcf_container = get_input('gcf_container');
 		$gcf_title = get_input('gcf_title');
 		$gcf_type = get_input('gcf_type');
@@ -139,9 +143,12 @@ switch ($gcf_subtype) {
 		$gcf_new_post->description = $gcf_description;
 		$gcf_new_post->owner_guid = $gcf_owner;
 
+
 		if ($new_guid = $gcf_new_post->save())
 			system_message(elgg_echo("Entity entitled '{$gcf_new_post->title}' has been created successfully"));
 	
+		elgg_set_ignore_access($old_access);
+
 		create_hjforumtopic_relationships($new_guid, $new_guid);
 		$forward_url = elgg_get_site_url()."gcforums/group/{$gcf_group}/{$gcf_container}/hjforumtopic";
 
@@ -230,6 +237,7 @@ function create_hjforumtopic_relationships($static_guid, $e_guid) {
 	} else {
 		if ($static_guid != $e_guid)
 			add_entity_relationship($static_guid, 'descendant', $e_guid);
+
 		create_hjforumtopic_relationships($static_guid, $entity->getContainerGUID());
 	}
 

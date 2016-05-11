@@ -14,7 +14,7 @@ return array(
   'wet:search'=>"Search and menus",
   'wet:searchHead'=>"Search",
   'wet:searchweb'=>"Search website",
-  'wet:searchgctools'=>"Search", // cyu - modified as per rajeev's request
+  'wet:searchgctools'=>"Search GCconnex",
   'wet:more'=>"More",
   'wet:topicmenu'=>"Topic menu",
   'wet:youarehere'=>"You are here:",

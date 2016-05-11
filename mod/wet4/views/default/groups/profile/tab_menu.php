@@ -7,6 +7,7 @@
  * 
  * - if adding an additional tool to groups
  * - make sure it's link priority is before "more" and "search"
+ * - Nick - removed the search tab button to replace with an inline search form. Activity tab is now showing up :(
  */
 
 
@@ -129,6 +130,7 @@ elgg_register_menu_item('owner_block', array(
 
 
 if(elgg_get_context() == 'group_profile'){
+    /* Nick removing the search item from this menu to add it's own form view
     elgg_register_menu_item('owner_block', array(
         'name' => 'search',
         'id' => 'searchTab',
@@ -140,7 +142,7 @@ if(elgg_get_context() == 'group_profile'){
         'aria-controls' => 'search',
         'class' => '',
         'priority' => '101',
-        ));
+        ));*/
 }
 
 if(elgg_in_context('group_profile')){
@@ -154,15 +156,16 @@ echo elgg_view_menu('owner_block', array('entity' => $owner, 'class' => 'nav nav
 //condition for page
 //see what page we are on for proper js
 if(elgg_get_context() == 'group_profile'){
-    $num = 2;
-} else {
     $num = 1;
+} else {
+    $num = 2;
 }
 
 //display more items on user profile page
 if(elgg_get_context() == 'profile'){
     $itemNum = 6;
 } else {
+    //Nick - this formats the tabs properly but now activity is showing up instead of hiding away like it should *If group has activity active which we might turn on for everyone
     $itemNum = 4;
 }
 
@@ -201,9 +204,9 @@ if(elgg_get_context() == 'profile'){
     }
 
     //remove more dropdown when there is no need for it
-        if(listItems.length <= 6){
+        if(listItems.length <= 5){ //Nick - Changed this to 5 instead of 6 with the removal of the search tab
             $('.elgg-menu-item-more').remove();
-
+            //alert('bye bye bubby');
     }
 });
 

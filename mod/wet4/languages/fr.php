@@ -15,7 +15,7 @@ return array(
   'wet:search' =>  "Recherche et menus",
   'wet:searchHead' =>  "Recherche",
   'wet:searchweb' =>  "Recherche sur le site Web",
-  'wet:searchgctools' => "Recherche", // cyu - modified as per rajeev's request
+  'wet:searchgctools' => "Recherche sur GCconnex", 
   'wet:more' => "Autres",
   'wet:topicmenu' => "Menu des sujets",
   'wet:youarehere' => "Vous êtes ici :",

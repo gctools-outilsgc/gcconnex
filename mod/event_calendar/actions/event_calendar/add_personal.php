@@ -19,6 +19,7 @@ if (elgg_instanceof($event, 'object', 'event_calendar')) {
 				'cp_event_receiver' => $email_users,
 				'cp_event_invite_url' => elgg_add_action_tokens_to_url("action/event_calendar/add_ics?guid={$event->guid}"),
 				'startdate' => $startdate,
+				//'cp_topic_title' => 'New event to you calendar',
 				'enddate' => $enddate,
 				'event' => $event,
 				'type_event' => 'REQUEST',
