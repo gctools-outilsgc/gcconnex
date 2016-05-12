@@ -13,7 +13,7 @@ $batch_run_time_in_secs = 2;
 // Offset is the total amount of errors so far. We skip these
 // comments to prevent them from possibly repeating the same error.
 $offset = get_input('offset', 0);
-$limit = 50;
+$limit = 10;
 
 $access_status = access_get_show_hidden_status();
 access_show_hidden_entities(true);
@@ -26,10 +26,14 @@ _elgg_services()->hooks = new Elgg\PluginHooksService();
 elgg_register_plugin_hook_handler('permissions_check', 'all', 'elgg_override_permissions');
 elgg_register_plugin_hook_handler('container_permissions_check', 'all', 'elgg_override_permissions');
 
-// list of entities that do not require to be subscribed
-$do_not_subscribe = array('messages', 'widget', 'poll_choice');
-
 $db_prefix = elgg_get_config('dbprefix');
+
+// list of entities that do not require to be subscribed
+$do_not_subscribe_strings = array('messages', 'widget', 'poll_choice', 'discussion_reply', 'folder');
+foreach ( $do_not_subscribe_strings as $dns_string ){
+	$do_not_subscribe[$dns_string] = get_data("SELECT id FROM {$db_prefix}entity_subtypes WHERE subtype = '$dns_string'")[0]->id;
+}
+
 $str_id = elgg_get_metastring_id('subscribed_to_all_group_content', true);	// get the metastring id, create the metastring if it does not exist
 
 $success_count = 0;
