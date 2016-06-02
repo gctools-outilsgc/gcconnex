@@ -6,44 +6,46 @@
  * @uses $vars['show_add_form'] Display add form or not
  */
 
-$show_add_form = elgg_extract('show_add_form', $vars, true);
+if ('gsa-crawler' != strtolower($_SERVER['HTTP_USER_AGENT'])) {
 
-$replies = elgg_list_entities(array(
-	'type' => 'object',
-	'subtype' => 'discussion_reply',
-	'container_guid' => $vars['topic']->getGUID(),
-	'reverse_order_by' => true,
-	'distinct' => false,
-	'url_fragment' => 'group-replies',
-));
+	 $show_add_form = elgg_extract('show_add_form', $vars, true);
 
-//check how many replies topic has
-$num_replies = elgg_get_entities(array(
-	'type' => 'object',
-	'subtype' => 'discussion_reply',
-	'container_guid' => $vars['topic']->getGUID(),
-	'count' => true,
-	'distinct' => false,
-));
+	 $replies = elgg_list_entities(array(
+		 'type' => 'object',
+		 'subtype' => 'discussion_reply',
+		 'container_guid' => $vars['topic']->getGUID(),
+		 'reverse_order_by' => true,
+		 'distinct' => false,
+		 'url_fragment' => 'group-replies',
+	 ));
+
+	 // check how many replies topic has
+	 $num_replies = elgg_get_entities(array(
+		 'type' => 'object',
+		 'subtype' => 'discussion_reply',
+		 'container_guid' => $vars['topic']->getGUID(),
+		 'count' => true,
+		 'distinct' => false,
+	 ));
 
 
-echo '<div id="group-replies" class="elgg-comments mrgn-rght-md mrgn-lft-md clearfix">';
-//if topic has replies show replies header
-if($num_replies != 0){
+	 echo '<div id="group-replies" class="elgg-comments mrgn-rght-md mrgn-lft-md clearfix">';
 
-    echo '<h2 class="panel-title mrgn-lft-sm mrgn-bttm-md mrgn-tp-md">' . elgg_echo('group:replies') . '</h2>';
-    
-}
+	 // if topic has replies show replies header
+	 if($num_replies != 0)
+		 echo '<h2 class="panel-title mrgn-lft-sm mrgn-bttm-md mrgn-tp-md">' . elgg_echo('group:replies') . '</h2>';
+	 
 
-echo $replies;
+	 echo $replies;
 
-echo '</div>';
+	 echo '</div>';
 
-if ($show_add_form) {
-	$form_vars = array('class' => 'mtm clearfix');
-	echo elgg_view_form('discussion/reply/save', $form_vars, $vars);
-}
+	 if ($show_add_form) {
+		 $form_vars = array('class' => 'mtm clearfix');
+		 echo elgg_view_form('discussion/reply/save', $form_vars, $vars);
+	 }
 
+ }
 
 ?>
 

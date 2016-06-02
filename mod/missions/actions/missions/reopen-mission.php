@@ -21,6 +21,7 @@ system_message(elgg_echo('missions:has_been_reopened', array($mission->job_title
 
 // If the admin tool is calling the action then the user is returned to the admin tool page.
 if($from_admin) {
-	forward(REFERER);	
+	forward(REFERER);
+}
 
 forward($mission->getURL());

@@ -48,11 +48,13 @@ switch($switch_segment) {
 		// If the passed GUID corrseponds to a mission then a mission is being shared.
 		else if($entity->type == 'object' && get_subtype_from_id($entity->subtype) == 'mission') {
 			$message_body = elgg_echo('missions:check_this_mission', array(elgg_get_excerpt($entity->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions')), $entity->getURL()));
-			$message_subject = elgg_get_excerpt($entity->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'));
+			$message_subject = elgg_get_excerpt($entity->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions')) . ' ' . elgg_echo('missions:micro_mission');
 			$title = elgg_echo('missions:share_with_colleague');
 		}
 		
-		$main_content = '<div class="col-sm-8">' . elgg_view_form('messages/send', array(), array(
+		$main_content = '<div>' . elgg_view_form('missions/message-user-form', array(
+				'class' => 'form-horizontal'
+		), array(
 				'recipient_username' => $recipient_username,
 				'subject' => $message_subject,
 				'body' => $message_body

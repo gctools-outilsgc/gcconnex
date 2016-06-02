@@ -36,6 +36,8 @@ else {
 	$max = elgg_get_plugin_setting('search_result_per_page', 'missions');
 }
 
+$entity_list = mm_sort_mission_decider($_SESSION['missions_sort_field_value'], $_SESSION['missions_order_field_value'], $entity_list);
+
 $archive_list = elgg_view_entity_list(array_slice($entity_list, $offset, $max), array(
 		'count' => $count,
 		'offset' => $offset,
@@ -51,11 +53,21 @@ $change_entities_per_page_form = elgg_view_form('missions/change-entities-per-pa
 		'entity_type' => 'mission',
 		'number_per' => $entities_per_page
 ));
+
+$sort_missions_form .= elgg_view_form('missions/sort-missions-form', array(
+		'class' => 'form-horizontal'
+), array(
+		'mission_sort_archive' => true
+));
 ?>
 
+<h4><?php echo elgg_echo('missions:archived_opportunities') . ': '; ?></h4>
 <div class="col-sm-12">
 	<?php echo $archive_list; ?>
 </div>
 <div class="col-sm-12">
 	<?php echo $change_entities_per_page_form; ?>
+</div>
+<div class="col-sm-12">
+	<?php echo $sort_missions_form; ?>
 </div>

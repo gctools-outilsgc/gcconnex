@@ -20,7 +20,7 @@ if(check_entity_relationship($mission->guid, 'mission_tentative', elgg_get_logge
 	$applicant = elgg_get_logged_in_user_guid();
 }
 else {
-	register_error('missions:error:not_sent_invitation');
+	register_error(elgg_echo('missions:error:not_sent_invitation'));
 	forward(REFERER);
 }
 

@@ -86,6 +86,8 @@ return array(
       */
 
       'page:create' => 'Create Page',
+      'page:minor_edit' => 'Is this a Minor Edit <small>(Do not send out emails)</small>',
+      'page:minor_edit_label' => 'Minor change',
 
       /*
        * Misc

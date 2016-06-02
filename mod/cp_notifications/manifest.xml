@@ -3,7 +3,7 @@
 	<name>Notification Email Messages Control Panel</name>
 	<id>cp_notifications</id>
 	<author>Government of Canada - Christine Yu</author>
-	<version>0.0.0.0</version>
+	<version>1.12</version>
 	<category>GoC Custom Functionality</category>
 	<description>Customized Notifications functionality</description>
 	<website>http://www.canada.ca</website>

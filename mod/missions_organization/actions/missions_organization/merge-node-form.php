@@ -13,7 +13,14 @@
 $subject_guid = get_input('hidden_subject_guid');
 $target_abbr = get_input('target_org_abbr');
 
-$subject_children_relations = get_entity_relationships($subject_guid);
+$options['type'] = 'object';
+$options['subtype'] = 'orgnode';
+$options['relationship'] = 'org-related';
+$options['relationship_guid'] = $subject_guid;
+$options['inverse_relationship'] = false;
+$options['limit'] = 0;
+$subject_children_relations = elgg_get_entities_from_relationship($options);
+//$subject_children_relations = get_entity_relationships($subject_guid);
 
 if($target_abbr == '') {
 	register_error(elgg_echo('missions_organization:error:abbreviation_needs_input'));
@@ -36,9 +43,9 @@ $targets = elgg_get_entities_from_metadata($options);
 
 // Error for when there are multiple instances of the same abbreviation.
 if(count($targets) > 1) {
-	$err = elgg_echo('missions_organization:following_have_the_same_abbreviation') . '\n';
+	$err = elgg_echo('missions_organization:following_have_the_same_abbreviation') . "\n";
 	foreach($targets as $target) {
-		$err .= $target->name . '\n';
+		$err .= $target->name . "\n";
 	}
 	register_error($err);
 	forward(REFERER);
@@ -53,7 +60,10 @@ else {
 	if($targets[0]) {
 		// Moves all the children over to the targeted node before deleting the old one.
 		foreach($subject_children_relations as $subject_child_relation) {
-			add_entity_relationship($targets[0]->guid, 'org-related', $subject_child_relation->guid_two);
+			$subject_child_relation->parent_guid = $targets[0]->guid;
+			$subject_child_relation->save();
+			
+			add_entity_relationship($targets[0]->guid, 'org-related', $subject_child_relation->guid);
 			delete_relationship($subject_child_relation->id);
 		}
 		get_entity($subject_guid)->delete();

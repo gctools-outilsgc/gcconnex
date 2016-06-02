@@ -44,8 +44,9 @@ if($_SESSION['mission_search_switch'] == 'candidate') {
     	$search_fields[count($search_fields)] = elgg_echo('missions:opt_in');
     }
     
-    $subtitle = elgg_echo('missions:advanced_search_for_candidates');
+    $subtitle = elgg_echo('missions:advanced_find_candidates');
 	$limit_options = array(10,25,50,100);
+	$button_text = elgg_echo('missions:find');
 }
 else {
     $search_fields = array(
@@ -67,6 +68,7 @@ else {
     
     $subtitle = elgg_echo('missions:advanced_search_for_opportunities');
 	$limit_options = array(9,18,30,60,120);
+	$button_text = elgg_echo('missions:search');
 }
 
 $input_advanced_limit = elgg_view('input/dropdown', array(
@@ -126,15 +128,15 @@ $hidden_input = elgg_view('input/hidden', array(
 </p>
 </noscript>
 
-<label for="search-mission-limit-dropdown-input" style="display:inline-block;"><?php echo elgg_echo('missions:search_limit') . ': '; ?></label>
+<!-- <label for="search-mission-limit-dropdown-input" style="display:inline-block;"><?php echo elgg_echo('missions:search_limit') . ': '; ?></label>
 <div style="display:inline-block">
-	<?php echo $input_advanced_limit; ?>
-</div>
+	<?php //echo $input_advanced_limit; ?>
+</div> -->
 
 <div style="text-align:right;"> 
 	<?php
 		echo elgg_view('input/submit', array(
-				'value' => elgg_echo('missions:search'),
+				'value' => $button_text,
 				'id' => 'mission-advanced-search-form-submission-button'
 		));
 		echo elgg_view('page/elements/one-click-restrictor', array('restricted_element_id' => 'mission-advanced-search-form-submission-button'));

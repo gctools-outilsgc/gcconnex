@@ -39,8 +39,14 @@ else {
 	$openess = false;
 }
 
+$max_applicants = elgg_get_plugin_setting('mission_max_applicants', 'missions');
+$max_array = array();
+for($i=1;$i<=$max_applicants;$i++) {
+	$max_array[$i-1] = $i;
+}
+
 $duplicating_entity = get_entity($_SESSION['mission_duplication_id']);
-if(get_subtype_from_id($duplicating_entity->subtype) == 'mission') {
+if(get_subtype_from_id($duplicating_entity->subtype) == 'mission' && !$_SESSION['mission_duplicating_override_second']) {
 	$job_title = $duplicating_entity->job_title;
 	$job_type = $duplicating_entity->job_type;
 	$job_area = $duplicating_entity->program_area;
@@ -69,7 +75,7 @@ $input_type = elgg_view('input/dropdown', array(
 $sort_areas = mm_echo_explode_setting_string(elgg_get_plugin_setting('program_area_string', 'missions'));
 asort($sort_areas);
 $sort_areas['missions:other'] = elgg_echo('missions:other');
-if(array_search($job_area, $sort_areas)) {
+if(array_key_exists($job_area, $sort_areas)) {
 	$initial_value = $job_area;
 	$other_value = '';
 }
@@ -79,7 +85,7 @@ else {
 }
 $input_area = elgg_view('input/dropdown', array(
 	    'name' => 'job_area',
-	    'value' => $job_area,
+	    'value' => $initial_value,
 		'options_values' => $sort_areas,
 	    'id' => 'post-mission-area-dropdown-input'
 ));
@@ -91,7 +97,7 @@ $input_other_area = elgg_view('page/elements/other-text-input', array(
 $input_number_of = elgg_view('input/dropdown', array(
 	    'name' => 'number',
 	    'value' => $number,
-	    'options' => array(1,2,3,4,5),
+	    'options' => $max_array,
 	    'id' => 'post-mission-number-dropdown-input'
 ));
 
@@ -135,8 +141,12 @@ else {
 
 <h4><?php echo elgg_echo('missions:second_post_form_title'); ?></h4></br>
 <div class="form-group">
-	<label for='post-mission-title-text-input' class="col-sm-3" style="text-align:right;">
-		<?php echo elgg_echo('missions:opportunity_title') . '*:';?>
+	<label for='post-mission-title-text-input' class="col-sm-3 required" style="text-align:right;" aria-required="true">
+		<?php echo elgg_echo('missions:opportunity_title');?>
+		<strong class="required" aria-required="true">
+			<?php echo elgg_echo('missions:required'); ?>
+		</strong>
+		:
 	</label>
 	<div class="col-sm-5">
 		<?php echo $input_title; ?>
@@ -144,10 +154,11 @@ else {
 </div>
 <div class="form-group">
 	<label for='post-mission-type-dropdown-input' class="col-sm-3" style="text-align:right;">
-		<?php echo elgg_echo('missions:opportunity_type') . '*:';?>
+		<?php echo elgg_echo('missions:opportunity_type') . ':';?>
 	</label>
 	<div class="col-sm-3">
 		<?php echo $input_type; ?>
+		<div><?php echo elgg_echo('missions:placeholder_j'); ?></div>
 	</div>
 </div>
 <div class="form-group">
@@ -161,35 +172,46 @@ else {
 </div>
 <div class="form-group">
 	<label for='post-mission-number-dropdown-input' class="col-sm-3" style="text-align:right;">
-		<?php echo elgg_echo('missions:opportunity_number') . '*:';?>
+		<?php echo elgg_echo('missions:opportunity_number') . ': ';?>
 	</label>
 	<div class="col-sm-1">
 		<?php echo $input_number_of; ?>
 	</div>
 </div>
 <div class="form-group">
-	<label for='post-mission-start-date-input' class="col-sm-3" style="text-align:right;">
-		<?php echo elgg_echo('missions:ideal_start_date') . '*:';?>
+	<label for='post-mission-start-date-input' class="col-sm-3 required" style="text-align:right;" aria-required="true">
+		<?php echo elgg_echo('missions:ideal_start_date');?>
+		<strong class="required" aria-required="true">
+			<?php echo elgg_echo('missions:required'); ?>
+		</strong>
+		:
 	</label>
 	<div class="col-sm-3">
 		<?php echo $input_start_date; ?>
 	</div>
+	<div class="fa fa-calendar fa-lg"></div>
 </div>
 <div class="form-group">
 	<label for='post-mission-completion-date-input' class="col-sm-3" style="text-align:right;">
-		<?php echo elgg_echo('missions:ideal_completion_date') . '*:';?>
+		<?php echo elgg_echo('missions:ideal_completion_date') . ':';?>
 	</label>
 	<div class="col-sm-3">
 		<?php echo $input_completion_date; ?>
 	</div>
+	<div class="fa fa-calendar fa-lg"></div>
 </div>
 <div class="form-group">
-	<label for='post-mission-deadline-date-input' class="col-sm-3" style="text-align:right;">
-		<?php echo elgg_echo('missions:application_deadline') . '*:';?>
+	<label for='post-mission-deadline-date-input' class="col-sm-3 required" style="text-align:right;" aria-required="true">
+		<?php echo elgg_echo('missions:deadline');?>
+		<strong class="required" aria-required="true">
+			<?php echo elgg_echo('missions:required'); ?>
+		</strong>
+		:
 	</label>
 	<div class="col-sm-3">
 		<?php echo $input_deadline; ?>
 	</div>
+	<div class="fa fa-calendar fa-lg"></div>
 </div>
 <div class="form-group">
 	<label for='post-mission-description-plaintext-input' class="col-sm-3" style="text-align:right;">

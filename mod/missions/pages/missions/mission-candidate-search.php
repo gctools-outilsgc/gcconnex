@@ -29,7 +29,7 @@ $content = elgg_view_title($title);
 
 $content .= elgg_view('page/elements/mission-tabs');
 
-$content .= '<h4>' . elgg_echo('missions:search_for_candidates') . ':' . '</h4>';
+$content .= '<h4>' . elgg_echo('missions:find_candidates') . ':' . '</h4>';
 
 $simple_search_form = elgg_view_form('missions/search-simple');
 
@@ -37,8 +37,8 @@ $advanced_search_form = elgg_view_form('missions/advanced-search-form', array(
 		'class' => 'form-horizontal'
 ));
 $content .=  elgg_view('page/elements/hidden-field', array(
-		'toggle_text' => elgg_echo('missions:advanced_search'),
-		'toggle_text_hidden' => elgg_echo('missions:simple_search'),
+		'toggle_text' => elgg_echo('missions:advanced_find'),
+		'toggle_text_hidden' => elgg_echo('missions:simple_find'),
 		'toggle_id' => 'advanced-search',
 		'hidden_content' => $advanced_search_form,
 		'hideable_pre_content' => $simple_search_form,

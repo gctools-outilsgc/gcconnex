@@ -11,7 +11,7 @@ $tabs = '';
 if(elgg_get_logged_in_user_entity()->opt_in_missions == 'gcconnex_profile:opt:yes') {
 	$navigation_tabs = array(
 			array(
-					'text' => elgg_echo('missions:find_opportunity'),
+					'text' => elgg_echo('missions:search_opportunities'),
 					'href' => elgg_get_site_url() . 'missions/main/find',
 					'selected' => $vars['highlight_one'],
 					'id' => 'mission-navigate-to-find-opportunity'
@@ -33,14 +33,16 @@ if(elgg_get_logged_in_user_entity()->opt_in_missions == 'gcconnex_profile:opt:ye
 					'href' => elgg_get_site_url() . 'missions/main/archive',
 					'selected' => $vars['highlight_four'],
 					'id' => 'mission-navigate-to-archive'
-			),
-			array(
-					'text' => elgg_echo('missions:analytics'),
-					'href' => elgg_get_site_url() . 'missions/graph-interval',
-					'selected' => $vars['highlight_five'],
-					'id' => 'mission-navigate-to-analytics'
 			)
 	);
+	if(elgg_get_plugin_setting('mission_analytics_on', 'missions') != 'NO') {
+		$navigation_tabs[4] = array(
+				'text' => elgg_echo('missions:analytics'),
+				'href' => elgg_get_site_url() . 'missions/graph-interval',
+				'selected' => $vars['highlight_five'],
+				'id' => 'mission-navigate-to-analytics'
+		);
+	}
 	
 	$tabs = elgg_view('navigation/tabs', array(
 			'class' => 'elgg-menu elgg-menu-filter list-inline mrgn-lft-sm elgg-menu-filter-default mission-tab',

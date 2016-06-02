@@ -89,9 +89,16 @@ foreach ($all_fields as $fn) {
 if ($event) {
 	$event_action = 'manage_event';
 	$event_guid = $event->guid;
+
+	// cyu
+	$new_entity = false;
+
 } else {
 	$event_action = 'add_event';
 	$event_guid = 0;
+
+	// cyu
+	$new_entity = true;
 }
 
 $user = elgg_get_logged_in_user_entity();
@@ -432,6 +439,23 @@ if ($event_calendar_region_display == 'yes' || $event_calendar_type_display == '
 
 	$body .= '</div>';
 }
+
+
+if (elgg_is_active_plugin('cp_notifications') && !$new_entity) {
+	// cyu - implement "minor edit" as per business requirements document
+	$body .= '<div>';
+	$body .= "<h2>Is this a Minor Edit (Do not send out emails)</h2>"; // TODO: add to en.php/fr.php
+	$body .= elgg_view('input/checkboxes', array(
+			'name' => 'chk_ec_minor_edit',
+			'id' => 'chk_ec_minor_edit',
+			'value' => 0,
+			'options' => array(
+					'ec_minor_edit' => 1),
+		));
+
+	$body .= '</div>';
+}
+
 
 $body .= '<br>'.elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('event_calendar:submit'), 'class' => 'btn btn-primary'));
 

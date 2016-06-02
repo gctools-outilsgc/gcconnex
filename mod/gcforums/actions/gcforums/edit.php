@@ -4,6 +4,7 @@ $gcf_type = get_input('gcf_type');
 $gcf_forward_url = str_replace("amp;","",get_input('gcf_forward_url'));
 $object = get_entity($gcf_guid);
 $gcf_group = get_input('gcf_group');
+$dbprefix = elgg_get_config('dbprefix');
 
 switch ($gcf_type) {
 	case 'hjforumcategory':
@@ -49,9 +50,7 @@ switch ($gcf_type) {
 
 		//error_log("--> file in: {$gcf_file_in_category}");
 
-		$query = "SELECT *
-				FROM elggentity_relationships
-				WHERE relationship = 'filed_in' AND guid_one = {$gcf_guid}";
+		$query = "SELECT * FROM {$dbprefix}entity_relationships	WHERE relationship = 'filed_in' AND guid_one = {$gcf_guid}";
 
 		$filed_in = get_data($query);
 		

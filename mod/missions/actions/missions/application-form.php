@@ -12,8 +12,9 @@
  */
 $mid = $_SESSION['mid_act'];
 unset($_SESSION['mid_act']);
-$email_body = get_input('email_body');
-$manager_permission = get_input('manager_permission');
+$mission_email_body = get_input('mission_email_body');
+//$manager_permission = get_input('manager_permission');
+$manager_permission = true;
 $email_manager = get_input('email_manager');
 $manager_email = get_input('email');
 
@@ -28,23 +29,30 @@ else {
 	if($email_manager == 'on') {
 		// Checks if the input email is valid.
 		if(!filter_var($manager_email, FILTER_VALIDATE_EMAIL)) {
-			register_error('missions:error:email_invalid');
+			register_error(elgg_echo('missions:error:email_invalid'));
 			forward(REFERER);
 		}
 		else {
 			// Sends a premade email.
 			$subject = elgg_echo('missions:notify_supervisor');
 			
-			$message = $mission->job_title;
-			$message .= "\r\n";
-			$message .= elgg_echo('missions:formatted:date_interval', array($mission->start_date, $mission->completion_date));
-			$message .= "\r\n";
-			$message .= elgg_echo('missions:formatted:time_commit', array($mission->time_commitment, $mission->time_interval));
-			$message .= "\r\n";
-			$message .= $mission->description;
+			$message .= elgg_echo('missions:supervisor_notice_sentence', array($applicant->name, $mission->job_title)) . '<br><br>';
+			$message .= elgg_echo('missions:applicant_name') . ': ' . $applicant->name . '<br>';
+			$message .= elgg_echo('missions:department') . ': ' . $applicant->department . '<br>';
+			$message .= elgg_echo('missions:location') . ': ' . $applicant->location . '<br>';
+			$message .= elgg_echo('missions:applicant_phone') . ': ' . $applicant->phone . '<br><br>';
+			
+			$message .= elgg_echo('missions:opportunity_title') . ': ' . $mission->job_title . '<br>';
+			$message .= elgg_echo('missions:opportunity_type') . ': ' . elgg_echo($mission->job_type) . '<br>';
+			$message .= elgg_echo('missions:manager_name') . ': ' . $mission->name . '<br>';
+			$message .= elgg_echo('missions:manager_email') . ': ' . $mission->email . '<br>';
+			$message .= elgg_echo('missions:ideal_start_date') . ': ' . $mission->start_date . '<br>';
+			$message .= elgg_echo('missions:ideal_completion_date') . ': ' . $mission->completion_date . '<br>';
+			$message .= elgg_echo('missions:time_commitment') . ': ' . $mission->time_commitment . ' ' . elgg_echo($mission->time_interval) . '<br>';
+			$message .= elgg_echo('missions:opportunity_description') . ': ' . $mission->descriptor . '<br>';
 			
 			$headers = 'MIME-Version: 1.0' . "\r\n";
-			$headers .= 'Content-type: text/plain; charset=utf-8' . "\r\n";
+			$headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
 			$headers .= 'From: ' . $applicant->email . "\r\n";
 			
 			mail($manager_email, $subject, $message, $headers);
@@ -52,12 +60,16 @@ else {
 	}
 	
 	// To separate different sections of the email.
-	$divider = "<br>" . '--------------------------------------------------' . "<br>";
+	$divider = '--------------------------------------------------' . "<br>";
 	
 	// Setting up the email head.
 	$subject = elgg_echo('missions:application_to') . $mission->job_title;
 	
 	$body = '';
+	
+	$body .= elgg_echo('missions:application_notice_sentence', array($applicant->name, $mission->job_title)) . '<br>';
+	$body .= $divider;
+	
 	$body .= elgg_echo('missions:see_full_profile') . ': '; 
 	$body .= elgg_view('output/url', array(
 	    'href' => $applicant->getURL(),
@@ -72,7 +84,7 @@ else {
 	
 	$body .= $divider;
 	
-	$body .= $email_body;
+	$body .= $mission_email_body . '<br>';
 	$body .= $divider;
 	
 	// Lists all educations of the applicant.

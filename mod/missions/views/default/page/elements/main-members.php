@@ -12,7 +12,17 @@
  */
 $_SESSION['mission_that_invites'] = 0;
 $_SESSION['mission_search_switch'] = 'candidate';
-$result_set = $_SESSION['candidate_search_set'];
+
+$result_set = array();
+if(time() > ($_SESSION['candidate_search_set_timestamp'] + elgg_get_plugin_setting('mission_session_variable_timeout', 'missions')) 
+		&& $_SESSION['candidate_search_set_timestamp'] != '') {
+	system_message(elgg_echo('missions:last_results_have_expired'));
+	unset($_SESSION['candidate_search_set']);
+	unset($_SESSION['candidate_search_set_timestamp']);
+}
+else {
+	$result_set = $_SESSION['candidate_search_set'];
+}
 
 if($_SESSION['candidate_entities_per_page']) {
 	$entities_per_page = $_SESSION['candidate_entities_per_page'];
@@ -30,8 +40,8 @@ $advanced_search_form = elgg_view_form('missions/advanced-search-form', array(
 		'return_to_referer' => true
 ));
 $advanced_field = elgg_view('page/elements/hidden-field', array(
-		'toggle_text' => elgg_echo('missions:advanced_search'),
-		'toggle_text_hidden' => elgg_echo('missions:simple_search'),
+		'toggle_text' => elgg_echo('missions:advanced_find'),
+		'toggle_text_hidden' => elgg_echo('missions:simple_find'),
 		'toggle_id' => 'advanced-search',
 		'hidden_content' => $advanced_search_form,
 		'hideable_pre_content' => $simple_search_form,
@@ -47,6 +57,11 @@ if($result_set) {
 	}
 	else {
 		$max = elgg_get_plugin_setting('search_result_per_page', 'missions');
+	}
+
+	$max_reached = '';
+	if(($offset + $max) >= elgg_get_plugin_setting('search_limit', 'missions') && $count >= elgg_get_plugin_setting('search_limit', 'missions')) {
+		$max_reached = '<div class="col-sm-12" style="font-style:italic;">' . elgg_echo('missions:reached_maximum_entities') . '</div>';
 	}
 
 	$search_set .= elgg_view_entity_list(array_slice($result_set, $offset, $max), array(
@@ -67,12 +82,13 @@ if($result_set) {
 ?>
 
 <div>
-	<h4><?php echo elgg_echo('missions:search_for_candidates') . ':'; ?></h4>
+	<h4><?php echo elgg_echo('missions:find_candidates') . ':'; ?></h4>
 	<?php 
 		//echo $simple_search_form;
 		echo $advanced_field;
 	?>
 </div>
+<?php echo $max_reached; ?>
 <div class="col-sm-12">
 	<?php echo $search_set; ?>
 </div>

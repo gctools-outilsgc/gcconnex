@@ -36,9 +36,9 @@ $targets = elgg_get_entities_from_metadata($options);
 
 // Error for when there are multiple instances of the same abbreviation.
 if(count($targets) > 1) {
-	$err = elgg_echo('missions_organization:following_have_the_same_abbreviation') . '\n';
+	$err = elgg_echo('missions_organization:following_have_the_same_abbreviation') . "\n";
 	foreach($targets as $target) {
-		$err .= $target->name . '\n';
+		$err .= $target->name . "\n";
 	}
 	register_error($err);
 	forward(REFERER);

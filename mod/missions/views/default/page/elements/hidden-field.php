@@ -46,21 +46,21 @@
  
  <script>
 	function hidden_field_toggle(toggle) {
-		var field = document.getElementById('<?php echo $field_id; ?>');
-		var pre_field = document.getElementById('<?php echo $pre_field_id; ?>');
-		var icon = document.getElementById('<?php echo $icon_id; ?>');
-		var text = document.getElementById('<?php echo $append; ?>');
+		var append = toggle.id;
+		var field = document.getElementById('hidden-field-'.concat(append));
+		var pre_field = document.getElementById('hidden-pre-field-'.concat(append));
+		var icon = document.getElementById('toggle-icon-'.concat(append));
 		
 		if(field.style.display == 'none') {
 			if('<?php echo $hidden_content_text; ?>') {
-				text.innerHTML = '<?php echo $hidden_content_text; ?>';
+				toggle.innerHTML = '<?php echo $hidden_content_text; ?>';
 			}
 			field.style.display = 'block';
 			pre_field.style.display = 'none';
 			icon.className = 'fa fa-chevron-down';
 		}
 		else {
-			text.innerHTML = '<?php echo $text ?>';
+			toggle.innerHTML = '<?php echo $text ?>';
 			field.style.display = 'none';
 			pre_field.style.display = 'inline-block';
 			icon.className = 'fa fa-chevron-right';

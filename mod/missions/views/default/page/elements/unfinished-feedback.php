@@ -30,6 +30,7 @@ foreach($mission_list as $mission) {
 					array('name' => 'message', 'value' => 'sent')
 			)
 	));
+	$feedback_search = array_filter($feedback_search);
 	
 	$participants = get_entity_relationships($mission->guid);
 	foreach($participants as $key => $relation) {
@@ -38,7 +39,7 @@ foreach($mission_list as $mission) {
 		}
 	}
 
-	if(elgg_get_logged_in_user_guid() == $mission->owner_guid && count($feedback_search) < count($participants)) {
+	if((elgg_get_logged_in_user_guid() == $mission->owner_guid || elgg_get_logged_in_user_guid() == $mission->account) && count($feedback_search) < count($participants)) {
 		$feedback_required .= '<div name="mission-unfinished-feedback-' . $mission->guid . '">';
 		
 		$feedback_required .= elgg_view('output/url', array(
@@ -50,7 +51,8 @@ foreach($mission_list as $mission) {
 		$feedback_required .= '</div>';
 		$count++;
 	}
-	elseif(check_entity_relationship($mission->guid, 'mission_accepted', elgg_get_logged_in_user_guid()) && !count($feedback_search) && elgg_get_logged_in_user_guid() != $mission->owner_guid) {
+	elseif(check_entity_relationship($mission->guid, 'mission_accepted', elgg_get_logged_in_user_guid()) 
+			&& !count($feedback_search) && elgg_get_logged_in_user_guid() != $mission->owner_guid && elgg_get_logged_in_user_guid() != $mission->account) {
 		$feedback_required .= '<div name="mission-unfinished-feedback-' . $mission->guid . '">';
 		
 		$feedback_required .= elgg_view('output/url', array(

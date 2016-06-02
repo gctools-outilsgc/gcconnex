@@ -16,5 +16,9 @@ return array(
 		'gcconnex_profile:opt:no' => 'Non',
 		'gcconnex_profile:completed_missions' => 'Micro-Missions accomplies',
 		'gcconnex_profile:opt:skill_sharing' => 'Partage des compétences',
-		'gcconnex_profile:opt:job_sharing' => "Partage d'emploi"
+		'gcconnex_profile:opt:job_sharing' => "Partage d'emploi",
+		'gcconnex_profile:opportunities' => 'Opportunités',
+		"gcconnex_profile:hide" => "Cacher",
+		"gcconnex_profile:confirm:hide" => "Cacher ce Micro-Mission signifie qu'il ne sera plus visible sous Opportunités dans votre profil et cette opération ne peut pas être inversée.",
+		"gcconnex_profile:show" => "Montrer"
 );

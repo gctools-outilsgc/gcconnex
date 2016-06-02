@@ -40,10 +40,12 @@ if(empty($nodes_match)) {
 	$orgnode = new ElggObject();
     $orgnode->subtype = 'orgnode';
     $orgnode->title = $name;
+    $orgnode->owner_guid = elgg_get_site_entity()->guid;
     $orgnode->name = $name_english;
     $orgnode->abbr = $abbr_english;
     $orgnode->name_french = $name_french;
     $orgnode->abbr_french = $abbr_french;
+    $orgnode->parent_guid = $guid;
     $orgnode->save();
     
     add_entity_relationship($guid, 'org-related', $orgnode->guid);

@@ -74,6 +74,7 @@ $(document).ready(function() {
             'height': '580',
             'onComplete': initFancyProfileBox
         });
+        
     /*
     var tour = new Tour({
         steps: [
@@ -89,6 +90,7 @@ $(document).ready(function() {
             }
         ]
     });
+    
     tour.init();
     tour.start();
     */
@@ -113,12 +115,12 @@ $(document).ready(function() {
 
     departments.initialize();
 
-    $('.gcconnex-basic-department').typeahead(null, {
+    /* $('.gcconnex-basic-department').typeahead(null, {
         name: 'department',
         displayKey: 'value',
         limit: 10,
         source: departments.ttAdapter()
-    });
+    });*/
 
     // show "edit profile picture" overlay on hover
     $('.avatar-profile-edit').hover(
@@ -628,7 +630,7 @@ function saveProfile(event) {
 
             profile.name = $(".gcconnex-basic-name").val();
             profile.job = $(".gcconnex-basic-job").val();
-            profile.department = $('.gcconnex-basic-department.tt-input').val();
+            profile.department = $('.gcconnex-basic-department').val();
             profile.location = $(".gcconnex-basic-location").val();
             profile.phone = $(".gcconnex-basic-phone").val();
             profile.mobile = $(".gcconnex-basic-mobile").val();
@@ -668,7 +670,8 @@ function saveProfile(event) {
 
             break;
         case "about-me":
-            var $about_me = $('#aboutme').val();
+            var area = $('#aboutme').val();
+            var $about_me = $.trim(area);
             var access = $('.gcconnex-about-me-access').val();
             // save the information the user just edited
             elgg.action('b_extended_profile/edit_profile', {
@@ -900,7 +903,9 @@ function saveProfile(event) {
 
             $official_langs = $('.gcconnex-profile-language-official-languages');
 
-            english = {
+			var access = $('.gcconnex-languages-access').val();
+			
+			english = {
                 'writtencomp': $official_langs.find('.gcconnex-languages-english-writtencomp').val(),
                 'writtenexp': $official_langs.find('.gcconnex-languages-english-writtenexp').val(),
                 'oral': $official_langs.find('.gcconnex-languages-english-oral').val(),
@@ -923,6 +928,7 @@ function saveProfile(event) {
                 data: {
                     'guid': elgg.get_logged_in_user_guid(),
                     'section': 'languages',
+                    'access_id': access,
                     'english': english,
                     'french': french,
                     'firstlang': firstlang

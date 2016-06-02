@@ -7,7 +7,7 @@ if (!empty($entities)) {
 	$content .= "<ul class='elgg-list elgg-list-entity'>";
 	
 	foreach ($entities as $entity) {
-		$icon = elgg_view_entity_icon($entity, "small");
+		$icon = elgg_view_entity_icon($entity, "medium");
 		
 		$info = elgg_view("output/url", array(
 			"href" => $entity->getURL(),

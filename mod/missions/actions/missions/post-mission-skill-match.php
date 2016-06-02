@@ -44,6 +44,8 @@ foreach($user_skill_match as $key => $value) {
 $_SESSION['mission_search_switch'] = 'candidate';
 $_SESSION['candidate_count'] = count($user_skill_match);
 $_SESSION['candidate_search_set'] = $user_skill_match;
+$_SESSION['candidate_search_set_timestamp'] = time();
+$_SESSION['missions_from_skill_match'] = true;
 
 // Clears all the sticky forms that have been in use so far.
 elgg_clear_sticky_form('firstfill');

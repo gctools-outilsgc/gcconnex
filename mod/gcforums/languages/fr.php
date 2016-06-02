@@ -59,9 +59,12 @@ $french = array(
 
     //edit page
 
-    'gforums:title_label' => "Nom du forum",
-    'gforums:description_label' => "Description",
-    'gcforums:save_button' => "Sauvegarder",
+'gforums:title_label' => "Nom du forum",
+'gforums:description_label' => "Description",
+'gcforums:save_button' => "Sauvegarder",
+
+'gcforums:subscribe' => 'Subscribe',
+'gcforums:unsubscribe' => 'Unsubscribe',
 
 	);
 

@@ -11,7 +11,15 @@
  * User display within the context of the micro missions plugin.
  */
 $user = $vars['user'];
-$feedback_string = $_SESSION['candidate_search_feedback'][$user->guid];
+$feedback_string = '';
+if(time() > ($_SESSION['candidate_search_feedback_timestamp'] + elgg_get_plugin_setting('mission_session_variable_timeout', 'missions')) 
+		&& $_SESSION['candidate_search_feedback_timestamp'] != '') {
+	unset($_SESSION['candidate_search_feedback'][$user->guid]);
+	unset($_SESSION['candidate_search_feedback_timestamp']);
+}
+else {
+	$feedback_string = $_SESSION['candidate_search_feedback'][$user->guid];
+}
 
 $mission_guid = $_SESSION['mission_that_invites'];
 
@@ -58,7 +66,7 @@ $button_content = '';
 if($user->opt_in_missions == 'gcconnex_profile:opt:yes') {
 	if($mission_guid != 0) {
 		$mission = get_entity($mission_guid);
-		if($user->guid != $mission->owner_guid) {
+		if($user->guid != $mission->owner_guid && $user->guid != $mission->account) {
 			if(!check_entity_relationship($mission->guid, 'mission_tentative', $user->guid)
 					&& !check_entity_relationship($mission->guid, 'mission_applied', $user->guid)
 					&& !check_entity_relationship($mission->guid, 'mission_accepted', $user->guid)) {

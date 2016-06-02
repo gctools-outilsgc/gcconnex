@@ -103,12 +103,13 @@
 			break;
 
 		default:		// the actual settings page
+			
 			// default value
 			if (!isset($vars['entity']->cp_notifications_email_addr))
 				$vars['entity']->cp_notifications_email_addr = 'admin.gcconnex@tbs-sct.gc.ca';
 
-if (!isset($vars['entity']->cp_notifications_email_addr))
-	$vars['entity']->cp_notifications_email_addr = 'admin.gcconnex@tbs-sct.gc.ca';
+			if (!isset($vars['entity']->cp_notifications_display))
+				$vars['entity']->cp_notifications_display = '1';
 
 			if (!isset($vars['entity']->cp_notifications_opt_out))
 				$vars['entity']->cp_notifications_opt_out = 'no';
@@ -116,10 +117,14 @@ if (!isset($vars['entity']->cp_notifications_email_addr))
 			if (!isset($vars['entity']->cp_notifications_enable_bulk))
 				$vars['entity']->cp_notifications_enable_bulk = 'no';
 
-if (!isset($vars['entity']->cp_notifications_sidebar))
-	$vars['entity']->cp_notifications_sidebar = 'no';
+			if (!isset($vars['entity']->cp_notifications_sidebar))
+				$vars['entity']->cp_notifications_sidebar = 'no';
+
+			if (!isset($vars['entity']->cp_enable_minor_edit))
+				$vars['entity']->cp_enable_minor_edit = 'no';
 
 			echo "<br/><br/>";
+
 
 			// display and allow admin to change the reply email (will be modified in the header)
 			echo "<div>";
@@ -145,18 +150,18 @@ if (!isset($vars['entity']->cp_notifications_sidebar))
 			echo "</div>";
 
 
-// display quick links for users (in user settings page for notifications)
-echo "<div>";
-echo "Enable Quick links sidebar for users : ";
-echo elgg_view('input/select', array(
-	'name' => 'params[cp_notifications_sidebar]',
-	'options_values' => array(
-		'no' => elgg_echo('option:no'),
-		'yes' => elgg_echo('option:yes')
-	),
-	'value' => $vars['entity']->cp_notifications_sidebar,
-));
-echo "</div>";
+			// display quick links for users (in user settings page for notifications)
+			echo "<div>";
+			echo "Enable Quick links sidebar for users : ";
+			echo elgg_view('input/select', array(
+				'name' => 'params[cp_notifications_sidebar]',
+				'options_values' => array(
+					'no' => elgg_echo('option:no'),
+					'yes' => elgg_echo('option:yes')
+				),
+				'value' => $vars['entity']->cp_notifications_sidebar,
+			));
+			echo "</div>";
 
 
 			// display option to allow users to enable bulk e-mail notifications
@@ -173,6 +178,38 @@ echo "</div>";
 			echo "</div>";
 
 
+			// display option to enable minor edit option (otherwise send notifications when there are edits)
+			echo "<div>";
+			echo "Enable Minor Edit option : ";
+			echo elgg_view('input/select', array(
+				'name' => 'params[cp_enable_minor_edit]',
+				'options_values' => array(
+					'no' => elgg_echo('option:no'),
+					'yes' => elgg_echo('option:yes')
+				),
+				'value' => $vars['entity']->cp_enable_minor_edit,
+			));
+			echo "</div>";
+
+
+			// control the number of groups being displayed
+			echo "<div>";
+			echo "Display number of items in the Notifications Setting page: ";
+			echo elgg_view('input/select', array(
+				'name' => 'params[cp_notifications_display]',
+				'options_values' => array(
+					'5' => elgg_echo('option:5'),	// cyu - for testing
+					'50' => elgg_echo('option:50'),
+					'75' => elgg_echo('option:75'),
+					'100' => elgg_echo('option:100'),
+					'500' => elgg_echo('option:500'),
+					'1000' => elgg_echo('option:1000'),
+				),
+				'value' => $vars['entity']->cp_notifications_display,
+			));
+			echo "</div>";
+
+
 
 
 			// admin-option only to run the script auto-subscribe their personal contents
@@ -185,6 +222,7 @@ echo "</div>";
 					'confirm' => 'Are you sure you want to run the script?'
 				)
 			);
+
 			echo $btn_run_personal_script;
 			echo "<br />";
 			echo elgg_view("output/url",

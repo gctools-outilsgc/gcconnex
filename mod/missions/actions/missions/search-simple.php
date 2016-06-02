@@ -11,6 +11,10 @@ elgg_make_sticky_form('searchsimplefill');
 $err = '';
 $search_form = elgg_get_sticky_values('searchsimplefill');
 
+if(trim($search_form['simple']) == '') {
+	$err .= elgg_echo('missions:error:search_field_empty');
+}
+
 // Currently no error checking is being done for the search form
 if ($err != '') {
     register_error($err);
@@ -21,7 +25,7 @@ if ($err != '') {
     switch($_SESSION['mission_search_switch']) {
         case 'candidate':
             // A multipurpose query which will be applied to skills, experience and education objects.
-            if (! empty($search_form['simple'])) {
+            if (!empty($search_form['simple'])) {
             	$string_to_array = explode(',', str_replace(', ', ',', $search_form['simple']));
             	
             	foreach($string_to_array as $key => $value) {
@@ -34,7 +38,7 @@ if ($err != '') {
             	}
             }
             
-            $returned = mm_search_candidate_database($array, 'OR', $search_form['limit']);
+            $returned = mm_search_candidate_database($array, 'OR', elgg_get_plugin_setting('search_limit', 'missions'));
             break;
         default:
             // A broad range search which determines whether the input text exists within the title, type or description of the mission.
@@ -45,19 +49,28 @@ if ($err != '') {
                     'value' => '%' . $search_form['simple'] . '%'
                 );
                 $array[1] = array(
-                    'name' => 'job_type',
-                    'operand' => 'LIKE',
-                    'value' => '%' . $search_form['simple'] . '%'
-                );
-                $array[2] = array(
                     'name' => 'descriptor',
                     'operand' => 'LIKE',
                     'value' => '%' . $search_form['simple'] . '%'
                 );
+                $array[2] = array(
+                    'name' => 'meta_guid',
+                    'operand' => '=',
+                    'value' => $search_form['simple']
+                );
+                
+                $translation_key = mm_get_translation_key_from_setting_string($search_form['simple'], elgg_get_plugin_setting('opportunity_type_string', 'missions'));
+                if($translation_key) {
+	                $array[3] = array(
+	                    'name' => 'job_type',
+	                    'operand' => '=',
+	                    'value' => $translation_key
+	                );
+                }
             }
             
             // This function executes the query and returns true or false depending on how succesful that query was.
-            $returned = mm_search_database($array, 'OR', $search_form['limit']);
+            $returned = mm_search_database($array, 'OR', elgg_get_plugin_setting('search_limit', 'missions'));
     }
     
     if (! $returned) {

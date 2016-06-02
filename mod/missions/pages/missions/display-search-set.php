@@ -14,11 +14,15 @@ gatekeeper();
 
 $search_typing = $_SESSION['mission_search_switch'];
 
+
 if($_SESSION[$search_typing . '_entities_per_page']) {
 	$entities_per_page = $_SESSION[$search_typing . '_entities_per_page'];
 }
 
-$title = elgg_echo('missions:search_results_display');
+$title = elgg_echo('missions:display_search_results');
+if($search_typing == 'candidate') {
+	$title = elgg_echo('missions:display_find_results');
+}
 
 elgg_push_breadcrumb(elgg_echo('missions:micromissions'), elgg_get_site_url() . 'missions/main');
 elgg_push_breadcrumb($title);
@@ -34,7 +38,16 @@ else {
 }
 
 // Calls a limited amount of missions for display
-$search_set = $_SESSION[$search_typing . '_search_set'];
+$search_set = array();
+if(time() > ($_SESSION[$search_typing . '_search_set_timestamp'] + elgg_get_plugin_setting('mission_session_variable_timeout', 'missions')) 
+		&& $_SESSION[$search_typing . '_search_set_timestamp'] != '') {
+	system_message(elgg_echo('missions:last_results_have_expired'));
+	unset($_SESSION[$search_typing . '_search_set']);
+	unset($_SESSION[$search_typing . '_search_set_timestamp']);
+}
+else {
+	$search_set = $_SESSION[$search_typing . '_search_set'];
+}
 
 $list_typing = 'list';
 $list_class = '';
@@ -43,9 +56,20 @@ if($search_typing == 'mission') {
     $list_class = 'mission-gallery';
 }
 
+$search_set = mm_sort_mission_decider($_SESSION['missions_sort_field_value'], $_SESSION['missions_order_field_value'], $search_set);
+
 $content = elgg_view_title($title);
 
+if($_SESSION['missions_from_skill_match']) {
+	unset($_SESSION['missions_from_skill_match']);
+	$content .= '<div>' . elgg_echo('missions:placeholder_e') . '</div>';
+}
+
 $content .= elgg_view('page/elements/mission-tabs');
+
+if(($offset + $max) >= elgg_get_plugin_setting('search_limit', 'missions') && $count >= elgg_get_plugin_setting('search_limit', 'missions')) {
+	$content .= '<div class="col-sm-12" style="font-style:italic;">' . elgg_echo('missions:reached_maximum_entities') . '</div>';
+}
 
 // Displays the missions as a list with custom class mission-gallery
 $content .= '<div class="col-sm-12">' . elgg_view_entity_list(array_slice($search_set, $offset, $max), array(
@@ -66,5 +90,11 @@ $content .= '<div class="col-sm-12">' . elgg_view_form('missions/change-entities
 		'entity_type' => $search_typing,
 		'number_per' => $entities_per_page
 )) . '</div>';
+
+if($search_typing == 'mission') {
+	$content .= '<div class="col-sm-12">' . elgg_view_form('missions/sort-missions-form', array(
+			'class' => 'form-horizontal'
+	)) . '</div>';
+}
 
 echo elgg_view_page($title, $content);

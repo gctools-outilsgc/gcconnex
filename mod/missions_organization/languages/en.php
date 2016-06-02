@@ -50,5 +50,13 @@ return array(
 		'missions_organization:extreme_danger_warning' => 'This operation is extremely dangerous. This operation will render all stored mission data obsolete because all the GUIDs are being deleted.',
 		'missions_organization:drill_down' => 'Drill down',
 		'missions_organization:other' => 'Other',
-		'missions_organization:other_cap' => 'OTHER'
+		'missions_organization:other_cap' => 'OTHER',
+		"missions_organization:diagnostic_suite:no_tree_root" => "The organization tree has no root.",
+		"missions_organization:diagnostic_suite:no_nodes_in_db" => "There are no organization nodes in the database.",
+		"missions_organization:diagnostic_suite:node_has_more_than_one_parent" => "The node %s with GUID %s has more than one parent. %s",
+		"missions_organization:diagnostic_suite:node_has_no_parent" => "The node %s with GUID %s has no parents.",
+		"missions_organization:diagnostic_suite:node_cannot_reach_root" => "The node %s with GUID %s can not reach the tree root.",
+		"missions_organization:diagnostic_suite:orphans" => "Orphans: %s",
+		"missions_organization:diagnostic_suite:severed" => "Severed Nodes: %s",
+		"missions_organization:settings:delete_tree" => "Show the delete all button? WARNING: This button, when pressed, deletes the entire organization tree and should only be used on test servers." 
 );

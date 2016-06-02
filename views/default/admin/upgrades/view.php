@@ -37,6 +37,7 @@ echo <<<HTML
 	<span id="upgrade-total" class="hidden">$count</span>
 	<span id="upgrade-count" class="hidden">0</span>
 	<span id="upgrade-action" class="hidden">$action</span>
+	<label>offset: <input type=input id="upgrade-parallelization-offset" value="0" /></label>
 	<div class="elgg-progressbar mvl"><span class="elgg-progressbar-counter" id="upgrade-counter">0%</span></div>
 	<ul class="mvl">
 		<li>$success_count_string <span id="upgrade-success-count">0</span></li>

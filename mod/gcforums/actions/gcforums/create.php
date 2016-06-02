@@ -49,7 +49,7 @@ switch ($gcf_subtype) {
 		$gcf_enable_category = get_input('gcf_allow_categories');
 		$gcf_enable_posting = get_input('gcf_allow_posting');
 
-		$gcf_file_in_category = get_input('gcf_file_in_category');	// TODO: file under a category if required
+		$gcf_file_in_category = get_input('gcf_file_in_category');	
 
 		$gcf_new_forum = new ElggObject();
 		$gcf_new_forum->container_guid = $gcf_container;
@@ -114,12 +114,18 @@ switch ($gcf_subtype) {
 			gcforums_notify_subscribed_users($gcf_new_topic, $forward_url);
 			create_hjforumtopic_relationships($new_guid, $new_guid);
 
+			// cyu - auto subscribe when user create the topic
+			if (elgg_is_active_plugin('cp_notifications')) {
+				add_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $the_guid);
+				add_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $the_guid);
+			}
+
 			forward($forward_url);
 		} else 
 			system_message(elgg_echo("Entity entitled '{$gcf_new_topic->title}' has not been created successfully"));
 
-
 		break;
+
 	case 'hjforumpost':
 
 		$old_access = elgg_get_ignore_access();

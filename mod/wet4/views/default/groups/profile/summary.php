@@ -27,19 +27,10 @@ if (!$owner) {
 
 ?>
 <div class="groups-profile panel panel-custom clearfix elgg-image-block col-xs-12">
-
-        
-
-    
-        <div class="group-summary-holder clearfix"> 
-            
-
-
-                
-            
-       
-    <div class="col-sm-9">
-		<div class="col-xs-2 col-md-2 mrgn-tp-sm group-profile-image-size">
+   <div class="group-summary-holder clearfix">
+	   <div class="col-sm-9">
+		   
+		   <div class="col-xs-2 col-md-2 mrgn-tp-sm group-profile-image-size">
 			<?php
 				// we don't force icons to be square so don't set width/height
 				echo elgg_view_entity_icon($group, 'medium', array(
@@ -49,7 +40,7 @@ if (!$owner) {
                     'class'=>'TESTING',
 				)); 
             ?>
-		</div>
+		   </div>
         
     
     
@@ -87,24 +78,7 @@ if (!$owner) {
 				echo '<b>' . elgg_echo('groups:members') . ':</b> ' . $all_members_link;
             ?>
 			</div>
-                    <div class="groups-info mrgn-lft-md pull-left">
 
-                        <p>
-                            <?php
-
-                            // cyu - indicate if user has subscribed to the group or not (must have cp notifications enabled)
-                            if (elgg_is_active_plugin('cp_notifications')) {
-                                if (check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $group->getGUID()) || check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $group->getGUID()))
-                                    echo "<a href='".elgg_add_action_tokens_to_url("/action/cp_notify/unsubscribe?guid={$group->getGUID()}")."'>".elgg_echo('cp_notify:subscribe')."</a>";
-                                else
-                                    echo '<a href="'.elgg_add_action_tokens_to_url("/action/cp_notify/subscribe?guid={$group->getGUID()}").'">'.elgg_echo('cp_notify:not_subscribed').'</a>';
-                            }
-                            ?>
-                        </p>
-
-
-
-                    </div>
 
         </div>
             
@@ -142,7 +116,7 @@ if (!$owner) {
       </div>          
         <div class="btn-group text-right col-sm-3">
                 
-                
+             
             <div class="groups-stats mrgn-tp-sm mrgn-bttm-sm text-right"></div>
                 <?php 
 
@@ -267,7 +241,9 @@ if (!$owner) {
                             $buttonTitle = elgg_echo('gprofile:settings');
                         }
                 ?>
-                
+
+
+
 
             <button type="button" class="btn btn-custom dropdown-toggle pull-right" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <?php echo $buttonTitle ?>
@@ -294,7 +270,27 @@ if (!$owner) {
                     }
                     
                         ?>
-                
+
+            <div class="groups-info mrgn-tp-sm mrgn-rght-md pull-right">
+
+                <p>
+                    <?php
+                    //This is the code to add the notification bell to the page to the left of the member button
+                    if ($group->isMember(elgg_get_logged_in_user_entity())) { //Nick - check if user is a member before
+                        // cyu - indicate if user has subscribed to the group or not (must have cp notifications enabled)
+                        if (elgg_is_active_plugin('cp_notifications')) {
+                            if (check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $group->getGUID()) || check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $group->getGUID()))
+                                echo "<a href='".elgg_add_action_tokens_to_url("/action/cp_notify/unsubscribe?guid={$group->getGUID()}")."'><i class='icon-sel fa fa-lg fa-bell'></i></a>";
+                            else
+                                echo '<a href="'.elgg_add_action_tokens_to_url("/action/cp_notify/subscribe?guid={$group->getGUID()}").'"><i class="icon-unsel fa fa-lg fa-bell-slash-o"></i></a>';
+                        }
+                    }
+                    ?>
+                </p>
+
+
+
+            </div>
         </div>
 		</div>
         

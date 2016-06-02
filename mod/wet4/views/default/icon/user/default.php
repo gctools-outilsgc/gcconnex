@@ -22,9 +22,9 @@ if (!array_key_exists($size, $icon_sizes)) {
 	$size = 'medium';
 }
 
-if(elgg_get_context() == 'friends'){
+/*if(elgg_get_context() == 'friends'){
     $size = 'medium';
-}
+}*/
 if(elgg_get_context() == 'profile'){
     $size = 'large';
 }

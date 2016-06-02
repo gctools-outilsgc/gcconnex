@@ -175,6 +175,14 @@ if ((!empty($user_guids) || !empty($emails) || !empty($csv)) && !empty($group)) 
 			if (!$adding) {
 				system_message(elgg_echo("group_tools:action:invite:success:invite", array($invited, $already_invited, $member)));
 			} else {
+
+				// cyu - 05/12/2016: modified to comform to the business requirements documentation
+				// please note that this file is overwritting groups and group_tools
+				if (elgg_is_active_plugin('cp_notifications')) {
+					add_entity_relationship($user->getGUID(), 'cp_subscribed_to_email', $group->getGUID());
+					add_entity_relationship($user->getGUID(), 'cp_subscribed_to_site_mail', $group->getGUID());
+				}
+
 				system_message(elgg_echo("group_tools:action:invite:success:add", array($join, $already_invited, $member)));
 			}
 		} else {

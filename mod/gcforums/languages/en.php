@@ -76,6 +76,9 @@ $english = array(
     'gforums:description_label' => "Description",
     'gcforums:save_button' => "Save",
 
+	'gcforums:subscribe' => 'Subscribe',
+	'gcforums:unsubscribe' => 'Unsubscribe',
+
 	);
 
 add_translation("en", $english);

@@ -199,13 +199,21 @@ function mentions_notification_handler($event, $event_type, $object) {
 					);
 
 					// cyu - trigger the hook (we are re-routing the mentions to cp_notifications if it is activated)
-					if (elgg_is_active_plugin('cp_notifications')) {
+					// please don't trigger if subtype is thewire
+					if (elgg_is_active_plugin('cp_notifications') && strcmp($object->getSubtype(),'thewire') != 0) {
+
+						if (strcmp($object->getSubtype(),'comment') == 0 || strcmp($object->getSubtype(),'thewire') == 0 || strcmp($object->getSubtype(),'discussion_reply') == 0)
+							$container = $object->getContainerEntity();
+						else
+							$container = $object;
+					
 						$message = array(
 							'cp_author' => $owner->name,
-							'cp_content' => $type_str[0],
+							'cp_content' => $container->title,
 							'cp_link' => $link,
 							'cp_msg_type' => 'cp_content_mention',
-							'cp_to_user' => $user
+							'cp_to_user' => $user,
+							'cp_content_desc' => $object->description,
 						);
 						elgg_trigger_plugin_hook('cp_overwrite_notification','all',$message);
 					} else {

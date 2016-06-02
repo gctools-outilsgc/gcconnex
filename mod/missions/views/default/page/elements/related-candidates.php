@@ -33,7 +33,7 @@ foreach ($applicant_relationships as $applicant_relation) {
 		$accepted .= '<div class="col-sm-8" style="display:inline-block;" name="mission-participant" id="mission-participant-' . $applicant_relation->guid_two . '">' . elgg_view_entity(get_user($applicant_relation->guid_two)) . '</div>';
 
 		if($mission->state == 'posted') {
-			if(elgg_get_logged_in_user_guid() == $mission->owner_guid) {
+			if(elgg_get_logged_in_user_guid() == $mission->owner_guid || elgg_get_logged_in_user_guid() == $mission->account) {
 				// Removal button for the candidate.
 				$accepted .= '<div class="col-sm-4">' . elgg_view('output/url', array(
 						'href' => elgg_get_site_url() . 'action/missions/remove-applicant?aid=' . $applicant_relation->guid_two . '&mid=' . $mission->guid,
@@ -41,14 +41,15 @@ foreach ($applicant_relationships as $applicant_relation) {
 						'is_action' => true,
 						'class' => 'elgg-button btn btn-danger',
 						'style' => 'width:120px;margin:4px;',
-						'id' => 'fill-mission-applicant-' . $applicant_relation->guid_two . '-remove-button'
+						'id' => 'fill-mission-applicant-' . $applicant_relation->guid_two . '-remove-button',
+						'confirm' => elgg_echo('missions:confirm:remove_participant')
 				)) . '</div>';
 			}
 		}
 		else {
 			$accepted .= '<div class="col-sm-4">';
 			
-			if(elgg_get_logged_in_user_guid() == $mission->owner_guid) {
+			if(elgg_get_logged_in_user_guid() == $mission->owner_guid || elgg_get_logged_in_user_guid() == $mission->account) {
 				$owner = $mission->owner_guid;
 				$target = $applicant_relation->guid_two;
 			}
@@ -68,7 +69,8 @@ foreach ($applicant_relationships as $applicant_relation) {
 					)
 			));
 			
-			if(elgg_get_logged_in_user_guid() == $mission->owner_guid || elgg_get_logged_in_user_guid() == $applicant_relation->guid_two) {
+			if(elgg_get_logged_in_user_guid() == $mission->owner_guid || elgg_get_logged_in_user_guid() == $mission->account 
+					|| elgg_get_logged_in_user_guid() == $applicant_relation->guid_two) {
 				if(count($feedback_search)) {
 					if($feedback_search[0]->endorsement != 'on') {
 						$accepted .= elgg_view('output/url', array(
@@ -100,12 +102,13 @@ foreach ($applicant_relationships as $applicant_relation) {
 	}
 
 	// Candidates which have been sent an invitation to the mission.
-	if ($applicant_relation->relationship == 'mission_applied') {
+	if ($applicant_relation->relationship == 'mission_applied' || $applicant_relation->relationship == 'mission_offered') {
 		if($mission->state == 'posted') {
-			if(elgg_get_logged_in_user_guid() == $mission->owner_guid || elgg_get_logged_in_user_guid() == $applicant_relation->guid_two) {
+			if(elgg_get_logged_in_user_guid() == $mission->owner_guid || elgg_get_logged_in_user_guid() == $mission->account 
+					|| elgg_get_logged_in_user_guid() == $applicant_relation->guid_two) {
 				$tentative .= '<div class="col-sm-8" style="display:inline-block;" name="mission-applicant" id="mission-applicant-' . $applicant_relation->guid_two . '">' . elgg_view_entity(get_user($applicant_relation->guid_two)) . '</div>';
 			
-				if(elgg_get_logged_in_user_guid() == $mission->owner_guid) {
+				if(elgg_get_logged_in_user_guid() == $mission->owner_guid || elgg_get_logged_in_user_guid() == $mission->account) {
 					$tentative .= '<div class="col-sm-4">';
 					$tentative .= mm_offer_button($mission, get_user($applicant_relation->guid_two));
 					
@@ -116,7 +119,8 @@ foreach ($applicant_relationships as $applicant_relation) {
 							'is_action' => true,
 							'class' => 'elgg-button btn btn-danger',
 							'style' => 'width:120px;margin:4px;',
-							'id' => 'fill-mission-applicant-' . $applicant_relation->guid_two . '-remove-button'
+							'id' => 'fill-mission-applicant-' . $applicant_relation->guid_two . '-remove-button',
+							'confirm' => elgg_echo('missions:confirm:remove_applicant')
 					));
 					
 					$tentative .= '</div>';

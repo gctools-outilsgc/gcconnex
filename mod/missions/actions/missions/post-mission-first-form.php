@@ -11,6 +11,7 @@
  * This action evaluates the data from the form for errors and forwards the user to the next tab.
  */
 elgg_make_sticky_form('firstfill');
+$_SESSION['mission_duplicating_override_first'] = true;
 unset($_SESSION['mission_uncheck_post_mission_disclaimer']);
 
 $err = '';

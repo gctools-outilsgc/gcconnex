@@ -32,6 +32,8 @@ elgg_push_breadcrumb($title);
 
 $content = elgg_view_title($title);
 
+$content .= '<div>' . elgg_echo('missions:placeholder_c') . '</div>';
+
 $content .= elgg_view('page/elements/mission-tabs', array(
 		'highlight_five' => true
 ));

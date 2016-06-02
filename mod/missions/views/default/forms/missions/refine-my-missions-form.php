@@ -11,7 +11,7 @@
  * 
  */
 $check = false;
-if(elgg_get_logged_in_user_entity()->show_closed_missions == 'on') {
+if(elgg_get_logged_in_user_entity()->show_closed_missions) {
 	$checked = true;
 }
 

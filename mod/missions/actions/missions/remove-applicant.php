@@ -26,9 +26,15 @@ else {
 	if(check_entity_relationship($mid, 'mission_tentative', $aid)) {
 		remove_entity_relationship($mid, 'mission_tentative', $aid);
 	}
+	if(check_entity_relationship($mid, 'mission_offered', $aid)) {
+    	remove_entity_relationship($mid, 'mission_offered', $aid);
+	}
 	if(check_entity_relationship($mid, 'mission_accepted', $aid)) {
     	remove_entity_relationship($mid, 'mission_accepted', $aid);
 	}
+	
+	$mission->time_to_fill = '';
+	$mission->save();
 	
     $body = '';
     // Notifies the manager that the candidate withdrew from the mission.

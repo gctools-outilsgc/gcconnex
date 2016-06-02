@@ -20,5 +20,6 @@ else {
 	$user->show_closed_missions = false;
 	system_message(elgg_echo('missions:not_displaying_closed_missions'));
 }
+$user->save();
 
 forward(REFERER);

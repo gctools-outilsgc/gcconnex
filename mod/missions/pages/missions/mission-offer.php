@@ -27,7 +27,7 @@ $err = '';
 if($applicant->type != 'user') {
 	$err .= elgg_echo('missions:error:entity_not_a_user');
 }
-if(elgg_get_logged_in_user_guid() != $mission->owner_guid) {
+if(elgg_get_logged_in_user_guid() != $mission->owner_guid || elgg_get_logged_in_user_guid() == $mission->account) {
 	$err .= elgg_echo('missions:error:you_do_not_own_this_mission', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))));
 }
 if(!check_entity_relationship($mission->guid, 'mission_applied', $applicant->guid)) {
@@ -47,6 +47,8 @@ else {
 	$content = elgg_view_title($title);
 
 	$content .= elgg_view('page/elements/mission-tabs');
+	
+	$content .= '<div>' . elgg_echo('missions:placeholder_h') . '</div>';
 
 	$content .= elgg_view_entity($applicant);
 	

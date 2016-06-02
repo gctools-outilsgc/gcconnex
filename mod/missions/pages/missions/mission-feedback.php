@@ -33,10 +33,11 @@ if(elgg_get_logged_in_user_entity()->opt_in_missions != 'gcconnex_profile:opt:ye
 $content .= elgg_view('page/elements/mission-tabs');
  
  $content .= elgg_echo('missions:feedback_explanation_one') . '</br>';
- $content .= elgg_echo('missions:feedback_explanation_two') . '</br></br>';
+ $content .= elgg_echo('missions:feedback_explanation_two') . '</br>';
+ $content .= elgg_echo('missions:feedback_explanation_three') . '</br></br>';
  
  // If the user is the mission manager then feedback forms will be generated for each participant.
- if(elgg_get_logged_in_user_guid() == $mission->owner_guid) {
+ if(elgg_get_logged_in_user_guid() == $mission->owner_guid || elgg_get_logged_in_user_guid() == $mission->account) {
  	$no_feedback_necessary = true;
  	$relationships = get_entity_relationships($mission->guid);
  	foreach($relationships as $relation) {
@@ -77,7 +78,7 @@ $content .= elgg_view('page/elements/mission-tabs');
  			'subtype' => 'mission-feedback',
  			'owner_guid' => elgg_get_logged_in_user_guid(),
  			'metadata_name_value_pairs' => array(
- 					array('name' => 'recipient', 'value' => $mission->owner_guid),
+ 					array('name' => 'recipient', 'value' => $mission->account),
  					array('name' => 'mission', 'value' => $mission->guid),
  					array('name' => 'message', 'value' => 'sent')
  			)
@@ -89,7 +90,7 @@ $content .= elgg_view('page/elements/mission-tabs');
 		 		'class' => 'horizontal-form'
 		 ), array(
 		 		'entity' => $mission,
-		 		'feedback_target' => get_user($mission->owner_guid)
+		 		'feedback_target' => get_user($mission->account)
 		 ));
  	}
  	else {

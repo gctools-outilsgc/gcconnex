@@ -32,7 +32,7 @@ if(!$feedback) {
 
 // If the feedback message input is not null then send a notification to the feedback target.
 if($feedback_body) {
-	if(elgg_get_logged_in_user_guid() == $mission->owner_guid) {
+	if(elgg_get_logged_in_user_guid() == $mission->owner_guid || elgg_get_logged_in_user_guid() == $mission->account) {
 		mm_notify_user($target->guid, $mission->guid, $mission->job_title . ' ' . elgg_echo('missions:feedback'), $feedback_body);
 		system_message(elgg_echo('missions:feedback_sent_to_participant', array($mission->job_title, $target->name)));
 	}

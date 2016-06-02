@@ -46,7 +46,7 @@ if(!empty($mission->key_skills)) {
     $clean_skills = $mission->key_skills;
 }
 if(!empty($mission->timezone)) {
-	$clean_timezone =  $mission->timezone;
+	$clean_timezone =  elgg_echo($mission->timezone);
 }
 if(!empty($mission->remotely)) {
 	$clean_remotely = elgg_echo('missions:yes');
@@ -58,6 +58,12 @@ if(!empty($mission->openess)) {
 $department_path = $mission->department_path_english;
 if(get_current_language() == 'fr') {
 	$department_path = $mission->department_path_french;
+}
+
+if(trim($department_path) == '') {
+	if(strpos($mission->department, 'MOrg:') === false) {
+		$department_path = $mission->department;
+	}
 }
 
 // Unpacks all language and time metadata attached to the mission.
@@ -181,8 +187,11 @@ if(!$vars['override_buttons']) {
 }
 
 $mission_state = '';
-if($mission->state == 'completed' || $mission->state == 'cancelled') {
-	$mission_state = '(' . $mission->state . ')';
+if($mission->state == 'completed') {
+	$mission_state = '(' . strtolower(elgg_echo('missions:completed')) . ')';
+}
+if($mission->state == 'cancelled') {
+	$mission_state = '(' . strtolower(elgg_echo('missions:cancelled')) . ')';
 }
 
 $creator = get_user($mission->owner_guid);

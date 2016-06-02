@@ -56,25 +56,6 @@ switch($type) {
         $content .= "<script>
             $('.wb-tables').dataTable( {} );
 
-            if($(':checkbox').is(':checked')) {
-                $(':checkbox').clone().appendTo('.friendspicker-savebuttons').addClass('hidden');
-            }
-
-            $(':checkbox').change(function() {
-            if($(this).is(':checked')) {
-                $(this).clone().appendTo('.friendspicker-savebuttons').addClass('hidden');
-                return;
-            } else {
-                var checkBoxes = $('.friendspicker-savebuttons input').toArray();
-                for (var i = 0; i < checkBoxes.length; i++) {
-                    if (checkBoxes[i].getAttribute('value') == $(this).val()) {
-                     checkBoxes[i].parentNode.removeChild(checkBoxes[i]);
-                   }
-                }
-           }
-        });
-
-
             </script>";
 		break;
 }

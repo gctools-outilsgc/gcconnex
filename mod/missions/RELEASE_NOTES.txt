@@ -149,6 +149,31 @@ Things like searches don't output a system message but inviting a user does retu
 
 There were other changes made to match feedback given.
 
+10)
+The invitation worflow now has an additional step after the manager sends an offer to an applicant which requires the applicant to accept or decline the offer.
+Another change to this workflow is that any participant or applicant declining or withdrawing from the Micro-Mission will be required to enter their reason for this declination or withdrawal.
+User reasons for declining an invitation/offer or withdrawing from a Micro-Mission are now stored as a mission-declination object owned by the user.
+Cancelling a Micro-Mission now requires that Micro-Mission to have 0 applicants and 0 offers active.
+
+Manager's will now see a red circle with a number in it in the top right corner of their Micro-Mission's card. This number represents the total of users that have applied plus the number of offers sent to users.
+Completed and cancelled Micro-Missions now only show up in the Archive and My Opportunities.
+The nomenclature changed so that search is now associated with Micro-Missions and find is associated with users.
+The search limits have been removed from the simple and advanced search forms. The search limit is now solely described by the setting search_limit.
+
+Ideal completion is no longer a mandatory field and date fields now have a calendar icon next to them in post and edit forms.
+Addtionally, the number of opportunities in the second post opportunity form are now described by the setting mission_max_applicants.
+
+The share an opportunity message form has been remodeled and now accepts multiple usernames in a comma separated string.
+
+Create opportunity and duplicate buttons now unset any leftover information from the 3 post opportunity forms.
+
+Micro-Missions now store time take to create missions, fill missions, and complete missions as metadata.
+
+IMPORTANT: There is now a setting in the Micro-Missions settings which hide the Analytics tab.
+
+There is now a test suite which works with the ufcoe_testable plugin.
+This test suite checks mission objects and returns errors if their data does not comply with the standards of the latest Micro-Missions plugin.
+
 --------------------------------------------------------------------------------------------------------------
 
 SOLUTIONS:

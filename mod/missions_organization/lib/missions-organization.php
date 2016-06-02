@@ -58,29 +58,57 @@ function mo_format_input_node($input) {
 /*
  * Function which gets all the ancestors of a stored organization department.
  */
-function mo_get_all_ancestors($node_string) {
+function mo_get_all_ancestors($node_string, $write_log = true) {
 	$x = true;
 	$count = 1;
 	$returner = array();
 	
-	$node_array = explode(':', $node_string);
-	$node_guid = $node_array[1];
+	if($write_log) {
+		$my_log = fopen("mod/missions_organization/get_ancestors_log.txt", "w");
+	}
+	
+	if($node_string == '') {
+		return array();
+	}
+	
+	$node_guid = mo_extract_node_guid($node_string);
 	
 	$returner[0] = $node_guid;
 	$current_id = $node_guid;
 	while($x) {
-		$parent_relation = get_entity_relationships($current_id, true);
+		$parent_relation = mo_node_immediate_parent($current_id);
+        /*$options['type'] = 'object';
+        $options['subtype'] = 'orgnode';
+		$options['relationship'] = 'org-related';
+		$options['relationship_guid'] = $current_id;
+		$options['inverse_relationship'] = true;
+		$options['limit'] = 0;
+		$parent_relation = elgg_get_entities_from_relationship($options);*/
+		//$parent_relation = get_entity_relationships($current_id, true);
 		
-		if($parent_relation[0]) {
-			$parent_guid = $parent_relation[0]->guid_one;
-			
+		if($count > 10) {
+			return array();
+		}
+		
+		if(!empty($parent_relation)) {
+			$parent_guid = $parent_relation[0]->guid;
 			$returner[$count] = $parent_guid;
+			
+			if($write_log) {
+				$to_file = $count . ": " . get_entity($current_id)->name . " (" . $current_id . ") --- " . get_entity($parent_guid)->name . " (" . $parent_guid . ")\n";
+				$fval = fwrite($my_log, $to_file);
+			}
+			
 			$count++;
 			$current_id = $parent_guid;
 		}
 		else {
 			$x = false;
 		}
+	}
+	
+	if($write_log) {
+		fclose($my_log);
 	}
 	
 	array_pop($returner);
@@ -134,18 +162,18 @@ function mo_extract_other_input($node_string) {
  * 
  */
 function mo_array_node_and_all_children($node_string) {
-		$node_guid = mo_extract_node_guid($node_string);
-		$returner = array($node_string);
+	$node_guid = mo_extract_node_guid($node_string);
+	$returner = array($node_string);
 		
-		$node_children_relations = get_entity_relationships($node_guid);
+	$node_children_relations = get_entity_relationships($node_guid);
 		
-		foreach($node_children_relations as $relation) {
-			$temp_node_string = mo_format_input_node($relation->guid_two);
-			$temp_array = mo_array_node_and_all_children($temp_node_string);
-			$returner = array_merge($returner, $temp_array);
-		}
+	foreach($node_children_relations as $relation) {
+		$temp_node_string = mo_format_input_node($relation->guid_two);
+		$temp_array = mo_array_node_and_all_children($temp_node_string);
+		$returner = array_merge($returner, $temp_array);
+	}
 		
-		return $returner;
+	return $returner;
 }
 
 /*
@@ -163,6 +191,18 @@ function mo_node_immediate_children($node_guid) {
 	
 	return $node_children_guid;
 }
+/*
+ * 
+ */
+function mo_node_immediate_parent($node_guid) {
+	$options['type'] = 'object';
+	$options['subtype'] = 'orgnode';
+	$options['relationship'] = 'org-related';
+	$options['relationship_guid'] = $node_guid;
+	$options['inverse_relationship'] = true;
+	$options['limit'] = 0;
+	return elgg_get_entities_from_relationship($options);
+}
 
 /*
  * 
@@ -175,5 +215,30 @@ function mo_get_tree_root() {
 	);
 	$entities_parent = elgg_get_entities_from_metadata($options);
 	
-	return $entities_parent[0];
+	if(count($entities_parent) > 0) {
+		return $entities_parent[0];
+	}
+	else {
+		return false;
+	}
+}
+
+/*
+ * 
+ */
+function mo_get_department_next_to_root($name) {
+	$options['type'] = 'object';
+	$options['subtype'] = 'orgnode';
+	$options['metadata_name_value_pairs'] = array(
+			array('name' => 'parent_guid', 'value' => mo_get_tree_root()->guid, 'operand' => '='),
+			array('name' => 'name', 'value' => $name, 'operand' => '=', 'case_sensitive' => false)
+	);
+	$entities = elgg_get_entities_from_metadata($options);
+	
+	if(count($entities) == 1) {
+		return $entities[0];
+	}
+	else {
+		return false;
+	}
 }

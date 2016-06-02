@@ -14,11 +14,14 @@ $mission = $vars['mission'];
 $container_class = $vars['container_class'];
 $grid_number = $vars['grid_number'];
 
-$manager_account_by_email = get_user_by_email($mission->email);
-$manager_account = array_pop($manager_account_by_email);
+$manager_account = get_user($mission->account);
+if(!$manager_account) {
+	$manager_account_by_email = get_user_by_email($mission->email);
+	$manager_account = array_pop($manager_account_by_email);
+}
 
 $manager_name = $mission->name;
-$manager_icon = '';
+$manager_icon = elgg_view_entity_icon(get_entity(1), 'small');
 if($manager_account) {
 	$manager_name = elgg_view('output/url', array(
 			'href' => elgg_get_site_url() . 'profile/' . $manager_account->name,
@@ -26,13 +29,18 @@ if($manager_account) {
 			'id' => 'mission-user-link-' . $manager->guid
 	));
 
-	$manager_icon = elgg_view_entity_icon($manager_account, 'small');;
+	$manager_icon = elgg_view_entity_icon($manager_account, 'small');
 }
 
 $department_node = get_entity(mo_extract_node_guid($mission->department));
-$department = $department_node->name;
-if(get_current_language() == 'fr') {
-	$department = $department_node->name_french;
+if($department_node == '') {
+	$department = $mission->department;
+}
+else {
+	$department = $department_node->name;
+	if(get_current_language() == 'fr') {
+		$department = $department_node->name_french;
+	}
 }
 
 $department_other = mo_extract_other_input($mission->department);

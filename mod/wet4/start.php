@@ -8,7 +8,25 @@
 elgg_register_event_handler('init','system','wet4_theme_init');
 
 function wet4_theme_init() {
-    
+
+	/* cyu - global change to sidebars, display when it is not the crawler
+	 * the following batch of elgg_extend_view overwrites the elements in the page
+	 */
+	elgg_extend_view('page/elements/sidebar','page/elements/gsa_view_start',1);
+	elgg_extend_view('page/elements/sidebar','page/elements/gsa_view_end',1000);
+
+	elgg_extend_view('page/elements/footer','page/elements/gsa_view_start',1);
+	elgg_extend_view('page/elements/footer','page/elements/gsa_view_end',1000);
+
+	elgg_extend_view('navigation/breadcrumbs','page/elements/gsa_view_start',1);
+	elgg_extend_view('navigation/breadcrumbs','page/elements/gsa_view_end',1000);
+
+	elgg_extend_view('object/widget/elements/content','page/elements/gsa_view_start',1);
+	elgg_extend_view('object/widget/elements/content','page/elements/gsa_view_end',1000);
+
+
+
+
     //reload groups library to have our sidebar changes
     elgg_register_library('elgg:groups', elgg_get_plugins_path() . 'wet4/lib/groups.php');
     elgg_register_library('GCconnex_logging', elgg_get_plugins_path() . 'wet4/lib/logging.php');
@@ -202,6 +220,7 @@ function wet4_theme_init() {
             'target' => '_blank',
             ));
     }
+
 
 }
 

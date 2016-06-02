@@ -1,5 +1,7 @@
 <?php
 $group = get_entity($vars['group_guid']);
+$db_prefix = elgg_get_config('dbprefix');
+
 if (elgg_is_logged_in() && $group->isMember(elgg_get_logged_in_user_entity())) {
 
 	// if this is within a group, set owner to group
@@ -98,12 +100,12 @@ if (elgg_is_logged_in() && $group->isMember(elgg_get_logged_in_user_entity())) {
 			// cyu - patched 03/21/2016
 			if ($gcf_container && $gcf_container != 0) { // this is within the nested forums
 				$query = "SELECT  oe.guid, oe.title
-						FROM elggentities e, elggentity_relationships r, elggobjects_entity oe, elggentity_subtypes es
+						FROM {$db_prefix}entities e, {$db_prefix}entity_relationships r, {$db_prefix}objects_entity oe, {$db_prefix}entity_subtypes es
 						WHERE e.subtype = es.id AND e.guid = r.guid_one AND e.container_guid = {$gcf_container} AND e.guid = oe.guid AND es.subtype='hjforumcategory'";
 
 			} else { // first page of group
-				$query = "SELECT  oe.guid, oe.title
-						FROM elggentities e, elggentity_relationships r, elggobjects_entity oe, elggentity_subtypes es
+				$query = "SELECT oe.guid, oe.title
+						FROM {$db_prefix}entities e, {$db_prefix}entity_relationships r, {$db_prefix}objects_entity oe, {$db_prefix}entity_subtypes es
 						WHERE e.subtype = es.id AND e.guid = r.guid_one AND e.container_guid = {$gcf_group} AND e.guid = oe.guid AND es.subtype='hjforumcategory'";
 			}
 

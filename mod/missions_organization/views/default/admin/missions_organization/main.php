@@ -11,15 +11,17 @@ gatekeeper();
 $title = elgg_echo('missions_organization:main_page');
 //$content = elgg_view_title($title);
 $content .= elgg_view_form('missions_organization/upload-form', array('class' => 'form-horizontal')) . '</br>';
-	
-// Button to wipe out the organization tree.
-/*$content .= elgg_view('output/confirmlink', array(
- 		'href' => elgg_get_site_url() . 'action/missions_organization/delete-all',
- 		'text' => elgg_echo('missions_organization:delete_all'),
- 		'is_action' => true,
-		'class' => 'elgg-button elgg-button-action',
-		'confirm' => elgg_echo('missions_organization:extreme_danger_warning')
-)) . '</br></br>';*/
+
+if(elgg_get_plugin_setting('show_delete_tree', 'missions_organization') == 'YES') {
+	// Button to wipe out the organization tree.
+	$content .= elgg_view('output/confirmlink', array(
+	 		'href' => elgg_get_site_url() . 'action/missions_organization/delete-all',
+	 		'text' => elgg_echo('missions_organization:delete_all'),
+	 		'is_action' => true,
+			'class' => 'elgg-button elgg-button-action',
+			'confirm' => elgg_echo('missions_organization:extreme_danger_warning')
+	)) . '</br></br>';
+}
 
 // Search for the organization tree root.
 $root = mo_get_tree_root();

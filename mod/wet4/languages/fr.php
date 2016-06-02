@@ -88,8 +88,8 @@ return array(
        */
 
             'page:create' => 'Créer la page',
-
-
+            'page:minor_edit' => 'Est-ce ceci une modification mineur <small>(ne pas envoie de courriel)</small>',
+            'page:minor_edit_label' => 'Changement mineur',
             /*
         * Misc
         * */

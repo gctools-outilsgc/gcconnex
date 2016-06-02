@@ -12,7 +12,7 @@
  */
 $applicant = get_user(get_input('applicant'));
 $mission = get_entity(get_input('mission'));
-$manager = get_user($mission->owner_guid);
+//$manager = get_user($mission->owner_guid);
 
 $err = '';
 
@@ -50,9 +50,9 @@ else {
 				'text' => $mission->title
 			));
 	    
-			$subject =  elgg_echo('missions:accepts_invitation', array($applicant->name), $manager->language);
-			$body = elgg_echo('missions:accepts_invitation_more', array($applicant->name), $manager->language) . $mission_link . '.';
-			$body .= "<br>" . elgg_echo('missions:finalize_offer', array(), $manager->language) . "<br>";
+			$subject =  elgg_echo('missions:accepts_invitation', array($applicant->name)/*, $manager->language*/);
+			$body = elgg_echo('missions:accepts_invitation_more', array($applicant->name)/*, $manager->language*/) . $mission_link . '.';
+			$body .= "<br>" . elgg_echo('missions:finalize_offer', array()/*, $manager->language*/) . "<br>";
 			$body .= elgg_view('output/url', array(
 			    	'href' => elgg_get_site_url() . 'missions/mission-offer/' . $mission->guid . '/' . $applicant->guid,
 			    	'text' => elgg_echo('missions:offer')

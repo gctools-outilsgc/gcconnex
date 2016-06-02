@@ -8,7 +8,7 @@
  */
  
 /*
- * Form which allows the user to generate a simple foreword for their application via longtext input.
+ * Form which allows the user to generate a simple foreword for their application via plaintext input.
  */
 $current_uri = $_SERVER['REQUEST_URI'];
 $exploded_uri = explode('/', $current_uri);
@@ -16,16 +16,14 @@ $current_guid = array_pop($exploded_uri);
 $mission = get_entity($current_guid);
 $_SESSION['mid_act'] = $current_guid;
 
-$email_body = get_input('eb');
-
-if (elgg_is_sticky_form('applicationfill')) {
+/*if (elgg_is_sticky_form('applicationfill')) {
     extract(elgg_get_sticky_values('applicationfill'));
     elgg_clear_sticky_form('applicationfill');
-}
+}*/
 
-$input_email_body = elgg_view('input/longtext', array(
-    'name' => 'email_body',
-    'value' => $email_body,
+$input_email_body = elgg_view('input/plaintext', array(
+    'name' => 'mission_email_body',
+    'value' => '',
     'id' => 'apply-mission-body-text-input'
 ));
 
@@ -50,22 +48,22 @@ $input_email = elgg_view('input/text', array(
 		<?php echo $input_email_body; ?>
 	</div>
 </div>
-<div class="form-group">
+<!-- <div class="form-group">
 	<div style="display:inline-block;">
-		<?php echo $input_manager_permission; ?>
+		<?php //echo $input_manager_permission; ?>
 	</div>
 	<div style="display:inline-block;"">
-		<?php echo elgg_echo('missions:manager_permission_disclaimer'); ?>
+		<?php //echo elgg_echo('missions:manager_permission_disclaimer'); ?>
 	</div>
-</div>
+</div> -->
 <div class="form-group" style="display:flex;align-items:center;">
 	<div style="display:inline-block;">
 		<?php echo $input_email_manager; ?>
 	</div>
-	<p style="font-style:normal;margin:0px 4px;">
+	<p style="display:inline-block;font-style:normal;margin:0px 4px;">
 		<?php echo elgg_echo('missions:email_manager_question'); ?>
 	</p>
-	<div>
+	<div style="display:inline-block;max-width:200px;">
 		<?php echo $input_email; ?>
 	</div>
 </div>

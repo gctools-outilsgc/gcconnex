@@ -59,6 +59,13 @@ if ($parent_guid) {
 	$task->parent_guid = $parent_guid;
 }
 
+// cyu - make this object either a minor edit or not
+if (elgg_is_active_plugin('cp_notifications')) {
+	//create_metadata($task->getGUID(), 'entity_minor_edit', get_input('chk_task_minor_edit'));
+	$minor_edit = get_input('chk_task_minor_edit');
+	$task->entity_minor_edit = $minor_edit;
+}
+
 if ($task->save()) { 
 
 	elgg_clear_sticky_form('task');

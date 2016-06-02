@@ -20,6 +20,10 @@ if(elgg_get_logged_in_user_entity()->opt_in_missions != 'gcconnex_profile:opt:ye
 	forward(elgg_get_site_url() . 'missions/main');
 }
 
+if($_SESSION['mission_creation_begin_timestamp'] == '') {
+	$_SESSION['mission_creation_begin_timestamp'] = time();
+}
+
 // Selects the last section of the current URI.
 $current_uri = $_SERVER['REQUEST_URI'];
 $exploded_uri = explode('/', $current_uri);
@@ -109,6 +113,7 @@ $content .= elgg_view('navigation/tabs', array(
 		'class' => 'elgg-menu elgg-menu-filter list-inline mrgn-lft-sm elgg-menu-filter-default mission-tab',
 		'tabs' => $navigation_tabs
 ));
+$content .= '<div>' . elgg_echo('missions:placeholder_d') . '</div>';
 $content .= $form_choice;
 
 echo elgg_view_page($title, $content);

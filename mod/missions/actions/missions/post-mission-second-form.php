@@ -11,6 +11,7 @@
  * This action evaluates the data from the form for errors and forwards the user to the next tab.
  */
 elgg_make_sticky_form('secondfill');
+$_SESSION['mission_duplicating_override_second'] = true;
 
 $err = '';
 $first_form = elgg_get_sticky_values('firstfill');

@@ -90,10 +90,14 @@ function missions_init()
     elgg_register_action("missions/endorse-user", elgg_get_plugins_path() . "missions/actions/missions/endorse-user.php");
     elgg_register_action("missions/post-mission-skill-match", elgg_get_plugins_path() . "missions/actions/missions/post-mission-skill-match.php");
     elgg_register_action("missions/pre-create-opportunity", elgg_get_plugins_path() . "missions/actions/missions/pre-create-opportunity.php");
+    elgg_register_action("missions/finalize-offer", elgg_get_plugins_path() . "missions/actions/missions/finalize-offer.php");
+    elgg_register_action("missions/message-user-form", elgg_get_plugins_path() . "missions/actions/missions/message-user-form.php");
+    elgg_register_action("missions/sort-missions-form", elgg_get_plugins_path() . "missions/actions/missions/sort-missions-form.php");
 
     // Register a new subtype of object for categorizing our mission object.
     elgg_register_entity_type('object', 'mission');
     elgg_register_entity_type('object', 'mission-feedback');
+    elgg_register_entity_type('object', 'mission-declination');
 
     // Register an ajax view for the advanced search page.
     elgg_register_ajax_view('missions/element-select');
@@ -344,6 +348,9 @@ function missions_main_page_handler($segments)
         /*case 'archive':
         	include elgg_get_plugins_path() . 'missions/pages/missions/archive.php';
         	break;*/
+        case 'mission-finalize':
+        	include elgg_get_plugins_path() . 'missions/pages/missions/mission-finalize.php';
+        	break;
     }
 }
 

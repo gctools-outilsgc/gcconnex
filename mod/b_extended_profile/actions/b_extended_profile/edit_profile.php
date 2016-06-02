@@ -104,7 +104,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
         case 'about-me':
             //$user->description = get_input('description', 'ERROR: Ask your admin to grep: 5FH13GAHHHS0001.');
 
-            error_log(print_r("access: " . get_input('access')));
+            //error_log(print_r("access: " . get_input('access')));
             create_metadata($user_guid, 'description', get_input('description', 'ERROR: Ask your admin to grep: 5FH13GAHHHS0001.'), 'text', 0, get_input('access'));
 
             $user->save();
@@ -412,19 +412,20 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
 			
 			$metadata = elgg_get_metadata(array(
                 'metadata_names' => array('english'),
-                'entity_guid' => elgg_get_logged_in_user_guid(),
+                'metadata_owner_guids' => array(elgg_get_logged_in_user_guid()),
 
             ));
             if ($metadata){
                 foreach ($metadata as $data){
-
+					
                     update_metadata($data->id, $data->name, $data->value, $data->value_type, $data->owner_guid, $access);
+                    //error_log('id '.$data->id .' name '. $data->name.' value '. $data->value.' value type '. $data->value_type.' owner_guid '.$data->owner_guid.' $access '. $access);
                 }
                 //$metadata[0]->save();
             }
             $metadata = elgg_get_metadata(array(
                 'metadata_names' => array('french'),
-                'entity_guid' => elgg_get_logged_in_user_guid(),
+                'metadata_owner_guids' => array(elgg_get_logged_in_user_guid()),
 
             ));
             if ($metadata){
@@ -436,7 +437,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             }
 			$metadata = elgg_get_metadata(array(
                 'metadata_names' => array('officialLanguage'),
-                'entity_guid' => elgg_get_logged_in_user_guid(),
+                'metadata_owner_guids' => array(elgg_get_logged_in_user_guid()),
 
             ));
             if ($metadata){

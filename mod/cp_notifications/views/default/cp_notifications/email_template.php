@@ -18,92 +18,86 @@ $msg_type = $vars['cp_msg_type'];
 
 $cp_notify_msg_footer = elgg_echo('cp_notify:footer2',array(),'fr') .'  '. elgg_echo('cp_notify:footer2',array(),'en');
 
-//All info for the event_calendar email
-$name =$vars['cp_topic_author'];
-$event = $vars['event'];
-$link = $vars['cp_event_invite_url'];
-$startdate = $vars['startdate'];
-$enddate = $vars['enddate'];
-$type_event =$vars['type_event'];
-$title = $event->title;
-$location =$event->venue;
-$room =$event->room;
-$teleconference = $event->teleconference;
-$additional = $event->calendar_additional;
-$fees = $event->fees;
-$organiser = $event->organiser;
-$contact = $event->contact;
-$long_description = $event->long_description;
-$description = $event->description;
-$language = $event->language;
-if ($type_event =='CANCEL'){
-	$informationEn .= '<h3 style ="font-family:sans-serif; color:#ff0000;">This event has been cancel!</h3>';
-	$informationFr .= '<h3 style ="font-family:sans-serif; color:#ff0000;">Cet événement à été annulé!</h3>';
-}else{
-	$informationEn .= '<h3 style ="font-family:sans-serif;">New event in your calendar</h3>';
-	$informationFr .= '<h3 style ="font-family:sans-serif;">Nouvel événement dans votre calendrier</h3>';
-}
-$informationEn .= '<h3 style ="font-family:sans-serif";>Infos</h3>';
-$informationFr .= '<h3 style ="font-family:sans-serif";>Infos</h3>';
 
-if($title){
-	$informationEn .= '<b>Title:</b> '.$title.'<br/>';
-	$informationFr .= '<b>Titre:</b> '.$title.'<br/>';
-}if($startdate){
-	$informationEn .= '<b>When:</b> '.$startdate.' - '.$enddate.'<br/>';
-	$informationFr .= '<b>Quand:</b> '.$startdate.' - '.$enddate.'<br/>';
-}if($location){
-	$informationEn .= '<b>Venue:</b> '.$location.'<br/>';
-	$informationFr .= '<b>Lieu:</b> '.$location.'<br/>';
-}if($room){
-	$informationEn .= '<b>Room:</b> '.$room.'<br/>';
-	$informationFr .= '<b>Salle:</b> '.$room.'<br/>';
-}if($contact){
-	$informationEn .= '<b>Contact:</b> '.$contact.'<br/>';
-	$informationFr .= '<b>Personne ressource:</b> '.$contact.'<br/>';
-}if($fees){
-	$informationEn .= '<b>Fees:</b> '.$fees.'<br/>';
-	$informationFr .= '<b>Prix:</b> '.$fees.'<br/>';
-}if($teleconference){
-	$informationEn .= '<b>Online meeting and teleconference:</b> '.$teleconference.'<br/>';
-	$informationFr .= '<b>Réunion en ligne et téléconférence:</b> '.$teleconference.'<br/>';
-}if($additional){
-	$informationEn .= '<b>Additional information:</b> '.$additional.'<br/>';
-	$informationFr .= '<b>Information additionelle:</b> '.$additional.'<br/>';
-}if($organiser){
-	$informationEn .= '<b>Organiser:</b> '.$organiser.'<br/>';
-	$informationFr .= '<b>Organisateur:</b> '.$organiser.'<br/>';
-}if($description){
-	$informationEn .= '<b>Description:</b> '.$description.'<br/>';
-	$informationFr .= '<b>Description:</b> '.$description.'<br/>';
-}if($language){
-	$informationEn .= '<b>Event language:</b> '.$language.'<br/>';
-	$informationFr .= '<b>Langue de l\'événement:</b> '.$language.'<br/>';
-}if($long_description){
-	$informationEn .= '<b>Long description:</b> '.$long_description.'<br/>';
-	$informationFr .= '<b>Longue description:</b> '.$long_description.'<br/>';
-}if($link){
-	$informationEn .= '<b>Add to my Outlook calendar:</b> <div><!--[if mso]>
-  <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="'.$link.'" style="height:40px;v-text-anchor:middle;width:125px;" arcsize="10%" strokecolor="#1e3650" fillcolor="#047177">
-    <w:anchorlock/>
-    <center style="color:#ffffff;font-family:sans-serif;font-size:13px;font-weight:bold;">Add to my Outlook calendar</center>
-  </v:roundrect><br/>';
-	$informationFr .= '<b>Ajouter à mon calendrier Outlook:</b> <div><!--[if mso]>
-  <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="'.$link.'" style="height:40px;v-text-anchor:middle;width:125px;" arcsize="10%" strokecolor="#1e3650" fillcolor="#047177">
-    <w:anchorlock/>
-    <center style="color:#ffffff;font-family:sans-serif;font-size:13px;font-weight:bold;">Ajouter à mon calendrier Outlook</center>
-  </v:roundrect>';
+
+// All info for the event_calendar email
+$event = $vars['event'];
+$name = $vars['cp_topic_author'];
+$event_infos = array(
+	'title' => $event->title,
+	'time_duration' => $vars['cp_event_time'],
+	'location' => $vars['location'],
+	'room' => $event->room,
+	'teleconference' => $event->teleconference,
+	'additional' => $event->calendar_additional,
+	'fees' => $event->fees,
+	'organizer' => $event->organizer,
+	'contact' => $event->contact,
+	'long_description' => $event->long_description,
+	'description' => $event->description,
+	'language' => $event->language,
+	'link' => $vars['cp_event_invite_url']
+);
+
+$description_info_en = '';
+$description_info_fr = '';
+
+if (strcmp($vars['type_event'],'CANCEL') == 0) {
+	$description_info_en .= '<h3 style ="font-family:sans-serif; color:#ff0000;">This event has been cancel!</h3>';
+	$description_info_fr .= '<h3 style ="font-family:sans-serif; color:#ff0000;">Cet événement à été annulé!</h3>';
+} else {
+	$description_info_en .= '<h3 style ="font-family:sans-serif;">New event in your calendar</h3>';
+	$description_info_fr .= '<h3 style ="font-family:sans-serif;">Nouvel événement dans votre calendrier</h3>';
 }
+
+//$description_info_en .= '<h3 style ="font-family:sans-serif";>Infos</h3>';
+//$description_info_fr .= '<h3 style ="font-family:sans-serif";>Infos</h3>';
+
+foreach ($event_infos as $info_key => $info_val) {
+	if ($info_val != '') {
+		$description_info_en .= elgg_echo("cp_notify:body_event:event_{$info_key}", array($info_val), 'en').'<br/>';
+		$description_info_fr .= elgg_echo("cp_notify:body_event:event_{$info_key}", array($info_val), 'fr').'<br/>';
+
+		// cyu - make option so that "add to outlook" can be disabled
+		// note: roundrect... snippets are html buttons for email
+		if (strcmp('link',$info_key) == 0) {
+			$description_info_en .= '<b>'.elgg_echo('cp_notify:body_event:event_add_to_outlook', array(), 'en').'</b>:'."
+				<v:roundrect xmlns:v='urn:schemas-microsoft-com:vml' xmlns:w='urn:schemas-microsoft-com:office:word' href='{$info_val}' style='height:40px;v-text-anchor:middle;width:125px;' arcsize='10%' strokecolor='#1e3650' fillcolor='#047177'>
+					<w:anchorlock/>
+					<center style='color:#ffffff; font-family:sans-serif;font-size:13px;font-weight:bold;'>".elgg_echo('cp_notify:body_event:event_add_to_outlook', array(), 'en')."</center>
+				</v:roundrect><br/>";
+
+			$description_info_fr .= '<b>'.elgg_echo('cp_notify:body_event:event_add_to_outlook', array(), 'fr').'</b> : '."
+				<v:roundrect xmlns:v='urn:schemas-microsoft-com:vml' xmlns:w='urn:schemas-microsoft-com:office:word' href='{$info_val}' style='height:40px;v-text-anchor:middle;width:125px;' arcsize='10%' strokecolor='#1e3650' fillcolor='#047177'>
+					<w:anchorlock/>
+					<center style='color:#ffffff; font-family:sans-serif;font-size:13px;font-weight:bold;'>".elgg_echo('cp_notify:body_event:event_add_to_outlook', array(), 'fr')."</center>
+				</v:roundrect><br/>";
+		}
+	}
+}
+
 
 
 switch ($msg_type) {
+
+	case 'cp_content_edit':
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_edit:title',array(),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_edit:title',array(),'fr');
+
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_edit:description',array(),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_edit:description',array(),'fr');
+
+		$cp_notify_msg_footer_en = elgg_echo('cp_notify:footer2',array(),'en');
+		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer2',array(),'fr');
+		break;
+
 
 	case 'cp_wire_mention':
 		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_wire_mention:title',array($vars['cp_mention_by']),'en');
 		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_wire_mention:title',array($vars['cp_mention_by']),'fr');
 
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_wire_mention:description',array($vars['cp_mention_by'],$vars['cp_view_mention']),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_wire_mention:description',array($vars['cp_mention_by'],$vars['cp_view_mention']),'fr');
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_wire_mention:description',array($vars['cp_mention_by'],$vars['cp_wire_mention_url']),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_wire_mention:description',array($vars['cp_mention_by'],$vars['cp_wire_mention_url']),'fr');
 
 		$cp_notify_msg_footer_en = elgg_echo('cp_notify:footer2',array(),'en');
 		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer2',array(),'fr');
@@ -165,11 +159,11 @@ switch ($msg_type) {
 
 
 	case 'cp_mention_type': // mentions
-		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_mention:title',array($cp_topic_author->name,$cp_topic_title),'en');
-		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_mention:title',array($cp_topic_author->name,$cp_topic_title),'fr');
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_mention:title',array($vars['cp_author'],$vars['cp_content']),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_mention:title',array($vars['cp_author'],$vars['cp_content']),'fr');
 
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_mention:description', array($cp_topic_description,$cp_topic_url),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_mention:description', array($cp_topic_description,$cp_topic_url),'fr');
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_mention:description', array($vars['cp_content_desc'],$vars['cp_link']),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_mention:description', array($vars['cp_content_desc'],$vars['cp_link']),'fr');
 
 		$cp_notify_msg_footer_en = elgg_echo('cp_notify:footer',array(elgg_get_site_url().'/settings/plugins/admin/cp_notifications'),'en');
 		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer',array(elgg_get_site_url().'/settings/plugins/admin/cp_notifications'),'fr');
@@ -208,8 +202,8 @@ switch ($msg_type) {
 		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_group_add:title',array($vars['cp_group']['name']),'en');
 		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_group_add:title',array($vars['cp_group']['name']),'fr');
 
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_group_add:description',array($vars['cp_group']['name'],$vars['cp_message']),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_group_add:description',array($vars['cp_group']['name'],$vars['cp_message']),'fr');
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_group_add:description',array($vars['cp_group']['name'],$vars['cp_group']->getURL()),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_group_add:description',array($vars['cp_group']['name'],$vars['cp_group']->getURL()),'fr');
 
 		$cp_notify_msg_footer_en = elgg_echo('cp_notify:footer2',array(),'en');
 		$cp_notify_msg_footer_en = elgg_echo('cp_notify:footer2',array(),'fr');
@@ -372,11 +366,12 @@ switch ($msg_type) {
 
 
 	case 'cp_event': //send event without ics
+
 		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_event:title',array($cp_topic_author->name,$cp_topic_title),'en');
 		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_event:title',array($cp_topic_author->name,$cp_topic_title),'fr');
 
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_event:description',array($cp_topic_description,$informationEn),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_event:description',array($cp_topic_description,$informationFr),'fr');
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_event:description',array($description_info_en),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_event:description',array($description_info_fr),'fr');
 
 		$cp_notify_msg_footer_en = elgg_echo('cp_notify:footer',array(elgg_get_site_url().'/settings/plugins/admin/cp_notifications'),'en');
 		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer',array(elgg_get_site_url().'/settings/plugins/admin/cp_notifications'),'fr');
@@ -386,8 +381,8 @@ switch ($msg_type) {
 		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_event_request:title',array($cp_topic_author->name,$title),'en');
 		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_event_request:title',array($cp_topic_author->name,$title),'fr');
 
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_event_request:description',array($name,$title,$link),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_event_request:description',array($name,$title,$link),'fr');
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_event_request:description',array($name,$title,$vars['cp_event_invite_url']),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_event_request:description',array($name,$title,$vars['cp_event_invite_url']),'fr');
 
 		$cp_notify_msg_footer_en = elgg_echo('cp_notify:footer',array(elgg_get_site_url().'/settings/plugins/admin/cp_notifications'),'en');
 		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer',array(elgg_get_site_url().'/settings/plugins/admin/cp_notifications'),'fr');

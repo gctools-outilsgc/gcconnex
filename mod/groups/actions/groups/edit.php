@@ -297,6 +297,14 @@ if ($must_move_icons) {
 	}
 }
 
+// cyu - 05/12/2016: modified to comform to the business requirements documentation
+// please note that, this action file is overwritten by group tools (if applicable)
+if (elgg_is_active_plugin('cp_notifications')) {
+	$user = elgg_get_logged_in_user_entity();
+	add_entity_relationship($user->getGUID(), 'cp_subscribed_to_email', $group->getGUID());
+	add_entity_relationship($user->getGUID(), 'cp_subscribed_to_site_mail', $group->getGUID());
+}
+
 system_message(elgg_echo("groups:saved"));
 
 forward($group->getUrl());

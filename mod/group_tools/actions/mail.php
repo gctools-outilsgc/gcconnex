@@ -27,7 +27,7 @@ if (!empty($group_guid) && !empty($body) && !empty($user_guids)) {
 				$message = array(
 					'cp_group' => $group,
 					'cp_group_subject' => $subject,
-					'cp_group_message' => get_input("description") . "<br/>" . elgg_echo("group_tools:mail:message:from") . ": " . $group->name . " [" . $group->getURL() . "]",
+					'cp_group_message' => get_input("description")."<br/> {$group->getURL()}",
 					'cp_group_mail_users' => $user_guids,
 					'cp_msg_type' => 'cp_group_mail',
 					);

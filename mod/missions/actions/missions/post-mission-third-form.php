@@ -15,6 +15,7 @@
 elgg_make_sticky_form('thirdfill');
 elgg_make_sticky_form('ldropfill');
 elgg_make_sticky_form('tdropfill');
+$_SESSION['mission_duplicating_override_third'] = true;
 
 $first_form = elgg_get_sticky_values('firstfill');
 $second_form = elgg_get_sticky_values('secondfill');
@@ -29,6 +30,10 @@ $err .= mm_third_post_error_check($third_form);
 
 // A specialized function for checking for errors in the time fields
 $err .= mm_validate_time_all($third_form);
+
+if($err == '') {
+	$err .= mm_third_post_special_error_check($third_form);
+}
 
 // Error reporting for bad user input
 if ($err != '') {
@@ -65,6 +70,9 @@ if ($err != '') {
     
     $mission->email = $first_form['email'];
     $mission->phone = $first_form['phone'];
+    
+    $accounts = get_user_by_email($first_form['email']);
+    $mission->account = array_pop($accounts)->guid;
     
     $mission->job_title = $second_form['job_title'];
     $mission->job_type = $second_form['job_type'];
@@ -142,12 +150,19 @@ if ($err != '') {
     $mission->sun_duration = $third_form['sun_duration'];
     
     $mission->state = 'posted';
+    $mission->version = elgg_get_plugin_setting('mission_version', 'missions');
+    
+    $mission->time_to_post = time() - $_SESSION['mission_creation_begin_timestamp'];
     
     // Sends the object and all its metadata to the database
     $mission->save();
     
+    $mission->meta_guid = $mission->guid;
+    
+    $mission->save();
+    
     // Creates a relationships between the user (manager) and the mission.
-    add_entity_relationship($mission->owner_guid, 'mission_posted', $mission->guid);
+    add_entity_relationship($mission->account, 'mission_posted', $mission->guid);
     
     // Add to the river so it can be seen on the main page.
     elgg_create_river_item(array(
@@ -159,20 +174,34 @@ if ($err != '') {
     //add_to_river('river/object/mission/create', 'create', $mission->owner_guid, $mission->getGUID());
     
     $_SESSION['mission_skill_match_array'] = $skill_array;
+    unset($_SESSION['mission_duplicating_override_first']);
+    unset($_SESSION['mission_duplicating_override_second']);
+    unset($_SESSION['mission_duplicating_override_third']);
     
-    if($third_form['hidden_java_state'] == 'noscript') {
-    	// Required action security tokens.
-    	$ts = time();
-    	$token = generate_action_token($ts);
-    	set_input('__elgg_ts', $ts);
-    	set_input('__elgg_token', $token);
-    	
-    	action('missions/post-mission-skill-match');
+    if(count($skill_array) == 0) {
+		elgg_clear_sticky_form('firstfill');
+		elgg_clear_sticky_form('secondfill');
+		elgg_clear_sticky_form('thirdfill');
+		elgg_clear_sticky_form('ldropfill');
+		elgg_clear_sticky_form('tdropfill');
+    	system_message(elgg_echo('missions:succesfully_posted', array($mission->job_title)));
+    	forward(elgg_get_site_url() . 'missions/main');
     }
     else {
-	    $_SESSION['mission_skill_match_is_interlude'] = true;
-	    system_message(elgg_echo('missions:saved_beginning_skill_match', array($key_skills)));
-	    forward(REFERER);
+	    if($third_form['hidden_java_state'] == 'noscript') {
+	    	// Required action security tokens.
+	    	$ts = time();
+	    	$token = generate_action_token($ts);
+	    	set_input('__elgg_ts', $ts);
+	    	set_input('__elgg_token', $token);
+	    	
+	    	action('missions/post-mission-skill-match');
+	    }
+	    else {
+		    $_SESSION['mission_skill_match_is_interlude'] = true;
+		    system_message(elgg_echo('missions:saved_beginning_skill_match', array($key_skills)));
+		    forward(REFERER);
+	    }
     }
     
     

@@ -38,6 +38,15 @@ if ($user && ($group instanceof ElggGroup)) {
 
 	if ($join) {
 		if (groups_join_group($group, $user)) {
+
+
+			// cyu - 05/12/2016: modified to comform to the business requirements documentation
+			if (elgg_is_active_plugin('cp_notifications')) {
+				$user = elgg_get_logged_in_user_entity();
+				add_entity_relationship($user->getGUID(), 'cp_subscribed_to_email', $group->getGUID());
+				add_entity_relationship($user->getGUID(), 'cp_subscribed_to_site_mail', $group->getGUID());
+			}
+
 			system_message(elgg_echo("groups:joined"));
 			forward($group->getURL());
 		} else {

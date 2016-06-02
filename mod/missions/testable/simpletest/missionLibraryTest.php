@@ -26,11 +26,11 @@ class MissionLibraryTest extends ElggCoreUnitTest {
 	private $session_language = null;
 
 	function setUp() {
-		$this->session_language = $_SESSION['language'];
+		$this->session_language = get_current_language();
     }
 
     function tearDown() {
-        $_SESSION['language'] = $this->session_language;
+        //$_SESSION['language'] = $this->session_language;
 		$this->session_language = null;
     }
 
@@ -258,6 +258,17 @@ class MissionLibraryTest extends ElggCoreUnitTest {
 		$this->assertIdentical($expected, $actual);
 	}
 
+	public function testFirstPostErrorCheck() {
+		$user = elgg_get_logged_in_user_entity();
+		$input_array = array(
+				'name' => $user->name,
+				'email' => $user->email,
+				'org-drop' => mo_get_tree_root()->guid,
+				'other_node' => '',
+				'phone' => '6139930617'
+		);
+		$this->assertFalse(mm_first_post_error_check($input_array));
+	}
 }
 
 

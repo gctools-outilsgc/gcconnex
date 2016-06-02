@@ -187,7 +187,7 @@ function mm_validate_time($day, $input_array)
  	}*/
  	
  	// Checks if the department is empty.
- 	if (!mo_get_last_input_node($input_array)) {
+ 	if (!mo_get_last_input_node($input_array) && !$input_array['department']) {
  		$err .= elgg_echo('missions:error:department_needs_input') . "\n";
  	}
  	
@@ -202,13 +202,13 @@ function mm_validate_time($day, $input_array)
 	 	else {
 	 		$returned_users = get_user_by_email($input_array['email']);
 		 	if(count($returned_users) == 0) {
-		 		$err .= elgg_echo('missions:error:email_not_on_gcconnex', array($input_array['email']));
+		 		$err .= elgg_echo('missions:error:email_not_on_gcconnex', array($input_array['email'])) . "\n";
 		 	}
 	 	}
  	}
  	
  	// Checks if the phone number is a valid phone number according to a function defined above.
- 	if (!mm_is_valid_phone_number($input_array['phone']) && ! empty($input_array['phone'])) {
+ 	if (!mm_is_valid_phone_number($input_array['phone']) && !empty($input_array['phone'])) {
  		$err .= elgg_echo('missions:error:phone_invalid') . "\n";
  	}
  	
@@ -238,13 +238,28 @@ function mm_validate_time($day, $input_array)
  	if (trim($input_array['start_date']) == '') {
  		$err .= elgg_echo('missions:error:start_date_needs_input') . "\n";
  	}
+ 	else {
+ 		if(!strtotime($input_array['start_date'])) {
+ 			$err .= elgg_echo('missions:error:start_date_not_date') . "\n";
+ 		}
+ 	}
  	
  	if (trim($input_array['completion_date']) == '') {
- 		$err .= elgg_echo('missions:error:end_date_needs_input') . "\n";
+ 		//$err .= elgg_echo('missions:error:end_date_needs_input') . "\n";
+ 	}
+ 	else {
+ 		if(!strtotime($input_array['completion_date'])) {
+ 			$err .= elgg_echo('missions:error:completion_date_not_date') . "\n";
+ 		}
  	}
  	
  	if (trim($input_array['deadline']) == '') {
  		$err .= elgg_echo('missions:error:deadline_needs_input') . "\n";
+ 	}
+ 	else {
+ 		if(!strtotime($input_array['deadline'])) {
+ 			$err .= elgg_echo('missions:error:deadline_not_date') . "\n";
+ 		}
  	}
  	
  	// Checks to see if the completion date comes before the end date.
@@ -252,12 +267,14 @@ function mm_validate_time($day, $input_array)
  	$date_end = strtotime($input_array['completion_date']);
  	$date_dead = strtotime($input_array['deadline']);
  	
- 	if ($date_end < $date_start) {
- 		$err .= elgg_echo('missions:error:start_after_end') . "\n";
- 	}
- 	
- 	if ($date_end < $date_dead) {
- 		$err .= elgg_echo('missions:error:deadline_after_end') . "\n";
+ 	if(trim($date_end) != '') {
+	 	if ($date_end < $date_start) {
+	 		$err .= elgg_echo('missions:error:start_after_end') . "\n";
+	 	}
+	 	
+	 	if ($date_end < $date_dead) {
+	 		$err .= elgg_echo('missions:error:deadline_after_end') . "\n";
+	 	}
  	}
  	
  	$description_limit = 2000;
@@ -296,6 +313,61 @@ function mm_validate_time($day, $input_array)
 		 		$err .= elgg_echo('missions:error:negative_time_commitment') . "\n";
 		 	}
 	 	}
+ 	}
+ 	
+ 	return $err;
+ }
+ 
+ /*
+  * 
+  */
+ function mm_check_days_for_start_or_duration($input) {
+ 	$input_type = '';
+ 	$days_values = array('mon_start','mon_duration','tue_start','tue_duration','wed_start','wed_duration',
+ 			'thu_start','thu_duration','fri_start','fri_duration','sat_start','sat_duration','sun_start','sun_duration');
+ 	
+ 	if(is_array($input)) {
+ 		$input_type = 'array';
+ 	}
+ 	
+ 	if(elgg_instanceof($input, 'object', 'mission')) {
+ 		$input_type = 'mission';
+ 	}
+ 	
+ 	if($input_type == '') {
+ 		return false;
+ 	}
+ 	else {
+	 	foreach($days_values as $day_value) {
+	 		if($input_type == 'array') {
+	 			if($input[$day_value] != '') {
+	 				return true;
+	 			}
+	 		}
+	 		else if($input_type == 'mission') {
+	 			if($input->$day_value != '') {
+	 				return true;
+	 			}
+	 		}
+	 	}
+ 	}
+ 	
+ 	return false;
+ }
+ 
+ /*
+  * 
+  */
+ function mm_third_post_special_error_check($input_array) {
+ 	$err = '';
+ 	$days = array('mon','tue','wed','thu','fri','sat','sun');
+ 	
+ 	$timezone_needed = mm_check_days_for_start_or_duration($input_array);
+ 	
+ 	if($timezone_needed) {
+ 		if(trim($input_array['timezone']) == '') {
+ 			$err .= elgg_echo('missions:error:timezone_needs_input') . "\n";
+ 		}
  	}
  	
  	return $err;

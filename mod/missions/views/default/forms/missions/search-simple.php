@@ -15,11 +15,13 @@ $limit = get_input('sl');
 
 $limit_options = array(9,18,30,60,120);
 $placeholder = elgg_echo('missions:mission_simple_search_placeholder');
+$button_text = elgg_echo('missions:search');
 
 if($_SESSION['mission_search_switch'] == 'candidate') {
-	$label = elgg_echo('missions:search_for_candidates');
+	$label = elgg_echo('missions:find_candidates');
 	$limit_options = array(10,25,50,100);
 	$placeholder = elgg_echo('missions:candidate_simple_search_placeholder');
+	$button_text = elgg_echo('missions:find');
 }
 
 if (elgg_is_sticky_form('searchsimplefill')) {
@@ -53,12 +55,12 @@ $hidden_input = elgg_view('input/hidden', array(
 	<div style="display:inline-block;vertical-align:middle;">
 		<?php echo $input_simple_text; ?> 
 	</div>
-	<label for="search-mission-limit-dropdown-input" style="display:inline-block;"><?php echo elgg_echo('missions:search_limit') . ': '; ?></label>
-	<div style="display:inline-block;"><?php echo $input_simple_limit; ?></div>
+	<!-- <label for="search-mission-limit-dropdown-input" style="display:inline-block;"><?php //echo elgg_echo('missions:search_limit') . ': '; ?></label>
+	<div style="display:inline-block;"><?php //echo $input_simple_limit; ?></div> -->
 	<div style="display:inline-block;vertical-align:middle;">
 		<?php 
 			echo elgg_view('input/submit', array(
-					'value' => elgg_echo('missions:search'),
+					'value' => $button_text,
 					'id' => 'mission-simple-search-form-submission-button'
 			));
 			echo elgg_view('page/elements/one-click-restrictor', array('restricted_element_id' => 'mission-simple-search-form-submission-button'));

@@ -14,6 +14,11 @@
 // Gets a sample of micro missions of size defined by mission_front_page_limit.
 $options['type'] = 'object';
 $options['subtype'] = 'mission';
+$options['metadata_name_value_pairs'] = array(array(
+		'name' => 'state',
+		'operand' => '=',
+		'value' => 'posted'
+));
 $options['limit'] = elgg_get_plugin_setting('mission_front_page_limit', 'missions');
 
 $entity_list = elgg_get_entities($options);
@@ -76,10 +81,11 @@ $advanced_field = elgg_view('page/elements/hidden-field', array(
 <div>
 	<?php 
 		echo elgg_view('output/url', array(
-				'href' => elgg_get_site_url() . 'action/missions/opt-from-main',
-				'text' => elgg_echo('missions:missioning'),
-				'is_action' => true,
+				'href' => elgg_get_site_url() . 'profile/' . elgg_get_logged_in_user_entity()->username . '#opt-in-anchor',
+				'text' => elgg_echo('missions:opt_in_to_opportunities'),
 				'class' => 'elgg-button btn btn-primary',
+				'is_action' => false,
+				'confirm' => elgg_echo('missions:opt_in_confirmation_text'),
 				'style' => 'float:right;',
 				'id' => 'mission-opt-in-button'
 		));

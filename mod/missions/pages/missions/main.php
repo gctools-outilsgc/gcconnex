@@ -55,6 +55,8 @@ else {
 			$highlight_one = true;
 	}
 	
+	$content .= '<div>' . elgg_echo('missions:placeholder_a') . '</div>';
+	
 	$content .= elgg_view('page/elements/mission-tabs', array(
 			'highlight_one' => $highlight_one,
 			'highlight_two' => $highlight_two,
@@ -75,6 +77,8 @@ else {
 	}
 	
 	$content .= $main_content;
+	
+	$content .= '<div>' . elgg_echo('missions:placeholder_b') . '</div>';
 	
 	if(elgg_get_plugin_setting('mission_developer_tools_on', 'missions') == 'YES') {
 		// Opt out button.

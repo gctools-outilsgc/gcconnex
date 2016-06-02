@@ -12,63 +12,39 @@ if (!empty($members)) {
 	}
 }
 
-$form_data = "<label>" . elgg_echo("group_tools:mail:form:recipients") . ": <span id='group_tools_mail_recipients'>" . count($friendpicker_value) . "</span></label>";//" . count($friendpicker_value) . "
+$form_data = "<label>" . elgg_echo("group_tools:mail:form:recipients") . ": <span id='group_tools_mail_recipients_count'>" . count($friendpicker_value) . "</span></label>";
 $form_data .= "<br />";
 $form_data .= elgg_view("output/url", array(
 	"text" => elgg_echo("group_tools:mail:form:members:selection"),
-	"href" => "#group_tools_mail_member_selection",
-    'id' => 'member_selection',
+	"href" => "#friends-picker1", // cyu - calling the wrong div, resulting in hiding the whole form
 	"rel" => "toggle"
 ));
 
-$form_data .= "<div id='group_tools_mail_member_selection' class='mrgn-tp-sm' style='display:none'>";
+$form_data .= "<div id='group_tools_mail_member_selection' >";
 $form_data .= elgg_view("input/friendspicker", array("entities" => $members, "value" => $friendpicker_value, "highlight" => "all", "name" => "user_guids"));
-$form_data .= "</div></div></div></div>";
+$form_data .= "</div>";
+$form_data .= "</div>";
 
-/*
-$form = "<div id='group_tools_mail_member_options' class='mrgn-tp-md mrgn-bttm-md'>";
-$form .= elgg_view("input/button", array("class" => "elgg-button-action mrs", "value" => elgg_echo("group_tools:clear_selection"), "onclick" => "elgg.group_tools.mail_clear_members();"));
-$form .= elgg_view("input/button", array("class" => "elgg-button-action mrs", "value" => elgg_echo("group_tools:all_members"), "onclick" => "elgg.group_tools.mail_all_members();"));
-$form .= "<br />";
-$form .= "</div>";
-*/
 
-$form .= "<div>";
-$form .= "<label for='subject'>" . elgg_echo("group_tools:mail:form:title") . "</label>";
-$form .= elgg_view("input/text", array("name" => "title", 'id' => 'subject', 'class' => 'mrgn-bttm-sm'));
-$form .= "</div>";
+$form_data .= "<div id='group_tools_mail_member_options'>";
+$form_data .= elgg_view("input/button", array("class" => "elgg-button-action mrs", "value" => elgg_echo("group_tools:clear_selection"), "onclick" => "elgg.group_tools.mail_clear_members();"));
+$form_data .= elgg_view("input/button", array("class" => "elgg-button-action mrs", "value" => elgg_echo("group_tools:all_members"), "onclick" => "elgg.group_tools.mail_all_members();"));
+$form_data .= "<br />";
+$form_data .= "</div>";
 
-$form .= "<div>";
-$form .= "<label>" . elgg_echo("group_tools:mail:form:description") . "</label>";
-$form .= elgg_view("input/longtext", array("name" => "description"));
-$form .= "</div>";
+$form_data .= "<div>";
+$form_data .= "<label>" . elgg_echo("group_tools:mail:form:title") . "</label>";
+$form_data .= elgg_view("input/text", array("name" => "title"));
+$form_data .= "</div>";
 
-$form .= "<div class='elgg-foot'>";
-$form .= elgg_view("input/hidden", array("name" => "group_guid", "value" => $group->getGUID()));
-$form .= elgg_view("input/submit", array("value" => elgg_echo("send"), 'class' => 'mrgn-tp-md btn btn-primary'));
-$form .= "</div>";
+$form_data .= "<div>";
+$form_data .= "<label>" . elgg_echo("group_tools:mail:form:description") . "</label>";
+$form_data .= elgg_view("input/longtext", array("name" => "description"));
+$form_data .= "</div>";
+
+$form_data .= "<div class='elgg-foot'>";
+$form_data .= elgg_view("input/hidden", array("name" => "group_guid", "value" => $group->getGUID()));
+$form_data .= elgg_view("input/submit", array("value" => elgg_echo("send")));
+$form_data .= "</div>";
 
 echo $form_data;
-echo elgg_format_element('section',['class' => ''], $form);
-
-?>
-
-<script>
-
-    var customCheck = false;
-
-
-    
-
-        $('input[type="submit"]').on('click', function () {
-            $('.friendpickerTable input[type="checkbox"]').remove();
-        });
-
-
-        $('.friendpickerTable input[type="checkbox"]').change(function () {
-
-            
-
-        });
-
-</script>

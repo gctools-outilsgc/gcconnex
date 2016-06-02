@@ -12,7 +12,7 @@
  */
 $applicant = get_user(get_input('aid'));
 $mission = get_entity(get_input('mid'));
-$manager = get_user($mission->owner_guid);
+//$manager = get_user($mission->owner_guid);
 
 $err = '';
 
@@ -36,15 +36,15 @@ else {
 		else {
 			remove_entity_relationship($mission->guid, 'mission_applied', $applicant->guid);
 		
-			add_entity_relationship($mission->guid, 'mission_accepted', $applicant->guid);
+			add_entity_relationship($mission->guid, 'mission_offered', $applicant->guid);
 			 
-			$mission_link = elgg_view('output/url', array(
-					'href' => $mission->getURL(),
-					'text' => $mission->title
+			$finalize_link = elgg_view('output/url', array(
+					'href' => elgg_get_site_url() . 'missions/mission-finalize/' . $mission->guid . '/' . $applicant->guid,
+					'text' => elgg_echo('missions:accept')
 			));
 			 
-			$subject = $applicant->name . ' ' . elgg_echo('missions:participating_in', array($mission->job_title), $applicant->language);
-			$body = $applicant->name . '. ' . elgg_echo('missions:participating_in_more', array(), $applicant->language) . $mission_link . '.';
+			$subject = elgg_echo('missions:offers_you_a_spot', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))), $applicant->language);
+			$body = elgg_echo('missions:offers_you_a_spot_more', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))), $applicant->language) . $finalize_link . '.';
 			mm_notify_user($applicant->guid, $mission->guid, $subject, $body);
 		}
 	}
@@ -52,8 +52,9 @@ else {
 
 if ($err != '') {
 	register_error($err);
+	forward(REFERER);
 }
-
-system_message(elgg_echo('missions:offered_user_position', array($applicant->name, $mission->job_title)));
-
-forward($mission->getURL());
+else {
+	system_message(elgg_echo('missions:offered_user_position', array($applicant->name, $mission->job_title)));
+	forward($mission->getURL());
+}

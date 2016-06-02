@@ -15,7 +15,6 @@ $given_value = $vars['given_value']; // The guid of the initial dropdown value.
 $disabled = $vars['is_disabled']; // Boolean which determines if the dropdown starts off disabled.
 
 // Gets all the names of the children of the targeted node in order to populate the dropdown.
-$node_children[0] = '';
 if($target_guid) {
 	unset($options);
 	$options['relationship'] = 'org-related';
@@ -30,8 +29,13 @@ if($target_guid) {
 		}
 	}
 }
-
-$node_children[1] = elgg_echo('missions_organization:other_cap');
+if(!empty($node_children)) {
+	asort($node_children);
+	$node_children = array(0 => '') + $node_children + array(1 => elgg_echo('missions_organization:other_cap'));
+}
+else {
+	$node_children = array(0 => '') + array(1 => elgg_echo('missions_organization:other_cap'));
+}
 
 // Only creates a dropdown if the dropdown options are not empty.
 if(!empty($node_children) && $node_children != array(0 => '', 1 => elgg_echo('missions_organization:other_cap'))) {
@@ -39,7 +43,7 @@ if(!empty($node_children) && $node_children != array(0 => '', 1 => elgg_echo('mi
 	$numerator = $_SESSION['organization_dropdown_input_count'] + 1;
 	$_SESSION['organization_dropdown_input_count'] = $numerator;
 	
-	echo '<div id="org-dropdown-container-' . $_SESSION['organization_dropdown_input_count'] . '">';
+	echo '<div name="org-dropdown-container" id="org-dropdown-container-' . $_SESSION['organization_dropdown_input_count'] . '">';
 	echo elgg_view('input/dropdown', array(
 			'name' => 'org-drop-' . $numerator,
 			'value' => $given_value,

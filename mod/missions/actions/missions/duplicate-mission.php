@@ -10,6 +10,17 @@
 /*
  * Action which saves the mission in session for duplication in the post an opportunity forms.
  */
+
+elgg_clear_sticky_form('firstfill');
+elgg_clear_sticky_form('secondfill');
+elgg_clear_sticky_form('thirdfill');
+elgg_clear_sticky_form('ldropfill');
+elgg_clear_sticky_form('tdropfill');
+unset($_SESSION['mission_duplicating_override_first']);
+unset($_SESSION['mission_duplicating_override_second']);
+unset($_SESSION['mission_duplicating_override_third']);
+unset($_SESSION['mission_creation_begin_timestamp']);
+
 $_SESSION['mission_duplication_id'] = get_input('mid');
 $mission = get_entity($_SESSION['mission_duplication_id']);
 

@@ -16,5 +16,9 @@ return array(
 		'gcconnex_profile:opt:no' => 'No',
 		'gcconnex_profile:completed_missions' => 'Completed Micro-Missions',
 		'gcconnex_profile:opt:skill_sharing' => 'Skill Sharing',
-		'gcconnex_profile:opt:job_sharing' => 'Job Sharing'
+		'gcconnex_profile:opt:job_sharing' => 'Job Sharing',
+		'gcconnex_profile:opportunities' => 'Opportunities',
+		"gcconnex_profile:hide" => "Hide",
+		"gcconnex_profile:confirm:hide" => "Hiding this Micro-Mission means that it will no longer appear under Opportunities in your profile and this operation cannot be reversed.",
+		"gcconnex_profile:show" => "Show"
 );

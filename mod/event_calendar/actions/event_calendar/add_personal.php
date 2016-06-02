@@ -14,20 +14,21 @@ if (elgg_instanceof($event, 'object', 'event_calendar')) {
 			$date = explode("-", $time);
 			$startdate = $date[0]; 
 			$enddate = $date[1]; 
+			
+			
 			if (elgg_is_active_plugin('cp_notifications')) {
-			$message = array(
-				'cp_event_receiver' => $email_users,
-				'cp_event_invite_url' => elgg_add_action_tokens_to_url("action/event_calendar/add_ics?guid={$event->guid}"),
-				'startdate' => $startdate,
-				//'cp_topic_title' => 'New event to you calendar',
-				'enddate' => $enddate,
-				'event' => $event,
-				'type_event' => 'REQUEST',
-				'cp_msg_type' => 'cp_event',
-						);
-			$result = elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
+				$message = array(
+					'cp_event_send_to_user' => elgg_get_logged_in_user_entity(),
+					'cp_event_invite_url' => elgg_add_action_tokens_to_url("action/event_calendar/add_ics?guid={$event->guid}"),
+					'cp_event_time' => "{$startdate} - {$enddate}",
+					'cp_event' => $event,
+					'type_event' => 'REQUEST',
+					'cp_msg_type' => 'cp_event',
+					'is_minor_edit' => 0	// cyu - this will always send out a notification
+				);
+				$result = elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
+			}
 
-		}
 			system_message(elgg_echo('event_calendar:add_to_my_calendar_response'));
 
 		} else {

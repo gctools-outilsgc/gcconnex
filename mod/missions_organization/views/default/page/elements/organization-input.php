@@ -129,7 +129,7 @@ $numerator = $_SESSION['organization_dropdown_input_count'];
 </div>
 
 <script>
-	function more_org() {
+	/*function more_org() {
 		// Gets all dropdown elements and how many there are.
 		var children = document.getElementById('org-dropdown-set').children;
 		var children_length = children.length;
@@ -165,9 +165,9 @@ $numerator = $_SESSION['organization_dropdown_input_count'];
 				less_button.style.display = 'block';
 			}
 		}
-	}
+	}*/
 
-	function less_org() {
+	/*function less_org() {
 		// Gets all dropdown elements and how many there are.
 		var children = document.getElementById('org-dropdown-set').children;
 		var children_length = children.length;
@@ -192,7 +192,7 @@ $numerator = $_SESSION['organization_dropdown_input_count'];
 			// Error message when the user tries to remove the last input.
 			elgg.system_message(elgg.echo('missions_organization:cannot_remove_last_input'));
 		}	
-	}
+	}*/
 
 	function dynamicDrop(caller) {
 		// The other input starts out hidden and disabled.
@@ -220,6 +220,11 @@ $numerator = $_SESSION['organization_dropdown_input_count'];
 		while(x) {
 			var last_container = document.getElementById(temp_array[temp_array.length - count]);
 			var last_element = last_container.getElementsByTagName('select');
+
+			if(count > 10) {
+				break;
+			}	
+			
 			if(last_element[0].id == caller.id) {
 				x = false;
 			}

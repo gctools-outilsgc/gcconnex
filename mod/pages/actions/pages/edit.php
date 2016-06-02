@@ -30,21 +30,25 @@ if (!$input['title']) {
 	forward(REFERER);
 }
 
-if ($page_guid) {
+if ($page_guid) { // edit page
 	$page = get_entity($page_guid);
 	if (!pages_is_page($page) || !$page->canEdit()) {
 		register_error(elgg_echo('pages:cantedit'));
 		forward(REFERER);
 	}
 	$new_page = false;
-} else {
+	$page->entity_minor_edit = get_input('minor_edit');
+
+} else { // new page, guid has not been set/created
 	$page = new ElggObject();
 	if ($parent_guid) {
 		$page->subtype = 'page';
 	} else {
 		$page->subtype = 'page_top';
 	}
+
 	$new_page = true;
+	$page->entity_minor_edit = 1; // cyu - because this is a new page, we have no "minor edit" option
 }
 
 if (sizeof($input) > 0) {

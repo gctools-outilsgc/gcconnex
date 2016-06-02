@@ -120,10 +120,19 @@ function gcforums_topic_content($topic_guid, $group_guid) {
 	$topic_content = '';
 
 	$user = elgg_get_logged_in_user_entity();
-	if (check_entity_relationship($user->guid, 'subscribed', $topic->guid))
-		$subscribe_text = 'Unsubscribe';
-	else
-		$subscribe_text = 'Subscribe';
+	
+	// cyu - using different notification system (if applicable)
+	if (elgg_is_active_plugin('cp_notifications')) {
+		if (check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $topic->guid) || check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $topic->guid))
+			$subscribe_text = elgg_echo('gcforums:unsubscribe');
+		else
+			$subscribe_text = elgg_echo('gcforums:subscribe');;
+	} else {
+		if (check_entity_relationship($user->guid, 'subscribed', $topic->guid))
+			$subscribe_text = elgg_echo(elgg_echo('gcforums:unsubscribe'));
+		else
+			$subscribe_text = elgg_echo(elgg_echo('gcforums:subscribe'));
+	}
 
 	elgg_view('output/url', array('is_action' => TRUE));
 	elgg_view('input/securitytoken');
@@ -209,8 +218,10 @@ function gcforums_topic_content($topic_guid, $group_guid) {
 }
 
 function get_total_posts($container_guid) {
+	$dbprefix = elgg_get_config('dbprefix');
+	
 	$query = "SELECT r.guid_one, r.relationship, r.guid_two, e.subtype, es.subtype
-			FROM elggentity_relationships r, elggentities e, elggentity_subtypes es
+			FROM {$dbprefix}entity_relationships r, {$dbprefix}entities e, {$dbprefix}entity_subtypes es
 			WHERE r.guid_one = e.guid AND e.subtype = es.id AND r.guid_two = {$container_guid} AND es.subtype = 'hjforumpost'";
 	$num_post = 0;
 	$posts = get_data($query);
@@ -222,8 +233,9 @@ function get_total_posts($container_guid) {
 }
 
 function get_total_topics($container_guid) {
+	$dbprefix = elgg_get_config('dbprefix');
 	$query = "SELECT r.guid_one, r.relationship, r.guid_two, e.subtype, es.subtype
-			FROM elggentity_relationships r, elggentities e, elggentity_subtypes es
+			FROM {$dbprefix}entity_relationships r, {$dbprefix}entities e, {$dbprefix}entity_subtypes es
 			WHERE r.guid_one = e.guid AND e.subtype = es.id AND r.guid_two = {$container_guid} AND es.subtype = 'hjforumtopic'";
 	$num_topic = 0;
 	$topics = get_data($query);
@@ -235,8 +247,9 @@ function get_total_topics($container_guid) {
 }
 
 function get_recent_post($container_guid) {//also grabbed display name - Nick
+	$dbprefix = elgg_get_config('dbprefix');
 	$query = "SELECT r.guid_one, r.relationship, r.guid_two, e.subtype, es.subtype, max(e.time_created) AS time_created, ue.email, ue.username, ue.name
-			FROM elggentity_relationships r, elggentities e, elggentity_subtypes es, elggusers_entity ue
+			FROM {$dbprefix}entity_relationships r, {$dbprefix}entities e, {$dbprefix}entity_subtypes es, {$dbprefix}users_entity ue
 			WHERE r.guid_one = e.guid AND e.subtype = es.id AND r.guid_two = {$container_guid} AND es.subtype = 'hjforumtopic' AND ue.guid = e.owner_guid";
 	$post = get_data($query);
 
@@ -369,10 +382,19 @@ function gcforums_topics_list($forum_guid, $group_guid, $is_sticky) {
 						$last_post_info = elgg_echo('gcforums:no_posts');
 
 					//$user = elgg_get_logged_in_user_entity();
-					if (check_entity_relationship($user->guid, 'subscribed', $topic->guid))
-						$subscribe_text = 'Unsubscribe';
-					else
-						$subscribe_text = 'Subscribe';
+					
+					// cyu - using different notification system (if applicable)
+					if (elgg_is_active_plugin('cp_notifications')) {
+						if (check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $topic->guid) || check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $topic->guid))
+							$subscribe_text = elgg_echo('gcforums:unsubscribe');
+						else
+							$subscribe_text = elgg_echo('gcforums:subscribe');;
+					} else {
+						if (check_entity_relationship($user->guid, 'subscribed', $topic->guid))
+							$subscribe_text = elgg_echo('gcforums:unsubscribe');
+						else
+							$subscribe_text = elgg_echo('gcforums:subscribe');
+					}
 
 					elgg_view('output/url', array('is_action' => TRUE));
 					elgg_view('input/securitytoken');
@@ -522,10 +544,21 @@ function gcforums_forums_edit_options($object_guid,$group_guid) {
 
 	// subscription functionality... users will get notified if any action occurs		
 	$user = elgg_get_logged_in_user_entity();
-	if (check_entity_relationship($user->guid, 'subscribed', $object_guid))
-		$subscribe_text = "Unsubscribe";
-	else
-		$subscribe_text = "Subscribe";
+
+		// cyu - using different notification system (if applicable)
+	if (elgg_is_active_plugin('cp_notifications')) {
+		if (check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $object_guid) || check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $object_guid))
+			$subscribe_text = elgg_echo('gcforums:unsubscribe');
+		else
+			$subscribe_text = elgg_echo('gcforums:subscribe');
+
+	} else {
+		
+		if (check_entity_relationship($user->guid, 'subscribed', $object_guid))
+			$subscribe_text = elgg_echo('gcforums:unsubscribe');
+		else
+			$subscribe_text = elgg_echo('gcforums:subscribe');
+	}
 
 	elgg_view('output/url', array('is_action' => TRUE));
 	elgg_view('input/securitytoken');

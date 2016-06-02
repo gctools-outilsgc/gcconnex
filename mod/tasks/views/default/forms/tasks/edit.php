@@ -38,6 +38,9 @@
 			
 			$container_id = $vars['entity']->getContainerGUID();
 			$container = get_entity($container_id);
+
+			// cyu
+			$new_entity = false;
 			
 		} else {
 			
@@ -66,6 +69,8 @@
 			//$container_id = $vars['container_guid'];
 			$container_id = get_input('container_guid');
 			$container = get_entity($container_id);
+
+			$new_entity = true;
 			
 		}
 		$current_user= elgg_get_logged_in_user_entity();
@@ -246,6 +251,29 @@ if ($vars['parent_guid']) {
 		'name' => 'parent_guid',
 		'value' => $vars['parent_guid'],
 	));
+}
+
+if (elgg_is_active_plugin('cp_notifications') && !$new_entity) {
+	// cyu - implement "minor edit" as per business requirements document
+	echo '<div>';
+	echo "<h2>Is this a Minor Edit (Do not send out emails)</h2>";
+	echo elgg_view('input/checkboxes', array(
+			'name' => 'chk_task_minor_edit',
+			'id' => 'chk_task_minor_edit',
+			'value' => $vars['entity']->entity_minor_edit,
+			'options' => array(
+					'task_minor_edit' => 1),
+		));
+
+	/* cyu - see note:
+	 * upon new entity creation, it invokes two functions (event and hook) in the start.php of this plugin
+	 * we need to make sure that we invoke sending notifcations only once, mark the second function as
+	 * minor edit by default
+	 */
+	if ($new_entity)
+		$vars['entity']->entity_minor_edit = true;
+	
+	echo '</div>';
 }
 
 echo elgg_view('input/submit', array('value' => elgg_echo('save')));

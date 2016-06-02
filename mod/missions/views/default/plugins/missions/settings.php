@@ -36,6 +36,11 @@ if (empty($mission_developer_tools_on)) {
     $mission_developer_tools_on = 'YES';
 }
 
+$mission_analytics_on = $vars['entity']->mission_analytics_on;
+if (empty($mission_analytics_on)) {
+	$mission_analytics_on = 'NO';
+}
+
 $mission_front_page_limit = $vars['entity']->mission_front_page_limit;
 if (empty($mission_front_page_limit)) {
 	$mission_developer_tools_on = 3;
@@ -73,6 +78,17 @@ elgg_set_plugin_setting('duration_string', $duration_string, 'missions');*/
     			'value' => $mission_developer_tools_on
 		));
 	?>
+</div>
+<div>
+	<?php echo elgg_echo('missions:settings:analytics_on'); ?>
+	<?php
+		echo elgg_view('input/dropdown', array(
+    			'name' => 'params[mission_analytics_on]',
+    			'options' => array('YES','NO'),
+    			'value' => $mission_analytics_on
+		));
+	?>
+</div>
 <div>
 	<?php echo elgg_echo('missions:settings:search_limit'); ?>
 	<?php

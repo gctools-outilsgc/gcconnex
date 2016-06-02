@@ -14,7 +14,7 @@ $email = get_input('fe');
 $phone = get_input('fp');
 $disclaimer = get_input('fd');
 
-if (elgg_is_sticky_form('firstfill')) {
+if(elgg_is_sticky_form('firstfill')) {
 	$temp_form = elgg_get_sticky_values('firstfill');
 	$extracted_org = mo_get_last_input_node($temp_form);
     extract($temp_form);
@@ -31,6 +31,11 @@ $user = get_entity(elgg_get_logged_in_user_guid());
 if(!$name) {
 	$name = $user->name;
 }
+if(!$extracted_org) {
+	$exploded_department = explode('/', $user->department);
+	$department_name = trim($exploded_department[0]);
+	$extracted_org = mo_format_input_node(mo_get_department_next_to_root($department_name));
+}
 if(!$email) {
 	$email = $user->email;
 }
@@ -39,7 +44,7 @@ if(!$phone) {
 }
 
 $duplicating_entity = get_entity($_SESSION['mission_duplication_id']);
-if(get_subtype_from_id($duplicating_entity->subtype) == 'mission') {
+if(get_subtype_from_id($duplicating_entity->subtype) == 'mission' && !$_SESSION['mission_duplicating_override_first']) {
 	//$name = $duplicating_entity->name;
 	$extracted_org = $duplicating_entity->department;
 	//$email = $duplicating_entity->email;
@@ -74,26 +79,40 @@ $input_disclaimer = elgg_view('input/checkbox', array(
 ));
 ?>
 
+
 <h4><?php echo elgg_echo('missions:first_post_form_title'); ?></h4></br>
 <div class="form-group">
-	<label for='post-mission-name-text-input' class="col-sm-3" style="text-align:right;">
-		<?php echo elgg_echo('missions:your_name') . '*:';?>
+	<label for='post-mission-name-text-input' class="col-sm-3 required" style="text-align:right;" aria-required="true">
+		<?php echo elgg_echo('missions:your_name');?>
+		<strong class="required" aria-required="true">
+			<?php echo elgg_echo('missions:required'); ?>
+		</strong>
+		:
 	</label>
 	<div class="col-sm-3">
 		<?php echo $input_name; ?>
 	</div>
 </div>
 <div class="form-group">
-	<label for='post-mission-department-text-input' class="col-sm-3" style="text-align:right;">
-		<?php echo elgg_echo('missions:your_department') . '*:';?>
+	<label for='post-mission-department-text-input' class="col-sm-3 required" style="text-align:right;" aria-required="true">
+		<?php echo elgg_echo('missions:your_department');?>
+		<strong class="required" aria-required="true">
+			<?php echo elgg_echo('missions:required'); ?>
+		</strong>
+		:
 	</label>
 	<div class="col-sm-3">
 		<?php echo $input_department; ?>
+		<div><?php echo elgg_echo('missions:placeholder_d2'); ?></div>
 	</div>
 </div>
 <div class="form-group">
-	<label for='post-mission-email-text-input' class="col-sm-3" style="text-align:right;">
-		<?php echo elgg_echo('missions:your_email') . '*:';?>
+	<label for='post-mission-email-text-input' class="col-sm-3 required" style="text-align:right;" aria-required="true">
+		<?php echo elgg_echo('missions:your_email');?>
+		<strong class="required" aria-required="true">
+			<?php echo elgg_echo('missions:required'); ?>
+		</strong>
+		:
 	</label>
 	<div class="col-sm-3">
 		<?php echo $input_email; ?>
@@ -106,7 +125,7 @@ $input_disclaimer = elgg_view('input/checkbox', array(
 	<div class="col-sm-3">
 		<?php echo $input_phone; ?>
 		<p style="font-style:italic;">
-			<?php echo elgg_echo('missions:post_contact_disclaimer')?>
+			<?php //echo elgg_echo('missions:post_contact_disclaimer')?>
 		</p>
 	</div>
 </div>
@@ -114,7 +133,7 @@ $input_disclaimer = elgg_view('input/checkbox', array(
 	<label for='post-mission-phone-text-input' class="col-sm-1" style="text-align:right;">
 		<?php echo $input_disclaimer;?>
 	</label>
-	<div class="col-sm-11">
+	<div class="col-sm-8">
 		<?php echo elgg_echo('missions:post_disclaimer'); ?>
 	</div>
 </div>

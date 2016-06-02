@@ -61,11 +61,11 @@ if ($err != '') {
     switch($_SESSION['mission_search_switch']) {
         case 'candidate':
             // Function for candidate searching.
-            $returned = mm_adv_search_candidate_database($array, 'AND', $advanced_form['limit']);
+            $returned = mm_adv_search_candidate_database($array, 'AND', elgg_get_plugin_setting('search_limit', 'missions'));
             break;
         default:
             // Function for mission searching.
-            $returned = mm_search_database($array, 'AND', $advanced_form['limit']);
+            $returned = mm_search_database($array, 'AND', elgg_get_plugin_setting('search_limit', 'missions'));
     }
     
     /*

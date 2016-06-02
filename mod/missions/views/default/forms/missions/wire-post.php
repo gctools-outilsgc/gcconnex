@@ -20,7 +20,7 @@ if($char_limit > 140) {
 
 $input_message = elgg_view('input/plaintext', array(
 		'name' => 'wire_message',
-		'value' => elgg_echo('missions:check_this_mission', array(elgg_get_excerpt($entity->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions')), $entity->getURL())),
+		'value' => elgg_echo('missions:check_this_mission', array(elgg_get_excerpt($entity->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions')/2), $entity->getURL())),
 		'id' => 'mission-message-share-wire-message-text-input',
 		'class' => 'mtm thewire-textarea form-control elgg-input-plaintext',
 		'data-max-length' => $char_limit,

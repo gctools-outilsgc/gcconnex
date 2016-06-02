@@ -270,45 +270,6 @@ if ($formtarget) {
                 </div>
             </div>
 
-            <div class="clearfix"></div>
-	<div class="friendspicker-savebuttons">
-		<input type="submit" class="mrgn-lft-sm mrgn-bttm-sm btn btn-primary" value="<?php echo elgg_echo('save'); ?>" />
-		<input type="button" class="mrgn-bttm-sm btn btn-default" value="<?php echo elgg_echo('cancel'); ?>" onclick="$('a.collectionmembers<?php echo $friendspicker; ?>').click();" />
-	<br /></div>
-	</form>
-
-        
-
-<?php
-
-}
-
-?>
-
-</div>
-</div>
-
-<?php
-} else {
-	echo $vars['replacement'];
-}
-if (!$callback) {
-
-?>
-
-<?php
-
-}
-
-if (!isset($vars['replacement'])) {
-?>
-<?php //@todo JS 1.8: no ?>
-
-
-<?php
-
-}?>
-
     <div id="storedArea" class="hidden">
         <?php echo $checkedValues;?>
             <script>
@@ -364,3 +325,41 @@ if (!isset($vars['replacement'])) {
             </script>
 
         </div>
+            <div class="clearfix"></div>
+	<div class="friendspicker-savebuttons">
+		<input type="submit" class="mrgn-lft-sm mrgn-bttm-sm btn btn-primary" value="<?php echo elgg_echo('save'); ?>" />
+		<input type="button" class="mrgn-bttm-sm btn btn-default" value="<?php echo elgg_echo('cancel'); ?>" onclick="$('a.collectionmembers<?php echo $friendspicker; ?>').click();" />
+	<br /></div>
+	</form>
+
+        
+
+<?php
+
+}
+
+?>
+
+</div>
+</div>
+
+<?php
+} else {
+	echo $vars['replacement'];
+}
+if (!$callback) {
+
+?>
+
+<?php
+
+}
+
+if (!isset($vars['replacement'])) {
+?>
+<?php //@todo JS 1.8: no ?>
+
+
+<?php
+
+}?>

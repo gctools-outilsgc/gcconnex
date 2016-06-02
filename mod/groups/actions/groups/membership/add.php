@@ -49,6 +49,14 @@ if (sizeof($user_guid)) {
 						// Send welcome notification to user
 						notify_user($user->getGUID(), $group->owner_guid, $subject, $body, $params);
 					}
+
+					// cyu - 05/12/2016: modified to comform to the business requirements documentation
+					// please note that this file is overwritten by group_tools and wet4 plugin (if applicable)
+					if (elgg_is_active_plugin('cp_notifications')) {
+						add_entity_relationship($user->getGUID(), 'cp_subscribed_to_email', $group->getGUID());
+						add_entity_relationship($user->getGUID(), 'cp_subscribed_to_site_mail', $group->getGUID());
+					}
+
 					system_message(elgg_echo('groups:addedtogroup'));
 				}
 				else {

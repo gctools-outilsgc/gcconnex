@@ -23,6 +23,10 @@ $err .= mm_second_post_error_check($edit_form);
 $err .= mm_third_post_error_check($edit_form);
 $err .= mm_validate_time_all($edit_form);
 
+if($err == '') {
+	$err .= mm_third_post_special_error_check($edit_form);
+}
+
 if ($err != '') {
     register_error($err);
     forward(REFERER);
@@ -119,6 +123,9 @@ if ($err != '') {
     $mission->sat_duration = $edit_form['sat_duration'];
     $mission->sun_start = $edit_form['sun_start'];
     $mission->sun_duration = $edit_form['sun_duration'];
+    
+    $mission->meta_guid = $mission->guid;
+    $mission->version = elgg_get_plugin_setting('mission_version', 'missions');
     
     $mission->save();
     

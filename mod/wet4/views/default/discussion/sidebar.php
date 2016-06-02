@@ -28,6 +28,7 @@ $options = array(
 );
 $content = elgg_list_entities($options);
 
-echo elgg_view_module('aside','TEST', $content);
-
+// cyu - why is this labeled as TEST?
+//echo elgg_view_module('aside','TEST', $content);
+echo elgg_view_module('aside',elgg_echo('gprofile:discussion'), $content);
 ?>

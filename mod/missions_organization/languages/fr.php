@@ -50,5 +50,13 @@ return array(
 		'missions_organization:extreme_danger_warning' => 'Cette opération est extrêmement dangereux. Cette opération rendra toutes les données de la mission stocké obsolète parce que tous les GUID sont supprimés.',
 		'missions_organization:drill_down' => 'Forer vers le bas',
 		'missions_organization:other' => 'Autre',
-		'missions_organization:other_cap' => 'AUTRE'
+		'missions_organization:other_cap' => 'AUTRE',
+		"missions_organization:diagnostic_suite:no_tree_root" => "L'arborescence de l'organisation n'a pas de racine.",
+		"missions_organization:diagnostic_suite:no_nodes_in_db" => "Il n'y a pas de noeuds d'organisation dans la base de données.",
+		"missions_organization:diagnostic_suite:node_has_more_than_one_parent" => "Le noeud %s avec GUID %s a plus d'un parent. %s",
+		"missions_organization:diagnostic_suite:node_has_no_parent" => "Le noeud %s avec GUID %s n'a pas de parents.",
+		"missions_organization:diagnostic_suite:node_cannot_reach_root" => "Le noeud %s avec GUID %s ne peut pas atteindre la racine de l'arbre.",
+		"missions_organization:diagnostic_suite:orphans" => "Orphelins: %s",
+		"missions_organization:diagnostic_suite:severed" => "Noeuds coupé: %s",
+		"missions_organization:settings:delete_tree" => "Afficher le bouton tout effacer? AVERTISSEMENT: Ce bouton, lorsqu'il est pressé, supprime toute l'arborescence de l'organisation et doit seulement être utilisé sur les serveurs de test." 
 );

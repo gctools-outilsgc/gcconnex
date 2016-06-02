@@ -57,6 +57,10 @@ else {
         case '':
             break;
         
+        /*case 'missions:user_department':
+        	
+        	break;*/
+            
         case elgg_echo('missions:opt_in'):
         	$content .= elgg_view('input/dropdown', array(
         			'name' => $dropdown_name . '_element',

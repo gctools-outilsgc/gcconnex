@@ -78,8 +78,19 @@ access_show_hidden_entities($access_status);
 _elgg_services()->events = $original_events;
 _elgg_services()->hooks = $original_hooks;
 
-// Give some feedback for the UI
-echo json_encode(array(
-	'numSuccess' => $success_count,
-	'numErrors' => $error_count,
-));
+if (!$user_guids) {
+	// no users left to process
+	echo json_encode(array(
+		'numSuccess' => $success_count,
+		'numErrors' => $error_count,
+		'processComplete' => true,
+	));
+}
+else{
+	// Give some feedback for the UI
+	echo json_encode(array(
+		'numSuccess' => $success_count,
+		'numErrors' => $error_count,
+		'processComplete' => false,
+	));
+}

@@ -9,13 +9,26 @@
 
 $mission_guid = $vars['mission_guid'];
 $mission_guid_id = 'mission-on-page-' . $mission_guid;
+
+$mission_version = get_entity($mission_guid)->version;
+$mission_version_id = 'mission-on-page-' . $mission_guid . '-version';
 ?>
 
-<div class="col-sm-12" style="margin:16px;">
-	<label for="<?php echo $mission_guid_id?>" style="display:inline-block;">
-		<?php echo elgg_echo('missions:mission_guid') . ': '; ?>
-	</label>
-	<div name="mission-on-page-guid" id="<?php echo $mission_guid_id; ?>" style="display:inline-block;">
-		<?php echo $mission_guid; ?>
+<div class="col-sm-12" style="margin-top:16px;font-size:10px;">
+	<div>
+		<label for="<?php echo $mission_guid_id?>" style="display:inline-block;">
+			<?php echo elgg_echo('missions:mission_guid') . ': '; ?>
+		</label>
+		<div name="mission-on-page-guid" id="<?php echo $mission_guid_id; ?>" style="display:inline-block;">
+			<?php echo $mission_guid; ?>
+		</div>
+	</div>
+	<div>
+		<label for="<?php echo $mission_version_id?>" style="display:inline-block;">
+			<?php echo elgg_echo('missions:mission_version') . ': '; ?>
+		</label>
+		<div name="mission-on-page-version" id="<?php echo $mission_version_id; ?>" style="display:inline-block;">
+			<?php echo $mission_version; ?>
+		</div>
 	</div>
 </div>

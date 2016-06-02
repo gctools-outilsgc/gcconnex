@@ -31,7 +31,7 @@ foreach ($variables as $name => $type) {
 	}
 
 ?>
-<div class="mrgn-bttm-md">
+<div class="form-group">
 	<label for="<?php echo $name; ?>"><?php echo elgg_echo("pages:$name") ?></label>
 	<?php
 		if ($type != 'longtext') {
@@ -71,6 +71,31 @@ if (!empty($cats)) {
 	echo $cats;
 }
 
+if (elgg_is_active_plugin('cp_notifications') && !$vars['new_entity']) {
+	// cyu - implement "minor edit" as per business requirements document
+	// this view is used by both creating new page and edit new page
+
+	echo "<h2>". elgg_echo("page:minor_edit")."</h2>";
+    echo '<div class="checkbox">';
+    echo elgg_view('input/checkbox', array(
+			'name' => 'chk_page_minor_edit',
+            'label'=>elgg_echo('page:minor_edit_label'),
+			'id' => 'chk_page_minor_edit',
+			'value' => $entity->entity_minor_edit,
+			'options' => array(
+					elgg_echo('cp_notify:minor_edit') => 1),
+		));
+
+	/* cyu - see note:
+	 * upon new entity creation, it invokes two functions (event and hook) in the start.php of this plugin
+	 * we need to make sure that we invoke sending notifcations only once, mark the second function as
+	 * minor edit by default
+	 */
+	if ($vars['new_entity'])
+		$entity->entity_minor_edit = true;
+
+	echo '</div>';
+}
 
 echo '<div class="elgg-foot">';
 if ($vars['guid']) {
@@ -89,6 +114,9 @@ if (!$vars['guid']) {
 		'value' => $vars['parent_guid'],
 	));
 }
+
+
+
 
 if($vars['guid']){
     echo elgg_view('input/submit', array('value' => elgg_echo('save'), 'class' => 'btn btn-primary'));

@@ -14,14 +14,33 @@ $mission_guid = get_input('mission_guid');
 $mission = get_entity($mission_guid);
 $from_admin = get_input('MISSION_ADMIN_ACTION_FLAG');
 
-$mission->state = 'cancelled';
-$mission->save;
+$relationship_count = elgg_get_entities_from_relationship(array(
+		'relationship' => 'mission_accepted',
+		'relationship_guid' => $mission->guid,
+		'count' => true
+));
+$relationship_count += elgg_get_entities_from_relationship(array(
+		'relationship' => 'mission_offered',
+		'relationship_guid' => $mission->guid,
+		'count' => true
+));
 
-system_message(elgg_echo('missions:has_been_cancelled', array($mission->job_title)));
-
-// If the admin tool is calling the action then the user is returned to the admin tool page.
-if($from_admin) {
+if($relationship_count > 0) {
+	register_error(elgg_echo('missions:cannot_cancel_mission_with_participants'));
 	forward(REFERER);
 }
-
-forward(elgg_get_site_url() . 'missions/main');
+else {
+	$mission->state = 'cancelled';
+	$mission->time_to_cancel = time() - $mission->time_created;
+	$mission->time_closed = time();
+	$mission->save;
+	
+	system_message(elgg_echo('missions:has_been_cancelled', array($mission->job_title)));
+	
+	// If the admin tool is calling the action then the user is returned to the admin tool page.
+	if($from_admin) {
+		forward(REFERER);
+	}
+	
+	forward(elgg_get_site_url() . 'missions/main');
+}

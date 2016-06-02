@@ -4,6 +4,7 @@
 
 $object = get_entity($vars['forum_guid']);
 $vars['entity'] = $object;
+$db_prefix = elgg_get_config('dbprefix');
 
 // category | topic
 if ($object->getSubtype() !== 'hjforumpost') {
@@ -77,7 +78,7 @@ if ($object->getSubtype() === 'hjforum') {
 		));
 
 	$query = "SELECT guid_two
-				FROM elggentity_relationships
+				FROM {$db_prefix}entity_relationships
 				WHERE guid_one = {$vars['forum_guid']} AND relationship = 'filed_in'";
 	$shelved_in = get_data($query);
 	
@@ -89,7 +90,7 @@ if ($object->getSubtype() === 'hjforum') {
 		
 		if ($vars['forum_guid'] && $vars['forum_guid'] != 0) { // this is within the nested forums
 			$query = "SELECT  oe.guid, oe.title
-					FROM elggentities e, elggentity_relationships r, elggobjects_entity oe, elggentity_subtypes es
+					FROM {$db_prefix}entities e, {$db_prefix}entity_relationships r, {$db_prefix}objects_entity oe, {$db_prefix}entity_subtypes es
 					WHERE e.subtype = es.id AND es.subtype = 'hjforumcategory' AND e.guid = r.guid_one AND e.container_guid = {$object->getContainerGUID()} AND e.guid = oe.guid";
 		}
 

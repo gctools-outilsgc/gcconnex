@@ -14,7 +14,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
 
 	$metadata = elgg_get_metadata(array(
                 'metadata_names' => array('english'),
-                'entity_guid' => elgg_get_logged_in_user_guid(),
+                'metadata_owner_guids' => array(elgg_get_logged_in_user_guid()),
 
     ));
 	

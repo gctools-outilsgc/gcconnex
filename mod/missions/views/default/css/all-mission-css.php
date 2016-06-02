@@ -103,7 +103,7 @@
 .mission-less {
 	display: inline-block;
 	border-style: solid; 
-	width: 340px;
+	width: 350px;
 }
 
 .mission-printer h5 { 

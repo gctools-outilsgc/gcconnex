@@ -24,6 +24,7 @@
 	$user = get_user($user_guid);
 	
 	// Division which will surround the table.
+	echo '<a name="opt-in-anchor"></a>';
 	echo '<div class="gcconnex-profile-opt-in-display" style="padding:20px 20px 10px 0px;">';
 		
 	if($user->canEdit() && false) {

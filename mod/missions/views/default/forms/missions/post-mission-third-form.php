@@ -30,9 +30,9 @@ if (elgg_is_sticky_form('thirdfill')) {
     $key_skills = substr($key_skills, 0, -2);
 }
 
-if(!$timezone) {
-	$timezone = 'Canada/Eastern (-5)';
-}
+/*if(!$timezone) {
+	$timezone = 'missions:timezone:five';
+}*/
 
 // Determines whether the remote work checkbox is checked or not.
 if($remotely == 'on') {
@@ -42,8 +42,12 @@ else {
 	$remotely = false;
 }
 
+if($location == '') {
+	$location = 'missions:ontario';
+}
+
 $duplicating_entity = get_entity($_SESSION['mission_duplication_id']);
-if(get_subtype_from_id($duplicating_entity->subtype) == 'mission') {
+if(get_subtype_from_id($duplicating_entity->subtype) == 'mission' && !$_SESSION['mission_duplicating_override_third']) {
 	$key_skills = $duplicating_entity->key_skills;
 	$time_commitment = $duplicating_entity->time_commitment;
 	$time_interval = $duplicating_entity->time_interval;
@@ -82,7 +86,7 @@ $input_security = elgg_view('input/dropdown', array(
 $input_timezone = elgg_view('input/dropdown', array(
 	    'name' => 'timezone',
 	    'value' => $timezone,
-	    'options' => explode(',', elgg_get_plugin_setting('timezone_string', 'missions')),
+	    'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('timezone_string', 'missions')),
 	    'id' => 'post-mission-timezone-dropdown-input'
 ));
 $input_time_commit = elgg_view('input/text', array(
@@ -154,11 +158,16 @@ if($skill_match_override) {
 		<div>
 			<?php echo $add_skill_button; ?>
 		</div>
+		<div><?php echo elgg_echo('missions:placeholder_f'); ?></div>
 	</div>
 </div>
 <div class="form-group">
-	<label for='post-mission-time-commitment-text-input' class="col-sm-3" style="text-align:right;">
-		<?php echo elgg_echo('missions:time_commitment_in_hours') . '*:';?>
+	<label for='post-mission-time-commitment-text-input' class="col-sm-3 required" style="text-align:right;" aria-required="true">
+		<?php echo elgg_echo('missions:time_in_hours');?>
+		<strong class="required" aria-required="true">
+			<?php echo elgg_echo('missions:required'); ?>
+		</strong>
+		:
 	</label>
 	<div class="col-sm-1">
 		<?php echo $input_time_commit; ?>
@@ -180,7 +189,7 @@ if($skill_match_override) {
 </div>
 <div class="form-group">
 	<label for='post-mission-location-text-input' class="col-sm-3" style="text-align:right;">
-		<?php echo elgg_echo('missions:location') . '*:';?>
+		<?php echo elgg_echo('missions:location') . ':';?>
 	</label>
 	<div class="col-sm-3">
 		<?php echo $input_location; ?>
