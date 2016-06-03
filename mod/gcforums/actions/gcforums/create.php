@@ -32,7 +32,7 @@ switch ($gcf_subtype) {
 		add_entity_relationship($new_category_guid, 'descendant', $gcf_container);
 
 		forward($gcf_forward_url);
-			$forward_url = elgg_get_site_url()."gcforums/group/{$gcf_group}/{$gcf_container}";
+		$forward_url = elgg_get_site_url()."gcforums/group/{$gcf_group}/{$gcf_container}";
 		forward($forward_url);
 
 		break;
@@ -49,7 +49,7 @@ switch ($gcf_subtype) {
 		$gcf_enable_category = get_input('gcf_allow_categories');
 		$gcf_enable_posting = get_input('gcf_allow_posting');
 
-		$gcf_file_in_category = get_input('gcf_file_in_category');	
+		$gcf_file_in_category = get_input('gcf_file_in_category');
 
 		$gcf_new_forum = new ElggObject();
 		$gcf_new_forum->container_guid = $gcf_container;
@@ -97,7 +97,7 @@ switch ($gcf_subtype) {
 		$gcf_new_topic->subtype = trim('hjforumtopic');
 		$gcf_new_topic->access_id = $gcf_access;
 		$gcf_new_topic->container_guid = $gcf_container;
-	
+
 		$the_guid = $gcf_new_topic->save();
 
 		elgg_set_ignore_access($old_access);
@@ -108,9 +108,9 @@ switch ($gcf_subtype) {
 			system_message(elgg_echo("Entity entitled '{$gcf_new_topic->title}' has been created successfully"));
 
 			add_entity_relationship($new_guid, 'descendant', $gcf_container);
-		
+
 			$forward_url = elgg_get_site_url()."gcforums/group/{$gcf_group}/{$new_guid}/hjforumtopic";
-			
+
 			gcforums_notify_subscribed_users($gcf_new_topic, $forward_url);
 			create_hjforumtopic_relationships($new_guid, $new_guid);
 
@@ -121,7 +121,7 @@ switch ($gcf_subtype) {
 			}
 
 			forward($forward_url);
-		} else 
+		} else
 			system_message(elgg_echo("Entity entitled '{$gcf_new_topic->title}' has not been created successfully"));
 
 		break;
@@ -152,7 +152,7 @@ switch ($gcf_subtype) {
 
 		if ($new_guid = $gcf_new_post->save())
 			system_message(elgg_echo("Entity entitled '{$gcf_new_post->title}' has been created successfully"));
-	
+
 		elgg_set_ignore_access($old_access);
 
 		create_hjforumtopic_relationships($new_guid, $new_guid);
@@ -172,14 +172,20 @@ function gcforums_notify_subscribed_users($hjobject, $hjlink) {
 	$hjobject_subtype = $hjobject->subtype;
 	if ($hjobject->getSubtype() === 'hjforumpost')
 		$hjobject_guid = $hjobject->getContainerGUID();
-	else 
+	else
 		$hjobject_guid = $hjobject->guid;
 
 	$notification_object_guid = $hjobject->getContainerGUID();
-	
+
+	if (elgg_is_active_plugin('cp_notifications')) {
+		$relationship_string = 'cp_subscribed_to_email';
+	} else {
+		$relationship_string = 'subscribed';
+	}
+
 	$options = array(
 		'type' => 'user',
-		'relationship' => 'subscribed',
+		'relationship' => $relationship_string,
 		'relationship_guid' => $notification_object_guid,
 		'inverse_relationship' => true,
 		'limit' => 0
@@ -208,7 +214,9 @@ function gcforums_notify_subscribed_users($hjobject, $hjlink) {
 
 	// if cp notification plugin is active, use that for notifications
 	if (elgg_is_active_plugin('cp_notifications')) {
+
 		if (trim($hjobject->getSubtype()) === 'hjforumtopic') { // topic made
+
 			$message = array(
 				'cp_topic_author' => $hjobject->getOwnerEntity()->name,
 				'cp_topic_description' => $hjobject->description,
@@ -227,6 +235,7 @@ function gcforums_notify_subscribed_users($hjobject, $hjlink) {
 				'cp_msg_type' => 'cp_hjpost',
 			);
 		}
+
 		$result = elgg_trigger_plugin_hook('cp_overwrite_notification','all',$message);
 	} else
 		notify_user($subscribers, $from, $subject, $message);

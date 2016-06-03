@@ -75,7 +75,7 @@ if (elgg_is_active_plugin('cp_notifications') && !$vars['new_entity']) {
 	// cyu - implement "minor edit" as per business requirements document
 	// this view is used by both creating new page and edit new page
 
-	echo "<h2>". elgg_echo("page:minor_edit")."</h2>";
+	echo "<h2>".elgg_echo('cp_notify:minor_edit_header')."</h2>";
     echo '<div class="checkbox">';
     echo elgg_view('input/checkbox', array(
 			'name' => 'chk_page_minor_edit',

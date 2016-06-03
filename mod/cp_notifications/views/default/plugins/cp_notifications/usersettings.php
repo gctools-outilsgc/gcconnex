@@ -157,17 +157,17 @@ $group_page = get_input('gs', 0);
 $content .= '<div class="col-sm-12 group-notification-options"><h3 class="well">'.elgg_echo('cp_notify:groupNotif').'</h3>';
 
 // cyu - implement a subscribe to all group and their content (TODO: perhaps build a time cooldown for this)
-$url = elgg_add_action_tokens_to_url(elgg_get_site_url()."action/cp_notifications/user_autosubscription");
+$url_sub = elgg_add_action_tokens_to_url(elgg_get_site_url()."action/cp_notifications/user_autosubscription?sub=sub");
+$url_unsub = elgg_add_action_tokens_to_url(elgg_get_site_url()."action/cp_notifications/user_autosubscription?sub=unsub");
 
-if (!$user->run_sub_group) {
-	$content .= "<div style='padding-bottom:50px;'>";
-	$content .= "<div style='border:1px solid black; padding: 2px 2px 2px 10px;'> <center><a href='{$url}'> ".elgg_echo('cp_notify:subscribe_all_label')." </a></center> </div>";
-	$content .= "</div>";
-} else {
-	$content .= "<div style='padding-bottom:50px;'>";
-	$content .= "<div style='border:1px solid black; padding: 2px 2px 2px 10px;'> <center><a href='{$url}'> ".elgg_echo('cp_notify:unsubscribe_all_label')." </a></center> </div>";
-	$content .= "</div>";
-}
+$content .= "<div style='padding-bottom:50px;'>";
+$content .= "<div style='border:1px solid black; padding: 2px 2px 2px 10px;'> <center><a href='{$url_sub}'> ".elgg_echo('cp_notify:subscribe_all_label',array($url_sub,$url_unsub))." </a></center> </div>";
+$content .= "</div>";
+
+//$content .= "<div style='padding-bottom:50px;'>";
+//$content .= "<div style='border:1px solid black; padding: 2px 2px 2px 10px;'> <center><a href='{$url_unsub}'> ".elgg_echo('cp_notify:unsubscribe_all_label')." </a></center> </div>";
+//$content .= "</div>";
+
 
 // This checkbox  is if you want to recieve emails about group notifications. it needs to toggle all the email check boxes
 $chk_all_email = elgg_view('input/checkbox', array(
@@ -372,7 +372,7 @@ $current_user = elgg_get_logged_in_user_entity();
 // build a base query (so we can use it to count all the results, and display all the items)
 // cyu - patched issue with personal subscription that contains group content
 $content_arr = array('blog','bookmark','event_calendar','file','hjforumtopic','hjforum','photo','album','task','page','page_top','task_top','idea','thewire');
-$query_base = " FROM {$dbprefix}entity_subtypes es, {$dbprefix}entities e, {$dbprefix}entity_relationships r, {$dbprefix}objects_entity o WHERE e.container_guid  NOT IN (SELECT guid FROM {$dbprefix}groups_entity) AND e.subtype = es.id AND o.description <> '' AND o.guid = e.guid AND o.guid = r.guid_two AND r.guid_one = {$current_user->getGUID()} AND ( r.relationship = 'cp_subscribed_to_email' OR r.relationship = 'cp_subscribed_to_site_mail' ) AND ( es.subtype = 'poll' ";
+$query_base = " FROM {$dbprefix}entity_subtypes es, {$dbprefix}entities e, {$dbprefix}entity_relationships r, {$dbprefix}objects_entity o WHERE e.container_guid  NOT IN (SELECT guid FROM {$dbprefix}groups_entity) AND e.subtype = es.id AND o.description <> '' AND o.guid = e.guid AND o.guid = r.guid_two AND r.guid_one = {$current_user->getGUID()} AND r.relationship = 'cp_subscribed_to_email' AND ( es.subtype = 'poll' ";
 foreach ($content_arr as $content_element)
 	$query_base .= " OR es.subtype = '{$content_element}'";
 $query_base .= " ) ";
@@ -388,7 +388,7 @@ $query_select = "SELECT e.guid, e.subtype as entity_subtype, es.subtype, o.title
 $query_select .= " ORDER BY e.subtype ASC LIMIT {$personal_limit} OFFSET {$personal_offset}";
 $subbed_contents = get_data($query_select);
 
-//$content .= "{$query_select}";
+$content .= "{$query_select}";
 
 // query that will count all the subscribed items
 $query_count = "SELECT count(e.guid) AS num_content {$query_base}";
@@ -405,19 +405,21 @@ foreach ($subbed_contents as $subbed_content) {
 	$content_title = $subbed_content->title;
 	if (!$content_title) $content_title = elgg_echo('cp_notify:wirepost_generic_title');
 
+
+	// cyu - clean up the html tags from the description
 	$content_desc = trim($subbed_content->description);
-	if (strlen($subbed_content->description) >= 40)
-		$content_desc = substr($subbed_content->description, 0, 45).'...';
 
 	$content_desc = str_replace('\r\n', '', $content_desc);
 	$content_desc = str_replace('\n', '', $content_desc);
 	$content_desc = str_replace('\r', '', $content_desc);
-	$content_desc = str_replace('<p>', '', $content_desc);
-	$content_desc = str_replace('</p>', '', $content_desc);
-	$content_desc = str_replace('<em>', '', $content_desc);
-	$content_desc = str_replace('</em>', '', $content_desc);
-	$content_desc = str_replace('<i>', '', $content_desc);
-	$content_desc = str_replace('</i>', '', $content_desc);
+	
+	$content_desc = preg_replace('/[\s]+/','',$content_desc);
+	$content_desc = preg_replace("/<[a-zA-Z ]+>|<\/[a-zA-Z]+>/",'',$content_desc);
+
+	$content_desc = strip_tags($content_desc);
+
+	if (strlen($content_desc) >= 40)
+		$content_desc = substr($content_desc, 0, 45).'...';
 
 	$cpn_unsub_btn = elgg_view('input/button', array(
 		'src'=> '#', // put the unsub action to the object here
@@ -432,7 +434,6 @@ foreach ($subbed_contents as $subbed_content) {
 
 	if (strcmp($subbed_content->subtype,'hjforum') == 0) {
 		$group_id = get_forum_in_group($subbed_content->guid, $subbed_content->guid);
-		//$content .= "GUID for forums... {$group_id}";
 		$url = "{$site->getURL()}gcforums/group/{$group_id}/{$subbed_content->guid}";
 	} else if (strcmp($subbed_content->subtype,'hjforumtopic') == 0)
 		$url = "{$site->getURL()}gcforums/group/{$group_id}/{$subbed_content->guid}/{$subbed_content->subtype}";

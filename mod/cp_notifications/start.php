@@ -440,9 +440,9 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 
 	$site = elgg_get_site_entity();
-	error_log(">>>>>>>> yeah overwrite hook: {$cp_msg_type}");
+	//error_log(">>>>>>>> yeah overwrite hook: {$cp_msg_type}");
 	foreach ($to_recipients as $to_recipient) {
-		error_log(">>>>>>>>>> >>>>> Add to send? {$add_to_sent} /// Email only? {$email_only}");
+		//error_log(">>>>>>>>>> >>>>> Add to send? {$add_to_sent} /// Email only? {$email_only}");
 		$send_email = true;
 		$send_site_mail = true;
 
@@ -721,7 +721,7 @@ function cp_create_notification($event, $type, $object) {
 				$cp_mentioned_users = cp_scan_mentions($object);
 
 			$container_entity = get_entity($object->getContainerGUID());	// get topic that the comment resides in
-			error_log("guid: {$container_entity->getGUID()}");
+			//error_log("guid: {$container_entity->getGUID()}");
 			// Users subscribed to recieve notifications by email
 			$options = array(
 				'relationship' => 'cp_subscribed_to_email',
@@ -734,7 +734,7 @@ function cp_create_notification($event, $type, $object) {
 			$users = elgg_get_entities_from_relationship($options);
 			
 			foreach ($users as $user) {
-				error_log("user: {$user->email} / {$user->username} / has access? ".has_access_to_entity($container_entity,$user));
+				//error_log("user: {$user->email} / {$user->username} / has access? ".has_access_to_entity($container_entity,$user));
 				if (has_access_to_entity($container_entity,$user))	// cyu - check if user has access to this entity (bc can be private or group only)
 					$to_recipients_email[$user->guid] = $user;
 			}
@@ -771,7 +771,7 @@ function cp_create_notification($event, $type, $object) {
 			);
 
 
-			error_log("auto subscribe!!!!");
+			//error_log("auto subscribe!!!!");
 			// the user creating the content is automatically subscribed to it
 			add_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $container_entity->getGUID());
 			add_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $container_entity->getGUID());
@@ -789,7 +789,7 @@ function cp_create_notification($event, $type, $object) {
 			$cp_whitelist = array('blog','file','thewire','album','image','bookmarks','poll','task_top','task','task','page','page_top','hjforum','hjforumtopic','groupforumtopic','event_calendar','idea');
 			// the user creating the content is automatically subscribed to it
 			if (in_array($object->getSubtype(),$cp_whitelist)) {
-				error_log("auto subscribe!!!! {$object->getSubtype()}");
+				//error_log("auto subscribe!!!! {$object->getSubtype()}");
 				add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_email', $object->getGUID());
 				add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_site_mail', $object->getGUID());
 			}
@@ -844,7 +844,7 @@ function cp_create_notification($event, $type, $object) {
 		
 			foreach ($user_subscribers as $user) {
 				if (has_access_to_entity($object,$user)) {
-					error_log("{$user->username} has access to {$object->getGUID()}");
+					//error_log("{$user->username} has access to {$object->getGUID()}");
 					$to_recipients_email[$user->guid] = $user;
 				}
 			}
@@ -910,7 +910,7 @@ function cp_create_notification($event, $type, $object) {
 	$template = elgg_view('cp_notifications/email_template', $message); // pass in the information into the template to prepare the notification
 
 
-	error_log(">>>>>>>>> cp notification create --- subtype: {$object->getSubtype()}");
+	//error_log(">>>>>>>>> cp notification create --- subtype: {$object->getSubtype()}");
 
 	// send out emails
 	foreach ($to_recipients_email as $to_recipient) { 

@@ -5,10 +5,10 @@ gatekeeper();
 $current_user = elgg_get_logged_in_user_entity();
 $dbprefix = elgg_get_config('dbprefix');
 
-$query = "
-SELECT g.guid AS grp_id
-FROM  {$dbprefix}entity_relationships r, {$dbprefix}groups_entity g
-WHERE r.guid_one = {$current_user->getGUID()} AND r.relationship = 'member' AND g.guid = r.guid_two";
+$subscription = get_input('sub');
+
+
+$query = "SELECT g.guid AS grp_id FROM  {$dbprefix}entity_relationships r, {$dbprefix}groups_entity g WHERE r.guid_one = {$current_user->getGUID()} AND r.relationship = 'member' AND g.guid = r.guid_two";
 
 $groups = get_data($query);
 $group_content_arr = array('blog','bookmark','groupforumtopic','event_calendar','file','hjforumtopic',/*'hjforum',*/'photo','album','task','page','page_top','task_top','idea');
@@ -17,7 +17,7 @@ $group_content_arr = array('blog','bookmark','groupforumtopic','event_calendar',
 
 foreach ($groups as $group) {
 
-	if (!$current_user->run_sub_group) {
+	if (strcmp($subscription,'sub') == 0) {
 		// subscribe to the group if not already
 		add_entity_relationship($current_user->guid, 'cp_subscribed_to_email', $group->grp_id);
 		add_entity_relationship($current_user->guid, 'cp_subscribed_to_site_mail', $group->grp_id);
@@ -35,7 +35,7 @@ foreach ($groups as $group) {
 
 	// subscribe to group content if not already
 	foreach ($group_contents as $group_content) {
-		if (!$current_user->run_sub_group) {
+		if (strcmp($subscription,'sub') == 0) {
 			add_entity_relationship($current_user->guid, 'cp_subscribed_to_email', $group_content->content_id);
 			add_entity_relationship($current_user->guid, 'cp_subscribed_to_site_mail', $group_content->content_id);
 		} else {
@@ -44,11 +44,6 @@ foreach ($groups as $group) {
 		}
 	}
 }
-
-if ($current_user->run_sub_group)
-	$current_user->run_sub_group = false;
-else
-	$current_user->run_sub_group = true;
 
 // forum topics and forums are a little bit different
 $query = "SELECT e.guid, o.title

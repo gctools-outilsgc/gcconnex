@@ -290,7 +290,7 @@ $english = array(
 	'cp_notify:sidebar:forum_title' => 'Forum and Forum Topics',
 
 	'cp_notify:wirepost_generic_title' => 'Wire post',
-	'cp_notify:subscribe_all_label' => 'Click here to subscribe to all the groups update',
+	'cp_notify:subscribe_all_label' => "<a href='%s'>Subscribe</a> or <a href='%s'> Unsubscribe</a> to all groups and their content",
 	'cp_notify:unsubscribe_all_label' => 'Click here to unsubscribe to all the groups update',
 	'cp_notify:personal_setting' => 'Your Subscriptions',
 	'cp_notify:no_subscription' => 'There are no subscriptions',

@@ -185,7 +185,7 @@ class FGContactForm
            {
            $subject = $categoryen." - ".$depart. " - $this->name  / ".$categoryfr." - ".$depart. " - $this->name";
            }else{
-            $subject = "GCconnex contact form";
+            $subject = "GCconnex - ".$depart. " - $this->name  / GCconnex - ".$depart. " - $this->name";
            }
         
         

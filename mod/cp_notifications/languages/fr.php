@@ -284,11 +284,11 @@ $french = array(
     'cp_notify:groupNotif'=>'Notifications de groupe',
 
 	'cp_notify:personal_bulk_notifications' => 'Activer la notification des Actualités', // new
-	'ec_minor_edit' => 'Changements mineurs', // new
+	'cp_notify:minor_edit' => 'Changements mineurs', // new
 	'cp_notify:sidebar:forum_title' => 'Les sujets de discussion et les forums',
 	'cp_notify:wirepost_generic_title' => 'Publications sur le fil', // new
 	'cp_notify:personal_setting' => 'Vos abonnements', // new
-	'cp_notify:subscribe_all_label' => 'Cliquez ici pour vous abonner à toutes les mises à jour des groupes', // new
+	'cp_notify:subscribe_all_label' => "<a href='%s'>S’abonner</a> ou <a href='%s'>Se désabonner</a> à tous les groupes et leur contenu", // new
 	'cp_notify:unsubscribe_all_label' => 'Cliquez ici pour vous désabonner à toutes les mises à jour des groupes',
 	'cp_notify:no_subscription' => "Il n'y a pas d'abonnement", // new
 );

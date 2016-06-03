@@ -437,11 +437,11 @@ switch ($msg_type) {
 
 
 	case 'cp_wire_share':
-		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_wireshare:title',array($vars['cp_shared_by']->name,$vars['cp_content']->getSubtype(),$vars['cp_content']->title),'en');
-		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_wireshare:title',array($vars['cp_shared_by']->name,$vars['cp_content']->getSubtype(),$vars['cp_content']->title),'fr');
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_wireshare:title',array($vars['cp_shared_by']->name,cp_translate_subtype($vars['cp_content']->getSubtype()),$vars['cp_content']->title),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_wireshare:title',array($vars['cp_shared_by']->name,cp_translate_subtype($vars['cp_content']->getSubtype()),$vars['cp_content']->title),'fr');
 
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_wireshare:description',array($vars['cp_shared_by']->name,$vars['cp_content']->getSubtype(),$vars['cp_wire_url']),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_wireshare:description',array($vars['cp_shared_by']->name,$vars['cp_content']->getSubtype(),$vars['cp_wire_url']),'fr');
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_wireshare:description',array($vars['cp_shared_by']->name,cp_translate_subtype($vars['cp_content']->getSubtype()),$vars['cp_wire_url']),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_wireshare:description',array($vars['cp_shared_by']->name,cp_translate_subtype($vars['cp_content']->getSubtype()),$vars['cp_wire_url']),'fr');
 
 		$cp_notify_msg_footer_en = elgg_echo('cp_notify:footer2',array(),'en');
 		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer2',array(),'fr');

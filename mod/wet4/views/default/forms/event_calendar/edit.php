@@ -444,13 +444,13 @@ if ($event_calendar_region_display == 'yes' || $event_calendar_type_display == '
 if (elgg_is_active_plugin('cp_notifications') && !$new_entity) {
 	// cyu - implement "minor edit" as per business requirements document
 	$body .= '<div>';
-	$body .= "<h2>Is this a Minor Edit (Do not send out emails)</h2>"; // TODO: add to en.php/fr.php
+	$body .= "<h2>".elgg_echo('cp_notify:minor_edit_header')."</h2>";
 	$body .= elgg_view('input/checkboxes', array(
 			'name' => 'chk_ec_minor_edit',
 			'id' => 'chk_ec_minor_edit',
 			'value' => 0,
 			'options' => array(
-					'ec_minor_edit' => 1),
+					elgg_echo('cp_notify:minor_edit') => 1),
 		));
 
 	$body .= '</div>';

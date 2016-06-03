@@ -88,8 +88,8 @@ return array(
        */
 
             'page:create' => 'Créer la page',
-            'page:minor_edit' => 'Est-ce ceci une modification mineur <small>(ne pas envoie de courriel)</small>',
-            'page:minor_edit_label' => 'Changement mineur',
+            'cp_notify:minor_edit_header' => 'Est-ce une modification mineure? <small>(En cliquant cette boîte, aucune notification sera envoyée)</small>',
+            'page:minor_edit_label' => 'Modification mineure',
             /*
         * Misc
         * */

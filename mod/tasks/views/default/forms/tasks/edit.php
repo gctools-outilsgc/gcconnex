@@ -256,13 +256,13 @@ if ($vars['parent_guid']) {
 if (elgg_is_active_plugin('cp_notifications') && !$new_entity) {
 	// cyu - implement "minor edit" as per business requirements document
 	echo '<div>';
-	echo "<h2>Is this a Minor Edit (Do not send out emails)</h2>";
+	echo "<h2>".elgg_echo('cp_notify:minor_edit_header')."</h2>";
 	echo elgg_view('input/checkboxes', array(
 			'name' => 'chk_task_minor_edit',
 			'id' => 'chk_task_minor_edit',
 			'value' => $vars['entity']->entity_minor_edit,
 			'options' => array(
-					'task_minor_edit' => 1),
+					elgg_echo('cp_notify:minor_edit') => 1),
 		));
 
 	/* cyu - see note:
