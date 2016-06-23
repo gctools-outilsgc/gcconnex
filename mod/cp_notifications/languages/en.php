@@ -99,6 +99,9 @@ $english = array(
 
 	// new content posted section
 	'cp_notify:subject:new_content' => "%s posted a new %s with the title '%s'",
+
+	'cp_notify:subject:in' => " in %s",
+
 	'cp_notify:body_new_content:title' => "%s posted new content entitled '%s'",
 	'cp_notify:body_new_content:description' => "The description of the new posting is: <br/>
 		%s <br/>

@@ -13,6 +13,7 @@
 $target_guid = $vars['target']; // The guid of the node whose children make up the dropdown options.
 $given_value = $vars['given_value']; // The guid of the initial dropdown value.
 $disabled = $vars['is_disabled']; // Boolean which determines if the dropdown starts off disabled.
+$disable_other = $vars['disable_other'];
 
 // Gets all the names of the children of the targeted node in order to populate the dropdown.
 if($target_guid) {
@@ -37,8 +38,12 @@ else {
 	$node_children = array(0 => '') + array(1 => elgg_echo('missions_organization:other_cap'));
 }
 
+if($disable_other) {
+	array_pop($node_children);
+}
+
 // Only creates a dropdown if the dropdown options are not empty.
-if(!empty($node_children) && $node_children != array(0 => '', 1 => elgg_echo('missions_organization:other_cap'))) {
+if(!empty($node_children) && $node_children != array(0 => '', 1 => elgg_echo('missions_organization:other_cap')) && $node_children != array(0 => '')) {
 	// Updates the session variable which helps make the dropdowns unique.
 	$numerator = $_SESSION['organization_dropdown_input_count'] + 1;
 	$_SESSION['organization_dropdown_input_count'] = $numerator;
@@ -48,6 +53,7 @@ if(!empty($node_children) && $node_children != array(0 => '', 1 => elgg_echo('mi
 			'name' => 'org-drop-' . $numerator,
 			'value' => $given_value,
 			'options_values' => $node_children,
+			'class' => 'org-dropdown-input',
 			'id' => 'org-dropdown-input-' . $numerator,
 			'disabled' => $disabled,
 			'onchange' => 'dynamicDrop(this)'

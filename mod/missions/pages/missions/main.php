@@ -20,7 +20,7 @@ $content = elgg_view_title($title);
 
 elgg_push_breadcrumb($title);
 
-if($current_user->opt_in_missions != 'gcconnex_profile:opt:yes') {
+if(!check_if_opted_in($current_user)) {
 	// Splash page for users not opted in to micro missions.
 	$content .= elgg_view('page/elements/main-splash');
 }
@@ -35,9 +35,14 @@ else {
 	$highlight_two = false;
 	$highlight_three = false;
 	$highlight_four = false;
+	$highlight_five = false;
 	
 	// The opted in main page has a regular view and a my missions view.
 	switch($last_segment) {
+		case 'analytics':
+			$main_content = elgg_view('page/elements/main-analytics');
+			$highlight_five = true;
+			break;
 		case 'archive':
 			$main_content = elgg_view('page/elements/main-archive');
 			$highlight_four = true;
@@ -61,11 +66,12 @@ else {
 			'highlight_one' => $highlight_one,
 			'highlight_two' => $highlight_two,
 			'highlight_three' => $highlight_three,
-			'highlight_four' => $highlight_four
+			'highlight_four' => $highlight_four,
+			'highlight_five' => $highlight_five
 	));
 	
 	// Links to the post opportunity pages.
-	if($last_segment != 'members' && $last_segment != 'archive') {
+	//if($last_segment != 'members' && $last_segment != 'archive' && $last_segment != 'analytics') {
 		$content .= elgg_view('output/url', array(
 				'href' => elgg_get_site_url() . 'action/missions/pre-create-opportunity',
 				'text' => elgg_echo('missions:create_opportunity'),
@@ -74,7 +80,7 @@ else {
 				'style' => 'float:right;',
 				'id' => 'mission-create-opportunity-button'
 		)) . '</br>';
-	}
+	//}
 	
 	$content .= $main_content;
 	

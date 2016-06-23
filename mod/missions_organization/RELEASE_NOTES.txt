@@ -26,6 +26,8 @@ As of Release 10, fixes have been applied to prevent an infinite loop bug from b
 In addition, a setting was created which hides or displays a delete all button which destroys the entire orgnization tree when pressed. THIS IS NOT A RECOMMENDED OPERATION, USE WITH CARE.
 Finally, a test suite was created that works with the plugin ufcoe_testable which checks if the organization tree root exists and that each node in the tree has a parent and can find it's way back to the root.
 
+As of Release 11, the organization input now has a disable_other option which removes the other option from the dropdown selection.
+
 --------------------------------------------------------------------------------------------------------------
 
 HOW TO USE THE INPUT FIELD:

@@ -7,6 +7,9 @@
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
  
+/*
+ * Script which acts as a bridge between the post mission third form submission and the skill match actions.
+ */
 // Required action security tokens.
 $ts = time();
 $token = generate_action_token($ts);

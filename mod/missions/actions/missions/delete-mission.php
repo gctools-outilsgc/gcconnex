@@ -9,7 +9,6 @@
 
 /*
  * This action is for the delete action when deleting from the print-mission or print-mission-more view.
- * There is no equivalent form for this action. It is called directly by a button.
  */
 $guid = (int) get_input('mission_guid');
 $mission = get_entity($guid);

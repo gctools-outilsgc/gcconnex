@@ -150,37 +150,3 @@ elgg_set_plugin_setting('duration_string', $duration_string, 'missions');*/
 		));
 	?>
 </div>
-<!--</br>
-<p>
-	<?php echo elgg_echo('missions:settings:array_string_paragraph'); ?>
-</p>
-<div>
-	<?php echo elgg_echo('missions:settings:hour_array_string') . "\n"; ?>
-	<?php
-
-echo elgg_view('input/text', array(
-    'name' => 'params[hour_string]',
-    'value' => $hour_string
-));
-?>
-</div>
-<div>
-	<?php echo elgg_echo('missions:settings:min_array_string') . "\n"; ?>
-	<?php
-
-echo elgg_view('input/text', array(
-    'name' => 'params[minute_string]',
-    'value' => $minute_string
-));
-?>
-</div>
-<div>
-	<?php echo elgg_echo('missions:settings:lang_array_string') . "\n"; ?>
-	<?php
-
-echo elgg_view('input/text', array(
-    'name' => 'params[language_string]',
-    'value' => $language_string
-));
-?>
-</div>-->

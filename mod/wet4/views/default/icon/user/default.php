@@ -24,10 +24,10 @@ if (!array_key_exists($size, $icon_sizes)) {
 
 /*if(elgg_get_context() == 'friends'){
     $size = 'medium';
-}*/
+}
 if(elgg_get_context() == 'profile'){
     $size = 'large';
-}
+}*/
 
 if (!($user instanceof ElggUser)) {
 	return;
@@ -37,10 +37,21 @@ if (!($user instanceof ElggUser)) {
 $name = htmlspecialchars($user->name, ENT_QUOTES, 'UTF-8', false);
 $username = $user->username;
 
-$class = "elgg-avatar elgg-avatar-$size-wet4 ";
+//prevents placing wet4 class on image to create a bigger image (used in user profile, profile card, user hover menu, avatar creation)
+$force_size = elgg_extract('force_size', $vars);
+
+if($force_size){
+    $class = "elgg-avatar ";
+} else {
+    $class = "elgg-avatar elgg-avatar-$size-wet4 ";
+}
+
+
+
 if (isset($vars['class'])) {
 	$class = "$class {$vars['class']}";
 }
+
 if ($user->isBanned()) {
 	$class .= ' elgg-state-banned';
 	$banned_text = elgg_echo('banned');

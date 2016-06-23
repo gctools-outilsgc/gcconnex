@@ -23,10 +23,17 @@ if ($coll->owner_guid == elgg_get_logged_in_user_guid()) {
 	echo "<div class=\"friends_collections_controls\">";
 
     echo elgg_view('output/url', array(
+        'href' => 'collections/edit/' . elgg_get_logged_in_user_entity()->guid . '?collection=' . $coll->id,
+        'text' => '<i class="fa fa-edit fa-2x icon-unsel"><span class="wb-inv">' . elgg_echo('edit:this') . '</span></i>',
+        'title' => elgg_echo('friends:collections:edit') . ': ' . $coll->name,
+        'class' => 'mrgn-rght-sm mrgn-tp-sm'
+        ));
+
+    echo elgg_view('output/url', array(
 			'href' => 'action/friends/collections/delete?collection=' . $coll->id,
 			'class' => 'delete_collection',
 			'text' => '<span class="wb-invisible">' . elgg_echo("delete") . '</span><i class="fa fa-trash-o fa-2x icon-unsel"></i>',
-            'title' => elgg_echo('delete'),
+            'title' => elgg_echo('delete') . ' ' . $coll->name,
 			'encode_text' => false,
 			'confirm' => true,
 		));
@@ -38,11 +45,13 @@ echo " (<span id=\"friends_membership_count{$vars['friendspicker']}\">{$count}</
 // individual collection panels
 $friends = $vars['collection']->entities;
 if ($friends) {
+    /*
 	$content = elgg_view('core/friends/collectiontabs', array(
 		'owner' => elgg_get_logged_in_user_entity(),
 		'collection' => $vars['collection'],
 		'friendspicker' => $vars['friendspicker'],
 	));
+    */
 
 	echo elgg_view('input/friendspicker', array(
 		'entities' => $friends,

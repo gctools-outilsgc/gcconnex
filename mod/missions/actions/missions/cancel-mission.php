@@ -14,6 +14,7 @@ $mission_guid = get_input('mission_guid');
 $mission = get_entity($mission_guid);
 $from_admin = get_input('MISSION_ADMIN_ACTION_FLAG');
 
+// Counts up all the participants and applicants who have received an offer.
 $relationship_count = elgg_get_entities_from_relationship(array(
 		'relationship' => 'mission_accepted',
 		'relationship_guid' => $mission->guid,
@@ -25,6 +26,7 @@ $relationship_count += elgg_get_entities_from_relationship(array(
 		'count' => true
 ));
 
+// Does not allow the misssion to be cancelled if the count is not zero.
 if($relationship_count > 0) {
 	register_error(elgg_echo('missions:cannot_cancel_mission_with_participants'));
 	forward(REFERER);

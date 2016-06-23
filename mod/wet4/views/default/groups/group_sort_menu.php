@@ -57,6 +57,27 @@ $tabs = array(
 	),
 );
 
+
+
+// if user is the gsa-crawler
+if (strcmp('gsa-crawler',strtolower($_SERVER['HTTP_USER_AGENT'])) == 0) {
+	// cyu - added discussion
+	$tabs["gsa_all_discussions"] = array(
+		"text" => elgg_echo("Discussions (gsa only)"),
+		"href" => "groups/all?gsa=discussion",
+		"priority" => 100,
+	);
+
+	// cyu - added all groups (and subgroups)
+	$tabs["gsa_all_groups"] = array(
+		"text" => elgg_echo("Groups (gsa only)"),
+		"href" => "groups/all?gsa=groups",
+		"priority" => 150,
+	);
+}
+
+
+
 foreach ($tabs as $name => $tab) {
 	$show_tab = false;
 	$show_tab_setting = elgg_get_plugin_setting("group_listing_" . $name . "_available", "group_tools");

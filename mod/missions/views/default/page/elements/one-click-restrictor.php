@@ -6,6 +6,10 @@
  * License: Creative Commons Attribution 3.0 Unported License
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
+ 
+/*
+ * Script which prevents the given element from being reclicked and sets the cursor to a spinner.
+ */
 ?>
 
 <script>

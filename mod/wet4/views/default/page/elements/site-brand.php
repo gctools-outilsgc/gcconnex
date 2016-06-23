@@ -8,7 +8,8 @@
 //echo elgg_view('core/account/login_dropdown');
 $site_url = elgg_get_site_url();
 
-
+// cyu - strip off the "GCconnex" branding bar for the gsa
+if (strcmp('gsa-crawler',strtolower($_SERVER['HTTP_USER_AGENT'])) != 0) {
 ?>
 
 
@@ -25,6 +26,7 @@ $site_url = elgg_get_site_url();
                     
                 </div>
                 <div class="col-sm-6 col-sm-offset-3 hidden-xs">
+                    <?php if (!elgg_get_plugin_setting('ExtTheme', 'wet4')) {?>
                     <div id="tool-link" class="pull-right">
                     <div class="pull-right tool-link">
                         <a href="<?php echo elgg_echo('wet:gcintranetLink-toolsHead');?>">
@@ -39,9 +41,11 @@ $site_url = elgg_get_site_url();
                     </div>
 
                     </div>
-                   
+                   <?php }?>
                 </div>
             </div>
         </div>
         
     </div>
+
+<?php } ?>

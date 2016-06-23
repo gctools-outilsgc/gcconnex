@@ -10,6 +10,8 @@ $widget = $vars['widget'];
 $show_access = elgg_extract('show_access', $vars, true);
 $widget_context = $widget->context;
 
+$show_access = true;
+
 $edit_view = "widgets/$widget->handler/edit";
 $custom_form_section = elgg_view($edit_view, array('entity' => $widget));
 

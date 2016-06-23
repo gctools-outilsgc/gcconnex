@@ -228,7 +228,7 @@ foreach ($groups as $group) {
 		$cpn_grp_email_checked = true;
 	else // (email) if user set item to unsubscribe, update relationship table
 		$cpn_grp_email_checked = false;
-   
+
 	if (empty($cpn_set_subscription_email)) $cpn_set_subscription_email = 'sub_'.$group->getGUID() ; // if not set, set no email as default
 
 
@@ -285,7 +285,7 @@ foreach ($groups as $group) {
 
 	foreach ($group_contents as $group_content) {
 		if (!in_array($group_content->getSubtype(), $no_notification_available)) {
-			
+
 			// cyu - i don't think we really need this block of code
 			/*
 			$cpn_set_subscription_email = $plugin->getUserSetting("cpn_email_{$group_content->getGUID()}", $user->getGUID());	// setting email notification
@@ -388,7 +388,7 @@ $query_select = "SELECT e.guid, e.subtype as entity_subtype, es.subtype, o.title
 $query_select .= " ORDER BY e.subtype ASC LIMIT {$personal_limit} OFFSET {$personal_offset}";
 $subbed_contents = get_data($query_select);
 
-$content .= "{$query_select}";
+//$content .= "{$query_select}";
 
 // query that will count all the subscribed items
 $query_count = "SELECT count(e.guid) AS num_content {$query_base}";

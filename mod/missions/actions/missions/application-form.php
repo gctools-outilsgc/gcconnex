@@ -149,20 +149,19 @@ else {
 	$english_skills = $applicant->english;
 	$french_skills = $applicant->french;
 	if(!empty($english_skills)) {
-		// TODO: This section should be in the language files eventually.
 	    $body .= '<b><font size="4">' . elgg_echo('missions:english') . ':</font></b>' . "<br>";
 	    $body .= elgg_echo('missions:written_comprehension') . '(' . $english_skills[0] . ') ';
 	    $body .= elgg_echo('missions:written_expression') . '(' . $english_skills[1] . ') ';
 	    $body .= elgg_echo('missions:oral_proficiency') . '(' . $english_skills[2] . ') ';
 	}
 	if(!empty($french_skills)) {
-		// TODO: This section should be in the language files eventually.
 	    $body .= "<br>" . '<b><font size="4">' . elgg_echo('missions:french') . ':</font></b>' . "<br>";
 	    $body .= elgg_echo('missions:written_comprehension') . '(' . $french_skills[0] . ') ';
 	    $body .= elgg_echo('missions:written_expression') . '(' . $french_skills[1] . ') ';
 	    $body .= elgg_echo('missions:oral_proficiency') . '(' . $french_skills[2] . ') ';
 	}
 	
+	// Sends the application via email and notification.
 	$body .= elgg_view('output/url', array(
 	    	'href' => elgg_get_site_url() . 'missions/mission-offer/' . $mission->guid . '/' . $applicant->guid,
 	    	'text' => elgg_echo('missions:offer')
@@ -176,7 +175,7 @@ else {
 	}
 	
 	// Opt in applicant if they are not opted in yet.
-	if($applicant->opt_in_missions != 'gcconnex_profile:opt:yes') {
+	if(!check_if_opted_in($applicant)) {
 		$applicant->opt_in_missions = 'gcconnex_profile:opt:yes';
 		$applicant->save();
 	}

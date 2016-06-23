@@ -36,6 +36,7 @@ $clean_skills = elgg_echo('missions:none_given');
 $clean_timezone = elgg_echo('missions:none_given');
 $clean_remotely = elgg_echo('missions:no');
 $clean_openess = elgg_echo('missions:no');
+$clean_completion_date = elgg_echo('missions:unknown');
 if(!empty($mission->phone)) {
     $clean_phone = $mission->phone;
 }
@@ -53,6 +54,9 @@ if(!empty($mission->remotely)) {
 }
 if(!empty($mission->openess)) {
 	$clean_openess = elgg_echo('missions:yes');
+}
+if(!empty($mission->completion_date)) {
+	$clean_completion_date = $mission->completion_date;
 }
 
 $department_path = $mission->department_path_english;
@@ -195,6 +199,11 @@ if($mission->state == 'cancelled') {
 }
 
 $creator = get_user($mission->owner_guid);
+
+$accept_and_decline_top_buttons = '';
+if(strpos($button_set['button_three'], 'accept-button') !== false) {
+	$accept_and_decline_top_buttons = $button_set['button_three'] . $button_set['button_four'];
+}
 ?>
 
 <div class="mission-printer">
@@ -205,6 +214,9 @@ $creator = get_user($mission->owner_guid);
 				<?php echo $mission_state; ?>
 			</div>
 		</h2>
+	</div>
+	<div style="text-align:right;">
+		<?php echo $accept_and_decline_top_buttons; ?>
 	</div>
 	<div>
 		<h5><?php echo elgg_echo('missions:opportunity_type') . ':';?></h5> 
@@ -268,7 +280,7 @@ $creator = get_user($mission->owner_guid);
 		</div>
 		<div class="col-sm-offset-1">
 			<h5><?php echo elgg_echo('missions:ideal_completion_date') . ':';?></h5> 
-			<span name="mission-completion-date"><?php echo $mission->completion_date;?></span>
+			<span name="mission-completion-date"><?php echo $clean_completion_date;?></span>
 		</div>
 		<div class="col-sm-offset-1">
 			<h5><?php echo elgg_echo('missions:deadline') . ':';?></h5> 

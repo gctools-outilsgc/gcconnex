@@ -45,5 +45,7 @@ $recipient_autocomplete = elgg_view('input/autocomplete', array(
 	?>
 </div>
 <div class="elgg-foot">
-	<?php echo elgg_view('input/submit', array('value' => elgg_echo('send'), 'class' => 'btn btn-primary')); ?>
+	<?php echo elgg_view('input/submit', array('value' => elgg_echo('send'), 'class' => 'btn btn-primary'));
+            echo  elgg_view('output/url', array('text' => elgg_echo('preview'), 'href' => 'ajax/view/messages/message_preview', 'class' => 'btn-default btn elgg-lightbox', 'id' => 'preview'));
+    ?>
 </div>

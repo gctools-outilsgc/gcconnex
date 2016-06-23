@@ -55,7 +55,9 @@ $advanced_field = elgg_view('page/elements/hidden-field', array(
 		'field_bordered' => true
 ));
 ?>
-
+<div>
+	<?php echo elgg_echo('missions:placeholder_a'); ?>
+</div>
 <h4><?php echo elgg_echo('missions:splash:what_are_missions'); ?></h4>
 <div>
 	<?php echo elgg_echo('missions:first_splash_paragraph')?>
@@ -83,7 +85,7 @@ $advanced_field = elgg_view('page/elements/hidden-field', array(
 		echo elgg_view('output/url', array(
 				'href' => elgg_get_site_url() . 'profile/' . elgg_get_logged_in_user_entity()->username . '#opt-in-anchor',
 				'text' => elgg_echo('missions:opt_in_to_opportunities'),
-				'class' => 'elgg-button btn btn-primary',
+				'class' => 'elgg-button btn btn-primary clearfix',
 				'is_action' => false,
 				'confirm' => elgg_echo('missions:opt_in_confirmation_text'),
 				'style' => 'float:right;',

@@ -32,7 +32,7 @@ $french = array(
 // error messages that pop up			// messages d'erreur qui apparaissent
 			
 'gcRegister:toc_error' => '<a href="#toc2">Vous devez accepter les condtions d\'utilisation</a>',
-'gcRegister:email_in_use' => '<a href="#email_initial">Cette adresse de courriel a déjà déjà été enregistrée</a>',
+'gcRegister:email_in_use' => 'Cette adresse de courriel a déjà déjà été enregistrée',
 'gcRegister:password_mismatch' => '<a href="#password">Les mots de passe ne sont pas identiques</a>',
 'gcRegister:password_too_short' => '<a href="#password">Le mot de passe doit avoir au moins 6 caractères</a>',
 'gcRegister:email_mismatch' => '<a href="#email_initial">Les adresses de courriel ne sont pas identitiques</a>',

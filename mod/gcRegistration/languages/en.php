@@ -37,7 +37,7 @@ $english = array(
 	
 	// error messages that pop up
 	'gcRegister:toc_error' => '<a href="#toc2">Terms and Conditions of Use must be accepted</a>',
-	'gcRegister:email_in_use' => '<a href="#email_initial">This email address has already been registered</a>',
+	'gcRegister:email_in_use' => 'This email address has already been registered',
 	'gcRegister:password_mismatch' => '<a href="#password">Passwords do not match</a>',
 	'gcRegister:password_too_short' => '<a href="#password">Password must contain minimum of 6 characters</a>',
 	'gcRegister:email_mismatch' => '<a href="#email_initial">Emails do not match</a>',

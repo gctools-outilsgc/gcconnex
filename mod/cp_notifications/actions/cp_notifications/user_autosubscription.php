@@ -11,7 +11,7 @@ $subscription = get_input('sub');
 $query = "SELECT g.guid AS grp_id FROM  {$dbprefix}entity_relationships r, {$dbprefix}groups_entity g WHERE r.guid_one = {$current_user->getGUID()} AND r.relationship = 'member' AND g.guid = r.guid_two";
 
 $groups = get_data($query);
-$group_content_arr = array('blog','bookmark','groupforumtopic','event_calendar','file','hjforumtopic',/*'hjforum',*/'photo','album','task','page','page_top','task_top','idea');
+$group_content_arr = array('blog','bookmark','groupforumtopic','event_calendar','file',/*'hjforumtopic','hjforum',*/'photo','album','task','page','page_top','task_top','idea');
 
 
 

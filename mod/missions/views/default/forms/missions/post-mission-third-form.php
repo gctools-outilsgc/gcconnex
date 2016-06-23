@@ -30,20 +30,12 @@ if (elgg_is_sticky_form('thirdfill')) {
     $key_skills = substr($key_skills, 0, -2);
 }
 
-/*if(!$timezone) {
-	$timezone = 'missions:timezone:five';
-}*/
-
 // Determines whether the remote work checkbox is checked or not.
 if($remotely == 'on') {
 	$remotely = true;
 }
 else {
 	$remotely = false;
-}
-
-if($location == '') {
-	$location = 'missions:ontario';
 }
 
 $duplicating_entity = get_entity($_SESSION['mission_duplication_id']);
@@ -188,8 +180,12 @@ if($skill_match_override) {
 	</div>
 </div>
 <div class="form-group">
-	<label for='post-mission-location-text-input' class="col-sm-3" style="text-align:right;">
-		<?php echo elgg_echo('missions:location') . ':';?>
+	<label for='post-mission-location-text-input' class="col-sm-3 required" style="text-align:right;" aria-required="true">
+		<?php echo elgg_echo('missions:location');?>
+		<strong class="required" aria-required="true">
+			<?php echo elgg_echo('missions:required'); ?>
+		</strong>
+		:
 	</label>
 	<div class="col-sm-3">
 		<?php echo $input_location; ?>

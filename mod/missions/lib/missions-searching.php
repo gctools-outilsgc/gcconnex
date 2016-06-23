@@ -787,7 +787,7 @@ function mm_guids_to_entities_with_opt($candidates) {
 	$potentials_users = array();
 	foreach($candidates as $candidate) {
 		$user_temp = get_user($candidate);
-		if($user_temp->opt_in_missions == 'gcconnex_profile:opt:yes') {
+		if(check_if_opted_in($user_temp)) {
 			$candidates_users[$count_c] = $user_temp;
 			$count_c++;
 		}

@@ -119,6 +119,10 @@ $french = array(
 	// new content posted section
 	'cp_notify:subject:new_content_mas' => "%s a publié un nouveau %s intitulé '%s'",
 	'cp_notify:subject:new_content_fem' => "%s a publié une nouvelle %s intitulée '%s'",
+
+	'cp_notify:subject:in' => " dans %s",
+
+
 	'cp_notify:body_new_content:title' => "%s a publié un nouvel item intitulé '%s'",
 	'cp_notify:body_new_content:description' => "La description de leur nouvelle publication se lit comme suit : <br/> 
 		%s <br/> 

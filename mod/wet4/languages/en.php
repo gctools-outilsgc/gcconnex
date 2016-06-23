@@ -37,6 +37,9 @@ return array(
   'wet:groupLoading'=>'Loading content',
   'subgroups:parent:need_join' => "Join Parent Group",
   'event_calendar:none' => "No events found.",
+  'wet:cover_photo_remove'=>'Remove current group cover image',
+  'wet:cover_photo_input'=>'Add a Cover Image to your group',
+  'wet:cover_photo_dim'=> 'The cover image will stretch and scale based on the screen size. We suggest an image around 1500x 275',
 /**
 *notice section
 */
@@ -633,7 +636,7 @@ GCconnex is a professional networking and collaborative workspace for all public
 	'registration:emailnotvalid' => 'Sorry, the email address you entered is invalid on this system',
 	'registration:passwordnotvalid' => 'Sorry, the password you entered is invalid on this system',
 	'registration:usernamenotvalid' => 'Sorry, the username you entered is invalid on this system',
-    'registration:userexists' => 'That username already exists. <a href="'.$site_url.'forgotpassword">Retrieve your password</a> (translate me)',
+    'registration:userexists' => 'That username already exists. <a href=&quot;'.$site_url.'forgotpassword&quot;>Retrieve your password</a>',
 	'adduser' => "Add User",
 	'adduser:ok' => "You have successfully added a new user.",
 	'adduser:bad' => "The new user could not be created.",

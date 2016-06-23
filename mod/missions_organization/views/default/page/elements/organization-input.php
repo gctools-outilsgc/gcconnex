@@ -42,7 +42,8 @@ if($root) {
 			$initial_input .= elgg_view('missions_organization/org-dropdown', array(
 					'given_value' => $org,
 					'target' => $previous_org,
-					'is_disabled' => $is_disabled
+					'is_disabled' => $is_disabled,
+					'disable_other' => $vars['disable_other']
 			));
 			
 			$previous_org = $org;
@@ -57,14 +58,18 @@ if($root) {
 		
 		$initial_input .= elgg_view('missions_organization/org-dropdown', array(
 				'given_value' => $last_given,
-				'target' => $previous_org
+				'target' => $previous_org,
+				'disable_other' => $vars['disable_other']
 		));
 		
 		$display_less_button = 'display:block;';
 	}
 	else {
 		// Create a single initial dropdown element for the root of the organization tree.
-		$initial_input = elgg_view('missions_organization/org-dropdown', array('target' => $root->guid));
+		$initial_input = elgg_view('missions_organization/org-dropdown', array(
+				'target' => $root->guid,
+				'disable_other' => $vars['disable_other']
+		));
 	}
 	
 	// Button to create a dropdown element for the node in the previous dropdown element.
@@ -108,8 +113,15 @@ else {
 }
  
 $numerator = $_SESSION['organization_dropdown_input_count'];
+
+$hidden_disable_other = elgg_view('input/hidden', array(
+		'name' => 'hidden_disable_other',
+		'value' => $vars['disable_other'],
+		'id' => 'missions-is-other-disabled-hidden-value'
+));
 ?>
 
+<?php echo $hidden_disable_other; ?>
 <div>
 	<div id="org-dropdown-set">
 		<?php echo $initial_input; ?>
@@ -235,10 +247,12 @@ $numerator = $_SESSION['organization_dropdown_input_count'];
 		}
 
 		var value = caller.value;
+		var disabling = document.getElementById('missions-is-other-disabled-hidden-value').value;
 		if(value != 0 && value != 1) {
 			elgg.get('ajax/view/missions_organization/org-dropdown', {
 				data: {
-					target: value
+					target: value,
+					disable_other: disabling
 				},
 				success: function(result, success, xhr) {
 					if($.trim(result)) {

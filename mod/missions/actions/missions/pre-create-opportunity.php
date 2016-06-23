@@ -8,9 +8,9 @@
  */
 
 /*
- * 
+ * Action which runs when the create opportunity button is pressed.
  */
- 
+// Clears out any previous sticky form information or related session variables.
 $_SESSION['mission_uncheck_post_mission_disclaimer'] = true;
 elgg_clear_sticky_form('firstfill');
 elgg_clear_sticky_form('secondfill');

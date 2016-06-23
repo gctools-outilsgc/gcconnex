@@ -29,6 +29,9 @@ mod/missions_profile_extend/view/default/missions/completed-missions.php
 The completed Micro-Missions panel can now be hidden by the owner selecting different access privileges.
 Individual Micro-Missions may also be hidden from the list or re-displayed after being hidden.
 
+The amount of opt-in options has been reduced to 6.
+Spinner now disappears correctly when clicking on the edit button.
+
 --------------------------------------------------------------------------------------------------------------
 
 This plugin stores the opt-in data as a metadata strings.

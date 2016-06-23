@@ -12,7 +12,7 @@
  moved view all link to footer of module
  */
 
-$group = elgg_get_page_owner_entity();
+$group = $vars['group_guid'];
 
 //$header = "<span class=\"groups-widget-viewall\">{$vars['all_link']}</span>";
 $header = $vars['title'];
@@ -41,25 +41,34 @@ if (/*$group->canWriteToContainer() && */isset($vars['add_link'])) { //we check 
     
 	$vars['content'] .= "<span class='elgg-widget-more'>{$vars['add_link']}</span>";
     */
-    
+    if($vars['add_link'] == 'discuss'){
+        //Nick - if the user wants a dicsussion we change the add discussion
+        $discuss_start = elgg_view('groups/profile/discuss_start', array(
+            'user'=>$user_guid,
+            'group'=>$group,
+            ));
+        $content = $discuss_start . $vars['content'];
+    }else{
+        //gather info from $vars['add_link'] to use in our button
+        $buttonHREF = explode('"', $vars['add_link']);
+
+        //seperate text from system genereated link
+        $throwaway = explode('>', $vars['add_link']);
+        $buttonText = explode('<', $throwaway[1]);
+
+        //create button from gathered variables
+        $addButton = elgg_view('output/url', array(
+            'text' =>  $buttonText[0],
+            'class' => 'btn btn-primary mrgn-bttm-sm',
+            'style' => 'color:white',
+            'href' => $buttonHREF[1],
+        ));
+
+        $content = '<div class="text-right">' . $addButton . '</div>' . $vars['content'];
+    }
 
 
-    //gather info from $vars['add_link'] to use in our button
-    $buttonHREF = explode('"', $vars['add_link']);
-    
-    //seperate text from system genereated link
-    $throwaway = explode('>', $vars['add_link']);
-    $buttonText = explode('<', $throwaway[1]);
-    
-    //create button from gathered variables
-    $addButton = elgg_view('output/url', array(
-        'text' =>  $buttonText[0],
-        'class' => 'btn btn-primary mrgn-bttm-sm',
-        'style' => 'color:white',
-        'href' => $buttonHREF[1],
-    ));
-    
-    $content = '<div class="text-right">' . $addButton . '</div>' . $vars['content'];
+
 }
 
 

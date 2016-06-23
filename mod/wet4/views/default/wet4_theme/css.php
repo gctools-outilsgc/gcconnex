@@ -3425,10 +3425,10 @@ tbody.collapse.in {
       padding: 10px 15px; }
       .nav > li > a:hover,
       .nav > li > a:focus {
-            background-color: #fcfcfc;
+            background-color: #f9f9f9;
     text-decoration: none;
     padding-bottom: 0;
-    margin-bottom: 9px;
+    margin-bottom: 0;
     border-bottom: 3px solid #055959; }
     .nav > li.disabled > a {
       color: #767676; }
@@ -3462,12 +3462,13 @@ tbody.collapse.in {
      padding:13px 8px 0px 8px;
      margin: 0 4px;
       border: 1px solid transparent;
+      border-bottom: 3px solid rgba(1,1,1,0);
       border-radius: 4px 4px 0 0; }
       .nav-tabs > li > a:hover {
-          background-color:#fcfcfc;
+          background-color:#f9f9f9;
           text-decoration: none;
           padding-bottom: 0;
-          margin-bottom: 9px;
+          margin-bottom: 0;
           border-bottom: 3px solid #055959;
          }
     .nav-tabs > li.active > a,
@@ -3476,10 +3477,10 @@ tbody.collapse.in {
       color: #055959;
         font-weight:bold;
         text-decoration:none;
-      background-color: #fcfcfc;
+      background-color: #f9f9f9;
       border-bottom: 3px solid;
       padding-bottom: 0px;
-      margin-bottom:9px;
+      margin-bottom:0;
       border-bottom-color: #055959;
       cursor: default; }
 
@@ -9877,7 +9878,7 @@ details {
 	Global Default Body styling
 */
 body {
-  background: #fcfcfc !important;
+  background: #f9f9f9 !important;
   font-family: Helvetica, Arial, sans-serif;
   font-size: 16px;
   font-weight: 300; }
@@ -11362,6 +11363,67 @@ border:none;
 
 }
 
+.quick-discuss panel-body, panel-footer{
+    padding:1px;
+
+}
+.start-discussion-form{
+    padding-right: 20px;
+
+}
+
+.quick-discuss-action-btn{
+    font-size: 1.3em;
+
+}
+.toggle-quick-discuss{
+    cursor:pointer;
+    background-color: #f5f5f5;
+    border-top: solid 1px #ddd;
+
+}
+#quick-discuss-panel .quick-start-collapse, #quick-discuss-panel  .quick-start-hide, #quick-discuss-panel  .alert-info{
+    display:none;
+    
+}
+.quick-start-discussion{
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 5px;
+
+}
+
+.groups-profile{
+    margin-top: 170px;
+
+}
+
+.group-cover-photo{
+    width:100%;
+    height: 250px;
+    position: absolute;
+    margin-top: 60px;
+    background-color:#047177;
+    overflow:hidden;
+}
+
+.group-cover-photo img{
+    width:100%;
+
+}
+.groups-profile{
+    margin-top: 170px;
+    z-index: 1;
+}
+
+.group-cover-photo{
+    width:100%;
+    height: 250px;
+    position: absolute;
+    margin-top: 60px;
+    background-color:#047177;
+    overflow:hidden;
+}
+
 /******Padding Classes********/
 
 .pad-lft-0 {
@@ -11827,12 +11889,18 @@ details.elgg-state-success:before {
 
 }
     #friends_collections_accordian li h2 {
-        background: white;
-        border: none;
-        margin: 10px 0 0;
+        background: #f5f5f5;
+    border: 2px solid;
+    margin: 10px 0 0;
+    border-color: #ddd;
+    webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.09);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.09);
+    }
 
-        webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.09);
-        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.09);
+    #friends_collections_accordian .friends-picker-main-wrapper {
+            border: 2px solid;
+            border-top: 0px solid transparent;
+             border-color: #ddd;
     }
 
     .selected-circle {
@@ -12457,14 +12525,14 @@ Carousel
     -webkit-border-radius: 5px 5px 0 0;
     -moz-border-radius: 5px 5px 0 0;
     border-radius: 4px 4px 0 0;
-    background-color: #fcfcfc; }
+    background-color: #f9f9f9; }
 
 .elgg-menu-filter>.elgg-state-selected >a:hover,
 .elgg-menu-filter>.elgg-state-selected >a:focus{
     border-bottom: 3px solid;
     border-bottom-color: #055959;
     text-decoration: none;
-    background-color: #fcfcfc;
+    background-color: #f9f9f9;
         padding-bottom: 0;
     margin-bottom:9px;
      -webkit-border-radius: 5px 5px 0 0;
@@ -12478,7 +12546,7 @@ Carousel
     text-decoration: none;
     border-bottom: 3px solid;
     border-bottom-color: #055959;
-    background-color: #fcfcfc;
+    background-color: #f9f9f9;
     padding-bottom: 0;
     margin-bottom:9px;
      -webkit-border-radius: 5px 5px 0 0;

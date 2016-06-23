@@ -80,6 +80,13 @@ $change_entities_per_page_form = elgg_view_form('missions/change-entities-per-pa
 $sort_missions_form .= elgg_view_form('missions/sort-missions-form', array(
 		'class' => 'form-horizontal'
 ));
+$sort_field = elgg_view('page/elements/hidden-field', array(
+		'toggle_text' => elgg_echo('missions:sort_options'),
+		'toggle_text_hidden' => elgg_echo('missions:sort_options'),
+		'toggle_id' => 'sort_options',
+		'hidden_content' => $sort_missions_form,
+		'alignment' => 'right'
+));
 ?>
 
 <div class="col-sm-12">
@@ -92,6 +99,9 @@ $sort_missions_form .= elgg_view_form('missions/sort-missions-form', array(
 		echo $advanced_field;
 	?>
 </div>
+<div class="col-sm-5 col-sm-offset-7">
+	<?php echo $sort_field; ?>
+</div>
 <div class="col-sm-12">
 	<h4><?php echo elgg_echo('missions:latest_opportunities'); ?></h4>
 	<?php echo $max_reached; ?>
@@ -103,7 +113,4 @@ $sort_missions_form .= elgg_view_form('missions/sort-missions-form', array(
 <div hidden name="mission-total-count"><?php echo $count; ?></div>
 <div class="col-sm-12">
 	<?php echo $change_entities_per_page_form; ?>
-</div>
-<div class="col-sm-12">
-	<?php echo $sort_missions_form; ?>
 </div>

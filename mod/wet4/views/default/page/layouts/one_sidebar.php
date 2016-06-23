@@ -28,6 +28,7 @@
         */
 
     if(elgg_instanceof(elgg_get_page_owner_entity(), 'group')){
+        //echo '<div>Hello I am a cover photo or something</div>';
         //$group = elgg_extract('entity', $vars);
         elgg_push_context('groups');
         echo elgg_view('groups/profile/summary');

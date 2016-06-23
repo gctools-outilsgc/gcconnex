@@ -18,7 +18,6 @@ if(elgg_is_sticky_form('firstfill')) {
 	$temp_form = elgg_get_sticky_values('firstfill');
 	$extracted_org = mo_get_last_input_node($temp_form);
     extract($temp_form);
-    // elgg_clear_sticky_form('firstfill');
 }
 
 if($disclaimer == 'YES' && !$disclaimer_uncheck) {
@@ -27,28 +26,28 @@ if($disclaimer == 'YES' && !$disclaimer_uncheck) {
 else {
 	$disclaimer = false;
 }
-$user = get_entity(elgg_get_logged_in_user_guid());
-if(!$name) {
-	$name = $user->name;
-}
-if(!$extracted_org) {
-	$exploded_department = explode('/', $user->department);
-	$department_name = trim($exploded_department[0]);
-	$extracted_org = mo_format_input_node(mo_get_department_next_to_root($department_name));
-}
-if(!$email) {
-	$email = $user->email;
-}
-if(!$phone) {
-	$phone = $user->phone;
+
+if(!elgg_is_sticky_form('firstfill')) {
+	$user = get_entity(elgg_get_logged_in_user_guid());
+	if(!$name) {
+		$name = $user->name;
+	}
+	if(!$extracted_org) {
+		$exploded_department = explode('/', $user->department);
+		$department_name = trim($exploded_department[0]);
+		$extracted_org = mo_format_input_node(mo_get_department_next_to_root($department_name));
+	}
+	if(!$email) {
+		$email = $user->email;
+	}
+	if(!$phone) {
+		$phone = $user->phone;
+	}
 }
 
 $duplicating_entity = get_entity($_SESSION['mission_duplication_id']);
 if(get_subtype_from_id($duplicating_entity->subtype) == 'mission' && !$_SESSION['mission_duplicating_override_first']) {
-	//$name = $duplicating_entity->name;
 	$extracted_org = $duplicating_entity->department;
-	//$email = $duplicating_entity->email;
-	//$phone = $duplicating_entity->phone;
 }
 
 $input_name = elgg_view('input/text', array(
@@ -78,7 +77,6 @@ $input_disclaimer = elgg_view('input/checkbox', array(
 		'id' => 'post-mission-disclaimer-checkbox-input'
 ));
 ?>
-
 
 <h4><?php echo elgg_echo('missions:first_post_form_title'); ?></h4></br>
 <div class="form-group">

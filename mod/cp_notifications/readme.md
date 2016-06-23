@@ -74,4 +74,11 @@ Plugins modified to implement Minor Edit (file locations)
 18. .../mod/wet4/views/default/forms/event_calendar/edit.php
 19. .../mod/wet4/views/default/forms/pages/edit.php
 
+Update since May 28 2016
+20. .../mod/cp_notifications/actions/cp_notifications/user_autosubscription.php
+21. .../mod/cp_notifications/languages/*.php
+22. .../mod/cp_notifications/views/default/plugins/cp_notifications/usersettings.php
+23. .../mod/groups/actions/groups/membership/leave.php
+24. .../mod/groups/actions/groups/membership/remove.php
+
 

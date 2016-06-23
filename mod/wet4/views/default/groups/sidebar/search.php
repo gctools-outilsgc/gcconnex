@@ -5,7 +5,7 @@
  * @uses vars['entity'] ElggGroup
  */
 
-$url = elgg_get_site_url() . 'search';
+$url = elgg_get_site_url() . 'search'; //Change this action to use a different search
 $body = elgg_view_form('groups/search', array(
 	'action' => $url,
 	'method' => 'get',

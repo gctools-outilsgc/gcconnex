@@ -266,11 +266,11 @@ if ($formtarget) {
 		echo $vars['formcontents'];
 
 ?>
+
                     </div>
                 </div>
             </div>
-
-    <div id="storedArea" class="hidden">
+                <div id="storedArea" class="hidden">
         <?php echo $checkedValues;?>
             <script>
 
@@ -328,7 +328,7 @@ if ($formtarget) {
             <div class="clearfix"></div>
 	<div class="friendspicker-savebuttons">
 		<input type="submit" class="mrgn-lft-sm mrgn-bttm-sm btn btn-primary" value="<?php echo elgg_echo('save'); ?>" />
-		<input type="button" class="mrgn-bttm-sm btn btn-default" value="<?php echo elgg_echo('cancel'); ?>" onclick="$('a.collectionmembers<?php echo $friendspicker; ?>').click();" />
+		<!--<input type="button" class="mrgn-bttm-sm btn btn-default" value="<?php //echo elgg_echo('cancel'); ?>" onclick="$('a.collectionmembers<?php //echo $friendspicker; ?>').click();" />-->
 	<br /></div>
 	</form>
 
@@ -337,9 +337,66 @@ if ($formtarget) {
 <?php
 
 }
-
+else {
 ?>
 
+
+    <div id="storedArea" class="hidden">
+        <?php echo $checkedValues;?>
+            <script>
+
+        $('#table-select-all').on('click', function(){
+            $('.friendpickerTable input[type="checkbox"]').prop('checked', this.checked);
+            $('.friendpickerTable input[type="checkbox"]').trigger('change');
+        });
+
+                $(function () {
+
+
+
+                    //add guids to move selected link when checked
+                    $('.friendpickerTable input[type="checkbox"]').change(function () {
+                        var check = false;
+
+                        if ($(this).is(":checked")) {
+                            var checkBoxes = $('#storedArea input').toArray();
+                            for (var i = 0; i < checkBoxes.length; i++) {
+                                if (checkBoxes[i].getAttribute("value") == $(this).val()) {
+                                    check = true;
+                                }
+                            }
+
+                            //dont want duplicate values stored
+                            if (check == false) {
+                                $(this).clone().attr('checked', 'checked').appendTo('#storedArea');
+                                $('#group_tools_mail_recipients').html($('#storedArea input[name="user_guids[]"]').length);
+                            }
+
+                            return;
+
+                        } else {
+
+                            var checkBoxes = $('#storedArea input').toArray();
+                            for (var i = 0; i < checkBoxes.length; i++) {
+
+                                if (checkBoxes[i].getAttribute("value") == $(this).val()) {
+
+                                    checkBoxes[i].parentNode.removeChild(checkBoxes[i]);
+                                    $('#group_tools_mail_recipients').html($('#storedArea input').length);
+                                }
+                            }
+
+                        }
+                    });
+
+
+
+                });
+
+            </script>
+
+        </div>
+        <?php } ?>
 </div>
 </div>
 

@@ -29,21 +29,24 @@ echo elgg_view('input/hidden', array(
 ?>
 
 <div>
-	<label><?php echo elgg_echo("messages:title"); ?>: <br /></label>
+    <label for="subject"><?php echo elgg_echo("messages:title"); ?>: <br /></label>
 	<?php echo elgg_view('input/text', array(
-		'name' => 'subject',
+        'name' => 'subject',
+        'id' => 'subject',
 		'value' => $reply_title,
 	));
 	?>
 </div>
 <div>
-	<label><?php echo elgg_echo("messages:message"); ?>:</label>
+	<label for="body"><?php echo elgg_echo("messages:message"); ?>:</label>
 	<?php echo elgg_view("input/longtext", array(
 		'name' => 'body',
+        'id' => 'body',
 		'value' => '',
 	));
 	?>
 </div>
-<div class="elgg-foot">
-	<?php echo elgg_view('input/submit', array('value' => elgg_echo('send'))); ?>
+<div class="elgg-foot mrgn-tp-sm">
+	<?php echo elgg_view('input/submit', array('value' => elgg_echo('send')));
+          echo  elgg_view('output/url', array('text' => elgg_echo('preview'), 'href' => 'ajax/view/messages/message_preview', 'class' => 'btn-default btn elgg-lightbox', 'id' => 'preview'));?>
 </div>

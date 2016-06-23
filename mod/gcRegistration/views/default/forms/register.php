@@ -17,6 +17,7 @@
  * CYu 			Sept 19 2014 	adjusted textfield rules (no spaces for emails)
  * MBlondin 	Jan 25 2016 	Layout change
  * * MBlondin 	Feb 08 2016 	Delete IE7 form
+ * NickP        June 9 2016     Added function to the username generation ajax to provide link to password retrival if account already exists
  ***********************************************************************/
 
 $password = $password2 = '';
@@ -31,6 +32,7 @@ if (elgg_is_sticky_form('register')) {
 	elgg_clear_sticky_form('register');
 }
 
+$account_exist_message = '<span class=&quot;label label-danger tags mrgn-bttm-sm&quot;>'.elgg_echo('registration:userexists').'</span>';
 ?>
 
 <!--<style>
@@ -149,47 +151,47 @@ var enDepartments = {};//new Array();
 
 		if (invalid_email != "")
 		{
-			pop_up_msg += "- "+invalid_email+"\n";
+			//pop_up_msg += "- "+invalid_email+"\n";
 			is_valid = false;
 		}
 
 		if (email1 != email2)
 		{
-			pop_up_msg += '<?php echo elgg_echo('gcRegister:email_mismatch'); ?>\n';
+			//pop_up_msg += '<?php //echo elgg_echo('gcRegister:email_mismatch'); ?>\n';
 			is_valid = false;
 		}
 
 		if (password1 != password2)
 		{
-			pop_up_msg += '<?php echo elgg_echo('gcRegister:password_mismatch'); ?>\n';
+			//pop_up_msg += '<?php //echo elgg_echo('gcRegister:password_mismatch'); ?>\n';
 			is_valid = false;
 		}
 
 		if (password1 == password2 && password1.length < 6)
 		{
-			pop_up_msg += '<?php echo elgg_echo('gcRegister:password_too_short'); ?>\n';
+			//pop_up_msg += '<?php //echo elgg_echo('gcRegister:password_too_short'); ?>\n';
 			is_valid = false;
 		}
 		
 		if (d_name == "")
 		{
-			pop_up_msg += '<?php echo elgg_echo('gcRegister:display_name_is_empty'); ?>\n';
+			//pop_up_msg += '<?php// echo elgg_echo('gcRegister:display_name_is_empty'); ?>\n';
 			is_valid = false;
 		}
 
 		if (toc_val != "checked")
 		{
-			pop_up_msg += '<?php echo elgg_echo('gcRegister:toc_error'); ?>\n';
+			//pop_up_msg += '<?php //echo elgg_echo('gcRegister:toc_error'); ?>\n';
 			is_valid = false;
 		}
-
+        /*
 		if (!is_valid || pop_up_msg != "")
 		{
-			alert(pop_up_msg);
+			//alert(pop_up_msg);
 			return false;
 		} else {
 			return true;
-		}
+		}*/
 	}
 
 	function validateEmail(email) { 
@@ -309,7 +311,10 @@ var enDepartments = {};//new Array();
 		success: function (x) {
 		    //create username
 		    $('.username_test').val(x.output);
-		    
+           //Nick - Testing here if the username already exists and add a feedback to the user
+		    if(x.output == '<?php echo '> ' . elgg_echo('gcRegister:email_in_use'); ?>'){
+                $('.already-registered-message').html('<?php echo $account_exist_message; ?>');
+           }
 		    generateDisplayName();
 		    function generateDisplayName() {
             //generate display name (remove '.' in name)	
@@ -337,13 +342,42 @@ var enDepartments = {};//new Array();
    		'subtype' => 'dept_list',
    		'owner_guid' => elgg_get_logged_in_user_guid()
 	));
+	$provinces = array();
 	if (get_current_language()=='en'){
 		//$metaname = "deptsEn";
 		$departments = $obj[0]->deptsEn;
+		$provinces['pov-alb'] = 'Government of Alberta';
+		$provinces['pov-bc'] = 'Government of British Columbia';
+		$provinces['pov-man'] = 'Government of Manitoba';
+		$provinces['pov-nb'] = 'Government of New Brunswick';
+		$provinces['pov-nfl'] = 'Government of Newfoundland and Labrador';
+		$provinces['pov-ns'] = 'Government of Nova Scotia';
+		$provinces['pov-nwt'] = 'Government of Northwest Territories';
+		$provinces['pov-nun'] = 'Government of Nunavut';
+		$provinces['pov-ont'] = 'Government of Ontario';
+		$provinces['pov-pei'] = 'Government of Prince Edward Island';
+		$provinces['pov-que'] = 'Government of Quebec';
+		$provinces['pov-sask'] = 'Government of Saskatchewan';
+		$provinces['pov-yuk'] = 'Government of Yukon';
 	}else{
 		//$metaname = "deptsFr";
 		$departments = $obj[0]->deptsFr;
+		$provinces['pov-alb'] = "Gouvernement de l'Alberta";
+		$provinces['pov-bc'] = 'Gouvernement de la Colombie-Britannique';
+		$provinces['pov-man'] = 'Gouvernement du Manitoba';
+		$provinces['pov-nb'] = 'Gouvernement du Nouveau-Brunswick';
+		$provinces['pov-nfl'] = 'Gouvernement de Terre-Neuve-et-Labrador';
+		$provinces['pov-ns'] = 'Gouvernement de la Nouvelle-Écosse';
+		$provinces['pov-nwt'] = 'Gouvernement du Territoires du Nord-Ouest';
+		$provinces['pov-nun'] = 'Gouvernement du Nunavut';
+		$provinces['pov-ont'] = "Gouvernement de l'Ontario";
+		$provinces['pov-pei'] = "Gouvernement de l'Île-du-Prince-Édouard";
+		$provinces['pov-que'] = 'Gouvernement du Québec';
+		$provinces['pov-sask'] = 'Gouvernement de Saskatchewan';
+		$provinces['pov-yuk'] = 'Gouvernement du Yukon';
 	}
+	$departments = json_decode($departments, true);
+	//$departments['ont'] = 'ontario';
 	//echo "lang".get_current_language();
 	//$departments = $meta[0]->value;//array(1, 2, 3);
 	echo elgg_view('input/select', array(
@@ -351,12 +385,12 @@ var enDepartments = {};//new Array();
 		'id' => 'department',
         //'disabled'=>'disabled',
         'class' => 'department_test form-control',
-		'options_values' => json_decode($departments, true),
+		'options_values' => array_merge($departments,$provinces),
 	));
 	?>
 </div>
 <div class="form-group">
-	<label for="username" class="required"><span class="field-name"><?php echo elgg_echo('gcRegister:username'); ?></span><strong class="required">(required)</strong></label>
+	<label for="username" class="required"><span class="field-name"><?php echo elgg_echo('gcRegister:username'); ?></span><strong class="required">(required)</strong></label> <div class="already-registered-message mrgn-bttm-sm"></div>
 	<?php
 	echo elgg_view('input/text', array(
 		'name' => 'username',
@@ -456,7 +490,7 @@ echo '<br/>';
 
 	//$('<input>').on("focus", function() {
 	    $('#email_initial').on("keyup", function() {
-	    	enable_submit(validForm());
+	    	//enable_submit(validForm());
 	    	var val = $(this).attr('value');
 	        if ( val === '' ) {
 	        	var c_err_msg = '<?php echo elgg_echo('gcRegister:empty_field') ?>';
@@ -475,12 +509,12 @@ echo '<br/>';
 		$('#toc2').click(function() {
 	    	if ($('#toc2:checked').val() == 1)
 	    	{
-	    		enable_submit(validForm());
+	    		//enable_submit(validForm());
 	    	}
 	    });
 
 	    $('#email').on("keyup", function() {
-	    	enable_submit(validForm());
+	    	//enable_submit(validForm());
 	    	var val = $(this).attr('value');
 		    if ( val === '' ) {
 		    	var c_err_msg = "<?php echo elgg_echo('gcRegister:empty_field') ?>";
@@ -499,7 +533,7 @@ echo '<br/>';
 		});
 
 	    $('#password').on("keyup", function() {
-	    	enable_submit(validForm());
+	    	//enable_submit(validForm());
 	    	var val = $(this).val();
 		    if ( val === '' ) {
 		    	var c_err_msg = "<?php echo elgg_echo('gcRegister:empty_field') ?>";
@@ -511,7 +545,7 @@ echo '<br/>';
 		});	
 	    
 	    $('#password2').on("keyup", function() {
-	    	enable_submit(validForm());
+	    	//enable_submit(validForm());
 	    	var val = $(this).val();
 		    if ( val === '' ) {
 		    	var c_err_msg = "<?php echo elgg_echo('gcRegister:empty_field') ?>";
@@ -530,7 +564,7 @@ echo '<br/>';
 		});
 
 	    $('#department_name').on("keyup", function() {
-	    	enable_submit(validForm());
+	    	//enable_submit(validForm());
 	    	var val = $(this).val();
 		    if ( val === '' ) {
 		    	var c_err_msg = "<?php echo elgg_echo('gcRegister:empty_field') ?>";

@@ -1971,8 +1971,8 @@ function event_calendar_get_page_content_view($event_guid) {
 			if(event_calendar_can_add($event_container->getGUID())) {
 				elgg_register_menu_item('title', array(
 					'name' => 'add',
-					'href' => "event_calendar/add/".$event_container->getGUID(),
-					'text' => elgg_echo('event_calendar:add'),
+					'href' => elgg_add_action_tokens_to_url("action/event_calendar/add_ics?guid={$event->guid}"),
+					'text' => elgg_echo('event_calendar:add_ics'),
 					'link_class' => 'elgg-button elgg-button-action event-calendar-button-add',
 				));
 			}

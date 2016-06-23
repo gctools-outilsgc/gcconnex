@@ -25,7 +25,7 @@ $mission_guid = $_SESSION['mission_that_invites'];
 
 // Creates a gray background if the user is not opted in to micro missions.
 $background_content = '';
-if($user->opt_in_missions != 'gcconnex_profile:opt:yes') {
+if(!check_if_opted_in($user)) {
 	$background_content = 'style="background-color:#D3D3D3;"';
 }
 
@@ -63,7 +63,7 @@ foreach($user_skills as $skill) {
 
 // Displays invitation button if the user is opted in to micro missions.
 $button_content = '';
-if($user->opt_in_missions == 'gcconnex_profile:opt:yes') {
+if(check_if_opted_in($user)) {
 	if($mission_guid != 0) {
 		$mission = get_entity($mission_guid);
 		if($user->guid != $mission->owner_guid && $user->guid != $mission->account) {

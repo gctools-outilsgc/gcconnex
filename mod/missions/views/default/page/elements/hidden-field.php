@@ -16,6 +16,12 @@
  $content = $vars['hidden_content'];
  $pre_content = $vars['hideable_pre_content'];
  $additional_text = $vars['additional_text'];
+ $alignment = $vars['alignment'];
+ 
+ if($alignment != '') {
+ 	$alignment = 'float:' . $alignment . ';';
+ }
+ 
  if($vars['field_bordered']) {
  	$bordering = "brdr-tp brdr-rght brdr-bttm brdr-lft";
  }
@@ -23,6 +29,8 @@
  $field_id = 'hidden-field-' . $append;
  $pre_field_id = 'hidden-pre-field-' . $append;
  $icon_id = 'toggle-icon-' . $append;
+ $text_id = 'text-stored-' . $append;
+ $text_id_other = 'text-stored-other-' . $append;
  
  $toggle = elgg_view('output/url', array(
  		'href' => 'javascript:;',
@@ -32,15 +40,17 @@
  ));
  ?>
  
+<div hidden id="<?php echo $text_id; ?>"><?php echo $text; ?></div>
+<div hidden id="<?php echo $text_id_other; ?>"><?php echo $hidden_content_text; ?></div>
 <div id="<?php echo $pre_field_id; ?>" style="display:inline-block;">
 	<?php echo $pre_content; ?>
 </div>
-<div style="display:inline-block;max-width:500px;">
- 	<i class="fa fa-chevron-right" id="<?php echo $icon_id; ?>"></i>
- 	<span><?php echo $toggle; ?></span>
- 	<span style="font-style:italic;"><?php echo $additional_text; ?></span>
+<div style="display:inline-block;<?php echo $alignment; ?>">
+	 <i class="fa fa-chevron-right" id="<?php echo $icon_id; ?>"></i>
+	 <span><?php echo $toggle; ?></span>
+	 <span style="font-style:italic;"><?php echo $additional_text; ?></span>
 </div>
- <div class="<?php echo $bordering; ?>" id="<?php echo $field_id; ?>" style="display:none;padding:8px;">
+ <div class="<?php echo $bordering; ?>" id="<?php echo $field_id; ?>" style="display:none;padding:8px;float:left;">
  	<?php echo $content; ?>
  </div>
  
@@ -51,16 +61,19 @@
 		var pre_field = document.getElementById('hidden-pre-field-'.concat(append));
 		var icon = document.getElementById('toggle-icon-'.concat(append));
 		
+		var text = document.getElementById('text-stored-'.concat(append)).textContent;
+		var other_text = document.getElementById('text-stored-other-'.concat(append)).textContent;
+		
 		if(field.style.display == 'none') {
 			if('<?php echo $hidden_content_text; ?>') {
-				toggle.innerHTML = '<?php echo $hidden_content_text; ?>';
+				toggle.innerHTML = other_text;
 			}
 			field.style.display = 'block';
 			pre_field.style.display = 'none';
 			icon.className = 'fa fa-chevron-down';
 		}
 		else {
-			toggle.innerHTML = '<?php echo $text ?>';
+			toggle.innerHTML = text;
 			field.style.display = 'none';
 			pre_field.style.display = 'inline-block';
 			icon.className = 'fa fa-chevron-right';

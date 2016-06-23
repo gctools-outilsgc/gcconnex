@@ -16,7 +16,7 @@ $current_uri = $_SERVER['REQUEST_URI'];
 $blast_radius = explode('/', $current_uri);
 $mission = get_entity(array_pop($blast_radius));
 
-// The logged in user must have been invited to the mission to be on this page.
+// The logged in user must be related to the mission to be on this page.
 if(check_entity_relationship($mission->guid, 'mission_tentative', elgg_get_logged_in_user_guid())
 		|| check_entity_relationship($mission->guid, 'mission_applied', elgg_get_logged_in_user_guid())
 		|| check_entity_relationship($mission->guid, 'mission_offered', elgg_get_logged_in_user_guid())
@@ -38,7 +38,6 @@ else if(check_entity_relationship($mission->guid, 'mission_applied', $applicant)
 
 elgg_push_breadcrumb(elgg_echo('missions:micromissions'), elgg_get_site_url() . 'missions/main');
 elgg_push_breadcrumb(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions')), $mission->getURL());
-elgg_push_breadcrumb(elgg_echo('missions:mission_invitation'), elgg_get_site_url() . 'missions/mission-invitation/' . $mission->guid);
 elgg_push_breadcrumb($title);
 
 $content = elgg_view_title($title);

@@ -245,7 +245,7 @@ function mm_create_button_set_base($mission, $full_view=false) {
 			}
 			
 			if(check_entity_relationship($mission->guid, 'mission_offered', elgg_get_logged_in_user_guid())) {
-				$button_three = '<div id="accept-final-button-mission-' . $mission->guid . '" name="accept-final-button" style="display:inline-block;">' . mm_finalize_button($mission, elgg_get_logged_in_user_entity()) . '</div>';
+				$button_three = '<div id="final-accept-button-mission-' . $mission->guid . '" name="final-accept-button" style="display:inline-block;">' . mm_finalize_button($mission, elgg_get_logged_in_user_entity()) . '</div>';
 				$button_four = '<div id="decline-button-mission-' . $mission->guid . '" name="decline-button" style="display:inline-block;">' . elgg_view('output/url', array(
 					'href' => elgg_get_site_url() . 'missions/reason-to-decline/' . $mission->guid,
 					'text' => elgg_echo('missions:decline'),
@@ -269,7 +269,7 @@ function mm_create_button_set_base($mission, $full_view=false) {
 		}
 	}
 	else {
-		if(elgg_get_logged_in_user_entity()->opt_in_missions == 'gcconnex_profile:opt:yes') {
+		if(check_if_opted_in(elgg_get_logged_in_user_entity())) {
 			$button_three = '<div id="duplicate-button-mission-' . $mission->guid . '" name="duplicate-button" style="display:inline-block;">' . elgg_view('output/url', array(
 					'href' => elgg_get_site_url() . 'action/missions/duplicate-mission?mid=' . $mission->guid,
 					'text' => elgg_echo('missions:duplicate'),
@@ -518,7 +518,8 @@ function mm_get_invitable_missions($user_guid) {
 		$invited_already = false;
 		if(check_entity_relationship($entity->guid, 'mission_accepted', $user_guid) ||
 				check_entity_relationship($entity->guid, 'mission_applied', $user_guid) ||
-				check_entity_relationship($entity->guid, 'mission_tentative', $user_guid)) {
+				check_entity_relationship($entity->guid, 'mission_tentative', $user_guid) ||
+				check_entity_relationship($entity->guid, 'mission_offered', $user_guid)) {
 			$invited_already = true;
 		}
 		
@@ -580,6 +581,9 @@ function mm_offer_button($mission, $applicant) {
 	}
 }
 
+/*
+ * Returns an accept button to a user who has received an offer if the mission is not full.
+ */
 function mm_finalize_button($mission, $applicant) {
 	$relationship_count = elgg_get_entities_from_relationship(array(
 			'relationship' => 'mission_accepted',
@@ -609,6 +613,9 @@ function mm_finalize_button($mission, $applicant) {
 	}
 }
 
+/*
+ * Function which gets a translation key given the translated value whether it's in english or french.
+ */
 function mm_get_translation_key_from_setting_string($input, $setting_string) {
 	$english_array = mm_echo_explode_setting_string($setting_string, 'en');
 	foreach($english_array as $key => $value) {
@@ -640,6 +647,9 @@ function mm_get_translation_key_from_setting_string($input, $setting_string) {
 	}
 }
 
+/*
+ * Function which sorts a set of missions by a given value in ascending or descending order.
+ */
 function mm_sort_mission_decider($sort, $order, $entity_set) {
 	$backup_array = $entity_set;
 	
@@ -673,30 +683,64 @@ function mm_sort_mission_decider($sort, $order, $entity_set) {
 	}
 }
 
+/*
+ * Compares missions by job type.
+ */
 function mm_cmp_mission_by_type($a, $b) {
 	if(elgg_echo($a->job_type) == elgg_echo($b->job_type)) {
 		return 0;
 	}
-	return (elgg_echo($a->job_type) < elgg_echo($b->job_type)) ? -1 : 1;
+	return (elgg_echo($a->job_type) < elgg_echo($b->job_type)) ? 1 : -1;
 }
 
+/*
+ * Compares missions by their creation timestamp.
+ */
 function mm_cmp_mission_by_posted_date($a, $b) {
 	if($a->time_created == $b->time_created) {
 		return 0;
 	}
-	return ($a->time_created < $b->time_created) ? -1 : 1;
+	return ($a->time_created < $b->time_created) ? 1 : -1;
 }
-
+/*
+ * Compares missions by the closing timestamp.
+ */
 function mm_cmp_mission_by_closed_date($a, $b) {
 	if($a->time_closed == $b->time_closed) {
 		return 0;
 	}
-	return ($a->time_closed < $b->time_closed) ? -1 : 1;
+	return ($a->time_closed < $b->time_closed) ? 1 : -1;
 }
 
+/*
+ * Compares missions by their deadline date.
+ */
 function mm_cmp_mission_by_deadline($a, $b) {
 	if($a->deadline == $b->deadline) {
 		return 0;
 	}
-	return ($a->deadline < $b->deadline) ? -1 : 1;
+	return ($a->deadline < $b->deadline) ? 1 : -1;
+}
+
+function check_if_opted_in($current_user) {
+	if($current_user->opt_in_missions == 'gcconnex_profile:opt:yes') {
+		return true;
+	}
+	if($current_user->opt_in_swap == 'gcconnex_profile:opt:yes') {
+		return true;
+	}
+	if($current_user->opt_in_mentored == 'gcconnex_profile:opt:yes') {
+		return true;
+	}
+	if($current_user->opt_in_mentoring == 'gcconnex_profile:opt:yes') {
+		return true;
+	}
+	if($current_user->opt_in_shadowed == 'gcconnex_profile:opt:yes') {
+		return true;
+	}
+	if($current_user->opt_in_shadowing == 'gcconnex_profile:opt:yes') {
+		return true;
+	}
+	
+	return false;
 }

@@ -504,6 +504,13 @@ function editProfile(event) {
                 $('.save-' + $section).show();
                 $('.save-' + $section).removeClass('hidden');
                 $('.save-' + $section).removeClass('wb-invisible');
+
+                $('.cancel-' + $section).show();
+                $('.cancel-' + $section).removeClass('hidden');
+                $('.cancel-' + $section).removeClass('wb-invisible');
+
+                $('load-spinner').addClass('hidden');
+                $('.load-spinner').addClass('wb-invisible');
             });
             break;
         /*
@@ -1013,10 +1020,10 @@ function saveProfile(event) {
             opt_in_set[3] = $options.find('#gcconnex-opt-in-mentoring-check').is(':checked');
             opt_in_set[4] = $options.find('#gcconnex-opt-in-shadowed-check').is(':checked');
             opt_in_set[5] = $options.find('#gcconnex-opt-in-shadowing-check').is(':checked');
-            opt_in_set[6] = $options.find('#gcconnex-opt-in-peer-coached-check').is(':checked');
+            /*opt_in_set[6] = $options.find('#gcconnex-opt-in-peer-coached-check').is(':checked');
             opt_in_set[7] = $options.find('#gcconnex-opt-in-peer-coaching-check').is(':checked');
             opt_in_set[8] = $options.find('#gcconnex-opt-in-skill-sharing-check').is(':checked');
-            opt_in_set[9] = $options.find('#gcconnex-opt-in-job-sharing-check').is(':checked');
+            opt_in_set[9] = $options.find('#gcconnex-opt-in-job-sharing-check').is(':checked');*/
                     
             for(i=0;i<opt_in_set.length;i++) {
                 if(opt_in_set[i]) {

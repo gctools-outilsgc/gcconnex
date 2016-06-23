@@ -65,7 +65,7 @@ function mm_is_guid_number($num)
 }
 
 /*
- * A regex which check the time format.
+ * A regex which checks the time format.
  * Valid:
  * 1:00
  * 23:59
@@ -78,6 +78,14 @@ function mm_is_valid_time($time) {
 	$regex = '/[0-2][0-9][:][0-6][0-9]$/';
 	
 	return preg_match($regex, $time);
+}
+
+/*
+ * A regex which checks the date format.
+ */
+function mm_is_valid_date($date) {
+	$regex = '/^((19|20)\d\d)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/';
+	return preg_match($regex, $date);
 }
 
 /*
@@ -192,24 +200,29 @@ function mm_validate_time($day, $input_array)
  	}
  	
  	// Checks if the email a valid email address according to a function defined above.
- 	if (!filter_var($input_array['email'], FILTER_VALIDATE_EMAIL)) {
- 		$err .= elgg_echo('missions:error:email_invalid') . "\n";
+ 	if($input_array['email'] == '') {
+ 		$err .= elgg_echo('missions:error:email_needs_input') . "\n";
  	}
- 	else {
- 		if(strlen($input_array['email']) > $name_and_email_limit) {
-	 		$err .= elgg_echo('missions:error:exceeds_string_length', array(elgg_echo('missions:your_email'), $name_and_email_limit)) . "\n";
+ 	else {	
+	 	if (!filter_var($input_array['email'], FILTER_VALIDATE_EMAIL)) {
+	 		$err .= elgg_echo('missions:error:email_invalid') . "\n";
 	 	}
 	 	else {
-	 		$returned_users = get_user_by_email($input_array['email']);
-		 	if(count($returned_users) == 0) {
-		 		$err .= elgg_echo('missions:error:email_not_on_gcconnex', array($input_array['email'])) . "\n";
+	 		if(strlen($input_array['email']) > $name_and_email_limit) {
+		 		$err .= elgg_echo('missions:error:exceeds_string_length', array(elgg_echo('missions:your_email'), $name_and_email_limit)) . "\n";
+		 	}
+		 	else {
+		 		$returned_users = get_user_by_email($input_array['email']);
+			 	if(count($returned_users) == 0) {
+			 		$err .= elgg_echo('missions:error:email_not_on_gcconnex', array($input_array['email'])) . "\n";
+			 	}
 		 	}
 	 	}
- 	}
- 	
- 	// Checks if the phone number is a valid phone number according to a function defined above.
- 	if (!mm_is_valid_phone_number($input_array['phone']) && !empty($input_array['phone'])) {
- 		$err .= elgg_echo('missions:error:phone_invalid') . "\n";
+	 	
+	 	// Checks if the phone number is a valid phone number according to a function defined above.
+	 	if (!mm_is_valid_phone_number($input_array['phone']) && !empty($input_array['phone'])) {
+	 		$err .= elgg_echo('missions:error:phone_invalid') . "\n";
+	 	}
  	}
  	
  	return $err;
@@ -235,30 +248,25 @@ function mm_validate_time($day, $input_array)
  		$err .= elgg_echo('missions:error:opportunity_type_needs_input') . "\n";
  	}
  	
- 	if (trim($input_array['start_date']) == '') {
- 		$err .= elgg_echo('missions:error:start_date_needs_input') . "\n";
- 	}
- 	else {
- 		if(!strtotime($input_array['start_date'])) {
- 			$err .= elgg_echo('missions:error:start_date_not_date') . "\n";
+ 	$date_type_array = array('start_date', 'completion_date', 'deadline');
+ 	foreach($date_type_array as $date_type) {
+ 		if (trim($input_array[$date_type]) == '' && $date_type != 'completion_date') {
+ 			$err .= elgg_echo('missions:error:' . $date_type . '_needs_input') . "\n";
  		}
- 	}
- 	
- 	if (trim($input_array['completion_date']) == '') {
- 		//$err .= elgg_echo('missions:error:end_date_needs_input') . "\n";
- 	}
- 	else {
- 		if(!strtotime($input_array['completion_date'])) {
- 			$err .= elgg_echo('missions:error:completion_date_not_date') . "\n";
- 		}
- 	}
- 	
- 	if (trim($input_array['deadline']) == '') {
- 		$err .= elgg_echo('missions:error:deadline_needs_input') . "\n";
- 	}
- 	else {
- 		if(!strtotime($input_array['deadline'])) {
- 			$err .= elgg_echo('missions:error:deadline_not_date') . "\n";
+ 		else {
+ 			$date_before = $input_array[$date_type];
+ 			if($date_before != '') {
+	 			if(!mm_is_valid_date($date_before)) {
+		 			$err .= elgg_echo('missions:error:' . $date_type . '_not_formatted_properly') . "\n";
+	 			}
+	 			else {
+		 			$timestamp = strtotime($date_before);
+		 			$date_after = date('Y-m-d', $timestamp);
+		 			if(!$timestamp || $date_after != $date_before) {
+		 				$err .= elgg_echo('missions:error:' . $date_type . '_not_date') . "\n";
+		 			}
+	 			}
+ 			}
  		}
  	}
  	
@@ -319,7 +327,7 @@ function mm_validate_time($day, $input_array)
  }
  
  /*
-  * 
+  * Checks that any day start or duration values are present in the input array.
   */
  function mm_check_days_for_start_or_duration($input) {
  	$input_type = '';
@@ -356,7 +364,8 @@ function mm_validate_time($day, $input_array)
  }
  
  /*
-  * 
+  * An extra check that runs if a days start or duration values are not empty.
+  * The timezone cannot be empty in that case.
   */
  function mm_third_post_special_error_check($input_array) {
  	$err = '';

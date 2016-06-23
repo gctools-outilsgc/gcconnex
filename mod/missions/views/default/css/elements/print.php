@@ -1,4 +1,4 @@
-.mission-printer { border-style: solid; border-width: 4px; width: 30%;
+.mission-printer { border-style: solid; border-width: 4px;
 padding: 16px; } .mission-more { width: 60%; } .mission-printer
 .short-table { table-layout: fixed; height: 100px; } .mission-printer
 .short-table tr { height: 33px; } .mission-printer h3 { display: inline;

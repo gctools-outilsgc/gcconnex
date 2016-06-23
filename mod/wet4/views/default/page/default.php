@@ -55,6 +55,12 @@ $version = $wet4plugin->getManifest()->getVersion();
 if(elgg_is_active_plugin('GoC_dev_banner')){
     $alert = elgg_view('banner/dev_banner');
 }
+if(elgg_instanceof(elgg_get_page_owner_entity(), 'group')){
+    if(!elgg_in_context('event_calendar') && !elgg_in_context('gcforums')){
+        $group_cover_image = elgg_view('page/elements/cover_photo', $vars);
+    }
+    
+}
 
 $feedbackText= elgg_echo('wet:feedbackText');
 $body = <<<__BODY
@@ -84,11 +90,12 @@ $navbar
 $breadcrumbs
         
 	</header>
-    
-	<main role="main" property="mainContentOfPage" class="container">
-		<div class="elgg-page-messages">
+    <div class="elgg-page-messages container">
 		$messages
 	   </div>
+    $group_cover_image
+	<main role="main" property="mainContentOfPage" class="container">
+		
         <!--<div class="elgg-inner">-->
             $userMenu
         <!--<section>-->

@@ -7,6 +7,9 @@
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
 
+/*
+ * Action which sets session variables which determine what value missions are sorted by and whether they're in ascending or descending order.
+ */
 $sort_field = get_input('sort_field');
 $order_field = get_input('order_field');
 

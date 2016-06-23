@@ -63,8 +63,8 @@ $french = array(
 'gforums:description_label' => "Description",
 'gcforums:save_button' => "Sauvegarder",
 
-'gcforums:subscribe' => 'Subscribe',
-'gcforums:unsubscribe' => 'Unsubscribe',
+'gcforums:subscribe' => 'S\'abonner',
+'gcforums:unsubscribe' => 'Se désabonner',
 
 	);
 

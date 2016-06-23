@@ -196,6 +196,40 @@ if ($has_uploaded_icon) {
 	}
 }
 
+//Nick - Added action for user to upload a coverphoto to their group profile
+$c_photo = $_FILES['c_photo'];
+//print_r($_FILES['c_photo']);
+foreach($c_photo as $c){
+    $printing_files .= $c .' , ';
+}
+if(reset($c_photo) ){
+    $prefix = "groups_c_photo/" . $group->guid;
+
+    $filehandler2 = new ElggFile();
+	$filehandler2->owner_guid = $group->owner_guid;
+    $filehandler2->container_guid = $group->guid;
+    $filehandler2->subtype = 'c_photo';
+	$filehandler2->setFilename($prefix . ".jpg");
+	$filehandler2->open("write");
+	$filehandler2->write(get_uploaded_file('c_photo'));
+	$filehandler2->close();
+    $filehandler2->save();
+    
+    $c_photo_guid = $filehandler2->getGUID();
+    $subtype_testing = $filehandler2->getSubtype();
+    system_message(reset($c_photo) . ' - '. 'TEST = ' .$c_photo_guid . ' subtype ='.$subtype_testing);
+   $group->cover_photo =$c_photo_guid;
+}else if(isset($group->cover_photo) && $group->cover_photo !='nope'){
+
+}else{
+$group->cover_photo = 'nope';
+}
+
+$remove_c_photo = get_input('remove_photo');
+if($remove_c_photo){
+    $group->cover_photo = 'nope';
+}
+//$group->addRelationship($c_photo_guid, 'c_photo');
 // owner transfer
 $old_owner_guid = $is_new_group ? 0 : $group->owner_guid;
 $new_owner_guid = (int) get_input('owner_guid');

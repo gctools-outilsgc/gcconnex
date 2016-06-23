@@ -2,7 +2,7 @@
 /*
  * Preset all plugin settings.
  */
-elgg_set_plugin_setting('mission_version', 10, 'missions');
+elgg_set_plugin_setting('mission_version', 12, 'missions');
 
 elgg_set_plugin_setting('search_limit', '100', 'missions');
 elgg_set_plugin_setting('river_message_limit', '100', 'missions');
@@ -44,12 +44,13 @@ elgg_set_plugin_setting('duration_string', $duration_string, 'missions');
 $time_rate_string = 'missions:total' . ',' . 'missions:per_day' . ',' . 'missions:per_week' . ',' . 'missions:per_month';
 elgg_set_plugin_setting('time_rate_string', $time_rate_string, 'missions');
 
-$opportunity_type_string = 'missions:micro_mission' . ',' . 'missions:job_swap' . ',' . 'missions:mentoring' . ',' 
+/*$opportunity_type_string = 'missions:micro_mission' . ',' . 'missions:job_swap' . ',' . 'missions:mentoring' . ',' 
 		. 'missions:shadowing' . ',' . 'missions:peer_coaching' . ',' . 'missions:skill_sharing' . ',' 
-				. 'missions:job_sharing';
+				. 'missions:job_sharing';*/
+$opportunity_type_string = 'missions:micro_mission' . ',' . 'missions:mentoring' . ',' . 'missions:job_swap' . ',' . 'missions:job_shadowing';
 elgg_set_plugin_setting('opportunity_type_string', $opportunity_type_string, 'missions');
 
-$province_string = 'missions:alberta' . ',' . 'missions:british_columbia' . ',' . 'missions:manitoba' . ',' 
+$province_string = ',' . 'missions:alberta' . ',' . 'missions:british_columbia' . ',' . 'missions:manitoba' . ',' 
 		. 'missions:new_brunswick' . ',' . 'missions:newfoundland_and_labrador' . ',' . 'missions:northwest_territories' . ',' 
 				. 'missions:nova_scotia' . ',' . 'missions:nunavut' . ',' . 'missions:ontario' . ',' 
 						. 'missions:prince_edward_island' . ',' . 'missions:quebec' . ',' . 'missions:saskatchewan' . ',' 

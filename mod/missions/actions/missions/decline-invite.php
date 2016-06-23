@@ -8,11 +8,10 @@
  */
 
 /*
- * Declines the invitation sent to a candidate.
+ * Declines the invitation sent to a candidate and creates and mission-declination object.
  */
 $applicant = get_user(get_input('hidden_applicant_guid'));
 $mission = get_entity(get_input('hidden_mission_guid'));
-//$manager = get_user($mission->owner_guid);
 
 // Processes the reason given by the declining user whether it's from the dropdown menu or the free text entry.
 $reason = get_input('reason');
@@ -47,6 +46,7 @@ if(check_entity_relationship($mission->guid, 'mission_accepted', $applicant->gui
 	remove_entity_relationship($mission->guid, 'mission_accepted', $applicant->guid);
 }
 
+// Object which stores the reason for declining a mission.
 $declination = new ElggObject();
 $declination->subtype = 'mission-declination';
 $declination->title = 'Micro-Mission Declination Report';
@@ -63,11 +63,10 @@ $mission_link = elgg_view('output/url', array(
     'text' => elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))
 ));
 
-$subject = elgg_echo('missions:applicant_leaves', array($applicant->name)/*, $manager->language*/);
-$body = elgg_echo('missions:applicant_leaves_more', array($applicant->name)/*, $manager->language*/) . $mission_link . '.' . "\n";
-$body .= elgg_echo('missions:reason_given', array($reason)/*, $manager->language*/);
+$subject = elgg_echo('missions:applicant_leaves', array($applicant->name));
+$body = elgg_echo('missions:applicant_leaves_more', array($applicant->name)) . $mission_link . '.' . "\n";
+$body .= elgg_echo('missions:reason_given', array($reason));
 mm_notify_user($mission->guid, $applicant->guid, $subject, nl2br($body));
-                
-//forward(elgg_get_site_url() . 'messages/inbox/' . $applicant->username);
+
 system_message(elgg_echo($message_return, array($mission->job_title)));
 forward(elgg_get_site_url() . 'missions/main');

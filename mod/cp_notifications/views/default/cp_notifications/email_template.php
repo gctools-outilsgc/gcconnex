@@ -21,7 +21,7 @@ $cp_notify_msg_footer = elgg_echo('cp_notify:footer2',array(),'fr') .'  '. elgg_
 
 
 // All info for the event_calendar email
-$event = $vars['event'];
+$event = $vars['cp_event'];
 $name = $vars['cp_topic_author'];
 $event_infos = array(
 	'title' => $event->title,
@@ -45,7 +45,10 @@ $description_info_fr = '';
 if (strcmp($vars['type_event'],'CANCEL') == 0) {
 	$description_info_en .= '<h3 style ="font-family:sans-serif; color:#ff0000;">This event has been cancel!</h3>';
 	$description_info_fr .= '<h3 style ="font-family:sans-serif; color:#ff0000;">Cet événement à été annulé!</h3>';
-} else {
+} elseif (strcmp($vars['type_event'],'UPDATE') == 0){
+	$description_info_en .= '<h3 style ="font-family:sans-serif;">This event has been updated</h3>';//NEW
+	$description_info_fr .= '<h3 style ="font-family:sans-serif;">Cet événement a été mis à jour.</h3>';//NEW
+}else {
 	$description_info_en .= '<h3 style ="font-family:sans-serif;">New event in your calendar</h3>';
 	$description_info_fr .= '<h3 style ="font-family:sans-serif;">Nouvel événement dans votre calendrier</h3>';
 }
@@ -54,28 +57,27 @@ if (strcmp($vars['type_event'],'CANCEL') == 0) {
 //$description_info_fr .= '<h3 style ="font-family:sans-serif";>Infos</h3>';
 
 foreach ($event_infos as $info_key => $info_val) {
-	if ($info_val != '') {
+	if (($info_val != '') && (strcmp('link',$info_key) !== 0)) {//remove the double link in the email
 		$description_info_en .= elgg_echo("cp_notify:body_event:event_{$info_key}", array($info_val), 'en').'<br/>';
 		$description_info_fr .= elgg_echo("cp_notify:body_event:event_{$info_key}", array($info_val), 'fr').'<br/>';
 
 		// cyu - make option so that "add to outlook" can be disabled
 		// note: roundrect... snippets are html buttons for email
-		if (strcmp('link',$info_key) == 0) {
-			$description_info_en .= '<b>'.elgg_echo('cp_notify:body_event:event_add_to_outlook', array(), 'en').'</b>:'."
-				<v:roundrect xmlns:v='urn:schemas-microsoft-com:vml' xmlns:w='urn:schemas-microsoft-com:office:word' href='{$info_val}' style='height:40px;v-text-anchor:middle;width:125px;' arcsize='10%' strokecolor='#1e3650' fillcolor='#047177'>
+	}
+
+}
+
+$description_info_en .= /*'<b>'.elgg_echo('cp_notify:body_event:event_add_to_outlook', array(), 'en').'</b>:'.*/
+				"<v:roundrect xmlns:v='urn:schemas-microsoft-com:vml' xmlns:w='urn:schemas-microsoft-com:office:word' href='{$info_val}' style='height:40px;v-text-anchor:middle;width:125px;' arcsize='10%' strokecolor='#1e3650' fillcolor='#047177'>
 					<w:anchorlock/>
 					<center style='color:#ffffff; font-family:sans-serif;font-size:13px;font-weight:bold;'>".elgg_echo('cp_notify:body_event:event_add_to_outlook', array(), 'en')."</center>
 				</v:roundrect><br/>";
 
-			$description_info_fr .= '<b>'.elgg_echo('cp_notify:body_event:event_add_to_outlook', array(), 'fr').'</b> : '."
-				<v:roundrect xmlns:v='urn:schemas-microsoft-com:vml' xmlns:w='urn:schemas-microsoft-com:office:word' href='{$info_val}' style='height:40px;v-text-anchor:middle;width:125px;' arcsize='10%' strokecolor='#1e3650' fillcolor='#047177'>
+			$description_info_fr .= /*'<b>'.elgg_echo('cp_notify:body_event:event_add_to_outlook', array(), 'fr').'</b> : '.*/
+				"<v:roundrect xmlns:v='urn:schemas-microsoft-com:vml' xmlns:w='urn:schemas-microsoft-com:office:word' href='{$info_val}' style='height:40px;v-text-anchor:middle;width:125px;' arcsize='10%' strokecolor='#1e3650' fillcolor='#047177'>
 					<w:anchorlock/>
 					<center style='color:#ffffff; font-family:sans-serif;font-size:13px;font-weight:bold;'>".elgg_echo('cp_notify:body_event:event_add_to_outlook', array(), 'fr')."</center>
 				</v:roundrect><br/>";
-		}
-	}
-}
-
 
 
 switch ($msg_type) {
@@ -392,8 +394,8 @@ switch ($msg_type) {
 		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_event:title',array($cp_topic_author->name,$cp_topic_title),'en');
 		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_event:title',array($cp_topic_author->name,$cp_topic_title),'fr');
 
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_event:description',array($cp_topic_description,$informationEn),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_event:description',array($cp_topic_description,$informationFr),'fr');
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_event:description',array($description_info_en),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_event:description',array($description_info_fr),'fr');
 
 		$cp_notify_msg_footer_en = elgg_echo('cp_notify:footer',array(elgg_get_site_url().'/settings/plugins/admin/cp_notifications'),'en');
 		$cp_notify_msg_footer_fr = elgg_echo('cp_notify:footer',array(elgg_get_site_url().'/settings/plugins/admin/cp_notifications'),'fr');

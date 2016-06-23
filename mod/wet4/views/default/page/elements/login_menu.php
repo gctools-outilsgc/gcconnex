@@ -293,18 +293,20 @@ $site_url = elgg_get_site_url();
      }else{
 $session = elgg_get_session();
 
+//EW - removed returning/forwarding code to allow user to stay on same page after login
+
 // set forward url
-if ($session->has('last_forward_from')) {
+/*if ($session->has('last_forward_from')) {
 	$forward_url = $session->get('last_forward_from');
 	$forward_source = 'last_forward_from';
 } elseif (get_input('returntoreferer')) {
 	$forward_url = REFERER;
 	$forward_source = 'return_to_referer';
-} else {
+} else {*/
 	// forward to main index page
-	$forward_url = '';
+	$forward_url = current_page_url();
 	$forward_source = null;
-}
+//}
 
 $username = get_input('username');
 $password = get_input('password', null, false);
@@ -355,6 +357,10 @@ if ($user->language) {
 $session->remove('last_forward_from');
 
 $params = array('user' => $user, 'source' => $forward_source);
+
+//EW - Remove query strings that have username/password in them after login
+$forward_url = str_replace('username=' . $username . '&password=' . $password, '', $forward_url);
+
 $forward_url = elgg_trigger_plugin_hook('login:forward', 'user', $params, $forward_url);
 
 system_message($message);

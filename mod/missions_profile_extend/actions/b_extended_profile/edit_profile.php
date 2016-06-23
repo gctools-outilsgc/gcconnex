@@ -104,7 +104,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
         case 'about-me':
             //$user->description = get_input('description', 'ERROR: Ask your admin to grep: 5FH13GAHHHS0001.');
 
-            error_log(print_r("access: " . get_input('access')));
+            //error_log(print_r("access: " . get_input('access')));
             create_metadata($user_guid, 'description', get_input('description', 'ERROR: Ask your admin to grep: 5FH13GAHHHS0001.'), 'text', 0, get_input('access'));
 
             $user->save();
@@ -412,19 +412,20 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
 			
 			$metadata = elgg_get_metadata(array(
                 'metadata_names' => array('english'),
-                'entity_guid' => elgg_get_logged_in_user_guid(),
+                'metadata_owner_guids' => array(elgg_get_logged_in_user_guid()),
 
             ));
             if ($metadata){
                 foreach ($metadata as $data){
-
+					
                     update_metadata($data->id, $data->name, $data->value, $data->value_type, $data->owner_guid, $access);
+                    //error_log('id '.$data->id .' name '. $data->name.' value '. $data->value.' value type '. $data->value_type.' owner_guid '.$data->owner_guid.' $access '. $access);
                 }
                 //$metadata[0]->save();
             }
             $metadata = elgg_get_metadata(array(
                 'metadata_names' => array('french'),
-                'entity_guid' => elgg_get_logged_in_user_guid(),
+                'metadata_owner_guids' => array(elgg_get_logged_in_user_guid()),
 
             ));
             if ($metadata){
@@ -436,7 +437,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             }
 			$metadata = elgg_get_metadata(array(
                 'metadata_names' => array('officialLanguage'),
-                'entity_guid' => elgg_get_logged_in_user_guid(),
+                'metadata_owner_guids' => array(elgg_get_logged_in_user_guid()),
 
             ));
             if ($metadata){
@@ -538,13 +539,13 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             $user->save();
 
             break;
-        /*
-         * MODIFIED CODE!
-         * optset is the array of opt-in choices and gets directly saved as a metadata array (cannot be associative).
-         * access is not currently being used for anything.
-         */
-        case 'opt-in':
-           	$opt_in_set = get_input('opt_in_set');
+	   /*
+        * MODIFIED CODE!
+        * optset is the array of opt-in choices and gets directly saved as a metadata array (cannot be associative).
+        * access is not currently being used for anything.
+        */
+       case 'opt-in':
+            $opt_in_set = get_input('opt_in_set');
             $access = get_input('access');
             
             $user->opt_in_missions = $opt_in_set[0];
@@ -553,10 +554,10 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             $user->opt_in_mentoring = $opt_in_set[3];
             $user->opt_in_shadowed = $opt_in_set[4];
             $user->opt_in_shadowing = $opt_in_set[5];
-            $user->opt_in_peer_coached = $opt_in_set[6];
+            /*$user->opt_in_peer_coached = $opt_in_set[6];
             $user->opt_in_peer_coaching = $opt_in_set[7];
             $user->opt_in_skill_sharing = $opt_in_set[8];
-            $user->opt_in_job_sharing = $opt_in_set[9];
+            $user->opt_in_job_sharing = $opt_in_set[9];*/
             
             // Not saving this at the moment because it is not in use.
             //$user->optaccess = $access;
@@ -564,10 +565,10 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             $user->save();
             
             break;
-		/*
-		 * END MODIFIED CODE
-		 */
-            
+       /*
+        * END MODIFIED CODE
+        */
+            	
         default:
             system_message(elgg_echo("profile:saved"));
 

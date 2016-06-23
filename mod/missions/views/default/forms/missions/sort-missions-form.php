@@ -7,6 +7,9 @@
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
 
+/*
+ * Form which determines which value missions are being sorted by and whether or not they are in ascending or descending order.
+ */
 $sort_field = $_SESSION['missions_sort_field_value'];
 $order_field = $_SESSION['missions_order_field_value'];
 
@@ -40,21 +43,21 @@ $input_order_field = elgg_view('input/dropdown', array(
 ));
 ?>
 
-<div class="col-sm-5" style="border:solid;padding:4px;">
+<div class="col-sm-12" style="border:solid;padding:4px;">
 	<div>
-		<div style="display:inline-block;">
+		<label for="missions-sort-missions-sort-field-text-input" class="col-sm-6" style="margin:4px;">
 			<?php echo elgg_echo('missions:sort_by') . ': '; ?>
-		</div>
-		<div style="display:inline-block;">
+		</label>
+		<div class="col-sm-5" style="margin:4px;">
 			<?php echo $input_sort_field; ?>
 		</div>
 		
 	</div>
 	<div>
-		<div style="display:inline-block;">
+		<label for="missions-sort-missions-order-field-text-input" class="col-sm-6" style="margin:4px;">
 			<?php echo elgg_echo('mission:following_order') . ': '; ?>
-		</div>
-		<div style="display:inline-block;">
+		</label>
+		<div class="col-sm-5" style="margin:4px;">
 			<?php echo $input_order_field; ?>
 		</div>
 	</div>
@@ -63,7 +66,8 @@ $input_order_field = elgg_view('input/dropdown', array(
 			echo elgg_view('input/submit', array(
 					'value' => elgg_echo('missions:sort'),
 					'class' => 'elgg-button btn btn-default',
-					'id' => 'missions-sort-missions-form-submission-button'
+					'id' => 'missions-sort-missions-form-submission-button',
+					'style' => 'margin:8px;float:right;'
 			));
 		?>
 	</div>

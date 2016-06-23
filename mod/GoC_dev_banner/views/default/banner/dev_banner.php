@@ -15,7 +15,7 @@ if (elgg_get_plugin_setting('Banneractive', 'GoC_dev_banner')) {
         $Notstartdate=date('Y-m-d',strtotime(elgg_get_plugin_setting('startdate','GoC_dev_banner')));
         $Notenddate=date('Y-m-d',strtotime(elgg_get_plugin_setting('enddate','GoC_dev_banner')));
         $currdate=date('Y-m-d');
-        if(($currdate >$Notstartdate) &&  ($currdate<$Notenddate)){
+        if(($currdate >=$Notstartdate) &&  ($currdate<=$Notenddate)){
             
             echo '<div class="alert alert-'.elgg_get_plugin_setting('bannertype','GoC_dev_banner').' text-center mrgn-bttm-0" role="alert"><p>' .elgg_get_plugin_setting('notice'.$NotTextLang,'GoC_dev_banner');
             if(elgg_get_plugin_setting('moreinfolink','GoC_dev_banner') !=""){

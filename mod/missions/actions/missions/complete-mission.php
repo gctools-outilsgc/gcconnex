@@ -22,9 +22,9 @@ foreach($mission_relation_list as $relation) {
 	// Messages all mission participants that the mission is completed.
 	if($relation->relationship == 'mission_accepted') {
 		$feedback_link = elgg_view('output/url', array(
-	 				'href' => elgg_get_site_url() . 'missions/mission-feedback/' . $mission_guid,
-	 				'text' => elgg_echo('missions:mission_feedback')
-	 		));
+	 			'href' => elgg_get_site_url() . 'missions/mission-feedback/' . $mission_guid,
+	 			'text' => elgg_echo('missions:mission_feedback')
+	 	));
 		
 		$subject = $mission->job_title . ' ' . elgg_echo('missions:feedback');
 		$body = $mission->job_title . ' ' . elgg_echo('missions:feedback_message') . "\n" . $feedback_link;

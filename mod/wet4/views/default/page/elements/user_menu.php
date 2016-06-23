@@ -21,9 +21,8 @@ $email = get_loggedin_user()->email;
 
 elgg_register_menu_item('user_menu_subMenu', array(
     'name' => 'profile_card',
-    
     'text' => elgg_view('page/elements/profile_card'),
-    ));
+));
 
 $dropdown = elgg_view_menu('user_menu_subMenu', array('class' => 'dropdown-menu user-menu pull-right subMenu'));
 
@@ -32,7 +31,7 @@ $dropdown = elgg_view_menu('user_menu_subMenu', array('class' => 'dropdown-menu 
 
 //admin link
 //check to see if user is an admin
-if(elgg_is_admin_logged_in()){
+if(elgg_is_admin_logged_in()) {
     elgg_register_menu_item('user_menu', array(
         'name' => 'Admin',
         'href' => $site_url . 'admin',
@@ -41,7 +40,7 @@ if(elgg_is_admin_logged_in()){
         'item_class' => 'brdr-rght',
         'class' => '',
         'priority' => '0',
-        ));
+    ));
 }
 
 
@@ -49,12 +48,12 @@ if(elgg_is_admin_logged_in()){
 
 $breakup = explode('.', $email);
 $initials = substr($breakup[0], 0, 1) . substr($breakup[1], 0, 1);
-if($user_avatar){//show avatar if they have one
+if ($user_avatar) { //show avatar if they have one
     $dropdown_avatar = '<span><img class="img-circle mrgn-rght-sm" src="'.$user_avatar.'"></span>';
 
     //EW - render to display badge instead
     $dropdown_avatar = elgg_view_entity_icon(elgg_get_logged_in_user_entity(), 'small', array('use_hover' => false, 'use_link' => false, 'class' => 'userMenuAvatar'));
-}else{ // show initials if the don't
+} else { // show initials if the don't
     $dropdown_avatar = '<span class="init-badge">' . strtoupper($initials) . '</span>';
 }
 
@@ -73,28 +72,25 @@ elgg_register_menu_item('user_menu', array(
     ));
 
 
-
-
 //display new message badge on messages
-if(elgg_is_active_plugin('messages')){
+if (elgg_is_active_plugin('messages')) {
     $unread = messages_count_unread();
-    
-    
     
     $title = ' - ' . $unread . ' ' . elgg_echo('messages:unreadmessages');
     
     //display 9+ insted of huge numbers in notif badge
-    if($unread >= 10){
+    if ($unread >= 10) {
         //$unread = '9+';
     }
     
     $msgbadge = "<span class='notif-badge'>" . $unread . "</span>";
     
-    if($unread == 0){
+    if ($unread == 0) {
         $msgbadge = '';
         $title = '';
     }
-} 
+}
+
 elgg_register_menu_item('user_menu', array(
     'name' => 'messages',
     'href' => 'messages/inbox/' . $user,
@@ -112,10 +108,6 @@ Colleague menu item runs in start.php - sorry
 
 */
 
-
-echo elgg_view_menu('user_menu', array('sort_by' => 'priority', 'id' => 'userMenu', 'class' => 'list-inline visited-link'));
-
-
-?>
-
-
+// cyu - remove the user menu when the gsa hits the page
+if (strcmp('gsa-crawler',strtolower($_SERVER['HTTP_USER_AGENT'])) != 0)
+	echo elgg_view_menu('user_menu', array('sort_by' => 'priority', 'id' => 'userMenu', 'class' => 'list-inline visited-link'));

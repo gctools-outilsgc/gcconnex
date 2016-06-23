@@ -17,6 +17,9 @@ $guid = elgg_extract('guid', $vars, null);
 	<label for="title"><?php echo elgg_echo('title'); ?></label><br />
 	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title, 'id' => 'title')); ?>
 </div>
+<div class="quick-start-collapse">
+    
+    
 <div class="mrgn-bttm-md">
 	<label for="description"><?php echo elgg_echo('groups:topicmessage'); ?></label>
 	<?php echo elgg_view('input/longtext', array('name' => 'description', 'value' => $desc, 'id' => 'description')); ?>
@@ -25,6 +28,8 @@ $guid = elgg_extract('guid', $vars, null);
 	<label for="tags"><?php echo elgg_echo('tags'); ?></label>
 	<?php echo elgg_view('input/tags', array('name' => 'tags', 'value' => $tags, 'id' => 'tags')); ?>
 </div>
+</div>
+<div class="quick-start-hide">
 <div class="mrgn-bttm-md">
     <label for="status"><?php echo elgg_echo("groups:topicstatus"); ?></label><br />
 	<?php
@@ -37,8 +42,9 @@ $guid = elgg_extract('guid', $vars, null);
 				'closed' => elgg_echo('status:closed'),
 			),
 		));
-	?>
+    ?>
 </div>
+
 <div class="mrgn-bttm-md"> 
 	<label for="access_id"><?php echo elgg_echo('access'); ?></label><br />
 	<?php echo elgg_view('input/access', array(
@@ -50,20 +56,19 @@ $guid = elgg_extract('guid', $vars, null);
 		'entity_subtype' => 'groupforumtopic',
 	)); ?>
 </div>
-<div class="elgg-foot">
-<?php
-
+</div>
+<div class="quick-start-collapse">
+    <div class="elgg-foot">
+        <?php
 echo elgg_view('input/hidden', array('name' => 'container_guid', 'value' => $container_guid));
-
 if ($guid) {
 	echo elgg_view('input/hidden', array('name' => 'topic_guid', 'value' => $guid));
 }
-
 if($guid){
     echo elgg_view('input/submit', array('value' => elgg_echo('save'), 'class' => 'btn btn-primary'));
 } else {
     echo elgg_view('input/submit', array('value' => 'Create Discussion', 'class' => 'btn btn-primary'));
 }
-
-?>
+        ?>
+    </div>
 </div>

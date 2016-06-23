@@ -7,6 +7,9 @@
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
 
+/*
+ * Form which allows admins to target a mission by GUID and then perform an action on it.
+ */
 $input_mission_guid = elgg_view('input/text', array(
 		'name' => 'mission_guid',
 		'value' => '',

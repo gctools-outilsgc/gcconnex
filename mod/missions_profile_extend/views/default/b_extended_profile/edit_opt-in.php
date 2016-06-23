@@ -45,7 +45,7 @@ if (elgg_is_xhr) {
 	if($user->opt_in_shadowing == 'gcconnex_profile:opt:yes') {
 	    $opt_in_set[5] = true;
 	}
-	if($user->opt_in_peer_coached == 'gcconnex_profile:opt:yes') {
+	/*if($user->opt_in_peer_coached == 'gcconnex_profile:opt:yes') {
 	    $opt_in_set[6] = true;
 	}
 	if($user->opt_in_peer_coaching == 'gcconnex_profile:opt:yes') {
@@ -56,7 +56,7 @@ if (elgg_is_xhr) {
 	}
 	if($user->opt_in_job_sharing == 'gcconnex_profile:opt:yes') {
 		$opt_in_set[9] = true;
-	}
+	}*/
 	
 	echo '<table class="gcconnex-profile-opt-in-options-table table table-bordered" style="margin: 10px;">';
 	echo '<tbody><tr>';
@@ -100,7 +100,7 @@ if (elgg_is_xhr) {
 			'id' => 'gcconnex-opt-in-shadowing-check' 
 	) ) . '</td>';
 	echo '</tr><tr>';
-	echo '<td class="left-col">' . elgg_echo ( 'gcconnex_profile:opt:peer_coached' ) . '</td>';
+	/*echo '<td class="left-col">' . elgg_echo ( 'gcconnex_profile:opt:peer_coached' ) . '</td>';
 	echo '<td>' . elgg_view ( "input/checkbox", array (
 			'name' => 'peer_coached_check',
 			'checked' => $opt_in_set [6],
@@ -124,7 +124,7 @@ if (elgg_is_xhr) {
 			'name' => 'job_sharing_check',
 			'checked' => $opt_in_set [9],
 			'id' => 'gcconnex-opt-in-job-sharing-check'
-	) ) . '</td>';
+	) ) . '</td>';*/
 	echo '</tr></tbody></table>';
 } else {
 	echo 'An error has occurred.';

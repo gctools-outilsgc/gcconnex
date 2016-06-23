@@ -64,6 +64,7 @@ if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
         'use_hover' => false,
         'use_link' => false,
         'class' => 'pro-avatar',
+        'force_size' => true,
     ));
 
     $iconfinal = elgg_view('output/url', array(
@@ -96,6 +97,7 @@ else {
         'use_hover' => false,
         'use_link' => false,
         'class' => 'pro-avatar',
+        'force_size' => true,
     ));
 }
 

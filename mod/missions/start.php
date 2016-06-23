@@ -17,70 +17,49 @@ elgg_register_event_handler('init', 'system', missions_init);
 function missions_init()
 {
 	elgg_register_js('typeahead', 'mod/missions/vendors/typeahead/dist/typeahead.bundle.min.js');
-	elgg_register_js('googlecharts', 'mod/missions/vendors/googlecharts/googlecharts.js');
+	//elgg_register_js('googlecharts', 'mod/missions/vendors/googlecharts/googlecharts.js');
+	elgg_register_js('missions_flot', 'mod/wet4/js/deps/jquery.flot.js');
+	elgg_register_js('missions_flot_stack_patched', 'mod/missions/vendors/flot_extra/jquery.flot.stack.patched.js');
 	
     // Register the custom library of methods for use in the plugin
     elgg_register_library('elgg:missions', elgg_get_plugins_path() . 'missions/lib/missions.php');
     elgg_register_library('elgg:missions-searching', elgg_get_plugins_path() . 'missions/lib/missions-searching.php');
     elgg_register_library('elgg:missions-errors', elgg_get_plugins_path() . 'missions/lib/missions-errors.php');
+    elgg_register_library('elgg:missions-analytics', elgg_get_plugins_path() . 'missions/lib/missions-analytics.php');
     elgg_load_library('elgg:missions');
     elgg_load_library('elgg:missions-searching');
     elgg_load_library('elgg:missions-errors');
+    elgg_load_library('elgg:missions-analytics');
 
    	elgg_load_library('elgg:missions-organization');
 
     //Register to run unit tests
 	register_plugin_hook('unit_test', 'system', 'missions_unit_tests');
 
-    // Register a method to react to the plugin page setup event for the right side menu.
-    elgg_register_event_handler('pagesetup', 'system', 'missions_setup_sidebar_menus');
-
     // Register a handler for page navigation.
     elgg_register_page_handler('missions', 'missions_main_page_handler');
 
     // Extends the original ELGG CSS with our own
-    /*
-     * elgg_extend_view('css/elgg', 'css/elements/tabbar');
-     * elgg_extend_view('css/elgg', 'css/forms/tabform');
-     * elgg_extend_view('css/elgg', 'css/elements/print');
-     * elgg_extend_view('css/elgg', 'css/elements/menu');
-     * elgg_extend_view('css/elgg', 'css/forms/advancedform');
-     */
     elgg_extend_view('css/elgg', 'css/all-mission-css');
 
     // Register our action files found in missions/action/
     elgg_register_action("missions/post-mission-first-form", elgg_get_plugins_path() . "missions/actions/missions/post-mission-first-form.php");
     elgg_register_action("missions/post-mission-second-form", elgg_get_plugins_path() . "missions/actions/missions/post-mission-second-form.php");
     elgg_register_action("missions/post-mission-third-form", elgg_get_plugins_path() . "missions/actions/missions/post-mission-third-form.php");
-    //elgg_register_action("missions/search-form", elgg_get_plugins_path() . "missions/actions/missions/search-form.php");
-    //elgg_register_action("missions/display-more", elgg_get_plugins_path() . "missions/actions/missions/display-more.php");
     elgg_register_action("missions/delete-mission", elgg_get_plugins_path() . "missions/actions/missions/delete-mission.php");
     elgg_register_action("missions/search-simple", elgg_get_plugins_path() . "missions/actions/missions/search-simple.php");
-    //elgg_register_action("missions/search-prereq", elgg_get_plugins_path() . "missions/actions/missions/search-prereq.php");
-    //elgg_register_action("missions/search-language", elgg_get_plugins_path() . "missions/actions/missions/search-language.php");
-    //elgg_register_action("missions/search-time", elgg_get_plugins_path() . "missions/actions/missions/search-time.php");
-    //elgg_register_action("missions/browse-display", elgg_get_plugins_path() . "missions/actions/missions/browse-display.php");
     elgg_register_action("missions/advanced-search-form", elgg_get_plugins_path() . "missions/actions/missions/advanced-search-form.php");
     elgg_register_action("missions/application-form", elgg_get_plugins_path() . "missions/actions/missions/application-form.php");
-    //elgg_register_action("missions/fill-form", elgg_get_plugins_path() . "missions/actions/missions/fill-form.php");
-    //elgg_register_action("missions/search-switch", elgg_get_plugins_path() . "missions/actions/missions/search-switch.php");
     elgg_register_action("missions/remove-applicant", elgg_get_plugins_path() . "missions/actions/missions/remove-applicant.php");
     elgg_register_action("missions/accept-invite", elgg_get_plugins_path() . "missions/actions/missions/accept-invite.php");
     elgg_register_action("missions/decline-invite", elgg_get_plugins_path() . "missions/actions/missions/decline-invite.php");
     elgg_register_action("missions/invite-user", elgg_get_plugins_path() . "missions/actions/missions/invite-user.php");
-    elgg_register_action("missions/remove-pending-invites", elgg_get_plugins_path() . "missions/actions/missions/remove-pending-invites.php");
     elgg_register_action("missions/change-mission-form", elgg_get_plugins_path() . "missions/actions/missions/change-mission-form.php");
-    elgg_register_action("missions/opt-from-main", elgg_get_plugins_path() . "missions/actions/missions/opt-from-main.php");
     elgg_register_action("missions/feedback-form", elgg_get_plugins_path() . "missions/actions/missions/feedback-form.php");
-    elgg_register_action("missions/delete-feedback", elgg_get_plugins_path() . "missions/actions/missions/delete-feedback.php");
     elgg_register_action("missions/complete-mission", elgg_get_plugins_path() . "missions/actions/missions/complete-mission.php");
     elgg_register_action("missions/cancel-mission", elgg_get_plugins_path() . "missions/actions/missions/cancel-mission.php");
     elgg_register_action("missions/reopen-mission", elgg_get_plugins_path() . "missions/actions/missions/reopen-mission.php");
     elgg_register_action("missions/refine-my-missions-form", elgg_get_plugins_path() . "missions/actions/missions/refine-my-missions-form.php");
-    elgg_register_action("missions/graph-interval-form", elgg_get_plugins_path() . "missions/actions/missions/graph-interval-form.php");
-    elgg_register_action("missions/graph-data-form", elgg_get_plugins_path() . "missions/actions/missions/graph-data-form.php");
-    elgg_register_action("missions/remove-department-from-graph", elgg_get_plugins_path() . "missions/actions/missions/remove-department-from-graph.php");
-    elgg_register_action("missions/users-by-opt-in-form", elgg_get_plugins_path() . "missions/actions/missions/users-by-opt-in-form.php");
     elgg_register_action("missions/wire-post", elgg_get_plugins_path() . "missions/actions/missions/wire-post.php");
     elgg_register_action("missions/mission-offer", elgg_get_plugins_path() . "missions/actions/missions/mission-offer.php");
     elgg_register_action("missions/duplicate-mission", elgg_get_plugins_path() . "missions/actions/missions/duplicate-mission.php");
@@ -102,12 +81,12 @@ function missions_init()
     // Register an ajax view for the advanced search page.
     elgg_register_ajax_view('missions/element-select');
     
-   	// Register an ajax view for the weekend dropdown elements.
-    //elgg_register_ajax_view('missions/weekend');
-    
     // Register an ajax view for adding a skill input field.
     elgg_register_ajax_view('missions/add-skill');
 
+    // Register an ajax view for generating an analytics graph.
+    elgg_register_ajax_view('missions/analytics-generator');
+    
     //Hook which sets the url for object entities upon creation.
     elgg_register_plugin_hook_handler('entity:url', 'object', 'mission_set_url');
     
@@ -121,17 +100,16 @@ function missions_init()
     //elgg_register_plugin_hook_handler('view', 'annotation/default', 'alter_mission_annotation_view');
     
     // Change the profile owner block for visiting users.
-    elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'append_profile_owner_block');
+    //elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'append_profile_owner_block');
 
-    // Adds a menu item to the original GCConnex sidebar that links to our plugin main page left side menu.
-    //$item = new ElggMenuItem('mission_main', elgg_echo('missions:micromissions'), 'missions/main');
-    //elgg_register_menu_item('user_menu', $item);
+    // Adds a menu item to the site menu (top bar).
     elgg_register_menu_item('site', array(
     		'name' => 'mission_main',
     		'href' => elgg_get_site_url() . 'missions/main',
-    		'text' => elgg_echo('missions:micromissions')
+    		'text' => elgg_echo('missions:micromissions_menu')
     ));
     
+    // Adds a menu item to the admin page under the administer section in the right hand bar.
     elgg_register_menu_item('page', array(
     		'name' => 'mission_admin_tool',
     		'href' => elgg_get_site_url() . 'admin/missions/main',
@@ -139,109 +117,6 @@ function missions_init()
     		'section' => 'administer',
     		'contexts' => array('admin')
     ));
-    
-    // Testing purposes only (so far).
-    //elgg_register_plugin_hook_handler('send', 'notification:site', 'missions_site_notifications_send');
-}
-
-/*
- * Creates a right side sidebar menu when our main page is being setup.
- * Menu items have priority as an alternate method to determine the order of items.
- * Lower priority means they are higher on the list.
- */
-function missions_setup_sidebar_menus()
-{
-    if (elgg_get_context() == 'missions') {
-        elgg_register_menu_item('mission_main', array(
-            'name' => 'post_opportunity',
-            'href' => elgg_get_site_url() . 'missions/mission-post/step-one',
-            'text' => elgg_echo('missions:post_opportunity'),
-            'priority' => 5
-        ));
-        /*
-         * elgg_register_menu_item('mission_main', array(
-         * 'name' => 'find_opportunity',
-         * 'href' => elgg_get_site_url() . 'missions/search-mission',
-         * 'text' => elgg_echo('missions:find_opportunity'),
-         * 'priority' => 10
-         * ));
-         * elgg_register_menu_item('mission_main', array(
-         * 'name' => 'close_opportunity',
-         * 'href' => elgg_get_site_url() . 'missions/close-mission',
-         * 'text' => elgg_echo('missions:close_opportunity'),
-         * 'priority' => 10
-         * ));
-         */
-        elgg_register_menu_item('mission_main', array(
-            'name' => 'search',
-            'href' => elgg_get_site_url() . 'missions/search',
-            'text' => elgg_echo('missions:search'),
-            'priority' => 10
-        ));
-        /*
-         * elgg_register_menu_item('mission_search', array(
-         * 'name' => 'simple',
-         * 'href' => elgg_get_site_url() . 'missions/search/simple',
-         * 'text' => elgg_echo('missions:simple_search'),
-         * 'priority' => 5
-         * ));
-         * elgg_register_menu_item('mission_search', array(
-         * 'name' => 'prereq',
-         * 'href' => elgg_get_site_url() . 'missions/search/prereq',
-         * 'text' => elgg_echo('missions:prereq_search'),
-         * 'priority' => 10
-         * ));
-         * elgg_register_menu_item('mission_search', array(
-         * 'name' => 'language',
-         * 'href' => elgg_get_site_url() . 'missions/search/language',
-         * 'text' => elgg_echo('missions:language_search'),
-         * 'priority' => 10
-         * ));
-         * elgg_register_menu_item('mission_search', array(
-         * 'name' => 'time',
-         * 'href' => elgg_get_site_url() . 'missions/search/time',
-         * 'text' => elgg_echo('missions:time_search'),
-         * 'priority' => 10
-         * ));
-         * elgg_register_menu_item('mission_refine', array(
-         * 'name' => 'prereq',
-         * 'href' => elgg_get_site_url() . 'missions/search/prereq?ref=true',
-         * 'text' => elgg_echo('missions:prereq_refine'),
-         * 'priority' => 20
-         * ));
-         * elgg_register_menu_item('mission_refine', array(
-         * 'name' => 'language',
-         * 'href' => elgg_get_site_url() . 'missions/search/language?ref=true',
-         * 'text' => elgg_echo('missions:language_refine'),
-         * 'priority' => 20
-         * ));
-         * elgg_register_menu_item('mission_refine', array(
-         * 'name' => 'time',
-         * 'href' => elgg_get_site_url() . 'missions/search/time?ref=true',
-         * 'text' => elgg_echo('missions:time_refine'),
-         * 'priority' => 20
-         * ));
-         */
-        elgg_register_menu_item('mission_main', array(
-            'name' => 'browse',
-            'href' => elgg_get_site_url() . 'action/missions/browse-display',
-            'text' => elgg_echo('missions:browse_missions'),
-            'priority' => 20,
-            'is_action' => true
-        ));
-        elgg_register_menu_item('mission_main', array(
-            'name' => 'advanced',
-            'href' => elgg_get_site_url() . 'missions/advanced-search',
-            'text' => elgg_echo('missions:advanced_search'),
-            'priority' => 15
-        ));
-        elgg_register_menu_item('mission_main', array(
-            'name' => 'user_missions',
-            'href' => elgg_get_site_url() . 'missions/mission-mine/all',
-            'text' => elgg_echo('missions:my_missions'),
-            'priority' => 25
-        ));
-    }
 }
 
 /*
@@ -253,62 +128,12 @@ function missions_main_page_handler($segments)
         case 'main':
             include elgg_get_plugins_path() . 'missions/pages/missions/main.php';
             break;
-        case 'post-mission-first-tab':
-            include elgg_get_plugins_path() . 'missions/pages/missions/post-mission-first-tab.php';
-            break;
-        case 'post-mission-second-tab':
-            include elgg_get_plugins_path() . 'missions/pages/missions/post-mission-second-tab.php';
-            break;
-        case 'post-mission-third-tab':
-            include elgg_get_plugins_path() . 'missions/pages/missions/post-mission-third-tab.php';
-            break;
-        case 'search-mission':
-            include elgg_get_plugins_path() . 'missions/pages/missions/search-mission.php';
-            break;
         case 'display-search-set':
             include elgg_get_plugins_path() . 'missions/pages/missions/display-search-set.php';
-            break;
-        /*
-         * The search case is a bit different since it is a single page with different possible forms.
-         * The 'search_page_helper' SESSION variable determines which form will be used.
-         */
-        case 'search':
-            switch ($segments[1]) {
-                case 'simple':
-                    $_SESSION['search_page_type'] = 'simple';
-                    break;
-                /*case 'prereq':
-                    $_SESSION['search_page_type'] = 'prereq';
-                    break;
-                case 'time':
-                    $_SESSION['search_page_type'] = 'time';
-                    break;
-                case 'language':
-                    $_SESSION['search_page_type'] = 'language';
-                    break;*/
-                default:
-                    $_SESSION['search_page_type'] = 'simple';
-            }
-            include elgg_get_plugins_path() . 'missions/pages/missions/search.php';
-            break;
-        case 'advanced-search':
-            include elgg_get_plugins_path() . 'missions/pages/missions/advanced-search.php';
             break;
         case 'mission-application':
             include elgg_get_plugins_path() . 'missions/pages/missions/mission-application.php';
             break;
-        case 'mission-fill':
-            include elgg_get_plugins_path() . 'missions/pages/missions/mission-fill.php';
-            break;
-        case 'mission-mine':
-            include elgg_get_plugins_path() . 'missions/pages/missions/mission-mine.php';
-            break;
-        case 'mission-invitation':
-            include elgg_get_plugins_path() . 'missions/pages/missions/mission-invitation.php';
-            break;
-        /*case 'mission-select-invite':
-            include elgg_get_plugins_path() . 'missions/pages/missions/mission-select-invite.php';
-            break;*/
         case 'mission-edit':
             include elgg_get_plugins_path() . 'missions/pages/missions/mission-edit.php';
             break;
@@ -327,29 +152,11 @@ function missions_main_page_handler($segments)
         case 'mission-candidate-search':
             include elgg_get_plugins_path() . 'missions/pages/missions/mission-candidate-search.php';
             break;
-        case 'graph-interval':
-        	include elgg_get_plugins_path() . 'missions/pages/missions/graph-interval.php';
-        	break;
-        case 'graph-data':
-        	include elgg_get_plugins_path() . 'missions/pages/missions/graph-data.php';
-        	break;
-        /*case 'graph-department-pie':
-        	include elgg_get_plugins_path() . 'missions/pages/missions/graph-department-pie.php';
-        	break;*/
-        /*case 'users-by-opt-in':
-        	include elgg_get_plugins_path() . 'missions/pages/missions/users-by-opt-in.php';
-        	break;*/
         case 'mission-offer':
         	include elgg_get_plugins_path() . 'missions/pages/missions/mission-offer.php';
         	break;
         case 'reason-to-decline':
         	include elgg_get_plugins_path() . 'missions/pages/missions/reason-to-decline.php';
-        	break;
-        /*case 'archive':
-        	include elgg_get_plugins_path() . 'missions/pages/missions/archive.php';
-        	break;*/
-        case 'mission-finalize':
-        	include elgg_get_plugins_path() . 'missions/pages/missions/mission-finalize.php';
         	break;
     }
 }
@@ -424,7 +231,7 @@ function alter_mission_owner_block($hook, $type, $returnvalue, $params) {
 }
 
 // Changes the profile owner block to allow the profile owner to be invited by another user reading their profile.
-function append_profile_owner_block($hook, $type, $returnvalue, $params) {
+/*function append_profile_owner_block($hook, $type, $returnvalue, $params) {
     $user = get_user(elgg_get_page_owner_guid());
     if(elgg_get_logged_in_user_guid() != elgg_get_page_owner_guid() && $user->opt_in_missions == 'gcconnex_profile:opt:yes') {
         $returnvalue[] = new ElggMenuItem('user_invite_from_profile', elgg_echo('missions:invite_to_a_mission'), 'missions/mission-select-invite/' . elgg_get_page_owner_guid());
@@ -433,7 +240,7 @@ function append_profile_owner_block($hook, $type, $returnvalue, $params) {
     else {
         return $returnvalue;
     }
-}
+}*/
 
 /*function alter_mission_annotation_view($hook, $type, $returnvalue, $params) {
 	$current_uri = $_SERVER['REQUEST_URI'];

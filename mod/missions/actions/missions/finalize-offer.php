@@ -7,6 +7,9 @@
 * Copyright: Her Majesty the Queen in Right of Canada, 2015
 */
 
+/*
+ * Accepts the offer sent to a candidate.
+ */
 $applicant = get_user(get_input('aid'));
 $mission = get_entity(get_input('mid'));
 
@@ -14,6 +17,7 @@ if($mission == '') {
 	$err .= elgg_echo('missions:error:entity_does_not_exist');
 }
 else {
+	// An offer needs to have been sent to the user.
 	if(!check_entity_relationship($mission->guid, 'mission_offered', $applicant->guid)) {
 		$err .= elgg_echo('missions:error:applicant_not_offered_this_mission', array($mission->job_title));
 	}
@@ -23,15 +27,17 @@ else {
 				'relationship_guid' => $mission->guid,
 				'count' => true
 		));
-	    
+
+		// Does not allow more accepted candidates then the number defined in the mission metadata.
 		if($relationship_count >= $mission->number) {
 			$err .= elgg_echo('missions:error:mission_full');
 		}
 		else {
+			// Changes the applicant into a participant.
 			remove_entity_relationship($mission->guid, 'mission_offered', $applicant->guid);
-		
 			add_entity_relationship($mission->guid, 'mission_accepted', $applicant->guid);
 			
+			// Saves time to fill data if this user fills the last spot.
 			if(($relationship_count + 1) == $mission->number) {
 				$mission->time_to_fill = time() - $mission->time_created;
 				$mission->save;

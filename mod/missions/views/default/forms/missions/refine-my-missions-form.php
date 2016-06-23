@@ -8,7 +8,7 @@
  */
 
 /*
- * 
+ * Form which allows or disallows completed/cancelled missions to be displayed in My Opportunities.
  */
 $check = false;
 if(elgg_get_logged_in_user_entity()->show_closed_missions) {

@@ -65,7 +65,12 @@ $(document).ready(function() {
 
                     $('#' + sub_type).append(data); //add the list from the view
                     $('#' + sub_type).children('.wet-ajax-loader').remove();
-                    $('#' + sub_type + ' .btn-primary').focus();
+                    if(sub_type == 'groupforumtopic'){
+                        $('#' + sub_type + ' .quick-discuss-action-btn').focus();
+                    }else{
+                        $('#' + sub_type + ' .btn-primary').focus();
+                    }
+                    
                    
                     
                 }
@@ -74,6 +79,8 @@ $(document).ready(function() {
 
         $(this).data("hasLoaded", 'true'); //we loaded content here so we won't do it again :3
     });
+
+    
     });
 
     

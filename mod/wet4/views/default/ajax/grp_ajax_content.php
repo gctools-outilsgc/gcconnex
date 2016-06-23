@@ -107,6 +107,9 @@ if(check_entity_relationship($user, 'member', $group)){ //are they a member?
         $related_group = $group;
     }else if($sub_type =='activity'){
         //No add activity button, that doesn't make no sense yo
+    }else if($sub_type == 'groupforumtopic'){
+        $new_link = 'discuss';
+
     }else{ //else put the 'add' content button - permissions are dealt with in the module view below
         $new_link = elgg_view('output/url', array(
         'href' => $action ,
@@ -126,6 +129,7 @@ echo elgg_view('groups/profile/module', array(
 	'add_link' => $new_link,
     'clicked_related'=>$related_group,
     'user_guid'=> $user, //passing more vars to the module view 
+    'group_guid'=>$group,
 ));
 //test if ajax goes through.
 //echo 'Gratz You made an ajax call! Here us the page GUID = ' .$group;

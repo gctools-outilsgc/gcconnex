@@ -11,7 +11,7 @@ $params = array(
 	'name' => 'q',
 	'class' => 'elgg-input-search mbm pull-left group-tab-menu-search-box',
     'id' => 'qSearch',
-    'placeholder'=>'I do not work :3',
+    'placeholder'=>'Search in this Group',
 );
 echo '<i class="fa fa-search fa-lg pull-left group-tab-menu-search-icon"></i><label for="qSearch" class="wb-inv">'.elgg_echo('wet:searchHead').'</label>';
 echo elgg_view('input/text', $params);

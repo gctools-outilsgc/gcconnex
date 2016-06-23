@@ -10,7 +10,7 @@
 /*
  * Action which saves the mission in session for duplication in the post an opportunity forms.
  */
-
+// Clears out any previous sticky form information or related session variables.
 elgg_clear_sticky_form('firstfill');
 elgg_clear_sticky_form('secondfill');
 elgg_clear_sticky_form('thirdfill');

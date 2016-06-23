@@ -15,6 +15,7 @@ $mission = $vars['entity'];
 $unpacked = mm_unpack_mission($mission);
 $vars['mission_metadata'] = $unpacked;
 elgg_load_js('typeahead');
+elgg_load_js('missions_flot');
 
 $department_string = $mission->department;
 $ancestor_array = mo_get_all_ancestors($department_string);
@@ -107,19 +108,22 @@ $input_number_of = elgg_view('input/dropdown', array(
 $input_start_date = elgg_view('input/date', array(
 		'name' => 'start_date',
 		'value' => $mission->start_date,
-		'id' => 'edit-mission-start-date-input'
+		'id' => 'edit-mission-start-date-input',
+		'placeholder' => 'yyyy-mm-dd'
 ));
 
 $input_completion_date = elgg_view('input/date', array(
 		'name' => 'completion_date',
 		'value' => $mission->completion_date,
-		'id' => 'edit-mission-completion-date-input'
+		'id' => 'edit-mission-completion-date-input',
+		'placeholder' => 'yyyy-mm-dd'
 ));
 
 $input_deadline = elgg_view('input/date', array(
 		'name' => 'deadline',
 		'value' => $mission->deadline,
-		'id' => 'edit-mission-deadline-date-input'
+		'id' => 'edit-mission-deadline-date-input',
+		'placeholder' => 'yyyy-mm-dd'
 ));
 
 $input_description = elgg_view('input/plaintext', array(
@@ -160,12 +164,6 @@ $input_timezone = elgg_view('input/dropdown', array(
 		'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('timezone_string', 'missions')),
 		'id' => 'edit-mission-timezone-dropdown-input'
 ));
-
-/*$input_skills = elgg_view('input/text', array(
-		'name' => 'key_skills',
-		'value' => $mission->key_skills,
-		'id' => 'edit-mission-skills-text-input'
-));*/
 
 $input_time_commit = elgg_view('input/text', array(
 		'name' => 'time_commitment',
@@ -368,8 +366,12 @@ $button_set = mm_create_button_set_full($mission);
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-sm-3" for="edit-mission-location-dropdown-input" style="text-align:right;">
+			<label class="col-sm-3 required" for="edit-mission-location-dropdown-input" style="text-align:right;" aria-required="true">
 				<?php echo elgg_echo('missions:location') . ':';?>
+				<strong class="required" aria-required="true">
+					<?php echo elgg_echo('missions:required'); ?>
+				</strong>
+				:
 			</label> 
 			<div class="col-sm-3">
 				<?php echo $input_location;?>

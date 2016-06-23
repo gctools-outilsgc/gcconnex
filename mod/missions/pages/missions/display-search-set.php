@@ -14,10 +14,20 @@ gatekeeper();
 
 $search_typing = $_SESSION['mission_search_switch'];
 
-
 if($_SESSION[$search_typing . '_entities_per_page']) {
 	$entities_per_page = $_SESSION[$search_typing . '_entities_per_page'];
 }
+
+$sort_missions_form .= elgg_view_form('missions/sort-missions-form', array(
+		'class' => 'form-horizontal'
+));
+$sort_field = elgg_view('page/elements/hidden-field', array(
+		'toggle_text' => elgg_echo('missions:sort_options'),
+		'toggle_text_hidden' => elgg_echo('missions:sort_options'),
+		'toggle_id' => 'sort_options',
+		'hidden_content' => $sort_missions_form,
+		'alignment' => 'right'
+));
 
 $title = elgg_echo('missions:display_search_results');
 if($search_typing == 'candidate') {
@@ -56,6 +66,7 @@ if($search_typing == 'mission') {
     $list_class = 'mission-gallery';
 }
 
+// Function which sorts the search set according to a given value in ascending or descending order.
 $search_set = mm_sort_mission_decider($_SESSION['missions_sort_field_value'], $_SESSION['missions_order_field_value'], $search_set);
 
 $content = elgg_view_title($title);
@@ -69,6 +80,11 @@ $content .= elgg_view('page/elements/mission-tabs');
 
 if(($offset + $max) >= elgg_get_plugin_setting('search_limit', 'missions') && $count >= elgg_get_plugin_setting('search_limit', 'missions')) {
 	$content .= '<div class="col-sm-12" style="font-style:italic;">' . elgg_echo('missions:reached_maximum_entities') . '</div>';
+}
+
+// Only displays sort form if the search set is missions.
+if($search_typing == 'mission') {
+	$content .= '<div class="col-sm-5 col-sm-offset-7">' . $sort_field . '</div>';
 }
 
 // Displays the missions as a list with custom class mission-gallery
@@ -90,11 +106,5 @@ $content .= '<div class="col-sm-12">' . elgg_view_form('missions/change-entities
 		'entity_type' => $search_typing,
 		'number_per' => $entities_per_page
 )) . '</div>';
-
-if($search_typing == 'mission') {
-	$content .= '<div class="col-sm-12">' . elgg_view_form('missions/sort-missions-form', array(
-			'class' => 'form-horizontal'
-	)) . '</div>';
-}
 
 echo elgg_view_page($title, $content);

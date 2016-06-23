@@ -19,7 +19,7 @@ if (isset($vars['class'])) {
 
 <div class="<?php echo $class; ?>">
 	<div>
-		<h1> <?php echo $vars['title']; ?> </h1>
+		<h1 id="wb-cont"> <?php echo $vars['title']; ?> </h1>
 	</div>
 	<div class="missions-tab-bar">
 		<?php echo elgg_view('page/elements/tab', $vars); ?>

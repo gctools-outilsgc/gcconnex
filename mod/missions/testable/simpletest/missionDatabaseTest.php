@@ -109,7 +109,7 @@ class MissionDatabaseTest extends ElggCoreUnitTest {
 	private function testMissionStartMustBeValid($mission) {
 		$result = $this->assertTrue((trim($mission->start_date) != ''), elgg_echo('missions:diagnostic_suite:no_start_date', array($mission->guid)));
 		if($result) {
-			$this->assertTrue(strtotime($mission->start_date), 
+			$this->assertTrue(mm_is_valid_date($mission->start_date), 
 					elgg_echo('missions:diagnostic_suite:invalid_start_date', array($mission->guid, $mission->start_date)));
 		}
 	}
@@ -117,7 +117,7 @@ class MissionDatabaseTest extends ElggCoreUnitTest {
 	private function testMissionCompletionMustBeValid($mission) {
 		//$result = $this->assertTrue((trim($mission->completion_date) != ''), elgg_echo('missions:diagnostic_suite:no_completion_date', array($mission->guid)));
 		if(trim($mission->completion_date) != '') {
-			$this->assertTrue(strtotime($mission->completion_date), 
+			$this->assertTrue(mm_is_valid_date($mission->completion_date), 
 					elgg_echo('missions:diagnostic_suite:invalid_completion_date', array($mission->guid, $mission->completion_date)));
 		}
 	}
@@ -125,7 +125,7 @@ class MissionDatabaseTest extends ElggCoreUnitTest {
 	private function testMissionDeadlineMustBeValid($mission) {
 		$result = $this->assertTrue((trim($mission->deadline) != ''), elgg_echo('missions:diagnostic_suite:no_deadline', array($mission->guid)));
 		if($result) {
-			$this->assertTrue(strtotime($mission->deadline), elgg_echo('missions:diagnostic_suite:invalid_deadline', array($mission->guid, $mission->deadline)));
+			$this->assertTrue(mm_is_valid_date($mission->deadline), elgg_echo('missions:diagnostic_suite:invalid_deadline', array($mission->guid, $mission->deadline)));
 		}
 	}
 	

@@ -80,6 +80,8 @@ function wet4_theme_init() {
     elgg_unregister_page_handler('messages', 'messages_page_handler');
     elgg_register_page_handler('messages', 'wet4_messages_page_handler');
 
+    elgg_register_page_handler('collections', 'wet4_collections_page_handler');
+
     //datatables css file
 	elgg_extend_view('css/elgg', '//cdn.datatables.net/1.10.10/css/jquery.dataTables.css');
 
@@ -104,10 +106,12 @@ function wet4_theme_init() {
     //file tools 
 	elgg_register_ajax_view("file_tools/move");
 
+    elgg_register_ajax_view("messages/message_preview");
 
     //Group AJAX loading view
     elgg_register_ajax_view('ajax/grp_ajax_content');
 	elgg_extend_view("js/elgg", "js/wet4/group_ajax");
+    elgg_extend_view("js/elgg", "js/wet4/discussion_quick_start");
 
 	elgg_register_plugin_hook_handler('head', 'page', 'wet4_theme_setup_head');
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'my_owner_block_handler');
@@ -127,6 +131,7 @@ function wet4_theme_init() {
 
 	elgg_register_action("file/move_folder", elgg_get_plugins_path() . "/wet4/actions/file/move.php");
     elgg_register_action("friends/collections/add", elgg_get_plugins_path() . "/wet4/actions/friends/collections/add.php");
+    elgg_register_action("friends/collections/edit", elgg_get_plugins_path() . "/wet4/actions/friends/collections/edit.php");
     elgg_register_action("login", elgg_get_plugins_path() . "/wet4/actions/login.php", "public");
     elgg_register_action("widgets/delete", elgg_get_plugins_path() . "/wet4/actions/widgets/delete.php");
     elgg_register_action("user/requestnewpassword", elgg_get_plugins_path() . "/wet4/actions/user/requestnewpassword.php", "public");
@@ -199,7 +204,7 @@ function wet4_theme_init() {
     elgg_register_plugin_hook_handler('index', 'system', 'new_index');
     elgg_register_page_handler('newsfeed', 'newsfeed_page_handler');
     elgg_register_page_handler('splash', 'splash_page_handler');
-
+    elgg_register_page_handler('c_photo_image', 'c_photo_page_handler');
     elgg_register_page_handler('groups_autocomplete', 'groups_autocomplete');
 
 
@@ -268,6 +273,11 @@ function splash_page_handler(){
     @include (dirname ( __FILE__ ) . "/pages/splash.php");
     return true;
 }
+//create cover photo page
+function c_photo_page_handler(){
+    @include (dirname ( __FILE__ ) . "/pages/c_photo_image.php");
+    return true;
+}
 
 /*
  *  Set new index page to sort user's landing page preference
@@ -317,12 +327,13 @@ function career_menu_hander($hook, $type, $menu, $params){
 
         switch ($item->getName()) {
             case 'career':
-                if(elgg_is_active_plugin('gcforums')){
-                    $item->addChild(elgg_get_menu_item('subSite', 'Forum'));
-                }
                 if(elgg_is_active_plugin('missions')){
                     $item->addChild(elgg_get_menu_item('site', 'mission_main'));
                 }
+if(elgg_is_active_plugin('gcforums')){
+                    $item->addChild(elgg_get_menu_item('subSite', 'Forum'));
+                }
+
                 $item->addChild(elgg_get_menu_item('subSite', 'jobs'));
                 $item->setLinkClass('item');
                 break;
@@ -1251,11 +1262,18 @@ function my_owner_block_handler($hook, $type, $menu, $params){
         foreach ($menu as $key => $item){
              
             switch ($item->getName()) {
-                case 'discussion':
-                    $item->setText(elgg_echo('gprofile:discussion'));
-                    $item->setHref('#groupforumtopic');
-                    $item->setPriority('1');
+             
+			
+				case 'discussion':
+					// cyu - take discussions off for the crawler
+					if (strcmp('gsa-crawler',strtolower($_SERVER['HTTP_USER_AGENT'])) != 0) {
+						$item->setText(elgg_echo('gprofile:discussion'));
+						$item->setHref('#groupforumtopic');
+						$item->setPriority('1');
+					}
                     break;
+
+
                 case 'gcforums':
                     $item->setPriority('1');
                     $item->setLinkClass('forums');
@@ -1582,7 +1600,6 @@ function wet4_widget_menu_setup($hook, $type, $return, $params) {
 			'id' => "elgg-widget-delete-button-$widget->guid",
 			'data-elgg-widget-type' => $widget->handler,
 			'priority' => 900,
-            'data-confirm' => elgg_echo('deleteconfirm'),
 		);
 		$return[] = \ElggMenuItem::factory($options);
         // This is to maybe have a move button on widgets to move them with the keyboard.
@@ -1604,6 +1621,37 @@ function wet4_widget_menu_setup($hook, $type, $return, $params) {
 	return $return;
 }
 
+function wet4_collections_page_handler($page) {
+
+	$current_user = elgg_get_logged_in_user_entity();
+	if (!$current_user) {
+		register_error(elgg_echo('noaccess'));
+		elgg_get_session()->set('last_forward_from', current_page_url());
+		forward('');
+	}
+    elgg_set_context('friends');
+	//elgg_push_breadcrumb(elgg_echo('messages'), 'messages/inbox/' . $current_user->username);
+
+
+	$base_dir = elgg_get_plugins_path() . 'wet4/pages/friends/collections';
+
+	switch ($page[0]) {
+		case 'owner':
+			include("$base_dir/view.php");
+			break;
+		case 'add':
+
+			include("$base_dir/add.php");
+			break;
+		case 'edit':
+
+			include("$base_dir/edit.php");
+			break;
+		default:
+			return false;
+	}
+	return true;
+}
 
 function wet4_messages_page_handler($page) {
 

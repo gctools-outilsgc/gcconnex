@@ -16,7 +16,7 @@
  */
 function widget_manager_write_access_hook($hook_name, $entity_type, $return_value, $params) {
 	
-	if (!elgg_in_context("widget_access")) {
+	if (elgg_in_context("widget_access")) { //(!elgg_in_context("widget_access")) { change access list
 		return $return_value;
 	}
 	$widget = elgg_extract('entity', $params['input_params']);

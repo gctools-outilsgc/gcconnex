@@ -42,6 +42,7 @@ if ($err != '') {
             break;
         default:
             // A broad range search which determines whether the input text exists within the title, type or description of the mission.
+            // This also checks guid but this is mostly for testing and admin purposes.
             if (! empty($search_form['simple'])) {
                 $array[0] = array(
                     'name' => 'job_title',

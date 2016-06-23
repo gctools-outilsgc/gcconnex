@@ -34,11 +34,17 @@ if ($vars['collection_members']) {
 }
 echo "</div>";
 
+$members = get_members_of_access_collection($vars['collection']->id, true);
+if (!$members) {
+	$members = array();
+}
+
 echo "<div><label>" . elgg_echo("friends:addfriends") . "</label>";
 echo elgg_view('input/friendspicker', array(
 	'entities' => $vars['friends'],
 	'name' => 'friends_collection',
 	'highlight' => $highlight,
+    'value' => $members
 ));
 echo "</div>";
 
@@ -52,39 +58,4 @@ if (isset($vars['collection'])) {
 echo elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('save'), 'class' => 'btn btn-primary mrgn-tp-md'));
 echo '</div>';
 
-echo '<div class="hidden check"></div>';
 ?>
-
-<script type="text/javascript">
-	
-    $(function(){
-
-
-
-        //add guids to move selected link when checked
-        $(':checkbox').change(function() {
-            if($(this).is(":checked")) {
-                    
-                $(this).clone().appendTo('.check');
-
-                return;
-
-            } else {
-
-                var checkBoxes = $('.check input').toArray();
-                for (var i = 0; i < checkBoxes.length; i++) {
-
-                    if (checkBoxes[i].getAttribute("value") == $(this).val()) {
-
-                     checkBoxes[i].parentNode.removeChild(checkBoxes[i]);
-
-                   }
-                }
-
-           }
-        });
-
-        
-
-	});
-</script>

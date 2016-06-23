@@ -16,7 +16,7 @@ gatekeeper();
 
 $disclaimer_uncheck = $_SESSION['mission_uncheck_post_mission_disclaimer'];
 
-if(elgg_get_logged_in_user_entity()->opt_in_missions != 'gcconnex_profile:opt:yes') {
+if(!check_if_opted_in(elgg_get_logged_in_user_entity())) {
 	forward(elgg_get_site_url() . 'missions/main');
 }
 
@@ -102,12 +102,6 @@ elgg_push_breadcrumb($title);
 $content = elgg_view_title($title);
 
 $content .= elgg_view('page/elements/mission-tabs');
-
-/*$skill_match_override = $_SESSION['mission_skill_match_is_interlude'];
-if($skill_match_override) {
-	unset($_SESSION['mission_skill_match_is_interlude']);
-	$content .= elgg_view('page/elements/skill-match-interlude');
-}*/
 
 $content .= elgg_view('navigation/tabs', array(
 		'class' => 'elgg-menu elgg-menu-filter list-inline mrgn-lft-sm elgg-menu-filter-default mission-tab',

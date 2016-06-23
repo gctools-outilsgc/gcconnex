@@ -48,27 +48,22 @@ if(check_entity_relationship($mission->guid, 'mission_accepted', $applicant->gui
 }
 	
 // Only users who have opted in to micro missions can be invited.
-if($applicant->opt_in_missions != 'gcconnex_profile:opt:yes') {
+if(!check_if_opted_in($applicant)) {
 	$err .= elgg_echo('missions:error:not_participating_in_missions', array($applicant->name));
 }
 
 if($err == '') {
 	$invitation_link = elgg_view('output/url', array(
-			'href' => elgg_get_site_url() . 'missions/mission-invitation/' . $mission->guid,
+			'href' => elgg_get_site_url() . 'missions/view/' . $mission->guid,
 			'text' => elgg_echo('missions:mission_invitation')
 	));
 	
 	$subject = $mission->name . elgg_echo('missions:invited_you', array(), $applicant->language) . $mission->title;
 	$body = $invitation_link;
-	$params = array(
-			'object' => $mission,
-			'action' => 'invite-user',
-			'summary' => $subject
-	);
 	
 	mm_notify_user($applicant->guid, $mission->guid, $subject, $body);
 	
-	add_entity_relationship($mission->guid, 'mission_tentative', $applicant->guid);
+	//add_entity_relationship($mission->guid, 'mission_tentative', $applicant->guid);
 	
 	system_message(elgg_echo('missions:invited_user_to_mission', array($applicant->name, $mission->job_title)));
 	

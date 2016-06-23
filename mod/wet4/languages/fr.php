@@ -38,6 +38,9 @@ return array(
   'wet:groupLoading'=>'Loading content(translate)',
   'subgroups:parent:need_join' => "Joindre le groupe parent",
   'event_calendar:none' => 'Aucun événement trouvé.',
+  'wet:cover_photo_remove'=>'Remove current group cover image (translate me)',
+  'wet:cover_photo_input'=>'Add a cover image to this group (translate me)',
+  'wet:cover_photo_dim'=> 'The cover image will stretch and scale based on the screen size. We suggest an image around 1500x 275(translate me)',
   /**
 *notice section
 */
@@ -592,7 +595,7 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 'registerdisabled' => "La création de comptes a été désactivée par l'administrateur du site.",
 'register:fields' => 'Tous les champs doivent être remplis',			
 'registration:notemail' => 'L\'adresse de courriel que vous avez indiquée ne semble pas être une adresse valide.',
-'registration:userexists' => 'Ce nom d\'utilisateur existe déjà. <a href="'.$site_url.'forgotpassword">Récupérer votre mot de passe</a>',
+'registration:userexists' => 'Cette adresse de courriel existe déjà. <a href=&quot;'.$site_url.'forgotpassword&quot;>Récupérer votre mot de passe</a>',
 	'registration:usernametooshort' => 'Le nom d\'utilisateur doit faire %u caractères au minimum.',
 	'registration:usernametoolong' => 'Votre nom d\'utilisateur est trop long. Il peut comporter au maximum %u caractères.',
 	'registration:passwordtooshort' => 'Le mot de passe doit comporter un minimum de %u caractères.',

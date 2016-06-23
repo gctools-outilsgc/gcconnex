@@ -62,6 +62,11 @@ if($mission->owner_guid == elgg_get_logged_in_user_guid() || $mission->account =
 		$relationship_alert = '<div name="mission-applicant-number" class="notif-badge" id="mission-' . $mission->guid . '-applicant-number" style="position:absolute;right:2px;top:2px;">' . $relationship_count . '</div>';
 	}
 }
+
+$completion_date_fixed = $mission->completion_date;
+if(trim($completion_date_fixed) == '') {
+	$completion_date_fixed = elgg_echo('missions:unknown');
+}
 ?>
 
 <div class="mission-printer mission-less" style="height:<?php echo $card_height;?>px;" name="mission-object">
@@ -85,7 +90,7 @@ if($mission->owner_guid == elgg_get_logged_in_user_guid() || $mission->account =
 			<div name="mission-start-and-completion-date">
 				<span name="mission-start-date"><?php echo $mission->start_date; ?></span>
 				<span><?php echo elgg_echo('missions:to'); ?></span>
-				<span name="mission-completion-date"><?php echo $mission->completion_date; ?></span>
+				<span name="mission-completion-date"><?php echo $completion_date_fixed; ?></span>
 			</div>
 			<div style="font-style:italic;" name="mission-time-commitment-and-interval">
 				<span name="mission-time-commitment">

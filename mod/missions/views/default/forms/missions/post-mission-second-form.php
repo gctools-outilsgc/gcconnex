@@ -29,7 +29,6 @@ $openess = get_input('so');
 
 if (elgg_is_sticky_form('secondfill')) {
     extract(elgg_get_sticky_values('secondfill'));
-    // elgg_clear_sticky_form('secondfill');
 }
 
 if($openess == 'on') {
@@ -104,19 +103,22 @@ $input_number_of = elgg_view('input/dropdown', array(
 $input_start_date = elgg_view('input/date', array(
 	    'name' => 'start_date',
 	    'value' => $start_date,
-	    'id' => 'post-mission-start-date-input'
+	    'id' => 'post-mission-start-date-input',
+		'placeholder' => 'yyyy-mm-dd'
 ));
 
 $input_completion_date = elgg_view('input/date', array(
 	    'name' => 'completion_date',
 	    'value' => $completion_date,
-	    'id' => 'post-mission-completion-date-input'
+	    'id' => 'post-mission-completion-date-input',
+		'placeholder' => 'yyyy-mm-dd'
 ));
 
 $input_deadline = elgg_view('input/date', array(
 	    'name' => 'deadline',
 	    'value' => $deadline,
-	    'id' => 'post-mission-deadline-date-input'
+	    'id' => 'post-mission-deadline-date-input',
+		'placeholder' => 'yyyy-mm-dd'
 ));
 
 $input_description = elgg_view('input/plaintext', array(

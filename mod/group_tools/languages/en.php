@@ -181,7 +181,7 @@ When a user creates a group he/she gets to choose one of the presets in order to
 	
 // group invite	
 'group_tools:groups:invite:title' => "Invite users to join this group.",
-'group_tools:groups:invite' => "Invite users.",	
+'group_tools:groups:invite' => "Invite users",	
 'group_tools:group:invite:friends:select_all' => "Select all colleagues.",
 'group_tools:group:invite:friends:deselect_all' => "Deselect all colleagues.",	
 'group_tools:group:invite:users' => "Find user(s)",

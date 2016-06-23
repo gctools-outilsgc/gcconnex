@@ -82,7 +82,7 @@ $department = $user->get('department');
                
                 <?php 
                     //EW - change image output so badge displays
-                echo elgg_view_entity_icon($user, 'large', array('use_hover' => false, 'class' => 'pro-avatar'));
+                echo elgg_view_entity_icon($user, 'medium', array('use_hover' => false, 'class' => 'pro-avatar', 'force_size' => true,));
                     ?>
            
         </div>

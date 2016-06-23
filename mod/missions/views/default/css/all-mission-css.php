@@ -96,14 +96,14 @@
 .mission-printer { 
 	border-style: none; 
 	border-width: 3px; 
-	padding: 10px;
+	padding: 8px;
 	position: relative;
 } 
 
 .mission-less {
 	display: inline-block;
 	border-style: solid; 
-	width: 350px;
+	width: 360px;
 }
 
 .mission-printer h5 { 

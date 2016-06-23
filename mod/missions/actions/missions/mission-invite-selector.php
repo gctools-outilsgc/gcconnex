@@ -7,6 +7,10 @@
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
 
+/*
+ * Action for when a supervisor needs to select a mission to invite a candidate to.
+ * This action links immediately into the invite-user action once a valid mission is given.
+ */
 $mission_guid = get_input('mission_guid');
 $candidate_guid = get_input('hidden_user_guid');
 

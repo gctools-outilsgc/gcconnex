@@ -141,8 +141,6 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
             	$pg = $_GET['pg'];
             	echo '<div role="tabpanel" class="tab-pane active clearfix" id="splashboard">';
             }
-            	
-            echo '<div role="tabpanel" class="tab-pane" id="splashboard">';
 
                 $num_columns = elgg_extract('num_columns', $vars, 2);
                 $show_add_widgets = elgg_extract('show_add_widgets', $vars, true);

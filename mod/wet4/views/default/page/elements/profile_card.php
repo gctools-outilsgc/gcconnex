@@ -16,7 +16,7 @@ $department = get_loggedin_user()->get('department');
         <div class="mrgn-tp-sm">
             <?php 
                 //EW - change to display new badge
-                echo elgg_view_entity_icon(elgg_get_logged_in_user_entity(), 'large', array('use_hover' => false, 'class' => 'pro-avatar')); 
+            echo elgg_view_entity_icon(elgg_get_logged_in_user_entity(), 'medium', array('use_hover' => false, 'class' => 'pro-avatar', 'force_size' => true,)); 
                 ?>
            </div>
     </div>

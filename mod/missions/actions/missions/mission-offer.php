@@ -12,7 +12,6 @@
  */
 $applicant = get_user(get_input('aid'));
 $mission = get_entity(get_input('mid'));
-//$manager = get_user($mission->owner_guid);
 
 $err = '';
 
@@ -35,11 +34,10 @@ else {
 		}
 		else {
 			remove_entity_relationship($mission->guid, 'mission_applied', $applicant->guid);
-		
 			add_entity_relationship($mission->guid, 'mission_offered', $applicant->guid);
 			 
 			$finalize_link = elgg_view('output/url', array(
-					'href' => elgg_get_site_url() . 'missions/mission-finalize/' . $mission->guid . '/' . $applicant->guid,
+					'href' => elgg_get_site_url() . 'missions/view/' . $mission->guid,
 					'text' => elgg_echo('missions:accept')
 			));
 			 

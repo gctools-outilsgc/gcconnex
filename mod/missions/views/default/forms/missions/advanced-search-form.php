@@ -11,22 +11,6 @@
  * Form which contains the input fields for the advanced search.
  * Input fields are generated dynamically using javascript.
  */
-/*$selection_zeroth = get_input('assz');
-$selection_first = get_input('assf');
-$selection_second = get_input('asss');
-$selection_third = get_input('asst');
-$selection_fourth = get_input('assfo');
-$selection_fifth = get_input('assfi');
-$selection_sixth = get_input('asssi');
-$selection_seventh = get_input('assse');
-$selection_eigth = get_input('asse');
-$selection_ninth = get_input('assn');*/
-
-/*if (elgg_is_sticky_form('advancedfill')) {
-    extract(elgg_get_sticky_values('advancedfill'));
-    elgg_clear_sticky_form('advancedfill');
-}*/
-
 elgg_load_js('typeahead');
 
 // The arrays are different depending on whether the user is searching for missions or candidates.
@@ -127,11 +111,6 @@ $hidden_input = elgg_view('input/hidden', array(
 	<?php echo elgg_echo('missions:advanced_note_paragraph_two'); ?>
 </p>
 </noscript>
-
-<!-- <label for="search-mission-limit-dropdown-input" style="display:inline-block;"><?php echo elgg_echo('missions:search_limit') . ': '; ?></label>
-<div style="display:inline-block">
-	<?php //echo $input_advanced_limit; ?>
-</div> -->
 
 <div style="text-align:right;"> 
 	<?php

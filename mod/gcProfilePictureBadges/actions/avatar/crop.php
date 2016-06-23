@@ -28,6 +28,15 @@ if (!file_exists($filename)) {
 	forward(REFERER);
 }
 //EW - new ambassaador badge doesnt combine images so we removed this functionality but kept the code
+require_once( elgg_get_plugins_path() . "gcProfilePictureBadges/badge_map.php" );	// get array of groups with badges
+global $badgemap;
+
+$badge_d = get_input( 'badge', '' );
+$badge = $badgemap[$badge_d]; 		// which badge
+
+$user = elgg_get_logged_in_user_entity();
+$user->active_badge = $badge_d;
+
 /* START gcProfilePictureBadges addition: add badges to master image */
 /*
 require_once( elgg_get_plugins_path() . "gcProfilePictureBadges/badge_map.php" );	// get array of groups with badges
