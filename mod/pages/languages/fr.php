@@ -70,11 +70,11 @@ return array(
 		
  // Page		
 		
-'pages:strapline' => 'Dernière mise à jour à %s par %s',
+'pages:strapline' => 'Dernière mise à jour faite %s par %s',
 		
  // History		
 		
-'pages:revision:subtitle' => 'Dernière mise à jour à %s par %s',
+'pages:revision:subtitle' => 'Dernière mise à jour faite %s par %s',
 		
  // Widget		
 		

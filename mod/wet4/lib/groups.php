@@ -559,7 +559,7 @@ function groups_handle_requests_page($guid) {
  * @param ElggGroup $group
  */
 function groups_register_profile_buttons($group) {
-/*
+
 	$actions = array();
 
 	// group owners
@@ -601,7 +601,7 @@ function groups_register_profile_buttons($group) {
 			));
 		}
 	}
-    */
+    
 }
 
 /**

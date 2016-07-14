@@ -28,7 +28,7 @@ function uservalidationbyemail_generate_code($user_guid, $email_address) {
  * @return mixed
  */
 function uservalidationbyemail_request_validation($user_guid, $admin_requested = 'deprecated') {
-
+	
 	if ($admin_requested != 'deprecated') {
 		elgg_deprecated_notice('Second param $admin_requested no more used in uservalidationbyemail_request_validation function', 1.9);
 	}
@@ -38,7 +38,7 @@ function uservalidationbyemail_request_validation($user_guid, $admin_requested =
 	$user_guid = (int)$user_guid;
 	$user = get_entity($user_guid);
 
-	if (($user) && ($user instanceof ElggUser)) {
+	if (($user) && ($user instanceof ElggUser) ) {
 		// Work out validate link
 		$code = uservalidationbyemail_generate_code($user_guid, $user->email);
 		$link = "{$site->url}uservalidationbyemail/confirm?u=$user_guid&c=$code";
@@ -63,20 +63,16 @@ function uservalidationbyemail_request_validation($user_guid, $admin_requested =
 
 		// cyu - 03/08/2016: improving notifications, redirect to notification manager module
 		if (elgg_is_active_plugin('cp_notifications')) {
-
 			$message = array(
 				'cp_validate_user' => $user,
 				'cp_validate_url' => $link,
 				'cp_msg_type' => 'cp_validate_user'
 				);
 			$result = elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
-
-
-		}
-
+		} else {
 			// Send validation email
 			$result = notify_user($user->guid, $site->guid, $subject, $body, array(), 'email');
-		
+		}
 		
 		return $result;
 	}

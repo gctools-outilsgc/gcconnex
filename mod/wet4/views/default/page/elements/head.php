@@ -131,6 +131,12 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
 ?>
 
         <?php
+		// cyu - prevent crawler to index unsaved draft
+		if ($my_page_entity instanceof ElggObject) {
+			if ($my_page_entity->getSubtype() === 'blog' && strcmp($my_page_entity->status,'unsaved_draft') == 0)
+				echo '<meta name="robots" content="noindex">';
+		}
+
           $no_index_array = array(
             'activity','activity/all','/activity/owner','/activity/friends/','/activity_tabs/mydept','/activity_tabs/otherdept',
             'blog/all','blog/owner/','/blog/group/','/blog/friends/',

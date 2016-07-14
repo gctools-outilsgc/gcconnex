@@ -39,7 +39,10 @@ return array(
   'event_calendar:none' => "No events found.",
   'wet:cover_photo_remove'=>'Remove current group cover image',
   'wet:cover_photo_input'=>'Add a Cover Image to your group',
-  'wet:cover_photo_dim'=> 'The cover image will stretch and scale based on the screen size. We suggest an image around 1500x 275',
+  'wet:cover_photo_dim'=> "Your group's cover image displays at 1500 pixels wide by 275 pixels tall on your page on computers. If the dimensions of the image is less or more, the image will be stretched or scaled to fit the area.",
+  'wet:search_in_group'=>'Search in this Group',
+  'wet:cover_photo_alt'=>'Graphic Element for the Group',
+
 /**
 *notice section
 */
@@ -72,6 +75,18 @@ return array(
      'ps:optingin' =>"Have you looked into opting-in to a Micro-mission?",
      'ps:optin' =>"Opt-In",
      'ps:psErr'=>"An error occured getting your profile information.  We are working to resolve the issue.",
+
+     /**
+    * Department Verify
+    */
+
+    'dept:confirm' => 'Just Checking In!',
+    'dept:intro' => 'Have you changed jobs recently? Started a temporary assignment? Been recruited by the CSA to become an astronaut? Help us keep GCconnex up to date by confirming where you work.',
+    'dept:not' => 'Not your current department?',
+    'dept:select' => 'Please select your current department',
+    'confirm' => 'Confirm',
+    'dept:saved' => '%s saved as current department',
+    'dept:notfound' => "We can’t seem find your current department in our list! Your department name may have changed lately. Please select the accurate department from the list below.",
 
      /**
    * Message Inbox
@@ -372,6 +387,7 @@ return array(
 	'access:admin_only' => "Administrators only",
 	'access:missing_name' => "Missing access level name",
 	'access:comments:change' => "This discussion is currently visible to a limited audience. Be thoughtful about who you share it with.",
+	'admin:remove:logged_in' => "Enable script change access logged in to public", //NEW
 
 /**
  * Dashboard and widgets
@@ -636,7 +652,7 @@ GCconnex is a professional networking and collaborative workspace for all public
 	'registration:emailnotvalid' => 'Sorry, the email address you entered is invalid on this system',
 	'registration:passwordnotvalid' => 'Sorry, the password you entered is invalid on this system',
 	'registration:usernamenotvalid' => 'Sorry, the username you entered is invalid on this system',
-    'registration:userexists' => 'That username already exists. <a href=&quot;'.$site_url.'forgotpassword&quot;>Retrieve your password</a>',
+    'registration:userexists' => 'That username already exists. <a href=forgotpassword>Retrieve your password</a>',
 	'adduser' => "Add User",
 	'adduser:ok' => "You have successfully added a new user.",
 	'adduser:bad' => "The new user could not be created.",
@@ -1624,6 +1640,11 @@ Please do not reply to this email.",
  'gcTour:step5txt' => "Post on the Wire more frequently from here.",
   'gcTour:step6' => 'Chatrooms',
  'gcTour:step6txt' => "Want to hold a group discussion on a project or a document? Use the chatrooms from the chat bar at the bottom of the screen.",
+/*Change access*/
+
+'msg:change_access' => "Not all users have access to your content. Since GCconnex wants to be as open as possible, are you sure you need to restrict the access to this content?", //NEW
+'msg:change_access_title' => "Did you know?",
+
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */

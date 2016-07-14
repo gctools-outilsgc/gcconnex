@@ -1,3 +1,35 @@
+
+<!-- Open modal when change access to something else than public. Have to be here, before the tabs SL -->
+<script>
+$(document).ready(function () {
+
+    $('#dialog-modal').dialog({
+        modal: true,
+        autoOpen: false
+    });
+
+    $('select[name=access_id_file]').change(function () {
+        if ($(this).val() != "2") {
+            $('#myModal').modal('show');
+        }
+    });
+
+});
+</script>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title"><?php echo elgg_echo('msg:change_access_title'); ?><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button></h3>
+
+  </div>
+  <div class="panel-body">
+   <?php echo elgg_echo('msg:change_access'); ?>
+  </div>
+</div>
+  </div>
+</div>
+
 <?php
 
 elgg_register_menu_item('file_options', array(

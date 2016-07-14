@@ -38,9 +38,11 @@ return array(
   'wet:groupLoading'=>'Loading content(translate)',
   'subgroups:parent:need_join' => "Joindre le groupe parent",
   'event_calendar:none' => 'Aucun événement trouvé.',
-  'wet:cover_photo_remove'=>'Remove current group cover image (translate me)',
-  'wet:cover_photo_input'=>'Add a cover image to this group (translate me)',
-  'wet:cover_photo_dim'=> 'The cover image will stretch and scale based on the screen size. We suggest an image around 1500x 275(translate me)',
+  'wet:cover_photo_remove'=>'Supprimer la Photo de Couverture',
+  'wet:cover_photo_input'=>'Ajouter une Photo de Couverture',
+  'wet:cover_photo_dim'=> "Votre image de couverture pour votre groupe s’affiche avec les dimensions de 1500 pixels de largeur par 275 pixels de hauteur sur un ordinateur. Si les dimensions de votre image sont plus petites ou plus grandes, votre image sera étirée ou réduite pour s’ajuster à la section.",
+  'wet:search_in_group'=>'Search in this Group(translate me)',
+  'wet:cover_photo_alt'=>'Graphic Element for the Group(translate me)',
   /**
 *notice section
 */
@@ -74,6 +76,24 @@ return array(
      'ps:optin' => "Adhérer",
      'ps:psErr' => "Une erreur est survenue durant l'obtentions de vos informations de profil . Nous travaillons pour résoudre le problème .",
 
+         /**
+     * Department Verify
+     */
+
+    'dept:confirm' => 'Confirmez votre ministère',
+    'dept:intro' => 'Dans l’optique d’avoir de l’information à jour sur GCconnex et afin d’obtenir les meilleurs statistiques possibles, nous vous prions de confirmer votre ministère.',
+    'dept:not' => "N'est pas votre ministère présentement?",
+    'dept:select' => 'Veuillez choisir votre ministère présent',
+    'confirm' => 'Confirmer',
+    'dept:saved' => '%s saved as current department',
+
+    'dept:confirm' => 'Salut, bonjour!',
+    'dept:intro' => "Avez-vous changé de poste récemment? Avez-vous commencé une affectation? L’ASC vous a recruté pour devenir astronaute? Aidez-nous à garder GCconnex à jour en confirmant où vous travaillez.",
+    'dept:not' => "N'est pas votre ministère présentement?",
+    'dept:select' => 'Veuillez choisir votre ministère présent',
+    'confirm' => 'Confirmer',
+    'dept:saved' => '%s saved as current department',
+    'dept:notfound' => "Nous ne sommes pas capable de trouver votre ministère dans notre liste! Votre ministère a possiblement changé de nom récemment. Veuillez sélectionner le bon ministère dans la liste suivante",
 
        /**
     * Message Inbox
@@ -358,6 +378,7 @@ return array(
 	'access:admin_only' => "Seulement pour les administrateurs",
 'access:missing_name' => "Nom du niveau d'accès manquant",
 'access:comments:change' => "Cette discussion ne peut être consultée que par un groupe restreint. Faites attention avant de la communiquer à quelqu'un.",
+'admin:remove:logged_in' => "Enable script change access logged in to public", //NEW
 
 
 /**
@@ -595,7 +616,7 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 'registerdisabled' => "La création de comptes a été désactivée par l'administrateur du site.",
 'register:fields' => 'Tous les champs doivent être remplis',			
 'registration:notemail' => 'L\'adresse de courriel que vous avez indiquée ne semble pas être une adresse valide.',
-'registration:userexists' => 'Cette adresse de courriel existe déjà. <a href=&quot;'.$site_url.'forgotpassword&quot;>Récupérer votre mot de passe</a>',
+'registration:userexists' => 'Cette adresse de courriel existe déjà. <a href=forgotpassword>Récupérer votre mot de passe</a>',
 	'registration:usernametooshort' => 'Le nom d\'utilisateur doit faire %u caractères au minimum.',
 	'registration:usernametoolong' => 'Votre nom d\'utilisateur est trop long. Il peut comporter au maximum %u caractères.',
 	'registration:passwordtooshort' => 'Le mot de passe doit comporter un minimum de %u caractères.',
@@ -1446,6 +1467,13 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 'event_calendar:meeting' => 'Réunion en ligne et téléconférence',
 'event_calendar:info' => 'Information(s) supplémentaire(s)',
 'river:create:object:event_calendar' => "%s a ajouté l'événement' %s",
+
+/*Change access*/
+
+'msg:change_access' => "Ce n’est pas tous les utilisateurs qui ont accès à votre contenu. Puisque GCconnex désire être le plus ouvert possible, êtes-vous certain de vouloir restreindre l’accès à ce contenu?", //NEW
+'msg:change_access_title' => "Le saviez-vous?",
+
+
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */

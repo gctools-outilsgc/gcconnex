@@ -19,7 +19,7 @@ $message->readYet = true;
 elgg_set_page_owner_guid($message->getOwnerGUID());
 $page_owner = elgg_get_page_owner_entity();
 
-$title = $message->title;
+$title = htmlspecialchars($message->title, ENT_QUOTES, 'UTF-8');
 
 $inbox = false;
 if ($page_owner->getGUID() == $message->toId) {
@@ -53,7 +53,7 @@ if ($inbox) {
 }
 
 $body = elgg_view_layout('one_column', array(
-	'content' => $content,
+	'content' => utf8_decode($content),
 	'title' => $title,
 	'filter' => '',
 ));

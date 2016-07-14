@@ -33,7 +33,6 @@ $leftcolumn_widgets_view = custom_index_build_columns($area1widgets,$widgettypes
 $middlecolumn_widgets_view = custom_index_build_columns($area2widgets,$widgettypes);
 $rightcolumn_widgets_view = custom_index_build_columns($area3widgets,$widgettypes);
 
-
 $content =  elgg_view_layout($ciw_layout, array('area1' => $leftcolumn_widgets_view,'area2' => $middlecolumn_widgets_view,'area3' => $rightcolumn_widgets_view, 'layoutmode' => 'index_mode') );
 
 if (elgg_is_logged_in() && $ciw_showdashboard=="yes"){
@@ -65,6 +64,25 @@ if (elgg_is_logged_in() && $ciw_showdashboard=="yes"){
 
     $content  .= elgg_view_layout($ciw_layout, array('area1' => $leftcolumn_widgets_view,'area2' => $middlecolumn_widgets_view,'area3' => $rightcolumn_widgets_view, 'layoutmode' => 'index_mode') );
 }
+
+//EW - Department verification
+if(elgg_is_logged_in()){
+    if((time() - elgg_get_logged_in_user_entity()->last_department_verify) > 15552000)
+    {
+        //create hidden link
+        $content .= elgg_view('output/url', array(
+            'href' => 'ajax/view/verify_department/verify_department',
+            'text' => 'verify',
+            'id' => 'verify',
+            'aria-hidden' => 'true',
+            'class' => 'elgg-lightbox hidden',
+        ));
+
+        //after page is loaded click link
+        $content .= '<script> window.onload = function () { document.getElementById("verify").click() } </script>';
+    }
+}
+
 
 echo elgg_view_page( elgg_echo('newsfeed'), $content);
 ?>

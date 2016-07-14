@@ -18,7 +18,7 @@ if (file_tools_use_folder_structure()) {
 
 $form_body .= "<div>";
 $form_body .= "<label for='access_id2'>" . elgg_echo("access") . "</label><br />";
-$form_body .= elgg_view("input/access", array("name" => "access_id", "id" => "access_id2"));
+$form_body .= elgg_view("input/access", array("name" => "access_id_file", "id" => "access_id2"));
 $form_body .= "</div>";
 
 $form_body .= "<div class='elgg-foot'>";

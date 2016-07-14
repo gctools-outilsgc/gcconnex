@@ -242,6 +242,9 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
 		$sender_guid = (int) elgg_get_logged_in_user_guid();
 	}
 
+	// cyu - fatal error (inserts line breaks, upon saving into database)
+	$body = utf8_encode($body);
+
 	// Initialise 2 new ElggObject
 	$message_to = new ElggObject();
 	$message_sent = new ElggObject();
@@ -300,7 +303,7 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
 		add_entity_relationship($message_sent->guid, "reply", $original_msg_guid);
 	}
 
-	$message_contents = strip_tags($body);
+	//$message_contents = strip_tags($body);
 	if (($recipient_guid != elgg_get_logged_in_user_guid()) && $notify) {
 		$recipient = get_user($recipient_guid);
 		$sender = get_user($sender_guid);

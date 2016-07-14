@@ -295,6 +295,89 @@ if(elgg_in_context('groups') && get_input("filter") == 'yours'){ //datatable for
 	    echo $nav;
     }
 
+} else if(elgg_in_context('member_by_dept')) { //members by deptartment
+
+    foreach ($items as $item) {
+	//$item_view = elgg_view_list_item($item, $vars);
+	/*if (!$item_view) {
+		continue;
+	}*/
+
+    
+
+	$li_attrs = ['class' => $item_classes];
+
+	if ($item instanceof \ElggEntity) {
+		$guid = $item->getGUID();
+		$type = $item->getType();
+		$subtype = $item->getSubtype();
+
+		$li_attrs['id'] = "elgg-$type-$guid";
+
+        
+		$li_attrs['class'][] = "elgg-item-$type list-break mrgn-tp-md clearfix noWrap";
+
+        $icon = '<div style="max-width:75px; width:100%;">'.elgg_view_entity_icon($item, 'medium', array('use_hover' => false, 'class' => '', 'force_size' => true,)).'</div>';
+        
+
+        $details = elgg_view('output/url', array(
+                'href' => $item->getURL(),
+                'text' => $item->name,
+                'title' => elgg_echo('profile:title', array($item->name)),
+            ));
+        $details .= '<br>'.$item->email.'<br>';
+        $details .= '<b>'.elgg_echo('c_bin:sort_guid').': </b>'.friendly_time($item->time_created);
+
+        if(check_entity_relationship(elgg_get_logged_in_user_guid(), 'friend', $item->getGUID())){
+            $action = 'friend';
+            
+            $action = elgg_view('output/url', array(
+                   'href' => 'action/friends/remove?friend='.$item->guid,
+                   'text' => elgg_echo('friend:remove'),
+                   'is_action' => true,
+               ));
+        } else {
+            $action = 'not friend';
+            $action = elgg_view('output/url', array(
+                    'href' => 'action/friends/add?friend='.$item->guid,
+                    'text' => elgg_echo('friend:add'),
+                    'is_action' => true,
+                ));
+        }
+
+        if(elgg_get_logged_in_user_guid() == $item->getGUID()) {
+            $action ='';
+        } 
+
+        $details .= '<p class="clearfix pull-right">'.$action.'</p>';
+
+        $item_view = elgg_view_image_block($icon, $details, array());
+
+
+		if ($subtype) {
+
+			$li_attrs['class'][] = "elgg-item-$type-$subtype clearfix";
+		}
+	} else if (is_callable(array($item, 'getType'))) {
+		$li_attrs['id'] = "item-{$item->getType()}-{$item->id}";
+	}
+
+	$list_items .= elgg_format_element('li', $li_attrs, $item_view);
+}
+
+if ($position == 'before' || $position == 'both') {
+	echo $nav;
+}
+
+echo elgg_format_element('ul', ['class' => $list_classes], $list_items);
+
+if ($position == 'after' || $position == 'both') {
+	echo $nav;
+}
+
+
+
+
 } else { //normal list for everything else
     
     foreach ($items as $item) {

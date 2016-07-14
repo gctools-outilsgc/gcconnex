@@ -31,7 +31,7 @@ if ($user->canEdit()) {
     $editAvatar = elgg_get_site_url(). 'avatar/edit/' . $user->username;
     echo '<div><a href='.$editAvatar.' class="btn btn-primary">'. elgg_echo('gcconnex_profile:profile:edit_avatar') .'</a></div>';
     echo '<div class="basic-profile-standard-field-wrapper col-sm-6 col-xs-12">'; // container for css styling, used to group profile content and display them seperately from other fields
-   
+
     $fields = array('Name', 'Job', 'Department', 'Location', 'Phone', 'Mobile', 'Email', 'Website');
 
     foreach ($fields as $field) { // create a label and input box for each field on the basic profile (see $fields above)
@@ -48,9 +48,9 @@ if ($user->canEdit()) {
             'class' => 'gcconnex-basic-' . $field,
             'value' => $value,
         );
-		/////////////Troy	
+		/////////////Troy
         if ($field == 'department') {
-            /////////////Troy	
+            /////////////Troy
             //echo '<div id="bloodhound" class="basic-profile-field">'; // field wrapper for css styling
             echo '<div class="basic-profile-field department-test">';
 			$obj = elgg_get_entities(array(
@@ -95,7 +95,7 @@ if ($user->canEdit()) {
 				$provinces['pov-yuk'] = 'Gouvernement du Yukon';
 				$departments = array_merge($departments,$provinces);
 			}
-			
+
 			$value = explode(" / ", $value);
 			//error_log("test".array_search($value[0], json_decode($departments, true)));
 			$key = array_search($value[0], $departments);
@@ -112,13 +112,13 @@ if ($user->canEdit()) {
         		'class' => ' gcconnex-basic-' . $field,
         		'value' => $key,
 				'options_values' => $departments,
-				
+
 			));
         }
         else {
             echo '<div class="basic-profile-field">'; // field wrapper for css styling
-        
-       		 echo elgg_view("input/text", $params); 
+
+			echo elgg_view("input/text", $params);
 		}// input field
         echo '</div>'; //close div class = basic-profile-field
 
@@ -129,8 +129,8 @@ if ($user->canEdit()) {
     echo '</div>'; // close div class="basic-profile-standard-field-wrapper"
     echo '<div class="basic-profile-social-media-wrapper col-sm-6 col-xs-12">'; // container for css styling, used to group profile content and display them seperately from other fields
 
-// pre-populate the social media fields and their prepended link for user profiles
-    
+	// pre-populate the social media fields and their prepended link for user profiles
+
 
 
     $fields = array('Facebook' => "http://www.facebook.com/",
@@ -143,7 +143,7 @@ if ($user->canEdit()) {
     'Instagram' => "http://instagram.com/",
     'Flickr' => "http://flickr.com/",
     'Youtube' => "http://www.youtube.com/");
-     
+
 
     foreach ($fields as $field => $field_link) { // create a label and input box for each social media field on the basic profile
 
@@ -180,7 +180,7 @@ if ($user->canEdit()) {
             'placeholder' => $placeholder,
             'value' => $value
         );
-       
+
         echo elgg_view("input/text", $params); // input field
 
         echo '</div>'; // close div class="input-group"
@@ -204,15 +204,15 @@ if ($user->canEdit()) {
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->';
-/*
+	/*
     $content = elgg_view('output/url', array(
-        'href' => 'ajax/view/b_extended_profile/edit_basic',
-        'class' => 'elgg-lightbox gcconnex-basic-profile-edit elgg-button',
-        'text' => elgg_echo('gcconnex_profile:edit_profile')
+	'href' => 'ajax/view/b_extended_profile/edit_basic',
+	'class' => 'elgg-lightbox gcconnex-basic-profile-edit elgg-button',
+	'text' => elgg_echo('gcconnex_profile:edit_profile')
     ));
 
     echo $content;
-*/
+	 */
 }
 echo '</div>'; // close div class="gcconnex-profile-name"
 //actions dropdown
@@ -224,26 +224,50 @@ if (elgg_get_page_owner_guid() != elgg_get_logged_in_user_guid()) {
     $admin = elgg_extract('admin', $menu, array());
 
     $profile_actions = '';
+
+	// cyu - GCCON-151 : Add colleague in FR not there (inconsistent FR and EN menu layout) & other issues
     if (elgg_is_logged_in() && $actions) {
-        
+		$btn_friend_request = '';
         foreach ($actions as $action) {
-            
+			
+			if (strcmp($action->getName(),'add_friend') == 0 || strcmp($action->getName(),'remove_friend') == 0) {
+				if (!check_entity_relationship(elgg_get_logged_in_user_guid(),'friendrequest',$user->getGUID())) {
+					if ($user->isFriend() && strcmp($action->getName(),'remove_friend') == 0) {
+						$btn_friend_request = $action->getContent();
+						$btn_friend_request_link = $action->getHref();
+					}
+					if (!$user->isFriend() && strcmp($action->getName(),'add_friend') == 0) {
+						$btn_friend_request = $action->getContent(array('class' => 'asdfasdasfad'));
+						$btn_friend_request_link = $action->getHref();
+					}
+				}
+			} else {
+
+				if (check_entity_relationship(elgg_get_logged_in_user_guid(),'friendrequest',$user->getGUID()) && strcmp($action->getName(),'friend_request') == 0) {
+					$btn_friend_request_link = $action->getHref();
+					$btn_friend_request = $action->getContent();
+				} else
+					$profile_actions .= '<li>' . $action->getContent(array('class' => 'gcconnex-basic-profile-actions')) . '</li>';
+			}
+
             //remove add/remove actions when they are not needed
-            if($user->isFriend() && strpos($action->getContent(), "Add colleague") == true){
-                
+            /*if($user->isFriend() && strpos($action->getContent(), "Add colleague") == true){
+
             } else if(!$user->isFriend() && strpos($action->getContent(), "Remove colleague") == true){
-                
+
             } else {
                 if(strpos($action->getContent(), "Add colleague")){
                     $add = $action->getContent(array('class' => 'gcconnex-basic-profile-actions btn btn-primary mrgn-rght-sm'));
                 } else {
                     $profile_actions .= '<li>' . $action->getContent(array('class' => 'gcconnex-basic-profile-actions')) . '</li>';
                 }
-            }
+            }*/
         }
-        
+
     }
     if(elgg_is_logged_in()){
+		echo "<button type='button' class='btn btn-primary' onclick='location.href=\"{$btn_friend_request_link}\"'>{$btn_friend_request}</button>"; // cyu - added button and removed from actions toggle
+
         echo $add . '<div class="btn-group"><button type="button" class="btn btn-custom mrgn-rght-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     ' . elgg_echo('profile:actions') . ' <span class="caret"></span>
                     </button>
@@ -267,9 +291,9 @@ if (elgg_is_admin_logged_in() && elgg_get_logged_in_user_guid() != elgg_get_page
     //$admin_links .= '</ul>';
     //$admin_links .= '</li>';
     //$admin_links .= '</ul>';
-    
+
     echo '<div class="pull-right btn-group"><button type="button" class="btn btn-custom pull-right dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' .
-                $text .  '<span class="caret"></span>
+	$text .  '<span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu pull-right clearfix">' . $admin_links . '</ul></div>';
 }
@@ -340,10 +364,10 @@ foreach ($social as $media) {
         if ($media == 'instagram') { $link = "http://instagram.com/" . $link; $class = "fa-instagram";}
         if ($media == 'flickr') { $link = "http://flickr.com/" . $link; $class = "fa-flickr"; }
         if ($media == 'youtube') { $link = "http://www.youtube.com/" . $link; $class = "fa-youtube";}
-        
-        
+
+
         echo '<a href="' . $link . '" target="_blank"><i class="socialMediaIcons fa ' . $class . ' fa-2x"></i></a>';
-        
+
     }
 }
 echo '</div>'; // close div class="gcconnex-profile-social-media-links"

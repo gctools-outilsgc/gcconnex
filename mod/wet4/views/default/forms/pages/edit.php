@@ -77,11 +77,11 @@ if (elgg_is_active_plugin('cp_notifications') && !$vars['new_entity']) {
 
 	echo "<h2>".elgg_echo('cp_notify:minor_edit_header')."</h2>";
     echo '<div class="checkbox">';
-    echo elgg_view('input/checkbox', array(
+    echo elgg_view('input/checkboxes', array(
 			'name' => 'chk_page_minor_edit',
             'label'=>elgg_echo('page:minor_edit_label'),
 			'id' => 'chk_page_minor_edit',
-			'value' => $entity->entity_minor_edit,
+			'value' => 0,
 			'options' => array(
 					elgg_echo('cp_notify:minor_edit') => 1),
 		));

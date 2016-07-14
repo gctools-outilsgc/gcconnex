@@ -260,5 +260,36 @@
 				)
 			);
 			echo "</div>";
+
+
+
+
+
+			// list all users who have group subscriptions and are not members of
+			echo "<br/><br/>";
+			echo "<h3>Run to fix inconsistent group subscriptions/members Script</h3>";
+			echo "<div>";
+
+			$str_id = elgg_get_metastring_id('fixing_notification_inconsistencies', true);
+			$val_id = elgg_get_metastring_id('0');
+
+			$query = "	SELECT COUNT(r1.guid_one) AS num_users
+						FROM {$dbprefix}entity_relationships r1
+						LEFT OUTER JOIN {$dbprefix}entity_relationships r2 ON r1.guid_two = r2.guid_two AND r2.relationship = 'member' AND r1.guid_one = r2.guid_one
+						WHERE
+							r1.guid_one IN (select guid FROM {$dbprefix}users_entity)
+							AND r1.relationship LIKE 'cp_subscribed_to%'
+							AND r1.guid_two IN (select guid FROM {$dbprefix}groups_entity)
+							AND r2.relationship is null";
+
+			$count = get_data_row($query);
+
+			echo elgg_view('admin/upgrades/view', array(
+				'count' => $count->num_users,
+				'action' => 'action/cp_notifications/fix_inconsistent_subscription_script',
+			));
+
+			echo "</div> <br/><br/>";
+
 			break;
 	}

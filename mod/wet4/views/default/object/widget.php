@@ -21,6 +21,15 @@ $handler = $widget->handler;
 
 $title = $widget->getTitle();
 
+// cyu - this file is overwriting the original file (.../mod/widget_manager/views/default/object/widget.php)
+// missing following code snippet where widget title gets the URL
+$widget_title_link = $widget->getURL();
+if ($widget_title_link !== elgg_get_site_url()) {
+	// only set usable widget titles
+	$title = elgg_view("output/url", array("href" => $widget_title_link, "text" => $title, 'is_trusted' => true, "class" => "widget-manager-widget-title-link"));
+}
+
+
 $edit_area = '';
 $can_edit = $widget->canEdit();
 if ($can_edit) {

@@ -34,7 +34,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 ?>
 <div class="panel panel-custom clearfix elgg-image-block col-xs-12 <?php echo $c_photo_top_margin; ?>">
    <div class="group-summary-holder clearfix">
-	   <div class="col-sm-9">
+	   <div class="col-xs-9">
 		   
 		   <div class="col-xs-2 col-md-2 mrgn-tp-sm group-profile-image-size">
 			<?php
@@ -120,7 +120,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
         
     </div>
       </div>          
-        <div class="btn-group text-right col-sm-3">
+        <div class="btn-group text-right col-xs-3">
                 
              
             <div class="groups-stats mrgn-tp-sm mrgn-bttm-sm text-right"></div>
@@ -279,7 +279,24 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 
             <div class="groups-info mrgn-tp-sm mrgn-rght-md pull-right">
 
-                <p>
+                    <?php
+                        //Nick - Added a link to share the group on the wire 
+                        if(elgg_is_logged_in()){
+                            $options = array(
+                                
+                                'text' => '<i class="fa fa-share-alt fa-lg icon-unsel"><span class="wb-inv">Share this group on the Wire</span></i>',
+                                'title' => elgg_echo('thewire_tools:reshare'),
+                                'href' => 'ajax/view/thewire_tools/reshare?reshare_guid=' . $group->getGUID(),
+                                'class' => 'elgg-lightbox',
+                                
+                                'is_trusted' => true,
+                               
+                            );
+                        }
+                        echo '<div class="pull-left mrgn-rght-sm">'.elgg_view('output/url', $options).'</div>';
+                    ?>
+                
+                <div class="pull-left">
                     <?php
                     //This is the code to add the notification bell to the page to the left of the member button
                     if ($group->isMember(elgg_get_logged_in_user_entity())) { //Nick - check if user is a member before
@@ -292,10 +309,11 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
                         }
                     }
                     ?>
-                </p>
 
 
 
+
+                </div>
             </div>
         </div>
 		</div>

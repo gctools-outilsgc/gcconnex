@@ -81,7 +81,7 @@ catch (Exception $e)
         <?php echo elgg_echo('wet:cover_photo_input'); ?>
     </label>
     <div class="timeStamp"><?php echo elgg_echo('wet:cover_photo_dim');?></div>
-    <br />
+
     <?php echo elgg_view("input/file", array("name" => "c_photo", 'id' => 'c_photo')); ?>
     <?php echo elgg_view('input/checkbox', array('name'=>'remove_photo', 'label'=> elgg_echo('wet:cover_photo_remove'), 'value'=>'remove_c_photo',));?>
 </div>

@@ -53,6 +53,10 @@ if($sub_type =='activity'){
     $action_view_more = 'groups/activity/' . $group;
 }
 
+if($sub_type =='related'){ //related group
+    $action_view_more = 'groups/related/' . $group;
+}
+
 $all_link = elgg_view('output/url', array(
 	'href' => $action_view_more,
 	'text' => elgg_echo('link:view:all'),

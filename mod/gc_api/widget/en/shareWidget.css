@@ -1,0 +1,44 @@
+/*
+ * filename shareWidget.css
+ * author: Nicholas Pietrantonio
+ * purpose: css for styling share button.
+ */
+.share-btn-icon img{
+    width:26px;
+    padding-right: 4px;
+}
+.share-float{
+    float:left;
+}
+
+.gcc-share-button {
+	font-family: sans-serif;
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 4px 6px;
+    font-size: 18px;
+    line-height: 1.5375;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    color: #fff;
+    background-color: #055959;
+    border-color: #055959;
+    text-decoration: none;
+}
+.gcc-share-button:active {
+	color: #fff;
+	background-color: #007173;
+	text-decoration: none;
+}
+#cometchat{
+	display:none !important;
+}

@@ -1,4 +1,36 @@
+<script>
+$(document).ready(function () {
+
+    $('#dialog-modal').dialog({
+        modal: true,
+        autoOpen: false
+    });
+
+    $('select[name=access_id]').change(function () {
+        if ($(this).val() != "2") {
+            $('#myModal').modal('show');
+        }
+    });
+
+});
+
+</script>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display:none">
+  <div class="modal-dialog" role="document">
+    <div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title"><?php echo elgg_echo('msg:change_access_title'); ?><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button></h3>
+
+  </div>
+  <div class="panel-body">
+    <?php echo elgg_echo("msg:change_access"); ?>  
+    </div>
+</div>
+  </div>
+</div>
 <?php
+
+
 /**
  * Elgg access level input
  * Displays a dropdown input field
@@ -16,12 +48,16 @@
  *
  */
 
+
 // bail if set to a unusable value
 if (isset($vars['options_values'])) {
 	if (!is_array($vars['options_values']) || empty($vars['options_values'])) {
+
 		return;
 	}
 }
+
+
 
 $entity_allows_comments = elgg_extract('entity_allows_comments', $vars, true);
 unset($vars['entity_allows_comments']);
@@ -81,17 +117,25 @@ $params['value'] = $vars['value'];
 // don't call get_write_access_array() unless we need it
 if (!isset($vars['options_values'])) {
 	$vars['options_values'] = get_write_access_array(0, 0, false, $params);
+	 unset($vars['options_values'][1]); //remove ACCESS_LOGGED_IN
+
 }
 
 if (!isset($vars['disabled'])) {
 	$vars['disabled'] = false;
+
+
 }
 
 // if access is set to a value not present in the available options, add the option
 if (!isset($vars['options_values'][$vars['value']])) {
+
 	$acl = get_access_collection($vars['value']);
 	$display = $acl ? $acl->name : elgg_echo('access:missing_name');
+
 	$vars['options_values'][$vars['value']] = $display;
+
+	
 }
 
 // should we tell users that public/logged-in access levels will be ignored?
@@ -99,13 +143,16 @@ if (($container instanceof ElggGroup)
 	&& $container->getContentAccessMode() === ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY
 	&& !elgg_in_context('group-edit')
 	&& !($entity instanceof ElggGroup)) {
+
 	$show_override_notice = true;
 } else {
 	$show_override_notice = false;
+
 }
 
 if ($show_override_notice) {
 	$vars['data-group-acl'] = $container->group_acl;
+
 }
 
 //EW - Made the default access for closed group content set to group not private
@@ -117,7 +164,11 @@ if(!$entity && ($container instanceof ElggGroup)){
     }
 }
 
+
 echo elgg_view('input/select', $vars);
 if ($show_override_notice) {
 	echo elgg_format_element('p', ['class' => 'elgg-text-help'], elgg_echo('access:overridenotice'));
 }
+
+
+

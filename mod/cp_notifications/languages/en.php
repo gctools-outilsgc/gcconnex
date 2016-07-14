@@ -13,9 +13,13 @@ $english = array(
 
 
 	// content edit section
-	'cp_notify:subject:edit_content' => "%s has been updated by %s",
-	'cp_notify:body_edit:title' => "This content has been edited. Click here to view the content: %s",
-	'cp_notify:body_edit:description' => "To unsubscribe to this notification: %s",
+	//'cp_notify:subject:edit_content' => "%s has been updated by %s",
+	//'cp_notify:body_edit:title' => "This content has been edited.",
+	'cp_notify:subject:edit_content' => "%s '%s' has been updated by %s",
+	'cp_notify:body_edit:title' => "This %s has been edited.",
+	//'cp_notify:body_edit:description' => "Click here to view <a href='%s'>%s</a>.",
+	'cp_notify:body_edit:description' => "<a href='%s'>View or comment</a> <br/>
+		You can like, share or subscribe to this content directly in GCconnex",
 
 
 	// group invite user section
@@ -82,31 +86,50 @@ $english = array(
 
 
 	// posted comment section
-	'cp_notify:subject:comments' => "%s posted a comment on '%s'",
-	'cp_notify:body_comments:title' => "%s posted a comment to '%s' by %s",
-	'cp_notify:body_comments:description' => "The comment is: <br/>
-		%s <br/>
-		You can view or reply to this by clicking on the following link: %s",
+	// +------ cyu - updated email notification content
+	'cp_notify:subject:comments' => "A comment was posted in the group %s",
+	'cp_notify:subject:comments_discussion' => "A discussion reply was posted in the group %s",
+
+	'cp_notify:subject:comments_user' => "A comment was posted in %s's topic",
+
+	'cp_notify:body_comments:title' => "<a href='%s'>%s</a> posted a new comment on the %s, <a href='%s'>%s</a>",
+	'cp_notify:body_comments:title_discussion' => "<a href='%s'>%s</a> posted a new reply on the %s, <a href='%s'>%s</a>",
+	
+	'cp_notify:body_comments:description' => "<a href='%s'>View or comment</a>",
+	'cp_notify:body_comments:description_discussion' => "<a href='%s'>View or reply</a>",
+
+	// colleague notifications (c_cp_notify:*)
+	'c_cp_notify:subject:comments' => 'New comment on the %s %s', // New comment on the <blog> <title of blog>
+	'c_cp_notify:body_comments:title' => "%s posted a comment on the %s ''",
+	'c_cp_notify:body_comments:description' => '',
 
 
 	// site message section
 	'cp_notify:subject:site_message' => "%s sent you a new message '%s'",
-		'cp_notify:body_site_msg:title' => "%s sent you a site message entitled '%s'",
+	'cp_notify:body_site_msg:title' => "%s sent you a site message entitled '%s'",
 	'cp_notify:body_site_msg:description' => "The content of the message is: <br/>
 		%s <br/>
 		You can view or reply to this by clicking on this link: %s",
 
 
 	// new content posted section
-	'cp_notify:subject:new_content' => "%s posted a new %s with the title '%s'",
+	//'cp_notify:subject:new_content' => "%s posted a new %s with the title '%s'",
+	'cp_notify:subject:new_content' => "A new %s was posted in group %s",
 
-	'cp_notify:subject:in' => " in %s",
-
-	'cp_notify:body_new_content:title' => "%s posted new content entitled '%s'",
+	// +------ cyu - modified : <username> posted a new <item type> entitled <item name>
+	'cp_notify:body_new_content:title' => "<a href='%s'>%s</a> posted a new %s entitled <a href='%s'>%s</a>",
 	'cp_notify:body_new_content:description' => "The description of the new posting is: <br/>
 		%s <br/>
-		You can view or reply to this by clicking on this link: %s",
+		<a href='%s'>View or comment</a> <br/>
+		You can like, share or subscribe to this content directly in GCconnex",
 
+	'cp_notify:body_new_content:description_discussion' => "The description of the new posting is: <br/>
+		%s <br/>
+		<a href='%s'>View or reply</a> <br/>
+		You can like, share or subscribe to this content directly in GCconnex",
+
+	'cp_notify:body_new_content:no_description_discussion' => "<a href='%s'>View or reply</a> <br/>
+		You can like, share or subscribe to this content directly in GCconnex",
 
 	// mentioned section
 	'cp_notify:subject:mention' => "%s mentioned you on GCconnex",
@@ -185,7 +208,7 @@ $english = array(
 	'cp_notify:subject:forgot_password' => "You have requested a password reset",
 	'cp_notify:body_forgot_password:title' => "There was a password reset request from this IP address: <code> %s </code>",
 	'cp_notify:body_forgot_password:description' => "There was a request to have a password reset from this user's IP address:<code> %s </code> <br/>
-		Please click on this link to have the password resetted for %s's account: %s",
+		Please click on this link to have the password reset for %s's account: %s",
 		
 
 	// validate user 
@@ -237,10 +260,10 @@ $english = array(
 
 
 	// email notification footer text (1 and 2)
-	'cp_notify:footer' => "<p>If you do not want to receive these types of notifications, you can change your subscription settings by clicking on this link: %s</p>", // Check URL or link
-    'cp_notify:footer2' => "",
+	'cp_notify:footer' => "Learn more about <a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Manage_Account_Settings/How_Do_I_Change_My_Notifications_Settings%3F'>GCconnex notifications</a>. ",
+	'cp_notify:footer2' => "Need help? <a href='https://gcconnex.gc.ca/mod/contactform/'>Contact us</a>.<br/>To unsubscribe from these notifications, login to GCconnex and edit your <a href='%s'>notifications' settings</a>.",
 
-
+//'cp_notify:footer' => "Learn more about <a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Manage_Account_Settings/How_Do_I_Change_My_Notifications_Settings%3F'>GCconnex notifications</a>. %s sent you a site message entitled '%s'",
 
 
 	// texts that will be displayed in the site pages
@@ -267,6 +290,13 @@ $english = array(
     'cp_notify:contactHelpDesk'=>'Should you have any concerns, please use the <a href="https://gcconnex.gc.ca/mod/contactform/">Contact us form</a>.',
     'cp_notify:visitTutorials'=>'To learn more about GCconnex and its features visit the <a href="http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/See_All">GCconnex User Help</a>.<br/>
 	                             Thank you',
+
+	// cyu - new message in place for email content revamp
+	'cp_notify:footer_msg' => "Learn more about <a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Manage_Account_Settings/How_Do_I_Change_My_Notifications_Settings%3F'>GCconnex notifications</a>. Need help? <a href='https://gcconnex.gc.ca/mod/contactform/'>Contact us</a>.<br/>To unsubscribe to notifications, login to GCconnex and edit your notifications' settings.",
+	'cp_notify:french_follows' => "<i>(Le fran&ccedil;ais suit)</i>",
+	'cp_notify:readmore' => "<a href='%s'>Read more</a>",
+
+
     'cp_notify:personal_likes'=>'Notify me when someone likes my content',
     'cp_notify:personal_mentions'=>'Notify me when someone @mentions me',
     'cp_notify:personal_content'=>'Notify me when something happens on content I create',

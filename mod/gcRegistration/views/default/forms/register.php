@@ -32,7 +32,7 @@ if (elgg_is_sticky_form('register')) {
 	elgg_clear_sticky_form('register');
 }
 
-$account_exist_message = '<span class=&quot;label label-danger tags mrgn-bttm-sm&quot;>'.elgg_echo('registration:userexists').'</span>';
+$account_exist_message = elgg_echo('registration:userexists');
 ?>
 
 <!--<style>
@@ -292,7 +292,7 @@ var enDepartments = {};//new Array();
 <section class="col-md-6">
 <div class="panel panel-default">
 <header class="panel-heading">
-    <h3 class="panel-title">Registration form</h3>
+    <h3 class="panel-title"><?php echo elgg_echo('gcRegister:form'); ?></h3>
 </header>
 <div class="panel-body mrgn-lft-md">
 <div class="form-group">
@@ -303,31 +303,40 @@ var enDepartments = {};//new Array();
 
 <div class="form-group">
 	<label for="email" class="required"><span class="field-name"><?php echo elgg_echo('gcRegister:email_secondary'); ?></span><strong class="required">(required)</strong></label>
+    <font id="email_secondary_error" color="red"></font><br />
 	<input id="email" class="form-control" type="text" value='<?php echo $email ?>' name="email" 
-	onBlur="elgg.action( 'register/ajax', {
+	onBlur="" />
+    <script>
+        $('#email').blur(function () {
+            elgg.action( 'register/ajax', {
 		data: {
-			args: document.getElementById('email').value 
-		}, 
+			args: document.getElementById('email').value
+		},
 		success: function (x) {
 		    //create username
 		    $('.username_test').val(x.output);
            //Nick - Testing here if the username already exists and add a feedback to the user
-		    if(x.output == '<?php echo '> ' . elgg_echo('gcRegister:email_in_use'); ?>'){
-                $('.already-registered-message').html('<?php echo $account_exist_message; ?>');
-           }
+		    if(x.output == "<?php echo '> ' . elgg_echo('gcRegister:email_in_use'); ?>"){
+                $('.already-registered-message span').html("<?php echo $account_exist_message; ?>").removeClass('hidden');
+		    } else {
+                $('.already-registered-message span').addClass('hidden');
+		    }
 		    generateDisplayName();
 		    function generateDisplayName() {
-            //generate display name (remove '.' in name)	
+            //generate display name (remove '.' in name)
                 var dName = $('.username_test').val();
-		            
+
 		            if(dName.indexOf('.')!= false) {
 			            dName = dName.replace(/\./g,' ');
 		            }
 
 		            $('.display_name').val(dName);
-           
+
 		    }
-		},   });" />
+		},   });
+        });
+
+    </script>
 </div>
 
     <div class="return_message">
@@ -390,7 +399,8 @@ var enDepartments = {};//new Array();
 	?>
 </div>
 <div class="form-group">
-	<label for="username" class="required"><span class="field-name"><?php echo elgg_echo('gcRegister:username'); ?></span><strong class="required">(required)</strong></label> <div class="already-registered-message mrgn-bttm-sm"></div>
+	<label for="username" class="required"><span class="field-name"><?php echo elgg_echo('gcRegister:username'); ?></span><strong class="required">(required)</strong></label> 
+    <div class="already-registered-message mrgn-bttm-sm"><span class="label label-danger tags mrgn-bttm-sm"></span></div>
 	<?php
 	echo elgg_view('input/text', array(
 		'name' => 'username',
@@ -418,6 +428,7 @@ var enDepartments = {};//new Array();
 
 <div class="form-group">
 	<label for="password2" class="required"><span class="field-name"><?php echo elgg_echo('gcRegister:password_secondary'); ?></span><strong class="required">(required)</strong></label>
+    <font id="password_secondary_error" color="red"></font><br />
 	<?php
 	echo elgg_view('input/password', array(
 		'name' => 'password2',
@@ -489,7 +500,7 @@ echo '<br/>';
 
 
 	//$('<input>').on("focus", function() {
-	    $('#email_initial').on("keyup", function() {
+	    $('#email_initial').on("focusout", function() {
 	    	//enable_submit(validForm());
 	    	var val = $(this).attr('value');
 	        if ( val === '' ) {
@@ -504,6 +515,13 @@ echo '<br/>';
 	            	document.getElementById('email_initial_error').innerHTML = c_err_msg;
 	            }
 	        }
+
+            var val_2 = $('#email').attr('value');
+            if (val_2 == val) {
+
+		        	document.getElementById('email_secondary_error').innerHTML = '';
+		        
+            }
 	    });
 	
 		$('#toc2').click(function() {
@@ -513,7 +531,7 @@ echo '<br/>';
 	    	}
 	    });
 
-	    $('#email').on("keyup", function() {
+	    $('#email').on("focusout", function() {
 	    	//enable_submit(validForm());
 	    	var val = $(this).attr('value');
 		    if ( val === '' ) {
@@ -532,7 +550,7 @@ echo '<br/>';
 		    }
 		});
 
-	    $('#password').on("keyup", function() {
+	    $('.password_test').on("focusout", function() {
 	    	//enable_submit(validForm());
 	    	var val = $(this).val();
 		    if ( val === '' ) {
@@ -542,9 +560,20 @@ echo '<br/>';
 		    else if ( val !== '' ) {
 		        document.getElementById('password_initial_error').innerHTML = '';
 		    }
+
+	        var val_2 = $('#password2').attr('value');
+	        
+            if (val_2 == val) {
+
+		        	document.getElementById('password_secondary_error').innerHTML = '';
+		        
+            } else if (val_2 !== '' && val_2 != val) {
+                var c_err_msg = "<?php echo elgg_echo('gcRegister:mismatch') ?>";
+		        	document.getElementById('password_secondary_error').innerHTML = c_err_msg;
+            }
 		});	
 	    
-	    $('#password2').on("keyup", function() {
+	    $('#password2').on("focusout", function() {
 	    	//enable_submit(validForm());
 	    	var val = $(this).val();
 		    if ( val === '' ) {
@@ -558,20 +587,20 @@ echo '<br/>';
 		        if (val2 != val)
 		        {
 		        	var c_err_msg = "<?php echo elgg_echo('gcRegister:mismatch') ?>";
-		        	document.getElementById('password_secondary_error').innerHTML = c_err_msg + val2 + ' ' + val;
+		        	document.getElementById('password_secondary_error').innerHTML = c_err_msg;
 		        }
 		    }
 		});
 
-	    $('#department_name').on("keyup", function() {
+	    $('#department_name').on("focusout", function() {
 	    	//enable_submit(validForm());
 	    	var val = $(this).val();
 		    if ( val === '' ) {
 		    	var c_err_msg = "<?php echo elgg_echo('gcRegister:empty_field') ?>";
-		        document.getElementById('department_error').innerHTML = c_err_msg;
+		        //document.getElementById('department_error').innerHTML = c_err_msg;
 		    }
 		    else if ( val !== '' ) {
-		        document.getElementById('department_error').innerHTML = '';
+		        //document.getElementById('department_error').innerHTML = '';
 		    }
 		});
 	//});

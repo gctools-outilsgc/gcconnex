@@ -464,7 +464,8 @@ function mm_notify_user($recipient, $sender, $subject, $body) {
 	$headers = 'MIME-Version: 1.0' . "\r\n";
 	$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
 	$headers .= 'From: ' . $sender_entity->email . "\r\n";
-	mail($recipient_entity->email, $subject, $body, $headers);
+	//mail($recipient_entity->email, $subject, $body, $headers);
+	phpmailer_send( $recipient_entity->email, $recipient_entity->name, $subject, $body, NULL, true );
 	
 	if(get_subtype_from_id($recipient_entity->subtype) == 'mission') {
 		if($recipient_entity->account) {

@@ -12,10 +12,13 @@ $french = array(
 	'cp_notify:body_group_add:description' => "Vous avez été ajouté au groupe %s : <br/>",
 	
 	// content edit section
-	'cp_notify:subject:edit_content' => "%s a été mis à jour par %s", // new
-	'cp_notify:body_edit:title' => "Ce contenu a été modifié. Cliquez ici pour voir le contenu : %s",	// new
-	'cp_notify:body_edit:description' => "Pour vous désabonner à cette notification : %s", // new
-
+	//'cp_notify:subject:edit_content' => "%s a été mis à jour par %s", // new
+	//'cp_notify:body_edit:title' => "Ce contenu a été modifié.",	// new
+	//'cp_notify:body_edit:description' => "Cliquez ici pour voir le contenu : <a href='%s'>%s</a>", // new
+	'cp_notify:subject:edit_content' => "%s '%s' a été mis à jour par %s",
+	'cp_notify:body_edit:title' => "%s a été modifié.",
+	'cp_notify:body_edit:description' => "<a href='%s'>Visualiser ou afficher un commentaire</a> <br/>
+		Vous pouvez aimer, partager et vous abonner à ce contenu dans GCconnex.",
 
 	// group invite user
 	'cp_notify:subject:group_invite_user' => "%s vous a invité à joindre le groupe %s",
@@ -89,8 +92,8 @@ $french = array(
 
 	// forgot password section
 	'cp_notify:subject:forgot_password' => "Vous avez fait une demande pour réinitialiser votre mot de passe",
-	'cp_notify:body_forgot_password:title' => "Une demande de réinitialisation du mot de passe a été fait a partir de cette adresse IP : <code> %s </code>",
-	'cp_notify:body_forgot_password:description' => "Une demande de réinitialisation du mot de passe a été fait pour l'adresse IP:<code> %s </code> <br/> 
+	'cp_notify:body_forgot_password:title' => "Une demande de réinitialisation du mot de passe a été faite à partir de cette adresse IP : <code> %s </code>",
+	'cp_notify:body_forgot_password:description' => "Une demande de réinitialisation du mot de passe a été faite pour l'adresse IP:<code> %s </code> <br/> 
 		Cliquez sur le lien suivant afin de réinitialiser le mot de passe pour le compte de %s : %s",
 
 
@@ -101,11 +104,25 @@ $french = array(
 
 
 	// post comment
-	'cp_notify:subject:comments' => "%s a publié un commentaire sur '%s'",
-	'cp_notify:body_comments:title' => "%s a publié un commentaire sur '%s' par %s",
-	'cp_notify:body_comments:description' => "Le commentaire se lit comme suit : <br/>
-		 %s <br/> 
-		Vous pouvez consulter ou répondre en cliquant sur le lien suivant : %s",
+	// +------ cyu updated
+	'cp_notify:subject:comments_user' => "Un commentaire a été affiché dans le groupe %s",
+
+	'cp_notify:subject:comments' => "Un commentaire a été affiché dans le groupe %s",
+	'cp_notify:subject:comments_discussion' => "Une réponse à une discussion a été affichée dans le groupe %s",
+
+	'cp_notify:subject:comments_user' => "Un commentaire a été publié dans le sujet de %s",
+
+	'cp_notify:body_comments:title_m' => "<a href='%s'>%s</a> a affiché un commentaire sur le %s intitulé <a href='%s'>%s</a>",
+	'cp_notify:body_comments:title_f' => "<a href='%s'>%s</a> a affiché un commentaire sur la %s intitulée <a href='%s'>%s</a>",
+
+
+	// +------ cyu discussion
+	'cp_notify:body_comments:title_discussion' => "<a href='%s'>%s</a> a affiché une réponse dans la %s intitulée <a href='%s'>%s</a>",
+
+	'cp_notify:body_comments:title_user' => "<a href='%s'>%s</a> a affiché une réponse dans la %s intitulée <a href='%s'>%s</a>",
+
+	'cp_notify:body_comments:description' => "<a href='%s'>Visualiser ou afficher un commentaire</a>",
+	'cp_notify:body_comments:description_discussion' => "<a href='%s'>Visualiser ou répondre</a>",
 
 
 	// site message
@@ -117,17 +134,30 @@ $french = array(
 
 
 	// new content posted section
-	'cp_notify:subject:new_content_mas' => "%s a publié un nouveau %s intitulé '%s'",
-	'cp_notify:subject:new_content_fem' => "%s a publié une nouvelle %s intitulée '%s'",
+	'cp_notify:subject:new_content_mas' => "Un nouveau %s a été affiché dans le groupe %s",
+	'cp_notify:subject:new_content_mas2' => "Un nouvel %s a été affiché dans le groupe %s",
+	'cp_notify:subject:new_content_fem' => "Une nouvelle %s a été affichée dans le groupe %s",
 
-	'cp_notify:subject:in' => " dans %s",
+	// +------ cyu <User name> posted a new <item type> entitled <item name>
+	'cp_notify:body_new_content:title_m' => "<a href='%s'>%s</a> a affiché un nouveau %s intitulé <a href='%s'>%s</a>",
+	'cp_notify:body_new_content:title_f' => "<a href='%s'>%s</a> a affiché une nouvelle %s intitulée <a href='%s'>%s</a>",
 
+	'cp_notify:body_new_content:title_m2' => "<a href='%s'>%s</a> a ajouté un nouveau %s intitulé <a href='%s'>%s</a>",
+	'cp_notify:body_new_content:title_m3' => "<a href='%s'>%s</a> a ajouté un nouvel %s intitulé <a href='%s'>%s</a>",
+	'cp_notify:body_new_content:title_f2' => "<a href='%s'>%s</a> a ajouté une nouvelle %s intitulée <a href='%s'>%s</a>",
 
-	'cp_notify:body_new_content:title' => "%s a publié un nouvel item intitulé '%s'",
 	'cp_notify:body_new_content:description' => "La description de leur nouvelle publication se lit comme suit : <br/> 
-		%s <br/> 
-		Vous pouvez consulter ou y répondre en cliquant sur le lien suivant : %s",
+		%s <br/>
+		<a href='%s'>Visualiser ou afficher un commentaire</a> <br/>
+		Vous pouvez aimer, partager et vous abonner à ce contenu dans GCconnex.",
 
+	'cp_notify:body_new_content:description_discussion' => "La description de leur nouvelle publication se lit comme suit : <br/>
+		%s <br/>
+		<a href='%s'>Visualiser ou répondre</a> <br/>
+		Vous pouvez aimer, partager et vous abonner à ce contenu dans GCconnex.",
+
+			'cp_notify:body_new_content:no_description_discussion' => "<a href='%s'>Visualiser ou répondre</a> <br/>
+		Vous pouvez aimer, partager et vous abonner à ce contenu dans GCconnex.",
 
 	// mention section
 	'cp_notify:subject:mention' => "%s vous a cité sur GCconnex",
@@ -138,10 +168,10 @@ $french = array(
 
 
 	// mention on the wire section
-	'cp_notify:subject:wire_mention' => "%s vous a mentioné sur le fil",
-	'cp_notify:body_wire_mention:title' => "Vous avez été mentioné sur le Fil",
-	'cp_notify:body_wire_mention:description' => "%s vous a mentioné dans son message sur le fil. <br/>
-		Pour consulter tous les messages ou vous avez été mentioné, cliquez sur le lien suivant : %s", 
+	'cp_notify:subject:wire_mention' => "%s vous a mentionné sur le fil",
+	'cp_notify:body_wire_mention:title' => "Vous avez été mentionné sur le Fil",
+	'cp_notify:body_wire_mention:description' => "%s vous a mentionné dans son message sur le fil. <br/>
+		Pour consulter tous les messages ou vous avez été mentionné, cliquez sur le lien suivant : %s", 
 
 
 	// forum topic
@@ -188,7 +218,7 @@ $french = array(
 
 
 	// add group operator
-	'cp_notify:subject:add_grp_operator' => "Le propriétaire du groupe '%s' vous à délégué les droits d'administrateur", // new
+	'cp_notify:subject:add_grp_operator' => "Le propriétaire du groupe '%s' vous a délégué les droits d'administrateur", // new
 	'cp_notify:body_add_grp_operator:title' => "Le propriétaire du groupe '%s' vous a délégué les droits d'administrateur'", // new
 	'cp_notify:body_add_grp_operator:description' => "%s vous a fait propriétaire du groupe '%s'. <br/>
 		Pour accéder le groupe , s'il vous plaît cliquer sur le lien suivant : <br/>
@@ -239,8 +269,8 @@ $french = array(
 	'cp_notify:event_update:subject' => " L'événement' %s a été mis à jour", // NEW
 
 	// email notification footer text (1 and 2)	
-	'cp_notify:footer' => "<p>Si vous ne voulez plus recevoir ce type de notification, veuillez modifier vos param?tres d'abonnement en cliquant le lien suivant : - http link -</p>",// Check URL or link
-	'cp_notify:footer2' =>  "",
+	'cp_notify:footer' => "Apprenez davantage au sujet des <a href='https://gcconnex.gc.ca/mod/contactform/'>notifications de GCconnex</a>.",// Check URL or link
+	'cp_notify:footer2' =>  " Besoin d’aide? <a href='http://www.gcpedia.gc.ca/wiki//Voir_Tout'>Contactez-nous</a>.<br/>Pour vous désabonner de ces notifications, connectez-vous à GCconnex et modifiez vos <a href='%s'>paramètres de notifications</a>.",
 
 
 
@@ -267,9 +297,14 @@ $french = array(
 	"cp_notify:sidebar:group_title" => "Abonnement aux groupes et contenu",
 	"cp_notify:sidebar:subs_title" => "Abonnement personnel",
 	'cp_notify:pickColleagues' => 'Abonnez-vous à vos collègues', // new
-	'cp_notify:contactHelpDesk'=>'Si vous avez des questions, veuillez soumettre votre demande via le <a href="https://gcconnex.gc.ca/mod/contactform/">formlaire Contactez-nous</a>.',
+	'cp_notify:contactHelpDesk'=>'Si vous avez des questions, veuillez soumettre votre demande via le <a href="https://gcconnex.gc.ca/mod/contactform/">formulaire Contactez-nous</a>.',
     'cp_notify:visitTutorials'=>"Pour de plus amples renseignements sur GCconnex et ses fonctionnalités, consultez l'<a href='http://www.gcpedia.gc.ca/wiki/Aide_%C3%A0_l%27utilisateur/Voir_Tout'>aide à l'utilisateur de GCconnex</a>.<br/>
 	                             Merci",
+
+	// cyu - new message in place for email content revamp
+	'cp_notify:french_follows' => "<i><sup>(Le fran&ccedil;ais suit)</sup></i>",
+	'cp_notify:readmore' => "<a href='%s'>Lire la suite</a>",
+
     'cp_notify:email'=>'Courriel', // new
     'cp_notify:personal_likes'=>'Envoyez-moi une notification lorsque quelqu\'un aime mon contenu',
     'cp_notify:personal_mentions'=>'Envoyez-moi une notification lorsque quelqu\'un me mentionne',

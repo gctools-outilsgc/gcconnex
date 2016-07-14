@@ -37,7 +37,7 @@ if ($page_guid) { // edit page
 		forward(REFERER);
 	}
 	$new_page = false;
-	$page->entity_minor_edit = get_input('minor_edit');
+	$page->entity_minor_edit = get_input('chk_page_minor_edit');
 
 } else { // new page, guid has not been set/created
 	$page = new ElggObject();

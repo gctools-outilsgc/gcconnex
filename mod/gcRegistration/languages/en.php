@@ -2,6 +2,7 @@
 
 $english = array(
 	// labels
+    'gcRegister:form' => 'Registration form',
 	'gcRegister:email_initial' => 'Enter your e-mail',
 	'gcRegister:email_secondary' => 'Confirm your e-mail',
 	'gcRegister:username' => 'Your username (auto-generated)',

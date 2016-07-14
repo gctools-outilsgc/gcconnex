@@ -103,6 +103,8 @@ function wet4_theme_init() {
 
     elgg_register_ajax_view("friend_circle/edit");
 
+    elgg_register_ajax_view("verify_department/verify_department");
+
     //file tools 
 	elgg_register_ajax_view("file_tools/move");
 
@@ -135,6 +137,10 @@ function wet4_theme_init() {
     elgg_register_action("login", elgg_get_plugins_path() . "/wet4/actions/login.php", "public");
     elgg_register_action("widgets/delete", elgg_get_plugins_path() . "/wet4/actions/widgets/delete.php");
     elgg_register_action("user/requestnewpassword", elgg_get_plugins_path() . "/wet4/actions/user/requestnewpassword.php", "public");
+
+    //Verify the department action
+    elgg_register_action("department/verify_department", elgg_get_plugins_path() . "/wet4/actions/department/verify_department.php");
+
 	// non-members do not get visible links to RSS feeds
 	if (!elgg_is_logged_in()) {
 		elgg_unregister_plugin_hook_handler('output:before', 'layout', 'elgg_views_add_rss_link');
@@ -227,6 +233,14 @@ function wet4_theme_init() {
     }
 
 
+}
+
+global $CONFIG;
+$dbprefix = elgg_get_config('dbprefix');
+    // user default access if enabled
+    if ($CONFIG->remove_logged_in) {
+    $query = "UPDATE {$dbprefix}entities SET access_id = 2 WHERE access_id = 1";//change access logged in to public
+    update_data($query);
 }
 
 /*
@@ -1856,7 +1870,6 @@ function embed_discussion_river($desc){
       
 	    }
     }
-
     return $strAndPara;
 
 }

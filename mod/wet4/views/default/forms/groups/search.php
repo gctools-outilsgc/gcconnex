@@ -11,14 +11,14 @@ $params = array(
 	'name' => 'q',
 	'class' => 'elgg-input-search mbm pull-left group-tab-menu-search-box',
     'id' => 'qSearch',
-    'placeholder'=>'Search in this Group',
+    'placeholder'=>elgg_echo('wet:search_in_group'),
 );
-echo '<i class="fa fa-search fa-lg pull-left group-tab-menu-search-icon"></i><label for="qSearch" class="wb-inv">'.elgg_echo('wet:searchHead').'</label>';
+echo '<label for="qSearch" class="wb-inv">'.elgg_echo('wet:searchHead').'</label>';
 echo elgg_view('input/text', $params);
 
 echo elgg_view('input/hidden', array(
 	'name' => 'container_guid',
 	'value' => $vars['entity']->getGUID(),
 ));
-
-echo elgg_view('input/submit', array('value' => elgg_echo('search:go'), 'class'=>'pull-left',));
+//Nick - created a new type "group_search" for buttons to put the search icon in the submit button
+echo elgg_view('input/button', array('value' => elgg_echo('wet:searchHead'), 'class'=>'pull-left group-search-button', 'type'=>'group_search'));

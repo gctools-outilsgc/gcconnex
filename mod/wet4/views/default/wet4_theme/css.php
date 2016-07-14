@@ -11127,7 +11127,7 @@ a.shr-opn, a.shr-opn:hover {
     
     .pagination {
         margin: 0;
-        left: 25%;
+        left: 10%;
     }
     
     .pagination li {
@@ -11139,6 +11139,10 @@ a.shr-opn, a.shr-opn:hover {
         margin-bottom: 0;
     }
 
+    .elgg-pagination{
+        left:25% !important;
+
+    }
     .ui-autocomplete {
         padding-left: 0;
     }
@@ -11343,7 +11347,7 @@ a.shr-opn, a.shr-opn:hover {
 
 .elgg-layout-one-column #widgets-add-panel{
     margin-top: -15px;
-        z-index: 9999999;
+        z-index: 1;
 
 }
 
@@ -11600,6 +11604,10 @@ border:none;
 
 }
 
+.group-search-button{
+    color: #055959;
+
+}
 
 /*Color box - Nick */
 

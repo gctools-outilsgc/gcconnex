@@ -24,8 +24,8 @@ switch ($vars['page'])
 		$content = get_online_users();
 		break;
 	case 'department':
-		$content = '<p>'.elgg_echo('c_bin:sort_by').'<a href="'.elgg_get_site_url().'members/department?sort=alpha">'.elgg_echo('c_bin:sort_alpha').'</a> | <a href="'.elgg_get_site_url().'members/department?sort=total">'.elgg_echo('c_bin:sort_totalUsers').'</a></p>'; 
-		$content .= render_department_tab($data_directory);
+		//$content = '<p>'.elgg_echo('c_bin:sort_by').'<a href="'.elgg_get_site_url().'members/department?sort=alpha">'.elgg_echo('c_bin:sort_alpha').'</a> | <a href="'.elgg_get_site_url().'members/department?sort=total">'.elgg_echo('c_bin:sort_totalUsers').'</a></p>'; 
+		$content = render_department_tab($data_directory);
 		break;
 	case 'newest':
 	default:
@@ -57,7 +57,7 @@ function render_department_tab($data_directory) {
 	gatekeeper();	// logged in users only
 	$display = '';
 	//$display .= create_files($data_directory);	// creates the necessary files..
-
+    /*
 	if (file_exists($data_directory.'department_listing.json') && file_exists($data_directory.'department_directory.json') && file_exists($data_directory.'department-listing.csv'))
 	{
 		// NOW DISPLAY THE INFORMATION ON THE PAGE
@@ -135,6 +135,88 @@ function render_department_tab($data_directory) {
 		$display .= '</table>';
 	} else {
 		$display = elgg_echo('c_bin:missing_requirements');
-	}
+	}*/
+
+    $obj = elgg_get_entities(array(
+              'type' => 'object',
+              'subtype' => 'dept_list',
+              'owner_guid' => 0
+       ));
+    echo '<br>';
+   
+        //$metaname = "deptsEn";
+        
+        $departmentsEn = json_decode($obj[0]->deptsEn, true);
+        $provinces['pov-alb'] = 'Government of Alberta';
+        $provinces['pov-bc'] = 'Government of British Columbia';
+        $provinces['pov-man'] = 'Government of Manitoba';
+        $provinces['pov-nb'] = 'Government of New Brunswick';
+        $provinces['pov-nfl'] = 'Government of Newfoundland and Labrador';
+        $provinces['pov-ns'] = 'Government of Nova Scotia';
+        $provinces['pov-nwt'] = 'Government of Northwest Territories';
+        $provinces['pov-nun'] = 'Government of Nunavut';
+        $provinces['pov-ont'] = 'Government of Ontario';
+        $provinces['pov-pei'] = 'Government of Prince Edward Island';
+        $provinces['pov-que'] = 'Government of Quebec';
+        $provinces['pov-sask'] = 'Government of Saskatchewan';
+        $provinces['pov-yuk'] = 'Government of Yukon';
+        $departmentsEn = array_merge($departmentsEn,$provinces);
+ 
+        //$metaname = "deptsFr";
+
+        $departmentsFr = json_decode($obj[0]->deptsFr, true);
+        $provinces['pov-alb'] = "Gouvernement de l'Alberta";
+        $provinces['pov-bc'] = 'Gouvernement de la Colombie-Britannique';
+        $provinces['pov-man'] = 'Gouvernement du Manitoba';
+        $provinces['pov-nb'] = 'Gouvernement du Nouveau-Brunswick';
+        $provinces['pov-nfl'] = 'Gouvernement de Terre-Neuve-et-Labrador';
+        $provinces['pov-ns'] = 'Gouvernement de la Nouvelle-Écosse';
+        $provinces['pov-nwt'] = 'Gouvernement du Territoires du Nord-Ouest';
+        $provinces['pov-nun'] = 'Gouvernement du Nunavut';
+        $provinces['pov-ont'] = "Gouvernement de l'Ontario";
+        $provinces['pov-pei'] = "Gouvernement de l'Île-du-Prince-Édouard";
+        $provinces['pov-que'] = 'Gouvernement du Québec';
+        $provinces['pov-sask'] = 'Gouvernement de Saskatchewan';
+        $provinces['pov-yuk'] = 'Gouvernement du Yukon';
+        $departmentsFr = array_merge($departmentsFr,$provinces);
+
+        if (get_current_language()=='en'){
+            $displayDept = $departmentsEn;
+        } else {
+            $displayDept = $departmentsFr;
+        }
+    
+    foreach($displayDept as $k => $v){
+        
+        
+        $provList = array('pov-alb', 'pov-bc', 'pov-man', 'pov-nb', 'pov-nfl', 'pov-ns', 'pov-nwt', 'pov-nun', 'pov-ont', 'pov-pei', 'pov-que', 'pov-sask', 'pov-yuk');
+        if(!in_array($k, $provList)){
+            $Abb = explode('=', $k);
+            $deptAbb = explode(',', $Abb[1]);
+        } else {
+            $deptAbb[0] = $k;
+        }
+
+        $deptLink = elgg_view('output/url', array(
+                'href' => 'members/gc_dept?dept=' . $deptAbb[0],
+                'text' => $v,
+                'title' => $v
+            ));
+        $deptCount = elgg_get_entities_from_metadata(array('types' => 'user', 'metadata_names' => array('department'), 'metadata_values' => array($departmentsEn[$k]." / ".$departmentsFr[$k], $departmentsFr[$k]." / ".$departmentsEn[$k]), 'count' => true));
+
+        $list_items = elgg_format_element('td', ['class' => 'data-table-list-item ', 'style' => 'padding: 10px 0'], $deptLink);
+        $list_items .= elgg_format_element('td', ['class' => 'data-table-list-item ', 'style' => 'padding: 10px 0'], '<span>' . $deptCount . '</span>');
+
+        $tR .= elgg_format_element('tr', [], $list_items);
+    }
+
+    //create table body
+    $tBody = elgg_format_element('tbody', ['class' => ''], $tR);
+
+    //create table head
+    $tHead = elgg_format_element('thead', ['class' => ''], '<tr> <th class="">' . elgg_echo('c_bin:department') . ' </th><th>' . elgg_echo('c_bin:total_user') . '</th></tr>');
+
+    $display .=  elgg_format_element('table', ['class' => ' wb-tables table table-striped', 'id' => '', "data-wb-tables"=>"{ \"lengthChange\" : false, \"pageLength\" : 200 }"], $tHead . $tBody);
+
 	return $display;
 }

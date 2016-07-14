@@ -257,13 +257,14 @@ function group_tools_pagesetup() {
 		}
 	}
 	
+	// cyu - index closed group too
 	if ($page_owner instanceof ElggGroup) {
-		if (!$page_owner->isPublicMembership()) {
+		/*if (!$page_owner->isPublicMembership()) {
 			if (elgg_get_plugin_setting("search_index", "group_tools") != "yes") {
 				// closed groups should be indexed by search engines
 				elgg_extend_view("page/elements/head", "metatags/noindex");
 			}
-		}
+		}*/
 		
 		// cleanup sidebar
 		elgg_extend_view("page/elements/sidebar", "group_tools/sidebar/cleanup");

@@ -117,6 +117,7 @@ $subbed_colleagues = elgg_get_entities_from_relationship( array(
 foreach( $subbed_colleagues as $c )
 	$subbed_colleague_guids[] = $c->getGUID();
 
+
 $cpn_coll_notif_checkbox = elgg_view('input/checkboxes', array(
     'name' => "params[cpn_notif_{$user->getGUID()}]", // might need to pass something else here to get this to work
     'value' => 'test',
@@ -131,20 +132,22 @@ $colleague_picker = elgg_view('input/friendspicker', array('entities' => $collea
 $content .='<div class="col-sm-12"><h3 class="well">'.elgg_echo('cp_notify:collNotif').'</h3>';
 
 // Nick - Coming soon message added for colleague notifications
-//$content .= '<div>'.elgg_echo('cp_notify:comingSoon').'</div>';
+$content .= '<div>'.elgg_echo('cp_notify:comingSoon').'</div>';
 
-// cyu - formatting was a little off
-$content .= '<div class="col-sm-8">' . elgg_echo('cp_notify:colleagueContent').'</div>';
-$content .= '<div class="col-sm-4">' . $cpn_coll_notif_checkbox.'</div>';
-$content .= '<div class="accordion col-sm-12 clearfix mrgn-bttm-sm">';
-$content .= '	<div class="tgl-panel clearfix">';
-$content .= '		<details class="acc-group" >';
-$content .= '	<br/>	';
-$content .= '			<summary class="wb-toggle tgl-tab">'.elgg_echo('cp_notify:pickColleagues').'</summary>';
-$content .= "			<div class='col-sm-12 clearfix'> {$colleague_picker} </div>";
-$content .= '		</details>';
-$content .= '	</div>';
-$content .= '</div>';
+if (elgg_is_admin_logged_in ()) { // only admins can see this (not completed)
+	// cyu - formatting was a little off
+	$content .= '<div class="col-sm-8">' . elgg_echo('cp_notify:colleagueContent').'</div>';
+	$content .= '<div class="col-sm-4">' . $cpn_coll_notif_checkbox.'</div>';
+	$content .= '<div class="accordion col-sm-12 clearfix mrgn-bttm-sm">';
+	$content .= '	<div class="tgl-panel clearfix">';
+	$content .= '		<details class="acc-group" >';
+	$content .= '	<br/>	';
+	$content .= '			<summary class="wb-toggle tgl-tab">'.elgg_echo('cp_notify:pickColleagues').'</summary>';
+	$content .= "			<div class='col-sm-12 clearfix'> {$colleague_picker} </div>";
+	$content .= '		</details>';
+	$content .= '	</div>';
+	$content .= '</div>';
+}
 
 
 

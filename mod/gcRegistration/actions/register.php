@@ -240,6 +240,7 @@ if (elgg_get_config('allow_registration')) {
 			}
 			
 			$new_user->set('department',$deptString);
+            $new_user->last_department_verify = time();
 			
 			// Forward on success, assume everything else is an error...
 			forward();

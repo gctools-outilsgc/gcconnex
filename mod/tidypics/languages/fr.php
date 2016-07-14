@@ -286,7 +286,7 @@ return array(
 'tidypics:inthisphoto' => 'Dans cette image',
 		
 'tidypics:tag:subject' => 	'Vous avez été mentionné dans une image !!!',
-'tidypics:tag:body' => 	'Vous avez été mentioné dans l\'image %s par %s !!!',
+'tidypics:tag:body' => 	'Vous avez été mentionné dans l\'image %s par %s !!!',
 		
 		
 		

@@ -24,11 +24,5 @@ $contents = $readfile->grabFile();
 //$contents = $file->grabFile();
 // caching images for 10 days
 
-header("Content-type: image/jpeg");
-header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime("+10 days")), true);
-//header('Expires: ' . date('r',time() + 1)); //cache expires in 1 second
-header("Pragma: public", true);
-header("Cache-Control: public", true);
-header("Content-Length: " . strlen($contents));
 
 echo $contents;

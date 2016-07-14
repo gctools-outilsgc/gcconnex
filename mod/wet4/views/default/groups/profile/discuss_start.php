@@ -27,7 +27,7 @@ $group = $vars['group'];
 
          <div class="col-sm-10">
                 <div class="mrgn-tp-sm">
-                    <a href="#quick-discuss-panel" class="quick-discuss-action-btn">Create a new discussion</a>
+                    <a href="#quick-discuss-panel" class="quick-discuss-action-btn"><?php echo elgg_echo('discussion:add');?></a>
                 </div>
 
                 <div id="quick-discuss-form" class="start-discussion-form" tabindex="-1">

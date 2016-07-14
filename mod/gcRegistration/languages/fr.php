@@ -2,13 +2,14 @@
 $site_url = elgg_get_site_url();
 $french = array(
 	// labels
+'gcRegister:form' => "Formulaire d'inscription",
 'gcRegister:email_initial' => 'Adresse de courriel',
 'gcRegister:email_secondary' => 'Confirmation du courriel',
 'gcRegister:username' => 'Nom d\'utilisateur (généré automatiquement)',
 'gcRegister:password_initial' => 'Mot de passe',
 'gcRegister:password_secondary' => 'Confirmation du mot de passe',
 'gcRegister:display_name' => 'Nom à afficher',
-'gcRegister:display_name_notice' => 'Veuillez écrire votre prénom et votre nom de famille, tel que l’on vous connaît au travail. Conformément aux Conditions d’utilisation, le nom affiché doit correspondre à votre vrai nom. Il n’est pas permis d’utiliser un pseudonyme.',
+'gcRegister:display_name_notice' => "Veuillez écrire votre prénom et votre nom de famille, tel que l’on vous connaît au travail. Conformément aux Conditions d’utilisation, le nom affiché doit correspondre à votre vrai nom. Il n’est pas permis d’utiliser un pseudonyme.",
 'gcRegister:please_enter_email' => 'Veuillez inscrire votre adresse de courriel',
 'gcRegister:department_name' => 'Inscrire le nom de votre ministère',
 'gcRegister:register' => 'S\'inscrire',
@@ -38,7 +39,7 @@ $french = array(
 'gcRegister:email_mismatch' => '<a href="#email_initial">Les adresses de courriel ne sont pas identitiques</a>',
 'gcRegister:display_name_is_empty' => '<a href="#name">Le champ « Nom à afficher » ne peut pas être laissé vide</a>',
 
-    'registration:userexists' => 'That username already exists. <a href="'.$site_url.'forgotpassword">Retrieve your password</a>(translate me)',
+    'registration:userexists' => 'That username already exists. <a href=forgotpassword>Retrieve your password</a>(translate me)',
     'gcRegister:department' => 'Ministère',
 );
  

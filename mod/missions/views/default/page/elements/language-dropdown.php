@@ -74,43 +74,43 @@ $input_french_oral_proficiency = elgg_view('input/dropdown', array(
 	<div class="col-sm-3" style="text-align:right;font-weight:bold;display:inline-block;">
 		
 	</div>
-	<div class="col-sm-1" style="font-weight:bold;display:inline-block;text-align:center;">
+	<div class="col-sm-3" style="font-weight:bold;display:inline-block;text-align:center;">
 		<?php echo elgg_echo('missions:english');?>
 	</div>
-	<div class="col-sm-1" style="font-weight:bold;display:inline-block;text-align:center;">
+	<div class="col-sm-3" style="font-weight:bold;display:inline-block;text-align:center;">
 		<?php echo elgg_echo('missions:french');?>
 	</div>
 </div>
 <div class="form-group">
-	<div class="col-sm-3" style="text-align:right;font-weight:bold;display:inline-block;">
+	<div class="col-sm-5" style="text-align:right;font-weight:bold;display:inline-block;">
 		<?php echo elgg_echo('missions:written_comprehension') . ':';?>
 	</div>
-	<div class="col-sm-1" style="display:inline-block;">
+	<div class="col-sm-3" style="display:inline-block;">
 		<?php echo $input_english_written_comprehension; ?>
 	</div>
-	<div class="col-sm-1" style="display:inline-block;">
+	<div class="col-sm-3" style="display:inline-block;">
 		<?php echo $input_french_written_comprehension; ?>
 	</div>
 </div>
 <div class="form-group">
-	<div class="col-sm-3" style="text-align:right;font-weight:bold;display:inline-block;">
+	<div class="col-sm-5" style="text-align:right;font-weight:bold;display:inline-block;">
 		<?php echo elgg_echo('missions:written_expression') . ':';?>
 	</div>
-	<div class="col-sm-1" style="display:inline-block;">
+	<div class="col-sm-3" style="display:inline-block;">
 		<?php echo $input_english_written_expression; ?>
 	</div>
-	<div class="col-sm-1" style="display:inline-block;">
+	<div class="col-sm-3" style="display:inline-block;">
 		<?php echo $input_french_written_expression; ?>
 	</div>
 </div>
 <div class="form-group">
-	<div class="col-sm-3" style="text-align:right;font-weight:bold;display:inline-block;">
+	<div class="col-sm-5" style="text-align:right;font-weight:bold;display:inline-block;">
 		<?php echo elgg_echo('missions:oral_proficiency') . ':';?>
 	</div>
-	<div class="col-sm-1" style="display:inline-block;">
+	<div class="col-sm-3" style="display:inline-block;">
 		<?php echo $input_english_oral_proficiency; ?>
 	</div>
-	<div class="col-sm-1" style="display:inline-block;">
+	<div class="col-sm-3" style="display:inline-block;">
 		<?php echo $input_french_oral_proficiency; ?>
 	</div>
 </div>

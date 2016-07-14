@@ -198,7 +198,7 @@ if ($has_uploaded_icon) {
 
 //Nick - Added action for user to upload a coverphoto to their group profile
 $c_photo = $_FILES['c_photo'];
-//print_r($_FILES['c_photo']);
+
 foreach($c_photo as $c){
     $printing_files .= $c .' , ';
 }
@@ -217,15 +217,14 @@ if(reset($c_photo) ){
     
     $c_photo_guid = $filehandler2->getGUID();
     $subtype_testing = $filehandler2->getSubtype();
-    system_message(reset($c_photo) . ' - '. 'TEST = ' .$c_photo_guid . ' subtype ='.$subtype_testing);
-   $group->cover_photo =$c_photo_guid;
+   $group->cover_photo =$c_photo_guid; //Nick - Set Cover photo metadata
 }else if(isset($group->cover_photo) && $group->cover_photo !='nope'){
 
-}else{
+}else{ 
 $group->cover_photo = 'nope';
 }
 
-$remove_c_photo = get_input('remove_photo');
+$remove_c_photo = get_input('remove_photo'); //Nick - Checkbox will set cover photo metadata to 'nope'
 if($remove_c_photo){
     $group->cover_photo = 'nope';
 }

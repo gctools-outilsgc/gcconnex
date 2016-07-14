@@ -1,0 +1,24 @@
+/*
+ * filename: specail.css
+ * author: Nicholas Pietrantonio
+ * Share external page style
+ */
+	.share-title{
+    	padding-top:9px;
+    }
+    .share-choose-group{
+        border: solid 1px #ddd;
+        margin-left: 30px;
+        padding:8px;
+    }
+    .share-link-holder{
+        border: solid 1px #ddd;
+        padding: 15px;
+        background-color: white;
+        box-shadow: 0 2px 2px rgba(0, 0, 0, 0.09);
+    }
+    .share-form-holder{
+        width:100%;
+        padding: 15px;
+    }
+    

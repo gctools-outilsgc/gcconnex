@@ -15,9 +15,9 @@ $site_url = elgg_get_site_url();
 if( _elgg_services()->session->get('language') == 'en'){//quick fix to display img on production
     $gcconnexGraphic = '<img src="'.$site_url.'mod/wet4/graphics/GCconnex_icon_slogan_Eng.png" alt="GCconnex. Connecting people and ideas." width="85%" class="mrgn-tp-sm">';
 }else{
-    $gcconnexGraphic = '<img src="'.$site_url.'mod/wet4/graphics/GCconnex_icon_slogan_Fra.png" alt="GCconnex. Branchez-vous, maximisez vos idées." width="85%" class="mrgn-tp-sm">';;
+    $gcconnexGraphic = '<img src="'.$site_url.'mod/wet4/graphics/GCconnex_icon_slogan_Fra.png" alt="GCconnex. Branchez-vous, maximisez vos idées." width="85%" class="mrgn-tp-sm">';
 }
-
+if(elgg_in_context('login')){ //Nick - only show the graphic and register text on the main login page
 ?>
 <div class="col-sm-2">
     <?php echo $gcconnexGraphic;?>
@@ -30,6 +30,8 @@ if( _elgg_services()->session->get('language') == 'en'){//quick fix to display i
     </div>
 
 </div>
+
+<?php }?>
 <div class="col-sm-5 col-sm-offset-1  mrgn-bttm-md clearfix">
 <div>
 	<label for="username_home"><?php echo elgg_echo('loginusername'); ?></label>
@@ -54,7 +56,7 @@ if( _elgg_services()->session->get('language') == 'en'){//quick fix to display i
 		<?php echo elgg_echo('user:persistent'); ?>
 	</label>
 	<div>
-        <?php echo elgg_view('input/submit', array('value' => elgg_echo('login'), 'class' => 'btn-custom-cta mrgn-rght-lg',)); ?>
+        <?php echo elgg_view('input/submit', array('value' => elgg_echo('login'), 'class' => 'btn-custom-cta mrgn-rght-sm',)); ?>
           <?php
         echo '<a href="' . $site_url . 'register" class="btn btn-custom">'.elgg_echo('register').'</a>';
         ?>

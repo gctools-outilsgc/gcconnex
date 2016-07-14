@@ -1,0 +1,28 @@
+<?php
+
+expose_function("get.blog",
+              "get_blog",
+               array("id" => array('type' => 'integer')),
+               'Takes a blog id and returns the Title, exerpt, and body of the blog',
+               'GET',
+               false,
+               false
+              );
+
+function get_blog($id) {
+	$blog = get_entity($id);
+	if ($blog == null){
+		return "No object was found with id ".$id;
+	}
+	
+	if ($blog->getSubtype() != 'blog'){
+		return "The ID provided is not a blog";
+	}
+	if($blog->getAccessID()!= 2){
+		return "Blog's access is not set to public, cannot display";
+	}
+	
+	$output = array('title' => $blog->title,'excerpt'=>$blog->excerpt,'body'=>$blog->description);
+	
+    return $output;
+}

@@ -52,7 +52,7 @@ elgg_load_css("jquery.uploadify");
 	<div>
 		<label>
 			<?php echo elgg_echo('access'); ?><br />
-			<?php echo elgg_view('input/access', array('name' => 'access_id', 'id' => 'file_tools_file_access_id')); ?>
+			<?php echo elgg_view('input/access', array('name' => 'access_id_file', 'id' => 'file_tools_file_access_id')); ?>
 		</label>
 	</div>
 	

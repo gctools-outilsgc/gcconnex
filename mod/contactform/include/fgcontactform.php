@@ -12,7 +12,7 @@ PARTICULAR PURPOSE.
 
 @copyright html-form-guide.com 2010
 */
-require_once("class.phpmailer.php");
+require_once( elgg_get_plugins_path() ."phpmailer/vendors/class.phpmailer.php");
 
 /*
 Interface to Captcha handler
@@ -55,6 +55,14 @@ class FGContactForm
 
         $this->mailer = new PHPMailer();
         $this->mailer->CharSet = 'utf-8';
+
+        $this->mailer->IsSMTP();
+        $this->mailer->Host = elgg_get_plugin_setting('phpmailer_host', 'phpmailer'); // SMTP server
+        $this->mailer->Port = elgg_get_plugin_setting('ep_phpmailer_port', 'phpmailer'); // SMTP server port
+        $this->mailer->SMTPSecure = 'tls';
+        $this->mailer->SMTPAuth = 'true';
+        $this->mailer->Username = elgg_get_plugin_setting('phpmailer_username', 'phpmailer');
+        $this->mailer->Password = elgg_get_plugin_setting('phpmailer_password', 'phpmailer');
     }
 
     function EnableCaptcha($captcha_handler)
@@ -195,9 +203,9 @@ class FGContactForm
         
         $this->mailer->Subject = $subject;
 
-        $this->mailer->From = $this->GetFromAddress();
+        $this->mailer->From = elgg_get_plugin_setting('phpmailer_from_email', 'phpmailer');//$this->GetFromAddress();
 
-        $this->mailer->FromName = $this->name;
+        $this->mailer->FromName = elgg_get_plugin_setting('phpmailer_from_name', 'phpmailer');//$this->name;
         
         //$this->mailer->AddReplyTo($this->email);
 

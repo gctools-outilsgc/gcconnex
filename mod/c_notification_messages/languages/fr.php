@@ -955,7 +955,7 @@ To change your personal notifications, click here:
 %s
 
 <div style='border-top: 1px dotted #999999;'>&nbsp;</div>Bonjour %s, <br/> 
-%s vous a mentionné(e) dans un message sur le fil. <br/>
+%s vous a mentionné dans un message sur le fil. <br/>
 Pour afficher vos mentions sur le Fil, cliquez ici : 
 %s <br/>
 Pour modifier vos notifications personnelles, cliquez ici : 

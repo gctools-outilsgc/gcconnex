@@ -36,6 +36,24 @@ if (isset($vars['class'])) {
         if (isset($vars['area2'])) {
 			echo $vars['area2'];
 		}
+        /*
+        if(elgg_is_logged_in()){
+            if((time() - elgg_get_logged_in_user_entity()->last_department_verify) > 20)
+            {
+                //create hidden link
+                echo elgg_view('output/url', array(
+                    'href' => 'ajax/view/verify_department/verify_department',
+                    'text' => 'verify',
+                    'id' => 'verify',
+                    'aria-hidden' => 'true',
+                    'class' => 'elgg-lightbox hidden',
+                ));
+                //click link after page load
+                echo '<script> window.onload = function () { document.getElementById("verify").click() } </script>';
+            }
+        }*/
+        
+
         echo '</section>';
 		echo elgg_view('page/layouts/elements/footer', $vars);
 	?>

@@ -127,7 +127,6 @@
 
 .pagination {
 	position: relative;
-	left: 40%;
 }
 
 .elgg-menu {
