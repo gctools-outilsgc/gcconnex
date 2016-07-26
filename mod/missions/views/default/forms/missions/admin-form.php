@@ -30,7 +30,7 @@ $input_action_taken = elgg_view('input/dropdown', array(
 ?>
 
 <div class="form-group">
-	<h4 style="display:inline-block;"><label for="admin-mission-guid-text-input"><?php echo elgg_echo('missions:mission_guid') . ':'; ?></label></h4>
+	<label for="admin-mission-guid-text-input"><?php echo elgg_echo('missions:mission_guid') . ':'; ?></label>
 	<div style="display:inline-block;">
 		<?php echo $input_mission_guid; ?> 
 	</div>

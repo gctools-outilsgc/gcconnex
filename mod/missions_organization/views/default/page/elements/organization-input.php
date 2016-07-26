@@ -43,7 +43,8 @@ if($root) {
 					'given_value' => $org,
 					'target' => $previous_org,
 					'is_disabled' => $is_disabled,
-					'disable_other' => $vars['disable_other']
+					'disable_other' => $vars['disable_other'],
+					'passed_onchange_function' => $vars['passed_onchange_function']
 			));
 			
 			$previous_org = $org;
@@ -59,7 +60,8 @@ if($root) {
 		$initial_input .= elgg_view('missions_organization/org-dropdown', array(
 				'given_value' => $last_given,
 				'target' => $previous_org,
-				'disable_other' => $vars['disable_other']
+				'disable_other' => $vars['disable_other'],
+				'passed_onchange_function' => $vars['passed_onchange_function']
 		));
 		
 		$display_less_button = 'display:block;';
@@ -68,26 +70,10 @@ if($root) {
 		// Create a single initial dropdown element for the root of the organization tree.
 		$initial_input = elgg_view('missions_organization/org-dropdown', array(
 				'target' => $root->guid,
-				'disable_other' => $vars['disable_other']
+				'disable_other' => $vars['disable_other'],
+				'passed_onchange_function' => $vars['passed_onchange_function']
 		));
 	}
-	
-	// Button to create a dropdown element for the node in the previous dropdown element.
-	/*$more_org_button = elgg_view('output/url', array(
-			'text' => elgg_echo('missions_organization:drill_down'),
-			'class' => 'elgg-button btn btn-default',
-			'id' => 'more-org-button',
-			'onclick' => 'more_org()'
-	));
-	
-	// Button to delete the last dropdown element. Not displayed if there is only one dropdown element.
-	$less_org_button = elgg_view('output/url', array(
-			'text' => elgg_echo('missions_organization:less'),
-			'class' => 'elgg-button btn btn-default',
-			'id' => 'less-org-button',
-			'onclick' => 'less_org()',
-			'style' => $display_less_button
-	));*/
 	
 	$initial_other_display = 'display:none;';
 	$initial_other_disabled = true;
@@ -119,21 +105,20 @@ $hidden_disable_other = elgg_view('input/hidden', array(
 		'value' => $vars['disable_other'],
 		'id' => 'missions-is-other-disabled-hidden-value'
 ));
+
+$hidden_passed_onchange = elgg_view('input/hidden', array(
+		'name' => 'hidden_passed_onchange',
+		'value' => $vars['passed_onchange_function'],
+		'id' => 'missions-passed-onchange-function-hidden-value'
+));
 ?>
 
 <?php echo $hidden_disable_other; ?>
+<?php echo $hidden_passed_onchange; ?>
 <div>
 	<div id="org-dropdown-set">
 		<?php echo $initial_input; ?>
 	</div>
-	<!-- <div>
-		<div style="display:inline-block;">
-			<?php //echo $more_org_button; ?>
-		</div>
-		<div style="display:inline-block;">
-			<?php //echo $less_org_button; ?>
-		</div>
-	</div> -->
 	<div id="org-other-input-field" style="<?php echo $initial_other_display; ?>">
 		<label style="display:inline-block;"><?php echo elgg_echo('missions_organization:other') . ':'; ?></label>
 		<?php echo $other_text_input; ?>
@@ -141,71 +126,6 @@ $hidden_disable_other = elgg_view('input/hidden', array(
 </div>
 
 <script>
-	/*function more_org() {
-		// Gets all dropdown elements and how many there are.
-		var children = document.getElementById('org-dropdown-set').children;
-		var children_length = children.length;
-
-		// Gets the dropdown input, its value and the hidden element.
-		var last_dropdown = children[children_length - 1].getElementsByTagName('select');
-		var value = last_dropdown[0].value;
-		//var last_hidden = children[children_length - 1].getElementsByTagName('input');
-		
-		if(value != '') {
-			elgg.get('ajax/view/missions_organization/org-dropdown', {
-				data: {
-					target: value
-				},
-				success: function(result, success, xhr) {
-					if($.trim(result)) {
-						// Appends the new element to the set.
-						$("#org-dropdown-set").append(result);
-						// Disables the previous element and sets the hidden input's value to its value.
-						//last_hidden[0].value = value;
-						last_dropdown[0].disabled = true;
-					}
-					else {
-						// Error message if the new dropdown element has no values to populate it.
-						elgg.system_message(elgg.echo('missions_organization:group_has_no_children'));
-					}
-				}
-			});
-
-			// Displays the less button if it's not already displayed.
-			var less_button = document.getElementById('less-org-button');
-			if(less_button.style.display == 'none') {
-				less_button.style.display = 'block';
-			}
-		}
-	}*/
-
-	/*function less_org() {
-		// Gets all dropdown elements and how many there are.
-		var children = document.getElementById('org-dropdown-set').children;
-		var children_length = children.length;
-		
-		if(children_length > 1) {
-			// Selects the element before the last element and re-enables it.
-			var second_last_dropdown = children[children_length - 2].getElementsByTagName('select');
-			var second_last_hidden = children[children_length - 2].getElementsByTagName('input');
-			//second_last_hidden[0].value = '';
-			second_last_dropdown[0].disabled = false;
-
-			// Delete the last element.
-			children[children_length - 1].remove();
-
-			// If there are only 2 elements when the less button is pressed.
-			if(children_length == 2) {
-				// Then do not display the less button.
-				document.getElementById('less-org-button').style.display = 'none';
-			}
-		}
-		else {
-			// Error message when the user tries to remove the last input.
-			elgg.system_message(elgg.echo('missions_organization:cannot_remove_last_input'));
-		}	
-	}*/
-
 	function dynamicDrop(caller) {
 		// The other input starts out hidden and disabled.
 		document.getElementById('org-other-input-field').style.display = 'none';
@@ -248,11 +168,13 @@ $hidden_disable_other = elgg_view('input/hidden', array(
 
 		var value = caller.value;
 		var disabling = document.getElementById('missions-is-other-disabled-hidden-value').value;
+		var passed_onchange = document.getElementById('missions-passed-onchange-function-hidden-value').value;
 		if(value != 0 && value != 1) {
 			elgg.get('ajax/view/missions_organization/org-dropdown', {
 				data: {
 					target: value,
-					disable_other: disabling
+					disable_other: disabling,
+					passed_onchange_function: passed_onchange
 				},
 				success: function(result, success, xhr) {
 					if($.trim(result)) {

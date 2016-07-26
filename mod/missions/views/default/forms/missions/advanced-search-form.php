@@ -16,6 +16,7 @@ elgg_load_js('typeahead');
 // The arrays are different depending on whether the user is searching for missions or candidates.
 if($_SESSION['mission_search_switch'] == 'candidate') {
     $search_fields = array(
+	        //'' => 'Choose',
 	        '',
 	        elgg_echo('missions:education'),
 	        elgg_echo('missions:experience'),
@@ -34,6 +35,7 @@ if($_SESSION['mission_search_switch'] == 'candidate') {
 }
 else {
     $search_fields = array(
+	        //'' => 'Choose',
 	        '',
 	        elgg_echo('missions:title'),
 	        elgg_echo('missions:type'),
@@ -73,12 +75,12 @@ for ($i = 0; $i < $number_of_rows; $i ++) {
     // Dropdown with a name that is numbered according to its row.
     $content .= '<div class="mission-emphasis-extra col-sm-offset-1 col-sm-4">';
     $content .= elgg_view('input/dropdown', array(
-        'name' => 'selection_' . $i,
-        'value' => '',
-        'options' => $search_fields,
-        'onchange' => 'element_switch(this)',
-        'onload' => 'element_switch(this)',
-        'id' => 'search-mission-advanced-selection-' . $i . '-dropdown-input'
+        	'name' => 'selection_' . $i,
+        	'value' => '',
+        	'options' => $search_fields,
+        	'onchange' => 'element_switch(this)',
+        	'onload' => 'element_switch(this)',
+        	'id' => 'search-mission-advanced-selection-' . $i . '-dropdown-input'
     ));
     $content .= '</div>';
     $content .= '<div class="mission-emphasis-extra col-sm-3" id="selection_' . $i . '"></div>';
@@ -92,7 +94,6 @@ for ($i = 0; $i < $number_of_rows; $i ++) {
     ));
     $content .= '</noscript></div>';
 }
-$content .= '</table>';
 
 $hidden_input = elgg_view('input/hidden', array(
     'name' => 'hidden_return',

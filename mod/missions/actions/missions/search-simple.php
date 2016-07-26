@@ -38,7 +38,7 @@ if ($err != '') {
             	}
             }
             
-            $returned = mm_search_candidate_database($array, 'OR', elgg_get_plugin_setting('search_limit', 'missions'));
+            $returned = mm_simple_search_database_for_candidates($array, 'OR', elgg_get_plugin_setting('search_limit', 'missions'));
             break;
         default:
             // A broad range search which determines whether the input text exists within the title, type or description of the mission.
@@ -71,7 +71,7 @@ if ($err != '') {
             }
             
             // This function executes the query and returns true or false depending on how succesful that query was.
-            $returned = mm_search_database($array, 'OR', elgg_get_plugin_setting('search_limit', 'missions'));
+            $returned = mm_search_database_for_missions($array, 'OR', elgg_get_plugin_setting('search_limit', 'missions'));
     }
     
     if (! $returned) {

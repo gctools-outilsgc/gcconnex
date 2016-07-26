@@ -16,7 +16,8 @@ if (isset($vars['entity'])) {
 }
 
 $description_string = elgg_get_excerpt($mission->description, 200);
-$card_height = '450';
+$card_height = elgg_get_plugin_setting('mission_card_height', 'missions');
+$card_width = elgg_get_plugin_setting('mission_card_width', 'missions');
 
 // Sets the buttons to the bottom of whichever view is used.
 if(!$vars['override_buttons']) {
@@ -69,19 +70,19 @@ if(trim($completion_date_fixed) == '') {
 }
 ?>
 
-<div class="mission-printer mission-less" style="height:<?php echo $card_height;?>px;" name="mission-object">
+<div class="mission-printer mission-less" style="height:<?php echo $card_height;?>px;width:<?php echo $card_width;?>px;" name="mission-object">
 	<?php echo $relationship_alert; ?>
 	<div style="width:100%;overflow-x:auto;">
 		<h2>
-			<div style="display:inline;" name="mission-job-title"><?php echo elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'));?></div>
-			<div style="font-style:italic;font-size:small;display:inline;" name="mission-state"><?php echo $mission_state; ?></div>
+			<span name="mission-job-title"><?php echo elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'));?></span>
+			<span style="font-style:italic;font-size:small;" name="mission-state"><?php echo $mission_state; ?></span>
 		</h2>
 	</div>
 	<div name="mission-job-type">
 		<b><?php echo elgg_echo($mission->job_type); ?></b>
 	</div>
 	<div style="max-height:115px;width:100%;overflow:hidden;" name="mission-description"><?php echo $description_string;?></div>
-	</br>
+	<br>
 	<div>
 		<div style="display:inline-block;vertical-align:top;">
 			<h5><?php echo elgg_echo('missions:date') . ':';?></h5>
@@ -111,7 +112,7 @@ if(trim($completion_date_fixed) == '') {
 		</div>
 		<div style="display:inline-block;" name="mission-deadline"><?php echo $mission->deadline;?></div>
 	</div>
-	</br>
+	<br>
 	<?php echo $manager_info; ?>
 	<div class="mission-button-set"><?php
 			if (! $full_view) {

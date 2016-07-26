@@ -109,10 +109,19 @@ for ($page = $start_page; $page <= $total_pages; $page++) {
 	$max++;
 }
 
-// added dotted spacer
+$last_pages2 = $total_pages -1;
+$last_page = $last_pages2 * $limit;
 
-if ($total_pages > ($start_page + 6)) {
+// added dotted spacer AND last page
+if ($total_pages > ($start_page + 5)){
 	$pages[] = ['text' => '...', 'disabled' => true];
+	$pages[] = ['text' => $total_pages, 'href' => $get_href($last_page)];
+}elseif ($total_pages > ($start_page + 4)) {
+	
+	$pages[] = ['text' => $total_pages, 'href' => $get_href($last_page)];
+}elseif ($total_pages > ($start_page + 6)) {
+	$pages[] = ['text' => '...', 'disabled' => true];
+	$pages[] = ['text' => $total_pages, 'href' => $get_href($last_page)];
 } elseif (($start_page + 4) == ($total_pages - 1)) {
 	$pages[$total_pages - 1] = [];
 }

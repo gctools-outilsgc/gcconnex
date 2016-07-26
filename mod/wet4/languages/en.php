@@ -476,7 +476,7 @@ return array(
 	'friends:collectionname' => "Collection name",
 	'friends:collectionfriends' => "Friends in collection",
 	'friends:collectionedit' => "Edit this collection",
-	'friends:nocollections' => "You do not have any collections yet.",
+	'friends:nocollections' => "You do not have any circles yet.",
 	'friends:collectiondeleted' => "Your collection has been deleted.",
 	'friends:collectiondeletefailed' => "We were unable to delete the collection. Either you don't have permission, or some other problem has occurred.",
 	'friends:collectionadded' => "Your collection was successfully created",

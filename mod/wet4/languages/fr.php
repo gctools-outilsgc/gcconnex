@@ -582,8 +582,8 @@ return array(
 	'groups:searchtitle' => "Rechercher des groupes : %s",
 	'advancedsearchtitle' => "%s résultat(s) trouvé(s) pour %s",
 	'notfound' => "Aucun résultat trouvé.",
-	'next' => "Suivant",
-	'previous' => "Précédent",
+	'next' => "Suivante",
+	'previous' => "Précédente",
 'viewtype:change' => "Changer le type de listes",
 'viewtype:list' => "Afficher les listes",
 	'viewtype:gallery' => "Galerie",
@@ -1472,7 +1472,6 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 
 'msg:change_access' => "Ce n’est pas tous les utilisateurs qui ont accès à votre contenu. Puisque GCconnex désire être le plus ouvert possible, êtes-vous certain de vouloir restreindre l’accès à ce contenu?", //NEW
 'msg:change_access_title' => "Le saviez-vous?",
-
 
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)

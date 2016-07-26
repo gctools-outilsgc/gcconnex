@@ -71,4 +71,7 @@ return array(
 'messages:user:self' => "Vous ne pouvez pas vous envoyer un message à vous-même.",		
 'messages:deleted_sender' => 'GCconnex',
 
+'colleague_circle_checkbox' => 'Vos cercles de collègues', //NEW
+'collections_circle_selection' => "Sélectionnez un cercle de collègues",//NEW
+'collections_circle_send' => "Envoyer message à",//NEW
 );

@@ -35,7 +35,7 @@ $hidden_type = elgg_view('input/hidden', array(
 
 <?php echo $hidden_type; ?>
 <div class="col-sm-12">
-	<h4 style="display:inline-block;"><label for="change-entities-per-page-dropdown-input"><?php echo elgg_echo('missions:entities_per_page') . ':'; ?></label></h4>
+	<label for="change-entities-per-page-dropdown-input"><?php echo elgg_echo('missions:entities_per_page') . ':'; ?></label>
 	<div style="display:inline-block;">	
 		<?php echo $input_per_page; ?>
 	</div>

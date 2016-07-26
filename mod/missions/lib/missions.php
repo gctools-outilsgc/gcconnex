@@ -258,10 +258,8 @@ function mm_create_button_set_base($mission, $full_view=false) {
 			if(check_entity_relationship($mission->guid, 'mission_accepted', elgg_get_logged_in_user_guid()) ||
 					check_entity_relationship($mission->guid, 'mission_applied', elgg_get_logged_in_user_guid())) {
 				$button_three = '<div id="withdraw-button-mission-' . $mission->guid . '" name="withdraw-button" style="display:inline-block;">' . elgg_view('output/url', array(
-						//'href' => elgg_get_site_url() . 'action/missions/remove-applicant?aid=' . elgg_get_logged_in_user_guid() . '&mid=' . $mission->guid,
 						'href' => elgg_get_site_url() . 'missions/reason-to-decline/' . $mission->guid,
 						'text' => elgg_echo('missions:withdraw'),
-						//'is_action' => true,
 						'class' => 'elgg-button btn btn-danger',
  						'style' => 'margin:2px;'
 				)) . '</div>';
@@ -355,73 +353,6 @@ function mm_create_button_set_base($mission, $full_view=false) {
  }
 
 /*
- * Returns two buttons which switch between mission and candidate searching.
- */
-/*function mm_create_switch_buttons() {
-    $returner = array();
-    
-    $active_mission_button = 'not_active';
-    $active_candidate_button = 'not_active';
-    if($_SESSION['mission_search_switch'] == 'mission' || $_SESSION['mission_search_switch'] == '') {
-        $active_mission_button = 'active';
-    }
-    if($_SESSION['mission_search_switch'] == 'candidate') {
-        $active_candidate_button = 'active';
-    }
-    
-    $returner['mission_button'] = elgg_view('output/url', array(
-        'href' => elgg_get_site_url() . 'action/missions/search-switch?switch=mission',
-        'text' => elgg_echo('missions:mission'),
-        'is_action' => true,
-        'class' => 'elgg-button btn btn-default' . ' ' . $active_mission_button
-    ));
-    $returner['candidate_button'] = elgg_view('output/url', array(
-        'href' => elgg_get_site_url() . 'action/missions/search-switch?switch=candidate',
-        'text' => elgg_echo('missions:candidate'),
-        'is_action' => true,
-        'class' => 'elgg-button btn btn-default' . ' ' . $active_candidate_button
-    ));
-    
-    return $returner;
-}*/
-
-/*
- * Sends a notification to a user containing an invitation to a mission.
- */
-/*function mm_send_notification_invite($target, $mission) {
-    // Link to a page which contains the invitation.
-    $invitation_link = elgg_view('output/url', array(
-        'href' => elgg_get_site_url() . 'missions/mission-invitation/' . $mission->guid,
-        'text' => elgg_echo('missions:mission_invitation')
-    ));
-    //system_message(elgg_get_site_url() . 'missions/mission-invitation/' . $mission->guid . '!');
-    
-    $subject = get_user($mission->owner_guid)->name . elgg_echo('missions:invited_you', array(), $target->language) . $mission->title;
-    $body = $invitation_link;
-    $params = array(
-    		'object' => $mission,
-    		'action' => 'invite-user',
-    		'summary' => $subject
-    );
-    $methods = array('email', 'site');
-    notify_user($target->guid, $mission->owner_guid, $subject, $body, $params, $methods);
-    
-    // THIS WORKS!
-    messages_send($subject, $body, $target->guid, $mission->owner_guid, 0, false);
-    
-    // Create a tentative relationship between mission and user for identification purposes.
-    if(!check_entity_relationship($mission->guid, 'mission_accepted', $target->guid) && !check_entity_relationship($mission->guid, 'mission_tentative', $target->guid)) {
-        add_entity_relationship($mission->guid, 'mission_tentative', $target->guid);
-    }
-    
-    if(check_entity_relationship($mission->guid, 'mission_applied', $target->guid)) {
-    	remove_entity_relationship($mission->guid, 'mission_applied', $target->guid);
-    }
-    
-    return true;
-}*/
-
-/*
  * Removes potential url variables from a guid string.
  */
 function mm_clean_url_segment($segment) {
@@ -464,8 +395,7 @@ function mm_notify_user($recipient, $sender, $subject, $body) {
 	$headers = 'MIME-Version: 1.0' . "\r\n";
 	$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
 	$headers .= 'From: ' . $sender_entity->email . "\r\n";
-	//mail($recipient_entity->email, $subject, $body, $headers);
-	phpmailer_send( $recipient_entity->email, $recipient_entity->name, $subject, $body, NULL, true );
+	mail($recipient_entity->email, $subject, $body, $headers);
 	
 	if(get_subtype_from_id($recipient_entity->subtype) == 'mission') {
 		if($recipient_entity->account) {
@@ -659,17 +589,19 @@ function mm_sort_mission_decider($sort, $order, $entity_set) {
 	}
 	
 	$comparison = '';
-	if($sort == 'missions:date_posted') {
-		$comparison = 'mm_cmp_mission_by_posted_date';
-	}
-	else if($sort == 'missions:date_closed') {
-		$comparison = 'mm_cmp_mission_by_closed_date';
-	}
-	else if($sort == 'missions:deadline') {
-		$comparison = 'mm_cmp_mission_by_deadline';
-	}
-	else if($sort == 'missions:opportunity_type') {
-		$comparison = 'mm_cmp_mission_by_type';
+	switch($sort) {
+		case 'missions:date_posted':
+			$comparison = 'mm_cmp_mission_by_posted_date';
+			break;
+		case 'missions:date_closed':
+			$comparison = 'mm_cmp_mission_by_closed_date';
+			break;
+		case 'missions:deadline':
+			$comparison = 'mm_cmp_mission_by_deadline';
+			break;
+		case 'missions:opportunity_type':
+			$comparison = 'mm_cmp_mission_by_type';
+			break;
 	}
 	
 	$result = usort($entity_set, $comparison);
@@ -723,6 +655,9 @@ function mm_cmp_mission_by_deadline($a, $b) {
 	return ($a->deadline < $b->deadline) ? 1 : -1;
 }
 
+/*
+ * Check if the user is opted in to any of the opt-in options.
+ */
 function check_if_opted_in($current_user) {
 	if($current_user->opt_in_missions == 'gcconnex_profile:opt:yes') {
 		return true;

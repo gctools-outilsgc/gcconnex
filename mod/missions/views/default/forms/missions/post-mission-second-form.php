@@ -141,7 +141,7 @@ else {
 }
 ?>
 
-<h4><?php echo elgg_echo('missions:second_post_form_title'); ?></h4></br>
+<h4><?php echo elgg_echo('missions:second_post_form_title'); ?></h4><br>
 <div class="form-group">
 	<label for='post-mission-title-text-input' class="col-sm-3 required" style="text-align:right;" aria-required="true">
 		<?php echo elgg_echo('missions:opportunity_title');?>

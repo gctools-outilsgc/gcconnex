@@ -102,8 +102,7 @@
 
 .mission-less {
 	display: inline-block;
-	border-style: solid; 
-	width: 360px;
+	border-style: solid;
 }
 
 .mission-printer h5 { 
@@ -127,6 +126,7 @@
 
 .pagination {
 	position: relative;
+	left: 40%;
 }
 
 .elgg-menu {

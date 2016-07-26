@@ -14,6 +14,7 @@ $target_guid = $vars['target']; // The guid of the node whose children make up t
 $given_value = $vars['given_value']; // The guid of the initial dropdown value.
 $disabled = $vars['is_disabled']; // Boolean which determines if the dropdown starts off disabled.
 $disable_other = $vars['disable_other'];
+$passed_onchange_function = $vars['passed_onchange_function'];
 
 // Gets all the names of the children of the targeted node in order to populate the dropdown.
 if($target_guid) {
@@ -48,7 +49,13 @@ if(!empty($node_children) && $node_children != array(0 => '', 1 => elgg_echo('mi
 	$numerator = $_SESSION['organization_dropdown_input_count'] + 1;
 	$_SESSION['organization_dropdown_input_count'] = $numerator;
 	
-	echo '<div name="org-dropdown-container" id="org-dropdown-container-' . $_SESSION['organization_dropdown_input_count'] . '">';
+	echo '<div class="org-dropdown-container" id="org-dropdown-container-' . $_SESSION['organization_dropdown_input_count'] . '">';
+	
+	$onchange_function = 'dynamicDrop(this);';
+	if($passed_onchange_function != '') {
+		$onchange_function = $onchange_function . ' ' . $passed_onchange_function;
+	}
+	
 	echo elgg_view('input/dropdown', array(
 			'name' => 'org-drop-' . $numerator,
 			'value' => $given_value,
@@ -56,7 +63,7 @@ if(!empty($node_children) && $node_children != array(0 => '', 1 => elgg_echo('mi
 			'class' => 'org-dropdown-input',
 			'id' => 'org-dropdown-input-' . $numerator,
 			'disabled' => $disabled,
-			'onchange' => 'dynamicDrop(this)'
+			'onchange' => $onchange_function
 	));
 	
 	if($disabled) {

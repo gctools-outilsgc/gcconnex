@@ -27,6 +27,8 @@ $english = array(
 	'c_bin:regenerate_notice' => 'Regenerate records',
 	'c_bin:tag_notice' => 'Tag users',
 	'c_bin:missing_requirements' => 'Missing Requirements',
+
+    'c_bin:warning' => 'Please be advised that the members by department was reset with the latest "Just Checking In!" feature. The numbers will climb back close to what they were as users sign in and confirm their department.',
 );
 
 add_translation('en', $english);

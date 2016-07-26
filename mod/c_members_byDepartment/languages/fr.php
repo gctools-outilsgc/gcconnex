@@ -28,6 +28,7 @@ $french = array(
 'c_bin:tag_notice' => '',
 'c_bin:missing_requirements' => 'Éléments nécessaires manquants',
 
+'c_bin:warning' => "Soyez avisez que la liste des membres par ministère a été réinitialisée avec la fonctionnalité « Salut, bonjour! ». Les chiffres vont remonter près de ce qu’ils étaient une fois que les utilisateurs se connecteront sur GCconnex et confirmeront leur ministère.",
 );
 
 add_translation("fr",$french);

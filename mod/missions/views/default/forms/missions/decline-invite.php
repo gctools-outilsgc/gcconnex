@@ -58,9 +58,9 @@ $hidden_applicant_input = elgg_view('input/hidden', array(
 <?php echo $hidden_mission_input; ?>
 <?php echo $hidden_applicant_input; ?>
 <div class="form-group">
-	<h4><label for="reason-to-decline-dropdown-input">
+	<label for="reason-to-decline-dropdown-input">
 		<?php echo elgg_echo($label_text, array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions')))) . ':'; ?>
-	</label></h4>
+	</label>
 	<div style="max-width:400px;">
 		<?php echo $input_reason; ?> 
 	</div>

@@ -29,7 +29,7 @@ $input_other = elgg_view('input/text', array(
 ?>
 
 <div id="<?php echo $container_id; ?>" style="display:<?php echo $container_style; ?>;">
-	<h4 style="display:inline-block;"><label for="<?php echo $final_id; ?>"><?php echo elgg_echo('missions:other') . ':'; ?></label></h4>
+	<label for="<?php echo $final_id; ?>"><?php echo elgg_echo('missions:other') . ':'; ?></label>
 	<div style="display:inline-block;vertical-align:middle;">
 		<?php echo $input_other; ?> 
 	</div>

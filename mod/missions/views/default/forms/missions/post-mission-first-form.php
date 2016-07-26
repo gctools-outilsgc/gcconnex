@@ -78,7 +78,7 @@ $input_disclaimer = elgg_view('input/checkbox', array(
 ));
 ?>
 
-<h4><?php echo elgg_echo('missions:first_post_form_title'); ?></h4></br>
+<h4><?php echo elgg_echo('missions:first_post_form_title'); ?></h4><br>
 <div class="form-group">
 	<label for='post-mission-name-text-input' class="col-sm-3 required" style="text-align:right;" aria-required="true">
 		<?php echo elgg_echo('missions:your_name');?>
@@ -92,7 +92,7 @@ $input_disclaimer = elgg_view('input/checkbox', array(
 	</div>
 </div>
 <div class="form-group">
-	<label for='post-mission-department-text-input' class="col-sm-3 required" style="text-align:right;" aria-required="true">
+	<label class="col-sm-3 required" style="text-align:right;" aria-required="true">
 		<?php echo elgg_echo('missions:your_department');?>
 		<strong class="required" aria-required="true">
 			<?php echo elgg_echo('missions:required'); ?>

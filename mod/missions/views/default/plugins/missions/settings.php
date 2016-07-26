@@ -100,23 +100,23 @@ elgg_set_plugin_setting('duration_string', $duration_string, 'missions');*/
 	?>
 </div>
 <div>
-	<?php echo elgg_echo('missions:settings:message_limit'); ?>
+	<?php //echo elgg_echo('missions:settings:message_limit'); ?>
 	<?php
-		echo elgg_view('input/dropdown', array(
+		/*echo elgg_view('input/dropdown', array(
     			'name' => 'params[river_message_limit]',
     			'options' => array('50','100','150','200','250','300'),
     			'value' => $river_message_limit
-		));
+		));*/
 	?>
 </div>
 <div>
-	<?php echo elgg_echo('missions:settings:river_element_limit'); ?>
+	<?php //echo elgg_echo('missions:settings:river_element_limit'); ?>
 	<?php
-		echo elgg_view('input/dropdown', array(
+		/*echo elgg_view('input/dropdown', array(
     			'name' => 'params[river_element_limit]',
     			'options' => array(5,10,15,20,25),
     			'value' => $river_element_limit
-		));
+		));*/
 	?>
 </div>
 <div>

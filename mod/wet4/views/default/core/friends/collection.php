@@ -31,9 +31,18 @@ if ($coll->owner_guid == elgg_get_logged_in_user_guid()) {
 
     echo elgg_view('output/url', array(
 			'href' => 'action/friends/collections/delete?collection=' . $coll->id,
-			'class' => 'delete_collection',
+			'class' => 'delete_collection mrgn-rght-sm mrgn-tp-sm',
 			'text' => '<span class="wb-invisible">' . elgg_echo("delete") . '</span><i class="fa fa-trash-o fa-2x icon-unsel"></i>',
             'title' => elgg_echo('delete') . ' ' . $coll->name,
+			'encode_text' => false,
+			'confirm' => true,
+		));
+    
+    echo elgg_view('output/url', array(
+			'href' => elgg_get_site_url() . 'messages/compose?collection=' . $coll->id,
+			'class' => 'delete_collection',
+			'text' => '<span class="wb-invisible">' . elgg_echo("send") . '</span><i class="fa fa-envelope-o fa-2x icon-unsel"></i>',
+            'title' => elgg_echo('collections_circle_send') . ' ' . $coll->name,
 			'encode_text' => false,
 			'confirm' => true,
 		));

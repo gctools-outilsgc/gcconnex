@@ -7,10 +7,22 @@
 
 $subject = strip_tags(get_input('subject'));
 $body = get_input('body');
+if(get_input('colleagueCircle') ){
+
+	$recipient_username = get_input('messageCollection');
+}else{
 $recipient_username = get_input('recipient_username');
+}
+
 $original_msg_guid = (int)get_input('original_guid');
 
 elgg_make_sticky_form('messages');
+
+$recipient_username = explode(",",$recipient_username); // create array seperate by ,
+
+foreach ($recipient_username as $member) {
+
+			$recipient_username = $member; // seperate user
 
 if (!$recipient_username) {
 	register_error(elgg_echo("messages:user:blank"));
@@ -58,7 +70,7 @@ if (!$result) {
 	register_error(elgg_echo("messages:error"));
 	forward("messages/compose");
 }
-
+}
 elgg_clear_sticky_form('messages');
 	
 system_message(elgg_echo("messages:posted"));

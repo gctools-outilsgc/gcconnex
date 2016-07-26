@@ -77,9 +77,9 @@ echo elgg_view('input/hidden', array(
 	<label for="mission-feedback-body-text-input-<?php echo $feedback_target->guid; ?>" style="font-size:x-large;">
 		<?php echo elgg_echo('missions:feedback_for') . $feedback_head; ?>
 	</label>
-	<span style="margin-left:8px;">
+	<div style="margin-left:8px;display:inline;">
 		<?php echo $feedback_pic; ?>
-	</span>
+	</div>
 	<?php echo $feedback_body; ?>
 </div>
 <div class="form-group">

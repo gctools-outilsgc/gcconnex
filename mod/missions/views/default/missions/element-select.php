@@ -11,7 +11,6 @@
  * Name and value of the dropdown box which called this view.
  * The dropdown name indicates which row is being modified.
  */
-
 $dropdown_name = $vars['caller_name'];
 $dropdown_value = $vars['caller_value'];
 $second = $vars['caller_second'];
@@ -160,7 +159,7 @@ else {
                 'value' => elgg_echo('missions:english'),
                 'options' => array( elgg_echo('missions:english'),elgg_echo('missions:french'))
             ));
-            $content .= '</br>';
+            $content .= '<br>';
             
             $content .= '<div class="col-sm-6">' . elgg_echo('missions:reading') . ':</div>';
             $content .= '<div class="col-sm-6">' . elgg_view('input/dropdown', array(

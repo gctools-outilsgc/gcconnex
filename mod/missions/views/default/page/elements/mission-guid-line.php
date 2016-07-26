@@ -16,17 +16,17 @@ $mission_version_id = 'mission-on-page-' . $mission_guid . '-version';
 
 <div class="col-sm-12" style="margin-top:16px;font-size:10px;">
 	<div>
-		<label for="<?php echo $mission_guid_id?>" style="display:inline-block;">
+		<div style="display:inline-block;font-weight:bold;">
 			<?php echo elgg_echo('missions:mission_guid') . ': '; ?>
-		</label>
+		</div>
 		<div name="mission-on-page-guid" id="<?php echo $mission_guid_id; ?>" style="display:inline-block;">
 			<?php echo $mission_guid; ?>
 		</div>
 	</div>
 	<div>
-		<label for="<?php echo $mission_version_id?>" style="display:inline-block;">
+		<div style="display:inline-block;font-weight:bold;">
 			<?php echo elgg_echo('missions:mission_version') . ': '; ?>
-		</label>
+		</div>
 		<div name="mission-on-page-version" id="<?php echo $mission_version_id; ?>" style="display:inline-block;">
 			<?php echo $mission_version; ?>
 		</div>

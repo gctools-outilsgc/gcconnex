@@ -26,8 +26,8 @@ $advanced_form = elgg_get_sticky_values('advancedfill');
 // Detects if backup fields are active or not. If they are then Javascript is disabled.
 $noscript = false;
 foreach ($advanced_form as $name => $value) {
-    if (strpos($name, 'backup_') !== false) {
-        if ($value != '') {
+    if(strpos($name, 'backup_') !== false) {
+        if($value != '') {
             $noscript = true;
         }
     }
@@ -47,12 +47,13 @@ if ($err != '') {
      * Empty evaluations are discarded.
      */
     for ($i = 0; $i < $element_total; $i ++) {
-        if ($noscript) {
+        if($noscript) {
             $query_clean = mm_analyze_backup($i, $advanced_form);
-        } else {
-            $query_clean = mm_analyze_selection($i, $advanced_form);
+        } 
+        else {
+            $query_clean = mm_analyze_advanced_search_element($i, $advanced_form);
         }
-        if (!empty($query_clean)) {
+        if(!empty($query_clean)) {
             $array[$i] = $query_clean;
         }
     }
@@ -61,11 +62,11 @@ if ($err != '') {
     switch($_SESSION['mission_search_switch']) {
         case 'candidate':
             // Function for candidate searching.
-            $returned = mm_adv_search_candidate_database($array, 'AND', elgg_get_plugin_setting('search_limit', 'missions'));
+            $returned = mm_advanced_search_database_for_candidates($array, 'AND', elgg_get_plugin_setting('search_limit', 'missions'));
             break;
         default:
             // Function for mission searching.
-            $returned = mm_search_database($array, 'AND', elgg_get_plugin_setting('search_limit', 'missions'));
+            $returned = mm_search_database_for_missions($array, 'AND', elgg_get_plugin_setting('search_limit', 'missions'));
     }
     
     /*

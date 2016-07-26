@@ -28,6 +28,8 @@ Finally, a test suite was created that works with the plugin ufcoe_testable whic
 
 As of Release 11, the organization input now has a disable_other option which removes the other option from the dropdown selection.
 
+As of Release 13, the organization input now has a passed_onchange_function option which adds passed function(s) to every dropdown element created.
+
 --------------------------------------------------------------------------------------------------------------
 
 HOW TO USE THE INPUT FIELD:

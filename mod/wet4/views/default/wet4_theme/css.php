@@ -12523,7 +12523,7 @@ Carousel
   .carousel-s2 a:hover {
     text-decoration: underline; }
       
-   /*Tabs style*/   
+ /*Tabs style*/   
  
 .elgg-menu-filter>.elgg-state-selected{
     color:#055959;
@@ -12542,7 +12542,7 @@ Carousel
     text-decoration: none;
     background-color: #f9f9f9;
         padding-bottom: 0;
-    margin-bottom:9px;
+    margin-bottom:10px;
      -webkit-border-radius: 5px 5px 0 0;
     -moz-border-radius: 5px 5px 0 0;
     border-radius: 4px 4px 0 0;
@@ -12556,8 +12556,8 @@ Carousel
     border-bottom-color: #055959;
     background-color: #f9f9f9;
     padding-bottom: 0;
-    margin-bottom:9px;
-     -webkit-border-radius: 5px 5px 0 0;
+    margin-bottom:10px;
+    -webkit-border-radius: 5px 5px 0 0;
     -moz-border-radius: 5px 5px 0 0;
     border-radius: 4px 4px 0 0;
     padding-left:15px;
@@ -12586,7 +12586,7 @@ Carousel
     border-bottom-color: transparent;}
 
 .elgg-menu-filter > li a{
-    border: 1px solid transparent;
+    border: 3px solid transparent;
     position: relative;
     display: block;
     padding:10px 8px;
@@ -12598,12 +12598,10 @@ Carousel
 
 .elgg-menu-filter > li>a:hover,
 .elgg-menu-filter > li>a:focus{
-    
-    
     text-decoration: none;
-   border-bottom: 3px solid #055959;
+    border-bottom: 3px solid #055959;
    padding-bottom: 0;
-   margin-bottom: 9px;
+   margin-bottom: 10px;
  }
       
 .elgg-menu-filter {
@@ -12621,6 +12619,7 @@ Carousel
       
 .elgg-menu-filter:after {
     clear: both; } 
+      
       
 /*Buttom*/
 .btn-primary>a{

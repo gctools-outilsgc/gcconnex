@@ -200,6 +200,30 @@ If a user clicks on sort options above and to the right of the opportunity cards
 
 Additional minor bug fixes were made in order to match feedback given on Saturday June 18th.
 
+13)
+Some of the code has been cleaned and some internal functions have been renamed to improve code readability.
+
+The first version of Analytics has been created which allows users to create stacked bar graphs and histograms.
+
+Stacked bar graphs get a set of opportunities found between a start date and an end date.
+Different opportunity dates can be targeted with target date: date the opportunity was posted, the day the opportunity is set to start, or the date the opportunity was completed or cancelled.
+The interval of the graph's horizontal axis can be set to year, fiscal year, quarter, month, week, or day by the time interval input.
+The opportunity set can be further divided into different bars with the separate opportunities input. Opportunities can be separated by state, reliability, whether it is a virtual opportunity, or whether it is limited by department.
+
+NOTE: The interval may change the graph's start date.
+For example selecting a July 14th, 2016 start date and an August 20th, 2016 end date with the year interval will set the start date to January 1st, 2016 while the end date remains unchanged.
+In the above example, you would get a graph with a single interval the notation 2016.
+
+Histograms can be given a number of intervals while the max and min values are determined from the all the opportunities in GCconnex and the size of the intervals is determined automatically.
+The target value input determines what metadata will be looked at when dividing the opportunities and generating the horizontal axis.
+The targeted metadata can be time taken to post, fill, complete, or cancel an opportunity as well as the time commitment per day, per week, per month, or total to the opportunity.
+
+The opportunity set can be further narrowed down by selecting a department which will only keep opportunities with that department or that department's children in the set.
+
+Once all the inputs are set, clicking generate will produce a graph in the space below.
+The graph bars can be moused over for additional information and the show data table text directly below the graph will display the associated table.
+Changing any of the dropdown inputs will wipe away the graph and table.
+
 --------------------------------------------------------------------------------------------------------------
 
 SOLUTIONS:

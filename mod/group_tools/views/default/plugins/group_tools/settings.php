@@ -157,8 +157,14 @@ echo elgg_view_module("inline", $title, $body);
 $title = elgg_echo("group_tools:settings:invite:title");
 
 $body = "<div>";
+//$body .= 'Valeur de invite est: '. $plugin->invite_circle;
 $body .= elgg_echo("group_tools:settings:invite");
 $body .= elgg_view("input/dropdown", array("name" => "params[invite]", "options_values" => $noyes_options, "value" => $plugin->invite, "class" => "mls"));
+$body .= "</div>";
+
+$body .= "<div>";
+$body .= elgg_echo("group_tools:settings:invite_circle");
+$body .= elgg_view("input/dropdown", array("name" => "params[invite_circle]", "options_values" => $noyes_options, "value" => $plugin->invite_circle, "class" => "mls"));
 $body .= "</div>";
 
 $body .= "<div>";

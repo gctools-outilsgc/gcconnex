@@ -62,12 +62,12 @@ $advanced_field = elgg_view('page/elements/hidden-field', array(
 <div>
 	<?php echo elgg_echo('missions:first_splash_paragraph')?>
 </div>
-</br>
+<br>
 <h4><?php echo elgg_echo('missions:splash:how_to_apply'); ?></h4>
 <div>
 	<?php echo elgg_echo('missions:second_splash_paragraph')?>
 </div>
-</br>
+<br>
 <h4><?php echo elgg_echo('missions:splash:missions_right_now'); ?></h4>
 <div>
 	<h4><?php echo elgg_echo('missions:search_for_opportunities') . ':'; ?></h4>
@@ -79,7 +79,7 @@ $advanced_field = elgg_view('page/elements/hidden-field', array(
 <div class="col-sm-12">
 	<?php echo $entity_list; ?>
 </div>
-</br>
+<br>
 <div>
 	<?php 
 		echo elgg_view('output/url', array(

@@ -12,7 +12,7 @@
  * Sets the resulting array and count of the array to SESSION variables if the count is not 0.
  * Also handles intersecting with any array that currently exists within SESSION.
  */
-function mm_search_database($query_array, $query_operand, $limit)
+function mm_search_database_for_missions($query_array, $query_operand, $limit)
 {
     $options = array();
     $mission_count = '';
@@ -36,20 +36,6 @@ function mm_search_database($query_array, $query_operand, $limit)
     $options['metadata_case_sensitive'] = false;
     $options['limit'] = $limit;
     $missions = elgg_get_entities_from_metadata($options);
-
-    // Deprecated merge logic
-    /*
-     * if(is_array($minute_clause)) {
-     * $options['metadata_name_value_pairs'] = $minute_clause;
-     * $missions_clause = elgg_get_entities_from_metadata($options);
-     * $missions = array_merge($missions, $missions_clause);
-     * }
-    */
-
-    // Compares mission guids and keeps those that appear in both arrays.
-    /*if ($refinement && ! empty($_SESSION['mission_search_set'])) {
-        $missions = array_uintersect($missions, $_SESSION['mission_search_set'], 'mm_compare_guid');
-    }*/
     
     foreach($missions as $key => $mission) {
     	if($mission->state != 'posted') {
@@ -89,11 +75,11 @@ function mm_compare_guid($a, $b)
  * Analyzes the selection values and selection element values in order to construct a WHERE statement.
  * This is for when Javascript is enabled.
  */
-function mm_analyze_selection($place, $array)
+function mm_analyze_advanced_search_element($place, $array)
 {
     $returner = array();
 
-    switch ($array['selection_' . $place]) {
+    switch(trim($array['selection_' . $place])) {
         // Returns an empty array if
         case '':
             break;
@@ -431,26 +417,32 @@ function mm_analyze_backup($place, $array)
             case elgg_echo('missions:title'):
                 $name_option = 'job_title';
                 break;
+                
             case elgg_echo('missions:type'):
                 $name_option = 'job_type';
                 $operand_option = 'LIKE';
                 $value_option = '%' . $array['backup_' . $place] . '%';
                 break;
+                
             case elgg_echo('missions:department'):
                 $name_option = 'department';
                 break;
+                
             case elgg_echo('missions:location'):
                 $name_option = 'location';
                 break;
+                
             case elgg_echo('missions:key_skills'):
                 $name_option = 'key_skills';
                 $operand_option = 'LIKE';
                 $value_option = '%' . $array['backup_' . $place] . '%';
                 break;
+                
             case elgg_echo('missions:security_clearance'):
                 $name_option = 'security';
                 break;
-                // In the language case, the value needs to have the format {language}{LWC}{LWE}{LOP}
+                
+            // In the language case, the value needs to have the format {language}{LWC}{LWE}{LOP}
             case elgg_echo('missions:language'):
                 switch ($array['backup_' . $place]) {
                     case (strpos($array['backup_' . $place], 'english') !== false):
@@ -464,7 +456,9 @@ function mm_analyze_backup($place, $array)
                 }
                 $operand_option = '=';
                 break;
-                // In the time case, the value needs to have the format {day}_{start/end}{hour}:{min}
+                
+            // In the time case, the value needs to have the format {day}_{start/end}{hour}:{min}
+            case elgg_echo('missions:duration'):
             case elgg_echo('missions:start_time'):
                 switch ($array['backup_' . $place]) {
                     case (strpos($array['backup_' . $place], 'mon_start') !== false):
@@ -513,15 +507,8 @@ function mm_analyze_backup($place, $array)
                         return array();
                 }
                 $operand_option = '=';
-                /*switch ($array['backup_' . $place]) {
-                    case (strpos($array['backup_' . $place], 'start') !== false):
-                        $operand_option = '>=';
-                        break;
-                    case (strpos($array['backup_' . $place], 'duration') !== false):
-                        $operand_option = '<=';
-                        break;
-                }*/
                 break;
+                
             case elgg_echo('missions:skill'):
                 $name_option = 'title';
                 $operand_option = 'LIKE';
@@ -542,15 +529,18 @@ function mm_analyze_backup($place, $array)
                 $value_option = '%' . $array['selection_' . $place . '_element_value'] . '%';
                 $extra_option = 'education';
                 break;
+                
             case elgg_echo('missions:portfolio'):
                 $name_option = 'title';
                 $operand_option = 'LIKE';
                 $value_option = '%' . $array['selection_' . $place . '_element_value'] . '%';
                 $extra_option = 'portfolio';
                 break;
+                
             case elgg_echo('missions:work_remotely'):
                 $name_option = 'remotely';
                 break;
+                
             case elgg_echo('missions:program_area'):
                 $name_option = 'program_area';
                 break;
@@ -568,7 +558,7 @@ function mm_analyze_backup($place, $array)
  * Basic search functionality for candidate searching.
  * Checks education, experience and skill attributes from user profiles.
  */
-function mm_search_candidate_database($query_array, $query_operand, $limit)
+function mm_simple_search_database_for_candidates($query_array, $query_operand, $limit)
 {
     $options = array();
 
@@ -576,6 +566,11 @@ function mm_search_candidate_database($query_array, $query_operand, $limit)
     if (empty($filtered_array)) {
         register_error(elgg_echo('missions:error:no_search_values'));
         return false;
+    }
+    
+    $value_array = array();
+    foreach($filtered_array as $key => $array) {
+    	$value_array[$key] = str_replace('%', '', $array['value']);
     }
 
     // Setting options with which the query will be built.
@@ -625,7 +620,14 @@ function mm_search_candidate_database($query_array, $query_operand, $limit)
     // Turns the user list into a list of GUIDs and sets the search feedback for search by name.
     foreach($users as $key => $user) {
     	$users[$key] = $user->guid;
-    	//$search_feedback[$user->guid] .= elgg_echo('missions:username') . ': ' . $user->name . ',';
+    	foreach($value_array as $value) {
+    		if(strpos(strtolower($user->name), $value) !== false) {
+    			$search_feedback[$user->guid] .= elgg_echo('missions:name') . ': ' . $user->name . ',';
+    		}
+    		if(strpos(strtolower($user->email), $value) !== false) {
+    			$search_feedback[$user->guid] .= elgg_echo('missions:email') . ': ' . $user->email . ',';
+    		}
+    	}
     	$count++;
     }
     
@@ -652,7 +654,7 @@ function mm_search_candidate_database($query_array, $query_operand, $limit)
  * Advanced search functionality for candidate searching.
  * Checks education, experience and skill attributes and metadata from user profiles.
  */
-function mm_adv_search_candidate_database($query_array, $query_operand, $limit) {
+function mm_advanced_search_database_for_candidates($query_array, $query_operand, $limit) {
     $users_returned_by_attribute = array();
     $users_returned_by_metadata = array();
     $is_attribute_searched = false;

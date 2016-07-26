@@ -44,6 +44,7 @@ $archive_list = elgg_view_entity_list(array_slice($entity_list, $offset, $max), 
 		'limit' => $max,
 		'pagination' => true,
 		'list_type' => 'gallery',
+		'gallery_class' => 'mission-gallery',
 		'mission_full_view' => false
 ), $offset, $max);
 
@@ -59,6 +60,7 @@ $sort_missions_form .= elgg_view_form('missions/sort-missions-form', array(
 ), array(
 		'mission_sort_archive' => true
 ));
+
 $sort_field = elgg_view('page/elements/hidden-field', array(
 		'toggle_text' => elgg_echo('missions:sort_options'),
 		'toggle_text_hidden' => elgg_echo('missions:sort_options'),
@@ -68,8 +70,10 @@ $sort_field = elgg_view('page/elements/hidden-field', array(
 ));
 ?>
 
-<h4><?php echo elgg_echo('missions:archived_opportunities') . ': '; ?></h4>
-<div class="col-sm-5 col-sm-offset-7>
+<div class="col-sm-12">
+	<h4><?php echo elgg_echo('missions:archived_opportunities') . ': '; ?></h4>
+</div>
+<div class="col-sm-5 col-sm-offset-7">
 	<?php echo $sort_field; ?>
 </div>
 <div class="col-sm-12">

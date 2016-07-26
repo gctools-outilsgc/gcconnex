@@ -32,9 +32,9 @@ if(!check_if_opted_in(elgg_get_logged_in_user_entity())) {
 
 $content .= elgg_view('page/elements/mission-tabs');
  
- $content .= elgg_echo('missions:feedback_explanation_one') . '</br>';
- $content .= elgg_echo('missions:feedback_explanation_two') . '</br>';
- $content .= elgg_echo('missions:feedback_explanation_three') . '</br></br>';
+ $content .= elgg_echo('missions:feedback_explanation_one') . '<br>';
+ $content .= elgg_echo('missions:feedback_explanation_two') . '<br>';
+ $content .= elgg_echo('missions:feedback_explanation_three') . '<br><br>';
  
  // If the user is the mission manager then feedback forms will be generated for each participant.
  if(elgg_get_logged_in_user_guid() == $mission->owner_guid || elgg_get_logged_in_user_guid() == $mission->account) {

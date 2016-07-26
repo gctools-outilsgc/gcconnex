@@ -83,7 +83,7 @@ if (! empty($unpacked_array['lwc_english']) || ! empty($unpacked_array['lwc_fren
     if (! empty($unpacked_array['lwc_french'])) {
         $unpacked_language .= '<span name="mission-lwc-french">' . elgg_echo('missions:formatted:french', array($unpacked_array['lwc_french'])) . '</span>';
     }
-    $unpacked_language .= '</br>';
+    $unpacked_language .= '<br>';
 }
 if (! empty($unpacked_array['lwe_english']) || ! empty($unpacked_array['lwe_french'])) {
     $unpacked_language .= '<h5>' . elgg_echo('missions:written_expression') . ': </h5>';
@@ -93,7 +93,7 @@ if (! empty($unpacked_array['lwe_english']) || ! empty($unpacked_array['lwe_fren
     if (! empty($unpacked_array['lwe_french'])) {
         $unpacked_language .= '<span name="mission-lwe-french">' . elgg_echo('missions:formatted:french', array($unpacked_array['lwc_french'])) . '</span>';
     }
-    $unpacked_language .= '</br>';
+    $unpacked_language .= '<br>';
 }
 if (! empty($unpacked_array['lop_english']) || ! empty($unpacked_array['lop_french'])) {
     $unpacked_language .= '<h5>' . elgg_echo('missions:oral_proficiency') . ': </h5>';
@@ -103,7 +103,7 @@ if (! empty($unpacked_array['lop_english']) || ! empty($unpacked_array['lop_fren
     if (! empty($unpacked_array['lop_french'])) {
         $unpacked_language .= '<span name="mission-lop-french">' . elgg_echo('missions:formatted:french', array($unpacked_array['lop_french'])) . '</span>';
     }
-    $unpacked_language .= '</br>';
+    $unpacked_language .= '<br>';
 }
 if (empty($unpacked_language)) {
     $unpacked_language = '<span name="no-languages">' . elgg_echo('missions:none_required') . '</span>';
@@ -113,73 +113,31 @@ if (empty($unpacked_language)) {
 $unpacked_time = '';
 if ($mission->mon_start) {
     $unpacked_time .= '<h5>' . elgg_echo('missions:mon') . ': </h5>';
-    /*$unpacked_time .= elgg_echo('missions:formatted:time', array(
-    		$unpacked_array['mon_start_hour'],
-    		$unpacked_array['mon_start_min'],
-    		$unpacked_array['mon_duration_hour'],
-    		$unpacked_array['mon_duration_min']
-    )) . '</br>';*/
-    $unpacked_time .= '<span name="mission-mon-start">' . $mission->mon_start . '</span>' . elgg_echo('missions:to') . '<span name="mission-mon-duration">' . $mission->mon_duration . '</span></br>';
+    $unpacked_time .= '<span name="mission-mon-start">' . $mission->mon_start . '</span>' . elgg_echo('missions:to') . '<span name="mission-mon-duration">' . $mission->mon_duration . '</span><br>';
 }
 if ($mission->tue_start) {
     $unpacked_time .= '<h5>' . elgg_echo('missions:tue') . ': </h5>';
-    /*$unpacked_time .= elgg_echo('missions:formatted:time', array(
-    		$unpacked_array['tue_start_hour'],
-    		$unpacked_array['tue_start_min'],
-    		$unpacked_array['tue_duration_hour'],
-    		$unpacked_array['tue_duration_min']
-    )) . '</br>';*/
-   $unpacked_time .= '<span name="mission-tue-start">' . $mission->tue_start . '</span>' . elgg_echo('missions:to') . '<span name="mission-tue-duration">' . $mission->tue_duration . '</span></br>';
+   $unpacked_time .= '<span name="mission-tue-start">' . $mission->tue_start . '</span>' . elgg_echo('missions:to') . '<span name="mission-tue-duration">' . $mission->tue_duration . '</span><br>';
 }
 if ($mission->wed_start) {
     $unpacked_time .= '<h5>' . elgg_echo('missions:wed') . ': </h5>';
-    /*$unpacked_time .= elgg_echo('missions:formatted:time', array(
-    		$unpacked_array['wed_start_hour'],
-    		$unpacked_array['wed_start_min'],
-    		$unpacked_array['wed_duration_hour'],
-    		$unpacked_array['wed_duration_min']
-    )) . '</br>';*/
-    $unpacked_time .= '<span name="mission-wed-start">' . $mission->wed_start . '</span>' . elgg_echo('missions:to') . '<span name="mission-wed-duration">' . $mission->wed_duration . '</span></br>';
+    $unpacked_time .= '<span name="mission-wed-start">' . $mission->wed_start . '</span>' . elgg_echo('missions:to') . '<span name="mission-wed-duration">' . $mission->wed_duration . '</span><br>';
 }
 if ($mission->thu_start) {
     $unpacked_time .= '<h5>' . elgg_echo('missions:thu') . ': </h5>';
-    /*$unpacked_time .= elgg_echo('missions:formatted:time', array(
-    		$unpacked_array['thu_start_hour'],
-    		$unpacked_array['thu_start_min'],
-    		$unpacked_array['thu_duration_hour'],
-    		$unpacked_array['thu_duration_min']
-    )) . '</br>';*/
-    $unpacked_time .= '<span name="mission-thu-start">' . $mission->thu_start . '</span>' . elgg_echo('missions:to') . '<span name="mission-thu-duration">' . $mission->thu_duration . '</span></br>';
+    $unpacked_time .= '<span name="mission-thu-start">' . $mission->thu_start . '</span>' . elgg_echo('missions:to') . '<span name="mission-thu-duration">' . $mission->thu_duration . '</span><br>';
 }
 if ($mission->fri_start) {
     $unpacked_time .= '<h5>' . elgg_echo('missions:fri') . ': </h5>';
-    /*$unpacked_time .= elgg_echo('missions:formatted:time', array(
-    		$unpacked_array['fri_start_hour'],
-    		$unpacked_array['fri_start_min'],
-    		$unpacked_array['fri_duration_hour'],
-    		$unpacked_array['fri_duration_min']
-    )) . '</br>';*/
-    $unpacked_time .= '<span name="mission-fri-start">' . $mission->fri_start . '</span>' . elgg_echo('missions:to') . '<span name="mission-fri-duration">' . $mission->fri_duration . '</span></br>';
+    $unpacked_time .= '<span name="mission-fri-start">' . $mission->fri_start . '</span>' . elgg_echo('missions:to') . '<span name="mission-fri-duration">' . $mission->fri_duration . '</span><br>';
 }
 if ($mission->sat_start) {
     $unpacked_time .= '<h5>' . elgg_echo('missions:sat') . ': </h5>';
-    /*$unpacked_time .= elgg_echo('missions:formatted:time', array(
-    		$unpacked_array['sat_start_hour'],
-    		$unpacked_array['sat_start_min'],
-    		$unpacked_array['sat_duration_hour'],
-    		$unpacked_array['sat_duration_min']
-    )) . '</br>';*/
-    $unpacked_time .= '<span name="mission-sat-start">' . $mission->sat_start . '</span>' . elgg_echo('missions:to') . '<span name="mission-sat-duration">' . $mission->sat_duration . '</span></br>';
+    $unpacked_time .= '<span name="mission-sat-start">' . $mission->sat_start . '</span>' . elgg_echo('missions:to') . '<span name="mission-sat-duration">' . $mission->sat_duration . '</span><br>';
 }
 if ($mission->sun_start) {
     $unpacked_time .= '<h5>' . elgg_echo('missions:sun') . ': </h5>';
-   /* $unpacked_time .= elgg_echo('missions:formatted:time', array(
-    		$unpacked_array['sun_start_hour'],
-    		$unpacked_array['sun_start_min'],
-    		$unpacked_array['sun_duration_hour'],
-    		$unpacked_array['sun_duration_min']
-    )) . '</br>';*/
-    $unpacked_time .= '<span name="mission-sun-start">' . $mission->sun_start . '</span>' . elgg_echo('missions:to') . '<span name="mission-sun-duration">' . $mission->sun_duration . '</span></br>';
+    $unpacked_time .= '<span name="mission-sun-start">' . $mission->sun_start . '</span>' . elgg_echo('missions:to') . '<span name="mission-sun-duration">' . $mission->sun_duration . '</span><br>';
 }
 if (empty($unpacked_time)) {
     $unpacked_time = '<span name="no-times">' . elgg_echo('missions:none_required') . '</span>';
@@ -210,9 +168,9 @@ if(strpos($button_set['button_three'], 'accept-button') !== false) {
 	<div>
 		<h2 name="mission-job-title">
 			<?php echo elgg_get_excerpt($mission->job_title, 200);?>
-			<div style="font-style:italic;font-size:small;display:inline;" name="mission-state">
+			<span style="font-style:italic;font-size:small;" name="mission-state">
 				<?php echo $mission_state; ?>
-			</div>
+			</span>
 		</h2>
 	</div>
 	<div style="text-align:right;">
@@ -225,7 +183,7 @@ if(strpos($button_set['button_three'], 'accept-button') !== false) {
 	<div name="mission-description">
 		<?php echo elgg_get_excerpt($mission->descriptor, 2000);?>
 	</div>
-	</br>
+	<br>
 	<div>
 		<div>
 			<h4><?php echo elgg_echo('mission:creator_information') . ':';?></h4>
@@ -239,7 +197,7 @@ if(strpos($button_set['button_three'], 'accept-button') !== false) {
 			<span name="creator-email"><?php echo $creator->email;?></span>
 		</div>
 	</div>
-	</br>
+	<br>
 	<div>
 		<div>
 			<h4><?php echo elgg_echo('mission:manager_information') . ':'; ?></h4>
@@ -261,7 +219,7 @@ if(strpos($button_set['button_three'], 'accept-button') !== false) {
 			<span name="mission-phone"><?php echo $clean_phone;?></span>
 		</div>
 	</div>
-	</br>
+	<br>
 	<div>
 		<div>
 			<h4><?php echo elgg_echo('mission:opportunity_details') . ':'; ?></h4>
@@ -307,16 +265,16 @@ if(strpos($button_set['button_three'], 'accept-button') !== false) {
 			<span name="mission-skills"><?php echo elgg_get_excerpt($clean_skills, 500);?></span>
 		</div>
 	</div>
-	</br>
+	<br>
 	<div class="col-sm-offset-1">
-		<h5><?php echo elgg_echo('missions:language_requirements') . ':</br>';?></h5>
+		<h5><?php echo elgg_echo('missions:language_requirements') . ':<br>';?></h5>
 		<div class="col-sm-offset-1">
 			<?php echo $unpacked_language;?>
 		</div>
 	</div>
-	</br>
+	<br>
 	<div class="col-sm-offset-1">
-		<h5><?php echo elgg_echo('missions:scheduling_requirements') . ':</br>';?></h5>
+		<h5><?php echo elgg_echo('missions:scheduling_requirements') . ':<br>';?></h5>
 		<div class="col-sm-offset-1">
 			<h5><?php echo elgg_echo('missions:time_commitment') . ':';?></h5>
 			<span name="mission-time-commitment">
@@ -337,8 +295,8 @@ if(strpos($button_set['button_three'], 'accept-button') !== false) {
 			<?php echo $unpacked_time; ?>
 		</div>
 	</div>
-	</br>
-	</br>
+	<br>
+	<br>
 	<div>
 		<?php
 			foreach ($button_set as $value) {

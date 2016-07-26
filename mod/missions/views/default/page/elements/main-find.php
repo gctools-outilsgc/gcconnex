@@ -90,9 +90,6 @@ $sort_field = elgg_view('page/elements/hidden-field', array(
 ?>
 
 <div class="col-sm-12">
-	<?php echo $create_button; ?>
-</div>
-<div class="col-sm-12">
 	<h4><?php echo elgg_echo('missions:search_for_opportunities') . ':'; ?></h4>
 	<?php 
 		//echo $simple_search_form;

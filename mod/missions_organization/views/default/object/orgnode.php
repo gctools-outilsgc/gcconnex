@@ -51,12 +51,12 @@ foreach($children_nodes as $child) {
 			'href' => elgg_get_site_url() . 'action/missions_organization/set-session-node-guid?nid=' . $child->guid,
 			'text' => $temp_name,
 			'is_action' => true
-	)) . '</br>';
+	)) . '<br>';
 }
 if($child_node_set == '<div style="margin-top:4px;">') {
 	$child_node_set .= elgg_echo('missions_organization:none');
 }
-$child_node_set .= '</div></br>';
+$child_node_set .= '</div><br>';
 
 // Displays all parents as links which lead to their node.
 $parent_node_set = '<div style="margin-top:4px;">';
@@ -70,12 +70,12 @@ foreach($parent_nodes as $parent) {
 			'href' => elgg_get_site_url() . 'action/missions_organization/set-session-node-guid?nid=' . $parent->guid,
 			'text' => $temp_name,
 			'is_action' => true
-	)) . '</br>';
+	)) . '<br>';
 }
 if($parent_node_set == '<div style="margin-top:4px;">') {
 	$parent_node_set .= elgg_echo('missions_organization:none');
 }
-$parent_node_set .= '</div></br>';
+$parent_node_set .= '</div><br>';
 
 // Button to change this nodes parent as long as the node is not the root.
 if(!$node->root) {
@@ -112,8 +112,8 @@ $merge_button = elgg_view('output/url', array(
 	<div style="display:inline-block;"><?php echo $add_child_button; ?></div>
 	<?php echo $child_node_set; ?>
 </div>
-</br>
+<br>
 <div>
 	<?php echo $merge_button; ?>
 </div>
-</br>
+<br>

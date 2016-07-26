@@ -84,6 +84,9 @@ function missions_init()
     // Register an ajax view for adding a skill input field.
     elgg_register_ajax_view('missions/add-skill');
 
+    // 
+    elgg_register_ajax_view('missions/analytics-inputs');
+    
     // Register an ajax view for generating an analytics graph.
     elgg_register_ajax_view('missions/analytics-generator');
     
@@ -95,12 +98,6 @@ function missions_init()
     
     // Changes the manager's owner block in the mission view.
     elgg_register_plugin_hook_handler('view', 'page/elements/owner_block', 'alter_mission_owner_block');
-    
-    // Hook which changes how user entities are displayed.
-    //elgg_register_plugin_hook_handler('view', 'annotation/default', 'alter_mission_annotation_view');
-    
-    // Change the profile owner block for visiting users.
-    //elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'append_profile_owner_block');
 
     // Adds a menu item to the site menu (top bar).
     elgg_register_menu_item('site', array(
@@ -229,46 +226,3 @@ function alter_mission_owner_block($hook, $type, $returnvalue, $params) {
         }
     }
 }
-
-// Changes the profile owner block to allow the profile owner to be invited by another user reading their profile.
-/*function append_profile_owner_block($hook, $type, $returnvalue, $params) {
-    $user = get_user(elgg_get_page_owner_guid());
-    if(elgg_get_logged_in_user_guid() != elgg_get_page_owner_guid() && $user->opt_in_missions == 'gcconnex_profile:opt:yes') {
-        $returnvalue[] = new ElggMenuItem('user_invite_from_profile', elgg_echo('missions:invite_to_a_mission'), 'missions/mission-select-invite/' . elgg_get_page_owner_guid());
-        return $returnvalue;
-    }
-    else {
-        return $returnvalue;
-    }
-}*/
-
-/*function alter_mission_annotation_view($hook, $type, $returnvalue, $params) {
-	$current_uri = $_SERVER['REQUEST_URI'];
-	$annotation = $params['vars']['annotation'];
-	
-	if(strpos($current_uri, 'view') === false && elgg_get_context() != 'missions') {
-		return $returnvalue;
-	}
-	else {
-		if(elgg_get_logged_in_user_guid() == $annotation->owner_guid) {
-			return $returnvalue . elgg_view('output/url', array(
-            	'href' => elgg_get_site_url() . 'action/missions/delete-feedback?aid=' . $annotation->id,
-            	'text' => elgg_echo('missions:delete'),
-            	'is_action' => true,
-            	'class' => 'elgg-button btn btn-default',
-				'style' => 'display:inline-block;'
-        	));
-		}
-	}
-	
-	return $returnvalue;
-}*/
-
-// Testing functionality to try and debug site notifications.
-/*function missions_site_notifications_send($hook, $type, $returnvalue, $params) {
-	//system_message('MESSAGE HOOK!');
-	//system_message($params['notification']->getSenderGUID() . '@' . $params['notification']->getRecipientGUID());
-	//system_message($params['notification']->guid . '#');
-	
-	return $params['notification'];
-}*/

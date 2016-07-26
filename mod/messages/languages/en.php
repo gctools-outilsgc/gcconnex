@@ -83,4 +83,8 @@ return array(
 
 	'messages:deleted_sender' => 'Gcconnex',
 
+	'colleague_circle_checkbox' => 'Your colleagues circles',//NEW
+	'collections_circle_selection' => "Select a colleague circle",//NEW
+	'collections_circle_send' => "Send message to",//NEW
+
 );

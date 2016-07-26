@@ -40,6 +40,7 @@
  ));
  ?>
  
+ 
 <div hidden id="<?php echo $text_id; ?>"><?php echo $text; ?></div>
 <div hidden id="<?php echo $text_id_other; ?>"><?php echo $hidden_content_text; ?></div>
 <div id="<?php echo $pre_field_id; ?>" style="display:inline-block;">

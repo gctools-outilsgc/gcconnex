@@ -56,6 +56,10 @@ echo elgg_view_page($title, $body);
 function render_department_tab($data_directory) {
 	gatekeeper();	// logged in users only
 	$display = '';
+
+    $display .= '<section class="alert alert-warning">
+	<p>'.elgg_echo('c_bin:warning').'</p>
+</section>';
 	//$display .= create_files($data_directory);	// creates the necessary files..
     /*
 	if (file_exists($data_directory.'department_listing.json') && file_exists($data_directory.'department_directory.json') && file_exists($data_directory.'department-listing.csv'))

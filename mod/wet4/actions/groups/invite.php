@@ -12,6 +12,13 @@ if (!empty($user_guids) && !is_array($user_guids)) {
 	$user_guids = array($user_guids);
 }
 
+// This fix a problem with array of colleague cercle
+$array_users = $user_guids;
+$string_users = implode(",", $array_users);
+
+$array_users2  = $string_users;
+$user_guids = explode(",", $array_users2);
+
 $adding = false;
 if (elgg_is_admin_logged_in()) {
 	// add all users?
@@ -68,7 +75,7 @@ if ((!empty($user_guids) || !empty($emails) || !empty($csv)) && !empty($group)) 
 		// show hidden (unvalidated) users
 		$hidden = access_get_show_hidden_status();
 		access_show_hidden_entities(true);
-		
+	
 		// counters
 		$already_invited = 0;
 		$invited = 0;

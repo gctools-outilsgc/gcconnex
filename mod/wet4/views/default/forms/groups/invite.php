@@ -7,8 +7,9 @@
 
 $group = elgg_extract("entity", $vars, elgg_get_page_owner_entity());
 $invite_site_members = elgg_extract("invite", $vars, "no");
-$invite_email = elgg_extract("invite_email", $vars, "no");;
-$invite_csv = elgg_extract("invite_csv", $vars, "no");;
+$invite_circle = elgg_extract("invite_circle", $vars, "no");
+$invite_email = elgg_extract("invite_email", $vars, "no");
+$invite_csv = elgg_extract("invite_csv", $vars, "no");
 
 $owner = $group->getOwnerEntity();
 $forward_url = $group->getURL();
@@ -27,7 +28,7 @@ if (!empty($friends)) {
 }
 
 // which options to show
-if (in_array("yes", array($invite_site_members, $invite_email, $invite_csv))) {
+if (in_array("yes", array($invite_site_members, $invite_circle, $invite_email, $invite_csv))) {
 	$tabs = array(
 		"friends" => array(
 			"text" => elgg_echo("friends"),
@@ -38,11 +39,17 @@ if (in_array("yes", array($invite_site_members, $invite_email, $invite_csv))) {
 			"selected" => true
 		)
 	);
-	
+
 	// invite friends
 	$form_data = "<div id='group_tools_group_invite_friends'>";
 	$form_data .= $friendspicker;
-	$form_data .= "</div></div></div></div>";
+
+    //fix an odd bug where if a user doesn't have any colleagues, the form will break
+    if(elgg_get_logged_in_user_entity()->getFriends(array('count'=>true,)) > 0){
+        $form_data .= "</div></div></div></div>";
+    } else {
+        $form_data .= '</div>';
+    }
 
 	//invite all site members
 	if ($invite_site_members == "yes") {
@@ -65,11 +72,50 @@ if (in_array("yes", array($invite_site_members, $invite_email, $invite_csv))) {
 			$form_data .= elgg_echo("group_tools:group:invite:users:all");
 		}
 
-
-		
 		$form_data .= "</div>";
 
+	}
 
+	if ($invite_circle == "yes") {
+		$tabs["circle"] = array(
+			"text" => elgg_echo("friends:collections"),
+			"href" => "#",
+			"rel" => "users",
+			"priority" => 400,
+			"onclick" => "group_tools_group_invite_switch_tab(\"circle\");"
+		);
+		
+		$form_data .= "<div id='group_tools_group_invite_circle' class='mbm'>";
+		$form_data .= "<p>".elgg_echo("collections_circle_selection")."</p>";
+		
+		$content = get_user_access_collections(elgg_get_logged_in_user_guid());
+		$collection_id = get_user_access_collections(elgg_get_logged_in_user_guid());
+
+		$form_data .= '<select class="form-control" id="user_guid[]" name="user_guid[]">
+				 <option value="">---</option>';
+
+		foreach ($content as $key => $collection) {
+			$collections = get_members_of_access_collection($collection->id, true);
+			$form_data .= "<option value=";
+			$coll_members = array();
+			
+				foreach ($collections as $key => $value) {
+					$name = get_user($value);
+					$coll_members[] = $name->guid;
+				}
+
+			$form_data .= implode(',', $coll_members);
+		
+			if ($collection->id == $collection_id){
+				$form_data .= ' selected="selected"';
+			}
+
+			$form_data .='> ';
+			$form_data .= ' '.$collection->name.'</option>';
+			$form_data .= '<br>';
+		}
+		$form_data .= '</select>';
+		$form_data .= "</div>";
 	}
 	
 	// invite by email
@@ -79,7 +125,7 @@ if (in_array("yes", array($invite_site_members, $invite_email, $invite_csv))) {
 			"text" => elgg_echo("group_tools:group:invite:email"),
 			"href" => "#",
 			"rel" => "users",
-			"priority" => 400,
+			"priority" => 500,
 			"onclick" => "group_tools_group_invite_switch_tab(\"email\");"
 		);
 
@@ -140,7 +186,7 @@ if (in_array("yes", array($invite_site_members, $invite_email, $invite_csv))) {
 			"text" => elgg_echo("group_tools:group:invite:csv"),
 			"href" => "#",
 			"rel" => "users",
-			"priority" => 500,
+			"priority" => 600,
 			"onclick" => "group_tools_group_invite_switch_tab(\"csv\");"
 		);
 		
@@ -256,7 +302,7 @@ echo '</div>';
 <script type="text/javascript">
 
     $('#group_tools_group_invite_email').hide();
-
+	$('#group_tools_group_invite_circle').hide();
     $('#group_tools_group_invite_users').hide();
 	function group_tools_group_invite_switch_tab(tab) {
 		$('#invite_to_group li').removeClass('elgg-state-selected');
@@ -268,13 +314,23 @@ echo '</div>';
 				$('#group_tools_group_invite_friends').hide();
 				$('#group_tools_group_invite_email').hide();
 				$('#group_tools_group_invite_csv').hide();
+				$('#group_tools_group_invite_circle').hide();
 				
 				$('#group_tools_group_invite_users').show();
+				break;
+			case "circle":
+				$('#group_tools_group_invite_friends').hide();
+				$('#group_tools_group_invite_email').hide();
+				$('#group_tools_group_invite_csv').hide();
+				$('#group_tools_group_invite_users').hide();
+				
+				$('#group_tools_group_invite_circle').show();
 				break;
 			case "email":
 				$('#group_tools_group_invite_friends').hide();
 				$('#group_tools_group_invite_users').hide();
 				$('#group_tools_group_invite_csv').hide();
+				$('#group_tools_group_invite_circle').hide();
 				
 				$('#group_tools_group_invite_email').removeClass('hidden wb-invisible').show();;
 				break;
@@ -282,6 +338,7 @@ echo '</div>';
 				$('#group_tools_group_invite_friends').hide();
 				$('#group_tools_group_invite_users').hide();
 				$('#group_tools_group_invite_email').hide();
+				$('#group_tools_group_invite_circle').hide();
 				
 				$('#group_tools_group_invite_csv').show();
 				break;
@@ -289,6 +346,7 @@ echo '</div>';
 				$('#group_tools_group_invite_users').hide();
 				$('#group_tools_group_invite_email').hide();
 				$('#group_tools_group_invite_csv').hide();
+				$('#group_tools_group_invite_circle').hide();
 				
 				$('#group_tools_group_invite_friends').show();
 				break;

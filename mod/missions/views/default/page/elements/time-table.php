@@ -28,50 +28,30 @@ if (elgg_is_sticky_form('tdropfill')) {
 
 $monday = elgg_view('page/elements/time-table-day', array(
 		'day' => 'mon',
-		/*'start_hour' => $metadata['mon_start_hour'],
-		'start_min' => $metadata['mon_start_min'],
-		'duration_hour' => $metadata['mon_duration_hour'],
-		'duration_min' => $metadata['mon_duration_min']*/
 		'start' => $mission->mon_start,
 		'duration' => $mission->mon_duration
 ));
 	
 $tuesday = elgg_view('page/elements/time-table-day', array(
 		'day' => 'tue',
-		/*'start_hour' => $metadata['tue_start_hour'],
-		'start_min' => $metadata['tue_start_min'],
-		'duration_hour' => $metadata['tue_duration_hour'],
-		'duration_min' => $metadata['tue_duration_min']*/
 		'start' => $mission->tue_start,
 		'duration' => $mission->tue_duration
 ));
 	
 $wednesday = elgg_view('page/elements/time-table-day', array(
 		'day' => 'wed',
-		/*'start_hour' => $metadata['wed_start_hour'],
-		'start_min' => $metadata['wed_start_min'],
-		'duration_hour' => $metadata['wed_duration_hour'],
-		'duration_min' => $metadata['wed_duration_min']*/
 		'start' => $mission->wed_start,
 		'duration' => $mission->wed_duration
 ));
 	
 $thursday = elgg_view('page/elements/time-table-day', array(
 		'day' => 'thu',
-		/*'start_hour' => $metadata['thu_start_hour'],
-		'start_min' => $metadata['thu_start_min'],
-		'duration_hour' => $metadata['thu_duration_hour'],
-		'duration_min' => $metadata['thu_duration_min']*/
 		'start' => $mission->thu_start,
 		'duration' => $mission->thu_duration
 ));
 	
 $friday = elgg_view('page/elements/time-table-day', array(
 		'day' => 'fri',
-		/*'start_hour' => $metadata['fri_start_hour'],
-		'start_min' => $metadata['fri_start_min'],
-		'duration_hour' => $metadata['fri_duration_hour'],
-		'duration_min' => $metadata['fri_duration_min']*/
 		'start' => $mission->fri_start,
 		'duration' => $mission->fri_duration
 ));
@@ -87,20 +67,6 @@ $sunday = elgg_view('page/elements/time-table-day', array(
 		'start' => $mission->sun_start,
 		'duration' => $mission->sun_duration
 ));
-
-/*$weekend_button = elgg_view('output/url', array(
-		'text' => elgg_echo('missions:weekend'),
-		'class' => 'elgg-button btn btn-default',
-		'id' => 'time-table-weekend-button',
-		'onclick' => 'set_weekend()'
-));
-
-$no_weekend_button = elgg_view('output/url', array(
-		'text' => elgg_echo('missions:no_weekend'),
-		'class' => 'elgg-button btn btn-default',
-		'id' => 'time-table-no-weekend-button',
-		'onclick' => 'unset_weekend()'
-));*/
 ?>
 
 <div style="display:inline-block;">
@@ -125,43 +91,3 @@ $no_weekend_button = elgg_view('output/url', array(
 <div style="font-style:italic;">
 	<?php echo elgg_echo('missions:time_table_example'); ?>
 </div>
-
- <!--  
-<div style="display:inline-block;">
-	<div>
-	</div>
-	<div>
-		<?php //echo $weekend_button; ?>
-	</div>
-	<div>
-		<?php //echo $no_weekend_button; ?>
-	</div>
-</div>
-
-<div id="weekend-section" style="display:inline-block;">
-	<noscript>
-		<?php //echo elgg_view('missions/weekend'); ?>
-	</noscript>
-</div>
--->
-
-<script>
-	/*function set_weekend() {
-		var section = "#weekend-section";
-		
-		elgg.get('ajax/view/missions/weekend', {
-			success: function(result, success, xhr) {
-				$(section).html(result);
-			}
-		});
-	}
-
-	function unset_weekend() {
-		var section = "#weekend-section";
-		$(section).html("");
-	}*/
-	
-	/*$('document').ready(function() {
-	    $("#time-tue-start-text-input").mask("00:00");
-	});*/
-</script>

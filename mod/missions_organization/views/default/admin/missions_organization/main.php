@@ -10,7 +10,7 @@ gatekeeper();
 	
 $title = elgg_echo('missions_organization:main_page');
 //$content = elgg_view_title($title);
-$content .= elgg_view_form('missions_organization/upload-form', array('class' => 'form-horizontal')) . '</br>';
+$content .= elgg_view_form('missions_organization/upload-form', array('class' => 'form-horizontal')) . '<br>';
 
 if(elgg_get_plugin_setting('show_delete_tree', 'missions_organization') == 'YES') {
 	// Button to wipe out the organization tree.
@@ -20,7 +20,7 @@ if(elgg_get_plugin_setting('show_delete_tree', 'missions_organization') == 'YES'
 	 		'is_action' => true,
 			'class' => 'elgg-button elgg-button-action',
 			'confirm' => elgg_echo('missions_organization:extreme_danger_warning')
-	)) . '</br></br>';
+	)) . '<br><br>';
 }
 
 // Search for the organization tree root.
@@ -33,7 +33,7 @@ if($root) {
 	 		'text' => elgg_echo('missions_organization:tree_root'),
 			'class' => 'elgg-button elgg-button-action',
 			'is_action' => true
-	)) . '</br>';
+	)) . '<br>';
 }
 	
 echo $content;
