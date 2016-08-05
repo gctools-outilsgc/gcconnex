@@ -30,7 +30,7 @@ if($userEnt->department){
 if($userEnt->job){
     $basicCount += 20;
 }
-if($userEnt->location){
+if($userEnt->location || $userEnt->addressString || $userEnt->addressStringFr){
     $basicCount += 20;
 }
 if($userEnt->email){

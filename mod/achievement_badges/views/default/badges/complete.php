@@ -6,6 +6,9 @@ do all calculations here to send to layout.php to display
 
 */
 
+//update profile strength to newest value
+checkProfileStrength();
+
 //get owner
 $user = elgg_get_page_owner_entity();
 

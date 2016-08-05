@@ -53,12 +53,71 @@ function get_badges(){
 }
 
 
-/*
- * Function to notify user
- * 
- *
- */
+function checkProfileStrength(){
+    $user_guid = elgg_get_page_owner_guid();
+    $userEnt = get_user ( $user_guid );
 
-function notif_level_up($name, $level, $user){
-    //_elgg_notify_user
+    //avatar
+    if($userEnt->getIconURL() !=  elgg_get_site_url() . '_graphics/icons/user/defaultmedium.gif'){
+
+        $avTotal = 100;
+    }else{
+
+        $avTotal = 0;
+    }
+
+    //About me
+    if($userEnt->description){
+
+        $aboutTotal = 100;
+    }else{
+
+        $aboutTotal = 0;
+    }
+
+    //basic profile
+    $basicCount = 0;
+
+    if($userEnt->department){
+        $basicCount += 20;
+    }
+    if($userEnt->job){
+        $basicCount += 20;
+    }
+    if($userEnt->location || $userEnt->addressString || $userEnt->addressStringFr){
+        $basicCount += 20;
+    }
+    if($userEnt->email){
+        $basicCount += 20;
+    }
+    if($userEnt->phone || $userEnt->mobile){
+        $basicCount += 20;
+    }
+
+    //education
+    if(count($userEnt->education) >= 1){
+        $eduCount = 100;
+    } else {
+        $eduCount = 0;
+    }
+
+    //work experience
+    if(count($userEnt->work) >= 1){
+        $workCount = 100;
+    } else {
+        $workCount = 0;
+    }
+
+    //skills
+    if(count($userEnt->gc_skills) >= 3){
+        $skillCount = 100;
+    } else {
+        $skillCount = round(count($userEnt->gc_skills)/3*100);
+    }
+
+    //overall total
+    $complete = round(($skillCount + $workCount + $eduCount + $basicCount + $aboutTotal + $avTotal)/6);
+
+    //set up profile strength metadata
+    $userEnt->profilestrength = $complete;
 }
