@@ -177,4 +177,272 @@ function _elgg_wet_fetch_entities_from_sql($sql, \ElggBatch $batch = null) {
 		return $rows;
 	}
 
+
+
+
+/*
+ * Customized for major speedup of group activity
+ */
+
+/**
+ * List river items
+ *
+ * @param array $options Any options from elgg_get_river() plus:
+ *   item_view  => STR         Alternative view to render list items
+ *   pagination => BOOL        Display pagination links (true)
+ *   no_results => STR|Closure Message to display if no items
+ *
+ * @return string
+ * @since 1.8.0
+ */
+function elgg_list_group_river(array $options = array()) {
+	global $autofeed;
+	$autofeed = true;
+
+	$defaults = array(
+		'offset'     => (int) max(get_input('offset', 0), 0),
+		'limit'      => (int) max(get_input('limit', max(20, elgg_get_config('default_limit'))), 0),
+		'pagination' => true,
+		'list_class' => 'elgg-list-river',
+		'no_results' => '',
+	);
+
+	$options = array_merge($defaults, $options);
+
+	if (!$options["limit"] && !$options["offset"]) {
+		// no need for pagination if listing is unlimited
+		$options["pagination"] = false;
+	}
+
+	$options['count'] = true;
+	$count = elgg_get_group_river($options);
+
+	if ($count > 0) {
+		$options['count'] = false;
+		$items = elgg_get_group_river($options);
+	} else {
+		$items = array();
+	}
+
+	$options['count'] = $count;
+	$options['items'] = $items;
+
+	return elgg_view('page/components/list', $options);
+}
+
+/**
+ * Get river items
+ *
+ * @note If using types and subtypes in a query, they are joined with an AND.
+ *
+ * @param array $options Parameters:
+ *   ids                  => INT|ARR River item id(s)
+ *   subject_guids        => INT|ARR Subject guid(s)
+ *   object_guids         => INT|ARR Object guid(s)
+ *   target_guids         => INT|ARR Target guid(s)
+ *   annotation_ids       => INT|ARR The identifier of the annotation(s)
+ *   action_types         => STR|ARR The river action type(s) identifier
+ *   posted_time_lower    => INT     The lower bound on the time posted
+ *   posted_time_upper    => INT     The upper bound on the time posted
+ *
+ *   types                => STR|ARR Entity type string(s)
+ *   subtypes             => STR|ARR Entity subtype string(s)
+ *   type_subtype_pairs   => ARR     Array of type => subtype pairs where subtype
+ *                                   can be an array of subtype strings
+ *
+ *   relationship         => STR     Relationship identifier
+ *   relationship_guid    => INT|ARR Entity guid(s)
+ *   inverse_relationship => BOOL    Subject or object of the relationship (false)
+ *
+ * 	 limit                => INT     Number to show per page (20)
+ *   offset               => INT     Offset in list (0)
+ *   count                => BOOL    Count the river items? (false)
+ *   order_by             => STR     Order by clause (rv.posted desc)
+ *   group_by             => STR     Group by clause
+ *
+ *   distinct             => BOOL    If set to false, Elgg will drop the DISTINCT
+ *                                   clause from the MySQL query, which will improve
+ *                                   performance in some situations. Avoid setting this
+ *                                   option without a full understanding of the
+ *                                   underlying SQL query Elgg creates. (true)
+ *
+ * @return array|int
+ * @since 1.8.0
+ */
+function elgg_get_group_river(array $options = array()) {
+	global $CONFIG;
+error_log("group river");
+	$defaults = array(
+		'ids'                  => ELGG_ENTITIES_ANY_VALUE,
+
+		'subject_guids'	       => ELGG_ENTITIES_ANY_VALUE,
+		'object_guids'         => ELGG_ENTITIES_ANY_VALUE,
+		'target_guids'         => ELGG_ENTITIES_ANY_VALUE,
+		'annotation_ids'       => ELGG_ENTITIES_ANY_VALUE,
+		'action_types'         => ELGG_ENTITIES_ANY_VALUE,
+
+		'relationship'         => null,
+		'relationship_guid'    => null,
+		'inverse_relationship' => false,
+
+		'types'	               => ELGG_ENTITIES_ANY_VALUE,
+		'subtypes'             => ELGG_ENTITIES_ANY_VALUE,
+		'type_subtype_pairs'   => ELGG_ENTITIES_ANY_VALUE,
+
+		'posted_time_lower'	   => ELGG_ENTITIES_ANY_VALUE,
+		'posted_time_upper'	   => ELGG_ENTITIES_ANY_VALUE,
+
+		'limit'                => 20,
+		'offset'               => 0,
+		'count'                => false,
+		'distinct'             => false,
+
+		'order_by'             => 'u.posted desc',
+		'group_by'             => ELGG_ENTITIES_ANY_VALUE,
+
+		'wheres'               => array(),
+		'wheres1'               => array(),
+		'wheres2'               => array(),
+		'joins'                => array(),
+	);
+
+	$options = array_merge($defaults, $options);
+
+	$singulars = array('id', 'subject_guid', 'object_guid', 'target_guid', 'annotation_id', 'action_type', 'type', 'subtype');
+	$options = _elgg_normalize_plural_options_array($options, $singulars);
+
+	$wheres = $options['wheres'];
+	$wheres1 = $options['wheres1'];
+	$wheres2 = $options['wheres2'];
+
+
+	$wheres[] = _elgg_get_guid_based_where_sql('rv.id', $options['ids']);
+	$wheres[] = _elgg_get_guid_based_where_sql('rv.subject_guid', $options['subject_guids']);
+	$wheres[] = _elgg_get_guid_based_where_sql('rv.object_guid', $options['object_guids']);
+	$wheres[] = _elgg_get_guid_based_where_sql('rv.target_guid', $options['target_guids']);
+	$wheres[] = _elgg_get_guid_based_where_sql('rv.annotation_id', $options['annotation_ids']);
+	$wheres[] = _elgg_river_get_action_where_sql($options['action_types']);
+	$wheres[] = _elgg_get_river_type_subtype_where_sql('rv', $options['types'],
+		$options['subtypes'], $options['type_subtype_pairs']);
+
+	if ($options['posted_time_lower'] && is_int($options['posted_time_lower'])) {
+		$wheres[] = "rv.posted >= {$options['posted_time_lower']}";
+	}
+
+	if ($options['posted_time_upper'] && is_int($options['posted_time_upper'])) {
+		$wheres[] = "rv.posted <= {$options['posted_time_upper']}";
+	}
+	
+	if (!access_get_show_hidden_status()) {
+		$wheres1[] = "rv.enabled = 'yes'";
+		$wheres2[] = "rv.enabled = 'yes'";
+	}
+
+	//$joins = $options['joins'];
+
+	$dbprefix = elgg_get_config('dbprefix');
+	$join1 = "JOIN {$dbprefix}entities oe ON rv.object_guid = oe.guid";
+	// LEFT JOIN is used because all river items do not necessarily have target
+	$join2 = "LEFT JOIN {$dbprefix}entities te ON rv.target_guid = te.guid";
+
+	if ($options['relationship_guid']) {
+		$clauses = elgg_get_entity_relationship_where_sql(
+				'rv.subject_guid',
+				$options['relationship'],
+				$options['relationship_guid'],
+				$options['inverse_relationship']);
+		if ($clauses) {
+			$wheres = array_merge($wheres, $clauses['wheres']);
+			$joins = array_merge($joins, $clauses['joins']);
+		}
+	}
+
+	// see if any functions failed
+	// remove empty strings on successful functions
+	foreach ($wheres as $i => $where) {
+		if ($where === false) {
+			return false;
+		} elseif (empty($where)) {
+			unset($wheres[$i]);
+		}
+	}
+
+	// remove identical where clauses
+	$wheres = array_unique($wheres);
+
+	if (!$options['count']) {
+		$distinct = $options['distinct'] ? "DISTINCT" : "";
+		
+		$query = "SELECT $distinct rv.* FROM {$CONFIG->dbprefix}river rv ";
+	} else {
+		// note: when DISTINCT unneeded, it's slightly faster to compute COUNT(*) than IDs
+		$count_expr = $options['distinct'] ? "DISTINCT rv.id" : "*";
+		
+		$query = "SELECT COUNT($count_expr) as total FROM {$CONFIG->dbprefix}river rv ";
+	}
+
+	// add joins
+	foreach ($joins as $j) {
+		$query .= " $j ";
+	}
+
+	// add wheres
+	$query .= ' WHERE ';
+
+	foreach ($wheres as $w) {
+		$query .= " $w AND ";
+	}
+
+// Wheres for the 2 parts of the union query
+	$w1 = "";
+	foreach ($wheres1 as $w) {
+		$w1 .= " $w AND ";
+	}
+
+	$w2 = "";
+	foreach ($wheres2 as $w) {
+		$w2 .= " $w AND ";
+	}
+
+	// Make sure that user has access to all the entities referenced by each river item
+	$object_access_where = _elgg_get_access_where_sql(array('table_alias' => 'oe'));
+	$target_access_where = _elgg_get_access_where_sql(array('table_alias' => 'te'));
+
+	// We use LEFT JOIN with entities table but the WHERE clauses are used
+	// regardless if a JOIN is successfully made. The "te.guid IS NULL" is
+	// needed because of this.
+	$query .= "$object_access_where AND ($target_access_where OR te.guid IS NULL) ";
+
+	if (!$options['count']) {
+		$GOL = "";	// Group by / order / limit
+		$options['group_by'] = sanitise_string($options['group_by']);
+		if ($options['group_by']) {
+			$GOL .= " GROUP BY {$options['group_by']}";
+		}
+
+		$options['order_by'] = sanitise_string($options['order_by']);
+		$GOL .= " ORDER BY {$options['order_by']}";
+
+		if ($options['limit']) {
+			$limit = sanitise_int($options['limit']);
+			$offset = sanitise_int($options['offset'], false);
+			$GOL .= " LIMIT $offset, $limit";
+		}
+// custom UNION - based query
+		$query = "SELECT u.* FROM ( ( SELECT rv.* FROM {$CONFIG->dbprefix}river rv {$join1} WHERE {$w1} {$object_access_where} ) UNION ".
+			"( SELECT rv.* FROM {$CONFIG->dbprefix}river rv {$join2} WHERE {$w2} ($target_access_where OR te.guid IS NULL) ) ) u {$GOL}";
+
+		$river_items = get_data($query, '_elgg_row_to_elgg_river_item');
+		_elgg_prefetch_river_entities($river_items);
+		error_log($query);
+		return $river_items;
+	} else {
+		$query = "SELECT sum(count) as total FROM ( ( SELECT count(*) as count FROM {$CONFIG->dbprefix}river rv {$join1} WHERE {$w1} {$object_access_where} ) UNION ".
+			"( SELECT count(*) as count FROM {$CONFIG->dbprefix}river rv {$join2} WHERE {$w2} ($target_access_where OR te.guid IS NULL) ) ) u";
+			error_log($query);
+		$total = get_data_row($query);
+		return (int)$total->total;
+	}
+}
+
 ?>
