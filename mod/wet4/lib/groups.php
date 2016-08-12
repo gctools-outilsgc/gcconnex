@@ -412,9 +412,12 @@ function groups_handle_activity_page($guid) {
 
 	$db_prefix = elgg_get_config('dbprefix');
 
-	$content = elgg_list_river(array(
-		'wheres' => array(
-			"(oe.container_guid = $group->guid OR te.container_guid = $group->guid)",
+	$content = elgg_list_group_river(array(
+		'wheres1' => array(
+			"oe.container_guid = $group->guid",
+		),
+		'wheres2' => array(
+			"te.container_guid = $group->guid",
 		),
 		'no_results' => elgg_echo('groups:activity:none'),
 	));

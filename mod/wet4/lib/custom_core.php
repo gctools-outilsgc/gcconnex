@@ -382,9 +382,9 @@ error_log("group river");
 	}
 
 	// add joins
-	foreach ($joins as $j) {
+	/*foreach ($joins as $j) {
 		$query .= " $j ";
-	}
+	}*/
 
 	// add wheres
 	$query .= ' WHERE ';

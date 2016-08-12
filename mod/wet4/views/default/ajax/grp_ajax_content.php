@@ -78,12 +78,15 @@ if($sub_type =='related'){ //related groups
     $content = elgg_list_entities_from_relationship($options);
 }else if($sub_type =='activity'){
     elgg_push_context('group_activity_tab'); //force my own context here so I can modify it in the river view
-    $content = elgg_list_river(array(
+    $content = elgg_list_group_river(array(
 	'limit' => 10,
 	'pagination' => false,
-	'wheres' => array(
-		"(oe.container_guid = $group OR te.container_guid = $group)",
-	),
+	'wheres1' => array(
+            "oe.container_guid = $group",
+        ),
+        'wheres2' => array(
+            "te.container_guid = $group",
+        ),
 ));
     elgg_pop_context();
 }else{ //all other content types

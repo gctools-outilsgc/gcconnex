@@ -370,7 +370,7 @@ function groups_handle_activity_page($guid) {
 	elgg_push_breadcrumb($title);
 
 	$db_prefix = elgg_get_config('dbprefix');
-
+error_log("huh?");
 	$content = elgg_list_river(array(
 		'joins' => array(
 			"JOIN {$db_prefix}entities e1 ON e1.guid = rv.object_guid",
