@@ -53,7 +53,7 @@ if ($allow_opt_out === 'yes') {
 $content .= "<section id='notificationstable' cellspacing='0' cellpadding='4' width='100%' class='clearfix'>";
 $content .= '<div class="col-sm-12 clearfix"> <h3 class="well">'.elgg_echo('cp_notify:personalNotif').'</h3>';
 
-$personal_notifications = array('likes','mentions','content'); // likes mentions content
+$personal_notifications = array('likes','mentions','content', 'opportunities'); // likes mentions content opportunities(micromissions mod)
 
 if (elgg_get_plugin_setting('cp_notifications_enable_bulk','cp_notifications') === 'yes')
 	$personal_notifications[] = 'bulk_notifications';
