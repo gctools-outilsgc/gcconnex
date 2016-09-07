@@ -16,6 +16,7 @@ $mission = get_entity(get_input('hidden_mission_guid'));
 // Processes the reason given by the declining user whether it's from the dropdown menu or the free text entry.
 $reason = get_input('reason');
 if($reason == 'missions:other') {
+	$raw_reason = $reason;
 	$reason = get_input('other_text');
 }
 else {
@@ -54,6 +55,7 @@ $declination->access_id = ACCESS_LOGGED_IN;
 $declination->owner_guid = $applicant->guid;
 $declination->mission_guid = $mission->guid;
 $declination->applicant_reason = $raw_reason;
+$declination->reason_text = $reason;
 
 $result = $declination->save();
 

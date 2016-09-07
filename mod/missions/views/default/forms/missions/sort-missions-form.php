@@ -43,8 +43,8 @@ $input_order_field = elgg_view('input/dropdown', array(
 ));
 ?>
 
-<div class="col-sm-12" style="border:solid;padding:4px;">
-	<div>
+<div class="col-sm-12 panel panel-default mission-sort-panel">
+	<div class="col-sm-5">
 		<label for="missions-sort-missions-sort-field-text-input" class="col-sm-6" style="margin:4px;">
 			<?php echo elgg_echo('missions:sort_by') . ': '; ?>
 		</label>
@@ -53,7 +53,7 @@ $input_order_field = elgg_view('input/dropdown', array(
 		</div>
 		
 	</div>
-	<div>
+	<div class="col-sm-5">
 		<label for="missions-sort-missions-order-field-text-input" class="col-sm-6" style="margin:4px;">
 			<?php echo elgg_echo('mission:following_order') . ': '; ?>
 		</label>
@@ -61,7 +61,7 @@ $input_order_field = elgg_view('input/dropdown', array(
 			<?php echo $input_order_field; ?>
 		</div>
 	</div>
-	<div>
+	<div class="col-sm-2">
 		<?php 
 			echo elgg_view('input/submit', array(
 					'value' => elgg_echo('missions:sort'),

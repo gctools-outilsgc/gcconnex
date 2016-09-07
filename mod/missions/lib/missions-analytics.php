@@ -317,6 +317,30 @@ function mm_analytics_get_missions_by_dates($start_date, $end_date, $date_type) 
 	return $missions;
 }
 
+function mm_analytics_get_declinations_by_dates($start_date, $end_date) {
+	$options['type'] = 'object';
+	$options['subtype'] = 'mission-declination';
+	$options['limit'] = 0;
+	$options['created_time_lower'] = $start_date;
+	$options['created_time_upper'] = $end_date;
+	
+	return elgg_get_entities($options);
+}
+
+function mm_analytics_get_missions_by_posting_and_closure($start_date, $end_date) {
+	$options['type'] = 'object';
+	$options['subtype'] = 'mission';
+	$options['limit'] = 0;
+	$options['created_time_upper'] = $end_date;
+	$options['metadata_name_value_pairs'] = array(array(
+			'name' => 'time_closed', 'operand' => '>=', 'value' => $start_date,
+			'name' => 'time_closed', 'operand' => '=', 'value' => null
+	));
+	$options['metadata_name_value_pairs_operator'] = 'OR';
+	
+	return elgg_get_entities_from_metadata($options);
+}
+
 /*
  * Removes all missions from the set which are not a part of the given department or that departments children.
  */
@@ -337,7 +361,7 @@ function mm_analytics_cull_missions_by_department($mission_set, $department) {
  */
 function mm_analytics_separate_missions_by_values($mission_set, $separator) {
 	$returner_array = array();
-	if($separator == '') {
+	if($separator == '' || $separator == 'missions:average_number_of_applicants') {
 		$returner_array[0] = $mission_set;
 	}
 	else {
@@ -345,7 +369,7 @@ function mm_analytics_separate_missions_by_values($mission_set, $separator) {
 		switch($separator) {
 			case 'missions:state':
 				$meta_tag = 'state';
-				$comparison_array = array('posted', 'completed', 'cancelled');
+				$comparison_array = array('posted', 'cancelled', 'completed');
 				break;
 			case 'missions:reliability':
 				$meta_tag = 'security';
@@ -358,6 +382,14 @@ function mm_analytics_separate_missions_by_values($mission_set, $separator) {
 			case 'missions:limited_by_department':
 				$meta_tag = 'openess';
 				$comparison_array = array('on', false);
+				break;
+			case 'missions:type':
+				$meta_tag = 'job_type';
+				$comparison_array = explode(',', elgg_get_plugin_setting('opportunity_type_string', 'missions'));
+				break;
+			case 'missions:reason_to_decline':
+				$meta_tag = 'applicant_reason';
+				$comparison_array = explode(',', elgg_get_plugin_setting('decline_reason_string', 'missions'));
 				break;
 		}
 		
@@ -402,6 +434,12 @@ function mm_analytics_generate_separation_labels($separator) {
 		case 'missions:limited_by_department':
 			$returner = array('missions:limited_by_department', 'missions:not_limited_by_department');
 			break;
+		case 'missions:type':
+			$returner = explode(',', elgg_get_plugin_setting('opportunity_type_string', 'missions'));
+			break;
+		case 'missions:reason_to_decline':
+			$returner = explode(',', elgg_get_plugin_setting('decline_reason_string', 'missions'));
+			break;
 		default:
 			$returner = array('missions:all_opportunities');
 	}
@@ -411,8 +449,9 @@ function mm_analytics_generate_separation_labels($separator) {
 /*
  * Separates the missions into their respective bins.
  */
-function mm_analytics_separate_missions_into_bins($mission_set, $timescale_array, $target, $graph_type) {
-	$metadata = mm_analytics_get_metadata_name_from_target_value($target);
+function mm_analytics_separate_sets_into_bins($mission_set, $timescale_array, $target_lower, $target_upper, $graph_type) {
+	$metadata_lower = mm_analytics_get_metadata_name_from_target_value($target_lower);
+	$metadata_upper = mm_analytics_get_metadata_name_from_target_value($metadata_upper);
 	
 	// Creates a set of bins corresponding to the intervals.
 	$returner = array();
@@ -438,7 +477,7 @@ function mm_analytics_separate_missions_into_bins($mission_set, $timescale_array
 					$upper_bound = $modified_data_by_type[1];
 				}
 				
-				if($mission->$metadata >= $lower_bound && $mission->$metadata < $upper_bound) {
+				if(($mission->$metadata_lower >= $lower_bound || $mission->$metadata_lower == null) && $mission->$metadata_upper < $upper_bound) {
 					$returner[$y][$i][] = $mission;
 				}
 			}
@@ -544,6 +583,8 @@ function mm_analytics_get_metadata_name_from_target_value($target_value) {
 		case 'missions:hours_per_month':
 			$metadata = 'time_commitment';
 			break;
+		default:
+			$metadata = 'time_created';
 	}
 	
 	return $metadata;

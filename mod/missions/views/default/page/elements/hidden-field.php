@@ -47,11 +47,11 @@
 	<?php echo $pre_content; ?>
 </div>
 <div style="display:inline-block;<?php echo $alignment; ?>">
-	 <i class="fa fa-chevron-right" id="<?php echo $icon_id; ?>"></i>
+    <i class="fa fa-caret-right caret-color" id="<?php echo $icon_id; ?>"></i>
 	 <span><?php echo $toggle; ?></span>
 	 <span style="font-style:italic;"><?php echo $additional_text; ?></span>
 </div>
- <div class="<?php echo $bordering; ?>" id="<?php echo $field_id; ?>" style="display:none;padding:8px;float:left;">
+ <div class="<?php echo $bordering; ?>" id="<?php echo $field_id; ?>" style="display:none;padding:8px;">
  	<?php echo $content; ?>
  </div>
  
@@ -71,13 +71,13 @@
 			}
 			field.style.display = 'block';
 			pre_field.style.display = 'none';
-			icon.className = 'fa fa-chevron-down';
+			icon.className = 'fa fa-caret-down caret-color';
 		}
 		else {
 			toggle.innerHTML = text;
 			field.style.display = 'none';
 			pre_field.style.display = 'inline-block';
-			icon.className = 'fa fa-chevron-right';
+			icon.className = 'fa fa-caret-right caret-color';
 		}
 	}
  </script>

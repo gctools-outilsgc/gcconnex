@@ -61,10 +61,13 @@ $input_separator = elgg_view('input/dropdown', array(
 				'missions:state' => elgg_echo('missions:state'),
 				'missions:reliability' => elgg_echo('missions:reliability'),
 				'missions:virtual_opportunity' => elgg_echo('missions:virtual_opportunity'),
-				'missions:limited_by_department' => elgg_echo('missions:limited_by_department')
+				'missions:limited_by_department' => elgg_echo('missions:limited_by_department'),
+				'missions:type' => elgg_echo('missions:type'),
+				'missions:average_number_of_applicants' => elgg_echo('missions:average_number_of_applicants'),
+				'missions:reason_to_decline' => elgg_echo('missions:reason_to_decline')
 		),
 		'id' => 'data-analytics-separator-dropdown-input',
-		'onchange' => 'wipe_away_graph()'
+		'onchange' => 'wipe_away_graph(); disable_target_date();'
 ));
 ?>
 

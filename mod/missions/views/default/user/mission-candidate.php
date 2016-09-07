@@ -26,7 +26,7 @@ $mission_guid = $_SESSION['mission_that_invites'];
 // Creates a gray background if the user is not opted in to micro missions.
 $background_content = '';
 if(!check_if_opted_in($user)) {
-	$background_content = 'style="background-color:#D3D3D3;"';
+	$background_content = 'style="background-color:#efefef;"';
 }
 
 $user_link = elgg_view('output/url', array(
@@ -37,13 +37,13 @@ $user_link = elgg_view('output/url', array(
 // Displays search feedback from simple search.
 $feedback_content = '';
 if($feedback_string != '') {
-	$feedback_content = '<h4>' . elgg_echo('missions:user_matched_by') . ':</h4>';
+	$feedback_content = '<h4 class="mrgn-tp-sm mrgn-bttm-sm">' . elgg_echo('missions:user_matched_by') . ':</h4>';
 	$count = 1;
     $feedback_array = explode(',', $feedback_string);
     
     foreach($feedback_array as $feedback) {
         if($feedback) {
-            $feedback_content .= '<div name="search-feedback-' . $count . '">' . $feedback . '</div>';
+            $feedback_content .= '<div class="mrgn-lft-md" name="search-feedback-' . $count . '">' . $feedback . '</div>';
         }
         $count++;
     }
@@ -57,7 +57,7 @@ $user_skills = elgg_get_entities($options);
 $skill_set = '';
 $count = 1;
 foreach($user_skills as $skill) {
-	$skill_set .= '<span name="user-skill-' . $count . '" style="margin-right:16px;text-decoration:underline;">' . $skill->title . '</span>';
+	$skill_set .= '<span name="user-skill-' . $count . '" class="mission-skills">' . $skill->title . '</span>';
 	$count++;
 }
 
@@ -111,25 +111,26 @@ else {
 }
 ?>
 
-<div class="col-xs-12" <?php echo $background_content; ?>>
-	<div class="col-xs-12">
-		<div class="col-xs-2">
+<div class="col-xs-12 mrgn-tp-sm" <?php echo $background_content; ?>>
+	<div class="col-xs-6">
+		<div class="col-xs-2 mrgn-tp-sm">
 			<?php echo elgg_view_entity_icon($user, 'medium'); ?>
 		</div>
 		<div class="col-xs-8">
-			<h3 name="user-name" style="margin-top:16px;"><?php echo $user_link; ?></h3>
+			<h3 name="user-name" class="mrgn-tp-sm"><?php echo $user_link; ?></h3>
 			<div name="user-job-title"><?php echo $user->job; ?></div>
 			<div name="user-location"><?php echo $user->location; ?></div>
-			<br>
+			
 			<div>
 				<?php echo $skill_set; ?>
 			</div>
 		</div>
-		<div class="col-xs-2">
-			<?php echo $button_content; ?>
-		</div>
+		
 	</div>
-	<div class="col-xs-12">
+	<div class="col-xs-4">
 		<?php echo $feedback_content; ?>
 	</div>
+    <div class="col-xs-2">
+        <?php echo $button_content; ?>
+    </div>
 </div>

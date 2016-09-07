@@ -90,8 +90,10 @@ if($result_set) {
 </div>
 <?php echo $max_reached; ?>
 <div class="col-sm-12">
+    
 	<?php echo $search_set; ?>
 </div>
 <div class="col-sm-12">
+   
 	<?php echo $change_entities_per_page_form; ?>
 </div>

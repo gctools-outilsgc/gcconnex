@@ -60,7 +60,7 @@ else {
 			$highlight_one = true;
 	}
 	
-	$content .= '<div>' . elgg_echo('missions:placeholder_a') . '</div>';
+	$content .= '<div class="panel panel-default mission-info-card">' . elgg_echo('missions:placeholder_a') . '</div>';
 	
 	$content .= elgg_view('page/elements/mission-tabs', array(
 			'highlight_one' => $highlight_one,

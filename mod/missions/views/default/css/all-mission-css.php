@@ -96,13 +96,14 @@
 .mission-printer { 
 	border-style: none; 
 	border-width: 3px; 
-	padding: 8px;
+	padding: 11px;
 	position: relative;
 } 
 
 .mission-less {
 	display: inline-block;
-	border-style: solid;
+	border-style: solid; 
+	width: 100%;
 }
 
 .mission-printer h5 { 
@@ -145,17 +146,17 @@
 }
 
 .mission-button-set {
-	position: absolute;
+	
 	bottom: 4px;
 	text-align: center;
-	width: 94%;
+	width: 100%;
 }
 
 .mission-user-card-info {
-	position:absolute;
-	width: 310px;
+	
+	width: 100%;
 	bottom: 50px;
-	text-align:center;
+
 }
 
 .mission-hr {
@@ -170,7 +171,7 @@ li.link-disabled a {
 }
 
 .mission-tab > li {
-	min-width: 20%;
+	
 	text-align: center;
 	display:inline-block;
 }
@@ -295,4 +296,51 @@ li.link-disabled a {
      -moz-transform: rotate(315deg) translate(0, -35px) scale(0.1);
      transform: rotate(315deg) translate(0, -35px) scale(0.1);
      opacity:0.1;
+}
+
+/* Nick addin the styles yo - h8rs mad 'cause im stylin' on em**/
+
+.mission-create-button{
+    margin-top:60px;
+}
+
+.mission-info-card{
+    padding:15px;
+}
+
+.caret-color{
+    color: #055252;
+}
+
+.mission-sort-panel{
+    padding: 4px;
+}
+
+.mission-card-footer{
+    position:absolute;
+    bottom:0;
+    width:100%;
+
+}
+
+.mission-card-body{
+    min-height:410px;
+}
+
+.mission-details h5{
+   display:inline;
+ 
+}
+
+.mission-skills{
+    color: #055959 !important;
+    padding: 3px;
+    border: 1px solid #055959;
+    border-radius: 8px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    color: white;
+    margin: 2px;
+    font-size: 14px;
+    display: inline-block;
 }

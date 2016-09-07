@@ -51,11 +51,14 @@ else {
 
 // Displays the list of mission entities.
 $missions_list = '<div style="display:block;">' . elgg_view_entity_list(array_slice($entity_list, $offset, $max), array(
-		'count' => $count,
+				'count' => $count,
 		'offset' => $offset,
 		'limit' => $max,
 		'pagination' => true,
 		'list_type' => 'gallery',
+        'gallery_class'=>'wb-eqht',
+        'item_class'=>'col-sm-6 col-md-4 ',
+
 		'mission_full_view' => false
 ), $offset, $max) . '</div>';
 

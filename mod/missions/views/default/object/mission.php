@@ -38,10 +38,10 @@ if (!$full_view && strpos($current_uri, 'view/' . $mission->guid) === false) {
         'override_buttons' => $button_override
     ));
     
-    $content .= elgg_view('page/elements/related-candidates', array(
+   /* $content .= elgg_view('page/elements/related-candidates', array(
     		'entity' => $mission
     ));
-
+    */
     $content .= elgg_view('page/elements/mission-guid-line', array('mission_guid' => $mission->guid));
     
     echo $content;

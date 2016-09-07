@@ -58,7 +58,7 @@ $graph_hide_table_button = elgg_view('output/url', array(
 	</div>
 </div>
 <div id="graph-type-inputs"></div>
-<div class="col-sm-12" style="margin:4px;">
+<div class="col-sm-12" style="margin:4px;" id="department-input-row">
 	<label class="col-sm-3" style="text-align:right;">
 		<?php echo elgg_echo('missions:department') . ':';?>
 	</label>
@@ -131,7 +131,7 @@ $graph_hide_table_button = elgg_view('output/url', array(
 		content += '<tr><td></td>';
 		if(graph_graph_type == 'missions:stacked_graph') {
 			for(var i=0; i < ticks.length; i++) {
-				content += '<th>' + ticks[i][1] + '</th>';
+				content += '<th style="text-align:center;">' + ticks[i][1] + '</th>';
 			}
 		}
 		else {
@@ -286,5 +286,19 @@ $graph_hide_table_button = elgg_view('output/url', array(
 		$('#data-analytics-hide-table-graph-button').css('display', 'none');
 		$('#data-analytics-show-table-graph-button').css('display', 'block');
 		$('#hidden-graph-table-container').css('display', 'none');
+	}
+
+	function disable_target_date() {
+		if($('#data-analytics-separator-dropdown-input').val() == 'missions:reason_to_decline' || $('#data-analytics-separator-dropdown-input').val() == 'missions:average_number_of_applicants') {
+			$('#data-analytics-target-mission-date-dropdown-input').val('missions:date_posted');
+			$('#data-analytics-target-mission-date-dropdown-input').prop('disabled', true);
+			if($('#data-analytics-separator-dropdown-input').val() == 'missions:reason_to_decline') {
+				$('#department-input-row').hide();
+			}
+		}
+		else {
+			$('#data-analytics-target-mission-date-dropdown-input').prop('disabled', false);
+			$('#department-input-row').show();
+		}
 	}
 </script>

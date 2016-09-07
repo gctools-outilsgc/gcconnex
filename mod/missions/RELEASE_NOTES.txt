@@ -224,6 +224,19 @@ Once all the inputs are set, clicking generate will produce a graph in the space
 The graph bars can be moused over for additional information and the show data table text directly below the graph will display the associated table.
 Changing any of the dropdown inputs will wipe away the graph and table.
 
+14)
+Three new separation categories were added to analytics under the stacked graph type: opportunity type, average number of applicants, and reason to decline.
+
+Opportunity type creates stacked bars according to the opportunities type metadata.
+Reason to decline looks at the mission-declination objects which are generated when a user declines or withdraws from an opportunity and creates stacked bars for each of the different reasons.
+Both of the above behave like most of other separation types by counting the objects within the displayed time periods.
+However reason to decline does not allow the users to select a target date or department since it is not dealing with mission objects.
+
+Average number of applicants is a bit different.
+This separator takes the number of applicants and candidates within a given time period and then divides them by the number of opportunities that are still open within that time period.
+Open opportunities are ones that have been posted and not yet completed or cancelled.
+This gives the analytics user a ratio of total applicants and candidates to total active opportunities in order to form an average.
+
 --------------------------------------------------------------------------------------------------------------
 
 SOLUTIONS:

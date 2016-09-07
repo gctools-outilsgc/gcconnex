@@ -34,6 +34,10 @@ else {
 		$target = $target_date;
 		$time_interval = $interval;
 		
+		if($separator == 'missions:average_number_of_applicants' || $separator == 'missions:reason_to_decline') {
+			$target = 'missions:date_posted';
+		}
+		
 		// Sets start and end date to default if the user did not enter any dates.
 		if($start_date == '') {
 			$start_date = '2016-06-19';
@@ -46,10 +50,18 @@ else {
 		$timescale_array = mm_analytics_generate_time_scale_timestamps($start_date, $end_date, $interval);
 		
 		// Gets the set of missions between the start date and end date. The search checks against the user given target date.
-		$mission_set = mm_analytics_get_missions_by_dates($timescale_array[0], $timescale_array[count($timescale_array) - 1], $target);
+		if($separator == 'missions:reason_to_decline') {
+			$mission_set = mm_analytics_get_declinations_by_dates($timescale_array[0], $timescale_array[count($timescale_array) - 1]);
+		}
+		else if($separator == 'missions:average_number_of_applicants') {
+			$mission_set = mm_analytics_get_missions_by_posting_and_closure($timescale_array[0], $timescale_array[count($timescale_array) - 1]);
+		}
+		else {
+			$mission_set = mm_analytics_get_missions_by_dates($timescale_array[0], $timescale_array[count($timescale_array) - 1], $target);
+		}
 		
 		// Removes the missions that are not within the department or that department's children.
-		if($department_identifier != '') {
+		if($department_identifier != '' && $separator != 'missions:reason_to_decline') {
 			$mission_set = mm_analytics_cull_missions_by_department($mission_set, $department_identifier);
 		}
 		
@@ -87,8 +99,28 @@ else {
 	// Creates the labels for each series.
 	$bar_labels = mm_analytics_generate_separation_labels($separator);
 	
+	$target_lower = $target;
+	$target_upper = $target;
+	
+	if($separator == 'missions:average_number_of_applicants') {
+		$relation_set = array(array());
+		foreach($mission_set[0] as $mission) {
+			$relations_from_missions = get_entity_relationships($mission->guid);
+			foreach($relations_from_missions as $relation) {
+				if($relation->relationship == 'mission_accepted' ||
+						$relation->relationship == 'mission_offered' ||
+						$relation->relationship == 'mission_applied') {
+					array_push($relation_set[0], $relation);
+				}
+			}
+		}
+		$relation_set = mm_analytics_separate_sets_into_bins($relation_set, $timescale_array, $target_lower, $target_upper, $graph_type);
+		$target_lower = 'missions:closure_date';
+		$target_upper = 'missions:date_posted';
+	}
+	
 	// Separates the missions into their respectives bins.
-	$mission_set = mm_analytics_separate_missions_into_bins($mission_set, $timescale_array, $target, $graph_type);
+	$mission_set = mm_analytics_separate_sets_into_bins($mission_set, $timescale_array, $target_lower, $target_upper, $graph_type);
 	
 	// Transforms the separated set of missions into a format readable by flot.
 	$mission_set_final = array();
@@ -96,7 +128,20 @@ else {
 	foreach($mission_set as $y => $bar) {
 		$mission_set_final[$y] = array('label' => elgg_echo($bar_labels[$y]), 'data' => array());
 		foreach($bar as $x => $time) {
-			$value = count($mission_set[$y][$x]);
+			if($separator == 'missions:average_number_of_applicants') {
+				$applicant_count = count($relation_set[$y][$x]);
+				$mission_count = count($mission_set[$y][$x]);
+				
+				if($mission_count == 0) {
+					$value = 0;
+				}
+				else {
+					$value = round(($applicant_count / $mission_count), 2);
+				}
+			}
+			else {
+				$value = count($mission_set[$y][$x]);
+			}
 			$mission_set_final[$y]['data'][] = array($x, $value);
 			if($value > 0 && $is_set_empty) {
 				$is_set_empty = false;

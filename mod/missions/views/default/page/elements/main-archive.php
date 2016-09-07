@@ -44,7 +44,9 @@ $archive_list = elgg_view_entity_list(array_slice($entity_list, $offset, $max), 
 		'limit' => $max,
 		'pagination' => true,
 		'list_type' => 'gallery',
-		'gallery_class' => 'mission-gallery',
+        'gallery_class'=>'wb-eqht clearfix',
+        'item_class'=>'col-sm-6 col-md-4 ',
+//		'gallery_class' => 'mission-gallery',
 		'mission_full_view' => false
 ), $offset, $max);
 
@@ -66,7 +68,7 @@ $sort_field = elgg_view('page/elements/hidden-field', array(
 		'toggle_text_hidden' => elgg_echo('missions:sort_options'),
 		'toggle_id' => 'sort_options',
 		'hidden_content' => $sort_missions_form,
-		'alignment' => 'right'
+		'alignment' => 'left'
 ));
 ?>
 

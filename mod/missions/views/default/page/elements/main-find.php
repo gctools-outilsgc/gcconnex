@@ -66,7 +66,9 @@ $latest_missions = elgg_view_entity_list(array_slice($entity_list, $offset, $max
 		'limit' => $max,
 		'pagination' => true,
 		'list_type' => 'gallery',
-		'gallery_class' => 'mission-gallery',
+        'gallery_class'=>'wb-eqht clearfix',
+        'item_class'=>'col-sm-6 col-md-4 ',
+		
 		'mission_full_view' => false
 ), $offset, $max);
 
@@ -85,24 +87,59 @@ $sort_field = elgg_view('page/elements/hidden-field', array(
 		'toggle_text_hidden' => elgg_echo('missions:sort_options'),
 		'toggle_id' => 'sort_options',
 		'hidden_content' => $sort_missions_form,
-		'alignment' => 'right'
+		
 ));
+
+
+// Links to the post opportunity pages.
+//if($last_segment != 'members' && $last_segment != 'archive' && $last_segment != 'analytics') {
+$create_button .= elgg_view('output/url', array(
+        'href' => elgg_get_site_url() . 'action/missions/pre-create-opportunity',
+        'text' => elgg_echo('missions:create_opportunity'),
+        'is_action' => true,
+        'class' => 'elgg-button btn btn-primary',
+        'style' => 'float:right;',
+        'id' => 'mission-create-opportunity-button'
+)) . '</br>';
+	//}
+
 ?>
 
+
+
 <div class="col-sm-12">
-	<h4><?php echo elgg_echo('missions:search_for_opportunities') . ':'; ?></h4>
+    <div class="col-sm-8">
+	<h4 class="mrgn-tp-md mrgn-bttm-0"><?php echo elgg_echo('missions:search_for_opportunities') . ':'; ?></h4>
 	<?php 
 		//echo $simple_search_form;
 		echo $advanced_field;
-	?>
+    ?>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="mission-create-button"><?php echo $create_button; ?></div>
+    </div>
 </div>
-<div class="col-sm-5 col-sm-offset-7">
-	<?php echo $sort_field; ?>
-</div>
-<div class="col-sm-12">
-	<h4><?php echo elgg_echo('missions:latest_opportunities'); ?></h4>
-	<?php echo $max_reached; ?>
-	<div class="col-sm-12">
+
+<div class="col-sm-12 TEST">
+    <div class="col-sm-12">
+        <div class="pull-left">
+            <h4 class="mrgn-tp-sm mrgn-bttm-0">
+                 <?php echo elgg_echo('missions:latest_opportunities'); ?>
+            </h4>
+        </div>
+        <div class="pull-left">
+                <div class="mrgn-tp-md">
+
+                <?php echo $sort_field; ?>
+                </div>
+                
+                
+        </div>
+
+        <?php echo $max_reached; ?>
+    </div>
+    <div class="col-sm-12">
 		
 		<?php echo $latest_missions; ?>
 	</div>

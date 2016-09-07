@@ -21,7 +21,7 @@ $applicants_none_tentative = true;
 
 $accepted = '<h3>' . elgg_echo('missions:participants') . ':</h3>';
 $tentative = '<h3>' . elgg_echo('missions:applicants') . ':</h3>';
-$width_class_first = 'col-sm-5';
+$width_class_first = 'col-sm-12';
 $width_class_second = $width_class_first;
 
 $participant_count = 0;
@@ -30,17 +30,17 @@ $applicant_count = 0;
 foreach ($applicant_relationships as $applicant_relation) {
 	// Candidates which have been accepted into the mission.
 	if ($applicant_relation->relationship == 'mission_accepted') {
-		$accepted .= '<div class="col-sm-8" style="display:inline-block;" name="mission-participant" id="mission-participant-' . $applicant_relation->guid_two . '">' . elgg_view_entity(get_user($applicant_relation->guid_two)) . '</div>';
+		$accepted .= '<div class="col-sm-12" style="display:inline-block;" name="mission-participant" id="mission-participant-' . $applicant_relation->guid_two . '">' . elgg_view_entity(get_user($applicant_relation->guid_two)) . '</div>';
 
 		if($mission->state == 'posted') {
 			if(elgg_get_logged_in_user_guid() == $mission->owner_guid || elgg_get_logged_in_user_guid() == $mission->account) {
 				// Removal button for the candidate.
-				$accepted .= '<div class="col-sm-4">' . elgg_view('output/url', array(
+				$accepted .= '<div class="col-sm-12">' . elgg_view('output/url', array(
 						'href' => elgg_get_site_url() . 'action/missions/remove-applicant?aid=' . $applicant_relation->guid_two . '&mid=' . $mission->guid,
 						'text' => elgg_echo('missions:remove'),
 						'is_action' => true,
 						'class' => 'elgg-button btn btn-danger',
-						'style' => 'width:120px;margin:4px;',
+						'style' => 'margin:4px;',
 						'id' => 'fill-mission-applicant-' . $applicant_relation->guid_two . '-remove-button',
 						'confirm' => elgg_echo('missions:placeholder_i')
 				)) . '</div>';
@@ -78,7 +78,7 @@ foreach ($applicant_relationships as $applicant_relation) {
 								'text' => elgg_echo('missions:endorse'),
 								'is_action' => true,
 								'class' => 'elgg-button btn btn-success',
-								'style' => 'width:120px;margin:4px;',
+								'style' => 'margin:4px;',
 								'id' => 'fill-mission-applicant-' . $applicant_relation->guid_two . '-endorse-button'
 						));
 					}
@@ -106,10 +106,10 @@ foreach ($applicant_relationships as $applicant_relation) {
 		if($mission->state == 'posted') {
 			if(elgg_get_logged_in_user_guid() == $mission->owner_guid || elgg_get_logged_in_user_guid() == $mission->account 
 					|| elgg_get_logged_in_user_guid() == $applicant_relation->guid_two) {
-				$tentative .= '<div class="col-sm-8" style="display:inline-block;" name="mission-applicant" id="mission-applicant-' . $applicant_relation->guid_two . '">' . elgg_view_entity(get_user($applicant_relation->guid_two)) . '</div>';
+				$tentative .= '<div class="col-sm-12" style="display:inline-block;" name="mission-applicant" id="mission-applicant-' . $applicant_relation->guid_two . '">' . elgg_view_entity(get_user($applicant_relation->guid_two)) . '</div>';
 			
 				if(elgg_get_logged_in_user_guid() == $mission->owner_guid || elgg_get_logged_in_user_guid() == $mission->account) {
-					$tentative .= '<div class="col-sm-4">';
+					$tentative .= '<div class="col-sm-12">';
 					$tentative .= mm_offer_button($mission, get_user($applicant_relation->guid_two));
 					
 					// Removal button for the candidate.
@@ -118,7 +118,7 @@ foreach ($applicant_relationships as $applicant_relation) {
 							'text' => elgg_echo('missions:remove'),
 							'is_action' => true,
 							'class' => 'elgg-button btn btn-danger',
-							'style' => 'width:120px;margin:4px;',
+							'style' => 'margin:4px;',
 							'id' => 'fill-mission-applicant-' . $applicant_relation->guid_two . '-remove-button',
 							'confirm' => elgg_echo('missions:placeholder_i2')
 					));
@@ -158,6 +158,6 @@ $tentative .= $hidden_applicant_count = elgg_view('input/hidden', array(
 ));
 
 echo '<div>';
-echo '<div class="' . $width_class_first . '" style="display:inline-block;margin:8px;">' . $accepted . '</div>';
-echo '<div class="' . $width_class_second . '" style="display:inline-block;margin:8px;">' . $tentative . '</div>';
+echo '<div class="' . $width_class_first . '" >' . $accepted . '</div>';
+echo '<div class="' . $width_class_second . '" >' . $tentative . '</div>';
 echo '</div>';

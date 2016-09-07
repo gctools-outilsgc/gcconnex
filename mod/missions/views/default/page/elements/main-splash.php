@@ -34,8 +34,9 @@ $entity_list = elgg_view_entity_list(array_slice($entity_list, $offset, $max), a
 		'limit' => $max,
 		'pagination' => true,
 		'list_type' => 'gallery',
-		'gallery_class' => 'mission-gallery',
-		'override_buttons' => true,
+        'gallery_class'=>'wb-eqht',
+        'item_class'=>'col-sm-6 col-md-4 ',
+
 		'mission_full_view' => false
 ), $offset, $max);
 
@@ -55,20 +56,23 @@ $advanced_field = elgg_view('page/elements/hidden-field', array(
 		'field_bordered' => true
 ));
 ?>
-<div>
+<div class="panel panel-default mission-info-card">
 	<?php echo elgg_echo('missions:placeholder_a'); ?>
 </div>
 <h4><?php echo elgg_echo('missions:splash:what_are_missions'); ?></h4>
 <div>
 	<?php echo elgg_echo('missions:first_splash_paragraph')?>
 </div>
-<br>
 <h4><?php echo elgg_echo('missions:splash:how_to_apply'); ?></h4>
 <div>
 	<?php echo elgg_echo('missions:second_splash_paragraph')?>
 </div>
-<br>
-<h4><?php echo elgg_echo('missions:splash:missions_right_now'); ?></h4>
+
+<div class="alert alert-info mrgn-tp-sm">
+    <p>
+        <?php echo elgg_echo('missions:splash:missions_right_now'); ?>
+    </p>
+</div>
 <div>
 	<h4><?php echo elgg_echo('missions:search_for_opportunities') . ':'; ?></h4>
 	<?php 
@@ -79,7 +83,7 @@ $advanced_field = elgg_view('page/elements/hidden-field', array(
 <div class="col-sm-12">
 	<?php echo $entity_list; ?>
 </div>
-<br>
+
 <div>
 	<?php 
 		echo elgg_view('output/url', array(
