@@ -84,5 +84,12 @@ if(elgg_is_logged_in()){
 }
 
 
-echo elgg_view_page( elgg_echo('newsfeed'), $content);
+//Onboarding extention
+//view exists with gc_onboard
+if(elgg_is_active_plugin('gc_onboard') && elgg_is_logged_in()){
+    $onboard = elgg_view('welcome-steps/modal');
+    $onboard .= '<script> window.onload = function () { document.getElementById("onboardPopup").click() } </script>';
+}
+
+echo elgg_view_page( elgg_echo('newsfeed'), $content . $onboard);
 ?>

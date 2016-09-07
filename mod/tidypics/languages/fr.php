@@ -237,7 +237,7 @@ return array(
 'tidypics:uploader:basic' => 	'Vous pouvez télécharger jusqu\'à %s images à la fois (%s Mo maximum par image)',
 'tidypics:sort:instruct' => 'Triez l\'album d\'image en cliquant et en déplaçant les images. Puis cliquez sur le bouton Enregistrer.',
 'tidypics:sort:no_images' => 'Aucune image à trier. Chargez d\'abord des images en cliquant sur le lien ci-dessus.',
-'tidypics:album_select' => 'Avant de télécharger vos image, vous devez sélectionner l\'album dans lequel vous désirez ajouter les images ou choisir de créer un nouvel album :',
+'tidypics:album_select' => 'Avant de télécharger vos images, vous devez sélectionner l\'album dans lequel vous désirez ajouter les images ou choisir de créer un nouvel album :',
 'tidypics:continue' => 'Continuer',
 'tidypics:uploader:filetype' => 	'Acceptez les images de type fichier',
 			

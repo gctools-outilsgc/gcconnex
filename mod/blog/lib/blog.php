@@ -56,7 +56,7 @@ function blog_get_page_content_read($guid = NULL) {
 function blog_get_page_content_list($container_guid = NULL) {
 
 	$return = array();
-
+	$lang = get_current_language();
 	$return['filter_context'] = $container_guid ? 'mine' : 'all';
 
 	$options = array(
@@ -79,7 +79,10 @@ function blog_get_page_content_list($container_guid = NULL) {
 		if (!$container) {
 
 		}
-		$return['title'] = elgg_echo('blog:title:user_blogs', array($container->name));
+		if(!$container->name){
+			$container->name = $container->name2;
+		}
+		$return['title'] = elgg_echo('blog:title:user_blogs', array(gc_explode_translation($container->title3, $lang)));
 
 		$crumbs_title = $container->name;
 		elgg_push_breadcrumb($crumbs_title);

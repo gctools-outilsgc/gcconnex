@@ -11079,7 +11079,51 @@ a.shr-opn, a.shr-opn:hover {
 
         border-radius: 0;
     }
+
+    /**Login Page**/
     
+    .login-engage-message{
+        font-size: 1.2em;
+        margin: 5px;
+        margin-top:15px;
+        margin-bottom: 15px;
+
+    }
+
+    .login-engage-list{
+        list-style:none;
+        margin: 5px 5px 15px 5px;
+        font-size: 1em;
+    }
+
+    .login-engage-list li{
+        margin: 30px 10px;
+    }
+
+    .login-engage-list i{
+        color: #047177;
+        padding-top: 2px;
+    }
+
+
+    .login-big-num{
+        display:block;
+        font-size: 1.4em;
+
+    }
+
+    .login-engage-bg{
+        background-image: url("<?php echo $site_url.'mod/wet4/graphics/gcconnex_icon_transp.png'?>");
+        background-repeat: no-repeat;
+        background-size:contain;
+        background-position: center center;
+    }
+
+    .login-stats-child:nth-child(2){
+        border-right: solid 1px #ddd;
+        border-left: solid 1px #ddd;
+
+    }
     /****************************************/
     
     /******************** Removing Ugly rounded Corners ********************/

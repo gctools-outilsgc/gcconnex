@@ -63,7 +63,7 @@ function event_calendar_set_event_from_form($event_guid, $group_guid) {
 			$required_fields[] = 'spots';
 		}
 	} else {
-		$required_fields = array('title', 'start_date', 'end_date', 'venue');
+		$required_fields = array('title','title2', 'start_date', 'end_date', 'venue');
 	}
 
 	if ($event_guid) {
@@ -163,6 +163,10 @@ function event_calendar_set_event_from_form($event_guid, $group_guid) {
 		$e->calendar_additional = '';
 
 	}
+	if(!$e->title){
+		$e->title = $e->title2;
+	}
+
 
 	foreach ($required_fields as $fn) {
 		if (!trim($e->$fn)) {
@@ -1885,7 +1889,8 @@ $content = elgg_view('event_calendar/show_events', $vars);
 			switch ($page_type) {
 				case 'group':
 				case 'owner':
-					$title = elgg_echo('event_calendar:listing_title:user', array($container->name));
+				$lang = get_current_language();
+					$title = elgg_echo('event_calendar:listing_title:user', array(gc_explode_translation($container->title3, $lang)));
 					break;
 				default:
 					switch ($filter) {

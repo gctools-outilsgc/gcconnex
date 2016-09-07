@@ -178,13 +178,18 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_recipient' => $params['cp_recipient'],
 				'cp_wire_url' => $params['cp_wire_url'],
 			);
+			if ($params['cp_content']->getType() == 'group'){
+				$type = $params['cp_content']->getType();
+			}else{
+				$type = cp_translate_subtype($params['cp_content']->getSubtype());
+			}
 
 			if (strcmp($params['cp_content']->getSubtype(),'thewire') == 0) {
 				$subject = elgg_echo('cp_notify:wireshare_thewire:subject',array($params['cp_shared_by']->name,cp_translate_subtype($params['cp_content']->getSubtype()),'en'));
 				$subject .= ' | '.elgg_echo('cp_notify:wireshare_thewire:subject',array($params['cp_shared_by']->name,cp_translate_subtype($params['cp_content']->getSubtype()),'fr'));
 			} else {
-				$subject = elgg_echo('cp_notify:wireshare:subject',array($params['cp_shared_by']->name,cp_translate_subtype($params['cp_content']->getSubtype()),$params['cp_content']->title),'en');
-				$subject .= ' | '.elgg_echo('cp_notify:wireshare:subject',array($params['cp_shared_by']->name,cp_translate_subtype($params['cp_content']->getSubtype()),$params['cp_content']->title),'fr');
+				$subject = elgg_echo('cp_notify:wireshare:subject',array($params['cp_shared_by']->name,$type,$params['cp_content']->title),'en');
+				$subject .= ' | '.elgg_echo('cp_notify:wireshare:subject',array($params['cp_shared_by']->name,$type,$params['cp_content']->title),'fr');
 			}
 			$to_recipients[] = $params['cp_recipient'];
 			break;

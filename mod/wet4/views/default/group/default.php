@@ -6,7 +6,7 @@
  */
 
 $group = $vars['entity'];
-
+$lang = get_current_language();
 if(elgg_get_context() == 'widgets' || elgg_get_context() == 'custom_index_widgets'){
     $icon = elgg_view_entity_icon($group, 'small', $vars);
 } else {
@@ -35,8 +35,23 @@ if ($vars['full_view']) {
 	$params = array(
 		'entity' => $group,
 		'metadata' => $metadata,
+	);
+if($group->briefdescription3){
+	$params2 = array(
+		'subtitle' => gc_explode_translation($group->briefdescription3,$lang),
+	);
+}elseif($group->briefdescription2){
+	$params2 = array(
+		'subtitle' => $group->briefdescription2,
+	);
+}else{
+		$params2 = array(
 		'subtitle' => $group->briefdescription,
 	);
+}
+
+
+	$params = $params + $params2;
 	$params = $params + $vars;
 	$list_body = elgg_view('group/elements/summary', $params);
 

@@ -553,6 +553,7 @@ function groups_register_profile_buttons($group) {
 function groups_prepare_form_vars($group = null) {
 	$values = array(
 		'name' => '',
+		'name2' => '',
 		'membership' => ACCESS_PUBLIC,
 		'vis' => ACCESS_PUBLIC,
 		'guid' => null,

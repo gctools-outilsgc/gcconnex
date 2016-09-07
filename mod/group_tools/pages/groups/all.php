@@ -5,7 +5,7 @@
 
 // all groups doesn"t get link to self
 elgg_pop_breadcrumb();
-elgg_push_breadcrumb(elgg_echo("groups"));
+//elgg_push_breadcrumb(elgg_echo("groups"));
 
 // only register title button if allowed
 if ((elgg_get_plugin_setting("limited_groups", "groups") != "yes") || elgg_is_admin_logged_in()) {

@@ -48,7 +48,7 @@ if ($user && ($group instanceof ElggGroup)) {
 			}
 
 			system_message(elgg_echo("groups:joined"));
-			forward($group->getURL());
+			forward(REFERER); //changed from $group->getURL() - Ethan 08/24/2016
 		} else {
 			register_error(elgg_echo("groups:cantjoin"));
 		}

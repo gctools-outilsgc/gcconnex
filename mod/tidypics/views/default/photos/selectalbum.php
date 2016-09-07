@@ -26,12 +26,20 @@ $album_options = array();
 $album_options[-1] = elgg_echo('album:create');
 if ($albums) {
 	foreach ($albums as $album) {
-		$album_title = $album->getTitle();
+if (!$album->title){
+	$album_title = $album->title2;
+}else{
+	$album_title = $album->getTitle();
+}
+		
 		if (strlen($album_title) > 50) {
 			$album_title = substr($album_title, 0, 47).'...';
 		}
 		$album_options[$album->guid] = $album_title;
-	}
+	}	
+	if(!$album_title){
+			$album_title = $album->title2;
+		}
 }
 
 $body = "<div style=\"width:400px;\">".elgg_echo('tidypics:album_select')."<br><br>";

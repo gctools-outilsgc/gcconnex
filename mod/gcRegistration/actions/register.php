@@ -231,7 +231,7 @@ if (elgg_get_config('allow_registration')) {
 			$provincesFr['pov-que'] = 'Gouvernement du Québec';
 			$provincesFr['pov-sask'] = 'Gouvernement de Saskatchewan';
 			$provincesFr['pov-yuk'] = 'Gouvernement du Yukon';
-			$departmentsFr = array_merge($departmentsEn,$provincesFr);
+			$departmentsFr = array_merge($departmentsFr,$provincesFr);
 			
 			if (get_current_language()=='en'){
 				$deptString = $departmentsEn[$deptNum]." / ".$departmentsFr[$deptNum];

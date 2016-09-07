@@ -216,6 +216,7 @@ function polls_prepare_edit_body_vars($poll = NULL) {
 }
 
 function polls_get_page_list($page_type, $container_guid = NULL) {
+	$lang = get_current_language();
 	global $autofeed;
 	$autofeed = TRUE;
 	$user = elgg_get_logged_in_user_entity();
@@ -235,7 +236,7 @@ function polls_get_page_list($page_type, $container_guid = NULL) {
 		if (!elgg_instanceof($group,'group') || !polls_activated_for_group($group)) {
 			forward();
 		}
-		$crumbs_title = $group->name;
+		$crumbs_title = gc_explode_translation($group->title3, $lang);
 		$params['title'] = elgg_echo('polls:group_polls:listing:title', array(htmlspecialchars($crumbs_title)));
 		$params['filter'] = "";
 		

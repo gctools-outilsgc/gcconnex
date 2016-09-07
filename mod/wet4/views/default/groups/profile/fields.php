@@ -7,7 +7,7 @@
  */
 
 $group = $vars['entity'];
-
+$lang = get_current_language();
 $profile_fields = elgg_get_config('group');
 
 if (is_array($profile_fields) && count($profile_fields) > 0) {
@@ -28,15 +28,18 @@ if (is_array($profile_fields) && count($profile_fields) > 0) {
 		if ($valtype == 'tags') {
 			$options['tag_names'] = $key;
 		}
-
+if($group->description3){
+	$description = gc_explode_translation($group->description3,$lang);
+}else{
+	$description = $group->description;
+}
         if($key == 'description'){
             echo "<div class=\"{$even_odd} panel panel-custom\">";
                 echo '<div class="panel-heading clearfix">';
                     echo '<h2 class="panel-title profile-info-head pull-left clearfix">Description</h2>';
                 echo "</div>";
                 echo '<div class="panel-body">';
-            
-                echo elgg_view("output/$valtype", $options);
+           		echo $description;
                 echo "</div>";
             echo "</div>";
             }

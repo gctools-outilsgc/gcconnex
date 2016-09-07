@@ -9,7 +9,7 @@ return array(
     'ps:details' => "Voir en détail",
     'ps:education' => "Éducation",
     'ps:work' => "Expérience de travail",
-    'ps:profilestrength' => "Profil",
+    'ps:profilestrength' => "Force du profil",
      'ps:all-star' => "Félicitations! Vous êtes une étoile.",
      'ps:beginner' => "Débutant",
      'ps:advanced' => "Avancé",

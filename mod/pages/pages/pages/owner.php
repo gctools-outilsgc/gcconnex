@@ -4,7 +4,7 @@
  *
  * @package ElggPages
  */
-
+$lang = get_current_language();
 $owner = elgg_get_page_owner_entity();
 if (!$owner) {
 	forward('', '404');
@@ -13,9 +13,9 @@ if (!$owner) {
 // access check for closed groups
 elgg_group_gatekeeper();
 
-$title = elgg_echo('pages:owner', array($owner->name));
+$title = elgg_echo('pages:owner', array(gc_explode_translation($owner->title3, $lang)));
 
-elgg_push_breadcrumb($owner->name);
+elgg_push_breadcrumb(gc_explode_translation($owner->title3, $lang));
 
 elgg_register_title_button();
 

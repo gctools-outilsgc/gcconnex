@@ -30,7 +30,6 @@ if ($parent_guid) {
 	forward("thewire/thread/$parent->wire_thread");
 }
 
-
 system_message(elgg_echo("thewire:posted"));
 
 // cyu - send notifications when a user shares your content on the wire
@@ -38,6 +37,11 @@ if ($reshare_guid || $reshare_guid > 0) {
 	$content_owner = get_entity($reshare_guid)->getOwnerEntity();
 	$entity = get_entity($reshare_guid);
 	$wire_entity = get_entity($guid);
+
+	if ($entity->getType() == 'group'){
+		$entity->title = $entity->name;
+	}
+
 	// cyu - if cp notification plugin is active, use that for notifications
 	if (elgg_is_active_plugin('cp_notifications')) {
 		$message = array(

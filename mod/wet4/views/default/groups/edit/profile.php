@@ -9,6 +9,7 @@
  */
 
 $name = elgg_extract("name", $vars);
+$name2 = elgg_extract("name2", $vars);
 $group_profile_fields = elgg_get_config("group");
 $group = elgg_extract("entity", $vars);
 
@@ -43,11 +44,24 @@ catch (Exception $e)
         gc_err_logging($errMess,$errStack,'Suggested Friends',$errType);
          $connection->close();
 }*/
+$french = elgg_view('input/button', array(
+    'value' => elgg_echo('french'),
+    'id' => 'btnClickfr',
+    'class' => 'btn btn-default en',
+));
 
+$english = elgg_view('input/button', array(
+    'value' => elgg_echo('english'),
+    'id' => 'btnClicken',
+    'class' => 'btn btn-default fr',
+));
+
+echo $french,$english;
 
 ?>
 
-<div>
+<!-- title en -->
+<div class="en">
     <label for="name">
         <?php echo elgg_echo("groups:name"); ?>
     </label>
@@ -71,6 +85,33 @@ catch (Exception $e)
 	));
     }?>
 </div>
+
+<!-- title fr -->
+<div class="fr">
+    <label for="name2">
+        <?php echo elgg_echo("groups:name2"); ?>
+    </label>
+    <br />
+    <div id="suggestedText2"></div>
+    <?php
+        //if creating a group
+    if(empty($group)){
+        echo elgg_view("input/groups_autocomplete", array(
+                'name' => 'name2',
+                'value' => elgg_extract('name2', $vars),
+        ));
+    } else {
+    ?>
+
+    <?php echo elgg_view("input/text", array(
+        "name" => "name2",
+        "value" => $name2,
+        'id' => 'name2',
+        'class' => 'ui-autocomplete-input',
+    ));
+    }?>
+</div>
+
 <div>
 <label for="icon"><?php echo elgg_echo("groups:icon"); ?></label><br />
 	<?php echo elgg_view("input/file", array("name" => "icon", 'id' => 'icon')); ?>
@@ -104,7 +145,7 @@ foreach ((array)$group_profile_fields as $shortname => $valtype) {
 	$line_break = ($valtype == "longtext") ? "" : "<br />";
 	$label = elgg_echo("groups:{$shortname}");
 
-	if ( $shortname == 'briefdescription' ){				// Brief description with character limit, count
+	if ( ($shortname == 'briefdescription') || ($shortname == 'briefdescription2') ){				// Brief description with character limit, count
 		$label .= elgg_echo('groups:brief:charcount') . "0/" . $briefmaxlength;	// additional text for max length
 		$input = elgg_view("input/{$valtype}", array(
 			'name' => $shortname,
@@ -113,6 +154,7 @@ foreach ((array)$group_profile_fields as $shortname => $valtype) {
 			'maxlength' => $briefmaxlength,
 			'onkeyup' => "document.getElementById('briefdescr-lbl').innerHTML = '" . elgg_echo("groups:{$shortname}") . elgg_echo('groups:brief:charcount') . " ' + this.value.length + '/" . $briefmaxlength . "';"
 		));
+
 	}
 	else
 		$input = elgg_view("input/{$valtype}", array(
@@ -121,8 +163,50 @@ foreach ((array)$group_profile_fields as $shortname => $valtype) {
 			"value" => elgg_extract($shortname, $vars),
 		));
 
-	if ( $shortname == 'briefdescription' )			// Brief description with character limit, count
-        echo "<div><label id='briefdescr-lbl' for='{$shortname}'>{$label}</label>{$line_break}{$input}</div>";
-	else
+	if ( $shortname == 'briefdescription' )		// Brief description with character limit, count
+        echo "<div class='en'><label id='briefdescr-lbl' for='{$shortname}'>{$label}</label>{$line_break}{$input}</div>";
+    elseif ( $shortname == 'briefdescription2' )     // Brief description with character limit, count
+        echo "<div class='fr'><label id='briefdescr-lbl' for='{$shortname}'>{$label}</label>{$line_break}{$input}</div>";
+	elseif ( $shortname == 'description2' )
+         echo "<div class='fr'><label id='briefdescr-lbl' for='{$shortname}'>{$label}</label>{$line_break}{$input}</div>"; 
+    elseif ( $shortname == 'description' )
+         echo "<div class='en'><label id='briefdescr-lbl' for='{$shortname}'>{$label}</label>{$line_break}{$input}</div>";
+    else
         echo "<div><label for='{$shortname}'>{$label}</label>{$line_break}{$input}</div>";
 }
+
+if(get_current_language() == 'fr'){
+?>
+    <script>
+        jQuery('.fr').show();
+        jQuery('.en').hide();
+
+    </script>
+<?php
+}else{
+?>
+    <script>
+        jQuery('.en').show();
+        jQuery('.fr').hide();
+
+    </script>
+<?php
+}
+?>
+<script>
+jQuery(function(){
+
+        jQuery('#btnClickfr').click(function(){
+               jQuery('.fr').show();
+               jQuery('.en').hide();
+                
+        });
+
+          jQuery('#btnClicken').click(function(){
+               jQuery('.en').show();
+               jQuery('.fr').hide();
+               
+        });
+
+});
+</script>

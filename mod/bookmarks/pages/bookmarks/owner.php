@@ -4,7 +4,7 @@
  *
  * @package Bookmarks
  */
-
+$lang = get_current_language();
 $page_owner = elgg_get_page_owner_entity();
 if (!$page_owner) {
 	forward('', '404');
@@ -25,7 +25,7 @@ $content .= elgg_list_entities(array(
 	'distinct' => false,
 ));
 
-$title = elgg_echo('bookmarks:owner', array($page_owner->name));
+$title = elgg_echo('bookmarks:owner', array(gc_explode_translation($page_owner->title3, $lang)));
 
 $filter_context = '';
 if ($page_owner->getGUID() == elgg_get_logged_in_user_guid()) {

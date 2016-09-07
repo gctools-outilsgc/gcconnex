@@ -8,6 +8,7 @@
  */
 
 $group = get_entity(elgg_get_page_owner_guid());
+$lang = get_current_language();
 /*
 if (!isset($vars['entity']) || !$vars['entity']) {
 	echo elgg_echo('groups:notfound');
@@ -53,7 +54,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
     
 		<div class="groups-info col-xs-10 col-md-10 ">
             <h1 class="group-title">
-                <?php echo $group->name; ?>
+                <?php echo gc_explode_translation($group->title3, $lang); ?>
             </h1>
             <div class="clearfix">
             <div class="mrgn-bttm-sm pull-left">

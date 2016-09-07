@@ -58,10 +58,11 @@ if ($listing_format == 'paged' || $listing_format == 'full') {
 			'limit' => $vars['limit'],
 			'count' => $vars['count'],
 
-		);
-		$event_list = elgg_view_entity_list($vars['events'], $options);
-	//echo elgg_view('event_calendar/full_calendar_view', $vars);
-		 $new_link = elgg_view('output/url', array(
+	);
+	$event_list = elgg_view_entity_list($vars['events'], $options);
+
+	$group = elgg_get_page_owner_entity();
+	$new_link = elgg_view('output/url', array(
         'href' => "event_calendar/add/$group->guid",
         'text' => elgg_echo('event_calendar:new'),
         'class' => 'btn btn-primary pull-right',
@@ -73,6 +74,7 @@ if ($listing_format == 'paged' || $listing_format == 'full') {
 		$event_list = '<p>'.elgg_echo('event_calendar:no_events_found').'</p>';
 		echo $event_list;
 	} else {
+		//show the list of event
 		echo $event_list;
 		
 	}
@@ -90,6 +92,7 @@ if ($listing_format == 'paged' || $listing_format == 'full') {
 			?>
 		</div>
 		<div style="float:right;">
+			<!-- see the calendar -->
 			<?php
 			echo elgg_view('event_calendar/calendar', $vars);
 			?>

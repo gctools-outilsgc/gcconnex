@@ -25,9 +25,20 @@ $checkPage = elgg_get_context();
 $entity = $vars['entity'];
 
 $title_link = elgg_extract('title', $vars, '');
-if ($title_link === '') {
-	if (isset($entity->title)) {
-		$text = $entity->title;
+if ($title_link === '') {//add translation
+	if (isset($entity->title) || isset($entity->name)) {
+		if($entity->title3){
+			$text = gc_explode_translation($entity->title3, $lang);
+		}elseif($entity->title2){
+			$text = $entity->title2;
+		}elseif($entity->title){
+			$text = $entity->title;
+		}elseif($entity->name){
+			$text = $entity->name;
+		}elseif($entity->name2){
+			$text = $entity->name2;
+		}
+
 	} else {
 		$text = $entity->name;
 	}

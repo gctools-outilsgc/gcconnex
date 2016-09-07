@@ -28,13 +28,22 @@ if ($subtype) {
 
 // set river options
 $db_prefix = elgg_get_config('dbprefix');
-$options = array(
+/*$options = array(
 	'joins' => array(
 		"JOIN {$db_prefix}entities e1 ON e1.guid = rv.object_guid",
 		"LEFT JOIN {$db_prefix}entities e2 ON e2.guid = rv.target_guid",
 	),
 	'wheres' => array(
 		"(e1.container_guid = $group->guid OR e2.container_guid = $group->guid)",
+	),
+	'no_results' => elgg_echo('groups:activity:none'),
+);*/
+$options = array(
+	'wheres1' => array(
+		"oe.container_guid = $group->guid",
+	),
+	'wheres2' => array(
+		"te.container_guid = $group->guid",
 	),
 	'no_results' => elgg_echo('groups:activity:none'),
 );
@@ -53,7 +62,7 @@ elgg_push_breadcrumb($group->name, $group->getURL());
 elgg_push_breadcrumb($title);
 
 $content = elgg_view('core/river/filter', array('selector' => $selector));
-$content .= elgg_list_river($options);
+$content .= elgg_list_group_river($options);
 
 $params = array(
 	'content' => $content,

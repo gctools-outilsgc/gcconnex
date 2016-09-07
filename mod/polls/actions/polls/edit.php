@@ -110,8 +110,14 @@ if ($guid) {
 		$poll->access_id = $access_id;
 	
 		$poll->question = $question;
-		$poll->title = $question;
-
+		$poll->question2 = $question2;
+		$poll->title3 = gc_implode_translation($question2,$question2);
+		
+		if(!$poll->question){
+			$poll->title = $poll->question2;
+		}else{
+			$poll->title = $poll->question;
+		}
 		if (!$poll->save()) {
 			register_error(elgg_echo("polls:error"));
 			if ($container_guid) {

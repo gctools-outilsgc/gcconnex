@@ -1,9 +1,9 @@
 <?php
-    /*This Lib serves to combine english and french text into the single entry as well as explode the entry to retreive the english and french
-     * 
-     * 
-     * */
-    /***********************************************************************
+/*This Lib serves to combine english and french text into the single entry as well as explode the entry to retreive the english and french
+ *
+ *
+ * */
+/***********************************************************************
  * MODIFICATION LOG
  * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  *
@@ -11,7 +11,7 @@
  * MBlondin 	2016-02-14 		Creation of library
 
  ***********************************************************************/
- /**
+/**
  * GCconnex combine English and French text into one string
  *
  *
@@ -32,24 +32,35 @@ function gc_explode_translation($imploded_txt, $lang)
     $en='';
     $fr='';
     if(count($text_ar)>0){
-    foreach($text_ar as $value){
-        if(strpos($value, "en]")!==false){
-            $en=substr($value,3,strlen($value));
+        foreach($text_ar as $value){
+            if(strpos($value, "en]")!==false){
+                $en=substr($value,3,strlen($value));
+            }
+            elseif(strpos($value, "fr]")!==false)
+            {
+                $fr=substr($value,3,strlen($value));
+            }
         }
-        elseif(strpos($value, "fr]")!==false)
-        {
-            $fr=substr($value,3,strlen($value));
-        }
-    }
         if($lang=='en' && trim($en)<>''){
             $value=$en;
         }
         elseif($lang=='fr' && trim($fr)<>''){
-                $value=$fr;
-         }
+            $value=$fr;
+        }
         else
         {
-            $value=$imploded_txt;
+            if(($lang=='fr') && (!$fr)){
+       /*         $value=$fr;
+            }else{*/
+                $value=$en;
+            }
+
+             if(($lang=='en') && (!$en)){
+      /*          $value=$en;
+            }else{*/
+                $value=$fr;
+            }
+
         }
     }
     else

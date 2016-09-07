@@ -9,6 +9,8 @@ $direction 			= get_input("direction");
 $limit				= file_tools_get_list_length();
 $offset				= (int) get_input("offset", 0);
 
+$lang = get_current_language();
+
 if (empty($page_owner) || (!elgg_instanceof($page_owner, "user") && !elgg_instanceof($page_owner, "group"))) {
 	forward(REFERER);
 }
@@ -107,7 +109,7 @@ if (!$draw_page) {
 	$folders = file_tools_get_folders($page_owner->getGUID());
 
 	// build page elements
-	$title_text = elgg_echo("file:user", array($page_owner->name));
+	$title_text = elgg_echo("file:user", array(gc_explode_translation($page_owner->title3, $lang)));
 	
 	$body = "<div id='file_tools_list_files_container' class='elgg-content'>" . elgg_view("graphics/ajax_loader", array("hidden" => false)) . "</div>";
 	

@@ -10,8 +10,10 @@ require.config({
 });
 
 //testing only one-click button elgg-form-groups-edit
-$(".elgg-form-groups-edit").submit(function () {
-    $(this).submit(function () {
+$("input[type=submit]").click(function () {
+    
+    $(this).click(function () {
+        
         return false;
     });
     return true;
@@ -20,5 +22,5 @@ $(".elgg-form-groups-edit").submit(function () {
 
 // { "dom": '<"top"ilf>' }
 requirejs( ["datatables"], function() {
-  //$('.wb-tables').dataTable( { "dom": '<"top"ilf>' } );
+// $('.wb-tables').dataTable( { "dom": '<"top"ilf>' } );
 } );

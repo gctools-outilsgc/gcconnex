@@ -24,15 +24,12 @@ $all_link = elgg_view('output/url', array(
 
 elgg_push_context('widgets');
 $db_prefix = elgg_get_config('dbprefix');
-$content = elgg_list_group_river(array(
+$content = elgg_list_river(array(
 	'limit' => 4,
 	'pagination' => false,
     'distinct' => false,
-	'wheres1' => array(
-		"oe.container_guid = $group->guid",
-	),
-	'wheres2' => array(
-		"te.container_guid = $group->guid",
+	'wheres' => array(
+		"(oe.container_guid = $group->guid OR te.container_guid = $group->guid)",
 	),
 ));
 elgg_pop_context();

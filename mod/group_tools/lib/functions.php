@@ -74,7 +74,7 @@ function group_tools_check_group_email_invitation($invite_code, $group_guid = 0)
  */
 function group_tools_invite_user(ElggGroup $group, ElggUser $user, $text = "", $resend = false) {
 	$result = false;
-	
+	$lang = get_current_language();
 	$loggedin_user = elgg_get_logged_in_user_entity();
 	
 	if (!empty($user) && ($user instanceof ElggUser) && !empty($group) && ($group instanceof ElggGroup) && !empty($loggedin_user)) {
@@ -97,7 +97,9 @@ function group_tools_invite_user(ElggGroup $group, ElggUser $user, $text = "", $
 				$url
 			));
 			
-
+	if(!$group->name){
+				$group->name = $group->name2;
+			}
 
 			// cyu - 03/07/2016: modified to improve notifications
 			if (elgg_is_active_plugin('cp_notifications')) {
@@ -165,7 +167,9 @@ function group_tools_add_user(ElggGroup $group, ElggUser $user, $text = "") {
 				"inviter" => $loggedin_user,
 				"invitee" => $user
 			);
-			
+			if(!$group->name){
+				$group->name = $group->name2;
+			}
 
 			// cyu - 03/07/2016: modified to improve notifications
 			if (elgg_is_active_plugin('cp_notifications')) {
@@ -258,8 +262,11 @@ function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend 
 					"inviter" => $loggedin_user,
 					"invitee" => $email
 				);
+
+								if(!$group->name){
+				$group->name = $group->name2;
+			}
 				$body = elgg_trigger_plugin_hook("invite_notification", "group_tools", $params, $body);
-				
 
 				// cyu - 03/07/2016: modified to improve notifications
 				if (elgg_is_active_plugin('cp_notifications')) {

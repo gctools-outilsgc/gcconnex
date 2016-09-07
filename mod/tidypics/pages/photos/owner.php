@@ -7,14 +7,14 @@
  */
 
 elgg_group_gatekeeper();
-
+$lang = get_current_language();
 $owner = elgg_get_page_owner_entity();
 
 if (!$owner) {
 	forward(REFERER);
 }
 
-$title = elgg_echo('album:user', array($owner->name));
+$title = elgg_echo('album:user', array(gc_explode_translation($owner->title3, $lang)));
 
 // set up breadcrumbs
 elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');

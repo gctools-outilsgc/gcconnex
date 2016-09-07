@@ -19,8 +19,8 @@ if ($guid) {
 	$activity = elgg_list_river(array(
 		'limit' => $num,
 		'pagination' => false,
-		'joins' => array("JOIN {$db_prefix}entities e1 ON e1.guid = rv.object_guid"),
-		'wheres' => array("(e1.container_guid = $guid)"),
+	//	'joins' => array("JOIN {$db_prefix}entities e1 ON e1.guid = rv.object_guid"),
+		'wheres' => array("(oe.container_guid = $guid)"),
 	));
 	if (!$activity) {
 		$activity = '<p>' . elgg_echo('groups:widget:group_activity:content:noactivity') . '</p>';

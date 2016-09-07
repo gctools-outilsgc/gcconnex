@@ -16,6 +16,7 @@ $owner = $blog->getOwnerEntity();
 $container = $blog->getContainerEntity();
 $categories = elgg_view('output/categories', $vars);
 $excerpt = $blog->excerpt;
+
 if (empty($excerpt)) {
 	$excerpt = elgg_get_excerpt($blog->description);
 }
@@ -39,7 +40,7 @@ $author_text = elgg_echo('byline', array($owner_link));
 if (elgg_instanceof($container, "group") && ($container->getGUID() !== elgg_get_page_owner_guid())) {
 	$params = array(
 		'href' => $container->getURL(),
-		'text' => $container->name,
+		'text' => gc_explode_translation($container->title3, $lang),
 		'is_trusted' => true
 	);
 	$group_link = elgg_view('output/url', $params);

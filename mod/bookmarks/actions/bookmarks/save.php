@@ -22,7 +22,7 @@ if ($address && !preg_match("#^((ht|f)tps?:)?//#i", $address)) {
 	$address = "http://$address";
 }
 
-if (!$title || !$address) {
+if ((!$title && !$title2) || !$address) {
 	register_error(elgg_echo('bookmarks:save:failed'));
 	forward(REFERER);
 }
@@ -64,6 +64,11 @@ $bookmark->address = $address;
 $bookmark->description = $description;
 $bookmark->access_id = $access_id;
 $bookmark->tags = $tagarray;
+
+//temporary
+if(!$bookmark->title){
+	$bookmark->title = $bookmark->title2;
+}
 
 if ($bookmark->save()) {
 

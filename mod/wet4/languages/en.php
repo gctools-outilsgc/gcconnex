@@ -42,6 +42,11 @@ return array(
   'wet:cover_photo_dim'=> "Your group's cover image displays at 1500 pixels wide by 275 pixels tall on your page on computers. If the dimensions of the image is less or more, the image will be stretched or scaled to fit the area.",
   'wet:search_in_group'=>'Search in this Group',
   'wet:cover_photo_alt'=>'Graphic Element for the Group',
+  'wet:login_engage_0'=>'Join your colleagues across Canada to something something something dark side!',
+  'wet:login_engage_1'=>'Share your knowledge and ideas',
+  'wet:login_engage_2'=>'Find people you need. The opportunities you want',
+  'wet:login_engage_3'=>'Promote government-wide GC activities',
+  'wet:login_welcome'=>'Welcome to GCconnex',
 
 /**
 *notice section

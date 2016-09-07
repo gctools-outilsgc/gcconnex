@@ -43,6 +43,10 @@ return array(
   'wet:cover_photo_dim'=> "Votre image de couverture pour votre groupe s’affiche avec les dimensions de 1500 pixels de largeur par 275 pixels de hauteur sur un ordinateur. Si les dimensions de votre image sont plus petites ou plus grandes, votre image sera étirée ou réduite pour s’ajuster à la section.",
   'wet:search_in_group'=>'Search in this Group(translate me)',
   'wet:cover_photo_alt'=>'Graphic Element for the Group(translate me)',
+    'wet:login_engage_1'=>"Partagez vos connaissances et vos idées",
+  'wet:login_engage_2'=>"Trouvez les gens dont vous avez besoin",
+  'wet:login_engage_3'=>"Promouvoir les activités GC à l'échelle du gouvernement",
+  'wet:login_welcome'=>'Welcome to GCconnex',
   /**
 *notice section
 */
@@ -1472,6 +1476,23 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 
 'msg:change_access' => "Ce n’est pas tous les utilisateurs qui ont accès à votre contenu. Puisque GCconnex désire être le plus ouvert possible, êtes-vous certain de vouloir restreindre l’accès à ce contenu?", //NEW
 'msg:change_access_title' => "Le saviez-vous?",
+
+/*
+*Change language content
+*/
+
+'title:en' => 'Titre en anglais',
+'title:fr' => 'Titre en français',
+'blog:body:fr' => 'Texte complet en français',
+'blog:body:en' => 'Texte complet en anglais',
+'blog:excerpt:fr' => 'Extrait en français',
+'blog:excerpt:en' => 'Extrait en anglais',
+'groups:name' => 'Nom de groupe en anglais',
+'groups:name2' => 'Nom de groupe en français',
+'groups:briefdescription' => 'Description brève en anglais',
+'groups:briefdescription2' => 'Description brève en français',
+'groups:description' => 'Description longue en anglais',
+'groups:description2'=> 'Description longue en français',
 
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)

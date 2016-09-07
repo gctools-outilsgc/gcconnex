@@ -32,6 +32,8 @@ foreach (elgg_get_config('group') as $shortname => $valuetype) {
 }
 
 $input['name'] = htmlspecialchars(get_input('name', '', false), ENT_QUOTES, 'UTF-8');
+$input['name2'] = htmlspecialchars(get_input('name2', '', false), ENT_QUOTES, 'UTF-8');
+$input['description3'] = $input['name2'];
 
 $user = elgg_get_logged_in_user_entity();
 
