@@ -14,7 +14,7 @@
 if (elgg_is_xhr) {
 	echo elgg_echo ( 'gcconnex_profile:opt:opt_in_access' );
 	
-	$user_guid = $_GET ["guid"];
+	$user_guid = elgg_get_logged_in_user_guid();
 	$user = get_user ( $user_guid );
 	
 	$access_id = $user->optaccess;

@@ -79,17 +79,57 @@ $advanced_field = elgg_view('page/elements/hidden-field', array(
 <div>
 	<?php 
 //Nick - moving the opt in button and changing it to function with a lightbox
-		echo elgg_view('output/url', array(
-				'href' => elgg_get_site_url() . 'ajax/view/ajax/opt_in_splash',
-				'text' => elgg_echo('missions:opt_in_to_opportunities'),
-				'class' => 'elgg-button btn btn-primary btn-lg clearfix elgg-lightbox elgg-non-link',
-				'is_action' => false,
-                'rel'=>'nofollow',
-				/*'confirm' => elgg_echo('missions:opt_in_confirmation_text'),*/
-				'id' => 'mission-opt-in-button',
-		));
+
 	?>
 </div>
+<div>
+    <style>
+    .modal-open .modal {
+        background: rgba(0,0,0,0.4);
+    }
+</style>
+<button aria-hidden="true" type="button" id="optinPopup" class="btn btn-primary btn-lg gcconnex-edit-profile" data-toggle="modal" data-target="#showOptin" data-keyboard="false" data-backdrop="static" data-colorbox-opts='{"inline":true, "href":"#showOptin", "innerWidth": 600, "maxHeight": "80%", "margin-top":"15%"}'><?php echo elgg_echo('missions:opt_in_to_opportunities'); ?></button>
+</div>
+
+<div class="modal fade" id="showOptin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg opt-in-modal" style="margin-top:10%;">
+        <div class="panel panel-custom" id="welcome-step">
+            
+            <div class="panel-body">
+                <div class="clearfix">
+                     <div class="pull-right clearfix">
+
+                    <a href ="#" type="button" class="" data-dismiss="modal">X</a>
+
+                    </div>
+                    <div>
+                        <h3 class="mrgn-tp-md">What opportunities are you interested in?</h3>
+                        <p class="timeStamp">Select the opportunity types below</p>
+                    </div>
+
+
+                </div>
+
+               
+                <div>
+                    <?php
+                        echo elgg_view_form('missions/opt-in-splash');
+                        
+                        
+                    ?>
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
 <div>
 	<h4><?php echo elgg_echo('missions:splash:missions_right_now') ; ?></h4>
 	<?php 

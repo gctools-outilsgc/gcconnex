@@ -72,6 +72,7 @@ function missions_init()
     elgg_register_action("missions/finalize-offer", elgg_get_plugins_path() . "missions/actions/missions/finalize-offer.php");
     elgg_register_action("missions/message-user-form", elgg_get_plugins_path() . "missions/actions/missions/message-user-form.php");
     elgg_register_action("missions/sort-missions-form", elgg_get_plugins_path() . "missions/actions/missions/sort-missions-form.php");
+    elgg_register_action("missions/opt-in-splash", elgg_get_plugins_path() . "missions/actions/missions/opt-in-splash.php");
 
     // Register a new subtype of object for categorizing our mission object.
     elgg_register_entity_type('object', 'mission');
@@ -91,7 +92,7 @@ function missions_init()
     elgg_register_ajax_view('missions/analytics-generator');
     
     // Register an ajax view for the opt in on splash
-    elgg_register_ajax_view('ajax/opt_in_splash');
+    elgg_register_ajax_view('missions/opt_in_splash');
     
     //Hook which sets the url for object entities upon creation.
     elgg_register_plugin_hook_handler('entity:url', 'object', 'mission_set_url');
