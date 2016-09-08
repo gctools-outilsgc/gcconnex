@@ -1336,14 +1336,14 @@ function cp_translate_subtype($subtype_name, $english = true) {
 function userOptedIn( $user_obj, $mission_type ){
 	$typemap = array(
 		'missions:micro_mission'	=> 'opt_in_missions',
-		'Job Swap'	=>	'opt_in_swap',
-		'Mentoring'	=>	'opt_in_mentored',
-		'Job Shadowing'	=>	'opt_in_shadowed');
+		'missions:job_swap'	=>	'opt_in_swap',
+		'missions:mentoring'	=>	'opt_in_mentored',
+		'missions:job_shadowing'	=>	'opt_in_shadowed');
 
 	$typemap2 = array(
 		'missions:micro-mission'	=> 'opt_in_missions',
-		'Job Swap'	=>	'opt_in_swap',
-		'Mentoring'	=>	'opt_in_mentoring',
-		'Job Shadowing'	=>	'opt_in_shadowing');
+		'missions:job_swap'	=>	'opt_in_swap',
+		'missions:mentoring'	=>	'opt_in_mentoring',
+		'missions:job_shadowing'	=>	'opt_in_shadowing');
 	return $user_obj->$typemap[$mission_type] == 'gcconnex_profile:opt:yes' || $user_obj->$typemap2[$mission_type] == 'gcconnex_profile:opt:yes';
 }
