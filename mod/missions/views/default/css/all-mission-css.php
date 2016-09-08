@@ -344,3 +344,8 @@ li.link-disabled a {
     font-size: 14px;
     display: inline-block;
 }
+
+.opt-in-modal{
+    margin-top: 10%;
+    width: 65% !important;
+}

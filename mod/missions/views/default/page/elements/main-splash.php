@@ -68,32 +68,77 @@ $advanced_field = elgg_view('page/elements/hidden-field', array(
 	<?php echo elgg_echo('missions:second_splash_paragraph')?>
 </div>
 
+
+
 <div class="alert alert-info mrgn-tp-sm">
     <p>
         <?php echo elgg_echo('missions:splash:missions_right_now'); ?>
     </p>
 </div>
+
 <div>
-	<h4><?php echo elgg_echo('missions:search_for_opportunities') . ':'; ?></h4>
+	<?php 
+//Nick - moving the opt in button and changing it to function with a lightbox
+
+	?>
+</div>
+<div>
+    <style>
+    .modal-open .modal {
+        background: rgba(0,0,0,0.4);
+    }
+</style>
+<button aria-hidden="true" type="button" id="optinPopup" class="btn btn-primary btn-lg gcconnex-edit-profile" data-toggle="modal" data-target="#showOptin" data-keyboard="false" data-backdrop="static" data-colorbox-opts='{"inline":true, "href":"#showOptin", "innerWidth": 600, "maxHeight": "80%", "margin-top":"15%"}'><?php echo elgg_echo('missions:opt_in_to_opportunities'); ?></button>
+</div>
+
+<div class="modal fade" id="showOptin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg opt-in-modal" style="margin-top:10%;">
+        <div class="panel panel-custom" id="welcome-step">
+            
+            <div class="panel-body">
+                <div class="clearfix">
+                     <div class="pull-right clearfix">
+
+                    <a href ="#" type="button" class="" data-dismiss="modal">X</a>
+
+                    </div>
+                    <div>
+                        <h3 class="mrgn-tp-md">What opportunities are you interested in?</h3>
+                        <p class="timeStamp">Select the opportunity types below</p>
+                    </div>
+
+
+                </div>
+
+               
+                <div>
+                    <?php
+                        echo elgg_view_form('missions/opt-in-splash');
+                        
+                        
+                    ?>
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<div>
+	<h4><?php echo elgg_echo('missions:splash:missions_right_now') ; ?></h4>
 	<?php 
 		//echo $simple_search_form;
-		echo $advanced_field;
+//Nick - Removing search from splash page as user still needs to opt in
+		//echo $advanced_field;
 	?>
 </div>
 <div class="col-sm-12">
 	<?php echo $entity_list; ?>
 </div>
 
-<div>
-	<?php 
-		echo elgg_view('output/url', array(
-				'href' => elgg_get_site_url() . 'profile/' . elgg_get_logged_in_user_entity()->username . '#opt-in-anchor',
-				'text' => elgg_echo('missions:opt_in_to_opportunities'),
-				'class' => 'elgg-button btn btn-primary clearfix',
-				'is_action' => false,
-				'confirm' => elgg_echo('missions:opt_in_confirmation_text'),
-				'style' => 'float:right;',
-				'id' => 'mission-opt-in-button'
-		));
-	?>
-</div>

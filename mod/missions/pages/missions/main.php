@@ -72,14 +72,14 @@ else {
 	
 	// Links to the post opportunity pages.
 	//if($last_segment != 'members' && $last_segment != 'archive' && $last_segment != 'analytics') {
-		$content .= '<div class="col-sm-12" style="margin-top:16px;margin-bottom:16px;">' . elgg_view('output/url', array(
+		/*$content .= '<div class="col-sm-12" style="margin-top:16px;margin-bottom:16px;">' . elgg_view('output/url', array(
 				'href' => elgg_get_site_url() . 'action/missions/pre-create-opportunity',
 				'text' => elgg_echo('missions:create_opportunity'),
 				'is_action' => true,
 				'class' => 'elgg-button btn btn-primary',
 				'style' => 'float:right;',
 				'id' => 'mission-create-opportunity-button'
-		)) . '</div>';
+		)) . '</div>';*/
 	//}
 	
 	$content .= $main_content;

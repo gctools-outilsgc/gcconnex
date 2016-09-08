@@ -75,7 +75,7 @@ $sort_field = elgg_view('page/elements/hidden-field', array(
 <div class="col-sm-12">
 	<h4><?php echo elgg_echo('missions:archived_opportunities') . ': '; ?></h4>
 </div>
-<div class="col-sm-5 col-sm-offset-7">
+<div class="col-sm-12">
 	<?php echo $sort_field; ?>
 </div>
 <div class="col-sm-12">

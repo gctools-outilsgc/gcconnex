@@ -17,7 +17,7 @@
     	$user_guid = $_GET["guid"];
 	}
 	else {
-    	$user_guid = elgg_get_page_owner_guid();
+    	$user_guid = elgg_get_logged_in_user_guid();
 	}
 	
 	// Gets the opt_in_set from the user's profile.
@@ -34,7 +34,7 @@
 		echo '<table class="gcconnex-profile-opt-in-display-table table table-bordered" style="margin: 10px;">';
 			echo '<tbody><tr>';
 				echo '<td class="left-col">' . elgg_echo('gcconnex_profile:opt:micro_mission') . '</td>';
-				echo '<td>' . elgg_echo($user->opt_in_missions) . '</td>';
+				echo '<td>' . $user->opt_in_missions . '</td>';
 			echo '</tr><tr>';
 				echo '<td class="left-col">' . elgg_echo('gcconnex_profile:opt:job_swap') . '</td>';
 				echo '<td>' . elgg_echo($user->opt_in_swap) . '</td>';
