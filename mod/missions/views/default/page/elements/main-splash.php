@@ -99,7 +99,7 @@ $advanced_field = elgg_view('page/elements/hidden-field', array(
                 <div class="clearfix">
                      <div class="pull-right clearfix">
 
-                    <a href ="#" type="button" class="" data-dismiss="modal">X</a>
+                    <a href ="#" type="button" class="" data-dismiss="modal"><i class="fa fa-times fa-lg" aria-hidden="true"></i><span class="wb-inv"><?php echo elgg_echo('close');?></span></a>
 
                     </div>
                     <div>

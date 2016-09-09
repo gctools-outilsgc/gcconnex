@@ -35,4 +35,5 @@ foreach($opt_in_inputs as $k => $v){
             
             //$user->save();
             //system_message($opt_in_inputs[0].' '. $opt_in_inputs[1] . ' '. $opt_in_mentored . ' '. $opt_in_shadowed .' '. $opt_in_mentoring . ' ' . $opt_in_shadowing );
+            system_message(elgg_echo('missions:optin:success'));
 ?>
