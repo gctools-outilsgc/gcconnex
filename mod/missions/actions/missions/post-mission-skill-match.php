@@ -36,9 +36,32 @@ foreach($skill_array as $skill) {
 	}
 }
 
+$dbprefix = elgg_get_config('dbprefix');
+
+// prepare for query
+$skillswhere = array();
+foreach($skill_array as $skill) {
+	$skillswhere[] = "oe.title LIKE '%$skill%'";
+}
+$skillswhere = implode(' OR ', $skillswhere);
+$skill_subtype_id = get_data("SELECT id FROM {$dbprefix}entity_subtypes WHERE subtype = 'MySkill'");
+
+// query the database for the ordered + ranked list of users
+$user_match_query = 
+	"SELECT ue.guid as user_guid, count(DISTINCT oe.guid) as n_skills, count(md.id) as n_endorsments 
+FROM elggobjects_entity oe 
+LEFT JOIN elggentities e ON oe.guid = e.guid
+LEFT JOIN elggusers_entity ue ON e.owner_guid = ue.guid
+LEFT JOIN elggmetadata md ON md.entity_guid = oe.guid
+WHERE ({$skillswhere})
+AND e.subtype = {$skill_subtype_id[0]->id}
+GROUP BY user_guid ORDER BY n_skills DESC, n_endorsments DESC";
+
+$user_skill_match = get_data( $user_match_query );
+
 // Turns the user GUIDs into user entities.
 foreach($user_skill_match as $key => $value) {
-	$user_skill_match[$key] = get_entity($value);
+	$user_skill_match[$key] = get_entity($value->user_guid);
 }
 
 $_SESSION['mission_search_switch'] = 'candidate';
