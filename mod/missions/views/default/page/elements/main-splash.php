@@ -104,7 +104,7 @@ $advanced_field = elgg_view('page/elements/hidden-field', array(
                     </div>
                     <div>
                         <h3 class="mrgn-tp-md">What opportunities are you interested in?</h3>
-                        <p class="timeStamp">Select the opportunity types below</p>
+                        <p class="timeStamp">Select the opportunity types below and if you are interested in finding or creating these types of opportunities</p>
                     </div>
 
 
