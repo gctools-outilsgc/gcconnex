@@ -38,29 +38,65 @@ if (elgg_is_xhr) {
         <h4 class="mrgn-tp-0">At-Level Mobility</h4>
         <ul class="list-unstyled">
             <li class="clearfix">
+                <?php echo elgg_echo('missions:assignment');?>
+                
+                <ul class="clearfix brdr-lft mrgn-lft-md list-unstyled">
+                   <li class="clearfix pull-left mrgn-lft-md">
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
-			         'name' => 'assignment_check',
+			         'name' => 'assignseek_check',
 			         'checked' => false,
 			         'id' => 'gcconnex-opt-in-swap-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'assignment' ),
+                        'label'=>elgg_echo ( 'seek' ),
 	               ));
                     
                 ?>
+                    </li> 
+                    <li class="clearfix pull-left mrgn-lft-md">
+                <?php
+                	echo elgg_view ( "input/checkbox", array (
+			         'name' => 'assigncreate_check',
+			         'checked' => false,
+			         'id' => 'gcconnex-opt-in-swap-check',
+                        'class'=>'pull-left',
+                        'label'=>elgg_echo ( 'create' ),
+	               ));
+                    
+                ?>
+                    </li> 
+                </ul>
             </li>
             
             <li class="clearfix">
+                <?php echo elgg_echo('missions:deployment');?>
+                
+                <ul class="clearfix brdr-lft mrgn-lft-md list-unstyled">
+                   <li class="clearfix pull-left mrgn-lft-md">
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
-			         'name' => 'deployment_check',
+			         'name' => 'deploymentseek_check',
 			         'checked' => false,
 			         'id' => 'gcconnex-opt-in-swap-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'deployment' ),
+                        'label'=>elgg_echo ( 'seek' ),
 	               ));
                     
                 ?>
+                    </li> 
+                    <li class="clearfix pull-left mrgn-lft-md">
+                <?php
+                	echo elgg_view ( "input/checkbox", array (
+			         'name' => 'deploymentcreate_check',
+			         'checked' => false,
+			         'id' => 'gcconnex-opt-in-swap-check',
+                        'class'=>'pull-left',
+                        'label'=>elgg_echo ( 'create' ),
+	               ));
+                    
+                ?>
+                    </li> 
+                </ul>
             </li>
             
             <li class="clearfix">
@@ -83,7 +119,7 @@ if (elgg_is_xhr) {
 			         'checked' => false,
 			         'id' => 'gcconnex-opt-in-swap-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'rotation' ),
+                        'label'=>elgg_echo ( 'missions:job_rotation' ),
 	               ));
                     
                 ?>
@@ -97,92 +133,162 @@ if (elgg_is_xhr) {
         <h4 class="mrgn-tp-0">Developmental Opportunities</h4>
         <ul class="list-unstyled">
             <li class="clearfix">
+                <?php echo elgg_echo ( 'gcconnex_profile:opt:micro_mission' );?>
+                <ul class="brdr-lft clearfix mrgn-lft-md list-unstyled">
+                <li class="clearfix pull-left mrgn-lft-md">
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
-			         'name' => 'mission_check',
+			         'name' => 'missionSeeker_check',
 			         'checked' => true,
-			         'id' => 'gcconnex-opt-in-mission-check',
+			         'id' => 'gcconnex-opt-in-mentoringseeker-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'gcconnex_profile:opt:micro_mission' ),
+                        'label'=>elgg_echo ( 'seeker' ),
 	               ));
                     
                 ?>
-            </li>
-            
-            <li class="clearfix">
+                </li>
+                    <li class="clearfix pull-left mrgn-lft-md">
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
-			         'name' => 'mentoring_check',
+			         'name' => 'missionCreater_check',
 			         'checked' => true,
-			         'id' => 'gcconnex-opt-in-mentoring-check',
+			         'id' => 'gcconnex-opt-in-mentoringcreater-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'gcconnex_profile:opt:mentoring' ),
+                        'label'=>elgg_echo ( 'create' ),
 	               ));
                     
                 ?>
+                </li>
+                </ul>
             </li>
             
             <li class="clearfix">
+                <?php echo elgg_echo('missions:mentoring');?>
+                
+                <ul class="clearfix brdr-lft mrgn-lft-md list-unstyled">
+                <li class="clearfix pull-left mrgn-lft-md">
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'mentored_check',
 			         'checked' => true,
-			         'id' => 'gcconnex-opt-in-mentored-check',
+			         'id' => 'gcconnex-opt-in-mentoring-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'gcconnex_profile:opt:mentored' ),
+                        'label'=>elgg_echo ( 'Mentee' ),
 	               ));
                     
                 ?>
             </li>
             
-            <li class="clearfix">
+            <li class="clearfix pull-left mrgn-lft-md">
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
-			         'name' => 'shadowed_check',
+                        'name' => 'mentoring_check',
 			         'checked' => true,
-			         'id' => 'gcconnex-opt-in-shadowed-check',
+			         'id' => 'gcconnex-opt-in-mentored-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'gcconnex_profile:opt:shadowed' ),
+                        'label'=>elgg_echo ( 'Mentor' ),
 	               ));
                     
                 ?>
             </li>
+                </ul>
+            </li>
             
             <li class="clearfix">
+                <?php echo elgg_echo ( 'gcconnex_profile:opt:shadowing' ); ?>
+                
+                <ul class="clearfix brdr-lft mrgn-lft-md list-unstyled">
+                <li class="clearfix pull-left mrgn-lft-md">
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'shadowing_check',
 			         'checked' => true,
 			         'id' => 'gcconnex-opt-in-shadowing-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'gcconnex_profile:opt:shadowing' ),
+                        'label'=>elgg_echo ( 'seeker' ),
+	               ));
+                    
+                ?>
+                </li>
+            
+                <li class="clearfix pull-left mrgn-lft-md">
+                <?php
+                	echo elgg_view ( "input/checkbox", array (
+			         'name' => 'shadowed_check',
+			         'checked' => true,
+			         'id' => 'gcconnex-opt-in-shadowed-check',
+                        'class'=>'pull-left',
+                        'label'=>elgg_echo ( 'create' ),
+	               ));
+                    
+                ?>
+                </li>
+                </ul>
+            </li>
+            
+            
+            <li class="clearfix">
+                <?php echo elgg_echo( 'missions:skill_share' ); ?>
+                
+                <ul class="brdr-lft clearfix mrgn-lft-md list-unstyled">
+                <li class="clearfix pull-left mrgn-lft-md">
+                <?php
+                	echo elgg_view ( "input/checkbox", array (
+			         'name' => 'skillseeker_check',
+			         'checked' => false,
+			         'id' => 'gcconnex-opt-in-shadowing-check',
+                        'class'=>'pull-left',
+                        'label'=>elgg_echo ( 'seeker' ),
+	               ));
+                    
+                ?>
+                </li>
+            
+            <li class="clearfix pull-left mrgn-lft-md">
+                <?php
+                	echo elgg_view ( "input/checkbox", array (
+			         'name' => 'skillcreator_check',
+			         'checked' => false,
+			         'id' => 'gcconnex-opt-in-shadowing-check',
+                        'class'=>'pull-left',
+                        'label'=>elgg_echo ( 'create' ),
 	               ));
                     
                 ?>
             </li>
-            <li class="clearfix">
-                <?php
-                	echo elgg_view ( "input/checkbox", array (
-			         'name' => 'skill_check',
-			         'checked' => false,
-			         'id' => 'gcconnex-opt-in-shadowing-check',
-                        'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'skill share' ),
-	               ));
-                    
-                ?>
+                </ul>
             </li>
+            
+            
             <li class="clearfix">
+                <?php echo elgg_echo( 'missions:peer_coaching' ); ?>
+                
+                <ul class="clearfix brdr-lft mrgn-lft-md list-unstyled">
+                    <li class="clearfix pull-left mrgn-lft-md">
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
-			         'name' => 'jobshare_check',
+			         'name' => 'coachseek_check',
 			         'checked' => false,
-			         'id' => 'gcconnex-opt-in-shadowing-check',
+			         'id' => 'gcconnex-opt-in-seekCoach-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'job share' ),
+                        'label'=>elgg_echo ( 'seek' ),
 	               ));
                     
                 ?>
+                    </li>
+                    <li class="clearfix pull-left mrgn-lft-md">
+                        <?php
+                	       echo elgg_view ( "input/checkbox", array (
+			             'name' => 'coachcreate_check',
+			         'checked' => false,
+			         'id' => 'gcconnex-opt-in-becomeCoach-check',
+                        'class'=>'pull-left',
+                        'label'=>elgg_echo ( 'become coach' ),
+	                   ));
+                    
+                        ?>
+                    </li>
+                </ul>
             </li>
             
             <li class="clearfix">
@@ -192,11 +298,12 @@ if (elgg_is_xhr) {
 			         'checked' => false,
 			         'id' => 'gcconnex-opt-in-shadowing-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'job share' ),
+                        'label'=>elgg_echo ( 'missions:job_share' ),
 	               ));
                     
                 ?>
             </li>
+            
         </ul>
     </div>
 </div>
