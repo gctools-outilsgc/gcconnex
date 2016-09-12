@@ -850,8 +850,9 @@ function cp_create_notification($event, $type, $object) {
 
 			// micromissions / opportunities
 			case 'mission':
+				$dbprefix = elgg_get_config('dbprefix');
 				// get users who want to be notified about new opportunities by site message
-				$op_siteusers = get_data("SELECT id, entity_guid FROM elggprivate_settings WHERE name = 'plugin:user_setting:cp_notifications:cpn_opportunities_site' AND value = 'opportunities_site'");
+				$op_siteusers = get_data("SELECT id, entity_guid FROM {$dbprefix}private_settings WHERE name = 'plugin:user_setting:cp_notifications:cpn_opportunities_site' AND value = 'opportunities_site'");
 
 				foreach ($op_siteusers as $result){
 					$userid = $result->entity_guid;
@@ -862,20 +863,20 @@ function cp_create_notification($event, $type, $object) {
 				}
 
 				// get users who want to be notified about new opportunities by email
-				$op_emailusers = get_data("SELECT * FROM elggprivate_settings WHERE name = 'plugin:user_setting:cp_notifications:cpn_opportunities_email' AND value = 'opportunities_email'");
+				$op_emailusers = get_data("SELECT * FROM {$dbprefix}private_settings WHERE name = 'plugin:user_setting:cp_notifications:cpn_opportunities_email' AND value = 'opportunities_email'");
 
 				foreach ($op_emailusers as $result){
 					$userid = $result->entity_guid;
 					$user_obj = get_user($userid);
 					if ( userOptedIn( $user_obj, $object->job_type ) )
-						$to_recipients_message[$userid] = $user_obj;
+						$to_recipients_email[$userid] = $user_obj;
 				}
 
 				$message = array(
 					'cp_topic' => $object, 
 					'cp_msg_type' => 'cp_new_type',
 				);
-
+				$subject = elgg_echo("missions:new_micromission_notification");
 				// the user creating the content is automatically subscribed to it
 				add_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $object->getGUID());
 				add_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $object->getGUID());
@@ -1028,7 +1029,6 @@ function cp_create_notification($event, $type, $object) {
 			if ($to_recipient instanceof ElggUser)
 				//mail($to_recipient->email,$subject,$template,cp_get_headers());
 				phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );		
-
 		}
 	} 
 
@@ -1321,6 +1321,9 @@ function cp_translate_subtype($subtype_name, $english = true) {
 			break;
 		case 'task_top':
 			$label = 'task';
+			break;
+		case 'mission':
+			$label = 'opportunity';
 			break;
 		default:
 			$label = $subtype_name;
