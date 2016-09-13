@@ -56,25 +56,31 @@ $advanced_field = elgg_view('page/elements/hidden-field', array(
 		'field_bordered' => true
 ));
 ?>
-<div class="panel panel-default mission-info-card">
-	<?php echo elgg_echo('missions:placeholder_a'); ?>
+<!--<div class="panel panel-default mission-info-card">
+	<?php /*echo elgg_echo('missions:placeholder_a');*/ ?>
+</div> -->
+
+<div class="col-sm-12 clearfix">
+    <h4><?php echo elgg_echo('missions:splash:welcome'); ?></h4>
+	<div class="col-sm-8"><?php echo elgg_echo('missions:first_splash_paragraph')?></div>
 </div>
-<h4><?php echo elgg_echo('missions:splash:what_are_missions'); ?></h4>
-<div>
-	<?php echo elgg_echo('missions:first_splash_paragraph')?>
-</div>
-<h4><?php echo elgg_echo('missions:splash:how_to_apply'); ?></h4>
-<div>
-	<?php echo elgg_echo('missions:second_splash_paragraph')?>
+
+<div class="col-sm-12 clearfix">
+    <h4 class=""><?php echo elgg_echo('missions:splash:how_to_apply'); ?></h4>
+    <div class="col-sm-8">
+        <?php echo elgg_echo('missions:second_splash_paragraph'); ?>
+        <div class="col-sm-12 alert alert-info mrgn-tp-sm clearfix">
+            <p>
+                <?php echo elgg_echo('missions:splash:missions_right_now'); ?>
+            </p>
+        </div>
+    </div>
+	
 </div>
 
 
 
-<div class="alert alert-info mrgn-tp-sm">
-    <p>
-        <?php echo elgg_echo('missions:splash:missions_right_now'); ?>
-    </p>
-</div>
+
 
 <div>
 	<?php 
@@ -82,13 +88,16 @@ $advanced_field = elgg_view('page/elements/hidden-field', array(
 
 	?>
 </div>
-<div>
-    <style>
+<div class="clearfix col-sm-12 mrgn-bttm-md">
+    <div class="col-sm-offset-4 col-sm-4">
+        <style>
     .modal-open .modal {
         background: rgba(0,0,0,0.4);
     }
 </style>
-<button aria-hidden="true" type="button" id="optinPopup" class="btn btn-primary btn-lg gcconnex-edit-profile" data-toggle="modal" data-target="#showOptin" data-keyboard="false" data-backdrop="static" data-colorbox-opts='{"inline":true, "href":"#showOptin", "innerWidth": 600, "maxHeight": "80%", "margin-top":"15%"}'><?php echo elgg_echo('missions:opt_in_to_opportunities'); ?></button>
+<button aria-hidden="true" type="button" id="optinPopup" class="btn btn-primary btn-lg btn-block gcconnex-edit-profile" data-toggle="modal" data-target="#showOptin" data-keyboard="false" data-backdrop="static" data-colorbox-opts='{"inline":true, "href":"#showOptin", "innerWidth": 600, "maxHeight": "80%", "margin-top":"15%"}'><?php echo elgg_echo('missions:opt_in_to_opportunities'); ?></button>
+    </div>
+
 </div>
 
 <div class="modal fade" id="showOptin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
