@@ -7,6 +7,9 @@
 /composer.phar
 /cache
 
+#log file
+/mod/missions_organization/get_ancestors_log.txt
+
 # ignore Single Signon mods
 /mod/saml_link/
 /mod/simplesaml/
