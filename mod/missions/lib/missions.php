@@ -659,6 +659,7 @@ function mm_cmp_mission_by_deadline($a, $b) {
  * Check if the user is opted in to any of the opt-in options.
  */
 function check_if_opted_in($current_user) {
+    //Nick - adding additional checks for other opportunity types
 	if($current_user->opt_in_missions == 'gcconnex_profile:opt:yes') {
 		return true;
 	}
@@ -675,6 +676,37 @@ function check_if_opted_in($current_user) {
 		return true;
 	}
 	if($current_user->opt_in_shadowing == 'gcconnex_profile:opt:yes') {
+		return true;
+	}
+    if($current_user->opt_in_jobshare == 'gcconnex_profile:opt:yes') {
+		return true;
+	}
+    if($current_user->opt_in_pcSeek == 'gcconnex_profile:opt:yes') {
+		return true;
+	}
+    if($current_user->opt_in_pcCreate == 'gcconnex_profile:opt:yes') {
+		return true;
+	}
+    if($current_user->opt_in_rotation== 'gcconnex_profile:opt:yes') {
+		return true;
+	}
+    
+    if($current_user->opt_in_ssSeek == 'gcconnex_profile:opt:yes') {
+		return true;
+	}
+    if($current_user->opt_in_ssCreate == 'gcconnex_profile:opt:yes') {
+		return true;
+	}
+    if($current_user->opt_in_assignSeek == 'gcconnex_profile:opt:yes') {
+		return true;
+	}
+    if($current_user->opt_in_assignCreate == 'gcconnex_profile:opt:yes') {
+		return true;
+	}
+    if($current_user->opt_in_deploySeek == 'gcconnex_profile:opt:yes') {
+		return true;
+	}
+    if($current_user->opt_in_deployCreate == 'gcconnex_profile:opt:yes') {
 		return true;
 	}
 	
