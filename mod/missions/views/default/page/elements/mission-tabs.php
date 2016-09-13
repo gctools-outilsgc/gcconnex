@@ -48,8 +48,23 @@ $tabs = elgg_view('navigation/tabs', array(
 		'tabs' => $navigation_tabs
 ));
 
+$create_button = elgg_view('output/url', array(
+        'href' => elgg_get_site_url() . 'action/missions/pre-create-opportunity',
+        'text' => elgg_echo('missions:create_opportunity'),
+        'is_action' => true,
+        'class' => 'elgg-button btn btn-primary',
+        'style' => 'float:right;',
+        'id' => 'mission-create-opportunity-button'
+)) . '</br>';
+
+
 ?>
 
-<div style="margin-bottom:4px;">
-	<?php echo $tabs; ?>
+<div class="clearfix col-sm-12" style="margin-bottom:4px;">
+	<div class="col-sm-9">
+        <?php echo $tabs; ?>
+    </div>
+    <div class="col-sm-3">
+        <?php echo $create_button; ?>
+    </div>
 </div>

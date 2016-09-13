@@ -1020,6 +1020,16 @@ function saveProfile(event) {
             opt_in_set[3] = $options.find('#gcconnex-opt-in-mentoring-check').is(':checked');
             opt_in_set[4] = $options.find('#gcconnex-opt-in-shadowed-check').is(':checked');
             opt_in_set[5] = $options.find('#gcconnex-opt-in-shadowing-check').is(':checked');
+            opt_in_set[6] = $options.find('#gcconnex-opt-in-jobshare-check').is(':checked');
+            opt_in_set[7] = $options.find('#gcconnex-opt-in-coachseek-check').is(':checked');
+            opt_in_set[8] = $options.find('#gcconnex-opt-in-coachcreate-check').is(':checked');
+            opt_in_set[9] = $options.find('#gcconnex-opt-in-skillseeker-check').is(':checked');
+            opt_in_set[10] = $options.find('#gcconnex-opt-in-skillcreator-check').is(':checked');
+            opt_in_set[11] = $options.find('#gcconnex-opt-in-rotation-check').is(':checked');
+            opt_in_set[12] = $options.find('#gcconnex-opt-in-assignseek-check').is(':checked');
+            opt_in_set[13] = $options.find('#gcconnex-opt-in-assigncreate-check').is(':checked');
+            opt_in_set[14] = $options.find('#gcconnex-opt-in-deploymentseek-check').is(':checked');
+            opt_in_set[15] = $options.find('#gcconnex-opt-in-deploymentcreate-check').is(':checked');
             /*opt_in_set[6] = $options.find('#gcconnex-opt-in-peer-coached-check').is(':checked');
             opt_in_set[7] = $options.find('#gcconnex-opt-in-peer-coaching-check').is(':checked');
             opt_in_set[8] = $options.find('#gcconnex-opt-in-skill-sharing-check').is(':checked');

@@ -52,9 +52,9 @@ if (elgg_is_xhr) {
     //Nick - Loop through array of selected things and change their value to match the meta data        
 foreach($opt_in_set as $k => $v){
     if($v == 'gcconnex_profile:opt:yes'){
-        $opt_in_set[$k]  = 'true';
+        $opt_in_set[$k]  = true;
     }else{
-        $opt_in_set[$k]  = 'false';   
+        $opt_in_set[$k]  = false;   
     }
 }
     
@@ -145,7 +145,7 @@ foreach($opt_in_set as $k => $v){
 //Nick - modifying the edit form to account for additional opportunity types
 ?>
 
-<div class="clearfix brdr-bttm mrgn-bttm-sm">
+<div class="clearfix brdr-bttm mrgn-bttm-sm gcconnex-profile-opt-in-options-table">
     <div class="col-sm-6">
         <h4 class="mrgn-tp-0">At-Level Mobility</h4>
         <ul class="list-unstyled">
@@ -158,7 +158,7 @@ foreach($opt_in_set as $k => $v){
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'assignseek_check',
 			         'checked' => $opt_in_set[12],
-			         'id' => 'gcconnex-opt-in-swap-check',
+			         'id' => 'gcconnex-opt-in-assignseek-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'seek' ) . ' ' .$opt_in_set[12],
 	               ));
@@ -170,7 +170,7 @@ foreach($opt_in_set as $k => $v){
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'assigncreate_check',
 			         'checked' => $opt_in_set[13],
-			         'id' => 'gcconnex-opt-in-swap-check',
+			         'id' => 'gcconnex-opt-in-assigncreate-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'create' ),
 	               ));
@@ -189,7 +189,7 @@ foreach($opt_in_set as $k => $v){
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'deploymentseek_check',
 			         'checked' => $opt_in_set[14],
-			         'id' => 'gcconnex-opt-in-swap-check',
+			         'id' => 'gcconnex-opt-in-deploymentseek-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'seek' ),
 	               ));
@@ -201,7 +201,7 @@ foreach($opt_in_set as $k => $v){
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'deploymentcreate_check',
 			         'checked' => $opt_in_set[15],
-			         'id' => 'gcconnex-opt-in-swap-check',
+			         'id' => 'gcconnex-opt-in-deploymentcreate-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'create' ),
 	               ));
@@ -229,7 +229,7 @@ foreach($opt_in_set as $k => $v){
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'rotation_check',
 			         'checked' => $opt_in_set[11],
-			         'id' => 'gcconnex-opt-in-swap-check',
+			         'id' => 'gcconnex-opt-in-rotation-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'rotation' ),
 	               ));
@@ -252,7 +252,7 @@ foreach($opt_in_set as $k => $v){
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'missionSeeker_check',
 			         'checked' => $opt_in_set[0],
-			         'id' => 'gcconnex-opt-in-mentoringseeker-check',
+			         'id' => 'gcconnex-opt-in-missionSeeker-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'seeker' ),
 	               ));
@@ -264,7 +264,7 @@ foreach($opt_in_set as $k => $v){
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'missionCreater_check',
 			         'checked' => false,
-			         'id' => 'gcconnex-opt-in-mentoringcreater-check',
+			         'id' => 'gcconnex-opt-in-missionCreater-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'create' ),
 	               ));
@@ -283,7 +283,7 @@ foreach($opt_in_set as $k => $v){
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'mentored_check',
 			         'checked' => $opt_in_set[2],
-			         'id' => 'gcconnex-opt-in-mentoring-check',
+			         'id' => 'gcconnex-opt-in-mentored-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'Mentee' ),
 	               ));
@@ -296,7 +296,7 @@ foreach($opt_in_set as $k => $v){
                 	echo elgg_view ( "input/checkbox", array (
                         'name' => 'mentoring_check',
 			         'checked' => $opt_in_set[3],
-			         'id' => 'gcconnex-opt-in-mentored-check',
+			         'id' => 'gcconnex-opt-in-mentoring-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'Mentor' ),
 	               ));
@@ -348,7 +348,7 @@ foreach($opt_in_set as $k => $v){
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'skillseeker_check',
 			         'checked' => $opt_in_set[9],
-			         'id' => 'gcconnex-opt-in-shadowing-check',
+			         'id' => 'gcconnex-opt-in-skillseeker-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'seeker' ),
 	               ));
@@ -361,7 +361,7 @@ foreach($opt_in_set as $k => $v){
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'skillcreator_check',
 			         'checked' => $opt_in_set[10],
-			         'id' => 'gcconnex-opt-in-shadowing-check',
+			         'id' => 'gcconnex-opt-in-skillcreator-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'create' ),
 	               ));
@@ -381,7 +381,7 @@ foreach($opt_in_set as $k => $v){
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'coachseek_check',
 			         'checked' => $opt_in_set[7],
-			         'id' => 'gcconnex-opt-in-seekCoach-check',
+			         'id' => 'gcconnex-opt-in-coachseek-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'seek' ),
 	               ));
@@ -393,7 +393,7 @@ foreach($opt_in_set as $k => $v){
                 	       echo elgg_view ( "input/checkbox", array (
 			             'name' => 'coachcreate_check',
 			         'checked' => $opt_in_set[8],
-			         'id' => 'gcconnex-opt-in-becomeCoach-check',
+			         'id' => 'gcconnex-opt-in-coachcreate-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'become coach' ),
 	                   ));
@@ -408,7 +408,7 @@ foreach($opt_in_set as $k => $v){
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'jobshare_check',
 			         'checked' => $opt_in_set[6],
-			         'id' => 'gcconnex-opt-in-shadowing-check',
+			         'id' => 'gcconnex-opt-in-jobshare-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'job share' ),
 	               ));

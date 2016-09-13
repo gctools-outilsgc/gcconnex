@@ -117,7 +117,7 @@ $create_button .= elgg_view('output/url', array(
     </div>
 
     <div class="col-sm-4">
-        <div class="mission-create-button"><?php echo $create_button; ?></div>
+        <div class="mission-create-button"><?php /*echo $create_button;*/ ?></div>
     </div>
 </div>
 

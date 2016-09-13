@@ -490,6 +490,16 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             $user->opt_in_mentoring = $opt_in_set[3];
             $user->opt_in_shadowed = $opt_in_set[4];
             $user->opt_in_shadowing = $opt_in_set[5];
+            $user->opt_in_jobshare = $opt_in_set[6];
+            $user->opt_in_pcSeek = $opt_in_set[7];
+            $user->opt_in_pcCreate = $opt_in_set[8];
+            $user->opt_in_ssSeek = $opt_in_set[9];
+            $user->opt_in_ssCreate = $opt_in_set[10];
+            $user->opt_in_rotation = $opt_in_set[11];
+            $user->opt_in_assignSeek = $opt_in_set[12];
+            $user->opt_in_assignCreate = $opt_in_set[13];
+            $user->opt_in_deploySeek = $opt_in_set[14];
+            $user->opt_in_deployCreate = $opt_in_set[15];
             /*$user->opt_in_peer_coached = $opt_in_set[6];
               $user->opt_in_peer_coaching = $opt_in_set[7];
               $user->opt_in_skill_sharing = $opt_in_set[8];
