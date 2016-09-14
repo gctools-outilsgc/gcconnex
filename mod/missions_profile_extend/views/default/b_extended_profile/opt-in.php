@@ -33,8 +33,10 @@
 	else {
 		echo '<div class="gcconnex-profile-opt-in-display-table" style="margin: 10px;">';
 			echo '<div class="col-sm-6">';
-				echo '<div class="left-col">' . elgg_echo('gcconnex_profile:opt:micro_mission');
+				echo '<div class="left-col">' . elgg_echo('gcconnex_profile:opt:micro_missionseek');
 				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_missions) . '</span></div>';
+        echo '<div class="left-col">' . elgg_echo('gcconnex_profile:opt:micro_mission');
+				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_missionCreate) . '</span></div>';
 			
 				echo '<div class="left-col">' . elgg_echo('gcconnex_profile:opt:job_swap');
 				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_swap) . '</span></div>';
