@@ -391,6 +391,14 @@ function mm_analytics_separate_missions_by_values($mission_set, $separator) {
 				$meta_tag = 'applicant_reason';
 				$comparison_array = explode(',', elgg_get_plugin_setting('decline_reason_string', 'missions'));
 				break;
+			case 'missions:location':
+				$meta_tag = 'location';
+				$comparison_array = explode(',', elgg_get_plugin_setting('province_string', 'missions'));
+				break;
+			case 'missions:field_of_work':
+				$meta_tag = 'program_area';
+				$comparison_array = explode(',', elgg_get_plugin_setting('program_area_string', 'missions'));
+				break;
 		}
 		
 		// Creates the bins which the missions will be divided into.
@@ -439,6 +447,12 @@ function mm_analytics_generate_separation_labels($separator) {
 			break;
 		case 'missions:reason_to_decline':
 			$returner = explode(',', elgg_get_plugin_setting('decline_reason_string', 'missions'));
+			break;
+		case 'missions:location':
+			$returner = explode(',', elgg_get_plugin_setting('province_string', 'missions'));
+			break;
+		case 'missions:field_of_work':
+			$returner = explode(',', elgg_get_plugin_setting('program_area_string', 'missions'));
 			break;
 		default:
 			$returner = array('missions:all_opportunities');
