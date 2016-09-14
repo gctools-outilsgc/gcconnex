@@ -691,5 +691,7 @@ You can share your opportunity with any employee whether on this list or not. Em
         "missions:error:analytics:select_graph_type" => "Please select a graph type.",
         "missions:error:analytics:no_opportunities_in_data" => "There are no opportunities within the dataset resulting from your input parameters.",
         "missions:error:analytics:no_intervals_in_x_axis" => "Creation of the horizontal axis intervals has failed.",
-        "missions:average_number_of_applicants" => "Average number of applicants"
+        "missions:average_number_of_applicants" => "Average number of applicants",
+
+    "missions:error:department_restricted"  =>  "This opportunity is only available within: %s.<br /> Your department is currently set to: %s.<br /> If this is not correct please update your profile.",
 );

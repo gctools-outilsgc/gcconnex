@@ -17,14 +17,19 @@ $mission_email_body = get_input('mission_email_body');
 $manager_permission = true;
 $email_manager = get_input('email_manager');
 $manager_email = get_input('email');
+$mission = get_entity($mid);
+$applicant = elgg_get_logged_in_user_entity();
+$mmdep = trim( explode('/', $mission->department_path_english)[0] );
 
 if(!$manager_permission) {
 	register_error(elgg_echo('missions:error:please_obtain_permission'));
 	forward(REFERER);
 }
+elseif ( $mission->openess && stripos( $applicant->department, $mmdep ) === false ) {	// Check restriction by department
+	register_error( elgg_echo( 'missions:error:department_restricted', array($mmdep, $applicant->department) ) );
+	forward(REFERER);
+}
 else {
-	$mission = get_entity($mid);
-	$applicant = elgg_get_logged_in_user_entity();
 	
 	if($email_manager == 'on') {
 		// Checks if the input email is valid.
