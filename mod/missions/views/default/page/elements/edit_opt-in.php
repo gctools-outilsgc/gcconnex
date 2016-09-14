@@ -138,9 +138,9 @@ if (elgg_is_xhr) {
                 <li class="clearfix pull-left mrgn-lft-md">
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
-			         'name' => 'missionSeeker_check',
+			         'name' => 'mission_check',
 			         'checked' => true,
-			         'id' => 'gcconnex-opt-in-mentoringseeker-check',
+			         'id' => 'gcconnex-opt-in-mission-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'seeker' ),
 	               ));
@@ -150,7 +150,7 @@ if (elgg_is_xhr) {
                     <li class="clearfix pull-left mrgn-lft-md">
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
-			         'name' => 'missionCreater_check',
+			         'name' => 'missioncreate_check',
 			         'checked' => true,
 			         'id' => 'gcconnex-opt-in-mentoringcreater-check',
                         'class'=>'pull-left',

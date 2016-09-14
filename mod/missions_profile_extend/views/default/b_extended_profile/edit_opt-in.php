@@ -48,7 +48,7 @@ if (elgg_is_xhr) {
 	}*/
     
     
-                $opt_in_set = array($user->opt_in_missions, $user->opt_in_swap, $user->opt_in_mentored, $user->opt_in_mentoring, $user->opt_in_shadowed, $user->opt_in_shadowing, $user->opt_in_jobshare, $user->opt_in_pcSeek, $user->opt_in_pcCreate, $user->opt_in_ssSeek, $user->opt_in_ssCreate, $user->opt_in_rotation, $user->opt_in_assignSeek, $user->opt_in_assignCreate, $user->opt_in_deploySeek, $user->opt_in_deployCreate);
+                $opt_in_set = array($user->opt_in_missions, $user->opt_in_swap, $user->opt_in_mentored, $user->opt_in_mentoring, $user->opt_in_shadowed, $user->opt_in_shadowing, $user->opt_in_jobshare, $user->opt_in_pcSeek, $user->opt_in_pcCreate, $user->opt_in_ssSeek, $user->opt_in_ssCreate, $user->opt_in_rotation, $user->opt_in_assignSeek, $user->opt_in_assignCreate, $user->opt_in_deploySeek, $user->opt_in_deployCreate, $user->opt_in_missionCreate);
     //Nick - Loop through array of selected things and change their value to match the meta data        
 foreach($opt_in_set as $k => $v){
     if($v == 'gcconnex_profile:opt:yes'){
@@ -250,9 +250,9 @@ foreach($opt_in_set as $k => $v){
                 <li class="clearfix pull-left mrgn-lft-md">
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
-			         'name' => 'missionSeeker_check',
+			         'name' => 'mission_check',
 			         'checked' => $opt_in_set[0],
-			         'id' => 'gcconnex-opt-in-missionSeeker-check',
+			         'id' => 'gcconnex-opt-in-mission-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'seeker' ),
 	               ));
@@ -262,9 +262,9 @@ foreach($opt_in_set as $k => $v){
                     <li class="clearfix pull-left mrgn-lft-md">
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
-			         'name' => 'missionCreater_check',
-			         'checked' => false,
-			         'id' => 'gcconnex-opt-in-missionCreater-check',
+			         'name' => 'missioncreate_check',
+			         'checked' => $opt_in_set[16],
+			         'id' => 'gcconnex-opt-in-missioncreator-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'create' ),
 	               ));

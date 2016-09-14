@@ -500,6 +500,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             $user->opt_in_assignCreate = $opt_in_set[13];
             $user->opt_in_deploySeek = $opt_in_set[14];
             $user->opt_in_deployCreate = $opt_in_set[15];
+            $user->opt_in_missionCreate = $opt_in_set[16];
             /*$user->opt_in_peer_coached = $opt_in_set[6];
               $user->opt_in_peer_coaching = $opt_in_set[7];
               $user->opt_in_skill_sharing = $opt_in_set[8];
