@@ -10,6 +10,7 @@ return array(
 
 	// opportunity types opt-in
 			// at-level
+    "gcconnex_profile:opt:atlevel"=>"At-Level Mobility",
 		"gcconnex_profile:opt:assignment_deployment_seek" => "Assignment / Secondment Seeker",
 		"gcconnex_profile:opt:assignment_deployment_create" => "Assignment / Opportunity Creator",
 		"gcconnex_profile:opt:deployment_seek" => "Deployment Seeker",
@@ -29,6 +30,10 @@ return array(
 		"gcconnex_profile:opt:peer_coaching" => "Peer Coach",
 		"gcconnex_profile:opt:skill_sharing" => "Skill Sharing Seeker",
 		"gcconnex_profile:opt:skill_sharing_create" => "Skill Sharing Opportunity Creator",
+        "gcconnex_profile:opt:participants"=>"Participant",
+        "gcconnex_profile:opt:host"=>"Host",
+        
+        "gcconnex_profile:opt:development"=>"Developmental Opportunities",
 		
 		// SEPARATION
 		

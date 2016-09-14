@@ -35,7 +35,7 @@ if (elgg_is_xhr) {
 ?>
 <div class="clearfix brdr-bttm mrgn-bttm-sm">
     <div class="col-sm-4 col-sm-offset-2">
-        <h4 class="mrgn-tp-0">At-Level Mobility</h4>
+        <h4 class="mrgn-tp-0"><?php echo elgg_echo('At-Level Mobility'); ?></h4>
         <ul class="list-unstyled">
             <li class="clearfix">
                 <?php echo elgg_echo('missions:assignment');?>
@@ -48,7 +48,7 @@ if (elgg_is_xhr) {
 			         'checked' => false,
 			         'id' => 'gcconnex-opt-in-swap-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'seek' ),
+                        'label'=>elgg_echo ( 'gcconnex_profile:opt:participants' ),
 	               ));
                     
                 ?>
@@ -60,7 +60,7 @@ if (elgg_is_xhr) {
 			         'checked' => false,
 			         'id' => 'gcconnex-opt-in-swap-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'create' ),
+                        'label'=>elgg_echo ( 'gcconnex_profile:opt:host' ),
 	               ));
                     
                 ?>
@@ -79,7 +79,7 @@ if (elgg_is_xhr) {
 			         'checked' => false,
 			         'id' => 'gcconnex-opt-in-swap-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'seek' ),
+                        'label'=>elgg_echo ( 'gcconnex_profile:opt:participants' ),
 	               ));
                     
                 ?>
@@ -91,7 +91,7 @@ if (elgg_is_xhr) {
 			         'checked' => false,
 			         'id' => 'gcconnex-opt-in-swap-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'create' ),
+                        'label'=>elgg_echo ( 'gcconnex_profile:opt:host' ),
 	               ));
                     
                 ?>
@@ -130,7 +130,7 @@ if (elgg_is_xhr) {
     </div>
 
     <div class="col-sm-4">
-        <h4 class="mrgn-tp-0">Developmental Opportunities</h4>
+        <h4 class="mrgn-tp-0"><?php echo elgg_echo('gcconnex_profile:opt:development'); ?></h4>
         <ul class="list-unstyled">
             <li class="clearfix">
                 <?php echo elgg_echo ( 'gcconnex_profile:opt:micro_mission' );?>
@@ -142,7 +142,7 @@ if (elgg_is_xhr) {
 			         'checked' => true,
 			         'id' => 'gcconnex-opt-in-mission-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'seeker' ),
+                        'label'=>elgg_echo ( 'gcconnex_profile:opt:participants' ),
 	               ));
                     
                 ?>
@@ -154,7 +154,7 @@ if (elgg_is_xhr) {
 			         'checked' => true,
 			         'id' => 'gcconnex-opt-in-mentoringcreater-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'create' ),
+                        'label'=>elgg_echo ( 'gcconnex_profile:opt:host' ),
 	               ));
                     
                 ?>
@@ -173,7 +173,7 @@ if (elgg_is_xhr) {
 			         'checked' => true,
 			         'id' => 'gcconnex-opt-in-mentoring-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'Mentee' ),
+                        'label'=>elgg_echo ( 'gcconnex_profile:opt:mentored' ),
 	               ));
                     
                 ?>
@@ -186,7 +186,7 @@ if (elgg_is_xhr) {
 			         'checked' => true,
 			         'id' => 'gcconnex-opt-in-mentored-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'Mentor' ),
+                        'label'=>elgg_echo ( 'gcconnex_profile:opt:mentoring' ),
 	               ));
                     
                 ?>
@@ -205,7 +205,7 @@ if (elgg_is_xhr) {
 			         'checked' => true,
 			         'id' => 'gcconnex-opt-in-shadowing-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'seeker' ),
+                        'label'=>elgg_echo ( 'gcconnex_profile:opt:participants' ),
 	               ));
                     
                 ?>
@@ -218,7 +218,7 @@ if (elgg_is_xhr) {
 			         'checked' => true,
 			         'id' => 'gcconnex-opt-in-shadowed-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'create' ),
+                        'label'=>elgg_echo ( 'gcconnex_profile:opt:host' ),
 	               ));
                     
                 ?>
@@ -238,7 +238,7 @@ if (elgg_is_xhr) {
 			         'checked' => false,
 			         'id' => 'gcconnex-opt-in-shadowing-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'seeker' ),
+                        'label'=>elgg_echo ( 'gcconnex_profile:opt:participants' ),
 	               ));
                     
                 ?>
@@ -251,7 +251,7 @@ if (elgg_is_xhr) {
 			         'checked' => false,
 			         'id' => 'gcconnex-opt-in-shadowing-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'create' ),
+                        'label'=>elgg_echo ( 'gcconnex_profile:opt:host' ),
 	               ));
                     
                 ?>
@@ -271,7 +271,7 @@ if (elgg_is_xhr) {
 			         'checked' => false,
 			         'id' => 'gcconnex-opt-in-seekCoach-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'seek' ),
+                        'label'=>elgg_echo ( 'gcconnex_profile:opt:participants' ),
 	               ));
                     
                 ?>
@@ -283,7 +283,7 @@ if (elgg_is_xhr) {
 			         'checked' => false,
 			         'id' => 'gcconnex-opt-in-becomeCoach-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'become coach' ),
+                        'label'=>elgg_echo ( 'gcconnex_profile:opt:host' ),
 	                   ));
                     
                         ?>

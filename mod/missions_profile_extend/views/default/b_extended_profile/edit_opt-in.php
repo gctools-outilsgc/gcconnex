@@ -147,10 +147,10 @@ foreach($opt_in_set as $k => $v){
 
 <div class="clearfix brdr-bttm mrgn-bttm-sm gcconnex-profile-opt-in-options-table">
     <div class="col-sm-6">
-        <h4 class="mrgn-tp-0">At-Level Mobility</h4>
+        <h4 class="mrgn-tp-0"><?php echo elgg_echo('gcconnex_profile:opt:atlevel'); ?></h4>
         <ul class="list-unstyled">
             <li class="clearfix">
-                Assignment
+                <?php echo elgg_echo('missions:assignment');?>
                 
                 <ul class="clearfix brdr-lft mrgn-lft-md list-unstyled">
                    <li class="clearfix pull-left mrgn-lft-md">
@@ -160,7 +160,7 @@ foreach($opt_in_set as $k => $v){
 			         'checked' => $opt_in_set[12],
 			         'id' => 'gcconnex-opt-in-assignseek-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'seek' ) . ' ' .$opt_in_set[12],
+                        'label'=>elgg_echo ( 'gcconnex_profile:opt:participants' ),
 	               ));
                     
                 ?>
@@ -172,7 +172,7 @@ foreach($opt_in_set as $k => $v){
 			         'checked' => $opt_in_set[13],
 			         'id' => 'gcconnex-opt-in-assigncreate-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'create' ),
+                        'label'=>elgg_echo ( 'gcconnex_profile:opt:host' ),
 	               ));
                     
                 ?>
@@ -181,7 +181,7 @@ foreach($opt_in_set as $k => $v){
             </li>
             
             <li class="clearfix">
-                Deployment
+                <?php echo elgg_echo('missions:deployment');?>
                 
                 <ul class="clearfix brdr-lft mrgn-lft-md list-unstyled">
                    <li class="clearfix pull-left mrgn-lft-md">
@@ -191,7 +191,7 @@ foreach($opt_in_set as $k => $v){
 			         'checked' => $opt_in_set[14],
 			         'id' => 'gcconnex-opt-in-deploymentseek-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'seek' ),
+                        'label'=>elgg_echo ( 'gcconnex_profile:opt:participants' ),
 	               ));
                     
                 ?>
@@ -203,7 +203,7 @@ foreach($opt_in_set as $k => $v){
 			         'checked' => $opt_in_set[15],
 			         'id' => 'gcconnex-opt-in-deploymentcreate-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'create' ),
+                        'label'=>elgg_echo ( 'gcconnex_profile:opt:host' ),
 	               ));
                     
                 ?>
@@ -231,7 +231,7 @@ foreach($opt_in_set as $k => $v){
 			         'checked' => $opt_in_set[11],
 			         'id' => 'gcconnex-opt-in-rotation-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'rotation' ),
+                        'label'=>elgg_echo ( 'missions:job_rotation' ),
 	               ));
                     
                 ?>
@@ -242,7 +242,7 @@ foreach($opt_in_set as $k => $v){
     </div>
 
     <div class="col-sm-6">
-        <h4 class="mrgn-tp-0">Developmental Opportunities</h4>
+        <h4 class="mrgn-tp-0"><?php echo elgg_echo('gcconnex_profile:opt:development'); ?></h4>
         <ul class="list-unstyled">
             <li class="clearfix">
                 <?php echo elgg_echo ( 'gcconnex_profile:opt:micro_mission' );?>
@@ -254,7 +254,7 @@ foreach($opt_in_set as $k => $v){
 			         'checked' => $opt_in_set[0],
 			         'id' => 'gcconnex-opt-in-mission-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'seeker' ),
+                        'label'=>elgg_echo ( 'gcconnex_profile:opt:participants' ),
 	               ));
                     
                 ?>
@@ -266,7 +266,7 @@ foreach($opt_in_set as $k => $v){
 			         'checked' => $opt_in_set[16],
 			         'id' => 'gcconnex-opt-in-missioncreator-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'create' ),
+                        'label'=>elgg_echo ( 'gcconnex_profile:opt:host' ),
 	               ));
                     
                 ?>
@@ -275,7 +275,7 @@ foreach($opt_in_set as $k => $v){
             </li>
             
             <li class="clearfix">
-                <?php echo elgg_echo('gcconnex_profile:opt:mentoring');?>
+                <?php echo elgg_echo('missions:mentoring');?>
                 
                 <ul class="clearfix brdr-lft mrgn-lft-md list-unstyled">
                 <li class="clearfix pull-left mrgn-lft-md">
@@ -285,7 +285,7 @@ foreach($opt_in_set as $k => $v){
 			         'checked' => $opt_in_set[2],
 			         'id' => 'gcconnex-opt-in-mentored-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'Mentee' ),
+                        'label'=>elgg_echo ( 'gcconnex_profile:opt:mentored' ),
 	               ));
                     
                 ?>
@@ -298,7 +298,7 @@ foreach($opt_in_set as $k => $v){
 			         'checked' => $opt_in_set[3],
 			         'id' => 'gcconnex-opt-in-mentoring-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'Mentor' ),
+                        'label'=>elgg_echo ( 'gcconnex_profile:opt:mentoring' ),
 	               ));
                     
                 ?>
@@ -317,7 +317,7 @@ foreach($opt_in_set as $k => $v){
 			         'checked' => $opt_in_set[5],
 			         'id' => 'gcconnex-opt-in-shadowing-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'seeker' ),
+                        'label'=>elgg_echo ( 'gcconnex_profile:opt:participants' ),
 	               ));
                     
                 ?>
@@ -330,7 +330,7 @@ foreach($opt_in_set as $k => $v){
 			         'checked' => $opt_in_set[4],
 			         'id' => 'gcconnex-opt-in-shadowed-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'create' ),
+                        'label'=>elgg_echo ( 'gcconnex_profile:opt:host' ),
 	               ));
                     
                 ?>
@@ -340,7 +340,7 @@ foreach($opt_in_set as $k => $v){
             
             
             <li class="clearfix">
-                <?php echo elgg_echo( 'skill share' ); ?>
+                <?php echo elgg_echo( 'missions:skill_share' ); ?>
                 
                 <ul class="brdr-lft clearfix mrgn-lft-md list-unstyled">
                 <li class="clearfix pull-left mrgn-lft-md">
@@ -350,7 +350,7 @@ foreach($opt_in_set as $k => $v){
 			         'checked' => $opt_in_set[9],
 			         'id' => 'gcconnex-opt-in-skillseeker-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'seeker' ),
+                        'label'=>elgg_echo ( 'gcconnex_profile:opt:participants' ),
 	               ));
                     
                 ?>
@@ -363,7 +363,7 @@ foreach($opt_in_set as $k => $v){
 			         'checked' => $opt_in_set[10],
 			         'id' => 'gcconnex-opt-in-skillcreator-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'create' ),
+                        'label'=>elgg_echo ( 'gcconnex_profile:opt:host' ),
 	               ));
                     
                 ?>
@@ -373,7 +373,7 @@ foreach($opt_in_set as $k => $v){
             
             
             <li class="clearfix">
-                <?php echo elgg_echo( 'peer coaching' ); ?>
+                <?php echo elgg_echo( 'missions:peer_coaching' ); ?>
                 
                 <ul class="clearfix brdr-lft mrgn-lft-md list-unstyled">
                     <li class="clearfix pull-left mrgn-lft-md">
@@ -383,7 +383,7 @@ foreach($opt_in_set as $k => $v){
 			         'checked' => $opt_in_set[7],
 			         'id' => 'gcconnex-opt-in-coachseek-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'seek' ),
+                        'label'=>elgg_echo ( 'gcconnex_profile:opt:participants' ),
 	               ));
                     
                 ?>
@@ -395,7 +395,7 @@ foreach($opt_in_set as $k => $v){
 			         'checked' => $opt_in_set[8],
 			         'id' => 'gcconnex-opt-in-coachcreate-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'become coach' ),
+                        'label'=>elgg_echo ( 'gcconnex_profile:opt:host' ),
 	                   ));
                     
                         ?>
@@ -410,7 +410,7 @@ foreach($opt_in_set as $k => $v){
 			         'checked' => $opt_in_set[6],
 			         'id' => 'gcconnex-opt-in-jobshare-check',
                         'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'job share' ),
+                        'label'=>elgg_echo ( 'missions:job_share' ),
 	               ));
                     
                 ?>
