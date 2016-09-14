@@ -10,7 +10,7 @@ return array(
 
 	// opportunity types opt-in
 			// at-level
-		"gcconnex_profile:opt:assignment_deployment_seek" => "Assignment / Deployment Seeker",
+		"gcconnex_profile:opt:assignment_deployment_seek" => "Assignment / Secondment Seeker",
 		"gcconnex_profile:opt:assignment_deployment_create" => "Assignment / Opportunity Creator",
 		"gcconnex_profile:opt:deployment_seek" => "Deployment Seeker",
 		"gcconnex_profile:opt:deployment_create" => "Deployment Opportunity Creator",
@@ -18,7 +18,7 @@ return array(
 		"gcconnex_profile:opt:job_rotate" => "Job Rotation Seeker",
 
 			// Developmental
-		"gcconnex_profile:opt:micro_mission" => "Micro-Mission Seeker",
+		"gcconnex_profile:opt:micro_missionseek" => "Micro-Mission Seeker",
 		"gcconnex_profile:opt:micro_mission" => "Micro-Mission Opportunity Creator",
 		"gcconnex_profile:opt:shadowing" => "Job Shadowing Seeker",
 		"gcconnex_profile:opt:shadowed" => "Job Shadowing Opportunity Creator",

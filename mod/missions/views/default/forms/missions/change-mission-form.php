@@ -212,7 +212,7 @@ $hidden_guid = elgg_view('input/hidden', array(
 $button_set = mm_create_button_set_full($mission);
 ?>
 
-<div class="mission-printer">
+<div class="row clearfix">
 	<div>
 		<?php echo $hidden_guid; ?>
 	</div>
