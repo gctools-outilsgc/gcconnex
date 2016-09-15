@@ -1341,12 +1341,26 @@ function userOptedIn( $user_obj, $mission_type ){
 		'missions:micro_mission'	=> 'opt_in_missions',
 		'missions:job_swap'	=>	'opt_in_swap',
 		'missions:mentoring'	=>	'opt_in_mentored',
-		'missions:job_shadowing'	=>	'opt_in_shadowed');
+		'missions:job_shadowing'	=>	'opt_in_shadowed',
+		'missions:assignment'	=> 'opt_in_assignSeek',
+		'missions:deployment'	=>	'opt_in_deploySeek',
+		'missions:job_rotation'	=>	'opt_in_rotation',
+		'missions:skill_share'	=>	'opt_in_ssSeek',
+		'missions:peer_coaching'	=>	'opt_in_pcSeek',
+		'missions:job_share'	=>	'opt_in_jobshare',
+		);
 
 	$typemap2 = array(
-		'missions:micro-mission'	=> 'opt_in_missions',
+		'missions:micro-mission'	=> 'opt_in_missionCreate',
 		'missions:job_swap'	=>	'opt_in_swap',
 		'missions:mentoring'	=>	'opt_in_mentoring',
-		'missions:job_shadowing'	=>	'opt_in_shadowing');
+		'missions:job_shadowing'	=>	'opt_in_shadowing',
+		'missions:assignment'	=> 'opt_in_assignCreate',
+		'missions:deployment'	=>	'opt_in_deployCreate',
+		'missions:job_rotation'	=>	'opt_in_rotation',
+		'missions:skill_share'	=>	'opt_in_ssCreate',
+		'missions:peer_coaching'	=>	'opt_in_pcCreate',
+		'missions:job_share'	=>	'opt_in_jobshare',
+		);
 	return $user_obj->$typemap[$mission_type] == 'gcconnex_profile:opt:yes' || $user_obj->$typemap2[$mission_type] == 'gcconnex_profile:opt:yes';
 }
