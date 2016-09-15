@@ -83,8 +83,8 @@ for ($i = 0; $i < $number_of_rows; $i ++) {
         	'id' => 'search-mission-advanced-selection-' . $i . '-dropdown-input'
     ));
     $content .= '</div>';
-    $content .= '<div class="mission-emphasis-extra col-sm-3" id="selection_' . $i . '"></div>';
-    $content .= '<div class="mission-emphasis-extra col-sm-3" id="selection_' . $i . '_element"></div>';
+    $content .= '<div class="mission-emphasis-extra col-sm-6" id="selection_' . $i . '"></div>';
+    $content .= '<div class="mission-emphasis-extra col-sm-6" id="selection_' . $i . '_element"></div>';
     // Backup dropdown for when Javascript is disabled.
     $content .= '<noscript>';
     $content .= elgg_view('input/text', array(

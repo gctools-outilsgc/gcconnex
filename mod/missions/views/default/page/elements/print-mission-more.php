@@ -178,8 +178,9 @@ if(strpos($button_set['button_three'], 'accept-button') !== false) {
 		<?php echo $accept_and_decline_top_buttons; ?>
 	</div>
         <div class="mission-details mrgn-bttm-lg">
-		<h5><?php echo elgg_echo('missions:opportunity_type') . ':';?></h5> 
-		<span name="mission-job-type"><?php echo elgg_echo($mission->job_type);?></span>
+		
+		<span name="mission-job-type"><?php echo elgg_echo($mission->job_type);?></span> <i class="fa fa-circle mrgn-lft-sm timeStamp mrgn-bttm-sm" aria-hidden="true" style="font-size:8px"></i>
+            <span class="mrgn-lft-sm"><?php echo elgg_get_friendly_time($mission->time_created); ?></span>
 	</div>
 	<div name="mission-description">
 		<?php echo elgg_get_excerpt($mission->descriptor, 2000);?>
