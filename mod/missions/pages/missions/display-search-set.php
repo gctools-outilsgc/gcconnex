@@ -61,9 +61,11 @@ else {
 
 $list_typing = 'list';
 $list_class = '';
+$item_class = '';
 if($search_typing == 'mission') {
     $list_typing = 'gallery';
     $list_class = 'mission-gallery wb-eqht clearfix';
+    $item_class = 'col-sm-4';
 }
 
 // Function which sorts the search set according to a given value in ascending or descending order.
@@ -95,7 +97,7 @@ $content .= '<div class="col-sm-12 clearfix">' . elgg_view_entity_list(array_sli
 	    'pagination' => true,
 	    'list_type' => $list_typing,
 	    'gallery_class' => $list_class,
-        'item_class'=>'col-sm-6 col-md-4 ',
+        'item_class'=>$item_class,
 		'missions_full_view' => false
 ), $offset, $max) . '</div>';
 
