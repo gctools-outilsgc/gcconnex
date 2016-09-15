@@ -145,7 +145,7 @@ foreach($opt_in_set as $k => $v){
 //Nick - modifying the edit form to account for additional opportunity types
 ?>
 
-<div class="clearfix brdr-bttm mrgn-bttm-sm gcconnex-profile-opt-in-options-table">
+<div class="clearfix brdr-bttm mrgn-bttm-sm mm-optin-holder gcconnex-profile-opt-in-options-table">
     <div class="col-sm-6">
         <h4 class="mrgn-tp-0"><?php echo elgg_echo('gcconnex_profile:opt:atlevel'); ?></h4>
         <ul class="list-unstyled">
@@ -245,7 +245,7 @@ foreach($opt_in_set as $k => $v){
         <h4 class="mrgn-tp-0"><?php echo elgg_echo('gcconnex_profile:opt:development'); ?></h4>
         <ul class="list-unstyled">
             <li class="clearfix">
-                <?php echo elgg_echo ( 'gcconnex_profile:opt:micro_mission' );?>
+                <?php echo elgg_echo ( 'missions:micro_mission' );?>
                 <ul class="brdr-lft clearfix mrgn-lft-md list-unstyled">
                 <li class="clearfix pull-left mrgn-lft-md">
                 <?php
@@ -307,7 +307,7 @@ foreach($opt_in_set as $k => $v){
             </li>
             
             <li class="clearfix">
-                <?php echo elgg_echo ( 'gcconnex_profile:opt:shadowing' ); ?>
+                <?php echo elgg_echo ( 'missions:job_shadowing' ); ?>
                 
                 <ul class="clearfix brdr-lft mrgn-lft-md list-unstyled">
                 <li class="clearfix pull-left mrgn-lft-md">

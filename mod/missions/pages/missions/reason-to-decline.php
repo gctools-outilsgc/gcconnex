@@ -43,10 +43,10 @@ elgg_push_breadcrumb($title);
 $content = elgg_view_title($title);
 
 $content .= elgg_view('page/elements/mission-tabs');
-
+$content .= '<div class="col-sm-12 clearix">';
 $content .= elgg_view_form('missions/decline-invite', array(), array(
 		'mission' => $mission,
 		'applicant' => $applicant
 ));
-
+$content .= '</div>';
 echo elgg_view_page($title, $content);

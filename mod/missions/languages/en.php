@@ -669,7 +669,7 @@ You can share your opportunity with any employee whether on this list or not. Em
         "missions:show_data_table" => "Show data table",
         "missions:hide_data_table" => "Hide data table",
         "missions:applicant_count" => "This opportunity has %s applicant%s.",
-        "missions:job_shadowing" => "Job shadowing",
+        "missions:job_shadowing" => "Job Shadowing",
         "missions:sort_options" => "Sort options",
         "missions:stacked_graph" => "Stacked graph",
         "missions:histogram" => "Histogram",

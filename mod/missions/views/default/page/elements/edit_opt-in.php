@@ -33,7 +33,7 @@ if (elgg_is_xhr) {
 	echo 'An error has occurred.';
 }
 ?>
-<div class="clearfix brdr-bttm mrgn-bttm-sm">
+<div class="clearfix brdr-bttm mrgn-bttm-sm mm-optin-holder">
     <div class="col-sm-4 col-sm-offset-2">
         <h4 class="mrgn-tp-0"><?php echo elgg_echo('At-Level Mobility'); ?></h4>
         <ul class="list-unstyled">
@@ -45,7 +45,7 @@ if (elgg_is_xhr) {
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'assignseek_check',
-			         'checked' => false,
+			         'checked' => true,
 			         'id' => 'gcconnex-opt-in-swap-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'gcconnex_profile:opt:participants' ),
@@ -57,7 +57,7 @@ if (elgg_is_xhr) {
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'assigncreate_check',
-			         'checked' => false,
+			         'checked' => true,
 			         'id' => 'gcconnex-opt-in-swap-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'gcconnex_profile:opt:host' ),
@@ -76,7 +76,7 @@ if (elgg_is_xhr) {
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'deploymentseek_check',
-			         'checked' => false,
+			         'checked' => true,
 			         'id' => 'gcconnex-opt-in-swap-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'gcconnex_profile:opt:participants' ),
@@ -88,7 +88,7 @@ if (elgg_is_xhr) {
                 <?php
                 	echo elgg_view ( "input/checkbox", array (
 			         'name' => 'deploymentcreate_check',
-			         'checked' => false,
+			         'checked' => true,
 			         'id' => 'gcconnex-opt-in-swap-check',
                         'class'=>'pull-left',
                         'label'=>elgg_echo ( 'gcconnex_profile:opt:host' ),
@@ -133,7 +133,7 @@ if (elgg_is_xhr) {
         <h4 class="mrgn-tp-0"><?php echo elgg_echo('gcconnex_profile:opt:development'); ?></h4>
         <ul class="list-unstyled">
             <li class="clearfix">
-                <?php echo elgg_echo ( 'gcconnex_profile:opt:micro_mission' );?>
+                <?php echo elgg_echo ( 'missions:micro_mission' );?>
                 <ul class="brdr-lft clearfix mrgn-lft-md list-unstyled">
                 <li class="clearfix pull-left mrgn-lft-md">
                 <?php
@@ -195,7 +195,7 @@ if (elgg_is_xhr) {
             </li>
             
             <li class="clearfix">
-                <?php echo elgg_echo ( 'gcconnex_profile:opt:shadowing' ); ?>
+                <?php echo elgg_echo ( 'missions:job_shadowing' ); ?>
                 
                 <ul class="clearfix brdr-lft mrgn-lft-md list-unstyled">
                 <li class="clearfix pull-left mrgn-lft-md">

@@ -349,3 +349,7 @@ li.link-disabled a {
     margin-top: 10%;
     width: 65% !important;
 }
+
+.mm-optin-holder label{
+    font-weight: normal !important;
+}

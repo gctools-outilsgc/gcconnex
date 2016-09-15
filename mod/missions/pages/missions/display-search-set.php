@@ -63,7 +63,7 @@ $list_typing = 'list';
 $list_class = '';
 if($search_typing == 'mission') {
     $list_typing = 'gallery';
-    $list_class = 'mission-gallery';
+    $list_class = 'mission-gallery wb-eqht clearfix';
 }
 
 // Function which sorts the search set according to a given value in ascending or descending order.
@@ -88,13 +88,14 @@ if($search_typing == 'mission') {
 }
 
 // Displays the missions as a list with custom class mission-gallery
-$content .= '<div class="col-sm-12">' . elgg_view_entity_list(array_slice($search_set, $offset, $max), array(
+$content .= '<div class="col-sm-12 clearfix">' . elgg_view_entity_list(array_slice($search_set, $offset, $max), array(
 	    'count' => $count,
 	    'offset' => $offset,
 	    'limit' => $max,
 	    'pagination' => true,
 	    'list_type' => $list_typing,
 	    'gallery_class' => $list_class,
+        'item_class'=>'col-sm-6 col-md-4 ',
 		'missions_full_view' => false
 ), $offset, $max) . '</div>';
 
