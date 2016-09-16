@@ -161,7 +161,7 @@ $hidden_passed_onchange = elgg_view('input/hidden', array(
 				x = false;
 			}
 			else {
-				last_container.remove();
+				$(last_container).remove();
 			}
 			count++;
 		}
