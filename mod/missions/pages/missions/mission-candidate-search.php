@@ -63,10 +63,10 @@ if(!empty($entity->key_skills)){
 	// query the database for the ordered + ranked list of users
 	$user_match_query = 
 		"SELECT ue.guid as user_guid, count(DISTINCT oe.guid) as n_skills, count(md.id) as n_endorsments 
-	FROM elggobjects_entity oe 
-	LEFT JOIN elggentities e ON oe.guid = e.guid
-	LEFT JOIN elggusers_entity ue ON e.owner_guid = ue.guid
-	LEFT JOIN elggmetadata md ON md.entity_guid = oe.guid
+	FROM {$dbprefix}objects_entity oe 
+	LEFT JOIN {$dbprefix}entities e ON oe.guid = e.guid
+	LEFT JOIN {$dbprefix}users_entity ue ON e.owner_guid = ue.guid
+	LEFT JOIN {$dbprefix}metadata md ON md.entity_guid = oe.guid
 	WHERE ({$skillswhere})
 	AND e.subtype = {$skill_subtype_id[0]->id}
 	GROUP BY user_guid ORDER BY n_skills DESC, n_endorsments DESC";
