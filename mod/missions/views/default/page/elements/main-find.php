@@ -52,7 +52,7 @@ else {
 	$max = elgg_get_plugin_setting('search_result_per_page', 'missions');
 }
 
-$entity_list = mm_sort_mission_decider($_SESSION['missions_sort_field_value'], $_SESSION['missions_order_field_value'], $entity_list);
+$entity_list = mm_sort_mission_decider($_SESSION['missions_sort_field_value'], $_SESSION['missions_order_field_value'],$_SESSION['missions_type_field_value'], $entity_list);
 
 $max_reached = '';
 if(($offset + $max) >= elgg_get_plugin_setting('search_limit', 'missions') && $count >= elgg_get_plugin_setting('search_limit', 'missions')) {
@@ -108,6 +108,12 @@ $create_button .= elgg_view('output/url', array(
 
 
 <div class="col-sm-12">
+    <?php
+    
+foreach($entity_list as $entity){
+    echo $entity->job_type . ' - ';  
+}
+    ?>
     <div class="col-sm-8">
 	<h4 class="mrgn-tp-md mrgn-bttm-0"><?php echo elgg_echo('missions:search_for_opportunities') . ':'; ?></h4>
 	<?php 

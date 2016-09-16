@@ -584,13 +584,25 @@ function mm_get_translation_key_from_setting_string($input, $setting_string) {
 /*
  * Function which sorts a set of missions by a given value in ascending or descending order.
  */
-function mm_sort_mission_decider($sort, $order, $entity_set) {
+function mm_sort_mission_decider($sort, $order, $opp_type, $entity_set) {
 	$backup_array = $entity_set;
 	
-	if($sort == '' || $order == '' || $entity_set == '') {
+	if($sort == '' || $order == '' || $opp_type == '' || $entity_set == '') {
 		return $backup_array;
 	}
+    
+    if($opp_type){
+        unset($entity_set);   
+    }
+    
+    foreach($entity_set as $type){
+        //$type_array[] = $type->job_type;
+        if(in_array($type->job_type,$opp_type)){
+            $entity_set[] = $type;   
+        }
+    }
 	
+    //$entity_set = array_intersect($type);
 	$comparison = '';
 	switch($sort) {
 		case 'missions:date_posted':

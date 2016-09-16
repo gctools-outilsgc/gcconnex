@@ -353,3 +353,8 @@ li.link-disabled a {
 .mm-optin-holder label{
     font-weight: normal !important;
 }
+
+.filter-opp-type-list{
+    padding: 8px !important;
+    margin-bottom: 0;
+}
