@@ -139,7 +139,7 @@ $advanced_field = elgg_view('page/elements/hidden-field', array(
 
 
 
-<div>
+<div class="brdr-tp mrgn-tp-md clearfix col-sm-12">
 	<h4><?php echo elgg_echo('missions:splash:missions_right_now') ; ?></h4>
 	<?php 
 		//echo $simple_search_form;
