@@ -668,3 +668,47 @@ function mm_analytics_generate_time_scale_bins($number_of_bins, $target_value, $
 	
 	return $timescale_bins;
 }
+
+
+
+
+/** 
+ * Get the top n most requested skills in currently posted micromissions
+ * @param int $n the number of skills to return, default: top 10 skills
+ * @return array the top $n most requested skills
+ */
+function getTopSkills( $n = 10 ){
+
+	$top_skills = array();		// the array which will be will be returned
+	$all_skills = array();		// will contain all skills as keys with the ammount of time they occur as the value
+	$dbprefix = elgg_get_config('dbprefix');
+
+	// Prepare query - we're looking for all skills from currently posted micromissions for now.
+	// Most of the analysis of the data (counting the skills, sorting) to get the top $n skills will happen afterwards in PHP.
+	
+	// TODO: finish the query
+	$query_string = 
+	"SELECT skillsv.string AS skill, count(*) AS num
+	FROM {$dbprefix}
+	GROUP BY skill";
+
+	// now run the query
+	$result = get_data($query_string);
+
+	// get an array of distinct skills with along with their occurance frequency
+	foreach ( $result as $row ) {
+		// allows handling of the cases where there are multiple skills
+		$skill_array = explode( ',', $row->skill );
+		foreach ( $skill_array as $skill ) {
+			// clean up the string
+			$skill_string = trim($skill);
+			$all_skills[$skill_string] = $all_skills[$skill_string] + $row->num;		// add to occurance of this skill the number of opportunities that had this set of skills
+		}
+	}
+
+	ksort($all_skills);		// sort by occurance frequency
+
+	// TODO: get top $n skills
+
+	return $top_skills;
+}
