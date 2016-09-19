@@ -591,14 +591,11 @@ function mm_sort_mission_decider($sort, $order, $opp_type, $entity_set) {
 		return $backup_array;
 	}
     
-    if($opp_type){
-        unset($entity_set);   
-    }
-    
+   
     foreach($entity_set as $type){
         //$type_array[] = $type->job_type;
         if(in_array($type->job_type,$opp_type)){
-            $entity_set[] = $type;   
+            $entity_set2[] = $type;   
         }
     }
 	
@@ -619,15 +616,15 @@ function mm_sort_mission_decider($sort, $order, $opp_type, $entity_set) {
 			break;
 	}
 	
-	$result = usort($entity_set, $comparison);
+	$result = usort($entity_set2, $comparison);
 	if(!$result) {
 		return $backup_array;
 	}
 	else {
 		if($order == 'missions:ascending') {
-			return array_reverse($entity_set);
+			return array_reverse($entity_set2);
 		}
-		return $entity_set;
+		return $entity_set2;
 	}
 }
 

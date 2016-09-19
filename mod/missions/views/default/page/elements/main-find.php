@@ -109,10 +109,10 @@ $create_button .= elgg_view('output/url', array(
 
 <div class="col-sm-12">
     <?php
-    
+    /* Nick - just testing what the job type actually outputs
 foreach($entity_list as $entity){
     echo $entity->job_type . ' - ';  
-}
+}*/
     ?>
     <div class="col-sm-8">
 	<h4 class="mrgn-tp-md mrgn-bttm-0"><?php echo elgg_echo('missions:search_for_opportunities') . ':'; ?></h4>

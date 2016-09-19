@@ -12,7 +12,7 @@
  */
 $sort_field = $_SESSION['missions_sort_field_value'];
 $order_field = $_SESSION['missions_order_field_value'];
-
+$opp_type_field = $_SESSION['missions_type_field_value'];
 $options_array = array(
 		'missions:date_posted' => elgg_echo('missions:date_posted'),
 		'missions:deadline' => elgg_echo('missions:deadline'),
@@ -33,7 +33,7 @@ foreach($opp_types as $k => $v){
 
 $input_opp_types_filter = elgg_view('input/checkboxes', array(
     'name'=>'opp_filter',
-    
+    'value'=>$opp_type_field,
     'options'=> $opp_types2,
     'class'=>' list-unstyled filter-opp-type-list',
     'multiple'=>true,
