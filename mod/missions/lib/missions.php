@@ -584,20 +584,22 @@ function mm_get_translation_key_from_setting_string($input, $setting_string) {
 /*
  * Function which sorts a set of missions by a given value in ascending or descending order.
  */
-function mm_sort_mission_decider($sort, $order, $entity_set, $opp_type) {
+function mm_sort_mission_decider($sort, $order, $entity_set, $opp_type = '') {
 	$backup_array = $entity_set;
 	
-	if($sort == '' || $order == '' || $opp_type == '' || $entity_set == '') {
+	if($sort == '' || $order == '' || $entity_set == '') {
 		return $backup_array;
 	}
     
-   
-    foreach($entity_set as $type){
-        //$type_array[] = $type->job_type;
-        if(in_array($type->job_type,$opp_type)){
-            $entity_set2[] = $type;   
-        }
-    }
+   if ( $opp_type != '' )				// apply filtering if some types are passed for filtering
+	    foreach($entity_set as $type){
+	        //$type_array[] = $type->job_type;
+	        if(in_array($type->job_type,$opp_type)){		
+	            $entity_set2[] = $type;   
+	        }
+	    }
+	else 								// if nothing is selected for filtering, do not filter
+		$entity_set2 = $entity_set;
 	
     //$entity_set = array_intersect($type);
 	$comparison = '';
