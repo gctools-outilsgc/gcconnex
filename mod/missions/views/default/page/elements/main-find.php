@@ -43,7 +43,6 @@ $options['limit'] = elgg_get_plugin_setting('search_limit', 'missions');
 
 $entity_list = elgg_get_entities_from_metadata($options);
 
-$count = count($entity_list);
 $offset = (int) get_input('offset', 0);
 if($entities_per_page) {
 	$max = $entities_per_page;
@@ -52,7 +51,10 @@ else {
 	$max = elgg_get_plugin_setting('search_result_per_page', 'missions');
 }
 
-$entity_list = mm_sort_mission_decider($_SESSION['missions_sort_field_value'], $_SESSION['missions_order_field_value'],$_SESSION['missions_type_field_value'], $entity_list);
+$entity_list = mm_sort_mission_decider($_SESSION['missions_sort_field_value'], $_SESSION['missions_order_field_value'], $entity_list,$_SESSION['missions_type_field_value']);
+$count = count($entity_list);		// count the filtered list
+if ( $offset >= $count )			// reset offset if it no longer makes sense after filtering
+	$offset = 0;
 
 $max_reached = '';
 if(($offset + $max) >= elgg_get_plugin_setting('search_limit', 'missions') && $count >= elgg_get_plugin_setting('search_limit', 'missions')) {
