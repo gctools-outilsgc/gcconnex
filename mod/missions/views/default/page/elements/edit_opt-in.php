@@ -35,7 +35,7 @@ if (elgg_is_xhr) {
 ?>
 <div class="clearfix brdr-bttm mrgn-bttm-sm mm-optin-holder">
     <div class="col-sm-4 col-sm-offset-2">
-        <h4 class="mrgn-tp-0"><?php echo elgg_echo('At-Level Mobility'); ?></h4>
+        <h4 class="mrgn-tp-0"><?php echo elgg_echo('gcconnex_profile:opt:atlevel'); ?></h4>
         <ul class="list-unstyled">
             <li class="clearfix">
                 <?php echo elgg_echo('missions:assignment');?>

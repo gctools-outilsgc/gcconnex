@@ -150,7 +150,7 @@ foreach($opt_in_set as $k => $v){
         <h4 class="mrgn-tp-0"><?php echo elgg_echo('gcconnex_profile:opt:atlevel'); ?></h4>
         <ul class="list-unstyled">
             <li class="clearfix">
-                <?php echo elgg_echo('missions:assignment');?>
+                <?php echo elgg_echo('gcconnex_profile:opt:atlevel');?>
                 
                 <ul class="clearfix brdr-lft mrgn-lft-md list-unstyled">
                    <li class="clearfix pull-left mrgn-lft-md">
@@ -181,7 +181,7 @@ foreach($opt_in_set as $k => $v){
             </li>
             
             <li class="clearfix">
-                <?php echo elgg_echo('missions:deployment');?>
+                <?php echo elgg_echo('gcconnex_profile:opt:development');?>
                 
                 <ul class="clearfix brdr-lft mrgn-lft-md list-unstyled">
                    <li class="clearfix pull-left mrgn-lft-md">

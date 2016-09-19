@@ -71,7 +71,7 @@ $advanced_field = elgg_view('page/elements/hidden-field', array(
         <?php echo elgg_echo('missions:second_splash_paragraph'); ?>
         <div class="col-sm-12 alert alert-info mrgn-tp-sm clearfix">
             <p>
-                <?php echo elgg_echo('missions:splash:missions_right_now'); ?>
+                <?php echo elgg_echo('missions:splash:missions_help_message'); ?>
             </p>
         </div>
     </div>
@@ -112,8 +112,8 @@ $advanced_field = elgg_view('page/elements/hidden-field', array(
 
                     </div>
                     <div>
-                        <h3 class="mrgn-tp-md">What opportunities are you interested in?</h3>
-                        <p class="timeStamp">Select the opportunity types below and if you are interested in finding or creating these types of opportunities</p>
+                        <h3 class="mrgn-tp-md"><?php echo elgg_echo('missions:splash:popup_title'); ?></h3>
+                        <p class="timeStamp"><?php echo elgg_echo('missions:splash:popup_instruction'); ?></p>
                     </div>
 
 

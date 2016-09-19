@@ -20,6 +20,7 @@ return array(
 
 		// opportunity types opt-in
 			// at-level
+    "gcconnex_profile:opt:atlevel"=>"Mobilité au même niveau",
 		"gcconnex_profile:opt:assignment_deployment_seek" => "Assignment / Deployment Seeker",
 		"gcconnex_profile:opt:assignment_deployment_create" => "Assignment / Opportunity Creator",
 		"gcconnex_profile:opt:deployment_seek" => "Deployment Seeker",
@@ -32,13 +33,17 @@ return array(
 		"gcconnex_profile:opt:micro_mission" => "Micro-Mission Opportunity Creator",
 		"gcconnex_profile:opt:shadowing" => "Job Shadowing Seeker",
 		"gcconnex_profile:opt:shadowed" => "Job Shadowing Opportunity Creator",
-		"gcconnex_profile:opt:mentored" => "Mentee",
+		"gcconnex_profile:opt:mentored" => "Mentoré",
 		"gcconnex_profile:opt:mentoring" => "Mentor",
 		"gcconnex_profile:opt:job_sharing" => "Job Sharing",
 		"gcconnex_profile:opt:peer_coached" => "Peer Coaching Seeker",
 		"gcconnex_profile:opt:peer_coaching" => "Peer Coach",
 		"gcconnex_profile:opt:skill_sharing" => "Skill Sharing Seeker",
 		"gcconnex_profile:opt:skill_sharing_create" => "Skill Sharing Opportunity Creator",
+            "gcconnex_profile:opt:participants"=>"Participant",
+        "gcconnex_profile:opt:host"=>"Hôte",
+    
+    "gcconnex_profile:opt:development"=>"Possibilités de perfectionnement professionnel",
 		
 		// SEPARATION
 		
