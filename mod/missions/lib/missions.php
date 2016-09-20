@@ -339,6 +339,14 @@ function mm_create_button_set_base($mission, $full_view=false) {
  				'confirm' => elgg_echo('missions:confirm:cancel_mission'),
  				'style' => 'margin:2px;'
  		)) . '</div>';
+        
+        
+        $returner['edit_button'] = '<div id="edit-button-mission-' . $mission->guid . '" name="edit-button" style="display:inline-block;">' . elgg_view('output/url', array(
+					'href' => elgg_get_site_url() . 'missions/mission-edit/' . $mission->guid,
+					'text' => elgg_echo('missions:edit'),
+					'class' => 'elgg-button btn btn-primary',
+ 					'style' => 'margin:2px;'
+			)) . '</div>';
  	}
  	
  	if(($mission->owner_guid == elgg_get_logged_in_user_guid() || $mission->account == elgg_get_logged_in_user_guid()) 

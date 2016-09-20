@@ -62,12 +62,12 @@ $input_order_field = elgg_view('input/dropdown', array(
     <div class="col-sm-11">
         <div class="col-sm-4">
 		  <label for="" class="" style="margin:4px;">
-			 <?php echo elgg_echo('Filter by') . ': '; ?>
+			 <?php echo elgg_echo('filter') . ': '; ?>
 		  </label>
 		  <div class="" style="margin:4px;">
 			<div class="dropdown">
                 <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="form-control">
-            Choose Type
+            <?php echo elgg_echo('missions:type');?>
                 <span class="caret"></span>
                 </button>
                 <div class="dropdown-menu " aria-labelledby="dLabel">
