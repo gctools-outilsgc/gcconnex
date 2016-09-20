@@ -304,6 +304,14 @@ return array(
 "missions:peer_coaching" =>"Encadrement de carrière (coaching)",
 "missions:skill_sharing" =>	"Partage des habiletés",
 "missions:job_sharing" =>	"Partage d'emploi",
+    "missions:assignment"=>"Détachements / Affectations",
+    "missions:deployment"=>"Mutation",
+    "missions:job_rotation"=>"Rotation d'emploi",
+    "missions:skill_share"=>"Partage des habiletés",
+    "missions:job_share"=>"Partage d'emploi",
+    
+    
+    "missions:optin:continue"=>"Continuer à la plateforme de possibilités",
 "missions:settings:mission_front_page_limit" =>	"Combien de cartes de possibilité sont affichées sur la page d'accueil?",
 "missions:feedback_explanation_one" =>	"Remplir le champ texte et cliquer sur le bouton Soumettre enverra un avis de rétroaction à l'utilisateur.",
 "missions:feedback_explanation_two" =>	"Cocher la case approuvera l'utilisateur en ce qui concerne cette possibilité. Cela s'affichera sur la page de profil de l'employé avec votre avatar.",
