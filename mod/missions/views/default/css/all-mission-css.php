@@ -358,3 +358,7 @@ li.link-disabled a {
     padding: 8px !important;
     margin-bottom: 0;
 }
+
+.mission-sort-btn{
+    padding-left: 50px;
+}

@@ -308,7 +308,7 @@ return array(
 "missions:feedback_explanation_one" =>	"Remplir le champ texte et cliquer sur le bouton Soumettre enverra un avis de rétroaction à l'utilisateur.",
 "missions:feedback_explanation_two" =>	"Cocher la case approuvera l'utilisateur en ce qui concerne cette possibilité. Cela s'affichera sur la page de profil de l'employé avec votre avatar.",
 "missions:error:cannot_complete_mission_no_participants" =>	"Vous ne pouvez pas achever une possibilité sans participant actif.",
-    'missions:splash:popup_title'=>"Que possibilités êtes vous intéressé ?",
+    'missions:splash:popup_title'=>"Que possibilités êtes vous intéressé?",
     'missions:splash:popup_instruction'=> "Sélectionner les types de possibilités qui vous intéressent (soit comme un hôte ou comme participant).",
     'missions:splash:welcome'=>"Bienvenue à la Plateforme de possibilités de ConneXions Carrière au sein du Carrefour d'emploi!",
 "missions:first_splash_paragraph" =>	"Il s’agit d’un outil qui jumèle rapidement les opportunités de mobilité d'emplois au même niveau (Micro-Missions, Échange d'emploi) et de perfectionnement professionnel (Mentorat, Observation au poste de travail) aux employés talentueux en utilisant le contenu affiché dans les profils GCconnex des employés.",

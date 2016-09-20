@@ -102,7 +102,8 @@ $input_order_field = elgg_view('input/dropdown', array(
     </div>
 	
 	<div class="col-sm-1">
-		<?php 
+        <div class="mrgn-tp-md mission-sort-btn clearfix">
+        <?php 
 			echo elgg_view('input/submit', array(
 					'value' => elgg_echo('missions:sort'),
 					'class' => 'elgg-button btn btn-default',
@@ -110,5 +111,7 @@ $input_order_field = elgg_view('input/dropdown', array(
 					'style' => 'margin:8px;float:right;'
 			));
 		?>
+        </div>
+		
 	</div>
 </div>
