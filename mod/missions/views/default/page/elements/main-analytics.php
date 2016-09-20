@@ -14,6 +14,7 @@ $input_graph_type = elgg_view('input/dropdown', array(
 		'value' => $graph_type,
 		'options_values' => array(
 				'' => '',
+				'missions:top_skills'	=>	elgg_echo('missions:top_skills'),
 				'missions:stacked_graph' => elgg_echo('missions:stacked_graph'),
 				'missions:histogram' => elgg_echo('missions:histogram')
 		),

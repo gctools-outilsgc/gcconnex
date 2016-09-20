@@ -685,17 +685,26 @@ function getTopSkills( $n = 10 ){
 
 	// Prepare query - we're looking for all skills from currently posted micromissions for now.
 	// Most of the analysis of the data (counting the skills, sorting) to get the top $n skills will happen afterwards in PHP.
-	
-	// TODO: finish the query
 	$query_string = 
-	"SELECT skillsv.string AS skill, count(*) AS num
-	FROM {$dbprefix}
-	GROUP BY skill";
+	"SELECT msvs.string AS skill, count(*) AS num 
+	/* filter - currently posted opportunities only */
+	FROM {$dbprefix}metastrings msnp 
+	LEFT JOIN {$dbprefix}metadata mdp ON msnp.id = mdp.name_id 
+	LEFT JOIN {$dbprefix}metastrings msvp ON msvp.id = mdp.value_id 
+	/* ensure we are only dealing with opportunities */
+	LEFT JOIN {$dbprefix}entities e ON mdp.entity_guid = e.guid 
+	LEFT JOIN {$dbprefix}entity_subtypes st ON e.subtype = st.id 
+	/* now we can get the key required skills from each of these opportunities */
+	LEFT JOIN {$dbprefix}metadata mds ON e.guid = mds.entity_guid 
+	LEFT JOIN {$dbprefix}metastrings msns ON mds.name_id = msns.id 
+	LEFT JOIN {$dbprefix}metastrings msvs ON mds.value_id = msvs.id 
+	WHERE msnp.string = 'state' AND msvp.string = 'posted' AND st.subtype = 'mission' AND msns.string = 'key_skills' 
+	GROUP BY skill HAVING skill <> ''";
 
 	// now run the query
 	$result = get_data($query_string);
 
-	// get an array of distinct skills with along with their occurance frequency
+	// Get an array of distinct skills with along with their occurance frequency
 	foreach ( $result as $row ) {
 		// allows handling of the cases where there are multiple skills
 		$skill_array = explode( ',', $row->skill );
@@ -706,9 +715,16 @@ function getTopSkills( $n = 10 ){
 		}
 	}
 
-	ksort($all_skills);		// sort by occurance frequency
+	arsort($all_skills);		// sort by occurance frequency (stored in the array values)
 
-	// TODO: get top $n skills
+	// Get top $n skills
+	$i = 0;
+	foreach ($all_skills as $key => $value) {
+		$top_skills[$key] = $value;
+		$i+=1;
+		if ($i >= $n)
+			break;
+	}
 
 	return $top_skills;
 }
