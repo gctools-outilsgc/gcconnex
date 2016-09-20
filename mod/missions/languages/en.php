@@ -515,6 +515,11 @@ Please note that information you input in these fields will be stored in your ca
 <a herf='http://www.gcpedia.gc.ca/wiki/Jobs_Marketplace' target='_blank'>Click here for more information about the Jobs Marketplace and each opportunity type.</a> 
 The approval of your supervisor will be required before an offer for any type of opportunity can be accepted. By opting in to an opportunity type you certify that you have had an initial conversation with your supervisor about leveraging these professional development and mobility tools.",
 
+    
+    "missions:new_micromission_notification"=>"A new opportunity has been created in the Career ConneXions Opportunities Platform",
+    
+    "cp_notify:personal_opportunities"=>"Notify me when a new opportunity I have opted in for is created in the Career ConneXions Opportunities Platform",
+    
 "missions:error:search_field_empty" =>   "Please enter a value in the search field.",
 "missions:diagnostic_suite:no_missions_in_db" =>"There are no opportunities in the database.",
 "missions:diagnostic_suite:no_manager_name" =>  "The opportunity '%s' has an empty manager name.",

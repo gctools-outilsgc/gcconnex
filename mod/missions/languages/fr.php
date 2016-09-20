@@ -610,6 +610,10 @@ L'approbation de votre superviseur est nécessaire avant que vous soyez en mesur
 "missions:required" =>    "(requis)",
 "missions:placeholder_a" =>   "Bienvenue à la Plateforme de possibilités de ConneXions Carrière au sein du Carrefour d'emploi! Il s’agit d’un outil qui jumèle rapidement les opportunités de mobilité d'emplois au même niveau (Micro-Missions, Échange d'emploi) et de perfectionnement professionnel (Mentorat, Observation au poste de travail) aux employés talentueux en utilisant le contenu affiché dans les profils GCconnex des employés. On encourage les employés à s'inscrire aux types de possibilité de perfectionnement professionnel et de mobilité au même niveau dans leur profil afin de pleinement profiter de cet outil. <a href='http://www.gcpedia.gc.ca/wiki/Carrefour_d_emploi' target='_blank'>Veuillez cliquer ici pour obtenir des renseignements, des tutoriels et du matériel d'orientation</a>.",
 
+/*Notifictaions*/    
+        "missions:new_micromission_notification"=>"Une nouvelle opportunité a été créée dans la Plateforme de possibilités de ConneXions Carrière",
+    
+    "cp_notify:personal_opportunities"=>"Envoyez-moi une notification quand une nouvelle opportunité que j'ai choisie est créée dans la Plateforme de possibilités de ConneXions Carrière",
 
 "missions:placeholder_d2" =>  " ",
 "missions:placeholder_e" =>   "La liste d'employés ci-dessous a été automatiquement générée en fonction des compétences que vous avez indiquées dans votre possibilité ou vos paramètres de recherche, lesquels ont été comparés aux profils GCconnex des employés. Notez que la présence d'un employé sur cette liste ne garantit pas qu'il est qualifié pour votre possibilité; toutefois, cela devrait vous offrir un bon point de départ pour retrouver des candidats talentueux de façon proactive.
