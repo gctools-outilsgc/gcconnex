@@ -138,7 +138,7 @@ return array(
     "missions:settings:min_array_string" =>	"Chaîne de caractères pour les valeurs de minutes.",
     "missions:settings:lang_array_string" =>	"Chaîne de caractères pour les valeurs de la langue (les valeurs sont évaluées par leurs codes ASCII).",
     "missions:reading" =>	"Lecture",
-    "missions:writing" =>	"Écriture.",
+    "missions:writing" =>	"Écriture",
     "missions:oral" =>	"Oral",
     "missions:advanced_note_paragraph_one" =>	"Veuillez noter que tous les champs de recherche utilisent la logique de recherche « ET » pour sélectionner les possibilités. Cela signifie que l'ajout de plus de champs de recherche précisera les résultats de la recherche.",
     "missions:advanced_note_paragraph_two" =>	"Notez également que si Javascript est désactivé, tous les champs de recherche ne prendront en charge que le texte et certains types de recherche nécessiteront un formatage spécial.",
