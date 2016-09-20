@@ -20,9 +20,9 @@ switch($graph_type) {
 		echo elgg_view('page/elements/histogram-inputs');
 		break;
 	case 'missions:top_skills':
-		$top_skills = getTopSkills(5);
+		$top_skills = getTopSkills(10);
 		$top_skills_string = '<table class="table">';
-		$top_skills_string .= "<tr><td>" .elgg_echo('missions:skill'). "</td> <td> " .elgg_echo('missions:skill_request_frequency'). " </td> </tr>";
+		$top_skills_string .= "<tr><td>" .elgg_echo('missions:skill'). "</td> <td> # </td> </tr>";
 		foreach ($top_skills as $key => $value) {
 			$top_skills_string .= "<tr> <td> $key </td> <td> $value </td> </tr>";
 		}
