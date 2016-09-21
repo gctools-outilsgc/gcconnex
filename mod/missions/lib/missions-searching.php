@@ -23,28 +23,57 @@ function mm_search_database_for_missions($query_array, $query_operand, $limit)
         register_error(elgg_echo('missions:error:no_search_values'));
         return false;
     }
-	
+
     foreach($filtered_array as $key => $array) {
-    	$filtered_array[$key]['operand'] = htmlspecialchars_decode($array['operand']);
+        $filtered_array[$key]['operand'] = htmlspecialchars_decode($array['operand']);
     }
+
+    if ( strcasecmp( $query_operand, 'OR' ) === 0 ){
+        $options['type'] = 'object';
+        $options['subtype'] = 'mission';
+        $options['metadata_name_value_pairs_operator'] = $query_operand;
+        $options['metadata_case_sensitive'] = false;
+        $options['limit'] = $limit;
+
+        // split the search into separate queries to prevent slowdown from 10+ join queries using 'OR'
+        $all_missions = array();
+        foreach ($filtered_array as $array) {
+            $options['metadata_name_value_pairs'] = array($array);
+            $some_missions = elgg_get_entities_from_metadata($options);
+            $all_missions = array_merge( $all_missions, $some_missions );
+        }
+        
+        $missions = array();
+        foreach ($all_missions as $mission) {
+            $missions[$mission->guid] = $mission;
+        }
+        // remove the closed, completed, etc. opportunities
+        foreach($missions as $key => $mission) {
+            if($mission->state != 'posted') {
+                unset($missions[$key]);
+            }
+        }
+
+    }
+    else {
+        // Setting options with which the query will be built.
+        $options['type'] = 'object';
+        $options['subtype'] = 'mission';
+        $options['metadata_name_value_pairs'] = $filtered_array;
+        $options['metadata_name_value_pairs_operator'] = $query_operand;
+        $options['metadata_case_sensitive'] = false;
+        $options['limit'] = $limit;
+        $missions = elgg_get_entities_from_metadata($options);
     
-    // Setting options with which the query will be built.
-    $options['type'] = 'object';
-    $options['subtype'] = 'mission';
-    $options['metadata_name_value_pairs'] = $filtered_array;
-    $options['metadata_name_value_pairs_operator'] = $query_operand;
-    $options['metadata_case_sensitive'] = false;
-    $options['limit'] = $limit;
-    $missions = elgg_get_entities_from_metadata($options);
-    
-    foreach($missions as $key => $mission) {
-    	if($mission->state != 'posted') {
-    		unset($missions[$key]);
-    	}
+
+        foreach($missions as $key => $mission) {
+            if($mission->state != 'posted') {
+                unset($missions[$key]);
+            }
+        }
     }
 
     $mission_count = count($missions);
-
     if ($mission_count == 0) {
         register_error(elgg_echo('missions:error:entity_does_not_exist'));
         return false;
