@@ -324,7 +324,7 @@ li.link-disabled a {
 }
 
 .mission-card-body{
-    min-height:335px;
+    min-height:350px;
 }
 
 .mission-details h5{
@@ -361,4 +361,8 @@ li.link-disabled a {
 
 .mission-sort-btn{
     padding-left: 50px;
+}
+
+.print-mission-more-holder h5{
+    margin-top:8px;
 }

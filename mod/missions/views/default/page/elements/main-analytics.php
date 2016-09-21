@@ -51,6 +51,7 @@ $graph_hide_table_button = elgg_view('output/url', array(
 ?>
 
 <div class="col-sm-12" style="margin:4px;">
+    <?php echo elgg_get_context();?>
 	<label for='data-analytics-graph-type-dropdown-input' class="col-sm-3" style="text-align:right;">
 		<?php echo elgg_echo('missions:graph_type') . ':';?>
 	</label>

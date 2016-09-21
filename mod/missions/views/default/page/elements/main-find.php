@@ -69,7 +69,7 @@ $latest_missions = elgg_view_entity_list(array_slice($entity_list, $offset, $max
 		'pagination' => true,
 		'list_type' => 'gallery',
         'gallery_class'=>'wb-eqht clearfix',
-        'item_class'=>'col-sm-6 col-md-4 ',
+        'item_class'=>'col-sm-6 col-md-4 hght-inhrt',
 		
 		'mission_full_view' => false
 ), $offset, $max);

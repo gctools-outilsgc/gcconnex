@@ -49,7 +49,7 @@ if ((elgg_get_context() != 'event_calendar')){
 echo $items->getType;
 $list_classes = ['list-unstyled clearfix'];
 if (isset($vars['gallery_class'])) {
-	$list_classes[] = $vars['gallery_class'];
+	$list_classes = $vars['gallery_class'];
 }
 
 //if the boolean is false (not photo context) stack them normally
