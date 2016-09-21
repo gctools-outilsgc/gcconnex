@@ -42,7 +42,7 @@ $manager_profile = elgg_view('output/url', array(
 
 $manager_info = elgg_view('page/elements/mission-manager-info', array(
 		'mission' => $mission,
-		'container_class' => 'mission-user-card-info',
+		'container_class' => 'mission-user-card-info clearfix',
 		'grid_number' => '2'
 ));
 
@@ -139,7 +139,7 @@ if(trim($completion_date_fixed) == '') {
 
 	<div class="mission-card-footer clearfix">
         <?php echo $manager_info; ?>
-        <div class="mission-button-set">
+        <div class="mission-button-set clearfix col-sm-12">
             <?php
 			if (! $full_view) {
 			    foreach ($button_set as $value) {

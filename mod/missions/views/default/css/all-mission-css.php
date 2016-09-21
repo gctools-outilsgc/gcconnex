@@ -317,14 +317,14 @@ li.link-disabled a {
 }
 
 .mission-card-footer{
-    position:absolute;
+    position:relative;
     bottom:0;
     width:100%;
 
 }
 
 .mission-card-body{
-    min-height:410px;
+    min-height:335px;
 }
 
 .mission-details h5{
