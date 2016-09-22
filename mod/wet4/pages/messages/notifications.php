@@ -18,11 +18,11 @@ if (!$page_owner || !$page_owner->canEdit()) {
 	forward();
 }
 
-elgg_push_breadcrumb(elgg_echo('messages:inbox'));
+elgg_push_breadcrumb(elgg_echo('messages:notifications'));
 
 elgg_register_title_button();
 
-$title = elgg_echo('messages:user', array($page_owner->name));
+$title = elgg_echo('messages:user_notifications', array($page_owner->name));
 
 //$list = elgg_echo('messages:displayposts', array('<a href="?num=10">10</a> | <a href="?num=25">25</a> | <a href="?num=100">100</a>'));
 $display_num_post = $_GET['num'];
@@ -45,18 +45,18 @@ $list .= elgg_list_entities_from_metadata(array(
 	LEFT JOIN {$dbprefix}metastrings msnfrom ON mdfrom.name_id = msnfrom.id
 	LEFT JOIN {$dbprefix}metastrings msvfrom ON mdfrom.value_id = msvfrom.id
 	LEFT JOIN {$dbprefix}entities efrom ON msvfrom.string = efrom.guid",
-	'wheres' => "msnfrom.string = 'fromId' AND efrom.type = 'user'"
+	'wheres' => "msnfrom.string = 'fromId' AND (efrom.type <> 'user' OR efrom.type IS NULL)"
 ));
 
 $body_vars = array(
-	'folder' => 'inbox',
+	'folder' => 'notifications',
 	'list' => $list,
 );
 $content = elgg_view_form('messages/process', array(), $body_vars);
 
 $body = elgg_view_layout('one_column', array(
 	'content' => $content,
-	'title' => elgg_echo('messages:inbox'),
+	'title' => elgg_echo('messages:notifications'),
 	'filter' => '',
 ));
 
