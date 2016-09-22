@@ -6,8 +6,10 @@ $page_owner = elgg_extract("page_owner_entity", $vars);
 $form_data = "";
 if (!empty($folder)) {
 	$title = $folder->title;
+	$title2 = $folder->title2;
 	$desc = $folder->description;
-
+	$desc2 = $folder->description2;
+	
 	if (!empty($folder->parent_guid)) {
 		$parent = $folder->parent_guid;
 	} else {
@@ -38,16 +40,42 @@ if (!empty($folder)) {
 	$submit_text = elgg_echo("save");
 }
 
+$french = elgg_view('input/button', array(
+    'value' => elgg_echo('btn:translate:fr'),
+    'id' => 'btnClickfr',
+    'class' => 'btn btn-default en',
+    'onclick' => 'showfr()',
+));
+
+$english = elgg_view('input/button', array(
+    'value' => elgg_echo('btn:translate:en'),
+    'id' => 'btnClicken',
+    'class' => 'btn btn-default fr',
+    'onclick' => 'showen()',
+));
+
+$form_data .= '<div id="btnfr">'.$french.'</div><div id="btnen"> '.$english.'</div>';
+
 $form_data .= elgg_view("input/hidden", array("name" => "page_owner", "value" => $page_owner->getGUID()));
 
-$form_data .= "<div>";
-$form_data .= "<label for='title'>" . elgg_echo("file_tools:forms:edit:title") . "</label>";
+$form_data .= "<div class='en' id='entitle'>";
+$form_data .= "<label for='title'>" . elgg_echo("title:en") . "</label>";
 $form_data .= elgg_view("input/text", array("name" => "title", "id" => "title", "value" => $title));
 $form_data .= "</div>";
 
-$form_data .= "<div>";
+$form_data .= "<div class='fr' id='frtitle'>";
+$form_data .= "<label for='title2'>" . elgg_echo("title:fr") . "</label>";
+$form_data .= elgg_view("input/text", array("name" => "title2", "id" => "title2", "value" => $title2));
+$form_data .= "</div>";
+
+$form_data .= "<div class='en' id='endesc'>";
 $form_data .= "<label for='description'>" . elgg_echo("file_tools:forms:edit:description") . "</label>";
 $form_data .= elgg_view("input/longtext", array("name" => "description", "id" => "description", "value" => $desc));
+$form_data .= "</div>";
+
+$form_data .= "<div class='fr' id='frdesc'>";
+$form_data .= "<label for='description2'>" . elgg_echo("file_tools:forms:edit:description2") . "</label>";
+$form_data .= elgg_view("input/longtext", array("name" => "description2", "id" => "description2", "value" => $desc2));
 $form_data .= "</div>";
 
 $form_data .= "<div>";
@@ -87,3 +115,73 @@ $form_data .= "</div>";
 echo $form_data;
 
 elgg_unregister_menu_item('title2', 'new_folder');
+
+if(get_current_language() == 'fr'){
+?><!-- Jquerry not working -->
+    <script>
+      document.getElementById('frtitle').style.display = "block";
+   document.getElementById('btnen').style.display = "block";
+   document.getElementById('frdesc').style.display = "block";
+   document.getElementById('entitle').style.display = "none";
+   document.getElementById('btnfr').style.display = "none";
+   document.getElementById('endesc').style.display = "none";
+
+
+
+    </script>
+<?php
+}else{
+?>
+    <script>
+        document.getElementById('entitle').style.display = "block";
+   document.getElementById('endesc').style.display = "block";
+   document.getElementById('btnfr').style.display = "block";
+   document.getElementById('frtitle').style.display = "none";
+   document.getElementById('frdesc').style.display = "none";
+   document.getElementById('btnen').style.display = "none";
+
+    </script>
+<?php
+}
+?>
+<script>
+
+function showen() {
+
+   document.getElementById('entitle').style.display = "block";
+   document.getElementById('endesc').style.display = "block";
+   document.getElementById('btnfr').style.display = "block";
+   document.getElementById('frtitle').style.display = "none";
+   document.getElementById('frdesc').style.display = "none";
+   document.getElementById('btnen').style.display = "none";
+}
+function showfr() {
+	
+   document.getElementById('frtitle').style.display = "block";
+   document.getElementById('btnen').style.display = "block";
+   document.getElementById('frdesc').style.display = "block";
+   document.getElementById('entitle').style.display = "none";
+   document.getElementById('btnfr').style.display = "none";
+   document.getElementById('endesc').style.display = "none";
+}
+
+/*jQuery(function(){
+
+        jQuery('#btnClickfr').click(function(){
+               jQuery('.fr').show();
+               jQuery('.en').hide();
+                alert('frbtn');
+                
+        });
+
+          jQuery('#btnClicken').click(function(){
+               jQuery('.en').show();
+               jQuery('.fr').hide();
+               alert('enbtn');
+        });
+            alert('test');
+
+});*/
+
+</script>
+<?php

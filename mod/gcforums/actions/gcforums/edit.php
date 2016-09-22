@@ -11,6 +11,13 @@ switch ($gcf_type) {
 
 		$title = get_input('gcf_title');
 		$description = get_input('gcf_description');
+
+		if (!$description) {
+			register_error(elgg_echo('gcforums:missing_description'));
+			return false;
+		}
+
+
 		$access = get_input('gcf_access_id');
 		// get the following hidden field inputs as well
 		$gcf_guid = get_input('gcf_guid');
@@ -29,6 +36,12 @@ switch ($gcf_type) {
 
 		$title = get_input('gcf_title');
 		$description = get_input('gcf_description');
+
+		if (!$description) {
+			register_error(elgg_echo('gcforums:missing_description'));
+			return false;
+		}
+
 		$access = get_input('gcf_access_id');
 		$enable_categories = get_input('gcf_allow_categories');
 		$enable_posting = get_input('gcf_allow_posting');
@@ -69,6 +82,12 @@ switch ($gcf_type) {
 
 		$title = get_input('gcf_title');
 		$description = get_input('gcf_description');
+
+		if (!$description) {
+			register_error(elgg_echo('gcforums:missing_description'));
+			return false;
+		}
+
 		$access = get_input('gcf_access_id');
 		// get the following hidden field inputs as well
 		$gcf_guid = get_input('gcf_guid');
@@ -90,6 +109,11 @@ switch ($gcf_type) {
 		$gcf_guid = get_input('gcf_guid');
 		$post_object = get_entity($gcf_guid);
 		$description = get_input('gcf_description');
+
+		if (!$description) {
+			register_error(elgg_echo('gcforums:missing_description'));
+			return false;
+		}
 
 		$post_object->description = $description;
 		$post_object->save();

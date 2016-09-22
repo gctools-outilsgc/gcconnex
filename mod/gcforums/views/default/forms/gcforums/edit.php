@@ -12,13 +12,14 @@ if ($object->getSubtype() !== 'hjforumpost') {
 	$gcf_title_input = elgg_view('input/text', array(
 		'name' => 'gcf_title',
 		'value' => $object->title,
+		'required' => true
 	));
 
 	$gcf_access_label = elgg_echo('gcforums:access_label');
 	$gcf_access_input = elgg_view('input/access', array(
-	'name' => 'gcf_access_id',
-	'id' => 'gcf_access_id',
-	'value' => $object->access_id
+		'name' => 'gcf_access_id',
+		'id' => 'gcf_access_id',
+		'value' => $object->access_id
 	));
 }
 
@@ -27,6 +28,7 @@ $gcf_description_input = elgg_view('input/longtext', array(
 	'name' => 'gcf_description',
 	'id' => 'blog_description',
 	'value' => $object->description,
+	'required' => true
 ));
 
 
@@ -39,7 +41,7 @@ $group_operators = elgg_get_entities_from_relationship(array(
 	'relationship' => 'operator',
 	'relationship_guid' => $vars['group_guid'],
 	'inverse_relationship' => true
-	));
+));
 
 foreach ($group_operators as $group_operator)
 	$gcf_moderator_user[] = $group_operator->guid;

@@ -5,7 +5,12 @@
 
 // Get variables
 $title = htmlspecialchars(get_input('title', '', false), ENT_QUOTES, 'UTF-8');
+$title2 = htmlspecialchars(get_input('title2', '', false), ENT_QUOTES, 'UTF-8');
+$title3 = gc_implode_translation($title, $title2);
+
 $desc = get_input("description");
+$desc2 = get_input("description2");
+$desc3 = gc_implode_translation($desc, $desc2);
 $status = get_input("status");
 $access_id = (int) get_input("access_id");
 $container_guid = (int) get_input('container_guid');
@@ -15,10 +20,10 @@ $tags = get_input("tags");
 elgg_make_sticky_form('topic');
 
 // validation of inputs
-if (!$title || !$desc) {
+if ((!$title && !$title2) || (!$desc && !$desc2)) {
 	register_error(elgg_echo('discussion:error:missing'));
 	forward(REFERER);
-}
+} 
 
 $container = get_entity($container_guid);
 if (!$container || !$container->canWriteToContainer(0, 'object', 'groupforumtopic')) {
@@ -45,7 +50,11 @@ if ($new_topic) {
 }
 
 $topic->title = $title;
+$topic->title2 = $title2;
+$topic->title3 = $title3;
 $topic->description = $desc;
+$topic->description2 = $desc2;
+$topic->description3 = $desc3;
 $topic->status = $status;
 $topic->access_id = $access_id;
 $topic->container_guid = $container_guid;
@@ -82,3 +91,4 @@ if ($new_topic) {
 }
 
 forward($topic->getURL());
+

@@ -24,8 +24,12 @@ $content .= elgg_list_entities(array(
 	'preload_owners' => true,
 	'distinct' => false,
 ));
+if($page_owner->title3){
+	$title = elgg_echo('bookmarks:owner', array(gc_explode_translation($page_owner->title3, $lang)));
+}else{
+	$title =  elgg_echo('bookmarks:owner', array($page_owner->name));
+}
 
-$title = elgg_echo('bookmarks:owner', array(gc_explode_translation($page_owner->title3, $lang)));
 
 $filter_context = '';
 if ($page_owner->getGUID() == elgg_get_logged_in_user_guid()) {

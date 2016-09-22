@@ -112,8 +112,12 @@ if ($full) {
 
 } else {
 	// brief view
-
+if($page->description3){
+	$excerpt = elgg_get_excerpt(gc_explode_translation($page->description3, $lang));
+}else{
 	$excerpt = elgg_get_excerpt($page->description);
+}
+	
 
     if(elgg_in_context('group_profile')){
         $metadata = elgg_view_menu('entity', array(

@@ -16,8 +16,12 @@ function ideas_prepare_form_vars($idea = null) {
 	
 	$values = array(
 		'title' => get_input('title', ''),
+		'title2' => get_input('title2', ''),
+		'title1' => get_input('title', ''),
 		'search' => get_input('search', ''),
 		'description' => '',
+		'description1' => '',
+		'description2' => '',
 		'access_id' => ACCESS_DEFAULT,
 		'tags' => '',
 		'status' => 'open',
@@ -25,8 +29,12 @@ function ideas_prepare_form_vars($idea = null) {
 		'container_guid' => elgg_get_page_owner_guid(),
 		'guid' => null,
 	);
-
-	if (!$values['title']) $values['title'] = $values['search'];
+	if (get_current_language() == 'fr'){
+		if (!$values['title2']) $values['title2'] = $values['search'];
+	}else{
+		if (!$values['title']) $values['title'] = $values['search'];
+	}
+	
 
 	if ($idea) {
 		foreach (array_keys($values) as $field) {

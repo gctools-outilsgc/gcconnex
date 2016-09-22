@@ -5,6 +5,7 @@ $gcf_container = $vars['container_guid'];
 $gcf_subtype = get_input('gcf_subtype');
 $gcf_group = get_input('gcf_group');
 
+
 switch ($gcf_subtype) {
 	case 'hjforumcategory':
 
@@ -15,6 +16,11 @@ switch ($gcf_subtype) {
 		$gcf_subtype = get_input('gcf_subtype');
 		$gcf_forward_url = get_input('gcf_forward_url');
 		$gcf_description = get_input('gcf_description');
+		if (!$gcf_description) {
+			register_error(elgg_echo('gcforums:missing_description'));
+			return false;
+		}
+
 		$gcf_owner = get_input('gcf_owner');
 
 		$gcf_new_category = new ElggObject();
@@ -45,6 +51,12 @@ switch ($gcf_subtype) {
 		$gcf_subtype = get_input('gcf_subtype');
 		$gcf_forward_url = get_input('gcf_forward_url');
 		$gcf_description = get_input('gcf_description');
+
+		if (!$gcf_description) {
+			register_error(elgg_echo('gcforums:missing_description'));
+			return false;
+		}
+
 		$gcf_owner = get_input('gcf_owner');
 		$gcf_enable_category = get_input('gcf_allow_categories');
 		$gcf_enable_posting = get_input('gcf_allow_posting');
@@ -86,6 +98,12 @@ switch ($gcf_subtype) {
 		$gcf_subtype = get_input('gcf_subtype');
 		$gcf_forward_url = get_input('gcf_forward_url');
 		$gcf_description = get_input('gcf_description');
+
+		if (!$gcf_description) {
+			register_error(elgg_echo('gcforums:missing_description'));
+			return false;
+		}
+
 		$gcf_owner = get_input('gcf_owner');
 		$gcf_sticky = get_input('gcf_sticky');
 		if (!$gcf_sticky) $gcf_sticky = 0;
@@ -138,6 +156,12 @@ switch ($gcf_subtype) {
 		$gcf_subtype = get_input('gcf_subtype');
 		$gcf_forward_url = get_input('gcf_forward_url');
 		$gcf_description = get_input('gcf_description');
+
+		if (!$gcf_description) {
+			register_error(elgg_echo('gcforums:missing_description'));
+			return false;
+		}
+
 		$gcf_owner = get_input('gcf_owner');
 
 		$gcf_new_post = new ElggObject();

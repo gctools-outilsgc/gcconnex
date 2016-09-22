@@ -2,7 +2,7 @@
 
 $folder = elgg_extract("entity", $vars);
 $full_view = elgg_extract("full_view", $vars, false);
-
+$lang = get_current_language();
 $time_preference = "date";
 
 if ($user_time_preference = elgg_get_plugin_user_setting('file_tools_time_display', null, "file_tools")) {
@@ -17,7 +17,13 @@ if ($time_preference == 'date') {
 	$friendlytime 	= elgg_view_friendly_time($folder->time_created);
 }
 
-$title = $folder->title;
+
+if($folder->title3){
+	$title = gc_explode_translation($folder->title3,$lang);
+}else{
+	$title = $folder->title;
+}
+
 if (empty($title)) {
 	$title = elgg_echo("untitled");
 }
@@ -59,12 +65,19 @@ if ($full_view) {
 	$params = $params + $vars;
 	$summary = elgg_view("object/elements/summary", $params);
 	
+	if($folder->description3){
+		$body = elgg_view("output/longtext", array("value" => gc_explode_translation($folder->description3,$lang)));
+	}else{
+		$body = elgg_view("output/longtext", array("value" => $folder->description));
+	}
+
+
 	echo elgg_view("object/elements/full", array(
 		"entity" => $folder,
 		"title" => false,
 		"icon" => $icon,
 		"summary" => $summary,
-		"body" => elgg_view("output/longtext", array("value" => $folder->description))
+		"body" => $body,
 	));
     elgg_unregister_menu_item('title2', 'new_folder');
 } else {

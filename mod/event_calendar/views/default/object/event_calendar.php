@@ -12,6 +12,7 @@
  */
 
 elgg_load_library('elgg:event_calendar');
+$lang = get_current_language();
 
 $event = $vars['entity'];
 $full = elgg_extract('full_view', $vars, false);
@@ -62,11 +63,15 @@ if ($full) {
 		}
 	}
 
-	if ($event->long_description) {
-		$body .= '<div class="mtm">' . $event->long_description . '</div>';
+	if (!$event->long_description3) {
+		if ($event->long_description){
+			$body .= '<div class="mtm">' . $event->long_description . '</div>';
+		}
 	} else if ($event->description) {
 		$body .= '<div class="mtm">' . $event->description . '</div>';
-	}
+	}else{
+		$body .= '<div class="mtm">' . gc_explode_translation($event->long_description3, $lang) . '</div>';
+	} 
 
 	$metadata = elgg_view_menu('entity', array(
 		'entity' => $event,

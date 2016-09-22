@@ -161,6 +161,7 @@ function file_tools_get_folders($container_guid = 0) {
  */
 function file_tools_build_select_options($folders, $depth = 0) {
 	$result = array();
+	$lang = get_current_language();
 	
 	if (!empty($folders)) {
 		foreach ($folders as $index => $level) {
@@ -171,7 +172,13 @@ function file_tools_build_select_options($folders, $depth = 0) {
 			 *
 			 */
 			if ($folder = elgg_extract("folder", $level)) {
-				$result[$folder->getGUID()] = str_repeat("-", $depth) . $folder->title;
+
+				if($folder->title3){
+					$folder_title = gc_explode_translation($folder->title3,$lang);
+				}else{
+					$folder_title = $folder->title;
+				}
+				$result[$folder->getGUID()] = str_repeat("-", $depth) . $folder_title;
 			}
 			
 			if ($childen = elgg_extract("children", $level)) {
@@ -358,13 +365,19 @@ function file_tools_get_sub_folders($folder = false, $list = false) {
  */
 function file_tools_make_menu_items($folders) {
 	$result = false;
-	
+	$lang = get_current_language();
+
 	if (!empty($folders) && is_array($folders)) {
 		$result = array();
 		
 		foreach ($folders as $index => $level) {
 			if ($folder = elgg_extract("folder", $level)) {
-				$folder_title = $folder->title;
+				if($folder->title3){
+					$folder_title = gc_explode_translation($folder->title3,$lang);
+				}else{
+					$folder_title = $folder->title;
+				}
+
 				if (empty($folder_title)) {
 					$folder_title = elgg_echo("untitled");
 				}

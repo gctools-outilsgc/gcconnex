@@ -31,9 +31,11 @@ if ($page_type == "edit") {
 	$title = elgg_echo("blog:edit");
 
 	if (elgg_instanceof($blog, "object", "blog") && $blog->canEdit()) {
+		$lang = get_current_language();
 		$vars["entity"] = $blog;
 
-		$title .= ": " . $blog->title;
+$tilte = gc_explode_translation($blog->title3, $lang);
+		$title .= ": " . $tilte;
 		
 		if ($revision) {
 			$revision = elgg_get_annotation_from_id((int)$revision);

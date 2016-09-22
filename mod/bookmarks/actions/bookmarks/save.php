@@ -6,7 +6,11 @@
 */
 
 $title = htmlspecialchars(get_input('title', '', false), ENT_QUOTES, 'UTF-8');
+$title2 = htmlspecialchars(get_input('title2', '', false), ENT_QUOTES, 'UTF-8');
+$title3 = gc_implode_translation($title, $title2);
 $description = get_input('description');
+$description2 = get_input('description2');
+$description3 = gc_implode_translation($description,$description2);
 $address = get_input('address');
 $access_id = get_input('access_id');
 $tags = get_input('tags');
@@ -60,8 +64,12 @@ if ($guid == 0) {
 $tagarray = string_to_tag_array($tags);
 
 $bookmark->title = $title;
+$bookmark->title2 = $title2;
+$bookmark->title3 = $title3;
 $bookmark->address = $address;
 $bookmark->description = $description;
+$bookmark->description2 = $description2;
+$bookmark->description3 = $description3;
 $bookmark->access_id = $access_id;
 $bookmark->tags = $tagarray;
 

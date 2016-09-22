@@ -9,7 +9,9 @@
 
 // Get input data
 $title = get_input('title');
+$title2 = get_input('title2');
 $description = get_input('description');
+$description2 = get_input('description2');
 $tags = get_input('tags');
 $access_id = get_input('access_id');
 $container_guid = get_input('container_guid', elgg_get_logged_in_user_guid());
@@ -17,7 +19,7 @@ $guid = get_input('guid');
 
 elgg_make_sticky_form('tidypics');
 
-if (empty($title)) {
+if (empty($title) && empty($title2)) {
 	register_error(elgg_echo("album:blank"));
 	forward(REFERER);
 }
@@ -46,7 +48,12 @@ $album->container_guid = $container_guid;
 $album->owner_guid = elgg_get_logged_in_user_guid();
 $album->access_id = $access_id;
 $album->title = $title;
+$album->title2 = $title2;
+$album->title3 = gc_implode_translation($title,$title2);
 $album->description = $description;
+$album->description2 = $description2;
+$album->description3 = gc_implode_translation($description,$description2);
+
 if($tags) {
         $album->tags = string_to_tag_array($tags);
 } else {

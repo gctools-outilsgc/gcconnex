@@ -2,14 +2,18 @@
 
 $guid = (int) get_input("guid");
 $title = get_input("title");
+$title2 = get_input("title2");
+$title3 = gc_implode_translation($title,$title2);
 $owner_guid = (int) get_input("page_owner");
 $description = get_input("description");
+$description2 = get_input("description2");
+$description3 = gc_implode_translation($description,$description2);
 $parent_guid = (int) get_input("file_tools_parent_guid", 0); // 0 is top_level
 $access_id = (int) get_input("access_id", ACCESS_DEFAULT);
 $change_children_access = get_input("change_children_access", false);
 $change_files_access = get_input("change_files_access", false);
 
-if (!empty($title) && !empty($owner_guid)) {
+if ((!empty($title2) || !empty($title)) && !empty($owner_guid) ) {
 	if (($owner = get_entity($owner_guid)) && (elgg_instanceof($owner, "user") || elgg_instanceof($owner, "group"))) {
 		if (!empty($guid)) {
 			// check if editing existing
@@ -47,7 +51,11 @@ if (!empty($title) && !empty($owner_guid)) {
 			// check for the correct parent_guid
 			if (($parent_guid === 0) || ($parent_guid != $folder->getGUID())) {
 				$folder->title = $title;
+				$folder->title2 = $title2;
+				$folder->title3 = $title3;
 				$folder->description = $description;
+				$folder->description2 = $description2;
+				$folder->description3 = $description3;
 	
 				$folder->access_id = $access_id;
 	

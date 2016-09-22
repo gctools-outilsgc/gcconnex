@@ -13,8 +13,10 @@ $page_owner = elgg_get_page_owner_entity();
 
 elgg_make_sticky_form('idea');
 
-$title = strip_tags(get_input('title'));
-$description = get_input('description');
+$title = $title1 = strip_tags(get_input('title'));
+$title2 = strip_tags(get_input('title2'));
+$description = $description1 = get_input('description');
+$description2 = get_input('description2');
 $tags = get_input('tags');
 $guid = (int)get_input('guid');
 $container_guid = (int)get_input('container_guid', elgg_get_page_owner_guid());
@@ -35,7 +37,7 @@ if (!$container || !$container->canWritetoContainer()) {
 	forward(REFERER);
 }
 
-if (!$title || !$description ) {
+if ((!$title || !$description) && (!$title2 || !$description2)) {
 	register_error(elgg_echo('ideas:idea:save:empty'));
 	forward(REFERER);
 }
@@ -50,10 +52,28 @@ if ($guid == 0) {
 	forward(REFERER);
 }
 
-$tagarray = string_to_tag_array($tags);
+	
+if($title && $title2){
+	$title = $title .'->'. $title2;
+}else if (!$title && $title2){
+	$title = $title2;
+}
+
+if($description && $description2){
+	$description = $description .'->'. $description2;
+}else if (!$description && $description2){
+	$description = $description2;
+}
 
 $idea->title = $title;
+$idea->title1 = $title1;
+$idea->title2 = $title2;
+$idea->title3 = gc_implode_translation($title1, $title2);
 $idea->description = $description;
+$idea->description1 = $description1;
+$idea->description2 = $description2;
+$idea->description3 = gc_implode_translation($description1, $description2);
+$tagarray = string_to_tag_array($tags);
 $idea->access_id = $owner->access_id;
 $idea->tags = $tagarray;
 
@@ -81,3 +101,4 @@ if ($idea->save()) {
 	register_error(elgg_echo('ideas:idea:save:failed'));
 	forward(REFERER);
 }
+

@@ -53,6 +53,7 @@ if (elgg_is_logged_in() && $group->isMember(elgg_get_logged_in_user_entity())) {
 		foreach ($group_operators as $group_operator)
 			$gcf_moderator_user[] = $group_operator->guid;
 
+		// save as sticky topic
 		if ($gcf_subtype === 'hjforumtopic' && in_array($gcf_current_user_guid, $gcf_moderator_user)) {
 			$gcf_sticky_topic_label = elgg_echo('gcforums:sticky_topic');
 			$gcf_sticky_topic_input = elgg_view('input/checkboxes', array(
@@ -64,17 +65,21 @@ if (elgg_is_logged_in() && $group->isMember(elgg_get_logged_in_user_entity())) {
 			));
 		}
 
+		// title (required)
 		$gcf_title_label = elgg_echo("gcforums:title_label_{$gcf_subtype}");
 		$gcf_title_input = elgg_view('input/text', array(
 			'name' => 'gcf_title',
+			'required' => true
 		));
 
+		// access level
 		$gcf_access_label = elgg_echo('gcforums:access_label');
 		$gcf_access_input = elgg_view('input/access', array(
 			'name' => 'gcf_access',
 		));
 
-		if ($gcf_subtype === 'hjforum') { // enable categories and postings
+		// enable categories and postings
+		if ($gcf_subtype === 'hjforum') { 
 			$gcf_enable_categories_label = elgg_echo('gcforums:enable_categories_label');
 			$gcf_enable_categories_input = elgg_view('input/checkboxes', array(
 				'name' => 'gcf_allow_categories',
@@ -135,9 +140,11 @@ if (elgg_is_logged_in() && $group->isMember(elgg_get_logged_in_user_entity())) {
 	else
 		$gcf_description_label = elgg_echo('gcforums:description'); // description
 
+	// description
 	$gcf_description_input = elgg_view('input/longtext', array(
 		'name' => 'gcf_description',
 		'id' => 'gcf_description',
+		'required' => true
 	));
 
 

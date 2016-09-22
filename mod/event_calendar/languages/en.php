@@ -323,7 +323,7 @@ return array(
 
 'event_calendar:venue_label' => 'Location', //NEW / Change
 'event_calendar:add_ics' => 'Add to my Outlook calendar',// NEW
-'event_calendar:add_to_my_calendar_ics_response' => 'L\'événement à été envoyé à votre outlook.',//NEW
+'event_calendar:add_to_my_calendar_ics_response' => 'Send to your Outlook.',//NEW
 
 'event_calendar:room_label' => 'Room',//NEW
 );

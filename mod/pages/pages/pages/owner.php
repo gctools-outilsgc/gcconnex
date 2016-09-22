@@ -13,7 +13,12 @@ if (!$owner) {
 // access check for closed groups
 elgg_group_gatekeeper();
 
-$title = elgg_echo('pages:owner', array(gc_explode_translation($owner->title3, $lang)));
+if(!$owner->title3){
+	$title = elgg_echo('pages:owner', array($owner->name));
+}else{
+	$title = elgg_echo('pages:owner', array(gc_explode_translation($owner->title3, $lang)));
+}
+
 
 elgg_push_breadcrumb(gc_explode_translation($owner->title3, $lang));
 

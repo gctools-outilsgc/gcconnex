@@ -44,25 +44,65 @@ $save_button = elgg_view('input/submit', array(
 ));
 $action_buttons = $save_button . $preview_button . $delete_link;
 
-$title_label = elgg_echo('title');
-$title_input = elgg_view('input/text', array(
+$french = elgg_view('input/button', array(
+	'value' => elgg_echo('french'),
+	'id' => 'btnClickfr',
+    'class' => 'btn btn-default',
+));
+
+$english = elgg_view('input/button', array(
+	'value' => elgg_echo('english'),
+	'id' => 'btnClicken',
+    'class' => 'btn btn-default',
+));
+
+$label = elgg_echo('title:en');
+$input = elgg_view('input/text', array(
 	'name' => 'title',
 	'id' => 'blog_title',
 	'value' => $vars['title']
 ));
 
-$excerpt_label = elgg_echo('blog:excerpt');
+$label2 = elgg_echo('title:fr');
+$input2 = elgg_view('input/text', array(
+	'name' => 'title2',
+	'id' => 'blog_title2',
+	'value' => $vars['title2']
+));
+
+$excerpt_label = elgg_echo('blog:excerpt:en');
 $excerpt_input = elgg_view('input/text', array(
 	'name' => 'excerpt',
 	'id' => 'blog_excerpt',
 	'value' => _elgg_html_decode($vars['excerpt'])
 ));
 
-$body_label = elgg_echo('blog:body');
+$excerpt_label2 = elgg_echo('blog:excerpt:fr');
+$excerpt_input2 = elgg_view('input/text', array(
+	'name' => 'excerpt2',
+	'id' => 'blog_excerpt2',
+	'value' => _elgg_html_decode($vars['excerpt2'])
+));
+
+$excerpt_label3 = elgg_echo('blog:excerpt:fr');
+$excerpt_input3 = elgg_view('input/text', array(
+	'name' => 'excerpt3',
+	'id' => 'blog_excerpt3',
+	'value' => _elgg_html_decode($vars['excerpt2'])
+));
+
+$body_label = elgg_echo('blog:body:en');
 $body_input = elgg_view('input/longtext', array(
 	'name' => 'description',
 	'id' => 'blog_description',
 	'value' => $vars['description']
+));
+
+$body_label2 = elgg_echo('blog:body:fr');
+$body_input2 = elgg_view('input/longtext', array(
+	'name' => 'description2',
+	'id' => 'blog_description2',
+	'value' => $vars['description2']
 ));
 
 $save_status = elgg_echo('blog:save_status');
@@ -118,21 +158,41 @@ $guid_input = elgg_view('input/hidden', array('name' => 'guid', 'value' => $vars
 
 echo <<<___HTML
 
-$draft_warning
-
-<div>
-	<label for="blog_title">$title_label</label>
-	$title_input
+$draft_warning<br>
+<div class='en'>
+$french 
+</div>
+<div class='fr'>
+$english
+</div>
+<div id=blog_title class='en'>
+	<label for="blog_title">$label</label>
+	$input
 </div>
 
-<div>
+<div id=blog_title2 class='fr'>
+	<label for="blog_title">$label2</label>
+	$input2
+</div>
+
+<div class='en'>
 	<label for="blog_excerpt">$excerpt_label</label>
 	$excerpt_input
 </div>
 
-<div>
+<div class='fr'>
+	<label for="blog_excerpt">$excerpt_label2</label>
+	$excerpt_input2
+</div>
+
+<div class='en'>
 	<label for="blog_description">$body_label</label>
 	$body_input
+</div>
+
+<div class='fr'>
+	<label for="blog_description">$body_label2</label>
+	$body_input2
 </div>
 
 <div>
@@ -169,3 +229,39 @@ $categories_input
 </div>
 
 ___HTML;
+
+if(get_current_language() == 'fr'){
+?>
+	<script>
+		jQuery('.fr').show();
+	    jQuery('.en').hide();
+
+	</script>
+<?php
+}else{
+?>
+	<script>
+		jQuery('.en').show();
+    	jQuery('.fr').hide();
+
+	</script>
+<?php
+}
+?>
+<script>
+jQuery(function(){
+
+		jQuery('#btnClickfr').click(function(){
+               jQuery('.fr').show();
+               jQuery('.en').hide();
+                
+        });
+
+          jQuery('#btnClicken').click(function(){
+               jQuery('.en').show();
+               jQuery('.fr').hide();
+               
+        });
+
+});
+</script>

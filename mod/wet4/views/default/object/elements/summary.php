@@ -23,10 +23,10 @@ $checkPage = elgg_get_context();
 //echo $checkPage;
 
 $entity = $vars['entity'];
-
+$lang = get_current_language();
 $title_link = elgg_extract('title', $vars, '');
 if ($title_link === '') {//add translation
-	if (isset($entity->title) || isset($entity->name)) {
+	if (isset($entity->title) || isset($entity->name)|| isset($entity->title3)) {
 		if($entity->title3){
 			$text = gc_explode_translation($entity->title3, $lang);
 		}elseif($entity->title2){
@@ -40,8 +40,9 @@ if ($title_link === '') {//add translation
 		}
 
 	} else {
-		$text = $entity->name;
+		$text = gc_explode_translation($entity->title3, $lang);
 	}
+
 	$params = array(
 		'text' => elgg_get_excerpt($text, 100),
 		'href' => $entity->getURL(),
@@ -53,14 +54,33 @@ if ($title_link === '') {//add translation
 $metadata = elgg_extract('metadata', $vars, '');
 $subtitle = elgg_extract('subtitle', $vars, '');
 $content = elgg_extract('content', $vars, '');
+$lang = get_current_language();
+
+if(($entity->excerpt) || ($entity->excerpt2)){
+	
+	$content = gc_explode_translation($entity->excerpt3, $lang);
+	}
+
 
 $tags = elgg_extract('tags', $vars, '');
 if ($tags === '') {
 	$tags = elgg_view('output/tags', array('tags' => $entity->tags));
 }
 
+if ((!$title_link)&& ($entity->title && $entity->title2)){
+	if($entity->title1){
+		$entity->title3 = gc_implode_translation($entity->title1,$entity->title2);
+	}else{
+		$entity->title3 = gc_implode_translation($entity->title,$entity->title2);
+	}
+$title_link = gc_explode_translation($entity->title3, $lang);
+}
+
 if ($title_link) {
     echo "<span class=\"mrgn-bttm-0 summary-title\">$title_link</span>"; //put in span because some links would not take classes
+    echo elgg_in_context($context);
+}else{
+        echo "<span class=\"mrgn-bttm-0 summary-title\">$entity->title</span>"; //put in span because some links would not take classes
     echo elgg_in_context($context);
 }
 //This tests to see if you are looking at a group list and does't outpout the subtitle variable here, It's called at the end of this file
@@ -107,25 +127,13 @@ if($entity->getType() == 'group' ){
 
 	}else{
 
+	echo '<div class="row mrgn-tp-sm">';
+	if ($metadata) {
+	    if ($checkPage != 'widgets_calendar'){
+	        echo '<div class="col-xs-12 mrgn-lft-md ">' .$metadata . '</div>';
+    	}
+	}
 
-	
-  
-echo '<div class="row mrgn-tp-sm">';
-if ($metadata) {
-    if ($checkPage != 'widgets_calendar'){
-        echo '<div class="col-xs-12 mrgn-lft-md ">' .$metadata . '</div>';
-    }
+	echo '</div>';  
+	}
 }
-
-
-
-
-
-
-echo '</div>';  
-}
-}
-
-
-
-

@@ -7,6 +7,7 @@
  */
 
 // get the album entity
+$lang = get_current_language();
 $album_guid = (int) get_input('guid');
 $album = get_entity($album_guid);
 if (!$album) {
@@ -35,7 +36,13 @@ if (elgg_instanceof($owner, 'group')) {
 } else {
 	elgg_push_breadcrumb($owner->name, "photos/owner/$owner->username");
 }
-elgg_push_breadcrumb($album->getTitle());
+
+if ($album->title3){
+	elgg_push_breadcrumb(gc_explode_translation($album->title3, $lang));
+}else{
+	elgg_push_breadcrumb($album->getTitle());
+}
+
 
 $content = elgg_view_entity($album, array('full_view' => true));
 
@@ -98,11 +105,16 @@ if (elgg_get_plugin_setting('slideshow', 'tidypics') && $album->getSize() > 0) {
 		'priority' => 300
 	));
 }
+if ($album->title3){
+	$title = gc_explode_translation($album->title3, $lang);
+}else{
+	$title = $album->getTitle();
+}
 
 $body = elgg_view_layout('content', array(
 	'filter' => false,
 	'content' => $content,
-	'title' => $album->getTitle(),
+	'title' => $title,
 	'sidebar' => elgg_view('photos/sidebar_al', array('page' => 'album')),
 ));
 
