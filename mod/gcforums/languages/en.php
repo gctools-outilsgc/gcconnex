@@ -79,6 +79,7 @@ $english = array(
 	'gcforums:subscribe' => 'Subscribe',
 	'gcforums:unsubscribe' => 'Unsubscribe',
 
+	'gcforums:missing_description' => 'Missing Description', // NEW
 	);
 
 add_translation("en", $english);

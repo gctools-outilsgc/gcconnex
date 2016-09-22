@@ -7,8 +7,11 @@
  * @author Cash Costello
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
-
+$lang = get_current_language();
 $album = elgg_extract('entity', $vars);
+if($album->title3){
+    $album->title = gc_explode_translation($album->title3, $lang);
+}
 
 $album_cover = elgg_view_entity_icon($album, 'medium');
 

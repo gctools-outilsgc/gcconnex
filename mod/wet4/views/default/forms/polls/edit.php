@@ -6,15 +6,33 @@ if ($poll) {
 	$guid = 0;
 }
 
+$lang = get_current_language();
+
+$french = elgg_view('input/button', array(
+    'value' => elgg_echo('btn:translate:fr'),
+    'id' => 'btnClickfr',
+    'class' => 'btn btn-default en',
+));
+
+$english = elgg_view('input/button', array(
+    'value' => elgg_echo('btn:translate:en'),
+    'id' => 'btnClicken',
+    'class' => 'btn btn-default fr',
+));
+
 $question = $vars['fd']['question'];
+$question2 = $vars['fd']['question2'];
 $tags = $vars['fd']['tags'];
 $access_id = $vars['fd']['access_id'];
 
-$question_label = elgg_echo('polls:question');
+$question_label = elgg_echo('polls:questionen');
 $question_textbox = elgg_view('input/text', array('name' => 'question', 'id' => 'question', 'value' => $question));
 
+$question_label2 = elgg_echo('polls:questionfr');
+$question_textbox2 = elgg_view('input/text', array('name' => 'question2', 'id' => 'question2', 'value' => $question2));
+
 $responses_label = elgg_echo('polls:responses');
-$responses_control = elgg_view('polls/input/choices',array('poll'=>$poll));
+$responses_control = elgg_view('polls/input/choices',array('poll'=>$poll, 'test' => $lang));
 
 $tag_label = elgg_echo('tags');
 $tag_input = elgg_view('input/tags', array('name' => 'tags', 'id' => 'tags', 'value' => $tags));
@@ -34,14 +52,30 @@ if (isset($vars['entity'])) {
 $entity_hidden .= elgg_view('input/hidden', array('name' => 'container_guid', 'value' => elgg_get_page_owner_guid()));
 
 echo <<<__HTML
+$french $english
+<div class='en'>
 		<p>
 			<label for="question">$question_label</label><br />
 			$question_textbox
 		</p>
+</div>
+<div class='fr'>
+		<p>
+			<label for="question">$question_label2</label><br />
+			$question_textbox2
+		</p>
+		</div>
 		<p>
 			<label>$responses_label</label><br />
 			$responses_control
 		</p>
+
+		<p >
+			<label>$responses_label2</label><br />
+			$responses_control2
+		</p>
+		
+
 		<p>
 			<label for="tags">$tag_label</label><br />
 			$tag_input
@@ -65,4 +99,42 @@ $('#polls_edit_cancel').click(
 		window.location.href="<?php echo $vars['url'].'pg/polls/list/'.(elgg_get_page_owner_entity()->username); ?>";
 	}
 );
+</script>
+
+<?php
+
+if(get_current_language() == 'fr'){
+?>
+    <script>
+        jQuery('.fr').show();
+        jQuery('.en').hide();
+
+    </script>
+<?php
+}else{
+?>
+    <script>
+        jQuery('.en').show();
+        jQuery('.fr').hide();
+
+    </script>
+<?php
+}
+?>
+<script>
+jQuery(function(){
+
+        jQuery('#btnClickfr').click(function(){
+               jQuery('.fr').show();
+               jQuery('.en').hide();
+                
+        });
+
+          jQuery('#btnClicken').click(function(){
+               jQuery('.en').show();
+               jQuery('.fr').hide();
+               
+        });
+
+});
 </script>

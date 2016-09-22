@@ -4,7 +4,7 @@
  *
  * @package ideas
  */
-
+$lang = get_current_language();
 $idea = get_entity(get_input('guid'));
 
 $page_owner = elgg_get_page_owner_entity();
@@ -16,8 +16,12 @@ if (elgg_instanceof($page_owner, 'group')) {
 } else {
 	elgg_push_breadcrumb($crumbs_title, "ideas/owner/$page_owner->username");
 }
+if($idea->title3){
+	$title = gc_explode_translation($idea->title3, $lang);
+}else{
+	$title = $idea->title;
+}
 
-$title = $idea->title;
 
 elgg_push_breadcrumb($title);
 

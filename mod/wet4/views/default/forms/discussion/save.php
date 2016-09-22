@@ -5,24 +5,51 @@
  */
 
 $title = elgg_extract('title', $vars, '');
+$title2 = elgg_extract('title2', $vars, '');
+
 $desc = elgg_extract('description', $vars, '');
+$desc2 = elgg_extract('description2', $vars, '');
 $status = elgg_extract('status', $vars, '');
 $tags = elgg_extract('tags', $vars, '');
 $access_id = elgg_extract('access_id', $vars, ACCESS_DEFAULT);
 $container_guid = elgg_extract('container_guid', $vars);
 $guid = elgg_extract('guid', $vars, null);
 
+
+$french = elgg_view('input/button', array(
+    'value' => elgg_echo('btn:translate:fr'),
+    'id' => 'btnClickfr',
+    'class' => 'btn btn-default en',
+));
+
+$english = elgg_view('input/button', array(
+    'value' => elgg_echo('btn:translate:en'),
+    'id' => 'btnClicken',
+    'class' => 'btn btn-default fr',
+));
+
+echo $french,$english;
 ?>
-<div class="mrgn-bttm-md">
-	<label for="title"><?php echo elgg_echo('title'); ?></label><br />
+<div class="mrgn-bttm-md en">
+	<label for="title"><?php echo elgg_echo('title:en'); ?></label><br />
 	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title, 'id' => 'title')); ?>
+</div>
+
+<div class="mrgn-bttm-md fr">
+	<label for="title"><?php echo elgg_echo('title:fr'); ?></label><br />
+	<?php echo elgg_view('input/text', array('name' => 'title2', 'value' => $title2, 'id' => 'title2')); ?>
 </div>
 <div class="quick-start-collapse">
     
     
-<div class="mrgn-bttm-md">
+<div class="mrgn-bttm-md en">
 	<label for="description"><?php echo elgg_echo('groups:topicmessage'); ?></label>
 	<?php echo elgg_view('input/longtext', array('name' => 'description', 'value' => $desc, 'id' => 'description')); ?>
+</div>
+
+<div class="mrgn-bttm-md fr">
+	<label for="description"><?php echo elgg_echo('groups:topicmessage2'); ?></label>
+	<?php echo elgg_view('input/longtext', array('name' => 'description2', 'value' => $desc2, 'id' => 'description2')); ?>
 </div>
 <div>
 	<label for="tags"><?php echo elgg_echo('tags'); ?></label>
@@ -69,6 +96,42 @@ if($guid){
 } else {
     echo elgg_view('input/submit', array('value' => 'Create Discussion', 'class' => 'btn btn-primary'));
 }
-        ?>
-    </div>
-</div>
+       
+    
+echo'</div></div>';
+
+if(get_current_language() == 'fr'){
+?>
+    <script>
+        jQuery('.fr').show();
+        jQuery('.en').hide();
+
+    </script>
+<?php
+}else{
+?>
+    <script>
+        jQuery('.en').show();
+        jQuery('.fr').hide();
+
+    </script>
+<?php
+}
+?>
+<script>
+jQuery(function(){
+
+        jQuery('#btnClickfr').click(function(){
+               jQuery('.fr').show();
+               jQuery('.en').hide();
+                
+        });
+
+          jQuery('#btnClicken').click(function(){
+               jQuery('.en').show();
+               jQuery('.fr').hide();
+               
+        });
+
+});
+</script>

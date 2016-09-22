@@ -20,18 +20,24 @@ if( _elgg_services()->session->get('language') == 'en') {//quick fix to display 
 if(elgg_in_context('login')){ //Nick - only show the graphic and register text on the main login page
 ?>
 
-<div class="col-sm-6 clearfix login-engage-bg">
-   <div class="col-sm-12 clearfix ">
-    <?php 
-        
+<div class="col-sm-6 clearfix">
+   <div class="col-sm-4 clearfix ">
+    <?php
+    if( _elgg_services()->session->get('language') == 'en'){//quick fix to display img on production
+        $gcconnexGraphic = '<img src="'.$site_url.'mod/wet4/graphics/GCconnex_icon_slogan_Eng.png" alt="GCconnex. Connecting people and ideas." class="mrgn-tp-md center-block">';
+    }else{
+        $gcconnexGraphic = '<img src="'.$site_url.'mod/wet4/graphics/GCconnex_icon_slogan_Fra.png" alt="GCconnex. Branchez-vous, maximisez vos idées." class="mrgn-tp-md center-block">';
+    }
+
+    echo $gcconnexGraphic;
         //echo '<div class="col-sm-2">'.$gcconnexGraphic.'</div>';
-        echo '<div class="col-sm-12">'.elgg_format_element('div', array('class'=>'login-engage-message',), elgg_echo('wet:login_engage_0')) .'</div>';
+        //echo '<div class="col-sm-12">'.elgg_format_element('div', array('class'=>'login-engage-message',), elgg_echo('wet:login_engage_0')) .'</div>';
         ?>
 
     </div> 
 
 
-<div class="clearfix col-sm-12">
+<div class="clearfix col-sm-8">
 
     <div>
         <?php //Nick - adding list of engaging things in the center of the login / landing page
@@ -42,7 +48,7 @@ if(elgg_in_context('login')){ //Nick - only show the graphic and register text o
                 $contents .='<li><i class="fa fa-circle-o pull-left mrgn-rght-sm" aria-hidden="true"></i>'.elgg_echo($list_text) .'</li>';
             }
             
-            echo elgg_format_element('ul', array('class'=>'login-engage-list'), $contents );
+            echo elgg_format_element('ul', array('class'=>'login-engage-list center-block'), $contents );
             
         ?>
     </div>
@@ -103,9 +109,14 @@ if(elgg_in_context('login')){ //Nick - only show the graphic and register text o
 
 
 <?php
+
+    //stat tracking groups and discussions
+$groups = elgg_get_entities(array('count' => true, 'types' => 'group'));
+$discussions = elgg_get_entities(array('type' => 'object', 'subtype' => 'groupforumtopic', 'count' => true));
+
     //Nick - adding some stats to the bottom of the landing / login page (Should only appear on that page)
 if(elgg_in_context('login')){
-    $inside_stats =['<span class="login-big-num">3000+</span> Groups','<span class="login-big-num">174</span> Departments Across Canada','<span class="login-big-num">14,000</span> Discussion Happening Right Now'];
+    $inside_stats =['<span class="login-big-num">'.$groups.'</span> '.elgg_echo('groups'),elgg_echo('wet:login:departments'),elgg_echo('wet:login:discussions', array($discussions))];
     foreach($inside_stats as $stat){
         $insides .='<div class="col-sm-4 text-center login-stats-child">'.$stat.'</div>';
     }

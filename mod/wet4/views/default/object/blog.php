@@ -4,7 +4,7 @@
  *
  * @package Blog
  */
-
+$lang = get_current_language();
 $full = elgg_extract('full_view', $vars, FALSE);
 $blog = elgg_extract('entity', $vars, FALSE);
 
@@ -18,7 +18,7 @@ $categories = elgg_view('output/categories', $vars);
 $excerpt = $blog->excerpt;
 
 if (empty($excerpt)) {
-	$excerpt = elgg_get_excerpt($blog->description);
+	$excerpt = elgg_get_excerpt(gc_explode_translation($blog->description3, $lang));
 }
 
 //test to see if it is widget view
@@ -79,8 +79,14 @@ if (elgg_in_context('widgets')) {
 // Show blog
 if ($full) {
 	// full view
-	$body = elgg_view('output/longtext', array(
-		'value' => $blog->description,
+
+if($blog->description3){
+	$blog_descr = gc_explode_translation($blog->description3, $lang);
+}else{
+	$blog_descr = $blog->description;
+}
+ 	$body = elgg_view('output/longtext', array(
+		'value' => $blog_descr,
 		'class' => 'blog-post',
 	));
 

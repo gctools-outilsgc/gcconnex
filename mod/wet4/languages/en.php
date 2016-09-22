@@ -48,6 +48,8 @@ return array(
   'wet:login_engage_3'=>'Promote government-wide GC activities',
   'wet:login_welcome'=>'Welcome to GCconnex',
 
+  'wet:login:departments'=>"<span class=\"login-big-num\">174</span> organizations across Canada",
+  'wet:login:discussions'=>"<span class=\"login-big-num\">%s</span> discussions happening right now",
 /**
 *notice section
 */
@@ -161,6 +163,7 @@ return array(
   */
 
   'file:folderstruct' => 'Folder structure',
+  //'file:move:selected' => 'Move selected',
 
 /**
  * User Menu
@@ -1650,6 +1653,56 @@ Please do not reply to this email.",
 'msg:change_access' => "Not all users have access to your content. Since GCconnex wants to be as open as possible, are you sure you need to restrict the access to this content?", //NEW
 'msg:change_access_title' => "Did you know?",
 
+/*
+*Change language content
+*/
+
+'btn:translate:fr' => 'French',
+'btn:translate:en' => 'English',
+'title:en' => 'English title',
+'title:fr' => 'French title',
+'blog:body:fr' => 'Body in french',
+'blog:body:en' => 'Body in english',
+'blog:excerpt:fr' => 'Excerpt in french',
+'blog:excerpt:en' => 'Excerpt in english',
+'groups:name' => 'Group name in english',
+'groups:name2' => 'Group name in french',
+'groups:briefdescription' => 'Brief description in english',
+'groups:briefdescription2' => 'Brief description in english',
+'groups:description' => 'Long description in english',
+'groups:description2'=> 'Long description in french',
+'groups:topicmessage' => 'Topic message in english',
+'groups:topicmessage2' => 'Topic message in french',
+'event_calendar:long_description_label' => 'Long description in english',
+'event_calendar:long_description_label2' => 'Long description in french',
+'event_calendar:info' => 'Additional information in english',
+'event_calendar:info2' => 'Additional information in french',
+'event_calendar:title_label2' => 'Event title in french',
+'event_calendar:title_label' => 'Event title in english',
+'booksmark:description' => 'Long description in english',
+'booksmark:description2'=> 'Long description in french',
+'polls:add_choicefr' => 'Add response choice in french',
+'polls:add_choiceen' => 'Add response choice in english',
+'polls:questionfr' => 'Poll question in french',
+'polls:questionen' => 'Poll question in english',
+'file:description:fr' => 'Description in french',
+'file:description:en' => 'Description in english',
+'album:title:en' => 'Album title in english',
+'album:title:fr' => 'Album title in french',
+'album:desc:en' => 'Album description in english',
+'album:desc:fr' => 'Album description in french',
+'caption:en' => 'Caption in english',
+'caption:fr' => 'Caption in french',
+'pages:description' => 'Page text in english',
+'pages:description2' => 'Page text in french',
+'pages:title' => 'Page title in english',
+'pages:title2' => 'Page title in french',
+'file_tools:forms:edit:description2' => 'Description in french',
+'file_tools:forms:edit:description' => 'Description in english',
+'img:desc:fr' => 'Image description in french',
+'img:desc:en' => 'Image description in english',
+'description:ideas:en' => 'Ideas description in english',
+'description:ideas:fr' => 'Ideas description in french',
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */

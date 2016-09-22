@@ -47,6 +47,13 @@ return array(
   'wet:login_engage_2'=>"Trouvez les gens dont vous avez besoin",
   'wet:login_engage_3'=>"Promouvoir les activités GC à l'échelle du gouvernement",
   'wet:login_welcome'=>'Welcome to GCconnex',
+
+  'wet:login:departments'=>"<span class=\"login-big-num\">174</span> organizations de toutes les regions du Canada",
+  'wet:login:discussions'=>"<span class=\"login-big-num\">%s</span> discussions qui se passe à l’instant",
+  'img:desc:fr' => 'Description de l\'image en français',
+'img:desc:en' => 'Description de l\'image en anglais',
+'description:ideas:en' => 'Description de l\'idée en anglais',
+'description:ideas:fr' => 'Description de l\'idée en français',
   /**
 *notice section
 */
@@ -165,7 +172,8 @@ return array(
    * Files
    */
 
-  'file:folderstruct' => 'Folder structure (translate me)', /* NEW */
+  //'file:folderstruct' => 'Arborescence',
+  //'file:move:selected' => 'Déplacer la sélection',
 
 /**
   * User Menu
@@ -1480,7 +1488,8 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 /*
 *Change language content
 */
-
+'btn:translate:fr' => 'Français',
+'btn:translate:en' => 'Anglais',
 'title:en' => 'Titre en anglais',
 'title:fr' => 'Titre en français',
 'blog:body:fr' => 'Texte complet en français',
@@ -1493,6 +1502,32 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 'groups:briefdescription2' => 'Description brève en français',
 'groups:description' => 'Description longue en anglais',
 'groups:description2'=> 'Description longue en français',
+'groups:topicmessage' => 'Dernière discussion en anglais',
+'groups:topicmessage2' => 'Dernière discussion en français',
+'event_calendar:long_description_label' => 'Description longue',
+'event_calendar:long_description_label2' => 'Description longue',
+'event_calendar:info' => 'Information supplémentaire en anglais',
+'event_calendar:info2' => 'Information supplémentaire en français',
+'event_calendar:title_label2' => "Titre de l'événement en français",
+'event_calendar:title_label' => "Titre de l'événement en anglais",
+'booksmark:description' => 'Description longue en anglais',
+'booksmark:description2'=> 'Description longue en français',
+'polls:add_choicefr' => 'Ajouter choix de réponse en français',
+'polls:add_choiceen' => 'Ajouter choix de réponse en anglais',
+'file:description:fr' => 'Description en français',
+'file:description:en' => 'Description en anglais',
+'album:title:en' => 'Titre de l\'album en anglais',
+'album:title:fr' => 'Titre de l\'album en français',
+'album:desc:en' => 'Description de l\'album en anglais',
+'album:desc:fr' => 'Description de l\'album en français',
+'caption:en' => 'Description en anglais',
+'caption:fr' => 'Description en français',
+'pages:description' => 'Texte de la page en anglais',
+'pages:description2' => 'Texte de la page en français',
+'pages:title' => 'Titre de la page en anglais',
+'pages:title2' => 'Titre de la page en français',
+'file_tools:forms:edit:description2' => 'Description en français',
+'file_tools:forms:edit:description' => 'Description en anglais',
 
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)

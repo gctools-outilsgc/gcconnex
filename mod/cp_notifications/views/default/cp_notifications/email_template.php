@@ -150,8 +150,19 @@ switch ($msg_type) {
 		);
 
 		// cyu - update
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_comments:description',array($vars['cp_comment']->getURL()),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_comments:description',array($vars['cp_comment']->getURL()),'fr');
+		$cp_comment_txt = strip_tags($vars['cp_comment']->description);
+		//$cp_notify_msg_description_en = elgg_echo('cp_notify:body_comments:description',array($vars['cp_comment']->getURL()),'en');
+		//$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_comments:description',array($vars['cp_comment']->getURL()),'fr');
+
+		// GCCON-209: missing description (refer to requirements)
+		$cp_notify_msg_description_en = $cp_comment_txt;
+		$cp_notify_msg_description_fr = $cp_comment_txt;
+		if (strlen($cp_comment_txt) > 200) {
+			$cp_comment_txt = substr($cp_comment_txt, 0, 200);
+			$cp_notify_msg_description_en = substr($cp_comment_txt, 0, strrpos($cp_comment_txt, ' ')).'... '.elgg_echo('cp_notify:readmore',array($vars['cp_comment']->getURL()),'en');
+			$cp_notify_msg_description_fr = substr($cp_comment_txt, 0, strrpos($cp_comment_txt, ' ')).'... '.elgg_echo('cp_notify:readmore',array($vars['cp_comment']->getURL()),'fr');
+		}
+
 		if ($vars['cp_topic']->getSubtype() === 'groupforumtopic') {
 			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_comments:title_discussion', array($vars['cp_user_comment']->getURL(), $vars['cp_user_comment']->username, $vars['cp_topic_type'], $vars['cp_topic']->getURL(), $vars['cp_topic']->title),'en');
 			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_comments:title_discussion', array($vars['cp_user_comment']->getURL(), $vars['cp_user_comment']->username, $vars['cp_topic_type'], $vars['cp_topic']->getURL(), $vars['cp_topic']->title),'fr');
@@ -201,6 +212,10 @@ switch ($msg_type) {
 		// cyu - updated as per required (06-15-2016)
 		$topic_author = get_entity($vars['cp_topic']->owner_guid);
 
+		if($vars['cp_topic']->title1){
+			$vars['cp_topic']->title =$vars['cp_topic']->title1;
+		}
+
 		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_new_content:title',array($topic_author->getURL(), $topic_author->username, cp_translate_subtype($vars['cp_topic']->getSubtype()), $vars['cp_topic']->getURL(), $vars['cp_topic']->title),'en');
 		if (array_key_exists($vars['cp_topic']->getSubtype(),$entity_f))
 			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_f',array($topic_author->getURL(), $topic_author->username, $entity_f[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL(), $vars['cp_topic']->title),'fr');
@@ -214,7 +229,9 @@ switch ($msg_type) {
 			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_m2',array($topic_author->getURL(), $topic_author->username, $entity_m2[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL(), $vars['cp_topic']->title),'fr');
 
 		//$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title',array($topic_author->getURL(), $topic_author->username, cp_translate_subtype($vars['cp_topic']->getSubtype()), $vars['cp_topic']->getURL(), $vars['cp_topic']->title),'fr');
-		$cp_topic_description = strip_tags($vars['cp_topic']->description);
+		if($vars['cp_topic']->description1){
+             $cp_topic_description = strip_tags($vars['cp_topic']->description1);
+        }
 
 		$cp_topic_description_en = $cp_topic_description;
 		$cp_topic_description_fr = $cp_topic_description;
@@ -223,7 +240,7 @@ switch ($msg_type) {
 			$cp_topic_description_en = substr($cp_topic_description, 0, strrpos($cp_topic_description, ' ')).'... '.elgg_echo('cp_notify:readmore',array($vars['cp_topic']->getURL()),'en');
 			$cp_topic_description_fr = substr($cp_topic_description, 0, strrpos($cp_topic_description, ' ')).'... '.elgg_echo('cp_notify:readmore',array($vars['cp_topic']->getURL()),'fr');
 		}
-		if ($vars['cp_topic']->getSubtype() === 'groupforumtopic') {
+		if ($vars['cp_topic']->getSubtype() === 'groupforumtopic' /*|| $vars['cp_topic']->getContainerEntity() instanceof ElggGroup*/) {
 			$cp_notify_msg_description_en = elgg_echo('cp_notify:body_new_content:description_discussion',array("<i>{$cp_topic_description_en}</i><br/>", $vars['cp_topic']->getURL()),'en');
 			$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_new_content:description_discussion',array("<i>{$cp_topic_description_fr}</i><br/>", $vars['cp_topic']->getURL()),'fr');
 		} else if (!$cp_topic_description) {
@@ -471,8 +488,14 @@ switch ($msg_type) {
 
 
 	case 'cp_wire_share':
-		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_wireshare:title',array($vars['cp_shared_by']->name,cp_translate_subtype($vars['cp_content']->getSubtype()),$vars['cp_content']->title),'en');
-		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_wireshare:title',array($vars['cp_shared_by']->name,cp_translate_subtype($vars['cp_content']->getSubtype()),$vars['cp_content']->title),'fr');
+
+		if (!$vars['cp_content']->title) {
+			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_wireshare:title2',array($vars['cp_shared_by']->name,cp_translate_subtype($vars['cp_content']->getSubtype())),'en');
+			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_wireshare:title2',array($vars['cp_shared_by']->name,cp_translate_subtype($vars['cp_content']->getSubtype())),'fr');
+		} else {
+			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_wireshare:title',array($vars['cp_shared_by']->name,cp_translate_subtype($vars['cp_content']->getSubtype()),$vars['cp_content']->title),'en');
+			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_wireshare:title',array($vars['cp_shared_by']->name,cp_translate_subtype($vars['cp_content']->getSubtype()),$vars['cp_content']->title),'fr');
+		}
 
 		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_wireshare:description',array($vars['cp_shared_by']->name,cp_translate_subtype($vars['cp_content']->getSubtype()),$vars['cp_wire_url']),'en');
 		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_wireshare:description',array($vars['cp_shared_by']->name,cp_translate_subtype($vars['cp_content']->getSubtype()),$vars['cp_wire_url']),'fr');

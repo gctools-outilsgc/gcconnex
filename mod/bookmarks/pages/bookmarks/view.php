@@ -13,6 +13,8 @@ $bookmark = get_entity($guid);
 
 $page_owner = elgg_get_page_owner_entity();
 
+$lang = get_current_language();
+
 elgg_group_gatekeeper();
 
 $crumbs_title = $page_owner->name;
@@ -23,7 +25,7 @@ if (elgg_instanceof($page_owner, 'group')) {
 	elgg_push_breadcrumb($crumbs_title, "bookmarks/owner/$page_owner->username");
 }
 
-$title = $bookmark->title;
+$title = gc_explode_translation($bookmark->title3,$lang);
 
 elgg_push_breadcrumb($title);
 

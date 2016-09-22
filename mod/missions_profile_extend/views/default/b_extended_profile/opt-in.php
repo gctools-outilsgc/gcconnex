@@ -32,8 +32,12 @@
 	}
 	else {
 		echo '<div class="gcconnex-profile-opt-in-display-table" style="margin: 10px;">';
-			echo '<ul class="col-sm-6 list-unstyled">';
-        
+        echo '<div class="col-sm-6 "><h4 class="mrgn-tp-0">'. elgg_echo('gcconnex_profile:opt:atlevel').'</h4>';
+			echo '<ul class="list-unstyled">';
+                echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:micro_missionseek');
+				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_missions) . '</span></li>';
+                echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:micro_mission');
+                echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_missionCreate) . '</span></li>';
                 echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:assignment_deployment_seek');
 				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_assignSeek) . '</span></li>';
 				echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:assignment_deployment_create');
@@ -51,12 +55,11 @@
         
 				
                 
-        echo '</ul>';
-        echo '<ul class="col-sm-6 list-unstyled">';
-                echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:micro_missionseek');
-				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_missions) . '</span></li>';
-                echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:micro_mission');
-				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_missionCreate) . '</span></li>';
+        echo '</ul></div>';
+        echo '<div class="col-sm-6 "><h4 class="mrgn-tp-0">'. elgg_echo('gcconnex_profile:opt:development').'</h4>';
+        echo '<ul class="list-unstyled">';
+                
+				
                 echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:mentored');
 				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_mentored) . '</span></li>';
 				echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:mentoring');
@@ -84,7 +87,7 @@
                 
         
                 
-                echo '</ul>';
+                echo '</ul></div>';
 			/*echo '</tr><tr>';
 				echo '<div class="left-col">' . elgg_echo('gcconnex_profile:opt:peer_coached') . '</div>';
 				echo '<div>' . elgg_echo($user->opt_in_peer_coached) . '</div>';

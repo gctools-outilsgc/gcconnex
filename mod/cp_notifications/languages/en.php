@@ -113,7 +113,8 @@ $english = array(
 
 
 	// new content posted section
-	//'cp_notify:subject:new_content' => "%s posted a new %s with the title '%s'",
+	'cp_notify_usr:subject:new_content' => "%s posted a new %s with the title '%s'",
+	'cp_notify_usr:subject:new_content2' => "%s posted a new %s",
 	'cp_notify:subject:new_content' => "A new %s was posted in group %s",
 
 	// +------ cyu - modified : <username> posted a new <item type> entitled <item name>
@@ -228,6 +229,8 @@ $english = array(
 	// sharing content on wire section
 	'cp_notify:wireshare:subject' => "%s shared your %s with title '%s'",
 	'cp_notify:body_wireshare:title' => "%s shared your %s with title '%s'",
+	'cp_notify:body_wireshare:title2' => "%s shared your %s",
+	//'cp_notify:body_wireshare:description' => "%s has shared your %s on the wire, to view or reply to this please click on the following link: %s",
 	'cp_notify:body_wireshare:description' => "%s has shared your %s on the wire, to view or reply to this please click on the following link: %s",
 	'cp_notify:wireshare_thewire:subject' => "%s shared your message on the wire",
 
@@ -287,7 +290,7 @@ $english = array(
 	"cp_notify:sidebar:group_title" => "Group you are member of",
 	"cp_notify:sidebar:subs_title" => "Personal Subscriptions",
     
-    'cp_notify:contactHelpDesk'=>'Should you have any concerns, please use the <a href="https://gcconnex.gc.ca/mod/contactform/">Contact us form</a>.',
+    'cp_notify:contactHelpDesk'=>'Should you have any concerns, please use the <a href="'.elgg_get_site_url().'mod/contactform/">Contact us form</a>.',
     'cp_notify:visitTutorials'=>'To learn more about GCconnex and its features visit the <a href="http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/See_All">GCconnex User Help</a>.<br/>
 	                             Thank you',
 
@@ -327,6 +330,8 @@ $english = array(
 	'cp_notify:unsubscribe_all_label' => 'Click here to unsubscribe to all the groups update',
 	'cp_notify:personal_setting' => 'Your Subscriptions',
 	'cp_notify:no_subscription' => 'There are no subscriptions',
+
+	'not_contact_person' => 'Not the right contact?',
 );
 
 add_translation("en", $english);

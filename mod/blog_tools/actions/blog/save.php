@@ -51,11 +51,17 @@ $old_status = $blog->status;
 // set defaults and required values.
 $values = array(
 	'title' => '',
+	'title2' => '',
+	'title3' => '',
 	'description' => '',
+	'description2' => '',
+	'description3' => '',
 	'status' => 'draft',
 	'access_id' => ACCESS_DEFAULT,
 	'comments_on' => 'On',
 	'excerpt' => '',
+	'excerpt2' => '',
+	'excerpt3' => '',
 	'tags' => '',
 	'publication_date' => '',
 	'expiration_date' => '',
@@ -64,7 +70,7 @@ $values = array(
 
 // fail if a required entity isn't set
 //$required = array('title', 'description');
-$cart = array(); //Create an array to compare if english or french title and description is in.
+$cart = array(); //Create a array to compare if english or french title and description is in.
 foreach ($values as $name => $default) {
 
 	 $cart[] = array($name => $values);
@@ -79,7 +85,6 @@ if ($cart['description'] && $cart['description2'] == ''){
 	$error = elgg_echo("blog:error:missing:description");
 
 }
-
 
 // load from POST and do sanity and access checking
 foreach ($values as $name => $default) {
@@ -143,7 +148,6 @@ foreach ($values as $name => $default) {
 if (!$values['title']){
 	$values['title'] = $values['title2'];
 }
-
 //implode for tranlation
 $values['title3'] = gc_implode_translation($values['title'], $values['title2']);
 $values['excerpt3'] = gc_implode_translation($values['excerpt'], $values['excerpt2']);

@@ -7,7 +7,9 @@
 
 // once elgg_view stops throwing all sorts of junk into $vars, we can use
 $title = elgg_extract('title', $vars, '');
+$title2 = elgg_extract('title2', $vars, '');
 $desc = elgg_extract('description', $vars, '');
+$desc2 = elgg_extract('description2', $vars, '');
 $tags = elgg_extract('tags', $vars, '');
 $access_id = elgg_extract('access_id', $vars, ACCESS_DEFAULT);
 $container_guid = elgg_extract('container_guid', $vars);
@@ -26,18 +28,39 @@ if ($guid) {
 
 elgg_unregister_menu_item('title', 'new_folder');
 
+$french = elgg_view('input/button', array(
+    'value' => elgg_echo('btn:translate:fr'),
+    'id' => 'btnClickfr',
+    'class' => 'btn btn-default en',
+));
+
+$english = elgg_view('input/button', array(
+    'value' => elgg_echo('btn:translate:en'),
+    'id' => 'btnClicken',
+    'class' => 'btn btn-default fr',
+));
+
+echo $body .= $french.' '.$english;
 ?>
 <div>
 	<label for="upload"><?php echo $file_label; ?></label><br />
 	<?php echo elgg_view('input/file', array('name' => 'upload', 'id' => 'upload')); ?>
 </div>
-<div>
-	<label for="title"><?php echo elgg_echo('title'); ?></label><br />
+<div class="en">
+	<label for="title"><?php echo elgg_echo('title:en'); ?></label><br />
 	<?php echo elgg_view('input/text', array('name' => 'title', 'id' => 'title', 'value' => $title)); ?>
 </div>
-<div>
-	<label for="description"><?php echo elgg_echo('description'); ?></label>
+<div class="fr">
+	<label for="title2"><?php echo elgg_echo('title:fr'); ?></label><br />
+	<?php echo elgg_view('input/text', array('name' => 'title2', 'id' => 'title2', 'value' => $title2)); ?>
+</div>
+<div class="en">
+	<label for="description"><?php echo elgg_echo('file:description:en'); ?></label>
 	<?php echo elgg_view('input/longtext', array('name' => 'description', 'id' => 'description', 'value' => $desc)); ?>
+</div>
+<div class="fr">
+	<label for="description2"><?php echo elgg_echo('file:description:fr'); ?></label>
+	<?php echo elgg_view('input/longtext', array('name' => 'description2', 'id' => 'description2', 'value' => $desc2)); ?>
 </div>
 <div>
 	<label for="tags"><?php echo elgg_echo('tags'); ?></label>
@@ -85,5 +108,41 @@ if ($guid) {
 
 echo elgg_view('input/submit', array('value' => $submit_label, 'class' => 'btn btn-primary mrgn-tp-md'));
 
+
+echo'</div>';
+
+if(get_current_language() == 'fr'){
 ?>
-</div>
+    <script>
+        jQuery('.fr').show();
+        jQuery('.en').hide();
+
+    </script>
+<?php
+}else{
+?>
+    <script>
+        jQuery('.en').show();
+        jQuery('.fr').hide();
+
+    </script>
+<?php
+}
+?>
+<script>
+jQuery(function(){
+
+        jQuery('#btnClickfr').click(function(){
+               jQuery('.fr').show();
+               jQuery('.en').hide();
+                
+        });
+
+          jQuery('#btnClicken').click(function(){
+               jQuery('.en').show();
+               jQuery('.fr').hide();
+               
+        });
+
+});
+</script>

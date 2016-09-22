@@ -11,7 +11,7 @@
  * MBlondin 	2016-02-14 		Creation of library
 
  ***********************************************************************/
-/**
+ /**
  * GCconnex combine English and French text into one string
  *
  *

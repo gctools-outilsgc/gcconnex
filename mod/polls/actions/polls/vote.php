@@ -5,7 +5,7 @@
  */
 
 // Get input data
-$response = get_input('response');
+$response = get_input('response3');
 $guid = get_input('guid');
 
 //get the poll entity

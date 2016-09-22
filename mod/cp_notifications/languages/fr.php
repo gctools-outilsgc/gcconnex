@@ -134,6 +134,8 @@ $french = array(
 
 
 	// new content posted section
+	'cp_notify_usr:subject:new_content' => "%s a publié un nouveau %s avec le titre '%s'",
+	'cp_notify_usr:subject:new_content2' => "%s a publié un nouveau %s",
 	'cp_notify:subject:new_content_mas' => "Un nouveau %s a été affiché dans le groupe %s",
 	'cp_notify:subject:new_content_mas2' => "Un nouvel %s a été affiché dans le groupe %s",
 	'cp_notify:subject:new_content_fem' => "Une nouvelle %s a été affichée dans le groupe %s",
@@ -234,10 +236,11 @@ $french = array(
 
 
 	// wire share section
-	'cp_notify:wireshare:subject' => "%s a partagé votre %s avec le titre '%s'", // translate
-	'cp_notify:body_wireshare:title' => "%s a partagé votre %s avec le titre '%s'", // translate
-	'cp_notify:body_wireshare:description' => "%s a partagé votre %s sur le fil, 
-		pour consulter ou répondre, veuillez cliquer sur le lien suivant : %s", // translate
+	'cp_notify:wireshare:subject' => "%s a partagé votre %s avec le titre '%s'",
+	'cp_notify:body_wireshare:title' => "%s a partagé votre %s avec le titre '%s'",
+	'cp_notify:body_wireshare:title2' => "%s a partagé votre %s",
+
+	'cp_notify:body_wireshare:description' => "%s a partagé votre %s sur le fil, pour consulter ou répondre, veuillez cliquer sur le lien suivant : %s",
 	'cp_notify:wireshare_thewire:subject' => "%s a partager votre publication sur le fil",
 
 	// event calendar section

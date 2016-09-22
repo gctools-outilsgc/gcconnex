@@ -8,6 +8,7 @@
 $full = elgg_extract('full_view', $vars, FALSE);
 $idea = elgg_extract('entity', $vars, FALSE);
 $show_group = elgg_extract('show_group', $vars, FALSE);
+$lang = get_current_language();
 
 if (!$idea) {
 	return;
@@ -19,10 +20,19 @@ $container = $idea->getContainerEntity();
 $user_guid = elgg_get_logged_in_user_guid();
 $categories = elgg_view('output/categories', $vars);
 
-$description = elgg_view('output/longtext', array('value' => $idea->description, 'class' => 'pbl'));
-
+if($idea->description3){
+	$description = elgg_view('output/longtext', array('value' => gc_explode_translation($idea->description3,$lang), 'class' => 'pbl'));
+}else{
+	$description = elgg_view('output/longtext', array('value' => $idea->description, 'class' => 'pbl'));
+}
+$lang = get_current_language();
+if($idea->title3){
+	$title = gc_explode_translation($idea->title3, $lang);
+}else{
+	$title = $idea->title;
+}
 $title_link = elgg_view('output/url', array(
-	'text' => $idea->title,
+	'text' => $title,
 	'href' => $idea->getURL(),
 	'class' => 'mrs'
 ));
@@ -183,7 +193,9 @@ HTML;
 HTML;
 
 } elseif ($full == 'no_vote') {
-
+    if ($idea->description1){
+     $idea->description = $idea->description1;   
+    }
 	$content = elgg_get_excerpt($idea->description);
     $points = "<div class='idea-vote-counter text-center idea-points'><span class='wb-inv'>Vote count</span>$sum</div>";
     $metadata = elgg_view_menu('entity', array(

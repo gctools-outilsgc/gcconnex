@@ -7,7 +7,7 @@
 
 $full = elgg_extract('full_view', $vars, FALSE);
 $bookmark = elgg_extract('entity', $vars, FALSE);
-
+$lang = get_current_language();
 if (!$bookmark) {
 	return;
 }
@@ -17,7 +17,11 @@ $owner_icon = elgg_view_entity_icon($owner, 'medium');
 $categories = elgg_view('output/categories', $vars);
 
 $link = elgg_view('output/url', array('href' => $bookmark->address));
+if($bookmark->description3){
+    $description = elgg_view('output/longtext', array('value' => gc_explode_translation($bookmark->description3, $lang), 'class' => 'pbl'));
+}else{
 $description = elgg_view('output/longtext', array('value' => $bookmark->description, 'class' => 'pbl'));
+}
 
 $owner_link = elgg_view('output/url', array(
 	'href' => "bookmarks/owner/$owner->username",

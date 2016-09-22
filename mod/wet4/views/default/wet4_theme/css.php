@@ -10826,7 +10826,7 @@ a.shr-opn, a.shr-opn:hover {
  .noWrap {
      overflow-wrap: break-word;
   word-wrap: break-word;
-
+  white-space:inherit;
  }
 
  .elgg-avatar-wet4-sf{
@@ -10853,6 +10853,10 @@ a.shr-opn, a.shr-opn:hover {
  .pro-avatar {
      height:auto !important;
      width: 100% !important;
+ }
+
+ .pro-avatar img {
+     margin: 0 auto;
  }
 
  .department-test{
@@ -10886,6 +10890,25 @@ a.shr-opn, a.shr-opn:hover {
      width:25%;
      position:absolute;
      left: 5%;
+}
+
+.gcInitBadge {
+        position: absolute; 
+         margin-left: auto; 
+         margin-right: auto;
+         left:0;
+         right:0;
+         width:80%;
+         bottom:-10%;
+         z-index:999;
+}
+
+.elgg-avatar > .elgg-icon-hover-menu  {
+    z-index: 1000;
+}
+
+elgg-menu-item-profile-card .gcInitBadge {
+    left:-15%;
 }
 
     .gcProfileBadge-lower {
@@ -11440,9 +11463,11 @@ border:none;
 
 }
 
+/*** Group Cover Photo ***/
+
 .groups-profile{
     margin-top: 170px;
-
+    z-index: 1;
 }
 
 .group-cover-photo{
@@ -11458,19 +11483,30 @@ border:none;
     width:100%;
 
 }
-.groups-profile{
-    margin-top: 170px;
-    z-index: 1;
+
+
+@media (max-width: 767px) {
+  .group-cover-photo{
+      display:none;
+
+  }
+  .groups-profile{
+      margin-top: 4px !important;
+  }
+
 }
 
-.group-cover-photo{
-    width:100%;
-    height: 250px;
-    position: absolute;
-    margin-top: 60px;
-    background-color:#047177;
-    overflow:hidden;
-}
+@media (max-width: 992px) {
+    .group-cover-photo{
+      height: 180px;
+
+  }
+  .groups-profile{
+      margin-top: 100px;
+  }
+     }
+
+/*** end of Group Cover Photo ***/
 
 /******Padding Classes********/
 
@@ -11592,7 +11628,7 @@ border:none;
         padding: 8px;
     }
 
-
+    
 #userMenu p {
     display: inline;
 }
@@ -11727,7 +11763,7 @@ border:none;
 
 }
 .elgg-menu-hover{
-    z-index: 3;
+    z-index: 1000;
     background-color:white;
     padding: 0;
     border: 1px solid #ccc;

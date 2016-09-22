@@ -109,7 +109,12 @@ if (!$draw_page) {
 	$folders = file_tools_get_folders($page_owner->getGUID());
 
 	// build page elements
-	$title_text = elgg_echo("file:user", array(gc_explode_translation($page_owner->title3, $lang)));
+	if($page_owner->title3){
+		$title_text = elgg_echo("file:user", array(gc_explode_translation($page_owner->title3, $lang)));	
+	}else{
+		$title_text = elgg_echo("file:user", array($page_owner->name));
+	}
+	
 	
 	$body = "<div id='file_tools_list_files_container' class='elgg-content'>" . elgg_view("graphics/ajax_loader", array("hidden" => false)) . "</div>";
 	

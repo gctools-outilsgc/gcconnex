@@ -9,7 +9,7 @@
  * www.webgalli.com or www.m4medicine.com
  */
 
-
+$lang = get_current_language();
 if (isset($vars['entity'])) {
     $chartHeight = "data-flot='{ \"legend\": {\"show\":\"false\"}}'";
     echo '<table class="wb-charts wb-charts-pie wb-charts-nolegend table mrgn-tp-md polls-table" '. $chartHeight .' >';
@@ -20,7 +20,11 @@ if (isset($vars['entity'])) {
 	$question = $vars['entity']->question;
 
 	//get the array of possible responses
-	$responses = polls_get_choice_array($vars['entity']);
+	if(polls_get_choice_array3($vars['entity'])){
+		$responses = polls_get_choice_array3($vars['entity']);
+    }else{
+        $responses = polls_get_choice_array($vars['entity']);
+    }
 
 	//get the array of user responses to the poll
 	$user_responses = $vars['entity']->getAnnotations('vote',9999,0,'desc');
@@ -29,10 +33,9 @@ if (isset($vars['entity'])) {
 	$user_responses_count = $vars['entity']->countAnnotations('vote');
 
 	//create new array to store response and count
-	//$response_count = array();
-
 
 	//populate array
+
     echo '<tr>';
     echo '<td class="wb-inv"></td>';
 	foreach($responses as $response)
@@ -50,9 +53,19 @@ if (isset($vars['entity'])) {
 		//html
 		?>
 
-    <th class="text-center">
-        <?php echo $response; ?>
+<th class="text-center">
+        <?php 
+        
+        $response1 = gc_explode_translation($response, $lang);
+        if(empty($response1)){
+           echo $response;
+        }else{
+            echo gc_explode_translation($response1, $lang); 
+        }
+        
+        ?>
     </th>
+
 
 
 
@@ -64,9 +77,14 @@ if (isset($vars['entity'])) {
         echo '<th class="wb-inv">'.$question.'</th>';
     	foreach($responses as $response)
 	{
+		$response1 = gc_explode_translation($response, $lang);
+            if(empty($response1)){
+            $response1 = $response;
+            }
+
 		//get count per response
 		$response_count = polls_get_response_count($response, $user_responses);
-			
+
 		//calculate %
 		if ($response_count && $user_responses_count) {
 			$response_percentage = round(100 / ($user_responses_count / $response_count));

@@ -68,13 +68,13 @@ echo $french,$english;
     <br />
     <div id="suggestedText"></div>
     <?php
-        //if creating a group
+   /*     //if creating a group
     if(empty($group)){
         echo elgg_view("input/groups_autocomplete", array(
 				'name' => 'name',
 				'value' => elgg_extract('name', $vars),
 		));
-    } else {
+    } else {*/
     ?>
 
 	<?php echo elgg_view("input/text", array(
@@ -83,7 +83,7 @@ echo $french,$english;
         'id' => 'name',
         'class' => 'ui-autocomplete-input',
 	));
-    }?>
+   // }?>
 </div>
 
 <!-- title fr -->
@@ -94,13 +94,13 @@ echo $french,$english;
     <br />
     <div id="suggestedText2"></div>
     <?php
-        //if creating a group
+   /*     //if creating a group
     if(empty($group)){
         echo elgg_view("input/groups_autocomplete", array(
                 'name' => 'name2',
                 'value' => elgg_extract('name2', $vars),
         ));
-    } else {
+    } else {*/
     ?>
 
     <?php echo elgg_view("input/text", array(
@@ -109,7 +109,7 @@ echo $french,$english;
         'id' => 'name2',
         'class' => 'ui-autocomplete-input',
     ));
-    }?>
+  //  }?>
 </div>
 
 <div>
@@ -122,7 +122,7 @@ echo $french,$english;
         <?php echo elgg_echo('wet:cover_photo_input'); ?>
     </label>
     <div class="timeStamp"><?php echo elgg_echo('wet:cover_photo_dim');?></div>
-
+   
     <?php echo elgg_view("input/file", array("name" => "c_photo", 'id' => 'c_photo')); ?>
     <?php echo elgg_view('input/checkbox', array('name'=>'remove_photo', 'label'=> elgg_echo('wet:cover_photo_remove'), 'value'=>'remove_c_photo',));?>
 </div>

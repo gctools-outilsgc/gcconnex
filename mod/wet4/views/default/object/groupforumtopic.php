@@ -7,6 +7,7 @@
 
 $full = elgg_extract('full_view', $vars, FALSE);
 $topic = elgg_extract('entity', $vars, FALSE);
+$lang = get_current_language();
 
 if (!$topic) {
 	return;
@@ -20,8 +21,12 @@ if (!$poster) {
 	}
 	return;
 }
+if($topic->description3){
+	$excerpt = elgg_get_excerpt(gc_explode_translation($topic->description3, $lang));
+}else{
+	$excerpt = elgg_get_excerpt($topic->description);
+}
 
-$excerpt = elgg_get_excerpt($topic->description);
 
 $poster_icon = elgg_view_entity_icon($poster, 'medium');
 $poster_link = elgg_view('output/url', array(

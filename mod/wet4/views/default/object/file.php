@@ -13,13 +13,19 @@ if (empty($file)) {
 	return true;
 }
 
+$lang = get_current_language();
+
 $file_guid = $file->getGUID();
 $owner = $file->getOwnerEntity();
 
 $tags = elgg_view("output/tags", array("value" => $file->tags));
 $categories = elgg_view('output/categories', $vars);
 
-$title = $file->title;
+if($file->title3){
+    $title = gc_explode_translation($file->title3, $lang);
+}else{
+    $title = $file->title;
+}
 $mime = $file->mimetype;
 $base_type = substr($mime, 0, strpos($mime,'/'));
 
@@ -122,8 +128,14 @@ if ($full_view && !elgg_in_context("gallery")) {
 	);
 	$params = $params + $vars;
 	$summary = elgg_view("object/elements/summary", $params);
+	if($file->description3){
+		$file_descr = gc_explode_translation($file->description3, $lang);
+	}else{
+		$file_descr = $file->description;
+	}
+
 	
-	$text = elgg_view("output/longtext", array("value" => $file->description));
+	$text = elgg_view("output/longtext", array("value" => $file_descr ));
 	$body = "$text $extra";
 	
 	echo elgg_view("object/elements/full", array(
@@ -133,12 +145,12 @@ if ($full_view && !elgg_in_context("gallery")) {
 			"summary" => $summary,
 			"body" => $body
 	));
-    elgg_unregister_menu_item('title2', 'new_folder');
+    elgg_unregister_menu_item('title', 'new_folder');
 
 } elseif (elgg_in_context("gallery")) {
 	// gallery view of the file
 	echo "<div class='file-gallery-item'>";
-	echo "<h3>" . $file->title . "</h3>";
+	echo "<h3>" . $file->title3 . "</h3>";
 	echo elgg_view_entity_icon($file, "medium");
 	echo "<p class='elgg-quiet'>$owner_link $date</p>";
 	echo "</div>";

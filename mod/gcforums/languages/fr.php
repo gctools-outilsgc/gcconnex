@@ -66,6 +66,7 @@ $french = array(
 'gcforums:subscribe' => 'S\'abonner',
 'gcforums:unsubscribe' => 'Se désabonner',
 
+'gcforums:missing_description' => 'Missing Description', // NEW
 	);
 
 add_translation("fr", $french);

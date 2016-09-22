@@ -26,8 +26,8 @@ function blog_get_page_content_read($guid = NULL) {
 	elgg_set_page_owner_guid($blog->container_guid);
 
 	elgg_group_gatekeeper();
-
-	$return['title'] = $blog->title;
+ 	$lang = get_current_language();
+	$return['title'] =  gc_explode_translation($blog->title3, $lang);
 
 	$container = $blog->getContainerEntity();
 	$crumbs_title = $container->name;
@@ -79,10 +79,12 @@ function blog_get_page_content_list($container_guid = NULL) {
 		if (!$container) {
 
 		}
-		if(!$container->name){
-			$container->name = $container->name2;
-		}
-		$return['title'] = elgg_echo('blog:title:user_blogs', array(gc_explode_translation($container->title3, $lang)));
+		
+		if(!$container->title3){
+			$return['title'] = elgg_echo('blog:title:user_blogs', array($container->name));
+		}else{
+            $return['title'] = elgg_echo('blog:title:user_blogs', array(gc_explode_translation($container->title3, $lang)));
+        }
 
 		$crumbs_title = $container->name;
 		elgg_push_breadcrumb($crumbs_title);
@@ -104,7 +106,6 @@ function blog_get_page_content_list($container_guid = NULL) {
 	}
 
 	elgg_register_title_button();
-
 	// show all posts for admin or users looking at their own blogs
 	// show only published posts for other users.
 	$show_only_published = true;
@@ -315,11 +316,16 @@ function blog_prepare_form_vars($post = NULL, $revision = NULL) {
 	// input names => defaults
 	$values = array(
 		'title' => NULL,
+		'title2' => NULL,
 		'description' => NULL,
+		'description2' => NULL,
+		'description3' => NULL,
 		'status' => 'published',
 		'access_id' => ACCESS_DEFAULT,
 		'comments_on' => 'On',
 		'excerpt' => NULL,
+		'excerpt2' => NULL,
+		'excerpt3' => NULL,
 		'tags' => NULL,
 		'container_guid' => NULL,
 		'guid' => NULL,

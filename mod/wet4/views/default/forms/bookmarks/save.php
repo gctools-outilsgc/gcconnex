@@ -6,7 +6,9 @@
  */
 
 $title = elgg_extract('title', $vars, '');
+$title2 = elgg_extract('title2', $vars, '');
 $desc = elgg_extract('description', $vars, '');
+$desc2 = elgg_extract('description2', $vars, '');
 $address = elgg_extract('address', $vars, '');
 $tags = elgg_extract('tags', $vars, '');
 $access_id = elgg_extract('access_id', $vars, ACCESS_DEFAULT);
@@ -14,18 +16,46 @@ $container_guid = elgg_extract('container_guid', $vars);
 $guid = elgg_extract('guid', $vars, null);
 $shares = elgg_extract('shares', $vars, array());
 
+
+
+$french = elgg_view('input/button', array(
+    'value' => elgg_echo('btn:translate:fr'),
+    'id' => 'btnClickfr',
+    'class' => 'btn btn-default en',
+));
+
+$english = elgg_view('input/button', array(
+    'value' => elgg_echo('btn:translate:en'),
+    'id' => 'btnClicken',
+    'class' => 'btn btn-default fr',
+));
+
+echo $body .= $french.' '.$english;
 ?>
-<div class="mrgn-bttm-md">
-	<label for="title"><?php echo elgg_echo('title'); ?></label><br />
+<!-- English -->
+<div class="mrgn-bttm-md en">
+	<label for="title"><?php echo elgg_echo('title:en'); ?></label><br />
 	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title, 'id' => 'title')); ?>
 </div>
+<!-- French -->
+<div class="mrgn-bttm-md fr">
+	<label for="title2"><?php echo elgg_echo('title:fr'); ?></label><br />
+	<?php echo elgg_view('input/text', array('name' => 'title2', 'value' => $title2, 'id' => 'title2')); ?>
+</div>
+
 <div class="mrgn-bttm-md">
 	<label for="address"><?php echo elgg_echo('bookmarks:address'); ?></label><br />
 	<?php echo elgg_view('input/text', array('name' => 'address', 'value' => $address, 'id' =>'address')); ?>
 </div>
-<div class="mrgn-bttm-md">
-	<label for="description"><?php echo elgg_echo('description'); ?></label>
+<!-- English -->
+<div class="mrgn-bttm-md en">
+	<label for="description"><?php echo elgg_echo('booksmark:description'); ?></label>
 	<?php echo elgg_view('input/longtext', array('name' => 'description', 'value' => $desc, 'id' => 'description')); ?>
+</div>
+<!-- French -->
+<div class="mrgn-bttm-md fr">
+	<label for="description2"><?php echo elgg_echo('booksmark:description2'); ?></label>
+	<?php echo elgg_view('input/longtext', array('name' => 'description2', 'value' => $desc2, 'id' => 'description2')); ?>
 </div>
 <div class="mrgn-bttm-md">
 	<label for="tags"><?php echo elgg_echo('tags'); ?></label>
@@ -64,5 +94,41 @@ if($guid){
 } else {
     echo elgg_view('input/submit', array('value' => elgg_echo('bookmarks:add'), 'class'=>'btn btn-primary'));
 }
+
+echo'</div>';
+
+if(get_current_language() == 'fr'){
 ?>
-</div>
+    <script>
+        jQuery('.fr').show();
+        jQuery('.en').hide();
+
+    </script>
+<?php
+}else{
+?>
+    <script>
+        jQuery('.en').show();
+        jQuery('.fr').hide();
+
+    </script>
+<?php
+}
+?>
+<script>
+jQuery(function(){
+
+        jQuery('#btnClickfr').click(function(){
+               jQuery('.fr').show();
+               jQuery('.en').hide();
+                
+        });
+
+          jQuery('#btnClicken').click(function(){
+               jQuery('.en').show();
+               jQuery('.fr').hide();
+               
+        });
+
+});
+</script>

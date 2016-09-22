@@ -38,6 +38,36 @@ if (elgg_is_xhr) {
         <h4 class="mrgn-tp-0"><?php echo elgg_echo('gcconnex_profile:opt:atlevel'); ?></h4>
         <ul class="list-unstyled">
             <li class="clearfix">
+                <?php echo elgg_echo ( 'missions:micro_mission' );?>
+                <ul class="brdr-lft clearfix mrgn-lft-md list-unstyled">
+                <li class="clearfix pull-left mrgn-lft-md">
+                <?php
+                	echo elgg_view ( "input/checkbox", array (
+			         'name' => 'mission_check',
+			         'checked' => true,
+			         'id' => 'gcconnex-opt-in-mission-check',
+                        'class'=>'pull-left',
+                        'label'=>elgg_echo ( 'gcconnex_profile:opt:participants' ),
+	               ));
+                    
+                ?>
+                </li>
+                    <li class="clearfix pull-left mrgn-lft-md">
+                <?php
+                	echo elgg_view ( "input/checkbox", array (
+			         'name' => 'missioncreate_check',
+			         'checked' => true,
+			         'id' => 'gcconnex-opt-in-mentoringcreater-check',
+                        'class'=>'pull-left',
+                        'label'=>elgg_echo ( 'gcconnex_profile:opt:host' ),
+	               ));
+                    
+                ?>
+                </li>
+                </ul>
+            </li>
+            
+            <li class="clearfix">
                 <?php echo elgg_echo('missions:assignment');?>
                 
                 <ul class="clearfix brdr-lft mrgn-lft-md list-unstyled">
@@ -132,35 +162,7 @@ if (elgg_is_xhr) {
     <div class="col-sm-4">
         <h4 class="mrgn-tp-0"><?php echo elgg_echo('gcconnex_profile:opt:development'); ?></h4>
         <ul class="list-unstyled">
-            <li class="clearfix">
-                <?php echo elgg_echo ( 'missions:micro_mission' );?>
-                <ul class="brdr-lft clearfix mrgn-lft-md list-unstyled">
-                <li class="clearfix pull-left mrgn-lft-md">
-                <?php
-                	echo elgg_view ( "input/checkbox", array (
-			         'name' => 'mission_check',
-			         'checked' => true,
-			         'id' => 'gcconnex-opt-in-mission-check',
-                        'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'gcconnex_profile:opt:participants' ),
-	               ));
-                    
-                ?>
-                </li>
-                    <li class="clearfix pull-left mrgn-lft-md">
-                <?php
-                	echo elgg_view ( "input/checkbox", array (
-			         'name' => 'missioncreate_check',
-			         'checked' => true,
-			         'id' => 'gcconnex-opt-in-mentoringcreater-check',
-                        'class'=>'pull-left',
-                        'label'=>elgg_echo ( 'gcconnex_profile:opt:host' ),
-	               ));
-                    
-                ?>
-                </li>
-                </ul>
-            </li>
+            
             
             <li class="clearfix">
                 <?php echo elgg_echo('missions:mentoring');?>

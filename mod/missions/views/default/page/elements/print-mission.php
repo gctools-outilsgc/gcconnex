@@ -68,6 +68,13 @@ $completion_date_fixed = $mission->completion_date;
 if(trim($completion_date_fixed) == '') {
 	$completion_date_fixed = elgg_echo('missions:unknown');
 }
+
+//Nick - making the headers clickable as well
+$click_header = elgg_view('output/url', array(
+        'href'=>$mission->getURL(),
+        'text'=>elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions')),
+    'class'=>'mission-title-header',
+    ));
 ?>
 
 <div class="mission-printer mission-less panel panel-default hght-inhrt clearfix" style="height:<?php //echo $card_height;?>px;" name="mission-object">
@@ -76,7 +83,9 @@ if(trim($completion_date_fixed) == '') {
         <div style="width:100%;overflow-x:auto;">
             <h2>
                 <div style="display:inline; font-weight:normal;" name="mission-job-title">
-                    <?php echo elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'));?>
+                    <?php //echo elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'));
+                        echo $click_header;
+                    ?>
                 </div>
                 <div style="font-style:italic;font-size:small;display:inline;" name="mission-state">
                     <?php echo $mission_state; ?>

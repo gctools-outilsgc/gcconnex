@@ -7,7 +7,7 @@
  * @author Cash Costello
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
-
+$lang = get_current_language();
 $image = $photo = $vars['entity'];
 $album = $image->getContainerEntity();
 
@@ -68,8 +68,13 @@ echo '</div>';
 // }
 
 if ($photo->description) {
+	if (empty(gc_explode_translation($photo->description3, $lang))){
+	$description = $photo->description;
+}else{
+$description = gc_explode_translation($photo->description3, $lang);
+}
 	echo elgg_view('output/longtext', array(
-		'value' => $photo->description,
+		'value' => $description,
 		'class' => 'mbl mrgn-tp-md mrgn-bttm-md',
 	));
 }
