@@ -366,3 +366,11 @@ li.link-disabled a {
 .print-mission-more-holder h5{
     margin-top:8px;
 }
+
+.mission-title-header{
+    text-decoration: none;
+color: #055959;
+}
+.mission-title-header:visited{
+color: #055959;
+}
