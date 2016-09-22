@@ -47,22 +47,35 @@ $tabs = elgg_view('navigation/tabs', array(
 		'class' => 'elgg-menu elgg-menu-filter list-inline mrgn-lft-sm elgg-menu-filter-default mission-tab',
 		'tabs' => $navigation_tabs
 ));
+//Nick - need to test if we are on analytics to not show the create button
+//Nick - find out if the user is on the analytics page
+ $current_url = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+$break_url = explode('/',$current_url);
+$current_path = array_pop($break_url);
 
-$create_button = elgg_view('output/url', array(
+if($current_path == "analytics"){ //Nick - Are we on analytics? don't show create button
+   $create_button = ''; 
+}else{
+  $create_button = elgg_view('output/url', array(
         'href' => elgg_get_site_url() . 'action/missions/pre-create-opportunity',
         'text' => elgg_echo('missions:create_opportunity'),
         'is_action' => true,
         'class' => 'elgg-button btn btn-primary',
         'style' => 'float:right;',
         'id' => 'mission-create-opportunity-button'
-)) . '</br>';
+)) . '</br>';  
+}
+
 
 
 ?>
 
 <div class="clearfix col-sm-12" style="margin-bottom:4px;">
 	<div class="col-sm-9">
-        <?php echo $tabs; ?>
+        <?php echo $tabs;
+        
+        ?>
+        
     </div>
     <div class="col-sm-3">
         <?php echo $create_button; ?>
