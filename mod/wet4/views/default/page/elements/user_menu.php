@@ -27,6 +27,14 @@ elgg_register_menu_item('user_menu_subMenu', array(
 $dropdown = elgg_view_menu('user_menu_subMenu', array('class' => 'dropdown-menu user-menu pull-right subMenu'));
 
 
+elgg_register_menu_item('messages_dd', array(
+  'name'=>'messages_ajax_dd',
+  'text'=>elgg_view('page/elements/messages_dd'),
+));
+$ajax_dd_messages = elgg_view_menu('messages_dd', array(
+  'class'=>'dropdown-menu user-menu pull-right subMenu',
+
+));
 
 
 //admin link
@@ -95,9 +103,11 @@ if (elgg_is_active_plugin('messages')) {
 elgg_register_menu_item('user_menu', array(
     'name' => 'messages',
     'href' => 'messages/inbox/' . $user,
-    'text' => '<i class="fa fa-envelope mrgn-rght-sm mrgn-tp-sm fa-lg"></i><span class="hidden-xs">' . elgg_echo('messages') . '</span>' . $msgbadge,
+    'text' => '<i class="fa fa-envelope mrgn-rght-sm mrgn-tp-sm fa-lg"></i><span class="hidden-xs">' . elgg_echo('messages') . '</span>' . $msgbadge. $ajax_dd_messages,
     'title' => elgg_echo('userMenu:messages') . $title,
-    'item_class' => 'brdr-lft ',
+    'item_class' => 'brdr-lft messagesLabel',
+    'data-toggle' => '',
+    'id'=>'messagesLabel',
     'class' => '',
     'priority' => '2',
     ));
