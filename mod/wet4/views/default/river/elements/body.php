@@ -8,7 +8,7 @@
  * @uses $vars['attachments'] Optional attachments (displaying icons or other non-text data)
  * @uses $vars['responses']   Alternate respones (comments, replies, etc.)
  */
-
+$lang = get_current_language();
 $item = $vars['item'];
 /* @var ElggRiverItem $item */
 
@@ -44,6 +44,7 @@ if ($message !== null) {
 	$message = "<div class=\"elgg-river-message mrgn-bttm-sm actPre\">$message</div>";
 }
 
+
 $attachments = elgg_extract('attachments', $vars);
 if ($attachments !== null) {
 	$attachments = "<div class=\"elgg-river-attachments clearfix\">$attachments</div>";
@@ -75,10 +76,16 @@ if($subtype_test == 'comment' || $subtype_test =='discussion_reply'){
     $commentordiscuss = false;
 }
 
+if($container->title3){
+	$name = gc_explode_translation($container->title3,$lang);
+}else{
+	$name = $container->name;
+}
+
 if ($container instanceof ElggGroup && $container->guid != elgg_get_page_owner_guid()) {
 	$group_link = elgg_view('output/url', array(
 		'href' => $container->getURL(),
-		'text' => $container->name,
+		'text' => $name,
 		'is_trusted' => true,
 	));
     //Nick - Changed "in the group" to just the group link in order to show this is group content. May need some looking at

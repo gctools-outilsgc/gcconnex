@@ -10900,7 +10900,7 @@ a.shr-opn, a.shr-opn:hover {
          right:0;
          width:80%;
          bottom:-10%;
-         z-index:999;
+         
 }
 
 .elgg-avatar > .elgg-icon-hover-menu  {

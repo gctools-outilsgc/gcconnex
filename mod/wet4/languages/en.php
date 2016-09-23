@@ -43,9 +43,9 @@ return array(
   'wet:search_in_group'=>'Search in this Group',
   'wet:cover_photo_alt'=>'Graphic Element for the Group',
   'wet:login_engage_0'=>'Join your colleagues across Canada to something something something dark side!',
-  'wet:login_engage_1'=>'Share your knowledge and ideas',
-  'wet:login_engage_2'=>'Find people you need. The opportunities you want',
-  'wet:login_engage_3'=>'Promote government-wide GC activities',
+  'wet:login_engage_1'=>'Share your knowledge and ideas.',
+  'wet:login_engage_2'=>'Find people you need. The opportunities you want.',
+  'wet:login_engage_3'=>'Promote government-wide GC activities.',
   'wet:login_welcome'=>'Welcome to GCconnex',
 
   'wet:login:departments'=>"<span class=\"login-big-num\">174</span> organizations across Canada",

@@ -26,7 +26,6 @@ if (isset($vars['object']) && is_array($vars['object']) && sizeof($vars['object'
             if($type=='error')
             {
                 echo '<div class="alert alert-'.$type.' clearfix" >'; //elgg-system-messages custom-message
-                echo elgg_echo('wet:errmess');
             }else
             {
                 echo '<div class="elgg-system-messages clearfix custom-message alert alert-'.$type.' ">'; //

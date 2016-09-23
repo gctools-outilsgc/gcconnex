@@ -7,6 +7,7 @@
 
 $item = $vars['item'];
 
+$lang = get_current_language();
 $subject = $item->getSubjectEntity();
 $object = $item->getObjectEntity();
 
@@ -17,7 +18,16 @@ $subject_link = elgg_view('output/url', array(
 	'is_trusted' => true,
 ));
 
+if($object->title1){
+	$object->title = $object->title;
+}
+
 $object_text = $object->title ? $object->title : $object->name;
+
+if($object->title3){
+	$object_text = gc_explode_translation($object->title3, $lang);
+}
+
 $object_link = elgg_view('output/url', array(
 	'href' => $object->getURL(),
 	'text' => elgg_get_excerpt($object_text, 100),
