@@ -74,28 +74,60 @@ elgg_register_menu_item('user_menu', array(
 
 //display new message badge on messages
 if (elgg_is_active_plugin('messages')) {
-    $unread = messages_count_unread();
-    
+    $unread = messages_count_unread_inbox();
+
     $title = ' - ' . $unread . ' ' . elgg_echo('messages:unreadmessages');
-    
+
     //display 9+ insted of huge numbers in notif badge
     if ($unread >= 10) {
         //$unread = '9+';
     }
-    
+
     $msgbadge = "<span class='notif-badge'>" . $unread . "</span>";
-    
+
     if ($unread == 0) {
         $msgbadge = '';
         $title = '';
     }
 }
 
+// messages inbox menu item
 elgg_register_menu_item('user_menu', array(
     'name' => 'messages',
     'href' => 'messages/inbox/' . $user,
     'text' => '<i class="fa fa-envelope mrgn-rght-sm mrgn-tp-sm fa-lg"></i><span class="hidden-xs">' . elgg_echo('messages') . '</span>' . $msgbadge,
     'title' => elgg_echo('userMenu:messages') . $title,
+    'item_class' => 'brdr-lft ',
+    'class' => '',
+    'priority' => '2',
+    ));
+
+
+//display new message badge on messages
+if (elgg_is_active_plugin('messages')) {
+    $unread = messages_count_unread_notifications();
+
+    $title = ' - ' . $unread . ' ' . elgg_echo('messages:unreadmessages');
+
+    //display 9+ insted of huge numbers in notif badge
+    if ($unread >= 10) {
+        //$unread = '9+';
+    }
+
+    $msgbadge = "<span class='notif-badge'>" . $unread . "</span>";
+
+    if ($unread == 0) {
+        $msgbadge = '';
+        $title = '';
+    }
+}
+
+// notifications inbox menu item
+elgg_register_menu_item('user_menu', array(
+    'name' => 'notifications',
+    'href' => 'messages/notifications/' . $user,
+    'text' => '<i class="fa fa-bell mrgn-rght-sm mrgn-tp-sm fa-lg"></i><span class="hidden-xs">' . elgg_echo('notifications') . '</span>' . $msgbadge,
+    'title' => elgg_echo('userMenu:notifications') . $title,
     'item_class' => 'brdr-lft ',
     'class' => '',
     'priority' => '2',
