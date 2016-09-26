@@ -26,7 +26,7 @@ elgg_register_menu_item('user_menu_subMenu', array(
 
 $dropdown = elgg_view_menu('user_menu_subMenu', array('class' => 'dropdown-menu user-menu pull-right subMenu'));
 
-
+/*
 elgg_register_menu_item('messages_dd', array(
   'name'=>'messages_ajax_dd',
   'text'=>elgg_view('page/elements/messages_dd'),
@@ -34,7 +34,12 @@ elgg_register_menu_item('messages_dd', array(
 $ajax_dd_messages = elgg_view_menu('messages_dd', array(
   'class'=>'dropdown-menu user-menu pull-right subMenu',
 
-));
+));*/
+
+$ajax_dd_messages = '<div aria-hidden="true" id="msg_dd" class="dropdown-menu user-menu pull-right subMenu">'. elgg_view('page/elements/messages_dd') . '</div>';
+
+$ajax_dd_notification = '<div aria-hidden="true" id="notif_dd"  class="dropdown-menu user-menu pull-right subMenu">'. elgg_view('page/elements/notifications_dd') . '</div>';
+
 
 
 //admin link
@@ -136,9 +141,9 @@ if (elgg_is_active_plugin('messages')) {
 elgg_register_menu_item('user_menu', array(
     'name' => 'notifications',
     'href' => 'messages/notifications/' . $user,
-    'text' => '<i class="fa fa-bell mrgn-rght-sm mrgn-tp-sm fa-lg"></i><span class="hidden-xs">' . elgg_echo('notifications') . '</span>' . $msgbadge,
+    'text' => '<i class="fa fa-bell mrgn-rght-sm mrgn-tp-sm fa-lg"></i><span class="hidden-xs">' . elgg_echo('notifications') . '</span>' . $msgbadge . $ajax_dd_notification,
     'title' => elgg_echo('userMenu:notifications') . $title,
-    'item_class' => 'brdr-lft ',
+    'item_class' => 'brdr-lft messagesLabel',
     'class' => '',
     'priority' => '2',
     ));
