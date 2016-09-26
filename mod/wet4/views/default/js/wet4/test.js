@@ -24,10 +24,24 @@ $("input[type=submit]").click(function () {
 
 $('.messagesLabel').hover(function(){
   //alert('you hovered me');
-  $(this).find('.dropdown-menu').stop(true, true).delay(100).fadeIn(400);
+  $(this).find('.dropdown-menu').stop(true, true).delay(400).fadeIn(400, function(){ // Do the ajax call on mouseover
+      var type = $(this).attr('id');
+      //alert(type);
+      var ajax_path = 'ajax/view/ajax/notif_dd';
+      var params = {'type': type};
+      elgg.get(ajax_path, {
+        data:params,
+        dataType:'html',
+        success: function(data){
+          //alert(data);
+            $('#'+type).html(data);
+
+        }
+      })
+  });
 
 }, function(){
-  $(this).find('.dropdown-menu').stop(true, true).delay(100).fadeOut(400);
+  $(this).find('.dropdown-menu').stop(true, true).delay(400).fadeOut(400);
 
 })
 
