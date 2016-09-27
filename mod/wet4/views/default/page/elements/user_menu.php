@@ -36,9 +36,9 @@ $ajax_dd_messages = elgg_view_menu('messages_dd', array(
 
 ));*/
 
-$ajax_dd_messages = '<div aria-hidden="true" id="msg_dd" class="dropdown-menu user-menu pull-right subMenu">'. elgg_view('page/elements/messages_dd') . '</div>';
+$ajax_dd_messages = '<div aria-hidden="true" id="msg_dd" class="dropdown-menu user-menu-message-dd message-dd-position subMenu">'. elgg_view('page/elements/messages_dd') . '</div>';
 
-$ajax_dd_notification = '<div aria-hidden="true" id="notif_dd"  class="dropdown-menu user-menu pull-right subMenu">'. elgg_view('page/elements/notifications_dd') . '</div>';
+$ajax_dd_notification = '<div aria-hidden="true" id="notif_dd"  class="dropdown-menu user-menu-message-dd notif-dd-position subMenu">'. elgg_view('page/elements/notifications_dd') . '</div>';
 
 
 
@@ -108,13 +108,15 @@ if (elgg_is_active_plugin('messages')) {
 elgg_register_menu_item('user_menu', array(
     'name' => 'messages',
     'href' => 'messages/inbox/' . $user,
-    'text' => '<i class="fa fa-envelope mrgn-rght-sm mrgn-tp-sm fa-lg"></i><span class="hidden-xs">' . elgg_echo('messages') . '</span>' . $msgbadge. $ajax_dd_messages,
+    'text' => '<i class="fa fa-envelope mrgn-rght-sm mrgn-tp-sm fa-lg"></i><span class="hidden-xs">' . elgg_echo('messages') . '</span>' . $msgbadge ,
     'title' => elgg_echo('userMenu:messages') . $title,
     'item_class' => 'brdr-lft messagesLabel',
     'data-toggle' => '',
     'id'=>'messagesLabel',
     'class' => '',
+    'data-dd-type'=>'msg_dd',
     'priority' => '2',
+
     ));
 
 
@@ -141,11 +143,12 @@ if (elgg_is_active_plugin('messages')) {
 elgg_register_menu_item('user_menu', array(
     'name' => 'notifications',
     'href' => 'messages/notifications/' . $user,
-    'text' => '<i class="fa fa-bell mrgn-rght-sm mrgn-tp-sm fa-lg"></i><span class="hidden-xs">' . elgg_echo('notifications') . '</span>' . $msgbadge . $ajax_dd_notification,
+    'text' => '<i class="fa fa-bell mrgn-rght-sm mrgn-tp-sm fa-lg"></i><span class="hidden-xs">' . elgg_echo('notifications:subscriptions:changesettings') . '</span>' . $msgbadge,
     'title' => elgg_echo('userMenu:notifications') . $title,
     'item_class' => 'brdr-lft messagesLabel',
     'class' => '',
     'priority' => '2',
+    'data-dd-type'=>'notif_dd',
     ));
 
 
@@ -158,3 +161,6 @@ Colleague menu item runs in start.php - sorry
 // cyu - remove the user menu when the gsa hits the page
 if (strcmp('gsa-crawler',strtolower($_SERVER['HTTP_USER_AGENT'])) != 0)
 	echo elgg_view_menu('user_menu', array('sort_by' => 'priority', 'id' => 'userMenu', 'class' => 'list-inline visited-link'));
+  //Nick - Adding dropdowns to the user menu
+echo $ajax_dd_messages;
+echo $ajax_dd_notification;

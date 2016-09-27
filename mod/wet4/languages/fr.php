@@ -15,7 +15,7 @@ return array(
   'wet:search' =>  "Recherche et menus",
   'wet:searchHead' =>  "Recherche",
   'wet:searchweb' =>  "Recherche sur le site Web",
-  'wet:searchgctools' => "Recherche sur GCconnex", 
+  'wet:searchgctools' => "Recherche sur GCconnex",
   'wet:more' => "Autres",
   'wet:topicmenu' => "Menu des sujets",
   'wet:youarehere' => "Vous êtes ici :",
@@ -54,6 +54,7 @@ return array(
 'img:desc:en' => 'Description de l\'image en anglais',
 'description:ideas:en' => 'Description de l\'idée en anglais',
 'description:ideas:fr' => 'Description de l\'idée en français',
+'wet:messagedd:no_results'=>"You are all caught up!(fr)",
   /**
 *notice section
 */
@@ -178,7 +179,7 @@ return array(
 /**
   * User Menu
  */
-    
+
     'userMenu:profile' => "Mon profil",
     'userMenu:account' => "Paramètres",
     'userMenu:messages' => "Mes messages",
@@ -192,12 +193,12 @@ return array(
 	'wetActivity:welcome' => "Bienvenue sur GCconnex",
 	'wetActivity:browsegroups' => "Parcourir la liste des groupes",
     'wet4:filterActivity'=>'Filtre Activité',
-     
-     
+
+
   /**
  * Group Profile
- */     
-    
+ */
+
     'gprofile:about' => "Infos",
     'gprofile:discussion' => "Discussion",
     'gprofile:files' => "Fichiers",
@@ -215,11 +216,11 @@ return array(
     'gprofile:ideas' => "Idées",
     'gprofile:more' => "Plus",
     'gprofile:settings' => 'Paramètres',
-    'gprofile:create' => 	"Créer un groupe",			
+    'gprofile:create' => 	"Créer un groupe",
     'gprofile:edit:content' => "Options pour le contenu",
     'gprofile:edit:admin' => "Option pour l'administrateur",
-    'groups:suggestedGroups' => 'Le groupe en cours de création existe déjà, consultez ces suggestions pour trouver ce que vous chercher.',			
-    'groups:creatediscussion' => 	'Créer une discussion',		
+    'groups:suggestedGroups' => 'Le groupe en cours de création existe déjà, consultez ces suggestions pour trouver ce que vous chercher.',
+    'groups:creatediscussion' => 	'Créer une discussion',
     'profile:actions' => 	'Actions',
     'profile:viewall:coll' => 	'Voir tous mes collègues',
     'profile:viewall:groups' => 'Voir tous mes groupes',
@@ -233,7 +234,7 @@ return array(
      'group:invite:cannot' => '<br><br> Les utilisateurs suivants ne sont pas membres du groupe principal et ne peuvent être invités/ajoutés.',
 
   'group:invite:clicktoadd' => "Cliquez pour ajouter",
-  	'group:invite:email' => "Saisir une adresse de courriel valide et appuyer sur « Entrée » pour l'inscrire à la liste",		
+  	'group:invite:email' => "Saisir une adresse de courriel valide et appuyer sur « Entrée » pour l'inscrire à la liste",
  	'groups:eng' => "Anglais",
   	'groups:fra' => "Français",
 
@@ -257,11 +258,11 @@ return array(
 	'loginerror' => "Nous n'avons pas pu vous identifier. Vérifiez les renseignements que vous avez saisis et réessayez.",
 	'login:empty' => "Votre nom d'utilisateur ou votre adresse de courriel et votre mot de passe sont requis.",
 	'login:baduser' => "Impossible de charger votre compte d'utilisateur.",
-	'auth:nopams' => "Erreur interne. Aucune méthode d'authentification des utilisateurs n'est installée.",	
+	'auth:nopams' => "Erreur interne. Aucune méthode d'authentification des utilisateurs n'est installée.",
 	'logout' => "Fermer la session",
 	'logoutok' => "Fermeture de session réussie.",
 	'logouterror' => "Nous n'avons pas pu vous fermer votre session. Essayez à nouveau.",
-	'session_expired' => "Suite à un temps d'inactivité prolongé, votre session de travail a expiré. Veuillez recharger la page pour vous identifier à nouveau.",		
+	'session_expired' => "Suite à un temps d'inactivité prolongé, votre session de travail a expiré. Veuillez recharger la page pour vous identifier à nouveau.",
 	'loggedinrequired' => "Vous devez ouvrir une session pour voir cette page.",
 	'adminrequired' => "Vous devez être administrateur pour voir cette page.",
 	'membershiprequired' => "Vous devez être membre de ce groupe pour voir cette page.",
@@ -280,7 +281,7 @@ return array(
 'actionloggedout' => "Désolé, vous ne pouvez pas effectuer cette action si votre session n'est pas ouverte.",
 	'actionunauthorized' => 'Vous n êtes pas autorisé(e) à effectuer cette action.',
 'ajax:error' => 'Une erreur inattendue s\'est produite lors l\'exécution d\'un appel AJAX. La connexion au serveur a peut-être été coupée.',
-'ajax:not_is_xhr' => 'Vous ne pouvez pas avoir accès directement aux vues AJAX',		
+'ajax:not_is_xhr' => 'Vous ne pouvez pas avoir accès directement aux vues AJAX',
 'PluginException:MisconfiguredPlugin' => "Le module d'extension %s (guid: %s) est mal configuré. Il a été désactivé. Veuillez rechercher dans le wiki d'aide les causes possibles (http://learn.elgg.org/).",
 	'PluginException:CannotStart' => '%s (guid : %s) ne peut pas démarrer. Raison: %s',
 'PluginException:InvalidID' => "%s est un ID de module d'\extension invalide.",
@@ -304,7 +305,7 @@ return array(
 'PluginException:ParserError' => 'Erreur de syntaxe du fichier manifest.xml avec la version %s de l\'API du module d\'extension %s.',
 'PluginException:NoAvailableParser' => 'Analyseur syntaxique du fichier manifest.xml introuvable pour l\'API version %s du module d\'extension %s.',
 'PluginException:ParserErrorMissingRequiredAttribute' => "L'attribut nécessaire '%s' manque dans le fichier manifest.xml pour le module d'\extension %s.",
-'ElggPlugin:InvalidAndDeactivated' => '%s est un module d\'extension invalide et a été désactivé.',			
+'ElggPlugin:InvalidAndDeactivated' => '%s est un module d\'extension invalide et a été désactivé.',
 	'ElggPlugin:Dependencies:Requires' => 'Requis',
 	'ElggPlugin:Dependencies:Suggests' => 'Suggestion',
 	'ElggPlugin:Dependencies:Conflicts' => 'Conflits',
@@ -320,10 +321,10 @@ return array(
 	'ElggPlugin:Dependencies:Priority:Before' => 'Avant %s',
 	'ElggPlugin:Dependencies:Priority:Uninstalled' => '%s n\'est pas installé',
 	'ElggPlugin:Dependencies:Suggests:Unsatisfied' => 'Manquant',
-'ElggPlugin:Dependencies:ActiveDependent' => 'Il existe d\'autres modules d\'extension répertoriant %s comme dépendance. Vous devez désactiver les modules d\'extension suivants avant de désactiver celui-ci: %s',		
+'ElggPlugin:Dependencies:ActiveDependent' => 'Il existe d\'autres modules d\'extension répertoriant %s comme dépendance. Vous devez désactiver les modules d\'extension suivants avant de désactiver celui-ci: %s',
 'ElggMenuBuilder:Trees:NoParents' => 'Une entrée de menu a été trouvé sans lien avec un parent',
 'ElggMenuBuilder:Trees:OrphanedChild' => 'L\'entrée de menu [%s] a été trouvée avec un parent manquant [%s]',
-'ElggMenuBuilder:Trees:DuplicateChild' => 'L\'entrée de menu [%s] est enregistrée plusieurs fois',			
+'ElggMenuBuilder:Trees:DuplicateChild' => 'L\'entrée de menu [%s] est enregistrée plusieurs fois',
 	'RegistrationException:EmptyPassword' => '<a href="#password">Les champs du mot de passe ne peut pas être vide</a>',
 'RegistrationException:PasswordMismatch' => '<a href="#password">Les mots de passe doivent être identiques</a>',
 	'LoginException:BannedUser' => 'Vous avez été banni de ce site et ne pouvez plus vous connecter',
@@ -331,7 +332,7 @@ return array(
 	'LoginException:PasswordFailure' => 'Nous n\'avons pas pu vous connecter ! Vérifiez votre nom d\'utilisateur et mot de passe.',
 'LoginException:AccountLocked' => 'Votre compte a été verrouillé suite à un trop grand nombre d\'échecs de l\'ouverture de votre session.',
 	'LoginException:ChangePasswordFailure' => 'Echec vérification mot de passe courant.',
-'LoginException:Unknown' => 'Nous ne pouvons pas ouvrir votre session à cause d\'une erreur inconnue.',		
+'LoginException:Unknown' => 'Nous ne pouvons pas ouvrir votre session à cause d\'une erreur inconnue.',
 	'deprecatedfunction' => 'Attention : Ce code source utilise une fonction périmée \'%s\'. Il n\'est pas compatible avec cette version de Elgg.',
 'pageownerunavailable' => 	'Attention : La page de l\'utilisateur %d n\'est pas accessible.',
 	'viewfailure' => 'Il y a eu une erreur interne dans la vue %s',
@@ -398,7 +399,7 @@ return array(
  */
 
 	'dashboard' => "Tableau de bord",
-'dashboard:nowidgets' => "Votre tableau de bord vous permet de suivre l'activité sur le site et d'en filtrer le contenu selon vos intérêts.",		
+'dashboard:nowidgets' => "Votre tableau de bord vous permet de suivre l'activité sur le site et d'en filtrer le contenu selon vos intérêts.",
 	'widgets:add' => 'Ajouter des widgets',
 	'widgets:add:description' => "Cliquez sur n'importe quel widget ci-dessous pour l'ajouter à la page.",
 	'widgets:panel:close' => "Fermer le panneau des widgets",
@@ -452,17 +453,17 @@ return array(
 'friends:yours' => "Vos amis",
 'friends:owned' => "Les amis de %s",
 'friend:add' => "Ajouter un ami",
-'friend:remove' => "Supprimer un ami",			
+'friend:remove' => "Supprimer un ami",
 'friends:add:successful' => "Vous avez ajouté %s à vos amis.",
-'friends:add:failure' => "%s n'a pas pu être ajouté(e) à vos amis. Merci de réessayer ultérieurement.",			
+'friends:add:failure' => "%s n'a pas pu être ajouté(e) à vos amis. Merci de réessayer ultérieurement.",
 'friends:remove:successful' => "Vous avez retiré %s de vos amis.",
-'friends:remove:failure' => "%s n'a pas pu être retiré(e) de vos amis. ",			
+'friends:remove:failure' => "%s n'a pas pu être retiré(e) de vos amis. ",
 'friends:none' => "Ce membre n'a pas encore ajouté d'ami.",
-'friends:none:you' => "Vous n'avez pas encore d'ami !",			
-'friends:none:found' => "Aucun ami trouvé.",			
+'friends:none:you' => "Vous n'avez pas encore d'ami !",
+'friends:none:found' => "Aucun ami trouvé.",
 'friends:of:none' => "Personne n'a encore ajouté cet utilisateur comme ami.",
-'friends:of:none:you' => "Personne ne vous a encore ajouté comme ami. Commencez à remplir votre profil et à publier du contenu pour que les gens vous trouvent !",			
-'friends:of:owned' => "Les personnes qui ont %s dans leurs amis",			
+'friends:of:none:you' => "Personne ne vous a encore ajouté comme ami. Commencez à remplir votre profil et à publier du contenu pour que les gens vous trouvent !",
+'friends:of:owned' => "Les personnes qui ont %s dans leurs amis",
 'friends:of' => "Amis de",
 'friends:collections' => "Listes de amis",
 'collections:add' => "Nouvelle liste",
@@ -479,8 +480,8 @@ return array(
 	'friends:collections:members' => "Membres du groupement",
 'friends:collections:edit' => "Modifier la liste d'amis",
 'friends:collections:edited' => "Liste sauvegardée",
-'friends:collection:edit_failed' => 'Impossible de sauvegarder liste.',			
-'friendspicker:chararray' =>  'ABCDEFGHIJKLMNOPQRSTUVWXYZ',			
+'friends:collection:edit_failed' => 'Impossible de sauvegarder liste.',
+'friendspicker:chararray' =>  'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
 	'avatar' => 'Avatar',
 	'avatar:noaccess' => "Vous n'êtes pas autorisé à modifier l'avatar de cet utilisateur",
 	'avatar:create' => 'Créez votre avatar',
@@ -511,7 +512,7 @@ return array(
 	'profile:mobile' => "Téléphone portable",
 	'profile:website' => "Site web",
 	'profile:twitter' => "Nom d'utilisateur Twitter",
-'profile:saved' => "Votre profile a été enregistré avec succès",		
+'profile:saved' => "Votre profile a été enregistré avec succès",
 	'profile:field:text' => 'Texte court',
 'profile:field:longtext' => 'Grande zone de texte',
 'profile:field:tags' => 'Mots-clés',
@@ -577,9 +578,9 @@ return array(
  * Notifications
  */
 'notifications:usersettings' => "Configuration des notifications",
-'notification:method:email' => 'Courriel',			
+'notification:method:email' => 'Courriel',
 'notifications:usersettings:save:ok' => "La configuration des notifications a été sauvegardée avec succès.",
-'notifications:usersettings:save:fail' => "Il y a eu un problème lors de la sauvegarde des paramètres de configuration des notifications.",			
+'notifications:usersettings:save:fail' => "Il y a eu un problème lors de la sauvegarde des paramètres de configuration des notifications.",
 	'notification:subject' => 'Notification à propos de %s',
 	'notification:body' => 'Consulter les nouvelles activités à %s',
 
@@ -599,9 +600,9 @@ return array(
 'viewtype:change' => "Changer le type de listes",
 'viewtype:list' => "Afficher les listes",
 	'viewtype:gallery' => "Galerie",
-'tag:search:startblurb' => "Éléments avec le ou les mots-clés '%s' :",			
+'tag:search:startblurb' => "Éléments avec le ou les mots-clés '%s' :",
 'user:search:startblurb' => "Utilisateurs avec le ou les mots-clés '%s' :",
-'user:search:finishblurb' => "Pour obtenir plus de résultats, cliquez ici.",			
+'user:search:finishblurb' => "Pour obtenir plus de résultats, cliquez ici.",
 	'group:search:startblurb' => "Groupes qui vérifient le critère : %s",
 'group:search:finishblurb' => "Pour obtenir plus de résultats, cliquez ici.",
 	'search:go' => 'Rechercher',
@@ -626,7 +627,7 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 'registerok' => "Vous vous êtes inscrit avec succès dans %s.",
 'registerbad' => "Votre inscription a échoué pour une raison inconnue.",
 'registerdisabled' => "La création de comptes a été désactivée par l'administrateur du site.",
-'register:fields' => 'Tous les champs doivent être remplis',			
+'register:fields' => 'Tous les champs doivent être remplis',
 'registration:notemail' => 'L\'adresse de courriel que vous avez indiquée ne semble pas être une adresse valide.',
 'registration:userexists' => 'Cette adresse de courriel existe déjà. <a href=forgotpassword>Récupérer votre mot de passe</a>',
 	'registration:usernametooshort' => 'Le nom d\'utilisateur doit faire %u caractères au minimum.',
@@ -636,14 +637,14 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 'registration:invalidchars' => 'Désolé, votre nom d\'utilisateur contient le caractère invalide %s. Les caractères suivants sont invalides : %s',
 'registration:emailnotvalid' => 'Désolé, l\'adresse de courriel que vous avez saisie est invalide sur ce site.',
 'registration:passwordnotvalid' => 'Désolé, le mot de passe que vous avez saisi est invalide sur ce site.',
-'registration:usernamenotvalid' => 'Désolé, le nom d\'utilisateur que vous avez saisi est invalide sur ce site.',			
+'registration:usernamenotvalid' => 'Désolé, le nom d\'utilisateur que vous avez saisi est invalide sur ce site.',
 	'adduser' => "Ajouter un utilisateur",
 	'adduser:ok' => "Vous avez ajouté un nouvel utilisateur avec succès.",
-'adduser:bad' => "Le nouvel utilisateur n'a peut pu être créé.",			
+'adduser:bad' => "Le nouvel utilisateur n'a peut pu être créé.",
 'user:set:name' => "Paramètres du nom du compte",
 'user:name:label' => "Afficher le nom",
 'user:name:success' => "Le nom d'\affichage a été modifié avec succès.",
-'user:name:fail' => "Le nom d'\affichage n'a pas pu être modifié.",			
+'user:name:fail' => "Le nom d'\affichage n'a pas pu être modifié.",
 	'user:set:password' => "Mot de passe",
 	'user:current_password:label' => 'Mot de passe actuel',
 	'user:password:label' => "Votre nouveau mot de passe",
@@ -654,16 +655,16 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 	'user:password:fail:tooshort' => "Le mot de passe est trop court !",
 	'user:password:fail:incorrect_current_password' => 'Le mot de passe actuel entré est incorrect.',
 	'user:changepassword:unknown_user' => 'Utilisateur inconnu.',
-'user:changepassword:change_password_confirm' => 'Cette action modifiera votre mot de passe.',			
+'user:changepassword:change_password_confirm' => 'Cette action modifiera votre mot de passe.',
 'user:set:language' => "Paramètres linguistiques",
 'user:language:label' => "Langue sélectionnée",
 'user:language:success' => "Vos paramètres linguistiques ont été mis à jour.",
-'user:language:fail' => "Vos paramètres linguistiques n'ont pas pu être sauvegardé.",			
+'user:language:fail' => "Vos paramètres linguistiques n'ont pas pu être sauvegardé.",
 	'user:username:notfound' => 'Nom d\'utilisateur %s non trouvé.',
 	'user:password:lost' => 'Mot de passe perdu',
 'user:password:changereq:success' => 'Vous avez demandé un nouveau mot de passe, un courriel vous a été envoyé',
-'user:password:changereq:fail' => 'La demande de nouveau mot de passe a échoué.',			
-'user:password:text' => 'Pour générer un nouveau mot de passe, entrez votre nom d\'utilisateur ou votre adresse de courriel, puis cliquez sur le bouton Requête.',			
+'user:password:changereq:fail' => 'La demande de nouveau mot de passe a échoué.',
+'user:password:text' => 'Pour générer un nouveau mot de passe, entrez votre nom d\'utilisateur ou votre adresse de courriel, puis cliquez sur le bouton Requête.',
 'user:persistent' => 'Mémoriser mes renseignements',
 	'user:forgot' => 'Mot de passe perdu?',
 'walled_garden:welcome' => 'Bienvenue sur',
@@ -683,9 +684,9 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 	'admin:configuration:fail' => "Vos paramètres n'ont pas pu être sauvegardés.",
 'admin:configuration:dataroot:relative_path' => 'Impossible de définir %s comme racine de \'dataroot\', car ce n\'est pas un chemin d\'accès absolu.',
 	'admin:configuration:default_limit' => 'Le nombre d\'éléments par page doit être d\'au moins 1.',
-'admin:unknown_section' => 'Section administrateur invalide.',			
+'admin:unknown_section' => 'Section administrateur invalide.',
 	'admin' => "Administration",
-'admin:description' => "Le panneau d'administration vous permet de contrôler tous les aspects du système Elgg, de la gestion des utilisateurs au fonctionnement des modules d'\extension. Choisissez une option dans le menu ci-dessous pour commencer.",			
+'admin:description' => "Le panneau d'administration vous permet de contrôler tous les aspects du système Elgg, de la gestion des utilisateurs au fonctionnement des modules d'\extension. Choisissez une option dans le menu ci-dessous pour commencer.",
 	'admin:statistics' => "Statistiques",
 	'admin:statistics:overview' => 'Vue d\'ensemble',
 	'admin:statistics:server' => 'Info Serveur',
@@ -710,7 +711,7 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 	'admin:users:opt:description' => "Configurer les utilisateurs et les informations des comptes.",
 	'admin:users:find' => 'Trouver',
 	'admin:administer_utilities:maintenance' => 'Mode maintenance',
-'admin:upgrades' => 'Mises à niveau',			
+'admin:upgrades' => 'Mises à niveau',
 'admin:settings' => 'Paramètres',
 'admin:settings:basic' => 'Paramètres de base',
 	'admin:settings:advanced' => 'Paramètres avancés',
@@ -728,7 +729,7 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 	'site_secret:strength:moderate' => "Moyenne",
 'site_secret:strength_msg:moderate' => "Nous vous conseillons de générer une nouvelle clé secrète pour votre site afin d'en maximiser la sécurité.",
 	'site_secret:strength:strong' => "Forte",
-'site_secret:strength_msg:strong' => "La clé secrète de votre site est suffisamment complexe. Il n'est pas nécessaire d'en générer une nouvelle.",			
+'site_secret:strength_msg:strong' => "La clé secrète de votre site est suffisamment complexe. Il n'est pas nécessaire d'en générer une nouvelle.",
 	'admin:dashboard' => 'Tableau de bord',
 	'admin:widget:online_users' => 'Utilisateurs en ligne',
 	'admin:widget:online_users:help' => 'Affiche la liste des utilisateurs actuellement sur le site',
@@ -744,14 +745,14 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 	'widget:content_stats:number' => 'Nombre',
 	'admin:widget:admin_welcome' => 'Bienvenu',
 	'admin:widget:admin_welcome:help' => "Une courte introduction à la zone d'administration de Elgg",
-'admin:widget:admin_welcome:intro' => 'Bienvenue dans Elgg ! Vous vous trouvez actuellement sur le tableau de bord de l\'administration. Il est utile pour suivre de ce qui se passe sur le site.',			
+'admin:widget:admin_welcome:intro' => 'Bienvenue dans Elgg ! Vous vous trouvez actuellement sur le tableau de bord de l\'administration. Il est utile pour suivre de ce qui se passe sur le site.',
 'admin:widget:admin_welcome:admin_overview' => 'La navigation dans la zone d\'administration se fait à l\'aide du menu de droite, qui se divise en trois sections :
 	<dl>
 		<dt>Administrer</dt><dd>Les tâches quotidiennes comme le suivi du contenu signalé, l\'aperçu des utilisateurs en ligne, l\'affichage des statistiques...</dd>
 		<dt>Configurer</dt><dd>Les tâches occasionnelles comme le paramétrage du nom du site ou l\'activation d\'un module d\'extension.</dd>
 		<dt>Développer</dt><dd>Pour les développeurs qui créent des modules d\'extension ou conçoient des thèmes. (Nécessite des connaissances en programmation.)</dd>
 	</dl>',
-'admin:widget:admin_welcome:outro' => '<br /> N\'oublier pas d\'aller voir les ressources disponibles en vous servant des liens de bas de la page et merci d\'utiliser Elgg !',			
+'admin:widget:admin_welcome:outro' => '<br /> N\'oublier pas d\'aller voir les ressources disponibles en vous servant des liens de bas de la page et merci d\'utiliser Elgg !',
 'admin:widget:control_panel' => 'Console',
 	'admin:widget:control_panel:help' => "Fourni un accès facile aux contrôles communs",
 	'admin:cache:flush' => 'Nettoyer le cache',
@@ -778,9 +779,9 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 	'admin:plugins:category:widget' => 'Widget',
 	'admin:plugins:category:utility' => 'Utilitaires',
 'admin:plugins:markdown:unknown_plugin' => 'Module d\'extension inconnu.',
-'admin:plugins:markdown:unknown_file' => 'Fichier inconnu.',			
+'admin:plugins:markdown:unknown_file' => 'Fichier inconnu.',
 	'admin:notices:could_not_delete' => 'Impossible de supprimer la remarque.',
-'item:object:admin_notice' => 'Remarques de l\'administrateur',			
+'item:object:admin_notice' => 'Remarques de l\'administrateur',
 'admin:options' => 'Options de l\'administrateur',
 
 
@@ -793,7 +794,7 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 'plugins:settings:save:fail' => "Il y a eu un problème lors de la sauvegarde des paramètres du module d'extension %s.",
 'plugins:usersettings:save:ok' => "Les paramètres du module d'extension ont été sauvegardé avec succès.",
 'plugins:usersettings:save:fail' => "Il y a eu un problème lors de la sauvegarde des paramètres de l'utilisateur pour le module d'\extension %s.",
-'item:object:plugin' => 'Modules d\'extension',			
+'item:object:plugin' => 'Modules d\'extension',
 'admin:plugins' => "Modules d'extension",
 'admin:plugins:activate_all' => 'Tout activer',
 'admin:plugins:deactivate_all' => 'Tout désactiver',
@@ -839,7 +840,7 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 	'admin:plugins:author' => '%s',
 	'admin:plugins:version' => 'Version %s',
 'admin:plugin_settings' => 'Paramètres du module d\'extension',
-'admin:plugins:warning:unmet_dependencies_active' => 'Ce module d\'extension est actif, mais a des dépendances non satisfaites. Cela peut poser des problèmes. Consulter la section \'Plus d\'informations\' ci-dessous pour plus de détails.',			
+'admin:plugins:warning:unmet_dependencies_active' => 'Ce module d\'extension est actif, mais a des dépendances non satisfaites. Cela peut poser des problèmes. Consulter la section \'Plus d\'informations\' ci-dessous pour plus de détails.',
 	'admin:plugins:dependencies:type' => 'Type',
 	'admin:plugins:dependencies:name' => 'Nom',
 'admin:plugins:dependencies:expected_value' => 'Valeur attendue',
@@ -869,7 +870,7 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 'admin:server:error_log' => "Journal des erreurs du serveur Web",
 'admin:server:label:post_max_size' => 'Taille maximum d\'un élément publié',
 'admin:server:label:upload_max_filesize' => 'Taille maximum d\'un élément téléversé',
-'admin:server:warning:post_max_too_small' => '(Remarque : la valeur de post_max_size doit être supérieure à cette valeur pour que le téléversement de fichiers dont la taille correspond à cette dernière valeur soit possible)',			
+'admin:server:warning:post_max_too_small' => '(Remarque : la valeur de post_max_size doit être supérieure à cette valeur pour que le téléversement de fichiers dont la taille correspond à cette dernière valeur soit possible)',
 	'admin:user:label:search' => "Trouver des utilisateurs :",
 	'admin:user:label:searchbutton' => "Chercher",
 'admin:user:ban:no' => "Cet utilisateur ne peut pas être bloqué",
@@ -883,26 +884,26 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 	'admin:user:resetpassword:yes' => "Mot de passe réinitialisé, utilisateur notifié.",
 	'admin:user:resetpassword:no' => "Le mot de passe n'a pas pu être réinitialisé.",
 	'admin:user:makeadmin:yes' => "L'utilisateur est maintenant un administrateur.",
-'admin:user:makeadmin:no' => "Nous n'avons pas pu faire de cet utilisateur un administrateur.",			
+'admin:user:makeadmin:no' => "Nous n'avons pas pu faire de cet utilisateur un administrateur.",
 	'admin:user:removeadmin:yes' => "L'utilisateur n'est plus administrateur.",
 'admin:user:removeadmin:no' => "Nous ne pouvons pas enlever les privilèges d'administrateur à cet utilisateur.",
-'admin:user:self:removeadmin:no' => "Vous ne pouvez pas enlever vos propres privilèges d'administrateur.",			
+'admin:user:self:removeadmin:no' => "Vous ne pouvez pas enlever vos propres privilèges d'administrateur.",
 'admin:appearance:menu_items' => 'Éléments de menu',
 	'admin:menu_items:configure' => 'Configurer les éléments du menu principal',
 'admin:menu_items:description' => 'Sélectionnez les éléments du menu que vous voulez afficher en liens directs. Les éléments inutilisés pourront être affichés en cliquant sur «Plus» à la fin de la liste.',
 	'admin:menu_items:hide_toolbar_entries' => 'Supprimer les liens dans le menu barre d\'outils ?',
 'admin:menu_items:saved' => 'Éléments de menu sauvegardés.',
 	'admin:add_menu_item' => 'Ajouter un élément de menu personnalisé',
-'admin:add_menu_item:description' => 'Inscrivez le nom d\'affichage et l\'adresse URL correspondante afin d\'ajouter des éléments personnalisés à votre menu de navigation.',			
+'admin:add_menu_item:description' => 'Inscrivez le nom d\'affichage et l\'adresse URL correspondante afin d\'ajouter des éléments personnalisés à votre menu de navigation.',
 	'admin:appearance:default_widgets' => 'Widgets par défaut',
 'admin:default_widgets:unknown_type' => 'Type de widget inconnu',
-'admin:default_widgets:instructions' => 'Ajoutez, supprimez, positionnez et configurez les widgets par défaut pour la page sélectionnée. Ces changements ne s\'appliqueront qu\'aux nouveaux utilisateurs du site',						
+'admin:default_widgets:instructions' => 'Ajoutez, supprimez, positionnez et configurez les widgets par défaut pour la page sélectionnée. Ces changements ne s\'appliqueront qu\'aux nouveaux utilisateurs du site',
 'admin:robots.txt:instructions' => "Modifier le fichier robots.txt du site ci-dessous",
 'admin:robots.txt:plugins' => "Les modules d'\extension ajoutent les lignes suivantes au fichier robots.txt ",
 'admin:robots.txt:subdir' => "L'outil robots.txt ne fonctionnera peut-être pas car Elgg est installé dans un sous-répertoire",
-'admin:robots.txt:physical' => "L'outil robots.txt ne fonctionnera pas, car il existe un fichier physique robots.txt",			
+'admin:robots.txt:physical' => "L'outil robots.txt ne fonctionnera pas, car il existe un fichier physique robots.txt",
 'admin:maintenance_mode:default_message' => 'Le site est fermé pour maintenance',
-'admin:maintenance_mode:instructions' => 'Le mode maintenance devrait être utilisé pour les mises à jour et les autres changements sur le site.', 			
+'admin:maintenance_mode:instructions' => 'Le mode maintenance devrait être utilisé pour les mises à jour et les autres changements sur le site.',
 	'admin:maintenance_mode:mode_label' => 'Mode maintenance',
 'admin:maintenance_mode:message_label' => 'Message s\'affichant à l\'écran des utilisateurs lorsque le mode maintenance est activé',
 	'admin:maintenance_mode:saved' => 'Les paramètres du mode maintenance ont été sauvegardés.',
@@ -913,8 +914,8 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 /**
  * User settings
  */
-		
-'usersettings:description' => "Le panneau de configuration vous permet de contrôler tous vos paramètres personnels, de la gestion des utilisateurs au fonctionnement des modules d'\extension. Choisissez une option ci-dessous pour continuer.",			
+
+'usersettings:description' => "Le panneau de configuration vous permet de contrôler tous vos paramètres personnels, de la gestion des utilisateurs au fonctionnement des modules d'\extension. Choisissez une option ci-dessous pour continuer.",
 	'usersettings:statistics' => "Vos statistiques",
 'usersettings:statistics:opt:description' => "Voir les statistiques des utilisateurs et des objets sur votre site.",
 	'usersettings:statistics:opt:linktext' => "Statistiques de votre compte.",
@@ -936,7 +937,7 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 /**
  * Activity river
  */
-		
+
 	'river:all' => 'Toute l\'activité du site',
 	'river:mine' => 'Mon activité',
 	'river:owner' => 'Activité de %s',
@@ -963,7 +964,7 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 'icon:size:large' =>  "Grand",
 'icon:size:master' => "Très grand",
 
-		
+
 /**
  * Generic action words
  */
@@ -1018,7 +1019,7 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 	'add' => 'Ajouter',
 	'create' => 'Créer',
 	'remove' => 'Enlever',
-'revert' => 'Restaurer',			
+'revert' => 'Restaurer',
 'site' => 'Site',
 	'activity' => 'Activité',
 	'members' => 'Membres',
@@ -1034,7 +1035,7 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 	'resetpassword' => "Réinitialiser le mot de passe",
 	'changepassword' => "Changer le mot de passe",
 'makeadmin' => "Donner le rôle d'administrateur",
-'removeadmin' => "Supprimer les droits d'administrateur de l'utilisateur",			
+'removeadmin' => "Supprimer les droits d'administrateur de l'utilisateur",
 	'option:yes' => "Oui",
 	'option:no' => "Non",
 	'unknown' => 'Inconnu',
@@ -1054,7 +1055,7 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 	'content:latest:blurb' => 'Vous pouvez également cliquer ici pour voir les dernières modifications effectuées sur le site.',
 'link:text' => 'voir le lien',
 
-	
+
 /**
  * Generic questions
  */
@@ -1084,7 +1085,7 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 'sort:alpha' => 'Par ordre alphabétique',
 'sort:priority' => 'Par ordre de priorité',
 
-		
+
 /**
  * Generic data words
  */
@@ -1099,7 +1100,7 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 	'annotations' => "Annotations",
 	'relationships' => "Relations",
 	'metadata' => "Métadonnées",
-'tagcloud' => "Nuage de mots-clés",			
+'tagcloud' => "Nuage de mots-clés",
 'on' => 'Activé',
 'off' => 'Désactivé',
 
@@ -1107,7 +1108,7 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 /**
  * Entity actions
  */
-		
+
 	'edit:this' => 'Modifier',
 	'delete:this' => 'Supprimer',
 	'comment:this' => 'Commenter',
@@ -1137,7 +1138,7 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 /**
  * Import / export
  */
-		
+
 	'importsuccess' => "L'importation des données a été effectuée avec succès",
 	'importfail' => "L'importation OpenDD des données a échouée.",
 
@@ -1153,7 +1154,7 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 	'friendlytime:days' => "Il y a %s jours",
 	'friendlytime:days:singular' => "hier",
 	'friendlytime:date_format' => 'j F Y @ g:ia',
-	
+
 	'friendlytime:future:minutes' => "dans %s minutes",
 	'friendlytime:future:minutes:singular' => "dans une minute",
 	'friendlytime:future:hours' => "dans %s heures",
@@ -1181,7 +1182,7 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 	'date:weekday:4' => 'jeudi',
 	'date:weekday:5' => 'vendredi',
 	'date:weekday:6' => 'samedi',
-	
+
 	'interval:minute' => 'chaque minute',
 	'interval:fiveminute' => 'toutes les cinq minutes',
 	'interval:fifteenmin' => 'toutes les 15 minutes',
@@ -1218,29 +1219,29 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 	'installation:registration:description' => 'L\'enregistrement d\'un utilisateur est activé par défaut. Désactivez cette option si vous ne voulez pas que de nouveaux utilisateurs soient en mesure de s\'inscrire eux-mêmes.',
 	'installation:registration:label' => 'Permettre à de nouveaux utilisateurs s\'inscrire eux-mêmes',
 	'installation:walled_garden:description' => 'Activez cette fonction pour empêcher les personnes qui ne sont pas membres de voir le site, à l\'exception des pages Web désignée comme publique (comme les pages d\'ouverture de session et d\'inscription)',
-	'installation:walled_garden:label' => 'Restreindre les pages aux utilisateurs qui ont ouvert une session',		
+	'installation:walled_garden:label' => 'Restreindre les pages aux utilisateurs qui ont ouvert une session',
 	'installation:httpslogin' => "Activer ceci pour que les utilisateurs puissent ouvrir une session en utilisant le protocole HTTPS. Le protocole HTTPS doit activé sur votre serveur pour que cela fonctionne.",
 	'installation:httpslogin:label' => "Activer les connexions HTTPS",
-	'installation:view' => "Inscrivez le nom de l'affichage par défaut qui sera utilisé automatiquement pour le site ou laissez le champs vide pour utiliser l'affichage par défaut du système (en cas de doute, utilisez l'affichage par défaut du système):",		
+	'installation:view' => "Inscrivez le nom de l'affichage par défaut qui sera utilisé automatiquement pour le site ou laissez le champs vide pour utiliser l'affichage par défaut du système (en cas de doute, utilisez l'affichage par défaut du système):",
 	'installation:siteemail' => "L'adresse de courriel du site (utilisée lors d'envoi de courriels par le système)",
-	'installation:default_limit' => "Nombre d'éléments par défaut sur chaque page",		
+	'installation:default_limit' => "Nombre d'éléments par défaut sur chaque page",
 	'admin:site:access:warning' => "Il s'agit du niveau d'accès par défaut pour le nouveau contenu créé qui est proposé aux utilisateurs . S'il est modifié, le niveau accès au contenu déjà présent ne sera pas changé",
 	'installation:allow_user_default_access:description' => "Activez cette fonction pour que les utilisateurs puissent modifier les paramètres d'accès par défaut et remplacer ceux proposé par le système.",
-	'installation:allow_user_default_access:label' => "Autoriser les utilisateurs à définir un niveau d'accès par défaut",		
+	'installation:allow_user_default_access:label' => "Autoriser les utilisateurs à définir un niveau d'accès par défaut",
 	'installation:simplecache:description' => "Le cache simple augmente les performances en mettant en cache du contenu statique comme des CSS et des fichiers Javascripts. Normalement vous ne devriez pas avoir besoin de l'activer.",
 	'installation:simplecache:label' => "Utiliser un cache simple (recommandé)",
 	'installation:minify:description' => 	"Le cache peut être amélioré en compressant les fichiers JavaScript et  CSS. (le cache simple doit être activité). ",
 	'installation:minify_js:label' => "Compresser le JavaScript (recommandé)",
 	'installation:minify_css:label' => "Compresser les CSS (recommandé)",
 	'installation:htaccess:needs_upgrade' => "Vous devez mettre à jour votre fichier .htaccess afin que le chemin soit ajouté au paramètre GET __elgg_uri (vous pouvez vous aider de htaccess_dist)",
-	'installation:htaccess:localhost:connectionfailed' => "Elgg ne peut pas se connecter à lui-même pour tester correctement les règles de réécriture. Veuillez vérifier si l'extension cURL fonctionne, et qu'il n'y a pas de restrictions visant les IP interdisant de la connexion depuis localhost.",		
+	'installation:htaccess:localhost:connectionfailed' => "Elgg ne peut pas se connecter à lui-même pour tester correctement les règles de réécriture. Veuillez vérifier si l'extension cURL fonctionne, et qu'il n'y a pas de restrictions visant les IP interdisant de la connexion depuis localhost.",
 	'installation:systemcache:description' => "Le cache système diminue le temps de chargement du moteur Elgg en mettant en cache les données dans des fichiers.",
 	'installation:systemcache:label' => "Utiliser le cache système (recommandé)",
 	'admin:legend:system' => 	'Système',
 	'admin:legend:caching' => 'Mise en cache',
 	'admin:legend:content_access' => 'Accès au contenu',
 	'admin:legend:site_access' => 'Accès au site',
-	'admin:legend:debug' => 'Débogage et journalisation',		
+	'admin:legend:debug' => 'Débogage et journalisation',
 	'upgrading' => 'Mise à niveau en cours',
 	'upgrade:db' => 'Votre base de données a été mise à jour.',
 	'upgrade:core' => 'Votre version d\'Elgg installée a été mise à niveau.',
@@ -1253,13 +1254,13 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 	'update:twitter_api:deactivated' => 'Twitter API (précédemment Twitter Service) a été désactivé lors de la mise à niveau. Veuillez l\'activer manuellement si nécessaire.',
 	'update:oauth_api:deactivated' => 'OAuth API (précédemment OAuth Lib) a été désactivé lors de la mise à niveau. Veuillez l\'activer manuellement au besoin.',
 	'upgrade:site_secret_warning:moderate' => "Vous êtes invité à régénérer la clé de votre site afin d'améliorer sa sécurité. Voir Configuration &gt; Paramètres &gt; Avancés",
-	'upgrade:site_secret_warning:weak' => "Nous vous incitons à générer de nouveau la clé de votre site pour améliorer la sécurité de votre système. Voir Configuration &gt; Paramètres &gt; Avancés",		
+	'upgrade:site_secret_warning:weak' => "Nous vous incitons à générer de nouveau la clé de votre site pour améliorer la sécurité de votre système. Voir Configuration &gt; Paramètres &gt; Avancés",
 	'deprecated:function' => '%s() est obsolète et a été remplacé par %s()',
 	'admin:pending_upgrades' => 'Des mises à niveau en attente pour le site nécessitent votre attention immédiate.',
 	'admin:view_upgrades' => 'Afficher les mises à niveau en attente.',
 	'admin:upgrades' => 'Mises à niveau',
 	'item:object:elgg_upgrade' => 'Mises à niveau du site',
-	'admin:upgrades:none' => 'Votre site est à jour !',		
+	'admin:upgrades:none' => 'Votre site est à jour !',
 	'upgrade:item_count' => 'Il y a <b>%s</b> éléments qui doivent être mis à niveau.',
 	'upgrade:warning' => '<b>Attention :</b> Sur un site volumineux cette mise à jour peut être très longue !',
 	'upgrade:success_count' => 	'Mise à jour :',
@@ -1269,18 +1270,18 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 	'upgrade:finished' => 'Mise à jour terminée',
 	'upgrade:finished_with_errors' => '<p>Mise à jour terminée sans erreurs. Rafraîchissez la page et tentez de relancer la mise à jour.</p></p><br />Si vous avez encore cette erreur, vérifiez le contenu du log d\'erreurs du serveur. Vous pouvez chercher de l\'aide sur cette erreur dans le <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">groupe de support technique</a> de la communauté Elgg.</p>',
 
- /* Strings specific for the comments upgrade	*/		
-			
+ /* Strings specific for the comments upgrade	*/
+
 	'admin:upgrades:comments' => 'Mise à jour des commentaires',
 	'upgrade:comment:create_failed' => 'Impossible de convertir le commentaire id %s en une entité.',
 	'admin:upgrades:commentaccess' => 'Mise à jour des commentaires',
-			
- /* Strings specific for the datadir upgrade*/			
+
+ /* Strings specific for the datadir upgrade*/
 
 	'admin:upgrades:datadirs' => 'Répertoire de données mis à jour',
 
- /* Strings specific for the discussion reply upgrade	*/		
-			
+ /* Strings specific for the discussion reply upgrade	*/
+
 	'admin:upgrades:discussion_replies' => 'Réponse à la discussion mise à jour',
 	'discussion:upgrade:replies:create_failed' => 'Impossible de convertir la discussion id %s en une entité.',
 
@@ -1294,17 +1295,17 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 /**
  * Emails
  */
-		
+
 	'email:from' => 'De',
 	'email:to' => 'Pour',
 	'email:subject' => 'Sujet',
 	'email:body' => 'Corps de l\'article',
 	'email:settings' => "Paramètres des courriels",
-	'email:address:label' => "Votre adresse de courriel",		
+	'email:address:label' => "Votre adresse de courriel",
 	'email:save:success' => "Nouvelle adresse de courriel sauvegardée. Une vérification a été envoyée.",
-	'email:save:fail' => "Votre nouvelle adresse e-mail n\'a pas pu être sauvegardée.",		
+	'email:save:fail' => "Votre nouvelle adresse e-mail n\'a pas pu être sauvegardée.",
 	'friend:newfriend:subject' => "%s vous a ajouté comme contact !",
-	'friend:newfriend:body' => "%s vous a ajouté comme contact ! Pour voir son profil cliquez sur le lien ci-dessous %s Veuillez ne pas répondre au présent courriel.",		
+	'friend:newfriend:body' => "%s vous a ajouté comme contact ! Pour voir son profil cliquez sur le lien ci-dessous %s Veuillez ne pas répondre au présent courriel.",
 	'email:changepassword:subject' => "Mot de passe modifié !",
 	'email:changepassword:body' => "Bonjour %s, Votre mot de passe a été modifié.",
 	'email:resetpassword:subject' => "Réinitialisation du mot de passe !",
@@ -1352,10 +1353,10 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 /**
  * Entities
  */
-	
+
 	'byline' => 'Par %s',
 	'entity:default:strapline' => 'Créé le %s par %s',
-'entity:default:missingsupport:popup' => 'Cette entité ne peut pas être affichée correctement. Peut-être parce qu\'elle s\'appuie sur module d\'extension qui a été supprimé.',		
+'entity:default:missingsupport:popup' => 'Cette entité ne peut pas être affichée correctement. Peut-être parce qu\'elle s\'appuie sur module d\'extension qui a été supprimé.',
 	'entity:delete:success' => 'L\'entité %s a été effacée',
 	'entity:delete:fail' => 'L\'entité %s n\'a pas pu être effacée',
 'entity:can_delete:invaliduser' => 'Désolé, le commentaire demandé n\'a pas été trouvé. Vous avez été redirigé sur la page précédente.',
@@ -1398,7 +1399,7 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
  */
 	'elgg:powered' => "Propulsé par Elgg",
 
-/* 
+/*
 *Activity module
 */
 
@@ -1430,7 +1431,7 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
   'contactform:groupgcconnex' => 'Groupe GCconnex des Outils GC 2.0',
   'contactform:teamgcpedia' => 'Équipe des Outils GC 2.0 dans GCpédia',
   'contactform:collaborating' => 'Collaboration au moyen de GCpédia de l’EFPC (B171)',
-  'contactform:collaborating:link' => '"http://www.csps-efpc.gc.ca/forlearners/coursesandprograms/CourseDetail-fra.aspx?courseno=b171%7C"', 
+  'contactform:collaborating:link' => '"http://www.csps-efpc.gc.ca/forlearners/coursesandprograms/CourseDetail-fra.aspx?courseno=b171%7C"',
   'contactform:socialmedia' => 'La collaboration au moyen de GCconnex et de GCpédia (B336)',
   'contactform:socialmedia:link' => '"http://www.csps-efpc.gc.ca/forlearners/coursesandprograms/CourseDetail-fra.aspx?courseno=B336"',
   'contactform:guidance' => '<a href="http://www.gcpedia.gc.ca/gcwiki/images/e/ee/Les_medias_sociaux_au_sein_du_GC.jpg">Lignes directrices à l’intention des employés : Les médias sociaux au sein du GC</a>',

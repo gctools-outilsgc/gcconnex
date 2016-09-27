@@ -10657,12 +10657,46 @@ a.shr-opn, a.shr-opn:hover {
     border-bottom:none !important;
 }
 .message-dd-block{
-  padding:5px;
+  padding:8px;
 
+
+}
+.message-dd-holder{
+  overflow-x: hidden;
+  overflow-y: scroll;
+max-height: 500px;
 }
 
 .message-dd-title{
   font-weight: bold;
+
+}
+
+.message-dd-no-results{
+  width:50%;
+  padding: 12px;
+  margin: 0 auto;
+
+}
+.user-menu-message-dd{
+  width:400px;
+  min-height: 75px;
+
+
+
+}
+
+
+.notif-dd-position{
+
+  left:auto;
+  top:38px;
+  right:14%;
+}
+.message-dd-position{
+  left:auto;
+  top:38px;
+  right:24%;
 
 }
 
