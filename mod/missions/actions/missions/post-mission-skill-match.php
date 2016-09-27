@@ -23,11 +23,11 @@ foreach($skill_array as $skill) {
 			'case_sensitive' => false
 	);
 	$skill_match = elgg_get_entities_from_attributes($options);
-	 
+
 	foreach($skill_match as $key => $value) {
 		$skill_match[$key] = $value->owner_guid;
 	}
-	 
+
 	if(empty($user_skill_match)) {
 		$user_skill_match = $skill_match;
 	}
@@ -35,6 +35,20 @@ foreach($skill_array as $skill) {
 		$user_skill_match = array_intersect($user_skill_match, $skill_match);
 	}
 }
+
+// map for mission type to opt-in
+$typemap = array(
+	'missions:micro_mission'	=> 'opt_in_missions',
+	'missions:job_swap'	=>	'opt_in_swap',
+	'missions:mentoring'	=>	'opt_in_mentored',
+	'missions:job_shadowing'	=>	'opt_in_shadowed',
+	'missions:assignment'	=> 'opt_in_assignSeek',
+	'missions:deployment'	=>	'opt_in_deploySeek',
+	'missions:job_rotation'	=>	'opt_in_rotation',
+	'missions:skill_share'	=>	'opt_in_ssSeek',
+	'missions:peer_coaching'	=>	'opt_in_pcSeek',
+	'missions:job_share'	=>	'opt_in_jobshare',
+	);
 
 $dbprefix = elgg_get_config('dbprefix');
 
@@ -47,15 +61,19 @@ $skillswhere = implode(' OR ', $skillswhere);
 $skill_subtype_id = get_data("SELECT id FROM {$dbprefix}entity_subtypes WHERE subtype = 'MySkill'");
 
 // query the database for the ordered + ranked list of users
-$user_match_query = 
-	"SELECT ue.guid as user_guid, count(DISTINCT oe.guid) as n_skills, count(md.id) as n_endorsments 
-FROM {$dbprefix}objects_entity oe 
+$user_match_query =
+	"SELECT ue.guid as user_guid, count(DISTINCT oe.guid) as n_skills, count(md.id) as n_endorsments
+FROM {$dbprefix}objects_entity oe
 LEFT JOIN {$dbprefix}entities e ON oe.guid = e.guid
 LEFT JOIN {$dbprefix}users_entity ue ON e.owner_guid = ue.guid
 LEFT JOIN {$dbprefix}metadata md ON md.entity_guid = oe.guid
-WHERE ({$skillswhere})
+LEFT JOIN {$dbprefix}metadata md1 ON md1.entity_guid = ue.guid
+LEFT JOIN {$dbprefix}metastrings msn ON msn.id = md1.name_id
+LEFT JOIN {$dbprefix}metastrings msv ON msv.id = md1.value_id
+WHERE msn.string = '{$typemap[$entity->job_type]}' AND ({$skillswhere})
 AND e.subtype = {$skill_subtype_id[0]->id}
-GROUP BY user_guid ORDER BY n_skills DESC, n_endorsments DESC";
+GROUP BY user_guid ORDER BY msv.string DESC, n_skills DESC, n_endorsments DESC";
+
 $user_skill_match = get_data( $user_match_query );
 
 // Turns the user GUIDs into user entities.
