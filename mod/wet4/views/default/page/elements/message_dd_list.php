@@ -8,6 +8,17 @@ $count = elgg_extract('count', $vars);
 $pagination = elgg_extract('pagination', $vars, true);
 $position = elgg_extract('position', $vars, 'after');
 $no_results = elgg_extract('no_results', $vars, '');
+$dd_type = elgg_extract('dd_type', $vars, '');
+
+if (!$items && $no_results) {
+	if ($no_results instanceof Closure) {
+		echo $no_results();
+		return;
+	}
+	echo "<p class='elgg-no-results message-dd-no-results'>$no_results</p>";
+	return;
+}
+
 
 foreach ($items as $item) {
   $item_view = elgg_view_list_item($item, $vars);
@@ -25,7 +36,7 @@ foreach ($items as $item) {
 
     $li_attrs['class'][] = "elgg-item-$type";
     if ($subtype) {
-            //
+
       $li_attrs['class'][] = "elgg-item-$type-$subtype clearfix";
     }
   } else if (is_callable(array($item, 'getType'))) {
@@ -50,9 +61,18 @@ foreach ($items as $item) {
     'is_trusted' => true,
   ));
 
+
+if($dd_type =='msg_dd'){
   $name_and_time = '<div class="col-sm-12 clearfix"><div class="col-sm-2">'.$send_avatar.'</div><div class="col-sm-10"><div class="col-sm-12">'.$sender.'</div><div class="col-sm-12">'.elgg_view_friendly_time($item->time_created).'</div></div></div>';
   $message_title = '<div class="col-sm-12 mrgn-tp-sm clearfix message-dd-title">'.$subject_info.'</div>';
   $message_final = $name_and_time . $message_title;
+
+}else if ($dd_type =='notif_dd'){
+$message_title = '<div class="col-sm-12 mrgn-tp-sm clearfix ">'.$subject_info.'</div>';
+$name_and_time = '<div class="col-sm-12">'.elgg_view_friendly_time($item->time_created).'</div>';
+$message_final =  $message_title . $name_and_time;
+}
+
 echo elgg_format_element('div',  array('class'=>'list-break message-dd-block mrgn-bttm-sm clearfix',), $message_final);
 }
 ?>

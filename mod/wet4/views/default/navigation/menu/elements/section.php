@@ -16,6 +16,8 @@ $class = elgg_extract('class', $vars, '');
 $item_class = elgg_extract('item_class', $vars, '');
 $id = elgg_extract('id', $vars, '');
 $get_role = elgg_extract('role', $vars, '');
+// Nick - Adding dropdown content for message and notification dropdown in user menu
+$dropdown_content = elgg_extract('menu_dd', $vars, '');
 if ($headers) {
 	$name = elgg_extract('name', $vars);
 	$section = elgg_extract('section', $vars);
@@ -29,6 +31,7 @@ if (is_array($items)) {
 		echo elgg_view('navigation/menu/elements/item', array(
 			'item' => $menu_item,
 			'item_class' => $item_class,
+			'menu_dd'=>$dropdown_content,
 		));
 	}
 }
