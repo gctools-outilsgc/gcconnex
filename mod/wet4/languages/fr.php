@@ -17,6 +17,7 @@ return array(
   'wet:searchweb' =>  "Recherche sur le site Web",
   'wet:searchgctools' => "Recherche sur GCconnex",
   'wet:more' => "Autres",
+  'wet:inboxmore'=>"Autres (archivé)",
   'wet:topicmenu' => "Menu des sujets",
   'wet:youarehere' => "Vous êtes ici :",
   'wet:errmess' => "<h3 class='h3'>Le formulaire n'a pu être soumis, car une ou des erreurs ont été trouvées.</h3>",

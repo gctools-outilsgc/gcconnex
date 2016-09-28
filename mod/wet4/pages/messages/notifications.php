@@ -7,6 +7,8 @@
 
 elgg_gatekeeper();
 
+$offset = get_input('offset', 0);
+
 $page_owner = elgg_get_page_owner_entity();
 
 if (!$page_owner || !$page_owner->canEdit()) {
@@ -28,6 +30,8 @@ $title = elgg_echo('messages:user_notifications', array($page_owner->name));
 $display_num_post = $_GET['num'];
 if (!isset($display_num_post)) $display_num_post = 10;
 
+$count = messages_count_unread_notifications(elgg_get_page_owner_guid());
+$limit = 1000;
 $dbprefix = elgg_get_config('dbprefix');
 $list .= elgg_list_entities_from_metadata(array(
 	'type' => 'object',
@@ -36,7 +40,7 @@ $list .= elgg_list_entities_from_metadata(array(
 	'metadata_value' => elgg_get_page_owner_guid(),
 	'owner_guid' => elgg_get_page_owner_guid(),
 	'full_view' => false,
-	'limit' => 0,
+	'limit' => $limit,
     'pagination' => false,
 	'preload_owners' => true,
 	'bulk_actions' => true,
@@ -53,6 +57,18 @@ $body_vars = array(
 	'list' => $list,
 );
 $content = elgg_view_form('messages/process', array(), $body_vars);
+
+if ( $count - $offset > $limit ){
+	$offset = $offset + $limit;
+	// add a "Show All button"
+	$moreButton = elgg_view('output/url', array(
+		'href' => $site_url ."messages/notifications/".elgg_get_page_owner_entity()->username."/?offset={$offset}",
+		'text' => elgg_echo('wet:inboxmore'),
+		'class' => 'btn btn-primary newsfeed-button',
+		'is_trusted' => true,
+	));
+	$content .= $moreButton;
+}
 
 $body = elgg_view_layout('one_column', array(
 	'content' => $content,

@@ -16,6 +16,7 @@ return array(
   'wet:searchweb'=>"Search website",
   'wet:searchgctools'=>"Search GCconnex",
   'wet:more'=>"More",
+  'wet:inboxmore'=>"More (archived)",
   'wet:topicmenu'=>"Topic menu",
   'wet:youarehere'=>"You are here:",
   'wet:errmess' => "<h3 class='h3'>The form could not be submitted because errors were found.</h3>",
