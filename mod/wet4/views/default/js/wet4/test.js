@@ -24,8 +24,8 @@ $("input[type=submit]").click(function () {
 
 $('.messagesLabel').hover(function(){
   //alert('you hovered me');
-  var dd_type = $(this).find('a').attr('data-dd-type');
-  $('#'+dd_type).stop(true, true).delay(400).fadeIn(400, function(){ // Do the ajax call on mouseover
+  //var dd_type = $(this).find('a').attr('data-dd-type');
+  $(this).find('.dropdown-menu').stop(true, true).delay(400).fadeIn(400, function(){ // Do the ajax call on mouseover
       var type = $(this).attr('id');
       //Call the view
       var ajax_path = 'ajax/view/ajax/notif_dd';
@@ -39,14 +39,48 @@ $('.messagesLabel').hover(function(){
 
         }
       });
-      //If they mouse leave then close the dd
-      $(this).on('mouseleave', function(){
-        $(this).stop(true, true).delay(400).fadeOut(400);
 
-      })
+
   });
 
-} )
+}, function(){
+  $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(200);
+
+})
+
+$('.messagesLabel').on('focusin', function(){
+//When A user tabs to the the link they can click the link or we show them a dd link to open up the messages dd.
+  var dd_object = $(this).find('.dropdown-menu');
+  $(this).find('.focus_dd_link').show(function(){
+
+    $(this).on('click', function(){ // Click = Enter
+      $(dd_object).attr('aria-hidden', "false");
+      $(dd_object).stop(true, true).delay(400).fadeIn(400, function(){
+          var type = $(this).attr('id');
+          //Call the view
+          var ajax_path = 'ajax/view/ajax/notif_dd';
+          var params = {'type': type};
+          elgg.get(ajax_path, {
+            data:params,
+            dataType:'html',
+            success: function(data){
+              //alert(data);
+                $('#'+type).html(data);
+                //alert('focus pokus!');
+                $(dd_object).focus(function(){
+                  $(this).focusout(function(){
+                    $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(200)
+                  })
+                });
+                //alert($(this));
+                //$(this).focus();
+            }
+          });
+
+      });
+    })
+  });
+});
 
 // { "dom": '<"top"ilf>' }
 requirejs( ["datatables"], function() {

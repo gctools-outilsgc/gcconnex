@@ -10681,23 +10681,54 @@ max-height: 500px;
 .user-menu-message-dd{
   width:400px;
   min-height: 75px;
+}
 
+.user-menu-message-dd:before{
+  content: '';
+  display: block;
+  position: absolute;
+  left: 85%;
+  top: -12px;
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 12px solid rgba(0, 0, 0, 0.15);
+  clear: both;
+}
 
+.user-menu-message-dd:after{
+      content: '';
+      display: block;
+      position: absolute;
+      left: 85%;
+      top: -10px;
+      width: 0;
+      height: 0;
+      border-left: 12px solid transparent;
+      border-right: 12px solid transparent;
+      border-bottom: 12px solid #fff;
+      clear: both;
 
 }
 
-
 .notif-dd-position{
-
   left:auto;
-  top:38px;
-  right:14%;
+  top:30px;
+  right:0;
 }
 .message-dd-position{
   left:auto;
-  top:38px;
-  right:24%;
+  top:30px;
+  right:0;
 
+}
+
+.focus_dd_link{
+float:right;
+position: absolute;
+left: 50%;
+display:none;
 }
 
 /*Place Holder color in user profile fields*/
