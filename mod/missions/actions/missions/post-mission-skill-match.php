@@ -67,19 +67,22 @@ FROM {$dbprefix}objects_entity oe
 LEFT JOIN {$dbprefix}entities e ON oe.guid = e.guid
 LEFT JOIN {$dbprefix}users_entity ue ON e.owner_guid = ue.guid
 LEFT JOIN {$dbprefix}metadata md ON md.entity_guid = oe.guid
-LEFT JOIN {$dbprefix}metadata md1 ON md1.entity_guid = ue.guid
-LEFT JOIN {$dbprefix}metastrings msn ON msn.id = md1.name_id
-LEFT JOIN {$dbprefix}metastrings msv ON msv.id = md1.value_id
-WHERE msn.string = '{$typemap[$entity->job_type]}' AND ({$skillswhere})
+WHERE ({$skillswhere})
 AND e.subtype = {$skill_subtype_id[0]->id}
-GROUP BY user_guid ORDER BY msv.string DESC, n_skills DESC, n_endorsments DESC";
+GROUP BY user_guid ORDER BY n_skills DESC, n_endorsments DESC";
 
 $user_skill_match = get_data( $user_match_query );
 
 // Turns the user GUIDs into user entities.
+$temp_opted = array();
+$temp_not_opted = array();
 foreach($user_skill_match as $key => $value) {
-	$user_skill_match[$key] = get_entity($value->user_guid);
+	if ( get_entity($value->user_guid)->$typemap[$entity->job_type] == 'gcconnex_profile:opt:yes' )
+		$temp_opted[] = get_entity($value->user_guid);
+	else
+		$temp_not_opted[] = get_entity($value->user_guid);
 }
+$user_skill_match = array_merge( $temp_opted, $temp_not_opted );
 
 $_SESSION['mission_search_switch'] = 'candidate';
 $_SESSION['candidate_count'] = count($user_skill_match);
