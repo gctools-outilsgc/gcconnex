@@ -76,7 +76,7 @@ function _elgg_wet_fetch_entities_from_sql($sql, \ElggBatch $batch = null) {
 		if (null === $plugin_subtype) {
 			$plugin_subtype = get_subtype_id('object', 'plugin');
 		}
-	
+
 		// Keys are types, values are columns that, if present, suggest that the secondary
 		// table is already JOINed. Note it's OK if guess incorrectly because entity load()
 		// will fetch any missing attributes.
@@ -86,14 +86,14 @@ function _elgg_wet_fetch_entities_from_sql($sql, \ElggBatch $batch = null) {
 			'group' => 'name',
 			'site' => 'url',
 		);
-	
+
 		$rows = _elgg_services()->db->getData($sql);
-	
+
 		// guids to look up in each type
 		$lookup_types = array();
 		// maps GUIDs to the $rows key
 		$guid_to_key = array();
-	
+
 		if (isset($rows[0]->type, $rows[0]->subtype)
 				&& $rows[0]->type === 'object'
 				&& $rows[0]->subtype == $plugin_subtype) {
@@ -102,7 +102,7 @@ function _elgg_wet_fetch_entities_from_sql($sql, \ElggBatch $batch = null) {
 			// but abandon the extra queries.
 			$types_to_optimize = array();
 		}
-	
+
 		// First pass: use cache where possible, gather GUIDs that we're optimizing
 		foreach ($rows as $i => $row) {
 			if (empty($row->guid) || empty($row->type)) {
@@ -128,7 +128,7 @@ function _elgg_wet_fetch_entities_from_sql($sql, \ElggBatch $batch = null) {
 		// Do secondary queries and merge rows
 		if ($lookup_types) {
 			$dbprefix = _elgg_services()->config->get('dbprefix');
-	
+
 			foreach ($lookup_types as $type => $guids) {
 				if ( $type = "object" ){
 					$set = "(" . implode(',', $guids) . ")";
@@ -166,7 +166,7 @@ function _elgg_wet_fetch_entities_from_sql($sql, \ElggBatch $batch = null) {
 				} catch (IncompleteEntityException $e) {
 					// don't let incomplete entities throw fatal errors
 					unset($rows[$i]);
-	
+
 					// report incompletes to the batch process that spawned this query
 					if ($batch) {
 						$batch->reportIncompleteEntity($row);
@@ -332,7 +332,7 @@ function elgg_get_group_river(array $options = array()) {
 		$wheres1[] = "rv.posted <= {$options['posted_time_upper']}";
 		$wheres2[] = "rv.posted <= {$options['posted_time_upper']}";
 	}*/
-	
+
 	if (!access_get_show_hidden_status()) {
 		$wheres1[] = "rv.enabled = 'yes'";
 		$wheres2[] = "rv.enabled = 'yes'";
@@ -410,5 +410,61 @@ function elgg_get_group_river(array $options = array()) {
 		return (int)$total->total;
 	}
 }
+
+
+/**
+ * Provides an array of the latest n messages in the user's inbox
+ * @param $user_id the guid of the user who is the recipient of the messages we will be looking for and returning
+ * @param $type is this for the regular inbox ('inbox', the default) or the notification one ('notif')
+ * @param $n the number of messages to return, default is 5
+ *
+ * @return array of entity objects
+ */
+ function latest_messages_preview( $user_guid, $type = 'inbox', $n = 5 ) {
+	// prepare for query building
+	$strings = array('toId', $user_guid, 'readYet', 0, 'msg', 1, 'fromId');
+ 	$map = array();
+ 	foreach ($strings as $string) {
+ 		$id = elgg_get_metastring_id($string);
+ 		$map[$string] = $id;
+ 	}
+
+ 	 $db_prefix = elgg_get_config('dbprefix');
+	 // set up the joins and where for the query
+	 $options = array(
+ 		'joins' => array(
+ 			"JOIN {$db_prefix}metadata msg_toId on e.guid = msg_toId.entity_guid",
+ 			"JOIN {$db_prefix}metadata msg_readYet on e.guid = msg_readYet.entity_guid",
+ 			"JOIN {$db_prefix}metadata msg_msg on e.guid = msg_msg.entity_guid",
+ 			"LEFT JOIN {$db_prefix}metadata msg_fromId on e.guid = msg_fromId.entity_guid",
+ 			"LEFT JOIN {$db_prefix}metastrings msvfrom ON msg_fromId.value_id = msvfrom.id",
+ 			"LEFT JOIN {$db_prefix}entities efrom ON msvfrom.string = efrom.guid",
+ 		),
+ 		'wheres' => array(
+ 			"msg_toId.name_id='{$map['toId']}' AND msg_toId.value_id='{$map[$user_guid]}'",
+ 			"msg_fromId.name_id='{$map['fromId']}' AND efrom.type = 'user'",
+ 			"msg_readYet.name_id='{$map['readYet']}' AND msg_readYet.value_id='{$map[0]}'",
+ 			"msg_msg.name_id='{$map['msg']}' AND msg_msg.value_id='{$map[1]}'",
+ 		),
+ 		'owner_guid' => $user_guid,
+ 		'limit' => $n,
+ 		'offset' => 0,
+ 		'count' => false,
+ 		'distinct' => false,
+ 	);
+	// only the wheres are a little different for notifications
+	if ( $type === 'notif' )
+		$options['wheres'] = array(
+ 			"msg_toId.name_id='{$map['toId']}' AND msg_toId.value_id='{$map[$user_guid]}'",
+ 			"msg_fromId.name_id='{$map['fromId']}' AND efrom.type <> 'user'",
+ 			"msg_readYet.name_id='{$map['readYet']}' AND msg_readYet.value_id='{$map[0]}'",
+ 			"msg_msg.name_id='{$map['msg']}' AND msg_msg.value_id='{$map[1]}'",
+ 		);
+
+	// run the query and retrieve the entities
+	 $messages = elgg_get_entities_from_metadata($options);
+
+	 return $messages;
+ }
 
 ?>

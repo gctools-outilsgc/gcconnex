@@ -29,13 +29,13 @@ function messages_init() {
 			'href' => "messages/notifications/" . elgg_get_logged_in_user_entity()->username,
 			'context' => 'messages',
 		));
-		
+
 		elgg_register_menu_item('page', array(
 			'name' => 'messages:sentmessages',
 			'text' => elgg_echo('messages:sentmessages'),
 			'href' => "messages/sent/" . elgg_get_logged_in_user_entity()->username,
 			'context' => 'messages',
-		));		
+		));
 	}
 
 	elgg_register_event_handler('pagesetup', 'system', 'messages_notifier');
@@ -43,7 +43,7 @@ function messages_init() {
 	// Extend system CSS with our own styles, which are defined in the messages/css view
 	elgg_extend_view('css/elgg', 'messages/css');
 	elgg_extend_view('js/elgg', 'messages/js');
-	
+
 	// Register a page handler, so we can have nice URLs
 	elgg_register_page_handler('messages', 'messages_page_handler');
 
@@ -141,7 +141,7 @@ function messages_notifier() {
 	if (elgg_is_logged_in()) {
 		$text = elgg_view_icon("mail");
 		$tooltip = elgg_echo("messages");
-		
+
 		// get unread messages
 		$num_messages = (int)messages_count_unread();
 		if ($num_messages != 0) {
@@ -318,7 +318,7 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
 	if (($recipient_guid != elgg_get_logged_in_user_guid()) && $notify) {
 		$recipient = get_user($recipient_guid);
 		$sender = get_user($sender_guid);
-		
+
 		$subject = elgg_echo('messages:email:subject', array(), $recipient->language);
 		$body = elgg_echo('messages:email:body', array(
 				$sender->name,
@@ -415,6 +415,130 @@ function messages_get_unread($user_guid = 0, $limit = null, $offset = 0, $count 
 	return elgg_get_entities_from_metadata($options);
 }
 
+
+/**
+ * Returns the unread messages from other users in a user's inbox
+ *
+ * @param int  $user_guid GUID of user whose inbox we're counting (0 for logged in user)
+ * @param int  $limit     Number of unread messages to return (default from settings)
+ * @param int  $offset    Start at a defined offset (for listings)
+ * @param bool $count     Switch between entities array or count mode
+ *
+ * @return array, int (if $count = true)
+ * @since 1.9
+ */
+function messages_get_unread_inbox($user_guid = 0, $limit = null, $offset = 0, $count = false) {
+	if (!$user_guid) {
+		$user_guid = elgg_get_logged_in_user_guid();
+	}
+	$db_prefix = elgg_get_config('dbprefix');
+
+	// denormalize the md to speed things up.
+	// seriously, 10 joins if you don't.
+	$strings = array('toId', $user_guid, 'readYet', 0, 'msg', 1, 'fromId');
+	$map = array();
+	foreach ($strings as $string) {
+		$id = elgg_get_metastring_id($string);
+		$map[$string] = $id;
+	}
+
+	if ($limit === null) {
+		$limit = elgg_get_config('default_limit');
+	}
+
+	$options = array(
+		// original options before denormalizing
+		// 'metadata_name_value_pairs' => array(
+		// 'toId' => elgg_get_logged_in_user_guid(),
+		// 'readYet' => 0,
+		// 'msg' => 1
+		// ),
+		'joins' => array(
+			"JOIN {$db_prefix}metadata msg_toId on e.guid = msg_toId.entity_guid",
+			"JOIN {$db_prefix}metadata msg_readYet on e.guid = msg_readYet.entity_guid",
+			"JOIN {$db_prefix}metadata msg_msg on e.guid = msg_msg.entity_guid",
+			"LEFT JOIN {$db_prefix}metadata msg_fromId on e.guid = msg_fromId.entity_guid",
+			"LEFT JOIN {$db_prefix}metastrings msvfrom ON msg_fromId.value_id = msvfrom.id",
+			"LEFT JOIN {$db_prefix}entities efrom ON msvfrom.string = efrom.guid",
+		),
+		'wheres' => array(
+			"msg_toId.name_id='{$map['toId']}' AND msg_toId.value_id='{$map[$user_guid]}'",
+			"msg_fromId.name_id='{$map['fromId']}' AND efrom.type = 'user'",
+			"msg_readYet.name_id='{$map['readYet']}' AND msg_readYet.value_id='{$map[0]}'",
+			"msg_msg.name_id='{$map['msg']}' AND msg_msg.value_id='{$map[1]}'",
+		),
+		'owner_guid' => $user_guid,
+		'limit' => $limit,
+		'offset' => $offset,
+		'count' => $count,
+		'distinct' => false,
+	);
+
+	return elgg_get_entities_from_metadata($options);
+}
+
+
+/**
+ * Returns the unread notification messages in a user's inbox
+ *
+ * @param int  $user_guid GUID of user whose inbox we're counting (0 for logged in user)
+ * @param int  $limit     Number of unread messages to return (default from settings)
+ * @param int  $offset    Start at a defined offset (for listings)
+ * @param bool $count     Switch between entities array or count mode
+ *
+ * @return array, int (if $count = true)
+ * @since 1.9
+ */
+function messages_get_unread_notifications($user_guid = 0, $limit = null, $offset = 0, $count = false) {
+	if (!$user_guid) {
+		$user_guid = elgg_get_logged_in_user_guid();
+	}
+	$db_prefix = elgg_get_config('dbprefix');
+
+	// denormalize the md to speed things up.
+	// seriously, 10 joins if you don't.
+	$strings = array('toId', $user_guid, 'readYet', 0, 'msg', 1, 'fromId');
+	$map = array();
+	foreach ($strings as $string) {
+		$id = elgg_get_metastring_id($string);
+		$map[$string] = $id;
+	}
+
+	if ($limit === null) {
+		$limit = elgg_get_config('default_limit');
+	}
+
+	$options = array(
+		// original options before denormalizing
+		// 'metadata_name_value_pairs' => array(
+		// 'toId' => elgg_get_logged_in_user_guid(),
+		// 'readYet' => 0,
+		// 'msg' => 1
+		// ),
+		'joins' => array(
+			"JOIN {$db_prefix}metadata msg_toId on e.guid = msg_toId.entity_guid",
+			"JOIN {$db_prefix}metadata msg_readYet on e.guid = msg_readYet.entity_guid",
+			"JOIN {$db_prefix}metadata msg_msg on e.guid = msg_msg.entity_guid",
+			"LEFT JOIN {$db_prefix}metadata msg_fromId on e.guid = msg_fromId.entity_guid",
+			"LEFT JOIN {$db_prefix}metastrings msvfrom ON msg_fromId.value_id = msvfrom.id",
+			"LEFT JOIN {$db_prefix}entities efrom ON msvfrom.string = efrom.guid",
+		),
+		'wheres' => array(
+			"msg_toId.name_id='{$map['toId']}' AND msg_toId.value_id='{$map[$user_guid]}'",
+			"msg_fromId.name_id='{$map['fromId']}' AND efrom.type <> 'user'",
+			"msg_readYet.name_id='{$map['readYet']}' AND msg_readYet.value_id='{$map[0]}'",
+			"msg_msg.name_id='{$map['msg']}' AND msg_msg.value_id='{$map[1]}'",
+		),
+		'owner_guid' => $user_guid,
+		'limit' => $limit,
+		'offset' => $offset,
+		'count' => $count,
+		'distinct' => false,
+	);
+
+	return elgg_get_entities_from_metadata($options);
+}
+
 /**
  * Count the unread messages in a user's inbox
  *
@@ -424,6 +548,28 @@ function messages_get_unread($user_guid = 0, $limit = null, $offset = 0, $count 
  */
 function messages_count_unread($user_guid = 0) {
 	return messages_get_unread($user_guid, 10, 0, true);
+}
+
+/**
+ * Count the unread messages in a user's inbox
+ *
+ * @param int $user_guid GUID of user whose inbox we're counting (0 for logged in user)
+ *
+ * @return int
+ */
+function messages_count_unread_inbox($user_guid = 0) {
+	return messages_get_unread_inbox($user_guid, 10, 0, true);
+}
+
+/**
+ * Count the unread messages in a user's inbox
+ *
+ * @param int $user_guid GUID of user whose inbox we're counting (0 for logged in user)
+ *
+ * @return int
+ */
+function messages_count_unread_notifications($user_guid = 0) {
+	return messages_get_unread_notifications($user_guid, 10, 0, true);
 }
 
 /**
