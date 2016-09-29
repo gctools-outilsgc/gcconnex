@@ -40,7 +40,7 @@ $ajax_dd_messages = '<div aria-hidden="true" id="msg_dd" class="dropdown-menu us
 
 $ajax_dd_notification = '<div aria-hidden="true" id="notif_dd"  class="dropdown-menu user-menu-message-dd notif-dd-position subMenu">'. elgg_view('page/elements/notifications_dd') . '</div>';
 
-$focus_dd = '<a href="#" class="focus_dd_link" style="display:none;"><i class="fa fa-caret-down" aria-hidden="true"></i></a>';
+$focus_dd = '<a href="#" class="focus_dd_link" style="display:none;"><i class="fa fa-caret-down" aria-hidden="true"></i><span class="wb-inv">'.elgg_echo('wet:dd:expand').'</span></a>';
 
 //admin link
 //check to see if user is an admin
@@ -78,7 +78,7 @@ elgg_register_menu_item('user_menu', array(
     'title' => elgg_echo('userMenu:usermenuTitle'),
     'item_class' => 'brdr-lft dropdown',
     'data-toggle' => 'dropdown',
-    'class' => 'dropdown-toggle  dropdownToggle',
+    'class' => 'dropdown-toggle  dropdownToggle dd-close',
     'priority' => '3',
     'tab-index'=>'0', //If the tab index is gone perhaps the screen reader will skip it? What about sighted people with out mouse, need to test, just an idea :3
     //Google has some kind of tab loop when the the card is open, so when the user tabs they only tab through the options in the card
@@ -109,7 +109,7 @@ elgg_register_menu_item('user_menu', array(
     'name' => 'messages',
     'text' => '<a href="'.elgg_get_site_url().'messages/inbox/' . $user.'"><i class="fa fa-envelope mrgn-rght-sm mrgn-tp-sm fa-lg"></i><span class="hidden-xs">' . elgg_echo('messages') . '</span>' . $msgbadge .'</a>'.$focus_dd .$ajax_dd_messages,
     'title' => elgg_echo('userMenu:messages') . $title,
-    'item_class' => 'brdr-lft messagesLabel',
+    'item_class' => 'brdr-lft messagesLabel close-msg-dd',
     'data-toggle' => '',
     'id'=>'messagesLabel',
     'class' => '',
@@ -144,7 +144,7 @@ elgg_register_menu_item('user_menu', array(
 
     'text' => '<a href="'.elgg_get_site_url().'messages/notifications/' . $user.'"><i class="fa fa-bell mrgn-rght-sm mrgn-tp-sm fa-lg"></i><span class="hidden-xs">' . elgg_echo('notifications:subscriptions:changesettings') . '</span>' . $msgbadge .'</a>'.$focus_dd.'<div>'.$ajax_dd_notification.'</div>',
     'title' => elgg_echo('userMenu:notifications') . $title,
-    'item_class' => 'brdr-lft messagesLabel',
+    'item_class' => 'brdr-lft messagesLabel close-notif-dd',
     'class' => '',
     'priority' => '2',
     'data-dd-type'=>'notif_dd',

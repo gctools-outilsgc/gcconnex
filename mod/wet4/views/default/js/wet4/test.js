@@ -51,7 +51,8 @@ $('.messagesLabel').hover(function(){
 $('.messagesLabel').on('focusin', function(){
 //When A user tabs to the the link they can click the link or we show them a dd link to open up the messages dd.
   var dd_object = $(this).find('.dropdown-menu');
-  $(this).find('.focus_dd_link').show(function(){
+
+  $(this).find('.focus_dd_link').show(function()  {
 
     $(this).on('click', function(){ // Click = Enter
       $(dd_object).attr('aria-hidden', "false");
@@ -67,11 +68,7 @@ $('.messagesLabel').on('focusin', function(){
               //alert(data);
                 $('#'+type).html(data);
                 //alert('focus pokus!');
-                $(dd_object).focus(function(){
-                  $(this).focusout(function(){
-                    $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(200)
-                  })
-                });
+
                 //alert($(this));
                 //$(this).focus();
             }
@@ -82,6 +79,16 @@ $('.messagesLabel').on('focusin', function(){
   });
 });
 
+//Close the windows when focused out
+$('.dd-close').on('focusin', function(){
+  $('.dropdown-menu').stop(true, true).delay(200).fadeOut(200);
+});
+$('.close-msg-dd').on('focusin', function(){
+  $('.close-notif-dd').find('.dropdown-menu').stop(true, true).delay(200).fadeOut(200);
+})
+$('.close-notif-dd').on('focusin', function(){
+  $('.close-msg-dd').find('.dropdown-menu').stop(true, true).delay(200).fadeOut(200);
+})
 // { "dom": '<"top"ilf>' }
 requirejs( ["datatables"], function() {
 // $('.wb-tables').dataTable( { "dom": '<"top"ilf>' } );

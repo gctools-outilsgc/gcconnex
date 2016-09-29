@@ -176,6 +176,7 @@ return array(
     'userMenu:messages' => "My Messages",
     'userMenu:colleagues' => "My Colleagues",
     'userMenu:usermenuTitle' =>'User Card - Click here for links to your profile, account settings and logout', /*NEW*/
+		'wet:dd:expand'=>"Open drop down of most recent messages",
 
     /**
      * Custom Activity Widget
