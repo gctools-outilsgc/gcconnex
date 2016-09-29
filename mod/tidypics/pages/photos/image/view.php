@@ -40,13 +40,31 @@ if (elgg_get_plugin_setting('tagging', 'tidypics')) {
 // set up breadcrumbs
 elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
 elgg_push_breadcrumb(elgg_echo('tidypics:albums'), 'photos/all');
-if (elgg_instanceof($owner, 'group')) {
-	elgg_push_breadcrumb($owner->name, "photos/group/$owner->guid/all");
-} else {
-	elgg_push_breadcrumb($owner->name, "photos/owner/$owner->username");
+
+if($owner->title3){
+	$title_group = gc_explode_translation($owner->title3,$lang);
+}else{
+	$title_group = $owner->name;
 }
-elgg_push_breadcrumb($album->getTitle(), $album->getURL());
-elgg_push_breadcrumb(gc_explode_translation($photo->title3, $lang));
+
+if (elgg_instanceof($owner, 'group')) {
+	elgg_push_breadcrumb($title_group, "photos/group/$owner->guid/all");
+} else {
+	elgg_push_breadcrumb($title_group, "photos/owner/$owner->username");
+}
+
+if($album->title3){
+	$album_title = gc_explode_translation($album->title3,$lang);
+}else{
+	$album_title = $album->title;
+}
+
+elgg_push_breadcrumb($album_title, $album->getURL());
+if($photo->title3){
+    elgg_push_breadcrumb(gc_explode_translation($photo->title3, $lang));
+}else{
+ elgg_push_breadcrumb($photo->title);   
+}
 
 if (elgg_is_logged_in()) {
 	if ($owner instanceof ElggGroup) {

@@ -4,7 +4,7 @@ define(function(require) {
 	var CKEDITOR = require('ckeditor');
 
 	CKEDITOR.plugins.addExternal('blockimagepaste', elgg.get_site_url() + 'mod/ckeditor/views/default/js/elgg/ckeditor/blockimagepaste.js', '');
-	
+	CKEDITOR.disableAutoInline = true;
 	var elggCKEditor = {
 
 		/**

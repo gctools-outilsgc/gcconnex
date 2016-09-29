@@ -219,7 +219,13 @@ function discussion_handle_view_page($guid) {
 
 	elgg_group_gatekeeper();
 
-	elgg_push_breadcrumb($group->name, "discussion/owner/$group->guid");
+	if($group->title3){
+		elgg_push_breadcrumb(gc_explode_translation($group->title3,$lang), "discussion/owner/$group->guid");
+	}else{
+		elgg_push_breadcrumb($group->name, "discussion/owner/$group->guid");
+	}
+
+	
 	if($topic->title3){
 	elgg_push_breadcrumb(gc_explode_translation($topic->title3, $lang));
     }else{

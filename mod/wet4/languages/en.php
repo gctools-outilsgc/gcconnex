@@ -163,7 +163,10 @@ return array(
   */
 
   'file:folderstruct' => 'Folder structure',
-  //'file:move:selected' => 'Move selected',
+  'file:move:selected' => 'Move selected',
+  'fil:which:folder' => 'Move into which folder? ',
+  'file:no:selected' => 'Nothing Selected',
+  'file:chose' => 'You have to chose a file or folder first.',
 
 /**
  * User Menu

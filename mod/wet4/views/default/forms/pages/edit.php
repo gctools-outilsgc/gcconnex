@@ -12,6 +12,19 @@ $can_change_access = true;
 if ($user && $entity) {
 	$can_change_access = ($user->isAdmin() || $user->getGUID() == $entity->owner_guid);
 }
+$french = elgg_view('input/button', array(
+    'value' => elgg_echo('btn:translate:fr'),
+    'id' => 'btnClickfr',
+    'class' => 'btn btn-default en',
+));
+
+$english = elgg_view('input/button', array(
+    'value' => elgg_echo('btn:translate:en'),
+    'id' => 'btnClicken',
+    'class' => 'btn btn-default fr',
+));
+
+echo $body .= $french.' '.$english;
 
 foreach ($variables as $name => $type) {
 	// don't show read / write access inputs for non-owners or admin when editing
@@ -29,14 +42,24 @@ foreach ($variables as $name => $type) {
 	} else {
 		$input_view = "input/$type";
 	}
+if (($name == 'title2') || ($name == 'description2')){
 
+		echo '<div class="form-group fr">';
+		}elseif (($name == 'title') || ($name == 'description')){
+
+			echo '<div class="form-group en">';
+		}else{
+			echo '<div class="form-group ">';
+		}
 ?>
-<div class="form-group">
+
+
 	<label for="<?php echo $name; ?>"><?php echo elgg_echo("pages:$name") ?></label>
 	<?php
 		if ($type != 'longtext') {
 			echo '<br />';
 		}
+
 
 		$view_vars = array(
 			'name' => $name,
@@ -44,6 +67,8 @@ foreach ($variables as $name => $type) {
             'id' => $name,
 			'entity' => ($name == 'parent_guid') ? $vars['entity'] : null,
 		);
+		
+
 		if ($input_view === 'input/access' || $input_view === 'input/write_access') {
 			$view_vars['entity'] = $entity;
 			$view_vars['entity_type'] = 'object';
@@ -124,4 +149,41 @@ if($vars['guid']){
     echo elgg_view('input/submit', array('value' => elgg_echo('page:create'), 'class' => 'btn btn-primary'));
 }
 
-echo '</div>';
+
+echo'</div>';
+
+if(get_current_language() == 'fr'){
+?>
+    <script>
+        jQuery('.fr').show();
+        jQuery('.en').hide();
+
+    </script>
+<?php
+}else{
+?>
+    <script>
+        jQuery('.en').show();
+        jQuery('.fr').hide();
+
+    </script>
+<?php
+}
+?>
+<script>
+jQuery(function(){
+
+        jQuery('#btnClickfr').click(function(){
+               jQuery('.fr').show();
+               jQuery('.en').hide();
+                
+        });
+
+          jQuery('#btnClicken').click(function(){
+               jQuery('.en').show();
+               jQuery('.fr').hide();
+               
+        });
+
+});
+</script>

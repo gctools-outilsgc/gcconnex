@@ -131,7 +131,7 @@ if ($guid) {
 			}
 			
 			// Success message
-			system_message(elgg_echo("polls:edited".$count3));
+			system_message(elgg_echo("polls:edited"));
 		}
 	}
 } else {

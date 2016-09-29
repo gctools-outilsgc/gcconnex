@@ -15,7 +15,12 @@ if (!$blog) {
 $owner = $blog->getOwnerEntity();
 $container = $blog->getContainerEntity();
 $categories = elgg_view('output/categories', $vars);
-$excerpt = $blog->excerpt;
+if($blog->excerpt3){
+	$excerpt = gc_explode_translation($blog->excerpt3,$lang);
+}else{
+	$excerpt = $blog->excerpt;
+}
+
 
 if (empty($excerpt)) {
 	$excerpt = elgg_get_excerpt(gc_explode_translation($blog->description3, $lang));

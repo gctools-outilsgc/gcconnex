@@ -57,10 +57,16 @@ if (isset($vars['entity'])) {
 		
 	$subtitle = "$author_text $date $comments_link $categories";
 	if ($full) {
+		$lang = get_current_language();
+		if($poll->title3){
+			$title = gc_explode_translation($poll->title3,$lang);
+		}else{
+			$title = false;
+		}
 
 		$params = array(
 			'entity' => $poll,
-			'title' => false,
+			'title' => $title,
 			'metadata' => $metadata,
 			'subtitle' => $subtitle,
 			'tags' => $tags,

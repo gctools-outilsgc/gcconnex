@@ -56,11 +56,11 @@ $subtitle = elgg_extract('subtitle', $vars, '');
 $content = elgg_extract('content', $vars, '');
 $lang = get_current_language();
 
-if(($entity->excerpt) || ($entity->excerpt2)){
+/*if($entity->excerpt3){
 	
-	$content = gc_explode_translation($entity->excerpt3, $lang);
+	$entity->excerpt = gc_explode_translation($entity->excerpt3, $lang);
 	}
-
+*/
 
 $tags = elgg_extract('tags', $vars, '');
 if ($tags === '') {

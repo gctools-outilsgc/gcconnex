@@ -172,8 +172,11 @@ return array(
    * Files
    */
 
-  //'file:folderstruct' => 'Arborescence',
-  //'file:move:selected' => 'Déplacer la sélection',
+  'file:folderstruct' => 'Structure de dossiers',
+  'file:move:selected' => 'Déplacer la sélection',
+  'fil:which:folder' => 'Déplacer dans quel dossier?',
+  'file:no:selected' => 'Rien n’a été sélectionné',
+  'file:chose' => 'Vous devez choisir un fichier ou un dossier.',
 
 /**
   * User Menu

@@ -65,7 +65,9 @@ function pages_init() {
 	// where key is the array key below
 	elgg_set_config('pages', array(
 		'title' => 'text',
+		'title2' => 'text',
 		'description' => 'longtext',
+		'description2' => 'longtext',
 		'tags' => 'tags',
 		'parent_guid' => 'parent',
 		'access_id' => 'access',

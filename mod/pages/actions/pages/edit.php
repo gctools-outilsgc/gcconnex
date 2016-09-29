@@ -18,6 +18,10 @@ foreach ($variables as $name => $type) {
 	}
 }
 
+$input['title3'] = gc_implode_translation($input['title'],$input['title2']);
+$input['description3'] = gc_implode_translation($input['description'],$input['description2']);
+
+
 // Get guids
 $page_guid = (int)get_input('page_guid');
 $container_guid = (int)get_input('container_guid');
@@ -25,7 +29,7 @@ $parent_guid = (int)get_input('parent_guid');
 
 elgg_make_sticky_form('page');
 
-if (!$input['title']) {
+if ((!$input['title']) && (!$input['title2'])) {
 	register_error(elgg_echo('pages:error:no_title'));
 	forward(REFERER);
 }

@@ -441,10 +441,17 @@ function polls_get_page_view($guid) {
 		}
 		
 		elgg_push_breadcrumb(elgg_echo('item:object:poll'), "polls/all");
+
+		if($page_owner->title3){
+			$title_group = gc_explode_translation($page_owner->title3, $lang);
+		}else{
+			$title_group = $page_owner->name;
+		}
+
 		if (elgg_instanceof($page_owner,'user')) {
-			elgg_push_breadcrumb($page_owner->name, "polls/owner/{$page_owner->username}");
+			elgg_push_breadcrumb($title_group, "polls/owner/{$page_owner->username}");
 		} else {
-			elgg_push_breadcrumb($page_owner->name, "polls/group/{$page_owner->guid}");
+			elgg_push_breadcrumb($title_group, "polls/group/{$page_owner->guid}");
 		}
 		$lang = get_current_language();
 		elgg_push_breadcrumb(gc_explode_translation($poll->title3, $lang));

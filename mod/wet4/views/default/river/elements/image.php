@@ -46,7 +46,13 @@ if(elgg_get_context() !== 'widgets'){
 	
 } else {
     if($container && $subtype_test && !elgg_in_context('group_activity_tab')){//happens in group
-        echo elgg_view_entity_icon($container, 'medium');
+        //if in group show the groups icon
+        if(elgg_instanceof($container, 'group')){
+            echo elgg_view_entity_icon($container, 'medium');
+        } else {
+            //if not just show user's icon
+            echo elgg_view_entity_icon($object->getOwnerEntity(), 'medium');
+        }
         //echo $subtype_test;
     }else if($container && !elgg_in_context('group_activity_tab')){
         //if user joins group show their photo, not group owner's image

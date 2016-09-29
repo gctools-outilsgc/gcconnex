@@ -104,6 +104,12 @@ foreach ($values as $name => $default) {
 			$values[$name] = string_to_tag_array($value);
 			break;
 
+		case 'excerpt2':
+			if ($value) {
+				$values[$name] = elgg_get_excerpt($value);
+			}
+			break;
+
 		case 'excerpt':
 			if ($value) {
 				$values[$name] = elgg_get_excerpt($value);

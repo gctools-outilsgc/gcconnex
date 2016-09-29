@@ -17,7 +17,12 @@ if (isset($vars['entity'])) {
 	//set img src
 	$img_src = $vars['url'] . "mod/polls/graphics/poll.gif";
 
-	$question = $vars['entity']->question;
+	if($vars['entity']->title3){
+		$question = gc_explode_translation($vars['entity']->title3,$lang);
+	}else{
+		$question = $vars['entity']->question;
+	}
+	
 
 	//get the array of possible responses
 	if(polls_get_choice_array3($vars['entity'])){
@@ -60,7 +65,7 @@ if (isset($vars['entity'])) {
         if(empty($response1)){
            echo $response;
         }else{
-            echo gc_explode_translation($response1, $lang); 
+            echo $response1; 
         }
         
         ?>

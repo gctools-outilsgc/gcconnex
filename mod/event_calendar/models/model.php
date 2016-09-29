@@ -2001,13 +2001,21 @@ function event_calendar_get_page_content_view($event_guid) {
 		}else{
 			$title = htmlspecialchars($event->title);
 		}
-		
+
 		$event_container = get_entity($event->container_guid);
+
+		if($event_container->title3){
+			$group_name = gc_explode_translation($event_container->title3, $lang);
+		}else{
+			$group_name = $event_container->name;
+		}
+		
 		if (elgg_instanceof($event_container, 'group')) {
 			if ($event_container->canEdit()) {
 				event_calendar_handle_menu($event_guid);
 			}
-			elgg_push_breadcrumb($event_container->name, 'event_calendar/group/' . $event->container_guid);
+
+			elgg_push_breadcrumb($group_name, 'event_calendar/group/' . $event->container_guid);
 			
 			// cyu - disabling add to outlook action (temporarily)
 			/*if (event_calendar_can_add($event_container->getGUID())) {
@@ -2023,7 +2031,7 @@ function event_calendar_get_page_content_view($event_guid) {
 			if ($event->canEdit()) {
 				event_calendar_handle_menu($event_guid);
 			}
-			elgg_push_breadcrumb($event_container->name, 'event_calendar/owner/' . $event_container->username);
+			elgg_push_breadcrumb($group_name, 'event_calendar/owner/' . $event_container->username);
 			$user_guid = elgg_get_logged_in_user_guid();
 			$calendar_status = event_calendar_personal_can_manage($event, $user_guid);
 

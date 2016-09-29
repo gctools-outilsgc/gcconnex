@@ -15,7 +15,7 @@
 function blog_get_page_content_read($guid = NULL) {
 
 	$return = array();
-
+	$lang = get_current_language();
 	elgg_entity_gatekeeper($guid, 'object', 'blog');
 
 	$blog = get_entity($guid);
@@ -30,14 +30,24 @@ function blog_get_page_content_read($guid = NULL) {
 	$return['title'] =  gc_explode_translation($blog->title3, $lang);
 
 	$container = $blog->getContainerEntity();
-	$crumbs_title = $container->name;
+	if($container->title3){
+		$crumbs_title = gc_explode_translation($container->title3,$lang);
+	}else{
+		$crumbs_title = $container->name;
+	}
+	
 	if (elgg_instanceof($container, 'group')) {
 		elgg_push_breadcrumb($crumbs_title, "blog/group/$container->guid/all");
 	} else {
 		elgg_push_breadcrumb($crumbs_title, "blog/owner/$container->username");
 	}
 
-	elgg_push_breadcrumb($blog->title);
+	if($blog->title3){
+		elgg_push_breadcrumb(gc_explode_translation($blog->title3,$lang));
+	}else{
+		elgg_push_breadcrumb($blog->title2);
+	}
+	
 	$return['content'] = elgg_view_entity($blog, array('full_view' => true));
 	// check to see if we should allow comments
 	if ($blog->comments_on != 'Off' && $blog->status == 'published') {

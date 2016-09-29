@@ -31,10 +31,17 @@ $title = elgg_echo($album->getTitle());
 // set up breadcrumbs
 elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
 elgg_push_breadcrumb(elgg_echo('tidypics:albums'), 'photos/all');
+
+if($owner->title3){
+	$group_title = gc_explode_translation($owner->title3,$lang);
+}else{
+	$group_title = $owner->name;
+}
+
 if (elgg_instanceof($owner, 'group')) {
-	elgg_push_breadcrumb($owner->name, "photos/group/$owner->guid/all");
+	elgg_push_breadcrumb($group_title, "photos/group/$owner->guid/all");
 } else {
-	elgg_push_breadcrumb($owner->name, "photos/owner/$owner->username");
+	elgg_push_breadcrumb($group_title, "photos/owner/$owner->username");
 }
 
 if ($album->title3){

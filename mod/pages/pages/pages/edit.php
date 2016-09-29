@@ -7,6 +7,7 @@
 
 elgg_gatekeeper();
 
+$lang = get_current_language();
 $page_guid = (int)get_input('guid');
 $revision = (int)get_input('annotation_id');
 $page = get_entity($page_guid);
@@ -22,8 +23,12 @@ if (!$container) {
 }
 
 elgg_set_page_owner_guid($container->getGUID());
+if($page->title3){
+	elgg_push_breadcrumb(gc_explode_translation($page->title3,$lang), $page->getURL());
+}else{
+	elgg_push_breadcrumb($page->title, $page->getURL());
+}
 
-elgg_push_breadcrumb($page->title, $page->getURL());
 elgg_push_breadcrumb(elgg_echo('edit'));
 
 $title = elgg_echo("pages:edit");
