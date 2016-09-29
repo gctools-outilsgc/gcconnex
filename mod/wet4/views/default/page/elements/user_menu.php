@@ -26,16 +26,6 @@ elgg_register_menu_item('user_menu_subMenu', array(
 
 $dropdown = elgg_view_menu('user_menu_subMenu', array('class' => 'dropdown-menu user-menu pull-right subMenu'));
 
-/*
-elgg_register_menu_item('messages_dd', array(
-  'name'=>'messages_ajax_dd',
-  'text'=>elgg_view('page/elements/messages_dd'),
-));
-$ajax_dd_messages = elgg_view_menu('messages_dd', array(
-  'class'=>'dropdown-menu user-menu pull-right subMenu',
-
-));*/
-
 $ajax_dd_messages = '<div aria-hidden="true" id="msg_dd" class="dropdown-menu user-menu-message-dd message-dd-position subMenu">'. elgg_view('page/elements/messages_dd') . '</div>';
 
 $ajax_dd_notification = '<div aria-hidden="true" id="notif_dd"  class="dropdown-menu user-menu-message-dd notif-dd-position subMenu">'. elgg_view('page/elements/notifications_dd') . '</div>';
@@ -105,6 +95,7 @@ if (elgg_is_active_plugin('messages')) {
 }
 
 // messages inbox menu item
+//Nick - Removed the href and created my own in the text to hold hidden messages dropdown
 elgg_register_menu_item('user_menu', array(
     'name' => 'messages',
     'text' => '<a href="'.elgg_get_site_url().'messages/inbox/' . $user.'"><i class="fa fa-envelope mrgn-rght-sm mrgn-tp-sm fa-lg"></i><span class="hidden-xs">' . elgg_echo('messages') . '</span>' . $msgbadge .'</a>'.$focus_dd .$ajax_dd_messages,
@@ -141,7 +132,6 @@ if (elgg_is_active_plugin('messages')) {
 // notifications inbox menu item
 elgg_register_menu_item('user_menu', array(
     'name' => 'notifications',
-
     'text' => '<a href="'.elgg_get_site_url().'messages/notifications/' . $user.'"><i class="fa fa-bell mrgn-rght-sm mrgn-tp-sm fa-lg"></i><span class="hidden-xs">' . elgg_echo('notifications:subscriptions:changesettings') . '</span>' . $msgbadge .'</a>'.$focus_dd.'<div>'.$ajax_dd_notification.'</div>',
     'title' => elgg_echo('userMenu:notifications') . $title,
     'item_class' => 'brdr-lft messagesLabel close-notif-dd',
@@ -161,4 +151,3 @@ Colleague menu item runs in start.php - sorry
 // cyu - remove the user menu when the gsa hits the page
 if (strcmp('gsa-crawler',strtolower($_SERVER['HTTP_USER_AGENT'])) != 0)
 	echo elgg_view_menu('user_menu', array('sort_by' => 'priority', 'id' => 'userMenu', 'class' => 'list-inline visited-link'));
-  //Nick - Adding dropdowns to the user menu

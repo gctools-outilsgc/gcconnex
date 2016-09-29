@@ -10,8 +10,6 @@
  */
 
 $item = $vars['item'];
-//$dropdown_content = $vars['menu_dd'];
-$dropdown_content = elgg_extract('menu_dd', $vars, '');
 $link_class = 'elgg-menu-closed';
 if ($item->getSelected()) {
 	// @todo switch to addItemClass when that is implemented
@@ -43,8 +41,4 @@ if ($children) {
 		'class' => ' elgg-child-menu sm list-unstyled',
 	));
 }
-if($dropdown_content){
-	echo $dropdown_content;
-}
-
 echo '</li>';
