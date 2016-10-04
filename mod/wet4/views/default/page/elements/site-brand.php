@@ -1,7 +1,7 @@
 <?php
 /**
  * WET 4 Site Branding
- * 
+ *
  */
 
 // footer
@@ -22,7 +22,7 @@ if (strcmp('gsa-crawler',strtolower($_SERVER['HTTP_USER_AGENT'])) != 0) {
                         <span><span class="bold-gc">GC</span>connex</span>
                     </a>
                     </div>
-                    
+
                     
                 </div>
                 <div class="col-sm-6 col-sm-offset-3 hidden-xs">
@@ -31,13 +31,13 @@ if (strcmp('gsa-crawler',strtolower($_SERVER['HTTP_USER_AGENT'])) != 0) {
                     <div class="pull-right tool-link">
                         <a href="<?php echo elgg_echo('wet:gcintranetLink-toolsHead');?>">
                         <img class="tool-link-icon" src="<?php echo $site_url.'/mod/wet4/graphics/intranet_icon.png'?>" alt="GCintranet"/><span class="bold-gc">GC</span>intranet</a>
-                        
+
                     </div>
                     <div class="pull-right tool-link">
                         <a href="<?php echo elgg_echo('wet:gcpediaLink');?>">
                         <img class="tool-link-icon" src="<?php echo $site_url.'/mod/wet4/graphics/pedia_icon.png';?>" alt="GCpedia" /><span class="bold-gc">GC</span><?php echo elgg_echo('wet:barGCpedia');?></a>
-                        
-                        
+
+
                     </div>
 
                     </div>
@@ -45,7 +45,7 @@ if (strcmp('gsa-crawler',strtolower($_SERVER['HTTP_USER_AGENT'])) != 0) {
                 </div>
             </div>
         </div>
-        
+
     </div>
 
 <?php } ?>

@@ -29,13 +29,13 @@ $header = elgg_view('output/url', array(
 
 $container = $album->getContainerEntity();
 if ($container) {
-    
+
     if($album->getContainerEntity()->title3){
         $group_title = gc_explode_translation($album->getContainerEntity()->title3,$lang);
     }else{
          $group_title = $album->getContainerEntity()->name;
     }
-    
+
         $footer = '<div class="elgg-subtext brdr-tp">' . elgg_echo('album:created_by') . elgg_view('output/url', array(
                 'text' => $group_title,
                 'href' => $album->getContainerEntity()->getURL(),
@@ -53,10 +53,3 @@ $params = array(
     'item_class' => 'col-sm-4 ',
 );
 echo elgg_view_module('tidypics-album-wet', $header, $album_cover, $params);
-/*
-echo elgg_view('page/components/photo_module', array(
-        'title' => $header,
-        'body' => $container,
-    
-    ));
-*/

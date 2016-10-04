@@ -9,7 +9,7 @@
  * @uses $vars['object'] The array of message registers
  */
  //The aria-live attribute will tell a screen reader to read this content when content appears in it. Ideally whenever an ajax system message pops up screen readers will get feedback, as well the screen reader will read this content first when the system message is created on page load.
- //This needs a lot of testing
+
  //we can change it from assertive to polite if it is well ... too assertive :3
 echo '<ul class="elgg-system-messages custom-message list-unstyled" aria-live="assertive" >';
 
@@ -20,9 +20,9 @@ if (isset($vars['object']) && is_array($vars['object']) && sizeof($vars['object'
     $num=0;
     foreach ($vars['object'] as $type => $list ) {
         if($num==0){
-            
+
              //alert-dismissible" role="alert">';
-            
+
             if($type=='error')
             {
                 echo '<div class="alert alert-'.$type.' clearfix" >'; //elgg-system-messages custom-message
