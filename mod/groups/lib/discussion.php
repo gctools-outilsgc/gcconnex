@@ -89,6 +89,8 @@ function discussion_handle_list_page($guid) {
  */
 function discussion_handle_edit_page($type, $guid) {
 	elgg_gatekeeper();
+	$lang = get_current_language();
+
 
 	if ($type == 'add') {
 		$group = get_entity($guid);
@@ -124,8 +126,20 @@ function discussion_handle_edit_page($type, $guid) {
 
 		$title = elgg_echo('groups:edittopic');
 
-		elgg_push_breadcrumb($group->name, "discussion/owner/$group->guid");
-		elgg_push_breadcrumb($topic->title, $topic->getURL());
+		if($group->title3){
+			elgg_push_breadcrumb(gc_explode_translation($group->title3,$lang), "discussion/owner/$group->guid");
+		}else{
+			elgg_push_breadcrumb($group->name, "discussion/owner/$group->guid");
+		}
+
+		if($group->title3){
+			elgg_push_breadcrumb(gc_explode_translation($topic->title3,$lang), $topic->getURL());
+		}else{
+			elgg_push_breadcrumb($topic->title, $topic->getURL());
+		}
+
+		
+		
 		elgg_push_breadcrumb($title);
 
 		$body_vars = discussion_prepare_form_vars($topic);

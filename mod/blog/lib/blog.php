@@ -27,7 +27,12 @@ function blog_get_page_content_read($guid = NULL) {
 
 	elgg_group_gatekeeper();
  	$lang = get_current_language();
-	$return['title'] =  gc_explode_translation($blog->title3, $lang);
+ 	
+	    if($blog->title3){
+	   $return['title'] =  gc_explode_translation($blog->title3, $lang);
+    }else{
+      	$return['title'] =  $blog->title;
+    }
 
 	$container = $blog->getContainerEntity();
 	if($container->title3){
@@ -45,7 +50,7 @@ function blog_get_page_content_read($guid = NULL) {
 	if($blog->title3){
 		elgg_push_breadcrumb(gc_explode_translation($blog->title3,$lang));
 	}else{
-		elgg_push_breadcrumb($blog->title2);
+		elgg_push_breadcrumb($blog->title);
 	}
 	
 	$return['content'] = elgg_view_entity($blog, array('full_view' => true));

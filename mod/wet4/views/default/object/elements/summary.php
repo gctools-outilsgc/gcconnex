@@ -79,10 +79,10 @@ $title_link = gc_explode_translation($entity->title3, $lang);
 if ($title_link) {
     echo "<span class=\"mrgn-bttm-0 summary-title\">$title_link</span>"; //put in span because some links would not take classes
     echo elgg_in_context($context);
-}else{
+}/*else{
         echo "<span class=\"mrgn-bttm-0 summary-title\">$entity->title</span>"; //put in span because some links would not take classes
     echo elgg_in_context($context);
-}
+}*/
 //This tests to see if you are looking at a group list and does't outpout the subtitle variable here, It's called at the end of this file
 if($entity->getType() == 'group'){
    echo '';

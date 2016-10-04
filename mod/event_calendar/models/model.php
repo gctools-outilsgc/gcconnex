@@ -1458,6 +1458,7 @@ function event_calendar_send_event_request($event, $user_guid) {
 
 function event_calendar_get_page_content_list($page_type, $container_guid, $start_date, $display_mode, $filter, $region='-') {
 	elgg_load_js('elgg.event_calendar');
+	$lang = get_current_language();
 	global $autofeed;
 	$autofeed = true;
 	elgg_push_breadcrumb(elgg_echo('item:object:event_calendar'), 'event_calendar/list');
@@ -1466,7 +1467,14 @@ function event_calendar_get_page_content_list($page_type, $container_guid, $star
 			forward();
 		}
 		$group = get_entity($container_guid);
-		elgg_push_breadcrumb($group->name, 'event_calendar/group/' . $group->name);
+
+		if($group->title3){
+			$group_title = gc_explode_translation($group->title3,$lang);
+		}else{
+			$group_title = $group->name;
+		}
+
+		elgg_push_breadcrumb($group_title, 'event_calendar/group/' . $group->name);
 		elgg_push_context('groups');
 		elgg_set_page_owner_guid($container_guid);
 		if(event_calendar_can_add($container_guid)) {
@@ -1553,6 +1561,7 @@ if ($event_page == false){
 
 function event_calendar_get_page_content_edit($page_type, $guid, $start_date='') {
 	elgg_load_js('elgg.event_calendar');
+	$lang = get_current_language();
 
 	$vars = array();
 	$vars['id'] = 'event-calendar-edit';
@@ -1572,14 +1581,27 @@ function event_calendar_get_page_content_edit($page_type, $guid, $start_date='')
 			$body_vars['form_data'] =  event_calendar_prepare_edit_form_vars($event, $page_type);
 
 			$event_container = get_entity($event->container_guid);
+
+			if($event_container->title3){
+				$group_title = gc_explode_translation($event_container->title3,$lang);
+			}else{
+				$group_title = $event_container->name;
+			}
+
 			if (elgg_instanceof($event_container, 'group')) {
-				elgg_push_breadcrumb($event_container->name, 'event_calendar/group/' . $event->container_guid);
+				elgg_push_breadcrumb($group_title, 'event_calendar/group/' . $event->container_guid);
 				$body_vars['group_guid'] = $event_container->guid;
 			} else {
-				elgg_push_breadcrumb($event_container->name, 'event_calendar/owner/' . $event_container->username);
+				elgg_push_breadcrumb($group_title, 'event_calendar/owner/' . $event_container->username);
 				$body_vars['group_guid'] = 0;
 			}
-			elgg_push_breadcrumb($event->title, $event->getURL());
+
+			if($event->title3){
+				elgg_push_breadcrumb(gc_explode_translation($event->title3,$lang), $event->getURL());
+			}else{
+				elgg_push_breadcrumb($event->title, $event->getURL());
+
+			}
 			elgg_push_breadcrumb(elgg_echo('event_calendar:manage_event_title'));
 
 			$content = elgg_view_form('event_calendar/edit', $vars, $body_vars);

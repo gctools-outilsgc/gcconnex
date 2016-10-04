@@ -106,7 +106,14 @@ if ($full_view && !elgg_in_context("gallery")) {
 		}
 
 		while ($p = array_pop($folders)) {
-			elgg_push_breadcrumb($p->title, $p->getURL());
+
+			if($p->title3){
+				$folder_title = gc_explode_translation($p->title3,$lang);
+			}else{
+				$folder_title = $p->title;
+			}
+
+			elgg_push_breadcrumb($folder_title, $p->getURL());
 		}
 
 		elgg_push_breadcrumb($file->title);

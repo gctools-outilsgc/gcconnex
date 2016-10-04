@@ -46,10 +46,16 @@ $author_text = elgg_echo('byline', array($owner_link));
 $tags = elgg_view('output/tags', array('tags' => $idea->tags));
 $date = elgg_view_friendly_time($idea->time_created);
 
+if($container->title3){
+    $group_title = gc_explode_translation($container->title3,$lang);
+}else{
+    $group_title = $container->name;
+}
+
 if ($show_group && elgg_instanceof($container, 'group')) {
 	$group_link = elgg_view('output/url', array(
 		'href' => $container->getURL(),
-		'text' => $container->name,
+		'text' => $group_title,
 		'is_trusted' => true,
 	));
 	$group_text = elgg_echo('groups:ingroup') . ' ' . $group_link;
@@ -196,7 +202,13 @@ HTML;
     if ($idea->description1){
      $idea->description = $idea->description1;   
     }
-	$content = elgg_get_excerpt($idea->description);
+
+    if($idea->description3){
+        $content = elgg_get_excerpt(gc_explode_translation($idea->description3,$lang));
+    }else{
+       $content = elgg_get_excerpt($idea->description);
+    }
+	//$content = elgg_get_excerpt($idea->description);
     $points = "<div class='idea-vote-counter text-center idea-points'><span class='wb-inv'>Vote count</span>$sum</div>";
     $metadata = elgg_view_menu('entity', array(
 	'entity' => $vars['entity'],

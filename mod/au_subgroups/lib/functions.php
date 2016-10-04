@@ -6,6 +6,7 @@ namespace AU\SubGroups;
 // note that the array is built backwards due to the recursive
 // getting of parents
 function breadcrumb_override($params) {
+	$lang = get_current_language();
 	switch ($params['segments'][0]) {
 		case 'profile':
 			$group = get_entity($params['segments'][1]);
@@ -20,8 +21,14 @@ function breadcrumb_override($params) {
 				$breadcrumbs[] = $parentcrumb;
 			}
 
+			if($group->title3){
+				$group_title = gc_explode_translation($group->title3,$lang);
+			}else{
+				$group_title = $group->name;
+			}
+
 			$breadcrumbs[] = array(
-				'title' => $group->name,
+				'title' => $group_title,
 				'link' => NULL
 			);
 
@@ -182,10 +189,18 @@ function list_subgroups($group, $limit = 10) {
  * @param type $group
  */
 function parent_breadcrumbs($group, $push = true) {
+		$lang = get_current_language();
 	$parents = array();
 
 	while ($parent = get_parent_group($group)) {
-		$parents[] = array('title' => $parent->name, 'link' => $parent->getURL());
+
+		if($parent->title3){
+			$group_name = gc_explode_translation($parent->title3,$lang);
+		}else{
+			$group_name = $parent->name;
+		}
+
+		$parents[] = array('title' => $group_name, 'link' => $parent->getURL());
 		$group = $parent;
 	}
 

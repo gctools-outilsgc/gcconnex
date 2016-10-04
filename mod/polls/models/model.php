@@ -228,12 +228,18 @@ $lang = get_current_language();
 			
 			// set breadcrumb
 			elgg_push_breadcrumb(elgg_echo('item:object:poll'),'polls/all');
-			
+
 			$container = get_entity($container_guid);
+			if($container->title3){
+				$group_title = gc_explode_translation($container->title3,$lang);
+			}else{
+				$group_title = $container->name;
+			}
+
 			if (elgg_instanceof($container,'group')) {
-				elgg_push_breadcrumb($container->name, 'polls/group/' . $container->getGUID());
+				elgg_push_breadcrumb($group_title, 'polls/group/' . $container->getGUID());
 			} else {
-				elgg_push_breadcrumb($container->name, 'polls/owner/' . $container->username);
+				elgg_push_breadcrumb($group_title, 'polls/owner/' . $container->username);
 			}
 			elgg_push_breadcrumb(elgg_echo("polls:edit"));
 		} else {
@@ -454,7 +460,13 @@ function polls_get_page_view($guid) {
 			elgg_push_breadcrumb($title_group, "polls/group/{$page_owner->guid}");
 		}
 		$lang = get_current_language();
-		elgg_push_breadcrumb(gc_explode_translation($poll->title3, $lang));
+		
+        if($poll->title3){
+            elgg_push_breadcrumb(gc_explode_translation($poll->title3, $lang));
+        }else{
+            elgg_push_breadcrumb($poll->title);
+        }
+		
 	} else {			
 		// Display the 'post not found' page instead
 		$title = elgg_echo("polls:notfound");	

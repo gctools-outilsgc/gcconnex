@@ -1,8 +1,9 @@
 <?php
 //get guids passed here
 $fileGUIDs = (string) get_input("guids");
+$lang = get_current_language();
+
 if(!empty($fileGUIDs)){
- 
     //put string values into array
     $file = explode(',', $fileGUIDs);
     array_pop($file);
@@ -53,13 +54,23 @@ if(!empty($fileGUIDs)){
                 'is_action' => true,
             ));
             $form .='<br>';
-    
+
             foreach($resultArray as $key => $value){
-                $form .= elgg_view('output/url', array(
+                if(get_entity($key)->title3){
+                           $form .= elgg_view('output/url', array(
+                'text' => '-'.gc_explode_translation(get_entity($key)->title3,$lang),
+                'href' => 'action/file/move_folder?file_guid=' . $fileGUIDs . '&folder_guid=' . $key,
+                'is_action' => true,
+            ));
+                       }else{
+                           $form .= elgg_view('output/url', array(
                 'text' => $value,
                 'href' => 'action/file/move_folder?file_guid=' . $fileGUIDs . '&folder_guid=' . $key,
                 'is_action' => true,
             ));
+
+                       }
+         
                 
                 $form .= '<br>';
             }

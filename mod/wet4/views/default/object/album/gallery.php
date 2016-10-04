@@ -30,9 +30,14 @@ $header = elgg_view('output/url', array(
 $container = $album->getContainerEntity();
 if ($container) {
     
+    if($album->getContainerEntity()->title3){
+        $group_title = gc_explode_translation($album->getContainerEntity()->title3,$lang);
+    }else{
+         $group_title = $album->getContainerEntity()->name;
+    }
     
         $footer = '<div class="elgg-subtext brdr-tp">' . elgg_echo('album:created_by') . elgg_view('output/url', array(
-                'text' => $album->getContainerEntity()->name,
+                'text' => $group_title,
                 'href' => $album->getContainerEntity()->getURL(),
                 'is_trusted' => true,
         ));

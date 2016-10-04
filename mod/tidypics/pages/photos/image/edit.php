@@ -5,7 +5,7 @@
  * @author Cash Costello
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
-
+$lang = get_current_language();
 $guid = (int) get_input('guid');
 
 if (!$entity = get_entity($guid)) {
@@ -31,15 +31,32 @@ elgg_group_gatekeeper();
 
 $title = elgg_echo('image:edit');
 
+if($owner->title3){
+	$group_title = gc_explode_translation($owner->title3,$lang);
+}else{
+	$group_title = $owner->title;
+}
+
 // set up breadcrumbs
 elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
 if (elgg_instanceof($owner, 'user')) {
-	elgg_push_breadcrumb($owner->name, "photos/owner/$owner->username");
+	elgg_push_breadcrumb($group_title, "photos/owner/$owner->username");
 } else {
-	elgg_push_breadcrumb($owner->name, "photos/group/$owner->guid/all");
+	elgg_push_breadcrumb($group_title, "photos/group/$owner->guid/all");
 }
-elgg_push_breadcrumb($album->getTitle(), $album->getURL());
-elgg_push_breadcrumb($entity->getTitle(), $entity->getURL());
+
+if($album->title3){
+	elgg_push_breadcrumb(gc_explode_translation($album->title3,$lang), $album->getURL());
+}else{
+	elgg_push_breadcrumb($album->getTitle(), $album->getURL());
+}
+
+if($entity->title3){
+	elgg_push_breadcrumb(gc_explode_translation($entity->title3,$lang), $entity->getURL());
+}else{
+	elgg_push_breadcrumb($entity->getTitle(), $entity->getURL());
+}
+
 elgg_push_breadcrumb($title);
 
 $vars = tidypics_prepare_form_vars($entity);

@@ -243,7 +243,7 @@ return array(
 			
 // Albums		
 		
-'album:created_by' => 'By',	
+'album:created_by' => 'Par ',	
 'album:num' => 'images de %s',
 		
 // Views		

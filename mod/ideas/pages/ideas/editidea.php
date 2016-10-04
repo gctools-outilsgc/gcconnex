@@ -4,7 +4,7 @@
  *
  * @package ideas
  */
- 
+$lang = get_current_language();
 $idea_guid = get_input('guid');
 $idea = get_entity($idea_guid);
 
@@ -13,8 +13,12 @@ if (!elgg_instanceof($idea, 'object', 'idea') || !$idea->canEdit()) {
 	forward(REFERRER);
 }
 
+if($idea->title3){
+	elgg_push_breadcrumb(gc_explode_translation($idea->title3,$lang), $idea->getURL());
+}else{
+	elgg_push_breadcrumb($idea->title, $idea->getURL());
+}
 elgg_push_breadcrumb(elgg_echo('ideas:edit'));
-elgg_push_breadcrumb($idea->title, $idea->getURL());
 
 $vars = ideas_prepare_form_vars($idea);
 

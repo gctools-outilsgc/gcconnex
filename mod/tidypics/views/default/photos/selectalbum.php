@@ -11,7 +11,7 @@
  * License: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
  *
  */
-
+$lang = get_current_language();
 $owner_guid = get_input('owner_guid', elgg_get_logged_in_user_guid());
 $owner = get_entity($owner_guid);
 if (!($owner instanceof ElggUser || $owner instanceof ElggGroup)) {
@@ -26,20 +26,18 @@ $album_options = array();
 $album_options[-1] = elgg_echo('album:create');
 if ($albums) {
 	foreach ($albums as $album) {
-if (!$album->title){
-	$album_title = $album->title2;
-}else{
-	$album_title = $album->getTitle();
-}
+
+		if($album->title3){
+			$album_title = gc_explode_translation($album->title3, $lang);
+		}else{
+			$album_title = $album->title;
+		}
 		
 		if (strlen($album_title) > 50) {
 			$album_title = substr($album_title, 0, 47).'...';
 		}
 		$album_options[$album->guid] = $album_title;
 	}	
-	if(!$album_title){
-			$album_title = $album->title2;
-		}
 }
 
 $body = "<div style=\"width:400px;\">".elgg_echo('tidypics:album_select')."<br><br>";

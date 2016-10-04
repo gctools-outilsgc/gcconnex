@@ -62,6 +62,7 @@ function pages_prepare_form_vars($page = null, $parent_guid = 0, $revision = nul
  * @param ElggObject $page Page entity
  */
 function pages_prepare_parent_breadcrumbs($page) {
+    $lang = get_current_language();
 	if ($page && $page->parent_guid) {
 		$parents = array();
 		$parent = get_entity($page->parent_guid);
@@ -71,7 +72,11 @@ function pages_prepare_parent_breadcrumbs($page) {
 		}
 		while ($parents) {
 			$parent = array_pop($parents);
-			elgg_push_breadcrumb($parent->title, $parent->getURL());
+            if($parent->title3){
+                elgg_push_breadcrumb(gc_explode_translation($parent->title3,$lang), $parent->getURL());
+            }else{
+			     elgg_push_breadcrumb($parent->title, $parent->getURL());
+            }
 		}
 	}
 }
@@ -133,6 +138,13 @@ function pages_get_navigation_tree($container) {
 			));
 
 			foreach ($children as $child) {
+
+                if($child->title3){
+                    $child_title = gc_explode_translation($child->title3,$lang);
+                }else{
+                    $child_title = $child->title;
+                }
+				
 				$tree[] = array(
 					'guid' => $child->getGUID(),
 					'title' => $child->title,

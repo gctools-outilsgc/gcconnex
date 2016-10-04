@@ -9,7 +9,7 @@ Added count to view all link
 */
 
 namespace AU\SubGroups;
-
+$lang = get_current_language();
 if ($vars['entity']->subgroups_enable == 'no') {
 	// no subgroups allowed
 	return;
@@ -25,10 +25,16 @@ if (!$subgroups) {
 } else {
 	foreach ($subgroups as $subgroup) {
 
+		if ($subgroup->title23){
+			$subgroup_name = gc_explode_translation( $subgroup->title23, $lang);
+		}else{
+			$subgroup_name = $subgroup->name;
+		}
+
 		$body .= elgg_view_image_block(
 				elgg_view_entity_icon($subgroup, 'tiny'), elgg_view('output/url', array(
 			'href' => $subgroup->getURL(),
-			'text' => $subgroup->name,
+			'text' => $subgroup_name,
 			'is_trusted' => true))
 		);
 	}

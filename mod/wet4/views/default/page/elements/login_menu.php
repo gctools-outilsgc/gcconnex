@@ -359,7 +359,8 @@ $session->remove('last_forward_from');
 $params = array('user' => $user, 'source' => $forward_source);
 
 //EW - Remove query strings that have username/password in them after login
-$forward_url = str_replace('username=' . $username . '&password=' . $password, '', $forward_url);
+//$forward_url = str_replace('username=' . $username . '&password=' . $password, '', $forward_url);
+$forward_url = strtok($forward_url, '?');
 
 $forward_url = elgg_trigger_plugin_hook('login:forward', 'user', $params, $forward_url);
 
