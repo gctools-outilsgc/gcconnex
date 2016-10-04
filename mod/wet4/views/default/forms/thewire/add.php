@@ -10,6 +10,7 @@ elgg_load_js("elgg.thewire");
 $post = elgg_extract("post", $vars);
 $char_limit = thewire_tools_get_wire_length();
 $reshare = elgg_extract("reshare", $vars); // for reshare functionality
+$lang = get_current_language();
 
 $text = elgg_echo("post");
 if ($post) {
@@ -64,7 +65,9 @@ if (!empty($reshare)) {
         
     
 
-	if (!empty($reshare->title)) {
+	if(!empty($reshare->title3)){
+		$post_value = gc_explode_translation($reshare->title3,$lang);
+	} elseif (!empty($reshare->title)) {
 		$post_value = $reshare->title;
 	} elseif (!empty($reshare->name)) {
 		$post_value = $reshare->name;

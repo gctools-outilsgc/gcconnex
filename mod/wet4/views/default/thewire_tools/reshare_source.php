@@ -4,6 +4,7 @@
  */
 
 $entity = elgg_extract("entity", $vars);
+$lang = get_current_language();
 
 if (empty($entity) || !(elgg_instanceof($entity, "object") || elgg_instanceof($entity, "group"))) {
 	return true;
@@ -20,7 +21,9 @@ if ($url === elgg_get_site_url()) {
 }
 
 $text = "";
-if (!empty($entity->title)) {
+if(!empty($entity->title3)){
+	$text = gc_explode_translation($entity->title3,$lang);
+} elseif (!empty($entity->title)) {
 	$text = $entity->title;
 } elseif (!empty($entity->name)) {
 	$text = $entity->name;

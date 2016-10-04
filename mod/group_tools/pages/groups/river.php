@@ -13,6 +13,8 @@ elgg_set_page_owner_guid($guid);
 
 elgg_group_gatekeeper();
 
+$lang = get_current_language();
+
 // remove thewire_tools double extend
 elgg_unextend_view("core/river/filter", "thewire_tools/activity_post");
 
@@ -58,7 +60,13 @@ if ($type != 'all') {
 // build page elements
 $title = elgg_echo('groups:activity');
 
-elgg_push_breadcrumb($group->name, $group->getURL());
+if($group->title3){
+	elgg_push_breadcrumb(gc_explode_translation($group->title3,$lang), $group->getURL());
+}else{
+	elgg_push_breadcrumb($group->name, $group->getURL());
+}
+
+
 elgg_push_breadcrumb($title);
 
 $content = elgg_view('core/river/filter', array('selector' => $selector));
