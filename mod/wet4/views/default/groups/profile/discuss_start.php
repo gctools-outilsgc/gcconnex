@@ -3,7 +3,7 @@
 /**
  * This view is a card that will allow quick creation of discussion topics with groups. Similar to "How are you feeling" actions on social media
  *
- * 
+ *
  *
  * @version 1.0
  * @author Nick
@@ -34,7 +34,6 @@ $access_id = get_entity($group)->group_acl;
                 <div id="quick-discuss-form" class="start-discussion-form" tabindex="-1">
                 <div>
                     <?php
-                    //echo $group;
                         //Nick - echo out the form to create a discussion here
                         //Pass the container_guid so it knows what group you want to add this discussion to
                     echo elgg_view_form('discussion/save', array('class'=>'quick-start-form-tabindex',), array(

@@ -1,7 +1,4 @@
 <?php
-
-
-
 /**
  * Output the cover photo image
  *
@@ -28,7 +25,7 @@ $file = get_entity($file_guid);
 if (!elgg_instanceof($file, 'object', 'file')) {
     echo 'NOT A FILE?';
 	exit;
-    
+
 }
 
 $simpletype = $file->simpletype;

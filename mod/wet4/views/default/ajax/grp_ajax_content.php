@@ -7,7 +7,7 @@
  *
  * Add this AJAX view in order to load group content
  * @version 1.0
- * @author Owner
+ * @author Nick
  */
 
 $group = get_input('group_guid'); //get the guid through AJAX
@@ -17,9 +17,9 @@ $user = elgg_get_logged_in_user_guid();
 
 if ($vars['entity']->forum_enable == 'no') {
 	return true;
-}   
+}
 
-//$group = $vars['entity'];
+//I should have written a switch statement (maybe i will :3)
 if($sub_type =='groupforumtopic'){ //some subtypes are different for list_entities
     $sub_type2 ='discussion';
     $all_link_location = '/owner/';
@@ -78,13 +78,6 @@ if($sub_type =='related'){ //related groups
     $content = elgg_list_entities_from_relationship($options);
 }else if($sub_type =='activity'){
     elgg_push_context('group_activity_tab'); //force my own context here so I can modify it in the river view
-    /*$content = elgg_list_river(array(
-	'limit' => 10,
-	'pagination' => false,
-	'wheres' => array(
-		"(oe.container_guid = $group OR te.container_guid = $group)",
-	),
-));*/
     $content = elgg_list_group_river(array(
         'limit' => 10,
         'pagination' => false,
@@ -115,8 +108,6 @@ if(check_entity_relationship($user, 'member', $group)){ //are they a member?
 
     $action = $sub_type2 . "/add/" . $group;
 
-
-
     if($sub_type =='related'){ //if we want related groups then set the related_group var with the group guid
         $related_group = $group;
     }else if($sub_type =='activity'){
@@ -133,8 +124,7 @@ if(check_entity_relationship($user, 'member', $group)){ //are they a member?
     }
 }
 
-
-//echo out the module view for the content 
+//echo out the module view for the content
 
 echo elgg_view('groups/profile/module', array(
 	'title' => elgg_echo('discussion:group'),
@@ -142,8 +132,7 @@ echo elgg_view('groups/profile/module', array(
 	'all_link' => $all_link,
 	'add_link' => $new_link,
     'clicked_related'=>$related_group,
-    'user_guid'=> $user, //passing more vars to the module view 
+    'user_guid'=> $user, //passing more vars to the module view
     'group_guid'=>$group,
 ));
 //test if ajax goes through.
-//echo 'Gratz You made an ajax call! Here us the page GUID = ' .$group;
