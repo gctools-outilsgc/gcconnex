@@ -24,27 +24,27 @@
     color: rgba(0,0,0,0.5);
 }
 
-.missions-tab-bar { 
-	background-color: #047177; 
+.missions-tab-bar {
+	background-color: #047177;
 	border-style: solid;
-	border-color: #047177; 
-	border-radius: 6px; 
-	width: auto; 
-	padding: 15px 10px 0px; 
-	margin-bottom: 12px; 
-	box-shadow: 1px 1px 5px #CCC; 
+	border-color: #047177;
+	border-radius: 6px;
+	width: auto;
+	padding: 15px 10px 0px;
+	margin-bottom: 12px;
+	box-shadow: 1px 1px 5px #CCC;
 }
 
-.missions-tab{ 
+.missions-tab{
 	background-color: #055959;
-	font-size: 18px; 
-	font-weight: bold; 
+	font-size: 18px;
+	font-weight: bold;
 	border-style: solid;
-	border-color: #055959; 
-	border-radius: 6px; 
+	border-color: #055959;
+	border-radius: 6px;
 	padding: 5px;
 	color: white
-} 
+}
 
 .missions-tab a, .missions-tab a:visited {
 	color: white;
@@ -55,28 +55,28 @@
 }
 
 .mission-post-table {
-	table-layout: fixed; 
+	table-layout: fixed;
 	align: center;
-} 
+}
 
 .mission-post-table td {
 	padding-top: 4px;
 	padding-bottom: 4px;
 }
 
-.mission-post-table-lefty { 
-	text-align: right; 
+.mission-post-table-lefty {
+	text-align: right;
 	padding-right: 6px;
-	width: 280px; 
+	width: 280px;
 }
 
-.mission-post-table-righty { 
-	text-align: left; 
-	width: 520px; 
+.mission-post-table-righty {
+	text-align: left;
+	width: 520px;
 }
 
-.mission-post-table-righty div { 
-	width: 250px; 
+.mission-post-table-righty div {
+	width: 250px;
 }
 
 .mission-post-table-day {
@@ -93,36 +93,36 @@
 	padding: 8px 2px;
 }
 
-.mission-printer { 
-	border-style: none; 
-	border-width: 3px; 
+.mission-printer {
+	border-style: none;
+	border-width: 3px;
 	padding: 11px;
 	position: relative;
-} 
+}
 
 .mission-less {
 	display: inline-block;
-	border-style: solid; 
+	border-style: solid;
 	width: 100%;
 }
 
-.mission-printer h5 { 
-	display: inline; 
+.mission-printer h5 {
+	display: inline;
 }
 
 .mission-printer .elgg-button {
 	margin: 4px;
 	vertical-align: middle;
-} 
+}
 
 .mission-gallery {
 	vertical-align:baseline
 }
 
 .mission-gallery li {
-	padding: 10px; 
-	border-bottom: none; 
-	vertical-align: baseline; 
+	padding: 10px;
+	border-bottom: none;
+	vertical-align: baseline;
 }
 
 .pagination {
@@ -131,7 +131,7 @@
 }
 
 .elgg-menu {
-	padding: 0px 15px; 
+	padding: 0px 15px;
 }
 
 .mission-emphasis {
@@ -146,14 +146,14 @@
 }
 
 .mission-button-set {
-	
+
 	bottom: 4px;
 	text-align: center;
 	width: 100%;
 }
 
 .mission-user-card-info {
-	
+
 	width: 100%;
 	bottom: 50px;
 
@@ -171,13 +171,13 @@ li.link-disabled a {
 }
 
 .mission-tab > li {
-	
+
 	text-align: center;
 	display:inline-block;
 }
 
 .mission-tab > li a {
-	border-bottom-color: rgb(227,227,227); 
+	border-bottom-color: rgb(227,227,227);
 }
 
 .tt-dropdown-menu {
@@ -329,7 +329,7 @@ li.link-disabled a {
 
 .mission-details h5{
    display:inline;
- 
+
 }
 
 .mission-skills{
@@ -365,6 +365,7 @@ li.link-disabled a {
 
 .print-mission-more-holder h5{
     margin-top:8px;
+		display:inline-block;
 }
 
 .mission-title-header{
