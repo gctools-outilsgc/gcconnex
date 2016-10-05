@@ -183,7 +183,11 @@ if(strpos($button_set['button_three'], 'accept-button') !== false) {
             <span class="mrgn-lft-sm"><?php echo elgg_get_friendly_time($mission->time_created); ?></span>
 	</div>
 	<div name="mission-description">
-		<?php echo elgg_get_excerpt($mission->descriptor, 2000);?>
+		<?php
+      //echo elgg_get_excerpt($mission->descriptor, 2000);
+      //Nick - Changed from exceprt to echo the metadata so it does not strip the tags made by ck editor
+      echo $mission->descriptor;
+    ?>
 	</div>
 
 	<div>

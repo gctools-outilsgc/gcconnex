@@ -6,7 +6,7 @@
  * License: Creative Commons Attribution 3.0 Unported License
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
- 
+
 $department_string = $_SESSION['missions_pass_department_to_second_form'];
 $ancestor_array = mo_get_all_ancestors($department_string);
 $progenitor = get_entity($ancestor_array[0]);
@@ -52,7 +52,7 @@ if(get_subtype_from_id($duplicating_entity->subtype) == 'mission' && !$_SESSION[
 	$number = $duplicating_entity->number;
 	$description = $duplicating_entity->descriptor;
 	$openess = $duplicating_entity->openess;
-	
+
 	$start_date = false;
 	$completion_date = false;
 	$deadline = false;
@@ -121,7 +121,7 @@ $input_deadline = elgg_view('input/date', array(
 		'placeholder' => 'yyyy-mm-dd'
 ));
 
-$input_description = elgg_view('input/plaintext', array(
+$input_description = elgg_view('input/longtext', array(
 	    'name' => 'description',
 	    'value' => $description,
 	    'id' => 'post-mission-description-plaintext-input'
@@ -232,7 +232,7 @@ else {
 	</div>
 </div>
 
-<div> 
+<div>
 	<?php
 		echo elgg_view('output/url', array(
 				'href' => elgg_get_site_url() . 'missions/mission-post/step-one',
@@ -245,6 +245,6 @@ else {
 				'class' => 'elgg-button btn btn-primary',
 				'style' => 'float:right;',
 				'id' => 'mission-post-opportunity-second-form-submission-button'
-		)); 
-	?> 
+		));
+	?>
 </div>
