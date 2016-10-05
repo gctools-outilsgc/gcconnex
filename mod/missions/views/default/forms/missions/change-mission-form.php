@@ -6,7 +6,7 @@
  * License: Creative Commons Attribution 3.0 Unported License
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
- 
+
 /*
  * Form which allows a manager to modify their mission.
  * This form includes all the same input fields as the post opportunity forms and they are formatted similarly..
@@ -126,7 +126,7 @@ $input_deadline = elgg_view('input/date', array(
 		'placeholder' => 'yyyy-mm-dd'
 ));
 
-$input_description = elgg_view('input/plaintext', array(
+$input_description = elgg_view('input/longtext', array(
 		'name' => 'description',
 		'value' => $mission->description,
 		'id' => 'edit-mission-description-plaintext-input'
@@ -223,7 +223,7 @@ $button_set = mm_create_button_set_full($mission);
 				<?php echo elgg_echo('missions:required'); ?>
 			</strong>
 			:
-		</label> 
+		</label>
 		<div class="col-sm-3">
 			<?php echo $input_title;?>
 		</div>
@@ -231,7 +231,7 @@ $button_set = mm_create_button_set_full($mission);
 	<div class="form-group">
 		<label class="col-sm-3" for="edit-mission-type-dropdown-input" style="text-align:right;">
 			<?php echo elgg_echo('missions:opportunity_type') . ':';?>
-		</label> 
+		</label>
 		<div class="col-sm-3">
 			<?php echo $input_type;?>
 		</div>
@@ -267,7 +267,7 @@ $button_set = mm_create_button_set_full($mission);
 				<?php echo elgg_echo('missions:required'); ?>
 			</strong>
 			:
-		</label> 
+		</label>
 		<div class="col-sm-5">
 			<?php echo $input_department;?>
 		</div>
@@ -287,7 +287,7 @@ $button_set = mm_create_button_set_full($mission);
 	<div class="form-group">
 		<label class="col-sm-3" for="edit-mission-phone-text-input" style="text-align:right;">
 			<?php echo elgg_echo('missions:your_phone') . ':';?>
-		</label> 
+		</label>
 		<div class="col-sm-3">
 			<?php echo $input_phone;?>
 		</div>
@@ -309,7 +309,7 @@ $button_set = mm_create_button_set_full($mission);
 		<div class="form-group">
 			<label class="col-sm-3" for="edit-mission-number-dropdown-input" style="text-align:right;">
 				<?php echo elgg_echo('missions:opportunity_number')  . ':';?>
-			</label> 
+			</label>
 			<div class="col-sm-3">
 				<?php echo $input_number_of;?>
 			</div>
@@ -372,7 +372,7 @@ $button_set = mm_create_button_set_full($mission);
 					<?php echo elgg_echo('missions:required'); ?>
 				</strong>
 				:
-			</label> 
+			</label>
 			<div class="col-sm-3">
 				<?php echo $input_location;?>
 			</div>
@@ -380,7 +380,7 @@ $button_set = mm_create_button_set_full($mission);
 		<div class="form-group">
 			<label class="col-sm-3" for="edit-mission-security-dropdown-input" style="text-align:right;">
 				<?php echo elgg_echo('missions:security_level') . ':';?>
-			</label> 
+			</label>
 			<div class="col-sm-3">
 				<?php echo $input_security;?>
 			</div>
@@ -455,7 +455,7 @@ $button_set = mm_create_button_set_full($mission);
 				'id' => 'mission-edit-form-cancel-changes-button',
 				'style' => 'margin-right:8px;'
 		));
-	
+
 		echo elgg_view('input/submit', array(
 				'value' => elgg_echo('missions:save'),
 				'class' => 'elgg-button btn btn-primary',
@@ -463,7 +463,7 @@ $button_set = mm_create_button_set_full($mission);
 				'id' => 'mission-edit-form-submission-button'
 		));
 		echo elgg_view('page/elements/one-click-restrictor', array('restricted_element_id' => 'mission-edit-form-submission-button'));
-	?> 
+	?>
 </div>
 
 <script>
