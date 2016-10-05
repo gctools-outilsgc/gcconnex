@@ -19,34 +19,43 @@ if ($vars['entity']->forum_enable == 'no') {
 	return true;
 }
 
-//I should have written a switch statement (maybe i will :3)
-if($sub_type =='groupforumtopic'){ //some subtypes are different for list_entities
-    $sub_type2 ='discussion';
+//Nick - Changed this to a switch
+//Nick - Some sub_types and url paths are different from what was passed to this view
+switch($sub_type){
+	case 'groupforumtopic':
+		$sub_type2 ='discussion';
     $all_link_location = '/owner/';
-}else if($sub_type =='page_top'){
-    $sub_type2 = 'pages';
-    $all_link_location = '/group/';
-}else if($sub_type =='polls'){
-    $sub_type ='poll';
-    $sub_type2 ='polls';
-    $all_link_location = '/group/';
-}else if($sub_type =='ideas'){
-    $sub_type ='idea';
-    $sub_type2 ='ideas';
-    $all_link_location = '/group/';
-}else if($sub_type =='calendar'){
-    $sub_type2 ='event_calendar';
-    $sub_type ='event_calendar';
-    $all_link_location = '/group/';
-}else if($sub_type =='albums'){
-    $sub_type2 ='photos';
-    $sub_type ='album';
-    $all_link_location = '/group/';
-    $photos_class = ' col-sm-3';
-}else{
-    $sub_type2 = $sub_type;
-    $all_link_location = '/group/';
+		break;
+	case 'page_top':
+		$sub_type2 = 'pages';
+		$all_link_location = '/group/';
+		break;
+	case 'polls':
+		$sub_type ='poll';
+		$sub_type2 ='polls';
+		$all_link_location = '/group/';
+		break;
+	case 'ideas':
+		$sub_type ='idea';
+		$sub_type2 ='ideas';
+		$all_link_location = '/group/';
+		break;
+	case 'calendar':
+		$sub_type2 ='event_calendar';
+		$sub_type ='event_calendar';
+		$all_link_location = '/group/';
+		break;
+	case 'albums':
+		$sub_type2 ='photos';
+		$sub_type ='album';
+		$all_link_location = '/group/';
+		$photos_class = ' col-sm-3';
+		break;
+	default:
+		$sub_type2 = $sub_type;
+		$all_link_location = '/group/';
 }
+
 $action_view_more = $sub_type2 . $all_link_location . $group; //some view all links are different by content
 
 if($sub_type =='activity'){
