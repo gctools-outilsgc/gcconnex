@@ -33,7 +33,6 @@ $body .= <<<__BODY
 			var c_value = document.cookie;
 			var c_start = c_value.indexOf(" " + c_name + "=");
 
-			//alert("check1");
 			if (c_start == -1){
 				c_start = c_value.indexOf(c_name + "=");
 			}
@@ -107,8 +106,8 @@ if (language_selected == "English")
 <p><a href="javascript:form_submit('English')" class="btn btn-primary">English</a></p>
 </section>
 <section class="col-xs-6" lang="fr">
-<h2 class="wb-inv">GCconnex Fran�ais</h2>
-<p><a href="javascript:form_submit('French')" class="btn btn-primary">Fran&#231;ais</a></p>
+<h2 class="wb-inv">GCconnex Français</h2>
+<p><a href="javascript:form_submit('French')" class="btn btn-primary">Français</a></p>
 </section>
 
 <form action="$toggle_lang" method="post" id="formtoggle">
