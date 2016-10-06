@@ -110,6 +110,10 @@ function wet4_theme_init() {
 
     elgg_register_ajax_view("messages/message_preview");
 
+    //newsfeed filter form
+    elgg_register_ajax_view("ajax/newsfeed_filter");
+    elgg_register_action("newsfeed/filter", elgg_get_plugins_path() . "/wet4/actions/newsfeed/filter.php");
+
     //Group AJAX loading view
     elgg_register_ajax_view('ajax/grp_ajax_content');
 	elgg_extend_view("js/elgg", "js/wet4/group_ajax");
