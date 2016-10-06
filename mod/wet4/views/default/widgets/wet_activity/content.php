@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Wet 4 theme custom activity widget
  * (Display colleague and group activity)
@@ -8,15 +7,10 @@
  *
  * @version 1.0
  * @author Owner
- 
-    
-        /*
- 
-
         */
 
 
-        //YOLO CODE V2
+//YOLO CODE V2
 
 
 
@@ -24,8 +18,32 @@ if(elgg_is_logged_in()){
 ?>
 <script>
     $(document).ready(function () {
-        $('.elgg-list-river').parent().parent().attr('id','activity');
-    });
+        $('.elgg-list-river').parent().parent().attr('id', 'activity');
+
+        //add newsfeed settings link
+        $('#activity .panel-heading').prepend('<a href="#" title="<?php echo elgg_echo('newsfeed:filter:title'); ?>" class="dropdown  pull-right mrgn-rght-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-caret-down fa-2x icon-unsel " aria-hidden="true"></i></a><ul class="dropdown-menu pull-right newsfeed-filter panel-default" aria-labelledby="dropdownMenu2"><li class="panel-body" id="filter_form"></li></ul>');
+
+        //load in form when settings is pressed
+        $('#activity .dropdown').on('click', function () {
+            //check if form has already been loaded
+            if ($('#filter_form').html() == '') {
+
+                //place loading spinner
+                $('#filter_form').html('<div class="text-center" style="margin: 10px auto 0;display:block;"><?php echo $loading; ?></div>');
+                //load form
+                elgg.get('ajax/view/ajax/newsfeed_filter', {
+                    success: function (output) {
+                        $('#filter_form').html(output);
+                    }
+                });
+
+            }
+        });
+
+        //stop dropdown form from toggling while interacting with form
+        $('.dropdown-menu').click(function (e) {
+            e.stopPropagation();
+        });
 </script>
 <?PHP
         $_SESSION['Suggested_friends']=0;
@@ -56,6 +74,15 @@ if(elgg_is_logged_in()){
             $optionsf['relationship_guid'] = elgg_get_logged_in_user_guid();
             $optionsf['relationship'] = 'friend';
             $optionsf['pagination'] = true;
+
+            //turn off friend connections
+            //remove friend connections from action types
+            $actionTypes = array('comment', 'create', 'join', 'update', 'friend', 'reply');
+            //load user's preference
+            $filteredItems = array($user->colleagueNotif);
+            //filter out preference
+            $optionsf['action_types'] = array_diff( $actionTypes, $filteredItems);
+
             $activity = newsfeed_list_river($optionsf);
         }else if(!$hasfriends && $hasgroups){
             //if no friends but groups
@@ -68,9 +95,36 @@ if(elgg_is_logged_in()){
             $activity = newsfeed_list_river($optionsg);
         }else{
             //if friends and groups :3
+
+            ////////////////////// NEWSFEED FILTER TESTING ////////////////////
+            //
+            //removing group activity test
+            //filter out groups you do not want
+            /*
+            $test = array('534'); //534
+            $testGroups = array_diff( $group_guids, $test); //place in $guids_in to filter groups
+
+            $optionsfg['type'] = array('object', 'group', 'user'); //type newsfeed filter
+
+            //removing friend activity test
+            //filter out friends you do not want
+            $ignoreFriends = array(); //493
+            $ignoreFriends = implode(',', $ignoreFriends);
+            */
+            //
+            ///////////////////////////////////////////////////////////////////
+
+            //turn off friend connections
+            //remove friend connections from action types
+            $actionTypes = array('comment', 'create', 'join', 'update', 'friend', 'reply');
+            //load user's preference
+            $filteredItems = array($user->colleagueNotif);
+            //filter out preference
+            $optionsfg['action_types'] = array_diff( $actionTypes, $filteredItems);
+
             $guids_in = implode(',', array_unique(array_filter($group_guids)));
            //echo $guids_in;
-         /*   $optionsfg['joins'] = array(" {$db_prefix}entities e ON e.guid = rv.object_guid",
+           /*   $optionsfg['joins'] = array(" {$db_prefix}entities e ON e.guid = rv.object_guid",
                 " {$db_prefix}entities e1 ON e1.guid = rv.target_guid",
                 
                 );*/
@@ -84,19 +138,6 @@ if(elgg_is_logged_in()){
             $optionsfg['pagination'] = true;
             $activity = newsfeed_list_river($optionsfg);
         }
-        /*
-        if($hasfriends){
-        //friends activity only (if they only have friends no groups)
-        }else if($hasgroups){
-        //only groups but no friends
-        }else if($hasgroups && $hasfriends){
-        //groups and friends
-
-        }else{
-        //nothing :(
-        }
-        */
-
 
         if (!$activity) {
             //if the user doesn't have any friends or activity display this message
@@ -109,7 +150,7 @@ if(elgg_is_logged_in()){
 	        ));
             //$activity = elgg_echo('river:none');
             //placeholder panel
-            $activity .= '<div class="panel panel-custom"><div class="panel-body">';
+            $activity .= '<div class="panel panel-custom elgg-list-river"><div class="panel-body">';
             $activity .= '<h3 class="panel-title mrgn-tp-md">'.elgg_echo('wetActivity:welcome').'</h3>';
             $activity .= '<div class="mrgn-bttm-md mrgn-tp-sm">'.elgg_echo('wetActivity:nocollorgroup').'</div>';
             $activity .= '<div>'.$featuredGroupButton.'</div>';

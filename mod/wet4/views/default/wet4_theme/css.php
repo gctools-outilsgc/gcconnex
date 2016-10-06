@@ -2631,7 +2631,7 @@ Profile Completness
     outline: 5px auto -webkit-focus-ring-color;
     outline-offset: -2px; }
   .btn:hover,
-
+ 
   .btn:focus,
   .btn.focus {
     color: #335075;
@@ -3441,7 +3441,7 @@ tbody.collapse.in {
   .nav .open > a,
   .nav .open > a:hover,
   .nav .open > a:focus {
-
+    
      }
   .nav .nav-divider {
     height: 1px;
@@ -4924,7 +4924,7 @@ a.list-group-item-danger {
 
   .panel-custom .panel-heading{
       background-color:#f5f5f5;
-
+     
 
   }
     .panel-custom .panel-heading h1 {
@@ -5764,7 +5764,7 @@ button.close {
  *	Link colour and decoration
  */
 a {
-  text-decoration: underline;
+  text-decoration: underline; 
     color:#295376;
 }
   a.btn {
@@ -9914,7 +9914,7 @@ h1 {
 
 h2,
 .h2 {
-border-bottom: 1px solid #055959;
+border-bottom: 1px solid #055959;    
   font-size: 26px; }
 
 h3,
@@ -10619,10 +10619,10 @@ a.shr-opn, a.shr-opn:hover {
 /* I'm guessing i put my own styles down here? If I don't know, now i know */
 
 .card{
-
+    
     padding: 1%;
     border: solid 1px #efefef;
-
+    
 }
 
 .group-summary-holder{
@@ -10636,7 +10636,7 @@ a.shr-opn, a.shr-opn:hover {
 }
 
 /******************** Changing Bootstraps columns ********************/
-
+    
     .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
         padding-left: 5px;
         padding-right: 5px;
@@ -10646,15 +10646,15 @@ a.shr-opn, a.shr-opn:hover {
 .widget-area-col {
     min-height:50px;
 }
-
+    
 .list-break{
     margin-top: 5px !important;
     padding-bottom: 5px !important;
-    border-bottom: 1px solid #ddd !important;
+    border-bottom: 1px solid #ddd !important;  
 }
 
 .list-break:last-child{
-    border-bottom:none !important;
+    border-bottom:none !important;   
 }
 .message-dd-block{
   padding:8px;
@@ -10746,7 +10746,7 @@ display:none;
  }
 
     /****************************************/
-
+    
     /******************** user menu ********************/
 
     .dropdown .elgg-menu {
@@ -10757,59 +10757,59 @@ display:none;
     .subMenu .dropdownToggle {
         display: none;
     }
-
+    
     .profile-avatar {
         padding-left: 27px;
         background: transparent url(<?php echo $user_avatar ?>) no-repeat left;
         background-size: 25px;
         height: 25px;
     }
-
+    
     .msg-icon {
         padding-left: 23px;
         background: transparent url(<?php echo $site_url ?>/_graphics/elgg_sprites.png) no-repeat left;
         background-position: 0 -644px;
         height: 20px;
     }
-
+    
     .msg-icon:hover {
         background-position: 0 -626px;
-
+        
     }
-
+    
     .friend-icon {
         padding-left: 23px;
         height: 20px;
         background: transparent url(<?php echo $site_url ?>/_graphics/elgg_sprites.png) no-repeat left;
         background-position: 0 -1492px;
     }
-
+    
     .friend-icon:hover {
         background-position: 0 -1474px;
     }
-
+    
     .settings-icon {
         padding-left: 23px;
         background: transparent url(<?php echo $site_url ?>/_graphics/elgg_sprites.png) no-repeat left;
         background-position: 0 -970px;
         height: 21px;
     }
-
+    
     .settings-icon:hover {
         background-position: 0 -951px;
         height: 21px;
     }
-
+  
     .notif-ul{
 
-     margin: 0px;
+     margin: 0px;   
     }
 
     .bell-subbed .icon-unsel{
     color:#047177 !important;
 
 }
-
+      
     .notif-badge {
       display: inline-block;
       margin-left: -1px;
@@ -10823,10 +10823,10 @@ display:none;
       white-space: nowrap;
       text-align: center;
       background-color: #d00;
-      border-radius: 10px;
+      border-radius: 10px; 
 
     }
-
+    
     .init-badge {
         display: inline-block;
         width: 35px;
@@ -10852,7 +10852,7 @@ display:none;
     min-width: 400px;
 
 
-
+    
     /*position: relative;*/
 }
 
@@ -10863,10 +10863,10 @@ display:none;
 
 /** Sizing the Images to make medium images slightly smaller. They scale with the responsive class so it's all good **/
  .elgg-avatar-medium-wet4{
-     max-width:65%;
+     max-width:65%; 
      margin: 0 auto;
-     display: block !important;
-
+     display: block !important; 
+     
  }
 
  .thCheck {
@@ -10893,7 +10893,7 @@ display:none;
  .au_subgroups_group_icon-medium-wet4{
         max-width:65%;
         margin: 0 auto;
-     display: block !important;
+     display: block !important;   
 
  }
 
@@ -10947,11 +10947,11 @@ display:none;
 }
 
 .visited-link li a:visited{
-   color: #055959;
+   color: #055959; 
 }
 
 .btn-primary:visited{
-    color:#FFF;
+    color:#FFF;   
 }
 
 #file-tools-folder-tree {
@@ -10967,14 +10967,14 @@ display:none;
 }
 
 .gcInitBadge {
-        position: absolute;
-         margin-left: auto;
+        position: absolute; 
+         margin-left: auto; 
          margin-right: auto;
          left:0;
          right:0;
          width:80%;
          bottom:-10%;
-
+         
 }
 
 .elgg-avatar > .elgg-icon-hover-menu  {
@@ -10986,12 +10986,12 @@ elgg-menu-item-profile-card .gcInitBadge {
 }
 
     .gcProfileBadge-lower {
-         position: absolute;
-         margin-left: auto;
-         margin-right: auto;
-         left: 0;
-         bottom: -16%;
-         right: 0;
+         position: absolute; 
+         margin-left: auto; 
+         margin-right: auto; 
+         left: 0; 
+         bottom: -16%; 
+         right: 0; 
          pointer-events: none;
     }
 
@@ -11018,9 +11018,9 @@ elgg-menu-item-profile-card .gcInitBadge {
     height: 0;
 	border-left: 12px solid transparent;
 	border-right: 12px solid transparent;
-
+	
 	border-bottom: 12px solid #fff;
-    clear: both;
+    clear: both;    
 }
 .user-menu:before{
        content: '';
@@ -11032,9 +11032,9 @@ elgg-menu-item-profile-card .gcInitBadge {
     height: 0;
 	border-left: 12px solid transparent;
 	border-right: 12px solid transparent;
-
+	
 	border-bottom: 12px solid rgba(0, 0, 0, 0.15) ;
-    clear: both;
+    clear: both;     
 }
 
     .elgg-gallery li {
@@ -11042,7 +11042,7 @@ elgg-menu-item-profile-card .gcInitBadge {
     }
 
 .icon-unsel{
-    color: #a0a0a0;
+    color: #a0a0a0;   
 }
 
 .icon-unsel:hover{
@@ -11050,11 +11050,11 @@ elgg-menu-item-profile-card .gcInitBadge {
 }
 
 .icon-sel{
-   color:#047177;
+   color:#047177;   
 }
 
 .icon-sel:hover{
-    color: #b6b6b6;
+    color: #b6b6b6; 
 }
 
     .unread-custom span {
@@ -11064,7 +11064,7 @@ elgg-menu-item-profile-card .gcInitBadge {
 
     .message:hover {
        background: #F5F5F5;
-
+        
     }
 
         .message:hover span {
@@ -11095,14 +11095,14 @@ elgg-menu-item-profile-card .gcInitBadge {
     }
 
     .data-table-list-item input[type="checkbox"] {
-
+        
         /*margin-top: 15px;*/
         margin-right: 5px;
         margin-left: 5px;
     }
 
     th input[type="checkbox"] {
-
+        
         /*margin-top: 15px;*/
         margin-right: 5px;
         margin-left: 5px;
@@ -11124,18 +11124,18 @@ elgg-menu-item-profile-card .gcInitBadge {
 
 
 /*This is where the elgg icons get loaded!*/
-<?php echo elgg_view('css/elements/icons - Copy', $vars); ?>
+<?php echo elgg_view('css/elements/icons - Copy', $vars); ?> 
 
 
 .profile-info-head {
     margin: 5px 0;
-
+    
 }
 
     /****************************************/
-
+    
     /******************** Custom Button Styles ********************/
-
+    
     .btn-custom {
           color: #335075;
           background-color: #f3f3f3;
@@ -11147,7 +11147,7 @@ elgg-menu-item-profile-card .gcInitBadge {
         color: #335075;
         text-decoration: none;
     }
-
+    
     .btn-custom:hover {
         background: #cfd1d5;
     }
@@ -11156,14 +11156,14 @@ elgg-menu-item-profile-card .gcInitBadge {
         background: #cfd1d5;
         border-color: lightblue;
     }
-
+    
     .btn-custom-cta {
         background: #055959;
         border-radius: 0;
         border-color: #d0d2d3;
         color: white;
     }
-
+    
     .btn-custom-cta:hover {
         background: #047177;
         color: white;
@@ -11178,7 +11178,7 @@ elgg-menu-item-profile-card .gcInitBadge {
     }
 
     /**Login Page**/
-
+    
     .login-engage-message{
         font-size: 1.2em;
         margin: 5px;
@@ -11222,9 +11222,9 @@ elgg-menu-item-profile-card .gcInitBadge {
 
     }
     /****************************************/
-
+    
     /******************** Removing Ugly rounded Corners ********************/
-
+    
     .form-control {
         border-radius: 0;
     }
@@ -11233,44 +11233,44 @@ elgg-menu-item-profile-card .gcInitBadge {
    outline: 5px auto -webkit-focus-ring-color;;
     border-radius: 2px;
 }
-
+    
     .dropdown-menu {
         border-radius: 0;
     }
-
+    
     /****************************************/
-
+    
     /******************** Timestamp ********************/
-
+    
     .timeStamp {
         color: #606060;
         font-size: 16px;
     }
-
+    
     /****************************************/
-
+    
     /******************** Feed Content Previews ********************/
-
+    
     .actPre {
         padding-left: 5px;
         border-left: 2px solid #055959;
     }
-
+    
     .discPre {
         padding-left: 5px;
         border-left: 2px solid #055959;
         font-size: 13px;
     }
-
+    
     /****************************************/
-
+    
     /******************** Pager ********************/
-
+    
     .pagination {
         margin: 0;
         left: 10%;
     }
-
+    
     .pagination li {
         border-radius: 0;
     }
@@ -11309,23 +11309,23 @@ elgg-menu-item-profile-card .gcInitBadge {
 
         text-decoration: none;
     }
-
+    
     /****************************************/
-
+    
     /******************** Discussion Styles ********************/
-
+    
     .breadcrumb {
         margin-bottom: 5px;
     }
 
     .elgg-form-group-operators-add fieldset {
-        width: 100%;
+        width: 100%;   
     }
-
+    
     .userControlDisc {
         margin-bottom: 5px;
     }
-
+    
     .replyInfo {
         border-radius: 0;
         background: #f1f1f2;
@@ -11334,28 +11334,28 @@ elgg-menu-item-profile-card .gcInitBadge {
         color: #335075;
         margin: -5px;
     }
-
+    
     #commentSection {
         background: #f1f1f2;
         border: 1px solid #a6a8ab;
     }
-
+    
     #commentSection button {
         margin-right: 5px;
         margin-bottom: 5px;
     }
-
+    
     #textEditor {
         background: white;
         border: 1px solid #a6a8ab;
         width: 100%;
         height: 100px;
     }
-
+    
     textarea {
        resize: none;
     }
-
+    
     /****************************************/
 
     p {
@@ -11377,13 +11377,13 @@ elgg-menu-item-profile-card .gcInitBadge {
         width: 32px;
         height: 32px;
         background: url(<?php echo $site_url ?>/mod/wet4/graphics/sprites_share.png) 0 -480px;
-    }
+    }   
 
     #gPlus {
         width: 32px;
         height: 32px;
         background: url(<?php echo $site_url ?>/mod/wet4/graphics/sprites_share.png) 0 -256px;
-    }
+    }  
 
 /*Here are my custom styles for this prototype*/
 #thewire-tools-reshare-wrapper-wet4 {
@@ -11457,9 +11457,9 @@ elgg-menu-item-profile-card .gcInitBadge {
 
 
 #albums .elgg-item-object-album {
-
+    
     display:inline-block;
-
+    
     margin: 5px;
     clear:both;
 
@@ -11529,12 +11529,52 @@ border:none;
 }
 #quick-discuss-panel .quick-start-collapse, #quick-discuss-panel  .quick-start-hide, #quick-discuss-panel  .alert-info{
     display:none;
-
+    
 }
 .quick-start-discussion{
     border-bottom: 1px solid #ddd;
     margin-bottom: 5px;
 
+}
+
+    .newsfeed-filter-gear {
+        font-size: 1.75em !important;
+        margin-top: 3px;
+    }
+
+    .newsfeed-filter {
+        width:90%;
+        max-width: 500px;
+        margin-top:10px;
+    }
+
+    .newsfeed-filter:after{
+       content: '';
+    display: block;
+    position: absolute;
+    right:2%;
+    top: -12px;
+    width: 0;
+    height: 0;
+	border-left: 12px solid transparent;
+	border-right: 12px solid transparent;
+
+	border-bottom: 12px solid #fff;
+    clear: both;
+}
+.newsfeed-filter:before{
+       content: '';
+    display: block;
+    position: absolute;
+    right: 2%;
+    top: -14px;
+    width: 0;
+    height: 0;
+	border-left: 12px solid transparent;
+	border-right: 12px solid transparent;
+
+	border-bottom: 12px solid rgba(0, 0, 0, 0.15) ;
+    clear: both;
 }
 
 /*** Group Cover Photo ***/
@@ -11638,7 +11678,7 @@ border:none;
     height: 60px;
     float: left;
     margin: 1%;
-
+    
 }
 
 .img-act{
@@ -11653,14 +11693,14 @@ border:none;
 }
 .add-margin{
     margin: 1%;
-}
+} 
 
 .btn-discuss{
-    margin: 2% 10%;
+    margin: 2% 10%;   
 }
 
 #profileContent{
-    margin-top: 10px;
+    margin-top: 10px;   
 }
 
 .profileStr{
@@ -11669,7 +11709,7 @@ border:none;
 }
 
 .profileNavHolder{
-    margin-bottom: 20px;
+    margin-bottom: 20px;   
 }
 
 
@@ -11702,7 +11742,7 @@ border:none;
         padding: 8px;
     }
 
-
+    
 #userMenu p {
     display: inline;
 }
@@ -11744,7 +11784,7 @@ border:none;
 .gallery-margin li{
     margin:5px;
     border:none;
-}
+}   
 
 .removeMe {
     display: none;
@@ -11765,7 +11805,7 @@ border:none;
 
 /*Color box - Nick */
 
-/*
+/* 
     User Style:
     Change the following styles to modify the appearance of Colorbox.  They are
     ordered & tabbed in a way that represents the nesting of the generated HTML.
@@ -11794,7 +11834,7 @@ border:none;
 
         /* these elements are buttons, and may need to have additional styles reset to avoid unwanted base styles */
         #cboxPrevious, #cboxNext, #cboxSlideshow, #cboxClose {border:0; padding:0; margin:0; overflow:visible; width:auto; background:none; }
-
+        
         /* avoid outlines on :active (mouseclick), but preserve outlines on :focus (tabbed navigating) */
         #cboxPrevious:active, #cboxNext:active, #cboxSlideshow:active, #cboxClose:active {outline:0;}
 
@@ -11822,14 +11862,14 @@ border:none;
     overflow-y: scroll;
     border: 1px solid black;
      content: " ";
-  display: block;
+  display: block; 
   list-style: none;
 
   clear: both;
 }
 
 .ui-autocomplete:hover{
-    cursor: pointer;
+    cursor: pointer;   
 }
 
 .ui-autocomplete .ui-menu-item a:hover{
@@ -11889,7 +11929,7 @@ border:none;
 }
 
 .river-margin li{
-    margin:5px;
+    margin:5px;   
 }
 
 /*** more messages stuff ;3****/
@@ -11912,14 +11952,14 @@ border:none;
 
 .elgg-message > :first-child{
      margin-left: 1.2em;
-    margin-top: auto;
+    margin-top: auto;   
 }
 
 .elgg-message > :first-child:before{
     display: inline-block;
     font-family: "Glyphicons Halflings";
     margin-left: -1.3em;
-    position: absolute;
+    position: absolute;   
 }
 
 
@@ -11928,7 +11968,7 @@ border:none;
   border-color: #d6e9c6;
     position:fixed;
     z-index: 100000;
-
+   
    margin: 0 auto;
     width: 70%;
     border-left: solid 5px #2b542c;
@@ -11956,7 +11996,7 @@ details.elgg-state-success:before {
   border-color: #ebccd1;
       position:fixed;
     z-index: 100000;
-
+    
    margin: 0 auto;
     width: 70%;
     border-left: solid 5px #843534;
@@ -11978,23 +12018,23 @@ details.elgg-state-success:before {
 
 /** comment stuff ;) **/
 .elgg-body{
-    overflow:visible;
+    overflow:visible;   
 }
 
 .edit-comment form fieldset{
-    width:100%;
+    width:100%;   
 }
 
 
 /** Photo Gallery Custom Classes**/
 
 .panel-body-gallery {
- padding:7px;
+ padding:7px;   
 }
 
 /****** New Header style stuff *******/
 #app-brand{
-    background-color: #047177;
+    background-color: #047177; 
     color: #fff;
     min-height: 45px;
     /*padding-top: 5px;*/
@@ -12032,9 +12072,9 @@ details.elgg-state-success:before {
     height: 0;
 	border-top: 22.5px solid transparent;
 	border-bottom: 22.5px solid transparent;
-
+	
 	border-left: 20px solid #055959;
-    clear: both;
+    clear: both;     
 }
 
 .tool-link{
@@ -12070,18 +12110,18 @@ details.elgg-state-success:before {
     }
 
 .bold-gc{
-    font-weight: 800;
+    font-weight: 800;   
 }
 
 
 .tools-navigator{
     font-size: 1.1em;
     margin-top:10px;
-
+    
 }
 
 .tools-navigator-menu{
-    top:35px;
+    top:35px;   
 }
 
 .tools-navigator-menu:before{
@@ -12094,9 +12134,9 @@ details.elgg-state-success:before {
     height: 0;
 	border-left: 12px solid transparent;
 	border-right: 12px solid transparent;
-
+	
 	border-bottom: 12px solid #fff;
-    clear: both;
+    clear: both;    
 }
 .tools-navigator-menu:after{
        content: '';
@@ -12108,9 +12148,9 @@ details.elgg-state-success:before {
     height: 0;
 	border-left: 12px solid transparent;
 	border-right: 12px solid transparent;
-
+	
 	border-bottom: 12px solid rgba(0, 0, 0, 0.15) ;
-    clear: both;
+    clear: both;     
 }
 
 #tools-dropdown{
@@ -12123,11 +12163,11 @@ details.elgg-state-success:before {
     padding: 10px;
 }
 .tools-navigator-menu li a{
-    color:black;
+    color:black;   
 }
 
 .legend{
-    margin: 15px 0;
+    margin: 15px 0;   
 }
 
 figcaption{
@@ -12139,7 +12179,7 @@ figcaption{
 .wb-graph figure:first-child{
     width:100%;
     margin: 0 auto;
-
+ 
 }
 
 /****** Polls Custom stuff ******/
@@ -12168,28 +12208,28 @@ figcaption{
     width: 0;
     height: 0;
 	border-top: 10px solid transparent;
-	border-bottom: 10px solid transparent;
-
-	border-right:10px solid #efefef;
-    clear: both;
+	border-bottom: 10px solid transparent; 
+	
+	border-right:10px solid #efefef; 
+    clear: both;    
 }
 */
 
 .data-table-list-item{
-    padding:10px;
+    padding:10px;  
     border-bottom: 1px solid #ddd;
 }
 
 .data-table-head{
-    padding:10px;
+    padding:10px;   
 }
 
 
 /** Widget Stuff **/
 
 .elgg-widget-title{
-
-        margin:5px 0;
+       
+        margin:5px 0;   
 }
 
 .widget-enter-selected{
@@ -12218,8 +12258,8 @@ figcaption{
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-
-
+  
+  
   position: fixed;
     left: 0;
   top: 0;
@@ -12240,7 +12280,7 @@ min-height: 100%;}
     display: block;
     clear: both;
     float: right;
-    margin: 12% 12% 2% 0;
+    margin: 12% 12% 2% 0; 
     color: #055959;
 }
 
@@ -12676,9 +12716,9 @@ Carousel
   .carousel-s1 a:hover,
   .carousel-s2 a:hover {
     text-decoration: underline; }
-
- /*Tabs style*/
-
+      
+ /*Tabs style*/   
+ 
 .elgg-menu-filter>.elgg-state-selected{
     color:#055959;
     float: left;
@@ -12704,7 +12744,7 @@ Carousel
     padding-right:15px;}
 
 .elgg-menu-filter>.elgg-state-selected >a{
-
+   
     text-decoration: none;
     border-bottom: 3px solid;
     border-bottom-color: #055959;
@@ -12757,32 +12797,32 @@ Carousel
    padding-bottom: 0;
    margin-bottom: 10px;
  }
-
+      
 .elgg-menu-filter {
   margin-bottom: 0;
   padding-left: 0;
   list-style: none;
-
+ 
 }
-
+      
  .elgg-menu-filter:before,
  .elgg-menu-filter:after {
     content: " ";
     display: table;
     clear:both;}
-
+      
 .elgg-menu-filter:after {
-    clear: both; }
-
-
+    clear: both; } 
+      
+      
 /*Buttom*/
 .btn-primary>a{
     color:#fff;
-    text-decoration:none;}
-
+    text-decoration:none;}   
+      
 .btn-primary>a:visited{
-    color:#fff;}
-
+    color:#fff;}   
+    
 /*
  Views
  */
@@ -13052,7 +13092,7 @@ Carousel
 */
   .jumbotron.pagebrand figcaption {
     position: static; }
-
+    
   /*
  Search (print view)
  */
@@ -13064,7 +13104,7 @@ Carousel
  */
   /*
  Social Media Icons Print view
-
+    
 */ }
 
 
@@ -13081,9 +13121,9 @@ Carousel
       background-color: #31708f; }
   .panel-notice > .panel-footer + .panel-collapse > .panel-body {
     border-bottom-color: #bce8f1; }
-
-
-
+      
+      
+     
     /*cometchat*/
 .cometchat_userstabtitle,.cometchat_traytitle,.cometchat_tabtitle {
     background:#055959!important;
@@ -13099,7 +13139,7 @@ Carousel
 #cometchat_hide {
     background:none;
     width: 30px!important;
-    padding-top:3px !important;
+    padding-top:3px !important;   
 }
 #cometchat_hide:before {
     content:"\f057";

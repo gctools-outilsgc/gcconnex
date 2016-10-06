@@ -84,34 +84,28 @@ if(elgg_is_logged_in()){
 }
 
 
-//Onboarding extention
+//Onboarding
 //view exists with gc_onboard
 if(elgg_is_active_plugin('gc_onboard') && elgg_is_logged_in()){
-    /*
+
     $user = elgg_get_logged_in_user_entity();
 
     //$user->onboardcta = time();
 
-    //testing for new or returning users
-    //using the redesign launch as a date to check before
-    if($user->prev_last_login < 1458259200 && $user->onboardcta != true){ //1458259200
+    //grab times from settings
+    $time = elgg_get_plugin_setting("wait_time", "gc_onboard");
+    if(!$time){
+        $time = 1458259200;
+    }
 
-        //see if user has clicked 'Not now' but is still in first log in session
-        if(!isset($user->onboardcta) || time() - $user->onboardcta > 30){ //604800
-            $onboard = elgg_view('welcome-steps/modal');
-            $onboard .= '<script> window.onload = function () { document.getElementById("onboardPopup").click() } </script>';
-        }
-
-    //testing for users who pressed 'Not now'
-    } else if( is_numeric($user->onboardcta) && (time() - $user->onboardcta) > 30 ){ //604800
+    //check if user has interacted with the module already
+    if(!isset($user->onboardcta) || (is_numeric($user->onboardcta) && (time() - $user->onboardcta) > $time)){ //1458259200
 
         $onboard = elgg_view('welcome-steps/modal');
         $onboard .= '<script> window.onload = function () { document.getElementById("onboardPopup").click() } </script>';
-
+        
     }
-    */
-    $onboard = elgg_view('welcome-steps/modal');
-    $onboard .= '<script> window.onload = function () { document.getElementById("onboardPopup").click() } </script>';
+
     //remove on final version
     //$onboard .= $user->onboardcta . '<br>';
     //$onboard .= time() - $user->onboardcta;
