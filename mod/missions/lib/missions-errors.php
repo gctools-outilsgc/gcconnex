@@ -285,7 +285,7 @@ function mm_validate_time($day, $input_array)
 	 	}
  	}
  	//Nick - Increasing limit from 2k to 5k as per JIRA 239
- 	$description_limit = 5000;
+ 	$description_limit = 8000;
  	if(strlen($input_array['description']) > $description_limit) {
  		$err .= elgg_echo('missions:error:exceeds_string_length', array(elgg_echo('missions:opportunity_description'), $description_limit)) . "\n";
  	}
