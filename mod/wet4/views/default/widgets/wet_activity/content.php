@@ -15,6 +15,11 @@
 
 
 if(elgg_is_logged_in()){
+  $loading = elgg_view('output/img', array(
+          'src' => 'mod/wet4/graphics/loading.gif',
+          'alt' => 'loading'
+      ));
+
 ?>
 <script>
     $(document).ready(function () {
@@ -44,6 +49,7 @@ if(elgg_is_logged_in()){
         $('.dropdown-menu').click(function (e) {
             e.stopPropagation();
         });
+    });
 </script>
 <?PHP
         $_SESSION['Suggested_friends']=0;
@@ -89,7 +95,7 @@ if(elgg_is_logged_in()){
             $guids_in = implode(',', array_unique(array_filter($group_guids)));
             //$optionsg['joins'] = array("JOIN {$db_prefix}entities e1 ON e1.guid = rv.object_guid");
             //display created content and replies and comments
-            $optionsg['wheres'] = array("( oe.container_guid IN({$guids_in}) 
+            $optionsg['wheres'] = array("( oe.container_guid IN({$guids_in})
          OR te.container_guid IN({$guids_in}) )");
             $optionsg['pagination'] = true;
             $activity = newsfeed_list_river($optionsg);
@@ -126,7 +132,7 @@ if(elgg_is_logged_in()){
            //echo $guids_in;
            /*   $optionsfg['joins'] = array(" {$db_prefix}entities e ON e.guid = rv.object_guid",
                 " {$db_prefix}entities e1 ON e1.guid = rv.target_guid",
-                
+
                 );*/
             //Groups + Friends activity query
             //This query grabs new created content and comments and replies in the groups the user is a member of *** te.container_guid grabs comments and replies
@@ -186,4 +192,3 @@ if(elgg_is_logged_in()){
 //echo out the yolo code
 
 echo $activity;
-
