@@ -57,8 +57,8 @@ function event_calendar_init() {
 
 	//add to the css
 	elgg_extend_view('css/elgg', 'event_calendar/css');
-
 	$event_calendar_listing_format = elgg_get_plugin_setting('listing_format', 'event_calendar');
+	
 	if (elgg_is_active_plugin('event_poll') || ($event_calendar_listing_format == 'full')) {
 		elgg_extend_view('css/elgg', 'fullcalendar/css');
 		$plugin_js = elgg_get_simplecache_url('js', 'event_calendar/fullcalendar');

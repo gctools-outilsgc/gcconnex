@@ -144,11 +144,7 @@ handleViewDisplay = function(view) {
 		goToDateFlag = 1;
 		var a = current_iso.split("-");
 		$('#calendar').fullCalendar('gotoDate',parseInt(a[0],10),parseInt(a[1],10)-1,parseInt(a[2],10));
-		//$('.fc-widget-content').removeClass('event-calendar-date-selected');
-		//$(".fc-widget-content[data-date='"+ciso+"']").addClass('event-calendar-date-selected');
 	}
-
-	//$(".fc-widget-content[data-date='20120105']")
 }
 
 fullcalendarInit = function() {
