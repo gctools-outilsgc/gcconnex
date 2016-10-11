@@ -180,6 +180,15 @@ $input_time_interval = elgg_view('input/dropdown', array(
 		'style' => 'display:inline-block;margin-left:4px;'
 ));
 
+//Nick - adding group and level to the edit
+$input_gl_group = elgg_view('input/dropdown', array(
+	'name'=>'group',
+	'value'=>$mission->gl_group,
+	'options'=> mm_echo_explode_setting_string(elgg_get_plugin_setting('gl_group_string', 'missions')),
+	'id'=>'post-mission-gl-group',
+	'class'=>'',
+));
+
 $skill_set = '';
 $skill_array = explode(', ', $mission->key_skills);
 foreach($skill_array as $skill) {
@@ -297,6 +306,30 @@ $button_set = mm_create_button_set_full($mission);
 		<div>
 			<h4><?php echo elgg_echo('mission:opportunity_details') . ':'; ?></h4>
 		</div>
+		<div class="form-group">
+			<label for='post-mission-gl-group' class="col-sm-3" style="text-align:right;">
+				<?php echo elgg_echo('missions:groupandlevel') . ':';?>
+			</label>
+			<div class="col-sm-3">
+				<div class="col-sm-6">
+					<label for="post-mission-gl-group"><?php echo elgg_echo('missions:gl:group'); ?></label>
+					<?php echo $input_gl_group;
+					?>
+				</div>
+				<div class="col-sm-6">
+					<label for="numeric1"><?php echo elgg_echo('missions:gl:level'); ?></label>
+					<input class="form-control" id="numeric1" name="level" type="number" data-rule-digits="true" min="1" max="10" step="1" value="<?php echo $mission->gl_level; /*Nick - put the value in the input*/?>"/>
+				</div>
+
+			</div>
+			<script>
+					$('#post-mission-gl-group').change(function(){
+						$('#numeric1').val('1');
+					})
+			</script>
+		</div>
+
+
 		<div class="form-group">
 			<label for='edit-mission-area-dropdown-input' class="col-sm-3" style="text-align:right;">
 				<?php echo elgg_echo('missions:program_area') . ':';?>

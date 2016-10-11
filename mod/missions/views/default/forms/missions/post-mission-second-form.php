@@ -139,6 +139,18 @@ if($department_abbr) {
 else {
 	$openess_string = elgg_echo('missions:openess_sentence_generic');
 }
+
+//Nick - adding group and level
+//Dropdown for group
+
+$input_gl_group = elgg_view('input/dropdown', array(
+	'name'=>'group',
+	'value'=>'gl_group',
+	'options'=> mm_echo_explode_setting_string(elgg_get_plugin_setting('gl_group_string', 'missions')),
+	'id'=>'post-mission-gl-group',
+	'class'=>'',
+));
+
 ?>
 
 <h4><?php echo elgg_echo('missions:second_post_form_title'); ?></h4><br>
@@ -172,6 +184,30 @@ else {
 		<?php echo $input_other_area; ?>
 	</div>
 </div>
+
+<div class="form-group">
+	<label for='post-mission-gl-group' class="col-sm-3" style="text-align:right;">
+		<?php echo elgg_echo('missions:groupandlevel') . ':';?>
+	</label>
+	<div class="col-sm-3">
+		<div class="col-sm-6">
+			<label for="post-mission-gl-group"><?php echo elgg_echo('missions:gl:group'); ?></label>
+			<?php echo $input_gl_group;
+			?>
+		</div>
+		<div class="col-sm-6">
+			<label for="numeric1"><?php echo elgg_echo('missions:gl:level'); ?></label>
+			<input class="form-control" id="numeric1" name="level" type="number" data-rule-digits="true" min="1" max="10" step="1"/>
+		</div>
+
+	</div>
+	<script>
+			$('#post-mission-gl-group').change(function(){
+				$('#numeric1').val('1');
+			})
+	</script>
+</div>
+
 <div class="form-group">
 	<label for='post-mission-number-dropdown-input' class="col-sm-3" style="text-align:right;">
 		<?php echo elgg_echo('missions:opportunity_number') . ': ';?>

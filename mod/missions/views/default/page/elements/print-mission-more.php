@@ -70,6 +70,10 @@ if(trim($department_path) == '') {
 	}
 }
 
+//Nick - Adding group and level to the mission view
+if(!empty($mission->gl_group)){
+  $print_groupandlevel = '<h5>'.elgg_echo('missions:groupandlevel').': </h5><span>'.$mission->gl_group.'-'.$mission->gl_level.'</span>';
+}
 // Unpacks all language and time metadata attached to the mission.
 $unpacked_array = mm_unpack_mission($mission);
 
@@ -198,6 +202,9 @@ if(strpos($button_set['button_three'], 'accept-button') !== false) {
 			<h5><?php echo elgg_echo('missions:program_area')  . ':';?></h5>
 			<span  name="mission-program-area"><?php echo elgg_echo($mission->program_area);?></span>
 		</div>
+    <div class="clearfix">
+        <?php echo $print_groupandlevel; ?>
+    </div>
 		<div class="clearfix">
                 <h5><?php echo elgg_echo('missions:opportunity_number')  . ':';?></h5>
 			<span name="mission-number"><?php echo $mission->number;?></span>
