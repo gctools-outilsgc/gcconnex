@@ -295,11 +295,8 @@ return array(
 'event_calendar:river:create' => "a new event",
 'event_calendar:river:the_event' => 	"%s takes place at %s. You can visit the event page here: %s",
 'event_calendar:listing_title:user' => "%s's events",
-
-
 	
  // BBB support	
-	
 	
 'event_calendar:bbb_server_url' => "Big Blue Button server URL (must end with slash):",
 'event_calendar:bbb_security_salt' => "Big Blue Button security salt:",
@@ -320,10 +317,8 @@ return array(
 'event_calendar:notify:subject' => 'New event: %s',
 'event_calendar:notify:body' => 	'%s has created a new event: %s %s %s',	
 'event_calendar:notify:summary' => 'New event: %s',
-
-'event_calendar:venue_label' => 'Location', //NEW / Change
-'event_calendar:add_ics' => 'Add to my Outlook calendar',// NEW
-'event_calendar:add_to_my_calendar_ics_response' => 'Send to your Outlook.',//NEW
-
-'event_calendar:room_label' => 'Room',//NEW
+'event_calendar:venue_label' => 'Location', 
+'event_calendar:add_ics' => 'Add to my Outlook calendar',
+'event_calendar:add_to_my_calendar_ics_response' => 'Send to your Outlook.',
+'event_calendar:room_label' => 'Room',
 );
