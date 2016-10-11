@@ -48,6 +48,8 @@ return array(
   'wet:login_engage_2'=>'Find people you need. The opportunities you want.',
   'wet:login_engage_3'=>'Promote government-wide GC activities.',
   'wet:login_welcome'=>'Welcome to GCconnex',
+	'wet:jobs:link' => 'jobs.gc.ca <i class="fa fa-external-link mrgn-lft-sm"></i>',
+	'wet:jobs:href' => "http://jobs-emplois.gc.ca/index-eng.htm",
 
   'wet:login:departments'=>"<span class=\"login-big-num\">174</span> Organizations across Canada",
   'wet:login:discussions'=>"<span class=\"login-big-num\">%s</span> Discussions happening right now",
@@ -178,14 +180,14 @@ return array(
 /**
  * User Menu
  */
-    
+
     'userMenu:profile' => "My Profile",
     'userMenu:account' => "Account Settings",
     'userMenu:messages' => "My Messages",
     'userMenu:colleagues' => "My Colleagues",
     'userMenu:usermenuTitle' =>'User Card - Click here for links to your profile, account settings and logout', /*NEW*/
 		'wet:dd:expand'=>"Open drop down of most recent messages",
-    
+
     /**
      * Custom Activity Widget
      */
@@ -195,8 +197,8 @@ return array(
 
  /**
  * Group Profile
- */   
-    
+ */
+
     'gprofile:about' => "About",
     'gprofile:discussion' => "Discussion",
     'gprofile:files' => "Files",
@@ -215,7 +217,7 @@ return array(
     'gprofile:more' => "More",
     'gprofile:settings' => 'Settings',
     'photos:none' => 'No image albums',
-    
+
     'gprofile:create' => "Create Group",
 
     'gprofile:edit:content' => "Content options",
@@ -238,7 +240,7 @@ return array(
 
   'group:invite:clicktoadd' => "Click to add",
   'group:invite:email' => "Enter a valid email and press enter to submit it to the list",
-  
+
   'groups:eng'=>"Anglais",
   'groups:fra'=>"Français",
 
@@ -285,7 +287,7 @@ return array(
 	'actionnotfound' => "The action file for %s was not found.",
 	'actionloggedout' => "Sorry, you cannot perform this action while logged out.",
 	'actionunauthorized' => 'You are unauthorized to perform this action',
-	
+
 	'ajax:error' => 'Unexpected error while performing an AJAX call. Maybe the connection to the server is lost.',
 	'ajax:not_is_xhr' => 'You cannot access AJAX views directly',
 
@@ -330,7 +332,7 @@ return array(
 	'ElggPlugin:Dependencies:Priority:Before' => 'Before %s',
 	'ElggPlugin:Dependencies:Priority:Uninstalled' => '%s is not installed',
 	'ElggPlugin:Dependencies:Suggests:Unsatisfied' => 'Missing',
-	
+
 	'ElggPlugin:Dependencies:ActiveDependent' => 'There are other plugins that list %s as a dependency.  You must disable the following plugins before disabling this one: %s',
 
 	'ElggMenuBuilder:Trees:NoParents' => 'Menu items found without parents to link them to',
@@ -662,7 +664,7 @@ GCconnex is a professional networking and collaborative workspace for all public
 	'register:fields' => 'All fields are required',
 
 	'registration:notemail' => 'The email address you provided does not appear to be a valid email address.',
-	
+
 	'registration:usernametooshort' => 'Your username must be a minimum of %u characters long.',
 	'registration:usernametoolong' => 'Your username is too long. It can have a maximum of %u characters.',
 	'registration:passwordtooshort' => 'The password must be a minimum of %u characters long.',
@@ -996,7 +998,7 @@ These changes will only affect new users on the site.',
 /**
  * User settings
  */
-		
+
 	'usersettings:description' => "The user settings panel allows you to control all your personal settings, from user management to how plugins behave. Choose an option below to get started.",
 
 	'usersettings:statistics' => "Your statistics",
@@ -1023,7 +1025,7 @@ These changes will only affect new users on the site.',
 /**
  * Activity river
  */
-		
+
 	'river:all' => 'All Site Activity',
 	'river:mine' => 'My Activity',
 	'river:owner' => 'Activity of %s',
@@ -1038,7 +1040,7 @@ These changes will only affect new users on the site.',
 	'friends:icon_size' => "Icon size",
 	'friends:tiny' => "tiny",
 	'friends:small' => "small",
-    
+
     'wet_mygroups:my_groups' => "My Groups",
     'wet_mygroups:my_groups_nolog' => "New Groups",
     'wet4:filterActivity'=>'Filter Activity',
@@ -1053,7 +1055,7 @@ These changes will only affect new users on the site.',
 	'icon:size:medium' => "Medium",
 	'icon:size:large' => "Large",
 	'icon:size:master' => "Extra Large",
-		
+
 /**
  * Generic action words
  */
@@ -1138,11 +1140,11 @@ These changes will only affect new users on the site.',
 
 	'active' => 'Active',
 	'total' => 'Total',
-	
+
 	'ok' => 'OK',
 	'any' => 'Any',
 	'error' => 'Error',
-	
+
 	'other' => 'Other',
 	'options' => 'Options',
 	'advanced' => 'Advanced',
@@ -1155,7 +1157,7 @@ These changes will only affect new users on the site.',
 	'content:latest:blurb' => 'Alternatively, click here to view the latest content from across the site.',
 
 	'link:text' => 'view link',
-	
+
 /**
  * Generic questions
  */
@@ -1183,7 +1185,7 @@ These changes will only affect new users on the site.',
 	'sort:popular' => 'Popular',
 	'sort:alpha' => 'Alphabetical',
 	'sort:priority' => 'Priority',
-		
+
 /**
  * Generic data words
  */
@@ -1208,7 +1210,7 @@ These changes will only affect new users on the site.',
 /**
  * Entity actions
  */
-		
+
 	'edit:this' => 'Edit this',
 	'delete:this' => 'Delete this',
 	'comment:this' => 'Comment on this',
@@ -1251,7 +1253,7 @@ Once you have logged in, we highly recommend that you change your password.
 /**
  * Import / export
  */
-		
+
 	'importsuccess' => "Import of data was successful",
 	'importfail' => "OpenDD import of data failed.",
 
@@ -1267,7 +1269,7 @@ Once you have logged in, we highly recommend that you change your password.
 	'friendlytime:days' => "%s days ago",
 	'friendlytime:days:singular' => "yesterday",
 	'friendlytime:date_format' => 'j F Y @ g:ia',
-	
+
 	'friendlytime:future:minutes' => "in %s minutes",
 	'friendlytime:future:minutes:singular' => "in a minute",
 	'friendlytime:future:hours' => "in %s hours",
@@ -1295,7 +1297,7 @@ Once you have logged in, we highly recommend that you change your password.
 	'date:weekday:4' => 'Thursday',
 	'date:weekday:5' => 'Friday',
 	'date:weekday:6' => 'Saturday',
-	
+
 	'interval:minute' => 'Every minute',
 	'interval:fiveminute' => 'Every five minutes',
 	'interval:fifteenmin' => 'Every fifteen minutes',
@@ -1353,7 +1355,7 @@ Once you have logged in, we highly recommend that you change your password.
 
 	'installation:htaccess:needs_upgrade' => "You must update your .htaccess file so that the path is injected into the GET parameter __elgg_uri (you can use install/config/htaccess.dist as a guide).",
 	'installation:htaccess:localhost:connectionfailed' => "Elgg cannot connect to itself to test rewrite rules properly. Check that curl is working and there are no IP restrictions preventing localhost connections.",
-	
+
 	'installation:systemcache:description' => "The system cache decreases the loading time of Elgg by caching data to files.",
 	'installation:systemcache:label' => "Use system cache (recommended)",
 
@@ -1426,12 +1428,12 @@ Once you have logged in, we highly recommend that you change your password.
 /**
  * Emails
  */
-		
+
 	'email:from' => 'From',
 	'email:to' => 'To',
 	'email:subject' => 'Subject',
 	'email:body' => 'Body',
-	
+
 	'email:settings' => "Email settings",
 	'email:address:label' => "Email address",
 
@@ -1522,15 +1524,15 @@ Please do not reply to this email.",
 /**
 *Blogs
 */
-    
-    'blog:title:all_blogs' => 'Blogs', 
-    
+
+    'blog:title:all_blogs' => 'Blogs',
+
     /**
     *Activity module
     */
     'activity:module:weekly_likes' => 'Most liked of last week',
 	'activity:module:weekly_likes:none' => 'No likes',
-    
+
 /**
 *Contact page / FAQ
 */
@@ -1541,7 +1543,7 @@ Please do not reply to this email.",
     'contactform:title' => "GCconnex Help Pages",
     'contactform:list' => "<ul class='list-unstyled'>
 						<li> <a href='http://www.gcpedia.gc.ca/wiki/GC2.0_Tools_Help_Centre/GCconnex'>Help centre</a> </li>
-					
+
 						</ul>",
     'contactform:faq' => "FAQ",
     'contactform:title:lostpwd' => "<a href=' http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/How_to_retrieve_my_password'>Lost password</a>",
@@ -1551,7 +1553,7 @@ Please do not reply to this email.",
 '>Upload profile picture</a>",
     'contactform:title:sign-on' => "<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help_/_How_to_use_Simplified_Sign-on'>Simplified Sign-on</a>",
     'contactform:title:form' => "Contact Us",
-    
+
     'contactform:content:form' => "<p>
 					Please see the FAQ and the Help Centre to get instant answers for the most common questions and learn how to use GCconnex like a pro!</p>
 					<p>Can't find the answer you are looking for? Contact the GCconnex Help Desk by filling out the form below. Please be clear as possible in describing your question or issue, and provide a screenshot where possible. A GCTools Unit Support Officer will respond to your inquiry within two (2) business days.
@@ -1564,7 +1566,7 @@ Please do not reply to this email.",
     'contactform:groupgcconnex' => 'GC 2.0 Tools GCconnex Group',
     'contactform:teamgcpedia' => 'GC 2.0 Tools Team on GCpedia',
     'contactform:collaborating' => ' CSPS’s Collaborating Using GCpedia (B171) ',
-    'contactform:collaborating:link' => '"http://www.csps-efpc.gc.ca/forlearners/coursesandprograms/CourseDetail-eng.aspx?courseno=b171%7C"', 
+    'contactform:collaborating:link' => '"http://www.csps-efpc.gc.ca/forlearners/coursesandprograms/CourseDetail-eng.aspx?courseno=b171%7C"',
     'contactform:socialmedia' => 'Collaborating Using GCconnex and GCpedia (B336)',
     'contactform:socialmedia:link' => '"http://www.csps-efpc.gc.ca/forlearners/coursesandprograms/CourseDetail-eng.aspx?courseno=B336"',
     'contactform:guidance' => '<a href="http://www.gcpedia.gc.ca/gcwiki/images/b/b5/Social_Media_in_the_GC.jpg">Guidance for employees : Social Media in the GC context</a>',
@@ -1578,24 +1580,24 @@ Please do not reply to this email.",
 	'conatactform:eng:name' => 'Name of the link in english',
 	'conatactform:fr:link' => 'French link',
 	'conatactform:eng:link' => 'English link',
-    
+
 /*
  * Contact Form Validation
   *Message - Ce champ est obligatoire.
  * */
 
- 
+
 /**
  * Entities
  */
-	
+
 	'byline' => 'By %s',
 	'entity:default:strapline' => 'Created %s by %s',
 	'entity:default:missingsupport:popup' => 'This entity cannot be displayed correctly. This may be because it requires support provided by a plugin that is no longer installed.',
 
 	'entity:delete:success' => 'Entity %s has been deleted',
 	'entity:delete:fail' => 'Entity %s could not be deleted',
-	
+
 	'entity:can_delete:invaliduser' => 'Can not check canDelete for user_guid [%s] as the user does not exist.',
 
 /**

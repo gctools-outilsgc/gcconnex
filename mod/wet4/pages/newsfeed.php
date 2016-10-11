@@ -103,13 +103,9 @@ if(elgg_is_active_plugin('gc_onboard') && elgg_is_logged_in()){
 
         $onboard = elgg_view('welcome-steps/modal');
         $onboard .= '<script> window.onload = function () { document.getElementById("onboardPopup").click() } </script>';
-        
+
     }
 
-    //remove on final version
-    //$onboard .= $user->onboardcta . '<br>';
-    //$onboard .= time() - $user->onboardcta;
-    
 }
 
 echo elgg_view_page( elgg_echo('newsfeed'), $content . $onboard);

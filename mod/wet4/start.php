@@ -91,9 +91,6 @@ function wet4_theme_init() {
 
     //load datatables
     elgg_require_js("wet4/test");
-    //elgg_require_js("wet4/elgg_dataTables");
-
-    //elgg_register_js('removeMe', elgg_get_plugins_path() . 'wet4/js/removeMe.js');
 
     //the wire reply and thread
     elgg_register_ajax_view("thewire_tools/reply");
@@ -163,9 +160,7 @@ function wet4_theme_init() {
         $wet_activity_title = elgg_echo('wet4:colandgroupactivitynolog');
     }
     elgg_register_widget_type('wet_activity', $wet_activity_title, 'GCconnex Group and Colleague Activity', array('custom_index_widgets'),false);
-    //elgg_register_widget_type('profile_completness', elgg_echo('ps:profilestrength'), 'The "Profile Strength" widget', array('custom_index_widgets'),false);
     elgg_register_widget_type('suggested_friends', elgg_echo('sf:suggcolleagues'), elgg_echo('sf:suggcolleagues'), array('custom_index_widgets'),false);
-    //elgg_register_widget_type('user_summary_panel', 'user_summary_panel', 'user_summary_panel', array('custom_index_widgets'),false);
     elgg_register_widget_type('feature_tour', 'feature_tour', 'feature_tour', array('custom_index_widgets'),false);
 
     //WET my groups widget
@@ -175,7 +170,6 @@ function wet4_theme_init() {
 
     //Temp fix for river widget
     elgg_unregister_widget_type("group_river_widget");
-    //elgg_register_widget_type("group_river_widget", 'HELLO WORLD', 'GROUP ACTIVITY OVERRIDE');
 
     //extend views of plugin files to remove unwanted menu items
     $active_plugins = elgg_get_plugins();
@@ -190,9 +184,6 @@ function wet4_theme_init() {
 	}
     elgg_extend_view("core/settings/statistics", "forms/usersettings/menus");
     elgg_extend_view('forms/account/settings', 'core/settings/account/landing_page');
-
-
-
 
     //menu item for career dropdown
     elgg_register_menu_item('site', array(
@@ -221,22 +212,13 @@ function wet4_theme_init() {
 
 
     //jobs.gc.ca menu link
-    $lang = get_language();
-    if($lang == 'en'){
-        elgg_register_menu_item('subSite', array(
-            'name' => 'jobs',
-            'text' => 'jobs.gc.ca <i class="fa fa-external-link mrgn-lft-sm"></i>',
-            'href' => 'http://jobs-emplois.gc.ca/index-eng.htm',
-            'target' => '_blank',
-            ));
-    } else {
-        elgg_register_menu_item('subSite', array(
-            'name' => 'jobs',
-            'text' => 'emplois.gc.ca',
-            'href' => 'http://jobs-emplois.gc.ca/index-fra.htm',
-            'target' => '_blank',
-            ));
-    }
+    elgg_register_menu_item('subSite', array(
+        'name' => 'jobs',
+        'text' => elgg_echo('wet:jobs:link'),
+        'href' => elgg_echo('wet:jobs:href'),
+        'target' => '_blank',
+    ));
+
 
 
 }
@@ -429,17 +411,6 @@ function wet4_theme_pagesetup() {
 				elgg_register_menu_item('extras', $item);
 			}
 		}
-        /*
-        if ($item->canEdit()) {
-            $control = elgg_view("output/url",array(
-            'href' => elgg_get_site_url() . "action/plugin_name/delete?guid=" . $entity->guid,
-            'text' => 'Delete ME!',
-            'is_action' => true,
-            'is_trusted' => true,
-            'confirm' => elgg_echo('deleteconfirm'),
-            'class' => 'testing',
-                   ));
-                }*/
 
 
         //style colleague requests tab
@@ -701,26 +672,6 @@ function wet4_likes_entity_menu_setup($hook, $type, $return, $params) {
 		));
 	}
 
-
-
-
-
-    // Always register both. That makes it super easy to toggle with javascript
-    /*
-    if($entity->canEditMetadata(1, 'delete')){
-      $return[] = array(
-			'name' => 'delete',
-			'href' =>  elgg_get_site_url() . "action/plugin_name/delete?guid=" . $entity->guid,
-			'text' => 'delete yo',
-			'title' => elgg_echo('likes:likethis'),
-
-			'priority' => 100,
-		);
-    }
-*/
-
-
-
 	// likes count
 	$count = elgg_view('likes/count', array('entity' => $entity));
 	if ($count) {
@@ -734,10 +685,10 @@ function wet4_likes_entity_menu_setup($hook, $type, $return, $params) {
 		$return[] = ElggMenuItem::factory($options);
 	}
 
-
-
 	return $return;
 }
+
+
 
 //Setup page menu for user settings
 function wet4_elgg_page_menu_setup($hook, $type, $return, $params) {
@@ -1074,44 +1025,7 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params){
 		/* @var \ElggRiverItem $item */
 		$object = $item->getObjectEntity();
 		// add comment link but annotations cannot be commented on
-		if ($item->annotation_id == 0) {
-			if ($object->canComment()) {
-                /*
-				$options = array(
-					'name' => 'comment',
-					'href' => "#comments-add-$object->guid",
-					'text' => '<i class="fa fa-comment-o fa-lg icon-unsel"><span class="wb-inv">Comment on this</span></i>',
-					'title' => elgg_echo('comment:this'),
-					//'rel' => 'toggle',
-                   'data-toggle' => 'collapse',
-                    'aria-expanded' => 'false',
-					'priority' => 50,
-				);
-				$return[] = \ElggMenuItem::factory($options);
-                */
 
-            }else{
-                /*
-                      $options = array(
-					'name' => 'reply',
-					'href' => "#comments-add-$object->guid",
-					'text' => '<i class="fa fa-comment-o fa-lg icon-unsel"><span class="wb-inv">Comment on this</span></i>',
-					'title' => 'Reply to this',
-					//'rel' => 'toggle',
-                         'data-toggle' => 'collapse',
-                  'aria-expanded' => 'false',
-					'priority' => 50,
-				);
-				$return[] = \ElggMenuItem::factory($options);  */
-            }
-
-
-
-		}
-
-
-
-        	$object = $item->getObjectEntity();
 	if (!$object || !$object->canAnnotate(0, 'likes')) {
 		return;
 	}
@@ -1274,8 +1188,6 @@ function my_owner_block_handler($hook, $type, $menu, $params){
     //rearrange menu items
     if(elgg_get_context() == 'group_profile'){
 
-        //elgg_extend_view('page/layouts/one_sidebar','groups/profile/summary',452);
-
         elgg_unregister_menu_item('owner_block', 'Activity');
 
         //turn owner_block  menu into tabs
@@ -1310,12 +1222,12 @@ function my_owner_block_handler($hook, $type, $menu, $params){
                     break;
                 case 'blog':
                     $item->setText(elgg_echo('gprofile:blogs'));
-                    $item->setHref('#blog');// . strtolower(elgg_echo('gprofile:blogs'))
+                    $item->setHref('#blog');
                     $item->setPriority('3');
                     break;
                 case 'event_calendar':
                     $item->setText(elgg_echo('gprofile:events'));
-                    $item->setHref('#calendar');// . strtolower(elgg_echo('gprofile:calendar'))if(get_language() == 'fr'){ $item->setHref('#' . elgg_echo('gprofile:calendar'));} //quick fix for issue
+                    $item->setHref('#calendar');
                     $item->setPriority('5');
                     break;
                 case 'pages':
@@ -1325,17 +1237,17 @@ function my_owner_block_handler($hook, $type, $menu, $params){
                     break;
                 case 'bookmarks':
                     $item->setText(elgg_echo('gprofile:bookmarks'));
-                    $item->setHref('#bookmarks');// . strtolower(elgg_echo('gprofile:bookmarks'))
+                    $item->setHref('#bookmarks');
                     $item->setPriority('7');
                     break;
                 case 'polls':
                     $item->setText(elgg_echo('gprofile:polls'));
-                    $item->setHref('#polls');// . strtolower(elgg_echo('gprofile:polls'))
+                    $item->setHref('#polls');
                     $item->setPriority('14');
                     break;
                 case 'tasks':
                     $item->setText(elgg_echo('gprofile:tasks'));
-                    $item->setHref('#taks');// . strtolower(elgg_echo('gprofile:tasks'))
+                    $item->setHref('#taks');
                     $item->setPriority('9');
                     break;
                 case 'photos':
@@ -1347,15 +1259,15 @@ function my_owner_block_handler($hook, $type, $menu, $params){
                 case 'photo_albums':
                     $item->setText(elgg_echo('gprofile:albumsCatch'));
                     if(get_language() == 'en'){
-                        $item->setHref('#albums');// . strtolower(elgg_echo('gprofile:photoCatch'))
+                        $item->setHref('#albums');
                     } else {
-                        $item->setHref('#albums');//les
+                        $item->setHref('#albums');
                     }
                     $item->setPriority('11');
                     break;
                 case 'ideas':
                     $item->setText(elgg_echo('gprofile:ideas'));
-                    $item->setHref('#ideas');// . strtolower(elgg_echo('gprofile:ideas'))
+                    $item->setHref('#ideas');
                     $item->setPriority('12');
                     break;
                 case 'activity':
@@ -1363,7 +1275,6 @@ function my_owner_block_handler($hook, $type, $menu, $params){
                     $item->setText('Activity');
                     $item->setHref('#activity');
                     $item->setPriority('8');
-                   // $item->addItemClass('removeMe');
                     break;
 
             }
