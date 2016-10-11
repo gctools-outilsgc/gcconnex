@@ -1,7 +1,6 @@
 <?php
 
 elgg_load_library('elgg:event_calendar');
-
 $event_guid = get_input("event_guid", 0);
 $event = get_entity($event_guid);
 $group = get_entity($event->container_guid);

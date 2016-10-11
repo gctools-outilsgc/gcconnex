@@ -45,8 +45,6 @@ if ($handle = opendir($base_dir)) {
 }
 
 elgg_set_plugin_setting('version', $version, 'event_calendar');
-
 elgg_delete_admin_notice('event_calendar_admin_notice_pending_upgrades');
-
 system_message(elgg_echo('event_calendar:upgrade:success'));
 forward(REFERER);
