@@ -12,7 +12,6 @@
  */
 
 elgg_load_library('elgg:event_calendar');
-
 $listing_format = $vars['listing_format'];
 
 if ($vars['events']) {

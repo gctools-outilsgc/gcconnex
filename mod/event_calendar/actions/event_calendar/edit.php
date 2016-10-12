@@ -15,7 +15,6 @@ elgg_load_library('elgg:event_calendar');
 
 // start a new sticky form session in case of failure
 elgg_make_sticky_form('event_calendar');
-
 $event_guid = get_input('event_guid', 0);
 $group_guid = get_input('group_guid', 0);
 $event = event_calendar_set_event_from_form($event_guid, $group_guid);
@@ -30,28 +29,11 @@ if ($event) {
 	$user_guid = elgg_get_logged_in_user_guid();
 	if ($event_guid) {
 		$action = 'update';
-		$email_users = event_calendar_get_users_for_event($event_guid, $limit, $offset, false);
+		$cp_email_users = event_calendar_get_users_for_event($event_guid, $limit, $offset, false);
 		$time = event_calendar_get_formatted_time($event);
 		$date = explode("-", $time);
 		$startdate = $date[0]; 
 		$enddate = $date[1]; 
-			
-		$count = count($email_users);
-
-		$cp_email_users = $email_users;
-    	if ($count == 1) {
-
-     		foreach($email_users as $result)
-    			$email_users = $result['email'];
-    		
-		} else {
- 	
-			foreach($email_users as $result)
-    			$array_email[] = $result['email'];
-   
-			$email_users = implode(",", $array_email);
-    	}
-
 
 		if (elgg_is_active_plugin('cp_notifications')) {
 			// cyu - implemented minor edit option
@@ -68,7 +50,6 @@ if ($event) {
 			);
 			$result = elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
 		}
-
 		system_message(elgg_echo('event_calendar:manage_event_response'));
 	
 	} else {
@@ -76,34 +57,17 @@ if ($event) {
 		/* cyu notes:
 		 * This section of the code will create the event calendar
 		 */
-
-		$action = 'create';
-
 		$event_calendar_autopersonal = elgg_get_plugin_setting('autopersonal', 'event_calendar');
 		if (!$event_calendar_autopersonal || ($event_calendar_autopersonal == 'yes'))
 			event_calendar_add_personal_event($event->guid, $user_guid);
 
-		$email_users = event_calendar_get_users_for_event($event->guid, $limit, $offset, false);
+		$action = 'create';
+		$cp_email_users = event_calendar_get_users_for_event($event->guid, $limit, $offset, false);
 		$time = event_calendar_get_formatted_time($event);
 		$date = explode("-", $time);
 		$startdate = $date[0]; 
 		$enddate = $date[1];
-
-		$cp_email_users = $email_users; // cyu - we need the user entity
-		$count = count($email_users);
-    	if ($count == 1) {
-
-     		foreach($email_users as $result)
-    			$email_users = $result['email'];
-    		
-		} else {
-
- 			foreach($email_users as $result)
-    			$array_email[] = $result['email'];
-    		
-			$email_users = implode(",", $array_email);
-    	}
-
+	
 		// cyu - trigger a plugin hook
     	if (elgg_is_active_plugin('cp_notifications')) {
 			$message = array(

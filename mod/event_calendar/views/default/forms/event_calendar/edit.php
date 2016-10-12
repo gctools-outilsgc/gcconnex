@@ -14,11 +14,9 @@ if (elgg_is_active_plugin('event_poll')) {
 
 $event_calendar_fewer_fields = elgg_get_plugin_setting('fewer_fields', 'event_calendar');
 $event_calendar_repeating_events = elgg_get_plugin_setting('repeating_events', 'event_calendar');
-
 $event_calendar_region_display = elgg_get_plugin_setting('region_display', 'event_calendar');
 $event_calendar_type_display = elgg_get_plugin_setting('type_display', 'event_calendar');
 $event_calendar_spots_display = elgg_get_plugin_setting('spots_display', 'event_calendar');
-
 $event_calendar_more_required = elgg_get_plugin_setting('more_required', 'event_calendar');
 $event_calendar_bbb_server_url = elgg_get_plugin_setting('bbb_server_url', 'event_calendar');
 
@@ -53,8 +51,8 @@ if ($event) {
 $title = $fd['title'];
 $brief_description = $fd['description'];
 $venue = $fd['venue'];
-
 $fees = $fd['fees'];
+
 if ($event_calendar_spots_display) {
 	$spots = $fd['spots'];
 }
@@ -64,6 +62,7 @@ if ($event_calendar_region_display) {
 if ($event_calendar_type_display) {
 	$event_type = $fd['event_type'];
 }
+
 $contact = $fd['contact'];
 $organiser = $fd['organiser'];
 $event_tags = $fd['tags'];
@@ -144,7 +143,6 @@ foreach($schedule_options as $label => $key) {
 $body .= '</ul>';
 
 $vars['prefix'] = $prefix;
-
 $body .= elgg_view('event_calendar/schedule_section', $vars);
 
 if ($event_calendar_spots_display == 'yes') {

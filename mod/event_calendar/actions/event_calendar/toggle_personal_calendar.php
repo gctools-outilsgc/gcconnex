@@ -1,7 +1,6 @@
 <?php
 
 elgg_load_library('elgg:event_calendar');
-
 $event_guid = get_input('event_guid', 0);
 $user_guid = get_input('user_guid', elgg_get_logged_in_user_guid());
 $other = get_input('other', '');
