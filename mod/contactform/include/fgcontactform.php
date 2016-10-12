@@ -41,7 +41,6 @@ class FGContactForm
     var $arr_conditional_receipients;
     var $fileupload_fields;
     var $captcha_handler;
-
     var $mailer;
 
     function FGContactForm()
@@ -52,10 +51,8 @@ class FGContactForm
         $this->conditional_field='';
         $this->arr_conditional_receipients=array();
         $this->fileupload_fields=array();
-
         $this->mailer = new PHPMailer();
         $this->mailer->CharSet = 'utf-8';
-
         $this->mailer->IsSMTP();
         $this->mailer->Host = elgg_get_plugin_setting('phpmailer_host', 'phpmailer'); // SMTP server
         $this->mailer->Port = elgg_get_plugin_setting('ep_phpmailer_port', 'phpmailer'); // SMTP server port
@@ -196,29 +193,17 @@ class FGContactForm
             $subject = "GCconnex - ".$depart. " - $this->name  / GCconnex - ".$depart. " - $this->name";
            }
         
-        
         $this->CollectConditionalReceipients();
-
         $this->mailer->CharSet = 'utf-8';
-        
         $this->mailer->Subject = $subject;
-
-        $this->mailer->From = elgg_get_plugin_setting('phpmailer_from_email', 'phpmailer');//$this->GetFromAddress();
-
-        $this->mailer->FromName = elgg_get_plugin_setting('phpmailer_from_name', 'phpmailer');//$this->name;
-        
-        //$this->mailer->AddReplyTo($this->email);
-
+        $this->mailer->From = elgg_get_plugin_setting('phpmailer_from_email', 'phpmailer');
+        $this->mailer->FromName = elgg_get_plugin_setting('phpmailer_from_name', 'phpmailer');
         $this->mailer->AddCC($this->email);
-
         $message = $this->ComposeFormtoEmail();
-        
         $this->mailer->ConfirmReadingTo = $this->email;
-        
         $textMsg = trim(strip_tags(preg_replace('/<(head|title|style|script)[^>]*>.*?<\/\\1>/s','',$message)));
         $this->mailer->AltBody = @html_entity_decode($textMsg,ENT_QUOTES,"UTF-8");
         $this->mailer->MsgHTML($message);
-
         $this->AttachFiles();
 
         if(!$this->mailer->Send())
@@ -268,16 +253,6 @@ class FGContactForm
     function FormSubmissionToMail()
     {
         $ret_str='';
-     /*   foreach($_POST as $key=>$value)
-        {
-            if(!$this->IsInternalVariable($key))
-            {
-                $value = htmlentities($value,ENT_QUOTES,"UTF-8");
-                $value = nl2br($value);
-                $key = ucfirst($key);
-                $ret_str .= "<div class='label'>$key :</div><div class='value'>$value </div>\n";
-            }
-        }*/
         
                 $name = $_POST['name'];
                 $email = $_POST['email'];
@@ -287,9 +262,7 @@ class FGContactForm
                     $english = $option[1]; 
                 if(empty($_POST['subject']))
                 {
-                    $subject = "$this->name has contacted you about ". $english." / $this->name vous a
-
-envoyé un message à propos de ".$french;
+                    $subject = "$this->name has contacted you about ". $english." / $this->name vous a envoyé un message à propos de ".$french;
                 }else{
                     $subject = $_POST['subject'];
                 }
@@ -314,94 +287,77 @@ envoyé un message à propos de ".$french;
 
         <!-- email header -->
             <div align="center" width="100%" style="background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 12px; color: #055959">
-              Thank you for contacting the GCconnex Help desk. This is a copy of your request.<br/><br/> Merci d\'avoir communiqué avec le bureau de soutien de GCconnex. Ceci est une 
-
-copie de votre requête.
+              Thank you for contacting the GCconnex Help desk. This is a copy of your request.<br/><br/> Merci d\'avoir communiqué avec le bureau de soutien de GCconnex. Ceci est une copie de votre requête.
             </div>
         
 
-        <!-- GCconnex banner -->
-          <div width="100%" style="padding: 0 0 0 10px; color:#ffffff; font-family: sans-serif; font-size: 35px; line-height:38px; font-weight: bold; background-color:#047177;">
-              <span style="padding: 0 0 0 3px; font-size: 20px; color: #ffffff; font-family: sans-serif;">GCconnex</span>
+            <!-- GCconnex banner -->
+            <div width="100%" style="padding: 0 0 0 10px; color:#ffffff; font-family: sans-serif; font-size: 35px; line-height:38px; font-weight: bold; background-color:#047177;">
+            <span style="padding: 0 0 0 3px; font-size: 20px; color: #ffffff; font-family: sans-serif;">GCconnex</span>
             </div>
-
 
             <!-- email divider -->
             <div style="height:1px; background:#bdbdbd; border-bottom:1px solid #ffffff"></div>
 
 <!-- english -->
 
-
             <!-- main content of the notification (ENGLISH) -->
             <!-- *optional* email message (DO NOT REPLY) -->
-          <div width="100%" style="padding:30px 30px 10px 30px; font-size:12px; line-height:22px; font-family:sans-serif;">
+            <div width="100%" style="padding:30px 30px 10px 30px; font-size:12px; line-height:22px; font-family:sans-serif;">
 
-              <!-- The French Follows... -->
-              <span style="font-size:12px; font-weight: normal;"><i>(Le fran&ccedil;ais suit)</i></span><br/>
-                
+            <!-- The French Follows... -->
+            <span style="font-size:12px; font-weight: normal;"><i>(Le fran&ccedil;ais suit)</i></span><br/>  
             </div>
-
-         
 
             <div width="100%" style="padding:30px 30px 30px 30px; color:#153643; font-family:sans-serif; font-size:16px; line-height:22px; ">
-              <!-- TITLE OF CONTENT -->
-              <h2 style="padding: 0px 0px 15px 0px">
-                <strong> GCconnex Contact Us Form </strong>
-              </h2>
+            <!-- TITLE OF CONTENT -->
+            <h2 style="padding: 0px 0px 15px 0px">
+            <strong> GCconnex Contact Us Form </strong>
+            </h2>
 
-              <!-- BODY OF CONTENT -->
-                      <b>Name:</b> '.$name.'<br/>
-                  <b>Email:</b> '.$email.'<br/>
-                  <b>Reason:</b> '.$english.' <br/>
-                  <b>Subject:</b> '.$subject.'<br/>
-                  <b>Message:</b>
-                  '.$message .'<br/>
-
+            <!-- BODY OF CONTENT -->
+            <b>Name:</b> '.$name.'<br/>
+            <b>Email:</b> '.$email.'<br/>
+            <b>Reason:</b> '.$english.' <br/>
+            <b>Subject:</b> '.$subject.'<br/>
+            <b>Message:</b>'.$message .'<br/>
             </div>
-                <div style="margin-top:15px; padding: 5px; color: #6d6d6d; border-bottom: 1px solid #ddd;">
-                   
-                </div>
                 
-
+            <div style="margin-top:15px; padding: 5px; color: #6d6d6d; border-bottom: 1px solid #ddd;"></div>
+                
 <!-- french -->
 
             <!-- main content of the notification (FRENCH) -->
             <!-- *optional* email message (DO NOT REPLY) -->
-          <div id="gcc_fr_suit" name="gcc_fr_suit" width="100%" style="padding:30px 30px 10px 30px; font-size:12px; line-height:22px; font-family:sans-serif;">
-            
-            </div>
+            <div id="gcc_fr_suit" name="gcc_fr_suit" width="100%" style="padding:30px 30px 10px 30px; font-size:12px; line-height:22px; font-family:sans-serif;"></div>
 
             <div width="100%" style="padding:30px 30px 30px 30px; color:#153643; font-family:sans-serif; font-size:16px; line-height:22px;">
-              <!-- TITLE OF CONTENT -->
-              <h2 style="padding: 0px 0px 15px 0px">
-                <strong> Formulaire contactez-nous de GCconnex</strong>
-              </h2>
+            <!-- TITLE OF CONTENT -->
+            <h2 style="padding: 0px 0px 15px 0px">
+            <strong> Formulaire contactez-nous de GCconnex</strong>
+            </h2>
 
-              <!-- BODY OF CONTENT -->
-                                   <b>Nom :</b> '.$name.'<br/> 
-                  <b>Courriel :</b> '.$email.'<br/>
-                  <b>Raison :</b> '.$french.'<br/>
-                  <b>Sujet :</b> '.$subject.'<br/>
-                  <b>Message :</b>
-                  '.$message.'<br/>
-                    
+            <!-- BODY OF CONTENT -->
+            <b>Nom :</b> '.$name.'<br/> 
+            <b>Courriel :</b> '.$email.'<br/>
+            <b>Raison :</b> '.$french.'<br/>
+            <b>Sujet :</b> '.$subject.'<br/>
+            <b>Message :</b>'.$message.'<br/>
             </div>
-                    <div style="margin-top:15px; padding: 5px; color: #6d6d6d;">
-                
-                   
-                    </div>
+            <div style="margin-top:15px; padding: 5px; color: #6d6d6d;"></div>
 
             <!-- email divider -->
             <div style="height:1px; background:#bdbdbd; border-bottom:1px solid #ffffff"></div>
 
             <!-- email footer -->
             <div align="center" width="100%" style="background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 16px; color: #055959">
-              Please do not reply to this message | Veuillez ne pas répondre à ce message
+            Please do not reply to this message | Veuillez ne pas répondre à ce message
             </div>
 
       </div>
     </div>
   </div>';
+
         foreach($this->fileupload_fields as $upload_field)
         {
             $field_name = $upload_field["name"];
@@ -411,7 +367,6 @@ copie de votre requête.
             }        
             
             $filename = basename($_FILES[$field_name]['name']);
-
             $ret_str .= "<div class='label'>File upload '$field_name' :</div><div class='value'>$filename </div>\n";
         }
         return $ret_str;
@@ -427,16 +382,6 @@ copie de votre requête.
         return $ret_str;
     }
 
-   /* function GetMailStyle()
-    {
-        $retstr = "\n<style>".
-        "body,.label,.value { font-family:Arial,Verdana; } ".
-        ".label {font-weight:bold; margin-top:5px; font-size:1em; color:#333;} ".
-        ".value {margin-bottom:15px;font-size:0.8em;padding-left:5px;} ".
-        "</style>\n";
-
-        return $retstr;
-    }*/
     function GetHTMLHeaderPart()
     {
          $retstr = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">'."\n".
@@ -470,24 +415,24 @@ copie de votre requête.
     .col380 {width: 380px!important;}
     }*/
   </style>'.
-                   '<meta http-equiv=Content-Type content="text/html; charset=utf-8">';
+  '<meta http-equiv=Content-Type content="text/html; charset=utf-8">';
        
-        //$retstr .= $this->GetMailStyle();
          $retstr .= '</head><body yahoo bgcolor="#fcfcfc" style="margin: 0; padding: 0; min-width: 100%!important;">';
          return $retstr;
     }
+
     function GetHTMLFooterPart()
     {
         $retstr ='</body></html>';
         return $retstr ;
     }
+
     function ComposeFormtoEmail()
     {
         $header = $this->GetHTMLHeaderPart();
         $formsubmission = $this->FormSubmissionToMail();
-       // $extra_info = $this->ExtraInfoToMail();
         $footer = $this->GetHTMLFooterPart();
-     $message = $header."<p>$formsubmission</p><hr/>$extra_info".$footer;
+        $message = $header."<p>$formsubmission</p><hr/>$extra_info".$footer;
 
         return $message;
     }
@@ -503,7 +448,6 @@ copie de votre requête.
             }
             
             $filename =basename($_FILES[$field_name]['name']);
-
             $this->mailer->AddAttachment($_FILES[$field_name]["tmp_name"],$filename);
         }
     }
@@ -516,7 +460,6 @@ copie de votre requête.
         }
 
         $host = $_SERVER['SERVER_NAME'];
-
         $from ="nobody@$host";
         return $from;
     }
@@ -645,15 +588,6 @@ copie de votre requête.
                 $ret = false;
             }
 
-        //captcha validaions
-        /* if(isset($this->captcha_handler))
-        {
-        if(!$this->captcha_handler->Validate())
-        {
-        $this->add_error($this->captcha_handler->GetError());
-        $ret = false;
-        }
-        }*/
         //file upload validations
         if(!empty($this->fileupload_fields))
         {
@@ -685,8 +619,7 @@ copie de votre requête.
 
     function ValidateFileSize($field_name,$max_size)
     {
-        $size_of_uploaded_file =
-                $_FILES[$field_name]["size"]/1024;//size in KBs
+        $size_of_uploaded_file = $_FILES[$field_name]["size"]/1024;//size in KBs
         if($size_of_uploaded_file > $max_size)
         {
             $this->add_error();
@@ -742,7 +675,6 @@ copie de votre requête.
                     $ret=false;
                 }
             }
-
         }
         return $ret;
     }
