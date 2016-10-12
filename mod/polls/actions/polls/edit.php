@@ -14,7 +14,6 @@ $question = get_input('question');
 $question2 = get_input('question2');
 $number_of_choices = (int) get_input('number_of_choices',0);
 $number_of_choices2 = (int) get_input('number_of_choices2',0);
-
 $tags = get_input('tags');
 $access_id = get_input('access_id');
 $container_guid = get_input('container_guid');
@@ -33,28 +32,21 @@ $new_choices3 = array();
 if ($number_of_choices) {
 	for($i=0;$i<$number_of_choices;$i++) {
 		$text = get_input('choice_text_'.$i,'');
-		//$text2 = get_input('choice_text_f'.$i,'');
 		if ($text) {
 			$new_choices[] = $text;
-			//$new_choices2[] = $text2;
-			//$new_choices3[] = gc_implode_translation($text,$text2);
 			$count ++;
 		}
 	}
-	
 }
 
 if ($number_of_choices2) {
 	for($i=0;$i<$number_of_choices2;$i++) {
-		//$text = get_input('choice_text_f'.$i,'');
 		$text2 = get_input('choice_text_f'.$i,'');
 		if ($text2) {
-			//$new_choices[] = $text;
 			$new_choices2[] = $text2;
 			$count2 ++;
 		}
 	}
-	
 }
 
 if ($number_of_choices2>=$number_of_choices ) {
@@ -83,7 +75,6 @@ for($i=0;$i<$number_of_choices;$i++) {
 			$count3 ++;
 		}
 	}
-
 }
 
 $user = elgg_get_logged_in_user_entity();
@@ -101,10 +92,8 @@ if ($guid) {
 			// Otherwise, save the poll
 		} else {
 			$poll->access_id = $access_id;
-		
 			$poll->question = $question;
 			$poll->question2 = $question2;
-		//	$poll->title = gc_implode_translation($question,$question2);
 			$poll->title3 = gc_implode_translation($question,$question2);
 				
 			if (!$poll->save()) {
@@ -118,11 +107,9 @@ if ($guid) {
 			}
 			
 			elgg_clear_sticky_form('polls');
-			
 			polls_delete_choices($poll);
 			polls_delete_choices2($poll);
 			polls_delete_choices3($poll);
-
 			polls_add_choices3($poll,$new_choices3);
 			polls_add_choices2($poll,$new_choices2);
 			polls_add_choices($poll,$new_choices);
@@ -165,9 +152,7 @@ if ($guid) {
 		// Set its owner to the current user
 		$poll->owner_guid = $user->guid;
 		$poll->container_guid = $container_guid;
-	
 		$poll->access_id = $access_id;
-	
 		$poll->question = $question;
 		$poll->question2 = $question2;
 		$poll->title3 = gc_implode_translation($question2,$question2);

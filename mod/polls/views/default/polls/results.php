@@ -66,5 +66,3 @@ else
 	register_error(elgg_echo("polls:blank"));
 	forward("polls/all");
 }
-
-
