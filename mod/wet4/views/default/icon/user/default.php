@@ -22,12 +22,6 @@ if (!array_key_exists($size, $icon_sizes)) {
 	$size = 'medium';
 }
 
-/*if(elgg_get_context() == 'friends'){
-    $size = 'medium';
-}
-if(elgg_get_context() == 'profile'){
-    $size = 'large';
-}*/
 
 if (!($user instanceof ElggUser)) {
 	return;
@@ -109,7 +103,7 @@ if ($show_menu) {
 /*
  * GC tools ambassador badge
  * loading in the badge based on metadata
- * placed over user's avatar     
+ * placed over user's avatar
  */
 
 
@@ -121,14 +115,6 @@ if(elgg_is_active_plugin('gcProfilePictureBadges')){
         //load badge
         $badge = '<div class="gcProfileBadge">';
 
-        /* Badges
-         * 
-         *  Top left green - amb_badge_v1_2.png
-         *  Top left red - amb_badge_v1_5.png
-         *  Bottom green - amb_badge_1.png
-         *  Bottom red - amb_badge_v1_4.png
-         * 
-         */
         $badge .= elgg_view('output/img', array(
             'src' => 'mod/gcProfilePictureBadges/graphics/amb_badge_v1_5.png',
             'class' => 'img-responsive',

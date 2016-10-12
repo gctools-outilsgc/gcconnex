@@ -20,14 +20,14 @@ if (isset($vars['class'])) {
 
 ?>
 <div class="<?php echo $class; ?>" >
-    
+
 	<?php
 		echo elgg_extract('nav', $vars, elgg_view('navigation/breadcrumbs'));
 
 		echo elgg_view('page/layouts/elements/header', $vars);
         echo '<section class="col-sm-12" id="wb-cont">';
 		echo $vars['content'];
-		
+
 		// @deprecated 1.8
 		if (isset($vars['area1'])) {
 			echo $vars['area1'];
@@ -36,26 +36,10 @@ if (isset($vars['class'])) {
         if (isset($vars['area2'])) {
 			echo $vars['area2'];
 		}
-        /*
-        if(elgg_is_logged_in()){
-            if((time() - elgg_get_logged_in_user_entity()->last_department_verify) > 20)
-            {
-                //create hidden link
-                echo elgg_view('output/url', array(
-                    'href' => 'ajax/view/verify_department/verify_department',
-                    'text' => 'verify',
-                    'id' => 'verify',
-                    'aria-hidden' => 'true',
-                    'class' => 'elgg-lightbox hidden',
-                ));
-                //click link after page load
-                echo '<script> window.onload = function () { document.getElementById("verify").click() } </script>';
-            }
-        }*/
-        
 
+      
         echo '</section>';
 		echo elgg_view('page/layouts/elements/footer', $vars);
 	?>
-	
+
 </div>

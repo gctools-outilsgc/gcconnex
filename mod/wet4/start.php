@@ -94,17 +94,17 @@ function wet4_theme_init() {
 
     //the wire reply and thread
     elgg_register_ajax_view("thewire_tools/reply");
-	elgg_register_ajax_view("thewire_tools/thread");
-
+	  elgg_register_ajax_view("thewire_tools/thread");
+		//viewing phot on newsfeed
     elgg_register_ajax_view("ajax/photo");
-
+		//edit colleague circle
     elgg_register_ajax_view("friend_circle/edit");
-
+		//verfiy department pop up
     elgg_register_ajax_view("verify_department/verify_department");
 
     //file tools
-	elgg_register_ajax_view("file_tools/move");
-
+		elgg_register_ajax_view("file_tools/move");
+		//message preview
     elgg_register_ajax_view("messages/message_preview");
 
     //newsfeed filter form
@@ -348,10 +348,6 @@ if(elgg_is_active_plugin('gcforums')){
  */
 function wet4_theme_pagesetup() {
 
-    //elgg_load_js('elgg/dev');
-    //elgg_load_js('elgg/reportedcontent');
-    //elgg_load_js('removeMe');
-
 	if (elgg_is_logged_in()) {
 
 		elgg_register_menu_item('topbar', array(
@@ -474,8 +470,8 @@ function wet4_theme_pagesetup() {
 				"href" => "friends/" . $user->username,
 				"text" => '<i class="fa fa-users mrgn-rght-sm mrgn-tp-sm fa-lg"></i><span class="hidden-xs">' . elgg_echo("friends") . '</span>',
 				"title" => elgg_echo('friends'),
-                "class" => '',
-                'item_class' => '',
+        "class" => '',
+        'item_class' => '',
 				'priority' => '1'
 			);
 
@@ -496,10 +492,10 @@ function wet4_theme_pagesetup() {
 				"href" => "/settings/plugins/" . $user->username . "/cp_notifications",
 				"text" =>  elgg_echo('notifications:subscriptions:changesettings'),
 				'section' => 'configure',
-                "class" => 'TESTING',
-                'item_class' => '',
+        "class" => 'TESTING',
+        'item_class' => '',
 				'priority' => '100',
-                'context' => 'settings',
+        'context' => 'settings',
 			);
 
     elgg_register_menu_item("page", $params);
@@ -530,8 +526,8 @@ function wet4_theme_pagesetup() {
 				"href" => "friends/" . $user->username,
 				"text" => '<i class="fa fa-users mrgn-rght-sm mrgn-tp-sm fa-lg"></i><span class="hidden-xs">'. elgg_echo("friends") . "</span><span class='notif-badge'>" . $count . "</span>",
 				"title" => elgg_echo('userMenu:colleagues') . ' - ' . $countTitle . ' ' . elgg_echo('friend_request') .'(s)',
-                "class" => '',
-                'item_class' => '',
+        "class" => '',
+        'item_class' => '',
 				'priority' => '1'
 			);
 
@@ -541,14 +537,12 @@ function wet4_theme_pagesetup() {
 
             //topbar
 
-            $params = array(
+      $params = array(
 				"name" => "friends",
 				"href" => "friends/" . $user->username,
 				"text" => elgg_echo("friends") . "<span class='badge'>" . $count . "</span>",
 				"title" => elgg_echo('friends') . ' - Requests(' . $count .')',
-                "class" => 'friend-icon',
-
-
+        "class" => 'friend-icon',
 			);
 
 			elgg_register_menu_item("topbar", $params);
@@ -562,25 +556,24 @@ function wet4_theme_pagesetup() {
     $item = elgg_get_menu_item('entity', 'likes');
 		if ($item) {
 			$item->setText('likes');
-            $item->setItemClass('msg-icon');
-
+      $item->setItemClass('msg-icon');
 		}
 
     $item = elgg_get_menu_item('entity', 'delete');
 		if ($item){
-          echo '<div> What that mean?</div>';
-        }
+    	echo '<div> What that mean?</div>';
+    }
 
-    	if (elgg_is_logged_in() && elgg_get_config('allow_registration')) {
-		$params = array(
-			'name' => 'invite',
-			'text' => elgg_echo('friends:invite'),
-			'href' => "invite/". $user->username,
-			'contexts' => array('friends'),
-            'priority' => 300,
-		);
-		elgg_register_menu_item('page', $params);
-	}
+    if (elgg_is_logged_in() && elgg_get_config('allow_registration')) {
+			$params = array(
+				'name' => 'invite',
+				'text' => elgg_echo('friends:invite'),
+				'href' => "invite/". $user->username,
+				'contexts' => array('friends'),
+        'priority' => 300,
+			);
+			elgg_register_menu_item('page', $params);
+		}
 
 
     //new folder button for files
@@ -598,10 +591,8 @@ function wet4_theme_pagesetup() {
             );
             elgg_register_menu_item('title2', $params);
 
-
         }
     }
-
 
 }
 
@@ -680,7 +671,7 @@ function wet4_likes_entity_menu_setup($hook, $type, $return, $params) {
 			'text' => $count,
 			'href' => false,
 			'priority' => 999,
-            'item_class' => 'entity-menu-bubble',
+      'item_class' => 'entity-menu-bubble',
 		);
 		$return[] = ElggMenuItem::factory($options);
 	}
@@ -719,7 +710,6 @@ function wet4_elgg_page_menu_setup($hook, $type, $return, $params) {
         $options = array(
                    'name' => 'plugin_tools',
                    'text' => elgg_echo('usersettings:plugins:opt:linktext') . '<b class="caret"></b>' . $dropdown,
-
                    'priority' => 150,
                    'section' => 'configure',
                    'item_class' => 'dropdown',
@@ -779,17 +769,6 @@ function wet4_blog_entity_menu($hook, $entity_type, $returnvalue, $params) {
             "href" => $entity->getURL() . "#comments"
         ));
 
-        /*
-        $comment_count = $entity->countComments();
-        if ($comment_count) {
-            $returnvalue[] = \ElggMenuItem::factory(array(
-                "name" => "comments_count",
-                "text" => $comment_count,
-                "title" => elgg_echo("comments"),
-                "href" => false
-            ));
-        }
-        */
     }
 
     return $returnvalue;
@@ -875,10 +854,10 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
                 $return[] = \ElggMenuItem::factory($options);
 
                 $options = array(
-			'name' => 'access',
+										'name' => 'access',
                     'text' => '',
                     'item_class' => 'removeMe',
-		);
+									);
 		$return[] = \ElggMenuItem::factory($options);
 
             } else {
