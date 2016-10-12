@@ -8,7 +8,7 @@
  */
 
 /*
- * 
+ *
  */
 $mission = $vars['mission'];
 $container_class = $vars['container_class'];
@@ -52,18 +52,18 @@ $job_title = $manager_account->job;
 ?>
 
 <div class="<?php echo $container_class; ?>">
-    
-    
-	<div class="col-sm-<?php echo $grid_number; ?>">
+
+
+	<div class="col-xs-<?php echo $grid_number; ?>">
 		<?php echo $manager_icon;?>
 	</div>
-	<div class="col-sm-<?php echo (12 - $grid_number); ?>" name="mission-manager" style="text-align:left;">
+	<div class="col-xs-<?php echo (12 - $grid_number); ?>" name="mission-manager" style="text-align:left;">
 		<div>
 			<span name="mission-manager-name"><?php echo $manager_name;?></span>
 		</div>
 		<div>
 			<span name="mission-manager-department">
-            <?php //echo ucwords(strtolower($department)); 
+            <?php //echo ucwords(strtolower($department));
             echo $job_title;
             ?></span>
 		</div>

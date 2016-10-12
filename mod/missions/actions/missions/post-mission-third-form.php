@@ -41,7 +41,7 @@ if ($err != '') {
     forward(REFERER);
 } else {
     // $third_form = combine_time_table_from_array($third_form);
-    
+
     // Creation of an ELGGObject of subtype Mission
     $mission = new ElggObject();
     $mission->subtype = 'mission';
@@ -49,10 +49,10 @@ if ($err != '') {
     $mission->description = $second_form['description'];
     $mission->access_id = ACCESS_LOGGED_IN;
     $mission->owner_guid = elgg_get_logged_in_user_guid();
-    
+
     // Attaches the form data as metadata to the object
     $mission->name = $first_form['name'];
-    
+
     // If the organization tree is loaded, then the custom dropdown values will be processed and stored.
     if(mo_get_tree_root()) {
 	   	$department_string = mo_get_last_input_node($first_form);
@@ -67,13 +67,13 @@ if ($err != '') {
 		$mission->department_path_english = $first_form['department'];
 		$mission->department_path_french = $first_form['department'];
     }
-    
+
     $mission->email = $first_form['email'];
     $mission->phone = $first_form['phone'];
-    
+
     $accounts = get_user_by_email($first_form['email']);
     $mission->account = array_pop($accounts)->guid;
-    
+
     $mission->job_title = $second_form['job_title'];
     $mission->job_type = $second_form['job_type'];
 	// Stores the value of program area selected unless it is other.
@@ -90,7 +90,13 @@ if ($err != '') {
     $mission->deadline = $second_form['deadline'];
     $mission->descriptor = $second_form['description'];
     $mission->openess = $second_form['openess'];
-    
+
+		//Nick - Adding group and level to the mission meta data
+		if($second_form['group']){
+			$mission->gl_group = $second_form['group'];
+			$mission->gl_level = $second_form['level'];
+		}
+
     $mission->remotely = $third_form['remotely'];
     //$mission->flexibility = $third_form['flexibility'];
     $mission->security = $third_form['security'];
@@ -116,10 +122,10 @@ if ($err != '') {
     	}
     }
     $mission->key_skills = $key_skills;
-    
+
     $mission->english = mm_pack_language($third_form['lwc_english'], $third_form['lwe_english'], $third_form['lop_english'], 'english');
     $mission->french = mm_pack_language($third_form['lwc_french'], $third_form['lwe_french'], $third_form['lop_french'], 'french');
-    
+
     /*$mission->mon_start = mm_pack_time($third_form['mon_start_hour'], $third_form['mon_start_min'], 'mon_start');
     $mission->mon_duration = mm_pack_time($third_form['mon_duration_hour'], $third_form['mon_duration_min'], 'mon_duration');
     $mission->tue_start = mm_pack_time($third_form['tue_start_hour'], $third_form['tue_start_min'], 'tue_start');
@@ -148,22 +154,22 @@ if ($err != '') {
     $mission->sat_duration = $third_form['sat_duration'];
     $mission->sun_start = $third_form['sun_start'];
     $mission->sun_duration = $third_form['sun_duration'];
-    
+
     $mission->state = 'posted';
     $mission->version = elgg_get_plugin_setting('mission_version', 'missions');
-    
+
     $mission->time_to_post = time() - $_SESSION['mission_creation_begin_timestamp'];
-    
+
     // Sends the object and all its metadata to the database
     $mission->save();
-    
+
     $mission->meta_guid = $mission->guid;
-    
+
     $mission->save();
-    
+
     // Creates a relationships between the user (manager) and the mission.
     add_entity_relationship($mission->account, 'mission_posted', $mission->guid);
-    
+
     // Add to the river so it can be seen on the main page.
     elgg_create_river_item(array(
         'view' => 'river/object/mission/create',
@@ -172,12 +178,12 @@ if ($err != '') {
         'object_guid' => $mission->getGUID()
     ));
     //add_to_river('river/object/mission/create', 'create', $mission->owner_guid, $mission->getGUID());
-    
+
     $_SESSION['mission_skill_match_array'] = $skill_array;
     unset($_SESSION['mission_duplicating_override_first']);
     unset($_SESSION['mission_duplicating_override_second']);
     unset($_SESSION['mission_duplicating_override_third']);
-    
+
     if(count($skill_array) == 0) {
 		elgg_clear_sticky_form('firstfill');
 		elgg_clear_sticky_form('secondfill');
@@ -194,7 +200,7 @@ if ($err != '') {
 	    	$token = generate_action_token($ts);
 	    	set_input('__elgg_ts', $ts);
 	    	set_input('__elgg_token', $token);
-	    	
+
 	    	action('missions/post-mission-skill-match');
 	    }
 	    else {
@@ -203,8 +209,8 @@ if ($err != '') {
 		    forward(REFERER);
 	    }
     }
-    
-    
+
+
     /*
     // Finds a list of users who have the same skills that were input in the third form.
     $user_skill_match = array();
@@ -218,11 +224,11 @@ if ($err != '') {
     			'case_sensitive' => false
     	);
     	$skill_match = elgg_get_entities_from_attributes($options);
-    	
+
     	foreach($skill_match as $key => $value) {
     		$skill_match[$key] = $value->owner_guid;
     	}
-    	
+
     	if(empty($user_skill_match)) {
     		$user_skill_match = $skill_match;
     	}
@@ -230,25 +236,25 @@ if ($err != '') {
     		$user_skill_match = array_intersect($user_skill_match, $skill_match);
     	}
     }
-    
+
     // Turns the user GUIDs into user entities.
     foreach($user_skill_match as $key => $value) {
     	$user_skill_match[$key] = get_entity($value);
     }
-    
+
     $_SESSION['mission_search_switch'] = 'candidate';
     $_SESSION['candidate_count'] = count($user_skill_match);
     $_SESSION['candidate_search_set'] = $user_skill_match;
-    
+
     // Clears all the sticky forms that have been in use so far.
     elgg_clear_sticky_form('firstfill');
     elgg_clear_sticky_form('secondfill');
     elgg_clear_sticky_form('thirdfill');
     elgg_clear_sticky_form('ldropfill');
     elgg_clear_sticky_form('tdropfill');
-    
+
     unset($_SESSION['tab_context']);
-    
+
     // If the list of users with matching skills returned any results then those results are displayed.
     if(count($user_skill_match) > 0) {
     	forward(elgg_get_site_url() . 'missions/display-search-set');

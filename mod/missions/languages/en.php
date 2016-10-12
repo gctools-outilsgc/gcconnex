@@ -9,7 +9,7 @@
 return array(
         // labels
     "item:object:mission" =>     "Opportunities Platform",
-    //"missions:first_post:paragraph_one"   
+    //"missions:first_post:paragraph_one"
     "missions:first_post:paragraph_two" =>  "An email address is required to receive important notifications regarding the status of your opportunity, and to receive links for providing feedback to candidates.",
     "missions:first_post:paragraph_three" =>    "Please enter your phone number below if you would like to provide it as a way for interested applicants to contact you regarding this opportunity. If you do not enter your phone number, your email will be displayed to applicants instead.",
     "missions:first_post:paragraph_four" =>"*I agree to provide all selected employees with the appropriate guidance and direction for the tasks involved in this opportunity. I also agree to complete feedback forms which may be sent to me at the conclusion of the opportunity.",
@@ -140,7 +140,7 @@ return array(
     "missions:writing" =>   "Writing",
     "missions:oral" =>  "Oral",
     "missions:advanced_note_paragraph_one" =>   "Please note that all search fields use 'AND' search logic to select opportunities.  This means that adding more search fields will narrow the search results.",
-    "missions:advanced_note_paragraph_two" =>   "Also note that if Javascript is disabled then all search fields will be text based and certain search types will require special formatting.", 
+    "missions:advanced_note_paragraph_two" =>   "Also note that if Javascript is disabled then all search fields will be text based and certain search types will require special formatting.",
     "missions:field" => "Field",
     "missions:value" => "Value",
     "missions:mission_display" =>   "Search results display",
@@ -214,6 +214,7 @@ return array(
 "missions:weekend" =>   "7 Days",
 "missions:no_weekend" =>    "5 Days",
 "missions:formatted:french" =>  "French (%s)",
+"missions:formatted:english" =>  "English (%s)",
 "missions:formatted:time" =>    "Start at %s:%s for %sh%sm",
 "missions:opt_in_paragraph" =>  "Participating in the Career ConneXions Opportunities Platform means that you can post, apply to or receive invitations to opportunities supported by this tool. If you would like to opt in, please click on the button below.",
 "missions:opt_out_paragraph" => "If you would like to opt out of the Career ConneXions Opportunities Plateform, please click the button below.",
@@ -396,7 +397,7 @@ return array(
 "missions:cancel_changes" =>    "Cancel changes",
 "missions:invited_candidates" =>    "Members you shared this opportunity with",
 "missions:you_will_be_opted_in" =>  "Please note that upon submission you will be opted in to the Career ConneXions Opportunities Platform.",
-"missions:find_members" => "Find Members",  
+"missions:find_members" => "Find Members",
 "missions:invite_to_opportunity" => "Share Opportunity",
 "missions:select_mission" =>    "Select Opportunity",
 "missions:confirm:remove_department" => "This action will remove the associated department and all it's data from the current graph.",
@@ -439,7 +440,7 @@ return array(
 "missions:error:user_already_invited" =>    "%s has already been invited to  '%s'.",
 "missions:error:user_already_participating" =>  "%s is already participating in '%s'.",
 "missions:finalize_offer" =>    "Go to your opportunity to make an offer to the candidate of your choice.",
-"missions:reason_to_decline" => "Reason to decline",    
+"missions:reason_to_decline" => "Reason to decline",
 "missions:decline:workload" =>   "Unable due to current workload and/or operational requirements",
 "missions:decline:interest" =>  "No longer interested in this opportunity",
 "missions:decline:engagement" =>    "Already engaged in another opportunity",
@@ -490,14 +491,14 @@ return array(
 "missions:feedback_submitted" =>    "Feedback Submitted",
 "missions:feedback_not_submitted" =>    "Feedback Not Submitted",
 "missions:error:excessive_time_commitment" =>   "The time commitment for your opportunity cannot exceed 99 hours due to current system parameters (upgrades coming soon!)",
-"missions:endorse" => "Endorse",    
+"missions:endorse" => "Endorse",
 "mission:endorsed_recipient" => "You have endorsed %s. Your avatar will appear in their profile under completed opportunities and next to the opportunity '%s'.",
 "missions:error:negative_time_commitment" => "The time commitment for your opportunity must be greater than 0 hours.",
 "missions:error:time_commitment_not_number" => "The time commitment you input was not a number.",
 "missions:already_invited" => "Already invited to this opportunity [or to opt in to this tool]",
 "missions:saved_beginning_skill_match" => "Your opportunity has been successfully saved. A list of GCconnex users is being found with the following skills you input: %s.
 
-Note that users  on this list are not guaranteed to be qualified for your opportunity however the list should provide a good starting point for proactively seeking out talented candidates. 
+Note that users  on this list are not guaranteed to be qualified for your opportunity however the list should provide a good starting point for proactively seeking out talented candidates.
 
 You can share your opportunity with any employee whether on this list or not.  Employees who do not appear on this list are also welcome to express interest in your opportunity.",
 "missions:no_skill_matches_found" => "There were no users found with all the following skills: %s.",
@@ -511,15 +512,15 @@ Please note that information you input in these fields will be stored in your ca
 "missions:placeholder_i" => "This will permanently remove the individual from the participant and applicant list. The employee will receive a notification advising (s)he has been removed from this opportunity.",
 "missions:placeholder_i2" =>    "This will permanently remove the individual from the participant list. The employee will receive a notification advising (s)he has been removed from this opportunity.",
 "missions:placeholder_j" => "<a href='http://www.gcpedia.gc.ca/wiki/Jobs_Marketplace' target='_blank'>Click here for guidance and definitions about each type of opportunity</a>",
-"missions:placeholder_k" => "The 'opt-in' feature supports the functionality of the Career ConneXions Opportunities Platform within the Jobs Marketplace in tandem with the information in your GCconnex profile to facilitate connecting employees with opportunities of interest. 
-<a herf='http://www.gcpedia.gc.ca/wiki/Jobs_Marketplace' target='_blank'>Click here for more information about the Jobs Marketplace and each opportunity type.</a> 
+"missions:placeholder_k" => "The 'opt-in' feature supports the functionality of the Career ConneXions Opportunities Platform within the Jobs Marketplace in tandem with the information in your GCconnex profile to facilitate connecting employees with opportunities of interest.
+<a herf='http://www.gcpedia.gc.ca/wiki/Jobs_Marketplace' target='_blank'>Click here for more information about the Jobs Marketplace and each opportunity type.</a>
 The approval of your supervisor will be required before an offer for any type of opportunity can be accepted. By opting in to an opportunity type you certify that you have had an initial conversation with your supervisor about leveraging these professional development and mobility tools.",
 
-    
+
     "missions:new_micromission_notification"=>"A new opportunity has been created in the Career ConneXions Opportunities Platform",
-    
+
     "cp_notify:personal_opportunities"=>"Notify me when a new opportunity I have opted in for is created in the Career ConneXions Opportunities Platform",
-    
+
 "missions:error:search_field_empty" =>   "Please enter a value in the search field.",
 "missions:diagnostic_suite:no_missions_in_db" =>"There are no opportunities in the database.",
 "missions:diagnostic_suite:no_manager_name" =>  "The opportunity '%s' has an empty manager name.",
@@ -579,15 +580,15 @@ The approval of your supervisor will be required before an offer for any type of
 "missions:mission_finalize_acceptance_for" => "Finalize acceptance of %s participating in your opportunity '%s'",
 "missions:finalize_acceptance" => "Finalize Acceptance",
 "missions:offers_you_a_spot" =>   "Congratulations! You have been selected to participate in opportunity '%s'",
-"missions:offers_you_a_spot_more" =>   "Congratulations! The opportunity '%s' has been offered to you. 
-Should you no longer be available to participate in this opportunity, please decline the offer so it can be offered to another interested candidate. Accept the opportunity here.", "The opportunity '%s' has been offered to you. Please finalize your acceptance here: 
-Should you no longer be available to participate in this opportunity, please withdraw so it can be offered to another interested candidate.", "The opportunity '%s' has been offered to you. Please finalize your acceptance here: 
-Should you no longer be available to participate in this opportunity, please withdraw so it can be offered to another interested candidate.", "The opportunity '%s' has been offered to you. Please finalize your acceptance here: 
+"missions:offers_you_a_spot_more" =>   "Congratulations! The opportunity '%s' has been offered to you.
+Should you no longer be available to participate in this opportunity, please decline the offer so it can be offered to another interested candidate. Accept the opportunity here.", "The opportunity '%s' has been offered to you. Please finalize your acceptance here:
+Should you no longer be available to participate in this opportunity, please withdraw so it can be offered to another interested candidate.", "The opportunity '%s' has been offered to you. Please finalize your acceptance here:
+Should you no longer be available to participate in this opportunity, please withdraw so it can be offered to another interested candidate.", "The opportunity '%s' has been offered to you. Please finalize your acceptance here:
 Should you no longer be available to participate in this opportunity, please withdraw so it can be offered to another interested candidate.",
 "missions:now_participating_in_mission" =>    "You have a new participant for the opportunity '%s'.",
 "missions:declination_report" =>  "Report on Declined Opportunities",
 "missions:error:not_sent_invitation" =>   "You were not sent an offer to opportunity '%s'.",
-"missions:reason_to_decline_or_withdraw" => "Reason to decline or withdraw",  
+"missions:reason_to_decline_or_withdraw" => "Reason to decline or withdraw",
 "missions:reason_to_decline_or_withdraw_from" =>  "Reason to decline or withdraw from opportunity '%s'",
 "missions:reason_to_decline_from" =>  "Reason to decline appling to opportunity '%s'",
 "missions:reason_to_withdraw_from" =>     "Reason to withdraw from opportunity '%s'",
@@ -620,7 +621,7 @@ Should you no longer be available to participate in this opportunity, please wit
 "missions:settings:analytics_on" =>  "Display analytics tab?",
 "missions:cannot_cancel_mission_with_participants" => "Please remove all active participants and all applicants to whom you have sent an offer before deactivating this opportunity.",
 "missions:required" =>    "(required)",
-"missions:placeholder_a" =>   "Welcome to the Career ConneXions Opportunities Platform within Jobs Marketplace! This is a tool that quickly matches at-level mobility (i.e. micro-missions and job swapping) and development (i.e. mentoring and job shadowing) opportunities with talented employees by leveraging the content in employees&rsquo; GCconnex profiles. 
+"missions:placeholder_a" =>   "Welcome to the Career ConneXions Opportunities Platform within Jobs Marketplace! This is a tool that quickly matches at-level mobility (i.e. micro-missions and job swapping) and development (i.e. mentoring and job shadowing) opportunities with talented employees by leveraging the content in employees&rsquo; GCconnex profiles.
 Employees are encouraged to opt in to the professional development and at-level mobility opportunities in their profiles to take full advantage of this tool.
 <a href='http://www.gcpedia.gc.ca/wiki/Jobs_Marketplace' target='_blank'>Please click here for more information, tutorials and guidance materials</a>.","Welcome to the Career ConneXions Opportunities Platform within Jobs Marketplace!
 This is a tool that quickly matches opportunities with talented employees by leveraging the content in employees\ï¿½ GCconnex profiles.
@@ -647,7 +648,7 @@ Employees are encouraged to \'opt in\' to the professional development and at-le
 "missions:error:completion_date_not_formatted_properly" => "Your completion date is not formatted correctly. The correct format is: yyyy-mm-dd.",
     "missions:error:deadline_not_formatted_properly" => "Your application deadline is not formatted correctly. The correct format is: yyyy-mm-dd.",
     "missions:error:email_needs_input" => "Please enter an email address.",
-"missions:placeholder_e" =>    "The below list of employees was automatically generated based on the skills you identified in your opportunity which were cross-referenced with employees\ï¿½ GCconnex profiles. Note that being on this list does not guarantee the employee is qualified for your opportunity however it should provide a good starting point for proactively seeking out talented candidates. 
+"missions:placeholder_e" =>    "The below list of employees was automatically generated based on the skills you identified in your opportunity which were cross-referenced with employees\ï¿½ GCconnex profiles. Note that being on this list does not guarantee the employee is qualified for your opportunity however it should provide a good starting point for proactively seeking out talented candidates.
 You can share your opportunity with any employee whether on this list or not. Employees who do not appear on this list are also welcome to express interest in your opportunity.",
 "missions:confirm:remove_applicant" =>    "This action will remove the corresponding user from the list of applicants for this opportunity." ,
 "missions:confirm:remove_participant" =>   "This action will remove the corresponding user from the list of participants and applicants for this opportunity.",
@@ -704,4 +705,7 @@ You can share your opportunity with any employee whether on this list or not. Em
         "missions:average_number_of_applicants" => "Average number of applicants",
 
     "missions:error:department_restricted"  =>  "This opportunity is only available within: %s.<br /> Your department is currently set to: %s.<br /> If this is not correct please update your profile.",
+    "missions:groupandlevel"=>"Group/Classification",
+    "missions:gl:group"=>"Group",
+    "missions:gl:level"=>"Level",
 );

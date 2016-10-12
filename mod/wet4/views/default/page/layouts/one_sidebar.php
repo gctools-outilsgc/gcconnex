@@ -39,7 +39,7 @@
     <section class="col-md-8 mrgn-bttm-md" id="wb-cont">
         <!--<div class=" clearfix">-->
 		<?php
-			
+
 			//echo elgg_get_context();
 			echo elgg_view('page/layouts/elements/header', $vars);
             // This basically moves the "page menu" element to the tabs on pages where the side bar links are now tabs :)
@@ -47,7 +47,7 @@
 
             echo elgg_view_menu('page', array('sort_by' => 'priority'));
             //echo elgg_view_menu('page', array('sort_by' => 'name'));
-            //echo '<div>Maybe Im stoopid?</div>';
+            
             }
 			// @todo deprecated so remove in Elgg 2.0
 			if (isset($vars['area1'])) {
@@ -61,13 +61,13 @@
                            'class' => 'list-inline pull-right',
                             'item_class' => 'btn btn-primary btn-md',
                             ));
-                        
+
                         $buttons2 = elgg_view_menu('title2', array(
                            'sort_by' => 'priority',
                            'class' => 'list-inline pull-right',
                             'item_class' => 'btn btn-default btn-md mrgn-rght-md',
                             ));
-                        
+
                         echo '<div class="clearfix">';
                         echo $buttons;
                         echo $buttons2;
@@ -76,16 +76,16 @@
                 }
 				echo $vars['content'];
 			}
-			
+
 			echo elgg_view('page/layouts/elements/footer', $vars);
         ?>
        <!-- </div>-->
 	</section>
-    
+
     <?php //sidebar ?>
 	<section class="col-md-4 pull-right">
 		<?php
-			
+
 			// by moving sidebar below main content.
 			// On smaller screens, blocks are stacked in left to right order: content, sidebar.
 			echo elgg_view('page/elements/sidebar', $vars);

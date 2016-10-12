@@ -9,11 +9,7 @@
  * @author Nick P
  */
 
-
-//echo '<h1>AYYYY LMAOO</h1>';
-
 $group = get_entity(elgg_get_page_owner_guid());
-
 
 $options = array(
     'type' => 'object',
@@ -28,7 +24,5 @@ $options = array(
 );
 $content = elgg_list_entities($options);
 
-// cyu - why is this labeled as TEST?
-//echo elgg_view_module('aside','TEST', $content);
 echo elgg_view_module('aside',elgg_echo('gprofile:discussion'), $content);
 ?>

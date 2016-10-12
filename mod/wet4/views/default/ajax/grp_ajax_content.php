@@ -7,7 +7,7 @@
  *
  * Add this AJAX view in order to load group content
  * @version 1.0
- * @author Owner
+ * @author Nick
  */
 
 $group = get_input('group_guid'); //get the guid through AJAX
@@ -17,36 +17,45 @@ $user = elgg_get_logged_in_user_guid();
 
 if ($vars['entity']->forum_enable == 'no') {
 	return true;
-}   
-
-//$group = $vars['entity'];
-if($sub_type =='groupforumtopic'){ //some subtypes are different for list_entities
-    $sub_type2 ='discussion';
-    $all_link_location = '/owner/';
-}else if($sub_type =='page_top'){
-    $sub_type2 = 'pages';
-    $all_link_location = '/group/';
-}else if($sub_type =='polls'){
-    $sub_type ='poll';
-    $sub_type2 ='polls';
-    $all_link_location = '/group/';
-}else if($sub_type =='ideas'){
-    $sub_type ='idea';
-    $sub_type2 ='ideas';
-    $all_link_location = '/group/';
-}else if($sub_type =='calendar'){
-    $sub_type2 ='event_calendar';
-    $sub_type ='event_calendar';
-    $all_link_location = '/group/';
-}else if($sub_type =='albums'){
-    $sub_type2 ='photos';
-    $sub_type ='album';
-    $all_link_location = '/group/';
-    $photos_class = ' col-sm-3';
-}else{
-    $sub_type2 = $sub_type;
-    $all_link_location = '/group/';
 }
+
+//Nick - Changed this to a switch
+//Nick - Some sub_types and url paths are different from what was passed to this view
+switch($sub_type){
+	case 'groupforumtopic':
+		$sub_type2 ='discussion';
+    $all_link_location = '/owner/';
+		break;
+	case 'page_top':
+		$sub_type2 = 'pages';
+		$all_link_location = '/group/';
+		break;
+	case 'polls':
+		$sub_type ='poll';
+		$sub_type2 ='polls';
+		$all_link_location = '/group/';
+		break;
+	case 'ideas':
+		$sub_type ='idea';
+		$sub_type2 ='ideas';
+		$all_link_location = '/group/';
+		break;
+	case 'calendar':
+		$sub_type2 ='event_calendar';
+		$sub_type ='event_calendar';
+		$all_link_location = '/group/';
+		break;
+	case 'albums':
+		$sub_type2 ='photos';
+		$sub_type ='album';
+		$all_link_location = '/group/';
+		$photos_class = ' col-sm-3';
+		break;
+	default:
+		$sub_type2 = $sub_type;
+		$all_link_location = '/group/';
+}
+
 $action_view_more = $sub_type2 . $all_link_location . $group; //some view all links are different by content
 
 if($sub_type =='activity'){
@@ -78,13 +87,6 @@ if($sub_type =='related'){ //related groups
     $content = elgg_list_entities_from_relationship($options);
 }else if($sub_type =='activity'){
     elgg_push_context('group_activity_tab'); //force my own context here so I can modify it in the river view
-    /*$content = elgg_list_river(array(
-	'limit' => 10,
-	'pagination' => false,
-	'wheres' => array(
-		"(oe.container_guid = $group OR te.container_guid = $group)",
-	),
-));*/
     $content = elgg_list_group_river(array(
         'limit' => 10,
         'pagination' => false,
@@ -115,8 +117,6 @@ if(check_entity_relationship($user, 'member', $group)){ //are they a member?
 
     $action = $sub_type2 . "/add/" . $group;
 
-
-
     if($sub_type =='related'){ //if we want related groups then set the related_group var with the group guid
         $related_group = $group;
     }else if($sub_type =='activity'){
@@ -133,8 +133,7 @@ if(check_entity_relationship($user, 'member', $group)){ //are they a member?
     }
 }
 
-
-//echo out the module view for the content 
+//echo out the module view for the content
 
 echo elgg_view('groups/profile/module', array(
 	'title' => elgg_echo('discussion:group'),
@@ -142,8 +141,7 @@ echo elgg_view('groups/profile/module', array(
 	'all_link' => $all_link,
 	'add_link' => $new_link,
     'clicked_related'=>$related_group,
-    'user_guid'=> $user, //passing more vars to the module view 
+    'user_guid'=> $user, //passing more vars to the module view
     'group_guid'=>$group,
 ));
 //test if ajax goes through.
-//echo 'Gratz You made an ajax call! Here us the page GUID = ' .$group;
