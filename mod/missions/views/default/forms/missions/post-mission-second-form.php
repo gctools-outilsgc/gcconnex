@@ -149,6 +149,8 @@ $input_gl_group = elgg_view('input/dropdown', array(
 	'options'=> mm_echo_explode_setting_string(elgg_get_plugin_setting('gl_group_string', 'missions')),
 	'id'=>'post-mission-gl-group',
 	'class'=>'',
+    'disabled'=>true,
+
 ));
 
 ?>
@@ -197,11 +199,26 @@ $input_gl_group = elgg_view('input/dropdown', array(
 		</div>
 		<div class="col-sm-6">
 			<label for="numeric1"><?php echo elgg_echo('missions:gl:level'); ?></label>
-			<input class="form-control" id="numeric1" name="level" type="number" data-rule-digits="true" min="1" max="10" step="1"/>
+			<input class="form-control" id="numeric1" name="level" type="number" data-rule-digits="true" min="1" max="10" step="1" disabled/>
 		</div>
 
 	</div>
 	<script>
+        $('#post-mission-type-dropdown-input').change(function () {
+            //Nick - this makes it so micromissions cannot have a group and level 
+            var value = $(this).val();
+            if (value !== 'missions:micro_mission') {
+                $('#post-mission-gl-group').removeAttr('disabled');
+                $('#numeric1').removeAttr('disabled');
+            } else {//Deactivate and clear the group and level inputs
+                $('#post-mission-gl-group').attr('disabled', true);
+                $('#post-mission-gl-group').val('');
+                $('#numeric1').attr('disabled', true);
+                $('#numeric1').val('');
+
+            }
+        });
+
 			$('#post-mission-gl-group').change(function(){
 				$('#numeric1').val('1');
 			})

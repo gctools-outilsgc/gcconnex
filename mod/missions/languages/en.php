@@ -705,4 +705,7 @@ You can share your opportunity with any employee whether on this list or not. Em
         "missions:average_number_of_applicants" => "Average number of applicants",
 
     "missions:error:department_restricted"  =>  "This opportunity is only available within: %s.<br /> Your department is currently set to: %s.<br /> If this is not correct please update your profile.",
+    "missions:groupandlevel"=>"Group/Classification",
+    "missions:gl:group"=>"Group",
+    "missions:gl:level"=>"Level",
 );
