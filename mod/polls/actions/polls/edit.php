@@ -141,8 +141,8 @@ if ($guid) {
 			forward("polls/add");
 		}		
 	} else {
+		
 		// Otherwise, save the poll
-	
 		// Initialise a new ElggObject
 		$poll = new ElggObject();
 	

@@ -5,13 +5,13 @@
  */
 
 $poll = $vars['entity'];
-
 $owner = $poll->getOwnerEntity();
 $friendlytime = elgg_get_friendly_time($poll->time_created);
 $responses = $poll->countAnnotations('vote');
 
 $icon = '<img src="'.elgg_get_site_url().'mod/polls/graphics/poll.png" />';
 $info = "<a href=\"{$poll->getURL()}\">{$poll->question}</a><br>";
+
 if ($responses == 1) {
 	$noun = elgg_echo('polls:noun_response');
 } else {
