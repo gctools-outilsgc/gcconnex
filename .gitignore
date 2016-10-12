@@ -63,6 +63,7 @@
 Session.vim
 *.tmproj
 *.tmproject
+*.phpproj
 tmtags
 Thumbs.db
 Desktop.ini
