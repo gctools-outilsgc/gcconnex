@@ -57,7 +57,6 @@ $subgroup->save();
 
 //now we need to make sure that all members of the new subgroup are
 // members of the parent group
-
 // get all members of the subgroup - any members of subgroups have to be in this anyway
 
 $options = array(

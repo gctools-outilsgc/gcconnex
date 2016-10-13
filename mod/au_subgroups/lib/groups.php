@@ -1,11 +1,9 @@
 <?php
 /**
  * Groups function library
- */
-
-/**
  * List all groups
  */
+
 function groups_handle_all_page() {
 	$display_subgroups = elgg_get_plugin_setting('display_subgroups', 'au_subgroups');
 	$db_prefix = elgg_get_config('dbprefix');
@@ -112,9 +110,8 @@ function groups_search_page() {
 	echo elgg_view_page($title, $body);
 }
 
-/**
- * List owned groups
- */
+
+ //List owned groups
 function groups_handle_owned_page() {
 
 	$page_owner = elgg_get_page_owner_entity();
@@ -161,9 +158,7 @@ function groups_handle_owned_page() {
 	echo elgg_view_page($title, $body);
 }
 
-/**
- * List groups the user is memober of
- */
+ // List groups the user is memober of
 function groups_handle_mine_page() {
 	$display_subgroups = elgg_get_plugin_setting('display_subgroups', 'au_subgroups');
 	$page_owner = elgg_get_page_owner_entity();
@@ -260,9 +255,7 @@ function groups_handle_edit_page($page, $guid = 0) {
 	echo elgg_view_page($title, $body);
 }
 
-/**
- * Group invitations for a user
- */
+ // Group invitations for a user
 function groups_handle_invitations_page() {
 	elgg_gatekeeper();
 	$user = elgg_get_page_owner_entity();

@@ -46,9 +46,7 @@ function group_canedit($hook, $type, $return, $params) {
 	}
 }
 
-/**
- * prevent users from being invited to subgroups they can't join
- */
+ // prevent users from being invited to subgroups they can't join
 function group_invite($hook, $type, $return, $params) {
 	$user_guid = get_input('user_guid');
 	$group_guid = get_input('group_guid');
@@ -83,9 +81,7 @@ function group_invite($hook, $type, $return, $params) {
 	}
 }
 
-/**
- * re/routes some urls that go through the groups handler
- */
+ //re/routes some urls that go through the groups handler
 function groups_router($hook, $type, $return, $params) {
 	breadcrumb_override($return);
 
