@@ -2,10 +2,8 @@
 // this action allows an admin or event owner to approve a calendar request
 
 elgg_load_library('elgg:event_calendar');
-
 $user_guid = get_input('user_guid', elgg_get_logged_in_user_guid());
 $event_guid = get_input('event_guid');
-
 $user = get_entity($user_guid);
 $event = get_entity($event_guid);
 

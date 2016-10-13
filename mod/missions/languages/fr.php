@@ -309,8 +309,8 @@ return array(
     "missions:job_rotation"=>"Rotation d'emploi",
     "missions:skill_share"=>"Partage des habiletés",
     "missions:job_share"=>"Partage d'emploi",
-    
-    
+
+
     "missions:optin:continue"=>"Continuer à la plateforme de possibilités",
 "missions:settings:mission_front_page_limit" =>	"Combien de cartes de possibilité sont affichées sur la page d'accueil?",
 "missions:feedback_explanation_one" =>	"Remplir le champ texte et cliquer sur le bouton Soumettre enverra un avis de rétroaction à l'utilisateur.",
@@ -505,11 +505,11 @@ Vous pouvez inviter n'importe quel employé, qu'il figure à la liste ou non, à
 "missions:no_skill_matches_found" =>	"Aucun utilisateur n'a été trouvé avec toutes les compétences suivantes : %s. Faites une rechereche à nouveau avec moins de compétences.",
 "missions:all_feedback_finished" =>	"L'ensemble de la rétroaction pour la possibilité '%s' a été soumis.",
 "missions:placeholder_b" =>"La Plateforme de possibilités de ConneXions Carrière est une réalité grâce à la collaboration de nombreux employés passionnés et ministères coopératifs. <a href='http://www.gcpedia.gc.ca/wiki/Micro-missions_-_Page_d%27accueil#Remerciementss' target='_blank'>Cliquez ici pour la liste complète des contributeurs.</a>",
-//"missions:placeholder_c"	
-"missions:placeholder_d" =>	"<a href='http://www.gcpedia.gc.ca/wiki/Carrefour_d_emploi' target='_blank'>Veuillez cliquer ici pour obtenir des renseignements, des tutoriels et du matériel d'orientation.</a> 
+//"missions:placeholder_c"
+"missions:placeholder_d" =>	"<a href='http://www.gcpedia.gc.ca/wiki/Carrefour_d_emploi' target='_blank'>Veuillez cliquer ici pour obtenir des renseignements, des tutoriels et du matériel d'orientation.</a>
 Veuillez noter que les renseignements que vous saisissez dans ces champs seront conservés dans votre mémoire cache pendant à peu près 10 minutes. Une période d'inactivité surpassant ce délai peut entraîner la perte de renseignements.",
 
-"missions:placeholder_f" =>	"<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_Skill_List_-_Liste_des_comp%C3%A9tences_se_trouvant_sur_GCconnex' target='_blank'>Afficher l'inventaire complet des compétences.</a>", 
+"missions:placeholder_f" =>	"<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_Skill_List_-_Liste_des_comp%C3%A9tences_se_trouvant_sur_GCconnex' target='_blank'>Afficher l'inventaire complet des compétences.</a>",
 "missions:placeholder_h" =>	"L'employé ci-dessous a postulé à votre possibilité '%s'. Si vous choisissez de lui offrir cette possibilité, vous recevrez un avis automatique et devrez accepter ou refuser l'offre. Si vous supprimez ce candidat, il ne sera plus considéré comme candidat à cette possibilité.",
 "missions:placeholder_i" =>	"Cela supprimera de manière permanente la personne de la liste des participants et des candidats. L'employé recevra un avis l'informant qu'il a été retiré de cette possibilité.",
 "missions:placeholder_i2" => "Cela supprimera de manière permanente la personne de la liste des participants. L'employé recevra un avis l'informant qu'il a été retiré de cette possibilité.",
@@ -607,7 +607,7 @@ L'approbation de votre superviseur est nécessaire avant que vous soyez en mesur
 "missions:sort_options" =>     "Trier les possibilités par",
 "mission:following_order" =>  "Dans l'ordre suivant",
 "missions:sort" =>    "Trier",
-"missions:last_results_have_expired" => "The results of your last search have expired.",  //Missing transltation 
+"missions:last_results_have_expired" => "The results of your last search have expired.",  //Missing transltation
 "missions:date_closed" => "Date fermée",
 "missions:applicant_name" =>  "Nom du candidat",
 "missions:applicant_phone" =>     "Numéro de téléphone du candidat",
@@ -618,9 +618,9 @@ L'approbation de votre superviseur est nécessaire avant que vous soyez en mesur
 "missions:required" =>    "(requis)",
 "missions:placeholder_a" =>   "Bienvenue à la Plateforme de possibilités de ConneXions Carrière au sein du Carrefour d'emploi! Il s’agit d’un outil qui jumèle rapidement les opportunités de mobilité d'emplois au même niveau (Micro-Missions, Échange d'emploi) et de perfectionnement professionnel (Mentorat, Observation au poste de travail) aux employés talentueux en utilisant le contenu affiché dans les profils GCconnex des employés. On encourage les employés à s'inscrire aux types de possibilité de perfectionnement professionnel et de mobilité au même niveau dans leur profil afin de pleinement profiter de cet outil. <a href='http://www.gcpedia.gc.ca/wiki/Carrefour_d_emploi' target='_blank'>Veuillez cliquer ici pour obtenir des renseignements, des tutoriels et du matériel d'orientation</a>.",
 
-/*Notifictaions*/    
+/*Notifictaions*/
         "missions:new_micromission_notification"=>"Une nouvelle opportunité a été créée dans la Plateforme de possibilités de ConneXions Carrière",
-    
+
     "cp_notify:personal_opportunities"=>"Envoyez-moi une notification quand une nouvelle opportunité que j'ai choisie est créée dans la Plateforme de possibilités de ConneXions Carrière",
 
 "missions:placeholder_d2" =>  " ",
@@ -688,5 +688,8 @@ Vous pouvez inviter n'importe quel employé à votre possibilité, qu'il figure 
 	"missions:error:analytics:select_graph_type" => "S'il vous plaît sélectionner un type de graphique.",
 	"missions:error:analytics:no_opportunities_in_data" => "Il n'y a pas de possibilités au sein de l'ensemble de données résultant de vos paramètres d'entrée.",
 	"missions:error:analytics:no_intervals_in_x_axis" => "Création des intervalles d'axe horizontal a échoué.",
-	"missions:average_number_of_applicants" => "Nombre moyen de candidats"
+	"missions:average_number_of_applicants" => "Nombre moyen de candidats",
+    "missions:groupandlevel"=>"Groupe/ou de classification",
+    "missions:gl:group"=>"Group",
+    "missions:gl:level"=>"Niveau",
 );

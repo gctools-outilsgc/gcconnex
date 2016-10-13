@@ -4,11 +4,6 @@ $event_calendar_times = elgg_get_plugin_setting('times', 'event_calendar');
 $event_calendar_hide_end = elgg_get_plugin_setting('hide_end', 'event_calendar');
 $prefix = $vars['prefix'];
 $body = '';
-//$choix = $vars['choix'];
-
-
-
-//$body .= $choix;
 
 if ($event_calendar_times != 'no') {
 	if ($event_calendar_hide_end != 'yes') {

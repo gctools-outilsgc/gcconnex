@@ -1,7 +1,6 @@
 <?php
 
-$body = '<p class="description">'.sprintf(elgg_echo('event_calendar:delete_confirm_description'),$vars['title']).'</p>';
-                    
+$body = '<p class="description">'.sprintf(elgg_echo('event_calendar:delete_confirm_description'),$vars['title']).'</p>';                 
 $body .= '<form action="'.$vars['url'].'action/event_calendar/manage" method="post" >';
 $body .= elgg_view('input/securitytoken');
 $body .= elgg_view('input/hidden',array('internalname'=>'event_action', 'value'=>'delete_event'));

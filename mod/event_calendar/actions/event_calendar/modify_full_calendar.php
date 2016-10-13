@@ -1,7 +1,6 @@
 <?php
 
 elgg_load_library('elgg:event_calendar');
-
 $event_guid = get_input('event_guid', 0);
 $day_delta = get_input('dayDelta');
 $minute_delta = get_input('minuteDelta', '');

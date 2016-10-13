@@ -11,10 +11,8 @@
  *
  */
 
-elgg_extend_view('metatags','event_calendar/metatags');
-	 
+elgg_extend_view('metatags','event_calendar/metatags'); 
 $body = elgg_view('event_calendar/forms/manage_event_content',$vars);
-
 $body .= elgg_view('input/submit', array('internalname'=>'submit','value'=>elgg_echo('event_calendar:submit')));
 $form = elgg_view('input/form',array('action'=>$vars['url'].'action/event_calendar/manage','body'=>$body));
 

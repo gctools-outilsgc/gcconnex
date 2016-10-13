@@ -6,7 +6,7 @@
  * License: Creative Commons Attribution 3.0 Unported License
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
- 
+
 $department_string = $_SESSION['missions_pass_department_to_second_form'];
 $ancestor_array = mo_get_all_ancestors($department_string);
 $progenitor = get_entity($ancestor_array[0]);
@@ -52,7 +52,7 @@ if(get_subtype_from_id($duplicating_entity->subtype) == 'mission' && !$_SESSION[
 	$number = $duplicating_entity->number;
 	$description = $duplicating_entity->descriptor;
 	$openess = $duplicating_entity->openess;
-	
+
 	$start_date = false;
 	$completion_date = false;
 	$deadline = false;
@@ -121,7 +121,7 @@ $input_deadline = elgg_view('input/date', array(
 		'placeholder' => 'yyyy-mm-dd'
 ));
 
-$input_description = elgg_view('input/plaintext', array(
+$input_description = elgg_view('input/longtext', array(
 	    'name' => 'description',
 	    'value' => $description,
 	    'id' => 'post-mission-description-plaintext-input'
@@ -139,6 +139,20 @@ if($department_abbr) {
 else {
 	$openess_string = elgg_echo('missions:openess_sentence_generic');
 }
+
+//Nick - adding group and level
+//Dropdown for group
+
+$input_gl_group = elgg_view('input/dropdown', array(
+	'name'=>'group',
+	'value'=>'gl_group',
+	'options'=> mm_echo_explode_setting_string(elgg_get_plugin_setting('gl_group_string', 'missions')),
+	'id'=>'post-mission-gl-group',
+	'class'=>'',
+    'disabled'=>true,
+
+));
+
 ?>
 
 <h4><?php echo elgg_echo('missions:second_post_form_title'); ?></h4><br>
@@ -172,6 +186,45 @@ else {
 		<?php echo $input_other_area; ?>
 	</div>
 </div>
+
+<div class="form-group">
+	<label for='post-mission-gl-group' class="col-sm-3" style="text-align:right;">
+		<?php echo elgg_echo('missions:groupandlevel') . ':';?>
+	</label>
+	<div class="col-sm-3">
+		<div class="col-sm-6">
+			<label for="post-mission-gl-group"><?php echo elgg_echo('missions:gl:group'); ?></label>
+			<?php echo $input_gl_group;
+			?>
+		</div>
+		<div class="col-sm-6">
+			<label for="numeric1"><?php echo elgg_echo('missions:gl:level'); ?></label>
+			<input class="form-control" id="numeric1" name="level" type="number" data-rule-digits="true" min="1" max="10" step="1" disabled/>
+		</div>
+
+	</div>
+	<script>
+        $('#post-mission-type-dropdown-input').change(function () {
+            //Nick - this makes it so micromissions cannot have a group and level 
+            var value = $(this).val();
+            if (value !== 'missions:micro_mission') {
+                $('#post-mission-gl-group').removeAttr('disabled');
+                $('#numeric1').removeAttr('disabled');
+            } else {//Deactivate and clear the group and level inputs
+                $('#post-mission-gl-group').attr('disabled', true);
+                $('#post-mission-gl-group').val('');
+                $('#numeric1').attr('disabled', true);
+                $('#numeric1').val('');
+
+            }
+        });
+
+			$('#post-mission-gl-group').change(function(){
+				$('#numeric1').val('1');
+			})
+	</script>
+</div>
+
 <div class="form-group">
 	<label for='post-mission-number-dropdown-input' class="col-sm-3" style="text-align:right;">
 		<?php echo elgg_echo('missions:opportunity_number') . ': ';?>
@@ -232,7 +285,7 @@ else {
 	</div>
 </div>
 
-<div> 
+<div>
 	<?php
 		echo elgg_view('output/url', array(
 				'href' => elgg_get_site_url() . 'missions/mission-post/step-one',
@@ -245,6 +298,6 @@ else {
 				'class' => 'elgg-button btn btn-primary',
 				'style' => 'float:right;',
 				'id' => 'mission-post-opportunity-second-form-submission-button'
-		)); 
-	?> 
+		));
+	?>
 </div>

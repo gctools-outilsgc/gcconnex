@@ -4,12 +4,13 @@ This will populate a drop down that will show up when mousing over "notification
 
 ['type'] = Are you asking for notifications or messages?
 ['count'] = How many do you want back?
+
+Author: Nick
 */
 
 $info_type = get_input('type');
 $info_count = get_input('count');
 $user = elgg_get_logged_in_user_guid();
-
 
 if($info_type == 'msg_dd'){
   $type ='inbox';
@@ -32,7 +33,6 @@ $latest_messages = latest_messages_preview($user, $type);
 
   <?php
   echo '<div class="col-sm-12 mrgn-rght-sm mrgn-bttm-md brdr-bttm"><span class="message-dd-title">'.$title.'</span><span class="pull-right">'. $settings_link .'</span></div>';
-  elgg_push_context('messages_dd');
   echo elgg_view('page/elements/message_dd_list', array(
     'items'=>$latest_messages,
     'limit'=>6,
@@ -41,7 +41,5 @@ $latest_messages = latest_messages_preview($user, $type);
     'dd_type'=>$info_type,
 
   ));
-  elgg_pop_context();
   ?>
-
 </div>

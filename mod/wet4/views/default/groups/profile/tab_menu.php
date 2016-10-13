@@ -1,10 +1,9 @@
 <?php
 /**
  * Group Profile Tools Tab Menu
- * 
  *
- * 
- * 
+ *
+ *
  * - if adding an additional tool to groups
  * - make sure it's link priority is before "more" and "search"
  * - Nick - removed the search tab button to replace with an inline search form. Activity tab is now showing up :(
@@ -20,12 +19,10 @@ $pg = '';
 
      $pg = $_GET['pg'];
 
-} 
-
-
+}
 
 if(elgg_get_context() == 'groupSubPage'){
-    
+
     elgg_register_menu_item('owner_block', array(
     'name' => 'about',
     'href' => $owner->getURL(),
@@ -34,9 +31,9 @@ if(elgg_get_context() == 'groupSubPage'){
     'class' => '',
     'priority' => '0',
     ));
-    
+
 } else if(elgg_get_context() == 'group_profile'){
-    
+
     elgg_register_menu_item('owner_block', array(
     'name' => 'about',
     'href' => '#about',
@@ -47,7 +44,7 @@ if(elgg_get_context() == 'groupSubPage'){
     'class' => '',
     'priority' => '0',
     ));
-    
+
 } else if(elgg_get_context() == 'profile'){
     if ($pg == 'splashboard'){
 
@@ -70,10 +67,10 @@ if(elgg_get_context() == 'groupSubPage'){
     'data-toggle' => 'tab',
     'class' => '',
     'priority' => '0',
-    ));  
+    ));
     }
-    
-    
+
+
     elgg_register_menu_item('owner_block', array(
     'name' => 'portfolio',
     'href' => '#portfolio',
@@ -82,7 +79,7 @@ if(elgg_get_context() == 'groupSubPage'){
     'class' => '',
     'priority' => '0',
     ));
-	
+
 	if ($owner->orgStruct){
     	elgg_register_menu_item('owner_block', array(
     		'name' => 'orgs',
@@ -93,7 +90,7 @@ if(elgg_get_context() == 'groupSubPage'){
     		'priority' => '0',
     	));
   	}
-	
+
      if ($pg == 'splashboard'){
     elgg_register_menu_item('owner_block', array(
     'name' => 'widgets',
@@ -113,11 +110,11 @@ if(elgg_get_context() == 'groupSubPage'){
     'data-toggle' => 'tab',
     'class' => '',
     'priority' => '0',
-    ));  
+    ));
     }
-    
+
 }
- 
+
 elgg_register_menu_item('owner_block', array(
     'name' => 'more',
     'text' => elgg_echo('gprofile:more') . '<b class="caret"></b>',
@@ -128,22 +125,6 @@ elgg_register_menu_item('owner_block', array(
     'priority' => '100',
     ));
 
-
-if(elgg_get_context() == 'group_profile'){
-    /* Nick removing the search item from this menu to add it's own form view
-    elgg_register_menu_item('owner_block', array(
-        'name' => 'search',
-        'id' => 'searchTab',
-        'href' => '#search',
-        'text' => '<i class="fa fa-search"><span class="wb-inv">' . elgg_echo('groups:search_in_group') . '</span></i>',
-        'title' => 'search',
-        'data-toggle' => 'collapse',
-        'aria-expanded' => false,
-        'aria-controls' => 'search',
-        'class' => '',
-        'priority' => '101',
-        ));*/
-}
 
 if(elgg_in_context('group_profile')){
     $group_only_class = 'wet-group-tabs';
@@ -169,9 +150,7 @@ if(elgg_get_context() == 'profile'){
     $itemNum = 4;
 }
 
- ?> 
-
-
+ ?>
 
 <script type="text/javascript">
 
@@ -212,5 +191,3 @@ if(elgg_get_context() == 'profile'){
 
 
 </script>
-
-  

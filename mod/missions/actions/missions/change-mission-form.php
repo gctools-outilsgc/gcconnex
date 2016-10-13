@@ -34,9 +34,9 @@ if ($err != '') {
 	// Same saving methodology as the post opportunity.
 	$mission->title = $edit_form['job_title'];
 	$mission->description = $edit_form['description'];
-	
+
 	$mission->name = $edit_form['name'];
-	
+
 	// If the organization tree is loaded, then the custom dropdown values will be processed and stored.
 	if(mo_get_tree_root()) {
 		$department_string = mo_get_last_input_node($edit_form);
@@ -51,7 +51,7 @@ if ($err != '') {
 		$mission->department_path_english = $edit_form['department'];
 		$mission->department_path_french = $edit_form['department'];
 	}
-	
+
 	$mission->email = $edit_form['email'];
 	$mission->phone = $edit_form['phone'];
 	$mission->job_title = $edit_form['job_title'];
@@ -64,6 +64,13 @@ if ($err != '') {
 	else {
 		$mission->program_area = $edit_form['other_text'];
 	}
+
+	//Nick - adding group and level
+	if($edit_form['group']){
+		$mission->gl_group = $edit_form['group'];
+		$mission->gl_level = $edit_form['level'];
+	}
+
     $mission->number = $edit_form['number'];
     $mission->start_date = $edit_form['start_date'];
     $mission->completion_date = $edit_form['completion_date'];
@@ -76,7 +83,7 @@ if ($err != '') {
     $mission->timezone = $edit_form['timezone'];
     $mission->time_commitment = $edit_form['time_commitment'];
     $mission->time_interval = $edit_form['time_interval'];
-    
+
     // Stores the multiple skill fields in a comma separated string.
     $count = 0;
     $key_skills = '';
@@ -92,10 +99,10 @@ if ($err != '') {
     	}
     }
     $mission->key_skills = $key_skills;
-    
+
     $mission->english = mm_pack_language($edit_form['lwc_english'], $edit_form['lwe_english'], $edit_form['lop_english'], 'english');
     $mission->french = mm_pack_language($edit_form['lwc_french'], $edit_form['lwe_french'], $edit_form['lop_french'], 'french');
-    
+
     $mission->mon_start = $edit_form['mon_start'];
     $mission->mon_duration = $edit_form['mon_duration'];
     $mission->tue_start = $edit_form['tue_start'];
@@ -110,12 +117,12 @@ if ($err != '') {
     $mission->sat_duration = $edit_form['sat_duration'];
     $mission->sun_start = $edit_form['sun_start'];
     $mission->sun_duration = $edit_form['sun_duration'];
-    
+
     $mission->meta_guid = $mission->guid;
     $mission->version = elgg_get_plugin_setting('mission_version', 'missions');
-    
+
     $mission->save();
-    
+
     elgg_clear_sticky_form('editfill');
     system_message(elgg_echo('missions:changes_have_been_saved', array($mission->job_title)));
     forward(REFERER);

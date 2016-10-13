@@ -1,7 +1,7 @@
 <?php
 
 /**
- * 
+ *
  * Wet 4 Splash page.
  *
  * Creates a splash page for GCconnex for users to check language.
@@ -16,14 +16,13 @@ $termsLink = $site_url .'terms';
 $frenchLink = $site_url .'login';
 $toggle_lang = $site_url .'action/toggle_language/toggle';
 $CONFIG->splashLanguage ="false";
-
+$gcconnex_text = elgg_echo('wet:login_welcome');
 //Create The body of the splash
 //Add the toggle language JS to the page to set lang
 //Page forwards to login with users selected language
 $body .= <<<__BODY
 <div class="splash">
 <div id="bg">
-<!--<img src="./GCWeb/assets/splash_bg.jpg" alt=""> -->
 </div>
 <main role="main">
 	<script type="text/javascript">
@@ -34,7 +33,6 @@ $body .= <<<__BODY
 			var c_value = document.cookie;
 			var c_start = c_value.indexOf(" " + c_name + "=");
 
-			//alert("check1");
 			if (c_start == -1){
 				c_start = c_value.indexOf(c_name + "=");
 			}
@@ -51,9 +49,6 @@ $body .= <<<__BODY
 				}
 				c_value = unescape(c_value.substring(c_start,c_end));
 			}
-
-			//alert("language is:" + c_value);
-			//set_cookie('cclang')
 
 			// modified by cyu - oct 1 2013
 			// first time you visit the site.. the cookie language is set to null
@@ -74,11 +69,6 @@ $body .= <<<__BODY
 				parent.location.href= "$frenchLink";
 			} else {
 //Just force language on splash
-				//if (c_value == "en"){
-				//	set_cookie(c_name,"en");
-				//} else if(c_value == "fr") {
-				//	set_cookie(c_name, "fr");
-				//}
 
 if (language_selected == "English")
 				{
@@ -100,15 +90,11 @@ if (language_selected == "English")
 			document.cookie = name + "=" +escape( value ) + ";path=/" + ";expires=" + expires_date.toGMTString();
 
 		}
-
-
-
-
 	</script>
 
 <div class="sp-hb">
 <div class="sp-bx col-xs-12">
-<h1 property="name" class="wb-inv">{title}}</h1>
+<h1 property="name" class="wb-inv">$gcconnex_text</h1>
 <div class="row">
 <div class="col-xs-11 col-md-8">
 <object type="image/svg+xml" tabindex="-1" role="img" data="$site_url/mod/wet4/graphics/sig-blk-en.svg" width="283" aria-label="Government of Canada / Gouvernement du Canada"></object>
@@ -120,8 +106,8 @@ if (language_selected == "English")
 <p><a href="javascript:form_submit('English')" class="btn btn-primary">English</a></p>
 </section>
 <section class="col-xs-6" lang="fr">
-<h2 class="wb-inv">GCconnex Fran�ais</h2>
-<p><a href="javascript:form_submit('French')" class="btn btn-primary">Fran&#231;ais</a></p>
+<h2 class="wb-inv">GCconnex Français</h2>
+<p><a href="javascript:form_submit('French')" class="btn btn-primary">Français</a></p>
 </section>
 
 <form action="$toggle_lang" method="post" id="formtoggle">
@@ -155,13 +141,6 @@ if (language_selected == "English")
 
 </div>
 __BODY;
-/*
-$CONFIG->splashLang;
-//Pretty sure this doesn't do the thing I want it to do
-if ($CONFIG->splashLang) {
-    _elgg_services()->session->set( 'splashLang', 'true' );
-} 
-*/
 $body .= elgg_view('page/elements/foot');
 $headparams = array(
     'title' => 'GCconnex',
@@ -169,12 +148,10 @@ $headparams = array(
 $head = elgg_view('page/elements/head', $headparams);
 
 $params = array(
-   
+
 	'head' => $head,
 	'body' => $body,
 );
 //Create Page
 echo elgg_view("page/elements/html", $params);
 ?>
-
-
