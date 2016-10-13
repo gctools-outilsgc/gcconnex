@@ -61,6 +61,7 @@ function wet4_theme_init() {
 
 	// theme specific CSS
 	elgg_extend_view('css/elgg', 'wet4_theme/css');
+	elgg_extend_view('css/elgg', 'wet4_theme/custom_css');
 
     //remove_group_tool_option('activity');
 
