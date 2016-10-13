@@ -128,7 +128,6 @@ function blog_get_page_content_list($container_guid = NULL) {
 			array('name' => 'status', 'value' => 'published'),
 		);
 
-		
 		$options['metadata_name_value_pairs'] .= array(
 			array('name' => 'status', 'value' => 'draft', 'owner_guid' => $current_user->guid),
 		);
@@ -257,8 +256,8 @@ function blog_get_page_content_edit($page, $guid = 0, $revision = NULL) {
 	$vars = array();
 	$vars['id'] = 'blog-post-edit';
 	$vars['class'] = 'elgg-form-alt';
-
 	$sidebar = '';
+
 	if ($page == 'edit') {
 		$blog = get_entity((int)$guid);
 		$title = elgg_echo('blog:edit');
@@ -367,6 +366,7 @@ function blog_prepare_form_vars($post = NULL, $revision = NULL) {
 		'annotation_name' => 'blog_auto_save',
 		'limit' => 1,
 	));
+
 	if ($auto_save_annotations) {
 		$auto_save = $auto_save_annotations[0];
 	} else {

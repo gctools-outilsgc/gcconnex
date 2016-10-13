@@ -42,10 +42,6 @@ function blog_init() {
 	// add blog link to
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'blog_owner_block_menu');
 
-	// pingbacks
-	//elgg_register_event_handler('create', 'object', 'blog_incoming_ping');
-	//elgg_register_plugin_hook_handler('pingback:object:subtypes', 'object', 'blog_pingback_subtypes');
-
 	// Register for search.
 	elgg_register_entity_type('object', 'blog');
 
