@@ -112,17 +112,6 @@ if(elgg_is_active_plugin('gcProfilePictureBadges')){
         //load badge
         $badge = '<div class="gcProfileBadge">';
 
-<<<<<<< HEAD
-=======
-        /* Badges
-         *
-         *  Top left green - amb_badge_v1_2.png
-         *  Top left red - amb_badge_v1_5.png
-         *  Bottom green - amb_badge_1.png
-         *  Bottom red - amb_badge_v1_4.png
-         *
-         */
->>>>>>> refs/remotes/origin/gcconnex
         $badge .= elgg_view('output/img', array(
             'src' => 'mod/gcProfilePictureBadges/graphics/amb_badge_v1_5.png',
             'class' => 'img-responsive',
