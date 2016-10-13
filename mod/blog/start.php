@@ -24,7 +24,6 @@ function blog_init() {
 	// add a site navigation item
 	$item = new ElggMenuItem('blog', elgg_echo('blog:blogs'), 'blog/all');
 	elgg_register_menu_item('site', $item);
-
 	elgg_register_event_handler('upgrade', 'upgrade', 'blog_run_upgrades');
 
 	// add to the main css
@@ -197,7 +196,6 @@ function blog_owner_block_menu($hook, $type, $return, $params) {
 			$return[] = $item;
 		}
 	}
-
 	return $return;
 }
 
@@ -232,7 +230,6 @@ function blog_entity_menu_setup($hook, $type, $return, $params) {
 		);
 		$return[] = ElggMenuItem::factory($options);
 	}
-
 	return $return;
 }
 

@@ -17,24 +17,21 @@ function blog_get_page_content_read($guid = NULL) {
 	$return = array();
 	$lang = get_current_language();
 	elgg_entity_gatekeeper($guid, 'object', 'blog');
-
 	$blog = get_entity($guid);
 
 	// no header or tabs for viewing an individual blog
 	$return['filter'] = '';
-
 	elgg_set_page_owner_guid($blog->container_guid);
-
 	elgg_group_gatekeeper();
  	$lang = get_current_language();
- 	
-	    if($blog->title3){
+ 	$container = $blog->getContainerEntity();
+
+	if($blog->title3){
 	   $return['title'] =  gc_explode_translation($blog->title3, $lang);
     }else{
       	$return['title'] =  $blog->title;
     }
 
-	$container = $blog->getContainerEntity();
 	if($container->title3){
 		$crumbs_title = gc_explode_translation($container->title3,$lang);
 	}else{
@@ -88,12 +85,8 @@ function blog_get_page_content_list($container_guid = NULL) {
 	if ($container_guid) {
 		// access check for closed groups
 		elgg_group_gatekeeper();
-
 		$options['container_guid'] = $container_guid;
 		$container = get_entity($container_guid);
-		if (!$container) {
-
-		}
 		
 		if(!$container->title3){
 			$return['title'] = elgg_echo('blog:title:user_blogs', array($container->name));
@@ -160,14 +153,11 @@ function blog_get_page_content_friends($user_guid) {
 	}
 
 	$return = array();
-
 	$return['filter_context'] = 'friends';
 	$return['title'] = elgg_echo('blog:title:friends');
-
 	$crumbs_title = $user->name;
 	elgg_push_breadcrumb($crumbs_title, "blog/owner/{$user->username}");
 	elgg_push_breadcrumb(elgg_echo('friends'));
-
 	elgg_register_title_button();
 
 	$options = array(
@@ -199,8 +189,8 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
 
 	$owner = get_entity($owner_guid);
 	elgg_set_page_owner_guid($owner_guid);
-
 	$crumbs_title = $owner->name;
+
 	if (elgg_instanceof($owner, 'user')) {
 		$url = "blog/owner/{$owner->username}";
 	} else {
@@ -239,7 +229,6 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
 	}
 
 	$content = elgg_list_entities($options);
-
 	$title = elgg_echo('date:month:' . date('m', $lower), array(date('Y', $lower)));
 
 	return array(
@@ -272,12 +261,10 @@ function blog_get_page_content_edit($page, $guid = 0, $revision = NULL) {
 	$sidebar = '';
 	if ($page == 'edit') {
 		$blog = get_entity((int)$guid);
-
 		$title = elgg_echo('blog:edit');
 
 		if (elgg_instanceof($blog, 'object', 'blog') && $blog->canEdit()) {
 			$vars['entity'] = $blog;
-
 			$title .= ": \"$blog->title\"";
 
 			if ($revision) {
@@ -292,23 +279,19 @@ function blog_get_page_content_edit($page, $guid = 0, $revision = NULL) {
 					return $return;
 				}
 			}
-
 			$body_vars = blog_prepare_form_vars($blog, $revision);
-
 			elgg_push_breadcrumb($blog->title, $blog->getURL());
 			elgg_push_breadcrumb(elgg_echo('edit'));
-			
 			elgg_require_js('elgg/blog/save_draft');
-
 			$content = elgg_view_form('blog/save', $vars, $body_vars);
 			$sidebar = elgg_view('blog/sidebar/revisions', $vars);
+
 		} else {
 			$content = elgg_echo('blog:error:cannot_edit_post');
 		}
 	} else {
 		elgg_push_breadcrumb(elgg_echo('blog:add'));
 		$body_vars = blog_prepare_form_vars(null);
-
 		$title = elgg_echo('blog:add');
 		$content = elgg_view_form('blog/save', $vars, $body_vars);
 	}
