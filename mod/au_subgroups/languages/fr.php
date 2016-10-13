@@ -24,21 +24,18 @@ $french = array(
 'au_subgroups:subgroups:more' => "Voir tous les sous-groupes",
 'subgroups:parent:need_join' =>  '',     
             
-// group options            
-            
+// group options                    
 'au_subgroups:group:enable' => "Activer la création de sous-groupes pour ce groupe?",
 'au_subgroups:group:memberspermissions' => "Sous-groupes : Voulez-vous permettre à tous les membres de créer des sous-groupes? (Si vous sélectionnez « non », seuls les administrateurs du groupe pourrons créer des sous-groupes)",
             
-// Widget           
-            
+// Widget                    
 'au_subgroups:widget:order' => 'Trier les résultats par',
 'au_subgroups:option:default' => 'Date de création',
 'au_subgroups:option:alpha' => 'En ordre alphabétique',
 'au_subgroups:widget:numdisplay' => 'Nombre de sous-groupes à afficher',
 'au_subgroups:widget:description' => 'Afficher la liste des sous-groupes de ce groupe',
             
- // Move group          
-            
+ // Move group                   
 'au_subgroups:move:edit:title' => "Faire de ce groupe un sous-groupe d'un autre groupe",
 'au_subgroups:transfer:help' => "Vous pouvez définir ce groupe come sous-groupe de tout autre groupe que vous avez le droit de modifier. Si les membres actuels ne sont pas membres du nouveau groupe principal, ils seront retirés de la liste de l'ancien groupe et une invitation à se joindre au nouveau groupe principal et à tous les sous-groupes connexes à l'ancien groupe leur sera envoyée. <b>Tous les sous-groupes de l'ancien groupe seront aussi transférés</b>",
 'au_subgroups:search:text' =>  "Rechercher des groupes",
