@@ -28,7 +28,12 @@ switch($switch_segment) {
 			// Not in use at the moment.
 		}
 		else if($entity->type == 'object' && get_subtype_from_id($entity->subtype) == 'mission') {
-			$main_content = elgg_view_form('missions/wire-post', array(), array('entity_subject' => $entity)) . '</section>';
+
+            //Nick changing this to use the wire reshare view
+            /*$main_content = elgg_view('thewire_tools/reshare', array(
+                "reshare_guid"=>$entity_guid,
+                ));*/
+			$main_content = elgg_view_form('missions/wire-post', array('class'=>'clearfix col-sm-8',), array('entity_subject' => $entity)) . '</section>';
 			$title = elgg_echo('missions:share_with_colleague');
 		}
 		$highlight_two = true;
