@@ -192,9 +192,9 @@ function groups_handle_mine_page() {
 	}
 
 	$content = elgg_list_entities_from_relationship($options);
-	
 	$sidebar = '';
 	$display_sidebar = elgg_get_plugin_setting('display_featured', 'au_subgroups');
+
 	if ($display_sidebar == 'yes') {
 		$sidebar = elgg_view('groups/sidebar/featured');
 	}
@@ -344,11 +344,10 @@ function groups_handle_activity_page($guid) {
 	elgg_group_gatekeeper();
 	$group = get_entity($guid);
 	$title = elgg_echo('groups:activity');
+	$db_prefix = elgg_get_config('dbprefix');
 
 	elgg_push_breadcrumb($group->name, $group->getURL());
 	elgg_push_breadcrumb($title);
-
-	$db_prefix = elgg_get_config('dbprefix');
 
 	$content = elgg_list_river(array(
 		'joins' => array(
