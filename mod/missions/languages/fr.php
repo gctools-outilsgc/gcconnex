@@ -563,7 +563,7 @@ L'approbation de votre superviseur est nécessaire avant que vous soyez en mesur
 "missions:error:timezone_needs_input" => "Puisque vous avez saisi un temps de début et une durée, vous devez sélectionner un fuseau horaire.",
 "missions:diagnostic_suite:no_timezone" =>    "La possibilité avec ID %s a au moins un temps de début et une durée remplis, mais il n'y a pas de fuseau horaire indiqué.",
 "missions:mission_version" =>     "Version de la plate-forme Possibilité de carrière ConneXions",
-"missions:opt_in_to_opportunities" =>    "Assujetir aux possibilités",
+"missions:opt_in_to_opportunities" =>    "S'inscrire aux possibilités",
 "missions:opt_in_confirmation_text" =>    "En vous inscrivant, vous attestez que vous aviez eu une conversation initiale avec votre superviseur sur l'exploitation de ces outils de perfectionnement professionnel et de mobilité.",
 "missions:find" =>   "Rechercher",
 "missions:find_display" =>   "Rechercher l'affichage",
