@@ -6,25 +6,7 @@
  * License: Creative Commons Attribution 3.0 Unported License
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
-
-/*
- * Posts a mission notice to The Wire.
- 
-$message = get_input('wire_message');
-$char_limit = (int)elgg_get_plugin_setting('limit', 'thewire');
-
-if(strlen($message) > $char_limit) {
-	register_error(elgg_echo('missions:error:wire_post_too_long'));
-	forward(REFERER);
-}
-else {
-	thewire_tools_save_post($message, elgg_get_logged_in_user_guid(), ACCESS_LOGGED_IN);
-	
-	system_message(elgg_echo('missions:posted_to_the_wire'));
-	forward(elgg_get_site_url() . 'missions/main');
-}
-Nick - Replacing the old share on the wire tools action
-*/
+//Nick - Replaced the old action with the wire reshare action from wire_tools
 
 $body = get_input("body", "", false);
 

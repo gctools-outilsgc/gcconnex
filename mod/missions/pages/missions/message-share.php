@@ -29,10 +29,7 @@ switch($switch_segment) {
 		}
 		else if($entity->type == 'object' && get_subtype_from_id($entity->subtype) == 'mission') {
 
-            //Nick changing this to use the wire reshare view
-            /*$main_content = elgg_view('thewire_tools/reshare', array(
-                "reshare_guid"=>$entity_guid,
-                ));*/
+            //Nick changing this to use the wire reshare view and added col class
 			$main_content = elgg_view_form('missions/wire-post', array('class'=>'clearfix col-sm-8',), array('entity_subject' => $entity)) . '</section>';
 			$title = elgg_echo('missions:share_with_colleague');
 		}
