@@ -11,8 +11,8 @@
  * Form which allows users to post a message to The Wire about the subject mission entity.
  */
 
-//Nick - cutting up the orginal share on wire form
-
+//Nick - cutting up the orginal share on wire form to keep consistancy on the site
+//Cleaned up some of this file as it will only deal with mission opportunities
 /**
  * Wire add form body
  *
@@ -23,7 +23,7 @@ elgg_load_js("elgg.thewire");
 
 $post = elgg_extract("post", $vars);
 $char_limit = thewire_tools_get_wire_length();
-//Changes to entity_subject
+//Changed to entity_subject as this what was already passed to this view
 $reshare = elgg_extract("entity_subject", $vars); // for reshare functionality
 
 $text = elgg_echo("post");
@@ -83,32 +83,7 @@ $submit_button = elgg_view("input/submit", array(
 
 $mentions = "";
 $access_input = "";
-if (thewire_tools_groups_enabled()) {
 
-	if ($post) {
-		$access_input = elgg_view("input/hidden", array("name" => "access_id", "value" => $post->access_id));
-	} else {
-		$page_owner_entity = elgg_get_page_owner_entity();
-
-		if ($page_owner_entity instanceof ElggGroup) {
-			// in a group only allow sharing in the current group
-			$access_input = elgg_view("input/hidden", array("name" => "access_id", "value" => $page_owner_entity->group_acl));
-			$mentions = "<div class='elgg-subtext mbn'>" . elgg_echo("thewire_tools:groups:mentions") . "</div>";
-		} else {
-			$params = array(
-				"name" => "access_id"
-			);
-
-			if (elgg_in_context("widgets")) {
-				$params["class"] = "thewire-tools-widget-access";
-			}
-
-			elgg_push_context("thewire_add");
-			$access_input = elgg_view("input/access", $params);
-			elgg_pop_context();
-		}
-	}
-}
 
 echo <<<HTML
 	$reshare_input
