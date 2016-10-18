@@ -1,11 +1,13 @@
 <?php
-if (elgg_is_xhr()) {  //This is an Ajax call!
+
+//This is an Ajax call
+if (elgg_is_xhr()) {  
 
     $user_guid = get_input('guid');
     $user = get_user($user_guid);
-
     $section = get_input('section');
     $error = false;
+
     switch ($section) {
         case "profile":
             $profile_fields = get_input('profile');
@@ -16,7 +18,8 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
 
                 // cyu - check if email field is empty
                 if ($f === "email") {
-                    trim($v);   // remove white spaces from both sides of string
+                    // remove white spaces from both sides of string
+                    trim($v);   
 
                     if (!$v) {
                         register_error(elgg_echo('gcc_profile:error').elgg_echo('gcc_profile:missingemail'));
@@ -112,8 +115,6 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                 	}else{
                 		$user->set($f, $v);
                 	}
-                	//register_error($f);
-                    
                 }
             }
 
@@ -124,19 +125,12 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                 }
             }
 
-
-            //$user->micro = get_input('micro');
             $user->save();
-
-            //forward($user->getURL());
 
             break;
         case 'about-me':
-            //$user->description = get_input('description', 'ERROR: Ask your admin to grep: 5FH13GAHHHS0001.');
 
-            //error_log(print_r("access: " . get_input('access')));
             create_metadata($user_guid, 'description', get_input('description', 'ERROR: Ask your admin to grep: 5FH13GAHHHS0001.'), 'text', 0, get_input('access'));
-
             $user->save();
 
             break;
@@ -149,14 +143,12 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             $enddate = get_input('enddate', 'ERROR: Ask your admin to grep: 5FH13GAHHHS0004.');
             $endyear = get_input('endyear');
             $ongoing = get_input('ongoing');
-            //$program = get_input('program', 'ERROR: Ask your admin to grep: 5FH13GAHHHS0005.');
             $degree = get_input('degree');
             $field = get_input('field', 'ERROR: Ask your admin to grep: 5FH13GAHHHS0006.');
             $access = get_input('access', 'ERROR: Ask your admin to grep: 5321GDS1111661353BB.');
 
             // create education object
             $education_guids = array();
-
             $education_list = $user->education;
 
             if ($delete != null && !is_array($delete)) {
@@ -189,24 +181,13 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             if (is_array($eguid)) {
                 foreach ($eguid as $k => $v) {
 
-
                     $validInput = true;
-
-                    /*
-                    if($ongoing[$k] == true){
-                        $endyear[$k] = $startyear[$k];
-                    }*/
 
                     if(trim( htmlentities($school[$k])) == '' || trim( htmlentities($degree[$k])) == '' || trim( htmlentities($field[$k])) == ''){
                         $validInput = false;
                         $error == true;
                     }
-                    /*
-                    if(trim( $endyear[$k]) < trim($startyear[$k])){
-                        $validInput = false;
-                        $error == true;
-                    }
-                    */
+
                     if($validInput == true){
 
 
@@ -220,14 +201,12 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
 
                         $education->title = htmlentities($school[$k]);
                         $education->description = htmlentities($degree[$k]);
-
                         $education->school = htmlentities($school[$k]);
                         $education->startdate = $startdate[$k];
                         $education->startyear = $startyear[$k];
                         $education->enddate = $enddate[$k];
                         $education->endyear = $endyear[$k];
                         $education->ongoing = $ongoing[$k];
-                        //$education->program = htmlentities($program[$k]);
                         $education->degree = htmlentities($degree[$k]);
                         $education->field = htmlentities($field[$k]);
                         $education->access_id = $access;
@@ -237,8 +216,6 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                         } else {
                             $education->save();
                         }
-
-
                     }
                 }
             }
@@ -265,7 +242,6 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             $edit = $work_experience['edit'];
             $delete = $work_experience['delete_guids'];
             $access = get_input('access');
-
             $experience_list = $user->work;
 
             if (!(is_array($delete))) { $delete = array($delete); }
@@ -301,22 +277,13 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                 foreach ($edit as $work) {
 
                     $validInput = true;
-                    /*
-                    if($work['ongoing'] == true){
-                        $work['endyear'] = $work['startyear'];
-                    }
-                    */
+
                     //validation of work experience entry
                     if(trim($work['title']) == '' || trim($work['organization']) == ''){
                         $validInput = false;
                         $error = true;
                     }
-                    /*
-                    if(trim($work['endyear']) < trim($work['startyear'])){
-                        $validInput = false;
-                        $error = true;
-                    }
-                    */
+
                     if($validInput == true) {
 
 
@@ -330,7 +297,6 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
 
                         $experience->title = htmlentities($work['title']);
                         $experience->description = htmlentities($work['responsibilities']);
-
                         $experience->organization = htmlentities($work['organization']);
                         $experience->startdate = $work['startdate'];
                         $experience->startyear = $work['startyear'];
@@ -346,8 +312,6 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                         } else {
                             $experience->save();
                         }
-
-
 
                     }
                 }
@@ -373,7 +337,6 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             $skillsToAdd = get_input('skillsadded', 'ERROR: Ask your admin to grep: 5FH13GAHHHS0021.');
             $skillsToRemove = get_input('skillsremoved', 'ERROR: Ask your admin to grep: 5FH13GAHHHS0022.');
             $access = ACCESS_LOGGED_IN;
-
             $skill_guids = array();
 
             foreach ($skillsToAdd as $new_skill) {
@@ -418,8 +381,6 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                 }
             }
 
-            //$user->gc_skills = null; // dev stuff... delete me
-            //$user->skillsupgraded = NULL; // dev stuff.. delete me
             $user->save();
             
             break;
@@ -432,12 +393,10 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             $english = get_input('english', 'ERROR: Ask your admin to grep: SDFANLVNVNVNVNVNAA31566.');
             $languagesToAdd = get_input('langadded', 'ERROR: Ask your admin to grep: 5FH13FFSSGAHHHS0021.');
             $languagesToRemove = get_input('langremoved', 'ERROR: Ask your admin to grep: 5AAAAGGFH13GAH0022.');
-            //$access = get_input('access');    // not used
 			$access = get_input('access_id');
             $user->english = $english;
             $user->french = $french;
             $user->officialLanguage = $firstlang;
-
             $user->save();
 			
 			$metadata = elgg_get_metadata(array(
@@ -449,9 +408,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                 foreach ($metadata as $data){
 					
                     update_metadata($data->id, $data->name, $data->value, $data->value_type, $data->owner_guid, $access);
-                    //error_log('id '.$data->id .' name '. $data->name.' value '. $data->value.' value type '. $data->value_type.' owner_guid '.$data->owner_guid.' $access '. $access);
                 }
-                //$metadata[0]->save();
             }
             $metadata = elgg_get_metadata(array(
                 'metadata_names' => array('french'),
@@ -463,7 +420,6 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                     
                     update_metadata($data->id, $data->name, $data->value, $data->value_type, $data->owner_guid, $access);
                 }
-                //$metadata[0]->save();
             }
 			$metadata = elgg_get_metadata(array(
                 'metadata_names' => array('officialLanguage'),
@@ -475,7 +431,6 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                     
                     update_metadata($data->id, $data->name, $data->value, $data->value_type, $data->owner_guid, $access);
                 }
-                //$metadata[0]->save();
             }
 			
             break;
@@ -484,7 +439,6 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             $edit = $portfolio['edit'];
             $delete = $portfolio['delete_guids'];
             $access = get_input('access');
-
             $portfolio_list = $user->portfolio;
 
             if (!(is_array($delete))) { $delete = array($delete); }
@@ -537,11 +491,9 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
 
                     $entry->title = htmlentities($portfolio_edit['title']);
                     $entry->description = htmlentities($portfolio_edit['description']);
-
                     $entry->link = $portfolio_edit['link'];
                     $entry->pubdate = $portfolio_edit['pubdate'];
                     $entry->datestamped = $portfolio_edit['datestamped'];
-
                     $entry->access_id = $access;
 
                     if($portfolio_edit['eguid'] == "new") {
@@ -564,7 +516,6 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                     $user->portfolio = array_merge($stack, $portfolio_list_guids);
                 }
             }
-            //$user->portfolio = null;
             $user->portfolio_access = $access;
             $user->save();
 
@@ -575,7 +526,6 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
 
     }
 
-    //system_message(elgg_echo("profile:saved"));
     if($error == true){
        register_error(elgg_echo('Not all information could be saved, empty fields are not allowed'));
     } else {
@@ -583,7 +533,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
     }
 
 }
-else {  // In case this view will be called via the elgg_view_form() action, then we know it's the basic profile only
 
-
+// In case this view will be called via the elgg_view_form() action, then we know it's the basic profile only
+else {  
 }

@@ -43,7 +43,6 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
         }
     }
 
-
     echo '</div>';
 
     // create an "add more" button at the bottom of the education input fields so that the user can continue to add more education entries as needed

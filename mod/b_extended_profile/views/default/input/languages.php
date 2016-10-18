@@ -19,7 +19,6 @@ echo elgg_echo('gcconnex_profile:languages:language') . elgg_view("input/text", 
         'class' => 'gcconnex-languages-language',
         'value' => $languages->title));
 
-
 $params = array(
     'name' => 'enddate',
     'class' => 'gcconnex-education-enddate gcconnex-education-enddate-' . $education->guid,
@@ -33,8 +32,6 @@ echo '<br>' . elgg_echo('gcconnex_profile:education:end_month') . elgg_view("inp
 
 unset($params);
 
-
-
 $params = array(
     'name' => 'ongoing',
     'class' => 'gcconnex-education-ongoing',
@@ -46,12 +43,6 @@ if ($education->ongoing == 'true') {
 
 echo  '<label>' . elgg_view('input/checkbox', $params);
 echo elgg_echo('gcconnex_profile:education:ongoing') . '</label>';
-
-
-
-
-
-
 
 // create a delete button for each languages entry
 echo '<br><div class="elgg-button elgg-button-action btn" onclick="deleteEntry(this)" data-type="languages">' . elgg_echo('gcconnex_profile:languages:delete') . '</div>';

@@ -18,7 +18,6 @@ $friends = $owner->listFriends('', $num, array(
 
 
 $count2 = $owner->getFriends(array('limit'=>0, 'count'=>true,));
-//$count2 = 'testing';
 
 $friendCount = '(' . $count2 . ')';
 
@@ -31,7 +30,6 @@ $all_link = elgg_view('output/url', array(
 
 $footer = "<div class='text-right'>$all_link</div>";
 
-
 if(!($friends)) {
 
     $friends = elgg_echo('gcprofile:nocoll', array($owner->getDisplayName()));
@@ -39,5 +37,4 @@ if(!($friends)) {
 
 }
 echo elgg_view_module('aside', elgg_echo('friends'), $friends, array('footer' => $footer));
-
 ?>

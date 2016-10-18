@@ -12,21 +12,13 @@ $num_columns = elgg_extract('num_columns', $vars, 2);
 $show_add_widgets = elgg_extract('show_add_widgets', $vars, true);
 $exact_match = elgg_extract('exact_match', $vars, false);
 $show_access = elgg_extract('show_access', $vars, true);
-
 $owner = elgg_get_page_owner_entity();
-
 $widget_types = elgg_get_widget_types();
-
 $context = elgg_get_context();
 elgg_push_context('widgets');
-
 $widgets = elgg_get_widgets($owner->guid, $context);
 
-
-
-
 echo $vars['content'];
-
 
 elgg_pop_context();
 

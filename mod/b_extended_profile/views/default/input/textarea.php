@@ -30,8 +30,6 @@ $vars = array_merge($defaults, $vars);
 $value = $vars['value'];
 unset($vars['value']);
 
-
-
 ?>
 
 <textarea <?php echo elgg_format_attributes($vars); ?>>

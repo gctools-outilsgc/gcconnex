@@ -10,9 +10,7 @@ $french = array(
 
     //edit profile message
     'profile:notsaved' => 'Not all information could be saved, empty fields are not allowed', /* NEW */
-
     'profile:title' => "%s's Profile", /* NEW */
-
     'profile:contactinfo' => 'Contact Info', /* NEW */
 
     //user Settings Details
@@ -20,31 +18,26 @@ $french = array(
     'item:object:experience' => 'Expérience de travail inscrite dans le profil',
     'item:object:education' => 'Niveau d\'édudes inscrit dans le profil',
 
-
     //profile sidebar
     'gcprofile:nocoll' => '%s n\'a pris contact avec aucun de ses collègues pour l\'instant.',
     'gcprofile:nogroups' => '%s ne s\'est joint à aucun groupe pour l\'instant.',
             
-/* Email Verification */          
-            
+    //Email Verification          
     'gcc_profile:error' => "La modification n'a pas été sauvegardée : ",
     'gcc_profile:missingemail' => "Adresse de courriel manquante",
     'gcc_profile:notaccepted' => "Vous devez donner une adresse de courriel du Gouvernement du Canada",
             
-/*MAIN PROFILE PAGE   */      
-            
+    //MAIN PROFILE PAGE         
     'gcconnex_profile:edit_profile' => 'Modifier',
     'gcconnex_profile:user_content' => 'Contenu personnel',
     'gcconnex_profile:profile:edit_avatar' => 'Modifier mon avatar',
             
-/*MAIN PROFILE TABS*/         
-            
+    //MAIN PROFILE TABS              
     'gcconnex_profile:profile' => 'Profil',
     'gcconnex_profile:widgets' => 'Widgets',
     'gcconnex_profile:portfolio' =>  'Portfolio',
             
-/*PROFILE */          
-            
+    //PROFILE                
     'gcconnex_profile:about_me' => 'À mon sujet',
     'gcconnex_profile:education' => 'Études',
     'gcconnex_profile:experience' => 'Expérience de travail',
@@ -55,8 +48,6 @@ $french = array(
     'gcconnex_profile:present' => 'Maintenant',
     'gcconnex_profile:about_me:empty' => 'Ajoutez des précisions à votre sujet en cliquant sur « Modifier » dans le coin supérieur droit de cette section.',
     'gcconnex_profile:about_me:access' => 'Accès aux renseignements à mon sujet : ',
-
-
 
     // BASIC PROFILE FORM
     'gcconnex_profile:basic:header' => 'Modifier le profil de base',
@@ -71,7 +62,6 @@ $french = array(
     'gcconnex_profile:basic:micro_confirmation' => 'Les micro-affectations sont des affectations de courte durée publiées sur GCconnex et offertes à tous les fonctionnaires, sans égard à leur ministère. Elles sont de courte durée et de portée restreinte.<p>Avant de présenter votre candidature pour participer à des micro-affectations, vous devez d\'abord obtenir l\'autorisation de votre gestionnaire, puis cliquer sur la case à cocher ci-dessous.', //Micro affectation ou micro-mission?
     'gcconnex_profile:basic:micro_checkbox' => 'Je souhaite présenter ma candidature pour les micro-affectations.',
     'gcconnex_profile:basic:save' => 'Sauvegarder',
-
 
     // MONTHS
     'gcconnex_profile:month:january' => 'Janvier',
@@ -105,7 +95,6 @@ $french = array(
     'gcconnex_profile:education:start' => 'Début',
     'gcconnex_profile:education:end' =>  'Fin',
 
-
     // WORK EXPERIENCE
     'gcconnex_profile:experience:organization' => 'Nom de l’organisation : ',
     'gcconnex_profile:experience:title' => 'Titre : ',
@@ -123,7 +112,7 @@ $french = array(
     'gcconnex_profile:experience:colleagues_empty' => 'Vous n\'avez inscrit aucun nom de collègue dans cette section.',
     'gcconnex_profile:experience:colleague_suggest' => 'Pour lier un ou une collègue à cette entrée, cette personne doit faire partie de votre liste de collègues GCconnex',
 
-            // SKILLS
+    // SKILLS
     'gcconnex_profile:gc_skill:add' => 'Ajouter une nouvelle compétence',
     'gcconnex_profile:gc_skill:delete' => 'Supprimer cette compétence',
     'gcconnex_profile:gc_skill:save' => 'Voulez-vous vraiment sauvegarder ces modifications? Toutes les recommandations relatives aux compétences que vous avez supprimées seront effacées de façon permanente.',
@@ -131,11 +120,9 @@ $french = array(
     'gcconnex_profile:gc_skill:endorse' => 'Valider',
     'gcconnex_profile:gc_skill:limit' => 'Vous pouvez ajouter un maximum de 15 compétences.',
 
-
     // leftover skills
     'gcconnex_profile:gc_skill:leftover' => 'Vous avez précédemment ajouté des compétences à votre profil GCconnex. Veuillez passer en revue les compétences ci-dessous et les verser dans ce nouveau gabarit, au besoin. Lorsque vous ajoutez des compétences à votre profil, assurez-vous qu\'il s\'agit de compétences que vous croyez réellement posséder, qu\'elles sont précises, qu\'ils s\'agit de comptéences professionnelles, et qu’elles permettent aux personnes qui consultent votre profil d’obtenir de l’information claire, utile et pertinente à votre sujet (essayez d’éviter les expressions comme « plein d’choses » et « accomplir plein de tâches »). ',
     'gcconnex_profile:gc_skill:stop_showing' => 'Ne plus afficher ce message',
-
 
     // LANGUAGES
     'gcconnex_profile:langs' => 'Langues',

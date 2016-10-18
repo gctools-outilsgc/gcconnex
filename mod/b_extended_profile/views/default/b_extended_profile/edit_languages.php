@@ -6,7 +6,8 @@
  * Requires: gcconnex-profile.js in order to handle the add more and delete buttons which are triggered by js calls
  */
 
-if (elgg_is_xhr()) {  //This is an Ajax call!
+//This is an Ajax call
+if (elgg_is_xhr()) {  
     // allow the user to edit the access settings for languages entries
     $user_guid = $_GET["guid"];
     $user = get_user($user_guid);
@@ -19,10 +20,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
     ));
 	
 	$access_id = $metadata[0]->access_id;
-    //$access_id = $user->languages_access;
-    
-    //echo 'Access: ';
-    //var_dump($access_id);
+
     $params = array(
         'name' => "accesslevel['languages']",
         'value' => $access_id,
@@ -31,12 +29,10 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
     );
 
     echo elgg_view('input/access', $params);
-    //$user_guid = $_GET["user"];
     $user_guid = $_GET["guid"];
     $user = get_user($user_guid);
 
     //get the array of user languages entities
-    //$languages_guid = $user->langs;
     $english = $user->english;
     $french = $user->french;
 
@@ -50,19 +46,12 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
         'onchange' => 'hideLanguage()',
         'value' => $user->officialLanguage
     );
+
     echo elgg_view("input/pulldown", $params);
-
-
-    
-    
-    
-    
-    
     echo '<div class="gcconnex-profile-language-official-languages">';
     echo '<div id="engCred" class="gcconnex-work-experience-entry">';
     
         echo '<h3 class="mrgn-tp-0">' . elgg_echo('gcconnex_profile:languages:english') . '</h3>';
-        
         echo '<div class="clearfix">';
             echo '<h4 class="mrgn-tp-md mrgn-bttm-sm">' . elgg_echo('gcconnex_profile:languages:writtencomp') . '</h4>';
     
@@ -91,9 +80,6 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
         echo '</div>';
     echo '</div>';
         
-    
-    
-    
         echo '<div class="clearfix">';
             echo '<h4 class="mrgn-tp-md mrgn-bttm-sm">' . elgg_echo('gcconnex_profile:languages:writtenexp') . '</h4>';
     
@@ -121,8 +107,6 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                 echo elgg_view("input/date", $params);
         echo '</div>';
     echo '</div>';
-    
-    
     
         echo '<div class="clearfix">';
             echo '<h4 class="mrgn-tp-md mrgn-bttm-sm">' . elgg_echo('gcconnex_profile:languages:oral') . '</h4>';
@@ -153,8 +137,6 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
     echo '</div>';
     
     echo '</div>'; //closes gcconnex-work-experience-entry
-    
-    
         
     echo '<div id="fraCred" class="gcconnex-work-experience-entry">';
     
@@ -188,25 +170,22 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
         echo '</div>';
     echo '</div>';
         
-    
-    
-    
         echo '<div class="clearfix">';
             echo '<h4 class="mrgn-tp-md mrgn-bttm-sm">' . elgg_echo('gcconnex_profile:languages:writtenexp') . '</h4>';
     
             // french level
-    echo '<div class="col-xs-6"><label for="french_writtenexp" class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:languages:level') .  ':</label>';
-                $params = array(
-                    'name' => 'french_writtenexp',
-                    'id' => 'french_writtenexp',
-                    'class' => 'gcconnex-languages-french-writtenexp gcconnex-languages-french-writtenexp-' . $french->guid,
-                    'options' => array('-', 'X', 'A', 'B', 'C', 'E', 'P'),
-                    'value' => $french[1]
-                );
-                echo elgg_view("input/pulldown", $params);
-    echo '</div>';
+            echo '<div class="col-xs-6"><label for="french_writtenexp" class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:languages:level') .  ':</label>';
+                        $params = array(
+                            'name' => 'french_writtenexp',
+                            'id' => 'french_writtenexp',
+                            'class' => 'gcconnex-languages-french-writtenexp gcconnex-languages-french-writtenexp-' . $french->guid,
+                            'options' => array('-', 'X', 'A', 'B', 'C', 'E', 'P'),
+                            'value' => $french[1]
+                        );
+            echo elgg_view("input/pulldown", $params);
+        echo '</div>';
                 // french expiry
-    echo '<div class="col-xs-6"><label for="french_expiry_writtenexp" class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:languages:expiry') .  ':</label>';
+         echo '<div class="col-xs-6"><label for="french_expiry_writtenexp" class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:languages:expiry') .  ':</label>';
                 $params = array(
                     'name' => 'french_expiry_writtenexp',
                     'id' => 'french_expiry_writtenexp',
@@ -218,8 +197,6 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                 echo elgg_view("input/date", $params);
         echo '</div>';
     echo '</div>';
-    
-    
     
         echo '<div class="clearfix">';
             echo '<h4 class="mrgn-tp-md mrgn-bttm-sm">' . elgg_echo('gcconnex_profile:languages:oral') . '</h4>';
@@ -251,9 +228,6 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
     
     echo '</div>'; //closes gcconnex-work-experience-entry
     echo '</div>'; //closes gcconnex-work-experience-entry
-    
-    
-    
     
 }
 

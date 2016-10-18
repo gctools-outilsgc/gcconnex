@@ -26,7 +26,6 @@ else {
         if ($education = get_entity($guid)) {
 
             echo '<div class="gcconnex-profile-education-display gcconnex-education-' . $education->guid . '">';
-            
             echo '<div class="gcconnex-profile-label education-school">' . $education->school . '</div>';
             echo '<div class="gcconnex-profile-label education-degree">' . $education->degree . ' - ' . $education->field . '</div>';
             
@@ -52,14 +51,9 @@ else {
                 echo $cal_month[$education->enddate] . ', ' . $education->endyear;
             }
             echo '</div>';
-
-            
-            //echo '<div class="gcconnex-profile-label education-program"><ul><li>' . $education->program . '</li></ul></div>';
-            //echo '<div class="gcconnex-profile-label education-field">' . $education->field . '</div>';
             echo '</div>';
         }
     }
 }
 
 echo '</div>'; // close div class="gcconnex-profile-education-display"
-//echo '</div>'; // close div class="gcconnex-profile-section-wrapper"

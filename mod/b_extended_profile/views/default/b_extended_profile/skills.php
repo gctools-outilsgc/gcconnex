@@ -41,10 +41,8 @@ else {
             $skill_guid = $skill_guids[$i];
             if ($skill = get_entity($skill_guid)) {
                 $skill_class = str_replace(' ', '-', strtolower($skill->title));
-               // echo '<div class="gcconnex-skill-entry clearfix" data-guid="' . $skill_guid . '"><div class="skill-container clearfix" style="display:inline-block">';
-               // echo '<div class="gcconnex-endorsements-count gcconnex-endorsements-count-' . $skill_class . '">' . count($skill->endorsements) . '</div><div class="gcconnex-endorsements-skill" data-type="skill">' . $skill->title . '</div>';
-
                 $endorsements = $skill->endorsements;
+
                 if (!(is_array($endorsements))) {
                     $endorsements = array($endorsements);
                 }
@@ -56,15 +54,11 @@ else {
                         echo '<div class="gcconnex-skill-entry clearfix" data-guid="' . $skill_guid . '">        <div class="skill-container pointer  gcconnex-endorsement-add clearfix" tabIndex="0" onclick="addEndorsement(this)" title="Endorse / Valider" style="display:inline-block" data-guid="' . $skill->guid . '" data-skill="' . $skill->title . '">';
                         echo '<div class="gcconnex-endorsements-count gcconnex-endorsements-count-' . $skill_class . '">' . count($skill->endorsements) . '</div><div class="gcconnex-endorsements-skill" data-type="skill">' . $skill->title . '</div>';
 
-                        //echo '<button style="display:inline-block" class="gcconnex-endorsement-add btn-endorse mrgn-bttm-sm" onclick="addEndorsement(this)" data-guid="' . $skill->guid . '" data-skill="' . $skill->title . '">' . elgg_echo('gcconnex_profile:gc_skill:endorse') . '</button>';
                     } else {
                         // user has endorsed this skill for this user.. present the option to retract endorsement
 
                         echo '<div class="gcconnex-skill-entry clearfix" data-guid="' . $skill_guid . '">        <div class="skill-container pointer gcconnex-endorsement-retract clearfix" tabIndex="0" onclick="retractEndorsement(this)" title="Retract"  style="display:inline-block" data-guid="' . $skill->guid . '" data-skill="' . $skill->title . '">';
                         echo '<div class="gcconnex-endorsements-count gcconnex-endorsements-count-' . $skill_class . '">' . count($skill->endorsements) . '</div><div class="gcconnex-endorsements-skill" data-type="skill">' . $skill->title . '</div>';
-
-                        //echo '<button style="display:inline-block" class="gcconnex-endorsement-retract btn-endorse" onclick="retractEndorsement(this)" data-guid="' . $skill->guid . '" data-skill="' . $skill->title . '">Retract</button>';
-
                     }
                 } else {
                     echo '<div class="gcconnex-skill-entry clearfix" data-guid="' . $skill_guid . '"><div class="skill-container clearfix" style="display:inline-block">';
@@ -78,24 +72,7 @@ else {
                         'id' => "myModal" . $i,
                         'skill_guid' => $skill_guid
                     ));
-                    /*echo '<div class="modal" id="myModal' . $i . '">
-                          <div class="modal-header">
-                            <button class="close" data-dismiss="modal">×</button>
-                            <h3>Endorsements</h3>
-                          </div>
-                          <div class="modal-body">
-                            <p>';
-                    echo list_avatars(array(
-                        'guids' => $skill->endorsements,
-                        'size' => 'medium',
-                        'limit' => 0
-                    ));
-                    echo '</p>
-                          </div>
-                          <div class="modal-footer">
-                            <a href="#" class="btn" data-dismiss="modal">Close</a>
-                          </div>
-                        </div>';*/
+
                     echo '</div>'; // close div class="gcconnex-skill-endorsements"
                 echo '</div>'; // close div class=gcconnex-skill-entry
             }
@@ -103,7 +80,5 @@ else {
     }
 }
 
-//echo '</div></div><div class="endorsements-message"></div>';
 echo '</div>';
 echo '</div>';
-//echo '</div>'; // close div class=gcconnex-profile-section-wrapper

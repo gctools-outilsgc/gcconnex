@@ -22,7 +22,6 @@ echo '<div class="gcconnex-education-entry" data-guid="' . $guid . '">'; // educ
             'id' => 'education-' . $guid, 
             'value' => $education->school));
 
-
     // enter degree
     echo '<br><label for="degree-' . $guid . '" class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:education:degree') . '</label>';
     echo elgg_view("input/text", array(
@@ -31,15 +30,6 @@ echo '<div class="gcconnex-education-entry" data-guid="' . $guid . '">'; // educ
         'class' => 'gcconnex-education-degree',
         'value' => $education->degree));
 
-/*
-    // enter program
-    echo '<br><span class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:education:program') . '</span>';
-    echo elgg_view("input/text", array(
-            'name' => 'program',
-            'class' => 'gcconnex-education-program',
-            'value' => $education->program));
-*/
-
     // enter field  of study
     echo '<br><label for="fieldofstudy-' . $guid . '" class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:education:field') . '</label>';
     echo elgg_view("input/text", array(
@@ -47,8 +37,6 @@ echo '<div class="gcconnex-education-entry" data-guid="' . $guid . '">'; // educ
             'id' => 'fieldofstudy-' . $guid,
             'class' => 'gcconnex-education-field',
             'value' => $education->field));
-
-
 
     // enter start date
     echo '<div class="col-xs-6"><h4>' . elgg_echo('gcconnex_profile:education:start') . '</h4>';
@@ -106,13 +94,11 @@ echo '<div class="gcconnex-education-entry" data-guid="' . $guid . '">'; // educ
     }
     echo '</div>';
 
-
     echo '<div class="col-xs-6"><h4>' . elgg_echo('gcconnex_profile:education:end') . '</h4>';
     echo '<label for="enddate-' . $guid . '" class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:education:end_month') . '</label>';
     echo elgg_view("input/pulldown", $params);
 
     unset($params);
-
 
     $params = array('name' => 'end-year','id' => 'end-year-' . $guid,
         'class' => 'gcconnex-education-end-year gcconnex-education-end-year-' . $education->guid,
@@ -138,11 +124,7 @@ echo '<div class="gcconnex-education-entry" data-guid="' . $guid . '">'; // educ
 
     echo  '<label>' . elgg_view('input/checkbox', $params);
     echo elgg_echo('gcconnex_profile:education:ongoing') . '</label>';
-
     echo '</div>';
-
-
-
 
     // create a delete button for each education entry
     echo '<br><button class="eduDeleteButton btn btn-danger" onclick="deleteEntry(this)" data-type="education">' . elgg_echo('gcconnex_profile:education:delete') . '</button>';

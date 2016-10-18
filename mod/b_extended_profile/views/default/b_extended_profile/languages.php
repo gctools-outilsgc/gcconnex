@@ -70,12 +70,6 @@ if($user->officialLanguage == 'ENG') {
                 echo '<td>' . $french[5] . '</td>';
             echo '</tr>';
 
-            /*echo '<tr>';
-                echo '<td class="left-col">' . elgg_echo('gcconnex_profile:languages:expiry') . '</td>';
-                echo '<td>' . $english[3] . '</td>';
-                echo '<td>' . $french[3] . '</td>';
-            echo '</tr>';*/
-
         echo '</tbody>';
     echo '</table>'; // close table class="gcconnex-profile-language-official-languages table-bordered"
     
@@ -116,33 +110,18 @@ if($user->officialLanguage == 'ENG') {
 
             echo '</tr>';
 
-            /*echo '<tr>';
-                echo '<td class="left-col">' . elgg_echo('gcconnex_profile:languages:expiry') . '</td>';
-                echo '<td>' . $english[3] . '</td>';
-                echo '<td>' . $french[3] . '</td>';
-            echo '</tr>';*/
-
         echo '</tbody>';
     echo '</table>'; // close table class="gcconnex-profile-language-official-languages table-bordered"
     
-} else {
-    
-   // echo elgg_echo('gcconnex_profile:fol') . ': ' . elgg_echo( "gcconnex_profile:languages:".$user->officialLanguage);
-    
 }
-
-//echo elgg_echo('gcconnex_profile:fol') . ': ' . ( isset( $user->officialLanguage ) ? elgg_echo( "gcconnex_profile:languages:".$user->officialLanguage ) : '' ) . "<br />";
-
 
 if (is_array($languages_guid)) {
 
     foreach ($languages_guid as $guid) {
 
         $language = get_entity($guid);
-
-
     }
 }
 
 echo '</div>'; // close div class="gcconnex-profile-languages-display"
-//echo '</div>'; // close div class=gcconnex-profile-section-wrapper
+

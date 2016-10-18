@@ -4,9 +4,7 @@
     */
 
 $guid = (int) get_input('guid');
-
 $skill = get_entity($guid);
-
 $title = 'Endorsements';
 
 $content = list_avatars(array(
@@ -14,7 +12,6 @@ $content = list_avatars(array(
                         'size' => 'small',
                         'limit' => 0
                     ));
-
 
 $body = elgg_view_layout('one_column', array(
 	'filter' => false,
@@ -24,4 +21,4 @@ $body = elgg_view_layout('one_column', array(
 
 echo $body;
 
-    ?>
+?>

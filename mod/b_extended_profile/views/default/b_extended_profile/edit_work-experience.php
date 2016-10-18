@@ -7,7 +7,6 @@
  */
 
 if (elgg_is_xhr()) {  //This is an Ajax call!
-    //$user_guid = $_GET["user"];
     $user_guid = $_GET["guid"];
     $user = get_user($user_guid);
 
@@ -41,7 +40,6 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             echo elgg_view('input/work-experience', array('guid' => $work_experience_guid));
         }
     }
-
 
     echo '</div>';
 

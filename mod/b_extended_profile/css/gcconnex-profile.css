@@ -8,11 +8,6 @@
     margin-bottom: 20px;
 }
 
-.gcconnex-profile-name {
-/*    padding-bottom: 20px; 
-    height: 36px;*/
-}
-
 .img-responsive img {
     width: 100%;
 }
@@ -26,12 +21,7 @@
 .gcconnex-profile-name h1 {
     float: left;
 }
-/*
-.gcconnex-basic-profile-actions,
-.gcconnex-basic-profile-edit {
-    margin-left: 10px;
-}
-*/
+
 .gcconnex-profile-social-media-links {
     padding-top: 10px;
 }
@@ -71,9 +61,8 @@
     height: 50px;
     width: 50px;
 }
-/*
- * Styling for the message box that displays old skills to users for re-entry
- */
+
+ /* Styling for the message box that displays old skills to users for re-entry*/
 
 .gcconnex-old-skills {
     min-height: 20px;
@@ -84,7 +73,6 @@
     border: 1px solid #E3E3E3;
     border-radius: 10px;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05) inset;
-
 }
 
 .gcconnex-old-skills-display {
@@ -107,8 +95,6 @@
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
     border-right: 1px solid lightgray;
-    /*box-shadow: 7px 3px 5px #888888;
-    text-shadow: 1px 1px #888888;*/
 }
 
 .gcconnex-skill-entry {
@@ -154,7 +140,6 @@
     padding: 3px 6px 3px 5px;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
-    /*box-shadow: 5px 3px 5px #888888;*/
     margin-left: 0px;
     margin-right: 5px;
 }
@@ -172,8 +157,6 @@
     padding: 3px;
 }
 .gcconnex-endorsements-add-skill {
-    /*color: #3C698E;
-    text-shadow: 1px 1px #888888;*/
     font-family: arial;
     font-size: 12px;
     font-weight: bold;
@@ -194,7 +177,6 @@
     margin-top: 15px;
     background-color: #f9f9f9;
     padding: 15px;
-    /*border-radius: 5px;*/
 }
 
 
@@ -235,15 +217,6 @@ input.userfind {
     background-color: #FFA500;
 }
 
-/*
-.edit-png {
-    background: url('../img/edit.png');
-    background-size: 20px 20px;
-    width: 20px;
-    height: 20px;
-    position: absolute;
-}*/
-
 .profile-info-head {
     margin: 5px 0;
     border-bottom: 1px solid #af3c43;
@@ -276,9 +249,7 @@ input.userfind {
     max-width: 100px;
 }
 
-
 /* education */
-
 .gcconnex-profile-education-display,
 .gcconnex-profile-work-experience-display,
 .gcconnex-profile-languages-display,
@@ -373,16 +344,6 @@ input.userfind {
     top: 2px;
 }
 
-.cancel-control.cancel-hover {
-    /*background-color: #FFA500;
-    color: #FFF;*/
-}
-
-.save-control.save-hover {
-    /*background-color: #78ab46;
-    color: white;*/
-}
-
 .edit-control.edit-hover {
     background-color: #C1CDCD;
 }
@@ -390,34 +351,15 @@ input.userfind {
 .gcconnex-profile-edit-controls {
     float: right;
     position: relative;
-    /*margin-top: -20px;
-    margin-right: -11px;*/
-}
-
-.edit-control,
-.save-control,
-.cancel-control {
-   /* font-family: arial, sans-serif;
-    font-size: 12px;
-    color: #3C698E;
-    font-weight: bold;
-    z-index: 1;
-    cursor: pointer;
-    padding: 5px 15px 5px 5px;
-    position: relative;
-    background-color: rgb(208, 208, 208);
-    border-left: 1px solid darkgray; */
 }
 
 .edit-control,
 .cancel-control {
-    /*border-top-right-radius: 5px;*/
     border-bottom: 1px solid darkgray;
 }
 
 .save-control {
     border-top: 1px solid darkgray;
-    /*border-bottom-right-radius: 5px;*/
 }
 
 
@@ -452,13 +394,6 @@ input.userfind {
 .profile {
     float: none;
 }
-/*
-#profile-details {
-    padding-bottom: 5px;
-    float: left;
-    display: inline;
-    width: 45%;
-}*/
 
 .elgg-input-text[name='education'] {
     width: 300px;
@@ -489,9 +424,8 @@ input.userfind {
 .elgg-input-text[name='degree'] {
     width: 300px;
 }
-/*
- Colouring and styling for the "font-awesome" social media links on gcconnex profiles.
- */
+
+/* Colouring and styling for the "font-awesome" social media links on gcconnex profiles.*/
 .profile-icons {
     width: 33px;
     height: 28px;
@@ -556,15 +490,16 @@ input.userfind {
 #textarea {
     width: 99%;
 }
-/*
- * Twitter typeahead.js styling
- */
+
+ /* Twitter typeahead.js styling */
+
 
 .tt-suggestion-username {
     padding-bottom: 5px;
 }
 
-.tt-query, /* UPDATE: newer versions use tt-input instead of tt-query */
+/* UPDATE: newer versions use tt-input instead of tt-query */
+.tt-query, 
 .tt-hint {
     width: 396px;
     border: 2px solid #ccc;
@@ -572,7 +507,8 @@ input.userfind {
     outline: none;
 }
 
-.tt-query { /* UPDATE: newer versions use tt-input instead of tt-query */
+/* UPDATE: newer versions use tt-input instead of tt-query */
+.tt-query { 
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 }
 
@@ -600,8 +536,9 @@ input.userfind {
     line-height: 24px;
 }
 
+/* UPDATE: newer versions use .tt-suggestion.tt-cursor */
 .tt-suggestion.tt-is-under-cursor,
-.tt-suggestion.tt-cursor { /* UPDATE: newer versions use .tt-suggestion.tt-cursor */
+.tt-suggestion.tt-cursor { 
     color: #fff;
     background-color: #0097cf;
 }
@@ -710,22 +647,11 @@ td.left-col {
 }
 
 #profile-owner-block-wet4 {
-    /*position: relative;
-        
-    min-width: 100px;
-    */
     padding: 0;
     max-width: 115px;
     
 }
-/*
-.avatar-profile-page {
-    width: 255px;
-    height: 255px;
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
-}
-*/
+
 .avatar-hover-edit {
     background-color: rgba(3,3,3, 0.5);
     bottom: 25px;
@@ -741,7 +667,6 @@ td.left-col {
 }
 
 .gcconnex-profile-field-title {
-   /* width: 150px;*/
     display: inline-block;
     text-align: left;
     padding-right: 10px;
@@ -801,12 +726,10 @@ td.left-col {
     padding-top: 4px;
 }
 
-
 .basic-profile-field {
     margin: 3px;
     float: left;
 }
-
 
 .basic-profile-standard-field-wrapper,
 .basic-profile-social-media-wrapper,
@@ -825,7 +748,6 @@ td.left-col {
 body #editProfile {
     width: 100%;
     background-color: rgba(125,125,125,0.3);
- /*   margin-left: -400px;*/
     padding-left: 0 10px 0;
 }
 
@@ -883,7 +805,6 @@ body #editProfile {
 ::-moz-placeholder { color:#ccc; } /* firefox 19+ */
 :-ms-input-placeholder { color:#ccc; } /* ie */
 input:-moz-placeholder { color:#ccc; }
-
 
 .load-spinner {
     margin: 0 auto;
