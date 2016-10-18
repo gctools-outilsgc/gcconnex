@@ -21,9 +21,12 @@ if($blog->excerpt3){
 	$excerpt = $blog->excerpt;
 }
 
-
 if (empty($excerpt)) {
-	$excerpt = elgg_get_excerpt(gc_explode_translation($blog->description3, $lang));
+	if($blog->description3){
+		$excerpt = elgg_get_excerpt(gc_explode_translation($blog->description3, $lang));
+	}else{
+		$excerpt = $blog->description;
+	}
 }
 
 //test to see if it is widget view

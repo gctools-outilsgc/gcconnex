@@ -5,8 +5,15 @@
  * @package ideas
  */
 $page_owner = elgg_get_page_owner_entity();
+$lang = get_current_language();
 
-elgg_push_breadcrumb($page_owner->name);
+if($page_owner->title3){
+	$title_breadcrumbs = gc_explode_translation($page_owner->title3, $lang);
+}else{
+	$title_breadcrumbs = $page_owner->name;
+}
+
+elgg_push_breadcrumb($title_breadcrumbs);;
 elgg_push_breadcrumb(elgg_echo('ideas:filter:new'));
 
 if ($page_owner->canEdit() || elgg_is_admin_logged_in()) {
