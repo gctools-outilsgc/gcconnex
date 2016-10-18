@@ -88,6 +88,8 @@ if(elgg_is_logged_in()){
 //view exists with gc_onboard
 if(elgg_is_active_plugin('gc_onboard') && elgg_is_logged_in()){
 
+  $helpLaunch = get_input('welcome');
+
     $user = elgg_get_logged_in_user_entity();
 
     //$user->onboardcta = time();
@@ -103,6 +105,11 @@ if(elgg_is_active_plugin('gc_onboard') && elgg_is_logged_in()){
 
         $onboard = elgg_view('welcome-steps/modal');
         $onboard .= '<script> window.onload = function () { document.getElementById("onboardPopup").click() } </script>';
+
+    } else if($helpLaunch){
+
+      $onboard = elgg_view('welcome-steps/modal');
+      $onboard .= '<script> window.onload = function () { document.getElementById("onboardPopup").click() } </script>';
 
     }
 
