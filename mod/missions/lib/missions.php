@@ -163,7 +163,8 @@ function mm_create_button_set_base($mission, $full_view=false) {
 		
 		// Handles the case where an edit button is needed.
 		// This overwrites the read more button.
-		if(($mission->owner_guid == elgg_get_logged_in_user_guid() || $mission->account == elgg_get_logged_in_user_guid()) 
+        //Nick - letting site admins have access to edit/ deactivate missions
+		if(($mission->owner_guid == elgg_get_logged_in_user_guid() || $mission->account == elgg_get_logged_in_user_guid() || elgg_is_admin_logged_in()) 
 				&& $mission->state != 'completed' && $mission->state != 'cancelled') {
 			$button_one = '<div id="edit-button-mission-' . $mission->guid . '" name="edit-button" style="display:inline-block;">' . elgg_view('output/url', array(
 					'href' => elgg_get_site_url() . 'missions/mission-edit/' . $mission->guid,
@@ -309,7 +310,7 @@ function mm_create_button_set_base($mission, $full_view=false) {
  	}
  	
  	// Button to advance the mission state to cancelled from posted.
- 	if (($mission->owner_guid == elgg_get_logged_in_user_guid() || $mission->account == elgg_get_logged_in_user_guid()) 
+ 	if (($mission->owner_guid == elgg_get_logged_in_user_guid() || $mission->account == elgg_get_logged_in_user_guid() ||elgg_is_admin_logged_in()) 
  			&& $mission->state != 'cancelled' && $mission->state != 'completed') {
  		$candidate_total = count(elgg_get_entities_from_relationship(array(
  				'relationship' => 'mission_accepted',
@@ -359,6 +360,18 @@ function mm_create_button_set_base($mission, $full_view=false) {
  				'style' => 'margin:2px;'
  		)) . '</div>';
  	}
+     //Nick - adding the ability for site admins to delete missions from the edit page
+     //They don't want deleting to be an option for users for the sake of analytics
+     //Only admins can delete missions if need be (ex inapropriate content)
+     if(elgg_is_admin_logged_in()){
+         $returner['delete_button'] = '<div id="delete-button-mission-' . $mission->guid . '" name="delete-button" style="display:inline-block;">' . elgg_view('output/url', array(
+                     'href' => elgg_get_site_url() . 'action/missions/delete-mission?mission_guid=' . $mission->guid,
+                     'text' => elgg_echo('missions:delete'),
+                     'is_action' => true,
+                     'class' => 'elgg-button btn btn-danger',
+                     'style' => 'margin:2px;'
+             )) . '</div>';
+     }
  	
  	return $returner;
  }
