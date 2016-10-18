@@ -94,10 +94,13 @@ $click_header = elgg_view('output/url', array(
         </div>
         <div name="mission-job-type" class="mrgn-bttm-sm">
             <span class="timeStamp">
-                <?php echo elgg_echo($mission->job_type); ?>
+                <?php echo elgg_echo($mission->job_type);
+                      
+                    ?>
 
             </span>
         </div>
+
         <div class="mrgn-bttm-sm" style="max-height:115px;width:100%;overflow:hidden;" name="mission-description">
             <?php echo $description_string;?>
         </div>
@@ -131,6 +134,16 @@ $click_header = elgg_view('output/url', array(
                         <?php echo elgg_echo($mission->time_interval); ?>
                     </span>
                 </div>
+            </div>
+        </div>
+        <div>
+            <div style="display:inline-block;">
+                <h5>
+                    <?php echo elgg_echo("missions:posted"). ':';?>
+                </h5>
+            </div>
+            <div style="display:inline-block;">
+                <?php echo elgg_get_friendly_time($mission->time_created);?>
             </div>
         </div>
         <div>

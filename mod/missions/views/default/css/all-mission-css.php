@@ -324,7 +324,9 @@ li.link-disabled a {
 }
 
 .mission-card-body{
-    min-height:415px;
+    
+    min-height:450px;
+
 }
 
 .mission-details h5{
