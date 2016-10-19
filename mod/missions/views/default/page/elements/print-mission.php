@@ -47,6 +47,9 @@ $manager_info = elgg_view('page/elements/mission-manager-info', array(
 ));
 
 if($mission->owner_guid == elgg_get_logged_in_user_guid() || $mission->account == elgg_get_logged_in_user_guid()) {
+    $badge_color = 'mission-applicant-badge-owner';
+
+}
 	$relationship_count = elgg_get_entities_from_relationship(array(
 			'relationship' => 'mission_applied',
 			'relationship_guid' => $mission->guid,
@@ -60,9 +63,9 @@ if($mission->owner_guid == elgg_get_logged_in_user_guid() || $mission->account =
 	));
 	
 	if($relationship_count > 0 && $mission->state == 'posted') {
-		$relationship_alert = '<div name="mission-applicant-number" class="notif-badge" id="mission-' . $mission->guid . '-applicant-number" style="position:absolute;right:2px;top:2px;">' . $relationship_count . '</div>';
+		$relationship_alert = '<div name="mission-applicant-number" class="mission-applicant-badge '.$badge_color.'" id="mission-' . $mission->guid . '-applicant-number" style="">' . $relationship_count . ' '.elgg_echo("missions:applicants"). '</div>';
 	}
-}
+
 
 $completion_date_fixed = $mission->completion_date;
 if(trim($completion_date_fixed) == '') {
