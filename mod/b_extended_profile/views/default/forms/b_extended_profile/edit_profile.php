@@ -30,7 +30,6 @@
         padding: 10px;
     }
 
-
     .c_table {
         display: none;
     }
@@ -57,21 +56,17 @@
 
 </style>
 
-
 <?php
 echo '<div class="modal-header">';
-
 
 $guid = elgg_get_logged_in_user_guid();
 $user = get_user($guid);
 
 // pre-populate which fields to display on the "edit basic profile" overlay
-
 echo '<div class="gcconnex-b-extended-profile-edit-profile">';
 // outer container for all content (except the form title above) for css styling
 echo '<div class="basic-profile">'; 
 echo '</div>';
-
 
 // THIS BLOCK COMMENTED OUT UNTIL MICRO-MISSIONS ARE ENABLED
 /*

@@ -54,10 +54,7 @@ function initFancyProfileBox() {
         }
     }).bind('typeahead:selected', select);
 
-
 }
-
-
 
 $(document).ready(function() {
         initFancyProfileBox();
@@ -90,7 +87,6 @@ $(document).ready(function() {
             $('.avatar-hover-edit').fadeOut('slow');
         }
     );
-
 
     // initialize edit/save/cancel buttons and hide some of the toggle elements
     $('.save-control').hide();
@@ -171,7 +167,6 @@ $(document).ready(function() {
     $('.save-portfolio').on("click", function(){$('.edit-portfolio').focus()});
     $('.cancel-portfolio').on("click", function () { $('.edit-portfolio').focus() });
 
-
     //allow use of keyboard to endorse skills
     $('.skill-container').bind('keypress', function (e) {
 
@@ -225,8 +220,6 @@ function editProfile(event) {
 
     switch ($section) {
         case 'about-me':
-
-            
 
             // Edit the About Me blurb
             $.get(elgg.normalize_url('ajax/view/b_extended_profile/edit_about-me'),
@@ -387,7 +380,6 @@ function editProfile(event) {
                         $('#fraCred').hide();
                         $('#engCred').hide();
                     }
-                
                 });
             break;
         case 'portfolio':
@@ -548,7 +540,6 @@ function saveProfile(event) {
             social_media.flickr = $(".gcconnex-basic-flickr").val();
             social_media.youtube = $(".gcconnex-basic-youtube").val();
 
-
             elgg.action('b_extended_profile/edit_profile', {
                 data: {
                     'guid': elgg.get_logged_in_user_guid(),
@@ -604,8 +595,7 @@ function saveProfile(event) {
                     if ($(this).data('guid') != "new") {
                         $delete_guid.push($(this).data('guid'));
                     }
-                }
-                else {
+                }else {
                     $education_guid.push($(this).data('guid'));
                 }
             });
@@ -680,7 +670,7 @@ function saveProfile(event) {
                             $('.gcconnex-education').append('<div class="gcconnex-education-display">' + data + '</div>');
                         });
                 }
-                });
+            });
             $('.gcconnex-education-edit-wrapper').remove();
 
             break;
@@ -695,8 +685,7 @@ function saveProfile(event) {
             $('.gcconnex-work-experience-entry').each(function() {
                 if ( $(this).is(":hidden") ) {
                     work_experience.delete_guids.push($(this).data('guid'));
-                }
-                else {
+                }else {
                     experience = {
                         'eguid': $(this).data('guid'),
                         'organization': $(this).find('.gcconnex-work-experience-organization').val(),
@@ -1153,7 +1142,6 @@ function removeOldSkills() {
             $('.gcconnex-old-skills').remove();
         }
     });
-
 }
 
 var entityMap = {

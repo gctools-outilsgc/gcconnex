@@ -2,8 +2,7 @@
 
 if (elgg_is_xhr()) {
     $user_guid = $_GET["guid"];
-}
-else {
+}else {
     $user_guid = elgg_get_page_owner_guid();
 }
 
@@ -14,8 +13,9 @@ echo '<div class="gcconnex-education-display ">';
 
 if ($user->canEdit() && ($education_guid == NULL || empty($education_guid))) {
     echo elgg_echo('gcconnex_profile:education:empty');
-}
-else {
+
+}else {
+    
     if (!(is_array($education_guid))) {
         $education_guid = array($education_guid);
     }

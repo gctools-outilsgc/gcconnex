@@ -5,7 +5,6 @@ User profile Colleagues
 
 $owner = elgg_get_page_owner_entity();
 
-
 $friends = $owner->listFriends('', $num, array(
         'size' => 'small',
         'pagination' => FALSE,
@@ -14,8 +13,6 @@ $friends = $owner->listFriends('', $num, array(
         'count' => TRUE,
         'limit' => '14',
         ));
-
-
 
 $count2 = $owner->getFriends(array('limit'=>0, 'count'=>true,));
 

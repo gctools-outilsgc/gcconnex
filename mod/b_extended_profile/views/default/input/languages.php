@@ -6,9 +6,7 @@
  * Purpose: This is a collection of input fields that are grouped together to create an entry for languages (designed to be entered for a user's profile).
  */
 
-
 $languages = get_entity($vars['guid']); // get the guid of the language entry that is being requested for display
-
 $guid = ($languages != NULL)? $vars['guid'] : "new"; // if the languages guid isn't given, this must be a new entry
 
 echo '<div class="gcconnex-languages-entry" data-guid="' . $guid . '">'; // languages entry wrapper for css styling
@@ -46,5 +44,4 @@ echo elgg_echo('gcconnex_profile:education:ongoing') . '</label>';
 
 // create a delete button for each languages entry
 echo '<br><div class="elgg-button elgg-button-action btn" onclick="deleteEntry(this)" data-type="languages">' . elgg_echo('gcconnex_profile:languages:delete') . '</div>';
-
 echo '</div>'; // close div class="gcconnex-languages-entry"

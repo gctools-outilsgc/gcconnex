@@ -124,4 +124,3 @@ if (is_array($languages_guid)) {
 }
 
 echo '</div>'; // close div class="gcconnex-profile-languages-display"
-

@@ -103,7 +103,6 @@ echo elgg_view("input/pulldown", $params);
 
 unset($params);
 
-
 $params = array('name' => 'end-year','id' => 'end-year-' . $guid,
         'class' => 'gcconnex-work-experience-end-year gcconnex-work-experience-end-year-' . $work_experience->guid,
         'maxlength' => 4,
@@ -155,7 +154,6 @@ else {
     ));
 }
 echo '</div>'; // close div class="colleauges-list"
-
 
 $tid = 'tid-' . rand();
 

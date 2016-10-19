@@ -49,93 +49,92 @@ if (elgg_is_xhr()) {
 
     echo elgg_view("input/pulldown", $params);
     echo '<div class="gcconnex-profile-language-official-languages">';
-    echo '<div id="engCred" class="gcconnex-work-experience-entry">';
-    
-        echo '<h3 class="mrgn-tp-0">' . elgg_echo('gcconnex_profile:languages:english') . '</h3>';
-        echo '<div class="clearfix">';
-            echo '<h4 class="mrgn-tp-md mrgn-bttm-sm">' . elgg_echo('gcconnex_profile:languages:writtencomp') . '</h4>';
-    
-            // English level
-                echo '<div class="col-xs-6"><label for="english_writtencomp" class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:languages:level') .  ':</label>';
-                $params = array(
-                    'name' => 'english_writtencomp',
-                    'id' => 'english_writtencomp',
-                    'class' => 'gcconnex-languages-english-writtencomp gcconnex-languages-english-writtencomp-' . $english->guid,
-                    'options' => array('-', 'X', 'A', 'B', 'C', 'E', 'P'),
-                    'value' => $english[0]
-                );
-                echo elgg_view("input/pulldown", $params);
-        echo '</div>';
-            // English expiry
-            echo '<div class="col-xs-6"><label for="english_expiry_writtencomp" class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:languages:expiry') .  ':</label>';
-                $params = array(
-                    'name' => 'english_expiry_writtencomp',
-                    'id' => 'english_expiry_writtencomp',
-                    'placeholder' => 'yyyy-mm-dd',
-                    'style' => 'display:block;padding-left:3px;',
-                    'class' => 'language-expiry gcconnex-languages-english-expiry gcconnex-languages-english-expiry-' . $english->guid,
-                    'value' => $english[3]
-                );
-                echo elgg_view("input/date", $params);
-        echo '</div>';
-    echo '</div>';
+        echo '<div id="engCred" class="gcconnex-work-experience-entry">';
         
-        echo '<div class="clearfix">';
-            echo '<h4 class="mrgn-tp-md mrgn-bttm-sm">' . elgg_echo('gcconnex_profile:languages:writtenexp') . '</h4>';
-    
-            // English level
-    echo '<div class="col-xs-6"><label for="english_writtenexp" class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:languages:level') .  ':</label>';
-                $params = array(
-                    'name' => 'english_writtenexp',
-                    'id' => 'english_writtenexp',
-                    'class' => 'gcconnex-languages-english-writtenexp gcconnex-languages-english-writtenexp-' . $english->guid,
-                    'options' => array('-', 'X', 'A', 'B', 'C', 'E', 'P'),
-                    'value' => $english[1]
-                );
-                echo elgg_view("input/pulldown", $params);
-    echo '</div>';
-                // English expiry
-    echo '<div class="col-xs-6"><label for="english_expiry_writtenexp" class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:languages:expiry') .  ':</label>';
-                $params = array(
-                    'name' => 'english_expiry_writtenexp',
-                    'id' => 'english_expiry_writtenexp',
-                    'placeholder' => 'yyyy-mm-dd',
-                    'style' => 'display:block;padding-left:3px;',
-                    'class' => 'language-expiry gcconnex-languages-english-expiry gcconnex-languages-english-expiry-' . $english->guid,
-                    'value' => $english[4]
-                );
-                echo elgg_view("input/date", $params);
-        echo '</div>';
-    echo '</div>';
-    
-        echo '<div class="clearfix">';
-            echo '<h4 class="mrgn-tp-md mrgn-bttm-sm">' . elgg_echo('gcconnex_profile:languages:oral') . '</h4>';
-    
+            echo '<h3 class="mrgn-tp-0">' . elgg_echo('gcconnex_profile:languages:english') . '</h3>';
+            echo '<div class="clearfix">';
+                echo '<h4 class="mrgn-tp-md mrgn-bttm-sm">' . elgg_echo('gcconnex_profile:languages:writtencomp') . '</h4>';
+        
                 // English level
-    echo '<div class="col-xs-6"><label for="english_oral" class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:languages:level') .  ':</label>';
-                $params = array(
-                    'name' => 'english_oral',
-                    'id' => 'english_oral',
-                    'class' => 'gcconnex-languages-english-oral gcconnex-languages-english-oral-' . $english->guid,
-                    'options' => array('-', 'X', 'A', 'B', 'C', 'E', 'P'),
-                    'value' => $english[2]
-                );
-                echo elgg_view("input/pulldown", $params);
-        echo '</div>';
+                    echo '<div class="col-xs-6"><label for="english_writtencomp" class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:languages:level') .  ':</label>';
+                    $params = array(
+                        'name' => 'english_writtencomp',
+                        'id' => 'english_writtencomp',
+                        'class' => 'gcconnex-languages-english-writtencomp gcconnex-languages-english-writtencomp-' . $english->guid,
+                        'options' => array('-', 'X', 'A', 'B', 'C', 'E', 'P'),
+                        'value' => $english[0]
+                    );
+                    echo elgg_view("input/pulldown", $params);
+                    echo '</div>';
                 // English expiry
-    echo '<div class="col-xs-6"><label for="english_expiry_oral" class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:languages:expiry') .  ':</label>';
-                $params = array(
-                    'name' => 'english_expiry_oral',
-                    'id' => 'english_expiry_oral',
-                    'placeholder' => 'yyyy-mm-dd',
-                    'style' => 'display:block;padding-left:3px;',
-                    'class' => 'language-expiry gcconnex-languages-english-expiry gcconnex-languages-english-expiry-' . $english->guid,
-                    'value' => $english[5]
-                );
-                echo elgg_view("input/date", $params);
+                echo '<div class="col-xs-6"><label for="english_expiry_writtencomp" class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:languages:expiry') .  ':</label>';
+                    $params = array(
+                        'name' => 'english_expiry_writtencomp',
+                        'id' => 'english_expiry_writtencomp',
+                        'placeholder' => 'yyyy-mm-dd',
+                        'style' => 'display:block;padding-left:3px;',
+                        'class' => 'language-expiry gcconnex-languages-english-expiry gcconnex-languages-english-expiry-' . $english->guid,
+                        'value' => $english[3]
+                    );
+                    echo elgg_view("input/date", $params);
+                echo '</div>';
+            echo '</div>';
+            
+            echo '<div class="clearfix">';
+                echo '<h4 class="mrgn-tp-md mrgn-bttm-sm">' . elgg_echo('gcconnex_profile:languages:writtenexp') . '</h4>';
+        
+                // English level
+                echo '<div class="col-xs-6"><label for="english_writtenexp" class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:languages:level') .  ':</label>';
+                            $params = array(
+                                'name' => 'english_writtenexp',
+                                'id' => 'english_writtenexp',
+                                'class' => 'gcconnex-languages-english-writtenexp gcconnex-languages-english-writtenexp-' . $english->guid,
+                                'options' => array('-', 'X', 'A', 'B', 'C', 'E', 'P'),
+                                'value' => $english[1]
+                            );
+                            echo elgg_view("input/pulldown", $params);
+                echo '</div>';
+                    // English expiry
+                echo '<div class="col-xs-6"><label for="english_expiry_writtenexp" class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:languages:expiry') .  ':</label>';
+                            $params = array(
+                                'name' => 'english_expiry_writtenexp',
+                                'id' => 'english_expiry_writtenexp',
+                                'placeholder' => 'yyyy-mm-dd',
+                                'style' => 'display:block;padding-left:3px;',
+                                'class' => 'language-expiry gcconnex-languages-english-expiry gcconnex-languages-english-expiry-' . $english->guid,
+                                'value' => $english[4]
+                            );
+                            echo elgg_view("input/date", $params);
+                    echo '</div>';
+            echo '</div>';
+        
+            echo '<div class="clearfix">';
+                echo '<h4 class="mrgn-tp-md mrgn-bttm-sm">' . elgg_echo('gcconnex_profile:languages:oral') . '</h4>';
+        
+                    // English level
+                echo '<div class="col-xs-6"><label for="english_oral" class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:languages:level') .  ':</label>';
+                            $params = array(
+                                'name' => 'english_oral',
+                                'id' => 'english_oral',
+                                'class' => 'gcconnex-languages-english-oral gcconnex-languages-english-oral-' . $english->guid,
+                                'options' => array('-', 'X', 'A', 'B', 'C', 'E', 'P'),
+                                'value' => $english[2]
+                            );
+                            echo elgg_view("input/pulldown", $params);
+                echo '</div>';
+                    // English expiry
+                echo '<div class="col-xs-6"><label for="english_expiry_oral" class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:languages:expiry') .  ':</label>';
+                            $params = array(
+                                'name' => 'english_expiry_oral',
+                                'id' => 'english_expiry_oral',
+                                'placeholder' => 'yyyy-mm-dd',
+                                'style' => 'display:block;padding-left:3px;',
+                                'class' => 'language-expiry gcconnex-languages-english-expiry gcconnex-languages-english-expiry-' . $english->guid,
+                                'value' => $english[5]
+                            );
+                            echo elgg_view("input/date", $params);
+                echo '</div>';
         echo '</div>';
-    echo '</div>';
-    
     echo '</div>'; //closes gcconnex-work-experience-entry
         
     echo '<div id="fraCred" class="gcconnex-work-experience-entry">';

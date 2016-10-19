@@ -48,7 +48,6 @@
     text-decoration: none;
 }
 
-
 .gcconnex-profile-wire-post {
     margin-top: 15px;
 }
@@ -63,7 +62,6 @@
 }
 
  /* Styling for the message box that displays old skills to users for re-entry*/
-
 .gcconnex-old-skills {
     min-height: 20px;
     padding: 19px;
@@ -179,7 +177,6 @@
     padding: 15px;
 }
 
-
 input.gcconnex-endorsements-input-skill,
 input.userfind {
     display: block;
@@ -293,17 +290,8 @@ input.userfind {
     width: 300px;
 }
 
-.work-experience-responsibilities {
-
-}
-
 .gcconnex-work-experience-responsibilities {
     width: 98%;
-}
-
-.work-experience-organization {
-    
-
 }
 
 .gcconnex-profile-section-frame-wrapper {
@@ -361,7 +349,6 @@ input.userfind {
 .save-control {
     border-top: 1px solid darkgray;
 }
-
 
 .b-user-menu {
     display: inline;
@@ -492,8 +479,6 @@ input.userfind {
 }
 
  /* Twitter typeahead.js styling */
-
-
 .tt-suggestion-username {
     padding-bottom: 5px;
 }
@@ -578,7 +563,7 @@ input.userfind {
 }
 
 .gcconnex-avatars-expand {
-        float: right;
+    float: right;
     height: 30px;
     width: 30px;
     padding: 0px;
@@ -586,7 +571,7 @@ input.userfind {
     background-color: #eaebed;
     border-color: #dcdee1;
     text-align: center;
-        min-height: 30px;
+    min-height: 30px;
     min-width: 30px;
 }
 
@@ -649,7 +634,6 @@ td.left-col {
 #profile-owner-block-wet4 {
     padding: 0;
     max-width: 115px;
-    
 }
 
 .avatar-hover-edit {

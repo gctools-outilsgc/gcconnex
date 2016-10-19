@@ -35,14 +35,9 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
         }
         ?>
     </div>
-    
-   <?php 
-    
-?>
 
     <div class="b_extended_profile">
         <?php
-  
 
         echo '<div role="tabpanel">';
 

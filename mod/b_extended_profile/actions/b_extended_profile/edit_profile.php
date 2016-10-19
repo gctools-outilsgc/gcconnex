@@ -270,8 +270,6 @@ if (elgg_is_xhr()) {
                 $edit = array( $edit );
             }
 
-           
-
             //create new work experience entries
             if ( is_array($edit) ) {
                 foreach ($edit as $work) {
@@ -312,7 +310,6 @@ if (elgg_is_xhr()) {
                         } else {
                             $experience->save();
                         }
-
                     }
                 }
             }
@@ -328,6 +325,7 @@ if (elgg_is_xhr()) {
                     $user->work = array_merge($stack, $work_experience_guids);
                 }
             }
+
             $user->work_access = $access;
             $user->save();
 
@@ -371,9 +369,10 @@ if (elgg_is_xhr()) {
 
             if ($user->gc_skills == NULL) {
                 $user->gc_skills = $skill_guids;
-            }
-            else {
+
+            }else {
                 $stack = $user->gc_skills;
+
                 if (!(is_array($stack))) { $stack = array($stack); }
 
                 if ($skill_guids != NULL) {
@@ -484,8 +483,7 @@ if (elgg_is_xhr()) {
                         $entry = new ElggObject();
                         $entry->subtype = "portfolio";
                         $entry->owner_guid = $user_guid;
-                    }
-                    else {
+                    }else {
                         $entry = get_entity($portfolio_edit['eguid']);
                     }
 
@@ -507,8 +505,8 @@ if (elgg_is_xhr()) {
 
             if ($user->portfolio == NULL) {
                 $user->portfolio = $portfolio_list_guids;
-            }
-            else {
+
+            }else {
                 $stack = $user->portfolio;
                 if (!(is_array($stack))) { $stack = array($stack); }
 
@@ -523,7 +521,6 @@ if (elgg_is_xhr()) {
 
         default:
             system_message(elgg_echo("profile:saved"));
-
     }
 
     if($error == true){
@@ -531,7 +528,6 @@ if (elgg_is_xhr()) {
     } else {
         system_message(elgg_echo("profile:saved"));
     }
-
 }
 
 // In case this view will be called via the elgg_view_form() action, then we know it's the basic profile only

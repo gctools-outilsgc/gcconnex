@@ -35,5 +35,3 @@ unset($vars['value']);
 <textarea <?php echo elgg_format_attributes($vars); ?>>
 <?php echo htmlspecialchars($value, ENT_QUOTES, 'UTF-8', false); ?>
 </textarea>
-
-

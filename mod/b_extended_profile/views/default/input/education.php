@@ -6,9 +6,7 @@
  * Purpose: This is a collection of input fields that are grouped together to create an entry for education (designed to be entered for a user's profile).
  */
 
-
 $education = get_entity($vars['guid']); // get the guid of the education entry that is being requested for display
-
 $guid = ($education != NULL)? $vars['guid'] : "new"; // if the education guid isn't given, this must be a new entry
 
 echo '<div class="gcconnex-education-entry" data-guid="' . $guid . '">'; // education entry wrapper for css styling

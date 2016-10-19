@@ -51,8 +51,7 @@ if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
             'title' => elgg_echo('gcconnex_profile:profile:edit_avatar')
         )
     );
-}
-else {
+}else {
 
     $size = 'medium';
 
@@ -64,7 +63,6 @@ else {
         'force_size' => true,
     ));
 }
-
 
 //$profile_actions
 echo <<<HTML

@@ -34,8 +34,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                 echo elgg_view('input/work-experience', array('guid' => $guid));
             }
         }
-    }
-    else {
+    }else {
         if ($work_experience_guid != null && !empty($work_experience_guid)) {
             echo elgg_view('input/work-experience', array('guid' => $work_experience_guid));
         }
@@ -45,9 +44,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
 
     // create an "add more" button at the bottom of the work experience input fields so that the user can continue to add more work experience entries as needed
     echo '<br><button class="gcconnex-work-experience-add-another elgg-button elgg-button-action btn btn-primary" data-type="work-experience" onclick="addMore(this)">' . elgg_echo('gcconnex_profile:experience:add') . '</button>';
-}
-
-else {  // In case this view will be called via elgg_view()
+}else {  // In case this view will be called via elgg_view()
     echo 'An error has occurred. Please ask the system administrator to grep: SDFLK3GLK43BB5557';
 }
 
