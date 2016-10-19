@@ -377,3 +377,24 @@ color: #055959;
 .mission-title-header:visited{
 color: #055959;
 }
+
+.mission-applicant-badge{
+    position:absolute;
+    right:12px;
+    top:-8px;
+    min-width:10px;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    padding: 4px 7px;
+    vertical-align: top;
+    text-align: center;
+    background-color: white;
+    font-size:13px;
+    line-height: 1;
+}
+
+.mission-applicant-badge-owner{
+    color:white !important;
+    background-color:#d00 !important;
+    font-weight:bold !important;
+}
