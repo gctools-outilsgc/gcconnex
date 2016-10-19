@@ -49,6 +49,8 @@ return array(
   'wet:login_engage_3'=>"Promouvoir les activités GC à l'échelle du gouvernement.",
   'wet:login_welcome'=>'Welcome to GCconnex',
 
+  "wet:messagedd:no_results"=>"Vous êtes à jour!",
+
   'wet:login:departments'=>"<span class=\"login-big-num\">174</span> Organizations de toutes les regions du Canada",
   'wet:login:discussions'=>"<span class=\"login-big-num\">%s</span> Discussions qui se passe à l’instant",
   'img:desc:fr' => 'Description de l\'image en français',
