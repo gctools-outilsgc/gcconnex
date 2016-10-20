@@ -30,10 +30,6 @@ $currentBadge = $badges[0];
 //set level to zero
 $level = '1';
 
-//static
-$title = 'Bookmarks Badge';
-$description = 'Created bookmarks';
-
 //set goals for badge
 $goals[0] = 5;
 $goals[1] = 10;
@@ -58,14 +54,8 @@ $entities = elgg_get_entities(array(
 ));
 
 if($entities){
-    
-    /*
-    foreach($entities as $ent){
-        $likeCount = $likeCount + $ent->countAnnotations('likes');
-    }
-    */
-    //echo $likeCount;
-    
+
+
     $count = count($entities);
 }
 ///
@@ -74,45 +64,45 @@ if($entities){
 
 //progress check
 if($count < $goals[0]){ //no badge
-    
+
     $user->bookmarkBadge = 0;
     $currentBadge = $badges[0];
     $currentGoal = $goals[0];
     $level = '1';
-    
+
 } else if($count >= $goals[0] && $count < $goals[1]){ //lvl 1
-    
+
     $user->bookmarkBadge = 1;
     $currentBadge = $badges[1];
     $currentGoal = $goals[1];
     $level = '2';
-    
+
 } else if($count >= $goals[1]  && $count < $goals[2]){ //lvl 2
-    
+
     //$count = $goals[2];
     $user->bookmarkBadge = 2;
     $currentBadge = $badges[2];
     $currentGoal = $goals[2];
     $level = '3';
-    
+
 } else if($count >= $goals[2]  && $count < $goals[3]){ //lvl 3
-    
+
     //$count = $goals[2];
     $user->bookmarkBadge = 3;
     $currentBadge = $badges[3];
     $currentGoal = $goals[3];
     $level = '4';
-    
+
 } else if($count >= $goals[3]  && $count < $goals[4]){ //lvl 4
-    
+
     //$count = $goals[2];
     $user->bookmarkBadge = 4;
     $currentBadge = $badges[4];
     $currentGoal = $goals[4];
     $level = '5';
-    
+
 } else if($count >= $goals[4] ){ //lvl 5
-    
+
     $user->bookmarkBadge = 5;
     $count = $goals[4];
     $currentBadge = $badges[5];

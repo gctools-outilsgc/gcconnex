@@ -24,9 +24,6 @@ $currentBadge = $badges[0];
 //set level to zero
 $level = '1';
 
-//static
-$title = 'Profile Complete Badge';
-$description = '100%';
 
 //set goals for badge
 $goals[0] = 100;
@@ -38,20 +35,20 @@ $currentGoal = $goals[0];
 $count = $user->profilestrength;
 
 if($count < $goals[0]){ //no badge
-    
+
     $user->completeBadge = 0;
     $currentBadge = $badges[0];
     $currentGoal = $goals[0];
     $level = '1';
 
 } else if($count == $goals[0]){ //100% Complete
-    
+
     $user->completeBadge = 1;
     $currentBadge = $badges[1];
     $currentGoal = $goals[0];
     $level = 'Completed';
 
-} 
+}
 
 $title = elgg_echo('badge:' . $name . ':name');
 $description =  elgg_echo('badge:' . $name . ':objective:' . $user->completeBadge);
