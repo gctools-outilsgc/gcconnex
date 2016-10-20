@@ -13,7 +13,6 @@ function contactform_init() {
     requirements_check2();
 	elgg_register_page_handler('contactform','contactform_page_handler');
 	// Add menu link
-	//add_menu(elgg_echo('help_menu_item'), $CONFIG->wwwroot . "pg/contactform/");
 	elgg_register_menu_item('site', array(
 		'name' => 'Help',
         'href' => $CONFIG->wwwroot . "mod/contactform/",
