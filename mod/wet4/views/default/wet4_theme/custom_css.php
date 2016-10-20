@@ -213,6 +213,10 @@ max-height: 500px;
         margin-bottom: -14px;
     }
 
+    .user-menu{
+      min-width: 400px;
+    }
+
     .user-menu:after{
        content: '';
        display: block;
