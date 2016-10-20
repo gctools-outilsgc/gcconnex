@@ -135,8 +135,7 @@ function wet4_theme_init() {
         elgg_register_action("groups/invite", elgg_get_plugins_path() . "/wet4/actions/groups/invite.php");
     }
 
-	elgg_register_action("file/move_folder", elgg_get_plugins_path() . "/wet4/actions/file/move.php");
-    elgg_register_action("friends/collections/add", elgg_get_plugins_path() . "/wet4/actions/friends/collections/add.php");
+		elgg_register_action("file/move_folder", elgg_get_plugins_path() . "/wet4/actions/file/move.php");
     elgg_register_action("friends/collections/edit", elgg_get_plugins_path() . "/wet4/actions/friends/collections/edit.php");
     elgg_register_action("login", elgg_get_plugins_path() . "/wet4/actions/login.php", "public");
     elgg_register_action("widgets/delete", elgg_get_plugins_path() . "/wet4/actions/widgets/delete.php");
