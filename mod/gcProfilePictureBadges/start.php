@@ -14,8 +14,8 @@
 			 elgg_extend_view('groups/sidebar/sidebar', 'groups/sidebar/pledge', 1);
 
 			 //add style so badge doesnt break in admin menu
-			 elgg_extend_view('widgets/new_users/content', 'widgets/avatar_style', 1);
-			 elgg_extend_view('widgets/online_users/content', 'widgets/avatar_style', 1);
+			 elgg_extend_view('admin/header', 'widgets/avatar_style', 1);
+
 
 			 //pledge action to add badge to avatar without havign to edit avatar
 			 elgg_register_action('badge/pledge', elgg_get_plugins_path() . "gcProfilePictureBadges/actions/pledge.php");
