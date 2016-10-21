@@ -1173,13 +1173,13 @@ function event_calendar_get_formatted_time($event) {
 		}
 		if ((!$event->end_date) || ($end_date == $start_date)) {
 			if (!$event->all_day && $event_calendar_times) {
-				if(event_calendar_format_time($event->start_time) != '0:00,'){
+				if(event_calendar_format_time($event->start_time, $start_date) != '0:00,'){
 					
 					$start_date = event_calendar_format_time($start_date, $event->start_time);
 					$end_date = event_calendar_format_time($end_date, $event->end_time);
 
 				}
-				$start_date = event_calendar_format_time($start_date);
+				$start_date = event_calendar_format_time($start_date, $event->start_time);
 			}
 			$time_bit = "$start_date - $end_date";
 
