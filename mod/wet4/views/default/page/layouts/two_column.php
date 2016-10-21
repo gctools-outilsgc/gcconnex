@@ -94,11 +94,13 @@ if ($vars['context']){
 				'priority' => 400,
 			),
 		);
-	}
-
-	foreach ($tabs as $name => $tab) {
-		$tab['name'] = $name;
-		elgg_register_menu_item('filter', $tab);
+		}
+	if (is_array($tabs))
+	{
+		foreach ($tabs as $name => $tab) {
+			$tab['name'] = $name;
+			elgg_register_menu_item('filter', $tab);
+		}
 	}
 
 
