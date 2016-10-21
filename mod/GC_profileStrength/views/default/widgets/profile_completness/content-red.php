@@ -28,7 +28,8 @@ if (elgg_is_logged_in()) {
         echo '<script src="'.elgg_get_site_url().'mod/wet4/views/default/widgets/profile_completness/js/circliful.min.js"></script>';
         echo '<link rel="stylesheet" href="'.elgg_get_site_url().'mod/wet4/views/default/widgets/profile_completness/css/circliful.css">';
         ?>
-        <script>$(document).ready(function () {
+        <script>
+        $(document).ready(function () {
             $('#demo').circliful({
                 animation: 1,
                 animationStep: 5,
@@ -43,7 +44,8 @@ if (elgg_is_logged_in()) {
                 iconColor: '#055959',
                 targetColor: '#055959',
             });
-        });</script>
+        });
+        </script>
 
         <?php
         echo '<div class="col-md-push-3 col-md-6"><div id="demo"></div></div>';

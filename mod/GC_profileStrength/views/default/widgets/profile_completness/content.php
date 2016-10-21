@@ -153,14 +153,12 @@ if($userEnt->profilestrength != 100){
 	}
 
     //focus onto the micromission section
-    if(elgg_plugin_exists('missions') && elgg_is_active_plugin('missions') && $OptedIn==false)
-    {
+    if(elgg_plugin_exists('missions') && elgg_is_active_plugin('missions') && $OptedIn==false){
         echo '<p class="pull-left" style="width: 70%;">'.elgg_echo('ps:optingin').'</p>';
+        
         if(!strpos($currentPage,'profile')){
             echo '<a href="'.elgg_get_site_url().'profile/'.$userEnt->username.'#edit-opt-in" class="btn btn-primary mrgn-tp-sm pull-right">'. elgg_echo('ps:optin').'</a>';
-        }
-        else
-        {
+        }else{
             echo '<a href="#edit-opt-in" class="btn btn-primary mrgn-tp-sm pull-right">'. elgg_echo('ps:optin').'</a>';
         }
     }
