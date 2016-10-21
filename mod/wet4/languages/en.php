@@ -54,6 +54,8 @@ return array(
   'wet:login:departments'=>"<span class=\"login-big-num\">174</span> Organizations across Canada",
   'wet:login:discussions'=>"<span class=\"login-big-num\">%s</span> Discussions happening right now",
 
+  "wet:messagedd:no_results"=>"You're all caught up!",
+
   'newsfeed:filter' => "Filter your News Feed",
   'newsfeed:label' => "Remove colleague connections from your News Feed",
   'newsfeed:do' => "Colleague connections will no longer display on your News Feed.",

@@ -184,7 +184,7 @@ if(elgg_in_context('friends') || elgg_in_context('my_groups')){ //datatable for 
         $tBody = elgg_format_element('tbody', ['class' => ''], $tR);
 
         //create table head
-        $tHead = elgg_format_element('thead', ['class' => ''], '<tr> <th class=""> ' . elgg_echo('groups:members') . '</th><th>'.elgg_echo('c_bin:date_joined').'</th> </tr>');
+        $tHead = elgg_format_element('thead', ['class' => ''], '<tr> <th class=""> ' . elgg_echo('groups:members') . '</th><th>'.elgg_echo('c_bin:sort_guid').'</th> </tr>');
 
         //pull it all together and display table
         echo elgg_format_element('table', ['class' => ' wb-tables table table-striped', 'id' => ''], $tHead . $tBody);

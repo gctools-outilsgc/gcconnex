@@ -267,7 +267,7 @@ return array(
     "missions:splash:missions_help_message" =>"Si vous avez besoin d’aide, <a href=' http://www.gcpedia.gc.ca/wiki/Aide_%C3%A0_l%27utilisateur/Carrefour_d%27emploi ' target='_blank'>consultez la page d’aide à l’utilisateur! </a>",
 "missions:splash:missions_right_now" =>"Possibilités en ce Moment",
 "missions:splash:what_are_missions" =>	"Comment puis-je apprendre davantage sur les genres de possibilités disponibles dans la plateforme de possibilités de ConneXions carrière?",
-"missions:splash:how_to_apply" =>	"Comment postuler? Commencez par vous inscrir dans votre profil GCconnex!",
+"missions:splash:how_to_apply" =>	"Comment postuler? Commencez par vous inscrire dans votre profil GCconnex!",
 "missions:my_opportunities" =>	"Mes possibilités",
 "missions:search_opportunities" =>	"Recherche de possibilités",
 "missions:filter_search" =>	"Filtrer la recherche",
