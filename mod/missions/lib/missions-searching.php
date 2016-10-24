@@ -125,8 +125,11 @@ function mm_analyze_advanced_search_element($place, $array)
         	if(trim($array['selection_' . $place . '_element']) != '') {
         		$name_option = '';
 	        	switch($array['selection_' . $place . '_element']) {
+                    case elgg_echo('gcconnex_profile:opt:micro_missionseek'):
+                        $name_option = 'opt_in_missions';
+                        break;
 	        		case elgg_echo('gcconnex_profile:opt:micro_mission'):
-	        			$name_option = 'opt_in_missions';
+	        			$name_option = 'opt_in_missionCreate';
 	        			break;
 	        		case elgg_echo('gcconnex_profile:opt:job_swap'):
 	        			$name_option = 'opt_in_swap';
