@@ -51,7 +51,7 @@ return array(
   'wet:jobs:link' => 'emplois.gc.ca <i class="fa fa-external-link mrgn-lft-sm"></i>',
   'wet:jobs:href' => "http://jobs-emplois.gc.ca/index-fra.htm",
 
-  "wet:messagedd:no_results"=>"Vous êtes à jour!",
+  "wet:messagedd:no_results"=>"Vous êtes tous à jour!",
 
   'wet:login:departments'=>"<span class=\"login-big-num\">174</span> Organizations de toutes les regions du Canada",
   'wet:login:discussions'=>"<span class=\"login-big-num\">%s</span> Discussions qui se passe à l’instant",
