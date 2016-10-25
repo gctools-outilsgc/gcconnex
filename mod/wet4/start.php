@@ -205,7 +205,8 @@ function wet4_theme_init() {
 
     // Replace the default index page with redirect
     elgg_register_plugin_hook_handler('index', 'system', 'new_index');
-    elgg_register_page_handler('newsfeed', 'newsfeed_page_handler');
+    //TEMP
+   // elgg_register_page_handler('newsfeed', 'newsfeed_page_handler');
     elgg_register_page_handler('splash', 'splash_page_handler');
     elgg_register_page_handler('c_photo_image', 'c_photo_page_handler');
     elgg_register_page_handler('groups_autocomplete', 'groups_autocomplete');
@@ -243,13 +244,13 @@ function groups_autocomplete() {
 
 /*
  *  Create news feed page
- */
+    NEWSFEED COMMENT OUT FOR TEST
 
 function newsfeed_page_handler(){
     @include (dirname ( __FILE__ ) . "/pages/newsfeed.php");
     return true;
 }
-
+ */
 function activity_page_handler($page){
     elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 
