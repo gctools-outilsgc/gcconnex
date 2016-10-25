@@ -31,6 +31,10 @@ return array(
 'event_calendar:add_event_response' => "Your event has been added.",
 'event_calendar:manage_event_error' => "Error: There was an error in saving your event. Please make sure that you have provided the required fields.",
 'event_calendar:error_nosuchevent' => "Error: there is no such event.",
+
+// gccon-220: replace text for "error: there is no such event"
+'event_calendar:error_nosuchevent_loggedin_only' => "You must be logged in to view the requested page.",
+
 'event_calendar:day_label' => "Day",
 'event_calendar:week_label' => "Week",
 'event_calendar:month_label' => "Month",

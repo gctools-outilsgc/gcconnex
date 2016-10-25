@@ -30,6 +30,10 @@ return array (
 'event_calendar:add_event_response' => 'Votre événement a été ajouté.',
 'event_calendar:manage_event_error' => 'Erreur: Une erreur s\'est produite lors de l\'enregistrement de votre événement. Assurez-vous que les champs spécifiés ont bien été remplis.',
 'event_calendar:error_nosuchevent' =>  'Erreur: il n\'y a pas de tel événement.',
+
+// gccon-220: replace text for "error: there is no such event"
+'event_calendar:error_nosuchevent_loggedin_only' => "Vous devez ouvrir une session pour voir cette page.",
+
 'event_calendar:day_label' =>  "Jour",
 'event_calendar:week_label' => "Semaine",
 'event_calendar:month_label' =>  "Mois",

@@ -1922,7 +1922,8 @@ function event_calendar_get_page_content_view($event_guid) {
 	elgg_push_breadcrumb(elgg_echo('item:object:event_calendar'), 'event_calendar/list');
 
 	if (!elgg_instanceof($event, 'object', 'event_calendar')) {
-		$content = elgg_echo('event_calendar:error_nosuchevent');
+		// cyu - gccon-220: replace text for "error: there is no such event"
+		$content = elgg_echo('event_calendar:error_nosuchevent_loggedin_only');
 		$title = elgg_echo('event_calendar:generic_error_title');
 	} else {
 		if($event->title3){
