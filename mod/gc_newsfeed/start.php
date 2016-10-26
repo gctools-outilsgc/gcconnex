@@ -1,12 +1,11 @@
 <?php
 
 /**
- * Newsfeed Header
- *
+ * Newsfeed start.php
  * 
- *
+ * 
  * @version 1.0
- * @author GCTools Team
+ * @author Nick Pietrantonio    github.com/piet0024
  */
 
 

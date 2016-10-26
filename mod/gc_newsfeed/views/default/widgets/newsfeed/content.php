@@ -5,10 +5,8 @@
  * This will display Friend and Group activity based on the relationships of the logged in user
  * 
  *
- * content description.
- *
  * @version 1.0
- * @author Owner
+ * @author Nick Pietrantonio    github.com/piet0024
  */
 
 
@@ -93,7 +91,7 @@ if(elgg_is_logged_in()){
     }else if(!$hasfriends && $hasgroups){
         //if no friends but groups
         $guids_in = implode(',', array_unique(array_filter($group_guids)));
-        //$optionsg['joins'] = array("JOIN {$db_prefix}entities e1 ON e1.guid = rv.object_guid");
+        
         //display created content and replies and comments
         $optionsg['wheres'] = array("( oe.container_guid IN({$guids_in})
          OR te.container_guid IN({$guids_in}) )");
@@ -101,25 +99,6 @@ if(elgg_is_logged_in()){
         $activity = newsfeed_list_river($optionsg);
     }else{
         //if friends and groups :3
-
-        ////////////////////// NEWSFEED FILTER TESTING ////////////////////
-        //
-        //removing group activity test
-        //filter out groups you do not want
-        /*
-        $test = array('534'); //534
-        $testGroups = array_diff( $group_guids, $test); //place in $guids_in to filter groups
-
-        $optionsfg['type'] = array('object', 'group', 'user'); //type newsfeed filter
-
-        //removing friend activity test
-        //filter out friends you do not want
-        $ignoreFriends = array(); //493
-        $ignoreFriends = implode(',', $ignoreFriends);
-         */
-        //
-        ///////////////////////////////////////////////////////////////////
-
         //turn off friend connections
         //remove friend connections from action types
         $actionTypes = array('comment', 'create', 'join', 'update', 'friend', 'reply');
@@ -129,11 +108,7 @@ if(elgg_is_logged_in()){
         $optionsfg['action_types'] = array_diff( $actionTypes, $filteredItems);
 
         $guids_in = implode(',', array_unique(array_filter($group_guids)));
-        //echo $guids_in;
-        /*   $optionsfg['joins'] = array(" {$db_prefix}entities e ON e.guid = rv.object_guid",
-        " {$db_prefix}entities e1 ON e1.guid = rv.target_guid",
-
-        );*/
+        
         //Groups + Friends activity query
         //This query grabs new created content and comments and replies in the groups the user is a member of *** te.container_guid grabs comments and replies
         $optionsfg['wheres'] = array(
@@ -161,8 +136,6 @@ if(elgg_is_logged_in()){
         $activity .= '<div class="mrgn-bttm-md mrgn-tp-sm">'.elgg_echo('wetActivity:nocollorgroup').'</div>';
         $activity .= '<div>'.$featuredGroupButton.'</div>';
         $activity .= '</div></div>';
-        //$activity .= 'You should join some groups or something dawg.';
-        //we can put a link here (or suggested groups and stuff) as well to invite users to join groups or have colleagues and stuff
     }
     else if ( is_null( get_input('offset', null) ) ){
         // add a "Show All button"
@@ -187,7 +160,6 @@ if(elgg_is_logged_in()){
     echo $notice_;
     echo $login_;
 }
-
 
 //echo out the yolo code
 

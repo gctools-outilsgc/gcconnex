@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Newsfeed Filter form
+ * 
+ * @author Ethan Wallace    github.com/ethanWallace
+ */
 echo '<h3 class="mrgn-tp-sm">'.elgg_echo('newsfeed:filter').'</h3>';
 
 //check if user has filter set
