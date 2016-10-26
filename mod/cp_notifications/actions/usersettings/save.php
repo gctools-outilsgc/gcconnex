@@ -6,7 +6,38 @@ $user_guid = get_input('user_guid', elgg_get_logged_in_user_guid());
 $plugin = elgg_get_plugin_from_id($plugin_id);
 $user = get_entity($user_guid);
 
+$bulk_notifications_email = $params['cpn_bulk_notifications_email'];
+//error_log("save.php - usersettings");
 
+// create a new object for email or/and site notifications (collecting all the actions and events)
+$options = array(
+	'type' => 'object',
+	'subtype' => 'cp_digest',
+	'container_guid' => $user->getGUID(),
+);
+$current_digest = elgg_get_entities($options);
+// opposite value is sent to this action..... (maybe create ajax for it instead?)
+//error_log("status... {$plugin->getUserSetting("cpn_bulk_notifications_email",$user->getGUID())}");
+//error_log('checkbox - '.$bulk_notifications_email);
+if (strcmp($bulk_notifications_email,'bulk_notifications_email') == 0) {
+	error_log("the bulk notification flag is set for a user..");
+	if (empty($current_digest)) {
+		$new_digest = new ElggObject();
+		$new_digest->subtype = 'cp_digest';
+		$new_digest->owner_guid = $user->getGUID();
+		$new_digest->container_guid = $user->getGUID();
+		$new_digest->title = "Newsletter|{$user->email}";
+		$new_digest->access_id = ACCESS_PUBLIC;
+		$digest_id = $new_digest->save();
+
+		if ($digest_id) error_log("the object was created! with the guid of {$digest_id}");
+		$user->cpn_newsletter = $digest_id;
+		error_log("cpn_newsletter md: {$user->cpn_newsletter}");
+	}
+} else {
+	error_log("the bulk notification was unset...");
+	// disable the object (do not remove, yet!)
+}
 
 $plugin_name = $plugin->getManifest()->getName();
 foreach ($params as $k => $v) {

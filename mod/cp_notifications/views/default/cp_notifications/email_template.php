@@ -439,12 +439,14 @@ switch ($msg_type) {
 		break;
 
 	case 'cp_event_request': 
-		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_event_request:title',array($cp_topic_author->name,$title),'en');
-		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_event_request:title',array($cp_topic_author->name,$title),'fr');
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_event_request:title',array(/*$vars['cp_event_request_user'],$vars['cp_event_object']->title*/),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_event_request:title',array(/*$vars['cp_event_request_user'],$vars['cp_event_object']->title*/),'fr');
 
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_event_request:description',array($name,$title,$vars['cp_event_invite_url']),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_event_request:description',array($name,$title,$vars['cp_event_invite_url']),'fr');
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_event_request:description',array($vars['cp_event_request_user'],$vars['cp_event_object']->title,$vars['cp_event_request_url']),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_event_request:description',array($vars['cp_event_request_user'],$vars['cp_event_object']->title,$vars['cp_event_request_url']),'fr');
 
+		error_log("title: {$cp_notify_msg_title_en} | {$cp_notify_msg_title_fr} / description: {$cp_notify_msg_description_en} | {$cp_notify_msg_description_fr}");
+		$footer2_required = false;
 		break;
 
 	case 'cp_event_ics': // sent event with ics
@@ -497,8 +499,11 @@ switch ($msg_type) {
 			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_wireshare:title',array($vars['cp_shared_by']->name,cp_translate_subtype($vars['cp_content']->getSubtype()),$vars['cp_content']->title),'fr');
 		}
 
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_wireshare:description',array($vars['cp_shared_by']->name,cp_translate_subtype($vars['cp_content']->getSubtype()),$vars['cp_wire_url']),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_wireshare:description',array($vars['cp_shared_by']->name,cp_translate_subtype($vars['cp_content']->getSubtype()),$vars['cp_wire_url']),'fr');
+		$reshare_content = $vars['cp_content_reshare'];
+		$current_post = $vars['cp_content'];
+		
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_wireshare:description',array($vars['cp_shared_by']->name,cp_translate_subtype($vars['cp_content']->getSubtype()),$vars['cp_wire_url']),'en').$reshare_content->description;
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_wireshare:description',array($vars['cp_shared_by']->name,cp_translate_subtype($vars['cp_content']->getSubtype()),$vars['cp_wire_url']),'fr').$reshare_content->description;
 
 		break;
 
@@ -514,21 +519,41 @@ if ($msg_type !== 'cp_site_msg_type' && $msg_type !== 'cp_group_mail') {	// if t
 }
 
 
-$email_notif_footer_msg_fr1 = elgg_echo('cp_notify:contactHelpDesk', array(),'fr');
-$email_notif_footer_msg_fr2 = elgg_echo('cp_notify:visitTutorials', array(),'fr');
-$email_notif_footer_msg_en1 = elgg_echo('cp_notify:contactHelpDesk', array(),'en');
-$email_notif_footer_msg_en2 = elgg_echo('cp_notify:visitTutorials', array(),'en');
-
-
 $email_notification_footer_en = elgg_echo('cp_notify:footer',array(),'en');
 $email_notification_footer_fr = elgg_echo('cp_notify:footer',array(),'fr');
-$email_notification_footer_en2 = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/plugins/{$vars['user_name']->username}/cp_notifications"),'en');
-$email_notification_footer_fr2 = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/plugins/{$vars['user_name']->username}/cp_notifications"),'fr');
+
+// not all notification will need the 2nd footer ("...Please edit your notifications in your account's settings...")
+if ($footer2_required) {
+	$email_notification_footer_en2 = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/plugins/{$vars['user_name']}/cp_notifications"),'en');
+	$email_notification_footer_fr2 = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/plugins/{$vars['user_name']}/cp_notifications"),'fr');
+}
 
 $french_follows = elgg_echo('cp_notify:french_follows',array());
-//error_log(">>>>>> {$email_notification_footer_en} / >>>>>>> ".elgg_get_site_url()."/settings/plugins/{$current_username}/cp_notifications");
 
-echo<<<___HTML
+
+// since we have both external users and internal users using the same database, we need to make sure they each get the correct URL (depending on the email/dept)
+$email_address = $vars['_user_e-mail']; 
+$email_domain = explode('@',$email_address);	// (ie: first.last@gov.ab.ca) TODO - department name/abbreviation
+$pt_departments = elgg_get_plugin_setting('cp_pt_information','cp_notifications');
+error_log("pt departments - {$pt_departments}");
+$pt_departments = explode(',',$pt_departments);
+error_log(">>>> email template - {$email_address}");
+if (in_array($email_domain[1], $pt_departments)) {
+	error_log("found!");
+	$email_notification_header = str_replace(elgg_get_site_url(), 'https://ext.gcconnex.gc.ca/', $email_notification_header);
+	$cp_notify_msg_title_en = str_replace(elgg_get_site_url(), 'https://ext.gcconnex.gc.ca/', $cp_notify_msg_title_en);
+	$cp_notify_msg_description_en = str_replace(elgg_get_site_url(), 'https://ext.gcconnex.gc.ca/', $cp_notify_msg_description_en);
+	$email_notification_footer_en = str_replace(elgg_get_site_url(), 'https://ext.gcconnex.gc.ca/', $email_notification_footer_en); // no access to gcpedia
+	$email_notification_footer_en2 = str_replace(elgg_get_site_url(), 'https://ext.gcconnex.gc.ca/', $email_notification_footer_en2);
+	$cp_notify_msg_title_fr = str_replace(elgg_get_site_url(), 'https://ext.gcconnex.gc.ca/', $cp_notify_msg_title_fr);
+	$cp_notify_msg_description_fr = str_replace(elgg_get_site_url(), 'https://ext.gcconnex.gc.ca/', $cp_notify_msg_description_fr);
+	$email_notification_footer_fr = str_replace(elgg_get_site_url(), 'https://ext.gcconnex.gc.ca/', $email_notification_footer_fr); // no access to gcpedia
+	$email_notification_footer_fr2 = str_replace(elgg_get_site_url(), 'https://ext.gcconnex.gc.ca/', $email_notification_footer_fr2);
+
+}
+
+
+echo <<<___HTML
 <html>
 <body>
 	<!-- beginning of email template -->
@@ -553,7 +578,6 @@ echo<<<___HTML
 
 <!-- english -->
 
-
 		        <!-- main content of the notification (ENGLISH) -->
 		       	<!-- *optional* email message (DO NOT REPLY) -->
 		     	<div width='100%' style='padding:30px 30px 10px 30px; font-size:12px; line-height:22px; font-family:sans-serif;'>
@@ -575,11 +599,10 @@ echo<<<___HTML
 		        	
 		        	{$cp_notify_msg_description_en}
 		        	
-		              </div>
+		        </div>
                 <div style='margin-top:15px; padding: 5px; color: #6d6d6d; border-bottom: 1px solid #ddd;'>
                     <div>{$email_notification_footer_en}{$email_notification_footer_en2}</div>
                 </div>
-                
 
 <!-- french -->
 
@@ -601,12 +624,8 @@ echo<<<___HTML
 		        <!-- email divider -->
 		        <div style='height:1px; background:#bdbdbd; border-bottom:1px solid #ffffff'></div>
 
-
-
 		        <!-- email footer -->
-		        <div align='center' width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 16px; color: #055959'>
-		        	-
-		        </div>
+		        <div align='center' width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 16px; color: #055959'> </div>
 
 			</div>
 		</div>
