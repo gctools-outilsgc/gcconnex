@@ -56,11 +56,7 @@ return array(
 
   "wet:messagedd:no_results"=>"You're all caught up!",
 
-  'newsfeed:filter' => "Filter your News Feed",
-  'newsfeed:label' => "Remove colleague connections from your News Feed",
-  'newsfeed:do' => "Colleague connections will no longer display on your News Feed.",
-  'newsfeed:undo' => "Colleague connections will now display on your News Feed.",
-  'newsfeed:filter:title' => "News Feed settings",
+
 /**
 *notice section
 */
@@ -252,7 +248,6 @@ return array(
  */
     'landingPage' => 'Set Landing Page',
     'career' => 'Career',
-    'newsfeed' => 'News Feed',
 	'item:site' => 'Sites',
     'notifications:subscriptions:changesettings' => 'Notifications',
 /**
@@ -438,9 +433,6 @@ return array(
 	'widgets:add:failure' => "We could not add your widget.",
 	'widgets:move:failure' => "We could not store the new widget position.",
 	'widgets:remove:failure' => "Unable to remove this widget",
-
-    'wet4:colandgroupactivity'=>'Your News feed',
-    'wet4:colandgroupactivitynolog'=>'Welcome to GCconnex',
     'wet4:noticetitle' => 'Notice',
     'wet4:homenotice' => 'Welcome to GCconnex, the Government of Canada&#39;s professional social networking platform. The purpose of GCconnex is to enable public servants to connect and collaborate based on shared interests, knowledge, and experience. GCconnex is to be used for activities related to the workplace and should not be used as a replacement for personal social networks (such as Facebook).',
 
