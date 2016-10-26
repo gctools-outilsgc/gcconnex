@@ -108,10 +108,6 @@ function wet4_theme_init() {
 		//message preview
     elgg_register_ajax_view("messages/message_preview");
 
-    //newsfeed filter form
-    elgg_register_ajax_view("ajax/newsfeed_filter");
-    elgg_register_action("newsfeed/filter", elgg_get_plugins_path() . "/wet4/actions/newsfeed/filter.php");
-
     //Group AJAX loading view
     elgg_register_ajax_view('ajax/grp_ajax_content');
 	elgg_extend_view("js/elgg", "js/wet4/group_ajax");
@@ -197,8 +193,6 @@ function wet4_theme_init() {
 
     // Replace the default index page with redirect
     elgg_register_plugin_hook_handler('index', 'system', 'new_index');
-    //TEMP
-   // elgg_register_page_handler('newsfeed', 'newsfeed_page_handler');
     elgg_register_page_handler('splash', 'splash_page_handler');
     elgg_register_page_handler('c_photo_image', 'c_photo_page_handler');
     elgg_register_page_handler('groups_autocomplete', 'groups_autocomplete');
