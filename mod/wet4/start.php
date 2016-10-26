@@ -152,14 +152,6 @@ function wet4_theme_init() {
     // new widgets
     //registering wet 4 activity widget
 
-    if(elgg_is_logged_in()){//for my the my groups widget on the home page
-        $mygroups_title = elgg_echo('wet_mygroups:my_groups');
-        $wet_activity_title = elgg_echo('wet4:colandgroupactivity');
-    }else{
-        $mygroups_title = elgg_echo('wet_mygroups:my_groups_nolog');
-        $wet_activity_title = elgg_echo('wet4:colandgroupactivitynolog');
-    }
-    elgg_register_widget_type('wet_activity', $wet_activity_title, 'GCconnex Group and Colleague Activity', array('custom_index_widgets'),false);
     elgg_register_widget_type('suggested_friends', elgg_echo('sf:suggcolleagues'), elgg_echo('sf:suggcolleagues'), array('custom_index_widgets'),false);
     elgg_register_widget_type('feature_tour', 'feature_tour', 'feature_tour', array('custom_index_widgets'),false);
 

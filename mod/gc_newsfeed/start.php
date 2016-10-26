@@ -26,15 +26,16 @@ function newsfeed_init(){
     elgg_register_page_handler('newsfeed', 'newsfeed_page_handler');
 
     if(elgg_is_logged_in()){//for my the my groups widget on the home page
-        $mygroups_title = elgg_echo('wet_mygroups:my_groups');
-        $wet_activity_title = elgg_echo('wet4:colandgroupactivity');
+        $newsfeed_title = elgg_echo('wet4:colandgroupactivity');
     }else{
-        $mygroups_title = elgg_echo('wet_mygroups:my_groups_nolog');
-        $wet_activity_title = elgg_echo('wet4:colandgroupactivitynolog');
+        $newsfeed_title = elgg_echo('wet4:colandgroupactivitynolog');
     }
 
     //Register the custom index widget for the newsfeed page
-    elgg_register_widget_type('newsfeed', $wet_activity_title, 'Group and Friend Activity', array('custom_index_widgets'),false);
+    elgg_register_widget_type('newsfeed', $newsfeed_title, 'Group and Friend Activity', array('custom_index_widgets'),false);
+    //unregister old widget so it doesn't double up on the database on prod
+    elgg_unregister_widget_type('wet_activity');
+
 }
 
 //Custom Newsfeed Page
