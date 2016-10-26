@@ -43,6 +43,10 @@ function newsfeed_init(){
         'text'=>elgg_echo("newsfeed:menu"),
         ));
 
+    //Register newsfeed filter form
+    elgg_register_ajax_view("ajax/newsfeed_filter");
+    elgg_register_action("newsfeed/filter", elgg_get_plugins_path() . "/gc_newsfeed/actions/newsfeed/filter.php");
+
 }
 
 //Custom Newsfeed Page
