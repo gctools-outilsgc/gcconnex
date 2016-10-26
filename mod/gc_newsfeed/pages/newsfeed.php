@@ -115,4 +115,4 @@ if(elgg_is_active_plugin('gc_onboard') && elgg_is_logged_in()){
 
 }
 
-echo elgg_view_page( elgg_echo('newsfeed'), $content . $onboard);
+echo elgg_view_page( elgg_echo('newsfeed:menu'), $content . $onboard);
