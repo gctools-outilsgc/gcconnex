@@ -26,14 +26,14 @@ function newsfeed_init(){
     elgg_register_page_handler('newsfeed', 'newsfeed_page_handler');
 
     if(elgg_is_logged_in()){//for my the my groups widget on the home page
-        $newsfeed_title = elgg_echo('wet4:colandgroupactivity');
+        $newsfeed_title = elgg_echo('newsfeed:title');
     }else{
-        $newsfeed_title = elgg_echo('wet4:colandgroupactivitynolog');
+        $newsfeed_title = elgg_echo('newsfeed:titlenolog');
     }
 
     //Register the custom index widget for the newsfeed page
     elgg_register_widget_type('newsfeed', $newsfeed_title, 'Group and Friend Activity', array('custom_index_widgets'),false);
-    //unregister old widget so it doesn't double up on the database on prod
+    //Unregister old widget so it doesn't double up in the database on prod
     elgg_unregister_widget_type('wet_activity');
 
     //Register the site menu link
