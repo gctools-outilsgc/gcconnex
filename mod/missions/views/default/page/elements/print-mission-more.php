@@ -321,7 +321,13 @@ if(strpos($button_set['button_three'], 'accept-button') !== false) {
                     <?php echo elgg_echo('missions:email') . ':';?>
                 </h5>
                 <span name="mission-email">
-                    <?php echo elgg_get_excerpt($mission->email, 100);?>
+                    <?php 
+                        //Nick - Changed to a mailto link based on email feeback
+                        echo elgg_view('output/url', array(
+                                'text'=>$mission->email,
+                                'href'=>'mailto:'. $mission->email,
+                            ));
+                        ?>
                 </span>
             </div>
             <div class="">
