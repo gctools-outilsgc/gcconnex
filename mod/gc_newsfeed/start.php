@@ -36,6 +36,13 @@ function newsfeed_init(){
     //unregister old widget so it doesn't double up on the database on prod
     elgg_unregister_widget_type('wet_activity');
 
+    //Register the site menu link
+    elgg_register_menu_item('site', array(
+        'name'=>'newsfeed',
+        'href'=>elgg_get_site_url().'newsfeed',
+        'text'=>elgg_echo("newsfeed:menu"),
+        ));
+
 }
 
 //Custom Newsfeed Page
