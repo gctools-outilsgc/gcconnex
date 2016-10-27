@@ -940,8 +940,8 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 			'text' => '<i class="fa fa-download fa-lg icon-unsel"><span class="wb-inv">Download File</span></i>',
 			'title' => 'Download File',
 			'href' => "file/download/{$entity->getGUID()}",
-			'priority' => 299,
-            'context' => array('file_tools_selector', 'file'),
+			'priority' => 300,
+            //'context' => array('file_tools_selector', 'file'),
 		);
 		$return[] = \ElggMenuItem::factory($options);
     }
