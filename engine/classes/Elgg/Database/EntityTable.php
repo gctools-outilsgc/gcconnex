@@ -468,7 +468,7 @@ class EntityTable {
 		}
 
 		if ($options['callback'] === 'entity_row_to_elggstar') {
-			if ( $options['wetcustom:messages'] )
+			if ( isset($options['wetcustom:messages']) )
 				$results = _elgg_wet_fetch_entities_from_sql($query, $options['__ElggBatch']);      // Patched to allow for much faster message inbox loading with all messages being loaded into a data table
 			else
 				$results = _elgg_fetch_entities_from_sql($query, $options['__ElggBatch']);
