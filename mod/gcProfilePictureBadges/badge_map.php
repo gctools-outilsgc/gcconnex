@@ -12,7 +12,6 @@ global $initbadges;
 
 $initbadges = array(
     get_entity(534)->name => 'mentalHealth',
-    get_entity(184)->name => 'anotherOne',
     //get_entity(20934966)->name = 'mentalHealth',
 );
 

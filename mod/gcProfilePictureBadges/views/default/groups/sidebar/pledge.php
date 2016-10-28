@@ -1,4 +1,12 @@
 <?php
+/**
+ * gcProfilePictureBadges Pledge module
+ *
+ * @package gcProfilePictureBadges
+ *
+ * Loads a module in groups that have a badge associated with them if the user is a member and doesn't have the badge active
+ */
+
 $group = elgg_get_page_owner_entity();
 
 //only display for logged in user who is a member of the group
@@ -19,21 +27,21 @@ if(elgg_is_logged_in() && $group->isMember()){
 
     //display if group has a badge and the user does not have it active
     if($pledge && $pledge != $user->init_badge){
-        
+
 ?>
 <div class="pledge-holder clearfix">
-    <?php   
+    <?php
         //know more link
         echo '<span class="pull-right"><a title="' . elgg_echo('badge:knowmore') . '" target="_blank" href="' . elgg_echo('badge:knowmorelink') . '""><i class="fa fa-lg fa-info-circle icon-sel mrgn-lft-sm"><span class="wb-invisible">' . elgg_echo('badge:knowmore') . '</span></i></a></span>';
 
         //pledge description
-        echo '<p>'.elgg_echo('gcProfilePictureBadges:pledgeSell', array($pledge)).'</p>';
-        
+        echo '<p>'.elgg_echo('gcProfilePictureBadges:pledgeSell:'.$pledge).'</p>';
+
         //display badge
         echo elgg_view('output/img', array(
             'src' => 'mod/gcProfilePictureBadges/graphics/'.$pledge.'.png',
             'class' => 'center-block',
-            'title' => $pledge,
+            'title' => elgg_echo('gcProfilePictureBadges:badge:title:'.$pledge, array(elgg_echo('gcProfilePictureBadges:badge:'.$pledge))),
         ));
 
         //add to avatar button
@@ -92,7 +100,7 @@ if(elgg_is_logged_in() && $group->isMember()){
             //pledge description
             echo '<p class="">'.elgg_echo('gcProfilePictureBadges:ambassadorSell', array($pledge)).'</p>';
 
-            
+
 
             //add to avatar button
             echo elgg_view('output/url', array(
@@ -112,7 +120,7 @@ if(elgg_is_logged_in() && $group->isMember()){
         width: 100%;
         /*background-color: #f9e9b5;  f9e9b5*/
         background-color: rgba(249, 233, 181, 0.35);
-        padding: 5px; 
+        padding: 5px;
         margin: 6px 0px;
         box-shadow: 1px 1px 4px #CCC;
         border-radius: 5px;
