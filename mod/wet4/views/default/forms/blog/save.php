@@ -151,6 +151,37 @@ $access_input = elgg_view('input/access', array(
 
 $categories_input = elgg_view('input/categories', $vars);
 
+
+// code snippet below will be for minor edit for blog revisions...
+/*
+if (strcmp($vars['status'],'draft') != 0 && elgg_is_active_plugin('cp_notifications') && !$vars['new_entity']) {
+	// cyu - implement "minor edit" as per business requirements document
+	// this view is used by both creating new blog and edit new blog
+
+	$minor_edit = "<h2>".elgg_echo('cp_notify:minor_edit_header')."</h2>";
+    $minor_edit .= '<div class="checkbox">';
+    $minor_edit .= elgg_view('input/checkboxes', array(
+			'name' => 'chk_blog_minor_edit',
+            'label'=>elgg_echo('blog:minor_edit_label'),
+			'id' => 'chk_blog_minor_edit',
+			'value' => 0,
+			'options' => array(
+					elgg_echo('cp_notify:minor_edit') => 1),
+		));
+
+	// cyu - see note:
+	// upon new entity creation, it invokes two functions (event and hook) in the start.php of this plugin
+	// we need to make sure that we invoke sending notifcations only once, mark the second function as
+	// minor edit by default
+	//
+	if ($vars['new_entity'])
+		$entity->entity_minor_edit = true;
+
+	$minor_edit .= '</div>';
+}
+*/
+
+
 // hidden inputs
 $container_guid_input = elgg_view('input/hidden', array('name' => 'container_guid', 'value' => elgg_get_page_owner_guid()));
 $guid_input = elgg_view('input/hidden', array('name' => 'guid', 'value' => $vars['guid']));
@@ -217,10 +248,16 @@ $categories_input
 	$status_input
 </div>
 
+<div>
+$minor_edit
+</div>
+
 <div class="elgg-foot">
 	<div class="elgg-subtext mbm">
 	$save_status <span class="blog-save-status-time">$saved</span>
 	</div>
+
+	
 
 	$guid_input
 	$container_guid_input

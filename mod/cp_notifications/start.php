@@ -597,7 +597,7 @@ function cp_ical_headers($type_event, $event, $startdate, $enddate) {
  *
  */
 function cp_create_annotation_notification($event, $type, $object) {
-	
+	error_log("annotation happened!");
 	$entity = get_entity($object->entity_guid);
 
 	// cyu - this object is a minor edit... don't bother to send notifications
@@ -615,6 +615,12 @@ function cp_create_annotation_notification($event, $type, $object) {
 	if (strcmp($object_subtype,'likes') != 0) {
 
 		$content = get_entity($object->entity_guid);
+
+		// blog revisions, do not send out emails (temporarily disabled)
+		if (strcmp($object_subtype,'blog_revision') == 0) {
+			return;
+		}
+
 
 		if (strcmp($object_subtype,'blog' == 0) && strcmp($entity->status,'published') == 0) {
 
