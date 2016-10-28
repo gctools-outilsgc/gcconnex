@@ -326,6 +326,7 @@ foreach ($groups as $group) {
 
 <?php
 
+
 	// GROUP CONTENT SUBSCRIPTIONS
 	//------------------------------------------------------------------------------------------------------------------
     $content .= '<div class="accordion col-sm-12 clearfix mrgn-bttm-sm">';
@@ -344,11 +345,11 @@ foreach ($groups as $group) {
     $content .= '	</details>';	// close line 293
     $content .= '</div>';			// close line 299
 
-    $sub_group_content =''; // Nick - reset content2 for next group
+    $content .='</div>';				// close line 141
 
 } // cyu - end loop for the group
-
 $content .= "</section>";
+
 
 
 $site = elgg_get_site_entity();
@@ -519,5 +520,4 @@ function get_forum_in_group($entity_guid_static, $entity_guid) {
 		return get_forum_in_group($entity_guid_static, $entity->getContainerGUID());
 	}
 }
-
 
