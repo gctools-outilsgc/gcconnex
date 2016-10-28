@@ -124,6 +124,7 @@ if ($show_menu) {
 
 		//check if any initiative badges are being used
     if($user->init_badge){
+        $badge .= '<div class="gcInitBadge">';
 
         $badge .= elgg_view('output/img', array(
             'src' => 'mod/gcProfilePictureBadges/graphics/'.$user->init_badge.'.png',
