@@ -12,6 +12,7 @@ $guid = get_input('guid');
 elgg_entity_gatekeeper($guid, 'object', 'messages');
 
 $message = get_entity($guid);
+$from_user = get_user($message->fromId);
 
 // mark the message as read
 $message->readYet = true;
@@ -30,7 +31,10 @@ if ($page_owner->getGUID() == $message->toId) {
 }
 elgg_push_breadcrumb($title);
 
+$message->title = utf8_encode($message->title);
+$from_user->name = utf8_encode($from_user->name);
 $content = elgg_view_entity($message, array('full_view' => true));
+
 if ($inbox) {
 	$form_params = array(
 		'id' => 'messages-reply-form',
