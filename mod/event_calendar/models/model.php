@@ -520,7 +520,7 @@ function event_calendar_get_events_for_user_between($start_date, $end_date, $is_
 		$options['pagination'] = true;
 		$options['offset'] = $offset;
 		$options['order_by_metadata'] = array(array('name' => 'start_date', 'direction' => 'ASC', 'as' => 'integer'));
-		$events = event_calendar_get_personal_events_for_user($user_guid);
+		$events = event_calendar_get_personal_events_for_user($user_guid, $limit);
 		$repeating_events = event_calendar_get_repeating_events_for_user_between($user_guid, $start_date, $end_date, $container_guid, $region);
 		$all_events = event_calendar_merge_repeating_events($events, $repeating_events);
 		return $all_events;
