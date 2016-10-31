@@ -114,7 +114,7 @@ if ($show_menu) {
         $badge .= elgg_view('output/img', array(
             'src' => 'mod/gcProfilePictureBadges/graphics/amb_badge_v1_5.png',
             'class' => 'img-responsive',
-            'title' => 'GC Tools Ambassador',
+            'title' => elgg_echo('gcProfilePictureBadges:ambassador'),
         ));
         $badge .= '</div>';
 
@@ -129,7 +129,7 @@ if ($show_menu) {
         $badge .= elgg_view('output/img', array(
             'src' => 'mod/gcProfilePictureBadges/graphics/'.$user->init_badge.'.png',
             'class' => 'img-responsive',
-            'title' => elgg_echo('gcProfilePictureBadges:badge:title:'.$pledge, array(elgg_echo('gcProfilePictureBadges:badge:'.$pledge))),
+            'title' => elgg_echo('gcProfilePictureBadges:badge:title:'.$pledge),
         ));
 
         $badge .= '</div>';

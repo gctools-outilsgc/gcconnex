@@ -11,17 +11,18 @@
  *	Copyright : Team Webgalli 2011-2015
  */
 $french = array(
-	'gcProfilePictureBadges:badgeselectdesc' => 'Ajouter le badge d\'un groupe: ',
+	'gcProfilePictureBadges:badgeselectdesc' => "Ajouter le badge d'un groupe: ",
 
-    'gcProfilePictureBadges:ambassadorSell' => "Showcase that you are a GCTools Ambassador by displaying the badge on your avatar.(fr)",
-    'gcProfilePictureBadges:ambassador:added' => "Added GCTools Ambassador badge to your avatar(fr)",
+		'gcProfilePictureBadges:ambassador' => 'ambassadeur de OutilsGC',
+    'gcProfilePictureBadges:ambassadorSell' => "Démontrer que vous êtes un ambassadeur des OutilsGC en affichant l'écusson sur votre avatar",
+    'gcProfilePictureBadges:ambassador:added' => "L'écusson des ambassadeurs des OutilsGC a été ajouté à votre avatar",
 
-    'gcProfilePictureBadges:addtoavatar' => "Add to my avatar(fr)",
+    'gcProfilePictureBadges:addtoavatar' => "Ajouter à mon avatar",
 
-    'gcProfilePictureBadges:added' => "Added %s badge to your avatar(fr)",
+    'gcProfilePictureBadges:added' => " L'écusson %s à été ajouté à votre avatar",
 
     //info about badges
-		'gcProfilePictureBadges:badge:title:mentalHealth' => 'Supporting "%s"',
+		'gcProfilePictureBadges:badge:title:mentalHealth' => 'Appuie la santé mentale en milieu de travail',
 
 		'gcProfilePictureBadges:badge:mentalHealth' => "Santé mentale en milieu de travail",
 		'gcProfilePictureBadges:pledgeSell:mentalHealth' => "Démontrer votre engagement pour appuyer la « Santé mentale en milieu de travail » et ajoutez l'écusson à votre avatar.",
