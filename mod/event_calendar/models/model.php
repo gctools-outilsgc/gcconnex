@@ -170,7 +170,7 @@ function event_calendar_set_event_from_form($event_guid, $group_guid) {
 
 	}
 
-if(((!$e->title)&&(!$e->title2))&& (!$e->start_date) && (!$e->end_date) && (!$e->venue)){
+if(((!$e->title)&&(!$e->title2))||(!$e->start_date) || (!$e->end_date) || (!$e->venue)){
 	return false;
 }
 
