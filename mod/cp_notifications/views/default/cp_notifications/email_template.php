@@ -2,9 +2,13 @@
 <?php
 
 $cp_topic_title = $vars['cp_topic_title'];
+$cp_msg_title = $vars['cp_msg_title'];
 $cp_topic_description = $vars['cp_topic_description'];
+$cp_msg_content = $vars['cp_msg_content'];
+$cp_topic_author = get_user($vars['cp_topic_author']);
 $cp_topic_author = get_user($vars['cp_topic_author']);
 $cp_topic_url = $vars['cp_topic_url'];
+$cp_msg_url = $vars['cp_msg_url'];
 
 $cp_comment_author = get_user($vars['cp_comment_author']);
 $cp_comment_description = $vars['cp_comment_description'];
@@ -265,11 +269,11 @@ switch ($msg_type) {
 
 
 	case 'cp_site_msg_type': // new messages
-		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_site_msg:title',array($vars['cp_topic_author'],$cp_topic_title),'en');
-		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_site_msg:title',array($vars['cp_topic_author'],$cp_topic_title),'fr');
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_site_msg:title',array($vars['cp_sender'],$cp_msg_title),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_site_msg:title',array($vars['cp_sender'],$cp_msg_title),'fr');
 
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_site_msg:description',array($cp_topic_description,$cp_topic_url),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_site_msg:description',array($cp_topic_description,$cp_topic_url),'fr');
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_site_msg:description',array($cp_msg_content,$cp_msg_url),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_site_msg:description',array($cp_msg_content,$cp_msg_url),'fr');
 
 		break;
 
