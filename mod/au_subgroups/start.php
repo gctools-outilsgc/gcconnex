@@ -13,7 +13,6 @@ require_once 'lib/hooks.php';
 
 elgg_register_event_handler('init', 'system', __NAMESPACE__ . '\\init');
 
-
 function init() {
   // add in our own css
   elgg_extend_view('css/elgg', 'au_subgroups/css');
@@ -28,6 +27,7 @@ function init() {
   elgg_register_event_handler('update', 'group', __NAMESPACE__ . '\\group_visibility');
   elgg_register_event_handler('create', 'relationship', __NAMESPACE__ . '\\join_group_event', 0);
   elgg_register_event_handler('leave', 'group', __NAMESPACE__ . '\\leave_group_event');
+  
   // break up the create/update events to be more manageable
   elgg_register_event_handler('create', 'group', __NAMESPACE__ . '\\add_parent', 1000);
   elgg_register_event_handler('create', 'group', __NAMESPACE__ . '\\clone_layout_on_create', 1000);
@@ -37,9 +37,7 @@ function init() {
 
   // replace the existing groups library so we can push some display options
   elgg_register_library('elgg:groups', __DIR__ . '/lib/groups.php');
-  
   elgg_register_page_handler('au_subgroups', __NAMESPACE__ . '\\au_subgroups_pagehandler');
-  
   add_group_tool_option('subgroups', elgg_echo('au_subgroups:group:enable'));
   add_group_tool_option('subgroups_members_create', elgg_echo('au_subgroups:group:memberspermissions'));
   
@@ -55,25 +53,17 @@ function init() {
   // sort out what happens when a parent group is deleted
   elgg_register_plugin_hook_handler('action', 'groups/delete', __NAMESPACE__ . '\\delete_group');
   
-  // prevent users from being invited into a subgroup they can't join
-  //elgg_register_plugin_hook_handler('action', 'groups/invite', __NAMESPACE__ . '\\group_invite');
-  
   // remove 'join' and 'request membership' title links on subgroups for people not members of the parent
   elgg_register_plugin_hook_handler('register', 'menu:title', __NAMESPACE__ . '\\titlemenu');
   
   // register our widget
   elgg_register_widget_type('au_subgroups', elgg_echo('au_subgroups'), elgg_echo('au_subgroups:widget:description'), array('groups'));
-  
   elgg_register_ajax_view('au_subgroups/search_results');
-  
   
   // actions
   elgg_register_action('au_subgroups/move', __DIR__ . '/actions/move.php');
-  
   elgg_register_event_handler('upgrade', 'system', __NAMESPACE__ . '\\upgrades');
 }
-
-
 
 function au_subgroups_pagehandler($page) {
 	

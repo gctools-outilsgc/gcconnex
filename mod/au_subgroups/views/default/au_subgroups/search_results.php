@@ -11,7 +11,6 @@ else {
 }
 
 elgg_require_js('au_subgroups/edit');
-
 $dbprefix = elgg_get_config('dbprefix');
 
 $options = array(
@@ -29,9 +28,8 @@ else {
 }
 
 $groups = elgg_get_entities($options);
-
-
 elgg_push_context('widgets'); // use widgets context so no entity menu is used
+
 if ($groups) {
   echo '<div class="au-subgroups-result-col">';
   
@@ -48,7 +46,6 @@ if ($groups) {
 	else {
 	  $class = 'au-subgroups-non-parentable';
 	}
-	
 	
 	$action_url = elgg_get_site_url() . 'action/au_subgroups/move?parent_guid=' . $groups[$i]->guid;
 	$action_url = elgg_add_action_tokens_to_url($action_url);
