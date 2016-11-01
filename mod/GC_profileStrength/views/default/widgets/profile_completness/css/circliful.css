@@ -1,6 +1,4 @@
 /* Import the Google Font 'Lato' */
-
-
 /* Container styles */
 
 .outer {
@@ -29,7 +27,6 @@
 
 .circliful {
     overflow: visible !important;
-
 }
 
 .svg-container {

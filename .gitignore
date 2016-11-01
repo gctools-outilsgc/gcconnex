@@ -79,3 +79,4 @@ startup.sh
 !.gitignore
 !.scripts
 !.tx
+*.user

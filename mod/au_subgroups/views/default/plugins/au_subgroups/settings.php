@@ -11,7 +11,6 @@ echo elgg_view('input/dropdown', array(
 ));
 
 echo " " . elgg_echo('au_subgroups:setting:display_subgroups');
-
 echo "<br><br>";
 
 
@@ -26,5 +25,4 @@ echo elgg_view('input/dropdown', array(
 ));
 
 echo " " . elgg_echo('au_subgroups:setting:display_featured');
-
 echo "<br><br>";

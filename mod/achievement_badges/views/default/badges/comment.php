@@ -30,10 +30,6 @@ $currentBadge = $badges[0];
 //set level to zero
 $level = '1';
 
-//static
-$title = 'Comments Badge';
-$description = 'Providing your comments to the community';
-
 //set goals for badge
 $goals[0] = 1;
 $goals[1] = 25;
@@ -53,37 +49,37 @@ $entities =  elgg_get_entities(array('type' => 'object', 'subtype' => 'comment',
 if($entities){
 
     $count = count($entities);
-    
+
 } else {
-   
+
 }
 ///
 
 //progress check
 if($count < $goals[0]){ //no badge
-    
+
     $user->commentBadge = 0;
     $currentBadge = $badges[0];
     $currentGoal = $goals[0];
     $level = '1';
-    
+
 } else if($count >= $goals[0] && $count < $goals[1]){ //lvl 1
-    
+
     $user->commentBadge = 1;
     $currentBadge = $badges[1];
     $currentGoal = $goals[1];
     $level = '2';
-    
+
 } else if($count >= $goals[1]  && $count < $goals[2]){ //lvl 2
-    
+
     //$count = $goals[2];
     $user->commentBadge = 2;
     $currentBadge = $badges[2];
     $currentGoal = $goals[2];
     $level = '3';
-    
+
 } else if($count >= $goals[2]  && $count < $goals[3]){ //lvl 3
-    
+
     //$count = $goals[2];
     $user->commentBadge = 3;
     $currentBadge = $badges[3];
@@ -99,14 +95,14 @@ if($count < $goals[0]){ //no badge
     $level = '5';
 
 } else if($count >= $goals[4]){ //lvl 5
-    
+
     //$count = $goals[2];
     $user->commentBadge = 5;
     $count = $goals[4];
     $currentBadge = $badges[5];
     $currentGoal = $goals[4];
     $level = 'Completed';
-    
+
 }
 
 if(!isset($user->commentCount)){

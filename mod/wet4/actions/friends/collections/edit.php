@@ -24,7 +24,9 @@ $collection->name = $name;
 $owner = elgg_get_logged_in_user_guid();
 
 //change name using query
-$query = "UPDATE elggaccess_collections SET name='$name' WHERE id='$collection_id' AND owner_guid='$owner';";
+global $CONFIG;
+$dbprefix = elgg_get_config('dbprefix');
+$query = "UPDATE {$dbprefix}access_collections SET name='$name' WHERE id='$collection_id' AND owner_guid='$owner';";
 update_data($query);
 
 if (update_access_collection($collection_id, $friends)) {
