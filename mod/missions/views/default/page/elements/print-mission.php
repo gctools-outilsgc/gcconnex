@@ -47,6 +47,9 @@ $manager_info = elgg_view('page/elements/mission-manager-info', array(
 ));
 
 if($mission->owner_guid == elgg_get_logged_in_user_guid() || $mission->account == elgg_get_logged_in_user_guid()) {
+    $badge_color = 'mission-applicant-badge-owner';
+
+}
 	$relationship_count = elgg_get_entities_from_relationship(array(
 			'relationship' => 'mission_applied',
 			'relationship_guid' => $mission->guid,
@@ -60,9 +63,9 @@ if($mission->owner_guid == elgg_get_logged_in_user_guid() || $mission->account =
 	));
 	
 	if($relationship_count > 0 && $mission->state == 'posted') {
-		$relationship_alert = '<div name="mission-applicant-number" class="notif-badge" id="mission-' . $mission->guid . '-applicant-number" style="position:absolute;right:2px;top:2px;">' . $relationship_count . '</div>';
+		$relationship_alert = '<div name="mission-applicant-number" class="mission-applicant-badge '.$badge_color.'" id="mission-' . $mission->guid . '-applicant-number" style="">' . $relationship_count . ' '.elgg_echo("missions:applicants"). '</div>';
 	}
-}
+
 
 $completion_date_fixed = $mission->completion_date;
 if(trim($completion_date_fixed) == '') {
@@ -94,10 +97,13 @@ $click_header = elgg_view('output/url', array(
         </div>
         <div name="mission-job-type" class="mrgn-bttm-sm">
             <span class="timeStamp">
-                <?php echo elgg_echo($mission->job_type); ?>
+                <?php echo elgg_echo($mission->job_type);
+                      
+                    ?>
 
             </span>
         </div>
+
         <div class="mrgn-bttm-sm" style="max-height:115px;width:100%;overflow:hidden;" name="mission-description">
             <?php echo $description_string;?>
         </div>
@@ -131,6 +137,16 @@ $click_header = elgg_view('output/url', array(
                         <?php echo elgg_echo($mission->time_interval); ?>
                     </span>
                 </div>
+            </div>
+        </div>
+        <div>
+            <div style="display:inline-block;">
+                <h5>
+                    <?php echo elgg_echo("missions:posted"). ':';?>
+                </h5>
+            </div>
+            <div style="display:inline-block;">
+                <?php echo elgg_get_friendly_time($mission->time_created);?>
             </div>
         </div>
         <div>

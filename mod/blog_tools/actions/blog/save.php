@@ -70,20 +70,20 @@ $values = array(
 
 // fail if a required entity isn't set
 //$required = array('title', 'description');
+
 $cart = array(); //Create a array to compare if english or french title and description is in.
 foreach ($values as $name => $default) {
 
-	 $cart[] = array($name => $values);
+	$value = get_input($name, $default);
+	$cart[] = array($name => $value);
 }
 
-if ($cart['title'] && $cart['title2'] == ''){
-	$error = elgg_echo("blog:error:missing:title");
-
+if (($cart['0']['title'] == '') && ($cart['1']['title2'] == '')) {
+	$error = elgg_echo( "blog:error:missing:title");
 }
 
-if ($cart['description'] && $cart['description2'] == ''){
-	$error = elgg_echo("blog:error:missing:description");
-
+if (($cart['3']['description'] == '') && ($cart['4']['description2'] == '')) {
+	$error = elgg_echo( "blog:error:missing:description");
 }
 
 // load from POST and do sanity and access checking
@@ -92,11 +92,6 @@ foreach ($values as $name => $default) {
 		$value = htmlspecialchars(get_input('title', $default, false), ENT_QUOTES, 'UTF-8');
 	} else {
 		$value = get_input($name, $default);
-	}
-	
-	if (in_array($name, $required) && empty($value)) {
-		$error = elgg_echo("blog:error:missing:$name");
-		break;
 	}
 
 	switch ($name) {
@@ -151,13 +146,11 @@ foreach ($values as $name => $default) {
 	}
 }
 
-if (!$values['title']){
-	$values['title'] = $values['title2'];
-}
 //implode for tranlation
 $values['title3'] = gc_implode_translation($values['title'], $values['title2']);
 $values['excerpt3'] = gc_implode_translation($values['excerpt'], $values['excerpt2']);
 $values['description3'] =gc_implode_translation($values['description'], $values['description2']);
+
 // if preview, force status to be draft
 if ($save == false) {
 	$values['status'] = 'draft';

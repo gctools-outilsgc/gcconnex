@@ -1,35 +1,24 @@
 language: php
 php:
- - 5.4
- - 5.5
  - 5.6
 
 # This helps builds go quicker on Travis since it enables caching of dependencies
 # http://docs.travis-ci.com/user/workers/container-based-infrastructure/
 sudo: false
 
-
-branches:
-  except:
-    - 1.0
-    - 1.5
-    - 1.6
-    - 1.7
-    - 1.8
-
 matrix:
   include:
-    # Lint checks for PHP code and composer.json
-    - php: 5.6
-      env: VARIA=true
-      install:
-       - phpenv rehash
-       - composer self-update
-       - composer install
-      script:
-       - bash .scripts/travis/check_commit_msgs.sh
-       - vendor/bin/phpcs --standard=vendor/elgg/sniffs/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib
-       - composer validate
+    # Lint checks for PHP code and composer.json  -  removed until we figure out what to do with it
+    #- php: 5.6
+    #  env: VARIA=true
+    #  install:
+    #   - phpenv rehash
+    #   - composer self-update
+    #   - composer install
+    #  script:
+    #   - bash .scripts/travis/check_commit_msgs.sh
+    #   - vendor/bin/phpcs --standard=vendor/elgg/sniffs/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib
+    #   - composer validate
        
     # Build and test javascript
     - php: 5.6
@@ -89,11 +78,3 @@ install:
 script:
  - phpunit
  - php -f ./engine/tests/suite.php
- 
-notifications:
-  email:
-    secure: exC/ws07lLOj3Y43C89jiaKpyB8Yt7DPGSCShV4R3Wkw/hVVzjxt1BinPxzsyL5DC7APUMcTHGOhDB2oCE4ynDE6o6L9bH79fc+V8IYAiNaEIGL0AOuHdnRdGN9GMrr2jv78cZ5MctuUTkeYLaoOEyDGHmkMhqa6SufIDAY8b58=
-  webhooks:
-    urls:
-     - secure: "Ug81+4Fa2UFZetSCV79OWOgYi4uVgNQ6rVrVn2HElddOMDwuHxo9CYKoA3Q+joPKMtNFCN2qkMyoyUfIMM83uJi1LmaUx/c7lR1pXBFVgc4Xyt114NcY80I4OCWWKg0G1FDlSiaXil922JjeC3MekYoqjsIyUgabGihe6j7DWz0="
-    on_start: true

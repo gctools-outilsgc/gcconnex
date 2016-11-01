@@ -279,10 +279,16 @@ if($folder->title3){
 		$parent_guid = (int) $folder->parent_guid;
 		while (!empty($parent_guid) && ($parent = get_entity($parent_guid))) {
 			$priority--;
+
+			if($parent->title3){
+				$title_parent = gc_explode_translation($parent->title3,$lang);
+			}else{
+				$title_parent = $parent->title;
+			}
 			
 			$folder_options = array(
 				"name" => "folder_" . $parent->getGUID(),
-				"text" => $parent->title,
+				"text" => $title_parent,
 				"href" => $parent->getURL(),
 				"priority" => $priority
 			);

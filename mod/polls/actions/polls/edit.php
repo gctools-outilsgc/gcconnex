@@ -95,7 +95,7 @@ if ($guid) {
 		$container_guid = $poll->container_guid;
 		// Make sure the question / responses aren't blank
 		if  ((($count2 == 0) && ($count == 0)) || ((empty($question)) && (empty($question2)))) {
-			register_error(elgg_echo("polls:blank1".$count2));
+			register_error(elgg_echo("polls:blank"));
 			forward("polls/edit/".$guid);
 			exit;
 			// Otherwise, save the poll
@@ -170,7 +170,7 @@ if ($guid) {
 	
 		$poll->question = $question;
 		$poll->question2 = $question2;
-		$poll->title3 = gc_implode_translation($question2,$question2);
+		$poll->title3 = gc_implode_translation($question,$question2);
 		
 		if(!$poll->question){
 			$poll->title = $poll->question2;
