@@ -1,7 +1,10 @@
 <?php
-/*
-Profile Strength
-*/
+
+/**
+ * Profile Strength
+ * 
+ * @author Mathieu Blondin && Ethan Wallace github.com/ethanWallace
+ */
 
 elgg_register_event_handler('init', 'system', 'profileStrength_init');
 
