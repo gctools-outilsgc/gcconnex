@@ -30,7 +30,6 @@ if (elgg_instanceof($poll,'object','poll') && $poll->canEdit()) {
 	} else {
 		forward("polls/owner/" . $container->username);
 	}
-
 }
 		
 ?>
