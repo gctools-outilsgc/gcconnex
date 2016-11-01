@@ -14,4 +14,4 @@ return array(
     'dev_banner:enternoticeFR' => "Texte de notification en français:",
     'dev_banner:MoreInfo' => "Plus...",
     'dev_banner:activate' => "Activer la bannière:",
-    );
+);
