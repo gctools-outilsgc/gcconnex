@@ -3,14 +3,11 @@
 namespace AU\SubGroups;
 
 $display_subgroups = elgg_get_plugin_setting('display_subgroups', PLUGIN_ID);
-
 $db_prefix = elgg_get_config('dbprefix');
 // all groups doesn't get link to self
 elgg_pop_breadcrumb();
 elgg_push_breadcrumb(elgg_echo('groups'));
-
 elgg_register_title_button();
-
 $selected_tab = get_input('filter');
 
 // default group options
