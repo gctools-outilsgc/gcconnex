@@ -98,7 +98,7 @@ if ($user->canEdit()) {
 			if ($key === false){
 				$key = array_search($value[1], $departments);
 			}
-
+            echo elgg_view('input/select', array(
 				'name' => $field,
 				'id' => $field,
         		'class' => ' gcconnex-basic-' . $field,
