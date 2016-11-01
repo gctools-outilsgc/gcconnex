@@ -20,15 +20,16 @@ if ('gsa-crawler' != strtolower($_SERVER['HTTP_USER_AGENT'])) {
 			'annotation_name' => 'blog_auto_save',
 			'limit' => 1,
 		));
+
 		if ($auto_save_annotations) {
 			$revisions[] = $auto_save_annotations[0];
 		}
 
-		// count(FALSE) == 1!  AHHH!!!
 		$saved_revisions = $blog->getAnnotations(array(
 			'annotation_name' => 'blog_revision',
 			'reverse_order_by' => true,
 		));
+
 		if ($saved_revisions) {
 			$revision_count = count($saved_revisions);
 		} else {
@@ -39,10 +40,8 @@ if ('gsa-crawler' != strtolower($_SERVER['HTTP_USER_AGENT'])) {
 
 		if ($revisions) {
 			$title = elgg_echo('blog:revisions');
-
 			$n = count($revisions);
 			$body = '<ul class="blog-revisions">';
-
 			$load_base_url = "blog/edit/{$blog->getGUID()}";
 
 			// show the "published revision"
@@ -53,15 +52,12 @@ if ('gsa-crawler' != strtolower($_SERVER['HTTP_USER_AGENT'])) {
 					'is_trusted' => true,
 				));
 
-				$time = "<span class='elgg-subtext'>"
-					. elgg_view_friendly_time($blog->time_created) . "</span>";
-
+				$time = "<span class='elgg-subtext'>". elgg_view_friendly_time($blog->time_created) . "</span>";
 				$body .= "<li>$load : $time</li>";
 			}
 
 			foreach ($revisions as $revision) {
-				$time = "<span class='elgg-subtext'>"
-					. elgg_view_friendly_time($revision->time_created) . "</span>";
+				$time = "<span class='elgg-subtext'>". elgg_view_friendly_time($revision->time_created) . "</span>";
 
 				if ($revision->name == 'blog_auto_save') {
 					$revision_lang = elgg_echo('blog:auto_saved_revision');
@@ -76,9 +72,7 @@ if ('gsa-crawler' != strtolower($_SERVER['HTTP_USER_AGENT'])) {
 
 				$text = "$load: $time";
 				$class = 'class="auto-saved"';
-
 				$n--;
-
 				$body .= "<li $class>$text</li>";
 			}
 
@@ -87,5 +81,4 @@ if ('gsa-crawler' != strtolower($_SERVER['HTTP_USER_AGENT'])) {
 			echo elgg_view_module('aside', $title, $body);
 		}
 	}
-
 }
