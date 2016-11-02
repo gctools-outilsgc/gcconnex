@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Custom index widgets
+ * 
+ * @author Fx NION
+ */
+
 $maintype = "object";
 $subtype = $vars["entity"]->widget_subtype;
 

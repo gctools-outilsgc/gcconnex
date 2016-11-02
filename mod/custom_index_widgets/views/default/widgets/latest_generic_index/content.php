@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Custom index widgets
+ * 
+ * @author Fx NION
+ */
+
 $object_type = $vars["entity"]->widget_subtype;
 if (!isset($object_type))
     $object_type  = 'ELGG_ENTITIES_ANY_VALUE';
@@ -44,4 +50,3 @@ if ($site_categories == NULL || $widget_categorie == NULL) {
 
 echo $widget_datas;
 ?>
-

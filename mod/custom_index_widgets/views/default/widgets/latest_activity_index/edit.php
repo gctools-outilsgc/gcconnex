@@ -1,4 +1,11 @@
   <?php
+
+  /**
+ * Custom index widgets
+ * 
+ * @author Fx NION
+ */
+
 	$num_items = $vars['entity']->num_items;
 	if (!isset($num_items)) $num_items = 10;
 	
@@ -25,7 +32,6 @@
       <?php echo elgg_echo('group'); ?>
       : 
       <?php
-      //$groups = elgg_get_entities(array("type"=>'group','limit'=>100));
 	  $groups = elgg_get_entities(array('type'=>'group'));
       $group_list = array();
       $group_list[0] = elgg_echo('custom_index_widgets:widget_all_groups');

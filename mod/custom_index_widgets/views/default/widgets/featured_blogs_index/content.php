@@ -1,4 +1,11 @@
 <?php
+
+/**
+ * Custom index widgets
+ * 
+ * @author Fx NION
+ */
+ 
 $object_type = 'blog';
 
 $num_items = $vars['entity']->num_items;
@@ -23,7 +30,6 @@ if ($site_categories == NULL || $widget_categorie == NULL) {
 		'type'=>'object',
 		'subtype'=>$object_type,
 		'container_guids' => $widget_group,
-		// 'offset' => 0, //GCChange - set to 0 in order to ignore pagination of activity index widget
 		'limit'=>$num_items,
 		'full_view' => false,
 		'view_type_toggle' => false,
@@ -36,7 +42,6 @@ if ($site_categories == NULL || $widget_categorie == NULL) {
 		'type'=>'object',
 		'subtype'=>$object_type,
 		'container_guids' => $widget_group,
-		// 'offset' => 0, //GCChange - set to 0 in order to ignore pagination of activity index widget
 		'limit'=>$num_items,
 		'full_view' => false,
 		'view_type_toggle' => false,
@@ -55,4 +60,3 @@ elgg_push_context('widgets');
 
 echo $body;
 ?>
-
