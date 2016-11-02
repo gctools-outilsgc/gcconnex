@@ -1,4 +1,11 @@
 <?php
+
+/**
+ * Custom index widgets
+ * 
+ * @author Fx NION
+ */
+ 
 $object_type = 'blog';
 
 $num_items = $vars['entity']->num_items;

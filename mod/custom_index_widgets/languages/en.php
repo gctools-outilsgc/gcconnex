@@ -5,7 +5,6 @@
 		/*GCConnex edit: language variable for featured content widgets*/
 		'custom_index_widgets:featured_groups_index' => "Featured groups",
 		'custom_index_widgets:featured_blogs_index' => "Featured blog posts",
-		
 		'custom_index_widgets:latest_bookmarks_index' => "Latest bookmarks",
 		'custom_index_widgets:latest_groups_index' => "Latest groups",
 		'custom_index_widgets:latest_files_index' => "Latest files",
@@ -28,15 +27,12 @@
 		'custom_index_widgets:threshold'=> "Thresold",
 		'custom_index_widgets:latest_izap_videos_index' => 'Latest videos',
 		'custom_index_widgets:display_avatar' => 'Avatar',
-		
 		'custom_index_widgets:rich_media_index' => "Multimedia content",
 		'custom_index_widgets:widget_video_width' => "Width (number without px or %)",
 	    'custom_index_widgets:widget_video_height' => "Heigh (number without px or %)",
 	    'custom_index_widgets:widget_video_url' => "Url",
 	    'custom_index_widgets:widget_video_caption' => "Caption",
-		
 		'custom_index_widgets:layout' => "Layout",
-		
 		'custom_index_widgets:index_2rmsb' => '2 Columns, [Medium, Small] - [Big]',
 		'custom_index_widgets:index_2rsmb' => '2 Columns, [Small, Medium] - [Big]',
 		'custom_index_widgets:index_2rhhb' => '2 Columns, [Half, Half] - [Big]',
@@ -45,47 +41,36 @@
 		'custom_index_widgets:index_2rbhh' => '2 Columns, [Big] -[Half, Half]',
 		'custom_index_widgets:index_2rbsm' => '2 Columns, [Big] -[Small, Medium]',
 		'custom_index_widgets:index_2rbms' => '2 Columns, [Big] -[Medium, Small]',
-		
 		'custom_index_widgets:area1' => 'Widgets Zone 1',
 		'custom_index_widgets:area2' => 'Widgets Zone 2',
 		'custom_index_widgets:area3' => 'Widgets Zone 3',
-		
 		'custom_index_widgets:admin:notfound' => 'Page not found',
 		'custom_index_widgets:index' => "Index widgetisation",
 		'custom_index_widgets:num_items' => "Number of items",
 		'custom_index_widgets:reset' => "Reset all zones",
-		
 		'custom_index_widgets:pleaselogin' => "Please, please, login to see more...",
-		
 		'custom_index_widgets:widget_title' => "Override widget title (will be shown only on the index in replacement of widget default title)",
 		'custom_index_widgets:context_mode' => "Layout style",
 		'custom_index_widgets:context_list' => "List",
 		'custom_index_widgets:context_detail' => "Detail",
-		
 		'custom_index_widgets:login_style'=>"Login position",
 		'custom_index_widgets:inlayout'=>"In layout",
 		'custom_index_widgets:topbar'=>"Top bar",
 		'custom_index_widgets:widget_all_groups' => "All groups",
-		
 		"custom_index_widgets:showdashboard"=>"End index with dashboard",
 		"custom_index_widgets:showdashboard_yes"=>"Yes",
 		"custom_index_widgets:showdashboard_no"=>"No",
-
 		"custom_index_widgets:responsive"=>"Index responsive",
 		"custom_index_widgets:responsive_yes"=>"Yes",
 		"custom_index_widgets:responsive_no"=>"No",
-		
 		"custom_index_widgets:bodywidth"=>"Body width in px(fixed) or % (fluid)",
-
 		"custom_index_widgets:guest_only" => "Guest only",
 		"custom_index_widgets:box_style" => "Box Style",
 		"custom_index_widgets:social_share_index" => "Social Share",
 		"custom_index_widgets:login_index"=>"Login",
 		"admin:appearance:custom_index_widgets" => "Index Widgets",
 		"search:go" => "Go",
-	
 	);
 	
 	add_translation("en",$english);
-
 ?>

@@ -1,9 +1,10 @@
 <?php
-	 /**
- * Custom index widgets
- * 
- * @author Fx NION
- */
+/**
+* Custom index widgets
+* 
+* @author Fx NION
+*/
+
 ?>
 <div>
   <div class="contentWrapper">
@@ -66,7 +67,6 @@
           	?>
          </td>
        </tr>
-	  
     </table>
   </div>
 </div>

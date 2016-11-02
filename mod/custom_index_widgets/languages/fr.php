@@ -71,10 +71,7 @@
 			'custom_index_widgets:login_index' => "Ouverture de session",
 			'admin:appearance:custom_index_widgets' => "Index des widgets",
 			'search:go' => "OK",
-
-		
 	);
 	
 	add_translation("fr",$french);
-
 ?>

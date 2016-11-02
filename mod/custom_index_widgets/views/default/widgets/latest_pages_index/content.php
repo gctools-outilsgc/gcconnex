@@ -1,5 +1,11 @@
 <?php 
   
+ /**
+ * Custom index widgets
+ * 
+ * @author Fx NION
+ */
+
   $object_type ='page_top';
   
   $num_items = $vars['entity']->num_items;
@@ -42,4 +48,3 @@
 
 echo $widget_datas;
 ?>        
-

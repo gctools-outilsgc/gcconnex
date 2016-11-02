@@ -1,5 +1,11 @@
 <?php
 	
+/**
+ * Custom index widgets
+ * 
+ * @author Fx NION
+ */
+
 	$widget_video_width = $vars['entity']->widget_video_width;
 	$widget_video_height = $vars['entity']->widget_video_height;
 	$widget_video_url = $vars['entity']->widget_video_url;
@@ -11,7 +17,6 @@
 	if (!isset($widget_video_height)){
 		$widget_video_height = '250';
 	}
-
 ?>
 
 <div class="contentWrapper" align="center">
