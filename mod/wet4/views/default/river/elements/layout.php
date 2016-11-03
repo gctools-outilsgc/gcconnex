@@ -29,27 +29,29 @@ if(intval($_SESSION['Suggested_friends'])==5 && elgg_is_logged_in())
             $htmloutput=$htmloutput.'<h4 class="h4 mrgn-tp-0 text-primary">'.elgg_echo('sf:title').'</h3>';
             while ($row = $result->fetch_assoc()) {
                  $userGUID=$row['guid_two'];
-                $job=get_user($userGUID)->job;
-                $user_department=get_user($userGUID)->department;
-                $htmloutput=$htmloutput.'<div class="col-xs-4 text-center hght-inhrt">'; // suggested friend link to profile
-                $htmloutput .= '<a href="'.  $site_url. 'profile/'. get_user($row['guid_two'])->username.'" class="">';
+		if (elgg_get_user_validation_status($userGUID)){
+                	$job=get_user($userGUID)->job;
+                	$user_department=get_user($userGUID)->department;
+                	$htmloutput=$htmloutput.'<div class="col-xs-4 text-center hght-inhrt">'; // suggested friend link to profile
+                	$htmloutput .= '<a href="'.  $site_url. 'profile/'. get_user($row['guid_two'])->username.'" class="">';
 
-                //EW - change to render icon so new ambassador badges can be shown
-                $htmloutput.= elgg_view_entity_icon(get_entity($userGUID), 'medium', array('use_hover' => false, 'use_link' => false, 'class' => 'elgg-avatar-wet4-sf'));
-                //$htmloutput=$htmloutput.'<img src="'.get_user($row['guid_two'])->getIcon('medium') . '" class="avatar-profile-page img-responsive center-block img-circle elgg-avatar-wet4-sf" alt="'.elgg_echo('sf:alttext').' '.get_user($row['guid_two'])->getDisplayName().'">';
-                $htmloutput=$htmloutput.'<h4 class="h4 mrgn-tp-sm"><span class="text-primary">'.get_user($row['guid_two'])->getDisplayName().'</span></h4></a>';
-                if($job){ // Nick - Adding department if no job, if none add a space
-                    $htmloutput=$htmloutput.'<p class="small mrgn-tp-0">'.$job.'</p>';
-                }elseif(!$job && $user_department){
-                    $htmloutput=$htmloutput.'<p class="small mrgn-tp-0">'.$user_department.'</p>';
-                }else{
-                    $htmloutput=$htmloutput.'<p class="small mrgn-tp-0 min-height-cs"></p>';
-                }
+                	//EW - change to render icon so new ambassador badges can be shown
+                	$htmloutput.= elgg_view_entity_icon(get_entity($userGUID), 'medium', array('use_hover' => false, 'use_link' => false, 'class' => 'elgg-avatar-wet4-sf'));
+                	//$htmloutput=$htmloutput.'<img src="'.get_user($row['guid_two'])->getIcon('medium') . '" class="avatar-profile-page img-responsive center-block img-circle elgg-avatar-wet4-sf" alt="'.elgg_echo('sf:alttext').' '.get_user($row['guid_two'])->getDisplayName().'">';
+                	$htmloutput=$htmloutput.'<h4 class="h4 mrgn-tp-sm"><span class="text-primary">'.get_user($row['guid_two'])->getDisplayName().'</span></h4></a>';
+                	if($job){ // Nick - Adding department if no job, if none add a space
+                	    $htmloutput=$htmloutput.'<p class="small mrgn-tp-0">'.$job.'</p>';
+                	}elseif(!$job && $user_department){
+                	    $htmloutput=$htmloutput.'<p class="small mrgn-tp-0">'.$user_department.'</p>';
+                	}else{
+                	    $htmloutput=$htmloutput.'<p class="small mrgn-tp-0 min-height-cs"></p>';
+                	}
                
-                //changed connect button to send a friend request we should change the wording
-                $htmloutput=$htmloutput.'<a href="'.elgg_add_action_tokens_to_url("action/friends/add?friend={$userGUID}"). '" class="btn btn-primary mrgn-tp-sm">'.elgg_echo('friend:add').'</a>';
-                $htmloutput=$htmloutput.'</div>';
-               // $htmloutput=$htmloutput. $row['guid_two'].'-';
+                	//changed connect button to send a friend request we should change the wording
+                	$htmloutput=$htmloutput.'<a href="'.elgg_add_action_tokens_to_url("action/friends/add?friend={$userGUID}"). '" class="btn btn-primary mrgn-tp-sm">'.elgg_echo('friend:add').'</a>';
+                	$htmloutput=$htmloutput.'</div>';
+               		// $htmloutput=$htmloutput. $row['guid_two'].'-';
+	       }
             }
             $htmloutput=$htmloutput.'</div>';
             $htmloutput=$htmloutput.'<div class="clearfix"></div>';
