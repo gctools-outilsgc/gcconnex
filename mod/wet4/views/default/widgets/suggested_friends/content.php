@@ -37,21 +37,23 @@ try{
                     $htmloutput=$htmloutput.'<div class="row mrgn-tp-sm">';
                 }
                 $userGUID=$row['guid_two'];
-                $job=get_user($userGUID)->job;
-                $htmloutput=$htmloutput.'<div class="col-xs-6 text-center">';
-                $htmloutput .= '<a href="'.  $site_url. 'profile/'. get_user($row['guid_two'])->username.'" class="">';
-                $htmloutput=$htmloutput.'<img src="'.get_user($row['guid_two'])->getIcon('small') . '" class="avatar-profile-page img-responsive center-block img-circle " alt="'.elgg_echo('sf:alttext').' '.get_user($row['guid_two'])->getDisplayName().'">';
-                $htmloutput=$htmloutput.'<h4 class="h4 mrgn-tp-sm mrgn-bttm-0"><span class="text-primary">'.get_user($row['guid_two'])->getDisplayName().'</span></h4></a>';
-                $htmloutput=$htmloutput.'<p class="small mrgn-tp-0">'.$job.'</p>';
-                $htmloutput=$htmloutput.'<a href="'.elgg_add_action_tokens_to_url("action/friends/add?friend={$userGUID}"). '" class="btn btn-primary btn-sm mrgn-tp-sm">'.elgg_echo('friend:add').'</a>';
-                $htmloutput=$htmloutput.'</div>';
-                if($count==1 || $count==3)
-                {
-                    $htmloutput=$htmloutput.'</div>';
-                }
-                $count++;
-               // $htmloutput=$htmloutput. $row['guid_two'].'-';
-            }
+		if (elgg_get_user_validation_status($userGUID)){
+                	$job=get_user($userGUID)->job;
+                	$htmloutput=$htmloutput.'<div class="col-xs-6 text-center">';
+                	$htmloutput .= '<a href="'.  $site_url. 'profile/'. get_user($row['guid_two'])->username.'" class="">';
+                	$htmloutput=$htmloutput.'<img src="'.get_user($row['guid_two'])->getIcon('small') . '" class="avatar-profile-page img-responsive center-block img-circle " alt="'.elgg_echo('sf:alttext').' '.get_user($row['guid_two'])->getDisplayName().'">';
+                	$htmloutput=$htmloutput.'<h4 class="h4 mrgn-tp-sm mrgn-bttm-0"><span class="text-primary">'.get_user($row['guid_two'])->getDisplayName().'</span></h4></a>';
+                	$htmloutput=$htmloutput.'<p class="small mrgn-tp-0">'.$job.'</p>';
+                	$htmloutput=$htmloutput.'<a href="'.elgg_add_action_tokens_to_url("action/friends/add?friend={$userGUID}"). '" class="btn btn-primary btn-sm mrgn-tp-sm">'.elgg_echo('friend:add').'</a>';
+                	$htmloutput=$htmloutput.'</div>';
+                	if($count==1 || $count==3)
+                	{
+                	    $htmloutput=$htmloutput.'</div>';
+                	}
+                	$count++;
+               		// $htmloutput=$htmloutput. $row['guid_two'].'-';
+            	}
+	    }
             $htmloutput=$htmloutput.'</div></div>';
             $htmloutput=$htmloutput.'<div class="clearfix"></div>';
             //$htmloutput=$htmloutput.'</div>';
