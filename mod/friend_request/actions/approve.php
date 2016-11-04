@@ -1,4 +1,10 @@
 <?php
+
+/**
+* Friend request
+* 
+* @author ColdTrick IT Solutions
+*/	
 	
 $friend_guid = (int) get_input("guid");
 
@@ -53,5 +59,4 @@ if (!empty($friend)) {
 	}
 }
 
-forward(REFERER);
-	
+forward(REFERER);	

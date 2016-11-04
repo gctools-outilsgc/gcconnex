@@ -1,5 +1,11 @@
 <?php
-	
+
+/**
+* Friend request
+* 
+* @author ColdTrick IT Solutions
+*/	
+
 $friend_guid = (int) get_input("guid");
 
 $friend = get_user($friend_guid);
