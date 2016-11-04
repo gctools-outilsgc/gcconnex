@@ -25,7 +25,7 @@ $french = array(
 		'gcProfilePictureBadges:badge:title:mentalHealth' => 'Appuie la santé mentale en milieu de travail',
 
 		'gcProfilePictureBadges:badge:mentalHealth' => "Santé mentale en milieu de travail",
-		'gcProfilePictureBadges:pledgeSell:mentalHealth' => "Démontrer votre engagement pour appuyer la « Santé mentale en milieu de travail » et ajoutez l'écusson à votre avatar.",
+		'gcProfilePictureBadges:pledgeSell:mentalHealth' => "Démontrer votre engagement pour appuyer la &nbsp;&nbsp;« Santé mentale en milieu de travail » et ajoutez l'écusson à votre avatar.",
 );
 
 add_translation('fr', $french);

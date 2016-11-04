@@ -11,7 +11,7 @@ $badgemap = array(
 global $initbadges;
 
 $initbadges = array(
-    get_entity(534)->name => 'mentalHealth',
+    get_entity(791)->name => 'mentalHealth',
     //get_entity(20934966)->name = 'mentalHealth',
 );
 

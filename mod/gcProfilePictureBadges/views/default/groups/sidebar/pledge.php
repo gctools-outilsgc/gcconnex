@@ -35,7 +35,7 @@ if(elgg_is_logged_in() && $group->isMember()){
         echo '<span class="pull-right"><a title="' . elgg_echo('badge:knowmore') . '" target="_blank" href="' . elgg_echo('badge:knowmorelink') . '""><i class="fa fa-lg fa-info-circle icon-sel mrgn-lft-sm"><span class="wb-invisible">' . elgg_echo('badge:knowmore') . '</span></i></a></span>';
 
         //pledge description
-        echo '<p>'.elgg_echo('gcProfilePictureBadges:pledgeSell:'.$pledge).'</p>';
+        echo '<p style="margin-right: 12px;">'.elgg_echo('gcProfilePictureBadges:pledgeSell:'.$pledge).'</p>';
 
         //display badge
         echo elgg_view('output/img', array(
