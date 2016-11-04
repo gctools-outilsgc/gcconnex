@@ -12,12 +12,10 @@ return array(
 		'blog:archives' => 'Archives',
 		'blog:blog' =>  'ce blogue',
 		'item:object:blog' => 'Les blogues',
-		'blog:mine' => 'Mes blogues',
-					
+		'blog:mine' => 'Mes blogues',		
 		'blog:title:user_blogs' => 'Les blogues de %s',
 		'blog:title:all_blogs' => 'Tous les blogues du site',
-		'blog:title:friends' => 'Blogues de contacts',
-					
+		'blog:title:friends' => 'Blogues de contacts',		
 		'blog:group' => 'Blogues du groupe',
 		'blog:enableblog' => 'Activer le blogue du groupe',
 		'blog:write' => 'Rédiger un billet',
@@ -34,8 +32,7 @@ return array(
 		'blog:status' => 'Statut',
 		'blog:status:draft' => 'Brouillon',
 		'blog:status:published' => 'Publié',
-		'blog:status:unsaved_draft' => 'Brouillons non sauvegardés',
-					
+		'blog:status:unsaved_draft' => 'Brouillons non sauvegardés',		
 		'blog:revision' => 'Révision',
 		'blog:auto_saved_revision' => 'Révision automatiquement sauvegardée',
 					
@@ -55,7 +52,6 @@ return array(
 		'blog:error:missing:description' => "Veuillez inscrire le texte de votre billet!",
 		'blog:error:cannot_edit_post' => "Cet billet n'existe pas ou vous n'ayez pas les droits d\'accès pour le modifier.",
 		'blog:error:revision_not_found' => 	'Impossible de trouver cette révision.',
-
 					
 		// river			
 		'river:create:object:blog' => '%s a publié un billet %s',
@@ -76,6 +72,6 @@ return array(
 		'blog:noblogs' => 'Aucun billet ',
 
 		//sidebar
-	'blog:recent' => 'Récents billets',
+		'blog:recent' => 'Récents billets',
 
 );

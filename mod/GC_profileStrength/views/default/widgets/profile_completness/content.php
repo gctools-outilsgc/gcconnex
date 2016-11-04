@@ -68,9 +68,7 @@ $complete = round(($skillCount + $workCount + $eduCount + $basicCount + $aboutTo
 $userEnt->profilestrength = $complete;
 
 echo '<script src="'.elgg_get_site_url().'mod/GC_profileStrength/views/default/widgets/profile_completness/js/circliful.min.js"></script>';
-//echo '<link rel="stylesheet" href="'.elgg_get_site_url().'mod/wet4/views/default/widgets/profile_completness/css/material-design-iconic-font.min.css">';
 echo '<link rel="stylesheet" href="'.elgg_get_site_url().'mod/GC_profileStrength/views/default/widgets/profile_completness/css/circliful.css">';
-
 ?>
 
 <script>$(document).ready(function () {
@@ -80,7 +78,6 @@ echo '<link rel="stylesheet" href="'.elgg_get_site_url().'mod/GC_profileStrength
         iconPosition: 'top',
         foregroundBorderWidth: 15,
         backgroundBorderWidth: 15,
-        //iconSize: '10px',
         percent: <?php echo $complete;?>,
         fontColor: '#055959',
         textSize: 28,
@@ -88,11 +85,9 @@ echo '<link rel="stylesheet" href="'.elgg_get_site_url().'mod/GC_profileStrength
         foregroundColor: "#055959",
         iconColor: '#055959',
         targetColor: '#055959',
-        //text: 'New Users',
-        //textStyle: 'font-size: 12px;'
-        //textColor: '#666'
     });
-});</script>
+});
+</script>
 
 <?php
 //render results
@@ -158,18 +153,14 @@ if($userEnt->profilestrength != 100){
 	}
 
     //focus onto the micromission section
-    if(elgg_plugin_exists('missions') && elgg_is_active_plugin('missions') && $OptedIn==false)
-    {
+    if(elgg_plugin_exists('missions') && elgg_is_active_plugin('missions') && $OptedIn==false){
         echo '<p class="pull-left" style="width: 70%;">'.elgg_echo('ps:optingin').'</p>';
+        
         if(!strpos($currentPage,'profile')){
             echo '<a href="'.elgg_get_site_url().'profile/'.$userEnt->username.'#edit-opt-in" class="btn btn-primary mrgn-tp-sm pull-right">'. elgg_echo('ps:optin').'</a>';
-        }
-        else
-        {
+        }else{
             echo '<a href="#edit-opt-in" class="btn btn-primary mrgn-tp-sm pull-right">'. elgg_echo('ps:optin').'</a>';
         }
-
-
     }
 }
 

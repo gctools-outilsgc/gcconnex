@@ -143,7 +143,6 @@ if (!$error) {
 		}
 
 		system_message(elgg_echo('blog:message:saved'));
-
 		$status = $blog->status;
 
 		// add to river if changing status or published, regardless of new post

@@ -84,11 +84,26 @@ $change_entities_per_page_form = elgg_view_form('missions/change-entities-per-pa
 $sort_missions_form .= elgg_view_form('missions/sort-missions-form', array(
 		'class' => 'form-horizontal'
 ));
+
+//Nick - Checking to see if there are any sort filters so we can add a clear button
+$opp_type_field = $_SESSION['missions_type_field_value'];
+
+if($opp_type_field){
+    $clear_link = elgg_view('output/url', array(
+            'text'=>elgg_echo('missions:clear_filter'),
+            'href'=>'action/missions/sort-missions-form?opp_filter=',
+            'is_action' => true,
+            'is_trusted' => true,
+        ));
+}
+
 $sort_field = elgg_view('page/elements/hidden-field', array(
 		'toggle_text' => elgg_echo('missions:sort_options'),
 		'toggle_text_hidden' => elgg_echo('missions:sort_options'),
 		'toggle_id' => 'sort_options',
 		'hidden_content' => $sort_missions_form,
+        'additional_class'=>'btn btn-default',
+        'additional_text'=>$clear_link,
 		
 ));
 
@@ -131,13 +146,13 @@ foreach($entity_list as $entity){
 
 <div class="col-sm-12 TEST">
     <div class="col-sm-12">
-        <div class="pull-left">
+        <div class="">
             <h4 class="mrgn-tp-sm mrgn-bttm-0">
                  <?php echo elgg_echo('missions:latest_opportunities'); ?>
             </h4>
         </div>
-        <div class="pull-left">
-                <div class="mrgn-tp-md">
+        <div class="">
+                <div class="mrgn-tp-sm">
 
                 <?php echo $sort_field; ?>
                 </div>

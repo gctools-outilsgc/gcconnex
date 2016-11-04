@@ -4,29 +4,25 @@ namespace AU\SubGroups;
 
 $subgroup_guid = get_input('subgroup_guid');
 $parent_guid = get_input('parent_guid');
-
 $subgroup = get_entity($subgroup_guid);
 $parent = get_entity($parent_guid);
-
 $oldparent = get_parent_group($subgroup);
-
 $child_groups = get_all_children_guids($subgroup);
 
 //sanity check
 if (!elgg_instanceof($subgroup, 'group') || !elgg_instanceof($parent, 'group')) {
-  register_error(elgg_echo('au_subgroups:error:invalid:group'));
-  forward(REFERER);
+  	register_error(elgg_echo('au_subgroups:error:invalid:group'));
+  	forward(REFERER);
 }
 
 // we need to have edit permissions all the way up
 if (!can_move_subgroup($subgroup, $parent)) {
-  register_error(elgg_echo('au_subgroups:error:permissions'));
-  forward(REFERER);
+ 	register_error(elgg_echo('au_subgroups:error:permissions'));
+  	forward(REFERER);
 }
 
 // remove any existing parent relationships
 remove_parent_group($subgroup->guid);
-
 set_parent_group($subgroup->guid, $parent->guid);
 
 // determine the access_id of the new group, must be equal or more restrictive than the parent
@@ -61,7 +57,6 @@ $subgroup->save();
 
 //now we need to make sure that all members of the new subgroup are
 // members of the parent group
-
 // get all members of the subgroup - any members of subgroups have to be in this anyway
 
 $options = array(
@@ -99,7 +94,6 @@ foreach ($batch as $member) {
 	
 	// invite the user
 	add_entity_relationship($subgroup_guid, 'invited', $member_guid);
-	
 	$user = get_user($member_guid);
 	
 	if ($user) {

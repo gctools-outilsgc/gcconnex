@@ -3,7 +3,6 @@
 namespace AU\SubGroups;
 
 $group = elgg_get_page_owner_entity();
-
 $parent = get_parent_group($group);
 
 // radio buttons use label => value
@@ -24,7 +23,5 @@ echo elgg_view('input/radio', array(
 ));
 
 echo "<br><br>";
-
 echo elgg_view('input/hidden', array('name' => 'guid', 'value' => $group->guid));
-
 echo elgg_view('input/submit', array('value' => elgg_echo('submit')));

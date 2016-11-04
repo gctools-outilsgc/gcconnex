@@ -9,20 +9,17 @@
 	 * @Modified By Team Webgalli to work with ElggV1.5
 	 * www.webgalli.com or www.m4medicine.com
 	 */
-	 
 
 		$owner = $vars['entity']->getOwnerEntity();
 		$friendlytime = friendly_time($vars['entity']->time_created);
 		$responses = $vars['entity']->countAnnotations('vote');
 		
-		/**/
 		$icon = elgg_view(
 				"profile/icon", array(
 										'entity' => $owner,
 										'size' => 'small',
 									  )
 			);
-		
 		
 		$info = "<p>" . elgg_echo('poll') . ": <a href=\"{$vars['entity']->getURL()}\">{$vars['entity']->question}</a></p>";
 		$info .= "<p>{$responses} ".elgg_echo('polls:votes')."</p>";
@@ -33,6 +30,5 @@
 		echo "<div class=\"poll_gallery_icon\">" . $icon . "</div>";
 		echo "<div class=\"poll_gallery_content\">" . $info . "</div>";
 		echo "</div>";
-
 
 ?>
