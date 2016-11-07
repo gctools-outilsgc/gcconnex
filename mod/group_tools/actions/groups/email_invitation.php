@@ -1,7 +1,12 @@
 <?php
+
 /**
- * Accept an email invitation
- */
+* Group Tools
+*
+* Accept an email invitation
+* 
+* @author ColdTrick IT Solutions
+*/	
 
 $invitecode = get_input("invitecode");
 

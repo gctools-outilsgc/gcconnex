@@ -1,7 +1,12 @@
 <?php
+
 /**
- * save setting to show widgets on closed groups
- */
+* Group Tools
+*
+* save setting to show widgets on closed groups
+* 
+* @author ColdTrick IT Solutions
+*/	
 
 $group_guid = (int) get_input("group_guid");
 $profile_widgets = get_input("profile_widgets", "no");

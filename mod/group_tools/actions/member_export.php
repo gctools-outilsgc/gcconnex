@@ -1,7 +1,12 @@
 <?php
+
 /**
- * Export the members of a group to CSV
- */
+* Group Tools
+*
+* Export the members of a group to CSV
+* 
+* @author ColdTrick IT Solutions
+*/	
 
 $group_guid = (int) get_input("group_guid");
 

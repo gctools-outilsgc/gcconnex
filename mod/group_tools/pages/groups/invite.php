@@ -1,9 +1,13 @@
 <?php
+
 /**
+ * Group Tools
+ *
  * Invite users to groups
  *
+ * @author ColdTrick IT Solutions
  * @package ElggGroups
- */
+*/
 
 gatekeeper();
 

@@ -1,7 +1,12 @@
 <?php
+
 /**
- * Quickly open/close a discussion
- */
+* Group Tools
+*
+* Quickly open/close a discussion
+* 
+* @author ColdTrick IT Solutions
+*/	
 
 $guid = (int) get_input("guid");
 

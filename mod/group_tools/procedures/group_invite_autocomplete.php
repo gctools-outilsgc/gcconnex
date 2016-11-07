@@ -1,7 +1,14 @@
 <?php
+
 /**
+ * Group Tools
+ *
  * jQuery procedure to fill an autocomplete dropdown
- */
+ *
+ * @author ColdTrick IT Solutions
+ * 
+*/
+
 global $CONFIG;
 
 $q = sanitize_string(get_input("q"));

@@ -1,14 +1,19 @@
 <?php
+
 /**
+ * Group Tools
+ *
  * Overrule to group search page
- */
+ *
+ * @author ColdTrick IT Solutions
+ * 
+*/
 
 elgg_push_breadcrumb(elgg_echo("groups"), "groups/all");
 elgg_push_breadcrumb(elgg_echo("search"));
 
 $db_prefix = elgg_get_config("dbprefix");
 $query = sanitise_string(get_input("tag"));
-
 $title = elgg_echo("groups:search:title", array($query));
 $content = false;
 

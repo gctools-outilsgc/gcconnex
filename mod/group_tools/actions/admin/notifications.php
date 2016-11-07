@@ -1,7 +1,13 @@
 <?php
+
 /**
- * Enable or disable group notifications for all members
- */
+* Group Tools
+*
+* Enable or disable group notifications for all members
+* 
+* @author ColdTrick IT Solutions
+*/	
+
 $NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethods();
 
 $toggle = get_input("toggle");

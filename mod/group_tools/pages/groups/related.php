@@ -1,7 +1,13 @@
 <?php
+
 /**
+ * Group Tools
+ *
  * A page to show (and add) related groups
- */
+ *
+ * @author ColdTrick IT Solutions
+ *
+*/
 
 $group_guid = (int) get_input("group_guid");
 $group = get_entity($group_guid);

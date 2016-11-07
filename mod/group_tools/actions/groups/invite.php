@@ -1,9 +1,12 @@
 <?php
 /**
- * Invite a user to join a group
- *
- * @package ElggGroups
- */
+* Group Tools
+*
+* Invite a user to join a group
+* 
+* @author ColdTrick IT Solutions
+* @package ElggGroups
+*/	
 
 $logged_in_user = elgg_get_logged_in_user_entity();
 
