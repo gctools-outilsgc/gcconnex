@@ -7,11 +7,9 @@ return array(
 	'blog:blog' => 'Blog',
 	'item:object:blog' => 'Blogs',
 	'blog:mine' => 'My blog',
-
 	'blog:title:user_blogs' => '%s\'s blogs',
 	'blog:title:all_blogs' => 'All site blogs',
 	'blog:title:friends' => 'Friends\' blogs',
-
 	'blog:group' => 'Group blog',
 	'blog:enableblog' => 'Enable group blog',
 	'blog:write' => 'Write a blog post',
@@ -22,7 +20,6 @@ return array(
 	'blog:excerpt' => 'Excerpt',
 	'blog:body' => 'Body',
 	'blog:save_status' => 'Last saved: ',
-	
 	'blog:revision' => 'Revision',
 	'blog:auto_saved_revision' => 'Auto Saved Revision',
 
@@ -49,15 +46,7 @@ return array(
 	// notifications
 	'blog:notify:summary' => 'New blog post called %s',
 	'blog:notify:subject' => 'New blog post: %s',
-	'blog:notify:body' =>
-'
-%s published a new blog post: %s
-
-%s
-
-View and comment on the blog post:
-%s
-',
+	'blog:notify:body' => '%s published a new blog post: %s %s View and comment on the blog post: %s',
 
 	// widget
 	'blog:widget:description' => 'Display your latest blog posts',
