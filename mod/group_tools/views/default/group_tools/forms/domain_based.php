@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Group Tools
+ *
+ * @author ColdTrick IT Solutions
+ * 
+ */
+
 $group = elgg_extract("entity", $vars);
 if (!empty($group) && elgg_instanceof($group, "group") && group_tools_domain_based_groups_enabled()) {
 	$title = elgg_echo("group_tools:domain_based:title");

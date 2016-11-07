@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Group Tools
+ *
+ * @author ColdTrick IT Solutions
+ * 
+*/
+
 $limit = (int) get_input("limit", 50);
 if ($limit < 1) {
 	$limit = 50;

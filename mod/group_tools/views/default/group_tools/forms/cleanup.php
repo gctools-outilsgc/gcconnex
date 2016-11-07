@@ -1,6 +1,12 @@
 <?php
+
 /**
+ * Group Tools
+ *
  * Cleanup the group profile sidebar
+ *
+ * @author ColdTrick IT Solutions
+ * 
  */
 
 $group = elgg_extract("entity", $vars);

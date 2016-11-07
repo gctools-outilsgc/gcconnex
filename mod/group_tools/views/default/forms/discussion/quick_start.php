@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Group Tools
+ *
+ * @author ColdTrick IT Solutions
+ * 
+*/
+
 $group_selection_options = elgg_extract("groups", $vars);
 $group_access_options = elgg_extract("access", $vars);
 $selected_group = elgg_extract("container_guid", $vars, ELGG_ENTITIES_ANY_VALUE);
