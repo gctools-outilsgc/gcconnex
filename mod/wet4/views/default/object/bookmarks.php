@@ -96,7 +96,13 @@ HTML;
 	// brief view
 	$url = $bookmark->address;
 	$display_text = $url;
-	$excerpt = elgg_get_excerpt($bookmark->description);
+	
+	if($bookmark->description3){
+		$excerpt = elgg_get_excerpt(gc_explode_translation($bookmark->description3,$lang));
+	}else{
+		$excerpt = elgg_get_excerpt($bookmark->description);
+	}
+	
 	if ($excerpt) {
 		$excerpt = " - $excerpt";
 	}
