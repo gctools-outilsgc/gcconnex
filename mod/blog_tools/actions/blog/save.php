@@ -22,6 +22,7 @@ $error = FALSE;
 $error_forward_url = REFERER;
 $user = elgg_get_logged_in_user_entity();
 
+
 // edit or create a new entity
 $guid = get_input('guid');
 
@@ -81,10 +82,16 @@ if ($cart['title'] && $cart['title2'] == ''){
 
 }
 
-if ($cart['description'] && $cart['description2'] == ''){
+if ($cart['description'] && $cart['description2'] == '') {
 	$error = elgg_echo("blog:error:missing:description");
-
 }
+
+
+
+// cyu - implement minor edit functionality as per requirements document (notification)
+$minor_edit = get_input('chk_blog_minor_edit');
+$blog->entity_minor_edit = $minor_edit[0];
+
 
 // load from POST and do sanity and access checking
 foreach ($values as $name => $default) {

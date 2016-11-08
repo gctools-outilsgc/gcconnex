@@ -616,13 +616,15 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 		$content = get_entity($object->entity_guid);
 
-		// blog revisions, do not send out emails (temporarily disabled)
-		if (strcmp($object_subtype,'blog_revision') == 0) {
+		error_log("subtype: {$object_subtype} / status: {$entity->status} //// minor edit: {$entity->entity_minor_edit}" );
+
+
+		// auto save -drafts or -published blogs, we don't send out notifications
+		if (strcmp($object_subtype,'blog_auto_save') == 0 && (strcmp($entity->status,'draft') == 0 || strcmp($entity->status, 'published') == 0))
 			return;
-		}
 
-
-		if (strcmp($object_subtype,'blog' == 0) && strcmp($entity->status,'published') == 0) {
+		// if we are publishing, or revising blogs then send out notification
+		if (strcmp($object_subtype,'blog_revision') == 0 && strcmp($entity->status,'published') == 0) {
 
 			$current_user = get_user($entity->getOwnerGUID());
 
@@ -647,6 +649,10 @@ function cp_create_annotation_notification($event, $type, $object) {
 				
 
 				if ($watcher->guid != $current_user->getGUID()) { // make sure we don't send the notification to the owner themselves
+
+
+error_log(">>>>>>>>>>>>>>>> <> SUBJECT:{$subject} /// EMAIL:{$watcher->email} <><><><><><><><><><>");
+
 					if (check_entity_relationship($watcher->guid, 'cp_subscribed_to_email', $entity->getContainerGUID())) {
 						
 						if (strcmp(elgg_get_plugin_user_setting('cpn_bulk_notifications_email', $watcher->guid,'cp_notifications'),'bulk_notifications_email') == 0) {
@@ -671,7 +677,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 				}
 			}
 			return true;
-		}
+		} // end if (if subtype is blog, and published)
 
 		if (strcmp($object_subtype,'page') == 0 || strcmp($object_subtype,'page_top') == 0 || strcmp($object_subtype,'task') == 0 || strcmp($object_subtype,'task_top') == 0) {
 			$current_user = get_user($object->owner_guid);
