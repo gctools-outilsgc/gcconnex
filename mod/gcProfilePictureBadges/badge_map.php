@@ -10,9 +10,15 @@ $badgemap = array(
 //initiative badges
 global $initbadges;
 
+//get GUID of mental health group for badge
+$mentalHealth_guid = elgg_get_plugin_setting("mentalHealth_group", "gcProfilePictureBadges");
+
+if(!$mentalHealth_guid){
+    $mentalHealth_guid = 20934966;
+}
+
 $initbadges = array(
-    get_entity(791)->name => 'mentalHealth',
-    //get_entity(20934966)->name = 'mentalHealth',
+    get_entity($mentalHealth_guid)->name => 'mentalHealth',
 );
 
 
