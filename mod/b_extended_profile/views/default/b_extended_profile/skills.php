@@ -1,21 +1,31 @@
 <?php
+/***************************************************************************************
+ * Modifications:					
+ * Name 	Modification date 	Description
+ * Nick P	2016-11-04		    github #309 - Making it so this message can only be viewed by the page owner
+ ****************************************************************************************/
+
 $user_guid = elgg_get_page_owner_guid();
 $user = get_user($user_guid);
 
 // if skills isn't empty, display them so that the user can use them as a guide
 if ($user->skills != NULL && $user->skillsupgraded == NULL) {
-    echo '<div class="gcconnex-old-skills">';
-    echo '<div class="gcconnex-old-skills-message">' . elgg_echo('gcconnex_profile:gc_skill:leftover') . '</div>';
-    echo '<div class="gcconnex-old-skills-display">';
+    if(elgg_get_logged_in_user_entity() == elgg_get_page_owner_entity()){
+        echo '<div class="gcconnex-old-skills">';
+        echo '<div class="gcconnex-old-skills-message">' . elgg_echo('gcconnex_profile:gc_skill:leftover') . '</div>';
+        echo '<div class="gcconnex-old-skills-display">';
 
-    if (is_array($user->skills)) {
-        foreach ($user->skills as $oldskill)
-        echo $oldskill . '<br>';
+        if (is_array($user->skills)) {
+            foreach ($user->skills as $oldskill)
+                echo $oldskill . '<br>';
+        }
+
+        echo '</div><br>'; // close div class="gcconnex-old-skills-display
+        echo '<span class="gcconnex-old-skills-stop-showing gcconnex-profile-button" onclick="removeOldSkills()">Stop showing me this message.</span>';
+        echo '</div>'; // close div class="gcconnex-old-skills"
+    
     }
 
-    echo '</div><br>'; // close div class="gcconnex-old-skills-display
-    echo '<span class="gcconnex-old-skills-stop-showing gcconnex-profile-button" onclick="removeOldSkills()">Stop showing me this message.</span>';
-    echo '</div>'; // close div class="gcconnex-old-skills"
 }
 
 $skill_guids = $user->gc_skills;
