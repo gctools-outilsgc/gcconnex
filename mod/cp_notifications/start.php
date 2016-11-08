@@ -96,7 +96,7 @@ function cp_digest_cron_handler($hook, $entity_type, $return_value, $params) {
 			$notify_user->description = '';
 			$notify_user->save();
 			$notify_user->getOwnerEntity()->cpn_newsletter = $notify_user->guid;
-			error_log("cpn_newsletter value - {$notify_user->guid} / {$notify_user->getOwnerEntity()->cpn_newsletter}");
+			//error_log("cpn_newsletter value - {$notify_user->guid} / {$notify_user->getOwnerEntity()->cpn_newsletter}");
 			//$notify_user->delete();
 			//$user->deleteMetadata('cpn_newsletter');
 
@@ -240,9 +240,9 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_wire_url' => $params['cp_wire_url'],
 			);
 			$parent_item = $params['cp_content']->getContainerEntity();
-			error_log('Parent content1: '.$parent_item->description);
-			error_log(' ================================================================== ');
-			error_log('Parent content2: '.$params['cp_content']->description);
+			//error_log('Parent content1: '.$parent_item->description);
+			//error_log(' ================================================================== ');
+			//error_log('Parent content2: '.$params['cp_content']->description);
 			
 			if ($params['cp_content']->getType() == 'group'){
 				$type = $params['cp_content']->getType();
@@ -597,7 +597,6 @@ function cp_ical_headers($type_event, $event, $startdate, $enddate) {
  *
  */
 function cp_create_annotation_notification($event, $type, $object) {
-	error_log("annotation happened!");
 	$entity = get_entity($object->entity_guid);
 
 	// cyu - this object is a minor edit... don't bother to send notifications
@@ -616,7 +615,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 		$content = get_entity($object->entity_guid);
 
-		error_log("subtype: {$object_subtype} / status: {$entity->status} //// minor edit: {$entity->entity_minor_edit}" );
+		//error_log("subtype: {$object_subtype} / status: {$entity->status} //// minor edit: {$entity->entity_minor_edit}" );
 
 
 		// auto save -drafts or -published blogs, we don't send out notifications
@@ -649,9 +648,6 @@ function cp_create_annotation_notification($event, $type, $object) {
 				
 
 				if ($watcher->guid != $current_user->getGUID()) { // make sure we don't send the notification to the owner themselves
-
-
-error_log(">>>>>>>>>>>>>>>> <> SUBJECT:{$subject} /// EMAIL:{$watcher->email} <><><><><><><><><><>");
 
 					if (check_entity_relationship($watcher->guid, 'cp_subscribed_to_email', $entity->getContainerGUID())) {
 						
@@ -1125,9 +1121,9 @@ function cp_sub_to_wire_thread($wire_id) {
 	$dbprefix = elgg_get_config('dbprefix');
 	$query = "SELECT guid_two FROM {$dbprefix}entity_relationships WHERE relationship = 'parent' AND guid_one = {$wire_id}";
 	$parent_id = get_data($query);
-	error_log($query);
-	error_log(print_r($parent_id,true));
-	error_log("function [{$wire_id}] - {$parent_id[0]['guid_two']}");
+	//error_log($query);
+	//error_log(print_r($parent_id,true));
+	//error_log("function [{$wire_id}] - {$parent_id[0]['guid_two']}");
 
 	/*
 	if (!$parent_id) {

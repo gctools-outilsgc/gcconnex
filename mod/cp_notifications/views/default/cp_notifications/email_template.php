@@ -155,8 +155,6 @@ switch ($msg_type) {
 
 		// cyu - update
 		$cp_comment_txt = strip_tags($vars['cp_comment']->description);
-		//$cp_notify_msg_description_en = elgg_echo('cp_notify:body_comments:description',array($vars['cp_comment']->getURL()),'en');
-		//$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_comments:description',array($vars['cp_comment']->getURL()),'fr');
 
 		// GCCON-209: missing description (refer to requirements)
 		$cp_notify_msg_description_en = $cp_comment_txt;
@@ -181,13 +179,6 @@ switch ($msg_type) {
 			else
 				$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_comments:title_m', array($vars['cp_user_comment']->getURL(), $vars['cp_user_comment']->username, $vars['cp_topic_type'], $vars['cp_topic']->getURL(), $vars['cp_topic']->title),'fr');
 		}
-
-		error_log("=============================================================================================================");
-		error_log("EMAIL BODY");
-
-		error_log($cp_notify_msg_description_en);
-
-		error_log("=============================================================================================================");
 
 		break;
 
