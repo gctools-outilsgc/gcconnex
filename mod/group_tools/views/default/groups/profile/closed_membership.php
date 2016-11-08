@@ -1,8 +1,13 @@
 <?php
+
 /**
+ * Group Tools
+ *
  * Display message about closed membership
  *
  * @package ElggGroups
+ * @author ColdTrick IT Solutions
+ * 
  */
 
 $group = elgg_get_page_owner_entity();

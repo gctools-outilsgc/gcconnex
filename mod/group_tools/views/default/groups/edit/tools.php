@@ -1,11 +1,15 @@
 <?php
 
 /**
+ * Group Tools
+ *
  * Group edit form
  *
  * This view contains the group tool options provided by the different plugins
  *
  * @package ElggGroups
+ * @author ColdTrick IT Solutions
+ * 
  */
 
 $entity = elgg_extract("entity", $vars);

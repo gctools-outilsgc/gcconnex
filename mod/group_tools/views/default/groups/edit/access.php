@@ -1,12 +1,16 @@
 <?php
 
 /**
+ * Group Tools
+ *
  * Group edit form
  *
  * This view contains everything related to group access.
  * eg: how can people join this group, who can see the group, etc
  *
  * @package ElggGroups
+ * @author ColdTrick IT Solutions
+ * 
  */
 
 $entity = elgg_extract("entity", $vars, false);

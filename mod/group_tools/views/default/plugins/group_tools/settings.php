@@ -1,7 +1,14 @@
 <?php
+
 /**
+ *
+ * Group Tools
+ * 
  * Plugin settings for group tools
+ *
+ * @author ColdTrick IT Solutions
  */
+
 $plugin = $vars["entity"];
 
 $admin_transfer_options = array(

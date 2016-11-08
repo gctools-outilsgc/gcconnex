@@ -1,9 +1,15 @@
 <?php
+
 /**
+ *
+ * Group Tools
+ * 
  * Forum topic entity view
  *
  * @package ElggGroups
-*/
+ *
+ * @author ColdTrick IT Solutions
+ */
 
 $full = elgg_extract("full_view", $vars, FALSE);
 $topic = elgg_extract("entity", $vars, FALSE);

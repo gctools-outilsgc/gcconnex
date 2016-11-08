@@ -1,6 +1,12 @@
 <?php
+
 /**
+ * Group Tools
+ *
  * show the group status (open/closed) in the owner block of the group
+ *
+ * @author ColdTrick IT Solutions
+ * 
  */
 
 $group = elgg_get_page_owner_entity();

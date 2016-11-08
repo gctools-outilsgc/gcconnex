@@ -1,7 +1,14 @@
 <?php
+
 /**
+ * Group Tools
+ *
  * prefix to make the group edit tabbed
+ *
+ * @author ColdTrick IT Solutions
+ * 
  */
+
 ?>
 <script type="text/javascript">
 	

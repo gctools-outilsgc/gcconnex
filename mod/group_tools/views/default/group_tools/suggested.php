@@ -1,6 +1,12 @@
 <?php
+
 /**
+ * Group Tools
+ *
  * List all suggested groups
+ *
+ * @author ColdTrick IT Solutions
+ * 
  */
 
 $groups = elgg_extract("groups", $vars);

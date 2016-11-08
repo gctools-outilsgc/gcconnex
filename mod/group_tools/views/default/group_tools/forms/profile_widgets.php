@@ -1,6 +1,12 @@
 <?php
+
 /**
+ * Group Tools
+ *
  * show the group widgets/module on the profile for non members of closed groups
+ *
+ * @author ColdTrick IT Solutions
+ * 
  */
 
 $group = $vars["entity"];
