@@ -10,6 +10,7 @@
 
 $album = elgg_extract('entity', $vars);
 $owner = $album->getOwnerEntity();
+$lang = get_current_language();
 
 $owner_link = elgg_view('output/url', array(
 	'href' => "photos/owner/$owner->username",
@@ -22,8 +23,15 @@ $categories = elgg_view('output/categories', $vars);
 
 $subtitle = "$author_text $date $categories";
 
+if($album->title3){
+	$title_album = gc_explode_translation($album->title3, $lang);
+}else{
+	$title_album = $album->title;
+}
+
+
 $title = elgg_view('output/url', array(
-	'text' => $album->getTitle(),
+	'text' => $title_album,
 	'href' => $album->getURL(),
 ));
 
