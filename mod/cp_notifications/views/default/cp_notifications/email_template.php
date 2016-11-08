@@ -2,9 +2,13 @@
 <?php
 
 $cp_topic_title = $vars['cp_topic_title'];
+$cp_msg_title = $vars['cp_msg_title'];
 $cp_topic_description = $vars['cp_topic_description'];
+$cp_msg_content = $vars['cp_msg_content'];
+$cp_topic_author = get_user($vars['cp_topic_author']);
 $cp_topic_author = get_user($vars['cp_topic_author']);
 $cp_topic_url = $vars['cp_topic_url'];
+$cp_msg_url = $vars['cp_msg_url'];
 
 $cp_comment_author = get_user($vars['cp_comment_author']);
 $cp_comment_description = $vars['cp_comment_description'];
@@ -265,11 +269,11 @@ switch ($msg_type) {
 
 
 	case 'cp_site_msg_type': // new messages
-		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_site_msg:title',array($vars['cp_topic_author'],$cp_topic_title),'en');
-		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_site_msg:title',array($vars['cp_topic_author'],$cp_topic_title),'fr');
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_site_msg:title',array($vars['cp_sender'],$cp_msg_title),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_site_msg:title',array($vars['cp_sender'],$cp_msg_title),'fr');
 
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_site_msg:description',array($cp_topic_description,$cp_topic_url),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_site_msg:description',array($cp_topic_description,$cp_topic_url),'fr');
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_site_msg:description',array($cp_msg_content,$cp_msg_url),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_site_msg:description',array($cp_msg_content,$cp_msg_url),'fr');
 
 		break;
 
@@ -522,11 +526,24 @@ $email_notif_footer_msg_en2 = elgg_echo('cp_notify:visitTutorials', array(),'en'
 
 $email_notification_footer_en = elgg_echo('cp_notify:footer',array(),'en');
 $email_notification_footer_fr = elgg_echo('cp_notify:footer',array(),'fr');
-$email_notification_footer_en2 = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/plugins/{$vars['user_name']->username}/cp_notifications"),'en');
-$email_notification_footer_fr2 = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/plugins/{$vars['user_name']->username}/cp_notifications"),'fr');
+
+
+if (!$vars['user_name']->username) {
+	$username_link = $vars['user_name'];
+} else {
+	$username_link = $vars['user_name']->username;
+}
+
+$email_notification_footer_en2 = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/plugins/{$username_link}/cp_notifications"),'en');
+$email_notification_footer_fr2 = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/plugins/{$username_link}/cp_notifications"),'fr');
 
 $french_follows = elgg_echo('cp_notify:french_follows',array());
-//error_log(">>>>>> {$email_notification_footer_en} / >>>>>>> ".elgg_get_site_url()."/settings/plugins/{$current_username}/cp_notifications");
+
+
+
+
+
+//error_log(">>>>>>>>>>>>>>>>>>>>>>>>>> {$email_notification_footer_en2} / >>>>>>> ");
 
 echo<<<___HTML
 <html>

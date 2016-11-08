@@ -10,8 +10,6 @@ if (isset($vars['entity'])) {
 	//set img src
 	$img_src = $vars['url'] . "mod/polls/graphics/poll.gif";
 
-	$question = $vars['entity']->question;
-
 	//get the array of possible responses
 	$responses = polls_get_choice_array($vars['entity']);
 
@@ -55,7 +53,7 @@ if (isset($vars['entity'])) {
 	?>
 
 <p>
-<?php echo elgg_echo('polls:totalvotes') . $user_responses_count; ?>
+	<?php echo elgg_echo('polls:totalvotes') . $user_responses_count; ?>
 </p>
 
 <?php
@@ -66,5 +64,3 @@ else
 	register_error(elgg_echo("polls:blank"));
 	forward("polls/all");
 }
-
-

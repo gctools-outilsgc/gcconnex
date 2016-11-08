@@ -12,6 +12,8 @@ $guid = get_input('guid');
 elgg_entity_gatekeeper($guid, 'object', 'messages');
 
 $message = get_entity($guid);
+$from_user = get_user($message->fromId);
+$to_user = get_user($message->toId);
 
 // mark the message as read
 $message->readYet = true;
@@ -30,7 +32,12 @@ if ($page_owner->getGUID() == $message->toId) {
 }
 elgg_push_breadcrumb($title);
 
+$from_user->name = utf8_encode($from_user->name);
+$to_user->name = utf8_encode($to_user->name);
+$message->title = utf8_encode($message->title);
+
 $content = elgg_view_entity($message, array('full_view' => true));
+
 if ($inbox) {
 	$form_params = array(
 		'id' => 'messages-reply-form',
@@ -39,7 +46,6 @@ if ($inbox) {
 	);
 	$body_params = array('message' => $message);
 	$content .= elgg_view_form('messages/reply', $form_params, $body_params);
-	$from_user = get_user($message->fromId);
 	
 	if ((elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) && $from_user) {
 		elgg_register_menu_item('title', array(

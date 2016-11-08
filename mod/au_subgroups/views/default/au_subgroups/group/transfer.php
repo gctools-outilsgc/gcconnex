@@ -8,7 +8,6 @@ $create_page = get_input('au_subgroup', false);
 if (elgg_instanceof($group, 'group') && !$create_page) {
 
 	$title = elgg_echo('au_subgroups:move:edit:title');
-
 	$form = elgg_view_form('au_subgroups/transfer');
 
 	echo "<div>";

@@ -31,8 +31,6 @@ if (!$subgroups) {
 }
 
 $title = elgg_echo('au_subgroups:subgroups');
-
-
 $body .= "<div class='center mts'>$all_link</div>";
 
 echo elgg_view_module('aside', $title, $body);

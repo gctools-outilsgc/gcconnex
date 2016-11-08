@@ -15,7 +15,6 @@ namespace AU\SubGroups;
  * @uses $vars['link_class'] Optional CSS class for the link
  */
 $entity = $vars['entity'];
-
 $sizes = array('small', 'medium', 'large', 'tiny', 'master', 'topbar');
 // Get size
 if (!in_array($vars['size'], $sizes)) {
@@ -23,7 +22,6 @@ if (!in_array($vars['size'], $sizes)) {
 }
 
 $class = elgg_extract('img_class', $vars, '');
-
 $span = '';
 $parent = get_parent_group($entity);
 if ($parent) {
@@ -40,8 +38,8 @@ if (isset($entity->name)) {
 	$title = $entity->title;
 }
 $title = htmlspecialchars($title, ENT_QUOTES, 'UTF-8', false);
-
 $url = $entity->getURL();
+
 if (isset($vars['href'])) {
 	$url = $vars['href'];
 }
@@ -53,8 +51,8 @@ $size = $vars['size'];
 $filehandler = new \ElggFile();
 $filehandler->owner_guid = $entity->owner_guid;
 $filehandler->setFilename("groups/" . $entity->guid . $size . ".jpg");
-
 $location = elgg_get_plugins_path() . "groups/graphics/default{$size}.gif";
+
 if ($filehandler->open("read")) {
   $location = $filehandler->getFilenameOnFilestore();
 }
@@ -63,8 +61,8 @@ $imginfo = getimagesize($location);
 
 if($imginfo){
 	$realratio = $imginfo[0]/$imginfo[1];
-  $img_height = $size != 'master' ? $icon_sizes[$size]['h'] : NULL;
-  $img_width = $size != 'master' ? $icon_sizes[$size]['w'] : NULL;
+  	$img_height = $size != 'master' ? $icon_sizes[$size]['h'] : NULL;
+  	$img_width = $size != 'master' ? $icon_sizes[$size]['w'] : NULL;
   
 	//set ratio greater than realratio by default in case $img_height = 0
 	$setratio = $realratio + 1;

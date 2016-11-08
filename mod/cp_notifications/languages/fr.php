@@ -272,8 +272,8 @@ $french = array(
 	'cp_notify:event_update:subject' => " L'événement' %s a été mis à jour", // NEW
 
 	// email notification footer text (1 and 2)	
-	'cp_notify:footer' => "Apprenez davantage au sujet des <a href='https://gcconnex.gc.ca/mod/contactform/'>notifications de GCconnex</a>.",// Check URL or link
-	'cp_notify:footer2' =>  " Besoin d’aide? <a href='http://www.gcpedia.gc.ca/wiki//Voir_Tout'>Contactez-nous</a>.<br/>Pour vous désabonner de ces notifications, connectez-vous à GCconnex et modifiez vos <a href='%s'>paramètres de notifications</a>.",
+	'cp_notify:footer' => "Apprenez davantage au sujet des <a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Manage_Account_Settings/How_Do_I_Change_My_Notifications_Settings%3F/'>notifications de GCconnex</a>.",// Check URL or link
+	'cp_notify:footer2' =>  " Besoin d’aide? <a href='https://gcconnex.gc.ca/mod/contactform/'>Contactez-nous</a>.<br/>Pour vous désabonner de ces notifications, connectez-vous à GCconnex et modifiez vos <a href='%s'>paramètres de notifications</a>.",
 
 
 

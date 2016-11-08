@@ -154,7 +154,7 @@ $categories_input = elgg_view('input/categories', $vars);
 
 // code snippet below will be for minor edit for blog revisions...
 
-if (strcmp($vars['status'],'draft') != 0 && elgg_is_active_plugin('cp_notifications') && !$vars['new_entity']) {
+if ($vars['guid'] && (strcmp($vars['status'],'draft') != 0 && elgg_is_active_plugin('cp_notifications') && !$vars['new_entity'])) {
 	// cyu - implement "minor edit" as per business requirements document
 	// this view is used by both creating new blog and edit new blog
 

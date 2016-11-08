@@ -1470,7 +1470,8 @@ details.elgg-state-success:before {
 }
 
 .tool-link{
-    padding:11px 0 0 30px;
+    font-size:16px;
+    padding:11px 0 0 20px;
 }
 
 .tool-link:hover{
@@ -1479,7 +1480,7 @@ details.elgg-state-success:before {
 
 .tool-link-icon{
     width: 25px;
-    margin:0 5px 5px 0;
+    margin:0 2px 5px 0;
 
 }
     #friends_collections_accordian li h2 {
