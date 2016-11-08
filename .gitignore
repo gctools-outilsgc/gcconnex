@@ -79,3 +79,8 @@ startup.sh
 !.gitignore
 !.scripts
 !.tx
+
+*.user
+
+*.phpproj.user
+

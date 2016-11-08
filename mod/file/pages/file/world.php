@@ -26,7 +26,7 @@ $sidebar .= elgg_view('file/sidebar');
 
 $body = elgg_view_layout('content', array(
 	'filter_context' => 'all',
-	'content' => $content . elgg_unregister_menu_item('title2', 'new_folder'),
+	'content' => $content . elgg_unregister_menu_item('title', 'new_folder'), //change title2 cause phpwarning: Object of class ElggMenuItem could not be converted to string
 	'title' => $title,
 	'sidebar' => $sidebar,
 ));

@@ -20,7 +20,9 @@ $content = elgg_list_entities($options);
 echo $content;
 
 if ($content) {
-	$url = "pages/owner/" . elgg_get_page_owner_entity()->username;
+	//$url = "pages/owner/" . elgg_get_page_owner_entity()->username;
+	// GCCON-219: Broken Link (pages widget only)
+	$url = "pages/group/".elgg_get_page_owner_guid()."/all";
 	$more_link = elgg_view('output/url', array(
 		'href' => $url,
 		'text' => elgg_echo('pages:more'),

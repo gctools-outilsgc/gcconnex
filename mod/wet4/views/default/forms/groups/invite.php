@@ -20,7 +20,7 @@ $friends = elgg_get_logged_in_user_entity()->getFriends(array("limit" => false))
 if (!empty($friends)) {
 	$toggle_content = "<span>" . elgg_echo("group_tools:group:invite:friends:select_all") . "</span>";
 	$toggle_content .= "<span class='hidden wb-invisible'>" . elgg_echo("group_tools:group:invite:friends:deselect_all") . "</span>";
-	
+
 	//$friendspicker = elgg_view("output/url", array("text" => $toggle_content, "href" => "javascript:void(0);", "onclick" => "group_tools_toggle_all_friends();", "id" => "friends_toggle", "class" => "float-alt elgg-button elgg-button-action"));
 	$friendspicker .= elgg_view('input/friendspicker', array('entities' => $friends, 'name' => 'user_guid', 'highlight' => 'all'));
 } else {
@@ -60,7 +60,7 @@ if (in_array("yes", array($invite_site_members, $invite_circle, $invite_email, $
 			"priority" => 300,
 			"onclick" => "group_tools_group_invite_switch_tab(\"users\");"
 		);
-		
+
 		$form_data .= "<div id='group_tools_group_invite_users' class='mbm'>";
 		$form_data .= "<div>" . elgg_echo("group_tools:group:invite:users:description") . "</div>";
 		$form_data .= elgg_view("input/group_invite_autocomplete", array("name" => "user_guid",
@@ -84,10 +84,10 @@ if (in_array("yes", array($invite_site_members, $invite_circle, $invite_email, $
 			"priority" => 400,
 			"onclick" => "group_tools_group_invite_switch_tab(\"circle\");"
 		);
-		
+
 		$form_data .= "<div id='group_tools_group_invite_circle' class='mbm'>";
 		$form_data .= "<p>".elgg_echo("collections_circle_selection")."</p>";
-		
+
 		$content = get_user_access_collections(elgg_get_logged_in_user_guid());
 		$collection_id = get_user_access_collections(elgg_get_logged_in_user_guid());
 
@@ -98,14 +98,14 @@ if (in_array("yes", array($invite_site_members, $invite_circle, $invite_email, $
 			$collections = get_members_of_access_collection($collection->id, true);
 			$form_data .= "<option value=";
 			$coll_members = array();
-			
+
 				foreach ($collections as $key => $value) {
 					$name = get_user($value);
 					$coll_members[] = $name->guid;
 				}
 
 			$form_data .= implode(',', $coll_members);
-		
+
 			if ($collection->id == $collection_id){
 				$form_data .= ' selected="selected"';
 			}
@@ -117,10 +117,10 @@ if (in_array("yes", array($invite_site_members, $invite_circle, $invite_email, $
 		$form_data .= '</select>';
 		$form_data .= "</div>";
 	}
-	
+
 	// invite by email
 	if ($invite_email == "yes") {
-        
+
         $tabs["email"] = array(
 			"text" => elgg_echo("group_tools:group:invite:email"),
 			"href" => "#",
@@ -136,50 +136,9 @@ if (in_array("yes", array($invite_site_members, $invite_circle, $invite_email, $
 																			"group_guid" => $group->getGUID(),
 																			"relationship" => "email"));
 		$form_data .= "</div>";
-        /*
-         * New system that doesnt work
-         *
-         * 
-		$tabs["email"] = array(
-			"text" => elgg_echo("group_tools:group:invite:email"),
-			"href" => "#",
-			"rel" => "users",
-			"priority" => 400,
-			"onclick" => "group_tools_group_invite_switch_tab(\"email\");"
-		);
-		
-		$form_data .= "<div id='group_tools_group_invite_email' class='mbm'>";
-		$form_data .= "<div>" . elgg_echo("group:invite:email") . "</div>";
-		$form_data .= elgg_view("input/text", array("name" => "user_guid",
-																			"id" => "group_tools_group_invite_autocomplete_email",
-																			"group_guid" => $group->getGUID(),
-																			"relationship" => "email",
-                                                                            'class' => 'noSubmit'));
 
-        $form_data .= '<div id="group_tools_group_invite_autocomplete_email_autocomplete_results" class="mtm clearfloat"></div>';
-        //$form_data .= '<div class="group_tools_group_invite_autocomplete_autocomplete_result elgg-discover_result elgg-discover"><input type="hidden" value="" name="user_guid_email[]"></div>';
-		$form_data .= "</div>";
-         */
-        //<div class="group_tools_group_invite_autocomplete_autocomplete_result elgg-discover_result elgg-discover"><input type="hidden" value="etan154@gmail.com" name="user_guid_email[]">etan154@gmail.com<i class="fa fa-trash-o fa-lg icon-unsel mrgn-lft-sm elgg-icon-delete-alt"><span class="wb-inv">Delete this</span></i></div>
-         
-
-        /*
-
-        <div id="group_tools_group_invite_autocomplete_email_autocomplete_results" class="mtm clearfloat">
-            <div class="group_tools_group_invite_autocomplete_autocomplete_result elgg-discover_result elgg-discover">
-                <input type="hidden" value="test@test.tes" name="user_guid_email[]">test@test.tes<i class="fa fa-trash-o fa-lg icon-unsel mrgn-lft-sm elgg-icon-delete-alt"><span class="wb-inv">Delete this</span></i>
-            </div>
-        </div>
-
-        <div id="group_tools_group_invite_autocomplete_email_autocomplete_results" class="mtm clearfloat">  
-            <div class="group_tools_group_invite_autocomplete_autocomplete_result elgg-discover_result elgg-discover">
-                <input type="hidden" value="test@test.tes" name="user_guid_email[]">test@test.tes<i class="fa fa-trash-o fa-lg icon-unsel mrgn-lft-sm elgg-icon-delete-alt"><span class="wb-inv">Delete this</span></i>
-            </div>
-        </div>
-
-         * */
     }
-	
+
 	//invite by cvs upload
 	if ($invite_csv == "yes") {
 		$tabs["csv"] = array(
@@ -189,13 +148,13 @@ if (in_array("yes", array($invite_site_members, $invite_circle, $invite_email, $
 			"priority" => 600,
 			"onclick" => "group_tools_group_invite_switch_tab(\"csv\");"
 		);
-		
+
 		$form_data .= "<div id='group_tools_group_invite_csv' class='hidden wb-invisible mbm'>";
 		$form_data .= "<div>" . elgg_echo("group_tools:group:invite:csv:description") . "</div>";
 		$form_data .= elgg_view("input/file", array("name" => "csv"));
 		$form_data .= "</div>";
 	}
-	
+
 } else {
 	// only friends
 	$form_data = $friendspicker;
@@ -216,7 +175,7 @@ if ($group->canEdit()) {
 if (!empty($tabs)) {
 	foreach ($tabs as $name => $tab) {
 		$tab["name"] = $name;
-			
+
 		elgg_register_menu_item("filter", $tab);
 	}
 	echo elgg_view_menu("filter", array("sort_by" => "priority"));
@@ -230,7 +189,7 @@ echo $form_data;
 
 <script>
 
-            
+
              $('.noSubmit').keypress(function (e) {
                  if (e.keyCode == 13) {
 
@@ -275,7 +234,7 @@ echo $form_data;
              $('#group_tools_group_invite_email .elgg-icon-delete-alt').live("click", function () {
 			    $(this).parent('div').remove();
              });
-    
+
              $('.elgg-button-submit').live("click", function () {
 
                  if ($('td input:checked').attr('checked', 'checked')) {
@@ -297,7 +256,7 @@ if (elgg_is_admin_logged_in()) {
 	echo elgg_view("input/submit", array('name' => 'submit', "value" => elgg_echo("group_tools:add_users"), "onclick" => "return confirm(\"" . elgg_echo("group_tools:group:invite:add:confirm") . "\");"));
 }
 echo '</div>';
-	
+
 ?>
 <script type="text/javascript">
 
@@ -315,7 +274,7 @@ echo '</div>';
 				$('#group_tools_group_invite_email').hide();
 				$('#group_tools_group_invite_csv').hide();
 				$('#group_tools_group_invite_circle').hide();
-				
+
 				$('#group_tools_group_invite_users').show();
 				break;
 			case "circle":
@@ -323,7 +282,7 @@ echo '</div>';
 				$('#group_tools_group_invite_email').hide();
 				$('#group_tools_group_invite_csv').hide();
 				$('#group_tools_group_invite_users').hide();
-				
+
 				$('#group_tools_group_invite_circle').show();
 				break;
 			case "email":
@@ -331,7 +290,7 @@ echo '</div>';
 				$('#group_tools_group_invite_users').hide();
 				$('#group_tools_group_invite_csv').hide();
 				$('#group_tools_group_invite_circle').hide();
-				
+
 				$('#group_tools_group_invite_email').removeClass('hidden wb-invisible').show();;
 				break;
 			case "csv":
@@ -339,7 +298,7 @@ echo '</div>';
 				$('#group_tools_group_invite_users').hide();
 				$('#group_tools_group_invite_email').hide();
 				$('#group_tools_group_invite_circle').hide();
-				
+
 				$('#group_tools_group_invite_csv').show();
 				break;
 			default:
@@ -347,7 +306,7 @@ echo '</div>';
 				$('#group_tools_group_invite_email').hide();
 				$('#group_tools_group_invite_csv').hide();
 				$('#group_tools_group_invite_circle').hide();
-				
+
 				$('#group_tools_group_invite_friends').show();
 				break;
 		}

@@ -16,10 +16,7 @@
 			
 			foreach($vars['posts'] as $post) {
 				
-				echo elgg_view_entity($post);
-				
+				echo elgg_view_entity($post);	
 			}
-			
 		}
-
 ?>

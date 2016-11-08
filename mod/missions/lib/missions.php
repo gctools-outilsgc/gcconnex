@@ -280,6 +280,25 @@ function mm_create_button_set_base($mission, $full_view=false) {
 	 				'style' => 'margin:2px;'
 			)) . '</div>';
 		}
+
+        //Nick - Adding the option for admins to delete and edit archived missions
+        if(elgg_is_admin_logged_in()){
+            $returner['edit_button'] = '<div id="edit-button-mission-' . $mission->guid . '" name="edit-button" style="display:inline-block;">' . elgg_view('output/url', array(
+					'href' => elgg_get_site_url() . 'missions/mission-edit/' . $mission->guid,
+					'text' => elgg_echo('missions:edit'),
+					'class' => 'elgg-button btn btn-primary',
+ 					'style' => 'margin:2px;'
+			)) . '</div>';
+
+            $button_four = '<div id="delete-button-mission-' . $mission->guid . '" name="delete-button" style="display:inline-block;">' . elgg_view('output/url', array(
+                        'href' => elgg_get_site_url() . 'action/missions/delete-mission?mission_guid=' . $mission->guid,
+                        'text' => elgg_echo('missions:delete'),
+                        'is_action' => true,
+                        'class' => 'elgg-button btn btn-danger',
+                        'style' => 'margin:2px;'
+                )) . '</div>';
+        }
+
 	}
 	
 	$returner['button_zero'] = $button_zero;
