@@ -171,8 +171,8 @@ switch ($msg_type) {
 			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_comments:title_discussion', array($vars['cp_user_comment']->getURL(), $vars['cp_user_comment']->username, $vars['cp_topic_type'], $vars['cp_topic']->getURL(), $vars['cp_topic']->title),'en');
 			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_comments:title_discussion', array($vars['cp_user_comment']->getURL(), $vars['cp_user_comment']->username, $vars['cp_topic_type'], $vars['cp_topic']->getURL(), $vars['cp_topic']->title),'fr');
 
-			$cp_notify_msg_description_en = elgg_echo('cp_notify:body_comments:description_discussion',array($vars['cp_comment']->getURL()),'en');
-			$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_comments:description_discussion',array($vars['cp_comment']->getURL()),'fr');
+			$cp_notify_msg_description_en = $vars['cp_comment']->description."<br/>".elgg_echo('cp_notify:body_comments:description_discussion',array($vars['cp_comment']->getURL()),'en');
+			$cp_notify_msg_description_fr = $vars['cp_comment']->description."<br/>".elgg_echo('cp_notify:body_comments:description_discussion',array($vars['cp_comment']->getURL()),'fr');
 		} else {
 			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_comments:title', array($vars['cp_user_comment']->getURL(), $vars['cp_user_comment']->username, $vars['cp_topic_type'], $vars['cp_topic']->getURL(), $vars['cp_topic']->title),'en');
 
