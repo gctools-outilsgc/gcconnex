@@ -1067,7 +1067,10 @@ function cp_create_notification($event, $type, $object) {
 	if (empty($subject))
 		return false;
 
-
+$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
+//$subject = html_entity_decode($subject);
+//	$subject = utf8_encode ($subject);
+error_log("SUBJECT >>>>>>>>>>>> {$subject}");
 	// PLEASE NOTE THAT function messages_send() creates infinite loop
 	$query = "SELECT DISTINCT u.guid, u.email, u.username FROM {$dbprefix}entity_relationships r, {$dbprefix}users_entity u WHERE r.guid_one <> {$content_originator} AND r.relationship LIKE 'cp_subscribed_to_%' AND r.guid_two = {$guid_two} AND r.guid_one = u.guid";
 	$to_recipients = get_data($query);
