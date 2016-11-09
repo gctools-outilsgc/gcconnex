@@ -14,7 +14,7 @@
  */
 
 $entity = $vars['entity'];
-
+$lang = get_current_language();
 $sizes = array('master', 'large', 'small', 'tiny');
 // Get size
 if (!in_array($vars['size'], $sizes)) {
@@ -22,7 +22,12 @@ if (!in_array($vars['size'], $sizes)) {
 }
 
 if (!isset($vars['title'])) {
-	$title = $entity->getTitle();
+	if($entity->title3){
+		$title = gc_explode_translation($entity->title3, $lang);
+	}else{
+		$title = $entity->getTitle();
+	}
+
 } else {
 	$title = $vars['title'];
 }
