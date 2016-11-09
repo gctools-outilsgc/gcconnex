@@ -1,4 +1,11 @@
-<?php 
+<?php
+
+/**
+ * GC-Information Banne
+ * 
+ * @author Government of Canada
+ */
+
 $noticeEN = $vars['entity']->noticeEN;
 $noticeFR = $vars['entity']->noticeFR;
 $bannertype = $vars['entity']->bannertype;
@@ -6,9 +13,8 @@ $startdate = $vars['entity']->startdate;
 $enddate = $vars['entity']->enddate;
 $moreinfolink= $vars['entity']->moreinfolink;
 $active= $vars['entity']->Banneractive;
-/*if (!$loginreq) { $loginreq = 'yes'; }		*/
-?>
 
+?>
 <p>
 <?php
 $options = array(
