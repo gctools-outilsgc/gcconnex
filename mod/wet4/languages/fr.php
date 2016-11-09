@@ -176,8 +176,8 @@ return array(
  */
     'wire:post' => 'le message sur le fil',
     'thewire:post' => "Créer un article sur le fil",
-    'thewire:share'	=> 'Partage',
-    'thewire:shares' => 'Partages',
+    'thewire:share'	=> ' Partage',
+    'thewire:shares' => ' Partages',
     'thewire:contentwarning' => 'Il est possible que les utilisateurs ne puissent pas tous voir ce contenu en raison des permissions d\'accès.',
     'thewire:groupwarning' => 'Ce contenu peut être consulté par les membres de : ',
     'thewire:userwarning' => 'Seuls les utilisateurs suivants peuvent consulter ce contenu : ',
