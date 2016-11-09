@@ -3,6 +3,7 @@
 	$english = array(
 
 		/*GCConnex edit: language variable for featured content widgets*/
+		'custom_index_widgets:stream_wire_index' => "Stream Wire posts",
 		'custom_index_widgets:featured_groups_index' => "Featured groups",
 		'custom_index_widgets:featured_blogs_index' => "Featured blog posts",
 		

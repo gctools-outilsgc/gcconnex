@@ -38,14 +38,14 @@ console.log("polling call");
       
  document.getElementById("cyutest").innerHTML += "<ul class='list-unstyled elgg-list elgg-list-entity'> ";
 $.each (data['result']['posts'], function (key, value) {
-    console.log ("key: "+key+ " // value:"+value['text']);
-document.getElementById("cyutest").innerHTML += "<li class='elgg-item elgg-item-object list-break mrgn-tp-md clearfix noWrap elgg-item-object-thewire clearfix' id='elgg-object-123'>";
-document.getElementById("cyutest").innerHTML += "<div class='col-xs-12 mrgn-tp-sm clearfix mrgn-bttm-sm'> ";
-document.getElementById("cyutest").innerHTML += "<div class='mrgn-tp-sm col-xs-2 clearfix'><img src='"+value['user']['iconURL']+"' class='img-responsive img-circle' /></div>";
-document.getElementById("cyutest").innerHTML += "<div class='mrgn-tp-sm col-xs-10 noWrap'> "+ value['user']['username'] +" <div>";
-document.getElementById("cyutest").innerHTML += "<div> "+ value['text'] +" <div>";
-document.getElementById("cyutest").innerHTML += "</div> ";
-document.getElementById("cyutest").innerHTML += "</li>";
+  console.log ("key: "+key+ " // value:"+value['text']);
+  document.getElementById("cyutest").innerHTML += "<li class='elgg-item elgg-item-object list-break mrgn-tp-md clearfix noWrap elgg-item-object-thewire clearfix' id='elgg-object-123'>";
+  document.getElementById("cyutest").innerHTML += "<div class='col-xs-12 mrgn-tp-sm clearfix mrgn-bttm-sm'> ";
+  document.getElementById("cyutest").innerHTML += "<div class='mrgn-tp-sm col-xs-2 clearfix'><img src='"+value['user']['iconURL']+"' class='img-responsive img-circle' /></div>";
+  document.getElementById("cyutest").innerHTML += "<div class='mrgn-tp-sm col-xs-10 noWrap'> "+ value['user']['username'] +" <div>";
+  document.getElementById("cyutest").innerHTML += "<div> "+ value['text'] +" <div>";
+  document.getElementById("cyutest").innerHTML += "</div> ";
+  document.getElementById("cyutest").innerHTML += "</li>";
 });
 
        document.getElementById("cyutest").innerHTML += "</ul>";
