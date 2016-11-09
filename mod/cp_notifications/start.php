@@ -96,7 +96,7 @@ function cp_digest_cron_handler($hook, $entity_type, $return_value, $params) {
 			$notify_user->description = '';
 			$notify_user->save();
 			$notify_user->getOwnerEntity()->cpn_newsletter = $notify_user->guid;
-			error_log("cpn_newsletter value - {$notify_user->guid} / {$notify_user->getOwnerEntity()->cpn_newsletter}");
+			//error_log("cpn_newsletter value - {$notify_user->guid} / {$notify_user->getOwnerEntity()->cpn_newsletter}");
 			//$notify_user->delete();
 			//$user->deleteMetadata('cpn_newsletter');
 
@@ -240,9 +240,6 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_wire_url' => $params['cp_wire_url'],
 			);
 			$parent_item = $params['cp_content']->getContainerEntity();
-			error_log('Parent content1: '.$parent_item->description);
-			error_log(' ================================================================== ');
-			error_log('Parent content2: '.$params['cp_content']->description);
 			
 			if ($params['cp_content']->getType() == 'group'){
 				$type = $params['cp_content']->getType();
@@ -1070,7 +1067,7 @@ function cp_create_notification($event, $type, $object) {
 $subject = htmlspecialchars_decode($subject,ENT_QUOTES);
 //$subject = html_entity_decode($subject);
 //	$subject = utf8_encode ($subject);
-error_log("SUBJECT >>>>>>>>>>>> {$subject}");
+
 	// PLEASE NOTE THAT function messages_send() creates infinite loop
 	$query = "SELECT DISTINCT u.guid, u.email, u.username FROM {$dbprefix}entity_relationships r, {$dbprefix}users_entity u WHERE r.guid_one <> {$content_originator} AND r.relationship LIKE 'cp_subscribed_to_%' AND r.guid_two = {$guid_two} AND r.guid_one = u.guid";
 	$to_recipients = get_data($query);
@@ -1116,9 +1113,6 @@ function cp_sub_to_wire_thread($wire_id) {
 	$dbprefix = elgg_get_config('dbprefix');
 	$query = "SELECT guid_two FROM {$dbprefix}entity_relationships WHERE relationship = 'parent' AND guid_one = {$wire_id}";
 	$parent_id = get_data($query);
-	error_log($query);
-	error_log(print_r($parent_id,true));
-	error_log("function [{$wire_id}] - {$parent_id[0]['guid_two']}");
 
 	/*
 	if (!$parent_id) {
