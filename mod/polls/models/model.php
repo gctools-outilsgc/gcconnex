@@ -90,7 +90,6 @@ function polls_get_choice_array3($poll) {
 	return $responses;
 }
 
-
 function polls_add_choices($poll,$choices) {
 	$i = 0;
 	if ($choices) {
@@ -138,7 +137,6 @@ function polls_add_choices3($poll,$choices) {
 		}
 	}
 }
-
 
 function polls_delete_choices($poll) {
 	$choices = polls_get_choices($poll);
@@ -495,6 +493,5 @@ function polls_get_response_count($valueToCount, $fromArray) {
 			}
 		}	
 	}
-	
 	return $count;
 }

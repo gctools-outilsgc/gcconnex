@@ -29,6 +29,12 @@ if (strcmp('gsa-crawler',strtolower($_SERVER['HTTP_USER_AGENT'])) != 0) {
                     <?php if (!elgg_get_plugin_setting('ExtTheme', 'wet4')) {?>
                     <div id="tool-link" class="pull-right">
                     <div class="pull-right tool-link">
+                        <a href="<?php echo elgg_echo('wet:gcdirectoryLink');?>">
+                            <img class="tool-link-icon" src="<?php echo $site_url.'/mod/wet4/graphics/directory_icon.png'?>" alt="GCDirectory" /><span class="bold-gc">GC</span><?php echo elgg_echo('wet:barDirectory');?>
+                        </a>
+
+                    </div>
+                    <div class="pull-right tool-link">
                         <a href="<?php echo elgg_echo('wet:gcintranetLink-toolsHead');?>">
                         <img class="tool-link-icon" src="<?php echo $site_url.'/mod/wet4/graphics/intranet_icon.png'?>" alt="GCintranet"/><span class="bold-gc">GC</span>intranet</a>
 

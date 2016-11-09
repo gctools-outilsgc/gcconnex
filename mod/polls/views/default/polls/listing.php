@@ -13,8 +13,7 @@
 		$container = get_entity($vars['entity']->container_guid);
 		$friendlytime = elgg_get_friendly_time($vars['entity']->time_created);
 		$responses = $vars['entity']->countAnnotations('vote');
-		//$icon = "";
-		/**/
+
 		$icon = elgg_view(
 				"profile/icon", array(
 										'entity' => $owner,

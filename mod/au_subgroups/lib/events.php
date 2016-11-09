@@ -62,7 +62,6 @@ function group_visibility($event, $type, $object) {
 				break;
 		}
 
-
 		/*
 		 * Here we have some trickiness, because save is called twice with the visibility being
 		 * reset the second time.  So we have to make sure we're only updating the visibility

@@ -79,15 +79,15 @@ if (!elgg_in_context("widgets")) {
 
 if ($full_view && !elgg_in_context("gallery")) {
 	// normal full view
-    
+
     //remove new folder button when looking at single file
 	elgg_unregister_menu_item('title', 'new_folder');
-    
+
 	// add folder structure to the breadcrumbs
 	if (file_tools_use_folder_structure()) {
 		// @todo this should probably be moved to the file view page, but that is currently not under control of file_tools
 		$endpoint = elgg_pop_breadcrumb();
-		
+
 		$parent_folder = elgg_get_entities_from_relationship(array(
 			'relationship' => 'folder_of',
 			'relationship_guid' => $file->getGUID(),
@@ -125,7 +125,7 @@ if ($full_view && !elgg_in_context("gallery")) {
 	} elseif (elgg_view_exists("file/specialcontent/$base_type/default")) {
 		$extra = elgg_view("file/specialcontent/$base_type/default", $vars);
 	}
-	
+
 	$params = array(
 		"entity" => $file,
 		"title" => elgg_view("output/url", array("text" => $title, "href" => "file/download/" . $file->getGUID())),
@@ -141,10 +141,10 @@ if ($full_view && !elgg_in_context("gallery")) {
 		$file_descr = $file->description;
 	}
 
-	
+
 	$text = elgg_view("output/longtext", array("value" => $file_descr ));
 	$body = "$text $extra";
-	
+
 	echo elgg_view("object/elements/full", array(
 			"entity" => $file,
 			"title" => false,
@@ -166,11 +166,11 @@ if ($full_view && !elgg_in_context("gallery")) {
 	$file_icon_alt = "";
 	if (file_tools_use_folder_structure()) {
 		$file_icon = elgg_view_entity_icon($file, "small", array("img_class" => "file-tools-icon-small img-responsive"));
-		
+
 		if (elgg_in_context("file_tools_selector")) {
 			$file_icon_alt = elgg_view("input/checkbox", array("name" => "file_guids[]", "value" => $file->getGUID(), "default" => false, 'class' => '',));
 		}
-		
+
 		$excerpt = "";
 		$subtitle = "";
 		$tags = "";
@@ -179,14 +179,16 @@ if ($full_view && !elgg_in_context("gallery")) {
 		$excerpt = elgg_get_excerpt($file->description);
 	}
 
-    if(elgg_in_context('group_profile')){
+    if(elgg_in_context('group_profile') || elgg_in_context('profile')){
+
         $entity_menu = elgg_view_menu("entity", array(
-		"entity" => $file,
-		"handler" => "file",
-		"sort_by" => "priority",
-		"class" => "list-inline",
-		"item_class" => "mrgn-rght-sm"
-	));
+					"entity" => $file,
+					"handler" => "file",
+					"sort_by" => "priority",
+					"class" => "list-inline",
+					"item_class" => "mrgn-rght-sm"
+				));
+
     }
 
 	$params = array(
@@ -198,9 +200,9 @@ if ($full_view && !elgg_in_context("gallery")) {
 	);
 	$params = $params + $vars;
 	$list_body = elgg_view("object/elements/summary", $params);
-    
+
     $subtype = $file->getSubtype();
     $guid = $file->getGUID();
-	
+
 	echo elgg_view_image_block($file_icon, $list_body, array("class" => "file-tools-file", "image_alt" => $file_icon_alt, 'subtype' => $subtype, 'guid' => $guid));
 }

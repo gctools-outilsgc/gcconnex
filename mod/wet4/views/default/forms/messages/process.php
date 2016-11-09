@@ -8,6 +8,12 @@
  * 
  */
 
+/***************************************************************************************
+ * Modifications
+ * Name 	Modification date 	Description
+ * piet0024 2016/10/31		    #373 - Making it so the notification inbox has a mark as read button
+ ****************************************************************************************/
+
 $messages = $vars['list'];
 if (!$messages) {
 	echo elgg_echo('messages:nomessages');
@@ -28,7 +34,7 @@ echo elgg_view('input/submit', array(
 	'data-confirm' => elgg_echo('deleteconfirm:plural')
 ));
 
-if ($vars['folder'] == "inbox") {
+if ($vars['folder'] == "inbox" || $vars['folder'] =="notifications") {
 	echo elgg_view('input/submit', array(
 		'value' => elgg_echo('messages:markread'),
 		'name' => 'read',

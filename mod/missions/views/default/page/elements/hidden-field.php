@@ -17,7 +17,7 @@
  $pre_content = $vars['hideable_pre_content'];
  $additional_text = $vars['additional_text'];
  $alignment = $vars['alignment'];
- 
+ $additional_class = $vars['additional_class'];
  if($alignment != '') {
  	$alignment = 'float:' . $alignment . ';';
  }
@@ -46,9 +46,9 @@
 <div id="<?php echo $pre_field_id; ?>" style="display:inline-block;">
 	<?php echo $pre_content; ?>
 </div>
-<div style="display:inline-block;<?php echo $alignment; ?>">
-    <i class="fa fa-caret-right caret-color" id="<?php echo $icon_id; ?>"></i>
-	 <span><?php echo $toggle; ?></span>
+<div  style="display:inline-block;<?php echo $alignment; ?>">
+
+    <span class="<?php echo $additional_class; ?>"><i class="fa fa-caret-right caret-color mrgn-rght-sm" id="<?php echo $icon_id; ?>"></i><?php echo $toggle; ?></span>
 	 <span style="font-style:italic;"><?php echo $additional_text; ?></span>
 </div>
  <div class="<?php echo $bordering; ?>" id="<?php echo $field_id; ?>" style="display:none;padding:8px;">

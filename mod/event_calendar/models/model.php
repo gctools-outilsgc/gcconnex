@@ -170,7 +170,7 @@ function event_calendar_set_event_from_form($event_guid, $group_guid) {
 
 	}
 
-if(((!$e->title)&&(!$e->title2))&& (!$e->start_date) && (!$e->end_date) && (!$e->venue)){
+if(((!$e->title)&&(!$e->title2))||(!$e->start_date) || (!$e->end_date) || (!$e->venue)){
 	return false;
 }
 
@@ -520,7 +520,7 @@ function event_calendar_get_events_for_user_between($start_date, $end_date, $is_
 		$options['pagination'] = true;
 		$options['offset'] = $offset;
 		$options['order_by_metadata'] = array(array('name' => 'start_date', 'direction' => 'ASC', 'as' => 'integer'));
-		$events = event_calendar_get_personal_events_for_user($user_guid);
+		$events = event_calendar_get_personal_events_for_user($user_guid, $limit);
 		$repeating_events = event_calendar_get_repeating_events_for_user_between($user_guid, $start_date, $end_date, $container_guid, $region);
 		$all_events = event_calendar_merge_repeating_events($events, $repeating_events);
 		return $all_events;
@@ -1173,13 +1173,13 @@ function event_calendar_get_formatted_time($event) {
 		}
 		if ((!$event->end_date) || ($end_date == $start_date)) {
 			if (!$event->all_day && $event_calendar_times) {
-				if(event_calendar_format_time($event->start_time) != '0:00,'){
+				if(event_calendar_format_time($event->start_time, $start_date) != '0:00,'){
 					
 					$start_date = event_calendar_format_time($start_date, $event->start_time);
 					$end_date = event_calendar_format_time($end_date, $event->end_time);
 
 				}
-				$start_date = event_calendar_format_time($start_date);
+				$start_date = event_calendar_format_time($start_date, $event->start_time);
 			}
 			$time_bit = "$start_date - $end_date";
 
@@ -1190,7 +1190,7 @@ function event_calendar_get_formatted_time($event) {
 
 				 		$start_date = event_calendar_format_time($start_date, $event->start_time, $event->end_time);
 				 	}
-				 	if(event_calendar_format_time($event->start_time) != '0:00,'){
+				 	if(event_calendar_format_time($event->start_time,$start_date) != '0:00,'){
 
 				 		$start_date = event_calendar_format_time($start_date, $event->start_time);
 						$end_date = event_calendar_format_time($end_date, $event->end_time);

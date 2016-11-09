@@ -65,7 +65,8 @@ else {
         			'name' => $dropdown_name . '_element',
         			'value' => '',
         			'options' => array(
-        					'', 
+        					'',
+                            elgg_echo("gcconnex_profile:opt:micro_missionseek"),
         					elgg_echo('gcconnex_profile:opt:micro_mission'), 
         					elgg_echo('gcconnex_profile:opt:job_swap'), 
         					elgg_echo('gcconnex_profile:opt:mentored'),

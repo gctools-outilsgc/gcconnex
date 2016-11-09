@@ -37,7 +37,6 @@ function delete_group($hook, $type, $return, $params) {
 function group_canedit($hook, $type, $return, $params) {
 	$group = $params['entity'];
 	$user = $params['user'];
-
 	$parent = get_parent_group($group);
 
 	if ($parent) {
@@ -47,14 +46,11 @@ function group_canedit($hook, $type, $return, $params) {
 	}
 }
 
-/**
- * prevent users from being invited to subgroups they can't join
- */
+ // prevent users from being invited to subgroups they can't join
 function group_invite($hook, $type, $return, $params) {
 	$user_guid = get_input('user_guid');
 	$group_guid = get_input('group_guid');
 	$group = get_entity($group_guid);
-
 	$parent = get_parent_group($group);
 
 	// if $parent, then this is a subgroup they're being invited to
@@ -85,9 +81,7 @@ function group_invite($hook, $type, $return, $params) {
 	}
 }
 
-/**
- * re/routes some urls that go through the groups handler
- */
+ //re/routes some urls that go through the groups handler
 function groups_router($hook, $type, $return, $params) {
 	breadcrumb_override($return);
 
@@ -170,7 +164,6 @@ function groups_router($hook, $type, $return, $params) {
 
 function river_permissions($hook, $type, $return, $params) {
 	$group = get_entity($return['object_guid']);
-
 	$parent = get_parent_group($group);
 
 	if ($parent) {

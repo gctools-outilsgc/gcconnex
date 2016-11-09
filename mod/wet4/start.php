@@ -940,8 +940,8 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 			'text' => '<i class="fa fa-download fa-lg icon-unsel"><span class="wb-inv">Download File</span></i>',
 			'title' => 'Download File',
 			'href' => "file/download/{$entity->getGUID()}",
-			'priority' => 299,
-            'context' => array('file_tools_selector', 'file'),
+			'priority' => 300,
+            //'context' => array('file_tools_selector', 'file'),
 		);
 		$return[] = \ElggMenuItem::factory($options);
     }
@@ -1016,37 +1016,40 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params){
         $entContext = elgg_echo('group');
     }
 
-	$hasLiked = \Elgg\Likes\DataService::instance()->currentUserLikesEntity($object->guid);
 
-	// Always register both. That makes it super easy to toggle with javascript
-	$return[] = ElggMenuItem::factory(array(
-		'name' => 'likes',
-		'href' => elgg_add_action_tokens_to_url("/action/likes/add?guid={$object->guid}"),
-		'text' => '<i class="fa fa-thumbs-up fa-lg icon-unsel"></i><span class="wb-inv">Like This</span>',
-		'title' => elgg_echo('likes:likethis') . ' ' . $entContext,
-		'item_class' => $hasLiked ? 'hidden' : '',
-		'priority' => 100,
-	));
-	$return[] = ElggMenuItem::factory(array(
-		'name' => 'unlike',
-		'href' => elgg_add_action_tokens_to_url("/action/likes/delete?guid={$object->guid}"),
-		'text' => '<i class="fa fa-thumbs-up fa-lg icon-sel"></i><span class="wb-inv">Like This</span>',
-		'title' => elgg_echo('likes:remove') . ' ' . $entContext,
-		'item_class' => $hasLiked ? '' : 'hidden',
-		'priority' => 100,
-	));
+	if($entContext != 'user'){
 
-	// likes count
-	$count = elgg_view('likes/count', array('entity' => $object));
-	if ($count) {
+		$hasLiked = \Elgg\Likes\DataService::instance()->currentUserLikesEntity($object->guid);
+
+		// Always register both. That makes it super easy to toggle with javascript
 		$return[] = ElggMenuItem::factory(array(
-			'name' => 'likes_count',
-			'text' => $count,
-			'href' => false,
-			'priority' => 101,
+			'name' => 'likes',
+			'href' => elgg_add_action_tokens_to_url("/action/likes/add?guid={$object->guid}"),
+			'text' => '<i class="fa fa-thumbs-up fa-lg icon-unsel"></i><span class="wb-inv">Like This</span>',
+			'title' => elgg_echo('likes:likethis') . ' ' . $entContext,
+			'item_class' => $hasLiked ? 'hidden' : '',
+			'priority' => 100,
 		));
-	}
+		$return[] = ElggMenuItem::factory(array(
+			'name' => 'unlike',
+			'href' => elgg_add_action_tokens_to_url("/action/likes/delete?guid={$object->guid}"),
+			'text' => '<i class="fa fa-thumbs-up fa-lg icon-sel"></i><span class="wb-inv">Like This</span>',
+			'title' => elgg_echo('likes:remove') . ' ' . $entContext,
+			'item_class' => $hasLiked ? '' : 'hidden',
+			'priority' => 100,
+		));
 
+		// likes count
+		$count = elgg_view('likes/count', array('entity' => $object));
+		if ($count) {
+			$return[] = ElggMenuItem::factory(array(
+				'name' => 'likes_count',
+				'text' => $count,
+				'href' => false,
+				'priority' => 101,
+			));
+		}
+	}
 
            $blocked_subtypes = array('comment', 'discussion_reply');
            if(in_array($object->getSubtype(), $blocked_subtypes) || elgg_instanceof($object, 'user')){
