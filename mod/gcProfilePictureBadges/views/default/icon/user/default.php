@@ -129,7 +129,7 @@ if ($show_menu) {
         $badge .= elgg_view('output/img', array(
             'src' => 'mod/gcProfilePictureBadges/graphics/'.$user->init_badge.'.png',
             'class' => 'img-responsive',
-            'title' => elgg_echo('gcProfilePictureBadges:badge:title:'.$pledge),
+            'title' => elgg_echo('gcProfilePictureBadges:badge:title:'.$user->init_badge),
         ));
 
         $badge .= '</div>';
