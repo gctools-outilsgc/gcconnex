@@ -16,7 +16,7 @@
 
 /mod/machine_translation/
 /mod/gsa/
-/mod/geds_sync/
+
 
 # don't ignore bundled plugins
 !/mod/aalborg_theme/
