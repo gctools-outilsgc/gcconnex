@@ -1,0 +1,89 @@
+
+#geds-avatar{
+	padding-right:5px;
+}
+#profile-details{
+	width:56%;
+}
+#mapBody {
+        height: 450px;
+        width: 450px;
+      }
+#map{
+    height: 75%;
+    width: 100%;
+}
+#test{
+    min-height: 100px;
+ 
+}
+#deleteOrg{
+	
+	float:right;
+	margin-right: 5px;
+	margin-bottom:5px;
+}
+#table-modal-body{
+	max-height: none;
+	height:400px;
+}
+.col-xs-12{
+	padding-left:0px;
+}
+
+/*****
+    Edited mrgn classes below to put back to normal
+    ****/
+.col-xs-2{
+	width:45px;
+	height:40px;
+}
+.elgg-avatar{
+	height:40px;
+	width:40px;
+}
+.mrgn-tp-sm {
+
+}
+.mrgn-bttm-md{
+
+}
+.gcconnex-edit-profile{
+	margin-left: 5px;
+}
+.org-person{
+	height:60px;
+	padding-top:5px;
+	padding-bottom: 5px;
+	padding-left:5px;
+	
+}
+.org-avatar-container{
+	float: left;
+	height: 40px;
+	padding-right:5px;
+}
+.org-avatar{
+	height:40px;
+	width:40px;
+}
+.elgg-image-block{
+	padding:0;
+}
+.profile-detail-icon{
+	width:23px;
+	padding-right:0px;
+	margin-left:-2px;
+	
+}
+#newTest{
+	#height:450px;
+	#overflow-y:scroll;
+	
+}
+#infoText{
+	font-size:x-small;
+}
+.spinner{
+	height:auto !important;
+}
