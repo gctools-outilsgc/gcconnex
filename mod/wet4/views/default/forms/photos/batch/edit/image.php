@@ -11,20 +11,6 @@
 $image = $vars['entity'];
 $imageGUID = $image->getGUID();
 
-$french = elgg_view('input/button', array(
-    'value' => elgg_echo('btn:translate:fr'),
-    'id' => 'btnClickfr',
-    'class' => 'btn btn-default en',
-));
-
-$english = elgg_view('input/button', array(
-    'value' => elgg_echo('btn:translate:en'),
-    'id' => 'btnClicken',
-    'class' => 'btn btn-default fr',
-));
-
-echo $body .= $french.' '.$english;
-
 echo '<div class="elgg-image-block">';
 
 echo '<div class="elgg-image">';
