@@ -279,10 +279,10 @@ foreach ($groups as $group) {
 		if ($('#group-content-' + grp_guid).is(':visible')) {
 			// do nothing
 		} else {
-
+			var loading_text = elgg.echo('cp_notify:setting:loading');
 			// // assuming this is doing what i think it is doing + loading indicator
 			$('#group-content-' + grp_guid).children().remove();
-			$('#group-content-' + grp_guid).append("<div class='clearfix col-sm-12 list-break'>LOADING...<div>");
+			$('#group-content-' + grp_guid).append("<div class='clearfix col-sm-12 list-break'>" + loading_text + "<div>");
 
 			// jquery - retrieve the group content on user click (this way it doesn't try and load everything at once)
 			elgg.action('cp_notify/retrieve_group_contents', {
@@ -338,7 +338,7 @@ foreach ($groups as $group) {
     	$content .= '	<details class="acc-group" onClick="return create_group_content_item('.$group->getGUID().', '.$user->getGUID().')">';
     	$content .= "		<summary id='group_item_container-{$group->getGUID()}' class='wb-toggle tgl-tab'>".elgg_echo('cp_notify:groupContent').'</summary>';
     } else
-    	$content .= "		<summary> >>> You have no subscribed item in this group</summary>";
+    	$content .= "		<summary>".elgg_echo('cp_notify:setting:no_grp_subscription')."</summary>";
     
     $content .= "		<div id='group-content-{$group->getGUID()}' class='tgl-panel clearfix'>";
     $content .= '		</div>';	// close line 295
