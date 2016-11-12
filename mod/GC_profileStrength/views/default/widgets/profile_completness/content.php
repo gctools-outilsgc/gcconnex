@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Profile Strength
+ * 
+ * @author Mathieu Blondin Ethan Wallace github.com/ethanWallace
+ */
+
 $user_guid = elgg_get_logged_in_user_guid();
 $userEnt = get_user ( $user_guid );
 

@@ -20,6 +20,20 @@ $images = elgg_get_entities_from_relationship(array(
 	'limit' => 0
 ));
 
+$french = elgg_view('input/button', array(
+    'value' => elgg_echo('btn:translate:fr'),
+    'id' => 'btnClickfr',
+    'class' => 'btn btn-default en',
+));
+
+$english = elgg_view('input/button', array(
+    'value' => elgg_echo('btn:translate:en'),
+    'id' => 'btnClicken',
+    'class' => 'btn btn-default fr',
+));
+
+echo $body .= $french.' '.$english;
+
 echo '<ul class="list-unstyled">';
 foreach ($images as $image) {
 	echo '<li>';

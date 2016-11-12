@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * GC-Information Banne
+ * 
+ * @author Government of Canada
+ */
+
 elgg_register_event_handler('init', 'system', 'hello_world_init');
 
 function hello_world_init() {

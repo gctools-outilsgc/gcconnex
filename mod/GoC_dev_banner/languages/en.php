@@ -14,5 +14,4 @@ return array(
     'dev_banner:enternoticeFR' => "French Notification Text:",
     'dev_banner:MoreInfo' => "More...",
     'dev_banner:activate' => "Activate banner:",
-
-    );
+);

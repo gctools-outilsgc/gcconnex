@@ -63,7 +63,7 @@ if ($listing_format == 'paged' || $listing_format == 'full') {
 
 	$group = elgg_get_page_owner_entity();
 	$new_link = elgg_view('output/url', array(
-        'href' => "event_calendar/add/$group->guid",
+        'href' => "event_calendar/add",
         'text' => elgg_echo('event_calendar:new'),
         'class' => 'btn btn-primary pull-right',
     ));

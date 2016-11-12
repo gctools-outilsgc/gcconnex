@@ -62,8 +62,12 @@
 				elgg_register_widget_type('latest_photos_index', elgg_echo("tidypics:widget:latest"), elgg_echo("tidypics:widget:latest_descr"), array("custom_index_widgets"), true);
 				//		  elgg_register_widget_type('latest_album_index', elgg_echo("tidypics:widget:albums"), elgg_echo("tidypics:widget:latest_descr"), array("custom_index_widgets"), true);
 			}
-			if(elgg_is_active_plugin('thewire'))
+			if(elgg_is_active_plugin('thewire')) {
 				elgg_register_widget_type('latest_wire_index',elgg_echo ('custom_index_widgets:latest_wire_index'),elgg_echo ('custom_index_widgets:latest_wire_index'), array("custom_index_widgets"), true);
+
+				// live stream wire widget
+				elgg_register_widget_type('stream_wire_index',elgg_echo ('custom_index_widgets:stream_wire_index'),elgg_echo ('custom_index_widgets:stream_wire_index'), array("custom_index_widgets"), true);
+			}
 			
 			if(elgg_is_active_plugin('tasks'))
 				elgg_register_widget_type('latest_tasks_index',elgg_echo ('custom_index_widgets:latest_tasks_index'),elgg_echo ('custom_index_widgets:latest_tasks_index'), array("custom_index_widgets"), true);
