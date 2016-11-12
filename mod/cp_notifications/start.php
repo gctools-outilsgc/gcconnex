@@ -241,6 +241,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_wire_url' => $params['cp_wire_url'],
 			);
 			$parent_item = $params['cp_content']->getContainerEntity();
+
 			
 			if ($params['cp_content']->getType() == 'group'){
 				$type = $params['cp_content']->getType();
@@ -597,7 +598,6 @@ function cp_ical_headers($type_event, $event, $startdate, $enddate) {
  *
  */
 function cp_create_annotation_notification($event, $type, $object) {
-	
 	$entity = get_entity($object->entity_guid);
 
 	// cyu - this object is a minor edit... don't bother to send notifications
@@ -616,7 +616,15 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 		$content = get_entity($object->entity_guid);
 
-		if (strcmp($object_subtype,'blog' == 0) && strcmp($entity->status,'published') == 0) {
+		//error_log("subtype: {$object_subtype} / status: {$entity->status} //// minor edit: {$entity->entity_minor_edit}" );
+
+
+		// auto save -drafts or -published blogs, we don't send out notifications
+		if (strcmp($object_subtype,'blog_auto_save') == 0 && (strcmp($entity->status,'draft') == 0 || strcmp($entity->status, 'published') == 0))
+			return;
+
+		// if we are publishing, or revising blogs then send out notification
+		if (strcmp($object_subtype,'blog_revision') == 0 && strcmp($entity->status,'published') == 0) {
 
 			$current_user = get_user($entity->getOwnerGUID());
 
@@ -643,6 +651,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 				
 
 				if ($watcher->guid != $current_user->getGUID()) { // make sure we don't send the notification to the owner themselves
+
 					if (check_entity_relationship($watcher->guid, 'cp_subscribed_to_email', $entity->getContainerGUID())) {
 						
 						if (strcmp(elgg_get_plugin_user_setting('cpn_bulk_notifications_email', $watcher->guid,'cp_notifications'),'bulk_notifications_email') == 0) {
@@ -667,7 +676,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 				}
 			}
 			return true;
-		}
+		} // end if (if subtype is blog, and published)
 
 		if (strcmp($object_subtype,'page') == 0 || strcmp($object_subtype,'page_top') == 0 || strcmp($object_subtype,'task') == 0 || strcmp($object_subtype,'task_top') == 0) {
 			$current_user = get_user($object->owner_guid);
@@ -1122,6 +1131,7 @@ function cp_sub_to_wire_thread($wire_id) {
 	$query = "SELECT guid_two FROM {$dbprefix}entity_relationships WHERE relationship = 'parent' AND guid_one = {$wire_id}";
 	$parent_id = get_data($query);
 
+
 	/*
 	if (!$parent_id) {
 
@@ -1130,7 +1140,7 @@ function cp_sub_to_wire_thread($wire_id) {
 		cp_sub_to_wire_thread($wire_id);
 	}*/
 }
-
+ 
 /*
  * cp_send_new_password_request
  * 
