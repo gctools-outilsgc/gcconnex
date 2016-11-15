@@ -11,7 +11,7 @@
  *	Copyright : Team Webgalli 2011-2015
  */
 $french = array(
-	'gcProfilePictureBadges:badgeselectdesc' => "Ajouter le badge d'un groupe: ",
+		'gcProfilePictureBadges:badgeselectdesc' => "Ajouter le badge d'un groupe: ",
 
 		'gcProfilePictureBadges:ambassador' => 'ambassadeur de OutilsGC',
     'gcProfilePictureBadges:ambassadorSell' => "Démontrer que vous êtes un ambassadeur des OutilsGC en affichant l'écusson sur votre avatar",
@@ -26,6 +26,7 @@ $french = array(
 
 		'gcProfilePictureBadges:badge:mentalHealth' => "Santé mentale en milieu de travail",
 		'gcProfilePictureBadges:pledgeSell:mentalHealth' => "Démontrer votre engagement pour appuyer la &nbsp;&nbsp;« Santé mentale en milieu de travail » et ajoutez l'écusson à votre avatar.",
+		'gcProfilePictureBadges:knowmore:mentalHealth' => ''
 );
 
 add_translation('fr', $french);

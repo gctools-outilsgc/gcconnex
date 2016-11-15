@@ -11,7 +11,7 @@
  *	Copyright : Team Webgalli 2011-2015
  */
 $english = array(
-	'gcProfilePictureBadges:badgeselectdesc' => 'Add badge from group: ',
+		'gcProfilePictureBadges:badgeselectdesc' => 'Add badge from group: ',
 
 		'gcProfilePictureBadges:ambassador' => 'GCTools Ambassador',
     'gcProfilePictureBadges:ambassadorSell' => "Showcase that you are a GCTools Ambassador by displaying the badge on your avatar.",
@@ -26,6 +26,7 @@ $english = array(
 
 		'gcProfilePictureBadges:badge:mentalHealth' => 'Mental health in the workplace',
 		'gcProfilePictureBadges:pledgeSell:mentalHealth' => 'Show your support for "Mental health in the workplace" by adding the badge to your avatar.',
+		'gcProfilePictureBadges:knowmore:mentalHealth' => ''
 );
 
 add_translation('en', $english);
