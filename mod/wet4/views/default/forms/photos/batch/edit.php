@@ -19,7 +19,13 @@ $images = elgg_get_entities_from_relationship(array(
 	'inverse_relationship' => true,
 	'limit' => 0
 ));
+$btn_language =  '<ul class="nav nav-tabs nav-tabs-language">
+  <li id="btnen"><a href="#" id="btnClicken">'.elgg_echo('lang:english').'</a></li>
+  <li id="btnfr"><a href="#" id="btnClickfr">'.elgg_echo('lang:french').'</a></li>
+</ul>';
 
+echo $btn_language;
+echo'<div class="tab-content tab-content-border">';
 echo '<ul class="list-unstyled">';
 foreach ($images as $image) {
 	echo '<li>';
@@ -30,4 +36,4 @@ echo '</ul>';
 
 echo '<div class="elgg-foot">';
 echo elgg_view('input/submit', array('value' => elgg_echo('save')));
-echo '</div>';
+echo '</div></div>';
