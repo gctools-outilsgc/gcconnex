@@ -7,6 +7,13 @@
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
 
+ /*
+   GC_MODIFICATION
+   Do a count for how many applicants there are and choose the correct language
+   Author: Nick
+   Date: 2016-11-15
+ */
+
 /*
  * This view displays some of the mission metadata. It is meant to be a first glance summary.
  */
@@ -55,15 +62,21 @@ if($mission->owner_guid == elgg_get_logged_in_user_guid() || $mission->account =
 			'relationship_guid' => $mission->guid,
 			'count' => true
 	));
-		
+
 	$relationship_count += elgg_get_entities_from_relationship(array(
 			'relationship' => 'mission_offered',
 			'relationship_guid' => $mission->guid,
 			'count' => true
 	));
-	
+
+  if($relationship_count == 1){
+    $applicant_lang = elgg_echo("missions:applicant");
+  }else{
+    $applicant_lang = elgg_echo("missions:applicants");
+  }
+
 	if($relationship_count > 0 && $mission->state == 'posted') {
-		$relationship_alert = '<div name="mission-applicant-number" class="mission-applicant-badge '.$badge_color.'" id="mission-' . $mission->guid . '-applicant-number" style="">' . $relationship_count . ' '.elgg_echo("missions:applicants"). '</div>';
+		$relationship_alert = '<div name="mission-applicant-number" class="mission-applicant-badge '.$badge_color.'" id="mission-' . $mission->guid . '-applicant-number" style="">' . $relationship_count . ' '.$applicant_lang. '</div>';
 	}
 
 
@@ -98,7 +111,7 @@ $click_header = elgg_view('output/url', array(
         <div name="mission-job-type" class="mrgn-bttm-sm">
             <span class="timeStamp">
                 <?php echo elgg_echo($mission->job_type);
-                      
+
                     ?>
 
             </span>
@@ -178,5 +191,5 @@ $click_header = elgg_view('output/url', array(
         </div>
 
     </div>
-	
+
 </div>
