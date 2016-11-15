@@ -16,7 +16,7 @@
 			
 			if(get_plugin_setting("maintenance_active","maintenance")=="yes" && !isadminloggedin()){
 				
-				register_plugin_hook('index','system','maintenance_index',200);
+				elgg_register_plugin_hook_handler('index','system','maintenance_index',200);
 				
 				global $CONFIG;
 				//	these are the lines that changed to make the plugin compatible with elgg installed in a sub
