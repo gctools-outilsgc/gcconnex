@@ -192,7 +192,7 @@ function wet4_theme_init() {
     elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_landing_page');
 
     // Replace the default index page with redirect
-    elgg_register_plugin_hook_handler('index', 'system', 'new_index');
+
     elgg_register_page_handler('splash', 'splash_page_handler');
 
     elgg_register_page_handler('c_photo_image', 'c_photo_page_handler');
@@ -255,13 +255,6 @@ function c_photo_page_handler(){
     return true;
 }
 
-/*
- *  Set new index page to sort user's landing page preference
- */
-
-function new_index() {
-    return !include_once(dirname(__FILE__) . "/pages/index.php");
-}
 
 /*
  * Set landing page in user settings

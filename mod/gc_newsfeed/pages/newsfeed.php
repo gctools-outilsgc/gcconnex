@@ -84,35 +84,4 @@ if(elgg_is_logged_in()){
 }
 
 
-//Onboarding
-//view exists with gc_onboard
-if(elgg_is_active_plugin('gc_onboard') && elgg_is_logged_in()){
-
-    $helpLaunch = get_input('welcome');
-
-    $user = elgg_get_logged_in_user_entity();
-
-    //$user->onboardcta = time();
-
-    //grab times from settings
-    $time = elgg_get_plugin_setting("wait_time", "gc_onboard");
-    if(!$time){
-        $time = 1458259200;
-    }
-
-    //check if user has interacted with the module already
-    if(!isset($user->onboardcta) || (is_numeric($user->onboardcta) && (time() - $user->onboardcta) > $time)){ //1458259200
-
-        $onboard = elgg_view('welcome-steps/modal');
-        $onboard .= '<script> window.onload = function () { document.getElementById("onboardPopup").click() } </script>';
-
-    } else if($helpLaunch){
-
-        $onboard = elgg_view('welcome-steps/modal');
-        $onboard .= '<script> window.onload = function () { document.getElementById("onboardPopup").click() } </script>';
-
-    }
-
-}
-
 echo elgg_view_page( elgg_echo('newsfeed:menu'), $content . $onboard);
