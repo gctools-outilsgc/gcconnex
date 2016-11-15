@@ -56,5 +56,5 @@
 	}
 	
 	// Initialise plugin
-	register_elgg_event_handler('init','system','maintenance_init');
+	elgg_register_event_handler('init','system','maintenance_init');
 ?>
