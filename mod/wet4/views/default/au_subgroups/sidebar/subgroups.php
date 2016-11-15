@@ -25,8 +25,8 @@ if (!$subgroups) {
 } else {
 	foreach ($subgroups as $subgroup) {
 
-		if ($subgroup->title23){
-			$subgroup_name = gc_explode_translation( $subgroup->title23, $lang);
+		if ($subgroup->title3){
+			$subgroup_name = gc_explode_translation( $subgroup->title3, $lang);
 		}else{
 			$subgroup_name = $subgroup->name;
 		}

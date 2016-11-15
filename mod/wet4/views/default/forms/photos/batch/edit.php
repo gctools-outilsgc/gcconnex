@@ -26,6 +26,7 @@ $btn_language =  '<ul class="nav nav-tabs nav-tabs-language">
 
 echo $btn_language;
 echo'<div class="tab-content tab-content-border">';
+
 echo '<ul class="list-unstyled">';
 foreach ($images as $image) {
 	echo '<li>';
