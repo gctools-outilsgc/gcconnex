@@ -372,7 +372,7 @@ $loading = elgg_view('output/img', array(
             });
 
             $('#onboard-table').prepend("<p class='mrgn-bttm-sm'>" + "<?php echo elgg_echo("onboard:geds:select"); ?>" + "</p>");
-            $('#onboard-table').append("<div class='mrgn-tp-md'>" + "<?php echo str_replace( "\n", "", elgg_echo("geds:sync:info") ); ?>" + "</div>");
+            $('#onboard-table').append("<div class='mrgn-tp-md'>" + "<?php echo str_replace("\n", "", str_replace("\r\n", "", elgg_echo("geds:sync:info"))); ?>" + "</div>");
 
         //reset height of display
             $('#syncError').css('min-height', '0px')
