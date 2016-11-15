@@ -2,15 +2,15 @@
 
 /**
  * Newsfeed start.php
- * 
- * 
+ *
+ *
  * @version 1.0
  * @author Nick Pietrantonio    github.com/piet0024
  */
 
 
 elgg_register_event_handler('init','system', 'newsfeed_init');
-
+elgg_register_plugin_hook_handler('index', 'system', 'new_index');
 
 function newsfeed_init(){
     //set up metadata for user's landing page preference
@@ -52,4 +52,12 @@ function newsfeed_init(){
 function newsfeed_page_handler(){
     @include (dirname ( __FILE__ ) . "/pages/newsfeed.php");
     return true;
+}
+
+/*
+ *  Set new index page to sort user's landing page preference
+ */
+
+function new_index() {
+    return !include_once(dirname(__FILE__) . "/pages/index.php");
 }
