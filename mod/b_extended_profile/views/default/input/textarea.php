@@ -30,12 +30,8 @@ $vars = array_merge($defaults, $vars);
 $value = $vars['value'];
 unset($vars['value']);
 
-
-
 ?>
 
 <textarea <?php echo elgg_format_attributes($vars); ?>>
 <?php echo htmlspecialchars($value, ENT_QUOTES, 'UTF-8', false); ?>
 </textarea>
-
-

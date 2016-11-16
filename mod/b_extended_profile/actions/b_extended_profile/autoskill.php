@@ -6,19 +6,8 @@
  */
 
 $skills = file('skills.txt');
-
 $query = htmlspecialchars($_GET['query']);
 $result = array();
-
-/*
-foreach ($skills as $s) {
-    if (strpos(strtolower($s), strtolower($query)) !== FALSE) {
-        $result[] = array('value' => $s);
-    }
-}
-
-*/
-
 
 foreach ($skills as $s) {
 
@@ -89,4 +78,3 @@ foreach ( $result as $r ) {
 $result = array_merge($highest_relevance, $high_relevance, $med_relevance, $low_relevance, $lowest_relevance);
 
 echo json_encode($result);
-

@@ -36,22 +36,19 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                 echo elgg_view('input/portfolio', array('guid' => $guid));
             }
         }
-    }
-    else {
+    }else {
+
         if ($portfolio_guid != null && !empty($portfolio_guid)) {
             echo elgg_view('input/portfolio', array('guid' => $portfolio_guid));
         }
     }
 
-
     echo '</div>';
 
     // create an "add more" button at the bottom of the education input fields so that the user can continue to add more education entries as needed
     echo '<button class="gcconnex-portfolio-add-another elgg-button elgg-button-action btn btn-primary mrgn-tp-md" data-type="portfolio" onclick="addMore(this)">' . elgg_echo('gcconnex_profile:portfolio:add') . '</button>';
-}
+}else {  // In case this view will be called via elgg_view()
 
-else {  // In case this view will be called via elgg_view()
     echo 'An error has occurred. Please ask the system administrator to grep: DZZZNFDSAGHHS261177';
 }
-
 ?>

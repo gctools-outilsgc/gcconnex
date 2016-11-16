@@ -5,9 +5,9 @@
  * Purpose: Process an endorsement of a skill from one user to another
  */
 
-if (elgg_is_xhr()) {  //This is an Ajax call!
+//This is an Ajax call
+if (elgg_is_xhr()) {  
     $user_guid = get_input('guid');
-
     $skill_guid = get_input('skill');
     $skill = get_entity($skill_guid);
 
@@ -21,6 +21,5 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
         $stack[] = $user_guid;
         $skill->endorsements = $stack;
     }
-    //$skill->endorsements = NULL;
     $skill->save();
 }

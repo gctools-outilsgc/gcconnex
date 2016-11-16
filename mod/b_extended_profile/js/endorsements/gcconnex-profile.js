@@ -47,13 +47,6 @@ function initFancyProfileBox() {
         },
         limit: Infinity,
         source: manager.ttAdapter(),
-        /*
-        source: function(query, cb) {
-            manager.get(query, function(suggestions) {
-                cb(filter(suggestions));
-            });
-        },
-        */
         templates: {
             suggestion: function (user) {
                 return '<div class="tt-suggest-avatar">' + user.pic + '</div><div class="tt-suggest-username">' + user.value + '</div><br>';
@@ -61,39 +54,10 @@ function initFancyProfileBox() {
         }
     }).bind('typeahead:selected', select);
 
-
 }
-
-
 
 $(document).ready(function() {
         initFancyProfileBox();
-        /*$(".gcconnex-basic-profile-edit").fancybox({
-            'autoDimensions': false,
-            'width': '800',
-            'height': '580',
-            'onComplete': initFancyProfileBox
-        });
-
-    /*
-    var tour = new Tour({
-        steps: [
-            {
-                element: "#profile-details",
-                title: "Test",
-                content: "This is a test"
-            },
-            {
-                element: ".b_user_menu",
-                title: "Another",
-                content: "Muahahaha"
-            }
-        ]
-    });
-
-    tour.init();
-    tour.start();
-    */
 
     // bootstrap tabs.js functionality..
     $('#myTab a').click(function (e) {
@@ -102,25 +66,15 @@ $(document).ready(function() {
     });
 
     // bootstrap modal functionality for edit basic profile
-
     var departments = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
-        //prefetch: '../data/films/post_1960.json',
-        //remote: '../data/films/queries/%QUERY.json'
         remote: {
             url: elgg.get_site_url() + 'mod/b_extended_profile/actions/b_extended_profile/autodept.php?query=%QUERY'
         }
     });
 
     departments.initialize();
-
-   /* $('.gcconnex-basic-department').typeahead(null, {
-        name: 'department',
-        displayKey: 'value',
-        limit: 10,
-        source: departments.ttAdapter()
-    });*/
 
     // show "edit profile picture" overlay on hover
     $('.avatar-profile-edit').hover(
@@ -133,7 +87,6 @@ $(document).ready(function() {
             $('.avatar-hover-edit').fadeOut('slow');
         }
     );
-
 
     // initialize edit/save/cancel buttons and hide some of the toggle elements
     $('.save-control').hide();
@@ -189,7 +142,6 @@ $(document).ready(function() {
 
     $('.gcconnex-education-add-another').on("click", {section: "education"}, addMore);
 
-
     //add focus to click events to allow easy tabbing through edit content
     $('.edit-education').on("click", function(){$('.cancel-education').focus()});
     $('.save-education').on("click", function(){$('.edit-education').focus()});
@@ -214,7 +166,6 @@ $(document).ready(function() {
     $('.edit-portfolio').on("click", function(){$('.cancel-portfolio').focus()});
     $('.save-portfolio').on("click", function(){$('.edit-portfolio').focus()});
     $('.cancel-portfolio').on("click", function () { $('.edit-portfolio').focus() });
-
 
     //allow use of keyboard to endorse skills
     $('.skill-container').bind('keypress', function (e) {
@@ -265,13 +216,10 @@ function editProfile(event) {
     $('.edit-' + $section).hide();
     $('.edit-' + $section).addClass('hidden');
     $('.edit-' + $section).addClass('wb-invisible');
-
     $('#edit-' + $section).append('<div id="" class="load-spinner"></div>');
 
     switch ($section) {
         case 'about-me':
-
-
 
             // Edit the About Me blurb
             $.get(elgg.normalize_url('ajax/view/b_extended_profile/edit_about-me'),
@@ -324,7 +272,6 @@ function editProfile(event) {
                 function(data) {
                     // Output in a DIV with id=somewhere
                     $('.gcconnex-work-experience').append('<div class="gcconnex-work-experience-edit-wrapper">' + data + '</div>');
-                    //elgg.security.refreshToken();
 
                     $userFind = [];
                     $colleagueSelected = [];
@@ -359,8 +306,6 @@ function editProfile(event) {
             var newSkill = new Bloodhound({
                 datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
                 queryTokenizer: Bloodhound.tokenizers.whitespace,
-                //prefetch: '../data/films/post_1960.json',
-                //remote: '../data/films/queries/%QUERY.json'
                 remote: {
                     url: elgg.get_site_url() + 'mod/b_extended_profile/actions/b_extended_profile/autoskill.php?query=%QUERY'
                 }
@@ -403,8 +348,6 @@ function editProfile(event) {
             $('load-spinner').addClass('hidden');
             $('.load-spinner').addClass('wb-invisible');
 
-            //$('.delete-skill').show();
-
             break;
         case 'languages':
             // Edit the languages for this user
@@ -438,7 +381,6 @@ function editProfile(event) {
                         $('#engCred').hide();
                     }
 
-                //$official_langs.find('.gcconnex-languages-english-writtencomp').val(),
                 });
             break;
         case 'portfolio':
@@ -496,8 +438,6 @@ function user_search_init(target) {
         $("#selected").text(JSON.stringify($colleagueSelected[dataset]));
         $("input.typeahead").typeahead("val", "");
     };
-    //$colleagueSelected[tid] = [];
-    //$colleagueSelected[tid].push(selected);
 
     var filter = function(suggestions, tidName) {
         return $.grep(suggestions, function(suggestion, tid) {
@@ -596,7 +536,6 @@ function saveProfile(event) {
             social_media.flickr = $(".gcconnex-basic-flickr").val();
             social_media.youtube = $(".gcconnex-basic-youtube").val();
 
-
             elgg.action('b_extended_profile/edit_profile', {
                 data: {
                     'guid': elgg.get_logged_in_user_guid(),
@@ -605,14 +544,10 @@ function saveProfile(event) {
                     'social_media': social_media
                 },
                 success: function() {
-                    //if (response.system_messages["success"] != "") {
                         // close the modal
                         window.location.replace(window.location.href);
-                    //}
                 }
             });
-
-            //$('#editProfile').modal('hide');
 
             break;
         case "about-me":
@@ -627,7 +562,8 @@ function saveProfile(event) {
                     'description': $about_me,
                     'access': access
                 },
-                success: function() {            // fetch and display the information we just saved
+                success: function() {            
+                    // fetch and display the information we just saved
                     $.get(elgg.normalize_url('ajax/view/b_extended_profile/about-me'),
                         {
                             'guid': elgg.get_logged_in_user_guid()
@@ -655,6 +591,10 @@ function saveProfile(event) {
                             $delete_guid.push($(this).data('guid'));
                         }
                     }
+                }else {
+                    $education_guid.push($(this).data('guid'));
+                }
+            });
                     else {
                         $education_guid.push($(this).data('guid'));
                     }
@@ -738,6 +678,10 @@ function saveProfile(event) {
                       $endyear.push($(this).val());
                     }
 
+            var $degree = [];
+            $('.gcconnex-education-degree').not(":hidden").each(function() {
+                $degree.push($(this).val());
+            });
                   }
 
                     //increase count
@@ -760,6 +704,38 @@ function saveProfile(event) {
                     $degree.push($(this).val());
                   }
                 });
+
+            // save the information the user just edited
+            elgg.action('b_extended_profile/edit_profile', {
+                data: {
+                    'guid': elgg.get_logged_in_user_guid(),
+                    'delete': $delete_guid,
+                    'eguid': $education_guid,
+                    'section': 'education',
+                    'school': $school,
+                    'startdate': $startdate,
+                    'startyear': $startyear,
+                    'enddate': $enddate,
+                    'endyear': $endyear,
+                    'ongoing': $ongoing,
+                    'degree': $degree,
+                    'field': $field,
+                    'access': $access
+                },
+                success: function() {            
+                    // fetch and display the information we just saved
+                    $.get(elgg.normalize_url('ajax/view/b_extended_profile/education'),
+                        {
+                            'guid': elgg.get_logged_in_user_guid()
+                        },
+                        function(data) {
+                            // Output in a DIV with id=somewhere
+                            $('.gcconnex-education-display').remove();
+                            $('.gcconnex-education').append('<div class="gcconnex-education-display">' + data + '</div>');
+                        });
+                }
+            });
+            $('.gcconnex-education-edit-wrapper').remove();
 
                 //field of study field
                 var $field = [];
@@ -814,6 +790,36 @@ function saveProfile(event) {
                     $('.gcconnex-education-edit-wrapper').remove();
                     $('#edu-error').remove();
 
+            var work_experience = {};
+            var experience = [];
+            work_experience.edit = experience;
+            work_experience.delete_guids = [];
+            var access = $('.gcconnex-work-experience-access').val();
+
+            $('.gcconnex-work-experience-entry').each(function() {
+                if ( $(this).is(":hidden") ) {
+                    work_experience.delete_guids.push($(this).data('guid'));
+                }else {
+                    experience = {
+                        'eguid': $(this).data('guid'),
+                        'organization': $(this).find('.gcconnex-work-experience-organization').val(),
+                        'title': $(this).find('.gcconnex-work-experience-title').val(),
+                        'startdate': $(this).find('.gcconnex-work-experience-startdate').val(),
+                        'startyear': $(this).find('.gcconnex-work-experience-start-year').val(),
+                        'enddate': $(this).find('.gcconnex-work-experience-enddate').val(),
+                        'endyear': $(this).find('.gcconnex-work-experience-end-year').val(),
+                        'ongoing': $(this).find('.gcconnex-work-experience-ongoing').prop('checked'),
+                        'responsibilities': $(this).find('.gcconnex-work-experience-responsibilities').val()
+                    };
+                    experience.colleagues = [];
+                    $(this).find('.gcconnex-avatar-in-list').each(function() {
+                        if ($(this).is(':visible')) {
+                            experience.colleagues.push($(this).data('guid'));
+                        }
+                    });
+                    work_experience.edit.push(experience);
+                }
+            });
                   } else if($('#edu-error').size() < 1) {
                     $('div.save-education').prepend('<section id="edu-error" class="alert alert-danger">'+errorMsg+'</section>');
                   }
@@ -854,6 +860,7 @@ function saveProfile(event) {
                             }
                         });
 
+            break;
                         //title field
                         if($.trim(experience['title']) == ''){
                           $(this).find('.gcconnex-work-experience-title').addClass('input-error').attr('aria-invalid', "true");
@@ -962,9 +969,7 @@ function saveProfile(event) {
             var english = [];
             var french = [];
             var firstlang = $('.gcconnex-languages-edit-wrapper').find('.gcconnex-first-official-language').val();
-
             $official_langs = $('.gcconnex-profile-language-official-languages');
-
 			var access = $('.gcconnex-languages-access').val();
 
             english = {
@@ -1101,7 +1106,6 @@ function cancelChanges(event) {
             $('.gcconnex-profile-about-me-display').show();
             break;
         case "education":
-            //$('.gcconnex-profile-education-display').show();
             $('.gcconnex-education-edit-wrapper').remove();
             $('#edu-error').remove();
             $('.gcconnex-profile-education-display').show();
@@ -1141,7 +1145,6 @@ function checkForEnter(event) {
     if (event.keyCode == 13) { // 13 = 'Enter' key
 
         // The new skill being added, as entered by user
-        //var newSkill = $('.gcconnex-endorsements-input-skill').val().trim();
         var newSkill = $('.gcconnex-endorsements-input-skill').typeahead('val');
         // @todo: do data validation to ensure css class-friendly naming (ie: no symbols)
         // @todo: add a max length to newSkill
@@ -1187,8 +1190,8 @@ function addColleague(obj, datum, name) {
             '<div class="remove-colleague-from-list">X</div>' + datum.avatar + '</div>'
         );
     }
-    $('.userfind').typeahead('val', '');        // clear the typeahead box
-    // remove colleague from suggestible usernames list
+     // clear the typeahead box
+    $('.userfind').typeahead('val', '');       
 }
 
 /*
@@ -1259,18 +1262,12 @@ function addEndorsement(identifier) {
     var targetSkill = $(identifier).data('skill');
     var targetSkillDashed = targetSkill.replace(/\s+/g, '-').toLowerCase(); // replace spaces with '-' for css classes
 
-
     var endorse_count = $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.gcconnex-endorsements-count').text();
     endorse_count++;
     $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.gcconnex-endorsements-count').text(endorse_count);
-
     $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.skill-container').removeClass('gcconnex-endorsement-add').addClass('gcconnex-endorsement-retract');
     $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.skill-container').attr('onclick', 'retractEndorsement(this)');
     $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.skill-container').attr('title', 'Retract');
-
-   // $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').append('<button class="gcconnex-endorsement-retract btn-endorse" onclick="retractEndorsement(this)" data-guid="' + skill_guid + '" data-skill="' + targetSkill + '">Retract</button>')
-    //$('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.gcconnex-endorsement-add').remove();
-    //$('.add-endorsement-' + targetSkillDashed).remove();
 }
 
 /*
@@ -1285,23 +1282,14 @@ function retractEndorsement(identifier) {
         'skill': skill_guid
     });
 
-
     var targetSkill = $(identifier).data('skill');
     var targetSkillDashed = targetSkill.replace(/\s+/g, '-').toLowerCase(); // replace spaces with '-' for css classes
-
-
     var endorse_count = $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.gcconnex-endorsements-count').text();
     endorse_count--;
     $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.gcconnex-endorsements-count').text(endorse_count);
-
     $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.skill-container').removeClass('gcconnex-endorsement-retract').addClass('gcconnex-endorsement-add');
     $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.skill-container').attr('onclick', 'addEndorsement(this)');
     $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.skill-container').attr('title', 'Endorse / Valider');
-
-    //$('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').append('<button class="gcconnex-endorsement-add btn-endorse" onclick="addEndorsement(this)" data-guid="' + skill_guid + '" data-skill="' + targetSkill + '">Endorse</button>')
-
-    //$(identifier).after('<span class="gcconnex-endorsement-add add-endorsement-' + targetSkillDashed + '" onclick="addEndorsement(this)" data-guid="' + skill_guid + '" data-skill="' + targetSkill + '">+</span>');
-    //$('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.gcconnex-endorsement-retract').remove();
 }
 
 /*
@@ -1354,8 +1342,9 @@ function deleteEntry(identifier) {
         $('.cancel-' + entryType + 's').focus();
     } else {
         $('.cancel-' + entryType).focus();
-    }
 
+    } 
+    }
 }
 
 /*
@@ -1371,7 +1360,6 @@ function removeOldSkills() {
             $('.gcconnex-old-skills').remove();
         }
     });
-
 }
 
 var entityMap = {
