@@ -62,8 +62,9 @@ function onboard_ME() {
     elgg_extend_view('thewire/sidebar', 'welcome-steps/wire_modal', 449);
     elgg_extend_view('contactform/contactform', 'onboard/module_links');
 
-    elgg_extend_view('widgets/newsfeed/content', 'onboard/launch');
-    elgg_extend_view('widgets/wet_activity/content', 'onboard/launch');
+    //extend newsfeed to launch onboarding
+    elgg_extend_view('widgets/newsfeed/content', 'onboard/launch', 491);
+    elgg_extend_view('widgets/wet_activity/content', 'onboard/launch', 491);
 
     elgg_require_js("onboard_require");
 

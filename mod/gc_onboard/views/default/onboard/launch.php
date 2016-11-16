@@ -27,14 +27,16 @@ if(elgg_is_logged_in()){
     if(!isset($user->onboardcta) || (is_numeric($user->onboardcta) && (time() - $user->onboardcta) > $time)){ //1458259200
 
         $onboard = elgg_view('welcome-steps/modal');
-        $onboard .= '<script> window.onload = function () { document.getElementById("onboardPopup").click() } </script>';
+        $onboard .= '<script> window.onload = function () { document.getElementById("onboardPopup").click(); $("#welcome-step .feed-filter").remove(); } </script>';
 
     } else if($helpLaunch){
 
       $onboard = elgg_view('welcome-steps/modal');
-      $onboard .= '<script> window.onload = function () { document.getElementById("onboardPopup").click() } </script>';
+      $onboard .= '<script> window.onload = function () { document.getElementById("onboardPopup").click(); $("#welcome-step .feed-filter").remove(); } </script>';
 
     }
 
 }
+//display modal
+echo $onboard;
  ?>
