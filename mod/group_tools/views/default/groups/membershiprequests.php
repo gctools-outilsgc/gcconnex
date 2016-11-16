@@ -1,10 +1,15 @@
 <?php
+
 /**
+ *
+ * Group Tools
+ * 
  * A group"s member requests
  *
  * @uses $vars["entity"]   ElggGroup
  * @uses $vars["requests"] Array of ElggUsers who requested membership
  * @uses $vars["invitations"] Array of ElggUsers who where invited
+ * @author ColdTrick IT Solutions
  */
 
 $group = elgg_extract("entity", $vars);

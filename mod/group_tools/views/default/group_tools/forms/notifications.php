@@ -1,6 +1,12 @@
 <?php
+
 /**
+ * Group Tools
+ *
  * Set notification settings of group members
+ *
+ * @author ColdTrick IT Solutions
+ * 
  */
 
 $user = elgg_get_logged_in_user_entity();

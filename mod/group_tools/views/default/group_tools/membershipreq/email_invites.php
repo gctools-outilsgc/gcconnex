@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Group Tools
+ *
+ * @author ColdTrick IT Solutions
+ * 
+ */
+
 $emails = elgg_extract("emails", $vars);
 $group = elgg_extract("entity", $vars);
 

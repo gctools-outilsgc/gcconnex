@@ -1,9 +1,13 @@
 <?php
+
 /**
+ * Group Tools
+ *
  * All plugin hook callback functions are defined in this file
  *
+ * @author ColdTrick IT Solutions
  * @package group_tools
- */
+*/
 
 /**
  * Allow group admins (not owners) to also edit group content

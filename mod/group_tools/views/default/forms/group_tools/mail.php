@@ -1,7 +1,14 @@
 <?php
+
 /**
+ * Group Tools
+ *
  * Mail group members
+ *
+ * @author ColdTrick IT Solutions
+ * 
  */
+
 $group = $vars["entity"];
 $members = $vars["members"];
 

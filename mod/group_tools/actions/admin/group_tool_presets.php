@@ -1,5 +1,11 @@
 <?php
 
+/**
+* Group Tools
+* 
+* @author ColdTrick IT Solutions
+*/	
+
 $presets = get_input("params");
 
 // filter out invalid input

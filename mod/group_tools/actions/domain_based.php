@@ -1,7 +1,12 @@
 <?php
+
 /**
- * Save the domains for domain based joining of a group
- */
+* Group Tools
+*
+* Save the domains for domain based joining of a group
+* 
+* @author ColdTrick IT Solutions
+*/	
 
 $group_guid = (int) get_input("group_guid");
 $domains = get_input("domains");

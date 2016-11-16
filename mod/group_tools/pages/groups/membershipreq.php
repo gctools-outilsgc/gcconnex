@@ -1,9 +1,12 @@
 <?php
 /**
+ * Group Tools
+ *
  * Manage group invite requests.
  *
+ * @author ColdTrick IT Solutions
  * @package ElggGroups
- */
+*/
 
 elgg_gatekeeper();
 
@@ -63,7 +66,6 @@ switch ($subpage) {
 			"offset" => $offset,
 			"limit" => $limit,
 			"count" => true,
-			//"order_by" => "ue.name ASC"
 		);
 		
 		$count = elgg_get_entities_from_relationship($options);

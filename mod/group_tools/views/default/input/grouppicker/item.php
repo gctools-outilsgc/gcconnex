@@ -1,5 +1,9 @@
 <?php
+
 /**
+ *
+ * Group Tools
+ * 
  * Group view in Group Picker
  *
  * @package Elgg
@@ -7,6 +11,8 @@
  *
  * @uses $vars['entity'] Group entity
  * @uses $vars['input_name'] Name of the returned data array
+ *
+ * @author ColdTrick IT Solutions
  */
 
 /* @var ElggEntity $entity */

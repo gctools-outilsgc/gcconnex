@@ -1,11 +1,17 @@
 <?php
+
 /**
+ * Group Tools
+ *
  * Group module (also called a group widget)
  *
  * @uses $vars['title']    The title of the module
  * @uses $vars['content']  The module content
  * @uses $vars['all_link'] A link to list content
  * @uses $vars['add_link'] A link to create content
+ *
+ * @author ColdTrick IT Solutions
+ * 
  */
 
 $group = elgg_get_page_owner_entity();

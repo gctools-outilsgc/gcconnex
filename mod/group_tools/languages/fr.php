@@ -70,7 +70,6 @@ return array(
 'group_tools:settings:member_export' => "Autoriser les administrateurs du groupe d'exporter des informations sur les membres",
 'group_tools:settings:member_export:description' => "Cela inclut le nom, le nom d'utilisateur et l'adresse courriel de l'utilisateur",
 
-	
 // group tool presets
 'group_tools:admin:group_tool_presets:description' => "Here you can configure group tool presets.
 When a user creates a group he/she gets to choose one of the presets in order to quickly get the correct tools. A blank option is also offered to the user to allow his/her own choices.",
@@ -83,8 +82,7 @@ When a user creates a group he/she gets to choose one of the presets in order to
 'group_tools:create_group:tool_presets:blank:title' => "Blank group",
 'group_tools:create_group:tool_presets:blank:description' => "Choose this group to select your own tools.",
 	
-	
-	// group invite message
+// group invite message
 'group_tools:groups:invite:body' => "Bonjour %s,</br></br>%s vous a invité(e) à vous joindre au groupe '%s'.</br>%s</br></br>Voir ci-dessous le message/l'invitation :</br>%s",
 		
 // group add message		
@@ -202,7 +200,7 @@ When a user creates a group he/she gets to choose one of the presets in order to
 'group_tools:groups:membershipreq:email_invitations:none' => "Aucune invitation par courriel en attente",
 'group_tools:groups:membershipreq:invitations:revoke:confirm' => "Êtes-vous sûr de vouloir retirer cette invitation?",
 
-	// group invitations
+// group invitations
 'group_tools:group:invitations:request' => "Demandes d'adhésion en suspens",
 'group_tools:group:invitations:request:revoke:confirm' => "Êtes-vous sûr de vouloir retirer votre demande d'adhésion?",
 'group_tools:group:invitations:request:non_found' => "Aucune demande d'adhésion en suspens pour le moment.",
@@ -294,8 +292,7 @@ When a user creates a group he/she gets to choose one of the presets in order to
 'group_tools:action:fix_acl:error:input' => "Option(s) invalide(s) que vous ne pouvez corriger : %s.",
 'group_tools:action:fix_acl:error:missing:nothing' => "Aucun utilisateur manquant sur les listes de contrôle d'accès (ACL) du groupe.",
 'group_tools:action:fix_acl:error:excess:nothing' => "Aucun utilisateur excédentaire sur les listes de contrôle d'accès (ACL) du groupe.",
-'group_tools:action:fix_acl:error:without:nothing' => "Aucun groupe sans liste de contrôle d'accès (ACL).",
-		
+'group_tools:action:fix_acl:error:without:nothing' => "Aucun groupe sans liste de contrôle d'accès (ACL).",	
 'group_tools:action:fix_acl:success:missing' => "Ajout de %d utilisateurs sur les listes de contrôle d'accès (ACL) du groupe réussi.",
 'group_tools:action:fix_acl:success:excess' => "Suppression de %d utilisateurs sur les listes de contrôle d'accès (ACL) du groupe réussie.",
 'group_tools:action:fix_acl:success:without' => "Création de listes de contrôle d'accès (ACL) du groupe %d réussie.",

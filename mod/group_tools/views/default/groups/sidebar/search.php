@@ -1,8 +1,15 @@
 <?php
+
 /**
+ *
+ * Group Tools
  * Search for content in this group
  *
- * @uses vars["entity"] ElggGroup
+ * @package ElggGroups
+ *
+ * @uses $vars["entity"] Group entity
+ *
+ * @author ColdTrick IT Solutions
  */
 
 $group = elgg_extract("entity", $vars);

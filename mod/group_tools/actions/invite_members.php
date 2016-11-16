@@ -1,7 +1,12 @@
 <?php
+
 /**
- * Invite users to the group
- */
+* Group Tools
+*
+* Invite users to the group
+* 
+* @author ColdTrick IT Solutions
+*/	
 
 $invite_members = get_input("invite_members");
 $group_guid = (int) get_input("group_guid");

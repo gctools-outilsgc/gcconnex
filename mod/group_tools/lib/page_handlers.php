@@ -1,7 +1,12 @@
 <?php
+
 /**
+ * Group Tools
+ *
  * All page handlers are bundled here
- */
+ *
+ * @author ColdTrick IT Solutions
+*/
 
 /**
  * Take over the groupicon page handler for fallback

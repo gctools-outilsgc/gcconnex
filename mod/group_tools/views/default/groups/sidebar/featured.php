@@ -1,8 +1,13 @@
 <?php
+
 /**
+ * Group Tools
+ *
  * Featured groups
  *
  * @package ElggGroups
+ * @author ColdTrick IT Solutions
+ * 
  */
 
 $limit = (int) elgg_extract("limit", $vars, 10);

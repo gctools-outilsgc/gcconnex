@@ -1,7 +1,12 @@
 <?php
+
 /**
- * Save the group welcome message
- */
+* Group Tools
+*
+* Save the group welcome message
+* 
+* @author ColdTrick IT Solutions
+*/
 
 $group_guid = (int) get_input("group_guid");
 $welcome_message = get_input("welcome_message");

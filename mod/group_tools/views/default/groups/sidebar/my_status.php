@@ -1,10 +1,15 @@
 <?php
+
 /**
+ *
+ * Group Tools
  * Group status for logged in user
  *
  * @package ElggGroups
  *
  * @uses $vars["entity"] Group entity
+ *
+ * @author ColdTrick IT Solutions
  */
 
 $group = elgg_extract("entity", $vars);

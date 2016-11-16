@@ -1,7 +1,12 @@
 <?php
+
 /**
- * Action to save a new related group
- */
+* Group Tools
+*
+* Action to save a new related group
+* 
+* @author ColdTrick IT Solutions
+*/	
 
 $group_guid = (int) get_input("group_guid");
 $guid = (int) get_input("guid");

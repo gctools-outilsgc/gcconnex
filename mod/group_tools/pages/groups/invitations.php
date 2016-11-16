@@ -1,7 +1,12 @@
 <?php
+
 /**
+ * Group Tools
+ *
  * List all group invitations
- */
+ *
+ * @author ColdTrick IT Solutions
+*/
 
 gatekeeper();
 

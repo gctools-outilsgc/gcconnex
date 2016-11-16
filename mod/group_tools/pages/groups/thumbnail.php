@@ -1,7 +1,13 @@
 <?php
+
 /**
+ * Group Tools
+ *
  * Show the thumbnail
- */
+ *
+ * @author ColdTrick IT Solutions
+ * 
+*/
 
 // won"t be able to serve anything if no guid
 if (!isset($_GET["guid"]) || !isset($_GET["group_guid"])) {

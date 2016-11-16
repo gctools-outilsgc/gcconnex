@@ -1,7 +1,12 @@
 <?php
+
 /**
- * Decline an email invitation
- */
+* Group Tools
+*
+* Decline an email invitation
+* 
+* @author ColdTrick IT Solutions
+*/	
 
 $invitecode = get_input("invitecode");
 
