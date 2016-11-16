@@ -1,4 +1,10 @@
 <?php
+
+/**
+* Friend request
+* 
+* @author ColdTrick IT Solutions
+*/	
 	
 $content = "";
 
