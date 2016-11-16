@@ -1,4 +1,11 @@
 <?php
+
+/**
+ * Custom index widgets
+ * 
+ * @author Fx NION
+ */
+
 $object_type = 'izap_videos';
 
 $num_items = $vars['entity']->num_items;

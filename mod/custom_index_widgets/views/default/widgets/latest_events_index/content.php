@@ -1,5 +1,11 @@
 <?php 
 	
+/**
+ * Custom index widgets
+ * 
+ * @author Fx NION
+ */
+
 	require_once($CONFIG->pluginspath.'event_calendar/models/model.php');
 	
 	if(!function_exists('getLastDayOfMonth')){
@@ -29,14 +35,12 @@
 	    $widget_context_mode = 'search';
 	
 	elgg_set_context($widget_context_mode);
-	
 
 	$original_start_date = date('Y-m-d');
 	$day = 60*60*24;
 	$week = 7*$day;
 	$month = 31*$day;
 	
-
 	if ($mode == "day") {
 		$start_date = $original_start_date;
 		$end_date = $start_date;
@@ -78,7 +82,6 @@
 	
 	$count = event_calendar_get_events_between($start_ts,$end_ts,true,$num_items,0,$widget_group,'-');
 	$events = event_calendar_get_events_between($start_ts,$end_ts,false,$num_items,0,$widget_group,'-');
-	//$widget_datas= $event_list = elgg_view_entity_list($events, $count, 0, $num_items, false, false);
 	
 	$options = array(
 			'list_class' => 'elgg-list-entity',
@@ -92,4 +95,3 @@
 	$widget_datas = elgg_view_entity_list($events, $options);
 	echo $widget_datas;
 ?>
-

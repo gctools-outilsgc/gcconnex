@@ -1,7 +1,10 @@
 <?php
 
-		//action_gatekeeper();
-		
+/**
+* Custom index widgets
+* 
+* @author Fx NION
+*/	
 		global $CONFIG;
 		
 		$result = reorder_widgets_from_panel(null, null, null, 'custom_index_widgets', 2);
@@ -11,5 +14,4 @@
 			register_error(elgg_echo('widgets:save:failure'));
 		}
 		forward($_SERVER['HTTP_REFERER']);
-
 ?>

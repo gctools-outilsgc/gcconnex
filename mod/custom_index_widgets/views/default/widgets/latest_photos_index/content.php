@@ -1,3 +1,13 @@
+<?php
+
+/**
+ * Custom index widgets
+ * 
+ * @author Fx NION
+ */
+
+?>
+
 <div class="contentWrapper"> 
 <?php
 

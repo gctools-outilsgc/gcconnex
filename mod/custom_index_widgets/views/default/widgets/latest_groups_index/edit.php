@@ -1,8 +1,15 @@
 <?php
-    $num_items = $vars['entity']->num_items;
-    if (!isset($num_items)) $num_items = 10;
+
+/**
+ * Custom index widgets
+ * 
+ * @author Fx NION
+ */
+
+  $num_items = $vars['entity']->num_items;
+  if (!isset($num_items)) $num_items = 10;
    
-    $widget_title = $vars['entity']->widget_title;
+  $widget_title = $vars['entity']->widget_title;
 	
 	$guest_only = $vars['entity']->guest_only;
 	if (!isset($guest_only)) $guest_only = "no";

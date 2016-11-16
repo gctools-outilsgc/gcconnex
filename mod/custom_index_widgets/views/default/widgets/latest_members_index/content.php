@@ -1,5 +1,11 @@
 <?php 
   
+  /**
+ * Custom index widgets
+ * 
+ * @author Fx NION
+ */
+  
   $num_items = $vars['entity']->num_items;
   if (!isset($num_items)) $num_items = 10;
   $display_avatar = $vars['entity']->display_avatar;
@@ -16,5 +22,3 @@
 
 echo $widget_datas;
 ?>        
-
-

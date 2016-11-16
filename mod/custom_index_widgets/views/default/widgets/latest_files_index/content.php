@@ -1,14 +1,19 @@
 <?php 
   
-  $object_type ='file';
+/**
+ * Custom index widgets
+ * 
+ * @author Fx NION
+ */
   
+  $object_type ='file';
   $num_items = $vars['entity']->num_items;
+
   if (!isset($num_items)) $num_items = 10;
   
   $widget_group = $vars["entity"]->widget_group;
   if (!isset($widget_group)) $widget_group = ELGG_ENTITIES_ANY_VALUE;
   
-
   $site_categories = elgg_get_site_entity()->categories;
   $widget_categorie = $vars['entity']->widget_categorie;
   $widget_context_mode = $vars['entity']->widget_context_mode;
@@ -38,7 +43,5 @@
 		'metadata_value' => $widget_categorie,
 		));
 }
-  
 	echo $widget_datas;
 ?>        
-
