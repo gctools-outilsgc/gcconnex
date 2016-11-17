@@ -2,7 +2,7 @@
 /**
  * group_operator/language/en.php 
  *
- * Group Operators languages: englsih
+ * Group Operators languages: english
  *
  * @package ElggGroupOperators
  * @author Lorea
