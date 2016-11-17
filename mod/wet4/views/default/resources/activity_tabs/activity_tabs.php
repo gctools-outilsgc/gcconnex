@@ -56,7 +56,7 @@ switch ($page_type) {
 		$page_filter = 'activity_tab';
 		$users = elgg_get_entities_from_metadata(array(
 		    'type' => 'user',
-		    'metadata_name_value_pairs' => array('name' => 'department', 'value' => get_loggedin_user()->department)
+		    'metadata_name_value_pairs' => array('name' => 'department', 'value' => elgg_get_logged_in_user_entity()->department)
 		));
 		
 		foreach($users as $user) {
@@ -73,7 +73,7 @@ switch ($page_type) {
 		));
 		
 		foreach($users as $user) {
-			if ($user->department != get_loggedin_user()->department) {
+			if ($user->department != elgg_get_logged_in_user_entity()->department) {
 		    		$members[] .= $user->guid;
 			}
 		}        

@@ -1,11 +1,11 @@
 <?php 
 $site_url = elgg_get_site_url();
-$user = get_loggedin_user()->username;
-$displayName = get_loggedin_user()->name;
-$user_avatar = get_loggedin_user()->geticonURL('medium');
-$email = get_loggedin_user()->email;
+$user = elgg_get_logged_in_user_entity()->username;
+$displayName = elgg_get_logged_in_user_entity()->name;
+$user_avatar = elgg_get_logged_in_user_entity()->geticonURL('medium');
+$email = elgg_get_logged_in_user_entity()->email;
 
-$department = get_loggedin_user()->get('department');
+$department = elgg_get_logged_in_user_entity()->get('department');
 ?>
 
 

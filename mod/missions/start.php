@@ -34,7 +34,7 @@ function missions_init()
    	elgg_load_library('elgg:missions-organization');
 
     //Register to run unit tests
-	register_plugin_hook('unit_test', 'system', 'missions_unit_tests');
+	elgg_register_plugin_hook_handler('unit_test', 'system', 'missions_unit_tests');
 
     // Register a handler for page navigation.
     elgg_register_page_handler('missions', 'missions_main_page_handler');
