@@ -1547,6 +1547,11 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 'file_tools:forms:edit:description2' => 'Description en français',
 'file_tools:forms:edit:description' => 'Description en anglais',
 
+/*Translation content**/
+
+'lang:english' => 'Anglais',
+'lang:french' => 'Français',
+
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */

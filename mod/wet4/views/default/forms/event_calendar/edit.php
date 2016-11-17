@@ -139,19 +139,14 @@ $room = $fd['room'];
 
 $body = '<div class="event-calendar-edit-form">';
 
-$french = elgg_view('input/button', array(
-    'value' => elgg_echo('french'),
-    'id' => 'btnClickfr',
-    'class' => 'btn btn-default en',
-));
+$btn_language =  '<ul class="nav nav-tabs nav-tabs-language">
+  <li id="btnen"><a href="#" id="btnClicken">'.elgg_echo('lang:english').'</a></li>
+  <li id="btnfr"><a href="#" id="btnClickfr">'.elgg_echo('lang:french').'</a></li>
+</ul>';
 
-$english = elgg_view('input/button', array(
-    'value' => elgg_echo('english'),
-    'id' => 'btnClicken',
-    'class' => 'btn btn-default fr',
-));
+$body .= $btn_language;
 
-$body .= $french.' '.$english;
+$body .= '<div class="tab-content tab-content-border">';
 
 $body .= elgg_view('input/hidden', array('name' => 'event_action', 'value' => $event_action));
 $body .= elgg_view('input/hidden', array('name' => 'event_guid', 'value' => $event_guid));
@@ -501,43 +496,48 @@ if (elgg_is_active_plugin('cp_notifications') && !$new_entity) {
 
 $body .= '<br>'.elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('event_calendar:submit'), 'class' => 'btn btn-primary'));
 
-$body .= '</div>';
+$body .= '</div></div>';
 
 echo $body;
 
 
 if(get_current_language() == 'fr'){
 ?>
-    <script>
-        jQuery('.fr').show();
-        jQuery('.en').hide();
+	<script>
+		jQuery('.fr').show();
+	    jQuery('.en').hide();
+	    jQuery('#btnfr').addClass('active');
 
-    </script>
+	</script>
 <?php
 }else{
 ?>
-    <script>
-        jQuery('.en').show();
-        jQuery('.fr').hide();
-
-    </script>
+	<script>
+		jQuery('.en').show();
+    	jQuery('.fr').hide();
+    	jQuery('#btnen').addClass('active');
+	</script>
 <?php
 }
 ?>
 <script>
 jQuery(function(){
 
-        jQuery('#btnClickfr').click(function(){
+	var selector = '.nav li';
+
+	$(selector).on('click', function(){
+    $(selector).removeClass('active');
+    $(this).addClass('active');
+});
+
+		jQuery('#btnClickfr').click(function(){
                jQuery('.fr').show();
-               jQuery('.en').hide();
-                
+               jQuery('.en').hide();  
         });
 
           jQuery('#btnClicken').click(function(){
                jQuery('.en').show();
-               jQuery('.fr').hide();
-               
+               jQuery('.fr').hide();  
         });
-
 });
 </script>

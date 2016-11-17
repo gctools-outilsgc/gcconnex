@@ -35,7 +35,7 @@ if(!elgg_is_sticky_form('firstfill')) {
 	if(!$extracted_org) {
 		$exploded_department = explode('/', $user->department);
 		$department_name = trim($exploded_department[0]);
-		$extracted_org = false;//mo_format_input_node(mo_get_department_next_to_root($department_name));
+		$extracted_org = mo_format_input_node(mo_get_department_next_to_root($department_name));
 	}
 	if(!$email) {
 		$email = $user->email;

@@ -1720,6 +1720,11 @@ Please do not reply to this email.",
 'img:desc:en' => 'Image description in english',
 'description:ideas:en' => 'Ideas description in english',
 'description:ideas:fr' => 'Ideas description in french',
+
+/*Translation content**/
+
+'lang:english' => 'English',
+'lang:french' => 'French',
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */
