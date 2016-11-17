@@ -25,7 +25,7 @@ if (empty($excerpt)) {
 	if($blog->description3){
 		$excerpt = elgg_get_excerpt(gc_explode_translation($blog->description3, $lang));
 	}else{
-		$excerpt = $blog->description;
+		$excerpt = elgg_get_excerpt($blog->description);
 	}
 }
 
