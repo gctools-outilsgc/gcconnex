@@ -1638,3 +1638,46 @@ figcaption{
     display:none !important;
 
 }
+/**************Tabs for toggle language*******************/
+
+.nav-tabs-language>li>a {
+    margin-right: 2px;
+    line-height: 1.42857143;
+    border: 1px solid transparent;
+    border-radius: 4px 4px 0 0
+}
+
+.nav-tabs-language>li>a:hover {
+    border-color: #eee #eee #ddd
+}
+
+.nav-tabs-language>li.active>a,
+.nav-tabs-language>li.active>a:focus,
+.nav-tabs-language>li.active>a:hover {
+    color: #555;
+    cursor: default;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent
+}
+
+.nav-tabs-language {
+    margin-bottom: 0;
+}
+
+.nav-tabs-language > li > a:hover {
+    background-color: #eee;
+    text-decoration: none;
+    padding-bottom: 4px;
+}
+
+.tab-content-border {
+    padding: 10px;
+    margin: 4px;
+    margin-top: 0;
+    border: 1px solid #ddd;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    padding-bottom: 7px;
+}

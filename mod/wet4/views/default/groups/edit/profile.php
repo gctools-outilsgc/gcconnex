@@ -44,22 +44,15 @@ catch (Exception $e)
         gc_err_logging($errMess,$errStack,'Suggested Friends',$errType);
          $connection->close();
 }*/
-$french = elgg_view('input/button', array(
-    'value' => elgg_echo('french'),
-    'id' => 'btnClickfr',
-    'class' => 'btn btn-default en',
-));
+$btn_language =  '<ul class="nav nav-tabs nav-tabs-language">
+  <li id="btnen"><a href="#" id="btnClicken">'.elgg_echo('lang:english').'</a></li>
+  <li id="btnfr"><a href="#" id="btnClickfr">'.elgg_echo('lang:french').'</a></li>
+</ul>';
 
-$english = elgg_view('input/button', array(
-    'value' => elgg_echo('english'),
-    'id' => 'btnClicken',
-    'class' => 'btn btn-default fr',
-));
-
-echo $french,$english;
+echo $btn_language;
 
 ?>
-
+<div class="tab-content tab-content-border">
 <!-- title en -->
 <div class="en">
     <label for="name">
@@ -174,12 +167,13 @@ foreach ((array)$group_profile_fields as $shortname => $valtype) {
     else
         echo "<div><label for='{$shortname}'>{$label}</label>{$line_break}{$input}</div>";
 }
-
+echo'</div>';
 if(get_current_language() == 'fr'){
 ?>
     <script>
         jQuery('.fr').show();
         jQuery('.en').hide();
+        jQuery('#btnfr').addClass('active');
 
     </script>
 <?php
@@ -188,7 +182,7 @@ if(get_current_language() == 'fr'){
     <script>
         jQuery('.en').show();
         jQuery('.fr').hide();
-
+        jQuery('#btnen').addClass('active');
     </script>
 <?php
 }
@@ -196,17 +190,21 @@ if(get_current_language() == 'fr'){
 <script>
 jQuery(function(){
 
+    var selector = '.nav li';
+
+    $(selector).on('click', function(){
+    $(selector).removeClass('active');
+    $(this).addClass('active');
+});
+
         jQuery('#btnClickfr').click(function(){
                jQuery('.fr').show();
-               jQuery('.en').hide();
-                
+               jQuery('.en').hide();  
         });
 
           jQuery('#btnClicken').click(function(){
                jQuery('.en').show();
-               jQuery('.fr').hide();
-               
+               jQuery('.fr').hide();  
         });
-
 });
 </script>

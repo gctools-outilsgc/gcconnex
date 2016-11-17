@@ -46,36 +46,41 @@ echo '</div>';
 
 if(get_current_language() == 'fr'){
 ?>
-    <script>
-        jQuery('.fr').show();
-        jQuery('.en').hide();
+  <script>
+    jQuery('.fr').show();
+      jQuery('.en').hide();
+      jQuery('#btnfr').addClass('active');
 
-    </script>
+  </script>
 <?php
 }else{
 ?>
-    <script>
-        jQuery('.en').show();
-        jQuery('.fr').hide();
-
-    </script>
+  <script>
+    jQuery('.en').show();
+      jQuery('.fr').hide();
+      jQuery('#btnen').addClass('active');
+  </script>
 <?php
 }
 ?>
 <script>
 jQuery(function(){
 
-        jQuery('#btnClickfr').click(function(){
+  var selector = '.nav li';
+
+  $(selector).on('click', function(){
+    $(selector).removeClass('active');
+    $(this).addClass('active');
+});
+
+    jQuery('#btnClickfr').click(function(){
                jQuery('.fr').show();
-               jQuery('.en').hide();
-                
+               jQuery('.en').hide();  
         });
 
           jQuery('#btnClicken').click(function(){
                jQuery('.en').show();
-               jQuery('.fr').hide();
-               
+               jQuery('.fr').hide();  
         });
-
 });
 </script>
