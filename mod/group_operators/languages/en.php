@@ -1,37 +1,32 @@
 <?php
 /**
- * Group Operators languages
+ * group_operator/language/en.php 
+ *
+ * Group Operators languages: english
  *
  * @package ElggGroupOperators
+ * @author Lorea
  */
 
 $english = array(
 
-	/**
-	 * Titles
-	 */
+	// Titles
 	"group_operators:title" => 'Operators of %s',
 	"group_operators:manage" => 'Manage group operators',
 	"group_operators:operators" => 'Operators',
 	"group_operators:members" => 'Members',
 	
-	/**
-	 * Menus
-	 */
+	// Menus
 	"group_operators:operators:drop" => 'Drop privileges',
 	"group_operators:owner" => 'Is the owner',
 	"group_operators:owner:make" => 'Make owner',
 	
-	/**
-	 * Form fields
-	 */
+	// Form fields
 	"group_operators:new" => 'Add another operator',
 	"group_operators:new:button" => 'Make operator',
 	"group_operators:selectone" => 'select one...',
 	
-	/**
-	 * System messages
-	 */
+	// System messages
 	"group_operators:added" => '%s successfully added as group operator',
 	"group_operatros:add:error" => 'It was impossible to add %s as group operator',
 	"group_operators:owner_changed" => '%s is the new owner',

@@ -1,4 +1,12 @@
 <?php
+/**
+ * group_operator/remove.php 
+ *
+ * Operator Removed
+ *
+ * @author Lorea
+ */
+
 	$mygroup_guid = get_input('mygroup');
 	$who_guid = get_input('who');
 	$mygroup = get_entity($mygroup_guid);

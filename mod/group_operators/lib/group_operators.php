@@ -1,10 +1,12 @@
 <?php
 /**
+ * lib/group_oprator.php 
+ *
  * Group operators helper functions
  *
  * @package ElggGroupOperators
+ * @author Lorea
  */
-
 
 /**
  * Gives the list of the operators of a group
