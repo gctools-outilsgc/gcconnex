@@ -1,8 +1,11 @@
 <?php
 /**
+ * group_oprator/add.php 
+ *
  * Elgg group operators manage form
  *
  * @package ElggGroupOperators
+ * @author Lorea
  */
 
 $group_guid = elgg_extract('entity', $vars)->guid;

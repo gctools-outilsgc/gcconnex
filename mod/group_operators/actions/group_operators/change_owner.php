@@ -1,4 +1,12 @@
 <?php
+/**
+ * group_operator/change_owner.php 
+ *
+ * Change owner
+ *
+ * @author Lorea
+ */
+
 	action_gatekeeper();
 	$mygroup_guid = get_input('mygroup');
 	$who_guid = get_input('who');
@@ -7,13 +15,11 @@
 	if ($mygroup instanceof ElggGroup && ($mygroup->owner_guid == elgg_get_logged_in_user_guid() || elgg_is_admin_logged_in())) {
 		
 		// Owner is now a simple operator
-		
 		if (!check_entity_relationship($mygroup->owner_guid, 'operator', $mygroup_guid)) {
 			add_entity_relationship($mygroup->owner_guid, 'operator', $mygroup_guid);
 		}
 		
 		// We also change icons owner
-		
 		$old_filehandler = new ElggFile();
 		$old_filehandler->owner_guid = $group->owner_guid;
 		$old_filehandler->setFilename('groups');
@@ -29,11 +35,9 @@
 		}
 		
 		// Finally, we change the owner
-		
 		$mygroup->owner_guid = $who_guid;
 		$mygroup->save();
 
-		// cyu - work order #323 TFS
 		if (elgg_is_active_plugin('cp_notifications')) {
 			$message = array(
 				'cp_msg_type' => 'cp_grp_admin_transfer',

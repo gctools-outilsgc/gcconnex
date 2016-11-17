@@ -1,8 +1,11 @@
 <?php
 /**
+ * group_oprator/start.php 
+ *
  * Elgg group operators plugin
  *
  * @package ElggGroupOperators
+ * @author Lorea
  */
 
 elgg_register_event_handler('init', 'system', 'group_operators_init');
@@ -43,7 +46,7 @@ function group_operators_init() {
 /**
  * Dispatches group operators pages.
  * URLs take the form of
- *  Edit operators:       group_operators/manage/<group-guid>
+ * Edit operators:       group_operators/manage/<group-guid>
  *
  * @param array $page
  * @return bool
@@ -162,4 +165,3 @@ function group_operators_entity_menu_setup($hook, $entity_type, $returnvalue, $p
 
 	return $return;
 }
-

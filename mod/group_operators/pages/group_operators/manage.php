@@ -1,8 +1,11 @@
 <?php
 /**
+ * group_oprator/manage.php 
+ *
  * Manage group operators
  *
  * @package ElggGroupOperators
+ * @author Lorea
  */
 
 elgg_load_library('elgg:group_operators');
