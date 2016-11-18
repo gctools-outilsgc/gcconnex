@@ -14,7 +14,7 @@ $site_url = elgg_get_site_url();
 $jsLocation = $site_url . "mod/wet4/views/default/js/wet-boew.js";
 $termsLink = $site_url .'terms';
 $frenchLink = $site_url .'login';
-$toggle_lang = $site_url .'action/toggle_language/toggle';
+$toggle_lang = $site_url .'mod/toggle_language/action/toggle_language/toggle';
 $CONFIG->splashLanguage ="false";
 $gcconnex_text = elgg_echo('wet:login_welcome');
 //Create The body of the splash
