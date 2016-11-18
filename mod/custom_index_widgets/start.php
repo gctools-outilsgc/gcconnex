@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * Custom index widgets
+ * 
+ * @author Fx NION
+ */
 	 
     function custom_index_widgets_init() {
 
@@ -32,7 +38,6 @@
 			elgg_register_widget_type('latest_generic_index',elgg_echo ('custom_index_widgets:latest_generic_index'),elgg_echo ('custom_index_widgets:latest_generic_index'), array("custom_index_widgets"), true);
 			elgg_register_widget_type('latest_activity_index',elgg_echo ('custom_index_widgets:latest_activity_index'),elgg_echo ('custom_index_widgets:latest_activity_index'), array("custom_index_widgets"), true);
 			elgg_register_widget_type('cloud_generic_index',elgg_echo ('custom_index_widgets:cloud_generic_index'),elgg_echo ('custom_index_widgets:cloud_generic_index'), array("custom_index_widgets"), true);
-			//		elgg_register_widget_type('social_share_index',elgg_echo ('custom_index_widgets:social_share_index'),elgg_echo ('custom_index_widgets:social_share_index'), array("custom_index_widgets"), true);
 			elgg_register_widget_type('login_index',elgg_echo ('custom_index_widgets:login_index'),elgg_echo ('custom_index_widgets:login_index'), array("custom_index_widgets"), true);
 
 			if(elgg_is_active_plugin('groups'))	
@@ -60,10 +65,13 @@
 
 			if(elgg_is_active_plugin('tidypics')){ 
 				elgg_register_widget_type('latest_photos_index', elgg_echo("tidypics:widget:latest"), elgg_echo("tidypics:widget:latest_descr"), array("custom_index_widgets"), true);
-				//		  elgg_register_widget_type('latest_album_index', elgg_echo("tidypics:widget:albums"), elgg_echo("tidypics:widget:latest_descr"), array("custom_index_widgets"), true);
 			}
-			if(elgg_is_active_plugin('thewire'))
+			if(elgg_is_active_plugin('thewire')) {
 				elgg_register_widget_type('latest_wire_index',elgg_echo ('custom_index_widgets:latest_wire_index'),elgg_echo ('custom_index_widgets:latest_wire_index'), array("custom_index_widgets"), true);
+
+				// live stream wire widget
+				elgg_register_widget_type('stream_wire_index',elgg_echo ('custom_index_widgets:stream_wire_index'),elgg_echo ('custom_index_widgets:stream_wire_index'), array("custom_index_widgets"), true);
+			}
 			
 			if(elgg_is_active_plugin('tasks'))
 				elgg_register_widget_type('latest_tasks_index',elgg_echo ('custom_index_widgets:latest_tasks_index'),elgg_echo ('custom_index_widgets:latest_tasks_index'), array("custom_index_widgets"), true);
@@ -74,7 +82,6 @@
 			if(elgg_is_active_plugin('simplepie')) 
 				elgg_register_widget_type('feed_reader_index', elgg_echo('simplepie:widget'),elgg_echo('simplepie:description'),array("custom_index_widgets"), true);
 			
-			//elgg_register_plugin_hook_handler('index','system','custom_index_widgets');
 			elgg_register_page_handler('', 'custom_index_widgets');
 		}
     }
@@ -93,7 +100,6 @@
 		return true;
 	}
 
-
 	function custom_index_widgets_page_handler($page) {
 		global $CONFIG;
 
@@ -110,7 +116,6 @@
 		}
 		return true;
 	}
-	
 	
 	function custom_index_show_widget_area($areawidgets){
 		if (is_array($areawidgets) && sizeof($areawidgets) > 0)
@@ -137,7 +142,6 @@
 		}
 	}
 	
-	
 	function custom_index_build_columns($area_widget_list, $widgettypes, $build_server_side=TRUE){
 
 		$column_widgets_view = array();
@@ -162,7 +166,6 @@
 							$column_widgets_string .= "::";
 						}
 						$column_widgets_string .= "{$widget->handler}::{$widget->getGUID()}";
-						
 					}
 	  		}
 			

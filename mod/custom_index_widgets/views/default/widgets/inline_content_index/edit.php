@@ -1,4 +1,11 @@
 <?php 
+
+/**
+ * Custom index widgets
+ * 
+ * @author Fx NION
+ */
+ 
 	$widget_title = $vars['entity']->widget_title;
 	$html_content = $vars['entity']->html_content;
 	

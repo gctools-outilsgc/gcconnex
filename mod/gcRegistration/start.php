@@ -28,5 +28,5 @@
 
 	}
 	
-	register_elgg_event_handler('init','system','gcRegistration_init');		
+	elgg_register_event_handler('init','system','gcRegistration_init');		
 ?>

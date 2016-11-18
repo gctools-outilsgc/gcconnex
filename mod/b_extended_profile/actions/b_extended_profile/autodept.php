@@ -7,19 +7,8 @@
 
 $file = file_get_contents('departments.json');
 $departments = json_decode($file, true); // decode the JSON into an associative array
-
 $query = htmlspecialchars($_GET['query']);
 $result = array();
-
-/*
-foreach ($skills as $s) {
-    if (strpos(strtolower($s), strtolower($query)) !== FALSE) {
-        $result[] = array('value' => $s);
-    }
-}
-
-*/
-
 
 foreach ($departments as $d) {
 error_log(print_r('$d[title_en] = ' . $d['title_en'], true));
@@ -95,4 +84,3 @@ foreach ( $result as $r ) {
 $result = array_merge($highest_relevance, $high_relevance, $med_relevance, $low_relevance, $lowest_relevance);
 
 echo json_encode($result);
-

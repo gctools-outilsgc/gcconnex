@@ -12,7 +12,7 @@ if (elgg_instanceof($event, 'object', 'event_calendar')) {
 
 			$link = elgg_get_site_url().'event_calendar/review_requests/'.$event->guid;
 			$event_container = get_entity($event->container_guid);
-			$name = get_loggedin_user()->name;
+			$name = elgg_get_logged_in_user_entity()->name;
 			$time = event_calendar_get_formatted_time($event);
 			$date = explode("-", $time);
 			$startdate = $date[0]; 

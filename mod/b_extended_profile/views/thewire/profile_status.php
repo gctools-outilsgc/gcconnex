@@ -40,5 +40,4 @@ if ($latest_wire && count($latest_wire) > 0) {
 	$content
 </div>
 HTML;
-
 }

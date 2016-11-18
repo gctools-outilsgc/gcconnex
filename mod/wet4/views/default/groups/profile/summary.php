@@ -228,7 +228,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
                     }
 
                     if(elgg_is_logged_in()){ 
-                    $user = get_loggedin_user()->getGUID();
+                    $user = elgg_get_logged_in_user_entity()->getGUID();
                            
                     //see if user is a member
                     if($group->isFriendOf($user) || elgg_is_admin_logged_in()){
@@ -250,7 +250,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
                         ));
 
                         //display different title on button for group owner/mods
-                        if($owner == get_loggedin_user() || elgg_is_admin_logged_in()){
+                        if($owner == elgg_get_logged_in_user_entity() || elgg_is_admin_logged_in()){
                             $buttonTitle = elgg_echo('gprofile:settings');
                         }
                 ?>

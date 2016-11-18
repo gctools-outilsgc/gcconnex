@@ -1,7 +1,8 @@
 <?php
 
 $english = array(
-	
+	'cp_notify:setting:no_grp_subscription' => '',
+	'cp_notify:setting:loading' => 'Loading...',
 	// e-mail header text
 	'cp_notification:email_header' => 'This is a system-generated message from GCconnex. Please do not reply to this message',
 	'cp_notification:email_header_msg' => "",	

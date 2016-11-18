@@ -1,4 +1,11 @@
 <?php 
+
+/**
+* Custom index widgets
+* 
+* @author Fx NION
+*/
+
 	$widget_title = $vars['entity']->widget_title;
 	$widget_video_width = $vars['entity']->widget_video_width;
 	$widget_video_height = $vars['entity']->widget_video_height;
@@ -75,4 +82,3 @@
        										 'value'=>$guest_only));
       ?>
   </p>
-

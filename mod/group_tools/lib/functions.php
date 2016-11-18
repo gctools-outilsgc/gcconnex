@@ -1,9 +1,13 @@
 <?php
+
 /**
+ * Group Tools
+ *
  * All helper functions for this plugin can be found here.
  *
+ * @author ColdTrick IT Solutions
  * @package group_tools
- */
+*/
 
 /**
  * Check if a invitation code results in a group

@@ -1,10 +1,17 @@
 <?php
+
+/**
+ * Profile Strength
+ * 
+ * @author Mathieu Blondin Ethan Wallace github.com/ethanWallace
+ */
+
 if (elgg_is_logged_in()) { 
     try{
         $user_guid = elgg_get_logged_in_user_guid();
         $userEnt = get_user ( $user_guid );
         $site_url = elgg_get_site_url();
-        $user = get_loggedin_user()->username;
+        $user = elgg_get_logged_in_user_entity()->username;
         $currentPage=$_SERVER[ "REQUEST_URI" ];
         $OptedIn=FALSE;
          

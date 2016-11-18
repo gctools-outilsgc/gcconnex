@@ -6,8 +6,8 @@
  * Requires: gcconnex-profile.js in order to handle the add more and delete buttons which are triggered by js calls
  */
 
-if (elgg_is_xhr()) {  //This is an Ajax call!
-    //$user_guid = $_GET["user"];
+//This is an Ajax call
+if (elgg_is_xhr()) {  
     $user_guid = $_GET["guid"];
     $user = get_user($user_guid);
 
@@ -15,8 +15,6 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
     echo '<label for="eduAccess">' . elgg_echo('gcconnex_profile:education:access') . '</label>';
 
     $access_id = $user->education_access;
-    //echo 'Access: ';
-    //var_dump($access_id);
     $params = array(
         'name' => "accesslevel['education']",
         'value' => $access_id,
@@ -25,7 +23,6 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
     );
 
     echo elgg_view('input/access', $params);
-
 
     //get the array of user education entities
     $education_guid = $user->education;
@@ -45,7 +42,6 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             echo elgg_view('input/education', array('guid' => $education_guid));
         }
     }
-
 
     echo '</div>';
 

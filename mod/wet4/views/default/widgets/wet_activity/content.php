@@ -26,7 +26,7 @@ if(elgg_is_logged_in()){
         $('.elgg-list-river').parent().parent().attr('id', 'activity');
 
         //add newsfeed settings link
-        $('#activity .panel-heading').prepend('<a href="#" title="<?php echo elgg_echo('newsfeed:filter:title'); ?>" class="dropdown  pull-right mrgn-rght-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-caret-down fa-2x icon-unsel " aria-hidden="true"></i></a><ul class="dropdown-menu pull-right newsfeed-filter panel-default" aria-labelledby="dropdownMenu2"><li class="panel-body" id="filter_form"></li></ul>');
+        $('#activity .panel-heading').prepend('<a href="#" title="<?php echo elgg_echo('newsfeed:filter:title'); ?>" class="dropdown feed-filter pull-right mrgn-rght-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-caret-down fa-2x icon-unsel " aria-hidden="true"></i></a><ul class="dropdown-menu pull-right newsfeed-filter panel-default" aria-labelledby="dropdownMenu2"><li class="panel-body" id="filter_form"></li></ul>');
 
         //load in form when settings is pressed
         $('#activity .dropdown').on('click', function () {

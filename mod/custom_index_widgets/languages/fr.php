@@ -3,6 +3,7 @@
 	$french = array(
 					
 					/*GCConnex edit: language variable for featured content widgets*/
+			'custom_index_widgets:stream_wire_index' => "Alimentation du fil en direct", // needs translation
 			'custom_index_widgets:featured_groups_index' => "Groupes en vedette",
 			'custom_index_widgets:featured_blogs_index' => "Blogues en ​​vedette",			
 			'custom_index_widgets:latest_bookmarks_index' => "Derniers signets",
@@ -71,10 +72,7 @@
 			'custom_index_widgets:login_index' => "Ouverture de session",
 			'admin:appearance:custom_index_widgets' => "Index des widgets",
 			'search:go' => "OK",
-
-		
 	);
 	
 	add_translation("fr",$french);
-
 ?>

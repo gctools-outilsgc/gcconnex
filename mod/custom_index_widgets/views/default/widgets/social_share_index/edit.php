@@ -1,6 +1,11 @@
   <?php
 	
-	
+/**
+* Custom index widgets
+* 
+* @author Fx NION
+*/
+
 	$widget_title = $vars['entity']->widget_title;
 	$guest_only = $vars['entity']->guest_only;
 	if (!isset($guest_only)) $guest_only = "no";

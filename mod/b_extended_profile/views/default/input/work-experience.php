@@ -21,13 +21,10 @@ echo elgg_view("input/text", array(
     'class' => 'gcconnex-work-experience-title',
     'value' => $work_experience->title));
 
-
 // enter title
 echo '<br>';
 echo '<label for="work-experience-' . $guid . '" class="gcconnex-profile-field-title">';
-
 echo elgg_echo('gcconnex_profile:experience:organization') . '</label>';
-
 echo '<span class="gcconnex-profile-field-input">';
 
 echo elgg_view("input/text", array(
@@ -102,11 +99,9 @@ echo '</div>';
 //end date
 echo '<div class="col-xs-6"><h4>' . elgg_echo('gcconnex_profile:education:end') . '</h4>';
 echo '<label for="enddate-' . $guid . '" class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:experience:end_month') . '</label>';
-
 echo elgg_view("input/pulldown", $params);
 
 unset($params);
-
 
 $params = array('name' => 'end-year','id' => 'end-year-' . $guid,
         'class' => 'gcconnex-work-experience-end-year gcconnex-work-experience-end-year-' . $work_experience->guid,
@@ -116,7 +111,6 @@ $params = array('name' => 'end-year','id' => 'end-year-' . $guid,
 if ($work_experience->ongoing == 'true') {
         $params['disabled'] = 'true';
 }
-
 
 echo '<label for="end-year-' . $guid . '">' . elgg_echo('gcconnex_profile:education:end_year') . '</label>' . elgg_view("input/text", $params);
 
@@ -136,8 +130,6 @@ if ($work_experience->ongoing == 'true') {
 echo  '<label>' . elgg_view('input/checkbox', $params);
 echo elgg_echo('gcconnex_profile:experience:ongoing') . '</label>';
 echo '</div>';
-
-
 
 // enter responsibilities
 echo '<br><label for="textarea-' . $guid . '">' . elgg_echo('gcconnex_profile:experience:responsibilities') . '</label>' . elgg_view("input/textarea", array(
@@ -162,7 +154,6 @@ else {
     ));
 }
 echo '</div>'; // close div class="colleauges-list"
-
 
 $tid = 'tid-' . rand();
 

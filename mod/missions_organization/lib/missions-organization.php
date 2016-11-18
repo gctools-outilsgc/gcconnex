@@ -230,13 +230,13 @@ function mo_get_department_next_to_root($name) {
 	$options['type'] = 'object';
 	$options['subtype'] = 'orgnode';
 	$options['metadata_name_value_pairs'] = array(
-			array('name' => 'parent_guid', 'value' => mo_get_tree_root()->guid, 'operand' => '='),
+			//array('name' => 'parent_guid', 'value' => mo_get_tree_root()->guid, 'operand' => '='),
 			array('name' => 'name', 'value' => $name, 'operand' => '=', 'case_sensitive' => false)
 	);
 	$entities = elgg_get_entities_from_metadata($options);
 	
 	if(count($entities) == 1) {
-		return $entities[0];
+		return $entities[0]->guid;
 	}
 	else {
 		return false;

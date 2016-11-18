@@ -1,8 +1,12 @@
 <?php
+
 /**
- * Fixes issues with Group ACLs
- *
- */
+* Group Tools
+*
+* Fixes issues with Group ACLs
+* 
+* @author ColdTrick IT Solutions
+*/	
 
 // maybe this could take a while
 set_time_limit(0);

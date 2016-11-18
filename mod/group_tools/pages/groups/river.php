@@ -1,9 +1,13 @@
 <?php
+
 /**
+ * Group Tools
+ *
  * Add a filter to the river page of a group
  *
+ * @author ColdTrick IT Solutions
  * @todo remove when Elgg core supports this
- */
+*/
 
 $guid = (int) get_input("guid");
 
@@ -30,16 +34,7 @@ if ($subtype) {
 
 // set river options
 $db_prefix = elgg_get_config('dbprefix');
-/*$options = array(
-	'joins' => array(
-		"JOIN {$db_prefix}entities e1 ON e1.guid = rv.object_guid",
-		"LEFT JOIN {$db_prefix}entities e2 ON e2.guid = rv.target_guid",
-	),
-	'wheres' => array(
-		"(e1.container_guid = $group->guid OR e2.container_guid = $group->guid)",
-	),
-	'no_results' => elgg_echo('groups:activity:none'),
-);*/
+
 $options = array(
 	'wheres1' => array(
 		"oe.container_guid = $group->guid",

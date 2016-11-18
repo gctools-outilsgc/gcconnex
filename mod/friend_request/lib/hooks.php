@@ -1,10 +1,9 @@
 <?php
 /**
  * All plugin hook handlers are bundled here
- */
-
-/**
  * Change the url of the friend user hover menu item when already requested to be friend
+ *
+ * @author ColdTrick IT Solutions
  *
  * @param string         $hook        the name of the hook
  * @param string         $type        the type of the hook
@@ -13,6 +12,7 @@
  *
  * @return ElggMenuItem[]
  */
+
 function friend_request_user_menu_handler($hook, $type, $returnvalue, $params) {
 	
 	if (empty($params) || !is_array($params)) {

@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Group Tools
+ *
+ * @author ColdTrick IT Solutions
+ * 
+*/
+
 echo elgg_view("output/longtext", array("value" => elgg_echo("group_tools:admin:group_tool_presets:description")));
 
 

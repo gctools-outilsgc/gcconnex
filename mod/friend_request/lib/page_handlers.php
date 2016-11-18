@@ -1,15 +1,18 @@
 <?php
-/**
- * All page handlers are bundled here
- */
 
 /**
- * The friends request page handler
- *
- * @param array $page the page elements
- *
- * @return bool
- */
+* The friends request page handler
+* 
+* All page handlers are bundled here
+*
+* @author ColdTrick IT Solutions
+*
+* @param array $page the page elements
+* @param array $page the page elements
+*
+* @return bool
+*/
+
 function friend_request_page_handler($page) {
 
 	if (isset($page[0])) {

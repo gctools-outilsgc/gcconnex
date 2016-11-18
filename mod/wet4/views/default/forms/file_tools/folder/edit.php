@@ -40,7 +40,7 @@ if (!empty($folder)) {
 	$submit_text = elgg_echo("save");
 }
 
-$french = elgg_view('input/button', array(
+/*$french = elgg_view('input/button', array(
     'value' => elgg_echo('btn:translate:fr'),
     'id' => 'btnClickfr',
     'class' => 'btn btn-default en',
@@ -52,9 +52,17 @@ $english = elgg_view('input/button', array(
     'id' => 'btnClicken',
     'class' => 'btn btn-default fr',
     'onclick' => 'showen()',
-));
+));*/
 
-$form_data .= '<div id="btnfr">'.$french.'</div><div id="btnen"> '.$english.'</div>';
+$btn_language =  '<ul class="nav nav-tabs nav-tabs-language nav-tabs-language_folder">
+  <li id="btnen_folder"><a href="#" onclick="showen()">'.elgg_echo('lang:english').'</a></li>
+  <li id="btnfr_folder"><a href="#" onclick="showfr()">'.elgg_echo('lang:french').'</a></li>
+</ul>';
+
+//$form_data .= '<div id="btnfr">'.$french.'</div><div id="btnen"> '.$english.'</div>';
+$form_data .= $btn_language;
+
+$form_data .= '<div class="tab-content tab-content-border">';
 
 $form_data .= elgg_view("input/hidden", array("name" => "page_owner", "value" => $page_owner->getGUID()));
 
@@ -110,7 +118,7 @@ if (!empty($folder)) {
 
 $form_data .= "<div class='elgg-foot'>";
 $form_data .= elgg_view("input/submit", array("value" => $submit_text));
-$form_data .= "</div>";
+$form_data .= "</div></div>";
 
 echo $form_data;
 
@@ -119,26 +127,27 @@ elgg_unregister_menu_item('title2', 'new_folder');
 if(get_current_language() == 'fr'){
 ?><!-- Jquerry not working -->
     <script>
-      document.getElementById('frtitle').style.display = "block";
-   document.getElementById('btnen').style.display = "block";
-   document.getElementById('frdesc').style.display = "block";
-   document.getElementById('entitle').style.display = "none";
-   document.getElementById('btnfr').style.display = "none";
-   document.getElementById('endesc').style.display = "none";
+  var btnfr_folder = document.getElementById('btnfr_folder');
+  btnfr_folder.classList.add("active");
 
-
+  document.getElementById('frtitle').style.display = "block";
+  document.getElementById('frdesc').style.display = "block";
+  document.getElementById('entitle').style.display = "none";
+  document.getElementById('endesc').style.display = "none";
 
     </script>
 <?php
 }else{
 ?>
     <script>
-        document.getElementById('entitle').style.display = "block";
-   document.getElementById('endesc').style.display = "block";
-   document.getElementById('btnfr').style.display = "block";
-   document.getElementById('frtitle').style.display = "none";
-   document.getElementById('frdesc').style.display = "none";
-   document.getElementById('btnen').style.display = "none";
+
+  var btnen_folder = document.getElementById('btnen_folder');
+  btnen_folder.classList.add("active");
+
+  document.getElementById('entitle').style.display = "block";
+  document.getElementById('endesc').style.display = "block";
+  document.getElementById('frtitle').style.display = "none";
+  document.getElementById('frdesc').style.display = "none";
 
     </script>
 <?php
@@ -146,42 +155,30 @@ if(get_current_language() == 'fr'){
 ?>
 <script>
 
+jQuery(function(){
+
+  var selector = '.nav-tabs-language_folder li';
+
+  $(selector).on('click', function(){
+    $(selector).removeClass('active');
+    $(this).addClass('active');
+  });
+});
+
 function showen() {
 
    document.getElementById('entitle').style.display = "block";
    document.getElementById('endesc').style.display = "block";
-   document.getElementById('btnfr').style.display = "block";
    document.getElementById('frtitle').style.display = "none";
    document.getElementById('frdesc').style.display = "none";
-   document.getElementById('btnen').style.display = "none";
 }
 function showfr() {
 	
    document.getElementById('frtitle').style.display = "block";
-   document.getElementById('btnen').style.display = "block";
    document.getElementById('frdesc').style.display = "block";
    document.getElementById('entitle').style.display = "none";
-   document.getElementById('btnfr').style.display = "none";
    document.getElementById('endesc').style.display = "none";
 }
-
-/*jQuery(function(){
-
-        jQuery('#btnClickfr').click(function(){
-               jQuery('.fr').show();
-               jQuery('.en').hide();
-                alert('frbtn');
-                
-        });
-
-          jQuery('#btnClicken').click(function(){
-               jQuery('.en').show();
-               jQuery('.fr').hide();
-               alert('enbtn');
-        });
-            alert('test');
-
-});*/
 
 </script>
 <?php

@@ -1,6 +1,12 @@
 <?php
+
 /**
+ * Group Tools
+ *
  * Configure a welcome message to send to a new member when he/she joins the group
+ *
+ * @author ColdTrick IT Solutions
+ * 
  */
 
 $group = elgg_extract("entity", $vars);

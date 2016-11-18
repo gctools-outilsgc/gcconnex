@@ -1,11 +1,7 @@
 <?php 
 /*
-
     User Profile Tabs
-
 */
-
-
 //generate content tabs
 
 $fields = array('File', 'Blog', 'page_top', 'Bookmarks', 'Poll', 'Thewire', 'Album', 'task_top');
@@ -107,8 +103,6 @@ foreach($fields as $field){
     echo '</div>';
 }
 
-
-
 //event calendar tab
 echo '<div role="tabpanel" class="tab-pane fade-in" id="events">';
     echo '<div class="clearfix">';
@@ -136,7 +130,5 @@ echo '<div role="tabpanel" class="tab-pane fade-in" id="events">';
     echo '</div>';
 	echo "<div class=\"elgg-widget-more  panel-footer text-right\">$viewall_link</div>";
 echo '</div>';
-
-
 
 ?>

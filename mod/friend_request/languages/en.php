@@ -38,9 +38,6 @@ Pour consulter son profil, cliquez ici : %s
 'friend_request:approve' => "Approve",
 'friend_request:approve:subject' => "%s has accepted your colleague request / %s a accepté votre demande d’ajout de collègue",
 'friend_request:approve:message' => "Dear %s, %s has accepted your request to become a colleague.",
-	
-	
-	
 'friend_request:approve:successful' => "%s is now a colleague",
 'friend_request:approve:fail' => "Error while creating friend relation with %s",
 	
@@ -49,8 +46,6 @@ Pour consulter son profil, cliquez ici : %s
 'friend_request:decline' => "Decline",
 'friend_request:decline:subject' => "%s has declined your colleague request",
 'friend_request:decline:message' => "Dear %s, %s has declined your request to become a colleague.",
-	
-	
 'friend_request:decline:success' => "colleague request successfully declined",
 'friend_request:decline:fail' => "Error while declining colleague request, please try again",
 	

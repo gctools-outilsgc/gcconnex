@@ -1,7 +1,14 @@
 <?php
+
 /**
+ *
+ * Group Tools
+ * 
  * special autocomplete input
+ *
+ * @author ColdTrick IT Solutions
  */
+
 $name = elgg_extract("name", $vars); // input name of the selected user
 $id = elgg_extract("id", $vars);
 $relationship = elgg_extract("relationship", $vars);

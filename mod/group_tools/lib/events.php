@@ -1,7 +1,12 @@
 <?php
+
 /**
- * All event handlers for this plugin a in this file
- */
+* Group Tools
+*
+* All event handlers for this plugin a in this file
+* 
+* @author ColdTrick IT Solutions
+*/
 
 /**
  * When a user joins a group

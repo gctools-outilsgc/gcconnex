@@ -96,7 +96,7 @@ function cp_digest_cron_handler($hook, $entity_type, $return_value, $params) {
 			$notify_user->description = '';
 			$notify_user->save();
 			$notify_user->getOwnerEntity()->cpn_newsletter = $notify_user->guid;
-			error_log("cpn_newsletter value - {$notify_user->guid} / {$notify_user->getOwnerEntity()->cpn_newsletter}");
+			//error_log("cpn_newsletter value - {$notify_user->guid} / {$notify_user->getOwnerEntity()->cpn_newsletter}");
 			//$notify_user->delete();
 			//$user->deleteMetadata('cpn_newsletter');
 
@@ -157,6 +157,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 		case 'cp_group_invite_email':	// group_tools/lib/functions.php (returns user's email, so return after mail is sent out)
 			$subject = elgg_echo('cp_notify:subject:group_invite_email',array($params['cp_inviter']['name'],$params['cp_group_invite']['name']),'en') . ' | ' . elgg_echo('cp_notify:subject:group_invite_email',array($params['cp_inviter']['name'],$params['cp_group_invite']['name']),'fr');
+			$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
 			$message = array(
 				'cp_email_invited' => $params['cp_invitee'],
 				'cp_email_invited_by' => $params['cp_inviter'],
@@ -240,9 +241,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_wire_url' => $params['cp_wire_url'],
 			);
 			$parent_item = $params['cp_content']->getContainerEntity();
-			error_log('Parent content1: '.$parent_item->description);
-			error_log(' ================================================================== ');
-			error_log('Parent content2: '.$params['cp_content']->description);
+
 			
 			if ($params['cp_content']->getType() == 'group'){
 				$type = $params['cp_content']->getType();
@@ -500,6 +499,8 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 	if (empty($subject))
 		return false;
 
+	$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
+
 	foreach ($to_recipients as $to_recipient) {
 		// username for link in footer (both email notification and site notification
 		$message['user_name'] = $to_recipient->username;
@@ -597,7 +598,6 @@ function cp_ical_headers($type_event, $event, $startdate, $enddate) {
  *
  */
 function cp_create_annotation_notification($event, $type, $object) {
-	
 	$entity = get_entity($object->entity_guid);
 
 	// cyu - this object is a minor edit... don't bother to send notifications
@@ -616,12 +616,22 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 		$content = get_entity($object->entity_guid);
 
-		if (strcmp($object_subtype,'blog' == 0) && strcmp($entity->status,'published') == 0) {
+		//error_log("subtype: {$object_subtype} / status: {$entity->status} //// minor edit: {$entity->entity_minor_edit}" );
+
+
+		// auto save -drafts or -published blogs, we don't send out notifications
+		if (strcmp($object_subtype,'blog_auto_save') == 0 && (strcmp($entity->status,'draft') == 0 || strcmp($entity->status, 'published') == 0))
+			return;
+
+		// if we are publishing, or revising blogs then send out notification
+		if (strcmp($object_subtype,'blog_revision') == 0 && strcmp($entity->status,'published') == 0) {
 
 			$current_user = get_user($entity->getOwnerGUID());
 
 			$subject = elgg_echo('cp_notify:subject:edit_content',array('The blog',$entity->title, $current_user->username),'en');
 			$subject .= ' | '.elgg_echo('cp_notify:subject:edit_content',array('Le blogue',$entity->title, $current_user->username),'fr');
+
+			$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
 
 			$message = array(
 				'cp_content' => $entity,
@@ -641,6 +651,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 				
 
 				if ($watcher->guid != $current_user->getGUID()) { // make sure we don't send the notification to the owner themselves
+
 					if (check_entity_relationship($watcher->guid, 'cp_subscribed_to_email', $entity->getContainerGUID())) {
 						
 						if (strcmp(elgg_get_plugin_user_setting('cpn_bulk_notifications_email', $watcher->guid,'cp_notifications'),'bulk_notifications_email') == 0) {
@@ -665,7 +676,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 				}
 			}
 			return true;
-		}
+		} // end if (if subtype is blog, and published)
 
 		if (strcmp($object_subtype,'page') == 0 || strcmp($object_subtype,'page_top') == 0 || strcmp($object_subtype,'task') == 0 || strcmp($object_subtype,'task_top') == 0) {
 			$current_user = get_user($object->owner_guid);
@@ -673,6 +684,8 @@ function cp_create_annotation_notification($event, $type, $object) {
 			$subject = elgg_echo('cp_notify:subject:edit_content',array('The page', $entity->title, $current_user->username),'en');
 			$subject .= ' | '.elgg_echo('cp_notify:subject:edit_content',array('La page',$entity->title, $current_user->username),'fr');
 			
+			$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
+
 			$message = array(
 				'cp_content' => $entity,
 				'cp_user' => $current_user->username,
@@ -805,6 +818,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 		} // end switch statement
 	}
 
+	$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
 	
 	foreach ($to_recipients as $to_recipient) {
 
@@ -1067,6 +1081,9 @@ function cp_create_notification($event, $type, $object) {
 	if (empty($subject))
 		return false;
 
+$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
+//$subject = html_entity_decode($subject);
+//	$subject = utf8_encode ($subject);
 
 	// PLEASE NOTE THAT function messages_send() creates infinite loop
 	$query = "SELECT DISTINCT u.guid, u.email, u.username FROM {$dbprefix}entity_relationships r, {$dbprefix}users_entity u WHERE r.guid_one <> {$content_originator} AND r.relationship LIKE 'cp_subscribed_to_%' AND r.guid_two = {$guid_two} AND r.guid_one = u.guid";
@@ -1113,9 +1130,7 @@ function cp_sub_to_wire_thread($wire_id) {
 	$dbprefix = elgg_get_config('dbprefix');
 	$query = "SELECT guid_two FROM {$dbprefix}entity_relationships WHERE relationship = 'parent' AND guid_one = {$wire_id}";
 	$parent_id = get_data($query);
-	error_log($query);
-	error_log(print_r($parent_id,true));
-	error_log("function [{$wire_id}] - {$parent_id[0]['guid_two']}");
+
 
 	/*
 	if (!$parent_id) {
@@ -1125,7 +1140,7 @@ function cp_sub_to_wire_thread($wire_id) {
 		cp_sub_to_wire_thread($wire_id);
 	}*/
 }
-
+ 
 /*
  * cp_send_new_password_request
  * 

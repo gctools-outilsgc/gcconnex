@@ -1,5 +1,11 @@
 <?php
  
+ /**
+ * Custom index widgets
+ * 
+ * @author Fx NION
+ */
+
   $num_items = $vars['entity']->num_items;
   if (!isset($num_items)) $num_items = 10;
  
@@ -13,9 +19,6 @@
 		'full_view' => false,
 		'list_type_toggle' => false,
 		'pagination' => false));
-	
-   
 
 echo $widget_datas;
 ?>       
-

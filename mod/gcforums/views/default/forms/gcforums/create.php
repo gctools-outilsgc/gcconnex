@@ -200,7 +200,7 @@ if (elgg_is_logged_in() && $group->isMember(elgg_get_logged_in_user_entity())) {
 	// hidden field for user
 	$gcf_owner_input = elgg_view('input/hidden', array(
 		'name' => 'gcf_owner',
-		'value' => get_loggedin_user()->getGUID(),
+		'value' => elgg_get_logged_in_user_entity()->getGUID(),
 		));
 
 	// hidden field for forward url

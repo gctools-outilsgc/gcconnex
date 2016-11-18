@@ -1,10 +1,13 @@
 <?php
 /**
+ * group_oprator/display.php 
+ *
  * Elgg group operator display
  *
  * @uses $vars['entity'] ElggUser operator
  * @uses $vars['size']   Size of the icon
  * @uses $vars['group'] ElggGroup group which the operator have permissons
+ * @author Lorea
  */
 
 $entity = elgg_extract('entity', $vars);
@@ -28,8 +31,6 @@ $params = array(
 	'title' => $title,
 );
 
+$list_body = elgg_view('user/elements/summary', $params);
 
-	$list_body = elgg_view('user/elements/summary', $params);
-
-	echo elgg_view_image_block($icon, $list_body);
-
+echo elgg_view_image_block($icon, $list_body);

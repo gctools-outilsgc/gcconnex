@@ -13,7 +13,6 @@ $groups = elgg_get_entities_from_relationship(array(
     'limit'=> 3
 ));
 
-
 $count = elgg_get_entities_from_relationship(array(
     'relationship'=> 'member',
     'relationship_guid'=> $owner->guid,
@@ -46,7 +45,6 @@ if(!($groups)) {
 
     $content = elgg_echo('gcprofile:nogroups', array($owner->getDisplayName()));
     $footer='';
-
 }
 
 echo elgg_view_module('aside', elgg_echo('groups'), $content, array('footer' => $footer));

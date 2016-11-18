@@ -1,8 +1,11 @@
 <?php
 /**
+ * group_operator/add.php 
+ *
  * Elgg group operators adding action
  *
  * @package ElggGroupOperators
+ * @author Lorea
  */
 
 action_gatekeeper("group_operators/add");
@@ -27,8 +30,6 @@ if ($mygroup instanceof ElggGroup && $who instanceof ElggUser && $mygroup->canEd
 			);
 			$result = elgg_trigger_plugin_hook('cp_overwrite_notification','all',$message);
 		}
-
-
 	} else {
 		register_error(elgg_echo('group_operators:add:error', array($who->name, $group->name)));
 	}

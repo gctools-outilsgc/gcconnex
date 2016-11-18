@@ -1,5 +1,11 @@
 <?php
 
+/**
+* Friend request
+* 
+* @author ColdTrick IT Solutions
+*/	
+
 elgg_gatekeeper();
 
 $user = elgg_get_page_owner_entity();
@@ -51,5 +57,4 @@ $params = array(
 $body = elgg_view_layout("content", $params);
 
 // Draw page
-echo elgg_view_page($title_text, $body);
-	
+echo elgg_view_page($title_text, $body);	

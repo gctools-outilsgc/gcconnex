@@ -1,6 +1,12 @@
 <?php
+
 /**
- * Group module to show related groups
+ * Group Tools
+ *
+ *  Group module to show related groups
+ *
+ * @author ColdTrick IT Solutions
+ * 
  */
 
 $group = elgg_extract("entity", $vars);

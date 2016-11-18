@@ -112,6 +112,6 @@ function get_content($user_guid) {
 	}
 	$query_content .= ")";
 
-	error_log("query - {$query_content}");
+	//error_log("query - {$query_content}");
 	return $query_content;
 }

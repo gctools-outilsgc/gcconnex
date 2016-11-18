@@ -1,7 +1,12 @@
 <?php
+
 /**
- * add/remove a user as a group admin
- */
+* Group Tools
+*
+* add/remove a user as a group admin
+* 
+* @author ColdTrick IT Solutions
+*/
 
 $group_guid = (int) get_input("group_guid");
 $user_guid = (int) get_input("user_guid");

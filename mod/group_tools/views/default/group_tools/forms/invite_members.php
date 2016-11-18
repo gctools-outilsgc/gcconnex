@@ -1,6 +1,12 @@
 <?php
+
 /**
+ * Group Tools
+ *
  * who can invite group members
+ *
+ * @author ColdTrick IT Solutions
+ * 
  */
 
 $group = elgg_extract("entity", $vars);

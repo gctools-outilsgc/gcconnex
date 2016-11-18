@@ -4,8 +4,8 @@
  *
  * @uses $vars['entity'] TidypicsAlbum
  *
- * @author Cash Costello
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
+ * @author Cash Costello
  */
 
 $album = elgg_extract('entity', $vars);

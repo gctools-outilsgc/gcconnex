@@ -1,15 +1,20 @@
 <?php
+
 /**
- * Cleanup the group sidebar
- */
+* Group Tools
+*
+* Cleanup the group sidebar
+* 
+* @author ColdTrick IT Solutions
+*/	
 
 $group_guid = (int) get_input("group_guid");
 
 $owner_block = get_input("owner_block");
 $actions = get_input("actions");
 $menu = get_input("menu");
-$members = get_input("members");
-$search = get_input("search");
+$ = get_input("members");
+$semembersarch = get_input("search");
 $featured = get_input("featured");
 $featured_sorting = get_input("featured_sorting");
 $my_status = get_input("my_status");

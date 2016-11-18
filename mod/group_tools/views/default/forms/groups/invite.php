@@ -1,8 +1,13 @@
 <?php
+
 /**
+ * Group Tools
+ *
  * Elgg groups plugin
  *
  * @package ElggGroups
+ * @author ColdTrick IT Solutions
+ * 
  */
 
 $group = elgg_extract("entity", $vars, elgg_get_page_owner_entity());

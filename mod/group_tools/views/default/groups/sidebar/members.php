@@ -1,11 +1,15 @@
 <?php
 /**
+ *
+ * Group Tools
  * Group members sidebar
  *
  * @package ElggGroups
  *
  * @uses $vars["entity"] Group entity
  * @uses $vars["limit"]  The number of members to display
+ *
+ * @author ColdTrick IT Solutions
  */
 
 $group = elgg_extract("entity", $vars);

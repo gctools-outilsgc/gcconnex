@@ -69,8 +69,6 @@ return array(
 'group_tools:settings:fix:nothing' => "Nothing is wrong with the groups on your site!",	
 'group_tools:settings:member_export' => "Allow group admins to export member information",
 'group_tools:settings:member_export:description' => "This includes the name, username and email address of the user.",
-
-
 	
 // group tool presets
 'group_tools:admin:group_tool_presets:description' => "Here you can configure group tool presets.
@@ -83,7 +81,6 @@ When a user creates a group he/she gets to choose one of the presets in order to
 'group_tools:create_group:tool_presets:show_more' => "More tools",
 'group_tools:create_group:tool_presets:blank:title' => "Blank group",
 'group_tools:create_group:tool_presets:blank:description' => "Choose this group to select your own tools.",
-	
 	
 // group invite message
 'group_tools:groups:invite:body' => "Hi %s,</br></br>%s invited you to join the '%s' group.</br>%s</br></br>See below to view your message/invitation:</br>%s",
@@ -199,12 +196,12 @@ When a user creates a group he/she gets to choose one of the presets in order to
 	
 // group membership requests
 'group_tools:groups:membershipreq:requests' => "Membership requests",
-	'group_tools:groups:membershipreq:invitations' => "Invited users",
-	'group_tools:groups:membershipreq:invitations:none' => "No pending user invitations",
-	'group_tools:groups:membershipreq:email_invitations' => "Invited e-mail addresses",
-	'group_tools:groups:membershipreq:email_invitations:none' => "No pending e-mail invitations",
-	'group_tools:groups:membershipreq:invitations:revoke:confirm' => "Are you sure you wish to revoke this invitation",
-	'group_tools:groups:membershipreq:kill_request:prompt' => "Are you sure you wish to decline this membership request? Optionaly you can tell the user why you declined the request.",
+'group_tools:groups:membershipreq:invitations' => "Invited users",
+'group_tools:groups:membershipreq:invitations:none' => "No pending user invitations",
+'group_tools:groups:membershipreq:email_invitations' => "Invited e-mail addresses",
+'group_tools:groups:membershipreq:email_invitations:none' => "No pending e-mail invitations",
+'group_tools:groups:membershipreq:invitations:revoke:confirm' => "Are you sure you wish to revoke this invitation",
+'group_tools:groups:membershipreq:kill_request:prompt' => "Are you sure you wish to decline this membership request? Optionaly you can tell the user why you declined the request.",
 	
 // group listing	
 'group_tools:groups:sorting:alphabetical' => "Alphabetical",
@@ -416,11 +413,10 @@ When a user creates a group he/she gets to choose one of the presets in order to
 'group_tools:action:bulk_delete:success' => "The selected groups were deleted",
 'group_tools:action:bulk_delete:error' => "An error occured while deleting the groups, please try again",
 
-	// group invitations
+// group invitations
 'group_tools:group:invitations:request' => "Outstanding membership requests",
 'group_tools:group:invitations:request:revoke:confirm' => "Are you sure you wish to revoke your membership request?",
 'group_tools:group:invitations:request:non_found' => "There are no outstanding membership requests at this time",
-
 
 );
 

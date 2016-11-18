@@ -22,6 +22,7 @@ $error = FALSE;
 $error_forward_url = REFERER;
 $user = elgg_get_logged_in_user_entity();
 
+
 // edit or create a new entity
 $guid = get_input('guid');
 
@@ -70,21 +71,27 @@ $values = array(
 
 // fail if a required entity isn't set
 //$required = array('title', 'description');
-
 $cart = array(); //Create a array to compare if english or french title and description is in.
 foreach ($values as $name => $default) {
 
-	$value = get_input($name, $default);
-	$cart[] = array($name => $value);
+	 $cart[] = array($name => $values);
 }
 
-if (($cart['0']['title'] == '') && ($cart['1']['title2'] == '')) {
-	$error = elgg_echo( "blog:error:missing:title");
+if ($cart['title'] && $cart['title2'] == ''){
+	$error = elgg_echo("blog:error:missing:title");
+
 }
 
-if (($cart['3']['description'] == '') && ($cart['4']['description2'] == '')) {
-	$error = elgg_echo( "blog:error:missing:description");
+if ($cart['description'] && $cart['description2'] == '') {
+	$error = elgg_echo("blog:error:missing:description");
 }
+
+
+
+// cyu - implement minor edit functionality as per requirements document (notification)
+$minor_edit = get_input('chk_blog_minor_edit');
+$blog->entity_minor_edit = $minor_edit[0];
+
 
 // load from POST and do sanity and access checking
 foreach ($values as $name => $default) {
@@ -92,6 +99,11 @@ foreach ($values as $name => $default) {
 		$value = htmlspecialchars(get_input('title', $default, false), ENT_QUOTES, 'UTF-8');
 	} else {
 		$value = get_input($name, $default);
+	}
+	
+	if (in_array($name, $required) && empty($value)) {
+		$error = elgg_echo("blog:error:missing:$name");
+		break;
 	}
 
 	switch ($name) {
@@ -146,11 +158,13 @@ foreach ($values as $name => $default) {
 	}
 }
 
+if (!$values['title']){
+	$values['title'] = $values['title2'];
+}
 //implode for tranlation
 $values['title3'] = gc_implode_translation($values['title'], $values['title2']);
 $values['excerpt3'] = gc_implode_translation($values['excerpt'], $values['excerpt2']);
 $values['description3'] =gc_implode_translation($values['description'], $values['description2']);
-
 // if preview, force status to be draft
 if ($save == false) {
 	$values['status'] = 'draft';

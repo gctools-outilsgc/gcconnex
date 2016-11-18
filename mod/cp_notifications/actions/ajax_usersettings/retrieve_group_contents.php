@@ -24,7 +24,7 @@ $options = array(
 $group_contents = elgg_get_entities($options);//elgg_get_entities_from_relationship($options);
 $group = get_entity($group_guid);
 //$group_contents = $group->getObjects();
-error_log($group->getGUID().' / '.$group->name);
+//error_log($group->getGUID().' / '.$group->name);
 
 
 $group_objects = array();

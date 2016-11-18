@@ -203,7 +203,14 @@ if ($has_uploaded_icon) {
 	}
 }
 
-//Nick - Added action for user to upload a coverphoto to their group profile
+/**
+* Group Tools
+*
+* Added action for user to upload a coverphoto to their group profile
+* 
+* @author Nick - https://github.com/piet0024
+*/	
+
 $c_photo = $_FILES['c_photo'];
 
 foreach($c_photo as $c){
@@ -235,7 +242,7 @@ $remove_c_photo = get_input('remove_photo'); //Nick - Checkbox will set cover ph
 if($remove_c_photo){
     $group->cover_photo = 'nope';
 }
-//$group->addRelationship($c_photo_guid, 'c_photo');
+
 // owner transfer
 $old_owner_guid = $is_new_group ? 0 : $group->owner_guid;
 $new_owner_guid = (int) get_input('owner_guid');
