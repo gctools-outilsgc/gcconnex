@@ -5,7 +5,7 @@
      * Users landingpage metadata
      */
 
-if(elgg_is_logged_in()){
+ if(elgg_is_logged_in()){
     $user = elgg_get_logged_in_user_entity();
     
     //set metadata if not set
@@ -26,11 +26,15 @@ if(elgg_is_logged_in()){
     
 }
 else{
+    if(elgg_is_active_plugin('gc_splash_page')){
+            //if not logged in go to splash
+        $url = elgg_get_site_url()."splash/";
+        forward($url);
+        //Splash will forward them to login
+    }else{
 
-    //if not logged in go to splash
-    $url = elgg_get_site_url()."splash/";
-    forward($url);
-    //Splash will forward them to login
-    
+        $url = elgg_get_site_url()."login/";
+        forward($url);
+    } 
 }
     ?>
