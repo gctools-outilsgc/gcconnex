@@ -1067,6 +1067,7 @@ function cp_create_notification($event, $type, $object) {
 			$message = array(
 				'cp_topic' => $object, 
 				'cp_msg_type' => 'cp_new_type',
+				'cp_topic_description' => $object->description,
 			);
 
 			$email_only = false;
