@@ -823,7 +823,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 	foreach ($to_recipients as $to_recipient) {
 
 		// we only send notification to user who owns the content (liking a comment, discussion reply or general likes to content)
-		if ($to_recipient->guid == $object->owner_guid) { 
+		if ($to_recipient->guid != $object->owner_guid) { 
 
 			// pass in the information into the template to prepare the notification
 			$message['user_name'] = get_user($to_recipient->guid)->username;
