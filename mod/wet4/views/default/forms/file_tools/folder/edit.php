@@ -40,26 +40,11 @@ if (!empty($folder)) {
 	$submit_text = elgg_echo("save");
 }
 
-/*$french = elgg_view('input/button', array(
-    'value' => elgg_echo('btn:translate:fr'),
-    'id' => 'btnClickfr',
-    'class' => 'btn btn-default en',
-    'onclick' => 'showfr()',
-));
-
-$english = elgg_view('input/button', array(
-    'value' => elgg_echo('btn:translate:en'),
-    'id' => 'btnClicken',
-    'class' => 'btn btn-default fr',
-    'onclick' => 'showen()',
-));*/
-
 $btn_language =  '<ul class="nav nav-tabs nav-tabs-language nav-tabs-language_folder">
   <li id="btnen_folder"><a href="#" onclick="showen()">'.elgg_echo('lang:english').'</a></li>
   <li id="btnfr_folder"><a href="#" onclick="showfr()">'.elgg_echo('lang:french').'</a></li>
 </ul>';
 
-//$form_data .= '<div id="btnfr">'.$french.'</div><div id="btnen"> '.$english.'</div>';
 $form_data .= $btn_language;
 
 $form_data .= '<div class="tab-content tab-content-border">';
@@ -111,9 +96,12 @@ elgg_set_context($context);
 
 if (!empty($folder)) {
 	$form_data .= "<div id='file_tools_edit_form_access_extra'>";
-	$form_data .= "<div>" . elgg_view("input/checkboxes", array("options" => array(elgg_echo("file_tools:forms:edit:change_children_access") => "yes"), "value" => "yes", "name" => "change_children_access")) . "</div>";
-	$form_data .= "<div>" . elgg_view("input/checkboxes", array("options" => array(elgg_echo("file_tools:forms:edit:change_files_access") => "yes"), "name" => "change_files_access")) . "</div>";
-	$form_data .= "</div>";
+  $form_data .='<ul class="list-unstyled">';
+  $form_data .= '<li>'.elgg_view('input/checkbox', array('id' => 'change_children_access', 'name' => 'change_children_access', 'value' => 'yes')).'<label for="change_children_access">'.elgg_echo("file_tools:forms:edit:change_children_access").'</label></li>';
+  $form_data .= '<li>'.elgg_view('input/checkbox', array('id' => 'change_files_access', 'name' => 'change_files_access')).'<label for="change_files_access">'.elgg_echo("file_tools:forms:edit:change_files_access").'</label></li>';
+	//$form_data .= "<div>" . elgg_view("input/checkboxes", array("options" => array(elgg_echo("file_tools:forms:edit:change_children_access") => "yes"), "value" => "yes", "name" => "change_children_access")) . "</div>";
+	//$form_data .= "<div>" . elgg_view("input/checkboxes", array("options" => array(elgg_echo("file_tools:forms:edit:change_files_access") => "yes"), "name" => "change_files_access")) . "</div>";
+	$form_data .= "</ul></div>";
 }
 
 $form_data .= "<div class='elgg-foot'>";

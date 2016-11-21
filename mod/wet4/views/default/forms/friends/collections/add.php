@@ -17,12 +17,13 @@ if (isset($vars['collection'])) {
 	$highlight = 'all';
 }
 
-echo "<div class=\"mtm\"><label>" . elgg_echo("friends:collectionname") . "<br/>";
+echo "<div class=\"mtm\"><label for='collection_name'>" . elgg_echo("friends:collectionname") . "</label><br/>";
 echo elgg_view("input/text", array(
 		"name" => "collection_name",
+		"id" => "collection_name",
 		"value" => $title,
 	));
-echo "</label></div>";
+echo "</div>";
 
 echo "<div>";
 if ($vars['collection_members']) {

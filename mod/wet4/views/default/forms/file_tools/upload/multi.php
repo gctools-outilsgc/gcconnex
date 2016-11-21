@@ -33,7 +33,7 @@ elgg_load_css("jquery.uploadify");
 		
 		<div>
 			<?php
-				echo elgg_view("input/file", array("id" => "uploadify-button-wrapper", "name" => "upload", "tabindex" => 0,));
+				echo elgg_view("input/file", array("id" => "uploadify-button-wrapper-button", "name" => "upload", "tabindex" => 0,));
 				echo elgg_view("input/button", array("value" => elgg_echo('file_tools:forms:empty_queue'), "class" => "elgg-button-action hidden", "id" => "file-tools-uploadify-cancel"));
 			?>
 		</div>
@@ -41,19 +41,19 @@ elgg_load_css("jquery.uploadify");
 	
 	<?php if (file_tools_use_folder_structure()) { ?>
 	<div>
-		<label><?php echo elgg_echo("file_tools:forms:edit:parent"); ?><br />
+		<label for="file_tools_file_parent_guid"><?php echo elgg_echo("file_tools:forms:edit:parent"); ?><br /></label>
 		<?php
 			echo elgg_view("input/folder_select", array("name" => "folder_guid", "value" => get_input('parent_guid'), "id" => "file_tools_file_parent_guid"));
 		?>
-		</label>
+		
 	</div>
 	<?php }?>
 	
 	<div>
-		<label>
-			<?php echo elgg_echo('access'); ?><br />
+		<label for="file_tools_file_access_id"><?php echo elgg_echo('access'); ?><br /></label>
+			
 			<?php echo elgg_view('input/access', array('name' => 'access_id_file', 'id' => 'file_tools_file_access_id')); ?>
-		</label>
+		
 	</div>
 	
 	<div class="elgg-foot">
