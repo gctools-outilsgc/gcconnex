@@ -181,4 +181,3 @@ function showfr() {
 }
 
 </script>
-<?php
