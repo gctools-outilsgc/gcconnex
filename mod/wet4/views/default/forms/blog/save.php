@@ -52,28 +52,28 @@ $btn_language =  '<ul class="nav nav-tabs nav-tabs-language">
 $label = elgg_echo('title:en');
 $input = elgg_view('input/text', array(
 	'name' => 'title',
-	'id' => 'blog_title',
+	'id' => 'blog_title_en',
 	'value' => $vars['title']
 ));
 
 $label2 = elgg_echo('title:fr');
 $input2 = elgg_view('input/text', array(
 	'name' => 'title2',
-	'id' => 'blog_title2',
+	'id' => 'blog_title_fr',
 	'value' => $vars['title2']
 ));
 
 $excerpt_label = elgg_echo('blog:excerpt:en');
 $excerpt_input = elgg_view('input/text', array(
 	'name' => 'excerpt',
-	'id' => 'blog_excerpt',
+	'id' => 'blog_excerpt_en',
 	'value' => _elgg_html_decode($vars['excerpt'])
 ));
 
 $excerpt_label2 = elgg_echo('blog:excerpt:fr');
 $excerpt_input2 = elgg_view('input/text', array(
 	'name' => 'excerpt2',
-	'id' => 'blog_excerpt2',
+	'id' => 'blog_excerpt_fr',
 	'value' => _elgg_html_decode($vars['excerpt2'])
 ));
 
@@ -87,14 +87,14 @@ $excerpt_input3 = elgg_view('input/text', array(
 $body_label = elgg_echo('blog:body:en');
 $body_input = elgg_view('input/longtext', array(
 	'name' => 'description',
-	'id' => 'blog_description',
+	'id' => 'blog_description_en',
 	'value' => $vars['description']
 ));
 
 $body_label2 = elgg_echo('blog:body:fr');
 $body_input2 = elgg_view('input/longtext', array(
 	'name' => 'description2',
-	'id' => 'blog_description2',
+	'id' => 'blog_description_fr',
 	'value' => $vars['description2']
 ));
 
@@ -189,32 +189,32 @@ $btn_language
 
 <div class="tab-content tab-content-border">
 <div id=blog_title class='en'>
-	<label for="blog_title">$label</label>
+	<label for="blog_title_en">$label</label>
 	$input
 </div>
 
 <div id=blog_title2 class='fr'>
-	<label for="blog_title">$label2</label>
+	<label for="blog_title_fr">$label2</label>
 	$input2
 </div>
 
 <div class='en'>
-	<label for="blog_excerpt">$excerpt_label</label>
+	<label for="blog_excerpt_en">$excerpt_label</label>
 	$excerpt_input
 </div>
 
 <div class='fr'>
-	<label for="blog_excerpt">$excerpt_label2</label>
+	<label for="blog_excerpt_fr">$excerpt_label2</label>
 	$excerpt_input2
 </div>
 
 <div class='en'>
-	<label for="blog_description">$body_label</label>
+	<label for="blog_description_en">$body_label</label>
 	$body_input
 </div>
 
 <div class='fr'>
-	<label for="blog_description">$body_label2</label>
+	<label for="blog_description_fr">$body_label2</label>
 	$body_input2
 </div>
 
