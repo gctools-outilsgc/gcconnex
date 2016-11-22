@@ -16,6 +16,8 @@ elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'group_owners_
 function gc_group_layout_init(){
 
     elgg_register_library('elgg:groups', elgg_get_plugins_path() . 'gc_group_layout/lib/groups.php');
+// Extend the sidebar to have the full length group anchor header
+    elgg_extend_view('page/layouts/one_sidebar', 'groups/profile/summary', 400);
 }
 
 function group_owners_block_handler($hook, $type, $menu, $params){
