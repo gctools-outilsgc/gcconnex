@@ -35,7 +35,7 @@ return array(
   'wet:gcintranetLink-toolsHead' => 'http://intranet.canada.ca/index-eng.asp?utm_source=gcconnex&utm_medium=gctools-banner&utm_campaign=generic',
   'wet:gcintranetLink-toolsFoot' => 'http://intranet.canada.ca/index-eng.asp?utm_source=gcconnex&utm_medium=gcconnex-footer&utm_campaign=generic',
   'wet:gcpediaLink' => 'http://www.gcpedia.gc.ca/wiki/?setlang=en',
-  'wet:gcdirectoryLink' => 'http://gcdirectory-gcannuaire.gc.ca/en/GCD/?pgid=002',
+  'wet:gcdirectoryLink' => 'https://gcdirectory-gcannuaire.gc.ca/en/GCD/?pgid=002',
   'wet:tutorialLink'=>'http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/See_All',
   'wet:groupLoading'=>'Loading content',
   'subgroups:parent:need_join' => "Join Parent Group",
@@ -1685,7 +1685,7 @@ Please do not reply to this email.",
 'groups:name' => 'Group name in english',
 'groups:name2' => 'Group name in french',
 'groups:briefdescription' => 'Brief description in english',
-'groups:briefdescription2' => 'Brief description in english',
+'groups:briefdescription2' => 'Brief description in french',
 'groups:description' => 'Long description in english',
 'groups:description2'=> 'Long description in french',
 'groups:topicmessage' => 'Topic message in english',
@@ -1720,6 +1720,11 @@ Please do not reply to this email.",
 'img:desc:en' => 'Image description in english',
 'description:ideas:en' => 'Ideas description in english',
 'description:ideas:fr' => 'Ideas description in french',
+
+/*Translation content**/
+
+'lang:english' => 'English',
+'lang:french' => 'French',
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */

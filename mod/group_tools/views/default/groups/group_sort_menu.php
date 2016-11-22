@@ -1,7 +1,12 @@
 <?php
+
 /**
+ *
+ * Group Tools
+ * 
  * All groups listing page navigation
  *
+ * @author ColdTrick IT Solutions
  */
 
 $tabs = array(

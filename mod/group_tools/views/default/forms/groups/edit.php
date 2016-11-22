@@ -1,8 +1,13 @@
 <?php
+
 /**
+ * Group Tools
+ *
  * Group edit form
  *
  * @package ElggGroups
+ * @author ColdTrick IT Solutions
+ * 
  */
 
 /* @var ElggGroup $entity */

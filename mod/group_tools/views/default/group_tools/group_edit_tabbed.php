@@ -1,6 +1,12 @@
 <?php
+
 /**
+ * Group Tools
+ *
  * Show tabs on the group edit form
+ *
+ * @author ColdTrick IT Solutions
+ * 
  */
 
 $tabs = array(

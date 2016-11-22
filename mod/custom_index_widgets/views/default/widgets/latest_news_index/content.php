@@ -1,5 +1,11 @@
 <?php 
   
+/**
+* Custom index widgets
+* 
+* @author Fx NION
+*/
+
   $object_type ='news';
   
   $num_items = $vars['entity']->num_items;
@@ -16,7 +22,7 @@
 	    $widget_context_mode = 'search';
 	elgg_set_context($widget_context_mode);
   
-	if ($site_categories == NULL || $widget_categorie == NULL) {
+if ($site_categories == NULL || $widget_categorie == NULL) {
     $widget_datas = elgg_list_entities(array(
 		'type'=>'object',
 		'subtype'=>$object_type,
@@ -42,6 +48,3 @@
 
 echo $widget_datas;
 ?>        
-
-
-

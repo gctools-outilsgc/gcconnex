@@ -1,7 +1,12 @@
 <?php
+
 /**
+ * Group Tools
+ *
  * Display one group tool option
  *
+ * @author ColdTrick IT Solutions
+ * 
  * @uses $vars['group_tool'] the group tool options
  * @uses $vars['value']      the current value of this option
  * @uses $vars['name']       (optional) the name of the input

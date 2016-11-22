@@ -1,9 +1,14 @@
 <?php
+
 /**
-* A user"s group invitations
-*
-* @uses $vars["invitations"] Array of ElggGroups
-*/
+ *
+ * Group Tools
+ * 
+ * A user"s group invitations
+ *
+ * @uses $vars["invitations"] Array of ElggGroups
+ * @author ColdTrick IT Solutions
+ */
 
 $user = elgg_extract("user", $vars);
 $invitations = elgg_extract("invitations", $vars);

@@ -36,8 +36,8 @@ return array(
     'wet:gcintranetLink-toolsHead' => 'http://intranet.canada.ca/index-fra.asp?utm_source=gcconnex&utm_medium=gctools-banner&utm_campaign=generic',
     'wet:gcintranetLink-toolsFoot' => 'http://intranet.canada.ca/index-fra.asp?utm_source=gcconnex&utm_medium=gcconnex-footer&utm_campaign=generic',
   'wet:gcpediaLink' => 'http://www.gcpedia.gc.ca/wiki/?setlang=fr',
-  'wet:gcdirectoryLink' => "http://gcannuaire-gcdirectory.gc.ca/fr/GCA/?pgid=002",
-  'wet:tutorialLink'=>'http://www.gcpedia.gc.ca/wiki/Aide_%C3%A0_l%27utilisateur/Voir_Tout ',
+  'wet:gcdirectoryLink' => "https://gcannuaire-gcdirectory.gc.ca/fr/GCA/?pgid=002",
+  'wet:tutorialLink'=>'https://www.gcpedia.gc.ca/wiki/Aide_%C3%A0_l%27utilisateur/Voir_Tout ',
   'wet:groupLoading'=>'Loading content(translate)',
   'subgroups:parent:need_join' => "Joindre le groupe parent",
   'event_calendar:none' => 'Aucun événement trouvé.',
@@ -176,8 +176,8 @@ return array(
  */
     'wire:post' => 'le message sur le fil',
     'thewire:post' => "Créer un article sur le fil",
-    'thewire:share'	=> 'Partage',
-    'thewire:shares' => 'Partages',
+    'thewire:share'	=> ' Partage',
+    'thewire:shares' => ' Partages',
     'thewire:contentwarning' => 'Il est possible que les utilisateurs ne puissent pas tous voir ce contenu en raison des permissions d\'accès.',
     'thewire:groupwarning' => 'Ce contenu peut être consulté par les membres de : ',
     'thewire:userwarning' => 'Seuls les utilisateurs suivants peuvent consulter ce contenu : ',
@@ -1546,6 +1546,11 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
 'pages:title2' => 'Titre de la page en français',
 'file_tools:forms:edit:description2' => 'Description en français',
 'file_tools:forms:edit:description' => 'Description en anglais',
+
+/*Translation content**/
+
+'lang:english' => 'Anglais',
+'lang:french' => 'Français',
 
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)

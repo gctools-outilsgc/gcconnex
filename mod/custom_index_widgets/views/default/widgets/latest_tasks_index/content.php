@@ -1,5 +1,11 @@
 <?php 
   
+/**
+* Custom index widgets
+* 
+* @author Fx NION
+*/
+
   $object_type ='task_top';
   
   $num_items = $vars['entity']->num_items;
@@ -40,6 +46,3 @@
 
 echo $widget_datas;
 ?>        
-
-
-

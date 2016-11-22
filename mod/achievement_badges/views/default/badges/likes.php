@@ -51,8 +51,6 @@ if($entities){
         $likeCount = $likeCount + $ent->countAnnotations(array('name' => 'likes', 'limit' => 0));
     }
 
-    //echo $likeCount;
-
     $count = $likeCount;
 }
 
@@ -72,7 +70,6 @@ if($count < $goals[0]){ //no badge
 
 } else if($count >= $goals[1]  && $count < $goals[2]){ //lvl2
 
-    //$count = $goals[2];
     $user->likesBadge = 2;
     $currentBadge = $badges[2];
     $currentGoal = $goals[2];
@@ -81,7 +78,6 @@ if($count < $goals[0]){ //no badge
 } else if($count >= $goals[2] && $count < $goals[3] ){ //lvl3
 
     $user->likesBadge = 3;
-    $count = $goals[2];
     $currentBadge = $badges[3];
     $currentGoal = $goals[3];
     $level = '4';
@@ -89,7 +85,6 @@ if($count < $goals[0]){ //no badge
 } else if($count >= $goals[3] && $count < $goals[4] ){ //lvl4
 
     $user->likesBadge = 4;
-    $count = $goals[2];
     $currentBadge = $badges[4];
     $currentGoal = $goals[4];
     $level = '5';

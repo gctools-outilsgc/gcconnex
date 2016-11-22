@@ -1,7 +1,13 @@
 <?php
+
 /**
+ * Group Tools
+ *
  * List suggested groups
- */
+ *
+ * @author ColdTrick IT Solutions
+ * 
+*/
 
 gatekeeper();
 

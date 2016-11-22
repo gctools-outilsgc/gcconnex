@@ -1,7 +1,12 @@
 <?php
+
 /**
- * (un)Mark a group a as special
- */
+* Group Tools
+*
+* (un)Mark a group a as special
+* 
+* @author ColdTrick IT Solutions
+*/	
 
 $group_guid = (int) get_input("group_guid");
 $state = get_input("state");

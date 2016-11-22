@@ -12,26 +12,22 @@ elgg_register_event_handler('init', 'system', 'b_extended_profile_init');
 function b_extended_profile_init() {
     // Register the endorsements js library
     $url = 'mod/b_extended_profile/js/endorsements/';
-    elgg_register_js('gcconnex-profile', $url . "gcconnex-profile.js"); // js file containing code for edit, save, cancel toggles and the events that they trigger, plus more
-
+    // js file containing code for edit, save, cancel toggles and the events that they trigger, plus more
+    elgg_register_js('gcconnex-profile', $url . "gcconnex-profile.js"); 
     // Register vendor js libraries
     $url = 'mod/b_extended_profile/vendors/';
- //   elgg_register_js('typeahead', $url . 'typeahead/dist/typeahead.bundle.js'); // developer version typeahead js file !!! COMMENT THIS OuT AND ENABLE MINIFIED VERSIoN IN PRODcd
+    // elgg_register_js('typeahead', $url . 'typeahead/dist/typeahead.bundle.js'); // developer version typeahead js file !!! COMMENT THIS OuT AND ENABLE MINIFIED VERSIoN IN PRODcd
     elgg_register_js('fancybox', 'vendors/jquery/fancybox/jquery.fancybox-1.3.4.pack.js');
     elgg_register_js('typeahead', $url . 'typeahead/dist/typeahead.bundle.min.js'); // minified typeahead js file
-//    elgg_register_js('bootstrap-tour', $url . 'bootstrap-tour/build/js/bootstrap-tour.js');
 
     // Register the gcconnex profile css libraries
     $css_url = 'mod/b_extended_profile/css/gcconnex-profile.css';
     elgg_register_css('gcconnex-css', $css_url);
- //   elgg_register_css('font-awesome', 'mod/b_extended_profile/vendors/font-awesome/css/font-awesome.min.css'); // font-awesome icons used for social media and some profile fields
-//    elgg_register_css('bootstrap-tour-css', 'mod/b_extended_profile/vendors/bootstrap-tour/build/css/bootstrap-tour.css');
-    // register views
 
-    // register ajax views for all profile sections that are allowed to be edited and displayed via ajax
-
-    // display views
-    // see views/default/profile/wrapper.php for information on adding a new section to the user profile
+    /* register views
+       register ajax views for all profile sections that are allowed to be edited and displayed via ajax
+       display views
+       see views/default/profile/wrapper.php for information on adding a new section to the user profile */
     elgg_register_ajax_view('b_extended_profile/about-me');
     elgg_register_ajax_view('b_extended_profile/education');
     elgg_register_ajax_view('b_extended_profile/work-experience');
@@ -56,7 +52,6 @@ function b_extended_profile_init() {
     elgg_register_ajax_view('input/portfolio');
 
     // auto-complete
-    // elgg_register_ajax_view('input/autoskill');
     elgg_register_ajax_view('b_extended_profile/edit_basic'); // ajax view for editing the basic profile fields like name, title, department, email, etc.
 
     // register the action for saving profile fields
@@ -66,10 +61,7 @@ function b_extended_profile_init() {
     elgg_register_action('b_extended_profile/retract_endorsement', $action_path . 'retract_endorsement.php');
     elgg_register_action('b_extended_profile/user_find', $action_path . 'userfind.php', "public");
 
-    //elgg_register_plugin_hook_handler('cron', 'hourly', 'userfind_updatelist');
     elgg_register_page_handler('userfind', 'userfind_page_handler');
-
-    //elgg_unregister_page_handler('profile', 'profile_page_handler');
     elgg_register_page_handler('profile', 'extended_profile_page_handler');
 }
 
@@ -151,15 +143,12 @@ function init_ajax_block($title, $section, $user) {
         // create the edit/save/cancel toggles for this section
         echo '<span class="gcconnex-profile-edit-controls">';
         echo '<button title="Edit ' . $section . '" class="btn btn-default edit-' . $section . '">' . elgg_echo('gcconnex_profile:edit') . ' <span class="wb-inv">' . $field . '</span></button>';
-//        echo '<span class="save-control save-' . $section . ' hidden"><img src="' . elgg_get_site_url() . 'mod/b_extended_profile/img/save.png">' . elgg_echo('gcconnex_profile:save') . '</span>';
         echo '<button title="Cancel ' . $section . '"  class="btn btn-default cancel-control cancel-' . $section . ' hidden wb-invisible">' . elgg_echo('gcconnex_profile:cancel') . ' <span class="wb-inv">' . $field . '</span></button>';
         echo '</span>';
     }
     echo '</div>';
-    echo '<div id="edit-' . $section . '" class="gcconnex-profile-section-wrapper panel-body gcconnex-' . $section . '">'; // create the profile section wrapper div for css styling
-
-
-    
+     // create the profile section wrapper div for css styling
+    echo '<div id="edit-' . $section . '" class="gcconnex-profile-section-wrapper panel-body gcconnex-' . $section . '">';
 }
 
 function finit_ajax_block($section) {
@@ -168,12 +157,10 @@ function finit_ajax_block($section) {
     echo '</div>';
 }
 
-
 /*
  * Purpose: return a list of usernames for user-suggest
  */
 function userfind_page_handler() {
-    //$user_friends = elgg_get_entities_from_relationship(array('guid' => elgg_get_logged_in_user_guid()));
 
     $user_friends = get_user_friends(elgg_get_logged_in_user_guid(), null, 0);
     $query = htmlspecialchars($_GET['query']);
@@ -194,7 +181,6 @@ function userfind_page_handler() {
                     'href' => false)),
                 'pos' => 0
             );
-            //error_log('Result: ' . var_dump($result));
         }
 
         // Complete match for name (first, middle or last)
@@ -210,7 +196,6 @@ function userfind_page_handler() {
                     'href' => false)),
                 'pos' => 1
             );
-            //error_log('Result: ' . var_dump($result));
         }
 
         // Partial match beginning at start of first name
@@ -226,7 +211,6 @@ function userfind_page_handler() {
                     'href' => false)),
                 'pos' => 2
             );
-            //error_log('Result: ' . var_dump($result));
         }
 
         // Partial match beginning at start of some name (middle, last)
@@ -242,7 +226,6 @@ function userfind_page_handler() {
                     'href' => false)),
                 'pos' => 3
             );
-            //error_log('Result: ' . var_dump($result));
         }
 
         // Partial match somewhere within some name
@@ -258,7 +241,6 @@ function userfind_page_handler() {
                     'href' => false)),
                 'pos' => 4
             );
-            //error_log('Result: ' . var_dump($result));
         }
     }
 
@@ -288,8 +270,6 @@ function userfind_page_handler() {
 
     $result = array_merge($highest_relevance, $high_relevance, $med_relevance, $low_relevance, $lowest_relevance);
 
-    //error_log(print_r('Result: ' . $result, true));
-    //error_log(print_r($med_relevance, true));
     echo json_encode($result);
     return json_encode($result);
 }
@@ -335,9 +315,6 @@ function list_avatars($options) {
             'class' => 'elgg-lightbox gcconnex-basic-profile-edit elgg-button',
             'text' => elgg_echo('gcconnex_profile:edit_profile')
         ));
-        //$list .= '<a class="btn gcconnex-avatars-expand" data-toggle="modal" href="#' . $options['id'] . '" >...</a>';
-
-        //$list .= '<a class="btn gcconnex-avatars-expand elgg-lightbox" href="' . elgg_get_site_url() . 'ajax/view/endorse/endorsement" >...</a>';
     }
 
 
@@ -368,9 +345,6 @@ function list_avatars($options) {
                         'href' => false
                     ));
                     $list .= '</div>'; // close div class="gcconnex-avatar-in-list"
-                            //$list .= '<a class="btn gcconnex-avatars-expand" data-toggle="modal" href="#' . $options['id'] . '" >...</a>';
-
-                            
                 }
                 else {
                     $list .= '<div class="gcconnex-avatar-in-list" data-guid="' . $guids[$i] . '">';

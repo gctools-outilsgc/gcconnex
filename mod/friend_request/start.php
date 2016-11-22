@@ -1,4 +1,10 @@
 <?php
+
+/**
+* Friend request
+* 
+* @author ColdTrick IT Solutions
+*/	
 	
 require_once(dirname(__FILE__) . "/lib/events.php");
 require_once(dirname(__FILE__) . "/lib/hooks.php");
@@ -50,6 +56,7 @@ function friend_request_init() {
  *
  * @return void
  */
+
 function friend_request_pagesetup() {
 	
 	$context = elgg_get_context();
@@ -81,32 +88,4 @@ function friend_request_pagesetup() {
 			elgg_register_menu_item("topbar", $params);
 		}
 	}
-	
-/*	// Show menu link in the correct context
-	if (in_array($context, array("friends", "friendsof", "collections", "messages")) && !empty($page_owner) && $page_owner->canEdit()) {
-		$options = array(
-			"type" => "user",
-			"count" => true,
-			"relationship" => "friendrequest",
-			"relationship_guid" => $page_owner->getGUID(),
-			"inverse_relationship" => true
-		);
-		
-		$count = elgg_get_entities_from_relationship($options);
-		$extra = "";
-		if (!empty($count)) {
-			$extra = " [" . $count . "]";
-		}
-		
-		// add menu item
-		$menu_item = array(
-			"name" => "friend_request",
-			"text" => elgg_echo("friend_request:menu") . $extra,
-			"href" => "friend_request/" . $page_owner->username,
-			"contexts" => array("friends", "friendsof", "collections", "messages")
-		);
-		
-		elgg_register_menu_item("page", $menu_item);
-	}*/
-}
-	
+}	

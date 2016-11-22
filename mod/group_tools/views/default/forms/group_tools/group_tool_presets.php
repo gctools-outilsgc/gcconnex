@@ -1,6 +1,11 @@
 <?php
+
 /**
+ * Group Tools
+ *
  * Configure group tool presets
+ *
+ * @author ColdTrick IT Solutions
  * 
  * @uses $vars['group_tool_presets'] the current group tool presets (if any)
  */

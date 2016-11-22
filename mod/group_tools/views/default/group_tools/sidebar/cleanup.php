@@ -1,7 +1,14 @@
 <?php
+
 /**
+ * Group Tools
+ *
  * cleanup the group profile sidebar
+ *
+ * @author ColdTrick IT Solutions
+ * 
  */
+
 $group = elgg_get_page_owner_entity();
 
 if (!empty($group)) {

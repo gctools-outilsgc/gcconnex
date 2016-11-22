@@ -2,8 +2,7 @@
 
 if (elgg_is_xhr()) {
     $user_guid = $_GET["guid"];
-}
-else {
+}else {
     $user_guid = elgg_get_page_owner_guid();
 }
 
@@ -14,8 +13,9 @@ echo '<div class="gcconnex-education-display ">';
 
 if ($user->canEdit() && ($education_guid == NULL || empty($education_guid))) {
     echo elgg_echo('gcconnex_profile:education:empty');
-}
-else {
+
+}else {
+    
     if (!(is_array($education_guid))) {
         $education_guid = array($education_guid);
     }
@@ -26,7 +26,6 @@ else {
         if ($education = get_entity($guid)) {
 
             echo '<div class="gcconnex-profile-education-display gcconnex-education-' . $education->guid . '">';
-            
             echo '<div class="gcconnex-profile-label education-school">' . $education->school . '</div>';
             echo '<div class="gcconnex-profile-label education-degree">' . $education->degree . ' - ' . $education->field . '</div>';
             
@@ -52,14 +51,9 @@ else {
                 echo $cal_month[$education->enddate] . ', ' . $education->endyear;
             }
             echo '</div>';
-
-            
-            //echo '<div class="gcconnex-profile-label education-program"><ul><li>' . $education->program . '</li></ul></div>';
-            //echo '<div class="gcconnex-profile-label education-field">' . $education->field . '</div>';
             echo '</div>';
         }
     }
 }
 
 echo '</div>'; // close div class="gcconnex-profile-education-display"
-//echo '</div>'; // close div class="gcconnex-profile-section-wrapper"

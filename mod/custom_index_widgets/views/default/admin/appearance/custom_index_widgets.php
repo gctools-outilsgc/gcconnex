@@ -1,22 +1,21 @@
 <?php
 
+/**
+* Custom index widgets
+* 
+* @author Fx NION
+*/
 
 elgg_push_context('custom_index_widgets');
 elgg_set_page_owner_guid(elgg_get_config('site_guid'));
-
 $num_columns = elgg_extract('num_columns', $vars, 2);
 $show_add_widgets = elgg_extract('show_add_widgets', $vars, true);
 $exact_match = elgg_extract('exact_match', $vars, true);
 $show_access = elgg_extract('show_access', $vars, true);
-
-
 $owner = elgg_get_page_owner_entity(); 
-
-
 $context = elgg_get_context();
 $widget_types = elgg_get_widget_types($context, true);
 $widgets = elgg_get_widgets($owner->guid, $context);
-
 
 if (elgg_can_edit_widget_layout($context)) {
 	
@@ -54,4 +53,3 @@ for ($column_index = $num_columns; $column_index >= 1; $column_index--) {
 	echo '</div>';
 }
 echo '</div>';
-

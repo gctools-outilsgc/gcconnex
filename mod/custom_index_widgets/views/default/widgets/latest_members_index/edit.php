@@ -1,4 +1,11 @@
 <?php
+
+/**
+ * Custom index widgets
+ * 
+ * @author Fx NION
+ */
+ 
 	$num_items = $vars['entity']->num_items;
 	if (!isset($num_items)) $num_items = 10;
 	
@@ -12,8 +19,6 @@
 	
 	$box_style = $vars['entity']->box_style;
 	if (!isset($box_style)) $box_style = "collapsable";
-
-
 ?>
 <p>
   <?php echo elgg_echo('custom_index_widgets:widget_title'); ?>:

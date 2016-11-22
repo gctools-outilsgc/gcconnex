@@ -39,9 +39,6 @@ To view their profile, click here: %s
 'friend_request:approve' => "Accepter",
 'friend_request:approve:subject' => " %s a accepté votre demande d’ajout à votre liste de collègue / %s has accepted your colleague request",
 'friend_request:approve:message' => "%s, %s a accepté votre demande d'ajout à votre liste de collègue.",
-      
-      
-      
 'friend_request:approve:successful' => "%s fait maintenant partie de vos collègues",
 'friend_request:approve:fail' => "Erreur durant la création de l'entrée %s' dans vos collègues",
       
@@ -50,8 +47,6 @@ To view their profile, click here: %s
 'friend_request:decline' => "Refuser",
 'friend_request:decline:subject' => "%s a refusé votre demande à devenir collègue",
 'friend_request:decline:message' => "Cher %s, %s a refusé votre invitation pour devenir un de ses collègues.",
-      
-      
 'friend_request:decline:success' => "Demande d'ajout à la liste des collègues refusée avec succès",
 'friend_request:decline:fail' => "Erreur lors du refus de la demande d'ajout à la liste de collègues, merci de réessayer.",
       

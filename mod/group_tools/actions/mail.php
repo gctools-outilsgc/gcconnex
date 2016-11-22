@@ -1,7 +1,12 @@
 <?php
+
 /**
- * Mail all the members of a group
- */
+* Group Tools
+*
+* Mail all the members of a group
+* 
+* @author ColdTrick IT Solutions
+*/	
 
 $group_guid = (int) get_input("group_guid", 0);
 $user_guids = get_input("user_guids");

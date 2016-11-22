@@ -5,7 +5,7 @@
  * @package Elgg.Core
  * @subpackage Widgets.Management
  */
-$owner = get_loggedin_user()->username;
+$owner = elgg_get_logged_in_user_entity()->username;
 $widget = get_entity(get_input('widget_guid'));
 if ($widget) {
 	$layout_owner_guid = $widget->getContainerGUID();

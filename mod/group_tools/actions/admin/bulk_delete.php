@@ -1,5 +1,11 @@
 <?php
 
+/**
+* Group Tools
+* 
+* @author ColdTrick IT Solutions
+*/	
+
 $group_guids = get_input("group_guids");
 
 if (empty($group_guids)) {

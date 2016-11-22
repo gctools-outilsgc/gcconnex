@@ -1,7 +1,12 @@
 <?php
+
 /**
- * Make sure everyone is a member of the autojoin group
- */
+* Group Tools
+*
+* Make sure everyone is a member of the autojoin group
+* 
+* @author ColdTrick IT Solutions
+*/	
 
 // this could take a while ;)
 set_time_limit(0);

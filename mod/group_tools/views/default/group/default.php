@@ -1,8 +1,13 @@
 <?php
+
 /**
+ * Group Tools
+ *
  * Group entity view
  *
  * @package ElggGroups
+ * @author ColdTrick IT Solutions
+ * 
  */
 
 $group = $vars['entity'];

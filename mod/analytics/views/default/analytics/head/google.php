@@ -14,6 +14,8 @@ if (empty($domain)) {
 	$domain = 'auto';
 }
 
+
+if ('gsa-crawler' != strtolower($_SERVER['HTTP_USER_AGENT'])) {
 ?>
 <!-- Google Analytics -->
 <script type='text/javascript'>
@@ -47,3 +49,6 @@ if (empty($domain)) {
 	?>
 </script>
 <!-- End Google Analytics -->
+<?php
+
+}

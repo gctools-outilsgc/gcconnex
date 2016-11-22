@@ -11,20 +11,6 @@
 $image = $vars['entity'];
 $imageGUID = $image->getGUID();
 
-$french = elgg_view('input/button', array(
-    'value' => elgg_echo('btn:translate:fr'),
-    'id' => 'btnClickfr',
-    'class' => 'btn btn-default en',
-));
-
-$english = elgg_view('input/button', array(
-    'value' => elgg_echo('btn:translate:en'),
-    'id' => 'btnClicken',
-    'class' => 'btn btn-default fr',
-));
-
-echo $body .= $french.' '.$english;
-
 echo '<div class="elgg-image-block">';
 
 echo '<div class="elgg-image">';
@@ -60,36 +46,41 @@ echo '</div>';
 
 if(get_current_language() == 'fr'){
 ?>
-    <script>
-        jQuery('.fr').show();
-        jQuery('.en').hide();
+  <script>
+    jQuery('.fr').show();
+      jQuery('.en').hide();
+      jQuery('#btnfr').addClass('active');
 
-    </script>
+  </script>
 <?php
 }else{
 ?>
-    <script>
-        jQuery('.en').show();
-        jQuery('.fr').hide();
-
-    </script>
+  <script>
+    jQuery('.en').show();
+      jQuery('.fr').hide();
+      jQuery('#btnen').addClass('active');
+  </script>
 <?php
 }
 ?>
 <script>
 jQuery(function(){
 
-        jQuery('#btnClickfr').click(function(){
+  var selector = '.nav li';
+
+  $(selector).on('click', function(){
+    $(selector).removeClass('active');
+    $(this).addClass('active');
+});
+
+    jQuery('#btnClickfr').click(function(){
                jQuery('.fr').show();
-               jQuery('.en').hide();
-                
+               jQuery('.en').hide();  
         });
 
           jQuery('#btnClicken').click(function(){
                jQuery('.en').show();
-               jQuery('.fr').hide();
-               
+               jQuery('.fr').hide();  
         });
-
 });
 </script>

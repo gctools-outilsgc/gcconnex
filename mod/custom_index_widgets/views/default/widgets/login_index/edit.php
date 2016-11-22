@@ -1,7 +1,14 @@
-<?php 
-	$widget_title = $vars['entity']->widget_title;
-	
+<?php
+
+/**
+* Custom index widgets
+* 
+* @author Fx NION
+*/
+
+	$widget_title = $vars['entity']->widget_title;	
 	$show_welcome = $vars['entity']->show_welcome;
+
 	if (!isset($show_welcome)) $show_welcome = "yes";
 	
 	$guest_only = $vars['entity']->guest_only;

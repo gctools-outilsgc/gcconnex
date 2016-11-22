@@ -1,5 +1,7 @@
 <?php
 /**
+ * combobox.php 
+ *
  * Elgg dropdown input
  * Displays a combobox (text + select) input field
  *
@@ -14,6 +16,7 @@
  * 								 the value displayed on the button. Replaces
  *                               $vars['options'] when defined.
  * @uses $vars['class']          Additional CSS class
+ * @author Lorea
  */
 
 echo elgg_view('input/dropdown',$vars);

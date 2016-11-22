@@ -1,7 +1,11 @@
 <?php
 /**
- * Revoke an email inviation for a group
- */
+* Group Tools
+*
+* Revoke an email inviation for a group
+* 
+* @author ColdTrick IT Solutions
+*/	
 
 $annotation_id = (int) get_input("annotation_id");
 $group_guid = (int) get_input("group_guid");
