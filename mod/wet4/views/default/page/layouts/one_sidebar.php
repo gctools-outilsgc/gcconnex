@@ -26,14 +26,14 @@
         /*
         echo elgg_extract('nav', $vars, elgg_view('navigation/breadcrumbs'));
         */
-
+/*
     if(elgg_instanceof(elgg_get_page_owner_entity(), 'group')){
         //echo '<div>Hello I am a cover photo or something</div>';
         //$group = elgg_extract('entity', $vars);
         elgg_push_context('groups');
         echo elgg_view('groups/profile/summary');
         elgg_pop_context('groups');
-    }
+    }*/
     //main section
     ?>
     <section class="col-md-8 mrgn-bttm-md" id="wb-cont">
@@ -47,7 +47,7 @@
 
             echo elgg_view_menu('page', array('sort_by' => 'priority'));
             //echo elgg_view_menu('page', array('sort_by' => 'name'));
-            
+
             }
 			// @todo deprecated so remove in Elgg 2.0
 			if (isset($vars['area1'])) {

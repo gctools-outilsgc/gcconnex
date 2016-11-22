@@ -992,7 +992,7 @@ border:none;
 }
 
 /*** Group Cover Photo ***/
-
+/*
 .groups-profile{
     margin-top: 170px;
     z-index: 1;
@@ -1011,7 +1011,7 @@ border:none;
     width:100%;
 
 }
-
+*/
 
 @media (max-width: 767px) {
   .group-cover-photo{
