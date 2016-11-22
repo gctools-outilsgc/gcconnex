@@ -62,7 +62,7 @@ try {
 // @todo we need to use the config object to store this so that the current language
 // can be changed. Refs #4171
 $display_name = $user->name;
-//setcookie('connex_lang', $user->language, time()+(1000 * 60 * 60 * 24), '/');
+setcookie('connex_lang', $user->language, time()+(1000 * 60 * 60 * 24), '/');
 if ($user->language) {
 //give user a custom welcome message
 	$message = elgg_echo('wet:loginok', array($display_name));
