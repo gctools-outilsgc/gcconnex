@@ -26,7 +26,7 @@ if(elgg_is_logged_in() && $group->isMember()){
     }
 
     //display if group has a badge and the user does not have it active
-    if($pledge && $pledge != $user->init_badge){
+    if($pledge && $pledge != $user->init_badge && elgg_get_plugin_setting('mentalHealth_group_display', 'gcProfilePictureBadges')){
 
 ?>
 <div class="pledge-holder clearfix">
@@ -82,7 +82,7 @@ if(elgg_is_logged_in() && $group->isMember()){
         }
 
         //display if group has a badge and the user does not have it active
-        if($pledge && $pledge != $user->active_badge && array_key_exists($group->name, $badgemap)){ //662668
+        if($pledge && $pledge != $user->active_badge && array_key_exists($group->name, $badgemap) && elgg_get_plugin_setting('amb_badge_pledge', 'gcProfilePictureBadges')){ //662668
 
 ?>
 <div class="amb-holder clearfix">
