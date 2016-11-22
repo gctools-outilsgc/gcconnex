@@ -60,8 +60,13 @@ if(isset($_POST['submitted']))
                 // foo is the id of the other select box 
                 if ($(this).val() == "Autres$Other") {
                     $("#subject").show();
+                    $("#flag_content").hide(); 
+                } else if ($(this).val() == "Signaler un contenu ou comportement$Flag content or behaviour"){
+                    $("#flag_content").show();
+                     $("#subject").hide();
                 }else{
                     $("#subject").hide();
+                    $("#flag_content").hide();     
                 } 
             });
         });
@@ -144,6 +149,9 @@ echo '</select>';
                     <label for='photo'><?php echo elgg_echo('contactform:upload'); ?></label><br />
                     <input type="file" name='photo' id='photo' /><br />
                     <span id='contactus_photo_errorloc' class='error'></span>
+                </div>
+                 <div class="mbm elgg-text-help alert alert-warning" id="flag_content" style="display:none;">
+                    <?php echo elgg_echo('flag_content:info'); ?>
                 </div>
                 <div class='form-group'>
                     <label for='message' class="required"><span class="field-name"><?php echo elgg_echo('contactform:message');?></span><strong class="required"> (<?php echo elgg_echo('contactform:required'); ?>)</strong></label>

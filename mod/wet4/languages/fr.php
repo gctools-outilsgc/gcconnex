@@ -1462,6 +1462,7 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
   'conatactform:eng:name' => 'Le nom du lien en anglais',
   'conatactform:fr:link' => 'Le lien en français',
   'conatactform:eng:link' => 'Le lien en anglais',
+  'flag_content:info' => 'Si vous croyez qu\'un contenu ou comportement contrevient aux conditions d’utilisation, veuillez svp nous fournir une description du comportement ou contenu inacceptable, le nom de la personne visée, et les hyperliens si possible. Le contenu ou comportement sera passé en revue.',
 
 
     /*
