@@ -11,8 +11,7 @@
 /mod/missions_organization/get_ancestors_log.txt
 
 # ignore Single Signon mods
-/mod/saml_link/
-/mod/simplesaml/
+
 
 /mod/machine_translation/
 /mod/gsa/
