@@ -40,10 +40,11 @@ if (!$members) {
 	$members = array();
 }
 
-echo "<div><label>" . elgg_echo("friends:addfriends") . "</label>";
+echo "<div><label for='friends_collection'>" . elgg_echo("friends:addfriends") . "</label>";
 echo elgg_view('input/friendspicker', array(
 	'entities' => $vars['friends'],
 	'name' => 'friends_collection',
+	'id' => 'friends_collection',
 	'highlight' => $highlight,
     'value' => $members
 ));
