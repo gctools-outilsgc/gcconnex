@@ -206,7 +206,7 @@ function wet4_theme_init() {
     // Replace the default index page with redirect
     elgg_register_plugin_hook_handler('index', 'system', 'new_index');
     elgg_register_page_handler('newsfeed', 'newsfeed_page_handler');
-    elgg_register_page_handler('c_photo_image', 'c_photo_page_handler');
+    //GROUP_REMOVE elgg_register_page_handler('c_photo_image', 'c_photo_page_handler');
     elgg_register_page_handler('groups_autocomplete', 'groups_autocomplete');
 
 
@@ -270,11 +270,12 @@ function activity_page_handler($page){
 }
 
 //create cover photo page
+/* GROUP_REMOVE
 function c_photo_page_handler(){
     @include (dirname ( __FILE__ ) . "/pages/c_photo_image.php");
     return true;
 }
-
+*/
 /*
  *  Set new index page to sort user's landing page preference
  */

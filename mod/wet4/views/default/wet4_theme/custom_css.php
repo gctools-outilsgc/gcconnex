@@ -992,16 +992,15 @@ border:none;
 }
 
 /*** Group Cover Photo ***/
-/*
+/*MOVE_GROUP*/
 .groups-profile{
-    margin-top: 170px;
     z-index: 1;
 }
 
 .group-cover-photo{
     width:100%;
-    height: 250px;
-    position: absolute;
+    height: 225px;
+    position: relative;
     margin-top: 60px;
     background-color:#047177;
     overflow:hidden;
@@ -1011,7 +1010,7 @@ border:none;
     width:100%;
 
 }
-*/
+
 
 @media (max-width: 767px) {
   .group-cover-photo{
