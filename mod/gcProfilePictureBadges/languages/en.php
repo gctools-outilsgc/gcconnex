@@ -13,6 +13,8 @@
 $english = array(
 		'gcProfilePictureBadges:badgeselectdesc' => 'Add badge from group: ',
 
+		'gcProfilePictureBadges:knowmore' => 'Learn More',
+
 		'gcProfilePictureBadges:ambassador' => 'GCTools Ambassador',
     'gcProfilePictureBadges:ambassadorSell' => "Showcase that you are a GCTools Ambassador by displaying the badge on your avatar.",
     'gcProfilePictureBadges:ambassador:added' => "The GCTools Ambassador badge has been added to your avatar",
@@ -26,7 +28,7 @@ $english = array(
 
 		'gcProfilePictureBadges:badge:mentalHealth' => 'Mental health in the workplace',
 		'gcProfilePictureBadges:pledgeSell:mentalHealth' => 'Show your support for "Mental health in the workplace" by adding the badge to your avatar.',
-		'gcProfilePictureBadges:knowmore:mentalHealth' => ''
+		'gcProfilePictureBadges:knowmore:mentalHealth' => 'http://intranet.canada.ca/hr-rh/hw-ms/ww-mmt/mht-smt/pledge-engagement/index-eng.asp'
 );
 
 add_translation('en', $english);

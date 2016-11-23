@@ -13,6 +13,8 @@
 $french = array(
 		'gcProfilePictureBadges:badgeselectdesc' => "Ajouter le badge d'un groupe: ",
 
+		'gcProfilePictureBadges:knowmore' => 'Apprendre encore plus',
+
 		'gcProfilePictureBadges:ambassador' => 'ambassadeur de OutilsGC',
     'gcProfilePictureBadges:ambassadorSell' => "Démontrer que vous êtes un ambassadeur des OutilsGC en affichant l'écusson sur votre avatar",
     'gcProfilePictureBadges:ambassador:added' => "L'écusson des ambassadeurs des OutilsGC a été ajouté à votre avatar",
@@ -26,7 +28,7 @@ $french = array(
 
 		'gcProfilePictureBadges:badge:mentalHealth' => "Santé mentale en milieu de travail",
 		'gcProfilePictureBadges:pledgeSell:mentalHealth' => "Démontrer votre engagement pour appuyer la &nbsp;&nbsp;« Santé mentale en milieu de travail » et ajoutez l'écusson à votre avatar.",
-		'gcProfilePictureBadges:knowmore:mentalHealth' => ''
+		'gcProfilePictureBadges:knowmore:mentalHealth' => 'http://intranet.canada.ca/hr-rh/hw-ms/ww-mmt/mht-smt/pledge-engagement/index-fra.asp'
 );
 
 add_translation('fr', $french);
