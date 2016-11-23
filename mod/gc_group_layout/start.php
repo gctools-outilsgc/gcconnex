@@ -20,12 +20,8 @@ function gc_group_layout_init(){
     elgg_extend_view('page/layouts/one_sidebar', 'groups/profile/summary', 420);
 
 elgg_extend_view('page/layouts/one_sidebar', 'page/elements/cover_photo', 400);
-/*
-    if(elgg_instanceof(elgg_get_page_owner_entity(), 'group')){
-        if(!elgg_in_context('event_calendar') && !elgg_in_context('gcforums')){
-            elgg_extend_view('page/default', 'page/elements/cover_photo', 420);
-        }
-      }*/
+  elgg_extend_view('css/elgg', 'css/group_layout');
+
 }
 
   elgg_register_page_handler('c_photo_image', 'c_photo_page_handler');
