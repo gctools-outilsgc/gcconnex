@@ -1,0 +1,57 @@
+body{
+	background-image: url("http://gcconnex.tools.gc.ca/mod/simplesaml/images/header-bg-ie.jpg") !important;
+	background-repeat: no-repeat   !important;
+	background-position: top   !important;
+	background-size:100% 50%   !important;
+}
+header .brand, .alert-warning{
+	visibility: hidden;
+}
+#wb-srch{
+	visibility: hidden;
+}
+#app-brand{
+	visibility: hidden;
+}
+nav{
+	visibility: hidden;
+}
+footer{
+	visibility: hidden;
+}
+.elgg-main .col-sm-6 p{
+	visibility: hidden;
+}
+.elgg-main .col-sm-6 hr{
+	visibility: hidden;
+}
+.elgg-main .col-sm-6 a{
+	visibility: hidden;
+}
+label{
+	width:100%;
+}
+h2{
+	line-height: 0em;
+	padding-bottom: 0px;
+}
+
+.lang_toggle {
+  position: absolute !important;
+  float: none;
+  top:150px;
+  left:15px;
+}
+.lang_toggle .active {
+  color: #ffffff;
+  background: #000000 !important;
+  border: 1px solid #000000 !important;
+  
+}
+.lang_toggle .not_active {
+  color: #ffffff;
+  background: grey !important;
+  border: 1px solid grey !important;
+  cursor:pointer;
+  
+}
