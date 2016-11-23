@@ -95,7 +95,7 @@ $priv = $site_url .'privacy-confidentialite';
                     <a href="#wb-cont">Top of Page <span class="glyphicon glyphicon-chevron-up"></span></a>
                 </div>
                 <div class="col-xs-6 col-md-12 text-right">
-                    <object type="image/svg+xml" tabindex="-1" role="img" data="<?php echo $site_url; ?>/mod/wet4/graphics/wmms-blk.svg" aria-label="Symbol of the Government of Canada"></object>
+                    <object type="image/svg+xml" tabindex="-1" role="img" data="<?php echo $site_url; ?>/mod/gcconnex_theme/graphics/wmms-blk.svg" aria-label="Symbol of the Government of Canada"></object>
                 </div>
             </div>
         </div>
