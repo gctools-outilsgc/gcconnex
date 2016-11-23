@@ -1,5 +1,10 @@
 <?php
-//Action to control if you can see colleague connections on newsfeed
+/**
+ * Action to control if you can see colleague connections on newsfeed
+ * 
+ * @author Ethan Wallace github.com/ethanWallace
+*/
+
 
 $user = elgg_get_logged_in_user_entity();
 $colleague = get_input('colleague-off');

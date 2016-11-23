@@ -62,11 +62,6 @@ return array(
 'description:ideas:en' => 'Description de l\'idée en anglais',
 'description:ideas:fr' => 'Description de l\'idée en français',
 
-'newsfeed:filter' => "Filtrer votre fil de nouvelles",
-'newsfeed:label' => "Enlever les connexions faites avec vos collègues dans votre fil de nouvelles",
-'newsfeed:do' => "Les connexions faites avec vos collègues n'apparaîtront plus dans votre fil de nouvelles.",
-'newsfeed:undo' => "Les connexions faites avec vos collègues apparaîtront dans votre fil de nouvelles.",
-'newsfeed:filter:title' => "Configuration de votre fil de nouvelles",
 
   /**
 *notice section
@@ -261,7 +256,6 @@ return array(
  */
 	'landingPage' => 'Définir la page d\'accueil',
 	'career' =>	'Carrière',
-	'newsfeed' => 'Fil de nouvelles',
 	'item:site' => 'Sites',
     'notifications:subscriptions:changesettings' => "Notifications",
 
@@ -435,8 +429,6 @@ return array(
 	'widgets:add:failure' => "Nous n'avons pas pu ajouter votre widget.",
 'widgets:move:failure' => "Nous n'avons pas pu sauvegarder la nouvelle position du widget.",
 	'widgets:remove:failure' => "Impossible de supprimer ce widget",
-'wet4:colandgroupactivity' => 'Votre fil de nouvelles',
-'wet4:colandgroupactivitynolog' => 'Bienvenue sur GCconnex',
     'wet4:noticetitle' => 'Avis',
 'wet4:homenotice' => 'Bienvenue sur GCconnex, la plateforme de réseautage social professionnelle du gouvernement du Canada. GCconnex, c\'est un outil qui permet aux fonctionnaires de tisser des liens et de collaborer selon leurs connaissances, leurs expériences et leurs intérêts communs. GCconnex devrait être réservé aux activités professionnelles et ne devrait pas servir à remplacer les réseaux sociaux personnels (comme Facebook).',
 
