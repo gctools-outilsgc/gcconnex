@@ -116,7 +116,7 @@ if(get_current_language() == 'fr'){
 <script>
 jQuery(function(){
 
-    var selector = '.nav li';
+    var selector = '.nav-tabs-language li';
 
 $(selector).on('click', function(){
     $(selector).removeClass('active');
