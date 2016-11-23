@@ -16,7 +16,7 @@ if ($result) {
 	
 	// cyu - if saml plugin is enabled, forward the url to saml link. otherwise forward to normal url.
 	if (elgg_is_active_plugin('saml_link') || elgg_is_active_plugin('simplesaml'))
-		forward("http://gcconnex.gc.ca/simplesaml/saml2/idp/SingleLogoutService.php?ReturnTo=".elgg_get_site_url(). 'login');
+		forward(elgg_get_site_url()."simplesaml/saml2/idp/SingleLogoutService.php?ReturnTo=".elgg_get_site_url(). 'login');
 	else
 		forward(elgg_get_site_url(). 'login');
 
