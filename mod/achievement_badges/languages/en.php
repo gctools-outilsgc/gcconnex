@@ -34,16 +34,16 @@ return array(
     'badge:likes:objective:1' => "You've leveled up your Likes badge! Keep contributing and see who else will like your posts!",
     'badge:likes:objective:2' => 'Another level up! Keep it up, we like what you have to say!',
     'badge:likes:objective:3' => "Surprise, you reached the next level! Now you're making waves!",
-    'badge:likes:objective:4' => "Wow, you should get a badge for all Likes you're getting on your content… oh wait, you are! One more level and you will have completed the Likes badge!",
+    'badge:likes:objective:4' => "Wow, you should get a badge for all Likes you're getting on your contentï¿½ oh wait, you are! One more level and you will have completed the Likes badge!",
     'badge:likes:objective:5' => 'Congratulations! You have unlocked the Likes badge! How does it feel being famous?',
 
     //Achieved
     'badge:likes:achieved:0' => '%s has not achieved the Likes Badge yet',
-    'badge:likes:achieved:1' => '%s achieved 1 likes on their content',
-    'badge:likes:achieved:2' => '%s achieved 20 likes on their content',
-    'badge:likes:achieved:3' => '%s achieved 40 likes on their content',
-    'badge:likes:achieved:4' => '%s achieved 80 likes on their content',
-    'badge:likes:achieved:5' => '%s achieved 150 likes on their content',
+    'badge:likes:achieved:1' => '%s received more than one like on their content and reached level 1!',
+    'badge:likes:achieved:2' => '%s received over 20 likes on their content and reached level 2!',
+    'badge:likes:achieved:3' => '%s received over 40 likes on their content and reached level 3!',
+    'badge:likes:achieved:4' => '%s received over 80 likes on their content and reached level 4!',
+    'badge:likes:achieved:5' => '%s received over 150 likes on their content and completed all 5 levels! Congratulations!',
 
 
     //discussion badge
@@ -54,16 +54,16 @@ return array(
     'badge:discussion:objective:1' => "Surprise! You've leveled up your Discussion badge! Let's keep the discussions going!",
     'badge:discussion:objective:2' => "Great ideas come from great discussions. You're contributions are invaluable!",
     'badge:discussion:objective:3' => 'Another level up! Thanks for starting these great discussions. Keep up the good work!',
-    'badge:discussion:objective:4' => 'Wow, if you keep leveling up like this, we might just run out of badges to give you…',
+    'badge:discussion:objective:4' => 'Wow, if you keep leveling up like this, we might just run out of badges to give you!',
     'badge:discussion:objective:5' => "Congratulations! You have unlocked the Discussion badge! You are now an award winning conversationist. Sorry, we can't discuss this.",
 
     //Achieved
     'badge:discussion:achieved:0' => '%s has not achieved the Discussion Badge yet',
-    'badge:discussion:achieved:1' => '%s started 1 discussions in groups',
-    'badge:discussion:achieved:2' => '%s started 10 discussions in groups',
-    'badge:discussion:achieved:3' => '%s started 20 discussions in groups',
-    'badge:discussion:achieved:4' => '%s started 40 discussions in groups',
-    'badge:discussion:achieved:5' => '%s started 100 discussions in groups',
+    'badge:discussion:achieved:1' => '%s started more than one discussion and reached level 1!',
+    'badge:discussion:achieved:2' => '%s started more than 10 discussions and reached level 2!',
+    'badge:discussion:achieved:3' => '%s started more than 20 discussions and reached level 3!',
+    'badge:discussion:achieved:4' => '%s started more than 40 discussions and reached level 4!',
+    'badge:discussion:achieved:5' => '%s started more than 100 discussions and completed all 5 levels! Congratulations!',
 
 
     //colleague badge
@@ -74,16 +74,16 @@ return array(
     'badge:colleague:objective:1' => "You've leveled up your Colleague badge! Let the networking begin!",
     'badge:colleague:objective:2' => "Wow, you've leveled up again! You're making great connections!",
     'badge:colleague:objective:3' => 'Great work on reaching the next level. You sure know how to connect the dots!',
-    'badge:colleague:objective:4' => "You've almost completed your Colleague badge… You're making great connections!",
+    'badge:colleague:objective:4' => "You've almost completed your Colleague badge! You're making great connections!",
     'badge:colleague:objective:5' => "Congratulations! You have unlocked the Colleague badge! It's all about who you know that knows!",
 
     //Achieved
     'badge:colleague:achieved:0' => '%s has not achieved the Colleague Badge yet',
-    'badge:colleague:achieved:1' => '%s connected with 5 colleagues',
-    'badge:colleague:achieved:2' => '%s connected with 15 colleagues',
-    'badge:colleague:achieved:3' => '%s connected with 25 colleagues',
-    'badge:colleague:achieved:4' => '%s connected with 50 colleagues',
-    'badge:colleague:achieved:5' => '%s connected with 150 colleagues',
+    'badge:colleague:achieved:1' => '%s connected with more than 5 colleagues and reached level 1!',
+    'badge:colleague:achieved:2' => '%s connected with more than 15 colleagues and reached level 2!',
+    'badge:colleague:achieved:3' => '%s connected with more than 25 colleagues and reached level 3!',
+    'badge:colleague:achieved:4' => '%s connected with more than 50 colleagues and reached level 4!',
+    'badge:colleague:achieved:5' => '%s connected with more than 150 colleagues and completed all 5 levels! Congratulations!',
 
 
     //comment badge
@@ -99,11 +99,11 @@ return array(
 
     //Achieved
     'badge:comment:achieved:0' => '%s has not achieved the Comment Badge yet',
-    'badge:comment:achieved:1' => '%s commented on 1 items',
-    'badge:comment:achieved:2' => '%s commented on 25 items',
-    'badge:comment:achieved:3' => '%s commented on 75 items',
-    'badge:comment:achieved:4' => '%s commented on 200 items',
-    'badge:comment:achieved:5' => '%s commented on 500 items',
+    'badge:comment:achieved:1' => '%s posted more than one comment and reached level 1!',
+    'badge:comment:achieved:2' => '%s posted more than 25 comments and reached level 2!',
+    'badge:comment:achieved:3' => '%s posted more than 75 comments and reached level 3!',
+    'badge:comment:achieved:4' => '%s posted more than 200 comments and reached level 4!',
+    'badge:comment:achieved:5' => '%s posted more than 500 comments and completed all 5 levels! Congratulations!',
 
 
 
@@ -120,11 +120,11 @@ return array(
 
     //Achieved
     'badge:bookmark:achieved:0' => '%s has not achieved the Bookmark Badge yet',
-    'badge:bookmark:achieved:1' => '%s created 5 bookmarks',
-    'badge:bookmark:achieved:2' => '%s created 15 bookmarks',
-    'badge:bookmark:achieved:3' => '%s created 30 bookmarks',
-    'badge:bookmark:achieved:4' => '%s created 45 bookmarks',
-    'badge:bookmark:achieved:5' => '%s created 75 bookmarks',
+    'badge:bookmark:achieved:1' => '%s created over 5 bookmarks and reached level 1!',
+    'badge:bookmark:achieved:2' => '%s created over 15 bookmarks and reached level 2!',
+    'badge:bookmark:achieved:3' => '%s created over 30 bookmarks and reached level 3!',
+    'badge:bookmark:achieved:4' => '%s created over 45 bookmarks and reached level 4!',
+    'badge:bookmark:achieved:5' => '%s created more than 75 bookmarks and completed all 5 levels! Congratulations! ',
 
     //bookmark badge
     'badge:complete:name' => 'Profile Strength Badge',
@@ -135,5 +135,5 @@ return array(
 
     //Achieved
     'badge:complete:achieved:0' => '%s has not achieved the Profile Strength Badge yet',
-    'badge:complete:achieved:1' => '%s has a complete profile',
+    'badge:complete:achieved:1' => '%s has a complete profile! Congratulations!',
     );
