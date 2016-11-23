@@ -1,6 +1,6 @@
 <?php
 
-include dirname(__DIR__) . "/lib/missions-organization.php";
+include dirname(dirname(__DIR__)) . "/lib/missions-organization.php";
 
 /**
  * tests parsing of department strings
@@ -28,7 +28,7 @@ class MissionsOrganizationDepartmentParseTest extends \PHPUnit_Framework_TestCas
 		global $mockDBoutput;
 
 		$department = "not a department";
-		$mockDBoutput = null;
+		$mockDBoutput = array();
 			
 
 		$parsed_value = mo_get_department_next_to_root($department);
