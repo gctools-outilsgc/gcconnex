@@ -19,14 +19,19 @@ if( _elgg_services()->session->get('language') == 'en'){
 ?>
         <div class="row">
             <div class="brand col-xs-8 col-sm-9 col-md-6">
-
+               <object type="image/svg+xml" tabindex="-1" data="<?php echo $site_url ?>/mod/wet4/graphics/sig-blk-<?php echo $graphic_lang ?>.svg"></object>
+                <span class="wb-inv"><?php echo elgg_echo('wet:gc');?></span>
             </div>
             
             <section class="wb-mb-links col-xs-4 col-sm-3 visible-sm visible-xs" id="wb-glb-mn">
+                <h2><?php echo elgg_echo('wet:search');?></h2>
                 <ul class="list-inline text-right chvrn">
-                <li><a href="#mb-pnl" title="search" aria-controls="mb-pnl" class="overlay-lnk" role="button">
+                <li><a href="#mb-pnl" title="<?php echo elgg_echo('wet:search');?>" aria-controls="mb-pnl" class="overlay-lnk" role="button">
                         <span class="glyphicon glyphicon-search">
                             <span class="glyphicon glyphicon-th-list">
+                            <span class="wb-inv">
+                                <?php echo elgg_echo('wet:search');?>
+                            </span>
                             </span>
                         </span>
                         </a>
