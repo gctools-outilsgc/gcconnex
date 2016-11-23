@@ -30,6 +30,7 @@
  }
 
  .group-title {
+   border:none !important;
    font-size: 26px;
  }
 

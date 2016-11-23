@@ -20,7 +20,7 @@ function gc_group_layout_init(){
     elgg_extend_view('page/layouts/one_sidebar', 'groups/profile/summary', 420);
 
     elgg_extend_view('page/layouts/one_sidebar', 'page/elements/cover_photo', 400);
-    elgg_extend_view('css/elgg', 'css/group_');
+    elgg_extend_view('css/elgg', 'css/group_layout');
 
     elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'group_owners_block_handler');
 
