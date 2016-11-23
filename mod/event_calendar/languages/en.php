@@ -33,7 +33,7 @@ return array(
 'event_calendar:error_nosuchevent' => "Error: there is no such event.",
 
 // gccon-220: replace text for "error: there is no such event"
-'event_calendar:error_nosuchevent_loggedin_only' => "You must be logged in to view the requested page.",
+'event_calendar:error_nosuchevent_loggedin_only' => "You must be logged in and have access rights to view this event.",
 
 'event_calendar:day_label' => "Day",
 'event_calendar:week_label' => "Week",
