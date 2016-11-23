@@ -7,7 +7,7 @@
  * @uses $vars['group']
  */
 
-if(elgg_in_context('group_profile')){
+if(elgg_in_context('group_profile') || elgg_instanceof(elgg_get_page_owner_entity(), 'group')){
 //Wrap this view in the context of group profile
 
 

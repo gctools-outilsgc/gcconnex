@@ -42,7 +42,7 @@
 
  .group-cover-photo{
      width:100%;
-     height: 225px;
+     height: 185px;
      position: relative;
      margin-top: 60px;
      background-color:#047177;
@@ -68,11 +68,11 @@
 
  @media (max-width: 992px) {
      .group-cover-photo{
-       height: 180px;
+       height: 170px;
 
    }
    .groups-profile{
-       margin-top: 100px;
+       margin-top: 0px;
    }
       }
 
