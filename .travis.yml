@@ -80,5 +80,5 @@ script:
  - php -f ./engine/tests/suite.php
 
 # mod testing
- - cd ./mod/missions_organization/
+ - cd ./mod/
  - phpunit
