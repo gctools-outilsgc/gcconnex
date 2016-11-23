@@ -10,7 +10,7 @@
 elgg_register_event_handler('init','system','gc_group_layout_init');
 
 //Register Handler for owner_block
-elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'group_owners_block_handler');
+
 
 
 function gc_group_layout_init(){
@@ -19,8 +19,13 @@ function gc_group_layout_init(){
 // Extend the sidebar to have the full length group anchor header
     elgg_extend_view('page/layouts/one_sidebar', 'groups/profile/summary', 420);
 
-elgg_extend_view('page/layouts/one_sidebar', 'page/elements/cover_photo', 400);
-  elgg_extend_view('css/elgg', 'css/group_layout');
+    elgg_extend_view('page/layouts/one_sidebar', 'page/elements/cover_photo', 400);
+    elgg_extend_view('css/elgg', 'css/group_');
+
+    elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'group_owners_block_handler');
+
+    elgg_register_ajax_view('ajax/grp_ajax_content');
+    elgg_extend_view("js/elgg", "js/group_ajax");
 
 }
 
