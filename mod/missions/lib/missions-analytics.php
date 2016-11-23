@@ -225,7 +225,7 @@ function mm_analytics_generate_bin_labels($timescale_array, $case_value, $graph_
 				$timescale_labels[$key] = date('M, Y', $time);
 				break;
 			case 'missions:week':
-				$timescale_labels[$key] = 'W' . date('W, Y', $time);
+				$timescale_labels[$key] = 'W' . date('W, M-Y', $time);
 				break;
 			case 'missions:day':
 				$timescale_labels[$key] = date('Y-m-d', $time);
