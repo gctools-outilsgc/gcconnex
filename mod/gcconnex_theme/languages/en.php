@@ -5,7 +5,7 @@ $english = array(
   /**
      * WET specific
      */
-  	'breadcrum:home' => 'Home',
+
 
     'wet:skiptomain'=>"Skip to main content",
     'wet:aboutsite'=>"Skip to \"About this site\"",
@@ -15,7 +15,7 @@ $english = array(
     'wet:searchHead'=>"Search",
     'wet:searchweb'=>"Search website",
     'wet:searchgctools'=>"Search GCconnex",
-    'wet:more'=>"More",
+
     'wet:inboxmore'=>"More (archived)",
     'wet:topicmenu'=>"Topic menu",
     'wet:youarehere'=>"You are here:",
@@ -53,6 +53,7 @@ $english = array(
   	'wet:jobs:link' => 'jobs.gc.ca <i class="fa fa-external-link mrgn-lft-sm"></i>',
   	'wet:jobs:href' => "http://jobs-emplois.gc.ca/index-eng.htm",
 
+	'loginok' => "Welcome to GCconnex %s.", /*NEW but doesn't work :3*/
     'wet:login:departments'=>"<span class=\"login-big-num\">174</span> Organizations across Canada",
     'wet:login:discussions'=>"<span class=\"login-big-num\">%s</span> Discussions happening right now",
 
@@ -86,6 +87,10 @@ $english = array(
     'wetActivity:nocollorgroup'=>"To get started you can browse or search for groups related to your work and interests. Join some groups to start seeing activity.",
     'wetActivity:welcome'=>"Welcome to GCconnex",
     'wetActivity:browsegroups'=>"Start Browsing Groups",
+
+    'wet4:colandgroupactivity'=>'Your News feed',
+    'wet4:colandgroupactivitynolog'=>'Welcome to GCconnex',
+
 
 /*Login lang*/
     'wet:loginok' => "Welcome  to GCconnex %s.", /*NEW*/
@@ -130,6 +135,8 @@ $english = array(
     'contactform:guidance' => '<a href="http://www.gcpedia.gc.ca/gcwiki/images/b/b5/Social_Media_in_the_GC.jpg">Guidance for employees : Social Media in the GC context</a>',
     'contactform:department' => 'Department',
     'contactform:newsletter' => 'Subscribe to the Newsletter',
+
+    'msg:change_access' => "Not all users have access to your content. Since GCconnex wants to be as open as possible, are you sure you need to restrict the access to this content?", //NEW
 );
 
 add_translation("en", $english);

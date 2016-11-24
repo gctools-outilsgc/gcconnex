@@ -2,8 +2,8 @@
 $site_url = elgg_get_site_url();
 
 return array(
-
-
+    'wet:more'=>"More",
+  	'breadcrum:home' => 'Home',
     /**
     * Department Verify
     */
@@ -164,7 +164,7 @@ return array(
  */
 
 	'login' => "Log in",
-	'loginok' => "Welcome to GCconnex %s.", /*NEW but doesn't work :3*/
+
 
 	'loginerror' => "We couldn't log you in. Please check your credentials and try again.",
 	'login:empty' => "Username/email and password are required.",
@@ -343,8 +343,6 @@ return array(
 	'widgets:move:failure' => "We could not store the new widget position.",
 	'widgets:remove:failure' => "Unable to remove this widget",
 
-    'wet4:colandgroupactivity'=>'Your News feed',
-    'wet4:colandgroupactivitynolog'=>'Welcome to GCconnex',
 
 
 /**
@@ -1524,7 +1522,7 @@ Please do not reply to this email.",
  'gcTour:step6txt' => "Want to hold a group discussion on a project or a document? Use the chatrooms from the chat bar at the bottom of the screen.",
 /*Change access*/
 
-'msg:change_access' => "Not all users have access to your content. Since GCconnex wants to be as open as possible, are you sure you need to restrict the access to this content?", //NEW
+
 'msg:change_access_title' => "Did you know?",
 
 /*
