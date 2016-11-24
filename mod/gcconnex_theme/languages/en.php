@@ -18,6 +18,14 @@ $english = array(
     'contactform:clicks' => 'Clicks and Tips GCconnex Group',
     'contactform:groupgcconnex' => 'GC 2.0 Tools GCconnex Group',
     'contactform:teamgcpedia' => 'GC 2.0 Tools Team on GCpedia',
+    'contactform:learn' => 'Learn more about social media',
+    'contactform:collaborating' => ' CSPS’s Collaborating Using GCpedia (B171) ',
+    'contactform:collaborating:link' => '"http://www.csps-efpc.gc.ca/forlearners/coursesandprograms/CourseDetail-eng.aspx?courseno=b171%7C"',
+    'contactform:socialmedia' => 'Collaborating Using GCconnex and GCpedia (B336)',
+    'contactform:socialmedia:link' => '"http://www.csps-efpc.gc.ca/forlearners/coursesandprograms/CourseDetail-eng.aspx?courseno=B336"',
+    'contactform:guidance' => '<a href="http://www.gcpedia.gc.ca/gcwiki/images/b/b5/Social_Media_in_the_GC.jpg">Guidance for employees : Social Media in the GC context</a>',
+    'contactform:department' => 'Department', 
+    'contactform:newsletter' => 'Subscribe to the Newsletter',
 );
 
 add_translation("en", $english);
