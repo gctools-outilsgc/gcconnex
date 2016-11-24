@@ -1439,7 +1439,6 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
   'contactform:title:picture' => "<a href=' http://www.gcpedia.gc.ca/wiki/GCconnex_-_Aide_%C3%A0_l%27utilisateur/Comment_modifier_votre_profil_personnel#R.C3.A9viser_votre_profil_personnel'>Télécharger une photo de profil</a>",
   'contactform:title:sign-on' => "<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_-_Aide_%C3%A0_l%27utilisateur/_Comment_utiliser_la_Connexion_simplifi%C3%A9e'>Connexion simplifiée</a>",
   'contactform:title:form' => "Contactez-nous",
-  'contactform:content:form' => "<p>Veuillez consulter la FAQ et le Centre d’aide pour obtenir rapidement des réponses aux questions les plus courantes et apprendre à utiliser GCconnex comme un pro! </p><p>Vous ne trouvez pas la réponse à ce que vous cherchez? Communiquer avec le Soutien technique de GCconnex en remplissant le formulaire ci-dessous. Veuillez décrire votre problème ou poser clairement votre question ou même nous fournir une capture d’écran si vous le pouvez. Un agent de soutien des OutilsGC répondra à votre demande dans les 2 prochains jours ouvrables.</p>",
   'contactform:useful' => 'Groupes GCconnex qui pourraient vous être utiles :',
   'contactform:helpful' => 'Communautés utiles',
   'contactform:learn' => 'Pour en savoir plus sur les médias sociaux ',
