@@ -1,7 +1,7 @@
 <?php
 /**
  * WET 4 Footer
- * 
+ *
  */
 
 // footer
@@ -17,14 +17,14 @@ $priv = $site_url .'privacy-confidentialite';
     <div class="container">
 		<nav role="navigation">
 			<h2>About this site</h2>
-            
-            <?php  
+
+            <?php
             if(!elgg_is_logged_in()){
                 //Test is the user is logged in and give them links to register in the footer
                 //echo 'You not logged in braj';
                 echo elgg_view('page/elements/footer_register', $vars);
             }
-            
+
             ?>
 
 
@@ -38,6 +38,7 @@ $priv = $site_url .'privacy-confidentialite';
 		                  <li>Something</li>
                           <li>Something</li>
                           <li>Something</li>
+
 	                   </ul>
                 </section>
             <section class="col-sm-4">
@@ -64,10 +65,7 @@ $priv = $site_url .'privacy-confidentialite';
 
 			</div>
 		</nav>
-	</div>
-    
-    
-    
+   
     <!-- GC Info that will be at the bottom of the footer -->
     <div class="brand">
         <div class="container">
@@ -78,3 +76,5 @@ $priv = $site_url .'privacy-confidentialite';
             </div>
         </div>
     </div>
+=======
+>>>>>>> origin/gcconnex_theme

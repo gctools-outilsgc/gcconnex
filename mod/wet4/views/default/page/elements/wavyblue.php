@@ -1,7 +1,7 @@
 <?php
 /**
  * WET 4 Header , Canada branding and search
- * 
+ *
  */
 
 // footer
@@ -13,7 +13,12 @@ if( _elgg_services()->session->get('language') == 'en'){
 }else{
     $graphic_lang = 'fr';
 }
+//If GCconnex theme is not active, display the site name as a link in the top left
+$site_name = elgg_view('output/url', array(
+    'href'=>elgg_get_site_url(),
+    'text'=>elgg_get_config('sitename'),
 
+));
 
 
 ?>
@@ -21,7 +26,7 @@ if( _elgg_services()->session->get('language') == 'en'){
             <div class="brand col-xs-8 col-sm-9 col-md-6">
                 <!-- LOGO -->
             </div>
-            
+
             <section class="wb-mb-links col-xs-4 col-sm-3 visible-sm visible-xs" id="wb-glb-mn">
                 <h2><?php echo elgg_echo('wet:search');?></h2>
                 <ul class="list-inline text-right chvrn">
@@ -43,4 +48,3 @@ if( _elgg_services()->session->get('language') == 'en'){
         </div>
 
         <!-- End of Beautiful Wavy Blue Bar at the top -->
-
