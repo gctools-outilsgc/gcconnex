@@ -6,7 +6,7 @@ $english = array(
     * WET specific
     */
   'cp_notification:subscribe' => "Abonnez-vous maintenant!",
-    'breadcrum:home' => 'Accueil',
+
     'wet:skiptomain' => "Passer au contenu principal",
     'wet:aboutsite' => "Passer à « Informations sur le site »",
     'wet:LangSel' => "Sélection de la langue",

@@ -3,7 +3,7 @@
 
 return array(
       'wet:more' => "Autres",
-
+    'breadcrum:home' => 'Accueil',
 /**
  * Profile Strength
  */
