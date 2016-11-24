@@ -19,8 +19,7 @@ if( _elgg_services()->session->get('language') == 'en'){
 ?>
         <div class="row">
             <div class="brand col-xs-8 col-sm-9 col-md-6">
-               <object type="image/svg+xml" tabindex="-1" data="<?php echo $site_url ?>/mod/wet4/graphics/sig-blk-<?php echo $graphic_lang ?>.svg"></object>
-                <span class="wb-inv"><?php echo elgg_echo('wet:gc');?></span>
+                <!-- LOGO -->
             </div>
             
             <section class="wb-mb-links col-xs-4 col-sm-3 visible-sm visible-xs" id="wb-glb-mn">

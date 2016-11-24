@@ -12,7 +12,7 @@ PARTICULAR PURPOSE.
 
 @copyright html-form-guide.com 2010
 */
-require_once("class.phpmailer.php");
+require_once( elgg_get_plugins_path() ."phpmailer/vendors/class.phpmailer.php");
 
 /*
 Interface to Captcha handler
@@ -41,7 +41,6 @@ class FGContactForm
     var $arr_conditional_receipients;
     var $fileupload_fields;
     var $captcha_handler;
-
     var $mailer;
 
     function FGContactForm()
@@ -52,9 +51,15 @@ class FGContactForm
         $this->conditional_field='';
         $this->arr_conditional_receipients=array();
         $this->fileupload_fields=array();
-
         $this->mailer = new PHPMailer();
         $this->mailer->CharSet = 'utf-8';
+        $this->mailer->IsSMTP();
+        $this->mailer->Host = elgg_get_plugin_setting('phpmailer_host', 'phpmailer'); // SMTP server
+        $this->mailer->Port = elgg_get_plugin_setting('ep_phpmailer_port', 'phpmailer'); // SMTP server port
+        $this->mailer->SMTPSecure = 'tls';
+        $this->mailer->SMTPAuth = 'true';
+        $this->mailer->Username = elgg_get_plugin_setting('phpmailer_username', 'phpmailer');
+        $this->mailer->Password = elgg_get_plugin_setting('phpmailer_password', 'phpmailer');
     }
 
     function EnableCaptcha($captcha_handler)
@@ -171,40 +176,34 @@ class FGContactForm
 
     function SendFormSubmission()
     {
+              $reason = $_POST['reason'];
+                $option = explode("$", $_POST['reason']);
+                    $categoryfr = $option[0];
+                    $categoryen = $option[1]; 
+
+        $depart = $_POST['depart'];
         $reason = $_POST['reason'];
                 $option = explode("$", $_POST['reason']);
                     $french = $option[0];
                     $english = $option[1]; 
-        if(empty($_POST['subject']))
+         if(empty($_POST['subject']))
            {
-           $subject = "$this->name contact you about ". $english." / $this->name vous a contacter à propos de ".$french;
+           $subject = $categoryen." - ".$depart. " - $this->name  / ".$categoryfr." - ".$depart. " - $this->name";
            }else{
-           $subject = $_POST['subject'];
+            $subject = "GCconnex - ".$depart. " - $this->name  / GCconnex - ".$depart. " - $this->name";
            }
         
-        
         $this->CollectConditionalReceipients();
-
         $this->mailer->CharSet = 'utf-8';
-        
         $this->mailer->Subject = $subject;
-
-        $this->mailer->From = $this->GetFromAddress();
-
-        $this->mailer->FromName = $this->name;
-        
-        //$this->mailer->AddReplyTo($this->email);
-
+        $this->mailer->From = elgg_get_plugin_setting('phpmailer_from_email', 'phpmailer');
+        $this->mailer->FromName = elgg_get_plugin_setting('phpmailer_from_name', 'phpmailer');
         $this->mailer->AddCC($this->email);
-
         $message = $this->ComposeFormtoEmail();
-        
         $this->mailer->ConfirmReadingTo = $this->email;
-        
         $textMsg = trim(strip_tags(preg_replace('/<(head|title|style|script)[^>]*>.*?<\/\\1>/s','',$message)));
         $this->mailer->AltBody = @html_entity_decode($textMsg,ENT_QUOTES,"UTF-8");
         $this->mailer->MsgHTML($message);
-
         $this->AttachFiles();
 
         if(!$this->mailer->Send())
@@ -254,16 +253,6 @@ class FGContactForm
     function FormSubmissionToMail()
     {
         $ret_str='';
-     /*   foreach($_POST as $key=>$value)
-        {
-            if(!$this->IsInternalVariable($key))
-            {
-                $value = htmlentities($value,ENT_QUOTES,"UTF-8");
-                $value = nl2br($value);
-                $key = ucfirst($key);
-                $ret_str .= "<div class='label'>$key :</div><div class='value'>$value </div>\n";
-            }
-        }*/
         
                 $name = $_POST['name'];
                 $email = $_POST['email'];
@@ -271,12 +260,12 @@ class FGContactForm
                 $option = explode("$", $_POST['reason']);
                     $french = $option[0];
                     $english = $option[1]; 
-               if(empty($_POST['subject']))
-           {
-           $subject = $categoryen." - ".$depart. " - $this->name  / ".$categoryfr." - ".$depart. " - $this->name";
-           }else{
-            $ubject = "GCconnex contact form";
-           }
+                if(empty($_POST['subject']))
+                {
+                    $subject = "$this->name has contacted you about ". $english." / $this->name vous a envoyé un message à propos de ".$french;
+                }else{
+                    $subject = $_POST['subject'];
+                }
         
                 $message = $_POST['message'];
         
@@ -289,137 +278,86 @@ class FGContactForm
                 $value = htmlentities($value,ENT_QUOTES,"UTF-8");
                 $value = nl2br($value);
                 $key = ucfirst($key);
-                $ret_str .= '<table width="100%" bgcolor="#fcfcfc" border="0" cellpadding="0" cellspacing="0">
-<tr>
-  <td>
-    <!--[if (gte mso 9)|(IE)]>
-      <table width="600" align="center" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-          <td>
-    <![endif]-->     
-    <table bgcolor="#ffffff" class="content" align="center" cellpadding="0" cellspacing="0" border="0" style="width: 100%; max-width: 800px;">
-      <tr>
-        <td bgcolor="#047177" class="header" style="padding: 12px 0 10px 30px;">
-          <table width="70" align="left" border="0" cellpadding="0" cellspacing="0">  
-            <tr>
-                            <td height="50" style="padding: 0 0 0 20px; color: #ffffff; font-family: sans-serif; font-size: 45px; line-height: 38px; font-weight: bold;">
-                GC<span style="padding: 0 0 0 3px; font-size: 25px; color: #ffffff; font-family: sans-serif; ">connex</span>
-              </td>
-            </tr>
-          </table>
-        </td>
-               
-      <tr>
-        <td class="innerpadding" style="padding: 30px 30px 30px 30px; font-size: 16px; line-height: 22px; border-bottom: 1px solid #f2eeed; font-family: sans-serif;">
-        Thank you for contacting the GCconnex Help desk. This email is sent to you to have a copy of your request. You will receive an acknowledgment of receipt by email shortly. Shouldn’t you receive the acknowledgment of receipt, please contact the GCconnex Help Desk at: gcconnex@tbs-sct.gc.ca.<br/>Thank you<br/>
-<br/> Merci d\'avoir communiquer avec le bureau de soutien de GCconnex. Ce courriel vous est envoyé afin d’avoir une copie de votre demande dans vos dossiers. Vous recevrez un accusé de réception sous peu. Si vous ne recevez pas cet accusé de réception, prière de communiquer avec le bureau de soutien de GCconnex à l’adresse suivante : gcconnex@tbs-sct.gc.ca<br/>Merci
+                $ret_str .= '
 
+<!-- beginning of email template -->
+  <div width="100%" bgcolor="#fcfcfc">
+    <div>
+      <div>
 
-             
-        </td>
-      </tr>
-      </tr>
-      <tr>
-        <td class="innerpadding borderbottom" style="padding: 30px 30px 30px 30px; border-bottom: 1px solid #f2eeed;">
-          <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tr>
-              <td class="h2" style="color: #153643; font-family: sans-serif; padding: 0 0 15px 0; font-size: 24px; line-height: 28px; font-weight: bold;">
-                <span style="font-size:15px; font-weight: normal;">(Le fran&ccedil;ais suit)</span><br/>
-                  GCconnex Contact Form
-              </td>
-            </tr>
-            <tr>
-              <td class="bodycopy" style="color: #153643; font-family: sans-serif; font-size: 16px; line-height: 22px;">
-                <b>Name:</b> '.$name.'<br/>
-                  <b>Email:</b> '.$email.'<br/>
-                  <b>Reason:</b> '.$english.' <br/>
-                  <b>Subject:</b> '.$subject.'<br/>
-                  <b>message:</b>
-                  '.$message .'<br/>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-      <tr>
-        <td class="innerpadding borderbottom" style="padding: 30px 30px 30px 30px; border-bottom: 1px solid #f2eeed;">
-<!--          <table width="115" align="left" border="0" cellpadding="0" cellspacing="0">  
-            <tr>
-              <td height="115" style="padding: 0 20px 20px 0;">
-                <img class="fix" src="images/article1.png" width="115" height="115" border="0" alt="" />
-              </td>
-            </tr>
-          </table>-->
-          <!--[if (gte mso 9)|(IE)]>
-            <table width="380" align="left" cellpadding="0" cellspacing="0" border="0">
-              <tr>
-                <td>
-          <![endif]-->
-          
-            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-             
-               
-                  <tr>
-                    <td class="bodycopy" style="color: #153643; font-family: sans-serif; padding: 0 0 15px 0; font-size: 24px; line-height: 28px; font-weight: bold;">
-                        
-                  Formulaire en ligne de demande
-                    </td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 20px 0 0 0;font-family: sans-serif; color: #153643; font-size: 16px; line-height: 22px;">
-                           <b>Nom:</b> '.$name.'<br/> 
-                  <b>Email:</b> '.$email.'<br/>
-                  <b>Raison:</b> '.$french.'<br/>
-                  <b>Sujet:</b> '.$subject.'<br/>
-                  <b>Message:</b>
-                  '.$message.'<br/>
-                    </td>
-                  </tr>
-               
-              </table>
-          
-          <!--[if (gte mso 9)|(IE)]>
-                </td>
-              </tr>
-          </table>
-          <![endif]-->
-        </td>
-      </tr>
+        <!-- email header -->
+            <div align="center" width="100%" style="background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 12px; color: #055959">
+              Thank you for contacting the GCconnex Help desk. This is a copy of your request.<br/><br/> Merci d\'avoir communiqué avec le bureau de soutien de GCconnex. Ceci est une copie de votre requête.
+            </div>
+        
 
-      <tr>
-        <td class="footer" bgcolor="#f5f5f5" style="padding: 20px 30px 15px 30px;">
-          <table width="100%" border="0" cellspacing="0" cellpadding="0">
-            <tr>
-              <td align="center" class="footercopy" style="font-family: sans-serif; font-size: 14px; color: #055959">
-                GCconnex contact form / Formulaire de contact GCconnex<br/>
+            <!-- GCconnex banner -->
+            <div width="100%" style="padding: 0 0 0 10px; color:#ffffff; font-family: sans-serif; font-size: 35px; line-height:38px; font-weight: bold; background-color:#047177;">
+            <span style="padding: 0 0 0 3px; font-size: 20px; color: #ffffff; font-family: sans-serif;">GCconnex</span>
+            </div>
+
+            <!-- email divider -->
+            <div style="height:1px; background:#bdbdbd; border-bottom:1px solid #ffffff"></div>
+
+<!-- english -->
+
+            <!-- main content of the notification (ENGLISH) -->
+            <!-- *optional* email message (DO NOT REPLY) -->
+            <div width="100%" style="padding:30px 30px 10px 30px; font-size:12px; line-height:22px; font-family:sans-serif;">
+
+            <!-- The French Follows... -->
+            <span style="font-size:12px; font-weight: normal;"><i>(Le fran&ccedil;ais suit)</i></span><br/>  
+            </div>
+
+            <div width="100%" style="padding:30px 30px 30px 30px; color:#153643; font-family:sans-serif; font-size:16px; line-height:22px; ">
+            <!-- TITLE OF CONTENT -->
+            <h2 style="padding: 0px 0px 15px 0px">
+            <strong> GCconnex Contact Us Form </strong>
+            </h2>
+
+            <!-- BODY OF CONTENT -->
+            <b>Name:</b> '.$name.'<br/>
+            <b>Email:</b> '.$email.'<br/>
+            <b>Reason:</b> '.$english.' <br/>
+            <b>Subject:</b> '.$subject.'<br/>
+            <b>Message:</b>'.$message .'<br/>
+            </div>
                 
-                <span class="hide">Thanks contacting us / Merci de nous avoir contacter</span>
-              </td>
-            </tr>
-            <tr>
-              <td align="center" style="padding: 20px 0 0 0;">
-                <table border="0" cellspacing="0" cellpadding="0">
-                  <tr>
-                    <td width="150" style="text-align: center; padding: 0 10px 0 10px;">
-                  Do not reply /<br/> Ne pas r&#233;pondre
-                    </td>
-                   
-                  </tr>
-                </table>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
-    <!--[if (gte mso 9)|(IE)]>
-          </td>
-        </tr>
-    </table>
-    <![endif]-->
-    </td>
-  </tr>
-</table>';
+            <div style="margin-top:15px; padding: 5px; color: #6d6d6d; border-bottom: 1px solid #ddd;"></div>
+                
+<!-- french -->
+
+            <!-- main content of the notification (FRENCH) -->
+            <!-- *optional* email message (DO NOT REPLY) -->
+            <div id="gcc_fr_suit" name="gcc_fr_suit" width="100%" style="padding:30px 30px 10px 30px; font-size:12px; line-height:22px; font-family:sans-serif;"></div>
+
+            <div width="100%" style="padding:30px 30px 30px 30px; color:#153643; font-family:sans-serif; font-size:16px; line-height:22px;">
+            <!-- TITLE OF CONTENT -->
+            <h2 style="padding: 0px 0px 15px 0px">
+            <strong> Formulaire contactez-nous de GCconnex</strong>
+            </h2>
+
+            <!-- BODY OF CONTENT -->
+            <b>Nom :</b> '.$name.'<br/> 
+            <b>Courriel :</b> '.$email.'<br/>
+            <b>Raison :</b> '.$french.'<br/>
+            <b>Sujet :</b> '.$subject.'<br/>
+            <b>Message :</b>'.$message.'<br/>
+            </div>
+            <div style="margin-top:15px; padding: 5px; color: #6d6d6d;"></div>
+
+            <!-- email divider -->
+            <div style="height:1px; background:#bdbdbd; border-bottom:1px solid #ffffff"></div>
+
+            <!-- email footer -->
+            <div align="center" width="100%" style="background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 16px; color: #055959">
+            Please do not reply to this message | Veuillez ne pas répondre à ce message
+            </div>
+
+      </div>
+    </div>
+  </div>';
+
         foreach($this->fileupload_fields as $upload_field)
         {
             $field_name = $upload_field["name"];
@@ -429,7 +367,6 @@ class FGContactForm
             }        
             
             $filename = basename($_FILES[$field_name]['name']);
-
             $ret_str .= "<div class='label'>File upload '$field_name' :</div><div class='value'>$filename </div>\n";
         }
         return $ret_str;
@@ -445,16 +382,6 @@ class FGContactForm
         return $ret_str;
     }
 
-   /* function GetMailStyle()
-    {
-        $retstr = "\n<style>".
-        "body,.label,.value { font-family:Arial,Verdana; } ".
-        ".label {font-weight:bold; margin-top:5px; font-size:1em; color:#333;} ".
-        ".value {margin-bottom:15px;font-size:0.8em;padding-left:5px;} ".
-        "</style>\n";
-
-        return $retstr;
-    }*/
     function GetHTMLHeaderPart()
     {
          $retstr = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">'."\n".
@@ -488,24 +415,24 @@ class FGContactForm
     .col380 {width: 380px!important;}
     }*/
   </style>'.
-                   '<meta http-equiv=Content-Type content="text/html; charset=utf-8">';
+  '<meta http-equiv=Content-Type content="text/html; charset=utf-8">';
        
-        //$retstr .= $this->GetMailStyle();
          $retstr .= '</head><body yahoo bgcolor="#fcfcfc" style="margin: 0; padding: 0; min-width: 100%!important;">';
          return $retstr;
     }
+
     function GetHTMLFooterPart()
     {
         $retstr ='</body></html>';
         return $retstr ;
     }
+
     function ComposeFormtoEmail()
     {
         $header = $this->GetHTMLHeaderPart();
         $formsubmission = $this->FormSubmissionToMail();
-       // $extra_info = $this->ExtraInfoToMail();
         $footer = $this->GetHTMLFooterPart();
-     $message = $header."<p>$formsubmission</p><hr/>$extra_info".$footer;
+        $message = $header."<p>$formsubmission</p><hr/>$extra_info".$footer;
 
         return $message;
     }
@@ -521,7 +448,6 @@ class FGContactForm
             }
             
             $filename =basename($_FILES[$field_name]['name']);
-
             $this->mailer->AddAttachment($_FILES[$field_name]["tmp_name"],$filename);
         }
     }
@@ -534,15 +460,14 @@ class FGContactForm
         }
 
         $host = $_SERVER['SERVER_NAME'];
-
         $from ="nobody@$host";
         return $from;
     }
 
     function Validate()
     {
-        $numErr=0;
         $ret = true;
+        $numErr=0;
         //security validations
         if(empty($_POST[$this->GetFormIDInputName()]) ||
           $_POST[$this->GetFormIDInputName()] != $this->GetFormIDInputValue() )
@@ -563,95 +488,114 @@ class FGContactForm
             register_error("Automated submission prevention: case 2 failed");
             $ret = false;
         }
-        
+
         //select validations
         if((($_POST['reason']) =='Select...') || (($_POST['reason']) == "Choisir..."))
         {
             $numErr=$numErr+1;
             $this->add_error();
-            //register_error("Please provide your name");
-            register_error(str_replace('[#]',$numErr,elgg_echo('contactform:reason')));
+            register_error(str_replace('[#]',$numErr,elgg_echo('contactform:Errreason')));
             $ret = false;
         }
-        
-        if ($_POST['reason'] == 'Autre question$Other question')
+
+        if ($_POST['reason'] == 'Autres$Other')
         {
             if (empty($_POST['subject']))
             {
-            $this->add_error();
-           register_error("Please provide a subject");
-            $ret = false;
+                $numErr=$numErr+1;
+                $this->add_error();
+                register_error(str_replace('[#]',$numErr,elgg_echo('contactform:Errsubject')));
+                $ret = false;
             }
         }
 
         //name validations
         if(empty($_POST['name']))
         {
+            $numErr=$numErr+1;
             $this->add_error();
-           register_error("Please provide your name");
+            //'contactform:Errname'
+            register_error(str_replace('[#]',$numErr,elgg_echo('contactform:Errname')));
             $ret = false;
         }
         else
-        if(strlen($_POST['name'])>50)
-        {
-            $this->add_error();
-            register_error("Name is too big!");
-            $ret = false;
-        }
+            if(strlen($_POST['name'])>75)
+            {
+                $numErr=$numErr+1;
+                $this->add_error();
+                //'contactform:Errnamebig'
+                register_error(str_replace('[#]',$numErr,elgg_echo('contactform:Errnamebig')));
+                $ret = false;
+            }
 
         //email validations
         if(empty($_POST['email']))
         {
+            $numErr=$numErr+1;
             $this->add_error();
-            register_error("Please provide your email address");
+            register_error(str_replace('[#]',$numErr,elgg_echo('contactform:Erremail')));
             $ret = false;
         }
         else
-        if(strlen($_POST['email'])>50)
-        {
-            $this->add_error();
-            register_error("Email address is too big!");
-            $ret = false;
-        }
-        else
-        if(!$this->validate_email($_POST['email']))
-        {
-            $this->add_error();
-            register_error("Please provide a valid email address");
-            $ret = false;
-        }
-
-        //message validaions
-         if(empty($_POST['message']))
-        {
-            $this->add_error();
-             register_error("Please provide a message");
-            $ret = false;
-        }
-        else
-        if(strlen($_POST['message'])>2048)
-        {
-            $this->add_error();
-            register_error("Message is too big!");
-            $ret = false;
-        }
-
-        //captcha validaions
-       /* if(isset($this->captcha_handler))
-        {
-            if(!$this->captcha_handler->Validate())
+            if(strlen($_POST['email'])>100)
             {
-                $this->add_error($this->captcha_handler->GetError());
+                $numErr=$numErr+1;
+                $this->add_error();
+                register_error(str_replace('[#]',$numErr,elgg_echo('contactform:Erremailbig')));
                 $ret = false;
             }
-        }*/
+            else
+                if(!$this->validate_email($_POST['email']))
+                {
+                    $numErr=$numErr+1;
+                    $this->add_error();
+                    //'contactform:Erremailvalid'
+                    register_error(str_replace('[#]',$numErr,elgg_echo('contactform:Erremailvalid')));
+                    $ret = false;
+                }
+
+        //department validaions
+        if(empty($_POST['depart']))
+        {
+            $numErr=$numErr+1;
+            $this->add_error();
+            register_error(str_replace('[#]',$numErr,elgg_echo('contactform:Errdepart')));
+            $ret = false;
+        }
+        else
+            if(strlen($_POST['depart'])>255)
+            {
+                $numErr=$numErr+1;
+                $this->add_error();
+                register_error(str_replace('[#]',$numErr,elgg_echo('contactform:Errdepartbig')));
+                $ret = false;
+            }
+
+        //message validaions
+        if(empty($_POST['message']))
+        {
+            $numErr=$numErr+1;
+            $this->add_error();
+            register_error(str_replace('[#]',$numErr,elgg_echo('contactform:Errmess')));
+            $ret = false;
+        }
+        else
+            if(strlen($_POST['message'])>2048)
+            {
+                $numErr=$numErr+1;
+                $this->add_error();
+                register_error(str_replace('[#]',$numErr,elgg_echo('contactform:Errmessbig')));
+                $ret = false;
+            }
+
         //file upload validations
         if(!empty($this->fileupload_fields))
         {
-         if(!$this->ValidateFileUploads())
-         {
-            $ret = false;
-         }
+            $numErr=$numErr+1;
+            if(!$this->ValidateFileUploads($numErr))
+            {
+                $ret = false;
+            }
         }
         return $ret;
     }
@@ -675,8 +619,7 @@ class FGContactForm
 
     function ValidateFileSize($field_name,$max_size)
     {
-        $size_of_uploaded_file =
-                $_FILES[$field_name]["size"]/1024;//size in KBs
+        $size_of_uploaded_file = $_FILES[$field_name]["size"]/1024;//size in KBs
         if($size_of_uploaded_file > $max_size)
         {
             $this->add_error();
@@ -732,7 +675,6 @@ class FGContactForm
                     $ret=false;
                 }
             }
-
         }
         return $ret;
     }
