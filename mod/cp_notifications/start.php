@@ -957,7 +957,7 @@ function cp_create_notification($event, $type, $object) {
 			$guid_two = $site->getGUID();; // do we allow sending notification to the poster?
 
 			// get users who want to be notified about new opportunities by site message
-			$op_siteusers = get_data("SELECT id, entity_guid FROM elggprivate_settings WHERE name = 'plugin:user_setting:cp_notifications:cpn_opportunities_site' AND value = 'opportunities_site'");
+			$op_siteusers = get_data("SELECT id, entity_guid FROM {$dbprefix}private_settings WHERE name = 'plugin:user_setting:cp_notifications:cpn_opportunities_site' AND value = 'opportunities_site'");
 
 			foreach ($op_siteusers as $result){
 				$userid = $result->entity_guid;
@@ -968,7 +968,7 @@ function cp_create_notification($event, $type, $object) {
 			}
 
 			// get users who want to be notified about new opportunities by email
-			$op_emailusers = get_data("SELECT * FROM elggprivate_settings WHERE name = 'plugin:user_setting:cp_notifications:cpn_opportunities_email' AND value = 'opportunities_email'");
+			$op_emailusers = get_data("SELECT * FROM {$dbprefix}private_settings WHERE name = 'plugin:user_setting:cp_notifications:cpn_opportunities_email' AND value = 'opportunities_email'");
 
 			foreach ($op_emailusers as $result){
 				$userid = $result->entity_guid;
