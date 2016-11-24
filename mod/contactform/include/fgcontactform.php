@@ -554,6 +554,25 @@ class FGContactForm
                     $ret = false;
                 }
 
+        //department validaions
+        if (elgg_is_active_plugin('gcconnex_theme')) {
+            if(empty($_POST['depart']))
+            {
+                $numErr=$numErr+1;
+                $this->add_error();
+                register_error(str_replace('[#]',$numErr,elgg_echo('contactform:Errdepart')));
+                $ret = false;
+            }
+            else
+                if(strlen($_POST['depart'])>255)
+                {
+                    $numErr=$numErr+1;
+                    $this->add_error();
+                    register_error(str_replace('[#]',$numErr,elgg_echo('contactform:Errdepartbig')));
+                    $ret = false;
+                }
+        }
+
         //message validaions
         if(empty($_POST['message']))
         {
