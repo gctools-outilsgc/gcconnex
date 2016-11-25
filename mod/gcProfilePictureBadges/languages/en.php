@@ -12,6 +12,7 @@
  */
 $english = array(
 		'gcProfilePictureBadges:badgeselectdesc' => 'Add badge from group: ',
+		'gcProfilePictureBadges:form:tooltip' => 'Use the drop down menu below to add an interdepartmental initiative badge to your avatar. To get access to a badge and add it to your avatar, you must first join the group related to the initiative (e.g. <a href="https://gcconnex.gc.ca/groups/profile/20934966/mental-health-strategy-group-groupe-de-la-strategie-sur-la-sante-mentale">Mental Health Strategy Group</a>). ',
 
 		'gcProfilePictureBadges:knowmore' => 'Learn More',
 

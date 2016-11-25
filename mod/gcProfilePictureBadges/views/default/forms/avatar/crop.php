@@ -85,7 +85,8 @@ $content = elgg_get_entities_from_relationship($options);
 
     // select initiative badge
 	echo "<div class='mrgn-tp-sm mrgn-bttm-md'>";
-    echo '<label for="init_badge">' .elgg_echo("gcProfilePictureBadges:badgeselectdesc") . '</label>';
+  echo '<label for="init_badge">' .elgg_echo("gcProfilePictureBadges:badgeselectdesc") . '</label>';
+	echo '<div class="timeStamp">'.elgg_echo('gcProfilePictureBadges:form:tooltip').'</div>';
 	echo elgg_view("input/dropdown", array("name" => "init_badge", "id" => "init_badge", "options_values" => $options, "value" => $value));
 	echo "</div>";
 
