@@ -62,14 +62,14 @@ if (in_array("yes", array($invite_site_members, $invite_circle, $invite_email, $
 		);
 
 		$form_data .= "<div id='group_tools_group_invite_users' class='mbm'>";
-		$form_data .= "<div>" . elgg_echo("group_tools:group:invite:users:description") . "</div>";
+		$form_data .= "<div><label for='group_tools_group_invite_autocomplete_autocomplete'>" . elgg_echo("group_tools:group:invite:users:description") . "</label></div>";
 		$form_data .= elgg_view("input/group_invite_autocomplete", array("name" => "user_guid",
 																			"id" => "group_tools_group_invite_autocomplete",
 																			"group_guid" => $group->getGUID(),
 																			"relationship" => "site"));
 		if (elgg_is_admin_logged_in()) {
-			$form_data .= elgg_view("input/checkbox", array("name" => "all_users", "value" => "yes"));
-			$form_data .= elgg_echo("group_tools:group:invite:users:all");
+			$form_data .= elgg_view("input/checkbox", array("name" => "all_users", "id" => "all_users", "value" => "yes"));
+			$form_data .= '<label for="all_users">'.elgg_echo("group_tools:group:invite:users:all").'</label>';
 		}
 
 		$form_data .= "</div>";
@@ -86,7 +86,7 @@ if (in_array("yes", array($invite_site_members, $invite_circle, $invite_email, $
 		);
 
 		$form_data .= "<div id='group_tools_group_invite_circle' class='mbm'>";
-		$form_data .= "<p>".elgg_echo("collections_circle_selection")."</p>";
+		$form_data .= "<p><label for='user_guid[]'>".elgg_echo("collections_circle_selection")."</label></p>";
 
 		$content = get_user_access_collections(elgg_get_logged_in_user_guid());
 		$collection_id = get_user_access_collections(elgg_get_logged_in_user_guid());
@@ -130,7 +130,7 @@ if (in_array("yes", array($invite_site_members, $invite_circle, $invite_email, $
 		);
 
 		$form_data .= "<div id='group_tools_group_invite_email' class='hidden wb-invisible mbm'>";
-		$form_data .= "<div>" . elgg_echo("group_tools:group:invite:email:description") . "</div>";
+		$form_data .= "<div><label for='group_tools_group_invite_autocomplete_email_autocomplete'>" . elgg_echo("group_tools:group:invite:email:description") . "</label></div>";
 		$form_data .= elgg_view("input/group_invite_autocomplete", array("name" => "user_guid",
 																			"id" => "group_tools_group_invite_autocomplete_email",
 																			"group_guid" => $group->getGUID(),

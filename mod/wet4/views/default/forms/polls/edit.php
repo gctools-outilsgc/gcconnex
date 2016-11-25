@@ -56,7 +56,7 @@ $btn_language
 </div>
 <div class='fr'>
 		<p>
-			<label for="question">$question_label2</label><br />
+			<label for="question2">$question_label2</label><br />
 			$question_textbox2
 		</p>
 		</div>

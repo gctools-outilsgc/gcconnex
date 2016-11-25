@@ -33,13 +33,13 @@ $form_data .= "<br />";
 $form_data .= "</div>";
 
 $form_data .= "<div>";
-$form_data .= "<label>" . elgg_echo("group_tools:mail:form:title") . "</label>";
-$form_data .= elgg_view("input/text", array("name" => "title"));
+$form_data .= "<label for='title'>" . elgg_echo("group_tools:mail:form:title") . "</label>";
+$form_data .= elgg_view("input/text", array("name" => "title", "id" => "title"));
 $form_data .= "</div>";
 
 $form_data .= "<div>";
-$form_data .= "<label>" . elgg_echo("group_tools:mail:form:description") . "</label>";
-$form_data .= elgg_view("input/longtext", array("name" => "description"));
+$form_data .= "<label for='description'>" . elgg_echo("group_tools:mail:form:description") . "</label>";
+$form_data .= elgg_view("input/longtext", array("name" => "description", "id" => "description"));
 $form_data .= "</div>";
 
 $form_data .= "<div class='elgg-foot'>";

@@ -61,7 +61,7 @@ echo $btn_language;
 </div>
 
 <div class='fr'>
-    <label for="description"><?php echo elgg_echo('description:ideas:fr'); ?></label>
+    <label for="description2"><?php echo elgg_echo('description:ideas:fr'); ?></label>
     <?php echo elgg_view('input/longtext', array('name' => 'description2', 'id' => 'description2', 'value' => $desc2)); ?>
 </div>
 

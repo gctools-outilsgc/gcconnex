@@ -58,6 +58,7 @@ if ($comment) {
 if ($inline) {
 	$comment_input = elgg_view('input/text', array(
 		'name' => 'generic_comment',
+		'id' => 'generic_comment',
 		'value' => $comment_text,
 	));
 
@@ -67,6 +68,7 @@ if ($inline) {
 	$comment_input = elgg_view('input/longtext', array(
 		'name' => 'generic_comment',
 		'value' => $comment_text,
+		'id' => 'generic_comment',
 	));
 
 	$is_edit_page_input = elgg_view('input/hidden', array(
@@ -76,7 +78,7 @@ if ($inline) {
 
 	echo <<<FORM
 <div>
-	<label>$comment_label</label>
+	<label for="generic_comment">$comment_label</label>
 	$comment_input
 </div>
 <div class="elgg-foot">
