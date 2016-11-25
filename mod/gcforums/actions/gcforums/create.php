@@ -104,9 +104,11 @@ switch ($gcf_subtype) {
 			return false;
 		}
 
+		// cyu - Zube#316 (sticky forum topic non-functional)
 		$gcf_owner = get_input('gcf_owner');
 		$gcf_sticky = get_input('gcf_sticky');
-		if (!$gcf_sticky) $gcf_sticky = 0;
+		if (!$gcf_sticky[0]) $gcf_sticky = 0;
+
 
 		$gcf_new_topic = new ElggObject();
 		$gcf_new_topic->title = trim($gcf_title);
@@ -116,6 +118,7 @@ switch ($gcf_subtype) {
 		$gcf_new_topic->access_id = $gcf_access;
 		$gcf_new_topic->container_guid = $gcf_container;
 
+		$gcf_new_topic->sticky = $gcf_sticky[0];
 		$the_guid = $gcf_new_topic->save();
 
 		elgg_set_ignore_access($old_access);
