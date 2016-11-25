@@ -4,6 +4,15 @@
 return array(
       'wet:more' => "Autres",
     'breadcrum:home' => 'Accueil',
+
+        'wet:feedbackText' => "Rétroaction<span class='wb-inv'> sur ce site Web</span>",
+
+
+        'wet:footTerms' => 'Modalités',
+        'wet:footPrivacy'	 => 'Politique de confidentialité',
+        'wet:footTitleAbout' => 'Infos',
+        'wet:footTitleNews' =>  'Nouvelles',
+        'wet:footTitleSocial' => 'Restez branchés',
 /**
  * Profile Strength
  */

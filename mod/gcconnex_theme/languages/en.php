@@ -20,7 +20,7 @@ $english = array(
     'wet:topicmenu'=>"Topic menu",
     'wet:youarehere'=>"You are here:",
     'wet:errmess' => "<h3 class='h3'>The form could not be submitted because errors were found.</h3>",
-    'wet:feedbackText'=>"Feedback<span class='wb-inv'> about this web site</span>",
+
     'wet:footAbout' => 'About GCconnex',
     'wet:footTerms' => 'Terms and Conditions of Use',
     'wet:footPrivacy' => 'Privacy Policy',

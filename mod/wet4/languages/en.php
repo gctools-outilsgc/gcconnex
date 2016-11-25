@@ -4,6 +4,15 @@ $site_url = elgg_get_site_url();
 return array(
     'wet:more'=>"More",
   	'breadcrum:home' => 'Home',
+
+        'wet:feedbackText'=>"Feedback<span class='wb-inv'> about this web site</span>",
+
+
+        'wet:footTerms' => 'Terms and Conditions of Use',
+        'wet:footPrivacy' => 'Privacy Policy',
+        'wet:footTitleAbout' => 'About',
+        'wet:footTitleNews' => 'News',
+        'wet:footTitleSocial' => 'Stay Connected',
     /**
     * Department Verify
     */

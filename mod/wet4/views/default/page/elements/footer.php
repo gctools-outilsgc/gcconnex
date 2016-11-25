@@ -51,7 +51,7 @@ $priv = $site_url .'privacy-confidentialite';
                           <li>Something</li>
                 </ul>
             </section>
-           
+
                 <section class="col-sm-4">
                 <h3>
                     <?php echo elgg_echo('wet:footTitleSocial');?>
@@ -65,7 +65,7 @@ $priv = $site_url .'privacy-confidentialite';
 
 			</div>
 		</nav>
-   
+
     <!-- GC Info that will be at the bottom of the footer -->
     <div class="brand">
         <div class="container">
@@ -76,5 +76,3 @@ $priv = $site_url .'privacy-confidentialite';
             </div>
         </div>
     </div>
-=======
->>>>>>> origin/gcconnex_theme
