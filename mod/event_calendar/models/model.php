@@ -1922,8 +1922,9 @@ function event_calendar_get_page_content_view($event_guid) {
 	elgg_push_breadcrumb(elgg_echo('item:object:event_calendar'), 'event_calendar/list');
 
 	if (!elgg_instanceof($event, 'object', 'event_calendar')) {
-		$content = elgg_echo('event_calendar:error_nosuchevent');
-		$title = elgg_echo('event_calendar:generic_error_title');
+		register_error(elgg_echo('noaccess'));
+		$_SESSION['last_forward_from'] = current_page_url();
+		forward('');
 	} else {
 		if($event->title3){
 			$title = htmlspecialchars(gc_explode_translation($event->title3, $lang));
