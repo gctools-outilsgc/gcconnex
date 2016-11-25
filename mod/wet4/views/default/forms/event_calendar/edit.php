@@ -234,7 +234,7 @@ foreach($schedule_options as $label => $key) {
   }*/
 
  
-  $body .= '<input type="checkbox" name="schedule_type" id="all_day class="elgg-input-radio " value="'.$key.'" '.$checked.' />';
+  $body .= '<input type="checkbox" name="schedule_type" id="all_day" class="elgg-input-radio " value="'.$key.'" '.$checked.' />';
 $body .= '<label for="all_day" class="mrgn-lft-sm">'.$label.'</label>';
 
 }
