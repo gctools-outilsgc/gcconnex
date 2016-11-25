@@ -13,6 +13,10 @@
  * @uses $vars['img_class']  Optional CSS class added to img
  * @uses $vars['link_class'] Optional CSS class for the link
  * @uses $vars['href']       Optional override of the link href
+ *
+ * Modified to display badges based on metadata
+ * @uses active_badge metadata
+ * @uses init_badge metadata
  */
 
 $user = elgg_extract('entity', $vars, elgg_get_logged_in_user_entity());
@@ -21,7 +25,6 @@ $icon_sizes = elgg_get_config('icon_sizes');
 if (!array_key_exists($size, $icon_sizes)) {
 	$size = 'medium';
 }
-
 
 if (!($user instanceof ElggUser)) {
 	return;
@@ -96,7 +99,6 @@ if ($show_menu) {
 	echo elgg_view('navigation/menu/user_hover/placeholder', array('entity' => $user));
 }
 
-
 /*
  * GC tools ambassador badge
  * loading in the badge based on metadata
@@ -104,27 +106,35 @@ if ($show_menu) {
  */
 
 
-//check if plugin is active
-if(elgg_is_active_plugin('gcProfilePictureBadges')){
     //see what badge they have
     if($user->active_badge != 'none' && $user->active_badge != ''){
 
         //load badge
         $badge = '<div class="gcProfileBadge">';
-
         $badge .= elgg_view('output/img', array(
             'src' => 'mod/gcProfilePictureBadges/graphics/amb_badge_v1_5.png',
             'class' => 'img-responsive',
-            'title' => 'GC Tools Ambassador',
+            'title' => elgg_echo('gcProfilePictureBadges:ambassador'),
         ));
         $badge .= '</div>';
 
         //add border to avatar
-        //ambBorder1 => green border
-        //ambBorder2 => gold border
         $badgeBorder = ' ambBorder2';
     }
-}
+
+		//check if any initiative badges are being used
+    if($user->init_badge){
+        $badge .= '<div class="gcInitBadge">';
+
+        $badge .= elgg_view('output/img', array(
+            'src' => 'mod/gcProfilePictureBadges/graphics/'.$user->init_badge.'.png',
+            'class' => 'img-responsive',
+            'title' => elgg_echo('gcProfilePictureBadges:badge:title:'.$user->init_badge),
+        ));
+
+        $badge .= '</div>';
+    }
+
 
 
 $icon = elgg_view('output/img', array(
