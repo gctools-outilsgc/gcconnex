@@ -1548,6 +1548,7 @@ Please do not reply to this email.",
     'contactform:title:picture' => "<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/How_to_edit_your_personal_profile#Editing_your_personal_profile
 '>Upload profile picture</a>",
     'contactform:title:sign-on' => "<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help_/_How_to_use_Simplified_Sign-on'>Simplified Sign-on</a>",
+    'contactform:title:flag_content' => "<a href='http://www.gcpedia.gc.ca/wiki/Internal_Online_Collaborative_Tools_Guidance/Values_and_Ethics'> Flag content or behaviour</a>",
     'contactform:title:form' => "Contact Us",
 
     'contactform:content:form' => "<p>
@@ -1576,6 +1577,7 @@ Please do not reply to this email.",
 	'conatactform:eng:name' => 'Name of the link in english',
 	'conatactform:fr:link' => 'French link',
 	'conatactform:eng:link' => 'English link',
+  'flag_content:info' => 'If you believe that content or behaviour violates the terms of use, please provide a description of the inappropriate behaviour or content, the name of the person implicated, and the hyperlinks if possible. The content or behaviour will be reviewed.',
 
 /*
  * Contact Form Validation

@@ -28,7 +28,7 @@ function baseText_check2()
 {
 	global $CONFIG;
 
-	$query = "INSERT IGNORE INTO contact_list (english, francais) VALUES ('Log in credentials','Information de connexions'), (' Bugs/errors ','Bogues/Erreurs'), (' Group-related', 'Relatif aux groupes'), ('Training', 'Formation'), (' Jobs Marketplace','Carrefour d\’emploi'),(' Enhancement','Amélioration'),('Other','Autres')";
+	$query = "INSERT IGNORE INTO contact_list (english, francais) VALUES ('Log in credentials','Information de connexions'), (' Bugs/errors ','Bogues/Erreurs'), (' Group-related', 'Relatif aux groupes'), ('Training', 'Formation'), (' Jobs Marketplace','Carrefour d\’emploi'),(' Enhancement','Amélioration'),('Flag content or behaviour','Signaler un contenu ou comportement'),('Other','Autres')";
 
 	$connection = mysqli_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, $CONFIG->dbname);
 	if (mysqli_connect_errno($connection)) elgg_log("cyu - Failed to connect to MySQL: ".mysqli_connect_errno(), 'NOTICE');

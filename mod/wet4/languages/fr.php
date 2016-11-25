@@ -1430,6 +1430,7 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
   'contactform:title:create' => "<a href='http://www.gcpedia.gc.ca/wiki/GCconex_-_Aide_%C3%A0_l%27utilisateur/Comment_puis-je_cr%C3%A9er_un_compte%3F'>Créer un compte </a>",
   'contactform:title:picture' => "<a href=' http://www.gcpedia.gc.ca/wiki/GCconnex_-_Aide_%C3%A0_l%27utilisateur/Comment_modifier_votre_profil_personnel#R.C3.A9viser_votre_profil_personnel'>Télécharger une photo de profil</a>",
   'contactform:title:sign-on' => "<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_-_Aide_%C3%A0_l%27utilisateur/_Comment_utiliser_la_Connexion_simplifi%C3%A9e'>Connexion simplifiée</a>",
+  'contactform:title:flag_content' => "<a href='http://www.gcpedia.gc.ca/wiki/Carrefour_d%27orientation_des_outils_internes_de_collaboration_en_ligne/Valeurs_et_%C3%A9thique'>Signaler un contenu ou comportement</a>",
   'contactform:title:form' => "Contactez-nous",
   'contactform:content:form' => "<p>Veuillez consulter la FAQ et le Centre d’aide pour obtenir rapidement des réponses aux questions les plus courantes et apprendre à utiliser GCconnex comme un pro! </p><p>Vous ne trouvez pas la réponse à ce que vous cherchez? Communiquer avec le Soutien technique de GCconnex en remplissant le formulaire ci-dessous. Veuillez décrire votre problème ou poser clairement votre question ou même nous fournir une capture d’écran si vous le pouvez. Un agent de soutien des OutilsGC répondra à votre demande dans les 2 prochains jours ouvrables.</p>",
   'contactform:useful' => 'Groupes GCconnex qui pourraient vous être utiles :',
@@ -1454,6 +1455,7 @@ GCconnex est un espace de travail collaboratif pour le réseautage professionnel
   'conatactform:eng:name' => 'Le nom du lien en anglais',
   'conatactform:fr:link' => 'Le lien en français',
   'conatactform:eng:link' => 'Le lien en anglais',
+  'flag_content:info' => 'Si vous croyez qu\'un contenu ou comportement contrevient aux conditions d’utilisation, veuillez svp nous fournir une description du comportement ou contenu inacceptable, le nom de la personne visée, et les hyperliens si possible. Le contenu ou comportement sera passé en revue.',
 
 
     /*
