@@ -5,6 +5,11 @@
  * @package Elgg.Core
  * @subpackage Friends.Collections
  */
+ /*
+ * GC_MODIFICATION
+ * Description: Modified so user can change name of colleague collection while editing
+ * Author: Ethan Wallace <Ethan.Wallace@tbs-sct.gc.ca>
+ */
 
 $collection_id = get_input('collection_id');
 $friends = get_input('friends_collection');

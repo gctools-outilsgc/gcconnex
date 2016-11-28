@@ -5,7 +5,11 @@
  * @package Elgg.Core
  * @subpackage User.Account
  */
-
+ /*
+ * GC_MODIFICATION
+ * Description: Moved email handler to our notification plugin
+ * Author: CYU <>
+ */
 $username = get_input('username');
 
 // allow email addresses
@@ -18,7 +22,7 @@ if ($user) {
 
 	// cyu - 04/01/2016: use the hook to manage notification (if plugin is activated) / do we need to change core?
 	if (elgg_is_active_plugin('cp_notifications')) {
-		
+
 		$message = array( // this is a special case, we will have a function built in cp_notification to generate some keys
 			'cp_msg_type' => 'cp_forgot_password',
 			'cp_user_pass_req_guid' => $user->guid
