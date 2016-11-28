@@ -58,11 +58,7 @@ return array(
 
   "wet:messagedd:no_results"=>"You're all caught up!",
 
-  'newsfeed:filter' => "Filter your News Feed",
-  'newsfeed:label' => "Remove colleague connections from your News Feed",
-  'newsfeed:do' => "Colleague connections will no longer display on your News Feed.",
-  'newsfeed:undo' => "Colleague connections will now display on your News Feed.",
-  'newsfeed:filter:title' => "News Feed settings",
+
 /**
 *notice section
 */
@@ -254,7 +250,6 @@ return array(
  */
     'landingPage' => 'Set Landing Page',
     'career' => 'Career',
-    'newsfeed' => 'News Feed',
 	'item:site' => 'Sites',
     'notifications:subscriptions:changesettings' => 'Notifications',
 /**
@@ -440,9 +435,6 @@ return array(
 	'widgets:add:failure' => "We could not add your widget.",
 	'widgets:move:failure' => "We could not store the new widget position.",
 	'widgets:remove:failure' => "Unable to remove this widget",
-
-    'wet4:colandgroupactivity'=>'Your News feed',
-    'wet4:colandgroupactivitynolog'=>'Welcome to GCconnex',
     'wet4:noticetitle' => 'Notice',
     'wet4:homenotice' => 'Welcome to GCconnex, the Government of Canada&#39;s professional social networking platform. The purpose of GCconnex is to enable public servants to connect and collaborate based on shared interests, knowledge, and experience. GCconnex is to be used for activities related to the workplace and should not be used as a replacement for personal social networks (such as Facebook).',
 
@@ -1556,6 +1548,7 @@ Please do not reply to this email.",
     'contactform:title:picture' => "<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/How_to_edit_your_personal_profile#Editing_your_personal_profile
 '>Upload profile picture</a>",
     'contactform:title:sign-on' => "<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help_/_How_to_use_Simplified_Sign-on'>Simplified Sign-on</a>",
+    'contactform:title:flag_content' => "<a href='http://www.gcpedia.gc.ca/wiki/Internal_Online_Collaborative_Tools_Guidance/Values_and_Ethics'> Flag content or behaviour</a>",
     'contactform:title:form' => "Contact Us",
 
     'contactform:content:form' => "<p>
@@ -1584,6 +1577,7 @@ Please do not reply to this email.",
 	'conatactform:eng:name' => 'Name of the link in english',
 	'conatactform:fr:link' => 'French link',
 	'conatactform:eng:link' => 'English link',
+  'flag_content:info' => 'If you believe that content or behaviour violates the terms of use, please provide a description of the inappropriate behaviour or content, the name of the person implicated, and the hyperlinks if possible. The content or behaviour will be reviewed.',
 
 /*
  * Contact Form Validation

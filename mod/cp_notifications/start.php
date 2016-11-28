@@ -823,7 +823,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 	foreach ($to_recipients as $to_recipient) {
 
 		// we only send notification to user who owns the content (liking a comment, discussion reply or general likes to content)
-		if ($to_recipient->guid == $object->owner_guid) { 
+		if ($to_recipient->guid != $object->owner_guid) { 
 
 			// pass in the information into the template to prepare the notification
 			$message['user_name'] = get_user($to_recipient->guid)->username;
@@ -957,7 +957,7 @@ function cp_create_notification($event, $type, $object) {
 			$guid_two = $site->getGUID();; // do we allow sending notification to the poster?
 
 			// get users who want to be notified about new opportunities by site message
-			$op_siteusers = get_data("SELECT id, entity_guid FROM elggprivate_settings WHERE name = 'plugin:user_setting:cp_notifications:cpn_opportunities_site' AND value = 'opportunities_site'");
+			$op_siteusers = get_data("SELECT id, entity_guid FROM {$dbprefix}private_settings WHERE name = 'plugin:user_setting:cp_notifications:cpn_opportunities_site' AND value = 'opportunities_site'");
 
 			foreach ($op_siteusers as $result){
 				$userid = $result->entity_guid;
@@ -968,7 +968,7 @@ function cp_create_notification($event, $type, $object) {
 			}
 
 			// get users who want to be notified about new opportunities by email
-			$op_emailusers = get_data("SELECT * FROM elggprivate_settings WHERE name = 'plugin:user_setting:cp_notifications:cpn_opportunities_email' AND value = 'opportunities_email'");
+			$op_emailusers = get_data("SELECT * FROM {$dbprefix}private_settings WHERE name = 'plugin:user_setting:cp_notifications:cpn_opportunities_email' AND value = 'opportunities_email'");
 
 			foreach ($op_emailusers as $result){
 				$userid = $result->entity_guid;
@@ -1067,6 +1067,7 @@ function cp_create_notification($event, $type, $object) {
 			$message = array(
 				'cp_topic' => $object, 
 				'cp_msg_type' => 'cp_new_type',
+				'cp_topic_description' => $object->description,
 			);
 
 			$email_only = false;

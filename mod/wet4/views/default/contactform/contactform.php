@@ -17,6 +17,7 @@
 <li><?php echo elgg_echo('contactform:title:create'); ?></li>
 <li><?php echo elgg_echo('contactform:title:picture'); ?></li>
 <li><?php echo elgg_echo('contactform:title:sign-on'); ?></li>
+<li><?php echo elgg_echo('contactform:title:flag_content'); ?></li>
 </ul>
 				
 						

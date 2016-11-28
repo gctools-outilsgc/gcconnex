@@ -83,14 +83,30 @@ function get_blog($entity){
 }
 
 function get_comments($entity){
-	$annotations = $entity->getAnnotations();
-	$comments['count'] = 0;
-	foreach ($annotations as $comment){
-		if ($comment->name == 'generic_comment'){
- 			$comments['count']++;
- 			$comments['comment_'.$comments['count']] = array('comment_user'=>get_userBlock($comment->getOwner()),'comment_text'=>$comment->value,'comment_date'=>date("Y-m-d H:i:s",$comment->time_created));
- 		}
+
+	//$annotations = $entity->getAnnotations();
+	//error_log($entity->countAnnotations());
+	$comments['count'] = $entity->countComments();
+	$commentEntites = elgg_get_entities(array(
+		'type' => 'object',
+		'subtype' => 'comment',
+		'container_guid' => $entity->guid,
+		'order_by' => 'time_created asc'
+		));
+	$i = 0;
+	foreach ($commentEntites as $comment) {
+		//$comment->guid;
+		$i++;
+		//$comments['comment_'.$i] = $comment->description;
+		$comments['comment_'.$i] = array('comment_user'=>get_userBlock($comment->getOwner()),'comment_text'=>$comment->description,'comment_date'=>date("Y-m-d H:i:s",$comment->time_created));
+
 	}
+	//foreach ($annotations as $comment){
+	//	if ($comment->name == 'generic_comment'){
+ 			//$comments['count']++;
+ 	//		$comments['comment_'.$comments['count']] = array('comment_user'=>get_userBlock($comment->getOwner()),'comment_text'=>$comment->value,'comment_date'=>date("Y-m-d H:i:s",$comment->time_created));
+ 	//	}
+	//}
 	return $comments;
 }
 

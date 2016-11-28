@@ -108,10 +108,6 @@ function wet4_theme_init() {
 		//message preview
     elgg_register_ajax_view("messages/message_preview");
 
-    //newsfeed filter form
-    elgg_register_ajax_view("ajax/newsfeed_filter");
-    elgg_register_action("newsfeed/filter", elgg_get_plugins_path() . "/wet4/actions/newsfeed/filter.php");
-
     //Group AJAX loading view
 		/*REMOVE_GROUP
     elgg_register_ajax_view('ajax/grp_ajax_content');
@@ -153,14 +149,6 @@ function wet4_theme_init() {
     // new widgets
     //registering wet 4 activity widget
 
-    if(elgg_is_logged_in()){//for my the my groups widget on the home page
-        $mygroups_title = elgg_echo('wet_mygroups:my_groups');
-        $wet_activity_title = elgg_echo('wet4:colandgroupactivity');
-    }else{
-        $mygroups_title = elgg_echo('wet_mygroups:my_groups_nolog');
-        $wet_activity_title = elgg_echo('wet4:colandgroupactivitynolog');
-    }
-    elgg_register_widget_type('wet_activity', $wet_activity_title, 'GCconnex Group and Colleague Activity', array('custom_index_widgets'),false);
     elgg_register_widget_type('suggested_friends', elgg_echo('sf:suggcolleagues'), elgg_echo('sf:suggcolleagues'), array('custom_index_widgets'),false);
     elgg_register_widget_type('feature_tour', 'feature_tour', 'feature_tour', array('custom_index_widgets'),false);
 
@@ -204,10 +192,7 @@ function wet4_theme_init() {
     //save new user settings on landing page
     elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_landing_page');
 
-    // Replace the default index page with redirect
-    elgg_register_plugin_hook_handler('index', 'system', 'new_index');
-    elgg_register_page_handler('newsfeed', 'newsfeed_page_handler');
-    //GROUP_REMOVE elgg_register_page_handler('c_photo_image', 'c_photo_page_handler');
+
     elgg_register_page_handler('groups_autocomplete', 'groups_autocomplete');
 
 
@@ -241,15 +226,6 @@ function groups_autocomplete() {
 }
 
 
-/*
- *  Create news feed page
- */
-
-function newsfeed_page_handler(){
-    @include (dirname ( __FILE__ ) . "/pages/newsfeed.php");
-    return true;
-}
-
 function activity_page_handler($page){
     elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 
@@ -276,14 +252,7 @@ function c_photo_page_handler(){
     @include (dirname ( __FILE__ ) . "/pages/c_photo_image.php");
     return true;
 }
-*/
-/*
- *  Set new index page to sort user's landing page preference
- */
 
-function new_index() {
-    return !include_once(dirname(__FILE__) . "/pages/index.php");
-}
 
 /*
  * Set landing page in user settings

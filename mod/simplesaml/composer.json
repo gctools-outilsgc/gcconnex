@@ -1,0 +1,17 @@
+{
+	"name": "coldtrick/simplesaml",
+	"description": "Connect your site to a SAML/CAS IDentity Provider (IDP) as a Service Provider (SP) or configure your Elgg installation as an IDP",
+	"type": "elgg-plugin",
+	"keywords": ["elgg", "plugin", "saml", "authentication"],
+	"license": "GPL-2.0",
+	"support": {
+		"source": "https://github.com/ColdTrick/simplesaml",
+		"issues": "https://github.com/ColdTrick/simplesaml/issues"
+	},
+	"require": {
+		"composer/installers": "^1.0.8"
+	},
+	"require-dev": {
+		"coldtrick/sniffs": "dev-master"
+	}
+}

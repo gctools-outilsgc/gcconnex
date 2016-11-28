@@ -10,6 +10,7 @@
 /*
  * The set of inputs necessary to create a Stacked Graph.
  */
+$start_date = date('Y-m-d', strtotime('1 month ago'));
 $input_start_date = elgg_view('input/date', array(
 		'name' => 'start_date',
 		'value' => $start_date,
@@ -18,6 +19,7 @@ $input_start_date = elgg_view('input/date', array(
 		'onchange' => 'wipe_away_graph()'
 ));
 
+$end_date = date('Y-m-d');
 $input_end_date = elgg_view('input/date', array(
 		'name' => 'end_date',
 		'value' => $end_date,
@@ -26,6 +28,7 @@ $input_end_date = elgg_view('input/date', array(
 		'onchange' => 'wipe_away_graph()'
 ));
 
+$date_interval = 'missions:week';
 $input_interval = elgg_view('input/dropdown', array(
 		'name' => 'date_interval',
 		'value' => $date_interval,
@@ -88,7 +91,7 @@ $input_separator = elgg_view('input/dropdown', array(
 	<div class="col-sm-3">
 		<?php echo $input_start_date; ?>
 	</div>
-	<div class="fa fa-calendar fa-lg"></div>
+	<div class="fa fa-calendar fa-lg" id="data-analytics-start-date-input-img"></div>
 </div>
 <div class="col-sm-12" style="margin:4px;">
 	<label for='data-analytics-end-date-input' class="col-sm-3" style="text-align:right;">
@@ -97,7 +100,7 @@ $input_separator = elgg_view('input/dropdown', array(
 	<div class="col-sm-3">
 		<?php echo $input_end_date; ?>
 	</div>
-	<div class="fa fa-calendar fa-lg"></div>
+	<div class="fa fa-calendar fa-lg" id="data-analytics-end-date-input-img"></div>
 </div>
 <div class="col-sm-12" style="margin:4px;">
 	<label for='data-analytics-interval-dropdown-input' class="col-sm-3" style="text-align:right;">
@@ -115,3 +118,19 @@ $input_separator = elgg_view('input/dropdown', array(
 		<?php echo $input_target_mission_date; ?>
 	</div>
 </div>
+<script type="text/javascript">
+  $(function() {
+		$('#data-analytics-start-date-input-img')
+			.click(function() {
+				$('#data-analytics-start-date-input')
+					.focus();
+			})
+			.css('cursor', 'pointer');
+		$('#data-analytics-end-date-input-img')
+			.click(function() {
+				$('#data-analytics-end-date-input')
+					.focus();
+			})
+			.css('cursor', 'pointer');
+	});
+</script>
