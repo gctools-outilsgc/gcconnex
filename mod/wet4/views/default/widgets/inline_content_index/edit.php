@@ -52,7 +52,7 @@
 <?php
 	echo elgg_view('input/longtext', array(
 			'name' => 'params[html_content]',                        
-			'value' => gc_explode_translation($html_content,'en')
+			'value' => $html_content,
 		));
 	?>
 </p>
