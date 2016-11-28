@@ -10121,7 +10121,7 @@ header {
     header .brand object,
     header .brand img {
       height: auto;
-      max-height: 40px; }
+      max-height: 32px; }
 
 /*
  * Mobile Chevron
