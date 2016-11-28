@@ -17,17 +17,9 @@
 </div>
  
  
- 
- 
+ * GC_MODIFICATION
+ * Description: Replaced topbar with user menu
  */
-
-
-
-
-
-
-
-
 
 if (!elgg_is_logged_in()) {
     echo '<nav role="navigation" class="text-right col-md-12 mrgn-tp-sm user-z-index">';

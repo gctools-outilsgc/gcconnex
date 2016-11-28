@@ -1,10 +1,12 @@
 <?php
 /**
- * WET 4 Footer
- *
+ * footer.php
+ * 
+ * Site footer. Contains lists for links
+ * 
+ * @package wet4
+ * @author GCTools Team
  */
-
-// footer
 
 $site_url = elgg_get_site_url();
 $about = $site_url .'about-a_propos';
