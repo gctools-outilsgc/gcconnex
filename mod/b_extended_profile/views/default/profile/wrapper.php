@@ -21,7 +21,7 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
         <?php //echo elgg_view('profile/owner_block'); ?>
         <?php echo elgg_view('profile/details'); ?>
     </div>
-    
+
     <div class="gcconnex-profile-wire-post">
         <?php $user = get_user(elgg_get_page_owner_guid());
             $params = array(
@@ -42,7 +42,7 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
         echo '<div role="tabpanel">';
 
         //add additional tabs
-        echo elgg_view('groups/profile/tab_menu');
+        echo elgg_view('profile/profile_tab_menu');
 
         echo '<div class="tab-content">';
      if (empty($_GET['pg']))  {
@@ -52,7 +52,7 @@ $pg = '';
 
      $pg = $_GET['pg'];
  echo '<div role="tabpanel" class="tab-pane " id="profile-display">';
-} 
+}
 
         if ( has_content($user, 'description') ) {
             init_ajax_block(elgg_echo('gcconnex_profile:about_me'), 'about-me', $user);
@@ -96,8 +96,8 @@ $pg = '';
 
      $pg = $_GET['pg'];
   echo '<div role="tabpanel" class="tab-pane active clearfix" id="splashboard">';
-} 
-           
+}
+
                 $num_columns = elgg_extract('num_columns', $vars, 2);
                 $show_add_widgets = elgg_extract('show_add_widgets', $vars, true);
                 $exact_match = elgg_extract('exact_match', $vars, false);

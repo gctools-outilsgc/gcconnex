@@ -7,6 +7,10 @@
  * @uses $vars['group']
  */
 
+if(elgg_in_context('group_profile') || elgg_instanceof(elgg_get_page_owner_entity(), 'group')){
+//Wrap this view in the context of group profile
+
+
 $group = get_entity(elgg_get_page_owner_guid());
 $lang = get_current_language();
 /*
@@ -36,7 +40,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 <div class="panel panel-custom clearfix elgg-image-block col-xs-12 <?php echo $c_photo_top_margin; ?>">
    <div class="group-summary-holder clearfix">
 	   <div class="col-xs-9">
-		   
+
 		   <div class="col-xs-2 col-md-2 mrgn-tp-sm group-profile-image-size">
 			<?php
 				// we don't force icons to be square so don't set width/height
@@ -45,18 +49,18 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 					'width' => '',
 					'height' => '',
                     'class'=>'TESTING',
-				)); 
+				));
             ?>
 		   </div>
-        
-    
-    
-    
+
+
+
+
 		<div class="groups-info col-xs-10 col-md-10 ">
             <h1 class="group-title">
-                <?php 
+                <?php
                 if($group->title3){
-                    echo gc_explode_translation($group->title3, $lang); 
+                    echo gc_explode_translation($group->title3, $lang);
                 }else{
                     echo $group->name;
                 }
@@ -70,11 +74,11 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 						'text' => $owner->name,
 						'value' => $owner->getURL(),
 						'is_trusted' => true,
-					)); 
+					));
 				?>
 			</div>
-            
-            
+
+
 			<div class="mrgn-bttm-sm pull-left mrgn-lft-md">
 			<?php
 				$num_members = $group->getMembers(array('count' => true));
@@ -94,7 +98,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 
 
         </div>
-            
+
             <?php
 
             //Add tags for new layout to profile stats
@@ -102,36 +106,36 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
             $profile_fields = elgg_get_config('group');
 
             foreach ($profile_fields as $key => $valtype) {
-                
+
                 $options = array('value' => $group->$key, 'list_class' => 'mrgn-bttm-sm',);
-                
+
                 if ($valtype == 'tags') {
                     $options['tag_names'] = $key;
                     $tags .= elgg_view("output/$valtype", $options);
-                }   
-            }   
+                }
+            }
 
-            
+
             //check to see if tags have been made
             //dont list tag header if no tags
             if(!$tags){
-                
+
             } else {
                // echo '<div class="clearfix"><b>' . elgg_echo('profile:field:tags') . '</b>';
                 echo $tags;
                 //echo '</div>';
             }
-            
+
             ?>
 
-        
+
     </div>
-      </div>          
+      </div>
         <div class="btn-group text-right col-xs-3">
-                
-             
+
+
             <div class="groups-stats mrgn-tp-sm mrgn-bttm-sm text-right"></div>
-                <?php 
+                <?php
 
                     // add group operators menu link to title menu
                     // Get the page owner entity
@@ -227,12 +231,12 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
                         }
                     }
 
-                    if(elgg_is_logged_in()){ 
+                    if(elgg_is_logged_in()){
                     $user = elgg_get_logged_in_user_entity()->getGUID();
-                           
+
                     //see if user is a member
                     if($group->isFriendOf($user) || elgg_is_admin_logged_in()){
-            
+
                         if ($page_owner->canEdit() && (elgg_get_plugin_setting("mail", "group_tools") == "yes")) {
                         elgg_register_menu_item("group_ddb", array(
                                 "name" => "mail",
@@ -262,14 +266,14 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
                 <?php echo $buttonTitle ?>
                 <span class="caret"></span>
                 </button>
-            
-                        <?php 
-                            
+
+                        <?php
+
                                 //action buttons
-                                echo $buttons; 
-                        
+                                echo $buttons;
+
                             } else {
-                        
+
                             //if only join group option, display as button not in dropdown
                     $buttons = elgg_view_menu('group_ddb', array(
                             'sort_by' => 'priority',
@@ -277,32 +281,32 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
                             'item_class' => 'btn btn-primary',
 
                         ));
-                        
+
                         echo $buttons;
                     }
                     }
-                    
+
                         ?>
 
             <div class="groups-info mrgn-tp-sm mrgn-rght-md pull-right">
 
                     <?php
-                        //Nick - Added a link to share the group on the wire 
+                        //Nick - Added a link to share the group on the wire
                         if(elgg_is_logged_in()){
                             $options = array(
-                                
+
                                 'text' => '<i class="fa fa-share-alt fa-lg icon-unsel"><span class="wb-inv">Share this group on the Wire</span></i>',
                                 'title' => elgg_echo('thewire_tools:reshare'),
                                 'href' => 'ajax/view/thewire_tools/reshare?reshare_guid=' . $group->getGUID(),
                                 'class' => 'elgg-lightbox',
-                                
+
                                 'is_trusted' => true,
-                               
+
                             );
                         }
                         echo '<div class="pull-left mrgn-rght-sm">'.elgg_view('output/url', $options).'</div>';
                     ?>
-                
+
                 <div class="pull-left">
                     <?php
                     //This is the code to add the notification bell to the page to the left of the member button
@@ -324,11 +328,11 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
             </div>
         </div>
 		</div>
-        
-    
-    
-    
+
+
+
+
 
     </div>
 
-
+<?php } ?>

@@ -28,7 +28,7 @@ function wet4_theme_init() {
 
 
     //reload groups library to have our sidebar changes
-    elgg_register_library('elgg:groups', elgg_get_plugins_path() . 'wet4/lib/groups.php');
+
     elgg_register_library('GCconnex_logging', elgg_get_plugins_path() . 'wet4/lib/logging.php');
     elgg_register_library('GCconnex_display_in_language', elgg_get_plugins_path() . 'wet4/lib/translate_display.php');
     //elgg_register_library('elgg:user_settings', elgg_get_plugins_path(). 'wet4/lib/user_settings.php');
@@ -109,8 +109,9 @@ function wet4_theme_init() {
     elgg_register_ajax_view("messages/message_preview");
 
     //Group AJAX loading view
+		/*REMOVE_GROUP
     elgg_register_ajax_view('ajax/grp_ajax_content');
-	elgg_extend_view("js/elgg", "js/wet4/group_ajax");
+	elgg_extend_view("js/elgg", "js/wet4/group_ajax");*/
     elgg_extend_view("js/elgg", "js/wet4/discussion_quick_start");
 		//Notification / Messages dropdown view
 		elgg_register_ajax_view('ajax/notif_dd');
@@ -191,11 +192,7 @@ function wet4_theme_init() {
     //save new user settings on landing page
     elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_landing_page');
 
-    // Replace the default index page with redirect
 
-    elgg_register_page_handler('splash', 'splash_page_handler');
-
-    elgg_register_page_handler('c_photo_image', 'c_photo_page_handler');
     elgg_register_page_handler('groups_autocomplete', 'groups_autocomplete');
 
 
@@ -250,6 +247,7 @@ function activity_page_handler($page){
 }
 
 //create cover photo page
+/* GROUP_REMOVE
 function c_photo_page_handler(){
     @include (dirname ( __FILE__ ) . "/pages/c_photo_image.php");
     return true;
@@ -1133,191 +1131,6 @@ function my_owner_block_handler($hook, $type, $menu, $params){
      *
      */
 
-
-    //rearrange menu items
-    if(elgg_get_context() == 'group_profile'){
-
-        elgg_unregister_menu_item('owner_block', 'Activity');
-
-        //turn owner_block  menu into tabs
-        foreach ($menu as $key => $item){
-
-            switch ($item->getName()) {
-
-
-				case 'discussion':
-					// cyu - take discussions off for the crawler
-					if (strcmp('gsa-crawler',strtolower($_SERVER['HTTP_USER_AGENT'])) != 0) {
-						$item->setText(elgg_echo('gprofile:discussion'));
-						$item->setHref('#groupforumtopic');
-						$item->setPriority('1');
-					}
-                    break;
-
-
-                case 'gcforums':
-                    $item->setPriority('1');
-                    $item->setLinkClass('forums');
-                    break;
-                case 'related_groups':
-                    $item->setHref('#related');
-
-                    $item->setPriority('20');
-                    break;
-                case 'file':
-                    $item->setText(elgg_echo('gprofile:files'));
-                    $item->setHref('#file');
-                    $item->setPriority('2');
-                    break;
-                case 'blog':
-                    $item->setText(elgg_echo('gprofile:blogs'));
-                    $item->setHref('#blog');
-                    $item->setPriority('3');
-                    break;
-                case 'event_calendar':
-                    $item->setText(elgg_echo('gprofile:events'));
-                    $item->setHref('#calendar');
-                    $item->setPriority('5');
-                    break;
-                case 'pages':
-                    $item->setText(elgg_echo('gprofile:pages'));
-                    $item->setHref('#page_top');
-                    $item->setPriority('6');
-                    break;
-                case 'bookmarks':
-                    $item->setText(elgg_echo('gprofile:bookmarks'));
-                    $item->setHref('#bookmarks');
-                    $item->setPriority('7');
-                    break;
-                case 'polls':
-                    $item->setText(elgg_echo('gprofile:polls'));
-                    $item->setHref('#polls');
-                    $item->setPriority('14');
-                    break;
-                case 'tasks':
-                    $item->setText(elgg_echo('gprofile:tasks'));
-                    $item->setHref('#taks');
-                    $item->setPriority('9');
-                    break;
-                case 'photos':
-                    $item->setText(elgg_echo('gprofile:photos'));
-                    $item->setHref('#albums');
-                    $item->addItemClass('removeMe');
-                    $item->setPriority('10');
-                    break;
-                case 'photo_albums':
-                    $item->setText(elgg_echo('gprofile:albumsCatch'));
-                    if(get_language() == 'en'){
-                        $item->setHref('#albums');
-                    } else {
-                        $item->setHref('#albums');
-                    }
-                    $item->setPriority('11');
-                    break;
-                case 'ideas':
-                    $item->setText(elgg_echo('gprofile:ideas'));
-                    $item->setHref('#ideas');
-                    $item->setPriority('12');
-                    break;
-                case 'activity':
-                    elgg_unregister_menu_item('owner_block', 'activity');
-                    $item->setText('Activity');
-                    $item->setHref('#activity');
-                    $item->setPriority('8');
-                    break;
-
-            }
-
-        }
-
-
-    }
-
-
-    //rearrange menu items
-    if(elgg_get_context() == 'groupSubPage'){
-
-        elgg_unregister_menu_item('owner_block', 'activity');
-
-        //turn owner_block  menu into tabs
-        foreach ($menu as $key => $item){
-
-            switch ($item->getName()) {
-                case 'discussion':
-                    $item->setText(elgg_echo('gprofile:discussion'));
-
-                    $item->setPriority('1');
-                    break;
-                case 'gcforums':
-                    $item->setPriority('1');
-                    $item->setLinkClass('forums');
-                    break;
-                case 'related_groups':
-
-
-                    $item->setPriority('20');
-                    break;
-                case 'file':
-                    $item->setText(elgg_echo('gprofile:files'));
-
-                    $item->setPriority('2');
-                    break;
-                case 'blog':
-                    $item->setText(elgg_echo('gprofile:blogs'));
-
-                    $item->setPriority('3');
-                    break;
-                case 'event_calendar':
-                    $item->setText(elgg_echo('gprofile:events'));
-
-                    $item->setPriority('5');
-                    break;
-                case 'pages':
-                    $item->setText(elgg_echo('gprofile:pages'));
-
-                    $item->setPriority('6');
-                    break;
-                case 'bookmarks':
-                    $item->setText(elgg_echo('gprofile:bookmarks'));
-
-                    $item->setPriority('7');
-                    break;
-                case 'polls':
-                    $item->setText(elgg_echo('gprofile:polls'));
-
-                    $item->setPriority('8');
-                    break;
-                case 'tasks':
-                    $item->setText(elgg_echo('gprofile:tasks'));
-
-                    $item->setPriority('9');
-                    break;
-                case 'photos':
-                    $item->setText(elgg_echo('gprofile:photos'));
-                    $item->addItemClass('removeMe');
-                    $item->setPriority('10');
-                    break;
-                case 'photo_albums':
-                    $item->setText(elgg_echo('gprofile:albumsCatch'));
-
-                    $item->setPriority('11');
-                    break;
-                case 'ideas':
-                    $item->setText(elgg_echo('gprofile:ideas'));
-
-                    $item->setPriority('12');
-                    break;
-                case 'activity':
-                    $item->setText('Activity');
-
-                    $item->setPriority('13');
-                    $item->addItemClass('removeMe');
-                    break;
-
-            }
-
-        }
-    }
 
         //rearrange menu items
     if(elgg_get_context() == 'profile'){
