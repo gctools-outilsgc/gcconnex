@@ -4,6 +4,7 @@
  *
  * @package Blog
  */
+
 $lang = get_current_language();
 $full = elgg_extract('full_view', $vars, FALSE);
 $blog = elgg_extract('entity', $vars, FALSE);
@@ -15,6 +16,21 @@ if (!$blog) {
 $owner = $blog->getOwnerEntity();
 $container = $blog->getContainerEntity();
 $categories = elgg_view('output/categories', $vars);
+
+
+// identify available content
+if(($blog->description2) && ($blog->description)){
+	if (get_current_language() == 'fr'){
+		if ($blog->description){
+			echo'<span style="padding-left:70%;">Content available in english</span>';
+		}
+	}else{
+		if ($blog->description2){
+			echo'<span style="padding-left:70%;">Contenu disponible en français</span>';
+		}
+	}
+}
+
 if($blog->excerpt3){
 	$excerpt = gc_explode_translation($blog->excerpt3,$lang);
 }else{
