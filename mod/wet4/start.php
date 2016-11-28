@@ -739,8 +739,10 @@ function wet4_blog_entity_menu($hook, $entity_type, $returnvalue, $params) {
     return $returnvalue;
 }
 
-
-
+/*
+ * my_owner_block_handler
+ * Override owner_block menu to become tabs in profile
+ */
 function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 	//Have widgets show the same entity menu
     if (elgg_in_context('widgets')) {
@@ -926,7 +928,10 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 
 	return $return;
 }
-
+/*
+ * _wet4_friends_page_handler
+ * Override friends page handler to use wet4 pages
+ */
 function _wet4_friends_page_handler($page, $handler) {
     //change the page handler for friends to user our own pages. This increases the limit of friends for data table parsing and such :)
 	elgg_set_context('friends');
@@ -955,12 +960,18 @@ function _wet4_friends_page_handler($page, $handler) {
 	return true;
 }
 
-
+/*
+ * wet4_riverItem_remove
+ * Remove unwanted river items
+ */
 function wet4_riverItem_remove(){
     elgg_unregister_menu_item('river', 'comment');
     elgg_unregister_menu_item('river', 'reply');
 }
-
+/*
+ * wet4_elgg_river_menu_setup
+ * Override river menu to use font awesome icons + add accessability
+ */
 function wet4_elgg_river_menu_setup($hook, $type, $return, $params){
    // $entity = $params['entity'];
 
@@ -1053,7 +1064,10 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params){
 	return $return;
 }
 
-//arrange filter menu menu
+/*
+ * my_filter_menu_handler
+ * Rearrange filter menu for The Wire
+ */
 function my_filter_menu_handler($hook, $type, $menu, $params){
     foreach ($menu as $key => $item){
         if(elgg_in_context('thewire')){
@@ -1081,7 +1095,10 @@ function my_filter_menu_handler($hook, $type, $menu, $params){
     }
 }
 
-//fix site menu
+/*
+ * my_site_menu_handler
+ * Set href of groups link depending if a logged in user is using site
+ */
 function my_site_menu_handler($hook, $type, $menu, $params){
     foreach ($menu as $key => $item){
 
@@ -1101,7 +1118,10 @@ function my_site_menu_handler($hook, $type, $menu, $params){
 
 }
 
-//arrange title menu on photo album
+/*
+ * my_title_menu_handler
+ * Add styles to phot album title menu
+ */
 function my_title_menu_handler($hook, $type, $menu, $params){
     foreach ($menu as $key => $item){
         switch ($item->getName()) {
@@ -1120,8 +1140,10 @@ function my_title_menu_handler($hook, $type, $menu, $params){
     }
 }
 
-
-//arrange owner block menu
+/*
+ * my_owner_block_handler
+ * Override owner_block menu to become tabs in profile
+ */
 function my_owner_block_handler($hook, $type, $menu, $params){
 
     /*
@@ -1224,6 +1246,10 @@ function my_owner_block_handler($hook, $type, $menu, $params){
 
 }
 
+/*
+ * river_handler
+ * Remove comment menu item
+ */
 function river_handler($hook, $type, $menu, $params){
     foreach ($menu as $key => $item){
 
@@ -1235,6 +1261,10 @@ function river_handler($hook, $type, $menu, $params){
     }
 }
 
+/*
+ * wet4_dashboard_page_handler
+ * Override page handler for wet4 theme - dashboard
+ */
 function wet4_dashboard_page_handler() {
 	// Ensure that only logged-in users can see this page
 	elgg_gatekeeper();
@@ -1264,7 +1294,10 @@ function wet4_dashboard_page_handler() {
 	return true;
 }
 
-
+/*
+ * wet4_widget_menu_setup
+ * Override widget menu to use font awesome icons + add accessability
+ */
 function wet4_widget_menu_setup($hook, $type, $return, $params) {
 
 	$widget = $params['entity'];
@@ -1314,6 +1347,10 @@ function wet4_widget_menu_setup($hook, $type, $return, $params) {
 	return $return;
 }
 
+/*
+ * wet4_collections_page_handler
+ * Override page handler for wet4 theme - friend circles
+ */
 function wet4_collections_page_handler($page) {
 
 	$current_user = elgg_get_logged_in_user_entity();
@@ -1346,6 +1383,10 @@ function wet4_collections_page_handler($page) {
 	return true;
 }
 
+/*
+ * wet4_messages_page_handler
+ * Override page handler for wet4 theme - messages
+ */
 function wet4_messages_page_handler($page) {
 
 	$current_user = elgg_get_logged_in_user_entity();
@@ -1402,7 +1443,14 @@ function wet4_messages_page_handler($page) {
 	}
 	return true;
 }
-//Friendly Time from GCconnex Codefest 2015 - 2016 - Nick
+
+/*
+ * enhanced_friendly_time_hook
+ *
+ * Friendly Time from GCconnex Codefest 2015 - 2016
+ *
+ * @author Nick
+ */
 function enhanced_friendly_time_hook($hook, $type, $return, $params) {
 
 	$diff = time() - ((int) $params['time']);
@@ -1467,6 +1515,15 @@ function enhanced_friendly_time_hook($hook, $type, $return, $params) {
 	return "<time $attrs>$friendly_time</time>";
 }
 
+/*
+ * proper_subtypes
+ *
+ * Takes the subtypes and turns them into the plain language version of the subtype for menu items.
+ *
+ * @author Ethan Wallace<your.name@example.com>
+ * @param [string] [type] [<Entity subtype.>]
+ * @return [string] [<Subtype>]
+ */
 function proper_subtypes($type){
 
     switch ($type) {
@@ -1534,9 +1591,15 @@ function proper_subtypes($type){
     return $subtype;
 }
 
-
-// Embeding videos in river for discussion items
-
+/*
+ * embed_discussion_river
+ *
+ * Searches preview text of discussions to find video url to embed that video.
+ *
+ * @author Ethan Wallace<your.name@example.com>
+ * @param [string] [desc] [<Preview text from the discussion.>]
+ * @return [string] [<HTML to create embeded video>]
+ */
 function embed_discussion_river($desc){
 
     $patterns = array('#(((https://)?)|(^./))(((www.)?)|(^./))youtube\.com/watch[?]v=([^\[\]()<.,\s\n\t\r]+)#i'
