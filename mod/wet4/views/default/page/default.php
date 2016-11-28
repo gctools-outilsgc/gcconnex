@@ -1,10 +1,12 @@
 <?php
 /**
+ * default.php
+ *
  * Elgg pageshell
  * The standard HTML page shell that everything else fits into
  *
- * @package Elgg
- * @subpackage Core
+ * @package wet4
+ * @author GCTools Team
  *
  * @uses $vars['head']        Parameters for the <head> element
  * @uses $vars['body_attrs']  Attributes of the <body> tag
