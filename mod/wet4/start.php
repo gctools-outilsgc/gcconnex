@@ -216,16 +216,19 @@ $dbprefix = elgg_get_config('dbprefix');
     update_data($query);
 }
 
-/*
- *  load lib for suggested group text input
- */
-
+ /*
+  * groups_autocomplete
+  * loads library for groups autocomplete in group creation form
+  */
 function groups_autocomplete() {
     require_once elgg_get_plugins_path() . 'wet4/lib/groups_autocomplete.php';
     return true;
 }
 
-
+/*
+ * activity_page_handler
+ * Override activity page handler
+ */
 function activity_page_handler($page){
     elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 
@@ -246,18 +249,11 @@ function activity_page_handler($page){
     return true;
 }
 
-//create cover photo page
-/* GROUP_REMOVE
-function c_photo_page_handler(){
-    @include (dirname ( __FILE__ ) . "/pages/c_photo_image.php");
-    return true;
-}
 
-
-/*
- * Set landing page in user settings
- */
-
+ /*
+  * _elgg_set_landing_page
+  * Sets landing page from user settings
+  */
 function _elgg_set_landing_page() {
 	$page = strip_tags(get_input('landingpage'));
 	$user_guid = get_input('guid');
@@ -308,8 +304,9 @@ if(elgg_is_active_plugin('gcforums')){
     }
 }
 
-/**
- * Rearrange menu items
+/*
+ * wet4_theme_pagesetup
+ * Overrides various menu items to add font awesome icons, reorder items and add accessabilty
  */
 function wet4_theme_pagesetup() {
 
@@ -585,11 +582,10 @@ function wet4_theme_setup_head($hook, $type, $data) {
 	return $data;
 }
 
-
-
-
-
-
+/*
+ * wet4_likes_entity_menu_setup
+ * Override likes entity menu to include font awesome icons and add accessability
+ */
 function wet4_likes_entity_menu_setup($hook, $type, $return, $params) {
 	// make the widget view produce the same entity menu as the other objects
     if (elgg_in_context('widgets')) {
@@ -645,8 +641,10 @@ function wet4_likes_entity_menu_setup($hook, $type, $return, $params) {
 }
 
 
-
-//Setup page menu for user settings
+/*
+ * wet4_elgg_page_menu_setup
+ * Override page menu on user settings page
+ */
 function wet4_elgg_page_menu_setup($hook, $type, $return, $params) {
 
     if(elgg_in_context('settings')){
@@ -691,7 +689,10 @@ function wet4_elgg_page_menu_setup($hook, $type, $return, $params) {
 
 }
 
-
+/*
+ * wet4_blog_entity_menu
+ * Override blog entity menu to include font awesome icons and add accessability
+ */
 function wet4_blog_entity_menu($hook, $entity_type, $returnvalue, $params) {
     if (empty($params) || !is_array($params)) {
         return $returnvalue;
