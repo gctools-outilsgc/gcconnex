@@ -32,8 +32,14 @@ if ($page_owner->getGUID() == $message->toId) {
 }
 elgg_push_breadcrumb($title);
 
-$from_user->name = utf8_encode($from_user->name);
-$to_user->name = utf8_encode($to_user->name);
+//fix weird french accent display in usermenu
+//depending if reading inbox messages or sent messages
+if(elgg_get_logged_in_user_guid() == $message->fromId){ //sent
+	$to_user->name = utf8_encode($to_user->name);
+} else if (elgg_get_logged_in_user_guid() == $message->toId){ //inbox
+	$from_user->name = utf8_encode($from_user->name);
+}
+
 $message->title = utf8_encode($message->title);
 
 $content = elgg_view_entity($message, array('full_view' => true));
@@ -46,7 +52,7 @@ if ($inbox) {
 	);
 	$body_params = array('message' => $message);
 	$content .= elgg_view_form('messages/reply', $form_params, $body_params);
-	
+
 	if ((elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) && $from_user) {
 		elgg_register_menu_item('title', array(
 			'name' => 'reply',
