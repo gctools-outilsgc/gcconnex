@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * gallery.php
  * Gallery view
  *
  * Implemented as an unorder list
@@ -16,6 +17,9 @@
  * @uses $vars['item_class']    Additional CSS class for the <li> elements
  * @uses $vars['item_view']     Alternative view to render list items
  * @uses $vars['no_results']    Message to display if no results (string|Closure)
+ *
+ * @package wet4
+ * @author GCTools Team
  */
 $items = $vars['items'];
 $count = elgg_extract('count', $vars);
