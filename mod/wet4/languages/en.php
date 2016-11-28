@@ -2,8 +2,10 @@
 $site_url = elgg_get_site_url();
 
 return array(
+
     'wet:more'=>"More",
   	'breadcrum:home' => 'Home',
+
 
         'wet:feedbackText'=>"Feedback<span class='wb-inv'> about this web site</span>",
 
@@ -165,7 +167,6 @@ return array(
  */
     'landingPage' => 'Set Landing Page',
     'career' => 'Career',
-    'newsfeed' => 'News Feed',
 	'item:site' => 'Sites',
     'notifications:subscriptions:changesettings' => 'Notifications',
 /**
@@ -351,7 +352,6 @@ return array(
 	'widgets:add:failure' => "We could not add your widget.",
 	'widgets:move:failure' => "We could not store the new widget position.",
 	'widgets:remove:failure' => "Unable to remove this widget",
-
 
 
 /**
@@ -1441,13 +1441,13 @@ Please do not reply to this email.",
 /**
 *Contact page / FAQ
 */
-
-
+ 
 	'contactform:box:message' => 'Show the information box',
 	'conatactform:fr:name' => 'Name of the link in french',
 	'conatactform:eng:name' => 'Name of the link in english',
 	'conatactform:fr:link' => 'French link',
 	'conatactform:eng:link' => 'English link',
+  'flag_content:info' => 'If you believe that content or behaviour violates the terms of use, please provide a description of the inappropriate behaviour or content, the name of the person implicated, and the hyperlinks if possible. The content or behaviour will be reviewed.',
 
 /*
  * Contact Form Validation

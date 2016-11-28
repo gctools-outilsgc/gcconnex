@@ -30,7 +30,7 @@ echo $btn_language;
 </div>
 
 <div class="mrgn-bttm-md fr">
-	<label for="title"><?php echo elgg_echo('title:fr'); ?></label><br />
+	<label for="title2"><?php echo elgg_echo('title:fr'); ?></label><br />
 	<?php echo elgg_view('input/text', array('name' => 'title2', 'value' => $title2, 'id' => 'title2')); ?>
 </div>
 <div class="quick-start-collapse">
@@ -42,7 +42,7 @@ echo $btn_language;
 </div>
 
 <div class="mrgn-bttm-md fr">
-	<label for="description"><?php echo elgg_echo('groups:topicmessage2'); ?></label>
+	<label for="description2"><?php echo elgg_echo('groups:topicmessage2'); ?></label>
 	<?php echo elgg_view('input/longtext', array('name' => 'description2', 'value' => $desc2, 'id' => 'description2')); ?>
 </div>
 <div>

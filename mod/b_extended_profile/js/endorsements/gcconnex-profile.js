@@ -590,12 +590,7 @@ function saveProfile(event) {
                         if ($(this).data('guid') != "new") {
                             $delete_guid.push($(this).data('guid'));
                         }
-                    }
-                }else {
-                    $education_guid.push($(this).data('guid'));
-                }
-            });
-                    else {
+                    } else {
                         $education_guid.push($(this).data('guid'));
                     }
                 });
@@ -860,7 +855,6 @@ function saveProfile(event) {
                             }
                         });
 
-            break;
                         //title field
                         if($.trim(experience['title']) == ''){
                           $(this).find('.gcconnex-work-experience-title').addClass('input-error').attr('aria-invalid', "true");
@@ -1344,7 +1338,6 @@ function deleteEntry(identifier) {
         $('.cancel-' + entryType).focus();
 
     } 
-    }
 }
 
 /*

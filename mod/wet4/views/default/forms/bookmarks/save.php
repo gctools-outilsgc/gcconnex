@@ -66,7 +66,7 @@ if ($categories) {
 	<?php echo elgg_view('input/access', array(
 		'name' => 'access_id',
 		'value' => $access_id,
-        'id' => 'access_id',
+    'id' => 'access_id',
 		'entity' => get_entity($guid),
 		'entity_type' => 'object',
 		'entity_subtype' => 'bookmarks',

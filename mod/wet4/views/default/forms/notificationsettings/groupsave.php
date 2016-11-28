@@ -50,7 +50,7 @@ $groupmemberships = elgg_get_entities_from_relationship(array(
 		echo elgg_view('notifications/subscriptions/jsfuncs',$vars);
             ?>
         <h3 class="well mrgn-tp-sm">
-            <?php echo elgg_echo('notifications:subscriptions:changesettings:groups'); ?>
+           <?php echo elgg_echo('notifications:subscriptions:changesettings:groups'); ?>
         </h3>
 
 		<div class="mrgn-bttm-lg">

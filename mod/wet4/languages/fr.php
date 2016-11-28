@@ -6,8 +6,6 @@ return array(
     'breadcrum:home' => 'Accueil',
 
         'wet:feedbackText' => "Rétroaction<span class='wb-inv'> sur ce site Web</span>",
-
-
         'wet:footTerms' => 'Modalités',
         'wet:footPrivacy'	 => 'Politique de confidentialité',
         'wet:footTitleAbout' => 'Infos',
@@ -182,7 +180,6 @@ return array(
  */
 	'landingPage' => 'Définir la page d\'accueil',
 	'career' =>	'Carrière',
-	'newsfeed' => 'Fil de nouvelles',
 	'item:site' => 'Sites',
     'notifications:subscriptions:changesettings' => "Notifications",
 
@@ -355,7 +352,6 @@ return array(
 	'widgets:add:failure' => "Nous n'avons pas pu ajouter votre widget.",
 'widgets:move:failure' => "Nous n'avons pas pu sauvegarder la nouvelle position du widget.",
 	'widgets:remove:failure' => "Impossible de supprimer ce widget",
-
 
 /**
  * Groups
@@ -1355,6 +1351,7 @@ return array(
   'conatactform:eng:name' => 'Le nom du lien en anglais',
   'conatactform:fr:link' => 'Le lien en français',
   'conatactform:eng:link' => 'Le lien en anglais',
+  'flag_content:info' => 'Si vous croyez qu\'un contenu ou comportement contrevient aux conditions d’utilisation, veuillez svp nous fournir une description du comportement ou contenu inacceptable, le nom de la personne visée, et les hyperliens si possible. Le contenu ou comportement sera passé en revue.',
 
 
     /*
