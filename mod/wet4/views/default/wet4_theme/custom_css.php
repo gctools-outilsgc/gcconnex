@@ -1375,7 +1375,14 @@ details.elgg-state-success:before {
     color: #fff;
 }
 
+.brand h1{
+  border:none;
 
+}
+
+.brand h1 a{
+    color: #055959 !important;
+}
 
 #app-brand li a{
    text-decoration: none;

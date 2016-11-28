@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
  * WET 4 Site Branding
  *
