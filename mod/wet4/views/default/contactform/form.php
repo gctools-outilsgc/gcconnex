@@ -16,7 +16,6 @@ if (elgg_is_logged_in()) {
 }
 
 $path = require_once("./include/fgcontactform.php");
-echo $path;
 //require_once("./include/simple-captcha.php");
 $email=elgg_get_plugin_setting('email','contactform');
 //$list1=elgg_get_plugin_setting('list1','contactform');
@@ -47,7 +46,7 @@ if(isset($_POST['submitted']))
    {
 	system_messages(elgg_echo('contactform:thankyoumsg'));
 	forward("mod/contactform");
-   // forward(elgg_get_site_url());
+   // forward(elgg_get_site_url());adress
    }
 }
 
