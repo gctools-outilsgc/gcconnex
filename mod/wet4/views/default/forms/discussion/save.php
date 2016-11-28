@@ -34,8 +34,8 @@ echo $btn_language;
 	<?php echo elgg_view('input/text', array('name' => 'title2', 'value' => $title2, 'id' => 'title2')); ?>
 </div>
 <div class="quick-start-collapse">
-    
-    
+
+
 <div class="mrgn-bttm-md en">
 	<label for="description"><?php echo elgg_echo('groups:topicmessage'); ?></label>
 	<?php echo elgg_view('input/longtext', array('name' => 'description', 'value' => $desc, 'id' => 'description')); ?>
@@ -66,7 +66,7 @@ echo $btn_language;
     ?>
 </div>
 
-<div class="mrgn-bttm-md"> 
+<div class="mrgn-bttm-md">
 	<label for="access_id"><?php echo elgg_echo('access'); ?></label><br />
 	<?php echo elgg_view('input/access', array(
 		'name' => 'access_id',
@@ -90,8 +90,8 @@ if($guid){
 } else {
     echo elgg_view('input/submit', array('value' => 'Create Discussion', 'class' => 'btn btn-primary'));
 }
-       
-    
+
+
 echo'</div></div></div>';
 
 if(get_current_language() == 'fr'){
@@ -116,7 +116,7 @@ if(get_current_language() == 'fr'){
 <script>
 jQuery(function(){
 
-    var selector = '.nav li';
+    var selector = '.nav-tabs-language li';
 
 $(selector).on('click', function(){
     $(selector).removeClass('active');
@@ -126,13 +126,13 @@ $(selector).on('click', function(){
         jQuery('#btnClickfr').click(function(){
                jQuery('.fr').show();
                jQuery('.en').hide();
-                
+
         });
 
           jQuery('#btnClicken').click(function(){
                jQuery('.en').show();
                jQuery('.fr').hide();
-               
+
         })
 });
 </script>

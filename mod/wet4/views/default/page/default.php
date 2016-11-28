@@ -55,18 +55,19 @@ $version = $wet4plugin->getManifest()->getVersion();
 if(elgg_is_active_plugin('GoC_dev_banner')){
     $alert = elgg_view('banner/dev_banner');
 }
+/*
 if(elgg_instanceof(elgg_get_page_owner_entity(), 'group')){
     if(!elgg_in_context('event_calendar') && !elgg_in_context('gcforums')){
         $group_cover_image = elgg_view('page/elements/cover_photo', $vars);
     }
-    
-}
+
+}*/
 
 $feedbackText= elgg_echo('wet:feedbackText');
 $body = <<<__BODY
     $tabskip
 <div class="elgg-page elgg-page-default">
-	
+
 __BODY;
 
 //$body .= elgg_view('page/elements/topbar_wrapper', $vars);
@@ -77,7 +78,7 @@ $body .= <<<__BODY
 	<header role="banner">
     $alert
    <!-- <div class="elgg-inner">-->
-			
+
 		<!-- </div>-->
     	<div id="wb-bnr" class="container">
             $lang
@@ -88,14 +89,14 @@ $site_brand
 $navbar
 
 $breadcrumbs
-        
+
 	</header>
     <div class="elgg-page-messages container">
 		$messages
 	   </div>
     $group_cover_image
 	<main role="main" property="mainContentOfPage" class="container">
-		
+
         <!--<div class="elgg-inner">-->
             $userMenu
         <!--<section>-->
@@ -114,25 +115,25 @@ $breadcrumbs
 </div>
 </div>
 
-        
+
 	</main>
-    
-    
-    
+
+
+
 	<footer role="contentinfo" id="wb-info" class="visible-sm visible-md visible-lg wb-navcurr">
-		
+
 			$footer
-		
+
 	</footer>
-    
+
     <script src="$bootstrap"></script>
     <script src=" $jsLocation "></script>
-    
-    
+
+
 </div>
 __BODY;
 
-    
+
 
 $body .= elgg_view('page/elements/foot');
 

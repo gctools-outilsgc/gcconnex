@@ -22,15 +22,7 @@ $site_url = elgg_get_site_url();
 
 }
 
-.group-summary-holder{
 
-    padding:6px 0;
-}
-
-.group-summary-holder h1{
-    border-bottom:none;
-
-}
 
 /******************** Changing Bootstraps columns ********************/
 
@@ -266,10 +258,7 @@ max-height: 500px;
 
  }
 
- .group-profile-image-size img{
-     width: 180% !important;
 
- }
  .elgg-module-aside .elgg-avatar {
      width:40px;
      height:40px;
@@ -330,12 +319,7 @@ max-height: 500px;
          border: 2px solid #f5db84;
      }
 
-     .au_subgroups_group_icon-medium-wet4{
-            max-width:65%;
-            margin: 0 auto;
-         display: block !important;
 
-     }
 
 /****************************************/
 
@@ -460,9 +444,7 @@ max-height: 500px;
             font-size: 22px;
         }
 
-        .group-title {
-        font-size: 26px;
-        }
+
 
     .table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td {
         padding: 0;
@@ -991,50 +973,6 @@ border:none;
     clear: both;
 }
 
-/*** Group Cover Photo ***/
-
-.groups-profile{
-    margin-top: 170px;
-    z-index: 1;
-}
-
-.group-cover-photo{
-    width:100%;
-    height: 250px;
-    position: absolute;
-    margin-top: 60px;
-    background-color:#047177;
-    overflow:hidden;
-}
-
-.group-cover-photo img{
-    width:100%;
-
-}
-
-
-@media (max-width: 767px) {
-  .group-cover-photo{
-      display:none;
-
-  }
-  .groups-profile{
-      margin-top: 4px !important;
-  }
-
-}
-
-@media (max-width: 992px) {
-    .group-cover-photo{
-      height: 180px;
-
-  }
-  .groups-profile{
-      margin-top: 100px;
-  }
-     }
-
-/*** end of Group Cover Photo ***/
 
 /******Padding Classes********/
 

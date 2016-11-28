@@ -21,7 +21,7 @@ if($cover_photo == 'nope' || $cover_photo ==''){
    }else{
     //Nick - The img src is sent to a page in the wet4 mod to grab the image from the data folder
     //Nick - Mapping directly to the data folder is dangerous according to elgg community
-       $cover_photo_link = $site_url . 'mod/wet4/pages/c_photo_image.php?file_guid='.$page_owner_guid_c_photo;
+       $cover_photo_link = $site_url . 'mod/gc_group_layout/pages/c_photo_image.php?file_guid='.$page_owner_guid_c_photo;
        $cover_photo_link = elgg_format_url($cover_photo_link);
 
        //Format Image
