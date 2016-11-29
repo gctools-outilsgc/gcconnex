@@ -110,7 +110,7 @@ function htmlawed_tag_post_processor($element, $attributes = false) {
 	);
 
 	$allowed_classes = array(
-		'table', 'row' 
+		'table', 'row', 'wb-tables', 'table-striped', 'table-hover'
 	);
 
 	$params = array('tag' => $element);
