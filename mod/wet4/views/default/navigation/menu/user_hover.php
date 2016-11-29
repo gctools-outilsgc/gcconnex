@@ -6,6 +6,10 @@
  * hover menu. There are three sections: action, default, and admin.
  *
  * @uses $vars['menu']      Menu array provided by elgg_view_menu()
+ *
+ * GC_MODIFICATION
+ * Description: Changed the layout / grabs more profile info and department / admin options on hover 
+ * Author: Your name email
  */
 
 $user = $vars['entity'];
