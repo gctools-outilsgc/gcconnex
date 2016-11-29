@@ -6,7 +6,11 @@
  * @uses $vars['size']   Size of the icon
  * @uses $vars['title']  Optional override for the title
  */
-
+ /*
+ * GC_MODIFICATION
+ * Description: Switched classes to bootstrap classes and display different metadata
+ * Author: GCTools Team
+ */
 $entity = $vars['entity'];
 $size = elgg_extract('size', $vars, 'medium');
 

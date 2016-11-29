@@ -1,5 +1,12 @@
 <?php
-
+/*
+ * verify_department.php
+ *
+ * Popup that asks user to verify their department before continuing.
+ *
+ * @package wet4
+ * @author Ethan Wallace
+ */
 $user = elgg_get_logged_in_user_entity();
 
 $value = $user->get(department);
@@ -36,12 +43,12 @@ if (get_current_language()=='en'){
     $provinces['pov-man'] = 'Gouvernement du Manitoba';
     $provinces['pov-nb'] = 'Gouvernement du Nouveau-Brunswick';
     $provinces['pov-nfl'] = 'Gouvernement de Terre-Neuve-et-Labrador';
-    $provinces['pov-ns'] = 'Gouvernement de la Nouvelle-Écosse';
+    $provinces['pov-ns'] = 'Gouvernement de la Nouvelle-ï¿½cosse';
     $provinces['pov-nwt'] = 'Gouvernement du Territoires du Nord-Ouest';
     $provinces['pov-nun'] = 'Gouvernement du Nunavut';
     $provinces['pov-ont'] = "Gouvernement de l'Ontario";
-    $provinces['pov-pei'] = "Gouvernement de l'Île-du-Prince-Édouard";
-    $provinces['pov-que'] = 'Gouvernement du Québec';
+    $provinces['pov-pei'] = "Gouvernement de l'ï¿½le-du-Prince-ï¿½douard";
+    $provinces['pov-que'] = 'Gouvernement du Quï¿½bec';
     $provinces['pov-sask'] = 'Gouvernement de Saskatchewan';
     $provinces['pov-yuk'] = 'Gouvernement du Yukon';
     $departments = array_merge($departments,$provinces);
@@ -163,4 +170,3 @@ echo elgg_view('output/url', array(
 
 
 </script>
-

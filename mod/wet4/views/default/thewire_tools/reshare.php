@@ -2,6 +2,11 @@
 /**
  * Ajax wrapper view to show a wire add form
  */
+ /*
+ * GC_MODIFICATION
+ * Description: Modified ajax popup to contain javascript character limit code.
+ * Author: GCTools Team
+ */
 elgg_extend_view('input/longtext', 'thewire_tools/ajax_popup');
 elgg_extend_view('input/plaintext', 'thewire_tools/ajax_popup');
 

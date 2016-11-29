@@ -4,7 +4,11 @@
  *
  * @package ElggMessages
 */
-
+/*
+* GC_MODIFICATION
+* Description: Modified to increase load times and split messages from notifications
+* Author: GCTools Team
+*/
 elgg_gatekeeper();
 
 $page_owner = elgg_get_page_owner_entity();
