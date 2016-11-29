@@ -7,6 +7,10 @@
  * website http://www.syslogicinc.com
  * @Modified By Team Webgalli to work with ElggV1.5
  * www.webgalli.com or www.m4medicine.com
+ *
+ * GC_MODIFICATION
+ * Description: Added wet classes to make a graph popup based on the table data
+ * Author: Nick github.com/piet0024
  */
 
 $lang = get_current_language();
