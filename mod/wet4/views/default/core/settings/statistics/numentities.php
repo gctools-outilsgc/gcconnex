@@ -4,6 +4,10 @@
  *
  * @package Elgg
  * @subpackage Core
+ *
+ * GC_MODIFICATION
+ * Description: Added wet styling and classes 
+ * Author: GCTools Team
  */
 
 // Get entity statistics
