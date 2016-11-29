@@ -5,6 +5,10 @@
  * Displayed next to the body of each river item
  *
  * @uses $vars['item']
+ *
+ * GC_MODIFICATION
+ * Description: Added
+ * Author: Nick github.com/piet0024
  */
 
 $item = $vars['item'];

@@ -4,6 +4,10 @@
  *
  * @author Cash Costello
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
+ *
+ * GC_MODIFICATION
+ * Description: fixes for ajax windows on river view
+ * Author: GCTools Team
  */
 
 elgg_require_js('tidypics/tidypics');

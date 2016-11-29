@@ -1,6 +1,10 @@
 <?php
 /**
  * Update avatar river view
+ *
+ * GC_MODIFICATION
+ * Description: Changing avatar size
+ * Author: GCTools Team
  */
 
 $item = $vars['item'];
