@@ -1,6 +1,13 @@
 <?php
-    
-    
+/*
+* photo.php
+*
+* Ajax view of photos used by thumbnails on the river
+*
+* @package wet4
+* @author GCTools Team
+*/
+
     $guid = (int) get_input("guid");
 
     $img = get_entity($guid);
