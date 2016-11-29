@@ -1,8 +1,12 @@
 <?php
- 
+/*
+* GC_MODIFICATION
+* Description: Rewrote module to add bootstrap styling + added view all link
+* Author: GCTools Team
+*/
   $num_items = $vars['entity']->num_items;
   if (!isset($num_items)) $num_items = 10;
- 
+
   $widget_context_mode = $vars['entity']->widget_context_mode;
   if (!isset($widget_context_mode)) $widget_context_mode = 'custom_index_widgets';
   elgg_set_context($widget_context_mode);
@@ -13,13 +17,13 @@
       'size' => 'small',
       'relationship' => 'member',
       'relationship_guid' => $owner->guid,
-      'inverse_relationship'=> FALSE, 
+      'inverse_relationship'=> FALSE,
 		'type'=>'group',
 		'limit'=>$num_items,
 		'full_view' => false,
 		'list_type_toggle' => false,
 		'pagination' => false));
-	
+
 
  $options = array(
             'full_view' => false,
@@ -39,5 +43,4 @@ $all_link = elgg_view('output/url', array(
 echo $content;
 
 echo "<div class='text-right mrgn-tp-sm'>$all_link</div>";
-?>       
-
+?>

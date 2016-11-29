@@ -1,10 +1,15 @@
-<?php 
+<?php
+/*
+* GC_MODIFICATION
+* Description: Added support for content translation toggle
+* Author: GCTools Team
+*/
 	$widget_title = $vars['entity']->widget_title;
 	$html_content = $vars['entity']->html_content;
-	
+
 	$guest_only = $vars['entity']->guest_only;
 	if (!isset($guest_only)) $guest_only = "no";
-	
+
 	$box_style = $vars['entity']->box_style;
 	if (!isset($box_style)) $box_style = "collapsable";
 
@@ -42,16 +47,16 @@
   <?php echo elgg_echo('custom_index_widgets:widget_title'); ?>:
   <?php
 	echo elgg_view('input/text', array(
-			'name' => 'params[widget_title]',                        
+			'name' => 'params[widget_title]',
 			'value' => gc_explode_translation($widget_title,'en')
 		));
 	?>
 </p>
 <p>
-<?php echo elgg_echo('custom_index_widgets:html_content'); ?>	
+<?php echo elgg_echo('custom_index_widgets:html_content'); ?>
 <?php
 	echo elgg_view('input/longtext', array(
-			'name' => 'params[html_content]',                        
+			'name' => 'params[html_content]',
 			'value' => gc_explode_translation($html_content,'en')
 		));
 	?>
@@ -62,7 +67,7 @@
       <?php echo elgg_echo('custom_index_widgets:box_style'); ?>
       :
       <?php
-      echo elgg_view('input/dropdown', array('name'=>'params[box_style]', 
+      echo elgg_view('input/dropdown', array('name'=>'params[box_style]',
       										 'options_values'=>array('plain'=>'Plain', 'plain collapsable'=>'Plain and collapsable', 'collapsable'=>'Collapsable', 'standard' => 'No Collapsable'),
        										 'value'=>$box_style));
       ?>
@@ -71,7 +76,7 @@
       <?php echo elgg_echo('custom_index_widgets:guest_only'); ?>
       :
       <?php
-      echo elgg_view('input/dropdown', array('name'=>'params[guest_only]', 
+      echo elgg_view('input/dropdown', array('name'=>'params[guest_only]',
       										 'options_values'=>array('yes'=>'yes', 'no'=>'no'),
        										 'value'=>$guest_only));
       ?>
