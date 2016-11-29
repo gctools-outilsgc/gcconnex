@@ -6,6 +6,10 @@
  *
  * @author Cash Costello
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
+ *
+ * GC_MODIFICATION
+ * Description: formatting album gallery into bootstrap cols
+ * Author: GCTools Team
  */
 $lang = get_current_language();
 $album = elgg_extract('entity', $vars);

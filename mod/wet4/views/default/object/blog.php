@@ -3,6 +3,10 @@
  * View for blog objects
  *
  * @package Blog
+ *
+ * GC_MODIFICATION
+ * Description: add wet and bootstrap classes
+ * Author: GCTools Team
  */
 $lang = get_current_language();
 $full = elgg_extract('full_view', $vars, FALSE);

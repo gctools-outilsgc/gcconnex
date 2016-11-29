@@ -15,6 +15,10 @@
  * @uses $vars['subtitle']  HTML for the subtitle (optional)
  * @uses $vars['tags']      HTML for the tags (default is tags on entity, pass false for no tags)
  * @uses $vars['content']   HTML for the entity content (optional)
+ *
+ * GC_MODIFICATION
+ * Description: Changing the layout of the wire
+ * Author: GCTools Team
  */
 
 $entity = $vars['entity'];

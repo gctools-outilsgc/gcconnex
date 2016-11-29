@@ -4,6 +4,10 @@
  *
  * @uses $vars['widget']
  * @uses $vars['show_edit'] Whether to show the edit button (true)
+ *
+ * GC_MODIFICATION
+ * Description: added wet-widgets-menu / layout changes
+ * Author: GCTools Team
  */
 
 

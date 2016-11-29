@@ -4,6 +4,10 @@
  * Elgg poll individual post view
  * 
  * @uses $vars['entity'] Optionally, the poll post to view
+ *
+ * GC_MODIFICATION
+ * Description: Added styling 
+ * Author: GCTools Team
  */
 
 if (isset($vars['entity'])) {

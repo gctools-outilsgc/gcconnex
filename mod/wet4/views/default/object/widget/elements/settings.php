@@ -3,6 +3,7 @@
  * Elgg widget edit settings
  *
  * @uses $vars['widget']
+ *
  */
 
 $widget = elgg_extract('widget', $vars);

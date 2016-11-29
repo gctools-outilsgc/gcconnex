@@ -3,6 +3,10 @@
  * File renderer.
  *
  * @package ElggFile
+ *
+ * GC_MODIFICATION
+ * Description: Modifed layout / Accessibility / font awesome icons
+ * Author: GCTools Team
  */
 
 $full = elgg_extract('full_view', $vars, false);
