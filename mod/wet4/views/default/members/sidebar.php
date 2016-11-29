@@ -1,6 +1,10 @@
 <?php
 /**
  * Members sidebar
+ *
+ * GC_MODIFICATION
+ * Description: Does a user search through the GSA
+ * Author: GCTools Team
  */
 
 
