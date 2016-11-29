@@ -1,6 +1,10 @@
 <?php
 /**
  * New Group Ideas sidebar
+ *
+ * GC_MODIFICATION
+ * Description: moved sidebar content into a panel module
+ * Author: GCTools Team
  */
 $user = elgg_get_logged_in_user_guid();
 $page_owner = elgg_get_page_owner_guid();
