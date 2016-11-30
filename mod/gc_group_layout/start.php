@@ -21,11 +21,17 @@ function gc_group_layout_init(){
 
     elgg_extend_view('page/layouts/one_sidebar', 'page/elements/cover_photo', 400);
     elgg_extend_view('css/elgg', 'css/group_layout');
+    
 
     elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'group_owners_block_handler');
 
     elgg_register_ajax_view('ajax/grp_ajax_content');
     elgg_extend_view("js/elgg", "js/group_ajax");
+    
+    // group invitation
+	elgg_register_action("groups/invite", dirname(__FILE__) . "/actions/groups/invite.php");
+    //group edit
+    elgg_register_action("groups/edit", dirname(__FILE__) . "/actions/groups/edit.php");
 
 }
 
