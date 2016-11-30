@@ -29,7 +29,7 @@ $english = array(
 
 		'gcProfilePictureBadges:badge:mentalHealth' => 'Mental health in the workplace',
 		'gcProfilePictureBadges:pledgeSell:mentalHealth' => 'Show your support for "Mental health in the workplace" by adding the badge to your avatar.',
-		'gcProfilePictureBadges:knowmore:mentalHealth' => 'http://intranet.canada.ca/hr-rh/hw-ms/ww-mmt/mht-smt/pledge-engagement/index-eng.asp'
+		'gcProfilePictureBadges:knowmore:mentalHealth' => 'http://intranet.canada.ca/hr-rh/hw-ms/ww-mmt/mhw-smt/pledge-engagement/index-eng.asp'
 );
 
 add_translation('en', $english);
