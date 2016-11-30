@@ -8,6 +8,10 @@
 $lang = get_current_language();
 $full = elgg_extract('full_view', $vars, FALSE);
 $blog = elgg_extract('entity', $vars, FALSE);
+//$simple = 'simple string';
+$simple_fr = $blog->description2;
+$simple_en = $blog->description;
+
 
 if (!$blog) {
 	return TRUE;
@@ -16,20 +20,6 @@ if (!$blog) {
 $owner = $blog->getOwnerEntity();
 $container = $blog->getContainerEntity();
 $categories = elgg_view('output/categories', $vars);
-
-
-// identify available content
-if(($blog->description2) && ($blog->description)){
-	if (get_current_language() == 'fr'){
-		if ($blog->description){
-			echo'<span style="padding-left:70%;">Content available in english</span>';
-		}
-	}else{
-		if ($blog->description2){
-			echo'<span style="padding-left:70%;">Contenu disponible en français</span>';
-		}
-	}
-}
 
 if($blog->excerpt3){
 	$excerpt = gc_explode_translation($blog->excerpt3,$lang);
@@ -104,6 +94,29 @@ if (elgg_in_context('widgets')) {
 if ($full) {
 	// full view
 
+	// identify available content
+if(($blog->description2) && ($blog->description)){
+	echo'<div id="change_language">';
+	if (get_current_language() == 'fr'){
+		
+			//echo'<span style="padding-left:70%;">Content available in english/full view</span>';
+			echo'<a id="indicator_language_en" href="#"><label class="testClass hidden" >'.$blog->description.'</label><span id="indicator_text">Content available in english</span></a>';
+		//echo "<input id='indicator_language' type='button' value='".$blog->description."'' />";
+//echo"<a href='javascript:void(0);' onclick=\"showme('Test','','10.70725','-61.55391','','Tester');\" >$id</a>";
+		
+	}else{
+			echo'<a id="indicator_language_fr" href="#"><label class="testClass hidden" >'.$blog->description2.'</label><span id="indicator_text">Contenu disponible en français</span></a>';
+		
+		//	echo'<span style="padding-left:70%;">Contenu disponible en français/ vue complète</span>';
+			//echo'<a id="language_indicator" href="#french">Contenu disponible en français</a>';
+		//echo '<input type="button" value="Contenu disponible en français" onclick="getPage('allo')" />';
+			
+	}
+	echo'</div>';
+}
+
+echo'<div id="output"></div>';
+
 if($blog->description3){
 	$blog_descr = gc_explode_translation($blog->description3, $lang);
 }else{
@@ -136,6 +149,13 @@ if($blog->description3){
     echo '<div id="group-replies" class="elgg-comments mrgn-rght-md mrgn-lft-md clearfix">';
     
 } else {
+
+	// identify available content
+if(($blog->description2) && ($blog->description)){
+		
+			echo'<span style="padding-left:90%;"><i class="fa fa-language fa-2x" aria-hidden="true"></i></span>';
+	
+}
 	// how to show strapline
 	if (elgg_in_context("listing")) {
 		$excerpt = "";
@@ -182,4 +202,86 @@ if($blog->description3){
 
 	echo elgg_view_image_block($owner_icon, $list_body);
 
+	
+
 }
+?>
+<script>
+alert('utilise le script');
+jQuery(document).ready(function($){
+  $('#indicator_language_en').on('click', function (e){
+  	alert('test1');
+        e.preventDefault();
+        var label = $(this).find('.testClass').text();
+    	alert(label)
+        var fid = $(this).val();
+        $.ajax(
+        {
+            type : "post",
+            dataType: "html",
+           // url : "blog.php?fid="+fid,
+            cache: false,
+            success : function(response)
+            {
+                $(".blog-post").html(label);
+            }
+        });
+
+        change_title_fr();
+  });
+
+    $('#indicator_language_fr').on('click', function (e){
+  	alert('test1');
+        e.preventDefault();
+        var label = $(this).find('.testClass').text();
+    	alert(label)
+        var fid = $(this).val();
+        $.ajax(
+        {
+            type : "post",
+            dataType: "html",
+           // url : "blog.php?fid="+fid,
+            cache: false,
+            success : function(response)
+            {
+                $(".blog-post").html(label);
+            }
+        });
+
+        change_title_en();
+  });
+
+
+//<a id="indicator_language_fr" href="#"><label class="testClass hidden" >'.$blog->description2.'</label><span id="indicator_text">Contenu disponible en français</span></a>
+  	
+});
+
+
+function change_title_fr(){
+	alert('Change le titre à français');
+	//var loginUrl = "<?php echo "helo"; ?>";
+	//var loginUrl = "<?php echo "<a id='indicator_language_fr' href='#'><label class='testClass hidden'>'.$hello.'</label><span id='indicator_text'>Contenu disponible en français</span></a>"; ?>";
+	 var simple = '<a id="indicator_language_fr" href="#"><label class="testClass hidden" ><?php echo $simple_fr; ?></label><span id="indicator_text">Contenu disponible en français</span></a>';
+	//$("#change_language").html(loginUrl);
+
+	//alert(loginUrl);
+	alert('helo '+simple);
+	$("#change_language").html(simple)
+
+}
+
+function change_title_en(){
+	alert('Change le titre à anglais');
+	//var loginUrl = "<?php echo "helo"; ?>";
+	//var loginUrl = "<?php echo "<a id='indicator_language_fr' href='#'><label class='testClass hidden'>'.$hello.'</label><span id='indicator_text'>Contenu disponible en français</span></a>"; ?>";
+	 var simple = '<a id="indicator_language_en" href="#"><label class="testClass hidden" ><?php echo $simple_en; ?></label><span id="indicator_text">Content available in english</span></a>';
+	//$("#change_language").html(loginUrl);
+
+	//alert(loginUrl);
+	alert('helo '+simple);
+	$("#change_language").html(simple)
+
+}
+
+</script>
+<?php
