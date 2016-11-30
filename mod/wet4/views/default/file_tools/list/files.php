@@ -1,7 +1,7 @@
 <?php
 /*
 * GC_MODIFICATION
-* Description: Added accessability functionality to files list.
+* Description: Added accessibility functionality to files list.
 * Author: GCTools Team
 */
 $files = elgg_extract("files", $vars, array());

@@ -4,7 +4,11 @@
  *
  * @uses $vars['message']
  */
-
+ /*
+ * GC_MODIFICATION
+ * Description: Added accessible labels + message preview to form
+ * Author: GCTools Team
+ */
 // fix for RE: RE: RE: that builds on replies
 $reply_title = $vars['message']->title;
 if (strncmp($reply_title, "RE:", 3) != 0) {

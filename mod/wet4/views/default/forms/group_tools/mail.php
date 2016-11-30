@@ -2,6 +2,11 @@
 /**
  * Mail group members
  */
+ /*
+ * GC_MODIFICATION
+ * Description: Added accessible labels + fixed url
+ * Author: GCTools Team
+ */
 $group = $vars["entity"];
 $members = $vars["members"];
 

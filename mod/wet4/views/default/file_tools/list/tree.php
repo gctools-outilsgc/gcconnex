@@ -1,7 +1,7 @@
 <?php
 /*
 * GC_MODIFICATION
-* Description: Added styling and accessability to file tree.
+* Description: Added styling and accessibility to file tree.
 * Author: GCTools Team
 */
 $folders = elgg_extract("folders", $vars);

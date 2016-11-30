@@ -3,11 +3,15 @@
  * Edit properties on a batch of images
  *
  * @uses $vars['batch'] ElggObject
- * 
+ *
  * @author Cash Costello
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
-
+ /*
+ * GC_MODIFICATION
+ * Description: Added content translation support
+ * Author: GCTools Team
+ */
 $batch = $vars['batch'];
 $album = $batch->getContainerEntity();
 

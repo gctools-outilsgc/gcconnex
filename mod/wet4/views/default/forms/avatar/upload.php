@@ -1,10 +1,14 @@
 <?php
 /**
  * Avatar upload form
- * 
+ *
  * @uses $vars['entity']
  */
-
+ /*
+ * GC_MODIFICATION
+ * Description: Added accessible labels
+ * Author: GCTools Team
+ */
 ?>
 <div>
 	<label for="avatar"><?php echo elgg_echo("avatar:upload"); ?></label><br />
