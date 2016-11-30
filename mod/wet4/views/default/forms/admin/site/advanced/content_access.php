@@ -4,6 +4,7 @@
  */
  /*
  * GC_MODIFICATION
+ * Description: Added accessibility functionality.
  * Author: GCTools Team
  */
 $default_access_label = elgg_echo('installation:sitepermissions');
