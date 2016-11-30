@@ -100,12 +100,12 @@ if(($blog->description2) && ($blog->description)){
 	if (get_current_language() == 'fr'){
 		
 			//echo'<span style="padding-left:70%;">Content available in english/full view</span>';
-			echo'<a id="indicator_language_en" href="#"><label class="testClass hidden" >'.$blog->description.'</label><span id="indicator_text">Content available in english</span></a>';
+			echo'<a id="indicator_language_en" onclick="change_en((this.textContent || this.innerText))" href="#"><label class="testClass hidden" >'.$blog->description.'</label><span id="indicator_text">Content available in english</span></a>';
 		//echo "<input id='indicator_language' type='button' value='".$blog->description."'' />";
 //echo"<a href='javascript:void(0);' onclick=\"showme('Test','','10.70725','-61.55391','','Tester');\" >$id</a>";
 		
 	}else{
-			echo'<a id="indicator_language_fr" href="#"><label class="testClass hidden" >'.$blog->description2.'</label><span id="indicator_text">Contenu disponible en français</span></a>';
+			echo'<a id="indicator_language_fr" onclick="change_fr((this.textContent || this.innerText))" href="#"><label class="testClass hidden" >'.$blog->description2.'</label><span id="indicator_text">Contenu disponible en français</span></a>';
 		
 		//	echo'<span style="padding-left:70%;">Contenu disponible en français/ vue complète</span>';
 			//echo'<a id="language_indicator" href="#french">Contenu disponible en français</a>';
@@ -207,81 +207,47 @@ if(($blog->description2) && ($blog->description)){
 }
 ?>
 <script>
-alert('utilise le script');
-jQuery(document).ready(function($){
-  $('#indicator_language_en').on('click', function (e){
-  	alert('test1');
-        e.preventDefault();
-        var label = $(this).find('.testClass').text();
-    	alert(label)
-        var fid = $(this).val();
-        $.ajax(
+
+function change_fr(e){
+	var label = e;
+	$.ajax(
+    {
+        type : "post",
+        dataType: "html",
+        cache: false,
+        success : function(response)
         {
-            type : "post",
-            dataType: "html",
-           // url : "blog.php?fid="+fid,
-            cache: false,
-            success : function(response)
-            {
-                $(".blog-post").html(label);
-            }
-        });
+        	$(".blog-post").html(label);
+        }
+    });
+    change_title_en();
+};
 
-        change_title_fr();
-  });
-
-    $('#indicator_language_fr').on('click', function (e){
-  	alert('test1');
-        e.preventDefault();
-        var label = $(this).find('.testClass').text();
-    	alert(label)
-        var fid = $(this).val();
-        $.ajax(
+function change_en(e){
+  	var label = e;
+	$.ajax(
+    {
+        type : "post",
+        dataType: "html",
+        cache: false,
+        success : function(response)
         {
-            type : "post",
-            dataType: "html",
-           // url : "blog.php?fid="+fid,
-            cache: false,
-            success : function(response)
-            {
-                $(".blog-post").html(label);
-            }
-        });
-
-        change_title_en();
-  });
-
-
-//<a id="indicator_language_fr" href="#"><label class="testClass hidden" >'.$blog->description2.'</label><span id="indicator_text">Contenu disponible en français</span></a>
-  	
-});
-
+            $(".blog-post").html(label);
+        }
+    });
+	change_title_fr();
+};
 
 function change_title_fr(){
-	alert('Change le titre à français');
-	//var loginUrl = "<?php echo "helo"; ?>";
-	//var loginUrl = "<?php echo "<a id='indicator_language_fr' href='#'><label class='testClass hidden'>'.$hello.'</label><span id='indicator_text'>Contenu disponible en français</span></a>"; ?>";
-	 var simple = '<a id="indicator_language_fr" href="#"><label class="testClass hidden" ><?php echo $simple_fr; ?></label><span id="indicator_text">Contenu disponible en français</span></a>';
-	//$("#change_language").html(loginUrl);
 
-	//alert(loginUrl);
-	alert('helo '+simple);
-	$("#change_language").html(simple)
-
+	var link_available = '<a id="indicator_language_fr" onclick="change_fr((this.textContent || this.innerText))"  href="#"><label class="testClass hidden" ><?php echo $simple_fr; ?></label><span id="indicator_text">Contenu disponible en français</span></a>';
+	$("#change_language").html(link_available)
 }
 
 function change_title_en(){
-	alert('Change le titre à anglais');
-	//var loginUrl = "<?php echo "helo"; ?>";
-	//var loginUrl = "<?php echo "<a id='indicator_language_fr' href='#'><label class='testClass hidden'>'.$hello.'</label><span id='indicator_text'>Contenu disponible en français</span></a>"; ?>";
-	 var simple = '<a id="indicator_language_en" href="#"><label class="testClass hidden" ><?php echo $simple_en; ?></label><span id="indicator_text">Content available in english</span></a>';
-	//$("#change_language").html(loginUrl);
 
-	//alert(loginUrl);
-	alert('helo '+simple);
-	$("#change_language").html(simple)
-
+	 var link_available = '<a id="indicator_language_en" onclick="change_en((this.textContent || this.innerText))" href="#"><label class="testClass hidden" ><?php echo $simple_en; ?></label><span id="indicator_text">Content available in english</span></a>';
+	$("#change_language").html(link_available)
 }
-
 </script>
 <?php
