@@ -1,5 +1,9 @@
 <?php
-
+/*
+* GC_MODIFICATION
+* Description: Added accessible labels + changed styling
+* Author: GCTools Team
+*/
 $group = elgg_extract("entity", $vars);
 
 echo "<div id='group-tools-related-groups-form'>";

@@ -4,7 +4,11 @@
  *
  * @package ElggPages
  */
-
+ /*
+ * GC_MODIFICATION
+ * Description: Added accessible labels + content translation support
+ * Author: GCTools Team
+ */
 $variables = elgg_get_config('pages');
 $user = elgg_get_logged_in_user_entity();
 $entity = elgg_extract('entity', $vars);
@@ -25,7 +29,7 @@ foreach ($variables as $name => $type) {
 	if (($type == 'access' || $type == 'write_access') && !$can_change_access) {
 		continue;
 	}
-	
+
 	// don't show parent picker input for top or new pages.
 	if ($name == 'parent_guid' && (!$vars['parent_guid'] || !$vars['guid'])) {
 		continue;
@@ -61,7 +65,7 @@ if (($name == 'title2') || ($name == 'description2')){
             'id' => $name,
 			'entity' => ($name == 'parent_guid') ? $vars['entity'] : null,
 		);
-		
+
 
 		if ($input_view === 'input/access' || $input_view === 'input/write_access') {
 			$view_vars['entity'] = $entity;
@@ -72,7 +76,7 @@ if (($name == 'title2') || ($name == 'description2')){
 				$view_vars['purpose'] = 'write';
 				if ($entity) {
 					$view_vars['value'] = $entity->write_access_id;
-					
+
 					// no access change warning for write access input
 					$view_vars['entity_allows_comments'] = false;
 				}
@@ -177,12 +181,12 @@ jQuery(function(){
 
 		jQuery('#btnClickfr').click(function(){
                jQuery('.fr').show();
-               jQuery('.en').hide();  
+               jQuery('.en').hide();
         });
 
           jQuery('#btnClicken').click(function(){
                jQuery('.en').show();
-               jQuery('.fr').hide();  
+               jQuery('.fr').hide();
         });
 });
 </script>

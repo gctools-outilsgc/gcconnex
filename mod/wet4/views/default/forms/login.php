@@ -4,18 +4,22 @@
  *
  * @package Elgg
  * @subpackage Core
- 
- 
- 
+
+
+
  * Removed class: 'float-alt' from line 31
  */
-
+ /*
+ * GC_MODIFICATION
+ * Description: Redesigned the login form
+ * Author: GCTools Team
+ */
 $site_url = elgg_get_site_url();
 //english or french graphic to display
 if( _elgg_services()->session->get('language') == 'en') {//quick fix to display img on production
     $gcconnexGraphic = '<img src="'.$site_url.'mod/wet4/graphics/GCconnex_icon_slogan_Eng.png" alt="GCconnex. Connecting people and ideas." width="85%" class="mrgn-tp-sm">';
 }else{
-    $gcconnexGraphic = '<img src="'.$site_url.'mod/wet4/graphics/GCconnex_icon_slogan_Fra.png" alt="GCconnex. Branchez-vous, maximisez vos idées." width="85%" class="mrgn-tp-sm">';
+    $gcconnexGraphic = '<img src="'.$site_url.'mod/wet4/graphics/GCconnex_icon_slogan_Fra.png" alt="GCconnex. Branchez-vous, maximisez vos idÃ©es." width="85%" class="mrgn-tp-sm">';
 }
 if(elgg_in_context('login')){ //Nick - only show the graphic and register text on the main login page
 ?>
@@ -26,7 +30,7 @@ if(elgg_in_context('login')){ //Nick - only show the graphic and register text o
     if( _elgg_services()->session->get('language') == 'en'){//quick fix to display img on production
         $gcconnexGraphic = '<img src="'.$site_url.'mod/wet4/graphics/GCconnex_icon_slogan_Eng.png" alt="GCconnex. Connecting people and ideas." class="mrgn-tp-md center-block">';
     }else{
-        $gcconnexGraphic = '<img src="'.$site_url.'mod/wet4/graphics/GCconnex_icon_slogan_Fra.png" alt="GCconnex. Branchez-vous, maximisez vos idées." class="mrgn-tp-md center-block">';
+        $gcconnexGraphic = '<img src="'.$site_url.'mod/wet4/graphics/GCconnex_icon_slogan_Fra.png" alt="GCconnex. Branchez-vous, maximisez vos idÃ©es." class="mrgn-tp-md center-block">';
     }
 
     echo $gcconnexGraphic;
@@ -34,25 +38,25 @@ if(elgg_in_context('login')){ //Nick - only show the graphic and register text o
         //echo '<div class="col-sm-12">'.elgg_format_element('div', array('class'=>'login-engage-message',), elgg_echo('wet:login_engage_0')) .'</div>';
         ?>
 
-    </div> 
+    </div>
 
 
 <div class="clearfix col-sm-8">
 
     <div>
         <?php //Nick - adding list of engaging things in the center of the login / landing page
-            
+
             /*echo elgg_echo('gcconnex:registerText');*/ //Nick - This replaces the older register text
             $login_list_array = ['wet:login_engage_1','wet:login_engage_2','wet:login_engage_3'];
             foreach($login_list_array as $list_text){
                 $contents .='<li><i class="fa fa-circle-o pull-left mrgn-rght-sm" aria-hidden="true"></i>'.elgg_echo($list_text) .'</li>';
             }
-            
+
             echo elgg_format_element('ul', array('class'=>'login-engage-list center-block'), $contents );
-            
+
         ?>
     </div>
-  
+
 
 </div>
 </div>
@@ -86,9 +90,9 @@ if(elgg_in_context('login')){ //Nick - only show the graphic and register text o
           echo '<a href="' . $site_url . 'register" class="btn btn-default">'.elgg_echo('register').'</a>';
         ?>
     </div>
-	
-	
-	<?php 
+
+
+	<?php
 	if (isset($vars['returntoreferer'])) {
 		echo elgg_view('input/hidden', array('name' => 'returntoreferer', 'value' => 'true'));
 	}
@@ -120,7 +124,7 @@ if(elgg_in_context('login')){
     foreach($inside_stats as $stat){
         $insides .='<div class="col-sm-4 text-center login-stats-child">'.$stat.'</div>';
     }
-   
+
     $nextrow = elgg_format_element('div',array('class'=>'col-sm-6 col-sm-offset-3 mrgn-tp-lg login-stats',),$insides);
 
     echo elgg_format_element('div',array('class'=>'col-sm-12'),$nextrow);

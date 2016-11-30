@@ -1,5 +1,9 @@
 <?php
-
+/*
+* GC_MODIFICATION
+* Description: Added accessible labels
+* Author: GCTools Team
+*/
 $page_owner = elgg_get_page_owner_entity();
 
 $form_body = "<div>" . elgg_echo("file_tools:upload:form:zip:info") . "</div>";

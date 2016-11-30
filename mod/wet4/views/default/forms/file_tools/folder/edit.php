@@ -1,5 +1,9 @@
 <?php
-
+/*
+* GC_MODIFICATION
+* Description: Added accessible labels + content translation support
+* Author: GCTools Team
+*/
 $folder = elgg_extract("folder", $vars);
 $page_owner = elgg_extract("page_owner_entity", $vars);
 
@@ -9,7 +13,7 @@ if (!empty($folder)) {
 	$title2 = $folder->title2;
 	$desc = $folder->description;
 	$desc2 = $folder->description2;
-	
+
 	if (!empty($folder->parent_guid)) {
 		$parent = $folder->parent_guid;
 	} else {
@@ -161,7 +165,7 @@ function showen() {
    document.getElementById('frdesc').style.display = "none";
 }
 function showfr() {
-	
+
    document.getElementById('frtitle').style.display = "block";
    document.getElementById('frdesc').style.display = "block";
    document.getElementById('entitle').style.display = "none";

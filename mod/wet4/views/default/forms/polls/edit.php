@@ -1,4 +1,9 @@
 <?php
+/*
+* GC_MODIFICATION
+* Description: Added accessible labels + content translation support
+* Author: GCTools Team
+*/
 $poll = elgg_extract('entity', $vars);
 if ($poll) {
 	$guid = $poll->guid;
@@ -69,7 +74,7 @@ $btn_language
 			<label>$responses_label2</label><br />
 			$responses_control2
 		</p>
-		
+
 
 		<p>
 			<label for="tags">$tag_label</label><br />
@@ -130,12 +135,12 @@ jQuery(function(){
 
 		jQuery('#btnClickfr').click(function(){
                jQuery('.fr').show();
-               jQuery('.en').hide();  
+               jQuery('.en').hide();
         });
 
           jQuery('#btnClicken').click(function(){
                jQuery('.en').show();
-               jQuery('.fr').hide();  
+               jQuery('.fr').hide();
         });
 });
 </script>

@@ -2,10 +2,10 @@
 /*
  * groups_autocomplete.php
  *
- * Library to aotucomplete list of groups with similiar title swhile creating a group.
+ * Library to autocomplete list of groups with similiar titles while creating a group.
  *
  * @package wet4
- * @author 
+ * @author
  */
 	$q = sanitize_string(get_input("q"));
 	$current_groups = sanitize_string(get_input("groups_guids"));

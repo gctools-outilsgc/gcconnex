@@ -1,4 +1,10 @@
-
+<?php
+/*
+* GC_MODIFICATION
+* Description: Creates modal for file tabs
+* Author: GCTools Team
+*/
+?>
 <!-- Open modal when change access to something else than public. Have to be here, before the tabs SL -->
 <script>
 $(document).ready(function () {

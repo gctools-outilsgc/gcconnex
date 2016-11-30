@@ -4,7 +4,11 @@
  *
  * @package ElggGroups
  */
-
+ /*
+ * GC_MODIFICATION
+ * Description: Changed style of form using bootstrap classes
+ * Author: GCTools Team
+ */
 /* @var ElggGroup $entity */
 $entity = elgg_extract("entity", $vars, false);
 
