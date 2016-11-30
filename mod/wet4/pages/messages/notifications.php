@@ -4,7 +4,11 @@
  *
  * @package ElggMessages
 */
-
+/*
+* GC_MODIFICATION
+* Description: Modified to increase load times and split messages from notifications
+* Author: GCTools Team
+*/
 elgg_gatekeeper();
 
 $offset = get_input('offset', 0);

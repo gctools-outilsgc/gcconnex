@@ -1,6 +1,10 @@
 <?php
 /**
  * Group forum topic create river view.
+ *
+ * GC_MODIFICATION
+ * Description: if someone posts a video link in a discussion it will embed on the wire
+ * Author: GCTools Team
  */
 $lang = get_current_language();
 $item = $vars['item'];

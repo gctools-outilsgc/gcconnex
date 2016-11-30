@@ -1,4 +1,12 @@
 <?php
+/*
+ * verify_department.php
+ *
+ * Action file to confirm department of user.
+ *
+ * @package wet4
+ * @author Ethan Wallace <Ethan.Wallace@tbs-sct.gc.ca>
+ */
 
 //get input value
 $department = get_input('department');
@@ -33,12 +41,12 @@ $provincesFr['pov-bc'] = 'Gouvernement de la Colombie-Britannique';
 $provincesFr['pov-man'] = 'Gouvernement du Manitoba';
 $provincesFr['pov-nb'] = 'Gouvernement du Nouveau-Brunswick';
 $provincesFr['pov-nfl'] = 'Gouvernement de Terre-Neuve-et-Labrador';
-$provincesFr['pov-ns'] = 'Gouvernement de la Nouvelle-Écosse';
+$provincesFr['pov-ns'] = 'Gouvernement de la Nouvelle-Ã‰cosse';
 $provincesFr['pov-nwt'] = 'Gouvernement du Territoires du Nord-Ouest';
 $provincesFr['pov-nun'] = 'Gouvernement du Nunavut';
 $provincesFr['pov-ont'] = "Gouvernement de l'Ontario";
-$provincesFr['pov-pei'] = "Gouvernement de l'Île-du-Prince-Édouard";
-$provincesFr['pov-que'] = 'Gouvernement du Québec';
+$provincesFr['pov-pei'] = "Gouvernement de l'ÃŽle-du-Prince-Ã‰douard";
+$provincesFr['pov-que'] = 'Gouvernement du QuÃ©bec';
 $provincesFr['pov-sask'] = 'Gouvernement de Saskatchewan';
 $provincesFr['pov-yuk'] = 'Gouvernement du Yukon';
 $departmentsFr = array_merge($departmentsFr,$provincesFr);

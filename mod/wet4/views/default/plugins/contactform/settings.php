@@ -1,4 +1,13 @@
-<?php 
+<?php
+/*
+ * settings.php
+ * 
+ * Plugin Settings for contactform mod
+ * 
+ * @package wet4
+ * @author GCTools Team
+ */
+
 $email = $vars['entity']->email;
 $namefr = $vars['entity']->namefr;
 $nameeng = $vars['entity']->nameeng;

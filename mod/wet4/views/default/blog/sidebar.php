@@ -3,6 +3,10 @@
  * Blog sidebar
  *
  * @package Blog
+ *
+ * GC_MODIFICATION
+ * Description: GSA crawler fixes / Added most liked blogs / 
+ * Author: GCTools Team
  */
 
 // cyu - 01/04/2016: as per eric cantin's advice
@@ -76,20 +80,5 @@ if ('gsa-crawler' != strtolower($_SERVER['HTTP_USER_AGENT'])) {
 			'container_guid' => elgg_get_page_owner_guid(),
 		));
 	}
-    /*
-	if (elgg_is_active_plugin('blog')) {
-	elgg_push_context('widgets');
-	$options = array(
-	    'type' => 'object',
-	    'subtype' => 'blog',
-	    'limit' => 2,//$num,
-	    'full_view' => FALSE,'list_type' => 'list',
-	    'pagination' => FALSE,
-	    );
-	$content = elgg_list_entities($options);
-	echo elgg_view_module('featured',  elgg_echo("blog:recent"), $content);
-	elgg_pop_context();
-	}
-    */
 	
 }

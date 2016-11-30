@@ -1,3 +1,11 @@
+/*
+ * test.js
+ *
+ * Various javascript functionality. (Datatables, User menu message/notification dropdown preview)
+ *
+ * @package wet4
+ * @author GCTools Team
+ */
 //For Datatables creation
 //now you can just put 'wb-tables' on tables to render datatables
 var dtpath = elgg.normalize_url() + '/mod/wet4/views/default/js/wet4/elgg_dataTables';

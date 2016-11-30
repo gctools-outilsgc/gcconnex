@@ -1,5 +1,13 @@
 <?php
-//Dropdown view for when users mouse over the messages to get a quick view of their messages!
+/*
+ * notifications_dd.php
+ * 
+ * Dropdown view for when users mouse over the notifications to get a quick view of their notifs
+ * 
+ * @package wet4
+ * @author Nick github.com/piet0024
+ */
+
 $site_url = elgg_get_site_url();
 ?>
 

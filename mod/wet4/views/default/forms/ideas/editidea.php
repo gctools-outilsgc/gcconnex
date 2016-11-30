@@ -4,7 +4,11 @@
  *
  * @package ideas
  */
-
+ /*
+ * GC_MODIFICATION
+ * Description: Added accessible labels + content translation support
+ * Author: GCTools Team
+ */
 // once elgg_view stops throwing all sorts of junk into $vars, we can use extract()
 
 $title = elgg_extract('title', $vars, '');
@@ -31,11 +35,11 @@ echo $btn_language;
 	<label><?php echo elgg_echo('title:en'); ?></label><br />
 	<?php
     if($title1){
-        $title = $title1;   
+        $title = $title1;
     }
 
     if($desc1){
-        $desc = $desc1;   
+        $desc = $desc1;
     }
 	if (elgg_is_admin_logged_in()) {
 		echo $title;
@@ -87,7 +91,7 @@ echo $btn_language;
 
 	echo elgg_view('input/submit', array('value' => elgg_echo("save"), 'class' => 'btn btn-primary'));
 
-	
+
 echo'</div></div>';
 
 if(get_current_language() == 'fr'){
@@ -121,12 +125,12 @@ jQuery(function(){
 
         jQuery('#btnClickfr').click(function(){
                jQuery('.fr').show();
-               jQuery('.en').hide();  
+               jQuery('.en').hide();
         });
 
           jQuery('#btnClicken').click(function(){
                jQuery('.en').show();
-               jQuery('.fr').hide();  
+               jQuery('.fr').hide();
         });
 });
 </script>

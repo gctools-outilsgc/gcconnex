@@ -1,6 +1,13 @@
 <?php
-/**
- * View conversation thread
+/*
+ * thread.php
+ *
+ * Short description of the file.
+ *
+ * @package wet4
+ * @author GCTools Team
+ *
+ * @uses input['thread_id'] thread guid
  */
 
 $thread_id = get_input('thread_id');

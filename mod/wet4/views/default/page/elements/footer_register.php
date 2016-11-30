@@ -1,5 +1,12 @@
 <?php
-//If the user isn't logged in then display some additional links in the footer to register
+/*
+ * footer_register.php
+ * 
+ * If the user isn't logged in then display some additional links in the footer to register
+ * 
+ * @package wet4
+ * @author GCTools Team
+ */
 
 $site_url = elgg_get_site_url();
 ?>

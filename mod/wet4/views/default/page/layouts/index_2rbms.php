@@ -1,4 +1,13 @@
 <?php
+/*
+ * index_2rbms.php
+ * 
+ * Short description of the file.
+ * 
+ * @package wet4
+ * @author GCTools Team
+ */
+
 		$area1widgets = $vars['area1'];
 		$area2widgets = $vars['area2'];
 		$area3widgets = $vars['area3'];

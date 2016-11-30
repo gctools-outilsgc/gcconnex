@@ -1,6 +1,11 @@
 <?php
-/**
+/*
+ * comments.php
+ *
  * Display latest comments that user has received to own content.
+ *
+ * @package wet4
+ * @author GCTools Team
  */
 
 $owner_guid = elgg_get_logged_in_user_guid();

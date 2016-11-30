@@ -1,6 +1,11 @@
 <?php
 /**
+ * add_button.php 
+ *
  * Button area for showing the add widgets panel
+ *
+ * @package wet4
+ * @author GCTools Team
  */
 
 elgg_load_js('lightbox');

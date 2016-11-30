@@ -4,6 +4,10 @@
  *
  * @package Elgg.Core
  * @subpackage UI
+ *
+ * GC_MODIFICATION
+ * Description: Moved Bootstrap classes here
+ * Author: GCTools Team
  */
 ?>
 /* <style> /**/

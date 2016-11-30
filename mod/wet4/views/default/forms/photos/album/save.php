@@ -5,7 +5,11 @@
  * @author Cash Costello
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  */
-
+ /*
+ * GC_MODIFICATION
+ * Description: Added accessible labels + content translation support
+ * Author: GCTools Team
+ */
 $title = elgg_extract('title', $vars, '');
 $title2 = elgg_extract('title2', $vars, '');
 $description = elgg_extract('description', $vars, '');
@@ -96,12 +100,12 @@ jQuery(function(){
 
     jQuery('#btnClickfr').click(function(){
                jQuery('.fr').show();
-               jQuery('.en').hide();  
+               jQuery('.en').hide();
         });
 
           jQuery('#btnClicken').click(function(){
                jQuery('.en').show();
-               jQuery('.fr').hide();  
+               jQuery('.fr').hide();
         });
 });
 </script>

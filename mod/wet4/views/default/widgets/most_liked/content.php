@@ -1,5 +1,12 @@
-<?php 
-
+<?php
+/*
+ * content.php
+ *
+ * Provide most liked content for the past week
+ *
+ * @package wet4
+ * @author GCTools Team
+ */
 $week_ago = time() - (60 * 60 * 24 * 7);
 
 // Get entities that have been liked within a week

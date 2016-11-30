@@ -4,7 +4,11 @@
  *
  * @package ElggFile
  */
-
+ /*
+ * GC_MODIFICATION
+ * Description: Added accessible labels
+ * Author: GCTools Team
+ */
 $page_owner = elgg_get_page_owner_entity();
 $container_guid = $page_owner->getGUID();
 $site_url = elgg_get_site_url();
@@ -26,11 +30,11 @@ elgg_load_css("jquery.uploadify");
 <fieldset>
 	<div>
 		<label for="uploadify-button-wrapper-button"><?php echo elgg_echo("file:file"); ?></label>
-						
+
 		<div id="uploadify-queue-wrapper" class="mbm">
 			<span><?php echo elgg_echo("file_tools:upload:form:info"); ?></span>
 		</div>
-		
+
 		<div>
 			<?php
 				echo elgg_view("input/file", array("id" => "uploadify-button-wrapper-button", "name" => "upload", "tabindex" => 0,));
@@ -38,30 +42,30 @@ elgg_load_css("jquery.uploadify");
 			?>
 		</div>
 	</div>
-	
+
 	<?php if (file_tools_use_folder_structure()) { ?>
 	<div>
 		<label for="file_tools_file_parent_guid"><?php echo elgg_echo("file_tools:forms:edit:parent"); ?><br /></label>
 		<?php
 			echo elgg_view("input/folder_select", array("name" => "folder_guid", "value" => get_input('parent_guid'), "id" => "file_tools_file_parent_guid"));
 		?>
-		
+
 	</div>
 	<?php }?>
-	
+
 	<div>
 		<label for="file_tools_file_access_id"><?php echo elgg_echo('access'); ?><br /></label>
-			
+
 			<?php echo elgg_view('input/access', array('name' => 'access_id_file', 'id' => 'file_tools_file_access_id')); ?>
-		
+
 	</div>
-	
+
 	<div class="elgg-foot">
 		<?php
 			echo elgg_view('input/securitytoken');
 			echo elgg_view("input/hidden", array("name" => "container_guid", "value" => $container_guid));
 			echo elgg_view("input/hidden", array("name" => "PHPSESSID", "value" => session_id()));
-							
+
 			echo elgg_view("input/submit", array("value" => elgg_echo("upload"), 'class' => 'btn btn-primary'));
 		?>
 	</div>

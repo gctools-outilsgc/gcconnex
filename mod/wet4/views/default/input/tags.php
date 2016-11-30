@@ -7,6 +7,10 @@
  * @uses $vars['class']    Additional CSS class
  * @uses $vars['value']    Array of tags or a string
  * @uses $vars['entity']   Optional. Entity whose tags are being displayed (metadata ->tags)
+ *
+ * GC_MODIFICATION
+ * Description: Adding wet classes
+ * Author: GCTools Team
  */
 
 $vars['class'] = (array) elgg_extract('class', $vars, []);

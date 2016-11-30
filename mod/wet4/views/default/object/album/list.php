@@ -6,6 +6,10 @@
  *
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
  * @author Cash Costello
+ *
+ * GC_MODIFICATION
+ * Description: Language translation changes
+ * Author: GCTools Team
  */
 
 $album = elgg_extract('entity', $vars);

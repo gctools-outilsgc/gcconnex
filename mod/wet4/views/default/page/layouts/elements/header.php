@@ -1,9 +1,14 @@
 <?php
 /**
+ * header.php 
+ *
  * Header for layouts
  *
  * @uses $vars['title']  Title
  * @uses $vars['header'] Optional override for the header
+ *
+ * @package wet4
+ * @author GCTools Team
  
  2015/10/15-
  Removed page header from group profile page

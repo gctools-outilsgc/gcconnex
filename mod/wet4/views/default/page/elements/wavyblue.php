@@ -1,11 +1,14 @@
 <?php
-/**
- * WET 4 Header , Canada branding and search
- *
+/*
+ * wavyblue.php
+ * 
+ * Holder for site branding, GC FIP (If GCconnex theme is active), and search. *Sidenote - this file is called wavy blue because the old wet template had a wonderful wavy blue bar to hold the site branding, so we kept the name :3 
+ * 
+ * @package wet4
+ * @author GCTools Team
  */
 
-// footer
-//echo elgg_view('core/account/login_dropdown');
+
 $site_url = elgg_get_site_url();
 //check lang of current user and change Canada graphic based on language
 if( _elgg_services()->session->get('language') == 'en'){

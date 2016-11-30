@@ -1,5 +1,13 @@
 <?php
-//Dropdown view for when users mouse over the messages to get a quick view of their messages!
+/*
+ * messages_dd.php
+ * 
+ * Dropdown view for when users mouse over the messages to get a quick view of their messages!
+ * 
+ * @package wet4
+ * @author Nick github.com/piet0024
+ */
+
 $site_url = elgg_get_site_url();
 ?>
 

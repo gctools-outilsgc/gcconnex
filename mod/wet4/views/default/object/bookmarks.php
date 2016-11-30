@@ -3,6 +3,10 @@
  * Elgg bookmark view
  *
  * @package ElggBookmarks
+ *
+ * GC_MODIFICATION
+ * Description: Changing style / adding font awesome icons / adding wet classes
+ * Author: GCTools Team
  */
 
 $full = elgg_extract('full_view', $vars, FALSE);

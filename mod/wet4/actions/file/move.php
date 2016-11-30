@@ -1,4 +1,9 @@
 <?php
+/*
+* GC_MODIFICATION
+* Description: Modified to handle moving multiple folders at once
+* Author: Ethan Wallace <Ethan.Wallace@tbs-sct.gc.ca>
+*/
 $files 		= (string) get_input("file_guid", 0);
 $folder_guid 	= (int) get_input("folder_guid", 0);
 $fileGUID = explode(',', $files);

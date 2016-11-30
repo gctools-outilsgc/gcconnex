@@ -3,6 +3,10 @@
  * Layout of a river item
  *
  * @uses $vars['item'] ElggRiverItem
+ *
+ * GC_MODIFICATION
+ * Description: Added wet and bootstrap classes and style.
+ * Author: Nick github.com/piet0024
  */
 
 $item = $vars['item'];

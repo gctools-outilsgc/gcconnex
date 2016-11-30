@@ -3,6 +3,10 @@
  * Content filter for river
  *
  * @uses $vars[]
+ *
+ * GC_MODIFICATION
+ * Description: Added wet styling and classes / Adding form labels
+ * Author: GCTools Team
  */
 
 // create selection array

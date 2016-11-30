@@ -7,6 +7,10 @@
  * @uses $vars['class']
  * @uses $vars['name']
  * @uses $vars['show_section_headers']
+ *
+ * GC_MODIFICATION
+ * Description: styling page menus like tabs / tests for settings
+ * Author: GCTools Team
  */
 
 $headers = elgg_extract('show_section_headers', $vars, false);

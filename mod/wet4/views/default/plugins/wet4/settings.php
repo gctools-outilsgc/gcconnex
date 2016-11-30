@@ -1,5 +1,12 @@
 <?php
-//$active= $vars['entity']->Banneractive;
+/*
+ * settings.php
+ * 
+ * Plugin settings for wet4 mod. Accessed through the site admin panel
+ * 
+ * @package wet4
+ * @author GCTools Team
+ */
 
 $options = array(
 	'name' => 'params[ExtTheme]',

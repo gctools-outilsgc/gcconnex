@@ -1,6 +1,11 @@
 <?php
 /**
+ * comments.php
+ * 
  * List comments with optional add form
+ * 
+ * @package wet4
+ * @author GCTools Team
  *
  * @uses $vars['entity']        ElggEntity
  * @uses $vars['show_add_form'] Display add form or not
@@ -10,6 +15,7 @@
  * 
  * @todo look into restructuring this so we are not calling elgg_list_entities()
  * in this view
+ *
  */
 
 $show_add_form = elgg_extract('show_add_form', $vars, true);

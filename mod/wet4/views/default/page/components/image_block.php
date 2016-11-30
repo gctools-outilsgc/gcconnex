@@ -1,5 +1,6 @@
 <?php
 /**
+ * image_block.php
  * Elgg image block pattern
  *
  * Common pattern where there is an image, icon, media object to the left
@@ -17,6 +18,9 @@
  * @uses $vars['image_alt']   HTML content of the alternate image block
  * @uses $vars['class']       Optional additional class for media element
  * @uses $vars['id']          Optional id for the media element
+ *
+ * @package wet4
+ * @author GCTools Team
  */
 
 $checkPage = elgg_get_context();

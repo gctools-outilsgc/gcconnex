@@ -2,6 +2,10 @@
 
 /**
  * Event calendar river view.
+ *
+ * GC_MODIFICATION
+ * Description: panel class
+ * Author: GCTools Team
  */
 
 $object = $vars['item']->getObjectEntity();

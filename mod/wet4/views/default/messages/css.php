@@ -3,6 +3,10 @@
  * Elgg Messages CSS
  *
  * @package ElggMessages
+ *
+ * GC_MODIFICATION
+ * Description: Added messages badge styling
+ * Author: GCTools Team
  */
 ?>
 

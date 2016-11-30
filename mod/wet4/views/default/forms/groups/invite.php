@@ -4,7 +4,11 @@
  *
  * @package ElggGroups
  */
-
+ /*
+ * GC_MODIFICATION
+ * Description: Added accessible labels
+ * Author: GCTools Team
+ */
 $group = elgg_extract("entity", $vars, elgg_get_page_owner_entity());
 $invite_site_members = elgg_extract("invite", $vars, "no");
 $invite_circle = elgg_extract("invite_circle", $vars, "no");

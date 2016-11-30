@@ -7,6 +7,10 @@
  * @uses $vars['message']     Optional message (usually excerpt of text)
  * @uses $vars['attachments'] Optional attachments (displaying icons or other non-text data)
  * @uses $vars['responses']   Alternate respones (comments, replies, etc.)
+ *
+ * GC_MODIFICATION
+ * Description: Changes to the layout of the river body. Does checks for group activity to format the layout differently
+ * Author: Nick github.com/piet0024
  */
 $lang = get_current_language();
 $item = $vars['item'];
