@@ -1,7 +1,9 @@
 <?php
 
 /**
- * GC-Information Banne
+ * start.php
+ *
+ * GCconnex theme - includes all GCTools branding, links and language.
  * 
  * @author Government of Canada
  */
