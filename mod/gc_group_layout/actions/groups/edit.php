@@ -9,9 +9,9 @@ elgg_make_sticky_form('groups');
 
 /**
  * wrapper for recursive array walk decoding
- *
+ * 
  * @param string &$v value
- *
+ * 
  * @return string
  */
 function profile_array_decoder(&$v) {
@@ -70,7 +70,7 @@ if (sizeof($input) > 0) {
 			if ($acl) {
 				// @todo Elgg api does not support updating access collection name
 				$db_prefix = elgg_get_config('dbprefix');
-				$query = "UPDATE {$db_prefix}access_collections SET name = '$ac_name'
+				$query = "UPDATE {$db_prefix}access_collections SET name = '$ac_name' 
 					WHERE id = $group->group_acl";
 				update_data($query);
 			}
@@ -207,9 +207,9 @@ if ($has_uploaded_icon) {
 * Group Tools
 *
 * Added action for user to upload a coverphoto to their group profile
-*
+* 
 * @author Nick - https://github.com/piet0024
-*/
+*/	
 
 $c_photo = $_FILES['c_photo'];
 
@@ -228,13 +228,13 @@ if(reset($c_photo) ){
 	$filehandler2->write(get_uploaded_file('c_photo'));
 	$filehandler2->close();
     $filehandler2->save();
-
+    
     $c_photo_guid = $filehandler2->getGUID();
     $subtype_testing = $filehandler2->getSubtype();
    $group->cover_photo =$c_photo_guid; //Nick - Set Cover photo metadata
 }else if(isset($group->cover_photo) && $group->cover_photo !='nope'){
 
-}else{
+}else{ 
 $group->cover_photo = 'nope';
 }
 
@@ -250,21 +250,20 @@ $new_owner_guid = (int) get_input('owner_guid');
 if (!$is_new_group && $new_owner_guid && ($new_owner_guid != $old_owner_guid)) {
 	// who can transfer
 	$admin_transfer = elgg_get_plugin_setting("admin_transfer", "group_tools");
-
+	
 	$transfer_allowed = false;
 	if (($admin_transfer == "admin") && elgg_is_admin_logged_in()) {
 		$transfer_allowed = true;
 	} elseif (($admin_transfer == "owner") && (($group->getOwnerGUID() == $user->getGUID()) || elgg_is_admin_logged_in())) {
 		$transfer_allowed = true;
 	}
-
+	
 	if ($transfer_allowed) {
 		// get the new owner
 		$new_owner = get_user($new_owner_guid);
-		gc_group_layout_transfer_coverphoto($group, $new_owner);
+		
 		// transfer the group to the new owner
 		group_tools_transfer_group_ownership($group, $new_owner);
-
 	}
 }
 
