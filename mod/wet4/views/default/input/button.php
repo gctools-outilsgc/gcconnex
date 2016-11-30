@@ -7,6 +7,10 @@
  *
  * @uses $vars['src']   Src of an image
  * @uses $vars['class'] Additional CSS class
+ *
+ * GC_MODIFICATION
+ * Description: added only-one-click class to all buttons (runs a script that will stop forms from submitting many times) / styling with wet classes
+ * Author: GCTools Team
  */
 
 if (isset($vars['class'])) {
