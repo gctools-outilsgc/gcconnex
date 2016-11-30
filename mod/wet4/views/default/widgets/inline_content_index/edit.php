@@ -43,7 +43,7 @@
   <?php
 	echo elgg_view('input/text', array(
 			'name' => 'params[widget_title]',                        
-			'value' => gc_explode_translation($widget_title,'en')
+			'value' => $widget_title,
 		));
 	?>
 </p>
