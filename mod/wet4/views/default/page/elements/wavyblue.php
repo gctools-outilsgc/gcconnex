@@ -1,11 +1,14 @@
 <?php
-/**
- * WET 4 Header , Canada branding and search
+/*
+ * wavyblue.php
  * 
+ * Holder for site branding, GC FIP (If GCconnex theme is active), and search. *Sidenote - this file is called wavy blue because the old wet template had a wonderful wavy blue bar to hold the site branding, so we kept the name :3 
+ * 
+ * @package wet4
+ * @author GCTools Team
  */
 
-// footer
-//echo elgg_view('core/account/login_dropdown');
+
 $site_url = elgg_get_site_url();
 //check lang of current user and change Canada graphic based on language
 if( _elgg_services()->session->get('language') == 'en'){
@@ -13,16 +16,21 @@ if( _elgg_services()->session->get('language') == 'en'){
 }else{
     $graphic_lang = 'fr';
 }
+//If GCconnex theme is not active, display the site name as a link in the top left
+$site_name = elgg_view('output/url', array(
+    'href'=>elgg_get_site_url(),
+    'text'=>elgg_get_config('sitename'),
 
+));
 
 
 ?>
         <div class="row">
             <div class="brand col-xs-8 col-sm-9 col-md-6">
-               <object type="image/svg+xml" tabindex="-1" data="<?php echo $site_url ?>/mod/wet4/graphics/sig-blk-<?php echo $graphic_lang ?>.svg"></object>
-                <span class="wb-inv"><?php echo elgg_echo('wet:gc');?></span>
+                <!-- LOGO -->
+                <h1><?php echo $site_name; ?></h1>
             </div>
-            
+
             <section class="wb-mb-links col-xs-4 col-sm-3 visible-sm visible-xs" id="wb-glb-mn">
                 <h2><?php echo elgg_echo('wet:search');?></h2>
                 <ul class="list-inline text-right chvrn">
@@ -44,4 +52,3 @@ if( _elgg_services()->session->get('language') == 'en'){
         </div>
 
         <!-- End of Beautiful Wavy Blue Bar at the top -->
-

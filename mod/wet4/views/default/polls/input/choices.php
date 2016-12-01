@@ -1,5 +1,11 @@
 <?php
 
+/*
+ * GC_MODIFICATION
+ * Description: Added font awesome icons + JS to add additional choice fields + Accessability 
+ * Author: Nick github.com/piet0024
+ */
+
 // TODO: add ability to reorder poll questions?
 $poll = elgg_extract('poll', $vars);
 $test = elgg_extract('test', $vars);

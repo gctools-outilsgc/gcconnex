@@ -7,7 +7,11 @@
  * @uses $vars['subject']
  * @uses $vars['body']
  */
-
+ /*
+ * GC_MODIFICATION
+ * Description: Added accessible labels + support for sending to colleague circles
+ * Author: GCTools Team
+ */
 if ($_GET['collection']){ // if it's from collection, create a list of recipient
 	$collection_id = $_GET['collection'];
 	$members = get_members_of_access_collection($collection_id, true);
@@ -45,13 +49,13 @@ $content = get_user_access_collections(elgg_get_logged_in_user_guid());
 </div>
 
 <div class="mrgn-bttm-md" id="circlecolleague_section" name="circlecolleague_section">
-		
-<ul>	
-<?php 
+
+<ul>
+<?php
 echo '</ul>'; //list of colleague circle + radiobox
 echo '<select class="form-control" id="messageCollection" name="messageCollection">
 	<option value="">---</option>';
-	
+
 foreach ($content as $key => $collection) {
 	$collections = get_members_of_access_collection($collection->id, true);
 	echo "<option value=";
@@ -63,7 +67,7 @@ foreach ($content as $key => $collection) {
 	}
 
 	echo implode(',', $coll_members);
-		
+
 	if ($collection->id == $collection_id){
 		echo ' selected="selected"';
 	}
@@ -83,7 +87,7 @@ echo $vars['collection'];
 	<label for="recipient_username"><?php echo elgg_echo("email:to"); ?>: </label>
 	<?php echo $recipient_autocomplete; ?>
 	<span class="elgg-text-help"><?php echo elgg_echo("messages:to:help"); ?></span>
-	
+
 </div>
 <div class="mrgn-bttm-md">
 	<label for="subject"><?php echo elgg_echo("messages:title"); ?>: <br /></label>

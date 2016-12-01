@@ -7,6 +7,10 @@
  * @uses $vars['entity']    The page object
  * @uses $vars['full_view'] Whether to display the full view
  * @uses $vars['revision']  This parameter not supported by elgg_view_entity()
+ *
+ * GC_MODIFICATION
+ * Description: Styling to object and entity menu
+ * Author: GCTools Team
  */
 
 

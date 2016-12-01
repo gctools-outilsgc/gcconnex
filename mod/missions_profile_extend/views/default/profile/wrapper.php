@@ -24,7 +24,7 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
         <?php echo elgg_view('profile/details'); ?>
     </div>
 
-    
+
     <div class="gcconnex-profile-wire-post">
         <?php $user = get_user(elgg_get_page_owner_guid());
             $params = array(
@@ -40,19 +40,19 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
         }
         ?>
     </div>
-    
-   <?php //echo elgg_get_context(); 
-    
-    
+
+   <?php //echo elgg_get_context();
+
+
 
 ?>
-    
+
     <div class="b_extended_profile">
         <?php
 
         echo '<div role="tabpanel">';
 /* Old Tab Menu
-        
+
         echo '<ul class="nav nav-tabs" role="tablist">';
         echo '<li role="presentation" class="active"><a href="#profile-display" aria-controls="profile-display" role="tab" data-toggle="tab">' . elgg_echo('gcconnex_profile:profile') . '</a></li>';
         echo '<li role="presentation" ><a href="#splashboard" aria-controls="splashboard" role="tab" data-toggle="tab">' . elgg_echo('gcconnex_profile:widgets') . '</a></li>';
@@ -61,7 +61,7 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
         */
 
         //add additional tabs
-        echo elgg_view('groups/profile/tab_menu');
+        echo elgg_view('profile/profile_tab_menu');
 
         echo '<div class="tab-content">';
 		if (empty($_GET['pg']))  {
@@ -71,7 +71,7 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
 		else{
 			$pg = $_GET['pg'];
 		 	echo '<div role="tabpanel" class="tab-pane " id="profile-display">';
-		} 
+		}
 
         if ( has_content($user, 'description') ) {
             init_ajax_block(elgg_echo('gcconnex_profile:about_me'), 'about-me', $user);
@@ -90,7 +90,7 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
             echo elgg_view('b_extended_profile/work-experience');
             finit_ajax_block('work-experience');
         }
-        
+
         if(elgg_is_logged_in()){
             if ( has_content($user, 'gc_skills') ) {
                 init_ajax_block(elgg_echo('gcconnex_profile:gc_skills'), 'skills', $user);
@@ -98,7 +98,7 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
                 finit_ajax_block('skills');
             }
         }
-		
+
         /*
          * MODIFIED CODE
          * Constructs the opt-in section according to the original plugin methodology.
@@ -115,7 +115,7 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
             echo elgg_view('b_extended_profile/languages');
             finit_ajax_block('languages');
         }
-        
+
         /*
          * MODIFIED CODE
          * Constructs the opt-in section according to the original plugin methodology.
@@ -128,7 +128,7 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
         /*
          * END MODIFIED CODE
          */
-        
+
         // create the div wrappers and edit/save/cancel toggles for each profile section
 
             echo '</div>'; //close div id=#profile-display

@@ -1,4 +1,12 @@
-<?php 
+<?php
+/*
+ * groups_autocomplete.php
+ * 
+ * When creating a group this will search for groups with similar names in order to (hopefully) reduce duplicate groups
+ * 
+ * @package wet4
+ * @author Ethan github.com/ethanWallace
+ */
 	
 	$name = elgg_extract("name", $vars); // input name of the selected group
 	$id = elgg_extract("id", $vars);

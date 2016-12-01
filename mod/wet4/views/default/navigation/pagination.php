@@ -11,6 +11,10 @@
  * @uses int    $vars['count']      Number of items in list
  * @uses string $vars['baseurl']    Base URL to use in links
  * @uses string $vars['offset_key'] The string to use for offet in the URL
+ *
+ * GC_MODIFICATION
+ * Description: Formatting pager (Seems to be in flux)
+ * Author: GCTools Team
  */
 
 if (elgg_in_context('widget')) {

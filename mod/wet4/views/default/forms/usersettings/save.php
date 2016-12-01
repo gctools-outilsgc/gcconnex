@@ -4,7 +4,11 @@
  *
  * Plugins should extend "forms/account/settings" to add to the settings.
  */
-
+ /*
+ * GC_MODIFICATION
+ * Description: Remove menu items
+ * Author: GCTools Team
+ */
 $user = elgg_get_page_owner_entity();
 
 $form_body = elgg_view('forms/account/settings', $vars);

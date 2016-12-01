@@ -1,13 +1,12 @@
 <?php
-/**
- * The wire sidebar
+/*
+ * sidebar.php
+ *
+ * Sidebar on the wire. Features most liked wire posts
+ *
+ * @package wet4
+ * @author GCTools Team
  */
-
- /*
-echo elgg_view('page/elements/tagcloud_block', array(
-	'subtypes' => 'thewire',
-	'container_guid' => elgg_get_page_owner_guid(),
-));*/
 
 
 

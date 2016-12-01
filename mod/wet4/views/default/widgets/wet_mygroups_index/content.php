@@ -1,5 +1,12 @@
 <?php
- 
+/*
+* wet_mygroups_index/content.php
+*
+* Widget to display user's groups
+*
+* @package wet4
+* @author GCTools Team
+*/
   $num_items = $vars['entity']->num_items;
   if (!isset($num_items)) $num_items = 10;
 
@@ -17,16 +24,16 @@
       'size' => 'small',
       'relationship' => 'member',
       'relationship_guid' => $owner->guid,
-      'inverse_relationship'=> FALSE, 
+      'inverse_relationship'=> FALSE,
 		'type'=>'group',
 		'limit'=>$num_items,
 		'full_view' => false,
 		'list_type_toggle' => false,
 		'pagination' => false));
-	
+
 
  $options = array(
-            
+
             'full_view' => false,
             'list_type' => 'list',
             'pagination' => false,
@@ -45,5 +52,4 @@ $all_link = elgg_view('output/url', array(
 echo $content;
 
 echo "<div class=' mrgn-tp-sm'>$all_link</div>";
-?>       
-
+?>

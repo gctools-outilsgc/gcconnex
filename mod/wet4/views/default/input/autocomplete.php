@@ -11,6 +11,10 @@
  * @uses $vars['match_on']    Array | str What to match on. all|array(groups|users|friends)
  * @uses $vars['match_owner'] Bool.  Match only entities that are owned by logged in user.
  * @uses $vars['class']       Additional CSS class
+ *
+ * GC_MODIFICATION
+ * Description: Adding wet classes
+ * Author: GCTools Team
  */
 
 if (isset($vars['class'])) {

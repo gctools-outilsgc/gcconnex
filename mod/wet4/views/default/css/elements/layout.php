@@ -8,6 +8,10 @@
  *
  * @package Elgg.Core
  * @subpackage UI
+ *
+ * GC_MODIFICATION
+ * Description: Moved bootstrap col classes to here
+ * Author: GCTool Team
  */
 ?>
 /* <style> /**/

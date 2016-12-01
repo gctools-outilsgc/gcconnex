@@ -10,6 +10,10 @@
  * @uses $vars['name']     The name of the input field
  * @uses $vars['class']    Additional CSS class
  * @uses $vars['disabled']
+ *
+ * GC_MODIFICATION
+ * Description: Added wet classes
+ * Author: GCTools Team
  */
 
 $vars['class'] = (array) elgg_extract('class', $vars, []);

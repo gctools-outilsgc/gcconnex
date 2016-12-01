@@ -7,6 +7,10 @@
  *
  * @uses $vars['item']       ElggMenuItem
  * @uses $vars['item_class'] Additional CSS class for the menu item
+ *
+ * GC_MODIFICATION
+ * Description: add list-unstyled class
+ * Author: GCTools Team
  */
 
 $item = $vars['item'];

@@ -5,6 +5,11 @@
     terms of the GNU Lesser General Public License.
     See this page for more info:
     http://www.html-form-guide.com/contact-form/creating-a-contact-form.html
+    
+    * GC_MODIFICATION
+    * Description: Added wet styling and form validation things / Added flag content
+    * Author: GCTools Team 
+    
 */
 
 if (elgg_is_logged_in()) {
@@ -15,7 +20,7 @@ if (elgg_is_logged_in()) {
 
 }
 
-require_once("./include/fgcontactform.php");
+$path = require_once("./include/fgcontactform.php");
 //require_once("./include/simple-captcha.php");
 $email=elgg_get_plugin_setting('email','contactform');
 //$list1=elgg_get_plugin_setting('list1','contactform');
@@ -46,7 +51,7 @@ if(isset($_POST['submitted']))
    {
 	system_messages(elgg_echo('contactform:thankyoumsg'));
 	forward("mod/contactform");
-   // forward(elgg_get_site_url());
+   // forward(elgg_get_site_url());adress
    }
 }
 
@@ -81,7 +86,6 @@ if(isset($_POST['submitted']))
 	</header>
     
     <div class="panel-body mrgn-lft-md">
-        <?php echo elgg_echo('contactform:content:form'); ?>
         <form id='contactus' action='<?php echo $formproc->GetSelfScript(); ?>' enctype="multipart/form-data" method='post' accept-charset='UTF-8'>
                 <input type='hidden' name='submitted' id='submitted' value='1' />
                 <input type='hidden' name='<?php echo $formproc->GetFormIDInputName(); ?>' value='<?php echo $formproc->GetFormIDInputValue(); ?>' />
@@ -96,13 +100,6 @@ if(isset($_POST['submitted']))
 
                     <input type='text' name='email' class="form-control" id='email' value='<?php if (elgg_is_logged_in()){ echo $sender_email;}else{echo $formproc->SafeDisplay('email');}  ?>' /><br />
                     <span id='contactus_email_errorloc' class='error'></span>
-                </div>
-
-                <div class='form-group'>
-                    <label for='depart' class="required"><span class="field-name"><?php echo elgg_echo('contactform:department'); ?></span><strong class="required"> (<?php echo elgg_echo('contactform:required'); ?>)</strong></label>
-
-                    <input type='text' name='depart' class="form-control" id='depart' value='<?php if (elgg_is_logged_in()){ echo $sender_depart;}else{echo $formproc->SafeDisplay('depart');}  ?>' /><br />
-                    <span id='contactus_depart_errorloc' class='error'></span>
                 </div>
 
                 <div class='form-group'>

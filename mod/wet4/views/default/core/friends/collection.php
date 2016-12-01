@@ -6,6 +6,10 @@
  * @subpackage Core
  *
  * @uses $vars['collection'] The individual friends collection
+ *
+ * GC_MODIFICATION
+ * Description: Added wet styling and classes 
+ * Author: GCTools Team
  */
 
 $coll = $vars['collection'];

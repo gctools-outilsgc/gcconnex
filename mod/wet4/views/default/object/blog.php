@@ -3,6 +3,10 @@
  * View for blog objects
  *
  * @package Blog
+ *
+ * GC_MODIFICATION
+ * Description: add wet and bootstrap classes
+ * Author: GCTools Team
  */
 
 $lang = get_current_language();

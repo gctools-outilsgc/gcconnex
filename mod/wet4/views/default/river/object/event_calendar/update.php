@@ -1,4 +1,10 @@
 <?php
+/*
+ * GC_MODIFICATION
+ * Description: Add panel class
+ * Author: GCTools Team
+*/
+
 
 $object = $vars['item']->getObjectEntity();
 

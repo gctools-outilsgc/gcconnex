@@ -1,4 +1,14 @@
 <?php
+/*
+ * add_panel.php
+ * 
+ * This view formats the ajax window that opens up and allows users to add widgets
+ * 
+ * @package wet4
+ * @author GCTools Team
+ */
+
+
 $context = $vars["context"];
 $show_access = (int) $vars["show_access"];
 

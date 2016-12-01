@@ -10,6 +10,10 @@
  *
  * @see elgg_push_breadcrumb
  * @see elgg_get_breadcrumbs
+ *
+ * GC_MODIFICATION
+ * Description: breadcrumbs with the wet formatting
+ * Author: GCTools Team
  */
  $site_url = elgg_get_site_url();
 

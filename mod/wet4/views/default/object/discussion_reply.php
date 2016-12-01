@@ -3,6 +3,10 @@
  * Forum reply entity view
  *
  * @package ElggGroups
+ *
+ * GC_MODIFICATION
+ * Description: Layout changes / added wet and bootstrap classes
+ * Author: GCTools Team
 */
 
 $reply = elgg_extract('entity', $vars, FALSE);

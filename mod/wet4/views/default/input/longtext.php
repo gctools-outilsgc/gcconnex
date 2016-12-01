@@ -9,6 +9,10 @@
  * @uses $vars['value']    The current value, if any - will be html encoded
  * @uses $vars['disabled'] Is the input field disabled?
  * @uses $vars['class']    Additional CSS class
+ *
+ * GC_MODIFICATION
+ * Description: Adding wet classes 
+ * Author: GCTools Team
  */
 
 $vars['class'] = (array) elgg_extract('class', $vars, []);

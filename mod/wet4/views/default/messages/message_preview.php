@@ -4,6 +4,10 @@
     Display user's message in message format for preview
 
     Done in jQuery at the moment 
+    
+    * GC_MODIFICATION
+    * Description: Creates a preview of your site messages before you send it
+    * Author: Ethan github.com/ethanWallace
     */
     ?>
 

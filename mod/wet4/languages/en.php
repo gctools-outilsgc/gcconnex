@@ -2,96 +2,19 @@
 $site_url = elgg_get_site_url();
 
 return array(
-/**
-   * WET specific
-   */
-	'breadcrum:home' => 'Home',
 
-  'wet:skiptomain'=>"Skip to main content",
-  'wet:aboutsite'=>"Skip to \"About this site\"",
-  'wet:LangSel'=>"Language selection",
-  'wet:gc'=>"Government of Canada",
-  'wet:search'=>"Search and menus",
-  'wet:searchHead'=>"Search",
-  'wet:searchweb'=>"Search website",
-  'wet:searchgctools'=>"Search GCconnex",
-  'wet:more'=>"More",
-  'wet:inboxmore'=>"More (archived)",
-  'wet:topicmenu'=>"Topic menu",
-  'wet:youarehere'=>"You are here:",
-  'wet:errmess' => "<h3 class='h3'>The form could not be submitted because errors were found.</h3>",
-  'wet:feedbackText'=>"Feedback<span class='wb-inv'> about this web site</span>",
-  'wet:footAbout' => 'About GCconnex',
-  'wet:footTerms' => 'Terms and Conditions of Use',
-  'wet:footPrivacy' => 'Privacy Policy',
-  'wet:footTutorials' => 'GCconnex Tutorials',
-  'wet:footTitleAbout' => 'About',
-  'wet:footTitleNews' => 'News',
-  'wet:footTitleSocial' => 'Stay Connected',
-  'wet:footGCtools' => 'GCTools',
-  'wet:barGCpedia'=>'pedia',
-  'wet:barDirectory'=>'directory',
-  'wet:collapseWidget' => 'Collapse / Open %s',
-  'wet:gcintranetLink-toolsHead' => 'http://intranet.canada.ca/index-eng.asp?utm_source=gcconnex&utm_medium=gctools-banner&utm_campaign=generic',
-  'wet:gcintranetLink-toolsFoot' => 'http://intranet.canada.ca/index-eng.asp?utm_source=gcconnex&utm_medium=gcconnex-footer&utm_campaign=generic',
-  'wet:gcpediaLink' => 'http://www.gcpedia.gc.ca/wiki/?setlang=en',
-  'wet:gcdirectoryLink' => 'https://gcdirectory-gcannuaire.gc.ca/en/GCD/?pgid=002',
-  'wet:tutorialLink'=>'http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/See_All',
-  'wet:groupLoading'=>'Loading content',
-  'subgroups:parent:need_join' => "Join Parent Group",
-  'event_calendar:none' => "No events found.",
-  'wet:cover_photo_remove'=>'Remove current group cover image',
-  'wet:cover_photo_input'=>'Add a Cover Image to your group',
-  'wet:cover_photo_dim'=> "Your group's cover image displays at 1500 pixels wide by 275 pixels tall on your page on computers. If the dimensions of the image is less or more, the image will be stretched or scaled to fit the area.",
-  'wet:search_in_group'=>'Search in this Group',
-  'wet:cover_photo_alt'=>'Graphic Element for the Group',
-  'wet:login_engage_0'=>'Join your colleagues across Canada to something something something dark side!',
-  'wet:login_engage_1'=>'Share your knowledge and ideas.',
-  'wet:login_engage_2'=>'Find people you need. The opportunities you want.',
-  'wet:login_engage_3'=>'Promote government-wide GC activities.',
-  'wet:login_welcome'=>'Welcome to GCconnex',
-	'wet:jobs:link' => 'jobs.gc.ca <i class="fa fa-external-link mrgn-lft-sm"></i>',
-	'wet:jobs:href' => "http://jobs-emplois.gc.ca/index-eng.htm",
-
-  'wet:login:departments'=>"<span class=\"login-big-num\">174</span> Organizations across Canada",
-  'wet:login:discussions'=>"<span class=\"login-big-num\">%s</span> Discussions happening right now",
-
-  "wet:messagedd:no_results"=>"You're all caught up!",
+    'wet:more'=>"More",
+  	'breadcrum:home' => 'Home',
 
 
-/**
-*notice section
-*/
-'notice:title' => 'GCconnex... reimagined for you!',
-'notice:paragraphe' => '<p>Over the next few weeks, you may notice changes on GCconnex as we try-out the new features and tweak current functionalities to make your online collaboration and networking easier, faster and more fun.</p>
+        'wet:feedbackText'=>"Feedback<span class='wb-inv'> about this web site</span>",
 
-<p>We would like to thank you in advance for your understanding as we work through any bugs or issues that may arise.  We are extremely excited about the new GCconnex and hope you are too.</p>
 
-<p>Please join us for discussions regarding the upgrades in the <a href="https://gcconnex.gc.ca/groups/profile/226392/gc20-tools-outils-gc20">GC2.0 Tools Group </a> and we hope you can attend the official launch of the GCTools at the <a href="http://www.gcpedia.gc.ca/wiki/Blueprint_2020/Innovation_Fair_2016">Blueprint 2020 Innovation Fair</a> on April 20, 2016. </p>',
-
-/*
- *  Metadata
- */
-
- 'meta:desc' => 'GCconnex is a professional networking and collaborative workspace for all public service, allowing people to connect and share information, leveraging the power of networking towards a more effective and efficient public service.',
-
-/**
-  * Profile Strength
-  */
-     'ps:basicprofile' => "Basic profile",
-     'ps:access' => "Access: ",
-     'ps:details' => "See details",
-     'ps:education' => "Education",
-     'ps:work' => "Work experience",
-     'ps:profilestrength' => "Profile Strength",
-     'ps:all-star' =>"Congrats! You are an All-star.",
-     'ps:beginner' =>"Beginner",
-     'ps:advanced' =>"Advanced",
-     'ps:expert' =>"Expert",
-     'ps:optingin' =>"Have you looked into opting-in to a Micro-mission?",
-     'ps:optin' =>"Opt-In",
-     'ps:psErr'=>"An error occured getting your profile information.  We are working to resolve the issue.",
-
+        'wet:footTerms' => 'Terms and Conditions of Use',
+        'wet:footPrivacy' => 'Privacy Policy',
+        'wet:footTitleAbout' => 'About',
+        'wet:footTitleNews' => 'News',
+        'wet:footTitleSocial' => 'Stay Connected',
     /**
     * Department Verify
     */
@@ -188,12 +111,6 @@ return array(
     'userMenu:usermenuTitle' =>'User Card - Click here for links to your profile, account settings and logout', /*NEW*/
 		'wet:dd:expand'=>"Open drop down of most recent messages",
 
-    /**
-     * Custom Activity Widget
-     */
-     'wetActivity:nocollorgroup'=>"To get started you can browse or search for groups related to your work and interests. Join some groups to start seeing activity.",
-     'wetActivity:welcome'=>"Welcome to GCconnex",
-     'wetActivity:browsegroups'=>"Start Browsing Groups",
 
  /**
  * Group Profile
@@ -257,8 +174,8 @@ return array(
  */
 
 	'login' => "Log in",
-	'loginok' => "Welcome to GCconnex %s.", /*NEW but doesn't work :3*/
-    'wet:loginok' => "Welcome  to GCconnex %s.", /*NEW*/
+
+
 	'loginerror' => "We couldn't log you in. Please check your credentials and try again.",
 	'login:empty' => "Username/email and password are required.",
 	'login:baduser' => "Unable to load your user account.",
@@ -435,8 +352,6 @@ return array(
 	'widgets:add:failure' => "We could not add your widget.",
 	'widgets:move:failure' => "We could not store the new widget position.",
 	'widgets:remove:failure' => "Unable to remove this widget",
-    'wet4:noticetitle' => 'Notice',
-    'wet4:homenotice' => 'Welcome to GCconnex, the Government of Canada&#39;s professional social networking platform. The purpose of GCconnex is to enable public servants to connect and collaborate based on shared interests, knowledge, and experience. GCconnex is to be used for activities related to the workplace and should not be used as a replacement for personal social networks (such as Facebook).',
 
 
 /**
@@ -649,10 +564,6 @@ return array(
 	'tools' => "Tools",
 	'settings:edit' => 'Edit settings',
 
-    'gcconnex:registerText' => '
-<h3>Welcome to GCconnex! </h3>
-GCconnex is a professional networking and collaborative workspace for all public service, allowing people to connect and share information, leveraging the power of networking towards a more effective and efficient public service.<br>
-<a href="'.$site_url.'terms-termes">Terms and Conditions of Use</a>',
 	'register' => "Register",
 	'registerok' => "You have successfully registered for %s.",
 	'registerbad' => "Your registration was unsuccessful because of an unknown error.",
@@ -1037,9 +948,7 @@ These changes will only affect new users on the site.',
 	'friends:tiny' => "tiny",
 	'friends:small' => "small",
 
-    'wet_mygroups:my_groups' => "My Groups",
-    'wet_mygroups:my_groups_nolog' => "New Groups",
-    'wet4:filterActivity'=>'Filter Activity',
+
 /**
  * Icons
  */
@@ -1532,46 +1441,7 @@ Please do not reply to this email.",
 /**
 *Contact page / FAQ
 */
-       'contactform:help' => 'Help',
-    'contactform:upload' => 'Upload your file',
-      'contactform:required' => 'required',
-    'contactform:form:subject' => "Subject",
-    'contactform:title' => "GCconnex Help Pages",
-    'contactform:list' => "<ul class='list-unstyled'>
-						<li> <a href='http://www.gcpedia.gc.ca/wiki/GC2.0_Tools_Help_Centre/GCconnex'>Help centre</a> </li>
-
-						</ul>",
-    'contactform:faq' => "FAQ",
-    'contactform:title:lostpwd' => "<a href=' http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/How_to_retrieve_my_password'>Lost password</a>",
-    'contactform:title:lostuser' => "<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/How_to_retrieve_your_username'>Lost username</a>",
-    'contactform:title:create' => "<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/How_to_create_an_account_on_GCconnex'>Create account</a>",
-    'contactform:title:picture' => "<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/How_to_edit_your_personal_profile#Editing_your_personal_profile
-'>Upload profile picture</a>",
-    'contactform:title:sign-on' => "<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help_/_How_to_use_Simplified_Sign-on'>Simplified Sign-on</a>",
-    'contactform:title:flag_content' => "<a href='http://www.gcpedia.gc.ca/wiki/Internal_Online_Collaborative_Tools_Guidance/Values_and_Ethics'> Flag content or behaviour</a>",
-    'contactform:title:form' => "Contact Us",
-
-    'contactform:content:form' => "<p>
-					Please see the FAQ and the Help Centre to get instant answers for the most common questions and learn how to use GCconnex like a pro!</p>
-					<p>Can't find the answer you are looking for? Contact the GCconnex Help Desk by filling out the form below. Please be clear as possible in describing your question or issue, and provide a screenshot where possible. A GCTools Unit Support Officer will respond to your inquiry within two (2) business days.
-					</p>",
-	'contactform:useful' => 'GCconnex Groups that may be useful to you:',
-    'contactform:helpful' => 'Helpful communities',
-    'contactform:learn' => 'Learn more about social media',
-    'contactform:ambassadors' => 'Ambassadors Network for the GC 2.0 Tools GCconnex Group',
-    'contactform:clicks' => 'Clicks and Tips GCconnex Group',
-    'contactform:groupgcconnex' => 'GC 2.0 Tools GCconnex Group',
-    'contactform:teamgcpedia' => 'GC 2.0 Tools Team on GCpedia',
-    'contactform:collaborating' => ' CSPS’s Collaborating Using GCpedia (B171) ',
-    'contactform:collaborating:link' => '"http://www.csps-efpc.gc.ca/forlearners/coursesandprograms/CourseDetail-eng.aspx?courseno=b171%7C"',
-    'contactform:socialmedia' => 'Collaborating Using GCconnex and GCpedia (B336)',
-    'contactform:socialmedia:link' => '"http://www.csps-efpc.gc.ca/forlearners/coursesandprograms/CourseDetail-eng.aspx?courseno=B336"',
-    'contactform:guidance' => '<a href="http://www.gcpedia.gc.ca/gcwiki/images/b/b5/Social_Media_in_the_GC.jpg">Guidance for employees : Social Media in the GC context</a>',
-    'contactform:department' => 'Department',
-    'contactform:select' => 'Please select a category',
-    'contactform:reason' => 'Select...',
-    'contactform:help_menu_item' => "Help / Contact Us",
-    'contactform:newsletter' => 'Subscribe to the Newsletter',
+ 
 	'contactform:box:message' => 'Show the information box',
 	'conatactform:fr:name' => 'Name of the link in french',
 	'conatactform:eng:name' => 'Name of the link in english',
@@ -1661,7 +1531,7 @@ Please do not reply to this email.",
  'gcTour:step6txt' => "Want to hold a group discussion on a project or a document? Use the chatrooms from the chat bar at the bottom of the screen.",
 /*Change access*/
 
-'msg:change_access' => "Not all users have access to your content. Since GCconnex wants to be as open as possible, are you sure you need to restrict the access to this content?", //NEW
+
 'msg:change_access_title' => "Did you know?",
 
 /*

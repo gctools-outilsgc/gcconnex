@@ -1,9 +1,9 @@
 <?php
 /**
- * Elgg add a collection of friends
+ * Edit collection page
  *
- * @package Elgg.Core
- * @subpackage Social.Collections
+ * @package wet4
+ * @author Ethan Wallace
  */
 
 // You need to be logged in for this one

@@ -1,6 +1,11 @@
 <?php
-/**
+/*
+ * blog.php
+ *
  * Display a form for quick blog adding
+ *
+ * @package wet4
+ * @author GCTools Team
  */
 
 //$bubble_icon = elgg_view_icon('speech-bubble');

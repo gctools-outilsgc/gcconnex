@@ -1,6 +1,11 @@
 <?php
-/**
+/*
+ * weekly_likes.php
+ *
  * Display a list of the most liked contents within a week.
+ *
+ * @package wet4
+ * @author GCTools Team
  */
 
 $week_ago = time() - (60 * 60 * 24 * 7);

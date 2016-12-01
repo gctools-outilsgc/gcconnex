@@ -5,6 +5,11 @@
  * @package Elgg.Core
  * @subpackage Widgets.Management
  */
+ /*
+ * GC_MODIFICATION
+ * Description: makes sure the user is forwarded to the proper page after removing widget
+ * Author: 
+ */
 $owner = elgg_get_logged_in_user_entity()->username;
 $widget = get_entity(get_input('widget_guid'));
 if ($widget) {

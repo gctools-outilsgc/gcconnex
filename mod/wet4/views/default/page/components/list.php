@@ -1,6 +1,8 @@
 <?php
 
 /**
+ * list.php
+ *
  * View a list of items
  *
  * @package Elgg
@@ -18,6 +20,9 @@
  * @uses $vars['item_class']   Additional CSS class for the <li> elements
  * @uses $vars['item_view']    Alternative view to render list items
  * @uses $vars['no_results']   Message to display if no results (string|Closure)
+ *
+ * @package wet4
+ * @author GCTools Team
  */
 
 

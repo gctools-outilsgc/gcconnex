@@ -1,10 +1,18 @@
-<?php 
+<?php
+/*
+ * groups_autocomplete.php
+ *
+ * Library to autocomplete list of groups with similiar titles while creating a group.
+ *
+ * @package wet4
+ * @author
+ */
 	$q = sanitize_string(get_input("q"));
 	$current_groups = sanitize_string(get_input("groups_guids"));
 	$limit = (int) get_input("limit", 50);
 	$result = array();
 	$user = elgg_get_logged_in_user_entity();
-	
+
 	if(!empty($q)){
 		$db_prefix = elgg_get_config('dbprefix');
 		$params['type'] = 'group';

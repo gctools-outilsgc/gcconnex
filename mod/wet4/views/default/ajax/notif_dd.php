@@ -5,7 +5,7 @@ This will populate a drop down that will show up when mousing over "notification
 ['type'] = Are you asking for notifications or messages?
 ['count'] = How many do you want back?
 
-Author: Nick
+@author: Nick
 */
 
 $info_type = get_input('type');

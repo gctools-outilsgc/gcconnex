@@ -26,6 +26,10 @@
  * @uses string $vars['class']    Additional class of the list. Optional.
  * @uses string $vars['align']    'horizontal' or 'vertical' Default: 'vertical'
  *
+ *
+ * GC_MODIFICATION
+ * Description: wet classes / added stopPropagation() so if the checkboxes are in dropdowns it won't close the dropdown
+ * Author: GCTools Team
  */
 
 $defaults = array(

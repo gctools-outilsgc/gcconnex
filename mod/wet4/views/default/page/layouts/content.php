@@ -1,5 +1,7 @@
 <?php
 /**
+ * content.php 
+ *
  * Main content area layout
  *
  * @uses $vars['content']        HTML of main content area
@@ -12,6 +14,9 @@
  * @uses $vars['context']        Page context (override)
  * @uses $vars['filter_context'] Filter context: everyone, friends, mine
  * @uses $vars['class']          Additional class to apply to layout
+ *
+ * @package wet4
+ * @author GCTools Team
  */
 
 $context = elgg_extract('context', $vars, elgg_get_context());

@@ -5,6 +5,10 @@
  *
  * @package Elgg
  * @subpackage Core
+ *
+ * GC_MODIFICATION
+ * Description: Added wet styling and classes / Adding form labels
+ * Author: GCTools Team
  */
 $user = elgg_get_page_owner_entity();
 

@@ -1,8 +1,13 @@
-<?php 
+<?php
+/*
+* GC_MODIFICATION
+* Description: Added view all link
+* Author: GCTools Team
+*/
 	$num_items = $vars['entity']->num_items;
 	if (!isset($num_items)) $num_items = 10;
 	elgg_set_context('custom_index_widgets wire');
- 	
+
 	$widget_datas = elgg_list_entities(array(
 		'type'=>'object',
 		'subtype'=>'thewire',
@@ -10,7 +15,7 @@
 		'full_view' => false,
 		'list_type_toggle' => false,
 		'pagination' => false));
-	
+
 	echo $widget_datas;
 
 $all_link = elgg_view('output/url', array(
@@ -21,5 +26,3 @@ $all_link = elgg_view('output/url', array(
 echo "<div class='text-right mrgn-tp-sm'>$all_link</div>";
 
 ?>
-
-

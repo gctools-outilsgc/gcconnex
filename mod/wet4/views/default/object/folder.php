@@ -1,4 +1,15 @@
 <?php
+/*
+ * filename.php
+ * 
+ * Handles the file folder view. Related to the file_tools mod
+ * 
+ * @package file_tools
+ * 
+ * GC_MODIFICATION
+ * Description: changed the layout / added wet classes / accessibility modifications
+ * Author: GCTools Team
+ */
 
 $folder = elgg_extract("entity", $vars);
 $full_view = elgg_extract("full_view", $vars, false);
