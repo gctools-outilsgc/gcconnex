@@ -1,5 +1,7 @@
 <?php
 /**
+ * dashboard.php
+ * 
  * Wet dashboard layout
  *
  * @package Elgg
@@ -11,6 +13,9 @@
  * @uses $vars['title']   Optional title for main content area
  * @uses $vars['header']  Optional override for the header
  * @uses $vars['footer']  Optional footer
+ *
+ * @package wet4
+ * @author Nick github.com/piet0024
  */
 
 $class = 'elgg-layout elgg-layout-one-column clearfix';

@@ -26,7 +26,11 @@ $filename = $file->originalfilename;
 header("Pragma: public");
 
 header("Content-type: $mime");
-header("Content-Disposition: attachment; filename=\"$filename\"");
+if (strpos($mime, "image/") !== false || $mime == "application/pdf") {
+	header("Content-Disposition: inline; filename=\"$filename\"");
+} else {
+	header("Content-Disposition: attachment; filename=\"$filename\"");
+}
 header("Content-Length: {$file->getSize()}");
 
 while (ob_get_level()) {

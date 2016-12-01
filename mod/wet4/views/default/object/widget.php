@@ -5,6 +5,10 @@
  * @uses $vars['entity']      ElggWidget
  * @uses $vars['show_access'] Show the access control in edit area? (true)
  * @uses $vars['class']       Optional additional CSS class
+ *
+ * GC_MODIFICATION
+ * Description: widget accessibility changes
+ * Author: Nick github.com/piet0024
  */
 
 $widget = $vars['entity'];

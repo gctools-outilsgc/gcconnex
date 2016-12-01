@@ -1,5 +1,9 @@
 <?php
-
+/*
+* GC_MODIFICATION
+* Description: Added styling from wet framework
+* Author: GCTools Team
+*/
 $widget = $vars["entity"];
 
 $max_slider_options = 5;
@@ -27,14 +31,14 @@ $configured_slides = array();
 for ($i = 1; $i <= $max_slider_options; $i++) {
 	$url = $widget->{"slider_" . $i . "_url"};
 	if (!empty($url)) {
-		
+
 		$text = $widget->{"slider_" . $i . "_text"};
 		$link = $widget->{"slider_" . $i . "_link"};
 		$direction = "";
 		if ($slider_type != "flex_slider") {
 			$direction = $widget->{"slider_" . $i . "_direction"};
 		}
-	
+
 		$configured_slides[] = array(
 			"url" => $url,
 			"text" => $text,
@@ -80,38 +84,38 @@ if (empty($configured_slides)) {
 }
 
 if ($slider_type == "flexslider") {
-	
+
 	echo '<div id="' . $object_id . '">';
 	echo '<div class="flexslider">';
 	echo '<ul class="slides list-unstyled">';
 
 	foreach ($configured_slides as $slide) {
-		
+
 		echo '<li>';
-		
+
 		if (!empty($slide["link"])) {
 			echo '<a href="' . $slide["link"] . '">';
 		}
-		
+
 		echo '<img class="slider_img img-responsive" src="' . $slide["url"] . '" />';
-		
+
 		if (!empty($slide["text"])) {
 			echo '<div class="flex-caption">' . $slide["text"] . '</div>';
 		}
-		
+
 		if (!empty($slide["link"])) {
 			echo '</a>';
 		}
-		
+
 		echo '</li>';
 	}
-	
+
 	echo '</ul></div></div>';
-	
+
 	?>
 		<link rel="stylesheet" type="text/css" href="<?php echo elgg_get_site_url();?>mod/widget_manager/vendors/flexslider/flexslider.css"></link>
 		<script	type="text/javascript" src="<?php echo elgg_get_site_url();?>mod/widget_manager/vendors/flexslider/jquery.flexslider-min.js"></script>
-		
+
 		<style type="text/css">
 			.flex-caption {
 				background: #<?php echo $overlay_color; ?>;
@@ -121,7 +125,7 @@ if ($slider_type == "flexslider") {
 				opacity: 0.7;
 			}
 		</style>
-		
+
 		<script type="text/javascript">
 		    $(document).ready(function() {
 		    	$('#<?php echo $object_id; ?> .flexslider').flexslider({
@@ -169,34 +173,34 @@ if ($slider_type == "flexslider") {
 
 	foreach ($configured_slides as $slide) {
 		$style = "background-color: #" . $overlay_color . ";";
-	
+
 		if (empty($slide["text"])) {
 			$style .= "visibility: hidden;";
 		}
 		if (in_array($slide["direction"], array("left", "right"))) {
 			$style .= "height: " . $slider_height . "px;";
 		}
-	
+
 		$slides_list .= "<li class='widgets_image_slider_image'>";
-		
+
 		$slides_list .= "<span class='" . $slide["direction"] . "' style='" . $style . "'><div>" . $slide["text"] . "</div></span>";
-			
+
 		if (!empty($slide["link"])) {
 			$slides_list .= "<a href='" . $slide["link"] . "'>";
 		}
-	
+
 		$slides_list .= "<img class='img-responsive' src='" . $slide["url"] . "' />";
 		if (!empty($slide["link"])) {
 			$slides_list .= "</a>";
 		}
-		
+
 		$slides_list .= "</li>";
 	}
 
 	?>
 
 	<script	type="text/javascript" src="<?php echo elgg_get_site_url();?>mod/widget_manager/vendors/s3slider/s3Slider.js"></script>
-	
+
 	<script type="text/javascript">
 	    $(document).ready(function() {
 	        $('#<?php echo $object_id; ?>').s3Slider({
@@ -211,7 +215,7 @@ if ($slider_type == "flexslider") {
 			<div class="clearfix widgets_image_slider_image"></div>
 		</ul>
 	</div>
-	
+
 	<div class="clearfix"></div>
 	<?php
 }

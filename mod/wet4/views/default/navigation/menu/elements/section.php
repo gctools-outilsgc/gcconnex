@@ -8,6 +8,10 @@
  * @uses $vars['section']              The section name
  * @uses $vars['item_class']           Additional CSS class for each menu item
  * @uses $vars['show_section_headers'] Do we show headers for each section
+ *
+ * GC_MODIFICATION
+ * Description: now passing id and role to do special things
+ * Author: GCTools Team
  */
 
 $items = elgg_extract('items', $vars, array());

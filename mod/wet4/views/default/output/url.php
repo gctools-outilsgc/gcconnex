@@ -12,18 +12,22 @@
  * @uses bool   $vars['is_action']   Is this a link to an action (false)
  * @uses bool   $vars['is_trusted']  Is this link trusted (false)
  * @uses mixed  $vars['confirm']     Confirmation dialog text | (bool) true
- * 
+ *
  * Note: if confirm is set to true or has dialog text 'is_action' will default to true
- * 
+ *
  */
-
+ /*
+ * GC_MODIFICATION
+ * Description: Modified s-trusted section of link
+ * Author: GCTools Team
+ */
 if (!empty($vars['confirm']) && !isset($vars['is_action'])) {
 	$vars['is_action'] = true;
 }
 
 if (!empty($vars['confirm'])) {
 	$vars['data-confirm'] = elgg_extract('confirm', $vars, elgg_echo('question:areyousure'));
-	
+
 	// if (bool) true use defaults
 	if ($vars['data-confirm'] === true) {
 		$vars['data-confirm'] = elgg_echo('question:areyousure');

@@ -13,6 +13,10 @@
  * @uses $vars['value']
  * @uses $vars['highlight']
  * @uses $vars['callback']
+ *
+ * GC_MODIFICATION
+ * Description: Adding the wet data tables to the view
+ * Author: GCTools Team
  */
 
 //elgg_load_js('elgg.friendspicker');

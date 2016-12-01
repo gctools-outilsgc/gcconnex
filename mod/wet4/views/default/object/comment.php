@@ -4,6 +4,10 @@
  *
  * @uses $vars['entity']    ElggComment
  * @uses $vars['full_view'] Display full view or brief view
+ *
+ * GC_MODIFICATION
+ * Description: Layout changes / added wet and bootstrap classes
+ * Author: GCTools Team
  */
 
 $full_view = elgg_extract('full_view', $vars, true);

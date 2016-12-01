@@ -2,7 +2,11 @@
 /**
  * Group tag-based search form body
  */
-
+ /*
+ * GC_MODIFICATION
+ * Description: Added accessible labels
+ * Author: GCTools Team
+ */
 $tag_string = elgg_echo('groups:search:tags');
 
 $params = array(

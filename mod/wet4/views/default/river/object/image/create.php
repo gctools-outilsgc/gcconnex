@@ -4,6 +4,10 @@
  *
  * @author Cash Costello
  * @license http://www.gnu.org/licenses/gpl-2.0.html GNU General Public License v2
+ *
+ * GC_MODIFICATION
+ * Description: Fix for opening the image in an ajax window for the river
+ * Author: GCTools Team
  */
 
 elgg_require_js('tidypics/tidypics');

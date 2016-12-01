@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * module.php
  * Elgg module element
  *
  * @uses $vars['type']         The type of module (main, info, popup, aside, etc.)
@@ -11,7 +12,9 @@
  * @uses $vars['class']        Optional additional class for module
  * @uses $vars['id']           Optional id for module
  * @uses $vars['show_inner']   Optional flag to leave out inner div (default: false)
- 
+ *
+ * @package wet4
+ * @author GCTools Team
  
  2015/10/14-
  Added conditional check to see what page the module is loaded on and what type of module it is

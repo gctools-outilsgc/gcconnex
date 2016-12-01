@@ -4,7 +4,11 @@
  *
  * @package ElggGroups
  */
-
+ /*
+ * GC_MODIFICATION
+ * Description: Changed classes used by file
+ * Author: GCTools Team
+ */
 $guid = elgg_extract('guid', $vars);
 $hidden = elgg_extract('hidden', $vars, true);
 

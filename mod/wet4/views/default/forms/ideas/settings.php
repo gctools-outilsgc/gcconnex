@@ -4,7 +4,11 @@
  *
  * @package ideas
  */
-
+ /*
+ * GC_MODIFICATION
+ * Description: Added accessible labels
+ * Author: GCTools Team
+ */
 // once elgg_view stops throwing all sorts of junk into $vars, we can use extract()
 
 $description = elgg_extract('ideas_description', $vars, '');

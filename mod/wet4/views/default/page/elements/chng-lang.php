@@ -1,7 +1,11 @@
 <?php
-/**
- * WET 4 Lang Select
+/*
+ * chng-lang.php
  * 
+ * This styles and formats the language toggle mod.
+ * 
+ * @package wet4
+ * @author GCTools Team
  */
 
 // Lang Select

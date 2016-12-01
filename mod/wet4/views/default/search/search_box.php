@@ -4,6 +4,10 @@
  *
  * @uses $vars['value'] Current search query
  * @uses $vars['class'] Additional class
+ *
+ * GC_MODIFICATION
+ * Description: Formatting the search box to use the wet syntax and styles.
+ * Author: GCTools Team
  */
 
 $value = "";
@@ -56,7 +60,7 @@ $gc_language = $_COOKIE['connex_lang'];
                 <label for="wb-srch-q" class="wb-inv">
                     <?php echo elgg_echo('wet:searchweb');?>
                 </label>
-                <input class="wb-srch-q form-control" name="q"  value="" size="27" maxlength="150" placeholder="<?php echo elgg_echo('wet:searchgctools');?>">
+                <input class="wb-srch-q form-control" name="q"  value="" size="27" maxlength="150" placeholder="search">
 
                 <input type="hidden" name="a"  value="s">
                 <input type="hidden" name="s"  value="3">

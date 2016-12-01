@@ -1,3 +1,8 @@
+/*
+* GC_MODIFICATION
+* Description: Converted polls to use WET charts to display results
+* Author: GCTools Team
+*/
 elgg.provide('elgg.polls');
 
 elgg.polls.init = function() {
@@ -7,14 +12,14 @@ elgg.polls.init = function() {
 		var guid = $(this).attr("rel");
 		// prevent multiple clicks
 		$(this).attr("disabled", "disabled");
-		// submit the vote and display the response when it arrives 	 
+		// submit the vote and display the response when it arrives
 	    elgg.action('action/polls/vote', {data: $('#poll-vote-form-'+guid).serialize(),
 			success : function(response) {
 			        	$('#poll-container-'+guid).html(response.result);
                             $( document ).on( "wb-updated.wb-charts", ".wb-charts", function( event ) {
                                 createCharts();
                         });
-                        
+
 			        }
 	        });
     });
@@ -30,7 +35,7 @@ elgg.polls.toggleResults = function() {
 		$("#poll-vote-form-container-"+guid).show();
 		$("#poll-post-body-"+guid).hide();
 		$(this).html("<?php echo elgg_echo('polls:show_results'); ?>");
-	}	
+	}
 }
 
 elgg.register_hook_handler('init', 'system', elgg.polls.init);

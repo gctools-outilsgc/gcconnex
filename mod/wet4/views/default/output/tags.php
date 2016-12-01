@@ -9,7 +9,11 @@
  * @uses $vars['item_class'] Optional. Additional classes to be passed to <li> elements
  * @uses $vars['icon_class'] Optional. Additional classes to be passed to tags icon image
  */
-
+ /*
+ * GC_MODIFICATION
+ * Description: Added font awesome icon for start of tags list. Custom styling to tags
+ * Author: GCTools Team
+ */
 if (isset($vars['entity'])) {
 	$vars['tags'] = $vars['entity']->tags;
 	unset($vars['entity']);
@@ -47,7 +51,7 @@ if (isset($vars['item_class'])) {
 $icon_class = elgg_extract('icon_class', $vars);
 unset($vars['icon_class']);
 
-$list_items = ''; 
+$list_items = '';
 
 $params = $vars;
 foreach($tags as $tag) {

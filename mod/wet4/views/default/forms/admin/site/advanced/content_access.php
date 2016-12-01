@@ -2,7 +2,11 @@
 /**
  * Advanced site settings, content access section.
  */
-
+ /*
+ * GC_MODIFICATION
+ * Description: Added accessibility functionality.
+ * Author: GCTools Team
+ */
 $default_access_label = elgg_echo('installation:sitepermissions');
 $default_access_input = elgg_view('input/access', array(
 	'options_values' => array(
@@ -31,7 +35,7 @@ $script_access_default = elgg_view('input/checkbox', array(
 
 <fieldset class="elgg-fieldset" id="elgg-settings-advanced-content-access">
 	<legend><?php echo elgg_echo('admin:legend:content_access'); ?></legend>
-	
+
 	<div>
 		<label for="default_access">
 			<?php echo $default_access_label; ?>
@@ -40,7 +44,7 @@ $script_access_default = elgg_view('input/checkbox', array(
 
 		<p class="elgg-text-help"><?php echo elgg_echo('admin:site:access:warning'); ?></p>
 	</div>
-		
+
 	<div>
 		<?php echo $user_default_access_input; ?>
 		<label for="allow_user_default_access"> <?php echo elgg_echo('installation:allow_user_default_access:label'); ?></label>
@@ -54,5 +58,5 @@ $script_access_default = elgg_view('input/checkbox', array(
 		<?php echo $script_access_default; ?>
 		<label for="remove_logged_in"> <?php echo elgg_echo('admin:remove:logged_in'); ?></label>
 	</div>
-	
+
 </fieldset>

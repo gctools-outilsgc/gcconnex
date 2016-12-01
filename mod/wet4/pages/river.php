@@ -2,7 +2,11 @@
 /**
  * Main activity stream list page
  */
-
+ /*
+ * GC_MODIFICATION
+ * Description: Modified sidebar of activity page to display weekly likes module
+ * Author: GCTools Team
+ */
 $options = array(
 	'distinct' => false
 );

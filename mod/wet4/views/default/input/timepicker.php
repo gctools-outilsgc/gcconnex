@@ -1,4 +1,12 @@
 <?php
+/*
+ * timepicker.php
+ * 
+ * Input for selecting time.
+ * 
+ * @package wet4
+ * @author GCTools Team
+ */
 
 $time_format = elgg_get_plugin_setting('timeformat', 'event_calendar');
 if (!$time_format) {

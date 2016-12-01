@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * usersettings.php
+ * 
+ * Plugin settings for file_tools
+ * 
+ * @package file_tools
+ * @author GCTools Team
+ */
+
 $plugin = elgg_extract("entity", $vars);
 
 $options = array(

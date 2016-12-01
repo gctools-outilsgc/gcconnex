@@ -1,5 +1,7 @@
 <?php
 /**
+ * db_widgets.php 
+ *
  * Elgg widgets layout
  *
  * @uses $vars['content']          Optional display box at the top of layout
@@ -7,6 +9,9 @@
  * @uses $vars['show_add_widgets'] Display the add widgets button and panel (true)
  * @uses $vars['exact_match']      Widgets must match the current context (false)
  * @uses $vars['show_access']      Show the access control (true)
+ *
+ * @package wet4
+ * @author Nick github.com/piet0024
  */
 
 $num_columns = elgg_extract('num_columns', $vars, 2);

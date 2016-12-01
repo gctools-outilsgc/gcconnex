@@ -1,10 +1,12 @@
 <?php
-/**
- * WET 4 Tab to Content
+/*
+ * tabskip.php
  * 
+ * Creates a list at the top of the page that will allow users who are tabbing through the site to skip to the main content
+ * 
+ * @package wet4
+ * @author GCTools Team
  */
-
-// Tab to Content 
 
 $site_url = elgg_get_site_url();
 ?>

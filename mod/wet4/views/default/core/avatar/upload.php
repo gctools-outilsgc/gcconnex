@@ -3,6 +3,10 @@
  * Avatar upload view
  *
  * @uses $vars['entity']
+ *
+ * GC_MODIFICATION
+ * Description: Adding avatar badge support / wet and bootstrap classes
+ * Author: GCTools Team
  */
 
  //EW - converting user avatar to elgg view entity icon to display new Ambassador Badge

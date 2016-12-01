@@ -7,6 +7,10 @@
  * @subpackage Core
  *
  * @uses $vars['entities'] The array of ElggUser objects
+ *
+ * GC_MODIFICATION
+ * Description: Added wet styling and classes 
+ * Author: GCTools Team
  */
 
 if (is_array($vars['entities'])) {

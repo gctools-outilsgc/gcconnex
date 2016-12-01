@@ -3,6 +3,10 @@
  * Photo navigation
  *
  * @uses $vars['entity']
+ *
+ * GC_MODIFICATION
+ * Description: Added font awesome arrows + invis text for screen readers
+ * Author: Nick github.com/piet0024
  */
 
 $photo = $vars['entity'];

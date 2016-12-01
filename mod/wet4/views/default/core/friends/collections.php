@@ -7,6 +7,10 @@
  * @subpackage Core
  *
  * @uses $vars['collections'] The array of friends collections
+ *
+ * GC_MODIFICATION
+ * Description: Added wet styling and classes 
+ * Author: GCTools Team
  */
 
 if (is_array($vars['collections']) && sizeof($vars['collections'])) {

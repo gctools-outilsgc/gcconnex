@@ -3,6 +3,10 @@
  * Forum topic entity view
  *
  * @package ElggGroups
+ *
+ * GC_MODIFICATION
+ * Description: changes to layout and styling /add wet classes
+ * Author: GCTools Team
 */
 
 $full = elgg_extract('full_view', $vars, FALSE);

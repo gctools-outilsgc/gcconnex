@@ -1,13 +1,9 @@
 <?php
-
 /*
-
-2015/10/20-
-Added panel footer styling
-Added count to view all link
-
+* GC_MODIFICATION
+* Description: Added view all link with footer style. Added support for content translation.
+* Author: GCTools Team
 */
-
 namespace AU\SubGroups;
 $lang = get_current_language();
 if ($vars['entity']->subgroups_enable == 'no') {
@@ -38,7 +34,7 @@ if (!$subgroups) {
 			'is_trusted' => true))
 		);
 	}
-    
+
     //count total number of subgroups and add it to view all link
     $subgroupsTotalCount = get_subgroups($vars['entity']);
     $sgCount = '(' . count($subgroupsTotalCount) . ')';

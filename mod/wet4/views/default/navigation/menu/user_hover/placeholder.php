@@ -1,4 +1,9 @@
 <?php
+/*
+* GC_MODIFICATION
+ * Description: added list classes
+ * Author: GCTools Team
+*/
 
 $menus_present = (array) elgg_get_config("lazy_hover:menus");
 
