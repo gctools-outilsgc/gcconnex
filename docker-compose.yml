@@ -1,0 +1,30 @@
+version: '2'
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    logging:
+      driver: none
+
+  gcconnex.local:
+    build: .
+    ports:
+      - 8080:80
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - db
+      - nginx-proxy
+    environment:
+      - VIRTUAL_HOST=gcconnex.local
+
+  db:
+    image: library/mysql:5.6
+    environment:
+      - MYSQL_ROOT_PASSWORD=lpss
+      - MYSQL_DATABASE=elgg
+      - MYSQL_USER=elgg
+      - MYSQL_PASSWORD=lpss
