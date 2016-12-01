@@ -7,7 +7,13 @@
  * Author: Bryden Arndt
  * email: bryden@arndt.ca
  */
-
+ /*
+ * GC_MODIFICATION
+ * Description: Modified guid input of most actions to be elgg.get_page_owner_guid() to allow us as developers to easily work on bugs on profiles
+ * Author: Ethan Wallace
+ * Date: 2016-12-01
+ * Issue Number: 549
+ */
 /*
  * Purpose: initialize the script
  */
@@ -224,7 +230,7 @@ function editProfile(event) {
             // Edit the About Me blurb
             $.get(elgg.normalize_url('ajax/view/b_extended_profile/edit_about-me'),
                 {
-                    guid: elgg.get_logged_in_user_guid()
+                    guid: elgg.get_page_owner_guid()
                 },
                 function(data) {
                     $('.gcconnex-about-me').append('<div class="gcconnex-about-me-edit-wrapper">' + data + '</div>');
@@ -245,7 +251,7 @@ function editProfile(event) {
             // Edit the edumacation
             $.get(elgg.normalize_url('ajax/view/b_extended_profile/edit_education'),
                 {
-                    guid: elgg.get_logged_in_user_guid()
+                    guid: elgg.get_page_owner_guid()
                 },
                 function(data) {
                     // Output in a DIV with id=somewhere
@@ -267,7 +273,7 @@ function editProfile(event) {
             // Edit the experience for this user
             $.get(elgg.normalize_url('ajax/view/b_extended_profile/edit_work-experience'),
                 {
-                    guid: elgg.get_logged_in_user_guid()
+                    guid: elgg.get_page_owner_guid()
                 },
                 function(data) {
                     // Output in a DIV with id=somewhere
@@ -354,7 +360,7 @@ function editProfile(event) {
 
             $.get(elgg.normalize_url('ajax/view/b_extended_profile/edit_languages'),
                 {
-                    guid: elgg.get_logged_in_user_guid()
+                    guid: elgg.get_page_owner_guid()
                 },
                 function(data) {
                     // Output in a DIV with id=somewhere
@@ -386,7 +392,7 @@ function editProfile(event) {
         case 'portfolio':
             $.get(elgg.normalize_url('ajax/view/b_extended_profile/edit_portfolio'),
                 {
-                    guid: elgg.get_logged_in_user_guid()
+                    guid: elgg.get_page_owner_guid()
                 },
             function(data) {
                 // Output the 'edit portfolio' page somewhere
@@ -538,7 +544,7 @@ function saveProfile(event) {
 
             elgg.action('b_extended_profile/edit_profile', {
                 data: {
-                    'guid': elgg.get_logged_in_user_guid(),
+                    'guid': elgg.get_page_owner_guid(),
                     'section': "profile",
                     'profile': profile,
                     'social_media': social_media
@@ -557,16 +563,16 @@ function saveProfile(event) {
             // save the information the user just edited
             elgg.action('b_extended_profile/edit_profile', {
                 data: {
-                    'guid': elgg.get_logged_in_user_guid(),
+                    'guid': elgg.get_page_owner_guid(),
                     'section': 'about-me',
                     'description': $about_me,
                     'access': access
                 },
-                success: function() {            
+                success: function() {
                     // fetch and display the information we just saved
                     $.get(elgg.normalize_url('ajax/view/b_extended_profile/about-me'),
                         {
-                            'guid': elgg.get_logged_in_user_guid()
+                            'guid': elgg.get_page_owner_guid()
                         },
                         function(data) {
                             // Output in a DIV with id=somewhere
@@ -703,7 +709,7 @@ function saveProfile(event) {
             // save the information the user just edited
             elgg.action('b_extended_profile/edit_profile', {
                 data: {
-                    'guid': elgg.get_logged_in_user_guid(),
+                    'guid': elgg.get_page_owner_guid(),
                     'delete': $delete_guid,
                     'eguid': $education_guid,
                     'section': 'education',
@@ -717,11 +723,11 @@ function saveProfile(event) {
                     'field': $field,
                     'access': $access
                 },
-                success: function() {            
+                success: function() {
                     // fetch and display the information we just saved
                     $.get(elgg.normalize_url('ajax/view/b_extended_profile/education'),
                         {
-                            'guid': elgg.get_logged_in_user_guid()
+                            'guid': elgg.get_page_owner_guid()
                         },
                         function(data) {
                             // Output in a DIV with id=somewhere
@@ -754,7 +760,7 @@ function saveProfile(event) {
                 if($valid_form){
                 elgg.action('b_extended_profile/edit_profile', {
                     data: {
-                        'guid': elgg.get_logged_in_user_guid(),
+                        'guid': elgg.get_page_owner_guid(),
                         'delete': $delete_guid,
                         'eguid': $education_guid,
                         'section': 'education',
@@ -772,7 +778,7 @@ function saveProfile(event) {
                     success: function() {            // fetch and display the information we just saved
                         $.get(elgg.normalize_url('ajax/view/b_extended_profile/education'),
                             {
-                                'guid': elgg.get_logged_in_user_guid()
+                                'guid': elgg.get_page_owner_guid()
                             },
                             function(data) {
                                 // Output in a DIV with id=somewhere
@@ -899,7 +905,7 @@ function saveProfile(event) {
                 // save the information the user just edited
                 elgg.action('b_extended_profile/edit_profile', {
                     data: {
-                        'guid': elgg.get_logged_in_user_guid(),
+                        'guid': elgg.get_page_owner_guid(),
                         'work': work_experience,
                         'section': 'work-experience',
                         'access': access
@@ -907,7 +913,7 @@ function saveProfile(event) {
                     success: function() {
                         $.get(elgg.normalize_url('ajax/view/b_extended_profile/work-experience'),
                             {
-                                'guid': elgg.get_logged_in_user_guid()
+                                'guid': elgg.get_page_owner_guid()
                             },
                             function(data) {
                                 // Output in a DIV with id=somewhere
@@ -944,7 +950,7 @@ function saveProfile(event) {
             // save the information the user just edited
 
             elgg.action('b_extended_profile/edit_profile', {
-                'guid': elgg.get_logged_in_user_guid(),
+                'guid': elgg.get_page_owner_guid(),
                 'section': 'skills',
                 'skillsadded': $skills_added,
                 'skillsremoved': $delete_guid
@@ -987,7 +993,7 @@ function saveProfile(event) {
             // save the information the user just edited
             elgg.action('b_extended_profile/edit_profile', {
                 data: {
-                    'guid': elgg.get_logged_in_user_guid(),
+                    'guid': elgg.get_page_owner_guid(),
                     'section': 'languages',
                     'access_id': access,
                     'english': english,
@@ -997,7 +1003,7 @@ function saveProfile(event) {
                 success: function() {
                     $.get(elgg.normalize_url('ajax/view/b_extended_profile/languages'),
                         {
-                            guid: elgg.get_logged_in_user_guid()
+                            guid: elgg.get_page_owner_guid()
                         },
                         function(data) {
                             // Output in a DIV with id=somewhere
@@ -1036,7 +1042,7 @@ function saveProfile(event) {
 
             elgg.action('b_extended_profile/edit_profile', {
                 data: {
-                    'guid': elgg.get_logged_in_user_guid(),
+                    'guid': elgg.get_page_owner_guid(),
                     'section': 'portfolio',
                     'portfolio': portfolio,
                     'access': access
@@ -1044,7 +1050,7 @@ function saveProfile(event) {
                 success: function() {
                     $.get(elgg.normalize_url('ajax/view/b_extended_profile/portfolio'),
                         {
-                            'guid': elgg.get_logged_in_user_guid()
+                            'guid': elgg.get_page_owner_guid()
                         },
                         function (data) {
                             // Output portfolio here
@@ -1185,7 +1191,7 @@ function addColleague(obj, datum, name) {
         );
     }
      // clear the typeahead box
-    $('.userfind').typeahead('val', '');       
+    $('.userfind').typeahead('val', '');
 }
 
 /*
@@ -1337,7 +1343,7 @@ function deleteEntry(identifier) {
     } else {
         $('.cancel-' + entryType).focus();
 
-    } 
+    }
 }
 
 /*
@@ -1346,7 +1352,7 @@ function deleteEntry(identifier) {
 function removeOldSkills() {
     elgg.action('b_extended_profile/edit_profile', {
         data: {
-            'guid': elgg.get_logged_in_user_guid(),
+            'guid': elgg.get_page_owner_guid(),
             'section': 'old-skills'
         },
         success: function() {
