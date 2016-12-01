@@ -261,6 +261,8 @@ if (!$is_new_group && $new_owner_guid && ($new_owner_guid != $old_owner_guid)) {
 	if ($transfer_allowed) {
 		// get the new owner
 		$new_owner = get_user($new_owner_guid);
+
+		//transfer cover photo to new owner
 		gc_group_layout_transfer_coverphoto($group, $new_owner);
 		// transfer the group to the new owner
 		group_tools_transfer_group_ownership($group, $new_owner);
