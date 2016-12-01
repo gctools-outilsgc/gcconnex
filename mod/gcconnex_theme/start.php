@@ -14,6 +14,14 @@ function gcconnex_theme_init() {
     elgg_register_page_handler('hello', 'gcconnex_theme_page_handler');
     elgg_register_plugin_hook_handler('register', 'menu:site', 'career_menu_hander');
     
+        //jobs.gc.ca menu link
+    elgg_register_menu_item('subSite', array(
+        'name' => 'jobs',
+        'text' => elgg_echo('wet:jobs:link'),
+        'href' => elgg_echo('wet:jobs:href'),
+        'target' => '_blank',
+    ));
+    
     
         //menu item for career dropdown
     elgg_register_menu_item('site', array(
