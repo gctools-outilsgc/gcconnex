@@ -1,9 +1,11 @@
 <?php
 /**
+ * one_sidebar.php
+ *
  * Layout for main column with one sidebar
  *
- * @package Elgg
- * @subpackage Core
+ * @package wet4
+ * @author GCTools Team
  *
  * @uses $vars['title']   Optional title for main content area
  * @uses $vars['content'] Content HTML for the main column

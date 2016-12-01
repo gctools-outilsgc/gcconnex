@@ -1,8 +1,13 @@
 <?php
 /**
+ * sidebar.php
+ * 
  * Elgg sidebar contents
  *
  * @uses $vars['sidebar'] Optional content that is displayed at the bottom of sidebar
+ *
+ * GC_MODIFICATION
+ * Description: Removed the owners block and extras menu that normally appears on elgg sites
  */
 /*
 echo elgg_view_menu('extras', array(

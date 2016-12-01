@@ -13,6 +13,10 @@
  * 	'link_class' => string, // Class to pass to the link
  * 	'link_id' => string, // ID to pass to the link
  * )
+ *
+ * GC_MODIFICATION
+ * Description: Added wet and bootstrap classes
+ * Author: GCTools Team
  */
 $options = _elgg_clean_vars($vars);
 

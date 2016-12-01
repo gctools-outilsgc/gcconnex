@@ -5,7 +5,11 @@
  * @package Elgg.Core
  * @subpackage Social.Friends
  */
-
+ /*
+ * GC_MODIFICATION
+ * Description: Modified display limit to utilize datatables, also added suggested friend widget to sidebar.
+ * Author: GCTools Team
+ */
 $owner = elgg_get_page_owner_entity();
 
 $title = elgg_echo("friends:owned", array($owner->name));

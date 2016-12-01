@@ -1,11 +1,22 @@
 <?php
 /**
+ * html.php
+ * 
  * Page shell for all HTML pages
+ * 
+ * @package wet4
+ * @author GCTools Team
+ *
  *
  * @uses $vars['head']        Parameters for the <head> element
  * @uses $vars['body_attrs']  Attributes of the <body> tag
  * @uses $vars['body']        The main content of the page
+ *
+ * GC_MODIFICATION
+ * Description: Added WET specific html elements to the page
  */
+
+
 // Set the content type
 header("Content-type: text/html; charset=UTF-8");
 

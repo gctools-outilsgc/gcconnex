@@ -3,6 +3,10 @@
  * View a wire post
  *
  * @uses $vars["entity"]
+ *
+ * GC_MODIFICATION
+ * Description: Added wet classes + styling
+ * Author: GCTools Team
  */
 
 elgg_load_js("elgg.thewire");

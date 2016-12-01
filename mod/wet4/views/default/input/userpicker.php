@@ -15,6 +15,10 @@
  *
  * As users are selected they move down to a "users" box.
  * When this happens, a hidden input is created to return the GUID in the array with the form
+ *
+ * GC_MODIFICATION
+ * Description: Adding wet classes / Uses live search
+ * Author: GCTools Team
  */
 
 if (empty($vars['name'])) {

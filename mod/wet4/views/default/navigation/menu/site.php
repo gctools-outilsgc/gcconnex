@@ -4,6 +4,10 @@
  *
  * @uses $vars['menu']['default']
  * @uses $vars['menu']['more']
+ *
+ * GC_MODIFICATION
+ * Description: formats site menu to look and function like the wet template
+ * Author: GCTools Team
  */
 
 $default_items = elgg_extract('default', $vars['menu'], array());

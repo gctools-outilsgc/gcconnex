@@ -16,6 +16,10 @@
  *                               $vars['options'] when defined.
  * @uses $vars['multiple']       If true, multiselect of values will be allowed in the select box
  * @uses $vars['class']          Additional CSS class
+ *
+ * GC_MODIFICATION
+ * Description: Adding wet classes
+ * Author: GCTools Team
  */
 
 $vars['class'] = (array) elgg_extract('class', $vars, []);

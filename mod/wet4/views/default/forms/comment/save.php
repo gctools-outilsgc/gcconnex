@@ -9,7 +9,11 @@
  * @uses bool        $vars['inline']       Show a single line version of the form?
  * @uses bool        $vars['is_edit_page'] Is this form on its own page?
  */
-
+ /*
+ * GC_MODIFICATION
+ * Description: Added accessible labels
+ * Author: GCTools Team
+ */
 if (!elgg_is_logged_in()) {
 	return;
 }

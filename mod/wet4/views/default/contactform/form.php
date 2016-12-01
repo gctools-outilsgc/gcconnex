@@ -5,6 +5,11 @@
     terms of the GNU Lesser General Public License.
     See this page for more info:
     http://www.html-form-guide.com/contact-form/creating-a-contact-form.html
+    
+    * GC_MODIFICATION
+    * Description: Added wet styling and form validation things / Added flag content
+    * Author: GCTools Team 
+    
 */
 
 if (elgg_is_logged_in()) {

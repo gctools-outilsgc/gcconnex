@@ -1,5 +1,12 @@
 <?php
-
+/*
+ * weekly_likes.php
+ *
+ * Display an entity
+ *
+ * @package wet4
+ * @author GCTools Team
+ */
 $entity = $vars['entity'];
 $user = get_user($entity->owner_guid);
 if (!$entity || !$user) {

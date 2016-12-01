@@ -1,9 +1,12 @@
 <?php
-/**
- * WET 4 theme navbar
+/*
+ * navbar.php
  * 
+ * Creates the <nav> element to hold the site menu
+ * 
+ * @package plugin_name
+ * @author your name <your.name@example.com>
  */
-
 
 
 ?>

@@ -16,6 +16,10 @@
  *                         radio field as "label" => option
  * @uses $vars['class']    Additional class of the list. Optional.
  * @uses $vars['align']    'horizontal' or 'vertical' Default: 'vertical'
+ *
+ * GC_MODIFICATION
+ * Description: Adding wet classes
+ * Author: GCTools Team
  */
 
 $defaults = array(

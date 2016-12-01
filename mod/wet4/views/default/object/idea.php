@@ -3,6 +3,10 @@
  * Idea view
  *
  * @package ideas
+ *
+ * GC_MODIFICATION
+ * Description: modified layout / style changes
+ * Author: GCTools Team
  */
 
 $full = elgg_extract('full_view', $vars, FALSE);

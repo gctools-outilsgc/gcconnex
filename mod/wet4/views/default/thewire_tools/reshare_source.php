@@ -2,7 +2,11 @@
 /**
  * Show to what a wire post is linked
  */
-
+ /*
+ * GC_MODIFICATION
+ * Description: Added support for content translation titles
+ * Author: GCTools Team
+ */
 $entity = elgg_extract("entity", $vars);
 $lang = get_current_language();
 

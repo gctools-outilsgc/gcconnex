@@ -4,6 +4,10 @@
  * File renderer.
  *
  * @package ElggFile
+ *
+ * GC_MODIFICATION
+ * Description: Changes to layout / Added wet classes
+ * Author: GCTools Team
  */
 
 $file = elgg_extract("entity", $vars, false);

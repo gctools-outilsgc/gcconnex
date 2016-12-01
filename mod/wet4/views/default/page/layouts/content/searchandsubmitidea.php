@@ -1,8 +1,13 @@
 <?php
-/**
- * ideas search and add form
- *
+/*
+ * searchandsubmitidea.php
+ * 
+ * View that handles the search and submit actions for ideas
+ * 
+ * @package wet4
+ * @author GCTools Team
  */
+
 $group = elgg_get_page_owner_entity();
 
 if (!$description = $group->ideas_description) $description = '';

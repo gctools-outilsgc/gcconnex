@@ -3,6 +3,10 @@
  * Avatar cropping view
  *
  * @uses vars['entity']
+ *
+ * GC_MODIFICATION
+ * Description: Added wet and bootstrap classes
+ * Author: GCTools Team
  */
 
 ?>

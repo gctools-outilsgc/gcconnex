@@ -1,6 +1,10 @@
 <?php
 /**
  * Create friend river view
+ *
+ * GC_MODIFICATION
+ * Description: Font awesome icons 
+ * Author: GCTools Team
  */
 $item = $vars['item'];
 /* @var ElggRiverItem $item */

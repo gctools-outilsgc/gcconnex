@@ -1,5 +1,11 @@
 
 // JS for ideas plugin
+
+/*
+ * GC_MODIFICATION
+ * Description: Added font awesome and wet styling
+ * Author: GCTools Team
+*/
 elgg.provide('elgg.ideas');
 
 elgg.ideas.init = function() {

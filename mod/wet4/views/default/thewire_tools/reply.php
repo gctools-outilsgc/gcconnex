@@ -3,7 +3,11 @@
  * Reply page
  *
  */
-
+ /*
+ * GC_MODIFICATION
+ * Description: Moved rely form to ajax window with character limit javascript included.
+ * Author: GCTools Team
+ */
 elgg_extend_view('input/longtext', 'thewire_tools/ajax_popup');
 elgg_extend_view('input/plaintext', 'thewire_tools/ajax_popup');
 

@@ -7,7 +7,11 @@
  *
  * @uses $vars['collection'] Optionally, the collection to edit
  */
-
+ /*
+ * GC_MODIFICATION
+ * Description: Added accessible labels
+ * Author: GCTools Team
+ */
 // Set title, form destination
 if (isset($vars['collection'])) {
 	$title = $vars['collection']->name;

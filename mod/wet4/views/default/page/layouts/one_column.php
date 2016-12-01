@@ -1,9 +1,11 @@
 <?php
 /**
+ * one_column.php
+ * 
  * Elgg one-column layout
  *
- * @package Elgg
- * @subpackage Core
+ * @package wet4
+ * @author GCTools Team
  *
  * @uses $vars['content'] Content string
  * @uses $vars['class']   Additional class to apply to layout

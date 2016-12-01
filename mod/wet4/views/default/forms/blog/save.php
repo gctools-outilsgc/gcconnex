@@ -4,7 +4,11 @@
  *
  * @package Blog
  */
-
+ /*
+ * GC_MODIFICATION
+ * Description: Added accessible labels + content translation support
+ * Author: GCTools Team
+ */
 $blog = get_entity($vars['guid']);
 $vars['entity'] = $blog;
 
@@ -166,7 +170,7 @@ if ($vars['guid'] && (strcmp($vars['status'],'draft') != 0 && elgg_is_active_plu
 	// upon new entity creation, it invokes two functions (event and hook) in the start.php of this plugin
 	// we need to make sure that we invoke sending notifcations only once, mark the second function as
 	// minor edit by default
-	
+
 	if ($vars['new_entity'])
 		$entity->entity_minor_edit = true;
 
@@ -249,7 +253,7 @@ $categories_input
 	$save_status <span class="blog-save-status-time">$saved</span>
 	</div>
 
-	
+
 
 	$guid_input
 	$container_guid_input
@@ -291,12 +295,12 @@ jQuery(function(){
 
 		jQuery('#btnClickfr').click(function(){
                jQuery('.fr').show();
-               jQuery('.en').hide();  
+               jQuery('.en').hide();
         });
 
           jQuery('#btnClicken').click(function(){
                jQuery('.en').show();
-               jQuery('.fr').hide();  
+               jQuery('.fr').hide();
         });
 });
 </script>

@@ -1,6 +1,11 @@
 <?php
 /**
+ * widgets.php 
+ *
  * Elgg widgets layout
+ *
+ * @package wet4
+ * @author GCTools Team
  *
  * @uses $vars['content']          Optional display box at the top of layout
  * @uses $vars['num_columns']      Number of widget columns for this layout (3)

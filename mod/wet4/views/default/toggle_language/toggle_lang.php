@@ -1,3 +1,8 @@
+<?php /*
+ * GC_MODIFICATION
+ * Description: Modified the way session cookie is handled
+ * Author: GCTools Team
+ */?>
 <div>
 	<?php
 		global $SESSION;
@@ -11,13 +16,13 @@
 			var c_name = "connex_lang";
 			var c_value = document.cookie;
 			var c_start = c_value.indexOf(" " + c_name + "=");
-			
+
 			//alert("check1");
 			if (c_start == -1){
 				c_start = c_value.indexOf(c_name + "=");
 			}
 
-			if (c_start == -1) 
+			if (c_start == -1)
 			{
 				c_value = null;
 			} else {
@@ -43,7 +48,7 @@
 				{
 					set_cookie(c_name, "en");
 
-				} else 
+				} else
 				if (language_selected == "French")
 				{
 					set_cookie(c_name,"fr");
@@ -67,22 +72,22 @@
 			var expires_date = new Date( today.getTime() + (expires) );
 			document.cookie = name + "=" +escape( value ) + ";path=/" + ";expires=" + expires_date.toGMTString();
 		}
-		
-	
+
+
 	</script>
 		<form action="<?php echo $vars['url']; ?>action/toggle_language/toggle" method="post" id="formtoggle">
-			
+
 		<?php
 		// security tokens.
 		echo elgg_view('input/securitytoken');
 		?>
 		</form>
-		
+
 		<?php
 			//$log = fopen(dirname( __FILE__ ) . "/cyu - session conditional statement.txt", 'w');
 			//fwrite($log, "start logging - session language" . "\r\n" );
 
-			if ($SESSION['language'] == 'en') { 
+			if ($SESSION['language'] == 'en') {
 			//if ($_COOKIE["cc_lang"] == 'en'){
 				//fwrite($log, "session is in english" . "\r\n" );
 
