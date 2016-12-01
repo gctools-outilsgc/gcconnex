@@ -9,6 +9,40 @@ GCconnex is based on Elgg. https://github.com/Elgg/Elgg
 ### Installation
 Follow instructions in [INSTALL.md](https://github.com/tbs-sct/gcconnex/blob/gcconnex/INSTALL.md)
 
+### Using Docker
+
+Developers can use [docker-compose](https://docs.docker.com/compose/) to 
+quickly setup a development environment.
+
+#### Prerequisites
+* [docker](https://www.docker.com)
+* [docker-compose](https://docs.docker.com/compose/)
+
+#### Getting started
+Start by cloning the git repo; then change into the repo's root directory and
+use docker-compose to start/create your containers.
+
+    docker-compose up
+
+Then visit [http://localhost:8080](http://localhost:8080) and follow the 
+instructions to complete your installation.  One the installer is complete,
+refer to 
+[INSTALL.md](https://github.com/tbs-sct/gcconnex/blob/gcconnex/INSTALL.md#configure-plugins)
+to configure the plugins required by GCconnex. 
+
+#### Docker specific configuration
+On the `Database installation` page, use the following settings:
+
+| Parameter             | Value         |
+| --------------------- | ------------- |
+| Database Username     | elgg          |
+| Database Password     | gcconnex      |
+| Database Name         | elgg          |
+| Database Host         | gcconnex-db   |
+| Database Table Prefix | elgg_         |
+
+On the `Configure site` page, set the `Data Directory` to `/var/data`.
+
 ### Contributing
 We welcome your contributions. Create Issues for bugs or feature requests. Submit your pull requests.
 
@@ -28,6 +62,40 @@ GCconnex est basé sur Elgg. https://github.com/Elgg/Elgg
 
 ### Installation
 Suivez les instructions dans [INSTALL.md](https://github.com/tbs-sct/gcconnex/blob/gcconnex/INSTALL.md)
+
+### Utilisation de Docker
+
+Les développeurs peuvent utiliser 
+[docker-compose](https://docs.docker.com/compose/) pour rapidement établir un
+environnement de développement.
+
+#### Logiciels requis
+* [Docker] (https://www.docker.com)
+* [Docker-compose] (https://docs.docker.com/compose/)
+
+#### Pour commencer
+Commencez avec le téléchargement du code source de github, ensuite dans ceci
+utilisez `docker-compose` pour démarrer et/ou créer vos conteneurs Docker.
+
+    docker-compose up
+
+Ensuite, visitez [http://localhost:8080](http://localhost:8080) et suivre les
+instructions pour compléter votre installation.  Une fois complet, regarder à 
+[INSTALL.md](https://github.com/tbs-sct/gcconnex/blob/gcconnex/INSTALL.md#configure-plugins)
+et suivez les étapes additionnels.
+
+#### Configuration spécifique avec Docker
+Sur la page `Database installation`, utilisez les paramètres suivants:
+
+| Paramètre             | Valeur        |
+| --------------------- | ------------- |
+| Database Username     | elgg          |
+| Database Password     | gcconnex      |
+| Database Name         | elgg          |
+| Database Host         | gcconnex-db   |
+| Database Table Prefix | elgg_         |
+
+Sur la page `Configure site`, `Data Directory` sera `/var/data`.
 
 ### Contribuer
 Nous vous invitons à contribuer.  Créez des billets (Issues) pour des problèmes ou demander des nouvelles fonctionnalités.  Envoyez vos modification (Pull request).
