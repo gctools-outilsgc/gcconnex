@@ -206,9 +206,9 @@ if(($blog->description2) && ($blog->description)){
 
 }
 ?>
-<script>
 
-function change_fr(e){
+<!-- 
+/*function change_fr(e){
 	var label = e;
 	$.ajax(
     {
@@ -248,6 +248,6 @@ function change_title_en(){
 
 	 var link_available = '<a id="indicator_language_en" onclick="change_en((this.textContent || this.innerText))" href="#"><label class="testClass hidden" ><?php echo $simple_en; ?></label><span id="indicator_text">Content available in english</span></a>';
 	$("#change_language").html(link_available)
-}
-</script>
+}*/ -->
+
 <?php
