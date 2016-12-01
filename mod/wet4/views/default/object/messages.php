@@ -106,8 +106,8 @@ if ($full) {
 
         $user_link = '<b>' . $user->name . '</b>';
 
-    
-    $subject_info = '<b>' . elgg_echo('messages:title') . ':</b> ' . $message->title;
+
+    $subject_info = utf8_decode('<b>' . elgg_echo('messages:title') . ':</b> ' . $message->title);
 
     //lets redo the body here
     $body = <<<HTML
@@ -121,16 +121,16 @@ if ($full) {
 
 
 HTML;
-  
+
 	echo   elgg_view_image_block($icon, $body, array('class' => 'brdr-bttm mrgn-bttm-md'));
-	echo elgg_view('output/longtext', array('value' => $message->description, 'class' => 'mrgn-lft-sm'));
+	echo elgg_view('output/longtext', array('value' => utf8_decode($message->description), 'class' => 'mrgn-lft-sm'));
     //echo '</a>';
 
 } else {
-	
+
     //Making the body preview dissapear!
 	//$body .= elgg_view("output/longtext", array("value" => elgg_get_excerpt($message->description), "class" => "elgg-subtext clearfloat "));
-	
+
 	if ($bulk_actions) {
 		$checkbox = elgg_view('input/checkbox', array(
 			'name' => 'message_id[]',
@@ -139,16 +139,16 @@ HTML;
 		));
 
         $tBody = elgg_format_element('a', ['href' => $message->getURL()], $body);
-	
+
 		$entity_listing = elgg_view_image_block($icon, $body, array('class' => $class));
-		
+
 		echo  $entity_listing;
 	} else {
 
-        
-        
+
+
         //echo elgg_view_image_block($checkbox, $entity_listing);
 		echo elgg_view_image_block( $icon, $body, array('class' => $class));
-      
+
 	}
 }
