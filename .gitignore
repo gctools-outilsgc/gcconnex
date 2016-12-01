@@ -86,3 +86,5 @@ startup.sh
 
 *.phpproj.user
 
+# Ignore data files
+/data/
