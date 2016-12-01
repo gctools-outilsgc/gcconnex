@@ -85,11 +85,36 @@ $metadata = elgg_view_menu('entity', array(
 
 $subtitle = "$author_text $date $categories";
 
+function removeTag($content, $tagName) {
+    $dom = new DOMDocument();
+    $dom->loadXML($content);
+
+    $nodes = $dom->getElementsByTagName($tagName);
+
+    while ($node = $nodes->item(0)) {
+        $replacement = $dom->createDocumentFragment();
+        while ($inner = $node->childNodes->item(0)) {
+            $replacement->appendChild($inner);
+        }
+        $node->parentNode->replaceChild($replacement, $node);
+    }
+
+    return $dom->saveHTML();
+}
+
+$content = '<span>This <b>is</b> an <span>example</span></span>';
+
+$simple_en2 =  removeTag($simple_en, 'span'); 
+$simple_fr2 =  removeTag($simple_fr, 'span'); 
+
+$simple_en4 = preg_replace( "/\r|\n/", "", $simple_en2 );
+$simple_fr4 = preg_replace( "/\r|\n/", "", $simple_fr2 );
+
 // do not show the metadata and controls in widget view
 if (elgg_in_context('widgets')) {
     //$metadata = '';
 }
-
+$test = 'Bacon ipsum dolor amet boudin flank short loin shank sirloin alcatra shankle t-bone fatback ball tip porchetta shoulder prosciutto. Sirloin venison turkey meatball salami fatback capicola bresaola ball tip jowl. Tail pork chop turkey kielbasa alcatra biltong. Turducken tongue ham shoulder, beef t-bone tenderloin venison frankfurter shankle short loin strip steak. Salami leberkas bresaola shoulder ball tip, capicola kevin drumstick rump shank. Turkey pork chop shoulder fatback drumstick corned beef pig prosciutto venison biltong jerky chicken boudin filet mignon. Sirloin tri-tip short ribs filet mignon sausage cow brisket alcatra tenderloin.';
 // Show blog
 if ($full) {
 	// full view
@@ -99,17 +124,26 @@ if(($blog->description2) && ($blog->description)){
 	echo'<div id="change_language">';
 	if (get_current_language() == 'fr'){
 		
-			//echo'<span style="padding-left:70%;">Content available in english/full view</span>';
-			echo'<a id="indicator_language_en" onclick="change_en((this.textContent || this.innerText))" href="#"><label class="testClass hidden" >'.$blog->description.'</label><span id="indicator_text">Content available in english</span></a>';
-		//echo "<input id='indicator_language' type='button' value='".$blog->description."'' />";
-//echo"<a href='javascript:void(0);' onclick=\"showme('Test','','10.70725','-61.55391','','Tester');\" >$id</a>";
+					?>			
+
+<a id="indicator_language_en" href="#"><label class="testClass hidden" ><?php echo $blog->description; ?>'</label><span id="indicator_text" onclick="change_en('<?php echo $simple_en4; ?>', '<?php echo $simple_fr4; ?>');">Content available in english</span></a>
+
+
+
+<?php
+
+
 		
 	}else{
-			echo'<a id="indicator_language_fr" onclick="change_fr((this.textContent || this.innerText))" href="#"><label class="testClass hidden" >'.$blog->description2.'</label><span id="indicator_text">Contenu disponible en français</span></a>';
-		
-		//	echo'<span style="padding-left:70%;">Contenu disponible en français/ vue complète</span>';
-			//echo'<a id="language_indicator" href="#french">Contenu disponible en français</a>';
-		//echo '<input type="button" value="Contenu disponible en français" onclick="getPage('allo')" />';
+				
+		?>			
+
+<a id="indicator_language_fr" href="#"><label class="testClass hidden" ><?php echo $blog->description2; ?>'</label><span id="indicator_text" onclick="change_fr('<?php echo $simple_en4; ?>', '<?php echo $simple_fr4; ?>');">Contenu disponible en français</span></a>
+
+
+
+<?php
+
 			
 	}
 	echo'</div>';

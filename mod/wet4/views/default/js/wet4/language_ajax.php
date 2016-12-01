@@ -16,8 +16,30 @@
 
 alert('hello2');
 
-function change_fr(e){
+function change_fr(e,f){
+    var label = f;
+    $(".blog-post").html('<div id="loading-image"  class="wet-ajax-loader"><img src="../../../mod/wet4/graphics/loading.gif" alt="loading content"/></div>');
+ alert('First: '+e+' Second: '+f);
+    $.ajax(
+    {
+        type : "post",
+        dataType: "html",
+        cache: false,
+        success : function(response)
+        {
+            $(".blog-post").html(label);
+        },
+        complete: function(){
+        $('#loading-image').hide(); 
+      }
+    });
+    change_title_en(e,f);
+};
+
+function change_en(e,f){
     var label = e;
+
+    alert('First: '+e+' Second: '+f);
     $(".blog-post").html('<div id="loading-image"  class="wet-ajax-loader"><img src="../../../mod/wet4/graphics/loading.gif" alt="loading content"/></div>');
 
     $.ajax(
@@ -33,38 +55,18 @@ function change_fr(e){
         $('#loading-image').hide(); 
       }
     });
-    change_title_en();
+    change_title_fr(e,f);
 };
 
-function change_en(e){
-    var label = e;
-    $(".blog-post").html('<div id="loading-image"  class="wet-ajax-loader"><img src="../../../mod/wet4/graphics/loading.gif" alt="loading content"/></div>');
+function change_title_fr(e,f){
 
-    $.ajax(
-    {
-        type : "post",
-        dataType: "html",
-        cache: false,
-        success : function(response)
-        {
-            $(".blog-post").html(label);
-        },
-        complete: function(){
-        $('#loading-image').hide(); 
-      }
-    });
-    change_title_fr();
-};
-
-function change_title_fr(){
-
-    var link_available = '<a id="indicator_language_fr" onclick="change_fr((this.textContent || this.innerText))"  href="#"><label class="testClass hidden" ><?php echo $simple_fr; ?></label><span id="indicator_text">Contenu disponible en français</span></a>';
+    var link_available = '<a id="indicator_language_fr"  onclick=\'change_fr("'+e+'", "'+f+'")\'  href="#"><label class="testClass hidden" ><?php echo $blog->description2; ?></label><span id="indicator_text">Contenu disponible en français</span></a>';
     $("#change_language").html(link_available)
 }
 
-function change_title_en(){
+function change_title_en(e,f){
 
-     var link_available = '<a id="indicator_language_en" onclick="change_en((this.textContent || this.innerText))" href="#"><label class="testClass hidden" ><?php echo $simple_en; ?></label><span id="indicator_text">Content available in english</span></a>';
+     var link_available = '<a id="indicator_language_en" onclick=\'change_en("'+e+'", "'+f+'")\' href="#"><label class="testClass hidden" ><?php echo $blog->description; ?></label><span id="indicator_text">Content available in english</span></a>';
     $("#change_language").html(link_available)
 }
 
