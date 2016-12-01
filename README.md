@@ -25,7 +25,7 @@ use docker-compose to start/create your containers.
     docker-compose up
 
 Then visit [http://localhost:8080](http://localhost:8080) and follow the 
-instructions to complete your installation.  One the installer is complete,
+instructions to complete your installation.  Once the installer is complete,
 refer to 
 [INSTALL.md](https://github.com/tbs-sct/gcconnex/blob/gcconnex/INSTALL.md#configure-plugins)
 to configure the plugins required by GCconnex. 
