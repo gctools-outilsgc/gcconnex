@@ -263,16 +263,18 @@ $body .= '<div class="event-calendar-edit-bottom"></div>';
 $body .= '</div>';
 
 	if ($event_calendar_fewer_fields != 'yes') {
+		
 		//English
-		$body .= '<div class="en"><br><p><label for="long_description" style="float:left; width:225px;">'.elgg_echo("event_calendar:long_description_label").'</label>';
-		$body .= '<textarea rows="10" cols="80" id="long_description" name="long_description">'.$long_description.'</textarea>';
+		$body .= '<div class="en"><br><p><label for="long_description">'.elgg_echo("event_calendar:long_description_label").'</label>';
+		$body .= elgg_view("input/longtext", array('name' => 'long_description', 'id' => 'long_description', 'value' => $long_description));
 		$body .= '</p>';
 		$body .= '<p class="event-calendar-description">'.$prefix['long_description'].elgg_echo('event_calendar:long_description_description').'</p></div>';
-	//French
-		$body .= '<div class="fr"><br><p><label for="long_description2" style="float:left; width:225px;">'.elgg_echo("event_calendar:long_description_label2").'</label>';
-		$body .= '<textarea rows="10" cols="80" id="long_description2" name="long_description2">'.$long_description2.'</textarea>';
+
+		//french
+		$body .= '<div class="fr"><br><p><label for="long_description2">'.elgg_echo("event_calendar:long_description_label2").'</label>';
+		$body .= elgg_view("input/longtext", array('name' => 'long_description2', 'id' => 'long_description2', 'value' => $long_description2));
 		$body .= '</p>';
-		$body .= '<p class="event-calendar-description">'.$prefix['long_description2'].elgg_echo('event_calendar:long_description_description').'</p></div>';
+		$body .= '<p class="event-calendar-description">'.$prefix['long_description2'].elgg_echo('event_calendar:long_description_description2').'</p></div>';
 }
 
 /*$teleconference_options = array(
