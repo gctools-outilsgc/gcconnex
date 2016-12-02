@@ -18,8 +18,8 @@ services:
   #     driver: none
 
   # ###########################################################################
-  # The GCConnex container.  Will be accessible at http://localhost:8080, or 
-  # via the hostname provided in the VIRTUAL_HOST environment variable if 
+  # The GCConnex container.  Will be accessible at http://localhost:8080, or
+  # via the hostname provided in the VIRTUAL_HOST environment variable if
   # nginx-proxy is uncommented above.
   # ###########################################################################
   gcconnex:
@@ -28,7 +28,7 @@ services:
       - 8080:80
     volumes:
       - .:/var/www/html
-      - ./data:/data
+      - ./data/data:/data
     depends_on:
       - gcconnex-db
       # - nginx-proxy

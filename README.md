@@ -1,7 +1,7 @@
-## GCconnex 
+## GCconnex
 
-GCconnex is a professional networking and collaborative workspace for all Canadian public service, allowing people to connect and share information, leveraging the power of networking towards a more effective and efficient public service. 
- 
+GCconnex is a professional networking and collaborative workspace for all Canadian public service, allowing people to connect and share information, leveraging the power of networking towards a more effective and efficient public service.
+
 It features dynamic online communities where public servants can collaborate on projects, blog, chat via instant messaging, carry on discussions, ask and answer each other's questions about anything from learning to technology. It acts as a professional platform to create your professional C.V., share ideas and connect you with people and information that you need.
 
 GCconnex is based on Elgg. https://github.com/Elgg/Elgg
@@ -11,7 +11,7 @@ Follow instructions in [INSTALL.md](https://github.com/tbs-sct/gcconnex/blob/gcc
 
 ### Using Docker
 
-Developers can use [docker-compose](https://docs.docker.com/compose/) to 
+Developers can use [docker-compose](https://docs.docker.com/compose/) to
 quickly setup a development environment.
 
 #### Prerequisites
@@ -24,11 +24,11 @@ use docker-compose to start/create your containers.
 
     docker-compose up
 
-Then visit [http://localhost:8080](http://localhost:8080) and follow the 
+Then visit [http://localhost:8080](http://localhost:8080) and follow the
 instructions to complete your installation.  Once the installer is complete,
-refer to 
+refer to
 [INSTALL.md](https://github.com/tbs-sct/gcconnex/blob/gcconnex/INSTALL.md#configure-plugins)
-to configure the plugins required by GCconnex. 
+to configure the plugins required by GCconnex.
 
 #### Docker specific configuration
 On the `Database installation` page, use the following settings:
@@ -41,7 +41,7 @@ On the `Database installation` page, use the following settings:
 | Database Host         | gcconnex-db   |
 | Database Table Prefix | elgg_         |
 
-On the `Configure site` page, set the `Data Directory` to `/var/data`.
+On the `Configure site` page, set the `Data Directory` to `/data`.
 
 ### Contributing
 We welcome your contributions. Create Issues for bugs or feature requests. Submit your pull requests.
@@ -54,8 +54,8 @@ Elgg Copyright (c) 2008-2016, see COPYRIGHT.txt
 -------------------------------------------------------------------
 
 ## GCconnex
-GCconnex est un espace de travail collaboratif pour le réseautage professionnel à l'ensemble de la fonction publique Canadienne. Celle-ci vous permet de vous brancher, de partager de l'information et tirer profit du pouvoir de réseautage pour accroître l'efficacité et la productivité de la fonction publique. 
- 
+GCconnex est un espace de travail collaboratif pour le réseautage professionnel à l'ensemble de la fonction publique Canadienne. Celle-ci vous permet de vous brancher, de partager de l'information et tirer profit du pouvoir de réseautage pour accroître l'efficacité et la productivité de la fonction publique.
+
 On y retrouve plusieurs communautés en ligne où les employés peuvent collaborer à des projets, tenir des blogues, clavarder au moyen de la messagerie instantanée, tenir des discussions, poser des questions et obtenir des réponses sur des sujets aussi variés que l’apprentissage et la technologie. C'est une plateforme professionnel ou vous pouvez créer votre C.V, échanger des idées et vous connecter avec des gens et les information dont vous avez besoin.
 
 GCconnex est basé sur Elgg. https://github.com/Elgg/Elgg
@@ -65,7 +65,7 @@ Suivez les instructions dans [INSTALL.md](https://github.com/tbs-sct/gcconnex/bl
 
 ### Utilisation de Docker
 
-Les développeurs peuvent utiliser 
+Les développeurs peuvent utiliser
 [docker-compose](https://docs.docker.com/compose/) pour rapidement établir un
 environnement de développement.
 
@@ -80,7 +80,7 @@ utilisez `docker-compose` pour démarrer et/ou créer vos conteneurs Docker.
     docker-compose up
 
 Ensuite, visitez [http://localhost:8080](http://localhost:8080) et suivre les
-instructions pour compléter votre installation.  Une fois complet, regarder à 
+instructions pour compléter votre installation.  Une fois complet, regarder à
 [INSTALL.md](https://github.com/tbs-sct/gcconnex/blob/gcconnex/INSTALL.md#configure-plugins)
 et suivez les étapes additionnels.
 
