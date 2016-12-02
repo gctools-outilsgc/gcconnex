@@ -108,12 +108,26 @@ function removeTag($content, $tagName) {
 
 $content = '<span>This <b>is</b> an <span>example</span></span>';
 
-$simple_en2 =  removeTag($simple_en, 'span'); 
-$simple_fr2 =  removeTag($simple_fr, 'span'); 
 
-$simple_en4 = preg_replace( "/\r|\n/", "", $simple_en2 );
-$simple_fr4 = preg_replace( "/\r|\n/", "", $simple_fr2 );
+$simple_en8 = strip_tags($simple_en, '<p><strong><em><img>');
 
+$simple_fr8 = strip_tags($simple_fr, '<p><strong><em><img>');
+
+$simple_en9 = preg_replace( "/\r|\n/", "", $simple_en8 );
+$simple_fr9 = preg_replace( "/\r|\n/", "", $simple_fr8 );
+//echo $simple_fr;
+//$simple_en5 =  strip_tags($simple_en);
+//$simple_fr5 =  strip_tags($simple_fr);
+
+//$simple_en6 = trim($simple_en, "\n");
+//$simple_fr6 = trim($simple_fr, "\n");
+
+
+
+
+$simple_en7 = '<p>Pork loin shoulder tongue pastrami, burgdoggen leberkas flank andouille bresaola. Venison landjaeger burgdoggen, fatback beef ham jowl shankle doner t-bone frankfurter tongue. Alcatra short ribs capicola sausage tri-tip. Alcatra venison beef ribs, porchetta pork pork belly short loin tail shankle pork chop tri-tip leberkas. Hamburger leberkas ball tip, ribeye pancetta fatback strip steak beef cow prosciutto drumstick pork belly meatball short ribs chuck.</p><p>Pork loin ham prosciutto, chicken jerky doner drumstick shoulder corned beef kielbasa sausage brisket alcatra meatball pork. Pork loin shoulder tongue pastrami, burgdoggen leberkas flank andouille bresaola. Venison landjaeger burgdoggen, fatback beef ham jowl shankle doner t-bone frankfurter tongue. Alcatra short ribs capicola sausage tri-tip. Alcatra venison beef ribs, porchetta pork pork belly short loin tail shankle pork chop tri-tip leberkas. Hamburger leberkas ball tip, ribeye pancetta fatback strip steak beef cow prosciutto drumstick pork belly meatball short ribs chuck.Pork loin ham prosciutto, chicken jerky doner drumstick shoulder corned beef kielbasa sausage brisket alcatra meatball pork. </p>';
+$simple_fr7 = '<p>Bacon ipsum dolor amet boudin flank short loin shank sirloin alcatra shankle t-bone fatback ball tip porchetta shoulder prosciutto. Sirloin venison turkey meatball salami fatback capicola bresaola ball tip jowl. Tail pork chop turkey kielbasa alcatra biltong. Turducken tongue ham shoulder, beef t-bone tenderloin venison frankfurter shankle short loin strip steak. Salami leberkas bresaola shoulder ball tip, capicola kevin drumstick rump shank. Turkey pork chop shoulder fatback drumstick corned beef pig prosciutto venison biltong jerky chicken boudin filet mignon. Sirloin tri-tip short ribs filet mignon sausage cow brisket alcatra tenderloin.</p><p>Bacon ipsum dolor amet boudin flank short loin shank sirloin alcatra shankle t-bone fatback ball tip porchetta shoulder prosciutto. Sirloin venison turkey meatball salami fatback capicola bresaola ball tip jowl. Tail pork chop turkey kielbasa alcatra biltong. Turducken tongue ham shoulder, beef t-bone tenderloin venison frankfurter shankle short loin strip steak. Salami leberkas bresaola shoulder ball tip, capicola kevin drumstick rump shank. Turkey pork chop shoulder fatback drumstick corned beef pig prosciutto venison biltong jerky chicken boudin filet mignon. Sirloin tri-tip short ribs filet mignon sausage cow brisket alcatra tenderloin.</p>';
+//echo $simple_fr3;
 // do not show the metadata and controls in widget view
 if (elgg_in_context('widgets')) {
     //$metadata = '';
@@ -130,7 +144,7 @@ if(($blog->description2) && ($blog->description)){
 		
 					?>			
 
-<a id="indicator_language_en" href="#"><label class="testClass hidden" ><?php echo $blog->description; ?>'</label><span id="indicator_text" onclick="change_en('<?php echo $simple_en4; ?>', '<?php echo $simple_fr4; ?>');">Content available in english</span></a>
+<a id="indicator_language_en" href="#"><span id="indicator_text" onclick="change_en();"><span id="en_content" class="testClass hidden" ><?php echo $blog->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $blog->description2;?></span>Content available in english</span></a>
 
 
 
@@ -141,8 +155,8 @@ if(($blog->description2) && ($blog->description)){
 	}else{
 				
 		?>			
+<a id="indicator_language_fr" href="#"><span id="indicator_text" onclick="change_fr();"><span id="en_content" class="testClass hidden" ><?php echo $blog->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $blog->description2;?></span>Contenu disponible en français</span></a>
 
-<a id="indicator_language_fr" href="#"><label class="testClass hidden" ><?php echo $blog->description2; ?>'</label><span id="indicator_text" onclick="change_fr('<?php echo $simple_en4; ?>', '<?php echo $simple_fr4; ?>');">Contenu disponible en français</span></a>
 
 
 

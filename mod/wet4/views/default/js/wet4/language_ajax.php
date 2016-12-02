@@ -17,9 +17,16 @@
 alert('hello2');
 
 function change_fr(e,f){
-    var label = f;
+
+var spanfr = document.getElementById('fr_content');
+var f = spanfr.innerHTML || spanfr.textContent;
+
+var spanen = document.getElementById('en_content');
+var e = spanen.innerHTML || spanen.textContent;;
+
+
     $(".blog-post").html('<div id="loading-image"  class="wet-ajax-loader"><img src="../../../mod/wet4/graphics/loading.gif" alt="loading content"/></div>');
- alert('First: '+e+' Second: '+f);
+
     $.ajax(
     {
         type : "post",
@@ -27,7 +34,7 @@ function change_fr(e,f){
         cache: false,
         success : function(response)
         {
-            $(".blog-post").html(label);
+            $(".blog-post").html(f);
         },
         complete: function(){
         $('#loading-image').hide(); 
@@ -36,10 +43,15 @@ function change_fr(e,f){
     change_title_en(e,f);
 };
 
-function change_en(e,f){
-    var label = e;
+function change_en(){
 
-    alert('First: '+e+' Second: '+f);
+var spanfr = document.getElementById('fr_content');
+var f = spanfr.innerHTML || spanfr.textContent;
+
+var spanen = document.getElementById('en_content');
+var e = spanen.innerHTML || spanen.textContent;;
+
+
     $(".blog-post").html('<div id="loading-image"  class="wet-ajax-loader"><img src="../../../mod/wet4/graphics/loading.gif" alt="loading content"/></div>');
 
     $.ajax(
@@ -49,7 +61,7 @@ function change_en(e,f){
         cache: false,
         success : function(response)
         {
-            $(".blog-post").html(label);
+            $(".blog-post").html(e);
         },
         complete: function(){
         $('#loading-image').hide(); 
@@ -60,13 +72,15 @@ function change_en(e,f){
 
 function change_title_fr(e,f){
 
-    var link_available = '<a id="indicator_language_fr"  onclick=\'change_fr("'+e+'", "'+f+'")\'  href="#"><label class="testClass hidden" ><?php echo $blog->description2; ?></label><span id="indicator_text">Contenu disponible en français</span></a>';
+    var link_available ='<a id="indicator_language_fr" href="#"><span id="indicator_text" onclick="change_fr();"><span id="en_content" class="testClass hidden" >'+e+'</span><span id="fr_content" class="testClass hidden" >'+f+'</span>Contenu disponible en français</span></a>';
+    
     $("#change_language").html(link_available)
 }
 
 function change_title_en(e,f){
 
-     var link_available = '<a id="indicator_language_en" onclick=\'change_en("'+e+'", "'+f+'")\' href="#"><label class="testClass hidden" ><?php echo $blog->description; ?></label><span id="indicator_text">Content available in english</span></a>';
+    var link_available ='<a id="indicator_language_en" href="#"><span id="indicator_text" onclick="change_en();"><span id="en_content" class="testClass hidden" >'+e+'</span><span id="fr_content" class="testClass hidden" >'+f+'</span>Content available in english</span></a>';
+
     $("#change_language").html(link_available)
 }
 
