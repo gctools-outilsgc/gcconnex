@@ -72,14 +72,14 @@ var e = spanen.innerHTML || spanen.textContent;;
 
 function change_title_fr(e,f){
 
-    var link_available ='<a id="indicator_language_fr" href="#"><span id="indicator_text" onclick="change_fr();"><span id="en_content" class="testClass hidden" >'+e+'</span><span id="fr_content" class="testClass hidden" >'+f+'</span>Contenu disponible en français</span></a>';
+      var link_available ='<span id="indicator_language_fr" onclick="change_fr();"><span id="en_content" class="testClass hidden" >'+e+'</span><span id="fr_content" class="testClass hidden" >'+f+'</span>Ce contenu est disponible en français. <a href="#">Cliquer ici pour voir</a></span>';
     
     $("#change_language").html(link_available)
 }
 
 function change_title_en(e,f){
 
-    var link_available ='<a id="indicator_language_en" href="#"><span id="indicator_text" onclick="change_en();"><span id="en_content" class="testClass hidden" >'+e+'</span><span id="fr_content" class="testClass hidden" >'+f+'</span>Content available in english</span></a>';
+    var link_available ='<span id="indicator_language_en" onclick="change_en();"><span id="en_content" class="testClass hidden" >'+e+'</span><span id="fr_content" class="testClass hidden" >'+f+'</span>This content is available in english. <a href="#">Click here to see</a></span>';
 
     $("#change_language").html(link_available)
 }

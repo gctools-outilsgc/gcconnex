@@ -1626,3 +1626,12 @@ figcaption{
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
     padding-bottom: 7px;
 }
+
+/*Style for Available content function*/
+
+.change_language{
+  border: solid 4px #055959;
+  padding:5px;
+  text-align: right;;
+
+}
