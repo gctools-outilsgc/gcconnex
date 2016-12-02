@@ -47,8 +47,8 @@
   <?php echo elgg_echo('custom_index_widgets:widget_title'); ?>:
   <?php
 	echo elgg_view('input/text', array(
-			'name' => 'params[widget_title]',
-			'value' => gc_explode_translation($widget_title,'en')
+			'name' => 'params[widget_title]',                        
+			'value' => $widget_title,
 		));
 	?>
 </p>
@@ -56,8 +56,9 @@
 <?php echo elgg_echo('custom_index_widgets:html_content'); ?>
 <?php
 	echo elgg_view('input/longtext', array(
-			'name' => 'params[html_content]',
-			'value' => gc_explode_translation($html_content,'en')
+			'name' => 'params[html_content]',                        
+			'value' => $html_content,
+
 		));
 	?>
 </p>
