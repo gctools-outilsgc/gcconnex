@@ -22,10 +22,16 @@ function gc_group_layout_init(){
     elgg_extend_view('page/layouts/one_sidebar', 'page/elements/cover_photo', 400);
     elgg_extend_view('css/elgg', 'css/group_layout');
 
+
     elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'group_owners_block_handler');
 
     elgg_register_ajax_view('ajax/grp_ajax_content');
     elgg_extend_view("js/elgg", "js/group_ajax");
+
+    // group invitation
+	elgg_register_action("groups/invite", dirname(__FILE__) . "/actions/groups/invite.php");
+    //group edit
+    elgg_register_action("groups/edit", dirname(__FILE__) . "/actions/groups/edit.php");
 
 }
 
@@ -226,4 +232,72 @@ function group_owners_block_handler($hook, $type, $menu, $params){
 function c_photo_page_handler(){
     @include (dirname ( __FILE__ ) . "/pages/c_photo_image.php");
     return true;
+}
+
+/*
+ * gc_group_layout_transfer_coverphoto
+ *
+ * Transfers group cover photo to the new owner of group to prevent display issue
+ *
+ * @author your name <your.name@example.com>
+ * @param [Elgg_entity] [group] [<Group that this is taking place in>]
+ * @param [Elgg_entity] [new_owner] [<New owner of group>]
+ * @return [bool]
+ */
+function gc_group_layout_transfer_coverphoto($group, $new_owner){
+  $result = false;
+
+  //check if entity passed is group
+	if (empty($group) || !elgg_instanceof($group, "group") || !$group->canEdit()) {
+		return $result;
+	}
+
+  //check if entity passed is a user
+	if (empty($new_owner) || !elgg_instanceof($new_owner, "user")) {
+		return $result;
+	}
+
+  //check if the cover photo is set or has been removed before
+  if(!isset($group->cover_photo) || $group->cover_photo == 'nope'){
+    return $result;
+  }
+
+  //get old owner entity
+  $old_owner = $group->getOwnerEntity();
+
+  $prefix = "groups_c_photo/" . $group->guid;
+
+  //old file
+  $ofh = new ElggFile();
+  $ofh->owner_guid = $old_owner->getGUID();
+  $ofh->container_guid = $group->guid;
+  $ofh->subtype = 'c_photo';
+
+  //new file
+  $nfh = new ElggFile();
+  $nfh->owner_guid = $new_owner->guid;
+  $nfh->container_guid = $group->guid;
+  $nfh->subtype = 'c_photo';
+
+  $ofh->setFilename($prefix . ".jpg");
+  $nfh->setFilename($prefix . ".jpg");
+
+  $ofh->open("read");
+  $nfh->open("write");
+
+  //write old file into new file
+  $nfh->write($ofh->grabFile());
+
+  // close file
+  $ofh->close();
+  $nfh->close();
+
+  // cleanup old file
+  $nfh->save();
+  $ofh->delete();
+
+  $c_photo_guid = $nfh->getGUID();
+  $group->cover_photo =$c_photo_guid;
+
+  return true;
 }
