@@ -6,6 +6,12 @@
  * Fetch and display a list of matching users when writing a @mention and
  * autocomplete the selected user.
  */
+ /*
+ * GC_MODIFICATION
+ * Description: Changed targeted elgg-body classes to panel-body classes to work with wet4 theme. Also made ajax popup keyboard controllable.
+ * Author: Ethan Wallace
+ * Date: 2/2/2016
+ */
 define(function(require) {
 	var $ = require('jquery');
 	var elgg = require('elgg');
@@ -92,7 +98,7 @@ define(function(require) {
         //ability to tab and press enter on the list item
 
 		$('.mentions-autocomplete > li').bind('keypress', function (e) {
-		    
+
 		        e.preventDefault();
 		        if (e.keyCode == 13) {
 		        var username = $(this).data('username');

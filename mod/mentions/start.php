@@ -3,7 +3,11 @@
  * Provides links and notifications for using @username mentions
  *
  */
-
+ /*
+  * GC_MODIFICATION
+  * Description: Modified notifications of mentions to use cp_notifications
+  * Author: GCTools Team
+  */
 elgg_register_event_handler('init', 'system', 'mentions_init');
 
 function mentions_init() {
@@ -206,7 +210,7 @@ function mentions_notification_handler($event, $event_type, $object) {
 							$container = $object->getContainerEntity();
 						else
 							$container = $object;
-					
+
 						$message = array(
 							'cp_author' => $owner->name,
 							'cp_content' => $container->title,
