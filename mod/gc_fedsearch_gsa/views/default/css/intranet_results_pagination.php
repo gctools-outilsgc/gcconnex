@@ -1,12 +1,13 @@
 <?php
-	$gsa_pagination = elgg_get_plugin_setting('gc_fedsearch_gsa','gc_fedsearch_gsa');
+	$gsa_pagination = elgg_get_plugin_setting('gsa_pagination','gc_fedsearch_gsa');
 ?>
 
-
-.elgg-pagination_gsa {
+<style>
+.elgg-pagination {
 
 	position: relative;
-	left: <?php echo "{$gsa_pagination}%"; ?>;
+	right: <?php echo "{$gsa_pagination}%"; ?> !important;
 
 }
-
+</style>
+ 

@@ -7,8 +7,9 @@ function gc_fedsearch_gsa_init() {
 	elgg_register_plugin_hook_handler('view', 'output/longtext', 'entity_url');
 
 	// css layout for pagination
-	$gsa_pagination = elgg_get_plugin_setting('gc_fedsearch_gsa','gc_fedsearch_gsa');
-	if ($gsa_pagination) elgg_extend_view('css/elgg', 'css/intranet_results_pagination');
+	$gsa_pagination = elgg_get_plugin_setting('gsa_pagination','gc_fedsearch_gsa');
+	if ($gsa_pagination) elgg_extend_view('css/elgg', 'css/intranet_results_pagination', 1);
+	
 }
 
 
