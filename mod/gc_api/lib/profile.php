@@ -4,6 +4,10 @@ elgg_ws_expose_function("get.profile","get_api_profile", array("id" => array('ty
 	'provide user GUID number and all profile information is returned',
                'GET', false, false);
 
+elgg_ws_expose_function("push.profile","profilePush", array("id" => array('type' => 'string')),
+	'update a user profile based on id passed',
+               'GET', true, false);
+
 function get_api_profile($id){
 	global $CONFIG;
 	//$string = "User was not found. Please try a different GUID, username, or email address";
@@ -276,8 +280,8 @@ function get_api_profile($id){
 	return $user;
 }
 
-function profilePush(){
-
+function profilePush($id){
+	return "success! ".$id;
 }
 
 function getUserFromID($id){
