@@ -7,29 +7,7 @@ elgg_ws_expose_function("get.profile","get_api_profile", array("id" => array('ty
 function get_api_profile($id){
 	global $CONFIG;
 	//$string = "User was not found. Please try a different GUID, username, or email address";
-	if (is_numeric($id)){
-		$user_entity = get_user($id);
-		//$string = $user_entity->username;
-	}
-	else{
-		if (strpos($id, '@')){
-			$user_entity = get_user_by_email($id);
-			if (is_array($user_entity)){
-				if (count($user_entity)>1)
-					//$string = "Found more than 1 user, please use username or GUID";
-					return "Found more than 1 user, please use username or GUID";
-				else{
-					$user_entity = $user_entity[0];
-					//$string = $user_entity->username;
-				}
-			}
-		}else{
-			$user_entity = get_user_by_username($id);
-			//$string = $user_entity->username;
-		}
-		
-		
-	}
+	$user_entity = getUserFromID($id);
 	if (!$user_entity)
 		return "User was not found. Please try a different GUID, username, or email address";
 	
@@ -41,6 +19,8 @@ function get_api_profile($id){
 
 	//get and store user display name
 	$user['displayName'] = $user_entity->name;
+
+	$user['email'] = $user_entity->email;
 
 	//get and store URL for profile
 	$user['profileURL'] = $user_entity->getURL();
@@ -294,6 +274,37 @@ function get_api_profile($id){
 
 
 	return $user;
+}
+
+function profilePush(){
+
+}
+
+function getUserFromID($id){
+	if (is_numeric($id)){
+		$user_entity = get_user($id);
+		//$string = $user_entity->username;
+	}
+	else{
+		if (strpos($id, '@')){
+			$user_entity = get_user_by_email($id);
+			if (is_array($user_entity)){
+				if (count($user_entity)>1)
+					//$string = "Found more than 1 user, please use username or GUID";
+					return "Found more than 1 user, please use username or GUID";
+				else{
+					$user_entity = $user_entity[0];
+					//$string = $user_entity->username;
+				}
+			}
+		}else{
+			$user_entity = get_user_by_username($id);
+			//$string = $user_entity->username;
+		}
+		
+		
+	}
+	return $user_entity;
 }
 
 function buildDate($month, $year){
