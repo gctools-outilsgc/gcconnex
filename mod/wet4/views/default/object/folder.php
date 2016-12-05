@@ -83,6 +83,23 @@ if ($full_view) {
 	}
 
 
+if(($folder->description2) && ($folder->description)){
+	echo'<div id="change_language" class="change_language">';
+	if (get_current_language() == 'fr'){
+
+		?>			
+		<span id="indicator_language_en" onclick="change_en('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $folder->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $folder->description2;?></span>This content is available in english. <span class="fake-link" id="fake-link-1">Click here to see</span></span>
+		<?php
+
+	}else{
+				
+		?>			
+		<span id="indicator_language_fr" onclick="change_fr('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $folder->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $folder->description2;?></span>Ce contenu est disponible en français. <span class="fake-link" id="fake-link-1">Cliquer ici pour voir</span></span>
+		<?php	
+	}
+	echo'</div>';
+}
+
 	echo elgg_view("object/elements/full", array(
 		"entity" => $folder,
 		"title" => false,
@@ -92,6 +109,13 @@ if ($full_view) {
 	));
     elgg_unregister_menu_item('title2', 'new_folder');
 } else {
+
+	// identify available content
+if(($folder->description2) && ($folder->description)){
+		
+	echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';	
+}
+
 	// summary view
 	$icon = elgg_view_entity_icon($folder, "small");
 	$icon_alt = "";
@@ -107,6 +131,5 @@ if ($full_view) {
 	
 	$params = $params + $vars;
 	$list_body = elgg_view("object/elements/summary", $params);
-	
 	echo elgg_view_image_block($icon, $list_body, array("class" => "file-tools-folder", "image_alt" => $icon_alt));
 }

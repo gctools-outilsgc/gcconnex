@@ -70,14 +70,14 @@ var e = spanen.innerHTML || spanen.textContent;;
 
 function change_title_fr(e,f,d){
 
-      var link_available ='<span id="indicator_language_fr" onclick="change_fr(\'' + d + '\');"><span id="en_content" class="testClass hidden" >'+e+'</span><span id="fr_content" class="testClass hidden" >'+f+'</span>Ce contenu est disponible en français. <a href="#">Cliquer ici pour voir</a></span>';
+      var link_available ='<span id="indicator_language_fr" onclick="change_fr(\'' + d + '\');"><span id="en_content" class="testClass hidden" >'+e+'</span><span id="fr_content" class="testClass hidden" >'+f+'</span>Ce contenu est disponible en français. <span class="fake-link" id="fake-link-1">Cliquer ici pour voir</span></span>';
     
     $("#change_language").html(link_available)
 }
 
 function change_title_en(e,f,d){
 
-    var link_available ='<span id="indicator_language_en" onclick=\"change_en(\'' + d + '\');\"><span id="en_content" class="testClass hidden" >'+e+'</span><span id="fr_content" class="testClass hidden" >'+f+'</span>This content is available in english. <a href="#">Click here to see</a></span>';
+    var link_available ='<span id="indicator_language_en" onclick=\"change_en(\'' + d + '\');\"><span id="en_content" class="testClass hidden" >'+e+'</span><span id="fr_content" class="testClass hidden" >'+f+'</span>This content is available in english. <span class="fake-link" id="fake-link-1">Click here to see</span></span>';
 
     $("#change_language").html(link_available)
 }

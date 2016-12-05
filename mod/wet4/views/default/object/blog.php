@@ -104,13 +104,13 @@ if(($blog->description2) && ($blog->description)){
 	if (get_current_language() == 'fr'){
 		
 		?>			
-		<span id="indicator_language_en" onclick="change_en('.blog-post');"><span id="en_content" class="testClass hidden" ><?php echo $blog->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $blog->description2;?></span>This content is available in english. <a href="#">Click here to see</a></span>
+		<span id="indicator_language_en" onclick="change_en('.blog-post');"><span id="en_content" class="testClass hidden" ><?php echo $blog->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $blog->description2;?></span>This content is available in english. <span class="fake-link" id="fake-link-1">Click here to see</span></span>
 		<?php
 
 	}else{
 				
 		?>			
-		<span id="indicator_language_fr" onclick="change_fr('.blog-post');"><span id="en_content" class="testClass hidden" ><?php echo $blog->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $blog->description2;?></span>Ce contenu est disponible en français. <a href="#">Cliquer ici pour voir</a></span>
+		<span id="indicator_language_fr" onclick="change_fr('.blog-post');"><span id="en_content" class="testClass hidden" ><?php echo $blog->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $blog->description2;?></span>Ce contenu est disponible en français.<span class="fake-link" id="fake-link-1">Cliquer ici pour voir</span></span>
 		<?php	
 	}
 	echo'</div>';

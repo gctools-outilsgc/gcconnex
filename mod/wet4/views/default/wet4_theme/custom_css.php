@@ -1635,3 +1635,9 @@ figcaption{
   text-align: right;;
 
 }
+
+.fake-link {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}

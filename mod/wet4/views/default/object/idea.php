@@ -183,7 +183,23 @@ if($container) { // ds - was a weird bug where the container presumably didn't e
 $idea_info = elgg_view_image_block($owner_icon, $list_body, array('class' => 'mbs'));
 if ($full == 'full' && !elgg_in_context('gallery')) {
 
-	
+	if(($idea->description2) && ($idea->description)){
+	echo'<div id="change_language" class="change_language">';
+	if (get_current_language() == 'fr'){
+
+		?>			
+		<span id="indicator_language_en" onclick="change_en('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $idea->description1;?></span><span id="fr_content" class="testClass hidden" ><?php echo $idea->description2;?></span>This content is available in english. <span class="fake-link" id="fake-link-1">Click here to see</span></span>
+		<?php
+
+	}else{
+				
+		?>			
+		<span id="indicator_language_fr" onclick="change_fr('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $idea->description1;?></span><span id="fr_content" class="testClass hidden" ><?php echo $idea->description2;?></span>Ce contenu est disponible en français. <span class="fake-link" id="fake-link-1">Cliquer ici pour voir</span></span>
+		<?php	
+	}
+	echo'</div>';
+}
+
     
 	echo <<<HTML
 <div id="elgg-object-{$idea->guid}" class="elgg-item-idea">
@@ -254,6 +270,12 @@ HTML;
 HTML;
 
 } else {
+
+	// identify available content
+if(($idea->description2) && ($idea->description)){
+		
+	echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';	
+}
 
 	// brief view
 	if ( $full != 'searched') {
