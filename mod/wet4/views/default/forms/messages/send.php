@@ -28,6 +28,7 @@ if ($_GET['collection']){ // if it's from collection, create a list of recipient
 	$recipient_username = elgg_extract('recipient_username', $vars, '');
 }
 
+$recipient_username1 = elgg_extract('recipient_username', $vars, '');
 
 $subject = elgg_extract('subject', $vars, '');
 $body = elgg_extract('body', $vars, '');
@@ -35,7 +36,7 @@ $body = elgg_extract('body', $vars, '');
 $recipient_autocomplete = elgg_view('input/autocomplete', array(
 	'name' => 'recipient_username',
     'id' => 'recipient_username',
-	'value' => $recipient_username_list,
+	'value' => $recipient_username1,//$recipient_username_list,
 	'match_on' => array('friends'),
 ));
 
