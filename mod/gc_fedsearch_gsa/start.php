@@ -5,13 +5,22 @@ elgg_register_event_handler('init', 'system', 'gc_fedsearch_gsa_init');
 function gc_fedsearch_gsa_init() {
 	// strip out all the (broken) hyperlink so that the GSA doesn't recursively create indices
 	elgg_register_plugin_hook_handler('view', 'output/longtext', 'entity_url');
+
+	// css layout for pagination
+	$gsa_pagination = elgg_get_plugin_setting('gc_fedsearch_gsa','gc_fedsearch_gsa');
+	if ($gsa_pagination) elgg_extend_view('css/elgg', 'css/intranet_results_pagination');
 }
 
 
 function entity_url($hook, $type, $return, $params) {
 	
-	// do this only for the gsa-crawler
-	//if (strcmp('gsa-crawler',strtolower($_SERVER['HTTP_USER_AGENT'])) == 0)  {
+	// pull the user agent string and/or user testing
+	$gsa_agentstring = strtolower(elgg_get_plugin_setting('gsa_agentstring','gc_fedsearch_gsa'));
+	$gsa_usertest = elgg_get_plugin_setting('gsa_test','gc_fedsearch_gsa');
+	if ($gsa_usertest) $current_user = elgg_get_logged_in_user_entity();
+
+	// do this only for the gsa-crawler (and usertest is empty)
+	if ((!$gsa_usertest) && strcmp($gsa_agentstring,strtolower($_SERVER['HTTP_USER_AGENT'])) == 0)  {
 
 		/*blog pages bookmarks file discussion*/
 		$filter_entity = array('blog', 'pages');
@@ -46,7 +55,7 @@ function entity_url($hook, $type, $return, $params) {
 			}
 			$return .= $description->textContent;	
 		}
-	//}
+	}
    
 	return $return;
 }
