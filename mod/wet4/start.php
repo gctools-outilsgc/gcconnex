@@ -54,7 +54,6 @@ function wet4_theme_init() {
     elgg_register_plugin_hook_handler('register', 'menu:widget', 'wet4_widget_menu_setup');
     elgg_register_plugin_hook_handler('register', 'menu:page', 'wet4_elgg_page_menu_setup');
     elgg_register_plugin_hook_handler('register', 'menu:river', 'wet4_elgg_river_menu_setup');
-    elgg_register_plugin_hook_handler('register', 'menu:site', 'career_menu_hander');
 
     elgg_register_plugin_hook_handler('register', 'menu:entity', 'wet4_likes_entity_menu_setup', 400);
     //elgg_register_plugin_hook_handler('register', 'menu:entity', 'wet4_delete_entity_menu', 400);
@@ -174,12 +173,6 @@ function wet4_theme_init() {
     elgg_extend_view("core/settings/statistics", "forms/usersettings/menus");
     elgg_extend_view('forms/account/settings', 'core/settings/account/landing_page');
 
-    //menu item for career dropdown
-    elgg_register_menu_item('site', array(
-    		'name' => 'career',
-    		'href' => '#career_menu',
-    		'text' => elgg_echo('career') . '<span class="expicon glyphicon glyphicon-chevron-down"></span>'
-    ));
 
     //set up metadata for user's landing page preference
     if(elgg_is_logged_in()){
@@ -284,25 +277,6 @@ function _elgg_set_landing_page() {
 }
 
 
-// function that handles moving jobs marketplace and micro missions into drop down menu
-function career_menu_hander($hook, $type, $menu, $params){
-    foreach ($menu as $key => $item){
-
-        switch ($item->getName()) {
-            case 'career':
-                if(elgg_is_active_plugin('missions')){
-                    $item->addChild(elgg_get_menu_item('site', 'mission_main'));
-                }
-if(elgg_is_active_plugin('gcforums')){
-                    $item->addChild(elgg_get_menu_item('subSite', 'Forum'));
-                }
-
-                $item->addChild(elgg_get_menu_item('subSite', 'jobs'));
-                $item->setLinkClass('item');
-                break;
-        }
-    }
-}
 
 /*
  * wet4_theme_pagesetup
