@@ -185,8 +185,9 @@ $content .='<script>$(".all-site").click(function(){$(".group-site").prop("check
 
 
 $group_limit = elgg_get_plugin_setting('cp_notifications_display','cp_notifications');
-if (!$group_limit) $group_limit = 10; // cyu - default value if none is set (too many stuff)
+//if (!$group_limit) $group_limit = 10; // cyu - default value if none is set (too many stuff)
 
+$group_limit = 10;
 $group_offset = (int)$group_page * (int)$group_limit;
 
 // cyu - get user's groups that they've joined
@@ -205,6 +206,9 @@ $groups = elgg_get_entities_from_relationship($options);
 $user_guid = elgg_get_logged_in_user_guid();
 $query = "SELECT count(guid) AS num_group FROM {$db_prefix}groups_entity g, {$db_prefix}entity_relationships r WHERE g.guid = r.guid_two AND r.relationship = 'member' AND r.guid_one = {$user_guid}";
 $ng = get_data($query);
+
+error_log("cyu - {$ng[0]->num_group} and {$group_limit}");
+
 $number_of_grp_pages = (int)$ng[0]->num_group / (int)$group_limit;
 
 // start going through all the groups that you are a member of
@@ -330,15 +334,11 @@ foreach ($groups as $group) {
 	// GROUP CONTENT SUBSCRIPTIONS
 	//------------------------------------------------------------------------------------------------------------------
     $content .= '<div class="accordion col-sm-12 clearfix mrgn-bttm-sm">';
-    // cyu - performance upgrade: do not load all the group contents at the same time, load only if user wants to view it
-    $query = "SELECT e.guid FROM elggentities e, elggentity_relationships r WHERE e.container_guid = {$group->getGUID()} AND e.guid = r.guid_two AND r.guid_one = {$user->getGUID()} AND r.relationship = 'cp_subscribed_to_site_mail' LIMIT 1";
-    $all_or_none = count(get_data($query));
 
-    if ($all_or_none) {
     	$content .= '	<details class="acc-group" onClick="return create_group_content_item('.$group->getGUID().', '.$user->getGUID().')">';
     	$content .= "		<summary id='group_item_container-{$group->getGUID()}' class='wb-toggle tgl-tab'>".elgg_echo('cp_notify:groupContent').'</summary>';
-    } else
-    	$content .= "		<summary>".elgg_echo('cp_notify:setting:no_grp_subscription')."</summary>";
+  
+
     
     $content .= "		<div id='group-content-{$group->getGUID()}' class='tgl-panel clearfix'>";
     $content .= '		</div>';	// close line 295
@@ -359,7 +359,7 @@ $current_user = elgg_get_logged_in_user_entity();
 
 // do pagination
 $content .= "<div align='center'>";
-for ($x = 0; $x <= $number_of_grp_pages; $x++)
+for ($x = 0; $x < $number_of_grp_pages; $x++)
 	$content .= "[ <a href='{$site->getURL()}settings/plugins/{$current_user->username}/cp_notifications?gs={$x}'>{$x}</a> ]";
 $content  .= "</div>";
 
@@ -439,8 +439,8 @@ $cp_count = 0;
 
 
 <?php
-
-
+ 
+ 
 // update only the div when you want to view the next page
 $content .= "<section id='notificationstable' cellspacing='0' cellpadding='4' width='100%' class='clearfix'>";
 $content .= '<div class="col-sm-12 group-notification-options"><h3 class="well">'.elgg_echo('cp_notify:personal_setting').'</h3></div>';
@@ -520,4 +520,3 @@ function get_forum_in_group($entity_guid_static, $entity_guid) {
 		return get_forum_in_group($entity_guid_static, $entity->getContainerGUID());
 	}
 }
-
