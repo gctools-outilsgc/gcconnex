@@ -41,8 +41,6 @@ if(!empty($invitable_missions)) {
 			'id' => 'invitable-missions-submission-button-' . $user_guid,
 			'style' => 'width:100%;height:100%;'
 	));
-	
-	$invite_button_restrictor = elgg_view('page/elements/one-click-restrictor', array('restricted_element_id' => 'invitable-missions-submission-button-' . $user_guid));
 }
 ?>
 
@@ -53,6 +51,5 @@ if(!empty($invitable_missions)) {
 <div>
 	<?php 
 		echo $invite_button;
-		echo $invite_button_restrictor;
 	?>
 </div>
