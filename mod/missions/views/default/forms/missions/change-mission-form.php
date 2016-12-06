@@ -500,6 +500,17 @@ $button_set = mm_create_button_set_full($mission);
 </div>
 
 <script>
+	function init_ckeditors() {
+		if (typeof(CKEDITOR) !== 'undefined' && Object.keys(CKEDITOR.instances).length > 0) {
+			$.each(CKEDITOR.instances, function($k, $v) {
+				$v.on('change', function() {
+					$v.updateElement() });
+			});
+		} else {
+			setTimeout(init_ckeditors, 10);
+		}
+	};
+
 	function add_skill_field() {
 		elgg.get('ajax/view/missions/add-skill', {
 			success: function(result, success, xhr) {
@@ -507,4 +518,9 @@ $button_set = mm_create_button_set_full($mission);
 			}
 		});
 	}
+
+	$(function() {
+		init_ckeditors();
+	});
+
 </script>
