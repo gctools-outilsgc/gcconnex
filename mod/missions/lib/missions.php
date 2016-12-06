@@ -631,16 +631,17 @@ function mm_sort_mission_decider($sort, $order, $entity_set, $opp_type = '') {
 		return $backup_array;
 	}
     
-   if ( $opp_type != '' )				// apply filtering if some types are passed for filtering
+   if ( $opp_type != '' ) {				// apply filtering if some types are passed for filtering
+	    $entity_set2 = array();
 	    foreach($entity_set as $type){
 	        //$type_array[] = $type->job_type;
 	        if(in_array($type->job_type,$opp_type)){		
 	            $entity_set2[] = $type;   
 	        }
 	    }
-	else 								// if nothing is selected for filtering, do not filter
+	 } else { 								// if nothing is selected for filtering, do not filter
 		$entity_set2 = $entity_set;
-	
+	}
     //$entity_set = array_intersect($type);
 	$comparison = '';
 	switch($sort) {
