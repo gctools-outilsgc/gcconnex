@@ -73,7 +73,7 @@ if ($full && !elgg_in_context('gallery')) {
 	);
 	$params = $params + $vars;
 	$summary = elgg_view('object/elements/summary', $params);
-	
+
 	// identify available content
 	if(($bookmark->description2) && ($bookmark->description)){
 		echo'<div id="change_language" class="change_language">';
@@ -87,7 +87,7 @@ if ($full && !elgg_in_context('gallery')) {
 		}else{
 					
 			?>			
-			<span id="indicator_language_fr" onclick="change_fr('.pbl');"><span id="en_content" class="testClass hidden" ><?php echo $bookmark->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $bookmark->description2;?><span class="fake-link" id="fake-link-1">Cliquer ici pour voir</span></span>
+			<span id="indicator_language_fr" onclick="change_fr('.pbl');"><span id="en_content" class="testClass hidden" ><?php echo $bookmark->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $bookmark->description2;?></span>Ce contenu est disponible en français.<span class="fake-link" id="fake-link-1">Cliquer ici pour voir</span></span>
 			<?php	
 		}
 		echo'</div>';
