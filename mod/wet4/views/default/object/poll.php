@@ -69,9 +69,11 @@ if (isset($vars['entity'])) {
 			$title = false;
 		}
 $can_vote = !polls_check_for_previous_vote($poll, $user_guid);
+
+//Identify available content
 if((polls_get_choice_array2($poll)) && (polls_get_choice_array($poll))) {
 	echo'<div id="change_language" class="change_language">';
-	if ($can_vote){
+	if ($can_vote){//put content in different div if can ou can't vote
 		if (get_current_language() == 'fr'){
 
 		?>			
@@ -128,10 +130,10 @@ if((polls_get_choice_array2($poll)) && (polls_get_choice_array($poll))) {
 		// brief view
 	
 	// identify available content
-if((polls_get_choice_array2($poll)) && (polls_get_choice_array($poll))) {
-		
-	echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';	
-}
+	if((polls_get_choice_array2($poll)) && (polls_get_choice_array($poll))) {
+
+		echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';	
+	}
 
 		$params = array(
 			'entity' => $poll,
@@ -147,17 +149,16 @@ if((polls_get_choice_array2($poll)) && (polls_get_choice_array($poll))) {
 }
 ?>
 <script>
-                 	function change_language_polls(lang,guid){
-                 		var lang = lang;
-                 		var guid = guid;
-                 		//alert(lang);
-                 		//alert(guid);
-                     $("#"+guid).load("gcconnex/mod/polls/views/default/polls/results_for_widget?id="+lang+" #"+guid);
-                     if (lang == 'fr'){
-                     	change_link_en(guid);
-                     }else{
-                     	change_link_fr(guid);
-                     }
+function change_language_polls(lang,guid){
+	var lang = lang; //get lang
+	var guid = guid; // get guid for div
+
+	$("#"+guid).load("gcconnex/mod/polls/views/default/polls/results_for_widget?id="+lang+" #"+guid); // load section of this page
+	if (lang == 'fr'){//change link
+	    change_link_en(guid); 
+	}else{
+	    change_link_fr(guid);
+	}
 
 }
 

@@ -12,10 +12,6 @@
 $lang = get_current_language();
 $full = elgg_extract('full_view', $vars, FALSE);
 $blog = elgg_extract('entity', $vars, FALSE);
-//$simple = 'simple string';
-$simple_fr = $blog->description2;
-$simple_en = $blog->description;
-
 
 if (!$blog) {
 	return TRUE;
@@ -97,31 +93,29 @@ if (elgg_in_context('widgets')) {
 // Show blog
 if ($full) {
 	// full view
-
 	// identify available content
-if(($blog->description2) && ($blog->description)){
-	echo'<div id="change_language" class="change_language">';
-	if (get_current_language() == 'fr'){
-		
-		?>			
-		<span id="indicator_language_en" onclick="change_en('.blog-post');"><span id="en_content" class="testClass hidden" ><?php echo $blog->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $blog->description2;?></span>This content is available in english. <span class="fake-link" id="fake-link-1">Click here to see</span></span>
-		<?php
+	if(($blog->description2) && ($blog->description)){
+		echo'<div id="change_language" class="change_language">';
+		if (get_current_language() == 'fr'){
+			
+			?>			
+			<span id="indicator_language_en" onclick="change_en('.blog-post');"><span id="en_content" class="testClass hidden" ><?php echo $blog->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $blog->description2;?></span>This content is available in english. <span class="fake-link" id="fake-link-1">Click here to see</span></span>
+			<?php
 
-	}else{
-				
-		?>			
-		<span id="indicator_language_fr" onclick="change_fr('.blog-post');"><span id="en_content" class="testClass hidden" ><?php echo $blog->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $blog->description2;?></span>Ce contenu est disponible en français.<span class="fake-link" id="fake-link-1">Cliquer ici pour voir</span></span>
-		<?php	
+		}else{
+					
+			?>			
+			<span id="indicator_language_fr" onclick="change_fr('.blog-post');"><span id="en_content" class="testClass hidden" ><?php echo $blog->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $blog->description2;?></span>Ce contenu est disponible en français.<span class="fake-link" id="fake-link-1">Cliquer ici pour voir</span></span>
+			<?php	
+		}
+		echo'</div>';
 	}
-	echo'</div>';
-}
 
-
-if($blog->description3){
-	$blog_descr = gc_explode_translation($blog->description3, $lang);
-}else{
-	$blog_descr = $blog->description;
-}
+	if($blog->description3){
+		$blog_descr = gc_explode_translation($blog->description3, $lang);
+	}else{
+		$blog_descr = $blog->description;
+	}
  	$body = elgg_view('output/longtext', array(
 		'value' => $blog_descr,
 		'class' => 'blog-post',
@@ -151,10 +145,10 @@ if($blog->description3){
 } else {
 
 	// identify available content
-if(($blog->description2) && ($blog->description)){
-		
-	echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';	
-}
+	if(($blog->description2) && ($blog->description)){
+			
+		echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';	
+	}
 	// how to show strapline
 	if (elgg_in_context("listing")) {
 		$excerpt = "";
@@ -204,49 +198,3 @@ if(($blog->description2) && ($blog->description)){
 	
 
 }
-?>
-
-<!-- 
-/*function change_fr(e){
-	var label = e;
-	$.ajax(
-    {
-        type : "post",
-        dataType: "html",
-        cache: false,
-        success : function(response)
-        {
-        	$(".blog-post").html(label);
-        }
-    });
-    change_title_en();
-};
-
-function change_en(e){
-  	var label = e;
-	$.ajax(
-    {
-        type : "post",
-        dataType: "html",
-        cache: false,
-        success : function(response)
-        {
-            $(".blog-post").html(label);
-        }
-    });
-	change_title_fr();
-};
-
-function change_title_fr(){
-
-	var link_available = '<a id="indicator_language_fr" onclick="change_fr((this.textContent || this.innerText))"  href="#"><label class="testClass hidden" ><?php echo $simple_fr; ?></label><span id="indicator_text">Contenu disponible en français</span></a>';
-	$("#change_language").html(link_available)
-}
-
-function change_title_en(){
-
-	 var link_available = '<a id="indicator_language_en" onclick="change_en((this.textContent || this.innerText))" href="#"><label class="testClass hidden" ><?php echo $simple_en; ?></label><span id="indicator_text">Content available in english</span></a>';
-	$("#change_language").html(link_available)
-}*/ -->
-
-<?php

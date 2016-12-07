@@ -73,24 +73,25 @@ if ($full && !elgg_in_context('gallery')) {
 	);
 	$params = $params + $vars;
 	$summary = elgg_view('object/elements/summary', $params);
-
-if(($bookmark->description2) && ($bookmark->description)){
-	echo'<div id="change_language" class="change_language">';
 	
-	if (get_current_language() == 'fr'){
+	// identify available content
+	if(($bookmark->description2) && ($bookmark->description)){
+		echo'<div id="change_language" class="change_language">';
 		
-		?>			
-		<span id="indicator_language_en" onclick="change_en('.pbl');"><span id="en_content" class="testClass hidden" ><?php echo $bookmark->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $bookmark->description2;?></span>This content is available in english. <span class="fake-link" id="fake-link-1">Click here to see</span></span>
-		<?php
+		if (get_current_language() == 'fr'){
+			
+			?>			
+			<span id="indicator_language_en" onclick="change_en('.pbl');"><span id="en_content" class="testClass hidden" ><?php echo $bookmark->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $bookmark->description2;?></span>This content is available in english. <span class="fake-link" id="fake-link-1">Click here to see</span></span>
+			<?php
 
-	}else{
-				
-		?>			
-		<span id="indicator_language_fr" onclick="change_fr('.pbl');"><span id="en_content" class="testClass hidden" ><?php echo $bookmark->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $bookmark->description2;?><span class="fake-link" id="fake-link-1">Cliquer ici pour voir</span></span>
-		<?php	
+		}else{
+					
+			?>			
+			<span id="indicator_language_fr" onclick="change_fr('.pbl');"><span id="en_content" class="testClass hidden" ><?php echo $bookmark->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $bookmark->description2;?><span class="fake-link" id="fake-link-1">Cliquer ici pour voir</span></span>
+			<?php	
+		}
+		echo'</div>';
 	}
-	echo'</div>';
-}
 
 	$bookmark_icon = '<i class="fa fa-link mrgn-rght-md"></i>';
 	$body = <<<HTML
@@ -130,10 +131,10 @@ HTML;
 	}
 
 	// identify available content
-if(($bookmark->description2) && ($bookmark->description)){
-		
-	echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';	
-}
+	if(($bookmark->description2) && ($bookmark->description)){
+			
+		echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';	
+	}
 
 	if (strlen($url) > 25) {
 		$bits = parse_url($url);

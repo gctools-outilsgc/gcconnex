@@ -149,22 +149,23 @@ if ($full_view && !elgg_in_context("gallery")) {
 	$text = elgg_view("output/longtext", array("value" => $file_descr ));
 	$body = "$text $extra";
 
+	// identify available content
 	if(($file->description2) && ($file->description)){
 	echo'<div id="change_language" class="change_language">';
-	if (get_current_language() == 'fr'){
+		if (get_current_language() == 'fr'){
 
-		?>			
-		<span id="indicator_language_en" onclick="change_en('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $file->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $file->description2;?></span>This content is available in english. <span class="fake-link" id="fake-link-1">Click here to see</span></span>
-		<?php
+			?>			
+			<span id="indicator_language_en" onclick="change_en('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $file->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $file->description2;?></span>This content is available in english. <span class="fake-link" id="fake-link-1">Click here to see</span></span>
+			<?php
 
-	}else{
-				
-		?>			
-		<span id="indicator_language_fr" onclick="change_fr('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $file->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $file->description2;?></span>Ce contenu est disponible en français. <span class="fake-link" id="fake-link-1">Cliquer ici pour voir</span></span>
-		<?php	
-	}
+		}else{
+					
+			?>			
+			<span id="indicator_language_fr" onclick="change_fr('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $file->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $file->description2;?></span>Ce contenu est disponible en français. <span class="fake-link" id="fake-link-1">Cliquer ici pour voir</span></span>
+			<?php	
+		}
 	echo'</div>';
-}
+	}
 
 	echo elgg_view("object/elements/full", array(
 			"entity" => $file,
@@ -225,11 +226,11 @@ if ($full_view && !elgg_in_context("gallery")) {
     $subtype = $file->getSubtype();
     $guid = $file->getGUID();
 
-    	// identify available content
-if(($file->description2) && ($file->description)){
-		
-	echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';	
-}
+    // identify available content
+	if(($file->description2) && ($file->description)){
+			
+		echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';	
+	}
 
 	echo elgg_view_image_block($file_icon, $list_body, array("class" => "file-tools-file", "image_alt" => $file_icon_alt, 'subtype' => $subtype, 'guid' => $guid));
 }

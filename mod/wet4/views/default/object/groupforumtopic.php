@@ -112,11 +112,9 @@ if ($full) {
     // $replies_link - went here
 	$subtitle = "$poster_text $date ";
 
-	// identify available content
-
+// identify available content
 $english = gc_explode_translation($topic->description3, 'en');
 $french = gc_explode_translation($topic->description3, 'fr');
-
 
 if($english != $french){
 	echo'<div id="change_language" class="change_language">';
@@ -167,10 +165,10 @@ HTML;
 	$subtitle = "<p class=\"mrgn-tp-sm mrgn-bttm-0\">$poster_text $date</p> <p class=\"mrgn-bttm-sm\">$reply_text</p> $replies_link";
 
 	// identify available content
-if(($topic->description2) && ($topic->description)){
-		
-			echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';	
-}
+	if(($topic->description2) && ($topic->description)){
+			
+		echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';
+	}
 
 	$params = array(
 		'entity' => $topic,

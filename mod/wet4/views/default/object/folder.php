@@ -82,23 +82,23 @@ if ($full_view) {
 		$body = elgg_view("output/longtext", array("value" => $folder->description));
 	}
 
+	//Identify available content
+	if(($folder->description2) && ($folder->description)){
+		echo'<div id="change_language" class="change_language">';
+		if (get_current_language() == 'fr'){
 
-if(($folder->description2) && ($folder->description)){
-	echo'<div id="change_language" class="change_language">';
-	if (get_current_language() == 'fr'){
+			?>			
+			<span id="indicator_language_en" onclick="change_en('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $folder->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $folder->description2;?></span>This content is available in english. <span class="fake-link" id="fake-link-1">Click here to see</span></span>
+			<?php
 
-		?>			
-		<span id="indicator_language_en" onclick="change_en('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $folder->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $folder->description2;?></span>This content is available in english. <span class="fake-link" id="fake-link-1">Click here to see</span></span>
-		<?php
-
-	}else{
-				
-		?>			
-		<span id="indicator_language_fr" onclick="change_fr('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $folder->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $folder->description2;?></span>Ce contenu est disponible en français. <span class="fake-link" id="fake-link-1">Cliquer ici pour voir</span></span>
-		<?php	
+		}else{
+					
+			?>			
+			<span id="indicator_language_fr" onclick="change_fr('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $folder->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $folder->description2;?></span>Ce contenu est disponible en français. <span class="fake-link" id="fake-link-1">Cliquer ici pour voir</span></span>
+			<?php	
+		}
+		echo'</div>';
 	}
-	echo'</div>';
-}
 
 	echo elgg_view("object/elements/full", array(
 		"entity" => $folder,
@@ -111,10 +111,10 @@ if(($folder->description2) && ($folder->description)){
 } else {
 
 	// identify available content
-if(($folder->description2) && ($folder->description)){
-		
-	echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';	
-}
+	if(($folder->description2) && ($folder->description)){
+			
+		echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';	
+	}
 
 	// summary view
 	$icon = elgg_view_entity_icon($folder, "small");
