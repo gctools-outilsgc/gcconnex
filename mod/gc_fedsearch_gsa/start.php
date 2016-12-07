@@ -30,7 +30,7 @@ function entity_url($hook, $type, $return, $params) {
 		// check to see if the entity contains title and description, then it must be some kind of blog, files, etc..
 		if ($context && in_array($context, $filter_entity)) {
 			$url = explode('/',$_SERVER['REQUEST_URI']);
-			$entity = get_entity($url[4]);
+			$entity = get_entity($url[3]);
 			
 			// english body text
 			$description = new DOMDocument();
