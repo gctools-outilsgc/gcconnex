@@ -1053,14 +1053,14 @@ function cp_create_notification($event, $type, $object) {
 				$guid_two = $object->getOwnerGUID();
 
 					if (!$object->title) {
-						$subject = elgg_echo('cp_notify_usr:subject:new_content2',array($object->getOwnerEntity()->username,$object->getSubtype()),'en');
-						$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content2',array($object->getOwnerEntity()->username,$object->getSubtype()),'fr');
+						$subject = elgg_echo('cp_notify_usr:subject:new_content2',array($object->getOwnerEntity()->username,cp_translate_subtype($object->getSubtype())),'en');
+						$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content2',array($object->getOwnerEntity()->username,cp_translate_subtype($object->getSubtype()), false),'fr');
 					} else {
 						if($object->title1){
 							$object->title = $object->title1;
 						}
-						$subject = elgg_echo('cp_notify_usr:subject:new_content',array($object->getOwnerEntity()->username,$object->getSubtype(),$object->title),'en');
-						$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content',array($object->getOwnerEntity()->username,$object->getSubtype(),$object->title),'fr');
+						$subject = elgg_echo('cp_notify_usr:subject:new_content',array($object->getOwnerEntity()->username,cp_translate_subtype($object->getSubtype()),$object->title),'en');
+						$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content',array($object->getOwnerEntity()->username,cp_translate_subtype($object->getSubtype()),$object->title),'fr');
 					}
 				}
    
@@ -1078,7 +1078,7 @@ function cp_create_notification($event, $type, $object) {
 	} // end of switch statement
 
 
-	// check for empty subjects or empty content
+	// check for empty subjects or empty content 
 	if (empty($subject))
 		return false;
 
