@@ -220,7 +220,9 @@ function discussion_handle_view_page($guid) {
 	elgg_entity_gatekeeper($guid, 'object', 'groupforumtopic');
 
 	$topic = get_entity($guid);
-
+	if($topic->description3){
+ $topic->description =  gc_explode_translation($topic->description3, $lang); //change content to translation description   
+}
 	$group = $topic->getContainerEntity();
 	if (!elgg_instanceof($group, 'group')) {
 		register_error(elgg_echo('group:notfound'));
@@ -251,9 +253,7 @@ function discussion_handle_view_page($guid) {
 		'show_add_form' => false,
 	);
 
-	if($topic->description3){
- $topic->description =  gc_explode_translation($topic->description3, $lang); //change content to translation description   
-}
+
 	$content = elgg_view_entity($topic, array('full_view' => true, ));
 	if ($topic->status == 'closed') {
 		$content .= elgg_view('discussion/replies', $params);

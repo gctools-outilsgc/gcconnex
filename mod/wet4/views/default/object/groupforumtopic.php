@@ -113,21 +113,23 @@ if ($full) {
 	$subtitle = "$poster_text $date ";
 
 	// identify available content
-	echo'English description: '.$topic->description;
-	//echo'English description: '.gc_explode_translation($topic->description3, 'en');
-		echo'French description: '.$topic->description2;
-if(($topic->description2) && ($topic->description)){
+
+$english = gc_explode_translation($topic->description3, 'en');
+$french = gc_explode_translation($topic->description3, 'fr');
+
+
+if($english != $french){
 	echo'<div id="change_language" class="change_language">';
 	if (get_current_language() == 'fr'){
 		
 		?>			
-		<span id="indicator_language_en" onclick="change_en('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $topic->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $topic->description2;?></span>This content is available in english. <span class="fake-link" id="fake-link-1">Click here to see</span></span>
+		<span id="indicator_language_en" onclick="change_en('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $english;?></span><span id="fr_content" class="testClass hidden" ><?php echo $french;?></span>This content is available in english. <span class="fake-link" id="fake-link-1">Click here to see</span></span>
 		<?php
 
 	}else{
 				
 		?>			
-		<span id="indicator_language_fr" onclick="change_fr('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $topic->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $topic->description2;?></span>Ce contenu est disponible en français. <span class="fake-link" id="fake-link-1">Cliquer ici pour voir</span></span>
+		<span id="indicator_language_fr" onclick="change_fr('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $english;?></span><span id="fr_content" class="testClass hidden" ><?php echo $french;?></span>Ce contenu est disponible en français. <span class="fake-link" id="fake-link-1">Cliquer ici pour voir</span></span>
 		<?php	
 	}
 	echo'</div>';
