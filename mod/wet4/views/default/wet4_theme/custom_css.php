@@ -1630,10 +1630,11 @@ figcaption{
 /*Style for Available content function*/
 
 .change_language{
-  border: solid 4px #055959;
+  border: solid 1px #055959;
+    border-radius: 3px;
   padding:5px;
-  text-align: right;;
-
+  text-align: center;
+    cursor: pointer;
 }
 
 .fake-link {
