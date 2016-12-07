@@ -8,7 +8,7 @@
  */
 
 // This occurs when the plugin is loaded.
-elgg_register_event_handler('init', 'system', missions_init);
+elgg_register_event_handler('init', 'system', 'missions_init');
 
 /*
  * This method runs whenever the plugin is initialized.

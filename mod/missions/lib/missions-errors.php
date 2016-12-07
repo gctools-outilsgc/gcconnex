@@ -26,7 +26,7 @@ function mm_is_valid_phone_number($number)
 {
 	$regex = "/^(\d[\s-]?)?[\(\[\s-]{0,2}?\d{3}[\)\]\s-]{0,2}?\d{3}[\s-]?\d{4}$/i";
 
-	return preg_match($regex, (string) $number);
+	return preg_match($regex, (string) $number) === 1;
 }
 
 /*
@@ -45,7 +45,7 @@ function mm_is_valid_person_name($name)
 {
 	$regex = "/^[^0-9]+$/";
 
-	return preg_match($regex, $name);
+	return preg_match($regex, $name) === 1;
 }
 
 /*
@@ -61,7 +61,7 @@ function mm_is_guid_number($num)
 {
 	$regex = "/^[0-9]*$/";
 
-	return preg_match($regex, $num);
+	return preg_match($regex, $num) === 1;
 }
 
 /*
@@ -77,7 +77,7 @@ function mm_is_guid_number($num)
 function mm_is_valid_time($time) {
 	$regex = '/[0-2][0-9][:][0-6][0-9]$/';
 
-	return preg_match($regex, $time);
+	return preg_match($regex, $time) === 1;
 }
 
 /*
@@ -85,7 +85,7 @@ function mm_is_valid_time($time) {
  */
 function mm_is_valid_date($date) {
 	$regex = '/^((19|20)\d\d)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/';
-	return preg_match($regex, $date);
+	return preg_match($regex, $date) === 1;
 }
 
 /*
