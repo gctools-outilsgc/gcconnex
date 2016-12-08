@@ -13,6 +13,7 @@ function gc_fedsearch_gsa_init() {
 }
 
 function group_url($hook, $type, $return, $params) {
+	$gsa_agentstring = strtolower(elgg_get_plugin_setting('gsa_agentstring','gc_fedsearch_gsa'));
 	if ((!$gsa_usertest) && strcmp($gsa_agentstring,strtolower($_SERVER['HTTP_USER_AGENT'])) == 0)  {
 		if (strcmp(get_context(), 'group_profile') == 0) {
 			$params['vars']['entity']->description = "<p>{$params['vars']['entity']->description}</p> <p>{$params['vars']['entity']->description2}</p>";
