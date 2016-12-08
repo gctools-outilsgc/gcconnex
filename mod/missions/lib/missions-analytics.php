@@ -444,15 +444,19 @@ function mm_analytics_generate_separation_labels($separator) {
 			break;
 		case 'missions:type':
 			$returner = explode(',', elgg_get_plugin_setting('opportunity_type_string', 'missions'));
+			$returner[0] = 'missions:other';
 			break;
 		case 'missions:reason_to_decline':
 			$returner = explode(',', elgg_get_plugin_setting('decline_reason_string', 'missions'));
+			$returner[0] = 'missions:other';
 			break;
 		case 'missions:location':
 			$returner = explode(',', elgg_get_plugin_setting('province_string', 'missions'));
+			$returner[0] = 'missions:other';
 			break;
 		case 'missions:field_of_work':
 			$returner = explode(',', elgg_get_plugin_setting('program_area_string', 'missions'));
+			$returner[0] = 'missions:other';
 			break;
 		default:
 			$returner = array('missions:all_opportunities');

@@ -7,7 +7,7 @@
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
 
-elgg_register_event_handler('init', 'system', missions_organization_init);
+elgg_register_event_handler('init', 'system', 'missions_organization_init');
 
 function missions_organization_init() {
     elgg_register_page_handler('missions_organization', 'missions_organization_page_handler');
