@@ -29,7 +29,7 @@ elgg_load_css("jquery.uploadify");
 
 <fieldset>
 	<div>
-		<label for="uploadify-button-wrapper-button"><?php echo elgg_echo("file:file"); ?></label>
+		<label for="uploadify-button-wrapper"><?php echo elgg_echo("file:file"); ?></label>
 
 		<div id="uploadify-queue-wrapper" class="mbm">
 			<span><?php echo elgg_echo("file_tools:upload:form:info"); ?></span>
@@ -37,7 +37,7 @@ elgg_load_css("jquery.uploadify");
 
 		<div>
 			<?php
-				echo elgg_view("input/file", array("id" => "uploadify-button-wrapper-button", "name" => "upload", "tabindex" => 0,));
+				echo elgg_view("input/file", array("id" => "uploadify-button-wrapper", "name" => "upload", "tabindex" => 0,));
 				echo elgg_view("input/button", array("value" => elgg_echo('file_tools:forms:empty_queue'), "class" => "elgg-button-action hidden", "id" => "file-tools-uploadify-cancel"));
 			?>
 		</div>
