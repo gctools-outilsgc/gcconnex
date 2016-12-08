@@ -10,6 +10,9 @@
 //This is a test to get images to work
 
 $site_url = elgg_get_site_url();
+
+$gsa_pagination = elgg_get_plugin_setting('gsa_pagination','gc_fedsearch_gsa');
+
 ?>
 /* <style> /**/
 
@@ -23,6 +26,12 @@ $site_url = elgg_get_site_url();
 }
 
 
+.elgg-pagination_gsa {
+
+  position: relative;
+  left:<?php echo "{$gsa_pagination}%"; ?> !important;
+
+}
 
 /******************** Changing Bootstraps columns ********************/
 
