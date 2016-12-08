@@ -42,7 +42,7 @@ return array(
     'event_calendar:none' => 'Aucun événement trouvé.',
     'wet:cover_photo_remove'=>'Supprimer la Photo de Couverture',
     'wet:cover_photo_input'=>'Ajouter une Photo de Couverture',
-    'wet:cover_photo_dim'=> "Votre image de couverture pour votre groupe s’affiche avec les dimensions de 1500 pixels de largeur par 275 pixels de hauteur sur un ordinateur. Si les dimensions de votre image sont plus petites ou plus grandes, votre image sera étirée ou réduite pour s’ajuster à la section.",
+    'wet:cover_photo_dim'=> "Votre image de couverture pour votre groupe s’affiche avec les dimensions de 1140 pixels de largeur par 185 pixels de hauteur sur un ordinateur. Si les dimensions de votre image sont plus petites ou plus grandes, votre image sera étirée ou réduite pour s’ajuster à la section.",
     'wet:search_in_group'=>'Search in this Group(translate me)',
     'wet:cover_photo_alt'=>'Graphic Element for the Group(translate me)',
       'wet:login_engage_1'=>"Partagez vos connaissances et vos idées.",
