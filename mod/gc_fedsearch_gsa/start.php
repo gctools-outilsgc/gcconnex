@@ -5,13 +5,21 @@ elgg_register_event_handler('init', 'system', 'gc_fedsearch_gsa_init');
 function gc_fedsearch_gsa_init() {
 	// strip out all the (broken) hyperlink so that the GSA doesn't recursively create indices
 	elgg_register_plugin_hook_handler('view', 'output/longtext', 'entity_url');
-
+	elgg_register_plugin_hook_handler('view', 'groups/profile/fields', 'group_url');
 	// css layout for pagination
 	$gsa_pagination = elgg_get_plugin_setting('gsa_pagination','gc_fedsearch_gsa');
 	if ($gsa_pagination) elgg_extend_view('css/elgg', 'css/intranet_results_pagination', 1);
 	
 }
 
+function group_url($hook, $type, $return, $params) {
+	if ((!$gsa_usertest) && strcmp($gsa_agentstring,strtolower($_SERVER['HTTP_USER_AGENT'])) == 0)  {
+		if (strcmp(get_context(), 'group_profile') == 0) {
+			$params['vars']['entity']->description = "<p>{$params['vars']['entity']->description}</p> <p>{$params['vars']['entity']->description2}</p>";
+			return $params['vars']['entity']->description;
+		}
+	}
+}
 
 function entity_url($hook, $type, $return, $params) {
 	
@@ -24,7 +32,7 @@ function entity_url($hook, $type, $return, $params) {
 	if ((!$gsa_usertest) && strcmp($gsa_agentstring,strtolower($_SERVER['HTTP_USER_AGENT'])) == 0)  {
 
 		/*blog pages bookmarks file discussion*/
-		$filter_entity = array('blog', 'pages');
+		$filter_entity = array('blog', 'pages', 'discussion', 'file', 'bookmarks');
 		$context = get_context();
 
 		// check to see if the entity contains title and description, then it must be some kind of blog, files, etc..
