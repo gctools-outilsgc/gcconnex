@@ -9,14 +9,15 @@
  */
  
 ?>
-<!-- d = id of the div where the content will be -->
+
+// d = id of the div where the content will be -->
 function change_fr(d){
 
-<!-- f = french content -->
+// f = french content -->
 var spanfr = document.getElementById('fr_content');
 var f = spanfr.innerHTML || spanfr.textContent;
 
-<!-- e = english content -->
+// e = english content -->
 var spanen = document.getElementById('en_content');
 var e = spanen.innerHTML || spanen.textContent;;
 
