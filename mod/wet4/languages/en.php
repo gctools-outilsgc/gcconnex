@@ -1594,6 +1594,11 @@ Please do not reply to this email.",
 
 'lang:english' => 'English',
 'lang:french' => 'French',
+'box:indicator:fr' => 'Ce contenu est aussi disponible en ',
+'indicator:click:fr' => 'français',
+'box:indicator:en' => 'This content is also available in ',
+'indicator:click:en' => 'english.',
+
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */

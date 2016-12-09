@@ -77,26 +77,26 @@ if((polls_get_choice_array2($poll)) && (polls_get_choice_array($poll))) {
 		if (get_current_language() == 'fr'){
 
 		?>			
-		<span id="indicator_language_en">This content is available in english.<a href="#" onclick="change_language_polls('en','poll-vote-form-container-<?php echo $poll->guid; ?>');" id="activities">Click here to see</a></span>
+		<span id="indicator_language_en"><?php echo elgg_echo('box:indicator:en') ?><a href="#" onclick="change_language_polls('en','poll-vote-form-container-<?php echo $poll->guid; ?>');" id="activities"><?php echo elgg_echo('indicator:click:en') ?></a></span>
 		<?php
 
 		}else{
 					
 			?>			
-			<span id="indicator_language_fr" >Ce contenu est disponible en français.<a href="#" onclick="change_language_polls('fr','poll-vote-form-container-<?php echo $poll->guid; ?>');" id="activities">Cliquer ici pour voir</a></span>
+			<span id="indicator_language_fr" ><?php echo elgg_echo('box:indicator:fr') ?><a href="#" onclick="change_language_polls('fr','poll-vote-form-container-<?php echo $poll->guid; ?>');" id="activities"><?php echo elgg_echo('indicator:click:fr') ?></a></span>
 			<?php	
 		}
 	}else{
 		if (get_current_language() == 'fr'){
 
 		?>			
-		<span id="indicator_language_en">This content is available in english.<a href="#" onclick="change_language_polls('en','poll-container-<?php echo $poll->guid; ?>');" id="activities">Click here to see</a></span>
+		<span id="indicator_language_en"><?php echo elgg_echo('box:indicator:en') ?><a href="#" onclick="change_language_polls('en','poll-container-<?php echo $poll->guid; ?>');" id="activities"><?php echo elgg_echo('indicator:click:en') ?></a></span>
 		<?php
 
 		}else{
 					
 			?>			
-			<span id="indicator_language_fr" >Ce contenu est disponible en français.<a href="#" onclick="change_language_polls('fr','poll-container-<?php echo $poll->guid; ?>');" id="activities">Cliquer ici pour voir</a></span>
+			<span id="indicator_language_fr" ><?php echo elgg_echo('box:indicator:fr') ?><a href="#" onclick="change_language_polls('fr','poll-container-<?php echo $poll->guid; ?>');" id="activities"><?php echo elgg_echo('indicator:click:fr') ?></a></span>
 			<?php	
 		}
 	}
@@ -153,6 +153,16 @@ function change_language_polls(lang,guid){
 	var lang = lang; //get lang
 	var guid = guid; // get guid for div
 
+$("#"+guid).html('<div id="loading-image"  class="wet-ajax-loader"><img src="../../../mod/wet4/graphics/loading.gif" alt="loading content"/></div>');
+
+	 $.ajaxSetup({
+
+        complete: function() {
+            // TODO: hide spinner
+            $('#loading-image').hide();
+        }
+    });
+
 	$("#"+guid).load("gcconnex/mod/polls/views/default/polls/results_for_widget?id="+lang+" #"+guid); // load section of this page
 	if (lang == 'fr'){//change link
 	    change_link_en(guid); 
@@ -164,13 +174,13 @@ function change_language_polls(lang,guid){
 
 function change_link_fr(guid){
 	var guid= guid
-    var link_available ='<span id="indicator_language_en">Ce contenu est disponible en français.<a href="#" onclick="change_language_polls(\'fr\',\''+guid+'\');" id="activities">Cliquer ici pour voir</a></span>';
+    var link_available ='<span id="indicator_language_en"><?php echo elgg_echo("box:indicator:fr") ?><a href="#" onclick="change_language_polls(\'fr\',\''+guid+'\');" id="activities"><?php echo elgg_echo("indicator:click:fr") ?></a></span>';
     
     $("#change_language").html(link_available)
 }
 function change_link_en(guid){
 	var guid = guid
-    var link_available ='<span id="indicator_language_en">This content is available in english.<a href="#" onclick="change_language_polls(\'en\',\''+guid+'\');" id="activities">Click here to see</a></span>';
+    var link_available ='<span id="indicator_language_en"><?php echo elgg_echo("box:indicator:en") ?><a href="#" onclick="change_language_polls(\'en\',\''+guid+'\');" id="activities"><?php echo elgg_echo("indicator:click:en") ?></a></span>';
     
     $("#change_language").html(link_available)
 }

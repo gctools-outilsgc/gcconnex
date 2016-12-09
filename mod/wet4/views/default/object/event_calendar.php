@@ -25,13 +25,13 @@ if ($full) {
 		if (get_current_language() == 'fr'){
 
 			?>			
-			<span id="indicator_language_en" onclick="change_en('.mtm');"><span id="en_content" class="testClass hidden" ><?php echo $event->long_description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $event->long_description2;?></span>This content is available in english. <span class="fake-link" id="fake-link-1">Click here to see</span></span>
+			<span id="indicator_language_en" onclick="change_en('.mtm');"><span id="en_content" class="testClass hidden" ><?php echo $event->long_description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $event->long_description2;?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
 			<?php
 
 		}else{
 					
 			?>			
-			<span id="indicator_language_fr" onclick="change_fr('.mtm');"><span id="en_content" class="testClass hidden" ><?php echo $event->long_description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $event->long_description2;?></span>Ce contenu est disponible en français. <span class="fake-link" id="fake-link-1">Cliquer ici pour voir</span></span>
+			<span id="indicator_language_fr" onclick="change_fr('.mtm');"><span id="en_content" class="testClass hidden" ><?php echo $event->long_description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $event->long_description2;?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
 			<?php	
 		}
 		echo'</div>';

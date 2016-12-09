@@ -41,12 +41,13 @@ if($group->description3){
 				if (get_current_language() == 'fr'){
 					
 					?>			
-					<span id="indicator_language_en" onclick="change_en('.group-desc');"><span id="en_content" class="testClass hidden" ><?php echo $group->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $group->description2;?></span>This content is available in english. <a href="#">Click here to see</a></span>
+					<span id="indicator_language_en" onclick="change_en('.group-desc');"><span id="en_content" class="testClass hidden" ><?php echo $group->description;?></span><span id="en_content" class="testClass hidden" ><?php echo $group->description2;?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
+			
 					<?php
 				}else{
 							
 					?>			
-					<span id="indicator_language_fr" onclick="change_fr('.group-desc');"><span id="en_content" class="testClass hidden" ><?php echo $group->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $group->description2;?></span>Ce contenu est disponible en français. <a href="#">Cliquer ici pour voir</a></span>
+					<span id="indicator_language_fr" onclick="change_fr('.group-desc');"><span id="en_content" class="testClass hidden" ><?php echo $group->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $group->description2;?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
 					<?php	
 				}
 				echo'</div>';
