@@ -140,10 +140,10 @@ if ($full) {
 } else {
 
 	// identify available content
-	if(($page->description2) && ($page->description)){
+/*	if(($page->description2) && ($page->description)){
 			
 		echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';	
-	}
+	}*/
 
 	// brief view
 if($page->description3){

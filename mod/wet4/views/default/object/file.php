@@ -227,10 +227,10 @@ if ($full_view && !elgg_in_context("gallery")) {
     $guid = $file->getGUID();
 
     // identify available content
-	if(($file->description2) && ($file->description)){
+/*	if(($file->description2) && ($file->description)){
 			
 		echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';	
-	}
+	}*/
 
 	echo elgg_view_image_block($file_icon, $list_body, array("class" => "file-tools-file", "image_alt" => $file_icon_alt, 'subtype' => $subtype, 'guid' => $guid));
 }

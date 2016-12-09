@@ -131,10 +131,10 @@ HTML;
 	}
 
 	// identify available content
-	if(($bookmark->description2) && ($bookmark->description)){
+/*	if(($bookmark->description2) && ($bookmark->description)){
 			
 		echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';	
-	}
+	}*/
 
 	if (strlen($url) > 25) {
 		$bits = parse_url($url);

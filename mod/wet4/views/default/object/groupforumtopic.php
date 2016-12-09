@@ -165,10 +165,10 @@ HTML;
 	$subtitle = "<p class=\"mrgn-tp-sm mrgn-bttm-0\">$poster_text $date</p> <p class=\"mrgn-bttm-sm\">$reply_text</p> $replies_link";
 
 	// identify available content
-	if(($topic->description2) && ($topic->description)){
+/*	if(($topic->description2) && ($topic->description)){
 			
 		echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';
-	}
+	}*/
 
 	$params = array(
 		'entity' => $topic,

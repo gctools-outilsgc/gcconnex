@@ -145,10 +145,10 @@ if ($full) {
 } else {
 
 	// identify available content
-	if(($blog->description2) && ($blog->description)){
+/*	if(($blog->description2) && ($blog->description)){
 			
 		echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';	
-	}
+	}*/
 	// how to show strapline
 	if (elgg_in_context("listing")) {
 		$excerpt = "";

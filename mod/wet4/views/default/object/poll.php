@@ -130,10 +130,10 @@ if((polls_get_choice_array2($poll)) && (polls_get_choice_array($poll))) {
 		// brief view
 	
 	// identify available content
-	if((polls_get_choice_array2($poll)) && (polls_get_choice_array($poll))) {
+/*	if((polls_get_choice_array2($poll)) && (polls_get_choice_array($poll))) {
 
 		echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';	
-	}
+	}*/
 
 		$params = array(
 			'entity' => $poll,
