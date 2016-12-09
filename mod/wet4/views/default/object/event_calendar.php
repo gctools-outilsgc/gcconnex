@@ -12,11 +12,32 @@
  */
 
 elgg_load_library('elgg:event_calendar');
+$lang = get_current_language();
 
 $event = $vars['entity'];
 $full = elgg_extract('full_view', $vars, false);
 
 if ($full) {
+
+	//Identify available content
+	if(($event->long_description2) && ($event->long_description)){
+		echo'<div id="change_language" class="change_language">';
+		if (get_current_language() == 'fr'){
+
+			?>			
+			<span id="indicator_language_en" onclick="change_en('.mtm');"><span id="en_content" class="testClass hidden" ><?php echo $event->long_description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $event->long_description2;?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
+			<?php
+
+		}else{
+					
+			?>			
+			<span id="indicator_language_fr" onclick="change_fr('.mtm');"><span id="en_content" class="testClass hidden" ><?php echo $event->long_description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $event->long_description2;?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
+			<?php	
+		}
+		echo'</div>';
+	}
+
+
 	$owner = $event->getOwnerEntity();
 	$owner_icon = elgg_view_entity_icon($owner, 'tiny');
 	$owner_link = elgg_view('output/url', array(
@@ -62,17 +83,21 @@ if ($full) {
 		}
 	}
 
-	if ($event->long_description) {
-		$body .= '<div class="mtm">' . $event->long_description . '</div>';
+	if (!$event->long_description3) {
+		if ($event->long_description){
+			$body .= '<div class="mtm">' . $event->long_description . '</div>';
+		}
 	} else if ($event->description) {
 		$body .= '<div class="mtm">' . $event->description . '</div>';
-	}
+	}else{
+		$body .= '<div class="mtm">' . gc_explode_translation($event->long_description3, $lang) . '</div>';
+	} 
 
 	$metadata = elgg_view_menu('entity', array(
 		'entity' => $event,
 		'handler' => 'event_calendar',
 		'sort_by' => 'priority',
-		'class' => 'elgg-menu-hz',
+		'class' => 'elgg-menu-hz list-inline',
 	));
 
 	$params = array(
@@ -85,6 +110,7 @@ if ($full) {
 	$summary = elgg_view('object/elements/summary', $params);
 
 	echo elgg_view('object/elements/full', array(
+        'entity' => $event,
 		'summary' => $summary,
 		'icon' => $owner_icon,
 		'body' => $body,
@@ -95,6 +121,12 @@ if ($full) {
 	}
 
 } else {
+
+	// identify available content
+/*	if(($event->long_description2) && ($event->long_description)){
+			
+		echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';	
+	}*/
 
 	$time_bit = event_calendar_get_formatted_time($event);
 	$icon = '<img src="'.elgg_view("icon/object/event_calendar/small").'" />';
@@ -119,7 +151,7 @@ if ($full) {
 			'entity' => $event,
 			'handler' => 'event_calendar',
 			'sort_by' => 'priority',
-			'class' => 'elgg-menu-hz',
+			'class' => 'elgg-menu-hz list-inline',
 		));
 	}
 

@@ -15,6 +15,25 @@ $lang = get_current_language();
 $image = $photo = $vars['entity'];
 $album = $image->getContainerEntity();
 
+if(($photo->description2) && ($photo->description)){
+	echo'<div id="change_language" class="change_language">';
+	if (get_current_language() == 'fr'){
+
+		?>			
+		<span id="indicator_language_en" onclick="change_en('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $photo->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $photo->description2;?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
+			</span></span>
+		<?php
+
+	}else{
+				
+		?>			
+		<span id="indicator_language_fr" onclick="change_fr('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $photo->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $photo->description2;?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
+		<?php	
+	}
+	echo'</div>';
+}
+
+
 $img = elgg_view_entity_icon($image, 'large', array(
 	//'href' => $image->getIconURL('master'),
     'href' => 'ajax/view/ajax/photo?guid=' . $image->guid,

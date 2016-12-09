@@ -65,6 +65,25 @@ if (elgg_get_plugin_setting('album_comments', 'tidypics')) {
 	//$body .= elgg_view_comments($album);
 }
 
+if(($album->description2) && ($album->description)){
+	echo'<div id="change_language" class="change_language">';
+	if (get_current_language() == 'fr'){
+
+		?>			
+		<span id="indicator_language_en" onclick="change_en('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $album->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $album->description2;?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
+			
+		<?php
+
+	}else{
+				
+		?>			
+		<span id="indicator_language_fr" onclick="change_fr('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $album->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $album->description2;?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
+		<?php	
+	}
+	echo'</div>';
+}
+
+
 echo elgg_view('object/elements/full', array(
 	'entity' => $album,
 	'icon' => $owner_icon,

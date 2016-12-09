@@ -50,6 +50,11 @@ if($group->briefdescription3){
 	);
 }
 
+	// identify available content
+/*if(($group->description2) && ($group->description)){
+		
+			echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';	
+}*/
 
 	$params = $params + $params2;
 	$params = $params + $vars;

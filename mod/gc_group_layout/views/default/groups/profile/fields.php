@@ -34,11 +34,30 @@ if($group->description3){
 	$description = $group->description;
 }
         if($key == 'description'){
+
+				// identify available content
+			if(($group->description2) && ($group->description)){
+				echo'<div id="change_language" class="change_language">';
+				if (get_current_language() == 'fr'){
+					
+					?>			
+					<span id="indicator_language_en" onclick="change_en('.group-desc');"><span id="en_content" class="testClass hidden" ><?php echo $group->description;?></span><span id="en_content" class="testClass hidden" ><?php echo $group->description2;?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
+			
+					<?php
+				}else{
+							
+					?>			
+					<span id="indicator_language_fr" onclick="change_fr('.group-desc');"><span id="en_content" class="testClass hidden" ><?php echo $group->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $group->description2;?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
+					<?php	
+				}
+				echo'</div>';
+			}
+
             echo "<div class=\"{$even_odd} panel panel-custom\">";
                 echo '<div class="panel-heading clearfix">';
                     echo '<h2 class="panel-title profile-info-head pull-left clearfix">Description</h2>';
                 echo "</div>";
-                echo '<div class="panel-body">';
+                echo '<div class="panel-body group-desc">';
            		echo $description;
                 echo "</div>";
             echo "</div>";

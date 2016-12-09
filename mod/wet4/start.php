@@ -112,6 +112,11 @@ function wet4_theme_init() {
     elgg_register_ajax_view('ajax/grp_ajax_content');
 	elgg_extend_view("js/elgg", "js/wet4/group_ajax");*/
     elgg_extend_view("js/elgg", "js/wet4/discussion_quick_start");
+
+
+
+   elgg_extend_view("js/elgg","js/wet4/language_ajax");
+
 		//Notification / Messages dropdown view
 		elgg_register_ajax_view('ajax/notif_dd');
 

@@ -17,7 +17,15 @@ else
 	register_error(elgg_echo("polls:blank"));
 	forward('polls/all');
 }
+
 $lang = get_current_language();
+
+if($_GET['id']){
+	if($_GET['id'] != $lang ){
+		$lang = $_GET['id'];
+	}
+}
+
 //convert $responses to radio inputs for form display
 $responses = polls_get_choice_array($poll);
 
@@ -63,6 +71,7 @@ if ($vars['form_display']) {
 } else {
 	echo  '<div class="poll-vote-form-container-'.$poll->guid.'">';
 }
+
 
 echo $form_body;
 

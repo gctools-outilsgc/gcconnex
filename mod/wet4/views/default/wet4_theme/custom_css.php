@@ -1635,3 +1635,20 @@ figcaption{
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
     padding-bottom: 7px;
 }
+
+/*Style for Available content function*/
+
+.change_language{
+  border: solid 1px #055959;
+  border-radius: 3px;
+  padding:5px;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.fake-link {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
