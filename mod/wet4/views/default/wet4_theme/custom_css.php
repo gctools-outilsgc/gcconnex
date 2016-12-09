@@ -1640,10 +1640,11 @@ figcaption{
 
 .change_language{
   border: solid 1px #055959;
-    border-radius: 3px;
+  border-radius: 3px;
   padding:5px;
   text-align: center;
-    cursor: pointer;
+  cursor: pointer;
+  margin-bottom: 5px;
 }
 
 .fake-link {
