@@ -97,3 +97,12 @@ if($result_set) {
    
 	<?php echo $change_entities_per_page_form; ?>
 </div>
+
+<script>
+  $(document).ready(function() {
+		// Change the invite forms to fire asynchronously
+		require(['mission-invite/ajax'], function(invite_ajax) {
+			invite_ajax();
+		});
+  });
+</script>

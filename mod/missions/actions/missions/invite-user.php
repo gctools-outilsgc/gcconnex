@@ -65,7 +65,7 @@ if($err == '') {
 	
 	//add_entity_relationship($mission->guid, 'mission_tentative', $applicant->guid);
 	
-	system_message(elgg_echo('missions:invited_user_to_mission', array($applicant->name, $mission->job_title)));
+	system_message(elgg_echo('missions:invited_user_to_mission', array($mission->job_title, $applicant->name)));
 	
 	forward(elgg_get_site_url() . 'missions/main');
 }
