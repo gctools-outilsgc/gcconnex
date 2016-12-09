@@ -1,6 +1,6 @@
 <?php
 
-$english = array(
+return array(
 
   /**
     * WET specific
@@ -134,4 +134,3 @@ $english = array(
 
 );
 
-add_translation("en", $english);

@@ -21,12 +21,26 @@ if($_SESSION[$search_typing . '_entities_per_page']) {
 $sort_missions_form .= elgg_view_form('missions/sort-missions-form', array(
 		'class' => 'form-horizontal'
 ));
+
+
+$opp_type_field = $_SESSION['missions_type_field_value'];
+
+if($opp_type_field){
+    $clear_link = elgg_view('output/url', array(
+			'text'=>elgg_echo('missions:clear_filter'),
+			'href'=>'action/missions/sort-missions-form?opp_filter=',
+			'is_action' => true,
+			'is_trusted' => true,
+		));
+}
+
 $sort_field = elgg_view('page/elements/hidden-field', array(
 		'toggle_text' => elgg_echo('missions:sort_options'),
 		'toggle_text_hidden' => elgg_echo('missions:sort_options'),
 		'toggle_id' => 'sort_options',
 		'hidden_content' => $sort_missions_form,
-		'alignment' => 'left'
+		'additional_class'=>'btn btn-default',
+		'additional_text'=>$clear_link,
 ));
 
 $title = elgg_echo('missions:display_search_results');
@@ -69,7 +83,7 @@ if($search_typing == 'mission') {
 }
 
 // Function which sorts the search set according to a given value in ascending or descending order.
-$search_set = mm_sort_mission_decider($_SESSION['missions_sort_field_value'], $_SESSION['missions_order_field_value'], $search_set);
+$search_set = mm_sort_mission_decider($_SESSION['missions_sort_field_value'], $_SESSION['missions_order_field_value'], $search_set, $_SESSION['missions_type_field_value']);
 
 $content = elgg_view_title($title);
 

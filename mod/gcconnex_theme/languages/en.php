@@ -1,6 +1,6 @@
 <?php
 
-$english = array(
+return array(
 
   /**
      * WET specific
@@ -139,4 +139,3 @@ $english = array(
     'msg:change_access' => "Not all users have access to your content. Since GCconnex wants to be as open as possible, are you sure you need to restrict the access to this content?", //NEW
 );
 
-add_translation("en", $english);

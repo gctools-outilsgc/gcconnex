@@ -7,12 +7,13 @@
 
 $subject = strip_tags(get_input('subject'));
 $body = get_input('body');
-if(get_input('colleagueCircle') ){
 
+
+if(get_input('colleagueCircle'))
 	$recipient_username = get_input('messageCollection');
-}else{
-$recipient_username = get_input('recipient_username');
-}
+else
+	$recipient_username = get_input('recipient_username');
+
 
 $original_msg_guid = (int)get_input('original_guid');
 
