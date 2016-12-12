@@ -878,7 +878,7 @@ border:none;
 
 }
 .start-discussion-form{
-    padding-right: 20px;
+    /*padding-right: 20px;*/
 
 }
 
