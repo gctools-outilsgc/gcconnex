@@ -4,7 +4,12 @@
  *
  * @package ElggGroups
  */
-
+ /*
+  * GC_MODIFICATION
+  * Description: Tied action into cp_subscriptions. Also added removing operator rights to action.
+  * Author: GCTools Team
+  * Date: December 12th 2016 (Operator rights)
+  */
 $user_guid = get_input('user_guid');
 $group_guid = get_input('group_guid');
 
@@ -33,7 +38,7 @@ if ($user && ($group instanceof ElggGroup)) {
 				foreach ($group_content_arr as $grp_content_subtype)
 					$query .= " OR es.subtype = '{$grp_content_subtype}'";
 				$query .= " )";
-				
+
 				$group_contents = get_data($query);
 
 				// unsubscribe to the group
@@ -45,6 +50,12 @@ if ($user && ($group instanceof ElggGroup)) {
 					remove_entity_relationship($user->getGUID(), 'cp_subscribed_to_site_mail', $group_content->content_id);
 				}
 
+			}
+
+			//check if user is a group operator
+			if(check_entity_relationship($user->getGUID(), 'operator', $group_guid)){
+				//remove operator rights
+				remove_entity_relationship($user->getGUID(), 'operator', $group_guid);
 			}
 
 			system_message(elgg_echo("groups:left"));
