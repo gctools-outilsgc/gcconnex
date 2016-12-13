@@ -101,7 +101,7 @@ $graph_hide_table_button = elgg_view('output/url', array(
 	</div>
 </div>
 <div class="col-sm-6">
-	<div id="zoom_controls_container">
+	<div id="zoom_controls_container" style="display: none;">
 		<?php echo $chart_controls; ?>
 	</div>
 </div>
