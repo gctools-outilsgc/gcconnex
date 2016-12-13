@@ -23,5 +23,5 @@ RUN sed -i '/ErrorLog ${APACHE_LOG_DIR}\/error.log/c\ErrorLog \/dev\/stderr' /et
 WORKDIR /var/www/html
 
 # Start Apache in foreground mode
-CMD chown www-data /data && /usr/sbin/apache2ctl -D FOREGROUND
+CMD chown www-data /data && rm -f /var/run/apache2/apache2.pid && /usr/sbin/apache2ctl -D FOREGROUND
 
