@@ -131,9 +131,27 @@ function mm_analyze_advanced_search_element($place, $array)
 	        		case elgg_echo('gcconnex_profile:opt:micro_mission'):
 	        			$name_option = 'opt_in_missionCreate';
 	        			break;
+                    case elgg_echo('gcconnex_profile:opt:assignment_deployment_seek');
+                        $name_option = 'opt_in_assignSeek';
+                        break;
+				    case elgg_echo('gcconnex_profile:opt:assignment_deployment_create');
+                        $name_option = 'opt_in_assignCreate';
+                        break;
+				    case elgg_echo('gcconnex_profile:opt:deployment_seek');
+                        $name_option = 'opt_in_deploySeek';
+                        break;
+				    case elgg_echo('gcconnex_profile:opt:deployment_create');
+                        $name_option = 'opt_in_deployCreate';
+                        break;
 	        		case elgg_echo('gcconnex_profile:opt:job_swap'):
 	        			$name_option = 'opt_in_swap';
 	        			break;
+                    case elgg_echo('gcconnex_profile:opt:job_rotate');
+                        $name_option = 'opt_in_rotation';
+                        break;
+
+                    // Development
+
 	        		case elgg_echo('gcconnex_profile:opt:mentored'):
 	        			$name_option = 'opt_in_mentored';
 	        			break;
@@ -146,18 +164,21 @@ function mm_analyze_advanced_search_element($place, $array)
 	        		case elgg_echo('gcconnex_profile:opt:shadowing'):
 	        			$name_option = 'opt_in_shadowing';
 	        			break;
+	        		case elgg_echo('gcconnex_profile:opt:job_sharing'):
+	        			$name_option = 'opt_in_jobshare';
+	        			break;
 	        		case elgg_echo('gcconnex_profile:opt:peer_coached'):
-	        			$name_option = 'opt_in_peer_coached';
+	        			$name_option = 'opt_in_pcSeek';
 	        			break;
 	        		case elgg_echo('gcconnex_profile:opt:peer_coaching'):
-	        			$name_option = 'opt_in_peer_coaching';
+	        			$name_option = 'opt_in_pcCreate';
 	        			break;
 					case elgg_echo('gcconnex_profile:opt:skill_sharing'):
-	        			$name_option = 'opt_in_skill_sharing';
+	        			$name_option = 'opt_in_ssSeek';
 	        			break;
-	        		case elgg_echo('gcconnex_profile:opt:job_sharing'):
-	        			$name_option = 'opt_in_job_sharing';
-	        			break;
+                    case elgg_echo('gcconnex_profile:opt:skill_sharing_create');
+                        $name_option = 'opt_in_ssCreate';
+                        break;
 	        	}
 	        	$returner['name'] = $name_option;
                 $returner['operand'] = '=';
