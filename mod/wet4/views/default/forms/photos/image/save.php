@@ -14,6 +14,7 @@ $tags = elgg_extract('tags', $vars, '');
 $access_id = elgg_extract('access_id', $vars, get_default_access());
 $container_guid = elgg_extract('container_guid', $vars, elgg_get_page_owner_guid());
 $guid = elgg_extract('guid', $vars, 0);
+$photo = $vars['entity'];
 
 $btn_language =  '<ul class="nav nav-tabs nav-tabs-language">
   <li id="btnen"><a href="#" id="btnClicken">'.elgg_echo('lang:english').'</a></li>
@@ -21,6 +22,50 @@ $btn_language =  '<ul class="nav nav-tabs nav-tabs-language">
 </ul>';
 
 echo $btn_language;
+
+echo elgg_view_entity_icon($image, 'small', array(
+  //'href' => $image->getIconURL('master'),
+    'href' => 'ajax/view/ajax/photo?guid=' . $image->guid,
+  'img_class' => 'tidypics-photo',
+  'link_class' => 'elgg-lightbox',
+    
+));
+
+ $guid = (int) get_input("guid");
+
+    $img = get_entity($guid);
+
+    $imgsrc = elgg_view_entity_icon($img, 'master', array(
+        'img_class' => '',
+        'href' => '',
+        ));
+    echo $imgsrc;
+
+?>
+<img src="http://localhost/gcconnex/photos/thumbnail/583/master/" id="img"/>
+<?php
+  
+
+//$imgsrc = 'http://localhost/gcconnex/photos/thumbnail/583/master/';
+    if (file_exists($imgsrc)) {
+    $img = imagecreatefromjpeg($imgsrc);
+    if ($img !== false) {
+
+    $imgRotated = imagerotate($img,90,0);
+
+    $backgroundcolor = imagecolorallocate($imgRotated, 255, 255, 255);
+    imagefill($imgRotated, 0, 0, $backgroundcolor);
+
+    if ($imgRotated !== false) {
+      imagejpeg($imgRotated,"lapin2.jpg",100);
+        }
+    }
+}else{
+        echo'file exist error';
+    }
+
+
+
 ?>
 <div class="tab-content tab-content-border">
 <div class="en">
