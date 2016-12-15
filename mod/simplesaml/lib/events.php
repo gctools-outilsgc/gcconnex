@@ -51,9 +51,8 @@ function simplesaml_login_event_handler($event, $type, $object) {
 	$pageurl=$_SERVER['HTTP_REFERER'];
 	
 	$pageurl = strstr($pageurl, '?', true);
-	
 	//$pageurl = substr($pageurl, 0, strlen($pageurl));
-	if ($pageurl != elgg_get_site_url()."/saml/idp_login"){
+	if ($pageurl != elgg_get_site_url()."saml/idp_login"){
 		//system_message('this thing: '.$pageurl);
 	//forward("http://www.google.com");	
 	//change adds session for use with share button
