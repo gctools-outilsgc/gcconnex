@@ -10,6 +10,7 @@ function gc_fedsearch_gsa_init() {
 	$gsa_pagination = elgg_get_plugin_setting('gsa_pagination','gc_fedsearch_gsa');
 	if ($gsa_pagination) elgg_extend_view('css/elgg', 'css/intranet_results_pagination', 1);
 	
+	elgg_extend_view('page/elements/head', 'page/elements/head_gsa', 1);  
 }
 
 function group_url($hook, $type, $return, $params) {
