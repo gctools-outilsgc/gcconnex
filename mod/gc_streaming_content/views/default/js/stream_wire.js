@@ -24,8 +24,9 @@ function stream_count(){
 //Stop the timer and add a call to action to the DOM
 function stop_stream_count(){
     window.clearInterval(interval);
-    
-    $('.elgg-item-object-thewire').parent().prepend('<div class="stream-new-wire">There are new posts. Click to load.</div>');
+    //Animate in a div
+    $('.elgg-item-object-thewire').parent().prepend('<div class="stream-new-wire" style="display:none;">There are new posts. Click here to load.</div>');
+    $('.stream-new-wire').show('slow');
 }
 
 
@@ -74,7 +75,6 @@ function check_for_posts(){
             return false;
         }
      }
-     
      return true;
  }
 
