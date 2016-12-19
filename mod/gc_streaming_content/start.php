@@ -15,4 +15,6 @@ function gc_streaming_init(){
     
     elgg_extend_view('css/elgg', 'css/css');
     
+    elgg_register_ajax_view('ajax/wire_posts');
+    
 }
