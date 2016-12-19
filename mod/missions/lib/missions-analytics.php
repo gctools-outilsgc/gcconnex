@@ -280,6 +280,32 @@ function mm_analytics_transform_to_date_format($start, $end, $type) {
 	return $returner;
 }
 
+/**
+* Add the appropriate reports to the supplied mission_set
+*/
+function mm_analytics_add_reports_by_dates($start_date, $end_date, $separator, &$mission_set) {
+		if ($separator == 'missions:state') {
+				$subtypes = array(
+						'mission-wasoffered',
+						'mission-declination',
+						'mission-acceptance'
+				);
+				$subtype_ids = array();
+				foreach ($subtypes as $st) {
+					$subtypes_ids[] = get_subtype_id('object', $st);
+				};
+
+				$q_options['type'] = 'object';
+				$q_options['created_time_lower'] = $timescale_array[0];
+				$q_options['created_time_upper'] = $timescale_array[count($timescale_array) - 1];
+				$q_options['type_subtype_pairs'] = array('object' => $subtypes);
+				$reports = elgg_get_entities($q_options);
+				foreach ($reports as $report) {
+						$mission_set[array_search($report->subtype, $subtypes_ids)+3][] = $report;
+				}
+		}
+}
+
 /*
  * Gets all the missions in between the start and end dates according to the date they were posted, their ideal start date, or the date they were completed or cancelled.
  */
@@ -370,7 +396,7 @@ function mm_analytics_separate_missions_by_values($mission_set, $separator) {
 		switch($separator) {
 			case 'missions:state':
 				$meta_tag = 'state';
-				$comparison_array = array('posted', 'cancelled', 'completed');
+				$comparison_array = array('posted', 'cancelled', 'completed', 'offered', 'declined', 'inprocess');
 				break;
 			case 'missions:reliability':
 				$meta_tag = 'security';
@@ -431,7 +457,7 @@ function mm_analytics_generate_separation_labels($separator) {
 	$returner = array();
 	switch($separator) {
 		case 'missions:state':
-			$returner = array('missions:posted', 'missions:cancelled', 'missions:completed');
+			$returner = array('missions:posted', 'missions:cancelled', 'missions:completed', 'missions:offered', 'missions:declined', 'missions:inprocess');
 			break;
 		case 'missions:reliability':
 			$returner = explode(',', elgg_get_plugin_setting('security_string', 'missions'));

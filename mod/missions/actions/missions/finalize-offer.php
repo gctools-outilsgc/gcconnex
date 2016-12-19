@@ -36,7 +36,16 @@ else {
 			// Changes the applicant into a participant.
 			remove_entity_relationship($mission->guid, 'mission_offered', $applicant->guid);
 			add_entity_relationship($mission->guid, 'mission_accepted', $applicant->guid);
-			
+
+			// Create a record of when the applicant became a participant for Analytics
+			$accept_record = new ElggObject();
+			$accept_record->subtype = 'mission-acceptance';
+			$accept_record->title = 'Mission Acceptance Report';
+			$accept_record->access_id = ACCESS_LOGGED_IN;
+			$accept_record->owner_guid = $applicant->guid;
+			$accept_record->mission_guid = $mission->guid;
+			$accept_record->save();
+
 			// Saves time to fill data if this user fills the last spot.
 			if(($relationship_count + 1) == $mission->number) {
 				$mission->time_to_fill = time() - $mission->time_created;
