@@ -557,6 +557,10 @@ input.userfind {
     height: 30px;
 }
 
+.gcconnex-avatar-in-list .img-circle {
+  width:30px;
+}
+
 .gcconnex-avatars-expand {
     float: right;
     height: 30px;

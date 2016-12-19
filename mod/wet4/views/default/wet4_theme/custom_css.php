@@ -270,7 +270,7 @@ max-height: 500px;
 
  .elgg-module-aside .elgg-avatar {
      width:40px;
-     height:40px;
+     height:inherit;
 
  }
 
