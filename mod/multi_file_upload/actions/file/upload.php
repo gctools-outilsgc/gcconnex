@@ -1,21 +1,5 @@
 <?php
 
-//if (empty($_FILES)) {
-//	error_log('no files');
-    // No file was selected for upload, your (re)action goes here
-//}
-//error_log(json_encode($_FILES));
-//error_log($_FILES['uploads']['name'][0]);
-//$folder = $_POST['folder_guid'];
-//$access = $_POST['access_id_file'];
-
-//if(!empty($_FILES['uploads'])){
-//  $body = 'its here: '. $_FILES['uploads']['name'][0] . ' size: '.$_FILES['uploads']['name'][1];
-//} else {
-//  $file = 'fuck no';
-//}
-
-//system_message($folder . ' ' . $access . ' file ->'. $file);
 require_once('/var/www/elggGit/engine/start.php');
 error_log('mulit action');
 
@@ -28,10 +12,7 @@ $access_id = (int) get_input("access_id");
 $container_guid = (int) get_input('container_guid', 0);
 $guid = (int) get_input('file_guid');
 $folder_guid = (int) get_input("folder_guid", 0);
-//error_log($_POST['folder_guid']);
-//$tags = get_input("tags");
 
-//error_log($title.' - '.$title2.' - '.$desc.' - '.$desc2.' - '.$access_id.' - '.$container_guid.' - '.$guid.' - '.$folder_guid);
 
 if ($container_guid == 0) {
 	$container_guid = elgg_get_logged_in_user_guid();
@@ -54,7 +35,7 @@ if ($guid > 0) {
 }
 
 if ($new_file) {
-	//error_log('new file');
+	
 	// must have a file if a new file upload
 	if (empty($_FILES['upload']['name'])) {
 		$error = elgg_echo('file:nofile');
