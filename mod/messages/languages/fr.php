@@ -33,7 +33,7 @@ return array(
 'messages:inbox' => "Boîte de réception",
 'messages:sendmessage' => "Envoyer un message",
 'messages:add' => "Rédiger un message",
-'messages:sentmessages' => "Message envoyés",
+'messages:sentmessages' => "Messages envoyés",
 'messages:recent' => "Messages récents",
 'messages:original' => "Message original",
 'messages:yours' => "Votre message",
