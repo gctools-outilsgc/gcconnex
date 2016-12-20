@@ -17,4 +17,11 @@ function gc_streaming_init(){
     
     elgg_register_ajax_view('ajax/wire_posts');
     
+    elgg_register_page_handler('thewire', 'streaming_wire_page');
+    
+}
+
+function streaming_wire_page(){
+    @include (dirname ( __FILE__ ) . "/pages/thewire/everyone.php");
+    return true;
 }

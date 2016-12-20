@@ -10,7 +10,7 @@ $(document).ready(function(){
     
     //Setting an interval to time when the ajax calls should be made
     // TODO Test if we are on the newsfeed or wire
-
+    
     stream_count();
 });
 
@@ -25,7 +25,7 @@ function stream_count(){
 function stop_stream_count(){
     window.clearInterval(interval);
     //Animate in a div
-    $('.elgg-item-object-thewire').parent().prepend('<div class="stream-new-wire" style="display:none;">There are new posts. Click here to load.</div>');
+    $('.new-wire-holder').prepend('<div class="stream-new-wire" style="display:none;">There are new posts. Click here to load.</div>');
     $('.stream-new-wire').show('slow');
     $('.stream-new-wire').on('click', function(){
         loadNewPosts();
@@ -111,7 +111,7 @@ function loadNewPosts(){
                         data: {'limit': diff.length},
                         dataType: 'html',
                         success: function (data) {
-                        $('.elgg-item-object-thewire').parent().prepend(data);
+                        $('.posts-holder').prepend(data);
                         $('.stream-new-wire').remove();
                             stream_count();
                     }

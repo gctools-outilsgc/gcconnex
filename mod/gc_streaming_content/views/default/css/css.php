@@ -19,3 +19,7 @@
          text-decoration: underline;
          cursor: pointer;
      }
+     
+     .posts-holder ul:first-child{
+         border-left: 1px solid #9bc1d4;
+     }
