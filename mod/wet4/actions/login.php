@@ -91,7 +91,7 @@ if (strpos($_SERVER['HTTP_REFERER'], elgg_get_site_url()."saml/idp_login")=== fa
 			 if ($gcpuser == NULL || $gcpuser == ""){
 			 	forward("saml_link/link");
 			 }else{
-			 	$forward_url = "http://gcconnex.gc.ca/simplesaml/saml2/idp/SSOService.php?spentityid=http://www.gcpedia.gc.ca/simplesaml/module.php/saml/sp/metadata.php/elgg-idp&RelayState=http://www.gcpedia.gc.ca";
+			 	$forward_url = "http://".$_SERVER[HTTP_HOST]."/simplesaml/saml2/idp/SSOService.php?spentityid=".elgg_get_plugin_setting('gcpedia_url','saml_link')."simplesaml/module.php/saml/sp/metadata.php/elgg-idp&RelayState=".elgg_get_plugin_setting('gcpedia_url','saml_link');
 		 	
 			 }
 	
