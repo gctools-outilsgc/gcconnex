@@ -80,6 +80,7 @@ function entity_url($hook, $type, $return, $params) {
 		$description = new DOMDocument();
 		(strcmp($current_language,'en') == 0) ? $description->loadHTML($entity->description) : $description->loadHTML($entity->description2);
 
+		// for all the links <a href= ... />
 		$links = $description->getElementsByTagName('a');
 		for ($i = $links->length - 1; $i >= 0; $i--) {
 			$linkNode = $links->item($i);
@@ -96,7 +97,19 @@ function entity_url($hook, $type, $return, $params) {
 			$lnkText = $linkNode->setAttribute('href', $lnkText);
 
 			// remove and replace blocked:: (for users who copy paste from Outlook)
+			$lnkText = str_replace("blocked::", "", $lnkText);
+		}
 
+
+		// for all the links <em title= ... />
+		$links = $description->getElementsByTagName('em');
+		for ($i = $links->length - 1; $i >= 0; $i--) {
+			$linkNode = $links->item($i);
+			$lnkText = $linkNode->getAttribute('title');
+
+			// remove and replace blocked:: (for users who copy paste from Outlook)
+			$lnkText = preg_replace('/^blocked::/','', $lnkText);
+			$lnkText = $linkNode->setAttribute('title', $lnkText);
 		}
 
 		$return = $description->saveHTML();
