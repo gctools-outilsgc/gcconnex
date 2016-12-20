@@ -1,7 +1,7 @@
 /*
 * stream_wire.js
 *
-* Streaming Wire JS - Does things
+* Streaming Wire JS - Listens on the wire page for new wire posts. It then loads the new wire posts to the DOM
 *
 * @author Nick github.com/piet0024
 */
@@ -24,7 +24,7 @@ function stream_count(){
 //Stop the timer and add a call to action to the DOM
 function stop_stream_count(){
     window.clearInterval(interval);
-    //Animate in a div
+    //Animate in a div button 
     $('.new-wire-holder').prepend('<div class="stream-new-wire" style="display:none;">There are new posts. Click here to load.</div>');
     $('.stream-new-wire').show('slow');
     $('.stream-new-wire').on('click', function(){
@@ -34,16 +34,18 @@ function stop_stream_count(){
 
 // Checking to see if there are any new wire posts
 function check_for_posts(){
+        //What is the page currently loaded on the page?
         var firstPostOnPage = $('.elgg-item-object-thewire .elgg-content').first().text();
         var site = elgg.normalize_url();
         var first_post ='';
+        //Ping the api to see what the latest wire post is.
             $.ajax({
                 type: 'GET',
                 contentType: "application/json",
                 url: site+'services/api/rest/json/?method=get.wire',
                 dataType: 'json',
                 success: function(feed){
-                    
+                    //Get the latest post and compare that post to the post that is on the page.
                    var test_array = feed.result.posts.post_0.text;
                     if(comparePosts(test_array, firstPostOnPage)){
                         //True - Keep looking for posts
@@ -76,7 +78,9 @@ function check_for_posts(){
  }
 
 function loadNewPosts(){
+    //Spinner
     $('.stream-new-wire').html('<i class="fa fa-refresh fa-spin fa-1g fa-fw"></i><span class="sr-only">Loading...</span>');
+    //get all of the wire posts currently loaded on the page.
     var postsOnPage = $('.elgg-item-object-thewire .elgg-content');
     var existingArray =[];
     var queryArray = [];
@@ -87,21 +91,24 @@ function loadNewPosts(){
     
     var site = elgg.normalize_url();
         $.ajax({
+            //get the latest wire posts from the API
                 type: 'GET',
                 contentType: "application/json",
                 url: site+'services/api/rest/json/?method=get.wire',
                 dataType: 'json',
                 success: function(feed){
+                    //Put the latest posts in an array
                     var postArray = feed.result.posts;
                     for (var num in postArray){
                         queryArray.push(postArray[num].text);
                         
                     }
+                    //What is different from what is on the page and what is in the db?
                     var diff = $(queryArray).not(existingArray).get();
                     
                     
                     ajax_path = 'ajax/view/ajax/wire_posts'; //here is my ajax view :3
-                        //console.log(diff.length);
+                    //Bring back the latests posts and add them to the page
                     elgg.get(ajax_path, {
                         data: {'limit': diff.length},
                         dataType: 'html',
@@ -118,9 +125,7 @@ function loadNewPosts(){
 
                 }
             });
-    
 
-    //console.log(postsOnPage.length);
 }
 
     
