@@ -32,11 +32,9 @@ function stop_stream_count(){
     })
 }
 
-
-//Empty global array to hold the first two wire posts
-var holder =[];
 // Checking to see if there are any new wire posts
 function check_for_posts(){
+        var firstPostOnPage = $('.elgg-item-object-thewire .elgg-content').first().text();
         var site = elgg.normalize_url();
         var first_post ='';
             $.ajax({
@@ -47,7 +45,7 @@ function check_for_posts(){
                 success: function(feed){
                     
                    var test_array = feed.result.posts.post_0.text;
-                    if(comparePosts(test_array)){
+                    if(comparePosts(test_array, firstPostOnPage)){
                         //True - Keep looking for posts
                         stream_count();
                         console.log('true - keep going');
@@ -65,19 +63,16 @@ function check_for_posts(){
         }
     
 
- function comparePosts(post){
-     holder.push(post);
-     if(holder.length >2){
-         holder.splice(0,1);
-         if(holder[0] == holder[1]){
+ function comparePosts(post, onPage){
+
+         if(post == onPage){
              //Same wire post
              return true;
         }else{
             //a new post was made
             return false;
         }
-     }
-     return true;
+
  }
 
 function loadNewPosts(){

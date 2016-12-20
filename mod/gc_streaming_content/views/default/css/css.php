@@ -21,5 +21,9 @@
      }
      
      .posts-holder ul:first-child{
-         border-left: 1px solid #9bc1d4;
+         border-left: 2px solid #9bc1d4;
+     }
+     
+     .posts-holder ul .list-break{
+         border-bottom: 1px solid #ddd !important;
      }
