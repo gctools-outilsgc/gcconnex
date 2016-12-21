@@ -207,8 +207,6 @@ $user_guid = elgg_get_logged_in_user_guid();
 $query = "SELECT count(guid) AS num_group FROM {$db_prefix}groups_entity g, {$db_prefix}entity_relationships r WHERE g.guid = r.guid_two AND r.relationship = 'member' AND r.guid_one = {$user_guid}";
 $ng = get_data($query);
 
-error_log("cyu - {$ng[0]->num_group} and {$group_limit}");
-
 $number_of_grp_pages = (int)$ng[0]->num_group / (int)$group_limit;
 
 // start going through all the groups that you are a member of
@@ -280,13 +278,11 @@ foreach ($groups as $group) {
 <script>
 	function create_group_content_item(grp_guid, usr_guid) {
 		
-		if ($('#group-content-' + grp_guid).is(':visible')) {
-			// do nothing
-		} else {
-			var loading_text = elgg.echo('cp_notify:setting:loading');
+		if (!$('#group-content-' + grp_guid).is(':visible')) {
+			
 			// // assuming this is doing what i think it is doing + loading indicator
 			$('#group-content-' + grp_guid).children().remove();
-			$('#group-content-' + grp_guid).append("<div class='clearfix col-sm-12 list-break'>" + loading_text + "<div>");
+			$('#group-content-' + grp_guid).append("<div class='clearfix col-sm-12 list-break'>" + elgg.echo('cp_notify:setting:loading') + "<div>");
 
 			// jquery - retrieve the group content on user click (this way it doesn't try and load everything at once)
 			elgg.action('cp_notify/retrieve_group_contents', {
@@ -294,13 +290,21 @@ foreach ($groups as $group) {
 					group_guid: grp_guid,
 					user_guid: usr_guid,
 				},
+
 				success: function (content_arr) {
-					
 					$('#group-content-' + grp_guid).children().remove();
+
+					// we want to display a message when there arent any items subscribed under a group
+					if (content_arr.output.num_content <= 0) {
+						$('#group-content-' + grp_guid).append("<div class='clearfix col-sm-12 list-break'> " + elgg.echo('cp_notify:setting:no_grp_subscription') +" <div>");
+						return;
+					} 
+
 
 					// create a list of all the content in the group that you are subscribed to
 					for (var item in content_arr.output.text3)
 						$('#group-content-' + grp_guid).append("<div class='clearfix col-sm-12 list-break'>" + content_arr.output.text3[item] + "<div>");
+
 
 					// jquery - when the unsubscribe button is clicked, remove entry from the subscribed to content
 				    $('.unsub-button').on('click', function() {
@@ -314,18 +318,15 @@ foreach ($groups as $group) {
 			                success: function(data) {
 			                  $(this_thing).closest('.list-break').fadeOut();
 			                }
-				        }); 	// close jquery action
+				        });
+				    });			
 
-				    });			// close jquery unsub button
-				},
-				error:function(xhr, status, error) {
-					alert('Error: ' + status + '\nError Text: ' + error + '\nResponse Text: ' + xhr.responseText);
-				}
-			}); 				// close jquery action
+
+				}, error:function(xhr, status, error) { alert('Error: ' + status + '\nError Text: ' + error + '\nResponse Text: ' + xhr.responseText); }
+			}); // close elgg.action function
 		
-		} // end if ... else ... condition
+		}
 	}
-
 </script>
 
 <?php
@@ -335,11 +336,9 @@ foreach ($groups as $group) {
 	//------------------------------------------------------------------------------------------------------------------
     $content .= '<div class="accordion col-sm-12 clearfix mrgn-bttm-sm">';
 
-    	$content .= '	<details class="acc-group" onClick="return create_group_content_item('.$group->getGUID().', '.$user->getGUID().')">';
-    	$content .= "		<summary id='group_item_container-{$group->getGUID()}' class='wb-toggle tgl-tab'>".elgg_echo('cp_notify:groupContent').'</summary>';
+   	$content .= '	<details class="acc-group" onClick="return create_group_content_item('.$group->getGUID().', '.$user->getGUID().')">';
+   	$content .= "		<summary id='group_item_container-{$group->getGUID()}' class='wb-toggle tgl-tab'>".elgg_echo('cp_notify:groupContent').'</summary>';
   
-
-    
     $content .= "		<div id='group-content-{$group->getGUID()}' class='tgl-panel clearfix'>";
     $content .= '		</div>';	// close line 295
     $content .= '	</details>';	// close line 293
@@ -388,12 +387,12 @@ $query_select = "SELECT e.guid, e.subtype as entity_subtype, es.subtype, o.title
 $query_select .= " ORDER BY e.subtype ASC LIMIT {$personal_limit} OFFSET {$personal_offset}";
 $subbed_contents = get_data($query_select);
 
-//$content .= "{$query_select}";
 
 // query that will count all the subscribed items
 $query_count = "SELECT count(e.guid) AS num_content {$query_base}";
 $np = get_data($query_count);
 $number_of_personal_pages = (int)$np[0]->num_content / (int)$personal_limit;
+
 
 
 // display the list of items that are subscribed

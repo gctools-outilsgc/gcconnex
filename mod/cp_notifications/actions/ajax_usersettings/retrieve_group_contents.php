@@ -73,19 +73,18 @@ foreach ($group_contents as $key => $group_content) {
 
 
     	// we want the forum topic that resides in the group
-    	if (strcmp($content->getSubtype(), 'hjforumtopic') == 0)
-    		$container_id = $content->getContainerGUID();
-    	else
-    		$container_id = $content->getGUID();
+    	$container_id = (strcmp($content->getSubtype(), 'hjforumtopic') == 0) ? $content->getContainerGUID() : $container_id = $content->getGUID();
     	
     	if (get_forum_in_group($container_id,$container_id) == $group_guid)
     		$group_objects[$content->getGUID()] = "{$group_item_left}{$group_item_right}";
 	}
 }
 
- 
+$number_of_content = count($group_objects);
+
 
 echo json_encode([
+	'num_content' => $number_of_content,
 	'text1' => $sample_text,
 	'text2' => 12345,
 	'text3' => $group_objects,
