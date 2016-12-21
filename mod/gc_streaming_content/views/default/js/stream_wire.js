@@ -10,8 +10,11 @@ $(document).ready(function(){
     
     //Setting an interval to time when the ajax calls should be made
     // TODO Test if we are on the newsfeed or wire
-    
-    stream_count();
+    var sitePage = window.location.href;
+    var theWireUrl = elgg.normalize_url() + 'thewire/all';
+    if(sitePage == theWireUrl){
+       stream_count(); 
+    }
 });
 
 //This function counts 2 minutes while a streaming page is loaded
