@@ -9,7 +9,7 @@ require.config({
 requirejs( ["fileinput"], function() {
     //console.log(elgg.get_page_owner_guid());
     $("#red").fileinput({
-        //uploadAsync: false,
+        uploadAsync: false,
         //showRemove: false,
         //showUpload:false,
         //theme: 'fa',
@@ -26,8 +26,24 @@ requirejs( ["fileinput"], function() {
             return obj;
         },
     });
-    $('#red').on('filebatchuploadcomplete', function(event, files, extra) {
-        console.log('File batch upload complete');
+    $('#red').on('filebatchuploadsuccess', function(event, data) {
+        //console.log(JSON.stringify(data.response));
+        //console.log(data.response.forward_url);
+        window.location.replace(data.response.forward_url);
+        //console.log('event '+JSON.stringify(event));
+        //console.log('files '+JSON.stringify(data));
+        //console.log('extra '+JSON.stringify(extra));
     });
+   /*$('#red').on('filebatchuploadcomplete', function(event, data) {
+        console.log('event complete '+JSON.stringify(event));
+        console.log('files complete'+data);
+        //console.log('extra '+JSON.stringify(extra));
+    });*/
+    $('#red').on('filebatchuploaderror', function(event, data, msg) {
+        console.log('event error'+JSON.stringify(event));
+        console.log('files error'+JSON.stringify(data));
+        //console.log('extra '+JSON.stringify(extra));
+    });
+    
     
 });

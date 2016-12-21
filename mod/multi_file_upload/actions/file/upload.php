@@ -1,7 +1,8 @@
 <?php
 
-require_once('/var/www/elggGit/engine/start.php');
-error_log('mulit action');
+require_once($_SERVER['DOCUMENT_ROOT'].'/engine/start.php');
+
+//error_log($_SERVER['DOCUMENT_ROOT']);
 
 
 $title = htmlspecialchars(get_input('title', '', false), ENT_QUOTES, 'UTF-8');
@@ -194,8 +195,29 @@ if ($new_file) {
 
 	$container = get_entity($container_guid);
 	if (elgg_instanceof($container, 'group')) {
+		error_log(json_encode([
+			'forwardURL' => [
+				"file/group/$container->guid/all"
+			],
+		]));
+		echo json_encode([
+			'forwardURL' => [
+				"file/group/$container->guid/all"
+			],
+		]);
 		forward("file/group/$container->guid/all");
 	} else {
+		error_log(json_encode([
+			'forwardURL' => [
+				"file/owner/$container->username"
+			],
+		]));
+		echo json_encode([
+			'forwardURL' => [
+				"file/owner/$container->username"
+			],
+		]);
+		
 		forward("file/owner/$container->username");
 	}
 
@@ -205,7 +227,7 @@ if ($new_file) {
 	} else {
 		register_error(elgg_echo("file:uploadfailed"));
 	}
-
+	
 	forward($file->getURL());
 }
  ?>
