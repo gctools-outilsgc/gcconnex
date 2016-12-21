@@ -25,6 +25,7 @@ if (elgg_instanceof($page_owner, "group", null, "ElggGroup")) {
 
 elgg_load_js("fileinput-fa");
 elgg_load_css("bootstrap-fileinput-css");
+elgg_load_css("custom-bootstrap-fileinput");
 
 ?>
 <script type="text/javascript">
@@ -35,7 +36,7 @@ elgg_load_css("bootstrap-fileinput-css");
 
 <fieldset>
 	<div>
-	
+
 
 
 
@@ -57,7 +58,7 @@ elgg_load_css("bootstrap-fileinput-css");
 			<?php echo elgg_view('input/access', array('name' => 'access_id_file', 'id' => 'file_tools_file_access_id')); ?>
 
 	</div>
-	    <label class="control-label">Select File</label>
+	    <label for="red" class="control-label">Select File</label>
     	<input id="red" name="upload[]" type="file" multiple class="file-loading">
     	<div id="errorBlock" class="help-block"></div>
 	<div class="elgg-foot">

@@ -16,6 +16,8 @@ function multi_file_init(){
   elgg_require_js('multi_file_upload/fileinput');
   elgg_register_css('bootstrap-fileinput-css', "mod/multi_file_upload/css/fileinput.min.css");
 
+  //custom css for bootstrap fileinput
+  elgg_register_css('custom-bootstrap-fileinput', 'mod/multi_file_upload/css/custom.css');
 
   elgg_register_action("multi_file/upload", elgg_get_plugins_path() . "/multi_file_upload/actions/file/upload.php");
 }
