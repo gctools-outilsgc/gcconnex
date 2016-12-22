@@ -81,68 +81,36 @@ if ($album->getSize() > 1) {
 }
 echo elgg_view('photos/tagging/help', $vars);
 echo elgg_view('photos/tagging/select', $vars);
+
 echo $img;
 
-echo'<button onclick="rotate()">ROTATION</button>';
-echo'<div id="test" class="test">hello</div>';
+$image_src = elgg_get_site_url().'/photos/thumbnail/'.$image->guid.'/large/'.$image->largethumb;
 
-//echo '<img src="http://localhost/gcconnex/photos/thumbnail/588/large/" id="img"/>';
-//echo '<img src="C:/wamps/www/1/95/iamge/587/largethumb1481811100minions.jpg" id="img"/>';
+echo'<button onclick=rotate_ajax("'.$image_src.'")>ROTATION</button>';
 
-
-//if (file_exists($_SERVER['DOCUMENT_ROOT'] .'1/95/image/587/largethumb1481811100minions.jpg')) {
-/*	echo'YES!';
-	echo $_SERVER['DOCUMENT_ROOT'] .  '1/95/image/377/largethumb1481733804minions';
-}else{
-	echo'No!';
-	echo $_SERVER['DOCUMENT_ROOT'];
-}*/
 ?>
 
 <?php
 
 if (isset($_POST['action'])) {
     switch ($_POST['action']) {
-        case 'insert':
-            insert();
+        case 'rotation':
+            rotation($image);
             break;
-        case 'select':
-            select();
-             break;
-        case 'test':
-            test();
-            break;
+        
     }
 }
 
-function select() {
-    echo "The select function is called.";
-    exit;
-}
+function rotation($image){
+$imgsrc = $_SERVER['DOCUMENT_ROOT'] .'1/'.$image->owner_guid.'/'.$image->largethumb;
 
-function insert() {
-    echo "The insert function is called.";
-    exit;
-}
 
-function test(){
-
-echo "The test function is called.";
-
-$imgsrc = $_SERVER['DOCUMENT_ROOT'] .'1/95/image/587/largethumb1481811100minions.jpg';
-
-//$imgsrc = $_SERVER['DOCUMENT_ROOT'] .'1/95/image/587/largethumb1481811100minions.jpg';
     if (file_exists($imgsrc)) {
     $img = imagecreatefromjpeg($imgsrc);
-
-
 
     if ($img !== false) {
 
     $imgRotated = imagerotate($img,90,0);
-
-/*    $backgroundcolor = imagecolorallocate($imgRotated, 255, 255, 255);
-    imagefill($imgRotated, 0, 0, $backgroundcolor);*/
 
     if ($imgRotated !== false) {
       imagejpeg($imgRotated,$imgsrc,100);
@@ -155,7 +123,6 @@ echo 'false';
 }else{
         echo'file exist error';
     }
-
 }
 
 echo elgg_view('photos/tagging/tags', $vars);
