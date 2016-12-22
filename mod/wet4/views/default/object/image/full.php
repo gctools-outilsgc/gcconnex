@@ -83,6 +83,8 @@ echo elgg_view('photos/tagging/help', $vars);
 echo elgg_view('photos/tagging/select', $vars);
 echo $img;
 
+echo'<button onclick="rotate()">ROTATION</button>';
+echo'<div id="test" class="test">hello</div>';
 
 //echo '<img src="http://localhost/gcconnex/photos/thumbnail/588/large/" id="img"/>';
 //echo '<img src="C:/wamps/www/1/95/iamge/587/largethumb1481811100minions.jpg" id="img"/>';
@@ -95,6 +97,37 @@ echo $img;
 	echo'No!';
 	echo $_SERVER['DOCUMENT_ROOT'];
 }*/
+?>
+
+<?php
+
+if (isset($_POST['action'])) {
+    switch ($_POST['action']) {
+        case 'insert':
+            insert();
+            break;
+        case 'select':
+            select();
+             break;
+        case 'test':
+            test();
+            break;
+    }
+}
+
+function select() {
+    echo "The select function is called.";
+    exit;
+}
+
+function insert() {
+    echo "The insert function is called.";
+    exit;
+}
+
+function test(){
+
+echo "The test function is called.";
 
 $imgsrc = $_SERVER['DOCUMENT_ROOT'] .'1/95/image/587/largethumb1481811100minions.jpg';
 
@@ -123,7 +156,7 @@ echo 'false';
         echo'file exist error';
     }
 
-
+}
 
 echo elgg_view('photos/tagging/tags', $vars);
 echo '</div>';
