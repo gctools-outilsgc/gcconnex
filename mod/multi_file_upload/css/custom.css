@@ -36,11 +36,11 @@
 .file-footer-buttons .kv-file-upload, .close {
   display: none;
   visibility:hidden;
-}
+}*/
 .close {
   display: none;
   visibility:hidden;
-}*/
+}
 
 .modal-content .modal-header{
   color: #333333;
@@ -55,4 +55,5 @@
 
 .file-preview-frame {
   background:#fefefe;
+  width:26%;
 }

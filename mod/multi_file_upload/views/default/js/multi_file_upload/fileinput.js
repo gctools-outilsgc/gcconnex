@@ -7,12 +7,78 @@ require.config({
     }
 });
 requirejs( ["fileinput"], function() {
+
+    //define french language here
+    //elgg wasn't liking loading this file
+    $.fn.fileinputLocales['fr'] = {
+        fileSingle: 'fichier',
+        filePlural: 'fichiers',
+        browseLabel: 'Parcourir',
+        removeLabel: 'Retirer',
+        removeTitle: 'Retirer les fichiers sélectionnés',
+        cancelLabel: 'Annuler',
+        cancelTitle: "Annuler l'envoi en cours",
+        uploadLabel: 'Transférer',
+        uploadTitle: 'Transférer les fichiers sélectionnés',
+        msgNo: 'Non',
+        msgNoFilesSelected: '',
+        msgCancelled: 'Annulé',
+        msgZoomModalHeading: 'Aperçu détaillé',
+        msgSizeTooSmall: 'File "{name}" (<b>{size} KB</b>) is too small and must be larger than <b>{minSize} KB</b>.',
+        msgSizeTooLarge: 'Le fichier "{name}" (<b>{size} Ko</b>) dépasse la taille maximale autorisée qui est de <b>{maxSize} Ko</b>.',
+        msgFilesTooLess: 'Vous devez sélectionner au moins <b>{n}</b> {files} à transmettre.',
+        msgFilesTooMany: 'Le nombre de fichier sélectionné <b>({n})</b> dépasse la quantité maximale autorisée qui est de <b>{m}</b>.',
+        msgFileNotFound: 'Le fichier "{name}" est introuvable !',
+        msgFileSecured: "Des restrictions de sécurité vous empêchent d'accéder au fichier \"{name}\".",
+        msgFileNotReadable: 'Le fichier "{name}" est illisble.',
+        msgFilePreviewAborted: 'Prévisualisation du fichier "{name}" annulée.',
+        msgFilePreviewError: 'Une erreur est survenue lors de la lecture du fichier "{name}".',
+        msgInvalidFileName: 'Invalid or unsupported characters in file name "{name}".',
+        msgInvalidFileType: 'Type de document invalide pour "{name}". Seulement les documents de type "{types}" sont autorisés.',
+        msgInvalidFileExtension: 'Extension invalide pour le fichier "{name}". Seules les extensions "{extensions}" sont autorisées.',
+        msgUploadAborted: 'Le téléchargement du fichier a été interrompu',
+        msgUploadThreshold: 'Processing...',
+        msgValidationError: 'Erreur de validation',
+        msgLoading: 'Transmission du fichier {index} sur {files}&hellip;',
+        msgProgress: 'Transmission du fichier {index} sur {files} - {name} - {percent}% faits.',
+        msgSelected: '{n} {files} sélectionné(s)',
+        msgFoldersNotAllowed: 'Glissez et déposez uniquement des fichiers ! {n} répertoire(s) exclu(s).',
+        msgImageWidthSmall: 'Largeur de fichier image "{name}" doit être d\'au moins {size} px.',
+        msgImageHeightSmall: 'Hauteur de fichier image "{name}" doit être d\'au moins {size} px.',
+        msgImageWidthLarge: 'Largeur de fichier image "{name}" ne peut pas dépasser {size} px.',
+        msgImageHeightLarge: 'Hauteur de fichier image "{name}" ne peut pas dépasser {size} px.',
+        msgImageResizeError: "Impossible d'obtenir les dimensions de l'image à redimensionner.",
+        msgImageResizeException: "Erreur lors du redimensionnement de l'image.<pre>{errors}</pre>",
+        dropZoneTitle: 'Glissez et déposez les fichiers ici&hellip;',
+        dropZoneClickTitle: '<br>(or click to select {files})',
+        fileActionSettings: {
+            removeTitle: 'Supprimer le fichier',
+            uploadTitle: 'Télécharger un fichier',
+            zoomTitle: 'Voir les détails',
+            dragTitle: 'Move / Rearrange',
+            indicatorNewTitle: 'Pas encore téléchargé',
+            indicatorSuccessTitle: 'Posté',
+            indicatorErrorTitle: 'Ajouter erreur',
+            indicatorLoadingTitle: 'ajout ...'
+        },
+        previewZoomButtonTitles: {
+            prev: 'View previous file',
+            next: 'View next file',
+            toggleheader: 'Toggle header',
+            fullscreen: 'Toggle full screen',
+            borderless: 'Toggle borderless mode',
+            close: 'Close detailed preview'
+        }
+    };
+
     //console.log(elgg.get_page_owner_guid());
     $("#red").fileinput({
         //uploadAsync: false,
         //showRemove: false,
         //showUpload:false,
         //theme: 'fa',
+        language: elgg.get_language(),
+        //maxFileCount: 1,
         uploadUrl: elgg.normalize_url('/mod/multi_file_upload/actions/file/upload.php'),
         //uploadUrl: elgg.normalize_url('action/multi_file/upload'),
         maxFilePreviewSize: 10240,
@@ -29,5 +95,7 @@ requirejs( ["fileinput"], function() {
     $('#red').on('filebatchuploadcomplete', function(event, files, extra) {
         console.log('File batch upload complete');
     });
-    
+
+    //change tabindex of inputs for accessibility
+    $('.file-caption-main button, .file-caption-main .fileinput-upload-button, .file-caption-main .file-caption').attr('tabindex', '0');
 });
