@@ -71,7 +71,7 @@ function entity_url($hook, $type, $return, $params) {
  
 		// zube issue 533 (invalid url, appends to end of current URL)
 		$url = explode('/',$_SERVER['REQUEST_URI']);
-		$entity = get_entity($url[4]);
+		$entity = get_entity($url[3]);
 
 		// description is determined by the language that has been currently set
 		$current_language = get_current_language();
