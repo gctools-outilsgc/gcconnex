@@ -1,7 +1,7 @@
 <?php
 /**
 * Elgg send a message action page
-* 
+*
 * @package ElggMessages
 */
 
@@ -32,37 +32,37 @@ return array(
 'messages:replying' => "Message répondant à",
 'messages:inbox' => "Boîte de réception",
 'messages:sendmessage' => "Envoyer un message",
-'messages:add' => "Rédiger un message envoyés",
-'messages:sentmessages' => "Message envoyé",
+'messages:add' => "Rédiger un message",
+'messages:sentmessages' => "Messages envoyés",
 'messages:recent' => "Messages récents",
 'messages:original' => "Message original",
 'messages:yours' => "Votre message",
 'messages:toggle' => 'Sélectionner tout',
 'messages:markread' => 'Marquer comme lu',
 'messages:recipient' => 'Choisissez un destinataire&hellip;',
-'messages:to_user' => 'À : %s',		
-'messages:new' => 'Nouveau message',		
-'notification:method:site' => 'Site',		
-'messages:error' => "Une erreur est survenue lorsque vous avez tenter de sauvegarder votre message. Veuillez réessayer à nouveau.",		
+'messages:to_user' => 'À : %s',
+'messages:new' => 'Nouveau message',
+'notification:method:site' => 'Site',
+'messages:error' => "Une erreur est survenue lorsque vous avez tenter de sauvegarder votre message. Veuillez réessayer à nouveau.",
 'item:object:messages' => 'Messages',
-		
-		
-// Status messages		
-		
+
+
+// Status messages
+
 'messages:posted' => "Votre message a été envoyé avec succès.",
 'messages:success:delete:single' => 'Message a été supprimé',
 'messages:success:delete' => 'Message a été supprimé',
 'messages:success:read' => 	'Les messages marqués comme lus',
 'messages:error:messages_not_selected' => 'Aucun message sélectionné',
 'messages:error:delete:single' => 'Impossible de supprimer le message',
-		
-// Email messages		
-		
+
+// Email messages
+
 'messages:email:subject' => 'Vous avez un nouveau message!',
 'messages:email:body' => "Vous avez un nouveau message de %s. Il se lit comme sui t: %s Pour afficher vos messages, cliquez ici : %s Pour envoyer %s un message, cliquez ici : %s Vous ne pouvez pas répondre à ce message.",
-		
-// Error messages		
-		
+
+// Error messages
+
 'messages:blank' => "Désolé, vous devez ajouter du contenu dans le corps du message avant que nous puissions l'enregistrer.",
 'messages:notfound' => "Désolé, nous n'avons pas pu trouver le message spécifié.",
 'messages:notdeleted' => "Désolé, nous n'avons pas pu supprimer ce message.",
@@ -70,7 +70,7 @@ return array(
 'messages:nomessages' => "Il n'y a aucun message.",
 'messages:user:nonexist' => "We could not find the recipient in the user database.",
 'messages:user:blank' => "Vous n'avez pas choisi persone pour l'envoyer à.",
-'messages:user:self' => "Vous ne pouvez pas vous envoyer un message à vous-même.",		
+'messages:user:self' => "Vous ne pouvez pas vous envoyer un message à vous-même.",
 'messages:deleted_sender' => 'GCconnex',
 
 'colleague_circle_checkbox' => 'Vos cercles de collègues', //NEW
