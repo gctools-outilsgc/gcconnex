@@ -51,7 +51,7 @@ function entity_url($hook, $type, $return, $params) {
 
 
 	$url = explode('/',$_SERVER['REQUEST_URI']);
-	$entity = get_entity($url[4]);
+	$entity = get_entity($url[3]);
 
 
 	// do this only for the gsa-crawler (and usertest is empty)
