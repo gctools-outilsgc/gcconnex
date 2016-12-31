@@ -13,6 +13,10 @@ function gc_fedsearch_gsa_init() {
 	elgg_extend_view('page/elements/head', 'page/elements/head_gsa', 1);  
 }
 
+
+
+
+
 function group_url($hook, $type, $return, $params) {
 	$gsa_agentstring = strtolower(elgg_get_plugin_setting('gsa_agentstring','gc_fedsearch_gsa'));
 	if ((!$gsa_usertest) && strcmp($gsa_agentstring,strtolower($_SERVER['HTTP_USER_AGENT'])) == 0)  {
@@ -48,11 +52,8 @@ function entity_url($hook, $type, $return, $params) {
 	if (!in_array($context, $filter_entity))
 		return;
 
-
-
 	$url = explode('/',$_SERVER['REQUEST_URI']);
-	$entity = get_entity($url[3]);
-
+	$entity = get_entity($url[4]);
 
 	// do this only for the gsa-crawler (and usertest is empty)
 	if ( ((!$gsa_usertest) && strcmp($gsa_agentstring,strtolower($_SERVER['HTTP_USER_AGENT'])) == 0) || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false )  {
@@ -81,51 +82,48 @@ function entity_url($hook, $type, $return, $params) {
 		}
 		$return .= $description->textContent;	
 
-	} else {
- 
-		// zube issue 533 (invalid url, appends to end of current URL)
+	} 
 
-		// description is determined by the language that has been currently set
-		$current_language = get_current_language();
-		if(!$current_language) $current_language = 'en';
-
-		$description = new DOMDocument();
-		(strcmp($current_language,'en') == 0) ? $description->loadHTML($entity->description) : $description->loadHTML($entity->description2);
-
-		// for all the links <a href= ... />
-		$links = $description->getElementsByTagName('a');
-		for ($i = $links->length - 1; $i >= 0; $i--) {
-			$linkNode = $links->item($i);
-			$lnkText = $linkNode->getAttribute('href');
-
-			// if http(s):// is not present, append it
-			$url = parse_url($lnkText);
-			if (empty($url['scheme'])) {
-				$lnkText = $linkNode->setAttribute('href', "http://{$lnkText}");
-			}
-			
-			// remove and replace non-ascii characters
-			$lnkText = preg_replace('/[^(\x20-\x7F)]*/','', $lnkText);
-			$linkNode->setAttribute('href', $lnkText);
-
-			// remove and replace blocked:: (for users who copy paste from Outlook)
-			$lnkText = str_replace("blocked::", "", $lnkText);
-		}
-
-		// for all the links <em title= ... />
-		$links = $description->getElementsByTagName('em');
-		for ($i = $links->length - 1; $i >= 0; $i--) {
-			$linkNode = $links->item($i);
-			$lnkText = $linkNode->getAttribute('title');
-
-			// remove and replace blocked:: (for users who copy paste from Outlook)
-			$lnkText = preg_replace('/^blocked::/','', $lnkText);
-			$lnkText = $linkNode->setAttribute('title', $lnkText);
-		}
-
-		$return = $description->saveHTML();	
-	}
-	
 	return $return;
+}
+
+function clean_up_content($content) {
+
+	$description = new DOMDocument();
+	$description->loadHTML($content);
+
+	// for all the links <a href= ... />
+	$links = $description->getElementsByTagName('a');
+	for ($i = $links->length - 1; $i >= 0; $i--) {
+		$linkNode = $links->item($i);
+		$lnkText = $linkNode->getAttribute('href');
+
+		// if http(s):// is not present, append it
+		$url = parse_url($lnkText);
+		if (empty($url['scheme'])) {
+			$lnkText = $linkNode->setAttribute('href', "http://{$lnkText}");
+		}
+		
+		// remove and replace non-ascii characters
+		$lnkText = preg_replace('/[^(\x20-\x7F)]*/','', $lnkText);
+		$linkNode->setAttribute('href', $lnkText);
+
+		// remove and replace blocked:: (for users who copy paste from Outlook)
+		$lnkText = str_replace("blocked::", "", $lnkText);
+	}
+
+	// for all the links <em title= ... />
+	$links = $description->getElementsByTagName('em');
+	for ($i = $links->length - 1; $i >= 0; $i--) {
+		$linkNode = $links->item($i);
+		$lnkText = $linkNode->getAttribute('title');
+
+		// remove and replace blocked:: (for users who copy paste from Outlook)
+		$lnkText = preg_replace('/^blocked::/','', $lnkText);
+		$lnkText = $linkNode->setAttribute('title', $lnkText);
+	}
+
+	return $description->saveHTML();	
+	
 }
 
