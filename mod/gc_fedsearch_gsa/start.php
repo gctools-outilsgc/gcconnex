@@ -53,7 +53,7 @@ function entity_url($hook, $type, $return, $params) {
 		return;
 
 	$url = explode('/',$_SERVER['REQUEST_URI']);
-	$entity = get_entity($url[4]);
+	$entity = get_entity($url[3]);
 
 	// do this only for the gsa-crawler (and usertest is empty)
 	if ( ((!$gsa_usertest) && strcmp($gsa_agentstring,strtolower($_SERVER['HTTP_USER_AGENT'])) == 0) || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false )  {
