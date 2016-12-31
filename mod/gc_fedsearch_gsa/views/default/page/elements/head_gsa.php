@@ -4,4 +4,4 @@
 
 ?>
   
- <meta name='keywords' content="<?php echo implode(',',$my_page_entity->tags); ?>" />;
+ <meta name='keywords' content="<?php echo implode(',',$my_page_entity->tags); ?>" />

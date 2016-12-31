@@ -23,6 +23,7 @@ $query_params["q"] = $vars['value'];
 $query_params["search_type"] = "tags";
 $query_params["a"] = "s";
 $query_params["s"] = "3";
+$query_params['chk4'] = "on";
 
 if ($gsa_tags_key && $gsa_tags_value)
 	$query_params[$gsa_tags_key] = $gsa_tags_value;

@@ -121,13 +121,13 @@ if($english != $french){
 	if (get_current_language() == 'fr'){
 		
 		?>			
-		<span id="indicator_language_en" onclick="change_en('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $english;?></span><span id="fr_content" class="testClass hidden" ><?php echo $french;?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
+		<span id="indicator_language_en" onclick="change_en('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo clean_up_content($english);?></span><span id="fr_content" class="testClass hidden" ><?php echo clean_up_content($french);?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
 		<?php
 
 	}else{
 				
 		?>			
-		<span id="indicator_language_fr" onclick="change_fr('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $english;?></span><span id="fr_content" class="testClass hidden" ><?php echo $french;?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
+		<span id="indicator_language_fr" onclick="change_fr('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo clean_up_content($english);?></span><span id="fr_content" class="testClass hidden" ><?php echo clean_up_content($french);?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
 		<?php	
 	}
 	echo'</div>';
@@ -146,7 +146,7 @@ if($english != $french){
 	$info = elgg_view_image_block($poster_icon, $list_body);
 
 	$body = elgg_view('output/longtext', array(
-		'value' => gc_explode_translation($topic->description3, $lang),
+		'value' => gc_explode_translation(clean_up_content($topic->description3), $lang),
 		'class' => 'clearfix mrgn-lft-sm mrgn-rght-sm mrgn-tp-md',
 	));
     
