@@ -81,13 +81,13 @@ if ($full && !elgg_in_context('gallery')) {
 		if (get_current_language() == 'fr'){
 			
 			?>			
-			<span id="indicator_language_en" onclick="change_en('.pbl');"><span id="en_content" class="testClass hidden" ><?php echo clean_up_content($bookmark->description);?></span><span id="fr_content" class="testClass hidden" ><?php echo clean_up_content($bookmark->description2);?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
+			<span id="indicator_language_en" onclick="change_en('.pbl');"><span id="en_content" class="testClass hidden" ><?php echo $bookmark->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $bookmark->description2;?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
 			<?php
 
 		}else{
 					
 			?>			
-			<span id="indicator_language_fr" onclick="change_fr('.pbl');"><span id="en_content" class="testClass hidden" ><?php echo clean_up_content($bookmark->description);?></span><span id="fr_content" class="testClass hidden" ><?php echo clean_up_content($bookmark->description2);?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
+			<span id="indicator_language_fr" onclick="change_fr('.pbl');"><span id="en_content" class="testClass hidden" ><?php echo $bookmark->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $bookmark->description2;?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
 			<?php	
 		}
 		echo'</div>';

@@ -99,13 +99,13 @@ if ($full) {
 		if (get_current_language() == 'fr'){
 			
 			?>			
-			<span id="indicator_language_en" onclick="change_en('.blog-post');"><span id="en_content" class="testClass hidden" ><?php echo clean_up_content($blog->description);?></span><span id="fr_content" class="testClass hidden" ><?php echo clean_up_content($blog->description2);?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
+			<span id="indicator_language_en" onclick="change_en('.blog-post');"><span id="en_content" class="testClass hidden" ><?php echo $blog->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $blog->description2;?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
 			<?php
 
 		}else{
 					
 			?>			
-			<span id="indicator_language_fr" onclick="change_fr('.blog-post');"><span id="en_content" class="testClass hidden" ><?php echo clean_up_content($blog->description);?></span><span id="fr_content" class="testClass hidden" ><?php echo clean_up_content($blog->description2);?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
+			<span id="indicator_language_fr" onclick="change_fr('.blog-post');"><span id="en_content" class="testClass hidden" ><?php echo $blog->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $blog->description2;?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
 			<?php	
 		}
 		echo'</div>';
@@ -117,7 +117,7 @@ if ($full) {
 		$blog_descr = $blog->description;
 	}
  	$body = elgg_view('output/longtext', array(
-		'value' => clean_up_content($blog_descr),
+		'value' => $blog_descr,
 		'class' => 'blog-post',
 	));
 

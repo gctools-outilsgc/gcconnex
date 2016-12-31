@@ -106,6 +106,7 @@ function clean_up_content($content) {
 		
 		// remove and replace non-ascii characters
 		$lnkText = preg_replace('/[^(\x20-\x7F)]*/','', $lnkText);
+		$lnkText = str_replace('¨', '', $lnkText);
 		$linkNode->setAttribute('href', $lnkText);
 
 		// remove and replace blocked:: (for users who copy paste from Outlook)
