@@ -117,7 +117,7 @@ if ($full) {
 		$blog_descr = $blog->description;
 	}
  	$body = elgg_view('output/longtext', array(
-		'value' => $blog_descr,
+		'value' => clean_up_content($blog_descr),
 		'class' => 'blog-post',
 	));
 

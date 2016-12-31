@@ -146,7 +146,7 @@ if($english != $french){
 	$info = elgg_view_image_block($poster_icon, $list_body);
 
 	$body = elgg_view('output/longtext', array(
-		'value' => gc_explode_translation($topic->description3, $lang),
+		'value' => gc_explode_translation(clean_up_content($topic->description3), $lang),
 		'class' => 'clearfix mrgn-lft-sm mrgn-rght-sm mrgn-tp-md',
 	));
     

@@ -116,7 +116,7 @@ if ($full) {
 	}
 
 	if ($page->description3){
-		$annotation->value = gc_explode_translation($page->description3, $lang);
+		$annotation->value = gc_explode_translation(clean_up_content($page->description3), $lang);
 	}
 	$body = elgg_view('output/longtext', array('value' => $annotation->value));
 
