@@ -27,8 +27,10 @@ if (!$poster) {
 }
 if($topic->description3){
 	$excerpt = elgg_get_excerpt(gc_explode_translation($topic->description3, $lang));
+	$description = gc_explode_translation(clean_up_content($topic->description3), $lang);
 }else{
 	$excerpt = elgg_get_excerpt($topic->description);
+	$description = $topic->description;
 }
 
 
@@ -146,7 +148,7 @@ if($english != $french){
 	$info = elgg_view_image_block($poster_icon, $list_body);
 
 	$body = elgg_view('output/longtext', array(
-		'value' => gc_explode_translation(clean_up_content($topic->description3), $lang),
+		'value' => $description,
 		'class' => 'clearfix mrgn-lft-sm mrgn-rght-sm mrgn-tp-md',
 	));
     
