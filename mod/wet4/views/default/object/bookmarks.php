@@ -115,7 +115,7 @@ HTML;
 } elseif (elgg_in_context('gallery')) {
 	echo <<<HTML
 <div class="bookmarks-gallery-item">
-	<h3>$bookmark->title</h3>
+	<h3>json_decode($bookmark->title)->$lang</h3>
 	<p class='subtitle'>$owner_link $date</p>
 </div>
 HTML;
