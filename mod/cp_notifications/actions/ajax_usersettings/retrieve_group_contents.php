@@ -47,10 +47,10 @@ foreach ($group_contents as $group_content) {
 }
  
 // group forum topic
-$query = "SELECT elgg_subtype.entity_guid
+$query = "SELECT elgg_subtype.entity_guid, elgg_subtype.entity_subtype
 FROM elggentity_relationships r
 LEFT JOIN 
-	(SELECT e.guid AS entity_guid, s.subtype FROM elggentities e, elggentity_subtypes s WHERE (s.subtype = 'hjforumtopic' OR s.subtype = 'hjforum') AND e.subtype = s.id) elgg_subtype ON elgg_subtype.entity_guid = r.guid_two 
+	(SELECT e.guid AS entity_guid, s.subtype AS entity_subtype FROM elggentities e, elggentity_subtypes s WHERE (s.subtype = 'hjforumtopic' OR s.subtype = 'hjforum') AND e.subtype = s.id) elgg_subtype ON elgg_subtype.entity_guid = r.guid_two 
 WHERE r.guid_one = {$user_guid} AND r.relationship = 'cp_subscribed_to_site_mail'";
 
 $group_contents = get_data($query);
@@ -61,7 +61,7 @@ foreach ($group_contents as $key => $group_content) {
 
     	$site = elgg_get_site_entity();
     	// information about the group content
-    	$group_item_content = "<p><a href='{$site->getURL()}/gcforums/group/{$group_guid}/{$content->getGUID()}/hjforumtopic'>{$content->title}</a></p> <sup>"."forum topic"."</sup>";
+    	$group_item_content = "<p><a href='{$site->getURL()}/gcforums/group/{$group_guid}/{$content->getGUID()}/hjforumtopic'>{$content->title}</a></p> <sup>".$group_content->entity_subtype."</sup>";
 		$group_item_left = "<div class='togglefield col-sm-10'>{$group_item_content}</div>";
 
 		$unsubscribe_button = elgg_view('input/button', array(

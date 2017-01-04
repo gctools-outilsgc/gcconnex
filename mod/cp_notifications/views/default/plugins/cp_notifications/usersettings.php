@@ -370,7 +370,7 @@ $current_user = elgg_get_logged_in_user_entity();
 
 // build a base query (so we can use it to count all the results, and display all the items)
 // cyu - patched issue with personal subscription that contains group content
-$content_arr = array('blog','bookmark','event_calendar','file','hjforumtopic','hjforum','photo','album','task','page','page_top','task_top','idea','thewire');
+$content_arr = array('blog','bookmark','event_calendar','file','photo','album','task','page','page_top','task_top','idea','thewire');
 $query_base = " FROM {$dbprefix}entity_subtypes es, {$dbprefix}entities e, {$dbprefix}entity_relationships r, {$dbprefix}objects_entity o WHERE e.container_guid  NOT IN (SELECT guid FROM {$dbprefix}groups_entity) AND e.subtype = es.id AND o.description <> '' AND o.guid = e.guid AND o.guid = r.guid_two AND r.guid_one = {$current_user->getGUID()} AND r.relationship = 'cp_subscribed_to_email' AND ( es.subtype = 'poll' ";
 foreach ($content_arr as $content_element)
 	$query_base .= " OR es.subtype = '{$content_element}'";
@@ -481,7 +481,7 @@ foreach ($subbed_contents as $subbed_content) {
 		$url = $entity_content->getURL();
 
 	$content .= "<div class='clearfix col-sm-12 list-break'>";
-	$content .= "<div class='togglefield col-sm-10'> <a href='{$url}'><strong>{$content_title}</strong></a> - {$content_desc}  <sup>{$subbed_content->subtype}</sup> </div>";
+	$content .= "<div class='togglefield col-sm-10'> <a href='{$url}'><strong>{$content_title}</strong></a> - {$content_desc}  <br/><sup>{$subbed_content->subtype}</sup> </div>";
 	$content .= "<div class=' col-sm-2'> {$cpn_unsub_btn} </div>";
 	$content .= "</div>";
 

@@ -2,10 +2,16 @@
 
 $french = array(
 
-"gcforums:forumpost_saved" => "Your reply has been created successfully", // new translation req
-"gcforums:forumtopic_saved" => "Your topic '%s' has been created successfully", // new translation req
+
+"gcforums:forumpost_saved" => "Your reply has been created successfully",
+"gcforums:forumtopic_saved" => "Your Forum Topic '%s' has been created successfully",
 "gcforums:forumcategory_saved" => "The Forum Category has been created successfully",
 "gcforums:forum_saved" => "The Forum has been created successfully",
+
+"gcforums:forumpost_failed" => "Your reply has not been created successfully",
+"gcforums:forumtopic_failed" => "Your topic '%s' has not been created successfully",
+"gcforums:forum_failed" => "The Forum has not been created successfully",
+
 
 "gcforums:gobacktomain" => "Revenir à forum principal",
 "gcforums:categories_requred" => "S'il vous plaît créer des catégories avant de créer un nouveau forum",
