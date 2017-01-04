@@ -41,32 +41,54 @@ if (isset($_POST['action'])) {
 //function to rotate image
 function rotation($photo){
 
-echo "<script>alert(\"la variable est nulle\")</script>"; 
-$picture_size = array($photo->thumbnail, $photo->smallthumb, $photo->largethumb);
+  $picture_size = array($photo->thumbnail, $photo->smallthumb, $photo->largethumb, $photo->getFilename());
 
-  for($x = 0; $x < 3; $x++) {
-    $imgsrc = $_SERVER['DOCUMENT_ROOT'] .'1/'.$photo->owner_guid.'/'.$picture_size[$x];
-      if (file_exists($imgsrc)) {
-          $img = imagecreatefromjpeg($imgsrc);
+  for($x = 0; $x < 4; $x++) {
+      $imgsrc = $_SERVER['DOCUMENT_ROOT'] .'1/'.$photo->owner_guid.'/'.$picture_size[$x];
 
-            if ($img !== false) {
-              $imgRotated = imagerotate($img,90,0);
+      if (exif_imagetype($imgsrc) == IMAGETYPE_JPEG) {
+          if (file_exists($imgsrc)) {
+              $img = imagecreatefromjpeg($imgsrc);
+
+              if ($img !== false) {
+                $imgRotated = imagerotate($img,90,0);
 
                 if ($imgRotated !== false) {
-                  imagejpeg($imgRotated,$imgsrc,100);
+                    imagejpeg($imgRotated,$imgsrc,100);
                 }
-            }else{
-                  echo 'img rotate false';
-            }
+              }else{
+                echo 'Error, Image rotate false. JPEG';
+          
+              }
+            
+          }else{
+              echo'Error, file not exist. JPEG';
         
-        }else{
-            echo'file exist error';
-        }
-        imagedestroy($img);
-        imagedestroy($imgRotated);
-    }
-        
-  }
+          }
+      }else if (exif_imagetype($imgsrc) == IMAGETYPE_PNG){
+         if (file_exists($imgsrc)) {
+              $img = imagecreatefrompng($imgsrc);
+              $bgColor = imagecolorallocatealpha($imgsrc, 255, 255, 255, 127);
+
+              if ($img !== false) {
+                $imgRotated = imagerotate($img,90,$bgColor);
+
+                if ($imgRotated !== false) {
+                    imagesavealpha($imgRotated, true);
+                    imagepng($imgRotated,$imgsrc);
+                }
+              }else{
+                echo 'Error, Image rotate false. PNG';
+              }
+            
+          }else{
+              echo'Error, file not exist. PNG';
+          }
+      }
+      imagedestroy($img);
+      imagedestroy($imgRotated);
+  }        
+}
 
 
 //button image rotation
