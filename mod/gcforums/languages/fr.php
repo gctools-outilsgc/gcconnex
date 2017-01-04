@@ -2,6 +2,9 @@
 
 $french = array(
 
+"gcforums:forumpost_saved" => "Your reply has been created successfully", // new translation req
+"gcforums:forumtopic_saved" => "Your topic '%s' has been created successfully", // new translation req
+
 "gcforums:gobacktomain" => "Revenir à forum principal",
 "gcforums:categories_requred" => "S'il vous plaît créer des catégories avant de créer un nouveau forum",
 

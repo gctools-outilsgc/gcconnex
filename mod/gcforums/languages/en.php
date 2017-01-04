@@ -1,6 +1,13 @@
 <?php
 $site_url = elgg_get_site_url();
 $english = array(
+
+	"gcforums:forumpost_saved" => "Your reply has been created successfully",
+	"gcforums:forumtopic_saved" => "Your topic '%s' has been created successfully",
+
+	"gcforums:forumpost_failed" => "Your reply has not been created successfully",
+	"gcforums:forumtopic_failed" => "Your topic '%s' has not been created successfully",
+
 	"gcforums:gobacktomain" => "Go back to Main",
 	"gcforums:categories_requred" => "Please create categories before creating new Forum",
 
