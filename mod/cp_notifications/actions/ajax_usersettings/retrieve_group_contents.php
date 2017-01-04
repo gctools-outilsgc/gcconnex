@@ -21,11 +21,8 @@ $options = array(
 	'limit' => false,
 	'container_guid' => $group_guid,
 );
-$group_contents = elgg_get_entities($options);//elgg_get_entities_from_relationship($options);
+$group_contents = elgg_get_entities($options);
 $group = get_entity($group_guid);
-//$group_contents = $group->getObjects();
-//error_log($group->getGUID().' / '.$group->name);
-
 
 $group_objects = array();
 foreach ($group_contents as $group_content) {
@@ -46,7 +43,6 @@ foreach ($group_contents as $group_content) {
 		$group_objects[$group_content->getGUID()] = "{$group_item_left}{$group_item_right}";
 	}
 }
-
 
 echo json_encode([
 	'text1' => $sample_text,

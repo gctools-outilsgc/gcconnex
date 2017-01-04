@@ -1,6 +1,10 @@
 <?php
 
 $french = array(
+
+	'cp_notify:NewsletterSettings' => "Notification Newsletter", // translate
+	'cp_notify:enable_digest' => "Enable Digest Feature",
+
 	'cp_notify:setting:no_grp_subscription' => '',
 	'cp_notify:setting:loading' => 'Chargement...',
 	// e-mail header text

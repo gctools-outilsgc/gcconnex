@@ -1,6 +1,11 @@
 <?php
 
 $english = array(
+
+	'cp_notify:NewsletterSettings' => "Notification Newsletter",
+	'cp_notify:enable_digest' => "Enable Digest Feature",
+	'cp_notify:nocolleagues' => "You do not have any colleagues",
+
 	'cp_notify:setting:no_grp_subscription' => '',
 	'cp_notify:setting:loading' => 'Loading...',
 	// e-mail header text

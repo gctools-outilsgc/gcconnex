@@ -1,5 +1,6 @@
 <?php
 
+
 $params = get_input('params');
 $plugin_id = get_input('plugin_id');
 $user_guid = get_input('user_guid', elgg_get_logged_in_user_guid());

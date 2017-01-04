@@ -64,15 +64,16 @@ function cp_notifications_init() {
 	// http://gcconnex12_dev.gc.ca/cron/daily  --> go here to execute cron jobs
 }
 
+
+/**
+ * setup crontab either on a daily or weekly basis
+ * get users who are subscribed to digest
+ * run crontab, retrieve users, send digest, reset timer (update timestamp)
+ * create object [ title:<subject> / description:<email-content> / subtype:<cp_digest_site> or <cp_digest_group> ]
+ *
+ */
 function cp_digest_cron_handler($hook, $entity_type, $return_value, $params) {
 
-	/*
-	 *	- setup crontab on daily (midnight~5am)
-	 *	- get users who are subscribed to digest
-	 *	- run crontab, retrieve users, send digest, reset timer (update timestamp)
-	 *	- create object [ title:<subject> / description:<email-content> / subtype:<cp_digest_site> or <cp_digest_group> ]
-	 *
-	 */
 	echo "Starting up the cron job for the Notifications (cp_notifications plugin)";
 	$options = array(
 		'type' => 'object',
@@ -104,6 +105,7 @@ function cp_digest_cron_handler($hook, $entity_type, $return_value, $params) {
 			//error_log("cpn_newsletter value - {$notify_user->guid} / {$notify_user->getOwnerEntity()->cpn_newsletter}");
 			//$notify_user->delete();
 			//$user->deleteMetadata('cpn_newsletter');
+		}
 
 		$digest_content = ""; // we will save all the text into this variable
 		$digest_activities = "";
@@ -180,10 +182,8 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 	
 	switch($cp_msg_type) {
-
-		// E-MAIL ONLY NOTIFICATIONS (includes: user add to site, friend invite via email, forgot password, validate user)
-		//==================================================================================================================
-
+		
+		/* E-mail notifications only (includes password reset, registration, etc) */
 		
 		// these are special cases, where we only have the recipient's email address (because they have not joined the application yet)
 		case 'cp_friend_invite':		// invitefriends/actions/invite.php
@@ -725,10 +725,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 						if (strcmp(elgg_get_plugin_user_setting('cpn_bulk_notifications_email', $watcher->guid,'cp_notifications'),'bulk_notifications_email') == 0) {
 							cp_digest_preparation($watcher->guid, $content, 'new_revision');
-						
-						
 						} else {
-
 							if (elgg_is_active_plugin('phpmailer'))
 								phpmailer_send( $watcher->email, $watcher->name, $subject, $template, NULL, true );
 							else
@@ -1650,7 +1647,7 @@ function cp_translate_subtype($subtype_name, $english = true) {
 /*
  * Helper function for notifications about new opportunities
  */
-function userOptedIn( $user_obj, $mission_type ){
+function userOptedIn( $user_obj, $mission_type ) {
 	$typemap = array(
 		'missions:micro_mission' => 'opt_in_missions',
 		'missions:job_swap'	=> 'opt_in_swap',
@@ -1678,3 +1675,6 @@ function userOptedIn( $user_obj, $mission_type ){
 		);
 	return $user_obj->$typemap[$mission_type] == 'gcconnex_profile:opt:yes' || $user_obj->$typemap2[$mission_type] == 'gcconnex_profile:opt:yes';
 }
+
+
+
