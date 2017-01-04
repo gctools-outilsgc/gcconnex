@@ -33,7 +33,7 @@ switch ($gcf_subtype) {
 		$gcf_new_category->owner_guid = $gcf_owner;
 
 		if ($new_category_guid = $gcf_new_category->save())
-			system_message(elgg_echo("Entity entitled '{$gcf_new_category->title}' has been created successfully"));
+			system_message(elgg_echo("gcforums:forumcategory_saved"));
 
 		add_entity_relationship($new_category_guid, 'descendant', $gcf_container);
 
@@ -78,9 +78,9 @@ switch ($gcf_subtype) {
 
 			add_entity_relationship($new_forum_guid, 'filed_in', $gcf_file_in_category);
 			add_entity_relationship($new_forum_guid, 'descendant', $gcf_container);
-			system_message(elgg_echo("Entity entitled '{$gcf_new_forum->title}' has been created successfully"));
+			system_message(elgg_echo("gcforums:forum_saved"));
 		} else
-			system_message("Unable to create Forum");
+			system_message("gcforums:forum_failed");
 
 		forward($gcf_forward_url.'/'.$new_forum_guid);
 
