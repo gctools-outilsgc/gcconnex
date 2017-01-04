@@ -20,6 +20,21 @@ $container_guid = elgg_extract('container_guid', $vars);
 $guid = elgg_extract('guid', $vars, null);
 $shares = elgg_extract('shares', $vars, array());
 
+// decode json into English / French parts
+$json_title = json_decode($title);
+$json_desc = json_decode($desc);
+
+if ( $json_title ){
+  $title2 = $json_title->fr;
+  $title = $json_title->en;
+}
+
+if ( $json_desc ){
+  $desc2 = $json_desc->fr;
+  $desc = $json_desc->en;
+}
+
+
 $btn_language =  '<ul class="nav nav-tabs nav-tabs-language">
   <li id="btnen"><a href="#" id="btnClicken">'.elgg_echo('lang:english').'</a></li>
   <li id="btnfr"><a href="#" id="btnClickfr">'.elgg_echo('lang:french').'</a></li>
