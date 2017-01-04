@@ -21,7 +21,7 @@
  */
 function gc_implode_translation($english_txt,$french_txt)
 {
-    $value="[:en]".$english_txt."[:fr]".$french_txt."[:]";
+    $value = json_encode( array( "en" => $english_txt, "fr" => $french_txt ) );
 
     return $value;
 }
