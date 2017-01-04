@@ -20,26 +20,7 @@ echo '<div class="elgg-image-block">';
 
 echo '<div class="elgg-image">';
 echo elgg_view_entity_icon($image, 'small', array('href' => false));
-?>
-<img src="http://localhost/gcconnex/lapin2.jpg" id="img"/>
-<?php
-$imgsrc = 'lapin2.jpg';
-    if (file_exists($imgsrc)) {
-    $img = imagecreatefromjpeg($imgsrc);
-    if ($img !== false) {
 
-    $imgRotated = imagerotate($img,90,0);
-
-    $backgroundcolor = imagecolorallocate($imgRotated, 255, 255, 255);
-    imagefill($imgRotated, 0, 0, $backgroundcolor);
-
-    if ($imgRotated !== false) {
-      imagejpeg($imgRotated,"lapin2.jpg",100);
-        }
-    }
-}else{
-        echo'file exist error';
-    }
 echo '</div>';
 
 echo '<div class="elgg-body"><fieldset class="mlm">';

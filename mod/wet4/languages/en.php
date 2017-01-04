@@ -1599,6 +1599,9 @@ Please do not reply to this email.",
 'box:indicator:en' => 'This content is also available in ',
 'indicator:click:en' => 'english.',
 
+/*Rotate content*/
+'rotate:image' => 'Rotate image',
+
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */

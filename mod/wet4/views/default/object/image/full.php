@@ -84,13 +84,10 @@ echo elgg_view('photos/tagging/select', $vars);
 
 echo $img;
 
-$image_src = elgg_get_site_url().'/photos/thumbnail/'.$image->guid.'/large/'.$image->largethumb;
+/*$image_src = elgg_get_site_url().'/photos/thumbnail/'.$image->guid.'/large/'.$image->largethumb;
 
 echo'<button onclick=rotate_ajax("'.$image_src.'")>ROTATION</button>';
 
-?>
-
-<?php
 
 if (isset($_POST['action'])) {
     switch ($_POST['action']) {
@@ -100,30 +97,8 @@ if (isset($_POST['action'])) {
         
     }
 }
+*/
 
-function rotation($image){
-$imgsrc = $_SERVER['DOCUMENT_ROOT'] .'1/'.$image->owner_guid.'/'.$image->largethumb;
-
-
-    if (file_exists($imgsrc)) {
-    $img = imagecreatefromjpeg($imgsrc);
-
-    if ($img !== false) {
-
-    $imgRotated = imagerotate($img,90,0);
-
-    if ($imgRotated !== false) {
-      imagejpeg($imgRotated,$imgsrc,100);
-        }else{
-        	echo 'img rotate false';
-        }
-    }else{
-echo 'false';
-    }
-}else{
-        echo'file exist error';
-    }
-}
 
 echo elgg_view('photos/tagging/tags', $vars);
 echo '</div>';
@@ -147,3 +122,28 @@ $description = gc_explode_translation($photo->description3, $lang);
 }
 //echo '<h2 class="panel-title mrgn-lft-sm mrgn-bttm-md mrgn-tp-lg">' . elgg_echo("comments") . '</h2>';
 echo elgg_view_comments($photo);
+
+/*//function to rotate image
+function rotation($image){
+$imgsrc = $_SERVER['DOCUMENT_ROOT'] .'1/'.$image->owner_guid.'/'.$image->largethumb;
+
+
+    if (file_exists($imgsrc)) {
+    $img = imagecreatefromjpeg($imgsrc);
+
+    if ($img !== false) {
+
+    $imgRotated = imagerotate($img,90,0);
+
+    if ($imgRotated !== false) {
+      imagejpeg($imgRotated,$imgsrc,100);
+        }else{
+        	echo 'img rotate false';
+        }
+    }else{
+echo 'false';
+    }
+}else{
+        echo'file exist error';
+    }
+}*/

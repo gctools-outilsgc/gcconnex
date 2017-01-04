@@ -16,56 +16,70 @@ $container_guid = elgg_extract('container_guid', $vars, elgg_get_page_owner_guid
 $guid = elgg_extract('guid', $vars, 0);
 $photo = $vars['entity'];
 
+
+
+$img = elgg_view_entity_icon($photo, 'large', array(
+  //'href' => $image->getIconURL('master'),
+    'href' => 'ajax/view/ajax/photo?guid=' . $photo->guid,
+  'img_class' => 'tidypics-photo',
+  'link_class' => 'elgg-lightbox',
+  'id' => 'img',
+    
+));
+echo '<div class="test">';
+echo $img;
+echo '</div>';
+if (isset($_POST['action'])) {
+    switch ($_POST['action']) {
+        case 'rotation':
+            rotation($photo);
+            break;
+        
+    }
+}
+
+//function to rotate image
+function rotation($photo){
+
+echo "<script>alert(\"la variable est nulle\")</script>"; 
+$picture_size = array($photo->thumbnail, $photo->smallthumb, $photo->largethumb);
+
+  for($x = 0; $x < 3; $x++) {
+    $imgsrc = $_SERVER['DOCUMENT_ROOT'] .'1/'.$photo->owner_guid.'/'.$picture_size[$x];
+      if (file_exists($imgsrc)) {
+          $img = imagecreatefromjpeg($imgsrc);
+
+            if ($img !== false) {
+              $imgRotated = imagerotate($img,90,0);
+
+                if ($imgRotated !== false) {
+                  imagejpeg($imgRotated,$imgsrc,100);
+                }
+            }else{
+                  echo 'img rotate false';
+            }
+        
+        }else{
+            echo'file exist error';
+        }
+        imagedestroy($img);
+        imagedestroy($imgRotated);
+    }
+        
+  }
+
+
+//button image rotation
+$image_src = elgg_get_site_url().'/photos/thumbnail/'.$photo->guid.'/large/'.$photo->largethumb;
+echo'<div class="col-md-7 col-md-offset-5 mrgn-tp-md">';
+echo'<span class="btn btn-default" onclick=rotate_ajax("'.$image_src.'")>'.elgg_echo('rotate:image').'</span></div>';
+
 $btn_language =  '<ul class="nav nav-tabs nav-tabs-language">
   <li id="btnen"><a href="#" id="btnClicken">'.elgg_echo('lang:english').'</a></li>
   <li id="btnfr"><a href="#" id="btnClickfr">'.elgg_echo('lang:french').'</a></li>
 </ul>';
 
 echo $btn_language;
-
-echo elgg_view_entity_icon($image, 'small', array(
-  //'href' => $image->getIconURL('master'),
-    'href' => 'ajax/view/ajax/photo?guid=' . $image->guid,
-  'img_class' => 'tidypics-photo',
-  'link_class' => 'elgg-lightbox',
-    
-));
-
- $guid = (int) get_input("guid");
-
-    $img = get_entity($guid);
-
-    $imgsrc = elgg_view_entity_icon($img, 'master', array(
-        'img_class' => '',
-        'href' => '',
-        ));
-    echo $imgsrc;
-
-?>
-<img src="http://localhost/gcconnex/photos/thumbnail/583/master/" id="img"/>
-<?php
-  
-
-//$imgsrc = 'http://localhost/gcconnex/photos/thumbnail/583/master/';
-    if (file_exists($imgsrc)) {
-    $img = imagecreatefromjpeg($imgsrc);
-    if ($img !== false) {
-
-    $imgRotated = imagerotate($img,90,0);
-
-    $backgroundcolor = imagecolorallocate($imgRotated, 255, 255, 255);
-    imagefill($imgRotated, 0, 0, $backgroundcolor);
-
-    if ($imgRotated !== false) {
-      imagejpeg($imgRotated,"lapin2.jpg",100);
-        }
-    }
-}else{
-        echo'file exist error';
-    }
-
-
-
 ?>
 <div class="tab-content tab-content-border">
 <div class="en">
@@ -104,6 +118,11 @@ echo elgg_view('input/hidden', array('name' => 'container_guid', 'value' => $con
 echo elgg_view('input/submit', array('value' => elgg_echo('save'), 'class' => 'mrgn-tp-md',));
 
 echo'</div></div>';
+
+
+
+
+
 
 if(get_current_language() == 'fr'){
 ?>
