@@ -9,12 +9,11 @@
  */
  
 ?>
-alert('Hello everyone');
 
 
-function rotate_ajax(image_src){
 
-alert('Bonjour le monde2');
+function rotate_ajax_profil(image_src){
+
 var f = 'test';
 
     $.ajax(
@@ -23,12 +22,37 @@ var f = 'test';
         data: {action: 'rotation'},
         success : function(output) {
                       
-                      $('.tidypics-photo').html($(output).find(".tidypics-photo"));
-                      $('.tidypics-photo').attr('src', image_src + '?' + new Date().getTime());
+                     
+
+                      $('.rotate').html($(output).find(".rotate"));
+                      $('.rotate').attr('src', image_src + '&' + new Date().getTime());
+                     
         },
 
     });
 
 };
 
+
+function rotate_ajax(image_src){
+
+
+var f = 'test';
+
+    $.ajax(
+    {
+        type : "post",
+        data: {action: 'rotation'},
+        success : function(output) {
+                      
+                     
+
+            $('.tidypics-photo').html($(output).find(".tidypics-photo"));
+                      $('.tidypics-photo').attr('src', image_src + '?' + new Date().getTime());
+                     
+        },
+
+    });
+
+};
 <?php
