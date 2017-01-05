@@ -31,15 +31,9 @@ $json_title = json_decode($entity->title);
 $lang = get_current_language();
 $title_link = elgg_extract('title', $vars, '');
 if ($title_link === '') {//add translation
-	if (isset($entity->title) || isset($entity->name)|| isset($entity->title3)) {
-		if ( $json_title ){
-			$text = $json_title->$lang;
-		}elseif($entity->title3){
-			$text = gc_explode_translation($entity->title3, $lang);
-		}elseif($entity->title2){
-			$text = $entity->title2;
-		}elseif($entity->title){
-			$text = $entity->title;
+	if ( isset($entity->title) || isset($entity->name) ) {
+		if( $entity->title ){
+			$text = gc_explode_translation( $entity->title, $lang );
 		}elseif($entity->name){
 			$text = $entity->name;
 		}elseif($entity->name2){
@@ -74,15 +68,8 @@ if ($tags === '') {
 	$tags = elgg_view('output/tags', array('tags' => $entity->tags));
 }
 
-if ( (!$title_link) && $json_title ){
-	$text = $json_title->$lang;
-}else if ((!$title_link)&& ($entity->title && $entity->title2)){
-	if($entity->title1){
-		$entity->title3 = gc_implode_translation($entity->title1,$entity->title2);
-	}else{
-		$entity->title3 = gc_implode_translation($entity->title,$entity->title2);
-	}
-$title_link = gc_explode_translation($entity->title3, $lang);
+if ( !$title_link && json_decode($entity->title) ){
+	$title_link = gc_explode_translation($entity->title, $lang);
 }
 
 if ($title_link) {
