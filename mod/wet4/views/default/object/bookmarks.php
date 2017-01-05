@@ -23,13 +23,7 @@ $categories = elgg_view('output/categories', $vars);
 $link = elgg_view('output/url', array('href' => $bookmark->address));
 
 $json = json_decode($bookmark->description);
-if ( $json ){
-	$description = elgg_view('output/longtext', array('value' => $json->$lang, 'class' => 'pbl'));
-}else if($bookmark->description3){
-    $description = elgg_view('output/longtext', array('value' => gc_explode_translation($bookmark->description3, $lang), 'class' => 'pbl'));
-}else{
-	$description = elgg_view('output/longtext', array('value' => $bookmark->description, 'class' => 'pbl'));
-}
+$description = elgg_view('output/longtext', array('value' => gc_explode_translation( $bookmark->description, $lang ), 'class' => 'pbl'));
 
 $owner_link = elgg_view('output/url', array(
 	'href' => "bookmarks/owner/$owner->username",
@@ -115,7 +109,7 @@ HTML;
 } elseif (elgg_in_context('gallery')) {
 	echo <<<HTML
 <div class="bookmarks-gallery-item">
-	<h3>json_decode($bookmark->title)->$lang</h3>
+	<h3>gc_explode_translation( $bookmark->title, $lang )</h3>
 	<p class='subtitle'>$owner_link $date</p>
 </div>
 HTML;
@@ -124,14 +118,7 @@ HTML;
 	$url = $bookmark->address;
 	$display_text = $url;
 	
-	if ( $json ){
-		$excerpt = elgg_get_excerpt( $json->$lang );
-	}
-	else if($bookmark->description3){
-		$excerpt = elgg_get_excerpt( gc_explode_translation($bookmark->description3,$lang) );
-	}else{
-		$excerpt = elgg_get_excerpt( $bookmark->description );
-	}
+	$excerpt = elgg_get_excerpt( gc_explode_translation($bookmark->description, $lang) );
 	
 	if ($excerpt) {
 		$excerpt = " - $excerpt";
