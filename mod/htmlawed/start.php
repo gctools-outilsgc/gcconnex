@@ -82,6 +82,16 @@ function htmLawedArray(&$v, $k, $htmlawed_config) {
 	$v = htmLawed($v, $htmlawed_config);
 }
 
+
+/*
+ * GC_MODIFICATION
+ * Description: Added a css class whitelist to replace the blanket ban on them
+ * 		-> $allowed_classes variable - related lines
+ * Author: Ilia Salem
+ * Date: Apr 29 2016, Nov 29 2016
+ * Pull request: #542  (for the classes added to whitelist)
+ */
+
 /**
  * Post processor for tags in htmlawed
  * 
@@ -144,6 +154,7 @@ function htmlawed_tag_post_processor($element, $attributes = false) {
 			}
 
 		}
+		/*  GC_MODIFICATION - css class whitelist processing START */
 		else if ($attr == 'class') {
 			$classes = explode(' ', $value);
 
@@ -162,7 +173,8 @@ function htmlawed_tag_post_processor($element, $attributes = false) {
 				$class_str = trim($class_str);
 				$string .= " class=\"$class_str\"";
 			}
-		} else {
+		}/*  GC_MODIFICATION - css class whitelist processing END */
+		else {
 			$string .= " $attr=\"$value\"";
 		}
 	}

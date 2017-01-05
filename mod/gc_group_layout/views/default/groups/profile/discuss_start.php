@@ -18,9 +18,10 @@ $access_id = get_entity($group)->group_acl;
  <div class="quick-start-discussion">
      <div id="quick-discuss-panel" class="panel panel-default clearfix quick-discuss">
          <div class="clearfix ">
-         <div class="col-sm-2">
+         <div class="col-sm-2 col-xs-2 hidden-xs">
              <div class="mrgn-tp-md">
              <?php
+             //made icon go hidden when we reach xs screen size
              echo elgg_view_entity_icon(elgg_get_logged_in_user_entity(), 'medium', array('use_hover' => false, 'class' => ''));
              ?>
              </div>
