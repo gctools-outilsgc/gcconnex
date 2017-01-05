@@ -28,46 +28,30 @@ function gc_implode_translation($english_txt,$french_txt)
 
 function gc_explode_translation($imploded_txt, $lang)
 {
-    $text_ar=explode('[:',$imploded_txt);
-    $en='';
-    $fr='';
-    if(count($text_ar)>0){
-        foreach($text_ar as $value){
-            if(strpos($value, "en]")!==false){
-                $en=substr($value,3,strlen($value));
-            }
-            elseif(strpos($value, "fr]")!==false)
-            {
-                $fr=substr($value,3,strlen($value));
-            }
+    $json=json_decode($imploded_txt);
+
+    if(count($json)>0){
+        if($lang=='en' && trim($json->en)<>''){
+            $value=$json->en;
         }
-        if($lang=='en' && trim($en)<>''){
-            $value=$en;
-        }
-        elseif($lang=='fr' && trim($fr)<>''){
-            $value=$fr;
+        elseif($lang=='fr' && trim($json->fr)<>''){
+            $value=$json->fr;
         }
         else
         {
-            if(($lang=='fr') && (!$fr)){
-       /*         $value=$fr;
-            }else{*/
-                $value=$en;
+            if( ($lang=='fr') && trim($json->fr) == '' ){
+                $value=$json->en;
             }
-
-             if(($lang=='en') && (!$en)){
-      /*          $value=$en;
-            }else{*/
-                $value=$fr;
+            else if( ($lang=='en') && trim($json->en) == '' ){
+                $value=$json->fr;
             }
-
         }
     }
     else
     {
         $value=$imploded_txt;
     }
-    return $value;
 
+    return $value;
 }
 ?>
