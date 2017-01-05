@@ -143,5 +143,6 @@ echo elgg_view('groups/profile/module', array(
     'clicked_related'=>$related_group,
     'user_guid'=> $user, //passing more vars to the module view
     'group_guid'=>$group,
+		'subtype' => $sub_type2
 ));
 //test if ajax goes through.

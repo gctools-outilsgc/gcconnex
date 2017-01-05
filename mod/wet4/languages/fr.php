@@ -55,7 +55,7 @@ return array(
    'msg:from' => 'De',
    'msg:subject' => 'Sujet',
    'msg:recieved' => 'Reçu',
-   'msg:sent' => 'Envoyer',
+   'msg:sent' => 'Envoyés',
 
 
      /*
