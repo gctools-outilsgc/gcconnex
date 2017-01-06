@@ -1006,8 +1006,11 @@ function cp_create_notification($event, $type, $object) {
 
 				// cyu - as per request, wire post will auto subscribe to thread
 				//cp_sub_to_wire_thread($object->getGUID());
-
             }
+
+            // cyu - do not send out multiple notifications from a forum post or topic
+            if (strcmp($object->getSubtype(),'site_notification') == 0 || strcmp($object->getSubtype(),'hjforumpost') == 0 || strcmp($object->getSubtype(),'messages') == 0 || strcmp($object->getSubtype(),'site_notification') == 0 || strcmp($object->getSubtype(),'hjforumtopic') == 0)
+            	return true;
 
 			$guid_two = $object->getContainerGUID();
 			$content_originator = $object->getOwnerGUID();
@@ -1056,11 +1059,14 @@ function cp_create_notification($event, $type, $object) {
 						$subject = elgg_echo('cp_notify_usr:subject:new_content2',array($object->getOwnerEntity()->username,cp_translate_subtype($object->getSubtype())),'en');
 						$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content2',array($object->getOwnerEntity()->username,cp_translate_subtype($object->getSubtype(), false)),'fr');
 					} else {
-						if($object->title1){
-							$object->title = $object->title1;
+
+						if (strcmp($object->getSubtype(), 'hjforumpost') != 0 || strcmp($object->getSubtype(), 'hjforumtopic') != 0) {
+							if($object->title1) {
+								$object->title = $object->title1;
+							}
+							$subject = elgg_echo('cp_notify_usr:subject:new_content',array($object->getOwnerEntity()->username,cp_translate_subtype($object->getSubtype()),$object->title),'en');
+							$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content',array($object->getOwnerEntity()->username,cp_translate_subtype($object->getSubtype(), false),$object->title),'fr');
 						}
-						$subject = elgg_echo('cp_notify_usr:subject:new_content',array($object->getOwnerEntity()->username,cp_translate_subtype($object->getSubtype()),$object->title),'en');
-						$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content',array($object->getOwnerEntity()->username,cp_translate_subtype($object->getSubtype(), false),$object->title),'fr');
 					}
 				}
    

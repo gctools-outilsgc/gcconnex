@@ -1,7 +1,7 @@
 <?php
 
 $french = array(
-	'cp_notify:setting:no_grp_subscription' => '',
+	'cp_notify:setting:no_grp_subscription' => 'Rien à charger',
 	'cp_notify:setting:loading' => 'Chargement...',
 	// e-mail header text
 	'cp_notification:email_header' => "Ceci est un message généré par le système de GCconnex. Veuillez ne pas répondre à ce message",
