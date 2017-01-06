@@ -162,9 +162,9 @@ if (!$values['title']){
 	$values['title'] = $values['title2'];
 }
 //implode for tranlation
-$values['title3'] = gc_implode_translation($values['title'], $values['title2']);
-$values['excerpt3'] = gc_implode_translation($values['excerpt'], $values['excerpt2']);
-$values['description3'] =gc_implode_translation($values['description'], $values['description2']);
+$values['title'] = gc_implode_translation($values['title'], $values['title2']);
+$values['excerpt'] = gc_implode_translation($values['excerpt'], $values['excerpt2']);
+$values['description'] =gc_implode_translation($values['description'], $values['description2']);
 // if preview, force status to be draft
 if ($save == false) {
 	$values['status'] = 'draft';
