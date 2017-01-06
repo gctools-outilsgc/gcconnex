@@ -26,17 +26,11 @@ function blog_get_page_content_read($guid = NULL) {
  	$lang = get_current_language();
  	$container = $blog->getContainerEntity();
 
-	if($blog->title3){
-	   $return['title'] =  gc_explode_translation($blog->title3, $lang);
-    }else{
-      	$return['title'] =  $blog->title;
-    }
+	
+	$return['title'] =  gc_explode_translation($blog->title, $lang);
 
-	if($container->title3){
-		$crumbs_title = gc_explode_translation($container->title3,$lang);
-	}else{
-		$crumbs_title = $container->name;
-	}
+	$crumbs_title = gc_explode_translation($container->title,$lang);
+
 	
 	if (elgg_instanceof($container, 'group')) {
 		elgg_push_breadcrumb($crumbs_title, "blog/group/$container->guid/all");
@@ -44,11 +38,9 @@ function blog_get_page_content_read($guid = NULL) {
 		elgg_push_breadcrumb($crumbs_title, "blog/owner/$container->username");
 	}
 
-	if($blog->title3){
-		elgg_push_breadcrumb(gc_explode_translation($blog->title3,$lang));
-	}else{
-		elgg_push_breadcrumb($blog->title);
-	}
+	
+	elgg_push_breadcrumb(gc_explode_translation($blog->title,$lang));
+
 	
 	$return['content'] = elgg_view_entity($blog, array('full_view' => true));
 	// check to see if we should allow comments
