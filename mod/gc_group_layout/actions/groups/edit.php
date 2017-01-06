@@ -37,7 +37,7 @@ foreach (elgg_get_config('group') as $shortname => $valuetype) {
 
 $input['name'] = htmlspecialchars(get_input('name', '', false), ENT_QUOTES, 'UTF-8');
 $input['name2'] = htmlspecialchars(get_input('name2', '', false), ENT_QUOTES, 'UTF-8');
-$input['title3'] = gc_implode_translation($input['name'], $input['name2']);
+$input['title'] = gc_implode_translation($input['name'], $input['name2']);
 $input['description3'] = gc_implode_translation($input['description'], $input['description2']);
 $input['briefdescription3'] = gc_implode_translation($input['briefdescription'], $input['briefdescription2']);
 
