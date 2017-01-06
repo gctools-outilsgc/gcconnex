@@ -50,12 +50,12 @@ if ((!empty($title2) || !empty($title)) && !empty($owner_guid) ) {
 		if (!empty($folder)) {
 			// check for the correct parent_guid
 			if (($parent_guid === 0) || ($parent_guid != $folder->getGUID())) {
-				$folder->title = $title;
-				$folder->title2 = $title2;
-				$folder->title3 = $title3;
-				$folder->description = $description;
-				$folder->description2 = $description2;
-				$folder->description3 = $description3;
+				$folder->title = $title3;
+				//$folder->title2 = $title2;
+				//$folder->title3 = $title3;
+				$folder->description = $description3;
+				//$folder->description2 = $description2;
+				//$folder->description3 = $description3;
 	
 				$folder->access_id = $access_id;
 	

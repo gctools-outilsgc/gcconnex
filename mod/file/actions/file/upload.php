@@ -8,8 +8,10 @@
 // Get variables
 $title = htmlspecialchars(get_input('title', '', false), ENT_QUOTES, 'UTF-8');
 $title2 = htmlspecialchars(get_input('title2', '', false), ENT_QUOTES, 'UTF-8');
+$title3 = gc_implode_translation($title,$title2);
 $desc = get_input("description");
 $desc2 = get_input("description2");
+$desc3 = gc_implode_translation($desc,$desc2);
 $access_id = (int) get_input("access_id");
 $container_guid = (int) get_input('container_guid', 0);
 $guid = (int) get_input('file_guid');
@@ -71,12 +73,10 @@ if ($new_file) {
 	}
 }
 
-$file->title = $title;
-$file->title2 = $title2;
-$file->title3 = gc_implode_translation($title,$title2);
-$file->description = $desc;
-$file->description2 = $desc2;
-$file->description3 = gc_implode_translation($desc,$desc2);
+$file->title = $title3;
+//$file->title2 = $title2;
+$file->description = $desc3;
+//$file->description2 = $desc2;
 $file->access_id = $access_id;
 $file->container_guid = $container_guid;
 $file->tags = string_to_tag_array($tags);
