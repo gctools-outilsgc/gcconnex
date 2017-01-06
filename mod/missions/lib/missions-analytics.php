@@ -30,14 +30,14 @@ function mm_analytics_generate_time_scale_timestamps($beginning_date, $end_date,
 	if(!mm_analytics_validate_date_for_time_scale($beginning_date) || !mm_analytics_validate_date_for_time_scale($end_date)) {
 		return false;
 	}
-	
+
 	$original_timezone = date_default_timezone_get();
 	// Needed to ensure that date's start at 00:00.
 	date_default_timezone_set('Etc/GMT+0');
-	
+
 	$beginning_array = explode('-', $beginning_date);
 	$end_array = explode('-', $end_date);
-	
+
 	// If the month is set as Qx, then it is translated to a integer value corresponding to the beginning of the quarter.
 	/*if(strtolower(substr($beginning_array[1], 0, 1)) == 'q') {
 		$beginning_array[1] = (3 * intval(substr($beginning_array[1], 1, 1))) + 1;
@@ -46,7 +46,7 @@ function mm_analytics_generate_time_scale_timestamps($beginning_date, $end_date,
 			$beginning_array[0] = date('Y', strtotime('+1 year', strtotime($beginning_array[0] . '-01')));
 		}
 	}
-	
+
 	if(strtolower(substr($end_array[1], 0, 1)) == 'q') {
 		$end_array[1] = (3 * intval(substr($end_array[1], 1, 1))) + 1;
 		if($end_array[1] == 13) {
@@ -55,7 +55,7 @@ function mm_analytics_generate_time_scale_timestamps($beginning_date, $end_date,
 		}
 		$end_array[1] = $end_array[1] + 2;
 	}*/
-	
+
 	// Decides on the beginning date for the time range .
 	switch($interval) {
 		// Years always start on 01-01.
@@ -126,7 +126,7 @@ function mm_analytics_generate_time_scale_timestamps($beginning_date, $end_date,
 		default:
 			return false;
 	}
-	
+
 	// Sets the end date to end of year.
 	$end = strtotime($end_array[0] . '-12-31');
 	// If the end date has a month set then the end date is set to the end of that month.
@@ -137,7 +137,7 @@ function mm_analytics_generate_time_scale_timestamps($beginning_date, $end_date,
 			$end = strtotime(implode('-', $end_array));
 		}
 	}
-	
+
 	// Creates steps in the interval until a step exceeds the end date and the end date replaces that last step.
 	$returner_array = array($beginning);
 	while(true) {
@@ -151,9 +151,9 @@ function mm_analytics_generate_time_scale_timestamps($beginning_date, $end_date,
 			break;
 		}
 	}
-	
+
 	date_default_timezone_set($original_timezone);
-	
+
 	return $returner_array;
 }
 
@@ -199,36 +199,37 @@ function mm_analytics_string_together_time_segments($days, $hours, $minutes, $se
  */
 function mm_analytics_generate_bin_labels($timescale_array, $case_value, $graph_type) {
 	$timescale_labels = $timescale_array;
-	
+
 	if($graph_type == 'missions:stacked_graph') {
 		array_pop($timescale_labels);
 	}
-	
+
 	foreach($timescale_labels as $key => $time) {
 		switch($case_value) {
 			case 'missions:year':
-				$timescale_labels[$key] = date('Y', $time);
+				$timescale_labels[$key] = [date('Y', $time), $time * 1000];
 				break;
 			case 'missions:fiscal_year':
-				$timescale_labels[$key] = 'FY: ' . date('Y', $time);
+				$timescale_labels[$key] = ['FY: ' . date('Y', $time), $time * 1000];
 				break;
 			case 'missions:quarter':
+				$use_time = strtotime('-3 months', $time);
 				$q_num = ceil(intval(date('m', $time)) / 3) - 1;
 				$year = date('Y', $time);
 				if($q_num == 0) {
 					$q_num = 4;
 					$year = date('Y', strtotime('-1 year', $time));
 				}
-				$timescale_labels[$key] = 'Q' . $q_num . ', ' . $year;
+				$timescale_labels[$key] = ['Q' . $q_num . ', ' . $year, $use_time * 1000];
 				break;
 			case 'missions:month':
-				$timescale_labels[$key] = date('M, Y', $time);
+				$timescale_labels[$key] = [date('M, Y', $time), $time * 1000];
 				break;
 			case 'missions:week':
-				$timescale_labels[$key] = 'W' . date('W, M-Y', $time);
+				$timescale_labels[$key] = ['W' . date('W, M-Y', $time), $time * 1000];
 				break;
 			case 'missions:day':
-				$timescale_labels[$key] = date('Y-m-d', $time);
+				$timescale_labels[$key] = [date('Y-m-d', $time), $time * 1000];
 				break;
 			case 'missions:hours_total':
 			case 'missions:hours_per_day':
@@ -244,7 +245,7 @@ function mm_analytics_generate_bin_labels($timescale_array, $case_value, $graph_
 				if($time == 1) {
 					$plural = '';
 				}
-				
+
 				switch($_SESSION['missions_analytics_histogram_time_unit_for_axis']) {
 					case 'DAY':
 						$timescale_labels[$key] = elgg_echo('missions:day(s)', array(($time / 86400), $plural));
@@ -259,11 +260,11 @@ function mm_analytics_generate_bin_labels($timescale_array, $case_value, $graph_
 						$timescale_labels[$key] = elgg_echo('missions:second(s)', array($time, $plural));
 						break;
 				}
-				
+
 				break;
 		}
 	}
-	
+
 	return $timescale_labels;
 }
 
@@ -288,20 +289,20 @@ function mm_analytics_get_missions_by_dates($start_date, $end_date, $date_type) 
 	$start = $modified_input[0];
 	$end = $modified_input[1];
 	$metadata = mm_analytics_get_metadata_name_from_target_value($date_type);
-	
+
 	if($metadata == '') {
 		return false;
 	}
-	
+
 	$options['type'] = 'object';
 	$options['subtype'] = 'mission';
 	$options['limit'] = 0;
-	
+
 	// Time created is an attribute of the entity table in the database and not metadata.
 	if($metadata == 'time_created') {
 		$options['created_time_lower'] = $start;
 		$options['created_time_upper'] = $end;
-		
+
 		$missions = elgg_get_entities($options);
 	}
 	else {
@@ -310,10 +311,10 @@ function mm_analytics_get_missions_by_dates($start_date, $end_date, $date_type) 
 				array('name' => $metadata, 'value' => $end, 'operand' => '<=')
 		);
 		$options['metadata_name_value_pairs_operator'] = 'AND';
-		
+
 		$missions = elgg_get_entities_from_metadata($options);
 	}
-	
+
 	return $missions;
 }
 
@@ -323,7 +324,7 @@ function mm_analytics_get_declinations_by_dates($start_date, $end_date) {
 	$options['limit'] = 0;
 	$options['created_time_lower'] = $start_date;
 	$options['created_time_upper'] = $end_date;
-	
+
 	return elgg_get_entities($options);
 }
 
@@ -337,7 +338,7 @@ function mm_analytics_get_missions_by_posting_and_closure($start_date, $end_date
 			'name' => 'time_closed', 'operand' => '=', 'value' => null
 	));
 	$options['metadata_name_value_pairs_operator'] = 'OR';
-	
+
 	return elgg_get_entities_from_metadata($options);
 }
 
@@ -352,7 +353,7 @@ function mm_analytics_cull_missions_by_department($mission_set, $department) {
 			unset($mission_set_copy[$key]);
 		}
 	}
-	
+
 	return $mission_set_copy;
 }
 
@@ -400,7 +401,7 @@ function mm_analytics_separate_missions_by_values($mission_set, $separator) {
 				$comparison_array = explode(',', elgg_get_plugin_setting('program_area_string', 'missions'));
 				break;
 		}
-		
+
 		// Creates the bins which the missions will be divided into.
 		$count = 0;
 		foreach($comparison_array as $comparator) {
@@ -419,7 +420,7 @@ function mm_analytics_separate_missions_by_values($mission_set, $separator) {
 			}
 		}
 	}
-	
+
 	return $returner_array;
 }
 
@@ -460,6 +461,7 @@ function mm_analytics_generate_separation_labels($separator) {
 		default:
 			$returner = array('missions:all_opportunities');
 	}
+
 	return $returner;
 }
 
@@ -469,38 +471,38 @@ function mm_analytics_generate_separation_labels($separator) {
 function mm_analytics_separate_sets_into_bins($mission_set, $timescale_array, $target_lower, $target_upper, $graph_type) {
 	$metadata_lower = mm_analytics_get_metadata_name_from_target_value($target_lower);
 	$metadata_upper = mm_analytics_get_metadata_name_from_target_value($target_upper);
-	
+
 	// Creates a set of bins corresponding to the intervals.
 	$returner = array();
 	$temp_x_array = array();
 	for($i=0;$i<(count($timescale_array)-1);$i++) {
 		$temp_x_array[] = array();
 	}
-	
+
 	// Adds an interval bin to each of the series bins.
 	foreach($mission_set as $value) {
 		$returner[] = $temp_x_array;
 	}
-	
+
 	foreach($mission_set as $y => $set) {
 		foreach($set as $mission) {
 			for($i=0;$i<(count($timescale_array)-1);$i++) {
 				$lower_bound = $timescale_array[$i];
 				$upper_bound = $timescale_array[$i+1];
-				
+
 				if($graph_type == 'missions:stacked_graph') {
 					$modified_data_by_type = mm_analytics_transform_to_date_format($timescale_array[$i], $timescale_array[$i+1], $target);
 					$lower_bound = $modified_data_by_type[0];
 					$upper_bound = $modified_data_by_type[1];
 				}
-				
+
 				if(($mission->$metadata_lower >= $lower_bound || $mission->$metadata_lower == null) && $mission->$metadata_upper < $upper_bound) {
 					$returner[$y][$i][] = $mission;
 				}
 			}
 		}
 	}
-	
+
 	return $returner;
 }
 
@@ -509,12 +511,12 @@ function mm_analytics_separate_sets_into_bins($mission_set, $timescale_array, $t
  */
 function mm_analytics_get_missions_by_value($target_value) {
 	$mission_set = array();
-	
+
 	$options['type'] = 'object';
 	$options['subtype'] = 'mission';
 	$options['limit'] = 0;
 	$options['metadata_name_value_pairs_operator'] = 'AND';
-	
+
 	switch($target_value) {
 		// The first four cases deal with timestamps describing an elapsed period of time.
 		case 'missions:time_to_post_mission':
@@ -529,7 +531,7 @@ function mm_analytics_get_missions_by_value($target_value) {
 		case 'missions:time_to_cancel_mission':
 			$options['metadata_name_value_pairs'] = array(array('name' => 'time_to_cancel', 'value' => 0, 'operand' => '>'));
 			break;
-			
+
 		// The last four cases deal with time commitments and time intervals of which the intervals are targeted by the user.
 		case 'missions:hours_total':
 			$options['metadata_name_value_pairs'] = array(
@@ -555,11 +557,11 @@ function mm_analytics_get_missions_by_value($target_value) {
 					array('name' => 'time_interval', 'value' => 'missions:per_month', 'operand' => '=')
 			);
 			break;
-			
+
 		default:
 			$options['metadata_name_value_pairs'] = 'INVALID_TARGET';
 	}
-	
+
 	if($options['metadata_name_value_pairs'] != 'INVALID_TARGET') {
 		$mission_set = elgg_get_entities_from_metadata($options);
 	}
@@ -571,7 +573,7 @@ function mm_analytics_get_missions_by_value($target_value) {
  */
 function mm_analytics_get_metadata_name_from_target_value($target_value) {
 	$metadata = '';
-	
+
 	switch($target_value) {
 		case 'missions:date_posted':
 			$metadata = 'time_created';
@@ -603,7 +605,7 @@ function mm_analytics_get_metadata_name_from_target_value($target_value) {
 		default:
 			$metadata = 'time_created';
 	}
-	
+
 	return $metadata;
 }
 
@@ -614,7 +616,7 @@ function mm_analytics_get_metadata_name_from_target_value($target_value) {
 function mm_analytics_generate_time_scale_bins($number_of_bins, $target_value, $mission_set) {
 	$timescale_bins = array();
 	$metadata = mm_analytics_get_metadata_name_from_target_value($target_value);
-	
+
 	$max_value = -1;
 	$min_value = -1;
 	// Find the maximum and minimum values of the mission set metadata which define the range.
@@ -630,7 +632,7 @@ function mm_analytics_generate_time_scale_bins($number_of_bins, $target_value, $
 		$min_value = 0;
 	}
 	$max_value = $max_value + 1;
-	
+
 	if($max_value > 0 && $min_value >= 0) {
 		$max_time = ceil($max_value / 86400);
 		$min_time = floor($min_value / 86400);
@@ -654,7 +656,7 @@ function mm_analytics_generate_time_scale_bins($number_of_bins, $target_value, $
 				}
 			}
 		}
-		
+
 		// Determines the increments of the range according to the user given number of bins.
 		$bin_step = ceil(($max_time - $min_time) / $number_of_bins);
 		$i = 0;
@@ -663,19 +665,19 @@ function mm_analytics_generate_time_scale_bins($number_of_bins, $target_value, $
 			$i++;
 			$timescale_bins[$i] = (($i * $bin_step) + $min_time);
 		}
-		
+
 		foreach($timescale_bins as $index => $time) {
 			$timescale_bins[$index] = $time * $return_to_timestamp;
 		}
 	}
-	
+
 	return $timescale_bins;
 }
 
 
 
 
-/** 
+/**
  * Get the top n most requested skills in currently posted micromissions
  * @param int $n the number of skills to return, default: top 10 skills
  * @return array the top $n most requested skills
@@ -688,20 +690,20 @@ function getTopSkills( $n = 10 ){
 
 	// Prepare query - we're looking for all skills from currently posted micromissions for now.
 	// Most of the analysis of the data (counting the skills, sorting) to get the top $n skills will happen afterwards in PHP.
-	$query_string = 
-	"SELECT msvs.string AS skill, count(*) AS num 
+	$query_string =
+	"SELECT msvs.string AS skill, count(*) AS num
 	/* filter - currently posted opportunities only */
-	FROM {$dbprefix}metastrings msnp 
-	LEFT JOIN {$dbprefix}metadata mdp ON msnp.id = mdp.name_id 
-	LEFT JOIN {$dbprefix}metastrings msvp ON msvp.id = mdp.value_id 
+	FROM {$dbprefix}metastrings msnp
+	LEFT JOIN {$dbprefix}metadata mdp ON msnp.id = mdp.name_id
+	LEFT JOIN {$dbprefix}metastrings msvp ON msvp.id = mdp.value_id
 	/* ensure we are only dealing with opportunities */
-	LEFT JOIN {$dbprefix}entities e ON mdp.entity_guid = e.guid 
-	LEFT JOIN {$dbprefix}entity_subtypes st ON e.subtype = st.id 
+	LEFT JOIN {$dbprefix}entities e ON mdp.entity_guid = e.guid
+	LEFT JOIN {$dbprefix}entity_subtypes st ON e.subtype = st.id
 	/* now we can get the key required skills from each of these opportunities */
-	LEFT JOIN {$dbprefix}metadata mds ON e.guid = mds.entity_guid 
-	LEFT JOIN {$dbprefix}metastrings msns ON mds.name_id = msns.id 
-	LEFT JOIN {$dbprefix}metastrings msvs ON mds.value_id = msvs.id 
-	WHERE msnp.string = 'state' AND msvp.string = 'posted' AND st.subtype = 'mission' AND msns.string = 'key_skills' 
+	LEFT JOIN {$dbprefix}metadata mds ON e.guid = mds.entity_guid
+	LEFT JOIN {$dbprefix}metastrings msns ON mds.name_id = msns.id
+	LEFT JOIN {$dbprefix}metastrings msvs ON mds.value_id = msvs.id
+	WHERE msnp.string = 'state' AND msvp.string = 'posted' AND st.subtype = 'mission' AND msns.string = 'key_skills'
 	GROUP BY skill HAVING skill <> ''";
 
 	// now run the query
