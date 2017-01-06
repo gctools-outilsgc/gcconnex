@@ -444,7 +444,6 @@ function mm_analytics_generate_separation_labels($separator) {
 			break;
 		case 'missions:type':
 			$returner = explode(',', elgg_get_plugin_setting('opportunity_type_string', 'missions'));
-			$returner[0] = 'missions:other';
 			break;
 		case 'missions:reason_to_decline':
 			$returner = explode(',', elgg_get_plugin_setting('decline_reason_string', 'missions'));
