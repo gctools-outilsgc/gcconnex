@@ -1652,3 +1652,8 @@ figcaption{
     text-decoration: underline;
     cursor: pointer;
 }
+  
+.indicator_summary{
+  color:#D6D6D6;
+  font-size: 12px
+}

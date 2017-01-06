@@ -81,8 +81,17 @@ $title_link = gc_explode_translation($entity->title3, $lang);
 }
 
 if ($title_link) {
-    echo "<span class=\"mrgn-bttm-0 summary-title\">$title_link</span>"; //put in span because some links would not take classes
+    echo "<span class=\"mrgn-bttm-0 summary-title\">$title_link</span>";//put in span because some links would not take classes
+    if (($entity->description) && ($entity->description2)) {
+	    echo " <span class='indicator_summary' title='".elgg_echo('indicator:summary:title')."'>".elgg_echo('indicator:summary')."</span>"; //indicator translation
+	}elseif (elgg_get_context() == 'polls'){
+	    if ((polls_get_choice_array2($entity)) && (polls_get_choice_array($entity))) {
+	    	
+	    	echo " <span class='indicator_summary' title='".elgg_echo('indicator:summary:title')."'>".elgg_echo('indicator:summary')."</span>"; //indicator translation for polls
+	    }
+	}
     echo elgg_in_context($context);
+    
 }/*else{
         echo "<span class=\"mrgn-bttm-0 summary-title\">$entity->title</span>"; //put in span because some links would not take classes
     echo elgg_in_context($context);
