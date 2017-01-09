@@ -1914,6 +1914,7 @@ function event_calendar_get_page_content_view($event_guid) {
 
 		$event_container = get_entity($event->container_guid);
 
+		$group_name = gc_explode_translation($event_container->name, $lang);
 
 		
 		if (elgg_instanceof($event_container, 'group')) {
