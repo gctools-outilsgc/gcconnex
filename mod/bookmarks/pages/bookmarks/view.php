@@ -17,8 +17,11 @@ $lang = get_current_language();
 
 elgg_group_gatekeeper();
 
-$crumbs_title = gc_explode_translation($page_owner->title, $lang);
-
+if (!$page_owner->title){
+	$crumbs_title = $page_owner->name;
+}else{	
+	$crumbs_title = gc_explode_translation($page_owner->title, $lang);
+}
 
 if (elgg_instanceof($page_owner, 'group')) {
 	elgg_push_breadcrumb($crumbs_title, "bookmarks/group/$page_owner->guid/all");

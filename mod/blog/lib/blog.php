@@ -29,7 +29,12 @@ function blog_get_page_content_read($guid = NULL) {
 	
 	$return['title'] =  gc_explode_translation($blog->title, $lang);
 
-	$crumbs_title = gc_explode_translation($container->title,$lang);
+	if (!$container->title){
+		$crumbs_title = gc_explode_translation($container->name,$lang);
+	}else{
+		$crumbs_title = gc_explode_translation($container->title,$lang);
+	}
+	
 
 	
 	if (elgg_instanceof($container, 'group')) {

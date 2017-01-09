@@ -276,8 +276,8 @@ function groups_handle_edit_page($page, $guid = 0) {
 
 		if (elgg_instanceof($group, 'group') && $group->canEdit()) {
 			elgg_set_page_owner_guid($group->getGUID());
-			elgg_push_breadcrumb($group->name, $group->getURL());
-			elgg_push_breadcrumb($title);
+			//elgg_push_breadcrumb($group->name, $group->getURL());
+			//elgg_push_breadcrumb($title);
 			$content = elgg_view("groups/edit", array('entity' => $group));
 		} else {
 			$content = elgg_echo('groups:noaccess');
@@ -588,7 +588,6 @@ function groups_prepare_form_vars($group = null) {
 	$values = array(
 		'name' => '',
 		'name2' => '',
-		'title3' => '',
 		'membership' => ACCESS_PUBLIC,
 		'vis' => ACCESS_PUBLIC,
 		'guid' => null,
