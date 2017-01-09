@@ -26,6 +26,17 @@ $img = elgg_view_entity_icon($photo, 'large', array(
   'id' => 'img',
     
 ));
+
+
+$img = elgg_view_entity_icon($photo, 'large', array(
+  //'href' => $image->getIconURL('master'),
+    'href' => 'ajax/view/ajax/photo?guid=' . $photo->guid,
+  'img_class' => 'tidypics-photo',
+  'link_class' => 'elgg-lightbox',
+  'id' => 'img',
+    
+));
+
 echo '<div class="test">';
 echo $img;
 echo '</div>';
@@ -40,12 +51,18 @@ if (isset($_POST['action'])) {
 
 //function to rotate image
 function rotation($photo){
+  $path = $photo->getFilenameOnFilestore();
+  $path_noname = substr($path, 0, strrpos( $path, '/'));
 
-  $picture_size = array($photo->thumbnail, $photo->smallthumb, $photo->largethumb, $photo->getFilename());
+  $filename = $photo->getFilename();
+  $filename = substr($filename, strrpos($filename, '/') + 1);
 
-  for($x = 0; $x < 4; $x++) {
-      $imgsrc = $_SERVER['DOCUMENT_ROOT'] .'1/'.$photo->owner_guid.'/'.$picture_size[$x];
+  $picture_size = array('thumb', 'smallthumb', 'largethumb');
 
+  for($x = 0; $x < 3; $x++) {
+      //$imgsrc = $_SERVER['DOCUMENT_ROOT'] .'1/'.$photo->owner_guid.'/'.$picture_size[$x];
+        $imgsrc = $path_noname.'/'.$picture_size[$x].$filename;
+        error_log($imgsrc);
       if (exif_imagetype($imgsrc) == IMAGETYPE_JPEG) {
           if (file_exists($imgsrc)) {
               $img = imagecreatefromjpeg($imgsrc);
@@ -57,14 +74,18 @@ function rotation($photo){
                     imagejpeg($imgRotated,$imgsrc,100);
                 }
               }else{
+
                 echo 'Error, Image rotate false. JPEG';
           
               }
             
           }else{
-              echo'Error, file not exist. JPEG';
+            register_error(elgg_echo('Error, file not exist. JPEG'));
+            echo "<script>alert(\"la variable est nulle\")</script>"; 
         
           }
+              imagedestroy($img);
+              imagedestroy($imgRotated);
       }else if (exif_imagetype($imgsrc) == IMAGETYPE_PNG){
          if (file_exists($imgsrc)) {
               $img = imagecreatefrompng($imgsrc);
@@ -82,11 +103,15 @@ function rotation($photo){
               }
             
           }else{
-              echo'Error, file not exist. PNG';
+               register_error(elgg_echo('Error, file not exist. PNG'));
+               echo "<script>alert(\"la variable est nulle\")</script>"; 
           }
+            imagedestroy($img);
+            imagedestroy($imgRotated);
       }
-      imagedestroy($img);
-      imagedestroy($imgRotated);
+       register_error(elgg_echo('Error, file not exist. PNG'));
+       error_log("Base Oracle indisponible !");
+
   }        
 }
 

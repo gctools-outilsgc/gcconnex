@@ -49,11 +49,18 @@ if (isset($_POST['action'])) {
 
 //function to rotate image
 function rotation($photo){
-$time = time();
+  $time = time();
+  $file = new ElggFile();
+  $file->owner_guid = $user_guid;
+
   $picture_size = array('master');
 
   for($x = 0; $x < 6; $x++) {
-      $imgsrc = $_SERVER['DOCUMENT_ROOT'].'1/'.$photo->guid.'\profile/'.$photo->guid.''.$picture_size[$x].'.jpg';
+     // $imgsrc = $_SERVER['DOCUMENT_ROOT'].'1/'.$photo->guid.'\profile/'.$photo->guid.''.$picture_size[$x].'.jpg';
+      $file->setFilename("profile/{$photo->guid}{$picture_size[$x]}.jpg");
+      $filepath = $file->getFilenameOnFilestore();
+      
+      $imgsrc = $filepath;
 
       if (exif_imagetype($imgsrc) == IMAGETYPE_JPEG) {
           if (file_exists($imgsrc)) {
