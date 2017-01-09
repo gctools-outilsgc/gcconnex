@@ -19,7 +19,8 @@ elgg_push_breadcrumb(elgg_echo('file'), 'file/all');
 
 $lang = get_current_language();
 
-$crumbs_title = $owner->name;	
+$crumbs_title = gc_explode_translation($owner->title, $lang);
+
 
 if (elgg_instanceof($owner, 'group')) {
 	elgg_push_breadcrumb($crumbs_title, "file/group/$owner->guid/all");

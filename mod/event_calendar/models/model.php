@@ -130,7 +130,7 @@ function event_calendar_set_event_from_form($event_guid, $group_guid) {
 	$e->access_id = get_input('access_id');
 	$e->title = get_input('title');
 	$e->title2 = get_input('title2');
-	$e->title3 = gc_implode_translation($e->title,$e->title2);
+	$e->title = gc_implode_translation($e->title,$e->title2);
 	$e->description = get_input('description');
 	$e->description2 = get_input('description2');
 	$e->venue = get_input('venue');
@@ -140,13 +140,13 @@ function event_calendar_set_event_from_form($event_guid, $group_guid) {
 	$e->teleconference = get_input('teleconference_text');
 	$e->calendar_additional = get_input('calendar_additional');
 	$e->calendar_additional2 = get_input('calendar_additional2');
-	$e->calendar_additional3 = gc_implode_translation($e->calendar_additional,$e->calendar_additional2);
+	$e->calendar_additional = gc_implode_translation($e->calendar_additional,$e->calendar_additional2);
 	$e->contact = get_input('contact');
 	$e->organiser = get_input('organiser');
 	$e->tags = string_to_tag_array(get_input('tags'));
 	$e->long_description = get_input('long_description');
 	$e->long_description2 = get_input('long_description2');
-	$e->long_description3 = gc_implode_translation($e->long_description,$e->long_description2);
+	$e->long_description = gc_implode_translation($e->long_description,$e->long_description2);
 	$e->send_reminder = get_input('send_reminder');
 	$e->reminder_number = get_input('reminder_number');
 	$e->reminder_interval = get_input('reminder_interval');
@@ -179,7 +179,6 @@ if(((!$e->title)&&(!$e->title2))||(!$e->start_date) || (!$e->end_date) || (!$e->
 	$keys = array(
 		'title',
 		'title2',
-		'title3',
 		'description',
 		'access_id',
 		'start_date',
@@ -193,13 +192,11 @@ if(((!$e->title)&&(!$e->title2))||(!$e->start_date) || (!$e->end_date) || (!$e->
 		'teleconference',
 		'calendar_additional',
 		'calendar_additional2',
-		'calendar_additional3',
 		'contact',
 		'organiser',
 		'tags',
 		'long_description',
 		'long_description2',
-		'long_description3',
 		'send_reminder',
 		'reminder_number',
 		'reminder_interval',
@@ -1132,11 +1129,9 @@ function event_calendar_get_formatted_full_items($event) {
 
 	$item = new stdClass();
 	$item->title = elgg_echo('event_calendar:info');
-    if($event->calendar_additional3){
-        $item->value = htmlspecialchars( gc_explode_translation($event->calendar_additional3, $lang));
-    }else{
-         $item->value = htmlspecialchars($event->calendar_additional);
-    }
+
+    $item->value = htmlspecialchars( gc_explode_translation($event->calendar_additional, $lang));
+
 	$event_items[] = $item;
 	
 	if ($event_calendar_region_display == 'yes') {
@@ -1395,11 +1390,7 @@ function event_calendar_get_page_content_list($page_type, $container_guid, $star
 		}
 		$group = get_entity($container_guid);
 
-		if($group->title3){
-			$group_title = gc_explode_translation($group->title3,$lang);
-		}else{
-			$group_title = $group->name;
-		}
+		$group_title = gc_explode_translation($group->title,$lang);
 
 		elgg_push_breadcrumb($group_title, 'groups/profile/' .$group->guid.'/'. $group->name);
 		elgg_push_context('groups');
@@ -1502,11 +1493,8 @@ function event_calendar_get_page_content_edit($page_type, $guid, $start_date='')
 			$body_vars['form_data'] =  event_calendar_prepare_edit_form_vars($event, $page_type);
 			$event_container = get_entity($event->container_guid);
 
-			if($event_container->title3){
-				$group_title = gc_explode_translation($event_container->title3,$lang);
-			}else{
-				$group_title = $event_container->name;
-			}
+			$group_title = gc_explode_translation($event_container->title,$lang);
+
 
 			if (elgg_instanceof($event_container, 'group')) {
 				elgg_push_breadcrumb($group_title, 'event_calendar/group/' . $event->container_guid);
@@ -1515,12 +1503,9 @@ function event_calendar_get_page_content_edit($page_type, $guid, $start_date='')
 				elgg_push_breadcrumb($group_title, 'event_calendar/owner/' . $event_container->username);
 				$body_vars['group_guid'] = 0;
 			}
+	
+			elgg_push_breadcrumb(gc_explode_translation($event->title,$lang), $event->getURL());
 
-			if($event->title3){
-				elgg_push_breadcrumb(gc_explode_translation($event->title3,$lang), $event->getURL());
-			}else{
-				elgg_push_breadcrumb($event->title, $event->getURL());
-			}
 			elgg_push_breadcrumb(elgg_echo('event_calendar:manage_event_title'));
 
 			$content = elgg_view_form('event_calendar/edit', $vars, $body_vars);
@@ -1848,11 +1833,9 @@ $content = elgg_view('event_calendar/show_events', $vars);
 				case 'group':
 				case 'owner':
 				$lang = get_current_language();
-				if (!$container->title3) {
-					$title = elgg_echo('event_calendar:listing_title:user', array($container->name));
-				}else{
-					$title = elgg_echo('event_calendar:listing_title:user', array(gc_explode_translation($container->title3, $lang)));
-				}
+
+				$title = elgg_echo('event_calendar:listing_title:user', array(gc_explode_translation($container->title, $lang)));
+		
 					break;
 				default:
 					switch ($filter) {
@@ -1926,19 +1909,12 @@ function event_calendar_get_page_content_view($event_guid) {
 		$content = elgg_echo('event_calendar:error_nosuchevent_loggedin_only');
 		$title = elgg_echo('event_calendar:generic_error_title');
 	} else {
-		if($event->title3){
-			$title = htmlspecialchars(gc_explode_translation($event->title3, $lang));
-		}else{
-			$title = htmlspecialchars($event->title);
-		}
+	
+		$title = htmlspecialchars(gc_explode_translation($event->title, $lang));
 
 		$event_container = get_entity($event->container_guid);
 
-		if($event_container->title3){
-			$group_name = gc_explode_translation($event_container->title3, $lang);
-		}else{
-			$group_name = $event_container->name;
-		}
+
 		
 		if (elgg_instanceof($event_container, 'group')) {
 			if ($event_container->canEdit()) {
