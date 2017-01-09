@@ -59,11 +59,9 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 		<div class="groups-info col-xs-10 col-md-10 ">
             <h1 class="group-title">
                 <?php
-                if($group->title3){
-                    echo gc_explode_translation($group->title3, $lang);
-                }else{
-                    echo $group->name;
-                }
+               
+                    echo gc_explode_translation($group->title, $lang);
+
                 ?>
             </h1>
             <div class="clearfix">
