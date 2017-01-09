@@ -30,11 +30,11 @@ function gc_explode_translation($imploded_txt, $lang)
 {
     $json=json_decode($imploded_txt);
 
-    if(count($json)>0){
-        if($lang=='en' && trim($json->en)<>''){
+    if( isset($json->en) || isset($json->fr) ){
+        if( $lang == 'en' && trim($json->en) != ''){
             $value=$json->en;
         }
-        elseif($lang=='fr' && trim($json->fr)<>''){
+        else if( $lang == 'fr' && trim($json->fr) != ''){
             $value=$json->fr;
         }
         else

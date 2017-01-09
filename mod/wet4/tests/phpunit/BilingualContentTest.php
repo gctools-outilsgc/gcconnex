@@ -54,7 +54,7 @@ class BilingualContentTest extends \PHPUnit_Framework_TestCase {
     	$fr = gc_explode_translation( $content, 'fr');
 
     	$this->assertSame( "English Content", $en );				// check english
-    	$this->assertSame( "", $fr );								// check french
+    	$this->assertSame( "English Content", $fr );				// check french
     }
 
 
@@ -76,7 +76,7 @@ class BilingualContentTest extends \PHPUnit_Framework_TestCase {
     	$en = gc_explode_translation( $content, 'en');
     	$fr = gc_explode_translation( $content, 'fr');
 
-    	$this->assertSame( "", $en );								// check english
+    	$this->assertSame( "Français Content", $en );				// check english
     	$this->assertSame( "Français Content", $fr );				// check french
     }
 
