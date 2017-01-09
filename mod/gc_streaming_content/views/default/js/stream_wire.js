@@ -109,7 +109,8 @@ function loadNewPosts(){
                     //What is different from what is on the page and what is in the db?
                     var diff = $(queryArray).not(existingArray).get();
                     
-                    
+                    //Loggin this to see we're getting back on preprod
+                    console.log(diff);
                     ajax_path = 'ajax/view/ajax/wire_posts'; //here is my ajax view :3
                     //Bring back the latests posts and add them to the page
                     elgg.get(ajax_path, {
