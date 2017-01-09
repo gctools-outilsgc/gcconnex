@@ -13,7 +13,7 @@ class BilingualContentTest extends \PHPUnit_Framework_TestCase {
     function tearDown() {
     }
 
-// Should save "" to both
+	// Should save "" to both
     function testCreateEmptyContent() {
     	$content = gc_implode_translation( "", "" );
 
@@ -25,7 +25,10 @@ class BilingualContentTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
+	 * Should get empty for both
+	 *
      * @depends testCreateEmptyContent
+     * 
      */
     function testReadEmptyContent( $content ) {
     	$en = gc_explode_translation( $content, 'en');
@@ -35,7 +38,9 @@ class BilingualContentTest extends \PHPUnit_Framework_TestCase {
     	$this->assertSame( "", $fr );								// check french
     }
 
-    // Should save 
+
+
+    // Should save "" to fr
     function testCreateEnglishOnlyContent() {
     	$content = gc_implode_translation( "English Content", "" );
 
@@ -47,7 +52,10 @@ class BilingualContentTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
+	 * Should get english content for both
+	 *
      * @depends testCreateEnglishOnlyContent
+     *
      */
     function testReadEnglishOnlyContent( $content ) {
     	$en = gc_explode_translation( $content, 'en');
@@ -58,7 +66,8 @@ class BilingualContentTest extends \PHPUnit_Framework_TestCase {
     }
 
 
-    // Should save 
+
+    // Should save "" to en
     function testCreateFrenchOnlyContent() {
     	$content = gc_implode_translation( "", "Français Content" );
 
@@ -70,7 +79,10 @@ class BilingualContentTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
+	 * Should get french content for both
+	 *
      * @depends testCreateFrenchOnlyContent
+     *
      */
     function testReadFrenchOnlyContent( $content ) {
     	$en = gc_explode_translation( $content, 'en');
@@ -80,7 +92,9 @@ class BilingualContentTest extends \PHPUnit_Framework_TestCase {
     	$this->assertSame( "Français Content", $fr );				// check french
     }
 
-    // Should save 
+
+
+    // Should save appropriate language content to each
     function testCreateBilingualContent() {
     	$content = gc_implode_translation( "English Content", "Français Content" );
 
@@ -92,7 +106,10 @@ class BilingualContentTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
+	 * Should get appropriate language content for each one
+	 *
      * @depends testCreateBilingualContent
+     *
      */
     function testReadBilingualContent( $content ) {
     	$en = gc_explode_translation( $content, 'en');
