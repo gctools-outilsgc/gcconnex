@@ -30,6 +30,21 @@ if ($guid) {
 	$submit_label = elgg_echo('upload');
 }
 
+// decode json into English / French parts
+$json_title = json_decode($title);
+$json_desc = json_decode($desc);
+
+if ( $json_title ){
+  $title2 = $json_title->fr;
+  $title = $json_title->en;
+}
+
+if ( $json_desc ){
+  $desc2 = $json_desc->fr;
+  $desc = $json_desc->en;
+}
+
+
 elgg_unregister_menu_item('title', 'new_folder');
 
 $btn_language =  '<ul class="nav nav-tabs nav-tabs-language">
