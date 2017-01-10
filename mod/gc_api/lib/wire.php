@@ -65,7 +65,8 @@ function get_wire_posts($query, $limit){
 		$posts['post_'.$i]['time_created'] = $wp->time_created;
 		$posts['post_'.$i]['time_since'] = time_elapsed_B(time()-$wp->time_created);
 		$posts['post_'.$i]['user'] = get_userBlock($wp->owner_guid);
-		
+        //Nick - added guid to the api
+		$posts['post_'.$i]['guid'] = $wp->guid;
 		$i++;
 	}
 	if ($posts){

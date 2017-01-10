@@ -38,7 +38,14 @@ function stop_stream_count(){
 // Checking to see if there are any new wire posts
 function check_for_posts(){
         //What is the page currently loaded on the page?
-        var firstPostOnPage = $('.elgg-item-object-thewire .elgg-content').first().text();
+    
+        var firstPostOnPage = $('.elgg-item-object-thewire .elgg-content').first().parent().parent().parent().attr('id');
+    var postGUID = firstPostOnPage.split("-");
+    postGUID = postGUID.slice(2);
+    
+    
+    //firstPostOnPage = firstPostOnPage.replace(/\s/g, '');
+    //console.log(postGUID);
         var site = elgg.normalize_url();
         var first_post ='';
         //Ping the api to see what the latest wire post is.
@@ -49,8 +56,10 @@ function check_for_posts(){
                 dataType: 'json',
                 success: function(feed){
                     //Get the latest post and compare that post to the post that is on the page.
-                   var test_array = feed.result.posts.post_0.text;
-                    if(comparePosts(test_array, firstPostOnPage)){
+                   var test_array = feed.result.posts.post_0.guid;
+                    //test_array = test_array.replace(/\s/g, '');
+                    //console.log(test_array);
+                    if(comparePosts(test_array, postGUID)){
                         //True - Keep looking for posts
                         stream_count();
                         console.log('true - keep going');
@@ -85,13 +94,22 @@ function loadNewPosts(){
     $('.stream-new-wire').html('<i class="fa fa-refresh fa-spin fa-1g fa-fw"></i><span class="sr-only">Loading...</span>');
     //get all of the wire posts currently loaded on the page.
     var postsOnPage = $('.elgg-item-object-thewire .elgg-content');
+    //console.log(postsOnPage);
     var existingArray =[];
     var queryArray = [];
+    //console.log(postsOnPage);
     for (i=0; i < postsOnPage.length; i++){
-        //Push the existing posts to an array to compare with 
-        existingArray.push($(postsOnPage[i]).text());
-    }
+        //Push the existing posts to an array to compare with
+        
+        var post_ = $(postsOnPage[i]).parent().parent().parent().attr('id');
+        var postGUID = post_.split("-");
+        postGUID = postGUID.slice(2);
+        //This needs to be an int not a string
+        postGUID = parseInt(postGUID.toString());
+        existingArray.push(postGUID);
     
+    }
+   console.log(existingArray);
     var site = elgg.normalize_url();
         $.ajax({
             //get the latest wire posts from the API
@@ -103,7 +121,7 @@ function loadNewPosts(){
                     //Put the latest posts in an array
                     var postArray = feed.result.posts;
                     for (var num in postArray){
-                        queryArray.push(postArray[num].text);
+                        queryArray.push(postArray[num].guid);
                         
                     }
                     //What is different from what is on the page and what is in the db?
