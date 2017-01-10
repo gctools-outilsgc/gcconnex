@@ -17,10 +17,8 @@ function pages_prepare_form_vars($page = null, $parent_guid = 0, $revision = nul
 	$values = array(
 		'title' => '',
 		'title2' => '',
-		'title3' => '',
 		'description' => '',
 		'description2' => '',
-		'description3' => '',
 		'access_id' => ACCESS_DEFAULT,
 		'write_access_id' => ACCESS_DEFAULT,
 		'tags' => '',
@@ -38,6 +36,9 @@ function pages_prepare_form_vars($page = null, $parent_guid = 0, $revision = nul
 		}
 		
 	}
+
+//$page->title = gc_implode_translation($page->title,$page->title2);
+//$page->description = gc_implode_translation($page->description,$page->description2);
 
 	if (elgg_is_sticky_form('page')) {
 		$sticky_values = elgg_get_sticky_values('page');
@@ -72,11 +73,9 @@ function pages_prepare_parent_breadcrumbs($page) {
 		}
 		while ($parents) {
 			$parent = array_pop($parents);
-            if($parent->title3){
-                elgg_push_breadcrumb(gc_explode_translation($parent->title3,$lang), $parent->getURL());
-            }else{
-			     elgg_push_breadcrumb($parent->title, $parent->getURL());
-            }
+         
+                elgg_push_breadcrumb(gc_explode_translation($parent->title,$lang), $parent->getURL());
+
 		}
 	}
 }
@@ -107,21 +106,13 @@ function pages_get_navigation_tree($container) {
 	$depths = array();
 
 	foreach ($top_pages as $page) {
-		if ($page->title3){
+		
 			$tree[] = array(
 			'guid' => $page->getGUID(),
-			'title' => gc_explode_translation($page->title3,$lang),
+			'title' => gc_explode_translation($page->title,$lang),
 			'url' => $page->getURL(),
 			'depth' => 0,
 			);
-		}else{
-			$tree[] = array(
-			'guid' => $page->getGUID(),
-			'title' => $page->title,
-			'url' => $page->getURL(),
-			'depth' => 0,
-			);
-		}
 	
 		$depths[$page->guid] = 0;
 
@@ -139,11 +130,8 @@ function pages_get_navigation_tree($container) {
 
 			foreach ($children as $child) {
 
-                if($child->title3){
-                    $child_title = gc_explode_translation($child->title3,$lang);
-                }else{
-                    $child_title = $child->title;
-                }
+                $child_title = gc_explode_translation($child->title,$lang);
+
 				
 				$tree[] = array(
 					'guid' => $child->getGUID(),
