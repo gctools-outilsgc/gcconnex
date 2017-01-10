@@ -21,6 +21,30 @@ $action_buttons = '';
 $delete_link = '';
 $preview_button = '';
 
+$title = elgg_extract('title', $vars, '');
+$title2 = elgg_extract('title2', $vars, '');
+
+// decode json into English / French parts
+$json_title = json_decode($vars['title']);
+$json_desc = json_decode($vars['description']);
+$json_exc = json_decode($vars['excerpt']);
+
+if ( $json_title ){
+  $title2 = $json_title->fr;
+  $title = $json_title->en;
+}
+
+if ( $json_desc ){
+  $desc2 = $json_desc->fr;
+  $desc = $json_desc->en;
+}
+
+if ( $json_exc ){
+  $excerpt2 = $json_desc->fr;
+  $excerpt = $json_desc->en;
+}
+
+
 if ($vars['guid']) {
 	// add a delete button if editing
 	$delete_url = "action/blog/delete?guid={$vars['guid']}";
@@ -57,49 +81,49 @@ $label = elgg_echo('title:en');
 $input = elgg_view('input/text', array(
 	'name' => 'title',
 	'id' => 'blog_title_en',
-	'value' => $vars['title']
+	'value' => $title
 ));
 
 $label2 = elgg_echo('title:fr');
 $input2 = elgg_view('input/text', array(
 	'name' => 'title2',
 	'id' => 'blog_title_fr',
-	'value' => $vars['title2']
+	'value' => $title2
 ));
 
 $excerpt_label = elgg_echo('blog:excerpt:en');
 $excerpt_input = elgg_view('input/text', array(
 	'name' => 'excerpt',
 	'id' => 'blog_excerpt_en',
-	'value' => _elgg_html_decode($vars['excerpt'])
+	'value' => _elgg_html_decode($excerpt)
 ));
 
 $excerpt_label2 = elgg_echo('blog:excerpt:fr');
 $excerpt_input2 = elgg_view('input/text', array(
 	'name' => 'excerpt2',
 	'id' => 'blog_excerpt_fr',
-	'value' => _elgg_html_decode($vars['excerpt2'])
+	'value' => _elgg_html_decode($excerpt2)
 ));
 
 $excerpt_label3 = elgg_echo('blog:excerpt:fr');
 $excerpt_input3 = elgg_view('input/text', array(
 	'name' => 'excerpt3',
 	'id' => 'blog_excerpt3',
-	'value' => _elgg_html_decode($vars['excerpt2'])
+	'value' => _elgg_html_decode($excerpt2)
 ));
 
 $body_label = elgg_echo('blog:body:en');
 $body_input = elgg_view('input/longtext', array(
 	'name' => 'description',
 	'id' => 'blog_description_en',
-	'value' => $vars['description']
+	'value' => $desc,
 ));
 
 $body_label2 = elgg_echo('blog:body:fr');
 $body_input2 = elgg_view('input/longtext', array(
 	'name' => 'description2',
 	'id' => 'blog_description_fr',
-	'value' => $vars['description2']
+	'value' => $desc2
 ));
 
 $save_status = elgg_echo('blog:save_status');
