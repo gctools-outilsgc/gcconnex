@@ -287,21 +287,51 @@ function mm_analytics_add_reports_by_dates($start_date, $end_date, $separator, &
 		if ($separator == 'missions:state') {
 				$subtypes = array(
 						'mission-wasoffered',
-						'mission-declination',
-						'mission-acceptance'
+						'mission-declination'
 				);
 				$subtype_ids = array();
 				foreach ($subtypes as $st) {
 					$subtypes_ids[] = get_subtype_id('object', $st);
 				};
 
+				$q_options = array();
 				$q_options['type'] = 'object';
-				$q_options['created_time_lower'] = $timescale_array[0];
-				$q_options['created_time_upper'] = $timescale_array[count($timescale_array) - 1];
+				$q_options['created_time_lower'] = $start_date;
+				$q_options['created_time_upper'] = $end_date;
 				$q_options['type_subtype_pairs'] = array('object' => $subtypes);
 				$reports = elgg_get_entities($q_options);
 				foreach ($reports as $report) {
 						$mission_set[array_search($report->subtype, $subtypes_ids)+3][] = $report;
+				}
+
+				// 'mission-acceptance'  (Requires different query, to find missions "in progress".
+				// Finds all missions that meet the following in-progress report criteria:
+				// 1. In-progress report created prior to $end_date, but is still in progress. (completed = 0)
+				// 2. In-progress report created prior to $end_date and completed within $start_date to $end_date.
+
+				$q_options = array();
+				$prefix = elgg_get_config('dbprefix');
+				$q_options['type'] = 'object';
+				$q_options['subtype'] = 'mission-inprogress';
+				$q_options['created_time_upper'] = $end_date;
+				$q_options['metadata_name_value_pairs'] = array(
+						array(
+								'name' => 'mission_guid',
+								'value' => $mission->guid,
+								'operand' => '='
+						),
+						array(
+								'name' => 'completed',
+								'value' => 0,
+								'operand' => '>'
+						)
+				);
+				$q_options['wheres'] = array(
+					  "((msv1.string BETWEEN $start_date AND $end_date) OR msv1.string = 0)"
+				);
+				$in_progress = elgg_get_entities_from_metadata($q_options);
+				foreach ($in_progress as $p) {
+					$mission_set[5][] = $p;
 				}
 		}
 }
@@ -396,7 +426,7 @@ function mm_analytics_separate_missions_by_values($mission_set, $separator) {
 		switch($separator) {
 			case 'missions:state':
 				$meta_tag = 'state';
-				$comparison_array = array('posted', 'cancelled', 'completed', 'offered', 'declined', 'inprocess');
+				$comparison_array = array('posted', 'cancelled', 'completed', 'offered', 'declined', 'inprogress');
 				break;
 			case 'missions:reliability':
 				$meta_tag = 'security';
@@ -457,7 +487,7 @@ function mm_analytics_generate_separation_labels($separator) {
 	$returner = array();
 	switch($separator) {
 		case 'missions:state':
-			$returner = array('missions:posted', 'missions:cancelled', 'missions:completed', 'missions:offered', 'missions:declined', 'missions:inprocess');
+			$returner = array('missions:posted', 'missions:cancelled', 'missions:completed', 'missions:offered', 'missions:declined', 'missions:inprogress');
 			break;
 		case 'missions:reliability':
 			$returner = explode(',', elgg_get_plugin_setting('security_string', 'missions'));

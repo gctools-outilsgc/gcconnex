@@ -82,7 +82,7 @@ function missions_init()
     elgg_register_entity_type('object', 'mission-feedback');
     elgg_register_entity_type('object', 'mission-declination');
     elgg_register_entity_type('object', 'mission-wasoffered');
-    elgg_register_entity_type('object', 'mission-acceptance');
+    elgg_register_entity_type('object', 'mission-inprogress');
 
     // Register an ajax view for the advanced search page.
     elgg_register_ajax_view('missions/element-select');

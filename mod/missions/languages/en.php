@@ -635,7 +635,7 @@ Should you no longer be available to participate in this opportunity, please wit
 "missions:applicant_phone" =>   "Applicant phone number",
 "missions:please_give_reason_for_declination" =>"Please give a reason for declining this opportunity.",
 "missions:offered" =>   "Offered",
-"missions:inprocess" => "In Process",
+"missions:inprogress" => "In Progress",
 "missions:declined" => "Declined",
 "missions:settings:analytics_on" =>  "Display analytics tab?",
 "missions:cannot_cancel_mission_with_participants" => "Please remove all active participants and all applicants to whom you have sent an offer before deactivating this opportunity.",

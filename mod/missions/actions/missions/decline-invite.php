@@ -45,6 +45,7 @@ if(check_entity_relationship($mission->guid, 'mission_offered', $applicant->guid
 if(check_entity_relationship($mission->guid, 'mission_accepted', $applicant->guid)) {
 	$message_return = 'missions:withdrawal_has_been_sent';
 	remove_entity_relationship($mission->guid, 'mission_accepted', $applicant->guid);
+  mm_complete_mission_inprogress_reports($mission, true);
 }
 
 // Object which stores the reason for declining a mission.
@@ -56,8 +57,7 @@ $declination->owner_guid = $applicant->guid;
 $declination->mission_guid = $mission->guid;
 $declination->applicant_reason = $raw_reason;
 $declination->reason_text = $reason;
-
-$result = $declination->save();
+$declination->save();
 
 // Notifies the mission manager of the candidates refusal.
 $mission_link = elgg_view('output/url', array(

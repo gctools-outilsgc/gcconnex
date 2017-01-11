@@ -31,6 +31,7 @@ else {
 	}
 	if(check_entity_relationship($mid, 'mission_accepted', $aid)) {
     	remove_entity_relationship($mid, 'mission_accepted', $aid);
+			mm_complete_mission_inprogress_reports($mission, true);
 	}
 	
 	$mission->time_to_fill = '';

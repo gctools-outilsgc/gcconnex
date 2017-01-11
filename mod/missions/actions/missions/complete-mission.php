@@ -39,6 +39,9 @@ if($count == 0) {
 	forward(REFERER);
 }
 
+// Update any ongoing progress reports for this mission.
+mm_complete_mission_inprogress_reports($mission);
+
 $mission->state = 'completed';
 $mission->time_to_complete = time() - $mission->time_created;
 $mission->time_closed = time();

@@ -631,7 +631,7 @@ L'approbation de votre superviseur est nécessaire avant que vous soyez en mesur
 "missions:applicant_phone" =>     "Numéro de téléphone du candidat",
 "missions:please_give_reason_for_declination" =>  "Veuillez fournir un motif pour le refus de cette possibilité.",
 "missions:offered" => "Offert",
-"missions:inprocess" => "In Process",
+"missions:inprogress" => "En cours",
 "missions:declined" => "Refusé",
 "missions:settings:analytics_on" =>   "Afficher l'onglet des analytiques?",
 "missions:cannot_cancel_mission_with_participants" =>     "Veuillez supprimer tout participant actif et tout participant auxquels vous avez envoyé une offre avant la désactivation de cette possibilité.",
