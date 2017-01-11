@@ -52,7 +52,7 @@ function check_for_posts(){
             $.ajax({
                 type: 'GET',
                 contentType: "application/json",
-                url: site+'services/api/rest/json/?method=get.wire',
+                url: site+'services/api/rest/json/?method=get.wire&limit=1',
                 dataType: 'json',
                 success: function(feed){
                     //Get the latest post and compare that post to the post that is on the page.
