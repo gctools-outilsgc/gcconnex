@@ -63,11 +63,9 @@ if (isset($vars['entity'])) {
 	$subtitle = "$author_text $date $comments_link $categories";
 	if ($full) {
 		$lang = get_current_language();
-		if($poll->title3){
-			$title = gc_explode_translation($poll->title3,$lang);
-		}else{
-			$title = false;
-		}
+
+			$title = gc_explode_translation($poll->title,$lang);
+
 $can_vote = !polls_check_for_previous_vote($poll, $user_guid);
 
 //Identify available content

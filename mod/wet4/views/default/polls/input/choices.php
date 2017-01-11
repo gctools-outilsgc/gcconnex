@@ -63,7 +63,7 @@ $body .= '<div id="new_choices_area"  class="en"></div>';
 if ($poll) {
 //if ($test == 'fr'){
 
-	$choices = polls_get_choice_array2($poll);
+	$choices = polls_get_choice_array($poll);
 	if ($choices) {
 		foreach($choices as $choice) {
 			$body .= '<div id="choice_container_2'.$s.'"  class="fr">';
