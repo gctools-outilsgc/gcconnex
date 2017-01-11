@@ -35,7 +35,7 @@ if ( $page_mode == 'bilingual_upgrade' ) {
 	$excerpt3_id = elgg_get_metastring_id('excerpt3', true);
 
 	$db_prefix = elgg_get_config('dbprefix');
-	$count = get_data_row("SELECT count(*) as objects from {$db_prefix}objects_entity o LEFT JOIN {$db_prefix}metadata md ON o.guid = md.entity_guid 
+	$count = get_data_row("SELECT count(distinct o.guid) as objects from {$db_prefix}objects_entity o LEFT JOIN {$db_prefix}metadata md ON o.guid = md.entity_guid 
 		WHERE md.name_id IN ({$title2_id}, {$title3_id}, {$description2_id}, {$description3_id}, {$briefdescription2_id}, {$briefdescription3_id}, {$excerpt2_id}, {$excerpt3_id})");
 
 	echo elgg_view('admin/upgrades/view', array(

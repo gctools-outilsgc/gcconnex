@@ -45,7 +45,7 @@ $success_count = 0;
 $error_count = 0;
 
 do {
-	$object_guids = get_data("SELECT o.guid as guid from {$db_prefix}objects_entity o LEFT JOIN {$db_prefix}metadata md ON o.guid = md.entity_guid 
+	$object_guids = get_data("SELECT distinct o.guid as guid from {$db_prefix}objects_entity o LEFT JOIN {$db_prefix}metadata md ON o.guid = md.entity_guid 
 		WHERE md.name_id IN ({$title2_id}, {$title3_id}, {$description2_id}, {$description3_id}, {$briefdescription2_id}, {$briefdescription3_id}, {$excerpt2_id}, {$excerpt3_id})
 		ORDER BY o.guid DESC 
 		LIMIT {$offset}, {$limit}");
@@ -61,13 +61,16 @@ do {
 
 		// check, migrate title
 		if ( isset($object->title2) ){
-			$object->title = gc_implode_translation( $object->title, $object->title2 );
+			$new_title = gc_implode_translation( $object->title, $object->title2 );
+			$object->title = $new_title;
 			$object->deleteMetadata( "title2" );
 			$object->deleteMetadata( "title3" );
+			$object->save();
 		}
 		else if ( isset($object->title3 ) ){
 			$object->title = gc_implode_translation( old_gc_explode_translation($object->title3, 'en'), old_gc_explode_translation($object->title3, 'fr') );
 			$object->deleteMetadata( "title3" );
+			$object->save();
 		}
 
 		// check, migrate description
@@ -75,10 +78,12 @@ do {
 			$object->description = gc_implode_translation( $object->description, $object->description2 );
 			$object->deleteMetadata( "description2" );
 			$object->deleteMetadata( "description3" );
+			$object->save();
 		}
 		else if ( isset($object->description3 ) ){
 			$object->description = gc_implode_translation( old_gc_explode_translation($object->description3, 'en'), old_gc_explode_translation($object->description3, 'fr') );
 			$object->deleteMetadata( "description3" );
+			$object->save();
 		}
 
 		// check, migrate briefdescription
@@ -86,10 +91,12 @@ do {
 			$object->briefdescription = gc_implode_translation( $object->briefdescription, $object->briefdescription2 );
 			$object->deleteMetadata( "briefdescription2" );
 			$object->deleteMetadata( "briefdescription3" );
+			$object->save();
 		}
 		else if ( isset($object->briefdescription3 ) ){
 			$object->briefdescription = gc_implode_translation( old_gc_explode_translation($object->briefdescription3, 'en'), old_gc_explode_translation($object->briefdescription3, 'fr') );
 			$object->deleteMetadata( "briefdescription3" );
+			$object->save();
 		}
 
 		// check, migrate excerpt
@@ -97,10 +104,12 @@ do {
 			$object->excerpt = gc_implode_translation( $object->excerpt, $object->excerpt2 );
 			$object->deleteMetadata( "excerpt2" );
 			$object->deleteMetadata( "excerpt3" );
+			$object->save();
 		}
 		else if ( isset($object->excerpt3 ) ){
 			$object->excerpt = gc_implode_translation( old_gc_explode_translation($object->excerpt3, 'en'), old_gc_explode_translation($object->excerpt3, 'fr') );
 			$object->deleteMetadata( "excerpt3" );
+			$object->save();
 		}
 
 		$success_count++;
