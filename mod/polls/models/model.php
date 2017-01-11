@@ -48,7 +48,7 @@ function polls_get_choices2($poll) {
 
 function polls_get_choices3($poll) {
 	$options = array(
-		'relationship' => 'poll_choice3',
+		'relationship' => 'poll_choice',
 		'relationship_guid' => $poll->guid,
 		'inverse_relationship' => TRUE,
 		'order_by_metadata' => array('name'=>'display_order','direction'=>'ASC'),
@@ -58,7 +58,7 @@ function polls_get_choices3($poll) {
 }
 
 function polls_get_choice_array($poll) {
-	$choices = polls_get_choices($poll);
+	$choices = polls_get_choices3($poll);
 	$responses = array();
 	if ($choices) {
 		foreach($choices as $choice) {
@@ -79,16 +79,16 @@ function polls_get_choice_array2($poll) {
 	return $responses;
 }
 
-function polls_get_choice_array3($poll) {
+/*function polls_get_choice_array3($poll) {
 	$choices = polls_get_choices3($poll);
 	$responses = array();
 	if ($choices) {
 		foreach($choices as $choice) {
-			$responses[$choice->text3] = $choice->text3;
+			$responses[$choice->text] = $choice->text3;
 		}
 	}
 	return $responses;
-}
+}*/
 
 function polls_add_choices($poll,$choices) {
 	$i = 0;
@@ -106,7 +106,7 @@ function polls_add_choices($poll,$choices) {
 	}
 }
 
-function polls_add_choices2($poll,$choices) {
+/*function polls_add_choices2($poll,$choices) {
 	$e = 0;
 	if ($choices) {
 		foreach($choices as $choice) {
@@ -127,16 +127,16 @@ function polls_add_choices3($poll,$choices) {
 	if ($choices) {
 		foreach($choices as $choice) {
 			$poll_choice = new ElggObject();
-			$poll_choice->subtype = "poll_choice3";
-			$poll_choice->text3 = $choice;
+			$poll_choice->subtype = "poll_choice";
+			$poll_choice->text = $choice;
 			$poll_choice->display_order = $s*10;
 			$poll_choice->access_id = $poll->access_id;
 			$poll_choice->save();
-			add_entity_relationship($poll_choice->guid, 'poll_choice3', $poll->guid);
+			add_entity_relationship($poll_choice->guid, 'poll_choice', $poll->guid);
 			$s += 1;
 		}
 	}
-}
+}*/
 
 function polls_delete_choices($poll) {
 	$choices = polls_get_choices($poll);
@@ -437,7 +437,7 @@ function polls_get_page_view($guid) {
 		// Set the page owner
 		$page_owner = $poll->getContainerEntity();
 		elgg_set_page_owner_guid($page_owner->guid);
-		$title =  gc_explode_translation($poll->title3, $lang);
+		$title =  gc_explode_translation($poll->title, $lang);
 		$content = elgg_view_entity($poll, array('full_view' => TRUE));
 		//check to see if comments are on
 		if ($poll->comments_on != 'Off') {
@@ -445,12 +445,13 @@ function polls_get_page_view($guid) {
 		}
 		
 		elgg_push_breadcrumb(elgg_echo('item:object:poll'), "polls/all");
+if (!$page_owner->title){
+	$title_group = $page_owner->name;
 
-		if($page_owner->title3){
-			$title_group = gc_explode_translation($page_owner->title3, $lang);
-		}else{
-			$title_group = $page_owner->name;
-		}
+}else{
+	$title_group = gc_explode_translation($page_owner->title, $lang);
+}
+			
 
 		if (elgg_instanceof($page_owner,'user')) {
 			elgg_push_breadcrumb($title_group, "polls/owner/{$page_owner->username}");
@@ -459,11 +460,9 @@ function polls_get_page_view($guid) {
 		}
 		$lang = get_current_language();
 		
-        if($poll->title3){
-            elgg_push_breadcrumb(gc_explode_translation($poll->title3, $lang));
-        }else{
-            elgg_push_breadcrumb($poll->title);
-        }
+
+            elgg_push_breadcrumb(gc_explode_translation($poll->title, $lang));
+
 		
 	} else {			
 		// Display the 'post not found' page instead

@@ -27,21 +27,22 @@ if($_GET['id']){
 }
 
 //convert $responses to radio inputs for form display
-$responses = polls_get_choice_array($poll);
+/*$responses = polls_get_choice_array($poll);
 
 $response_inputs = elgg_view('input/radio', array('name' => 'response', 'class' => 'mrgn-rght-sm', 'options' => $responses));
 
 $responses2 = polls_get_choice_array2($poll);
 
 $response_inputs2 = elgg_view('input/radio', array('name' => 'response2', 'class' => 'mrgn-rght-sm', 'options' => $responses2));
-
-$responses3 = polls_get_choice_array3($poll);
+*/
+$responses3 = polls_get_choice_array($poll);
 
 $response_inputs3 = elgg_view('input/radio', array('name' => 'response3', 'class' => 'mrgn-rght-sm', 'options' => $responses3));
 
 foreach ($responses3 as $value) {
 
 	$responses4 = gc_explode_translation($value, $lang);
+
 
 $form_body .='  <input type="radio"  class = "mrgn-rght-sm" id="responses-'.$responses4.'" name="response3" value="'.$value.'"> <label for="responses-'.$responses4.'">'.$responses4.'</label><br>';
 }
