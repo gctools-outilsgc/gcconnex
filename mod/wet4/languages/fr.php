@@ -1446,7 +1446,7 @@ return array(
 'box:indicator:en' => 'This content is also available in ',
 'indicator:click:en' => 'english.',
 'indicator:summary' => '(EN/FR)',
-'indicator:summary:title' => 'This content is also available in english',
+'indicator:summary:title' => 'This content is also available in English',
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */
