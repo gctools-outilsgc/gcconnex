@@ -145,6 +145,9 @@ function wet4_theme_init() {
     //Verify the department action
     elgg_register_action("department/verify_department", elgg_get_plugins_path() . "/wet4/actions/department/verify_department.php");
 
+    // bilingual content upgrade script
+    elgg_register_action("wet4/update_to_json", elgg_get_plugins_path() . "/wet4/actions/bilingual_content/update_to_json.php");
+
 	// non-members do not get visible links to RSS feeds
 	if (!elgg_is_logged_in()) {
 		elgg_unregister_plugin_hook_handler('output:before', 'layout', 'elgg_views_add_rss_link');

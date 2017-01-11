@@ -9,6 +9,7 @@
  *
  * USER 		DATE 			DESCRIPTION
  * MBlondin 	2016-02-14 		Creation of library
+ * Ilia Salem   2017-01-        Reworked for JSON
 
  ***********************************************************************/
  /**
@@ -53,5 +54,50 @@ function gc_explode_translation($imploded_txt, $lang)
     }
 
     return $value;
+}
+
+function old_gc_explode_translation($imploded_txt, $lang)
+{
+    $text_ar=explode('[:',$imploded_txt);
+    $en='';
+    $fr='';
+    if(count($text_ar)>0){
+        foreach($text_ar as $value){
+            if(strpos($value, "en]")!==false){
+                $en=substr($value,3,strlen($value));
+            }
+            elseif(strpos($value, "fr]")!==false)
+            {
+                $fr=substr($value,3,strlen($value));
+            }
+        }
+        if($lang=='en' && trim($en)<>''){
+            $value=$en;
+        }
+        elseif($lang=='fr' && trim($fr)<>''){
+            $value=$fr;
+        }
+        else
+        {
+            if(($lang=='fr') && (!$fr)){
+       /*         $value=$fr;
+            }else{*/
+                $value=$en;
+            }
+
+             if(($lang=='en') && (!$en)){
+      /*          $value=$en;
+            }else{*/
+                $value=$fr;
+            }
+
+        }
+    }
+    else
+    {
+        $value=$imploded_txt;
+    }
+    return $value;
+
 }
 ?>
