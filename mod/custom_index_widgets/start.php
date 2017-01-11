@@ -69,8 +69,7 @@
 			if(elgg_is_active_plugin('thewire')) {
 				elgg_register_widget_type('latest_wire_index',elgg_echo ('custom_index_widgets:latest_wire_index'),elgg_echo ('custom_index_widgets:latest_wire_index'), array("custom_index_widgets"), true);
 
-				// live stream wire widget
-				elgg_register_widget_type('stream_wire_index',elgg_echo ('custom_index_widgets:stream_wire_index'),elgg_echo ('custom_index_widgets:stream_wire_index'), array("custom_index_widgets"), true);
+				
 			}
 			
 			if(elgg_is_active_plugin('tasks'))

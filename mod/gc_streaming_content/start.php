@@ -22,6 +22,9 @@ function gc_streaming_init(){
     
     elgg_register_action("get_timestamp", elgg_get_plugins_path() . "/gc_streaming_content/actions/get_wire_timestamp.php", "public");
     
+    // live stream wire widget
+    elgg_register_widget_type('stream_wire_index',elgg_echo ('custom_index_widgets:stream_wire_index'),elgg_echo ('custom_index_widgets:stream_wire_index'), array("custom_index_widgets"), true);
+    
 }
 
 function streaming_wire_page(){

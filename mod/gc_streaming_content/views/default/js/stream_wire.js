@@ -12,7 +12,8 @@ $(document).ready(function(){
     // TODO Test if we are on the newsfeed or wire
     var sitePage = window.location.href;
     var theWireUrl = elgg.normalize_url() + 'thewire/all';
-    if(sitePage == theWireUrl){
+    var newsFeedUrl = elgg.normalize_url() + 'newsfeed';
+    if(sitePage == theWireUrl || sitePage == newsFeedUrl){
        stream_count(); 
     }
 });
