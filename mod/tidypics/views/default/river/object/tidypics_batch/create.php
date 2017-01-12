@@ -30,11 +30,8 @@ if (!$album) {
 	return true;
 }
 
-if($album->title3){
-	$album_title = gc_explode_translation($album->title3,$lang);
-}else{
-	$album_title = $album->title;
-}
+	$album_title = gc_explode_translation($album->title,$lang);
+
 $album_link = elgg_view('output/url', array(
 	'href' => $album->getURL(),
 	'text' => $album_title,

@@ -24,9 +24,9 @@ if($object->title1){
 
 $object_text = $object->title ? $object->title : $object->name;
 
-if($object->title3){
-	$object_text = gc_explode_translation($object->title3, $lang);
-}
+
+	$object_text = gc_explode_translation($object->title, $lang);
+
 
 $object_link = elgg_view('output/url', array(
 	'href' => $object->getURL(),
