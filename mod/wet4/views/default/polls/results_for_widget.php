@@ -50,6 +50,7 @@ if (isset($vars['entity'])) {
 	foreach($responses as $response)
 	{
 		//get count per response
+
 		$response_count = polls_get_response_count($response, $user_responses);
 			
 		//calculate %
@@ -87,7 +88,7 @@ if (isset($vars['entity'])) {
             }
 
 		//get count per response
-		$response_count = polls_get_response_count($response1, $user_responses);
+		$response_count = polls_get_response_count($response, $user_responses);
 
 		//calculate %
 		if ($response_count && $user_responses_count) {
