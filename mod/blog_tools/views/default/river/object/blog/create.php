@@ -8,13 +8,11 @@ $object = $vars['item']->getObjectEntity();
 
 if ($object->excerpt){
 	
-		$excerpt = gc_explode_translation($object->excerpt,$lang);
+	$excerpt = gc_explode_translation($object->excerpt,$lang);
 
 }else{
 	
-		$excerpt = gc_explode_translation($object->description,$lang);
-
-	
+	$excerpt = gc_explode_translation($object->description,$lang);
 }
 
 $excerpt = elgg_get_excerpt($excerpt);
