@@ -11,11 +11,9 @@ $item = $vars['item'];
 
 $object = $item->getObjectEntity();
 
-if($object->description3){
+
 	$description = gc_explode_translation($object->description3,$lang);
-}else{
-	$description = $object->description;
-}
+
 
 $object = $item->getObjectEntity();
 $excerpt = elgg_get_excerpt($description);
