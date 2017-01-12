@@ -8,7 +8,7 @@
  * @author GCTools
  */
 
-require_once($_SERVER['DOCUMENT_ROOT'].'gcconnex/engine/start.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/engine/start.php');
 
 //error_log($_SERVER['DOCUMENT_ROOT']);
 

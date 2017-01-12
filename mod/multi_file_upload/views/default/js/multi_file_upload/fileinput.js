@@ -102,7 +102,7 @@ requirejs( ["fileinput"], function() {
         },
     });
     $('#red').on('filebatchuploadsuccess', function(event, data) {
-        console.log(JSON.stringify(data.response));
+        //console.log(JSON.stringify(data.response));
 
         //console.log(data.response.output.count);
         //console.log(data.response.output.name);
