@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
     User Profile Tabs
 */
@@ -20,7 +20,7 @@ foreach($fields as $field){
         'distinct' => false,
     );
 
-    $content = elgg_list_entities($options);  
+    $content = elgg_list_entities($options);
 
         //fix field to allow proper URLs
         //pick appropriate messages
@@ -49,7 +49,7 @@ foreach($fields as $field){
                 $add = elgg_echo('tasks:add');
                 $message = elgg_echo('tasks:none');
                 $field = "tasks";
-                break; 
+                break;
             case 'Poll':
                 $add = elgg_echo('polls:add');
                 $message = elgg_echo('polls:none');
@@ -79,9 +79,24 @@ foreach($fields as $field){
                     'class' => 'btn btn-primary',
                 ));
 
+                //for files we want an additional add folder button
+                if($field == 'File' && elgg_get_plugin_setting("user_folder_structure", "file_tools") == 'yes'){
+                  //create new foldr button
+                    $new_folder = elgg_view('output/url', array(
+                      'name' => 'new_folder',
+                      'text' => elgg_echo("file_tools:new:title"),
+                      'href' => "#",
+                      "id" => "file_tools_list_new_folder_toggle",
+                      'class' => 'btn btn-default mrgn-rght-sm',
+                    ));
+
+                    //add new folder to add button
+                    $addButton = $new_folder.$addButton;
+                }
+
                 echo $addButton;
             echo '</div>';
-                
+
             }
         }
 
@@ -113,12 +128,12 @@ echo '<div role="tabpanel" class="tab-pane fade-in" id="events">';
     if(!$events){
         echo '<div class="mrgn-lft-sm mrgn-bttm-md">' . elgg_echo('event_calendar:no_events_found') . '</div>';
     }
-    
+
     foreach($events as $event) {
 		echo elgg_view("object/event_calendar", array('entity' => $event));
         echo '</div>';
 	}
-    
+
     $date = date('Y-m-d'/*, strtotime("-1 days")*/);
     $event_url = "event_calendar/owner/". elgg_get_page_owner_entity()->username;
 	$viewall_link = elgg_view('output/url', array(
