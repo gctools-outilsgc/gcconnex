@@ -179,12 +179,12 @@ foreach ($groups as $group) {
 	// Update Relationship table as per selection by user
     $get_relationship_data = get_data("SELECT count(*) AS subed FROM {$dbprefix}entity_relationships WHERE guid_one = {$user->guid} AND relationship = 'cp_subscribed_to_email' AND guid_two = {$group->guid}")[0]->subed;
     $cpn_grp_email_checked = ($get_relationship_data) ? true : false;
-	$cpn_set_subscription_email = (empty($cpn_set_subscription_email)) ? "sub_{$group->getGUID()}"; 
+	$cpn_set_subscription_email = (empty($cpn_set_subscription_email)) ? "sub_{$group->getGUID()}" : ""; 
 	
 
 	$get_relationship_data =  get_data("SELECT count(*) AS subed FROM {$dbprefix}entity_relationships WHERE guid_one = {$user->guid} AND relationship = 'cp_subscribed_to_site_mail' AND guid_two={$group->guid}")[0]->subed;
 	$cpn_grp_site_mail_checked = ($get_relationship_data) ? true : false;
-	$cpn_set_subscription_site_mail = (empty($cpn_set_subscription_site_mail)) ? "sub_site_{$group->getGUID()}";
+	$cpn_set_subscription_site_mail = (empty($cpn_set_subscription_site_mail)) ? "sub_site_{$group->getGUID()}" : "";
 	$cpn_set_subscription_site_mail = $plugin->getUserSetting("cpn_site_mail_{$group->getGUID()}", $user->getGUID());
 
 	$options = array(
@@ -311,7 +311,7 @@ $query_base .= " ) ";
 
 
 $query_select = "SELECT e.guid, e.subtype as entity_subtype, es.subtype, o.title, o.description {$query_base}";
-$query_select .= " ORDER BY e.subtype ASC LIMIT {$personal_limit} OFFSET {$personal_offset}";
+$query_select .= " ORDER BY e.subtype ASC ";//LIMIT {$personal_limit} OFFSET {$personal_offset}";
 $subbed_contents = get_data($query_select);
 
 
