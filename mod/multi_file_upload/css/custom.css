@@ -56,4 +56,10 @@
 .file-preview-frame {
   background:#fefefe;
   width:26%;
+  height:160px;
+}
+
+.file-zoom-dialog .file-other-icon {
+  font-size: 8em !important;
+
 }
