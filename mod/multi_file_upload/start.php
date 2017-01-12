@@ -11,8 +11,11 @@ elgg_register_event_handler('init','system','multi_file_init');
 
 function multi_file_init(){
 
-  //elgg_register_js('bootstrap-fileinput', "mod/multi_file_upload/js/fileinput.min.js");
-  elgg_register_js('fileinput-fa', "mod/multi_file_upload/themes/fa/theme.js");
+  //extra js functions
+  elgg_extend_view("js/elgg", "js/multi_file_upload/functions");
+
+  elgg_extend_view('file_tools/sidebar/info', 'file_tools/message');
+
   elgg_require_js('multi_file_upload/fileinput');
   elgg_register_css('bootstrap-fileinput-css', "mod/multi_file_upload/css/fileinput.min.css");
 

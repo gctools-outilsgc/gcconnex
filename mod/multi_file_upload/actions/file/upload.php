@@ -1,17 +1,25 @@
 <?php
+/*
+ * upload.php
+ *
+ * Manage uploading of files through bootstrap drag and drop upload
+ *
+ * @package multi_file_upload
+ * @author GCTools
+ */
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/engine/start.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'gcconnex/engine/start.php');
 
 //error_log($_SERVER['DOCUMENT_ROOT']);
 
 
-$title = htmlspecialchars(get_input('title', '', false), ENT_QUOTES, 'UTF-8');
-$title2 = htmlspecialchars(get_input('title2', '', false), ENT_QUOTES, 'UTF-8');
-$desc = get_input("description");
-$desc2 = get_input("description2");
+//$title = htmlspecialchars(get_input('title', '', false), ENT_QUOTES, 'UTF-8');
+//$title2 = htmlspecialchars(get_input('title2', '', false), ENT_QUOTES, 'UTF-8');
+//$desc = get_input("description");
+//$desc2 = get_input("description2");
 $access_id = (int) get_input("access_id");
 $container_guid = (int) get_input('container_guid', 0);
-$guid = (int) get_input('file_guid');
+//$guid = (int) get_input('file_guid');
 $folder_guid = (int) get_input("folder_guid", 0);
 
 
@@ -21,58 +29,45 @@ if ($container_guid == 0) {
 
 elgg_make_sticky_form('file');
 
-// check if upload attempted and failed
-if (!empty($_FILES['upload']['name'][0]) && $_FILES['upload']['error'][0] != 0) {
-	$error = elgg_get_friendly_upload_error($_FILES['upload']['error']);
-
-	register_error($error);
-	//error_log('empty');
-	forward(REFERER);
-}
+$successMessage = '';
+$failedMessage = '';
 
 $new_file = true;
 if ($guid > 0) {
 	$new_file = false;
 }
 
-if ($new_file) {
-	
+
+//loop through files uploaded
+for($i = 0; $i < count($_FILES['upload']['name']); $i++){
+
+	// check if upload attempted and failed
+	if (!empty($_FILES['upload']['name'][$i]) && $_FILES['upload']['error'][$i] != 0) {
+		$error = elgg_get_friendly_upload_error($_FILES['upload']['error'][$i]);
+
+		register_error($error);
+		//error_log('empty');
+		//forward(REFERER);
+		continue;
+	}
 	// must have a file if a new file upload
-	if (empty($_FILES['upload']['name'])) {
+	if (empty($_FILES['upload']['name'][$i])) {
 		$error = elgg_echo('file:nofile');
 		register_error($error);
 
-		forward(REFERER);
+		//forward(REFERER);
+		continue;
 	}
 
 	$file = new FilePluginFile();
 	$file->subtype = "file";
 
 	// if no title on new upload, grab filename
-	if (empty($title)) {
-		$title = htmlspecialchars($_FILES['upload']['name'][0], ENT_QUOTES, 'UTF-8');
-		$title2 = $title;
-	}
-	
-} else {
-	// load original file object
-	$file = new FilePluginFile($guid);
-	if (!$file) {
-		register_error(elgg_echo('file:cannotload'));
-		forward(REFERER);
-	}
+	$title = htmlspecialchars($_FILES['upload']['name'][$i], ENT_QUOTES, 'UTF-8');
+	$title2 = $title;
 
-	// user must be able to edit file
-	if (!$file->canEdit()) {
-		register_error(elgg_echo('file:noaccess'));
-		forward(REFERER);
-	}
 
-	if (!$title) {
-		// user blanked title, but we need one
-		$title = $file->title;
-	}
-}
+
 $file->title = $title;
 $file->title2 = $title2;
 $file->title3 = gc_implode_translation($title,$title2);
@@ -83,27 +78,17 @@ $file->access_id = $access_id;
 $file->container_guid = $container_guid;
 //$file->tags = string_to_tag_array($tags);
 
-if (isset($_FILES['upload']['name']) && !empty($_FILES['upload']['name'])) {
+if (isset($_FILES['upload']['name'][$i]) && !empty($_FILES['upload']['name'][$i])) {
 
 	$prefix = "file/";
 
-	// if previous file, delete it
-	if ($new_file == false) {
-		$filename = $file->getFilenameOnFilestore();
-		if (file_exists($filename)) {
-			unlink($filename);
-		}
 
-		// use same filename on the disk - ensures thumbnails are overwritten
-		$filestorename = $file->getFilename();
-		$filestorename = elgg_substr($filestorename, elgg_strlen($prefix));
-	} else {
-		$filestorename = elgg_strtolower(time().$_FILES['upload']['name']);
-	}
+		$filestorename = elgg_strtolower(time().$_FILES['upload']['name'][$i]);
+
 
 	$file->setFilename($prefix . $filestorename);
-	$file->originalfilename = $_FILES['upload']['name'];
-	$mime_type = $file->detectMimeType($_FILES['upload']['tmp_name'], $_FILES['upload']['type']);
+	$file->originalfilename = $_FILES['upload']['name'][$i];
+	$mime_type = $file->detectMimeType($_FILES['upload']['tmp_name'][$i], $_FILES['upload']['type'][$i]);
 
 	$file->setMimeType($mime_type);
 	$file->simpletype = elgg_get_file_simple_type($mime_type);
@@ -111,18 +96,18 @@ if (isset($_FILES['upload']['name']) && !empty($_FILES['upload']['name'])) {
 	// Open the file to guarantee the directory exists
 	$file->open("write");
 	$file->close();
-	move_uploaded_file($_FILES['upload']['tmp_name'], $file->getFilenameOnFilestore());
+	move_uploaded_file($_FILES['upload']['tmp_name'][$i], $file->getFilenameOnFilestore());
 
 	$guid = $file->save();
 
 	// if image, we need to create thumbnails (this should be moved into a function)
 	if ($guid && $file->simpletype == "image") {
 		$file->icontime = time();
-		
+
 		$thumbnail = get_resized_image_from_existing_file($file->getFilenameOnFilestore(), 60, 60, true);
 		if ($thumbnail) {
 			$thumb = new ElggFile();
-			$thumb->setMimeType($_FILES['upload']['type']);
+			$thumb->setMimeType($_FILES['upload']['type'][$i]);
 
 			$thumb->setFilename($prefix."thumb".$filestorename);
 			$thumb->open("write");
@@ -155,17 +140,17 @@ if (isset($_FILES['upload']['name']) && !empty($_FILES['upload']['name'])) {
 	} elseif ($file->icontime) {
 		// if it is not an image, we do not need thumbnails
 		unset($file->icontime);
-		
+
 		$thumb = new ElggFile();
-		
+
 		$thumb->setFilename($prefix . "thumb" . $filestorename);
 		$thumb->delete();
 		unset($file->thumbnail);
-		
+
 		$thumb->setFilename($prefix . "smallthumb" . $filestorename);
 		$thumb->delete();
 		unset($file->smallthumb);
-		
+
 		$thumb->setFilename($prefix . "largethumb" . $filestorename);
 		$thumb->delete();
 		unset($file->largethumb);
@@ -177,10 +162,15 @@ if (isset($_FILES['upload']['name']) && !empty($_FILES['upload']['name'])) {
 
 // file saved so clear sticky form
 elgg_clear_sticky_form('file');
-if ($new_file) {
+
 	if ($guid) {
 		$message = elgg_echo("file:saved");
 		system_message($message);
+
+		//log success messages into session variable to display
+		$successMessage .= '<li>-'.$_FILES['upload']['name'][$i].'</li>';
+		$_SESSION['multi_file_upload_success'] = elgg_echo('multi_upload:success', array($successMessage));
+
 		elgg_create_river_item(array(
 			'view' => 'river/object/file/create',
 			'action_type' => 'create',
@@ -191,7 +181,14 @@ if ($new_file) {
 		// failed to save file object - nothing we can do about this
 		$error = elgg_echo("file:uploadfailed");
 		register_error($error);
+
+		//log errors into session variable to display
+		$failedMessage .= '<li>-'.$_FILES['upload']['name'][$i].'</li>';
+		$_SESSION['multi_file_upload_fail'] = elgg_echo('multi_upload:failed', array($failedMessage));
+		continue;
 	}
+
+}
 
 	$container = get_entity($container_guid);
 	if (elgg_instanceof($container, 'group')) {
@@ -204,6 +201,12 @@ if ($new_file) {
 			'forwardURL' => [
 				"file/group/$container->guid/all"
 			],
+			'count' => [
+				$container_guid
+			],
+			'name' => [
+				$_FILES['upload']['name'][0]
+			]
 		]);
 		forward("file/group/$container->guid/all");
 	} else {
@@ -216,18 +219,16 @@ if ($new_file) {
 			'forwardURL' => [
 				"file/owner/$container->username"
 			],
+			'count' => [
+				$container_guid
+			],
+			'name' => [
+				$_FILES['upload']['name'][0]
+			]
 		]);
-		
+
 		forward("file/owner/$container->username");
 	}
 
-} else {
-	if ($guid) {
-		system_message(elgg_echo("file:saved"));
-	} else {
-		register_error(elgg_echo("file:uploadfailed"));
-	}
-	
-	forward($file->getURL());
-}
+
  ?>

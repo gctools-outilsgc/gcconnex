@@ -1,3 +1,11 @@
+/*
+ * fileinput.js
+ *
+ * Initialize bootstra fileinput
+ *
+ * @package multi_file_input
+ * @author GCTools Team
+ */
 var dtpath = elgg.normalize_url() + 'mod/multi_file_upload/js/fileinput';
 
 require.config({
@@ -76,8 +84,9 @@ requirejs( ["fileinput"], function() {
         uploadAsync: false,
         //showRemove: false,
         //showUpload:false,
-        //theme: 'fa',
         language: elgg.get_language(),
+        //maxFileSize: 10000,
+        allowedFileExtensions: get_file_tools_settings(),
         //maxFileCount: 1,
         uploadUrl: elgg.normalize_url('/mod/multi_file_upload/actions/file/upload.php'),
         //uploadUrl: elgg.normalize_url('action/multi_file/upload'),
@@ -93,9 +102,17 @@ requirejs( ["fileinput"], function() {
         },
     });
     $('#red').on('filebatchuploadsuccess', function(event, data) {
-        //console.log(JSON.stringify(data.response));
-        //console.log(data.response.forward_url);
-        window.location.replace(data.response.forward_url);
+        console.log(JSON.stringify(data.response));
+
+        //console.log(data.response.output.count);
+        //console.log(data.response.output.name);
+        //console.log(data.response.system_messages.success);
+
+        //window.location.replace(data.response.forward_url);
+        //elgg.system_message(data.response.system_messages.success);
+        elgg.register_error(data.response.system_messages.error);
+        elgg.forward(data.response.forward_url);
+
         //console.log('event '+JSON.stringify(event));
         //console.log('files '+JSON.stringify(data));
         //console.log('extra '+JSON.stringify(extra));
@@ -116,5 +133,5 @@ requirejs( ["fileinput"], function() {
         //console.log('extra '+JSON.stringify(extra));
     });
 
-  
+
 });
