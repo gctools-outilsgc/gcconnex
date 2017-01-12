@@ -87,7 +87,7 @@ requirejs( ["fileinput"], function() {
         language: elgg.get_language(),
         //maxFileSize: 10000,
         allowedFileExtensions: get_file_tools_settings(),
-        //maxFileCount: 1,
+        maxFileCount: 8,
         uploadUrl: elgg.normalize_url('/mod/multi_file_upload/actions/file/upload.php'),
         //uploadUrl: elgg.normalize_url('action/multi_file/upload'),
         maxFilePreviewSize: 10240,

@@ -13,4 +13,9 @@
     <type>elgg_release</type>
     <version>1.9</version>
   </requires>
+  <requires>
+		<type>priority</type>
+		<priority>after</priority>
+		<plugin>file_tools</plugin>
+	</requires>
 </plugin_manifest>
