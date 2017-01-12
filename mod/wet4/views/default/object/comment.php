@@ -11,7 +11,7 @@
  */
 
 $full_view = elgg_extract('full_view', $vars, true);
-
+$lang = get_current_language();
 $comment = $vars['entity'];
 
 $entity = get_entity($comment->container_guid);
@@ -32,7 +32,7 @@ $commenter_icon = elgg_view_entity_icon($commenter, 'medium');
 
 $commenter_link = "<a href=\"{$commenter->getURL()}\">$commenter->name</a>";
 
-$entity_title = $entity->title ? $entity->title : elgg_echo('untitled');
+$entity_title = $entity->title ? gc_explode_translation($entity->title,$lang) : elgg_echo('untitled');
 $entity_link = "<a href=\"{$entity->getURL()}\">$entity_title</a>";
 
 if ($full_view) {

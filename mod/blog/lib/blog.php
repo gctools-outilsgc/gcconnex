@@ -88,7 +88,7 @@ function blog_get_page_content_list($container_guid = NULL) {
 		if(!$container->title3){
 			$return['title'] = elgg_echo('blog:title:user_blogs', array($container->name));
 		}else{
-            $return['title'] = elgg_echo('blog:title:user_blogs', array(gc_explode_translation($container->title3, $lang)));
+            $return['title'] = elgg_echo('blog:title:user_blogs', array(gc_explode_translation($container->title, $lang)));
         }
 
 		$crumbs_title = $container->name;
