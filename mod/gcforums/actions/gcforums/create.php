@@ -33,7 +33,7 @@ switch ($gcf_subtype) {
 		$gcf_new_category->owner_guid = $gcf_owner;
 
 		if ($new_category_guid = $gcf_new_category->save())
-			system_message(elgg_echo("Entity entitled '{$gcf_new_category->title}' has been created successfully"));
+			system_message(elgg_echo("gcforums:forumcategory_saved"));
 
 		add_entity_relationship($new_category_guid, 'descendant', $gcf_container);
 
@@ -78,9 +78,9 @@ switch ($gcf_subtype) {
 
 			add_entity_relationship($new_forum_guid, 'filed_in', $gcf_file_in_category);
 			add_entity_relationship($new_forum_guid, 'descendant', $gcf_container);
-			system_message(elgg_echo("Entity entitled '{$gcf_new_forum->title}' has been created successfully"));
+			system_message(elgg_echo("gcforums:forum_saved"));
 		} else
-			system_message("Unable to create Forum");
+			system_message("gcforums:forum_failed");
 
 		forward($gcf_forward_url.'/'.$new_forum_guid);
 
@@ -126,7 +126,7 @@ switch ($gcf_subtype) {
 		if ($the_guid) {
 			$new_guid = $the_guid;
 
-			system_message(elgg_echo("Entity entitled '{$gcf_new_topic->title}' has been created successfully"));
+			system_message(elgg_echo("gcforums:forumtopic_saved", array($gcf_new_topic->title)));
 
 			add_entity_relationship($new_guid, 'descendant', $gcf_container);
 
@@ -143,7 +143,7 @@ switch ($gcf_subtype) {
 
 			forward($forward_url);
 		} else
-			system_message(elgg_echo("Entity entitled '{$gcf_new_topic->title}' has not been created successfully"));
+			system_message(elgg_echo("gcforums:forumtopic_failed",array($gcf_new_topic->title)));
 
 		break;
 
@@ -178,7 +178,7 @@ switch ($gcf_subtype) {
 
 
 		if ($new_guid = $gcf_new_post->save())
-			system_message(elgg_echo("Entity entitled '{$gcf_new_post->title}' has been created successfully"));
+			system_message(elgg_echo("gcforums:forumpost_saved"));
 
 		elgg_set_ignore_access($old_access);
 
@@ -222,6 +222,11 @@ function gcforums_notify_subscribed_users($hjobject, $hjlink) {
 	// notify_user(to, from, subject, message)
 	$subscribers = array();
 	foreach ($users as $user) {
+		error_log("user->username: {$user->username} // owner {$hjobject->getOwnerEntity()->username}");
+		// do not self-notify
+		if (strcmp($hjobject->getOwnerEntity()->username,$user->username) == 0)
+			continue;
+
 		$subscribers[] = (string)$user->guid;
 	}
 
@@ -242,10 +247,11 @@ function gcforums_notify_subscribed_users($hjobject, $hjlink) {
 	// if cp notification plugin is active, use that for notifications
 	if (elgg_is_active_plugin('cp_notifications')) {
 
-		if (trim($hjobject->getSubtype()) === 'hjforumtopic') { // topic made
+		if (strcmp(trim($hjobject->getSubtype()),'hjforumtopic') == 0) { // topic made
 
 			$message = array(
 				'cp_topic_author' => $hjobject->getOwnerEntity()->name,
+				'cp_topic_author_username' => $hjobject->getOwnerEntity()->username,
 				'cp_topic_description' => $hjobject->description,
 				'cp_topic_url' => $hjlink,
 				'cp_topic_title' => $hjobject->title,
@@ -255,6 +261,7 @@ function gcforums_notify_subscribed_users($hjobject, $hjlink) {
 		} else { // post made
 			$message = array(
 				'cp_topic_author' => $hjobject->getOwnerEntity()->name,
+				'cp_topic_author_username' => $hjobject->getOwnerEntity()->username,
 				'cp_topic_description' => $hjobject->description,
 				'cp_topic_url' => $hjlink,
 				'cp_topic_title' => $hjobject->getContainerEntity()->title,
