@@ -25,6 +25,8 @@ function stream_count(){
    interval =  window.setInterval(check_for_posts(),10000);
 }
 
+
+
 //Stop the timer and add a call to action to the DOM
 function stop_stream_count(){
     window.clearInterval(interval);
@@ -62,7 +64,7 @@ function check_for_posts(){
                     //console.log(test_array);
                     if(comparePosts(test_array, postGUID)){
                         //True - Keep looking for posts
-                        stream_count();
+                        setTimeout(stream_count, 10000);
                         console.log('true - keep going');
                     }else{
                         //False - there is a new post. We can stop looking now.
