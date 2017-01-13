@@ -1,8 +1,4 @@
 <?php
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/gcconnex
 /*
  * navigation.php
  * 
@@ -11,10 +7,6 @@
  * @package wet4
  * @author Nick github.com/piet0024
  */
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/gcconnex
 ?>
 
 /* <style> /**/
