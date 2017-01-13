@@ -1,6 +1,6 @@
 <?php
 /**
- * Enable all users' group content subscriptions
+ * Upgrade bilingual content storage to use ajax strings instead of metadata
  * 
  * Run for 2 seconds per request as set by $batch_run_time_in_secs. This includes
  * the engine loading time.
@@ -41,12 +41,15 @@ $briefdescription3_id = elgg_get_metastring_id('briefdescription3', true);
 $excerpt2_id = elgg_get_metastring_id('excerpt2', true);	// get the metastring id, create the metastring if it does not exist
 $excerpt3_id = elgg_get_metastring_id('excerpt3', true);
 
+$poll_choice2_id = elgg_get_metastring_id('poll_choice2', true);	// get the metastring id, create the metastring if it does not exist
+$poll_choice3_id = elgg_get_metastring_id('poll_choice3', true);
+
 $success_count = 0;
 $error_count = 0;
 
 do {
 	$object_guids = get_data("SELECT distinct o.guid as guid from {$db_prefix}objects_entity o LEFT JOIN {$db_prefix}metadata md ON o.guid = md.entity_guid 
-		WHERE md.name_id IN ({$title2_id}, {$title3_id}, {$description2_id}, {$description3_id}, {$briefdescription2_id}, {$briefdescription3_id}, {$excerpt2_id}, {$excerpt3_id})
+		WHERE md.name_id IN ({$title2_id}, {$title3_id}, {$description2_id}, {$description3_id}, {$briefdescription2_id}, {$briefdescription3_id}, {$excerpt2_id}, {$excerpt3_id}, {$poll_choice2_id}, {$poll_choice3_id})
 		ORDER BY o.guid DESC 
 		LIMIT {$offset}, {$limit}");
 
@@ -109,6 +112,19 @@ do {
 		else if ( isset($object->excerpt3 ) ){
 			$object->excerpt = gc_implode_translation( old_gc_explode_translation($object->excerpt3, 'en'), old_gc_explode_translation($object->excerpt3, 'fr') );
 			$object->deleteMetadata( "excerpt3" );
+			$object->save();
+		}
+
+		// check, migrate poll_choice
+		if ( isset($object->poll_choice2) ){
+			$object->poll_choice = gc_implode_translation( $object->poll_choice, $object->poll_choice2 );
+			$object->deleteMetadata( "poll_choice2" );
+			$object->deleteMetadata( "poll_choice3" );
+			$object->save();
+		}
+		else if ( isset($object->poll_choice3 ) ){
+			$object->poll_choice = gc_implode_translation( old_gc_explode_translation($object->poll_choice3, 'en'), old_gc_explode_translation($object->poll_choice3, 'fr') );
+			$object->deleteMetadata( "poll_choice3" );
 			$object->save();
 		}
 
