@@ -1446,6 +1446,7 @@ Please do not reply to this email.",
     'contactform:faq' => "FAQ",
     'contactform:upload' => 'Upload your file',
     'contactform:title:form' => "Contact Us",
+    'contactform:required' => 'required',
  
 	'contactform:box:message' => 'Show the information box',
 	'conatactform:fr:name' => 'Name of the link in french',
