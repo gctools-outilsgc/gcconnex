@@ -33,10 +33,13 @@ if ( $page_mode == 'bilingual_upgrade' ) {
 
 	$excerpt2_id = elgg_get_metastring_id('excerpt2', true);	// get the metastring id, create the metastring if it does not exist
 	$excerpt3_id = elgg_get_metastring_id('excerpt3', true);
+	
+	$poll_choice2_id = elgg_get_metastring_id('poll_choice2', true);	// get the metastring id, create the metastring if it does not exist
+	$poll_choice3_id = elgg_get_metastring_id('poll_choice3', true);
 
 	$db_prefix = elgg_get_config('dbprefix');
 	$count = get_data_row("SELECT count(distinct o.guid) as objects from {$db_prefix}objects_entity o LEFT JOIN {$db_prefix}metadata md ON o.guid = md.entity_guid 
-		WHERE md.name_id IN ({$title2_id}, {$title3_id}, {$description2_id}, {$description3_id}, {$briefdescription2_id}, {$briefdescription3_id}, {$excerpt2_id}, {$excerpt3_id})");
+		WHERE md.name_id IN ({$title2_id}, {$title3_id}, {$description2_id}, {$description3_id}, {$briefdescription2_id}, {$briefdescription3_id}, {$excerpt2_id}, {$excerpt3_id}, {$poll_choice2_id}, {$poll_choice3_id})");
 
 	echo elgg_view('admin/upgrades/view', array(
 		'count' => $count->objects,
