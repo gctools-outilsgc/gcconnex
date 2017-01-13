@@ -63,3 +63,7 @@
   font-size: 8em !important;
 
 }
+
+.file-preview-error {
+  background: #f2dede;
+}
