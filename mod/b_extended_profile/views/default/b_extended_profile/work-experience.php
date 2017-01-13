@@ -19,7 +19,7 @@ else {
         $work_experience_guid = array($work_experience_guid);
     }
 
-    usort($work_experience_guid, "sortDate");
+   // usort($work_experience_guid, "sortDate");
 
     foreach ($work_experience_guid as $guid) {
 

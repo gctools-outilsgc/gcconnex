@@ -107,6 +107,17 @@ function gcforums_page_handler($page) {
  * TODO: Transferred to Lib Directory
  */
 
+
+/* recursive function */
+// function get_forum_topic_resides($static_guid, $entity_guid) {
+// 	$entity = get_entity($entity_guid);
+// 	if ($entity instanceof ElggGroup) {
+// 		return $forum_guid;
+// 	} else {
+
+// 	}
+// }
+
 /* Display Topic and the corresponding comments
  * @params topic
  */
@@ -358,6 +369,18 @@ function gcforums_topics_list($forum_guid, $group_guid, $is_sticky) {
 
 			// go through each topic
 			foreach ($topics as $topic) {
+
+
+$query = "
+SELECT MAX(guid_two) AS max_forum_guid 
+FROM elggentity_relationships 
+WHERE relationship = 'descendant' AND guid_one = {$topic->getGUID()}
+";
+$relationship = get_data($query);
+
+// correction to how the topics are displayed
+if ($relationship[0]->max_forum_guid != $forum_guid)
+	continue;
 
 				if ($topic->sticky == $is_sticky) {
 				

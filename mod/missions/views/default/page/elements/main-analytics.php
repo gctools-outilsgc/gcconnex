@@ -8,6 +8,9 @@
  */
 elgg_load_js('missions_flot');
 elgg_load_js('missions_flot_stack_patched');
+elgg_load_js('missions_flot_selection');
+elgg_load_js('missions_flot_navigation');
+elgg_load_js('missions_flot_time');
 
 $input_graph_type = elgg_view('input/dropdown', array(
 		'name' => 'graph_type',
@@ -33,6 +36,36 @@ $graph_generate_button = elgg_view('output/url', array(
 		'class' => 'elgg-button btn btn-success',
 		'id' => 'data-analytics-generate-graph-button',
 		'onclick' => 'generate_graph()'
+));
+
+$chart_controls = elgg_view('output/url', array(
+		'title' => elgg_echo('missions:zoomcenter'),
+		'class' => 'elgg-button btn btn-default glyphicon glyphicon-repeat',
+		'id' => 'data-analytics-zoom-reset-btn',
+));
+
+$chart_controls .= elgg_view('output/url', array(
+		'title' => elgg_echo('missions:zoomin'),
+		'class' => 'elgg-button btn btn-default glyphicon glyphicon-zoom-in',
+		'id' => 'data-analytics-zoom-in-btn',
+));
+
+$chart_controls .= elgg_view('output/url', array(
+		'title' => elgg_echo('missions:zoomout'),
+		'class' => 'elgg-button btn btn-default glyphicon glyphicon-zoom-out',
+		'id' => 'data-analytics-zoom-out-btn',
+));
+
+$chart_controls .= elgg_view('output/url', array(
+		'title' => elgg_echo('missions:panleft'),
+		'class' => 'elgg-button btn btn-default glyphicon glyphicon-circle-arrow-left',
+		'id' => 'data-analytics-pan-left-btn',
+));
+
+$chart_controls .= elgg_view('output/url', array(
+		'title' => elgg_echo('missions:panright'),
+		'class' => 'elgg-button btn btn-default glyphicon glyphicon-circle-arrow-right',
+		'id' => 'data-analytics-pan-right-btn',
 ));
 
 $graph_show_table_button = elgg_view('output/url', array(
@@ -67,7 +100,12 @@ $graph_hide_table_button = elgg_view('output/url', array(
 		<?php echo $input_department; ?>
 	</div>
 </div>
-<div style="text-align:right;">
+<div class="col-sm-6">
+	<div id="zoom_controls_container" style="display: none;">
+		<?php echo $chart_controls; ?>
+	</div>
+</div>
+<div class="col-sm-6 text-right">
 	<?php echo $graph_generate_button; ?>
 </div>
 <div id="generated-graph-parent" class="col-sm-12" style="overflow-x:auto;">
@@ -89,11 +127,17 @@ $graph_hide_table_button = elgg_view('output/url', array(
 			data: { graph_type: type },
 			success: function(result, success, xhr) {
 				$('#graph-type-inputs').html(result);
+				if (type == 'missions:top_skills') {
+					$('#department-input-row').hide();
+				} else {
+					disable_target_date();
+				}
 			}
 		});
 	}
 
 	function wipe_away_graph() {
+		$("#zoom_controls_container").css('display', 'none');
 		$('#generated-graph-container').html("");
 		$('#generated-graph-container').css("height", "");
 		$('#generated-graph-container').css("width", "");
@@ -103,7 +147,7 @@ $graph_hide_table_button = elgg_view('output/url', array(
 		$('#data-analytics-show-table-graph-button').css('display', 'none');
 		$(".elgg-state-error").fadeOut(500);
 	}
-	
+
 	window.onload = generate_inputs(document.getElementById("data-analytics-graph-type-dropdown-input"));
 
 	// Function which displays a pop up when one of the graph bars is moused over.
@@ -132,7 +176,7 @@ $graph_hide_table_button = elgg_view('output/url', array(
 		content += '<tr><td></td>';
 		if(graph_graph_type == 'missions:stacked_graph') {
 			for(var i=0; i < ticks.length; i++) {
-				content += '<th style="text-align:center;">' + ticks[i][1] + '</th>';
+				content += '<th style="text-align:center;white-space:nowrap;padding:10px;">' + ticks[i][1] + '</th>';
 			}
 		}
 		else {
@@ -154,7 +198,7 @@ $graph_hide_table_button = elgg_view('output/url', array(
 			}
 			content += '</tr>';
 		}
-		
+
 		content += '</table>';
 		$('#hidden-graph-table-container').append(content);
 	}
@@ -162,10 +206,10 @@ $graph_hide_table_button = elgg_view('output/url', array(
 	// Large function which creates the graph according to the previous input.
 	function generate_graph() {
 		wipe_away_graph();
-		
+
 		// Grabs the values of any of the inputs that are on the page.
 		var graph_graph_type = $('#data-analytics-graph-type-dropdown-input').val();
-		
+
 		var graph_start_date = $('#data-analytics-start-date-input').val();
 		var graph_end_date = $('#data-analytics-end-date-input').val();
 		var graph_interval = $('#data-analytics-interval-dropdown-input').val();
@@ -205,52 +249,96 @@ $graph_hide_table_button = elgg_view('output/url', array(
 							$("#data-analytics-show-table-graph-button").css("display", "block");
 						}
 						$("#hidden-graph-table-container").html('');
-						
+
 						var dataset = result.data;
-	
+
 						// Creates the graph table according to the set of data and the x-axis labels.
 						create_graph_table(dataset, result.ticks, '');
-	
+
 						// Each bar tracks what percentage of the bar each data group takes up (mostly relevant for stacked graphs).
 						// This stores these percentages as a hidden element for later retrieval by another function.
 						$('#hidden-percentages-for-hover').html(JSON.stringify(result.percentages));
-	
+
 						// Determines the width of the graph based on how many intervals exist in the x-axis. The minimum length is 1140px.
-						var number_of_series = dataset.length;
-						var graph_length = dataset[0].data.length * 150;
-						if(graph_length < 1000) {
-							graph_length = 1000;
+						function set_graph_size() {
+							var graph_length = $('h1', $('#generated-graph-container').parent()).width();
+							$("#generated-graph-container").css("width", graph_length + "px");
+							$("#hidden-graph-table-container").css("width", graph_length + "px");
 						}
-						$("#generated-graph-container").css("width", graph_length + "px");
-						$("#hidden-graph-table-container").css("width", graph_length + "px");
-						//$("#hidden-graph-table-parent").css("overflow-x", "scroll");
-						
+						set_graph_size();
+
 						var options = result.options;
-						var plot = $.plot($('#generated-graph-container'), dataset, options);
-	
+
+						function generate_chart() {
+							plot = $.plot("#generated-graph-container", dataset, options);
+
+							if (options.zoom) {
+								$("#zoom_controls_container").css('display', '');
+
+								$('#data-analytics-zoom-reset-btn')
+									.click(function (event) {
+										event.preventDefault();
+										generate_chart();
+									});
+
+								$('#data-analytics-zoom-in-btn')
+									.click(function (event) {
+										event.preventDefault();
+										plot.zoom();
+									});
+
+								$('#data-analytics-zoom-out-btn')
+									.click(function (event) {
+										event.preventDefault();
+										plot.zoomOut();
+									});
+
+								$('#data-analytics-pan-left-btn')
+									.click(function (e) {
+										e.preventDefault();
+										plot.pan({ left: -100 });
+									});
+
+									$('#data-analytics-pan-right-btn')
+										.click(function (e) {
+											e.preventDefault();
+											plot.pan({ left: 100 });
+										});
+
+							}
+						}
+
+						generate_chart();
+
+						$(window).resize(function() {
+							set_graph_size();
+							generate_chart();
+						});
+
 						// Function which handles the user mousing over a bar in the graph.
 						var previous_hover = [0,0,0];
-						$('#generated-graph-container').bind('plothover', function(event, pos, item) {
+						$('#generated-graph-container')
+						.bind('plothover', function(event, pos, item) {
 							if(item) {
 								if(previous_hover[0] != item.datapoint[0] || previous_hover[1] != item.datapoint[1] || previous_hover[2] != item.datapoint[2]) {
 									previous_hover = item.datapoint;
-		
+
 									$('#graph_tooltip').remove();
 									var x = item.datapoint[0];
 									var y = item.datapoint[1] - item.datapoint[2];
 									var label = item.series.label;
-		
+
 									var perc_set = JSON.parse($('#hidden-percentages-for-hover').html());
 									var total = perc_set[label][x][0];
 									var perc = perc_set[label][x][1];
-	
+
 									// Displays the y value of the bar.
 									var tool_string = label + ': ' + y;
 									// If that value is not 100% of the bar then the total y value and percentage is displayed.
 									if(perc < 100) {
 										tool_string = tool_string + '/' + total + ' (' + perc + '%)';
 									}
-		
+
 									showTooltip(item.pageX, item.pageY, tool_string);
 								}
 							}
@@ -258,9 +346,8 @@ $graph_hide_table_button = elgg_view('output/url', array(
 								$('#graph_tooltip').remove();
 								previous_hover = [0,0,0];
 							}
-						});
-					}
-					else {
+		      	});
+					} else {
 						elgg.register_error(result.error_returned);
 						setTimeout(function () {
 							$(".elgg-state-error").fadeOut(500);

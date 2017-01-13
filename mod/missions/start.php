@@ -17,10 +17,13 @@ elgg_register_event_handler('init', 'system', 'missions_init');
 function missions_init()
 {
 	elgg_register_js('typeahead', 'mod/missions/vendors/typeahead/dist/typeahead.bundle.min.js');
-	//elgg_register_js('googlecharts', 'mod/missions/vendors/googlecharts/googlecharts.js');
+
 	elgg_register_js('missions_flot', 'mod/wet4/views/default/js/deps/jquery.flot.js');
 	elgg_register_js('missions_flot_stack_patched', 'mod/missions/vendors/flot_extra/jquery.flot.stack.patched.js');
-	
+	elgg_register_js('missions_flot_selection', 'mod/missions/vendors/flot_extra/jquery.flot.selection.min.js');
+	elgg_register_js('missions_flot_navigation', 'mod/missions/vendors/flot_extra/jquery.flot.navigation.nrc.js');
+	elgg_register_js('missions_flot_time', 'mod/missions/vendors/flot_extra/jquery.flot.time.min.js');
+
     // Register the custom library of methods for use in the plugin
     elgg_register_library('elgg:missions', elgg_get_plugins_path() . 'missions/lib/missions.php');
     elgg_register_library('elgg:missions-searching', elgg_get_plugins_path() . 'missions/lib/missions-searching.php');

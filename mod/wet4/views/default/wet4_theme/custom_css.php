@@ -270,7 +270,7 @@ max-height: 500px;
 
  .elgg-module-aside .elgg-avatar {
      width:40px;
-     height:40px;
+     height:inherit;
 
  }
 
@@ -878,7 +878,7 @@ border:none;
 
 }
 .start-discussion-form{
-    padding-right: 20px;
+    /*padding-right: 20px;*/
 
 }
 
@@ -1651,4 +1651,9 @@ figcaption{
     color: blue;
     text-decoration: underline;
     cursor: pointer;
+}
+  
+.indicator_summary{
+  color:#D6D6D6;
+  font-size: 12px
 }

@@ -37,6 +37,7 @@ if ($au_subgroup) {
 		if ($parent->access_id != ACCESS_PUBLIC) {
 			// remove public access option 
 			?>
+
 					$('.elgg-form-groups-edit select[name=vis] option[value=<?php echo ACCESS_PUBLIC; ?>]').remove();
 			<?php
 		}
@@ -73,10 +74,12 @@ if ($au_subgroup) {
 		// otherwise if we're adding a group default to most permisssive
 		if (!$group) {
 			?>
+					$('.elgg-form-groups-edit select[name=vis]').find(":selected").removeAttr('selected');
 					$('.elgg-form-groups-edit select[name=vis] option:last').attr('selected', 'selected');
 			<?php
 		} elseif ($group->access_id == $parent->group_acl) {
 			?>
+					$('.elgg-form-groups-edit select[name=vis]').find(":selected").removeAttr('selected');
 					$('.elgg-form-groups-edit select[name=vis] option[value=parent_group_acl]').attr('selected', 'selected');
 			<?php
 		}
