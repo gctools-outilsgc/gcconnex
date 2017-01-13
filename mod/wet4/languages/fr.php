@@ -1372,7 +1372,7 @@ return array(
  'gcTour:step5' => 'Le fil',
  'gcTour:step5txt' => "Publier sur le fil plus souvent par ici.",
  'gcTour:step6' => 'Clavardoirs',
- 'gcTour:step6txt' => "Clavarder en groupe sur un projet ou un document via les clavardoirs en bas de page.",dsfd
+ 'gcTour:step6txt' => "Clavarder en groupe sur un projet ou un document via les clavardoirs en bas de page.",
 
 /**
  * Event calendar
@@ -1387,7 +1387,7 @@ return array(
 'event_calendar:meeting' => 'Réunion en ligne et téléconférence',
 'event_calendar:info' => 'Information(s) supplémentaire(s)',
 'river:create:object:event_calendar' => "%s a ajouté l'événement' %s",
-'event_calendar_contact' => "Vous n'êtes pas la personne contact?"
+'event_calendar_contact' => "Vous n'êtes pas la personne contact?",
 "event_calendar:email" => "Adresse courriel",
 "event_calendar:phone" => "Numéro de téléphone",
 
