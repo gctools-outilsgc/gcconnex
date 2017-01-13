@@ -3,7 +3,7 @@
 /*
 * start.php
 *
-* 
+* This mod adds some javascript to thewire/all page on the elgg site. It works with the GCAPI mod to check if there are new wire posts and adds the new posts directly to the DOM through ajax
 *
 * @author Nick github.com/piet0024
 */
@@ -16,12 +16,8 @@ function gc_streaming_init(){
     elgg_extend_view('css/elgg', 'css/css');
     
     elgg_register_ajax_view('ajax/wire_posts');
-    elgg_register_ajax_view('ajax/time_stamp');
     
     elgg_register_page_handler('thewire', 'streaming_wire_page');
-    
-    elgg_register_action("get_timestamp", elgg_get_plugins_path() . "/gc_streaming_content/actions/get_wire_timestamp.php", "public");
-    
     // live stream wire widget
     elgg_register_widget_type('stream_wire_index',elgg_echo ('custom_index_widgets:stream_wire_index'),elgg_echo ('custom_index_widgets:stream_wire_index'), array("custom_index_widgets"), true);
     

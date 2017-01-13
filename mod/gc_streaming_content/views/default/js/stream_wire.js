@@ -13,7 +13,7 @@ $(document).ready(function(){
     var sitePage = window.location.href;
     var theWireUrl = elgg.normalize_url() + 'thewire/all';
     var newsFeedUrl = elgg.normalize_url() + 'newsfeed';
-    if(sitePage == theWireUrl || sitePage == newsFeedUrl){
+    if(sitePage == theWireUrl || sitePage == newsFeedUrl ||sitePage == theWireUrl+'#' ||sitePage == newsFeedUrl+'#'){
        stream_count(); 
     }
 });
@@ -40,18 +40,17 @@ function stop_stream_count(){
 
 // Checking to see if there are any new wire posts
 function check_for_posts(){
-        //What is the page currently loaded on the page?
-    
+        //What are the posts currently loaded on the page?
+        //Get the guid from the post id
         var firstPostOnPage = $('.elgg-item-object-thewire .elgg-content').first().parent().parent().parent().attr('id');
-    var postGUID = firstPostOnPage.split("-");
-    postGUID = postGUID.slice(2);
+        var postGUID = firstPostOnPage.split("-");
+        postGUID = postGUID.slice(2);
     
     
-    //firstPostOnPage = firstPostOnPage.replace(/\s/g, '');
-    //console.log(postGUID);
+    
         var site = elgg.normalize_url();
         var first_post ='';
-        //Ping the api to see what the latest wire post is.
+        //Ping the api to see what the latest wire post. This will only grab one post
             $.ajax({
                 type: 'GET',
                 contentType: "application/json",
@@ -60,16 +59,15 @@ function check_for_posts(){
                 success: function(feed){
                     //Get the latest post and compare that post to the post that is on the page.
                    var test_array = feed.result.posts.post_0.guid;
-                    //test_array = test_array.replace(/\s/g, '');
-                    //console.log(test_array);
+                   
                     if(comparePosts(test_array, postGUID)){
                         //True - Keep looking for posts
                         setTimeout(stream_count, 10000);
-                        console.log('true - keep going');
+                        
                     }else{
                         //False - there is a new post. We can stop looking now.
                         stop_stream_count();
-                        console.log('false - stopping now');
+                    
                     }
                 },
                 error: function(request, status, error) { 
@@ -81,7 +79,7 @@ function check_for_posts(){
     
 
  function comparePosts(post, onPage){
-
+     //This compares the guids
          if(post == onPage){
              //Same wire post
              return true;
@@ -93,14 +91,13 @@ function check_for_posts(){
  }
 
 function loadNewPosts(){
+    //Goes through how 
     //Spinner
     $('.stream-new-wire').html('<i class="fa fa-refresh fa-spin fa-1g fa-fw"></i><span class="sr-only">Loading...</span>');
     //get all of the wire posts currently loaded on the page.
     var postsOnPage = $('.elgg-item-object-thewire .elgg-content');
-    //console.log(postsOnPage);
     var existingArray =[];
     var queryArray = [];
-    //console.log(postsOnPage);
     for (i=0; i < postsOnPage.length; i++){
         //Push the existing posts to an array to compare with
         
@@ -112,7 +109,7 @@ function loadNewPosts(){
         existingArray.push(postGUID);
     
     }
-   console.log(existingArray);
+  
     var site = elgg.normalize_url();
         $.ajax({
             //get the latest wire posts from the API
@@ -131,7 +128,7 @@ function loadNewPosts(){
                     var diff = $(queryArray).not(existingArray).get();
                     
                     //Loggin this to see we're getting back on preprod
-                    console.log(diff);
+                    
                     ajax_path = 'ajax/view/ajax/wire_posts'; //here is my ajax view :3
                     //Bring back the latests posts and add them to the page
                     elgg.get(ajax_path, {
