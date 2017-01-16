@@ -131,8 +131,7 @@ function event_calendar_set_event_from_form($event_guid, $group_guid) {
 	$e->title = get_input('title');
 	$e->title2 = get_input('title2');
 	$e->title = gc_implode_translation($e->title,$e->title2);
-	$e->description = get_input('description');
-	$e->description2 = get_input('description2');
+	$e->brief_description = get_input('brief_description');
 	$e->venue = get_input('venue');
 	$e->fees = get_input('fees');
 	$e->language = get_input('language');
@@ -144,9 +143,9 @@ function event_calendar_set_event_from_form($event_guid, $group_guid) {
 	$e->contact = get_input('contact');
 	$e->organiser = get_input('organiser');
 	$e->tags = string_to_tag_array(get_input('tags'));
-	$e->long_description = get_input('long_description');
-	$e->long_description2 = get_input('long_description2');
-	$e->long_description = gc_implode_translation($e->long_description,$e->long_description2);
+	$e->description = get_input('description');
+	$e->description2 = get_input('description2');
+	$e->description = gc_implode_translation($e->description,$e->description2);
 	$e->send_reminder = get_input('send_reminder');
 	$e->reminder_number = get_input('reminder_number');
 	$e->reminder_interval = get_input('reminder_interval');
@@ -179,7 +178,7 @@ if(((!$e->title)&&(!$e->title2))||(!$e->start_date) || (!$e->end_date) || (!$e->
 	$keys = array(
 		'title',
 		'title2',
-		'description',
+		'brief_description',
 		'access_id',
 		'start_date',
 		'start_time',
@@ -195,8 +194,8 @@ if(((!$e->title)&&(!$e->title2))||(!$e->start_date) || (!$e->end_date) || (!$e->
 		'contact',
 		'organiser',
 		'tags',
-		'long_description',
-		'long_description2',
+		'description',
+		'description2',
 		'send_reminder',
 		'reminder_number',
 		'reminder_interval',
@@ -212,7 +211,10 @@ if(((!$e->title)&&(!$e->title2))||(!$e->start_date) || (!$e->end_date) || (!$e->
 		);
 
 	foreach ($keys as $key) {
-		$event->$key = $e->$key;
+		if(($key != 'title2') && ($key != 'description2') && ($key != 'calendar_additional2') ){
+			$event->$key = $e->$key;
+		}
+		
 	}
 
 	if ($event_calendar_spots_display == 'yes') {
@@ -1493,7 +1495,13 @@ function event_calendar_get_page_content_edit($page_type, $guid, $start_date='')
 			$body_vars['form_data'] =  event_calendar_prepare_edit_form_vars($event, $page_type);
 			$event_container = get_entity($event->container_guid);
 
+			if (!$event_container->title){
+			$group_title = $event_container->name;
+
+		}else{
 			$group_title = gc_explode_translation($event_container->title,$lang);
+		}
+			
 
 
 			if (elgg_instanceof($event_container, 'group')) {
@@ -1562,7 +1570,7 @@ function event_calendar_prepare_edit_form_vars($event = null, $page_type = '', $
 	$values = array(
 		'title' => null,
 		'title2' => null,
-		'description' => null,
+		'brief_description' => null,
 		'teleconference' => null,
 		'teleconference_radio' => 'open',
 		'language' => 'open',
@@ -1602,8 +1610,8 @@ function event_calendar_prepare_edit_form_vars($event = null, $page_type = '', $
 		'personal_manage' => 'open',
 		'web_conference' => null,
 		'schedule_type' => null,
-		'long_description' => null,
-		'long_description2' => null,
+		'description' => null,
+		'description2' => null,
 		'access_id' => ACCESS_DEFAULT,
 		'group_guid' => null,
 		'room' => null,

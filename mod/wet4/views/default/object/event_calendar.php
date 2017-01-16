@@ -21,7 +21,7 @@ if ($full) {
 
 	//Identify available content
 
-$description_json = json_decode($event->long_description);
+$description_json = json_decode($event->description);
 if( $description_json->en && $description_json->fr ){
 	echo'<div id="change_language" class="change_language">';
 	if (get_current_language() == 'fr'){
@@ -84,7 +84,7 @@ if( $description_json->en && $description_json->fr ){
 		}
 	}
 
-	$body .= '<div class="mtm">' . gc_explode_translation($event->long_description, $lang) . '</div>';
+	$body .= '<div class="mtm">' . gc_explode_translation($event->description, $lang) . '</div>';
 
 
 	$metadata = elgg_view_menu('entity', array(
@@ -125,8 +125,8 @@ if( $description_json->en && $description_json->fr ){
 	$time_bit = event_calendar_get_formatted_time($event);
 	$icon = '<img src="'.elgg_view("icon/object/event_calendar/small").'" />';
 	$extras = array($time_bit);
-	if ($event->description) {
-		$extras[] = $event->description;
+	if ($event->brief_description) {
+		$extras[] = $event->brief_description;
 	}
 
 	if ($event_calendar_venue_view = elgg_get_plugin_setting('venue_view', 'event_calendar') == 'yes') {
