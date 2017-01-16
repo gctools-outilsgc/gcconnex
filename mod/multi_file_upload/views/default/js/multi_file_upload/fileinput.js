@@ -82,8 +82,8 @@ requirejs( ["fileinput"], function() {
     //console.log(elgg.get_page_owner_guid());
     $("#red").fileinput({
         uploadAsync: false,
-        //showRemove: false,
-        //showUpload:false,
+        allowedPreviewTypes: null,
+        allowedPreviewMimeTypes: ['image/jpeg', 'image/jpg', 'image/png', 'image/bmp', 'image/gif', 'text/plain'], //only allow preview for these file types
         language: elgg.get_language(),
         //maxFileSize: 10000,
         allowedFileExtensions: get_file_tools_settings(),
@@ -99,6 +99,17 @@ requirejs( ["fileinput"], function() {
             //access_id: $('#file_tools_file_access_id').find(":selected").val(),
             return obj;
         },
+        previewFileIconSettings: { //display nice icons for filetypes that don't have preview
+        'pdf': '<i class="fa fa-file-pdf-o text-danger"></i>',
+        'docx': '<i class="fa fa-file-word-o text-primary"></i>',
+        'doc': '<i class="fa fa-file-word-o text-primary"></i>',
+        'ppt': '<i class="fa fa-file-powerpoint-o text-danger"></i>',
+        'pptx': '<i class="fa fa-file-powerpoint-o text-danger"></i>',
+        'zip': '<i class="fa fa-file-archive-o text-muted"></i>',
+        'mov': '<i class="fa fa-file-movie-o text-warning"></i>',
+        'mp4': '<i class="fa fa-file-movie-o text-warning"></i>',
+        'mp3': '<i class="fa fa-file-audio-o text-warning"></i>',
+    },
     });
     $('#red').on('filebatchuploadsuccess', function(event, data) {
         //window.location.replace(data.response.forward_url);
