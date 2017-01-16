@@ -50,7 +50,7 @@ else {
 
 			$subject = elgg_echo('missions:participating_in', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))));
 			$body = elgg_echo('missions:participating_in_more', array($applicant->name)) . $mission_link . '.';
-			mm_notify_user($mission->guid, $applicant->guid, $subject, $body);
+			mm_notify_user($applicant->guid, $mission->guid, $subject, $body);
 		}
 	}
 }
