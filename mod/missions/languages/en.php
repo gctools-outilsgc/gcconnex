@@ -641,8 +641,8 @@ Should you no longer be available to participate in this opportunity, please wit
 "missions:placeholder_a" =>   "Welcome to the Career ConneXions Opportunities Platform within Jobs Marketplace! This is a tool that quickly matches at-level mobility (i.e. micro-missions and job swapping) and development (i.e. mentoring and job shadowing) opportunities with talented employees by leveraging the content in employees&rsquo; GCconnex profiles.
 Employees are encouraged to opt in to the professional development and at-level mobility opportunities in their profiles to take full advantage of this tool.
 <a href='http://www.gcpedia.gc.ca/wiki/Jobs_Marketplace' target='_blank'>Please click here for more information, tutorials and guidance materials</a>.","Welcome to the Career ConneXions Opportunities Platform within Jobs Marketplace!
-This is a tool that quickly matches opportunities with talented employees by leveraging the content in employees\ï¿½ GCconnex profiles.
-Employees are encouraged to \'opt in\' to the professional development and at-level mobility opportunities in their profiles to take full advantage of this tool.
+This is a tool that quickly matches opportunities with talented employees by leveraging the content in employees&rsquo; GCconnex profiles.
+Employees are encouraged to &rsquo;opt in&rsquo; to the professional development and at-level mobility opportunities in their profiles to take full advantage of this tool.
 <a href='http://www.gcpedia.gc.ca/wiki/Jobs_Marketplace' target='_blank'>Please click here for more information, tutorials and guidance materials</a>.",
 "missions:placeholder_d2" =>  " ",
 
@@ -665,7 +665,7 @@ Employees are encouraged to \'opt in\' to the professional development and at-le
 "missions:error:completion_date_not_formatted_properly" => "Your completion date is not formatted correctly. The correct format is: yyyy-mm-dd.",
     "missions:error:deadline_not_formatted_properly" => "Your application deadline is not formatted correctly. The correct format is: yyyy-mm-dd.",
     "missions:error:email_needs_input" => "Please enter an email address.",
-"missions:placeholder_e" =>    "The below list of employees was automatically generated based on the skills you identified in your opportunity which were cross-referenced with employees\ï¿½ GCconnex profiles. Note that being on this list does not guarantee the employee is qualified for your opportunity however it should provide a good starting point for proactively seeking out talented candidates.
+"missions:placeholder_e" =>    "The below list of employees was automatically generated based on the skills you identified in your opportunity which were cross-referenced with employees&rsquo; GCconnex profiles. Note that being on this list does not guarantee the employee is qualified for your opportunity however it should provide a good starting point for proactively seeking out talented candidates.
 You can share your opportunity with any employee whether on this list or not. Employees who do not appear on this list are also welcome to express interest in your opportunity.",
 "missions:confirm:remove_applicant" =>    "This action will remove the corresponding user from the list of applicants for this opportunity." ,
 "missions:confirm:remove_participant" =>   "This action will remove the corresponding user from the list of participants and applicants for this opportunity.",
