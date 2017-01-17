@@ -1652,8 +1652,23 @@ figcaption{
     text-decoration: underline;
     cursor: pointer;
 }
-  
+
 .indicator_summary{
   color:#D6D6D6;
   font-size: 12px
+}
+
+/*Related groups autocomplete*/
+.ui-autocomplete .ui-menu-item {
+  clear:both;
+  overflow:auto;
+}
+.ui-autocomplete .ui-menu-item:hover {
+  background:#eee;
+}
+.ui-autocomplete .ui-menu-item:focus {
+  background:#eee;
+}
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
+  border:none;
 }
