@@ -17,7 +17,9 @@ function gc_official_group_init(){
     
     elgg_extend_view('css/elgg', 'css/official_groups');
     
+    
     //Extend the summary view to add the official badge
     elgg_extend_view('object/elements/summary', 'object/elements/official_badge', 400);
+    elgg_extend_view('page/layouts/one_sidebar', 'object/elements/badge_group_profile',400);
     
 }
