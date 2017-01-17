@@ -8,6 +8,7 @@
 
 $body = elgg_view('page/elements/add_off_group');
 
+$body .= elgg_view('page/elements/off_group_table');
 
 echo $body;
 
