@@ -295,9 +295,9 @@ function gc_group_layout_transfer_coverphoto($group, $new_owner){
   // cleanup old file
   $nfh->save();
   $ofh->delete();
-
-  $c_photo_guid = $nfh->getGUID();
-  $group->cover_photo =$c_photo_guid;
-
+  //error_log($nfh->getGUID().'<---guid of file   old-->'.$ofh->getGUID());
+  //$c_photo_guid = $nfh->getGUID();
+  //$group->cover_photo =$c_photo_guid;
+  //system_message( $group->cover_photo);
   return true;
 }
