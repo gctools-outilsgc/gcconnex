@@ -15,6 +15,8 @@ function gc_official_group_init(){
     //Register the actions
     elgg_register_action('add_off_group', elgg_get_plugins_path() .'gc_official_groups/actions/add_off_group.php',"admin");
     
+    elgg_register_action('remove_off_group', elgg_get_plugins_path() .'gc_official_groups/actions/remove_off_group.php',"admin");
+    
     elgg_extend_view('css/elgg', 'css/official_groups');
     
     

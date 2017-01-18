@@ -22,12 +22,20 @@ echo '<tr><th>Group</th><th>Owner</th><th>Manage</th></tr>';
 foreach($group_entity_list as $group){
     
     $user = $group->getOwnerEntity();
-    
+    $mail_link = elgg_view('output/url', array(
+        'text'=>$user->email,
+        'href'=>'mailto:'.$user->email,
+    ));
+    $remove_link = elgg_view('output/url', array(
+        'text'=>'Remove Status',
+        'href'=>'action/remove_off_group?guid='.$group->guid,
+        'is_action'=>true,
+    ));
     echo '<tr>';
     $test = $group->name .' - ' .$group->guid . ' - ' .$user->name;
     echo '<td>'.$group->name.'</td>';
-    echo '<td>'.$user->name.' - '.$user->email.'</td>';
-    echo '<td><a href="#">Remove Status</a></td>';
+    echo '<td>'.$user->name.' - '.$mail_link.'</td>';
+    echo '<td>'.$remove_link.'</td>';
     echo '</tr>';
 }
 

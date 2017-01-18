@@ -5,7 +5,7 @@ if(elgg_in_context('group_profile') || elgg_instanceof(elgg_get_page_owner_entit
 
 
 $group = get_entity(elgg_get_page_owner_guid());
-    if($group->official_group){
+    if($group->official_group == true){
         
 ?>
 
