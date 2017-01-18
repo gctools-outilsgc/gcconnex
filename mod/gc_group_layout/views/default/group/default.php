@@ -36,19 +36,11 @@ if ($vars['full_view']) {
 		'entity' => $group,
 		'metadata' => $metadata,
 	);
-if($group->briefdescription3){
+
 	$params2 = array(
-		'subtitle' => gc_explode_translation($group->briefdescription3,$lang),
+		'subtitle' => gc_explode_translation($group->briefdescription,$lang),
 	);
-}elseif($group->briefdescription2){
-	$params2 = array(
-		'subtitle' => $group->briefdescription2,
-	);
-}else{
-		$params2 = array(
-		'subtitle' => $group->briefdescription,
-	);
-}
+
 
 	// identify available content
 /*if(($group->description2) && ($group->description)){
