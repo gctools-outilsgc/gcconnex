@@ -74,6 +74,7 @@ function cp_notifications_init() {
  */
 function cp_digest_cron_handler($hook, $entity_type, $return_value, $params) {
 
+	echo "<p>";
 	echo "Starting up the cron job for the Notifications (cp_notifications plugin)";
 	$options = array(
 		'type' => 'object',
@@ -86,8 +87,14 @@ function cp_digest_cron_handler($hook, $entity_type, $return_value, $params) {
 	// go through the list of notification digests (per user)
 	foreach ($current_digest as $notify_user) {
 
+		$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $notify_user->guid, 'cp_notifications');
+		if (strcmp($user_setting, 'set_digest_yes')) {
+
+			
 		// make sure the user has their setting set first before sending
-		if (strcmp(elgg_get_plugin_user_setting('cpn_bulk_notifications_email', $notify_user->getOwnerGUID(),'cp_notifications'),'bulk_notifications_email') == 0) {
+		//if (strcmp(elgg_get_plugin_user_setting('cpn_bulk_notifications_email', $notify_user->getOwnerGUID(),'cp_notifications'),'bulk_notifications_email') == 0) {
+
+
 			$user = get_user($notify_user->getOwnerGUID());
 			$timestamp = date("F j, Y, g:i a",$notify_user->time_updated);	// use time created (just update this timestamp when we send off notification)
 			echo "<p> {$user->username} -- {$user->email} on {$timestamp} </p>";
@@ -160,6 +167,7 @@ function cp_digest_cron_handler($hook, $entity_type, $return_value, $params) {
 		mail($title[1], $subject, $template, cp_get_headers());
 	
 	}
+	echo "</p>";
 }
 
 
@@ -483,30 +491,6 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				$to_recipients[] = get_user($s_uer);
 			break;
 
-		// see - cp_create_notification
-		/*case 'cp_event': // event_calendar/actions/event_calendar/add_personal.php AND /edit.php
-			if ($params['is_minor_edit'] == 1)
-				return false;
-
-			$message = array(
-				'cp_event_send_to_user' => $params['cp_event_send_to_user'], // cyu - will need to explode with delim ,
-				'cp_event_invite_url' => $params['cp_event_invite_url'],
-				'cp_event_time' => $params['cp_event_time'],
-				'cp_event' => $params['cp_event'],
-				'type_event' => $params['type_event'],
-				'cp_msg_type' => $cp_msg_type
-			);
-
-			if (strcmp($params['type_event'],'UPDATE') == 0) {
-				$subject = elgg_echo('cp_notify:event_update:subject', array($params['cp_event']->title), 'en');
-				$subject .= ' | '.elgg_echo('cp_notify:event_update:subject', array($params['cp_event']->title), 'fr');
-			} else {
-				$subject = elgg_echo('cp_notify:event:subject', array(), 'en'); 
-				$subject .= ' | '.elgg_echo('cp_notify:event:subject', array(), 'fr');
-			}
-			$to_recipients = $params['cp_event_send_to_user'];
-			break;*/
-
 		case 'cp_event_request': // event_calendar/actions/event_calendar/request_personal_calendar.php
 			$message = array(
 				'cp_event_request_user' => $params['cp_event_request_user'],
@@ -575,6 +559,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 		
 		// appropriate for newsletter
 		$newsletter_appropriate = array('cp_wire_share','cp_messageboard','cp_wire_mention','cp_hjpost','cp_hjtopic');
+		error_log("plugin user settings: ".elgg_get_plugin_user_setting('cpn_bulk_notifications_email', $to_recipient->guid,'cp_notifications'));
 		if (strcmp(elgg_get_plugin_user_setting('cpn_bulk_notifications_email', $to_recipient->guid,'cp_notifications'),'bulk_notifications_email') == 0 && in_array($cp_msg_type,$newsletter_appropriate)) {
 				$user = get_user($recipient_user->guid);
 				$digest = get_entity((int)$recipient_user->cpn_newsletter);
@@ -1114,10 +1099,7 @@ function cp_create_notification($event, $type, $object) {
 	if (empty($subject))
 		return false;
 
-$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
-//$subject = html_entity_decode($subject);
-//	$subject = utf8_encode ($subject);
-
+	$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
 
 	if (empty($to_recipients)) {
 		$query = "SELECT DISTINCT u.guid, u.email, u.username FROM {$dbprefix}entity_relationships r, {$dbprefix}users_entity u WHERE r.guid_one <> {$content_originator} AND r.relationship LIKE 'cp_subscribed_to_%' AND r.guid_two = {$guid_two} AND r.guid_one = u.guid";
@@ -1125,11 +1107,15 @@ $subject = htmlspecialchars_decode($subject,ENT_QUOTES);
 	}
 
 
-	//foreach ($to_recipients as $to_recipient_id => $to_recipient)
 	foreach ($to_recipients as $to_recipient)
 	{
+		$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid, 'cp_notifications');
+		error_log("TO: >>>> {$to_recipient->guid}   ////                SETTINGS: >>>>>>>> ".$user_setting);
 		// user wants a collection of all their notification
-		if (strcmp(elgg_get_plugin_user_setting('cpn_bulk_notifications_email', $to_recipient->guid,'cp_notifications'),'bulk_notifications_email') == 0) {
+		//if (strcmp(elgg_get_plugin_user_setting('cpn_bulk_notifications_email', $to_recipient->guid,'cp_notifications'),'bulk_notifications_email') == 0) {
+		
+		if ($user_setting === "set_digest_yes") {
+			error_log(">??>>>>>>>>>  prepare...");
 			cp_digest_preparation($to_recipient->guid, $object);
 
 		// user did not enable notification collections (digest)
@@ -1214,7 +1200,9 @@ function cp_digest_preparation($user_id, $entity, $action_type = 'new_object') {
 			default:	// user created new core/main entity (blogs, discussion, bookmarks, etc)
 				
 				$user_entity = get_user($user_id);
+
 				$digest = get_entity($user_entity->cpn_newsletter); // get entity
+
 				$digest_collection = json_decode($digest->description, true);
 				
 				// new entity has been created (either in group or user)
@@ -1252,15 +1240,17 @@ function cp_digest_preparation($user_id, $entity, $action_type = 'new_object') {
  * @param array		 $new_collection	the array that will be the digest
  */
 function cp_save_to_db($entity, $new_collection) {
+	error_log(">>>>>>>>>>>>>>>>>>>>>>> SAVING SAVING SAVING SAVING...");
 	// ignore access temporarily to set the digest
 	$ia = elgg_set_ignore_access(true);
-
+	error_log(">>>>>>>>>>> entity guid: {$entity->guid}");
 	$entity->description = json_encode($new_collection);
 	$entity->save();
 
 	// set old access back to the way it was
 	elgg_set_ignore_access($ia);
 }
+
 
 /* (WIP) cyu - recursively go through the parents of the wire posts (thread - kind of) */
 function cp_sub_to_wire_thread($wire_id) {

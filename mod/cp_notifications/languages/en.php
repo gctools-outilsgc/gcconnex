@@ -6,6 +6,13 @@ $english = array(
 	'cp_notify:enable_digest' => "Enable Digest Feature",
 	'cp_notify:nocolleagues' => "You do not have any colleagues",
 
+	'label:english' => "English",
+	'label:french' => "French",
+	'label:daily' => "Daily",
+	'label:weekly' => "Weekly",
+	'cp_notify:set_frequency' => "When do you want to receive Digest",
+	'cp_notify:set_language' => "Which language do you want to receive Digest",
+
 	'cp_notify:setting:no_grp_subscription' => '',
 	'cp_notify:setting:loading' => 'Loading...',
 	// e-mail header text

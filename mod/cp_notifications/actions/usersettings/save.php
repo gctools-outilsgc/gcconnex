@@ -20,7 +20,9 @@ $current_digest = elgg_get_entities($options);
 // opposite value is sent to this action..... (maybe create ajax for it instead?)
 //error_log("status... {$plugin->getUserSetting("cpn_bulk_notifications_email",$user->getGUID())}");
 //error_log('checkbox - '.$bulk_notifications_email);
-if (strcmp($bulk_notifications_email,'bulk_notifications_email') == 0) {
+$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $user->guid, 'cp_notifications');
+if (strcmp($user_setting,'set_digest_yes') == 0) {
+//if (strcmp($bulk_notifications_email,'bulk_notifications_email') == 0) {
 	error_log("the bulk notification flag is set for a user..");
 	if (empty($current_digest)) {
 		$new_digest = new ElggObject();
