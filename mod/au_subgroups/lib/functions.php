@@ -45,7 +45,7 @@ function breadcrumb_override($params) {
 				$breadcrumbs[] = $parentcrumb;
 			}
 
-			$breadcrumbs[] = array('title' => $group->name, 'link' => $group->getURL());
+			$breadcrumbs[] = array('title' => gc_explode_translation($group->name,$lang), 'link' => $group->getURL());
 			$breadcrumbs[] = array('title' => elgg_echo('groups:edit'), 'link' => NULL);
 			set_input('au_subgroups_breadcrumbs', $breadcrumbs);
 			break;
