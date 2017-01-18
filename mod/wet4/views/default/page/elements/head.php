@@ -31,7 +31,36 @@ $site_url = elgg_get_site_url();
 $metas = elgg_extract('metas', $vars, array());
 $links = elgg_extract('links', $vars, array());
 
-echo elgg_format_element('title', array(), $vars['title'], array('encode_text' => true));
+//Load in global variable with entity to create metadata tags
+global $my_page_entity;
+
+
+// github-685 gcconnex titles in gsa search result
+if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gsa_agentstring,strtolower($_SERVER['HTTP_USER_AGENT'])) == 0) || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ) {
+  $gc_language = get_current_language();
+
+  $page_title_deliminator = ($my_page_entity->title && $my_page_entity->title2) ? " | " : "";
+  $title_en = $my_page_entity->title;
+  $title_fr = $my_page_entity->title2;
+  
+  // check for character length then trim
+  if ($page_title_deliminator !== "") {
+    $title_en = (strlen($title_en) > 19) ? substr($title_en,0,20)."..." : $title_en;
+    $title_fr = (strlen($title_fr) > 19) ? substr($title_fr,0,20)."..." : $title_fr;
+  }
+
+  $page_title = (strcmp(get_current_language(),'en') == 0) ? $title_en.$page_title_deliminator.$title_fr : $$title_fr.$page_title_deliminator.$title_en;
+
+  echo elgg_format_element('title', array(), $page_title, array('encode_text' => true));
+
+} else {
+  
+  echo elgg_format_element('title', array(), $vars['title'], array('encode_text' => true));
+
+}
+
+
+
 foreach ($metas as $attributes) {
 	echo elgg_format_element('meta', $attributes);
 }
@@ -87,12 +116,11 @@ echo elgg_view_deprecated('metatags', array(), "Use the 'head', 'page' plugin ho
 
 /*---------------------Web Experience Toolkit 4---------------------*/
 
-
 ?>
 
 <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">-->
-<link rel="stylesheet" href="<?php echo $site_url ?>mod/wet4/views/default/css/awesome/font-awesome.min.css" type="text/css" />
-<meta charset="utf-8" />
+    <link rel="stylesheet" href="<?php echo $site_url ?>mod/wet4/views/default/css/awesome/font-awesome.min.css" type="text/css" />
+    <meta charset="utf-8" />
 		<!-- Web Experience Toolkit (WET) / Boîte à outils de l'expérience Web (BOEW)
 wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licence-fr.html -->
 
@@ -100,8 +128,7 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
 		<meta content="width=device-width, initial-scale=1" name="viewport" />
 <!-- Meta data -->
 <?php 
-    //Load in global variable with entity to create metadata tags
-      global $my_page_entity;
+
 
       if($my_page_entity){
           /*
@@ -137,9 +164,6 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
       }
 
 
-?>
-
-        <?php
 		// cyu - prevent crawler to index unsaved draft
 		if ($my_page_entity instanceof ElggObject) {
 			if ($my_page_entity->getSubtype() === 'blog' && strcmp($my_page_entity->status,'unsaved_draft') == 0)
@@ -163,14 +187,15 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
 
           $can_index = true;
           foreach ($no_index_array as $partial_url) {
-            if (strpos($_SERVER['REQUEST_URI'],$partial_url) !== false ) {              // cyu - if url is found, don't index
+            // if url is found, dont index
+            if (strpos($_SERVER['REQUEST_URI'],$partial_url) !== false ) {
               $can_index = false;
               break;
             }
           }
 
           if (!$can_index) {
-        ?>
+?>
 
           <!-- cyu - included header meta tags for GSA (limiting pages to index) -->
           <meta name="robots" content="noindex">
@@ -195,6 +220,5 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
 
 <![endif]-->
 
-
-
         <noscript><link rel="stylesheet" href="./css/noscript.css" /></noscript>
+
