@@ -23,11 +23,7 @@ foreach ($params as $k => $v) {
 
 
 
-
-
-
-
-// create a new object for email or/and site notifications (collecting all the actions and events)
+/// notification digest settings that should be saved
 $options = array(
 	'type' => 'object',
 	'subtype' => 'cp_digest',
@@ -60,15 +56,13 @@ if (strcmp($user_setting,'set_digest_yes') == 0) {
 
 
 
-
-$options = array(
+/// group notifications settings that needs to be saved
+$groups = elgg_get_entities_from_relationship(array(
 	'relationship' => 'member',
 	'relationship_guid' => $user->guid,
 	'type' => 'group',
 	'limit' => false,
-);
-
-$groups = elgg_get_entities_from_relationship($options);
+));
 
 foreach ($groups as $group) {
     // Nick - This asks for the inputs of the checkboxes. If the checkbox is checked it will save it's value. else it will return 'unSub' or 'site_unSub'
