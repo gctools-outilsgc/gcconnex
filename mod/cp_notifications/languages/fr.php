@@ -33,8 +33,7 @@ $french = array(
 	'cp_notify:subject:group_invite_email' => "%s vous a invité à joindre le groupe '%s'",
 	'cp_notify:subject:group_invite_user_by_email' => "%s vous a invité à joindre le groupe %s",
 	'cp_notify:body_group_invite_email:title' => "Vous êtes invité à joindre un groupe sur GCconnex",
-	'cp_notify:body_group_invite_email:description' => "Vous êtes invité à joindre le groupe '%s' sur GCconnex, veuillez vous inscrire ou vous connecter à GCconnex, ensuite cliquez sur ce lien : %s ou utiliser ce code dans la page d'invitation de groupe : '%s' <br/> %s", // translate
-	
+	'cp_notify:body_group_invite_email:description' => "Vous êtes invité à joindre le groupe '%s' sur GCconnex, veuillez vous inscrire en cliquant sur ce lien : %s ou, une fois inscrit, veuillez utiliser ce code dans la page d'invitation de groupe : '%s' <br/> %s", 
 
 	// group mail section
 	'cp_notify:subject:group_mail' => "Vous avez reçu un message intitulé '%s' du groupe '%s'",

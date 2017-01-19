@@ -35,8 +35,7 @@ $english = array(
 	'cp_notify:subject:group_invite_email' => "%s invited you to join the group '%s'",
 	'cp_notify:subject:group_invite_user_by_email' => "%s invited you to join the group %s",
 	'cp_notify:body_group_invite_email:title' => "You are invited to join a group on GCconnex",
-	'cp_notify:body_group_invite_email:description' => "You are invited to join the '%s' GCconnex group, please register or log in to GCconnex, then click on this link: %s or use this code on the group invitation page: '%s' <br/> %s",
-
+	'cp_notify:body_group_invite_email:description' => "You are invited to join the '%s' GCconnex group, please register by clicking on this link: %s or, once registered, use this code on the group invitation page: '%s' <br/> %s",
 
 	// group mail section
 	'cp_notify:subject:group_mail' => "You have received a message entitled '%s' from the group '%s'",
