@@ -1,5 +1,6 @@
 <?php
 
+gatekeeper();
 
 $params = get_input('params');
 $plugin_id = get_input('plugin_id');
@@ -7,8 +8,24 @@ $user_guid = get_input('user_guid', elgg_get_logged_in_user_guid());
 $plugin = elgg_get_plugin_from_id($plugin_id);
 $user = get_entity($user_guid);
 
-$bulk_notifications_email = $params['cpn_bulk_notifications_email'];
-//error_log("save.php - usersettings");
+
+/// overwriting the save action for usersettings in notifications, save all the checkboxes
+$plugin_name = $plugin->getManifest()->getName();
+foreach ($params as $k => $v) {
+	$result = $plugin->setUserSetting($k, $v, $user->guid);
+
+	if (!$result) {
+		register_error(elgg_echo('plugins:usersettings:save:fail', array($plugin_name)));
+		forward(REFERER);
+	}
+}
+
+
+
+
+
+
+
 
 // create a new object for email or/and site notifications (collecting all the actions and events)
 $options = array(
@@ -17,9 +34,7 @@ $options = array(
 	'container_guid' => $user->getGUID(),
 );
 $current_digest = elgg_get_entities($options);
-// opposite value is sent to this action..... (maybe create ajax for it instead?)
-//error_log("status... {$plugin->getUserSetting("cpn_bulk_notifications_email",$user->getGUID())}");
-//error_log('checkbox - '.$bulk_notifications_email);
+
 $user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $user->guid, 'cp_notifications');
 if (strcmp($user_setting,'set_digest_yes') == 0) {
 //if (strcmp($bulk_notifications_email,'bulk_notifications_email') == 0) {
@@ -42,17 +57,8 @@ if (strcmp($user_setting,'set_digest_yes') == 0) {
 	// disable the object (do not remove, yet!)
 }
 
-$plugin_name = $plugin->getManifest()->getName();
-foreach ($params as $k => $v) {
-	// Save
-	$result = $plugin->setUserSetting($k, $v, $user->guid);
 
-	// Error?
-	if (!$result) {
-		register_error(elgg_echo('plugins:usersettings:save:fail', array($plugin_name)));
-		forward(REFERER);
-	}
-}
+
 
 
 $options = array(
