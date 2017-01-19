@@ -55,13 +55,15 @@ switch ($page_type) {
 		$title = elgg_echo('activity_tabs:collection');
 		$page_filter = 'activity_tab';
         
+		$db_prefix = elgg_get_config('dbprefix');
 		$options['joins'] = array("INNER JOIN {$db_prefix}metadata md ON md.entity_guid = rv.subject_guid LEFT JOIN {$db_prefix}metastrings msn ON md.name_id = msn.id LEFT JOIN {$db_prefix}metastrings msv ON md.value_id = msv.id");	// we need this to filter by metadata
 		$options['wheres'] = array("msn.string = \"department\" AND msv.string LIKE \"{elgg_get_logged_in_user_entity()->department}\"");
 		break;
 	case 'otherdept':
 		$title = elgg_echo('activity_tabs:collection');
 		$page_filter = 'activity_tab';
-
+		
+		$db_prefix = elgg_get_config('dbprefix');
 		$options['joins'] = array("INNER JOIN {$db_prefix}metadata md ON md.entity_guid = rv.subject_guid LEFT JOIN {$db_prefix}metastrings msn ON md.name_id = msn.id LEFT JOIN {$db_prefix}metastrings msv ON md.value_id = msv.id");	// we need this to filter by metadata
 		$options['wheres'] = array("msn.string = \"department\" AND msv.string NOT LIKE \"{elgg_get_logged_in_user_entity()->department}\"");
 		break;
