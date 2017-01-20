@@ -128,7 +128,7 @@
 				//traverse up the dom and then find the paragraph tag which holds the comment text
 				$('#outputArea').text('');
         		textBlock = $(this).parent().parent().parent().find('div[data-role="discussion-reply-text"]');
-        		console.log(textBlock[0].innerHTML)
+        		//console.log(textBlock[0].innerHTML)
         		
         		$('#outputArea').html(textBlock[0].innerHTML);
         		
@@ -149,7 +149,7 @@
 				$('#outputContainer').html('<img id="loader" class="loader" src="<?php echo elgg_get_site_url();?>mod/machine_translation/lib/img/ajax-loader.gif" alt="Wait" />');
 				$('#textSpan').text('<?php echo elgg_echo('mc:LCtool:wait'); ?>');
 				var count = tmp.children('p').length;
-                console.log(count);
+                //console.log(count);
 				var i = 0;
 				tmp.children('p').each(function (index, element){
 					//console.log('index: '+index+' element: '+$(element).text());
@@ -168,7 +168,7 @@
         				//"text": 'This is a test',
         			};
         			
-        			console.log(JSON.stringify(sendData));
+        			//console.log(JSON.stringify(sendData));
         			
         			var txt = $('<textarea></textarea>');
                 	$.ajax({
@@ -179,7 +179,7 @@
                 		data: sendData,
                 		dataType: 'text',
                 		success: function (feed){
-                            console.log(feed);
+                            //console.log(feed);
                 			var feedObj = JSON.parse(feed); 
                 			var newText = feedObj.data.translations[0].translatedText;
                 			
