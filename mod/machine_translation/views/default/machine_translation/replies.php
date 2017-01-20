@@ -122,10 +122,7 @@
 			//adds translate link to the front of the metadata list
 			//replyMenu.prepend("<li class='mrgn-lft-sm'><a href='javascript:void(0);' id='translink' class='translink' name='trans' data-toggle='modal' data-target='#LCToolModal'><?php echo elgg_echo("machine:linktext"); ?></a></li>");
 			replyMenu.prepend('<li class="mrgn-lft-sm"><a href="javascript:void(0);" id="translink" class="translink" name="trans" data-toggle="modal" data-target="#modal-transparent"><i class="fa fa-language fa-lg icon-unsel" title="Language Comprehension Tool" aria-hidden="true"><span class="wb-inv"><?php echo elgg_echo("machine:linktext"); ?></span></i></a></li>');
-			/*document.getElementById("translateButton").addEventListener("click", function(){
-				var direction = $('select.directionSelect').val();
-				console.log('direction: '+direction);
-			});*/
+
 			
 			$('.translink').click(function(){
 				//traverse up the dom and then find the paragraph tag which holds the comment text
@@ -135,35 +132,12 @@
         		
         		$('#outputArea').html(textBlock[0].innerHTML);
         		
-        		////////////////
-        		//var iframe = $('.cke_wysiwyg_frame');
-        		//console.log('iframe: ' + JSON.stringify(iframe.contents().find('body').html()));
-        		//$('#outputArea > p').each(function(index){
-        		//	console.log(index);
-        		//});
-        		//$('#outputArea').innerhtml = 'test<br />1 2 3';
-        		//iframe.children().each(function(index){
-        		//	console.log(index);
-        		//});
+
        		});
        		
        		
 			$('#translateButton').click(function(){
-				//console.log($('#outputArea').val());
-				//var tmp = document.createElement("div");
-				//tmp.innerHTML = $('#outputArea').val();
 				
-				
-				//var tmp = $('#outputArea').val();
-				//var pArray = tmp.querySelectorAll("p");
-				//for (var i = 0; i<pArray.length; i++){
-				//	console.log(pArray[i]);
-				//}
-				//.each(function(index){
-					//console.log(index);
-				//});
-				
-				//var outputText = $('<div class="outputArea"></div>');				
 				var tmp = $('<div></div>');
 				tmp.html($('#outputArea').html());
 				
@@ -175,7 +149,8 @@
 				$('#outputContainer').html('<img id="loader" class="loader" src="<?php echo elgg_get_site_url();?>mod/machine_translation/lib/img/ajax-loader.gif" alt="Wait" />');
 				$('#textSpan').text('<?php echo elgg_echo('mc:LCtool:wait'); ?>');
 				var count = tmp.children('p').length;
-				
+                console.log(count);
+				var i = 0;
 				tmp.children('p').each(function (index, element){
 					//console.log('index: '+index+' element: '+$(element).text());
 					var newText = $(element).text();
@@ -198,52 +173,46 @@
         			var txt = $('<textarea></textarea>');
                 	$.ajax({
         				type: 'GET',
+                        //async: false,
         				url: '<?php echo elgg_get_plugin_setting('apiurl','machine_translation'); ?>',
-                		//url: 'https://portage-dev.pwgsc.gc.ca/translate',//translation bureau link
-                		//url: 'http://192.168.2.53/translate.php?q=$text&lang=$lang',
+
                 		data: sendData,
                 		dataType: 'text',
                 		success: function (feed){
+                            console.log(feed);
                 			var feedObj = JSON.parse(feed); 
                 			var newText = feedObj.data.translations[0].translatedText;
                 			
-                			//txt.innerHTML = newText;
+                			
                 			txt.html(newText);
-                			//alert(html(newText));
-                			//outputArea.append(txt.value);
-                			///return txt.value;
-                			//domText = txt.value;
-                			//textBlock.html(txt.value).text();//swaps text of comment with translated results
+                			
                 		}, 
                 		//TODO: complete with alert for debug edit error
                     	complete: function (feed){
-                    	    //alert(JSON.stringify(feed));
-                    	    //$('#outputContainer').empty();
-                    	    //outputArea.prop("readonly", true);
-                    	    //$('#outputContainer').append(outputArea);
-                    	    //$('#textSpan').text('<?php echo elgg_echo('mc:LCtool:translated'); ?>');
-                    	    //console.log(txt.value);
-                    	    //return '<p>'+txt.html()+'</p>';
-                    	    outputArea.append('<p>'+txt.html()+'</p>');
-                    	    if(index == count - 1){
-                    	    	console.log('in if')
+                    	    
+                            //console.log('index -'+index+', i - '+i+', count - '+count);
+                    	    outputArea.append('<p id ='+index+'>'+txt.html()+'</p>');
+                    	    if(i == count - 1){
+                                outputArea.find('p').sort(function(a, b) {
+                                    return parseInt(a.id) - parseInt(b.id);
+                                }).each(function() {
+                                    var elem = $(this);
+                                    elem.remove();
+                                    $(elem).appendTo(outputArea);
+                                });
+                    	    	
                     	    	$('#loader').hide();
                     	    	outputArea.show();
                     	    }
-                    	    //if()
+                            i++;
+                    	    
                         
                     	},
         			});
         			
         			//console.log(JSON.stringify(outputText.html()))
 				});
-				//console.log(outputText);
-				//$('#outputContainer').empty();
-				//outputArea.val(outputText.html());
 				
-				//longText.val(outputText.html());
-                //outputText.prop("readonly", true);
-                //console.log(outputText);
                 $('#outputContainer').append(outputArea);
               	$('#textSpan').text('<?php echo elgg_echo('mc:LCtool:translated'); ?>');
 				
