@@ -66,7 +66,7 @@ if ($listing_format == 'paged' || $listing_format == 'full') {
 
 		$new_link = elgg_view('output/url', array(
         'href' => "event_calendar/add/$owner->guid",
-        'text' => elgg_echo('event_calendar:new1'),
+        'text' => elgg_echo('event_calendar:new'),
         'class' => 'btn btn-primary pull-right',
     	));
 	}else{
