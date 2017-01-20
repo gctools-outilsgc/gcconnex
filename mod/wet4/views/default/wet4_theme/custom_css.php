@@ -872,36 +872,6 @@ border:none;
     margin-bottom: 5px;
 
 }
-
-.quick-discuss panel-body, panel-footer{
-    padding:1px;
-
-}
-.start-discussion-form{
-    /*padding-right: 20px;*/
-
-}
-
-.quick-discuss-action-btn{
-    font-size: 1.3em;
-
-}
-.toggle-quick-discuss{
-    cursor:pointer;
-    background-color: #f5f5f5;
-    border-top: solid 1px #ddd;
-
-}
-#quick-discuss-panel .quick-start-collapse, #quick-discuss-panel  .quick-start-hide, #quick-discuss-panel  .alert-info{
-    display:none;
-
-}
-.quick-start-discussion{
-    border-bottom: 1px solid #ddd;
-    margin-bottom: 5px;
-
-}
-
     .newsfeed-filter-gear {
         font-size: 1.75em !important;
         margin-top: 3px;
@@ -927,6 +897,7 @@ border:none;
 	border-bottom: 12px solid #fff;
     clear: both;
 }
+
 .newsfeed-filter:before{
        content: '';
     display: block;
