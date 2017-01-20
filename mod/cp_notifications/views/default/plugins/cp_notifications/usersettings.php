@@ -53,6 +53,7 @@ $dbprefix = elgg_get_config('dbprefix');
 $site = elgg_get_site_entity();
 
 $title = elgg_echo('cp_notify:panel_title',array("<a href='".elgg_get_site_url()."settings/user/'>".elgg_echo('label:email')."</a>"));
+$current_user = elgg_get_logged_in_user_entity();
 
 
 // DIGEST OPTION FOR USER NOTIFICATIONS
@@ -209,7 +210,6 @@ foreach ($groups as $group) {
 	$chk_email_grp = create_checkboxes($user->getGUID(), "cpn_email_{$group->getGUID()}", array("sub_{$group->getGUID()}", "set_notify_off"), elgg_echo('label:email'));
 	$chk_site_grp = create_checkboxes($user->getGUID(), "cpn_site_mail_{$group->getGUID()}", array("'sub_site_{$group->getGUID()}", "set_notify_off"), elgg_echo('label:site'));
 
-
     $content .= "		<div class='list-break clearfix'>";
 	$content .= "			<div class='namefield col-sm-8'> <strong> <a href='{$group->getURL()}' id='group-{$group->guid}'>{$group->name}</a> </strong> </div>";
     $content .= "			<div class='col-sm-2'>{$chk_email_grp}</div>";
@@ -224,14 +224,14 @@ foreach ($groups as $group) {
     $content .= "				<div id='group-content-{$group->getGUID()}' class='tgl-panel clearfix'></div>";
     $content .= '			</details>';	
     $content .= '		</div>';			
-    $content .= '	</div>';				
+   				
 } 
+$content .= '	</div>';
 $content .= "</section>";
 
 
 
 // PERSONAL SUBSCRIPTIONS (DISPLAYS ALL ITEMS THAT DO NOT BELONG IN GROUP NOTIFICATIONS)
-$current_user = elgg_get_logged_in_user_entity();
 
 // build a base query (so we can use it to count all the results, and display all the items)
 // cyu - patched issue with personal subscription that contains group content
