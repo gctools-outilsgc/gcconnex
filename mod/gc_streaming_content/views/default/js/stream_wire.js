@@ -31,7 +31,7 @@ function stream_count(){
 function stop_stream_count(){
     window.clearInterval(interval);
     //Animate in a div button 
-    $('.new-wire-holder').prepend('<div class="stream-new-wire" style="display:none;">There are new posts. Click here to load.</div>');
+    $('.new-wire-holder').prepend('<div class="stream-new-wire" style="display:none;">'+elgg.echo('stream:new_wire')+'</div>');
     $('.stream-new-wire').show('slow');
     $('.stream-new-wire').on('click', function(){
         loadNewPosts();
