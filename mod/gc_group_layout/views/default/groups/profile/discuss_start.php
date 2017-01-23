@@ -14,9 +14,12 @@ $user = $vars['user'];
 $group = $vars['group'];
 $access_id = get_entity($group)->group_acl;
  ?>
+<div class="col-sm-12 clearfix">
+    <a class="btn btn-primary quick-discuss-action-btn pull-right clearfix"><?php echo elgg_echo('discussion:add');?></a>
+</div>
 
- <div class="quick-start-discussion">
-     <div id="quick-discuss-panel" class="panel panel-default clearfix quick-discuss">
+ <div style="display:none;" class="quick-start-discussion quick-start-collapse clearfix col-sm-12">
+     <div id="quick-discuss-panel" class="panel panel-default clearfix quick-discuss quick-start-hide">
          <div class="clearfix ">
          <div class="col-sm-2 col-xs-2 hidden-xs">
              <div class="mrgn-tp-md">
@@ -29,7 +32,7 @@ $access_id = get_entity($group)->group_acl;
 
          <div class="col-sm-10">
                 <div class="mrgn-tp-sm">
-                    <a href="#quick-discuss-panel" class="quick-discuss-action-btn"><?php echo elgg_echo('discussion:add');?></a>
+                    <div class="quick-discuss-title"><?php echo elgg_echo('discussion:add');?></div>
                 </div>
 
                 <div id="quick-discuss-form" class="start-discussion-form" tabindex="-1">

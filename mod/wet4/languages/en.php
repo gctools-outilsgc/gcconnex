@@ -1446,6 +1446,7 @@ Please do not reply to this email.",
     'contactform:faq' => "FAQ",
     'contactform:upload' => 'Upload your file',
     'contactform:title:form' => "Contact Us",
+    'contactform:required' => 'required',
  
 	'contactform:box:message' => 'Show the information box',
 	'conatactform:fr:name' => 'Name of the link in french',
@@ -1517,6 +1518,9 @@ Please do not reply to this email.",
 	'event_calendar:mine' => 'My events',
 	'event_calendar:meeting' => 'Online meeting and teleconference',
 	'event_calendar:info' => 'Additional information',
+	'event_calendar_contact' => "You are not the contact person?",
+	"event_calendar:email" => "E-mail address",
+	"event_calendar:phone" => "Phone number",
 
     /*new for tour*/
 'gcTour:next' => 'Next ',
