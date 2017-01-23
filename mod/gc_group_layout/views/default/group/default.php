@@ -1,7 +1,7 @@
-<?php 
+<?php
 /**
  * Group entity view
- * 
+ *
  * @package ElggGroups
  */
 
@@ -30,7 +30,7 @@ if (elgg_in_context('owner_block') || elgg_in_context('widgets')) {
 
 if ($vars['full_view']) {
 	echo elgg_view('groups/profile/summary', $vars);
-} else {
+} else if(!elgg_in_context('livesearch')){
 	// brief view
 	$params = array(
 		'entity' => $group,
@@ -52,8 +52,8 @@ if($group->briefdescription3){
 
 	// identify available content
 /*if(($group->description2) && ($group->description)){
-		
-			echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';	
+
+			echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';
 }*/
 
 	$params = $params + $params2;
@@ -61,4 +61,9 @@ if($group->briefdescription3){
 	$list_body = elgg_view('group/elements/summary', $params);
 
 	echo elgg_view_image_block($icon, $list_body, $vars);
+} else {
+  $icon = elgg_view_entity_icon($group, 'medium', $vars);
+  $body = $group->name;
+
+  echo elgg_view_image_block($icon, $body, $vars);
 }

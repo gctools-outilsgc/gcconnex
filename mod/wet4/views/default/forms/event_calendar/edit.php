@@ -341,7 +341,7 @@ if ($event_calendar_fewer_fields != 'yes') {
 		} else {
 		$body .= elgg_view('input/checkbox', array('name' => 'contact_checkbox', 'id' => 'contact_checkbox', 'value' => 1));
 		}
-		$body .= '<label for="contact_checkbox">'.elgg_echo('Vous n\'êtes pas la personne contact?').'</lable>';
+		$body .= '<label for="contact_checkbox">'.elgg_echo('event_calendar_contact').'</lable>';
 		$body .= '</p>';
 
 		$body .= '</div><div id="infoContact" class="list-unstyled">';

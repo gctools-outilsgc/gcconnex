@@ -77,3 +77,41 @@
       }
 
  /*** end of Group Cover Photo ***/
+
+     
+     
+/** Quick Discussion **/
+     
+     .quick-discuss panel-body, panel-footer{
+    padding:1px;
+
+}
+.start-discussion-form{
+    /*padding-right: 20px;*/
+
+}
+
+.quick-discuss-action-btn{
+  
+
+}
+.toggle-quick-discuss{
+    cursor:pointer;
+    background-color: #f5f5f5;
+    border-top: solid 1px #ddd;
+
+}
+#quick-discuss-panel .quick-start-collapse, #quick-discuss-panel  .quick-start-hide, #quick-discuss-panel  .alert-info{
+    display:none;
+
+}
+.quick-start-discussion{
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 5px;
+
+}
+
+     .quick-discuss-title{
+         font-weight: bold;
+         font-size: 1.3em;
+     }
