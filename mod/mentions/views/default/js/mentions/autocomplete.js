@@ -16,11 +16,21 @@ define(function(require) {
 	var $ = require('jquery');
 	var elgg = require('elgg');
 
+setTimeout(function () {
 	if (require.specified('ckeditor')) {
+
 		require(['ckeditor'], function(CKEDITOR) {
+
+			console.log(CKEDITOR);
+
 			CKEDITOR.on('instanceCreated', function (e) {
+
+				console.log('instanced');
+
 				e.editor.on('contentDom', function(ev) {
 					var editable = ev.editor.editable();
+
+					console.log("ContentDom'd");
 
 					editable.attachListener(editable, 'keyup', function() {
 						textarea = e.editor;
@@ -33,6 +43,7 @@ define(function(require) {
 			});
 		});
 	};
+}, 10);
 
 	var getCursorPosition = function(el) {
 		var pos = 0;
@@ -132,6 +143,7 @@ define(function(require) {
 	};
 
 	var autocomplete = function (content, position) {
+		console.log("autocomplete'd");
 		beforeMention = content.substring(0, position);
 		afterMention = content.substring(position);
 		parts = beforeMention.split(' ');
