@@ -279,6 +279,7 @@ function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend 
 						'cp_invitee' => $email,
 						'cp_inviter' => $loggedin_user,
 						'cp_group_invite' => $group,
+						'group_link' => elgg_get_site_url().'groups/profile/'.$group->guid.'/'.$group->name,
 						'cp_invitation_nonuser_url' => elgg_get_site_url()."register?group_invitecode={$invite_code}",
 						'cp_invitation_url' => elgg_get_site_url()."groups/invitations/?invitecode={$invite_code}",
 						'cp_invitation_code' => $invite_code,
