@@ -14399,8 +14399,7 @@
 										'tabindex': settings.iTabIndex,
 										'id': idx === 0 && typeof button === 'string' ?
 											settings.sTableId +'_'+ button :
-											null,
-										'href':'#table-select-all',	
+											null
 									} )
 									.html( btnDisplay )
 									.appendTo( container );
