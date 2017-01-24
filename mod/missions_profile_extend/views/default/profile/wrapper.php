@@ -91,13 +91,13 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
             finit_ajax_block('work-experience');
         }
 
-        if(elgg_is_logged_in()){
+        //if(elgg_is_logged_in()){
             if ( has_content($user, 'gc_skills') ) {
                 init_ajax_block(elgg_echo('gcconnex_profile:gc_skills'), 'skills', $user);
                 echo elgg_view('b_extended_profile/skills');
                 finit_ajax_block('skills');
             }
-        }
+        //}
 
         /*
          * MODIFIED CODE
