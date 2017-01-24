@@ -11,7 +11,9 @@ $guid = (int) get_input('guid');
 
 $group = get_entity($guid);
 
-if($group->official_group){
+//Make sure it is a group
+if($group instanceof ElggGroup){
+    if($group->official_group){
     if($group->official_group == true){
        echo json_encode([
         'confirm' =>'I am already official',
@@ -34,3 +36,11 @@ if($group->official_group){
 echo json_encode([
     'confirm' =>$guid,
 ]);*/
+    
+}else{
+    echo json_encode([
+        'confirm' =>'This aint no group',
+        'color'=>'red',
+    ]);
+    
+}
