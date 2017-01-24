@@ -1,4 +1,10 @@
 <?php
+/*
+* Displays the official check in the group summary view
+*
+* @version 1.0
+* @author Nick
+*/
 
 $entity = $vars['entity'];
 //Tests if the entity is an official group

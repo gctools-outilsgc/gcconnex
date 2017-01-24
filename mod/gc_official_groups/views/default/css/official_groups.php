@@ -1,6 +1,9 @@
 <?php
 /*
 * Custom Styles for the official group mod
+*
+* @version 1.0
+* @author Nick
 */
  ?>
 

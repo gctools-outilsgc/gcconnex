@@ -5,10 +5,12 @@
 * @version 1.0
 * @author Nick
 */
-
+//Label with some basic instructions
 $body = '<label for="group_url">Add Official Group</label>';
 $body .= '<div>Add the url to the group profile and click Add Group - ex: https://gcconnex.gc.ca/groups/profile/1234567/group-name</div>';
 $body .= '<div class="off-group-add-feedback"></div>';
+
+//Form
 $body .= elgg_view('input/text', array(
     'name'=>'group_url',
     'id' => 'group_url',
@@ -17,7 +19,7 @@ $body .= elgg_view('input/text', array(
 ));
 
 
-
+//Button
 $body .= elgg_view('output/url', array(
     'text'=>'Add Group',
     'href'=>'#',

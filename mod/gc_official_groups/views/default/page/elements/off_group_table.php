@@ -6,7 +6,7 @@
 * @author Nick
 */
 
-
+//Grab the groups with the official group = true metadata
 $group_entity_list = elgg_get_entities_from_metadata(array(
     'type'=>'group',
     'limit'=>0,
@@ -18,14 +18,16 @@ $group_entity_list = elgg_get_entities_from_metadata(array(
 
 echo '<table class="off-group-table">';
 echo '<tr><th>Group</th><th>Owner</th><th>Manage</th></tr>';
-//echo $group_entity_list;
+
 foreach($group_entity_list as $group){
-    
+    //Get the info for the group
     $user = $group->getOwnerEntity();
+    //Get the owner's email incase we need to contact them
     $mail_link = elgg_view('output/url', array(
         'text'=>$user->email,
         'href'=>'mailto:'.$user->email,
     ));
+    //Link to remove official status
     $remove_link = elgg_view('output/url', array(
         'text'=>'Remove Status',
         'href'=>'action/remove_off_group?guid='.$group->guid,

@@ -1,4 +1,10 @@
 <?php
+/*
+* If we are on a group profile page, add the badge graphic with javascript
+*
+* @version 1.0
+* @author Nick
+*/
 
 if(elgg_in_context('group_profile') || elgg_instanceof(elgg_get_page_owner_entity(), 'group')){
 //Wrap this view in the context of group profile

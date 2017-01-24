@@ -17,6 +17,7 @@ function gc_official_group_init(){
     
     elgg_register_action('remove_off_group', elgg_get_plugins_path() .'gc_official_groups/actions/remove_off_group.php',"admin");
     
+    //Add CSS styles
     elgg_extend_view('css/elgg', 'css/official_groups');
     
     
