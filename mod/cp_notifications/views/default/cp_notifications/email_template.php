@@ -421,11 +421,11 @@ switch ($msg_type) {
 
 
 	case 'cp_friend_invite': // link
-		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_invite_new_user:title',array(),'en');
-		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_invite_new_user:title',array(),'fr');
-
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_invite_new_user:description',array($vars['cp_join_url']),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_invite_new_user:description',array($vars['cp_join_url']),'fr');
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_invite_new_user:title',array($vars['cp_from_user']),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_invite_new_user:title',array($vars['cp_from_user']),'fr');
+        //Nick - adding the msg to the 
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_invite_new_user:description',array($vars['cp_join_url']),'en') . ' <br> ' . $vars['cp_msg'];
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_invite_new_user:description',array($vars['cp_join_url']),'fr'). ' <br> ' . $vars['cp_msg'];
 
 		break;
 

@@ -179,7 +179,7 @@ $english = array(
 
 	// invited to join GCconnex section
 	'cp_notify:subject:invite_new_user' => "You have been invited to join GCconnex",
-	'cp_notify:body_invite_new_user:title' => "You have been invited to join GCconnex",
+	'cp_notify:body_invite_new_user:title' => "You have been invited to join GCconnex by %s",
 	'cp_notify:body_invite_new_user:description' => "Join the professionnal networking and collaborative workspace for all public service. You can proceed to your GCconnex registration through this link %s", 
 
 

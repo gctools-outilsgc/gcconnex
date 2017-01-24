@@ -208,7 +208,7 @@ $french = array(
 
 	// invite new user to GCconnex
 	'cp_notify:subject:invite_new_user' => "Vous avez été invité à joindre GCconnex",
-	'cp_notify:body_invite_new_user:title' => "Vous avez été invité à joindre GCconnex",
+	'cp_notify:body_invite_new_user:title' => "Vous avez été invité à joindre GCconnex par %s",
 	'cp_notify:body_invite_new_user:description' => "Joignez-vous à l'espace de travail collaboratif pour le réseautage professionnel pour l'ensemble de la fonction publique. Vous pouvez vous inscrire à GCconnex en cliquant sur le lien suivant %s",
 
 
