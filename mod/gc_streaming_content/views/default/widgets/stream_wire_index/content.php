@@ -1,6 +1,28 @@
 <?php 
 
 
+
+/*
+* GC_MODIFICATION
+* Description: Added view all link
+* Author: GCTools Team
+*/
+
+echo '<div class="new-wire-holder"><div class="posts-holder"></div></div>';
+	$num_items = $vars['entity']->num_items;
+	if (!isset($num_items)) $num_items = 15;
+	elgg_set_context('custom_index_widgets wire');
+
+	$widget_datas = elgg_list_entities(array(
+		'type'=>'object',
+		'subtype'=>'thewire',
+		'limit'=>$num_items,
+		'full_view' => false,
+		'list_type_toggle' => false,
+		'pagination' => false));
+
+	echo $widget_datas;
+
 $all_link = elgg_view('output/url', array(
 	'href' => 'thewire/all',
 	'text' => elgg_echo('View The Wire') . $groupCount,
@@ -8,16 +30,12 @@ $all_link = elgg_view('output/url', array(
 ));
 echo "<div class='text-right mrgn-tp-sm'>$all_link</div>";
 
+
 ?>
  
 
-
-
-<div id='cyutest' class='cyutest' name='cyutest'>
-	fdgfdgfd
-</div>
-
 <script>
+    /*
 $( document ).ready(function() {
     console.log( "ready!" );
     doAjaxLongpollingCall()
@@ -62,6 +80,6 @@ $.each (data['result']['posts'], function (key, value) {
 
 //while (true) {
     
-
+*/
 
 </script>
