@@ -7,7 +7,7 @@
  */
 
 $english = array(
-
+    'temp:languages:disabled:message' => '<br />We are currently re-working language skills will appear in GCconnex profiles.<br />Please stay tuned for updates.',
     //edit profile message
     'profile:notsaved' => 'Not all information could be saved, empty fields are not allowed', /* NEW */
     'profile:title' => "%s's Profile",
