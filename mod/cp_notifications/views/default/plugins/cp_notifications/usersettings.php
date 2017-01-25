@@ -333,7 +333,7 @@ function get_forum_in_group($entity_guid_static, $entity_guid) {
 			// do nothing
 		} else {
 			var loading_text = elgg.echo('cp_notify:setting:loading');
-			// // assuming this is doing what i think it is doing + loading indicator
+
 			$('#group-content-' + grp_guid).children().remove();
 			$('#group-content-' + grp_guid).append("<div class='clearfix col-sm-12 list-break'>" + loading_text + "<div>");
 			// jquery - retrieve the group content on user click (this way it doesn't try and load everything at once)
@@ -400,12 +400,11 @@ function get_forum_in_group($entity_guid_static, $entity_guid) {
 		                success: function(data) {
 		                  $(this_thing).closest('.list-break').fadeOut();
 		                }
-			        }) 	// close jquery action line 286
+			        }) 	
 			    });
 			}
-		}); 			// close jquery action line 271
+		}); 			
 	}
-
 </script>
 
 <?php

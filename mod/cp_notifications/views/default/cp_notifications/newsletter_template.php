@@ -31,67 +31,73 @@ if (strlen($mission) > 0) {
 	$mission_fr = "<h4><p> Missions </p></h4> {$mission} <br/>";
 }
 
+
+
 echo <<<___HTML
 <html>
 	<body>
-	<!-- beginning of email template -->
-		<div width='100%' bgcolor='#fcfcfc'>
-		<div>
-		<div>
+  <h2>Your GCconnex Digest: 11 New Things Happened on GCconnex</h2>
+  <sub>This is a system-generated message from GCconnex. Please do not reply to this message</sub>
+	<div width='100%' bgcolor='#fcfcfc'>
 
-		<!-- email header -->
-		<div align='center' width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 12px; color: #055959'> &nbsp; </div>
-
-
-		<!-- GCconnex banner -->
-		<div width='100%' style='padding: 0 0 0 10px; color:#ffffff; font-family: sans-serif; font-size: 35px; line-height:38px; font-weight: bold; background-color:#047177;'>
+	<!-- GCconnex banner -->
+	<div width='100%' style='padding: 0 0 0 10px; color:#ffffff; font-family: sans-serif; font-size: 35px; line-height:38px; font-weight: bold; background-color:#047177;'>
 		<span style='padding: 0 0 0 3px; font-size: 20px; color: #ffffff; font-family: sans-serif;'>GCconnex</span>
-		</div>
+	</div>
+
+Good morning Christine
+Here are your notifications for October 3rd 2016.
+
+<div>
+<h3>Personal Notifications</h3>
+  <ul>
+    <li>3 likes on your post: Hello World</li>
+    <li>John Doe has liked your discussion reply</li>
+    <li>2 colleague requests</li>
+  </ul>
+</div>
+
+<div>
+<h3>Opportunity (Micro Mission) Notifications</h3>
+  <ul>
+    <li>2 Opportunities have been created</li>
+    <ul><li>New Opportunity</li></ul>
+    <ul><li>New Opportunity</li></ul>
+    <ul><li>New Opportunity</li></ul>
+  </ul>
+</div>
+
+<div>
+<h3>Group Notifications</h3>
+  <ul>
+    <li>Hello World Group Beta</li>
+    <ul><li>2 Discussion Topics have been created</li></ul>
+      <ul><ul><li>Hello World 1</li></ul></ul>
+      <ul><ul><li>Hello World 2</li></ul></ul>
+    
+		<ul><li>3 Files have been uploaded</li></ul>
+      <ul><ul><li>File Alpha 1</li></ul></ul>
+      <ul><ul><li>File Alpha 2</li></ul></ul>
+    
+    <li>Hello World Group Alpha</li>
+		<ul><li>3 Files have been uploaded</li></ul>
+      <ul><ul><li>File Alpha 1</li></ul></ul>
+      <ul><ul><li>File Alpha 2</li></ul></ul>
+  </ul>
+</div>
+The GCTools Team
 
 
-		<!-- email divider -->
-		<div style='height:1px; background:#bdbdbd; border-bottom:1px solid #ffffff'></div>
+    <!-- email footer -->
+    <div width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 10px; color: #055959'>Should you have any concerns, please use the Contact us form. To unsubscribe or manage these messages, please login and visit your notification settings 	</div>
 
 
-
-
-		<table cellspacing="0" cellpadding="10" border="1" width="90%" align="center">
-			<tr>
-
-				<td width="50%">
-
-				{$content_en}
-				{$like_en}
-				{$comment_en}
-				{$revision_en}
-				{$mission_en}
-
-				</td>
-
-
-				<td width="50%">
-
-				{$content_fr}
-				{$like_fr}
-				{$comment_fr}
-				{$revision_fr}
-				{$mission_fr}
-
-				</td>
-			</tr>
-		</table>
-
-
-
-
-		<!-- email footer -->
-		<div align='center' width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 10px; color: #055959'> GCconnex © 2016 </div>
-
-		</div>
-		</div>
 		</div>
 	</body>
 </html>
 
 ___HTML;
+
+
+
 
