@@ -303,7 +303,13 @@ elgg.file_tools.new_folder = function(event) {
 	event.preventDefault();
 
 	var hash = window.location.hash.substr(1);
-	var link = elgg.get_site_url() + "file_tools/folder/new/" + elgg.get_page_owner_guid() + "?folder_guid=" + hash;
+	var guid = elgg.get_page_owner_guid();
+
+	if (!guid){
+		var guid = elgg.get_logged_in_user_guid();
+	}
+
+	var link = elgg.get_site_url() + "file_tools/folder/new/" + guid + "?folder_guid=" + hash;
 	
 	$.colorbox({
 		href: link,
