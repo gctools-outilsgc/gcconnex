@@ -46,18 +46,19 @@ if ($reshare_guid || $reshare_guid > 0) {
 
 	if($to_recipients->guid != get_loggedin_user()->guid){ // if user share his own stuff, dont send the notification
 
-		// cyu - if cp notification plugin is active, use that for notifications
-		if (elgg_is_active_plugin('cp_notifications')) {
-			$message = array(
-				'cp_msg_type' => 'cp_wire_share',
-				'cp_recipient' => $to_recipients,
-				'cp_shared_by' => elgg_get_logged_in_user_entity(),
-				'cp_content' => $entity,
-				'cp_wire_url' => $wire_entity->getURL(),
-			);
-			elgg_trigger_plugin_hook('cp_overwrite_notification','all',$message);
 
-		}
+	// cyu - if cp notification plugin is active, use that for notifications
+	if (elgg_is_active_plugin('cp_notifications')) {
+		$message = array(
+			'cp_msg_type' => 'cp_wire_share',
+			'cp_recipient' => $entity->getOwnerEntity(),
+			'cp_shared_by' => elgg_get_logged_in_user_entity(),
+			'cp_content_reshared' => $entity,
+			'cp_content' => $wire_entity,
+			'cp_wire_url' => $wire_entity->getURL(),
+		);
+		elgg_trigger_plugin_hook('cp_overwrite_notification','all',$message);
+
 	}
 }
 

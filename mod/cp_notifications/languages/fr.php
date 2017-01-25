@@ -1,7 +1,15 @@
 <?php
 
 $french = array(
+
 	'cp_notify:setting:no_grp_subscription' => 'Rien à charger',
+
+
+	'cp_notify:NewsletterSettings' => "Notification Newsletter", // translate
+	'cp_notify:enable_digest' => "Enable Digest Feature",
+
+	'cp_notify:setting:no_grp_subscription' => '',
+
 	'cp_notify:setting:loading' => 'Chargement...',
 	// e-mail header text
 	'cp_notification:email_header' => "Ceci est un message généré par le système de GCconnex. Veuillez ne pas répondre à ce message",
@@ -213,24 +221,24 @@ $french = array(
 
 
 	// transfer group admin
-	'cp_notify:subject:group_admin_transfer' => "Vous êtes maintenant le propriétaire du groupe '%s'", // translate
-	'cp_notify:body_group_admin_transfer:title' => "Vous êtes maintenant le propriétaire du group '%s'", // translate
+	'cp_notify:subject:group_admin_transfer' => "Vous êtes maintenant le propriétaire du groupe '%s'",
+	'cp_notify:body_group_admin_transfer:title' => "Vous êtes maintenant le propriétaire du group '%s'",
 	'cp_notify:body_group_admin_transfer:description' => "%s vous a délégué les droits d'administrateur du groups '%s'.<br/><br/>
 		Pour accéder le groupe, veuillez cliquer sur le lien suivant : <br/> 
 		%s", // translate
 
 
 	// add group operator
-	'cp_notify:subject:add_grp_operator' => "Le propriétaire du groupe '%s' vous a délégué les droits d'administrateur", // new
-	'cp_notify:body_add_grp_operator:title' => "Le propriétaire du groupe '%s' vous a délégué les droits d'administrateur'", // new
+	'cp_notify:subject:add_grp_operator' => "Le propriétaire du groupe '%s' vous a délégué les droits d'administrateur",
+	'cp_notify:body_add_grp_operator:title' => "Le propriétaire du groupe '%s' vous a délégué les droits d'administrateur'",
 	'cp_notify:body_add_grp_operator:description' => "%s vous a fait propriétaire du groupe '%s'. <br/>
 		Pour accéder le groupe , s'il vous plaît cliquer sur le lien suivant : <br/>
 		%s", // new
 
 
 	// message board post section
-	'cp_notify:messageboard:subject' => "Quelqu'un a écrit sur ​​votre babillard", // translate
-	'cp_notify:body_messageboard:title' => "Quelqu'un a écrit sur ​​votre babillard", // translate
+	'cp_notify:messageboard:subject' => "Quelqu'un a écrit sur ​​votre babillard",
+	'cp_notify:body_messageboard:title' => "Quelqu'un a écrit sur ​​votre babillard",
 	'cp_notify:body_messageboard:description' => "%s a écrit sur ​​votre babillard le message suivant : <br/><br/>	
 		%s <br/>
 		Pour consulter votre babillard, cliquez sur le lien suivant : %s", // translate
@@ -265,18 +273,18 @@ $french = array(
 
 
 	// event calendar(request) section
-	'cp_notify:event_request:subject' => "%s veut ajouter %s à son calendrier ",// NEW
-	'cp_notify:body_event_request:title' => "Demande d'ajout d'un événement",// NEW
+	'cp_notify:event_request:subject' => "%s veut ajouter %s à son calendrier ",
+	'cp_notify:body_event_request:title' => "Demande d'ajout d'un événement",
 	'cp_notify:body_event_request:description' => '%s a fait une demande pour ajouter %s à son calendrier<br><br>Pour voir la requête, veuillez cliquer ici: <a href="%s">Demande d\'ajout</a>', //  Check URL or link
 
 	// event calendar (update)
-	'cp_notify:event_update:subject' => " L'événement' %s a été mis à jour", // NEW
+	'cp_notify:event_update:subject' => " L'événement' %s a été mis à jour",
 
 	// email notification footer text (1 and 2)	
-	'cp_notify:footer' => "Apprenez davantage au sujet des <a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Manage_Account_Settings/How_Do_I_Change_My_Notifications_Settings%3F/'>notifications de GCconnex</a>.",// Check URL or link
-	'cp_notify:footer2' =>  " Besoin d’aide? <a href='https://gcconnex.gc.ca/mod/contactform/'>Contactez-nous</a>.<br/>Pour vous désabonner de ces notifications, connectez-vous à GCconnex et modifiez vos <a href='%s'>paramètres de notifications</a>.",
 
 
+	'cp_notify:footer' => "Apprenez davantage au sujet des <a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Manage_Account_Settings/How_Do_I_Change_My_Notifications_Settings%3F'>notifications de GCconnex</a>.",// Check URL or link
+	'cp_notify:footer2' =>  " Besoin d’aide? <a href='".elgg_get_site_url()."mod/contactform/'>Contactez-nous</a>.<br/>Pour vous désabonner de ces notifications, connectez-vous à GCconnex et modifiez vos <a href='%s'>paramètres de notifications</a>.",
 
 
 
@@ -300,16 +308,18 @@ $french = array(
 	"cp_notify:sidebar:no_subscriptions" => "<i>Aucun abonnement disponible</i>",
 	"cp_notify:sidebar:group_title" => "Abonnement aux groupes et contenu",
 	"cp_notify:sidebar:subs_title" => "Abonnement personnel",
-	'cp_notify:pickColleagues' => 'Abonnez-vous à vos collègues', // new
-	'cp_notify:contactHelpDesk'=>'Si vous avez des questions, veuillez soumettre votre demande via le <a href="https://gcconnex.gc.ca/mod/contactform/">formulaire Contactez-nous</a>.',
-    'cp_notify:visitTutorials'=>"Pour de plus amples renseignements sur GCconnex et ses fonctionnalités, consultez l'<a href='http://www.gcpedia.gc.ca/wiki/Aide_%C3%A0_l%27utilisateur/Voir_Tout'>aide à l'utilisateur de GCconnex</a>.<br/>
+	'cp_notify:pickColleagues' => 'Abonnez-vous à vos collègues',
+	'cp_notify:contactHelpDesk'=>'Si vous avez des questions, veuillez soumettre votre demande via le <a href="'.elgg_get_site_url().'mod/contactform/">formulaire Contactez-nous</a>.',
+    'cp_notify:visitTutorials'=>"Pour de plus amples renseignements sur GCconnex et ses fonctionnalités, consultez l'<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_-_Aide_%C3%A0_l%27utilisateur/Modifier_mes_param%C3%A8tres_de_compte/Comment_puis-je_modifier_mes_param%C3%A8tres_de_notification%3F'>aide à l'utilisateur de GCconnex</a>.<br/>
 	                             Merci",
 
 	// cyu - new message in place for email content revamp
 	'cp_notify:french_follows' => "<i><sup>(Le fran&ccedil;ais suit)</sup></i>",
 	'cp_notify:readmore' => "<a href='%s'>Lire la suite</a>",
 
-    'cp_notify:email'=>'Courriel', // new
+	'cp_notify:personal_opportunities' => "Notify me when a new opportunity I have opted in for is created in the Career ConneXions Opportunities Platform",
+
+    'cp_notify:email'=>'Courriel',
     'cp_notify:personal_likes'=>'Envoyez-moi une notification lorsque quelqu\'un aime mon contenu',
     'cp_notify:personal_mentions'=>'Envoyez-moi une notification lorsque quelqu\'un me mentionne',
     'cp_notify:personal_content'=>'Envoyez-moi une notification lorsqu\'un changement est fait au contenu que j\'ai crée',
@@ -326,14 +336,16 @@ $french = array(
     'cp_notify:collNotif'=>'Notifications de collègues',
     'cp_notify:groupNotif'=>'Notifications de groupe',
 
-	'cp_notify:personal_bulk_notifications' => 'Activer la notification des Actualités', // new
-	'cp_notify:minor_edit' => 'Changements mineurs', // new
+	'cp_notify:personal_bulk_notifications' => 'Activer la notification des Actualités', 
+	'cp_notify:minor_edit' => 'Changements mineurs',
 	'cp_notify:sidebar:forum_title' => 'Les sujets de discussion et les forums',
-	'cp_notify:wirepost_generic_title' => 'Publications sur le fil', // new
-	'cp_notify:personal_setting' => 'Vos abonnements', // new
-	'cp_notify:subscribe_all_label' => "<a href='%s'>S’abonner</a> ou <a href='%s'>Se désabonner</a> à tous les groupes et leur contenu", // new
+	'cp_notify:wirepost_generic_title' => 'Publications sur le fil',
+	'cp_notify:personal_setting' => 'Vos abonnements',
+	'cp_notify:subscribe_all_label' => "<a href='%s'>S’abonner</a> ou <a href='%s'>Se désabonner</a> à tous les groupes et leur contenu",
 	'cp_notify:unsubscribe_all_label' => 'Cliquez ici pour vous désabonner à toutes les mises à jour des groupes',
-	'cp_notify:no_subscription' => "Il n'y a pas d'abonnement", // new
+	'cp_notify:no_subscription' => "Il n'y a pas d'abonnement",
+
+	'not_contact_person' => "Vous n'êtes pas la personne contact?",
 );
 
 add_translation("fr", $french);

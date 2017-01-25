@@ -1,7 +1,22 @@
 <?php
 
 $english = array(
+
 	'cp_notify:setting:no_grp_subscription' => 'Nothing to load',
+
+	'cp_notify:NewsletterSettings' => "Notification Newsletter",
+	'cp_notify:enable_digest' => "Enable Digest Feature",
+	'cp_notify:nocolleagues' => "You do not have any colleagues",
+
+	'label:english' => "English",
+	'label:french' => "French",
+	'label:daily' => "Daily",
+	'label:weekly' => "Weekly",
+	'cp_notify:set_frequency' => "When do you want to receive Digest",
+	'cp_notify:set_language' => "Which language do you want to receive Digest",
+
+	'cp_notify:setting:no_grp_subscription' => '',
+
 	'cp_notify:setting:loading' => 'Loading...',
 	// e-mail header text
 	'cp_notification:email_header' => 'This is a system-generated message from GCconnex. Please do not reply to this message',
@@ -255,17 +270,17 @@ $english = array(
 	'cp_notify:body_event:event_add_to_outlook' => 'Add to my outlook calendar',
 
 	// event calendar (request) section
-	'cp_notify:event_request:subject' => "%s want to add %s at his calendar ", // NEW
-	'cp_notify:body_event_request:title' => "Calendar request", // NEW
-	'cp_notify:body_event_request:description' => '%s make a request to add %s to his calendar<br><br>To view the request, click here: <a href="%s">Demande d\'ajout</a>', //  Check URL or link
+	'cp_notify:event_request:subject' => "%s want to add %s to his calendar ",
+	'cp_notify:body_event_request:title' => "Calendar request",
+	'cp_notify:body_event_request:description' => '%s made a request to add %s to his calendar<br><br>To view the request, click here: <a href="%s">Review Request</a>',
 
 	// event calendar (update)
-	'cp_notify:event_update:subject' => "The Event %s has been updated", // NEW
+	'cp_notify:event_update:subject' => "The Event %s has been updated",
 
 
 	// email notification footer text (1 and 2)
 	'cp_notify:footer' => "Learn more about <a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Manage_Account_Settings/How_Do_I_Change_My_Notifications_Settings%3F'>GCconnex notifications</a>. ",
-	'cp_notify:footer2' => "Need help? <a href='https://gcconnex.gc.ca/mod/contactform/'>Contact us</a>.<br/>To unsubscribe from these notifications, login to GCconnex and edit your <a href='%s'>notifications' settings</a>.",
+	'cp_notify:footer2' => "Need help? <a href='".elgg_get_site_url()."contactform/'>Contact us</a>.<br/>To unsubscribe from these notifications, login to GCconnex and edit your <a href='%s'>notifications' settings</a>.",
 
 //'cp_notify:footer' => "Learn more about <a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Manage_Account_Settings/How_Do_I_Change_My_Notifications_Settings%3F'>GCconnex notifications</a>. %s sent you a site message entitled '%s'",
 
@@ -296,10 +311,10 @@ $english = array(
 	                             Thank you',
 
 	// cyu - new message in place for email content revamp
-	'cp_notify:footer_msg' => "Learn more about <a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Manage_Account_Settings/How_Do_I_Change_My_Notifications_Settings%3F'>GCconnex notifications</a>. Need help? <a href='https://gcconnex.gc.ca/mod/contactform/'>Contact us</a>.<br/>To unsubscribe to notifications, login to GCconnex and edit your notifications' settings.",
 	'cp_notify:french_follows' => "<i>(Le fran&ccedil;ais suit)</i>",
 	'cp_notify:readmore' => "<a href='%s'>Read more</a>",
 
+	'cp_notify:personal_opportunities' => "Notify me when a new opportunity I have opted in for is created in the Career ConneXions Opportunities Platform",
 
     'cp_notify:personal_likes'=>'Notify me when someone likes my content',
     'cp_notify:personal_mentions'=>'Notify me when someone @mentions me',
