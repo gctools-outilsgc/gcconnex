@@ -23,7 +23,7 @@ $(document).ready(function(){
         group_url = $(this).val();
     })
     $('#add_group_btn').on('click', function(){
-        
+        $(this).text('Thinking ...');
         //Take the url and split it up to get the group guid
         var group_guid_array = group_url.split("/");
         var group_guid = group_guid_array.slice(0,-1);
@@ -37,11 +37,13 @@ $(document).ready(function(){
                     //Feedback gets sent back
                     $('.off-group-add-feedback').text(data.output.confirm);
                     $('.off-group-add-feedback').css({"color":data.output.color,});
+                    $('#add_group_btn').text('Add Group');
                 }
             })
         }else{
             //This ain't no GUID I ere heard of
-            alert("I can't seem to find the group from this URL. Make sure you are grabbing the group's profile URL"));
+            alert("I can't seem to find the group from this URL. Make sure you are grabbing the group's profile URL");
+            $('#add_group_btn').text('Add Group');
         }
         
 

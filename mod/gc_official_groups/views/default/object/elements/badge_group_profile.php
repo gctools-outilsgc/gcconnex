@@ -19,7 +19,7 @@ $group = get_entity(elgg_get_page_owner_guid());
     $(document).ready(function(){
         //alert('good to go bb');
         var badge_link = elgg.normalize_url() +'mod/gc_official_groups/graphics/official_check.svg';
-        $('.group-title').prepend('<img src="'+badge_link+'" style="max-width: 26px;" title="official group">');
+        $('.group-title').prepend('<img src="'+badge_link+'" style="max-width: 26px;" title="<?php echo elgg_echo('gc_off_group:badge_text'); ?>">');
     })
 </script>
 
