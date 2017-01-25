@@ -5,7 +5,7 @@
  */
 
 $english = array(
-	'geds:button' => 'Sync with GEDS',
+	'geds:button' => 'Sync with GCdirectory',
 	'geds:cancel' => 'Cancel',
 	'geds:save' => 'Save',
 	'geds:searchfail' => 'No information was found in GEDS for ',
@@ -85,7 +85,9 @@ If you do not wish for your GCconnex avatar and skills to appear on GCdirectory,
 	'geds:edit:error' => 'You do not have permission to view this item.',
 	'geds_sync:setting:url' => 'GEDS API service URL',
 	'geds_sync:setting:auth_key' => 'GEDS Auth key',
-	'geds_sync:setting:map_key' => 'google map key'
+	'geds_sync:setting:map_key' => 'google map key',
+	'geds:button:unsync' => 'Unsync from GCdirectory',
+	'geds:unSync:message' => 'this action will disable GCdirectory from being able to show information from your GCconnex profile. Are you sure?',
 );
 
 add_translation('en', $english);

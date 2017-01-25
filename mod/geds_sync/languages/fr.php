@@ -5,7 +5,7 @@
  */
 
 $french = array(
-'geds:button'=> 'Synchroniser avec les SAGE',
+'geds:button'=> 'Synchroniser avec le GCannuaire',
 'geds:cancel'=> 'Annuler',
 'geds:save'=> 'Enregistrer',
 'geds:searchfail'=> 'Aucune information trouvée dans les SAGE pour ',
@@ -83,6 +83,9 @@ Si vous ne souhaitez pas que votre avatar GCconnex et vos compétences apparaiss
 'geds:org:edit:body' => 'Pour mettre à jour l’information au sujet de votre organisation ou votre lieu de travail dans les SAGE, consulter les instructions disponibles sur le <a href="http://geds20-sage20.ssc-spc.gc.ca/fr/SAGE20/?pgid=005#q1">site Web SAGE 2.0</a>.',
 'geds:org:edit:success' => 'Paramètres de sécurités sauvegardés.',
 'geds:edit:error' => "Vous n'avez pas la permission de voir cet élément.",
+'geds:button:unsync' => 'FRE - Unsync from GCdirectory',
+'geds:unSync:message' => 'FRE - this action will disable GCdirectory from being able to show information from your GCconnex profile. Are you sure?',
+
 
 );
 
