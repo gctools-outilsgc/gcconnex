@@ -87,7 +87,8 @@ If you do not wish for your GCconnex avatar and skills to appear on GCdirectory,
 	'geds_sync:setting:auth_key' => 'GEDS Auth key',
 	'geds_sync:setting:map_key' => 'google map key',
 	'geds:button:unsync' => 'Unsync from GCdirectory',
-	'geds:unSync:message' => 'this action will disable GCdirectory from being able to show information from your GCconnex profile. Are you sure?',
+	'geds:unSync:message' => 'If you unsync, your GCconnex profile information will no longer be shown on GCdirectory. Are you sure?',
+	'geds:unsync:title' => 'Are you sure?',
 );
 
 add_translation('en', $english);
