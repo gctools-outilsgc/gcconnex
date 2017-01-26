@@ -420,7 +420,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 		
 		$newsletter_appropriate = array('cp_wire_share','cp_messageboard','cp_wire_mention','cp_hjpost','cp_hjtopic');
 		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0 && in_array($cp_msg_type,$newsletter_appropriate)) {
-			error_log('create digest');
+			error_log(' +++++++++++++++++++++++++++++++++++++++++++++++++++++ create digest');
 		} else {
 			$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template ) : mail($to_recipient->email, $subject, $template, cp_get_headers($event));
 		}
@@ -597,10 +597,10 @@ function cp_create_annotation_notification($event, $type, $object) {
 				if ($watcher->guid != $object->owner_guid) { // make sure we don't send the notification to the user who made the changes
 					if (check_entity_relationship($watcher->guid, 'cp_subscribed_to_email', $entity->getContainerGUID())) {
 						
-						if (strcmp(elgg_get_plugin_user_setting('cpn_bulk_notifications_email', $watcher->guid,'cp_notifications'),'bulk_notifications_email') == 0) {
+						if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $watcher->guid,'cp_notifications'),'set_digest_yes') == 0) {
 						
-	   
-							cp_digest_preparation($watcher->guid, $content, 'new_revision');
+	   						error_log("+++++++++++++++++++++++++++++++++++++++++++++++++++++ create digest");
+							//cp_digest_preparation($watcher->guid, $content, 'new_revision');
 						
 						
 						} else {
@@ -718,7 +718,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 			$message['_user_e-mail'] = $to_recipient->email;	// for P/T user
 			$template = elgg_view('cp_notifications/email_template', $message); 
 			
-			(strcmp(elgg_get_plugin_user_setting('cpn_bulk_notifications_email', $to_recipient->guid,'cp_notifications'),'bulk_notifications_email') == 0) ? error_log("create digest") : cp_notification_preparation_send($content_entity, $to_recipient, $message, $content_entity->getOwnerGUID(), $subject);
+			(strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0) ? error_log(" ++++++++++++++++++++++++++++++++++++++++++++ create digest") : cp_notification_preparation_send($content_entity, $to_recipient, $message, $content_entity->getOwnerGUID(), $subject);
 
 		}
 	}
@@ -941,7 +941,7 @@ function cp_create_notification($event, $type, $object) {
 	{
 
 		$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid, 'cp_notifications');
-		$result = (strcmp($user_setting, "set_digest_yes") == 0) ? error_log("create digest") : cp_notification_preparation_send($object, $to_recipient, $message, $guid_two, $subject);
+		$result = (strcmp($user_setting, "set_digest_yes") == 0) ? error_log("++++++++++++++++++++++++++++++++++++++ create digest") : cp_notification_preparation_send($object, $to_recipient, $message, $guid_two, $subject);
 	
 	}
 }
