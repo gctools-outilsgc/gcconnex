@@ -84,7 +84,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 	switch($cp_msg_type) {
 		
-		/// e-mail notifications only (password reset, registration, etc)
+		/// EMAIL NOTIFICATIONS ONLY (password reset, registration, etc)
 		case 'cp_friend_invite': // invitefriends/actions/invite.php
 			$message = array(
 				'cp_msg_type' => $cp_msg_type,
@@ -126,8 +126,6 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $params['cp_invitee'], $params['cp_invitee'], $subject, $template, NULL, true ) : mail($params['cp_invitee'],$subject,$template,cp_get_headers());
 			return true;
 
-
-		/// all cases after this point, recipients all have a user object (they have already an account on the application)
 		case 'cp_useradd': // cp_notifications/actions/useradd.php
 			$message = array(
 				'cp_msg_type' => $cp_msg_type,
@@ -168,7 +166,24 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			break;
 
 
-		/// NORMAL NOTIFICATIONS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		/// NORMAL NOTIFICATIONS that will send out both email and site notification
 		case 'cp_wire_share': // thewire_tools/actions/add.php
 			
 			$message = array(
@@ -192,6 +207,11 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				$subject .= ' | '.elgg_echo('cp_notify:wireshare:subject',array($params['cp_shared_by']->name,$type,$params['cp_content']->title),'fr');
 			}
 			$to_recipients[] = $params['cp_recipient'];
+
+
+			$content_entity = $params['cp_content'];
+			$author = $params['cp_shared_by'];
+
 			break;
 
 
@@ -204,20 +224,27 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			);
 			$subject = elgg_echo('cp_notify:messageboard:subject',array(),'en') . ' | ' . elgg_echo('cp_notify:messageboard:subject',array(),'fr');
 			$to_recipients[] = $params['cp_recipient'];
+
+			$content_entity = $params['cp_message_content'];
+			$author = $params['cp_writer'];
 			break;
 
 
-		case 'cp_content_mention': // mentions/start.php
-			$message = array(
-				'cp_author' => $params['cp_author'],
-				'cp_content' => $params['cp_content'],
-				'cp_link' => $params['cp_link'],
-				'cp_msg_type' => 'cp_mention_type',
-				'cp_content_desc' => $params['cp_content_desc'],
-			);
-			$subject = elgg_echo('cp_notify:subject:mention',array($params['cp_author']),'en') . ' | ' . elgg_echo('cp_notify:subject:mention',array($params['cp_author']),'fr');
-			$to_recipients[] = $params['cp_to_user'];
-			break;
+		// case 'cp_content_mention': // mentions/start.php
+		// 	$message = array(
+		// 		'cp_author' => $params['cp_author'],
+		// 		'cp_content' => $params['cp_content'],
+		// 		'cp_link' => $params['cp_link'],
+		// 		'cp_msg_type' => 'cp_mention_type',
+		// 		'cp_content_desc' => $params['cp_content_desc'],
+		// 	);
+		// 	$subject = elgg_echo('cp_notify:subject:mention',array($params['cp_author']),'en') . ' | ' . elgg_echo('cp_notify:subject:mention',array($params['cp_author']),'fr');
+		// 	$to_recipients[] = $params['cp_to_user'];
+
+		// 	$content_entity = $params['cp_content'];
+		// 	$author = $params['cp_author'];
+
+		// 	break;
 
 
 		case 'cp_add_grp_operator': // group_operators/actions/group_operators/add.php (adds group operator)
@@ -255,6 +282,9 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			);
 			$subject = elgg_echo('cp_notify:subject:wire_mention',array($params['cp_mention_by']),'en') . ' | ' . elgg_echo('cp_notify:subject:wire_mention',array($params['cp_mention_by']),'fr');
 			$to_recipients[] = $params['cp_send_to'];
+
+			$content_entity = $params['cp_wire_entity'];
+			$author = $content_entity->getOwnerEntity();
 			break;
 
 
@@ -293,6 +323,9 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_msg_type' => $cp_msg_type
 			);
 			$to_recipients[] = get_user($params['cp_invitee']['guid']);
+
+			$content_entity = $params['cp_invite_to_group'];
+			$author = $params['cp_inviter'];
 			break;
 
 
@@ -318,6 +351,10 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			);
 			$subject = elgg_echo('cp_notify:subject:friend_request',array($params['cp_friend_requester']['name']),'en') . ' | ' . elgg_echo('cp_notify:subject:friend_request',array($params['cp_friend_requester']['name']),'fr');
 			$to_recipients[] = get_user($params['cp_friend_receiver']['guid']);
+
+			$content_entity = $params['cp_friend_invite_url'];
+			$author = $params['cp_friend_requester'];
+
 			break;
 
 
@@ -334,6 +371,9 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$subject .= ' | '.elgg_echo('cp_notify:subject:hjpost',array($params['cp_topic_author'],$params['cp_topic_title']),'fr');
 			foreach ($t_user as $s_uer)
 				$to_recipients[] = get_user($s_uer);
+
+			$content_entity = "";
+			$author = $paramsp[];
 			break;
 
 
@@ -417,10 +457,11 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$template = elgg_view('cp_notifications/email_template', $message);
 		}
 		
-		
+		error_log("sending notification...... {$cp_msg_type}");
 		$newsletter_appropriate = array('cp_wire_share','cp_messageboard','cp_wire_mention','cp_hjpost','cp_hjtopic');
 		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0 && in_array($cp_msg_type,$newsletter_appropriate)) {
-			error_log(' +++++++++++++++++++++++++++++++++++++++++++++++++++++ create digest');
+			error_log(' +++++++++++++++++++++++++++++++++++++++++++++++++++++ create digest................... '.$cp_msg_type);
+			$result = temp_digest($author, $cp_msg_type, $content_entity, $to_recipient);
 		} else {
 			$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template ) : mail($to_recipient->email, $subject, $template, cp_get_headers($event));
 		}
@@ -428,7 +469,21 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 	}
 }
 
+function temp_digest($invoked_by, $subtype, $entity, $send_to) {
+	if ($subtype === 'cp_friend_request') {
+		error_log("======================> {$invoked_by} has sent you a friend request");
+	}
 
+	elseif ($subtype === 'cp_messageboard') {
+		error_log("======================> {$invoked_by->username} has left u a msg on your profile => sending to... {$send_to->guid} / {$send_to->username}");
+
+	} else {
+		$entity = get_entity($entity->guid);
+		error_log("======================> {$invoked_by->username} has {$subtype}: {$entity->getURL()} => sending to... {$send_to->guid} / {$send_to->username}");
+	}
+	return true;
+
+}
 
 /*
  * cp_ical_headers()
@@ -939,10 +994,8 @@ function cp_create_notification($event, $type, $object) {
 
 	foreach ($to_recipients as $to_recipient)
 	{
-
 		$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid, 'cp_notifications');
 		$result = (strcmp($user_setting, "set_digest_yes") == 0) ? error_log("++++++++++++++++++++++++++++++++++++++ create digest") : cp_notification_preparation_send($object, $to_recipient, $message, $guid_two, $subject);
-	
 	}
 }
 
@@ -1058,7 +1111,7 @@ function cp_digest_preparation($user_id, $entity, $action_type = 'new_object') {
 		// new entities had been created
 		$digest_collection['new_revision'][$entity->getGUID()] = $entity->title;
 
-		cp_save_to_db($digest, $digest_collection);
+		
 		
 	} elseif (strcmp($action_type, 'new_like') == 0) {
 
@@ -1068,8 +1121,6 @@ function cp_digest_preparation($user_id, $entity, $action_type = 'new_object') {
 
 		// new entities had been created
 		$digest_collection['new_like'][$entity->getGUID()] = $entity->title;
-
-		cp_save_to_db($digest, $digest_collection);
 
 	} else {
 
@@ -1082,7 +1133,7 @@ function cp_digest_preparation($user_id, $entity, $action_type = 'new_object') {
 				// new entities had been created
 				$digest_collection['new_mission'][$entity->getGUID()] = $entity->title;
 
-				cp_save_to_db($digest, $digest_collection);
+		
 				break;
 
 			case 'comment':
@@ -1103,7 +1154,7 @@ function cp_digest_preparation($user_id, $entity, $action_type = 'new_object') {
 					$digest_collection['new_comment'][$entity->getGUID()] = $entity->getContainerEntity()->title;
 				}
 
-				cp_save_to_db($digest, $digest_collection);
+		
 				break;
 
 			default:	// user created new core/main entity (blogs, discussion, bookmarks, etc)
@@ -1136,9 +1187,14 @@ function cp_digest_preparation($user_id, $entity, $action_type = 'new_object') {
 					}
 				}
 
-				cp_save_to_db($digest, $digest_collection);
+				
 
-	error_log(">>>>>>>>>>>>>>>>>>>>>>> SAVING SAVING SAVING SAVING...");
+
+
+		} // end switch
+	}
+
+
 	// ignore access temporarily to set the digest
 	$ia = elgg_set_ignore_access(true);
 	error_log(">>>>>>>>>>> entity guid: {$entity->guid}");
@@ -1147,9 +1203,6 @@ function cp_digest_preparation($user_id, $entity, $action_type = 'new_object') {
 
 	// set old access back to the way it was
 	elgg_set_ignore_access($ia);
-
-		} // end switch
-	}
 }
 
 
