@@ -272,6 +272,12 @@ function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend 
 			}
 				$body = elgg_trigger_plugin_hook("invite_notification", "group_tools", $params, $body);
 
+				if($text){
+					$text2 .="<div style='border: 1px solid #047177; padding:5px'>";
+					$text2 .= $text;
+					$text2 .= "</div>";
+				}
+
 				// cyu - 03/07/2016: modified to improve notifications
 				if (elgg_is_active_plugin('cp_notifications')) {
 					
@@ -283,7 +289,7 @@ function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend 
 						'cp_invitation_nonuser_url' => elgg_get_site_url()."register?group_invitecode={$invite_code}",
 						'cp_invitation_url' => elgg_get_site_url()."groups/invitations/?invitecode={$invite_code}",
 						'cp_invitation_code' => $invite_code,
-						'cp_invitation_msg' => $text,
+						'cp_invitation_msg' => $text2,
 						'cp_msg_type' => 'cp_group_invite_email'
 						);
 					elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);

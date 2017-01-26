@@ -34,15 +34,16 @@ $english = array(
 	// group invite by email section
 	'cp_notify:subject:group_invite_email' => "%s invited you to join the group '%s'",
 	'cp_notify:subject:group_invite_user_by_email' => "%s invited you to join the group %s",
-	'cp_notify:body_group_invite_email:title' => "You are invited to join a group on GCconnex",
-	//'cp_notify:body_group_invite_email:description' => "You are invited to join the '%s' GCconnex group, please register by clicking on this link: %s or, once registered, use this code on the group invitation page: '%s' <br/> %s",
-	'cp_notify:body_group_invite_email:description' => "You are invited to join the <a href='%s'>%s</a> GCconnex group. It looks like you’re not a member of GCconnex yet… GCconnex connects you with people and ideas to work better and faster. <a href='%s'>Register now</a> and be automatically added to the group.<br>
- 
-Already a member? The email in your profile may be out of date… Login and update your profile information.<br>
- 
-If you would like to register at a later time using the <a href='https://gcconnex.gc.ca/register'>Registration form</a> on GCconnex, you can join the group by using the following code on the Group invitations page: %s<br>
-%s",
+	'cp_notify:body_group_invite_email:title' => "%s invited you to join the <a href='%s'>%s</a> group on GCconnex. <br>",
+	'cp_notify:body_group_invite_email:description' => "%s<br/>
+	<a href='%s'>Register now</a> and be automatically added to the group.<br/><br/>
 
+	If you would like to register at a later time using the <a href='https://gcconnex.gc.ca/register'>Registration form</a> on GCconnex, you can join the group by using the following code on your <a href='%s'>group invitations</a> page: %s .<br/><br/>
+ 
+	Already on GCconnex? Your email address may out of date. <a href='https://gcconnex.gc.ca/login'>Login</a> and update your account settings.<br/> ",
+	
+	'cp_notify:footer:no_user' => 'Learn more about <a href="http://www.gcpedia.gc.ca/wiki/GCTools/GCconnex">GCconnex</a>, the professional networking and collaborative workspace for the public service.<br/>
+	Need help? <a href="https://gcconnex.gc.ca/mod/contactform/">Contact us</a>.',
 
 	// group mail section
 	'cp_notify:subject:group_mail' => "You have received a message entitled '%s' from the group '%s'",
