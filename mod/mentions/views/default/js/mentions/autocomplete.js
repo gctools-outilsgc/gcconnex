@@ -11,27 +11,28 @@
  * Description: Changed targeted elgg-body classes to panel-body classes to work with wet4 theme. Also made ajax popup keyboard controllable.
  * Author: Ethan Wallace
  * Date: 2/2/2016
+ *
+ * Description: Changed ckeditor mentions to use a ckeditor plugin to handle mentions. Loads new config file for ckeditor to know to load this plugin.
+ * Author: Ethan Wallace
+ * Date: 01/26/2017
+ *
  */
 define(function(require) {
 	var $ = require('jquery');
 	var elgg = require('elgg');
 
-setTimeout(function () {
+
 	if (require.specified('ckeditor')) {
 
 		require(['ckeditor'], function(CKEDITOR) {
 
-			console.log(CKEDITOR);
+			//tell ckeditor to load mentions plugin
+			CKEDITOR.plugins.addExternal('mentions',elgg.normalize_url('/mod/mentions/views/default/js/mentions/'), 'plugin.js');
 
+			/* OLD CODE
 			CKEDITOR.on('instanceCreated', function (e) {
-
-				console.log('instanced');
-
 				e.editor.on('contentDom', function(ev) {
 					var editable = ev.editor.editable();
-
-					console.log("ContentDom'd");
-
 					editable.attachListener(editable, 'keyup', function() {
 						textarea = e.editor;
 						mentionsEditor = 'ckeditor';
@@ -41,9 +42,10 @@ setTimeout(function () {
 					});
 				});
 			});
+			*/
 		});
+
 	};
-}, 10);
 
 	var getCursorPosition = function(el) {
 		var pos = 0;
@@ -143,7 +145,6 @@ setTimeout(function () {
 	};
 
 	var autocomplete = function (content, position) {
-		console.log("autocomplete'd");
 		beforeMention = content.substring(0, position);
 		afterMention = content.substring(position);
 		parts = beforeMention.split(' ');
