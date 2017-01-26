@@ -310,9 +310,9 @@ return array(
  * Access
  */
 
-	'PRIVATE' => "Private",
-	'LOGGED_IN' => "Logged in users",
-	'PUBLIC' => "Public",
+	'PRIVATE' => "Only me",
+	'LOGGED_IN' => "Users logged in to GCconnex only",
+	'PUBLIC' => "All public servants",
 	'LOGGED_OUT' => "Logged out users",
 	'access:friends:label' => "Friends",
 	'access' => "Access",

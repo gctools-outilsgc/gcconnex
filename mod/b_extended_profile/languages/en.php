@@ -7,7 +7,7 @@
  */
 
 $english = array(
-
+    'temp:languages:disabled:message' => '<br />We are currently re-working language skills will appear in GCconnex profiles.<br />Please stay tuned for updates.',
     //edit profile message
     'profile:notsaved' => 'Not all information could be saved, empty fields are not allowed', /* NEW */
     'profile:title' => "%s's Profile",
@@ -120,6 +120,7 @@ $english = array(
     'gcconnex_profile:gc_skill:endorse' => 'Endorse',
     'gcconnex_profile:gc_skill:limit' => 'You can add a maximum of 15 skills',
     'gcconnex_profile:gc_skill:click' => 'Click on skill to add/retract endorsement',
+    'gcconnex_profile:gc_skill:access' => 'Who can see my skills:',
 
     // leftover skills
     'gcconnex_profile:gc_skill:leftover' => 'You have previously entered skills which may need to be re-entered in the system. Please review your previously entered skills below and re-enter them as needed. When entering or re-entering a skill, <b>please make sure they are actual  skills that you believe you possess, that they are specific, professional and that they provide viewers of your profile with clear, meaningful and useful information</b> (ie: Not "A bunch of things.. " or "Getting things done!").',

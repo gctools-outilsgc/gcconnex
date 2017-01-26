@@ -5,7 +5,7 @@
  */
 
 $english = array(
-	'geds:button' => 'Sync with GEDS',
+	'geds:button' => 'Sync with GCdirectory',
 	'geds:cancel' => 'Cancel',
 	'geds:save' => 'Save',
 	'geds:searchfail' => 'No information was found in GEDS for ',
@@ -44,7 +44,7 @@ $english = array(
 	'geds:save' => 'Save',
 	'geds:map:title' => 'Work location',
 	//'geds:sync:info' => 'By clicking Save, you will sync the selected GEDS information with your GCconnex profile. Information about your office location and your organization will also be synched with your GCconnex profile.',
-	'geds:sync:info' => '<p>
+	/*'geds:sync:info' => '<p>
 By clicking Save, the above information you selected as well as your office and organization information will be imported from GEDS to update your GCconnex profile.  This information is copied the moment you click Save and will not update automatically if your GEDS information change unless you select the sync option again.
 </p>
 <p>
@@ -59,13 +59,36 @@ Your Avatar and Skills section will always be display in your GEDS profile.
 <p>
 The preceding only applies to the internal version of GEDS that is only visible to public servants. None of the information in your GCconnex profile will ever appear on the public-facing GEDS.gc.ca website, regardless of the privacy settings in GCconnex.
 </p>
-	',
+	',*/
+	'geds:sync:info' => '<p>
+	Please note: GCdirectory is only visible to public servants.<br />
+The Government of Canada has a separate, public-facing directory: GEDS.gc.ca.<br />
+None of the information in your GCconnex profile will appear on the GEDS.gc.ca website, regardless of your privacy settings in GCconnex.
+	</p>
+	<p>
+	When you click save, two things will happen:<br />
+1-	GCdirectory will update your office location and department/agency in GCconnex.
+This is a one-time update: if your GCdirectory information changes, you will need to sync again to update GCconnex.<br />
+2-	Your GCdirectory and GCconnex accounts will be linked and the following information from your GCconnex profile will automatically appear in GCdirectory:<br />
+Mandatory: Your Avatar (photo) and Skills<br />
+Optional: About Me, Education, Work Experience, and Second Language Evaluations
+	</p>
+	<p>
+	Important!<br />
+If you do not wish for your GCconnex avatar and skills to appear on GCdirectory, click “Cancel”.
+	</p>
+	<p>
+	For the optional information, you can chose who sees it by changing your privacy settings in GCconnex (i.e., “ Edit,” “Who can see my [description, education…]).
+	</p>',
 	'geds:org:edit:body' => 'To update information about your organization or your work location in GEDS, see the instructions available on the <a href="http://geds20-sage20.ssc-spc.gc.ca/en/GEDS20/?pgid=005#q1">GEDS 2.0 website</a>.',
 	'geds:org:edit:success' => 'Privacy settings have been updated.',
 	'geds:edit:error' => 'You do not have permission to view this item.',
 	'geds_sync:setting:url' => 'GEDS API service URL',
 	'geds_sync:setting:auth_key' => 'GEDS Auth key',
-	'geds_sync:setting:map_key' => 'google map key'
+	'geds_sync:setting:map_key' => 'google map key',
+	'geds:button:unsync' => 'Unsync from GCdirectory',
+	'geds:unSync:message' => 'If you unsync, your GCconnex profile information will no longer be shown on GCdirectory.<br /> Are you sure?',
+	'geds:unsync:title' => 'Are you sure?',
 );
 
 add_translation('en', $english);

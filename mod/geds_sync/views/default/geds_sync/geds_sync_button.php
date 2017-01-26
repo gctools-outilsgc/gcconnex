@@ -110,6 +110,58 @@
             //the button is added to the page here.
             $('.gcconnex-profile-name').append('<button type="button" class="elgg-button btn gcconnex-edit-profile" data-toggle="modal" data-target="#gedsProfile"> <?php echo elgg_echo("geds:button"); ?></button>')
             
+            if('<?php echo $owner->gedsDN; ?>' != ''){
+                //alert('geds!');
+                //var storedDn = '<?php echo $owner->gedsDN; ?>';
+                $('.gcconnex-profile-name').append('<button type="button" class="elgg-button btn gcconnex-edit-profile" data-toggle="modal" data-target="#gedsUnSync"> <?php echo elgg_echo("geds:button:unsync"); ?></button>');
+
+            }
+            $('#unSync').click(function(){
+                //var answer = confirm('<?php echo elgg_echo("geds:unSync:message"); ?>');
+                //if (answer){
+                    var pushObj = {
+                        requestID: 'X03',
+                        authorizationID: authIDsetting,
+                        requestSettings:{
+                            DN: '<?php echo addslashes($owner->gedsDN); ?>',
+                            GCpediaUsername: "",
+                            GCconnexUsername: ""
+                        }
+                    };
+                    
+                    $.ajax({
+                        type: 'POST',
+                        contentType: "application/json",
+                        url: gedsURL,
+                        data: JSON.stringify(pushObj),
+                        dataType: 'json',
+                        success: function (feed) {
+                            //console.log('unsync success');//alert(JSON.stringify(feed));
+                            elgg.action('geds_sync/saveGEDSProfile', { //target
+                                data: {
+                                    'guid': '<?php echo $owner->guid; ?>', //page owner guid
+                                    'gedsDN': 'DELETE_ME',
+                                },
+                                success: function() {
+                                    //close the modal
+                                    elgg.system_message(elgg.echo('geds:unsync:success'));
+                                    window.setTimeout(function(){
+                                        window.location.replace(window.location.href);
+                                    },1000);
+                                    //window.location.replace(window.location.href); //reload page so user can see changes
+                                }
+                            });
+                            
+                        },
+                        error: function(request, status, error) { 
+                            //do nothing - could be used for debugging
+                            //console.log('request: '+JSON.stringify(request));
+                            //console.log('status: '+JSON.stringify(status));
+                            //console.log('error: '+JSON.stringify(error));
+                        }
+                    });
+                //}
+            });
             //action listener for the modal. When the modal is shown it begins the ajax call to geds
             $('#gedsProfile').on('shown.bs.modal', function (e) {
                $("#test").empty();
@@ -380,7 +432,6 @@
             	};
            	}
            	//alert(feed.dn);
-            
             //alert(JSON.stringify(pushObj2));
             $.ajax({
             	type: 'POST',
@@ -472,3 +523,28 @@
     </div>
 </div>
 
+<div class="modal" id="gedsUnSync" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog dialog-box">
+        <div class="panel panel-custom">
+            <div class="panel-heading">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <div class="modal-title" id="title"><h2><?php echo elgg_echo('geds:unsync:title'); ?></h2></div>
+            </div>
+            <div class="panel-body" >
+                <div class="basic-profile-standard-field-wrapper">
+                    <div id="newTest">
+                        <br />
+                        <?php echo elgg_echo("geds:unSync:message"); ?>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <!--Is this you?-->
+                <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo elgg_echo('geds:personsel:no'); ?> </button> 
+                <button type="button" id="unSync" class="btn btn-primary"> <?php echo elgg_echo('geds:personsel:yes'); ?> </button> 
+            </div>
+        </div>
+    </div>
+</div>
