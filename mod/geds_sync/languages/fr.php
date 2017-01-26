@@ -84,7 +84,7 @@ Si vous ne souhaitez pas que votre avatar GCconnex et vos compétences apparaiss
 'geds:org:edit:success' => 'Paramètres de sécurités sauvegardés.',
 'geds:edit:error' => "Vous n'avez pas la permission de voir cet élément.",
 'geds:button:unsync' => 'Désynchroniser à partir de GCdirectory',
-'geds:unSync:message' => "Si vous désynchronisez, l'information dans votre profile GCconnex n'apparaîtra plus sur GCannuaire. Êtes-vous certain?",
+'geds:unSync:message' => "Si vous désynchronisez, l'information dans votre profile GCconnex n'apparaîtra plus sur GCannuaire.<br /> Êtes-vous certain?",
 'geds:unsync:title' => 'Êtes-vous certain?',
 
 );

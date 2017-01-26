@@ -312,7 +312,7 @@ return array(
 
 	'PRIVATE' => "Only me",
 	'LOGGED_IN' => "Users logged in to GCconnex only",
-	'PUBLIC' => "All public servants and GCdirectory",
+	'PUBLIC' => "All public servants",
 	'LOGGED_OUT' => "Logged out users",
 	'access:friends:label' => "Friends",
 	'access' => "Access",

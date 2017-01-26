@@ -313,7 +313,7 @@ return array(
 
 	'PRIVATE' => "Seulement moi",
 	'LOGGED_IN' => "Usagers connectés à GCconnex seulement",
-'PUBLIC' => "Tous les fonctionnaires et GCannuaire",
+'PUBLIC' => "Tous les fonctionnaires",
 'LOGGED_OUT' => "Utilisateurs hors connexion",
 	'access:friends:label' => "Amis",
 	'access' => "Accès",
