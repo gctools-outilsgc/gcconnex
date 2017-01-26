@@ -75,11 +75,26 @@ if ( !$title_link && json_decode($entity->title) ){
 if ($title_link) {
     echo "<span class=\"mrgn-bttm-0 summary-title\">$title_link</span>"; //put in span because some links would not take classes
     echo elgg_in_context($context);
+
+	// identify available content
+$description_json = json_decode($entity->description);
+    if (($description_json->en) && ($description_json->fr)) {
+	    echo " <span class='indicator_summary' title='".elgg_echo('indicator:summary:title')."'>".elgg_echo('indicator:summary')."</span>"; //indicator translation
+	}elseif (elgg_get_context() == 'polls'){
+	    if ((polls_get_choice_array2($entity)) && (polls_get_choice_array($entity))) {
+	    	
+	    	echo " <span class='indicator_summary' title='".elgg_echo('indicator:summary:title')."'>".elgg_echo('indicator:summary')."</span>"; //indicator translation for polls
+	    }
+	}
+
+
 }/*else{
         echo "<span class=\"mrgn-bttm-0 summary-title\">$entity->title</span>"; //put in span because some links would not take classes
     echo elgg_in_context($context);
 }*/
 //This tests to see if you are looking at a group list and does't outpout the subtitle variable here, It's called at the end of this file
+
+
 if($entity->getType() == 'group'){
    echo '';
 }else{
