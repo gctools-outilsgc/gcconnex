@@ -169,6 +169,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_msg_type' => $cp_msg_type,
 				'_user_e-mail' => $params['cp_invitee'],
 				'group_link' => $params['group_link'],
+				'cp_user_profile' => $params['cp_user_profile'],
 			);
 			$template = elgg_view('cp_notifications/email_template', $message);
 			$user_obj = get_user_by_email($params['cp_invitee']);

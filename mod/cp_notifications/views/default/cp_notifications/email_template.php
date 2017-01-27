@@ -311,12 +311,17 @@ switch ($msg_type) {
 
 
 	case 'cp_group_invite_email':	// inviting non user to group
-		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_group_invite_email:title',array($vars['cp_email_invited_by']->name,$vars['group_link'],$vars['cp_group_invite']->name),'en');
-		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_group_invite_email:title',array($vars['cp_email_invited_by']->name,$vars['group_link'],$vars['cp_group_invite']->name),'fr');
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_group_invite_email:title',array($vars['cp_user_profile'],$vars['cp_email_invited_by']->name,$vars['group_link'],$vars['cp_group_invite']->name),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_group_invite_email:title',array($vars['cp_user_profile'],$vars['cp_email_invited_by']->name,$vars['group_link'],$vars['cp_group_invite']->name),'fr');
 		//$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_group_invite_email:title',array(),'fr');
+		
+		if($vars['cp_invitation_msg']){
+			$cp_notify_msg_description_en = elgg_echo('cp_personalized_message',array($vars['cp_email_invited_by']->name,$vars['cp_invitation_msg']),'en');
+			$cp_notify_msg_description_fr = elgg_echo('cp_personalized_message',array($vars['cp_email_invited_by']->name,$vars['cp_invitation_msg']),'fr');
+		}
 
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_group_invite_email:description',array($vars['cp_invitation_msg'],$vars['cp_invitation_non_user_url'],'http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Content_Management_and_Collaboration/How_Do_I_Access_and_Join_a_Group%3F',$vars['cp_invitation_code']),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_group_invite_email:description',array($vars['cp_invitation_msg'],$vars['cp_invitation_non_user_url'],'http://www.gcpedia.gc.ca/wiki/GCconnex_-_Aide_%C3%A0_l%27utilisateur/Pour_commencer/Comment_puis-je_acc%C3%A9der_%C3%A0_un_groupe_et_m%E2%80%99y_joindre%3F',$vars['cp_invitation_code']),'fr');
+		$cp_notify_msg_description_en .= elgg_echo('cp_notify:body_group_invite_email:description',array($vars['cp_invitation_non_user_url'],'http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Content_Management_and_Collaboration/How_Do_I_Access_and_Join_a_Group%3F',$vars['cp_invitation_code']),'en');
+		$cp_notify_msg_description_fr .= elgg_echo('cp_notify:body_group_invite_email:description',array($vars['cp_invitation_non_user_url'],'http://www.gcpedia.gc.ca/wiki/GCconnex_-_Aide_%C3%A0_l%27utilisateur/Pour_commencer/Comment_puis-je_acc%C3%A9der_%C3%A0_un_groupe_et_m%E2%80%99y_joindre%3F',$vars['cp_invitation_code']),'fr');
 		//$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_group_invite_email:description',array($vars['cp_group_invite']->name,$vars['cp_invitation_non_user_url'],$vars['cp_invitation_code'],$vars['cp_invitation_msg']),'fr');
 		
 		$email_notification_footer_non_user_en = elgg_echo('cp_notify:footer:no_user',array(),'en');	
