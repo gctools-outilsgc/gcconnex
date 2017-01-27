@@ -372,8 +372,8 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			foreach ($t_user as $s_uer)
 				$to_recipients[] = get_user($s_uer);
 
-			$content_entity = "";
-			$author = $paramsp[];
+			$content_entity = $params['cp_post'];
+			$author = $params['cp_post']->getOwnerEntity();
 			break;
 
 
@@ -390,6 +390,9 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$subject .= ' | '.elgg_echo('cp_notify:subject:hjtopic',array($params['cp_topic_author'],$params['cp_topic_title']),'fr');
 			foreach ($t_user as $s_uer)
 				$to_recipients[] = get_user($s_uer);
+
+			$content_entity = $params['cp_post'];
+			$author = $params['cp_topic']->getOwnerEntity();
 			break;
 
 		case 'cp_event_request': // event_calendar/actions/event_calendar/request_personal_calendar.php
@@ -458,7 +461,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 		}
 		
 		error_log("sending notification...... {$cp_msg_type}");
-		$newsletter_appropriate = array('cp_wire_share','cp_messageboard','cp_wire_mention','cp_hjpost','cp_hjtopic');
+		$newsletter_appropriate = array('cp_wire_share','cp_messageboard','cp_wire_mention','cp_hjpost','cp_hjtopic', 'cp_friend_request');
 		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0 && in_array($cp_msg_type,$newsletter_appropriate)) {
 			error_log(' +++++++++++++++++++++++++++++++++++++++++++++++++++++ create digest................... '.$cp_msg_type);
 			$result = temp_digest($author, $cp_msg_type, $content_entity, $to_recipient);
@@ -469,21 +472,122 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 	}
 }
 
-function temp_digest($invoked_by, $subtype, $entity, $send_to) {
-	if ($subtype === 'cp_friend_request') {
-		error_log("======================> {$invoked_by} has sent you a friend request");
-	}
 
-	elseif ($subtype === 'cp_messageboard') {
-		error_log("======================> {$invoked_by->username} has left u a msg on your profile => sending to... {$send_to->guid} / {$send_to->username}");
+
+/*
+ * prepare the digest
+ * 
+ * @param int			$user_id		the recipient of the notification
+ * @param ElggObject	$entity			the new entity that has been created
+ * @param string		$action_type	the type of action (new object, edited, etc) default is  `new_object`
+ */
+function cp_digest_preparation($user_id, $entity, $action_type = 'new_object') {
+
+	$user = get_user($user_id);
+	//$notification_collection = get_entity($user->cpn_newsletter);
+	$subtype = $entity->getSubtype();
+	$dbprefix = elgg_get_config('dbprefix');
+	
+	if (strcmp($action_type,'new_revision') == 0) {
+
+		$user_entity = get_user($user_id);
+		$digest = get_entity($user_entity->cpn_newsletter); // get entity
+		$digest_collection = json_decode($digest->description, true);
+
+		// new entities had been created
+		$digest_collection['new_revision'][$entity->getGUID()] = $entity->title;
+
+		
+		
+	} elseif (strcmp($action_type, 'new_like') == 0) {
+
+		$user_entity = get_user($user_id);
+		$digest = get_entity($user_entity->cpn_newsletter); // get entity
+		$digest_collection = json_decode($digest->description, true);
+
+		// new entities had been created
+		$digest_collection['new_like'][$entity->getGUID()] = $entity->title;
 
 	} else {
-		$entity = get_entity($entity->guid);
-		error_log("======================> {$invoked_by->username} has {$subtype}: {$entity->getURL()} => sending to... {$send_to->guid} / {$send_to->username}");
-	}
-	return true;
 
+		switch ($subtype) {
+			case 'mission':
+				$user_entity = get_user($user_id);
+				$digest = get_entity($user_entity->cpn_newsletter); // get entity
+				$digest_collection = json_decode($digest->description, true);
+
+				// new entities had been created
+				$digest_collection['new_mission'][$entity->getGUID()] = $entity->title;
+
+		
+				break;
+
+			case 'comment':
+			case 'discussion_reply':
+
+				$user_entity = get_user($user_id);
+				$digest = get_entity($user_entity->cpn_newsletter); // get entity
+				$digest_collection = json_decode($digest->description, true);
+
+				// new comment or reply has been created (in either group or user)???
+				// TODO: for comments, we can total up the amount of comments for the topic
+
+
+				// extracting the title (english and french)
+				if (elgg_is_active_plugin('wet4')) {
+					$digest_collection['new_comment'][$entity->getGUID()] = gc_explode_translation($entity->getContainerEntity()->title3,'en').' / '.gc_explode_translation($entity->getContainerEntity()->title3,'fr');
+				} else {
+					$digest_collection['new_comment'][$entity->getGUID()] = $entity->getContainerEntity()->title;
+				}
+
+		
+				break;
+
+			default:	// user created new core/main entity (blogs, discussion, bookmarks, etc)
+				
+				$user_entity = get_user($user_id);
+
+				$digest = get_entity($user_entity->cpn_newsletter); // get entity
+
+				$digest_collection = json_decode($digest->description, true);
+				
+				
+
+				// new content has been created in the group
+				if ($entity->getContainerEntity() instanceof ElggGroup) {
+					$digest_collection['new_group_content'][$entity->getGUID()] = $entity->title;
+
+					if (elgg_is_active_plugin('wet4')) {
+						$digest_collection['new_group_content'][$entity->getGUID()] = gc_explode_translation($entity->title3,'en').' / '.gc_explode_translation($entity->title3,'fr');
+					} else {
+						$digest_collection['new_group_content'][$entity->getGUID()] = $entity->title;
+					}
+
+				// new content has been created in the user context
+				} else {
+					error_log("NEW CONTENT PUT INTO DIGEST");
+					if (elgg_is_active_plugin('wet4')) {
+						$digest_collection['new_content'][$entity->getGUID()] = gc_explode_translation($entity->title3,'en').' / '.gc_explode_translation($entity->title3,'fr');
+					} else {
+						$digest_collection['new_content'][$entity->getGUID()] = $entity->title;
+					}
+				}
+
+
+		} // end switch
+	}
+
+
+	// ignore access temporarily to set the digest
+	$ia = elgg_set_ignore_access(true);
+	error_log(">>>>>>>>>>> entity guid: {$entity->guid}");
+	$digest->description = json_encode($digest_collection);
+	$digest->save();
+
+	// set old access back to the way it was
+	elgg_set_ignore_access($ia);
 }
+
 
 /*
  * cp_ical_headers()
@@ -689,7 +793,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 	    switch ($type_of_like) {
 	    	case 'comment':
-
+	    		// likes your comment
 	    		$subject = elgg_echo('cp_notify:subject:likes_comment', array($liked_by->name,$content_title),'en');
 	    		$subject .= ' | '.elgg_echo('cp_notify:subject:likes_comment',array($liked_by->name,$content_title),'fr');
 
@@ -698,6 +802,8 @@ function cp_create_annotation_notification($event, $type, $object) {
 	    			'cp_comment_from' => $content_title,
 					'cp_msg_type' => 'cp_likes_comments',
 				);
+
+	    		$author = get_entity($comment_author->getGUID());
 
 				$to_recipients[$comment_author->getGUID()] = $comment_author;
 	    		break;
@@ -712,22 +818,26 @@ function cp_create_annotation_notification($event, $type, $object) {
 					'cp_comment_from' => $content_title,
 					'cp_msg_type' => 'cp_likes_topic_replies',
 				);
+				$author = get_entity($comment_author->getGUID());
 
 				$to_recipients[$comment_author->getGUID()] = $comment_author;
 	    		break;
 
 	    	default:
-
+	    		$type_of_like = 'cp_likes';
 		    	if ($liked_content instanceof ElggUser) {
 
 					// cyu - there doesn't seem to be any differentiation between updated avatar and colleague connection
 		    		$liked_by = get_user($object->owner_guid); // get user who liked comment
+		    		
+
 		    		$subject = elgg_echo('cp_notify:subject:likes_user_update',array($liked_by->name),'en') . ' | ' . elgg_echo('cp_notify:subject:likes_user_update',array($liked_by->name),'fr');
 		    		$message = array(
 						'cp_msg_type' => 'cp_likes_user_update',
 						'cp_liked_by' => $liked_by->name
 					);
 	    			$to_recipients[$liked_content->guid] = $liked_content;
+
 
 		    	} else {
 
@@ -762,6 +872,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 	$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
 	
+	$author = $liked_by;
 	foreach ($to_recipients as $to_recipient_id => $to_recipient) {
 
 		// we only send notification to user who owns the content (liking a comment, discussion reply or general likes to content)
@@ -773,7 +884,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 			$message['_user_e-mail'] = $to_recipient->email;	// for P/T user
 			$template = elgg_view('cp_notifications/email_template', $message); 
 			
-			(strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0) ? error_log(" ++++++++++++++++++++++++++++++++++++++++++++ create digest") : cp_notification_preparation_send($content_entity, $to_recipient, $message, $content_entity->getOwnerGUID(), $subject);
+			(strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0) ? temp_digest($author, $type_of_like, $content_entity, $to_recipient) : cp_notification_preparation_send($content_entity, $to_recipient, $message, $content_entity->getOwnerGUID(), $subject);
 
 		}
 	}
@@ -781,7 +892,63 @@ function cp_create_annotation_notification($event, $type, $object) {
 } // end of function
 
 
+function temp_digest($invoked_by, $subtype, $entity, $send_to) {
 
+
+$digest = get_entity($send_to->cpn_newsletter);
+$digest_collection = json_decode($digest->description,true);
+
+	if ($subtype === 'cp_friend_request') {
+		if (!is_array($digest_collection['personal']['friend_request']))
+			$digest_collection['personal']['friend_request'] = array();
+		$digest_collection['personal']['friend_request'][] = "{$invoked_by->username} has sent you a friend request";
+	}
+
+	elseif ($subtype === 'cp_messageboard') {
+
+		if (!is_array($digest_collection['personal']['profile_message']))
+			$digest_collection['personal']['profile_message'] = array();
+		$digest_collection['personal']['profile_message'][] = "{$invoked_by->username} has left u a msg on your profile => sending to... {$send_to->guid} / {$send_to->username}";
+
+	} elseif ($subtype === 'cp_hjtopic' || $subtype === 'cp_hjpost' ) { 
+
+		if ($subtype === 'cp_hjtopic') {
+			if (!is_array($digest_collection['personal']['forum_topic']))
+				$digest_collection['personal']['forum_topic'] = array();
+			$digest_collection['personal']['forum_topic'][] = "{$invoked_by->username} has {$subtype} in your forum {$entity->title} => sending to... {$send_to->guid} / {$send_to->username}";
+		} else {
+			if (!is_array($digest_collection['personal']['forum_reply']))
+				$digest_collection['personal']['forum_reply'] = array();
+			$digest_collection['personal']['forum_reply'][] = "{$invoked_by->username} has {$subtype} to your topic {$entity->getContainerEntity()->title} => sending to... {$send_to->guid} / {$send_to->username}";
+		}
+
+	} elseif ($subtype === 'cp_likes') { 
+			if (!is_array($digest_collection['personal']['likes']))
+				$digest_collection['personal']['likes'] = array();
+			$digest_collection['personal']['likes'][] = "{$invoked_by->username} has {$subtype} likes {$entity->title}:{$entity->getURL()}  => sending to... {$send_to->guid} / {$send_to->username}";
+
+	} elseif ($subtype === 'comment') { 
+		error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>> comment thingy");
+	}else {
+		$entity = get_entity($entity->guid);
+		error_log("======================> {$invoked_by->username} has {$subtype}: {$entity->getURL()} => sending to... {$send_to->guid} / {$send_to->username}");
+		if (!is_array($digest_collection['personal']['new_post']))
+			$digest_collection['personal']['new_post'] = array();
+		$digest_collection['personal']['new_post'][] = "{$invoked_by->username} has {$subtype}: {$entity->getURL()} => sending to... {$send_to->guid} / {$send_to->username}";
+	}
+
+
+	// ignore access temporarily to set the digest
+	$ia = elgg_set_ignore_access(true);
+	$digest->description = json_encode($digest_collection);
+	$digest->save();
+	// set old access back to the way it was
+	elgg_set_ignore_access($ia);
+
+
+	return true;
+
+}
 
 
 /*
@@ -1012,198 +1179,84 @@ function cp_create_notification($event, $type, $object) {
 function cp_digest_cron_handler($hook, $entity_type, $return_value, $params) {
 
 	echo "Starting up the cron job for the Notifications (cp_notifications plugin) <br/>";
-	$options = array(
-		'type' => 'object',
-		'subtype' => 'cp_digest',
-	);
-	$current_digest = elgg_get_entities($options);
 
-	$subject = "Your digest here";
-	// go through the list of notification digests (per user)
-	foreach ($current_digest as $notify_user) {
+	echo print_r(json_decode(get_entity(279)->description));
+	// $options = array(
+	// 	'type' => 'object',
+	// 	'subtype' => 'cp_digest',
+	// );
+	// $current_digest = elgg_get_entities($options);
 
-		$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $notify_user->guid, 'cp_notifications');
-		if (strcmp($user_setting, 'set_digest_yes') == 0) {
+	// $subject = "Your digest here";
+	// // go through the list of notification digests (per user)
+	// foreach ($current_digest as $notify_user) {
 
-			$user = get_user($notify_user->getOwnerGUID());
-			$timestamp = date("F j, Y, g:i a",$notify_user->time_updated);	// use time created (just update this timestamp when we send off notification)
-			echo "<p> {$user->username} -- {$user->email} on {$timestamp} </p>";
+	// 	$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $notify_user->guid, 'cp_notifications');
+	// 	if (strcmp($user_setting, 'set_digest_yes') == 0) {
 
-			// TODO: check to see if it's daily or weekly
-			$subject = $notify_user->title;
-			$message = array('email_content' => $notify_user->description);
-			$template = elgg_view('cp_notifications/newsletter_template', $message);
-			//mail($user->email,$subject,$template,cp_get_headers());
-			//messages_send($subject, $template, $notify_user->guid);
+	// 		$user = get_user($notify_user->getOwnerGUID());
+	// 		$timestamp = date("F j, Y, g:i a",$notify_user->time_updated);	// use time created (just update this timestamp when we send off notification)
+	// 		echo "<p> {$user->username} -- {$user->email} on {$timestamp} </p>";
+
+	// 		// TODO: check to see if it's daily or weekly
+	// 		$subject = $notify_user->title;
+	// 		$message = array('email_content' => $notify_user->description);
+	// 		$template = elgg_view('cp_notifications/newsletter_template', $message);
+	// 		//mail($user->email,$subject,$template,cp_get_headers());
+	// 		//messages_send($subject, $template, $notify_user->guid);
 	
 
-			// clear the digest, get ready for the next one
-			$notify_user->description = '';
-			$notify_user->save();
-			$notify_user->getOwnerEntity()->cpn_newsletter = $notify_user->guid;
-			//error_log("cpn_newsletter value - {$notify_user->guid} / {$notify_user->getOwnerEntity()->cpn_newsletter}");
-			//$notify_user->delete();
-			//$user->deleteMetadata('cpn_newsletter');
-		}
+	// 		// clear the digest, get ready for the next one
+	// 		$notify_user->description = '';
+	// 		$notify_user->save();
+	// 		$notify_user->getOwnerEntity()->cpn_newsletter = $notify_user->guid;
+	// 		//error_log("cpn_newsletter value - {$notify_user->guid} / {$notify_user->getOwnerEntity()->cpn_newsletter}");
+	// 		//$notify_user->delete();
+	// 		//$user->deleteMetadata('cpn_newsletter');
+	// 	}
 
-		$digest_content = ""; // we will save all the text into this variable
-		$digest_activities = "";
-		$digest_comments = "";
-		$digest_revisions = "";
-		$digest_mm_posting = "";
+	// 	$digest_content = ""; // we will save all the text into this variable
+	// 	$digest_activities = "";
+	// 	$digest_comments = "";
+	// 	$digest_revisions = "";
+	// 	$digest_mm_posting = "";
 
-		error_log("---------------------- RECEIPT  START ----------------------");
-		$title = explode('|',$notify_user->title);
-		error_log("sending to user.... {$title[1]}");
+	// 	error_log("---------------------- RECEIPT  START ----------------------");
+	// 	$title = explode('|',$notify_user->title);
+	// 	error_log("sending to user.... {$title[1]}");
 
-		// go through the items in the digest notification (new blog, new comment, new... etc)
-		$digest_items = json_decode($notify_user->description, true);
+	// 	// go through the items in the digest notification (new blog, new comment, new... etc)
+	// 	$digest_items = json_decode($notify_user->description, true);
 
-		foreach ($digest_items['personal'] as $digest_item => $digest_title) {
-			$digest_personal .= "item id: {$digest_item} / item title: {$digest_title} <br/>";
-		}
+	// 	foreach ($digest_items['personal'] as $digest_item => $digest_title) {
+	// 		$digest_personal .= "item id: {$digest_item} / item title: {$digest_title} <br/>";
+	// 	}
 
-		foreach ($digest_items['micromission'] as $digest_item => $digest_title) {
-			$digest_micromission .= "item id: {$digest_item} / item title: {$digest_title} <br/>";
-		}
+	// 	foreach ($digest_items['micromission'] as $digest_item => $digest_title) {
+	// 		$digest_micromission .= "item id: {$digest_item} / item title: {$digest_title} <br/>";
+	// 	}
 
-		foreach ($digest_items['group'] as $digest_item => $digest_title) {
-			$digest_group .= "item id: {$digest_item} / item title: {$digest_title} <br/>"; 
-		}
+	// 	foreach ($digest_items['group'] as $digest_item => $digest_title) {
+	// 		$digest_group .= "item id: {$digest_item} / item title: {$digest_title} <br/>"; 
+	// 	}
 
-		error_log("---------------------- RECEIPT  ENDDD ----------------------");
-		//$notify_user->delete();
+	// 	error_log("---------------------- RECEIPT  ENDDD ----------------------");
+	// 	//$notify_user->delete();
 		
-		$template = elgg_view('cp_notifications/newsletter_template', array(
-			'new_content' => $digest_content, 
-			'new_like' => $digest_activities, 
-			'new_comment' => $digest_comment, 
-			'new_mission' => $digest_mm_posting, 
-			'new_revision' => $digest_revision
-			));
+	// 	$template = elgg_view('cp_notifications/newsletter_template', array(
+	// 		'new_content' => $digest_content, 
+	// 		'new_like' => $digest_activities, 
+	// 		'new_comment' => $digest_comment, 
+	// 		'new_mission' => $digest_mm_posting, 
+	// 		'new_revision' => $digest_revision
+	// 		));
 
-	}
+	//}
 }
 
 
 
 
-/*
- * prepare the digest
- * 
- * @param int			$user_id		the recipient of the notification
- * @param ElggObject	$entity			the new entity that has been created
- * @param string		$action_type	the type of action (new object, edited, etc) default is  `new_object`
- */
-function cp_digest_preparation($user_id, $entity, $action_type = 'new_object') {
-
-	$user = get_user($user_id);
-	//$notification_collection = get_entity($user->cpn_newsletter);
-	$subtype = $entity->getSubtype();
-	$dbprefix = elgg_get_config('dbprefix');
-	
-	if (strcmp($action_type,'new_revision') == 0) {
-
-		$user_entity = get_user($user_id);
-		$digest = get_entity($user_entity->cpn_newsletter); // get entity
-		$digest_collection = json_decode($digest->description, true);
-
-		// new entities had been created
-		$digest_collection['new_revision'][$entity->getGUID()] = $entity->title;
-
-		
-		
-	} elseif (strcmp($action_type, 'new_like') == 0) {
-
-		$user_entity = get_user($user_id);
-		$digest = get_entity($user_entity->cpn_newsletter); // get entity
-		$digest_collection = json_decode($digest->description, true);
-
-		// new entities had been created
-		$digest_collection['new_like'][$entity->getGUID()] = $entity->title;
-
-	} else {
-
-		switch ($subtype) {
-			case 'mission':
-				$user_entity = get_user($user_id);
-				$digest = get_entity($user_entity->cpn_newsletter); // get entity
-				$digest_collection = json_decode($digest->description, true);
-
-				// new entities had been created
-				$digest_collection['new_mission'][$entity->getGUID()] = $entity->title;
-
-		
-				break;
-
-			case 'comment':
-			case 'discussion_reply':
-
-				$user_entity = get_user($user_id);
-				$digest = get_entity($user_entity->cpn_newsletter); // get entity
-				$digest_collection = json_decode($digest->description, true);
-
-				// new comment or reply has been created (in either group or user)???
-				// TODO: for comments, we can total up the amount of comments for the topic
-
-
-				// extracting the title (english and french)
-				if (elgg_is_active_plugin('wet4')) {
-					$digest_collection['new_comment'][$entity->getGUID()] = gc_explode_translation($entity->getContainerEntity()->title3,'en').' / '.gc_explode_translation($entity->getContainerEntity()->title3,'fr');
-				} else {
-					$digest_collection['new_comment'][$entity->getGUID()] = $entity->getContainerEntity()->title;
-				}
-
-		
-				break;
-
-			default:	// user created new core/main entity (blogs, discussion, bookmarks, etc)
-				
-				$user_entity = get_user($user_id);
-
-				$digest = get_entity($user_entity->cpn_newsletter); // get entity
-
-				$digest_collection = json_decode($digest->description, true);
-				
-				
-
-				// new content has been created in the group
-				if ($entity->getContainerEntity() instanceof ElggGroup) {
-					$digest_collection['new_group_content'][$entity->getGUID()] = $entity->title;
-
-					if (elgg_is_active_plugin('wet4')) {
-						$digest_collection['new_group_content'][$entity->getGUID()] = gc_explode_translation($entity->title3,'en').' / '.gc_explode_translation($entity->title3,'fr');
-					} else {
-						$digest_collection['new_group_content'][$entity->getGUID()] = $entity->title;
-					}
-
-				// new content has been created in the user context
-				} else {
-					error_log("NEW CONTENT PUT INTO DIGEST");
-					if (elgg_is_active_plugin('wet4')) {
-						$digest_collection['new_content'][$entity->getGUID()] = gc_explode_translation($entity->title3,'en').' / '.gc_explode_translation($entity->title3,'fr');
-					} else {
-						$digest_collection['new_content'][$entity->getGUID()] = $entity->title;
-					}
-				}
-
-				
-
-
-
-		} // end switch
-	}
-
-
-	// ignore access temporarily to set the digest
-	$ia = elgg_set_ignore_access(true);
-	error_log(">>>>>>>>>>> entity guid: {$entity->guid}");
-	$digest->description = json_encode($digest_collection);
-	$digest->save();
-
-	// set old access back to the way it was
-	elgg_set_ignore_access($ia);
-}
 
 
 
@@ -1330,7 +1383,7 @@ function cp_send_new_password_request($user_guid) {
 
 	if (elgg_is_active_plugin('phpmailer'))
 	phpmailer_send( $user->email, $user->name, $subject, $template );
-	else
+	else 
 		mail($user->email,$subject,$template,cp_get_headers());
 }
 
