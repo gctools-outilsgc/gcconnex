@@ -971,6 +971,9 @@ function cp_create_notification($event, $type, $object) {
 				'cp_msg_type' => 'cp_reply_type',
 			);
 
+			$content_entity = $container_entity;
+			$author = $user_comment;
+
 			// the user creating the content is automatically subscribed to it
 			add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_email', $container_entity->getGUID());
 			add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_site_mail', $container_entity->getGUID());
@@ -1097,7 +1100,7 @@ function cp_create_notification($event, $type, $object) {
 			break;
 
 	} // end of switch statement
-
+ 
 
 	// check for empty subjects or empty content 
 	if (empty($subject))
@@ -1114,7 +1117,7 @@ function cp_create_notification($event, $type, $object) {
 	foreach ($to_recipients as $to_recipient)
 	{
 		$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid, 'cp_notifications');
-		$result = (strcmp($user_setting, "set_digest_yes") == 0) ? error_log("++++++++++++++++++++++++++++++++++++++ create digest") : cp_notification_preparation_send($object, $to_recipient, $message, $guid_two, $subject);
+		$result = (strcmp($user_setting, "set_digest_yes") == 0) ? temp_digest($author, $object->getSubtype(), $content_entity, get_entity($to_recipient->guid)) : cp_notification_preparation_send($object, $to_recipient, $message, $guid_two, $subject);
 	}
 }
 
@@ -1128,7 +1131,21 @@ function temp_digest($invoked_by, $subtype, $entity, $send_to) {
 $digest = get_entity($send_to->cpn_newsletter);
 $digest_collection = json_decode($digest->description,true);
 
-if () {
+if ($subtype === 'comment' || $subtype === 'discussion_reply') {
+
+	if ($entity->getContainerEntity() instanceof ElggGroup) {
+		error_log("========================> {$invoked_by->username} has left a response or comment on your post  {$entity->title}: {$entity->getURL()} ... {$send_to->guid}  / {$send_to->username}");
+			if (!is_array($digest_collection['group']['response']))
+			$digest_collection['group']['response'] = array();
+		$digest_collection['group']['response'][] = "{$invoked_by->username} has left a response or comment on the post in the group blah blah blah  {$entity->title}: {$entity->getURL()} ... {$send_to->guid}  / {$send_to->username}";
+
+	} else {
+error_log("========================> {$invoked_by->username} has left a response or comment on your post  {$entity->title}: {$entity->getURL()} ... {$send_to->guid}  / {$send_to->username}");
+			if (!is_array($digest_collection['personal']['response']))
+			$digest_collection['personal']['response'] = array();
+		$digest_collection['personal']['response'][] = "{$invoked_by->username} has left a response or comment on your post  {$entity->title}: {$entity->getURL()} ... {$send_to->guid}  / {$send_to->username}";
+	}
+
 
 } elseif ($subtype === 'cp_friend_request') {
 		if (!is_array($digest_collection['personal']['friend_request']))
@@ -1167,7 +1184,7 @@ if () {
 			$digest_collection['personal']['content_revision'][] = "{$invoked_by->username} has {$subtype} revised {$entity->title}:{$entity->getURL()}  => sending to... {$send_to->guid} / {$send_to->username}";
 
 
-	}else {
+	} else {
 		$entity = get_entity($entity->guid);
 		if (!is_array($digest_collection['personal']['new_post']))
 			$digest_collection['personal']['new_post'] = array();
