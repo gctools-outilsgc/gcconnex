@@ -58,8 +58,8 @@ elgg_load_css("custom-bootstrap-fileinput");
 			<?php echo elgg_view('input/access', array('name' => 'access_id_file', 'id' => 'file_tools_file_access_id')); ?>
 
 	</div>
-	    <label for="red" class="control-label">Select File</label>
-    	<input id="red" name="upload[]" type="file" multiple class="file-loading">
+	    <label for="multi-file-upload" class="control-label">Select File</label>
+    	<input id="multi-file-upload" name="upload[]" type="file" multiple class="file-loading">
     	<div id="errorBlock" class="help-block"></div>
 	<div class="elgg-foot">
 		<?php
