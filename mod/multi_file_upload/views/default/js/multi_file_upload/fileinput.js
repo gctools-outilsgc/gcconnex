@@ -80,16 +80,17 @@ requirejs( ["fileinput"], function() {
     };
 
     //console.log(elgg.get_page_owner_guid());
-    $("#red").fileinput({
+    $("#multi-file-upload").fileinput({
         uploadAsync: false,
         allowedPreviewTypes: null,
         allowedPreviewMimeTypes: ['image/jpeg', 'image/jpg', 'image/png', 'image/bmp', 'image/gif', 'text/plain'], //only allow preview for these file types
         language: elgg.get_language(),
         //maxFileSize: 10000,
         allowedFileExtensions: get_file_tools_settings(),
-        maxFileCount: 8,
+        maxFileCount: 10,
         uploadUrl: elgg.normalize_url('/mod/multi_file_upload/actions/file/upload.php'),
         maxFilePreviewSize: 10240,
+        removeFromPreviewOnError: true,
         uploadExtraData:function() {
             var obj = {};
             obj['folder_guid'] = $('#file_tools_file_parent_guid').find(":selected").val();
@@ -111,7 +112,7 @@ requirejs( ["fileinput"], function() {
         'mp3': '<i class="fa fa-file-audio-o text-warning"></i>',
     },
     });
-    $('#red').on('filebatchuploadsuccess', function(event, data) {
+    $('#multi-file-upload').on('filebatchuploadsuccess', function(event, data) {
         //window.location.replace(data.response.forward_url);
         //elgg.system_message(data.response.system_messages.success);
         elgg.register_error(data.response.system_messages.error);
@@ -119,21 +120,15 @@ requirejs( ["fileinput"], function() {
 
     });
 
-    $('#red').on('fileuploaded', function(event, data) {
+    $('#multi-file-upload').on('fileuploaded', function(event, data) {
         elgg.system_message(data.response.system_messages.success);
         elgg.register_error(data.response.system_messages.error);
     });
 
-
     //change tabindex of inputs for accessibility
     $('.file-caption-main button, .file-caption-main .fileinput-upload-button, .file-caption-main .file-caption').attr('tabindex', '0');
 
-   /*$('#red').on('filebatchuploadcomplete', function(event, data) {
-        console.log('event complete '+JSON.stringify(event));
-        console.log('files complete'+data);
-        //console.log('extra '+JSON.stringify(extra));
-    });*/
-    $('#red').on('filebatchuploaderror', function(event, data, msg) {
+    $('#multi-file-upload').on('filebatchuploaderror', function(event, data, msg) {
         console.log('event error'+JSON.stringify(event));
         console.log('files error'+JSON.stringify(data));
         //console.log('extra '+JSON.stringify(extra));
