@@ -17,30 +17,34 @@ function gc_fedsearch_gsa_init() {
 }
 
 function entity_title($hook, $type, $return, $params) {
-	$entity_title = new DOMDocument();
-	$entity_title->loadHTML($return);
+	if ((!$gsa_usertest) && strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false) {
+
+		$entity_title = new DOMDocument();
+		$entity_title->loadHTML($return);
 
 
-	$filter_entity = array('blog', 'pages', 'discussion', 'file', 'bookmarks');
-	if (!in_array(elgg_get_context(), $filter_entity))
-		return;
+		$filter_entity = array('blog', 'pages', 'discussion', 'file', 'bookmarks');
+		if (!in_array(elgg_get_context(), $filter_entity))
+			return;
 
-	$url = explode('/',$_SERVER['REQUEST_URI']);
-	$entity = get_entity($url[3]);
+		$url = explode('/',$_SERVER['REQUEST_URI']);
+		$entity = get_entity($url[4]);
 
-	// let the gsa index the title of the entity as well
-	foreach ($entity_title->getElementsByTagName('h1')->item(0)->childNodes as $node) 
-		$node->nodeValue = "{$entity->title}  {$entity->title2}";
-	
-	$return = $entity_title->saveXML($entity_title);
-	return $return;
+		// let the gsa index the title of the entity as well
+		foreach ($entity_title->getElementsByTagName('h1')->item(0)->childNodes as $node) 
+			$node->nodeValue = "{$entity->title}  {$entity->title2}";
+		
+		$return = $entity_title->saveXML($entity_title);
+		return $return;
+	}
+	return;
 }
 
 
 
 function group_url($hook, $type, $return, $params) {
 	$gsa_agentstring = strtolower(elgg_get_plugin_setting('gsa_agentstring','gc_fedsearch_gsa'));
-	if ((!$gsa_usertest) && strcmp($gsa_agentstring,strtolower($_SERVER['HTTP_USER_AGENT'])) == 0)  {
+	if ((!$gsa_usertest) && strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false)  {
 		if (strcmp(get_context(), 'group_profile') == 0) {
 			$params['vars']['entity']->description = "<p>{$params['vars']['entity']->description}</p> <p>{$params['vars']['entity']->description2}</p>";
 			return $params['vars']['entity']->description;
