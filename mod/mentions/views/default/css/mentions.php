@@ -44,3 +44,26 @@
 #mentions-popup .mentions-autocomplete > li:hover {
 	background-color: #DCDCDC;
 }
+
+.mentions-autocomplete > li:hover {
+	background-color: #DCDCDC;
+	cursor: pointer;
+}
+
+.mentions-autocomplete {
+	margin-bottom: 10px;
+    background-color: #fff;
+    border: 1px solid transparent;
+    /* border-radius: 4px; */
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.09);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.09);
+		padding: 5px 0;
+}
+
+.mentions-autocomplete li {
+	padding: 2px 5px;
+}
+
+.mentions-user-hover {
+	background-color: #DCDCDC;
+}

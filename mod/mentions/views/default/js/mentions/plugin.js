@@ -176,9 +176,7 @@ CKEDITOR_mentions.prototype.timeout_callback = function (args) {
   var username = str.split('@');
 
   $.get(elgg.config.wwwroot + 'livesearch?q=' + username[1] + '&match_on=users', function(rsp) {
-    console.log('did we get here');
-    console.log(username[1]);
-    console.log(rsp);
+
     var ckel = $('#' + element_id);
     var par = ckel.parent();
 
@@ -186,17 +184,29 @@ CKEDITOR_mentions.prototype.timeout_callback = function (args) {
 
     var userOptions = '';
 		$(rsp).each(function(key, user) {
-			userOptions += '<li class="mention-users" tabIndex="0" data-name="'+ user.name+'" data-username="' + user.desc + '">' + user.icon + user.name + "</li>";
+			userOptions += '<li class="mention-users" data-name="'+ user.name+'" data-username="' + user.desc + '">' + user.icon + user.name + "</li>";
 		});
 
     if (rsp) {
       $('<div class="mention-suggestions"><ul class="list-unstyled mentions-autocomplete">' + userOptions + '</ul></div>').insertAfter(par);
     }
 
+    //for users using keyboard
+    $('.mention-users .elgg-avatar').find('a').on('focus', function(){
+      $(this).parent().parent().addClass('mentions-user-hover');
+    }).on('focusout', function(){
+      $(this).parent().parent().removeClass('mentions-user-hover');
+    });
+
     $('.mention-users').click(function(e) {
       e.preventDefault();
 
-      var mentions = CKEDITOR_mentions.get_instance(editor);
+      selection     = editor.getSelection();
+      range         = selection.getRanges()[0];
+      startOffset   = parseInt(range.startOffset - str.length) || 0;
+      element       = range.startContainer.$;
+      mentions      = CKEDITOR_mentions.get_instance(editor);
+
       mentions.stop_observing();
 
       // Keep the text originally inserted after the new tag.
@@ -204,6 +214,8 @@ CKEDITOR_mentions.prototype.timeout_callback = function (args) {
 
       // Shorten text node
       element.textContent = element.textContent.substr(0, startOffset);
+
+      window.startOffset = startOffset;
 
       // Create link
       var link = document.createElement('span');
@@ -225,19 +237,25 @@ CKEDITOR_mentions.prototype.timeout_callback = function (args) {
       if ($.trim(after_text).length) {
         element.parentNode.appendChild(document.createTextNode(after_text));
       }
-
+      /*
       if ( $.browser.msie ) {
         // so basically, due to some weird behaviour by ckeditor IE triggers an error on focus,
         // which in turn causes any additonal mentions to be inserted wrong.
         // By turning this off, IE users will have to click manually on the editor to get back.
-        // https://drupal.org/node/2033739
       } else {
         editor.focus();
         var range = editor.createRange(),
         el = new CKEDITOR.dom.element(link.parentNode);
         range.moveToElementEditablePosition(el, link.parentNode.textContent.length);
         range.select();
-      }
+      }*/
+      $('.mention-suggestions').remove();
+      selection = editor.getSelection();
+      range = selection.getRanges()[0];
+      var el = new CKEDITOR.dom.element(link.parentNode);
+      range.moveToElementEditablePosition(el, link.parentNode.textContent.length);
+      editor.focus();
+      range.select();
 
     });
   });
