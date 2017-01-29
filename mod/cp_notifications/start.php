@@ -1217,8 +1217,8 @@ function cp_digest_cron_handler($hook, $entity_type, $return_value, $params) {
 
 	echo "Starting up the cron job for the Notifications (cp_notifications plugin) <br/>";
 
-	$newsletter_id = get_entity(112)->cpn_newsletter;
-	echo print_r(json_decode(get_entity($newsletter_id)->description));
+	$newsletter_id = get_entity(95)->cpn_newsletter;
+	echo print_r(json_decode(get_entity($newsletter_id)->description, true));
 	// $options = array(
 	// 	'type' => 'object',
 	// 	'subtype' => 'cp_digest',
@@ -1281,20 +1281,56 @@ function cp_digest_cron_handler($hook, $entity_type, $return_value, $params) {
 	// 	error_log("---------------------- RECEIPT  ENDDD ----------------------");
 	// 	//$notify_user->delete();
 		
-	// 	$template = elgg_view('cp_notifications/newsletter_template', array(
-	// 		'new_content' => $digest_content, 
-	// 		'new_like' => $digest_activities, 
-	// 		'new_comment' => $digest_comment, 
-	// 		'new_mission' => $digest_mm_posting, 
-	// 		'new_revision' => $digest_revision
-	// 		));
+		echo '<br/><br/><br/><br/><br/><br/>';
+
+$template = elgg_view('cp_notifications/newsletter_template', array('newsletter_content' => json_decode(get_entity($newsletter_id)->description,true)));
+
+echo $template;
+
+
+		// $template = elgg_view('cp_notifications/newsletter_template', array(
+		// 	'new_content' => $digest_content, 
+		// 	'new_like' => $digest_activities, 
+		// 	'new_comment' => $digest_comment, 
+		// 	'new_mission' => $digest_mm_posting, 
+		// 	'new_revision' => $digest_revision
+		// 	));
 
 	//}
 }
 
 
 
+/*
+<div>
+<h3>Opportunity (Micro Mission) Notifications</h3>
+  <ul>
+    <li>2 Opportunities have been created</li>
+    <ul><li>New Opportunity</li></ul>
+    <ul><li>New Opportunity</li></ul>
+    <ul><li>New Opportunity</li></ul>
+  </ul>
+</div>
 
+<div>
+<h3>Group Notifications</h3>
+  <ul>
+    <li>Hello World Group Beta</li>
+    <ul><li>2 Discussion Topics have been created</li></ul>
+      <ul><ul><li>Hello World 1</li></ul></ul>
+      <ul><ul><li>Hello World 2</li></ul></ul>
+    
+		<ul><li>3 Files have been uploaded</li></ul>
+      <ul><ul><li>File Alpha 1</li></ul></ul>
+      <ul><ul><li>File Alpha 2</li></ul></ul>
+    
+    <li>Hello World Group Alpha</li>
+		<ul><li>3 Files have been uploaded</li></ul>
+      <ul><ul><li>File Alpha 1</li></ul></ul>
+      <ul><ul><li>File Alpha 2</li></ul></ul>
+  </ul>
+</div>
+*/
 
 
 

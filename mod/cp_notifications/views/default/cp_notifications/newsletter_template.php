@@ -1,43 +1,22 @@
 <?php
 
-$content = $vars['new_content'];
-$like = $vars['new_like'];
-$comment = $vars['new_comment'];
-$mission = $vars['digest_mm_posting'];
-$revision = $vars['new_revision'];
+$contents = $vars['newsletter_content'];
+$language_preference = elgg_get_plugin_user_setting('cpn_set_digest_lang_en', $to_recipient->guid, 'cp_notifications');
+//set_digest_en  set_digest_fr
 
 if (strlen($content) > 0) {
 	$content_en = "<h4><p> New Contents </p></h4> {$content} <br/>";
 	$content_fr = "<h4><p> Nouveau contenu </p></h4> {$content} <br/>";
 }
 
-if (strlen($like) > 0) {
-	$like_en = "<h4><p> New Likes </p></h4> {$like} <br/>";
-	$like_fr = "<h4><p> Nouveau activité </p></h4> {$like} <br/>";
-}
-
-if (strlen($comment) > 0) {
-	$comment_en = "<h4><p> New Comments </p></h4> {$comment} <br/>";
-	$comment_fr = "<h4><p> Nouveaux Commentaires </p></h4> {$comment} <br/>";
-}
-
-if (strlen($revision) > 0) {
-	$revision_en = "<h4><p> Revisions </p></h4> {$revision} <br/>";
-	$revision_fr = "<h4><p> Révisions </p></h4> {$revision} <br/>";
-}
-
-if (strlen($mission) > 0) {
-	$mission_en = "<h4><p> Missions </p></h4> {$mission} <br/>";
-	$mission_fr = "<h4><p> Missions </p></h4> {$mission} <br/>";
-}
+?>
 
 
 
-echo <<<___HTML
 <html>
-	<body>
-  <h2>Your GCconnex Digest: 11 New Things Happened on GCconnex</h2>
-  <sub>This is a system-generated message from GCconnex. Please do not reply to this message</sub>
+	<body style='font-family: sans-serif; color: #055959'>>
+  <h2>Your GCconnex Digest</h2>
+  <sub><center>This is a system-generated message from GCconnex. Please do not reply to this message</center></sub>
 	<div width='100%' bgcolor='#fcfcfc'>
 
 	<!-- GCconnex banner -->
@@ -45,58 +24,81 @@ echo <<<___HTML
 		<span style='padding: 0 0 0 3px; font-size: 20px; color: #ffffff; font-family: sans-serif;'>GCconnex</span>
 	</div>
 
-Good morning Christine
-Here are your notifications for October 3rd 2016.
+  <p>Good morning  <?php echo 'John Doe'; ?>. Here are your notifications for <strong><?php echo date('l\, F jS\, Y '); ?></strong>.</p>
+<br/><br/>
+
+<?php 
+foreach ($contents as $highlevel_header => $highlevel_contents) {
+?>
 
 <div>
-<h3>Personal Notifications</h3>
-  <ul>
-    <li>3 likes on your post: Hello World</li>
-    <li>John Doe has liked your discussion reply</li>
-    <li>2 colleague requests</li>
+<h3><?php echo render_headers($highlevel_header); ?></h3>
+  <ul style='list-style-type:none;'>
+
+<?php 
+foreach ($highlevel_contents as $detailed_header => $detailed_contents) {
+
+
+
+  echo "<li>{$detailed_header}</li>";
+  foreach ($detailed_contents as $content) {
+      echo  "<ul style='list-style-type:none;'><li>{$content}</li></ul>";
+  }
+}
+?>
+
   </ul>
 </div>
 
-<div>
-<h3>Opportunity (Micro Mission) Notifications</h3>
-  <ul>
-    <li>2 Opportunities have been created</li>
-    <ul><li>New Opportunity</li></ul>
-    <ul><li>New Opportunity</li></ul>
-    <ul><li>New Opportunity</li></ul>
-  </ul>
-</div>
+<?php 
 
-<div>
-<h3>Group Notifications</h3>
-  <ul>
-    <li>Hello World Group Beta</li>
-    <ul><li>2 Discussion Topics have been created</li></ul>
-      <ul><ul><li>Hello World 1</li></ul></ul>
-      <ul><ul><li>Hello World 2</li></ul></ul>
-    
-		<ul><li>3 Files have been uploaded</li></ul>
-      <ul><ul><li>File Alpha 1</li></ul></ul>
-      <ul><ul><li>File Alpha 2</li></ul></ul>
-    
-    <li>Hello World Group Alpha</li>
-		<ul><li>3 Files have been uploaded</li></ul>
-      <ul><ul><li>File Alpha 1</li></ul></ul>
-      <ul><ul><li>File Alpha 2</li></ul></ul>
-  </ul>
-</div>
-The GCTools Team
+}
 
+?>
 
-    <!-- email footer -->
-    <div width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 10px; color: #055959'>Should you have any concerns, please use the Contact us form. To unsubscribe or manage these messages, please login and visit your notification settings 	</div>
+        <br/><br/>
+        <p>Regards,</p> <p>The GCTools Team</p>
 
-
+      <!-- email footer -->
+      <div width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 10px; color: #055959'>
+      <center><p>Should you have any concerns, please use the <a href='#'>Contact us form</a>. </p>
+      <p>To unsubscribe or manage these messages, please login and visit your <a href='http://192.168.0.30/gcconnex/mod/contactform/'> Notification Settings</a>.</p> </center>	
+      </div>
 		</div>
 	</body>
 </html>
 
-___HTML;
+
+
+
+
+
+<?php
+
+function render_headers($heading) {
+
+  $proper_heading = '';
+
+  switch ($heading) {
+    case 'personal':
+      $proper_heading = 'Personal Notifications';
+      break;
+    
+    case 'micromission':
+      $proper_heading = 'Opportunity (Micro Mission) Notifications';
+      break;
+
+    case 'group':
+      $proper_heading = 'Group Name Here';
+      break;
+
+    default:
+      $proper_heading = 'Invalid Heading';
+      break;
+  }
+
+  return $proper_heading;
+}
 
 
 
