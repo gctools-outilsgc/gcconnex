@@ -29,24 +29,34 @@ if (strcmp($enable_digest, 'yes') == 0) {
 	$content .= '<div class="col-sm-8">'.elgg_echo('cp_notify:enable_digest').'</div>';
 	$content .= "<div class='col-sm-2'>{$chk_email}</div> <div class='col-sm-2'>     </div>";
 
-	/// select daily or weekly notification
-	$chk_occur_daily = create_checkboxes($user->getGUID(), 'cpn_set_digest_freq_daily', array('set_digest_daily', 'set_digest_no'), elgg_echo('label:daily'));
-	$chk_occur_weekly = create_checkboxes($user->getGUID(), 'cpn_set_digest_freq_weekly', array('set_digest_daily', 'set_digest_no'), elgg_echo('label:weekly'));
-	$content .= '<div class="col-sm-8">'.elgg_echo('cp_notify:set_frequency').'</div>';
-	$content .= "<div class='col-sm-2'>{$chk_occur_daily}</div> <div class='col-sm-2'>{$chk_occur_weekly}</div>";	
 	
-	/// select language preference
-	$chk_language_en = create_checkboxes($user->getGUID(), 'cpn_set_digest_lang_en', array('set_digest_en', 'set_digest_no'), elgg_echo('label:english'));
-	$chk_language_fr = create_checkboxes($user->getGUID(), 'cpn_set_digest_lang_fr', array('set_digest_fr', 'set_digest_no'), elgg_echo('label:french'));
-	$content .= '<div class="col-sm-8">'.elgg_echo('cp_notify:set_language').'</div>';
-	$content .= "<div class='col-sm-2'>{$chk_language_en}</div> <div class='col-sm-2'>{$chk_language_fr}</div>";
+	if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->getOwnerGUID(),'cp_notifications'),'set_digest_yes') != 0)
+		$visibility = "hidden";
+
+	$content .= "<div id='more_digest_options' {$visibility}>";
+
+		/// select daily or weekly notification
+		$chk_occur_daily = create_checkboxes($user->getGUID(), 'cpn_set_digest_freq_daily', array('set_digest_daily', 'set_digest_no'), elgg_echo('label:daily'), 'digest_frequency');
+		$chk_occur_weekly = create_checkboxes($user->getGUID(), 'cpn_set_digest_freq_weekly', array('set_digest_daily', 'set_digest_no'), elgg_echo('label:weekly'), 'digest_frequency');
+		$more_info = "<span class='pull-right'><a title='How frequent the digest should be sent out' target='_blank' href='#'><i class='fa fa-info-circle icon-sel'><span class='wb-invisible'> </span></i></a></span>";
+
+		$content .= '<div class="col-sm-8">'.elgg_echo('cp_notify:set_frequency')."{$more_info}</div>";
+		$content .= "<div class='col-sm-2'>{$chk_occur_daily}</div> <div class='col-sm-2'>{$chk_occur_weekly}</div>";	
+		
+		/// select language preference
+		$chk_language_en = create_checkboxes($user->getGUID(), 'cpn_set_digest_lang_en', array('set_digest_en', 'set_digest_no'), elgg_echo('label:english'), 'digest_language');
+		$chk_language_fr = create_checkboxes($user->getGUID(), 'cpn_set_digest_lang_fr', array('set_digest_fr', 'set_digest_no'), elgg_echo('label:french'), 'digest_language');
+		$more_info = "<span class='pull-right'><a title='What is the preferred language that the digest should be sent in' target='_blank' href='#'><i class='fa fa-info-circle icon-sel'><span class='wb-invisible'> </span></i></a></span>";
+
+		$content .= '<div class="col-sm-8">'.elgg_echo('cp_notify:set_language')."{$more_info}</div>";
+		$content .= "<div class='col-sm-2'>{$chk_language_en}</div> <div class='col-sm-2'>{$chk_language_fr}</div>";
+
+	$content .= "</div>";
 
 	$content .= "</div>";
 	$content .= "</section>";
 
 }
-
-
 
 // PERSONAL NOTIFICATIONS (NOTIFY FOR LIKES, @MENTIONS AND MAYBE SHARES)
 $content .= "<section id='notificationstable' cellspacing='0' cellpadding='4' width='100%' class='clearfix'>";
@@ -273,10 +283,21 @@ echo elgg_view_module('info', $title, $content);
 
 <script>
 
-/// control the checkboxes (only one check)
-//$("input:params[cpn_set_digest_freq_daily]").on('click', function() {
+/// jquery to limit the functionality
+///
+	$(document).ready( function () {
+		$('input[name="params[cpn_set_digest]"]').click(function() {
+			$("#more_digest_options").toggle(this.checked);
+		});
 
-//})
+		$(' #digest_frequency').click(function() {
+		    $(' #digest_frequency').not(this).prop('checked', false);
+		});    
+
+		$(' #digest_language').click(function() {
+		    $(' #digest_language').not(this).prop('checked', false);
+		});    
+	});
 
 
 /// Uses Ajax to dynamically create and display the list of group content that the user has subscribed to 

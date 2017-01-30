@@ -23,7 +23,7 @@ function get_forum_in_group($entity_guid_static, $entity_guid) {
  * @param array <string> 	$values
  * @param string 			$label
  */
-function create_checkboxes($user_id, $name, $values, $label) {
+function create_checkboxes($user_id, $name, $values, $label, $id='') {
 	$user_option = elgg_get_plugin_user_setting($name, $user_id, 'cp_notifications');
 	$is_checked = (strcmp($user_option, 'set_digest_no') == 0 || strcmp($user_option, 'set_notify_off') == 0) ? false : true;
 
@@ -33,7 +33,9 @@ function create_checkboxes($user_id, $name, $values, $label) {
 		'default' => 	$values[1],
 		'checked' => 	(strcmp($user_option, $name) == 0  || !$user_option) ? true : false,
 		'label' => 		$label,
-		'checked' => 	$is_checked ));
+		'checked' => 	$is_checked,
+		'id' =>		$id
+	));
 
 	return $chkbox;
 }

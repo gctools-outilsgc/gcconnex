@@ -728,6 +728,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 function cp_create_notification($event, $type, $object) {
 
 	$dbprefix = elgg_get_config('dbprefix');
+	elgg_load_library('elgg:gc_notification:functions');
 	$subject = "";
 	$no_notification = false;
 	$do_not_subscribe_list = array('poll_choice','blog_revision','widget','folder','c_photo', 'cp_digest');
@@ -876,7 +877,6 @@ function cp_create_notification($event, $type, $object) {
 			if ($object->getContainerEntity() instanceof ElggGroup) {
 				$subject = elgg_echo('cp_notify:subject:new_content',array(cp_translate_subtype($object->getSubtype()),$group->name),'en');
 				$subject .= ' | '.$subj_gender;
-
 			} else {
 				// subscribed to users or friends
 				$content_originator = $object->getOwnerGUID();
@@ -896,11 +896,9 @@ function cp_create_notification($event, $type, $object) {
 				}
 			}
 
-			$message = array(
-				'cp_topic' => $object, 
-				'cp_msg_type' => 'cp_new_type',
-				'cp_topic_description' => $object->description,
-			);
+			$content_entity = $object;
+			$author = $object->getOwnerEntity();
+
 
 			$email_only = false;
 
@@ -922,7 +920,7 @@ function cp_create_notification($event, $type, $object) {
 	foreach ($to_recipients as $to_recipient)
 	{
 		$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid, 'cp_notifications');
-		$result = (strcmp($user_setting, "set_digest_yes") == 0) ? temp_digest($author, $object->getSubtype(), $content_entity, get_entity($to_recipient->guid)) : cp_notification_preparation_send($object, $to_recipient, $message, $guid_two, $subject);
+		$result = (strcmp($user_setting, "set_digest_yes") == 0) ? temp_digest($author, $subtype, $content_entity, get_entity($to_recipient->guid)) : cp_notification_preparation_send($object, $to_recipient, $message, $guid_two, $subject);
 	}
 }
 
@@ -955,75 +953,83 @@ function get_subscribers($dbprefix, $user_guid, $entity_guid = '') {
  * @return Success 		true/false
  */
 function temp_digest($invoked_by, $subtype, $entity, $send_to) {
-elgg_load_library('elgg:gc_notification:functions');
-$digest = get_entity($send_to->cpn_newsletter);
-$digest_collection = json_decode($digest->description,true);
+	elgg_load_library('elgg:gc_notification:functions'); 
+	$digest = get_entity($send_to->cpn_newsletter);
+	$digest_collection = json_decode($digest->description,true);
 
-switch ($subtype) {
-	case 'comment':
-	case 'discussion_reply':
-		if ($entity->getContainerEntity() instanceof ElggGroup) {
-			if (!is_array($digest_collection['group']['response']))
-				$digest_collection['group'][$entity->getContainerEntity()->title]['response'] = array();
-			$digest_collection['group'][$entity->getContainerEntity()->title]['response'][] = "{$invoked_by->username} has left a response or comment on the post in the group blah blah blah  {$entity->title}: {$entity->getURL()} ... {$send_to->guid}  / {$send_to->username}";
+	switch ($subtype) {
+		case 'comment':
+		case 'discussion_reply':
+			if ($entity->getContainerEntity() instanceof ElggGroup) {
+				if (!is_array($digest_collection['group']['response']))
+					$digest_collection['group'][$entity->getContainerEntity()->title]['response'] = array();
+				$digest_collection['group'][$entity->getContainerEntity()->title]['response'][] = "{$invoked_by->username} has left a response or comment on the post in the group blah blah blah  {$entity->title}: {$entity->getURL()} ... {$send_to->guid}  / {$send_to->username}";
 
-		} else {
-			if (!is_array($digest_collection['personal']['response']))
-				$digest_collection['personal']['response'] = array();
-			$digest_collection['personal']['response'][] = "{$invoked_by->username} has left a response or comment on your post  {$entity->title}: {$entity->getURL()} ... {$send_to->guid}  / {$send_to->username}";
-		}
-		break;
-
-
-	case 'cp_friend_request':
-		if (!is_array($digest_collection['personal']['friend_request']))
-			$digest_collection['personal']['friend_request'] = array();
-		$digest_collection['personal']['friend_request'][] = "{$invoked_by->username} has sent you a friend request";
-	 	break;
+			} else {
+				if (!is_array($digest_collection['personal']['response']))
+					$digest_collection['personal']['response'] = array();
+				$digest_collection['personal']['response'][] = "{$invoked_by->username} has left a response or comment on your post  {$entity->title}: {$entity->getURL()} ... {$send_to->guid}  / {$send_to->username}";
+			}
+			break;
 
 
-	case 'cp_messageboard':
-		if (!is_array($digest_collection['personal']['profile_message']))
-			$digest_collection['personal']['profile_message'] = array();
-		$digest_collection['personal']['profile_message'][] = "{$invoked_by->username} has left u a msg on your profile => sending to... {$send_to->guid} / {$send_to->username}";
-		break;
+		case 'cp_friend_request':
+			if (!is_array($digest_collection['personal']['friend_request']))
+				$digest_collection['personal']['friend_request'] = array();
+			$digest_collection['personal']['friend_request'][] = "{$invoked_by->username} has sent you a friend request";
+		 	break;
 
 
-	case 'cp_hjtopic':
-	case 'cp_hjpost':
-		if ($subtype === 'cp_hjtopic') {
-			if (!is_array($digest_collection['personal']['forum_topic']))
-				$digest_collection['group'][get_entity(get_forum_in_group($entity->guid, $entity->guid))->title]['forum_topic'] = array();
-			$digest_collection['group'][get_entity(get_forum_in_group($entity->guid, $entity->guid))->title]['forum_topic'][] = "{$invoked_by->username} has {$subtype} in your forum {$entity->title} => sending to... {$send_to->guid} / {$send_to->username}";
-		
-		} else {
-			if (!is_array($digest_collection['personal']['forum_reply']))
-				$digest_collection['group'][get_entity(get_forum_in_group($entity->guid, $entity->guid))->title]['forum_reply'] = array();
-			$digest_collection['group'][get_entity(get_forum_in_group($entity->guid, $entity->guid))->title]['forum_reply'][] = "{$invoked_by->username} has {$subtype} to your topic {$entity->getContainerEntity()->title} => sending to... {$send_to->guid} / {$send_to->username}";
-		}
-		break;
+		case 'cp_messageboard':
+			if (!is_array($digest_collection['personal']['profile_message']))
+				$digest_collection['personal']['profile_message'] = array();
+			$digest_collection['personal']['profile_message'][] = "{$invoked_by->username} has left u a msg on your profile => sending to... {$send_to->guid} / {$send_to->username}";
+			break;
 
 
-	case 'post_likes':
-		if (!is_array($digest_collection['personal']['likes']))
-			$digest_collection['personal']['likes'] = array();
-		$digest_collection['personal']['likes'][] = "{$invoked_by->username} has {$subtype} likes {$entity->title}:{$entity->getURL()}  => sending to... {$send_to->guid} / {$send_to->username}";
-		break;
+		case 'cp_hjtopic':
+		case 'cp_hjpost':
+			if ($subtype === 'cp_hjtopic') {
+				if (!is_array($digest_collection['personal']['forum_topic']))
+					$digest_collection['group'][get_entity(get_forum_in_group($entity->guid, $entity->guid))->title]['forum_topic'] = array();
+				$digest_collection['group'][get_entity(get_forum_in_group($entity->guid, $entity->guid))->title]['forum_topic'][] = "{$invoked_by->username} has {$subtype} in your forum {$entity->title} => sending to... {$send_to->guid} / {$send_to->username}";
+			
+			} else {
+				if (!is_array($digest_collection['personal']['forum_reply']))
+					$digest_collection['group'][get_entity(get_forum_in_group($entity->guid, $entity->guid))->title]['forum_reply'] = array();
+				$digest_collection['group'][get_entity(get_forum_in_group($entity->guid, $entity->guid))->title]['forum_reply'][] = "{$invoked_by->username} has {$subtype} to your topic {$entity->getContainerEntity()->title} => sending to... {$send_to->guid} / {$send_to->username}";
+			}
+			break;
 
 
-	case 'content_revision':
-		if (!is_array($digest_collection['personal']['content_revision']))
-			$digest_collection['personal']['content_revision'] = array();
-		$digest_collection['personal']['content_revision'][] = "{$invoked_by->username} has {$subtype} revised {$entity->title}:{$entity->getURL()}  => sending to... {$send_to->guid} / {$send_to->username}";
-		break;
+		case 'post_likes':
+			if (!is_array($digest_collection['personal']['likes']))
+				$digest_collection['personal']['likes'] = array();
+			$digest_collection['personal']['likes'][] = "{$invoked_by->username} has {$subtype} likes {$entity->title}:{$entity->getURL()}  => sending to... {$send_to->guid} / {$send_to->username}";
+			break;
 
-	default:
-		$entity = get_entity($entity->guid);
-		if (!is_array($digest_collection['personal']['new_post']))
-			$digest_collection['personal']['new_post'] = array();
-		$digest_collection['personal']['new_post'][] = "{$invoked_by->username} has {$subtype}: {$entity->getURL()} => sending to... {$send_to->guid} / {$send_to->username}";
-		break;
-}
+
+		case 'content_revision':
+			if (!is_array($digest_collection['personal']['content_revision']))
+				$digest_collection['personal']['content_revision'] = array();
+			$digest_collection['personal']['content_revision'][] = "{$invoked_by->username} has {$subtype} revised {$entity->title}:{$entity->getURL()}  => sending to... {$send_to->guid} / {$send_to->username}";
+			break;
+
+		default:
+			$entity = get_entity($entity->guid);
+			if ($entity->getContainerEntity() instanceof ElggGroup) {
+
+				if (!is_array($digest_collection['group']['response']))
+					$digest_collection['group'][$entity->getContainerEntity()->title]['new_post'] = array();
+				$digest_collection['group'][$entity->getContainerEntity()->title]['new_post'][] = "{$invoked_by->username} has left a response or comment on the post in the group blah blah blah  {$entity->title}: {$entity->getURL()} ... {$send_to->guid}  / {$send_to->username}";
+
+			} else {
+				if (!is_array($digest_collection['personal']['new_post']))
+					$digest_collection['personal']['new_post'] = array();
+				$digest_collection['personal']['new_post'][] = "{$invoked_by->username} has {$subtype}: => sending to... {$send_to->guid} / {$send_to->username}";				
+			}
+			break;
+	}
 
 	// save the information to the digest object for later access
 	$ia = elgg_set_ignore_access(true);
@@ -1049,6 +1055,7 @@ function isJson($string) {
 	return (json_last_error() == JSON_ERROR_NONE);
 }
 
+
 /**
  * setup crontab either on a daily or weekly basis
  * get users who are subscribed to digest
@@ -1069,9 +1076,9 @@ function cp_digest_cron_handler($hook, $entity_type, $return_value, $params) {
 	);
 	$current_digest = elgg_get_entities($options);
 
-	foreach ($current_digest as $user) {
-		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->getOwnerGUID(),'cp_notifications'),'set_digest_yes') == 0) {
-			$to = $user->getOwnerEntity();
+	//foreach ($current_digest as $user) {
+	//	if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->getOwnerGUID(),'cp_notifications'),'set_digest_yes') == 0) {
+			$to = get_entity(112);//$user->getOwnerEntity();
 			$newsletter_id = $to->cpn_newsletter;
 			$newsletter_object = get_entity($newsletter_id);
 			$newsletter_content = json_decode($newsletter_object->description, true);
@@ -1090,8 +1097,8 @@ function cp_digest_cron_handler($hook, $entity_type, $return_value, $params) {
 			// clean up the newsletter
 			//$newsletter_object->description = json_encode(array());
 			//$newsletter_object->save();
-		}
-	}
+	//	}
+	//}
 }
 
 
@@ -1206,7 +1213,7 @@ function cp_send_new_password_request($user_guid) {
 	$template = elgg_view('cp_notifications/email_template', $message);
 
 	if (elgg_is_active_plugin('phpmailer'))
-	phpmailer_send( $user->email, $user->name, $subject, $template );
+		phpmailer_send( $user->email, $user->name, $subject, $template );
 	else 
 		mail($user->email,$subject,$template,cp_get_headers());
 }
