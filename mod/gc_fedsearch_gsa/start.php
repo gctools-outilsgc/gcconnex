@@ -28,7 +28,7 @@ function entity_title($hook, $type, $return, $params) {
 			return;
 
 		$url = explode('/',$_SERVER['REQUEST_URI']);
-		$entity = get_entity($url[3]);
+		$entity = get_entity($url[4]);
 
 		// let the gsa index the title of the entity as well
 		foreach ($entity_title->getElementsByTagName('h1')->item(0)->childNodes as $node) 
