@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * Retrieve the contents within the Group
  *
  */
@@ -12,6 +12,7 @@ if (!elgg_is_xhr()) {
 
 $group_guid = (int)get_input('group_guid');
 $user_guid = (int)get_input('user_guid');
+elgg_load_library('elgg:gc_notification:functions');
 
 $no_notification_available = array('widget','hjforumcategory','messages','MySkill','experience','education','hjforumpost','hjforumtopic','hjforum');
 
@@ -51,6 +52,7 @@ LEFT JOIN
 WHERE r.guid_one = {$user_guid} AND r.relationship = 'cp_subscribed_to_site_mail'";
 
 $group_contents = get_data($query);
+
 foreach ($group_contents as $key => $group_content) {
 	// make sure the Array Object is not empty
 	if (!empty($group_content->entity_guid) && $group_content->entity_guid > 0) {
@@ -81,19 +83,6 @@ $number_of_content = count($group_objects);
 
 echo json_encode([
 	'num_content' => $number_of_content,
-	'text1' => $sample_text,
-	'text2' => 12345,
 	'text3' => $group_objects,
 ]);
 
-
-// recursive, to get group id
-function get_forum_in_group($entity_guid_static, $entity_guid) {
-	$entity = get_entity($entity_guid);
-	if ($entity instanceof ElggGroup) { // stop recursing when we reach group guid
-		//error_log('stop at GUID: '.$entity_guid.' / '.$entity->name);
-		return $entity_guid;
-	} else { // keep going...
-		return get_forum_in_group($entity_guid_static, $entity->getContainerGUID());
-	}
-}

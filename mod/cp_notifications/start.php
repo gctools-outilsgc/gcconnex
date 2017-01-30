@@ -4,6 +4,8 @@ elgg_register_event_handler('init','system','cp_notifications_init');
 
 function cp_notifications_init() {
 
+	elgg_register_library('elgg:gc_notification:functions', elgg_get_plugins_path() . 'cp_notifications/lib/functions.php');
+	
 	elgg_register_css('cp_notifications-css','mod/cp_notifications/css/notifications-table.css');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'notify_entity_menu_setup', 400);
 
@@ -368,7 +370,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			foreach ($t_user as $s_uer)
 				$to_recipients[] = get_user($s_uer);
 
-			$content_entity = $params['cp_post'];
+			$content_entity = $params['cp_topic'];
 			$author = $params['cp_topic']->getOwnerEntity();
 			break;
 
@@ -421,10 +423,8 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 		if ($cp_msg_type != 'cp_event_ics')
 			$template = elgg_view('cp_notifications/email_template', $message);
 				
-		error_log("sending notification...... {$cp_msg_type}");
 		$newsletter_appropriate = array('cp_wire_share','cp_messageboard','cp_wire_mention','cp_hjpost','cp_hjtopic', 'cp_friend_request');
 		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0 && in_array($cp_msg_type,$newsletter_appropriate)) {
-			error_log(' +++++++++++++++++++++++++++++++++++++++++++++++++++++ create digest................... '.$cp_msg_type);
 			$result = temp_digest($author, $cp_msg_type, $content_entity, $to_recipient);
 		} else 
 			$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template ) : mail($to_recipient->email, $subject, $template, cp_get_headers($event));
@@ -556,7 +556,6 @@ function cp_create_annotation_notification($event, $type, $object) {
 				$template = elgg_view('cp_notifications/email_template', $message);
 
 				if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $watcher->guid,'cp_notifications'),'set_digest_yes') == 0) {
-					error_log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++ watcher username: '.$watcher->username);
 					temp_digest($author, $action_type, $content_entity, get_entity($watcher->guid));
 				} else {
 					(elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $watcher->email, $watcher->name, $subject, $template, NULL, true ) : mail($watcher->email, $subject, $template, cp_get_headers());
@@ -595,7 +594,6 @@ function cp_create_annotation_notification($event, $type, $object) {
 				$template = elgg_view('cp_notifications/email_template', $message);
 				
 				if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $watcher->guid,'cp_notifications'),'set_digest_yes') == 0) {
-					error_log("+++++++++++++++++++++++++++++++++++++++++++++++++++++ create digest");
 					temp_digest($author, $action_type, $content_entity, get_entity($watcher->guid));
 				
 				} else
@@ -711,7 +709,6 @@ function cp_create_annotation_notification($event, $type, $object) {
 			$template = elgg_view('cp_notifications/email_template', $message); 
 			
 			(strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0) ? temp_digest($author, $action_type, $content_entity, $to_recipient) : cp_notification_preparation_send($content_entity, $to_recipient, $message, $content_entity->getOwnerGUID(), $subject);
-
 		}
 	}
 
@@ -880,8 +877,6 @@ function cp_create_notification($event, $type, $object) {
 				$subject = elgg_echo('cp_notify:subject:new_content',array(cp_translate_subtype($object->getSubtype()),$group->name),'en');
 				$subject .= ' | '.$subj_gender;
 
-
-				
 			} else {
 				// subscribed to users or friends
 				$content_originator = $object->getOwnerGUID();
@@ -951,73 +946,84 @@ function get_subscribers($dbprefix, $user_guid, $entity_guid = '') {
 	
 
 /**
- * @param 
+ * assembles the digest then encodes the array into JSON to be saved
+ *
+ * @param ElggUser 		$invoked_by
+ * @param string 		$subtype
+ * @param ElggEntity 	$entity
+ * @param ElggUser 		$send_to
+ * @return Success 		true/false
  */
 function temp_digest($invoked_by, $subtype, $entity, $send_to) {
-
+elgg_load_library('elgg:gc_notification:functions');
 $digest = get_entity($send_to->cpn_newsletter);
 $digest_collection = json_decode($digest->description,true);
 
-if ($subtype === 'comment' || $subtype === 'discussion_reply') {
-
-	if ($entity->getContainerEntity() instanceof ElggGroup) {
-		error_log("========================> {$invoked_by->username} has left a response or comment on your post  {$entity->title}: {$entity->getURL()} ... {$send_to->guid}  / {$send_to->username}");
+switch ($subtype) {
+	case 'comment':
+	case 'discussion_reply':
+		if ($entity->getContainerEntity() instanceof ElggGroup) {
 			if (!is_array($digest_collection['group']['response']))
-			$digest_collection['group'][$entity->getContainerEntity()->title]['response'] = array();
-		$digest_collection['group'][$entity->getContainerEntity()->title]['response'][] = "{$invoked_by->username} has left a response or comment on the post in the group blah blah blah  {$entity->title}: {$entity->getURL()} ... {$send_to->guid}  / {$send_to->username}";
+				$digest_collection['group'][$entity->getContainerEntity()->title]['response'] = array();
+			$digest_collection['group'][$entity->getContainerEntity()->title]['response'][] = "{$invoked_by->username} has left a response or comment on the post in the group blah blah blah  {$entity->title}: {$entity->getURL()} ... {$send_to->guid}  / {$send_to->username}";
 
-	} else {
-error_log("========================> {$invoked_by->username} has left a response or comment on your post  {$entity->title}: {$entity->getURL()} ... {$send_to->guid}  / {$send_to->username}");
+		} else {
 			if (!is_array($digest_collection['personal']['response']))
-			$digest_collection['personal']['response'] = array();
-		$digest_collection['personal']['response'][] = "{$invoked_by->username} has left a response or comment on your post  {$entity->title}: {$entity->getURL()} ... {$send_to->guid}  / {$send_to->username}";
-	}
+				$digest_collection['personal']['response'] = array();
+			$digest_collection['personal']['response'][] = "{$invoked_by->username} has left a response or comment on your post  {$entity->title}: {$entity->getURL()} ... {$send_to->guid}  / {$send_to->username}";
+		}
+		break;
 
 
-} elseif ($subtype === 'cp_friend_request') {
+	case 'cp_friend_request':
 		if (!is_array($digest_collection['personal']['friend_request']))
 			$digest_collection['personal']['friend_request'] = array();
 		$digest_collection['personal']['friend_request'][] = "{$invoked_by->username} has sent you a friend request";
-	}
+	 	break;
 
-	elseif ($subtype === 'cp_messageboard') {
 
+	case 'cp_messageboard':
 		if (!is_array($digest_collection['personal']['profile_message']))
 			$digest_collection['personal']['profile_message'] = array();
 		$digest_collection['personal']['profile_message'][] = "{$invoked_by->username} has left u a msg on your profile => sending to... {$send_to->guid} / {$send_to->username}";
+		break;
 
-	} elseif ($subtype === 'cp_hjtopic' || $subtype === 'cp_hjpost' ) { 
-		// maybe put this in group
+
+	case 'cp_hjtopic':
+	case 'cp_hjpost':
 		if ($subtype === 'cp_hjtopic') {
 			if (!is_array($digest_collection['personal']['forum_topic']))
-				$digest_collection['personal']['forum_topic'] = array();
-			$digest_collection['personal']['forum_topic'][] = "{$invoked_by->username} has {$subtype} in your forum {$entity->title} => sending to... {$send_to->guid} / {$send_to->username}";
+				$digest_collection['group'][get_entity(get_forum_in_group($entity->guid, $entity->guid))->title]['forum_topic'] = array();
+			$digest_collection['group'][get_entity(get_forum_in_group($entity->guid, $entity->guid))->title]['forum_topic'][] = "{$invoked_by->username} has {$subtype} in your forum {$entity->title} => sending to... {$send_to->guid} / {$send_to->username}";
+		
 		} else {
 			if (!is_array($digest_collection['personal']['forum_reply']))
-				$digest_collection['personal']['forum_reply'] = array();
-			$digest_collection['personal']['forum_reply'][] = "{$invoked_by->username} has {$subtype} to your topic {$entity->getContainerEntity()->title} => sending to... {$send_to->guid} / {$send_to->username}";
+				$digest_collection['group'][get_entity(get_forum_in_group($entity->guid, $entity->guid))->title]['forum_reply'] = array();
+			$digest_collection['group'][get_entity(get_forum_in_group($entity->guid, $entity->guid))->title]['forum_reply'][] = "{$invoked_by->username} has {$subtype} to your topic {$entity->getContainerEntity()->title} => sending to... {$send_to->guid} / {$send_to->username}";
 		}
-
-	} elseif ($subtype === 'post_likes') { 
-
-			if (!is_array($digest_collection['personal']['likes']))
-				$digest_collection['personal']['likes'] = array();
-			$digest_collection['personal']['likes'][] = "{$invoked_by->username} has {$subtype} likes {$entity->title}:{$entity->getURL()}  => sending to... {$send_to->guid} / {$send_to->username}";
-
-	} elseif ($subtype === 'content_revision') { 
-			
-					if (!is_array($digest_collection['personal']['content_revision']))
-				$digest_collection['personal']['content_revision'] = array();
-			$digest_collection['personal']['content_revision'][] = "{$invoked_by->username} has {$subtype} revised {$entity->title}:{$entity->getURL()}  => sending to... {$send_to->guid} / {$send_to->username}";
+		break;
 
 
-	} else {
+	case 'post_likes':
+		if (!is_array($digest_collection['personal']['likes']))
+			$digest_collection['personal']['likes'] = array();
+		$digest_collection['personal']['likes'][] = "{$invoked_by->username} has {$subtype} likes {$entity->title}:{$entity->getURL()}  => sending to... {$send_to->guid} / {$send_to->username}";
+		break;
+
+
+	case 'content_revision':
+		if (!is_array($digest_collection['personal']['content_revision']))
+			$digest_collection['personal']['content_revision'] = array();
+		$digest_collection['personal']['content_revision'][] = "{$invoked_by->username} has {$subtype} revised {$entity->title}:{$entity->getURL()}  => sending to... {$send_to->guid} / {$send_to->username}";
+		break;
+
+	default:
 		$entity = get_entity($entity->guid);
 		if (!is_array($digest_collection['personal']['new_post']))
 			$digest_collection['personal']['new_post'] = array();
 		$digest_collection['personal']['new_post'][] = "{$invoked_by->username} has {$subtype}: {$entity->getURL()} => sending to... {$send_to->guid} / {$send_to->username}";
-	}
-
+		break;
+}
 
 	// save the information to the digest object for later access
 	$ia = elgg_set_ignore_access(true);
@@ -1027,6 +1033,8 @@ error_log("========================> {$invoked_by->username} has left a response
 
 	return true;
 }
+
+
 
 
 /**
@@ -1055,21 +1063,35 @@ function cp_digest_cron_handler($hook, $entity_type, $return_value, $params) {
 
 	echo "Starting up the cron job for the Notifications (cp_notifications plugin) <br/>";
 
-	$to = get_entity(95/*349*/);
-	$newsletter_id = $to->cpn_newsletter;
-	$newsletter_content = json_decode(get_entity($newsletter_id)->description, true);
+	$options = array(
+		'type' => 'object',
+		'subtype' => 'cp_digest',
+	);
+	$current_digest = elgg_get_entities($options);
 
-	echo print_r($newsletter_content);
+	foreach ($current_digest as $user) {
+		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->getOwnerGUID(),'cp_notifications'),'set_digest_yes') == 0) {
+			$to = $user->getOwnerEntity();
+			$newsletter_id = $to->cpn_newsletter;
+			$newsletter_object = get_entity($newsletter_id);
+			$newsletter_content = json_decode($newsletter_object->description, true);
 
-	echo '<br/><br/><br/><br/><br/><br/>';
+			echo print_r($newsletter_content);
 
-	if (sizeof($newsletter_content) > 0 || !empty($newsletter_content))
-		$template = elgg_view('cp_notifications/newsletter_template', array('to' => $to, 'newsletter_content' => json_decode(get_entity($newsletter_id)->description,true)));
-	else
-		$template = elgg_view('cp_notifications/newsletter_template_empty', array('to' => $to));
+			echo '<br/><br/><br/><br/><br/><br/>';
 
-	echo $template;
+			if (sizeof($newsletter_content) > 0 || !empty($newsletter_content))
+				$template = elgg_view('cp_notifications/newsletter_template', array('to' => $to, 'newsletter_content' => json_decode(get_entity($newsletter_id)->description,true)));
+			else
+				$template = elgg_view('cp_notifications/newsletter_template_empty', array('to' => $to));
 
+			echo $template;
+
+			// clean up the newsletter
+			//$newsletter_object->description = json_encode(array());
+			//$newsletter_object->save();
+		}
+	}
 }
 
 
@@ -1084,27 +1106,7 @@ function cp_digest_cron_handler($hook, $entity_type, $return_value, $params) {
     <ul><li>New Opportunity</li></ul>
   </ul>
 </div>
-
-<div>
-<h3>Group Notifications</h3>
-  <ul>
-    <li>Hello World Group Beta</li>
-    <ul><li>2 Discussion Topics have been created</li></ul>
-      <ul><ul><li>Hello World 1</li></ul></ul>
-      <ul><ul><li>Hello World 2</li></ul></ul>
-    
-		<ul><li>3 Files have been uploaded</li></ul>
-      <ul><ul><li>File Alpha 1</li></ul></ul>
-      <ul><ul><li>File Alpha 2</li></ul></ul>
-    
-    <li>Hello World Group Alpha</li>
-		<ul><li>3 Files have been uploaded</li></ul>
-      <ul><ul><li>File Alpha 1</li></ul></ul>
-      <ul><ul><li>File Alpha 2</li></ul></ul>
-  </ul>
-</div>
 */
-
 
 
 
@@ -1162,31 +1164,6 @@ function cp_notification_preparation_send($entity, $to_user, $message, $guid_two
 
 
 
-/**
- * check if object is: public, logged in, in group (check if user is in group), in friend-circle (check if user is in friend-circle)
- * 
- * @param ElggObject $entity		the entity we will check permissions of
- * @param int $recipient_user_id	the user guid.. to check if user is author's circle or friend
- */
-function cp_check_permissions($entity, $recipient_user_id = 0) {
-	$access_id = $entity->access_id;
-	if ($access_id == 2 || $access_id == 1) // public or logged-in access
-		return true;
-
-	if ($access_id == -2) { // author or author's friends
-		return check_entity_relationship($recipient_user_id, 'friend', $entity->getOwnerGUID()); // returns object
-	}
-
-	// Note: non-group members cannot subscribe to a group...
-	// check if user is in friend's circle
-	if ($access_id > 2) {
-		$user_id_list = get_members_of_access_collection($access_id, true); // returns list of id in collection
-		if (in_array($recipient_user_id, $user_id_list))
-			return true;
-	}
-
-	return false;
-}
 
 
 
@@ -1235,33 +1212,6 @@ function cp_send_new_password_request($user_guid) {
 }
 
 
-/**
- * We need to modify the headers so that emails can go out (header spoofing)
- *
- * @param string 	$event
- */
-function cp_get_headers($event) { 	// $event will be null if nothing is passed into it (no default value set)
-
-	$email_address = elgg_get_plugin_setting('cp_notifications_email_addr','cp_notifications');
-	if (!$email_address || $email_address === '')
-		$email_address = 'admin.gcconnex@tbs-sct.gc.ca'; // default if nothing is set
-	$php_version = phpversion();
-
-	$headers =  "From: GCconnex <{$email_address}> \r\n";
-	$headers .= "Reply-To: GCconnex <{$email_address}> \r\n";
-	$headers .= "Return-Path: GCconnex <{$email_address}> \r\n";
-	$headers .= "X-Mailer: PHP/{$php_version} \r\n";
-	$headers .= "MIME-Version: 1.0 \r\n";
-	$headers .= "Content-type: text/html; charset=utf-8 \r\n";
-   
-	if ($event === 'event') {
-		$mime_boundary = "----Meeting Booking----".MD5(TIME());
-		$headers .= 'Content-Type: multipart/alternative; boundary='.$mime_boundary."\r\n";
-		$headers .= "Content-class: urn:content-classes:calendarmessage\n";
-	}
-
-	return $headers;
-}
 
 
 /*
@@ -1295,31 +1245,6 @@ function cp_membership_request($event, $type, $object) { 	// MUST always be send
 
 
 
-/**
- * scans the text object for any @mentions
- * 
- * @param string 	$cp_object
- */
-function cp_scan_mentions($cp_object) {
-	$fields = array('title','description','value');
-	foreach($fields as $field) {
-		$content = $cp_object->$field;													// pull the information from the fields saved to object
-		if (preg_match_all("/\@([A-Za-z1-9]*).?([A-Za-z1-9]*)/", $content, $matches)) { // find all the string that matches: @christine.yu
-			$users_found = array();
-			foreach ($matches[0] as $match) {
-				if (preg_match('/\s/',$match)) { 										// what if no space found? check for space
-					$user_found = explode(' ',$match);
-					$users_found[] = $user_found[0];
-				}
-			}
-			return $users_found;
-		}
-	}
-	return false;
-}
-
-
-
 /* 
  * intercepts all email and stops emails from sending
  *
@@ -1327,7 +1252,6 @@ function cp_scan_mentions($cp_object) {
 function cpn_email_handler_hook($hook, $type, $notification, $params) {
 	return false;
 }
-
 
 
 /** 
@@ -1385,113 +1309,6 @@ function notify_entity_menu_setup($hook, $type, $return, $params) {
 	}
 	return $return;
 }
-
-
-
-/**
- * renders the correct subtype for the notification to display
- * 
- * @param string 			$subtype_name
- * @param optional string 	$english
- */
-function cp_translate_subtype($subtype_name, $english = true) {
-	$label = '';
-	switch($subtype_name) {
-		case 'blog':
-			$label = 'blog';
-			break;
-		case 'bookmarks':
-			$label = 'bookmark';
-			break;
-		case 'file':
-			$label = 'file';
-			break;
-		case 'poll':
-			$label = 'poll';
-			break;
-		case 'event_calendar':
-			$label = 'event';
-			break;
-		case 'album':
-			$label = 'album';
-			break;
-		case 'groupforumtopic':
-			$label = 'discussion';
-			break;
-		case 'image':
-			$label = 'photo';
-			break;
-		case 'idea':
-			$label = 'idea';
-			break;
-		case 'page_top':
-		case 'page':
-				$label = 'page';
-			break;
-		case 'hjforumtopic':
-			$label = 'forum topic';
-			break;
-		case 'hjforum':
-			$label = 'forum';
-			break;
-		case 'thewire':
-			$label = 'wire';
-			if (!$english)
-				$label = 'fil';
-			break;
-		case 'task_top':
-			$label = 'task';
-			break;
-		case 'mission':
-			$label = 'opportunity';
-			break;
-		default:
-			$label = $subtype_name;
-		break;
-	}
-	return $label;
-}
-
-
-/**
- * Helper function for notifications about new opportunities
- *
- * @param ElggUser 	$user_obj
- * @param string 	$mission_type
- */
-function userOptedIn( $user_obj, $mission_type ) {
-	$typemap = array(
-		'missions:micro_mission' => 'opt_in_missions',
-		'missions:job_swap'	=> 'opt_in_swap',
-		'missions:mentoring' => 'opt_in_mentored',
-		'missions:job_shadowing' => 'opt_in_shadowed',
-		'missions:assignment' => 'opt_in_assignSeek',
-		'missions:deployment' => 'opt_in_deploySeek',
-		'missions:job_rotation'	=> 'opt_in_rotation',
-		'missions:skill_share' => 'opt_in_ssSeek',
-		'missions:peer_coaching' => 'opt_in_pcSeek',
-		'missions:job_share' => 'opt_in_jobshare',
-		);
-
-	$typemap2 = array(
-		'missions:micro-mission' => 'opt_in_missionCreate',
-		'missions:job_swap' => 'opt_in_swap',
-		'missions:mentoring' =>	'opt_in_mentoring',
-		'missions:job_shadowing'	=>	'opt_in_shadowing',
-		'missions:assignment'	=> 'opt_in_assignCreate',
-		'missions:deployment'	=>	'opt_in_deployCreate',
-		'missions:job_rotation'	=>	'opt_in_rotation',
-		'missions:skill_share'	=>	'opt_in_ssCreate',
-		'missions:peer_coaching'	=>	'opt_in_pcCreate',
-		'missions:job_share'	=>	'opt_in_jobshare',
-		);
-	return $user_obj->$typemap[$mission_type] == 'gcconnex_profile:opt:yes' || $user_obj->$typemap2[$mission_type] == 'gcconnex_profile:opt:yes';
-}
-
-
-
-
-
 
 
 /* (WIP) cyu - recursively go through the parents of the wire posts (thread - kind of) */

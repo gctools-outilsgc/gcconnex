@@ -12,6 +12,7 @@ $user = elgg_get_page_owner_entity();
 $plugin = elgg_extract("entity", $vars);
 $dbprefix = elgg_get_config('dbprefix');
 $site = elgg_get_site_entity();
+elgg_load_library('elgg:gc_notification:functions');
 
 $title = elgg_echo('cp_notify:panel_title',array("<a href='".elgg_get_site_url()."settings/user/'>".elgg_echo('label:email')."</a>"));
 $current_user = elgg_get_logged_in_user_entity();
@@ -268,23 +269,15 @@ echo elgg_view_module('info', $title, $content);
 
 
 
-
-
-/// recursive, to get group id
-///
-function get_forum_in_group($entity_guid_static, $entity_guid) {
-	$entity = get_entity($entity_guid);
-	// (base) stop recursing when we reach group guid
-	if ($entity instanceof ElggGroup)  
-		return $entity_guid;
-	else 
-		return get_forum_in_group($entity_guid_static, $entity->getContainerGUID());
-}
-
-
 ?>
 
 <script>
+
+/// control the checkboxes (only one check)
+//$("input:params[cpn_set_digest_freq_daily]").on('click', function() {
+
+//})
+
 
 /// Uses Ajax to dynamically create and display the list of group content that the user has subscribed to 
 ///
@@ -331,29 +324,6 @@ function get_forum_in_group($entity_guid_static, $entity_guid) {
 		
 		}
 	}
-
-
-/**
- * @param integer 			$user_id 
- * @param string 			$name 
- * @param array <string> 	$values
- * @param string 			$label
- */
-function create_checkboxes($user_id, $name, $values, $label) {
-	$user_option = elgg_get_plugin_user_setting($name, $user_id, 'cp_notifications');
-	$is_checked = (strcmp($user_option, 'set_digest_no') == 0 || strcmp($user_option, 'set_notify_off') == 0) ? false : true;
-
-	$chkbox = elgg_view('input/checkbox', array(
-		'name' => 		"params[{$name}]",
-		'value' => 		$values[0],
-		'default' => 	$values[1],
-		'checked' => 	(strcmp($user_option, $name) == 0  || !$user_option) ? true : false,
-		'label' => 		$label,
-		'checked' => 	$is_checked ));
-
-	return $chkbox;
-}
-
 
 
 /// Uses Ajax to dynamically create and display the list of personal content that the user has subscribed to 

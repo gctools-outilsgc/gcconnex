@@ -40,20 +40,18 @@ if (strlen($content) > 0) {
         foreach ($highlevel_contents as $detailed_header => $detailed_contents) {
           echo "<li>{$detailed_header}</li>";
           
-
-
           foreach ($detailed_contents as $content) {
 
             if ($highlevel_header === 'group') {
+
               $group_activities = $content;
-              foreach ($group_activities as $activity_heading) {
+              foreach ($group_activities as $activity_heading)
                 echo  "<ul style='list-style-type:none;'><li>{$activity_heading}</li></ul>";
-              }
 
             } else {
               echo  "<ul style='list-style-type:none;'><li>{$content}</li></ul>";
             }
-          
+
           }
         }
 
@@ -69,7 +67,7 @@ if (strlen($content) > 0) {
 
       <!-- email footer -->
       <div width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 10px; color: #055959'>
-        <center><p>Should you have any concerns, please use the <a href='#'>Contact us form</a>. </p>
+        <center><p>Should you have any concerns, please use the <a href='http://192.168.0.30/gcconnex/mod/contactform/'>Contact us form</a>. </p>
         <p>To unsubscribe or manage these messages, please login and visit your <a href='http://192.168.0.30/gcconnex/mod/contactform/'> Notification Settings</a>.</p> </center>	
       </div>
     </div>
@@ -113,7 +111,7 @@ if (strlen($content) > 0) {
         break;
 
       case 'group':
-        $proper_heading = 'Group Name Here';
+        $proper_heading = 'Group Notifications';
         break;
 
       default:
