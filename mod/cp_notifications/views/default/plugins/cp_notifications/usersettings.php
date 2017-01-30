@@ -7,45 +7,6 @@
  *
  */
 
-/* name - name attribute for the checkbox
- * values - default and value
- * label - label for checkbox
- */
-function create_checkboxes($user_id, $name, $values, $label) {
-
-/*
-
-[Thu Jan 12 16:33:22.652228 2017] [:error] [pid 2701] [client 192.168.2.22:51779] user option: set_digest_yes / name: cpn_set_digest
-[Thu Jan 12 16:33:22.653739 2017] [:error] [pid 2701] [client 192.168.2.22:51779] user option:  / name: cpn_set_digest_freq_daily
-[Thu Jan 12 16:33:22.654544 2017] [:error] [pid 2701] [client 192.168.2.22:51779] user option:  / name: cpn_set_digest_freq_weekly
-[Thu Jan 12 16:33:22.655293 2017] [:error] [pid 2701] [client 192.168.2.22:51779] user option:  / name: cpn_set_digest_lang_en
-[Thu Jan 12 16:33:22.656107 2017] [:error] [pid 2701] [client 192.168.2.22:51779] user option:  / name: cpn_set_digest_lang_fr
-[Thu Jan 12 16:33:22.658270 2017] [:error] [pid 2701] [client 192.168.2.22:51779] user option: likes_email / name: cpn_likes_email
-[Thu Jan 12 16:33:22.658824 2017] [:error] [pid 2701] [client 192.168.2.22:51779] user option: likes_site / name: cpn_likes_site
-[Thu Jan 12 16:33:22.666418 2017] [:error] [pid 2701] [client 192.168.2.22:51779] user option: mentions_email / name: cpn_mentions_email
-[Thu Jan 12 16:33:22.667933 2017] [:error] [pid 2701] [client 192.168.2.22:51779] user option: mentions_site / name: cpn_mentions_site
-[Thu Jan 12 16:33:22.670782 2017] [:error] [pid 2701] [client 192.168.2.22:51779] user option: content_email / name: cpn_content_email
-[Thu Jan 12 16:33:22.671449 2017] [:error] [pid 2701] [client 192.168.2.22:51779] user option: content_site / name: cpn_content_site
-[Thu Jan 12 16:33:22.676638 2017] [:error] [pid 2701] [client 192.168.2.22:51779] user option: opportunities_email / name: cpn_opportunities_email
-[Thu Jan 12 16:33:22.678035 2017] [:error] [pid 2701] [client 192.168.2.22:51779] user option: opportunities_site / name: cpn_opportunities_site
-
-
-*/
-	$user_option = elgg_get_plugin_user_setting($name, $user_id, 'cp_notifications');
-	$is_checked = (strcmp($user_option, 'set_digest_no') == 0 || strcmp($user_option, 'set_notify_off') == 0) ? false : true;
-
-	$chkbox = elgg_view('input/checkbox', array(
-		'name' => "params[{$name}]",
-		'value' => $values[0],
-		'default' => $values[1],
-		'checked' => (strcmp($user_option, $name) == 0  || !$user_option) ? true : false,
-		'label' => $label,
-		'checked' => $is_checked ));
-
-	return $chkbox;
-}
-
-
 gatekeeper();
 $user = elgg_get_page_owner_entity();
 $plugin = elgg_extract("entity", $vars);
@@ -370,6 +331,28 @@ function get_forum_in_group($entity_guid_static, $entity_guid) {
 		
 		}
 	}
+
+
+/**
+ * @param integer 			$user_id 
+ * @param string 			$name 
+ * @param array <string> 	$values
+ * @param string 			$label
+ */
+function create_checkboxes($user_id, $name, $values, $label) {
+	$user_option = elgg_get_plugin_user_setting($name, $user_id, 'cp_notifications');
+	$is_checked = (strcmp($user_option, 'set_digest_no') == 0 || strcmp($user_option, 'set_notify_off') == 0) ? false : true;
+
+	$chkbox = elgg_view('input/checkbox', array(
+		'name' => 		"params[{$name}]",
+		'value' => 		$values[0],
+		'default' => 	$values[1],
+		'checked' => 	(strcmp($user_option, $name) == 0  || !$user_option) ? true : false,
+		'label' => 		$label,
+		'checked' => 	$is_checked ));
+
+	return $chkbox;
+}
 
 
 

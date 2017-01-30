@@ -1,6 +1,10 @@
 <?php
 
+$site_name = "GCconnex";
 $english = array(
+
+
+	'newsletter:title_heading' => "Your {$site_name} Digest",
 
 	'cp_notify:setting:no_grp_subscription' => 'Nothing to load',
 
