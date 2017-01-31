@@ -124,7 +124,133 @@ function cp_scan_mentions($cp_object) {
 
 
 
+/**
+ * assembles the digest then encodes the array into JSON to be saved
+ *
+ * @param ElggUser 		$invoked_by
+ * @param string 		$subtype
+ * @param ElggEntity 	$entity
+ * @param ElggUser 		$send_to
+ * @return Success 		true/false
+ */
+function temp_digest($invoked_by, $subtype, $entity, $send_to) {
+	elgg_load_library('elgg:gc_notification:functions'); 
+	$digest = get_entity($send_to->cpn_newsletter);
+	$digest_collection = json_decode($digest->description,true);
 
+	$content_array = array(
+		'content_title' => $entity->title,
+		'content_url' => $entity->getURL(),
+		'subtype' => $entity->getSubtype()
+	);
+
+	switch ($subtype) {
+		case 'mission':
+			if (!is_array($digest_collection['mission']['new_post']))
+				$digest_collection['mission']['new_post'] = array();
+			$digest_collection['mission']['new_post'][] = json_encode($content_array);
+			break;
+
+		case 'comment':
+		case 'discussion_reply':
+
+			if ($entity->getContainerEntity() instanceof ElggGroup) {
+				if (!is_array($digest_collection['group']["<a href='{$entity->getContainerEntity()->getURL()}'>{$entity->getContainerEntity()->title}</a>"]['response']))
+					$digest_collection['group']["<a href='{$entity->getContainerEntity()->getURL()}'>{$entity->getContainerEntity()->title}</a>"]['response'] = array();
+				$digest_collection['group']["<a href='{$entity->getContainerEntity()->getURL()}'>{$entity->getContainerEntity()->title}</a>"]['response'][] = json_encode($content_array);
+
+			} else {
+				if (!is_array($digest_collection['personal']['response']))
+					$digest_collection['personal']['response'] = array();
+				$digest_collection['personal']['response'][] = json_encode($content_array);
+			}
+
+			
+			break;
+
+
+		case 'cp_friend_request':
+			if (!is_array($digest_collection['personal']['friend_request']))
+				$digest_collection['personal']['friend_request'] = array();
+			$digest_collection['personal']['friend_request'][] = "{$invoked_by->username} has sent you a friend request";
+		 	break;
+
+
+		case 'cp_messageboard':
+			if (!is_array($digest_collection['personal']['profile_message']))
+				$digest_collection['personal']['profile_message'] = array();
+			$digest_collection['personal']['profile_message'][] = "{$invoked_by->username} has left u a msg on your profile => sending to... {$send_to->guid} / {$send_to->username}";
+			break;
+
+
+		case 'cp_hjtopic':
+		case 'cp_hjpost':
+
+			if ($subtype === 'cp_hjtopic') {
+				if (!is_array($digest_collection['personal']['forum_topic']))
+					$digest_collection['group'][get_entity(get_forum_in_group($entity->guid, $entity->guid))->title]['forum_topic'] = array();
+				$digest_collection['group'][get_entity(get_forum_in_group($entity->guid, $entity->guid))->title]['forum_topic'][] = json_encode($content_array);
+			
+			} else {
+				if (!is_array($digest_collection['personal']['forum_reply']))
+					$digest_collection['group'][get_entity(get_forum_in_group($entity->guid, $entity->guid))->title]['forum_reply'] = array();
+				$digest_collection['group'][get_entity(get_forum_in_group($entity->guid, $entity->guid))->title]['forum_reply'][] = json_encode($content_array);
+			}
+			break;
+
+
+		case 'post_likes':
+			if (!is_array($digest_collection['personal']['likes']))
+				$digest_collection['personal']['likes'] = array();
+
+			$digest_collection['personal']['likes'][$entity->guid] = json_encode($content_array);
+			break;
+
+
+		case 'content_revision':
+			if (!is_array($digest_collection['personal']['content_revision']))
+				$digest_collection['personal']['content_revision'] = array();
+		
+			$digest_collection['personal']['content_revision'][] = json_encode($content_array);
+			break;
+
+		case 'cp_wire_share':
+			if (!is_array($digest_collection['personal']['cp_wire_share']))
+				$digest_collection['personal']['cp_wire_share'] = array();
+
+			$digest_collection['personal']['cp_wire_share'][] = json_encode($content_array);
+			
+			break;
+
+		default:
+			$entity = get_entity($entity->guid);
+			
+			if ($entity->getContainerEntity() instanceof ElggGroup) {
+
+				if (!is_array($digest_collection['group']["<a href='{$entity->getContainerEntity()->getURL()}'>{$entity->getContainerEntity()->title}</a>"]['new_post']))
+					$digest_collection['group']["<a href='{$entity->getContainerEntity()->getURL()}'>{$entity->getContainerEntity()->title}</a>"]['new_post'] = array();
+				
+				$digest_collection['group']["<a href='{$entity->getContainerEntity()->getURL()}'>{$entity->getContainerEntity()->title}</a>"]['new_post'][$entity->guid] = json_encode($content_array);
+
+			} else {
+
+				if (!is_array($digest_collection['personal']['new_post']))
+					$digest_collection['personal']['new_post'] = array();
+
+				$digest_collection['personal']['new_post'][] = json_encode($content_array);				
+			
+			}
+			break;
+	}
+
+	// save the information to the digest object for later access
+	$ia = elgg_set_ignore_access(true);
+	$digest->description = json_encode($digest_collection);
+	$digest->save();
+	elgg_set_ignore_access($ia);
+
+	return true;
+}
 
 
 

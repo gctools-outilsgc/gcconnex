@@ -290,13 +290,21 @@ echo elgg_view_module('info', $title, $content);
 			$("#more_digest_options").toggle(this.checked);
 		});
 
-		$(' #digest_frequency').click(function() {
+		$(' #digest_frequency').click(function(e) {
 		    $(' #digest_frequency').not(this).prop('checked', false);
+		    
+		    if ($("#digest_frequency:checked").length == 0)
+		    	return false;
 		});    
 
-		$(' #digest_language').click(function() {
+		$(' #digest_language').click(function(e) {
 		    $(' #digest_language').not(this).prop('checked', false);
-		});    
+
+    		if ($("#digest_language:checked").length == 0)
+    			return false;
+		});
+
+
 	});
 
 
