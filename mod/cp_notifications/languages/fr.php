@@ -1,11 +1,22 @@
 <?php
+$site = elgg_get_site_entity();
+$site_name = $site->name;
+$contact_us = "{$site->getURL()}mod/contactform/";
+$notifications_settings = "{$site->getURL()}settings/plugin/{$to->username}/cp_notifications";
 
 $french = array(
 
 	'cp_notify:setting:no_grp_subscription' => 'Rien à charger',
 
+	'newsletter:title_heading:nothing' => "(F)Your {$site_name} Digest: Nothing to report today",
 
-	'cp_notify:NewsletterSettings' => "Notification Newsletter", // translate
+	'newsletter:greeting' => "(F)Good morning %s. Here are your notifications for <strong>%s</strong>.",
+	'newsletter_body:status:nothing' => "(F)It seems it was quiet in your network on GCconnex, we have nothing to report.",
+	'newsletter:footer:notification_settings' => "(F)To unsubscribe or manage these messages, please login and visit your <a href='<?php echo $notifications_settings; ?>'> Notification Settings</a>.",
+	'newsletter:ending' => "(F)<p>Regards,</p> <p>The GCTools Team</p>",
+
+
+
 	'cp_notify:enable_digest' => "Enable Digest Feature",
 
 	'cp_notify:setting:no_grp_subscription' => '',

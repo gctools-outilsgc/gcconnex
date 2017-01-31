@@ -30,6 +30,7 @@ function friend_request_event_create_friendrequest($event, $object_type, $object
 		// cyu - 03/08/2016: modified to improve notifications
 		if (elgg_is_active_plugin('cp_notifications')) {
 			$message = array(
+				'cp_relationship' => $object,
 				'cp_friend_requester' => $user_one,
 				'cp_friend_receiver' => $user_two,
 				'cp_friend_invite_url' => $view_friends_url,

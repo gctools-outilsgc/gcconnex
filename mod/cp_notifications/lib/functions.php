@@ -138,17 +138,33 @@ function temp_digest($invoked_by, $subtype, $entity, $send_to) {
 	$digest = get_entity($send_to->cpn_newsletter);
 	$digest_collection = json_decode($digest->description,true);
 
-	$content_array = array(
-		'content_title' => $entity->title,
-		'content_url' => $entity->getURL(),
-		'subtype' => $entity->getSubtype()
-	);
+	if ($entity instanceof ElggObject) {
+		$content_array = array(
+			'content_title' => $entity->title,
+			'content_url' => $entity->getURL(),
+			'subtype' => $entity->getSubtype()
+		);
+
+	} else {
+		$content_array = array(
+			'content_title' => 'colleague requests',
+			'content_url' => $entity,
+			'subtype' => $subtype
+		);
+	}
+
+
 
 	switch ($subtype) {
 		case 'mission':
-			if (!is_array($digest_collection['mission']['new_post']))
-				$digest_collection['mission']['new_post'] = array();
-			$digest_collection['mission']['new_post'][] = json_encode($content_array);
+			$content_array = array(
+				'content_title' => $entity->job_title,
+				'content_url' => $entity->getURL(),
+				'subtype' => $entity->job_type,
+				'deadline' => $entity->deadline
+			);
+
+			$digest_collection['mission']['new_post']["{$entity->guid}{$entity->getSubtype()}"] = json_encode($content_array);
 			break;
 
 		case 'comment':
@@ -170,11 +186,8 @@ function temp_digest($invoked_by, $subtype, $entity, $send_to) {
 
 
 		case 'cp_friend_request':
-			if (!is_array($digest_collection['personal']['friend_request']))
-				$digest_collection['personal']['friend_request'] = array();
-			$digest_collection['personal']['friend_request'][] = "{$invoked_by->username} has sent you a friend request";
+			$digest_collection['personal']['friend_request'][$invoked_by->guid] = json_encode($content_array);
 		 	break;
-
 
 		case 'cp_messageboard':
 			if (!is_array($digest_collection['personal']['profile_message']))
@@ -200,10 +213,7 @@ function temp_digest($invoked_by, $subtype, $entity, $send_to) {
 
 
 		case 'post_likes':
-			if (!is_array($digest_collection['personal']['likes']))
-				$digest_collection['personal']['likes'] = array();
-
-			$digest_collection['personal']['likes'][$entity->guid] = json_encode($content_array);
+			$digest_collection['personal']['likes']["{$entity->guid}{$author->guid}"] = json_encode($content_array);
 			break;
 
 
@@ -227,17 +237,11 @@ function temp_digest($invoked_by, $subtype, $entity, $send_to) {
 			
 			if ($entity->getContainerEntity() instanceof ElggGroup) {
 
-				if (!is_array($digest_collection['group']["<a href='{$entity->getContainerEntity()->getURL()}'>{$entity->getContainerEntity()->title}</a>"]['new_post']))
-					$digest_collection['group']["<a href='{$entity->getContainerEntity()->getURL()}'>{$entity->getContainerEntity()->title}</a>"]['new_post'] = array();
-				
 				$digest_collection['group']["<a href='{$entity->getContainerEntity()->getURL()}'>{$entity->getContainerEntity()->title}</a>"]['new_post'][$entity->guid] = json_encode($content_array);
 
 			} else {
 
-				if (!is_array($digest_collection['personal']['new_post']))
-					$digest_collection['personal']['new_post'] = array();
-
-				$digest_collection['personal']['new_post'][] = json_encode($content_array);				
+				$digest_collection['personal']['new_post'][$entity->guid] = json_encode($content_array);				
 			
 			}
 			break;

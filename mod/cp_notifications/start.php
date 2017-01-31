@@ -699,6 +699,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 	$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
 	
 	$author = $liked_by;
+
 	foreach ($to_recipients as $to_recipient_id => $to_recipient) {
 		// we only send notification to user who owns the content (liking a comment, discussion reply or general likes to content)
 
@@ -969,6 +970,11 @@ function cp_digest_cron_handler($hook, $entity_type, $return_value, $params) {
 
 	echo "Starting up the cron job for the Notifications (cp_notifications plugin) <br/>";
 
+$temp = get_entity(478);
+echo $temp->job_title;
+echo $temp->deadline;
+echo $temp->job_type;
+echo $temp->getURL();
 	$options = array(
 		'type' => 'object',
 		'subtype' => 'cp_digest',
@@ -977,7 +983,7 @@ function cp_digest_cron_handler($hook, $entity_type, $return_value, $params) {
 
 	//foreach ($current_digest as $user) {
 	//	if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->getOwnerGUID(),'cp_notifications'),'set_digest_yes') == 0) {
-			$to = get_entity(95);//$user->getOwnerEntity();
+			$to = get_entity(112);//$user->getOwnerEntity();
 			$newsletter_id = $to->cpn_newsletter;
 			$newsletter_object = get_entity($newsletter_id);
 			$newsletter_content = json_decode($newsletter_object->description, true);

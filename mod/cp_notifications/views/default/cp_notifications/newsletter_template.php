@@ -1,31 +1,33 @@
 <?php
 
-gatekeeper();
+
 $site = elgg_get_site_entity();
 $to = $vars['to'];
 $contents = $vars['newsletter_content'];
-$language_preference = elgg_get_plugin_user_setting('cpn_set_digest_lang_en', $to_recipient->guid, 'cp_notifications');
-$contact_us = "{$site->getURL()}mod/contactform/";
-$notifications_settings = "{$site->getURL()}settings/plugin/{$to->username}/cp_notifications";
 
-$language_preference = (strcmp($language_preference,'set_digest_en') == 0) ? 'en' : 'fr';
+$language_preference_en = elgg_get_plugin_user_setting('cpn_set_digest_lang_en', $to->guid, 'cp_notifications');
+if (strcmp($language_preference_en,'set_digest_en') == 0) 
+  $language_preference = 'en';
 
+$language_preference_fr = elgg_get_plugin_user_setting('cpn_set_digest_lang_fr', $to->guid, 'cp_notifications');
+if (strcmp($language_preference_fr,'set_digest_fr') == 0)
+  $language_preference = 'fr';
 
 ?>
 
 
 <html>
   <body style='font-family: sans-serif; color: #055959'>
-    <h2><?php echo elgg_echo('newsletter:title_heading',$language_preference); ?></h2>
-    <sub><center><?php echo elgg_echo('cp_notification:email_header',$language_preference); ?></center></sub>
+    <h2><?php echo elgg_echo('newsletter:title_heading',array('Something something hello'),$language_preference); ?></h2>
+    <sub><center><?php echo elgg_echo('cp_notification:email_header',array(),$language_preference); ?></center></sub>
     <div width='100%' bgcolor='#fcfcfc'>
 
       <?php // notification GCconnex banner ?>
       <div width='100%' style='padding: 0 0 0 10px; color:#ffffff; font-family: sans-serif; font-size: 35px; line-height:38px; font-weight: bold; background-color:#047177;'>
-        <span style='padding: 0 0 0 3px; font-size: 20px; color: #ffffff; font-family: sans-serif;'><?php echo $site->name ?></span>
+        <span style='padding: 0 0 0 3px; font-size: 20px; color: #ffffff; font-family: sans-serif;'><?php echo $site->name; ?></span>
       </div>
 
-      <p>Good morning  <?php echo $to->name; ?>. Here are your notifications for <strong><?php echo date('l\, F jS\, Y '); ?></strong>.</p>
+      <p><?php echo elgg_echo('newsletter:greeting', array($to->name, date('l\, F jS\, Y ')), $language_preference); ?></strong>.</p>
 
       
       <?php foreach ($contents as $highlevel_header => $highlevel_contents) { ?>
@@ -37,9 +39,10 @@ $language_preference = (strcmp($language_preference,'set_digest_en') == 0) ? 'en
 
         <?php 
 
+        
         // display the main headings (group title or different types of posts such as likes, comments, ...)
         foreach ($highlevel_contents as $detailed_header => $detailed_contents) {
-          echo "<li><strong>".render_headers($detailed_header)."</strong></li>";
+          echo "<p><li><strong>".sizeof($detailed_contents).' '.render_headers($detailed_header)."</strong></li>";
           
           foreach ($detailed_contents as $content) {
 
@@ -55,13 +58,13 @@ $language_preference = (strcmp($language_preference,'set_digest_en') == 0) ? 'en
 
             } else {
               // unwrap and display the personal content
-
               $content_array = json_decode($content,true);
-              echo  "<ul style='list-style-type:none;'><li>{$content_array['subtype']}:{$content_array['content_title']}:{$content_array['content_url']}</li></ul>";
+              echo  "<ul style='list-style-type:none;'><li>".render_contents($content_array)."</li></ul>";
             }
-
           }
+          echo "</p>";
         }
+        
 
         ?>
 
@@ -71,12 +74,12 @@ $language_preference = (strcmp($language_preference,'set_digest_en') == 0) ? 'en
       <?php } ?>
 
       <br/><br/>
-      <p>Regards,</p> <p>The GCTools Team</p>
+      <?php echo elgg_echo('newsletter:ending', array(), $language_preference); ?>
 
       <?php // notification footer ?>
-      <div width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 10px; color: #055959'>
-        <center><p>Should you have any concerns, please use the <a href='<?php echo $contact_us ?>'>Contact us form</a>. </p>
-        <p>To unsubscribe or manage these messages, please login and visit your <a href='<?php echo $notifications_settings ?>'> Notification Settings</a>.</p> </center>	
+      <div width='100%' style='background-color:#f5f5f5; padding:5px 30px 5px 30px; font-family: sans-serif; font-size: 10px; color: #055959'>
+        <center><p><?php echo elgg_echo('cp_notify:contactHelpDesk', array(), $language_preference); ?></p>
+        <p><?php echo elgg_echo('newsletter:footer:notification_settings', array(), $language_preference); ?></p> </center>	
       </div>
     </div>
   </body>
@@ -92,10 +95,11 @@ $language_preference = (strcmp($language_preference,'set_digest_en') == 0) ? 'en
   /**
    * @param Array <string> $heading
    */
-  function render_contents($heading) {
+  function render_contents($content_array) {
 
-    $rendered_content = $heading;
-    if ($heading)
+    //$content_array = json_decode($json_string,true);
+    $rendered_content = "{$content_array['subtype']} - <a href='{$content_array['content_url']}'>{$content_array['content_title']}</a>";
+    error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> {$rendered_content}");
 
     return $rendered_content;
   }
@@ -128,6 +132,14 @@ $language_preference = (strcmp($language_preference,'set_digest_en') == 0) ? 'en
 
       case 'cp_wire_share':
         $proper_heading = 'Contents that have been shared';
+        break;
+
+      case 'likes':
+        $proper_heading = 'Users that have liked your content';
+        break;
+
+      case 'friend_request':
+        $proper_heading = 'Colleague requests';
         break;
 
       default:

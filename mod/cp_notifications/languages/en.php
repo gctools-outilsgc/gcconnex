@@ -1,10 +1,19 @@
 <?php
 
-$site_name = "GCconnex";
+$site = elgg_get_site_entity();
+$site_name = $site->name;
+$contact_us = "{$site->getURL()}mod/contactform/";
+$notifications_settings = "{$site->getURL()}settings/plugin/{$to->username}/cp_notifications";
+
 $english = array(
 
 
-	'newsletter:title_heading' => "Your {$site_name} Digest",
+	'newsletter:title_heading:nothing' => "Your {$site_name} Digest: Nothing to report today",
+	'newsletter:title_heading' => "Your {$site_name} Digest: %s",
+	'newsletter:greeting' => "Good morning %s. Here are your notifications for <strong>%s</strong>.",
+	'newsletter_body:status:nothing' => "It seems it was quiet in your network on GCconnex, we have nothing to report.",
+	'newsletter:footer:notification_settings' => "To unsubscribe or manage these messages, please login and visit your <a href='<?php echo $notifications_settings; ?>'> Notification Settings</a>.",
+	'newsletter:ending' => "<p>Regards,</p> <p>The GCTools Team</p>",
 
 	'cp_notify:setting:no_grp_subscription' => 'Nothing to load',
 
