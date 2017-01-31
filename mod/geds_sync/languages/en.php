@@ -70,6 +70,7 @@ None of the information in your GCconnex profile will appear on the GEDS.gc.ca w
 1-	GCdirectory will update your office location and department/agency in GCconnex.
 This is a one-time update: if your GCdirectory information changes, you will need to sync again to update GCconnex.<br />
 2-	Your GCdirectory and GCconnex accounts will be linked and the following information from your GCconnex profile will automatically appear in GCdirectory:<br />
+
 Mandatory: Your Avatar (photo)<br />
 Optional: About Me, Education, Work Experience, and Skills
 	</p>
@@ -80,6 +81,7 @@ If you do not wish for your GCconnex avatar and skills to appear on GCdirectory,
 	<p>
 	For the optional information, you can chose who sees it by changing your privacy settings in GCconnex (i.e., “ Edit,” “Who can see my [description, education…]).
 	</p>',
+
 	'geds:org:edit:body' => 'To update information about your organization or your work location in GCdirectory, see the instructions available on the <a href="http://gcdirectory-gcannuaire.ssc-spc.gc.ca/en/GEDS20/?pgid=005#q1">GCdirectory website</a>.',
 	'geds:org:edit:success' => 'Privacy settings have been updated.',
 	'geds:edit:error' => 'You do not have permission to view this item.',

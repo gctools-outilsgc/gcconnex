@@ -5,6 +5,7 @@
  */
 
 $french = array(
+
 'geds:button'=> 'Synchroniser avec GCannuaire',
 'geds:cancel'=> 'Annuler',
 'geds:save'=> 'Enregistrer',
@@ -61,12 +62,14 @@ Ce qui précède s’applique uniquement à la version interne des SAGE à laque
 </p>
 ',*/
 'geds:sync:info' => "<p>
+
 	N.B. : GCannuaire est seulement visible pour les fonctionnaires.<br />
 Le Gouvernement du Canada a un service d’annuaire distinct, accessible au public: SAGE.gc.ca.<br />
 Aucune information de votre profil GCconnex n'apparaîtra sur le site SAGE.gc.ca, peu importe vos paramètres de confidentialité dans GCconnex.
 	</p>
 	<p>
 	Lorsque vous cliquez sur « enregistrer », deux choses se produiront :<br />
+
 1-	GCannuaire mettra à jour l’informations de votre lieu de travail et votre organisation dans GCconnex.
 Il s'agit d'une mise à jour unique: si vos informations dans GCannuaire changent, vous devrez synchroniser à nouveau pour mettre à jour GCconnex.<br />
 2-	Vos comptes GCannuaire et GCconnex seront liés et les informations suivantes de votre profil GCconnex apparaîtront automatiquement dans GCannuaire :<br />
@@ -80,6 +83,7 @@ Si vous ne souhaitez pas que votre avatar GCconnex et vos compétences apparaiss
 	<p>
 	Pour les informations facultatives, vous pouvez choisir qui les voit en modifiant vos paramètres de confidentialité dans GCconnex (c'est-à-dire «Modifier», «Qui peut voir ma/mon [description, éducation, etc.]».)
 	</p>",
+
 'geds:org:edit:body' => 'Pour mettre à jour l’information au sujet de votre lieu de travail ou votre organisation dans GCannuaire, consulter les instructions disponibles sur le <a href="http://gcdirectory-gcannuaire.ssc-spc.gc.ca/fr/SAGE20/?pgid=005#q1">site Web de GCannuaire</a>.',
 'geds:org:edit:success' => 'Paramètres de confidentialité sauvegardés.',
 'geds:edit:error' => "Vous n'avez pas la permission de voir cet élément.",

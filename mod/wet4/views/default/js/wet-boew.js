@@ -9731,7 +9731,7 @@ $document.on( "init.dt draw.dt", selector, function( event, settings ) {
 	$elm.next( ".bottom" ).find( ".paginate_button" )
 		.attr( {
 			"role": "button",
-			"href": "javascript:;"
+			"href": "#wb-sm"
 		} )
 		.not( ".previous, .next" )
 			.attr( "aria-pressed", "false" )

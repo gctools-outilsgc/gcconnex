@@ -113,6 +113,7 @@
             if('<?php echo $owner->gedsDN; ?>' != ''){
                 //alert('geds!');
                 //var storedDn = '<?php echo $owner->gedsDN; ?>';
+
                 $('.gcconnex-profile-name').append('<button type="button" class="elgg-button btn gcconnex-edit-profile geds-button" data-toggle="modal" data-target="#gedsUnSync"> <?php echo elgg_echo("geds:button:unsync"); ?></button>');
 
             }

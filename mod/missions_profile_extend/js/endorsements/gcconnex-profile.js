@@ -224,6 +224,7 @@ $(document).ready(function() {
 
     $('.edit-skills').on("click", function () { $('.cancel-skills').focus(); $('.gcconnex-skill-limit').removeClass('hidden');});
     $('.save-skills').on("click", function () { $('.edit-skills').focus(); $('.gcconnex-skill-limit').addClass('hidden'); $('#skillsAccessContainer').remove(); });
+
     $('.cancel-skills').on("click", function () { $('.edit-skills').focus(); $('.gcconnex-skill-limit').addClass('hidden'); $('#skillsAccessContainer').remove(); });
 
     $('.edit-languages').on("click", function(){$('.cancel-languages').focus()});
@@ -390,7 +391,6 @@ function editProfile(event) {
             if ( $('.gcconnex-skill-entry:visible').length < 15 ) {
                  /////
                 //console.log('skills in if');
-                
                 ////
                 var christineFix = elgg.echo("gcconnex_profile:gc_skill:add", null, 'en');
                 $('.gcconnex-skills').append('<div class="gcconnex-endorsements-input-wrapper">' +
