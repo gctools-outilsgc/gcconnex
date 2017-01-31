@@ -8,9 +8,9 @@ $english = array(
 	'geds:button' => 'Sync with GCdirectory',
 	'geds:cancel' => 'Cancel',
 	'geds:save' => 'Save',
-	'geds:searchfail' => 'No information was found in GEDS for ',
-	'geds:searchfail2' => 'Check that your GCconnex email is correct. To update your GEDS information, see the instructions available on the <a href=\'http://geds20-sage20.ssc-spc.gc.ca/en/GEDS20/?pgid=005#q1\' >GEDS 2.0 website.</a>',
-	'geds:personsel:title' => 'Your GEDS information',
+	'geds:searchfail' => 'No information was found in GCdirectory for ',
+	'geds:searchfail2' => 'Check that your GCconnex email is correct. To update your GCdirectory information, see the instructions available on the <a href=\'http://gcdirectory-gcannuaire.ssc-spc.gc.ca/en/GEDS20/?pgid=005#q1\' >GCdirectory website.</a>',
+	'geds:personsel:title' => 'Your GCdirectory information',
 	'geds:personsel:isthisyou' => 'Is this correct? ',
 	'geds:personsel:yes' => 'Yes',
 	'geds:personsel:no' => 'No',
@@ -21,24 +21,24 @@ $english = array(
 	'geds:sync:title' => 'Select items to sync',
 	'geds:sync:table:field' => 'Field',
 	'geds:sync:table:current' => 'What you have in GCconnex',
-	'geds:sync:table:ingeds' => 'Available from GEDS',
+	'geds:sync:table:ingeds' => 'Available from GCdirectory',
 	'geds:sync:table:field:display' => 'Name',
 	'geds:sync:table:field:job' => 'Job Title',
 	'geds:sync:table:field:department' => 'Department',
 	'geds:sync:table:field:telephone' => 'Telephone',
 	'geds:sync:table:field:mobile' => 'Mobile',
-	'geds:success' => 'Congratulations, your GEDS information has been synced with your GCconnex profile.',
+	'geds:success' => 'Congratulations, your GCdirectory information has been synced with your GCconnex profile.',
 	///////////////////////////////////////////////////////////////////////////
 	'geds:org:orgTab' => 'Organizations',
 	'geds:add:friend' => 'Add colleague',
 	'geds:invite:friend' => 'Invite to GCconnex',
 	'geds:org:orgTitle' => 'Organizations',
 	'geds:org:orgPeopleTitle' => 'People',
-	'geds:noMatch' => "<p>Your GEDS information has not been synced with GCconnex. Ensure your email address is up to date in your GCconnex settings. To update your GEDS information, see the instructions available on the <a href='http://geds20-sage20.ssc-spc.gc.ca/en/GEDS20/?pgid=005#q1'>GEDS 2.0 website</a></p>",
+	'geds:noMatch' => "<p>Your GCdirectory information has not been synced with GCconnex. Ensure your email address is up to date in your GCconnex settings. To update your GCdirectory information, see the instructions available on the <a href='http://gcdirectory-gcannuaire.ssc-spc.gc.ca/en/GEDS20/?pgid=005#q1'>GCdirectory website</a></p>",
 	'geds:floor' => "Floor",
 	'geds:org:delete' => "Delete",
 	'geds:org:edit' => "Edit",
-	'geds:org:edit:title' => 'Modify Privacy Settings of my GEDS information',
+	'geds:org:edit:title' => 'Modify Privacy Settings of my GCdirectory information',
 	'geds:org:access:label' => 'Who can see my organization: ',
 	'geds:loc:access:label' => 'Who can see my work location: ',
 	'geds:save' => 'Save',
@@ -70,8 +70,9 @@ None of the information in your GCconnex profile will appear on the GEDS.gc.ca w
 1-	GCdirectory will update your office location and department/agency in GCconnex.
 This is a one-time update: if your GCdirectory information changes, you will need to sync again to update GCconnex.<br />
 2-	Your GCdirectory and GCconnex accounts will be linked and the following information from your GCconnex profile will automatically appear in GCdirectory:<br />
-Mandatory: Your Avatar (photo) and Skills<br />
-Optional: About Me, Education, Work Experience, and Second Language Evaluations
+
+Mandatory: Your Avatar (photo)<br />
+Optional: About Me, Education, Work Experience, and Skills
 	</p>
 	<p>
 	Important!<br />
@@ -80,11 +81,12 @@ If you do not wish for your GCconnex avatar and skills to appear on GCdirectory,
 	<p>
 	For the optional information, you can chose who sees it by changing your privacy settings in GCconnex (i.e., “ Edit,” “Who can see my [description, education…]).
 	</p>',
-	'geds:org:edit:body' => 'To update information about your organization or your work location in GEDS, see the instructions available on the <a href="http://geds20-sage20.ssc-spc.gc.ca/en/GEDS20/?pgid=005#q1">GEDS 2.0 website</a>.',
+
+	'geds:org:edit:body' => 'To update information about your organization or your work location in GCdirectory, see the instructions available on the <a href="http://gcdirectory-gcannuaire.ssc-spc.gc.ca/en/GEDS20/?pgid=005#q1">GCdirectory website</a>.',
 	'geds:org:edit:success' => 'Privacy settings have been updated.',
 	'geds:edit:error' => 'You do not have permission to view this item.',
-	'geds_sync:setting:url' => 'GEDS API service URL',
-	'geds_sync:setting:auth_key' => 'GEDS Auth key',
+	'geds_sync:setting:url' => 'GCdirectory API service URL',
+	'geds_sync:setting:auth_key' => 'GCdirectory Auth key',
 	'geds_sync:setting:map_key' => 'google map key',
 	'geds:button:unsync' => 'Unsync from GCdirectory',
 	'geds:unSync:message' => 'If you unsync, your GCconnex profile information will no longer be shown on GCdirectory.<br /> Are you sure?',

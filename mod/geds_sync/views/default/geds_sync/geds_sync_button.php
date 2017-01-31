@@ -108,12 +108,13 @@
         */
         $(document).ready(function () {
             //the button is added to the page here.
-            $('.gcconnex-profile-name').append('<button type="button" class="elgg-button btn gcconnex-edit-profile" data-toggle="modal" data-target="#gedsProfile"> <?php echo elgg_echo("geds:button"); ?></button>')
+            $('.gcconnex-profile-name').append('<button type="button" class="elgg-button btn gcconnex-edit-profile geds-button" data-toggle="modal" data-target="#gedsProfile"> <?php echo elgg_echo("geds:button"); ?></button>')
             
             if('<?php echo $owner->gedsDN; ?>' != ''){
                 //alert('geds!');
                 //var storedDn = '<?php echo $owner->gedsDN; ?>';
-                $('.gcconnex-profile-name').append('<button type="button" class="elgg-button btn gcconnex-edit-profile" data-toggle="modal" data-target="#gedsUnSync"> <?php echo elgg_echo("geds:button:unsync"); ?></button>');
+
+                $('.gcconnex-profile-name').append('<button type="button" class="elgg-button btn gcconnex-edit-profile geds-button" data-toggle="modal" data-target="#gedsUnSync"> <?php echo elgg_echo("geds:button:unsync"); ?></button>');
 
             }
             $('#unSync').click(function(){
@@ -385,13 +386,13 @@
                     checkbox: true
                 }, {
                     field: 'item',
-                    title: '<?php echo elgg_echo("geds:sync:table:field"); ?>'
+                    title: '<b><?php echo elgg_echo("geds:sync:table:field"); ?></b>'
                 },{
                     field: 'gcc',
-                    title: '<?php echo elgg_echo("geds:sync:table:current"); ?>'
+                    title: '<b><?php echo elgg_echo("geds:sync:table:current"); ?></b>'
                 }, {
                     field: 'geds',
-                    title: '<?php echo elgg_echo("geds:sync:table:ingeds"); ?>'
+                    title: '<b><?php echo elgg_echo("geds:sync:table:ingeds"); ?></b>'
                 }],
                 //data set above
                 data: feedData

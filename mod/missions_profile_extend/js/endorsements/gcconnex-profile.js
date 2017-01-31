@@ -224,7 +224,8 @@ $(document).ready(function() {
 
     $('.edit-skills').on("click", function () { $('.cancel-skills').focus(); $('.gcconnex-skill-limit').removeClass('hidden');});
     $('.save-skills').on("click", function () { $('.edit-skills').focus(); $('.gcconnex-skill-limit').addClass('hidden'); $('#skillsAccessContainer').remove(); });
-    $('.cancel-skills').on("click", function () { $('.edit-skills').focus(); $('.gcconnex-skill-limit').addClass('hidden'); });
+
+    $('.cancel-skills').on("click", function () { $('.edit-skills').focus(); $('.gcconnex-skill-limit').addClass('hidden'); $('#skillsAccessContainer').remove(); });
 
     $('.edit-languages').on("click", function(){$('.cancel-languages').focus()});
     $('.save-languages').on("click", function(){$('.edit-languages').focus()});
@@ -377,10 +378,7 @@ function editProfile(event) {
 
         case 'skills':
             // inject the html to add ability to add skills
-            if ( $('.gcconnex-skill-entry:visible').length < 15 ) {
-                 /////
-                //console.log('skills in if');
-                elgg.get('ajax/view/b_extended_profile/skills-access', {
+            elgg.get('ajax/view/b_extended_profile/skills-access', {
                     data: {
                         guid: elgg.get_logged_in_user_guid(), // querystring
                     },
@@ -390,6 +388,9 @@ function editProfile(event) {
                         //$('.myplugin-link').html(output);
                     }
                 });
+            if ( $('.gcconnex-skill-entry:visible').length < 15 ) {
+                 /////
+                //console.log('skills in if');
                 ////
                 var christineFix = elgg.echo("gcconnex_profile:gc_skill:add", null, 'en');
                 $('.gcconnex-skills').append('<div class="gcconnex-endorsements-input-wrapper">' +
