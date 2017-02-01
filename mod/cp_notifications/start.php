@@ -896,7 +896,6 @@ function cp_create_notification($event, $type, $object) {
 					}
 				}
 			}
-			error_log("dsfdsfdsf>>>>>>>>>>>>>>>>" . $object->title);
 			$content_entity = $object;
 			$author = $object->getOwnerEntity();
 
@@ -986,12 +985,18 @@ function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $para
 			$newsletter_object = get_entity($newsletter_id);
 			$newsletter_content = json_decode($newsletter_object->description, true);
 
-			echo '<br/><br/><br/><br/><br/><br/>';
+			$subject = "Your Weekly Newsletter";
 
 			if (sizeof($newsletter_content) > 0 || !empty($newsletter_content))
 				$template = elgg_view('cp_notifications/newsletter_template', array('to' => $to, 'newsletter_content' => json_decode(get_entity($newsletter_id)->description,true)));
 			else
 				$template = elgg_view('cp_notifications/newsletter_template_empty', array('to' => $to));
+
+
+			if (elgg_is_active_plugin('phpmailer'))
+				phpmailer_send($to->email,$to->name,$subject,$template, NULL, true );
+			else
+				mail($to->email,$subject,$template,cp_get_headers());
 
 			// clean up the newsletter
 			$newsletter_object->description = json_encode(array());
