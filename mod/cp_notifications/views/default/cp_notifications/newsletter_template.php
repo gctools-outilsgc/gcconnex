@@ -13,6 +13,7 @@ $language_preference_fr = elgg_get_plugin_user_setting('cpn_set_digest_lang_fr',
 if (strcmp($language_preference_fr,'set_digest_fr') == 0)
   $language_preference = 'fr';
 
+//see array_count_values
 ?>
 
 
@@ -42,19 +43,29 @@ if (strcmp($language_preference_fr,'set_digest_fr') == 0)
         
         // display the main headings (group title or different types of posts such as likes, comments, ...)
         foreach ($highlevel_contents as $detailed_header => $detailed_contents) {
-          echo "<p><li><strong>".sizeof($detailed_contents).' '.render_headers($detailed_header)."</strong></li>";
+          if (strcmp($highlevel_header,'group') == 0){
+            echo "<p><li><strong>".render_headers($detailed_header)."</strong></li>";
+          } elseif ($detailed_header === 'friend_request') {
+            echo "<p><li><strong><a href='{$site->getURL()}friend_request/{$to->username}'>".sizeof($detailed_contents).' '.render_headers($detailed_header)."</a></strong></li>";
+            break;
+          } else {
+            echo "<p><li><strong>".sizeof($detailed_contents).' '.render_headers($detailed_header)."</strong></li>";
+          }
           
-          foreach ($detailed_contents as $content) {
+          foreach ($detailed_contents as $content_header => $content) {
 
             // unwrap and display the group content
             if (strcmp($highlevel_header,'group') == 0) {
+              echo  "<ul style='list-style-type:none;'><li><strong>".sizeof($content).' '.render_headers($content_header)."</strong></li>";
 
               $group_activities = $content;
               foreach ($group_activities as $activity_heading) {
                 $content_array = json_decode($activity_heading,true);
-                echo  "<ul style='list-style-type:none;'><li>{$content_array['subtype']}:{$content_array['content_title']}:{$content_array['content_url']}</li></ul>";
+
+                echo  "<ul style='list-style-type:none;'><li>".render_contents($content_array)."</li></ul>";
               }
 
+              echo "</ul>";
 
             } else {
               // unwrap and display the personal content
@@ -78,8 +89,8 @@ if (strcmp($language_preference_fr,'set_digest_fr') == 0)
 
       <?php // notification footer ?>
       <div width='100%' style='background-color:#f5f5f5; padding:5px 30px 5px 30px; font-family: sans-serif; font-size: 10px; color: #055959'>
-        <center><p><?php echo elgg_echo('cp_notify:contactHelpDesk', array(), $language_preference); ?></p>
-        <p><?php echo elgg_echo('newsletter:footer:notification_settings', array(), $language_preference); ?></p> </center>	
+        <center><p><?php echo elgg_echo('newsletter:footer:notification_settings', array(), $language_preference); ?></p>
+        <p><?php echo elgg_echo('cp_notify:contactHelpDesk', array(), $language_preference); ?></p> </center>	
       </div>
     </div>
   </body>
@@ -97,10 +108,16 @@ if (strcmp($language_preference_fr,'set_digest_fr') == 0)
    */
   function render_contents($content_array) {
 
-    //$content_array = json_decode($json_string,true);
-    $rendered_content = "{$content_array['subtype']} - <a href='{$content_array['content_url']}'>{$content_array['content_title']}</a>";
-    error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> {$rendered_content}");
-
+    $author = "{$content_array['content_author_name']} has posted a ";
+    // this is specifically for the Micro Missions portion due to extra field
+    $subtype = elgg_echo($content_array['subtype']);
+    if ($content_array['deadline']) {
+      $closing_date = 'Closing Date : '.$content_array['deadline'];
+      $subtype = elgg_echo($subtype);
+      $author = '';
+    }
+    // limit 35 characters
+    $rendered_content = "{$author}{$subtype} <a href='{$content_array['content_url']}'>{$content_array['content_title']}</a> {$closing_date}";
     return $rendered_content;
   }
 
@@ -140,6 +157,22 @@ if (strcmp($language_preference_fr,'set_digest_fr') == 0)
 
       case 'friend_request':
         $proper_heading = 'Colleague requests';
+        break;
+
+      case 'content_revision':
+        $proper_heading = 'Contents have been revised';
+        break;
+
+      case 'forum_topic':
+        $proper_heading = 'Forum Topics';
+        break;
+
+      case 'forum_reply':
+        $proper_heading = 'Forum Topic Replies';
+        break;
+
+      case 'response':
+        $proper_heading = 'Response to a content you are subscribed to';
         break;
 
       default:

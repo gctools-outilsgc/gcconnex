@@ -8,6 +8,10 @@ $notifications_settings = "{$site->getURL()}settings/plugin/{$to->username}/cp_n
 $english = array(
 
 
+	'groupforumtopic' => "Discussions",
+	'hjforumtopic' => "Forum Topic",
+	'hjforumpost' => "Topic reply",
+	
 	'newsletter:title_heading:nothing' => "Your {$site_name} Digest: Nothing to report today",
 	'newsletter:title_heading' => "Your {$site_name} Digest: %s",
 	'newsletter:greeting' => "Good morning %s. Here are your notifications for <strong>%s</strong>.",

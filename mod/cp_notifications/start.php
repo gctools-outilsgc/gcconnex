@@ -55,9 +55,8 @@ function cp_notifications_init() {
 	elgg_register_action('cp_notifications/user_autosubscription',"{$action_path}/user_autosubscription.php");
 	elgg_register_action('cp_notifications/fix_inconsistent_subscription_script',"{$action_path}/fix_inconsistent_subscription_script.php");
 
-	elgg_register_plugin_hook_handler('cron', 'daily', 'cp_digest_cron_handler');
-	elgg_register_plugin_hook_handler('cron', 'weekly', 'cp_digest_cron_handler');
-	// http://gcconnex12_dev.gc.ca/cron/daily  --> go here to execute cron jobs
+	elgg_register_plugin_hook_handler('cron', 'daily', 'cp_digest_daily_cron_handler');
+	elgg_register_plugin_hook_handler('cron', 'weekly', 'cp_digest_weekly_cron_handler');
 }
 
 
@@ -353,6 +352,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				$to_recipients[] = get_user($s_uer);
 
 			$content_entity = $params['cp_post'];
+			$content_url = $params['cp_topic_url'];
 			$author = $params['cp_post']->getOwnerEntity();
 			break;
 
@@ -371,6 +371,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			foreach ($t_user as $s_uer)
 				$to_recipients[] = get_user($s_uer);
 
+			$content_url = $params['cp_topic_url'];
 			$content_entity = $params['cp_topic'];
 			$author = $params['cp_topic']->getOwnerEntity();
 			break;
@@ -426,7 +427,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				
 		$newsletter_appropriate = array('cp_wire_share','cp_messageboard','cp_wire_mention','cp_hjpost','cp_hjtopic', 'cp_friend_request');
 		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0 && in_array($cp_msg_type,$newsletter_appropriate)) {
-			$result = temp_digest($author, $cp_msg_type, $content_entity, $to_recipient);
+			$result = create_digest($author, $cp_msg_type, $content_entity, $to_recipient, $content_url);
 		} else 
 			$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template ) : mail($to_recipient->email, $subject, $template, cp_get_headers($event));
 		
@@ -557,7 +558,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 				$template = elgg_view('cp_notifications/email_template', $message);
 
 				if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $watcher->guid,'cp_notifications'),'set_digest_yes') == 0) {
-					temp_digest($author, $action_type, $content_entity, get_entity($watcher->guid));
+					create_digest($author, $action_type, $content_entity, get_entity($watcher->guid));
 				} else {
 					(elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $watcher->email, $watcher->name, $subject, $template, NULL, true ) : mail($watcher->email, $subject, $template, cp_get_headers());
 				}
@@ -595,7 +596,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 				$template = elgg_view('cp_notifications/email_template', $message);
 				
 				if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $watcher->guid,'cp_notifications'),'set_digest_yes') == 0) {
-					temp_digest($author, $action_type, $content_entity, get_entity($watcher->guid));
+					create_digest($author, $action_type, $content_entity, get_entity($watcher->guid));
 				
 				} else
 					(elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $watcher->email, $watcher->name, $subject, $template, NULL, true ) : mail($watcher->email, $subject, $template, cp_get_headers());
@@ -710,7 +711,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 			$message['_user_e-mail'] = $to_recipient->email;	// for P/T user
 			$template = elgg_view('cp_notifications/email_template', $message); 
 			
-			(strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0) ? temp_digest($author, $action_type, $content_entity, $to_recipient) : cp_notification_preparation_send($content_entity, $to_recipient, $message, $content_entity->getOwnerGUID(), $subject);
+			(strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0) ? create_digest($author, $action_type, $content_entity, $to_recipient) : cp_notification_preparation_send($content_entity, $to_recipient, $message, $content_entity->getOwnerGUID(), $subject);
 		}
 	}
 
@@ -895,7 +896,7 @@ function cp_create_notification($event, $type, $object) {
 					}
 				}
 			}
-
+			error_log("dsfdsfdsf>>>>>>>>>>>>>>>>" . $object->title);
 			$content_entity = $object;
 			$author = $object->getOwnerEntity();
 
@@ -920,7 +921,7 @@ function cp_create_notification($event, $type, $object) {
 	foreach ($to_recipients as $to_recipient)
 	{
 		$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid, 'cp_notifications');
-		$result = (strcmp($user_setting, "set_digest_yes") == 0) ? temp_digest($author, $object->getSubtype(), $content_entity, get_entity($to_recipient->guid)) : cp_notification_preparation_send($object, $to_recipient, $message, $guid_two, $subject);
+		$result = (strcmp($user_setting, "set_digest_yes") == 0) ? create_digest($author, $object->getSubtype(), $content_entity, get_entity($to_recipient->guid)) : cp_notification_preparation_send($object, $to_recipient, $message, $guid_two, $subject);
 	}
 }
 
@@ -966,15 +967,55 @@ function isJson($string) {
  * @param - 	$return_value
  * @param - 	$params
  */
-function cp_digest_cron_handler($hook, $entity_type, $return_value, $params) {
+function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $params) {
 
 	echo "Starting up the cron job for the Notifications (cp_notifications plugin) <br/>";
 
-$temp = get_entity(478);
-echo $temp->job_title;
-echo $temp->deadline;
-echo $temp->job_type;
-echo $temp->getURL();
+	$options = array(
+		'type' => 'object',
+		'subtype' => 'cp_digest',
+	);
+	$current_digest = elgg_get_entities($options);
+
+	foreach ($current_digest as $user) {
+		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->getOwnerGUID(),'cp_notifications'),'set_digest_yes') == 0 && 
+			strcmp(elgg_get_plugin_user_setting('cpn_set_digest_freq_daily', $user->getOwnerGUID(),'cp_notifications'),'set_digest_daily') == 0 ) {
+
+			$to = $user->getOwnerEntity();
+			$newsletter_id = $to->cpn_newsletter;
+			$newsletter_object = get_entity($newsletter_id);
+			$newsletter_content = json_decode($newsletter_object->description, true);
+
+			echo '<br/><br/><br/><br/><br/><br/>';
+
+			if (sizeof($newsletter_content) > 0 || !empty($newsletter_content))
+				$template = elgg_view('cp_notifications/newsletter_template', array('to' => $to, 'newsletter_content' => json_decode(get_entity($newsletter_id)->description,true)));
+			else
+				$template = elgg_view('cp_notifications/newsletter_template_empty', array('to' => $to));
+
+			// clean up the newsletter
+			$newsletter_object->description = json_encode(array());
+			$newsletter_object->save();
+		}
+	}
+}
+
+
+
+/**
+ * setup crontab either on a daily or weekly basis
+ * get users who are subscribed to digest
+ * run crontab, retrieve users, send digest, reset timer (update timestamp)
+ *
+ * @param -		$hook
+ * @param - 	$entity_type
+ * @param - 	$return_value
+ * @param - 	$params
+ */
+function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $params) {
+
+	echo "Starting up the cron job for the Notifications (cp_notifications plugin) <br/>";
+
 	$options = array(
 		'type' => 'object',
 		'subtype' => 'cp_digest',
@@ -982,8 +1023,9 @@ echo $temp->getURL();
 	$current_digest = elgg_get_entities($options);
 
 	//foreach ($current_digest as $user) {
-	//	if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->getOwnerGUID(),'cp_notifications'),'set_digest_yes') == 0) {
-			$to = get_entity(112);//$user->getOwnerEntity();
+	//	if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->getOwnerGUID(),'cp_notifications'),'set_digest_yes') == 0 && 
+	//strcmp(elgg_get_plugin_user_setting('cpn_set_digest_freq_weekly', $user->getOwnerGUID(),'cp_notifications'),'set_digest_weekly') == 0 ) {
+			$to = get_entity(95);//$user->getOwnerEntity();
 			$newsletter_id = $to->cpn_newsletter;
 			$newsletter_object = get_entity($newsletter_id);
 			$newsletter_content = json_decode($newsletter_object->description, true);

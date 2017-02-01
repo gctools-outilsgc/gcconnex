@@ -131,18 +131,25 @@ function cp_scan_mentions($cp_object) {
  * @param string 		$subtype
  * @param ElggEntity 	$entity
  * @param ElggUser 		$send_to
+ * @param string 		$entity_url (default value empty)
  * @return Success 		true/false
  */
-function temp_digest($invoked_by, $subtype, $entity, $send_to) {
+function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '') {
 	elgg_load_library('elgg:gc_notification:functions'); 
 	$digest = get_entity($send_to->cpn_newsletter);
 	$digest_collection = json_decode($digest->description,true);
 
+	if (!$entity->title) $entity = get_entity($entity->guid); 
+
 	if ($entity instanceof ElggObject) {
+		$content_url = (!$entity_url) ? $entity->getURL() : $entity_url;
+
 		$content_array = array(
 			'content_title' => $entity->title,
-			'content_url' => $entity->getURL(),
-			'subtype' => $entity->getSubtype()
+			'content_url' => $content_url,
+			'subtype' => $entity->getSubtype(),
+			'content_author_name' => $invoked_by->name,
+			'content_author_url' => $invoked_by->getURL()
 		);
 
 	} else {
@@ -198,16 +205,24 @@ function temp_digest($invoked_by, $subtype, $entity, $send_to) {
 
 		case 'cp_hjtopic':
 		case 'cp_hjpost':
+		
+			$group_title = get_entity(get_forum_in_group($entity->guid, $entity->guid))->title;
+			$group_url = get_entity(get_forum_in_group($entity->guid, $entity->guid))->getURL();
 
 			if ($subtype === 'cp_hjtopic') {
-				if (!is_array($digest_collection['personal']['forum_topic']))
-					$digest_collection['group'][get_entity(get_forum_in_group($entity->guid, $entity->guid))->title]['forum_topic'] = array();
-				$digest_collection['group'][get_entity(get_forum_in_group($entity->guid, $entity->guid))->title]['forum_topic'][] = json_encode($content_array);
+
+				$digest_collection['group']["<a href='{$group_url}'>{$group_title}</a>"]['forum_topic'][$entity->guid] = json_encode($content_array);
 			
 			} else {
-				if (!is_array($digest_collection['personal']['forum_reply']))
-					$digest_collection['group'][get_entity(get_forum_in_group($entity->guid, $entity->guid))->title]['forum_reply'] = array();
-				$digest_collection['group'][get_entity(get_forum_in_group($entity->guid, $entity->guid))->title]['forum_reply'][] = json_encode($content_array);
+
+				$content_array = array(
+					'content_title' => $entity->getContainerEntity()->title,
+					'content_url' => $content_url,
+					'subtype' => $entity->getSubtype(),
+					'content_author' => $invoked_by
+				);
+
+				$digest_collection['group']["<a href='{$group_url}'>{$group_title}</a>"]['forum_reply'][$entity->guid] = json_encode($content_array);
 			}
 			break;
 
