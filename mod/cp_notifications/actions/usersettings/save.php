@@ -12,9 +12,9 @@ $user = get_entity($user_guid);
 /// overwriting the save action for usersettings in notifications, save all the checkboxes
 $plugin_name = $plugin->getManifest()->getName();
 foreach ($params as $k => $v) {
+	error_log("key: {$k} ///////// value: {$v}");
 	if (strpos($k,'cpn_group_') === false) {
 		$result = $plugin->setUserSetting($k, $v, $user->guid);
-			error_log(">>>>>>>>>>>>>>>>>>>>>>>> key: {$k} // value: {$v}");
 	}
 
 	/// create relationships between user and group that they have subscribed to

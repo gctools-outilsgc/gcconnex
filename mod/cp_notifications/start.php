@@ -734,7 +734,8 @@ function cp_create_notification($event, $type, $object) {
 	elgg_load_library('elgg:gc_notification:functions');
 	$subject = "";
 	$no_notification = false;
-	$do_not_subscribe_list = array('poll_choice','blog_revision','widget','folder','c_photo', 'cp_digest');
+	$do_not_subscribe_list = array('poll_choice','blog_revision','widget','folder','c_photo', 'cp_digest','MySkill', 'education', 'experience', 'poll_choice3');
+
 
 	if (in_array($object->getSubtype(), $do_not_subscribe_list))
 		return true;
@@ -937,7 +938,7 @@ function get_subscribers($dbprefix, $user_guid, $entity_guid = '') {
 	$condition_guid_two = ($user2_guid) ? "AND r.guid_two = {$entity_guid}" : "";
 	$query = "SELECT DISTINCT u.guid, u.email, u.username 
 	FROM {$dbprefix}entity_relationships r LEFT JOIN {$dbprefix}users_entity u ON r.guid_one = u.guid 
-	WHERE r.guid_one <> {$user_guid} AND r.relationship LIKE 'cp_subscribed_to_%' {$condition_guid_two}";
+	WHERE r.guid_one <> {$user_guid} AND r.relationship LIKE 'cp_subscribed_to_%' {$condition_guid_two} AND r.guid_two = {$user_guid}";
 	
 	return get_data($query);
 }
@@ -1030,7 +1031,7 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 	//foreach ($current_digest as $user) {
 	//	if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->getOwnerGUID(),'cp_notifications'),'set_digest_yes') == 0 && 
 	//strcmp(elgg_get_plugin_user_setting('cpn_set_digest_freq_weekly', $user->getOwnerGUID(),'cp_notifications'),'set_digest_weekly') == 0 ) {
-			$to = get_entity(95);//$user->getOwnerEntity();
+			$to = get_entity(112);//$user->getOwnerEntity();
 			$newsletter_id = $to->cpn_newsletter;
 			$newsletter_object = get_entity($newsletter_id);
 			$newsletter_content = json_decode($newsletter_object->description, true);
@@ -1045,8 +1046,8 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 			echo $template;
 
 			// clean up the newsletter
-			//$newsletter_object->description = json_encode(array());
-			//$newsletter_object->save();
+//			$newsletter_object->description = json_encode(array());
+//			$newsletter_object->save();
 	//	}
 	//}
 }

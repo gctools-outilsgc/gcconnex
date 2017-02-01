@@ -25,7 +25,28 @@ function get_forum_in_group($entity_guid_static, $entity_guid) {
  */
 function create_checkboxes($user_id, $name, $values, $label, $id='') {
 	$user_option = elgg_get_plugin_user_setting($name, $user_id, 'cp_notifications');
-	$is_checked = (strcmp($user_option, 'set_digest_no') == 0 || strcmp($user_option, 'set_notify_off') == 0) ? false : true;
+
+	if ($name === 'cpn_set_digest_freq_daily') {
+		$user_option_daily = elgg_get_plugin_user_setting('cpn_set_digest_freq_daily', $user_id, 'cp_notifications');
+		$user_option_weekly = elgg_get_plugin_user_setting('cpn_set_digest_freq_weekly', $user_id, 'cp_notifications');
+
+		if (!$user_option_daily && !$user_option_weekly) {
+			//elgg_set_plugin_user_setting($name, 'set_digest_daily', $user_id, 'cp_notifications');
+			$user_option = 'set_digest_daily';
+		}
+	}
+
+	if ($name === 'cpn_set_digest_lang_en') {
+		$user_option_en = elgg_get_plugin_user_setting('cpn_set_digest_lang_en', $user_id, 'cp_notifications');
+		$user_option_fr = elgg_get_plugin_user_setting('cpn_set_digest_lang_fr', $user_id, 'cp_notifications');
+
+		if (!$user_option_daily && !$user_option_weekly) {
+			//elgg_set_plugin_user_setting($name, 'set_digest_en', $user_id, 'cp_notifications');
+			$user_option = 'set_digest_en';
+		}
+	}
+
+	$is_checked = (strcmp($user_option, 'set_digest_no') == 0 || strcmp($user_option, 'set_notify_off') == 0 || !$user_option) ? false : true;
 
 	$chkbox = elgg_view('input/checkbox', array(
 		'name' => 		"params[{$name}]",
@@ -176,16 +197,12 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 
 		case 'comment':
 		case 'discussion_reply':
-
 			if ($entity->getContainerEntity() instanceof ElggGroup) {
-				if (!is_array($digest_collection['group']["<a href='{$entity->getContainerEntity()->getURL()}'>{$entity->getContainerEntity()->title}</a>"]['response']))
-					$digest_collection['group']["<a href='{$entity->getContainerEntity()->getURL()}'>{$entity->getContainerEntity()->title}</a>"]['response'] = array();
-				$digest_collection['group']["<a href='{$entity->getContainerEntity()->getURL()}'>{$entity->getContainerEntity()->title}</a>"]['response'][] = json_encode($content_array);
+				$digest_collection['group']["<a href='{$entity->getContainerEntity()->getURL()}'>{$entity->getContainerEntity()->name}</a>"]['response'][$entity->guid] = json_encode($content_array);
 
 			} else {
-				if (!is_array($digest_collection['personal']['response']))
-					$digest_collection['personal']['response'] = array();
-				$digest_collection['personal']['response'][] = json_encode($content_array);
+
+				$digest_collection['personal']['response'][$entity->guid] = json_encode($content_array);
 			}
 
 			
@@ -197,16 +214,15 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 		 	break;
 
 		case 'cp_messageboard':
-			if (!is_array($digest_collection['personal']['profile_message']))
-				$digest_collection['personal']['profile_message'] = array();
-			$digest_collection['personal']['profile_message'][] = "{$invoked_by->username} has left u a msg on your profile => sending to... {$send_to->guid} / {$send_to->username}";
+
+			$digest_collection['personal']['profile_message'][$entity->guid] = "{$invoked_by->username} has left u a msg on your profile => sending to... {$send_to->guid} / {$send_to->username}";
 			break;
 
 
 		case 'cp_hjtopic':
 		case 'cp_hjpost':
 		
-			$group_title = get_entity(get_forum_in_group($entity->guid, $entity->guid))->title;
+			$group_title = get_entity(get_forum_in_group($entity->guid, $entity->guid))->name;
 			$group_url = get_entity(get_forum_in_group($entity->guid, $entity->guid))->getURL();
 
 			if ($subtype === 'cp_hjtopic') {
@@ -252,7 +268,7 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 			
 			if ($entity->getContainerEntity() instanceof ElggGroup) {
 
-				$digest_collection['group']["<a href='{$entity->getContainerEntity()->getURL()}'>{$entity->getContainerEntity()->title}</a>"]['new_post'][$entity->guid] = json_encode($content_array);
+				$digest_collection['group']["<a href='{$entity->getContainerEntity()->getURL()}'>{$entity->getContainerEntity()->name}</a>"]['new_post'][$entity->guid] = json_encode($content_array);
 
 			} else {
 

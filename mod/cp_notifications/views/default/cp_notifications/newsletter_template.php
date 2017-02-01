@@ -51,9 +51,9 @@ if (strcmp($language_preference_fr,'set_digest_fr') == 0)
           } else {
             echo "<p><li><strong>".sizeof($detailed_contents).' '.render_headers($detailed_header)."</strong></li>";
           }
+          $detailed_header = str_replace("\'", '\'', $detailed_header);
           
-          foreach ($detailed_contents as $content_header => $content) {
-
+          foreach ($detailed_contents as $content_header => $content) { // display new_post, response, forum_topic etc
             // unwrap and display the group content
             if (strcmp($highlevel_header,'group') == 0) {
               echo  "<ul style='list-style-type:none;'><li><strong>".sizeof($content).' '.render_headers($content_header)."</strong></li>";
@@ -62,7 +62,7 @@ if (strcmp($language_preference_fr,'set_digest_fr') == 0)
               foreach ($group_activities as $activity_heading) {
                 $content_array = json_decode($activity_heading,true);
 
-                echo  "<ul style='list-style-type:none;'><li>".render_contents($content_array)."</li></ul>";
+                echo  "<ul style='list-style-type:none;'><li>".render_contents($content_array,$content_header)."</li></ul>";
               }
 
               echo "</ul>";
@@ -70,7 +70,7 @@ if (strcmp($language_preference_fr,'set_digest_fr') == 0)
             } else {
               // unwrap and display the personal content
               $content_array = json_decode($content,true);
-              echo  "<ul style='list-style-type:none;'><li>".render_contents($content_array)."</li></ul>";
+              echo  "<ul style='list-style-type:none;'><li>".render_contents($content_array,$detailed_header)."</li></ul>";
             }
           }
           echo "</p>";
@@ -106,7 +106,7 @@ if (strcmp($language_preference_fr,'set_digest_fr') == 0)
   /**
    * @param Array <string> $heading
    */
-  function render_contents($content_array) {
+  function render_contents($content_array, $heading='') {
 
     $author = "{$content_array['content_author_name']} has posted a ";
     // this is specifically for the Micro Missions portion due to extra field
@@ -116,8 +116,21 @@ if (strcmp($language_preference_fr,'set_digest_fr') == 0)
       $subtype = elgg_echo($subtype);
       $author = '';
     }
-    // limit 35 characters
-    $rendered_content = "{$author}{$subtype} <a href='{$content_array['content_url']}'>{$content_array['content_title']}</a> {$closing_date}";
+
+    if ($content_array['subtype'] === 'thewire') {
+      $subtype = elgg_echo($content_array['subtype']);
+      $author = "{$content_array['content_author_name']} has posted on ";
+      $rendered_content = "{$author}<a href='{$content_array['content_url']}'>{$subtype}</a>";
+    } elseif ($heading === 'likes') {
+      $author = "{$content_array['content_author_name']} has liked your post: ";
+      $rendered_content = "{$author}<a href='{$content_array['content_url']}'>{$subtype}</a>";
+    } elseif ($heading === 'response') {
+      $author = "{$content_array['content_author_name']} has posted a response or comment to your post: ";
+      $rendered_content = "{$author}<a href='{$content_array['content_url']}'>{$subtype}</a>";
+    } else {
+      // limit 35 characters
+      $rendered_content = "{$author}{$subtype} <a href='{$content_array['content_url']}'>{$content_array['content_title']}</a> {$closing_date}";
+    }
     return $rendered_content;
   }
 

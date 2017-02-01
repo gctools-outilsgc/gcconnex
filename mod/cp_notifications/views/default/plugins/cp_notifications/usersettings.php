@@ -90,8 +90,8 @@ foreach($subscribed_colleagues as $subscribed_colleague)
 
 $colleague_picker = elgg_view('input/friendspicker', array(
 	'entities' => $colleagues, 
-	'name' => 'subscribe_colleague_picker', 
-	'value' => $subscribed_colleagues_id
+	'name' => 'params[subscribe_colleague_picker]', 
+	'value' => "subscribe_to_{$subscribed_colleagues_id}",
 ));
 
 $content .= "<section id='notificationstable' cellspacing='0' cellpadding='4' width='100%' class='clearfix'>";
