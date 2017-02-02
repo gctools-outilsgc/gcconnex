@@ -223,8 +223,9 @@ $(document).ready(function() {
     $('.cancel-work-experience').on("click", function(){$('.edit-work-experience').focus()});
 
     $('.edit-skills').on("click", function () { $('.cancel-skills').focus(); $('.gcconnex-skill-limit').removeClass('hidden');});
-    $('.save-skills').on("click", function () { $('.edit-skills').focus(); $('.gcconnex-skill-limit').addClass('hidden'); });
-    $('.cancel-skills').on("click", function () { $('.edit-skills').focus(); $('.gcconnex-skill-limit').addClass('hidden'); });
+    $('.save-skills').on("click", function () { $('.edit-skills').focus(); $('.gcconnex-skill-limit').addClass('hidden'); $('#skillsAccessContainer').remove(); });
+
+    $('.cancel-skills').on("click", function () { $('.edit-skills').focus(); $('.gcconnex-skill-limit').addClass('hidden'); $('#skillsAccessContainer').remove(); });
 
     $('.edit-languages').on("click", function(){$('.cancel-languages').focus()});
     $('.save-languages').on("click", function(){$('.edit-languages').focus()});
@@ -377,7 +378,20 @@ function editProfile(event) {
 
         case 'skills':
             // inject the html to add ability to add skills
+            elgg.get('ajax/view/b_extended_profile/skills-access', {
+                    data: {
+                        guid: elgg.get_logged_in_user_guid(), // querystring
+                    },
+                    success: function (output) {
+                        //console.log(output);
+                        $('.gcconnex-skills').prepend(output);
+                        //$('.myplugin-link').html(output);
+                    }
+                });
             if ( $('.gcconnex-skill-entry:visible').length < 15 ) {
+                 /////
+                //console.log('skills in if');
+                ////
                 var christineFix = elgg.echo("gcconnex_profile:gc_skill:add", null, 'en');
                 $('.gcconnex-skills').append('<div class="gcconnex-endorsements-input-wrapper">' +
                 '<input type="text" class="gcconnex-endorsements-input-skill" onkeyup="checkForEnter(event)"/>' +
@@ -1008,6 +1022,7 @@ function saveProfile(event) {
             elgg.action('b_extended_profile/edit_profile', {
                 'guid': elgg.get_page_owner_guid(),
                 'section': 'skills',
+                'access': $('#skillsAccess').val(),
                 'skillsadded': $skills_added,
                 'skillsremoved': $delete_guid
             });

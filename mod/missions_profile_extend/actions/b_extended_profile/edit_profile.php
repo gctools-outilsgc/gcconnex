@@ -310,7 +310,9 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
         case 'skills':
             $skillsToAdd = get_input('skillsadded', 'ERROR: Ask your admin to grep: 5FH13GAHHHS0021.');
             $skillsToRemove = get_input('skillsremoved', 'ERROR: Ask your admin to grep: 5FH13GAHHHS0022.');
-            $access = ACCESS_LOGGED_IN;
+            //$access = ACCESS_LOGGED_IN;
+            $access = get_input('access');
+            //error_log('test - '.$access);
             $skill_guids = array();
             foreach ($skillsToAdd as $new_skill) {
                 $skill = new ElggObject();
@@ -347,6 +349,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             }
             //$user->gc_skills = null; // dev stuff... delete me
             //$user->skillsupgraded = NULL; // dev stuff.. delete me
+            $user->skill_access = $access;
             $user->save();
             
             break;

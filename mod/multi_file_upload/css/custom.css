@@ -65,5 +65,6 @@
 }
 
 .file-preview-error {
+  opacity:0.85;
   background: #f2dede;
 }
