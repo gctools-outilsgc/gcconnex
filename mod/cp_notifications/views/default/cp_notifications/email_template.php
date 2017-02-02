@@ -447,7 +447,6 @@ switch ($msg_type) {
 		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_event_request:description',array($vars['cp_event_request_user'],$vars['cp_event_object']->title,$vars['cp_event_request_url']),'en');
 		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_event_request:description',array($vars['cp_event_request_user'],$vars['cp_event_object']->title,$vars['cp_event_request_url']),'fr');
 
-		error_log("title: {$cp_notify_msg_title_en} | {$cp_notify_msg_title_fr} / description: {$cp_notify_msg_description_en} | {$cp_notify_msg_description_fr}");
 		$footer2_required = false;
 		break;
 
@@ -553,11 +552,11 @@ $french_follows = elgg_echo('cp_notify:french_follows',array());
 $email_address = $vars['_user_e-mail']; 
 $email_domain = explode('@',$email_address);	// (ie: first.last@gov.ab.ca) TODO - department name/abbreviation
 $pt_departments = elgg_get_plugin_setting('cp_pt_information','cp_notifications');
-error_log("pt departments - {$pt_departments}");
+
 $pt_departments = explode(',',$pt_departments);
-error_log(">>>> email template - {$email_address}");
+
 if (in_array($email_domain[1], $pt_departments)) {
-	error_log("found!");
+
 	$email_notification_header = str_replace(elgg_get_site_url(), 'https://ext.gcconnex.gc.ca/', $email_notification_header);
 	$cp_notify_msg_title_en = str_replace(elgg_get_site_url(), 'https://ext.gcconnex.gc.ca/', $cp_notify_msg_title_en);
 	$cp_notify_msg_description_en = str_replace(elgg_get_site_url(), 'https://ext.gcconnex.gc.ca/', $cp_notify_msg_description_en);

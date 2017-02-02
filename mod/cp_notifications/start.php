@@ -1028,28 +1028,24 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 	);
 	$current_digest = elgg_get_entities($options);
 
-	//foreach ($current_digest as $user) {
-	//	if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->getOwnerGUID(),'cp_notifications'),'set_digest_yes') == 0 && 
-	//strcmp(elgg_get_plugin_user_setting('cpn_set_digest_freq_weekly', $user->getOwnerGUID(),'cp_notifications'),'set_digest_weekly') == 0 ) {
-			$to = get_entity(112);//$user->getOwnerEntity();
+	foreach ($current_digest as $user) {
+		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->getOwnerGUID(),'cp_notifications'),'set_digest_yes') == 0 && 
+	strcmp(elgg_get_plugin_user_setting('cpn_set_digest_freq_weekly', $user->getOwnerGUID(),'cp_notifications'),'set_digest_weekly') == 0 ) {
+			$to = $user->getOwnerEntity();
 			$newsletter_id = $to->cpn_newsletter;
 			$newsletter_object = get_entity($newsletter_id);
 			$newsletter_content = json_decode($newsletter_object->description, true);
-
-			echo '<br/><br/><br/><br/><br/><br/>';
 
 			if (sizeof($newsletter_content) > 0 || !empty($newsletter_content))
 				$template = elgg_view('cp_notifications/newsletter_template', array('to' => $to, 'newsletter_content' => json_decode(get_entity($newsletter_id)->description,true)));
 			else
 				$template = elgg_view('cp_notifications/newsletter_template_empty', array('to' => $to));
 
-			echo $template;
-
 			// clean up the newsletter
-//			$newsletter_object->description = json_encode(array());
-//			$newsletter_object->save();
-	//	}
-	//}
+			$newsletter_object->description = json_encode(array());
+			$newsletter_object->save();
+		}
+	}
 }
 
 
