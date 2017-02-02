@@ -26,24 +26,18 @@ function get_forum_in_group($entity_guid_static, $entity_guid) {
 function create_checkboxes($user_id, $name, $values, $label, $id='') {
 	$user_option = elgg_get_plugin_user_setting($name, $user_id, 'cp_notifications');
 
-	if ($name === 'cpn_set_digest_freq_daily') {
+	if (strcmp($name, 'cpn_set_digest_freq_daily') == 0) {
 		$user_option_daily = elgg_get_plugin_user_setting('cpn_set_digest_freq_daily', $user_id, 'cp_notifications');
 		$user_option_weekly = elgg_get_plugin_user_setting('cpn_set_digest_freq_weekly', $user_id, 'cp_notifications');
 
-		if (!$user_option_daily && !$user_option_weekly) {
-			//elgg_set_plugin_user_setting($name, 'set_digest_daily', $user_id, 'cp_notifications');
-			$user_option = 'set_digest_daily';
-		}
+		if (!$user_option_daily && !$user_option_weekly) $user_option = 'set_digest_daily';
 	}
 
-	if ($name === 'cpn_set_digest_lang_en') {
+	if (strcmp($name, 'cpn_set_digest_lang_en') == 0) {
 		$user_option_en = elgg_get_plugin_user_setting('cpn_set_digest_lang_en', $user_id, 'cp_notifications');
 		$user_option_fr = elgg_get_plugin_user_setting('cpn_set_digest_lang_fr', $user_id, 'cp_notifications');
 
-		if (!$user_option_daily && !$user_option_weekly) {
-			//elgg_set_plugin_user_setting($name, 'set_digest_en', $user_id, 'cp_notifications');
-			$user_option = 'set_digest_en';
-		}
+		if (!$user_option_daily && !$user_option_weekly) $user_option = 'set_digest_en';
 	}
 
 	$is_checked = (strcmp($user_option, 'set_digest_no') == 0 || strcmp($user_option, 'set_notify_off') == 0 || !$user_option) ? false : true;
@@ -52,10 +46,9 @@ function create_checkboxes($user_id, $name, $values, $label, $id='') {
 		'name' => 		"params[{$name}]",
 		'value' => 		$values[0],
 		'default' => 	$values[1],
-		'checked' => 	(strcmp($user_option, $name) == 0  || !$user_option) ? true : false,
 		'label' => 		$label,
 		'checked' => 	$is_checked,
-		'id' =>		$id
+		'id' =>			$id
 	));
 
 	return $chkbox;
@@ -98,8 +91,7 @@ function cp_check_permissions($entity, $recipient_user_id = 0) {
 function cp_get_headers($event) { 	// $event will be null if nothing is passed into it (no default value set)
 
 	$email_address = elgg_get_plugin_setting('cp_notifications_email_addr','cp_notifications');
-	if (!$email_address || $email_address === '')
-		$email_address = 'admin.gcconnex@tbs-sct.gc.ca'; // default if nothing is set
+	if (!$email_address || $email_address === '') $email_address = 'admin.gcconnex@tbs-sct.gc.ca';
 	$php_version = phpversion();
 
 	$headers =  "From: GCconnex <{$email_address}> \r\n";
@@ -197,14 +189,11 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 
 		case 'comment':
 		case 'discussion_reply':
-			if ($entity->getContainerEntity() instanceof ElggGroup) {
+			if ($entity->getContainerEntity() instanceof ElggGroup) 
 				$digest_collection['group']["<a href='{$entity->getContainerEntity()->getURL()}'>{$entity->getContainerEntity()->name}</a>"]['response'][$entity->guid] = json_encode($content_array);
-
-			} else {
-
+			else 
 				$digest_collection['personal']['response'][$entity->guid] = json_encode($content_array);
-			}
-
+			
 			
 			break;
 
@@ -266,15 +255,11 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 		default:
 			$entity = get_entity($entity->guid);
 			
-			if ($entity->getContainerEntity() instanceof ElggGroup) {
-
+			if ($entity->getContainerEntity() instanceof ElggGroup)
 				$digest_collection['group']["<a href='{$entity->getContainerEntity()->getURL()}'>{$entity->getContainerEntity()->name}</a>"]['new_post'][$entity->guid] = json_encode($content_array);
+			else 
+				$digest_collection['personal']['new_post'][$entity->guid] = json_encode($content_array);
 
-			} else {
-
-				$digest_collection['personal']['new_post'][$entity->guid] = json_encode($content_array);				
-			
-			}
 			break;
 	}
 

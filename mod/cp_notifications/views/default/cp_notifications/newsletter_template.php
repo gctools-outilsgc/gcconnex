@@ -121,12 +121,15 @@ if (strcmp($language_preference_fr,'set_digest_fr') == 0)
       $subtype = elgg_echo($content_array['subtype']);
       $author = "{$content_array['content_author_name']} has posted on ";
       $rendered_content = "{$author}<a href='{$content_array['content_url']}'>{$subtype}</a>";
+
     } elseif ($heading === 'likes') {
       $author = "{$content_array['content_author_name']} has liked your post: ";
       $rendered_content = "{$author}<a href='{$content_array['content_url']}'>{$subtype}</a>";
+
     } elseif ($heading === 'response') {
       $author = "{$content_array['content_author_name']} has posted a response or comment to your post: ";
       $rendered_content = "{$author}<a href='{$content_array['content_url']}'>{$subtype}</a>";
+      
     } else {
       // limit 35 characters
       $rendered_content = "{$author}{$subtype} <a href='{$content_array['content_url']}'>{$content_array['content_title']}</a> {$closing_date}";

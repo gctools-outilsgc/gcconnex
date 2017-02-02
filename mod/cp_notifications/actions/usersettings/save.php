@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Overwriting the core function to save the Notifications Settings page
+ *
+ */
+
 gatekeeper();
 
 $params = get_input('params');
@@ -8,11 +13,12 @@ $user_guid = get_input('user_guid', elgg_get_logged_in_user_guid());
 $plugin = elgg_get_plugin_from_id($plugin_id);
 $user = get_entity($user_guid);
 
+/// array of subscribed users
+$old_colleague_list = json_decode($plugin->getUserSetting('subscribe_colleague_picker', $user->guid),true);
 
 /// overwriting the save action for usersettings in notifications, save all the checkboxes
 $plugin_name = $plugin->getManifest()->getName();
 foreach ($params as $k => $v) {
-	error_log("key: {$k} ///////// value: {$v}");
 	if (strpos($k,'cpn_group_') === false) {
 		$result = $plugin->setUserSetting($k, $v, $user->guid);
 	}
@@ -38,103 +44,62 @@ foreach ($params as $k => $v) {
 		}
 	}
 
+	/// create relationship between user and user (colleagues)
+	if (strpos($k,'subscribe_colleague_picker') == 0) {
+		foreach ($v as $colleague) {
+			$colleague_list[$colleague] = $colleague;
+			$result = $plugin->setUserSetting($k, json_encode($colleague_list), $user->guid);
+
+			add_entity_relationship($user_guid, 'cp_subscribed_to_email', $colleague);
+			add_entity_relationship($user_guid, 'cp_subscribed_to_site_mail', $colleague);
+		}
+	}
+
 	if (!$result) {
 		register_error(elgg_echo('plugins:usersettings:save:fail', array($plugin_name)));
 		forward(REFERER);
 	}
 }
 
+/// array of subscribed users
+$new_colleague_list = json_decode($plugin->getUserSetting('subscribe_colleague_picker', $user->guid),true);
+
+/// fix the user to user relationship
+foreach ($old_colleague_list as $old_colleague) {
+	if (!$new_colleague_list[$old_colleague]) {
+		remove_entity_relationship($user_guid, 'cp_subscribed_to_email', $old_colleague);
+		remove_entity_relationship($user_guid, 'cp_subscribed_to_site_mail', $old_colleague);
+	}	
+}
 
 
+/// create the digest object for the user
+if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->guid,'cp_notifications'),'set_digest_yes') == 0) {
+	if (!$user->cpn_newsletter) {
 
-/// notification digest settings that should be saved
-$options = array(
-	'type' => 'object',
-	'subtype' => 'cp_digest',
-	'container_guid' => $user->getGUID(),
-);
-$current_digest = elgg_get_entities($options);
-
-$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $user->guid, 'cp_notifications');
-if (strcmp($user_setting,'set_digest_yes') == 0) {
-	error_log("the bulk notification flag is set for a user..");
-	if (empty($current_digest)) {
 		$new_digest = new ElggObject();
 		$new_digest->subtype = 'cp_digest';
-		$new_digest->owner_guid = $user->getGUID();
-		$new_digest->container_guid = $user->getGUID();
+		$new_digest->owner_guid = $user->guid;
+		$new_digest->container_guid = $user->guid;
 		$new_digest->title = "Newsletter|{$user->email}";
 		$new_digest->access_id = ACCESS_PUBLIC;
 		$digest_id = $new_digest->save();
 
-		if ($digest_id) error_log("the object was created! with the guid of {$digest_id}");
-		$user->cpn_newsletter = $digest_id;
-		error_log("cpn_newsletter md: {$user->cpn_newsletter}");
+		if ($digest_id) { 
+			$user->cpn_newsletter = $digest_id;
+			$result = true;
+		} else {
+			$result = false;
+		}
 	}
+
 } else {
-	error_log("the bulk notification was unset...");
-	// disable the object (do not remove, yet!)
+	$digest = get_entity($user->cpn_newsletter);
+	$digest->delete();
+	$user->deleteMetadata('cpn_newsletter');
 }
 
+($result) ? system_message('Settings have been saved succesfully') : register_error('Settings did not save successfully');
+forward(REFERER);
 
 
-
-/// group notifications settings that needs to be saved
-
-
-
-
-
-// $groups = elgg_get_entities_from_relationship(array(
-// 	'relationship' => 'member',
-// 	'relationship_guid' => $user->guid,
-// 	'type' => 'group',
-// 	'limit' => false,
-// ));
-
-// foreach ($groups as $group) {
-//     // Nick - This asks for the inputs of the checkboxes. If the checkbox is checked it will save it's value. else it will return 'unSub' or 'site_unSub'
-// 	$cpn_set_subscription_email = $plugin->getUserSetting("cpn_email_{$group->getGUID()}", $user->getGUID());	// setting email notification
-
-// 	// (email) if user set item to subscribed, and no relationship has been built, please add new relationship
-//     if ($cpn_set_subscription_email == 'sub_'.$group->getGUID() /*&& !check_entity_relationship($user->getGUID(), 'cp_subscribed_to_email',$group->getGUID())*/){
-// 		add_entity_relationship($user->getGUID(), 'cp_subscribed_to_email', $group->getGUID());
-//     }
-
-// 	// (email) if user set item to unsubscribe, update relationship table
-// 	if ($cpn_set_subscription_email == 'unSub' /*&& check_entity_relationship($user->getGUID(), 'cp_subscribed_to_email',$group->getGUID())*/){
-// 		remove_entity_relationship($user->getGUID(), 'cp_subscribed_to_email', $group->getGUID());
-//     }
-
-// 	if (empty($cpn_set_subscription_email)) $cpn_set_subscription_email = 'sub_'.$group->getGUID() ;	// if not set, set no email as default
-
-
-
-// 	$cpn_set_subscription_site_mail = $plugin->getUserSetting("cpn_site_mail_{$group->getGUID()}", $user->getGUID());
-// 	// (site mail) checks for the inputs of the check boxes
-// 	if ($cpn_set_subscription_site_mail == 'sub_site_'.$group->getGUID()/* && !check_entity_relationship($user->getGUID(), 'cp_subscribed_to_site_mail',$group->getGUID())*/){
-//         add_entity_relationship($user->getGUID(), 'cp_subscribed_to_site_mail', $group->getGUID());
-//     }
-		
-// 	// (site mail)
-// 	if ($cpn_set_subscription_site_mail == 'site_unSub' /*&& check_entity_relationship($user->getGUID(), 'cp_subscribed_to_site_mail',$group->getGUID())*/){
-//         remove_entity_relationship($user->getGUID(), 'cp_subscribed_to_site_mail', $group->getGUID());
-//     }
-
-// 	if (empty($cpn_set_subscription_site_mail)) $cpn_set_subscription_site_mail = 'sub_site_'.$group->getGUID();
-// }
-
-// colleagues
-$all_colleagues = elgg_get_logged_in_user_entity()->getFriends(array('limit' => 0));
-$colleagues = get_input('colleagues_notify_sub');
-
-foreach( $all_colleagues as $colleague ){
-	if ( in_array( $colleague->getGUID(), $colleagues ) ){
-        add_entity_relationship($user->getGUID(), 'cp_subscribed_to_email', $colleague->getGUID());
-        add_entity_relationship($user->getGUID(), 'cp_subscribed_to_site_mail', $colleague->getGUID());
-	}
-	else{
-        remove_entity_relationship($user->getGUID(), 'cp_subscribed_to_email', $colleague->getGUID());
-        remove_entity_relationship($user->getGUID(), 'cp_subscribed_to_site_mail', $colleague->getGUID());
-	}
-}
