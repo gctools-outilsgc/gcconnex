@@ -35,7 +35,7 @@ echo '<div class="gcconnex-skills-skills-list-wrapper">';
 if (elgg_is_logged_in()){
     //elgg_get_logged_in_user_entity()->isFriendsWith($user->guid)
     //if ( elgg_get_logged_in_user_guid() != elgg_get_page_owner_guid() ) {
-    if($user->skill_access == ACCESS_PUBLIC || elgg_get_logged_in_user_entity()->isFriendsWith($user->guid) )
+    if((elgg_get_logged_in_user_guid() != elgg_get_page_owner_guid()) && ($user->skill_access == ACCESS_PUBLIC || elgg_get_logged_in_user_entity()->isFriendsWith($user->guid) ) && ($user->skill_access != ACCESS_PRIVATE))
         echo '<div class="gcconnex-skill-limit">' . elgg_echo('gcconnex_profile:gc_skill:click') . '</div>';
     //}
 }

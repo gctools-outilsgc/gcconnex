@@ -76,7 +76,7 @@ Optional: About Me, Education, Work Experience, and Skills
 	</p>
 	<p>
 	Important!<br />
-If you do not wish for your GCconnex avatar and skills to appear on GCdirectory, click “Cancel”.
+If you do not wish for your GCconnex avatar to appear on GCdirectory, click “Cancel”.
 	</p>
 	<p>
 	For the optional information, you can chose who sees it by changing your privacy settings in GCconnex (i.e., “ Edit,” “Who can see my [description, education…]).

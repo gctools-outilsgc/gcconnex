@@ -315,7 +315,7 @@ return array(
 	'LOGGED_IN' => "Usagers connectés à GCconnex seulement",
 'PUBLIC' => "Tous les fonctionnaires",
 'LOGGED_OUT' => "Utilisateurs hors connexion",
-	'access:friends:label' => "Amis",
+	'access:friends:label' => "Mes Collègues sur GCconnex seulement",
 	'access' => "Accès",
 'access:overridenotice' => "Note : En raison des règles de ce groupe, ce contenu ne sera accessible qu'aux membres du groupe. ",
 	'access:limited:label' => "Limité",
