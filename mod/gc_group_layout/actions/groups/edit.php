@@ -124,19 +124,21 @@ if ($is_new_group) {
 // is an odd requirement and should be removed. Either the acl creation happens
 // in the action or the visibility moves to a plugin hook
 if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
-	$visibility = (int)get_input('vis');
+    $visibility = get_input('vis'); // without (int) cast
 
-	if ($visibility == ACCESS_PRIVATE) {
-		// Make this group visible only to group members. We need to use
-		// ACCESS_PRIVATE on the form and convert it to group_acl here
-		// because new groups do not have acl until they have been saved once.
-		$visibility = $group->group_acl;
+    if ($visibility == ACCESS_PRIVATE) { // ACCESS_PRIVATE or any string: for instance 'parent_group_acl'
+        // Force all new group content to be available only to members
+                if ($visibility === ACCESS_PRIVATE) { // Only for ACCESS_PRIVATE
+                    $group->setContentAccessMode(ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY);
+                }
 
-		// Force all new group content to be available only to members
-		$group->setContentAccessMode(ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY);
-	}
+        // Make this group visible only to group members. We need to use
+        // ACCESS_PRIVATE on the form and convert it to group_acl here
+        // because new groups do not have acl until they have been saved once.
+        $visibility = $group->group_acl;
+    }
 
-	$group->access_id = $visibility;
+    $group->access_id = $visibility;
 }
 
 $group->save();

@@ -15,13 +15,18 @@ if($default_access === null) {
 	$default_access = get_default_access();
 }
 
-$input_access = elgg_view('input/dropdown', array(
+/*$input_access = elgg_view('input/dropdown', array(
 		'name' => 'completed_missions_access',
 		'value' => $default_access,
 		'options_values' => $access_options,
 		'id' => 'missions-access-type-dropdown-input'
-));
-
+));*/
+$params = array (
+			'name' => "completed_missions_access",
+			'value' => $default_access,
+			'id' => 'missions-access-type-dropdown-input' 
+	);
+$input_access = elgg_view ( 'input/access', $params );
 $hidden_user = elgg_view('input/hidden', array(
 		'name' => 'hidden_user_guid',
 		'value' => $user->guid

@@ -47,7 +47,12 @@
 			$user->set('addressStringFr', $locFr);
 		}
 		if ($gedsDN){
-			$user->set('gedsDN', $gedsDN);
+			if($gedsDN == 'DELETE_ME'){
+				$user->set('gedsDN', '');
+			}else{
+				$user->set('gedsDN', $gedsDN);
+			}
+			
 		}
 		//save changes.
 		$user->save();

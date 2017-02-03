@@ -185,6 +185,7 @@ function get_api_profile($id){
 	//Skills
 	///////////////////////////////////////////////////////
 	elgg_set_ignore_access(true);
+	if($user_entity->skill_access == ACCESS_PUBLIC)
 	$skillsEntity = elgg_get_entities(array(
 		'owner_guid'=>$user['id'],
 		'subtype'=>'MySkill',
@@ -221,7 +222,7 @@ function get_api_profile($id){
 	//Language
 	////////////////////////////////////////////////////////////////////
 	//$user['language']["format"] = "Written Comprehension / Written Expression / Oral Proficiency";
-	$languageMetadata =  elgg_get_metadata(array(
+	/*$languageMetadata =  elgg_get_metadata(array(
 		'guid'=>$user['id'],
 		'limit'=>0,
 		'metadata_name'=>'english'
@@ -264,7 +265,7 @@ function get_api_profile($id){
 			}
 			$i++;
 		}
-	}
+	}*/
 	//////////////////////////////////////////////////////////////////////////////////////
 	//portfolio
 	///////////////////////////////////////////////////////////////////

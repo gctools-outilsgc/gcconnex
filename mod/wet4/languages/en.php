@@ -310,9 +310,9 @@ return array(
  * Access
  */
 
-	'PRIVATE' => "Private",
-	'LOGGED_IN' => "Logged in users",
-	'PUBLIC' => "Public",
+	'PRIVATE' => "Only me",
+	'LOGGED_IN' => "Users logged in to GCconnex only",
+	'PUBLIC' => "All public servants",
 	'LOGGED_OUT' => "Logged out users",
 	'access:friends:label' => "Friends",
 	'access' => "Access",
@@ -1446,6 +1446,7 @@ Please do not reply to this email.",
     'contactform:faq' => "FAQ",
     'contactform:upload' => 'Upload your file',
     'contactform:title:form' => "Contact Us",
+    'contactform:required' => 'required',
  
 	'contactform:box:message' => 'Show the information box',
 	'conatactform:fr:name' => 'Name of the link in french',
@@ -1517,6 +1518,9 @@ Please do not reply to this email.",
 	'event_calendar:mine' => 'My events',
 	'event_calendar:meeting' => 'Online meeting and teleconference',
 	'event_calendar:info' => 'Additional information',
+	'event_calendar_contact' => "You are not the contact person?",
+	"event_calendar:email" => "E-mail address",
+	"event_calendar:phone" => "Phone number",
 
     /*new for tour*/
 'gcTour:next' => 'Next ',
@@ -1598,6 +1602,10 @@ Please do not reply to this email.",
 'indicator:click:fr' => 'français',
 'box:indicator:en' => 'This content is also available in ',
 'indicator:click:en' => 'english.',
+'indicator:summary' => '(FR/EN)',
+'indicator:summary:title' => 'Ce contenu est aussi disponible en français',
+
+
 
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)

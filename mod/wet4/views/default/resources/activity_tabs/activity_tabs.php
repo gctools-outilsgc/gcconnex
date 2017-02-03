@@ -54,30 +54,20 @@ switch ($page_type) {
 	case 'mydept':
 		$title = elgg_echo('activity_tabs:collection');
 		$page_filter = 'activity_tab';
-		$users = elgg_get_entities_from_metadata(array(
-		    'type' => 'user',
-		    'metadata_name_value_pairs' => array('name' => 'department', 'value' => elgg_get_logged_in_user_entity()->department)
-		));
 		
-		foreach($users as $user) {
-		    $members[] .= $user->guid;
-		}
-        
-		$options['subject_guid'] = $members;
+		$db_prefix = elgg_get_config('dbprefix');
+		$dept = elgg_get_logged_in_user_entity()->department;
+		$options['joins'] = array("INNER JOIN {$db_prefix}metadata md ON md.entity_guid = rv.subject_guid LEFT JOIN {$db_prefix}metastrings msn ON md.name_id = msn.id LEFT JOIN {$db_prefix}metastrings msv ON md.value_id = msv.id");	// we need this to filter by metadata
+		$options['wheres'] = array("msn.string = \"department\" AND msv.string LIKE \"{$dept}\"");
 		break;
 	case 'otherdept':
 		$title = elgg_echo('activity_tabs:collection');
 		$page_filter = 'activity_tab';
-		$users = elgg_get_entities(array(
-		    'type' => 'user'
-		));
-		
-		foreach($users as $user) {
-			if ($user->department != elgg_get_logged_in_user_entity()->department) {
-		    		$members[] .= $user->guid;
-			}
-		}        
-		$options['subject_guid'] = $members;
+
+		$db_prefix = elgg_get_config('dbprefix');
+		$dept = elgg_get_logged_in_user_entity()->department;
+		$options['joins'] = array("INNER JOIN {$db_prefix}metadata md ON md.entity_guid = rv.subject_guid LEFT JOIN {$db_prefix}metastrings msn ON md.name_id = msn.id LEFT JOIN {$db_prefix}metastrings msv ON md.value_id = msv.id");	// we need this to filter by metadata
+		$options['wheres'] = array("msn.string = \"department\" AND msv.string NOT LIKE \"{$dept}\"");
 		break;
 	case 'collection':
 	default:

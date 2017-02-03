@@ -82,7 +82,7 @@ if(elgg_is_logged_in() && $group->isMember()){
         }
 
         //display if group has a badge and the user does not have it active
-        if($pledge && $pledge != $user->active_badge && array_key_exists($group->name, $badgemap) && elgg_get_plugin_setting('amb_badge_pledge', 'gcProfilePictureBadges')){ //662668
+        if($pledge && ($user->active_badge == '' || $user->active_badge == 'none') && array_key_exists($group->name, $badgemap) && elgg_get_plugin_setting('amb_badge_pledge', 'gcProfilePictureBadges')){ //662668
 
 ?>
 <div class="amb-holder clearfix">

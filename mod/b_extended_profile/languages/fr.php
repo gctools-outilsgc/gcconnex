@@ -7,7 +7,8 @@
  */
 
 $french = array(
-
+    'temp:languages:disabled:message' => "<br />Nous sommes en train de re-travailler comment les compétences linguistiques apparaîtront dans les profils GCconnex.<br />Restez à l'écoute pour des mises à jour.",
+    
     //edit profile message
     'profile:notsaved' => 'Not all information could be saved, empty fields are not allowed', /* NEW */
     'profile:title' => "%s's Profile", /* NEW */
@@ -119,6 +120,7 @@ $french = array(
     'gcconnex_profile:gc_skill:empty' => 'Ajoutez les renseignements sur vos compétences en cliquant sur "Modifier" dans le coin supérieur droit de cette section.',
     'gcconnex_profile:gc_skill:endorse' => 'Valider',
     'gcconnex_profile:gc_skill:limit' => 'Vous pouvez ajouter un maximum de 15 compétences.',
+    'gcconnex_profile:gc_skill:access' => 'Qui peut voir mes compétences:',
 
     // leftover skills
     'gcconnex_profile:gc_skill:leftover' => 'Vous avez précédemment ajouté des compétences à votre profil GCconnex. Veuillez passer en revue les compétences ci-dessous et les verser dans ce nouveau gabarit, au besoin. Lorsque vous ajoutez des compétences à votre profil, assurez-vous qu\'il s\'agit de compétences que vous croyez réellement posséder, qu\'elles sont précises, qu\'ils s\'agit de comptéences professionnelles, et qu’elles permettent aux personnes qui consultent votre profil d’obtenir de l’information claire, utile et pertinente à votre sujet (essayez d’éviter les expressions comme « plein d’choses » et « accomplir plein de tâches »). ',

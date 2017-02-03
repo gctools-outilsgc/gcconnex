@@ -484,7 +484,7 @@ input.userfind {
 }
 
 /* UPDATE: newer versions use tt-input instead of tt-query */
-.tt-query, 
+.tt-query,
 .tt-hint {
     width: 396px;
     border: 2px solid #ccc;
@@ -493,7 +493,7 @@ input.userfind {
 }
 
 /* UPDATE: newer versions use tt-input instead of tt-query */
-.tt-query { 
+.tt-query {
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 }
 
@@ -523,7 +523,7 @@ input.userfind {
 
 /* UPDATE: newer versions use .tt-suggestion.tt-cursor */
 .tt-suggestion.tt-is-under-cursor,
-.tt-suggestion.tt-cursor { 
+.tt-suggestion.tt-cursor {
     color: #fff;
     background-color: #0097cf;
 }
@@ -557,9 +557,8 @@ input.userfind {
     height: 30px;
 }
 
-.gcconnex-avatar-in-list img {
-    width: 30px;
-    height: 30px;
+.gcconnex-avatar-in-list .img-circle {
+  width:30px;
 }
 
 .gcconnex-avatars-expand {

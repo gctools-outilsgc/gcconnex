@@ -185,8 +185,9 @@ $content .='<script>$(".all-site").click(function(){$(".group-site").prop("check
 
 
 $group_limit = elgg_get_plugin_setting('cp_notifications_display','cp_notifications');
-if (!$group_limit) $group_limit = 10; // cyu - default value if none is set (too many stuff)
+//if (!$group_limit) $group_limit = 10; // cyu - default value if none is set (too many stuff)
 
+$group_limit = 10;
 $group_offset = (int)$group_page * (int)$group_limit;
 
 // cyu - get user's groups that they've joined
@@ -205,6 +206,7 @@ $groups = elgg_get_entities_from_relationship($options);
 $user_guid = elgg_get_logged_in_user_guid();
 $query = "SELECT count(guid) AS num_group FROM {$db_prefix}groups_entity g, {$db_prefix}entity_relationships r WHERE g.guid = r.guid_two AND r.relationship = 'member' AND r.guid_one = {$user_guid}";
 $ng = get_data($query);
+
 $number_of_grp_pages = (int)$ng[0]->num_group / (int)$group_limit;
 
 // start going through all the groups that you are a member of
@@ -276,13 +278,11 @@ foreach ($groups as $group) {
 <script>
 	function create_group_content_item(grp_guid, usr_guid) {
 		
-		if ($('#group-content-' + grp_guid).is(':visible')) {
-			// do nothing
-		} else {
-			var loading_text = elgg.echo('cp_notify:setting:loading');
+		if (!$('#group-content-' + grp_guid).is(':visible')) {
+			
 			// // assuming this is doing what i think it is doing + loading indicator
 			$('#group-content-' + grp_guid).children().remove();
-			$('#group-content-' + grp_guid).append("<div class='clearfix col-sm-12 list-break'>" + loading_text + "<div>");
+			$('#group-content-' + grp_guid).append("<div class='clearfix col-sm-12 list-break'>" + elgg.echo('cp_notify:setting:loading') + "<div>");
 
 			// jquery - retrieve the group content on user click (this way it doesn't try and load everything at once)
 			elgg.action('cp_notify/retrieve_group_contents', {
@@ -290,13 +290,21 @@ foreach ($groups as $group) {
 					group_guid: grp_guid,
 					user_guid: usr_guid,
 				},
+
 				success: function (content_arr) {
-					
 					$('#group-content-' + grp_guid).children().remove();
+
+					// we want to display a message when there arent any items subscribed under a group
+					if (content_arr.output.num_content <= 0) {
+						$('#group-content-' + grp_guid).append("<div class='clearfix col-sm-12 list-break'> " + elgg.echo('cp_notify:setting:no_grp_subscription') +" <div>");
+						return;
+					} 
+
 
 					// create a list of all the content in the group that you are subscribed to
 					for (var item in content_arr.output.text3)
 						$('#group-content-' + grp_guid).append("<div class='clearfix col-sm-12 list-break'>" + content_arr.output.text3[item] + "<div>");
+
 
 					// jquery - when the unsubscribe button is clicked, remove entry from the subscribed to content
 				    $('.unsub-button').on('click', function() {
@@ -310,18 +318,15 @@ foreach ($groups as $group) {
 			                success: function(data) {
 			                  $(this_thing).closest('.list-break').fadeOut();
 			                }
-				        }); 	// close jquery action
+				        });
+				    });			
 
-				    });			// close jquery unsub button
-				},
-				error:function(xhr, status, error) {
-					alert('Error: ' + status + '\nError Text: ' + error + '\nResponse Text: ' + xhr.responseText);
-				}
-			}); 				// close jquery action
+
+				}, error:function(xhr, status, error) { alert('Error: ' + status + '\nError Text: ' + error + '\nResponse Text: ' + xhr.responseText); }
+			}); // close elgg.action function
 		
-		} // end if ... else ... condition
+		}
 	}
-
 </script>
 
 <?php
@@ -330,16 +335,10 @@ foreach ($groups as $group) {
 	// GROUP CONTENT SUBSCRIPTIONS
 	//------------------------------------------------------------------------------------------------------------------
     $content .= '<div class="accordion col-sm-12 clearfix mrgn-bttm-sm">';
-    // cyu - performance upgrade: do not load all the group contents at the same time, load only if user wants to view it
-    $query = "SELECT e.guid FROM elggentities e, elggentity_relationships r WHERE e.container_guid = {$group->getGUID()} AND e.guid = r.guid_two AND r.guid_one = {$user->getGUID()} AND r.relationship = 'cp_subscribed_to_site_mail' LIMIT 1";
-    $all_or_none = count(get_data($query));
 
-    if ($all_or_none) {
-    	$content .= '	<details class="acc-group" onClick="return create_group_content_item('.$group->getGUID().', '.$user->getGUID().')">';
-    	$content .= "		<summary id='group_item_container-{$group->getGUID()}' class='wb-toggle tgl-tab'>".elgg_echo('cp_notify:groupContent').'</summary>';
-    } else
-    	$content .= "		<summary>".elgg_echo('cp_notify:setting:no_grp_subscription')."</summary>";
-    
+   	$content .= '	<details class="acc-group" onClick="return create_group_content_item('.$group->getGUID().', '.$user->getGUID().')">';
+   	$content .= "		<summary id='group_item_container-{$group->getGUID()}' class='wb-toggle tgl-tab'>".elgg_echo('cp_notify:groupContent').'</summary>';
+  
     $content .= "		<div id='group-content-{$group->getGUID()}' class='tgl-panel clearfix'>";
     $content .= '		</div>';	// close line 295
     $content .= '	</details>';	// close line 293
@@ -359,7 +358,7 @@ $current_user = elgg_get_logged_in_user_entity();
 
 // do pagination
 $content .= "<div align='center'>";
-for ($x = 0; $x <= $number_of_grp_pages; $x++)
+for ($x = 0; $x < $number_of_grp_pages; $x++)
 	$content .= "[ <a href='{$site->getURL()}settings/plugins/{$current_user->username}/cp_notifications?gs={$x}'>{$x}</a> ]";
 $content  .= "</div>";
 
@@ -371,7 +370,7 @@ $current_user = elgg_get_logged_in_user_entity();
 
 // build a base query (so we can use it to count all the results, and display all the items)
 // cyu - patched issue with personal subscription that contains group content
-$content_arr = array('blog','bookmark','event_calendar','file','hjforumtopic','hjforum','photo','album','task','page','page_top','task_top','idea','thewire');
+$content_arr = array('blog','bookmark','event_calendar','file','photo','album','task','page','page_top','task_top','idea','thewire');
 $query_base = " FROM {$dbprefix}entity_subtypes es, {$dbprefix}entities e, {$dbprefix}entity_relationships r, {$dbprefix}objects_entity o WHERE e.container_guid  NOT IN (SELECT guid FROM {$dbprefix}groups_entity) AND e.subtype = es.id AND o.description <> '' AND o.guid = e.guid AND o.guid = r.guid_two AND r.guid_one = {$current_user->getGUID()} AND r.relationship = 'cp_subscribed_to_email' AND ( es.subtype = 'poll' ";
 foreach ($content_arr as $content_element)
 	$query_base .= " OR es.subtype = '{$content_element}'";
@@ -388,12 +387,12 @@ $query_select = "SELECT e.guid, e.subtype as entity_subtype, es.subtype, o.title
 $query_select .= " ORDER BY e.subtype ASC LIMIT {$personal_limit} OFFSET {$personal_offset}";
 $subbed_contents = get_data($query_select);
 
-//$content .= "{$query_select}";
 
 // query that will count all the subscribed items
 $query_count = "SELECT count(e.guid) AS num_content {$query_base}";
 $np = get_data($query_count);
 $number_of_personal_pages = (int)$np[0]->num_content / (int)$personal_limit;
+
 
 
 // display the list of items that are subscribed
@@ -439,8 +438,8 @@ $cp_count = 0;
 
 
 <?php
-
-
+ 
+ 
 // update only the div when you want to view the next page
 $content .= "<section id='notificationstable' cellspacing='0' cellpadding='4' width='100%' class='clearfix'>";
 $content .= '<div class="col-sm-12 group-notification-options"><h3 class="well">'.elgg_echo('cp_notify:personal_setting').'</h3></div>';
@@ -482,7 +481,7 @@ foreach ($subbed_contents as $subbed_content) {
 		$url = $entity_content->getURL();
 
 	$content .= "<div class='clearfix col-sm-12 list-break'>";
-	$content .= "<div class='togglefield col-sm-10'> <a href='{$url}'><strong>{$content_title}</strong></a> - {$content_desc}  <sup>{$subbed_content->subtype}</sup> </div>";
+	$content .= "<div class='togglefield col-sm-10'> <a href='{$url}'><strong>{$content_title}</strong></a> - {$content_desc}  <br/><sup>{$subbed_content->subtype}</sup> </div>";
 	$content .= "<div class=' col-sm-2'> {$cpn_unsub_btn} </div>";
 	$content .= "</div>";
 
@@ -520,4 +519,3 @@ function get_forum_in_group($entity_guid_static, $entity_guid) {
 		return get_forum_in_group($entity_guid_static, $entity->getContainerGUID());
 	}
 }
-

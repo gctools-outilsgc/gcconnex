@@ -1,0 +1,103 @@
+<html>
+<head>
+	<title>Translation test page</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+	<style>
+		div{
+			border-style: solid;
+			border-width: 5px;
+		}
+		.success{border-color: green;}
+		.error{border-color: red;}
+		.complete{border-color: yellow;}
+		.error_request{border-width: 1px;}
+		.error_status{border-width: 1px;}
+		.error_type{border-width: 1px;}
+	</style>
+</head>
+<body>
+	<!-- divs to show results from call -->
+	<div id='success1' class='success'>
+		success: 
+	</div>
+	<div class='error'>
+		error details
+		<div id='error_request1' class='error_request'>request:</div>
+		<div id='error_status1' class='error_status'>status:</div>
+		<div id='error_type1' class='error_type'>error:</div>
+	</div>
+	<div id='complete1' class='complete'>
+		complete: 
+	</div>
+
+
+	<script>
+		$(document).ready(function () {
+			/*var sendData = {
+        		"direction": 'e2f',
+        		"text": 'hello',
+        	};*/
+        		
+        	$.ajax({
+        		type: 'GET',
+               	url: 'http://gcconnex.tools.gc.ca/mod/machine_translation/lib/translate.json',
+               	contentType: "application/json; charset=utf-8",
+               	dataType: 'json',
+               	success: function (feed){
+               		$('#success1').append(JSON.stringify(feed.data));
+               	}, 
+               	error: function(request, status, error){
+               		$('#error_request1').append(JSON.stringify(request));
+               		$('#error_status1').append(status);
+               		$('#error_type1').append(error);
+               	},
+               	complete: function(feed){
+               		$('#complete1').append(JSON.stringify(feed));
+               	}
+       		});
+		});
+	</script>
+	<br />
+	<br />
+	<div id='success2' class='success'>
+		success: 
+	</div>
+	<div class='error'>
+		error details
+		<div id='error_request2' class='error_request'>request:</div>
+		<div id='error_status2' class='error_status'>status:</div>
+		<div id='error_type2' class='error_type'>error:</div>
+	</div>
+	<div id='complete2' class='complete'>
+		complete: 
+	</div>
+
+
+	<script>
+		$(document).ready(function () {
+			/*var sendData = {
+        		"direction": 'e2f',
+        		"text": 'hello',
+        	};*/
+        		
+        	$.ajax({
+        		type: 'GET',
+               	url: 'http://gcconnex.tools.gc.ca/mod/machine_translation/lib/translate2.json',
+               	contentType: "application/json; charset=utf-8",
+               	dataType: 'json',
+               	success: function (feed){
+               		$('#success2').append(JSON.stringify(feed.data));
+               	}, 
+               	error: function(request, status, error){
+               		$('#error_request2').append(JSON.stringify(request));
+               		$('#error_status2').append(status);
+               		$('#error_type2').append(error);
+               	},
+               	complete: function(feed){
+               		$('#complete2').append(JSON.stringify(feed));
+               	}
+       		});
+		});
+	</script>
+</body>
+</html>

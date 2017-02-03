@@ -6,7 +6,7 @@
  * @uses $vars['content']  The module content
  * @uses $vars['all_link'] A link to list content
  * @uses $vars['add_link'] A link to create content
- 
+
  2015/10/13-
  Placed widgets into tab content divs instead of li's
  moved view all link to footer of module
@@ -31,14 +31,14 @@ if(isset($vars['clicked_related'])){ //is the person the group owner, can they a
    ));
         $content = '<div class="text-right">' . $addButton . '</div>' . $vars['content'];
     }
-    
+
 }
 
 if (/*$group->canWriteToContainer() && */isset($vars['add_link'])) { //we check if the user can add content in grp_ajax_content.php
-    
+
     /*
     Original code
-    
+
 	$vars['content'] .= "<span class='elgg-widget-more'>{$vars['add_link']}</span>";
     */
     if($vars['add_link'] == 'discuss'){
@@ -63,6 +63,21 @@ if (/*$group->canWriteToContainer() && */isset($vars['add_link'])) { //we check 
             'style' => 'color:white',
             'href' => $buttonHREF[1],
         ));
+
+        //for files we want an additional add folder button
+        if($vars['subtype'] && $vars['subtype'] == 'file' && elgg_get_plugin_setting("user_folder_structure", "file_tools") == 'yes'){
+          //create new foldr button
+            $new_folder = elgg_view('output/url', array(
+              'name' => 'new_folder',
+              'text' => elgg_echo("file_tools:new:title"),
+              'href' => "#",
+              "id" => "file_tools_list_new_folder_toggle",
+              'class' => 'btn btn-default mrgn-rght-sm mrgn-bttm-sm',
+            ));
+
+            //add new folder to add button
+            $addButton = $new_folder.$addButton;
+        }
 
         $content = '<div class="text-right">' . $addButton . '</div>' . $vars['content'];
     }
@@ -94,4 +109,3 @@ echo elgg_view_module('GPmod', '', $content, array(
     'id' => $modID,
     'footer' => $footer,
 ));
-

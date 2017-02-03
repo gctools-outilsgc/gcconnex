@@ -15,7 +15,7 @@ function requirements_check2()
         $query = "CREATE TABLE IF NOT EXISTS contact_list (id INT NOT NULL AUTO_INCREMENT, PRIMARY KEY (id), english char(255), francais char(255))";
         
     $result = mysqli_query($connection,$query);
-      baseText_check2();
+      //baseText_check2(); stop populate the database
     
     }
       

@@ -55,7 +55,7 @@ return array(
     "wet:messagedd:no_results"=>"Vous êtes tous à jour!",
 
     'wet:login:departments'=>"<span class=\"login-big-num\">174</span> Organizations de toutes les regions du Canada",
-    'wet:login:discussions'=>"<span class=\"login-big-num\">%s</span> Discussions qui se passe à l’instant",
+    'wet:login:discussions'=>"<span class=\"login-big-num\">%s</span> Discussions qui se passent à l’instant",
     'img:desc:fr' => 'Description de l\'image en français',
   'img:desc:en' => 'Description de l\'image en anglais',
   'description:ideas:en' => 'Description de l\'idée en anglais',

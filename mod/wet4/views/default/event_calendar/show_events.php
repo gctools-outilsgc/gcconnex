@@ -61,12 +61,23 @@ if ($listing_format == 'paged' || $listing_format == 'full') {
 	);
 	$event_list = elgg_view_entity_list($vars['events'], $options);
 
-	$group = elgg_get_page_owner_entity();
-	$new_link = elgg_view('output/url', array(
-        'href' => "event_calendar/add",
+	$owner = elgg_get_page_owner_entity();
+	if(elgg_instanceof($owner, 'group')) { // add guid to the link if it a group
+
+		$new_link = elgg_view('output/url', array(
+        'href' => "event_calendar/add/$owner->guid",
         'text' => elgg_echo('event_calendar:new'),
         'class' => 'btn btn-primary pull-right',
-    ));
+    	));
+	}else{
+		$new_link = elgg_view('output/url', array(
+        'href' => "event_calendar/add",
+        'text' => elgg_echo('event_calendar:new1'),
+        'class' => 'btn btn-primary pull-right',
+    	));
+	}
+	
+
 		 echo'<h3>'.elgg_echo('event_calendar:comming').'</h3>';
 		 echo $new_link;
 	if (empty($event_list)) {

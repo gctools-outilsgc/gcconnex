@@ -55,7 +55,7 @@ return array(
    'msg:from' => 'De',
    'msg:subject' => 'Sujet',
    'msg:recieved' => 'Reçu',
-   'msg:sent' => 'Envoyer',
+   'msg:sent' => 'Envoyés',
 
 
      /*
@@ -311,9 +311,9 @@ return array(
  * Access
  */
 
-	'PRIVATE' => "Privé",
-	'LOGGED_IN' => "Utilisateurs connectés",
-'PUBLIC' => "Public",
+	'PRIVATE' => "Seulement moi",
+	'LOGGED_IN' => "Usagers connectés à GCconnex seulement",
+'PUBLIC' => "Tous les fonctionnaires",
 'LOGGED_OUT' => "Utilisateurs hors connexion",
 	'access:friends:label' => "Amis",
 	'access' => "Accès",
@@ -1387,6 +1387,9 @@ return array(
 'event_calendar:meeting' => 'Réunion en ligne et téléconférence',
 'event_calendar:info' => 'Information(s) supplémentaire(s)',
 'river:create:object:event_calendar' => "%s a ajouté l'événement' %s",
+'event_calendar_contact' => "Vous n'êtes pas la personne contact?",
+"event_calendar:email" => "Adresse courriel",
+"event_calendar:phone" => "Numéro de téléphone",
 
 /*Change access*/
 
@@ -1445,6 +1448,8 @@ return array(
 'indicator:click:fr' => 'français',
 'box:indicator:en' => 'This content is also available in ',
 'indicator:click:en' => 'english.',
+'indicator:summary' => '(EN/FR)',
+'indicator:summary:title' => 'This content is also available in English',
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */
