@@ -1,4 +1,4 @@
-﻿/**
+/**
 * @file
 * Written by Albert Skibinski <albert@merge.nl>
 * http://www.merge.nl
@@ -331,7 +331,7 @@ CKEDITOR_mentions.prototype.break_on = function (charcode) {
              * OR detect another @ while we are already observing
              * OR the length is longer than 11
              */
-            if ((mentions.char_input.length > 0 && typed_char === '@') || mentions.char_input.length > 11) {
+            if ((mentions.char_input.length > 0 && typed_char === '@') || mentions.char_input.length > 15) {
               mentions.stop_observing();
             } else {
               mentions.char_input.push(typed_char);
