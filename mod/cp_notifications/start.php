@@ -18,6 +18,8 @@ function cp_notifications_init() {
 	elgg_register_action('cp_notify/retrieve_pt_users', elgg_get_plugins_path().'cp_notifications/actions/ajax_usersettings/retrieve_pt_users.php'); // ajaxy
 	elgg_register_action('cp_notify/retrieve_messages', elgg_get_plugins_path().'cp_notifications/actions/ajax_usersettings/retrieve_messages.php'); // ajaxy
 
+	elgg_register_action('cp_notify/retrieve_user_info', elgg_get_plugins_path().'cp_notifications/actions/ajax_settings/retrieve_user_info.php'); // ajaxy
+
 	elgg_register_plugin_hook_handler('email', 'system', 'cpn_email_handler_hook');	// intercepts and blocks emails and notifications to be sent out
 	elgg_register_event_handler('create','object','cp_create_notification');		// send notifications when the action is sent out
 	elgg_register_event_handler('create','annotation','cp_create_annotation_notification');	// likes notification
