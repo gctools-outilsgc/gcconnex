@@ -981,7 +981,7 @@ function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $para
 
 	foreach ($current_digest as $user) {
 		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->getOwnerGUID(),'cp_notifications'),'set_digest_yes') == 0 && 
-			strcmp(elgg_get_plugin_user_setting('cpn_set_digest_freq_daily', $user->getOwnerGUID(),'cp_notifications'),'set_digest_daily') == 0 ) {
+			strcmp(elgg_get_plugin_user_setting('cpn_set_digest_freq_weekly', $user->getOwnerGUID(),'cp_notifications'),'set_digest_weekly') == 0 ) {
 
 			$to = $user->getOwnerEntity();
 			$newsletter_id = $to->cpn_newsletter;
@@ -1000,6 +1000,8 @@ function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $para
 				phpmailer_send($to->email,$to->name,$subject,$template, NULL, true );
 			else
 				mail($to->email,$subject,$template,cp_get_headers());
+
+			echo "<p>Digest sent to user email: {$user->email}</p>";
 
 			// clean up the newsletter
 			$newsletter_object->description = json_encode(array());
@@ -1032,17 +1034,26 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 
 	foreach ($current_digest as $user) {
 		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->getOwnerGUID(),'cp_notifications'),'set_digest_yes') == 0 && 
-	strcmp(elgg_get_plugin_user_setting('cpn_set_digest_freq_weekly', $user->getOwnerGUID(),'cp_notifications'),'set_digest_weekly') == 0 ) {
+			strcmp(elgg_get_plugin_user_setting('cpn_set_digest_freq_daily', $user->getOwnerGUID(),'cp_notifications'),'set_digest_daily') == 0 ) {
 			$to = $user->getOwnerEntity();
 			$newsletter_id = $to->cpn_newsletter;
 			$newsletter_object = get_entity($newsletter_id);
 			$newsletter_content = json_decode($newsletter_object->description, true);
+
+			$subject = "Your Weekly Newsletter";
 
 			if (sizeof($newsletter_content) > 0 || !empty($newsletter_content))
 				$template = elgg_view('cp_notifications/newsletter_template', array('to' => $to, 'newsletter_content' => json_decode(get_entity($newsletter_id)->description,true)));
 			else
 				$template = elgg_view('cp_notifications/newsletter_template_empty', array('to' => $to));
 
+			if (elgg_is_active_plugin('phpmailer'))
+				phpmailer_send($to->email,$to->name,$subject,$template, NULL, true );
+			else
+				mail($to->email,$subject,$template,cp_get_headers());
+
+			echo "<p>Digest sent to user email: {$user->email}</p>";
+			
 			// clean up the newsletter
 			$newsletter_object->description = json_encode(array());
 			$newsletter_object->save();
