@@ -981,11 +981,16 @@ function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $para
 	);
 	$current_digest = elgg_get_entities($options);
 
-	foreach ($current_digest as $user) {
+	foreach ($current_digest as $digest) {
+
+		$newsletter_title = explode('|', $digest->title);
+		$email = $newsletter_title[1];
+		$to = get_user_by_email($email);
+
 		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->getOwnerGUID(),'cp_notifications'),'set_digest_yes') == 0 && 
 			strcmp(elgg_get_plugin_user_setting('cpn_set_digest_freq_weekly', $user->getOwnerGUID(),'cp_notifications'),'set_digest_weekly') == 0 ) {
 
-			$to = $user->getOwnerEntity();
+			//$to = $user->getOwnerEntity();
 			$newsletter_id = $to->cpn_newsletter;
 			$newsletter_object = get_entity($newsletter_id);
 			$newsletter_content = json_decode($newsletter_object->description, true);
@@ -1003,7 +1008,7 @@ function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $para
 			else
 				mail($to->email,$subject,$template,cp_get_headers());
 
-			echo "<p>Digest sent to user email: {$user->email}</p>";
+			echo "<p>Digest sent to user email: {$to->email}</p>";
 
 			// clean up the newsletter
 			$newsletter_object->description = json_encode(array());
@@ -1013,7 +1018,7 @@ function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $para
 }
 
 
-
+  
 /**
  * setup crontab either on a daily or weekly basis
  * get users who are subscribed to digest
@@ -1034,10 +1039,17 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 	);
 	$current_digest = elgg_get_entities($options);
 
-	foreach ($current_digest as $user) {
+	foreach ($current_digest as $digest) {
+		
+		$newsletter_title = explode('|', $digest->title);
+		$email = $newsletter_title[1];
+		$to = get_user_by_email($email);
+
+		// what if there is more than one user associated with this email
+
 		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->getOwnerGUID(),'cp_notifications'),'set_digest_yes') == 0 && 
 			strcmp(elgg_get_plugin_user_setting('cpn_set_digest_freq_daily', $user->getOwnerGUID(),'cp_notifications'),'set_digest_daily') == 0 ) {
-			$to = $user->getOwnerEntity();
+			//$to = $user->getOwnerEntity();
 			$newsletter_id = $to->cpn_newsletter;
 			$newsletter_object = get_entity($newsletter_id);
 			$newsletter_content = json_decode($newsletter_object->description, true);
@@ -1050,11 +1062,12 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 				$template = elgg_view('cp_notifications/newsletter_template_empty', array('to' => $to));
 
 			if (elgg_is_active_plugin('phpmailer'))
-				phpmailer_send($to->email,$to->name,$subject,$template, NULL, true );
+				phpmailer_send($to->email, $to->name, $subject, $template, NULL, true );
 			else
-				mail($to->email,$subject,$template,cp_get_headers());
+				mail($to->email, $subject, $template, cp_get_headers());
 
-			echo "<p>Digest sent to user email: {$user->email}</p>";
+
+			echo "<p>Digest sent to user email: {$to->email}</p>";
 			
 			// clean up the newsletter
 			$newsletter_object->description = json_encode(array());
