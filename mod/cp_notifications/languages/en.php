@@ -7,7 +7,10 @@ $notifications_settings = "{$site->getURL()}settings/plugin/{$to->username}/cp_n
 
 $english = array(
 
+	'cp_newsletter:subject:daily' => 'Your Daily Newsletter',
 
+	'cp_newsletter:subject:weekly' => 'Your Weekly Newsletter',
+	
 	'groupforumtopic' => "Discussions",
 	'hjforumtopic' => "Forum Topic",
 	'hjforumpost' => "Topic reply",

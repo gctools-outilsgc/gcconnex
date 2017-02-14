@@ -23,6 +23,7 @@ if (!isset($vars['entity']->cp_notifications_sidebar))
 if (!isset($vars['entity']->cp_enable_minor_edit))
 	$vars['entity']->cp_enable_minor_edit = 'no';
 
+
 $body = "<br/>";
 
 $body .= '<fieldset class="elgg-fieldset" id="elgg-settings-advanced-system" style="padding-top:5px; padding-bottom:10px;">';

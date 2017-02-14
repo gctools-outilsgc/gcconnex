@@ -37,7 +37,7 @@ if (strcmp($enable_digest, 'yes') == 0) {
 
 		/// select daily or weekly notification
 		$chk_occur_daily = create_checkboxes($user->getGUID(), 'cpn_set_digest_freq_daily', array('set_digest_daily', 'set_digest_no'), elgg_echo('label:daily'), 'digest_frequency');
-		$chk_occur_weekly = create_checkboxes($user->getGUID(), 'cpn_set_digest_freq_weekly', array('set_digest_daily', 'set_digest_no'), elgg_echo('label:weekly'), 'digest_frequency');
+		$chk_occur_weekly = create_checkboxes($user->getGUID(), 'cpn_set_digest_freq_weekly', array('set_digest_weekly', 'set_digest_no'), elgg_echo('label:weekly'), 'digest_frequency');
 		$more_info = "<span class='pull-right'><a title='How frequent the digest should be sent out' target='_blank' href='#'><i class='fa fa-info-circle icon-sel'><span class='wb-invisible'> </span></i></a></span>";
 
 		$content .= '<div class="col-sm-8">'.elgg_echo('cp_notify:set_frequency')."{$more_info}</div>";
@@ -169,13 +169,9 @@ foreach ($groups as $group) {
 	$chk_email_grp = create_checkboxes($user->getGUID(), "cpn_email_{$group->getGUID()}", array("sub_{$group->getGUID()}", "set_notify_off"), elgg_echo('label:email'));
 	$chk_site_grp = create_checkboxes($user->getGUID(), "cpn_site_mail_{$group->getGUID()}", array("'sub_site_{$group->getGUID()}", "set_notify_off"), elgg_echo('label:site'));
 
-
-    //$content .= "		<div class='list-break clearfix'>";
 	$content .= "			<div class='namefield col-sm-8'> <strong> <a href='{$group->getURL()}' id='group-{$group->guid}'>{$group->name}</a> </strong> </div>";
     $content .= "			<div class='col-sm-2'>{$chk_email_grp}</div>";
     $content .= "			<div class='col-sm-2'>{$chk_site_grp}</div>";
-	//$content .= "		</div>";
-
 
 	// GROUP CONTENT SUBSCRIPTIONS
     $content .= '		<div class="accordion col-sm-12 clearfix mrgn-bttm-sm">';
@@ -190,6 +186,18 @@ $content .= '	</div>';
 $content .= "</section>";
 
 
+
+
+
+// accordian for each type of content
+$content .= "<section>";
+
+	$content .= '			<details>';
+	$content .= "				<summary>click here</summary>";
+    $content .= "				<div></div>";
+    $content .= '			</details>';	
+
+$content .= "</section>";
 
 /// PERSONAL SUBSCRIPTIONS (DISPLAYS ALL ITEMS THAT DO NOT BELONG IN GROUP NOTIFICATIONS)
 

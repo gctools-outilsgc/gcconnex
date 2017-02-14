@@ -972,6 +972,7 @@ function isJson($string) {
  * @param - 	$params
  */
 function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $params) {
+	elgg_load_library('elgg:gc_notification:functions');
 
 	echo "Starting up the cron job for the Notifications (cp_notifications plugin) <br/>";
 
@@ -985,12 +986,16 @@ function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $para
 
 		$newsletter_title = explode('|', $digest->title);
 		$email = $newsletter_title[1];
-		$to = get_user_by_email($email);
+		$query = "SELECT guid, email, name, username FROM elggusers_entity WHERE email = '{$email}'";
+		$user = get_data($query);
+		$to = $user[0];
 
 		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->getOwnerGUID(),'cp_notifications'),'set_digest_yes') == 0 && 
 			strcmp(elgg_get_plugin_user_setting('cpn_set_digest_freq_weekly', $user->getOwnerGUID(),'cp_notifications'),'set_digest_weekly') == 0 ) {
 
-			//$to = $user->getOwnerEntity();
+
+			$to = get_entity($to->guid);
+
 			$newsletter_id = $to->cpn_newsletter;
 			$newsletter_object = get_entity($newsletter_id);
 			$newsletter_content = json_decode($newsletter_object->description, true);
@@ -998,15 +1003,15 @@ function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $para
 			$subject = "Your Weekly Newsletter";
 
 			if (sizeof($newsletter_content) > 0 || !empty($newsletter_content))
-				$template = elgg_view('cp_notifications/newsletter_template', array('to' => $to, 'newsletter_content' => json_decode(get_entity($newsletter_id)->description,true)));
+				$template = elgg_view('cp_notifications/newsletter_template', array('to' => $to, 'newsletter_content' => $newsletter_content));
 			else
 				$template = elgg_view('cp_notifications/newsletter_template_empty', array('to' => $to));
 
 
 			if (elgg_is_active_plugin('phpmailer'))
-				phpmailer_send($to->email,$to->name,$subject,$template, NULL, true );
+				phpmailer_send($to->email, $to->name, $subject,$template, NULL, true );
 			else
-				mail($to->email,$subject,$template,cp_get_headers());
+				mail($to->email, $subject, $template, cp_get_headers());
 
 			echo "<p>Digest sent to user email: {$to->email}</p>";
 
@@ -1030,6 +1035,7 @@ function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $para
  * @param - 	$params
  */
 function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $params) {
+	elgg_load_library('elgg:gc_notification:functions');
 
 	echo "Starting up the cron job for the Notifications (cp_notifications plugin) <br/>";
 
@@ -1039,27 +1045,32 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 	);
 	$current_digest = elgg_get_entities($options);
 
+
 	foreach ($current_digest as $digest) {
-		
+
 		$newsletter_title = explode('|', $digest->title);
 		$email = $newsletter_title[1];
-		$to = get_user_by_email($email);
+		$query = "SELECT guid, email, name, username FROM elggusers_entity WHERE email = '{$email}'";
+		$user = get_data($query);
+		$to = $user[0];
 
 		// what if there is more than one user associated with this email
+		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->guid,'cp_notifications'),'set_digest_yes') == 0 && 
+			strcmp(elgg_get_plugin_user_setting('cpn_set_digest_freq_daily', $user->guid,'cp_notifications'),'set_digest_daily') == 0 ) {
 
-		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->getOwnerGUID(),'cp_notifications'),'set_digest_yes') == 0 && 
-			strcmp(elgg_get_plugin_user_setting('cpn_set_digest_freq_daily', $user->getOwnerGUID(),'cp_notifications'),'set_digest_daily') == 0 ) {
-			//$to = $user->getOwnerEntity();
+			$to = get_entity($to->guid);
+
 			$newsletter_id = $to->cpn_newsletter;
 			$newsletter_object = get_entity($newsletter_id);
 			$newsletter_content = json_decode($newsletter_object->description, true);
 
-			$subject = "Your Weekly Newsletter";
+			$subject = "Your Daily Newsletter";
 
 			if (sizeof($newsletter_content) > 0 || !empty($newsletter_content))
-				$template = elgg_view('cp_notifications/newsletter_template', array('to' => $to, 'newsletter_content' => json_decode(get_entity($newsletter_id)->description,true)));
+				$template = elgg_view('cp_notifications/newsletter_template', array('to' => $to, 'newsletter_content' => $newsletter_content));
 			else
 				$template = elgg_view('cp_notifications/newsletter_template_empty', array('to' => $to));
+
 
 			if (elgg_is_active_plugin('phpmailer'))
 				phpmailer_send($to->email, $to->name, $subject, $template, NULL, true );

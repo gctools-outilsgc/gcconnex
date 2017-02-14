@@ -9,10 +9,6 @@ $title = elgg_echo('Troubleshoot Tool');
 
 ?>
 
-<input type='text' name='username'></input>
-
-
-
 <script>
 	
 $(document).keypress(function(e) {
@@ -23,8 +19,9 @@ $(document).keypress(function(e) {
     		data: {
     			username: user_name
     		},
-    		success: function () {
-    			alert("SUCCESS!");
+    		success: function (user_information) {
+    			//alert("SUCCESS!");
+                $('.user_info').html(user_information.output.userinfo);
     		},
     		error: function () {
     			alert("ERROR!");
@@ -38,19 +35,13 @@ $(document).keypress(function(e) {
 <?php
 
 
-
-
-
 $body = "<br/>";
 $body .= '<fieldset class="elgg-fieldset" id="elgg-settings-advanced-system" style="padding-top:5px; padding-bottom:10px;">';
 $body .= "<legend>Display User's personal notifications</legend>";
 $body .= "<div style='padding-top:10px; padding-bottom:10px;'>";
 			
-$body .= "sup";
-	
-
-
-
+$body .= "<input type='text' name='username'></input>";
+$body .= "<div class='user_info'></div>";
 
 $body .= "</div>";
 $body .= '</fieldset>';
