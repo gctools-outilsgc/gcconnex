@@ -1521,6 +1521,9 @@ Please do not reply to this email.",
 	'event_calendar_contact' => "You are not the contact person?",
 	"event_calendar:email" => "E-mail address",
 	"event_calendar:phone" => "Phone number",
+    'event_calendar:lang:french'=>"French",
+    'event_calendar:lang:english'=>"English",
+    'event_calendar:lang:bilingual'=>"Bilingual",
 
     /*new for tour*/
 'gcTour:next' => 'Next ',

@@ -1390,6 +1390,9 @@ return array(
 'event_calendar_contact' => "Vous n'êtes pas la personne contact?",
 "event_calendar:email" => "Adresse courriel",
 "event_calendar:phone" => "Numéro de téléphone",
+'event_calendar:lang:french'=>"Français",
+'event_calendar:lang:english'=>"Anglais",
+'event_calendar:lang:bilingual'=>"Bilingue",
 
 /*Change access*/
 
