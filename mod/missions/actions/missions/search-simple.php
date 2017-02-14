@@ -6,6 +6,7 @@
  * License: Creative Commons Attribution 3.0 Unported License
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
+
 elgg_make_sticky_form('searchsimplefill');
 
 $err = '';
@@ -21,24 +22,18 @@ if ($err != '') {
     forward(REFERER);
 } else {
     $array = array();
-    
+
     switch($_SESSION['mission_search_switch']) {
         case 'candidate':
             // A multipurpose query which will be applied to skills, experience and education objects.
             if (!empty($search_form['simple'])) {
             	$string_to_array = explode(',', str_replace(', ', ',', $search_form['simple']));
-            	
-            	foreach($string_to_array as $key => $value) {
-            		$array[$key] = array(
-		                    'name' => 'title',
-		                    'operand' => 'LIKE',
-		                    'value' => '%' . $value . '%',
-	                		'case_sensitive' => false
-	                );
+
+            	foreach($string_to_array as $value) {
+            		$array[] = preg_replace('/[^\p{L}\p{N}_]+/u', ' ', $value);
             	}
             }
-            
-            $returned = mm_simple_search_database_for_candidates($array, 'OR', elgg_get_plugin_setting('search_limit', 'missions'));
+            $returned = mm_simple_search_database_for_candidates($array, max($_SESSION['candidate_entities_per_page'], 10));
             break;
         default:
             // A broad range search which determines whether the input text exists within the title, type or description of the mission.
@@ -59,7 +54,7 @@ if ($err != '') {
                     'operand' => '=',
                     'value' => $search_form['simple']
                 );
-                
+
                 $translation_key = mm_get_translation_key_from_setting_string($search_form['simple'], elgg_get_plugin_setting('opportunity_type_string', 'missions'));
                 if($translation_key) {
 	                $array[3] = array(
@@ -69,17 +64,20 @@ if ($err != '') {
 	                );
                 }
             }
-            
+
             // This function executes the query and returns true or false depending on how succesful that query was.
             $returned = mm_search_database_for_missions($array, 'OR', elgg_get_plugin_setting('search_limit', 'missions'));
     }
-    
+
     if (! $returned) {
         forward(REFERER);
     } else {
+        // reset the offset on new search
+        $ref = $_SERVER['HTTP_REFERER'];
+        $ref = preg_replace('/([?&])offset=[^&]+(&|$)/','$1', $ref);
         elgg_clear_sticky_form('searchsimplefill');
         if($search_form['hidden_return']) {
-        	forward(REFERER);
+        	forward($ref);
         }
         forward(elgg_get_site_url() . 'missions/display-search-set');
     }
