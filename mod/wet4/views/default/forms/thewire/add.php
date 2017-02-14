@@ -90,7 +90,7 @@ $post_input = elgg_view("input/plaintext", array(
     "id"=>"wire-body",
 	"class" => "mtm thewire-textarea form-control",
 	"rows" => $num_lines,
-	"value" => $post_value,
+	"value" => htmlspecialchars_decode($post_value, ENT_QUOTES),
 	"data-max-length" => $char_limit,
 ));
 
