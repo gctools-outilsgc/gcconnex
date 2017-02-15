@@ -6,7 +6,6 @@ elgg_register_event_handler('init','system','cp_notifications_init');
 
 
 function cp_notifications_init() {
-elgg_require_js("cp_notifications/popup");
 
 elgg_register_css('cp_notifications-css','mod/cp_notifications/css/notifications-table.css');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'notify_entity_menu_setup', 400);
@@ -22,7 +21,6 @@ elgg_register_css('cp_notifications-css','mod/cp_notifications/css/notifications
 
 	elgg_register_plugin_hook_handler('email', 'system', 'cpn_email_handler_hook');	// intercepts and blocks emails and notifications to be sent out
 	elgg_register_event_handler('create','object','cp_create_notification');		// send notifications when the action is sent out
-	elgg_register_event_handler('create','object','test_notif125');		// send notifications when the action is sent out
 	elgg_register_event_handler('create','annotation','cp_create_annotation_notification');	// likes notification
 
 	elgg_register_event_handler('create', 'membership_request', 'cp_membership_request');
@@ -980,13 +978,7 @@ if (elgg_instanceof($container, 'group')) {
 	add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_email', $container_entity->getGUID());
 			add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_site_mail', $container_entity->getGUID());
 }
-/*			
 
-$group = $container_entity->getContainerEntity;
-if (elgg_instanceof($container, 'group')) {
-       
-add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_email', elgg_instanceof($group, 'group'));
-			add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_site_mail', $container_entity->getGUID());*/
 			
 
 			break;

@@ -168,10 +168,16 @@ $('.elgg-system-messages').html("<?php echo elgg_echo('groups:joined'); ?>");
                         ));
 
                         echo $buttons;
-                        echo '<button class="mrgn-tp-sm btn btn-primary" onclick = "myFunction()">'.elgg_echo("groups:join").'</button>';
-                        echo '<button class="mrgn-tp-sm btn btn-primary" onclick = "myFunction2()">'.elgg_echo("groups:joinrequest").'</button>';
-	 					//echo elgg_view('input/button', array('value' => elgg_echo('groups:join'), 'class' => 'mrgn-tp-sm btn btn-primary', 'onclick' => 'myFunction()'));
 
+     if ($container->isPublicMembership() || $container->canEdit()) {
+                        echo '<button class="mrgn-tp-sm btn btn-primary" onclick = "myFunction()">'.elgg_echo("groups:join").'</button>';
+			
+		} else {
+			// request membership
+                        echo '<button class="mrgn-tp-sm btn btn-primary" onclick = "myFunction2()">'.elgg_echo("groups:joinrequest").'</button>';
+			
+		}
+	 				
 	echo elgg_view('input/submit', array('value' => elgg_echo('comment'), 'id' => 'comment_test','class' => 'mrgn-tp-sm btn', ));
                          
       	?>
