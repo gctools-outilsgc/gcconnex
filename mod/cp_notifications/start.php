@@ -2,7 +2,11 @@
 
 elgg_register_event_handler('init','system','cp_notifications_init');
 
+
+
+
 function cp_notifications_init() {
+elgg_require_js("cp_notifications/popup");
 
 elgg_register_css('cp_notifications-css','mod/cp_notifications/css/notifications-table.css');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'notify_entity_menu_setup', 400);
@@ -18,6 +22,7 @@ elgg_register_css('cp_notifications-css','mod/cp_notifications/css/notifications
 
 	elgg_register_plugin_hook_handler('email', 'system', 'cpn_email_handler_hook');	// intercepts and blocks emails and notifications to be sent out
 	elgg_register_event_handler('create','object','cp_create_notification');		// send notifications when the action is sent out
+	elgg_register_event_handler('create','object','test_notif125');		// send notifications when the action is sent out
 	elgg_register_event_handler('create','annotation','cp_create_annotation_notification');	// likes notification
 
 	elgg_register_event_handler('create', 'membership_request', 'cp_membership_request');
@@ -37,6 +42,8 @@ elgg_register_css('cp_notifications-css','mod/cp_notifications/css/notifications
 	elgg_register_action('useradd',"$actions_base/useradd.php",'admin');	// cyu - actions/useradd.php (core file)
 
     elgg_extend_view("js/elgg", "js/notification");							// add some notification js 
+    elgg_extend_view("js/elgg", "js/popup");
+     elgg_extend_view("js/elgg","js/wet4/language_ajax");							// add some notification js 
 
     // remove core notification settings portion of the main settings page
     elgg_unextend_view('forms/account/settings', 'core/settings/account/notifications');
@@ -865,7 +872,6 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 
 
-
 /*
  * cp_create_notification
  * 
@@ -946,11 +952,47 @@ function cp_create_notification($event, $type, $object) {
 				'cp_comment' => $object,
 				'cp_msg_type' => 'cp_reply_type',
 			);
+/* && ($container_entity->isMember($user_comment))*/
+$group = elgg_get_page_owner_entity();
+$entity = get_entity($container_entity->getGUID());
+//error_log( print_r($entity, TRUE));
+$subtype = $entity->getType();
 
-			// the user creating the content is automatically subscribed to it
+$container = $entity->getContainerEntity();
+
+
+//$subtype = $entity->getSubtype();
+
+if (elgg_instanceof($container, 'group')) {
+	 error_log('Yes! guid in group');	
+	 if($container->isMember($user_comment)){
+
+	 error_log('member of the group'.$user_comment);	
+
 			add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_email', $container_entity->getGUID());
 			add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_site_mail', $container_entity->getGUID());
+	}else{
+	 error_log('no member of the group');	
+
+	}		
+ }else{
+	error_log('No non no, dont work or not in a group'.$container_entity->getContainerEntity);
+	add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_email', $container_entity->getGUID());
+			add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_site_mail', $container_entity->getGUID());
+}
+/*			
+
+$group = $container_entity->getContainerEntity;
+if (elgg_instanceof($container, 'group')) {
+       
+add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_email', elgg_instanceof($group, 'group'));
+			add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_site_mail', $container_entity->getGUID());*/
+			
+
 			break;
+
+
+
 
 		// micromissions / opportunities
 		case 'mission':
@@ -1199,7 +1241,7 @@ function cp_send_new_password_request($user_guid) {
  *
  */
 
-function cp_get_headers($event) { 	// $event will be null if nothing is passed into it (no default value set)
+function cp_get_headers(/*$event*/) { 	// $event will be null if nothing is passed into it (no default value set)
 
 	$email_address = elgg_get_plugin_setting('cp_notifications_email_addr','cp_notifications');
 	if (!$email_address || $email_address === '')
@@ -1457,4 +1499,29 @@ function userOptedIn( $user_obj, $mission_type ){
 		'missions:job_share'	=>	'opt_in_jobshare',
 		);
 	return $user_obj->$typemap[$mission_type] == 'gcconnex_profile:opt:yes' || $user_obj->$typemap2[$mission_type] == 'gcconnex_profile:opt:yes';
+}
+
+
+function dialog_box_no_member(){
+	 error_log('in dialog box function');
+	 system_message('We did it!');	
+	 
+
+echo"<script language=\"javascript\">";
+echo"alert('bonjour2')";
+echo"</script>";
+
+/*    $url = 'views/default/js/popup.js';
+    forward($url);*/
+
+$options = array(
+	'id' => 'widgets-add-panel',
+	'text' => elgg_echo('widgets:add'),
+	'class' => 'elgg-button elgg-button-action elgg-lightbox',
+	'data-colorbox-opts' => '{"inline":true, "href":"#widget_manager_widgets_select", "innerWidth": 600, "maxHeight": "80%"}'
+);
+
+
+ $url = elgg_view('output/url', $options);
+//forward($url);
 }

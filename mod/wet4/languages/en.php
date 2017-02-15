@@ -1608,7 +1608,11 @@ Please do not reply to this email.",
 'indicator:summary' => '(FR/EN)',
 'indicator:summary:title' => 'Ce contenu est aussi disponible en français',
 
+/*Modal from comment(notifaction)*/
 
+'comment_notif_title' => "You are not member of the group!",
+'comment_notif_description' => "You are not member of this group. You can join the group now!",
+'not_now' => 'Not now',
 
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)

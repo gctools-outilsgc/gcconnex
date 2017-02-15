@@ -18,8 +18,14 @@ if (!elgg_is_logged_in()) {
 	return;
 }
 
+
 $entity = elgg_extract('entity', $vars);
 /* @var ElggEntity $entity */
+
+echo $entity->guid;
+$container = $entity->getContainerEntity();
+$userentity = elgg_get_logged_in_user_entity();
+echo elgg_instanceof($container, 'group');
 
 $comment = elgg_extract('comment', $vars);
 /* @var ElggComment $comment */
@@ -47,7 +53,15 @@ if ($comment && $comment->canEdit()) {
 	$comment_text = $comment->description;
 } else {
 	$comment_label  = elgg_echo("generic_comments:add");
-	$submit_input = elgg_view('input/submit', array('value' => elgg_echo('comment'), 'class' => 'mrgn-tp-sm btn btn-primary',));
+
+	if ((elgg_instanceof($container, 'group')) && (!$container->isMember($userentity))){
+	
+	$submit_input = elgg_view('input/button', array('value' => elgg_echo('comment'), 'class' => 'mrgn-tp-sm btn btn-primary', 'data-target' => "#notif_comment", 'data-toggle' => "modal"));
+
+	}else{
+	$submit_input = elgg_view('input/submit', array('value' => elgg_echo('comment'), 'class' => 'mrgn-tp-sm btn btn-primary', ));
+
+	}
 }
 
 $cancel_button = '';
@@ -93,3 +107,76 @@ if ($inline) {
 </div>
 FORM;
 }
+
+?>
+
+<script>
+function myFunction() {
+document.getElementById('test').click();
+  //alert("I am an alert box!");
+
+  //document.getElementById('comment_test').click();
+//$('.elgg-system-messages').html("<?php echo elgg_echo('groups:joined'); ?>");
+    $("#comment_test").click();
+   //elgg.system_message(elgg.echo('success'));
+
+}
+
+function myFunction2() {
+document.getElementById('test').click();
+   //alert("I am an alert box!");
+
+  document.getElementById('comment_test').click();
+$('.elgg-system-messages').html("<?php echo elgg_echo('groups:joined'); ?>");
+    //$("#comment_test").click();
+   //elgg.system_message(elgg.echo('success'));
+
+}
+</script>
+
+<!-- Modal -->
+<div class="modal fade" id="notif_comment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content modal-content1">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+     <?php   
+     echo '<h4 class="modal-title" id="myModalLabel">'.elgg_echo("comment_notif_title").'</h4>
+      </div>
+      <div class="modal-body">
+     '.elgg_echo("comment_notif_description").'
+      </div>
+      <div class="modal-footer">';
+
+      	
+
+         $url = elgg_get_site_url() . "action/groups/join?group_guid={$container->getGUID()}";
+              $url = elgg_add_action_tokens_to_url($url);
+                  elgg_register_menu_item('modal_notif', array(
+                        'name' => 'test',
+                        'id' => 'test',
+                        'href' => $url,
+                        'text' => elgg_echo('not_now'),
+                        'link_class' => 'elgg-button elgg-button-action',
+                    ));
+
+   $buttons = elgg_view_menu('modal_notif', array(
+                            'sort_by' => 'priority',
+                            'class' => 'hidden',
+                        	'id' => 'test',
+                            'item_class' => 'btn btn-primary',
+                        ));
+
+                        echo $buttons;
+                        echo '<button class="mrgn-tp-sm btn btn-primary" onclick = "myFunction()">'.elgg_echo("groups:join").'</button>';
+                        echo '<button class="mrgn-tp-sm btn btn-primary" onclick = "myFunction2()">'.elgg_echo("groups:joinrequest").'</button>';
+	 					//echo elgg_view('input/button', array('value' => elgg_echo('groups:join'), 'class' => 'mrgn-tp-sm btn btn-primary', 'onclick' => 'myFunction()'));
+
+	echo elgg_view('input/submit', array('value' => elgg_echo('comment'), 'id' => 'comment_test','class' => 'mrgn-tp-sm btn', ));
+                         
+      	?>
+      
+      </div>
+    </div>
+  </div>
+</div>

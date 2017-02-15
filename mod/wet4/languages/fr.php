@@ -1453,6 +1453,14 @@ return array(
 'indicator:click:en' => 'english.',
 'indicator:summary' => '(EN/FR)',
 'indicator:summary:title' => 'This content is also available in English',
+
+/*Modal from comment(notifaction)*/
+
+'comment_notif_title' => "Vous n'êtes pas membre du groupe!",
+'comment_notif_description' => "Vous n'êtes pas membre du groupe. Vous pouvez joindre le groupe maintenant!",
+'not_now' => 'Pas maintenant',
+
+
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */
