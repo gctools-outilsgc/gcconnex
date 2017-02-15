@@ -47,12 +47,10 @@ $count = '0';
 
 
 /////
-$entities = $user->getFriends(array('limit' => 0));
+$entities = $user->getFriends(array('limit' => 150, 'count' => true));
 
-if($entities){
+$count = $entities;
 
-    $count = count($entities);
-}
 ///
 
 
