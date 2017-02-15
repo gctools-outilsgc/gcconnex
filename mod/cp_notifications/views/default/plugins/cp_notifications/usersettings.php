@@ -175,8 +175,8 @@ foreach ($groups as $group) {
 
 	// GROUP CONTENT SUBSCRIPTIONS
     $content .= '		<div class="accordion col-sm-12 clearfix mrgn-bttm-sm">';
-	$content .= '			<details class="acc-group" onClick="return create_group_content_item('.$group->getGUID().', '.$user->getGUID().')">';
-	$content .= "				<summary id='group_item_container-{$group->getGUID()}' class='wb-toggle tgl-tab'>".elgg_echo('cp_notify:groupContent').'</summary>';
+	$content .= '			<details onClick="return create_group_content_item('.$group->getGUID().', '.$user->getGUID().')">';
+	$content .= "				<summary >".elgg_echo('cp_notify:groupContent').'</summary>';
     $content .= "				<div id='group-content-{$group->getGUID()}' class='tgl-panel clearfix'></div>";
     $content .= '			</details>';	
     $content .= '		</div>';			
