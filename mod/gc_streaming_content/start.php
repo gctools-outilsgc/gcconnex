@@ -23,7 +23,65 @@ function gc_streaming_init(){
     
 }
 
-function streaming_wire_page(){
-    @include (dirname ( __FILE__ ) . "/pages/thewire/everyone.php");
-    return true;
+function streaming_wire_page($page){
+    
+$base_dir = elgg_get_plugins_path() . 'thewire/pages/thewire';
+    //The wire/all page is overwritten in this theme 
+$stream_dir = elgg_get_plugins_path() .'gc_streaming_content/pages/thewire';
+	if (!isset($page[0])) {
+		$page = array('all');
+	}
+
+	switch ($page[0]) {
+		case "all":
+			include "$stream_dir/everyone.php";
+			break;
+
+		case "friends":
+			include "$base_dir/friends.php";
+			break;
+
+		case "owner":
+			include "$base_dir/owner.php";
+			break;
+
+		case "view":
+			if (isset($page[1])) {
+				set_input('guid', $page[1]);
+			}
+			include "$base_dir/view.php";
+			break;
+
+		case "thread":
+			if (isset($page[1])) {
+				set_input('thread_id', $page[1]);
+			}
+			include "$base_dir/thread.php";
+			break;
+
+		case "reply":
+			if (isset($page[1])) {
+				set_input('guid', $page[1]);
+			}
+			include "$base_dir/reply.php";
+			break;
+
+		case "tag":
+			if (isset($page[1])) {
+				set_input('tag', $page[1]);
+			}
+			include "$base_dir/tag.php";
+			break;
+
+		case "previous":
+			if (isset($page[1])) {
+				set_input('guid', $page[1]);
+			}
+			include "$base_dir/previous.php";
+			break;
+
+		default:
+			return false;
+	}
+	return true;
 }

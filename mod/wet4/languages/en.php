@@ -314,7 +314,7 @@ return array(
 	'LOGGED_IN' => "Users logged in to GCconnex only",
 	'PUBLIC' => "All public servants",
 	'LOGGED_OUT' => "Logged out users",
-	'access:friends:label' => "Friends",
+	'access:friends:label' => "My Colleagues on GCconnex only",
 	'access' => "Access",
 	'access:overridenotice' => "Note: Due to group policy, this content will be accessible only by group members.",
 	'access:limited:label' => "Limited",

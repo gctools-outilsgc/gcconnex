@@ -118,13 +118,13 @@ if( $description_json->en && $description_json->fr ){
 	if (get_current_language() == 'fr'){
 
 		?>			
-		<span id="indicator_language_en" onclick="change_en('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $description_json->en;?></span><span id="fr_content" class="testClass hidden" ><?php echo $description_json->fr;?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
-			
+
+		<span id="indicator_language_en" onclick="change_en('.content_desc');"><span id="en_content" class="testClass hidden" ><?php echo clean_up_content($description_json->en);?></span><span id="fr_content" class="testClass hidden" ><?php echo clean_up_content($description_json->fr);?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
 		<?php
 	}else{
-		?>		
-			
-		<span id="indicator_language_fr" onclick="change_fr('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $description_json->en;?></span><span id="fr_content" class="testClass hidden" ><?php echo $description_json->fr;?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
+				
+		?>			
+		<span id="indicator_language_fr" onclick="change_fr('.content_desc');"><span id="en_content" class="testClass hidden" ><?php echo clean_up_content($description_json->en);?></span><span id="fr_content" class="testClass hidden" ><?php echo clean_up_content($description_json->fr);?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
 		<?php	
 	}
 	echo'</div>';
@@ -144,7 +144,7 @@ if( $description_json->en && $description_json->fr ){
 
 	$body = elgg_view('output/longtext', array(
 		'value' => $description,
-		'class' => 'clearfix mrgn-lft-sm mrgn-rght-sm mrgn-tp-md',
+		'class' => 'clearfix mrgn-lft-sm mrgn-rght-sm mrgn-tp-md content_desc',
 	));
     
     $repliesFoot = '<div class="col-xs-12 text-right">' . $replies_link . '</div>';

@@ -35,7 +35,7 @@ $french = array(
 'geds:invite:friend' => 'Ajouter un collègue',
 'geds:org:orgTitle' => 'Organisations',
 'geds:org:orgPeopleTitle' => '<h3> Personnes</h3> ',
-'geds:noMatch' => "<p>Vos informations n’ont pas été synchronisées avec GCannuaire. Assurez-vous que votre adresse courriel est mise à jour dans votre compte de GCconnex. Pour mettre vos informations à jour dans le GCannuaire, consulter les instructions disponibles sur le <a href='http://gcdirectory-gcannuaire.ssc-spc.gc.ca/fr/SAGE20/?pgid=005#q1'>site Web de GCannuaire</a>.</p>",
+'geds:noMatch' => "<p>Vos informations n’ont pas été synchronisées avec GCannuaire. Assurez-vous que votre adresse courriel est mise à jour dans votre compte de GCconnex. Pour mettre vos informations à jour dans GCannuaire, consulter les instructions disponibles sur le <a href='http://gcdirectory-gcannuaire.ssc-spc.gc.ca/fr/SAGE20/?pgid=005#q1'>site Web de GCannuaire</a>.</p>",
 'geds:floor' => "Étage",
 'geds:org:delete' => "Supprimer",
 'geds:org:edit' => "Modifier",
@@ -78,7 +78,7 @@ Facultatif: Au sujet de moi, éducation, expérience de travail, et vos compéte
 	</p>
 	<p>
 	Important!<br />
-Si vous ne souhaitez pas que votre avatar GCconnex et vos compétences apparaissent sur GCannuaire, cliquez « Annuler ».
+Si vous ne souhaitez pas que votre avatar GCconnex apparaisse sur GCannuaire, cliquez « Annuler ».
 	</p>
 	<p>
 	Pour les informations facultatives, vous pouvez choisir qui les voit en modifiant vos paramètres de confidentialité dans GCconnex (c'est-à-dire «Modifier», «Qui peut voir ma/mon [description, éducation, etc.]».)
