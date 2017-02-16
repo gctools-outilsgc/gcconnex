@@ -14,7 +14,7 @@ $title = elgg_echo('Troubleshoot Tool');
 $(document).keypress(function(e) {
     if(e.which == 13) {
         // get the username from text box
-        user_name = 'christine.yu';
+        user_name = $('#textbox_username').val();
     	elgg.action('cp_notify/retrieve_user_info', {
     		data: {
     			username: user_name
@@ -40,7 +40,7 @@ $body .= '<fieldset class="elgg-fieldset" id="elgg-settings-advanced-system" sty
 $body .= "<legend>Display User's personal notifications</legend>";
 $body .= "<div style='padding-top:10px; padding-bottom:10px;'>";
 			
-$body .= "<input type='text' name='username'></input>";
+$body .= "<input type='text' id='textbox_username' name='username'></input>";
 $body .= "<div class='user_info'></div>";
 
 $body .= "</div>";

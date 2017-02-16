@@ -11,7 +11,7 @@ $username = get_input('username');
 $user = get_user_by_username($username);
 
 $query = "
-SELECT r.guid_one, r.guid_two, o.title, es.subtype, e.container_guid, e.guid
+SELECT DISTINCT r.guid_one, r.guid_two, o.title, es.subtype, e.container_guid, e.guid, o.description
 FROM elggentity_relationships r
 	LEFT JOIN elggentities e ON e.guid = r.guid_two
 	LEFT JOIN elggobjects_entity o ON o.guid = r.guid_two
@@ -21,11 +21,21 @@ WHERE r.guid_one = {$user->guid} AND r.relationship like 'cp_subscribed_%'
 
 $informations = get_data($query);
 
-$user_info = "";
+$user_info = "<p>";
+$user_info .= "<p><label>List all subscriptions for : {$username}</label></p>";
 foreach ($informations as $information) {
-	error_log("???????? ".$information->title);
-	$user_info .= "{$information->subtype} // {$information->title} // {$information->guid} <br/>";
+
+	$content_title = $information->title;
+	if ($information->subtype === 'thewire') {
+		$content_title = "wire post: {$information->description}";
+	}
+
+	$site = elgg_get_site_entity();
+	$url = elgg_add_action_tokens_to_url("/action/cp_notify/unsubscribe?guid={$information->guid}");
+	$content_url = $site->getURL()."{$information->subtype}/view/{$information->guid}/{$information->title}";
+	$user_info .= "<div id='item_{$information->guid}'> <strong> {$information->guid} </strong> {$information->subtype} - <a href='{$content_url}'> {$content_title} </a> <strong><a href='#' id='unsubscribe_link' style='color:red'> unsubscribe </a></strong> </div>";
 }
+$user_info .= "</p>";
 
 
 echo json_encode([

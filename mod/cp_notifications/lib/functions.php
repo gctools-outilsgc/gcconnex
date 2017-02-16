@@ -201,15 +201,15 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 		case 'mission':
 
 
-		if (isJson($entity->job_title))
-		{
-			// cyu - TODO: use the gc_explode_translation() (NEW)
-			$content_title = json_decode($entity->job_title, true);
+			if (isJson($entity->job_title))
+			{
+				// cyu - TODO: use the gc_explode_translation() (NEW)
+				$content_title = json_decode($entity->job_title, true);
 
-		} else {
-			// cyu - TODO: use the gc_explode_translation() (OLD)
-			$content_title = array('en' => $entity->job_title, 'fr' => $entity->job_title2);
-		}
+			} else {
+				// cyu - TODO: use the gc_explode_translation() (OLD)
+				$content_title = array('en' => $entity->job_title, 'fr' => $entity->job_title2);
+			}
 
 
 			$content_array = array(
