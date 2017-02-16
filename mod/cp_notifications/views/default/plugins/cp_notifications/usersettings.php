@@ -226,7 +226,7 @@ $content .= "</section>";
 // 			es.subtype = 'thewire' )
 // ";
 
-$entity_list = array('blog', 'poll', 'bookmark', 'event_calendar', 'file', 'photo', 'task', 'page', 'thewire');
+$entity_list = array('blog', 'poll', 'bookmarks', 'event_calendar', 'file', 'photo', 'task', /*'page',*/ 'thewire'/*, 'task'*/);
 $personal_subscriptions = get_data($query);
 
 
@@ -235,10 +235,13 @@ $content .= "<section id='notificationstable' cellspacing='0' cellpadding='4' wi
 $content .= '<div class="col-sm-12 group-notification-options"><h3 class="well">'.elgg_echo('cp_notify:personal_setting').'</h3>';
 
 foreach ($entity_list as $subtype) {
+
+	$display_subtype = cp_translate_subtype($subtype);
+
 	$content .= '<div class="accordion col-sm-12 clearfix mrgn-bttm-sm">';
 	//$content .= '<details onClick="return create_content_item('.$user->getGUID().',"'.$subtype.'")">';
-	$content .= '<details onClick="return create_content_item('.$user->getGUID().') ">';
-	$content .= "<summary> {$subtype} </summary>";
+	$content .= '<details onClick="return create_content_item('.$user->getGUID().',\''.$subtype.'\') ">';
+	$content .= "<summary> {$display_subtype} </summary>";
 	$content .= "<div id='personal-content-{$subtype}' class='tgl-panel clearfix'></div>";
 	$content .= '</details>';
 	$content .= "</div>";
@@ -354,6 +357,10 @@ echo elgg_view_module('info', $title, $content);
 					// create a list of all the content in the group that you are subscribed to
 					for (var item in content_arr.output.text3)
 						$('#group-content-' + grp_guid).append("<div class='clearfix col-sm-12 list-break'>" + content_arr.output.text3[item] + "<div>");
+
+					if (content_arr.output.text3.length == 0)
+						$('#group-content-' + grp_guid).append("<div class='clearfix col-sm-12 list-break'>" + "Nothing to show" + "<div>");
+
 					// jquery - when the unsubscribe button is clicked, remove entry from the subscribed to content
 				    $('.unsub-button').on('click', function() {
 				        var this_thing = $(this);
@@ -379,9 +386,8 @@ echo elgg_view_module('info', $title, $content);
 
 
 	/// Uses Ajax to dynamically create and display the list of personal content that the user has subscribed to 
-	function create_content_item(usr_guid) {
-	alert("suppppppppp");
-	entity_subtype = 'blog';
+	function create_content_item(usr_guid, obj_subtype) {
+		entity_subtype = obj_subtype;
 		// loading indicator
 		$('#personal-content-' + entity_subtype).append("<div class='clearfix col-sm-12 list-break'>LOADING...<div>");
 
@@ -398,6 +404,9 @@ echo elgg_view_module('info', $title, $content);
 				for (var item in sample_text.output.text3)
 					$('#personal-content-' + entity_subtype).append("<div class='clearfix col-sm-12 list-break'>" + sample_text.output.text3[item] + "<div>");
 				
+				if (sample_text.output.text3.length == 0)
+					$('#personal-content-' + entity_subtype).append("<div class='clearfix col-sm-12 list-break'>" + "Nothing to show" + "<div>");
+
 				// jquery - when the unsubscribe button is clicked, remove entry from the subscribed to content
 			    $('.unsub-button').on('click', function() {
 			        var this_thing = $(this);
