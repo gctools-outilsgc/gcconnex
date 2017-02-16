@@ -8,8 +8,7 @@ if (!elgg_is_xhr()) {
 $user_guid = (int)get_input('user_guid');
 $subtype = strtolower((string)get_input('subtype'));
 elgg_load_library('elgg:gc_notification:functions');
-
-$dbprefix = "elgg";
+$dbprefix = elgg_get_config('dbprefix');
 
 
 $query_subtype = " AND es.subtype = '{$subtype}'";
@@ -36,12 +35,8 @@ WHERE e.container_guid
 
 $query = ($query_subtypes) ? $query . $query_subtypes : $query . $query_subtype;
 
-
 $personal_contents = get_data($query);
-
 $subscribed_objects = array();
-
-
 
 foreach ($personal_contents as $personal_content) {
 	$content_url = create_url($personal_content->subtype, $personal_content->guid, $personal_content->title);

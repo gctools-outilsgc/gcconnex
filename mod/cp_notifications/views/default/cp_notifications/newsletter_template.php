@@ -1,9 +1,10 @@
 <?php
 
-
+elgg_load_library('elgg:gc_notification:functions');
 $site = elgg_get_site_entity();
 $to = $vars['to'];
 $contents = $vars['newsletter_content'];
+
 
 $language_preference_en = elgg_get_plugin_user_setting('cpn_set_digest_lang_en', $to->guid, 'cp_notifications');
 if (strcmp($language_preference_en,'set_digest_en') == 0) 
@@ -19,7 +20,7 @@ if (strcmp($language_preference_fr,'set_digest_fr') == 0)
 
 <html>
   <body style='font-family: sans-serif; color: #055959'>
-    <h2><?php echo elgg_echo('newsletter:title_heading',array('Something something hello'),$language_preference); ?></h2>
+    <h2><?php echo elgg_echo('newsletter:title_heading',array('There has been some new contents and updates'),$language_preference); ?></h2>
     <sub><center><?php echo elgg_echo('cp_notification:email_header',array(),$language_preference); ?></center></sub>
     <div width='100%' bgcolor='#fcfcfc'>
 
@@ -108,9 +109,20 @@ if (strcmp($language_preference_fr,'set_digest_fr') == 0)
    */
   function render_contents($content_array, $heading='') {
 
+    $language_preference_en = elgg_get_plugin_user_setting('cpn_set_digest_lang_en', $to->guid, 'cp_notifications');
+if (strcmp($language_preference_en,'set_digest_en') == 0) 
+  $language_preference = 'en';
+
+$language_preference_fr = elgg_get_plugin_user_setting('cpn_set_digest_lang_fr', $to->guid, 'cp_notifications');
+if (strcmp($language_preference_fr,'set_digest_fr') == 0)
+  $language_preference = 'fr';
+
+
     $author = "{$content_array['content_author_name']} has posted a ";
     // this is specifically for the Micro Missions portion due to extra field
     $subtype = elgg_echo($content_array['subtype']);
+    $subtype = cp_translate_subtype($subtype);
+
     if ($content_array['deadline']) {
       $closing_date = 'Closing Date : '.$content_array['deadline'];
       $subtype = elgg_echo($subtype);
@@ -132,7 +144,7 @@ if (strcmp($language_preference_fr,'set_digest_fr') == 0)
       
     } else {
       // limit 35 characters
-      $rendered_content = "{$author}{$subtype} <a href='{$content_array['content_url']}'>{$content_array['content_title']}</a> {$closing_date}";
+      $rendered_content = "{$author}{$subtype} <a href='{$content_array['content_url']}'>{$content_array['content_title'][$language_preference]}</a> {$closing_date}";
     }
     return $rendered_content;
   }
@@ -198,7 +210,5 @@ if (strcmp($language_preference_fr,'set_digest_fr') == 0)
 
     return $proper_heading;
   }
-
-
 
 

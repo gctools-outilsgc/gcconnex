@@ -432,7 +432,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$template = elgg_view('cp_notifications/email_template', $message);
 				
 		$newsletter_appropriate = array('cp_wire_share','cp_messageboard','cp_wire_mention','cp_hjpost','cp_hjtopic', 'cp_friend_request');
-		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0 && in_array($cp_msg_type,$newsletter_appropriate)) {
+		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0 && in_array($cp_msg_type, $newsletter_appropriate)) {
 			$result = create_digest($author, $cp_msg_type, $content_entity, $to_recipient, $content_url);
 		} else 
 			$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template ) : mail($to_recipient->email, $subject, $template, cp_get_headers($event));
@@ -740,9 +740,8 @@ function cp_create_notification($event, $type, $object) {
 	elgg_load_library('elgg:gc_notification:functions');
 	$subject = "";
 	$no_notification = false;
+
 	$do_not_subscribe_list = array('poll_choice','blog_revision','widget','folder','c_photo', 'cp_digest','MySkill', 'education', 'experience', 'poll_choice3');
-
-
 	if (in_array($object->getSubtype(), $do_not_subscribe_list))
 		return true;
 
@@ -841,6 +840,7 @@ function cp_create_notification($event, $type, $object) {
 				if (strcmp($object->status,'draft') == 0 || strcmp($object->status,'unsaved_draft') == 0) return;
 			
 			// the user creating the content is automatically subscribed to it (with exception that is not a widget, forum, etc..)
+			$cp_whitelist = array('blog', 'bookmarks', 'poll', 'groupforumtopic', 'image', 'idea', 'page', 'page_top', 'hjforumtopic', 'thewire', 'task_top', 'mission');
 			if (in_array($object->getSubtype(),$cp_whitelist)) {
 				add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_email', $object->getGUID());
 				add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_site_mail', $object->getGUID());
@@ -957,10 +957,10 @@ function get_subscribers($dbprefix, $user_guid, $entity_guid = '') {
  * @param string 	$string
  * @return boolean 	true/false
  */
-function isJson($string) {
-	json_decode($string);
-	return (json_last_error() == JSON_ERROR_NONE);
-}
+// function isJson($string) {
+// 	json_decode($string);
+// 	return (json_last_error() == JSON_ERROR_NONE);
+// }
 
 
 /**

@@ -136,6 +136,11 @@ function cp_scan_mentions($cp_object) {
 }
 
 
+function isJson($string) {
+  json_decode($string);
+  return (json_last_error() == JSON_ERROR_NONE);
+}
+
 
 /**
  * assembles the digest then encodes the array into JSON to be saved
@@ -148,17 +153,33 @@ function cp_scan_mentions($cp_object) {
  * @return Success 		true/false
  */
 function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '') {
-	elgg_load_library('elgg:gc_notification:functions'); 
+	elgg_load_library('GCconnex_display_in_language');
+	elgg_load_library('elgg:gc_notification:functions'); // cyu - lol i dont have this in my instance of gcconnex :|
 	$digest = get_entity($send_to->cpn_newsletter);
 	$digest_collection = json_decode($digest->description,true);
 
-	if (!$entity->title) $entity = get_entity($entity->guid); 
+	$content_title = $entity->title; // default value for title
+
+	if (!$entity->title) $entity = get_entity($entity->guid);
 
 	if ($entity instanceof ElggObject) {
 		$content_url = (!$entity_url) ? $entity->getURL() : $entity_url;
 
+		if (isJson($entity->title))
+		{
+			// cyu - TODO: use the gc_explode_translation() (NEW)
+			$content_title = json_decode($entity->title, true);
+
+		} else {
+			// cyu - TODO: use the gc_explode_translation() (OLD)
+			if ($entity->title2)
+				$content_title = array('en' => $entity->title, 'fr' => $entity->title2);
+			else
+				$content_title = array('en' => $entity->title, 'fr' => $entity->title);
+		}
+
 		$content_array = array(
-			'content_title' => $entity->title,
+			'content_title' => $content_title,
 			'content_url' => $content_url,
 			'subtype' => $entity->getSubtype(),
 			'content_author_name' => $invoked_by->name,
@@ -166,6 +187,7 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 		);
 
 	} else {
+
 		$content_array = array(
 			'content_title' => 'colleague requests',
 			'content_url' => $entity,
@@ -177,8 +199,21 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 
 	switch ($subtype) {
 		case 'mission':
+
+
+		if (isJson($entity->job_title))
+		{
+			// cyu - TODO: use the gc_explode_translation() (NEW)
+			$content_title = json_decode($entity->job_title, true);
+
+		} else {
+			// cyu - TODO: use the gc_explode_translation() (OLD)
+			$content_title = array('en' => $entity->job_title, 'fr' => $entity->job_title2);
+		}
+
+
 			$content_array = array(
-				'content_title' => $entity->job_title,
+				'content_title' => $content_title,
 				'content_url' => $entity->getURL(),
 				'subtype' => $entity->job_type,
 				'deadline' => $entity->deadline
@@ -189,12 +224,11 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 
 		case 'comment':
 		case 'discussion_reply':
+
 			if ($entity->getContainerEntity() instanceof ElggGroup) 
 				$digest_collection['group']["<a href='{$entity->getContainerEntity()->getURL()}'>{$entity->getContainerEntity()->name}</a>"]['response'][$entity->guid] = json_encode($content_array);
 			else 
 				$digest_collection['personal']['response'][$entity->guid] = json_encode($content_array);
-			
-			
 			break;
 
 
@@ -211,6 +245,7 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 		case 'cp_hjtopic':
 		case 'cp_hjpost':
 		
+
 			$group_title = get_entity(get_forum_in_group($entity->guid, $entity->guid))->name;
 			$group_url = get_entity(get_forum_in_group($entity->guid, $entity->guid))->getURL();
 
