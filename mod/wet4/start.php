@@ -82,6 +82,9 @@ function wet4_theme_init() {
 
     elgg_register_page_handler('collections', 'wet4_collections_page_handler');
 
+		//register login as menu item into user menu
+		elgg_register_event_handler('pagesetup', 'system', 'login_as_add_user_menu_link');
+
     //datatables css file
 	elgg_extend_view('css/elgg', '//cdn.datatables.net/1.10.10/css/jquery.dataTables.css');
 
@@ -1598,4 +1601,18 @@ function embed_discussion_river($desc){
     }
     return $strAndPara;
 
+}
+
+
+/**
+ * Add a menu item to the topbar menu for logging out of an account
+ */
+function login_as_add_user_menu_link() {
+	$item = elgg_get_menu_item('topbar', 'login_as_return');
+
+	if(isset($item)){
+			$item->addLinkClass('no-style-link');
+			$item->addItemClass('login-as-out');
+		elgg_register_menu_item('user_menu', $item);
+	}
 }

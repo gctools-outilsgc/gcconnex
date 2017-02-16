@@ -89,6 +89,28 @@ max-height: 500px;
   min-height: 75px;
 }
 
+.no-style-link {
+  text-decoration: none;
+  color: #055959;
+}
+
+.no-style-link:hover {
+  text-decoration: none;
+  color: #047177;
+}
+
+.login-as-out {
+  border: 1px solid rgba(188, 192, 198, 0);
+  padding: 2px 10px;
+}
+
+.login-as-out:hover {
+  border-radius:4px;
+  background: #cfd1d5;
+  border: 1px solid #bbbfc5;
+  padding: 2px 10px;
+}
+
 .user-menu-message-dd:before{
   content: '';
   display: block;
