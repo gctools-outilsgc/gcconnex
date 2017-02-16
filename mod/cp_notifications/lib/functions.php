@@ -37,7 +37,7 @@ function create_checkboxes($user_id, $name, $values, $label, $id='') {
 		$user_option_en = elgg_get_plugin_user_setting('cpn_set_digest_lang_en', $user_id, 'cp_notifications');
 		$user_option_fr = elgg_get_plugin_user_setting('cpn_set_digest_lang_fr', $user_id, 'cp_notifications');
 
-		if (!$user_option_daily && !$user_option_weekly) $user_option = 'set_digest_en';
+		if (!$user_option_en && !$user_option_fr) $user_option = 'set_digest_en';
 	}
 
 	$is_checked = (strcmp($user_option, 'set_digest_no') == 0 || strcmp($user_option, 'set_notify_off') == 0 || !$user_option) ? false : true;
@@ -172,10 +172,11 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 
 		} else {
 			// cyu - TODO: use the gc_explode_translation() (OLD)
-			if ($entity->title2)
+			if ($entity->title2) 
 				$content_title = array('en' => $entity->title, 'fr' => $entity->title2);
-			else
+			else 
 				$content_title = array('en' => $entity->title, 'fr' => $entity->title);
+			
 		}
 
 		$content_array = array(

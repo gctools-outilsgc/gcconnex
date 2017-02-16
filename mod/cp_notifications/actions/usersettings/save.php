@@ -55,6 +55,7 @@ foreach ($params as $k => $v) {
 		}
 	}
 
+	error_log(">>>>>>>>>>>>>>>>>>>>>>>> key:{$k} : value:{$v}");
 	if (!$result) {
 		register_error(elgg_echo('plugins:usersettings:save:fail', array($plugin_name)));
 		forward(REFERER);
@@ -94,9 +95,12 @@ if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->guid,'cp_notifi
 	}
 
 } else {
+
 	$digest = get_entity($user->cpn_newsletter);
-	$digest->delete();
-	$user->deleteMetadata('cpn_newsletter');
+	if ($digest) {
+		$digest->delete();
+		$user->deleteMetadata('cpn_newsletter');
+	}
 }
 
 ($result) ? system_message('Settings have been saved succesfully') : register_error('Settings did not save successfully');

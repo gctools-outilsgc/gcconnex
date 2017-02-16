@@ -1057,7 +1057,7 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 		$to = $user[0];
 
 		// what if there is more than one user associated with this email
-		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->guid,'cp_notifications'),'set_digest_yes') == 0 && 
+		if ($user && strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->guid,'cp_notifications'),'set_digest_yes') == 0 && 
 			strcmp(elgg_get_plugin_user_setting('cpn_set_digest_freq_daily', $user->guid,'cp_notifications'),'set_digest_daily') == 0 ) {
 
 			$to = get_entity($to->guid);
@@ -1080,7 +1080,10 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 				mail($to->email, $subject, $template, cp_get_headers());
 
 
-			echo "<p>Digest sent to user email: {$to->email}</p>";
+			echo "<p>Digest sent to user email: {$to->email} ({$to->guid})</p>";
+
+			//echo "<br/><br/>";
+			//echo $template;
 			
 			// clean up the newsletter
 			$newsletter_object->description = json_encode(array());

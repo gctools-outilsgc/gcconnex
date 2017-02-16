@@ -30,10 +30,22 @@ $(document).keypress(function(e) {
     }
 });
 
+function onclick_link(guid) {
+    var this_thing = $(this);
+    elgg.action('cp_notify/unsubscribe', {
+        data: {
+            'guid' : guid,
+        },
+        success: function(data) {
+            $('#item_' + guid).fadeOut();
+        }
+    });
+}
+
 </script>
 
-<?php
 
+<?php
 
 $body = "<br/>";
 $body .= '<fieldset class="elgg-fieldset" id="elgg-settings-advanced-system" style="padding-top:5px; padding-bottom:10px;">';

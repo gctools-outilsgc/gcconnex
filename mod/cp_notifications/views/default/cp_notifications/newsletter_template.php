@@ -63,7 +63,7 @@ if (strcmp($language_preference_fr,'set_digest_fr') == 0)
               foreach ($group_activities as $activity_heading) {
                 $content_array = json_decode($activity_heading,true);
 
-                echo  "<ul style='list-style-type:none;'><li>".render_contents($content_array,$content_header)."</li></ul>";
+                echo  "<ul style='list-style-type:none;'><li>".render_contents($content_array,$content_header,$language_preference)."</li></ul>";
               }
 
               echo "</ul>";
@@ -71,7 +71,7 @@ if (strcmp($language_preference_fr,'set_digest_fr') == 0)
             } else {
               // unwrap and display the personal content
               $content_array = json_decode($content,true);
-              echo  "<ul style='list-style-type:none;'><li>".render_contents($content_array,$detailed_header)."</li></ul>";
+              echo  "<ul style='list-style-type:none;'><li>".render_contents($content_array,$detailed_header,$language_preference)."</li></ul>";
             }
           }
           echo "</p>";
@@ -107,16 +107,7 @@ if (strcmp($language_preference_fr,'set_digest_fr') == 0)
   /**
    * @param Array <string> $heading
    */
-  function render_contents($content_array, $heading='') {
-
-    $language_preference_en = elgg_get_plugin_user_setting('cpn_set_digest_lang_en', $to->guid, 'cp_notifications');
-if (strcmp($language_preference_en,'set_digest_en') == 0) 
-  $language_preference = 'en';
-
-$language_preference_fr = elgg_get_plugin_user_setting('cpn_set_digest_lang_fr', $to->guid, 'cp_notifications');
-if (strcmp($language_preference_fr,'set_digest_fr') == 0)
-  $language_preference = 'fr';
-
+  function render_contents($content_array, $heading='', $language_preference='en') {
 
     $author = "{$content_array['content_author_name']} has posted a ";
     // this is specifically for the Micro Missions portion due to extra field
@@ -144,7 +135,12 @@ if (strcmp($language_preference_fr,'set_digest_fr') == 0)
       
     } else {
       // limit 35 characters
-      $rendered_content = "{$author}{$subtype} <a href='{$content_array['content_url']}'>{$content_array['content_title'][$language_preference]}</a> {$closing_date}";
+      if (is_array($content_array['content_title']))
+        $content_title = $content_array['content_title'][$language_preference];
+      else
+        $content_title = $content_array['content_title'];
+
+      $rendered_content = "{$author}{$subtype} <a href='{$content_array['content_url']}'>{$content_title}</a> {$closing_date}";
     }
     return $rendered_content;
   }
