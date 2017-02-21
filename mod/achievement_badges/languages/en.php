@@ -121,7 +121,7 @@ return array(
     //Achieved
     'badge:bookmark:achieved:0' => '%s has not achieved the Bookmark Badge yet',
     'badge:bookmark:achieved:1' => '%s created over 5 bookmarks and reached level 1!',
-    'badge:bookmark:achieved:2' => '%s created over 15 bookmarks and reached level 2!',
+    'badge:bookmark:achieved:2' => '%s created over 10 bookmarks and reached level 2!',
     'badge:bookmark:achieved:3' => '%s created over 30 bookmarks and reached level 3!',
     'badge:bookmark:achieved:4' => '%s created over 45 bookmarks and reached level 4!',
     'badge:bookmark:achieved:5' => '%s created more than 75 bookmarks and completed all 5 levels! Congratulations! ',

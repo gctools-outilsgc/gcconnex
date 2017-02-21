@@ -40,6 +40,10 @@ $gsa_pagination = elgg_get_plugin_setting('gsa_pagination','gc_fedsearch_gsa');
         padding-right: 5px;
     }
 
+    .col-xs-2 {
+          width: 16.6666666667% !important;
+    }
+
   /****************************************/
 
   /******************** Widgets ********************/
