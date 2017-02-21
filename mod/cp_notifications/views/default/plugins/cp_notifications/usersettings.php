@@ -21,14 +21,79 @@ $current_user = elgg_get_logged_in_user_entity();
 /// DIGEST OPTION FOR USER NOTIFICATIONS
 $enable_digest = elgg_get_plugin_setting('cp_notifications_enable_bulk','cp_notifications');
 if (strcmp($enable_digest, 'yes') == 0) {
+
+
+?>
+<style>
 	
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 25px;
+  height: 11px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+
+/* The slider */
+.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	border: 1px solid #aaa;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+
+.slider:before {
+	left: -1px;
+	top : -1px;
+	position: absolute;
+	content: "";
+	height: 11px;
+	width: 11px;
+	background-color: white;
+	border: 1px solid #000;
+	border-radius: 4px;
+}
+
+
+
+input:checked + .slider {
+  background-color: #ccc;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(14px);
+}
+
+/* Rounded sliders */
+.slider.round {
+	border-radius: 4px;
+}
+
+</style>
+
+<?php
+
 	/// enable notifications digest
 	$chk_email = create_checkboxes($user->getGUID(), 'cpn_set_digest', array('set_digest_yes', 'set_digest_no'), elgg_echo('label:email'));
 	$content .= "<section id='notificationstable' cellspacing='0' cellpadding='4' width='100%' class='clearfix'>";
 	$content .= '<div class="col-sm-12 clearfix"> <h3 class="well">'.elgg_echo('cp_notify:NewsletterSettings').'</h3>'; 
 	$content .= '<div class="col-sm-8">'.elgg_echo('cp_notify:enable_digest').'</div>';
 	$content .= "<div class='col-sm-2'>{$chk_email}</div> <div class='col-sm-2'>     </div>";
-
+	//$content .= '<div class="col-sm-2"> <label class="switch"> <input type="checkbox"> <div class="slider round"></div> </label></div> </div>';
 	
 	if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->getOwnerGUID(),'cp_notifications'),'set_digest_yes') != 0)
 		$visibility = "hidden";

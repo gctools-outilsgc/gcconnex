@@ -5,7 +5,7 @@ elgg_register_event_handler('init','system','cp_notifications_init');
 function cp_notifications_init() {
 
 	elgg_register_library('elgg:gc_notification:functions', elgg_get_plugins_path() . 'cp_notifications/lib/functions.php');
-	
+
 	elgg_register_css('cp_notifications-css','mod/cp_notifications/css/notifications-table.css');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'notify_entity_menu_setup', 400);
 
