@@ -67,14 +67,10 @@ if (elgg_is_logged_in() && $ciw_showdashboard=="yes"){
 
 //EW - Department verification
 if(elgg_is_logged_in()){
-    //check if value is set
-    if(isset(elgg_get_logged_in_user_entity()->last_department_verif)){
-      //load int value
-      $timestamp = is_array(elgg_get_logged_in_user_entity()->last_department_verify) ? elgg_get_logged_in_user_entity()->last_department_verify[0] : elgg_get_logged_in_user_entity()->last_department_verify;
-    } else {
-      //if nothing is set have the timestamp be 0
-      $timestamp = 0;
-    }
+
+    //load int value
+    $timestamp = is_array(elgg_get_logged_in_user_entity()->last_department_verify) ? elgg_get_logged_in_user_entity()->last_department_verify[0] : elgg_get_logged_in_user_entity()->last_department_verify;
+
     if((time() - $timestamp) > 15552000)
     {
         //create hidden link
