@@ -323,7 +323,7 @@ function mm_analytics_add_reports_by_dates($start_date, $end_date, $separator, &
 						array(
 								'name' => 'completed',
 								'value' => 0,
-								'operand' => '>'
+								'operand' => '>='
 						)
 				);
 				$q_options['wheres'] = array(
