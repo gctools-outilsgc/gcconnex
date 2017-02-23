@@ -692,7 +692,7 @@ You can share your opportunity with any employee whether on this list or not. Em
         "missions:virtual_opportunity" => "Virtual opportunity",
         "missions:limited_by_department" => "Limited by department",
         "missions:separate_missions_by" => "Separate opportunities by",
-        "missions:state" => "Posted/Completed/Cancelled",
+        "missions:state" => "Transactions",
         "missions:posted" => "Posted",
         "missions:not_declared" => "Not declared",
         "missions:not_virtual_opportunity" => "Not a virtual opportunity",

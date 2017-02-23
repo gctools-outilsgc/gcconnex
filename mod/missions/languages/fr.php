@@ -681,7 +681,7 @@ Vous pouvez inviter n'importe quel employé à votre possibilité, qu'il figure 
 	"missions:virtual_opportunity" => "Possibilité virtuelle",
 	"missions:limited_by_department" => "Limité par département",
 	"missions:separate_missions_by" => "Possibilités séparées par",
-	"missions:state" => "Publié/Achevé/Annulé",
+	"missions:state" => "Transactions",
 	"missions:posted" => "Publié",
 	"missions:not_declared" => "Non déclaré",
 	"missions:not_virtual_opportunity" => "Pas une possibilité virtuelle",
