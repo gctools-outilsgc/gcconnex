@@ -1459,6 +1459,15 @@ return array(
 
 'indicator:summary:title' => 'This content is also available in English',
 
+/*Modal from comment(notifaction)*/
+
+'comment_notif_title' => "Vous n’êtes pas membre du groupe %s!",
+/*'comment_notif_description' => "<p>Vous n'êtes pas membre de ce groupe. Joignez-vous au groupe pour être informé lorsque du nouveau contenu est ajouté et pour suivre ce fil. Remarque: Vous pouvez ajuster vos préférences de notification dans vos paramètres de compte de GCconnex.</p>
+ 
+<p>Vous n’êtes pas encore prêt à joindre le groupe? Allez-y et affichez votre commentaire, mais n'oubliez pas de revenir vérifier ce fil pour voir les nouveaux commentaires affichés.</p> ",
+*/'not_now' => 'Pas maintenant',
+
+  
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */

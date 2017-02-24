@@ -1608,7 +1608,11 @@ Please do not reply to this email.",
 'indicator:summary' => '(FR/EN)',
 'indicator:summary:title' => 'Ce contenu est aussi disponible en français',
 
+/*Modal from comment(notifaction)*/
 
+'comment_notif_title' => "You are not a member of the group %s!",
+'comment_notif_description' => "<p>You are not a member of this group. Join the group to be notified when new content is added and to follow this thread. Note: You can adjust your notification preferences in your GCconnex account settings.</p><p>Don’t want to join the group yet? Go ahead and post your comment, but remember to check back to see any new comments posted in this thread. </p>",
+'not_now' => 'Not now',
 
 /*Rotate content*/
 'rotate:image' => 'Rotate image',
