@@ -106,27 +106,12 @@ FORM;
 
 ?>
 <script>
-function myFunction() {
-document.getElementById('test').click();
-  //alert("I am an alert box!");
+function join_comment() {
 
-  //document.getElementById('comment_test').click();
-//$('.elgg-system-messages').html("<?php echo elgg_echo('groups:joined'); ?>");
-    $("#comment_test").click();
-   //elgg.system_message(elgg.echo('success'));
-
+	document.getElementById('join').click();
+	$('.elgg-system-messages').html("<?php echo elgg_echo('groups:joined'); ?>");
 }
 
-function myFunction2() {
-document.getElementById('test').click();
-   //alert("I am an alert box!");
-
-  document.getElementById('comment_test').click();
-$('.elgg-system-messages').html("<?php echo elgg_echo('groups:joined'); ?>");
-    //$("#comment_test").click();
-   //elgg.system_message(elgg.echo('success'));
-
-}
 </script>
 
 <!-- Modal -->
@@ -148,28 +133,28 @@ $('.elgg-system-messages').html("<?php echo elgg_echo('groups:joined'); ?>");
          $url = elgg_get_site_url() . "action/groups/join?group_guid={$container->getGUID()}";
               $url = elgg_add_action_tokens_to_url($url);
                   elgg_register_menu_item('modal_notif', array(
-                        'name' => 'test',
-                        'id' => 'test',
+                        'name' => 'join',
+                        'id' => 'join',
                         'href' => $url,
-                        'text' => elgg_echo('not_now'),
+                        'text' => elgg_echo('join'),
                         'link_class' => 'elgg-button elgg-button-action',
                     ));
 
    $buttons = elgg_view_menu('modal_notif', array(
                             'sort_by' => 'priority',
                             'class' => 'hidden',
-                        	'id' => 'test',
+                        	'id' => 'join',
                             'item_class' => 'btn btn-primary',
                         ));
 
                         echo $buttons;
 
      if ($container->isPublicMembership() || $container->canEdit()) {
-                        echo '<button class="mrgn-tp-sm btn btn-primary" onclick = "myFunction()">'.elgg_echo("groups:join").'</button>';
+                        echo '<button class="mrgn-tp-sm btn btn-primary" onclick = "join_comment()">'.elgg_echo("groups:join").'</button>';
 			
 		} else {
 			// request membership
-                        echo '<button class="mrgn-tp-sm btn btn-primary" onclick = "myFunction2()">'.elgg_echo("groups:joinrequest").'</button>';
+                        echo '<button class="mrgn-tp-sm btn btn-primary" onclick = "join_comment()">'.elgg_echo("groups:joinrequest").'</button>';
 			
 		}
 	 				
