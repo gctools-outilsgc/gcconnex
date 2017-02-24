@@ -1451,7 +1451,12 @@ return array(
 'indicator:click:fr' => 'français',
 'box:indicator:en' => 'This content is also available in ',
 'indicator:click:en' => 'english.',
+
+/*Rotate content*/
+'rotate:image' => 'Tourner l\'image',
+
 'indicator:summary' => '(EN/FR)',
+
 'indicator:summary:title' => 'This content is also available in English',
 
 /*Modal from comment(notifaction)*/
@@ -1462,7 +1467,7 @@ return array(
 <p>Vous n’êtes pas encore prêt à joindre le groupe? Allez-y et affichez votre commentaire, mais n'oubliez pas de revenir vérifier ce fil pour voir les nouveaux commentaires affichés.</p> ",
 */'not_now' => 'Pas maintenant',
 
-
+  
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */

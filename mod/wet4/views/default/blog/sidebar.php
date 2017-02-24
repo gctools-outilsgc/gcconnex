@@ -10,8 +10,9 @@
  */
 
 // cyu - 01/04/2016: as per eric cantin's advice
-if ('gsa-crawler' != strtolower($_SERVER['HTTP_USER_AGENT'])) {
-
+if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gsa_agentstring,strtolower($_SERVER['HTTP_USER_AGENT'])) == 0) || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ) {
+	
+} else {
 	$week_ago = time() - (60 * 60 * 24 * 7);
 
     
