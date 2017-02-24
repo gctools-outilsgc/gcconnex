@@ -149,7 +149,8 @@ function join_comment() {
 
                         echo $buttons;
 
-     if ($container->isPublicMembership() || $container->canEdit()) {
+	if ( $container instanceof ElggGroup ){
+     		if ($container->isPublicMembership() || $container->canEdit()) {
                         echo '<button class="mrgn-tp-sm btn btn-primary" onclick = "join_comment()">'.elgg_echo("groups:join").'</button>';
 			
 		} else {
@@ -157,6 +158,7 @@ function join_comment() {
                         echo '<button class="mrgn-tp-sm btn btn-primary" onclick = "join_comment()">'.elgg_echo("groups:joinrequest").'</button>';
 			
 		}
+	}
 	 				
 	echo elgg_view('input/submit', array('value' => elgg_echo('comment'), 'id' => 'comment_test','class' => 'mrgn-tp-sm btn', ));
                          
