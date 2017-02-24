@@ -37,19 +37,32 @@ global $my_page_entity;
 
 // github-685 gcconnex titles in gsa search result
 if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gsa_agentstring,strtolower($_SERVER['HTTP_USER_AGENT'])) == 0) || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ) {
+  
   $gc_language = get_current_language();
 
   $page_title_deliminator = ($my_page_entity->title && $my_page_entity->title2) ? " | " : "";
+  
   $title_en = $my_page_entity->title;
   $title_fr = $my_page_entity->title2;
   
+  // group profile
+  if ($title_en || $title_fr) {
+    $page_title_deliminator = ($my_page_entity->name && $my_page_entity->name2) ? " | " : "";
+    $title_en = $my_page_entity->name;
+    $title_fr = $my_page_entity->name2;
+  }
+
   // check for character length then trim
   if ($page_title_deliminator !== "") {
     $title_en = (strlen($title_en) > 19) ? substr($title_en,0,20)."..." : $title_en;
     $title_fr = (strlen($title_fr) > 19) ? substr($title_fr,0,20)."..." : $title_fr;
   }
+  $page_title = (strcmp(get_current_language(),'en') == 0) ? $title_en.$page_title_deliminator.$title_fr : $title_fr.$page_title_deliminator.$title_en;
 
-  $page_title = (strcmp(get_current_language(),'en') == 0) ? $title_en.$page_title_deliminator.$title_fr : $$title_fr.$page_title_deliminator.$title_en;
+
+  // profile <titles></title>
+  if (!$page_title)
+    $page_title = $my_page_entity->name;
 
   echo elgg_format_element('title', array(), $page_title, array('encode_text' => true));
 

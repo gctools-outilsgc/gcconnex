@@ -5,21 +5,28 @@
  * @uses $vars['entity']
  */
 
+
+$photo = $vars['entity'];
 elgg_load_js('jquery.imgareaselect');
 elgg_load_js('elgg.avatar_cropper');
 elgg_load_css('jquery.imgareaselect');
 
 $master_img = elgg_view('output/img', array(
-	'src' => $vars['entity']->getIconUrl('master'),
+	'src' => $vars['entity']->getIconUrl('master').'&newtime='.$time,
 	'alt' => elgg_echo('avatar'),
-	'class' => 'mrl',
+	'class' => 'mrl rotate',
 	'id' => 'user-avatar-cropper',
 ));
 
 $preview_img = elgg_view('output/img', array(
-	'src' => $vars['entity']->getIconUrl('master'),
+	'src' => $vars['entity']->getIconUrl('master').'&newtime='.$time,
 	'alt' => elgg_echo('avatar'),
+	'class' => 'rotate',
 ));
+
+echo '<div class="rotate2"></div>';
+
+
 
 ?>
 <div class="clearfix">
@@ -27,6 +34,67 @@ $preview_img = elgg_view('output/img', array(
 	<div id="user-avatar-preview-title"><label><?php echo elgg_echo('avatar:preview'); ?></label></div>
 	<div id="user-avatar-preview"><?php echo $preview_img; ?></div>
 </div>
+
+<?php
+
+//rotate
+if (isset($_POST['action'])) {
+    switch ($_POST['action']) {
+        case 'rotation':
+            rotation($photo);
+            break;
+        
+    }
+}
+
+//function to rotate image
+function rotation($photo){
+  $time = time();
+  $file = new ElggFile();
+  $file->owner_guid = $user_guid;
+
+  $picture_size = array('master');
+
+  for($x = 0; $x < 6; $x++) {
+     // $imgsrc = $_SERVER['DOCUMENT_ROOT'].'1/'.$photo->guid.'\profile/'.$photo->guid.''.$picture_size[$x].'.jpg';
+      $file->setFilename("profile/{$photo->guid}{$picture_size[$x]}.jpg");
+      $filepath = $file->getFilenameOnFilestore();
+      
+      $imgsrc = $filepath;
+
+      if (exif_imagetype($imgsrc) == IMAGETYPE_JPEG) {
+          if (file_exists($imgsrc)) {
+              $img = imagecreatefromjpeg($imgsrc);
+
+              if ($img !== false) {
+                $imgRotated = imagerotate($img,90,0);
+
+                if ($imgRotated !== false) {
+                    imagejpeg($imgRotated,$imgsrc,100);
+                }
+              }else{
+                echo 'Error, Image rotate false. JPEG';
+          
+              }
+            
+          }else{
+              echo'Error, file not exist. JPEG';
+        
+          }
+              imagedestroy($img);
+      imagedestroy($imgRotated);
+    }
+  }        
+}
+
+$image_src = $vars['entity']->getIconUrl('master');
+
+
+echo'<div class="col-md-7 col-md-offset-5 mrgn-tp-md">';
+echo'<span class="btn btn-default" onclick=rotate_ajax_profil("'.$image_src.'")>'.elgg_echo('rotate:image').'</span></div>';
+
+?>
+
 <div class="elgg-foot">
 <?php
 $coords = array('x1', 'x2', 'y1', 'y2');
