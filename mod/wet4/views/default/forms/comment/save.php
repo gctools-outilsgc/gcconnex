@@ -18,14 +18,10 @@ if (!elgg_is_logged_in()) {
 	return;
 }
 
-
+// var for the modal
 $entity = elgg_extract('entity', $vars);
-/* @var ElggEntity $entity */
-
-echo $entity->guid;
 $container = $entity->getContainerEntity();
 $userentity = elgg_get_logged_in_user_entity();
-echo elgg_instanceof($container, 'group');
 
 $comment = elgg_extract('comment', $vars);
 /* @var ElggComment $comment */
@@ -109,7 +105,6 @@ FORM;
 }
 
 ?>
-
 <script>
 function myFunction() {
 document.getElementById('test').click();

@@ -950,37 +950,21 @@ function cp_create_notification($event, $type, $object) {
 				'cp_comment' => $object,
 				'cp_msg_type' => 'cp_reply_type',
 			);
-/* && ($container_entity->isMember($user_comment))*/
-$group = elgg_get_page_owner_entity();
 $entity = get_entity($container_entity->getGUID());
-//error_log( print_r($entity, TRUE));
-$subtype = $entity->getType();
-
 $container = $entity->getContainerEntity();
 
-
-//$subtype = $entity->getSubtype();
-
 if (elgg_instanceof($container, 'group')) {
-	 error_log('Yes! guid in group');	
 	 if($container->isMember($user_comment)){
 
-	 error_log('member of the group'.$user_comment);	
-
-			add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_email', $container_entity->getGUID());
-			add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_site_mail', $container_entity->getGUID());
-	}else{
-	 error_log('no member of the group');	
-
-	}		
+		add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_email', $container_entity->getGUID());
+		add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_site_mail', $container_entity->getGUID());
+	}
  }else{
-	error_log('No non no, dont work or not in a group'.$container_entity->getContainerEntity);
+
 	add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_email', $container_entity->getGUID());
-			add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_site_mail', $container_entity->getGUID());
+	add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_site_mail', $container_entity->getGUID());
 }
-
 			
-
 			break;
 
 
@@ -1491,29 +1475,4 @@ function userOptedIn( $user_obj, $mission_type ){
 		'missions:job_share'	=>	'opt_in_jobshare',
 		);
 	return $user_obj->$typemap[$mission_type] == 'gcconnex_profile:opt:yes' || $user_obj->$typemap2[$mission_type] == 'gcconnex_profile:opt:yes';
-}
-
-
-function dialog_box_no_member(){
-	 error_log('in dialog box function');
-	 system_message('We did it!');	
-	 
-
-echo"<script language=\"javascript\">";
-echo"alert('bonjour2')";
-echo"</script>";
-
-/*    $url = 'views/default/js/popup.js';
-    forward($url);*/
-
-$options = array(
-	'id' => 'widgets-add-panel',
-	'text' => elgg_echo('widgets:add'),
-	'class' => 'elgg-button elgg-button-action elgg-lightbox',
-	'data-colorbox-opts' => '{"inline":true, "href":"#widget_manager_widgets_select", "innerWidth": 600, "maxHeight": "80%"}'
-);
-
-
- $url = elgg_view('output/url', $options);
-//forward($url);
 }
