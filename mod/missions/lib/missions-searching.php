@@ -12,7 +12,7 @@
  * Sets the resulting array and count of the array to SESSION variables if the count is not 0.
  * Also handles intersecting with any array that currently exists within SESSION.
  */
-function mm_search_database_for_missions($query_array, $query_operand, $limit)
+function mm_search_database_for_missions($query_array, $query_operand, $limit, $mission_state_include_array = ['posted'])
 {
     $options = array();
     $mission_count = '';
@@ -47,13 +47,20 @@ function mm_search_database_for_missions($query_array, $query_operand, $limit)
         foreach ($all_missions as $mission) {
             $missions[$mission->guid] = $mission;
         }
-        // remove the closed, completed, etc. opportunities
+        // Filter opportunities based on their state.  Inclusive.
+        // WHY: We may only want to search for archived or open opportunities which have different states.
         foreach($missions as $key => $mission) {
-            if($mission->state != 'posted') {
+            $include_opportunity = false;
+            foreach ($mission_state_include_array as $include_state) {
+                if ($mission->state == $include_state) {
+                    $include_opportunity = true;
+                    last;
+                }
+            }
+            if ($include_opportunity == false) {
                 unset($missions[$key]);
             }
         }
-
     }
     else {
         // Setting options with which the query will be built.

@@ -35,7 +35,7 @@ if ($err != '') {
             }
             $returned = mm_simple_search_database_for_candidates($array, max($_SESSION['candidate_entities_per_page'], 10));
             break;
-        default:
+        default:            
             // A broad range search which determines whether the input text exists within the title, type or description of the mission.
             // This also checks guid but this is mostly for testing and admin purposes.
             if (! empty($search_form['simple'])) {
@@ -65,8 +65,14 @@ if ($err != '') {
                 }
             }
 
-            // This function executes the query and returns true or false depending on how succesful that query was.
-            $returned = mm_search_database_for_missions($array, 'OR', elgg_get_plugin_setting('search_limit', 'missions'));
+            // Specify which missions' states we would like to filter by.  Inclusive.
+            $mission_state_include_array = ['posted'];
+            if (isset($_SESSION['mission_search_switch_subtype']) && $_SESSION['mission_search_switch_subtype'] == 'archive') {
+                $mission_state_include_array = ['cancelled', 'completed'];
+                unset($_SESSION['mission_search_switch_subtype']);
+            }
+            
+            $returned = mm_search_database_for_missions($array, 'OR', elgg_get_plugin_setting('search_limit', 'missions'), $mission_state_include_array);
     }
 
     if (! $returned) {
