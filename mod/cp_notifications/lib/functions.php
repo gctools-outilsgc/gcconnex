@@ -23,7 +23,7 @@ function get_forum_in_group($entity_guid_static, $entity_guid) {
  * @param array <string> 	$values
  * @param string 			$label
  */
-function create_checkboxes($user_id, $name, $values, $label, $id='') {
+function create_checkboxes($user_id, $name, $values, $label, $id='', $class='') {
 	$user_option = elgg_get_plugin_user_setting($name, $user_id, 'cp_notifications');
 
 	if (strcmp($name, 'cpn_set_digest_freq_daily') == 0) {
@@ -48,7 +48,8 @@ function create_checkboxes($user_id, $name, $values, $label, $id='') {
 		'default' => 	$values[1],
 		'label' => 		$label,
 		'checked' => 	$is_checked,
-		'id' =>			$id
+		'id' =>			$id,
+		'class' =>		$class,
 	));
 
 	return $chkbox;
