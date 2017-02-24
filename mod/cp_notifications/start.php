@@ -990,15 +990,14 @@ function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $para
 		$email = $newsletter_title[1];
 		$query = "SELECT guid, email, name, username FROM elggusers_entity WHERE email = '{$email}'";
 		$user = get_data($query);
-		$to = $user[0];
 
-		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->getOwnerGUID(),'cp_notifications'),'set_digest_yes') == 0 && 
+		$to = $user[0];
+		$user = get_entity($to->guid);
+
+		if ($user instanceof ElggUser && strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->getOwnerGUID(),'cp_notifications'),'set_digest_yes') == 0 && 
 			strcmp(elgg_get_plugin_user_setting('cpn_set_digest_freq_weekly', $user->getOwnerGUID(),'cp_notifications'),'set_digest_weekly') == 0 ) {
 
-
-			$to = get_entity($to->guid);
-
-			$newsletter_id = $to->cpn_newsletter;
+			$newsletter_id = $user->cpn_newsletter;
 			$newsletter_object = get_entity($newsletter_id);
 			$newsletter_content = json_decode($newsletter_object->description, true);
 
@@ -1054,15 +1053,15 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 		$email = $newsletter_title[1];
 		$query = "SELECT guid, email, name, username FROM elggusers_entity WHERE email = '{$email}'";
 		$user = get_data($query);
+
 		$to = $user[0];
+		$user = get_entity($to->guid);
 
 		// what if there is more than one user associated with this email
-		if ($user && strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->guid,'cp_notifications'),'set_digest_yes') == 0 && 
+		if ($user instanceof ElggUser && strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->guid,'cp_notifications'),'set_digest_yes') == 0 && 
 			strcmp(elgg_get_plugin_user_setting('cpn_set_digest_freq_daily', $user->guid,'cp_notifications'),'set_digest_daily') == 0 ) {
-
-			$to = get_entity($to->guid);
-
-			$newsletter_id = $to->cpn_newsletter;
+			
+			$newsletter_id = $user->cpn_newsletter;
 			$newsletter_object = get_entity($newsletter_id);
 			$newsletter_content = json_decode($newsletter_object->description, true);
 
