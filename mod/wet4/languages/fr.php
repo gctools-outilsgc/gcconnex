@@ -1451,8 +1451,14 @@ return array(
 'indicator:click:fr' => 'français',
 'box:indicator:en' => 'This content is also available in ',
 'indicator:click:en' => 'english.',
+
+/*Rotate content*/
+'rotate:image' => 'Tourner l\'image',
+
 'indicator:summary' => '(EN/FR)',
+
 'indicator:summary:title' => 'This content is also available in English',
+
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */

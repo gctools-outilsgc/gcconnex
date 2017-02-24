@@ -1610,6 +1610,9 @@ Please do not reply to this email.",
 
 
 
+/*Rotate content*/
+'rotate:image' => 'Rotate image',
+
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */
