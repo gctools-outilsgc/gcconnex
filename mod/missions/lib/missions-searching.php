@@ -611,9 +611,8 @@ function mm_analyze_backup($place, $array)
  * Basic search functionality for candidate searching.
  * Checks education, experience and skill attributes from user profiles.
  */
-function mm_simple_search_database_for_candidates($query_array, $query_operand, $limit)
+function mm_simple_search_database_for_candidates($query_array, $limit, $offset=0)
 {
-    $options = array();
 
     $filtered_array = array_filter($query_array);
     if (empty($filtered_array)) {
@@ -621,73 +620,152 @@ function mm_simple_search_database_for_candidates($query_array, $query_operand, 
         return false;
     }
 
-    $value_array = array();
-    foreach($filtered_array as $key => $array) {
-        $value_array[$key] = str_replace('%', '', $array['value']);
+    $dbprefix = elgg_get_config("dbprefix");
+    $only_opt_in = false; // Only include members who have opted-in to the platform
+    $opt_in_sql = '';
+
+    // TODO: Later versions of ELGG support parameterized queries... DO THAT.
+    $ms_search = array(); $s_search = array(); $u_search = array();
+    foreach ($query_array as $term) {
+        $t = mysql_escape_string(trim($term)) . '*';
+        $ms_search[] = "(MATCH(a.string) AGAINST(\"$t\" IN BOOLEAN MODE))";
+        $s_search[] = "(MATCH(eoe.title) AGAINST(\"$t\" IN BOOLEAN MODE))";
+        $u_search[] = "(MATCH(a.name) AGAINST(\"$t\" IN BOOLEAN MODE))";
     }
 
-    // Setting options with which the query will be built.
-    $options['type'] = 'object';
-    $options['subtypes'] = array('education', 'experience', 'MySkill', 'portfolio');
-    $options['attribute_name_value_pairs'] = $filtered_array;
-    $options['attribute_name_value_pairs_operator'] = $query_operand;
-    $entities = elgg_get_entities_from_attributes($options);
+    $metadata_search = implode(' AND ', $ms_search);
+    $metadata_relevance = implode(' + ', $ms_search) . ' + 0';
+    $skill_search = implode(' AND ', $s_search);
+    $skill_relevance = implode(' + ', $s_search) . ' + 0';
+    $user_search = implode(' AND ', $u_search);
+    $user_relevance = implode(' + ', $u_search) . ' + 0';
 
-    $entity_owners = array();
-    $search_feedback = array();
-    $count = 0;
-    foreach($entities as $entity) {
-        $entity_owners[$count] = $entity->owner_guid;
-        // Section for generating feedback which tells the user which search criteria the returned users met.
-        if($entity->getSubtype() == 'education') {
-            $identifier_string = elgg_echo('missions:school_name');
-        }
-        if($entity->getSubtype() == 'experience') {
-            $identifier_string = elgg_echo('missions:job_title');
-        }
-        if($entity->getSubtype() == 'MySkill') {
-            $identifier_string = elgg_echo('missions:skill');
-        }
-        if($entity->getSubtype() == 'portfolio') {
-            $identifier_string = elgg_echo('missions:portfolio');
-        }
-        $search_feedback[$entity->owner_guid] .= $identifier_string . ': ' . $entity->title . ',';
-        $count++;
+    $search_query_metadata = "
+        SELECT
+            c.guid AS user_guid,
+            CONCAT(d.string, ':::::', a.string) AS field,
+            ($metadata_relevance) as relevance
+        FROM
+            {$dbprefix}metastrings a
+            LEFT JOIN {$dbprefix}metadata b ON a.id = b.value_id
+            LEFT JOIN {$dbprefix}users_entity c ON c.guid = b.owner_guid
+            LEFT JOIN {$dbprefix}metastrings d ON b.name_id = d.id
+        WHERE
+            c.guid IS NOT null
+            AND d.string IN ('contactemail')
+            AND ($metadata_search)
+    ";
+    $search_user_name = "
+        SELECT
+            a.guid as user_guid,
+            CONCAT('name:::::', a.name) as field,
+            ($user_relevance) as relevance
+        FROM
+            {$dbprefix}users_entity a
+        WHERE
+            ($user_search)
+    ";
+    $search_query_subtypes = "
+        SELECT
+            eue.guid as user_guid,
+            CONCAT(es.subtype, ':::::', eoe.title) as field,
+            ($skill_search) as relevance
+            $opt_in_select
+        FROM
+            {$dbprefix}metastrings ems
+            LEFT JOIN {$dbprefix}metadata em ON ems.id = em.value_id
+            LEFT JOIN {$dbprefix}users_entity eue ON eue.guid = em.owner_guid
+            LEFT JOIN {$dbprefix}entities ee ON CAST(ee.guid as char(10)) = ems.string
+            LEFT JOIN {$dbprefix}entity_subtypes es ON es.id = ee.subtype
+            LEFT JOIN {$dbprefix}objects_entity eoe ON ee.guid = eoe.guid
+        WHERE
+            eue.guid IS NOT NULL
+            AND ee.subtype IN (SELECT id FROM {$dbprefix}entity_subtypes WHERE subtype IN ('MySkill', 'education', 'experience', 'portfolio'))
+            AND ($skill_search)
+    ";
+
+    $search_wrapper = "
+    SELECT SQL_CALC_FOUND_ROWS
+        user_guid,
+        GROUP_CONCAT(DISTINCT field SEPARATOR '!!!!!') as reason,
+        SUM(relevance) as relevance
+    FROM (";
+    $search_wrapper .= $search_user_name;
+    $search_wrapper .= "\nUNION\n" . $search_query_metadata;
+    $search_wrapper .= "\nUNION\n" . $search_query_subtypes;
+    $search_wrapper .= "\n) matches\n";
+    if ($only_opt_in) {
+        $search_wrapper .= "
+            LEFT JOIN {$dbprefix}metadata b ON b.owner_guid = user_guid
+            LEFT JOIN {$dbprefix}metastrings a ON a.id = b.name_id
+            LEFT JOIN {$dbprefix}metastrings c ON c.id = b.value_id
+        WHERE
+            match(a.string) against ('opt_in_*' IN BOOLEAN MODE)
+            AND c.string = 'gcconnex_profile:opt:yes'
+        ";
     }
+    $search_wrapper .= "GROUP BY user_guid ORDER BY relevance DESC, reason LIMIT $offset, $limit;";
+    $results = get_data($search_wrapper);
+    $total_users = get_data('SELECT FOUND_ROWS() as total_users;')[0]->total_users;
 
-    $filtered_array_name = $filtered_array;
-    $filtered_array_email = $filtered_array;
-    foreach($filtered_array as $key => $value) {
-        $filtered_array_name[$key]['name'] = 'name';
-        $filtered_array_email[$key]['name'] = 'email';
-    }
-    $filtered_array_total = array_merge($filtered_array_name, $filtered_array_email);
+    $candidate_count = min(elgg_get_plugin_setting('search_limit', 'missions'), $total_users);
 
-    // Searches user names for the given string.
-    $options_second['type'] = 'user';
-    $options_second['limit'] = $limit;
-    $options_second['attribute_name_value_pairs'] = $filtered_array_total;
-    $options_second['attribute_name_value_pairs_operator'] = $query_operand;
-    $users = elgg_get_entities_from_attributes($options_second);
-
-    // Turns the user list into a list of GUIDs and sets the search feedback for search by name.
-    foreach($users as $key => $user) {
-        $users[$key] = $user->guid;
-        foreach($value_array as $value) {
-            if(strpos(strtolower($user->name), $value) !== false) {
-                $search_feedback[$user->guid] .= elgg_echo('missions:name') . ': ' . $user->name . ',';
+    if (count($results) > 0) {
+        $search_feedback = array();
+        foreach($results as $result) {
+            $reasons = array();
+            $reason_values = array();
+            $reasons_tmp = explode('!!!!!', $result->reason);
+            foreach ($reasons_tmp as $rt) {
+                $sp = explode(':::::', $rt);
+                $reasons[] = $sp[0];
+                $reason_values[$sp[0]] = $sp[1];
             }
-            if(strpos(strtolower($user->email), $value) !== false) {
-                $search_feedback[$user->guid] .= elgg_echo('missions:email') . ': ' . $user->email . ',';
+            if (!isset($search_feedback[$result->user_guid])) {
+                $search_feedback[$result->user_guid] = '';
+            }
+            if (in_array('education', $reasons)) {
+                $search_feedback[$result->user_guid] .= elgg_echo('missions:school_name') . ': ' . $reason_values['education'] . ',';
+            }
+            if (in_array('experience', $reasons)) {
+                $search_feedback[$result->user_guid] .= elgg_echo('missions:job_title') . ': ' . $reason_values['experience'] . ',';
+            }
+            if (in_array('MySkill', $reasons)) {
+                $search_feedback[$result->user_guid] .= elgg_echo('missions:skill') . ': ' . $reason_values['MySkill'] . ',';
+            }
+            if (in_array('portfolio', $reasons)) {
+                $search_feedback[$result->user_guid] .= elgg_echo('missions:portfolio') . ': ' . $reason_values['portfolio'] . ',';
+            }
+            if (in_array('name', $reasons)) {
+                $search_feedback[$result->user_guid] .= elgg_echo('missions:name') . ': ' . $reason_values['name'] . ',';
+            }
+            if (in_array('contactemail', $reasons)) {
+                $search_feedback[$result->user_guid] .= elgg_echo('missions:email') . ': ' . $reason_values['contactemail'] . ',';
             }
         }
-        $count++;
+
+        $pairs = array();
+        foreach(array_keys($search_feedback) as $guid) {
+            $pairs[] = array(
+                'name' => 'guid',
+                'value' => $guid,
+                'operand' => '='
+            );
+        }
+        $unique_owners_entity = elgg_get_entities_from_attributes(array(
+            'type' => 'user', 'limit' => 0,
+            'attribute_name_value_pairs' => $pairs,
+            'attribute_name_value_pairs_operator' => 'OR'
+        ));
+
+        // SORT ORDER LOST, resort results based on initial query.
+        $sorted = array();
+        foreach ($unique_owners_entity as $owner) {
+            $sorted[] = array_search($owner->guid, array_keys($search_feedback));
+        }
+
+        array_multisort($sorted, $unique_owners_entity);
     }
-
-    $entity_owners = array_merge($entity_owners, $users);
-
-    $unique_owners_entity = mm_guids_to_entities_with_opt(array_unique($entity_owners));
-    $candidate_count = count($unique_owners_entity);
 
     if ($candidate_count == 0) {
         register_error(elgg_echo('missions:error:candidate_does_not_exist'));
@@ -698,6 +776,7 @@ function mm_simple_search_database_for_candidates($query_array, $query_operand, 
         $_SESSION['candidate_search_set_timestamp'] = time();
         $_SESSION['candidate_search_feedback'] = $search_feedback;
         $_SESSION['candidate_search_feedback_timestamp'] = time();
+        $_SESSION['candidate_search_query_array'] = $query_array;
 
         return true;
     }
