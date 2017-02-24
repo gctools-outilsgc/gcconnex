@@ -60,7 +60,7 @@ if (get_current_language()=='en'){
 //save dept
 elgg_get_logged_in_user_entity()->department = $deptString;
 //save time
-elgg_get_logged_in_user_entity()->last_department_verify = time();
+elgg_get_logged_in_user_entity()->set('last_department_verify', time());
 
 system_message($deptString );
     ?>
