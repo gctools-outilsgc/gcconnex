@@ -19,9 +19,12 @@ $old_colleague_list = json_decode($plugin->getUserSetting('subscribe_colleague_p
 /// overwriting the save action for usersettings in notifications, save all the checkboxes
 $plugin_name = $plugin->getManifest()->getName();
 foreach ($params as $k => $v) {
-	if (strpos($k,'cpn_group_') === false) {
-		$result = $plugin->setUserSetting($k, $v, $user->guid);
-	}
+	
+	// select all checkbox, don't save metadata
+	if (strpos($k,'cpn_group_') !== false)
+		continue;
+error_log("key: {$k} ... value: {$v}");
+	$result = $plugin->setUserSetting($k, $v, $user->guid);
 
 	/// create relationships between user and group that they have subscribed to
 	if (strpos($k,'cpn_site_mail_') !== false || strpos($k,'cpn_email_') !== false) {
@@ -30,32 +33,37 @@ foreach ($params as $k => $v) {
 		if (strpos($k,'cpn_site_mail_') !== false) {
 		
 			if (strcmp($v,'set_notify_off') == 0)
-				add_entity_relationship($user->getGUID(), 'cp_subscribed_to_site_mail', $group_guid[sizeof($group_guid) - 1]);
-			else
 				remove_entity_relationship($user->getGUID(), 'cp_subscribed_to_site_mail', $group_guid[sizeof($group_guid) - 1]);
+			else
+				add_entity_relationship($user->getGUID(), 'cp_subscribed_to_site_mail', $group_guid[sizeof($group_guid) - 1]);
+			
 		}
 	
 		if (strpos($k,'cpn_email_') !== false) {
 		
 			if (strcmp($v,'set_notify_off') == 0) 
-				add_entity_relationship($user->getGUID(), 'cp_subscribed_to_email', $group_guid[sizeof($group_guid) - 1]);
-			else 
 				remove_entity_relationship($user->getGUID(), 'cp_subscribed_to_email', $group_guid[sizeof($group_guid) - 1]);
+			else 
+				add_entity_relationship($user->getGUID(), 'cp_subscribed_to_email', $group_guid[sizeof($group_guid) - 1]);
+				
 		}
 	}
 
 	/// create relationship between user and user (colleagues)
 	if (strpos($k,'subscribe_colleague_picker') == 0) {
-		foreach ($v as $colleague) {
-			$colleague_list[$colleague] = $colleague;
-			$result = $plugin->setUserSetting($k, json_encode($colleague_list), $user->guid);
 
-			add_entity_relationship($user_guid, 'cp_subscribed_to_email', $colleague);
-			add_entity_relationship($user_guid, 'cp_subscribed_to_site_mail', $colleague);
+		// make sure that the value is an array, less warnings within the foreach loop
+		if (is_array($v)) {
+			foreach ($v as $colleague) {
+				$colleague_list[$colleague] = $colleague;
+				$result = $plugin->setUserSetting($k, json_encode($colleague_list), $user->guid);
+
+				add_entity_relationship($user_guid, 'cp_subscribed_to_email', $colleague);
+				add_entity_relationship($user_guid, 'cp_subscribed_to_site_mail', $colleague);
+			}
 		}
 	}
 
-	error_log(">>>>>>>>>>>>>>>>>>>>>>>> key:{$k} : value:{$v}");
 	if (!$result) {
 		register_error(elgg_echo('plugins:usersettings:save:fail', array($plugin_name)));
 		forward(REFERER);

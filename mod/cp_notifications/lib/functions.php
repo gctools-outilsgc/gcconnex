@@ -23,8 +23,9 @@ function get_forum_in_group($entity_guid_static, $entity_guid) {
  * @param array <string> 	$values
  * @param string 			$label
  */
-function create_checkboxes($user_id, $name, $values, $label, $id='', $class='') {
+function create_checkboxes($user_id, $name, $values, $label, $id='chkboxID', $class='chkboxClass') {
 	$user_option = elgg_get_plugin_user_setting($name, $user_id, 'cp_notifications');
+
 
 	if (strcmp($name, 'cpn_set_digest_freq_daily') == 0) {
 		$user_option_daily = elgg_get_plugin_user_setting('cpn_set_digest_freq_daily', $user_id, 'cp_notifications');
@@ -40,7 +41,10 @@ function create_checkboxes($user_id, $name, $values, $label, $id='', $class='') 
 		if (!$user_option_en && !$user_option_fr) $user_option = 'set_digest_en';
 	}
 
-	$is_checked = (strcmp($user_option, 'set_digest_no') == 0 || strcmp($user_option, 'set_notify_off') == 0 || !$user_option) ? false : true;
+	$is_checked = (strcmp($user_option, 'set_digest_no') == 0 || strcmp($user_option, 'set_notify_off') == 0 || !$user_option || strpos($name, 'cpn_group_') !== false) ? false : true;
+
+	$digest_option = elgg_get_plugin_user_setting('cpn_set_digest', $user_id, 'cp_notifications');
+	$disabled = (strcmp('set_digest_yes', $digest_option) == 0 && strpos($name, 'site') !== false) ? true : false;
 
 	$chkbox = elgg_view('input/checkbox', array(
 		'name' => 		"params[{$name}]",
@@ -50,6 +54,7 @@ function create_checkboxes($user_id, $name, $values, $label, $id='', $class='') 
 		'checked' => 	$is_checked,
 		'id' =>			$id,
 		'class' =>		$class,
+		'disabled' => 	$disabled
 	));
 
 	return $chkbox;

@@ -431,9 +431,10 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 		if ($cp_msg_type != 'cp_event_ics')
 			$template = elgg_view('cp_notifications/email_template', $message);
 				
-		$newsletter_appropriate = array('cp_wire_share','cp_messageboard','cp_wire_mention','cp_hjpost','cp_hjtopic', 'cp_friend_request');
+		$newsletter_appropriate = array('cp_wire_share','cp_messageboard','cp_wire_mention','cp_hjpost','cp_hjtopic', 'cp_friend_request', 'cp_friend_approve');
 		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0 && in_array($cp_msg_type, $newsletter_appropriate)) {
 			$result = create_digest($author, $cp_msg_type, $content_entity, $to_recipient, $content_url);
+			continue;
 		} else 
 			$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template ) : mail($to_recipient->email, $subject, $template, cp_get_headers($event));
 		

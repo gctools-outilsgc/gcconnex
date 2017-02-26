@@ -7,9 +7,10 @@ $notifications_settings = "{$site->getURL()}settings/plugin/{$to->username}/cp_n
 
 $english = array(
 
+	/// Newsletter variables
 	'cp_newsletter:subject:daily' => 'Your Daily Newsletter',
-
 	'cp_newsletter:subject:weekly' => 'Your Weekly Newsletter',
+	'cp_newsletter:notice' => "Once you enabled the Digest functionality, you will receive only one notification by mail on a daily or weekly basis depending on your chosen option. For more information visit [link].",
 	
 	'groupforumtopic' => "Discussions",
 	'hjforumtopic' => "Forum Topic",
@@ -38,6 +39,8 @@ $english = array(
 	'cp_notify:setting:no_grp_subscription' => '',
 
 	'cp_notify:setting:loading' => 'Loading...',
+
+	
 	// e-mail header text
 	'cp_notification:email_header' => 'This is a system-generated message from GCconnex. Please do not reply to this message',
 	'cp_notification:email_header_msg' => "",	
@@ -355,6 +358,7 @@ $english = array(
     'cp_notify:groupContent'=>'Group Content',
     'cp_notify:notifNewContent'=>'Notify me when new content is created (Discussion, Files, etc.)',
     'cp_notify:notifComments'=>'Notify me when comments are created',
+    
     'cp_notify:siteForGroup'=>'Select All',
     'cp_notify:unsubBell'=>'You are subscribed to this content. Click to unsubscribe.',
     'cp_notify:subBell'=>'You are not subscribed to this content. Click to subscribe and recieve notifications about this content.',
