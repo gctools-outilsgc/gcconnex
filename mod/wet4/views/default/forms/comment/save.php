@@ -22,6 +22,8 @@ if (!elgg_is_logged_in()) {
 $entity = elgg_extract('entity', $vars);
 $container = $entity->getContainerEntity();
 $userentity = elgg_get_logged_in_user_entity();
+$group = get_entity($container->guid);
+$user = get_user($userentity->guid);
 
 $comment = elgg_extract('comment', $vars);
 /* @var ElggComment $comment */
@@ -104,15 +106,54 @@ if ($inline) {
 FORM;
 }
 
-?>
-<script>
-function join_comment() {
+$test = '123456';
 
-	document.getElementById('join').click();
-	$('.elgg-system-messages').html("<?php echo elgg_echo('groups:joined'); ?>");
+if (isset($_POST['action'])) {
+    switch ($_POST['action']) {
+        case 'insert':
+            insert();
+            break;
+        case 'select':
+            select();
+            break;
+    }
 }
 
-</script>
+function select() {
+    echo "The select function is called.";
+    $test = '123456';
+/*    $url = elgg_get_site_url() . "action/groups/join?group_guid={$container->guid}";
+              $url = elgg_add_action_tokens_to_url($url);
+    echo elgg_view('output/url', array(
+   'text' => elgg_echo('join'),
+   'href' => $url,
+   'confirm' => true,
+));*/
+   // groups_join_group($group, $userentity);
+
+// var for the modal
+$entity = elgg_extract('entity', $vars);
+//$container = $entity->getContainerEntity();
+$userentity = elgg_get_logged_in_user_entity();
+$group = get_entity($container->guid);
+$user = get_user($userentity->guid);
+    error_log('Userentity'.$test);
+    error_log('User guid'.$user);
+   // error_log('container entity'.$container);
+    //error_log('container guid'.$container->guid);
+    error_log('group'.$group);
+    exit;
+}
+
+function insert() {
+    echo "The insert function is called.";
+    exit;
+}
+
+
+
+?>
+
 
 <!-- Modal -->
 <div class="modal fade" id="notif_comment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -123,7 +164,8 @@ function join_comment() {
      <?php   
      echo '<h4 class="modal-title" id="myModalLabel">'.elgg_echo("comment_notif_title",array($container->getDisplayName())).'</h4>
       </div>
-      <div class="modal-body">
+      <div class="modal
+      body">
      '.elgg_echo("comment_notif_description").'
       </div>
       <div class="modal-footer">';
@@ -140,6 +182,7 @@ function join_comment() {
                         'link_class' => 'elgg-button elgg-button-action',
                     ));
 
+
    $buttons = elgg_view_menu('modal_notif', array(
                             'sort_by' => 'priority',
                             'class' => 'hidden',
@@ -148,7 +191,8 @@ function join_comment() {
                         ));
 
                         echo $buttons;
-
+echo'<input type="submit" class="button" name="insert" value="insert" onclick = "join_comment()" />
+<input type="submit" class="button" name="select" value="select" onclick = "join_comment()" />';
 	if ( $container instanceof ElggGroup ){
      		if ($container->isPublicMembership() || $container->canEdit()) {
                         echo '<button class="mrgn-tp-sm btn btn-primary" onclick = "join_comment()">'.elgg_echo("groups:join").'</button>';
@@ -168,3 +212,23 @@ function join_comment() {
     </div>
   </div>
 </div>
+<script>
+	alert('Hello wolrd');
+
+
+function join_comment(){
+	alert('Hello wolrd1');
+    	alert('Hello wolrd2');
+var clickBtnValue = 'select';
+ data =  {'action': clickBtnValue};
+
+  $.post('save.php', data, function (response) {
+            alert('Hello wolrd3' + clickBtnValue);
+
+       
+    });
+
+}
+
+
+</script>
