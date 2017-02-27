@@ -1,6 +1,6 @@
 <?php
 $english = array(
-    'gccollab_stats:title' => "GCcollab Statistics",
+    'gccollab_stats:title' => "GCconnex Statistics",
     'gccollab_stats:unknown' => "Unknown",
     'gccollab_stats:membercount' => "Registered Members",
     'gccollab_stats:loading' => "Loading data...",
