@@ -121,9 +121,9 @@ function get_site_data($type, $lang) {
 		$groupsjoined = get_data($query);
 
 		foreach($groupsjoined as $key => $obj){
-			$user = get_user($obj->guid_one);
-			$group = get_entity($obj->guid_two);
-			$data[] = array($obj->time_created, $user->name, $group->name);
+			//$user = get_user($obj->guid_one);
+			//$group = get_entity($obj->guid_two);
+			$data[] = array($obj->time_created, $obj->guid_one, $obj->guid_two);
 		}
 	} else if ($type === 'likes') {
 		$likes = elgg_get_annotations(array(
