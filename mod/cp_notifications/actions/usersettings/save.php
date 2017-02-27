@@ -19,11 +19,11 @@ $old_colleague_list = json_decode($plugin->getUserSetting('subscribe_colleague_p
 /// overwriting the save action for usersettings in notifications, save all the checkboxes
 $plugin_name = $plugin->getManifest()->getName();
 foreach ($params as $k => $v) {
-	
+error_log("key: {$k} ... value: {$v}");	
 	// select all checkbox, don't save metadata
 	if (strpos($k,'cpn_group_') !== false)
 		continue;
-error_log("key: {$k} ... value: {$v}");
+
 	$result = $plugin->setUserSetting($k, $v, $user->guid);
 
 	/// create relationships between user and group that they have subscribed to

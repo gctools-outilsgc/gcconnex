@@ -26,7 +26,7 @@ if (strcmp($enable_digest, 'yes') == 0) {
 	$content .= "<div class='col-sm-12' style='text-align:center; border: 2px solid #055959; padding: 2px 2px 2px 2px; border-radius:5px; color:#055959;'> ".elgg_echo('cp_newsletter:notice')." </div>";
 
 	/// enable notifications digest
-	$chk_email = create_checkboxes($user->getGUID(), 'cpn_set_digest', array('set_digest_yes', 'set_digest_no'), '', '', 'chbox_enable_digest');
+	$chk_email = create_checkboxes($user->getGUID(), 'cpn_set_digest', array('set_digest_yes', 'set_digest_no'), '', 'chbox_enable_digest', 'chbox_enable_digest');
 	$user_option = elgg_get_plugin_user_setting('cpn_set_digest', $user->guid, 'cp_notifications');
 	$is_checked = (strcmp($user_option, 'set_digest_no') == 0 || strcmp($user_option, 'set_notify_off') == 0 || !$user_option) ? false : true;
 	$jquery_switch = '<label class="switch"> '.$chk_email.' <div class="slider round"></div> </label>';
@@ -46,8 +46,6 @@ if (strcmp($enable_digest, 'yes') == 0) {
 		$content .= "<div id='more_digest_options' {$visibility}>";
 
 		/// select daily or weekly notification
-		//$chk_occur_daily = create_checkboxes($user->getGUID(), 'cpn_set_digest_freq_daily', array('set_digest_daily', 'set_digest_no'), elgg_echo('label:daily'), 'digest_frequency');
-		//$chk_occur_weekly = create_checkboxes($user->getGUID(), 'cpn_set_digest_freq_weekly', array('set_digest_weekly', 'set_digest_no'), elgg_echo('label:weekly'), 'digest_frequency');
 		$user_option = elgg_get_plugin_user_setting('cpn_set_digest_frequency', $user->guid, 'cp_notifications');
 		if (strcmp($user_option, 'set_digest_daily') == 0) {
 			$chk_occur_daily = "<input type='radio' name='params[cpn_set_digest_frequency]' value='set_digest_daily' checked='checked'> Daily";
@@ -63,8 +61,6 @@ if (strcmp($enable_digest, 'yes') == 0) {
 		$content .= "<form> <div class='col-sm-2'>{$chk_occur_daily}</div> <div class='col-sm-2'>{$chk_occur_weekly}</div> </form>";	
 		
 		/// select language preference
-		//$chk_language_en = create_checkboxes($user->getGUID(), 'cpn_set_digest_lang_en', array('set_digest_en', 'set_digest_no'), elgg_echo('label:english'), 'digest_language');
-		//$chk_language_fr = create_checkboxes($user->getGUID(), 'cpn_set_digest_lang_fr', array('set_digest_fr', 'set_digest_no'), elgg_echo('label:french'), 'digest_language');
 		$user_option = elgg_get_plugin_user_setting('cpn_set_digest_language', $user->guid, 'cp_notifications');
 		if (strcmp($user_option, 'set_digest_en') == 0) {
 			$chk_language_en = "<input type='radio' name='params[cpn_set_digest_language]' value='set_digest_en' checked='checked'> English";
@@ -316,7 +312,10 @@ input:checked + .slider:before {
 	/// jquery to limit the functionality
 	$(document).ready( function () {
 
+		// TODO: incompatible with IE11 ...
 		$(".chbox_enable_digest").removeClass('elgg-input-checkbox');
+
+
 
 		// select all groups
 		$(".all-email").click(function() {
