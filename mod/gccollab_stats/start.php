@@ -73,47 +73,47 @@ function get_site_data($type, $lang) {
 	elgg_set_ignore_access(true);
 
 	if ($type === 'wireposts') {
-		$wireposts = elgg_get_entities(array(
-			'type' => 'object',
-			'subtype' => 'thewire',
-			'limit' => 0
-		));
+		$typeid = get_subtype_id('object', 'thewire');
+		$dbprefix = elgg_get_config('dbprefix');
+
+		$query = "SELECT guid, time_created, owner_guid FROM {$dbprefix}entities WHERE type = 'object' AND subtype = {$typeid} AND enabled = 'yes'";
+		$wireposts = get_data($query);
 
 		foreach($wireposts as $key => $obj){
-			$user = get_user($obj->owner_guid);
-			$data[] = array($obj->time_created, $obj->description, $user->name);
+			//$user = get_user($obj->owner_guid);
+			$data[] = array($obj->time_created, "description", $obj->owner_guid);
 		}
 	} else if ($type === 'blogposts') {
-		$blogposts = elgg_get_entities(array(
-			'type' => 'object',
-			'subtype' => 'blog',
-			'limit' => 0
-		));
+		$typeid = get_subtype_id('object', 'blog');
+		$dbprefix = elgg_get_config('dbprefix');
+
+		$query = "SELECT guid, time_created, owner_guid FROM {$dbprefix}entities WHERE type = 'object' AND subtype = {$typeid} AND enabled = 'yes'";
+		$blogposts = get_data($query);
 
 		foreach($blogposts as $key => $obj){
-			$user = get_user($obj->owner_guid);
-			$data[] = array($obj->time_created, $obj->title, $obj->description, $user->name);
+			//$user = get_user($obj->owner_guid);
+			$data[] = array($obj->time_created, "title", "description", $obj->owner_guid);
 		}
 	} else if ($type === 'comments') {
-		$comments = elgg_get_entities(array(
-			'type' => 'object',
-			'subtype' => 'comment',
-			'limit' => 0
-		));
+		$typeid = get_subtype_id('object', 'comment');
+		$dbprefix = elgg_get_config('dbprefix');
+
+		$query = "SELECT guid, time_created, owner_guid FROM {$dbprefix}entities WHERE type = 'object' AND subtype = {$typeid} AND enabled = 'yes'";
+		$comments = get_data($query);
 
 		foreach($comments as $key => $obj){
-			$user = get_user($obj->owner_guid);
-			$data[] = array($obj->time_created, $obj->description, $user->name);
+			//$user = get_user($obj->owner_guid);
+			$data[] = array($obj->time_created, "description", $obj->owner_guid);
 		}
 	} else if ($type === 'groupscreated') {
-		$groupscreated = elgg_get_entities(array(
-			'type' => 'group',
-			'limit' => 0
-		));
+		$dbprefix = elgg_get_config('dbprefix');
+
+		$query = "SELECT guid, time_created, owner_guid FROM {$dbprefix}entities WHERE type = 'group' AND enabled = 'yes'";
+		$groupscreated = get_data($query);
 
 		foreach($groupscreated as $key => $obj){
-			$user = get_user($obj->owner_guid);
-			$data[] = array($obj->time_created, $obj->name, $obj->description, $user->name);
+			//$user = get_user($obj->owner_guid);
+			$data[] = array($obj->time_created, "name", "description", $obj->owner_guid);
 		}
 	} else if ($type === 'groupsjoined') {
 		$dbprefix = elgg_get_config('dbprefix');
@@ -138,15 +138,15 @@ function get_site_data($type, $lang) {
 			$data[] = array($obj->time_created, $user->name, $user_liked);
 		}
 	} else if ($type === 'messages') {
-		$messages = elgg_get_entities(array(
-			'type' => 'object',
-			'subtype' => 'messages',
-			'limit' => 0
-		));
+		$typeid = get_subtype_id('object', 'messages');
+		$dbprefix = elgg_get_config('dbprefix');
+
+		$query = "SELECT guid, time_created, owner_guid FROM {$dbprefix}entities WHERE type = 'object' AND subtype = {$typeid} AND enabled = 'yes'";
+		$messages = get_data($query);
 
 		foreach($messages as $key => $obj){
-			$user = get_user($obj->owner_guid);
-			$data[] = array($obj->time_created, $obj->title, $user->name);
+			//$user = get_user($obj->owner_guid);
+			$data[] = array($obj->time_created, "title", $obj->owner_guid);
 		}
 	} 
     return $data;
