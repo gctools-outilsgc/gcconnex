@@ -129,7 +129,7 @@ function group_owners_block_handler($hook, $type, $menu, $params){
                     break;
                 case 'activity':
                     elgg_unregister_menu_item('owner_block', 'activity');
-                    $item->setText('Activity');
+                    $item->setText(elgg_echo('activity'));
                     $item->setHref('#activity');
                     $item->setPriority('8');
                     break;
