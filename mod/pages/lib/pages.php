@@ -108,7 +108,6 @@ function pages_get_navigation_tree($container) {
 
 	foreach ($top_pages as $page) {
 		if ($page->title3){
-
 			$tree[] = array(
 			'guid' => $page->getGUID(),
 			'title' => gc_explode_translation($page->title3,$lang),
@@ -145,8 +144,7 @@ function pages_get_navigation_tree($container) {
                 }else{
                     $child_title = $child->title;
                 }
-               
-				
+               				
 				$tree[] = array(
 					'guid' => $child->getGUID(),
 					'title' => $child_title,
