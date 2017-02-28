@@ -54,7 +54,7 @@ foreach ($personal_contents as $personal_content) {
     $unsubscribe_button = elgg_view('input/button', array(
         'class' =>'btn btn-default unsub-button',
         'id'=> $personal_content->guid .'_unsub',
-        'value' => elgg_echo("cp_notify:unsubscribe"),
+        'value' => elgg_echo('cp_notifications:unsubscribe'),
     ));
 	$item_right = "<div class='col-sm-2'>{$unsubscribe_button}</div>";
 

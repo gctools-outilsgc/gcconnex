@@ -7,6 +7,13 @@
  *
  */
 
+/**
+ *
+ */
+function information_icon($text, $url) {
+	return "<span class='pull-right'><a title='{$text}' target='_blank' href='{$url}'><i class='fa fa-info-circle icon-sel'><span class='wb-invisible'> </span></i></a></span>";
+}
+
 gatekeeper();
 $user = elgg_get_page_owner_entity();
 $plugin = elgg_extract("entity", $vars);
@@ -14,16 +21,16 @@ $dbprefix = elgg_get_config('dbprefix');
 $site = elgg_get_site_entity();
 elgg_load_library('elgg:gc_notification:functions');
 
-$title = elgg_echo('cp_notify:panel_title',array("<a href='".elgg_get_site_url()."settings/user/'>".elgg_echo('label:email')."</a>"));
-$current_user = elgg_get_logged_in_user_entity();
+$title = elgg_echo('cp_notifications:heading:page_title',array("<a href='".elgg_get_site_url()."settings/user/'>".elgg_echo('cp_notifications:your_email')."</a>"));
+
 
 
 /// DIGEST OPTION FOR USER NOTIFICATIONS
 $enable_digest = elgg_get_plugin_setting('cp_notifications_enable_bulk','cp_notifications');
 if (strcmp($enable_digest, 'yes') == 0) {
 
-	// notice for all the users who would like to enable the digest
-	$content .= "<div class='col-sm-12' style='text-align:center; border: 2px solid #055959; padding: 2px 2px 2px 2px; border-radius:5px; color:#055959;'> ".elgg_echo('cp_newsletter:notice')." </div>";
+	/// Information for the users regarding to the Notifications system
+	$content .= "<div class='alert alert-info col-sm-12'><p>".elgg_echo('cp_newsletter:notice')."</p></div>";
 
 	/// enable notifications digest
 	$chk_email = create_checkboxes($user->getGUID(), 'cpn_set_digest', array('set_digest_yes', 'set_digest_no'), '', 'chbox_enable_digest', 'chbox_enable_digest');
@@ -31,18 +38,19 @@ if (strcmp($enable_digest, 'yes') == 0) {
 	$is_checked = (strcmp($user_option, 'set_digest_no') == 0 || strcmp($user_option, 'set_notify_off') == 0 || !$user_option) ? false : true;
 	$jquery_switch = '<label class="switch"> '.$chk_email.' <div class="slider round"></div> </label>';
 
-	$more_info = "<span class='pull-right'><a title='How frequent the digest should be sent out' target='_blank' href='#'><i class='fa fa-info-circle icon-sel'><span class='wb-invisible'> </span></i></a></span>";
-
+	$more_info = information_icon(elgg_echo('cp_newsletter:information:digest_option'), elgg_echo('cp_newsletter:information:digest_option:url'));
 	$content .= "<section id='notificationstable' cellspacing='0' cellpadding='4' width='100%' class='clearfix'>";
-	$content .= '<div class="col-sm-12 clearfix"> <h3 class="well">'.elgg_echo('cp_notify:NewsletterSettings').'</h3>'; 
-	
-	$content .= '<div class="col-sm-8">'.elgg_echo('cp_notify:enable_digest').$more_info.'</div>';
+	$content .= '<div class="col-sm-12 clearfix"> <h3 class="well">'.elgg_echo('cp_notifications:heading:newsletter_section').'</h3>'; 
+
+	/// Warning for the Digest functionality
+	$content .= "<div class='info_digest_section alert alert-warning col-xs-12' hidden><p>".elgg_echo('cp_newsletter:notice')."</p></div>";
+
+	$content .= '<div class="col-sm-8">'.elgg_echo('cp_newsletter:enable_digest_option').$more_info.'</div>';
 	$content .= "<div class='col-sm-2'>{$jquery_switch} </div> <div class='col-sm-2'>    </div>";
 
 
 	if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->getOwnerGUID(),'cp_notifications'),'set_digest_yes') != 0)
 		$visibility = "hidden";
-
 		$content .= "<div id='more_digest_options' {$visibility}>";
 
 		/// select daily or weekly notification
@@ -54,10 +62,9 @@ if (strcmp($enable_digest, 'yes') == 0) {
 			$chk_occur_weekly = "<input type='radio' name='params[cpn_set_digest_frequency]' value='set_digest_weekly' checked='checked'> Weekly";
 			$chk_occur_daily = "<input type='radio' name='params[cpn_set_digest_frequency]' value='set_digest_daily'> Daily";
 		}
-		
-		$more_info = "<span class='pull-right'><a title='How frequent the digest should be sent out' target='_blank' href='#'><i class='fa fa-info-circle icon-sel'><span class='wb-invisible'> </span></i></a></span>";
 
-		$content .= '<div class="col-sm-8">'.elgg_echo('cp_notify:set_frequency')."{$more_info}</div>";
+		$more_info = information_icon(elgg_echo('cp_newsletter:information:frequency'), elgg_echo('cp_newsletter:information:frequency:url'));
+		$content .= '<div class="col-sm-8">'.elgg_echo('cp_newsletter:set_frequency')."{$more_info}</div>";
 		$content .= "<form> <div class='col-sm-2'>{$chk_occur_daily}</div> <div class='col-sm-2'>{$chk_occur_weekly}</div> </form>";	
 		
 		/// select language preference
@@ -71,28 +78,28 @@ if (strcmp($enable_digest, 'yes') == 0) {
 			$chk_language_en = "<input type='radio' name='params[cpn_set_digest_language]' value='set_digest_en'> English";
 		}
 
-		$more_info = "<span class='pull-right'><a title='What is the preferred language that the digest should be sent in' target='_blank' href='#'><i class='fa fa-info-circle icon-sel'><span class='wb-invisible'> </span></i></a></span>";
-
-		$content .= '<div class="col-sm-8">'.elgg_echo('cp_notify:set_language')."{$more_info}</div>";
+		$more_info = information_icon(elgg_echo('cp_newsletter:information:language'), elgg_echo('cp_newsletter:information:language:url'));
+		$content .= '<div class="col-sm-8">'.elgg_echo('cp_newsletter:set_language')."{$more_info}</div>";
 		$content .= "<div class='col-sm-2'>{$chk_language_en}</div> <div class='col-sm-2'>{$chk_language_fr}</div>";
 
 	$content .= "</div>";
-
 	$content .= "</div>";
 	$content .= "</section>";
 
 }
 
+
+
 /// PERSONAL NOTIFICATIONS (NOTIFY FOR LIKES, @MENTIONS AND MAYBE SHARES)
 $content .= "<section id='notificationstable' cellspacing='0' cellpadding='4' width='100%' class='clearfix'>";
-$content .= '<div class="col-sm-12 clearfix"> <h3 class="well">'.elgg_echo('cp_notify:personalNotif').'</h3>';
+$content .= '<div class="col-sm-12 clearfix"> <h3 class="well">'.elgg_echo('cp_notifications:heading:personal_section').'</h3>';
 
 $personal_notifications = array('likes','mentions','content', 'opportunities');
 foreach ($personal_notifications as $label) {
 
-	$chk_email = create_checkboxes($user->getGUID(), "cpn_{$label}_email", array("{$label}_email", "set_notify_off"), elgg_echo('label:email'));
-	$chk_site = create_checkboxes($user->getGUID(), "cpn_{$label}_site", array("{$label}_site", "set_notify_off"), elgg_echo('label:site'), '', 'chkbox_site');
-	$content .= '<div class="col-sm-8">'.elgg_echo("cp_notify:personal_{$label}").'</div>';
+	$chk_email = create_checkboxes($user->getGUID(), "cpn_{$label}_email", array("{$label}_email", "set_notify_off"), elgg_echo('cp_notifications:chkbox:email'));
+	$chk_site = create_checkboxes($user->getGUID(), "cpn_{$label}_site", array("{$label}_site", "set_notify_off"), elgg_echo('cp_notifications:chkbox:site'), '', 'chkbox_site');
+	$content .= '<div class="col-sm-8">'.elgg_echo("cp_notifications:personal_{$label}").'</div>';
 	$content .= "<div class='col-sm-2'>{$chk_email}</div> <div class='col-sm-2'>{$chk_site}</div>";
 }
 
@@ -112,12 +119,12 @@ $colleague_picker = elgg_view('input/friendspicker', array(
 ));
 
 $content .= "<section id='notificationstable' cellspacing='0' cellpadding='4' width='100%' class='clearfix'>";
-$content .= '	<div class="col-sm-12"><h3 class="well">'.elgg_echo('cp_notify:collNotif').'</h3>';
-$content .= '		<div class="col-sm-8">'.elgg_echo('cp_notify:colleagueContent').'</div>';
+$content .= '	<div class="col-sm-12"><h3 class="well">'.elgg_echo('cp_notifications:heading:colleague_section').'</h3>';
+//$content .= '		<div class="col-sm-8">'.elgg_echo('cp_notifications:pick_colleagues').'</div>';
 $content .= '		<div class="accordion col-sm-12 clearfix mrgn-bttm-sm">';
 $content .= '			<div class="tgl-panel clearfix">';
 $content .= '				<details style="width:100%; display:inline-block;" >';
-$content .= '					<summary>'.elgg_echo('cp_notify:pickColleagues').'</summary>';
+$content .= '					<summary>'.elgg_echo('cp_notifications:pick_colleagues').'</summary>';
 $content .= "					<div style='padding:5px 15px 0px 5px;'> {$colleague_picker} </div>";
 $content .= '				</details>';
 $content .= '			</div>';	
@@ -131,60 +138,41 @@ $content .= "</section>";
 $subscribe_link = elgg_add_action_tokens_to_url(elgg_get_site_url()."action/cp_notifications/user_autosubscription?sub=sub");
 $unsubscribe_link = elgg_add_action_tokens_to_url(elgg_get_site_url()."action/cp_notifications/user_autosubscription?sub=unsub");
 
-$chk_all_email = elgg_view('input/checkbox', array(
-	'name' => "params[cpn_group_email_{$user->getGUID()}]",
-	'label'=> elgg_echo('cp_notify:emailsForGroup'),
-	'class'=> 'all-email',
-	'id' => 'chk_group_email'
-));
 
-$chk_all_site_mail = elgg_view('input/checkbox', array(
-	'name' => "params[cpn_group_site_{$user->getGUID()}]",
-	'label' => elgg_echo('cp_notify:siteForGroup'),
-	'class' => 'all-site',
-	'id' => 'chk_group_site'
-));
-	$chk_all_email = create_checkboxes($user->getGUID(), "cpn_group_email_{$user->getGUID()}", array(), elgg_echo('label:email'), 'chk_group_email', 'all-email');
-	$chk_all_site_mail = create_checkboxes($user->getGUID(), "cpn_group_site_{$user->getGUID()}", array(), elgg_echo('label:site'), 'chk_group_site', 'all-site chkbox_site');
-
+$chk_all_email = create_checkboxes($user->getGUID(), "cpn_group_email_{$user->getGUID()}", array(),  elgg_echo('cp_notifications:chkbox:email'), 'chk_group_email', 'all-email');
+$chk_all_site_mail = create_checkboxes($user->getGUID(), "cpn_group_site_{$user->getGUID()}", array(),  elgg_echo('cp_notifications:chkbox:site'), 'chk_group_site', 'all-site chkbox_site');
 
 $query = "SELECT g.name, g.guid FROM {$dbprefix}entity_relationships r LEFT JOIN {$dbprefix}groups_entity g ON r.guid_two = g.guid WHERE r.guid_one = {$user->guid} AND r.relationship = 'member'";
 $groups = get_data($query);
 
-
 /// SUBSCRIBE OR UNSUBSCRIBE TO ALL GROUP AND GROUP CONTENT NOTIFICATIONS 
 $content .= "<section id='notificationstable' cellspacing='0' cellpadding='4' width='100%' class='clearfix'>";
-$content .= '	<div class="col-sm-12 group-notification-options"><h3 class="well">'.elgg_echo('cp_notify:groupNotif').'</h3>';
+$content .= '	<div class="col-sm-12 group-notification-options"><h3 class="well">'.elgg_echo('cp_notifications:heading:group_section').'</h3>';
 $content .= "		<div style='padding-bottom:50px;'>";
-$content .= "			<div style='border:1px solid black; padding: 2px 2px 2px 10px;'> <center><a href='{$subscribe_link}'> ".elgg_echo('cp_notify:subscribe_all_label',array($subscribe_link,$unsubscribe_link))." </a></center></div>";
+$content .= "			<div style='border:1px solid black; padding: 2px 2px 2px 10px;'> <center><a href='{$subscribe_link}'> ".elgg_echo('cp_notifications:subscribe_all_label',array($subscribe_link,$unsubscribe_link))." </a></center></div>";
 $content .= "		</div>";
 
+$more_info = information_icon(elgg_echo('cp_newsletter:information:select_all'), elgg_echo('cp_newsletter:information:select_all:url'));
+$content .= "<div class='col-sm-8'> ".elgg_echo('cp_notifications:chkbox:select_all_group_for_notification')." {$more_info} </div> <div class='col-sm-2 mrgn-bttm-md'>{$chk_all_email}</div>		<div class='col-sm-2 mrgn-bttm-md'>{$chk_all_site_mail}</div>";
+$content .= "<hr/>";
 
-$more_info = "<span class='pull-right'><a title='How frequent the digest should be sent out' target='_blank' href='#'><i class='fa fa-info-circle icon-sel'><span class='wb-invisible'> </span></i></a></span>";
-$content .= "<div class='col-sm-8'> {$more_info} </div> <div class='col-sm-2 mrgn-bttm-md'>{$chk_all_email}</div>		<div class='col-sm-2 mrgn-bttm-md'>{$chk_all_site_mail}</div>";
 
 $content .= "<div id='group_notifications_section'>";
 foreach ($groups as $group) {
 
 	// list all the groups, Update Relationship table as per selection by user
     $group_subscription = check_entity_relationship ($user->guid, 'cp_subscribed_to_email', $group->guid);
-    if ($group_subscription) 
-    	elgg_set_plugin_user_setting("cpn_email_{$group->guid}", "sub_{$group->guid}", $user->guid, 'cp_notifications');
-    else
-    	elgg_set_plugin_user_setting("cpn_email_{$group->guid}", "set_notify_off", $user->guid, 'cp_notifications');
-
+    $group_notification_settings = ($group_subscription) ? "sub_{$group->guid}" : "set_notify_off";
+    elgg_set_plugin_user_setting("cpn_email_{$group->guid}", $group_notification_settings, $user->guid, 'cp_notifications');
 
     $group_subscription = check_entity_relationship ($user->guid, 'cp_subscribed_to_site_mail', $group->guid);
-    if ($group_subscription) 
-    	elgg_set_plugin_user_setting("cpn_site_mail_{$group->guid}", "sub_site_{$group->guid}", $user->guid, 'cp_notifications');
-    else
-    	elgg_set_plugin_user_setting("cpn_site_mail_{$group->guid}", "set_notify_off", $user->guid, 'cp_notifications');
-
+    $group_notification_settings = ($group_subscription) ? "sub_site_{$group->guid}" : "set_notify_off";
+    elgg_set_plugin_user_setting("cpn_site_mail_{$group->guid}", $group_notification_settings, $user->guid, 'cp_notifications');
 
     $group_url = elgg_get_site_url()."groups/profile/{$group->guid}/{$group->name}";
     // Nick - checkboxes for email and site. if they are checked they will send 'sub_groupGUID' if not checked they will send 'unSub' (is now set_notify_off)
-	$chk_email_grp = create_checkboxes($user->getGUID(), "cpn_email_{$group->guid}", array("sub_{$group->guid}", "set_notify_off"), elgg_echo('label:email'), '', 'group_email');
-	$chk_site_grp = create_checkboxes($user->getGUID(), "cpn_site_mail_{$group->guid}", array("sub_site_{$group->guid}", "set_notify_off"), elgg_echo('label:site'), '', 'group_site chkbox_site');
+	$chk_email_grp = create_checkboxes($user->getGUID(), "cpn_email_{$group->guid}", array("sub_{$group->guid}", "set_notify_off"),  elgg_echo('cp_notifications:chkbox:email'), '', 'group_email');
+	$chk_site_grp = create_checkboxes($user->getGUID(), "cpn_site_mail_{$group->guid}", array("sub_site_{$group->guid}", "set_notify_off"),  elgg_echo('cp_notifications:chkbox:site'), '', 'group_site chkbox_site');
 
 	$content .= "			<div class='namefield col-sm-8'> <strong> <a href='{$group_url}' id='group-{$group->guid}'>{$group->name}</a> </strong> </div>";
     $content .= "			<div class='col-sm-2'>{$chk_email_grp}</div>	<div class='col-sm-2'>{$chk_site_grp}</div>";
@@ -192,10 +180,11 @@ foreach ($groups as $group) {
 	// GROUP CONTENT SUBSCRIPTIONS
     $content .= '		<div class="accordion col-sm-12 clearfix mrgn-bttm-sm">';
 	$content .= '			<details onClick="return create_group_content_item('.$group->guid.', '.$user->getGUID().')">';
-	$content .= "				<summary >".elgg_echo('cp_notify:groupContent').'</summary>';
+	$content .= "				<summary >".elgg_echo('cp_notifications:group_content').'</summary>';
+    
     $content .= "				<div id='group-content-{$group->guid}' class='tgl-panel clearfix'></div>";
     $content .= '			</details>';	
-    $content .= '		</div>';			
+    $content .= '		</div> <hr/>';			
    				
 }
 $content .= "</div>";
@@ -210,7 +199,7 @@ $personal_subscriptions = get_data($query);
 
 // ajax the view for personal notifications (performance enhancement)
 $content .= "<section id='notificationstable' cellspacing='0' cellpadding='4' width='100%' class='clearfix'>";
-$content .= '<div class="col-sm-12 group-notification-options"><h3 class="well">'.elgg_echo('cp_notify:personal_setting').'</h3>';
+$content .= '<div class="col-sm-12 group-notification-options"><h3 class="well">'.elgg_echo('cp_notifications:heading:nonGroup_section').'</h3>';
 
 foreach ($entity_list as $subtype) {
 
@@ -228,8 +217,6 @@ foreach ($entity_list as $subtype) {
 $content .= "</div>";
 $content .= "</section>";
 
-
-
 if (strcmp(elgg_get_plugin_setting('cp_notifications_sidebar','cp_notifications'), 'yes') == 0)
 	echo elgg_extend_view('page/elements/sidebar','cp_notifications/sidebar');
 
@@ -239,6 +226,12 @@ echo elgg_view_module('info', $title, $content);
 ?>
 
 <?php /// css scripts to render the usersettings page for notifications ?>
+
+
+
+
+
+
 
 <style>
 	
@@ -313,9 +306,11 @@ input:checked + .slider:before {
 	$(document).ready( function () {
 
 		// TODO: incompatible with IE11 ...
-		$(".chbox_enable_digest").removeClass('elgg-input-checkbox');
+		$(".chkbox_enable_digest").removeClass('elgg-input-checkbox');
 
+		$(".chkbox_enable_digest").click(function() {
 
+		});
 
 		// select all groups
 		$(".all-email").click(function() {
@@ -332,6 +327,8 @@ input:checked + .slider:before {
 		$('input[name="params[cpn_set_digest]"]').click(function() {
 			$("#more_digest_options").fadeToggle(this.checked);
 			$(".chkbox_site").attr('disabled',this.checked);
+			if (!this.checked)
+				$(".info_digest_section").show('slow');
 		});
 
 		$(' #digest_frequency').click(function(e) {
@@ -358,7 +355,7 @@ input:checked + .slider:before {
 		if ($('#group-content-' + grp_guid).is(':visible')) {
 			// do nothing
 		} else {
-			var loading_text = elgg.echo('cp_notify:setting:loading');
+			var loading_text = elgg.echo('cp_notifications:loading');
 
 			$('#group-content-' + grp_guid).children().remove();
 			$('#group-content-' + grp_guid).append("<div class='clearfix col-sm-12 list-break'>" + loading_text + "<div>");

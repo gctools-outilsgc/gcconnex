@@ -3,45 +3,85 @@
 $site = elgg_get_site_entity();
 $site_name = $site->name;
 $contact_us = "{$site->getURL()}mod/contactform/";
-$notifications_settings = "{$site->getURL()}settings/plugin/{$to->username}/cp_notifications";
 
 $english = array(
 
-	/// Newsletter variables
+	/// SETTINGS PAGE: Newsletter translation texts
+	'cp_newsletter:notice' => "If you enable the digest, your newsletter will include everything selected under EMAIL in group notifications. See the <a href='#'>Notifications User Guide</a> for more information.",
+	'cp_newsletter:notice:disable_digest' => "Once digest feature is disabled and saved, you will start receiving instant notifications based on your selections below. You will not receive the notifications regarding... See guide for more <a href='#'>information</a>.",
 	'cp_newsletter:subject:daily' => 'Your Daily Newsletter',
 	'cp_newsletter:subject:weekly' => 'Your Weekly Newsletter',
-	'cp_newsletter:notice' => "Once you enabled the Digest functionality, you will receive only one notification by mail on a daily or weekly basis depending on your chosen option. For more information visit [link].",
+	'cp_newsletter:enable_digest_option' => "Enable digest feature",
+	'cp_newsletter:label:english' => "English",
+	'cp_newsletter:label:french' => "French",
+	'cp_newsletter:label:daily' => "Daily",
+	'cp_newsletter:label:weekly' => "Weekly",
+
+	'cp_newsletter:information:digest_option' => "This will enable or disable the Newsletter functionality",
+	'cp_newsletter:information:digest_option:url' => "#",
+	'cp_newsletter:information:frequency' => "This will determine how often you want to receive the Newsletter",
+	'cp_newsletter:information:frequency:url' => "#",
+	'cp_newsletter:information:language' => "This will determine which language you want the Newsletter displayed in",
+	'cp_newsletter:information:language:url' => "#",
+	'cp_newsletter:information:select_all' => "This will only select the group itself, not the group content",
+	'cp_newsletter:information:select_all:url' => "#",
+	'cp_newsletter:set_frequency' => "When do you want to receive Digest",
+	'cp_newsletter:set_language' => "Which language do you want to receive Digest",
+
+	'cp_notifications:subtype:groupforumtopic' => "Discussions",
+	'cp_notifications:subtype:hjforumtopic' => "Forum Topic",
+	'cp_notifications:subtype:hjforumpost' => "Topic reply",
+	'cp_notifications:subtype:page' => "Page",
+	'cp_notifications:subtype:blog' => "Blog",
+	'cp_notifications:subtype:bookmark' => "Bookmark",
+	'cp_notifications:subtype:file' => "File",
+	'cp_notifications:subtype:album' => "Album",
+	'cp_notifications:subtype:thewire' => "Wire",
+
+	'cp_notifications:no_colleagues' => "You do not have any colleagues",
+    'cp_notifications:chkbox:email' => "Email",
+    'cp_notifications:chkbox:site' => "Site",
+	'cp_notifications:unsubscribe' => 'Unsubscribe',
+	'cp_notifications:not_subscribed' => 'Not Subscribed',
+	'cp_notifications:pick_colleagues' => 'Subscribe to your colleagues',
+	'cp_notifications:group_content'=>'Group Content',
+    'cp_notifications:no_group_subscription' => "Nothing to load",
+ 	'cp_notifications:loading' => 'Loading...',
+	'cp_notifications:subscribe_all_label' => "<a href='%s'>Subscribe</a> or <a href='%s'> Unsubscribe</a> to all groups and their content",
+	'cp_notifications:chkbox:select_all_group_for_notification' => "Select all the groups (not the group content)",
+
+    'cp_notifications:personal_likes' => 'Notify me when someone likes my content',
+    'cp_notifications:personal_mentions' => 'Notify me when someone @mentions me',
+    'cp_notifications:personal_content' => 'Notify me when something happens on content I create',
+    'cp_notifications:personal_colleagues' => 'Notify me when my colleagues create content',
+	'cp_notifications:personal_opportunities' => "Notify me when a new opportunity I have opted in for is created in the Career ConneXions Opportunities Platform",
+
+
+	/// SETTINGS PAGE: Notification headings
+	'cp_notifications:heading:page_title' => 'Subscription settings (go here to edit %s)',
+	'cp_notifications:your_email' => "your email",
+	'cp_notifications:heading:newsletter_section' => "Notification Newsletter",
+ 	'cp_notifications:heading:personal_section'=>'Personal Notifications',
+    'cp_notifications:heading:colleague_section'=>'Colleague Notifications',
+    'cp_notifications:heading:group_section' => 'Group Notifications',
+ 	'cp_notifications:heading:nonGroup_section' => 'Non Group related subscriptions',
+
+
 	
-	'groupforumtopic' => "Discussions",
-	'hjforumtopic' => "Forum Topic",
-	'hjforumpost' => "Topic reply",
-	
-	'newsletter:title_heading:nothing' => "Your {$site_name} Digest: Nothing to report today",
-	'newsletter:title_heading' => "Your {$site_name} Digest: %s",
-	'newsletter:greeting' => "Good morning %s. Here are your notifications for <strong>%s</strong>.",
-	'newsletter_body:status:nothing' => "It seems it was quiet in your network on GCconnex, we have nothing to report.",
-	'newsletter:footer:notification_settings' => "To unsubscribe or manage these messages, please login and visit your <a href='<?php echo $notifications_settings; ?>'> Notification Settings</a>.",
-	'newsletter:ending' => "<p>Regards,</p> <p>The GCTools Team</p>",
+	/// (NEWSLETTER) THROUGH EMAIL SERVER, EMAIL CONTENT: Newsletter email notifications
+	'cp_newsletter:title_heading:nothing' => "Your {$site_name} Digest: Nothing to report today",
+	'cp_newsletter:body:nothing' => "It seems it was quiet in your network on GCconnex, we have nothing to report.",
+	'cp_newsletter:title_heading' => "Your {$site_name} Digest: There has been some new contents and updates",
+	'cp_newsletter:greeting' => "Good morning %s. Here are your notifications for <strong>%s</strong>.",
 
-	'cp_notify:setting:no_grp_subscription' => 'Nothing to load',
 
-	'cp_notify:NewsletterSettings' => "Notification Newsletter",
-	'cp_notify:enable_digest' => "Enable Digest Feature",
-	'cp_notify:nocolleagues' => "You do not have any colleagues",
+	/// (INSTANT EMAIL) EMAIL CONTENT: Normal email notifications
+	'cp_newsletter:footer:notification_settings' => "To unsubscribe or manage these messages, please login and visit your <a href='{$site->getURL()}settings/plugin/%s/cp_notifications'> Notification Settings</a>.",
+	'cp_newsletter:ending' => "<p>Regards,</p> <p>The GCTools Team</p>",
 
-	'label:english' => "English",
-	'label:french' => "French",
-	'label:daily' => "Daily",
-	'label:weekly' => "Weekly",
-	'cp_notify:set_frequency' => "When do you want to receive Digest",
-	'cp_notify:set_language' => "Which language do you want to receive Digest",
 
-	'cp_notify:setting:no_grp_subscription' => '',
 
-	'cp_notify:setting:loading' => 'Loading...',
-
-	
-	// e-mail header text
+	/// notification header
 	'cp_notification:email_header' => 'This is a system-generated message from GCconnex. Please do not reply to this message',
 	'cp_notification:email_header_msg' => "",	
 
@@ -118,17 +158,6 @@ $english = array(
 	'cp_notify:subject:likes_user_update' => "%s liked your your updated avatar or your new colleague connection",
 	'cp_notify:body_likes_user_update:title' => "%s liked your your updated avatar or your new colleague connection",
 	'cp_notify:body_likes_user_update:description' => "Your recent avatar update or your new colleague connection was liked by %s", 
-
-	// cyu - there doesn't seem to be any differentiation between updated avatar and colleague connection
-	/*
-	'cp_notify:subject:likes_user_update_avatar' => "%s liked your your updated avatar", // Please update
-	'cp_notify:body_likes_user_update:title_avatar' => "%s liked your updated avatar", // Please update
-	'cp_notify:body_likes_user_update:description_avatar' => "Your recent avatar update was liked by %s", // Please update
-	
-	'cp_notify:subject:likes_user_update_colleague' => "%s liked your new colleague connection", // Please update
-	'cp_notify:body_likes_user_update:title_colleague' => "%s liked your recent update on your '%s'", // Please update
-	'cp_notify:body_likes_user_update:description_colleague' => "Your recent update on your '%s' was liked by %s", // Please update
-	*/
 
 	'cp_notify:body_likes:description' => "You can view your content by clicking on this link: %s",
 
@@ -317,19 +346,12 @@ $english = array(
 //'cp_notify:footer' => "Learn more about <a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Manage_Account_Settings/How_Do_I_Change_My_Notifications_Settings%3F'>GCconnex notifications</a>. %s sent you a site message entitled '%s'",
 
 
-	// texts that will be displayed in the site pages
-    'cp_notifications:usersettings:title' => 'Notifications Settings',
-
-    'label:email' => "Email",
-    'label:site' => "Site",
-	'cp_notify:panel_title' => 'Subscription settings (click to edit %s)',
 	'cp_notify:quicklinks' => 'Subscription Quick Links',
 	'cp_notify:content_name' => 'Content Name',
 	'cp_notify:email' => 'Notify by e-mail',
 	'cp_notify:site_mail' => 'Notify by site mail',
 	'cp_notify:subscribe' => 'Subscribe',
-	'cp_notify:unsubscribe' => 'Unsubscribe',
-	'cp_notify:not_subscribed' => 'Not Subscribed',
+
 
 	'cp_notify:no_group_sub' => "You have not subscribed to any Group content",
 	'cp_notify:no_sub' => "You have not subscribed to any content",
@@ -346,16 +368,10 @@ $english = array(
 	'cp_notify:french_follows' => "<i>(Le fran&ccedil;ais suit)</i>",
 	'cp_notify:readmore' => "<a href='%s'>Read more</a>",
 
-	'cp_notify:personal_opportunities' => "Notify me when a new opportunity I have opted in for is created in the Career ConneXions Opportunities Platform",
-
-    'cp_notify:personal_likes'=>'Notify me when someone likes my content',
-    'cp_notify:personal_mentions'=>'Notify me when someone @mentions me',
-    'cp_notify:personal_content'=>'Notify me when something happens on content I create',
-
-    'cp_notify:pickColleagues' => 'Subscribe to your colleagues',
-    'cp_notify:colleagueContent'=>'Notify me when my colleagues create content',
+	
     'cp_notify:emailsForGroup'=>'Select All',
-    'cp_notify:groupContent'=>'Group Content',
+
+
     'cp_notify:notifNewContent'=>'Notify me when new content is created (Discussion, Files, etc.)',
     'cp_notify:notifComments'=>'Notify me when comments are created',
     
@@ -363,9 +379,7 @@ $english = array(
     'cp_notify:unsubBell'=>'You are subscribed to this content. Click to unsubscribe.',
     'cp_notify:subBell'=>'You are not subscribed to this content. Click to subscribe and recieve notifications about this content.',
     'cp_notify:comingSoon'=>'Coming soon!',
-    'cp_notify:personalNotif'=>'Personal Notifications',
-    'cp_notify:collNotif'=>'Colleague Notifications',
-    'cp_notify:groupNotif'=>'Group Notifications',
+   
 
     'cp_notify:start_subscribe' => 'Start Subscription',
     'cp_notify:stop_subscribe' => 'Stop Subscription',
@@ -375,9 +389,9 @@ $english = array(
 	'cp_notify:sidebar:forum_title' => 'Forum and Forum Topics',
 
 	'cp_notify:wirepost_generic_title' => 'Wire post',
-	'cp_notify:subscribe_all_label' => "<a href='%s'>Subscribe</a> or <a href='%s'> Unsubscribe</a> to all groups and their content",
+
 	'cp_notify:unsubscribe_all_label' => 'Click here to unsubscribe to all the groups update',
-	'cp_notify:personal_setting' => 'Your Subscriptions',
+
 	'cp_notify:no_subscription' => 'There are no subscriptions',
 
 	'not_contact_person' => 'Not the right contact?',

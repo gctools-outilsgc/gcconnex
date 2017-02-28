@@ -215,7 +215,7 @@ switch ($msg_type) {
 		$topic_author = get_entity($vars['cp_topic']->owner_guid);
 
 		if($vars['cp_topic']->title1){
-			$vars['cp_topic']->title =$vars['cp_topic']->title1;
+			$vars['cp_topic']->title = $vars['cp_topic']->title1;
 		}
 
 		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_new_content:title',array($topic_author->getURL(), $topic_author->username, cp_translate_subtype($vars['cp_topic']->getSubtype()), $vars['cp_topic']->getURL(), $vars['cp_topic']->title),'en');

@@ -14,8 +14,6 @@ $group_guid = (int)get_input('group_guid');
 $user_guid = (int)get_input('user_guid');
 elgg_load_library('elgg:gc_notification:functions');
 
-$no_notification_available = array('widget','hjforumcategory','messages','MySkill','experience','education','hjforumpost','hjforumtopic','hjforum');
-
 $options = array(
 	'subtypes' => array(),
 	'type' => 'object',
@@ -36,7 +34,7 @@ foreach ($group_contents as $group_content) {
         $unsubscribe_button = elgg_view('input/button', array(
             'class' =>'btn btn-default unsub-button',
             'id'=> $group_content->getGUID() .'_b',
-            'value' => elgg_echo("cp_notify:unsubscribe"),
+            'value' => elgg_echo('cp_notifications:unsubscribe'),
         ));
 		$group_item_right = "<div class='col-sm-2'>{$unsubscribe_button}</div>";
 
@@ -66,7 +64,7 @@ foreach ($group_contents as $key => $group_content) {
 		$unsubscribe_button = elgg_view('input/button', array(
             'class' =>'btn btn-default unsub-button',
             'id'=> $content->getGUID() .'_b',
-            'value' => elgg_echo("cp_notify:unsubscribe"),
+            'value' => elgg_echo('cp_notifications:unsubscribe'),
         ));
 		$group_item_right = "<div class='col-sm-2'>{$unsubscribe_button}</div>";
 
