@@ -42,6 +42,12 @@ $(document).ready(function () {
 	    }
 	});
 
+	$("input[name=submit]").click(function(){//if no title in english, copy the french one
+	   	if( !$("input[name=title]").val() ){
+			$("input[name=title]").val($("input[name=title2]").val());
+	  	}
+	});
+
 });
 
 </script>
