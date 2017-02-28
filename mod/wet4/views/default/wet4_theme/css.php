@@ -7875,7 +7875,7 @@ img.mfp-img {
   position: relative; }
 
 .modal-content {
-  background: transparent; }
+  /*background: transparent; */}
 
 .modal-body {
   background: #fff; }

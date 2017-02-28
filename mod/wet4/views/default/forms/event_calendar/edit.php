@@ -55,9 +55,9 @@ $schedule_options = array(
 );
 
 $language_options = array(
-	elgg_echo('Français'),
-	elgg_echo('English'),
-	elgg_echo('Bilingue'),
+	elgg_echo('event_calendar:lang:french'),
+	elgg_echo('event_calendar:lang:english'),
+	elgg_echo('event_calendar:lang:bilingual'),
 );
 
 if (elgg_is_active_plugin('event_poll')) {

@@ -1,7 +1,7 @@
 <?php
 
 //This is an Ajax call
-if (elgg_is_xhr()) {  
+if (elgg_is_xhr()) {
 
     $user_guid = get_input('guid');
     $user = get_user($user_guid);
@@ -19,17 +19,17 @@ if (elgg_is_xhr()) {
                 // cyu - check if email field is empty
                 if ($f === "email") {
                     // remove white spaces from both sides of string
-                    trim($v);   
+                    trim($v);
 
                     if (!$v) {
                         register_error(elgg_echo('gcc_profile:error').elgg_echo('gcc_profile:missingemail'));
                         return true;
                     }
-                    
+
                     elgg_load_library('c_ext_lib');
                     $isValid = false;
 
-                    
+
                     if ($v) {
                         // cyu - check if the email is in the list of exceptions
                         $user_email = explode('@',$v);
@@ -48,7 +48,7 @@ if (elgg_is_xhr()) {
                         // cyu - check if domain is gc.ca
                         if (!$isValid) {
                             $govt_domain = explode('.',$user_email[1]);
-                            $govt_domain_len = count($govt_domain) - 1;                           
+                            $govt_domain_len = count($govt_domain) - 1;
 
                             if ($govt_domain[$govt_domain_len - 1].'.'.$govt_domain[$govt_domain_len] === 'gc.ca') {
                                 $isValid = true;
@@ -66,53 +66,73 @@ if (elgg_is_xhr()) {
 
                     $user->set($f, $v);
                 }
-                else {
+                else  {
                 	if($f=='department'){
                 		$obj = elgg_get_entities(array(
-   							'type' => 'object',
-   							'subtype' => 'dept_list',
-   							'owner_guid' => 0
-						));
-						$departmentsEn = json_decode($obj[0]->deptsEn, true);
-						$provinces['pov-alb'] = 'Government of Alberta';
-						$provinces['pov-bc'] = 'Government of British Columbia';
-						$provinces['pov-man'] = 'Government of Manitoba';
-						$provinces['pov-nb'] = 'Government of New Brunswick';
-						$provinces['pov-nfl'] = 'Government of Newfoundland and Labrador';
-						$provinces['pov-ns'] = 'Government of Nova Scotia';
-						$provinces['pov-nwt'] = 'Government of Northwest Territories';
-						$provinces['pov-nun'] = 'Government of Nunavut';
-						$provinces['pov-ont'] = 'Government of Ontario';
-						$provinces['pov-pei'] = 'Government of Prince Edward Island';
-						$provinces['pov-que'] = 'Government of Quebec';
-						$provinces['pov-sask'] = 'Government of Saskatchewan';
-						$provinces['pov-yuk'] = 'Government of Yukon';
-						$departmentsEn = array_merge($departmentsEn,$provinces);
-						
-						$departmentsFr = json_decode($obj[0]->deptsFr, true);
-						$provincesFr['pov-alb'] = "Gouvernement de l'Alberta";
-						$provincesFr['pov-bc'] = 'Gouvernement de la Colombie-Britannique';
-						$provincesFr['pov-man'] = 'Gouvernement du Manitoba';
-						$provincesFr['pov-nb'] = 'Gouvernement du Nouveau-Brunswick';
-						$provincesFr['pov-nfl'] = 'Gouvernement de Terre-Neuve-et-Labrador';
-						$provincesFr['pov-ns'] = 'Gouvernement de la Nouvelle-Écosse';
-						$provincesFr['pov-nwt'] = 'Gouvernement du Territoires du Nord-Ouest';
-						$provincesFr['pov-nun'] = 'Gouvernement du Nunavut';
-						$provincesFr['pov-ont'] = "Gouvernement de l'Ontario";
-						$provincesFr['pov-pei'] = "Gouvernement de l'Île-du-Prince-Édouard";
-						$provincesFr['pov-que'] = 'Gouvernement du Québec';
-						$provincesFr['pov-sask'] = 'Gouvernement de Saskatchewan';
-						$provincesFr['pov-yuk'] = 'Gouvernement du Yukon';
-						$departmentsFr = array_merge($departmentsFr,$provincesFr);
-						
-						if (get_current_language()=='en'){
-							$deptString = $departmentsEn[$v]." / ".$departmentsFr[$v];
-						}else{
-							$deptString = $departmentsFr[$v]." / ".$departmentsEn[$v];
-						}
-			
-						$user->set('department',$deptString);
-                	}else{
+         							'type' => 'object',
+         							'subtype' => 'dept_list',
+         							'owner_guid' => 0
+      						));
+      						$departmentsEn = json_decode($obj[0]->deptsEn, true);
+      						$provinces['pov-alb'] = 'Government of Alberta';
+      						$provinces['pov-bc'] = 'Government of British Columbia';
+      						$provinces['pov-man'] = 'Government of Manitoba';
+      						$provinces['pov-nb'] = 'Government of New Brunswick';
+      						$provinces['pov-nfl'] = 'Government of Newfoundland and Labrador';
+      						$provinces['pov-ns'] = 'Government of Nova Scotia';
+      						$provinces['pov-nwt'] = 'Government of Northwest Territories';
+      						$provinces['pov-nun'] = 'Government of Nunavut';
+      						$provinces['pov-ont'] = 'Government of Ontario';
+      						$provinces['pov-pei'] = 'Government of Prince Edward Island';
+      						$provinces['pov-que'] = 'Government of Quebec';
+      						$provinces['pov-sask'] = 'Government of Saskatchewan';
+      						$provinces['pov-yuk'] = 'Government of Yukon';
+      						$departmentsEn = array_merge($departmentsEn,$provinces);
+
+      						$departmentsFr = json_decode($obj[0]->deptsFr, true);
+      						$provincesFr['pov-alb'] = "Gouvernement de l'Alberta";
+      						$provincesFr['pov-bc'] = 'Gouvernement de la Colombie-Britannique';
+      						$provincesFr['pov-man'] = 'Gouvernement du Manitoba';
+      						$provincesFr['pov-nb'] = 'Gouvernement du Nouveau-Brunswick';
+      						$provincesFr['pov-nfl'] = 'Gouvernement de Terre-Neuve-et-Labrador';
+      						$provincesFr['pov-ns'] = 'Gouvernement de la Nouvelle-Écosse';
+      						$provincesFr['pov-nwt'] = 'Gouvernement du Territoires du Nord-Ouest';
+      						$provincesFr['pov-nun'] = 'Gouvernement du Nunavut';
+      						$provincesFr['pov-ont'] = "Gouvernement de l'Ontario";
+      						$provincesFr['pov-pei'] = "Gouvernement de l'Île-du-Prince-Édouard";
+      						$provincesFr['pov-que'] = 'Gouvernement du Québec';
+      						$provincesFr['pov-sask'] = 'Gouvernement de Saskatchewan';
+      						$provincesFr['pov-yuk'] = 'Gouvernement du Yukon';
+      						$departmentsFr = array_merge($departmentsFr,$provincesFr);
+
+      						if (get_current_language()=='en'){
+      							$deptString = $departmentsEn[$v]." / ".$departmentsFr[$v];
+      						}else{
+      							$deptString = $departmentsFr[$v]." / ".$departmentsEn[$v];
+      						}
+
+      						$user->set('department',$deptString);
+
+                } else if($f == 'location' && $v) {
+
+                    //check to see if addressString exists
+                    if($user->addressString && $user->addressStringFr){
+
+                      //split up location field value
+                      $address = explode(',', $v);
+
+                      //Add cut up location field to address string
+                      //if user enters a proper address the address wil display nicely. If not the map will not display right
+                      //sadly we cannot extract all the same information from the location field properly to complete the json string
+                      $user->addressString = '{"street":"'.$address[0].'","city":"'.$address[1].'","province":"'.$address[2].'","country":"Canada","pc":""}';
+                      $user->addressStringFr = '{"street":"'.$address[0].'","city":"'.$address[1].'","province":"'.$address[2].'","country":"Canada","pc":""}';
+
+                    }
+
+                    //set value like normal
+                    $user->set($f, $v);
+
+                  } else {
                 		$user->set($f, $v);
                 	}
                 }
@@ -383,7 +403,7 @@ if (elgg_is_xhr()) {
             }
 
             $user->save();
-            
+
             break;
         case 'old-skills':
             $user->skillsupgraded = TRUE;
@@ -399,7 +419,7 @@ if (elgg_is_xhr()) {
             $user->french = $french;
             $user->officialLanguage = $firstlang;
             $user->save();
-			
+
 			$metadata = elgg_get_metadata(array(
                 'metadata_names' => array('english'),
                 'metadata_owner_guids' => array(elgg_get_logged_in_user_guid()),
@@ -407,7 +427,7 @@ if (elgg_is_xhr()) {
             ));
             if ($metadata){
                 foreach ($metadata as $data){
-					
+
                     update_metadata($data->id, $data->name, $data->value, $data->value_type, $data->owner_guid, $access);
                 }
             }
@@ -418,7 +438,7 @@ if (elgg_is_xhr()) {
             ));
             if ($metadata){
                 foreach ($metadata as $data){
-                    
+
                     update_metadata($data->id, $data->name, $data->value, $data->value_type, $data->owner_guid, $access);
                 }
             }
@@ -429,11 +449,11 @@ if (elgg_is_xhr()) {
             ));
             if ($metadata){
                 foreach ($metadata as $data){
-                    
+
                     update_metadata($data->id, $data->name, $data->value, $data->value_type, $data->owner_guid, $access);
                 }
             }
-			
+
             break;
         case 'portfolio':
             $portfolio = get_input('portfolio');
@@ -533,5 +553,5 @@ if (elgg_is_xhr()) {
 }
 
 // In case this view will be called via the elgg_view_form() action, then we know it's the basic profile only
-else {  
+else {
 }

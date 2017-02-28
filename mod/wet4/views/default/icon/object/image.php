@@ -15,6 +15,9 @@
  * GC_MODIFICATION
  * Description: added responsize class / layout changes
  * Author: GCTools Team
+ *
+ * Description: Add time to src image, so it fic problem with cache image when it rotate
+ * Author: GCTools Team
  */
 
 $entity = $vars['entity'];
@@ -47,10 +50,11 @@ if (isset($vars['img_class'])) {
 }
 $class = " $class center-block img-responsive";
 
+$time = time();// add time to fix cache problem with image rotation
 $img_src = $entity->getIconURL($vars['size']);
 $img_src = elgg_format_url($img_src);
 $img = elgg_view('output/img', array(
-	'src' => $img_src,
+	'src' => $img_src.''.$time,
 	'class' => $class,
 	'title' => $title,
 	'alt' => $title,

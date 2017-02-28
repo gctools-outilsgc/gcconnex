@@ -6,7 +6,9 @@
  * @uses $vars['show_add_form'] Display add form or not
  */
 
-if ('gsa-crawler' != strtolower($_SERVER['HTTP_USER_AGENT'])) {
+if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gsa_agentstring,strtolower($_SERVER['HTTP_USER_AGENT'])) == 0) || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ) {
+	
+} else {
 
 	 $show_add_form = elgg_extract('show_add_form', $vars, true);
 

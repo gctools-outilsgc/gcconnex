@@ -14,14 +14,14 @@
  * @return void
  */
 function simplesaml_login_event_handler($event, $type, $object) {
-	
+
 	if (!empty($object) && elgg_instanceof($object, "user")) {
-		
+
 		if (isset($_SESSION["saml_attributes"]) && isset($_SESSION["saml_source"])) {
-			
+
 			$saml_attributes = $_SESSION["saml_attributes"];
 			$source = $_SESSION["saml_source"];
-			
+
 			if (simplesaml_is_enabled_source($source)) {
 				$saml_uid = elgg_extract("elgg:external_id", $saml_attributes);
 				if (!empty($saml_uid)) {
@@ -31,14 +31,14 @@ function simplesaml_login_event_handler($event, $type, $object) {
 					// save the external id so the next login will go faster
 					simplesaml_link_user($object, $source, $saml_uid);
 				}
-				
+
 				// save the attributes to the user
 				simplesaml_save_authentication_attributes($object, $source, $saml_attributes);
-				
+
 				// save source name for single logout
 				$_SESSION["saml_login_source"] = $source;
 			}
-			
+
 			unset($_SESSION["saml_attributes"]);
 			unset($_SESSION["saml_source"]);
 		}
@@ -47,14 +47,14 @@ function simplesaml_login_event_handler($event, $type, $object) {
 	setcookie('connex_lang', elgg_get_logged_in_user_entity()->language, time()+(1000 * 60 * 60 * 24), '/');
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//auto login to GCpedia
-	
+
 	$pageurl=$_SERVER['HTTP_REFERER'];
-	
+
 	$pageurl = strstr($pageurl, '?', true);
 	//$pageurl = substr($pageurl, 0, strlen($pageurl));
 	if ($pageurl != elgg_get_site_url()."saml/idp_login"){
 		//system_message('this thing: '.$pageurl);
-	//forward("http://www.google.com");	
+	//forward("http://www.google.com");
 	//change adds session for use with share button
 	$session = elgg_get_session();
 	if ($session->has('last_forward_from')) {
@@ -71,8 +71,15 @@ function simplesaml_login_event_handler($event, $type, $object) {
 		));
 		$gcpuser = $obj[0]->title;
 		if ($gcpuser){
+			//exception for login as logout to unset all session variables
+			if($_SESSION['login_as_logout_flag']){
+				unset($_SESSION['login_as_original_user_guid']);
+				unset($_SESSION['login_as_original_persistent']);
+				unset($_SESSION['login_as_logout_flag']);
+			}
+
 			forward("http://".$_SERVER[HTTP_HOST]."/simplesaml/saml2/idp/SSOService.php?spentityid=".elgg_get_plugin_setting('gcpedia_url','saml_link')."simplesaml/module.php/saml/sp/metadata.php/elgg-idp&RelayState=$forward_url");
-		 	
+
 		}
 	//
 	}

@@ -14,7 +14,24 @@ $_SESSION['mission_that_invites'] = 0;
 $_SESSION['mission_search_switch'] = 'candidate';
 
 $result_set = array();
-if(time() > ($_SESSION['candidate_search_set_timestamp'] + elgg_get_plugin_setting('mission_session_variable_timeout', 'missions')) 
+$offset = (int) get_input('offset', 0);
+$entities_per_page = max($_SESSION['candidate_entities_per_page'], 10);
+
+if ((count($_SESSION['candidate_search_set']) < ($offset + $entities_per_page)) && (count($_SESSION['candidate_search_set']) < $_SESSION['candidate_count'])) {
+	$old_results = $_SESSION['candidate_search_set'];
+	$fetch_limit = ($offset + $entities_per_page) - count($_SESSION['candidate_search_set']);
+	$fetch_offset =  count($_SESSION['candidate_search_set']);
+
+	mm_simple_search_database_for_candidates(
+		$_SESSION['candidate_search_query_array'], $fetch_limit, $fetch_offset
+	);
+	$_SESSION['candidate_search_set'] = array_merge(
+		$old_results,
+		$_SESSION['candidate_search_set']
+	);
+}
+
+if(time() > ($_SESSION['candidate_search_set_timestamp'] + elgg_get_plugin_setting('mission_session_variable_timeout', 'missions'))
 		&& $_SESSION['candidate_search_set_timestamp'] != '') {
 	system_message(elgg_echo('missions:last_results_have_expired'));
 	unset($_SESSION['candidate_search_set']);
@@ -22,10 +39,6 @@ if(time() > ($_SESSION['candidate_search_set_timestamp'] + elgg_get_plugin_setti
 }
 else {
 	$result_set = $_SESSION['candidate_search_set'];
-}
-
-if($_SESSION['candidate_entities_per_page']) {
-	$entities_per_page = $_SESSION['candidate_entities_per_page'];
 }
 
 // Simple search form.
@@ -50,28 +63,20 @@ $advanced_field = elgg_view('page/elements/hidden-field', array(
 
 if($result_set) {
 	$search_set = '<h4>' . elgg_echo('missions:search_results') . '</h4>';
-	$count = count($result_set);
-	$offset = (int) get_input('offset', 0);
-	if($entities_per_page) {
-		$max = $entities_per_page;
-	}
-	else {
-		$max = elgg_get_plugin_setting('search_result_per_page', 'missions');
-	}
+	$count = $_SESSION['candidate_count'];
 
 	$max_reached = '';
-	if(($offset + $max) >= elgg_get_plugin_setting('search_limit', 'missions') && $count >= elgg_get_plugin_setting('search_limit', 'missions')) {
+	if(($offset + $entities_per_page) >= elgg_get_plugin_setting('search_limit', 'missions') && $count >= elgg_get_plugin_setting('search_limit', 'missions')) {
 		$max_reached = '<div class="col-sm-12" style="font-style:italic;">' . elgg_echo('missions:reached_maximum_entities') . '</div>';
 	}
-
-	$search_set .= elgg_view_entity_list(array_slice($result_set, $offset, $max), array(
+	$search_set .= elgg_view_entity_list(array_slice($result_set, $offset, $entities_per_page), array(
 			'count' => $count,
 			'offset' => $offset,
-			'limit' => $max,
+			'limit' => $entities_per_page,
 			'pagination' => true,
 			'missions_full_view' => false
-	), $offset, $max);
-	
+	), $offset, $entities_per_page);
+
 	$change_entities_per_page_form = elgg_view_form('missions/change-entities-per-page', array(
 			'class' => 'form-horizontal'
 	), array(
