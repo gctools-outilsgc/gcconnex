@@ -45,10 +45,10 @@ function get_member_data($type, $lang) {
 	ini_set("memory_limit", -1);
 	elgg_set_ignore_access(true);
 
-	$users = elgg_get_entities(array(
-		'type' => 'user',
-		'limit' => 0
-	));
+
+	$dbprefix = elgg_get_config('dbprefix');
+	$query = "SELECT u.guid, msv.string as department FROM {$dbprefix}users_entity u LEFT JOIN {$dbprefix}metadata md ON u.guid = md.entity_guid LEFT JOIN {$dbprefix}metastrings msn ON md.name_id = msn.id LEFT JOIN {$dbprefix}metastrings msv ON md.value_id = msv.id WHERE msn.string = 'department'";
+	$users = get_data($query);
 
 	/*if ($lang == 'fr'){
 		$users_types = array('federal' => 'féderal', 'provincial' => 'provincial', 'academic' => 'milieu universitaire', 'student' => 'étudiant', 'other' => 'autre');
@@ -141,9 +141,14 @@ function get_site_data($type, $lang) {
 		}
 	} else if ($type === 'messages') {
 		$typeid = get_subtype_id('object', 'messages');
+		$name_id = elgg_get_metastring_id("fromId");
 		$dbprefix = elgg_get_config('dbprefix');
 
-		$query = "SELECT guid, time_created, owner_guid FROM {$dbprefix}entities WHERE type = 'object' AND subtype = {$typeid} AND enabled = 'yes'";
+		$query = "SELECT e.guid, e.time_created as time_created, e.owner_guid as owner_guid FROM {$dbprefix}entities e JOIN {$dbprefix}metadata md ON md.entity_guid = e.guid 
+					LEFT JOIN {$dbprefix}metastrings ms ON ms.id = md.value_id
+					RIGHT JOIN {$dbprefix}users_entity efrom ON ms.string = efrom.guid
+					WHERE e.type = 'object' AND e.subtype = {$typeid} AND e.enabled = 'yes'
+					AND md.name_id = {$name_id} AND efrom.type='user'";
 		$messages = get_data($query);
 
 		foreach($messages as $key => $obj){
