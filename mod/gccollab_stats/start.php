@@ -123,19 +123,21 @@ function get_site_data($type, $lang) {
 		foreach($groupsjoined as $key => $obj){
 			//$user = get_user($obj->guid_one);
 			//$group = get_entity($obj->guid_two);
-			$data[] = array($obj->time_created, $obj->guid_one, $obj->guid_two);
+			if ( $obj->time_created )
+				$data[] = array($obj->time_created, $obj->guid_one, $obj->guid_two);
 		}
 	} else if ($type === 'likes') {
-		$likes = elgg_get_annotations(array(
-			'annotation_names' => array('likes'),
-			'limit' => 0
-		));
+		$dbprefix = elgg_get_config('dbprefix');
+		$likesID = elgg_get_metastring_id("likes");
+
+		$query = "SELECT * FROM {$dbprefix}annotations WHERE name_id = $likesID";
+		$likes = get_data($query);
 
 		foreach($likes as $key => $obj){
-			$entity = get_entity($obj->entity_guid);
-			$user = get_user($obj->owner_guid);
-			$user_liked = ($entity->title != "" ? $entity->title : ($entity->name != "" ? $entity->name : $entity->description));
-			$data[] = array($obj->time_created, $user->name, $user_liked);
+			//$entity = get_entity($obj->entity_guid);
+			//$user = get_user($obj->owner_guid);
+			//$user_liked = ($entity->title != "" ? $entity->title : ($entity->name != "" ? $entity->name : $entity->description));
+			$data[] = array($obj->time_created, $obj->owner_guid, "user_liked");
 		}
 	} else if ($type === 'messages') {
 		$typeid = get_subtype_id('object', 'messages');
