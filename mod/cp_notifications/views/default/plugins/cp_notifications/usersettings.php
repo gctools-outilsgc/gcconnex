@@ -75,11 +75,16 @@ if (strcmp($enable_digest, 'yes') == 0) {
 	/// Information for the users regarding to the Notifications system
 	$content .= "<div class='alert alert-info col-sm-12'><p>".elgg_echo('cp_newsletter:notice')."</p></div>";
 
-	/// enable notifications digest
-	$chk_email = create_checkboxes($user->getGUID(), 'cpn_set_digest', array('set_digest_yes', 'set_digest_no'), '', 'chbox_enable_digest', 'chbox_enable_digest');
-	$user_option = elgg_get_plugin_user_setting('cpn_set_digest', $user->guid, 'cp_notifications');
-	$is_checked = (strcmp($user_option, 'set_digest_no') == 0 || strcmp($user_option, 'set_notify_off') == 0 || !$user_option) ? false : true;
-	$jquery_switch = '<label class="switch"> '.$chk_email.' <div class="slider round"></div> </label>';
+	if (elgg_is_admin_user($user->guid))
+		$content .= $_SERVER["HTTP_USER_AGENT"];
+	$chk_email = create_checkboxes($user->getGUID(), 'cpn_set_digest', array('set_digest_yes', 'set_digest_no'), '', 'id_chkbox_enable_digest', 'class_chkbox_enable_digest');
+	if (strpos($_SERVER["HTTP_USER_AGENT"],'Edge') !== false || strpos($_SERVER["HTTP_USER_AGENT"],'MSIE') !== false) {
+		// nothing
+	} else {
+		$user_option = elgg_get_plugin_user_setting('cpn_set_digest', $user->guid, 'cp_notifications');
+		$is_checked = (strcmp($user_option, 'set_digest_no') == 0 || strcmp($user_option, 'set_notify_off') == 0 || !$user_option) ? false : true;
+		$chk_email = '<label class="switch"> '.$chk_email.' <div class="slider round"></div> </label>';
+	}
 
 	$more_info = information_icon(elgg_echo('cp_newsletter:information:digest_option'), elgg_echo('cp_newsletter:information:digest_option:url'));
 	$content .= "<section id='notificationstable' cellspacing='0' cellpadding='4' width='100%' class='clearfix'>";
@@ -89,7 +94,7 @@ if (strcmp($enable_digest, 'yes') == 0) {
 	$content .= "<div class='info_digest_section alert alert-warning col-xs-12' hidden><p>".elgg_echo('cp_newsletter:notice')."</p></div>";
 
 	$content .= '<div class="col-sm-8">'.elgg_echo('cp_newsletter:enable_digest_option').$more_info.'</div>';
-	$content .= "<div class='col-sm-2'>{$jquery_switch} </div> <div class='col-sm-2'>    </div>";
+	$content .= "<div class='col-sm-2'>{$chk_email} </div> <div class='col-sm-2'>    </div>";
  
 
 	if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->getOwnerGUID(),'cp_notifications'),'set_digest_yes') != 0)
@@ -220,10 +225,6 @@ foreach ($groups as $group) {
 	$content .= "			<div class='namefield col-sm-8'> <strong> <a href='{$group_url}' id='group-{$group->guid}'>{$group->name}</a> </strong> </div>";
     $content .= "			<div class='col-sm-2'>{$chk_email_grp}</div>	<div class='col-sm-2'>{$chk_site_grp}</div>";
 
-    //$subscription_count = "";
-	//if (has_group_subscriptions($group->guid, $user->guid) == 0)
-	//	$subscription_count = elgg_echo('cp_notifications:no_group_content');
-
 	// GROUP CONTENT SUBSCRIPTIONS
     $content .= '		<div class="accordion col-sm-12 clearfix mrgn-bttm-sm">';
 	$content .= '			<details onClick="return create_group_content_item('.$group->guid.', '.$user->getGUID().')">';
@@ -352,11 +353,9 @@ input:checked + .slider:before {
 	$(document).ready( function () {
 
 		// TODO: incompatible with IE11 ...
-		$(".chkbox_enable_digest").removeClass('elgg-input-checkbox');
+		$(".class_chkbox_enable_digest").removeClass('elgg-input-checkbox');
+		$("#id_chkbox_enable_digest").removeClass('elgg-input-checkbox');
 
-		$(".chkbox_enable_digest").click(function() {
-
-		});
 
 		// select all groups
 		$(".all-email").click(function() {
