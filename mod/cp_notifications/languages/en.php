@@ -74,16 +74,19 @@ $english = array(
 
 	
 	/// (NEWSLETTER) THROUGH EMAIL SERVER, EMAIL CONTENT: Newsletter email notifications
-	'cp_newsletter:title_heading:nothing' => "Your {$site_name} Digest: Nothing to report today",
+	'cp_newsletter:title:nothing' => "Your {$site_name} Digest: Nothing to report today",
 	'cp_newsletter:body:nothing' => "It seems it was quiet in your network on GCconnex, we have nothing to report.",
-	'cp_newsletter:title_heading' => "Your {$site_name} Digest: There has been some new contents and updates",
+	'cp_newsletter:title' => "Your {$site_name} Digest: There has been some new contents and updates",
 	'cp_newsletter:greeting' => "Good morning %s. Here are your notifications for <strong>%s</strong>.",
 
+	'cp_newsletter:subject:daily' => "GCconnex Daily Newsletter",
+	'cp_newsletter:subject:weekly' => "GCconnex Weekly Newsletter",
 
 	/// (INSTANT EMAIL) EMAIL CONTENT: Normal email notifications
 	'cp_newsletter:footer:notification_settings' => "To unsubscribe or manage these messages, please login and visit your <a href='{$site->getURL()}settings/plugin/%s/cp_notifications'> Notification Settings</a>.",
 	'cp_newsletter:ending' => "<p>Regards,</p> <p>The GCTools Team</p>",
 
+    'cp_notifications:contact_help_desk'=> "Should you have any concerns, please use the <a href='{$site->getURL()}mod/contactform/'>Contact us form</a>.",
 
 
 	/// notification header
@@ -365,7 +368,7 @@ $english = array(
 	"cp_notify:sidebar:group_title" => "Group you are member of",
 	"cp_notify:sidebar:subs_title" => "Personal Subscriptions",
     
-    'cp_notify:contactHelpDesk'=>'Should you have any concerns, please use the <a href="'.elgg_get_site_url().'mod/contactform/">Contact us form</a>.',
+
     'cp_notify:visitTutorials'=>'To learn more about GCconnex and its features visit the <a href="http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/See_All">GCconnex User Help</a>.<br/>
 	                             Thank you',
 

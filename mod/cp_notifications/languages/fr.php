@@ -86,7 +86,11 @@ $french = array(
 
 
 
+	'cp_newsletter:subject:daily' => "GCconnex Bulletin par jour",
+	'cp_newsletter:subject:weekly' => "GCconnex Bulletin par semaine",
+'cp_newsletter:body:nothing' => "Il semble que c'était calme dans votre réseau sur GCconnex, nous n'avons rien à signaler.",
 
+  'cp_notifications:contact_help_desk'=> "Si vous avez des questions, veuillez soumettre votre demande via le <a href='{$site->getURL()}mod/contactform/'>formulaire Contactez-nous</a>.",
 
 	/// NOTIFICATION CONTENT
 
@@ -398,7 +402,7 @@ $french = array(
 	"cp_notify:sidebar:group_title" => "Abonnement aux groupes et contenu",
 	"cp_notify:sidebar:subs_title" => "Abonnement personnel",
 
-	'cp_notify:contactHelpDesk'=>'Si vous avez des questions, veuillez soumettre votre demande via le <a href="'.elgg_get_site_url().'mod/contactform/">formulaire Contactez-nous</a>.',
+
     'cp_notify:visitTutorials'=>"Pour de plus amples renseignements sur GCconnex et ses fonctionnalités, consultez l'<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_-_Aide_%C3%A0_l%27utilisateur/Modifier_mes_param%C3%A8tres_de_compte/Comment_puis-je_modifier_mes_param%C3%A8tres_de_notification%3F'>aide à l'utilisateur de GCconnex</a>.<br/>
 	                             Merci",
 
