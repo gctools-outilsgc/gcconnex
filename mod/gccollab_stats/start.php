@@ -144,16 +144,15 @@ function get_site_data($type, $lang) {
 		$name_id = elgg_get_metastring_id("fromId");
 		$dbprefix = elgg_get_config('dbprefix');
 
-		$query = "SELECT e.guid, e.time_created as time_created, e.owner_guid as owner_guid FROM {$dbprefix}entities e LEFT JOIN {$dbprefix}metadata md ON md.entity_guid = e.guid 
-					LEFT JOIN {$dbprefix}metastrings ms ON ms.id = md.value_id
+		$query = "SELECT md.time_created as time_created, ms.string as sender_guid FROM {$dbprefix}metadata md 
+					RIGHT JOIN {$dbprefix}metastrings ms ON ms.id = md.value_id
 					RIGHT JOIN {$dbprefix}users_entity efrom ON ms.string = efrom.guid
-					WHERE e.type = 'object' AND e.subtype = {$typeid} AND e.enabled = 'yes'
-					AND md.name_id = {$name_id}";
+					WHERE md.name_id = {$name_id}";
 		$messages = get_data($query);
 
 		foreach($messages as $key => $obj){
 			//$user = get_user($obj->owner_guid);
-			$data[] = array($obj->time_created, "title", $obj->owner_guid);
+			$data[] = array($obj->time_created, "title", $obj->sender_guid);
 		}
 	} 
     return $data;
