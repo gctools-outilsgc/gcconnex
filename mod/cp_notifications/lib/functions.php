@@ -94,7 +94,7 @@ function cp_check_permissions($entity, $recipient_user_id = 0) {
  *
  * @param string 	$event
  */
-function cp_get_headers($event) { 	// $event will be null if nothing is passed into it (no default value set)
+function cp_get_headers($event = '') { 	// $event will be null if nothing is passed into it (no default value set)
 
 	$email_address = elgg_get_plugin_setting('cp_notifications_email_addr','cp_notifications');
 	if (!$email_address || $email_address === '') $email_address = 'admin.gcconnex@tbs-sct.gc.ca';

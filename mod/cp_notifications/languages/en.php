@@ -33,10 +33,14 @@ $english = array(
 	'cp_notifications:subtype:hjforumpost' => "Topic reply",
 	'cp_notifications:subtype:page' => "Page",
 	'cp_notifications:subtype:blog' => "Blog",
-	'cp_notifications:subtype:bookmark' => "Bookmark",
+	'cp_notifications:subtype:bookmarks' => "Bookmark",
 	'cp_notifications:subtype:file' => "File",
 	'cp_notifications:subtype:album' => "Album",
 	'cp_notifications:subtype:thewire' => "Wire",
+	'cp_notifications:subtype:poll' => "Poll",
+	'cp_notifications:subtype:event_calendar' => "Event Calendar",
+	'cp_notifications:subtype:photo' => "Images",
+	'cp_notifications:subtype:task' => "Task",
 
 	'cp_notifications:no_colleagues' => "You do not have any colleagues",
     'cp_notifications:chkbox:email' => "Email",
@@ -56,6 +60,7 @@ $english = array(
     'cp_notifications:personal_colleagues' => 'Notify me when my colleagues create content',
 	'cp_notifications:personal_opportunities' => "Notify me when a new opportunity I have opted in for is created in the Career ConneXions Opportunities Platform",
 
+	'cp_notifications:no_group_content' => "(No subscribed group content)",
 
 	/// SETTINGS PAGE: Notification headings
 	'cp_notifications:heading:page_title' => 'Subscription settings (go here to edit %s)',

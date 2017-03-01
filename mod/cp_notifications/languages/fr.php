@@ -4,24 +4,94 @@ $site_name = $site->name;
 $contact_us = "{$site->getURL()}mod/contactform/";
 $notifications_settings = "{$site->getURL()}settings/plugin/{$to->username}/cp_notifications";
 
-$french = array(
+$french = array( 
 
-	'cp_notify:setting:no_grp_subscription' => 'Rien à charger',
+	/// SETTINGS PAGE: Newsletter translation texts
+	'cp_notifications:no_group_subscription' => 'Rien à charger',
+	'cp_newsletter:enable_digest_option' => "Activer la fonctionnalité de bulletin",
+	'cp_notifications:loading' => 'Chargement...',
+	'cp_newsletter:set_frequency' => "Quand souhaitez-vous recevoir la Newsletter",
+	'cp_newsletter:information:language' => "Quelle langue voulez-vous recevoir Bulletin",
 
-	'newsletter:title_heading:nothing' => "(F)Your {$site_name} Digest: Nothing to report today",
+	'cp_newsletter:title_heading:nothing' => "Votre {$site_name} Bulletin: Rien à signaler aujourd'hui",
 
-	'newsletter:greeting' => "(F)Good morning %s. Here are your notifications for <strong>%s</strong>.",
-	'newsletter_body:status:nothing' => "(F)It seems it was quiet in your network on GCconnex, we have nothing to report.",
-	'newsletter:footer:notification_settings' => "(F)To unsubscribe or manage these messages, please login and visit your <a href='<?php echo $notifications_settings; ?>'> Notification Settings</a>.",
-	'newsletter:ending' => "(F)<p>Regards,</p> <p>The GCTools Team</p>",
+	'cp_newsletter:greeting' => "Bonjour Christine. Voici vos notifications pour <strong>%s</strong>",
+
+	'cp_newsletter_body:status:nothing' => "Il semble que c'était calme dans votre réseau sur GCconnex, nous n'avons rien à signaler.",
+	'cp_newsletter:footer:notification_settings' => "Pour vous désabonner ou gérer ces messages, veuillez vous connecter et visiter votre <a href = '<?php echo $notifications_settings; ?> '> Paramètres de notification </a>.",
+	'cp_newsletter:ending' => "<p>Cordialement,</p> <p>L'équipe GCTools</p>",
+	'cp_notifications:heading:page_title' => "Paramètres d'abonnement (cliquer pour modifier votre %s)",
+
+	'cp_newsletter:notice' => "Si vous activez le condensé, votre bulletin comprendra tout ce qui est sélectionné sous EMAIL dans les notifications de groupe. Pour plus d'informations, reportez-vous au <a href='#'> Notifications Guide de l'utilisateur </a>.",
+
+	'cp_notifications:heading:newsletter_section' => "Bulletin d'information",
+
+'cp_notifications:heading:personal_section' => 'Vos abonnements',
 
 
 
-	'cp_notify:enable_digest' => "Enable Digest Feature",
+    'cp_notifications:personal_likes'=>'Envoyez-moi une notification lorsque quelqu\'un aime mon contenu',
+    'cp_notifications:personal_mentions'=>'Envoyez-moi une notification lorsque quelqu\'un me mentionne',
+    'cp_notifications:personal_content'=>'Envoyez-moi une notification lorsqu\'un changement est fait au contenu que j\'ai crée',
+    'cp_notifications:colleagueContent'=>'Envoyez-moi une notification lorsqu\'un(e) collègue crée du nouveau contenu',
+	'cp_notifications:personal_opportunities' => "Avertissez-moi dès qu'une nouvelle opportunité que j'ai choisie est créée dans la plate-forme Opportunités Carrières ConneXions",
 
-	'cp_notify:setting:no_grp_subscription' => '',
+'cp_notifications:heading:colleague_section'=>'Colleague Notifications',
+	'cp_notifications:pick_colleagues' => 'Abonnez-vous à vos collègues',
 
-	'cp_notify:setting:loading' => 'Chargement...',
+   'cp_notifications:heading:group_section' => 'Notifications de groupe',
+'cp_notifications:chkbox:select_all_group_for_notification' => "Sélectionnez tous les groupes (pas le contenu du groupe)",
+'cp_notifications:group_content'=>'Contenu du groupe',
+'cp_notifications:no_group_subscription' => "Rien à charger",
+
+
+	'cp_newsletter:label:daily' => "par jour",
+	'cp_newsletter:label:weekly' => "par semaine",
+
+	'cp_newsletter:label:english' => "anglais",
+	'cp_newsletter:label:french' => "français",
+
+
+    'cp_notifications:chkbox:email' => "Courriel",
+    'cp_notifications:chkbox:site' => "Site",
+ 	'cp_notifications:heading:nonGroup_section' => 'Abonnement non groupé',
+
+	'cp_notifications:subscribe_all_label' => "<a href='%s'>S’abonner</a> ou <a href='%s'>Se désabonner</a> à tous les groupes et leur contenu",
+
+'cp_notifications:unsubscribe' => 'Désabonner',
+
+	'cp_notifications:subtype:groupforumtopic' => "Discussions",
+	'cp_notifications:subtype:hjforumtopic' => "Sujet du forum",
+	'cp_notifications:subtype:hjforumpost' => "Sujet réponse",
+	'cp_notifications:subtype:page' => "Page",
+	'cp_notifications:subtype:blog' => "Blogue",
+	'cp_notifications:subtype:bookmarks' => "Signet",
+	'cp_notifications:subtype:file' => "Fichier",
+	'cp_notifications:subtype:album' => "Album",
+	'cp_notifications:subtype:thewire' => "Fil",
+	'cp_notifications:subtype:poll' => "Vote",
+	'cp_notifications:subtype:event_calendar' => "Événement",
+	'cp_notifications:subtype:photo' => "Images",
+	'cp_notifications:subtype:task' => "Tâche",
+
+
+	'cp_newsletter:information:digest_option' => "Cela activera ou désactivera la fonctionnalité de la Bulletin",
+	'cp_newsletter:information:digest_option:url' => "#",
+	'cp_newsletter:information:frequency' => "",
+	'cp_newsletter:information:frequency:url' => "#",
+	'cp_newsletter:information:language' => "Cela déterminera la fréquence à laquelle vous souhaitez recevoir la bulletin",
+	'cp_newsletter:information:language:url' => "#",
+	'cp_newsletter:information:select_all' => "Cela sélectionnera seulement le groupe lui-même, pas le contenu du groupe",
+	'cp_newsletter:information:select_all:url' => "#",
+
+
+
+
+
+	/// NOTIFICATION CONTENT
+
+
+
 	// e-mail header text
 	'cp_notification:email_header' => "Ceci est un message généré par le système de GCconnex. Veuillez ne pas répondre à ce message",
 	'cp_notification:email_header_msg' => "",
@@ -311,14 +381,14 @@ $french = array(
 	'cp_notifications:usersettings:title' => 'Paramètres des notifications',
 	'label:email' => "Courriel",
 	'label:site' => "Site", // new
-	'cp_notify:panel_title' => "Paramètres d'abonnement (cliquer pour modifier votre %s)",
+	
 	'cp_notify:panel_title' => "Paramètres d'abonnement <br> (Modifiez votre %s)",
 	'cp_notify:quicklinks' => 'Liens rapides aux abonnements',
 	'cp_notify:content_name' => 'Nom du contenu',
 	'cp_notify:email' => 'Informer par courriel',
 	'cp_notify:site_mail' => 'Informer par courrier du système',
 	'cp_notify:subscribe' => 'Abonner',
-	'cp_notify:unsubscribe' => 'Désabonner',
+
 	'cp_notify:not_subscribed' => 'Pas abonné',
 
 	'cp_notify:no_group_sub' => "Vous n'êtes pas abonné a aucun contenu de groupe",
@@ -327,7 +397,7 @@ $french = array(
 	"cp_notify:sidebar:no_subscriptions" => "<i>Aucun abonnement disponible</i>",
 	"cp_notify:sidebar:group_title" => "Abonnement aux groupes et contenu",
 	"cp_notify:sidebar:subs_title" => "Abonnement personnel",
-	'cp_notify:pickColleagues' => 'Abonnez-vous à vos collègues',
+
 	'cp_notify:contactHelpDesk'=>'Si vous avez des questions, veuillez soumettre votre demande via le <a href="'.elgg_get_site_url().'mod/contactform/">formulaire Contactez-nous</a>.',
     'cp_notify:visitTutorials'=>"Pour de plus amples renseignements sur GCconnex et ses fonctionnalités, consultez l'<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_-_Aide_%C3%A0_l%27utilisateur/Modifier_mes_param%C3%A8tres_de_compte/Comment_puis-je_modifier_mes_param%C3%A8tres_de_notification%3F'>aide à l'utilisateur de GCconnex</a>.<br/>
 	                             Merci",
@@ -336,13 +406,10 @@ $french = array(
 	'cp_notify:french_follows' => "<i><sup>(Le fran&ccedil;ais suit)</sup></i>",
 	'cp_notify:readmore' => "<a href='%s'>Lire la suite</a>",
 
-	'cp_notify:personal_opportunities' => "Notify me when a new opportunity I have opted in for is created in the Career ConneXions Opportunities Platform",
-
+	
     'cp_notify:email'=>'Courriel',
-    'cp_notify:personal_likes'=>'Envoyez-moi une notification lorsque quelqu\'un aime mon contenu',
-    'cp_notify:personal_mentions'=>'Envoyez-moi une notification lorsque quelqu\'un me mentionne',
-    'cp_notify:personal_content'=>'Envoyez-moi une notification lorsqu\'un changement est fait au contenu que j\'ai crée',
-    'cp_notify:colleagueContent'=>'Envoyez-moi une notification lorsqu\'un(e) collègue crée du nouveau contenu',
+
+
     'cp_notify:emailsForGroup'=>'Sélectionnez tout',
     'cp_notify:groupContent'=>'Contenu de group',
     'cp_notify:notifNewContent'=>'Envoyez-moi une notification lorsque du nouveau contenu est crée (discussion, fichier, etc.)',
@@ -359,8 +426,8 @@ $french = array(
 	'cp_notify:minor_edit' => 'Changements mineurs',
 	'cp_notify:sidebar:forum_title' => 'Les sujets de discussion et les forums',
 	'cp_notify:wirepost_generic_title' => 'Publications sur le fil',
-	'cp_notify:personal_setting' => 'Vos abonnements',
-	'cp_notify:subscribe_all_label' => "<a href='%s'>S’abonner</a> ou <a href='%s'>Se désabonner</a> à tous les groupes et leur contenu",
+	
+
 	'cp_notify:unsubscribe_all_label' => 'Cliquez ici pour vous désabonner à toutes les mises à jour des groupes',
 	'cp_notify:no_subscription' => "Il n'y a pas d'abonnement",
 

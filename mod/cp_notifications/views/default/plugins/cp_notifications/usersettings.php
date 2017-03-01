@@ -14,6 +14,49 @@ function information_icon($text, $url) {
 	return "<span class='pull-right'><a title='{$text}' target='_blank' href='{$url}'><i class='fa fa-info-circle icon-sel'><span class='wb-invisible'> </span></i></a></span>";
 }
 
+function has_group_subscriptions($group_guid, $user_guid) {
+
+	// normal objects
+	$query = "
+	SELECT  r.guid_one, r.relationship, r.guid_two
+	FROM elggentity_relationships r 
+		LEFT JOIN elggentities e ON r.guid_two = e.guid
+		LEFT JOIN (SELECT guid FROM elgggroups_entity WHERE guid = {$group_guid}) g ON e.container_guid = g.guid
+	WHERE 	r.relationship LIKE 'cp_subscribed_to_%' AND 
+			e.type = 'object' AND
+			e.container_guid = {$group_guid}
+	LIMIT 1
+	";
+
+	$subscriptions = get_data($query);
+
+	if (sizeof($subscriptions) == 0) {
+		// forums
+		$query = "SELECT elgg_subtype.entity_guid, elgg_subtype.entity_subtype
+		FROM elggentity_relationships r
+		LEFT JOIN 
+			(SELECT e.guid AS entity_guid, s.subtype AS entity_subtype FROM elggentities e, elggentity_subtypes s WHERE (s.subtype = 'hjforumtopic' OR s.subtype = 'hjforum') AND e.subtype = s.id) elgg_subtype ON elgg_subtype.entity_guid = r.guid_two 
+		WHERE r.guid_one = {$user_guid} AND r.relationship LIKE 'cp_subscribed_to_%'";
+
+		$forums = get_data($query);
+
+		foreach ($forums as $forum) {
+			if (!empty($group_content->entity_guid) && $group_content->entity_guid > 0) {
+		    	$content = get_entity($group_content->entity_guid);
+
+				// we want the forum topic that resides in the group
+		    	$container_id = (strcmp($content->getSubtype(), 'hjforumtopic') == 0) ? $content->getContainerGUID() : $container_id = $content->getGUID();
+		    	
+		    	if (get_forum_in_group($container_id,$container_id) == $group_guid)
+		    		return 1;
+		    }
+		}
+		return 0;
+	}
+
+	return sizeof($subscriptions);
+}
+
 gatekeeper();
 $user = elgg_get_page_owner_entity();
 $plugin = elgg_extract("entity", $vars);
@@ -47,7 +90,7 @@ if (strcmp($enable_digest, 'yes') == 0) {
 
 	$content .= '<div class="col-sm-8">'.elgg_echo('cp_newsletter:enable_digest_option').$more_info.'</div>';
 	$content .= "<div class='col-sm-2'>{$jquery_switch} </div> <div class='col-sm-2'>    </div>";
-
+ 
 
 	if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->getOwnerGUID(),'cp_notifications'),'set_digest_yes') != 0)
 		$visibility = "hidden";
@@ -56,11 +99,11 @@ if (strcmp($enable_digest, 'yes') == 0) {
 		/// select daily or weekly notification
 		$user_option = elgg_get_plugin_user_setting('cpn_set_digest_frequency', $user->guid, 'cp_notifications');
 		if (strcmp($user_option, 'set_digest_daily') == 0) {
-			$chk_occur_daily = "<input type='radio' name='params[cpn_set_digest_frequency]' value='set_digest_daily' checked='checked'> Daily";
-			$chk_occur_weekly = "<input type='radio' name='params[cpn_set_digest_frequency]' value='set_digest_weekly'> Weekly";
+			$chk_occur_daily = "<input type='radio' name='params[cpn_set_digest_frequency]' value='set_digest_daily' checked='checked'> ".elgg_echo('cp_newsletter:label:daily');
+			$chk_occur_weekly = "<input type='radio' name='params[cpn_set_digest_frequency]' value='set_digest_weekly'> ".elgg_echo('cp_newsletter:label:weekly');
 		} else {
-			$chk_occur_weekly = "<input type='radio' name='params[cpn_set_digest_frequency]' value='set_digest_weekly' checked='checked'> Weekly";
-			$chk_occur_daily = "<input type='radio' name='params[cpn_set_digest_frequency]' value='set_digest_daily'> Daily";
+			$chk_occur_weekly = "<input type='radio' name='params[cpn_set_digest_frequency]' value='set_digest_weekly' checked='checked'> ".elgg_echo('cp_newsletter:label:weekly');
+			$chk_occur_daily = "<input type='radio' name='params[cpn_set_digest_frequency]' value='set_digest_daily'> ".elgg_echo('cp_newsletter:label:daily');
 		}
 
 		$more_info = information_icon(elgg_echo('cp_newsletter:information:frequency'), elgg_echo('cp_newsletter:information:frequency:url'));
@@ -70,12 +113,12 @@ if (strcmp($enable_digest, 'yes') == 0) {
 		/// select language preference
 		$user_option = elgg_get_plugin_user_setting('cpn_set_digest_language', $user->guid, 'cp_notifications');
 		if (strcmp($user_option, 'set_digest_en') == 0) {
-			$chk_language_en = "<input type='radio' name='params[cpn_set_digest_language]' value='set_digest_en' checked='checked'> English";
-			$chk_language_fr = "<input type='radio' name='params[cpn_set_digest_language]' value='set_digest_fr'> French";
+			$chk_language_en = "<input type='radio' name='params[cpn_set_digest_language]' value='set_digest_en' checked='checked'> ".elgg_echo('cp_newsletter:label:english');
+			$chk_language_fr = "<input type='radio' name='params[cpn_set_digest_language]' value='set_digest_fr'> ".elgg_echo('cp_newsletter:label:french');
 		}
 		else {
-			$chk_language_fr = "<input type='radio' name='params[cpn_set_digest_language]' value='set_digest_fr' checked='checked'> French";
-			$chk_language_en = "<input type='radio' name='params[cpn_set_digest_language]' value='set_digest_en'> English";
+			$chk_language_fr = "<input type='radio' name='params[cpn_set_digest_language]' value='set_digest_fr' checked='checked'> ".elgg_echo('cp_newsletter:label:french');
+			$chk_language_en = "<input type='radio' name='params[cpn_set_digest_language]' value='set_digest_en'> ".elgg_echo('cp_newsletter:label:english');
 		}
 
 		$more_info = information_icon(elgg_echo('cp_newsletter:information:language'), elgg_echo('cp_newsletter:information:language:url'));
@@ -177,10 +220,14 @@ foreach ($groups as $group) {
 	$content .= "			<div class='namefield col-sm-8'> <strong> <a href='{$group_url}' id='group-{$group->guid}'>{$group->name}</a> </strong> </div>";
     $content .= "			<div class='col-sm-2'>{$chk_email_grp}</div>	<div class='col-sm-2'>{$chk_site_grp}</div>";
 
+    //$subscription_count = "";
+	//if (has_group_subscriptions($group->guid, $user->guid) == 0)
+	//	$subscription_count = elgg_echo('cp_notifications:no_group_content');
+
 	// GROUP CONTENT SUBSCRIPTIONS
     $content .= '		<div class="accordion col-sm-12 clearfix mrgn-bttm-sm">';
 	$content .= '			<details onClick="return create_group_content_item('.$group->guid.', '.$user->getGUID().')">';
-	$content .= "				<summary >".elgg_echo('cp_notifications:group_content').'</summary>';
+	$content .= "				<summary >".elgg_echo('cp_notifications:group_content')." ".$subscription_count.'</summary>';
     
     $content .= "				<div id='group-content-{$group->guid}' class='tgl-panel clearfix'></div>";
     $content .= '			</details>';	
@@ -206,9 +253,8 @@ foreach ($entity_list as $subtype) {
 	$display_subtype = cp_translate_subtype($subtype); 
 
 	$content .= '<div class="accordion col-sm-12 clearfix mrgn-bttm-sm">';
-	//$content .= '<details onClick="return create_content_item('.$user->getGUID().',"'.$subtype.'")">';
 	$content .= '<details onClick="return create_content_item('.$user->getGUID().',\''.$subtype.'\') ">';
-	$content .= "<summary> {$display_subtype} </summary>";
+	$content .= "<summary> ".elgg_echo("cp_notifications:subtype:{$subtype}")." </summary>";
 	$content .= "<div id='personal-content-{$subtype}' class='tgl-panel clearfix'></div>";
 	$content .= '</details>';
 	$content .= "</div>";
@@ -356,6 +402,7 @@ input:checked + .slider:before {
 			// do nothing
 		} else {
 			var loading_text = elgg.echo('cp_notifications:loading');
+			var nothing_text = elgg.echo('cp_notifications:no_group_subscription');
 
 			$('#group-content-' + grp_guid).children().remove();
 			$('#group-content-' + grp_guid).append("<div class='clearfix col-sm-12 list-break'>" + loading_text + "<div>");
@@ -373,7 +420,7 @@ input:checked + .slider:before {
 						$('#group-content-' + grp_guid).append("<div class='clearfix col-sm-12 list-break'>" + content_arr.output.text3[item] + "<div>");
 
 					if (content_arr.output.text3.length == 0)
-						$('#group-content-' + grp_guid).append("<div class='clearfix col-sm-12 list-break'>" + "Nothing to show" + "<div>");
+						$('#group-content-' + grp_guid).append("<div class='clearfix col-sm-12 list-break'>" + nothing_text + "<div>");
 
 					// jquery - when the unsubscribe button is clicked, remove entry from the subscribed to content
 				    $('.unsub-button').on('click', function() {
@@ -403,7 +450,8 @@ input:checked + .slider:before {
 	function create_content_item(usr_guid, obj_subtype) {
 		entity_subtype = obj_subtype;
 		// loading indicator
-		$('#personal-content-' + entity_subtype).append("<div class='clearfix col-sm-12 list-break'>LOADING...<div>");
+		var loading_text = elgg.echo('cp_notifications:loading');
+		$('#personal-content-' + entity_subtype).append("<div class='clearfix col-sm-12 list-break'>" + loading_text + "<div>");
 
 		elgg.action('cp_notify/retrieve_personal_content', {
 			data: {
@@ -411,6 +459,8 @@ input:checked + .slider:before {
 				subtype: entity_subtype
 			},
 			success: function (sample_text) {
+				var nothing_text = elgg.echo('cp_notifications:no_group_subscription');
+
 
 				// assuming this is doing what i think it is doing 
 				$('#personal-content-' + entity_subtype).children().remove();
@@ -419,7 +469,7 @@ input:checked + .slider:before {
 					$('#personal-content-' + entity_subtype).append("<div class='clearfix col-sm-12 list-break'>" + sample_text.output.text3[item] + "<div>");
 				
 				if (sample_text.output.text3.length == 0)
-					$('#personal-content-' + entity_subtype).append("<div class='clearfix col-sm-12 list-break'>" + "Nothing to show" + "<div>");
+					$('#personal-content-' + entity_subtype).append("<div class='clearfix col-sm-12 list-break'>" + nothing_text + "<div>");
 
 				// jquery - when the unsubscribe button is clicked, remove entry from the subscribed to content
 			    $('.unsub-button').on('click', function() {
