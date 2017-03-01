@@ -17,21 +17,22 @@
 ?>
 <script>
 
-function join_comment(group_guid, user_guid) {
+function join_comment(group_guid, user_guid, status) {
 
      elgg.action('comment/join', {
             data: {
                 group_guid: group_guid, user_guid: user_guid
             },
-            success: function (wrapper) {
-                if (wrapper.output.result == 'joined') { //joined group
-                    $('#' + 'success' + '-' + guid).html("<?php echo elgg_echo('groups:joined'); ?>").attr('disabled', true);
-                    
-                } else if(wrapper.output.result == 'requestsent') { //join request sent
-                    $('#' + 'success' + '-' + guid).html("<?php echo elgg_echo('groups:joinrequestmade'); ?>").attr('disabled', true);
-                   
-                }
+            success: function (message) {
+               if (status == 'open') { //joined group
+                
+                  elgg.system_message(elgg.echo('groups:join'));
+           
+                }else{
+                  elgg.system_message(elgg.echo('groups:joinrequestmade'));
+
             }
+          }
         });
 }
 </script>
@@ -171,11 +172,11 @@ FORM;
 
 	if ( $container instanceof ElggGroup ){
      		if ($container->isPublicMembership() || $container->canEdit()) {
-                        echo '<button class="mrgn-tp-sm btn btn-primary" onclick = "join_comment('.$group->guid.',\''.$user->guid.'\')">'.elgg_echo("groups:join").'</button>';
+                        echo '<button class="mrgn-tp-sm btn btn-primary" onclick = "join_comment('.$group->guid.',\''.$user->guid.'\',\'open\')">'.elgg_echo("groups:join").'</button>';
                         		
 		} else {
 			// request membership
-                        echo '<button class="mrgn-tp-sm btn btn-primary" onclick = "join_comment('.$group->guid.',\''.$user->guid.'\')">'.elgg_echo("groups:joinrequest").'</button>';
+                        echo '<button class="mrgn-tp-sm btn btn-primary" onclick = "join_comment('.$group->guid.',\''.$user->guid.'\',\'close\')">'.elgg_echo("groups:joinrequest").'</button>';
 			
 		}
 	}
