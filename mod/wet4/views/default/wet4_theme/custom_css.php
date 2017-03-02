@@ -1671,13 +1671,15 @@ figcaption{
 }
 
 .event-calendar-repeating-unselected {
-
+    background-color: #fff;
   width: auto;
+  color:#000;
 
 }
 
 .event-calendar-repeating-selected {
-
+    background-color:#047177;
+    color: #fff !important;
     width: auto;
 
 }
@@ -1685,4 +1687,14 @@ figcaption{
 .event-calendar-repeating-selected:hover {
   text-decoration: none;
   color: #000;
+}
+
+.event-calendar-repeating-unselected:hover {
+    text-decoration: none;
+    background-color:#047177;
+    color: #fff;
+}
+
+.space_event{
+  margin-right:5px;
 }
