@@ -4,10 +4,12 @@ $event = $vars['event'];
 $fd = $vars['form_data'];
 echo '<div class="event-calendar-repeat-section">';
 if ($fd['repeats'] == 'yes') {
-	echo elgg_view('input/checkbox', array('name' => 'repeats', 'value' => 'yes', 'checked' => 'checked'));
+	echo elgg_view('input/checkbox', array('name' => 'repeats', 'id' => 'repeats', 'value' => 'yes', 'checked' => 'checked'));
 } else {
-	echo elgg_view('input/checkbox', array('name' => 'repeats', 'value' => 'yes'));
+	echo elgg_view('input/checkbox', array('name' => 'repeats', 'id' => 'repeats', 'value' => 'yes'));
 }
+echo elgg_echo('event_calendar:add_recurrence');
+echo '<div id="recurrence_event">';
 echo elgg_echo('event_calendar:repeat_interval_label').' ';
 echo elgg_view('input/dropdown', array('name' => 'repeat_interval','style'=>'width: auto; display:inline-block;', 'value' => $fd['repeat_interval'], 'options_values' => array('1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5', '6' => '6', '7' => '7', '8' => '8')));
 echo ' '.elgg_echo('event_calendar:repeat_weeks');
@@ -32,3 +34,20 @@ foreach ($days as $day) {
 }
 
 ?>
+<script>
+ if ($('#repeats').is(':checked')){
+	$('#recurrence_event').show();
+	
+}else{
+	$('#recurrence_event').hide();
+}
+
+
+$('#repeats').change(function(){
+    if($(this).is(":checked")) {
+        $('#recurrence_event').show("slow");
+    } else {
+        $('#recurrence_event').hide("1000");
+    }
+});
+</script>

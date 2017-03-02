@@ -1393,6 +1393,7 @@ return array(
 'event_calendar:lang:french'=>"Français",
 'event_calendar:lang:english'=>"Anglais",
 'event_calendar:lang:bilingual'=>"Bilingue",
+'event_calendar:add_recurrence' => "Ajouter une récurrence",
 
 /*Change access*/
 
