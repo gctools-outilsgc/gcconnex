@@ -277,7 +277,7 @@ if ($event_calendar_repeating_events != 'no') {
 	return $event;
 }
 
-function event_calendar_get_events_between($start_date, $end_date, $is_count=false, $limit=20, $offset=0, $container_guid=0, $region='-') {
+function event_calendar_get_events_between($start_date, $end_date, $is_count=false, $limit=10, $offset=0, $container_guid=0, $region='-') {
 	$polls_supported = elgg_is_active_plugin('event_poll');
 	if ($is_count) {
 		$count = event_calendar_get_entities_from_metadata_between('start_date', 'end_date', $start_date, $end_date, "object", "event_calendar", 0, $container_guid, $limit, $offset, "", 0, false, true, $region);
@@ -429,7 +429,7 @@ function event_calendar_get_repeating_event_structure($events, $start_date, $end
 	return $repeating_events;
 }
 
-function event_calendar_get_open_events_between($start_date, $end_date, $is_count=false, $limit=20, $offset=0, $container_guid=0, $region='-', $meta_max = 'spots', $relationship_name = 'personal_event') {
+function event_calendar_get_open_events_between($start_date, $end_date, $is_count=false, $limit=10, $offset=0, $container_guid=0, $region='-', $meta_max = 'spots', $relationship_name = 'personal_event') {
 	if ($is_count) {
 		$count = event_calendar_get_entities_from_metadata_between('start_date', 'end_date', $start_date, $end_date, "object", "event_calendar", 0, $container_guid, $limit, $offset, "", 0, false, true, $region, $meta_max, $relationship_name);
 		return $count;
@@ -506,7 +506,7 @@ function event_calendar_get_open_repeating_events_between($start_date, $end_date
 
 
 //For list event
-function event_calendar_get_events_for_user_between($start_date, $end_date, $is_count, $limit=20, $offset=0, $user_guid, $container_guid=0, $region='-') {
+function event_calendar_get_events_for_user_between($start_date, $end_date, $is_count, $limit=10, $offset=0, $user_guid, $container_guid=0, $region='-') {
 	$options = array(
 		'type' => 'object',
 		'subtype' => 'event_calendar',
@@ -550,7 +550,7 @@ function event_calendar_get_events_for_user_between($start_date, $end_date, $is_
 
 
 //For calendar event
-function event_calendar_get_events_for_user_between2($start_date, $end_date, $is_count, $limit=20, $offset=0, $user_guid, $container_guid=0, $region='-') {
+function event_calendar_get_events_for_user_between2($start_date, $end_date, $is_count, $limit=10, $offset=0, $user_guid, $container_guid=0, $region='-') {
 	$options = array(
 		'type' => 'object',
 		'subtype' => 'event_calendar',
@@ -665,7 +665,7 @@ function event_calendar_get_repeating_events_for_friends_between($user_guid, $fr
 	return event_calendar_get_repeating_event_structure($events, $start_date, $end_date);
 }
 
-function event_calendar_get_events_for_friends_between($start_date, $end_date, $is_count, $limit=20, $offset=0, $user_guid, $container_guid=0, $region='-') {
+function event_calendar_get_events_for_friends_between($start_date, $end_date, $is_count, $limit=10, $offset=0, $user_guid, $container_guid=0, $region='-') {
 	if ($user_guid) {
 		$user = get_user($user_guid);
 
@@ -747,7 +747,7 @@ function event_calendar_vsort($original, $field, $descending = false) {
 }
 
 // adds any related events (has the display_on_group relation) that meet the appropriate criteria
-function event_calendar_get_entities_from_metadata_between_related($meta_start_name, $meta_end_name,$meta_start_value, $meta_end_value, $entity_type="", $entity_subtype="", $owner_guid=0, $container_guid=0, $limit=20, $offset=0, $order_by="", $site_guid=0, $filter=false, $count=false, $region='-', $main_events) {
+function event_calendar_get_entities_from_metadata_between_related($meta_start_name, $meta_end_name,$meta_start_value, $meta_end_value, $entity_type="", $entity_subtype="", $owner_guid=0, $container_guid=0, $limit=10, $offset=0, $order_by="", $site_guid=0, $filter=false, $count=false, $region='-', $main_events) {
 
 	$main_list = array();
 	if ($main_events) {
@@ -807,7 +807,7 @@ function event_calendar_get_entities_from_metadata_between_related($meta_start_n
  *
  * TODO: see if the new API is robust enough to avoid this custom query
  */
-function event_calendar_get_entities_from_metadata_between($meta_start_name, $meta_end_name, $meta_start_value, $meta_end_value, $entity_type="", $entity_subtype="", $owner_guid=0, $container_guid=0, $limit=20, $offset=0, $order_by="", $site_guid=0, $filter=false, $count=false, $region='-', $meta_max='', $relationship_name='') {
+function event_calendar_get_entities_from_metadata_between($meta_start_name, $meta_end_name, $meta_start_value, $meta_end_value, $entity_type="", $entity_subtype="", $owner_guid=0, $container_guid=0, $limit=10, $offset=0, $order_by="", $site_guid=0, $filter=false, $count=false, $region='-', $meta_max='', $relationship_name='') {
 
 	// This should not be possible, but a sanity check just in case
 	if (!is_numeric($meta_start_value) || !is_numeric($meta_end_value)) {
@@ -1276,7 +1276,7 @@ function event_calendar_has_collision($event_id, $user_id) {
 			$start_time = $event->start_date;
 			$end_time = event_calendar_get_end_time($event);
 			// look to see if the user already has events within this period
-			$count = event_calendar_get_events_for_user_between($start_time, $end_time, true, 20, 0, $user_id);
+			$count = event_calendar_get_events_for_user_between($start_time, $end_time, true, 10, 0, $user_id);
 			if ($count > 0) {
 				return true;
 			} else {
@@ -1801,7 +1801,7 @@ function event_calendar_generate_listing_params($page_type, $container_guid, $or
 	}
 
 if (($filter == 'all') && ($page_type != 'group')) {
-			$limit = 20;
+			$limit = 10;
 	}
 
 	if (($filter == 'all') || ($filter == 'owner')) {
@@ -2116,7 +2116,7 @@ function event_calendar_get_page_content_manage_users($event_guid) {
 	// TODO: make this an optional feature, toggled off
 	elgg_load_js('elgg.event_calendar');
 	$event = get_entity($event_guid);
-	$limit = 20;
+	$limit = 10;
 	$offset = get_input('offset', 0);
 	$event_calendar_add_users = elgg_get_plugin_setting('add_users', 'event_calendar');
 	if ($event_calendar_add_users != 'yes') {
