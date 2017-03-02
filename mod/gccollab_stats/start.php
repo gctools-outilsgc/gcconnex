@@ -47,8 +47,8 @@ function get_member_data($type, $lang) {
 
 
 	$dbprefix = elgg_get_config('dbprefix');
-	$query = "SELECT u.guid, msv.string as department FROM {$dbprefix}users_entity u LEFT JOIN {$dbprefix}metadata md ON u.guid = md.entity_guid LEFT JOIN {$dbprefix}metastrings msn ON md.name_id = msn.id LEFT JOIN {$dbprefix}metastrings msv ON md.value_id = msv.id WHERE msn.string = 'department'";
-	$users = get_data($query);
+        $query = "SELECT msv.string as department, count(*) as count FROM {$dbprefix}users_entity u LEFT JOIN {$dbprefix}metadata md ON u.guid = md.entity_guid LEFT JOIN {$dbprefix}metastrings msn ON md.name_id = msn.id LEFT JOIN {$dbprefix}metastrings msv ON md.value_id = msv.id WHERE msn.string = 'department' GROUP BY department ORDER BY count DESC LIMIT 25";
+	$departments = get_data($query);
 
 	/*if ($lang == 'fr'){
 		$users_types = array('federal' => 'féderal', 'provincial' => 'provincial', 'academic' => 'milieu universitaire', 'student' => 'étudiant', 'other' => 'autre');
@@ -57,8 +57,8 @@ function get_member_data($type, $lang) {
 			$data[$users_types[$obj->user_type]]++;
 		}
 	} else {*/
-		foreach($users as $key => $obj){
-			$data[$obj->department]++;
+		foreach($departments as $key => $obj){
+			$data[$obj->department] = (int)$obj->count;
 		}
 	//}
 
