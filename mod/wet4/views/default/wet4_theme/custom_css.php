@@ -1669,3 +1669,20 @@ figcaption{
 .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
   border:none;
 }
+
+.event-calendar-repeating-unselected {
+
+  width: auto;
+
+}
+
+.event-calendar-repeating-selected {
+
+    width: auto;
+
+}
+
+.event-calendar-repeating-selected:hover {
+  text-decoration: none;
+  color: #000;
+}
