@@ -12,10 +12,10 @@ function gc_fedsearch_gsa_init() {
 	
 	elgg_extend_view('page/elements/head', 'page/elements/head_gsa', 1);
 
-	//if (((!$gsa_usertest) && strcmp($gsa_agentstring,strtolower($_SERVER['HTTP_USER_AGENT'])) == 0) || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ) {
+	if (((!$gsa_usertest) && strcmp($gsa_agentstring,strtolower($_SERVER['HTTP_USER_AGENT'])) == 0) || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ) {
 		elgg_register_plugin_hook_handler('entity:url', 'object', 'modify_content_url',1);
 		elgg_register_plugin_hook_handler('entity:url', 'group', 'modify_group_url');
-	//}
+	}
 
 
 }
@@ -24,19 +24,28 @@ function modify_group_url($hook, $type, $url, $params) {
 	$url = explode('/', $_SERVER['REQUEST_URI']);
 	if (strpos($_SERVER['REQUEST_URI'],"/groups/profile/") !== false)
 	{
-		if (sizeof($url) > 5)
+		if (sizeof($url) > 4)
 			forward("groups/profile/{$params['entity']->guid}");
-		return "groups/profile/{$params['entity']->guid}";
+		//return "groups/profile/{$params['entity']->guid}";
 	}
 }
 
+/**
+ * covers: blogs, files, pages
+ * does not cover: bookmarks, missions, images, polls, wire
+ */
 function modify_content_url($hook, $type, $url, $params) {
 	$url = explode('/', $_SERVER['REQUEST_URI']);
 	if (strpos($_SERVER['REQUEST_URI'],"/view/") !== false)
 	{
-		if (sizeof($url) > 5)
-			forward("{$params['entity']->getSubtype()}/view/{$params['entity']->guid}");
-		return "{$params['entity']->getSubtype()}/view/{$params['entity']->guid}";
+		$subtype = $params['entity']->getSubtype();
+		if ($subtype === 'groupforumtopic') $subtype = 'discussion';
+		if ($subtype === 'page_top') $subtype = 'pages';
+		if ($subtype === 'idea') $subtype = 'ideas';
+
+		if (sizeof($url) > 4)
+			forward("{$subtype}/view/{$params['entity']->guid}");
+		//return "{$subtype}/view/{$params['entity']->guid}";
 	}
 }
 
