@@ -42,6 +42,25 @@ $english = array(
 	'cp_notifications:subtype:photo' => "Images",
 	'cp_notifications:subtype:task' => "Task",
 
+	'cp_notifications:mail_body:subtype:groupforumtopic' => "% has posted a discussions %s",
+	'cp_notifications:mail_body:subtype:hjforumtopic' => "%s has posted a forum topic %s",
+	'cp_notifications:mail_body:subtype:hjforumpost' => "%s has posted a topic reply to %s",
+	'cp_notifications:mail_body:subtype:page' => "%s has posted a page %s",
+	'cp_notifications:mail_body:subtype:blog' => "%s has posted a blog %s",
+	'cp_notifications:mail_body:subtype:bookmarks' => "%s has posted a bookmark %s",
+	'cp_notifications:mail_body:subtype:file' => "%s has posted a file %s",
+	'cp_notifications:mail_body:subtype:album' => "%s has posted an album %s",
+	'cp_notifications:mail_body:subtype:thewire' => "%s on the %s",
+	'cp_notifications:mail_body:subtype:poll' => "%s has created a poll",
+	'cp_notifications:mail_body:subtype:event_calendar' => "%s posted an event %s",
+	'cp_notifications:mail_body:subtype:photo' => "%s has posted an image %s",
+	'cp_notifications:mail_body:subtype:task' => "%s has created a task %s",
+	'cp_notifications:mail_body:subtype:likes' => "%s has liked your post: %s",
+	'cp_notifications:mail_body:subtype:response' => "%s posted a response or comment to your post: %s",
+	'cp_notifications:mail_body:subtype:any' => "%s posted a(n) %s %s",
+
+
+
 	'cp_notifications:no_colleagues' => "You do not have any colleagues",
     'cp_notifications:chkbox:email' => "Email",
     'cp_notifications:chkbox:site' => "Site",
@@ -81,6 +100,23 @@ $english = array(
 
 	'cp_newsletter:subject:daily' => "GCconnex Daily Newsletter",
 	'cp_newsletter:subject:weekly' => "GCconnex Weekly Newsletter",
+
+
+	/// NEWSLETTER HEADINGS
+	'cp_newsletter:heading:notify:personal' => "Personal Notification",
+	'cp_newsletter:heading:notify:mission' => "Opportunity (Micro Mission) Notification",
+	'cp_newsletter:heading:notify:group' => "Group Notification",
+	'cp_newsletter:heading:notify:new_post' => "New content posted by your colleagues",
+	'cp_newsletter:heading:notify:cp_wire_share' => "Content(s) that have been shared",
+	'cp_newsletter:heading:notify:likes' => "Users that have liked your content",
+	'cp_newsletter:heading:notify:friend_request' => "Colleague requests",
+	'cp_newsletter:heading:notify:friend_approved' => "%s has approved your colleague requests",
+	'cp_newsletter:heading:notify:content_revision' => "Contents that have been revised",
+	'cp_newsletter:heading:notify:forum_topic' => "Forum Topics",
+	'cp_newsletter:heading:notify:forum_reply' => "Forum Topic Replies",
+	'cp_newsletter:heading:notify:response' => "Response to a content you are subscripted to",
+
+
 
 	/// (INSTANT EMAIL) EMAIL CONTENT: Normal email notifications
 	'cp_newsletter:footer:notification_settings' => "To unsubscribe or manage these messages, please login and visit your <a href='{$site->getURL()}settings/plugin/%s/cp_notifications'> Notification Settings</a>.",

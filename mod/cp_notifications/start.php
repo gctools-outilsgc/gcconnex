@@ -104,7 +104,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 
 		case 'cp_forgot_password':	// send email notifications only - /wet4/users/action/password
-			cp_send_new_password_request($params['cp_user_pass_req_guid']);
+			cp_send_new_password_request($params['cp_password_requester']);
 			return true;
 
 		case 'cp_group_invite_email':	// group_tools/lib/functions.php (returns user's email, so return after mail is sent out)
@@ -281,6 +281,9 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_msg_type' => $cp_msg_type,
 				);
 			$to_recipients[] = get_user($params['cp_request_guid']);
+
+			$content_entity = $params['cp_approver_profile'];
+			$author = $params['cp_friend_approver'];
 			break;
 
 
@@ -909,12 +912,19 @@ function cp_create_notification($event, $type, $object) {
 				}
 			}
 
+			// cyu - client wants the html tags stripped from the notifications
+			$object_description = ($object->description != strip_tags($object->description)) ? "" : $object->description;
+
+
 			$message = array(
 				'cp_topic' => $object, 
 				'cp_msg_type' => 'cp_new_type',
-				'cp_topic_description' => $object->description,
+				'cp_topic_description' => $object_description,
 			);
 			
+			$content_entity = $object;
+			$author = $object->getOwnerEntity();
+
 			$to_recipients = get_subscribers($dbprefix, $object->getOwnerGUID(), $object->guid);
 			$email_only = false;
 			break;
@@ -929,8 +939,6 @@ function cp_create_notification($event, $type, $object) {
 
 	foreach ($to_recipients as $to_recipient)
 	{
-		if ($to_recipient->guid == $object->getContainerEntity()->getOwnerGUID()) continue;	// do not send notification to themselves
-		error_log(">>>>>>>>>> ".$to_recipient->guid ." // ". $object->getContainerEntity()->getOwnerGUID());
 		$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid, 'cp_notifications');
 
 		// send digest
@@ -1078,13 +1086,23 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 
 		// what if there is more than one user associated with this email
 		if ($user instanceof ElggUser && strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->guid,'cp_notifications'),'set_digest_yes') == 0 && 
-			strcmp(elgg_get_plugin_user_setting('cpn_set_digest_freq_daily', $user->guid,'cp_notifications'),'set_digest_daily') == 0 ) {
-			
+			strcmp(elgg_get_plugin_user_setting('cpn_set_digest_frequency', $user->guid,'cp_notifications'),'set_digest_daily') == 0 ) {
+
 			$newsletter_id = $user->cpn_newsletter;
 			$newsletter_object = get_entity($newsletter_id);
 			$newsletter_content = json_decode($newsletter_object->description, true);
 
-			$subject = "Your Daily Newsletter";
+			$language_preference_en = elgg_get_plugin_user_setting('cpn_set_digest_language', $to->guid, 'cp_notifications');
+			if (strcmp($language_preference_en,'set_digest_en') == 0) 
+				$language_preference = 'en';
+
+			$language_preference_fr = elgg_get_plugin_user_setting('cpn_set_digest_language', $to->guid, 'cp_notifications');
+			if (strcmp($language_preference_fr,'set_digest_fr') == 0) {
+				$language_preference = 'fr';
+				//setlocale(LC_ALL, 'fr_FR');
+			}
+
+			$subject = elgg_echo('cp_newsletter:subject:daily',$language_preference);
 
 			if (sizeof($newsletter_content) > 0 || !empty($newsletter_content))
 				$template = elgg_view('cp_notifications/newsletter_template', array('to' => $to, 'newsletter_content' => $newsletter_content));
@@ -1170,9 +1188,7 @@ function cp_notification_preparation_send($entity, $to_user, $message, $guid_two
  *
  * Only need to send an e-mail notification out, no need to send a site-mail
  */
-function cp_send_new_password_request($user_guid) {
-	$user_guid = (int)$user_guid;
-	$user = _elgg_services()->entityTable->get($user_guid);
+function cp_send_new_password_request($user) {
 	if (!$user instanceof ElggUser)
 		return false;
 
@@ -1182,7 +1198,7 @@ function cp_send_new_password_request($user_guid) {
 	$user->setPrivateSetting('passwd_conf_time', time());
 
 	// generate link
-	$link = _elgg_services()->config->getSiteUrl() . "changepassword?u={$user_guid}&c={$code}";
+	$link = elgg_get_site_entity()."changepassword?u={$user_guid}&c={$code}";
 
 	// generate email
 	$ip_address = _elgg_services()->request->getClientIp();

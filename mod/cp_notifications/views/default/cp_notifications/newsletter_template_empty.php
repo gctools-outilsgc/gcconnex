@@ -2,15 +2,12 @@
 
 $site = elgg_get_site_entity();
 $to = $vars['to'];
-$language_preference_en = elgg_get_plugin_user_setting('cpn_set_digest_language', $to->guid, 'cp_notifications');
-if (strcmp($language_preference_en,'set_digest_en') == 0) 
+$language_preference = elgg_get_plugin_user_setting('cpn_set_digest_language', $to->guid, 'cp_notifications');
+if (strcmp($language_preference,'set_digest_en') == 0) 
 	$language_preference = 'en';
-
-$language_preference_fr = elgg_get_plugin_user_setting('cpn_set_digest_language', $to->guid, 'cp_notifications');
-if (strcmp($language_preference_fr,'set_digest_fr') == 0) {
+else 
 	$language_preference = 'fr';
-	//setlocale(LC_ALL, 'fr_FR');
-}
+//setlocale(LC_ALL, 'fr_FR');
 
 
 ?>

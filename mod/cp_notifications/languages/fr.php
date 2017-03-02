@@ -15,7 +15,7 @@ $french = array(
 
 	'cp_newsletter:title_heading:nothing' => "Votre {$site_name} Bulletin: Rien à signaler aujourd'hui",
 
-	'cp_newsletter:greeting' => "Bonjour Christine. Voici vos notifications pour <strong>%s</strong>",
+	'cp_newsletter:greeting' => "Bonjour %s. Voici vos notifications pour <strong>%s</strong>",
 
 	'cp_newsletter_body:status:nothing' => "Il semble que c'était calme dans votre réseau sur GCconnex, nous n'avons rien à signaler.",
 	'cp_newsletter:footer:notification_settings' => "Pour vous désabonner ou gérer ces messages, veuillez vous connecter et visiter votre <a href = '<?php echo $notifications_settings; ?> '> Paramètres de notification </a>.",
@@ -28,7 +28,7 @@ $french = array(
 
 'cp_notifications:heading:personal_section' => 'Vos abonnements',
 
-
+'cp_newsletter:title:nothing' => "Votre {$site_name} Digest: Rien à signaler aujourd'hui",
 
     'cp_notifications:personal_likes'=>'Envoyez-moi une notification lorsque quelqu\'un aime mon contenu',
     'cp_notifications:personal_mentions'=>'Envoyez-moi une notification lorsque quelqu\'un me mentionne',
@@ -88,7 +88,7 @@ $french = array(
 
 	'cp_newsletter:subject:daily' => "GCconnex Bulletin par jour",
 	'cp_newsletter:subject:weekly' => "GCconnex Bulletin par semaine",
-'cp_newsletter:body:nothing' => "Il semble que c'était calme dans votre réseau sur GCconnex, nous n'avons rien à signaler.",
+	'cp_newsletter:body:nothing' => "Il semble que c'était calme dans votre réseau sur GCconnex, nous n'avons rien à signaler.",
 
   'cp_notifications:contact_help_desk'=> "Si vous avez des questions, veuillez soumettre votre demande via le <a href='{$site->getURL()}mod/contactform/'>formulaire Contactez-nous</a>.",
 

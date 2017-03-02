@@ -243,6 +243,10 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 			$digest_collection['personal']['friend_request'][$invoked_by->guid] = json_encode($content_array);
 		 	break;
 
+		case 'cp_friend_approve':
+			$digest_collection['personal']['friend_approved'][$invoked_by->guid] = json_encode($content_array);
+			break;
+
 		case 'cp_messageboard':
 
 			$digest_collection['personal']['profile_message'][$entity->guid] = "{$invoked_by->username} has left u a msg on your profile => sending to... {$send_to->guid} / {$send_to->username}";
@@ -419,5 +423,136 @@ function userOptedIn( $user_obj, $mission_type ) {
 }
 
 
+/**
+   * @param Array <string> $heading
+   */
+  function render_contents($content_array, $heading = '', $language_preference = 'en') {
+
+    $author = $content_array['content_author_name'];
+
+    // this is specifically for the Micro Missions portion due to extra field
+    $subtype = elgg_echo($content_array['subtype']);
+    $subtype = cp_translate_subtype($subtype);
+
+    if ($content_array['deadline']) {
+      $closing_date = 'Closing Date : '.$content_array['deadline'];
+      $subtype = elgg_echo($subtype);
+      $author = '';
+    }
+
+    if ($content_array['subtype'] === 'thewire') {
+      $url = "<a href='{$content_array['content_url']}'>{$subtype}</a>";
+      $rendered_content = elgg_echo("cp_notifications:mail_body:subtype:{$content_array['subtype']}", array($author, $url), $language_preference);
+
+
+    } elseif ($heading === 'likes') {
+      $url = "<a href='{$content_array['content_url']}'>{$subtype}</a>";
+      $rendered_content = elgg_echo("cp_notifications:mail_body:subtype:{$content_array['subtype']}", array($author, $url), $language_preference);
+
+
+    } elseif ($heading === 'response') {
+      $url = "<a href='{$content_array['content_url']}'>{$subtype}</a>";
+      $rendered_content = elgg_echo("cp_notifications:mail_body:subtype:{$content_array['subtype']}", array($author, $url), $language_preference);
+      
+
+    } else {
+      // limit 35 characters
+      if (is_array($content_array['content_title']))
+        $content_title = $content_array['content_title'][$language_preference];
+      else
+        $content_title = $content_array['content_title'];
+
+      $url = "<a href='{$content_array['content_url']}'>{$content_title}</a> {$closing_date}";
+      $rendered_content = elgg_echo("cp_notifications:mail_body:subtype:any", array($author, $content_array['subtype'], $url), $language_preference);
+    }
+    return $rendered_content;
+  }
+
+
+  /**
+   * @param string  $heading
+   *
+   */
+  function render_headers($heading, $user_name='', $language='en') {
+
+    $proper_heading = '';
+
+    switch ($heading) {
+      case 'personal':
+      case 'mission':
+      case 'group':
+      case 'new_post':
+      case 'cp_wire_share':
+      case 'likes':
+      case 'friend_request':
+      case 'content_revision':
+      case 'forum_topic':
+      case 'forum_reply':
+      case 'response':
+        $proper_heading = elgg_echo("cp_newsletter:heading:notify:{$heading}");
+        break;
+      case 'friend_approved':
+       $proper_heading = elgg_echo("cp_newsletter:heading:notify:{$heading}",array($user_name),$language);
+      	break;
+      default:
+        $proper_heading = $heading;
+        break;
+    }
+
+    return $proper_heading;
+  }
+
+
+
+
+/**
+ *
+ */
+function information_icon($text, $url) {
+	return "<span class='pull-right'><a title='{$text}' target='_blank' href='{$url}'><i class='fa fa-info-circle icon-sel'><span class='wb-invisible'> </span></i></a></span>";
+}
+
+function has_group_subscriptions($group_guid, $user_guid) {
+
+	// normal objects
+	$query = "
+	SELECT  r.guid_one, r.relationship, r.guid_two
+	FROM elggentity_relationships r 
+		LEFT JOIN elggentities e ON r.guid_two = e.guid
+		LEFT JOIN (SELECT guid FROM elgggroups_entity WHERE guid = {$group_guid}) g ON e.container_guid = g.guid
+	WHERE 	r.relationship LIKE 'cp_subscribed_to_%' AND 
+			e.type = 'object' AND
+			e.container_guid = {$group_guid}
+	LIMIT 1
+	";
+
+	$subscriptions = get_data($query);
+
+	if (sizeof($subscriptions) == 0) {
+		// forums
+		$query = "SELECT elgg_subtype.entity_guid, elgg_subtype.entity_subtype
+		FROM elggentity_relationships r
+		LEFT JOIN 
+			(SELECT e.guid AS entity_guid, s.subtype AS entity_subtype FROM elggentities e, elggentity_subtypes s WHERE (s.subtype = 'hjforumtopic' OR s.subtype = 'hjforum') AND e.subtype = s.id) elgg_subtype ON elgg_subtype.entity_guid = r.guid_two 
+		WHERE r.guid_one = {$user_guid} AND r.relationship LIKE 'cp_subscribed_to_%'";
+
+		$forums = get_data($query);
+
+		foreach ($forums as $forum) {
+			if (!empty($group_content->entity_guid) && $group_content->entity_guid > 0) {
+		    	$content = get_entity($group_content->entity_guid);
+
+				// we want the forum topic that resides in the group
+		    	$container_id = (strcmp($content->getSubtype(), 'hjforumtopic') == 0) ? $content->getContainerGUID() : $container_id = $content->getGUID();
+		    	
+		    	if (get_forum_in_group($container_id,$container_id) == $group_guid)
+		    		return 1;
+		    }
+		}
+		return 0;
+	}
+
+	return sizeof($subscriptions);
+}
 
 

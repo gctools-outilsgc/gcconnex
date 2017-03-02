@@ -7,55 +7,6 @@
  *
  */
 
-/**
- *
- */
-function information_icon($text, $url) {
-	return "<span class='pull-right'><a title='{$text}' target='_blank' href='{$url}'><i class='fa fa-info-circle icon-sel'><span class='wb-invisible'> </span></i></a></span>";
-}
-
-function has_group_subscriptions($group_guid, $user_guid) {
-
-	// normal objects
-	$query = "
-	SELECT  r.guid_one, r.relationship, r.guid_two
-	FROM elggentity_relationships r 
-		LEFT JOIN elggentities e ON r.guid_two = e.guid
-		LEFT JOIN (SELECT guid FROM elgggroups_entity WHERE guid = {$group_guid}) g ON e.container_guid = g.guid
-	WHERE 	r.relationship LIKE 'cp_subscribed_to_%' AND 
-			e.type = 'object' AND
-			e.container_guid = {$group_guid}
-	LIMIT 1
-	";
-
-	$subscriptions = get_data($query);
-
-	if (sizeof($subscriptions) == 0) {
-		// forums
-		$query = "SELECT elgg_subtype.entity_guid, elgg_subtype.entity_subtype
-		FROM elggentity_relationships r
-		LEFT JOIN 
-			(SELECT e.guid AS entity_guid, s.subtype AS entity_subtype FROM elggentities e, elggentity_subtypes s WHERE (s.subtype = 'hjforumtopic' OR s.subtype = 'hjforum') AND e.subtype = s.id) elgg_subtype ON elgg_subtype.entity_guid = r.guid_two 
-		WHERE r.guid_one = {$user_guid} AND r.relationship LIKE 'cp_subscribed_to_%'";
-
-		$forums = get_data($query);
-
-		foreach ($forums as $forum) {
-			if (!empty($group_content->entity_guid) && $group_content->entity_guid > 0) {
-		    	$content = get_entity($group_content->entity_guid);
-
-				// we want the forum topic that resides in the group
-		    	$container_id = (strcmp($content->getSubtype(), 'hjforumtopic') == 0) ? $content->getContainerGUID() : $container_id = $content->getGUID();
-		    	
-		    	if (get_forum_in_group($container_id,$container_id) == $group_guid)
-		    		return 1;
-		    }
-		}
-		return 0;
-	}
-
-	return sizeof($subscriptions);
-}
 
 gatekeeper();
 $user = elgg_get_page_owner_entity();
@@ -352,7 +303,6 @@ input:checked + .slider:before {
 	/// jquery to limit the functionality
 	$(document).ready( function () {
 
-		// TODO: incompatible with IE11 ...
 		$(".class_chkbox_enable_digest").removeClass('elgg-input-checkbox');
 		$("#id_chkbox_enable_digest").removeClass('elgg-input-checkbox');
 
