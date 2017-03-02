@@ -136,7 +136,7 @@
 
                     Highcharts.chart('allMembers', {
                         chart: {
-                            type: 'bar'
+                            type: 'pie'
                         },
                         title: {
                             text: '<?php echo elgg_echo("gccollab_stats:types:title"); ?> (' + allMembersCount + ')'
