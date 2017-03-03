@@ -1,12 +1,13 @@
 <?php
 
-/*
+/**
 * start.php
 *
 * This mod adds some javascript to thewire/all page on the elgg site. It works with the GCAPI mod to check if there are new wire posts and adds the new posts directly to the DOM through ajax
 *
 * @author Nick github.com/piet0024
-*/
+* @author Ilia github.com/phanoix
+**/
 
 elgg_register_event_handler('init', 'system', 'gc_streaming_init');
 

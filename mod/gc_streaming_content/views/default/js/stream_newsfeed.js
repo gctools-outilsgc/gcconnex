@@ -1,83 +1,83 @@
-/*
+/**
 * stream_wire.js
 *
 * Streaming Wire JS - Listens on the wire page for new wire posts. It then loads the new wire posts to the DOM
 *
 * @author Nick github.com/piet0024
-*/
+* @author Ilia github.com/phanoix
+**/
 
 $(document).ready(function(){
     
     //Setting an interval to time when the ajax calls should be made
     // TODO Test if we are on the newsfeed or wire
     var sitePage = window.location.href;
-    var theWireUrl = elgg.normalize_url() + 'thewire/all';
     var newsFeedUrl = elgg.normalize_url() + 'newsfeed';
-    if(sitePage == theWireUrl || sitePage == newsFeedUrl ||sitePage == theWireUrl+'#' ||sitePage == newsFeedUrl+'#'){
+    if( sitePage == newsFeedUrl ||sitePage == newsFeedUrl+'#' ){
        stream_count(); 
     }
 });
 
 //This function counts 2 minutes while a streaming page is loaded
 var interval = null;
-function stream_count(){
+function newsfeed_stream_count(){
     
-   interval =  window.setInterval(check_for_posts(),10000);
+   interval =  window.setInterval(check_for_newsfeed_items(),10000);
 }
 
 
 
 //Stop the timer and add a call to action to the DOM
-function stop_stream_count(){
+function stop_stream_newsfeed_count(){
     window.clearInterval(interval);
     //Animate in a div button 
-    $('.new-wire-holder').prepend('<div class="stream-new-wire" style="display:none;">'+elgg.echo('stream:new_wire')+'</div>');
-    $('.stream-new-wire').show('slow');
-    $('.stream-new-wire').on('click', function(){
-        loadNewPosts();
+    $('.new-wire-holder').prepend('<div class="stream-new-newsfeed" style="display:none;">'+elgg.echo('stream:new_wire')+'</div>');
+    $('.stream-new-newsfeed').show('slow');
+    $('.stream-new-newsfeed').on('click', function(){
+        loadNewNewsfeedItems();
     })
 }
 
 // Checking to see if there are any new wire posts
-function check_for_posts(){
-        //What are the posts currently loaded on the page?
-        //Get the guid from the post id
-        var firstPostOnPage = $('.elgg-item-object-thewire .elgg-content').first().parent().parent().parent().attr('id');
-        var postGUID = firstPostOnPage.split("-");
-        postGUID = postGUID.slice(2);
+function check_for_posts_newsfeed_items(){
+    //What are the posts currently loaded on the page?
+    //Get the guid from the post id
+    var firstPostOnPage = $('.panel-river .elgg-river-message').first().parent().parent().parent().attr('id');
+    var postGUID = firstPostOnPage.split("-");
+    postGUID = postGUID.slice(2);
     
     
     
-        var site = elgg.normalize_url();
-        var first_post ='';
-        //Ping the api to see what the latest wire post. This will only grab one post
-            $.ajax({
-                type: 'GET',
-                contentType: "application/json",
-                url: site+'services/api/rest/json/?method=get.wire&limit=1',
-                dataType: 'json',
-                success: function(feed){
-                    //Get the latest post and compare that post to the post that is on the page.
-                   var test_array = feed.result.posts.post_0.guid;
-                   
-                    if(comparePosts(test_array, postGUID)){
-                        //True - Keep looking for posts
-                        setTimeout(stream_count, 10000);
-                        
-                    }else{
-                        //False - there is a new post. We can stop looking now.
-                        stop_stream_count();
+    var site = elgg.normalize_url();
+    var first_post ='';
+    //Ping the api to see what the latest wire post. This will only grab one post
+        $.ajax({
+            type: 'GET',
+            contentType: "application/json",
+            url: site+'services/api/rest/json/?method=get.wire&limit=1',
+            dataType: 'json',
+            success: function(feed){
+                //Get the latest post and compare that post to the post that is on the page.
+               var test_array = feed.result.posts.post_0.guid;
+               
+                if(comparePosts(test_array, postGUID)){
+                    //True - Keep looking for posts
+                    setTimeout(stream_count, 10000);
                     
-                    }
-                },
-                error: function(request, status, error) { 
-                   console.log('error');
-
+                }else{
+                    //False - there is a new post. We can stop looking now.
+                    stop_stream_count();
+                
                 }
-            });
-        }
-    
+            },
+            error: function(request, status, error) { 
+               console.log('error');
 
+            }
+        });
+}
+
+// is there a point to this?
  function comparePosts(post, onPage){
      //This compares the guids
          if(post == onPage){
@@ -90,7 +90,7 @@ function check_for_posts(){
 
  }
 
-function loadNewPosts(){
+function loadNewNewsfeedItems(){
     //Goes through how 
     //Spinner
     $('.stream-new-wire').html('<i class="fa fa-refresh fa-spin fa-1g fa-fw"></i><span class="sr-only">Loading...</span>');
