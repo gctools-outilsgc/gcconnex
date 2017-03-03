@@ -425,6 +425,8 @@ return array(
 	"missions:error:applicant_not_applied_to_mission" => "L'utilisateur %s s'est retiré cette possibilité.",
 	"missions:participating_in" => "Participant à '%s'",
 	"missions:participating_in_more" => "Vous êtes maintenant un candidat à cette possibilité ",
+    "missions:participating_out" => "Cette opportunité à été comblée: '%s'.",
+    "missions:participating_out_more" => "Nous vous remercions de votre candidature. Malheureusement, cette opportunité a été offerte à un(e) autre candidat(e), mais nous avons hâte de vous voir postuler pour d'autres opportunités.",
 	"missions:error:user_already_applied" => "%s a déjà postulé à '%s'.",
 	"missions:error:user_already_invited" => "%s a déjà été invité à '%s'.",
 	"missions:error:user_already_participating" => "%s participe déjà à '%s'.",
