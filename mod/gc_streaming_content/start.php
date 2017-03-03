@@ -12,14 +12,17 @@ elgg_register_event_handler('init', 'system', 'gc_streaming_init');
 
 function gc_streaming_init(){
     elgg_require_js("stream_wire");
+    elgg_require_js("stream_newsfeed");					// TODO: add the actual file
     
     elgg_extend_view('css/elgg', 'css/css');
     
     elgg_register_ajax_view('ajax/wire_posts');
+    elgg_register_ajax_view('ajax/newsfeed_items');			// TODO: add the actual file
     
     elgg_register_page_handler('thewire', 'streaming_wire_page');
     // live stream wire widget
     elgg_register_widget_type('stream_wire_index',elgg_echo ('custom_index_widgets:stream_wire_index'),elgg_echo ('custom_index_widgets:stream_wire_index'), array("custom_index_widgets"), true);
+    elgg_register_widget_type('stream_newsfeed_index',elgg_echo ('custom_index_widgets:stream_newsfeed_index'),elgg_echo ('custom_index_widgets:stream_newsfeed_index'), array("custom_index_widgets"), true);
     
 }
 
