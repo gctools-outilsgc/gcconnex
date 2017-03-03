@@ -34,6 +34,7 @@ if (!elgg_is_logged_in()) {
 
 
 <nav role="navigation" class="text-right col-md-12 mrgn-tp-sm user-z-index">
+    <h2 class="wb-invisible"><?php echo elgg_echo('wet:usermenu:helpertext'); ?></h2>
     <?php
         //echo elgg_view('page/elements/topbar', $vars);
 		echo elgg_view('page/elements/user_menu', $vars);

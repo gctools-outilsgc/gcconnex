@@ -128,6 +128,7 @@ return array(
     'userMenu:messages' => "Mes messages",
     'userMenu:colleagues' => "Mes collègues",
     'userMenu:usermenuTitle' =>'User Card - Click here for links to your profile, account settings and logout(translate me)', /*NEW*/
+    'wet:usermenu:helpertext' => "User Menu. Contains Links to Notifications, Profile and Logout",
     'wet:dd:expand'=>"Open drop down of most recent messages(fr)",
 
 

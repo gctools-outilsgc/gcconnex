@@ -96,11 +96,15 @@ $breadcrumbs
     <div class="elgg-page-messages container">
 		$messages
 	   </div>
+       <div class="container">
+       $userMenu
+       </div>
+       
     $group_cover_image
 	<main role="main" property="mainContentOfPage" class="container">
 
         <!--<div class="elgg-inner">-->
-            $userMenu
+            
         <!--<section>-->
 			$content
 <!--</section>
