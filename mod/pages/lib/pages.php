@@ -144,10 +144,10 @@ function pages_get_navigation_tree($container) {
                 }else{
                     $child_title = $child->title;
                 }
-				
+               				
 				$tree[] = array(
 					'guid' => $child->getGUID(),
-					'title' => $child->title,
+					'title' => $child_title,
 					'url' => $child->getURL(),
 					'parent_guid' => $parent->getGUID(),
 					'depth' => $depths[$parent->guid] + 1,
