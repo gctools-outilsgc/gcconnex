@@ -42,7 +42,7 @@ function stop_stream_newsfeed_count(){
 function check_for_newsfeed_items(){
     //What are the posts currently loaded on the page?
     //Get the guid from the post id
-    var firstPostOnPage = $('.panel-river .elgg-river-message').first().parent().parent().parent().attr('id');
+    var firstPostOnPage = $('.panel-river .elgg-body').first().parent().parent().attr('id');
     var postID = firstPostOnPage.split("-");
     postID = postID.slice(2);
     
@@ -52,7 +52,7 @@ function check_for_newsfeed_items(){
     var first_post ='';
     //Ping the api to see what the latest wire post. This will only grab one post
         elgg.get('ajax/view/ajax/newsfeed_check', {
-            data: {'userid': elgg.get_logged_in_user_guid},
+            data: {'userid': elgg.get_logged_in_user_guid, 'limit': 1},
             dataType: 'json',
             success: function(response){
                 //Get the latest post and compare that post to the post that is on the page.
@@ -93,13 +93,13 @@ function loadNewNewsfeedItems(){
     //Spinner
     $('.stream-new-newsfeed').html('<i class="fa fa-refresh fa-spin fa-1g fa-fw"></i><span class="sr-only">Loading...</span>');
     //get all of the wire posts currently loaded on the page.
-    var postsOnPage = $('.panel-river .elgg-river-message');
+    var postsOnPage = $('.panel-river .elgg-body');
     var existingArray =[];
     var queryArray = [];
     for (i=0; i < postsOnPage.length; i++){
         //Push the existing posts to an array to compare with
         
-        var post_ = $(postsOnPage[i]).parent().parent().parent().attr('id');
+        var post_ = $(postsOnPage[i]).parent().parent().attr('id');
         var postGUID = post_.split("-");
         postGUID = postGUID.slice(2);
         //This needs to be an int not a string
@@ -111,6 +111,7 @@ function loadNewNewsfeedItems(){
     var site = elgg.normalize_url();
         elgg.get('ajax/view/ajax/newsfeed_check', {
             //get the latest wire posts from the API
+                data: {'userid': elgg.get_logged_in_user_guid, 'limit': 0},
                 dataType: 'json',
                 success: function(response){
                     //Put the latest posts in an array

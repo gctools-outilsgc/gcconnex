@@ -21,7 +21,7 @@ if ($user) {
 if(!$hasgroups && !$hasfriends){
     //no friends and no groups :(
     $result = null;
-    error_log("message");
+    error_log("error message!");
 }else if(!$hasgroups && $hasfriends){
     //has friends but no groups
     $optionsf['relationship_guid'] = elgg_get_logged_in_user_guid();
@@ -66,9 +66,10 @@ if(!$hasgroups && !$hasfriends){
      OR te.container_guid IN({$guids_in}) )
     OR rv.subject_guid IN (SELECT guid_two FROM {$db_prefix}entity_relationships WHERE guid_one=$user->guid AND relationship='friend')
     ");
-    $optionsfg['limit'] = 1;
+    // check if we're checking only the last item or the full page
+    get_input("limit") ? $optionsfg['limit'] = 1 : $optionsf['pagination'] = true;
+    
     $result = elgg_get_river($optionsfg);
 
-    error_log("message::" .$result[0]->id);
 }
 echo json_encode($result);
