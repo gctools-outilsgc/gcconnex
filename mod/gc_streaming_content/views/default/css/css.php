@@ -4,7 +4,7 @@
 
  /* <style> /**/
      
-     .stream-new-wire{
+     .stream-new-wire, .stream-new-newsfeed{
          background-color: #d9edf7;
          padding: 10px;
          margin-bottom: 22px;
@@ -15,7 +15,7 @@
 
          
      }  
-     .stream-new-wire:hover{
+     .stream-new-wire:hover, .stream-new-newsfeed:hover{
          text-decoration: underline;
          cursor: pointer;
      }
