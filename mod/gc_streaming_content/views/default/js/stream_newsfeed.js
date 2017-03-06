@@ -13,8 +13,8 @@ $(document).ready(function(){
     // TODO Test if we are on the newsfeed or wire
     var sitePage = window.location.href;
     var newsFeedUrl = elgg.normalize_url() + 'newsfeed';
-    if( sitePage == newsFeedUrl ||sitePage == newsFeedUrl+'#' ){
-       stream_count(); 
+    if( sitePage == newsFeedUrl ||sitePage == newsFeedUrl+'/' ||sitePage == newsFeedUrl+'/#' ){
+       newsfeed_stream_count(); 
     }
 });
 
@@ -39,7 +39,7 @@ function stop_stream_newsfeed_count(){
 }
 
 // Checking to see if there are any new wire posts
-function check_for_posts_newsfeed_items(){
+function check_for_newsfeed_items(){
     //What are the posts currently loaded on the page?
     //Get the guid from the post id
     var firstPostOnPage = $('.panel-river .elgg-river-message').first().parent().parent().parent().attr('id');
@@ -51,22 +51,19 @@ function check_for_posts_newsfeed_items(){
     var site = elgg.normalize_url();
     var first_post ='';
     //Ping the api to see what the latest wire post. This will only grab one post
-        $.ajax({
-            type: 'GET',
-            contentType: "application/json",
-            url: site+'services/api/rest/json/?method=get.wire&limit=1',
+        elgg.get('ajax/view/ajax/newsfeed_check', {
             dataType: 'json',
-            success: function(feed){
+            success: function(response){
                 //Get the latest post and compare that post to the post that is on the page.
-               var test_array = feed.result.posts.post_0.guid;
+               var test_array = response;
                
                 if(comparePosts(test_array, postGUID)){
                     //True - Keep looking for posts
-                    setTimeout(stream_count, 10000);
+                    setTimeout(newsfeed_stream_count, 10000);
                     
                 }else{
                     //False - there is a new post. We can stop looking now.
-                    stop_stream_count();
+                    stop_stream_newsfeed_count();
                 
                 }
             },
@@ -111,15 +108,12 @@ function loadNewNewsfeedItems(){
     }
   
     var site = elgg.normalize_url();
-        $.ajax({
+        elgg.get('ajax/view/ajax/newsfeed_check', {
             //get the latest wire posts from the API
-                type: 'GET',
-                contentType: "application/json",
-                url: site+'services/api/rest/json/?method=get.wire',
                 dataType: 'json',
-                success: function(feed){
+                success: function(response){
                     //Put the latest posts in an array
-                    var postArray = feed.result.posts;
+                    var postArray = response;
                     for (var num in postArray){
                         queryArray.push(postArray[num].guid);
                         
@@ -129,7 +123,7 @@ function loadNewNewsfeedItems(){
                     
                     //Loggin this to see we're getting back on preprod
                     
-                    ajax_path = 'ajax/view/ajax/wire_posts'; //here is my ajax view :3
+                    ajax_path = 'ajax/view/ajax/newsfeed_items'; //here is my ajax view :3
                     //Bring back the latests posts and add them to the page
                     elgg.get(ajax_path, {
                         data: {'limit': diff.length},
@@ -137,7 +131,7 @@ function loadNewNewsfeedItems(){
                         success: function (data) {
                         $('.posts-holder').prepend(data);
                         $('.stream-new-wire').remove();
-                            stream_count();
+                            newsfeed_stream_count();
                     }
                         
                     });
