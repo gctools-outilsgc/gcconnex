@@ -1,7 +1,7 @@
 /**
-* stream_wire.js
+* stream_newsfeed.js
 *
-* Streaming Wire JS - Listens on the wire page for new wire posts. It then loads the new wire posts to the DOM
+* Streaming Newsfeed JS - Listens on the newsfeed page for new newsfeed items. It then loads the new newsfeed items to the DOM
 *
 * @author Nick github.com/piet0024
 * @author Ilia github.com/phanoix
@@ -10,7 +10,6 @@
 $(document).ready(function(){
     
     //Setting an interval to time when the ajax calls should be made
-    // TODO Test if we are on the newsfeed or wire
     var sitePage = window.location.href;
     var newsFeedUrl = elgg.normalize_url() + 'newsfeed';
     if( sitePage == newsFeedUrl ||sitePage == newsFeedUrl+'/' ||sitePage == newsFeedUrl+'/#' ){
@@ -38,7 +37,7 @@ function stop_stream_newsfeed_count(){
     })
 }
 
-// Checking to see if there are any new wire posts
+// Checking to see if there are any new newsfeed items
 function check_for_newsfeed_items(){
     //What are the posts currently loaded on the page?
     //Get the guid from the post id
@@ -50,7 +49,7 @@ function check_for_newsfeed_items(){
     
     var site = elgg.normalize_url();
     var first_post ='';
-    //Ping the api to see what the latest wire post. This will only grab one post
+    //Ping the api to see what the latest newsfeed item. This will only grab one post
         elgg.get('ajax/view/ajax/newsfeed_check', {
             data: {'userid': elgg.get_logged_in_user_guid, 'limit': 1},
             dataType: 'json',
@@ -79,7 +78,7 @@ function check_for_newsfeed_items(){
  function comparePosts(post, onPage){
      //This compares the guids
          if(post == onPage){
-             //Same wire post
+             //Same newsfeed item
              return true;
         }else{
             //a new post was made
@@ -92,7 +91,7 @@ function loadNewNewsfeedItems(){
     //Goes through how 
     //Spinner
     $('.stream-new-newsfeed').html('<i class="fa fa-refresh fa-spin fa-1g fa-fw"></i><span class="sr-only">Loading...</span>');
-    //get all of the wire posts currently loaded on the page.
+    //get all of the newsfeed items currently loaded on the page.
     var postsOnPage = $('.panel-river .elgg-body');
     var existingArray =[];
     var queryArray = [];
@@ -110,7 +109,7 @@ function loadNewNewsfeedItems(){
   
     var site = elgg.normalize_url();
         elgg.get('ajax/view/ajax/newsfeed_check', {
-            //get the latest wire posts from the API
+            //get the latest newsfeed items from the API
                 data: {'userid': elgg.get_logged_in_user_guid, 'limit': 0},
                 dataType: 'json',
                 success: function(response){
