@@ -7,26 +7,29 @@ $contact_us = "{$site->getURL()}mod/contactform/";
 $english = array(
 
 	/// SETTINGS PAGE: Newsletter translation texts
-	'cp_newsletter:notice' => "If you enable the digest, your newsletter will include everything selected under EMAIL in group notifications. See the <a href='#'>Notifications User Guide</a> for more information.",
-	'cp_newsletter:notice:disable_digest' => "Once digest feature is disabled and saved, you will start receiving instant notifications based on your selections below. You will not receive the notifications regarding... See guide for more <a href='#'>information</a>.",
+	//'cp_newsletter:notice' => "If you enable the digest, your newsletter will include everything selected under EMAIL in group notifications. See the <a href='#'>Notifications User Guide</a> for more information.",
+	'cp_newsletter:notice' => "Choose how you want to be notified of GCconnex activities of interest to you. The Notification Digest can be used to receive a daily or weekly email digest that provides a summary of the activities to which you are subscribed. Prefer to receive instant notification? Forgo the digest and select the content for which you want to receive notification in real-time. Please note that email notifications are sent to the email address used in your User Settings.",
+	//'cp_newsletter:notice:disable_digest' => "Once digest feature is disabled and saved, you will start receiving instant notifications based on your selections below. You will not receive the notifications regarding... See guide for more <a href='#'>information</a>.",
+	'cp_newsletter:notice:disable_digest' => "The notification digest is now enabled; please select your digest preferences below (frequency and language preference). The digest will include all content selected in the 'Email' column below, as well the subscriptions in the 'Other content subscriptions' section.",
+
 	'cp_newsletter:subject:daily' => 'Your Daily Newsletter',
 	'cp_newsletter:subject:weekly' => 'Your Weekly Newsletter',
-	'cp_newsletter:enable_digest_option' => "Enable digest feature",
+	'cp_newsletter:enable_digest_option' => "Enable notification digest",
 	'cp_newsletter:label:english' => "English",
 	'cp_newsletter:label:french' => "French",
 	'cp_newsletter:label:daily' => "Daily",
 	'cp_newsletter:label:weekly' => "Weekly",
 
-	'cp_newsletter:information:digest_option' => "This will enable or disable the Newsletter functionality",
+	'cp_newsletter:information:digest_option' => "This will enable or disable the digest functionality",
 	'cp_newsletter:information:digest_option:url' => "#",
-	'cp_newsletter:information:frequency' => "This will determine how often you want to receive the Newsletter",
+	'cp_newsletter:information:frequency' => "This will determine how often you want to receive the digest",
 	'cp_newsletter:information:frequency:url' => "#",
-	'cp_newsletter:information:language' => "This will determine which language you want the Newsletter displayed in",
+	'cp_newsletter:information:language' => "This will determine in which language you will receive the digest",
 	'cp_newsletter:information:language:url' => "#",
 	'cp_newsletter:information:select_all' => "This will only select the group itself, not the group content",
 	'cp_newsletter:information:select_all:url' => "#",
-	'cp_newsletter:set_frequency' => "When do you want to receive Digest",
-	'cp_newsletter:set_language' => "Which language do you want to receive Digest",
+	'cp_newsletter:set_frequency' => "How often do you want to receive the digest?",
+	'cp_newsletter:set_language' => "In which language do you want to receive the digest?",
 
 	'cp_notifications:subtype:groupforumtopic' => "Discussions",
 	'cp_notifications:subtype:hjforumtopic' => "Forum Topic",
@@ -59,6 +62,7 @@ $english = array(
 	'cp_notifications:mail_body:subtype:response' => "%s posted a response or comment to your post: %s",
 	'cp_notifications:mail_body:subtype:any' => "%s posted a(n) %s %s",
 
+	'cp_newsletter:other_content:notice' => "These subscriptions are for content outside of groups only",
 
 
 	'cp_notifications:no_colleagues' => "You do not have any colleagues",
@@ -71,7 +75,7 @@ $english = array(
     'cp_notifications:no_group_subscription' => "Nothing to load",
  	'cp_notifications:loading' => 'Loading...',
 	'cp_notifications:subscribe_all_label' => "<a href='%s'>Subscribe</a> or <a href='%s'> Unsubscribe</a> to all groups and their content",
-	'cp_notifications:chkbox:select_all_group_for_notification' => "Select all the groups (not the group content)",
+	'cp_notifications:chkbox:select_all_group_for_notification' => "Select all groups (this will not select the group content)",
 
     'cp_notifications:personal_likes' => 'Notify me when someone likes my content',
     'cp_notifications:personal_mentions' => 'Notify me when someone @mentions me',
@@ -82,13 +86,13 @@ $english = array(
 	'cp_notifications:no_group_content' => "(No subscribed group content)",
 
 	/// SETTINGS PAGE: Notification headings
-	'cp_notifications:heading:page_title' => 'Subscription settings (go here to edit %s)',
+	'cp_notifications:heading:page_title' => 'Your Subscriptions',
 	'cp_notifications:your_email' => "your email",
 	'cp_notifications:heading:newsletter_section' => "Notification Newsletter",
  	'cp_notifications:heading:personal_section'=>'Personal Notifications',
     'cp_notifications:heading:colleague_section'=>'Colleague Notifications',
     'cp_notifications:heading:group_section' => 'Group Notifications',
- 	'cp_notifications:heading:nonGroup_section' => 'Non Group related subscriptions',
+ 	'cp_notifications:heading:nonGroup_section' => 'Other content subscriptions',
 
 
 	

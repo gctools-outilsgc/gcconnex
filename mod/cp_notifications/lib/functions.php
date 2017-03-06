@@ -510,6 +510,7 @@ function userOptedIn( $user_obj, $mission_type ) {
  */
 function information_icon($text, $url) {
 	return "<span class='pull-right'><a title='{$text}' target='_blank' href='{$url}'><i class='fa fa-info-circle icon-sel'><span class='wb-invisible'> </span></i></a></span>";
+//	return "<span class='pull-right'><a title='{$text}' target='_blank' href='{$url}'><i class='fa fa-info-circle icon-sel'><span class='wb-invisible'> </span></i></a></span>";
 }
 
 function has_group_subscriptions($group_guid, $user_guid) {
