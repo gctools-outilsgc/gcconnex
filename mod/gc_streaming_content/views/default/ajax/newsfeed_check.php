@@ -1,9 +1,10 @@
 <?php
 
 $db_prefix = elgg_get_config('dbprefix');
-
-//$userid = get_input('userid');
-$user = elgg_get_logged_in_user_entity();// get_entity($userid);
+$result = 0;
+$userid = get_input('userid');
+$user = get_entity($userid);
+error_log("user: " .$user->username);
 if ($user) {
     //check if user exists and has friends or groups
     $hasfriends = $user->getFriends();
@@ -20,6 +21,7 @@ if ($user) {
 if(!$hasgroups && !$hasfriends){
     //no friends and no groups :(
     $result = null;
+    error_log("message");
 }else if(!$hasgroups && $hasfriends){
     //has friends but no groups
     $optionsf['relationship_guid'] = elgg_get_logged_in_user_guid();
@@ -65,7 +67,8 @@ if(!$hasgroups && !$hasfriends){
     OR rv.subject_guid IN (SELECT guid_two FROM {$db_prefix}entity_relationships WHERE guid_one=$user->guid AND relationship='friend')
     ");
     $optionsfg['limit'] = 1;
-    $result = elgg_get_river($optionsfg)->id;
-}
+    $result = elgg_get_river($optionsfg);
 
-echo $result;
+    error_log("message::" .$result[0]->id);
+}
+echo json_encode($result);

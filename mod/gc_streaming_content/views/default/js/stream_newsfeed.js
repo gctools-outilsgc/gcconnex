@@ -31,7 +31,7 @@ function newsfeed_stream_count(){
 function stop_stream_newsfeed_count(){
     window.clearInterval(interval);
     //Animate in a div button 
-    $('.new-wire-holder').prepend('<div class="stream-new-newsfeed" style="display:none;">'+elgg.echo('stream:new_wire')+'</div>');
+    $('.new-newsfeed-holder').prepend('<div class="stream-new-newsfeed" style="display:none;">'+elgg.echo('stream:new_newsfeed')+'</div>');
     $('.stream-new-newsfeed').show('slow');
     $('.stream-new-newsfeed').on('click', function(){
         loadNewNewsfeedItems();
@@ -43,8 +43,8 @@ function check_for_newsfeed_items(){
     //What are the posts currently loaded on the page?
     //Get the guid from the post id
     var firstPostOnPage = $('.panel-river .elgg-river-message').first().parent().parent().parent().attr('id');
-    var postGUID = firstPostOnPage.split("-");
-    postGUID = postGUID.slice(2);
+    var postID = firstPostOnPage.split("-");
+    postID = postID.slice(2);
     
     
     
@@ -52,12 +52,13 @@ function check_for_newsfeed_items(){
     var first_post ='';
     //Ping the api to see what the latest wire post. This will only grab one post
         elgg.get('ajax/view/ajax/newsfeed_check', {
+            data: {'userid': elgg.get_logged_in_user_guid},
             dataType: 'json',
             success: function(response){
                 //Get the latest post and compare that post to the post that is on the page.
-               var test_array = response;
+               //var test_array = response;
                
-                if(comparePosts(test_array, postGUID)){
+                if(comparePosts(response[0].id, postID[0])){
                     //True - Keep looking for posts
                     setTimeout(newsfeed_stream_count, 10000);
                     
@@ -90,9 +91,9 @@ function check_for_newsfeed_items(){
 function loadNewNewsfeedItems(){
     //Goes through how 
     //Spinner
-    $('.stream-new-wire').html('<i class="fa fa-refresh fa-spin fa-1g fa-fw"></i><span class="sr-only">Loading...</span>');
+    $('.stream-new-newsfeed').html('<i class="fa fa-refresh fa-spin fa-1g fa-fw"></i><span class="sr-only">Loading...</span>');
     //get all of the wire posts currently loaded on the page.
-    var postsOnPage = $('.elgg-item-object-thewire .elgg-content');
+    var postsOnPage = $('.panel-river .elgg-river-message');
     var existingArray =[];
     var queryArray = [];
     for (i=0; i < postsOnPage.length; i++){
@@ -126,11 +127,11 @@ function loadNewNewsfeedItems(){
                     ajax_path = 'ajax/view/ajax/newsfeed_items'; //here is my ajax view :3
                     //Bring back the latests posts and add them to the page
                     elgg.get(ajax_path, {
-                        data: {'limit': diff.length},
+                        data: {'userid': elgg.get_logged_in_user_guid},
                         dataType: 'html',
                         success: function (data) {
                         $('.posts-holder').prepend(data);
-                        $('.stream-new-wire').remove();
+                        $('.stream-new-newsfeed').remove();
                             newsfeed_stream_count();
                     }
                         
