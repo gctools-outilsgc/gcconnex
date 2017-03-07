@@ -7,7 +7,7 @@
  */
 
 //This is an Ajax call
-if (elgg_is_xhr()) {  
+if (elgg_is_xhr()) {
     $user_guid = $_GET["guid"];
     $user = get_user($user_guid);
 
@@ -31,6 +31,7 @@ if (elgg_is_xhr()) {
 
     // handle $education_guid differently depending on whether it's an array or not
     if (is_array($education_guid)) {
+        usort($education_guid, "sortDate");
         foreach ($education_guid as $guid) { // display the input/education view for each education entry
             if ( $guid != null ) {
                 echo elgg_view('input/education', array('guid' => $guid));
