@@ -398,7 +398,7 @@ input:checked + .slider:before {
 				    $('.unsub-button').on('click', function() {
 				        var this_thing = $(this);
 				        var guid = parseInt($(this_thing).attr('id'));
-				        
+				       
 				        elgg.action('cp_notify/unsubscribe', {
 			                data: {
 			                	'guid':guid,

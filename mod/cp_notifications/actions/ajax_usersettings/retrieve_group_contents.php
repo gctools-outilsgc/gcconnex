@@ -13,6 +13,7 @@ if (!elgg_is_xhr()) {
 $group_guid = (int)get_input('group_guid');
 $user_guid = (int)get_input('user_guid');
 elgg_load_library('elgg:gc_notification:functions');
+$dbprefix = elgg_get_config('dbprefix');
 
 $options = array(
 	'subtypes' => array(),
@@ -44,10 +45,10 @@ foreach ($group_contents as $group_content) {
  
 // group forum topic
 $query = "SELECT elgg_subtype.entity_guid, elgg_subtype.entity_subtype
-FROM elggentity_relationships r
+FROM {$dbprefix}entity_relationships r
 LEFT JOIN 
-	(SELECT e.guid AS entity_guid, s.subtype AS entity_subtype FROM elggentities e, elggentity_subtypes s WHERE (s.subtype = 'hjforumtopic' OR s.subtype = 'hjforum') AND e.subtype = s.id) elgg_subtype ON elgg_subtype.entity_guid = r.guid_two 
-WHERE r.guid_one = {$user_guid} AND r.relationship = 'cp_subscribed_to_site_mail'";
+	(SELECT e.guid AS entity_guid, s.subtype AS entity_subtype FROM {$dbprefix}entities e, {$dbprefix}entity_subtypes s WHERE (s.subtype = 'hjforumtopic' OR s.subtype = 'hjforum') AND e.subtype = s.id) elgg_subtype ON elgg_subtype.entity_guid = r.guid_two 
+WHERE r.guid_one = {$user_guid} AND r.relationship LIKE 'cp_subscribed_to_%'";
 
 $group_contents = get_data($query);
 

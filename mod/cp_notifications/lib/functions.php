@@ -514,17 +514,10 @@ function information_icon($text, $url) {
 }
 
 function has_group_subscriptions($group_guid, $user_guid) {
+	$dbprefix = elgg_get_config('dbprefix');
 
 	// normal objects
-	$query = "
-	SELECT  r.guid_one, r.relationship, r.guid_two
-	FROM elggentity_relationships r 
-		LEFT JOIN elggentities e ON r.guid_two = e.guid
-		LEFT JOIN (SELECT guid FROM elgggroups_entity WHERE guid = {$group_guid}) g ON e.container_guid = g.guid
-	WHERE 	r.relationship LIKE 'cp_subscribed_to_%' AND 
-			e.type = 'object' AND
-			e.container_guid = {$group_guid}
-	LIMIT 1
+	$query = "SELECT r.guid_one, r.relationship, r.guid_two  FROM elggentity_relationships r LEFT JOIN elggentities e ON r.guid_two = e.guid LEFT JOIN (SELECT guid FROM elgggroups_entity WHERE guid = {$group_guid}) g ON e.container_guid = g.guid WHERE r.relationship LIKE 'cp_subscribed_to_%' AND e.type = 'object' AND e.container_guid = {$group_guid} AND r.guid_one = {$user_guid} LIMIT 1
 	";
 
 	$subscriptions = get_data($query);
@@ -532,9 +525,9 @@ function has_group_subscriptions($group_guid, $user_guid) {
 	if (sizeof($subscriptions) == 0) {
 		// forums
 		$query = "SELECT elgg_subtype.entity_guid, elgg_subtype.entity_subtype
-		FROM elggentity_relationships r
+		FROM {$dbprefix}entity_relationships r
 		LEFT JOIN 
-			(SELECT e.guid AS entity_guid, s.subtype AS entity_subtype FROM elggentities e, elggentity_subtypes s WHERE (s.subtype = 'hjforumtopic' OR s.subtype = 'hjforum') AND e.subtype = s.id) elgg_subtype ON elgg_subtype.entity_guid = r.guid_two 
+			(SELECT e.guid AS entity_guid, s.subtype AS entity_subtype FROM {$dbprefix}entities e, {$dbprefix}entity_subtypes s WHERE (s.subtype = 'hjforumtopic' OR s.subtype = 'hjforum') AND e.subtype = s.id) elgg_subtype ON elgg_subtype.entity_guid = r.guid_two 
 		WHERE r.guid_one = {$user_guid} AND r.relationship LIKE 'cp_subscribed_to_%'";
 
 		$forums = get_data($query);
