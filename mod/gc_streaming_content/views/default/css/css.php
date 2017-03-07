@@ -20,10 +20,10 @@
          cursor: pointer;
      }
      
-     .posts-holder ul:first-child{
+     .posts-holder, .newsfeed-posts-holder ul:first-child{
          border-left: 2px solid #9bc1d4;
      }
      
-     .posts-holder ul .list-break{
+     .posts-holder, .newsfeed-posts-holder ul .list-break{
          border-bottom: 1px solid #ddd !important;
      }

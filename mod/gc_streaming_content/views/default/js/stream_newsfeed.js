@@ -130,7 +130,7 @@ function loadNewNewsfeedItems(){
                         data: {'userid': elgg.get_logged_in_user_guid},
                         dataType: 'html',
                         success: function (data) {
-                        $('.posts-holder').prepend(data);
+                        $('.newsfeed-posts-holder').prepend(data);
                         $('.stream-new-newsfeed').remove();
                             newsfeed_stream_count();
                     }

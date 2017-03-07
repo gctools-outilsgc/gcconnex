@@ -163,5 +163,5 @@ if(elgg_is_logged_in()){
 
 //echo out the yolo code
 
-echo '<div class="new-newsfeed-holder"><div class="posts-holder"></div></div>';
+echo '<div class="new-newsfeed-holder"><div class="newsfeed-posts-holder"></div></div>';
 echo $activity;
