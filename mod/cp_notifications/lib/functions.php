@@ -553,7 +553,7 @@ function has_group_subscriptions($group_guid, $user_guid) {
 		return 0;
 	}
 
-	return sizeof($subscriptions);
+	return (sizeof($subscriptions) > 0);
 }
 
 

@@ -178,13 +178,21 @@ foreach ($groups as $group) {
     $content .= "			<div class='col-sm-2'>{$chk_email_grp}</div>	<div class='col-sm-2'>{$chk_site_grp}</div>";
 
 	// GROUP CONTENT SUBSCRIPTIONS
-    $content .= '		<div class="accordion col-sm-12 clearfix mrgn-bttm-sm">';
-	$content .= '			<details onClick="return create_group_content_item('.$group->guid.', '.$user->getGUID().')">';
-	$content .= "				<summary >".elgg_echo('cp_notifications:group_content')." ".$subscription_count.'</summary>';
-    
-    $content .= "				<div id='group-content-{$group->guid}' class='tgl-panel clearfix'></div>";
-    $content .= '			</details>';	
-    $content .= '		</div> <hr/>';			
+	if (has_group_subscriptions($group->guid, $user->getGUID())) {
+	    $content .= '		<div class="accordion col-sm-12 clearfix mrgn-bttm-sm">';
+		$content .= '			<details onClick="return create_group_content_item('.$group->guid.', '.$user->getGUID().')">';
+		$content .= "				<summary >".elgg_echo('cp_notifications:group_content')." ".$subscription_count.'</summary>';
+	    
+	    $content .= "				<div id='group-content-{$group->guid}' class='tgl-panel clearfix'></div>";
+	    $content .= '			</details>';	
+	    $content .= '		</div> <hr/>';
+    } else {
+    	$content .= '		<div class="col-sm-12 clearfix mrgn-bttm-sm">';
+		$content .= '			<details">';
+		$content .= "				<summary >".elgg_echo('cp_notifications:no_group_content').'</summary>';
+	    $content .= '			</details>';	
+	    $content .= '		</div> <hr/>';
+    }		
    				
 }
 $content .= "</div>";
@@ -332,9 +340,9 @@ input:checked + .slider:before {
 			$(".chkbox_site").attr('disabled',this.checked);
 
 			if ($(this).is(":checked"))
-		        $("label").css({"color":"gray"});
+		        $(".chkbox_site").closest("label").css({"color":"gray"});
 		    else
-		        $("label").css({"color":"black"});
+		       $(".chkbox_site").closest("label").css({"color":"black"});
 
 
 			if (!this.checked)
