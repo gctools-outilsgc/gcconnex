@@ -100,7 +100,7 @@ function loadNewNewsfeedItems(){
     ajax_path = 'ajax/view/ajax/newsfeed_items'; //here is my ajax view :3
     //Bring back the latests posts and add them to the page
     elgg.get(ajax_path, {
-        data: {'userid': elgg.get_logged_in_user_guid, 'latest': postID},
+        data: {'userid': elgg.get_logged_in_user_guid, 'latest': postID[0]},
         dataType: 'html',
         success: function (data) {
             $('.newsfeed-posts-holder').prepend(data);
