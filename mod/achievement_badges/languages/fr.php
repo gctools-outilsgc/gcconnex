@@ -126,7 +126,7 @@ return array(
     //Achieved
 'badge:bookmark:achieved:0' => "%s n’a pas encore atteint l’écusson pour les signets",
 'badge:bookmark:achieved:1' => '%s a créé plus de 5 signets et a atteint le niveau 1!',
-'badge:bookmark:achieved:2' => '%s a créé plus de 15 signets et a atteint le niveau 2!',
+'badge:bookmark:achieved:2' => '%s a créé plus de 10 signets et a atteint le niveau 2!',
 'badge:bookmark:achieved:3' => '%s a créé plus de 30 signets et a atteint le niveau 3!',
 'badge:bookmark:achieved:4' => '%s a créé plus de 45 signets et a atteint le niveau 4!',
 'badge:bookmark:achieved:5' => '%s a créé plus de 75 signets et a complété les 5 niveaux! Félicitations!',

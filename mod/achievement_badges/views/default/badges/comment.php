@@ -44,15 +44,10 @@ $currentGoal = $goals[0];
 $count = '0';
 
 /////
-$entities =  elgg_get_entities(array('type' => 'object', 'subtype' => 'comment', 'owner_guid' => $user->getGUID(), 'limit' => 0));
+$entities =  elgg_get_entities(array('type' => 'object', 'subtype' => 'comment', 'owner_guid' => $user->getGUID(), 'limit' => 500, 'count' => true));
 
-if($entities){
+$count = $entities;
 
-    $count = count($entities);
-
-} else {
-
-}
 ///
 
 //progress check

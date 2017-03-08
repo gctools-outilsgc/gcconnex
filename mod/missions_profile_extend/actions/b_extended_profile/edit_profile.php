@@ -17,10 +17,10 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                         register_error(elgg_echo('gcc_profile:error').elgg_echo('gcc_profile:missingemail'));
                         return true;
                     }
-                    
+
                     elgg_load_library('c_ext_lib');
                     $isValid = false;
-                    
+
                     if ($v) {
                         // cyu - check if the email is in the list of exceptions
                         $user_email = explode('@',$v);
@@ -37,7 +37,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                         // cyu - check if domain is gc.ca
                         if (!$isValid) {
                             $govt_domain = explode('.',$user_email[1]);
-                            $govt_domain_len = count($govt_domain) - 1;                           
+                            $govt_domain_len = count($govt_domain) - 1;
                             if ($govt_domain[$govt_domain_len - 1].'.'.$govt_domain[$govt_domain_len] === 'gc.ca') {
                                 $isValid = true;
                             } else {
@@ -55,54 +55,74 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                 else {
                 	if($f=='department'){
                 		$obj = elgg_get_entities(array(
-   							'type' => 'object',
-   							'subtype' => 'dept_list',
-   							'owner_guid' => 0
-						));
-						$departmentsEn = json_decode($obj[0]->deptsEn, true);
-						$provinces['pov-alb'] = 'Government of Alberta';
-						$provinces['pov-bc'] = 'Government of British Columbia';
-						$provinces['pov-man'] = 'Government of Manitoba';
-						$provinces['pov-nb'] = 'Government of New Brunswick';
-						$provinces['pov-nfl'] = 'Government of Newfoundland and Labrador';
-						$provinces['pov-ns'] = 'Government of Nova Scotia';
-						$provinces['pov-nwt'] = 'Government of Northwest Territories';
-						$provinces['pov-nun'] = 'Government of Nunavut';
-						$provinces['pov-ont'] = 'Government of Ontario';
-						$provinces['pov-pei'] = 'Government of Prince Edward Island';
-						$provinces['pov-que'] = 'Government of Quebec';
-						$provinces['pov-sask'] = 'Government of Saskatchewan';
-						$provinces['pov-yuk'] = 'Government of Yukon';
-						$departmentsEn = array_merge($departmentsEn,$provinces);
-						
-						$departmentsFr = json_decode($obj[0]->deptsFr, true);
-						$provincesFr['pov-alb'] = "Gouvernement de l'Alberta";
-						$provincesFr['pov-bc'] = 'Gouvernement de la Colombie-Britannique';
-						$provincesFr['pov-man'] = 'Gouvernement du Manitoba';
-						$provincesFr['pov-nb'] = 'Gouvernement du Nouveau-Brunswick';
-						$provincesFr['pov-nfl'] = 'Gouvernement de Terre-Neuve-et-Labrador';
-						$provincesFr['pov-ns'] = 'Gouvernement de la Nouvelle-Écosse';
-						$provincesFr['pov-nwt'] = 'Gouvernement du Territoires du Nord-Ouest';
-						$provincesFr['pov-nun'] = 'Gouvernement du Nunavut';
-						$provincesFr['pov-ont'] = "Gouvernement de l'Ontario";
-						$provincesFr['pov-pei'] = "Gouvernement de l'Île-du-Prince-Édouard";
-						$provincesFr['pov-que'] = 'Gouvernement du Québec';
-						$provincesFr['pov-sask'] = 'Gouvernement de Saskatchewan';
-						$provincesFr['pov-yuk'] = 'Gouvernement du Yukon';
-						$departmentsFr = array_merge($departmentsFr,$provincesFr);
-						
-						if (get_current_language()=='en'){
-							$deptString = $departmentsEn[$v]." / ".$departmentsFr[$v];
-						}else{
-							$deptString = $departmentsFr[$v]." / ".$departmentsEn[$v];
-						}
-			
-						$user->set('department',$deptString);
-                	}else{
+           							'type' => 'object',
+           							'subtype' => 'dept_list',
+           							'owner_guid' => 0
+        						));
+        						$departmentsEn = json_decode($obj[0]->deptsEn, true);
+        						$provinces['pov-alb'] = 'Government of Alberta';
+        						$provinces['pov-bc'] = 'Government of British Columbia';
+        						$provinces['pov-man'] = 'Government of Manitoba';
+        						$provinces['pov-nb'] = 'Government of New Brunswick';
+        						$provinces['pov-nfl'] = 'Government of Newfoundland and Labrador';
+        						$provinces['pov-ns'] = 'Government of Nova Scotia';
+        						$provinces['pov-nwt'] = 'Government of Northwest Territories';
+        						$provinces['pov-nun'] = 'Government of Nunavut';
+        						$provinces['pov-ont'] = 'Government of Ontario';
+        						$provinces['pov-pei'] = 'Government of Prince Edward Island';
+        						$provinces['pov-que'] = 'Government of Quebec';
+        						$provinces['pov-sask'] = 'Government of Saskatchewan';
+        						$provinces['pov-yuk'] = 'Government of Yukon';
+        						$departmentsEn = array_merge($departmentsEn,$provinces);
+
+        						$departmentsFr = json_decode($obj[0]->deptsFr, true);
+        						$provincesFr['pov-alb'] = "Gouvernement de l'Alberta";
+        						$provincesFr['pov-bc'] = 'Gouvernement de la Colombie-Britannique';
+        						$provincesFr['pov-man'] = 'Gouvernement du Manitoba';
+        						$provincesFr['pov-nb'] = 'Gouvernement du Nouveau-Brunswick';
+        						$provincesFr['pov-nfl'] = 'Gouvernement de Terre-Neuve-et-Labrador';
+        						$provincesFr['pov-ns'] = 'Gouvernement de la Nouvelle-ï¿½cosse';
+        						$provincesFr['pov-nwt'] = 'Gouvernement du Territoires du Nord-Ouest';
+        						$provincesFr['pov-nun'] = 'Gouvernement du Nunavut';
+        						$provincesFr['pov-ont'] = "Gouvernement de l'Ontario";
+        						$provincesFr['pov-pei'] = "Gouvernement de l'ï¿½le-du-Prince-ï¿½douard";
+        						$provincesFr['pov-que'] = 'Gouvernement du Quï¿½bec';
+        						$provincesFr['pov-sask'] = 'Gouvernement de Saskatchewan';
+        						$provincesFr['pov-yuk'] = 'Gouvernement du Yukon';
+        						$departmentsFr = array_merge($departmentsFr,$provincesFr);
+
+        						if (get_current_language()=='en'){
+        							$deptString = $departmentsEn[$v]." / ".$departmentsFr[$v];
+        						}else{
+        							$deptString = $departmentsFr[$v]." / ".$departmentsEn[$v];
+        						}
+
+        						$user->set('department',$deptString);
+
+                	}else if($f == 'location' && $v) {
+
+                      //check to see if addressString exists
+                      if($user->addressString && $user->addressStringFr){
+
+                        //split up location field value
+                        $address = explode(',', $v);
+
+                        //Add cut up location field to address string
+                        //if user enters a proper address the address wil display nicely. If not the map will not display right
+                        //sadly we cannot extract all the same information from the location field properly to complete the json string
+                        $user->addressString = '{"street":"'.$address[0].'","city":"'.$address[1].'","province":"'.$address[2].'","country":"Canada","pc":""}';
+                        $user->addressStringFr = '{"street":"'.$address[0].'","city":"'.$address[1].'","province":"'.$address[2].'","country":"Canada","pc":""}';
+
+                      }
+
+                      //set value like normal
+                      $user->set($f, $v);
+
+                    } else {
                 		$user->set($f, $v);
                 	}
                 	//register_error($f);
-                    
+
                 }
             }
             foreach ( $social_media as $f => $v ) {
@@ -246,7 +266,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             if ($edit != null && !is_array($edit)) {
                 $edit = array( $edit );
             }
-           
+
             //create new work experience entries
             if ( is_array($edit) ) {
                 foreach ($edit as $work) {
@@ -351,7 +371,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             //$user->skillsupgraded = NULL; // dev stuff.. delete me
             $user->skill_access = $access;
             $user->save();
-            
+
             break;
         case 'old-skills':
             $user->skillsupgraded = TRUE;
@@ -368,14 +388,14 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             $user->french = $french;
             $user->officialLanguage = $firstlang;
             $user->save();
-			
+
 			$metadata = elgg_get_metadata(array(
                 'metadata_names' => array('english'),
                 'metadata_owner_guids' => array(elgg_get_logged_in_user_guid()),
             ));
             if ($metadata){
                 foreach ($metadata as $data){
-					
+
                     update_metadata($data->id, $data->name, $data->value, $data->value_type, $data->owner_guid, $access);
                     //error_log('id '.$data->id .' name '. $data->name.' value '. $data->value.' value type '. $data->value_type.' owner_guid '.$data->owner_guid.' $access '. $access);
                 }
@@ -387,7 +407,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             ));
             if ($metadata){
                 foreach ($metadata as $data){
-                    
+
                     update_metadata($data->id, $data->name, $data->value, $data->value_type, $data->owner_guid, $access);
                 }
                 //$metadata[0]->save();
@@ -398,12 +418,12 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             ));
             if ($metadata){
                 foreach ($metadata as $data){
-                    
+
                     update_metadata($data->id, $data->name, $data->value, $data->value_type, $data->owner_guid, $access);
                 }
                 //$metadata[0]->save();
             }
-			
+
             break;
         case 'portfolio':
             $portfolio = get_input('portfolio');
@@ -477,7 +497,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
             $user->portfolio_access = $access;
             $user->save();
             break;
-        
+
         /*
          * MODIFIED CODE!
          * optset is the array of opt-in choices and gets directly saved as a metadata array (cannot be associative).
@@ -486,7 +506,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
         case 'opt-in':
             $opt_in_set = get_input('opt_in_set');
             $access = get_input('access');
-            
+
             $user->opt_in_missions = $opt_in_set[0];
             $user->opt_in_swap = $opt_in_set[1];
             $user->opt_in_mentored = $opt_in_set[2];
@@ -508,17 +528,17 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
               $user->opt_in_peer_coaching = $opt_in_set[7];
               $user->opt_in_skill_sharing = $opt_in_set[8];
               $user->opt_in_job_sharing = $opt_in_set[9];*/
-            
+
             // Not saving this at the moment because it is not in use.
             //$user->optaccess = $access;
-            
+
             $user->save();
-            
+
             break;
         /*
          * END MODIFIED CODE
          */
-            
+
         default:
             system_message(elgg_echo("profile:saved"));
     }

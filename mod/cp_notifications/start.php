@@ -2,6 +2,9 @@
 
 elgg_register_event_handler('init','system','cp_notifications_init');
 
+
+
+
 function cp_notifications_init() {
 
 	elgg_register_library('elgg:gc_notification:functions', elgg_get_plugins_path() . 'cp_notifications/lib/functions.php');
@@ -44,6 +47,8 @@ function cp_notifications_init() {
 	elgg_register_action('useradd',"$actions_base/useradd.php",'admin');	// cyu - actions/useradd.php (core file)
 
     elgg_extend_view("js/elgg", "js/notification");							// add some notification js 
+    elgg_extend_view("js/elgg", "js/popup");
+     elgg_extend_view("js/elgg","js/wet4/language_ajax");							// add some notification js 
 
     // remove core notification settings portion of the main settings page
     elgg_unextend_view('forms/account/settings', 'core/settings/account/notifications');
@@ -743,6 +748,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 
 
+
 /**
  * function cp_create_notification is an event handler, invokes everytime a new entity is created
  * This contains the notifications for new content posted on GCconnex
@@ -816,7 +822,6 @@ function cp_create_notification($event, $type, $object) {
 
 			$to_recipients = get_subscribers($dbprefix, $object->getOwnerGUID(), $object->getContainerGUID());
 			break;
-
 
 		// micromissions / opportunities
 		case 'mission':
@@ -1219,8 +1224,6 @@ function cp_send_new_password_request($user) {
 	else 
 		mail($user->email,$subject,$template,cp_get_headers());
 }
-
-
 
 
 /*

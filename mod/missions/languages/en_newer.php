@@ -277,6 +277,7 @@ return array(
 	"missions:show_closed_missions" => "Show completed/cancelled opportunities",
 	"missions:candidate_search" => "Candidate Search",
 	"missions:search_for_opportunities" => "Search for Opportunities",
+    "missions:search_for_archived_opportunities" =>  "Search for Archived Opportunities",
 	"missions:search_for_candidates" => "Search for Candidates",
 	"missions:advanced_search_for_opportunities" => "Advanced Search for Opportunities",
 	"missions:advanced_search_for_candidates" => "Advanced Search for Candidates",

@@ -54,7 +54,8 @@ function group_owners_block_handler($hook, $type, $menu, $params){
 
 				case 'discussion':
 					// cyu - take discussions off for the crawler
-					if (strcmp('gsa-crawler',strtolower($_SERVER['HTTP_USER_AGENT'])) != 0) {
+					if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gsa_agentstring,strtolower($_SERVER['HTTP_USER_AGENT'])) == 0) || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ) {
+                    } else {
 						$item->setText(elgg_echo('gprofile:discussion'));
 						$item->setHref('#groupforumtopic');
 						$item->setPriority('1');
@@ -128,7 +129,7 @@ function group_owners_block_handler($hook, $type, $menu, $params){
                     break;
                 case 'activity':
                     elgg_unregister_menu_item('owner_block', 'activity');
-                    $item->setText('Activity');
+                    $item->setText(elgg_echo('activity'));
                     $item->setHref('#activity');
                     $item->setPriority('8');
                     break;

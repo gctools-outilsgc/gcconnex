@@ -279,6 +279,7 @@ return array(
 	"missions:show_closed_missions" => "Voir les possibilités achevées ou annulées",
 	"missions:candidate_search" => "Recherche de candidats",
 	"missions:search_for_opportunities" => "Recherche de possibilités",
+    "missions:search_for_archived_opportunities" =>  "Recherche de possibilités archivées",
 	"missions:search_for_candidates" => "Recherche de candidats",
 	"missions:advanced_search_for_opportunities" => "Recherche avancée de possibilités",
 	"missions:advanced_search_for_candidates" => "Recherche avancée de candidats",

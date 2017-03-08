@@ -95,7 +95,7 @@ if (! empty($unpacked_array['lwe_english']) || ! empty($unpacked_array['lwe_fren
         $unpacked_language .= '<span name="mission-lwe-english">' . elgg_echo('missions:formatted:english', array($unpacked_array['lwe_english'])) . '</span> ';
     }
     if (! empty($unpacked_array['lwe_french'])) {
-        $unpacked_language .= '<span name="mission-lwe-french">' . elgg_echo('missions:formatted:french', array($unpacked_array['lwc_french'])) . '</span>';
+        $unpacked_language .= '<span name="mission-lwe-french">' . elgg_echo('missions:formatted:french', array($unpacked_array['lwe_french'])) . '</span>';
     }
     $unpacked_language .= '<br>';
 }

@@ -88,7 +88,7 @@ $french = array(
      * Elgg Core
      */
 
-'access:friends:label' => "$uplural",
+//'access:friends:label' => "$uplural",
 'friends' => "$uplural",
 'friends:yours' => "Vos {$lplural}",
 'friends:owned' => "%s' {$lplural}",

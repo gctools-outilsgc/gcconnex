@@ -233,8 +233,8 @@ if(reset($c_photo) ){
 
     $c_photo_guid = $filehandler2->getGUID();
     $subtype_testing = $filehandler2->getSubtype();
-   $group->cover_photo =$c_photo_guid; //Nick - Set Cover photo metadata
-}else if(isset($group->cover_photo) && $group->cover_photo !='nope'){
+   $group->cover_photo = 'yessir'; //Nick - Yes there is a cover photo. Changed from the photo guid as this was not being set when a group admin / operator was trying to change the cover photo
+}else if(isset($group->cover_photo) && $group->cover_photo !=='nope'){
 
 }else{
 $group->cover_photo = 'nope';

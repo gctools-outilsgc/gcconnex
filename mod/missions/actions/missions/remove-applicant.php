@@ -42,12 +42,14 @@ else {
     	$target = $mission->guid;
     	$sender = $aid;
     	$subject = elgg_echo('missions:withdrew_from_mission', array($user->name, $mission->title), $user->language);
+        $body = elgg_echo('missions:withdrew_from_mission_body', array($user->name), $user->language);
     }
     // Notifies the candidate that they were removed from the mission.
     else {
     	$target = $aid;
     	$sender = $mission->guid;
     	$subject = elgg_echo('missions:removed_from_mission', array($mission->title), $user->language);
+        $body = elgg_echo('missions:removed_from_mission_body', array(), $user->language);
     }
     mm_notify_user($target, $sender, $subject, $body);
 }

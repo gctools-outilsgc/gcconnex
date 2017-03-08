@@ -19,7 +19,7 @@ foreach($badges as $badg){
     //if($owner->$currentBadge > 0){
 
         //use width of 112px or 57px
-        $content .= '<li class="col-xs-2" style="" >';
+        $content .= '<li class="col-xs-2" style="height:auto;" >';
         $content .= elgg_view('output/img', array(
                             'src' => 'mod/achievement_badges/graphics/' . $currentBadge . 'Lvl0' . $owner->$currentBadge . '.png',
                             'class' => 'img-responsive mrgn-rght',
