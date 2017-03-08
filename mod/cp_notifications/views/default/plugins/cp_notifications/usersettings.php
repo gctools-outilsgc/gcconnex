@@ -43,7 +43,7 @@ if (strcmp($enable_digest, 'yes') == 0) {
 	$content .= '<div class="col-sm-12 clearfix"> <h3 class="well">'.elgg_echo('cp_notifications:heading:newsletter_section').'</h3>'; 
 
 	/// Warning for the Digest functionality
-	$content .= "<div class='info_digest_section alert alert-warning col-xs-12' hidden><p>".elgg_echo('cp_newsletter:notice')."</p></div>";
+	$content .= "<div class='info_digest_section alert alert-warning col-xs-12' hidden><p>".elgg_echo('cp_newsletter:notice:disable_digest')."</p></div>";
 
 	$content .= '<div class="col-sm-8">'.elgg_echo('cp_newsletter:enable_digest_option').$more_info.'</div>';
 	$content .= "<div class='col-sm-2'>{$chk_email} </div> <div class='col-sm-2'>    </div>";

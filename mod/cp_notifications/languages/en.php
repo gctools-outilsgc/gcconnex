@@ -7,9 +7,7 @@ $contact_us = "{$site->getURL()}mod/contactform/";
 $english = array(
 
 	/// SETTINGS PAGE: Newsletter translation texts
-	//'cp_newsletter:notice' => "If you enable the digest, your newsletter will include everything selected under EMAIL in group notifications. See the <a href='#'>Notifications User Guide</a> for more information.",
 	'cp_newsletter:notice' => "Choose how you want to be notified of GCconnex activities of interest to you. The Notification Digest can be used to receive a daily or weekly email digest that provides a summary of the activities to which you are subscribed. Prefer to receive instant notification? Forgo the digest and select the content for which you want to receive notification in real-time. Please note that email notifications are sent to the email address used in your User Settings.",
-	//'cp_newsletter:notice:disable_digest' => "Once digest feature is disabled and saved, you will start receiving instant notifications based on your selections below. You will not receive the notifications regarding... See guide for more <a href='#'>information</a>.",
 	'cp_newsletter:notice:disable_digest' => "The notification digest is now enabled; please select your digest preferences below (frequency and language preference). The digest will include all content selected in the 'Email' column below, as well the subscriptions in the 'Other content subscriptions' section.",
 
 	'cp_newsletter:subject:daily' => 'Your Daily Newsletter',
@@ -19,6 +17,7 @@ $english = array(
 	'cp_newsletter:label:french' => "French",
 	'cp_newsletter:label:daily' => "Daily",
 	'cp_newsletter:label:weekly' => "Weekly",
+
 
 	'cp_newsletter:information:digest_option' => "This will enable or disable the digest functionality",
 	'cp_newsletter:information:digest_option:url' => "#",
@@ -30,6 +29,7 @@ $english = array(
 	'cp_newsletter:information:select_all:url' => "#",
 	'cp_newsletter:set_frequency' => "How often do you want to receive the digest?",
 	'cp_newsletter:set_language' => "In which language do you want to receive the digest?",
+
 
 	'cp_notifications:subtype:groupforumtopic' => "Discussions",
 	'cp_notifications:subtype:hjforumtopic' => "Forum Topic",
@@ -45,6 +45,7 @@ $english = array(
 	'cp_notifications:subtype:photo' => "Images",
 	'cp_notifications:subtype:task' => "Task",
 
+
 	'cp_notifications:mail_body:subtype:groupforumtopic' => "% has posted a discussions %s",
 	'cp_notifications:mail_body:subtype:hjforumtopic' => "%s has posted a forum topic %s",
 	'cp_notifications:mail_body:subtype:hjforumpost' => "%s has posted a topic reply to %s",
@@ -53,14 +54,14 @@ $english = array(
 	'cp_notifications:mail_body:subtype:bookmarks' => "%s has posted a bookmark %s",
 	'cp_notifications:mail_body:subtype:file' => "%s has posted a file %s",
 	'cp_notifications:mail_body:subtype:album' => "%s has posted an album %s",
-	'cp_notifications:mail_body:subtype:thewire' => "%s on the %s",
+	'cp_notifications:mail_body:subtype:thewire' => "%s posted on the %s",
 	'cp_notifications:mail_body:subtype:poll' => "%s has created a poll",
 	'cp_notifications:mail_body:subtype:event_calendar' => "%s posted an event %s",
 	'cp_notifications:mail_body:subtype:photo' => "%s has posted an image %s",
 	'cp_notifications:mail_body:subtype:task' => "%s has created a task %s",
 	'cp_notifications:mail_body:subtype:likes' => "%s has liked your post: %s",
 	'cp_notifications:mail_body:subtype:response' => "%s posted a response or comment to your post: %s",
-	'cp_notifications:mail_body:subtype:any' => "%s posted a(n) %s %s",
+	'cp_notifications:mail_body:subtype:any' => "%s posted a%s %s %s", // john doe posted an idea vs john doe posted a blog
 
 	'cp_newsletter:other_content:notice' => "These subscriptions are for content outside of groups only",
 
@@ -101,9 +102,6 @@ $english = array(
 	'cp_newsletter:body:nothing' => "It seems it was quiet in your network on GCconnex, we have nothing to report.",
 	'cp_newsletter:title' => "Your {$site_name} Digest: There has been some new contents and updates",
 	'cp_newsletter:greeting' => "Good morning %s. Here are your notifications for <strong>%s</strong>.",
-
-	'cp_newsletter:subject:daily' => "GCconnex Daily Newsletter",
-	'cp_newsletter:subject:weekly' => "GCconnex Weekly Newsletter",
 
 
 	/// NEWSLETTER HEADINGS

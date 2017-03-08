@@ -7,8 +7,6 @@ if (strcmp($language_preference,'set_digest_en') == 0)
 	$language_preference = 'en';
 else 
 	$language_preference = 'fr';
-//setlocale(LC_ALL, 'fr_FR');
-
 
 ?>
 
@@ -23,7 +21,7 @@ else
 				<span style='padding: 0 0 0 3px; font-size: 20px; color: #ffffff; font-family: sans-serif;'><?php echo $site->name; ?></span>
 			</div>
 
-		    <p><?php echo elgg_echo('cp_newsletter:greeting', array($to->name, date('l\, F jS\, Y ')), $language_preference); ?></strong>.</p>
+		    <p><?php echo elgg_echo('cp_newsletter:greeting', array($to->name, date("Y/m/d")), $language_preference); ?></strong>.</p>
 		    <br/><br/>
 
 			<div><?php echo elgg_echo('cp_newsletter:body:nothing', array(), $language_preference); ?></div>

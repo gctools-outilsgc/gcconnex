@@ -463,7 +463,12 @@ function userOptedIn( $user_obj, $mission_type ) {
         $content_title = $content_array['content_title'];
 
       $url = "<a href='{$content_array['content_url']}'>{$content_title}</a> {$closing_date}";
-      $rendered_content = elgg_echo("cp_notifications:mail_body:subtype:any", array($author, $content_array['subtype'], $url), $language_preference);
+
+      $subtype = cp_translate_subtype($content_array['subtype']);
+      $n = "";
+      $vowels = array('a','e','i','o','u');
+      if (in_array($subtype{0}, $vowels)) $n = "n";
+      $rendered_content = elgg_echo("cp_notifications:mail_body:subtype:any", array($author, $n, $subtype, $url), $language_preference);
     }
     return $rendered_content;
   }
