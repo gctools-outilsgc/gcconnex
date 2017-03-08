@@ -91,58 +91,24 @@ function loadNewNewsfeedItems(){
     //Goes through how 
     //Spinner
     $('.stream-new-newsfeed').html('<i class="fa fa-refresh fa-spin fa-1g fa-fw"></i><span class="sr-only">Loading...</span>');
-    //get all of the newsfeed items currently loaded on the page.
-    var postsOnPage = $('.panel-river .elgg-body');
-    var existingArray =[];
-    var queryArray = [];
-    for (i=0; i < postsOnPage.length; i++){
-        //Push the existing posts to an array to compare with
-        
-        var post_ = $(postsOnPage[i]).parent().parent().attr('id');
-        var postGUID = post_.split("-");
-        postGUID = postGUID.slice(2);
-        //This needs to be an int not a string
-        postGUID = parseInt(postGUID.toString());
-        existingArray.push(postGUID);
-    
-    }
+
+    //Get the guid from the post id
+    var firstPostOnPage = $('.panel-river .elgg-body').first().parent().parent().attr('id');
+    var postID = firstPostOnPage.split("-");
+    postID = postID.slice(2);
   
-    var site = elgg.normalize_url();
-        elgg.get('ajax/view/ajax/newsfeed_check', {
-            //get the latest newsfeed items from the API
-                data: {'userid': elgg.get_logged_in_user_guid, 'limit': 0},
-                dataType: 'json',
-                success: function(response){
-                    //Put the latest posts in an array
-                    var postArray = response;
-                    for (var num in postArray){
-                        queryArray.push(postArray[num].guid);
-                        
-                    }
-                    //What is different from what is on the page and what is in the db?
-                    var diff = $(queryArray).not(existingArray).get();
-                    
-                    //Loggin this to see we're getting back on preprod
-                    
-                    ajax_path = 'ajax/view/ajax/newsfeed_items'; //here is my ajax view :3
-                    //Bring back the latests posts and add them to the page
-                    elgg.get(ajax_path, {
-                        data: {'userid': elgg.get_logged_in_user_guid},
-                        dataType: 'html',
-                        success: function (data) {
-                        $('.newsfeed-posts-holder').prepend(data);
-                        $('.stream-new-newsfeed').remove();
-                            newsfeed_stream_count();
-                    }
-                        
-                    });
-                },
-                error: function(request, status, error) { 
-                   console.log('error');
-
-                }
-            });
-
+    ajax_path = 'ajax/view/ajax/newsfeed_items'; //here is my ajax view :3
+    //Bring back the latests posts and add them to the page
+    elgg.get(ajax_path, {
+        data: {'userid': elgg.get_logged_in_user_guid, 'latest': postID},
+        dataType: 'html',
+        success: function (data) {
+            $('.newsfeed-posts-holder').prepend(data);
+            $('.stream-new-newsfeed').remove();
+            newsfeed_stream_count();
+        }
+        
+    });
 }
 
     

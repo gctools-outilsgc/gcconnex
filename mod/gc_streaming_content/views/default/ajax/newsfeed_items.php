@@ -3,6 +3,7 @@ $title = elgg_echo('river:all');
 $user = elgg_get_logged_in_user_entity();
 $db_prefix = elgg_get_config('dbprefix');
 $page_filter = 'all';
+$latestId = get_input('latest');
 
 if ($user) {
     //check if user exists and has friends or groups
@@ -33,6 +34,7 @@ if(!$hasgroups && !$hasfriends){
     $filteredItems = array($user->colleagueNotif);
     //filter out preference
     $optionsf['action_types'] = array_diff( $actionTypes, $filteredItems);
+    $optionsf['wheres'] = array("rv.id > {$latestId}");
 
     $activity = newsfeed_list_river($optionsf);
 }else if(!$hasfriends && $hasgroups){
@@ -41,7 +43,7 @@ if(!$hasgroups && !$hasfriends){
     
     //display created content and replies and comments
     $optionsg['wheres'] = array("( oe.container_guid IN({$guids_in})
-     OR te.container_guid IN({$guids_in}) )");
+     OR te.container_guid IN({$guids_in}) ) AND rv.id > {$latestId}");
     $optionsg['pagination'] = true;
     $activity = newsfeed_list_river($optionsg);
 }else{
@@ -59,9 +61,9 @@ if(!$hasgroups && !$hasfriends){
     //Groups + Friends activity query
     //This query grabs new created content and comments and replies in the groups the user is a member of *** te.container_guid grabs comments and replies
     $optionsfg['wheres'] = array(
-"( oe.container_guid IN({$guids_in})
+"( ( oe.container_guid IN({$guids_in})
      OR te.container_guid IN({$guids_in}) )
-    OR rv.subject_guid IN (SELECT guid_two FROM {$db_prefix}entity_relationships WHERE guid_one=$user->guid AND relationship='friend')
+    OR rv.subject_guid IN (SELECT guid_two FROM {$db_prefix}entity_relationships WHERE guid_one=$user->guid AND relationship='friend') ) AND rv.id > {$latestId}
     ");
     $optionsfg['pagination'] = true;
     $activity = newsfeed_list_river($optionsfg);
