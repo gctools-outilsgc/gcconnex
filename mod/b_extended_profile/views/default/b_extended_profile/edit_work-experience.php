@@ -29,7 +29,7 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
     echo '<div class="gcconnex-work-experience-all">';
     // handle $work_experience_guid differently depending on whether it's an array or not
     if (is_array($work_experience_guid)) {
-        //usort($work_experience_guid, "sortDate");
+        usort($work_experience_guid, "sortDate");
         foreach ($work_experience_guid as $guid) { // display the input/work-experience view for each work experience entry
             if ( $guid != null ) {
                 echo elgg_view('input/work-experience', array('guid' => $guid));
