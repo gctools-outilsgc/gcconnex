@@ -246,7 +246,6 @@ $site_url = elgg_get_site_url();
 	<label for='username'><?php echo elgg_echo('loginusername'); ?></label>
 	<?php echo elgg_view('input/text', array(
 		'name' => 'username',
-		'autofocus' => true,
         'placeholder' => elgg_echo('loginusername'),
         'id' => 'username',
         'class' => 'form-control',

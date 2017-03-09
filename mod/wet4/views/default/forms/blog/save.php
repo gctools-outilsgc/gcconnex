@@ -57,7 +57,8 @@ $label = elgg_echo('title:en');
 $input = elgg_view('input/text', array(
 	'name' => 'title',
 	'id' => 'blog_title_en',
-	'value' => $vars['title']
+	'value' => $vars['title'],
+    'autofocus' =>'true',
 ));
 
 $label2 = elgg_echo('title:fr');

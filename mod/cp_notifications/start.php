@@ -1344,7 +1344,7 @@ function notify_entity_menu_setup($hook, $type, $return, $params) {
 	    if ( check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $entity->getGUID()) || check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $entity->getGUID()) ) {
 
 			if (elgg_is_active_plugin('wet4')) // check if plugin for wet is enabled (if disabled, FontAwesome will not show up)
-			 	$bell_status = '<i class="icon-unsel fa fa-lg fa-bell"></i>';
+			 	$bell_status = '<i class="icon-unsel fa fa-lg fa-bell"></i><span class="wb-inv">'.elgg_echo('cp_notify:stop_subscribe').'</span>';
 		    else
 			    $bell_status = elgg_echo('cp_notify:stop_subscribe');
 		
@@ -1361,7 +1361,7 @@ function notify_entity_menu_setup($hook, $type, $return, $params) {
 	    } else {
 
 		    if (elgg_is_active_plugin('wet4')) // check if plugin for wet is enabled
-			   $bell_status = '<i class="icon-unsel fa fa-lg fa-bell-slash-o"></i>';
+			   $bell_status = '<i class="icon-unsel fa fa-lg fa-bell-slash-o"></i><span class="wb-inv">'.elgg_echo('cp_notify:start_subscribe').'</span>';
 		    else
 			   $bell_status = elgg_echo('cp_notify:start_subscribe');
 
