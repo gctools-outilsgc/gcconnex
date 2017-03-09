@@ -3,16 +3,18 @@
 elgg_register_event_handler('init', 'system', 'gc_fedsearch_gsa_init');
 
 function gc_fedsearch_gsa_init() {
-	// strip out all the (broken) hyperlink so that the GSA doesn't recursively create indices
-	elgg_register_plugin_hook_handler('view', 'output/longtext', 'entity_url');
-	elgg_register_plugin_hook_handler('view', 'groups/profile/fields', 'group_url');
+
 	// css layout for pagination
 	$gsa_pagination = elgg_get_plugin_setting('gsa_pagination','gc_fedsearch_gsa');
 	if ($gsa_pagination) elgg_extend_view('css/elgg', 'css/intranet_results_pagination', 1);
 	
-	elgg_extend_view('page/elements/head', 'page/elements/head_gsa', 1);
 
 	if (((!$gsa_usertest) && strcmp($gsa_agentstring,strtolower($_SERVER['HTTP_USER_AGENT'])) == 0) || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ) {
+		// strip out all the (broken) hyperlink so that the GSA doesn't recursively create indices
+		elgg_extend_view('page/elements/head', 'page/elements/head_gsa', 1);
+		elgg_register_plugin_hook_handler('view', 'output/longtext', 'entity_url');
+		elgg_register_plugin_hook_handler('view', 'groups/profile/fields', 'group_url');
+
 		elgg_register_plugin_hook_handler('entity:url', 'object', 'modify_content_url',1);
 		elgg_register_plugin_hook_handler('entity:url', 'group', 'modify_group_url');
 	}
@@ -24,7 +26,7 @@ function modify_group_url($hook, $type, $url, $params) {
 	$url = explode('/', $_SERVER['REQUEST_URI']);
 	if (strpos($_SERVER['REQUEST_URI'],"/groups/profile/") !== false)
 	{
-		if (sizeof($url) > 4)
+		if (sizeof($url) > 5)
 			forward("groups/profile/{$params['entity']->guid}");
 		//return "groups/profile/{$params['entity']->guid}";
 	}
@@ -43,7 +45,7 @@ function modify_content_url($hook, $type, $url, $params) {
 		if ($subtype === 'page_top') $subtype = 'pages';
 		if ($subtype === 'idea') $subtype = 'ideas';
 
-		if (sizeof($url) > 4)
+		if (sizeof($url) > 5)
 			forward("{$subtype}/view/{$params['entity']->guid}");
 		//return "{$subtype}/view/{$params['entity']->guid}";
 	}
@@ -86,7 +88,7 @@ function entity_url($hook, $type, $return, $params) {
 		return;
 
 	$url = explode('/',$_SERVER['REQUEST_URI']);
-	$entity = get_entity($url[3]);
+	$entity = get_entity($url[4]);
 
 	// do this only for the gsa-crawler (and usertest is empty)
 	if ( ((!$gsa_usertest) && strcmp($gsa_agentstring,strtolower($_SERVER['HTTP_USER_AGENT'])) == 0) || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false )  {
