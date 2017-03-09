@@ -1013,6 +1013,7 @@ function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $para
 	$options = array(
 		'type' => 'object',
 		'subtype' => 'cp_digest',
+		'limit' => false,
 	);
 	$current_digest = elgg_get_entities($options);
 
@@ -1023,17 +1024,19 @@ function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $para
 		$query = "SELECT guid, email, name, username FROM elggusers_entity WHERE email = '{$email}'";
 		$user = get_data($query);
 
-		$to = $user[0];
+		$to = $user[sizeof($user) - 1];
 		$user = get_entity($to->guid);
 
-		if ($user instanceof ElggUser && strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->getOwnerGUID(),'cp_notifications'),'set_digest_yes') == 0 && 
-			strcmp(elgg_get_plugin_user_setting('cpn_set_digest_freq_weekly', $user->getOwnerGUID(),'cp_notifications'),'set_digest_weekly') == 0 ) {
+		$enable = elgg_get_plugin_user_setting('cpn_set_digest', $user->guid,'cp_notifications');
+		$frequency = elgg_get_plugin_user_setting('cpn_set_digest_frequency', $user->guid, 'cp_notifications');
+
+		if ($user instanceof ElggUser && strcmp($enable,'set_digest_yes') == 0 && strcmp($frequency,'set_digest_weekly') == 0 ) {
 
 			$newsletter_id = $user->cpn_newsletter;
 			$newsletter_object = get_entity($newsletter_id);
 			$newsletter_content = json_decode($newsletter_object->description, true);
 
-			$subject = "Your Weekly Newsletter";
+			$subject = elgg_echo('cp_newsletter:subject:daily',$language_preference);
 
 			if (sizeof($newsletter_content) > 0 || !empty($newsletter_content))
 				$template = elgg_view('cp_notifications/newsletter_template', array('to' => $to, 'newsletter_content' => $newsletter_content));
@@ -1075,6 +1078,7 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 	$options = array(
 		'type' => 'object',
 		'subtype' => 'cp_digest',
+		'limit' => false,
 	);
 	$current_digest = elgg_get_entities($options);
 
@@ -1086,12 +1090,14 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 		$query = "SELECT guid, email, name, username FROM elggusers_entity WHERE email = '{$email}'";
 		$user = get_data($query);
 
-		$to = $user[0];
+
+		$to = $user[sizeof($user) - 1];
 		$user = get_entity($to->guid);
 
-		// what if there is more than one user associated with this email
-		if ($user instanceof ElggUser && strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->guid,'cp_notifications'),'set_digest_yes') == 0 && 
-			strcmp(elgg_get_plugin_user_setting('cpn_set_digest_frequency', $user->guid,'cp_notifications'),'set_digest_daily') == 0 ) {
+		$enable = elgg_get_plugin_user_setting('cpn_set_digest', $user->guid,'cp_notifications');
+		$frequency = elgg_get_plugin_user_setting('cpn_set_digest_frequency', $user->guid, 'cp_notifications');
+
+		if ($user instanceof ElggUser && strcmp($enable,'set_digest_yes') == 0 && strcmp($frequency,'set_digest_daily') == 0 ) {
 
 			$newsletter_id = $user->cpn_newsletter;
 			$newsletter_object = get_entity($newsletter_id);
@@ -1102,10 +1108,9 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 				$language_preference = 'en';
 
 			$language_preference_fr = elgg_get_plugin_user_setting('cpn_set_digest_language', $to->guid, 'cp_notifications');
-			if (strcmp($language_preference_fr,'set_digest_fr') == 0) {
+			if (strcmp($language_preference_fr,'set_digest_fr') == 0)
 				$language_preference = 'fr';
-				//setlocale(LC_ALL, 'fr_FR');
-			}
+			
 
 			$subject = elgg_echo('cp_newsletter:subject:daily',$language_preference);
 
