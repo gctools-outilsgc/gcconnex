@@ -36,7 +36,7 @@ if(!$hasgroups && !$hasfriends){
     $optionsf['action_types'] = array_diff( $actionTypes, $filteredItems);
 	
     $optionsf['limit'] = 1;			// we only need the most recent one
-    $result = elgg_get_river($optionsf)->id;
+    $result = elgg_get_river($optionsf);
 }else if(!$hasfriends && $hasgroups){
     //if no friends but groups
     $guids_in = implode(',', array_unique(array_filter($group_guids)));
@@ -46,7 +46,7 @@ if(!$hasgroups && !$hasfriends){
      OR te.container_guid IN({$guids_in}) )");
 
     $optionsg['limit'] = true;
-    $result = elgg_get_river($optionsg)->id;
+    $result = elgg_get_river($optionsg);
 }else{
     //if friends and groups :3
     //turn off friend connections
