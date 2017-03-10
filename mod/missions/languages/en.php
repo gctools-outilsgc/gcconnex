@@ -458,6 +458,8 @@ return array(
 "missions:participating_in_more" => "You are now a participant in this opportunity. Please advise your supervisor and enjoy your experience!",
 "missions:participating_in2" =>  "%s has accepted your offer",
 "missions:participating_in2_more" => "%s has accepted your offer to participate in ",
+"missions:participating_out" => "The opportunity '%s' has been filled.",
+"missions:participating_out_more" => "Thank you for applying to this opportunity. Unfortunately, the opportunity was offered to another applicant, but we look forward to seeing you apply for other opportunities.",
 "missions:error:user_already_applied" =>    "%s has already applied to  '%s'.",
 "missions:error:user_already_invited" =>    "%s has already been invited to  '%s'.",
 "missions:error:user_already_participating" =>  "%s is already participating in '%s'.",
