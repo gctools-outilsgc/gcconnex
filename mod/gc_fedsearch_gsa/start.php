@@ -15,6 +15,7 @@ function gc_fedsearch_gsa_init() {
 		elgg_register_plugin_hook_handler('view', 'output/longtext', 'entity_url');
 		elgg_register_plugin_hook_handler('view', 'groups/profile/fields', 'group_url');
 
+		// these two hook handlers will change and remove the trailing URL (does not include the titles)
 		elgg_register_plugin_hook_handler('entity:url', 'object', 'modify_content_url',1);
 		elgg_register_plugin_hook_handler('entity:url', 'group', 'modify_group_url');
 	}
@@ -26,7 +27,7 @@ function modify_group_url($hook, $type, $url, $params) {
 	$url = explode('/', $_SERVER['REQUEST_URI']);
 	if (strpos($_SERVER['REQUEST_URI'],"/groups/profile/") !== false)
 	{
-		if (sizeof($url) > 5)
+		if (sizeof($url) > 4)
 			forward("groups/profile/{$params['entity']->guid}");
 		//return "groups/profile/{$params['entity']->guid}";
 	}
@@ -34,7 +35,7 @@ function modify_group_url($hook, $type, $url, $params) {
 
 /**
  * covers: blogs, files, pages
- * does not cover: bookmarks, missions, images, polls, wire
+ * does not cover: bookmarks, missions, images, polls, wire, event
  */
 function modify_content_url($hook, $type, $url, $params) {
 	$url = explode('/', $_SERVER['REQUEST_URI']);
@@ -45,7 +46,7 @@ function modify_content_url($hook, $type, $url, $params) {
 		if ($subtype === 'page_top') $subtype = 'pages';
 		if ($subtype === 'idea') $subtype = 'ideas';
 
-		if (sizeof($url) > 5)
+		if (sizeof($url) > 4)
 			forward("{$subtype}/view/{$params['entity']->guid}");
 		//return "{$subtype}/view/{$params['entity']->guid}";
 	}
@@ -88,7 +89,7 @@ function entity_url($hook, $type, $return, $params) {
 		return;
 
 	$url = explode('/',$_SERVER['REQUEST_URI']);
-	$entity = get_entity($url[4]);
+	$entity = get_entity($url[3]);
 
 	// do this only for the gsa-crawler (and usertest is empty)
 	if ( ((!$gsa_usertest) && strcmp($gsa_agentstring,strtolower($_SERVER['HTTP_USER_AGENT'])) == 0) || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false )  {
