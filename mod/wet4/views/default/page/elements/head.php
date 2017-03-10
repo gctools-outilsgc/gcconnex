@@ -232,6 +232,7 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
         <?php echo $datemeta; ?>
         <meta name="dcterms.subject" title="scheme" content="<?php echo $briefdesc; ?>" />
         <meta name="dcterms.language" title="ISO639-2" content="<?php echo get_language(); ?>" />
+        <meta name="gcctitle" content="<?php echo $vars['title']; ?>" />
         <link href="<?php echo $site_url; ?>mod/wet4/graphics/favicon.ico" rel="icon" type="image/x-icon" />
 <!-- Meta data-->
 
