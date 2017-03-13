@@ -1345,7 +1345,7 @@ return array(
   'contactform:select' => 'Veuillez sélectionner une catégorie',
   'contactform:reason' => 'Choisir...',
   'contactform:help_menu_item' => "Aide / Contactez-nous",
-  'contactform:newsletter' => 'Abonnez à l’Infolettre',
+  'contactform:newsletter' => "Abonnez-vous à l'Infolettre",
   'contactform:box:message' => 'Afficher la boîte d\'information',
   'conatactform:fr:name' => 'Le nom du lien en français',
   'conatactform:eng:name' => 'Le nom du lien en anglais',
