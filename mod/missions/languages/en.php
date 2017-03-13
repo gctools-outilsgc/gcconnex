@@ -371,7 +371,7 @@ return array(
 "missions:september_short" => "Sep",
 "missions:october_short" =>	"Oct",
 "missions:november_short" => "Nov",
-"missions:december_short" => "Dev",
+"missions:december_short" => "Dec",
 "missions:graph_type" =>    "Graph type",
 "missions:bar_graph" => "Bar graph",
 "missions:pie_graph" => "Pie graph",
