@@ -63,7 +63,7 @@ $english = array(
 	'cp_notifications:mail_body:subtype:response' => "%s posted a response or comment to your post: %s",
 	'cp_notifications:mail_body:subtype:any' => "%s posted a%s %s %s", // john doe posted an idea vs john doe posted a blog
 
-	'cp_newsletter:other_content:notice' => "These subscriptions are for content outside of groups only",
+	'cp_newsletter:other_content:notice' => "These subscriptions are only for content that is not part of a group",
 
 
 	'cp_notifications:no_colleagues' => "You do not have any colleagues",
@@ -77,6 +77,7 @@ $english = array(
  	'cp_notifications:loading' => 'Loading...',
 	'cp_notifications:subscribe_all_label' => "<a href='%s'>Subscribe</a> or <a href='%s'> Unsubscribe</a> to all groups and their content",
 	'cp_notifications:chkbox:select_all_group_for_notification' => "Select all groups (this will not select the group content)",
+    'cp_notify:personal_bulk_notifications' => 'Enable Notification Digest',
 
     'cp_notifications:personal_likes' => 'Notify me when someone likes my content',
     'cp_notifications:personal_mentions' => 'Notify me when someone @mentions me',
@@ -430,7 +431,7 @@ $english = array(
     'cp_notify:start_subscribe' => 'Start Subscription',
     'cp_notify:stop_subscribe' => 'Stop Subscription',
 
-    'cp_notify:personal_bulk_notifications' => 'Enable Notification Digest',
+
 	'cp_notify:minor_edit' => 'Minor Edit',
 	'cp_notify:sidebar:forum_title' => 'Forum and Forum Topics',
 

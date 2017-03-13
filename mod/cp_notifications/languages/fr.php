@@ -7,27 +7,27 @@ $contact_us = "{$site->getURL()}mod/contactform/";
 $french = array( 
 
 	/// SETTINGS PAGE: Newsletter translation texts
-	'cp_newsletter:notice' => "Si vous activez le condensé, votre bulletin comprendra tout ce qui est sélectionné sous EMAIL dans les notifications de groupe. Pour plus d'informations, reportez-vous au <a href='#'> Notifications Guide de l'utilisateur </a>.",
-	'cp_newsletter:notice:disable_digest' => "Le résumé de notification est maintenant activé; Veuillez sélectionner vos préférences de digest ci-dessous (fréquence et préférence de langue). Le résumé comprendra tous les contenus sélectionnés dans la colonne «Email» ci-dessous, ainsi que les abonnements dans la section «Autres abonnements au contenu».",
-	'cp_newsletter:subject:daily' => "Votre Bulletin par jour",
-	'cp_newsletter:subject:weekly' => "Votre Bulletin par semaine",
+	'cp_newsletter:notice' => "Choisissez le moyen par lequel vous souhaitez recevoir des avis sur les activités de GCconnex qui vous intéressent. Le résumé des notifications vous permet de recevoir un courriel quotidien ou hebdomadaire contenant un sommaire des activités auxquelles vous êtes abonné. Vous préférez recevoir un avis instantané? Oubliez le résumé et sélectionnez le contenu pour lequel vous souhaitez recevoir des avis en temps réel. Veuillez noter que les avis par courriel sont envoyés à l’adresse électronique utilisée dans vos paramètres d’utilisateur.",
+	'cp_newsletter:notice:disable_digest' => "Le résumé des avis est maintenant activé; veuillez choisir ci après vos préférences applicables au résumé (fréquence et langue). Le résumé comprendra tout le contenu sélectionné dans la colonne « Courriel », de même que les abonnements dans la section « Autres abonnements de contenu ».",
+	'cp_newsletter:subject:daily' => "Votre bulletin quotidien",
+	'cp_newsletter:subject:weekly' => "Votre bulletin hebdomadaire",
 	'cp_newsletter:enable_digest_option' => "Activer la fonctionnalité de bulletin",
 	'cp_newsletter:label:english' => "anglais",
 	'cp_newsletter:label:french' => "français",
-	'cp_newsletter:label:daily' => "par jour",
-	'cp_newsletter:label:weekly' => "par semaine",
+	'cp_newsletter:label:daily' => "Chaque jour",
+	'cp_newsletter:label:weekly' => "Chaque semaine",
 
 
-	'cp_newsletter:information:digest_option' => "Cela activera ou désactivera la fonctionnalité de la Bulletin",
+	'cp_newsletter:information:digest_option' => "Cette option activera ou désactivera la fonction de résumé.",
 	'cp_newsletter:information:digest_option:url' => "#",
-	'cp_newsletter:information:frequency' => "",
+	'cp_newsletter:information:frequency' => "Cette option déterminera la fréquence à laquelle vous souhaitez recevoir le résumé.",
 	'cp_newsletter:information:frequency:url' => "#",
-	'cp_newsletter:information:language' => "Cela déterminera la fréquence à laquelle vous souhaitez recevoir la bulletin",
+	'cp_newsletter:information:language' => "Cette option déterminera la langue dans laquelle vous recevrez le résumé.",
 	'cp_newsletter:information:language:url' => "#",
-	'cp_newsletter:information:select_all' => "Cela sélectionnera seulement le groupe lui-même, pas le contenu du groupe",
+	'cp_newsletter:information:select_all' => "Cette option permet de sélectionner le groupe uniquement, et non le contenu du groupe",
 	'cp_newsletter:information:select_all:url' => "#",
-	'cp_newsletter:set_frequency' => "Quand souhaitez-vous recevoir la Newsletter",
-	'cp_newsletter:set_language' => "Dans quelle langue voulez-vous recevoir le bulletin?",
+	'cp_newsletter:set_frequency' => "À quelle fréquence souhaitez-vous recevoir le résumé?",
+	'cp_newsletter:set_language' => "Dans quelle langue souhaitez-vous recevoir le résumé?",
 
 
 	'cp_notifications:subtype:groupforumtopic' => "Discussions",
@@ -61,7 +61,7 @@ $french = array(
 	'cp_notifications:mail_body:subtype:response' => "%s posté une réponse ou un commentaire à votre message: %s",
 	'cp_notifications:mail_body:subtype:any' => "%s posted a%s %s %s", // john doe post un blogue vs john doe posted un blog
 
-	'cp_newsletter:other_content:notice' => "Ces abonnements ne concernent que le contenu en dehors de groupes",
+	'cp_newsletter:other_content:notice' => "Ces abonnements s'appliquent uniquement au contenu qui ne fait pas partie d'un groupe",
 	
 	'cp_notifications:no_colleagues' => "Vous n'avez aucun collègue",
 	'cp_notifications:chkbox:email' => "Courriel",
@@ -73,7 +73,9 @@ $french = array(
 	'cp_notifications:no_group_subscription' => 'Rien à charger',
 	'cp_notifications:loading' => 'Chargement...',
 	'cp_notifications:subscribe_all_label' => "<a href='%s'>S’abonner</a> ou <a href='%s'>Se désabonner</a> à tous les groupes et leur contenu",
-	'cp_notifications:chkbox:select_all_group_for_notification' => "Sélectionnez tous les groupes (pas le contenu du groupe)",
+	'cp_notifications:chkbox:select_all_group_for_notification' => "Sélectionner tous les groupes (cette option ne sélectionnera pas le contenu des groupes).",
+
+	'cp_notify:personal_bulk_notifications' => 'Activer le résumé des notifications', 
 
 	'cp_notifications:personal_likes'=>'Envoyez-moi une notification lorsque quelqu\'un aime mon contenu',
 	'cp_notifications:personal_mentions'=>'Envoyez-moi une notification lorsque quelqu\'un me mentionne',
@@ -87,28 +89,28 @@ $french = array(
 	'cp_notifications:your_email' => "your email",
 	'cp_notifications:heading:newsletter_section' => "Bulletin d'information",
 	'cp_notifications:heading:personal_section' => 'Vos abonnements',
-	'cp_notifications:heading:colleague_section'=>'Colleague Notifications',
+	'cp_notifications:heading:colleague_section'=>'Avis de collègues',
 	'cp_notifications:heading:group_section' => 'Notifications de groupe',
-	'cp_notifications:heading:nonGroup_section' => 'Abonnement non groupé',
+	'cp_notifications:heading:nonGroup_section' => 'Autres abonnements de contenu',
 
 
-	'cp_newsletter:title:nothing' => "Votre {$site_name} Digest: Rien à signaler aujourd'hui",
+	'cp_newsletter:title:nothing' => "Votre résumé {$site_name} : Rien à signaler aujourd’hui.",
 	'cp_newsletter:body:nothing' => "Il semble que c'était calme dans votre réseau sur GCconnex, nous n'avons rien à signaler.",
-	'cp_newsletter:title' => "F: Your {$site_name} Digest: There has been some new contents and updates",
-	'cp_newsletter:greeting' => "Bonjour %s. Voici vos notifications pour <strong>%s</strong>",
+	'cp_newsletter:title' => "Votre résumé {$site_name} : Il y a du nouveau contenu et des mises à jour.",
+	'cp_newsletter:greeting' => "Bonjour %s. Voici vos notifications pour le <strong>%s</strong>",
 
 
-	'cp_newsletter:heading:notify:content_revision' => "Contenu révisé",
-	'cp_newsletter:heading:notify:mission' => "Avis de mission (micro mission)",
-	'cp_newsletter:heading:notify:group' => "Notification de groupe",
-	'cp_newsletter:heading:notify:new_post' => "Nouveau contenu affiché par vos collègues",
-	'cp_newsletter:heading:notify:cp_wire_share' => "Contenu qui ont été partagés",
+	'cp_newsletter:heading:notify:content_revision' => "Contenu qui a été révisé",
+	'cp_newsletter:heading:notify:mission' => "Avis d’occasion (micro-mission)",
+	'cp_newsletter:heading:notify:group' => "Avis de groupes",
+	'cp_newsletter:heading:notify:new_post' => "Nouveau contenu publié par vos collègues",
+	'cp_newsletter:heading:notify:cp_wire_share' => "Contenu qui a été partagé",
 	'cp_newsletter:heading:notify:likes' => "Utilisateurs ayant apprécié votre contenu",
 	'cp_newsletter:heading:notify:friend_request' => "Demandes de collègues",
-	'cp_newsletter:heading:notify:friend_approved' => "%s A approuvé vos demandes de collègue",
-	'cp_newsletter:heading:notify:personal' => "Notification personnelle",
-	'cp_newsletter:heading:notify:forum_topic' => "Sujets du forum",
-	'cp_newsletter:heading:notify:forum_reply' => "Forum Sujets Réponses",
+	'cp_newsletter:heading:notify:friend_approved' => "%s a approuvé vos demandes de collègue",
+	'cp_newsletter:heading:notify:personal' => "Avis personnels",
+	'cp_newsletter:heading:notify:forum_topic' => "Sujets de forum",
+	'cp_newsletter:heading:notify:forum_reply' => "Réponses au sujet de forum",
 	'cp_newsletter:heading:notify:response' => "Réponse à un contenu auquel vous êtes abonné",
 
 	'cp_newsletter:footer:notification_settings' => "Pour vous désabonner ou gérer ces messages, veuillez vous connecter et visiter votre <a href='{$site->getURL()}settings/plugin/%s/cp_notifications'> Paramètres de notification</a>.",
@@ -448,7 +450,7 @@ $french = array(
 	'cp_notify:collNotif'=>'Notifications de collègues',
 	'cp_notify:groupNotif'=>'Notifications de groupe',
 
-	'cp_notify:personal_bulk_notifications' => 'Activer la notification des Actualités', 
+
 	'cp_notify:minor_edit' => 'Changements mineurs',
 	'cp_notify:sidebar:forum_title' => 'Les sujets de discussion et les forums',
 	'cp_notify:wirepost_generic_title' => 'Publications sur le fil',
