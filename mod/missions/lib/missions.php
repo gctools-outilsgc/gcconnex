@@ -624,25 +624,35 @@ function mm_get_translation_key_from_setting_string($input, $setting_string) {
 /*
  * Function which sorts a set of missions by a given value in ascending or descending order.
  */
-function mm_sort_mission_decider($sort, $order, $entity_set, $opp_type = '') {
+function mm_sort_mission_decider($sort, $order, $entity_set, $opp_type, $role_type) {
 	$backup_array = $entity_set;
 	
-	if($sort == '' || $order == '' || $entity_set == '') {
+	if ($sort == '' || $order == '' || $entity_set == '') {
 		return $backup_array;
 	}
     
-   if ( $opp_type != '' ) {				// apply filtering if some types are passed for filtering
+   if ($role_type != '') { // apply filtering if some types are passed for filtering
+        $entity_set1 = array();
+        foreach ($entity_set as $type) {
+            if (in_array($type->role_type, $role_type)) {
+                $entity_set1[] = $type;
+            }
+        }
+    } else { // if nothing is selected for filtering, do not filter
+        $entity_set1 = $entity_set;
+    }
+
+   if ($opp_type != '') { // apply filtering if some types are passed for filtering
 	    $entity_set2 = array();
-	    foreach($entity_set as $type){
-	        //$type_array[] = $type->job_type;
-	        if(in_array($type->job_type,$opp_type)){		
-	            $entity_set2[] = $type;   
+	    foreach ($entity_set1 as $type) {
+	        if (in_array($type->job_type, $opp_type)) {
+	            $entity_set2[] = $type;
 	        }
 	    }
-	 } else { 								// if nothing is selected for filtering, do not filter
-		$entity_set2 = $entity_set;
+	} else { // if nothing is selected for filtering, do not filter
+		$entity_set2 = $entity_set1;
 	}
-    //$entity_set = array_intersect($type);
+
 	$comparison = '';
 	switch($sort) {
 		case 'missions:date_posted':

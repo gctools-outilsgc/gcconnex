@@ -24,24 +24,17 @@ $sort_missions_form .= elgg_view_form('missions/sort-missions-form', array(
 
 
 $opp_type_field = $_SESSION['missions_type_field_value'];
+$role_type_field = $_SESSION['missions_role_field_value'];
 
-if($opp_type_field){
+if ($opp_type_field || $role_type_field) {
     $clear_link = elgg_view('output/url', array(
-			'text'=>elgg_echo('missions:clear_filter'),
-			'href'=>'action/missions/sort-missions-form?opp_filter=',
-			'is_action' => true,
-			'is_trusted' => true,
-		));
+		'text' => elgg_echo('missions:clear_filter'),
+		'href' => 'action/missions/sort-missions-form?opp_filter=&role_filter=',
+		'class' => 'mrgn-lft-sm',
+		'is_action' => true,
+		'is_trusted' => true,
+	));
 }
-
-$sort_field = elgg_view('page/elements/hidden-field', array(
-		'toggle_text' => elgg_echo('missions:sort_options'),
-		'toggle_text_hidden' => elgg_echo('missions:sort_options'),
-		'toggle_id' => 'sort_options',
-		'hidden_content' => $sort_missions_form,
-		'additional_class'=>'btn btn-default',
-		'additional_text'=>$clear_link,
-));
 
 $title = elgg_echo('missions:display_search_results');
 if($search_typing == 'candidate') {
@@ -83,7 +76,15 @@ if($search_typing == 'mission') {
 }
 
 // Function which sorts the search set according to a given value in ascending or descending order.
-$search_set = mm_sort_mission_decider($_SESSION['missions_sort_field_value'], $_SESSION['missions_order_field_value'], $search_set, $_SESSION['missions_type_field_value']);
+$search_set = mm_sort_mission_decider($_SESSION['missions_sort_field_value'], $_SESSION['missions_order_field_value'], $search_set, $_SESSION['missions_type_field_value'], $_SESSION['missions_role_field_value']);
+$count = count($search_set);		// count the filtered list
+if ( $offset >= $count )			// reset offset if it no longer makes sense after filtering
+	$offset = 0;
+
+$max_reached = '';
+if(($offset + $max) >= elgg_get_plugin_setting('search_limit', 'missions') && $count >= elgg_get_plugin_setting('search_limit', 'missions')) {
+	$max_reached = '<div class="col-sm-12" style="font-style:italic;">' . elgg_echo('missions:reached_maximum_entities') . '</div>';
+}
 
 $content = elgg_view_title($title);
 
@@ -92,15 +93,11 @@ if($_SESSION['missions_from_skill_match']) {
 	$content .= '<div>' . elgg_echo('missions:placeholder_e') . '</div>';
 }
 
-$content .= elgg_view('page/elements/mission-tabs');
-
-if(($offset + $max) >= elgg_get_plugin_setting('search_limit', 'missions') && $count >= elgg_get_plugin_setting('search_limit', 'missions')) {
-	$content .= '<div class="col-sm-12" style="font-style:italic;">' . elgg_echo('missions:reached_maximum_entities') . '</div>';
-}
+$content .= elgg_view('page/elements/mission-tabs') . $max_reached;
 
 // Only displays sort form if the search set is missions.
 if($search_typing == 'mission') {
-	$content .= '<div class="col-sm-12">' . $sort_field . '</div>';
+	$content .= '<div class="col-sm-12">' . $sort_missions_form . $clear_link . '</div>';
 }
 
 // Displays the missions as a list with custom class mission-gallery
