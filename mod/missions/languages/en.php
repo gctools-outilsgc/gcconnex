@@ -185,6 +185,7 @@ return array(
     "missions:managed_by" =>    "Managed by",
     "missions:invited_you" =>   " shared the following opportunity with you: ",
     "missions:accept" =>    "Accept",
+    "missions:respond" =>   "Respond",
     "missions:decline" =>   "Decline",
     "missions:declines_invitation" =>   "%s declines pursuing this opportunity.",
     "missions:declines_invitation_more" =>  "%s has declined pursuing this opportunity ",

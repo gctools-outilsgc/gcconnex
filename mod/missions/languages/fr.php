@@ -186,6 +186,7 @@ return array(
     "missions:managed_by" =>	"Géré par",
     "missions:invited_you" =>	" vous a invité à la possibilité suivante : ",
     "missions:accept" =>	"Accepter",
+    "missions:respond" =>   "Répondre",
     "missions:decline" =>	"Refuser",
     "missions:declines_invitation" =>	"%s refuse l'invitation à cette possibilité.",
     "missions:declines_invitation_more" =>	"%s a refusé l'invitation à cette possibilité ",
