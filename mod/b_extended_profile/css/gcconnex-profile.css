@@ -812,3 +812,7 @@ input:-moz-placeholder { color:#ccc; }
         display: none;
     }
 }
+
+.b_extended_profile .tab-pane {
+  outline: none !important;
+}

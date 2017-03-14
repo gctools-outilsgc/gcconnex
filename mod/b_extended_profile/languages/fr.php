@@ -7,8 +7,11 @@
  */
 
 $french = array(
+    //accessibility changes
+    'profile:content:menu' => 'User Content Menu(fr)',
+
     'temp:languages:disabled:message' => "<br />Nous sommes en train de re-travailler comment les compétences linguistiques apparaîtront dans les profils GCconnex.<br />Restez à l'écoute pour des mises à jour.",
-    
+
     //edit profile message
     'profile:notsaved' => 'Not all information could be saved, empty fields are not allowed', /* NEW */
     'profile:title' => "%s's Profile", /* NEW */
@@ -22,23 +25,23 @@ $french = array(
     //profile sidebar
     'gcprofile:nocoll' => '%s n\'a pris contact avec aucun de ses collègues pour l\'instant.',
     'gcprofile:nogroups' => '%s ne s\'est joint à aucun groupe pour l\'instant.',
-            
-    //Email Verification          
+
+    //Email Verification
     'gcc_profile:error' => "La modification n'a pas été sauvegardée : ",
     'gcc_profile:missingemail' => "Adresse de courriel manquante",
     'gcc_profile:notaccepted' => "Vous devez donner une adresse de courriel du Gouvernement du Canada",
-            
-    //MAIN PROFILE PAGE         
+
+    //MAIN PROFILE PAGE
     'gcconnex_profile:edit_profile' => 'Modifier',
     'gcconnex_profile:user_content' => 'Contenu personnel',
     'gcconnex_profile:profile:edit_avatar' => 'Modifier mon avatar',
-            
-    //MAIN PROFILE TABS              
+
+    //MAIN PROFILE TABS
     'gcconnex_profile:profile' => 'Profil',
     'gcconnex_profile:widgets' => 'Widgets',
     'gcconnex_profile:portfolio' =>  'Portfolio',
-            
-    //PROFILE                
+
+    //PROFILE
     'gcconnex_profile:about_me' => 'À mon sujet',
     'gcconnex_profile:education' => 'Études',
     'gcconnex_profile:experience' => 'Expérience de travail',

@@ -7,6 +7,9 @@
  */
 
 $english = array(
+    //accessibility changes
+    'profile:content:menu' => 'User Content Menu',
+
     'temp:languages:disabled:message' => '<br />We are currently re-working language skills will appear in GCconnex profiles.<br />Please stay tuned for updates.',
     //edit profile message
     'profile:notsaved' => 'Not all information could be saved, empty fields are not allowed', /* NEW */
@@ -111,7 +114,7 @@ $english = array(
     'gcconnex_profile:experience:empty' => 'Begin entering your work experience by clicking "Edit" in the top right corner of this box.',
     'gcconnex_profile:experience:colleagues_empty' => 'You haven\'t listed any colleagues for this entry.',
     'gcconnex_profile:experience:colleague_suggest' => 'In order to list a colleague for this entry, you must have already added them as a colleague to your profile.',
-    
+
     // SKILLS
     'gcconnex_profile:gc_skill:add' => '+ add new skill',
     'gcconnex_profile:gc_skill:delete' => 'Delete this skill',
