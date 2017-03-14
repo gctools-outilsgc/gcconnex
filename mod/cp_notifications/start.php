@@ -48,7 +48,7 @@ function cp_notifications_init() {
 
     elgg_extend_view("js/elgg", "js/notification");							// add some notification js 
     elgg_extend_view("js/elgg", "js/popup");
-     elgg_extend_view("js/elgg","js/wet4/language_ajax");							// add some notification js 
+    elgg_extend_view("js/elgg","js/wet4/language_ajax");							// add some notification js 
 
     // remove core notification settings portion of the main settings page
     elgg_unextend_view('forms/account/settings', 'core/settings/account/notifications');
@@ -816,6 +816,7 @@ function cp_create_notification($event, $type, $object) {
 			$content_entity = $container_entity;
 			$author = $user_comment;
 
+			
 			// the user creating the content is automatically subscribed to it
 			add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_email', $container_entity->getGUID());
 			add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_site_mail', $container_entity->getGUID());
