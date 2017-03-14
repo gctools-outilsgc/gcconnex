@@ -1179,7 +1179,8 @@ function event_calendar_get_formatted_time($event) {
 					$end_date = event_calendar_format_time($end_date, $event->end_time);
 
 				}
-				$start_date = event_calendar_format_time($start_date, $event->start_time);
+                //Nick - I commented this out because it was causing the start date to appear twice
+				//$start_date = event_calendar_format_time($start_date, $event->start_time);
 			}
 			$time_bit = "$start_date - $end_date";
 
