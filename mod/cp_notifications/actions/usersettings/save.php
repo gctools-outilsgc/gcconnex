@@ -90,7 +90,8 @@ if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->guid,'cp_notifi
 		$new_digest->subtype = 'cp_digest';
 		$new_digest->owner_guid = $user->guid;
 		$new_digest->container_guid = $user->guid;
-		$new_digest->title = "Newsletter|{$user->email}";
+		//$new_digest->title = "Newsletter|{$user->email}";
+		$new_digest->title = "Newsletter|{$user->guid}";
 		$new_digest->access_id = ACCESS_PUBLIC;
 		$digest_id = $new_digest->save();
 

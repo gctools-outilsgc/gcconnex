@@ -1007,7 +1007,8 @@ function get_subscribers($dbprefix, $user_guid, $entity_guid = '') {
  */
 function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $params) {
 	elgg_load_library('elgg:gc_notification:functions');
-
+	$dbprefix = elgg_get_config('dbprefix');
+	
 	echo "Starting up the cron job for the Notifications (cp_notifications plugin) <br/>";
 
 	$options = array(
@@ -1020,8 +1021,11 @@ function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $para
 	foreach ($current_digest as $digest) {
 
 		$newsletter_title = explode('|', $digest->title);
-		$email = $newsletter_title[1];
-		$query = "SELECT guid, email, name, username FROM elggusers_entity WHERE email = '{$email}'";
+
+		$userid = $newsletter_title[1];
+		$query = "SELECT guid, email, name, username FROM {$dbprefix}users_entity WHERE guid = '{$userid}'";
+
+
 		$user = get_data($query);
 
 		$to = $user[sizeof($user) - 1];
@@ -1072,6 +1076,7 @@ function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $para
  */
 function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $params) {
 	elgg_load_library('elgg:gc_notification:functions');
+	$dbprefix = elgg_get_config('dbprefix');
 
 	echo "Starting up the cron job for the Notifications (cp_notifications plugin) <br/>";
 
@@ -1086,10 +1091,11 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 	foreach ($current_digest as $digest) {
 
 		$newsletter_title = explode('|', $digest->title);
-		$email = $newsletter_title[1];
-		$query = "SELECT guid, email, name, username FROM elggusers_entity WHERE email = '{$email}'";
-		$user = get_data($query);
+		// initially set with a user's email address, but if we need the user information, might as well put the id
 
+		$userid = $newsletter_title[1];
+		$query = "SELECT guid, email, name, username FROM {$dbprefix}users_entity WHERE guid = '{$userid}'";
+		$user = get_data($query);
 
 		$to = $user[sizeof($user) - 1];
 		$user = get_entity($to->guid);

@@ -34,6 +34,7 @@ $french = array(
 	'cp_notifications:subtype:hjforumtopic' => "Sujet du forum",
 	'cp_notifications:subtype:hjforumpost' => "Sujet réponse",
 	'cp_notifications:subtype:page' => "Page",
+	'cp_notifications:subtype:page_top' => "Page",
 	'cp_notifications:subtype:blog' => "Blogue",
 	'cp_notifications:subtype:bookmarks' => "Signet",
 	'cp_notifications:subtype:file' => "Fichier",
@@ -86,7 +87,7 @@ $french = array(
 	'cp_notifications:no_group_content' => "(Aucun contenu de groupe abonné)", //
 
 	'cp_notifications:heading:page_title' => "Paramètres d'abonnement (cliquer pour modifier votre %s)",
-	'cp_notifications:your_email' => "your email",
+	'cp_notifications:your_email' => "courriel",
 	'cp_notifications:heading:newsletter_section' => "Bulletin d'information",
 	'cp_notifications:heading:personal_section' => 'Vos abonnements',
 	'cp_notifications:heading:colleague_section'=>'Avis de collègues',

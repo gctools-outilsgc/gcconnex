@@ -35,6 +35,7 @@ $english = array(
 	'cp_notifications:subtype:hjforumtopic' => "Forum Topic",
 	'cp_notifications:subtype:hjforumpost' => "Topic reply",
 	'cp_notifications:subtype:page' => "Page",
+	'cp_notifications:subtype:page_top' => "Page",
 	'cp_notifications:subtype:blog' => "Blog",
 	'cp_notifications:subtype:bookmarks' => "Bookmark",
 	'cp_notifications:subtype:file' => "File",
@@ -50,6 +51,7 @@ $english = array(
 	'cp_notifications:mail_body:subtype:hjforumtopic' => "%s has posted a forum topic %s",
 	'cp_notifications:mail_body:subtype:hjforumpost' => "%s has posted a topic reply to %s",
 	'cp_notifications:mail_body:subtype:page' => "%s has posted a page %s",
+	'cp_notifications:mail_body:subtype:page_top' => "%s has posted a page %s",
 	'cp_notifications:mail_body:subtype:blog' => "%s has posted a blog %s",
 	'cp_notifications:mail_body:subtype:bookmarks' => "%s has posted a bookmark %s",
 	'cp_notifications:mail_body:subtype:file' => "%s has posted a file %s",
@@ -117,7 +119,7 @@ $english = array(
 	'cp_newsletter:heading:notify:content_revision' => "Contents that have been revised",
 	'cp_newsletter:heading:notify:forum_topic' => "Forum Topics",
 	'cp_newsletter:heading:notify:forum_reply' => "Forum Topic Replies",
-	'cp_newsletter:heading:notify:response' => "Response to a content you are subscripted to",
+	'cp_newsletter:heading:notify:response' => "Response to a content you are subscribed to",
 
 
 

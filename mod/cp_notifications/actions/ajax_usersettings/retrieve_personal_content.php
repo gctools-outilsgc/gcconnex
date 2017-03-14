@@ -44,10 +44,10 @@ foreach ($personal_contents as $personal_content) {
 
 	// wire post does not have a title	
 	if ($subtype === 'thewire')
-		$content_title = "Wire post: {$personal_content->description}";
+		$content_title = elgg_echo('cp_notifications:subtype:thewire').": {$personal_content->description}";
 
 
-	$item_content = "<p><a href='{$content_url}'> {$content_title} </a></p> <sup>".cp_translate_subtype($personal_content->subtype)."</sup>";
+	$item_content = "<p><a href='{$content_url}'> {$content_title} </a></p> <sup>".elgg_echo('cp_notifications:subtype:'.$personal_content->subtype)."</sup>";
 	$item_left = "<div class='togglefield col-sm-10'>{$item_content}</div>";
 
 

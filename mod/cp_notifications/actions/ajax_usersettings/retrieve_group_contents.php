@@ -28,7 +28,7 @@ $group_objects = array();
 foreach ($group_contents as $group_content) {
 	if (check_entity_relationship($user_guid, 'cp_subscribed_to_email', $group_content->getGUID())) {
 
-		$group_item_content = "<p><a href='{$group_content->getURL()}'>{$group_content->title}</a></p> <sup>".cp_translate_subtype($group_content->getSubtype())."</sup>";
+		$group_item_content = "<p><a href='{$group_content->getURL()}'>{$group_content->title}</a></p> <sup>".elgg_echo('cp_notifications:subtype:'.$group_content->getSubtype())."</sup>";
 		$group_item_left = "<div class='togglefield col-sm-10'>{$group_item_content}</div>";
 
 
@@ -59,7 +59,7 @@ foreach ($group_contents as $key => $group_content) {
 
     	$site = elgg_get_site_entity();
     	// information about the group content
-    	$group_item_content = "<p><a href='{$site->getURL()}/gcforums/group/{$group_guid}/{$content->getGUID()}/hjforumtopic'>{$content->title}</a></p> <sup>".$group_content->entity_subtype."</sup>";
+    	$group_item_content = "<p><a href='{$site->getURL()}/gcforums/group/{$group_guid}/{$content->getGUID()}/hjforumtopic'>{$content->title}</a></p> <sup>".elgg_echo('cp_notifications:subtype:'.$group_content->entity_subtype)."</sup>";
 		$group_item_left = "<div class='togglefield col-sm-10'>{$group_item_content}</div>";
 
 		$unsubscribe_button = elgg_view('input/button', array(
