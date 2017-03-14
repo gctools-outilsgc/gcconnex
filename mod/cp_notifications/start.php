@@ -648,7 +648,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 	    		$message = array(
 	    			'cp_liked_by' => $liked_by->name,
-	    			'cp_comment_from' => $content_title,
+	    			'cp_comment_from' => "<a href='{$content->getURL()}'>{$content_title}</a>",
 					'cp_msg_type' => 'cp_likes_comments',
 				);
 
@@ -664,7 +664,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 				$message = array(
 					'cp_liked_by' => $liked_by->name,
-					'cp_comment_from' => $content_title,
+					'cp_comment_from' => "<a href='{$content->getURL()}'>{$content_title}</a>",
 					'cp_msg_type' => 'cp_likes_topic_replies',
 				);
 				$author = get_entity($comment_author->getGUID());
