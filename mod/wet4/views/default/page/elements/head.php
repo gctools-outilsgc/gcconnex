@@ -34,26 +34,40 @@ $links = elgg_extract('links', $vars, array());
 //Load in global variable with entity to create metadata tags
 global $my_page_entity;
 
+$page_title = $vars['title'];
 
 // github-685 gcconnex titles in gsa search result
 if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gsa_agentstring,strtolower($_SERVER['HTTP_USER_AGENT'])) == 0) || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ) {
 
   $gc_language = get_current_language();
 
-  $page_title_deliminator = ($my_page_entity->title && $my_page_entity->title2) ? " | " : "";
+  $elgg_entity = $my_page_entity;
 
   // check if this is a profile
-  if ($my_page_entity->title == null || $my_page_entity->title === '') {
-    $page_title = $my_page_entity->name;
+  if ($elgg_entity->title == null || $elgg_entity->title === '') {
+    
+    if ($elgg_entity instanceof ElggUser) {
+      $page_title = $elgg_entity->name;  
+    } else {
+      $page_title = (!$elgg_entity->name2) ? $elgg_entity->name : $elgg_entity->name.' | '.$elgg_entity->name2;
+    }
+    
   } else {
-    $page_title = $my_page_entity->title;
+
+    $page_title = (!$elgg_entity->title2) ? $elgg_entity->title : $my_page_entity->title.' | '.$elgg_entity->title2;
+    
   }
 
   echo elgg_format_element('title', array(), $page_title, array('encode_text' => true));
 
 } else {
   
-  echo elgg_format_element('title', array(), $vars['title'], array('encode_text' => true));
+  if ($elgg_entity instanceof ElggUser || $elgg_entity instanceof ElggGroup)
+    $page_title = $elgg_entity->name;
+  else
+    $page_title = $elgg_entity->title;
+  
+  echo elgg_format_element('title', array(), $page_title, array('encode_text' => true));
 
 }
 

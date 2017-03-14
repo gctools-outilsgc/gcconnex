@@ -26,6 +26,7 @@ function gc_fedsearch_gsa_init() {
 		elgg_register_plugin_hook_handler('entity:url', 'object', 'modify_content_url',1);
 		elgg_register_plugin_hook_handler('entity:url', 'group', 'modify_group_url');
 	}
+}
 
 function entity_title($hook, $type, $return, $params) {
 	if ((!$gsa_usertest) && strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false) {
@@ -49,8 +50,8 @@ function entity_title($hook, $type, $return, $params) {
 		return $return;
 	}
 	return;
-
 }
+
 
 function modify_group_url($hook, $type, $url, $params) {
 	$url = explode('/', $_SERVER['REQUEST_URI']);
