@@ -37,19 +37,17 @@ global $my_page_entity;
 
 // github-685 gcconnex titles in gsa search result
 if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gsa_agentstring,strtolower($_SERVER['HTTP_USER_AGENT'])) == 0) || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ) {
+
   $gc_language = get_current_language();
 
   $page_title_deliminator = ($my_page_entity->title && $my_page_entity->title2) ? " | " : "";
-  $title_en = $my_page_entity->title;
-  $title_fr = $my_page_entity->title2;
-  
-  // check for character length then trim
-  if ($page_title_deliminator !== "") {
-    $title_en = (strlen($title_en) > 19) ? substr($title_en,0,20)."..." : $title_en;
-    $title_fr = (strlen($title_fr) > 19) ? substr($title_fr,0,20)."..." : $title_fr;
-  }
 
-  $page_title = (strcmp(get_current_language(),'en') == 0) ? $title_en.$page_title_deliminator.$title_fr : $$title_fr.$page_title_deliminator.$title_en;
+  // check if this is a profile
+  if ($my_page_entity->title == null || $my_page_entity->title === '') {
+    $page_title = $my_page_entity->name;
+  } else {
+    $page_title = $my_page_entity->title;
+  }
 
   echo elgg_format_element('title', array(), $page_title, array('encode_text' => true));
 
@@ -175,7 +173,7 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
             'blog/all','blog/owner/','/blog/group/','/blog/friends/',
             'bookmarks/all','bookmarks/owner/','/bookmarks/friends/','/bookmarks/group/',
             'event_calendar/list',
-            'file/all','/file/owner/','/file/friends/','/file/',
+            'file/all','/file/owner/','/file/friends/',
             'photos/all','photos/owner','photos/friends/',
             'members','/members/popular/','/members/online','/members/department',
             'polls/all','/polls/owner/','/polls/friends/',
@@ -208,6 +206,7 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
         <?php echo $datemeta; ?>
         <meta name="dcterms.subject" title="scheme" content="<?php echo $briefdesc; ?>" />
         <meta name="dcterms.language" title="ISO639-2" content="<?php echo get_language(); ?>" />
+        <meta name="gcctitle" content="<?php echo $vars['title']; ?>" />
         <link href="<?php echo $site_url; ?>mod/wet4/graphics/favicon.ico" rel="icon" type="image/x-icon" />
 <!-- Meta data-->
 

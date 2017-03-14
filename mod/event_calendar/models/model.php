@@ -1401,7 +1401,7 @@ function event_calendar_get_page_content_list($page_type, $container_guid, $star
 			$group_title = $group->name;
 		}
 
-		elgg_push_breadcrumb($group_title, 'event_calendar/group/' . $group->name);
+		elgg_push_breadcrumb($group_title, 'groups/profile/' .$group->guid.'/'. $group->name);
 		elgg_push_context('groups');
 		elgg_set_page_owner_guid($container_guid);
 		if(event_calendar_can_add($container_guid)) {

@@ -8,7 +8,9 @@
 	 
     function custom_index_widgets_init() {
 
-		if ('gsa-crawler' != strtolower($_SERVER['HTTP_USER_AGENT'])) {
+if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gsa_agentstring,strtolower($_SERVER['HTTP_USER_AGENT'])) == 0) || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ) {
+ 
+} else {
 			elgg_extend_view('css','custom_index_widgets/css');
 			elgg_extend_view('css/admin', 'custom_index_widgets/admin-css');
 			elgg_extend_view('page/elements/head','custom_index_widgets/js');
@@ -69,8 +71,7 @@
 			if(elgg_is_active_plugin('thewire')) {
 				elgg_register_widget_type('latest_wire_index',elgg_echo ('custom_index_widgets:latest_wire_index'),elgg_echo ('custom_index_widgets:latest_wire_index'), array("custom_index_widgets"), true);
 
-				// live stream wire widget
-				elgg_register_widget_type('stream_wire_index',elgg_echo ('custom_index_widgets:stream_wire_index'),elgg_echo ('custom_index_widgets:stream_wire_index'), array("custom_index_widgets"), true);
+				
 			}
 			
 			if(elgg_is_active_plugin('tasks'))

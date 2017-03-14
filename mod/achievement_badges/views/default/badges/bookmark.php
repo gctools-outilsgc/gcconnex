@@ -51,13 +51,12 @@ $entities = elgg_get_entities(array(
     'type' => 'object',
     'subtype' => 'bookmarks',
     'owner_guid' => $user->getGUID(),
+    'limit' => 75,
+    'count' => true
 ));
 
-if($entities){
+$count = $entities;
 
-
-    $count = count($entities);
-}
 ///
 
 

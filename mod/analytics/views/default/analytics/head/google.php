@@ -15,7 +15,9 @@ if (empty($domain)) {
 }
 
 
-if ('gsa-crawler' != strtolower($_SERVER['HTTP_USER_AGENT'])) {
+if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gsa_agentstring,strtolower($_SERVER['HTTP_USER_AGENT'])) == 0) || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ) {
+	
+} else {
 ?>
 <!-- Google Analytics -->
 <script type='text/javascript'>

@@ -54,7 +54,8 @@ function group_owners_block_handler($hook, $type, $menu, $params){
 
 				case 'discussion':
 					// cyu - take discussions off for the crawler
-					if (strcmp('gsa-crawler',strtolower($_SERVER['HTTP_USER_AGENT'])) != 0) {
+					if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gsa_agentstring,strtolower($_SERVER['HTTP_USER_AGENT'])) == 0) || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ) {
+                    } else {
 						$item->setText(elgg_echo('gprofile:discussion'));
 						$item->setHref('#groupforumtopic');
 						$item->setPriority('1');
@@ -128,7 +129,7 @@ function group_owners_block_handler($hook, $type, $menu, $params){
                     break;
                 case 'activity':
                     elgg_unregister_menu_item('owner_block', 'activity');
-                    $item->setText('Activity');
+                    $item->setText(elgg_echo('activity'));
                     $item->setHref('#activity');
                     $item->setPriority('8');
                     break;
@@ -295,9 +296,9 @@ function gc_group_layout_transfer_coverphoto($group, $new_owner){
   // cleanup old file
   $nfh->save();
   $ofh->delete();
-
-  $c_photo_guid = $nfh->getGUID();
-  $group->cover_photo =$c_photo_guid;
-
+  //error_log($nfh->getGUID().'<---guid of file   old-->'.$ofh->getGUID());
+  //$c_photo_guid = $nfh->getGUID();
+  //$group->cover_photo =$c_photo_guid;
+  //system_message( $group->cover_photo);
   return true;
 }

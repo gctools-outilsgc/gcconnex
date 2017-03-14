@@ -45,7 +45,7 @@ if(!elgg_instanceof($entity, 'group')){
 if (!empty($url)) {
 	$content .= elgg_view("output/url", array(
 		"href" => $url,
-		"text" => $text,
+		"text" => htmlspecialchars_decode($text, ENT_QUOTES),
 		"is_trusted" => true
 	));
 } else {

@@ -40,6 +40,10 @@ $gsa_pagination = elgg_get_plugin_setting('gsa_pagination','gc_fedsearch_gsa');
         padding-right: 5px;
     }
 
+    .col-xs-2 {
+          width: 16.6666666667% !important;
+    }
+
   /****************************************/
 
   /******************** Widgets ********************/
@@ -87,6 +91,28 @@ max-height: 500px;
 .user-menu-message-dd{
   width:400px;
   min-height: 75px;
+}
+
+.no-style-link {
+  text-decoration: none;
+  color: #055959;
+}
+
+.no-style-link:hover {
+  text-decoration: none;
+  color: #047177;
+}
+
+.login-as-out {
+  border: 1px solid rgba(188, 192, 198, 0);
+  padding: 2px 10px;
+}
+
+.login-as-out:hover {
+  border-radius:4px;
+  background: #cfd1d5;
+  border: 1px solid #bbbfc5;
+  padding: 2px 10px;
 }
 
 .user-menu-message-dd:before{
@@ -872,36 +898,6 @@ border:none;
     margin-bottom: 5px;
 
 }
-
-.quick-discuss panel-body, panel-footer{
-    padding:1px;
-
-}
-.start-discussion-form{
-    /*padding-right: 20px;*/
-
-}
-
-.quick-discuss-action-btn{
-    font-size: 1.3em;
-
-}
-.toggle-quick-discuss{
-    cursor:pointer;
-    background-color: #f5f5f5;
-    border-top: solid 1px #ddd;
-
-}
-#quick-discuss-panel .quick-start-collapse, #quick-discuss-panel  .quick-start-hide, #quick-discuss-panel  .alert-info{
-    display:none;
-
-}
-.quick-start-discussion{
-    border-bottom: 1px solid #ddd;
-    margin-bottom: 5px;
-
-}
-
     .newsfeed-filter-gear {
         font-size: 1.75em !important;
         margin-top: 3px;
@@ -927,6 +923,7 @@ border:none;
 	border-bottom: 12px solid #fff;
     clear: both;
 }
+
 .newsfeed-filter:before{
        content: '';
     display: block;
@@ -1652,8 +1649,23 @@ figcaption{
     text-decoration: underline;
     cursor: pointer;
 }
-  
+
 .indicator_summary{
   color:#D6D6D6;
   font-size: 12px
+}
+
+/*Related groups autocomplete*/
+.ui-autocomplete .ui-menu-item {
+  clear:both;
+  overflow:auto;
+}
+.ui-autocomplete .ui-menu-item:hover {
+  background:#eee;
+}
+.ui-autocomplete .ui-menu-item:focus {
+  background:#eee;
+}
+.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus {
+  border:none;
 }

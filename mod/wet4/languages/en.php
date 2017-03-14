@@ -310,11 +310,11 @@ return array(
  * Access
  */
 
-	'PRIVATE' => "Private",
-	'LOGGED_IN' => "Logged in users",
-	'PUBLIC' => "Public",
+	'PRIVATE' => "Only me",
+	'LOGGED_IN' => "Users logged in to GCconnex only",
+	'PUBLIC' => "All public servants",
 	'LOGGED_OUT' => "Logged out users",
-	'access:friends:label' => "Friends",
+	'access:friends:label' => "My Colleagues on GCconnex only",
 	'access' => "Access",
 	'access:overridenotice' => "Note: Due to group policy, this content will be accessible only by group members.",
 	'access:limited:label' => "Limited",
@@ -1518,6 +1518,12 @@ Please do not reply to this email.",
 	'event_calendar:mine' => 'My events',
 	'event_calendar:meeting' => 'Online meeting and teleconference',
 	'event_calendar:info' => 'Additional information',
+	'event_calendar_contact' => "You are not the contact person?",
+	"event_calendar:email" => "E-mail address",
+	"event_calendar:phone" => "Phone number",
+    'event_calendar:lang:french'=>"French",
+    'event_calendar:lang:english'=>"English",
+    'event_calendar:lang:bilingual'=>"Bilingual",
 
     /*new for tour*/
 'gcTour:next' => 'Next ',
@@ -1602,7 +1608,14 @@ Please do not reply to this email.",
 'indicator:summary' => '(FR/EN)',
 'indicator:summary:title' => 'Ce contenu est aussi disponible en français',
 
+/*Modal from comment(notifaction)*/
 
+'comment_notif_title' => "You are not a member of the group %s!",
+'comment_notif_description' => "<p>You are not a member of this group. Join the group to be notified when new content is added and to follow this thread. Note: You can adjust your notification preferences in your GCconnex account settings.</p><p>Don’t want to join the group yet? Go ahead and post your comment, but remember to check back to see any new comments posted in this thread. </p>",
+'not_now' => 'Not now',
+
+/*Rotate content*/
+'rotate:image' => 'Rotate image',
 
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)

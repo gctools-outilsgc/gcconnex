@@ -14,6 +14,112 @@ $tags = elgg_extract('tags', $vars, '');
 $access_id = elgg_extract('access_id', $vars, get_default_access());
 $container_guid = elgg_extract('container_guid', $vars, elgg_get_page_owner_guid());
 $guid = elgg_extract('guid', $vars, 0);
+$photo = $vars['entity'];
+
+
+
+$img = elgg_view_entity_icon($photo, 'large', array(
+  //'href' => $image->getIconURL('master'),
+    'href' => 'ajax/view/ajax/photo?guid=' . $photo->guid,
+  'img_class' => 'tidypics-photo',
+  'link_class' => 'elgg-lightbox',
+  'id' => 'img',
+    
+));
+
+
+$img = elgg_view_entity_icon($photo, 'large', array(
+  //'href' => $image->getIconURL('master'),
+    'href' => 'ajax/view/ajax/photo?guid=' . $photo->guid,
+  'img_class' => 'tidypics-photo',
+  'link_class' => 'elgg-lightbox',
+  'id' => 'img',
+    
+));
+
+echo '<div class="test">';
+echo $img;
+echo '</div>';
+if (isset($_POST['action'])) {
+    switch ($_POST['action']) {
+        case 'rotation':
+            rotation($photo);
+            break;
+        
+    }
+}
+
+//function to rotate image
+function rotation($photo){
+  $path = $photo->getFilenameOnFilestore();
+  $path_noname = substr($path, 0, strrpos( $path, '/'));
+
+  $filename = $photo->getFilename();
+  $filename = substr($filename, strrpos($filename, '/') + 1);
+
+  $picture_size = array('thumb', 'smallthumb', 'largethumb');
+
+  for($x = 0; $x < 3; $x++) {
+      //$imgsrc = $_SERVER['DOCUMENT_ROOT'] .'1/'.$photo->owner_guid.'/'.$picture_size[$x];
+        $imgsrc = $path_noname.'/'.$picture_size[$x].$filename;
+        error_log($imgsrc);
+      if (exif_imagetype($imgsrc) == IMAGETYPE_JPEG) {
+          if (file_exists($imgsrc)) {
+              $img = imagecreatefromjpeg($imgsrc);
+
+              if ($img !== false) {
+                $imgRotated = imagerotate($img,90,0);
+
+                if ($imgRotated !== false) {
+                    imagejpeg($imgRotated,$imgsrc,100);
+                }
+              }else{
+
+                echo 'Error, Image rotate false. JPEG';
+          
+              }
+            
+          }else{
+            register_error(elgg_echo('Error, file not exist. JPEG'));
+            echo "<script>alert(\"la variable est nulle\")</script>"; 
+        
+          }
+              imagedestroy($img);
+              imagedestroy($imgRotated);
+      }else if (exif_imagetype($imgsrc) == IMAGETYPE_PNG){
+         if (file_exists($imgsrc)) {
+              $img = imagecreatefrompng($imgsrc);
+              $bgColor = imagecolorallocatealpha($imgsrc, 255, 255, 255, 127);
+
+              if ($img !== false) {
+                $imgRotated = imagerotate($img,90,$bgColor);
+
+                if ($imgRotated !== false) {
+                    imagesavealpha($imgRotated, true);
+                    imagepng($imgRotated,$imgsrc);
+                }
+              }else{
+                echo 'Error, Image rotate false. PNG';
+              }
+            
+          }else{
+               register_error(elgg_echo('Error, file not exist. PNG'));
+               echo "<script>alert(\"la variable est nulle\")</script>"; 
+          }
+            imagedestroy($img);
+            imagedestroy($imgRotated);
+      }
+       register_error(elgg_echo('Error, file not exist. PNG'));
+       error_log("Base Oracle indisponible !");
+
+  }        
+}
+
+
+//button image rotation
+$image_src = elgg_get_site_url().'/photos/thumbnail/'.$photo->guid.'/large/'.$photo->largethumb;
+echo'<div class="col-md-7 col-md-offset-5 mrgn-tp-md">';
+echo'<span class="btn btn-default" onclick=rotate_ajax("'.$image_src.'")>'.elgg_echo('rotate:image').'</span></div>';
 
 $btn_language =  '<ul class="nav nav-tabs nav-tabs-language">
   <li id="btnen"><a href="#" id="btnClicken">'.elgg_echo('lang:english').'</a></li>
@@ -59,6 +165,11 @@ echo elgg_view('input/hidden', array('name' => 'container_guid', 'value' => $con
 echo elgg_view('input/submit', array('value' => elgg_echo('save'), 'class' => 'mrgn-tp-md',));
 
 echo'</div></div>';
+
+
+
+
+
 
 if(get_current_language() == 'fr'){
 ?>

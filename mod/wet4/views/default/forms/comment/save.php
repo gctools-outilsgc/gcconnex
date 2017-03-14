@@ -14,12 +14,42 @@
  * Description: Added accessible labels
  * Author: GCTools Team
  */
+?>
+<script>
+
+function join_comment(group_guid, user_guid, status) {
+
+     elgg.action('comment/join', {
+            data: {
+                group_guid: group_guid, user_guid: user_guid
+            },
+            success: function (message) {
+               if (status == 'open') { //joined group
+                
+                  elgg.system_message(elgg.echo('groups:join'));
+           
+                }else{
+                  elgg.system_message(elgg.echo('groups:joinrequestmade'));
+
+            }
+          }
+        });
+}
+</script>
+
+<?php
+
 if (!elgg_is_logged_in()) {
 	return;
 }
 
+// var for the modal
 $entity = elgg_extract('entity', $vars);
-/* @var ElggEntity $entity */
+$container = $entity->getContainerEntity();
+$userentity = elgg_get_logged_in_user_entity();
+$group = get_entity($container->guid);
+$user = get_user($userentity->guid);
+
 
 $comment = elgg_extract('comment', $vars);
 /* @var ElggComment $comment */
@@ -47,7 +77,15 @@ if ($comment && $comment->canEdit()) {
 	$comment_text = $comment->description;
 } else {
 	$comment_label  = elgg_echo("generic_comments:add");
-	$submit_input = elgg_view('input/submit', array('value' => elgg_echo('comment'), 'class' => 'mrgn-tp-sm btn btn-primary',));
+
+	if ((elgg_instanceof($container, 'group')) && (!$container->isMember($userentity))){
+	
+	$submit_input = elgg_view('input/button', array('value' => elgg_echo('comment'), 'class' => 'mrgn-tp-sm btn btn-primary', 'data-target' => "#notif_comment", 'data-toggle' => "modal"));
+
+	}else{
+	$submit_input = elgg_view('input/submit', array('value' => elgg_echo('comment'), 'class' => 'mrgn-tp-sm btn btn-primary', ));
+
+	}
 }
 
 $cancel_button = '';
@@ -93,3 +131,62 @@ if ($inline) {
 </div>
 FORM;
 }
+
+?>
+
+
+<!-- Modal -->
+<div class="modal fade" id="notif_comment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content modal-content1">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+     <?php   
+     echo '<h4 class="modal-title" id="myModalLabel">'.elgg_echo("comment_notif_title",array($container->getDisplayName())).'</h4>
+      </div>
+      <div class="modal-body">
+     '.elgg_echo("comment_notif_description").'
+      </div>
+      <div class="modal-footer">';
+
+      	
+
+         $url = elgg_get_site_url() . "action/groups/join?group_guid={$container->getGUID()}";
+              $url = elgg_add_action_tokens_to_url($url);
+                  elgg_register_menu_item('modal_notif', array(
+                        'name' => 'join',
+                        'id' => 'join',
+                        'href' => $url,
+                        'text' => elgg_echo('join'),
+                        'link_class' => 'elgg-button elgg-button-action',
+                    ));
+
+   $buttons = elgg_view_menu('modal_notif', array(
+                            'sort_by' => 'priority',
+                            'class' => 'hidden',
+                        	'id' => 'join',
+                            'item_class' => 'btn btn-primary',
+                        ));
+
+                        echo $buttons;
+
+	if ( $container instanceof ElggGroup ){
+     		if ($container->isPublicMembership() || $container->canEdit()) {
+                        echo '<button class="mrgn-tp-sm btn btn-primary" onclick = "join_comment('.$group->guid.',\''.$user->guid.'\',\'open\')">'.elgg_echo("groups:join").'</button>';
+                        		
+		} else {
+			// request membership
+                        echo '<button class="mrgn-tp-sm btn btn-primary" onclick = "join_comment('.$group->guid.',\''.$user->guid.'\',\'close\')">'.elgg_echo("groups:joinrequest").'</button>';
+			
+		}
+	}
+	 				
+	echo elgg_view('input/submit', array('value' => elgg_echo('comment'), 'id' => 'comment_test','class' => 'mrgn-tp-sm btn', ));
+                         
+      	?>
+
+      
+      </div>
+    </div>
+  </div>
+</div>

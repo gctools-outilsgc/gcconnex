@@ -32,9 +32,17 @@ $french = array(
 	// group invite user by email
 	'cp_notify:subject:group_invite_email' => "%s vous a invité à joindre le groupe '%s'",
 	'cp_notify:subject:group_invite_user_by_email' => "%s vous a invité à joindre le groupe %s",
-	'cp_notify:body_group_invite_email:title' => "Vous êtes invité à joindre un groupe sur GCconnex",
-	'cp_notify:body_group_invite_email:description' => "Vous êtes invité à joindre le groupe '%s' sur GCconnex, veuillez vous inscrire ou vous connecter à GCconnex, ensuite cliquez sur ce lien : %s ou utiliser ce code dans la page d'invitation de groupe : '%s' <br/> %s", // translate
+	'cp_notify:body_group_invite_email:title' => "<a href='%s'>%s</a> vous a invité à joindre le groupe <a href='%s'>%s</a>  sur GCconnex. <br>",
+	'cp_notify:body_group_invite_email:description' => "<a href='%s'>Inscrivez-vous maintenant</a> et vous serez automatiquement ajouté au groupe.<br/><br/>
+
+	Si vous désirez vous inscrire à une date ultérieure en utilisant le <a href='https://gcconnex.gc.ca/register'>formulaire d’inscription</a> sur GCconnex, vous pouvez vous joindre au groupe en utilisant le code suivant sur votre page d'<a href='%s'>invitation de groupe</a> : %s .<br/><br/>
 	
+	Vous-êtes déjà sur GCconnex? Votre adresse est peut-être désuète. <a href='https://gcconnex.gc.ca/login'>Connectez-vous</a> et mettez à jour vos paramètres de comptes.<br/> ",
+	
+	'cp_notify:footer:no_user' => 'Apprenez davantage au sujet de <a href=http://www.gcpedia.gc.ca/wiki/OutilsGC/GCconnex">GCconnex</a>, l’espace de travail collaboratif pour le réseautage professionnel à l\'ensemble de la fonction publique.<br/>
+	Besoin d\'aide? <a href="https://gcconnex.gc.ca/mod/contactform/">Contactez-nous</a>.',
+	'cp_personalized_message' => "<div style='border: 1px solid #047177; padding:5px; margin-bottom:10px;'>%s vous a envoyé un message personnalisé:<br/><i>%s</i></div>",
+
 
 	// group mail section
 	'cp_notify:subject:group_mail' => "Vous avez reçu un message intitulé '%s' du groupe '%s'",
@@ -208,7 +216,7 @@ $french = array(
 
 	// invite new user to GCconnex
 	'cp_notify:subject:invite_new_user' => "Vous avez été invité à joindre GCconnex",
-	'cp_notify:body_invite_new_user:title' => "Vous avez été invité à joindre GCconnex",
+	'cp_notify:body_invite_new_user:title' => "Vous avez été invité à joindre GCconnex par %s",
 	'cp_notify:body_invite_new_user:description' => "Joignez-vous à l'espace de travail collaboratif pour le réseautage professionnel pour l'ensemble de la fonction publique. Vous pouvez vous inscrire à GCconnex en cliquant sur le lien suivant %s",
 
 

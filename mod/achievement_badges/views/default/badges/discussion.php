@@ -53,41 +53,41 @@ $entities = elgg_get_entities(array(
     'type' => 'object',
     'subtype' => 'groupforumtopic',
     'owner_guid' => $user->getGUID(),
+    'limit' => 100,
+    'count' => true
 ));
 
-if($entities){
-    
-    $count = count($entities);
-}
+$count = $entities;
+
 ///
 
 
 
 //progress check
 if($count < $goals[0]){ //no badge
-    
+
     $user->discussionBadge = 0;
     $currentBadge = $badges[0];
     $currentGoal = $goals[0];
     $level = '1';
-    
+
 } else if($count >= $goals[0] && $count < $goals[1]){ //lvl 1
-    
+
     $user->discussionBadge = 1;
     $currentBadge = $badges[1];
     $currentGoal = $goals[1];
     $level = '2';
-    
+
 } else if($count >= $goals[1]  && $count < $goals[2]){ //lvl 2
-    
+
     //$count = $goals[2];
     $user->discussionBadge = 2;
     $currentBadge = $badges[2];
     $currentGoal = $goals[2];
     $level = '3';
-    
+
 } else if($count >= $goals[2]  && $count < $goals[3]){ //lvl 3
-    
+
     //$count = $goals[2];
     $user->discussionBadge = 3;
     $currentBadge = $badges[3];
@@ -103,14 +103,14 @@ if($count < $goals[0]){ //no badge
     $level = '5';
 
 } else if($count >= $goals[4]){ //lvl 5
-    
+
     $count = $goals[4];
     $user->discussionBadge = 5;
     $currentBadge = $badges[5];
     $currentGoal = $goals[4];
     $level = 'Completed';
-    
-} 
+
+}
 
 
 if(!isset($user->discussionCount)){

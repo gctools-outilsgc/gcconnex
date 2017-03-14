@@ -61,11 +61,13 @@ function get_wire_posts($query, $limit){
 	$i = 0;
 	foreach($wire_posts as $wp){
 		//error_log(var_dump($wp));
+        //Nick - added guid to the api
+		$posts['post_'.$i]['guid'] = $wp->guid;
 		$posts['post_'.$i]['text'] = thewire_filter($wp->description);
 		$posts['post_'.$i]['time_created'] = $wp->time_created;
 		$posts['post_'.$i]['time_since'] = time_elapsed_B(time()-$wp->time_created);
 		$posts['post_'.$i]['user'] = get_userBlock($wp->owner_guid);
-		
+        
 		$i++;
 	}
 	if ($posts){

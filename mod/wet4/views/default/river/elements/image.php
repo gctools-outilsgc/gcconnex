@@ -47,9 +47,11 @@ if(elgg_get_context() !== 'widgets'){
           echo elgg_view_entity_icon($subject, 'medium');
       }
 
-	
+
 } else {
-    if($container && $subtype_test && !elgg_in_context('group_activity_tab')){//happens in group
+
+    //dont show group avatar when looking at group's activity feed
+    if($container && $subtype_test && !elgg_in_context('group_activity_tab') && $container->guid != elgg_get_page_owner_guid()){//happens in group
         //if in group show the groups icon
         if(elgg_instanceof($container, 'group')){
             echo elgg_view_entity_icon($container, 'medium');
@@ -69,9 +71,8 @@ if(elgg_get_context() !== 'widgets'){
  if (elgg_in_context('widgets')) {
      echo elgg_view_entity_icon($subject, 'medium');
 } else if(elgg_in_context('group_activity_tab')){
- 
+
  }else {
 	echo elgg_view_entity_icon($subject, 'medium');
-}   
 }
-
+}

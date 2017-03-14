@@ -54,6 +54,7 @@ $hidden_input = elgg_view('input/hidden', array(
 <div class="form-group" style="display:inline-block;margin-right:16px;">
 	<div style="display:inline-block;vertical-align:middle;">
 		<?php echo $input_simple_text; ?> 
+		<input type="hidden" name="offset" value="0">
 	</div>
 	<!-- <label for="search-mission-limit-dropdown-input" style="display:inline-block;"><?php //echo elgg_echo('missions:search_limit') . ': '; ?></label>
 	<div style="display:inline-block;"><?php //echo $input_simple_limit; ?></div> -->
@@ -61,7 +62,7 @@ $hidden_input = elgg_view('input/hidden', array(
 		<?php 
 			echo elgg_view('input/submit', array(
 					'value' => $button_text,
-					'id' => 'mission-simple-search-form-submission-button'
+					'id' => 'mission-simple-search-form-submission-button',
 			));
 			echo elgg_view('page/elements/one-click-restrictor', array('restricted_element_id' => 'mission-simple-search-form-submission-button'));
 		?>

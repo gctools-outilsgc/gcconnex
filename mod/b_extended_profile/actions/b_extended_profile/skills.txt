@@ -1,4 +1,6 @@
 English
+Aboriginal Law
+Accountability
 Accountability
 Accounting
 Accounts Payable
@@ -8,10 +10,15 @@ Action Management
 Active Listening
 Adaptability
 Administration
+Administrative Law
 Administrative Support
 Adobe Acrobat
 Adobe Creative Suite
+Adobe Dreamweaver
 Adobe Illustrator
+Adobe InDesign
+Adobe Photoshop
+Adobe Photoshop Lightroom
 Advertising
 Advocacy
 Agricultural Technology
@@ -19,55 +26,57 @@ Agriculture
 Agri-food
 Agroecosystem and Health
 Air
-Animal Health And Wellness
-Arctic And Northern
-Artificial Insemination
-Arthropod
 Algorithms
 Analysis
 Analytical Chemistry
 Analytical Method Development
 Android
+Animal Health And Wellness
 Animal Microbiology
 Animal parasitology
 Application Development
-Architecture
-Archiving
-Artificial Intelligence
-Asset Management
-Auditing
-Audivisual Equipment
-Automation
 Aquaculture
 Aquatic Animal Health
+Architecture
+Archiving
+Arctic And Northern
+Arthropod
 Artificial Insemination
+Artificial Insemination
+Artificial Intelligence
+Asset Management
 Assistive Technologies
 Astronaut Training
 Astronomy
+Auditing
+Audivisual Equipment
+Automation
 Banking
+Bankruptcy and Collection
 Beef And Forage
+Bijuralism
 Bilingual
 Bioassay
 Biochemistry
-Bioenergy
 Biodiversity And Bioresources
 Biodiversity Science
+Bioenergy
 Bioinformatics
 Biological
 Biological Oceanography
-Bioproducts
 Biomedical Experiments
 Biomedical Investigation
 Biometrics For National Security
 Biomonitoring
+Bioproducts
 Biosimilars
 Biotherapeutics
 Border And Transportation Security
 Botany
 Branding
+Briefing
 Broadcasting
 Broadcasting Industry
-Briefing
 Budget Management
 Business Analysis
 Business Development
@@ -82,21 +91,22 @@ Carpentry
 Cartography
 Case Management
 Cash Management
+Cellular Telephones
 Cereals And Pulses
 Certifications
-Cellular Telephones
 Change Management
 Chemical Analysis
 Chemistry
+Civil Law
+Civil Litigation
 Client Relations
 Client Service
 Climate
 Cloning
 Coaching
-Consumer Products
-Cooking
 Collaboration
 Collections
+Commercial and Corporate Law
 Communication Skills
 Communications
 Communications Equipment
@@ -117,17 +127,24 @@ Concrete
 Conferences
 Conflict Management
 Conflict Resolution
+Constitutional Law
 Construction
+Consumer Products
 Consumer Protection
 Content Management
 Continuous Learning
 Contracting
+Cooking
 Coordinating Travel And/Or Hospitality
+Correctional Law
 Cost Benefit Analysis
 Creative Thinking
 Creative Writing
+Criminal Law
 Critical Infrastructure Vulnerabilities, Resiliency And Interdependencies
 Critical Thinking
+Crown Liability
+Customs & Excise
 Dairy, Pork, Poultry And Other Livestock
 Data Analysis
 Data Analytics
@@ -145,15 +162,14 @@ Database Management
 Decision Making
 Decorating
 Delivering Presentations
+Departmental Operations
 Dependability
 Design
 Desktop Publishing
-Departmental Operations
 Developer
 Developing Others
-Strategic Communication
-Lean
 Diagnostic Method Development
+Digital Asset Management (DAM)
 Digital Collaboration
 Digital Imaging
 Digital Libraries
@@ -161,10 +177,12 @@ Digital Preservation
 Digital Technology
 Digitization
 Diplomacy
+Dispute Prevention and Resolution
 Document Management
 Drawing
-Earthquakes
 Earth Sciences
+Earthquakes
+E-books
 Ecology
 Economic Analysis
 Economic Conditions
@@ -184,12 +202,13 @@ Electronic Mail
 Electronic Monitoring
 Electronics
 Email Marketing
-Emergency Preparedness And Response
 Emergency Management Systems And Interoperability
+Emergency Preparedness And Response
 Emergency Response Service
 Employee Engagement
 Employee Relations
 Endocrinology
+Energy and Resources
 Energy Technology
 Enforcement
 Engineering
@@ -197,6 +216,7 @@ Environment And Human Helath
 Environmental And Occupational Toxicology
 Environmental Chemistry
 Environmental Health
+Environmental Law
 Environmental Policy
 Epidemiology
 Equipment
@@ -210,9 +230,11 @@ Excel
 Expenditure Management
 Explosives
 Exposure Science
-Facilitation
+Extradition Law & Mutual Legal Assistance
 Facilitating And/Or Delivering Training
+Facilitation
 Fact Checking
+Family Law
 Feature Writing
 Film
 Finance
@@ -222,9 +244,11 @@ Financial Planning
 Financial Policy Development
 Financial Reporting
 Financial Systems
+Firearms Law
 First Nations And Inuit Health Programming And Services
 First Responders
 Fish Population Science
+Fisheries
 Flash
 Floods
 Fluorides
@@ -233,11 +257,15 @@ Food And Nutrition
 Food Safety
 Forecasting
 Forensics
+Form Development
 Fortran
 Fostering Learning
 Fraud Prevention And Detection
 Fundraising
 Garden Soil
+GCconnex
+GCdocs
+GCpedia
 Genetic Engineering
 Genetic Toxicology
 Genetically Modifed Foods
@@ -246,7 +274,6 @@ Genomics
 Geographic Data
 Geographic Information Systems
 Geomatics
-GCdocs
 Global Navigation Satellite System (GNSS)
 Google
 Grammar
@@ -255,26 +282,29 @@ Graphics
 Hardware
 Hazard Identification
 Health Behaviour
-Health Science
 Health Products
+Health Science
 Horticulture
 House Dust
 Human Exposure Research
 Human Health Risk Assessment
 Human Resources
 Human Resources Management
+Human Rights and Charter
 Hurricanes
 Hydroelectric Plants
 Hydrography
 Illustration
 Image Editing
-Improvisation
+Immigration Law
 Immunology
 Immunotoxicology
+Improvisation
 Indoor Air
 Industrial Research
 Industrial Technology
 Industry Sector Knowledge
+Information and Privacy Law
 Information Management
 Information Processing
 Information Systems
@@ -286,9 +316,12 @@ Innovative
 Inspection
 Inspirational Leadership
 Insulation
+Intellectual Property and Information Technology
 Intelligent Systems
 Interactive Communication
 Internal Services
+International Law (Private)
+International Law (Public)
 International Telecommunications
 Internet
 Interpersonal Communication
@@ -303,19 +336,27 @@ Journalism
 Knowledge Management
 Knowledge Transition
 Laboratories
+Labour and Employment Law
 Landslides
 Languages
+Law Enforcement
+Law Practice Management
 Layout
 Leadership
+Lean
 Learning Support
+Legal Advisor
 Legal Analysis
+Legal Policy Developer
 Legal Research
 Legislation
+Legislative Drafting and Statutory Interpretation
 Limnology
 Linux
 Listening
 Litigation
 Litigation Support
+Litigator
 Logistics
 Machine Readable Data
 Maintenance
@@ -324,12 +365,13 @@ Management Information Systems
 Managing Teams
 Manufacturing Industry
 Marine Geohazards
+Maritime Law
 Market Research
 Marketing
 Materials Technology
 Mathematics
-Mechanisms Of Action
 Mechanical Engineering
+Mechanisms Of Action
 Media Relations
 Mediations
 Medical Technology
@@ -342,11 +384,13 @@ Microbiology
 Microelectronics
 Microsoft Access
 Microsoft Excel
-Microsoft Powerpoint
 Microsoft Outlook
+Microsoft Powerpoint
 Microsoft Word
 Military Engineering
 Military Technology
+Mindful leadership
+Mindfulness
 Mining Technology
 Molecular Biology
 Monitoring
@@ -355,6 +399,7 @@ Motivating
 Multimedia
 Mutagenesis And Carcinogenesis
 Nanotechnology
+National Security
 Nature And Wildlife
 Navigation Systems
 Needs Analysis
@@ -371,6 +416,7 @@ Nuclear Technology
 Nutrition
 Office Automation
 Office Management
+Official Languages
 Oilseeds
 Open Source Software
 Operations
@@ -387,6 +433,7 @@ Parasitology
 Partnering
 Pathology
 Payroll
+Pension, Benefits and Social Programs
 People Management
 People Skills
 Performance Management
@@ -404,6 +451,7 @@ Physiology
 Planning
 Plant Identification
 Policy Development
+Policy Law
 Pollution And Waste
 Positive Attitude
 Positive Reinforcement
@@ -444,13 +492,16 @@ Purchasing
 Python
 Qualitative Analysis
 Quality Assurance
+Quality Improvement
 Quantitative Analysis
 Radiation
 Radio
 Radioactivity
 Radiological-Nuclear
+Real Property
 Reconciliation
 Recruiting
+Regulatory Law
 Regulatory Toxicology
 Rehabilitation
 Relationship Building
@@ -468,7 +519,6 @@ Risk Assessment
 Risk Assessment Methodology
 Risk Management
 Robotics
-Quality Improvement
 Safety
 Sales
 Sampling Technologies
@@ -507,6 +557,7 @@ Statistical Analysis
 Statistics
 Stem Cells
 Strategic Briefing
+Strategic Communication
 Strategic Management
 Strategic Planning
 Strategic Thinking
@@ -555,6 +606,7 @@ Topography
 Toxicogenomics
 Training
 Transborder Data Flow
+Translation
 Transportation
 Troubleshooting
 Tsunamis
@@ -582,589 +634,640 @@ Workplace Health
 Writing
 Writing Reports
 Xenotransplantation
+Youth Criminal Justice
 Zoonosis
 French
-Imputabilité
-Comptabilité
-Comptes créditeurs
-Comptes débiteurs
-Approvisionnements
-Gestion par l'action
-Écoute active
+Accompagnement
+Achat
+Activités ministérielles
 Adaptabilité
 Administration
-Soutien administratif
+Administration des systèmes
 Adobe Acrobat
 Adobe Creative Suite
+Adobe Dreamweaver
+Adobe Flash
 Adobe Illustrator
-Publicité
-Défense des droits
-Technologie agricole
+Adobe InDesign
+Adobe Photoshop
+Agilité personnelle
 Agriculture
-Secteur agroalimentaire
-Productivité et santé de l'agrosystème
 Air
-Santé animale
-Arctique et nord
-Insémination artificielle
-Arthropodes
+Air intérieur
 Algorithmes
+Aliments
+Aliments et nutrition
+Aliments génétiquement modifiés
+Amélioration de la qualité
+Amélioration des processus
+Aménagement
 Analyse
-Chimie analytique
-Élaboration de méthodes analytiques
+Analyse chimique
+Analyse de rentabilité
+Analyse des besoins
+Analyse des données
+Analyse des médias sociaux
+Analyse des risques
+Analyse économique
+Analyse financière
+Analyse juridique
+Analyse opérationnelle
+Analyse qualitative
+Analyse quantitative
+Analyse statistique
+Analytiques des données
 Androïde
-Microbiologie animale
-Parasitologie animale
-Développement d'applications
+Animation
+Appareil électrique
+Application de la loi
+Application des règlements
+Applications Web
+Apprentissage continu
+Approvisionnements
+Aptitude en relations humaines
+Aquaculture
 Architecture
 Archivage
-Intelligence artificielle
-Gestion des installations et des actifs
-Vérification
-Équipement audiovisuel
-Automatisation
-Aquaculture
-Santé de la faune aquatique
-Insémination artificielle
-Téchnologies d’aide
-Entraînement des astronautes
+Arctique et nord
+Armes à feu
+Arpentage/Repérage/Recensement
+Art culinaire
+Art oratoire
+Arthropodes
+Assistant numérique personnel
+Assurance de la qualité
 Astronomie
-Opérations bancaires
-Boeuf et culture fourragère
+Attitude positive
+Automatisation
+Axé sur les solutions
+Béton
+Bibliothèque numérique
+Bijuridisme
 Bilingue
 Bioanalyse
 Biochimie
-Bioénergie
+Biodisponibilité des métaux
 Biodiversité et ressources biologiques
-Science de la biodiversité
+Bioénergie
 Bioinformatique
 Biologie
-Océanographie biologique
-Bioproduits
-Expérimentation biomédicale
-Enquête biomédicale
+Biologie moléculaire
 Biométrie pour la sécurité nationale
+Bioproduits
 Biosurveillance
-Produits biosimilaires
-Produits biothérapeutiques
-Sécurité des frontières et du transport
+Boeuf et culture fourragère
 Botanique
-Image de marque
-Radiodiffusion
-Industrie de la radiodiffusion
-Séance d'information
-Gestion des budgets
-Analyse opérationnelle
-Développement des affaires
-Veille stratégique
-Gestion des opérations/des affaires
-Planification opérationnelle et harmonisation des programmes
+Bulletins d'nformation
+Bureautique
 Câblodistribution
-Système de santé au Canada
 Cancer
-Évaluation des risques de cancer
-Charpenterie
 Cartographie
-Gestion de cas
-Gestion de la trésorerie
+Cellules souches
+Centrale électrique
+Centrale hydroélectrique
 Céréales et grains
 Certification
-Téléphone cellulaire
-Gestion du changement
-Analyse chimique
+Charpenterie
+Chauffage solaire
 Chimie
-Relations avec la clientèle
-Service à la clientèle
+Chimie analytique
+Chimie de l’environnement
 Climat
 Clonage
-Accompagnement
-Produits de consommation
-Art culinaire
 Collaboration
+Collaboration numérique
+Collecte de données
+Collecte de fonds
 Collections
 Communication
-Communications
-Équipement de communications
-Développement de la conscience communautaire
-Extension des services à la communauté
-Radio communautaire
-Rémunération
-Conformité
-Composition
-Réseaux informatiques
-Programmation informatique
-Informatique
-Sécurité informatique
-Services informatiques
-Système Informatique
-Raisonnement conceptuel
-Béton
-Conférences
-Gestion de conflits
-Règlement de conflits
-Construction
-Protection du consommateur
-Gestion du contenu
-Apprentissage continu
-Passation de marchés
-Coordination des déplacements et/ou de l'accueil
-Analyse de rentabilité
-Créativité
-Création litéraire
-Vulnérabilité, résilience et interdépendances des infrastructures essentielles
-Pensée critique
-Produits laitiers, porc, volaille et autres productions animales
-Analyse des données
-Analytiques des données
-Collecte de données
-Intégration de données
-Gestion de données
-Manipulation de données
-Exploration de données
-Modélisation de données
-Traitement des données
-Structures de données
-Conception de bases de données
-Développement/entretie de base de données
-Gestion de bases de données
-Prise de décisions
-Décoration
-Présenter des exposés
-Fiabilité
-Conception
-Éditique
-Activités ministérielles
-Concepteur/Développeur
-Développement des autres
+Communication de renseignements stratégiques
+Communication intéractive
+Communication orale
 Communication stratégique
-Lean
-Développement de méthodes pour le diagnostic
-Collaboration numérique
-Imagerie numérique
-Bibliothèque numérique
-Préservation numérique
-Technologie numérique
-Numérisation
-Diplomatie
-Gestion des documents
-Dessin
-Tremblement de terre
-Sciences de la terre
-Écologie
-Analyse économique
+Communications
+Communications interpersonnelles
+Compétences en applications logicielles
+Comportements de santé
+Composition
+Compréhension organisationnelle
+Comptabilité
+Comptabilité financière et de gestion
+Comptes créditeurs
+Comptes débiteurs
+Concepteur/Développeur
+Concepteurs de politiques
+Conception
+Conception de bases de données
+Conception du système
+Conception durable
 Conditions économiques
-Développement économique
-Recherche économique
-Statistiques économiques
-Édition de texte/travail éditorial
-Éducation
-Technologie éducative
-Véhicule électrique
-Appareil électrique
-Centrale électrique
-Échange électronique d’informations
-Documents électroniques
-Équipement électronique
+Conférences
+Conformité
+Connaissance du secteur industriel
+Connaissance organisationnelle
+Connaissances techniques
+Conseiller juridique
+Consommation et abus de substances
+Construction
+Contanimants dans les résidences
+Convivialité
+Coordination de projet
+Coordination des déplacements et/ou de l'accueil
+Correction d'épreuve
 Courrier électronique
-Surveillance électronique
-Électronique
+Création litéraire
+Créativité
+Crédibilité professionelle
 Cybermarketing
-Protection civile et intervention
-Systèmes de gestion des urgences et interopérabilité
-Services d’intervention d’urgence
-Engagement des employés
-Relations avec les employés
+Cybersécurité
+Décoration
+Défense des droits
+Dépannage
+Déroulement des réunions
+Dessin
+Développement d'applications
+Développement de la conscience communautaire
+Développement de méthodes pour le diagnostic
+Développement de pojet et établissement de rapports
+Développement de système
+Développement des affaires
+Développement des autres
+Développement durable
+Développement économique
+Développement organisationnel
+Développement Web
+Développement/entretie de base de données
+Diagnostique vétérinaire
+Diplomatie
+Documents électroniques
+Données géographiques
+Données lisibles par machine
+Dotation
+Douanes & accises
+Droit administratif
+Droit autochtone
+Droit civil
+Droit commercial et corporatif
+Droit constitutionnel
+Droit correctionnel
+Droit criminel
+Droit de l’information et vie privée
+Droit de la famille
+Droit de l'environnement
+Droit du travail et de l'emploi
+Droit fiscal
+Droit Immigration
+Droit immobilier
+Droit international (privé)
+Droit international (public)
+Droit maritime
+Droit Politiques
+Droit réglementaire
+Droits de la personne et Charte
+Durabilité
+Eau
+Échange électronique d’informations
+Écologie
+Écoute
+Écoute active
+Écrit sur un sujet spécial
+Écriture journalistique
+Édition de texte/travail éditorial
+Édition d'images
+Édition et marketing
+Éditique
+Éducation
+Élaboration de logiciels
+Élaboration de méthodes analytiques
+Élaboration de normes et de méthodes
+Élaboration de produit
+Élaboration de programme
+Élaboration de stratégies
+Elaboration des politiques
+Élaboration des politiques financières
+Électronique
 Endocrinologie
-Technologie énergétique
-Application des règlements
-Ingénierie
+Énergie & ressources
+Engagement des employés
+Enquête biomédicale
+Entraînement des astronautes
+Entregent
 Environnement et santé humaine
-Toxicologie environnementale et professionnelle
-Chimie de l’environnement
-Santé environnementale
-Politique environnementale
 Épidémiologie
 Équipement
-Industrie de l’équipement
-Cybersécurité
+Équipement audiovisuel
+Équipement de communications
+Équipement électronique
+Équipement scientifique
+Esprit d'équipe
+Établissement de liens
+Établissement de partenariats
 Éthique et professionalisme
+Étude du marché
 Évaluation
-Gestion des événements
-Planification des événements
+Évaluation de programme
+Évaluation des besoins
+Évaluation des risques
+Évaluation des risques de cancer
+Évaluation des risques pour la santé humaine
+Évaluation du risque
 Excel
-Gestion des dépenses
+Expérience d'utilisateur
+Expérimentation biomédicale
+Exploitation
+Exploration de données
+Exploration spatiale
 Explosifs
-Science de l’exposition
-Animation
-Prestation et/ou facilitation de formation
-Vérification des faits
-Écrit sur un sujet spécial
+Exposition orale
+Exposition par inhalation
+Extension des services à la communauté
+Extradition et entraide juridique
+Faillite & recouvrement
+Favoriser l'apprentissage
+Fenêtres
+Feuille de calculs/Tableurs
+Fiabilité
 Film
 Finances
-Analyse financière
-Comptabilité financière et de gestion
-Planification financière
-Élaboration des politiques financières
-Rapports financiers
-Systèmes financiers
-Programmes liés à la santé des Premières nations et des Inuits
-Premiers intervenants
-Science de la population ichtyologique
-Adobe Flash
-Inondation
 Fluorure
-Aliments
-Aliments et nutrition
-Salubrité des aliments
-Prévision
-Sciences judiciaires
+Flux transfrontalier de données
+Formation
 Fortran
-Favoriser l'apprentissage
-Prévention et détection des fraudes
-Collecte de fonds
-Terre de jardin
-Génie génétique
-Toxicologie génétique
-Aliments génétiquement modifiés
-Génétique
-Génomique
-Données géographiques
-Système d’information géographique
-Géomatique
+GCconnex
 GCdocs
-Systèmes globaux de radiolocatlisation par satellite (GNSS)
+GCpédia
+Génétique
+Génie génétique
+Génie mécanique
+Génie militaire
+Génomique
+Géomatique
+Géorisques marins
+Gestion
+Gestion de bases de données
+Gestion de bureaux
+Gestion de cas
+Gestion de conflits
+Gestion de données
+Gestion de la pratique du droit
+Gestion de la trésorerie
+Gestion de l'Information
+Gestion de programme
+Gestion de projet
+Gestion d'équipe
+Gestion des budgets
+Gestion des connaissances
+Gestion des dépenses
+Gestion des documents
+Gestion des équipes
+Gestion des événements
+Gestion des installations et des actifs
+Gestion des opérations/des affaires
+Gestion des personnes
+Gestion des processus
+Gestion des relations
+Gestion des ressources humaines
+Gestion des talents
+Gestion du changement
+Gestion du contenu
+Gestion du rendement
+Gestion du risque
+Gestion du stress
+Gestion du temps
+Gestion par l'action
+Gestion stratégique
+Glissements de terrain
 Google
 Grammaire
-Graphisme
 Graphiques
-Quincaillerie
-Évaluation des risques
-Comportements de santé
-Sciences de la santé
-Produits de santé
+Graphisme
 Horticulture
-Poussière domestique
-Recherche sur l’exposition humaine
-Évaluation des risques pour la santé humaine
-Ressources humaines
-Gestion des ressources humaines
-Ouragan
-Centrale hydroélectrique
 Hydrographie
+Hygiène de l'environnement durable
+Identification des plantes
 Illustration
-Édition d'images
-Improvisation
+Image de marque
+Imagerie numérique
 Immunologie
 Immunotoxicologie
-Air intérieur
-Recherche industrielle
-Technologie industrielle
-Connaissance du secteur industriel
-Gestion de l'Information
-Traitement de l'information
-Systèmes d'information
-Technologie de l'information
+Improvisation
+Imputabilité
+Industrie de l’équipement
+Industrie de la radiodiffusion
+Industrie manufacturière
+Industrie primaire
+Information scientifique
+Informatique
 Infrastructure
-Exposition par inhalation
-Innovation et développement
+Ingénierie
+Ingénieur en logiciel
 Innovant
+Innovation et développement
+Innovation technologique
+Inondation
+Insémination artificielle
+Insémination artificielle
 Inspection
-Leadership inspirant
-Isolation thermique
-Systèmes intelligents
-Communication intéractive
-Services internes
-Télécommunications internationales
+Intégration de données
+Intégration d'un système
+Intelligence artificielle
 Internet
-Communications interpersonnelles
-Entregent
 Interprétation
 Intervention
-Techniques d'entrevue
 Intranet
 Inventions
+Isolation thermique
 Java
 Journalisme
-Gestion des connaissances
-Transfert de connaissances
+Justice pénale pour adolescents
 Laboratoires
-Glissements de terrain
+Langages de script
 Langues
-Aménagement
+Langues officielles
 Leadership
-Soutien à l'apprentissage
-Analyse juridique
-Recherche juridique
-Lois
+Leadership inspirant
+Lean
 Limnologie
 Linux
-Écoute
 Litige
-Soutien aux litiges
+Litige civil
+Livre électronique
+Logiciel
+Logiciel libre
+Logiciel ouvert
 Logistique
-Données lisibles par machine
+Lois
 Maintenance/Entretien
-Gestion
-Systèmes d’information de gestion
-Gestion des équipes
-Industrie manufacturière
-Géorisques marins
-Étude du marché
+Manipulation de données
 Marketing
-Technologie des matériaux
+Marketing des médias sociaux
 Mathématiques
 Mécanismes d'action
-Génie mécanique
-Relations avec les médias
-Médiations
-Technologie médicale
 Médecine
-Déroulement des réunions
+Médias sociaux
+Médiations
 Mentorat
 Mercure
-Biodisponibilité des métaux
+Mesure de rendement et d'évaluation
+Météo spatiale
+Méthode d'évaluation des risques
 Microbiologie
+Microbiologie animale
 Microélectronique
 Microsoft Access
 Microsoft Excel
-Microsoft Powerpoint
 Microsoft Outlook
+Microsoft Powerpoint
 Microsoft Word
-Génie militaire
-Technologie militaire
-Technologie minière
-Biologie moléculaire
-Surveillance/Contrôle/Suivi
-Surveillance de plans de projets
+Milieu urbain
+Mise à l'essai
+Mise en service et approvisionnement
+Modélisation de données
+Montage vidéo
 Motivation
 Multimédia
 Mutagenèse et carcinogenèse
 Nanotechnologie
 Nature et faune
-Système de navigation
-Analyse des besoins
-Évaluation des besoins
 Négociation
 Nématologie
-Sécurité de réseau
-Réseautage
 Neurosciences
 Neurotoxicologie
-Écriture journalistique
-Bulletins d'nformation
-Technologie nucléaire
+Numérisation
 Nutrition
-Bureautique
-Gestion de bureaux
+Océanographie biologique
+Océanographie physique
 Oléagineux
-Logiciel ouvert
-Exploitation
+Opérations bancaires
+Optimisation pour les moteurs de recherche
 Oracle
-Communication orale
-Exposition orale
 Organisation
-Développement organisationnel
-Compréhension organisationnelle
-Connaissance organisationnelle
-Peinture
+Orientation vers les résultats
+Ouragan
+Outillage
 Paléontologie
 Parasitologie
-Établissement de partenariats
+Parasitologie animale
+Passation de marchés
 Pathologie
 Paye
-Gestion des personnes
-Aptitude en relations humaines
-Gestion du rendement
-Mesure de rendement et d'évaluation
-Agilité personnelle
-Assistant numérique personnel
-Réglementation à l'usage d'un pesticide
+Pêches
+Peinture
+Pensée critique
+Pensée stratégique
+Pension, avantages et programmes sociaux
+Perfectionnement de la main-d'oeuvre
+Perfectionnement professionnel
 Pharmacocinétique et pharmacodynamie
 Pharmacologie
 Photographie
-Océanographie physique
-Sciences physiques
-Physique
 Physiologie
+Physique
+Plaideurs
+Plan d'enquête
 Planification
-Identification des plantes
-Elaboration des politiques
+Planification de la relève
+Planification de projet
+Planification des événements
+Planification financière
+Planification opérationnelle et harmonisation des programmes
+Planification stratégique
+Pleine-conscience
+Pleine-conscience du leadership
+Politique en matière de télécommunication
+Politique environnementale
+Politique scientifique
+Politique technologique
 Pollution et déchets
-Attitude positive
-Renforcement positif
+Poussière de rue
+Poussière domestique
+Premiers intervenants
+Préparation de notes d'allocution
 Préparation de notes de breffage
 Préparation de présentations
-Préparation de notes d'allocution
-Industrie primaire
+Présenter des exposés
+Préservation numérique
+Prestation et/ou facilitation de formation
+Prévention et détection des fraudes
+Prévention et règlement des différends
+Prévision
 Prions
-Résolution de problèmes
-Amélioration des processus
-Gestion des processus
-Schématisation des processus
-Mise en service et approvisionnement
-Élaboration de produit
+Prise de décisions
 Production
-Crédibilité professionelle
-Perfectionnement professionnel
-Élaboration de programme
-Évaluation de programme
-Gestion de programme
-Coordination de projet
-Développement de pojet et établissement de rapports
-Gestion de projet
-Planification de projet
-Soutien de projet
-Correction d'épreuve
+Productivité et santé de l'agrosystème
+Produits biosimilaires
+Produits biothérapeutiques
+Produits de consommation
+Produits de santé
+Produits laitiers, porc, volaille et autres productions animales
+Programmation informatique
+Programmes liés à la santé des Premières nations et des Inuits
+Propriété intellectuelle et technologies de l’Information
+Protection civile et intervention
+Protection du consommateur
 Protéomique
 Prototypage
 Psychologie
-Résilience psychosocialeet communautaire
-Santé publique
-Science de la santé publique et connaissance d'expert
-Relations publiques
-Art oratoire
+Publication Web
 Publications
-Édition et marketing
-Achat
+Publicité
 Python
-Analyse qualitative
-Assurance de la qualité
-Analyse quantitative
+Quincaillerie
 Radiation
 Radio
+Radio communautaire
 Radioactivité
+Radiodiffusion
 Radionucléaire
+Raisonnement conceptuel
+Rapports financiers
+Récapitulation
+Recherche
+Recherche économique
+Recherche industrielle
+Recherche juridique
+Recherche scientifique
+Recherche sociale
+Recherche sur l’exposition humaine
 Réconciliation
 Recrutement
-Toxicologie réglementaire
-Réhabilitation
-Établissement de liens
-Gestion des relations
-Rédaction de rapports
-Toxicologie de la reproduction et du développement
-Technique de la reproduction
-Toxicologie de la reproduction
-Reprographie
-Recherche
-Contanimants dans les résidences
-Orientation vers les résultats
-Analyse des risques
-Évaluation du risque
-Méthode d'évaluation des risques
-Gestion du risque
-Robotique
-Amélioration de la qualité
-Sécurité
-Ventes
-Technologies d'échantillonnage
-Satellite
-Science
-Politique scientifique
-Équipement scientifique
-Information scientifique
-Recherche scientifique
-Langages de script
-Optimisation pour les moteurs de recherche
-Sedimentologie
-Souci du service à la clientèle
-Tempêtes de neige
-Médias sociaux
-Analyse des médias sociaux
-Marketing des médias sociaux
-Surveillance des médias sociaux
-Recherche sociale
-Logiciel
-Compétences en applications logicielles
-Élaboration de logiciels
-Ingénieur en logiciel
-Sol
-Chauffage solaire
-Axé sur les solutions
-Exploration spatiale
-Station orbitale
-Technologie spatiale
-Météo spatiale
+Rédaction
 Rédaction de discours
-Feuille de calculs/Tableurs
-Dotation
-Élaboration de normes et de méthodes
-Analyse statistique
-Statistiques
-Cellules souches
-Communication de renseignements stratégiques
-Gestion stratégique
-Planification stratégique
-Pensée stratégique
-Élaboration de stratégies
-Stratigraphie
-Poussière de rue
-Gestion du stress
-Révision stylistique
-Consommation et abus de substances
-Révision du contenu
-Planification de la relève
-Récapitulation
-Surveillance
-Plan d'enquête
-Arpentage/Repérage/Recensement
-Durabilité
-Conception durable
-Développement durable
-Hygiène de l'environnement durable
-Synthèse de données
-Conception du système
-Développement de système
-Intégration d'un système
-Administration des systèmes
-Gestion des talents
-Droit fiscal
-Esprit d'équipe
-Gestion d'équipe
-Travail d'équipe
-Connaissances techniques
-Soutien technique
+Rédaction de rapports
+Rédaction de rapports
+Rédaction et interprétation des textes législatifs
 Rédaction technique
-Innovation technologique
+Rédaction Web
+Règlement de conflits
+Réglementation à l'usage d'un pesticide
+Réhabilitation
+Relations avec la clientèle
+Relations avec les employés
+Relations avec les médias
+Relations publiques
+Rémunération
+Renforcement positif
+Reprographie
+Réseautage
+Réseaux informatiques
+Résilience psychosocialeet communautaire
+Résolution de problèmes
+Responsabilité de l'État
+Ressources humaines
+Révision du contenu
+Révision stylistique
+Robotique
+Salubrité des aliments
+Santé animale
+Santé de la faune aquatique
+Santé en milieu de travail
+Santé environnementale
+Santé publique
+Satellite
+Schématisation des processus
+Science
+Science de l’exposition
+Science de la biodiversité
+Science de la population ichtyologique
+Science de la santé publique et connaissance d'expert
+Sciences de la santé
+Sciences de la terre
+Sciences judiciaires
+Sciences physiques
+Séance d'information
+Secteur agroalimentaire
+Sécurité
+Sécurité de réseau
+Sécurité des frontières et du transport
+Sécurité informatique
+Sécurité nationale
+Sedimentologie
+Service à la clientèle
+Services d’intervention d’urgence
+Services informatiques
+Services internes
+Sites Web
+Sol
+Souci du service à la clientèle
+Soutien à l'apprentissage
+Soutien administratif
+Soutien aux litiges
+Soutien de projet
+Soutien technique
+Station orbitale
+Statistiques
+Statistiques économiques
+Stratigraphie
+Structures de données
+Surveillance
+Surveillance de plans de projets
+Surveillance des médias sociaux
+Surveillance électronique
+Surveillance/Contrôle/Suivi
+Synthèse de données
+Système d’information géographique
+Système de navigation
+Système de santé au Canada
+Système Informatique
+Systèmes d’information de gestion
+Systèmes de gestion des urgences et interopérabilité
+Systèmes d'information
+Systèmes financiers
+Systèmes globaux de radiolocatlisation par satellite (GNSS)
+Systèmes intelligents
+Technique de la reproduction
+Techniques d'entrevue
 Technologie
-Politique technologique
-Transfert technologique
+Technologie agricole
+Technologie de l'information
+Technologie des matériaux
+Technologie éducative
+Technologie énergétique
+Technologie industrielle
+Technologie médicale
+Technologie militaire
+Technologie minière
+Technologie nucléaire
+Technologie numérique
+Technologie spatiale
+Téchnologies d’aide
+Technologies d'échantillonnage
 Télécommunication
-Politique en matière de télécommunication
+Télécommunications internationales
 Téléconférence
-Télésanté
 Télémédecine
-Mise à l'essai
-Gestion du temps
-Outillage
+Téléphone cellulaire
+Télésanté
+Tempêtes de neige
+Temps et météorologie
+Terre de jardin
 Topographie
 Toxicogénomique
-Formation
-Flux transfrontalier de données
+Toxicologie de la reproduction
+Toxicologie de la reproduction et du développement
+Toxicologie environnementale et professionnelle
+Toxicologie génétique
+Toxicologie réglementaire
+Traduction
+Traitement de l'information
+Traitement de texte
+Traitement des données
+Transfert de connaissances
+Transfert technologique
 Transport
-Dépannage
+Travail d'équipe
+Tremblement de terre
 Tsunami
 Twitter
 Unix
-Milieu urbain
-Convivialité
-Expérience d'utilisateur
 Vaccins
-Diagnostique vétérinaire
-Montage vidéo
+Véhicule électrique
+Veille stratégique
+Ventes
+Vérification
+Vérification des faits
 Vision
 Volcan
-Eau
-Temps et météorologie
-Applications Web
-Développement Web
-Publication Web
-Sites Web
-Rédaction Web
-Fenêtres
-Traitement de texte
-Perfectionnement de la main-d'oeuvre
-Santé en milieu de travail
-Rédaction
-Rédaction de rapports
+Vulnérabilité, résilience et interdépendances des infrastructures essentielles
 Xénotransplantation
 Zoonoses

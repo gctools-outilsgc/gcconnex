@@ -33,37 +33,37 @@ if (!empty($reshare)) {
 		"name" => "reshare_guid",
 		"value" => $reshare->getGUID()
 	));
-	
+
     //display warning to user if resharing content that is not public on the wire
 	$reshare_input .= elgg_view("thewire_tools/reshare_source", array("entity" => $reshare));
-    
+
     //see if entity is within a group
     $owner = $reshare->getContainerEntity();
 
         //check access mode of group
         if(elgg_instanceof($owner, "group") && $owner->getContentAccessMode() == 'members_only'){
-            
+
             echo '<div class="alert alert-warning">
             <p>' . elgg_echo('thewire:contentwarning') . '</p>
             <p>' . elgg_echo('thewire:groupwarning') . '<b><i>' . $owner->name . '</i></b></p>
             </div>';
-            
+
         } else if($reshare->access_id != 2){
-            
+
             $access = elgg_view('output/access', array(
                 'name' => 'access',
                 'entity' => $reshare,
                 ));
-            
+
             echo '<div class="alert alert-warning">
             <p>' . elgg_echo('thewire:contentwarning') . '</p>
             <p>' . elgg_echo('thewire:userwarning') . '<b><i>' . $access . '</i></b></p>
             </div>';
         }
-        
-        
-        
-    
+
+
+
+
 
 	if(!empty($reshare->title3)){
 		$post_value = gc_explode_translation($reshare->title3,$lang);
@@ -90,7 +90,7 @@ $post_input = elgg_view("input/plaintext", array(
     "id"=>"wire-body",
 	"class" => "mtm thewire-textarea form-control",
 	"rows" => $num_lines,
-	"value" => $post_value,
+	"value" => htmlspecialchars_decode($post_value, ENT_QUOTES),
 	"data-max-length" => $char_limit,
 ));
 
@@ -116,11 +116,11 @@ if (thewire_tools_groups_enabled()) {
 			$params = array(
 				"name" => "access_id"
 			);
-			
+
 			if (elgg_in_context("widgets")) {
 				$params["class"] = "thewire-tools-widget-access";
 			}
-			
+
 			elgg_push_context("thewire_add");
 			$access_input = elgg_view("input/access", $params);
 			elgg_pop_context();
@@ -148,7 +148,7 @@ if (elgg_is_xhr()) {
 	?>
 	<script type="text/javascript">
 		$("#thewire-tools-reshare-wrapper").find('.elgg-form-thewire-add textarea[name="body"]').each(function(i) {
-			elgg.thewire_tools.init_autocomplete(this);
+			//elgg.thewire_tools.init_autocomplete(this);
 		});
 	</script>
 	<?php

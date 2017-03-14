@@ -14,6 +14,11 @@ if($_SESSION['mission_entities_per_page']) {
 	$entities_per_page = $_SESSION['mission_entities_per_page'];
 }
 
+$_SESSION['mission_search_switch_subtype'] = 'archive';
+
+// Simple search form.
+$simple_search_form = elgg_view_form('missions/search-simple');
+
 $options['type'] = 'object';
 $options['subtype'] = 'mission';
 $options['metadata_name_value_pairs'] = array(array(
@@ -88,8 +93,17 @@ $sort_field = elgg_view('page/elements/hidden-field', array(
 ?>
 
 <div class="col-sm-12">
-	<h4><?php echo elgg_echo('missions:archived_opportunities') . ': '; ?></h4>
+    <div class="col-sm-8">
+        <h4 class="mrgn-tp-md mrgn-bttm-0"><?php echo elgg_echo('missions:search_for_archived_opportunities') . ':'; ?></h4>
+        <?php
+            echo $simple_search_form;
+        ?>
+    </div>
 </div>
+<div class="col-sm-12">
+    <h4><?php echo elgg_echo('missions:archived_opportunities') . ': '; ?></h4>
+</div>
+
 <div class="col-sm-12">
 	<?php echo $sort_field; ?>
 </div>

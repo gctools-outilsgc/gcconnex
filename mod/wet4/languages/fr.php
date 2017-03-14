@@ -311,11 +311,11 @@ return array(
  * Access
  */
 
-	'PRIVATE' => "Privé",
-	'LOGGED_IN' => "Utilisateurs connectés",
-'PUBLIC' => "Public",
+	'PRIVATE' => "Seulement moi",
+	'LOGGED_IN' => "Usagers connectés à GCconnex seulement",
+'PUBLIC' => "Tous les fonctionnaires",
 'LOGGED_OUT' => "Utilisateurs hors connexion",
-	'access:friends:label' => "Amis",
+	'access:friends:label' => "Mes Collègues sur GCconnex seulement",
 	'access' => "Accès",
 'access:overridenotice' => "Note : En raison des règles de ce groupe, ce contenu ne sera accessible qu'aux membres du groupe. ",
 	'access:limited:label' => "Limité",
@@ -1387,6 +1387,12 @@ return array(
 'event_calendar:meeting' => 'Réunion en ligne et téléconférence',
 'event_calendar:info' => 'Information(s) supplémentaire(s)',
 'river:create:object:event_calendar' => "%s a ajouté l'événement' %s",
+'event_calendar_contact' => "Vous n'êtes pas la personne contact?",
+"event_calendar:email" => "Adresse courriel",
+"event_calendar:phone" => "Numéro de téléphone",
+'event_calendar:lang:french'=>"Français",
+'event_calendar:lang:english'=>"Anglais",
+'event_calendar:lang:bilingual'=>"Bilingue",
 
 /*Change access*/
 
@@ -1445,8 +1451,23 @@ return array(
 'indicator:click:fr' => 'français',
 'box:indicator:en' => 'This content is also available in ',
 'indicator:click:en' => 'english.',
+
+/*Rotate content*/
+'rotate:image' => 'Tourner l\'image',
+
 'indicator:summary' => '(EN/FR)',
+
 'indicator:summary:title' => 'This content is also available in English',
+
+/*Modal from comment(notifaction)*/
+
+'comment_notif_title' => "Vous n’êtes pas membre du groupe %s!",
+/*'comment_notif_description' => "<p>Vous n'êtes pas membre de ce groupe. Joignez-vous au groupe pour être informé lorsque du nouveau contenu est ajouté et pour suivre ce fil. Remarque: Vous pouvez ajuster vos préférences de notification dans vos paramètres de compte de GCconnex.</p>
+ 
+<p>Vous n’êtes pas encore prêt à joindre le groupe? Allez-y et affichez votre commentaire, mais n'oubliez pas de revenir vérifier ce fil pour voir les nouveaux commentaires affichés.</p> ",
+*/'not_now' => 'Pas maintenant',
+
+  
 /**
  * Languages according to ISO 639-1 (with a couple of exceptions)
  */

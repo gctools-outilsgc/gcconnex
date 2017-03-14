@@ -784,7 +784,13 @@ QUERY;
 	return true;
 }
 
-
+/*
+ * GC_MODIFICATION
+ * Description: Split into 3 queries in order to not use ORs in (se.guid = {$entity->guid} OR oe.guid = {$entity->guid} OR te.guid = {$entity->guid}), this allows it to not use indexes and greatly speeds up execution
+ * Author: Ilia   github.com/Phanoix  phanoix@gmail.com
+ * Date: 24/01/2017
+ * Pull Request #734
+ */
 /**
  * Enable river entries that reference a re-enabled entity as subject/object/target
  * 
@@ -801,7 +807,7 @@ function _elgg_river_enable($event, $type, $entity) {
 	}
 	
 	$dbprefix = elgg_get_config('dbprefix');
-	$query = <<<QUERY
+	$query1 = <<<QUERY
 	UPDATE {$dbprefix}river AS rv
 	LEFT JOIN {$dbprefix}entities AS se ON se.guid = rv.subject_guid
 	LEFT JOIN {$dbprefix}entities AS oe ON oe.guid = rv.object_guid
@@ -812,10 +818,40 @@ function _elgg_river_enable($event, $type, $entity) {
 			(oe.enabled = 'yes' OR oe.guid IS NULL) AND
 			(te.enabled = 'yes' OR te.guid IS NULL)		
 		)
-		AND (se.guid = {$entity->guid} OR oe.guid = {$entity->guid} OR te.guid = {$entity->guid});
+		AND se.guid = {$entity->guid};
 QUERY;
 
-	update_data($query);
+	$query2 = <<<QUERY
+	UPDATE {$dbprefix}river AS rv
+	LEFT JOIN {$dbprefix}entities AS se ON se.guid = rv.subject_guid
+	LEFT JOIN {$dbprefix}entities AS oe ON oe.guid = rv.object_guid
+	LEFT JOIN {$dbprefix}entities AS te ON te.guid = rv.target_guid
+	SET rv.enabled = 'yes'
+	WHERE (
+			(se.enabled = 'yes' OR se.guid IS NULL) AND 
+			(oe.enabled = 'yes' OR oe.guid IS NULL) AND
+			(te.enabled = 'yes' OR te.guid IS NULL)		
+		)
+		AND oe.guid = {$entity->guid};
+QUERY;
+
+	$query3 = <<<QUERY
+	UPDATE {$dbprefix}river AS rv
+	LEFT JOIN {$dbprefix}entities AS se ON se.guid = rv.subject_guid
+	LEFT JOIN {$dbprefix}entities AS oe ON oe.guid = rv.object_guid
+	LEFT JOIN {$dbprefix}entities AS te ON te.guid = rv.target_guid
+	SET rv.enabled = 'yes'
+	WHERE (
+			(se.enabled = 'yes' OR se.guid IS NULL) AND 
+			(oe.enabled = 'yes' OR oe.guid IS NULL) AND
+			(te.enabled = 'yes' OR te.guid IS NULL)		
+		)
+		AND te.guid = {$entity->guid};
+QUERY;
+
+	update_data($query1);
+	update_data($query2);
+	update_data($query3);
 	return true;
 }
 
