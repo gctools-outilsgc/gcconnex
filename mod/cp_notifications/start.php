@@ -929,7 +929,6 @@ function cp_create_notification($event, $type, $object) {
 			// cyu - client wants the html tags stripped from the notifications
 			$object_description = ($object->description != strip_tags($object->description)) ? "" : $object->description;
 
-
 			$message = array(
 				'cp_topic' => $object, 
 				'cp_msg_type' => 'cp_new_type',

@@ -428,6 +428,8 @@ return array(
 	"missions:error:applicant_not_applied_to_mission" => "User %s has withdrawn from this opportunity.",
 	"missions:participating_in" => "Participating in '%s'",
 	"missions:participating_in_more" => "You are now a participant in this opportunity '%s'. Please advise your supervisor and enjoy your experience!",
+    "missions:participating_out" => "The opportunity '%s' has been filled.",
+    "missions:participating_out_more" => "Thank you for applying to this opportunity. Unfortunately, the opportunity was offered to another applicant, but we look forward to seeing you apply for other opportunities.",
 	"missions:error:user_already_applied" => "%s has already applied to  '%s'.",
 	"missions:error:user_already_invited" => "%s has already been invited to  '%s'.",
 	"missions:error:user_already_participating" => "%s is already participating in '%s'.",
