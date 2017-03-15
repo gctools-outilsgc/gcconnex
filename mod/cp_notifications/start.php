@@ -914,6 +914,9 @@ function cp_create_notification($event, $type, $object) {
 			} else {	
 
 				if (!$object->title) {
+					if (strstr($object->getSubtype(),"poll_choice") !== false)
+						return true;
+
 					$subject = elgg_echo('cp_notify_usr:subject:new_content2',array($object->getOwnerEntity()->username,cp_translate_subtype($object->getSubtype())),'en');
 					$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content2',array($object->getOwnerEntity()->username,cp_translate_subtype($object->getSubtype(), false)),'fr');
 				} else {
