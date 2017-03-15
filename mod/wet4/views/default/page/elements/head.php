@@ -34,6 +34,7 @@ $links = elgg_extract('links', $vars, array());
 //Load in global variable with entity to create metadata tags
 global $my_page_entity;
 
+// in case the title is not populated
 $page_title = $vars['title'];
 
 // github-685 gcconnex titles in gsa search result
@@ -44,7 +45,7 @@ if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gs
   $elgg_entity = $my_page_entity;
 
   // check if this is a profile
-  if ($elgg_entity->title == null || $elgg_entity->title === '') {
+  if ($elgg_entity instanceof ElggUser || $elgg_entity instanceof ElggGroup) {
     
     if ($elgg_entity instanceof ElggUser) {
       $page_title = $elgg_entity->name;  
@@ -54,7 +55,17 @@ if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gs
     
   } else {
 
-    $page_title = (!$elgg_entity->title2) ? $elgg_entity->title : $my_page_entity->title.' | '.$elgg_entity->title2;
+    // condition where there would be a french version only or vice versa for english
+    if ($elgg_entity->title && $elgg_entity->title2) {
+      // if both fields are populated then put both languages as title
+      $page_title = $my_page_entity->title.' | '.$elgg_entity->title2;
+    } else {
+
+      if ($elgg_entity->title)
+        $page_title = $elgg_entity->title;
+      else
+        $page_title = $elgg_entity->title2;
+    }
     
   }
 

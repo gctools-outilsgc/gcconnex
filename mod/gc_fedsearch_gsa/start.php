@@ -109,8 +109,11 @@ function entity_url($hook, $type, $return, $params) {
 	$comment = new DOMDocument();
 	$comment->loadHTML($return);
 	$comment_block = $comment->getElementsByTagName('div');
-	$comment_text = $comment_block->item(0)->getAttribute('data-role');
 
+	if (!empty(trim($comment_block)) || $comment_block === null)
+		$comment_text = $comment_block->item(0)->getAttribute('data-role');
+	else
+		$comment_text = "";
 
 	if (( strcmp($comment_text,'comment-text') == 0 || strcmp($comment_text, 'discussion-reply-text') == 0 ))
 		return;
