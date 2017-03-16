@@ -732,8 +732,17 @@ td.left-col {
 
 body #editProfile {
     width: 100%;
-    background-color: rgba(125,125,125,0.3);
+    /*background-color: rgba(125,125,125,0.3);*/
     padding-left: 0 10px 0;
+}
+#editProfile{
+    max-width: 70% !important;
+    max-height: 65% !important;
+    
+}
+
+#editProfile header{
+    background-color: #047177;
 }
 
 .dialog-box {
