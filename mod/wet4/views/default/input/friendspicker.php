@@ -19,7 +19,7 @@
  * Author: GCTools Team
  */
 
-//elgg_load_js('elgg.friendspicker');
+elgg_load_js('elgg.friendspicker');
 elgg_load_js('jquery.easing');
 
 
@@ -56,6 +56,7 @@ if (isset($vars['callback'])) {
 } else {
 	$callback = false;
 }
+
 
 // We need to count the number of friends pickers on the page.
 if (!isset($vars['friendspicker'])) {
@@ -94,6 +95,7 @@ if (is_array($vars['entities']) && sizeof($vars['entities'])) {
 	}
 }
 
+
 // sort users in letters alphabetically
 foreach ($users as $letter => $letter_users) {
 	usort($letter_users, create_function('$a, $b', '
@@ -123,7 +125,29 @@ if (!isset($vars['replacement'])) {
 	if ($formtarget) {
 ?>
 <?php //@todo JS 1.8: no ?>
+<script language="text/javascript">
+	/*$(function() { // onload...do
+		$('#collectionMembersForm<?php echo $friendspicker; ?>').submit(function() {
+			var inputs = [];
+			$(':input', this).each(function() {
+				if (this.type != 'checkbox' || (this.type == 'checkbox' && this.checked != false)) {
+					inputs.push(this.name + '=' + escape(this.value));
+				}
+			});
+			jQuery.ajax({
+				type: "POST",
+				data: inputs.join('&'),
+				url: this.action,
+				success: function(){
+					$('a.collectionmembers<?php echo $friendspicker; ?>').click();
+				}
 
+			});
+			return false;
+		})
+	})*/
+
+	</script>
 
 <!-- Collection members form -->
 <form id="collectionMembersForm<?php echo $friendspicker; ?>" action="<?php echo $formtarget; ?>" method="post"> <!-- action="" method=""> -->
@@ -136,7 +160,7 @@ if (!isset($vars['replacement'])) {
 		));
 	}
 ?>
-
+<!--here-->
 <div class="friends-picker-wrapper">
 <div id="friends-picker<?php echo $friendspicker; ?>">
 	<div class="friends-picker-container">
@@ -156,9 +180,12 @@ if (!isset($vars['replacement'])) {
     $collTable = '';
     
 	while (1 == 1) {
-
-        unset($collRow);
-
+unset($collRow);
+ 		?>
+<!--		<div class="panel" title="<?php	echo $letter; ?>">
+			<div class="wrapper">
+				<h3><?php echo $letter; ?></h3>-->
+		<?php
 		if (isset($users[$letter])) {
 			ksort($users[$letter]);
 
@@ -170,9 +197,9 @@ if (!isset($vars['replacement'])) {
 					$collRow .= "<div class='col-xs-12'>";
 				}
 
-                
+               
 
-				//echo "<p>" . $user->name . "</p>";
+				echo "<p>" . $friend->name . "</p>";
 				$label = elgg_view_entity_icon($friend, 'small', array('use_hover' => false, 'class' => 'img-responsive'));
 				$options[$label] = $friend->getGUID();
 
@@ -180,10 +207,10 @@ if (!isset($vars['replacement'])) {
 					$activeletters[] = $letter;
 				}
 
-
-				if (in_array($friend->getGUID(),$vars['value'])) {
+ 
+				if (in_array($friend->getGUID())) {
 					$checked = "checked = \"checked\"";
-                    $checkedValues .= '<input type="checkbox"' . $checked . 'name="' . $name . '[]" value="' . $options[$label] . '" />';
+                  $checkedValues .= '<input type="checkbox"' . $checked . 'name="' . $name . '[]" value="' . $options[$label] . '" />';
 					if (!in_array($letter,$activeletters) && $vars['highlight'] == 'default') {
 						$activeletters[] = $letter;
 					}
@@ -263,7 +290,7 @@ if (!isset($vars['replacement'])) {
     echo elgg_format_element('table', ['class' => ' wb-tables table friendpickerTable', "data-wb-tables"=>"{ \"ordering\" : false, \"lengthMenu\": [[25, 50, 100, 250], [25, 50, 100, 250]], \"columns\": [ { \"orderable\": false }, null], \"aoColumnDefs\": [ { \"bSearchable\": false, \"aTargets\": [ 0 ] } ] }", 'id' => ''], $tHead . $tBody);
 
 
-
+//<!--here-->
 if ($formtarget) {
 
 	if (isset($vars['formcontents']))
