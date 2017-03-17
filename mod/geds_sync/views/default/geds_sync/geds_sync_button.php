@@ -28,7 +28,7 @@
     ?>
 <!-- bootstrap style modal window --> 
 <div class="modal" id="gedsProfile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog dialog-box">
+    <div id="innerGedsProfile" class="modal-dialog dialog-box" tabindex="-1" role="document">
         <div class="panel panel-custom">
             <div class="panel-heading">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -165,6 +165,10 @@
             });
             //action listener for the modal. When the modal is shown it begins the ajax call to geds
             $('#gedsProfile').on('shown.bs.modal', function (e) {
+                //Put focus on the modal 
+                $(this).attr('aria-hidden', "false");
+                $('#innerGedsProfile').focus();
+                
                $("#test").empty();
                 getFrGEDS();
                 //this is the initial geds search for a user
