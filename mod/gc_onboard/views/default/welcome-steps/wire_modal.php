@@ -19,19 +19,30 @@
     .modal-open .modal {
         background: rgba(0,0,0,0.4);
     }
+    #showWire{
+        width: 70% !important;
+        height: 65% !important;
+    }
+    #showWire header{
+        background-color: #047177;
+    }
+    #showWire .panel-body{
+        width:90%;
+        margin: 0 auto;
+    }
 </style>
 <div class="row clearfix wire-button-holder">
-    <button aria-hidden="true" type="button" id="wirePopup" class="btn btn-default gcconnex-edit-profile pull-right" data-toggle="modal" data-target="#showWire" data-keyboard="false" data-backdrop="static" data-colorbox-opts='{"inline":true, "href":"#showWire", "innerWidth": 800, "maxHeight": "80%"}'><?php echo elgg_echo('onboard:wireButton'); ?></button>
+    <a aria-hidden="true" role="button" id="wirePopup" class="overlay-lnk btn btn-default gcconnex-edit-profile pull-right" href="#showWire" aria-controls="mid-screen"><?php echo elgg_echo('onboard:wireButton'); ?></a>
 
 </div>
 
 
-<div class="modal fade" id="showWire" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="panel panel-custom" id="welcome-step">
-            <div class="panel-heading clearfix">
-                <h2 class="pull-left"><?php echo elgg_echo('onboard:wireTitle'); ?></h2>
-            </div>
+<section class="wb-overlay modal-content overlay-def wb-popup-mid" id="showWire">
+    <div class="">
+        <div class="" id="welcome-step">
+            <header class="modal-header">
+                <h2 class="modal-title"><?php echo elgg_echo('onboard:wireTitle'); ?></h2>
+            </header>
             <div class="panel-body">
                 <div class="additional-feature-holder clearfix">
 
@@ -78,9 +89,9 @@
 
                 <div class="mrgn-bttm-md mrgn-tp-md pull-right">
 
-                    <button type="button" class="btn btn-primary close-wire-popup" data-dismiss="modal">
+                    <a type="button" class="overlay-close btn btn-primary close-wire-popup" data-dismiss="modal" style="background-color: #047177;">
                         <?php echo elgg_echo('groupTour:gotit');?>
-                    </button>
+                    </a>
 
                 </div>
 
@@ -123,7 +134,7 @@
 
     </div>
 
-</div>
+</section>
 
 
 <?php
