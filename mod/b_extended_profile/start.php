@@ -330,7 +330,7 @@ function has_content($user, $section) {
 function list_avatars($options) {
 
     $list = "";
-    $list .= '<div class="list-avatars clearfix' . $options['class'] . '">';
+    $list .= '<ul class="list-avatars list-unstyled clearfix' . $options['class'] . '">';
 
     if ( $options['limit'] == 0 ) {
         $options['limit'] = 999;
@@ -363,7 +363,7 @@ function list_avatars($options) {
         for ( $i=0; $i<$options['limit']; $i++) {
             if( ($user = get_user($guids[$i])) == true ) {
                 if ( $options['edit_mode'] == true ) {
-                    $list .= '<div class="gcconnex-avatar-in-list" data-guid="' . $guids[$i] . '" onclick="removeColleague(this)">';
+                    $list .= '<li class="gcconnex-avatar-in-list" data-guid="' . $guids[$i] . '" onclick="removeColleague(this)">';
                     $list .= '<div class="remove-colleague-from-list">X';
                     $list .= '</div>'; // close div class="remove-colleague-from-list"
 
@@ -371,14 +371,14 @@ function list_avatars($options) {
                         'use_hover' => $options['use_hover'],
                         'href' => false
                     ));
-                    $list .= '</div>'; // close div class="gcconnex-avatar-in-list"
+                    $list .= '</li>'; // close div class="gcconnex-avatar-in-list"
                 }
                 else {
-                    $list .= '<div class="gcconnex-avatar-in-list" data-guid="' . $guids[$i] . '">';
+                    $list .= '<li class="gcconnex-avatar-in-list" data-guid="' . $guids[$i] . '">';
                     $list .= elgg_view_entity_icon($user, $options['size'], array(
                         'use_hover' => $options['use_hover'],
                     ));
-                    $list .= '</div>'; // close div class="gcconnex-avatar-in-list"
+                    $list .= '</li>'; // close div class="gcconnex-avatar-in-list"
 
                 }
             }
@@ -391,7 +391,7 @@ function list_avatars($options) {
     if($options['id'] && $options['skill_guid'] && count($guids) > 4){
         $list .= '<a class="btn gcconnex-avatars-expand elgg-lightbox" title="'.elgg_echo('gcconnex_profile:gc_skill:allendorse').'" href="' . elgg_get_site_url() . 'ajax/view/endorse/endorsement?guid=' . $options['skill_guid'] .'" ><i class="fa fa-flip-vertical mrgn-tp-sm fa-ellipsis-h" aria-hidden="true"><span class="wb-invisible">'.elgg_echo('gcconnex_profile:gc_skill:allendorse').'</span></i></a>';
     }
-    $list .= '</div>'; // close div class="list-avatars"
+    $list .= '</ul>'; // close div class="list-avatars"
     return $list;
 }
 

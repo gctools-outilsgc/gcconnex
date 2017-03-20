@@ -35,7 +35,7 @@ echo elgg_view("input/text", array(
 echo '</span>';
 
 // enter start date
-echo '<div class="col-xs-6"><h4>' . elgg_echo('gcconnex_profile:education:start') . '</h4>';
+echo '<div class="col-xs-6 mrgn-tp-md">';
 echo '<label for="startdate-' . $guid . '" class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:experience:start_month') .  '</label>';
 
 echo elgg_view("input/pulldown", array(
@@ -97,7 +97,7 @@ if ($work_experience->ongoing == 'true') {
 echo '</div>';
 
 //end date
-echo '<div class="col-xs-6"><h4>' . elgg_echo('gcconnex_profile:education:end') . '</h4>';
+echo '<div class="col-xs-6 mrgn-tp-md">';
 echo '<label for="enddate-' . $guid . '" class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:experience:end_month') . '</label>';
 echo elgg_view("input/pulldown", $params);
 

@@ -37,7 +37,7 @@ echo '<div class="gcconnex-education-entry" tabindex="-1" data-guid="' . $guid .
             'value' => $education->field));
 
     // enter start date
-    echo '<div class="col-xs-6"><h4>' . elgg_echo('gcconnex_profile:education:start') . '</h4>';
+    echo '<div class="col-xs-6 mrgn-tp-md">';
     echo '<label for="startdate-' . $guid . '" class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:education:start_month') . '</label>';
 
     echo elgg_view("input/pulldown", array(
@@ -92,7 +92,7 @@ echo '<div class="gcconnex-education-entry" tabindex="-1" data-guid="' . $guid .
     }
     echo '</div>';
 
-    echo '<div class="col-xs-6"><h4>' . elgg_echo('gcconnex_profile:education:end') . '</h4>';
+    echo '<div class="col-xs-6 mrgn-tp-md">';
     echo '<label for="enddate-' . $guid . '" class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:education:end_month') . '</label>';
     echo elgg_view("input/pulldown", $params);
 

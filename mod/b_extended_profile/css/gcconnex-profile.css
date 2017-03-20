@@ -156,11 +156,9 @@
     padding: 3px;
 }
 .gcconnex-endorsements-add-skill {
-    font-family: arial;
-    font-size: 12px;
-    font-weight: bold;
+
     clear: left;
-    padding: 3px 3px 3px 5px;
+
     margin: 0px;
     cursor: pointer;
 }
