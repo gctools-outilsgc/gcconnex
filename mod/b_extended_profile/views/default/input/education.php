@@ -9,7 +9,7 @@
 $education = get_entity($vars['guid']); // get the guid of the education entry that is being requested for display
 $guid = ($education != NULL)? $vars['guid'] : "new"; // if the education guid isn't given, this must be a new entry
 
-echo '<div class="gcconnex-education-entry" data-guid="' . $guid . '">'; // education entry wrapper for css styling
+echo '<div class="gcconnex-education-entry" tabindex="-1" data-guid="' . $guid . '">'; // education entry wrapper for css styling
 
     // enter school name
     echo '<label for="education-' . $guid . '" class="gcconnex-profile-field-title">';
@@ -17,7 +17,7 @@ echo '<div class="gcconnex-education-entry" data-guid="' . $guid . '">'; // educ
     echo elgg_view("input/text", array(
             'name' => 'education',
             'class' => 'gcconnex-education-school',
-            'id' => 'education-' . $guid, 
+            'id' => 'education-' . $guid,
             'value' => $education->school));
 
     // enter degree
