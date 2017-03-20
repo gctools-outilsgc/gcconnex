@@ -4,7 +4,10 @@
 $cp_topic_title = $vars['cp_topic_title'];
 $cp_msg_title = $vars['cp_msg_title'];
 $cp_topic_description = $vars['cp_topic_description'];
-$cp_topic_description2 = $vars['cp_topic_description2'];
+$cp_topic_description_discussion = $vars['cp_topic_description_discussion'];
+$cp_topic_description_discussion2 = $vars['cp_topic_description_discussion2'];
+;
+//error_log(message)
 $cp_msg_content = $vars['cp_msg_content'];
 $cp_topic_author = get_user($vars['cp_topic_author']);
 $cp_topic_author = get_user($vars['cp_topic_author']);
@@ -238,14 +241,18 @@ switch ($msg_type) {
 
 		$cp_topic_description_en = $cp_topic_description;
 		$cp_topic_description_fr = $cp_topic_description2;
+
+		$cp_topic_description_discussion_en = $cp_topic_description_discussion;
+		$cp_topic_description_discussion_fr = $cp_topic_description_discussion2;
+
 		if (strlen($cp_topic_description) > 200) {
 			$cp_topic_description = substr($cp_topic_description, 0, 200);
 			$cp_topic_description_en = substr($cp_topic_description, 0, strrpos($cp_topic_description, ' ')).'... '.elgg_echo('cp_notify:readmore',array($vars['cp_topic']->getURL()),'en');
 			$cp_topic_description_fr = substr($cp_topic_description, 0, strrpos($cp_topic_description, ' ')).'... '.elgg_echo('cp_notify:readmore',array($vars['cp_topic']->getURL()),'fr');
 		}
 		if ($vars['cp_topic']->getSubtype() === 'groupforumtopic' /*|| $vars['cp_topic']->getContainerEntity() instanceof ElggGroup*/) {
-			$cp_notify_msg_description_en = elgg_echo('cp_notify:body_new_content:description_discussion',array("<i>{$cp_topic_description_en}</i><br/>", $vars['cp_topic']->getURL()),'en');
-			$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_new_content:description_discussion',array("<i>{$cp_topic_description_fr}</i><br/>", $vars['cp_topic']->getURL()),'fr');
+			$cp_notify_msg_description_en = elgg_echo('cp_notify:body_new_content:description_discussion',array("<i>{$cp_topic_description_discussion_en}</i><br/>", $vars['cp_topic']->getURL()),'en');
+			$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_new_content:description_discussion',array("<i>{$cp_topic_description_discussion_fr}</i><br/>", $vars['cp_topic']->getURL()),'fr');
 		} else if (!$cp_topic_description) {
 			$cp_notify_msg_description_en = elgg_echo('cp_notify:body_new_content:no_description_discussion',array($vars['cp_topic']->getURL()),'en');
 			$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_new_content:no_description_discussion',array($vars['cp_topic']->getURL()),'fr');
