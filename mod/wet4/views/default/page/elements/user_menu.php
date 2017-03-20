@@ -113,7 +113,7 @@ if (elgg_is_active_plugin('messages')) {
         //$unread = '9+';
     }
 
-    $msgbadge = "<span class='notif-badge'>" . $unread . "</span>";
+    $msgbadge = "<span aria-hidden='true' class='notif-badge'>" . $unread . "</span>";
 
     if ($unread == 0) {
         $msgbadge = '';
@@ -148,7 +148,7 @@ if (elgg_is_active_plugin('messages')) {
         //$unread = '9+';
     }
 
-    $msgbadge = "<span class='notif-badge'>" . $unread . "</span>";
+    $msgbadge = "<span aria-hidden='true' class='notif-badge'>" . $unread . "</span>";
 
     if ($unread == 0) {
         $msgbadge = '';
