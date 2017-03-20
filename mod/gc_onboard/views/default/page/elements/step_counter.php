@@ -13,7 +13,7 @@
 $total_steps = elgg_extract('total_steps', $vars);
 $current_step = elgg_extract('current_step', $vars);
 
-$screen_reader = elgg_format_element('div', array('class'=>'wb-invisible'), 'Step '.$current_step. ' of '.$total_steps);
+$screen_reader = elgg_format_element('div', array('class'=>'wb-invisible'), elgg_echo('onboard:steps:sr', array($current_step, $total_steps)));
 $additional_class = elgg_extract('class', $vars);
 
 //Nick - Loop through the steps and create li with the step number
