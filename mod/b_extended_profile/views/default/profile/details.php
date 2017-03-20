@@ -13,7 +13,9 @@ $profile_fields = elgg_get_config('profile_fields');
 // display the username, title, phone, mobile, email, website
 // fa classes are the font-awesome icons
 
-echo '<div class="panel-heading clearfix"><div class="pull-right clearfix">';
+echo '<div class="panel-heading clearfix">';
+echo '<h1 class="pull-left group-title">' . $user->name . '</h1>';
+echo '<div class="pull-right clearfix">';
 echo '<div class="gcconnex-profile-name">';
 //edit button
 if ($user->canEdit()) {
@@ -203,7 +205,7 @@ if (elgg_get_page_owner_guid() != elgg_get_logged_in_user_guid()) {
     if (elgg_is_logged_in() && $actions) {
 		$btn_friend_request = '';
         foreach ($actions as $action) {
-			
+
 			if (strcmp($action->getName(),'add_friend') == 0 || strcmp($action->getName(),'remove_friend') == 0) {
 				if (!check_entity_relationship(elgg_get_logged_in_user_guid(),'friendrequest',$user->getGUID())) {
 					if ($user->isFriend() && strcmp($action->getName(),'remove_friend') == 0) {
@@ -253,7 +255,7 @@ if (elgg_is_admin_logged_in() && elgg_get_logged_in_user_guid() != elgg_get_page
 }
 
 echo '</div>'; //closes btn-group
-echo '<h1 class="pull-left group-title">' . $user->name . '</h1>';
+
 echo '</div>'; // close div class="panel-heading"
 
 echo '<div class="row mrgn-lft-md mrgn-rght-sm">';
