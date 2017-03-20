@@ -41,9 +41,19 @@ elgg.group_tools.mail_all_members = function() {
 }
 
 elgg.group_tools.mail_update_recipients = function() {
-	var count = $('#group_tools_mail_member_selection input[name="user_guids[]"]:checked').length;
-
+	var count = '';
+	 count = $('#group_tools_mail_member_selection input[name="user_guids[]"]:checked').length;
+		
 	$('#group_tools_mail_recipients_count').html(count);
+
+	var rowCount = $("#group_tools_mail_member_selection input[name='user_guids[]']:checked").filter(function() {
+    return $(this).find('[name^="user_guids[]"]').length;
+}).length;
+
+	
+	var numberNotChecked = $('#user_guids[]:checked').length;;
+console.log(numberNotChecked);
+
 }
 
 elgg.group_tools.init_mail = function() {
