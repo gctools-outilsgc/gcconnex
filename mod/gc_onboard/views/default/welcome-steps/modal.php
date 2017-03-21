@@ -67,14 +67,14 @@ elgg_load_js('bsTablejs'); //bootstraptable
 </script>
 <!-- Modal -->
 <div id="fullscreen-fade"></div>
-<section id="editProfile" class="wb-overlay modal-content overlay-def wb-popup-mid onboard-popup">
+<section id="editProfile" class="wb-overlay modal-content overlay-def wb-popup-mid onboard-popup"  aria-live="assertive">
 
     <header>
         <h2>Getting Started</h2>
     </header>
     <div class="modal-dialog modal-lg">
 
-        <div class=""  id="welcome-step" aria-live="assertive">
+        <div class=""  id="welcome-step">
             <?php
             //Nick - Testing for the ?last_step=true to show stepFour view instead
             //?last_step=true is set by the last step of the bootstrap tour
