@@ -28,12 +28,20 @@ elgg.group_tools.mail_clear_members = function() {
 	$('#group_tools_mail_member_selection input[name="user_guids[]"]:checked').each(function() {
 		$(this).removeAttr('checked');
 	});
+    
+    	$('#group_tools_mail_member_selection input[name="select_all"]:checked').each(function() {
+		$(this).removeAttr('checked');
+	});
 
 	elgg.group_tools.mail_update_recipients();
 }
 
 elgg.group_tools.mail_all_members = function() {
 	$('#group_tools_mail_member_selection input[name="user_guids[]"]').each(function() {
+		$(this).attr('checked', 'checked');
+	});
+    
+    	$('#group_tools_mail_member_selection input[name="select_all"]').each(function() {
 		$(this).attr('checked', 'checked');
 	});
 
@@ -51,7 +59,7 @@ elgg.group_tools.mail_update_recipients = function() {
 }).length;
 
 	
-	var numberNotChecked = $('#user_guids[]:checked').length;;
+	var numberNotChecked = $("#group_tools_mail_member_selection input[id='user_guids[]']:checked").length;
 console.log(numberNotChecked);
 
 }
