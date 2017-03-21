@@ -162,7 +162,7 @@ define(function(require) {
 
 		if (current.match(/@/) && current.length > 1) {
 			current = current.replace('@', '');
-			$('#mentions-popup').removeClass('hidden');
+			//$('#mentions-popup').removeClass('hidden');
 
 			var options = {success: handleResponse};
 

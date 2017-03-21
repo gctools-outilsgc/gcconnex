@@ -162,9 +162,24 @@ function missions_main_page_handler($segments)
         case 'reason-to-decline':
         	include elgg_get_plugins_path() . 'missions/pages/missions/reason-to-decline.php';
         	break;
+
+        case 'api':
+            if (count($segments) >= 3) {
+                if ($segments[1] == 'v0') {
+                    switch ($segments[2]) {
+                        case 'users':
+                            include elgg_get_plugins_path() . 'missions/api/v0/users.php';
+                            break;
+                        case 'opportunities':
+                            include elgg_get_plugins_path() . 'missions/api/v0/opportunities.php';
+                            break;
+                    }
+
+                }
+
+            }
     }
 }
-
 
 
 /**
