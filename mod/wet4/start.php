@@ -39,7 +39,7 @@ function wet4_theme_init() {
     elgg_load_library('GCconnex_display_in_language');
     elgg_load_library('wet:custom_core');
     //get rid of reply icon on river menu
-    //elgg_unregister_plugin_hook_handler('register', 'menu:river', 'discussion_add_to_river_menu');
+    elgg_unregister_plugin_hook_handler('register', 'menu:river', 'discussion_add_to_river_menu');
 
     //change icons for blog entity
     elgg_unregister_plugin_hook_handler("register", "menu:entity", array("\ColdTrick\BlogTools\EntityMenu", "register"));
@@ -129,7 +129,7 @@ function wet4_theme_init() {
     elgg_register_plugin_hook_handler('register', 'menu:title', 'my_title_menu_handler');
     elgg_register_plugin_hook_handler('register', 'menu:filter', 'my_filter_menu_handler');
     elgg_register_plugin_hook_handler('register', 'menu:site', 'my_site_menu_handler');
-	//elgg_register_plugin_hook_handler('register', 'menu:river', 'river_handler');
+	elgg_register_plugin_hook_handler('register', 'menu:river', 'river_handler');
 
     elgg_register_simplecache_view('wet4/test.js');
 
