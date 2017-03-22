@@ -1524,6 +1524,7 @@ Please do not reply to this email.",
     'event_calendar:lang:french'=>"French",
     'event_calendar:lang:english'=>"English",
     'event_calendar:lang:bilingual'=>"Bilingual",
+    'event_calendar:add_recurrence' => "Add recurrence",
 
     /*new for tour*/
 'gcTour:next' => 'Next ',
