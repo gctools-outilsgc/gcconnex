@@ -22,13 +22,13 @@ if ($user->canEdit()) {
 <section id="editProfile" class="wb-overlay modal-content overlay-def wb-popup-mid">
     <div class="">
         <div class="">
-            <header class="modal-header">';
+            <header class="modal-header profile-edit-header">';
     echo '<h2 class="modal-title">' . elgg_echo('gcconnex_profile:basic:header') . '</h2>';
     echo '</header>';
-    echo '<div class="panel-body">';
+    echo '<div class="panel-body overflow-body">';
     $editAvatar = elgg_get_site_url(). 'avatar/edit/' . $user->username;
     echo '<div><a href='.$editAvatar.' class="btn btn-primary">'. elgg_echo('gcconnex_profile:profile:edit_avatar') .'</a></div>';
-    echo '<div class="basic-profile-standard-field-wrapper col-sm-6 col-xs-12">'; // container for css styling, used to group profile content and display them seperately from other fields
+    echo '<div class="basic-profile-standard-field-wrapper col-md-6 col-xs-12">'; // container for css styling, used to group profile content and display them seperately from other fields
 
     $fields = array('Name', 'Job', 'Department', 'Location', 'Phone', 'Mobile', 'Email', 'Website');
 
@@ -117,7 +117,7 @@ if ($user->canEdit()) {
     }
 
     echo '</div>'; // close div class="basic-profile-standard-field-wrapper"
-    echo '<div class="basic-profile-social-media-wrapper col-sm-6 col-xs-12">'; // container for css styling, used to group profile content and display them seperately from other fields
+    echo '<div class="basic-profile-social-media-wrapper col-md-6 col-xs-12">'; // container for css styling, used to group profile content and display them seperately from other fields
 
 	// pre-populate the social media fields and their prepended link for user profiles
 
@@ -176,9 +176,9 @@ if ($user->canEdit()) {
     echo '
 
     </div>
-            <div class="panel-footer text-right">
-                <button type="button" class="btn btn-default overlay-close" style="background-color: #eaebed;">' . elgg_echo('gcconnex_profile:cancel') . '</button>
+            <div class="panel-footer text-right profile-edit-footer">
                 <button type="button" class="btn btn-primary save-profile">' . elgg_echo('gcconnex_profile:basic:save') . '</button>
+                <button type="button" class="btn btn-default overlay-close" style="background-color: #eaebed;">' . elgg_echo('gcconnex_profile:cancel') . '</button>
             </div>
         </div>
         <!-- /.modal-content -->
@@ -202,7 +202,7 @@ if (elgg_get_page_owner_guid() != elgg_get_logged_in_user_guid()) {
     if (elgg_is_logged_in() && $actions) {
 		$btn_friend_request = '';
         foreach ($actions as $action) {
-			
+
 			if (strcmp($action->getName(),'add_friend') == 0 || strcmp($action->getName(),'remove_friend') == 0) {
 				if (!check_entity_relationship(elgg_get_logged_in_user_guid(),'friendrequest',$user->getGUID())) {
 					if ($user->isFriend() && strcmp($action->getName(),'remove_friend') == 0) {
