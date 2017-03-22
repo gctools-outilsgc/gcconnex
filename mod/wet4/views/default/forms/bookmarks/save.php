@@ -31,7 +31,7 @@ echo $btn_language;
 <!-- English -->
 <div class="mrgn-bttm-md en">
 	<label for="title"><?php echo elgg_echo('title:en'); ?></label><br />
-	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title, 'id' => 'title')); ?>
+	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title, 'id' => 'title', 'autofocus' => 'true',)); ?>
 </div>
 <!-- French -->
 <div class="mrgn-bttm-md fr">

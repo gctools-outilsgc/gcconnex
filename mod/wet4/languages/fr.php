@@ -128,6 +128,7 @@ return array(
     'userMenu:messages' => "Mes messages",
     'userMenu:colleagues' => "Mes collègues",
     'userMenu:usermenuTitle' =>'User Card - Click here for links to your profile, account settings and logout(translate me)', /*NEW*/
+    'wet:usermenu:helpertext' => "Menu Utilisateur. Liens vers Notifications, Profil et Déconnexion",
     'wet:dd:expand'=>"Open drop down of most recent messages(fr)",
 
 
@@ -162,7 +163,7 @@ return array(
     'profile:viewall:groups' => 'Voir tous mes groupes',
     'photos:none' => 'Aucun album d\'image',
     'gcforums:enable_group_forums' => 'Activé les forums de groupe',
-
+    'gprofile:contentMenu' => "Menu de contenu du groupe",
         /**
    * Group invite
    */

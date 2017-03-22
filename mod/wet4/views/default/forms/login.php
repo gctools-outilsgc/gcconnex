@@ -67,7 +67,7 @@ if(elgg_in_context('login')){ //Nick - only show the graphic and register text o
 	<?php echo elgg_view('input/text', array(
 		'name' => 'username',
         'id' => 'username_home',
-		'autofocus' => true,
+		'autofocus' => 'true',
         'placeholder' => elgg_echo('loginusername'),
 		));
 	?>
