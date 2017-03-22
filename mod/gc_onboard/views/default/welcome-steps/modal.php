@@ -67,7 +67,7 @@ elgg_load_js('bsTablejs'); //bootstraptable
 </script>
 <!-- Modal -->
 <div id="fullscreen-fade"></div>
-<section id="editProfile" class="wb-overlay modal-content overlay-def wb-popup-mid onboard-popup"  aria-live="assertive">
+<section id="editProfile" class="wb-overlay modal-content overlay-def onboard-popup" aria-live="assertive">
 
     <header>
         <h2>Getting Started</h2>
@@ -150,6 +150,11 @@ elgg_load_js('bsTablejs'); //bootstraptable
         background: rgba(0,0,0,0.25);
     }
     .onboard-popup{
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 0;
+        margin: auto;
         max-width:70% !important;
         max-height:70% !important;
     }
