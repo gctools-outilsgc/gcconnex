@@ -150,6 +150,7 @@ return array(
     'profile:viewall:coll' => 'View All Colleagues',
     'profile:viewall:groups' => 'View All Groups',
     'gcforums:enable_group_forums' => 'Enable group forums',
+    'gprofile:contentMenu' => "Group content menu",
 
     /**
   * Group invite

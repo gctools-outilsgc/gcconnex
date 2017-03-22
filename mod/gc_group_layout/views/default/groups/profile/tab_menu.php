@@ -133,7 +133,7 @@ if(elgg_in_context('group_profile')){
 }
 //if(elgg_get_context() == 'group_profile'){
 echo '<nav role="navigation">';
-echo '<h2 class="wb-invisible">Group Content Menu</h2>';
+echo '<h2 class="wb-invisible">'.elgg_echo('gprofile:contentMenu').'</h2>';
 echo elgg_view_menu('owner_block', array('entity' => $owner, 'class' => 'nav nav-tabs tabMenuGroup clearfix ' .$group_only_class, 'sort_by' => 'priority',));
 echo '</nav>';
 //}

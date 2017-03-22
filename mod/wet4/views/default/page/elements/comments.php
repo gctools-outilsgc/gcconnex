@@ -47,7 +47,7 @@ unset($vars['internalid']);
         echo '<h2 class="panel-title mrgn-bttm-md mrgn-tp-md">' . elgg_echo('comments') . '</h2>';
     
         if($num_replies == 0){
-            echo '<div>No comments yet! Be the first</div>';
+            echo '<div>'.elgg_echo('generic_comment:none').'</div>';
         }
 
 $content = elgg_list_entities(array(
