@@ -62,8 +62,8 @@ elgg_load_js('bsTablejs'); //bootstraptable
             }
         })
     });
-    
-    
+
+
 </script>
 <!-- Modal -->
 <div id="fullscreen-fade"></div>
@@ -141,25 +141,33 @@ elgg_load_js('bsTablejs'); //bootstraptable
         background: rgba(0,0,0,0.4);
     }
     .fullscreen-fade{
-        z-index: 1040; 
-        width: 100%; 
-        height: 100%; 
-        position: fixed; 
-        top: 0; 
+        z-index: 1040;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
         left: 0;
         background: rgba(0,0,0,0.25);
     }
     .onboard-popup{
         bottom: 0;
-        left: 0;
-        right: 0;
+        /*left: 0;
+        right: 0;*/
         top: 0;
         margin: auto;
-        max-width:70% !important;
-        max-height:70% !important;
+        width:95%;
+        max-width:1100px !important;
+        max-height:800px !important;
     }
     .overlay-def header{
         padding:10px 45px 2px 1em !important;
+    }
+
+    @media (min-width: 200px) and (max-width: 1200px) {
+      .onboard-popup {
+        left:0;
+        right:0;
+      }
     }
 
 </style>
