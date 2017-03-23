@@ -73,9 +73,33 @@ elgg_register_menu_item('user_menu', array(
     'data-toggle' => 'dropdown',
     'class' => 'dropdown-toggle  dropdownToggle dd-close',
     'priority' => '3',
+    'aria-hidden' => 'true',
     'tab-index'=>'0', //If the tab index is gone perhaps the screen reader will skip it? What about sighted people with out mouse, need to test, just an idea :3
     //Google has some kind of tab loop when the the card is open, so when the user tabs they only tab through the options in the card
     ));
+
+
+//screen reader links
+elgg_register_menu_item('user_menu', array(
+    'name' => 'sr_profile',
+    'text' => elgg_echo('userMenu:profile'),
+    'href' => 'profile/'.elgg_get_logged_in_user_entity()->username,
+    'item_class' => 'wb-invisible sr_menu_item',
+));
+
+elgg_register_menu_item('user_menu', array(
+    'name' => 'sr_account',
+    'text' => elgg_echo('userMenu:account'),
+    'href' => 'settings/user/'.elgg_get_logged_in_user_entity()->username,
+    'item_class' => 'wb-invisible sr_menu_item',
+));
+
+elgg_register_menu_item('user_menu', array(
+    'name' => 'sr_logout',
+    'text' => elgg_echo('logout'),
+    'href' => 'action/logout',
+    'item_class' => 'wb-invisible sr_menu_item',
+));
 
 
 //display new message badge on messages
@@ -89,7 +113,7 @@ if (elgg_is_active_plugin('messages')) {
         //$unread = '9+';
     }
 
-    $msgbadge = "<span class='notif-badge'>" . $unread . "</span>";
+    $msgbadge = "<span aria-hidden='true' class='notif-badge'>" . $unread . "</span>";
 
     if ($unread == 0) {
         $msgbadge = '';
@@ -124,7 +148,7 @@ if (elgg_is_active_plugin('messages')) {
         //$unread = '9+';
     }
 
-    $msgbadge = "<span class='notif-badge'>" . $unread . "</span>";
+    $msgbadge = "<span aria-hidden='true' class='notif-badge'>" . $unread . "</span>";
 
     if ($unread == 0) {
         $msgbadge = '';
@@ -154,7 +178,7 @@ Colleague menu item runs in start.php - sorry
 // cyu - remove the user menu when the gsa hits the page
 if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gsa_agentstring,strtolower($_SERVER['HTTP_USER_AGENT'])) == 0) || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false )
 {
-    // do nothing 
+    // do nothing
 } else {
 	echo elgg_view_menu('user_menu', array('sort_by' => 'priority', 'id' => 'userMenu', 'class' => 'list-inline visited-link'));
 }

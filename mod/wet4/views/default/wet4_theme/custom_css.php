@@ -183,6 +183,10 @@ max-height: 500px;
 
     /******************** user menu ********************/
 
+    .sr_menu_item {
+      padding: 0 !important;
+    }
+
     .dropdown .elgg-menu {
         padding: 0;
     }
