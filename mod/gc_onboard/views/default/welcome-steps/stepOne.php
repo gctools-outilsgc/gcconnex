@@ -131,6 +131,7 @@
                     success: function (output) {
 
                         $('#welcome-step').html(output);
+                        $('#welcome-step').focus();
 
                     }
                 });
@@ -144,6 +145,7 @@
         elgg.get('ajax/view/welcome-steps/stepTwo', {
             success: function (output) {
                 $('#welcome-step').html(output);
+                $('#welcome-step').focus();
             }
         });
     });

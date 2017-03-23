@@ -74,7 +74,7 @@ elgg_load_js('bsTablejs'); //bootstraptable
     </header>
     <div class="modal-dialog modal-lg">
 
-        <div class=""  id="welcome-step">
+        <div class=""  id="welcome-step" tabindex="-1">
             <?php
             //Nick - Testing for the ?last_step=true to show stepFour view instead
             //?last_step=true is set by the last step of the bootstrap tour
@@ -178,6 +178,7 @@ elgg_load_js('bsTablejs'); //bootstraptable
             success: function (output) {
 
                 $('#welcome-step').html(output);
+                $('#welcome-step').focus();
 
             }
         });
