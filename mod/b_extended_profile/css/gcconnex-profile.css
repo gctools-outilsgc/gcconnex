@@ -90,9 +90,10 @@
     padding: 3px 3px 3px 3px;
     text-align: center;
     border: 0px solid cornflowerblue;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
     border-right: 1px solid lightgray;
+    margin-right: 5px;
 }
 
 .gcconnex-skill-entry {
@@ -133,13 +134,13 @@
     font-family: arial, sans-serif;
     background-color: #f0f0f0;
     border-bottom: 1px solid lightgrey;
-    border-right: 1px solid lightgrey;
+    border-left: 1px solid lightgrey;
     color: #335075;
     padding: 3px 6px 3px 5px;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
     margin-left: 0px;
-    margin-right: 5px;
+
 }
 
 .gcconnex-endorsement-add {
@@ -155,11 +156,9 @@
     padding: 3px;
 }
 .gcconnex-endorsements-add-skill {
-    font-family: arial;
-    font-size: 12px;
-    font-weight: bold;
+
     clear: left;
-    padding: 3px 3px 3px 5px;
+
     margin: 0px;
     cursor: pointer;
 }
@@ -193,6 +192,11 @@ input.userfind {
 
 .gcconnex-endorsements-skill-wrapper {
     padding-top: 10px;
+}
+
+button.delete-skill {
+  border: none;
+  background: transparent;
 }
 
 .delete-skill {
@@ -811,4 +815,8 @@ input:-moz-placeholder { color:#ccc; }
     #edit-skills .gcconnex-avatar-in-list {
         display: none;
     }
+}
+
+.b_extended_profile .tab-pane {
+  outline: none !important;
 }

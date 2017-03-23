@@ -66,11 +66,11 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
         echo '<div class="tab-content">';
 		if (empty($_GET['pg']))  {
 			$pg = '';
-		    echo '<div role="tabpanel" class="tab-pane active" id="profile-display">';
+		    echo '<div role="tabpanel" class="tab-pane active" tabindex="-1" id="profile-display">';
 		}
 		else{
 			$pg = $_GET['pg'];
-		 	echo '<div role="tabpanel" class="tab-pane " id="profile-display">';
+		 	echo '<div role="tabpanel" class="tab-pane " tabindex="-1" id="profile-display">';
 		}
 
         if ( has_content($user, 'description') ) {
@@ -135,11 +135,11 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
 
             if (empty($_GET['pg']))  {
             	$pg = '';
-            	echo '<div role="tabpanel" class="tab-pane clearfix" id="splashboard">';
+            	echo '<div role="tabpanel" class="tab-pane clearfix" tabindex="-1" id="splashboard">';
             }
             else{
             	$pg = $_GET['pg'];
-            	echo '<div role="tabpanel" class="tab-pane active clearfix" id="splashboard">';
+            	echo '<div role="tabpanel" class="tab-pane active clearfix" tabindex="-1" id="splashboard">';
             }
 
                 $num_columns = elgg_extract('num_columns', $vars, 2);
@@ -199,7 +199,7 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
             echo '</div>'; // close div id="splashboard"
 
 
-            echo '<div role="tabpanel" class="tab-pane" id="portfolio">';
+            echo '<div role="tabpanel" class="tab-pane" tabindex="-1" id="portfolio">';
 
                 init_ajax_block(elgg_echo('gcconnex_profile:portfolio'), 'portfolio', $user);
                 echo elgg_view('b_extended_profile/portfolio'); // call the proper view for the section

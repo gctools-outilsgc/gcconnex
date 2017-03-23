@@ -8,7 +8,7 @@ $fields = array('File', 'Blog', 'page_top', 'Bookmarks', 'Poll', 'Thewire', 'Alb
 
 foreach($fields as $field){
 
-    echo '<div role="tabpanel" class="tab-pane fade-in" id="' . strtolower($field) . '">';
+    echo '<div role="tabpanel" tabindex="-1" class="tab-pane fade-in" id="' . strtolower($field) . '">';
 
     $options = array(
         'type' => 'object',
@@ -119,7 +119,7 @@ foreach($fields as $field){
 }
 
 //event calendar tab
-echo '<div role="tabpanel" class="tab-pane fade-in" id="events">';
+echo '<div role="tabpanel" tabindex="-1" class="tab-pane fade-in" id="events">';
     echo '<div class="clearfix">';
     if(elgg_is_active_plugin('event_calendar')){
         $events = event_calendar_get_personal_events_for_user(elgg_get_page_owner_guid(), 5);
