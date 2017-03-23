@@ -708,16 +708,16 @@ td.left-col {
 }
 
 .basic-profile-label {
-    margin: 5px;
+    /*margin: 5px;
     float: left;
     text-align: right;
-    width: 120px;
+    width: 120px;*/
     padding-top: 4px;
 }
 
 .basic-profile-field {
-    margin: 3px;
-    float: left;
+    /*margin: 3px;
+    float: left;*/
 }
 
 .basic-profile-standard-field-wrapper,
@@ -725,19 +725,47 @@ td.left-col {
 .basic-profile-micro-assignments {
     float: left;
     margin-bottom: 10px;
+    padding: 0 10px !important;
 }
 
 .basic-profile-field-wrapper,
 .basic-profile-social-media-wrapper {
-    margin-left: 15px;
-    width: auto;
+  /*  margin-left: 15px;
+    width: auto; */
 
 }
 
+.department-test {
+  width:100%;
+}
+
+.overflow-body {
+  overflow-y: scroll;
+  height: 500px;
+  padding-top: 5px;
+}
+
+.profile-edit-footer {
+  background-color: #f5f5f5 !important;
+  position:absolute;
+  bottom: 0;
+  width:100%;
+  z-index: 5;
+}
+
 body #editProfile {
-    width: 100%;
-    background-color: rgba(125,125,125,0.3);
+    width: 95%;
+    /*background-color: rgba(125,125,125,0.3);*/
     padding-left: 0 10px 0;
+}
+#editProfile{
+    max-width: 1100px !important;
+    max-height: 600px !important;
+    overflow: hidden !important;
+}
+
+#editProfile header{
+    background-color: #047177;
 }
 
 .dialog-box {

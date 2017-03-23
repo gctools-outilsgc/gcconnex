@@ -19,19 +19,18 @@ echo '<div class="pull-right clearfix">';
 echo '<div class="gcconnex-profile-name">';
 //edit button
 if ($user->canEdit()) {
-    echo '<button type="button" class="btn btn-primary gcconnex-edit-profile" data-toggle="modal" data-target="#editProfile" data-colorbox-opts = \'{"inline":true, "href":"#editProfile", "innerWidth": 800, "maxHeight": "80%"}\'>' . elgg_echo('gcconnex_profile:edit_profile') . ' <span class="wb-inv">' . elgg_echo('profile:contactinfo') . '</span></button>';
+    echo '<a role="button" class="btn btn-primary gcconnex-edit-profile overlay-lnk" href="#editProfile">' . elgg_echo('gcconnex_profile:edit_profile') . ' <span class="wb-inv">' . elgg_echo('profile:contactinfo') . '</span></a>';
     echo '<!-- Modal -->
-<div class="modal" id="editProfile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog dialog-box">
-        <div class="panel panel-custom">
-            <div class="panel-heading">';
-    echo '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
-    echo '<h2>' . elgg_echo('gcconnex_profile:basic:header') . '</h2>';
-    echo '</div>';
-    echo '<div class="panel-body">';
+<section id="editProfile" class="wb-overlay modal-content overlay-def wb-popup-mid">
+    <div class="">
+        <div class="">
+            <header class="modal-header profile-edit-header">';
+    echo '<h2 class="modal-title">' . elgg_echo('gcconnex_profile:basic:header') . '</h2>';
+    echo '</header>';
+    echo '<div class="panel-body overflow-body">';
     $editAvatar = elgg_get_site_url(). 'avatar/edit/' . $user->username;
     echo '<div><a href='.$editAvatar.' class="btn btn-primary">'. elgg_echo('gcconnex_profile:profile:edit_avatar') .'</a></div>';
-    echo '<div class="basic-profile-standard-field-wrapper col-sm-6 col-xs-12">'; // container for css styling, used to group profile content and display them seperately from other fields
+    echo '<div class="basic-profile-standard-field-wrapper col-md-6 col-xs-12">'; // container for css styling, used to group profile content and display them seperately from other fields
 
     $fields = array('Name', 'Job', 'Department', 'Location', 'Phone', 'Mobile', 'Email', 'Website');
 
@@ -120,7 +119,7 @@ if ($user->canEdit()) {
     }
 
     echo '</div>'; // close div class="basic-profile-standard-field-wrapper"
-    echo '<div class="basic-profile-social-media-wrapper col-sm-6 col-xs-12">'; // container for css styling, used to group profile content and display them seperately from other fields
+    echo '<div class="basic-profile-social-media-wrapper col-md-6 col-xs-12">'; // container for css styling, used to group profile content and display them seperately from other fields
 
 	// pre-populate the social media fields and their prepended link for user profiles
 
@@ -179,15 +178,15 @@ if ($user->canEdit()) {
     echo '
 
     </div>
-            <div class="panel-footer text-right">
-                <button type="button" class="btn btn-default" data-dismiss="modal">' . elgg_echo('gcconnex_profile:cancel') . '</button>
+            <div class="panel-footer text-right profile-edit-footer">
                 <button type="button" class="btn btn-primary save-profile">' . elgg_echo('gcconnex_profile:basic:save') . '</button>
+                <button type="button" class="btn btn-default overlay-close" style="background-color: #eaebed;">' . elgg_echo('gcconnex_profile:cancel') . '</button>
             </div>
         </div>
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
-</div>
+</section>
 <!-- /.modal -->';
 
 }
