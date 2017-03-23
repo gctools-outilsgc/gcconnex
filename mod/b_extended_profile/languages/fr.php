@@ -8,7 +8,7 @@
 
 $french = array(
     //accessibility changes
-    'profile:content:menu' => 'User Content Menu(fr)',
+    'profile:content:menu' => "Menu du contenu de l'utilisateur",
     'profile:content:to' => "à",
     'profile:content:for' => "pour",
 
@@ -126,9 +126,9 @@ $french = array(
     'gcconnex_profile:gc_skill:endorse' => 'Valider',
     'gcconnex_profile:gc_skill:limit' => 'Vous pouvez ajouter un maximum de 15 compétences.',
     'gcconnex_profile:gc_skill:access' => 'Qui peut voir mes compétences',
-    'gcconnex_profile:gc_skill:endorsement' => ' endorsements(fr)',
-    'gcconnex_profile:gc_skill:who' => 'Who endorsed this skill.(fr)',
-    'gcconnex_profile:gc_skill:allendorse' => 'See all endorsements(fr)',
+    'gcconnex_profile:gc_skill:endorsement' => ' approbation',
+    'gcconnex_profile:gc_skill:who' => 'Qui a approuvé cette compétence.',
+    'gcconnex_profile:gc_skill:allendorse' => 'Voir toutes les mentions légales.',
 
     // leftover skills
     'gcconnex_profile:gc_skill:leftover' => 'Vous avez précédemment ajouté des compétences à votre profil GCconnex. Veuillez passer en revue les compétences ci-dessous et les verser dans ce nouveau gabarit, au besoin. Lorsque vous ajoutez des compétences à votre profil, assurez-vous qu\'il s\'agit de compétences que vous croyez réellement posséder, qu\'elles sont précises, qu\'ils s\'agit de comptéences professionnelles, et qu’elles permettent aux personnes qui consultent votre profil d’obtenir de l’information claire, utile et pertinente à votre sujet (essayez d’éviter les expressions comme « plein d’choses » et « accomplir plein de tâches »). ',
