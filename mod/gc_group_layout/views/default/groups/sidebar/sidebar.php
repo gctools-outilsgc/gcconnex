@@ -12,7 +12,7 @@ $group = elgg_get_page_owner_entity();
 $display_members = $group->getPrivateSetting('group_tools:cleanup:members');
 
 //show group members based on privacy setting
-if($display_members == 'no'){
+if($display_members != 'yes'){
   echo elgg_view('groups/sidebar/group_members', $vars);
 }
 
