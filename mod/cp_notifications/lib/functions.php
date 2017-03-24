@@ -439,19 +439,34 @@ function userOptedIn( $user_obj, $mission_type ) {
       $subtype = elgg_echo($subtype);
       $author = '';
     }
+    error_log(">>>>>>>>>>>>> switch:  heading - {$heading} // subtype - {$content_array['subtype']}");
 
-    if ($content_array['subtype'] === 'thewire') {
+    if (strcmp($heading, "content_revision") == 0) {
+   	  $content_title = (is_array($content_array['content_title'])) ? $content_array['content_title'][$language_preference] : $content_title = $content_array['content_title'];
+
+      $url = "<a href='{$content_array['content_url']}'>{$content_title}</a>";
+      $rendered_content = elgg_echo("cp_notifications:mail_body:subtype:{$heading}", array($author, $subtype, $url), $language_preference);
+
+error_log(">>>>>>>>>> heading: {$heading} -- cp_notifications:mail_body:subtype:{$heading} >>>>>> {$rendered_content}");
+//"%s have revised a %s %s",
+    } elseif ($content_array['subtype'] === 'thewire') {
       $url = "<a href='{$content_array['content_url']}'>{$subtype}</a>";
       $rendered_content = elgg_echo("cp_notifications:mail_body:subtype:{$content_array['subtype']}", array($author, $url), $language_preference);
 
 
     } elseif ($heading === 'likes') {
-      $url = "<a href='{$content_array['content_url']}'>{$subtype}</a>";
-      $rendered_content = elgg_echo("cp_notifications:mail_body:subtype:{$content_array['subtype']}", array($author, $url), $language_preference);
+
+      $content_title = (is_array($content_array['content_title'])) ? $content_array['content_title'][$language_preference] : $content_title = $content_array['content_title'];
+
+      $url = "<a href='{$content_array['content_url']}'>{$content_title}</a>";
+      $rendered_content = elgg_echo("cp_notifications:mail_body:subtype:{$heading}", array($author, $url), $language_preference);
 
 
     } elseif ($heading === 'response') {
-      $url = "<a href='{$content_array['content_url']}'>{$subtype}</a>";
+
+      $content_title = (is_array($content_array['content_title'])) ? $content_array['content_title'][$language_preference] : $content_title = $content_array['content_title'];
+
+      $url = "<a href='{$content_array['content_url']}'>{$content_array['content_title']}</a>";
       $rendered_content = elgg_echo("cp_notifications:mail_body:subtype:{$content_array['subtype']}", array($author, $url), $language_preference);
       
 
@@ -514,7 +529,7 @@ function userOptedIn( $user_obj, $mission_type ) {
  *
  */
 function information_icon($text, $url) {
-	return "<span class='pull-right'><a title='{$text}' target='_blank' href='{$url}'><i class='fa fa-info-circle icon-sel'><span class='wb-invisible'> </span></i></a></span>";
+	return "<span class='pull-right'><a title='{$text}'><i class='fa fa-info-circle icon-sel'><span class='wb-invisible'> </span></i></a></span>";
 //	return "<span class='pull-right'><a title='{$text}' target='_blank' href='{$url}'><i class='fa fa-info-circle icon-sel'><span class='wb-invisible'> </span></i></a></span>";
 }
 

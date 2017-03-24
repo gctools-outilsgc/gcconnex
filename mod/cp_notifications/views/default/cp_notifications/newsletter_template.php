@@ -76,6 +76,8 @@ else
               // unwrap and display the personal content
               $content_array = json_decode($content,true);
               echo  "<ul style='list-style-type:none;'><li>".render_contents($content_array,$detailed_header,$language_preference)."</li></ul>";
+              
+              
             }
           }
           echo "</p>";

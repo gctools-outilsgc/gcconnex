@@ -7,7 +7,7 @@ $contact_us = "{$site->getURL()}mod/contactform/";
 $english = array(
 
 	/// SETTINGS PAGE: Newsletter translation texts
-	'cp_newsletter:notice' => "Choose how you want to be notified of GCconnex activities of interest to you. The Notification Digest can be used to receive a daily or weekly email digest that provides a summary of the activities to which you are subscribed. Prefer to receive instant notification? Forgo the digest and select the content for which you want to receive notification in real-time. Please note that email notifications are sent to the email address used in your User Settings.",
+	'cp_newsletter:notice' => "Choose how you want to be notified of GCconnex activities of interest to you. The <strong>notification digest</strong> can be used to receive a daily or weekly email that provides a summary of the activities to which you are subscribed. Prefer to receive instant notification? Forgo the digest and select the content for which you want to receive notification in real-time. Please note that email notifications are sent to the email address used in your <a href='{$site->getURL()}settings/user/'>Account Settings</a>.",
 	'cp_newsletter:notice:disable_digest' => "The notification digest is now enabled; please select your digest preferences below (frequency and language preference). The digest will include all content selected in the 'Email' column below, as well the subscriptions in the 'Other content subscriptions' section.",
 
 	'cp_newsletter:subject:daily' => 'Your Daily Newsletter',
@@ -19,7 +19,7 @@ $english = array(
 	'cp_newsletter:label:weekly' => "Weekly",
 
 
-	'cp_newsletter:information:digest_option' => "This will enable or disable the digest functionality",
+	'cp_newsletter:information:digest_option' => "This will enable or disable the digest. Click \"Save\" to save your settings.",
 	'cp_newsletter:information:digest_option:url' => "#",
 	'cp_newsletter:information:frequency' => "This will determine how often you want to receive the digest",
 	'cp_newsletter:information:frequency:url' => "#",
@@ -65,6 +65,8 @@ $english = array(
 	'cp_notifications:mail_body:subtype:response' => "%s posted a response or comment to your post: %s",
 	'cp_notifications:mail_body:subtype:any' => "%s posted a%s %s %s", // john doe posted an idea vs john doe posted a blog
 
+	'cp_notifications:mail_body:subtype:content_revision' => "%s have revised a %s %s",
+
 	'cp_newsletter:other_content:notice' => "These subscriptions are only for content that is not part of a group",
 
 
@@ -92,7 +94,7 @@ $english = array(
 	/// SETTINGS PAGE: Notification headings
 	'cp_notifications:heading:page_title' => 'Your Subscriptions',
 	'cp_notifications:your_email' => "your email",
-	'cp_notifications:heading:newsletter_section' => "Notification Newsletter",
+	'cp_notifications:heading:newsletter_section' => "Notification Digest",
  	'cp_notifications:heading:personal_section'=>'Personal Notifications',
     'cp_notifications:heading:colleague_section'=>'Colleague Notifications',
     'cp_notifications:heading:group_section' => 'Group Notifications',
@@ -102,7 +104,7 @@ $english = array(
 	
 	/// (NEWSLETTER) THROUGH EMAIL SERVER, EMAIL CONTENT: Newsletter email notifications
 	'cp_newsletter:title:nothing' => "Your {$site_name} Digest: Nothing to report today",
-	'cp_newsletter:body:nothing' => "It seems it was quiet in your network on GCconnex, we have nothing to report.",
+	'cp_newsletter:body:nothing' => "It seems it was quiet in your network on GCconnex. Join <a href='{$site->getURL()}groups/all?filter=popular'>groups</a> of interest, share information and add new <a href='{$site->getURL()}members/popular'>colleagues</a> to stay informed and grow your network!",
 	'cp_newsletter:title' => "Your {$site_name} Digest: There has been some new contents and updates",
 	'cp_newsletter:greeting' => "Good morning %s. Here are your notifications for <strong>%s</strong>.",
 
@@ -116,7 +118,10 @@ $english = array(
 	'cp_newsletter:heading:notify:likes' => "Users that have liked your content",
 	'cp_newsletter:heading:notify:friend_request' => "Colleague requests",
 	'cp_newsletter:heading:notify:friend_approved' => "%s has approved your colleague requests",
-	'cp_newsletter:heading:notify:content_revision' => "Contents that have been revised",
+
+	'cp_newsletter:heading:notify:content_revision:plural' => "Contents that have been revised",
+	'cp_newsletter:heading:notify:content_revision:singular' => "Content that have been revised",
+
 	'cp_newsletter:heading:notify:forum_topic' => "Forum Topics",
 	'cp_newsletter:heading:notify:forum_reply' => "Forum Topic Replies",
 	'cp_newsletter:heading:notify:response' => "Response to a content you are subscribed to",

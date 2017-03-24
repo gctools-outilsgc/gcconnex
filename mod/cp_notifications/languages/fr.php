@@ -7,7 +7,7 @@ $contact_us = "{$site->getURL()}mod/contactform/";
 $french = array( 
 
 	/// SETTINGS PAGE: Newsletter translation texts
-	'cp_newsletter:notice' => "Choisissez le moyen par lequel vous souhaitez recevoir des avis sur les activités de GCconnex qui vous intéressent. Le résumé des notifications vous permet de recevoir un courriel quotidien ou hebdomadaire contenant un sommaire des activités auxquelles vous êtes abonné. Vous préférez recevoir un avis instantané? Oubliez le résumé et sélectionnez le contenu pour lequel vous souhaitez recevoir des avis en temps réel. Veuillez noter que les avis par courriel sont envoyés à l’adresse électronique utilisée dans vos paramètres d’utilisateur.",
+	'cp_newsletter:notice' => "Choisissez le moyen par lequel vous souhaitez recevoir des avis sur les activités de GCconnex qui vous intéressent. Le <strong>résumé des notifications</strong> vous permet de recevoir un courriel quotidien ou hebdomadaire contenant un sommaire des activités auxquelles vous êtes abonné. Vous préférez recevoir un avis instantané? Oubliez le résumé et sélectionnez le contenu pour lequel vous souhaitez recevoir des avis en temps réel. Veuillez noter que les avis par courriel sont envoyés à l’adresse électronique utilisée dans vos <a href='{$site->getURL()}settings/user/'>paramètres d’utilisateur</a>.",
 	'cp_newsletter:notice:disable_digest' => "Le résumé des avis est maintenant activé; veuillez choisir ci après vos préférences applicables au résumé (fréquence et langue). Le résumé comprendra tout le contenu sélectionné dans la colonne « Courriel », de même que les abonnements dans la section « Autres abonnements de contenu ».",
 	'cp_newsletter:subject:daily' => "Votre bulletin quotidien",
 	'cp_newsletter:subject:weekly' => "Votre bulletin hebdomadaire",
@@ -88,7 +88,7 @@ $french = array(
 
 	'cp_notifications:heading:page_title' => "Paramètres d'abonnement (cliquer pour modifier votre %s)",
 	'cp_notifications:your_email' => "courriel",
-	'cp_notifications:heading:newsletter_section' => "Bulletin d'information",
+	'cp_notifications:heading:newsletter_section' => "Résumé de notifications",
 	'cp_notifications:heading:personal_section' => 'Vos abonnements',
 	'cp_notifications:heading:colleague_section'=>'Avis de collègues',
 	'cp_notifications:heading:group_section' => 'Notifications de groupe',

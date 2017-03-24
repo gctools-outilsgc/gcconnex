@@ -345,7 +345,7 @@ input:checked + .slider:before {
 		       $(".chkbox_site").closest("label").css({"color":"black"});
 
 
-			if (!this.checked)
+			if (this.checked)
 				$(".info_digest_section").show('slow');
 		});
 
