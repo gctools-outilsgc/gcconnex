@@ -129,10 +129,13 @@ function cp_scan_mentions($cp_object) {
 		$content = $cp_object->$field;													// pull the information from the fields saved to object
 		if (preg_match_all("/\@([A-Za-z1-9]*).?([A-Za-z1-9]*)/", $content, $matches)) { // find all the string that matches: @christine.yu
 			$users_found = array();
+			error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>> FOUND!! mentions: ".print_r($matches,true));
 			foreach ($matches[0] as $match) {
+
 				if (preg_match('/\s/',$match)) { 										// what if no space found? check for space
 					$user_found = explode(' ',$match);
 					$users_found[] = $user_found[0];
+
 				}
 			}
 			return $users_found;
@@ -541,8 +544,7 @@ function has_group_subscriptions($group_guid, $user_guid) {
 	$dbprefix = elgg_get_config('dbprefix');
 
 	// normal objects
-	$query = "SELECT r.guid_one, r.relationship, r.guid_two  FROM elggentity_relationships r LEFT JOIN elggentities e ON r.guid_two = e.guid LEFT JOIN (SELECT guid FROM elgggroups_entity WHERE guid = {$group_guid}) g ON e.container_guid = g.guid WHERE r.relationship LIKE 'cp_subscribed_to_%' AND e.type = 'object' AND e.container_guid = {$group_guid} AND r.guid_one = {$user_guid} LIMIT 1
-	";
+	$query = "SELECT r.guid_one, r.relationship, r.guid_two  FROM {$dbprefix}entity_relationships r LEFT JOIN {$dbprefix}entities e ON r.guid_two = e.guid LEFT JOIN (SELECT guid FROM {$dbprefix}groups_entity WHERE guid = {$group_guid}) g ON e.container_guid = g.guid WHERE r.relationship LIKE 'cp_subscribed_to_%' AND e.type = 'object' AND e.container_guid = {$group_guid} AND r.guid_one = {$user_guid} LIMIT 1";
 
 	$subscriptions = get_data($query);
 

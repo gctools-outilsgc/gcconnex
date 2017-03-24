@@ -782,6 +782,7 @@ function cp_create_notification($event, $type, $object) {
 			// if mentions plugin is enabled... check to see if there were any mentions
 			$cp_mentioned_users = (elgg_is_active_plugin('mentions') && $object->getSubtype() !== 'messages') ? cp_scan_mentions($object) : "";
 
+error_log(">>>>>>>>>>>>>>> ".print_r($cp_mentioned_users,true));
 			// retrieve all necessary information for notification
 			$container_entity = $object->getContainerEntity();
 		
