@@ -244,6 +244,10 @@ function mm_validate_time($day, $input_array)
  		$err .= elgg_echo('missions:error:exceeds_string_length', array(elgg_echo('missions:opportunity_title'), $job_title_limit)) . "\n";
  	}
 
+ 	if (empty($input_array['role_type'])) {
+ 		$err .= elgg_echo('missions:error:opportunity_role_needs_input') . "\n";
+ 	}
+
  	if (empty($input_array['job_type'])) {
  		$err .= elgg_echo('missions:error:opportunity_type_needs_input') . "\n";
  	}

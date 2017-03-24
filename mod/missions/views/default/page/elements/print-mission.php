@@ -110,10 +110,7 @@ $click_header = elgg_view('output/url', array(
         </div>
         <div name="mission-job-type" class="mrgn-bttm-sm">
             <span class="timeStamp">
-                <?php echo elgg_echo($mission->job_type);
-
-                    ?>
-
+                <?php echo elgg_echo($mission->job_type); if (!empty($mission->role_type)) { echo ' (' . strtolower(elgg_echo($mission->role_type)) . ')'; } ?>
             </span>
         </div>
 

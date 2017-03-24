@@ -13,9 +13,10 @@
 $sort_field = get_input('sort_field');
 $order_field = get_input('order_field');
 $opp_field = get_input('opp_filter');
-
+$role_field = get_input('role_filter');
 
 $_SESSION['missions_sort_field_value'] = $sort_field;
 $_SESSION['missions_order_field_value'] = $order_field;
 $_SESSION['missions_type_field_value'] = $opp_field;
+$_SESSION['missions_role_field_value'] = $role_field;
 forward(REFERER);
