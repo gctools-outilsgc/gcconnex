@@ -27,7 +27,7 @@ else
         <span style='padding: 0 0 0 3px; font-size: 20px; color: #ffffff; font-family: sans-serif;'><?php echo $site->name; ?></span>
       </div>
 
-      <p><?php echo elgg_echo('cp_newsletter:greeting', array($to->name, date("Y/m/d")), $language_preference); ?></strong>.</p>
+      <p><?php echo elgg_echo('cp_newsletter:greeting', array($to->name, date("Y/m/d")), $language_preference); ?></strong></p>
 
       
       <?php foreach ($contents as $highlevel_header => $highlevel_contents) { ?>

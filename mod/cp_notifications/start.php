@@ -427,6 +427,10 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			break;
 	}
 
+
+
+
+
 	if (empty($subject))
 		return false;
 
@@ -909,6 +913,8 @@ function cp_create_notification($event, $type, $object) {
 				$subject = elgg_echo('cp_notify:subject:new_content',array(cp_translate_subtype($object->getSubtype()),$group->name),'en');
 				$subject .= ' | '.$subj_gender;
 			
+				//$to_recipients = get_subscribers($dbprefix, $object->getContainerGUID(), $object->guid);
+				$guidone = $object->getContainerGUID();
 
 			// subscribed to users or friends
 			} else {	
@@ -927,6 +933,8 @@ function cp_create_notification($event, $type, $object) {
 						$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content',array($object->getOwnerEntity()->username, cp_translate_subtype($object->getSubtype(), false), $object->title),'fr');
 					}
 				}
+				$guidone = $object->getOwnerGUID();
+				//$to_recipients = get_subscribers($dbprefix, $object->getOwnerGUID(), $object->guid);
 			}
 
 			// cyu - client wants the html tags stripped from the notifications
@@ -941,7 +949,7 @@ function cp_create_notification($event, $type, $object) {
 			$content_entity = $object;
 			$author = $object->getOwnerEntity();
 
-			$to_recipients = get_subscribers($dbprefix, $object->getOwnerGUID(), $object->guid);
+			$to_recipients = get_subscribers($dbprefix, $guidone, $object->guid);
 			$email_only = false;
 			break;
 
@@ -1137,12 +1145,12 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 				$template = elgg_view('cp_notifications/newsletter_template_empty', array('to' => $to));
 
 
-			if (elgg_is_active_plugin('phpmailer'))
+			/*if (elgg_is_active_plugin('phpmailer'))
 				phpmailer_send($to->email, $to->name, $subject, $template, NULL, true );
 			else
 				mail($to->email, $subject, $template, cp_get_headers());
-
-
+*/
+echo $template;
 			echo "<p>Digest sent to user email: {$to->email} ({$to->guid})</p>";
 
 			//echo "<br/><br/>";

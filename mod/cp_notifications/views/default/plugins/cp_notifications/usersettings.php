@@ -335,7 +335,14 @@ input:checked + .slider:before {
 
 		// toggle for more digest options
 		$('input[name="params[cpn_set_digest]"]').click(function() {
-			$("#more_digest_options").fadeToggle(this.checked);
+
+			if (document.getElementById("id_chkbox_enable_digest").checked) {
+				document.getElementById("more_digest_options").style.display = "block";
+			} else {
+				document.getElementById("more_digest_options").style.display = "none";
+			}
+
+			//$("#more_digest_options").fadeToggle(this.checked);
 
 			$(".chkbox_site").attr('disabled',this.checked);
 
