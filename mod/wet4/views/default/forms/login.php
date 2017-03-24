@@ -115,7 +115,7 @@ if(elgg_in_context('login')){ //Nick - only show the graphic and register text o
 <?php
 
     //stat tracking groups and discussions
-$groups = elgg_get_entities(array('count' => true, 'types' => 'group'));
+$groups = elgg_get_entities(array('count' => true, 'type' => 'group', 'limit' => 0));
 $discussions = elgg_get_entities(array('type' => 'object', 'subtype' => 'groupforumtopic', 'count' => true));
 
     //Nick - adding some stats to the bottom of the landing / login page (Should only appear on that page)
