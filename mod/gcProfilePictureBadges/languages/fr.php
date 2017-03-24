@@ -29,7 +29,14 @@ $french = array(
 
 		'gcProfilePictureBadges:badge:mentalHealth' => "Santé mentale en milieu de travail",
 		'gcProfilePictureBadges:pledgeSell:mentalHealth' => "Démontrer votre engagement pour appuyer la &nbsp;&nbsp;« Santé mentale en milieu de travail » et ajoutez l'écusson à votre avatar.",
-		'gcProfilePictureBadges:knowmore:mentalHealth' => 'http://intranet.canada.ca/hr-rh/hw-ms/ww-mmt/mhw-smt/pledge-engagement/index-fra.asp'
+		'gcProfilePictureBadges:knowmore:mentalHealth' => 'http://intranet.canada.ca/hr-rh/hw-ms/ww-mmt/mhw-smt/pledge-engagement/index-fra.asp',
+
+		//info about badges - breaking barriers
+		'gcProfilePictureBadges:badge:title:breakingBarriers' => "Bâtir la diversité, l'inclusion et l'accessibilité au travail",
+
+		'gcProfilePictureBadges:badge:breakingBarriers' => "Bâtir la diversité, l'inclusion et l'accessibilité au travail",
+		'gcProfilePictureBadges:pledgeSell:breakingBarriers' => 'Show your support for "Mental health in the workplace" by adding the badge to your avatar.',
+		'gcProfilePictureBadges:knowmore:breakingBarriers' => 'http://intranet.canada.ca/hr-rh/hw-ms/ww-mmt/mhw-smt/pledge-engagement/index-eng.asp'
 );
 
 add_translation('fr', $french);

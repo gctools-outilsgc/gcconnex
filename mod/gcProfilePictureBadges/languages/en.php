@@ -22,14 +22,21 @@ $english = array(
 
     'gcProfilePictureBadges:addtoavatar' => 'Add to my avatar',
 
-    'gcProfilePictureBadges:added' => 'The "%s" has been added badge to your avatar',
+    'gcProfilePictureBadges:added' => 'The "%s" badge has been added to your avatar',
 
-    //info about badges
+    //info about badges - mental health
 		'gcProfilePictureBadges:badge:title:mentalHealth' => 'Supporting Mental health in the workplace',
 
 		'gcProfilePictureBadges:badge:mentalHealth' => 'Mental health in the workplace',
 		'gcProfilePictureBadges:pledgeSell:mentalHealth' => 'Show your support for "Mental health in the workplace" by adding the badge to your avatar.',
-		'gcProfilePictureBadges:knowmore:mentalHealth' => 'http://intranet.canada.ca/hr-rh/hw-ms/ww-mmt/mhw-smt/pledge-engagement/index-eng.asp'
+		'gcProfilePictureBadges:knowmore:mentalHealth' => 'http://intranet.canada.ca/hr-rh/hw-ms/ww-mmt/mhw-smt/pledge-engagement/index-eng.asp',
+
+		//info about badges - breaking barriers
+		'gcProfilePictureBadges:badge:title:breakingBarriers' => 'Building diversity, inclusion and accessibility in the workplace',
+
+		'gcProfilePictureBadges:badge:breakingBarriers' => 'Building diversity, inclusion and accessibility in the workplace',
+		'gcProfilePictureBadges:pledgeSell:breakingBarriers' => 'Show your support for "Mental health in the workplace" by adding the badge to your avatar.',
+		'gcProfilePictureBadges:knowmore:breakingBarriers' => 'http://intranet.canada.ca/hr-rh/hw-ms/ww-mmt/mhw-smt/pledge-engagement/index-eng.asp'
 );
 
 add_translation('en', $english);

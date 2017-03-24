@@ -26,7 +26,7 @@ if(elgg_is_logged_in() && $group->isMember()){
     }
 
     //display if group has a badge and the user does not have it active
-    if($pledge && $pledge != $user->init_badge && elgg_get_plugin_setting('mentalHealth_group_display', 'gcProfilePictureBadges')){
+    if($pledge && $pledge != $user->init_badge && elgg_get_plugin_setting($pledge.'_group_display', 'gcProfilePictureBadges')){
 
 ?>
 <div class="pledge-holder clearfix">
@@ -42,6 +42,7 @@ if(elgg_is_logged_in() && $group->isMember()){
             'src' => 'mod/gcProfilePictureBadges/graphics/'.$pledge.'.png',
             'class' => 'center-block',
             'title' => elgg_echo('gcProfilePictureBadges:badge:title:'.$pledge, array(elgg_echo('gcProfilePictureBadges:badge:'.$pledge))),
+            'alt' => elgg_echo('gcProfilePictureBadges:badge:title:'.$pledge, array(elgg_echo('gcProfilePictureBadges:badge:'.$pledge))),
         ));
 
         //add to avatar button
