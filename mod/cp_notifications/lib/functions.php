@@ -129,14 +129,14 @@ function cp_scan_mentions($cp_object) {
 		$content = $cp_object->$field;													// pull the information from the fields saved to object
 		if (preg_match_all("/\@([A-Za-z1-9]*).?([A-Za-z1-9]*)/", $content, $matches)) { // find all the string that matches: @christine.yu
 			$users_found = array();
-			error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>> FOUND!! mentions: ".print_r($matches,true));
+			
 			foreach ($matches[0] as $match) {
 
-				if (preg_match('/\s/',$match)) { 										// what if no space found? check for space
+				//if (preg_match('/\s/',$match)) { 										// what if no space found? check for space
 					$user_found = explode(' ',$match);
 					$users_found[] = $user_found[0];
 
-				}
+				//}
 			}
 			return $users_found;
 		}
@@ -273,7 +273,7 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 					'content_title' => $entity->getContainerEntity()->title,
 					'content_url' => $content_url,
 					'subtype' => $entity->getSubtype(),
-					'content_author' => $invoked_by
+					'content_author' => $entity->getOwnerEntity()->guid
 				);
 
 				$digest_collection['group']["<a href='{$group_url}'>{$group_title}</a>"]['forum_reply'][$entity->guid] = json_encode($content_array);
@@ -443,8 +443,19 @@ function userOptedIn( $user_obj, $mission_type ) {
       $author = '';
     }
 
-error_log(">>>>>>>>>>>>>>>>>>>>>> {$heading}");
-    if (strcmp($heading, "content_revision") == 0) {
+//error_log(">>>>>>>>>>>>>>>>>>>>>> {$heading}");
+
+	if ($heading === 'forum_reply') {
+
+   	  $content_title = (is_array($content_array['content_title'])) ? $content_array['content_title'][$language_preference] : $content_title = $content_array['content_title'];
+   	  $author = get_entity($content_array['content_author']);
+
+      $url = "<a href='{$content_array['content_url']}'>{$content_title}</a>";
+      $rendered_content = elgg_echo("cp_notifications:mail_body:subtype:hjforumpost", array($author->name, $url), $language_preference);
+
+
+	} elseif (strcmp($heading, "content_revision") == 0) {
+
    	  $content_title = (is_array($content_array['content_title'])) ? $content_array['content_title'][$language_preference] : $content_title = $content_array['content_title'];
 
       $url = "<a href='{$content_array['content_url']}'>{$content_title}</a>";
@@ -500,7 +511,7 @@ error_log(">>>>>>>>>>>>>>>>>>>>>> {$heading}");
    * @param string  $heading
    *
    */
-  function render_headers($heading, $user_name='', $language='en') {
+  function render_headers($heading, $user_name='', $language='en', $number='') {
 
     $proper_heading = '';
 

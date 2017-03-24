@@ -368,6 +368,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$content_entity = $params['cp_post'];
 			$content_url = $params['cp_topic_url'];
 			$author = $params['cp_post']->getOwnerEntity();
+
 			break;
 
 
@@ -782,7 +783,28 @@ function cp_create_notification($event, $type, $object) {
 			// if mentions plugin is enabled... check to see if there were any mentions
 			$cp_mentioned_users = (elgg_is_active_plugin('mentions') && $object->getSubtype() !== 'messages') ? cp_scan_mentions($object) : "";
 
-error_log(">>>>>>>>>>>>>>> ".print_r($cp_mentioned_users,true));
+			// send mentioned users a notification
+			/*foreach ($cp_mentioned_users as $cp_mentioned_user) {
+
+				$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid, 'cp_notifications');
+
+				// send digest
+				if (strcmp($user_setting, "set_digest_yes") == 0)
+					create_digest($author, $object->getSubtype(), $content_entity, get_entity($to_recipient->guid));
+				
+				// send email and site notification
+				else {
+					$template = elgg_view('cp_notifications/email_template', $message);
+
+					if (elgg_is_active_plugin('phpmailer'))
+						phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );
+					else
+						mail($to_recipient->email,$subject,$template,cp_get_headers());
+
+					messages_send($subject, $template, $to_recipient->guid, $site->guid, 0, true, false);
+
+			}*/
+
 			// retrieve all necessary information for notification
 			$container_entity = $object->getContainerEntity();
 		
@@ -1146,13 +1168,13 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 				$template = elgg_view('cp_notifications/newsletter_template_empty', array('to' => $to));
 
 
-			/*if (elgg_is_active_plugin('phpmailer'))
+			if (elgg_is_active_plugin('phpmailer'))
 				phpmailer_send($to->email, $to->name, $subject, $template, NULL, true );
 			else
 				mail($to->email, $subject, $template, cp_get_headers());
-*/
-echo $template;
-			echo "<p>Digest sent to user email: {$to->email} ({$to->guid})</p>";
+
+			//echo $template;
+			//echo "<p>Digest sent to user email: {$to->email} ({$to->guid})</p>";
 
 			//echo "<br/><br/>";
 			//echo $template;
