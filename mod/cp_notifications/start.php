@@ -1090,11 +1090,12 @@ if (elgg_instanceof($container, 'group')) {
 					}
 				}
    
-   			$object_description = ($object->description != strip_tags($object->description)) ? "" : $object->description;
+   			//$object_description = ($object->description != strip_tags($object->description)) ? "" : $object->description;
 			$message = array(
 				'cp_topic' => $object, 
 				'cp_msg_type' => 'cp_new_type',
-				'cp_topic_description' => $object_description,
+				'cp_topic_description_discussion' => $object->description,
+				'cp_topic_description_discussion2' => $object->description2,
 			);
 
 			$email_only = false;

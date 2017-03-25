@@ -4,7 +4,7 @@ gatekeeper();
 $gcf_container = $vars['container_guid'];
 $gcf_subtype = get_input('gcf_subtype');
 $gcf_group = get_input('gcf_group');
-
+error_log('hello!');
 
 switch ($gcf_subtype) {
 	case 'hjforumcategory':
@@ -260,6 +260,7 @@ function gcforums_notify_subscribed_users($hjobject, $hjlink) {
 			);
 		} else { // post made
 			$message = array(
+
 				'cp_topic_author' => $hjobject->getOwnerEntity()->name,
 				'cp_topic_author_username' => $hjobject->getOwnerEntity()->username,
 				'cp_topic_description' => $hjobject->description,
@@ -273,7 +274,7 @@ function gcforums_notify_subscribed_users($hjobject, $hjlink) {
 		$result = elgg_trigger_plugin_hook('cp_overwrite_notification','all',$message);
 	} else
 		notify_user($subscribers, $from, $subject, $message);
-}
+//}
 
 // new entity guid / container guid
 function create_hjforumtopic_relationships($static_guid, $e_guid) {
