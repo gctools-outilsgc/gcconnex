@@ -44,6 +44,7 @@ return array(
     "missions:opportunity_title" =>	"Titre de la possibilité",
     "missions:opportunity_type" =>	"Type de possibilité",
     "missions:opportunity_number" =>	"Nombre de possibilités",
+    "missions:opportunity_status" => "Statut de la possibilité",
     "missions:ideal_start_date" =>	"Date de début idéale",
     "missions:ideal_completion_date" =>	"Date d'achèvement idéale",
     "missions:key_skills_opportunity" =>	"Compétences clés offertes par la possibilité",

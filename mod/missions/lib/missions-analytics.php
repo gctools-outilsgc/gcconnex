@@ -358,6 +358,49 @@ function mm_analytics_cull_missions_by_department($mission_set, $department) {
 }
 
 /*
+ * Removes all missions from the set which are not a part of the given role_type.
+ */
+function mm_analytics_cull_missions_by_role_type($mission_set, $role_type) {
+	$mission_set_copy = $mission_set;
+	foreach($mission_set_copy as $key => $mission) {		
+		if($mission->role_type != $role_type) {
+			unset($mission_set_copy[$key]);
+		}
+	}
+
+	return $mission_set_copy;
+}
+
+/*
+ * Removes all missions from the set which are not a part of the given job_type.
+ */
+function mm_analytics_cull_missions_by_job_type($mission_set, $job_type) {
+	$mission_set_copy = $mission_set;
+	foreach($mission_set_copy as $key => $mission) {		
+		if($mission->job_type != $job_type) {
+			unset($mission_set_copy[$key]);
+		}
+	}
+
+	return $mission_set_copy;
+}
+
+/*
+ * Removes all missions from the set which are not a part of the given status.
+ */
+function mm_analytics_cull_missions_by_status($mission_set, $status) {
+
+	$mission_set_copy = $mission_set;
+	foreach($mission_set_copy as $key => $mission) {		
+		if($mission->state != strtolower(elgg_echo($status, [], 'en'))) {
+			unset($mission_set_copy[$key]);
+		}
+	}
+
+	return $mission_set_copy;
+}
+
+/*
  * Separates the missions into different series according to the given value.
  */
 function mm_analytics_separate_missions_by_values($mission_set, $separator) {

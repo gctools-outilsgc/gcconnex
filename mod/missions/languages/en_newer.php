@@ -37,6 +37,7 @@ return array(
     "missions:opportunity_title" => "Bilingual opportunity title",
     "missions:opportunity_type" => "Type of opportunity",
     "missions:opportunity_number" => "Number of opportunities",
+    "missions:opportunity_status" => "Status of opportunity",
     "missions:ideal_start_date" => "Ideal start date",
     "missions:ideal_completion_date" => "Ideal completion date",
     "missions:key_skills_opportunity" => "Key skills this opportunity provides",
