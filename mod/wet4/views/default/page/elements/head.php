@@ -34,52 +34,51 @@ $links = elgg_extract('links', $vars, array());
 //Load in global variable with entity to create metadata tags
 global $my_page_entity;
 
+// in case the title is not populated
+$page_title = $vars['title'];
 
 // github-685 gcconnex titles in gsa search result
 if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gsa_agentstring,strtolower($_SERVER['HTTP_USER_AGENT'])) == 0) || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ) {
-  
+
   $gc_language = get_current_language();
 
-  $page_title_deliminator = ($my_page_entity->title && $my_page_entity->title2) ? " | " : "";
+  $elgg_entity = $my_page_entity;
 
   // check if this is a profile
-  if ($my_page_entity->title == null || $my_page_entity->title === '') {
-    $page_title = $my_page_entity->name;
+  if ($elgg_entity instanceof ElggUser || $elgg_entity instanceof ElggGroup) {
+    
+    if ($elgg_entity instanceof ElggUser) {
+      $page_title = $elgg_entity->name;  
+    } else {
+      $page_title = (!$elgg_entity->name2) ? $elgg_entity->name : $elgg_entity->name.' | '.$elgg_entity->name2;
+    }
+    
   } else {
-    $page_title = $my_page_entity->title;
+
+    // condition where there would be a french version only or vice versa for english
+    if ($elgg_entity->title && $elgg_entity->title2) {
+      // if both fields are populated then put both languages as title
+      $page_title = $my_page_entity->title.' | '.$elgg_entity->title2;
+    } else {
+
+      if ($elgg_entity->title)
+        $page_title = $elgg_entity->title;
+      else
+        $page_title = $elgg_entity->title2;
+    }
+    
   }
-
-
-
-  /*  
-  $title_en = $my_page_entity->title;
-  $title_fr = $my_page_entity->title2;
- 
-  // group profile
-  if ($title_en || $title_fr) {
-    $page_title_deliminator = ($my_page_entity->name && $my_page_entity->name2) ? " | " : "";
-   
-    $title_fr = $my_page_entity->name2;
-  }
-
-  // check for character length then trim
-  if ($page_title_deliminator !== "") {
-    $title_en = (strlen($title_en) > 19) ? substr($title_en,0,20)."..." : $title_en;
-    $title_fr = (strlen($title_fr) > 19) ? substr($title_fr,0,20)."..." : $title_fr;
-  }
-  $page_title = (strcmp(get_current_language(),'en') == 0) ? $title_en.$page_title_deliminator.$title_fr : $title_fr.$page_title_deliminator.$title_en;
-  
-
-  // profile <titles></title>
-  if (!$page_title)
-    $page_title = $my_page_entity->name;
-  */
 
   echo elgg_format_element('title', array(), $page_title, array('encode_text' => true));
 
 } else {
   
-  echo elgg_format_element('title', array(), $vars['title'], array('encode_text' => true));
+  if ($elgg_entity instanceof ElggUser || $elgg_entity instanceof ElggGroup)
+    $page_title = $elgg_entity->name;
+  else
+    $page_title = $elgg_entity->title;
+  
+  echo elgg_format_element('title', array(), $page_title, array('encode_text' => true));
 
 }
 
