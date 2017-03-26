@@ -67,6 +67,8 @@ $english = array(
 
 	'cp_notifications:mail_body:subtype:content_revision' => "%s have revised a %s %s",
 
+	'cp_notifications:mail_body:subtype:content_share' => "%s has shared your %s %s",
+
 	'cp_newsletter:other_content:notice' => "These subscriptions are only for content that is not part of a group",
 
 
