@@ -110,6 +110,10 @@ function entity_url($hook, $type, $return, $params) {
 	$comment->loadHTML($return);
 	$comment_block = $comment->getElementsByTagName('div');
 
+	if (strstr($return, 'data-role="comment-text"') !== false) {
+		return;
+	}
+
 	if (!empty(trim($comment_block)) || $comment_block === null)
 		$comment_text = $comment_block->item(0)->getAttribute('data-role');
 	else
