@@ -34,9 +34,9 @@ $english = array(
 		//info about badges - breaking barriers
 		'gcProfilePictureBadges:badge:title:breakingBarriers' => 'Building diversity, inclusion and accessibility in the workplace',
 
-		'gcProfilePictureBadges:badge:breakingBarriers' => 'Building diversity, inclusion and accessibility in the workplace',
-		'gcProfilePictureBadges:pledgeSell:breakingBarriers' => 'Show your support for "Mental health in the workplace" by adding the badge to your avatar.',
-		'gcProfilePictureBadges:knowmore:breakingBarriers' => 'http://intranet.canada.ca/hr-rh/hw-ms/ww-mmt/mhw-smt/pledge-engagement/index-eng.asp'
+		'gcProfilePictureBadges:badge:breakingBarriers' => 'Workplace Breaking Barriers Challenge',
+		'gcProfilePictureBadges:pledgeSell:breakingBarriers' => 'Show your support for "Building diversity, inclusion and accessibility in the workplace" by adding the badge to your avatar.',
+		'gcProfilePictureBadges:knowmore:breakingBarriers' => 'http://www.gcpedia.gc.ca/wiki/Workplace_Breaking_Barriers_Challenge'
 );
 
 add_translation('en', $english);
