@@ -66,6 +66,8 @@ $english = array(
 	'cp_notifications:mail_body:subtype:any' => "%s posted a%s %s %s", // john doe posted an idea vs john doe posted a blog
 
 	'cp_notifications:mail_body:subtype:content_revision' => "%s have revised a %s %s",
+	'cp_notifications:mail_body:subtype:mention' => "%s has mentioned you in %s: %s",
+
 
 	'cp_newsletter:other_content:notice' => "These subscriptions are only for content that is not part of a group",
 
@@ -125,6 +127,9 @@ $english = array(
 	'cp_newsletter:heading:notify:forum_topic' => "Forum Topics",
 	'cp_newsletter:heading:notify:forum_reply' => "Forum Topic Replies",
 	'cp_newsletter:heading:notify:response' => "Response to a content you are subscribed to",
+
+	'cp_newsletter:heading:notify:cp_mention' => "You were mentioned",
+	//'cp_newsletter:heading:notify:mention' => "%s has mentioned you in GCconnex: %s",
 
 
 

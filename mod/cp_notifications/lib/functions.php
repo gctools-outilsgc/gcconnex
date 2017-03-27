@@ -301,6 +301,23 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 			
 			break;
 
+		case 'mention':
+
+			$content_array = array(
+				'content_title' => $entity->getContainerEntity()->title,
+				'content_url' => $content_url,
+				'subtype' => $entity->getContainerEntity()->getSubtype(),
+				'content_author' => $invoked_by->name,
+				'content_author_url' => $invoked_by->getURL()
+			);
+
+			if (!is_array($digest_collection['personal']['cp_mention']))
+				$digest_collection['personal']['cp_mention'] = array();
+
+			$digest_collection['personal']['cp_mention'][] = json_encode($content_array);
+
+			break;
+
 		default:
 			$entity = get_entity($entity->guid);
 			
@@ -445,7 +462,16 @@ function userOptedIn( $user_obj, $mission_type ) {
 
 //error_log(">>>>>>>>>>>>>>>>>>>>>> {$heading}");
 
-	if ($heading === 'forum_reply') {
+	if ($heading === 'cp_mention') {
+
+   	  $content_title = (is_array($content_array['content_title'])) ? $content_array['content_title'][$language_preference] : $content_title = $content_array['content_title'];
+   	  $author = $content_array['content_author'];
+
+      $url = "<a href='{$content_array['content_url']}'>{$content_title}</a>";
+      $rendered_content = elgg_echo("cp_notifications:mail_body:subtype:mention", array($author, $content_array['subtype'],$url), $language_preference);
+
+
+	} elseif ($heading === 'forum_reply') {
 
    	  $content_title = (is_array($content_array['content_title'])) ? $content_array['content_title'][$language_preference] : $content_title = $content_array['content_title'];
    	  $author = get_entity($content_array['content_author']);
@@ -524,6 +550,12 @@ function userOptedIn( $user_obj, $mission_type ) {
       case 'likes':
       case 'friend_request':
       case 'content_revision':
+      	if ($number > 1) {
+      		$proper_heading = elgg_echo("cp_newsletter:heading:notify:{$heading}:plural");
+      	} else {
+      		$proper_heading = elgg_echo("cp_newsletter:heading:notify:{$heading}:singular");
+      	}
+
       case 'forum_topic':
       case 'forum_reply':
       case 'response':
@@ -531,6 +563,9 @@ function userOptedIn( $user_obj, $mission_type ) {
         break;
       case 'friend_approved':
        $proper_heading = elgg_echo("cp_newsletter:heading:notify:{$heading}",array($user_name),$language);
+      	break;
+      case 'cp_mention':
+      	$proper_heading = elgg_echo("cp_newsletter:heading:notify:{$heading}");
       	break;
       default:
         $proper_heading = $heading;
