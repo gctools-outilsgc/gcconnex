@@ -179,7 +179,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$message = array(
 				'cp_msg_type' => $cp_msg_type,
 				'cp_shared_by' => $params['cp_shared_by'],
-				'cp_content_reshare' => $params['cp_content_reshare'],
+				'cp_content_reshare' => $params['cp_content_reshared'],
 				'cp_content' => $params['cp_content'],
 				'cp_recipient' => $params['cp_recipient'],
 				'cp_wire_url' => $params['cp_wire_url'],
@@ -198,10 +198,9 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			}
 			$to_recipients[] = $params['cp_recipient'];
 
-
-			$content_entity = $params['cp_content'];
+			$content_entity = $params['cp_content_reshared'];
 			$author = $params['cp_shared_by'];
-
+			$content_url = $params['cp_content_reshared']->getURL(); 
 			break;
 
 
@@ -1177,7 +1176,8 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 				mail($to->email, $subject, $template, cp_get_headers());
 			*/
 
-			echo $template;
+
+			//echo $template;
 			echo "<p>Digest sent to user email: {$to->email} ({$to->guid})</p>";
 
 			//echo "<br/><br/>";
