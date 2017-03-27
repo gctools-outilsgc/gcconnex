@@ -167,6 +167,7 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 	$digest = get_entity($send_to->cpn_newsletter);
 	$digest_collection = json_decode($digest->description,true);
 
+error_log("send to: {$send_to} /// {$send_to->cpn_newsletter}");
 	$content_title = $entity->title; // default value for title
 
 	if (!$entity->title) $entity = get_entity($entity->guid);
@@ -548,10 +549,11 @@ function userOptedIn( $user_obj, $mission_type ) {
    * @param string  $heading
    *
    */
-  function render_headers($heading, $user_name='', $language='en', $number='') {
+  function render_headers($heading, $user_name='', $language = "en", $number='') {
 
     $proper_heading = '';
-
+    $number_items = ($number > 1) ? "plural" : "singular";
+error_log("correct:    >>>>>>>     ".$number_items);
     switch ($heading) {
       case 'personal':
       case 'mission':
@@ -561,22 +563,19 @@ function userOptedIn( $user_obj, $mission_type ) {
       case 'likes':
       case 'friend_request':
       case 'content_revision':
-      	if ($number > 1) {
-      		$proper_heading = elgg_echo("cp_newsletter:heading:notify:{$heading}:plural");
-      	} else {
-      		$proper_heading = elgg_echo("cp_newsletter:heading:notify:{$heading}:singular");
-      	}
+      	$proper_heading = elgg_echo("cp_newsletter:heading:notify:{$heading}:{$number_items}", array(), $Language);
+      	break;
 
       case 'forum_topic':
       case 'forum_reply':
       case 'response':
-        $proper_heading = elgg_echo("cp_newsletter:heading:notify:{$heading}");
+        $proper_heading = elgg_echo("cp_newsletter:heading:notify:{$heading}:{$number_items}", array(), $Language);
         break;
       case 'friend_approved':
-       $proper_heading = elgg_echo("cp_newsletter:heading:notify:{$heading}",array($user_name),$language);
+       $proper_heading = elgg_echo("cp_newsletter:heading:notify:{$heading}:{$number_items}", array($user_name),$Language);
       	break;
       case 'cp_mention':
-      	$proper_heading = elgg_echo("cp_newsletter:heading:notify:{$heading}");
+      	$proper_heading = elgg_echo("cp_newsletter:heading:notify:{$heading}:{$number_items}", array(), $Language);
       	break;
       default:
         $proper_heading = $heading;

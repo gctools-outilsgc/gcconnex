@@ -114,26 +114,36 @@ $english = array(
 
 
 	/// NEWSLETTER HEADINGS
-	'cp_newsletter:heading:notify:personal' => "Personal Notification",
+	'cp_newsletter:heading:notify:personal:singular' => "Personal Notification",
+	'cp_newsletter:heading:notify:personal:plural' => "Personal Notifications",
+
 	'cp_newsletter:heading:notify:mission' => "Opportunity (Micro Mission) Notification",
 	'cp_newsletter:heading:notify:group' => "Group Notification",
-	'cp_newsletter:heading:notify:new_post' => "New content posted by your colleagues",
 	'cp_newsletter:heading:notify:cp_wire_share' => "Content(s) that have been shared",
-	'cp_newsletter:heading:notify:likes' => "Users that have liked your content",
-	'cp_newsletter:heading:notify:friend_request' => "Colleague requests",
-	'cp_newsletter:heading:notify:friend_approved' => "%s has approved your colleague requests",
 
-	'cp_newsletter:heading:notify:content_revision:plural' => "Contents that have been revised",
+	'cp_newsletter:heading:notify:friend_request' => "Colleague requests",
+
+	'cp_newsletter:heading:notify:friend_approved:singular' => "%s has approved your colleague requests",
+
+
+	'cp_newsletter:heading:notify:likes:singular' => "User that have liked your content",
+	'cp_newsletter:heading:notify:likes:plural' => "Users that have liked your content",
+
+	'cp_newsletter:heading:notify:new_post:singular' => "New content posted by your colleague",
+	'cp_newsletter:heading:notify:new_post:plural' => "New contents posted by your colleagues",
+
 	'cp_newsletter:heading:notify:content_revision:singular' => "Content that have been revised",
+	'cp_newsletter:heading:notify:content_revision:plural' => "Contents that have been revised",
+
+	'cp_newsletter:heading:notify:cp_mention:singular' => "Content that you have been mentioned",
+	'cp_newsletter:heading:notify:cp_mention:plural' => "Contents that you have been mentioned",
+
 
 	'cp_newsletter:heading:notify:forum_topic' => "Forum Topics",
 	'cp_newsletter:heading:notify:forum_reply' => "Forum Topic Replies",
 	'cp_newsletter:heading:notify:response' => "Response to a content you are subscribed to",
 
-	'cp_newsletter:heading:notify:cp_mention' => "You were mentioned",
-	//'cp_newsletter:heading:notify:mention' => "%s has mentioned you in GCconnex: %s",
-
-
+	
 
 	/// (INSTANT EMAIL) EMAIL CONTENT: Normal email notifications
 	'cp_newsletter:footer:notification_settings' => "To unsubscribe or manage these messages, please login and visit your <a href='{$site->getURL()}settings/plugin/%s/cp_notifications'> Notification Settings</a>.",

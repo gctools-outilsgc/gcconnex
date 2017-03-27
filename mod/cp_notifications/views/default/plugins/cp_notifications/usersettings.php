@@ -111,7 +111,7 @@ $content .= '</section>';
 /// SUBSCRIBE TO COLLEAGUE NOTIFICATIONS
 $colleagues = $user->getFriends(array('limit' => false));
 $subscribed_colleagues = elgg_get_plugin_user_setting('subscribe_colleague_picker', $user->getOwnerGUID(),'cp_notifications');
-
+error_log("==========================================================subs: {$subscribed_colleagues}");
 $colleague_picker = elgg_view('input/friendspicker', array(
 	'entities' => $colleagues, 
 	'name' => 'params[subscribe_colleague_picker]', 

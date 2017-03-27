@@ -45,6 +45,9 @@ $french = array(
 	'cp_notifications:subtype:photo' => "Images",
 	'cp_notifications:subtype:task' => "Tâche",
 
+
+
+
 	'cp_notifications:mail_body:subtype:groupforumtopic' => "% a publié une discussion %s",
 	'cp_notifications:mail_body:subtype:hjforumtopic' => "%s a posté un sujet sur le forum %s",
 	'cp_notifications:mail_body:subtype:hjforumpost' => "%s a publié une réponse à un sujet de forum %s",
@@ -101,18 +104,39 @@ $french = array(
 	'cp_newsletter:greeting' => "Bonjour %s. Voici vos notifications pour le <strong>%s</strong>",
 
 
-	'cp_newsletter:heading:notify:content_revision' => "Contenu qui a été révisé",
+	'cp_newsletter:heading:notify:personal:singular' => "Vos abonnement",
+	'cp_newsletter:heading:notify:personal:plural' => "Vos abonnements",
+
+	'cp_newsletter:heading:notify:group' => "Notifications de groupe",
+
+
+
 	'cp_newsletter:heading:notify:mission' => "Avis d’occasion (micro-mission)",
 	'cp_newsletter:heading:notify:group' => "Avis de groupes",
-	'cp_newsletter:heading:notify:new_post' => "Nouveau contenu publié par vos collègues",
+
 	'cp_newsletter:heading:notify:cp_wire_share' => "Contenu qui a été partagé",
-	'cp_newsletter:heading:notify:likes' => "Utilisateurs ayant apprécié votre contenu",
+	
 	'cp_newsletter:heading:notify:friend_request' => "Demandes de collègues",
 	'cp_newsletter:heading:notify:friend_approved' => "%s a approuvé vos demandes de collègue",
 	'cp_newsletter:heading:notify:personal' => "Avis personnels",
 	'cp_newsletter:heading:notify:forum_topic' => "Sujets de forum",
 	'cp_newsletter:heading:notify:forum_reply' => "Réponses au sujet de forum",
 	'cp_newsletter:heading:notify:response' => "Réponse à un contenu auquel vous êtes abonné",
+
+
+	'cp_newsletter:heading:notify:likes:singular' => "Utilisateur ayant apprécié votre contenu",
+	'cp_newsletter:heading:notify:likes:plural' => "Utilisateurs ayant apprécié votre contenus",
+
+	'cp_newsletter:heading:notify:new_post:singular' => "Nouveau contenu publié par vos collègue",
+	'cp_newsletter:heading:notify:new_post:plural' => "Nouveaus contenus publié par vos collègues",
+
+	'cp_newsletter:heading:notify:content_revision:singular' => "Contenu qui a été révisé",
+	'cp_newsletter:heading:notify:content_revision:plural' => "Contenus qui a été révisé",
+
+	'cp_newsletter:heading:notify:cp_mention:singular' => "Contenu que vous avez mentionné",
+	'cp_newsletter:heading:notify:cp_mention:plural' => "Contenus que vous avez mentionnés",
+
+
 
 	'cp_newsletter:footer:notification_settings' => "Pour vous désabonner ou gérer ces messages, veuillez vous connecter et visiter votre <a href='{$site->getURL()}settings/plugin/%s/cp_notifications'> Paramètres de notification</a>.",
 	'cp_newsletter:ending' => "<p>Cordialement,</p> <p>L'équipe GCTools</p>",

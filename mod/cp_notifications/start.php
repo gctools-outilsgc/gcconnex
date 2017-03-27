@@ -773,7 +773,6 @@ function cp_create_notification($event, $type, $object) {
 	$to_recipients = array();
 	$subject = "";
 
-
 	switch ($object->getSubtype()) {
 
 		case 'discussion_reply':
@@ -784,17 +783,20 @@ function cp_create_notification($event, $type, $object) {
 
 			// send mentioned users a notification
 			//foreach ($cp_mentioned_users as $key => $cp_mentioned_user) {
-			for($i = 0; $i < sizeof($cp_mentioned_users); $i++) {
+
+			if (sizeof($cp_mentioned_users) > 0 && is_array($cp_mentioned_users)) {
+			for ($i = 0; $i < sizeof($cp_mentioned_users); $i++) {
 				$cp_mentioned_user = $cp_mentioned_users[$i];
 				$mentioned_user = get_user_by_username(substr($cp_mentioned_user, 1));
 				$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $mentioned_user->guid, 'cp_notifications');
 
 				// send digest
-				if (strcmp($user_setting, "set_digest_yes") == 0)
-					create_digest($object->getOwnerEntity(), "mention", $object, $mentioned_user));
+				if (strcmp($user_setting, "set_digest_yes") == 0) {
+					create_digest($object->getOwnerEntity(), "mention", $object, $mentioned_user);
+				
 				
 				// send email and site notification
-				else {
+				} else {
 					$template = elgg_view('cp_notifications/email_template', $message);
 
 					if (elgg_is_active_plugin('phpmailer'))
@@ -806,6 +808,8 @@ function cp_create_notification($event, $type, $object) {
 				}
 
 			}
+		}
+
 
 			// retrieve all necessary information for notification
 			$container_entity = $object->getContainerEntity();
@@ -859,6 +863,8 @@ function cp_create_notification($event, $type, $object) {
 
 
 			$to_recipients = get_subscribers($dbprefix, $object->getOwnerGUID(), $object->getContainerGUID());
+		
+		error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>> ".print_r($to_recipients,true));
 			break;
 
 		// micromissions / opportunities
@@ -1170,18 +1176,18 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 				$template = elgg_view('cp_notifications/newsletter_template_empty', array('to' => $to));
 
 
-			/*if (elgg_is_active_plugin('phpmailer'))
-				phpmailer_send($to->email, $to->name, $subject, $template, NULL, true );
-			else
-				mail($to->email, $subject, $template, cp_get_headers());
-			*/
+			//if (elgg_is_active_plugin('phpmailer'))
+			//	phpmailer_send($to->email, $to->name, $subject, $template, NULL, true );
+			//else
+			//	mail($to->email, $subject, $template, cp_get_headers());
+			
 
 
 			//echo $template;
 			echo "<p>Digest sent to user email: {$to->email} ({$to->guid})</p>";
 
 			//echo "<br/><br/>";
-			//echo $template;
+			echo $template;
 			
 			// clean up the newsletter
 			$newsletter_object->description = json_encode(array());
