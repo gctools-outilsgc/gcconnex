@@ -55,7 +55,11 @@ Goto ```http://localhost/gcconnex```.  Follow instructions.  You will need to en
     chmod 775 gcconnex/engine
 
 #### Configure Plugins
-The final step to getting the GCconnex experience is to reorder and enable/disable plugins in the Administration section of your installation.
+The final step to getting the GCconnex experience is to reorder and
+enable/disable plugins in the Administration section of your installation.
+
+A quick way to sort and activate plugins in the correct order is to activate
+the "Elgg plugin reorder plugin".
 
 ### Elgg Installation Instructions
 http://learn.elgg.org/en/1.x/intro/install.html

@@ -1,0 +1,48 @@
+version: '2'
+services:
+  # ###########################################################################
+  # Uncomment if you want to use a custom host such as http://gcconnex.local
+  #
+  # You would need to ensure your chosen custom host resolved correctly on your
+  # system... typically by adding entries to your system's host file.
+  # /etc/hosts on Linux / Mac OS
+  # %SYSTEM%\drivers\etc\hosts on Win (C:\Windows\System32\drivers\etc\hosts)
+  # ###########################################################################
+  # nginx-proxy:
+  #   image: jwilder/nginx-proxy
+  #   ports:
+  #     - "80:80"
+  #   volumes:
+  #     - /var/run/docker.sock:/tmp/docker.sock:ro
+  #   logging:
+  #     driver: none
+
+  # ###########################################################################
+  # The GCConnex container.  Will be accessible at http://localhost:8080, or
+  # via the hostname provided in the VIRTUAL_HOST environment variable if
+  # nginx-proxy is uncommented above.
+  # ###########################################################################
+  gcconnex:
+    build: .
+    ports:
+      - 8080:80
+    volumes:
+      - .:/var/www/html
+      - ./data/data:/data
+    depends_on:
+      - gcconnex-db
+      # - nginx-proxy
+    environment:
+      - VIRTUAL_HOST=gcconnex.local
+
+  # ###########################################################################
+  # Database container for gcconnex, accessible from within gcconnex using the
+  # network host "gcconnex-db".
+  # ###########################################################################
+  gcconnex-db:
+    image: library/mysql:5.6
+    environment:
+      - MYSQL_ROOT_PASSWORD=gcconnex
+      - MYSQL_DATABASE=elgg
+      - MYSQL_USER=elgg
+      - MYSQL_PASSWORD=gcconnex
