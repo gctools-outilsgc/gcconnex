@@ -540,7 +540,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 	$liked_content = get_entity($object->entity_guid);
 	$type_of_like = $liked_content->getSubtype();
 	$action_type = "content_revision";
-
+	$author = $liked_by;
 
 	/// EDITS TO BLOGS AND PAGES, THEY ARE CONSIDERED ANNOTATION DUE TO REVISIONS AND MULTIPLE COPIES OF SAME CONTENT
 	if (strcmp($object_subtype,'likes') != 0) {
@@ -657,7 +657,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 				);
 
 	    		$author = get_entity($comment_author->getGUID());
-
+	    		$content_entity = $content;
 				$to_recipients[$comment_author->getGUID()] = $comment_author;
 	    		break;
 	    	
@@ -672,7 +672,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 					'cp_msg_type' => 'cp_likes_topic_replies',
 				);
 				$author = get_entity($comment_author->getGUID());
-
+				$content_entity = $content;
 				$to_recipients[$comment_author->getGUID()] = $comment_author;
 	    		break;
 
@@ -697,6 +697,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 		    		$type_of_like = 'content';
 		    		$liked_by = get_user($object->owner_guid); // get user who liked content
 		    		$content = get_entity($object->entity_guid);
+
 		    		$content_author = get_user($content->owner_guid);
 
 		    		// cyu - patching issue #323 (liking wire post)
@@ -725,12 +726,15 @@ function cp_create_annotation_notification($event, $type, $object) {
 	}
 
 	$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
-	$author = $liked_by;
+	
 
 
 	foreach ($to_recipients as $to_recipient_id => $to_recipient) {
 		$message['user_name'] = get_user($to_recipient->guid)->username;
 		$message['_user_e-mail'] = $to_recipient->email;	// for P/T user
+
+		if ($to_recipient->guid == $liked_by->guid)
+			continue;
 
 		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0)
 			create_digest($author, $action_type, $content_entity, $to_recipient);
@@ -876,7 +880,7 @@ function cp_create_notification($event, $type, $object) {
 			foreach ($op_siteusers as $result) {
 				$userid = $result->entity_guid;
 				$user_obj = get_user($userid);
-				if (userOptedIn($user_obj, $object->job_type)) $to_recipients[$userid] = $user_obj;
+				if (userOptedIn($user_obj, $object->job_type)) $to_recipients_site[$userid] = $user_obj;
 			}
 
 			// get users who want to be notified about new opportunities by email
@@ -885,7 +889,7 @@ function cp_create_notification($event, $type, $object) {
 			foreach ($op_emailusers as $result) {
 				$userid = $result->entity_guid;
 				$user_obj = get_user($userid);
-				if ( userOptedIn( $user_obj, $object->job_type ) ) $to_recipients_email[$userid] = $user_obj;
+				if ( userOptedIn( $user_obj, $object->job_type ) ) $to_recipients[$userid] = $user_obj;
 					
 			}
 
@@ -994,6 +998,7 @@ function cp_create_notification($event, $type, $object) {
 
 	foreach ($to_recipients as $to_recipient)
 	{
+		error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>> mission! {$to_recipient->name}");
 		$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid, 'cp_notifications');
 
 		// send digest

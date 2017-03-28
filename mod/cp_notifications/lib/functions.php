@@ -207,7 +207,6 @@ error_log("send to: {$send_to} /// {$send_to->cpn_newsletter}");
 	}
 
 
-
 	switch ($subtype) {
 		case 'mission':
 
@@ -225,6 +224,7 @@ error_log("send to: {$send_to} /// {$send_to->cpn_newsletter}");
 
 			$content_array = array(
 				'content_title' => $content_title,
+				'content_author_name' => $entity->getOwnerEntity()->name,
 				'content_url' => $entity->getURL(),
 				'subtype' => $entity->job_type,
 				'deadline' => $entity->deadline
@@ -283,7 +283,20 @@ error_log("send to: {$send_to} /// {$send_to->cpn_newsletter}");
 
 
 		case 'post_likes':
-			$digest_collection['personal']['likes']["{$entity->guid}{$author->guid}"] = json_encode($content_array);
+
+
+			if ($content_title === null) {
+				error_log(">>>>>>>>>>>>>>>>>>>> <<<<   {$entity->title} /// {$entity->getContainerEntity()->title}");
+				$content_array = array(
+					'content_title' => $entity->getContainerEntity()->title,
+					'content_url' =>  $entity->getContainerEntity()->getURL(),
+					'subtype' => $entity->getSubtype(),
+					'content_author_name' => $invoked_by->name,
+					'content_author_url' => $invoked_by->getURL()
+				);
+			} else {
+				$digest_collection['personal']['likes']["{$entity->guid}{$author->guid}"] = json_encode($content_array);
+			}
 			break;
 
 
@@ -458,7 +471,7 @@ function userOptedIn( $user_obj, $mission_type ) {
   function render_contents($content_array, $heading = '', $language_preference = 'en') {
 
     $author = $content_array['content_author_name'];
-
+error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>> author {$author}");
     // this is specifically for the Micro Missions portion due to extra field
     $subtype = elgg_echo($content_array['subtype']);
     $subtype = cp_translate_subtype($subtype);
@@ -466,7 +479,7 @@ function userOptedIn( $user_obj, $mission_type ) {
     if ($content_array['deadline']) {
       $closing_date = 'Closing Date : '.$content_array['deadline'];
       $subtype = elgg_echo($subtype);
-      $author = '';
+     
     }
 
 	if ($heading === 'cp_wire_share') {
@@ -517,14 +530,6 @@ function userOptedIn( $user_obj, $mission_type ) {
 
       $url = "<a href='{$content_array['content_url']}'>{$content_title}</a>";
       $rendered_content = elgg_echo("cp_notifications:mail_body:subtype:{$heading}", array($author, $url), $language_preference);
-     
-    /*elseif ($heading === 'cp_wire_share') {
-
-    	// share..
-    	      $content_title = (is_array($content_array['content_title'])) ? $content_array['content_title'][$language_preference] : $content_title = $content_array['content_title'];
-
-      $url = "<a href='{$content_array['content_url']}'>{$content_title}</a>";
-      $rendered_content = elgg_echo("cp_notifications:mail_body:subtype:{$heading}", array($author, $url), $language_preference);*/
 
     } else {
       // limit 35 characters

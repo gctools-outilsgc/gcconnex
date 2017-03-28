@@ -20,8 +20,6 @@ $old_colleague_list = json_decode($plugin->getUserSetting('subscribe_colleague_p
 $plugin_name = $plugin->getManifest()->getName();
 foreach ($params as $k => $v) {
 	
-error_log("key: {$k} /// value: {$v}");
-
 	// select all checkbox, don't save metadata
 	if (strpos($k,'cpn_group_') !== false)
 		continue;
@@ -77,10 +75,20 @@ $new_colleague_list = json_decode($plugin->getUserSetting('subscribe_colleague_p
 
 /// fix the user to user relationship
 foreach ($old_colleague_list as $old_colleague) {
+	
 	if (!$new_colleague_list[$old_colleague]) {
 		remove_entity_relationship($user_guid, 'cp_subscribed_to_email', $old_colleague);
 		remove_entity_relationship($user_guid, 'cp_subscribed_to_site_mail', $old_colleague);
 	}	
+}
+
+/// there is something weird going on with friends picker
+if (!array_key_exists('subscribe_colleague_picker', $params)) {
+	foreach ($new_colleague_list as $new_colleague) {
+		remove_entity_relationship($user_guid, 'cp_subscribed_to_email', $new_colleague);
+		remove_entity_relationship($user_guid, 'cp_subscribed_to_site_mail', $new_colleague);
+	}
+	$result = $plugin->setUserSetting('subscribe_colleague_picker', json_encode(array()), $user->guid);
 }
 
 

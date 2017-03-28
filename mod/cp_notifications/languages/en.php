@@ -117,9 +117,14 @@ $english = array(
 	'cp_newsletter:heading:notify:personal:singular' => "Personal Notification",
 	'cp_newsletter:heading:notify:personal:plural' => "Personal Notifications",
 
-	'cp_newsletter:heading:notify:mission' => "Opportunity (Micro Mission) Notification",
-	'cp_newsletter:heading:notify:group' => "Group Notification",
-	'cp_newsletter:heading:notify:cp_wire_share' => "Content(s) that have been shared",
+	'cp_newsletter:heading:notify:mission:singular' => "Opportunity (Micro Mission) Notification",
+	'cp_newsletter:heading:notify:mission:plural' => "Opportunity (Micro Mission) Notifications",
+
+	'cp_newsletter:heading:notify:group:singular' => "Group Notification",
+	'cp_newsletter:heading:notify:group:plural' => "Group Notifications",
+
+	'cp_newsletter:heading:notify:cp_wire_share:singular' => "Content has been shared",
+	'cp_newsletter:heading:notify:cp_wire_share:plural' => "Contents that have been shared",
 
 	'cp_newsletter:heading:notify:friend_request' => "Colleague requests",
 

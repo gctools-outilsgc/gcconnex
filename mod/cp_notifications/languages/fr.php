@@ -107,18 +107,25 @@ $french = array(
 	'cp_newsletter:heading:notify:personal:singular' => "Vos abonnement",
 	'cp_newsletter:heading:notify:personal:plural' => "Vos abonnements",
 
-	'cp_newsletter:heading:notify:group' => "Notifications de groupe",
+	'cp_newsletter:heading:notify:group:singular' => "Notification de groupe",
+	'cp_newsletter:heading:notify:group:plural' => "Notifications de groupe",
 
 
+	'cp_newsletter:heading:notify:mission:singular' => "Avis d’occasion (micro-mission)",
+	'cp_newsletter:heading:notify:mission:plural' => "Avis d’occasions (micro-missions)",
 
-	'cp_newsletter:heading:notify:mission' => "Avis d’occasion (micro-mission)",
-	'cp_newsletter:heading:notify:group' => "Avis de groupes",
+	'cp_newsletter:heading:notify:personal:singular' => "Avis personnel",
+	'cp_newsletter:heading:notify:personal:plural' => "Avis personnels",
 
-	'cp_newsletter:heading:notify:cp_wire_share' => "Contenu qui a été partagé",
+	'cp_newsletter:heading:notify:group:singular' => "Avis de groupe",
+	'cp_newsletter:heading:notify:group:plural' => "Avis des groupes",
+
+	'cp_newsletter:heading:notify:cp_wire_share:singular' => "Contenu qui a été partagé",
+	'cp_newsletter:heading:notify:cp_wire_share:plural' => "Contenus qui sont été partagés",
 	
 	'cp_newsletter:heading:notify:friend_request' => "Demandes de collègues",
 	'cp_newsletter:heading:notify:friend_approved' => "%s a approuvé vos demandes de collègue",
-	'cp_newsletter:heading:notify:personal' => "Avis personnels",
+	
 	'cp_newsletter:heading:notify:forum_topic' => "Sujets de forum",
 	'cp_newsletter:heading:notify:forum_reply' => "Réponses au sujet de forum",
 	'cp_newsletter:heading:notify:response' => "Réponse à un contenu auquel vous êtes abonné",
