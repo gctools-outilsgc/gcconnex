@@ -73,6 +73,7 @@ $english = array(
 
 	'cp_newsletter:other_content:notice' => "These subscriptions are only for content that is not part of a group",
 
+	'cp_notifications:subtype:name:thewire' => "fil",
 
 	'cp_notifications:no_colleagues' => "You do not have any colleagues",
     'cp_notifications:chkbox:email' => "Email",
@@ -104,7 +105,7 @@ $english = array(
     'cp_notifications:heading:group_section' => 'Group Notifications',
  	'cp_notifications:heading:nonGroup_section' => 'Other content subscriptions',
 
-
+	'cp_notifications:subtype:name:thewire' => "Wire",
 	
 	/// (NEWSLETTER) THROUGH EMAIL SERVER, EMAIL CONTENT: Newsletter email notifications
 	'cp_newsletter:title:nothing' => "Your {$site_name} Digest: Nothing to report today",
@@ -126,10 +127,11 @@ $english = array(
 	'cp_newsletter:heading:notify:cp_wire_share:singular' => "Content has been shared",
 	'cp_newsletter:heading:notify:cp_wire_share:plural' => "Contents that have been shared",
 
-	'cp_newsletter:heading:notify:friend_request' => "Colleague requests",
+	'cp_newsletter:heading:notify:friend_request:singular' => "Colleague requests",
+	'cp_newsletter:heading:notify:friend_request:plural' => "Colleague request",
 
-	'cp_newsletter:heading:notify:friend_approved:singular' => "%s has approved your colleague requests",
-
+	'cp_newsletter:heading:notify:friend_approved:singular' => "%s has approved your colleague request",
+	'cp_newsletter:heading:notify:friend_approved:plural' => "%s has approved your colleague requests",
 
 	'cp_newsletter:heading:notify:likes:singular' => "User that have liked your content",
 	'cp_newsletter:heading:notify:likes:plural' => "Users that have liked your content",
@@ -144,9 +146,14 @@ $english = array(
 	'cp_newsletter:heading:notify:cp_mention:plural' => "Contents that you have been mentioned",
 
 
-	'cp_newsletter:heading:notify:forum_topic' => "Forum Topics",
-	'cp_newsletter:heading:notify:forum_reply' => "Forum Topic Replies",
-	'cp_newsletter:heading:notify:response' => "Response to a content you are subscribed to",
+	'cp_newsletter:heading:notify:forum_topic:singular' => "Forum Topic",
+	'cp_newsletter:heading:notify:forum_topic:plural' => "Forum Topics"
+
+	'cp_newsletter:heading:notify:forum_reply:singular' => "Forum Topic Reply",
+	'cp_newsletter:heading:notify:forum_reply:plural' => "Forum Topic Replies",
+
+	'cp_newsletter:heading:notify:response:singular' => "Response to a content you are subscribed to",
+	'cp_newsletter:heading:notify:response:plural' => "Responses to a content you are subscribed to",
 
 	
 

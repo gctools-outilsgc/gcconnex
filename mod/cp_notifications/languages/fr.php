@@ -45,7 +45,7 @@ $french = array(
 	'cp_notifications:subtype:photo' => "Images",
 	'cp_notifications:subtype:task' => "Tâche",
 
-
+	'cp_notifications:subtype:name:thewire' => "fil",
 
 
 	'cp_notifications:mail_body:subtype:groupforumtopic' => "% a publié une discussion %s",
@@ -63,7 +63,7 @@ $french = array(
 	'cp_notifications:mail_body:subtype:task' => "%s a publié une tâche %s",
 	'cp_notifications:mail_body:subtype:likes' => "%s a aimé votre publication: %s",
 	'cp_notifications:mail_body:subtype:response' => "%s a répondu ou commenté votre publication: %s",
-	'cp_notifications:mail_body:subtype:any' => "%s posted a%s %s %s", // john doe post un blogue vs john doe posted un blog
+	'cp_notifications:mail_body:subtype:any' => "%s a publié %s %s %s", // john doe post un blogue vs john doe posted un blog
 
 	'cp_newsletter:other_content:notice' => "Ces abonnements s'appliquent uniquement au contenu qui ne fait pas partie d'un groupe",
 	
@@ -123,12 +123,21 @@ $french = array(
 	'cp_newsletter:heading:notify:cp_wire_share:singular' => "Contenu qui a été partagé",
 	'cp_newsletter:heading:notify:cp_wire_share:plural' => "Contenus qui sont été partagés",
 	
-	'cp_newsletter:heading:notify:friend_request' => "Demandes de collègues",
+	'cp_newsletter:heading:notify:friend_request:singular' => "Demandes de collègue",
+	'cp_newsletter:heading:notify:friend_request:plural' => "Demandes des collègues",
+
+	'cp_newsletter:heading:notify:friend_approved:singular' => "%s a approuvé vos demandes de collègue",
 	'cp_newsletter:heading:notify:friend_approved' => "%s a approuvé vos demandes de collègue",
-	
-	'cp_newsletter:heading:notify:forum_topic' => "Sujets de forum",
-	'cp_newsletter:heading:notify:forum_reply' => "Réponses au sujet de forum",
-	'cp_newsletter:heading:notify:response' => "Réponse à un contenu auquel vous êtes abonné",
+	'cp_newsletter:heading:notify:friend_approved:plural' => "%s a approuvé vos demandes des collègues",
+
+	'cp_newsletter:heading:notify:forum_topic:singular' => "Sujets des forums",
+	'cp_newsletter:heading:notify:forum_topic:plural' => "Sujets de forum",
+
+	'cp_newsletter:heading:notify:forum_reply:singular' => "Réponse au sujet des forums",
+	'cp_newsletter:heading:notify:forum_reply:plural' => "Réponses au sujet de forum",
+
+	'cp_newsletter:heading:notify:response:singular' => "Réponse à un contenu auquel vous êtes abonné",
+	'cp_newsletter:heading:notify:response:plural' => "Réponse à un contenu auquel vous êtes abonné",
 
 
 	'cp_newsletter:heading:notify:likes:singular' => "Utilisateur ayant apprécié votre contenu",

@@ -511,7 +511,7 @@ function userOptedIn( $user_obj, $mission_type ) {
       $rendered_content = elgg_echo("cp_notifications:mail_body:subtype:{$heading}", array($author, $subtype, $url), $language_preference);
 
     } elseif ($content_array['subtype'] === 'thewire') {
-      $url = "<a href='{$content_array['content_url']}'>{$subtype}</a>";
+      $url = "<a href='{$content_array['content_url']}'>".elgg_echo('cp_notifications:subtype:name:thewire', $language_preference)."</a>";
       $rendered_content = elgg_echo("cp_notifications:mail_body:subtype:{$content_array['subtype']}", array($author, $url), $language_preference);
 
 
