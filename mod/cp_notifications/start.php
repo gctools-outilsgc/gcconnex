@@ -868,7 +868,6 @@ function cp_create_notification($event, $type, $object) {
 
 			$to_recipients = get_subscribers($dbprefix, $object->getOwnerGUID(), $object->getContainerGUID());
 		
-		error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>> ".print_r($to_recipients,true));
 			break;
 
 		// micromissions / opportunities
@@ -998,8 +997,11 @@ function cp_create_notification($event, $type, $object) {
 
 	foreach ($to_recipients as $to_recipient)
 	{
-		error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>> mission! {$to_recipient->name}");
+		
 		$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid, 'cp_notifications');
+
+		if ($to_recipient->guid == $author->guid)
+			continue;
 
 		// send digest
 		if (strcmp($user_setting, "set_digest_yes") == 0)
@@ -1180,19 +1182,19 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 			else
 				$template = elgg_view('cp_notifications/newsletter_template_empty', array('to' => $to));
 
-
+/*
 			if (elgg_is_active_plugin('phpmailer'))
 				phpmailer_send($to->email, $to->name, $subject, $template, NULL, true );
 			else
 				mail($to->email, $subject, $template, cp_get_headers());
 			
-
+*/
 
 			//echo $template;
 			echo "<p>Digest sent to user email: {$to->email} ({$to->guid})</p>";
 
 			//echo "<br/><br/>";
-			//echo $template;
+			echo $template;
 			
 			// clean up the newsletter
 			$newsletter_object->description = json_encode(array());

@@ -167,7 +167,6 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 	$digest = get_entity($send_to->cpn_newsletter);
 	$digest_collection = json_decode($digest->description,true);
 
-error_log("send to: {$send_to} /// {$send_to->cpn_newsletter}");
 	$content_title = $entity->title; // default value for title
 
 	if (!$entity->title) $entity = get_entity($entity->guid);
@@ -286,7 +285,6 @@ error_log("send to: {$send_to} /// {$send_to->cpn_newsletter}");
 
 
 			if ($content_title === null) {
-				error_log(">>>>>>>>>>>>>>>>>>>> <<<<   {$entity->title} /// {$entity->getContainerEntity()->title}");
 				$content_array = array(
 					'content_title' => $entity->getContainerEntity()->title,
 					'content_url' =>  $entity->getContainerEntity()->getURL(),
@@ -471,7 +469,7 @@ function userOptedIn( $user_obj, $mission_type ) {
   function render_contents($content_array, $heading = '', $language_preference = 'en') {
 
     $author = $content_array['content_author_name'];
-error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>> author {$author}");
+
     // this is specifically for the Micro Missions portion due to extra field
     $subtype = elgg_echo($content_array['subtype']);
     $subtype = cp_translate_subtype($subtype);
@@ -558,7 +556,7 @@ error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>> author {$author}");
 
     $proper_heading = '';
     $number_items = ($number > 1) ? "plural" : "singular";
-error_log("correct:    >>>>>>>     ".$number_items);
+
     switch ($heading) {
       case 'personal':
       case 'mission':
