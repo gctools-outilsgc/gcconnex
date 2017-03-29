@@ -112,10 +112,22 @@ $content .= '</section>';
 $colleagues = $user->getFriends(array('limit' => false));
 $subscribed_colleagues = elgg_get_plugin_user_setting('subscribe_colleague_picker', $user->getOwnerGUID(),'cp_notifications');
 
+
+	$subbed_colleagues = elgg_get_entities_from_relationship(array(
+		'relationship' => 'cp_subscribed_to_site_mail',
+		'relationship_guid' => $user->guid,
+		'type' => 'user',
+		'limit' => false,
+	));
+
+	foreach($subbed_colleagues as $c) {
+		$subbed_colleague_guids[] = $c->getGUID();
+	}
+
 $colleague_picker = elgg_view('input/friendspicker', array(
 	'entities' => $colleagues, 
 	'name' => 'params[subscribe_colleague_picker]', 
-	'value' => json_decode($subscribed_colleagues,true),
+	'value' => $subbed_colleague_guids//json_decode($subscribed_colleagues,true),
 ));
 
 $content .= "<section id='notificationstable' cellspacing='0' cellpadding='4' width='100%' class='clearfix'>";
@@ -211,18 +223,29 @@ $content .= '<div class="col-sm-12 group-notification-options"><h3 class="well">
 
 $content .= "<div class='alert alert-info col-sm-12'><p>".elgg_echo('cp_newsletter:other_content:notice')."</p></div>";
 
-sort($entity_list);
+$display_entity_list = array();
+$content_text = "";
+
 foreach ($entity_list as $subtype) {
 
-	$display_subtype = cp_translate_subtype($subtype); 
+	$content_text .= '<div class="accordion col-sm-12 clearfix mrgn-bttm-sm">';
+	$content_text .= '<details onClick="return create_content_item('.$user->getGUID().',\''.$subtype.'\') ">';
+	$content_text .= "<summary> ".elgg_echo("cp_notifications:subtype:{$subtype}")." </summary>";
+	$content_text .= "<div id='personal-content-{$subtype}' class='tgl-panel clearfix'></div>";
+	$content_text .= '</details>';
+	$content_text .= "</div>";
 
-	$content .= '<div class="accordion col-sm-12 clearfix mrgn-bttm-sm">';
-	$content .= '<details onClick="return create_content_item('.$user->getGUID().',\''.$subtype.'\') ">';
-	$content .= "<summary> ".elgg_echo("cp_notifications:subtype:{$subtype}")." </summary>";
-	$content .= "<div id='personal-content-{$subtype}' class='tgl-panel clearfix'></div>";
-	$content .= '</details>';
-	$content .= "</div>";
+	$display_entity_list[elgg_echo("cp_notifications:subtype:{$subtype}")] = $content_text;
+	$content_text = "";
 }
+
+ksort($display_entity_list);
+foreach ($display_entity_list as $key => $display) {
+	$content .= $display;
+}
+
+
+
 
 $content .= "</div>";
 $content .= "</section>";

@@ -14,7 +14,7 @@ $plugin = elgg_get_plugin_from_id($plugin_id);
 $user = get_entity($user_guid);
 
 /// array of subscribed users
-$old_colleague_list = json_decode($plugin->getUserSetting('subscribe_colleague_picker', $user->guid),true);
+//$old_colleague_list = json_decode($plugin->getUserSetting('subscribe_colleague_picker', $user->guid),true);
 
 /// overwriting the save action for usersettings in notifications, save all the checkboxes
 $plugin_name = $plugin->getManifest()->getName();
@@ -50,45 +50,27 @@ foreach ($params as $k => $v) {
 	}
 
 	/// create relationship between user and user (colleagues)
-	if (strpos($k,'subscribe_colleague_picker') == 0) {
-
+	if (strcmp($k,'subscribe_colleague_picker') == 0) {
 		// make sure that the value is an array, less warnings within the foreach loop
-		if (is_array($v)) {
-			foreach ($v as $colleague) {
-				$colleague_list[$colleague] = $colleague;
-				$result = $plugin->setUserSetting($k, json_encode($colleague_list), $user->guid);
+		$all_colleagues = $user->getFriends(array('limit' => false));
+		$subscribed_colleagues = $v;
 
-				add_entity_relationship($user_guid, 'cp_subscribed_to_email', $colleague);
-				add_entity_relationship($user_guid, 'cp_subscribed_to_site_mail', $colleague);
+		foreach ($all_colleagues as $colleague) {
+
+			if (in_array($colleague->getGUID(), $subscribed_colleagues)) {
+				$result1 = add_entity_relationship($user->guid, 'cp_subscribed_to_email', $colleague->guid);
+        		$result2 = add_entity_relationship($user->guid, 'cp_subscribed_to_site_mail', $colleague->guid);
+    		} else {
+    			$result1 = remove_entity_relationship($user->guid, 'cp_subscribed_to_email', $colleague->guid);
+        		$result2 = remove_entity_relationship($user->guid, 'cp_subscribed_to_site_mail', $colleague->guid);
 			}
-		}
+    	}
 	}
 
 	if (!$result) {
 		register_error(elgg_echo('plugins:usersettings:save:fail', array($plugin_name)));
 		forward(REFERER);
 	}
-}
-
-/// array of subscribed users
-$new_colleague_list = json_decode($plugin->getUserSetting('subscribe_colleague_picker', $user->guid),true);
-
-/// fix the user to user relationship
-foreach ($old_colleague_list as $old_colleague) {
-	
-	if (!$new_colleague_list[$old_colleague]) {
-		remove_entity_relationship($user_guid, 'cp_subscribed_to_email', $old_colleague);
-		remove_entity_relationship($user_guid, 'cp_subscribed_to_site_mail', $old_colleague);
-	}	
-}
-
-/// there is something weird going on with friends picker
-if (!array_key_exists('subscribe_colleague_picker', $params)) {
-	foreach ($new_colleague_list as $new_colleague) {
-		remove_entity_relationship($user_guid, 'cp_subscribed_to_email', $new_colleague);
-		remove_entity_relationship($user_guid, 'cp_subscribed_to_site_mail', $new_colleague);
-	}
-	$result = $plugin->setUserSetting('subscribe_colleague_picker', json_encode(array()), $user->guid);
 }
 
 

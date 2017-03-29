@@ -1032,9 +1032,12 @@ function cp_create_notification($event, $type, $object) {
  * @return Array <ElggUser> 
  */
 function get_subscribers($dbprefix, $user_guid, $entity_guid = '') {
+
+	$subscribed_to = ($entity_guid != '') ? $entity_guid : $user_guid;
+
 	$query = "	SELECT DISTINCT u.guid, u.email, u.username, u.name
 				FROM {$dbprefix}entity_relationships r LEFT JOIN {$dbprefix}users_entity u ON r.guid_one = u.guid 
-				WHERE r.guid_one <> {$user_guid} AND r.relationship LIKE 'cp_subscribed_to_%' AND r.guid_two = {$user_guid}";
+				WHERE r.guid_one <> {$user_guid} AND r.relationship LIKE 'cp_subscribed_to_%' AND r.guid_two = {$subscribed_to}";
 	return get_data($query);
 }
 

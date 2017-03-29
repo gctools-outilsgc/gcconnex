@@ -566,19 +566,19 @@ function userOptedIn( $user_obj, $mission_type ) {
       case 'likes':
       case 'friend_request':
       case 'content_revision':
-      	$proper_heading = elgg_echo("cp_newsletter:heading:notify:{$heading}:{$number_items}", array(), $Language);
+      	$proper_heading = elgg_echo("cp_newsletter:heading:notify:{$heading}:{$number_items}", array(), $language);
       	break;
 
       case 'forum_topic':
       case 'forum_reply':
       case 'response':
-        $proper_heading = elgg_echo("cp_newsletter:heading:notify:{$heading}:{$number_items}", array(), $Language);
+        $proper_heading = elgg_echo("cp_newsletter:heading:notify:{$heading}:{$number_items}", array(), $language);
         break;
       case 'friend_approved':
-       $proper_heading = elgg_echo("cp_newsletter:heading:notify:{$heading}:{$number_items}", array($user_name),$Language);
+       $proper_heading = elgg_echo("cp_newsletter:heading:notify:{$heading}:{$number_items}", array($user_name),$language);
       	break;
       case 'cp_mention':
-      	$proper_heading = elgg_echo("cp_newsletter:heading:notify:{$heading}:{$number_items}", array(), $Language);
+      	$proper_heading = elgg_echo("cp_newsletter:heading:notify:{$heading}:{$number_items}", array(), $language);
       	break;
       default:
         $proper_heading = $heading;
