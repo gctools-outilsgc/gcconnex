@@ -110,7 +110,7 @@ $english = array(
 	/// (NEWSLETTER) THROUGH EMAIL SERVER, EMAIL CONTENT: Newsletter email notifications
 	'cp_newsletter:title:nothing' => "Your {$site_name} Digest: Nothing to report today",
 	'cp_newsletter:body:nothing' => "It seems it was quiet in your network on GCconnex. Join <a href='{$site->getURL()}groups/all?filter=popular'>groups</a> of interest, share information and add new <a href='{$site->getURL()}members/popular'>colleagues</a> to stay informed and grow your network!",
-	'cp_newsletter:title' => "Your {$site_name} Digest: There has been some new contents and updates",
+	'cp_newsletter:title' => "Your {$site_name} Digest: New activities to report!", //CHANGE
 	'cp_newsletter:greeting' => "Good morning %s. Here are your notifications for <strong>%s</strong>.",
 
 
@@ -118,21 +118,21 @@ $english = array(
 	'cp_newsletter:heading:notify:personal:singular' => "Personal notification", //CHANGE	
 	'cp_newsletter:heading:notify:personal:plural' => "Personal notifications", //CHANGE
 	
-	'cp_newsletter:heading:notify:mission:singular' => "Opportunity Platform notification", //CHANGE	
-	'cp_newsletter:heading:notify:mission:plural' => "Opportunity Platform notifications", //CHANGE
+	'cp_newsletter:heading:notify:mission:singular' => "Opportunities Platform notification", //CHANGE	
+	'cp_newsletter:heading:notify:mission:plural' => "Opportunities Platform notifications", //CHANGE
 	
 	'cp_newsletter:heading:notify:group:singular' => "Group notification", //CHANGE	
 	'cp_newsletter:heading:notify:group:plural' => "Group notifications", //CHANGE
 	
-	'cp_newsletter:heading:notify:cp_wire_share:singular' => "Your content has been shared", //CHANGE	
-	'cp_newsletter:heading:notify:cp_wire_share:plural' => "Your content has been shared", //CHANGE
+	'cp_newsletter:heading:notify:cp_wire_share:singular' => "Your content has been shared!", //CHANGE	
+	'cp_newsletter:heading:notify:cp_wire_share:plural' => "Your content has been shared!", //CHANGE
 	
-	'cp_newsletter:heading:notify:friend_request:singular' => "Colleague request", //CHANGE
-	'cp_newsletter:heading:notify:friend_request:plural' => "Colleague requests", //CHANGE
+	'cp_newsletter:heading:notify:friend_request:singular' => "New colleague request", //CHANGE
+	'cp_newsletter:heading:notify:friend_request:plural' => "New colleague requests", //CHANGE
 	'cp_newsletter:heading:notify:friend_approved:singular' => "%s approved your colleague request", //CHANGE	
-	'cp_newsletter:heading:notify:friend_approved:plural' => "%s approved your colleague requests", //CHANGE
-	'cp_newsletter:heading:notify:likes:singular' => "User liked your content", //CHANGE
-	'cp_newsletter:heading:notify:likes:plural' => "Users liked your content", //CHANGE
+	'cp_newsletter:heading:notify:friend_approved:plural' => "%s approved your colleague request", //CHANGE
+	'cp_newsletter:heading:notify:likes:singular' => "Your content has been liked!", //CHANGE
+	'cp_newsletter:heading:notify:likes:plural' => "Your content has been liked!", //CHANGE
 
 	'cp_newsletter:heading:notify:new_post:singular' => "New content posted by your colleague",
 	'cp_newsletter:heading:notify:new_post:plural' => "New content posted by your colleagues", //CHANGE
@@ -143,15 +143,14 @@ $english = array(
 	'cp_newsletter:heading:notify:cp_mention:singular' => "You have been mentioned!", //CHANGE	
 	'cp_newsletter:heading:notify:cp_mention:plural' => "You have been mentioned!", //CHANGE
 
-	'cp_newsletter:heading:notify:forum_topic:singular' => "Forum Topic", 
-	'cp_newsletter:heading:notify:forum_topic:plural' => "Forum Topics"
-
-	'cp_newsletter:heading:notify:forum_reply:singular' => "Reply to a Forum Topic", //CHANGE	
-	'cp_newsletter:heading:notify:forum_reply:plural' => "Replies to Forum Topics", //CHANGE
+	'cp_newsletter:heading:notify:forum_topic:singular' => "New forum topic", //CHANGE	
+	'cp_newsletter:heading:notify:forum_topic:plural' => "New forum topics" //CHANGE
 	
-	'cp_newsletter:heading:notify:response:singular' => "Response to a content you are subscribed to",
-	'cp_newsletter:heading:notify:response:plural' => "Responses to a content you are subscribed to",
-
+	'cp_newsletter:heading:notify:forum_reply:singular' => "Reply to forum topic", //CHANGE	
+	'cp_newsletter:heading:notify:forum_reply:plural' => "Replies to forum topics", //CHANGE
+	
+	'cp_newsletter:heading:notify:response:singular' => "Response to other content subscriptions", //CHANGE	
+	'cp_newsletter:heading:notify:response:plural' => "Responses to other content subscriptions", //CHANGE
 	
 
 	/// (INSTANT EMAIL) EMAIL CONTENT: Normal email notifications
