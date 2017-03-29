@@ -147,7 +147,7 @@ $english = array(
 
 
 	'cp_newsletter:heading:notify:forum_topic:singular' => "Forum Topic",
-	'cp_newsletter:heading:notify:forum_topic:plural' => "Forum Topics"
+	'cp_newsletter:heading:notify:forum_topic:plural' => "Forum Topics",
 
 	'cp_newsletter:heading:notify:forum_reply:singular' => "Forum Topic Reply",
 	'cp_newsletter:heading:notify:forum_reply:plural' => "Forum Topic Replies",

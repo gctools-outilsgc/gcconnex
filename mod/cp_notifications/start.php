@@ -789,30 +789,30 @@ function cp_create_notification($event, $type, $object) {
 			//foreach ($cp_mentioned_users as $key => $cp_mentioned_user) {
 
 			if (sizeof($cp_mentioned_users) > 0 && is_array($cp_mentioned_users)) {
-			for ($i = 0; $i < sizeof($cp_mentioned_users); $i++) {
-				$cp_mentioned_user = $cp_mentioned_users[$i];
-				$mentioned_user = get_user_by_username(substr($cp_mentioned_user, 1));
-				$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $mentioned_user->guid, 'cp_notifications');
+				for ($i = 0; $i < sizeof($cp_mentioned_users); $i++) {
+					$cp_mentioned_user = $cp_mentioned_users[$i];
+					$mentioned_user = get_user_by_username(substr($cp_mentioned_user, 1));
+					$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $mentioned_user->guid, 'cp_notifications');
 
-				// send digest
-				if (strcmp($user_setting, "set_digest_yes") == 0) {
-					create_digest($object->getOwnerEntity(), "mention", $object, $mentioned_user);
-				
-				
-				// send email and site notification
-				} else {
-					$template = elgg_view('cp_notifications/email_template', $message);
+					// send digest
+					if (strcmp($user_setting, "set_digest_yes") == 0) {
+						create_digest($object->getOwnerEntity(), "mention", $object, $mentioned_user);
+					
+					
+					// send email and site notification
+					} else {
+						$template = elgg_view('cp_notifications/email_template', $message);
 
-					if (elgg_is_active_plugin('phpmailer'))
-						phpmailer_send( $mentioned_user->email, $mentioned_user->name, $subject, $template, NULL, true );
-					else
-						mail($mentioned_user->email,$subject,$template,cp_get_headers());
+						if (elgg_is_active_plugin('phpmailer'))
+							phpmailer_send( $mentioned_user->email, $mentioned_user->name, $subject, $template, NULL, true );
+						else
+							mail($mentioned_user->email,$subject,$template,cp_get_headers());
 
-					messages_send($subject, $template, $mentioned_user->guid, $site->guid, 0, true, false);
+						messages_send($subject, $template, $mentioned_user->guid, $site->guid, 0, true, false);
+					}
+
 				}
-
 			}
-		}
 
 
 			// retrieve all necessary information for notification

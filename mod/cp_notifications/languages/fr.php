@@ -48,6 +48,10 @@ $french = array(
 	'cp_notifications:subtype:name:thewire' => "fil",
 
 
+	'cp_notifications:mail_body:subtype:content_revision' => "%s a on fait un revision pour %s %s",
+	'cp_notifications:mail_body:subtype:mention' => "%s a mentionnez dans %s: %s",
+
+
 	'cp_notifications:mail_body:subtype:groupforumtopic' => "% a publié une discussion %s",
 	'cp_notifications:mail_body:subtype:hjforumtopic' => "%s a posté un sujet sur le forum %s",
 	'cp_notifications:mail_body:subtype:hjforumpost' => "%s a publié une réponse à un sujet de forum %s",
