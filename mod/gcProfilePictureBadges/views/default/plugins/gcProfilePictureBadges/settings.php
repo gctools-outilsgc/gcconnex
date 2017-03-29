@@ -48,38 +48,6 @@ echo '</div>';
   echo '</div>';
 
 
-//checkbox to display pledge widget
- echo '<div style="margin-top:15px">';
-
-$options = array(
-  'name' => 'params[mentalHealth_group_display]',
-  'id' => 'mentalHealth-group-display',
-  'label'=>'Display Mental Health pledge widget in group sidebar',
-);
-if (elgg_get_plugin_setting('mentalHealth_group_display', 'gcProfilePictureBadges')) {
-	$options['checked'] = 'checked';
-}
- echo elgg_view ( "input/checkbox", $options);
-
- echo '</div>';
-
-
- //checkbox to display pledge widget
-  echo '<div style="margin-top:15px">';
-
- $options = array(
-   'name' => 'params[breakingBarriers_group_display]',
-   'id' => 'breakingBarriers-group-display',
-   'label'=>'Display Breaking Barriers pledge widget in group sidebar',
- );
- if (elgg_get_plugin_setting('breakingBarriers_group_display', 'gcProfilePictureBadges')) {
- 	$options['checked'] = 'checked';
- }
-  echo elgg_view ( "input/checkbox", $options);
-
-  echo '</div>';
-
-
  //checkbox to display pledge widget
   echo '<div style="margin-top:15px">';
 

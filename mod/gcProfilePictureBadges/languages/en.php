@@ -24,6 +24,8 @@ $english = array(
 
     'gcProfilePictureBadges:added' => 'The "%s" badge has been added to your avatar',
 
+		'gcProfilePictureBadges:form' => 'Enable "%s" badge',
+
     //info about badges - mental health
 		'gcProfilePictureBadges:badge:title:mentalHealth' => 'Supporting Mental health in the workplace',
 
