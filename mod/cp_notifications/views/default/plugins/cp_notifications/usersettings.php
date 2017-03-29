@@ -15,7 +15,7 @@ $dbprefix = elgg_get_config('dbprefix');
 $site = elgg_get_site_entity();
 elgg_load_library('elgg:gc_notification:functions');
 
-$title = elgg_echo('cp_notifications:heading:page_title',array("<a href='".elgg_get_site_url()."settings/user/'>".elgg_echo('cp_notifications:your_email')."</a>"));
+$title = elgg_echo('cp_notifications:heading:page_title');
 
 
 
@@ -201,7 +201,7 @@ $content .= "</section>";
 
 
 /// PERSONAL SUBSCRIPTIONS (DISPLAYS ALL ITEMS THAT DO NOT BELONG IN GROUP NOTIFICATIONS)
-$entity_list = array('blog', 'poll', 'bookmarks', 'event_calendar', 'file', 'photo', 'task', /*'page',*/ 'thewire'/*, 'task'*/);
+$entity_list = array('blog', 'poll', 'bookmarks', 'event_calendar', 'file', 'photo', /*'task',*/ /*'page',*/ 'thewire'/*, 'task'*/);
 $personal_subscriptions = get_data($query);
 
 
@@ -211,6 +211,7 @@ $content .= '<div class="col-sm-12 group-notification-options"><h3 class="well">
 
 $content .= "<div class='alert alert-info col-sm-12'><p>".elgg_echo('cp_newsletter:other_content:notice')."</p></div>";
 
+sort($entity_list);
 foreach ($entity_list as $subtype) {
 
 	$display_subtype = cp_translate_subtype($subtype); 
@@ -354,6 +355,8 @@ input:checked + .slider:before {
 
 			if (this.checked)
 				$(".info_digest_section").show('slow');
+			else
+				$(".info_digest_section").hide();
 		});
 
 		$(' #digest_frequency').click(function(e) {
