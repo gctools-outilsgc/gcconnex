@@ -32,12 +32,24 @@
     }
 </style>
 <div class="row clearfix wire-button-holder">
-    <a aria-hidden="true" role="button" id="wirePopup" class="overlay-lnk btn btn-default gcconnex-edit-profile pull-right" href="#showWire" aria-controls="mid-screen"><?php echo elgg_echo('onboard:wireButton'); ?></a>
+    <a role="button" id="wirePopup" class="overlay-lnk btn btn-default gcconnex-edit-profile pull-right" href="#showWire" aria-controls="mid-screen"><?php echo elgg_echo('onboard:wireButton'); ?></a>
 
+	                <?php if(!elgg_get_logged_in_user_entity()->hasVisitedWire){?>
+                      
+                <script>
+                    $(document).ready(function () {
+                        $('#wirePopup').delay(800).click();
+						$('#wirePopup').on('click', function(){
+							$('#showWire').focus();	
+						});
+                    });
+                </script>
+
+                      <?php }?>
 </div>
 
 
-<section class="wb-overlay modal-content overlay-def wb-popup-mid" id="showWire">
+<div class="wb-overlay modal-content overlay-def wb-popup-mid" id="showWire" tabindex="-1">
     <div class="">
         <div class="" id="welcome-step">
             <header class="modal-header">
@@ -95,16 +107,7 @@
 
                 </div>
 
-                <?php if(!elgg_get_logged_in_user_entity()->hasVisitedWire){?>
-                      
-                <script>
-                    $(document).ready(function () {
-                        $('#wirePopup').delay(800).click();
 
-                    });
-                </script>
-
-                      <?php }?>
 
                 <script>
                     $(document).ready(function () {
@@ -134,7 +137,7 @@
 
     </div>
 
-</section>
+</div>
 
 
 <?php

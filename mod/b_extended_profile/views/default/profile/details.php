@@ -19,9 +19,9 @@ echo '<div class="pull-right clearfix">';
 echo '<div class="gcconnex-profile-name">';
 //edit button
 if ($user->canEdit()) {
-    echo '<a role="button" class="btn btn-primary gcconnex-edit-profile overlay-lnk" href="#editProfile">' . elgg_echo('gcconnex_profile:edit_profile') . ' <span class="wb-inv">' . elgg_echo('profile:contactinfo') . '</span></a>';
+    echo '<a role="button" class="btn btn-primary gcconnex-edit-profile overlay-lnk" href="#editProfile">' . elgg_echo('gcconnex_profile:edit_profile') . ' <span class="wb-inv">' . elgg_echo('profile:contactinfo') . '</span></a><script>$(".gcconnex-edit-profile").on("click", function(){ $("#editProfile").focus(); });</script>';
     echo '<!-- Modal -->
-<section id="editProfile" class="wb-overlay modal-content overlay-def wb-popup-mid">
+<div id="editProfile" class="wb-overlay modal-content overlay-def wb-popup-mid" tabindex="-1">
     <div class="">
         <div class="">
             <header class="modal-header profile-edit-header">';
@@ -186,7 +186,7 @@ if ($user->canEdit()) {
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
-</section>
+</div>
 <!-- /.modal -->';
 
 }

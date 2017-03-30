@@ -95,7 +95,7 @@ $advanced_field = elgg_view('page/elements/hidden-field', array(
         background: rgba(0,0,0,0.4);
     }
 </style>
-<button aria-hidden="true" type="button" id="optinPopup" class="btn btn-primary btn-lg btn-block gcconnex-edit-profile" data-toggle="modal" data-target="#showOptin" data-keyboard="false" data-backdrop="static" data-colorbox-opts='{"inline":true, "href":"#showOptin", "innerWidth": 600, "maxHeight": "80%", "margin-top":"15%"}'><?php echo elgg_echo('missions:opt_in_to_opportunities'); ?></button>
+<button type="button" id="optinPopup" class="btn btn-primary btn-lg btn-block gcconnex-edit-profile" data-toggle="modal" data-target="#showOptin" data-keyboard="false" data-backdrop="static" data-colorbox-opts='{"inline":true, "href":"#showOptin", "innerWidth": 600, "maxHeight": "80%", "margin-top":"15%"}'><?php echo elgg_echo('missions:opt_in_to_opportunities'); ?></button>
     </div>
 
 </div>
