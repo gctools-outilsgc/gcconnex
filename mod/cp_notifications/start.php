@@ -950,6 +950,9 @@ function cp_create_notification($event, $type, $object) {
 				//$to_recipients = get_subscribers($dbprefix, $object->getContainerGUID(), $object->guid);
 				$guidone = $object->getContainerGUID();
 
+				$author_id = $object->getOwnerGUID();
+				$content_id = $object->getContainerGUID();
+
 			// subscribed to users or friends
 			} else {	
 
@@ -969,6 +972,8 @@ function cp_create_notification($event, $type, $object) {
 				}
 				$guidone = $object->getOwnerGUID();
 				//$to_recipients = get_subscribers($dbprefix, $object->getOwnerGUID(), $object->guid);
+				$author_id = $object->getOwnerGUID();
+				//$content_id = $object->guid;
 			}
 
 			// cyu - client wants the html tags stripped from the notifications
@@ -983,7 +988,7 @@ function cp_create_notification($event, $type, $object) {
 			$content_entity = $object;
 			$author = $object->getOwnerEntity();
 
-			$to_recipients = get_subscribers($dbprefix, $guidone, $object->guid);
+			$to_recipients = get_subscribers($dbprefix, $author_id, $content_id);
 			$email_only = false;
 			break;
 
