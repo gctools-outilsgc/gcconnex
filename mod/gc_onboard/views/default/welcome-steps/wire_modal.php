@@ -49,7 +49,7 @@
 </div>
 
 
-<div class="wb-overlay modal-content overlay-def wb-popup-mid" id="showWire" tabindex="-1" aria-live="assertive">
+<div class="wb-overlay modal-content overlay-def wb-popup-mid" id="showWire" tabindex="-1">
     <div class="">
         <div class="" id="welcome-step">
             <header class="modal-header">
