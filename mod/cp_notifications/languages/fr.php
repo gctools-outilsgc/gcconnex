@@ -80,7 +80,7 @@ $french = array(
 	'cp_notifications:group_content'=>'Contenu du groupe',
 	'cp_notifications:no_group_subscription' => 'Rien à charger',
 	'cp_notifications:loading' => 'Chargement...',
-	'cp_notifications:subscribe_all_label' => "<a href='%s'>S’abonner</a> ou <a href='%s'>Se désabonner</a> à tous les groupes et leur contenu",
+	'cp_notifications:subscribe_all_label' => "<a href='%s'>S’abonner</a> ou <a href='%s'>se désabonner</a> à tous les groupes et leur contenu", //CHANGE 2
 	'cp_notifications:chkbox:select_all_group_for_notification' => "Sélectionner tous les groupes (cette option ne sélectionnera pas le contenu des groupes).",
 
 	'cp_notify:personal_bulk_notifications' => 'Activer le résumé des notifications', 
@@ -89,7 +89,7 @@ $french = array(
 	'cp_notifications:personal_mentions'=>'Envoyez-moi une notification lorsque quelqu\'un me mentionne',
 	'cp_notifications:personal_content'=>'Envoyez-moi une notification lorsqu\'un changement est fait au contenu que j\'ai crée',
 	'cp_notifications:colleagueContent'=>'Envoyez-moi une notification lorsqu\'un(e) collègue crée du nouveau contenu',
-	'cp_notifications:personal_opportunities' => "Envoyez-moi une notification lorsqu\'une nouvelle opportunité que j'ai choisie est créée dans la Plateforme de possibilités de ConneXions Carrière", //CHANGE 1
+	'cp_notifications:personal_opportunities' => "Envoyez-moi une notification lorsqu'une nouvelle opportunité que j'ai choisie est créée dans la Plateforme de possibilités de ConneXions Carrière", //CHANGE 2
 
 	'cp_notifications:no_group_content' => "(Aucun contenu de groupe abonné)", //
 
@@ -117,7 +117,7 @@ $french = array(
 
 	'cp_newsletter:heading:notify:mission:singular' => "Notification pour la Plateforme de possibilités", //CHANGE
 	'cp_newsletter:heading:notify:mission:plural' => "Notifications pour la Plateforme de possibilités", //CHANGE
-
+	
 	'cp_newsletter:heading:notify:personal:singular' => "Notification personnelle", //CHANGE
 	'cp_newsletter:heading:notify:personal:plural' => "Notifications personnelles", //CHANGE
 
@@ -141,7 +141,7 @@ $french = array(
 	'cp_newsletter:heading:notify:forum_reply:plural' => "Réponses à des sujets de forum", //CHANGE
 
 	'cp_newsletter:heading:notify:response:singular' => "Réponse au contenu auquel vous êtes abonné", //CHANGE
-	'cp_newsletter:heading:notify:response:plural' => "Réponse aux contenus auxquels vous êtes abonné", //CHANGE
+	'cp_newsletter:heading:notify:response:plural' => "Réponses aux contenus auxquels vous êtes abonné", //CHANGE 2
 
 
 	'cp_newsletter:heading:notify:likes:singular' => "Item a été aimé.", //CHANGE 1
@@ -159,7 +159,7 @@ $french = array(
 
 
 	'cp_newsletter:footer:notification_settings' => "Pour vous désabonner ou gérer ces messages, veuillez vous connecter et visiter votre <a href='{$site->getURL()}settings/plugin/%s/cp_notifications'> Paramètres de notification</a>.",
-	'cp_newsletter:ending' => "<p>Cordialement,</p> <p>L'équipe GCTools</p>",
+	'cp_newsletter:ending' => "<p>Cordialement,</p> <p>L'équipe des OutilsGC</p>", //CHANGE 2
 	'cp_notifications:contact_help_desk'=> "Si vous avez des questions, veuillez soumettre votre demande via le <a href='{$site->getURL()}mod/contactform/'>formulaire Contactez-nous</a>.",
 
 
