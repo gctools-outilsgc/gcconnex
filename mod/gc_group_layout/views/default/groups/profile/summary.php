@@ -315,8 +315,8 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
                                 $options = array(
 			                     'name' => 'unlike',
 			                     'href' => elgg_add_action_tokens_to_url("/action/likes/delete?guid={$group->guid}"),
-			                     'text' => '<i class="fa fa-thumbs-up fa-lg icon-sel"></i><span class="wb-inv">Like This</span>',
-			                     'title' => elgg_echo('likes:remove') . ' ' . $entContext,
+			                     'text' => '<i class="fa fa-thumbs-up fa-lg icon-sel"></i><span class="wb-inv">'. elgg_echo('likes:remove').'</span>',
+			                     'title' => elgg_echo('likes:remove') . ' ' .elgg_echo('group'),
 			                     'item_class' => $hasLiked ? 'pad-rght-xs' : 'hidden',
 			                     'priority' => 998,
 		                      );
@@ -324,8 +324,8 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
                                $options = array(
 			                     'name' => 'likes',
 			                     'href' => elgg_add_action_tokens_to_url("/action/likes/add?guid={$group->guid}"),
-			                     'text' => '<i class="fa fa-thumbs-up fa-lg icon-unsel"></i><span class="wb-inv">Like This</span>',
-                                'title' => elgg_echo('likes:likethis') . ' ' . $entContext,
+			                     'text' => '<i class="fa fa-thumbs-up fa-lg icon-unsel"></i><span class="wb-inv">'.elgg_echo('likes:likethis').'</span>',
+                                 'title' => elgg_echo('likes:likethis') . ' ' . elgg_echo('group'),
 			                     'item_class' => $hasLiked ? 'hidden' : '',
 			                     'priority' => 998,
 		                      ); 
