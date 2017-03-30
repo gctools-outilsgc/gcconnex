@@ -3,7 +3,7 @@
  * head.php
  *
  * The HTML head
- * 
+ *
  * JavaScript load sequence (set in views library and this view)
  * ------------------------
  * 1. Elgg's initialization which is inline because it can change on every page load.
@@ -25,7 +25,7 @@
  * Description: Added IE9 check that will load the wet IE9 JS
  * Author: Nick P github.com/piet0024
  */
- 
+
 $site_url = elgg_get_site_url();
 
 $metas = elgg_extract('metas', $vars, array());
@@ -46,13 +46,13 @@ if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gs
 
   // check if this is a profile
   if ($elgg_entity instanceof ElggUser || $elgg_entity instanceof ElggGroup) {
-    
+
     if ($elgg_entity instanceof ElggUser) {
-      $page_title = $elgg_entity->name;  
+      $page_title = $elgg_entity->name;
     } else {
       $page_title = (!$elgg_entity->name2) ? $elgg_entity->name : $elgg_entity->name.' | '.$elgg_entity->name2;
     }
-    
+
   } else {
 
     // condition where there would be a french version only or vice versa for english
@@ -66,18 +66,13 @@ if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gs
       else
         $page_title = $elgg_entity->title2;
     }
-    
+
   }
 
   echo elgg_format_element('title', array(), $page_title, array('encode_text' => true));
 
 } else {
-  
-  if ($elgg_entity instanceof ElggUser || $elgg_entity instanceof ElggGroup)
-    $page_title = $elgg_entity->name;
-  else
-    $page_title = $elgg_entity->title;
-  
+
   echo elgg_format_element('title', array(), $page_title, array('encode_text' => true));
 
 }
@@ -118,15 +113,15 @@ foreach ($css as $url) {
 	<script><?php echo $elgg_init; ?></script>
 <?php
 foreach ($js as $url) {
-    
+
     if (strpos($url,'jquery-1.11.0.min.js') !== false) {
         //$url = 'https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js';
     }
-    
+
     if (strpos($url,'require-2.1.10.min.js') !== false) {
         //$url= str_replace($url,'require-2.1.10.min.js','require-2.1.20.min.js');
     }
-    
+
 	echo elgg_format_element('script', array('src' => $url));
 }
 
@@ -150,7 +145,7 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
 
 		<meta content="width=device-width, initial-scale=1" name="viewport" />
 <!-- Meta data -->
-<?php 
+<?php
 
 
       if($my_page_entity){
@@ -206,7 +201,7 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
             'photos/siteimagesowner/',
             'thewire/all','/thewire/owner/','/thewire/friends/',
             'file_tools/list', '/newsfeed/',
-          ); 
+          );
 
           $can_index = true;
           foreach ($no_index_array as $partial_url) {
@@ -245,4 +240,3 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
 <![endif]-->
 
         <noscript><link rel="stylesheet" href="./css/noscript.css" /></noscript>
-
