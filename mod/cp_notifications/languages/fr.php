@@ -9,9 +9,9 @@ $french = array(
 	/// SETTINGS PAGE: Newsletter translation texts
 	'cp_newsletter:notice' => "Choisissez le moyen par lequel vous souhaitez recevoir des avis sur les activités de GCconnex qui vous intéressent. Le <strong>résumé des notifications</strong> vous permet de recevoir un courriel quotidien ou hebdomadaire contenant un sommaire des activités auxquelles vous êtes abonné. Vous préférez recevoir un avis instantané? Oubliez le résumé et sélectionnez le contenu pour lequel vous souhaitez recevoir des avis en temps réel. Veuillez noter que les avis par courriel sont envoyés à l’adresse électronique utilisée dans vos <a href='{$site->getURL()}settings/user/'>paramètres d’utilisateur</a>.",
 	'cp_newsletter:notice:disable_digest' => "Le résumé des avis est maintenant activé; veuillez choisir ci après vos préférences applicables au résumé (fréquence et langue). Le résumé comprendra tout le contenu sélectionné dans la colonne « Courriel », de même que les abonnements dans la section « Autres abonnements de contenu ».",
-	'cp_newsletter:subject:daily' => "Votre résumé quotidien", //CHANGE
-	'cp_newsletter:subject:weekly' => "Votre résumé hebdomadaire", //CHANGE
-	'cp_newsletter:enable_digest_option' => "Activer votre résumé de notifications", //CHANGE
+	'cp_newsletter:subject:daily' => "Votre résumé quotidien", 
+	'cp_newsletter:subject:weekly' => "Votre résumé hebdomadaire", 
+	'cp_newsletter:enable_digest_option' => "Activer votre résumé de notifications", 
 	'cp_newsletter:label:english' => "anglais",
 	'cp_newsletter:label:french' => "français",
 	'cp_newsletter:label:daily' => "Chaque jour",
@@ -32,7 +32,7 @@ $french = array(
 
 	'cp_notifications:subtype:groupforumtopic' => "Discussions",
 	'cp_notifications:subtype:hjforumtopic' => "Sujet du forum",
-	'cp_notifications:subtype:hjforumpost' => "Sujet réponse",
+	'cp_notifications:subtype:hjforumpost' => "Réponse au sujet de forum", // CHANGE 3
 	'cp_notifications:subtype:page' => "Page",
 	'cp_notifications:subtype:page_top' => "Page",
 	'cp_notifications:subtype:blog' => "Blogue",
@@ -40,7 +40,7 @@ $french = array(
 	'cp_notifications:subtype:file' => "Fichier",
 	'cp_notifications:subtype:album' => "Album",
 	'cp_notifications:subtype:thewire' => "Fil",
-	'cp_notifications:subtype:poll' => "Vote",
+	'cp_notifications:subtype:poll' => "Sondage", //CHANGE 3
 	'cp_notifications:subtype:event_calendar' => "Événement",
 	'cp_notifications:subtype:photo' => "Image",
 	'cp_notifications:subtype:task' => "Tâche",
@@ -52,21 +52,21 @@ $french = array(
 	'cp_notifications:mail_body:subtype:mention' => "%s a mentionnez dans %s: %s",
 
 
-	'cp_notifications:mail_body:subtype:groupforumtopic' => "% a publié une discussion : %s", //CHANGE 1
-	'cp_notifications:mail_body:subtype:hjforumtopic' => "%s a publié un sujet sur le forum : %s", //CHANGE 1
-	'cp_notifications:mail_body:subtype:hjforumpost' => "%s a publié une réponse à un sujet de forum : %s", //CAHNGE 1
-	'cp_notifications:mail_body:subtype:page' => "%s a publié une page : %s", //CHANGE 1
-	'cp_notifications:mail_body:subtype:blog' => "%s a publié un blogue : %s", //CHANGE 1
-	'cp_notifications:mail_body:subtype:bookmarks' => "%s a publié un signet : %s", //CHANGE 1	
-	'cp_notifications:mail_body:subtype:file' => "%s a publié un fichier : %s", //CHANGE 1
-	'cp_notifications:mail_body:subtype:album' => "%s a publié un album : %s", //CHANGE 1
-	'cp_notifications:mail_body:subtype:thewire' => "%s publié sur le %s",
-	'cp_notifications:mail_body:subtype:poll' => "%s a créé un sondage :", //CHANGE 1
-	'cp_notifications:mail_body:subtype:event_calendar' => "%s a publié un événement : %s", //CHANGE 1
-	'cp_notifications:mail_body:subtype:photo' => "%s a publié une image : %s", //CHANGE 1
-	'cp_notifications:mail_body:subtype:task' => "%s a publié une tâche : %s", //CHANGE 1
-	'cp_notifications:mail_body:subtype:likes' => "%s a aimé votre publication: %s", // CHANGE 1
-	'cp_notifications:mail_body:subtype:response' => "%s a publié une réponse ou un commentaire sur votre publication: %s", //CHANGE 1
+	'cp_notifications:mail_body:subtype:groupforumtopic' => "% a publié une discussion : %s", 
+	'cp_notifications:mail_body:subtype:hjforumtopic' => "%s a publié un sujet sur le forum : %s", 
+	'cp_notifications:mail_body:subtype:hjforumpost' => "%s a publié une réponse à un sujet de forum : %s", 
+	'cp_notifications:mail_body:subtype:page' => "%s a publié une page : %s", 
+	'cp_notifications:mail_body:subtype:blog' => "%s a publié un blogue : %s", 
+	'cp_notifications:mail_body:subtype:bookmarks' => "%s a publié un signet : %s", 	
+	'cp_notifications:mail_body:subtype:file' => "%s a publié un fichier : %s", 
+	'cp_notifications:mail_body:subtype:album' => "%s a publié un album : %s", 
+	'cp_notifications:mail_body:subtype:thewire' => "%s a publié sur le %s", // CHANGE 3
+	'cp_notifications:mail_body:subtype:poll' => "%s a créé un sondage :", 
+	'cp_notifications:mail_body:subtype:event_calendar' => "%s a publié un événement : %s", 
+	'cp_notifications:mail_body:subtype:photo' => "%s a publié une image : %s", 
+	'cp_notifications:mail_body:subtype:task' => "%s a publié une tâche : %s", 
+	'cp_notifications:mail_body:subtype:likes' => "%s a aimé votre publication: %s", 
+	'cp_notifications:mail_body:subtype:response' => "%s a publié une réponse ou un commentaire sur votre publication: %s", 
 	'cp_notifications:mail_body:subtype:any' => "%s a publié %s %s : %s", // john doe post un blogue vs john doe posted un blog CHANGE 1
 
 	'cp_newsletter:other_content:notice' => "Ces abonnements s'appliquent uniquement au contenu qui ne fait pas partie d'un groupe",
@@ -104,62 +104,62 @@ $french = array(
 
 	'cp_newsletter:title:nothing' => "Votre résumé {$site_name} : Rien à signaler aujourd’hui.",
 	'cp_newsletter:body:nothing' => "Il semble que c'était calme dans votre réseau sur GCconnex. Joignez-vous à des <a href='{$site->getURL()}groups/all?filter=popular'>groupes</a> d'intérêt, partagez des informations et ajoutez des nouveaux <a href='{$site->getURL()}members/popular'>collègues</a> pour rester informé et grandir votre réseau!", //CHANGE
-	'cp_newsletter:title' => "Votre résumé {$site_name} : De nouvelles activités à signaler!", //CHANGE
+	'cp_newsletter:title' => "Votre résumé {$site_name} : De nouvelles activités à signaler!", 
 	'cp_newsletter:greeting' => "Bonjour %s. Voici vos notifications pour le <strong>%s</strong>",
 
 
-	'cp_newsletter:heading:notify:personal:singular' => "Notification personnelle", //CHANGE
-	'cp_newsletter:heading:notify:personal:plural' => "Notifications personnelles", //CHANGE
+	'cp_newsletter:heading:notify:personal:singular' => "Notification personnelle", 
+	'cp_newsletter:heading:notify:personal:plural' => "Notifications personnelles", 
 
 	'cp_newsletter:heading:notify:group:singular' => "Notification de groupe",
 	'cp_newsletter:heading:notify:group:plural' => "Notifications de groupe",
 
 
-	'cp_newsletter:heading:notify:mission:singular' => "Notification pour la Plateforme de possibilités", //CHANGE
-	'cp_newsletter:heading:notify:mission:plural' => "Notifications pour la Plateforme de possibilités", //CHANGE
+	'cp_newsletter:heading:notify:mission:singular' => "Notification pour la Plateforme de possibilités", 
+	'cp_newsletter:heading:notify:mission:plural' => "Notifications pour la Plateforme de possibilités", 
 	
-	'cp_newsletter:heading:notify:personal:singular' => "Notification personnelle", //CHANGE
-	'cp_newsletter:heading:notify:personal:plural' => "Notifications personnelles", //CHANGE
+	'cp_newsletter:heading:notify:personal:singular' => "Notification personnelle", 
+	'cp_newsletter:heading:notify:personal:plural' => "Notifications personnelles", 
 
-	'cp_newsletter:heading:notify:group:singular' => "Notification de groupe", //CHANGE
-	'cp_newsletter:heading:notify:group:plural' => "Notifications de groupe", //CHANGE
+	'cp_newsletter:heading:notify:group:singular' => "Notification de groupe", 
+	'cp_newsletter:heading:notify:group:plural' => "Notifications de groupe", 
 
-	'cp_newsletter:heading:notify:cp_wire_share:singular' => "Item a été partagé.", //CHANGE 1
-	'cp_newsletter:heading:notify:cp_wire_share:plural' => "Items ont été partagés!", //CHANGE 1
+	'cp_newsletter:heading:notify:cp_wire_share:singular' => "Item a été partagé.", 
+	'cp_newsletter:heading:notify:cp_wire_share:plural' => "Items ont été partagés!", 
 	
-	'cp_newsletter:heading:notify:friend_request:singular' => "Nouvelle demande de collègue", //CHANGE
-	'cp_newsletter:heading:notify:friend_request:plural' => "Nouvelles demandes de collègue", //CHANGE
+	'cp_newsletter:heading:notify:friend_request:singular' => "Nouvelle demande de collègue", 
+	'cp_newsletter:heading:notify:friend_request:plural' => "Nouvelles demandes de collègue", 
 
-	'cp_newsletter:heading:notify:friend_approved:singular' => "%s a approuvé votre demande de collègue", //CHANGE
-	'cp_newsletter:heading:notify:friend_approved' => "%s a approuvé votre demande de collègue", //CHANGE
-	'cp_newsletter:heading:notify:friend_approved:plural' => "%s a approuvé votre demande de collègue", //CHANGE
+	'cp_newsletter:heading:notify:friend_approved:singular' => "%s a approuvé votre demande de collègue", 
+	'cp_newsletter:heading:notify:friend_approved' => "%s a approuvé votre demande de collègue", 
+	'cp_newsletter:heading:notify:friend_approved:plural' => "%s a approuvé votre demande de collègue", 
 
-	'cp_newsletter:heading:notify:forum_topic:singular' => "Nouveau sujet de forum", //CHANGE
-	'cp_newsletter:heading:notify:forum_topic:plural' => "Nouveaux sujets de forum", //CHANGE
+	'cp_newsletter:heading:notify:forum_topic:singular' => "Nouveau sujet de forum", 
+	'cp_newsletter:heading:notify:forum_topic:plural' => "Nouveaux sujets de forum", 
 
-	'cp_newsletter:heading:notify:forum_reply:singular' => "Réponse à un sujet de forum", //CHANGE
-	'cp_newsletter:heading:notify:forum_reply:plural' => "Réponses à des sujets de forum", //CHANGE
+	'cp_newsletter:heading:notify:forum_reply:singular' => "Réponse à un sujet de forum", 
+	'cp_newsletter:heading:notify:forum_reply:plural' => "Réponses à des sujets de forum", 
 
-	'cp_newsletter:heading:notify:response:singular' => "Réponse au contenu auquel vous êtes abonné", //CHANGE
-	'cp_newsletter:heading:notify:response:plural' => "Réponses aux contenus auxquels vous êtes abonné", //CHANGE 2
+	'cp_newsletter:heading:notify:response:singular' => "Réponse au contenu auquel vous êtes abonné", 
+	'cp_newsletter:heading:notify:response:plural' => "Réponses aux contenus auxquels vous êtes abonné", 
 
 
-	'cp_newsletter:heading:notify:likes:singular' => "Item a été aimé.", //CHANGE 1
-	'cp_newsletter:heading:notify:likes:plural' => "Items ont été aimés.", //CHANGE 1
+	'cp_newsletter:heading:notify:likes:singular' => "Item a été aimé.", 
+	'cp_newsletter:heading:notify:likes:plural' => "Items ont été aimés.", 
 
-	'cp_newsletter:heading:notify:new_post:singular' => "Nouvel item a été publié par votre collègue", //CHANGE 1
-	'cp_newsletter:heading:notify:new_post:plural' => "Nouvels items ont été publiés par vos collègues", //CHANGE 1
+	'cp_newsletter:heading:notify:new_post:singular' => "Nouvel item a été publié par votre collègue",
+	'cp_newsletter:heading:notify:new_post:plural' => "Nouvels items ont été publiés par vos collègues", 
 
-	'cp_newsletter:heading:notify:content_revision:singular' => "Item a été révisé", //CHANGE 1
-	'cp_newsletter:heading:notify:content_revision:plural' => "Items ont été révisés", //CHANGE 1
+	'cp_newsletter:heading:notify:content_revision:singular' => "Item a été révisé", 
+	'cp_newsletter:heading:notify:content_revision:plural' => "Items ont été révisés", 
 
-	'cp_newsletter:heading:notify:cp_mention:singular' => "Personne vous a mentionné.", //CHANGE 1
-	'cp_newsletter:heading:notify:cp_mention:plural' => "Personnes vous ont mentionné!", //CHANGE 1
+	'cp_newsletter:heading:notify:cp_mention:singular' => "Personne vous a mentionné.", 
+	'cp_newsletter:heading:notify:cp_mention:plural' => "Personnes vous ont mentionné!", 
 
 
 
 	'cp_newsletter:footer:notification_settings' => "Pour vous désabonner ou gérer ces messages, veuillez vous connecter et visiter votre <a href='{$site->getURL()}settings/plugin/%s/cp_notifications'> Paramètres de notification</a>.",
-	'cp_newsletter:ending' => "<p>Cordialement,</p> <p>L'équipe des OutilsGC</p>", //CHANGE 2
+	'cp_newsletter:ending' => "<p>Cordialement,</p> <p>L'équipe des OutilsGC</p>", 
 	'cp_notifications:contact_help_desk'=> "Si vous avez des questions, veuillez soumettre votre demande via le <a href='{$site->getURL()}mod/contactform/'>formulaire Contactez-nous</a>.",
 
 
