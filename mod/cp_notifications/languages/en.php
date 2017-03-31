@@ -137,7 +137,7 @@ $english = array(
 	'cp_newsletter:heading:notify:likes:plural' => "Likes received on your content", 
 
 	'cp_newsletter:heading:notify:new_post:singular' => "New item has been posted by your colleague",
-	'cp_newsletter:heading:notify:new_post:plural' => "New items has been posted by your colleagues", 
+	'cp_newsletter:heading:notify:new_post:plural' => "New items have been posted by your colleagues", //CHANGE 3 
 	
 	'cp_newsletter:heading:notify:content_revision:singular' => "Item has been revised", 
 	'cp_newsletter:heading:notify:content_revision:plural' => "Items have been revised", 
