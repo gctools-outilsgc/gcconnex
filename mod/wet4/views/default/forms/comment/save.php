@@ -45,13 +45,19 @@ if (!elgg_is_logged_in()) {
 
 // var for the modal
 $entity = elgg_extract('entity', $vars);
-$container = $entity->getContainerEntity();
+$comment = elgg_extract('comment', $vars);
+
+if(empty($entity)){
+	$container = $comment->getContainerEntity();
+}else{
+	$container = $entity->getContainerEntity();
+}
+
 $userentity = elgg_get_logged_in_user_entity();
 $group = get_entity($container->guid);
 $user = get_user($userentity->guid);
 
 
-$comment = elgg_extract('comment', $vars);
 /* @var ElggComment $comment */
 
 $inline = elgg_extract('inline', $vars, false);
