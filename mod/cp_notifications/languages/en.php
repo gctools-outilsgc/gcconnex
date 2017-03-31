@@ -10,8 +10,8 @@ $english = array(
 	'cp_newsletter:notice' => "Choose how you want to be notified of GCconnex activities of interest to you. The <strong>notification digest</strong> can be used to receive a daily or weekly email that provides a summary of the activities to which you are subscribed. Prefer to receive instant notification? Forgo the digest and select the content for which you want to receive notification in real-time. Please note that email notifications are sent to the email address used in your <a href='{$site->getURL()}settings/user/'>Account Settings</a>.",
 	'cp_newsletter:notice:disable_digest' => "The notification digest is now enabled; please select your digest preferences below (frequency and language preference). The digest will include all content selected in the 'Email' column below, as well the subscriptions in the 'Other content subscriptions' section.",
 
-	'cp_newsletter:subject:daily' => 'Your Daily Digest', //CHANGE
-	'cp_newsletter:subject:weekly' => 'Your Weekly Digest', //CHANGE
+	'cp_newsletter:subject:daily' => 'Your Daily Digest', 
+	'cp_newsletter:subject:weekly' => 'Your Weekly Digest', 
 	'cp_newsletter:enable_digest_option' => "Enable your notification digest",
 	'cp_newsletter:label:english' => "English",
 	'cp_newsletter:label:french' => "French",
@@ -47,31 +47,31 @@ $english = array(
 	'cp_notifications:subtype:task' => "Task",
 
 
-	'cp_notifications:mail_body:subtype:groupforumtopic' => "% posted a discussions: %s", //CHANGE 1
-	'cp_notifications:mail_body:subtype:hjforumtopic' => "%s posted a forum topic: %s", //CHANGE 1
-	'cp_notifications:mail_body:subtype:hjforumpost' => "%s posted a topic reply to: %s", //CHANGE 1
-	'cp_notifications:mail_body:subtype:page' => "%s posted a page: %s", //CHANGE 1
-	'cp_notifications:mail_body:subtype:page_top' => "%s posted a page: %s", //CHANGE 1
-	'cp_notifications:mail_body:subtype:blog' => "%s posted a blog: %s", //CHANGE 1
-	'cp_notifications:mail_body:subtype:bookmarks' => "%s posted a bookmark: %s", //CHANGE 1
-	'cp_notifications:mail_body:subtype:file' => "%s posted a file: %s", //CHANGE 1
-	'cp_notifications:mail_body:subtype:album' => "%s posted an album: %s", //CHANGE 1
+	'cp_notifications:mail_body:subtype:groupforumtopic' => "% posted a discussions: %s", 
+	'cp_notifications:mail_body:subtype:hjforumtopic' => "%s posted a forum topic: %s", 
+	'cp_notifications:mail_body:subtype:hjforumpost' => "%s posted a topic reply to: %s", 
+	'cp_notifications:mail_body:subtype:page' => "%s posted a page: %s", 
+	'cp_notifications:mail_body:subtype:page_top' => "%s posted a page: %s", 
+	'cp_notifications:mail_body:subtype:blog' => "%s posted a blog: %s", 
+	'cp_notifications:mail_body:subtype:bookmarks' => "%s posted a bookmark: %s", 
+	'cp_notifications:mail_body:subtype:file' => "%s posted a file: %s", 
+	'cp_notifications:mail_body:subtype:album' => "%s posted an album: %s", 
 	'cp_notifications:mail_body:subtype:thewire' => "%s posted on the %s",
-	'cp_notifications:mail_body:subtype:poll' => "%s created a poll: %s", //CHANGE 1 ADDED A %s
-	'cp_notifications:mail_body:subtype:event_calendar' => "%s posted an event: %s", //CHANGE 1
-	'cp_notifications:mail_body:subtype:photo' => "%s posted an image: %s", //CHANGE 1
-	'cp_notifications:mail_body:subtype:task' => "%s created a task: %s", //CHANGE 1
+	'cp_notifications:mail_body:subtype:poll' => "%s created a poll: %s", 
+	'cp_notifications:mail_body:subtype:event_calendar' => "%s posted an event: %s", 
+	'cp_notifications:mail_body:subtype:photo' => "%s posted an image: %s", 
+	'cp_notifications:mail_body:subtype:task' => "%s created a task: %s", 
 	'cp_notifications:mail_body:subtype:likes' => "%s liked your post: %s",
-	'cp_notifications:mail_body:subtype:response' => "%s replied or commented on your post: %s", // CHANGE 2
+	'cp_notifications:mail_body:subtype:response' => "%s replied or commented on your post: %s", 
 	'cp_notifications:mail_body:subtype:any' => "%s posted a%s %s: %s", // john doe posted an idea vs john doe posted a blog
 
-	'cp_notifications:mail_body:subtype:content_revision' => "%s revised the %s: %s", //CHANGE 1
-	'cp_notifications:mail_body:subtype:mention' => "%s mentioned you in the %s: %s", //CHANGE 1
+	'cp_notifications:mail_body:subtype:content_revision' => "%s revised the %s: %s", 
+	'cp_notifications:mail_body:subtype:mention' => "%s mentioned you in the %s: %s", 
 
 
-	'cp_notifications:mail_body:subtype:content_share' => "%s shared your %s: %s", //CHANGE 1
+	'cp_notifications:mail_body:subtype:content_share' => "%s shared your %s: %s", 
 
-	'cp_newsletter:other_content:notice' => "These subscriptions are only for content items that are not part of a group", //CHANGE 1
+	'cp_newsletter:other_content:notice' => "These subscriptions are only for content items that are not part of a group", 
 
 	'cp_notifications:subtype:name:thewire' => "fil",
 
@@ -103,56 +103,56 @@ $english = array(
  	'cp_notifications:heading:personal_section'=>'Personal Notifications',
     'cp_notifications:heading:colleague_section'=>'Colleague Notifications',
     'cp_notifications:heading:group_section' => 'Group Notifications',
- 	'cp_notifications:heading:nonGroup_section' => 'Other content subscriptions',
+ 	'cp_notifications:heading:nonGroup_section' => 'Other Content Subscriptions', //CHANGE 3
 
 	'cp_notifications:subtype:name:thewire' => "Wire",
 	
 	/// (NEWSLETTER) THROUGH EMAIL SERVER, EMAIL CONTENT: Newsletter email notifications
 	'cp_newsletter:title:nothing' => "Your {$site_name} Digest: Nothing to report today",
 	'cp_newsletter:body:nothing' => "It seems it was quiet in your network on GCconnex. Join <a href='{$site->getURL()}groups/all?filter=popular'>groups</a> of interest, share information and add new <a href='{$site->getURL()}members/popular'>colleagues</a> to stay informed and grow your network!",
-	'cp_newsletter:title' => "Your {$site_name} Digest: New activities to report!", //CHANGE
+	'cp_newsletter:title' => "Your {$site_name} Digest: New activities to report!", 
 	'cp_newsletter:greeting' => "Good morning %s. Here are your notifications for <strong>%s</strong>",
 
 
 	/// NEWSLETTER HEADINGS
-	'cp_newsletter:heading:notify:personal:singular' => "Personal notification", //CHANGE	
-	'cp_newsletter:heading:notify:personal:plural' => "Personal notifications", //CHANGE
+	'cp_newsletter:heading:notify:personal:singular' => "Personal notification", 	
+	'cp_newsletter:heading:notify:personal:plural' => "Personal notifications", 
 	
-	'cp_newsletter:heading:notify:mission:singular' => "Opportunities Platform notification", //CHANGE	
-	'cp_newsletter:heading:notify:mission:plural' => "Opportunities Platform notifications", //CHANGE
+	'cp_newsletter:heading:notify:mission:singular' => "Opportunities Platform notification", 	
+	'cp_newsletter:heading:notify:mission:plural' => "Opportunities Platform notifications", 
 	
-	'cp_newsletter:heading:notify:group:singular' => "Group notification", //CHANGE	
-	'cp_newsletter:heading:notify:group:plural' => "Group notifications", //CHANGE
+	'cp_newsletter:heading:notify:group:singular' => "Group notification", 	
+	'cp_newsletter:heading:notify:group:plural' => "Group notifications", 
 	
-	'cp_newsletter:heading:notify:cp_wire_share:singular' => "Shared content.", //CHANGE 1 	
-	'cp_newsletter:heading:notify:cp_wire_share:plural' => "Shared content.", //CHANGE 1
+	'cp_newsletter:heading:notify:cp_wire_share:singular' => "Shared content.",  	
+	'cp_newsletter:heading:notify:cp_wire_share:plural' => "Shared content.", 
 	
-	'cp_newsletter:heading:notify:friend_request:singular' => "New colleague request", //CHANGE
-	'cp_newsletter:heading:notify:friend_request:plural' => "New colleague requests", //CHANGE
+	'cp_newsletter:heading:notify:friend_request:singular' => "New colleague request", 
+	'cp_newsletter:heading:notify:friend_request:plural' => "New colleague requests", 
 
-	'cp_newsletter:heading:notify:friend_approved:singular' => "%s approved your colleague request", //CHANGE	
-	'cp_newsletter:heading:notify:friend_approved:plural' => "%s approved your colleague request", //CHANGE
+	'cp_newsletter:heading:notify:friend_approved:singular' => "%s approved your colleague request", 	
+	'cp_newsletter:heading:notify:friend_approved:plural' => "%s approved your colleague request", 
 
-	'cp_newsletter:heading:notify:likes:singular' => "Like received on your content", //CHANGE 1
-	'cp_newsletter:heading:notify:likes:plural' => "Likes received on your content", //CHANGE 1
+	'cp_newsletter:heading:notify:likes:singular' => "Like received on your content", 
+	'cp_newsletter:heading:notify:likes:plural' => "Likes received on your content", 
 
 	'cp_newsletter:heading:notify:new_post:singular' => "New item has been posted by your colleague",
-	'cp_newsletter:heading:notify:new_post:plural' => "New items has been posted by your colleagues", //CHANGE
+	'cp_newsletter:heading:notify:new_post:plural' => "New items has been posted by your colleagues", 
 	
-	'cp_newsletter:heading:notify:content_revision:singular' => "Item has been revised", //CHANGE 1
-	'cp_newsletter:heading:notify:content_revision:plural' => "Items have been revised", //CHANGE 1
+	'cp_newsletter:heading:notify:content_revision:singular' => "Item has been revised", 
+	'cp_newsletter:heading:notify:content_revision:plural' => "Items have been revised", 
 
-	'cp_newsletter:heading:notify:cp_mention:singular' => "Person mentioned you.", //CHANGE 1	
-	'cp_newsletter:heading:notify:cp_mention:plural' => "People mentioned you.", //CHANGE 1
+	'cp_newsletter:heading:notify:cp_mention:singular' => "Person mentioned you.", 	
+	'cp_newsletter:heading:notify:cp_mention:plural' => "People mentioned you.", 
 
-	'cp_newsletter:heading:notify:forum_topic:singular' => "New forum topic", //CHANGE	
-	'cp_newsletter:heading:notify:forum_topic:plural' => "New forum topics", //CHANGE
+	'cp_newsletter:heading:notify:forum_topic:singular' => "New forum topic", 	
+	'cp_newsletter:heading:notify:forum_topic:plural' => "New forum topics", 
 	
-	'cp_newsletter:heading:notify:forum_reply:singular' => "Reply to forum topic", //CHANGE	
-	'cp_newsletter:heading:notify:forum_reply:plural' => "Replies to forum topics", //CHANGE
+	'cp_newsletter:heading:notify:forum_reply:singular' => "Reply to forum topic", 	
+	'cp_newsletter:heading:notify:forum_reply:plural' => "Replies to forum topics", 
 	
-	'cp_newsletter:heading:notify:response:singular' => "Response to other content subscriptions", //CHANGE	
-	'cp_newsletter:heading:notify:response:plural' => "Responses to other content subscriptions", //CHANGE
+	'cp_newsletter:heading:notify:response:singular' => "Response to other content subscriptions", 	
+	'cp_newsletter:heading:notify:response:plural' => "Responses to other content subscriptions", 
 	
 
 	/// (INSTANT EMAIL) EMAIL CONTENT: Normal email notifications
