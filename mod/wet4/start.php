@@ -430,20 +430,20 @@ function wet4_theme_pagesetup() {
 
 	// Remove link to friendsof
 	elgg_unregister_menu_item("page", "friends:of");
-    //Settings notifications stuff
+    
+
+    // Settings notifications tab in the User's setting page
+    // cyu - allow site administrators to view user notification settings page
 	elgg_unregister_menu_item('page', '2_a_user_notify');
-
-
     $params = array(
-				"name" => "2_a_user_notify",
-				"href" => "/settings/plugins/" . $user->username . "/cp_notifications",
-				"text" =>  elgg_echo('notifications:subscriptions:changesettings'),
-				'section' => 'configure',
-        "class" => 'TESTING',
-        'item_class' => '',
-				'priority' => '100',
+        "name" => "2_a_user_notify",
+        "href" => "/settings/plugins/{$page_owner->username}/cp_notifications",
+        "text" =>  elgg_echo('notifications:subscriptions:changesettings'),
+        'section' => 'configure',
+        'priority' => '100',
         'context' => 'settings',
-			);
+    );
+
 
     elgg_register_menu_item("page", $params);
 

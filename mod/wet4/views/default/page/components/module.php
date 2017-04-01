@@ -41,8 +41,6 @@ $attrs = [
     
 ];
 
-
-
 /**
  *
  * Check which page and type of module are being rendered

@@ -150,8 +150,16 @@ $access_input = elgg_view('input/access', array(
 $categories_input = elgg_view('input/categories', $vars);
 
 
-// code snippet below will be for minor edit for blog revisions...
 
+?>
+<style>
+	ul#chk_blog_minor_edit {
+	  list-style-type: none;
+	}
+</style>
+
+<?php
+// code snippet below will be for minor edit for blog revisions...
 if ($vars['guid'] && (strcmp($vars['status'],'draft') != 0 && elgg_is_active_plugin('cp_notifications') && !$vars['new_entity'])) {
 	// cyu - implement "minor edit" as per business requirements document
 	// this view is used by both creating new blog and edit new blog
@@ -160,11 +168,10 @@ if ($vars['guid'] && (strcmp($vars['status'],'draft') != 0 && elgg_is_active_plu
     $minor_edit .= '<div class="checkbox">';
     $minor_edit .= elgg_view('input/checkboxes', array(
 			'name' => 'chk_blog_minor_edit',
-            'label'=>elgg_echo('blog:minor_edit_label'),
+            'label'=> elgg_echo('blog:minor_edit_label'),
 			'id' => 'chk_blog_minor_edit',
 			'value' => $blog->entity_minor_edit,
-			'options' => array(
-					elgg_echo('cp_notify:minor_edit') => 1),
+			'options' => array( elgg_echo('cp_notify:minor_edit') => 1 ),
 		));
 
 	// cyu - see note:
