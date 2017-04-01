@@ -542,7 +542,7 @@ function userOptedIn( $user_obj, $mission_type ) {
       $n = "";
       $vowels = array('a','e','i','o','u');
       if (in_array($subtype{0}, $vowels)) $n = "n";
-      $rendered_content = elgg_echo("cp_notifications:mail_body:subtype:any", array($author, $subtype, $url), $language_preference);
+      $rendered_content = elgg_echo("cp_notifications:mail_body:subtype:any", array($author, "",$subtype, $url), $language_preference);
     }
     return $rendered_content;
   }
