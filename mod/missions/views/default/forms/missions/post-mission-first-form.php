@@ -76,47 +76,47 @@ $input_disclaimer = elgg_view('input/checkbox', array(
 
 <h4><?php echo elgg_echo('missions:first_post_form_title'); ?></h4><br>
 <div class="form-group">
-	<label for='post-mission-name-text-input' class="col-sm-3 required" style="text-align:right;" aria-required="true">
+	<label for='post-mission-name-text-input' class="col-sm-3 required text-right" aria-required="true">
 		<?php echo elgg_echo('missions:your_name');?>
 		<strong class="required" aria-required="true">
 			<?php echo elgg_echo('missions:required'); ?>
 		</strong>
 		:
 	</label>
-	<div class="col-sm-3">
+	<div class="col-sm-4">
 		<?php echo $input_name; ?>
 	</div>
 </div>
 <div class="form-group">
-	<label class="col-sm-3 required" style="text-align:right;" aria-required="true">
+	<label class="col-sm-3 required text-right" aria-required="true">
 		<?php echo elgg_echo('missions:your_department');?>
 		<strong class="required" aria-required="true">
 			<?php echo elgg_echo('missions:required'); ?>
 		</strong>
 		:
 	</label>
-	<div class="col-sm-3">
+	<div class="col-sm-4">
 		<?php echo $input_department; ?>
 		<div><?php echo elgg_echo('missions:placeholder_d2'); ?></div>
 	</div>
 </div>
 <div class="form-group">
-	<label for='post-mission-email-text-input' class="col-sm-3 required" style="text-align:right;" aria-required="true">
+	<label for='post-mission-email-text-input' class="col-sm-3 required text-right" aria-required="true">
 		<?php echo elgg_echo('missions:your_email');?>
 		<strong class="required" aria-required="true">
 			<?php echo elgg_echo('missions:required'); ?>
 		</strong>
 		:
 	</label>
-	<div class="col-sm-3">
+	<div class="col-sm-4">
 		<?php echo $input_email; ?>
 	</div>
 </div>
 <div class="form-group">
-	<label for='post-mission-phone-text-input' class="col-sm-3" style="text-align:right;">
+	<label for='post-mission-phone-text-input' class="col-sm-3 text-right">
 		<?php echo elgg_echo('missions:your_phone') . ':';?>
 	</label>
-	<div class="col-sm-3">
+	<div class="col-sm-4">
 		<?php echo $input_phone; ?>
 		<p style="font-style:italic;">
 			<?php //echo elgg_echo('missions:post_contact_disclaimer')?>
@@ -124,19 +124,21 @@ $input_disclaimer = elgg_view('input/checkbox', array(
 	</div>
 </div>
 <div class="form-group">
-	<label for='post-mission-phone-text-input' class="col-sm-1" style="text-align:right;">
-		<?php echo $input_disclaimer;?>
-	</label>
-	<div class="col-sm-8">
-		<?php echo elgg_echo('missions:post_disclaimer'); ?>
+	<div class="col-sm-7 col-md-offset-3">
+		<label for='post-mission-disclaimer-checkbox-input' style="font-weight:normal;">
+			<?php echo $input_disclaimer;?>&nbsp;
+			<?php echo elgg_echo('missions:post_disclaimer'); ?>
+			<strong class="required" aria-required="true">
+				<?php echo elgg_echo('missions:required'); ?>
+			</strong>
+		</label>		
 	</div>
 </div>
 <div>
 	<?php
 		echo elgg_view('input/submit', array(
 				'value' => elgg_echo('missions:next'),
-				'class' => 'elgg-button btn btn-primary',
-				'style' => 'float:right;',
+				'class' => 'elgg-button btn btn-primary pull-right',
 				'id' => 'mission-post-opportunity-first-form-submission-button'
 		));
 	?>

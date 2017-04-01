@@ -128,6 +128,7 @@ return array(
     'userMenu:messages' => "Mes messages",
     'userMenu:colleagues' => "Mes collègues",
     'userMenu:usermenuTitle' =>'User Card - Click here for links to your profile, account settings and logout(translate me)', /*NEW*/
+    'wet:usermenu:helpertext' => "Menu Utilisateur. Liens vers Notifications, Profil et Déconnexion",
     'wet:dd:expand'=>"Open drop down of most recent messages(fr)",
 
 
@@ -162,7 +163,7 @@ return array(
     'profile:viewall:groups' => 'Voir tous mes groupes',
     'photos:none' => 'Aucun album d\'image',
     'gcforums:enable_group_forums' => 'Activé les forums de groupe',
-
+    'gprofile:contentMenu' => "Menu de contenu du groupe",
         /**
    * Group invite
    */
@@ -1345,7 +1346,7 @@ return array(
   'contactform:select' => 'Veuillez sélectionner une catégorie',
   'contactform:reason' => 'Choisir...',
   'contactform:help_menu_item' => "Aide / Contactez-nous",
-  'contactform:newsletter' => 'Abonnez à l’Infolettre',
+  'contactform:newsletter' => "Abonnez-vous à l'Infolettre",
   'contactform:box:message' => 'Afficher la boîte d\'information',
   'conatactform:fr:name' => 'Le nom du lien en français',
   'conatactform:eng:name' => 'Le nom du lien en anglais',
@@ -1393,6 +1394,7 @@ return array(
 'event_calendar:lang:french'=>"Français",
 'event_calendar:lang:english'=>"Anglais",
 'event_calendar:lang:bilingual'=>"Bilingue",
+'event_calendar:add_recurrence' => "Ajouter une récurrence",
 
 /*Change access*/
 

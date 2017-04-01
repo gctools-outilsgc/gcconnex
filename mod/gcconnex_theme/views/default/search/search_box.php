@@ -56,7 +56,7 @@ $gc_language = $_COOKIE['connex_lang'];
                 <label for="wb-srch-q" class="wb-inv">
                     <?php echo elgg_echo('wet:searchweb');?>
                 </label>
-                <input class="wb-srch-q form-control" name="q"  value="" size="27" maxlength="150" placeholder="<?php echo elgg_echo('wet:searchgctools');?>">
+                <input class="wb-srch-q form-control" name="q"  value="" size="27" maxlength="150" placeholder="<?php echo elgg_echo('wet:searchgctools');?>" id="wb-srch-q">
 
                 <input type="hidden" name="a"  value="s">
                 <input type="hidden" name="s"  value="3">

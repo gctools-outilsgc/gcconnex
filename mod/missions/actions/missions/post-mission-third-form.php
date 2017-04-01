@@ -75,6 +75,7 @@ if ($err != '') {
     $mission->account = array_pop($accounts)->guid;
 
     $mission->job_title = $second_form['job_title'];
+    $mission->role_type = $second_form['role_type'];
     $mission->job_type = $second_form['job_type'];
 	// Stores the value of program area selected unless it is other.
     if($second_form['job_area'] != 'missions:other') {

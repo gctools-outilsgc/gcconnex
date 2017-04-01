@@ -13,6 +13,7 @@
 $sort_field = $_SESSION['missions_sort_field_value'];
 $order_field = $_SESSION['missions_order_field_value'];
 $opp_type_field = $_SESSION['missions_type_field_value'];
+$role_type_field = $_SESSION['missions_role_field_value'];
 $options_array = array(
 		'missions:date_posted' => elgg_echo('missions:date_posted'),
 		'missions:deadline' => elgg_echo('missions:deadline'),
@@ -38,6 +39,17 @@ $input_opp_types_filter = elgg_view('input/checkboxes', array(
     'class'=>' list-unstyled filter-opp-type-list',
     'multiple'=>true,
     'checked'=>false,
+    'id' => 'missions-sort-missions-type-field-text-input'
+));
+
+$input_role_types_filter = elgg_view('input/checkboxes', array(
+    'name' => 'role_filter',
+    'value' => $role_type_field,
+    'options' => [elgg_echo('missions:filter:opportunity_role:offering') => 'missions:offering', elgg_echo('missions:filter:opportunity_role:seeking') => 'missions:seeking'],
+    'class' =>' list-unstyled filter-opp-type-list',
+    'multiple' => true,
+    'checked' => false,
+    'id' => 'missions-sort-missions-role-field-text-input'
 ));
 
 $input_sort_field = elgg_view('input/dropdown', array(
@@ -58,19 +70,19 @@ $input_order_field = elgg_view('input/dropdown', array(
 ));
 ?>
 
-<div class="col-sm-12 panel panel-default mission-sort-panel">
+<div class="col-sm-12 panel panel-default mission-sort-panel mrgn-bttm-md">
     <div class="col-sm-11">
-        <div class="col-sm-4">
-		  <label for="" class="" style="margin:4px;">
-			 <?php echo elgg_echo('filter') . ': '; ?>
+        <div class="col-sm-3">
+		  <label for="missions-sort-missions-type-field-text-input" class="mrgn-tp-sm mrgn-lft-sm">
+			 <?php echo elgg_echo('missions:filter:opportunity_type:label') . ': '; ?>
 		  </label>
 		  <div class="" style="margin:4px;">
 			<div class="dropdown">
-                <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="form-control">
+                <button id="missions-sort-missions-type-field-text-input" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="form-control">
             <?php echo elgg_echo('missions:type');?>
                 <span class="caret"></span>
                 </button>
-                <div class="dropdown-menu " aria-labelledby="dLabel">
+                <div class="dropdown-menu " aria-labelledby="missions-sort-missions-type-field-text-input">
                     <?php
                         echo $input_opp_types_filter;
                         //echo $opp_types2;
@@ -78,27 +90,42 @@ $input_order_field = elgg_view('input/dropdown', array(
                     ?>
                 </div>
               </div>
-		  </div>
-		
-	       </div>
-        <div class="col-sm-4">
-		<label for="missions-sort-missions-sort-field-text-input" class="" style="margin:4px;">
-			<?php echo elgg_echo('missions:sort_by') . ': '; ?>
-		</label>
-		<div class="" style="margin:4px;">
-			<?php echo $input_sort_field; ?>
-		</div>
-		
-	</div>
-	<div class="col-sm-4">
-		<label for="missions-sort-missions-order-field-text-input" class="" style="margin:4px;">
-			<?php echo elgg_echo('mission:following_order') . ': '; ?>
-		</label>
-		<div class="" style="margin:4px;">
-			<?php echo $input_order_field; ?>
-		</div>
-	</div>
-    
+		  </div>		
+	    </div>
+        <div class="col-sm-3">
+          <label for="missions-sort-missions-role-field-text-input" class="mrgn-tp-sm mrgn-lft-sm">
+             <?php echo elgg_echo('missions:filter:opportunity_role:label') . ': '; ?>
+          </label>
+          <div class="" style="margin:4px;">
+            <div class="dropdown">
+                <button id="missions-sort-missions-role-field-text-input" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="form-control">
+            <?php echo elgg_echo('missions:filter:opportunity_role:title'); ?>
+                <span class="caret"></span>
+                </button>
+                <div class="dropdown-menu " aria-labelledby="missions-sort-missions-role-field-text-input">
+                    <?php
+                        echo $input_role_types_filter;
+                    ?>
+                </div>
+              </div>
+          </div>        
+        </div>
+        <div class="col-sm-3">
+    		<label for="missions-sort-missions-sort-field-text-input" class="mrgn-tp-sm mrgn-lft-sm">
+    			<?php echo elgg_echo('missions:sort_by') . ': '; ?>
+    		</label>
+    		<div class="" style="margin:4px;">
+    			<?php echo $input_sort_field; ?>
+    		</div>		
+	   </div>
+    	<div class="col-sm-3">
+    		<label for="missions-sort-missions-order-field-text-input" class="mrgn-tp-sm mrgn-lft-sm">
+    			<?php echo elgg_echo('mission:following_order') . ': '; ?>
+    		</label>
+    		<div class="" style="margin:4px;">
+    			<?php echo $input_order_field; ?>
+    		</div>
+    	</div>    
     </div>
 	
 	<div class="col-sm-1">

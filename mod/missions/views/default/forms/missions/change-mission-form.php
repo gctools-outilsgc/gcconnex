@@ -69,6 +69,17 @@ $input_title = elgg_view('input/text', array(
 		'id' => 'edit-mission-title-text-input'
 ));
 
+$input_role = elgg_view('input/radio', array(
+	'name' => 'role_type',
+	'id' => 'post-mission-role-radio-input',
+	'value' => $mission->role_type,
+	'options' => array(
+		'<span style="font-weight:normal;"> '.elgg_echo('missions:opportunity_role:offering').'</span>' => 'missions:offering',
+		'<span style="font-weight:normal;"> '.elgg_echo('missions:opportunity_role:seeking').'</span>' => 'missions:seeking'
+    	)
+ 	)
+);
+
 $input_type = elgg_view('input/dropdown', array(
 		'name' => 'job_type',
 		'value' => $mission->job_type,
@@ -226,15 +237,26 @@ $button_set = mm_create_button_set_full($mission);
 		<?php echo $hidden_guid; ?>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-3 required" for="edit-mission-title-text-input" style="text-align:right;" aria-required="true">
+		<label for="edit-mission-title-text-input" class="col-sm-3 text-right required" aria-required="true">
 			<?php echo elgg_echo('missions:opportunity_title'); ?>
 			<strong class="required" aria-required="true">
 				<?php echo elgg_echo('missions:required'); ?>
 			</strong>
 			:
 		</label>
-		<div class="col-sm-3">
+		<div class="col-sm-5">
 			<?php echo $input_title;?>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for='post-mission-role-radio-input' class="col-sm-3 text-right required" aria-required="true">
+			<?php echo elgg_echo('missions:opportunity_role') . ':';?>
+			<strong class="required" aria-required="true">
+				<?php echo elgg_echo('missions:required'); ?>
+			</strong>
+		</label>
+		<div class="col-sm-4">
+			<?php echo $input_role; ?>
 		</div>
 	</div>
 	<div class="form-group">

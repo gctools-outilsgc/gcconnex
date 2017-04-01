@@ -146,10 +146,6 @@ HTML;
 
 if (elgg_is_xhr()) {
 	?>
-	<script type="text/javascript">
-		$("#thewire-tools-reshare-wrapper").find('.elgg-form-thewire-add textarea[name="body"]').each(function(i) {
-			//elgg.thewire_tools.init_autocomplete(this);
-		});
-	</script>
+
 	<?php
 }

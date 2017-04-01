@@ -255,7 +255,7 @@ $vars['prefix'] = $prefix;
 //$body .= $key;
 $body .= '<div style="float:left">';
 $body .= elgg_view('event_calendar/schedule_section', $vars);
-$body .= '</div></ul>';
+$body .= '</ul>';
 
 
 if ($event_calendar_spots_display == 'yes') {

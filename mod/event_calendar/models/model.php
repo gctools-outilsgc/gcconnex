@@ -174,6 +174,27 @@ if(((!$e->title)&&(!$e->title2))||(!$e->start_date) || (!$e->end_date) || (!$e->
 	return false;
 }
 
+//Validation if recurrence box is check
+if ($event_calendar_repeating_events != 'no') {
+	$validation ='';
+	$repeats = get_input('repeats');
+	$e->repeats = $repeats;
+	if ($repeats == 'yes') {
+
+		$dow = array('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday');
+		foreach ($dow as $w) {
+			$v = 'event-calendar-repeating-'.$w.'-value';
+			$event->$v = get_input($v);
+				if($event->$v == 1){
+					$validation = '1';
+				}
+		}
+		if (!$validation){
+			return false;
+		}
+	}
+}
+
 	// ok, the input passes the validation so put the values in the real event object
 
 	$keys = array(
@@ -1179,7 +1200,8 @@ function event_calendar_get_formatted_time($event) {
 					$end_date = event_calendar_format_time($end_date, $event->end_time);
 
 				}
-				$start_date = event_calendar_format_time($start_date, $event->start_time);
+                //Nick - I commented this out because it was causing the start date to appear twice
+				//$start_date = event_calendar_format_time($start_date, $event->start_time);
 			}
 			$time_bit = "$start_date - $end_date";
 

@@ -132,7 +132,10 @@ if(elgg_in_context('group_profile')){
     $group_only_class = '';
 }
 //if(elgg_get_context() == 'group_profile'){
+echo '<nav role="navigation">';
+echo '<h2 class="wb-invisible">'.elgg_echo('profile:content:menu').'</h2>';
 echo elgg_view_menu('owner_block', array('entity' => $owner, 'class' => 'nav nav-tabs tabMenuGroup clearfix ' .$group_only_class, 'sort_by' => 'priority',));
+echo '</nav>';
 //}
 //condition for page
 //see what page we are on for proper js
@@ -187,6 +190,18 @@ if(elgg_get_context() == 'profile'){
             $('.elgg-menu-item-more').remove();
             //alert('bye bye bubby');
     }
+
+    //focus on tabs when navigating to each panel
+    $('.elgg-menu-owner-block-default a').on('click', function(e){
+      //get id
+      var id = $(this).attr('href');
+      //dont do anything if more tab is pressed
+      if(id != ''){
+        //add active class and focus to new tab
+        $('.tab-content').find(id).addClass('active').focus();
+      }
+    });
+
 });
 
 

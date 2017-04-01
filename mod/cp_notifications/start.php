@@ -970,6 +970,7 @@ function cp_create_notification($event, $type, $object) {
 						$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content',array($object->getOwnerEntity()->username, cp_translate_subtype($object->getSubtype(), false), $object->title),'fr');
 					}
 				}
+
 				$guidone = $object->getOwnerGUID();
 				//$to_recipients = get_subscribers($dbprefix, $object->getOwnerGUID(), $object->guid);
 				$author_id = $object->getOwnerGUID();
@@ -979,10 +980,12 @@ function cp_create_notification($event, $type, $object) {
 			// cyu - client wants the html tags stripped from the notifications
 			$object_description = ($object->description != strip_tags($object->description)) ? "" : $object->description;
 
+
 			$message = array(
 				'cp_topic' => $object, 
 				'cp_msg_type' => 'cp_new_type',
-				'cp_topic_description' => $object_description,
+				'cp_topic_description_discussion' => $object->description,
+				'cp_topic_description_discussion2' => $object->description2,
 			);
 			
 			$content_entity = $object;
@@ -1369,6 +1372,7 @@ function notify_entity_menu_setup($hook, $type, $return, $params) {
 	if ($allow_subscription && elgg_is_logged_in()) {
 	    if ( check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $entity->getGUID()) || check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $entity->getGUID()) ) {
 
+
 			$bell_status = (elgg_is_active_plugin('wet4')) ? '<i class="icon-unsel fa fa-lg fa-bell"></i>' : elgg_echo('cp_notify:stop_subscribe');			 	
 
 		
@@ -1384,7 +1388,9 @@ function notify_entity_menu_setup($hook, $type, $return, $params) {
 
 	    } else {
 
+
 		    $bell_status = (elgg_is_active_plugin('wet4')) ? '<i class="icon-unsel fa fa-lg fa-bell-slash-o"></i>' : elgg_echo('cp_notify:start_subscribe');
+
 
 		    $return[] = ElggMenuItem::factory(array(
 			    'name' => 'set_notify',

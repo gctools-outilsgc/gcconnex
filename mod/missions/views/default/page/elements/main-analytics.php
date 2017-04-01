@@ -31,6 +31,27 @@ $input_department = elgg_view('page/elements/organization-input', array(
 		'passed_onchange_function' => 'wipe_away_graph();'
 ));
 
+$input_role = elgg_view('input/dropdown', array(
+	    'name' => 'job_role',
+	    'value' => '',
+		'options_values' => array('' => '') + mm_echo_explode_setting_string(elgg_get_plugin_setting('opportunity_role_string', 'missions')),
+	    'id' => 'data-analytics-role-dropdown-input'
+));
+
+$input_type = elgg_view('input/dropdown', array(
+	    'name' => 'job_type',
+	    'value' => '',
+		'options_values' => array('' => '') + mm_echo_explode_setting_string(elgg_get_plugin_setting('opportunity_type_string', 'missions')),
+	    'id' => 'data-analytics-type-dropdown-input'
+));
+
+$input_status = elgg_view('input/dropdown', array(
+	    'name' => 'status',
+	    'value' => '',
+		'options_values' => array('' => '') + mm_echo_explode_setting_string(elgg_get_plugin_setting('opportunity_status_string', 'missions')),
+	    'id' => 'data-analytics-status-dropdown-input'
+));
+
 $graph_generate_button = elgg_view('output/url', array(
 		'text' => elgg_echo('missions:generate'),
 		'class' => 'elgg-button btn btn-success',
@@ -100,6 +121,31 @@ $graph_hide_table_button = elgg_view('output/url', array(
 		<?php echo $input_department; ?>
 	</div>
 </div>
+<div class="col-sm-12" style="margin:4px;" id="role-input-row">
+	<label class="col-sm-3 text-right">
+		<?php echo elgg_echo('missions:opportunity_role') . ':';?>
+	</label>
+	<div class="col-sm-3">
+		<?php echo $input_role; ?>
+	</div>
+</div>
+<div class="col-sm-12" style="margin:4px;" id="type-input-row">
+	<label class="col-sm-3 text-right">
+		<?php echo elgg_echo('missions:opportunity_type') . ':';?>
+	</label>
+	<div class="col-sm-3">
+		<?php echo $input_type; ?>
+	</div>
+</div>
+<div class="col-sm-12" style="margin:4px;" id="status-input-row">
+	<label class="col-sm-3 text-right">
+		<?php echo elgg_echo('missions:opportunity_status') . ':';?>
+	</label>
+	<div class="col-sm-3">
+		<?php echo $input_status; ?>
+	</div>
+</div>
+
 <div class="col-sm-6">
 	<div id="zoom_controls_container" style="display: none;">
 		<?php echo $chart_controls; ?>
@@ -129,6 +175,9 @@ $graph_hide_table_button = elgg_view('output/url', array(
 				$('#graph-type-inputs').html(result);
 				if (type == 'missions:top_skills') {
 					$('#department-input-row').hide();
+					$('#role-input-row').hide();
+					$('#type-input-row').hide();
+					$('#status-input-row').hide();
 				} else {
 					disable_target_date();
 				}
@@ -227,6 +276,30 @@ $graph_hide_table_button = elgg_view('output/url', array(
 			department_guid = array_of_department_values[array_of_department_values.length - 2];
 		}
 
+		var array_of_role_type_values = $("#data-analytics-role-dropdown-input").map(function(index) {
+			return $('#' + this.id).val();
+		});
+		var role_type = array_of_role_type_values[array_of_role_type_values.length - 1];
+		if(role_type == 0 && array_of_role_type_values.length > 1) {
+			role_type = array_of_role_type_values[array_of_role_type_values.length - 2];
+		}
+
+		var array_of_job_type_values = $("#data-analytics-type-dropdown-input").map(function(index) {
+			return $('#' + this.id).val();
+		});
+		var job_type = array_of_job_type_values[array_of_job_type_values.length - 1];
+		if(job_type == 0 && array_of_job_type_values.length > 1) {
+			job_type = array_of_job_type_values[array_of_job_type_values.length - 2];
+		}
+
+		var array_of_status_values = $("#data-analytics-status-dropdown-input").map(function(index) {
+			return $('#' + this.id).val();
+		});
+		var status = array_of_status_values[array_of_status_values.length - 1];
+		if(status == 0 && array_of_status_values.length > 1) {
+			status = array_of_status_values[array_of_status_values.length - 2];
+		}
+
 		// AJAX call which generates the data set for the graph as well as sets some supporting data and options.
 		elgg.getJSON('ajax/view/missions/analytics-generator', {
 			data: {
@@ -236,6 +309,9 @@ $graph_hide_table_button = elgg_view('output/url', array(
 				interval: graph_interval,
 				target_mission_date: graph_target_date,
 				department_guid: department_guid,
+				role_type: role_type,
+				job_type: job_type,
+				status: status,
 				separator: graph_separator,
 				bin_number: graph_bin_number,
 				target_value: graph_target_value
@@ -382,11 +458,17 @@ $graph_hide_table_button = elgg_view('output/url', array(
 			$('#data-analytics-target-mission-date-dropdown-input').prop('disabled', true);
 			if($('#data-analytics-separator-dropdown-input').val() == 'missions:reason_to_decline') {
 				$('#department-input-row').hide();
+				$('#role-input-row').hide();
+				$('#type-input-row').hide();
+				$('#status-input-row').hide();
 			}
 		}
 		else {
 			$('#data-analytics-target-mission-date-dropdown-input').prop('disabled', false);
 			$('#department-input-row').show();
+			$('#role-input-row').show();
+			$('#type-input-row').show();
+			$('#status-input-row').show();
 		}
 	}
 </script>

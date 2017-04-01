@@ -10,7 +10,7 @@ $work_experience = get_entity($vars['guid']); // get the guid of the work experi
 
 $guid = ($work_experience != NULL)? $vars['guid'] : "new"; // if the work experience guid isn't given, this must be a new entry
 
-echo '<div class="gcconnex-work-experience-entry ' . $guid . '" data-guid="' . $guid . '">'; // work experience entry wrapper for css styling
+echo '<div tabindex="-1" class="gcconnex-work-experience-entry ' . $guid . '" data-guid="' . $guid . '">'; // work experience entry wrapper for css styling
 
 // enter organization name
 echo '<label for="title-' . $guid . '" class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:experience:title') . '</label>';
@@ -35,7 +35,7 @@ echo elgg_view("input/text", array(
 echo '</span>';
 
 // enter start date
-echo '<div class="col-xs-6"><h4>' . elgg_echo('gcconnex_profile:education:start') . '</h4>';
+echo '<div class="col-xs-6 mrgn-tp-md">';
 echo '<label for="startdate-' . $guid . '" class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:experience:start_month') .  '</label>';
 
 echo elgg_view("input/pulldown", array(
@@ -97,7 +97,7 @@ if ($work_experience->ongoing == 'true') {
 echo '</div>';
 
 //end date
-echo '<div class="col-xs-6"><h4>' . elgg_echo('gcconnex_profile:education:end') . '</h4>';
+echo '<div class="col-xs-6 mrgn-tp-md">';
 echo '<label for="enddate-' . $guid . '" class="gcconnex-profile-field-title">' . elgg_echo('gcconnex_profile:experience:end_month') . '</label>';
 echo elgg_view("input/pulldown", $params);
 

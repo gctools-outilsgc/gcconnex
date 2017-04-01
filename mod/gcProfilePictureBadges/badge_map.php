@@ -17,8 +17,17 @@ if(!$mentalHealth_guid){
     $mentalHealth_guid = 20934966;
 }
 
+
+//get GUID of mental health group for badge
+$breakingBarriers_guid = elgg_get_plugin_setting("breakingBarriers_group", "gcProfilePictureBadges");
+
+if(!$breakingBarriers_guid){
+    $breakingBarriers_guid = 24229563;
+}
+
 $initbadges = array(
     get_entity($mentalHealth_guid)->name => 'mentalHealth',
+		get_entity($breakingBarriers_guid)->name => 'breakingBarriers',
 );
 
 

@@ -25,8 +25,14 @@ if(elgg_is_logged_in() && $group->isMember()){
         }
     }
 
+    //this needs to be run at least once for previous clients who had badges enabled before control over badge was transferred to group
+    if($pledge == 'mentalHealth' && is_null($group->getPrivateSetting("group:badge:".$pledge))){
+        $group->setPrivateSetting("group:badge:".$pledge, 'yes');
+        $group->setPrivateSetting("group:badge:".$pledge.":display_widget", 'yes');
+    }
+
     //display if group has a badge and the user does not have it active
-    if($pledge && $pledge != $user->init_badge && elgg_get_plugin_setting('mentalHealth_group_display', 'gcProfilePictureBadges')){
+    if($pledge && $pledge != $user->init_badge && $group->getPrivateSetting("group:badge:".$pledge) == 'yes' && $group->getPrivateSetting("group:badge:".$pledge.":display_widget") == 'yes'){
 
 ?>
 <div class="pledge-holder clearfix">
@@ -42,6 +48,7 @@ if(elgg_is_logged_in() && $group->isMember()){
             'src' => 'mod/gcProfilePictureBadges/graphics/'.$pledge.'.png',
             'class' => 'center-block',
             'title' => elgg_echo('gcProfilePictureBadges:badge:title:'.$pledge, array(elgg_echo('gcProfilePictureBadges:badge:'.$pledge))),
+            'alt' => elgg_echo('gcProfilePictureBadges:badge:title:'.$pledge, array(elgg_echo('gcProfilePictureBadges:badge:'.$pledge))),
         ));
 
         //add to avatar button

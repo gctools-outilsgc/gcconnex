@@ -108,7 +108,9 @@ return array(
     'userMenu:account' => "Account Settings",
     'userMenu:messages' => "My Messages",
     'userMenu:colleagues' => "My Colleagues",
-    'userMenu:usermenuTitle' =>'User Card - Click here for links to your profile, account settings and logout', /*NEW*/
+    'userMenu:usermenuTitle' =>'User Card - Click here for links to your profile, account settings and logout',
+    'wet:usermenu:helpertext' => "User Menu. Contains Links to Notifications, Profile and Logout",
+    /*NEW*/
 		'wet:dd:expand'=>"Open drop down of most recent messages",
 
 
@@ -148,6 +150,7 @@ return array(
     'profile:viewall:coll' => 'View All Colleagues',
     'profile:viewall:groups' => 'View All Groups',
     'gcforums:enable_group_forums' => 'Enable group forums',
+    'gprofile:contentMenu' => "Group content menu",
 
     /**
   * Group invite
@@ -1524,6 +1527,7 @@ Please do not reply to this email.",
     'event_calendar:lang:french'=>"French",
     'event_calendar:lang:english'=>"English",
     'event_calendar:lang:bilingual'=>"Bilingual",
+    'event_calendar:add_recurrence' => "Add recurrence",
 
     /*new for tour*/
 'gcTour:next' => 'Next ',

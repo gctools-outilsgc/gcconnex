@@ -140,7 +140,7 @@ function wet4_theme_init() {
         elgg_register_action("groups/invite", elgg_get_plugins_path() . "/wet4/actions/groups/invite.php");
     }
  elgg_register_action("comment/join", elgg_get_plugins_path() . "groups/actions/groups/membership/join.php");
-   
+
 		elgg_register_action("file/move_folder", elgg_get_plugins_path() . "/wet4/actions/file/move.php");
     elgg_register_action("friends/collections/edit", elgg_get_plugins_path() . "/wet4/actions/friends/collections/edit.php");
     elgg_register_action("login", elgg_get_plugins_path() . "/wet4/actions/login.php", "public");
@@ -381,7 +381,7 @@ function wet4_theme_pagesetup() {
                     if($count >= 10){
                         //$count = '9+';
                     }
-                    $extra = '<span class="notif-badge">' . $count . '</span>';
+                    $extra = '<span aria-hidden="true" class="notif-badge">' . $count . '</span>';
                 }
 
                 // add menu item
@@ -738,6 +738,20 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 	$entity = $params['entity'];
 	/* @var \ElggEntity $entity */
 	$handler = elgg_extract('handler', $params, false);
+    
+    //Nick -Remove empty comment and reply links from river menu
+        foreach ($return as $key => $item){
+
+            switch ($item->getName()) {
+                case 'access':
+                    //$item->setItemClass('removeMe');
+                    unset($return[$key]);
+                    break;
+
+            }
+
+    }
+    
 
 
 
@@ -806,12 +820,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
                 );
                 $return[] = \ElggMenuItem::factory($options);
 
-                $options = array(
-										'name' => 'access',
-                    'text' => '',
-                    'item_class' => 'removeMe',
-									);
-		$return[] = \ElggMenuItem::factory($options);
+
 
             } else {
                 $options = array(
@@ -970,6 +979,21 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params){
 	if (!$object || !$object->canAnnotate(0, 'likes')) {
 		return;
 	}
+        //Nick -Remove empty comment and reply links from river menu
+        foreach ($return as $key => $item){
+
+            switch ($item->getName()) {
+                case 'comment':
+                    //$item->setItemClass('removeMe');
+                    unset($return[$key]);
+                    break;
+                case 'reply':
+                    //$item->setItemClass('removeMe');
+                    unset($return[$key]);
+                    break;
+            }
+
+    }
 
     $entContext = $object->getType();
     if($entContext == 'object'){
@@ -1237,14 +1261,7 @@ function my_owner_block_handler($hook, $type, $menu, $params){
  * Remove comment menu item
  */
 function river_handler($hook, $type, $menu, $params){
-    foreach ($menu as $key => $item){
 
-            switch ($item->getName()) {
-                case 'comment':
-                    $item->setItemClass('removeMe');
-            }
-
-    }
 }
 
 /*

@@ -12,6 +12,9 @@ $end_date = $vars['end_date'];
 $interval = $vars['interval'];
 $target_date = $vars['target_mission_date'];
 $department_guid = $vars['department_guid'];
+$role_type = $vars['role_type'];
+$job_type = $vars['job_type'];
+$status = $vars['status'];
 $separator = $vars['separator'];
 
 $bin_number = $vars['bin_number'];
@@ -67,6 +70,18 @@ else {
 			$mission_set = mm_analytics_cull_missions_by_department($mission_set, $department_identifier);
 		}
 
+		if ($role_type != '') {
+			$mission_set = mm_analytics_cull_missions_by_role_type($mission_set, $role_type);
+		}
+
+		if ($job_type != '') {
+			$mission_set = mm_analytics_cull_missions_by_job_type($mission_set, $job_type);
+		}
+
+		if ($status != '') {
+			$mission_set = mm_analytics_cull_missions_by_status($mission_set, $status);
+		}
+
 		// Separates the missions according to the user given separator into different series. These series are later stacked upon each other in the graph.
 		$mission_set = mm_analytics_separate_missions_by_values($mission_set, $separator);
 
@@ -114,6 +129,18 @@ else {
 		// Removes the missions that are not within the department or that department's children.
 		if($department_identifier != '') {
 			$mission_set = mm_analytics_cull_missions_by_department($mission_set, $department_identifier);
+		}
+
+		if ($role_type != '') {
+			$mission_set = mm_analytics_cull_missions_by_role_type($mission_set, $role_type);
+		}
+
+		if ($job_type != '') {
+			$mission_set = mm_analytics_cull_missions_by_job_type($mission_set, $job_type);
+		}
+
+		if ($status != '') {
+			$mission_set = mm_analytics_cull_missions_by_status($mission_set, $status);
 		}
 
 		// Creates an array of number which will separate the missions into bins.
