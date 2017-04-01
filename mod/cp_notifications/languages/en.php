@@ -63,7 +63,7 @@ $english = array(
 	'cp_notifications:mail_body:subtype:task' => "%s created a task: %s", //CHANGE 1
 	'cp_notifications:mail_body:subtype:likes' => "%s liked your post: %s",
 	'cp_notifications:mail_body:subtype:response' => "%s replied or commented on your post: %s", // CHANGE 2
-	'cp_notifications:mail_body:subtype:any' => "%s posted a%s %s: %s", // john doe posted an idea vs john doe posted a blog
+	'cp_notifications:mail_body:subtype:any' => "%s posted %s: %s", // john doe posted an idea vs john doe posted a blog
 
 	'cp_notifications:mail_body:subtype:content_revision' => "%s revised the %s: %s", //CHANGE 1
 	'cp_notifications:mail_body:subtype:mention' => "%s mentioned you in the %s: %s", //CHANGE 1

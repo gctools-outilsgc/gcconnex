@@ -370,52 +370,50 @@ function cp_translate_subtype($subtype_name, $english = true) {
 	$label = '';
 	switch($subtype_name) {
 		case 'blog':
-			$label = 'blog';
+			$label = ($english) ? 'blog' : 'un blogue';
 			break;
 		case 'bookmarks':
-			$label = 'bookmark';
+			$label = ($english) ? 'bookmark' : 'un signet';
 			break;
 		case 'file':
-			$label = 'file';
+			$label = ($english) ? 'file' : 'un fichier';
 			break;
 		case 'poll':
-			$label = 'poll';
+			$label = ($english) ? 'poll' : 'un sondage';
 			break;
 		case 'event_calendar':
-			$label = 'event';
+			$label = ($english) ? 'event' : 'un événement';
 			break;
 		case 'album':
-			$label = 'album';
+			$label = ($english) ? 'album' : 'un album';
 			break;
 		case 'groupforumtopic':
-			$label = 'discussion';
+			$label = ($english) ? 'discussion' : 'une discussion';
 			break;
 		case 'image':
-			$label = 'photo';
+			$label = ($english) ? 'photo' : 'une image';
 			break;
 		case 'idea':
-			$label = 'idea';
+			$label = ($english) ? 'idea' : 'un idee';
 			break;
 		case 'page_top':
 		case 'page':
-				$label = 'page';
+				$label = ($english) ? 'page' : 'une page';
 			break;
 		case 'hjforumtopic':
-			$label = 'forum topic';
+			$label = ($english) ? 'forum topic' : 'un suget sur le forum';
 			break;
 		case 'hjforum':
-			$label = 'forum';
+			$label = ($english) ? 'forum' : 'un forum';
 			break;
 		case 'thewire':
-			$label = 'wire';
-			if (!$english)
-				$label = 'fil';
+			$label = ($english) ? 'wire' : 'un fil';
 			break;
 		case 'task_top':
-			$label = 'task';
+			$label = ($english) ? 'task' : 'une tâche';
 			break;
 		case 'mission':
-			$label = 'opportunity';
+			$label = ($english) ? 'opportunity' : 'un oppourtunite';
 			break;
 		default:
 			$label = $subtype_name;
@@ -472,7 +470,8 @@ function userOptedIn( $user_obj, $mission_type ) {
 
     // this is specifically for the Micro Missions portion due to extra field
     $subtype = elgg_echo($content_array['subtype']);
-    $subtype = cp_translate_subtype($subtype);
+    $boolSubtype = ($language_preference === 'fr') ? false : true;
+    $subtype = cp_translate_subtype($subtype, $boolSubtype);
 
     if ($content_array['deadline']) {
       $closing_date = 'Closing Date : '.$content_array['deadline'];
@@ -538,11 +537,12 @@ function userOptedIn( $user_obj, $mission_type ) {
 
       $url = "<a href='{$content_array['content_url']}'>{$content_title}</a> {$closing_date}";
 
-      $subtype = cp_translate_subtype($content_array['subtype']);
+      $boolSubtype = ($language_preference === 'fr') ? false : true;
+      $subtype = cp_translate_subtype($content_array['subtype'], $boolSubtype);
       $n = "";
       $vowels = array('a','e','i','o','u');
       if (in_array($subtype{0}, $vowels)) $n = "n";
-      $rendered_content = elgg_echo("cp_notifications:mail_body:subtype:any", array($author, $n, $subtype, $url), $language_preference);
+      $rendered_content = elgg_echo("cp_notifications:mail_body:subtype:any", array($author, $subtype, $url), $language_preference);
     }
     return $rendered_content;
   }

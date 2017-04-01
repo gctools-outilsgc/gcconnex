@@ -34,7 +34,7 @@ else
 
       <div>
         <?php // display the main headings (group, personal, and micro missions) ?>
-        <h3><?php echo render_headers($highlevel_header,'',$language_preference); ?></h3>
+        <h3><?php echo render_headers($highlevel_header,'',$language_preference, sizeof($highlevel_contents)); ?></h3>
         <ul style='list-style-type:none;'>
 
         <?php 

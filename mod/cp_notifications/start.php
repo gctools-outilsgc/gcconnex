@@ -1190,19 +1190,19 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 			else
 				$template = elgg_view('cp_notifications/newsletter_template_empty', array('to' => $to));
 
-/*
+
 			if (elgg_is_active_plugin('phpmailer'))
 				phpmailer_send($to->email, $to->name, $subject, $template, NULL, true );
 			else
 				mail($to->email, $subject, $template, cp_get_headers());
 			
-*/
+
 
 			//echo $template;
 			echo "<p>Digest sent to user email: {$to->email} ({$to->guid})</p>";
 
 			//echo "<br/><br/>";
-			echo $template;
+			//echo $template;
 			
 			// clean up the newsletter
 			$newsletter_object->description = json_encode(array());
