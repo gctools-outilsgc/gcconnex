@@ -600,7 +600,7 @@ $pt_departments = elgg_get_plugin_setting('cp_pt_information','cp_notifications'
 
 $pt_departments = explode(',',$pt_departments);
 
-if (in_array($email_domain[1], $pt_departments)) {
+/*if (in_array($email_domain[1], $pt_departments)) {
 
 	$email_notification_header = str_replace(elgg_get_site_url(), 'https://ext.gcconnex.gc.ca/', $email_notification_header);
 	$cp_notify_msg_title_en = str_replace(elgg_get_site_url(), 'https://ext.gcconnex.gc.ca/', $cp_notify_msg_title_en);
@@ -612,7 +612,7 @@ if (in_array($email_domain[1], $pt_departments)) {
 	$email_notification_footer_fr = str_replace(elgg_get_site_url(), 'https://ext.gcconnex.gc.ca/', $email_notification_footer_fr); // no access to gcpedia
 	$email_notification_footer_fr2 = str_replace(elgg_get_site_url(), 'https://ext.gcconnex.gc.ca/', $email_notification_footer_fr2);
 
-}
+}*/
 
 
 echo <<<___HTML
