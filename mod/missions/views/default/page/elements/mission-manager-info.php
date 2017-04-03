@@ -14,7 +14,7 @@ $mission = $vars['mission'];
 $container_class = $vars['container_class'];
 $grid_number = $vars['grid_number'];
 $test = $mission->account;
-$manager_account = get_user($mission->account); //Nick changed to owner_guid then back to account
+$manager_account = get_user($mission->owner_guid); //Nick changed to owner_guid then back to account
 if(!$manager_account) {
 	$manager_account_by_email = get_user_by_email($mission->email);
 	$manager_account = array_pop($manager_account_by_email);
@@ -24,9 +24,9 @@ $manager_name = $mission->name;
 $manager_icon = elgg_view_entity_icon(get_entity(1), 'small');
 if($manager_account) {
 	$manager_name = elgg_view('output/url', array(
-			'href' => $manager_account->getURL(), //Nick changed to profile url
+			'href' => elgg_get_site_url().'profile/'.$manager_name,//$manager_account->getURL(), //Nick changed to profile url
 			'text' => $manager_name,
-			'class' => 'mission-user-link-' . $manager_account->guid
+			'class' => 'mission-user-link-' . $mission->owner_guid
 	));
 
 	$manager_icon = elgg_view_entity_icon($manager_account, 'small');
