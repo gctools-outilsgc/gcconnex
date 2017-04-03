@@ -892,6 +892,11 @@ function cp_create_notification($event, $type, $object) {
 					
 			}
 
+			$message = array(
+				'cp_topic' => $object,
+				'cp_msg_type' => 'cp_new_type',
+			);
+
 			// digest information purposes
 			$content_entity = $object;
 			$author = $object->getOwnerEntity();
