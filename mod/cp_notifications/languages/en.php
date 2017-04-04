@@ -66,6 +66,7 @@ $english = array(
 	'cp_notifications:mail_body:subtype:response' => "%s replied or commented on your post: %s", 
 	'cp_notifications:mail_body:subtype:any' => "%s posted a%s %s: %s", // john doe posted an idea vs john doe posted a blog
 
+	'cp_notifications:mail_body:subtype:oppourtunity' => "%s posted an oppourtunity (%s): %s",
 
 	'cp_notifications:mail_body:subtype:content_revision' => "%s revised the %s: %s", 
 	'cp_notifications:mail_body:subtype:mention' => "%s mentioned you in the %s: %s", 
@@ -138,9 +139,12 @@ $english = array(
 	'cp_newsletter:heading:notify:likes:singular' => "Like received on your content", 
 	'cp_newsletter:heading:notify:likes:plural' => "Likes received on your content", 
 
-	'cp_newsletter:heading:notify:new_post:singular' => "New item has been posted by your colleague",
-	'cp_newsletter:heading:notify:new_post:plural' => "New items have been posted by your colleagues", //CHANGE 3 
+	'cp_newsletter:heading:notify:new_post:singular' => "New item have been posted by your colleague",
+	'cp_newsletter:heading:notify:new_post:plural' => "New items have been posted by your colleagues", 
 	
+	'cp_newsletter:heading:notify:new_post:group:singular' => "New item have been posted",
+	'cp_newsletter:heading:notify:new_post:group:plural' => "New items have been posted", 
+
 	'cp_newsletter:heading:notify:content_revision:singular' => "Item has been revised", 
 	'cp_newsletter:heading:notify:content_revision:plural' => "Items have been revised", 
 
@@ -156,6 +160,8 @@ $english = array(
 	'cp_newsletter:heading:notify:response:singular' => "Response to other content subscriptions", 	
 	'cp_newsletter:heading:notify:response:plural' => "Responses to other content subscriptions", 
 	
+
+	'cp_newsletter:digest:opportunities:date' => "Closing date: ",
 
 	/// (INSTANT EMAIL) EMAIL CONTENT: Normal email notifications
 	'cp_newsletter:footer:notification_settings' => "To unsubscribe or manage these messages, please login and visit your <a href='{$site->getURL()}settings/plugin/%s/cp_notifications'> Notification Settings</a>.",

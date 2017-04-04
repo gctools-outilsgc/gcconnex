@@ -72,6 +72,7 @@ $french = array(
 
 	'cp_notifications:mail_body:subtype:any' => "%s a publié %s %s : %s", // john doe post un blogue vs john doe posted un blog CHANGE 1
 
+	'cp_notifications:mail_body:subtype:oppourtunity' => "%s a publié une opportunité (%s): %s",
 
 	'cp_newsletter:other_content:notice' => "Ces abonnements s'appliquent uniquement au contenu qui ne fait pas partie d'un groupe",
 	
@@ -146,8 +147,10 @@ $french = array(
 
 
 	'cp_newsletter:heading:notify:new_post:singular' => "Nouvel item a été publié par votre collègue", 
-
 	'cp_newsletter:heading:notify:new_post:plural' => "Nouvels items ont été publiés par vos collègues", 
+
+	'cp_newsletter:heading:notify:new_post:group:singular' => "Nouvel item a été publié", 
+	'cp_newsletter:heading:notify:new_post:group:plural' => "Nouvels items ont été publiés", 
 
 	'cp_newsletter:heading:notify:content_revision:singular' => "Item a été révisé", 
 	'cp_newsletter:heading:notify:content_revision:plural' => "Items ont été révisés", 
@@ -157,12 +160,13 @@ $french = array(
 
 
 
+
 	'cp_newsletter:footer:notification_settings' => "Pour vous désabonner ou gérer ces messages, veuillez vous connecter et visiter votre <a href='{$site->getURL()}settings/plugin/%s/cp_notifications'> Paramètres de notification</a>.",
 	'cp_newsletter:ending' => "<p>Cordialement,</p> <p>L'équipe des OutilsGC</p>", 
 	'cp_notifications:contact_help_desk'=> "Si vous avez des questions, veuillez soumettre votre demande via le <a href='{$site->getURL()}mod/contactform/'>formulaire Contactez-nous</a>.",
 
 
-
+	'cp_newsletter:digest:opportunities:date' => "Date limite : ",
 
 
 	// e-mail header text

@@ -1190,7 +1190,7 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 			if (strcmp($language_preference_fr,'set_digest_fr') == 0)
 				$language_preference = 'fr';
 			
-
+ 
 			$subject = elgg_echo('cp_newsletter:subject:daily',$language_preference);
 
 			if (sizeof($newsletter_content) > 0 || !empty($newsletter_content))
@@ -1199,22 +1199,22 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 				$template = elgg_view('cp_notifications/newsletter_template_empty', array('to' => $to));
 
 
-			if (elgg_is_active_plugin('phpmailer'))
+			/*if (elgg_is_active_plugin('phpmailer'))
 				phpmailer_send($to->email, $to->name, $subject, $template, NULL, true );
 			else
 				mail($to->email, $subject, $template, cp_get_headers());
-			
+			*/
 
 
 			//echo $template;
 			echo "<p>Digest sent to user email: {$to->email} ({$to->guid})</p>";
 
 			//echo "<br/><br/>";
-			//echo $template;
+			echo $template;
 			
 			// clean up the newsletter
-			$newsletter_object->description = json_encode(array());
-			$newsletter_object->save();
+			//$newsletter_object->description = json_encode(array());
+			//$newsletter_object->save();
 		}
 	}
 }
