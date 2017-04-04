@@ -1290,7 +1290,7 @@ function cp_send_new_password_request($user) {
 
 	// generate link
 	$link = elgg_get_site_url()."changepassword?u={$user->guid}&c={$code}";
-	error_log($link);
+	
 	// generate email
 	$ip_address = _elgg_services()->request->getClientIp();
 	// we don't need to check if the plugin (cp_notifications) is enabled here
