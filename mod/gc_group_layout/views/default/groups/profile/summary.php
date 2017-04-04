@@ -294,15 +294,35 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
                         //Nick - Added a link to share the group on the wire
                         if(elgg_is_logged_in()){
                             $options = array(
-
                                 'text' => '<i class="fa fa-share-alt fa-lg icon-unsel"><span class="wb-inv">Share this group on the Wire</span></i>',
                                 'title' => elgg_echo('thewire_tools:reshare'),
                                 'href' => 'ajax/view/thewire_tools/reshare?reshare_guid=' . $group->getGUID(),
                                 'class' => 'elgg-lightbox',
-
                                 'is_trusted' => true,
-
                             );
+                        }
+                        echo '<div class="pull-left mrgn-rght-sm">'.elgg_view('output/url', $options).'</div>';
+    
+                        //Nick - Added a link to like the group!
+                        if(elgg_is_logged_in()){
+                            $hasLiked = \Elgg\Likes\DataService::instance()->currentUserLikesEntity($group->guid);
+		                      //Has this user liked this already?
+                            if($hasLiked){
+                                $options = array(
+			                     'href' => elgg_add_action_tokens_to_url("/action/likes/delete?guid={$group->guid}"),
+			                     'text' => '<i class="fa fa-thumbs-up fa-lg icon-sel"></i><span class="wb-inv">'. elgg_echo('likes:remove').'</span>',
+			                     'title' => elgg_echo('likes:remove') . ' ' .elgg_echo('group'),
+			                     
+		                      );
+                            }else{
+                               $options = array(
+			                     'href' => elgg_add_action_tokens_to_url("/action/likes/add?guid={$group->guid}"),
+			                     'text' => '<i class="fa fa-thumbs-up fa-lg icon-unsel"></i><span class="wb-inv">'.elgg_echo('likes:likethis').'</span>',
+                                 'title' => elgg_echo('likes:likethis') . ' ' . elgg_echo('group'),
+			                     
+		                      ); 
+                            }
+
                         }
                         echo '<div class="pull-left mrgn-rght-sm">'.elgg_view('output/url', $options).'</div>';
                     ?>
