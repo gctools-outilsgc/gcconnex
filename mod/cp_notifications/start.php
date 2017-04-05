@@ -867,6 +867,7 @@ function cp_create_notification($event, $type, $object) {
 
 
 			$to_recipients = get_subscribers($dbprefix, $object->getOwnerGUID(), $object->getContainerGUID());
+			$to_recipients_site = get_site_subscribers($dbprefix, $author_id, $content_id);
 		
 			break;
 
@@ -997,6 +998,7 @@ function cp_create_notification($event, $type, $object) {
 			$author = $object->getOwnerEntity();
 
 			$to_recipients = get_subscribers($dbprefix, $author_id, $content_id);
+			$to_recipients_site = get_site_subscribers($dbprefix, $author_id, $content_id);
 			$email_only = false;
 			break;
 
@@ -1027,11 +1029,20 @@ function cp_create_notification($event, $type, $object) {
 			if (elgg_is_active_plugin('phpmailer'))
 				phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );
 			else
-				mail($to_recipient->email,$subject,$template,cp_get_headers());
-
-			messages_send($subject, $template, $to_recipient->guid, $site->guid, 0, true, false);
-			
+				mail($to_recipient->email,$subject,$template,cp_get_headers());			
 		}
+	}
+
+	foreach ($to_recipients_site as $to_recipient) {
+		$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid, 'cp_notifications');
+
+		if ($to_recipient->guid == $author->guid)
+			continue;
+
+		if (strcmp($user_setting, "set_digest_yes") == 0)
+			continue;
+
+		messages_send($subject, $template, $to_recipient->guid, $site->guid, 0, true, false);
 	}
 }
 
@@ -1042,15 +1053,24 @@ function cp_create_notification($event, $type, $object) {
  * @param string 			$dbprefix
  * @param integer 			$user_guid
  * @param optional integer 	$entity_guid
+ * @param email vs site_mail
  * @return Array <ElggUser> 
  */
 function get_subscribers($dbprefix, $user_guid, $entity_guid = '') {
-
 	$subscribed_to = ($entity_guid != '') ? $entity_guid : $user_guid;
 
 	$query = "	SELECT DISTINCT u.guid, u.email, u.username, u.name
 				FROM {$dbprefix}entity_relationships r LEFT JOIN {$dbprefix}users_entity u ON r.guid_one = u.guid 
-				WHERE r.guid_one <> {$user_guid} AND r.relationship LIKE 'cp_subscribed_to_%' AND r.guid_two = {$subscribed_to}";
+				WHERE r.guid_one <> {$user_guid} AND r.relationship LIKE 'cp_subscribed_to_email' AND r.guid_two = {$subscribed_to}";
+	return get_data($query);
+}
+
+function get_site_subscribers($dbprefix, $user_guid, $entity_guid = '') {
+	$subscribed_to = ($entity_guid != '') ? $entity_guid : $user_guid;
+
+	$query = " SELECT DISTINCT u.guid, u.email, u.username, u.name
+	FROM {$dbprefix}entity_relationships r LEFT JOIN {$dbprefix}users_entity u ON r.guid_one = u.guid 
+	WHERE r.guid_one <> {$user_guid} AND r.relationship LIKE 'cp_subscribed_to_site_mail' AND r.guid_two = {$subscribed_to}";
 	return get_data($query);
 }
 
