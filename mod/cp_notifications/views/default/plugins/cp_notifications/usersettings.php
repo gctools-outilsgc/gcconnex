@@ -464,7 +464,7 @@ input:checked + .slider:before {
 				subtype: entity_subtype
 			},
 			success: function (sample_text) {
-				var nothing_text = elgg.echo('cp_notifications:no_group_subscription');
+				var nothing_text = elgg.echo('cp_notifications:no_personal_subscription');
 
 
 				// assuming this is doing what i think it is doing 

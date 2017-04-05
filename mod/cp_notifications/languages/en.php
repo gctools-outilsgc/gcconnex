@@ -85,7 +85,10 @@ $english = array(
 	'cp_notifications:not_subscribed' => 'Not Subscribed',
 	'cp_notifications:pick_colleagues' => 'Subscribe to your colleagues',
 	'cp_notifications:group_content'=>'Group Content',
+
     'cp_notifications:no_group_subscription' => "Nothing to load",
+ 	'cp_notifications:no_personal_subscription' => "No content subscription",
+
  	'cp_notifications:loading' => 'Loading...',
 	'cp_notifications:subscribe_all_label' => "<a href='%s'>Subscribe</a> or <a href='%s'> Unsubscribe</a> to all groups and their content",
 	'cp_notifications:chkbox:select_all_group_for_notification' => "Select all groups (this will not select the group content)",
@@ -97,7 +100,7 @@ $english = array(
     'cp_notifications:personal_colleagues' => 'Notify me when my colleagues create content',
 	'cp_notifications:personal_opportunities' => "Notify me when a new opportunity I have opted in for is created in the Career ConneXions Opportunities Platform",
 
-	'cp_notifications:no_group_content' => "(No subscribed group content)",
+	'cp_notifications:no_group_content' => "(No group content subscription)",
 
 	/// SETTINGS PAGE: Notification headings
 	'cp_notifications:heading:page_title' => 'Your Subscriptions',

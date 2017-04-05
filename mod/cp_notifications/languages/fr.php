@@ -84,6 +84,8 @@ $french = array(
 	'cp_notifications:pick_colleagues' => 'Abonnez-vous à vos collègues',
 	'cp_notifications:group_content'=>'Contenu du groupe',
 	'cp_notifications:no_group_subscription' => 'Rien à charger',
+	 'cp_notifications:no_personal_subscription' => "Aucun abonnement de contenu",
+
 	'cp_notifications:loading' => 'Chargement...',
 	'cp_notifications:subscribe_all_label' => "<a href='%s'>S’abonner</a> ou <a href='%s'>se désabonner</a> à tous les groupes et leur contenu", //CHANGE 2
 	'cp_notifications:chkbox:select_all_group_for_notification' => "Sélectionner tous les groupes (cette option ne sélectionnera pas le contenu des groupes).",
@@ -96,7 +98,7 @@ $french = array(
 	'cp_notifications:colleagueContent'=>'Envoyez-moi une notification lorsqu\'un(e) collègue crée du nouveau contenu',
 	'cp_notifications:personal_opportunities' => "Envoyez-moi une notification lorsqu'une nouvelle opportunité que j'ai choisie est créée dans la Plateforme de possibilités de ConneXions Carrière", //CHANGE 2
 
-	'cp_notifications:no_group_content' => "(Aucun contenu de groupe abonné)", //
+	'cp_notifications:no_group_content' => "(Aucun abonnement de contenu de groupe)", 
 
 	'cp_notifications:heading:page_title' => "Paramètres d'abonnement",
 	'cp_notifications:your_email' => "courriel",
