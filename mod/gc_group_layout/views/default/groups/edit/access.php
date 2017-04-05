@@ -76,6 +76,124 @@ if ($entity) {
 	}
 }
 ?>
+<script>
+	var handleResponse = function (json) {
+		var userOptions = '';
+		$(json).each(function(key, user) {
+			userOptions += '<li tabIndex="0" data-username="' + user.desc + '">' + user.icon + user.name + "</li>";
+		});
+
+		if (!userOptions) {
+			$('#mentions-popup > .panel-body').html('<div class="elgg-ajax-loader"></div>');
+			$('#mentions-popup').addClass('hidden');
+			return;
+		}
+
+		$('#mentions-popup > .panel-body').html('<ul class="mentions-autocomplete list-unstyled mrgn-bttm-0">' + userOptions + "</ul>");
+		$('.mentions-autocomplete .elgg-avatar a').attr('tabindex', '-1');
+		$('#mentions-popup').removeClass('hidden');
+
+		$('.mentions-autocomplete > li').bind('click', function(e) {
+			e.preventDefault();
+
+			var username = $(this).data('username');
+
+			// Remove the partial @username string from the first part
+			newBeforeMention = beforeMention.substring(0, position - current.length);
+
+			// Add the complete @username string and the rest of the original
+			// content after the first part
+			var newContent = newBeforeMention + username + afterMention;
+
+			// Set new content for the textarea
+			if (mentionsEditor == 'ckeditor') {
+				textarea.setData(newContent, function() {
+					this.checkDirty(); // true
+				});
+
+			} else if (mentionsEditor == 'tinymce') {
+				tinyMCE.activeEditor.setContent(newContent);
+			} else {
+				$(textarea).val(newContent);
+			}
+
+			// Hide the autocomplete popup
+			$('#mentions-popup').addClass('hidden');
+		});
+
+
+        //ability to tab and press enter on the list item
+
+		$('.mentions-autocomplete > li').bind('keypress', function (e) {
+
+		        e.preventDefault();
+		        if (e.keyCode == 13) {
+		        var username = $(this).data('username');
+
+		        // Remove the partial @username string from the first part
+		        newBeforeMention = beforeMention.substring(0, position - current.length);
+
+		        // Add the complete @username string and the rest of the original
+		        // content after the first part
+		        var newContent = newBeforeMention + username + afterMention;
+
+		        // Set new content for the textarea
+		        if (mentionsEditor == 'ckeditor') {
+		            textarea.setData(newContent, function () {
+		                this.checkDirty(); // true
+		                this.focus();
+		            });
+
+		        } else if (mentionsEditor == 'tinymce') {
+		            tinyMCE.activeEditor.setContent(newContent).focus();
+		        } else {
+		            $(textarea).val(newContent).focus();
+		        }
+
+		        // Hide the autocomplete popup
+		        $('#mentions-popup').addClass('hidden');
+		    }
+		    });
+
+
+	};
+
+	var autocomplete = function (content, position) {
+		var current = content;
+
+		if (current.length > 1) {
+			current = current.replace('@', '');
+			//$('#mentions-popup').removeClass('hidden');
+
+			var options = {success: handleResponse};
+
+			elgg.get(elgg.config.wwwroot + 'livesearch?q=' + current + '&match_on=groupmems', options);
+		} else {
+			$('#mentions-popup > .panel-body').html('<div class="elgg-ajax-loader"></div>');
+			$('#mentions-popup').addClass('hidden');
+		}
+	};
+
+	var init = function() {
+		$('owner_guid').bind('keyup', function(e) {
+
+			// Hide on backspace and enter
+			if (e.which == 8 || e.which == 13) {
+				$('#mentions-popup > .panel-body').html('<div class="elgg-ajax-loader"></div>');
+				$('#mentions-popup').addClass('hidden');
+			} else {
+				textarea = $(this);
+				content = $(this).val();
+				position = getCursorPosition(this);
+				mentionsEditor = 'textarea';
+
+				autocomplete(content, position);
+			}
+		});
+	};
+
+	init();
+</script>
 <div>
 	<label for="groups-content-access-mode"><?php echo elgg_echo("groups:content_access_mode"); ?></label><br />
 	<?php
@@ -91,35 +209,19 @@ if ($entity) {
 </div>
 
 <?php
-
 if ($entity && ($owner_guid == elgg_get_logged_in_user_guid() || elgg_is_admin_logged_in())) {
-	$members = array();
-
-	$options = array(
-		"relationship" => "member",
-		"relationship_guid" => $entity->getGUID(),
-		"inverse_relationship" => true,
-		"type" => "user",
-		"limit" => 0,
-	);
-
-	$batch = new ElggBatch("elgg_get_entities_from_relationship", $options);
-	foreach ($batch as $member) {
-		$option_text = "$member->name (@$member->username)";
-		$members[$member->guid] = htmlspecialchars($option_text, ENT_QUOTES, "UTF-8", false);
-	}
 	?>
 
 	<div>
 		<label for="groups-owner-guid"><?php echo elgg_echo("groups:owner"); ?></label><br />
 		<?php
-			echo elgg_view("input/select", array(
+			echo elgg_view("input/text", array(
 				"name" => "owner_guid",
 				"id" => "groups-owner-guid",
 				"value" =>  $owner_guid,
-				"options_values" => $members,
 				"class" => "groups-owner-input",
 			));
+			echo elgg_view_module('popup', '', elgg_view('graphics/ajax_loader', array('hidden' => false)), array('class' => 'mentions-popup hidden','id' => 'mentions-popup'));		// group members popup
 
 			if ($owner_guid == elgg_get_logged_in_user_guid()) {
 				echo "<span class='elgg-text-help'>" . elgg_echo("groups:owner:warning") . "</span>";

@@ -333,10 +333,58 @@ function input_livesearch_page_handler($page) {
 				break;
 
 			case 'friends':
+				$group = get_input('groupid');
 				$options = array(
 					'type' => 'user',
 					'limit' => $limit,
 					'relationship' => 'friend',
+					'relationship_guid' => $group,
+					'joins' => array("JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid"),
+					'wheres' => array(
+						"ue.banned = 'no'",
+						"(ue.name LIKE '$q%' OR ue.name LIKE '% $q%' OR ue.username LIKE '$q%')"
+					)
+				);
+				
+				$entities = elgg_get_entities_from_relationship($options);
+				if (!empty($entities)) {
+					foreach ($entities as $entity) {
+						
+						$output = elgg_view_list_item($entity, array(
+							'use_hover' => false,
+							'use_link' => false,
+							'class' => 'elgg-autocomplete-item',
+							'title' => $entity->name, // Default title would be a link
+						));
+
+						$icon = elgg_view_entity_icon($entity, 'tiny', array(
+							'use_hover' => false,
+						));
+
+						$result = array(
+							'type' => 'user',
+							'name' => $entity->name,
+							'desc' => $entity->username,
+							'guid' => $entity->guid,
+							'label' => $output,
+							'value' => $entity->username,
+							'icon' => $icon,
+							'url' => $entity->getURL(),
+							'html' => elgg_view('input/userpicker/item', array(
+								'entity' => $entity,
+								'input_name' => $input_name,
+							)),
+						);
+						$results[$entity->name . rand(1, 100)] = $result;
+					}
+				}
+				break;
+
+			case 'groupmems':
+				$options = array(
+					'type' => 'user',
+					'limit' => $limit,
+					'relationship' => 'member',
 					'relationship_guid' => $user->getGUID(),
 					'joins' => array("JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid"),
 					'wheres' => array(
