@@ -71,7 +71,7 @@ $english = array(
 	'cp_notifications:mail_body:subtype:content_revision' => "%s revised the %s: %s", 
 	'cp_notifications:mail_body:subtype:mention' => "%s mentioned you in the %s: %s", 
 
-	'cp_notifications:mail_body:subtype:wire_mention' => "%s mentioned you in the %s",
+	'cp_notifications:mail_body:subtype:wire_mention' => "%s mentioned you on the %s",
 
 	'cp_notifications:mail_body:subtype:content_share' => "%s shared your %s: %s", 
 

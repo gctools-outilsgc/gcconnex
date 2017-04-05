@@ -49,9 +49,9 @@ $french = array(
 
 
 	'cp_notifications:mail_body:subtype:content_revision' => "%s a on fait un revision pour %s %s",
-	'cp_notifications:mail_body:subtype:mention' => "%s a mentionnez dans %s: %s",
+	'cp_notifications:mail_body:subtype:mention' => "%s vous a mentionné dans %s: %s",
 
-	'cp_notifications:mail_body:subtype:wire_mention' => "%s a mentionnez dans le %s",
+	'cp_notifications:mail_body:subtype:wire_mention' => "%s vous a mentionné sur le %s",
 
 	'cp_notifications:mail_body:subtype:groupforumtopic' => "% a publié une discussion : %s", 
 	'cp_notifications:mail_body:subtype:hjforumtopic' => "%s a publié un sujet sur le forum : %s", 
