@@ -309,6 +309,19 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 			
 			break;
 
+		case 'cp_wire_mention':
+			if (!is_array($digest_collection['personal']['cp_mention']))
+				$digest_collection['personal']['cp_mention'] = array();
+
+			$content_array = array(
+				'content_url' => $entity->getURL(),
+				'subtype' => 'wire_mention',
+				'content_author' => $invoked_by->name,
+				'content_author_url' => $invoked_by->getURL(), 
+			);
+			$digest_collection['personal']['cp_mention'][] = json_encode($content_array);
+			break;
+
 		case 'mention':
 
 			$content_array = array(
@@ -470,7 +483,8 @@ function userOptedIn( $user_obj, $mission_type ) {
 
       $url = "<a href='{$content_array['content_url']}'>{$content_title}</a>";
       $rendered_content = elgg_echo("cp_notifications:mail_body:subtype:oppourtunity", array($author, $subtype, $url), $language_preference)." - ".$closing_date;
-     
+
+
     } elseif ($heading === 'cp_wire_share') {
    	  $content_title = (is_array($content_array['content_title'])) ? $content_array['content_title'][$language_preference] : $content_array['content_title'];
       $url = "<a href='{$content_array['content_url']}'>{$content_title}</a>";
@@ -478,11 +492,22 @@ function userOptedIn( $user_obj, $mission_type ) {
 
 	} elseif ($heading === 'cp_mention') {
 
+	if ($content_array['subtype'] === 'wire_mention') {
+
+   	  $content_title = elgg_echo("cp_notifications:subtype:name:thewire", $language_preference);
+   	  $author = $content_array['content_author'];
+
+      $url = "<a href='{$content_array['content_url']}'>{$content_title}</a>";
+      $rendered_content = elgg_echo("cp_notifications:mail_body:subtype:wire_mention", array($author, $url), $language_preference);
+
+
+    } else {
    	  $content_title = (is_array($content_array['content_title'])) ? $content_array['content_title'][$language_preference] : $content_title = $content_array['content_title'];
    	  $author = $content_array['content_author'];
 
       $url = "<a href='{$content_array['content_url']}'>{$content_title}</a>";
       $rendered_content = elgg_echo("cp_notifications:mail_body:subtype:mention", array($author, $content_array['subtype'],$url), $language_preference);
+  	}
 
 
 	} elseif ($heading === 'forum_reply') {

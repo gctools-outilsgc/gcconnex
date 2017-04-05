@@ -263,12 +263,14 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 
 		case 'cp_wire_mention': // thewire_tools/lib/events.php (TODO: share option in notifications setting)
+		
 			$message = array(
 				'cp_mention_by' => $params['cp_mention_by'],
 				'cp_view_mention' => $params['cp_view_your_mention'],
 				'cp_msg_type' => $cp_msg_type,
 				'cp_wire_mention_url' => $params['cp_wire_mention_url'],
 			);
+
 			$subject = elgg_echo('cp_notify:subject:wire_mention',array($params['cp_mention_by']),'en') . ' | ' . elgg_echo('cp_notify:subject:wire_mention',array($params['cp_mention_by']),'fr');
 			$to_recipients[] = $params['cp_send_to'];
 
@@ -445,6 +447,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				
 		$newsletter_appropriate = array('cp_wire_share','cp_messageboard','cp_wire_mention','cp_hjpost','cp_hjtopic', 'cp_friend_request', 'cp_friend_approve');
 		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0 && in_array($cp_msg_type, $newsletter_appropriate)) {
+			error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   author: {$author->username} /// msg_type: {$cp_msg_type} /// blah...");
 			$result = create_digest($author, $cp_msg_type, $content_entity, $to_recipient, $content_url);
 			continue;
 		} else 
@@ -867,7 +870,7 @@ function cp_create_notification($event, $type, $object) {
 
 
 			$to_recipients = get_subscribers($dbprefix, $object->getOwnerGUID(), $object->getContainerGUID());
-			$to_recipients_site = get_site_subscribers($dbprefix, $author_id, $content_id);
+			$to_recipients_site = get_subscribers($dbprefix, $object->getOwnerGUID(), $object->getContainerGUID());
 		
 			break;
 
@@ -1061,7 +1064,7 @@ function get_subscribers($dbprefix, $user_guid, $entity_guid = '') {
 
 	$query = "	SELECT DISTINCT u.guid, u.email, u.username, u.name
 				FROM {$dbprefix}entity_relationships r LEFT JOIN {$dbprefix}users_entity u ON r.guid_one = u.guid 
-				WHERE r.guid_one <> {$user_guid} AND r.relationship LIKE 'cp_subscribed_to_email' AND r.guid_two = {$subscribed_to}";
+				WHERE r.guid_one <> {$user_guid} AND r.relationship = 'cp_subscribed_to_email' AND r.guid_two = {$subscribed_to}";
 	return get_data($query);
 }
 
@@ -1070,7 +1073,7 @@ function get_site_subscribers($dbprefix, $user_guid, $entity_guid = '') {
 
 	$query = " SELECT DISTINCT u.guid, u.email, u.username, u.name
 	FROM {$dbprefix}entity_relationships r LEFT JOIN {$dbprefix}users_entity u ON r.guid_one = u.guid 
-	WHERE r.guid_one <> {$user_guid} AND r.relationship LIKE 'cp_subscribed_to_site_mail' AND r.guid_two = {$subscribed_to}";
+	WHERE r.guid_one <> {$user_guid} AND r.relationship = 'cp_subscribed_to_site_mail' AND r.guid_two = {$subscribed_to}";
 	return get_data($query);
 }
 
@@ -1219,18 +1222,18 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 				$template = elgg_view('cp_notifications/newsletter_template_empty', array('to' => $to));
 
 
-			/*if (elgg_is_active_plugin('phpmailer'))
+			if (elgg_is_active_plugin('phpmailer'))
 				phpmailer_send($to->email, $to->name, $subject, $template, NULL, true );
 			else
 				mail($to->email, $subject, $template, cp_get_headers());
-			*/
+			
 
 
 			//echo $template;
 			echo "<p>Digest sent to user email: {$to->email} ({$to->guid})</p>";
 
 			//echo "<br/><br/>";
-			echo $template;
+			//echo $template;
 			
 			// clean up the newsletter
 			//$newsletter_object->description = json_encode(array());
