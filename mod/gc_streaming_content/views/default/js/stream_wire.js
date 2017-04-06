@@ -35,7 +35,7 @@ function stop_stream_count(){
     $('.stream-new-wire').show('slow');
     $('.stream-new-wire').on('click', function(){
         loadNewPosts();
-    })
+    });
 }
 
 // Checking to see if there are any new wire posts

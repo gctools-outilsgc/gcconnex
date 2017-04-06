@@ -30,9 +30,9 @@
 		var wireContent = Util.q('#wb-cont > ul.elgg-list');
 
 		var extractId = function(elem) {
-			var regex = /^elgg\-object\-(\d+)$/
-			return parseInt(elem.id.match(regex)[1])
-		}
+			var regex = /^elgg\-object\-(\d+)$/;
+			return parseInt(elem.id.match(regex)[1]);
+		};
 
 		// Returns an array of the ids of all loaded posts
 		var getCurrentPosts = function() {
@@ -72,7 +72,7 @@
 								return true;
 							}).forEach(function(elem) {
 								wireContent.appendChild(elem);
-							})
+							});
 
 							isLoading = false;
 						}

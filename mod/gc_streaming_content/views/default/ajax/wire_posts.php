@@ -13,7 +13,7 @@ $content = elgg_list_entities(array(
 	'limit' => get_input('limit'),
 	'offset' => get_input('offset'),
 	'preload_owners' => true,
-    'pagination' =>false,
+	'pagination' =>false,
 ));
 
 echo $content;
