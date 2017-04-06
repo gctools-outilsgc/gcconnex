@@ -1,6 +1,8 @@
 
 # GCconnex
 
+[![Join the chat at https://gitter.im/gctools-outilsgc/gcconnex](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/gctools-outilsgc/general?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 GCconnex is a professional networking and collaborative workspace for all Canadian public service, allowing people to connect and share information, leveraging the power of networking towards a more effective and efficient public service.
 
 It features dynamic online communities where public servants can collaborate on projects, blog, chat via instant messaging, carry on discussions, ask and answer each other's questions about anything from learning to technology. It acts as a professional platform to create your professional C.V., share ideas and connect you with people and information that you need.
