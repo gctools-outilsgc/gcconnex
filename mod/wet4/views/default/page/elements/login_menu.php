@@ -230,15 +230,14 @@ $site_url = elgg_get_site_url();
 ?>
 
 <div id="container">
-<div id="topnav">
-<div class="active-links">
-    <div id="session">
-    <a id="signin-link" href="#" style='text-decoration:none;'>
-    <strong><?php echo elgg_echo('login'); ?> |</strong>
-    </a>
-    <strong><a  href=" <?php echo $site_url; ?>register">  <?php echo elgg_echo('register'); ?></a></li></strong>
+    <div id="topnav">
+        <div class="active-links">
+            <div id="session">
+                <strong><a href="<?php echo $site_url; ?>login"><?php echo elgg_echo('login'); ?></a> |</strong>
+                </a>
+                <strong><a  href=" <?php echo $site_url; ?>register">  <?php echo elgg_echo('register'); ?></a></li></strong>
     
-    </div>
+<!--     </div>
         <div id="signin-dropdown" class='login-menu'>
     
      <form method="get" role="form" action="#">
@@ -283,11 +282,13 @@ $site_url = elgg_get_site_url();
 
     echo '<a href="' . $site_url . 'forgotpassword" class="col-xs-12 mrgn-tp-md">'.elgg_echo('user:forgot').'</a>';
 ?>
-</div>
-    </div>
+</form>
+</div> -->
+            </div>
         </div>
      </div>
-</form>
+</div>
+
 <?php
      }else{
 $session = elgg_get_session();
