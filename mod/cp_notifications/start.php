@@ -795,6 +795,17 @@ function cp_create_notification($event, $type, $object) {
 					$cp_mentioned_user = $cp_mentioned_users[$i];
 					$mentioned_user = get_user_by_username(substr($cp_mentioned_user, 1));
 
+					if (!$mentioned_user)
+						break;
+
+					$subject = elgg_echo('cp_notify:subject:mention',array($object->getOwnerEntity()->name), 'en') .' | ' . elgg_echo('cp_notify:subject:mention',array($object->getOwnerEntity()->name), 'fr');
+					$message = array(
+						'cp_msg_type' => 'cp_mention_type',
+						'cp_author' => $object->getOwnerEntity()->name,
+						'cp_content_desc' => $object->description,
+						'cp_cp_link' => $object->getURL()
+					);
+					$template = elgg_view('cp_notifications/email_template', $message);
 					$user_setting = elgg_get_plugin_user_setting('cpn_mentions_email', $mentioned_user->guid, 'cp_notifications');
 					if (strcmp($user_setting, 'mentions_email') == 0) {
 						$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $mentioned_user->guid, 'cp_notifications');
@@ -805,7 +816,7 @@ function cp_create_notification($event, $type, $object) {
 
 						// send email and site notification
 						} else {
-							$template = elgg_view('cp_notifications/email_template', $message);
+							
 
 							if (elgg_is_active_plugin('phpmailer'))
 								phpmailer_send( $mentioned_user->email, $mentioned_user->name, $subject, $template, NULL, true );
@@ -1038,7 +1049,6 @@ function cp_create_notification($event, $type, $object) {
 			if (elgg_is_active_plugin('phpmailer'))
 				phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );
 			else
-
 				mail($to_recipient->email,$subject,$template,cp_get_headers());			
 
 		}
