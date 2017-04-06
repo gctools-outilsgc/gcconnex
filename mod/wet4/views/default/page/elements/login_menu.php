@@ -207,6 +207,11 @@ $(document).click(function() {
     $('#signin-dropdown').hide();
     $('#session').removeClass('active');
 });
+
+$('#login_focus').click(function(){
+   
+    setTimeout(function(){$('#username').focus();},0);
+});
 });   
 </script>
 <?php
@@ -230,14 +235,17 @@ $site_url = elgg_get_site_url();
 ?>
 
 <div id="container">
-    <div id="topnav">
-        <div class="active-links">
-            <div id="session">
-                <strong><a href="<?php echo $site_url; ?>login"><?php echo elgg_echo('login'); ?></a> |</strong>
-                </a>
-                <strong><a  href=" <?php echo $site_url; ?>register">  <?php echo elgg_echo('register'); ?></a></li></strong>
-    
-<!--     </div>
+<div id="topnav">
+<div class="active-links">
+    <div id="session">
+
+
+    <a id="signin-link" href="#" style='text-decoration:none;'>
+    <strong><span id="login_focus"><?php if (get_context() != 'login'){ echo elgg_echo('login'); ?></span>  |</strong>
+    </a>
+    <strong><a  href=" <?php echo $site_url; ?>register">  <?php echo elgg_echo('register'); ?></a></li></strong>
+    <?php } ?>
+    </div>
         <div id="signin-dropdown" class='login-menu'>
     
      <form method="get" role="form" action="#">
@@ -282,13 +290,11 @@ $site_url = elgg_get_site_url();
 
     echo '<a href="' . $site_url . 'forgotpassword" class="col-xs-12 mrgn-tp-md">'.elgg_echo('user:forgot').'</a>';
 ?>
-</form>
-</div> -->
-            </div>
+</div>
+    </div>
         </div>
      </div>
-</div>
-
+</form>
 <?php
      }else{
 $session = elgg_get_session();
