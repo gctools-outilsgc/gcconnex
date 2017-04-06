@@ -37,8 +37,8 @@ function cp_notifications_init() {
 		elgg_unregister_event_handler('update', 'annotation','mentions_notification_handler');
 	}
 
-	if (elgg_is_active_plugin('thewire_tools'))
-		elgg_unregister_event_handler('create', 'object', 'thewire_tools_create_object_event_handler');
+	//if (elgg_is_active_plugin('thewire_tools'))
+	//	elgg_unregister_event_handler('create', 'object', 'thewire_tools_create_object_event_handler');
 
 	// since most of the notifications are built within the action file itself, the trigger_plugin_hook was added to respected plugins
 	elgg_register_plugin_hook_handler('cp_overwrite_notification', 'all', 'cp_overwrite_notification_hook');
@@ -263,7 +263,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 
 		case 'cp_wire_mention': // thewire_tools/lib/events.php (TODO: share option in notifications setting)
-		
+
 			$message = array(
 				'cp_mention_by' => $params['cp_mention_by'],
 				'cp_view_mention' => $params['cp_view_your_mention'],
@@ -447,7 +447,6 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 		$newsletter_appropriate = array('cp_wire_share','cp_messageboard','cp_wire_mention','cp_hjpost','cp_hjtopic', 'cp_friend_request', 'cp_friend_approve');
 		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0 && in_array($cp_msg_type, $newsletter_appropriate)) {
-			error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   author: {$author->username} /// msg_type: {$cp_msg_type} /// blah...");
 			$result = create_digest($author, $cp_msg_type, $content_entity, $to_recipient, $content_url);
 			continue;
 		} else
@@ -795,25 +794,31 @@ function cp_create_notification($event, $type, $object) {
 				for ($i = 0; $i < sizeof($cp_mentioned_users); $i++) {
 					$cp_mentioned_user = $cp_mentioned_users[$i];
 					$mentioned_user = get_user_by_username(substr($cp_mentioned_user, 1));
-					$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $mentioned_user->guid, 'cp_notifications');
 
-					// send digest
-					if (strcmp($user_setting, "set_digest_yes") == 0) {
-						create_digest($object->getOwnerEntity(), "mention", $object, $mentioned_user);
+					$user_setting = elgg_get_plugin_user_setting('cpn_mentions_email', $mentioned_user->guid, 'cp_notifications');
+					if (strcmp($user_setting, 'mentions_email') == 0) {
+						$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $mentioned_user->guid, 'cp_notifications');
 
+						// send digest
+						if (strcmp($user_setting, "set_digest_yes") == 0) {
+							create_digest($object->getOwnerEntity(), "cp_mention", $object, $mentioned_user);
 
-					// send email and site notification
-					} else {
-						$template = elgg_view('cp_notifications/email_template', $message);
+						// send email and site notification
+						} else {
+							$template = elgg_view('cp_notifications/email_template', $message);
 
-						if (elgg_is_active_plugin('phpmailer'))
-							phpmailer_send( $mentioned_user->email, $mentioned_user->name, $subject, $template, NULL, true );
-						else
-							mail($mentioned_user->email,$subject,$template,cp_get_headers());
+							if (elgg_is_active_plugin('phpmailer'))
+								phpmailer_send( $mentioned_user->email, $mentioned_user->name, $subject, $template, NULL, true );
+							else
+								mail($mentioned_user->email,$subject,$template,cp_get_headers());
 
-						messages_send($subject, $template, $mentioned_user->guid, $site->guid, 0, true, false);
+							//messages_send($subject, $template, $mentioned_user->guid, $site->guid, 0, true, false);
+						}
 					}
 
+					$user_setting = elgg_get_plugin_user_setting('cpn_mentions_site', $mentioned_user->guid, 'cp_notifications');
+					if (strcmp($user_setting, 'mentions_site') == 0)
+						messages_send($subject, $template, $mentioned_user->guid, $site->guid, 0, true, false);
 				}
 			}
 
@@ -870,7 +875,6 @@ function cp_create_notification($event, $type, $object) {
 
 
 			$to_recipients = get_subscribers($dbprefix, $object->getOwnerGUID(), $object->getContainerGUID());
-
 			$to_recipients_site = get_subscribers($dbprefix, $object->getOwnerGUID(), $object->getContainerGUID());
 		
 
@@ -1240,11 +1244,11 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 			echo "<p>Digest sent to user email: {$to->email} ({$to->guid})</p>";
 
 			//echo "<br/><br/>";
-			//echo $template;
+			echo $template;
 
 			// clean up the newsletter
-			//$newsletter_object->description = json_encode(array());
-			//$newsletter_object->save();
+			$newsletter_object->description = json_encode(array());
+			$newsletter_object->save();
 		}
 	}
 }

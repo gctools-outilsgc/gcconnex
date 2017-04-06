@@ -14,6 +14,8 @@
  */
 function thewire_tools_create_object_event_handler($event, $type, ElggObject $object) {
 	
+	error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> wire mention here");
+	
 	if (empty($object) || !elgg_instanceof($object, "object", "thewire")) {
 		return;
 	}
@@ -51,7 +53,7 @@ function thewire_tools_create_object_event_handler($event, $type, ElggObject $ob
 			$object->getOwnerEntity()->name,
 			elgg_normalize_url("thewire/search/@" . $user->username)
 		));
-		
+		error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> wire mention here");
 		if (elgg_is_active_plugin('cp_notifications')) {
 			error_log("wire mention : ". $object->getOwnerEntity()->name);
 			$message = array(
