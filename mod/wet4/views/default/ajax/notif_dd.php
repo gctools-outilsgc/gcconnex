@@ -7,7 +7,11 @@ This will populate a drop down that will show up when mousing over "notification
 
 @author: Nick
 */
-
+?>
+<script>
+$( "div.message-dd-holder div.message-dd-block a" ).first().focus(); //add focus on the first link
+</script>
+<?php
 $info_type = get_input('type');
 $info_count = get_input('count');
 $user = elgg_get_logged_in_user_guid();

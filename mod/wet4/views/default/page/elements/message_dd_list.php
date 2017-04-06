@@ -7,7 +7,9 @@
  * @package wet4
  * @author Nick github.com/piet0024
  */
+?>
 
+<?php
 $items = $vars['items'];
 $count = elgg_extract('count', $vars);
 $pagination = elgg_extract('pagination', $vars, true);
@@ -20,7 +22,7 @@ if (!$items && $no_results) {
 		echo $no_results();
 		return;
 	}
-	echo "<p class='elgg-no-results message-dd-no-results'>$no_results</p>";
+	echo "<p class='elgg-no-results message-dd-no-results' aria-live='assertive'>$no_results</p>";
 	return;
 }
 
@@ -74,10 +76,12 @@ if($dd_type =='msg_dd'){ //Test for messages
   $message_final = $name_and_time . $message_title;
 
 }else if ($dd_type =='notif_dd'){ //Test for notifcations
-$message_title = '<div class="col-sm-12 mrgn-tp-sm clearfix ">'.$subject_info.'</div>';
+$message_title = '<div class="col-sm-12 mrgn-tp-sm clearfix">'.$subject_info.'</div>';
 $name_and_time = '<div class="col-sm-12">'.elgg_view_friendly_time($item->time_created).'</div>';
 $message_final =  $message_title . $name_and_time;
 }
+
+
 //Format the div element
 echo elgg_format_element('div',  array('class'=>'list-break message-dd-block mrgn-bttm-sm clearfix',), $message_final);
 }
