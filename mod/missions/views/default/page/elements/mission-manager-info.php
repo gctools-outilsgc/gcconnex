@@ -13,9 +13,22 @@
 $mission = $vars['mission'];
 $container_class = $vars['container_class'];
 $grid_number = $vars['grid_number'];
-$test = $mission->account;
-$manager_account = get_user($mission->account); //Nick changed to owner_guid then back to account
-error_log('guid'. $manager_account->guid);
+$email = $mission->email;
+
+$accounts = get_user_by_email($email);
+//Compare email and username for user with more than one account
+foreach ($accounts as $key) {
+	if($key->name == $mission->name){
+		$guid_account = $key->guid;
+	}
+}
+
+if($guid_account){
+	$manager_account = get_user($guid_account);
+}else{
+	$manager_account = get_user($mission->account); //Nick changed to owner_guid then back to account
+}
+
 if(!$manager_account) {
 	$manager_account_by_email = get_user_by_email($mission->email);
 	$manager_account = array_pop($manager_account_by_email);
