@@ -7,9 +7,7 @@
  * @package wet4
  * @author Nick github.com/piet0024
  */
-?>
 
-<?php
 $items = $vars['items'];
 $count = elgg_extract('count', $vars);
 $pagination = elgg_extract('pagination', $vars, true);
@@ -80,8 +78,6 @@ $message_title = '<div class="col-sm-12 mrgn-tp-sm clearfix">'.$subject_info.'</
 $name_and_time = '<div class="col-sm-12">'.elgg_view_friendly_time($item->time_created).'</div>';
 $message_final =  $message_title . $name_and_time;
 }
-
-
 //Format the div element
 echo elgg_format_element('div',  array('class'=>'list-break message-dd-block mrgn-bttm-sm clearfix',), $message_final);
 }
