@@ -28,14 +28,6 @@ elgg.group_tools.mail_clear_members = function() {
 	$('#group_tools_mail_member_selection input[name="user_guids[]"]:checked').each(function() {
 		$(this).removeAttr('checked');
 	});
-    
-    	$('#group_tools_mail_member_selection input[name="select_all"]:checked').each(function() {
-		$(this).removeAttr('checked');
-	});
-
-		$('#group_tools_mail_member_selection input[name="select_all"]:checked').each(function() {
-		$(this).removeAttr('checked');
-	});
 
 	elgg.group_tools.mail_update_recipients();
 }
@@ -44,22 +36,13 @@ elgg.group_tools.mail_all_members = function() {
 	$('#group_tools_mail_member_selection input[name="user_guids[]"]').each(function() {
 		$(this).attr('checked', 'checked');
 	});
-    
-    	$('#group_tools_mail_member_selection input[name="select_all"]').each(function() {
-		$(this).attr('checked', 'checked');
-	});
-
-		$('#group_tools_mail_member_selection input[name="select_all"]').each(function() {
-		$(this).attr('checked', 'checked');
-	});
 
 	elgg.group_tools.mail_update_recipients();
 }
 
 elgg.group_tools.mail_update_recipients = function() {
-	var count = '';
-	 count = $('#group_tools_mail_member_selection input[name="user_guids[]"]:checked').length;
-		
+	var count = $('#group_tools_mail_member_selection input[name="user_guids[]"]:checked').length;
+
 	$('#group_tools_mail_recipients_count').html(count);
 }
 
