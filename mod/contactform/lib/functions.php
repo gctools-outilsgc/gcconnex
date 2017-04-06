@@ -24,7 +24,7 @@ function requirements_check2()
 	return true;
 }
 
-function baseText_check2()
+/*function baseText_check2() // should not duplicate anymore
 {
 	global $CONFIG;
 
@@ -35,7 +35,7 @@ function baseText_check2()
 	$result = mysqli_query($connection,$query);
 	mysqli_close($connection);
 	return $result;
-}
+}*/
 
 function getExtension2() 
 {
