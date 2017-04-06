@@ -10,7 +10,7 @@
 	margin-right: 20px;
 }
 .groups-stats {
-	margin-top: 10px;
+	margin-top: 5px; <!-- change to 5 for better look for icon group (share, thumbs up and bell) -->
 }
 .groups-stats p {
 	margin-bottom: 2px;
