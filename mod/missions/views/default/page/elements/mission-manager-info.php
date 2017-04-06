@@ -14,7 +14,8 @@ $mission = $vars['mission'];
 $container_class = $vars['container_class'];
 $grid_number = $vars['grid_number'];
 $test = $mission->account;
-$manager_account = get_user($mission->owner_guid); //Nick changed to owner_guid then back to account
+$manager_account = get_user($mission->account); //Nick changed to owner_guid then back to account
+error_log('guid'. $manager_account->guid);
 if(!$manager_account) {
 	$manager_account_by_email = get_user_by_email($mission->email);
 	$manager_account = array_pop($manager_account_by_email);
