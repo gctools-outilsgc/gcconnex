@@ -195,23 +195,24 @@ form.signin .remb .remember {
 
 <script>
 $(document).ready(function () {
-$('#signin-link').click(function () {
-    $('#signin-dropdown').toggle();
-    $('#session').toggleClass('active');
-    return false;
-});
-$('#signin-dropdown').click(function(e) {
-    e.stopPropagation();
-});
-$(document).click(function() {
-    $('#signin-dropdown').hide();
-    $('#session').removeClass('active');
-});
+    $('#signin-link').click(function () {
+        $('#signin-dropdown').toggle();
+        $('#session').toggleClass('active');
+        return false;
+    });
 
-$('#login_focus').click(function(){
-   
-    setTimeout(function(){$('#username').focus();},0);
-});
+    $('#signin-dropdown').click(function(e) {
+        e.stopPropagation();
+    });
+
+    $(document).click(function() {
+        $('#signin-dropdown').hide();
+        $('#session').removeClass('active');
+    });
+
+    $('#login_focus').click(function(){
+        setTimeout(function(){$('#username').focus();},0);
+    });
 });   
 </script>
 <?php

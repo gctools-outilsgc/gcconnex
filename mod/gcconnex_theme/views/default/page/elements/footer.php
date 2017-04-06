@@ -18,16 +18,6 @@ $priv = $site_url .'privacy-confidentialite';
 		<nav role="navigation">
 			<h2>About this site</h2>
             
-            <?php  
-            if(!elgg_is_logged_in()){
-                //Test is the user is logged in and give them links to register in the footer
-                //echo 'You not logged in braj';
-                echo elgg_view('page/elements/footer_register', $vars);
-            }
-            
-            ?>
-
-
 			<div class="row">
 
                 <section class="col-sm-3">
