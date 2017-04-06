@@ -46,8 +46,8 @@ foreach ($personal_contents as $personal_content) {
 	if ($subtype === 'thewire')
 		$content_title = elgg_echo('cp_notifications:subtype:thewire').": {$personal_content->description}";
 
-
-	$item_content = "<p><a href='{$content_url}'> {$content_title} </a></p> <sup>".elgg_echo('cp_notifications:subtype:'.$personal_content->subtype)."</sup>";
+	$item_content = "<p><a href='{$content_url}'> {$content_title} </a></p>";
+	//$item_content = "<p><a href='{$content_url}'> {$content_title} </a></p> <sup>".elgg_echo('cp_notifications:subtype:'.$personal_content->subtype)."</sup>";
 	$item_left = "<div class='togglefield col-sm-10'>{$item_content}</div>";
 
 

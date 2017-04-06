@@ -276,7 +276,7 @@ function gcforums_notify_subscribed_users($hjobject, $hjlink) {
 		$result = elgg_trigger_plugin_hook('cp_overwrite_notification','all',$message);
 	} else
 		notify_user($subscribers, $from, $subject, $message);
-//}
+}
 
 // new entity guid / container guid
 function create_hjforumtopic_relationships($static_guid, $e_guid) {

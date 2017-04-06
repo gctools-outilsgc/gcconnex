@@ -7,8 +7,8 @@ $contact_us = "{$site->getURL()}mod/contactform/";
 $french = array( 
 
 	/// SETTINGS PAGE: Newsletter translation texts
-	'cp_newsletter:notice' => "Choisissez le moyen par lequel vous souhaitez recevoir des avis sur les activités de GCconnex qui vous intéressent. Le <strong>résumé des notifications</strong> vous permet de recevoir un courriel quotidien ou hebdomadaire contenant un sommaire des activités auxquelles vous êtes abonné. Vous préférez recevoir un avis instantané? Oubliez le résumé et sélectionnez le contenu pour lequel vous souhaitez recevoir des avis en temps réel. Veuillez noter que les avis par courriel sont envoyés à l’adresse électronique utilisée dans vos <a href='{$site->getURL()}settings/user/'>paramètres d’utilisateur</a>.",
-	'cp_newsletter:notice:disable_digest' => "Le résumé des avis est maintenant activé; veuillez choisir ci après vos préférences applicables au résumé (fréquence et langue). Le résumé comprendra tout le contenu sélectionné dans la colonne « Courriel », de même que les abonnements dans la section « Autres abonnements de contenu ».",
+	'cp_newsletter:notice' => "Choisissez le moyen par lequel vous souhaitez recevoir des avis sur les activités de GCconnex qui vous intéressent. Le <strong>résumé des notifications</strong> vous permet de recevoir un courriel quotidien ou hebdomadaire contenant un sommaire des activités auxquelles vous êtes abonné. Vous préférez recevoir un avis instantané? Oubliez le résumé et sélectionnez le contenu pour lequel vous souhaitez recevoir des avis en temps réel. Veuillez noter que les avis par courriel sont envoyés à l’adresse électronique utilisée dans vos <a href='{$site->getURL()}settings/user/'>paramètres d’utilisateur</a>. Voir: “<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_-_Aide_%C3%A0_l%27utilisateur/Modifier_mes_param%C3%A8tres_de_compte/Comment_puis-je_modifier_mes_param%C3%A8tres_de_notification%3F'>Comment puis-je modifier mes paramètres de notification</a>?” pour plus d’informaiton.",
+	'cp_newsletter:notice:disable_digest' => "Le résumé des avis est maintenant activé; veuillez choisir ci après vos préférences applicables au résumé (fréquence et langue). Le résumé comprendra tout le contenu sélectionné dans la colonne « Courriel », de même que les abonnements dans la section « Autres abonnements de contenu ». Si vous choisissez d’activer le résumé des notifications, vous ne recevrez plus de notifications par courriel ou de site en temps réel (instantanément) au moment où ont lieu les différentes activités de GCconnex (à l’exception des notifications de type administratif).",
 	'cp_newsletter:subject:daily' => "Votre résumé quotidien", 
 	'cp_newsletter:subject:weekly' => "Votre résumé hebdomadaire", 
 	'cp_newsletter:enable_digest_option' => "Activer votre résumé de notifications", 
@@ -49,8 +49,9 @@ $french = array(
 
 
 	'cp_notifications:mail_body:subtype:content_revision' => "%s a on fait un revision pour %s %s",
-	'cp_notifications:mail_body:subtype:mention' => "%s a mentionnez dans %s: %s",
+	'cp_notifications:mail_body:subtype:mention' => "%s vous a mentionné dans %s: %s",
 
+	'cp_notifications:mail_body:subtype:wire_mention' => "%s vous a mentionné sur le %s",
 
 	'cp_notifications:mail_body:subtype:groupforumtopic' => "% a publié une discussion : %s", 
 	'cp_notifications:mail_body:subtype:hjforumtopic' => "%s a publié un sujet sur le forum : %s", 
@@ -72,6 +73,7 @@ $french = array(
 
 	'cp_notifications:mail_body:subtype:any' => "%s a publié %s %s : %s", // john doe post un blogue vs john doe posted un blog CHANGE 1
 
+	'cp_notifications:mail_body:subtype:oppourtunity' => "%s a publié une opportunité (%s): %s",
 
 	'cp_newsletter:other_content:notice' => "Ces abonnements s'appliquent uniquement au contenu qui ne fait pas partie d'un groupe",
 	
@@ -83,6 +85,8 @@ $french = array(
 	'cp_notifications:pick_colleagues' => 'Abonnez-vous à vos collègues',
 	'cp_notifications:group_content'=>'Contenu du groupe',
 	'cp_notifications:no_group_subscription' => 'Rien à charger',
+	 'cp_notifications:no_personal_subscription' => "Aucun abonnement de contenu",
+
 	'cp_notifications:loading' => 'Chargement...',
 	'cp_notifications:subscribe_all_label' => "<a href='%s'>S’abonner</a> ou <a href='%s'>se désabonner</a> à tous les groupes et leur contenu", //CHANGE 2
 	'cp_notifications:chkbox:select_all_group_for_notification' => "Sélectionner tous les groupes (cette option ne sélectionnera pas le contenu des groupes).",
@@ -95,7 +99,7 @@ $french = array(
 	'cp_notifications:colleagueContent'=>'Envoyez-moi une notification lorsqu\'un(e) collègue crée du nouveau contenu',
 	'cp_notifications:personal_opportunities' => "Envoyez-moi une notification lorsqu'une nouvelle opportunité que j'ai choisie est créée dans la Plateforme de possibilités de ConneXions Carrière", //CHANGE 2
 
-	'cp_notifications:no_group_content' => "(Aucun contenu de groupe abonné)", //
+	'cp_notifications:no_group_content' => "(Aucun abonnement de contenu de groupe)", 
 
 	'cp_notifications:heading:page_title' => "Paramètres d'abonnement",
 	'cp_notifications:your_email' => "courriel",
@@ -146,8 +150,10 @@ $french = array(
 
 
 	'cp_newsletter:heading:notify:new_post:singular' => "Nouvel item a été publié par votre collègue", 
-
 	'cp_newsletter:heading:notify:new_post:plural' => "Nouvels items ont été publiés par vos collègues", 
+
+	'cp_newsletter:heading:notify:new_post:group:singular' => "Nouvel item a été publié", 
+	'cp_newsletter:heading:notify:new_post:group:plural' => "Nouvels items ont été publiés", 
 
 	'cp_newsletter:heading:notify:content_revision:singular' => "Item a été révisé", 
 	'cp_newsletter:heading:notify:content_revision:plural' => "Items ont été révisés", 
@@ -157,12 +163,13 @@ $french = array(
 
 
 
+
 	'cp_newsletter:footer:notification_settings' => "Pour vous désabonner ou gérer ces messages, veuillez vous connecter et visiter votre <a href='{$site->getURL()}settings/plugin/%s/cp_notifications'> Paramètres de notification</a>.",
 	'cp_newsletter:ending' => "<p>Cordialement,</p> <p>L'équipe des OutilsGC</p>", 
 	'cp_notifications:contact_help_desk'=> "Si vous avez des questions, veuillez soumettre votre demande via le <a href='{$site->getURL()}mod/contactform/'>formulaire Contactez-nous</a>.",
 
 
-
+	'cp_newsletter:digest:opportunities:date' => "Date limite : ",
 
 
 	// e-mail header text

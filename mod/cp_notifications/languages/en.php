@@ -7,8 +7,8 @@ $contact_us = "{$site->getURL()}mod/contactform/";
 $english = array(
 
 	/// SETTINGS PAGE: Newsletter translation texts
-	'cp_newsletter:notice' => "Choose how you want to be notified of GCconnex activities of interest to you. The <strong>notification digest</strong> can be used to receive a daily or weekly email that provides a summary of the activities to which you are subscribed. Prefer to receive instant notification? Forgo the digest and select the content for which you want to receive notification in real-time. Please note that email notifications are sent to the email address used in your <a href='{$site->getURL()}settings/user/'>Account Settings</a>.",
-	'cp_newsletter:notice:disable_digest' => "The notification digest is now enabled; please select your digest preferences below (frequency and language preference). The digest will include all content selected in the 'Email' column below, as well the subscriptions in the 'Other content subscriptions' section.",
+	'cp_newsletter:notice' => "Choose how you want to be notified of GCconnex activities of interest to you. The <strong>notification digest</strong> can be used to receive a daily or weekly email that provides a summary of the activities to which you are subscribed. Prefer to receive instant notification? Forgo the digest and select the content for which you want to receive notification in real-time. Please note that email notifications are sent to the email address used in your <a href='{$site->getURL()}settings/user/'>Account Settings</a>. See: “<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Manage_Account_Settings/How_Do_I_Change_My_Notifications_Settings%3F'>How Do I Change My Notifications Settings</a>?” for more information.",
+	'cp_newsletter:notice:disable_digest' => "The notification digest is now enabled; please select your digest preferences below (frequency and language preference). The digest will include all content selected in the 'Email' column below, as well the subscriptions in the 'Other content subscriptions' section. If you choose to enable the notification digest, you will no longer receive real-time (instant) notifications by email and/or on the site, about activities happening on GCconnex (with the exception of administrative-type notifications).",
 
 	'cp_newsletter:subject:daily' => 'Your Daily Digest', 
 	'cp_newsletter:subject:weekly' => 'Your Weekly Digest', 
@@ -66,16 +66,18 @@ $english = array(
 	'cp_notifications:mail_body:subtype:response' => "%s replied or commented on your post: %s", 
 	'cp_notifications:mail_body:subtype:any' => "%s posted a%s %s: %s", // john doe posted an idea vs john doe posted a blog
 
+	'cp_notifications:mail_body:subtype:oppourtunity' => "%s posted an oppourtunity (%s): %s",
 
 	'cp_notifications:mail_body:subtype:content_revision' => "%s revised the %s: %s", 
 	'cp_notifications:mail_body:subtype:mention' => "%s mentioned you in the %s: %s", 
 
+	'cp_notifications:mail_body:subtype:wire_mention' => "%s mentioned you on the %s",
 
 	'cp_notifications:mail_body:subtype:content_share' => "%s shared your %s: %s", 
 
 	'cp_newsletter:other_content:notice' => "These subscriptions are only for content items that are not part of a group", 
 
-	'cp_notifications:subtype:name:thewire' => "fil",
+	'cp_notifications:subtype:name:thewire' => "wire",
 
 	'cp_notifications:no_colleagues' => "You do not have any colleagues",
     'cp_notifications:chkbox:email' => "Email",
@@ -84,7 +86,10 @@ $english = array(
 	'cp_notifications:not_subscribed' => 'Not Subscribed',
 	'cp_notifications:pick_colleagues' => 'Subscribe to your colleagues',
 	'cp_notifications:group_content'=>'Group Content',
+
     'cp_notifications:no_group_subscription' => "Nothing to load",
+ 	'cp_notifications:no_personal_subscription' => "No content subscription",
+
  	'cp_notifications:loading' => 'Loading...',
 	'cp_notifications:subscribe_all_label' => "<a href='%s'>Subscribe</a> or <a href='%s'> Unsubscribe</a> to all groups and their content",
 	'cp_notifications:chkbox:select_all_group_for_notification' => "Select all groups (this will not select the group content)",
@@ -96,7 +101,7 @@ $english = array(
     'cp_notifications:personal_colleagues' => 'Notify me when my colleagues create content',
 	'cp_notifications:personal_opportunities' => "Notify me when a new opportunity I have opted in for is created in the Career ConneXions Opportunities Platform",
 
-	'cp_notifications:no_group_content' => "(No subscribed group content)",
+	'cp_notifications:no_group_content' => "(No group content subscription)",
 
 	/// SETTINGS PAGE: Notification headings
 	'cp_notifications:heading:page_title' => 'Your Subscriptions',
@@ -138,9 +143,12 @@ $english = array(
 	'cp_newsletter:heading:notify:likes:singular' => "Like received on your content", 
 	'cp_newsletter:heading:notify:likes:plural' => "Likes received on your content", 
 
-	'cp_newsletter:heading:notify:new_post:singular' => "New item has been posted by your colleague",
-	'cp_newsletter:heading:notify:new_post:plural' => "New items have been posted by your colleagues", //CHANGE 3 
+	'cp_newsletter:heading:notify:new_post:singular' => "New item have been posted by your colleague",
+	'cp_newsletter:heading:notify:new_post:plural' => "New items have been posted by your colleagues", 
 	
+	'cp_newsletter:heading:notify:new_post:group:singular' => "New item have been posted",
+	'cp_newsletter:heading:notify:new_post:group:plural' => "New items have been posted", 
+
 	'cp_newsletter:heading:notify:content_revision:singular' => "Item has been revised", 
 	'cp_newsletter:heading:notify:content_revision:plural' => "Items have been revised", 
 
@@ -156,6 +164,8 @@ $english = array(
 	'cp_newsletter:heading:notify:response:singular' => "Response to other content subscriptions", 	
 	'cp_newsletter:heading:notify:response:plural' => "Responses to other content subscriptions", 
 	
+
+	'cp_newsletter:digest:opportunities:date' => "Closing date: ",
 
 	/// (INSTANT EMAIL) EMAIL CONTENT: Normal email notifications
 	'cp_newsletter:footer:notification_settings' => "To unsubscribe or manage these messages, please login and visit your <a href='{$site->getURL()}settings/plugin/%s/cp_notifications'> Notification Settings</a>.",

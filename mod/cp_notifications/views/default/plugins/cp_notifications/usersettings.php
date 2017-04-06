@@ -154,7 +154,7 @@ $unsubscribe_link = elgg_add_action_tokens_to_url(elgg_get_site_url()."action/cp
 $chk_all_email = create_checkboxes($user->getGUID(), "cpn_group_email_{$user->getGUID()}", array(),  elgg_echo('cp_notifications:chkbox:email'), 'chk_group_email', 'all-email');
 $chk_all_site_mail = create_checkboxes($user->getGUID(), "cpn_group_site_{$user->getGUID()}", array(),  elgg_echo('cp_notifications:chkbox:site'), 'chk_group_site', 'all-site chkbox_site');
 
-$query = "SELECT g.name, g.guid FROM {$dbprefix}entity_relationships r LEFT JOIN {$dbprefix}groups_entity g ON r.guid_two = g.guid WHERE r.guid_one = {$user->guid} AND r.relationship = 'member'";
+$query = "SELECT g.name, g.guid FROM {$dbprefix}entity_relationships r LEFT JOIN {$dbprefix}groups_entity g ON r.guid_two = g.guid WHERE r.guid_one = {$user->guid} AND r.relationship = 'member' ORDER BY g.name";
 $groups = get_data($query);
 
 /// SUBSCRIBE OR UNSUBSCRIBE TO ALL GROUP AND GROUP CONTENT NOTIFICATIONS 
@@ -464,7 +464,7 @@ input:checked + .slider:before {
 				subtype: entity_subtype
 			},
 			success: function (sample_text) {
-				var nothing_text = elgg.echo('cp_notifications:no_group_subscription');
+				var nothing_text = elgg.echo('cp_notifications:no_personal_subscription');
 
 
 				// assuming this is doing what i think it is doing 
