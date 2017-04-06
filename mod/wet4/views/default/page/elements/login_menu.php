@@ -210,7 +210,13 @@ $(document).ready(function () {
         $('#session').removeClass('active');
     });
 
-    $('#login_focus').click(function(){
+$('#signin-link').live('keydown', function(e) { 
+    if (keyCode == 13) { 
+        setTimeout(function(){$('#username').focus();},0);
+    }
+});    
+
+    $('#signin-link').click(function(){
         setTimeout(function(){$('#username').focus();},0);
     });
 });   
