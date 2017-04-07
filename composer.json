@@ -30,7 +30,8 @@
         "gctools-hackathon-ircc/missions_profile_extend": "dev-composer",
         "gctools-hackathon-ircc/custom_error_page": "dev-composer",
         "gctools-hackathon-ircc/ideas": "dev-composer",
-        "gctools-hackathon-ircc/unvalidated_user_cleanup": "dev-composer"
+        "gctools-hackathon-ircc/unvalidated_user_cleanup": "dev-composer",
+        "elgg/wet4": "dev-composer"
     },
     "scripts": {
         "test": "phpunit",
@@ -106,6 +107,10 @@
       {
           "type": "vcs",
           "url": "https://github.com/gctools-hackathon-ircc/unvalidated_user_cleanup"
+      },
+      {
+          "type": "vcs",
+          "url": "https://github.com/gctools-hackathon-ircc/wet4"
       }
     ]
 }
