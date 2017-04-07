@@ -116,10 +116,18 @@ while ($vevent = $v->getComponent()) {
 	$event_type = $vevent->getProperty( 'X-PROP-TYPE' );
 	$tags = $vevent->getProperty( 'X-PROP-TAGS' );
 	$contact = $vevent->getProperty( 'X-PROP-CONTACT' );
-	$long_description = $vevent->getProperty( 'X-PROP-LONG-DESC' );
+	$elggUser = elgg_get_logged_in_user_entity();
+	if(empty($contact[1])){
+		$contact[1] = $elggUser->name;
+	}
+		
+	$long_description = $vevent->getProperty( 'X-ALT-DESC' );
 	
 	if (empty($long_description[1])) {
-	  $long_description = array(1 => $description);
+	  $long_description = array(1 => nl2br($description));
+	}else{
+		$toRemove = array('\t', '\r','\n');
+		$long_description[1] = preg_replace('/^<!DOCTYPE.+?>/',"",str_replace($toRemove,"",$long_description[1]));
 	}
 	
 	set_input('event_action', 'add_event');
@@ -145,7 +153,7 @@ while ($vevent = $v->getComponent()) {
 	$enddate = $endtime->format('Y-m-d');
 	set_input('end_date',$enddate);
 	
-	set_input('brief_description', nl2br($description));
+	set_input('brief_description', nl2br($description."foobar"));
 					
 	if ($event_calendar_region_display == 'yes') {
 	  set_input('region',$region[1]);
@@ -157,9 +165,11 @@ while ($vevent = $v->getComponent()) {
 
 	set_input('fees',$fees[1]);
 	set_input('contact',$contact[1]);
+	set_input('contact_email', $elggUser->email);
+	set_input('contact_phone', $elggUser->phone);
 	set_input('organiser', $organiser['params']['CN']);
 	set_input('tags',  $tags[1]);
-	set_input('long_description', nl2br($long_description[1]));
+	set_input('long_description', $long_description[1]);
 	$result = event_calendar_set_event_from_form(0, $container_guid);
 	
 	if ($result) {

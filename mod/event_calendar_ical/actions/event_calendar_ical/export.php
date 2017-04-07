@@ -29,6 +29,7 @@ switch ($filter) {
   default:
 	// see if we're exporting just a single event
 	$events = false;
+	$singleEvent = true;
 	$event = get_entity($filter);
 	if (elgg_instanceof($event, 'object', 'event_calendar')) {
 	  $events = array(array('event' => $event));
@@ -57,7 +58,8 @@ $v->setProperty( 'method', 'PUBLISH' );
 $v->setProperty( "X-WR-TIMEZONE", date_default_timezone_get() );
 $v->setProperty( "calscale", "GREGORIAN" );
 $v->setProperty( "version", "2.0" );
-$v->setProperty( "X-WR-CALNAME", elgg_get_logged_in_user_entity()->username. "Calendar" );
+if(!$singleEvent)
+	$v->setProperty( "X-WR-CALNAME", "GCconnex" );
 
 
 iCalUtilityFunctions::createTimezone($v, $timezone);
@@ -102,27 +104,80 @@ foreach($events as $event){
 		'sec' => $se
 	);
 	
+	//get events language
+	$language = $event->language;
+	//get both titles
 	$title_en = $event->title;
 	$title_fr = $event->title2;
-	$title_bi = $title_fr . " / " . $title_en;
+	//get both descriptions
+	$description_en = $event->long_description;
+	$description_fr = $event->long_description2;
+	
+	//create plain text description (strip all HTML)
+	$description_en_PlainText = html_entity_decode(strip_tags($description_en));
+	$description_fr_PlainText = html_entity_decode(strip_tags($description_fr));
+	
+	$debug = "";
+	
+	/*When an event is created and
+		- there is no english title
+		- there is a french title
+	 The french title is copied over to the english title
+	* if french and english titles are the same, don't include both in event title when exported
+	*/
+	/*if($title_fr)
+		$debug .= "French title true<br/>";
+	if($title_en)
+		$debug .= "English title true<br/>";
+	if(!strcmp($title_fr,$title_en))//english and french title equal
+		$debug .= "English and French title equal<br/>";
+	if($description_fr)
+		$debug .= "french description true<br/>";
+	if($description_en)
+		$debug .= "english description true<br/>";
+	*/
+	if(!strcmp($title_fr,$title_en))//english and french title equal
+		$title_bi = $title_fr;
+	else if($title_fr){
+		if(!strcmp($language, "English"))//event language english put english first
+			$title_bi = $title_en . " / " . $title_fr;
+		else
+			$title_bi = $title_fr . " / " . $title_en;
+	}
+	else $title_bi = $title_en;
+	
+	
+	
+	//$title_bi = $title_fr . " / " . $title_en;
+	
+	
+	//Convert description to plain text
+	
+	if($description_fr && $description_en){
+		if(!strcmp($language, "English")){//event language english put english first
+			$description_bi = $description_en . "<hr/>". $description_fr;
+			$description_bi_PlainText = $description_en_PlainText. "\n------------------------------\n" . $description_fr_PlainText;
+		}else{
+			$description_bi =  $description_fr. "<hr/>". $description_en;
+			$description_bi_PlainText = $description_fr_PlainText . "\n------------------------------\n" . $description_en_PlainText;
+		}
+	}else if($description_en){
+		$description_bi = $description_en;
+		$description_bi_PlainText = $description_en_PlainText;
+	}else{
+		$description_bi = $description_fr;
+		$description_bi_PlainText = $description_fr_PlainText;
+	}
+	
+	//$description_bi = "language: " . $language . "<br/>" . $description_fr . "<hr/>".$description_en . "<br/>" . $debug;
+	 //"";
+	
 	
 	$vevent->setProperty('dtend', $end);
 	$vevent->setProperty('LOCATION', $event->venue);
 	$vevent->setProperty('LAST_MODIFIED', $event->time_updated);
 	$vevent->setProperty('summary', $title_bi);
 	//$description = (isset($event->description) && $event->description != "") ? $event->description : null;
-	
-	$description_en = $event->long_description;
-	
-	$description_fr = $event->long_description2;
-	
-	
-	//Convert description to plain text
-	$description_en_PlainText = html_entity_decode(strip_tags($description_en));
-	$description_fr_PlainText = html_entity_decode(strip_tags($description_fr));
-	
-	$description_bi = $description_fr . "<hr/>".$description_en;
-	$description_bi_PlainText = "";
 	
 	$vevent->setProperty("description", $description_bi_PlainText);
 	//add html description so compatible applications can display the rich text
