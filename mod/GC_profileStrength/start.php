@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Profile Strength
+ * Profile Strength test 
  * 
  * @author Mathieu Blondin && Ethan Wallace github.com/ethanWallace
  */

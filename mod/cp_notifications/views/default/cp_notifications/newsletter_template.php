@@ -42,9 +42,8 @@ else
         
         // display the main headings (group title or different types of posts such as likes, comments, ...)
         foreach ($highlevel_contents as $detailed_header => $detailed_contents) {
-
           if (strcmp($highlevel_header,'group') == 0){
-            echo "<p><li><strong>".render_headers($detailed_header,'',$language_preference, sizeof($detailed_contents))."</strong></li>";
+            echo "<p><li><strong>".render_headers($detailed_header,'',$language_preference)."</strong></li>";
 
           } elseif ($detailed_header === 'friend_request') {
             echo "<p><li><strong><a href='{$site->getURL()}friend_request/{$to->username}'>".sizeof($detailed_contents).' '.render_headers($detailed_header,'',$language_preference, sizeof($detailed_contents))."</a></strong></li>";
@@ -62,7 +61,7 @@ else
           foreach ($detailed_contents as $content_header => $content) { // display new_post, response, forum_topic etc
             // unwrap and display the group content
             if (strcmp($highlevel_header,'group') == 0) {
-              echo  "<ul style='list-style-type:none;'><li><strong>".sizeof($content).' '.render_headers("new_post_in_group",'',$language_preference, sizeof($content))."</strong></li>";
+              echo  "<ul style='list-style-type:none;'><li><strong>".sizeof($content).' '.render_headers($content_header,'',$language_preference, sizeof($detailed_contents))."</strong></li>";
 
               $group_activities = $content;
               foreach ($group_activities as $activity_heading) {
