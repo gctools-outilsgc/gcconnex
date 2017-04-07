@@ -18,7 +18,8 @@
         "tedivm/stash": "0.14.*",
         "ircmaxell/password-compat": "~1.0",
         "elgg/login_as": "~1.9",
-        "gctools-hackathon-ircc/GC_profileStrength": "dev-composer"
+        "gctools-hackathon-ircc/GC_profileStrength": "dev-composer",
+        "gctools-hackathon-ircc/gc_api": "dev-composer"
     },
     "scripts": {
         "test": "phpunit",
@@ -50,6 +51,10 @@
       {
           "type": "vcs",
           "url": "https://github.com/gctools-hackathon-ircc/GC_profileStrength"
+      },
+      {
+          "type": "vcs",
+          "url": "https://github.com/gctools-hackathon-ircc/gc_api"
       }
     ]
 }
