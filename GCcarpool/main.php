@@ -1,10 +1,17 @@
 <?php
 	
-    $body = "";
+    $body = "example body";
     $title = "Carpool";
     
 /* Write all of the GC Carpool code here */
-    $content = "This will be all the content of the web page for GC Carpool";
+    $content = "
+
+This will be all the content of the web page for GC Carpool
+<br><br>
+body = $body
+<br><br>
+
+";
     
 
  /* End all of the GC Carpool code here */
@@ -15,6 +22,7 @@
 				'sidebar' => elgg_view('Carpool/sidebar')
 				)
     		);
+
 	echo elgg_view_page($title, $body);
 
 ?>
