@@ -28,7 +28,7 @@ $result = false;
 
 if (empty($username) || empty($password)) {
 	register_error(elgg_echo('login:empty'));
-	forward();
+	forward(REFERER);
 }
 
 // check if logging in with email address
