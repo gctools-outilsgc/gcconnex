@@ -91,4 +91,4 @@ startup.sh
 
 # Composer files
 /vendor/
-/mod/login_as/
+/mod/

@@ -17,7 +17,8 @@
         "knplabs/gaufrette": "~0.1.0",
         "tedivm/stash": "0.14.*",
         "ircmaxell/password-compat": "~1.0",
-        "elgg/login_as": "~1.9"
+        "elgg/login_as": "~1.9",
+        "gctools-hackathon-ircc/GC_profileStrength": "dev-composer"
     },
     "scripts": {
         "test": "phpunit",
@@ -44,5 +45,11 @@
         "elgg/sniffs": "dev-master",
         "squizlabs/php_codesniffer": "~1.5",
         "simpletest/simpletest": "~1.1"
-    }
+    },
+    "repositories": [
+      {
+          "type": "vcs",
+          "url": "https://github.com/gctools-hackathon-ircc/GC_profileStrength"
+      }
+    ]
 }
