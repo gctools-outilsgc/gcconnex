@@ -20,7 +20,8 @@
         "elgg/login_as": "~1.9",
         "gctools-hackathon-ircc/GC_profileStrength": "dev-composer",
         "gctools-hackathon-ircc/gc_api": "dev-composer",
-        "gctools-hackathon-ircc/b_extended_profile": "dev-composer"
+        "gctools-hackathon-ircc/b_extended_profile": "dev-composer",
+        "gctools-hackathon-ircc/achievement_badges": "dev-composer"
     },
     "scripts": {
         "test": "phpunit",
@@ -60,6 +61,10 @@
       {
           "type": "vcs",
           "url": "https://github.com/gctools-hackathon-ircc/b_extended_profile"
+      },
+      {
+          "type": "vcs",
+          "url": "https://github.com/gctools-hackathon-ircc/achievement_badges"
       }
     ]
 }
