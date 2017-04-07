@@ -88,3 +88,5 @@ startup.sh
 
 # Ignore data files
 /data/
+
+/vendor/
