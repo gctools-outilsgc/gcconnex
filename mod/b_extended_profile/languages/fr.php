@@ -52,6 +52,7 @@ $french = array(
     'gcconnex_profile:cancel' => 'Annuler',
     'gcconnex_profile:save' => 'Sauvegarder',
     'gcconnex_profile:present' => 'Maintenant',
+	'gcconnex_profile:unknown' => 'Inconnu', // for education time ranges when year is left empty	
     'gcconnex_profile:about_me:empty' => 'Ajoutez des précisions à votre sujet en cliquant sur « Modifier » dans le coin supérieur droit de cette section.',
     'gcconnex_profile:about_me:access' => 'Accès aux renseignements à mon sujet ',
 
@@ -70,6 +71,7 @@ $french = array(
     'gcconnex_profile:basic:save' => 'Sauvegarder',
 
     // MONTHS
+	'gcconnex_profile:month:none' => '',
     'gcconnex_profile:month:january' => 'Janvier',
     'gcconnex_profile:month:february' => 'Février',
     'gcconnex_profile:month:march' => 'Mars',
