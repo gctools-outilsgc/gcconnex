@@ -39,7 +39,8 @@
         "gctools-hackathon-ircc/gcforums": "dev-composer",
         "gctools-hackathon-ircc/gcProfilePictureBadges": "dev-composer",
         "gctools-hackathon-ircc/gcRegistration": "dev-composer",
-        "gctools-hackathon-ircc/widget_manager_accessibility": "dev-composer"
+        "gctools-hackathon-ircc/widget_manager_accessibility": "dev-composer",
+        "gctools-hackathon-ircc/gc_fedsearch_gsa": "dev-composer"
     },
     "scripts": {
         "test": "phpunit",
@@ -155,6 +156,10 @@
       {
           "type": "vcs",
           "url": "https://github.com/gctools-hackathon-ircc/widget_manager_accessibility"
+      },
+      {
+          "type": "vcs",
+          "url": "https://github.com/gctools-hackathon-ircc/gc_fedsearch_gsa"
       }
     ]
 }
