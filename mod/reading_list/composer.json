@@ -1,0 +1,15 @@
+{
+	"name": "reading_list",
+	"description": "Extend the functionality of Bookmarks",
+	"type": "elgg-plugin",
+	"keywords": ["elgg", "plugin"],
+	"license": "GPL-2.0",
+	"autoload": {
+		"psr-0": { 
+			"": "classes/" 
+		}
+	},
+	"require": {
+		"composer/installers": "^1.0.8"
+	}
+}
