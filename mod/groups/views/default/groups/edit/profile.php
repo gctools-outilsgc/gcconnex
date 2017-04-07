@@ -13,19 +13,23 @@ $group_profile_fields = elgg_get_config("group");
 
 ?>
 
-
+<div class="form-group>">
 <div>
-<label><?php echo elgg_echo("groups:icon"); ?></label><br />
-	<?php echo elgg_view("input/file", array("name" => "icon")); ?>
+<label for="icon"><?php echo elgg_echo("groups:icon"); ?></label><br />
+	<?php echo elgg_view("input/file", array("name" => "icon",
+        "id" => "icon")); ?>
 </div>
-<div>
-	<label><?php echo elgg_echo("groups:name"); ?></label><br />
+<div class="mrgn-tp-md">
+    <label for="name" class="required"><span class="field-name"><?php echo elgg_echo("groups:name"); ?></span> <strong class="required"><?php echo elgg_echo("groups:required"); ?></strong></label><br />
 	<?php echo elgg_view("input/text", array(
 		"name" => "name",
+		"id" => "name",
+		"required" => "required",
 		"value" => $name,
 	));
 	?>
 </div>
+
 <?php
 
 // show the configured group profile fields
@@ -47,6 +51,7 @@ foreach ((array)$group_profile_fields as $shortname => $valtype) {
 		$label .= elgg_echo('groups:brief:charcount') . "0/" . $briefmaxlength;	// additional text for max length
 		$input = elgg_view("input/{$valtype}", array(
 			'name' => $shortname,
+			'id' => $shortname,
 			'value' => elgg_extract($shortname, $vars),
 			'maxlength' => $briefmaxlength,
 			'onkeyup' => "document.getElementById('briefdescr-lbl').innerHTML = '" . elgg_echo("groups:{$shortname}") . elgg_echo('groups:brief:charcount') . " ' + this.value.length + '/" . $briefmaxlength . "';"
@@ -55,11 +60,16 @@ foreach ((array)$group_profile_fields as $shortname => $valtype) {
 	else
 		$input = elgg_view("input/{$valtype}", array(
 			"name" => $shortname,
+            'id' => $shortname,
 			"value" => elgg_extract($shortname, $vars),
 		));
 
+	//var_dump($shortname);
+
 	if ( $shortname == 'briefdescription' )			// Brief description with character limit, count
-		echo "<div><label id='briefdescr-lbl'>{$label}</label>{$line_break}{$input}</div>";
+		echo "<div class='mrgn-tp-md'><label id='briefdescr-lbl' for='$shortname'>{$label}</label>{$line_break}{$input}</div>";
 	else
-		echo "<div><label>{$label}</label>{$line_break}{$input}</div>";
+		echo "<div class='mrgn-tp-md'><label for='$shortname'>{$label}</label>{$line_break}{$input}</div>";
 }
+?>
+</div>
