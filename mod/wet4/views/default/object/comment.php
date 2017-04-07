@@ -58,7 +58,7 @@ if ($full_view) {
 	} else {
 		$comment_text = elgg_view('output/longtext', array(
 			'value' => $comment->description,
-			'class' => 'elgg-inner mrgn-tp-md',
+			'class' => 'elgg-inner mrgn-tp-md comment-container',
 			'data-role' => 'comment-text',
 		));
 	}

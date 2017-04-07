@@ -1703,10 +1703,10 @@ figcaption{
   margin-right:5px;
 }
 
-.elgg-item-object-comment ul li {
+.comment-container ul li {
     list-style: initial;
 }
 
-.elgg-item-object-comment ol li {
+.comment-container ol li {
     list-style: decimal;
 }
