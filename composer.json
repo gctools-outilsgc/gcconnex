@@ -44,7 +44,8 @@
         "gctools-hackathon-ircc/gc_group_layout": "dev-composer",
         "gctools-hackathon-ircc/gc_newsfeed": "dev-composer",
         "gctools-hackathon-ircc/gc_official_groups": "dev-composer",
-        "gctools-hackathon-ircc/gc_onboard": "dev-composer"
+        "gctools-hackathon-ircc/gc_onboard": "dev-composer",
+        "gctools-hackathon-ircc/gc_splash_page": "dev-composer"
     },
     "scripts": {
         "test": "phpunit",
@@ -180,6 +181,10 @@
       {
           "type": "vcs",
           "url": "https://github.com/gctools-hackathon-ircc/gc_onboard"
+      },
+      {
+          "type": "vcs",
+          "url": "https://github.com/gctools-hackathon-ircc/gc_splash_page"
       }
     ]
 }
