@@ -28,7 +28,8 @@
         "gctools-hackathon-ircc/missions": "dev-composer",
         "gctools-hackathon-ircc/missions_organization": "dev-composer",
         "gctools-hackathon-ircc/missions_profile_extend": "dev-composer",
-        "gctools-hackathon-ircc/custom_error_page": "dev-composer"
+        "gctools-hackathon-ircc/custom_error_page": "dev-composer",
+        "gctools-hackathon-ircc/ideas": "dev-composer"
     },
     "scripts": {
         "test": "phpunit",
@@ -96,6 +97,10 @@
       {
           "type": "vcs",
           "url": "https://github.com/gctools-hackathon-ircc/custom_error_page"
+      },
+      {
+          "type": "vcs",
+          "url": "https://github.com/gctools-hackathon-ircc/ideas"
       }
     ]
 }
