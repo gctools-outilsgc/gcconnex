@@ -86,6 +86,10 @@
       },
       {
           "type": "vcs",
+          "url": "https://github.com/gctools-hackathon-ircc/achievement_badges"
+      },
+      {
+          "type": "vcs",
           "url": "https://github.com/gctools-hackathon-ircc/gc_group_deletion"
       },
       {
