@@ -34,7 +34,8 @@
         "elgg/wet4": "dev-composer",
         "gctools-hackathon-ircc/toggle_language": "dev-composer",
         "gctools-hackathon-ircc/c_email_extensions": "dev-composer",
-        "gctools-hackathon-ircc/c_members_byDepartment": "dev-composer"
+        "gctools-hackathon-ircc/c_members_byDepartment": "dev-composer",
+        "gctools-hackathon-ircc/c_module_dump": "dev-composer"
     },
     "scripts": {
         "test": "phpunit",
@@ -126,6 +127,10 @@
       {
           "type": "vcs",
           "url": "https://github.com/gctools-hackathon-ircc/c_members_byDepartment"
+      },
+      {
+          "type": "vcs",
+          "url": "https://github.com/gctools-hackathon-ircc/c_module_dump"
       }
     ]
 }
