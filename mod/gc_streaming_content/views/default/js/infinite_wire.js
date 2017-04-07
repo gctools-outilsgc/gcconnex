@@ -16,7 +16,7 @@
 	var SEARCH_REGEX = /^\/thewire\/search\/?([^\/]+)?/;
 	var SCROLLING_BUFFER = 200;
 
-	// If they're on one of the wire pages/^\/thewire\/search\/?(.+)?/
+	// If they're on one of the wire pages
 	if (PATHNAME.match(ALL_REGEX) ||
 		PATHNAME.match(FRIENDS_REGEX) ||
 		PATHNAME.match(OWNER_REGEX) ||
@@ -41,11 +41,20 @@
 				if (!results) return null;
 				if (!results[2]) return '';
 				return decodeURIComponent(results[2].replace(/\+/g, " "));
+			},
+			createSpinner: function() {
+				var div = document.createElement('div');
+				div.classList.add('wet-ajax-loader');
+				var img = document.createElement('img');
+				img.src = '/mod/wet4/graphics/loading.gif';
+				div.appendChild(img);
+				return div;
 			}
 		};
 
 		var Posts = {
 			postsElement: Util.q('#wb-cont > ul.elgg-list'),
+			paginator: Util.q('#wb-cont > ul.elgg-pagination.pagination'),
 			// extracts the GUID from the id of the posts element
 			extractId: function(elem) {
 				var regex = /^elgg\-object\-(\d+)$/;
@@ -81,18 +90,29 @@
 			if (!query) {
 				query = Util.getQueryParameter('q');
 				if (!query) {
+					// don't run the script if they're on the search page with no query
 					runScript = false;
 				}
 			}
 		}
 
+
 		if (runScript) {
+			if (Posts.paginator) {
+				// hide paginator
+				Posts.paginator.style.display = 'none';
+			}
+
 			var isLoading = false;
 			window.addEventListener('scroll', function(e) {
 				if (!isLoading) {
 					// when we've scrolled past the bottom of the wire content load the stuff
 					if (Posts.postsElement.getBoundingClientRect().bottom <= window.innerHeight + SCROLLING_BUFFER) {
 						isLoading = true;
+
+						// add spinner
+						var spinner = Util.createSpinner();
+						Posts.postsElement.parentNode.appendChild(spinner);
 
 						var params = {
 							'limit': 15,
@@ -142,6 +162,8 @@
 									// if no new results, assume at end and stop loading
 									isLoading = false;
 								}
+
+								spinner.remove();
 							}
 						});
 					}
