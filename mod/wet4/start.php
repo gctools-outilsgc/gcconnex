@@ -254,7 +254,7 @@ function _elgg_wet_user_settings_page_handler($page) {
     switch ($page[0]) {
         case 'notifications':
             elgg_push_breadcrumb(elgg_echo('cp_notifications:name'));
-            $path = "/var/www/html/gcconnex/mod/cp_notifications/" . "pages/cp_notifications/notification_setting.php";
+            $path = elgg_get_plugins_path() . "/cp_notifications/" . "pages/cp_notifications/notification_setting.php";
             break;
         case 'statistics':
             elgg_push_breadcrumb(elgg_echo('usersettings:statistics:opt:linktext'));
