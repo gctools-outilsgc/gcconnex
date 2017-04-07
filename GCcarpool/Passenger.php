@@ -13,8 +13,9 @@
 	echo'	<table id="columnNames";align="center"; style="width:80%;margin: auto;">
 	<tr>
 		<td align="left"><label>Departure</label></td>
-		<td align="left"><label>Destination</label></td>
-		<td align="center"><label>Starting Date</label></td>
+		<td align="center"><label>Destination</label></td>
+		<td align="left"><label>Starting Date</label></td>
+		<td></td>
 	</tr>
 	</table>';
 	echo'	<div id="result" style="width:80%;height:150px;margin: auto; border: 2px solid black; overflow-y: scroll">';
@@ -45,14 +46,22 @@
 		echo "<script type='text/javascript'>alert('No Results!');</script>";
 	}else{*/
 		echo"<table id='list'; cellspacing ='2px'; cellpadding = '5%' align ='center' width=100%>";
+		$rownum = 0;
 		while ($row = mysqli_fetch_assoc($result)) {
-    	 		echo"<tr id='tablerow' onclick='getMap($row[Destination], $row[Departure])'>";
-    	 		echo"<td align='left' > $row[Destination]</td>";
-    	 		echo"<td align='left'> $row[Departure]</td>";
-    	 		echo"<td align='left'> $row[startDate]</td>";
+    	 		echo"<tr id='tablerow'>";
+  	 			echo"<td align='left'id='departure$rownum'> $row[Departure]</td>";    	 		
+    	 		echo"<td align='left'id='destination$rownum'> $row[Destination]</td>";
+ 
+    	 		echo"<td align='left'id='date$rownum'> $row[startDate]</td>";
+    	 		echo"<td><button type='button' id='button$rownum' onclick='foo(\"$rownum\");'>Show Map></button></td>";          
+    	 		
     	 		echo"</tr>";
-
+    	 		$rownum++;
 		};
+
+		if($rownum ==0){
+			echo "<script type='text/javascript'>alert('Sorry! No Result were found.');</script>"; 
+		}
 	//};
 	$db->close();
 
@@ -60,6 +69,7 @@
 ?>
 
 	<br>
+
 	<div id="map" style="width:80%;height:600px;margin: auto; border: 2px solid black"></div>
 	<br>
 	<button type="button" id="request" name="request">Send Request to Driver</button>
@@ -80,48 +90,99 @@
 
       			  directionsDisplay.setMap(map);
 
-      			  document.getElementById('display').addEventListener('click', function() {
-          			display();
-        		});
-			}
-			function calculateAndDisplayRoute(directionsService, directionsDisplay) {
-		        var waypts = [];
+      			  document.getElementById('button0').addEventListener('click', function() {
+          			calculateAndDisplayRoute(directionsService, directionsDisplay, 0);
+        			});
+      			  document.getElementById('button1').addEventListener('click', function() {
+          			calculateAndDisplayRoute(directionsService, directionsDisplay, 1);
+        			});      			  
+      			  document.getElementById('button2').addEventListener('click', function() {
+          			calculateAndDisplayRoute(directionsService, directionsDisplay, 2);
+        			});				
+      		}
+			function calculateAndDisplayRoute(directionsService, directionsDisplay, x) {
+       			 var waypts = [];
 
-		        directionsService.route({
-		          origin: document.getElementById('start').value,
-		          destination: document.getElementById('end').value,
+       			directionsService.route({
+         		origin: document.getElementById('departure' + x).innerHTML,
+         		destination: document.getElementById('destination' + x).innerHTML,
+       			travelMode: 'DRIVING'
+        }, function(response, status) {
+          if (status === 'OK') {
+            directionsDisplay.setDirections(response);
+            var route = response.routes[0];
+            var summaryPanel = document.getElementById('directions-panel');
+            summaryPanel.innerHTML = '';
+            // For each route, display summary information.
+            for (var i = 0; i < route.legs.length; i++) {
+              var routeSegment = i + 1;
+              summaryPanel.innerHTML += '<b>Route Segment' +
+                  '</b><br>';
+              summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+              summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+              summaryPanel.innerHTML += route.legs[i].distance.text + '<br>';
+              summaryPanel.innerHTML += route.legs[i].duration.text + '<br><br>';
+            }
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
+      }
+      function foo(x){
+      			var rowNum = x;
+      	     	alert(document.getElementById('departure' + rowNum).innerHTML);
+      	     	var directionsService = new google.maps.DirectionsService;
+ 	   	        var directionsDisplay = new google.maps.DirectionsRenderer;
 
-		          travelMode: 'DRIVING'
-		        }, function(response, status) {
-		          if (status === 'OK') {
-		            directionsDisplay.setDirections(response);
-		            var route = response.routes[0];
-		            var summaryPanel = document.getElementById('directions-panel');
-		            summaryPanel.innerHTML = '';
-		            // For each route, display summary information.
-		            for (var i = 0; i < route.legs.length; i++) {
-		              var routeSegment = i + 1;
-		              summaryPanel.innerHTML += '<b>Route Segment' +
-		                  '</b><br>';
-		              summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-		              summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-		              summaryPanel.innerHTML += route.legs[i].distance.text + '<br>';
-		              summaryPanel.innerHTML += route.legs[i].duration.text + '<br><br>';
-		            }
-		          } else {
-		            window.alert('Directions request failed due to ' + status);
-          		}
-        	});
-      	}
+ 	   	        foo2(directionsService,directionsDisplay, rowNum);
 
-      	function getMap(departure, destination){
-      			  directionsService.route({
-		          origin: document.getElementById('start').value,
-		          destination: document.getElementById('end').value,
+      			/*
+      			var directionsService = new google.maps.DirectionsService;
+				var directionsDisplay = new google.maps.DirectionsRenderer;
+				var map = new google.maps.Map(document.getElementById('map'),{
+					zoom: 15, center: {lat: 45.425821, lng: -75.719821}});
+				directionsDisplay.setMap(map);
 
-		          travelMode: 'DRIVING'
-		        }
-      	}
+				directionsService.route({
+         		origin: document.getElementById('departure'+ rowNum).innerHTML,
+         		destination: document.getElementById('destination'+rowNum).innerHTML,
+       			travelMode: 'DRIVING'}, function(response, status){
+        		if (status === 'OK') {
+            		directionsDisplay.setDirections(response);
+      			}}); 
+*/
+			} 
+
+
+
+			      function foo2(directionsService, directionsDisplay, x) {
+        var waypts = [];
+
+        directionsService.route({
+          origin: document.getElementById('departure' + x).value,
+          destination: document.getElementById('destination' + x).value,
+          travelMode: 'DRIVING'
+        }, function(response, status) {
+          if (status === 'OK') {
+            directionsDisplay.setDirections(response);
+            var route = response.routes[0];
+            var summaryPanel = document.getElementById('directions-panel');
+            summaryPanel.innerHTML = '';
+            // For each route, display summary information.
+            for (var i = 0; i < route.legs.length; i++) {
+              var routeSegment = i + 1;
+              summaryPanel.innerHTML += '<b>Route Segment' +
+                  '</b><br>';
+              summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+              summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+              summaryPanel.innerHTML += route.legs[i].distance.text + '<br>';
+              summaryPanel.innerHTML += route.legs[i].duration.text + '<br><br>';
+            }
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
+      }
 		</script>
 		<script 	
 			 src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyB2AjldRKq1iv_sl951s7uMdFmlDXtbSWI&callback=initMap">
