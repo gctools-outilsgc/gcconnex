@@ -16,6 +16,9 @@ $owner_guid = elgg_extract("owner_guid", $vars);
 $content_access_mode = elgg_extract("content_access_mode", $vars);
 
 ?>
+
+<?php echo "<p>test</p>" ?>
+
 <div>
 	<label for="groups-membership"><?php echo elgg_echo("groups:membership"); ?></label><br />
 	<?php echo elgg_view("input/select", array(
@@ -111,7 +114,7 @@ if ($entity && ($owner_guid == elgg_get_logged_in_user_guid() || elgg_is_admin_l
 	?>
 
 	<div>
-		<label for="groups-owner-guid"><?php echo elgg_echo("groups:owner"); ?></label><br />
+        <label for="groups-owner-guid"><?php echo elgg_echo("groups:owner"); ?></label><br />
 		<?php
 			echo elgg_view("input/select", array(
 				"name" => "owner_guid",

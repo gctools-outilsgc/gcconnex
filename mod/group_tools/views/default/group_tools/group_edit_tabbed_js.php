@@ -22,7 +22,7 @@
 		$("#group-tools-group-edit-profile").hide();
 		$("#group-tools-group-edit-access").hide();
 		$("#group-tools-group-edit-tools").hide();
-		$("#group-tools-group-edit-tabbed").nextAll("div").hide();
+	//	$("#group-tools-group-edit-tabbed").nextAll("div").hide();
 		
 		var link = $(this).children("a").attr("href");
 		switch (link) {

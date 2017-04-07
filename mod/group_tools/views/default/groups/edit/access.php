@@ -21,6 +21,7 @@ $content_access_mode = elgg_extract("content_access_mode", $vars);
 $default_access = elgg_extract("group_default_access", $vars, ACCESS_DEFAULT);
 
 ?>
+
 <div>
 	<label for="groups-membership"><?php echo elgg_echo("groups:membership"); ?></label><br />
 	<?php echo elgg_view("input/select", array(
@@ -107,7 +108,8 @@ if ($entity && ($default_access === ACCESS_DEFAULT)) {
 <div>
 	<label for="groups-default-access"><?php echo elgg_echo("group_tools:default_access:title"); ?></label><br />
 	<?php
-		// make sure the full list can be shown
+    echo "<span class='elgg-text-help'>" . elgg_echo("group_tools:default_access:description") . "</span>";
+    // make sure the full list can be shown
 		$ga = false;
 		if ($entity) {
 			$ga = $entity->getContentAccessMode();
@@ -119,8 +121,6 @@ if ($entity && ($default_access === ACCESS_DEFAULT)) {
 		if ($ga !== false) {
 			$entity->setContentAccessMode($ga);
 		}
-		
-		echo "<span class='elgg-text-help'>" . elgg_echo("group_tools:default_access:description") . "</span>";
 	?>
 </div>
 

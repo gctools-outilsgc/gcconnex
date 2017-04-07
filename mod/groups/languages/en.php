@@ -107,7 +107,8 @@ return array(
 'groups:member' => "members",
 'groups:searchtag' => "Search for groups by tag",	
 'groups:more' => 'More groups',
-'groups:none' => 'No groups',	
+'groups:none' => 'No groups',
+'groups:required' => '(required)',
 	
  // Access	
 	
