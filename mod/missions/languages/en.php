@@ -46,7 +46,7 @@ return array(
     "missions:opportunity_status" => "Status of opportunity",
     "missions:ideal_start_date" =>  "Ideal start date",
     "missions:ideal_completion_date" => "Ideal completion date",
-    "missions:key_skills_opportunity" =>    "Key skills this opportunity provides",
+    "missions:key_skills_opportunity" =>    "Skills sought in candidate",
     "missions:application_deadline" =>  "Application deadline",
     "missions:opportunity_description" =>   "Bilingual description of opportunity",
     "missions:time_commitment" =>   "Time commitment",

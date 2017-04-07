@@ -47,7 +47,7 @@ return array(
     "missions:opportunity_status" => "Statut de la possibilité",
     "missions:ideal_start_date" =>	"Date de début idéale",
     "missions:ideal_completion_date" =>	"Date d'achèvement idéale",
-    "missions:key_skills_opportunity" =>	"Compétences clés offertes par la possibilité",
+    "missions:key_skills_opportunity" =>	"Compétences recherchées chez le/la candidat(e)",
     "missions:application_deadline" =>	"Date limite d'inscription",
     "missions:opportunity_description" =>	"Description de la possibilité",
     "missions:time_commitment" =>"Période d'engagement",
