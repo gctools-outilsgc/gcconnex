@@ -33,7 +33,7 @@ function Carpool_page_handler($page) {
 
 	switch ($page[0]) {
 		case "all":
-			include "$pages/main.php";
+			include "$pages/form.php";
 			break;
 
 		
