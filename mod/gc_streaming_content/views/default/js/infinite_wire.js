@@ -14,6 +14,7 @@
 	var FRIENDS_REGEX = /^\/thewire\/friends\/([^\/]+)/;
 	var OWNER_REGEX = /^\/thewire\/owner\/([^\/]+)/;
 	var SEARCH_REGEX = /^\/thewire\/search\/?([^\/]+)?/;
+	var SCROLLING_BUFFER = 200;
 
 	// If they're on one of the wire pages/^\/thewire\/search\/?(.+)?/
 	if (PATHNAME.match(ALL_REGEX) ||
@@ -90,7 +91,7 @@
 			window.addEventListener('scroll', function(e) {
 				if (!isLoading) {
 					// when we've scrolled past the bottom of the wire content load the stuff
-					if (Posts.postsElement.getBoundingClientRect().bottom <= window.innerHeight) {
+					if (Posts.postsElement.getBoundingClientRect().bottom <= window.innerHeight + SCROLLING_BUFFER) {
 						isLoading = true;
 
 						var params = {
