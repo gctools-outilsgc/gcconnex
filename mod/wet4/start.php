@@ -24,7 +24,9 @@ function wet4_theme_init() {
 	elgg_extend_view('object/widget/elements/content','page/elements/gsa_view_start',1);
 	elgg_extend_view('object/widget/elements/content','page/elements/gsa_view_end',1000);
 
-
+    // cyu - are we overriding the settings page handler? (note: the one in this plugin does nothing)
+    elgg_unregister_page_handler('settings');
+    elgg_register_page_handler('settings', '_elgg_wet_user_settings_page_handler');
 
 
     //reload groups library to have our sidebar changes
@@ -229,6 +231,57 @@ function groups_autocomplete() {
     return true;
 }
 
+
+
+
+function _elgg_wet_user_settings_page_handler($page) {
+    global $CONFIG;
+
+    if (!isset($page[0])) {
+        $page[0] = 'user';
+    }
+
+    if (isset($page[1])) {
+        $user = get_user_by_username($page[1]);
+        elgg_set_page_owner_guid($user->guid);
+    } else {
+        $user = elgg_get_logged_in_user_entity();
+        elgg_set_page_owner_guid($user->guid);
+    }
+
+    elgg_push_breadcrumb(elgg_echo('settings'), "settings/user/$user->username");
+
+    switch ($page[0]) {
+        case 'notifications':
+            elgg_push_breadcrumb(elgg_echo('cp_notifications:name'));
+            $path = "/var/www/html/gcconnex/mod/cp_notifications/" . "pages/cp_notifications/notification_setting.php";
+            break;
+        case 'statistics':
+            elgg_push_breadcrumb(elgg_echo('usersettings:statistics:opt:linktext'));
+            $path = $CONFIG->path . "pages/settings/statistics.php";
+            break;
+        /*case 'plugins':
+            if (isset($page[2])) {
+                set_input("plugin_id", $page[2]);
+                elgg_push_breadcrumb(elgg_echo('usersettings:plugins:opt:linktext'));
+                $path = $CONFIG->path . "pages/settings/tools.php";
+            }
+            break;*/
+        case 'user':
+            $path = $CONFIG->path . "pages/settings/account.php";
+            break;
+    }
+
+    if (isset($path)) {
+        require $path;
+        return true;
+    }
+    return false;
+}
+
+
+
+
 /*
  * activity_page_handler
  * Override activity page handler
@@ -431,13 +484,13 @@ function wet4_theme_pagesetup() {
 	// Remove link to friendsof
 	elgg_unregister_menu_item("page", "friends:of");
     
-
+ 
     // Settings notifications tab in the User's setting page
     // cyu - allow site administrators to view user notification settings page
 	elgg_unregister_menu_item('page', '2_a_user_notify');
     $params = array(
         "name" => "2_a_user_notify",
-        "href" => "/settings/plugins/{$page_owner->username}/cp_notifications",
+        "href" => "/settings/notifications/{$page_owner->username}",
         "text" =>  elgg_echo('notifications:subscriptions:changesettings'),
         'section' => 'configure',
         'priority' => '100',
