@@ -1158,7 +1158,7 @@ function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $para
 			$newsletter_object = get_entity($newsletter_id);
 			$newsletter_content = json_decode($newsletter_object->description, true);
 
-			$subject = elgg_echo('cp_newsletter:subject:daily',$language_preference);
+			$subject = elgg_echo('cp_newsletter:subject:weekly',$language_preference);
 
 			if (sizeof($newsletter_content) > 0 || !empty($newsletter_content))
 				$template = elgg_view('cp_notifications/newsletter_template', array('to' => $to, 'newsletter_content' => $newsletter_content));
@@ -1173,9 +1173,16 @@ function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $para
 
 			echo "<p>Digest sent to user email: {$to->email}</p>";
 
+			// TODO: authenticate cronjobs - since crons dont have a valid admin login, thhis portion fails
+			// temporarily strip the access
+			$ia = elgg_set_ignore_access(true);
+
 			// clean up the newsletter
 			$newsletter_object->description = json_encode(array());
 			$newsletter_object->save();
+
+			// see above comment about access
+			elgg_set_ignore_access($ia);
 		}
 	}
 }
@@ -1254,11 +1261,18 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 			echo "<p>Digest sent to user email: {$to->email} ({$to->guid})</p>";
 
 			//echo "<br/><br/>";
-			echo $template;
+			//echo $template;
+
+			// TODO: authenticate cronjobs - since crons dont have a valid admin login, thhis portion fails
+			// temporarily strip the access
+			$ia = elgg_set_ignore_access(true);
 
 			// clean up the newsletter
 			$newsletter_object->description = json_encode(array());
 			$newsletter_object->save();
+
+			// see above comment about access
+			elgg_set_ignore_access($ia);
 		}
 	}
 }

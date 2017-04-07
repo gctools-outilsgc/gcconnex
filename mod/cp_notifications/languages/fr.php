@@ -116,8 +116,9 @@ $french = array(
 	'cp_newsletter:greeting' => "Bonjour %s. Voici vos notifications pour le <strong>%s</strong>",
 
 
-	'cp_newsletter:heading:notify:mission:plural' => "Notifications pour la Plateforme de possibilités", 
-	
+	'cp_newsletter:heading:notify:mission:plural' => "Notifications de la Platformes de possibilités", 
+	'cp_newsletter:heading:notify:mission:singular' => "Notification de la Platformes de possibilités", 
+
 	'cp_newsletter:heading:notify:personal:singular' => "Notification personnelle", 
 	'cp_newsletter:heading:notify:personal:plural' => "Notifications personnelles", 
 
