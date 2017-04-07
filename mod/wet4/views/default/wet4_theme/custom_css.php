@@ -1702,3 +1702,11 @@ figcaption{
 .space_event{
   margin-right:5px;
 }
+
+.elgg-item-object-comment ul li {
+    list-style: initial;
+}
+
+.elgg-item-object-comment ol li {
+    list-style: decimal;
+}
