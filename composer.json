@@ -22,7 +22,8 @@
         "gctools-hackathon-ircc/gc_api": "dev-composer",
         "gctools-hackathon-ircc/b_extended_profile": "dev-composer",
         "gctools-hackathon-ircc/achievement_badges": "dev-composer",
-        "gctools-hackathon-ircc/cp_notifications": "dev-composer"
+        "gctools-hackathon-ircc/cp_notifications": "dev-composer",
+        "gctools-hackathon-ircc/gc_group_deletion": "dev-composer"
     },
     "scripts": {
         "test": "phpunit",
@@ -66,6 +67,10 @@
       {
           "type": "vcs",
           "url": "https://github.com/gctools-hackathon-ircc/cp_notifications"
+      },
+      {
+          "type": "vcs",
+          "url": "https://github.com/gctools-hackathon-ircc/gc_group_deletion"
       }
     ]
 }
