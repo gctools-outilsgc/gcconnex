@@ -37,7 +37,8 @@
         "gctools-hackathon-ircc/c_members_byDepartment": "dev-composer",
         "gctools-hackathon-ircc/c_module_dump": "dev-composer",
         "gctools-hackathon-ircc/gcforums": "dev-composer",
-        "gctools-hackathon-ircc/gcProfilePictureBadges": "dev-composer"
+        "gctools-hackathon-ircc/gcProfilePictureBadges": "dev-composer",
+        "gctools-hackathon-ircc/gcRegistration": "dev-composer"
     },
     "scripts": {
         "test": "phpunit",
@@ -141,6 +142,10 @@
       {
           "type": "vcs",
           "url": "https://github.com/gctools-hackathon-ircc/gcProfilePictureBadges"
+      },
+      {
+          "type": "vcs",
+          "url": "https://github.com/gctools-hackathon-ircc/gcRegistration"
       }
     ]
 }
