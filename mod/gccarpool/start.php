@@ -29,7 +29,7 @@ function Carpool_page_handler($page) {
 
 
 
-	$pages = dirname(__FILE__) . '/GCcarpool/';
+	$pages = dirname(__FILE__) . '/pages/';
 
 	switch ($page[0]) {
 		case "all":
