@@ -33,7 +33,8 @@
         "gctools-hackathon-ircc/unvalidated_user_cleanup": "dev-composer",
         "elgg/wet4": "dev-composer",
         "gctools-hackathon-ircc/toggle_language": "dev-composer",
-        "gctools-hackathon-ircc/c_email_extensions": "dev-composer"
+        "gctools-hackathon-ircc/c_email_extensions": "dev-composer",
+        "gctools-hackathon-ircc/c_members_byDepartment": "dev-composer"
     },
     "scripts": {
         "test": "phpunit",
@@ -121,6 +122,10 @@
       {
           "type": "vcs",
           "url": "https://github.com/gctools-hackathon-ircc/c_email_extensions"
+      },
+      {
+          "type": "vcs",
+          "url": "https://github.com/gctools-hackathon-ircc/c_members_byDepartment"
       }
     ]
 }
