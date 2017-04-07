@@ -58,7 +58,7 @@ function ec_ical_entity_menu($hook, $type, $return, $params) {
 	
 	$item = new ElggMenuItem(
 			'ical_export',
-			elgg_view('output/img', array('src' => elgg_get_site_url() . 'mod/event_calendar/images/ics.png')),
+			elgg_view('output/img', array('src' => elgg_get_site_url() . 'mod/event_calendar_ical/images/outlook.png')),
 			elgg_add_action_tokens_to_url($url)
 			);
 	$item->setPriority(1000);
@@ -81,7 +81,7 @@ function ec_ical_extras_menu($hook, $type, $return, $params) {
 		$group_guid = get_input('ical_group_guid', false);
 		
 		// it's our link, lets modify it
-		$text = elgg_view('output/img', array('src' => 'mod/event_calendar/images/ics.png'));
+		$text = elgg_view('output/img', array('src' => 'mod/event_calendar_ical/images/outlook.png', 'alt' => 'Add to outlook'));
 		$url = elgg_get_site_url() . 'event_calendar/ical/export?method=ical';
 		
 		if ($filter) {

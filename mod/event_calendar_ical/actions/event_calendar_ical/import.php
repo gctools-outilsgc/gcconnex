@@ -197,4 +197,4 @@ if ($error) {
 }
 
 system_message(elgg_echo('event_calendar:add_event_response'));
-forward(REFERER);
+forward(elgg_get_site_url() . "/event_calendar/edit/" . $result->guid);
