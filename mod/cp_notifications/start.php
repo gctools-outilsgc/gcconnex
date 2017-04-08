@@ -795,6 +795,17 @@ function cp_create_notification($event, $type, $object) {
 					$cp_mentioned_user = $cp_mentioned_users[$i];
 					$mentioned_user = get_user_by_username(substr($cp_mentioned_user, 1));
 
+					if (!$mentioned_user)
+						break;
+
+					$subject = elgg_echo('cp_notify:subject:mention',array($object->getOwnerEntity()->name), 'en') .' | ' . elgg_echo('cp_notify:subject:mention',array($object->getOwnerEntity()->name), 'fr');
+					$message = array(
+						'cp_msg_type' => 'cp_mention_type',
+						'cp_author' => $object->getOwnerEntity()->name,
+						'cp_content_desc' => $object->description,
+						'cp_cp_link' => $object->getURL()
+					);
+					$template = elgg_view('cp_notifications/email_template', $message);
 					$user_setting = elgg_get_plugin_user_setting('cpn_mentions_email', $mentioned_user->guid, 'cp_notifications');
 					if (strcmp($user_setting, 'mentions_email') == 0) {
 						$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $mentioned_user->guid, 'cp_notifications');
@@ -805,7 +816,7 @@ function cp_create_notification($event, $type, $object) {
 
 						// send email and site notification
 						} else {
-							$template = elgg_view('cp_notifications/email_template', $message);
+							
 
 							if (elgg_is_active_plugin('phpmailer'))
 								phpmailer_send( $mentioned_user->email, $mentioned_user->name, $subject, $template, NULL, true );
@@ -1038,7 +1049,6 @@ function cp_create_notification($event, $type, $object) {
 			if (elgg_is_active_plugin('phpmailer'))
 				phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );
 			else
-
 				mail($to_recipient->email,$subject,$template,cp_get_headers());			
 
 		}
@@ -1148,7 +1158,7 @@ function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $para
 			$newsletter_object = get_entity($newsletter_id);
 			$newsletter_content = json_decode($newsletter_object->description, true);
 
-			$subject = elgg_echo('cp_newsletter:subject:daily',$language_preference);
+			$subject = elgg_echo('cp_newsletter:subject:weekly',$language_preference);
 
 			if (sizeof($newsletter_content) > 0 || !empty($newsletter_content))
 				$template = elgg_view('cp_notifications/newsletter_template', array('to' => $to, 'newsletter_content' => $newsletter_content));
@@ -1163,9 +1173,16 @@ function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $para
 
 			echo "<p>Digest sent to user email: {$to->email}</p>";
 
+			// TODO: authenticate cronjobs - since crons dont have a valid admin login, thhis portion fails
+			// temporarily strip the access
+			$ia = elgg_set_ignore_access(true);
+
 			// clean up the newsletter
 			$newsletter_object->description = json_encode(array());
 			$newsletter_object->save();
+
+			// see above comment about access
+			elgg_set_ignore_access($ia);
 		}
 	}
 }
@@ -1244,11 +1261,18 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 			echo "<p>Digest sent to user email: {$to->email} ({$to->guid})</p>";
 
 			//echo "<br/><br/>";
-			echo $template;
+			//echo $template;
+
+			// TODO: authenticate cronjobs - since crons dont have a valid admin login, thhis portion fails
+			// temporarily strip the access
+			$ia = elgg_set_ignore_access(true);
 
 			// clean up the newsletter
 			$newsletter_object->description = json_encode(array());
 			$newsletter_object->save();
+
+			// see above comment about access
+			elgg_set_ignore_access($ia);
 		}
 	}
 }

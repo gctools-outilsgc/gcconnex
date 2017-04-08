@@ -5,14 +5,15 @@ $site_name = $site->name;
 $contact_us = "{$site->getURL()}mod/contactform/";
 
 $english = array(
+	'cp_notifications:name' => "Notification Email",
 
 	/// SETTINGS PAGE: Newsletter translation texts
-	'cp_newsletter:notice' => "Choose how you want to be notified of GCconnex activities of interest to you. The <strong>notification digest</strong> can be used to receive a daily or weekly email that provides a summary of the activities to which you are subscribed. Prefer to receive instant notification? Forgo the digest and select the content for which you want to receive notification in real-time. Please note that email notifications are sent to the email address used in your <a href='{$site->getURL()}settings/user/'>Account Settings</a>. See: “<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Manage_Account_Settings/How_Do_I_Change_My_Notifications_Settings%3F'>How Do I Change My Notifications Settings</a>?” for more information.",
-	'cp_newsletter:notice:disable_digest' => "The notification digest is now enabled; please select your digest preferences below (frequency and language preference). The digest will include all content selected in the 'Email' column below, as well the subscriptions in the 'Other content subscriptions' section. If you choose to enable the notification digest, you will no longer receive real-time (instant) notifications by email and/or on the site, about activities happening on GCconnex (with the exception of administrative-type notifications).",
+	'cp_newsletter:notice' => "Choose how you want to be notified of GCconnex activities of interest to you. The <strong>notifications digest</strong> can be used to receive a daily or weekly email that provides a summary of the activities to which you are subscribed. Prefer to receive instant notification? Forgo the digest and select the content for which you want to receive notification in real-time. Please note that email notifications are sent to the email address used in your <a href='{$site->getURL()}settings/user/'>Account Settings</a>. See: “<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Manage_Account_Settings/How_Do_I_Change_My_Notifications_Settings%3F'>How Do I Change My Notifications Settings</a>?” for more information.",
+	'cp_newsletter:notice:disable_digest' => "The notifications digest is now enabled; please select your digest preferences below (frequency and language preference). The digest will include all content selected in the 'Email' column below, as well the subscriptions in the 'Other content subscriptions' section. If you choose to enable the notifications digest, you will no longer receive real-time (instant) notifications by email and/or on the site, about activities happening on GCconnex (with the exception of administrative-type notifications).",
 
 	'cp_newsletter:subject:daily' => 'Your Daily Digest', 
 	'cp_newsletter:subject:weekly' => 'Your Weekly Digest', 
-	'cp_newsletter:enable_digest_option' => "Enable your notification digest",
+	'cp_newsletter:enable_digest_option' => "Enable your notifications digest",
 	'cp_newsletter:label:english' => "English",
 	'cp_newsletter:label:french' => "French",
 	'cp_newsletter:label:daily' => "Daily",
@@ -66,7 +67,7 @@ $english = array(
 	'cp_notifications:mail_body:subtype:response' => "%s replied or commented on your post: %s", 
 	'cp_notifications:mail_body:subtype:any' => "%s posted a%s %s: %s", // john doe posted an idea vs john doe posted a blog
 
-	'cp_notifications:mail_body:subtype:oppourtunity' => "%s posted an oppourtunity (%s): %s",
+	'cp_notifications:mail_body:subtype:oppourtunity' => "%s posted an opportunity (%s): %s",
 
 	'cp_notifications:mail_body:subtype:content_revision' => "%s revised the %s: %s", 
 	'cp_notifications:mail_body:subtype:mention' => "%s mentioned you in the %s: %s", 
@@ -93,7 +94,7 @@ $english = array(
  	'cp_notifications:loading' => 'Loading...',
 	'cp_notifications:subscribe_all_label' => "<a href='%s'>Subscribe</a> or <a href='%s'> Unsubscribe</a> to all groups and their content",
 	'cp_notifications:chkbox:select_all_group_for_notification' => "Select all groups (this will not select the group content)",
-    'cp_notify:personal_bulk_notifications' => 'Enable Notification Digest',
+    'cp_notify:personal_bulk_notifications' => 'Enable Notifications Digest',
 
     'cp_notifications:personal_likes' => 'Notify me when someone likes my content',
     'cp_notifications:personal_mentions' => 'Notify me when someone @mentions me',
@@ -106,7 +107,7 @@ $english = array(
 	/// SETTINGS PAGE: Notification headings
 	'cp_notifications:heading:page_title' => 'Your Subscriptions',
 	'cp_notifications:your_email' => "your email",
-	'cp_notifications:heading:newsletter_section' => "Notification Digest",
+	'cp_notifications:heading:newsletter_section' => "Notifications Digest",
  	'cp_notifications:heading:personal_section'=>'Personal Notifications',
     'cp_notifications:heading:colleague_section'=>'Colleague Notifications',
     'cp_notifications:heading:group_section' => 'Group Notifications',

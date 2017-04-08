@@ -5,6 +5,7 @@ $site_name = $site->name;
 $contact_us = "{$site->getURL()}mod/contactform/";
 
 $french = array( 
+	'cp_notifications:name' => "Paramètres de notifications",
 
 	/// SETTINGS PAGE: Newsletter translation texts
 	'cp_newsletter:notice' => "Choisissez le moyen par lequel vous souhaitez recevoir des avis sur les activités de GCconnex qui vous intéressent. Le <strong>résumé des notifications</strong> vous permet de recevoir un courriel quotidien ou hebdomadaire contenant un sommaire des activités auxquelles vous êtes abonné. Vous préférez recevoir un avis instantané? Oubliez le résumé et sélectionnez le contenu pour lequel vous souhaitez recevoir des avis en temps réel. Veuillez noter que les avis par courriel sont envoyés à l’adresse électronique utilisée dans vos <a href='{$site->getURL()}settings/user/'>paramètres d’utilisateur</a>. Voir: “<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_-_Aide_%C3%A0_l%27utilisateur/Modifier_mes_param%C3%A8tres_de_compte/Comment_puis-je_modifier_mes_param%C3%A8tres_de_notification%3F'>Comment puis-je modifier mes paramètres de notification</a>?” pour plus d’informaiton.",
@@ -116,8 +117,9 @@ $french = array(
 	'cp_newsletter:greeting' => "Bonjour %s. Voici vos notifications pour le <strong>%s</strong>",
 
 
-	'cp_newsletter:heading:notify:mission:plural' => "Notifications pour la Plateforme de possibilités", 
-	
+	'cp_newsletter:heading:notify:mission:plural' => "Notifications de la Platformes de possibilités", 
+	'cp_newsletter:heading:notify:mission:singular' => "Notification de la Platformes de possibilités", 
+
 	'cp_newsletter:heading:notify:personal:singular' => "Notification personnelle", 
 	'cp_newsletter:heading:notify:personal:plural' => "Notifications personnelles", 
 
@@ -164,7 +166,7 @@ $french = array(
 
 
 
-	'cp_newsletter:footer:notification_settings' => "Pour vous désabonner ou gérer ces messages, veuillez vous connecter et visiter votre <a href='{$site->getURL()}settings/plugin/%s/cp_notifications'> Paramètres de notification</a>.",
+	'cp_newsletter:footer:notification_settings' => "Pour vous désabonner ou gérer ces messages, veuillez vous connecter et visiter votre <a href='{$site->getURL()}settings/notifications/%s'> Paramètres de notification</a>.",
 	'cp_newsletter:ending' => "<p>Cordialement,</p> <p>L'équipe des OutilsGC</p>", 
 	'cp_notifications:contact_help_desk'=> "Si vous avez des questions, veuillez soumettre votre demande via le <a href='{$site->getURL()}mod/contactform/'>formulaire Contactez-nous</a>.",
 

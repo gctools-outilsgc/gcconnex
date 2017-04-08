@@ -10,7 +10,7 @@ gatekeeper();
 $params = get_input('params');
 $plugin_id = get_input('plugin_id');
 $user_guid = get_input('user_guid', elgg_get_logged_in_user_guid());
-$plugin = elgg_get_plugin_from_id($plugin_id);
+$plugin = elgg_get_plugin_from_id('cp_notifications');
 $user = get_entity($user_guid);
 
 /// array of subscribed users
@@ -19,7 +19,7 @@ $user = get_entity($user_guid);
 /// overwriting the save action for usersettings in notifications, save all the checkboxes
 $plugin_name = $plugin->getManifest()->getName();
 foreach ($params as $k => $v) {
-	
+
 	// select all checkbox, don't save metadata
 	if (strpos($k,'cpn_group_') !== false)
 		continue;
