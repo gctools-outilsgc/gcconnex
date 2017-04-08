@@ -37,7 +37,7 @@ $tag_label = elgg_echo('tags');
 $tag_input = elgg_view('input/tags', array('name' => 'tags', 'id' => 'tags', 'value' => $tags));
 
 $access_label = elgg_echo('access');
-$access_input = elgg_view('input/access', array('name' => 'access_id', 'id' => 'access_id', 'value' => $access_id));
+$access_input = elgg_view('input/access', array('name' => 'access_id', 'id' => 'access_id', 'value' => $access_id, 'entity' => get_entity($guid)));
 
 $submit_input = elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('save')));
 $submit_input .= ' '.elgg_view('input/button', array('name' => 'cancel', 'id' => 'polls_edit_cancel', 'type'=> 'button', 'value' => elgg_echo('cancel')));
