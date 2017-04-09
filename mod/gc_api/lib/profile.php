@@ -4,6 +4,8 @@ elgg_ws_expose_function("get.profile","get_api_profile", array("id" => array('ty
 	'provide user GUID number and all profile information is returned',
                'GET', false, false);
 
+//this will change
+
 function get_api_profile($id){
 	global $CONFIG;
 	//$string = "User was not found. Please try a different GUID, username, or email address";
