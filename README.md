@@ -85,7 +85,8 @@ environnement de développement.
 
 * [Docker] (https://www.docker.com)
 * [Docker-compose] (https://docs.docker.com/compose/)
-
+### Added a report file in the root
+Called PSCRevsReports.odt
 ### Pour commencer
 
 > Le serveur apache qui fonctionne dans Docker aura besoin d'ecrire dans le dossier 
