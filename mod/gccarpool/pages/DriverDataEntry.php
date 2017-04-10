@@ -1,7 +1,7 @@
 <?php
 	$user ='root';
 	$password='';
-	$dbname='elgg';
+	$dbname='elgg2';
 	
 	$db = new mysqli('localhost', $user, $password, $dbname) or die("Unable to connect to the database.");	
 
