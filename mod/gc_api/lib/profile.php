@@ -4,32 +4,14 @@ elgg_ws_expose_function("get.profile","get_api_profile", array("id" => array('ty
 	'provide user GUID number and all profile information is returned',
                'GET', false, false);
 
+elgg_ws_expose_function("push.profile","profilePush", array("id" => array('type' => 'string'), "data" => array('type'=>'string')),
+	'update a user profile based on id passed',
+               'GET', true, false);
+
 function get_api_profile($id){
 	global $CONFIG;
 	//$string = "User was not found. Please try a different GUID, username, or email address";
-	if (is_numeric($id)){
-		$user_entity = get_user($id);
-		//$string = $user_entity->username;
-	}
-	else{
-		if (strpos($id, '@')){
-			$user_entity = get_user_by_email($id);
-			if (is_array($user_entity)){
-				if (count($user_entity)>1)
-					//$string = "Found more than 1 user, please use username or GUID";
-					return "Found more than 1 user, please use username or GUID";
-				else{
-					$user_entity = $user_entity[0];
-					//$string = $user_entity->username;
-				}
-			}
-		}else{
-			$user_entity = get_user_by_username($id);
-			//$string = $user_entity->username;
-		}
-		
-		
-	}
+	$user_entity = getUserFromID($id);
 	if (!$user_entity)
 		return "User was not found. Please try a different GUID, username, or email address";
 	
@@ -41,6 +23,8 @@ function get_api_profile($id){
 
 	//get and store user display name
 	$user['displayName'] = $user_entity->name;
+
+	$user['email'] = $user_entity->email;
 
 	//get and store URL for profile
 	$user['profileURL'] = $user_entity->getURL();
@@ -295,6 +279,192 @@ function get_api_profile($id){
 
 
 	return $user;
+}
+
+function profilePush($id, $data){
+	$user_entity = getUserFromID($id);
+	if (!$user_entity){
+		return "Not a valid user";
+	}
+	$userDataObj = json_decode($data, true);
+	if (json_last_error() !== 0){
+		return "invalid JSON format of data";
+	}
+
+	/*
+{ 
+	"name": {
+		"firstName": "Troy",
+		"lastName": "Lawson"
+	},
+	"title": "GCconnex King",
+	"classification": {
+		"group": "CS",
+		"level": "03"
+	},
+	"department":{
+		"en": "Treasury Board of Canada Secretariat",
+		"fr":	"Secrétariat Conseil du Trésor du Canada"
+	},
+	"branch":{
+		"en": "Information Management and Technology Directorate",
+		"fr": "Direction générale de la gestion d'information et de la technologie"
+	},
+	"sector":{
+		"en": "Corporate Services Sector",
+		"fr": "Secteur des services ministériels"
+	},
+	"location":{
+		"en": {
+			"street": "140 O'Connor St",
+			"city": "Ottawa",
+			"province": "Ontario",
+			"postalCode": "K1A 0R5",
+			"country": "Canada",
+			"building": "L'Esplanade Laurier",
+			"floor": "6",
+			"officeNum": "06062"
+		},
+		"fr": {
+			"street": "140, rue O'Connor",
+			"city": "Ottawa",
+			"province": "Ontario",
+			"postalCode": "K1A 0R5",
+			"country": "Canada",
+			"building": "L'Esplanade Laurier",
+			"floor": "6",
+			"officeNum": "06062"			
+		}
+	},
+	"phone": "613-979-0315",
+	"mobile": "613-979-0315",
+	"email": "Troy.Lawson@tbs-sct.gc.ca",
+	"secondLanguage": {
+		"firstLang": "en",
+		"secondLang": {
+			"lang": "fr",
+			"writtenComp": {
+				"level": "B",
+				"expire": "2016-12-29"
+			},
+			"writtenExpression": {
+				"level": "C",
+				"expire": "2016-12-29"
+			},
+			"oral": {
+				"level": "B",
+				"expire": "2016-12-29"
+			}
+			
+		}
+	}
+}
+	*
+	*
+	*/
+	foreach ($userDataObj as $field => $value){
+		switch($field){
+			case 'name':
+				//error_log(json_encode($value));
+				$nameData = json_decode(json_encode($value), true);
+
+				$name = $nameData["firstName"].' '.$nameData["lastName"];
+				//error_log($name);
+				$user_entity->set('name', $name);
+				break;
+			case 'title':
+				//error_log($user_entity->language);
+				//error_log(json_encode($value));
+				$langaugeData = json_decode(json_encode($value), true);
+				if ($user_entity->language === 'fr'){
+					$user_entity->set('job', $langaugeData['fr'].' / '.$langaugeData['en']);
+				}
+				else{
+					$user_entity->set('job', $langaugeData['en'].' / '.$langaugeData['fr']);
+				}
+				
+				break;
+			case 'classification':
+				//error_log(json_encode($value));
+				$user_entity->set('classification', json_encode($value));
+				break;
+			case 'department':
+				//error_log(json_encode($value));
+				$deptData = json_decode(json_encode($value), true);
+				if ($user_entity->language === 'fr'){
+					$user_entity->set('department', $deptData['fr'].' / '.$deptData['en']);
+				}
+				else{
+					$user_entity->set('department', $deptData['en'].' / '.$deptData['fr']);
+				}
+
+
+				break;
+			case 'branch':
+				//error_log(json_encode($value));
+				break;
+			case 'sector':
+				//error_log(json_encode($value));
+				break;
+			case 'location':
+				//error_log(json_encode($value));
+				//error_log(json_encode($value["en"]));
+				//error_log(json_encode($value["fr"]));
+				$user_entity->set('addressString', json_encode($value["en"]));
+				$user_entity->set('addressStringFr', json_encode($value["fr"]));
+				break;
+			case 'phone':
+				//error_log(json_encode($value));
+				$user_entity->set('phone', $value);
+				break;
+			case 'mobile':
+				//error_log(json_encode($value));
+				$user_entity->set('mobile', $value);
+				break;
+			case 'email':
+				//error_log(json_encode($value));
+				$user_entity->set('email', $value);
+				break;
+			case 'secondLanguage':
+				//error_log(json_encode($value));
+				//$user->english = $english;
+            	//$user->french = $french;
+				$user_entity->set('english', $value["ENG"]);
+				$user_entity->set('french', $value["FRA"]);
+            	$user_entity->set('officialLanguage', $value["firstLanguage"]);
+
+				break;
+		}
+	}
+	$user_entity->save();
+	return 'success';
+}
+
+function getUserFromID($id){
+	if (is_numeric($id)){
+		$user_entity = get_user($id);
+		//$string = $user_entity->username;
+	}
+	else{
+		if (strpos($id, '@')){
+			$user_entity = get_user_by_email($id);
+			if (is_array($user_entity)){
+				if (count($user_entity)>1)
+					//$string = "Found more than 1 user, please use username or GUID";
+					return "Found more than 1 user, please use username or GUID";
+				else{
+					$user_entity = $user_entity[0];
+					//$string = $user_entity->username;
+				}
+			}
+		}else{
+			$user_entity = get_user_by_username($id);
+			//$string = $user_entity->username;
+		}
+		
+		
+	}
+	return $user_entity;
 }
 
 function buildDate($month, $year){
