@@ -38,7 +38,7 @@ function mm_api_secure() {
   # Ensure API has full access via an admin account - but do not allow
   # this session to persist.
   session_destroy();
-  login(get_user(6), false);
+  login(get_user(24789157), false);
 }
 
 /**
