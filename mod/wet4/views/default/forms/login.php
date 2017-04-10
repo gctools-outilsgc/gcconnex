@@ -113,14 +113,17 @@ if(elgg_in_context('login')){ //Nick - only show the graphic and register text o
 
 
 <?php
+global $CONFIG;
+$dbprefix = elgg_get_config('dbprefix');
+$query = "SELECT COUNT(guid) FROM {$dbprefix}groups_entity";
 
-    //stat tracking groups and discussions
-$groups = elgg_get_entities(array('count' => true, 'type' => 'group', 'limit' => 0));
+//stat tracking groups and discussions
+$groups = get_data($query);
 $discussions = elgg_get_entities(array('type' => 'object', 'subtype' => 'groupforumtopic', 'count' => true));
 
-    //Nick - adding some stats to the bottom of the landing / login page (Should only appear on that page)
+//Nick - adding some stats to the bottom of the landing / login page (Should only appear on that page)
 if(elgg_in_context('login')){
-    $inside_stats =['<span class="login-big-num">'.$groups.'</span> '.elgg_echo('groups'),elgg_echo('wet:login:departments'),elgg_echo('wet:login:discussions', array($discussions))];
+    $inside_stats =['<span class="login-big-num">'.$groups[0]->{'COUNT(guid)'}.'</span> '.elgg_echo('groups'),elgg_echo('wet:login:departments'),elgg_echo('wet:login:discussions', array($discussions))];
     foreach($inside_stats as $stat){
         $insides .='<div class="col-sm-4 text-center login-stats-child">'.$stat.'</div>';
     }
