@@ -7,6 +7,16 @@
 <title>
 </title>
 </head>
+
+<div id="dom-target" style="display: none;">
+
+    <?php 
+        $departure = $_POST['departure']; //Again, do some operation, get the output.
+        echo htmlspecialchars($departure); /* You have to escape because the result
+                                           will not be valid HTML otherwise. */
+    ?>
+</div>
+
 <body>
 <?php
 	echo"<h1>Search Results</h1>";
@@ -77,6 +87,8 @@
 
 </body>
 
+				<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+		
 		<script>
 			function initMap(){
 				var buttonName = 'button';
@@ -85,15 +97,25 @@
 				var basic = new google.maps.LatLng(45.425821,-75.719821)
 				var map = new google.maps.Map(document.getElementById('map'),{
 					zoom: 15, center: {lat: 45.425821, lng: -75.719821}});
-				
-				/*var marker = new google.maps.Marker({
-					position: <?php echo $_POST['departure'] ?>,
-					map: map
-				});*/
+
+				var div = document.getElementById("dom-target");
+   				var depart = div.textContent;
+
+   				var geocoder = new google.maps.Geocoder();
+
+				geocoder.geocode( { 'address': depart}, function(results, status) {
+ 				 if (status == google.maps.GeocoderStatus.OK) {
+    				var latitude = results[0].geometry.location.lat();
+
+    				var longitude = results[0].geometry.location.lng();
+    				var marker = new google.maps.Marker({
+					position: {lat: latitude, lng: longitude},
+					label: "You",
+					map: map});
+    			}}); 
 
       			  directionsDisplay.setMap(map);
 
-				  
 				  var rowNumber = document.getElementById('list').rows.length;
 				  for (i = 0; i < rowNumber; i++){(function(i){
 						document.getElementById(buttonName+i).addEventListener('click', function() {
@@ -105,10 +127,6 @@
 			
 			function calculateAndDisplayRoute(directionsService, directionsDisplay, x) {
        			 var waypts = [];
-				/*var marker = new google.maps.Marker({
-					position: <?php echo $_POST['departure']?>,
-					map:map //added line
-				});*/
        			directionsService.route({
          		origin: document.getElementById('departure' + x).innerHTML,
          		destination: document.getElementById('destination' + x).innerHTML,
@@ -116,7 +134,7 @@
         }, function(response, status) {
           if (status === 'OK') {
             directionsDisplay.setDirections(response);
-			marker.setMarker('map'); //added line
+			
             var route = response.routes[0];
             var summaryPanel = document.getElementById('directions-panel');
             summaryPanel.innerHTML = '';
