@@ -33,7 +33,7 @@
 	
 	$db = new mysqli('localhost', $user, $password, $dbname) or die("Unable to connect to the database.");
 	//Enable the search in the query
-	$sql="SELECT Destination,Departure, startDate FROM ROUTE WHERE destination in ('$destination')";
+	$sql="SELECT Destination,Departure, startDate FROM route WHERE destination in ('$destination')";
 	//put the result in the variable
 	if($db->query($sql)==true){
 		$result = $db->query($sql);
@@ -48,7 +48,7 @@
 		echo"<table id='list'; cellspacing ='2px'; cellpadding = '5%' align ='center' width=100%>";
 		$rownum = 0;
 		while ($row = mysqli_fetch_assoc($result)) {
-    	 		echo"<tr id='tablerow'>";
+    	 		echo"<tr id='tablerow$rownum'>";
   	 			echo"<td align='left'id='departure$rownum'> $row[Departure]</td>";    	 		
     	 		echo"<td align='left'id='destination$rownum'> $row[Destination]</td>";
  
@@ -61,6 +61,7 @@
 
 		if($rownum ==0){
 			echo "<script type='text/javascript'>alert('Sorry! No Result were found.');</script>"; 
+			include "SearchForm.html";
 		}
 	//};
 	$db->close();
@@ -78,37 +79,36 @@
 
 		<script>
 			function initMap(){
+				var buttonName = 'button';
 			    var directionsService = new google.maps.DirectionsService;
 				var directionsDisplay = new google.maps.DirectionsRenderer;
 				var basic = new google.maps.LatLng(45.425821,-75.719821)
 				var map = new google.maps.Map(document.getElementById('map'),{
 					zoom: 15, center: {lat: 45.425821, lng: -75.719821}});
-				var marker = new google.maps.Marker({
-					position: {lat: 45.425821, lng: -75.719821},
+				
+				/*var marker = new google.maps.Marker({
+					position: <?php echo $_POST['departure'] ?>,
 					map: map
-				});
+				});*/
 
       			  directionsDisplay.setMap(map);
 
-      			  document.getElementById('button0').addEventListener('click', function() {
-          			calculateAndDisplayRoute(directionsService, directionsDisplay, 0);
-        			});
-      			  document.getElementById('button1').addEventListener('click', function() {
-          			calculateAndDisplayRoute(directionsService, directionsDisplay, 1);
-        			});      			  
-      			  document.getElementById('button2').addEventListener('click', function() {
-          			calculateAndDisplayRoute(directionsService, directionsDisplay, 2);
-        			});				
-    			  document.getElementById('button3').addEventListener('click', function() {
-          			calculateAndDisplayRoute(directionsService, directionsDisplay, 3);
-        			});	
-    			  document.getElementById('button4').addEventListener('click', function() {
-          			calculateAndDisplayRoute(directionsService, directionsDisplay, 4);
-        			});				
+				  
+				  var rowNumber = document.getElementById('list').rows.length;
+				  for (i = 0; i < rowNumber; i++){(function(i){
+						document.getElementById(buttonName+i).addEventListener('click', function() {
+						calculateAndDisplayRoute(directionsService, directionsDisplay, i);
+						});
+					})(i);
+				  }
         	}
+			
 			function calculateAndDisplayRoute(directionsService, directionsDisplay, x) {
        			 var waypts = [];
-
+				/*var marker = new google.maps.Marker({
+					position: <?php echo $_POST['departure']?>,
+					map:map //added line
+				});*/
        			directionsService.route({
          		origin: document.getElementById('departure' + x).innerHTML,
          		destination: document.getElementById('destination' + x).innerHTML,
@@ -116,6 +116,7 @@
         }, function(response, status) {
           if (status === 'OK') {
             directionsDisplay.setDirections(response);
+			marker.setMarker('map'); //added line
             var route = response.routes[0];
             var summaryPanel = document.getElementById('directions-panel');
             summaryPanel.innerHTML = '';
@@ -140,7 +141,7 @@
  	   	        var directionsDisplay = new google.maps.DirectionsRenderer;
 
  	   	        foo2(directionsService,directionsDisplay, rowNum);
-
+				
       			/*
       			var directionsService = new google.maps.DirectionsService;
 				var directionsDisplay = new google.maps.DirectionsRenderer;

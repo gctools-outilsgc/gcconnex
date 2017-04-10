@@ -1,7 +1,7 @@
 <?php
 	$user ='root';
 	$password='';
-	$dbname='elgg2';
+	$dbname='elgg';
 	
 	$db = new mysqli('localhost', $user, $password, $dbname) or die("Unable to connect to the database.");	
 
@@ -16,10 +16,10 @@
 	$addC=$_POST['addcomments'];
 	$date = $_POST['startDate'];
 
-	$countQuery = ($db->query('select * from Route'));
+	$countQuery = ($db->query('select * from route'));
 	$count = mysqli_num_rows($countQuery);
 
-	$sql="INSERT INTO Route (
+	$sql="INSERT INTO route (
 		RouteID, 
 		Departure,
 		Destination, 
