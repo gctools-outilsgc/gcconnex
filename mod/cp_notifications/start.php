@@ -942,7 +942,7 @@ function cp_create_notification($event, $type, $object) {
 			$content_entity = $object;
 			$author = $object->getOwnerEntity();
 
-			$subject = "New micromission notification";
+			$subject = elgg_echo('cp_new_mission:subject',array(),'en') . ' | ' . elgg_echo('cp_new_mission:subject',array(),'fr');
 
 			// the user creating the content is automatically subscribed to it
 			add_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $object->getGUID());

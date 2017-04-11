@@ -186,7 +186,7 @@ $english = array(
 
 
 	'cp_newsletter:body:view_comment_reply' => 'View comment or discussion reply',
-
+	'cp_new_mission:subject' => "New micromission notification",
 
 
 

@@ -164,6 +164,7 @@ $french = array(
 	'cp_newsletter:heading:notify:cp_mention:plural' => "Personnes vous ont mentionné!", 
 
 
+	'cp_new_mission:subject' => "Nouveau Plateformes de possibilités",
 
 
 	'cp_newsletter:footer:notification_settings' => "Pour vous désabonner ou gérer ces messages, veuillez vous connecter et visiter votre <a href='{$site->getURL()}settings/notifications/%s'> Paramètres de notification</a>.",
@@ -232,7 +233,7 @@ $french = array(
 
 
 
-	'cp_newsletter:body:view_comment_reply' => 'Voir votre commentaire ou réponse', /// is this right translation?
+	'cp_newsletter:body:view_comment_reply' => 'Voir votre commentaire ou réponse à la discussion', /// is this right translation?
 
 
 
