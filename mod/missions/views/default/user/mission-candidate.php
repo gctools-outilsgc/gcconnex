@@ -111,12 +111,12 @@ else {
 }
 ?>
 
-<div class="col-xs-12 mrgn-tp-sm" <?php echo $background_content; ?>>
-	<div class="col-xs-6">
-		<div class="col-xs-2 mrgn-tp-sm">
+<div class="clearfix" <?php echo $background_content; ?>>
+	<div class="col-xs-12">
+		<div class="col-xs-12 mrgn-tp-sm">
 			<?php echo elgg_view_entity_icon($user, 'medium'); ?>
 		</div>
-		<div class="col-xs-8">
+		<div class="col-xs-12">
 			<h3 name="user-name" class="mrgn-tp-sm"><?php echo $user_link; ?></h3>
 			<div name="user-job-title"><?php echo $user->job; ?></div>
 			<div name="user-location"><?php echo $user->location; ?></div>
@@ -127,10 +127,10 @@ else {
 		</div>
 		
 	</div>
-	<div class="col-xs-4">
+	<div class="col-xs-12">
 		<?php echo $feedback_content; ?>
 	</div>
-    <div class="col-xs-2">
+    <div class="col-xs-12">
         <?php echo $button_content; ?>
     </div>
 </div>
