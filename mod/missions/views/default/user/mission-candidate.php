@@ -26,7 +26,7 @@ $mission_guid = $_SESSION['mission_that_invites'];
 // Creates a gray background if the user is not opted in to micro missions.
 $background_content = '';
 if(!check_if_opted_in($user)) {
-	$background_content = 'style="background-color:#efefef;"';
+	$background_content = 'style="background-color:#fafafa;"';
 }
 
 $user_link = elgg_view('output/url', array(
@@ -37,13 +37,13 @@ $user_link = elgg_view('output/url', array(
 // Displays search feedback from simple search.
 $feedback_content = '';
 if($feedback_string != '') {
-	$feedback_content = '<h4 class="mrgn-tp-sm mrgn-bttm-sm">' . elgg_echo('missions:user_matched_by') . ':</h4>';
+	$feedback_content = '<h4 class="mrgn-tp-sm mrgn-bttm-0">' . elgg_echo('missions:user_matched_by') . ':</h4>';
 	$count = 1;
     $feedback_array = explode(',', $feedback_string);
     
     foreach($feedback_array as $feedback) {
         if($feedback) {
-            $feedback_content .= '<div class="mrgn-lft-md" name="search-feedback-' . $count . '">' . $feedback . '</div>';
+            $feedback_content .= '<div class="mrgn-lft-sm" name="search-feedback-' . $count . '">' . $feedback . '</div>';
         }
         $count++;
     }
@@ -111,26 +111,22 @@ else {
 }
 ?>
 
-<div class="clearfix" <?php echo $background_content; ?>>
-	<div class="col-xs-12">
-		<div class="col-xs-12 mrgn-tp-sm">
-			<?php echo elgg_view_entity_icon($user, 'medium'); ?>
+<div class="clearfix panel panel-default" <?php echo $background_content; ?>>
+	<div class="col-xs-12 user-info-content clearfix">
+		<div class="col-xs-12 user-avatar">
+			<?php echo elgg_view_entity_icon($user, 'large'); ?>
 		</div>
 		<div class="col-xs-12">
 			<h3 name="user-name" class="mrgn-tp-sm"><?php echo $user_link; ?></h3>
-			<div name="user-job-title"><?php echo $user->job; ?></div>
-			<div name="user-location"><?php echo $user->location; ?></div>
-			
-			<div>
-				<?php echo $skill_set; ?>
-			</div>
+			<div class="user-job-title" name="user-job-title"><?php echo $user->job; ?></div>
+			<div class="user-location" name="user-location"><?php echo $user->location; ?></div>
 		</div>
-		
-	</div>
+	
 	<div class="col-xs-12">
 		<?php echo $feedback_content; ?>
 	</div>
-    <div class="col-xs-12">
+    </div>
+    <div class="user-button-content">
         <?php echo $button_content; ?>
     </div>
 </div>

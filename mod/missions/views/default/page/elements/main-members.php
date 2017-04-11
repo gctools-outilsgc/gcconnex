@@ -62,7 +62,7 @@ $advanced_field = elgg_view('page/elements/hidden-field', array(
 ));
 
 if($result_set) {
-	$search_set = '<h4>' . elgg_echo('missions:search_results') . '</h4>';
+	$search_set = '<h2>' . elgg_echo('missions:search_results') . '</h2>';
 	$count = $_SESSION['candidate_count'];
 
 	$max_reached = '';
@@ -71,8 +71,8 @@ if($result_set) {
 	}
 	$search_set .= elgg_view_entity_list(array_slice($result_set, $offset, $entities_per_page), array(
 			'count' => $count,
-            'list_class' => 'wb-eqht gallery-padding',
-            'item_class' => 'col-sm-3 panel panel-default',
+            'list_class' => '',
+            'item_class' => 'col-sm-3 candidate-panel pull-left',
 			'offset' => $offset,
 			'limit' => $entities_per_page,
 			'pagination' => true,

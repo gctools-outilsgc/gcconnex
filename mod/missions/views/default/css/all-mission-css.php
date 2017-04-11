@@ -398,3 +398,32 @@ color: #055959;
     background-color:#d00 !important;
     font-weight:bold !important;
 }
+
+.candidate-panel{
+    padding:45px 4px 10px 4px !important;
+    height: 410px;
+}
+.candidate-panel .user-avatar{
+    margin-top: -40px;
+}
+
+.candidate-panel .user-avatar .elgg-avatar-large-wet4{
+    width:45%;
+    margin: 0 auto;
+    display:block !important;
+}
+
+.candidate-panel .user-info-content{
+    top:0;
+    min-height: 370px;
+}
+.candidate-panel .user-button-content{
+    position: absolute;
+    bottom: 0;
+    width: 97%;
+    padding: 3%;
+}
+.candidate-panel .user-job-title{
+    font-weight: bold;
+    margin-bottom: 1px;
+}
