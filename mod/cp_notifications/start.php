@@ -658,9 +658,14 @@ function cp_create_annotation_notification($event, $type, $object) {
 					'cp_msg_type' => 'cp_likes_comments',
 				);
 
-	    		$author = get_entity($comment_author->getGUID());
-	    		$content_entity = $content;
-				$to_recipients[$comment_author->getGUID()] = $comment_author;
+	    		$author = $liked_by;
+	    		$content_entity = $content_entity;
+	    		$action_type = "like_comment";
+
+	    		if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $comment_author->getGUID(),'cp_notifications'),'likes_email') == 0)
+    				$to_recipients[$comment_author->getGUID()] = $comment_author;
+    			if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $comment_author->getGUID(),'cp_notifications'),'likes_site') == 0)
+    				$to_recipients_site[$comment_author->getGUID()] = $comment_author;
 	    		break;
 
 	    	case 'discussion_reply':
@@ -673,9 +678,14 @@ function cp_create_annotation_notification($event, $type, $object) {
 					'cp_comment_from' => "<a href='{$content->getURL()}'>{$content_title}</a>",
 					'cp_msg_type' => 'cp_likes_topic_replies',
 				);
-				$author = get_entity($comment_author->getGUID());
-				$content_entity = $content;
-				$to_recipients[$comment_author->getGUID()] = $comment_author;
+				$author = $liked_by;
+				$content_entity = $content_entity;
+				$action_type = "like_reply";
+
+	    		if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $comment_author->getGUID(),'cp_notifications'),'likes_email') == 0)
+    				$to_recipients[$comment_author->getGUID()] = $comment_author;
+    			if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $comment_author->getGUID(),'cp_notifications'),'likes_site') == 0)
+    				$to_recipients_site[$comment_author->getGUID()] = $comment_author;
 	    		break;
 
 
@@ -696,12 +706,13 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 
 		    	} else {
+
 		    		$type_of_like = 'content';
 		    		$liked_by = get_user($object->owner_guid); // get user who liked content
 		    		$content = get_entity($object->entity_guid);
 
-		    		$content_author = get_user($content->owner_guid);
-
+		    		error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>  content-author: {$content->getOwnerEntity()->username} /// liked-by: {$liked_by->username}");
+		    		$author = $liked_by;
 		    		// cyu - patching issue #323 (liking wire post)
 		    		if ($content->getSubtype() === 'thewire') {
 		    			$subject = elgg_echo('cp_notify:subject:likes_wire',array($liked_by->name,$content->title),'en') . ' | ' . elgg_echo('cp_notify:subject:likes_wire',array($liked_by->name,$content->title),'fr');
@@ -720,7 +731,11 @@ function cp_create_annotation_notification($event, $type, $object) {
 						'cp_content_url' => $content->getURL(),
 					);
 
-	    			$to_recipients[$content_author->guid] = $content_author;
+		    		if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $content->getOwnerGUID(),'cp_notifications'),'likes_email') == 0)
+	    				$to_recipients[$content->getOwnerGUID()] = $content->getOwnerEntity();
+	    			if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $content->getOwnerGUID(),'cp_notifications'),'likes_site') == 0)
+	    				$to_recipients_site[$content->getOwnerGUID()] = $content->getOwnerEntity();
+
 		    	}
 	    		break;
 
@@ -730,16 +745,16 @@ function cp_create_annotation_notification($event, $type, $object) {
 	$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
 
 
-
+	// send notification out via email
 	foreach ($to_recipients as $to_recipient_id => $to_recipient) {
 		$message['user_name'] = get_user($to_recipient->guid)->username;
-		$message['_user_e-mail'] = $to_recipient->email;	// for P/T user
 
-		if ($to_recipient->guid == $liked_by->guid)
+		if ($liked_by->guid == $entity->getOwnerGUID() && $to_recipient->guid == $liked_by->guid) 
 			continue;
-
-		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0)
+		
+		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0) 
 			create_digest($author, $action_type, $content_entity, $to_recipient);
+		
 		else {
 
 			$template = elgg_view('cp_notifications/email_template', $message);
@@ -748,9 +763,15 @@ function cp_create_annotation_notification($event, $type, $object) {
 				phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );
 			else
 				mail($to_recipient->email, $subject, $template,cp_get_headers());
-
-			messages_send($subject, $template, $to_recipient->guid, $site->guid, 0, true, false);
 		}
+	}
+
+	// send notification out via site
+	foreach ($to_recipients_site as $to_recipient_id => $to_recipient) {
+		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0)
+			continue;
+
+		messages_send($subject, $template, $to_recipient->guid, $site->guid, 0, true, false);
 	}
 
 } // end of function
@@ -915,7 +936,7 @@ function cp_create_notification($event, $type, $object) {
 
 			$message = array(
 				'cp_topic' => $object,
-				'cp_msg_type' => 'cp_new_type',
+				'cp_msg_type' => 'new_mission',
 			);
 
 			// digest information purposes
@@ -1250,18 +1271,18 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 				$template = elgg_view('cp_notifications/newsletter_template_empty', array('to' => $to));
 
 
-			if (elgg_is_active_plugin('phpmailer'))
+			/*if (elgg_is_active_plugin('phpmailer'))
 				phpmailer_send($to->email, $to->name, $subject, $template, NULL, true );
 			else
 				mail($to->email, $subject, $template, cp_get_headers());
-
+			*/
 
 
 			//echo $template;
 			echo "<p>Digest sent to user email: {$to->email} ({$to->guid})</p>";
 
 			//echo "<br/><br/>";
-			//echo $template;
+			echo $template;
 
 			// TODO: authenticate cronjobs - since crons dont have a valid admin login, thhis portion fails
 			// temporarily strip the access

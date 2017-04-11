@@ -185,6 +185,11 @@ $english = array(
 	'cp_notify:body_group_add:description' => "You have been added to the group %s: <br/>%s",
 
 
+	'cp_newsletter:body:view_comment_reply' => 'View comment or discussion reply',
+
+
+
+
 	// content edit section
 	//'cp_notify:subject:edit_content' => "%s has been updated by %s",
 	//'cp_notify:body_edit:title' => "This content has been edited.",

@@ -162,11 +162,13 @@ function isJson($string) {
  * @return Success 		true/false
  */
 function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '') {
+
 	elgg_load_library('GCconnex_display_in_language');
 	elgg_load_library('elgg:gc_notification:functions'); // cyu - lol i dont have this in my instance of gcconnex :|
 	$digest = get_entity($send_to->cpn_newsletter);
 	$digest_collection = json_decode($digest->description,true);
 
+	error_log("+++++++++++++++++++++++++++++  content title: {$entity->title} // subtype: {$subtype}");
 	$content_title = $entity->title; // default value for title
 
 	if (!$entity->title) $entity = get_entity($entity->guid);
@@ -204,7 +206,6 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 			'subtype' => $subtype
 		);
 	}
-
 
 	switch ($subtype) {
 		case 'mission':
@@ -246,8 +247,6 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 
 		case 'cp_hjtopic':
 		case 'cp_hjpost':
-		
-
 			$group_title = get_entity(get_forum_in_group($entity->guid, $entity->guid))->name;
 			$group_url = get_entity(get_forum_in_group($entity->guid, $entity->guid))->getURL();
 
@@ -269,20 +268,31 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 			break;
 
 
+		case 'like_comment':
+		case 'like_reply':
 		case 'post_likes':
 
-
-			if ($content_title === null) {
+			if ($subtype === "like_comment" || $subtype === "like_reply") {
+				$content_title = array('en' => elgg_echo("cp_newsletter:body:view_comment_reply",'en'), 'fr' => elgg_echo("cp_newsletter:body:view_comment_reply",'fr'));
 				$content_array = array(
-					'content_title' => $entity->getContainerEntity()->title,
-					'content_url' =>  $entity->getContainerEntity()->getURL(),
+					'content_title' => $content_title,
+					'content_url' =>  $entity->getURL(),
 					'subtype' => $entity->getSubtype(),
 					'content_author_name' => $invoked_by->name,
 					'content_author_url' => $invoked_by->getURL()
 				);
 			} else {
-				$digest_collection['personal']['likes']["{$entity->guid}{$author->guid}"] = json_encode($content_array);
+
+				$content_array = array(
+					'content_title' => $entity->title,
+					'content_url' =>  $entity->getContainerEntity()->getURL(),
+					'subtype' => $entity->getSubtype(),
+					'content_author_name' => $invoked_by->name,
+					'content_author_url' => $invoked_by->getURL()
+				);
 			}
+
+			$digest_collection['personal']['likes']["{$entity->guid}{$author->guid}"] = json_encode($content_array);
 			break;
 
 
@@ -341,6 +351,7 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 			break;
 
 		default:
+
 			$entity = get_entity($entity->guid);
 			
 			if ($entity->getContainerEntity() instanceof ElggGroup)
@@ -576,7 +587,7 @@ function userOptedIn( $user_obj, $mission_type ) {
     $number_items = ($number > 1) ? "plural" : "singular";
 
     switch ($heading) {
-    	
+      case 'new_mission':	
       case 'new_post_in_group':
       	$proper_heading = elgg_echo("cp_newsletter:heading:notify:new_post:group:{$number_items}", array(), $language);
       	break;

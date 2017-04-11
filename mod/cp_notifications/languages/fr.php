@@ -117,8 +117,8 @@ $french = array(
 	'cp_newsletter:greeting' => "Bonjour %s. Voici vos notifications pour le <strong>%s</strong>",
 
 
-	'cp_newsletter:heading:notify:mission:plural' => "Notifications de la Platformes de possibilités", 
-	'cp_newsletter:heading:notify:mission:singular' => "Notification de la Platformes de possibilités", 
+	'cp_newsletter:heading:notify:mission:plural' => "Notifications de la Plateformes de possibilités", 
+	'cp_newsletter:heading:notify:mission:singular' => "Notification de la Plateformes de possibilités", 
 
 	'cp_newsletter:heading:notify:personal:singular' => "Notification personnelle", 
 	'cp_newsletter:heading:notify:personal:plural' => "Notifications personnelles", 
@@ -228,6 +228,12 @@ $french = array(
 	'cp_notify:body_group_request:title' => "%s vous a envoyé une demande d'adhésion au groupe '%s'",
 	'cp_notify:body_group_request:description' => "Consultez la demande en cliquant sur le lien suivant : %s
 		%s",
+
+
+
+
+	'cp_newsletter:body:view_comment_reply' => 'Voir votre commentaire ou réponse', /// is this right translation?
+
 
 
 	// likes section
