@@ -168,7 +168,6 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 	$digest = get_entity($send_to->cpn_newsletter);
 	$digest_collection = json_decode($digest->description,true);
 
-	error_log("+++++++++++++++++++++++++++++  content title: {$entity->title} // subtype: {$subtype}");
 	$content_title = $entity->title; // default value for title
 
 	if (!$entity->title) $entity = get_entity($entity->guid);

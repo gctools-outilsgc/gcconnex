@@ -711,7 +711,6 @@ function cp_create_annotation_notification($event, $type, $object) {
 		    		$liked_by = get_user($object->owner_guid); // get user who liked content
 		    		$content = get_entity($object->entity_guid);
 
-		    		error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>  content-author: {$content->getOwnerEntity()->username} /// liked-by: {$liked_by->username}");
 		    		$author = $liked_by;
 		    		// cyu - patching issue #323 (liking wire post)
 		    		if ($content->getSubtype() === 'thewire') {
