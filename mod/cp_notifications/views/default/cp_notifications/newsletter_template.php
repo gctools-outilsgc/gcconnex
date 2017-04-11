@@ -34,8 +34,29 @@ else
 
       <div>
         <?php // display the main headings (group, personal, and micro missions) ?>
+        <?php 
 
-        <h3><?php echo render_headers($highlevel_header,'',$language_preference, sizeof($highlevel_contents)); ?></h3>
+        // determines the singular or plural headings
+          $content_size = sizeof($highlevel_contents);
+          //echo "<br/>{$content_size}<br/>";
+          if ($content_size == 1) {
+            foreach ($highlevel_contents as $detailed_header => $detailed_contents) {
+              $content_size = sizeof($detailed_contents);
+              //echo "<br/>{$content_size}<br/>";
+              if ($content_size == 1) {
+                foreach ($detailed_contents as $content_header => $content) {
+                  $content_size = sizeof($content);
+                  //echo "<br/>{$content_size}<br/>";
+                  break;
+                }
+              }
+              break;
+            }
+          }
+          //echo ">>>> <br/>{$content_size}<br/> ";
+        ?>
+
+        <h3><?php echo render_headers($highlevel_header,'',$language_preference, $content_size); ?></h3>
         <ul style='list-style-type:none;'>
 
         <?php 

@@ -1274,14 +1274,14 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 				phpmailer_send($to->email, $to->name, $subject, $template, NULL, true );
 			else
 				mail($to->email, $subject, $template, cp_get_headers());
-			
+
 
 
 			//echo $template;
 			echo "<p>Digest sent to user email: {$to->email} ({$to->guid})</p>";
 
 			//echo "<br/><br/>";
-			echo $template;
+			//echo $template;
 
 			// TODO: authenticate cronjobs - since crons dont have a valid admin login, thhis portion fails
 			// temporarily strip the access
