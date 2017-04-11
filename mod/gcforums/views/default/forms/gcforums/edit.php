@@ -46,14 +46,15 @@ $group_operators = elgg_get_entities_from_relationship(array(
 foreach ($group_operators as $group_operator)
 	$gcf_moderator_user[] = $group_operator->guid;
 
-if ($object->getSubtype() === 'hjforumtopic' /*&& in_array($gcf_current_user_guid, $gcf_moderator_user)*/) {
+if (($object->getSubtype() === 'hjforumtopic' && in_array($gcf_current_user_guid, $gcf_moderator_user)) || elgg_is_admin_logged_in()) {
 
 	$gcf_sticky_topic_label = elgg_echo('gcforums:is_sticky');
 	$gcf_sticky_topic_input = elgg_view('input/checkboxes', array(
 		'name' => 'gcf_sticky',
 		'id' => 'gcf_sticky',
+		'class' => 'list-unstyled mrgn-tp-sm',
 		'options' => array(
-			$gcf_sticky_topic_label => 1),
+		$gcf_sticky_topic_label => 1),
 		'value' => $object->sticky,
 	));
 }
