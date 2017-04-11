@@ -84,4 +84,100 @@ $(document).ready(function() {
     });
 
     
+    var handleResponse_groupmem = function (json) {
+        var userOptions = '';
+        $(json).each(function(key, user) {
+            userOptions += '<li tabIndex="0" data-username="' + user.desc + '">' + user.icon + user.name + "</li>";
+        });
 
+        if (!userOptions) {
+            $('#mentions-popup > .panel-body').html('<div class="elgg-ajax-loader"></div>');
+            $('#mentions-popup').addClass('hidden');
+            return;
+        }
+
+        $('#mentions-popup > .panel-body').html('<ul class="mentions-autocomplete list-unstyled mrgn-bttm-0">' + userOptions + "</ul>");
+        $('.mentions-autocomplete .elgg-avatar a').attr('tabindex', '-1');
+        $('#mentions-popup').removeClass('hidden');
+
+        $('.mentions-autocomplete > li').bind('click', function(e) {
+            e.preventDefault();
+
+            var username = $(this).data('username');
+
+            // Remove the partial @username string from the first part
+            newBeforeMention = beforeMention.substring(0, position - current.length);
+
+            // Add the complete @username string and the rest of the original
+            // content after the first part
+            var newContent = newBeforeMention + username + afterMention;
+
+            // Set new content for the textarea
+                $(textarea).val(newContent);
+
+            // Hide the autocomplete popup
+            $('#mentions-popup').addClass('hidden');
+        });
+
+
+        //ability to tab and press enter on the list item
+
+        $('.mentions-autocomplete > li').bind('keypress', function (e) {
+
+                e.preventDefault();
+                if (e.keyCode == 13) {
+                var username = $(this).data('username');
+
+                // Remove the partial @username string from the first part
+                newBeforeMention = beforeMention.substring(0, position - current.length);
+
+                // Add the complete @username string and the rest of the original
+                // content after the first part
+                var newContent = newBeforeMention + username + afterMention;
+
+                $(textarea).val(newContent).focus();
+
+                // Hide the autocomplete popup
+                $('#mentions-popup').addClass('hidden');
+            }
+            });
+
+
+    };
+
+    var autocomplete_groupmem = function (content, position) {
+        var current = content;
+
+        if (current.length > 1) {
+            current = current.replace('@', '');
+            //$('#mentions-popup').removeClass('hidden');
+
+            var options = {success: handleResponse};
+
+            elgg.get(elgg.config.wwwroot + 'livesearch?q=' + current + '&match_on=groupmems', options);
+        } else {
+            $('#mentions-popup > .panel-body').html('<div class="elgg-ajax-loader"></div>');
+            $('#mentions-popup').addClass('hidden');
+        }
+    };
+
+    var init_groupmem = function() {
+        console.log("test");
+        var textarea;
+        var content;
+        var position;
+        
+        $('owner_guid').bind('keyup', function(e) {
+
+            // Hide on backspace and enter
+            if (e.which == 8 || e.which == 13) {
+                $('#mentions-popup > .panel-body').html('<div class="elgg-ajax-loader"></div>');
+                $('#mentions-popup').addClass('hidden');
+            } else {
+                textarea = $(this);
+                content = $(this).val();
+                position = getCursorPosition(this);
+                autocomplete(content, position);
+            }
+        });
+    };
