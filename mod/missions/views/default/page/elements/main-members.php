@@ -5,6 +5,10 @@
  *
  * License: Creative Commons Attribution 3.0 Unported License
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
+ *
+ *
+ * MODIFICATION
+ * Nick - Modifed search result list / Modified headings
  */
 
 /*
@@ -89,7 +93,7 @@ if($result_set) {
 ?>
 
 <div>
-	<h4><?php echo elgg_echo('missions:find_candidates') . ':'; ?></h4>
+	<h2 class="h4"><?php echo elgg_echo('missions:find_candidates') . ':'; ?></h2>
 	<?php 
 		//echo $simple_search_form;
 		echo $advanced_field;

@@ -402,6 +402,7 @@ color: #055959;
 .candidate-panel{
     padding:45px 4px 10px 4px !important;
     height: 410px;
+    border-bottom: none !important;
 }
 .candidate-panel .user-avatar{
     margin-top: -40px;
@@ -426,4 +427,9 @@ color: #055959;
 .candidate-panel .user-job-title{
     font-weight: bold;
     margin-bottom: 1px;
+    max-width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-x: hidden;
+    display:block;
 }

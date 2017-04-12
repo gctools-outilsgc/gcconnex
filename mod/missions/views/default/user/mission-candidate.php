@@ -5,6 +5,10 @@
  *
  * License: Creative Commons Attribution 3.0 Unported License
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
+ *
+ *
+ * MODIFICATION
+ * Nick - Changed the layout to a card layout. Added/ Modified CSS in all-mission-css. Modified headings to make sense
  */
 
 /*
@@ -119,7 +123,7 @@ else {
 		<div class="col-xs-12">
 			<h3 name="user-name" class="mrgn-tp-sm"><?php echo $user_link; ?></h3>
 			<div class="user-job-title" name="user-job-title"><?php echo $user->job; ?></div>
-			<div class="user-location" name="user-location"><?php echo $user->location; ?></div>
+			<div class="user-location timeStamp" name="user-location"><?php echo $user->location; ?></div>
 		</div>
 	
 	<div class="col-xs-12">
