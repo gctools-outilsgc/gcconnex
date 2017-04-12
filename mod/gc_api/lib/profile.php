@@ -633,7 +633,7 @@ function profileUpdate($id, $data){
 				$connection = mysqli_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, $CONFIG->dbname)or die(mysqli_error($connection));
 				//error_log($CONFIG->dbhost.' '.$CONFIG->dbuser.' '.$CONFIG->dbpass.' '.$CONFIG->dbname);
 				mysqli_select_db($connection,$CONFIG->dbname);
-				$emaildomain = explode('@',$value);
+				$emaildomain = explode('@',filter_var($value, FILTER_SANITIZE_EMAIL));
 				$query = "SELECT count(*) AS num FROM email_extensions WHERE ext ='".$emaildomain[1]."'";
 			
 				$result = mysqli_query($connection, $query)or die(mysqli_error($connection));
@@ -923,7 +923,8 @@ function profileCreate($data){
 				$connection = mysqli_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, $CONFIG->dbname)or die(mysqli_error($connection));
 				//error_log($CONFIG->dbhost.' '.$CONFIG->dbuser.' '.$CONFIG->dbpass.' '.$CONFIG->dbname);
 				mysqli_select_db($connection,$CONFIG->dbname);
-				$emaildomain = explode('@',$value);
+				$emaildomain = explode('@',filter_var($value, FILTER_SANITIZE_EMAIL));
+
 				$query = "SELECT count(*) AS num FROM email_extensions WHERE ext ='".$emaildomain[1]."'";
 			
 				$result = mysqli_query($connection, $query)or die(mysqli_error($connection));
