@@ -659,7 +659,6 @@ function cp_create_annotation_notification($event, $type, $object) {
 				);
 
 	    		$author = $liked_by;
-	    		$content_entity = $content_entity;
 	    		$action_type = "like_comment";
 
 	    		if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $comment_author->getGUID(),'cp_notifications'),'likes_email') == 0)
@@ -679,7 +678,6 @@ function cp_create_annotation_notification($event, $type, $object) {
 					'cp_msg_type' => 'cp_likes_topic_replies',
 				);
 				$author = $liked_by;
-				$content_entity = $content_entity;
 				$action_type = "like_reply";
 
 	    		if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $comment_author->getGUID(),'cp_notifications'),'likes_email') == 0)
@@ -767,10 +765,8 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 	// send notification out via site
 	foreach ($to_recipients_site as $to_recipient_id => $to_recipient) {
-		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0)
-			continue;
-
-		messages_send($subject, $template, $to_recipient->guid, $site->guid, 0, true, false);
+		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') !== 0)
+			messages_send($subject, $template, $to_recipient->guid, $site->guid, 0, true, false);
 	}
 
 } // end of function

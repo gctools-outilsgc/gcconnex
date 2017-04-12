@@ -117,8 +117,8 @@ $french = array(
 	'cp_newsletter:greeting' => "Bonjour %s. Voici vos notifications pour le <strong>%s</strong>",
 
 
-	'cp_newsletter:heading:notify:mission:plural' => "Notifications de la Plateformes de possibilités", 
-	'cp_newsletter:heading:notify:mission:singular' => "Notification de la Plateformes de possibilités", 
+	'cp_newsletter:heading:notify:mission:plural' => "Notifications de la Plateforme de possibilités", 
+	'cp_newsletter:heading:notify:mission:singular' => "Notification de la Plateforme de possibilités", 
 
 	'cp_newsletter:heading:notify:personal:singular' => "Notification personnelle", 
 	'cp_newsletter:heading:notify:personal:plural' => "Notifications personnelles", 
@@ -164,7 +164,7 @@ $french = array(
 	'cp_newsletter:heading:notify:cp_mention:plural' => "Personnes vous ont mentionné!", 
 
 
-	'cp_new_mission:subject' => "Nouveau Plateformes de possibilités",
+	'cp_new_mission:subject' => "Nouvelle Plateforme de possibilités",
 
 
 	'cp_newsletter:footer:notification_settings' => "Pour vous désabonner ou gérer ces messages, veuillez vous connecter et visiter votre <a href='{$site->getURL()}settings/notifications/%s'> Paramètres de notification</a>.",
