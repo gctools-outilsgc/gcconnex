@@ -12,7 +12,7 @@ elgg_ws_expose_function("profile.update","profileUpdate", array("id" => array('t
                'POST', true, false);
 
 elgg_ws_expose_function("profile.create","profileCreate", array("data" => array('type'=>'string')),
-	'update a user profile based on id passed',
+	'Create a new user profile, issue a password reset on the newly created profile and pre-populate profile fields based on data passed in. Returns guid of newly created user',
                'POST', true, false);
 
 function get_api_profile($id){
@@ -395,19 +395,19 @@ function profileUpdate($id, $data){
 			
 				//error_log(json_encode($value));
 				$nameData = json_decode(json_encode($value), true);
+				if (!isset($nameData["firstName"])&&!isset($nameData["lastName"])){
+						$response['error'] = 4;
+						$response['message'] = 'invalid data format - missing first and last name';
+						return $response;
 
+				}
 				if (!isset($nameData["firstName"])||!isset($nameData["lastName"])){
 						$response['error'] = 4;
 						$response['message'] = 'invalid data format - missing first or last name';
 						return $response;
 
 				}
-				if (!isset($nameData["firstName"])&&!isset($nameData["lastName"])){
-						$response['error'] = 4;
-						$response['message'] = 'invalid data format - missing first or last name';
-						return $response;
-
-				}
+				
 
 				$name = $nameData["firstName"].' '.$nameData["lastName"];
 				//error_log($name);
@@ -428,18 +428,19 @@ function profileUpdate($id, $data){
 			case 'title':
 				
 				$titleData = json_decode(json_encode($value), true);
-				if (!isset($titleData['fr'])||!isset($titleData['en'])){
-						$response['error'] = 4;
-						$response['message'] = 'invalid data format - missing french or english title';
-						return $response;
-
-				}
 				if (!isset($titleData['fr'])&&!isset($titleData['en'])){
 						$response['error'] = 4;
 						$response['message'] = 'invalid data format - missing french and english title';
 						return $response;
 
 				}
+				if (!isset($titleData['fr'])||!isset($titleData['en'])){
+						$response['error'] = 4;
+						$response['message'] = 'invalid data format - missing french or english title';
+						return $response;
+
+				}
+				
 				if ($user_entity->language === 'fr'){
 					$user_entity->set('job', $titleData['fr'].' / '.$titleData['en']);
 				}
@@ -451,34 +452,36 @@ function profileUpdate($id, $data){
 			case 'classification':
 				//error_log(json_encode($value));
 				$classificationData = json_decode(json_encode($value), true);
-				if (!isset($classificationData['group'])||!isset($classificationData['level'])){
-						$response['error'] = 4;
-						$response['message'] = 'invalid data format - missing classification group or level';
-						return $response;
-
-				}
 				if (!isset($classificationData['group'])&&!isset($classificationData['level'])){
 						$response['error'] = 4;
 						$response['message'] = 'invalid data format - missing classification group and level';
 						return $response;
 
 				}
+				if (!isset($classificationData['group'])||!isset($classificationData['level'])){
+						$response['error'] = 4;
+						$response['message'] = 'invalid data format - missing classification group or level';
+						return $response;
+
+				}
+				
 				$user_entity->set('classification', json_encode($value));
 				break;
 			case 'department':
 				$deptData = json_decode(json_encode($value), true);
-				if (!isset($deptData['fr'])||!isset($deptData['en'])){
-						$response['error'] = 4;
-						$response['message'] = 'invalid data format - missing french or english department';
-						return $response;
-
-				}
 				if (!isset($deptData['fr'])&&!isset($deptData['en'])){
 						$response['error'] = 4;
 						$response['message'] = 'invalid data format - department format';
 						return $response;
 
 				}
+				if (!isset($deptData['fr'])||!isset($deptData['en'])){
+						$response['error'] = 4;
+						$response['message'] = 'invalid data format - missing french or english department';
+						return $response;
+
+				}
+				
 
 				$obj = elgg_get_entities(array(
    					'type' => 'object',
@@ -505,19 +508,19 @@ function profileUpdate($id, $data){
 
 				$deptListFr = json_decode($obj[0]->deptsFr, true);
 				$provinces = array();
-				$provinces['pov-alb'] = 'Government of Alberta';
-				$provinces['pov-bc'] = 'Government of British Columbia';
-				$provinces['pov-man'] = 'Government of Manitoba';
-				$provinces['pov-nb'] = 'Government of New Brunswick';
-				$provinces['pov-nfl'] = 'Government of Newfoundland and Labrador';
-				$provinces['pov-ns'] = 'Government of Nova Scotia';
-				$provinces['pov-nwt'] = 'Government of Northwest Territories';
-				$provinces['pov-nun'] = 'Government of Nunavut';
-				$provinces['pov-ont'] = 'Government of Ontario';
-				$provinces['pov-pei'] = 'Government of Prince Edward Island';
-				$provinces['pov-que'] = 'Government of Quebec';
-				$provinces['pov-sask'] = 'Government of Saskatchewan';
-				$provinces['pov-yuk'] = 'Government of Yukon';
+				$provinces['pov-alb'] = "Gouvernement de l'Alberta";
+				$provinces['pov-bc'] = 'Gouvernement de la Colombie-Britannique';
+				$provinces['pov-man'] = 'Gouvernement du Manitoba';
+				$provinces['pov-nb'] = 'Gouvernement du Nouveau-Brunswick';
+				$provinces['pov-nfl'] = 'Gouvernement de Terre-Neuve-et-Labrador';
+				$provinces['pov-ns'] = 'Gouvernement de la Nouvelle-Écosse';
+				$provinces['pov-nwt'] = 'Gouvernement du Territoires du Nord-Ouest';
+				$provinces['pov-nun'] = 'Gouvernement du Nunavut';
+				$provinces['pov-ont'] = "Gouvernement de l'Ontario";
+				$provinces['pov-pei'] = "Gouvernement de l'Île-du-Prince-Édouard";
+				$provinces['pov-que'] = 'Gouvernement du Québec';
+				$provinces['pov-sask'] = 'Gouvernement de Saskatchewan';
+				$provinces['pov-yuk'] = 'Gouvernement du Yukon';
 				$deptAndProvincesFr = array_merge($deptListFr,$provinces);
 
 				if(!in_array($deptData['en'], $deptAndProvincesEn)){
@@ -544,34 +547,36 @@ function profileUpdate($id, $data){
 				break;
 			case 'branch':
 				$branchData = json_decode(json_encode($value), true);
-				if (!isset($branchData['en'])||!isset($branchData['fr'])){
-						$response['error'] = 4;
-						$response['message'] = 'invalid data format - missing english or french branch name';
-						return $response;
-
-				}
 				if (!isset($branchData['en'])&&!isset($branchData['fr'])){
 						$response['error'] = 4;
 						$response['message'] = 'invalid data format - missing english and french branch name';
 						return $response;
 
 				}
+				if (!isset($branchData['en'])||!isset($branchData['fr'])){
+						$response['error'] = 4;
+						$response['message'] = 'invalid data format - missing english or french branch name';
+						return $response;
+
+				}
+				
 				$user_entity->set('branch', json_encode($value));
 				break;
 			case 'sector':
 				$sectorData = json_decode(json_encode($value), true);
-				if (!isset($sectorData['en'])||!isset($sectorData['fr'])){
-						$response['error'] = 4;
-						$response['message'] = 'invalid data format - missing english or french sector name';
-						return $response;
-
-				}
 				if (!isset($sectorData['en'])&&!isset($sectorData['fr'])){
 						$response['error'] = 4;
 						$response['message'] = 'invalid data format - missing english and french sector name';
 						return $response;
 
 				}
+				if (!isset($sectorData['en'])||!isset($sectorData['fr'])){
+						$response['error'] = 4;
+						$response['message'] = 'invalid data format - missing english or french sector name';
+						return $response;
+
+				}
+				
 				$user_entity->set('sector', json_encode($value));
 				break;
 			case 'location':
@@ -582,16 +587,17 @@ function profileUpdate($id, $data){
 
 				}
 				$locationData = json_decode(json_encode($value['en']), true);
-				if(!isset($locationData['street'])||!isset($locationData['city'])||!isset($locationData['province'])||!isset($locationData['postalCode'])||!isset($locationData['country'])||!isset($locationData['building'])||!isset($locationData['floor'])||!isset($locationData['officeNum'])){
-						$response['error'] = 4;
-						$response['message'] = 'missing location data';
-						return $response;
-				}
 				if(!isset($locationData['street'])&&!isset($locationData['city'])&&!isset($locationData['province'])&&!isset($locationData['postalCode'])&&!isset($locationData['country'])&&!isset($locationData['building'])&&!isset($locationData['floor'])&&!isset($locationData['officeNum'])){
 						$response['error'] = 4;
 						$response['message'] = 'invalid location data';
 						return $response;
 				}
+				if(!isset($locationData['street'])||!isset($locationData['city'])||!isset($locationData['province'])||!isset($locationData['postalCode'])||!isset($locationData['country'])||!isset($locationData['building'])||!isset($locationData['floor'])||!isset($locationData['officeNum'])){
+						$response['error'] = 4;
+						$response['message'] = 'missing location data';
+						return $response;
+				}
+				
 				if (!isset($value['fr'])){
 						$response['error'] = 4;
 						$response['message'] = 'missing french location data';
@@ -599,16 +605,17 @@ function profileUpdate($id, $data){
 
 				}
 				$locationData = json_decode(json_encode($value['fr']), true);
-				if(!isset($locationData['street'])||!isset($locationData['city'])||!isset($locationData['province'])||!isset($locationData['postalCode'])||!isset($locationData['country'])||!isset($locationData['building'])||!isset($locationData['floor'])||!isset($locationData['officeNum'])){
-						$response['error'] = 4;
-						$response['message'] = 'missing location data';
-						return $response;
-				}
 				if(!isset($locationData['street'])&&!isset($locationData['city'])&&!isset($locationData['province'])&&!isset($locationData['postalCode'])&&!isset($locationData['country'])&&!isset($locationData['building'])&&!isset($locationData['floor'])&&!isset($locationData['officeNum'])){
 						$response['error'] = 4;
 						$response['message'] = 'invalid location data';
 						return $response;
 				}
+				if(!isset($locationData['street'])||!isset($locationData['city'])||!isset($locationData['province'])||!isset($locationData['postalCode'])||!isset($locationData['country'])||!isset($locationData['building'])||!isset($locationData['floor'])||!isset($locationData['officeNum'])){
+						$response['error'] = 4;
+						$response['message'] = 'missing location data';
+						return $response;
+				}
+				
 				$user_entity->set('addressString', json_encode($value["en"]));
 				$user_entity->set('addressStringFr', json_encode($value["fr"]));
 				break;
@@ -713,19 +720,19 @@ function profileCreate($data){
 			
 				//error_log(json_encode($value));
 				$nameData = json_decode(json_encode($value), true);
+				if (!isset($nameData["firstName"])&&!isset($nameData["lastName"])){
+						$response['error'] = 4;
+						$response['message'] = 'invalid data format - missing first and last name';
+						return $response;
 
+				}
 				if (!isset($nameData["firstName"])||!isset($nameData["lastName"])){
 						$response['error'] = 4;
 						$response['message'] = 'invalid data format - missing first or last name';
 						return $response;
 
 				}
-				if (!isset($nameData["firstName"])&&!isset($nameData["lastName"])){
-						$response['error'] = 4;
-						$response['message'] = 'invalid data format - missing first or last name';
-						return $response;
-
-				}
+				
 
 				$name = $nameData["firstName"].' '.$nameData["lastName"];
 				
@@ -733,51 +740,54 @@ function profileCreate($data){
 			case 'title':
 				
 				$titleData = json_decode(json_encode($value), true);
-				if (!isset($titleData['fr'])||!isset($titleData['en'])){
-						$response['error'] = 4;
-						$response['message'] = 'invalid data format - missing french or english title';
-						return $response;
-
-				}
 				if (!isset($titleData['fr'])&&!isset($titleData['en'])){
 						$response['error'] = 4;
 						$response['message'] = 'invalid data format - missing french and english title';
 						return $response;
 
 				}
+				if (!isset($titleData['fr'])||!isset($titleData['en'])){
+						$response['error'] = 4;
+						$response['message'] = 'invalid data format - missing french or english title';
+						return $response;
+
+				}
+				
 				
 				
 				break;
 			case 'classification':
 				//error_log(json_encode($value));
 				$classificationData = json_decode(json_encode($value), true);
-				if (!isset($classificationData['group'])||!isset($classificationData['level'])){
-						$response['error'] = 4;
-						$response['message'] = 'invalid data format - missing classification group or level';
-						return $response;
-
-				}
 				if (!isset($classificationData['group'])&&!isset($classificationData['level'])){
 						$response['error'] = 4;
 						$response['message'] = 'invalid data format - missing classification group and level';
 						return $response;
 
 				}
-				break;
-			case 'department':
-				$deptData = json_decode(json_encode($value), true);
-				if (!isset($deptData['fr'])||!isset($deptData['en'])){
+				if (!isset($classificationData['group'])||!isset($classificationData['level'])){
 						$response['error'] = 4;
-						$response['message'] = 'invalid data format - missing french or english department';
+						$response['message'] = 'invalid data format - missing classification group or level';
 						return $response;
 
 				}
+				
+				break;
+			case 'department':
+				$deptData = json_decode(json_encode($value), true);
 				if (!isset($deptData['fr'])&&!isset($deptData['en'])){
 						$response['error'] = 4;
 						$response['message'] = 'invalid data format - department format';
 						return $response;
 
 				}
+				if (!isset($deptData['fr'])||!isset($deptData['en'])){
+						$response['error'] = 4;
+						$response['message'] = 'invalid data format - missing french or english department';
+						return $response;
+
+				}
+				
 
 				$obj = elgg_get_entities(array(
    					'type' => 'object',
@@ -804,19 +814,19 @@ function profileCreate($data){
 
 				$deptListFr = json_decode($obj[0]->deptsFr, true);
 				$provinces = array();
-				$provinces['pov-alb'] = 'Government of Alberta';
-				$provinces['pov-bc'] = 'Government of British Columbia';
-				$provinces['pov-man'] = 'Government of Manitoba';
-				$provinces['pov-nb'] = 'Government of New Brunswick';
-				$provinces['pov-nfl'] = 'Government of Newfoundland and Labrador';
-				$provinces['pov-ns'] = 'Government of Nova Scotia';
-				$provinces['pov-nwt'] = 'Government of Northwest Territories';
-				$provinces['pov-nun'] = 'Government of Nunavut';
-				$provinces['pov-ont'] = 'Government of Ontario';
-				$provinces['pov-pei'] = 'Government of Prince Edward Island';
-				$provinces['pov-que'] = 'Government of Quebec';
-				$provinces['pov-sask'] = 'Government of Saskatchewan';
-				$provinces['pov-yuk'] = 'Government of Yukon';
+				$provinces['pov-alb'] = "Gouvernement de l'Alberta";
+				$provinces['pov-bc'] = 'Gouvernement de la Colombie-Britannique';
+				$provinces['pov-man'] = 'Gouvernement du Manitoba';
+				$provinces['pov-nb'] = 'Gouvernement du Nouveau-Brunswick';
+				$provinces['pov-nfl'] = 'Gouvernement de Terre-Neuve-et-Labrador';
+				$provinces['pov-ns'] = 'Gouvernement de la Nouvelle-Écosse';
+				$provinces['pov-nwt'] = 'Gouvernement du Territoires du Nord-Ouest';
+				$provinces['pov-nun'] = 'Gouvernement du Nunavut';
+				$provinces['pov-ont'] = "Gouvernement de l'Ontario";
+				$provinces['pov-pei'] = "Gouvernement de l'Île-du-Prince-Édouard";
+				$provinces['pov-que'] = 'Gouvernement du Québec';
+				$provinces['pov-sask'] = 'Gouvernement de Saskatchewan';
+				$provinces['pov-yuk'] = 'Gouvernement du Yukon';
 				$deptAndProvincesFr = array_merge($deptListFr,$provinces);
 
 				if(!in_array($deptData['en'], $deptAndProvincesEn)){
@@ -835,34 +845,36 @@ function profileCreate($data){
 				break;
 			case 'branch':
 				$branchData = json_decode(json_encode($value), true);
-				if (!isset($branchData['en'])||!isset($branchData['fr'])){
-						$response['error'] = 4;
-						$response['message'] = 'invalid data format - missing english or french branch name';
-						return $response;
-
-				}
 				if (!isset($branchData['en'])&&!isset($branchData['fr'])){
 						$response['error'] = 4;
 						$response['message'] = 'invalid data format - missing english and french branch name';
 						return $response;
 
 				}
+				if (!isset($branchData['en'])||!isset($branchData['fr'])){
+						$response['error'] = 4;
+						$response['message'] = 'invalid data format - missing english or french branch name';
+						return $response;
+
+				}
+				
 				
 				break;
 			case 'sector':
 				$sectorData = json_decode(json_encode($value), true);
-				if (!isset($sectorData['en'])||!isset($sectorData['fr'])){
-						$response['error'] = 4;
-						$response['message'] = 'invalid data format - missing english or french sector name';
-						return $response;
-
-				}
 				if (!isset($sectorData['en'])&&!isset($sectorData['fr'])){
 						$response['error'] = 4;
 						$response['message'] = 'invalid data format - missing english and french sector name';
 						return $response;
 
 				}
+				if (!isset($sectorData['en'])||!isset($sectorData['fr'])){
+						$response['error'] = 4;
+						$response['message'] = 'invalid data format - missing english or french sector name';
+						return $response;
+
+				}
+				
 				
 				break;
 			case 'location':
@@ -873,16 +885,17 @@ function profileCreate($data){
 
 				}
 				$locationData = json_decode(json_encode($value['en']), true);
-				if(!isset($locationData['street'])||!isset($locationData['city'])||!isset($locationData['province'])||!isset($locationData['postalCode'])||!isset($locationData['country'])||!isset($locationData['building'])||!isset($locationData['floor'])||!isset($locationData['officeNum'])){
-						$response['error'] = 4;
-						$response['message'] = 'missing location data';
-						return $response;
-				}
 				if(!isset($locationData['street'])&&!isset($locationData['city'])&&!isset($locationData['province'])&&!isset($locationData['postalCode'])&&!isset($locationData['country'])&&!isset($locationData['building'])&&!isset($locationData['floor'])&&!isset($locationData['officeNum'])){
 						$response['error'] = 4;
 						$response['message'] = 'invalid location data';
 						return $response;
 				}
+				if(!isset($locationData['street'])||!isset($locationData['city'])||!isset($locationData['province'])||!isset($locationData['postalCode'])||!isset($locationData['country'])||!isset($locationData['building'])||!isset($locationData['floor'])||!isset($locationData['officeNum'])){
+						$response['error'] = 4;
+						$response['message'] = 'missing location data';
+						return $response;
+				}
+				
 				if (!isset($value['fr'])){
 						$response['error'] = 4;
 						$response['message'] = 'missing french location data';
@@ -890,16 +903,17 @@ function profileCreate($data){
 
 				}
 				$locationData = json_decode(json_encode($value['fr']), true);
-				if(!isset($locationData['street'])||!isset($locationData['city'])||!isset($locationData['province'])||!isset($locationData['postalCode'])||!isset($locationData['country'])||!isset($locationData['building'])||!isset($locationData['floor'])||!isset($locationData['officeNum'])){
-						$response['error'] = 4;
-						$response['message'] = 'missing location data';
-						return $response;
-				}
 				if(!isset($locationData['street'])&&!isset($locationData['city'])&&!isset($locationData['province'])&&!isset($locationData['postalCode'])&&!isset($locationData['country'])&&!isset($locationData['building'])&&!isset($locationData['floor'])&&!isset($locationData['officeNum'])){
 						$response['error'] = 4;
 						$response['message'] = 'invalid location data';
 						return $response;
 				}
+				if(!isset($locationData['street'])||!isset($locationData['city'])||!isset($locationData['province'])||!isset($locationData['postalCode'])||!isset($locationData['country'])||!isset($locationData['building'])||!isset($locationData['floor'])||!isset($locationData['officeNum'])){
+						$response['error'] = 4;
+						$response['message'] = 'missing location data';
+						return $response;
+				}
+				
 				
 				break;
 			
