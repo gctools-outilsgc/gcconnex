@@ -573,8 +573,8 @@ if ($email_notification_footer_non_user_en || $email_notification_footer_non_use
 	$email_notification_footer_en2 = $email_notification_footer_non_user_en;
 	$email_notification_footer_fr2 = $email_notification_footer_non_user_fr;
 }else{
-	$email_notification_footer_en2 = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/plugins/{$username_link}/cp_notifications"),'en');
-	$email_notification_footer_fr2 = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/plugins/{$username_link}/cp_notifications"),'fr');
+	$email_notification_footer_en2 = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/notifications/{$username_link}"),'en');
+	$email_notification_footer_fr2 = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/notifications/{$username_link}"),'fr');
 }
 
 
@@ -585,9 +585,10 @@ $french_follows = elgg_echo('cp_notify:french_follows',array());
 
 // not all notification will need the 2nd footer ("...Please edit your notifications in your account's settings...")
 if ($footer2_required) {
-	$email_notification_footer_en2 = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/plugins/{$vars['user_name']}/cp_notifications"),'en');
-	$email_notification_footer_fr2 = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/plugins/{$vars['user_name']}/cp_notifications"),'fr');
+	$email_notification_footer_en2 = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/notifications/{$vars['user_name']}"),'en');
+	$email_notification_footer_fr2 = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/notifications/{$vars['user_name']}"),'fr');
 }
+
 
 $french_follows = elgg_echo('cp_notify:french_follows',array());
 
@@ -599,20 +600,6 @@ $email_domain = explode('@',$email_address);	// (ie: first.last@gov.ab.ca) TODO 
 $pt_departments = elgg_get_plugin_setting('cp_pt_information','cp_notifications');
 
 $pt_departments = explode(',',$pt_departments);
-
-/*if (in_array($email_domain[1], $pt_departments)) {
-
-	$email_notification_header = str_replace(elgg_get_site_url(), 'https://ext.gcconnex.gc.ca/', $email_notification_header);
-	$cp_notify_msg_title_en = str_replace(elgg_get_site_url(), 'https://ext.gcconnex.gc.ca/', $cp_notify_msg_title_en);
-	$cp_notify_msg_description_en = str_replace(elgg_get_site_url(), 'https://ext.gcconnex.gc.ca/', $cp_notify_msg_description_en);
-	$email_notification_footer_en = str_replace(elgg_get_site_url(), 'https://ext.gcconnex.gc.ca/', $email_notification_footer_en); // no access to gcpedia
-	$email_notification_footer_en2 = str_replace(elgg_get_site_url(), 'https://ext.gcconnex.gc.ca/', $email_notification_footer_en2);
-	$cp_notify_msg_title_fr = str_replace(elgg_get_site_url(), 'https://ext.gcconnex.gc.ca/', $cp_notify_msg_title_fr);
-	$cp_notify_msg_description_fr = str_replace(elgg_get_site_url(), 'https://ext.gcconnex.gc.ca/', $cp_notify_msg_description_fr);
-	$email_notification_footer_fr = str_replace(elgg_get_site_url(), 'https://ext.gcconnex.gc.ca/', $email_notification_footer_fr); // no access to gcpedia
-	$email_notification_footer_fr2 = str_replace(elgg_get_site_url(), 'https://ext.gcconnex.gc.ca/', $email_notification_footer_fr2);
-
-}*/
 
 
 echo <<<___HTML

@@ -138,20 +138,20 @@ $english = array(
 	'cp_newsletter:heading:notify:friend_request:singular' => "New colleague request", 
 	'cp_newsletter:heading:notify:friend_request:plural' => "New colleague requests", 
 
-	'cp_newsletter:heading:notify:friend_approved:singular' => "%s approved your colleague request", 	
-	'cp_newsletter:heading:notify:friend_approved:plural' => "%s approved your colleague request", 
+	'cp_newsletter:heading:notify:friend_approved:singular' => "%s user approved your colleague request", 	
+	'cp_newsletter:heading:notify:friend_approved:plural' => "%s users approved your colleague request", 
 
 	'cp_newsletter:heading:notify:likes:singular' => "Like received on your content", 
 	'cp_newsletter:heading:notify:likes:plural' => "Likes received on your content", 
 
-	'cp_newsletter:heading:notify:new_post:singular' => "New item have been posted by your colleague",
-	'cp_newsletter:heading:notify:new_post:plural' => "New items have been posted by your colleagues", 
+	'cp_newsletter:heading:notify:new_post:singular' => "New item has been posted by your colleague",
+	'cp_newsletter:heading:notify:new_post:plural' => "New items has been posted by your colleagues", 
 	
-	'cp_newsletter:heading:notify:new_post:group:singular' => "New item have been posted",
-	'cp_newsletter:heading:notify:new_post:group:plural' => "New items have been posted", 
+	'cp_newsletter:heading:notify:new_post:group:singular' => "New item has been posted",
+	'cp_newsletter:heading:notify:new_post:group:plural' => "New items has been posted", 
 
 	'cp_newsletter:heading:notify:content_revision:singular' => "Item has been revised", 
-	'cp_newsletter:heading:notify:content_revision:plural' => "Items have been revised", 
+	'cp_newsletter:heading:notify:content_revision:plural' => "Items has been revised", 
 
 	'cp_newsletter:heading:notify:cp_mention:singular' => "Person mentioned you.", 	
 	'cp_newsletter:heading:notify:cp_mention:plural' => "People mentioned you.", 
@@ -169,7 +169,7 @@ $english = array(
 	'cp_newsletter:digest:opportunities:date' => "Closing date: ",
 
 	/// (INSTANT EMAIL) EMAIL CONTENT: Normal email notifications
-	'cp_newsletter:footer:notification_settings' => "To unsubscribe or manage these messages, please login and visit your <a href='{$site->getURL()}settings/plugin/%s/cp_notifications'> Notification Settings</a>.",
+	'cp_newsletter:footer:notification_settings' => "To unsubscribe or manage these messages, please login and visit your <a href='{$site->getURL()}settings/notifications/%s'> Notification Settings</a>.",
 	'cp_newsletter:ending' => "<p>Regards,</p> <p>The GCTools Team</p>",
 
     'cp_notifications:contact_help_desk'=> "Should you have any concerns, please use the <a href='{$site->getURL()}mod/contactform/'>Contact us form</a>.",

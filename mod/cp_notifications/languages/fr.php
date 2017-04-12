@@ -132,8 +132,8 @@ $french = array(
 	'cp_newsletter:heading:notify:friend_request:singular' => "Nouvelle demande de collègue", 
 	'cp_newsletter:heading:notify:friend_request:plural' => "Nouvelles demandes de collègue", 
 
-	'cp_newsletter:heading:notify:friend_approved:singular' => "%s a approuvé votre demande de collègue", 
-	'cp_newsletter:heading:notify:friend_approved' => "%s a approuvé votre demande de collègue", 
+	'cp_newsletter:heading:notify:friend_approved:singular' => "%s utilisateur a approuvé votre demande de collègue", 
+	'cp_newsletter:heading:notify:friend_approved' => "%s utilisateurs ont approuvé votre demande de collègue", 
 	'cp_newsletter:heading:notify:friend_approved:plural' => "%s a approuvé votre demande de collègue", 
 
 	'cp_newsletter:heading:notify:forum_topic:singular' => "Nouveau sujet de forum", 
