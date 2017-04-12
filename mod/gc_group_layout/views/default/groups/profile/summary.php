@@ -294,7 +294,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
                         //Nick - Added a link to share the group on the wire
                         if(elgg_is_logged_in()){
                             $options = array(
-                                'text' => '<i class="fa fa-share-alt fa-lg icon-unsel"><span class="wb-inv">Share this group on the Wire</span></i>',
+                                'text' => '<i class="fa fa-share-alt fa-lg icon-unsel"><span class="wb-inv">'.elgg_echo('group:share:link').'</span></i>',
                                 'title' => elgg_echo('thewire_tools:reshare'),
                                 'href' => 'ajax/view/thewire_tools/reshare?reshare_guid=' . $group->getGUID(),
                                 'class' => 'elgg-lightbox',
@@ -302,7 +302,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
                             );
                         }
                         echo '<div class="pull-left mrgn-rght-sm">'.elgg_view('output/url', $options).'</div>';
-    
+
                         //Nick - Added a link to like the group!
                         if(elgg_is_logged_in()){
                             $hasLiked = \Elgg\Likes\DataService::instance()->currentUserLikesEntity($group->guid);
@@ -310,17 +310,17 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
                             if($hasLiked){
                                 $options = array(
 			                     'href' => elgg_add_action_tokens_to_url("/action/likes/delete?guid={$group->guid}"),
-			                     'text' => '<i class="fa fa-thumbs-up fa-lg icon-sel"></i><span class="wb-inv">'. elgg_echo('likes:remove').'</span>',
+			                     'text' => '<i class="fa fa-thumbs-up fa-lg icon-sel"></i><span class="wb-inv">'. elgg_echo('likes:remove') . ' ' . elgg_echo('group').'</span>',
 			                     'title' => elgg_echo('likes:remove') . ' ' .elgg_echo('group'),
-			                     
+
 		                      );
                             }else{
                                $options = array(
 			                     'href' => elgg_add_action_tokens_to_url("/action/likes/add?guid={$group->guid}"),
-			                     'text' => '<i class="fa fa-thumbs-up fa-lg icon-unsel"></i><span class="wb-inv">'.elgg_echo('likes:likethis').'</span>',
+			                     'text' => '<i class="fa fa-thumbs-up fa-lg icon-unsel"></i><span class="wb-inv">'.elgg_echo('likes:likethis') . ' ' . elgg_echo('group').'</span>',
                                  'title' => elgg_echo('likes:likethis') . ' ' . elgg_echo('group'),
-			                     
-		                      ); 
+
+		                      );
                             }
 
                         }
@@ -334,9 +334,9 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
                         // cyu - indicate if user has subscribed to the group or not (must have cp notifications enabled)
                         if (elgg_is_active_plugin('cp_notifications')) {
                             if (check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $group->getGUID()) || check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $group->getGUID()))
-                                echo "<a href='".elgg_add_action_tokens_to_url("/action/cp_notify/unsubscribe?guid={$group->getGUID()}")."' title='".elgg_echo('cp_notify:unsubBell')."'><i class='icon-sel fa fa-lg fa-bell'></i></a>";
+                                echo "<a href='".elgg_add_action_tokens_to_url("/action/cp_notify/unsubscribe?guid={$group->getGUID()}")."' title='".elgg_echo('cp_notify:unsubBell')."'><i class='icon-sel fa fa-lg fa-bell'><span class='wb-inv'>".elgg_echo('entity:subscribe')."</span></i></a>";
                             else
-                                echo '<a href="'.elgg_add_action_tokens_to_url("/action/cp_notify/subscribe?guid={$group->getGUID()}").'" title="'.elgg_echo('cp_notify:subBell').'"><i class="icon-unsel fa fa-lg fa-bell-slash-o"></i></a>';
+                                echo '<a href="'.elgg_add_action_tokens_to_url("/action/cp_notify/subscribe?guid={$group->getGUID()}").'" title="'.elgg_echo('cp_notify:subBell').'"><i class="icon-unsel fa fa-lg fa-bell-slash-o"><span class="wb-inv">'.elgg_echo('entity:subscribe').'</span></i></a>';
                         }
                     }
                     ?>

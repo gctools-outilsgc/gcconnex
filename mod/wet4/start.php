@@ -430,7 +430,7 @@ function wet4_theme_pagesetup() {
 
 	// Remove link to friendsof
 	elgg_unregister_menu_item("page", "friends:of");
-    
+
 
     // Settings notifications tab in the User's setting page
     // cyu - allow site administrators to view user notification settings page
@@ -578,23 +578,51 @@ function wet4_likes_entity_menu_setup($hook, $type, $return, $params) {
 	}
 
 	$entity = $params['entity'];
+	$lang = get_current_language();
 	/* @var ElggEntity $entity */
 
-    $entContext = $entity->getType();
-    if($entContext == 'object'){
-        $entContext =  proper_subtypes($entity->getSubtype());//$entity->getSubtype();
-    } else if($entContext == 'group'){
-        $entContext = elgg_echo('group:group');
-    }
+	$entContext = $entity->getType();
+	if($entContext == 'object'){
+
+			$entContext =  proper_subtypes($entity->getSubtype());//$entity->getSubtype();
+			if($entity->title3){
+					$entName = gc_explode_translation($entity->title3, $lang);
+			}else{
+					$entName = $entity->title;
+			}
+
+	} else if($entContext == 'group'){
+
+			$entContext = elgg_echo('group');
+			if($entity->title3){
+					$entName = gc_explode_translation($entity->title3, $lang);
+			}else{
+					$entName = $entity->name;
+			}
+
+	}
 
 	if ($entity->canAnnotate(0, 'likes')) {
 		$hasLiked = \Elgg\Likes\DataService::instance()->currentUserLikesEntity($entity->guid);
+
+		//to hande different retext for wire posts, comments and discussion replies since they do not have titles or names
+		if(in_array($entity->getSubtype(), array('comment', 'discussion_reply', 'thewire'))){
+
+			//get entity owner
+			$ownerName = $entity->getOwnerEntity()->name;
+
+			$likeText = elgg_echo('entity:notitle:like:link', array($entContext, $ownerName));
+			$unlikeText = elgg_echo('entity:notitle:unlike:link', array($entContext, $ownerName));
+		} else {
+			$likeText = elgg_echo('entity:like:link', array($entContext, $entName));
+			$unlikeText = elgg_echo('entity:unlike:link', array($entContext, $entName));
+		}
 
 		// Always register both. That makes it super easy to toggle with javascript
 		$return[] = ElggMenuItem::factory(array(
 			'name' => 'likes',
 			'href' => elgg_add_action_tokens_to_url("/action/likes/add?guid={$entity->guid}"),
-			'text' => '<i class="fa fa-thumbs-up fa-lg icon-unsel"></i><span class="wb-inv">Like This</span>',
+			'text' => '<i class="fa fa-thumbs-up fa-lg icon-unsel"></i><span class="wb-inv">'.$likeText.'</span>',
 			'title' => elgg_echo('likes:likethis') . ' ' . $entContext,
 			'item_class' => $hasLiked ? 'hidden' : '',
 			'priority' => 998,
@@ -602,7 +630,7 @@ function wet4_likes_entity_menu_setup($hook, $type, $return, $params) {
 		$return[] = ElggMenuItem::factory(array(
 			'name' => 'unlike',
 			'href' => elgg_add_action_tokens_to_url("/action/likes/delete?guid={$entity->guid}"),
-			'text' => '<i class="fa fa-thumbs-up fa-lg icon-sel"></i><span class="wb-inv">Like This</span>',
+			'text' => '<i class="fa fa-thumbs-up fa-lg icon-sel"></i><span class="wb-inv">'.$unlikeText.'</span>',
 			'title' => elgg_echo('likes:remove') . ' ' . $entContext,
 			'item_class' => $hasLiked ? 'pad-rght-xs' : 'hidden',
 			'priority' => 998,
@@ -688,6 +716,12 @@ function wet4_blog_entity_menu($hook, $entity_type, $returnvalue, $params) {
         return $returnvalue;
     }
 
+		if($entity->title3){
+				$entName = gc_explode_translation($entity->title3, $lang);
+		}else{
+				$entName = $entity->title;
+		}
+
     // only published blogs
     if ($entity->status == "draft") {
         return $returnvalue;
@@ -715,7 +749,7 @@ function wet4_blog_entity_menu($hook, $entity_type, $returnvalue, $params) {
     if ($entity->canComment()) {
         $returnvalue[] = \ElggMenuItem::factory(array(
             "name" => "comments",
-            "text" => '<i class="fa fa-lg fa-comment icon-unsel"><span class="wb-inv">' . elgg_echo("comment:this") . '</span></i>',
+            "text" => '<i class="fa fa-lg fa-comment icon-unsel"><span class="wb-inv">' . elgg_echo("entity:comment:link", array(elgg_echo('blog:blog'), $entName)) . '</span></i>',
             "title" => elgg_echo("comment:this"),
             "href" => $entity->getURL() . "#comments"
         ));
@@ -736,9 +770,10 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 	}
 
 	$entity = $params['entity'];
+	$lang = get_current_language();
 	/* @var \ElggEntity $entity */
 	$handler = elgg_extract('handler', $params, false);
-    
+
     //Nick -Remove empty comment and reply links from river menu
         foreach ($return as $key => $item){
 
@@ -751,16 +786,51 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
             }
 
     }
-    
+
 
 
 
     $entContext = $entity->getType();
     if($entContext == 'object'){
+
         $entContext =  proper_subtypes($entity->getSubtype());//$entity->getSubtype();
+				if($entity->title3){
+						$entName = gc_explode_translation($entity->title3, $lang);
+				}else{
+						$entName = $entity->title;
+				}
+
     } else if($entContext == 'group'){
+
         $entContext = elgg_echo('group');
+				if($entity->title3){
+						$entName = gc_explode_translation($entity->title3, $lang);
+				}else{
+						$entName = $entity->name;
+				}
+
     }
+
+
+		//to hande different retext for wire posts, comments and discussion replies since they do not have titles or names
+		if(in_array($entity->getSubtype(), array('comment', 'discussion_reply', 'thewire'))){
+
+			//get entity owner
+			$ownerName = $entity->getOwnerEntity()->name;
+
+			$shareText = elgg_echo('wire:notitle:share:link', array($entContext, $ownerName));
+			$editText = elgg_echo('entity:notitle:edit:link', array($entContext, $ownerName));
+			$deleteText = elgg_echo('entity:notitle:delete:link', array($entContext, $ownerName));
+			$replyText = elgg_echo('wire:notitle:reply:link', array($entContext, $ownerName));
+		} else {
+			$shareText = elgg_echo('wire:share:link', array($entContext, $entName));
+			$editText = elgg_echo('entity:edit:link', array($entContext, $entName));
+			$deleteText = elgg_echo('entity:delete:link', array($entContext, $entName));
+			$downloadText = elgg_echo('entity:download:link', array($entContext, $entName));
+			$historyText = elgg_echo('entity:history:link', array($entContext, $entName));
+			$lockText = elgg_echo('entity:lock:link', array($entContext, $entName));
+			$unlockText = elgg_echo('entity:unlock:link', array($entContext, $entName));
+		}
 
 
 
@@ -810,7 +880,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
                 //reshare on the wire
                 $options = array(
                     'name' => 'thewire_tools_reshare',
-                    'text' => '<i class="fa fa-share-alt fa-lg icon-unsel"><span class="wb-inv">Share this on the Wire</span></i>',
+                    'text' => '<i class="fa fa-share-alt fa-lg icon-unsel"><span class="wb-inv">'.$shareText.'</span></i>',
                     'title' => elgg_echo('thewire_tools:reshare'),
                     'href' => 'ajax/view/thewire_tools/reshare?reshare_guid=' . $entity->getGUID(),
                     'link_class' => 'elgg-lightbox',
@@ -838,7 +908,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
         if($entity->getSubtype() == 'thewire' && elgg_is_logged_in()){
             $options = array(
                 'name' => 'reply',
-                'text' => '<i class="fa fa-reply fa-lg icon-unsel"><span class="wb-inv">'.elgg_echo('reply').'</span></i>',
+                'text' => '<i class="fa fa-reply fa-lg icon-unsel"><span class="wb-inv">'.$replyText.'</span></i>',
                 'title' => elgg_echo('reply'),
                 'href' => 'ajax/view/thewire_tools/reply?guid=' . $entity->getGUID(),
                 'link_class' => 'elgg-lightbox',
@@ -867,7 +937,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
             if($entity->getSubtype() != 'thewire'){
                 $options = array(
                     'name' => 'edit',
-                    'text' => '<i class="fa fa-edit fa-lg icon-unsel"><span class="wb-inv">' . elgg_echo('edit:this') . '</span></i>',
+                    'text' => '<i class="fa fa-edit fa-lg icon-unsel"><span class="wb-inv">'.$editText.'</span></i>',
                     'title' => elgg_echo('edit:this') . ' ' . $entContext,
                     'href' => "$handler/edit/{$entity->getGUID()}",
                     'priority' => 299,
@@ -880,7 +950,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 
 		$options = array(
 			'name' => 'delete',
-			'text' => '<i class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">' . elgg_echo('delete:this') . '</span></i>',
+			'text' => '<i class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">'.$deleteText.'</span></i>',
 			'title' => elgg_echo('delete:this') . ' ' . $entContext,
 			'href' => "action/$handler/delete?guid={$entity->getGUID()}",
 			'confirm' => elgg_echo('deleteconfirm'),
@@ -899,7 +969,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
         // download link
 		$options = array(
 			'name' => 'download',
-			'text' => '<i class="fa fa-download fa-lg icon-unsel"><span class="wb-inv">Download File</span></i>',
+			'text' => '<i class="fa fa-download fa-lg icon-unsel"><span class="wb-inv">'.$downloadText.'</span></i>',
 			'title' => 'Download File',
 			'href' => "file/download/{$entity->getGUID()}",
 			'priority' => 300,
@@ -909,17 +979,42 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
     }
 
 
-            if($entity->getSubType() == 'page_top'){
+    if($entity->getSubType() == 'page_top'){
                 //history icon
             $options = array(
                 'name' => 'history',
-                'text' => '<i class="fa fa-history fa-lg icon-unsel"><span class="wb-inv">' . elgg_echo('pages:history') . '</span></i>',
+                'text' => '<i class="fa fa-history fa-lg icon-unsel"><span class="wb-inv">' . $historyText . '</span></i>',
                 'title'=> elgg_echo('pages:history'),
                 'href' => "pages/history/$entity->guid",
                 'priority' => 150,
             );
             $return[] = \ElggMenuItem::factory($options);
         }
+
+//opening and close dicussions
+if (elgg_instanceof($entity, "object", "groupforumtopic") && $entity->canEdit() && elgg_is_active_plugin('group_tools')) {
+				$return[] = ElggMenuItem::factory(array(
+					"name" => "status_change_open",
+					"text" => '<i class="fa fa-lock fa-lg icon-unsel"><span class="wb-inv">'.$unlockText.'</span></i>', //elgg_echo("open");,
+					"confirm" => elgg_echo("group_tools:discussion:confirm:open"),
+					"href" => "action/discussion/toggle_status?guid=" . $entity->getGUID(),
+					"is_trusted" => true,
+	                 "title" => "Open the topic",
+					"priority" => 200,
+					"item_class" => ($entity->status == "closed") ? "" : "hidden"
+				));
+				$return[] = ElggMenuItem::factory(array(
+					"name" => "status_change_close",
+					"text" => '<i class="fa fa-unlock fa-lg icon-unsel"><span class="wb-inv">'.$lockText.'</span></i>', //elgg_echo("close");,
+					"confirm" => elgg_echo("group_tools:discussion:confirm:close"),
+					"href" => "action/discussion/toggle_status?guid=" . $entity->getGUID(),
+					"is_trusted" => true,
+	                "title" => "Close the topic",
+					"priority" => 201,
+					"item_class" => ($entity->status == "closed") ? "hidden" : ""
+				));
+
+			}
 
 	return $return;
 }
@@ -974,6 +1069,7 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params){
 		$item = $params['item'];
 		/* @var \ElggRiverItem $item */
 		$object = $item->getObjectEntity();
+		$lang = get_current_language();
 		// add comment link but annotations cannot be commented on
 
 	if (!$object || !$object->canAnnotate(0, 'likes')) {
@@ -995,12 +1091,48 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params){
 
     }
 
-    $entContext = $object->getType();
+		$entContext = $object->getType();
     if($entContext == 'object'){
+
         $entContext =  proper_subtypes($object->getSubtype());//$entity->getSubtype();
+				if($object->title3){
+						$entName = gc_explode_translation($object->title3, $lang);
+				}else{
+						$entName = $object->title;
+				}
+
     } else if($entContext == 'group'){
+
         $entContext = elgg_echo('group');
+				if($object->title3){
+						$entName = gc_explode_translation($object->title3, $lang);
+				}else{
+						$entName = $object->name;
+				}
+
     }
+
+		//to hande different retext for wire posts, comments and discussion replies since they do not have titles or names
+		if(in_array($object->getSubtype(), array('comment', 'discussion_reply', 'thewire'))){
+
+			//get entity owner
+			$ownerName = $object->getOwnerEntity()->name;
+
+			$shareText = elgg_echo('wire:notitle:share:link', array($entContext, $ownerName));
+			$editText = elgg_echo('entity:notitle:edit:link', array($entContext, $ownerName));
+			$deleteText = elgg_echo('entity:notitle:delete:link', array($entContext, $ownerName));
+			$replyText = elgg_echo('wire:notitle:reply:link', array($entContext, $ownerName));
+			$likeText = elgg_echo('entity:notitle:like:link', array($entContext, $ownerName));
+			$unlikeText = elgg_echo('entity:notitle:unlike:link', array($entContext, $ownerName));
+		} else {
+			$shareText = elgg_echo('wire:share:link', array($entContext, $entName));
+			$editText = elgg_echo('entity:edit:link', array($entContext, $entName));
+			$deleteText = elgg_echo('entity:delete:link', array($entContext, $entName));
+			$downloadText = elgg_echo('entity:download:link', array($entContext, $entName));
+			$historyText = elgg_echo('entity:history:link', array($entContext, $entName));
+			$likeText = elgg_echo('entity:like:link', array($entContext, $entName));
+			$unlikeText = elgg_echo('entity:unlike:link', array($entContext, $entName));
+		}
 
 
 	if($entContext != 'user'){
@@ -1011,7 +1143,7 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params){
 		$return[] = ElggMenuItem::factory(array(
 			'name' => 'likes',
 			'href' => elgg_add_action_tokens_to_url("/action/likes/add?guid={$object->guid}"),
-			'text' => '<i class="fa fa-thumbs-up fa-lg icon-unsel"></i><span class="wb-inv">Like This</span>',
+			'text' => '<i class="fa fa-thumbs-up fa-lg icon-unsel"></i><span class="wb-inv">'.$likeText.'</span>',
 			'title' => elgg_echo('likes:likethis') . ' ' . $entContext,
 			'item_class' => $hasLiked ? 'hidden' : '',
 			'priority' => 100,
@@ -1019,7 +1151,7 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params){
 		$return[] = ElggMenuItem::factory(array(
 			'name' => 'unlike',
 			'href' => elgg_add_action_tokens_to_url("/action/likes/delete?guid={$object->guid}"),
-			'text' => '<i class="fa fa-thumbs-up fa-lg icon-sel"></i><span class="wb-inv">Like This</span>',
+			'text' => '<i class="fa fa-thumbs-up fa-lg icon-sel"></i><span class="wb-inv">'.$unlikeText.'</span>',
 			'title' => elgg_echo('likes:remove') . ' ' . $entContext,
 			'item_class' => $hasLiked ? '' : 'hidden',
 			'priority' => 100,
@@ -1045,7 +1177,7 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params){
            } else {
                $return[]= ElggMenuItem::factory(array(
                    'name' => 'thewire_tools_reshare',
-                   'text' => '<i class="fa fa-share-alt fa-lg icon-unsel"><span class="wb-inv">Share this on the Wire</span></i>',
+                   'text' => '<i class="fa fa-share-alt fa-lg icon-unsel"><span class="wb-inv">'.$shareText.'</span></i>',
                    'title' => elgg_echo('thewire_tools:reshare'),
                    'href' => 'ajax/view/thewire_tools/reshare?reshare_guid=' . $object->getGUID(),
                    'link_class' => 'elgg-lightbox',

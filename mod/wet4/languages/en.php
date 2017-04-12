@@ -3,6 +3,38 @@ $site_url = elgg_get_site_url();
 
 return array(
 
+
+    /*
+    More context links - entity/river menus
+    */
+
+    'wire:share:link' => 'Share the %s "%s" on the wire',
+    'wire:reply:link' => 'Reply to this wire post',
+
+    'entity:edit:link' => 'Edit the %s titled "%s"',
+    'entity:delete:link' => 'Delete this %s titled "%s"',
+    'entity:like:link' => 'Like the %s "%s"',
+    'entity:unlike:link' => 'Remove like from %s "%s"',
+    'entity:download:link' => 'Download %s "%s"',
+    'entity:history:link' => 'View history of %s "%s"',
+    'entity:comment:link' => 'Comment on %s "%s"',
+    'entity:lock:link' => 'Close %s "%s"',
+    'entity:unlock:link' => 'Open %s "%s"',
+    'entity:upvote:link' => 'Upvote the idea "%s"',
+    'entity:downvote:link' => 'Downvote the idea "%s"',
+
+    'wire:notitle:reply:link' => 'Reply to %s by %s',
+    'wire:notitle:share:link' => 'Share this %s by %s on the wire',
+    'entity:notitle:edit:link' => 'Edit this %s by %s',
+    'entity:notitle:delete:link' => 'Delete this %s by %s',
+    'entity:notitle:like:link' => 'Like this %s by %s',
+    'entity:notitle:unlike:link' => 'Remove like from this %s by %s',
+
+    'entity:subscribe' => 'Subscribe to this content',
+    'entity:unsubscribe' => 'Unsubscribe from this content',
+
+    'group:share:link' => 'Share this group on the Wire',
+
     'wet:more'=>"More",
   	'breadcrum:home' => 'Home',
 
@@ -1450,7 +1482,7 @@ Please do not reply to this email.",
     'contactform:upload' => 'Upload your file',
     'contactform:title:form' => "Contact Us",
     'contactform:required' => 'required',
- 
+
 	'contactform:box:message' => 'Show the information box',
 	'conatactform:fr:name' => 'Name of the link in french',
 	'conatactform:eng:name' => 'Name of the link in english',
