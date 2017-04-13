@@ -1,7 +1,7 @@
 <?php
 return array(
     /**
-   * 
+   *
    */
      'profile:strength' 	=> 'Profile Strength',
      'error:nope' 		=> 'Please fill in the missing information or click skip to move on to the next step.',
@@ -86,6 +86,11 @@ return array(
     'onboard:welcome:three:description' => "After creating an account on GCconnex, you will be automatically added to the Welcome to GCconnex group. You should take a tour of the group!",
     'onboard:welcome:three:tour' 	=> "Take a tour of this group",
     'onboard:welcome:three:skip' 	=> "Skip tour",
+
+
+    'onboard:welcome:profile:sell:title' => "But wait there's more!",
+    'onboard:welcome:profile:sell:text' => "GCconnex has profile pages like every other online platform ever.",
+    'onboard:welcome:profile:sell:img' => "onboard-welcome-profile-en2.jpg",
 
     /*Step four - groups*/
     //'onboard:groupfeature1'		=> 'I am group col 1',

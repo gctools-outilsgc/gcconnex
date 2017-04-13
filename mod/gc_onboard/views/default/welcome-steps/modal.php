@@ -92,9 +92,9 @@ elgg_load_js('bsTablejs'); //bootstraptable
 
                 <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times fa-lg" aria-hidden="true"></i></button>-->
 
-                <h2 class="pull-left"> <?php echo elgg_echo('onboard:welcome:intro:title'); ?></h2>
+                <h3 class="pull-left mrgn-tp-md"> <?php echo elgg_echo('onboard:welcome:intro:title'); ?></h3>
                 <div class="pull-right">
-                    <?php echo elgg_view('page/elements/step_counter', array('current_step'=>1, 'total_steps'=>5));?>
+                    <?php echo elgg_view('page/elements/step_counter', array('current_step'=>1, 'total_steps'=>6));?>
 
                 </div>
 
