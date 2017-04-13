@@ -146,14 +146,14 @@ $english = array(
 	'cp_newsletter:heading:notify:likes:singular' => "Like received on your content", 
 	'cp_newsletter:heading:notify:likes:plural' => "Likes received on your content", 
 
-	'cp_newsletter:heading:notify:new_post:singular' => "New item has been posted by your colleague",
-	'cp_newsletter:heading:notify:new_post:plural' => "New items has been posted by your colleagues", 
+	'cp_newsletter:heading:notify:new_post:singular' => "New item has been posted by your colleague", 
+	'cp_newsletter:heading:notify:new_post:plural' => "New items have been posted by your colleagues", //CHANGE
 	
 	'cp_newsletter:heading:notify:new_post:group:singular' => "New item has been posted",
-	'cp_newsletter:heading:notify:new_post:group:plural' => "New items has been posted", 
+	'cp_newsletter:heading:notify:new_post:group:plural' => "New items have been posted", //CHANGE
 
 	'cp_newsletter:heading:notify:content_revision:singular' => "Item has been revised", 
-	'cp_newsletter:heading:notify:content_revision:plural' => "Items has been revised", 
+	'cp_newsletter:heading:notify:content_revision:plural' => "Items have been revised", //CHANGE
 
 	'cp_newsletter:heading:notify:cp_mention:singular' => "Person mentioned you.", 	
 	'cp_newsletter:heading:notify:cp_mention:plural' => "People mentioned you.", 
@@ -409,7 +409,7 @@ $english = array(
 	'cp_notify:body_wireshare:title' => "%s shared your %s with title '%s'",
 	'cp_notify:body_wireshare:title2' => "%s shared your %s",
 	//'cp_notify:body_wireshare:description' => "%s has shared your %s on the wire, to view or reply to this please click on the following link: %s",
-	'cp_notify:body_wireshare:description' => "%s has shared your %s on the wire, to view or reply to this please click on the following link: %s",
+	'cp_notify:body_wireshare:description' => "%s shared your %s on the wire, to view or reply to this please click on the following link: %s", //CHANGE
 	'cp_notify:wireshare_thewire:subject' => "%s shared your message on the wire",
 
 	// event calendar section
