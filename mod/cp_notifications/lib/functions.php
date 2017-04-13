@@ -206,7 +206,22 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 		);
 	}
 
+
+
 	switch ($subtype) {
+
+		case 'thewire':
+			$content_array = array(
+				'content_description' => $entity->description,
+				'content_url' => $content_url,
+				'subtype' => $entity->getSubtype(),
+				'content_author_name' => $invoked_by->name,
+				'content_author_url' => $invoked_by->getURL()
+			);
+
+			$digest_collection['personal']['new_post'][$entity->guid] = json_encode($content_array);
+			break;
+
 		case 'mission':
 
 			$content_array = array(
@@ -280,6 +295,16 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 					'content_author_name' => $invoked_by->name,
 					'content_author_url' => $invoked_by->getURL()
 				);
+			} elseif ($entity->getSubtype() === 'thewire') {
+
+				$content_array = array(
+					'content_title' => array('en' => elgg_echo('cp_notifications:mail_body:your_wire_post','en'), 'fr' => elgg_echo('cp_notifications:mail_body:your_wire_post','fr')),
+					'content_url' =>  $entity->getURL(),
+					'subtype' => $entity->getSubtype(),
+					'content_author_name' => $invoked_by->name,
+					'content_author_url' => $invoked_by->getURL()
+				);
+
 			} else {
 
 				$content_array = array(
@@ -485,6 +510,7 @@ function userOptedIn( $user_obj, $mission_type ) {
     $boolSubtype = ($language_preference === 'fr') ? false : true;
     $subtype = cp_translate_subtype($subtype, $boolSubtype);
 
+
     if ($content_array['deadline']) {
 
        $content_title = (is_array($content_array['content_title'])) ? $content_array['content_title'][$language_preference] : $content_array['content_title'];
@@ -497,9 +523,18 @@ function userOptedIn( $user_obj, $mission_type ) {
 
 
     } elseif ($heading === 'cp_wire_share') {
-   	  $content_title = (is_array($content_array['content_title'])) ? $content_array['content_title'][$language_preference] : $content_array['content_title'];
-      $url = "<a href='{$content_array['content_url']}'>{$content_title}</a>";
-      $rendered_content = elgg_echo("cp_notifications:mail_body:subtype:content_share", array($author, $subtype, $url), $language_preference);
+
+    	if ($subtype === 'The Wire') {
+
+			$content_title = (is_array($content_array['content_title'])) ? $content_array['content_title'][$language_preference] : $content_array['content_title'];
+			$url = "<a href='{$content_array['content_url']}'> ".elgg_echo('cp_notifications:mail_body:your_wire_post', $language_preference)." </a>";
+			$rendered_content = elgg_echo("cp_notifications:mail_body:subtype:content_share:wire", array($author, $url), $language_preference);
+    	} else {
+
+			$content_title = (is_array($content_array['content_title'])) ? $content_array['content_title'][$language_preference] : $content_array['content_title'];
+			$url = "<a href='{$content_array['content_url']}'>{$content_title}</a>";
+			$rendered_content = elgg_echo("cp_notifications:mail_body:subtype:content_share", array($author, $subtype, $url), $language_preference);
+    	}
 
 	} elseif ($heading === 'cp_mention') {
 
@@ -537,14 +572,16 @@ function userOptedIn( $user_obj, $mission_type ) {
       $url = "<a href='{$content_array['content_url']}'>{$content_title}</a>";
       $rendered_content = elgg_echo("cp_notifications:mail_body:subtype:{$heading}", array($author, $subtype, $url), $language_preference);
 
-    } elseif ($content_array['subtype'] === 'thewire') {
-      $url = "<a href='{$content_array['content_url']}'>".elgg_echo('cp_notifications:subtype:name:thewire', $language_preference)."</a>";
+    } elseif ($content_array['subtype'] === 'thewire' && $heading !== 'likes') {
+
+      $url = elgg_echo('cp_notifications:subtype:name:thewire', $language_preference)." : <a href='{$content_array['content_url']}'>".$content_array['content_description']."</a>";
       $rendered_content = elgg_echo("cp_notifications:mail_body:subtype:{$content_array['subtype']}", array($author, $url), $language_preference);
 
 
-    } elseif ($heading === 'likes') {
+    } elseif (strcmp($heading, "likes") === 0) {
 
       $content_title = (is_array($content_array['content_title'])) ? $content_array['content_title'][$language_preference] : $content_array['content_title'];
+      if ($content_title == '') $content_title = elgg_echo('cp_notifications:mail_body:your_wire_post',$language_preference);
 
       $url = "<a href='{$content_array['content_url']}'>{$content_title}</a>";
       $rendered_content = elgg_echo("cp_notifications:mail_body:subtype:{$heading}", array($author, $url), $language_preference);
@@ -557,6 +594,8 @@ function userOptedIn( $user_obj, $mission_type ) {
       $rendered_content = elgg_echo("cp_notifications:mail_body:subtype:{$heading}", array($author, $url), $language_preference);
 
     } else {
+
+
       // limit 35 characters
       if (is_array($content_array['content_title']))
         $content_title = $content_array['content_title'][$language_preference];

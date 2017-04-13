@@ -75,6 +75,8 @@ $english = array(
 	'cp_notifications:mail_body:subtype:wire_mention' => "%s mentioned you on the %s",
 
 	'cp_notifications:mail_body:subtype:content_share' => "%s shared your %s: %s", 
+	'cp_notifications:mail_body:subtype:content_share:wire' => "%s shared your %s",
+	'cp_notifications:mail_body:your_wire_post' => "Wire post",
 
 	'cp_newsletter:other_content:notice' => "These subscriptions are only for content items that are not part of a group", 
 
@@ -111,7 +113,7 @@ $english = array(
  	'cp_notifications:heading:personal_section'=>'Personal Notifications',
     'cp_notifications:heading:colleague_section'=>'Colleague Notifications',
     'cp_notifications:heading:group_section' => 'Group Notifications',
- 	'cp_notifications:heading:nonGroup_section' => 'Other Content Subscriptions', //CHANGE 3
+ 	'cp_notifications:heading:nonGroup_section' => 'Other Content Subscriptions',
 
 	'cp_notifications:subtype:name:thewire' => "Wire",
 	

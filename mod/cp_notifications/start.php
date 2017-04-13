@@ -709,11 +709,13 @@ function cp_create_annotation_notification($event, $type, $object) {
 		    		$liked_by = get_user($object->owner_guid); // get user who liked content
 		    		$content = get_entity($object->entity_guid);
 
+		    		$content_entity = $content;
 		    		$author = $liked_by;
 		    		// cyu - patching issue #323 (liking wire post)
 		    		if ($content->getSubtype() === 'thewire') {
 		    			$subject = elgg_echo('cp_notify:subject:likes_wire',array($liked_by->name,$content->title),'en') . ' | ' . elgg_echo('cp_notify:subject:likes_wire',array($liked_by->name,$content->title),'fr');
 		    			$content_subtype = 'thewire';
+
 		    		} else {
 		    			$subject = elgg_echo('cp_notify:subject:likes',array($liked_by->name,$content->title),'en') . ' | ' . elgg_echo('cp_notify:subject:likes',array($liked_by->name,$content->title),'fr');
 		    			$content_subtype = '';
@@ -1266,18 +1268,18 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 				$template = elgg_view('cp_notifications/newsletter_template_empty', array('to' => $to));
 
 
-			if (elgg_is_active_plugin('phpmailer'))
+			/*if (elgg_is_active_plugin('phpmailer'))
 				phpmailer_send($to->email, $to->name, $subject, $template, NULL, true );
 			else
 				mail($to->email, $subject, $template, cp_get_headers());
-
+*/
 
 
 			//echo $template;
 			echo "<p>Digest sent to user email: {$to->email} ({$to->guid})</p>";
 
 			//echo "<br/><br/>";
-			//echo $template;
+			echo $template;
 
 			// TODO: authenticate cronjobs - since crons dont have a valid admin login, thhis portion fails
 			// temporarily strip the access

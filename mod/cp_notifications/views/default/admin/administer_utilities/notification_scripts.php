@@ -136,6 +136,9 @@ $body .= "<div style='padding-top:10px; padding-bottom:10px;'>";
 $body .= "</div>";
 $body .= '</fieldset>';
 
+
+
+/*
 $body .= "<br/>";
 $body .= '<fieldset class="elgg-fieldset" id="elgg-settings-advanced-system" style="padding-top:5px; padding-bottom:10px;">';
 $body .= "<legend>Run to enable all users on site to use the Notification Digest</legend>";
@@ -162,7 +165,7 @@ $body .= "<div style='padding-top:10px; padding-bottom:10px;'>";
 
 $body .= "</div>";
 $body .= '</fieldset>';
-
+*/
 
 
 echo elgg_view_module('main', $title, $body);

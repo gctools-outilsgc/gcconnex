@@ -20,7 +20,7 @@ if($info_type == 'msg_dd'){
   $type = 'notif';
   //Nick - add a notifications setting link
   $settings_link = elgg_view('output/url', array(
-    'href'=>elgg_get_site_url().'settings/plugins/'.get_entity($user)->username.'/cp_notifications',
+    'href'=>elgg_get_site_url().'settings/notifications/'.get_entity($user)->username,
     'text'=>'<i class="fa fa-cog fa-lg icon-unsel"><span class="wb-inv">Settings</span></i>',
   ));
   $title = elgg_echo('notifications:subscriptions:changesettings');
