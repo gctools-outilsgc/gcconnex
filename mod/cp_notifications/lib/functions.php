@@ -331,8 +331,11 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 			if (!is_array($digest_collection['personal']['cp_wire_share']))
 				$digest_collection['personal']['cp_wire_share'] = array();
 
+			$content_title = $entity->title;
+			if (!$entity->title) $content_title = $entity->description;
+
 			$content_array = array(
-				'content_title' => $entity->title,
+				'content_title' => $content_title,
 				'content_url' => $entity->getURL(),
 				'subtype' => $entity->getSubtype(),
 				'content_author_name' => $invoked_by->name,
@@ -524,17 +527,10 @@ function userOptedIn( $user_obj, $mission_type ) {
 
     } elseif ($heading === 'cp_wire_share') {
 
-    	if ($subtype === 'The Wire') {
-
-			$content_title = (is_array($content_array['content_title'])) ? $content_array['content_title'][$language_preference] : $content_array['content_title'];
-			$url = "<a href='{$content_array['content_url']}'> ".elgg_echo('cp_notifications:mail_body:your_wire_post', $language_preference)." </a>";
-			$rendered_content = elgg_echo("cp_notifications:mail_body:subtype:content_share:wire", array($author, $url), $language_preference);
-    	} else {
-
 			$content_title = (is_array($content_array['content_title'])) ? $content_array['content_title'][$language_preference] : $content_array['content_title'];
 			$url = "<a href='{$content_array['content_url']}'>{$content_title}</a>";
 			$rendered_content = elgg_echo("cp_notifications:mail_body:subtype:content_share", array($author, $subtype, $url), $language_preference);
-    	}
+    	
 
 	} elseif ($heading === 'cp_mention') {
 
