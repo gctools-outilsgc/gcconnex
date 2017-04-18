@@ -25,15 +25,15 @@
         <?php
 
         $tour = elgg_view('output/url',array(
-            'text'=>'Go to profile walkthrough',
+            'text'=> elgg_echo('onboard:welcome:profile:walkthrough'),
             'href'=>elgg_get_site_url().'profileonboard',
-            'class'=>'btn btn-primary',
+            'class'=>'btn btn-primary got-it',
         ));
 
         $profile = elgg_view('output/url',array(
-            'text'=>'Visit your profile',
+            'text'=> elgg_echo('onboard:welcome:profile:visit'),
             'href'=>elgg_get_site_url().'profile/'.elgg_get_logged_in_user_entity()->username,
-            'class'=>'btn btn-default',
+            'class'=>'btn btn-default got-it',
         ));
 
 
@@ -44,7 +44,7 @@
         </div>
 
         <div class="mrgn-tp-md mrgn-bttm-md">
-          <p>You can also just get to things and not worry about that stuff right now by clicking done below.</p>
+          <p><?php echo elgg_echo('onboard:welcome:profile:sell:moveon'); ?></p>
         </div>
 
     </div>

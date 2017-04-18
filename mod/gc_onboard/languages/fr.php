@@ -101,6 +101,14 @@ return array(
     'onboard:profile:intro:description' => "Votre profil permet aux autres de savoir qui vous êtes et ce que vous faites. Il peut vous aider à tisser des liens solides et sert de CV en ligne. Les renseignements de votre profil peuvent être changés ultérieurement à partir de la page de profil.",
     'onboard:profile:intro:start' 	=> "Bâtir mon profil",
 
+
+    'onboard:welcome:profile:sell:title' => "But wait there's more!",
+    'onboard:welcome:profile:sell:text' => "GCconnex has profile pages like every other online platform ever.",
+    'onboard:welcome:profile:sell:moveon' => "You can also just get to things and not worry about that stuff right now by clicking done below.",
+    'onboard:welcome:profile:sell:img' => "onboard-welcome-profile-en2.jpg",
+    'onboard:welcome:profile:walkthrough' => 'Go to profile walkthrough',
+    'onboard:welcome:profile:visit' => 'Visit your profile',
+
     /*Step 1 - basic information/geds */
     'onboard:profile:one:title' 	=> "Dites-nous qui vous êtes",
 
@@ -164,5 +172,5 @@ return array(
     'onboard:groups:trackerButton' 	=> 'Aller au fil de nouvelles',
 
     );
-    
+
     //add_translation("fr", $french);

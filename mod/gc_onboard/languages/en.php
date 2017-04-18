@@ -90,7 +90,10 @@ return array(
 
     'onboard:welcome:profile:sell:title' => "But wait there's more!",
     'onboard:welcome:profile:sell:text' => "GCconnex has profile pages like every other online platform ever.",
+    'onboard:welcome:profile:sell:moveon' => "You can also just get to things and not worry about that stuff right now by clicking done below.",
     'onboard:welcome:profile:sell:img' => "onboard-welcome-profile-en2.jpg",
+    'onboard:welcome:profile:walkthrough' => 'Go to profile walkthrough',
+    'onboard:welcome:profile:visit' => 'Visit your profile',
 
     /*Step four - groups*/
     //'onboard:groupfeature1'		=> 'I am group col 1',
