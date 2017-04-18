@@ -30,7 +30,7 @@ $mission_guid = $_SESSION['mission_that_invites'];
 // Creates a gray background if the user is not opted in to micro missions.
 $background_content = '';
 if(!check_if_opted_in($user)) {
-	$background_content = 'style="background-color:#fafafa;"';
+	$background_content = 'style="border:1px solid #ffffff;"';
 }
 
 $user_link = elgg_view('output/url', array(
@@ -47,7 +47,7 @@ if($feedback_string != '') {
     
     foreach($feedback_array as $feedback) {
         if($feedback) {
-            $feedback_content .= '<div class="mrgn-lft-sm" name="search-feedback-' . $count . '">' . $feedback . '</div>';
+            $feedback_content .= '<div class="" name="search-feedback-' . $count . '">' . $feedback . '</div>';
         }
         $count++;
     }
@@ -118,7 +118,7 @@ else {
 <div class="clearfix panel panel-default" <?php echo $background_content; ?>>
 	<div class="col-xs-12 user-info-content clearfix">
 		<div class="col-xs-12 user-avatar">
-			<?php echo elgg_view_entity_icon($user, 'large'); ?>
+			<?php echo elgg_view_entity_icon($user, 'medium'); ?>
 		</div>
 		<div class="col-xs-12">
 			<h3 name="user-name" class="mrgn-tp-sm"><?php echo $user_link; ?></h3>
@@ -127,7 +127,9 @@ else {
 		</div>
 	
 	<div class="col-xs-12">
-		<?php echo $feedback_content; ?>
+        <div class="user-found-by">
+            <?php echo $feedback_content; ?>
+        </div>
 	</div>
     </div>
     <div class="user-button-content">

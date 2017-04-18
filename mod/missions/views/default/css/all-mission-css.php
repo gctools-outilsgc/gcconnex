@@ -408,8 +408,8 @@ color: #055959;
     margin-top: -40px;
 }
 
-.candidate-panel .user-avatar .elgg-avatar-large-wet4{
-    width:45%;
+.candidate-panel .user-avatar .elgg-avatar-medium-wet4{
+    width:40% !important;
     margin: 0 auto;
     display:block !important;
 }
@@ -432,4 +432,21 @@ color: #055959;
     white-space: nowrap;
     overflow-x: hidden;
     display:block;
+}
+
+.candidate-panel .user-location{
+    margin-bottom: 1px;
+    max-width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-x: hidden;
+    display:block;
+}
+
+.candidate-panel .user-found-by{
+    max-width:100%;
+    text-overflow:ellipsis;
+    overflow-x: hidden;
+    display:block;
+    height: 115px;
 }
