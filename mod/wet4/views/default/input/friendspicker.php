@@ -183,7 +183,7 @@ if (!isset($vars['replacement'])) {
 
 				if (in_array($friend->getGUID(),$vars['value'])) {
 					$checked = "checked = \"checked\"";
-                    $checkedValues .= '<input type="checkbox"' . $checked . 'name="' . $name . '1[]" id="' . $name . '1[]" value="' . $options[$label] . '" />';
+                    $checkedValues .= '<input type="checkbox"' . $checked . 'name="' . $name . '[]" id="' . $name . '[]" value="' . $options[$label] . '" />';
 					if (!in_array($letter,$activeletters) && $vars['highlight'] == 'default') {
 						$activeletters[] = $letter;
 					}
@@ -302,7 +302,7 @@ if ($formtarget) {
                             //dont want duplicate values stored
                             if (check == false) {
                                 $(this).clone().attr('checked', 'checked').appendTo('#storedArea');
-                                $('#group_tools_mail_recipients').html($('#storedArea input[name="user_guids1[]"]').length);
+                                $('#group_tools_mail_recipients').html($('#storedArea input[name="user_guids[]"]').length);
                             }
 
                             return;
@@ -372,8 +372,8 @@ else {
 
                             //dont want duplicate values stored
                             if (check == false) {
-                                //$(this).clone().attr('checked', 'checked').appendTo('#storedArea');
-                                $('#group_tools_mail_recipients').html($('#storedArea input[name="user_guids1[]"]').length);
+                                $(this).clone().attr('checked', 'checked').appendTo('#storedArea');
+                                $('#group_tools_mail_recipients').html($('#storedArea input[name="user_guids[]"]').length);
                             }
 
                             return;
