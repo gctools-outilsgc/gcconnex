@@ -92,6 +92,7 @@ return array(
     'onboard:welcome:profile:sell:text' => "GCconnex has profile pages like every other online platform ever.",
     'onboard:welcome:profile:sell:moveon' => "You can also just get to things and not worry about that stuff right now by clicking done below.",
     'onboard:welcome:profile:sell:img' => "onboard-user-card.jpg",
+    'onboard:welcome:profile:sell:img:alt' => "Reach your profile through the user menu.",
     'onboard:welcome:profile:walkthrough' => 'Go to profile walkthrough',
     'onboard:welcome:profile:visit' => 'Visit your profile',
 
