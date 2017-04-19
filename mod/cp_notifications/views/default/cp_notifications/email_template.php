@@ -186,7 +186,7 @@ switch ($msg_type) {
 
 		break;
 
-
+	case 'new_mission':
 	case 'cp_new_type': // new blogs or other entities
 
 		$entity_m = array(
