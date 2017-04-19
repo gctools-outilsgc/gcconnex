@@ -91,7 +91,7 @@ return array(
     'onboard:welcome:profile:sell:title' => "But wait there's more!",
     'onboard:welcome:profile:sell:text' => "GCconnex has profile pages like every other online platform ever.",
     'onboard:welcome:profile:sell:moveon' => "You can also just get to things and not worry about that stuff right now by clicking done below.",
-    'onboard:welcome:profile:sell:img' => "onboard-welcome-profile-en2.jpg",
+    'onboard:welcome:profile:sell:img' => "onboard-user-card.jpg",
     'onboard:welcome:profile:walkthrough' => 'Go to profile walkthrough',
     'onboard:welcome:profile:visit' => 'Visit your profile',
 
@@ -128,6 +128,7 @@ return array(
     'onboard:profile:skill:why' 	=> "We will use this information to add &ldquo;Skills&rdquo; to your profile.",
     'onboard:profile:recommendation' 	=> "You can have a total of 15 skills. We recommend adding at least 3 skills.",
     'onboard:profile:addSkill' 		=> "Click to add %s skill",
+    'onboard:profile:skill:of' 		=> "%s of 15",
 
     'onboard:skills:headsup' 		=> "Heads up!",
     'onboard:skills:headsuplimit' 	=> "You have reached your skill limit!",
