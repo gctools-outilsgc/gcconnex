@@ -35,6 +35,13 @@ return array(
 
     'group:share:link' => 'Share this group on the Wire',
 
+    'friend_request:approve' => 'Accept<span class="wb-inv"> %s\'s friend request</span>',
+    'friend_request:decline' => 'Decline <span class="wb-inv"> %s\'s friend request</span>',
+    'friend_request:revoke' => 'Revoke <span class="wb-inv">sent friend request to %s </span>',
+
+    'group:accept:invitation' => 'Accept<span class="wb-inv">group invite to "%s"</span>',
+    'group:decline:invitation' => 'Decline<span class="wb-inv">group invite to "%s"</span>',
+
     'wet:more'=>"More",
   	'breadcrum:home' => 'Home',
 
