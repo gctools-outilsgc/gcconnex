@@ -76,9 +76,6 @@ if ($entity) {
 	}
 }
 ?>
-<script>
-	init_groupmem();
-</script>
 <div>
 	<label for="groups-content-access-mode"><?php echo elgg_echo("groups:content_access_mode"); ?></label><br />
 	<?php

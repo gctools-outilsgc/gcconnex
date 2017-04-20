@@ -83,6 +83,22 @@ $(document).ready(function() {
     
     });
 
+
+    var getCursorPosition = function(el) {
+        var pos = 0;
+
+        if ('selectionStart' in el) {
+            pos = el.selectionStart;
+        } else if ('selection' in document) {
+            el.focus();
+            var Sel = document.selection.createRange();
+            var SelLength = document.selection.createRange().text.length;
+            Sel.moveStart('character', - el.value.length);
+            pos = Sel.text.length - SelLength;
+        }
+
+        return pos;
+    };
     
     var handleResponse_groupmem = function (json) {
         var userOptions = '';
@@ -152,9 +168,9 @@ $(document).ready(function() {
             current = current.replace('@', '');
             //$('#mentions-popup').removeClass('hidden');
 
-            var options = {success: handleResponse};
+            var options = {success: handleResponse_groupmem};
 
-            elgg.get(elgg.config.wwwroot + 'livesearch?q=' + current + '&match_on=groupmems', options);
+            elgg.get(elgg.config.wwwroot + 'livesearch?q=' + current + '&g=' + elgg.get_page_owner_guid() + '&match_on=groupmems', options);
         } else {
             $('#mentions-popup > .panel-body').html('<div class="elgg-ajax-loader"></div>');
             $('#mentions-popup').addClass('hidden');
@@ -166,8 +182,9 @@ $(document).ready(function() {
         var textarea;
         var content;
         var position;
+//        elgg = require('elgg');
         
-        $('owner_guid').bind('keyup', function(e) {
+        $('#groups-owner-guid').bind('keyup', function(e) {
 
             // Hide on backspace and enter
             if (e.which == 8 || e.which == 13) {
@@ -177,7 +194,9 @@ $(document).ready(function() {
                 textarea = $(this);
                 content = $(this).val();
                 position = getCursorPosition(this);
-                autocomplete(content, position);
+                autocomplete_groupmem(content, position);
             }
         });
     };
+
+    elgg.register_hook_handler('init', 'system', init_groupmem, 9999);
