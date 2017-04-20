@@ -439,7 +439,7 @@ max-height: 500px;
     }
 
 .icon-unsel{
-    color: #a0a0a0;
+    color: #919191;
 }
 
 .icon-unsel:hover{
@@ -451,7 +451,7 @@ max-height: 500px;
 }
 
 .icon-sel:hover{
-    color: #b6b6b6;
+    color: #919191;
 }
 
     .unread-custom span {
@@ -1655,7 +1655,7 @@ figcaption{
 }
 
 .indicator_summary{
-  color:#D6D6D6;
+  color:#6D6D6D;
   font-size: 12px
 }
 
