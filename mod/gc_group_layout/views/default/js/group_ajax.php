@@ -83,7 +83,7 @@ $(document).ready(function() {
     
     });
 
-
+var textarea;
     var getCursorPosition = function(el) {
         var pos = 0;
 
@@ -103,7 +103,7 @@ $(document).ready(function() {
     var handleResponse_groupmem = function (json) {
         var userOptions = '';
         $(json).each(function(key, user) {
-            userOptions += '<li tabIndex="0" data-username="' + user.desc + '">' + user.icon + user.name + "</li>";
+            userOptions += '<li tabIndex="0" data-username="' + user.desc + '" data-guid="' + user.guid + '">' + user.icon + user.name + "</li>";
         });
 
         if (!userOptions) {
@@ -119,14 +119,14 @@ $(document).ready(function() {
         $('.mentions-autocomplete > li').bind('click', function(e) {
             e.preventDefault();
 
-            var username = $(this).data('username');
+            var username = $(this).data('guid');
 
             // Remove the partial @username string from the first part
-            newBeforeMention = beforeMention.substring(0, position - current.length);
+            //newBeforeMention = beforeMention.substring(0, position - current.length);
 
             // Add the complete @username string and the rest of the original
             // content after the first part
-            var newContent = newBeforeMention + username + afterMention;
+            var newContent = username;
 
             // Set new content for the textarea
                 $(textarea).val(newContent);
@@ -142,14 +142,14 @@ $(document).ready(function() {
 
                 e.preventDefault();
                 if (e.keyCode == 13) {
-                var username = $(this).data('username');
+                var username = $(this).data('guid');
 
                 // Remove the partial @username string from the first part
-                newBeforeMention = beforeMention.substring(0, position - current.length);
+                //newBeforeMention = beforeMention.substring(0, position - current.length);
 
                 // Add the complete @username string and the rest of the original
                 // content after the first part
-                var newContent = newBeforeMention + username + afterMention;
+                var newContent = username;
 
                 $(textarea).val(newContent).focus();
 
@@ -179,7 +179,7 @@ $(document).ready(function() {
 
     var init_groupmem = function() {
         console.log("test");
-        var textarea;
+        
         var content;
         var position;
 //        elgg = require('elgg');
