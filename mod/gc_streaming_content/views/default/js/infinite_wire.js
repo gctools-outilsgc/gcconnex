@@ -35,33 +35,7 @@
 		}
 
 		// Returns an array of the ids of all loaded posts
-		var getCurrentPosts = function() {var Util = {
-			log: function() {
-				var args = [].slice.call(arguments);
-				args.unshift('%c' + SCRIPT_NAME + ':', 'font-weight: bold;color: #233c7b;');
-				console.log.apply(console, args);
-			},
-			q: function(query, context) {
-				return (context || document).querySelector(query);
-			},
-			qq: function(query, context) {
-				return [].slice.call((context || document).querySelectorAll(query));
-			}
-		};
-
-		var wireContent = Util.q('#wb-cont > ul.elgg-list');
-
-		var extractId = function(elem) {
-			var regex = /^elgg\-object\-(\d+)$/
-			return parseInt(elem.id.match(regex)[1])
-		}
-
-		// Returns an array of the ids of all loaded posts
 		var getCurrentPosts = function() {
-			return Util.qq('.elgg-item-object-thewire', wireContent).map(function(elem) {
-				return extractId(elem);
-			});
-		};
 			return Util.qq('.elgg-item-object-thewire', wireContent).map(function(elem) {
 				return extractId(elem);
 			});
