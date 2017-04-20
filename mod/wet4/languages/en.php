@@ -8,27 +8,108 @@ return array(
     More context links - entity/river menus
     */
 
-    'wire:share:link' => 'Share the %s "%s" on the wire',
-    'wire:reply:link' => 'Reply to this wire post',
+    'entity:like:link:page_top' => 'like %s',
+    'entity:unlike:link:page_top' => 'unlike %s',
+    'entity:edit:link:page_top' => 'edit %s',
+    'entity:delete:link:page_top' => 'delete %s',
+    'entity:share:link:page_top' => 'share %s',
+    'entity:history:link:page_top' => 'history %s',
 
-    'entity:edit:link' => 'Edit the %s titled "%s"',
-    'entity:delete:link' => 'Delete this %s titled "%s"',
-    'entity:like:link' => 'Like the %s "%s"',
-    'entity:unlike:link' => 'Remove like from %s "%s"',
-    'entity:download:link' => 'Download %s "%s"',
-    'entity:history:link' => 'View history of %s "%s"',
-    'entity:comment:link' => 'Comment on %s "%s"',
-    'entity:lock:link' => 'Close %s "%s"',
-    'entity:unlock:link' => 'Open %s "%s"',
-    'entity:upvote:link' => 'Upvote the idea "%s"',
-    'entity:downvote:link' => 'Downvote the idea "%s"',
+    'entity:like:link:page' => 'like %s',
+    'entity:unlike:link:page' => 'unlike %s',
+    'entity:edit:link:page' => 'edit %s',
+    'entity:delete:link:page' => 'delete %s',
+    'entity:share:link:page' => 'share %s',
+    'entity:history:link:page' => 'history %s',
 
-    'wire:notitle:reply:link' => 'Reply to %s by %s',
-    'wire:notitle:share:link' => 'Share this %s by %s on the wire',
-    'entity:notitle:edit:link' => 'Edit this %s by %s',
-    'entity:notitle:delete:link' => 'Delete this %s by %s',
-    'entity:notitle:like:link' => 'Like this %s by %s',
-    'entity:notitle:unlike:link' => 'Remove like from this %s by %s',
+    'entity:like:link:thewire' => 'like %s',
+    'entity:unlike:link:thewire' => 'unlike %s',
+    'entity:edit:link:thewire' => 'edit %s',
+    'entity:delete:link:thewire' => 'delete %s',
+    'entity:share:link:thewire' => 'share %s',
+    'entity:reply:link:thewire' => 'reply %s',
+
+    'entity:like:link:blog' => 'like %s',
+    'entity:unlike:link:blog' => 'unlike %s',
+    'entity:edit:link:blog' => 'edit %s',
+    'entity:delete:link:blog' => 'delete %s',
+    'entity:share:link:blog' => 'share %s',
+    'entity:comment:link:blog' => 'comment %s',
+
+    'entity:like:link:comment' => 'like %s',
+    'entity:unlike:link:comment' => 'unlike %s',
+    'entity:edit:link:comment' => 'edit %s',
+    'entity:delete:link:comment' => 'delete %s',
+
+    'entity:like:link:groupforumtopic' => 'like %s',
+    'entity:unlike:link:groupforumtopic' => 'unlike %s',
+    'entity:edit:link:groupforumtopic' => 'edit %s',
+    'entity:delete:link:groupforumtopic' => 'delete %s',
+    'entity:share:link:groupforumtopic' => 'share %s',
+    'entity:lock:link:groupforumtopic' => 'lock %s',
+    'entity:unlock:link:groupforumtopic' => 'unlock %s',
+
+    'entity:like:link:discussion_reply' => 'like %s',
+    'entity:unlike:link:discussion_reply' => 'unlike %s',
+    'entity:edit:link:discussion_reply' => 'edit %s',
+    'entity:delete:link:discussion_reply' => 'delete %s',
+
+    'entity:like:link:file' => 'like %s',
+    'entity:unlike:link:file' => 'unlike %s',
+    'entity:edit:link:file' => 'edit %s',
+    'entity:delete:link:file' => 'delete %s',
+    'entity:share:link:file' => 'share %s',
+    'entity:download:link:file' => 'download %s',
+
+    'entity:like:link:folder' => 'like %s',
+    'entity:unlike:link:folder' => 'unlike %s',
+    'entity:edit:link:folder' => 'edit %s',
+    'entity:delete:link:folder' => 'delete %s',
+    'entity:share:link:folder' => 'share %s',
+
+    'entity:like:link:event_calendar' => 'like %s',
+    'entity:unlike:link:event_calendar' => 'unlike %s',
+    'entity:edit:link:event_calendar' => 'edit %s',
+    'entity:delete:link:event_calendar' => 'delete %s',
+    'entity:share:link:event_calendar' => 'share %s',
+
+    'entity:like:link:bookmarks' => 'like %s',
+    'entity:unlike:link:bookmarks' => 'unlike %s',
+    'entity:edit:link:bookmarks' => 'edit %s',
+    'entity:delete:link:bookmarks' => 'delete %s',
+    'entity:share:link:bookmarks' => 'share %s',
+
+    'entity:like:link:poll' => 'like %s',
+    'entity:unlike:link:poll' => 'unlike %s',
+    'entity:edit:link:poll' => 'edit %s',
+    'entity:delete:link:poll' => 'delete %s',
+    'entity:share:link:poll' => 'share %s',
+
+    'entity:like:link:album' => 'like %s',
+    'entity:unlike:link:album' => 'unlike %s',
+    'entity:edit:link:album' => 'edit %s',
+    'entity:delete:link:album' => 'delete %s',
+    'entity:share:link:album' => 'share %s',
+
+    'entity:like:link:image' => 'like %s',
+    'entity:unlike:link:image' => 'unlike %s',
+    'entity:edit:link:image' => 'edit %s',
+    'entity:delete:link:image' => 'delete %s',
+    'entity:share:link:image' => 'share %s',
+
+    'entity:like:link:idea' => 'like %s',
+    'entity:unlike:link:idea' => 'unlike %s',
+    'entity:edit:link:idea' => 'edit %s',
+    'entity:delete:link:idea' => 'delete %s',
+    'entity:share:link:idea' => 'share %s',
+    'entity:upvote:link:idea' => 'upvote %s',
+    'entity:downvote:link:idea' => 'downvote %s',
+
+    'entity:like:link:group' => 'like %s',
+    'entity:unlike:link:group' => 'unlike %s',
+    'entity:edit:link:group' => 'edit %s',
+    'entity:delete:link:group' => 'delete %s',
+    'entity:share:link:group' => 'share %s',
 
     'entity:subscribe' => 'Subscribe to this content',
     'entity:unsubscribe' => 'Unsubscribe from this content',
@@ -41,6 +122,10 @@ return array(
 
     'group:accept:invitation' => 'Accept<span class="wb-inv">group invite to "%s"</span>',
     'group:decline:invitation' => 'Decline<span class="wb-inv">group invite to "%s"</span>',
+
+
+
+    ////
 
     'wet:more'=>"More",
   	'breadcrum:home' => 'Home',
