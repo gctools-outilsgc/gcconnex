@@ -212,6 +212,18 @@ function input_livesearch_page_handler($page) {
 	// replace mysql vars with escaped strings
 	$q = str_replace(array('_', '%'), array('\_', '\%'), $q);
 
+// for the group members search: group guid - should be numeric
+	if (!$g = get_input('term', get_input('g'))) {
+		exit;
+	}
+
+	$input_name = get_input('name', 'members');
+
+	$g = sanitise_string($g);
+
+	// replace mysql vars with escaped strings
+	$g = str_replace(array('_', '%'), array('\_', '\%'), $g);
+
 	$match_on = get_input('match_on', 'all');
 
 	if (!is_array($match_on)) {
@@ -333,12 +345,11 @@ function input_livesearch_page_handler($page) {
 				break;
 
 			case 'friends':
-				$group = get_input('groupid');
 				$options = array(
 					'type' => 'user',
 					'limit' => $limit,
 					'relationship' => 'friend',
-					'relationship_guid' => $group,
+					'relationship_guid' => $user->getGUID(),
 					'joins' => array("JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid"),
 					'wheres' => array(
 						"ue.banned = 'no'",
@@ -385,7 +396,8 @@ function input_livesearch_page_handler($page) {
 					'type' => 'user',
 					'limit' => $limit,
 					'relationship' => 'member',
-					'relationship_guid' => $user->getGUID(),
+					'relationship_guid' => $g,
+					'inverse_relationship' => true,
 					'joins' => array("JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid"),
 					'wheres' => array(
 						"ue.banned = 'no'",
