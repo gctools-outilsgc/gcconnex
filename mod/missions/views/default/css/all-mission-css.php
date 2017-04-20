@@ -448,5 +448,5 @@ color: #055959;
     text-overflow:ellipsis;
     overflow-x: hidden;
     display:block;
-    height: 115px;
+    white-space: nowrap;
 }

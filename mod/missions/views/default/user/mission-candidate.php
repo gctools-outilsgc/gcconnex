@@ -47,7 +47,7 @@ if($feedback_string != '') {
     
     foreach($feedback_array as $feedback) {
         if($feedback) {
-            $feedback_content .= '<div class="" name="search-feedback-' . $count . '">' . $feedback . '</div>';
+            $feedback_content .= '<div class="user-found-by" name="search-feedback-' . $count . '">' . $feedback . '</div>';
         }
         $count++;
     }
@@ -127,7 +127,7 @@ else {
 		</div>
 	
 	<div class="col-xs-12">
-        <div class="user-found-by">
+        <div class="">
             <?php echo $feedback_content; ?>
         </div>
 	</div>

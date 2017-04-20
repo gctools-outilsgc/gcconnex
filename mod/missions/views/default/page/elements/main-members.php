@@ -19,7 +19,7 @@ $_SESSION['mission_search_switch'] = 'candidate';
 
 $result_set = array();
 $offset = (int) get_input('offset', 0);
-$entities_per_page = max($_SESSION['candidate_entities_per_page'], 12);
+$entities_per_page = max($_SESSION['candidate_entities_per_page'], 10);
 
 if ((count($_SESSION['candidate_search_set']) < ($offset + $entities_per_page)) && (count($_SESSION['candidate_search_set']) < $_SESSION['candidate_count'])) {
 	$old_results = $_SESSION['candidate_search_set'];
