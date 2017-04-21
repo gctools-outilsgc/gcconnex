@@ -195,18 +195,30 @@ form.signin .remb .remember {
 
 <script>
 $(document).ready(function () {
-$('#signin-link').click(function () {
-    $('#signin-dropdown').toggle();
-    $('#session').toggleClass('active');
-    return false;
-});
-$('#signin-dropdown').click(function(e) {
-    e.stopPropagation();
-});
-$(document).click(function() {
-    $('#signin-dropdown').hide();
-    $('#session').removeClass('active');
-});
+    $('#signin-link').click(function () {
+        $('#signin-dropdown').toggle();
+        $('#session').toggleClass('active');
+        return false;
+    });
+
+    $('#signin-dropdown').click(function(e) {
+        e.stopPropagation();
+    });
+
+    $(document).click(function() {
+        $('#signin-dropdown').hide();
+        $('#session').removeClass('active');
+    });
+
+$('#signin-link').live('keydown', function(e) { 
+    if (keyCode == 13) { 
+        setTimeout(function(){$('#username').focus();},0);
+    }
+});    
+
+    $('#signin-link').click(function(){
+        setTimeout(function(){$('#username').focus();},0);
+    });
 });   
 </script>
 <?php
@@ -233,11 +245,13 @@ $site_url = elgg_get_site_url();
 <div id="topnav">
 <div class="active-links">
     <div id="session">
+
+
     <a id="signin-link" href="#" style='text-decoration:none;'>
-    <strong><?php echo elgg_echo('login'); ?> |</strong>
+    <strong><span id="login_focus"><?php if (get_context() != 'login'){ echo elgg_echo('login'); ?></span>  |</strong>
     </a>
     <strong><a  href=" <?php echo $site_url; ?>register">  <?php echo elgg_echo('register'); ?></a></li></strong>
-    
+    <?php } ?>
     </div>
         <div id="signin-dropdown" class='login-menu'>
     
