@@ -1407,12 +1407,31 @@ function notify_entity_menu_setup($hook, $type, $return, $params) {
 	} else if ( $entity->getContainerEntity() instanceof ElggUser )
 		$allow_subscription = true;
 
+		if($entity instanceof ElggGroup){
+			$entType = 'group';
+			if($entity->title3){
+					$entName = gc_explode_translation($entity->title3, get_current_language());
+			}else{
+					$entName = $entity->name;
+			}
+		} else {
+			if(!in_array($entity->getSubtype(), array('comment', 'discussion_reply', 'thewire'))){
+				if($entity->title3){
+						$entName = gc_explode_translation($entity->title3, get_current_language());
+				}else{
+						$entName = $entity->title;
+				}
+			} else {
+				$entName = $entity->getOwnerEntity()->name;
+			}
+			$entType = $entity->getSubtype();
+		}
 
 	if ($allow_subscription && elgg_is_logged_in()) {
 	    if ( check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $entity->getGUID()) || check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $entity->getGUID()) ) {
 
 
-			$bell_status = (elgg_is_active_plugin('wet4')) ? '<i class="icon-unsel fa fa-lg fa-bell"><span class="wb-inv">'.elgg_echo('entity:unsubscribe').'</span></i>' : elgg_echo('cp_notify:stop_subscribe');
+			$bell_status = (elgg_is_active_plugin('wet4')) ? '<i class="icon-unsel fa fa-lg fa-bell"><span class="wb-inv">'.elgg_echo('entity:unsubscribe:link:'.$entType, array($entName)).'</span></i>' : elgg_echo('cp_notify:stop_subscribe');
 
 
 		    $return[] = ElggMenuItem::factory(array(
@@ -1427,8 +1446,7 @@ function notify_entity_menu_setup($hook, $type, $return, $params) {
 
 	    } else {
 
-
-		    $bell_status = (elgg_is_active_plugin('wet4')) ? '<i class="icon-unsel fa fa-lg fa-bell-slash-o"><span class="wb-inv">'.elgg_echo('entity:subscribe').'</span></i>' : elgg_echo('cp_notify:start_subscribe');
+		    $bell_status = (elgg_is_active_plugin('wet4')) ? '<i class="icon-unsel fa fa-lg fa-bell-slash-o"><span class="wb-inv">'.elgg_echo('entity:subscribe:link:'.$entType, array($entName)).'</span></i>' : elgg_echo('cp_notify:start_subscribe');
 
 
 		    $return[] = ElggMenuItem::factory(array(

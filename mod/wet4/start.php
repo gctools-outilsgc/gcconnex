@@ -1809,7 +1809,7 @@ function generate_hidden_text($type, $name){
 	$hiddenText['edit'] = elgg_echo('entity:edit:link:'.$type, array($name));
 	$hiddenText['delete'] = elgg_echo('entity:delete:link:'.$type, array($name));
 	$hiddenText['share'] = elgg_echo('entity:share:link:'.$type, array($name));
-  $hiddenText['subscribe'] = elgg_echo('entity:subscribe');
+  $hiddenText['subscribe'] = elgg_echo('entity:subscribe:link:'.$type, array($name));
 
 	return $hiddenText;
 }

@@ -334,9 +334,9 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
                         // cyu - indicate if user has subscribed to the group or not (must have cp notifications enabled)
                         if (elgg_is_active_plugin('cp_notifications')) {
                             if (check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $group->getGUID()) || check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $group->getGUID()))
-                                echo "<a href='".elgg_add_action_tokens_to_url("/action/cp_notify/unsubscribe?guid={$group->getGUID()}")."' title='".elgg_echo('cp_notify:unsubBell')."'><i class='icon-sel fa fa-lg fa-bell'><span class='wb-inv'>".elgg_echo('entity:subscribe')."</span></i></a>";
+                                echo "<a href='".elgg_add_action_tokens_to_url("/action/cp_notify/unsubscribe?guid={$group->getGUID()}")."' title='".elgg_echo('cp_notify:unsubBell')."'><i class='icon-sel fa fa-lg fa-bell'><span class='wb-inv'>".elgg_echo('entity:unsubscribe:link:group')."</span></i></a>";
                             else
-                                echo '<a href="'.elgg_add_action_tokens_to_url("/action/cp_notify/subscribe?guid={$group->getGUID()}").'" title="'.elgg_echo('cp_notify:subBell').'"><i class="icon-unsel fa fa-lg fa-bell-slash-o"><span class="wb-inv">'.elgg_echo('entity:subscribe').'</span></i></a>';
+                                echo '<a href="'.elgg_add_action_tokens_to_url("/action/cp_notify/subscribe?guid={$group->getGUID()}").'" title="'.elgg_echo('cp_notify:subBell').'"><i class="icon-unsel fa fa-lg fa-bell-slash-o"><span class="wb-inv">'.elgg_echo('entity:subscribe:link:group').'</span></i></a>';
                         }
                     }
                     ?>
