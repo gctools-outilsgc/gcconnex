@@ -69,7 +69,7 @@ if (strcmp($enable_digest, 'yes') == 0) {
 		
 		/// select language preference
 		$user_option = elgg_get_plugin_user_setting('cpn_set_digest_language', $user->guid, 'cp_notifications');
-		if (strcmp($user_option, 'set_digest_en') == 0) {
+		if (strcmp($user_option, 'set_digest_en') == 0 || ( !isset($user_option) && get_language() === 'en' )) {
 			$chk_language_en = "<input type='radio' name='params[cpn_set_digest_language]' value='set_digest_en' checked='checked'> ".elgg_echo('cp_newsletter:label:english');
 			$chk_language_fr = "<input type='radio' name='params[cpn_set_digest_language]' value='set_digest_fr'> ".elgg_echo('cp_newsletter:label:french');
 		}
