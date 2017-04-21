@@ -102,9 +102,13 @@ var textarea;
     
     var handleResponse_groupmem = function (json) {
         var userOptions = '';
+        var userSelectOptions = '';
         $(json).each(function(key, user) {
             userOptions += '<li tabIndex="0" data-username="' + user.desc + '" data-guid="' + user.guid + '">' + user.icon + user.name + "</li>";
+            userSelectOptions += '<option value="' + user.guid + '">' + user.desc + " (@" + user.name + ")" + "</option>";
         });
+
+        $('#groups-owner-guid-select').html(userSelectOptions);        // update select options
 
         if (!userOptions) {
             $('#mentions-popup > .panel-body').html('<div class="elgg-ajax-loader"></div>');
@@ -116,10 +120,12 @@ var textarea;
         $('.mentions-autocomplete .elgg-avatar a').attr('tabindex', '-1');
         $('#mentions-popup').removeClass('hidden');
 
+
         $('.mentions-autocomplete > li').bind('click', function(e) {
             e.preventDefault();
 
-            var username = $(this).data('guid');
+            var username = $(this).data('username');
+            var guid = $(this).data('guid');
 
             // Remove the partial @username string from the first part
             //newBeforeMention = beforeMention.substring(0, position - current.length);
@@ -130,6 +136,7 @@ var textarea;
 
             // Set new content for the textarea
                 $(textarea).val(newContent);
+                $('#groups-owner-guid-select').val(guid);
 
             // Hide the autocomplete popup
             $('#mentions-popup').addClass('hidden');
@@ -142,7 +149,8 @@ var textarea;
 
                 e.preventDefault();
                 if (e.keyCode == 13) {
-                var username = $(this).data('guid');
+                var username = $(this).data('username');
+                var guid = $(this).data('guid');
 
                 // Remove the partial @username string from the first part
                 //newBeforeMention = beforeMention.substring(0, position - current.length);
@@ -152,6 +160,7 @@ var textarea;
                 var newContent = username;
 
                 $(textarea).val(newContent).focus();
+                $('#groups-owner-guid-select').val(guid);
 
                 // Hide the autocomplete popup
                 $('#mentions-popup').addClass('hidden');
@@ -166,7 +175,7 @@ var textarea;
 
         if (current.length > 1) {
             current = current.replace('@', '');
-            //$('#mentions-popup').removeClass('hidden');
+            $('#mentions-popup').removeClass('hidden');
 
             var options = {success: handleResponse_groupmem};
 
@@ -178,7 +187,6 @@ var textarea;
     };
 
     var init_groupmem = function() {
-        console.log("test");
         
         var content;
         var position;
