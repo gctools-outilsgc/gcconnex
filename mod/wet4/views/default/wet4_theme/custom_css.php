@@ -1302,6 +1302,12 @@ border:none;
     position: absolute;
 }
 
+.custom-message{
+    position: fixed;
+    width: 1140px;
+    z-index: 9999;
+    top: 185px;
+}
 
 .elgg-state-success {
   background-color: #dff0d8;
