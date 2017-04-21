@@ -1302,6 +1302,12 @@ border:none;
     position: absolute;
 }
 
+.custom-message{
+    position: fixed;
+    width: 1140px;
+    z-index: 9999;
+    top: 185px;
+}
 
 .elgg-state-success {
   background-color: #dff0d8;
@@ -1310,7 +1316,7 @@ border:none;
     z-index: 100000;
 
    margin: 0 auto;
-    width: 70%;
+    width: 1140px;
     border-left: solid 5px #2b542c;
    }
   .elgg-state-success hr {
@@ -1338,7 +1344,7 @@ details.elgg-state-success:before {
     z-index: 100000;
 
    margin: 0 auto;
-    width: 70%;
+    width: 1140px;;
     border-left: solid 5px #843534;
 }
   .elgg-state-error hr {
