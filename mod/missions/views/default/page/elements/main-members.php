@@ -75,8 +75,8 @@ if($result_set) {
 	}
 	$search_set .= elgg_view_entity_list(array_slice($result_set, $offset, $entities_per_page), array(
 			'count' => $count,
-            'list_class' => 'clearfix row mrgn-bttm-md',
-            'item_class' => 'col-sm-3 candidate-panel pull-left',
+            'list_class' => 'clearfix row mrgn-bttm-md candidate-holder',
+            'item_class' => 'col-md-3 col-sm-6 candidate-panel ',
 			'offset' => $offset,
 			'limit' => $entities_per_page,
 			'pagination' => true,

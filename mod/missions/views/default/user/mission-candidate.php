@@ -118,7 +118,9 @@ else {
 <div class="clearfix panel panel-default" <?php echo $background_content; ?>>
 	<div class="col-xs-12 user-info-content clearfix">
 		<div class="col-xs-12 user-avatar">
-			<?php echo elgg_view_entity_icon($user, 'medium'); ?>
+			<?php echo elgg_view_entity_icon($user, 'medium', array(
+                'use_hover' => false,
+            )); ?>
 		</div>
 		<div class="col-xs-12">
 			<h3 name="user-name" class="mrgn-tp-sm"><?php echo $user_link; ?></h3>

@@ -153,8 +153,8 @@ if(!empty($entity->key_skills)){
 	}
 
 	$list_typing = 'list';
-	$list_class = 'row clearfix mrgn-bttm-md';
-	$item_class = 'col-sm-3 candidate-panel pull-left';
+	$list_class = 'row clearfix mrgn-bttm-md candidate-holder';
+	$item_class = 'col-md-3 col-sm-6 candidate-panel ';
 
 	if($_SESSION['missions_from_skill_match']) {
 		unset($_SESSION['missions_from_skill_match']);
