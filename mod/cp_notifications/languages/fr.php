@@ -33,7 +33,7 @@ $french = array(
 
 	'cp_notifications:subtype:groupforumtopic' => "Discussions",
 	'cp_notifications:subtype:hjforumtopic' => "Sujet du forum",
-	'cp_notifications:subtype:hjforumpost' => "Réponse au sujet de forum", // CHANGE 3
+	'cp_notifications:subtype:hjforumpost' => "Réponse au sujet de forum", 
 	'cp_notifications:subtype:page' => "Page",
 	'cp_notifications:subtype:page_top' => "Page",
 	'cp_notifications:subtype:blog' => "Blogue",
@@ -50,6 +50,7 @@ $french = array(
 
 
 	'cp_notifications:mail_body:subtype:content_revision' => "%s a on fait un revision pour %s %s",
+
 	'cp_notifications:mail_body:subtype:mention' => "%s vous a mentionné dans %s: %s",
 
 	'cp_notifications:mail_body:subtype:wire_mention' => "%s vous a mentionné sur le %s",
@@ -63,7 +64,7 @@ $french = array(
 	'cp_notifications:mail_body:subtype:bookmarks' => "%s a publié un signet : %s", 	
 	'cp_notifications:mail_body:subtype:file' => "%s a publié un fichier : %s", 
 	'cp_notifications:mail_body:subtype:album' => "%s a publié un album : %s", 
-	'cp_notifications:mail_body:subtype:thewire' => "%s a publié sur le %s", // CHANGE 3
+	'cp_notifications:mail_body:subtype:thewire' => "%s a publié sur le %s", 
 
 	'cp_notifications:mail_body:subtype:poll' => "%s a créé un sondage :", 
 	'cp_notifications:mail_body:subtype:event_calendar' => "%s a publié un événement : %s", 
@@ -72,7 +73,7 @@ $french = array(
 	'cp_notifications:mail_body:subtype:likes' => "%s a aimé votre publication: %s", 
 	'cp_notifications:mail_body:subtype:response' => "%s a publié une réponse ou un commentaire sur votre publication: %s", 
 
-	'cp_notifications:mail_body:subtype:any' => "%s a publié %s %s : %s", // john doe post un blogue vs john doe posted un blog CHANGE 1
+	'cp_notifications:mail_body:subtype:any' => "%s a publié %s %s : %s", // john doe post un blogue vs john doe posted un blog 
 
 	'cp_notifications:mail_body:subtype:oppourtunity' => "%s a publié une opportunité (%s): %s",
 
@@ -89,7 +90,7 @@ $french = array(
 	 'cp_notifications:no_personal_subscription' => "Aucun abonnement de contenu",
 
 	'cp_notifications:loading' => 'Chargement...',
-	'cp_notifications:subscribe_all_label' => "<a href='%s'>S’abonner</a> ou <a href='%s'>se désabonner</a> à tous les groupes et leur contenu", //CHANGE 2
+	'cp_notifications:subscribe_all_label' => "<a href='%s'>S’abonner</a> ou <a href='%s'>se désabonner</a> à tous les groupes et leur contenu", 
 	'cp_notifications:chkbox:select_all_group_for_notification' => "Sélectionner tous les groupes (cette option ne sélectionnera pas le contenu des groupes).",
 
 	'cp_notify:personal_bulk_notifications' => 'Activer le résumé des notifications', 
@@ -98,7 +99,7 @@ $french = array(
 	'cp_notifications:personal_mentions'=>'Envoyez-moi une notification lorsque quelqu\'un me mentionne',
 	'cp_notifications:personal_content'=>'Envoyez-moi une notification lorsqu\'un changement est fait au contenu que j\'ai crée',
 	'cp_notifications:colleagueContent'=>'Envoyez-moi une notification lorsqu\'un(e) collègue crée du nouveau contenu',
-	'cp_notifications:personal_opportunities' => "Envoyez-moi une notification lorsqu'une nouvelle opportunité que j'ai choisie est créée dans la Plateforme de possibilités de ConneXions Carrière", //CHANGE 2
+	'cp_notifications:personal_opportunities' => "Envoyez-moi une notification lorsqu'une nouvelle opportunité que j'ai choisie est créée dans la Plateforme de possibilités de ConneXions Carrière", 
 
 	'cp_notifications:no_group_content' => "(Aucun abonnement de contenu de groupe)", 
 
@@ -117,8 +118,8 @@ $french = array(
 	'cp_newsletter:greeting' => "Bonjour %s. Voici vos notifications pour le <strong>%s</strong>",
 
 
-	'cp_newsletter:heading:notify:mission:plural' => "Notifications de la Platformes de possibilités", 
-	'cp_newsletter:heading:notify:mission:singular' => "Notification de la Platformes de possibilités", 
+	'cp_newsletter:heading:notify:mission:plural' => "Notifications de la Plateforme de possibilités", 
+	'cp_newsletter:heading:notify:mission:singular' => "Notification de la Plateforme de possibilités", 
 
 	'cp_newsletter:heading:notify:personal:singular' => "Notification personnelle", 
 	'cp_newsletter:heading:notify:personal:plural' => "Notifications personnelles", 
@@ -132,8 +133,8 @@ $french = array(
 	'cp_newsletter:heading:notify:friend_request:singular' => "Nouvelle demande de collègue", 
 	'cp_newsletter:heading:notify:friend_request:plural' => "Nouvelles demandes de collègue", 
 
-	'cp_newsletter:heading:notify:friend_approved:singular' => "%s a approuvé votre demande de collègue", 
-	'cp_newsletter:heading:notify:friend_approved' => "%s a approuvé votre demande de collègue", 
+	'cp_newsletter:heading:notify:friend_approved:singular' => "%s utilisateur a approuvé votre demande de collègue", 
+	'cp_newsletter:heading:notify:friend_approved' => "%s utilisateurs ont approuvé votre demande de collègue", 
 	'cp_newsletter:heading:notify:friend_approved:plural' => "%s a approuvé votre demande de collègue", 
 
 	'cp_newsletter:heading:notify:forum_topic:singular' => "Nouveau sujet de forum", 
@@ -146,6 +147,10 @@ $french = array(
 	'cp_newsletter:heading:notify:response:plural' => "Réponses aux contenus auxquels vous êtes abonné", 
 
 	'cp_notifications:mail_body:subtype:content_share' => "%s a partagé votre %s: %s",
+
+	'cp_notifications:mail_body:subtype:content_share:wire' => "%s a partagé votre %s",
+	'cp_notifications:mail_body:your_wire_post' => "fil",
+
 
 	'cp_newsletter:heading:notify:likes:singular' => "Item a été aimé.", 
 	'cp_newsletter:heading:notify:likes:plural' => "Items ont été aimés.", 
@@ -164,6 +169,7 @@ $french = array(
 	'cp_newsletter:heading:notify:cp_mention:plural' => "Personnes vous ont mentionné!", 
 
 
+	'cp_new_mission:subject' => "Nouvelle Plateforme de possibilités",
 
 
 	'cp_newsletter:footer:notification_settings' => "Pour vous désabonner ou gérer ces messages, veuillez vous connecter et visiter votre <a href='{$site->getURL()}settings/notifications/%s'> Paramètres de notification</a>.",
@@ -228,6 +234,12 @@ $french = array(
 	'cp_notify:body_group_request:title' => "%s vous a envoyé une demande d'adhésion au groupe '%s'",
 	'cp_notify:body_group_request:description' => "Consultez la demande en cliquant sur le lien suivant : %s
 		%s",
+
+
+
+
+	'cp_newsletter:body:view_comment_reply' => 'Voir votre commentaire ou réponse à la discussion', 
+
 
 
 	// likes section

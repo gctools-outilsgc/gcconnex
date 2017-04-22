@@ -16,7 +16,7 @@ if (!$user) {
 
 } else {
 
-	$query = "SELECT DISTINCT r.guid_one, r.guid_two, o.title, es.subtype, e.container_guid, e.guid, o.description FROM elggentity_relationships r 	LEFT JOIN elggentities e ON e.guid = r.guid_two LEFT JOIN elggobjects_entity o ON o.guid = r.guid_two 	LEFT JOIN elggentity_subtypes es ON es.id = e.subtype WHERE r.guid_one = {$user->guid} AND r.relationship like 'cp_subscribed_%' ";
+	$query = "SELECT DISTINCT r.guid_one, r.guid_two, o.title, e.type, es.subtype, e.container_guid, e.guid, o.description, g.name FROM elggentity_relationships r 	LEFT JOIN elggentities e ON e.guid = r.guid_two LEFT JOIN elgggroups_entity g ON e.guid = g.guid LEFT JOIN elggobjects_entity o ON o.guid = r.guid_two 	LEFT JOIN elggentity_subtypes es ON es.id = e.subtype WHERE r.guid_one = {$user->guid} AND r.relationship like 'cp_subscribed_%' ";
 
 
 	$informations = get_data($query);
@@ -37,8 +37,14 @@ if (!$user) {
 
 		$site = elgg_get_site_entity();
 		$url = elgg_add_action_tokens_to_url("/action/cp_notify/unsubscribe?guid={$information->guid}");
-		$content_url = $site->getURL()."{$subtype}/view/{$information->guid}/{$information->title}";
-		$user_info .= "<div id='item_{$information->guid}'> <strong> {$information->guid} </strong> {$information->subtype} - <a href='{$content_url}'> {$content_title} </a> <strong><a href='#' id='unsubscribe_link' style='color:red' onClick='onclick_link({$information->guid})'> unsubscribe </a></strong> </div>";
+
+
+		$entity_name = ($information->type === 'group') ? $information->name : $information->title;
+		$content_url = ($information->type === 'group') ? $site->getURL()."groups/profile/{$information->guid}" : $site->getURL()."{$subtype}/view/{$information->guid}/{$entity_name}";
+		$content_type = ($information->type === 'group' || $information->type === 'user') ? $information->type : $information->subtype;
+
+			
+		$user_info .= "<div id='item_{$information->guid}'> <strong> {$information->guid} </strong> {$content_type} - <a href='{$content_url}'> {$entity_name} </a> <strong><a href='#' id='unsubscribe_link' style='color:red' onClick='onclick_link({$information->guid})'> unsubscribe </a></strong> </div>";
 	}
 	$user_info .= "</p>";
 

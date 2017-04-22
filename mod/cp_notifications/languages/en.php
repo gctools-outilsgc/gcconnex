@@ -75,6 +75,8 @@ $english = array(
 	'cp_notifications:mail_body:subtype:wire_mention' => "%s mentioned you on the %s",
 
 	'cp_notifications:mail_body:subtype:content_share' => "%s shared your %s: %s", 
+	'cp_notifications:mail_body:subtype:content_share:wire' => "%s shared your %s",
+	'cp_notifications:mail_body:your_wire_post' => "Wire post",
 
 	'cp_newsletter:other_content:notice' => "These subscriptions are only for content items that are not part of a group", 
 
@@ -111,7 +113,7 @@ $english = array(
  	'cp_notifications:heading:personal_section'=>'Personal Notifications',
     'cp_notifications:heading:colleague_section'=>'Colleague Notifications',
     'cp_notifications:heading:group_section' => 'Group Notifications',
- 	'cp_notifications:heading:nonGroup_section' => 'Other Content Subscriptions', //CHANGE 3
+ 	'cp_notifications:heading:nonGroup_section' => 'Other Content Subscriptions',
 
 	'cp_notifications:subtype:name:thewire' => "Wire",
 	
@@ -138,20 +140,20 @@ $english = array(
 	'cp_newsletter:heading:notify:friend_request:singular' => "New colleague request", 
 	'cp_newsletter:heading:notify:friend_request:plural' => "New colleague requests", 
 
-	'cp_newsletter:heading:notify:friend_approved:singular' => "%s approved your colleague request", 	
-	'cp_newsletter:heading:notify:friend_approved:plural' => "%s approved your colleague request", 
+	'cp_newsletter:heading:notify:friend_approved:singular' => "%s user approved your colleague request", 	
+	'cp_newsletter:heading:notify:friend_approved:plural' => "%s users approved your colleague request", 
 
 	'cp_newsletter:heading:notify:likes:singular' => "Like received on your content", 
 	'cp_newsletter:heading:notify:likes:plural' => "Likes received on your content", 
 
-	'cp_newsletter:heading:notify:new_post:singular' => "New item have been posted by your colleague",
-	'cp_newsletter:heading:notify:new_post:plural' => "New items have been posted by your colleagues", 
+	'cp_newsletter:heading:notify:new_post:singular' => "New item has been posted by your colleague", 
+	'cp_newsletter:heading:notify:new_post:plural' => "New items have been posted by your colleagues", //CHANGE
 	
-	'cp_newsletter:heading:notify:new_post:group:singular' => "New item have been posted",
-	'cp_newsletter:heading:notify:new_post:group:plural' => "New items have been posted", 
+	'cp_newsletter:heading:notify:new_post:group:singular' => "New item has been posted",
+	'cp_newsletter:heading:notify:new_post:group:plural' => "New items have been posted", //CHANGE
 
 	'cp_newsletter:heading:notify:content_revision:singular' => "Item has been revised", 
-	'cp_newsletter:heading:notify:content_revision:plural' => "Items have been revised", 
+	'cp_newsletter:heading:notify:content_revision:plural' => "Items have been revised", //CHANGE
 
 	'cp_newsletter:heading:notify:cp_mention:singular' => "Person mentioned you.", 	
 	'cp_newsletter:heading:notify:cp_mention:plural' => "People mentioned you.", 
@@ -169,7 +171,7 @@ $english = array(
 	'cp_newsletter:digest:opportunities:date' => "Closing date: ",
 
 	/// (INSTANT EMAIL) EMAIL CONTENT: Normal email notifications
-	'cp_newsletter:footer:notification_settings' => "To unsubscribe or manage these messages, please login and visit your <a href='{$site->getURL()}settings/plugin/%s/cp_notifications'> Notification Settings</a>.",
+	'cp_newsletter:footer:notification_settings' => "To unsubscribe or manage these messages, please login and visit your <a href='{$site->getURL()}settings/notifications/%s'> Notification Settings</a>.",
 	'cp_newsletter:ending' => "<p>Regards,</p> <p>The GCTools Team</p>",
 
     'cp_notifications:contact_help_desk'=> "Should you have any concerns, please use the <a href='{$site->getURL()}mod/contactform/'>Contact us form</a>.",
@@ -183,6 +185,11 @@ $english = array(
 	'cp_notify:subject:group_add_user' => "You have been added the group '%s'",
 	'cp_notify:body_group_add:title' => "You have been added to the group '%s'",
 	'cp_notify:body_group_add:description' => "You have been added to the group %s: <br/>%s",
+
+
+	'cp_newsletter:body:view_comment_reply' => 'View comment or discussion reply',
+	'cp_new_mission:subject' => "New micromission notification",
+
 
 
 	// content edit section
@@ -402,7 +409,7 @@ $english = array(
 	'cp_notify:body_wireshare:title' => "%s shared your %s with title '%s'",
 	'cp_notify:body_wireshare:title2' => "%s shared your %s",
 	//'cp_notify:body_wireshare:description' => "%s has shared your %s on the wire, to view or reply to this please click on the following link: %s",
-	'cp_notify:body_wireshare:description' => "%s has shared your %s on the wire, to view or reply to this please click on the following link: %s",
+	'cp_notify:body_wireshare:description' => "%s shared your %s on the wire, to view or reply to this please click on the following link: %s", //CHANGE
 	'cp_notify:wireshare_thewire:subject' => "%s shared your message on the wire",
 
 	// event calendar section
