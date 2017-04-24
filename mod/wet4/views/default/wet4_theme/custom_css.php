@@ -1402,8 +1402,7 @@ details.elgg-state-success:before {
 
 #app-brand li a{
    text-decoration: none;
-    color: black;
-    padding: 30px 35px;
+    color: white;
 }
 .app-name{
     font-size: 1.6em;
