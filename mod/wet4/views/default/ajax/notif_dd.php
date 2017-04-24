@@ -9,7 +9,10 @@ This will populate a drop down that will show up when mousing over "notification
 */
 ?>
 <script>
-$( "div.message-dd-holder div.message-dd-block a" ).first().focus(); //add focus on the first link
+$( "li.elgg-menu-item-notifications div.message-dd-holder div.message-dd-block a" ).first().focus(); //add focus on the first link of notifications
+
+$( "li.elgg-menu-item-messages div.message-dd-holder div.message-dd-block a" ).first().focus(); //add focus on the first link of messages
+
 </script>
 <?php
 $info_type = get_input('type');
