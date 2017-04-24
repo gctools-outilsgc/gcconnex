@@ -2,13 +2,13 @@
 
 $site = elgg_get_site_entity();
 $site_name = $site->name;
-$contact_us = "{$site->getURL()}mod/contactform/";
+$contact_us = "{$site->getURL()}mod/contactform/?utm_source=notification_digest&utm_medium=email";
 
 $english = array(
 	'cp_notifications:name' => "Notification Email",
 
 	/// SETTINGS PAGE: Newsletter translation texts
-	'cp_newsletter:notice' => "Choose how you want to be notified of GCconnex activities of interest to you. The <strong>notifications digest</strong> can be used to receive a daily or weekly email that provides a summary of the activities to which you are subscribed. Prefer to receive instant notification? Forgo the digest and select the content for which you want to receive notification in real-time. Please note that email notifications are sent to the email address used in your <a href='{$site->getURL()}settings/user/'>Account Settings</a>. See: “<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Manage_Account_Settings/How_Do_I_Change_My_Notifications_Settings%3F'>How Do I Change My Notifications Settings</a>?” for more information.",
+	'cp_newsletter:notice' => "Choose how you want to be notified of GCconnex activities of interest to you. The <strong>notifications digest</strong> can be used to receive a daily or weekly email that provides a summary of the activities to which you are subscribed. Prefer to receive instant notification? Forgo the digest and select the content for which you want to receive notification in real-time. Please note that email notifications are sent to the email address used in your <a href='{$site->getURL()}settings/user/?utm_source=notification_digest&utm_medium=email'>Account Settings</a>. See: “<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Manage_Account_Settings/How_Do_I_Change_My_Notifications_Settings%3F?utm_source=notification_digest&utm_medium=email'>How Do I Change My Notifications Settings</a>?” for more information.",
 	'cp_newsletter:notice:disable_digest' => "The notifications digest is now enabled; please select your digest preferences below (frequency and language preference). The digest will include all content selected in the 'Email' column below, as well the subscriptions in the 'Other content subscriptions' section. If you choose to enable the notifications digest, you will no longer receive real-time (instant) notifications by email and/or on the site, about activities happening on GCconnex (with the exception of administrative-type notifications).",
 
 	'cp_newsletter:subject:daily' => 'Your Daily Digest', 
@@ -119,7 +119,7 @@ $english = array(
 	
 	/// (NEWSLETTER) THROUGH EMAIL SERVER, EMAIL CONTENT: Newsletter email notifications
 	'cp_newsletter:title:nothing' => "Your {$site_name} Digest: Nothing to report today",
-	'cp_newsletter:body:nothing' => "It seems it was quiet in your network on GCconnex. Join <a href='{$site->getURL()}groups/all?filter=popular'>groups</a> of interest, share information and add new <a href='{$site->getURL()}members/popular'>colleagues</a> to stay informed and grow your network!",
+	'cp_newsletter:body:nothing' => "It seems it was quiet in your network on GCconnex. Join <a href='{$site->getURL()}groups/all?filter=popular?utm_source=notification_digest&utm_medium=email'>groups</a> of interest, share information and add new <a href='{$site->getURL()}members/popular?utm_source=notification_digest&utm_medium=email'>colleagues</a> to stay informed and grow your network!",
 	'cp_newsletter:title' => "Your {$site_name} Digest: New activities to report!", 
 	'cp_newsletter:greeting' => "Good morning %s. Here are your notifications for <strong>%s</strong>",
 
@@ -171,10 +171,10 @@ $english = array(
 	'cp_newsletter:digest:opportunities:date' => "Closing date: ",
 
 	/// (INSTANT EMAIL) EMAIL CONTENT: Normal email notifications
-	'cp_newsletter:footer:notification_settings' => "To unsubscribe or manage these messages, please login and visit your <a href='{$site->getURL()}settings/notifications/%s'> Notification Settings</a>.",
+	'cp_newsletter:footer:notification_settings' => "To unsubscribe or manage these messages, please login and visit your <a href='{$site->getURL()}settings/notifications/%s?utm_source=notification_digest&utm_medium=email'> Notification Settings</a>.",
 	'cp_newsletter:ending' => "<p>Regards,</p> <p>The GCTools Team</p>",
 
-    'cp_notifications:contact_help_desk'=> "Should you have any concerns, please use the <a href='{$site->getURL()}mod/contactform/'>Contact us form</a>.",
+    'cp_notifications:contact_help_desk'=> "Should you have any concerns, please use the <a href='{$site->getURL()}mod/contactform/?utm_source=notification_digest&utm_medium=email'>Contact us form</a>.",
 
 
 	/// notification header

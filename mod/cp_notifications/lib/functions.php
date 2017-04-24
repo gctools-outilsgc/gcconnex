@@ -173,7 +173,7 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 	if (!$entity->title) $entity = get_entity($entity->guid);
 
 	if ($entity instanceof ElggObject) {
-		$content_url = (!$entity_url) ? $entity->getURL() : $entity_url;
+		$content_url = (!$entity_url) ? $entity->getURL()."?utm_source=notification_digest&utm_medium=email" : $entity_url."?utm_source=notification_digest&utm_medium=email";
 
 		if (isJson($entity->title))
 		{
@@ -191,10 +191,10 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 
 		$content_array = array(
 			'content_title' => $content_title,
-			'content_url' => $content_url,
+			'content_url' => $content_url."?utm_source=notification_digest&utm_medium=email",
 			'subtype' => $entity->getSubtype(),
 			'content_author_name' => $invoked_by->name,
-			'content_author_url' => $invoked_by->getURL()
+			'content_author_url' => $invoked_by->getURL()."?utm_source=notification_digest&utm_medium=email"
 		);
 
 	} else {
@@ -213,7 +213,7 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 		case 'thewire':
 			$content_array = array(
 				'content_description' => $entity->description,
-				'content_url' => $content_url,
+				'content_url' => $content_url."?utm_source=notification_digest&utm_medium=email",
 				'subtype' => $entity->getSubtype(),
 				'content_author_name' => $invoked_by->name,
 				'content_author_url' => $invoked_by->getURL()
@@ -227,7 +227,7 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 			$content_array = array(
 				'content_title' => $entity->title,
 				'content_author_name' => $entity->getOwnerEntity()->name,
-				'content_url' => $entity->getURL(),
+				'content_url' => $entity->getURL()."?utm_source=notification_digest&utm_medium=email",
 				'subtype' => $entity->job_type,
 				'deadline' => $entity->deadline
 			);
@@ -272,7 +272,7 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 
 				$content_array = array(
 					'content_title' => $entity->getContainerEntity()->title,
-					'content_url' => $content_url,
+					'content_url' => $content_url."?utm_source=notification_digest&utm_medium=email",
 					'subtype' => $entity->getSubtype(),
 					'content_author' => $entity->getOwnerEntity()->guid
 				);
@@ -290,7 +290,7 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 				$content_title = array('en' => elgg_echo("cp_newsletter:body:view_comment_reply",'en'), 'fr' => elgg_echo("cp_newsletter:body:view_comment_reply",'fr'));
 				$content_array = array(
 					'content_title' => $content_title,
-					'content_url' =>  $entity->getURL(),
+					'content_url' =>  $entity->getURL()."?utm_source=notification_digest&utm_medium=email",
 					'subtype' => $entity->getSubtype(),
 					'content_author_name' => $invoked_by->name,
 					'content_author_url' => $invoked_by->getURL()
@@ -299,7 +299,7 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 
 				$content_array = array(
 					'content_title' => $entity->description,
-					'content_url' =>  $entity->getURL(),
+					'content_url' =>  $entity->getURL()."?utm_source=notification_digest&utm_medium=email",
 					'subtype' => $entity->getSubtype(),
 					'content_author_name' => $invoked_by->name,
 					'content_author_url' => $invoked_by->getURL()
@@ -309,7 +309,7 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 
 				$content_array = array(
 					'content_title' => $entity->title,
-					'content_url' =>  $entity->getContainerEntity()->getURL(),
+					'content_url' =>  $entity->getContainerEntity()->getURL()."?utm_source=notification_digest&utm_medium=email",
 					'subtype' => $entity->getSubtype(),
 					'content_author_name' => $invoked_by->name,
 					'content_author_url' => $invoked_by->getURL()
@@ -336,7 +336,7 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 
 			$content_array = array(
 				'content_title' => $content_title,
-				'content_url' => $entity->getURL(),
+				'content_url' => $entity->getURL()."?utm_source=notification_digest&utm_medium=email",
 				'subtype' => $entity->getSubtype(),
 				'content_author_name' => $invoked_by->name,
 				'content_author_url' => $invoked_by->getURL()
@@ -352,7 +352,7 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 
 
 			$content_array = array(
-				'content_url' => $entity->getURL(),
+				'content_url' => $entity->getURL()."?utm_source=notification_digest&utm_medium=email",
 				'subtype' => 'wire_mention',
 				'content_author' => $invoked_by->name,
 				'content_author_url' => $invoked_by->getURL(), 
@@ -364,7 +364,7 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 
 			$content_array = array(
 				'content_title' => $entity->getContainerEntity()->title,
-				'content_url' => $content_url,
+				'content_url' => $content_url."?utm_source=notification_digest&utm_medium=email",
 				'subtype' => $entity->getContainerEntity()->getSubtype(),
 				'content_author' => $invoked_by->name,
 				'content_author_url' => $invoked_by->getURL()
