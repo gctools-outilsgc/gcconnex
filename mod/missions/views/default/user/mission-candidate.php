@@ -30,7 +30,7 @@ $mission_guid = $_SESSION['mission_that_invites'];
 // Creates a gray background if the user is not opted in to micro missions.
 $background_content = '';
 if(!check_if_opted_in($user)) {
-	$background_content = 'style="border:1px solid #ffffff;"';
+	$background_content = 'style="border:1px solid #F6FAF8;"';
 }
 
 $user_link = elgg_view('output/url', array(
@@ -120,6 +120,7 @@ else {
 		<div class="col-xs-12 user-avatar">
 			<?php echo elgg_view_entity_icon($user, 'medium', array(
                 'use_hover' => false,
+                'show_badge' => false,
             )); ?>
 		</div>
 		<div class="col-xs-12">
