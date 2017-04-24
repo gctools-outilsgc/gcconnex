@@ -31,7 +31,7 @@ return array(
     'entity:delete:link:thewire' => 'Delete the wire post by %s',
     'entity:share:link:thewire' => 'Share the wire post by %s on The Wire',
     'entity:subscribe:link:thewire' => 'Subscribe to the wire post by %s',
-    'entity:unsubscribe:link:thewire' => 'unsubscribe to the wire post by %s',
+    'entity:unsubscribe:link:thewire' => 'Unsubscribe to the wire post by %s',
     'entity:reply:link:thewire' => 'Reply to the wire post by %s',
 
     'entity:like:link:blog' => 'Like the blog "%s"',
