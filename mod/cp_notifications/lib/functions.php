@@ -173,7 +173,7 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 	if (!$entity->title) $entity = get_entity($entity->guid);
 
 	if ($entity instanceof ElggObject) {
-		$content_url = (!$entity_url) ? $entity->getURL()."?utm_source=notification_digest&utm_medium=email" : $entity_url."?utm_source=notification_digest&utm_medium=email";
+		$content_url = (!$entity_url) ? $entity->getURL() : $entity_url;
 
 		if (isJson($entity->title))
 		{
@@ -382,7 +382,7 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 			$entity = get_entity($entity->guid);
 			
 			if ($entity->getContainerEntity() instanceof ElggGroup)
-				$digest_collection['group']["<a href='{$entity->getContainerEntity()->getURL()}'>{$entity->getContainerEntity()->name}</a>"]['new_post'][$entity->guid] = json_encode($content_array);
+				$digest_collection['group']["<a href='{$entity->getContainerEntity()->getURL()}?utm_source=notification_digest&utm_medium=email'>{$entity->getContainerEntity()->name}</a>"]['new_post'][$entity->guid] = json_encode($content_array);
 			else 
 				$digest_collection['personal']['new_post'][$entity->guid] = json_encode($content_array);
 
