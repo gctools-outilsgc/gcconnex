@@ -398,3 +398,60 @@ color: #055959;
     background-color:#d00 !important;
     font-weight:bold !important;
 }
+
+.candidate-panel{
+    padding:45px 4px 10px 4px !important;
+    height: 410px;
+
+}
+
+.candidate-holder .candidate-panel{
+    border-bottom: none !important; 
+}
+
+.candidate-panel .user-avatar{
+    margin-top: -40px;
+}
+
+.candidate-panel .user-avatar .elgg-avatar-medium-wet4{
+    width:40% !important;
+    margin: 0 auto;
+    display:block !important;
+}
+
+.candidate-panel .user-info-content{
+    top:0;
+    min-height: 370px;
+}
+.candidate-panel .user-button-content{
+    position: absolute;
+    bottom: 0;
+    width: 97%;
+    padding: 3%;
+}
+.candidate-panel .user-job-title{
+    font-weight: bold;
+    margin-bottom: 1px;
+    max-width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-x: hidden;
+    display:block;
+}
+
+.candidate-panel .user-location{
+    margin-bottom: 1px;
+    max-width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-x: hidden;
+    display:block;
+}
+
+.candidate-panel .user-found-by{
+    max-width:100%;
+    text-overflow:ellipsis;
+    overflow-x: hidden;
+    display:block;
+    white-space: nowrap;
+}
