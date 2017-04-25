@@ -33,7 +33,9 @@ $leftcolumn_widgets_view = custom_index_build_columns($area1widgets,$widgettypes
 $middlecolumn_widgets_view = custom_index_build_columns($area2widgets,$widgettypes);
 $rightcolumn_widgets_view = custom_index_build_columns($area3widgets,$widgettypes);
 
-$content =  elgg_view_layout($ciw_layout, array('area1' => $leftcolumn_widgets_view,'area2' => $middlecolumn_widgets_view,'area3' => $rightcolumn_widgets_view, 'layoutmode' => 'index_mode') );
+//Nick - Adding h1 to newsfeed
+$content = '<h1 class="wb-invisible">'.elgg_echo('newsfeed:menu').'</h1>';
+$content .=  elgg_view_layout($ciw_layout, array('area1' => $leftcolumn_widgets_view,'area2' => $middlecolumn_widgets_view,'area3' => $rightcolumn_widgets_view, 'layoutmode' => 'index_mode') );
 
 if (elgg_is_logged_in() && $ciw_showdashboard=="yes"){
 
