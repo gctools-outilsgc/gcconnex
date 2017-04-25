@@ -220,8 +220,8 @@ $english = array(
  
 	Already on GCconnex? Your email address may out of date. <a href='https://gcconnex.gc.ca/login'>Login</a> and update your account settings.<br/> ",
 	
-	'cp_notify:footer:no_user' => 'Learn more about <a href="http://www.gcpedia.gc.ca/wiki/GCTools/GCconnex">GCconnex</a>, the professional networking and collaborative workspace for the public service.<br/>
-	Need help? <a href="https://gcconnex.gc.ca/mod/contactform/">Contact us</a>.',
+	'cp_notify:footer:no_user' => 'Learn more about <a href="http://www.gcpedia.gc.ca/wiki/GCTools/GCconnex?utm_source=notification&utm_medium=email">GCconnex</a>, the professional networking and collaborative workspace for the public service.<br/>
+	Need help? <a href="https://gcconnex.gc.ca/mod/contactform/?utm_source=notification&utm_medium=email">Contact us</a>.',
 	//'cp_personalized_message' => 'Personalized message from %s.',
 	'cp_personalized_message' => "<div style='border: 1px solid #047177; padding:5px; margin-bottom:10px;'>Personalized message from %s:<br/><i>%s</i></div>",
 
@@ -441,8 +441,8 @@ $english = array(
 
 
 	// email notification footer text (1 and 2)
-	'cp_notify:footer' => "Learn more about <a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Manage_Account_Settings/How_Do_I_Change_My_Notifications_Settings%3F'>GCconnex notifications</a>. ",
-	'cp_notify:footer2' => "Need help? <a href='".elgg_get_site_url()."contactform/'>Contact us</a>.<br/>To unsubscribe from these notifications, login to GCconnex and edit your <a href='%s'>notifications' settings</a>.",
+	'cp_notify:footer' => "Learn more about <a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Manage_Account_Settings/How_Do_I_Change_My_Notifications_Settings%3F?utm_source=notification&utm_medium=email'>GCconnex notifications</a>. ",
+	'cp_notify:footer2' => "Need help? <a href='".elgg_get_site_url()."contactform/?utm_source=notification&utm_medium=email'>Contact us</a>.<br/>To unsubscribe from these notifications, login to GCconnex and edit your <a href='%s'>notifications' settings</a>.",
 
 //'cp_notify:footer' => "Learn more about <a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Manage_Account_Settings/How_Do_I_Change_My_Notifications_Settings%3F'>GCconnex notifications</a>. %s sent you a site message entitled '%s'",
 
