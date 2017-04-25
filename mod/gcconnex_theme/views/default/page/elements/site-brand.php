@@ -44,7 +44,7 @@ if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gs
                         </a>
                         </li>
                         <li class="pull-left tool-link">
-                        <a href="<?php echo elgg_echo('wet:gcdirectoryLink');?>">
+                        <a href="<?php echo elgg_echo('wet:gccollabLink');?>">
                             <img class="tool-link-icon" src="<?php echo $site_url.'/mod/wet4/graphics/collab_icon.png'?>" alt="GCcollab" /><span class="bold-gc">GC</span>collab
                         </a>
                         </li>
