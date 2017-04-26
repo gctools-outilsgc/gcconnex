@@ -140,7 +140,7 @@ foreach($entity_list as $entity){
 <div class="col-sm-12 TEST">
     <div class="col-sm-12">
         <div class="">
-            <h2 class=" h4 mrgn-tp-sm mrgn-bttm-0">
+            <h2 class="h4 mrgn-tp-sm mrgn-bttm-0">
                  <?php echo elgg_echo('missions:latest_opportunities'); ?>
             </h2>
         </div>
