@@ -153,8 +153,8 @@ if(!empty($entity->key_skills)){
 	}
 
 	$list_typing = 'list';
-	$list_class = '';
-	$item_class = '';
+	$list_class = 'row clearfix mrgn-bttm-md candidate-holder';
+	$item_class = 'col-md-3 col-sm-6 candidate-panel ';
 
 	if($_SESSION['missions_from_skill_match']) {
 		unset($_SESSION['missions_from_skill_match']);
@@ -173,6 +173,7 @@ if(!empty($entity->key_skills)){
 		    'pagination' => true,
 		    'list_type' => $list_typing,
 		    'gallery_class' => $list_class,
+            'list_class' => $list_class,
 	        'item_class'=>$item_class,
 			'missions_full_view' => false
 	), $offset, $max) . '</div>';
