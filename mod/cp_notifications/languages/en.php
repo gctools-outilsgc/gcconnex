@@ -64,7 +64,9 @@ $english = array(
 	'cp_notifications:mail_body:subtype:task' => "%s created a task: %s", 
 	'cp_notifications:mail_body:subtype:likes' => "%s liked your post: %s",
 
-	'cp_notifications:mail_body:subtype:response' => "%s replied or commented on your post: %s", 
+	'cp_notifications:mail_body:subtype:response' => "%s replied or commented on the post: %s",
+	//'cp_notifications:mail_body:subtype:response:others' => "%s replied or commented on the post: %s",
+
 	'cp_notifications:mail_body:subtype:any' => "%s posted a%s %s: %s", // john doe posted an idea vs john doe posted a blog
 
 	'cp_notifications:mail_body:subtype:oppourtunity' => "%s posted an opportunity (%s): %s",
@@ -335,9 +337,9 @@ $english = array(
 
 
 	// friend approval section
-	'cp_notify:subject:approve_friend' => "%s approved your colleague's request",
-	'cp_notify:body_friend_approve:title' => "%s approved your colleague's request",
-	'cp_notify:body_friend_approve:description' => "%s approved your colleague's request",
+	'cp_notify:subject:approve_friend' => "%s approved your colleague request",
+	'cp_notify:body_friend_approve:title' => "%s approved your colleague request",
+	'cp_notify:body_friend_approve:description' => "%s approved your colleague request",
 
 
 	// mention user on the wire section

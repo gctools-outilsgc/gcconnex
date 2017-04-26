@@ -71,7 +71,8 @@ $french = array(
 	'cp_notifications:mail_body:subtype:photo' => "%s a publié une image : %s", 
 	'cp_notifications:mail_body:subtype:task' => "%s a publié une tâche : %s", 
 	'cp_notifications:mail_body:subtype:likes' => "%s a aimé votre publication: %s", 
-	'cp_notifications:mail_body:subtype:response' => "%s a publié une réponse ou un commentaire sur votre publication: %s", 
+	
+	'cp_notifications:mail_body:subtype:response' => "%s a publié une réponse ou un commentaire sur la publication: %s", 
 
 	'cp_notifications:mail_body:subtype:any' => "%s a publié %s %s : %s", // john doe post un blogue vs john doe posted un blog 
 

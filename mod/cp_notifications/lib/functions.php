@@ -306,10 +306,13 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 				);
 
 			} else {
+				$entity_title = $entity->title;
+				if ($entity->title == '')
+					$entity_title = $entity->name;
 
 				$content_array = array(
-					'content_title' => $entity->title,
-					'content_url' =>  $entity->getContainerEntity()->getURL()."?utm_source=notification_digest&utm_medium=email",
+					'content_title' => $entity_title,
+					'content_url' =>  $entity->getURL()."?utm_source=notification_digest&utm_medium=email",//$entity->getContainerEntity()->getURL()."?utm_source=notification_digest&utm_medium=email",
 					'subtype' => $entity->getSubtype(),
 					'content_author_name' => $invoked_by->name,
 					'content_author_url' => $invoked_by->getURL()
