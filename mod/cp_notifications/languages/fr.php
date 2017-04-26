@@ -194,8 +194,8 @@ $french = array(
 	//'cp_notify:subject:edit_content' => "%s a été mis à jour par %s", // new
 	//'cp_notify:body_edit:title' => "Ce contenu a été modifié.",	// new
 	//'cp_notify:body_edit:description' => "Cliquez ici pour voir le contenu : <a href='%s'>%s</a>", // new
-	'cp_notify:subject:edit_content' => "%s '%s' a été mis à jour par %s",
-	'cp_notify:body_edit:title' => "%s a été modifié.",
+	'cp_notify:subject:edit_content' => "%s '%s' a été mise à jour par %s",
+	'cp_notify:body_edit:title' => "%s a été modifiée.",
 	'cp_notify:body_edit:description' => "<a href='%s'>Visualiser ou afficher un commentaire</a> <br/>
 		Vous pouvez aimer, partager et vous abonner à ce contenu dans GCconnex.",
 
