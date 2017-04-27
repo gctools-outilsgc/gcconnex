@@ -25,8 +25,14 @@ $gsa_pagination = elgg_get_plugin_setting('gsa_pagination','gc_fedsearch_gsa');
 
 }
 
+    label .error{
+        margin-top:2px;
+    }
+    
 .error {
-  background: rgba(255,0,0,0.5);
+  background: #f3e9e8;
+    border-left: 5px solid #d3080c;
+    padding: 2px 5px;
 }
 
 .elgg-pagination_gsa {
