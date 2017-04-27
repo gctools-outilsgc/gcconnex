@@ -7,7 +7,7 @@
 When prompted, enter a root password for MySQL.
 
 #### Fork and Clone GCConnex Github Repo
-    git clone -b gcconnex https://github.com/tbs-sct/gcconnex.git
+    git clone -b gcconnex https://github.com/gctools-outilsgc/gcconnex.git
 
 #### Create data directory
     mkdir gcconnex_data

@@ -39,7 +39,8 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 ?>
 <div class="panel panel-custom clearfix elgg-image-block col-xs-12 <?php echo $c_photo_top_margin; ?>">
    <div class="group-summary-holder clearfix">
-	   <div class="col-xs-9">
+     <div class="btn-group text-right col-xs-3 col-md-push-9">
+
 
 		   <div class="col-xs-2 col-md-2 mrgn-tp-sm group-profile-image-size">
 			<?php
@@ -117,27 +118,66 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
                 }
             }
 
-
-            //check to see if tags have been made
-            //dont list tag header if no tags
-            if(!$tags){
-
-            } else {
-               // echo '<div class="clearfix"><b>' . elgg_echo('profile:field:tags') . '</b>';
-                echo $tags;
-                //echo '</div>';
-            }
-
-            ?>
-
-
-    </div>
-      </div>
-        <div class="btn-group text-right col-xs-3">
-
-
             <div class="groups-stats mrgn-tp-sm mrgn-bttm-sm text-right"></div>
-                <?php
+
+            <div class="groups-info pull-right">
+               
+                    <?php
+                        //Nick - Added a link to share the group on the wire
+                        if(elgg_is_logged_in()){
+                            $options = array(
+                                'text' => '<i class="fa fa-share-alt fa-lg icon-unsel"><span class="wb-inv">Share this group on the Wire</span></i>',
+                                'title' => elgg_echo('thewire_tools:reshare'),
+                                'href' => 'ajax/view/thewire_tools/reshare?reshare_guid=' . $group->getGUID(),
+                                'class' => 'elgg-lightbox',
+                                'is_trusted' => true,
+                            );
+                        }
+                        echo '<div class="pull-left mrgn-tp-sm mrgn-rght-sm">'.elgg_view('output/url', $options).'</div>';
+    
+                        //Nick - Added a link to like the group!
+                        if(elgg_is_logged_in()){
+                            $hasLiked = \Elgg\Likes\DataService::instance()->currentUserLikesEntity($group->guid);
+                              //Has this user liked this already?
+                            if($hasLiked){
+                                $options = array(
+                                 'href' => elgg_add_action_tokens_to_url("/action/likes/delete?guid={$group->guid}"),
+                                 'text' => '<i class="fa fa-thumbs-up fa-lg icon-sel"></i><span class="wb-inv">'. elgg_echo('likes:remove').'</span>',
+                                 'title' => elgg_echo('likes:remove') . ' ' .elgg_echo('group'),
+                                 
+                              );
+                            }else{
+                               $options = array(
+                                 'href' => elgg_add_action_tokens_to_url("/action/likes/add?guid={$group->guid}"),
+                                 'text' => '<i class="fa fa-thumbs-up fa-lg icon-unsel"></i><span class="wb-inv">'.elgg_echo('likes:likethis').'</span>',
+                                 'title' => elgg_echo('likes:likethis') . ' ' . elgg_echo('group'),
+                                 
+                              ); 
+                            }
+
+                        }
+                        echo '<div class="pull-left mrgn-tp-sm mrgn-rght-sm">'.elgg_view('output/url', $options).'</div>';
+                    ?>
+
+                <div class="pull-left mrgn-tp-sm mrgn-rght-sm">
+                    <?php
+                    //This is the code to add the notification bell to the page to the left of the member button
+                    if ($group->isMember(elgg_get_logged_in_user_entity())) { //Nick - check if user is a member before
+                        // cyu - indicate if user has subscribed to the group or not (must have cp notifications enabled)
+                        if (elgg_is_active_plugin('cp_notifications')) {
+                            if (check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $group->getGUID()) || check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $group->getGUID()))
+                                echo "<a href='".elgg_add_action_tokens_to_url("/action/cp_notify/unsubscribe?guid={$group->getGUID()}")."' title='".elgg_echo('cp_notify:unsubBell')."'><i class='icon-sel fa fa-lg fa-bell'></i></a>";
+                            else
+                                echo '<a href="'.elgg_add_action_tokens_to_url("/action/cp_notify/subscribe?guid={$group->getGUID()}").'" title="'.elgg_echo('cp_notify:subBell').'"><i class="icon-unsel fa fa-lg fa-bell-slash-o"></i></a>';
+                        }
+                    }
+                    ?>
+
+
+
+
+                </div>
+                 <?php
 
                     // add group operators menu link to title menu
                     // Get the page owner entity
@@ -289,8 +329,22 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
                     }
 
                         ?>
+            </div>
+        </div>
+	   <div class="col-xs-9 col-md-pull-3">
 
-            <div class="groups-info mrgn-tp-sm mrgn-rght-md pull-right">
+		   <div class="col-xs-2 col-md-2 mrgn-tp-sm group-profile-image-size">
+			<?php
+				// we don't force icons to be square so don't set width/height
+				echo elgg_view_entity_icon($group, 'medium', array(
+					'href' => '',
+					'width' => '',
+					'height' => '',
+                    'class'=>'TESTING',
+				));
+            ?>
+		   </div>
+
 
                     <?php
                         //Nick - Added a link to share the group on the wire
@@ -325,9 +379,8 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 		                      );
                             }
 
-                        }
-                        echo '<div class="pull-left mrgn-rght-sm">'.elgg_view('output/url', $options).'</div>';
-                    ?>
+
+
 
                 <div class="pull-left">
                     <?php
@@ -343,12 +396,83 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
                     }
                     ?>
 
+		<div class="groups-info col-xs-10 col-md-10 ">
+            <h1 class="group-title">
+                <?php
+                if($group->title3){
+                    echo gc_explode_translation($group->title3, $lang);
+                }else{
+                    echo $group->name;
+                }
+                ?>
+            </h1>
+            <div class="clearfix">
+            <div class="mrgn-bttm-sm pull-left">
+				<b><?php echo elgg_echo("groups:owner"); ?>: </b>
+				<?php
+					echo elgg_view('output/url', array(
+						'text' => $owner->name,
+						'value' => $owner->getURL(),
+						'is_trusted' => true,
+					));
+				?>
+			</div>
 
 
 
-                </div>
-            </div>
+			<div class="mrgn-bttm-sm pull-left mrgn-lft-md">
+			<?php
+				$num_members = $group->getMembers(array('count' => true));
+                $members_link = 'groups/members/' . $group->guid;
+
+
+                $all_members_link = elgg_view('output/url', array(
+	                'href' => $members_link,
+	                'text' =>  $num_members,
+	                'is_trusted' => true,
+                    'class' => '',
+                ));
+
+				echo '<b>' . elgg_echo('groups:members') . ':</b> ' . $all_members_link;
+            ?>
+			</div>
+
+
         </div>
+
+            <?php
+
+            //Add tags for new layout to profile stats
+
+            $profile_fields = elgg_get_config('group');
+
+            foreach ($profile_fields as $key => $valtype) {
+
+                $options = array('value' => $group->$key, 'list_class' => 'mrgn-bttm-sm',);
+
+                if ($valtype == 'tags') {
+                    $options['tag_names'] = $key;
+                    $tags .= elgg_view("output/$valtype", $options);
+                }
+            }
+
+
+            //check to see if tags have been made
+            //dont list tag header if no tags
+            if(!$tags){
+
+            } else {
+               // echo '<div class="clearfix"><b>' . elgg_echo('profile:field:tags') . '</b>';
+                echo $tags;
+                //echo '</div>';
+            }
+
+            ?>
+
+
+    </div>
+      </div>
+       
 		</div>
 
 

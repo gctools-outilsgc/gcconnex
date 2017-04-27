@@ -59,7 +59,7 @@ if ($categories) {
 ?>
 <div>
 	<label for="access_id"><?php echo elgg_echo('access'); ?></label>
-	<?php echo elgg_view('input/access', array('name' => 'access_id', 'value' => $access_id, 'id' => 'access_id',)); ?>
+	<?php echo elgg_view('input/access', array('name' => 'access_id', 'value' => $access_id, 'id' => 'access_id', 'entity' => get_entity($guid),)); ?>
 </div>
 <div class="elgg-foot">
 <?php

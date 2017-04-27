@@ -15,7 +15,7 @@
  */
 
  //we can change it from assertive to polite if it is well ... too assertive :3
-echo '<ul class="elgg-system-messages custom-message list-unstyled" aria-live="assertive" >';
+echo '<ul class="elgg-system-messages custom-message list-unstyled mrgn-bttm-0" aria-live="assertive" >';
 
 // hidden li so we validate
 echo '<li class="hidden wb-invisible"></li>';

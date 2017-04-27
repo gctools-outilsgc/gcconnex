@@ -183,7 +183,7 @@ if (!isset($vars['replacement'])) {
 
 				if (in_array($friend->getGUID(),$vars['value'])) {
 					$checked = "checked = \"checked\"";
-                    $checkedValues .= '<input type="checkbox"' . $checked . 'name="' . $name . '[]" value="' . $options[$label] . '" />';
+                    $checkedValues .= '<input type="checkbox"' . $checked . 'name="' . $name . '[]" id="' . $name . '[]" value="' . $options[$label] . '" />';
 					if (!in_array($letter,$activeletters) && $vars['highlight'] == 'default') {
 						$activeletters[] = $letter;
 					}
@@ -194,7 +194,7 @@ if (!isset($vars['replacement'])) {
 
 				//$collRow .= '<div class="col-xs-1">';
 
-                $checkedBox = '<div  class="mrgn-tp-sm"><input type="checkbox"' . $checked . 'name="' . $name . '[]" value="' . $options[$label] . '" /></div>';
+                $checkedBox = '<div  class="mrgn-tp-sm"><input type="checkbox"' . $checked . 'name="' . $name . '[]" id="' . $name . '[]" value="' . $options[$label] . '" /></div>';
 
 				$collRow .= '
 
@@ -390,7 +390,7 @@ else {
                                 }
                             }
 
-                        }
+                       }
                     });
 
 
