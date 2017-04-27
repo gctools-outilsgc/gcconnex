@@ -8,7 +8,68 @@ require.config({
 });
 
 requirejs( ["form-validate"], function() {
-   $("#validate-form").validate();
+   $("#validate-form").validate({
+     showErrors: function(errorMap, errorList) {
+             $("#myErrorContainer").html("Your form contains "
+              + this.numberOfInvalids()
+              + " errors, see details below.");
+              this.defaultShowErrors();
+            },
+    invalidHandler: function(form, validator) {
+              var errors = validator.numberOfInvalids();
+              if (errors) {
+
+                var element = validator.errorList[0].element;
+
+                //check to see if textarea
+                if($(element).is('textarea:hidden')){
+                  for(var i in CKEDITOR.instances){
+                    if(CKEDITOR.instances[i].name == $(element).attr('name') || CKEDITOR.instances[i].name == $(element).attr('id')){
+                      $('#cke_'+$(element).attr('id')).attr('aria-labelledby', $(element).attr('id')+'-error');
+                      CKEDITOR.instances[i].focus();
+                    }
+                  }
+                } else {
+                  validator.errorList[0].element.focus();
+                }
+              }
+          },
+     ignore: ':hidden:not(.validate-me)',
+     rules: {
+       generic_comment: {
+          required: true
+      },
+      description: {
+        required: true
+      },
+      description2: {
+        required: true
+      },
+      title: {
+        required: true
+      },
+      title2: {
+        required: true
+      },
+      username: {
+        required: true
+      },
+      password: {
+        required: true
+      },
+      password2: {
+        required: true,
+        equalTo: "#password"
+      },
+      email_initial: {
+        required: true
+      },
+      email: {
+        required: true,
+        equalTo: "#email_initial"
+      }
+    }
+   });
 
    if(elgg.get_language() == 'fr'){
    $.extend( $.validator.messages, {
@@ -59,3 +120,22 @@ requirejs( ["form-validate"], function() {
    }
 
  } );
+
+
+
+   //deal with copying the ckeditor text into the actual textarea
+  CKEDITOR.on('instanceReady', function () {
+      $.each(CKEDITOR.instances, function (instance) {
+          CKEDITOR.instances[instance].document.on("keyup", CK_jQ);
+          CKEDITOR.instances[instance].document.on("paste", CK_jQ);
+        //  CKEDITOR.instances[instance].document.on("keypress", CK_jQ);
+        //  CKEDITOR.instances[instance].document.on("blur", CK_jQ);
+        //  CKEDITOR.instances[instance].document.on("change", CK_jQ);
+      });
+  });
+
+  function CK_jQ() {
+      for (instance in CKEDITOR.instances) {
+          CKEDITOR.instances[instance].updateElement();
+      }
+  }

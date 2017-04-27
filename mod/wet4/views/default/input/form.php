@@ -43,6 +43,6 @@ unset($vars['action_name']);
 
 $vars['id'] = 'validate-form';
 
-$form = elgg_format_element('form', $vars, "<fieldset>$body</fieldset>");
+//$body = '<div id="myErrorContainer"></div>'.$body;
 
-echo elgg_format_element('div', array('class' => ''), $form);
+echo elgg_format_element('form', $vars, "<fieldset>$body</fieldset>");

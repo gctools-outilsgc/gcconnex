@@ -38,12 +38,12 @@ echo $btn_language;
 
 <div class="mrgn-bttm-md en">
 	<label for="description"><?php echo elgg_echo('groups:topicmessage'); ?></label>
-	<?php echo elgg_view('input/longtext', array('name' => 'description', 'value' => $desc, 'id' => 'description')); ?>
+	<?php echo elgg_view('input/longtext', array('name' => 'description', 'value' => $desc, 'id' => 'description', 'class' => 'validate-me')); ?>
 </div>
 
 <div class="mrgn-bttm-md fr">
 	<label for="description2"><?php echo elgg_echo('groups:topicmessage2'); ?></label>
-	<?php echo elgg_view('input/longtext', array('name' => 'description2', 'value' => $desc2, 'id' => 'description2')); ?>
+	<?php echo elgg_view('input/longtext', array('name' => 'description2', 'value' => $desc2, 'id' => 'description2', 'class' => 'validate-me')); ?>
 </div>
 <div>
 	<label for="tags"><?php echo elgg_echo('tags'); ?></label>
@@ -101,6 +101,7 @@ if(get_current_language() == 'fr'){
         jQuery('.en').hide();
         jQuery('#btnfr').addClass('active');
 
+        $('#description').removeClass('validate-me');
     </script>
 <?php
 }else{
@@ -109,6 +110,8 @@ if(get_current_language() == 'fr'){
         jQuery('.en').show();
         jQuery('.fr').hide();
         jQuery('#btnen').addClass('active');
+
+        $('#description2').removeClass('validate-me');
     </script>
 <?php
 }
@@ -127,12 +130,16 @@ $(selector).on('click', function(){
                jQuery('.fr').show();
                jQuery('.en').hide();
 
+               $('#description').removeClass('validate-me');
+               $('#description2').addClass('validate-me');
         });
 
           jQuery('#btnClicken').click(function(){
                jQuery('.en').show();
                jQuery('.fr').hide();
 
+               $('#description').addClass('validate-me');
+               $('#description2').removeClass('validate-me');
         })
 });
 </script>

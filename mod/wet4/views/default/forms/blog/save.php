@@ -57,6 +57,7 @@ $label = elgg_echo('title:en');
 $input = elgg_view('input/text', array(
 	'name' => 'title',
 	'id' => 'blog_title_en',
+  'required' => 'required',
 	'value' => $vars['title'],
     'autofocus' =>'true',
 ));
@@ -65,6 +66,7 @@ $label2 = elgg_echo('title:fr');
 $input2 = elgg_view('input/text', array(
 	'name' => 'title2',
 	'id' => 'blog_title_fr',
+  'required' => 'required',
 	'value' => $vars['title2']
 ));
 
@@ -93,6 +95,7 @@ $body_label = elgg_echo('blog:body:en');
 $body_input = elgg_view('input/longtext', array(
 	'name' => 'description',
 	'id' => 'blog_description_en',
+      'class' => 'validate-me',
 	'value' => $vars['description']
 ));
 
@@ -100,6 +103,7 @@ $body_label2 = elgg_echo('blog:body:fr');
 $body_input2 = elgg_view('input/longtext', array(
 	'name' => 'description2',
 	'id' => 'blog_description_fr',
+      'class' => 'validate-me',
 	'value' => $vars['description2']
 ));
 
@@ -279,6 +283,8 @@ if(get_current_language() == 'fr'){
 	    jQuery('.en').hide();
 	    jQuery('#btnfr').addClass('active');
 
+      $('#blog_description_en').removeClass('validate-me');
+
 	</script>
 <?php
 }else{
@@ -287,6 +293,8 @@ if(get_current_language() == 'fr'){
 		jQuery('.en').show();
     	jQuery('.fr').hide();
     	jQuery('#btnen').addClass('active');
+
+      $('#blog_description_fr').removeClass('validate-me');
 	</script>
 <?php
 }
@@ -304,11 +312,17 @@ jQuery(function(){
 		jQuery('#btnClickfr').click(function(){
                jQuery('.fr').show();
                jQuery('.en').hide();
+
+               $('#blog_description_en').removeClass('validate-me');
+               $('#blog_description_fr').addClass('validate-me');
         });
 
           jQuery('#btnClicken').click(function(){
                jQuery('.en').show();
                jQuery('.fr').hide();
+
+               $('#blog_description_fr').removeClass('validate-me');
+               $('#blog_description_en').addClass('validate-me');
         });
 });
 </script>

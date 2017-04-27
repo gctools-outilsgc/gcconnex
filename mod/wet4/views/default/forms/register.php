@@ -298,13 +298,13 @@ var enDepartments = {};//new Array();
 <div class="form-group">
     <label for="email_initial" class="required"><span class="field-name"><?php echo elgg_echo('gcRegister:email_initial'); ?></span><strong class="required">(required)</strong></label>
     <font id="email_initial_error" color="red"></font><br />
-    <input type="email" name="email_initial" id="email_initial" value='<?php echo $email ?>' class="form-control" required="required" />
+    <input type="email" name="email_initial" id="email_initial" value='<?php echo $email ?>' class="form-control" />
 </div>
 
 <div class="form-group">
 	<label for="email" class="required"><span class="field-name"><?php echo elgg_echo('gcRegister:email_secondary'); ?></span><strong class="required">(required)</strong></label>
     <font id="email_secondary_error" color="red"></font><br />
-	<input id="email" class="form-control" type="email" value='<?php echo $email ?>' name="email" onBlur="" required="required"/>
+	<input id="email" class="form-control" type="email" value='<?php echo $email ?>' name="email" onBlur="" />
     <script>
         $('#email').blur(function () {
             elgg.action( 'register/ajax', {
@@ -391,7 +391,6 @@ var enDepartments = {};//new Array();
 	echo elgg_view('input/select', array(
 		'name' => 'department',
 		'id' => 'department',
-		'required' => 'required',
         //'disabled'=>'disabled',
         'class' => 'department_test form-control',
 		'options_values' => array_merge($departments,$provinces),
@@ -420,7 +419,6 @@ var enDepartments = {};//new Array();
 	echo elgg_view('input/password', array(
 		'name' => 'password',
 		'id' => 'password',
-		'required' => 'required',
     'class'=>'password_test form-control',
 		'value' => $password,
 	));
@@ -435,7 +433,6 @@ var enDepartments = {};//new Array();
 		'name' => 'password2',
 		'value' => $password2,
 		'id' => 'password2',
-		'required' => 'required',
     'class'=>'password2_test form-control',
 	));
 	?>

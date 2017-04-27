@@ -25,6 +25,9 @@ $gsa_pagination = elgg_get_plugin_setting('gsa_pagination','gc_fedsearch_gsa');
 
 }
 
+.error {
+  background: rgba(255,0,0,0.5);
+}
 
 .elgg-pagination_gsa {
 
