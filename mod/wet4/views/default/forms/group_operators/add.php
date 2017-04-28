@@ -31,7 +31,7 @@ $group_guid = elgg_extract('entity', $vars)->guid;
 
 			$vars = array(
 				'class' => 'mentions-popup hidden',
-				'id' => 'mentions-popup',
+				'id' => 'groupmems-popup',
 			);
 
 	$body .= elgg_view_module('popup', '', elgg_view('graphics/ajax_loader', array('hidden' => false)), $vars);

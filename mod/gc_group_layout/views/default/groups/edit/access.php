@@ -114,7 +114,7 @@ if ($entity && ($owner_guid == elgg_get_logged_in_user_guid() || elgg_is_admin_l
 
 			$vars = array(
 				'class' => 'mentions-popup hidden',
-				'id' => 'mentions-popup',
+				'id' => 'groupmems-popup',
 			);
 
 			echo elgg_view_module('popup', '', elgg_view('graphics/ajax_loader', array('hidden' => false)), $vars);

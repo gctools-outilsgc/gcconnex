@@ -111,14 +111,14 @@ var textarea;
         $('#groups-owner-guid-select').html(userSelectOptions);        // update select options
 
         if (!userOptions) {
-            $('#mentions-popup > .panel-body').html('<div class="elgg-ajax-loader"></div>');
-            $('#mentions-popup').addClass('hidden');
+            $('#groupmems-popup > .panel-body').html('<div class="elgg-ajax-loader"></div>');
+            $('#groupmems-popup').addClass('hidden');
             return;
         }
 
-        $('#mentions-popup > .panel-body').html('<ul class="mentions-autocomplete list-unstyled mrgn-bttm-0">' + userOptions + "</ul>");
+        $('#groupmems-popup > .panel-body').html('<ul class="mentions-autocomplete list-unstyled mrgn-bttm-0">' + userOptions + "</ul>");
         $('.mentions-autocomplete .elgg-avatar a').attr('tabindex', '-1');
-        $('#mentions-popup').removeClass('hidden');
+        $('#groupmems-popup').removeClass('hidden');
 
 
         $('.mentions-autocomplete > li').bind('click', function(e) {
@@ -139,7 +139,7 @@ var textarea;
                 $('#groups-owner-guid-select').val(guid);
 
             // Hide the autocomplete popup
-            $('#mentions-popup').addClass('hidden');
+            $('#groupmems-popup').addClass('hidden');
         });
 
 
@@ -163,7 +163,7 @@ var textarea;
                 $('#groups-owner-guid-select').val(guid);
 
                 // Hide the autocomplete popup
-                $('#mentions-popup').addClass('hidden');
+                $('#groupmems-popup').addClass('hidden');
             }
             });
 
@@ -175,14 +175,14 @@ var textarea;
 
         if (current.length > 1) {
             current = current.replace('@', '');
-            $('#mentions-popup').removeClass('hidden');
+            $('#groupmems-popup').removeClass('hidden');
 
             var options = {success: handleResponse_groupmem};
 
             elgg.get(elgg.config.wwwroot + 'livesearch?q=' + current + '&g=' + elgg.get_page_owner_guid() + '&match_on=groupmems', options);
         } else {
-            $('#mentions-popup > .panel-body').html('<div class="elgg-ajax-loader"></div>');
-            $('#mentions-popup').addClass('hidden');
+            $('#groupmems-popup > .panel-body').html('<div class="elgg-ajax-loader"></div>');
+            $('#groupmems-popup').addClass('hidden');
         }
     };
 
@@ -196,8 +196,8 @@ var textarea;
 
             // Hide on backspace and enter
             if (e.which == 8 || e.which == 13) {
-                $('#mentions-popup > .panel-body').html('<div class="elgg-ajax-loader"></div>');
-                $('#mentions-popup').addClass('hidden');
+                $('#groupmems-popup > .panel-body').html('<div class="elgg-ajax-loader"></div>');
+                $('#groupmems-popup').addClass('hidden');
             } else {
                 textarea = $(this);
                 content = $(this).val();
