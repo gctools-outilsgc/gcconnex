@@ -74,6 +74,7 @@ echo $btn_language;
 		"name" => "name",
 		"value" => $name,
         'id' => 'name',
+        'required '=> "required",
         'class' => 'ui-autocomplete-input',
 	));
    // }?>
@@ -100,6 +101,7 @@ echo $btn_language;
         "name" => "name2",
         "value" => $name2,
         'id' => 'name2',
+        'required '=> "required",
         'class' => 'ui-autocomplete-input',
     ));
   //  }?>
