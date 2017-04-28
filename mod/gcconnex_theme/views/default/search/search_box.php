@@ -31,7 +31,7 @@ function submit_search_query(selected_language) {
 
     var url = "http://intranet.canada.ca/search-recherche/query-recherche-" + selected_language + ".aspx";
     //var url = "http://192.168.1.80/gcconnex/blog/view/1077";
-    var encode_url = url + "?" + "q=" + escape(document.getElementById('wb-srch-q').value + "a=" + document.getElementById('a').value + "&s=3&chk=on");
+    var encode_url = url + "?" + "q=" + escape(document.getElementById('wb-srch-q').value) + "&a=" + document.getElementById('a').value + "&s=" + document.getElementById('s').value + "&chk4=" + document.getElementById('chk4').value;
     document.location.href = encode_url;
 }
 
