@@ -116,7 +116,8 @@ return array(
 'groups:member' => "membres",
 'groups:searchtag' => "Recherche de groupes par mot-clic",		
 'groups:more' => 'Plus de groupes',
-'groups:none' => 'Aucun groupe',		
+'groups:none' => 'Aucun groupe',
+'groups:required' => '(obligatoire)',
 		
  // Access		
 		
@@ -141,7 +142,6 @@ return array(
 'group:created' => '%s a été créé avec %d articles',
 'groups:enablepages' => 'Activer les pages de groupe',
 
-		
 		
  // Group discussion		
 		

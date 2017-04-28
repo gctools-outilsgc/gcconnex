@@ -1708,3 +1708,11 @@ figcaption{
 .space_event{
   margin-right:5px;
 }
+
+.comment-container ul li {
+    list-style: initial;
+}
+
+.comment-container ol li {
+    list-style: decimal;
+}

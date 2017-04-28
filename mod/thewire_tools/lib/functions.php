@@ -308,3 +308,41 @@ function thewire_tools_get_notification_settings($user_guid = 0) {
 
 	return array();
 }
+
+/**
+ * Get all the wire entries that match a query
+ *
+ * @param string $query the query to match on
+ * @param int $limit the number of results to return
+ * @param int $offset the number of records to skip
+ *
+ * @return array
+ */
+function get_wire_entries_by_query($query, $limit=null, $offset=0) {
+	$options = array(
+		"types" => "object",
+		"subtypes" => "thewire",
+		"offset" => $offset,
+		"pagination" => true
+	);
+
+	if ($limit) {
+		$options["limit"] = $limit;
+	}
+
+	$options["joins"] = array("JOIN " . elgg_get_config("dbprefix") . "objects_entity oe ON e.guid = oe.guid");
+
+	$where_options = explode(" ", $query);
+	if (!empty($where_options)) {
+		$wheres = array();
+		foreach ($where_options as $wo) {
+			$wheres[] = "oe.description LIKE '%" . sanitise_string($wo) . "%'";
+		}
+
+		if (!empty($wheres)) {
+			$options["wheres"] = "(" . implode(" AND ", $wheres) . ")";
+		}
+	}
+
+	return elgg_list_entities($options);
+}
