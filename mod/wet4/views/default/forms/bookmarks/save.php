@@ -31,22 +31,22 @@ echo $btn_language;
 <!-- English -->
 <div class="mrgn-bttm-md en">
 	<label for="title"><?php echo elgg_echo('title:en'); ?></label><br />
-	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title, 'id' => 'title', 'autofocus' => 'true',)); ?>
+	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title, 'id' => 'title', 'autofocus' => 'true', 'required '=> "required",)); ?>
 </div>
 <!-- French -->
 <div class="mrgn-bttm-md fr">
 	<label for="title2"><?php echo elgg_echo('title:fr'); ?></label><br />
-	<?php echo elgg_view('input/text', array('name' => 'title2', 'value' => $title2, 'id' => 'title2')); ?>
+	<?php echo elgg_view('input/text', array('name' => 'title2', 'value' => $title2, 'id' => 'title2', 'required '=> "required")); ?>
 </div>
 
 <div class="mrgn-bttm-md">
 	<label for="address"><?php echo elgg_echo('bookmarks:address'); ?></label><br />
-	<?php echo elgg_view('input/text', array('name' => 'address', 'value' => $address, 'id' =>'address')); ?>
+	<?php echo elgg_view('input/text', array('type' => 'url', 'name' => 'address', 'value' => $address, 'id' =>'address', 'required '=> "required")); ?>
 </div>
 <!-- English -->
 <div class="mrgn-bttm-md en">
 	<label for="description"><?php echo elgg_echo('booksmark:description'); ?></label>
-	<?php echo elgg_view('input/longtext', array('name' => 'description', 'value' => $desc, 'id' => 'description')); ?>
+	<?php echo elgg_view('input/longtext', array('type' => 'url', 'name' => 'description', 'value' => $desc, 'id' => 'description')); ?>
 </div>
 <!-- French -->
 <div class="mrgn-bttm-md fr">

@@ -118,6 +118,7 @@ if ($inline) {
 	$comment_input = elgg_view('input/longtext', array(
 		'name' => 'generic_comment',
     'class' => 'validate-me',
+    'required '=> "required",
 		'value' => $comment_text,
 		'id' => 'generic_comment',
 	));

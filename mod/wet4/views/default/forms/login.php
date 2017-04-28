@@ -68,13 +68,14 @@ if(elgg_in_context('login')){ //Nick - only show the graphic and register text o
 		'name' => 'username',
     'id' => 'username_home',
 		'autofocus' => 'true',
+    'required' => 'required',
         'placeholder' => elgg_echo('loginusername'),
 		));
 	?>
 </div>
 <div class="mrgn-bttm-sm">
 	<label for="password_home"><?php echo elgg_echo('password'); ?></label>
-        <?php echo elgg_view('input/password', array('name' => 'password', 'id' => 'password_home', 'placeholder' => elgg_echo('password'))); ?>
+        <?php echo elgg_view('input/password', array('name' => 'password', 'id' => 'password_home', 'placeholder' => elgg_echo('password'), 'required' => 'required')); ?>
 </div>
 
 <?php echo elgg_view('login/extend', $vars); ?>

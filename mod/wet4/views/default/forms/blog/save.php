@@ -96,6 +96,7 @@ $body_input = elgg_view('input/longtext', array(
 	'name' => 'description',
 	'id' => 'blog_description_en',
       'class' => 'validate-me',
+      'required '=> "required",
 	'value' => $vars['description']
 ));
 
@@ -104,6 +105,7 @@ $body_input2 = elgg_view('input/longtext', array(
 	'name' => 'description2',
 	'id' => 'blog_description_fr',
       'class' => 'validate-me',
+      'required '=> "required",
 	'value' => $vars['description2']
 ));
 

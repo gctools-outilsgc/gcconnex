@@ -42,15 +42,15 @@ echo $btn_language;
 <div class="tab-content tab-content-border">
 <div>
 	<label for="upload"><?php echo $file_label; ?></label><br />
-	<?php echo elgg_view('input/file', array('name' => 'upload', 'id' => 'upload', 'autofocus' =>'true')); ?>
+	<?php echo elgg_view('input/file', array('name' => 'upload', 'id' => 'upload', 'autofocus' =>'true', 'required '=> "required")); ?>
 </div>
 <div class="en">
 	<label for="title"><?php echo elgg_echo('title:en'); ?></label><br />
-	<?php echo elgg_view('input/text', array('name' => 'title', 'id' => 'title', 'value' => $title)); ?>
+	<?php echo elgg_view('input/text', array('name' => 'title', 'id' => 'title', 'value' => $title, 'required '=> "required")); ?>
 </div>
 <div class="fr">
 	<label for="title2"><?php echo elgg_echo('title:fr'); ?></label><br />
-	<?php echo elgg_view('input/text', array('name' => 'title2', 'id' => 'title2', 'value' => $title2)); ?>
+	<?php echo elgg_view('input/text', array('name' => 'title2', 'id' => 'title2', 'value' => $title2, 'required '=> "required")); ?>
 </div>
 <div class="en">
 	<label for="description"><?php echo elgg_echo('file:description:en'); ?></label>

@@ -45,24 +45,9 @@ requirejs( ["form-validate"], function() {
       description2: {
         required: true
       },
-      title: {
-        required: true
-      },
-      title2: {
-        required: true
-      },
-      username: {
-        required: true
-      },
-      password: {
-        required: true
-      },
       password2: {
         required: true,
         equalTo: "#password"
-      },
-      email_initial: {
-        required: true
       },
       email: {
         required: true,

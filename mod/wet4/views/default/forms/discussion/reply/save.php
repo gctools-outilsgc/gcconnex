@@ -66,6 +66,7 @@ FORM;
 		'name' => 'description',
 		'value' => $value,
         'class' => 'validate-me',
+				'required '=> "required",
         'id' => 'box-'. $reply->guid,
 	));
 

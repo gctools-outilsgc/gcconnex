@@ -26,24 +26,24 @@ echo $btn_language;
 <div class="tab-content tab-content-border">
 <div class="mrgn-bttm-md en">
 	<label for="title"><?php echo elgg_echo('title:en'); ?></label><br />
-	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title, 'id' => 'title')); ?>
+	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title, 'id' => 'title', 'required '=> "required")); ?>
 </div>
 
 <div class="mrgn-bttm-md fr">
 	<label for="title2"><?php echo elgg_echo('title:fr'); ?></label><br />
-	<?php echo elgg_view('input/text', array('name' => 'title2', 'value' => $title2, 'id' => 'title2')); ?>
+	<?php echo elgg_view('input/text', array('name' => 'title2', 'value' => $title2, 'id' => 'title2', 'required '=> "required")); ?>
 </div>
 <div class="quick-start-collapse">
 
 
 <div class="mrgn-bttm-md en">
 	<label for="description"><?php echo elgg_echo('groups:topicmessage'); ?></label>
-	<?php echo elgg_view('input/longtext', array('name' => 'description', 'value' => $desc, 'id' => 'description', 'class' => 'validate-me')); ?>
+	<?php echo elgg_view('input/longtext', array('name' => 'description', 'value' => $desc, 'id' => 'description', 'class' => 'validate-me', 'required '=> "required")); ?>
 </div>
 
 <div class="mrgn-bttm-md fr">
 	<label for="description2"><?php echo elgg_echo('groups:topicmessage2'); ?></label>
-	<?php echo elgg_view('input/longtext', array('name' => 'description2', 'value' => $desc2, 'id' => 'description2', 'class' => 'validate-me')); ?>
+	<?php echo elgg_view('input/longtext', array('name' => 'description2', 'value' => $desc2, 'id' => 'description2', 'class' => 'validate-me', 'required '=> "required")); ?>
 </div>
 <div>
 	<label for="tags"><?php echo elgg_echo('tags'); ?></label>
