@@ -8,10 +8,10 @@
  */
 return array(
     //accessibility context
-    "mission:button:oppurtunity" => '<span class="wb-inv">the opportunity "%s"</span>',
-    "mission:button:apply" => '<span class="wb-inv">to the opportunity "%s"</span>',
-    "mission:button:withdraw" => '<span class="wb-inv">from the opportunity "%s"</span>',
-    "mission:button:find" => '<span class="wb-inv">canidates for the opportunity "%s"</span>',
+    "mission:button:oppurtunity" => '<span class="wb-inv"> the opportunity "%s"</span>',
+    "mission:button:apply" => '<span class="wb-inv"> to the opportunity "%s"</span>',
+    "mission:button:withdraw" => '<span class="wb-inv"> from the opportunity "%s"</span>',
+    "mission:button:find" => '<span class="wb-inv"> canidates for the opportunity "%s"</span>',
 
         // labels
     "item:object:mission" =>     "Opportunities Platform",
