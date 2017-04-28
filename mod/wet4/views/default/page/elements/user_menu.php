@@ -125,7 +125,7 @@ if (elgg_is_active_plugin('messages')) {
 //Nick - Removed the href and created my own in the text to hold hidden messages dropdown
 elgg_register_menu_item('user_menu', array(
     'name' => 'messages',
-    'text' => /*'<a href="'.elgg_get_site_url().'messages/inbox/' . $user.'">*/'<i class="fa fa-envelope mrgn-rght-sm mrgn-tp-sm fa-lg"></i><span class="hidden-xs" aria-hidden="true">' . elgg_echo('messages') . '</span>' . $msgbadge .'<span class="wb-inv">'.elgg_echo('userMenu:messages') . $title.' </span></a>'.$focus_dd .$ajax_dd_messages,
+    'text' => '<i class="fa fa-envelope mrgn-rght-sm mrgn-tp-sm fa-lg"></i><span class="hidden-xs" aria-hidden="true">' . elgg_echo('messages') . '</span>' . $msgbadge .'<span class="wb-inv">'.elgg_echo('userMenu:messages') . $title.' </span></a>'.$focus_dd .$ajax_dd_messages,
     'title' => elgg_echo('userMenu:messages') . $title,
     'item_class' => 'brdr-lft messagesLabel close-msg-dd',
     'data-toggle' => '',
@@ -134,7 +134,6 @@ elgg_register_menu_item('user_menu', array(
     'data-dd-type'=>'msg_dd',
     'priority' => '2',
     'href' => elgg_get_site_url().'messages/inbox/' . $user,
-    //'tabindex' => '-1'
 
     ));
 
@@ -161,7 +160,7 @@ if (elgg_is_active_plugin('messages')) {
 // notifications inbox menu item
 elgg_register_menu_item('user_menu', array(
     'name' => 'notifications',
-    'text' => /*'<a href="'.elgg_get_site_url().'messages/notifications/' . $user.'">*/'<i class="fa fa-bell mrgn-rght-sm mrgn-tp-sm fa-lg"></i><span class="hidden-xs">' . elgg_echo('notifications:subscriptions:changesettings') . '</span>' . $msgbadge .'<span class="wb-inv">'.elgg_echo('userMenu:notifications') . $title.' </span></a>'.$focus_dd.'<div>'.$ajax_dd_notification.'</div>',
+    'text' =>'<i class="fa fa-bell mrgn-rght-sm mrgn-tp-sm fa-lg"></i><span class="hidden-xs" aria-hidden="true">' . elgg_echo('notifications:subscriptions:changesettings') . '</span>' . $msgbadge .'<span class="wb-inv">'.elgg_echo('userMenu:notifications') . $title.' </span></a>'.$focus_dd.'<div>'.$ajax_dd_notification.'</div>',
     'title' => elgg_echo('userMenu:notifications') . $title,
     'item_class' => 'brdr-lft messagesLabel close-notif-dd',
     'class' => '',
