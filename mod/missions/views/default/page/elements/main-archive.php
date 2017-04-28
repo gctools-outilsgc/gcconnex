@@ -94,14 +94,14 @@ if ($opp_type_field || $role_type_field) {
 
 <div class="col-sm-12">
     <div class="col-sm-8">
-        <h4 class="mrgn-tp-md mrgn-bttm-0"><?php echo elgg_echo('missions:search_for_archived_opportunities') . ':'; ?></h4>
+        <h2 class="h4 mrgn-tp-md mrgn-bttm-0"><?php echo elgg_echo('missions:search_for_archived_opportunities') . ':'; ?></h2>
         <?php
             echo $simple_search_form;
         ?>
     </div>
 </div>
 <div class="col-sm-12">
-    <h4><?php echo elgg_echo('missions:archived_opportunities') . ': '; ?></h4>
+    <h2 class="h4"><?php echo elgg_echo('missions:archived_opportunities') . ': '; ?></h2>
 </div>
 
 <div class="col-sm-12">

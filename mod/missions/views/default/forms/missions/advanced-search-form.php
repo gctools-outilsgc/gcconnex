@@ -101,7 +101,7 @@ $hidden_input = elgg_view('input/hidden', array(
 ));
 ?>
 
-<h4><?php echo $subtitle . ':'; ?></h4>
+<h2 class="h4" style="margin:0;"><?php echo $subtitle . ':'; ?></h2>
 <?php echo $hidden_input; ?>
 <?php echo $content; ?>
 <p>

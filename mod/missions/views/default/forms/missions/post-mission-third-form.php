@@ -138,7 +138,7 @@ if($skill_match_override) {
 		<input name="hidden_java_state" value="noscript" type="hidden">
 	</div>
 </noscript>
-<h4><?php echo elgg_echo('missions:third_post_form_title'); ?></h4><br>
+<h2 class='h4'><?php echo elgg_echo('missions:third_post_form_title'); ?></h2><br>
 <div class="form-group">
 	<label class="col-sm-3" style="text-align:right;">
 		<?php echo elgg_echo('missions:skills') . ':';?>
