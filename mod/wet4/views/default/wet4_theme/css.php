@@ -4623,6 +4623,8 @@ a.list-group-item-danger {
 .elgg-river-summary{
     font-weight:bold;
     font-style: italic;
+    margin: 2px 0 2px 0;
+    font-size: 1em;
 }
 
 .elgg-river-summary a{

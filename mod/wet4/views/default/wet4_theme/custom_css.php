@@ -482,7 +482,13 @@ max-height: 500px;
         .summary-title a {
             font-size: 22px;
         }
-
+        .summary-title{
+            font-weight: normal;
+            border:none;
+            margin: 0 0 5px 0 !important;
+            padding: 0 !important;
+            display: inline-block;
+        }
 
 
     .table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td {
