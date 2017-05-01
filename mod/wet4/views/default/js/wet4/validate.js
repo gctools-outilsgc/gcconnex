@@ -44,12 +44,12 @@ requirejs( ["form-validate"], function() {
       },
       description2: {
         required: true
-      },
+      },/*
       password2: {
         required: true,
         equalTo: "#password"
       },
-     /* email: {
+      email: {
         required: true,
         equalTo: "#email_initial"
       } */
