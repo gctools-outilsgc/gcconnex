@@ -49,10 +49,10 @@ requirejs( ["form-validate"], function() {
         required: true,
         equalTo: "#password"
       },
-      email: {
+     /* email: {
         required: true,
         equalTo: "#email_initial"
-      }
+      } */
     }
    });
 
