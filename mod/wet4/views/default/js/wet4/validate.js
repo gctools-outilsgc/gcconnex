@@ -44,7 +44,7 @@ requirejs( ["form-validate"], function() {
       },
       description2: {
         required: true
-      },
+      },/*
       password2: {
         required: true,
         equalTo: "#password"
@@ -52,7 +52,7 @@ requirejs( ["form-validate"], function() {
       email: {
         required: true,
         equalTo: "#email_initial"
-      }
+      } */
     }
    });
 
