@@ -7,7 +7,7 @@
 
 ?>
 
-<div class="panel-heading clearfix">
+<div class="clearfix">
     <h3 class="pull-left mrgn-tp-md"><?php echo elgg_echo('onboard:featureTitle');?></h3>
     <div class="pull-right">
         <?php echo elgg_view('page/elements/step_counter', array('current_step'=>5, 'total_steps'=>6));?>
