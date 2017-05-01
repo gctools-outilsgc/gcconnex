@@ -8,7 +8,8 @@ require.config({
 });
 
 requirejs( ["form-validate"], function() {
-   $("#validate-form").validate({
+   $(".elgg-form").each(function(){
+     $(this).validate({
      showErrors: function(errorMap, errorList) {
              $("#myErrorContainer").html("Your form contains "
               + this.numberOfInvalids()
@@ -44,7 +45,7 @@ requirejs( ["form-validate"], function() {
       },
       description2: {
         required: true
-      },
+      },/*
       password2: {
         required: true,
         equalTo: "#password"
@@ -52,9 +53,10 @@ requirejs( ["form-validate"], function() {
       email: {
         required: true,
         equalTo: "#email_initial"
-      }
+      }*/
     }
    });
+ });
 
    if(elgg.get_language() == 'fr'){
    $.extend( $.validator.messages, {
@@ -105,22 +107,3 @@ requirejs( ["form-validate"], function() {
    }
 
  } );
-
-
-
-   //deal with copying the ckeditor text into the actual textarea
-  CKEDITOR.on('instanceReady', function () {
-      $.each(CKEDITOR.instances, function (instance) {
-          CKEDITOR.instances[instance].document.on("keyup", CK_jQ);
-          CKEDITOR.instances[instance].document.on("paste", CK_jQ);
-        //  CKEDITOR.instances[instance].document.on("keypress", CK_jQ);
-        //  CKEDITOR.instances[instance].document.on("blur", CK_jQ);
-        //  CKEDITOR.instances[instance].document.on("change", CK_jQ);
-      });
-  });
-
-  function CK_jQ() {
-      for (instance in CKEDITOR.instances) {
-          CKEDITOR.instances[instance].updateElement();
-      }
-  }
