@@ -345,6 +345,22 @@ li.link-disabled a {
     margin: 2px;
     font-size: 14px;
     display: inline-block;
+
+}
+
+.cut-skill{
+    max-width: 140px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.mission-skills-popup{
+    max-width: 50% !important;
+    max-height: 50% !important;
+}
+.mission-skills-popup .modal-header{
+    background: #047177;
 }
 
 .opt-in-modal{
