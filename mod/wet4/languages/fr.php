@@ -305,6 +305,9 @@ return array(
     'photos:none' => 'Aucun album d\'image',
     'gcforums:enable_group_forums' => 'Activé les forums de groupe',
     'gprofile:contentMenu' => "Menu de contenu du groupe",
+
+    'groups:stats'  => "statistiques de group",
+
         /**
    * Group invite
    */
