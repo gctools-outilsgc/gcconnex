@@ -191,11 +191,12 @@ $french = array(
 	'cp_notify:body_group_add:description' => "Vous avez été ajouté au groupe %s : <br/>",
 
 	// content edit section
-	//'cp_notify:subject:edit_content' => "%s a été mis à jour par %s", // new
-	//'cp_notify:body_edit:title' => "Ce contenu a été modifié.",	// new
-	//'cp_notify:body_edit:description' => "Cliquez ici pour voir le contenu : <a href='%s'>%s</a>", // new
-	'cp_notify:subject:edit_content' => "%s '%s' a été mise à jour par %s",
-	'cp_notify:body_edit:title' => "%s a été modifiée.",
+	'cp_notify:subject:edit_content:m' => "%s '%s' a été mis à jour par %s",
+	'cp_notify:subject:edit_content:f' => "%s '%s' a été mise à jour par %s",
+
+	'cp_notify:body_edit:title:m' => "%s a été modifié.",
+	'cp_notify:body_edit:title:f' => "%s a été modifiée.",
+
 	'cp_notify:body_edit:description' => "<a href='%s'>Visualiser ou afficher un commentaire</a> <br/>
 		Vous pouvez aimer, partager et vous abonner à ce contenu dans GCconnex.",
 

@@ -90,9 +90,9 @@ $description_info_en .= /*'<b>'.elgg_echo('cp_notify:body_event:event_add_to_out
 
 switch ($msg_type) {
 
-	case 'cp_content_edit':
+	case 'cp_content_edit': // blog vs page (edits)
+		$cp_notify_msg_title_fr = (strcmp($vars['cp_en_entity'],'blog') === 0) ? elgg_echo('cp_notify:body_edit:title:m',array($vars['cp_fr_entity']),'fr') : elgg_echo('cp_notify:body_edit:title:f',array($vars['cp_fr_entity']),'fr');
 		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_edit:title',array($vars['cp_en_entity']),'en');
-		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_edit:title',array($vars['cp_fr_entity']),'fr');
 
 		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_edit:description',array($vars['cp_content']->getURL().'?utm_source=notification&utm_medium=email'),'en');
 		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_edit:description',array($vars['cp_content']->getURL().'?utm_source=notification&utm_medium=email'),'fr');

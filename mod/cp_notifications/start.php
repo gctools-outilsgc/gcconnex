@@ -561,7 +561,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 		// if we are publishing, or revising blogs then send out notification
 		if (strcmp($object_subtype,'blog_revision') == 0 && strcmp($entity->status,'published') == 0) {
 			$current_user = get_user($entity->getOwnerGUID());
-			$subject = elgg_echo('cp_notify:subject:edit_content',array('The blog',$entity->title, $current_user->username),'en') . ' | ' . elgg_echo('cp_notify:subject:edit_content',array('Le blogue',$entity->title, $current_user->username),'fr');
+			$subject = elgg_echo('cp_notify:subject:edit_content',array('The blog',$entity->title, $current_user->username),'en') . ' | ' . elgg_echo('cp_notify:subject:edit_content:m',array('Le blogue',$entity->title, $current_user->username),'fr');
 			$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
 
 			$message = array(
@@ -604,7 +604,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 		if (strcmp($object_subtype,'page') == 0 || strcmp($object_subtype,'page_top') == 0 || strcmp($object_subtype,'task') == 0 || strcmp($object_subtype,'task_top') == 0) {
 			$current_user = get_user($object->owner_guid);
 			$subject = elgg_echo('cp_notify:subject:edit_content',array('The page', $entity->title, $current_user->username),'en');
-			$subject .= ' | '.elgg_echo('cp_notify:subject:edit_content',array('La page',$entity->title, $current_user->username),'fr');
+			$subject .= ' | '.elgg_echo('cp_notify:subject:edit_content:f',array('La page',$entity->title, $current_user->username),'fr');
 
 			$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
 
