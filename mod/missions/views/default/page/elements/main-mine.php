@@ -84,7 +84,7 @@ $change_entities_per_page_form = elgg_view_form('missions/change-entities-per-pa
 	<?php echo $unfinished_feedback; ?>
 </div>
 <div>
-	<h4><?php echo elgg_echo('missions:my_opportunities'); ?></h4>
+	<h2 class='h4'><?php echo elgg_echo('missions:my_opportunities'); ?></h2>
 	<div class="col-sm-12">
 		<?php echo $missions_list; ?>
 	</div>

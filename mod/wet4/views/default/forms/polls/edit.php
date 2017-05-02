@@ -25,10 +25,10 @@ $tags = $vars['fd']['tags'];
 $access_id = $vars['fd']['access_id'];
 
 $question_label = elgg_echo('polls:questionen');
-$question_textbox = elgg_view('input/text', array('name' => 'question', 'id' => 'question', 'value' => $question));
+$question_textbox = elgg_view('input/text', array('name' => 'question', 'id' => 'question', 'value' => $question, 'required' => 'required'));
 
 $question_label2 = elgg_echo('polls:questionfr');
-$question_textbox2 = elgg_view('input/text', array('name' => 'question2', 'id' => 'question2', 'value' => $question2));
+$question_textbox2 = elgg_view('input/text', array('name' => 'question2', 'id' => 'question2', 'value' => $question2, 'required' => 'required'));
 
 $responses_label = elgg_echo('polls:responses');
 $responses_control = elgg_view('polls/input/choices',array('poll'=>$poll, 'test' => $lang));

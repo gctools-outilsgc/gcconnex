@@ -912,7 +912,7 @@ function cp_create_notification($event, $type, $object) {
 
 			$to_recipients = get_subscribers($dbprefix, $object->getOwnerGUID(), $object->getContainerGUID());
 			$to_recipients_site = get_subscribers($dbprefix, $object->getOwnerGUID(), $object->getContainerGUID());
-		
+
 
 			break;
 
@@ -1074,7 +1074,7 @@ function cp_create_notification($event, $type, $object) {
 			if (elgg_is_active_plugin('phpmailer'))
 				phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );
 			else
-				mail($to_recipient->email,$subject,$template,cp_get_headers());			
+				mail($to_recipient->email,$subject,$template,cp_get_headers());
 
 		}
 	}
@@ -1102,7 +1102,7 @@ function cp_create_notification($event, $type, $object) {
  * @param optional integer 	$entity_guid
 
  * @param email vs site_mail
- * @return Array <ElggUser> 
+ * @return Array <ElggUser>
 
  */
 
@@ -1112,6 +1112,7 @@ function get_subscribers($dbprefix, $user_guid, $entity_guid = '') {
 	$query = "	SELECT DISTINCT u.guid, u.email, u.username, u.name
 				FROM {$dbprefix}entity_relationships r LEFT JOIN {$dbprefix}users_entity u ON r.guid_one = u.guid 
 				WHERE r.guid_one <> {$user_guid} AND r.relationship = 'cp_subscribed_to_email' AND r.guid_two = {$subscribed_to}";
+  
 	return get_data($query);
 }
 
@@ -1119,7 +1120,7 @@ function get_site_subscribers($dbprefix, $user_guid, $entity_guid = '') {
 	$subscribed_to = ($entity_guid != '') ? $entity_guid : $user_guid;
 
 	$query = " SELECT DISTINCT u.guid, u.email, u.username, u.name
-	FROM {$dbprefix}entity_relationships r LEFT JOIN {$dbprefix}users_entity u ON r.guid_one = u.guid 
+	FROM {$dbprefix}entity_relationships r LEFT JOIN {$dbprefix}users_entity u ON r.guid_one = u.guid
 	WHERE r.guid_one <> {$user_guid} AND r.relationship = 'cp_subscribed_to_site_mail' AND r.guid_two = {$subscribed_to}";
 
 	return get_data($query);
@@ -1374,7 +1375,7 @@ function cp_send_new_password_request($user) {
 
 	// generate link
 	$link = elgg_get_site_url()."changepassword?u={$user->guid}&c={$code}";
-	
+
 	// generate email
 	$ip_address = _elgg_services()->request->getClientIp();
 	// we don't need to check if the plugin (cp_notifications) is enabled here
@@ -1457,12 +1458,31 @@ function notify_entity_menu_setup($hook, $type, $return, $params) {
 	} else if ( $entity->getContainerEntity() instanceof ElggUser )
 		$allow_subscription = true;
 
+		if($entity instanceof ElggGroup){
+			$entType = 'group';
+			if($entity->title3){
+					$entName = gc_explode_translation($entity->title3, get_current_language());
+			}else{
+					$entName = $entity->name;
+			}
+		} else {
+			if(!in_array($entity->getSubtype(), array('comment', 'discussion_reply', 'thewire'))){
+				if($entity->title3){
+						$entName = gc_explode_translation($entity->title3, get_current_language());
+				}else{
+						$entName = $entity->title;
+				}
+			} else {
+				$entName = $entity->getOwnerEntity()->name;
+			}
+			$entType = $entity->getSubtype();
+		}
 
 	if ($allow_subscription && elgg_is_logged_in()) {
 	    if ( check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $entity->getGUID()) || check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $entity->getGUID()) ) {
 
 
-			$bell_status = (elgg_is_active_plugin('wet4')) ? '<i class="icon-unsel fa fa-lg fa-bell"></i>' : elgg_echo('cp_notify:stop_subscribe');
+			$bell_status = (elgg_is_active_plugin('wet4')) ? '<i class="icon-unsel fa fa-lg fa-bell"><span class="wb-inv">'.elgg_echo('entity:unsubscribe:link:'.$entType, array($entName)).'</span></i>' : elgg_echo('cp_notify:stop_subscribe');
 
 
 		    $return[] = ElggMenuItem::factory(array(
@@ -1477,8 +1497,7 @@ function notify_entity_menu_setup($hook, $type, $return, $params) {
 
 	    } else {
 
-
-		    $bell_status = (elgg_is_active_plugin('wet4')) ? '<i class="icon-unsel fa fa-lg fa-bell-slash-o"></i>' : elgg_echo('cp_notify:start_subscribe');
+		    $bell_status = (elgg_is_active_plugin('wet4')) ? '<i class="icon-unsel fa fa-lg fa-bell-slash-o"><span class="wb-inv">'.elgg_echo('entity:subscribe:link:'.$entType, array($entName)).'</span></i>' : elgg_echo('cp_notify:start_subscribe');
 
 
 		    $return[] = ElggMenuItem::factory(array(

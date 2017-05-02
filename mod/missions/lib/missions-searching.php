@@ -437,7 +437,7 @@ function mm_analyze_advanced_search_element($place, $array)
             $returner['name'] = 'remotely';
             $returner['operand'] = '=';
             if($array['selection_' . $place . '_element']) {
-                $returner['value'] = 1;
+                $returner['value'] = 'on';
             }
             else {
                 $returner['value'] = 0;

@@ -92,6 +92,7 @@ $post_input = elgg_view("input/plaintext", array(
 	"rows" => $num_lines,
 	"value" => htmlspecialchars_decode($post_value, ENT_QUOTES),
 	"data-max-length" => $char_limit,
+	'required '=> "required",
 ));
 
 $submit_button = elgg_view("input/submit", array(

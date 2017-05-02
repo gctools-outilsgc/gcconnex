@@ -66,15 +66,16 @@ if(elgg_in_context('login')){ //Nick - only show the graphic and register text o
 	<label for="username_home"><?php echo elgg_echo('loginusername'); ?></label>
 	<?php echo elgg_view('input/text', array(
 		'name' => 'username',
-        'id' => 'username_home',
+    'id' => 'username_home',
 		'autofocus' => 'true',
+    'required' => 'required',
         'placeholder' => elgg_echo('loginusername'),
 		));
 	?>
 </div>
 <div class="mrgn-bttm-sm">
 	<label for="password_home"><?php echo elgg_echo('password'); ?></label>
-        <?php echo elgg_view('input/password', array('name' => 'password', 'id' => 'password_home', 'placeholder' => elgg_echo('password'))); ?>
+        <?php echo elgg_view('input/password', array('name' => 'password', 'id' => 'password_home', 'placeholder' => elgg_echo('password'), 'required' => 'required')); ?>
 </div>
 
 <?php echo elgg_view('login/extend', $vars); ?>
@@ -85,7 +86,7 @@ if(elgg_in_context('login')){ //Nick - only show the graphic and register text o
 		<?php echo elgg_echo('user:persistent'); ?>
 	</label>
 	<div>
-        <?php echo elgg_view('input/submit', array('value' => elgg_echo('login'), 'class' => 'btn-custom-cta mrgn-rght-sm',)); ?>
+        <?php echo elgg_view('input/submit', array('value' => elgg_echo('login'), 'class' => 'btn-primary mrgn-rght-sm',)); ?>
           <?php
           echo '<a href="' . $site_url . 'register" class="btn btn-default">'.elgg_echo('register').'</a>';
         ?>

@@ -16,6 +16,8 @@
  *
  * @package wet4
  * @author Nick github.com/piet0024
+ *
+ * Nick Update - Added invisible headings for accessibility.
  */
 
 $class = 'elgg-layout elgg-layout-one-column clearfix';
@@ -25,12 +27,13 @@ if (isset($vars['class'])) {
 
 ?>
 <div class="<?php echo $class; ?>" >
-
+    <h1 class="wb-invisible"><?php echo elgg_echo('dashboard'); ?></h1>
 	<?php
 		echo elgg_extract('nav', $vars, elgg_view('navigation/breadcrumbs'));
 
 		echo elgg_view('page/layouts/elements/header', $vars);
         echo '<section class="col-sm-12" id="wb-cont">';
+        echo '<h2 class="wb-invisible">'.elgg_echo('widgets').'</h2>';
 		echo $vars['content'];
 
 		// @deprecated 1.8
