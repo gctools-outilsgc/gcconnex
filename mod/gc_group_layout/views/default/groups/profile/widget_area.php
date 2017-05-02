@@ -53,7 +53,7 @@ echo '<div id="customWidgets">';
                     } else {
                         $column_widgets = array();
                     }
-                    
+                    elgg_push_context('widgets');
                     echo "<div class=\"$widget_class elgg-widgets col-sm-6 col-xs-12 widget-area-col\" id=\"elgg-widget-col-$column_index\">";
                     
                     if (sizeof($column_widgets) > 0) {
@@ -65,6 +65,7 @@ echo '<div id="customWidgets">';
                         }
                     }
                     echo '</div>';
+                    elgg_pop_context();
                 }
             echo '</div>'; 
 

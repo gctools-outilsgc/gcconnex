@@ -8,7 +8,7 @@
  * @uses $vars['collection'] The individual friends collection
  *
  * GC_MODIFICATION
- * Description: Added wet styling and classes 
+ * Description: Added wet styling and classes
  * Author: GCTools Team
  */
 
@@ -21,14 +21,15 @@ if (is_array($vars['collection']->members)) {
 }
 
 echo "<li><h2 title='Colleague circle' tabIndex='0'>";
-
+echo $coll->name;
+echo "(<span id=\"friends_membership_count{$vars['friendspicker']}\">{$count}</span>)";
 //as collections are private, check that the logged in user is the owner
 if ($coll->owner_guid == elgg_get_logged_in_user_guid()) {
 	echo "<div class=\"friends_collections_controls\">";
 
     echo elgg_view('output/url', array(
         'href' => 'collections/edit/' . elgg_get_logged_in_user_entity()->guid . '?collection=' . $coll->id,
-        'text' => '<i class="fa fa-edit fa-2x icon-unsel"><span class="wb-inv">' . elgg_echo('edit:this') . '</span></i>',
+        'text' => '<i class="fa fa-edit fa-2x icon-unsel"><span class="wb-inv">' . elgg_echo('friends:collections:edit') . ' ' . $coll->name . '</span></i>',
         'title' => elgg_echo('friends:collections:edit') . ': ' . $coll->name,
         'class' => 'mrgn-rght-sm mrgn-tp-sm'
         ));
@@ -36,24 +37,24 @@ if ($coll->owner_guid == elgg_get_logged_in_user_guid()) {
     echo elgg_view('output/url', array(
 			'href' => 'action/friends/collections/delete?collection=' . $coll->id,
 			'class' => 'delete_collection mrgn-rght-sm mrgn-tp-sm',
-			'text' => '<span class="wb-invisible">' . elgg_echo("delete") . '</span><i class="fa fa-trash-o fa-2x icon-unsel"></i>',
+			'text' => '<span class="wb-invisible">' . elgg_echo("delete"). ' ' . $coll->name . '</span><i class="fa fa-trash-o fa-2x icon-unsel"></i>',
             'title' => elgg_echo('delete') . ' ' . $coll->name,
 			'encode_text' => false,
 			'confirm' => true,
 		));
-    
+
     echo elgg_view('output/url', array(
 			'href' => elgg_get_site_url() . 'messages/compose?collection=' . $coll->id,
 			'class' => 'delete_collection',
-			'text' => '<span class="wb-invisible">' . elgg_echo("send") . '</span><i class="fa fa-envelope-o fa-2x icon-unsel"></i>',
+			'text' => '<span class="wb-invisible">' . elgg_echo('collections_circle_send') . ' ' . $coll->name . '</span><i class="fa fa-envelope-o fa-2x icon-unsel"></i>',
             'title' => elgg_echo('collections_circle_send') . ' ' . $coll->name,
 			'encode_text' => false,
 			'confirm' => true,
 		));
 	echo "</div>";
 }
-echo $coll->name;
-echo " (<span id=\"friends_membership_count{$vars['friendspicker']}\">{$count}</span>) </h2>";
+
+echo " </h2>";
 
 // individual collection panels
 $friends = $vars['collection']->entities;
@@ -87,4 +88,3 @@ if ($friends) {
 
 // close friends-picker div and the accordian list item
 echo "</li>";
-

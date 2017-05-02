@@ -61,12 +61,12 @@ echo $btn_language;
 
 <div class='en'>
     <label for="description"><?php echo elgg_echo('description:ideas:en'); ?></label>
-    <?php echo elgg_view('input/longtext', array('name' => 'description', 'id' => 'description', 'value' => $desc)); ?>
+    <?php echo elgg_view('input/longtext', array('name' => 'description', 'id' => 'description', 'value' => $desc, 'required '=> "required", "class" => "validate-me")); ?>
 </div>
 
 <div class='fr'>
     <label for="description2"><?php echo elgg_echo('description:ideas:fr'); ?></label>
-    <?php echo elgg_view('input/longtext', array('name' => 'description2', 'id' => 'description2', 'value' => $desc2)); ?>
+    <?php echo elgg_view('input/longtext', array('name' => 'description2', 'id' => 'description2', 'value' => $desc2, 'required '=> "required", "class" => "validate-me")); ?>
 </div>
 
 <div>
@@ -96,41 +96,50 @@ echo'</div></div>';
 
 if(get_current_language() == 'fr'){
 ?>
-    <script>
-        jQuery('.fr').show();
-        jQuery('.en').hide();
-        jQuery('#btnfr').addClass('active');
+<script>
+    jQuery('.fr').show();
+    jQuery('.en').hide();
+    jQuery('#btnfr').addClass('active');
 
-    </script>
+    jQuery('#description').removeClass('validate-me');
+</script>
 <?php
 }else{
 ?>
-    <script>
-        jQuery('.en').show();
-        jQuery('.fr').hide();
-        jQuery('#btnen').addClass('active');
-    </script>
+<script>
+    jQuery('.en').show();
+    jQuery('.fr').hide();
+    jQuery('#btnen').addClass('active');
+
+    jQuery('#description2').removeClass('validate-me');
+</script>
 <?php
 }
 ?>
 <script>
 jQuery(function(){
 
-    var selector = '.nav li';
+var selector = '.nav li';
 
-    $(selector).on('click', function(){
-    $(selector).removeClass('active');
-    $(this).addClass('active');
+$(selector).on('click', function(){
+$(selector).removeClass('active');
+$(this).addClass('active');
 });
 
-        jQuery('#btnClickfr').click(function(){
-               jQuery('.fr').show();
-               jQuery('.en').hide();
-        });
+    jQuery('#btnClickfr').click(function(){
+           jQuery('.fr').show();
+           jQuery('.en').hide();
 
-          jQuery('#btnClicken').click(function(){
-               jQuery('.en').show();
-               jQuery('.fr').hide();
-        });
+           jQuery('#description').removeClass('validate-me');
+           jQuery('#description2').addClass('validate-me');
+    });
+
+      jQuery('#btnClicken').click(function(){
+           jQuery('.en').show();
+           jQuery('.fr').hide();
+
+           jQuery('#description').addClass('validate-me');
+           jQuery('#description2').removeClass('validate-me');
+    });
 });
 </script>

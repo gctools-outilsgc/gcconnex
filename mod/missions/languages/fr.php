@@ -7,6 +7,11 @@
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
 return array(
+        //accessibility context
+    "mission:button:oppurtunity" => '<span class="wb-inv"> la possibilité "%s"</span>',
+    "mission:button:apply" => '<span class="wb-inv"> à la possibilité "%s"</span>',
+    "mission:button:withdraw" => '<span class="wb-inv"> de la possibilité "%s"</span>',
+    "mission:button:find" => '<span class="wb-inv"> les candidats pour la possibilité "%s"</span>',
 	    // labels
 
     "item:object:mission" =>	"Plateforme de possibilités",

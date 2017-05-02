@@ -25,6 +25,34 @@ $gsa_pagination = elgg_get_plugin_setting('gsa_pagination','gc_fedsearch_gsa');
 
 }
 
+    label .error{
+        margin-top:2px;
+    }
+    
+label.error {
+    background: #f3e9e8;
+    border-left: 5px solid #d3080c;
+    padding: 2px 6px;
+    margin-top: 3px;
+}
+input.error{
+    border: 1px solid #d3080c;
+
+}
+input.error:focus{
+     border: 1px solid #d3080c;
+    -webkit-box-shadow: inset 0 1px 1px rgba(255,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(255,0,0,.075) !important;
+}
+textarea.error{
+    border: 1px solid #d3080c;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+}
+textarea.error:focus{
+     border: 1px solid #d3080c;
+    -webkit-box-shadow: inset 0 1px 1px rgba(255,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075) !important;        
+}
 
 .elgg-pagination_gsa {
 
@@ -439,7 +467,7 @@ max-height: 500px;
     }
 
 .icon-unsel{
-    color: #a0a0a0;
+    color: #919191;
 }
 
 .icon-unsel:hover{
@@ -451,7 +479,7 @@ max-height: 500px;
 }
 
 .icon-sel:hover{
-    color: #b6b6b6;
+    color: #919191;
 }
 
     .unread-custom span {
@@ -482,7 +510,13 @@ max-height: 500px;
         .summary-title a {
             font-size: 22px;
         }
-
+        .summary-title{
+            font-weight: normal;
+            border:none;
+            margin: 0 0 5px 0 !important;
+            padding: 0 !important;
+            display: inline-block;
+        }
 
 
     .table > thead > tr > th, .table > thead > tr > td, .table > tbody > tr > th, .table > tbody > tr > td, .table > tfoot > tr > th, .table > tfoot > tr > td {
@@ -1661,7 +1695,7 @@ figcaption{
 }
 
 .indicator_summary{
-  color:#D6D6D6;
+  color:#6D6D6D;
   font-size: 12px
 }
 
