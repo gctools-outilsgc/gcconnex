@@ -1051,6 +1051,7 @@ function cp_create_notification($event, $type, $object) {
 	foreach ($to_recipients as $to_recipient)
 	{
 
+$recipient_user = get_user($to_recipient->guid);
 		$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid, 'cp_notifications');
 
 		if ($to_recipient->guid == $author->guid)
@@ -1062,14 +1063,17 @@ function cp_create_notification($event, $type, $object) {
 
 		// send email and site notification
 		else {
+			
 			$template = elgg_view('cp_notifications/email_template', $message);
-
+if (has_access_to_entity($object, $recipient_user)) {
+	error_log('hello3');
 			if (elgg_is_active_plugin('phpmailer'))
 				phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );
 			else
 				mail($to_recipient->email,$subject,$template,cp_get_headers());
 
 		}
+	}
 	}
 
 	foreach ($to_recipients_site as $to_recipient) {
@@ -1320,7 +1324,6 @@ function cp_notification_preparation_send($entity, $to_user, $message, $guid_two
 			}
 
 		} else {
-
 			// check if user has access to the content (DO NOT send if user has no access to this object)
 			if (cp_check_permissions($entity, $to_user->guid)) {
 
