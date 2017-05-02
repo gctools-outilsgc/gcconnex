@@ -198,7 +198,7 @@ if(elgg_get_context() == 'profile'){
       //dont do anything if more tab is pressed
       if(id != ''){
         //add active class and focus to new tab
-        $('.tab-content').find(id).addClass('active').focus();
+        $('.tab-content').find(id).addClass('active');
       }
     });
 
