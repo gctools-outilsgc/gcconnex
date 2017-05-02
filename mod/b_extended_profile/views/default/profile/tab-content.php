@@ -72,11 +72,13 @@ foreach($fields as $field){
 
         if(elgg_get_page_owner_entity()->canEdit()){
 
+            echo '<h3 class="wb-invisible">'.$title.'</h3>';
+
             //dont display add button on The Wire panel
             if($field == 'Thewire'){
                 //do nothing
             } else {
-                echo '<h3 class="wb-invisible">'.$title.'</h3>';
+
                 //display add button
             echo '<div class="text-right">';
                 $action = strtolower($field) . "/add/" . elgg_get_page_owner_entity()->guid;
