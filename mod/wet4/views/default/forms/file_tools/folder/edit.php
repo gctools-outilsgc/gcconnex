@@ -127,6 +127,7 @@ if(get_current_language() == 'fr'){
   document.getElementById('entitle').style.display = "none";
   document.getElementById('endesc').style.display = "none";
 
+	$('#title').removeAttr('required');
     </script>
 <?php
 }else{
@@ -140,6 +141,8 @@ if(get_current_language() == 'fr'){
   document.getElementById('endesc').style.display = "block";
   document.getElementById('frtitle').style.display = "none";
   document.getElementById('frdesc').style.display = "none";
+
+	$('#title2').removeAttr('required');
 
     </script>
 <?php
@@ -163,6 +166,9 @@ function showen() {
    document.getElementById('endesc').style.display = "block";
    document.getElementById('frtitle').style.display = "none";
    document.getElementById('frdesc').style.display = "none";
+
+	 $('#title2').removeAttr('required');
+	 $('#title').attr('required', 'required');
 }
 function showfr() {
 
@@ -170,6 +176,9 @@ function showfr() {
    document.getElementById('frdesc').style.display = "block";
    document.getElementById('entitle').style.display = "none";
    document.getElementById('endesc').style.display = "none";
+
+	 $('#title').removeAttr('required');
+	 $('#title2').attr('required', 'required');
 }
 
 </script>
