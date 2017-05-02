@@ -747,10 +747,10 @@ function cp_create_annotation_notification($event, $type, $object) {
 	// send notification out via email
 	foreach ($to_recipients as $to_recipient_id => $to_recipient) {
 		$message['user_name'] = get_user($to_recipient->guid)->username;
-
+		$recipient_user = get_user($to_recipient->guid);
 		if ($liked_by->guid == $entity->getOwnerGUID() && $to_recipient->guid == $liked_by->guid) 
 			continue;
-		
+		if (has_access_to_entity($object, $recipient_user)) {
 		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0) 
 			create_digest($author, $action_type, $content_entity, $to_recipient);
 		
@@ -762,6 +762,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 				phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );
 			else
 				mail($to_recipient->email, $subject, $template,cp_get_headers());
+		}
 		}
 	}
 
@@ -1051,12 +1052,12 @@ function cp_create_notification($event, $type, $object) {
 	foreach ($to_recipients as $to_recipient)
 	{
 
-$recipient_user = get_user($to_recipient->guid);
+		$recipient_user = get_user($to_recipient->guid);
 		$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid, 'cp_notifications');
 
 		if ($to_recipient->guid == $author->guid)
 			continue;
-
+if (has_access_to_entity($object, $recipient_user)) {
 		// send digest
 		if (strcmp($user_setting, "set_digest_yes") == 0)
 			create_digest($author, $object->getSubtype(), $content_entity, get_entity($to_recipient->guid));
@@ -1065,15 +1066,15 @@ $recipient_user = get_user($to_recipient->guid);
 		else {
 			
 			$template = elgg_view('cp_notifications/email_template', $message);
-if (has_access_to_entity($object, $recipient_user)) {
-	error_log('hello3');
-			if (elgg_is_active_plugin('phpmailer'))
-				phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );
-			else
-				mail($to_recipient->email,$subject,$template,cp_get_headers());
+			
+				error_log('hello3');
+				if (elgg_is_active_plugin('phpmailer'))
+					phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );
+				else
+					mail($to_recipient->email,$subject,$template,cp_get_headers());
 
+			}
 		}
-	}
 	}
 
 	foreach ($to_recipients_site as $to_recipient) {
