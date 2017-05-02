@@ -15,11 +15,14 @@
     </div>
 </div>
 <div class="panel-body">
-    <div class="additional-feature-holder clearfix">
-        <div class="col-sm-6 col-xs-12">
-          <img class="img-responsive" src="<?php echo elgg_get_site_url() .'mod/gc_onboard/graphics/'.elgg_echo('onboard:welcome:profile:sell:img'); ?>" alt="<?php echo elgg_echo('onboard:welcome:profile:sell:img:alt');?>" title="<?php echo elgg_echo('onboard:welcome:profile:sell:img:alt');?>" />
+    <div class="clearfix">
+        <div class="">
+                  <p><?php echo elgg_echo('onboard:welcome:profile:access'); ?></p>
+          <img class="img-responsive" style="margin: 0 auto 10px;" src="<?php echo elgg_get_site_url() .'mod/gc_onboard/graphics/'.elgg_echo('onboard:welcome:profile:sell:img'); ?>" alt="<?php echo elgg_echo('onboard:welcome:profile:sell:img:alt');?>" title="<?php echo elgg_echo('onboard:welcome:profile:sell:img:alt');?>" />
+
         </div>
-        <div class="col-sm-6 col-xs-12">
+        <div class="">
+
         <p class="mrgn-tp-sm"><?php echo elgg_echo('onboard:welcome:profile:sell:text'); ?></p>
 
         <?php
