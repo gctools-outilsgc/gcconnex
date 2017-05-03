@@ -18,7 +18,7 @@ return array(
      'onboard:feature1'		=> "Search for groups, discussions, colleagues files and much more using the search.",
      'onboard:feature2'		=> "Chat instantly with your colleagues who are online.",
      'onboard:feature3'		=> "Browse opportunities by clicking on the Career tab of the main navigation menu. ",
-     'onboard:feature4'		=> "Want to learn more? Check out the <a href='http://www.gcpedia.gc.ca/wiki/Help:GC2.0_Tools_Help_Centre/GCconnex' target='_blank'>GCTools Help Center</a> for more help material and tutorials and the <a href='http://www.gcpedia.gc.ca/wiki/GCTools_Newsletter' target='_blank'>GCTools ECHO Newsletter</a> to stay up to date with the latest developments",
+     'onboard:feature4'		=> "Want to learn more? Check out the <a href='http://www.gcpedia.gc.ca/wiki/Help:GC2.0_Tools_Help_Centre/GCconnex' target='_blank'>GCTools Help Center</a> for more help material and tutorials.",
      'onboard:featureImgAlt1'	=> "Screenshot of Search",
      'onboard:featureImgAlt2'	=> "Screenshot of the GCconnex Chat Feature",
      'onboard:featureImgAlt3'	=> "Screenshot of the Career main menu item",

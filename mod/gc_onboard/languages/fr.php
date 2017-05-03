@@ -19,7 +19,7 @@ return array(
      'onboard:feature1'		=> "Trouvez des groupes, des discussions, des fichiers de collègues et plus encore à l'aide de l'outil de recherche.",
      'onboard:feature2'		=> "Clavardez automatiquement avec vos collègues qui sont en ligne.",
      'onboard:feature3'		=> "Explorez les possibilités en cliquant sur l'onglet Carrière du menu de navigation principal. ",
-     'onboard:feature4'		=> "Vous voulez en apprendre davantage? Consultez le <a href='http://www.gcpedia.gc.ca/wiki/Help:Centre_d%27aide_pour_les_outils_GC2.0/GCconnex' target='_blank'>Centre d'aide des outilsGC</a> pour accéder à de plus amples documents d'aide et de tutoriels, de même qu'au <a href='http://www.gcpedia.gc.ca/wiki/Infolettre_OutilsGC' target='_blank'>Bulletin d'information ECHO des OutilsGC</a> pour vous tenir au courant des derniers développements",
+     'onboard:feature4'		=> "Vous voulez en apprendre davantage? Consultez le <a href='http://www.gcpedia.gc.ca/wiki/Help:Centre_d%27aide_pour_les_outils_GC2.0/GCconnex' target='_blank'>Centre d'aide des outilsGC</a> pour accéder à de plus amples documents d'aide et tutoriels.",
      'onboard:featureImgAlt1'	=> "Capture d'écran de l'outil de recherche",
      'onboard:featureImgAlt2'	=> "Capture d'écran de la fonctionnalité de clavardage de GCconnex",
      'onboard:featureImgAlt3'	=> "Capture d'écran de l'élément Carrière du menu principal",
