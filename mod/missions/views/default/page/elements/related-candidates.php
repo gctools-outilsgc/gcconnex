@@ -100,7 +100,6 @@ foreach ($applicant_relationships as $applicant_relation) {
 		$applicants_none_accepted = false;
 		$participant_count++;
 	}
-error_log(elgg_is_admin_logged_in());
 	// Candidates which have been sent an invitation to the mission.
 	if ($applicant_relation->relationship == 'mission_applied' || $applicant_relation->relationship == 'mission_offered') {
 		if($mission->state == 'posted') {
