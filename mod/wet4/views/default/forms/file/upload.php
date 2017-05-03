@@ -105,7 +105,6 @@ if ($guid) {
 }
 
 echo elgg_view('input/submit', array('value' => $submit_label, 'class' => 'btn btn-primary mrgn-tp-md'));
-echo elgg_get_context();
 
 echo'</div></div>';
 
