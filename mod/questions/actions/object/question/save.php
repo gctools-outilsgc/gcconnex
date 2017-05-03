@@ -84,6 +84,8 @@ try {
 	} elseif ($moving) {
 		elgg_trigger_event('move', 'object', $question);
 	}
+
+	system_message(elgg_echo("question:action:question:save:success"));
 } catch (Exception $e) {
 	register_error(elgg_echo('questions:action:question:save:error:save'));
 	register_error($e->getMessage());
