@@ -198,14 +198,7 @@ if(elgg_get_context() == 'profile'){
 
       //dont do anything if more tab is pressed
       if(id != ''){
-        //the first three tabs have a different structure
-        var h2_headers = ['#profile-display', '#portfolio', '#splashboard'];
-        //check if one of the first three tabs was pressed
-        if($.inArray(id, h2_headers) !== -1){
           $(id).find('h2').attr('tabindex', '-1').focus();
-        } else {
-          $(id).find('h3').focus();
-        }
       }
     });
 

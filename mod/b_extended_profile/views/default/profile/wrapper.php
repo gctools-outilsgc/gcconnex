@@ -152,6 +152,7 @@ $pg = '';
                     }
                     echo '</div>';
                 }
+            elgg_pop_context();
             echo '</div>'; // close div id="splashboard"
 
             echo '<div role="tabpanel" tabindex="-1" class="tab-pane" id="portfolio">';
