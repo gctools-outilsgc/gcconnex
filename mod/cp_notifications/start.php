@@ -748,12 +748,12 @@ function cp_create_annotation_notification($event, $type, $object) {
 	foreach ($to_recipients as $to_recipient_id => $to_recipient) {
 		$message['user_name'] = get_user($to_recipient->guid)->username;
 		$recipient_user = get_user($to_recipient->guid);
-		if ($liked_by->guid == $entity->getOwnerGUID() && $to_recipient->guid == $liked_by->guid) 
+		if ($liked_by->guid == $entity->getOwnerGUID() && $to_recipient->guid == $liked_by->guid)
 			continue;
 		if (has_access_to_entity($object, $recipient_user)) {
-		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0) 
+		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0)
 			create_digest($author, $action_type, $content_entity, $to_recipient);
-		
+
 		else {
 
 			$template = elgg_view('cp_notifications/email_template', $message);
@@ -763,7 +763,10 @@ function cp_create_annotation_notification($event, $type, $object) {
 			else
 				mail($to_recipient->email, $subject, $template,cp_get_headers());
 		}
-		}
+	}else{
+		add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_email', $container_entity->getGUID());
+		add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_site_mail', $container_entity->getGUID());
+	}
 	}
 
 	// send notification out via site
@@ -835,7 +838,7 @@ function cp_create_notification($event, $type, $object) {
 
 						// send email and site notification
 						} else {
-							
+
 
 							if (elgg_is_active_plugin('phpmailer'))
 								phpmailer_send( $mentioned_user->email, $mentioned_user->name, $subject, $template, NULL, true );
@@ -1064,9 +1067,9 @@ if (has_access_to_entity($object, $recipient_user)) {
 
 		// send email and site notification
 		else {
-			
+
 			$template = elgg_view('cp_notifications/email_template', $message);
-			
+
 				error_log('hello3');
 				if (elgg_is_active_plugin('phpmailer'))
 					phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );
@@ -1074,6 +1077,9 @@ if (has_access_to_entity($object, $recipient_user)) {
 					mail($to_recipient->email,$subject,$template,cp_get_headers());
 
 			}
+		}else{
+			add_entity_relationship($to_recipient->guid, 'cp_subscribed_to_email', $object->getGUID());
+			add_entity_relationship($to_recipient->guid, 'cp_subscribed_to_site_mail', $object->getGUID());
 		}
 	}
 
