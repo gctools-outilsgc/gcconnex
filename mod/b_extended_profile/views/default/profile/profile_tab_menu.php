@@ -121,7 +121,6 @@ elgg_register_menu_item('owner_block', array(
     'item_class' => 'dropdown',
     'data-toggle' => 'dropdown',
     'class' => 'dropdown-toggle',
-    'aria-haspopup' => "true",
     'href' => '',
     'priority' => '100',
     ));
@@ -196,11 +195,17 @@ if(elgg_get_context() == 'profile'){
     $('.elgg-menu-owner-block-default a').on('click', function(e){
       //get id
       var id = $(this).attr('href');
+
       //dont do anything if more tab is pressed
       if(id != ''){
-        //add active class and focus to new tab
-        $('.tab-content').find(id).addClass('active');
-        $(id).find('h3').focus();
+        //the first three tabs have a different structure
+        var h2_headers = ['#profile-display', '#portfolio', '#splashboard'];
+        //check if one of the first three tabs was pressed
+        if($.inArray(id, h2_headers) !== -1){
+          $(id).find('h2').attr('tabindex', '-1').focus();
+        } else {
+          $(id).find('h3').focus();
+        }
       }
     });
 
