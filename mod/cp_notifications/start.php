@@ -619,7 +619,8 @@ function cp_create_annotation_notification($event, $type, $object) {
 				$message['user_name'] = $watcher->username;
 				$message['_user_e-mail'] = $watcher->email;	// fpr P/T users
 				$template = elgg_view('cp_notifications/email_template', $message);
-
+				$recipient_user = get_user($watcher->guid);
+		if (has_access_to_entity($entity, $recipient_user)) {
 				// create the digest if digest is enabled
 				if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $watcher->guid,'cp_notifications'),'set_digest_yes') == 0)
 					create_digest($author, $action_type, $content_entity, get_entity($watcher->guid));
@@ -627,7 +628,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 				// create the instant notification if digest is not enabled
 				else
 					(elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $watcher->email, $watcher->name, $subject, $template, NULL, true ) : mail($watcher->email, $subject, $template, cp_get_headers());
-
+}
 			}
 			if (check_entity_relationship($watcher->guid, 'cp_subscribed_to_site_mail', $entity->getContainerGUID()))
 				messages_send($subject, $template, $watcher->guid, $site->guid, 0, true, false);
