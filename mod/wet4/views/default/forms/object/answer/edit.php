@@ -10,6 +10,7 @@ $description = [
 	'value' => elgg_get_sticky_value('answer', 'description', $answer->description),
 ];
 
+echo '<label for="answer_description" class="wb-inv">'.elgg_echo('answers:addyours').'</label>';
 echo elgg_view('input/longtext', $description);
 
 echo '<div class="mts">';

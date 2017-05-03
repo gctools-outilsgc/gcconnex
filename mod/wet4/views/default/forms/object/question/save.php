@@ -51,7 +51,7 @@ $comment_options = [
 		'on' => elgg_echo('on'),
 		'off' => elgg_echo('off'),
 	],
-	'class' => 'mls',
+	'class' => 'mls mrgn-lft-0',
 ];
 
 if ($container instanceof ElggUser) {
@@ -69,6 +69,7 @@ if ($container instanceof ElggUser) {
 $access_id = [
 	'name' => 'access_id',
 	'id' => 'question_access_id',
+	'class' => 'mrgn-bttm-sm',
 	'value' => (int) elgg_get_sticky_value('question', 'access_id', $question->access_id),
 ];
 
@@ -179,7 +180,7 @@ if (!$editing || (questions_experts_enabled() && questions_is_expert(elgg_get_pa
 			// format select
 			$select_attr = [
 				'name' => 'container_guid',
-				'class' => 'elgg-input-dropdown',
+				'class' => 'elgg-input-dropdown form-control mrgn-bttm-sm',
 				'id' => 'questions-container-guid',
 			];
 			$select = elgg_format_element('select', $select_attr, implode('', $select_options));

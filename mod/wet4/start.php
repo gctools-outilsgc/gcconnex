@@ -60,6 +60,11 @@ function wet4_theme_init() {
     elgg_register_plugin_hook_handler('register', 'menu:entity', 'wet4_likes_entity_menu_setup', 400);
     //elgg_register_plugin_hook_handler('register', 'menu:entity', 'wet4_delete_entity_menu', 400);
 
+		//questions modifications
+		elgg_register_page_handler('questions', 'wet_questions_page_handler');
+		elgg_unregister_plugin_hook_handler('register', 'menu:filter', 'questions_filter_menu_handler');
+		elgg_register_plugin_hook_handler('register', 'menu:filter', 'wet_questions_filter_menu_handler');
+
 	// theme specific CSS
 	elgg_extend_view('css/elgg', 'wet4_theme/css');
 	elgg_extend_view('css/elgg', 'wet4_theme/custom_css');
@@ -1937,4 +1942,145 @@ function login_as_add_user_menu_link() {
 			$item->addItemClass('login-as-out');
 		elgg_register_menu_item('user_menu', $item);
 	}
+}
+
+/**
+ * Handles all question pages. Modified to add friends page
+ *
+ * @param array $segments
+ *
+ * @return bool
+ */
+function wet_questions_page_handler($segments) {
+	elgg_push_breadcrumb(elgg_echo('questions'), 'questions/all');
+
+	$pages = 'mod/questions/pages/questions';
+	$new_page = 'mod/wet4/pages/questions';
+	switch ($segments[0]) {
+		case 'all':
+			include "$pages/all.php";
+			break;
+		case 'todo':
+			if (isset($segments[1]) && is_numeric($segments[1])) {
+				set_input('group_guid', $segments[1]);
+			}
+			include "$pages/todo.php";
+			break;
+		case 'owner':
+			if (isset($segments[1]) && is_numeric($segments[1])) {
+				elgg_set_page_owner_guid($segments[1]);
+			}
+			include "$pages/owner.php";
+			break;
+		case 'view':
+			set_input('guid', $segments[1]);
+			include "$pages/view.php";
+			break;
+		case 'add':
+			elgg_gatekeeper();
+			include "$pages/add.php";
+			break;
+		case 'edit':
+			elgg_gatekeeper();
+			set_input('guid', $segments[1]);
+			include "$pages/edit.php";
+			break;
+		case 'group':
+			elgg_group_gatekeeper();
+			include "$pages/owner.php";
+			break;
+		case 'friends':
+				include "$new_page/friends.php";
+				break;
+		case 'experts':
+			if (isset($segments[1]) && is_numeric($segments[1])) {
+				elgg_set_page_owner_guid($segments[1]);
+			}
+			include "$pages/experts.php";
+			break;
+		default:
+			forward('questions/all');
+			return false;
+	}
+
+	return true;
+}
+
+/**
+ * Add menu items to the filter menu. Modified to remove filter menu from group context and add friends filter
+ *
+ * @param string         $hook   the name of the hook
+ * @param string         $type   the type of the hook
+ * @param ElggMenuItem[] $items  current return value
+ * @param array          $params supplied params
+ *
+ * @return void|ElggMenuItem[]
+ */
+function wet_questions_filter_menu_handler($hook, $type, $items, $params) {
+
+	if (empty($items) || !is_array($items) || !elgg_in_context('questions')) {
+		return;
+	}
+
+	$page_owner = elgg_get_page_owner_entity();
+
+	// change some menu items
+	foreach ($items as $key => $item) {
+		// add friends back into filter menu
+		if ($item->getName() == 'friend') {
+			$item->setHref("questions/friends");
+		}
+
+		// in group context
+		if ($page_owner instanceof ElggGroup) {
+			// remove mine
+			if ($item->getName() == 'mine') {
+				unset($items[$key]);
+			}
+
+			if ($item->getName() == 'friend') {
+				unset($items[$key]);
+			}
+
+			// check if all is correct
+			if ($item->getName() === 'all') {
+				// remove filter menu in group context
+				unset($items[$key]);
+			}
+		}
+	}
+
+	if (questions_is_expert()) {
+		$items[] = ElggMenuItem::factory([
+			'name' => 'todo',
+			'text' => elgg_echo('questions:menu:filter:todo'),
+			'href' => 'questions/todo',
+			'priority' => 700,
+		]);
+
+		if ($page_owner instanceof ElggGroup) {
+			$items[] = ElggMenuItem::factory([
+				'name' => 'todo_group',
+				'text' => elgg_echo('questions:menu:filter:todo_group'),
+				'href' => "questions/todo/{$page_owner->getGUID()}",
+				'priority' => 710,
+			]);
+		}
+	}
+
+	if (questions_experts_enabled()) {
+		$experts_href = 'questions/experts';
+		if ($page_owner instanceof ElggGroup) {
+			$experts_href .= "/{$page_owner->getGUID()}";
+		}
+
+		$items[] = ElggMenuItem::factory([
+			'name' => 'experts',
+			'text' => elgg_echo('questions:menu:filter:experts'),
+			'href' => $experts_href,
+			'priority' => 800,
+		]);
+	}
+
+	return $items;
 }

@@ -164,6 +164,13 @@ if ($full) {
 } else {
 	// brief view
 	$title_text = '';
+	$title_text .= elgg_get_excerpt($question->title, 100);
+	$title = elgg_view('output/url', [
+		'text' => $title_text,
+		'href' => $question->getURL(),
+		'is_trusted' => true,
+	]);
+
 	if ($question->getMarkedAnswer()) {
 
 		//place checkmark telling user an answer has been marked correct
@@ -172,13 +179,11 @@ if ($full) {
 		$correcttitle = elgg_echo('questions:answer:checkmark:brief', [$question->getOwnerEntity()->name, $poster->name, $timestamp]);
 
 		$poster_icon .= elgg_format_element('div', ['class' => 'fa fa-check fa-3x questions-correct', 'title' => $correcttitle]);
+
+		//add answered identifier to title of question
+		$title .= elgg_echo('question:answered');
 	}
-	$title_text .= elgg_get_excerpt($question->title, 100);
-	$title = elgg_view('output/url', [
-		'text' => $title_text,
-		'href' => $question->getURL(),
-		'is_trusted' => true,
-	]);
+
 
 	$excerpt = '';
 	if (!empty($question->description)) {
