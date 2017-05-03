@@ -143,14 +143,10 @@ else {
        <p class="mrgn-tp-0 mrgn-bttm-0 h4"><?php echo elgg_echo("missions:skills")?></p>
         <div>
             <?php echo $skill_set; ?>
-        </div>
+        
+        <p class=""><span class="center-block"><a href="#mid-screen-<?php echo $user->guid;?>" aria-controls="mid-screen" class="overlay-lnk" role="button">View All Skills</a></span></p>
 
-	</div>
-    </div>
-    <div class="user-button-content">
-        <p><a href="#mid-screen-<?php echo $user->guid;?>" aria-controls="mid-screen" class="overlay-lnk center-block" role="button">View All Skills</a></p>
-
-        <section id="mid-screen-<?php echo $user->guid?>" class="wb-overlay modal-content overlay-def wb-popup-mid mission-skills-popup">
+        <section id="mid-screen-<?php echo $user->guid?>" class="wb-overlay modal-content overlay-def wb-popup-mid mission-skills-popup onboard-popup">
 	       <header class="modal-header" style="background:#047177;">
 		      <h2 class="modal-title">Skills for <?php echo $user->name; ?></h2>
 	       </header>
@@ -158,6 +154,11 @@ else {
 		      <?php echo $skill_set_more; ?>
 	       </div>
         </section>
+        </div>
+	</div>
+    </div>
+    <div class="user-button-content">
+
         
         <?php echo $button_content; ?>
     </div>

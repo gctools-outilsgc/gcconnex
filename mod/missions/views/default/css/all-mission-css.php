@@ -362,6 +362,10 @@ li.link-disabled a {
 .mission-skills-popup .modal-header{
     background: #047177;
 }
+.more-skills-button{
+    position:absolute;
+    padding: 5px;
+}
 
 .opt-in-modal{
     margin-top: 10%;
