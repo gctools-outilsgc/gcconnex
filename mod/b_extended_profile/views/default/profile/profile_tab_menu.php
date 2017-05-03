@@ -121,6 +121,7 @@ elgg_register_menu_item('owner_block', array(
     'item_class' => 'dropdown',
     'data-toggle' => 'dropdown',
     'class' => 'dropdown-toggle',
+    'aria-haspopup' => "true",
     'href' => '',
     'priority' => '100',
     ));
@@ -199,6 +200,7 @@ if(elgg_get_context() == 'profile'){
       if(id != ''){
         //add active class and focus to new tab
         $('.tab-content').find(id).addClass('active');
+        $(id).find('h3').focus();
       }
     });
 
