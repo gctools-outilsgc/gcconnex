@@ -144,7 +144,7 @@ else {
         <div>
             <?php echo $skill_set; ?>
         
-        <p class=""><span class="center-block"><a href="#mid-screen-<?php echo $user->guid;?>" aria-controls="mid-screen" class="overlay-lnk" role="button">View All Skills</a></span></p>
+        <p><span class="center-block"><a href="#mid-screen-<?php echo $user->guid;?>" aria-controls="mid-screen-<?php echo $user->guid;?>" class="overlay-lnk" role="button">View All Skills</a></span></p>
 
         <section id="mid-screen-<?php echo $user->guid?>" class="wb-overlay modal-content overlay-def wb-popup-mid mission-skills-popup onboard-popup">
 	       <header class="modal-header" style="background:#047177;">

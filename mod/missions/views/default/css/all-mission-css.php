@@ -356,8 +356,11 @@ li.link-disabled a {
 }
 
 .mission-skills-popup{
+    bottom: 0px;
+    top: 0px;
+    margin: auto;
     max-width: 50% !important;
-    max-height: 50% !important;
+    max-height: 40% !important;
 }
 .mission-skills-popup .modal-header{
     background: #047177;
