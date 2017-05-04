@@ -121,6 +121,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 
 						 <div class="groups-info pull-right">
 
+									<ul class="list-inline pull-left mrgn-rght-sm">
 										 <?php
 												 //Nick - Added a link to share the group on the wire
 												 if(elgg_is_logged_in()){
@@ -132,7 +133,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 																 'is_trusted' => true,
 														 );
 												 }
-												 echo '<div class="pull-left mrgn-tp-sm mrgn-rght-sm">'.elgg_view('output/url', $options).'</div>';
+												 echo '<li class="mrgn-tp-sm">'.elgg_view('output/url', $options).'</li>';
 
 												 //Nick - Added a link to like the group!
 												 if(elgg_is_logged_in()){
@@ -154,10 +155,10 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 															 );
 														 }
 												 }
-												 echo '<div class="pull-left mrgn-tp-sm mrgn-rght-sm">'.elgg_view('output/url', $options).'</div>';
+												 echo '<li class="mrgn-tp-sm mrgn-lft-sm">'.elgg_view('output/url', $options).'</li>';
 										 ?>
 
-								 <div class="pull-left mrgn-tp-sm mrgn-rght-sm">
+								 <li class="mrgn-tp-sm">
 										 <?php
 										 //This is the code to add the notification bell to the page to the left of the member button
 										 if ($group->isMember(elgg_get_logged_in_user_entity())) { //Nick - check if user is a member before
@@ -174,7 +175,10 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 
 
 
-								 </div>
+								 </li>
+							 </ul>
+
+
 									<?php
 										 // add group operators menu link to title menu
 										 // Get the page owner entity

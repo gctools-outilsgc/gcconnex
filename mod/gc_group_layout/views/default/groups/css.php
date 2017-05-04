@@ -61,3 +61,7 @@
 .elgg-menu-groups-my-status li.elgg-state-selected > a {
 	color: #999;
 }
+
+.groups-info .list-inline li {
+		padding:0;
+}
