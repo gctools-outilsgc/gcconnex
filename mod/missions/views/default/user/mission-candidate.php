@@ -144,9 +144,10 @@ else {
         <div>
             <?php echo $skill_set; ?>
         
+            <?php if(count($user_skills) > 4){?>
         <p><span class="center-block"><a href="#mid-screen-<?php echo $user->guid;?>" aria-controls="mid-screen-<?php echo $user->guid;?>" class="overlay-lnk" role="button">View All Skills</a></span></p>
 
-        <section id="mid-screen-<?php echo $user->guid?>" class="wb-overlay modal-content overlay-def wb-popup-mid mission-skills-popup onboard-popup">
+        <section id="mid-screen-<?php echo $user->guid?>" class="wb-overlay modal-content overlay-def mission-skills-popup onboard-popup ">
 	       <header class="modal-header" style="background:#047177;">
 		      <h2 class="modal-title">Skills for <?php echo $user->name; ?></h2>
 	       </header>
@@ -154,6 +155,7 @@ else {
 		      <?php echo $skill_set_more; ?>
 	       </div>
         </section>
+            <?php } ?>
         </div>
 	</div>
     </div>

@@ -358,6 +358,8 @@ li.link-disabled a {
 .mission-skills-popup{
     bottom: 0px;
     top: 0px;
+    left: 0px;
+    right: 0px;
     margin: auto;
     max-width: 50% !important;
     max-height: 40% !important;
