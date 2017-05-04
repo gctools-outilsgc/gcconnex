@@ -132,6 +132,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
                         'href' => $url,
                         'text' => elgg_echo($text),
                         'link_class' => 'elgg-button elgg-button-action',
+			'style' => 'z-index: 100;',
                     ));
                 }
             }
