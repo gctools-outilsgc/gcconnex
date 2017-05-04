@@ -142,4 +142,52 @@ $(selector).on('click', function(){
                $('#description2').removeClass('validate-me');
         })
 });
+
+$(".elgg-form").each(function(){
+  $(this).validate({
+ invalidHandler: function(form, validator) {
+           var errors = validator.numberOfInvalids();
+           if (errors) {
+
+             var element = validator.errorList[0].element;
+
+             //check to see if textarea
+             if($(element).is('textarea:hidden')){
+               for(var i in CKEDITOR.instances){
+                 if(CKEDITOR.instances[i].name == $(element).attr('name') || CKEDITOR.instances[i].name == $(element).attr('id')){
+                   $('#cke_'+$(element).attr('id')).attr('aria-labelledby', $(element).attr('id')+'-error');
+                   CKEDITOR.instances[i].focus();
+                 }
+               }
+             } else {
+               validator.errorList[0].element.focus();
+             }
+           }
+       },
+       submitHandler: function(form) {
+         $(form).find('button').prop('disabled', true);
+         form.submit();
+       },
+ ignore: ':hidden:not(.validate-me)',
+  rules: {
+    generic_comment: {
+       required: true
+   },
+   description: {
+      required: true
+   },
+    description2: {
+      required: true
+    },/*
+   password2: {
+     required: true,
+     equalTo: "#password"
+   },
+   email: {
+     required: true,
+     equalTo: "#email_initial"
+   }*/
+ }
+});
+});
 </script>
