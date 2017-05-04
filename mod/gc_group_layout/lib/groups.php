@@ -1,4 +1,4 @@
-<?php
+é<?php
 /**
  * Groups function library
  */
@@ -340,6 +340,8 @@ function groups_handle_profile_page($guid) {
 	// turn this into a core function
 	global $autofeed;
 	$autofeed = true;
+	$lang = get_current_language();
+	$title = gc_explode_translation($title,$lang);
 
 	elgg_push_context('group_profile');
 
@@ -347,7 +349,7 @@ function groups_handle_profile_page($guid) {
 
 	$group = get_entity($guid);
 
-	elgg_push_breadcrumb($group->name);
+	elgg_push_breadcrumb($title);
 
 	groups_register_profile_buttons($group);
 
@@ -357,11 +359,11 @@ function groups_handle_profile_page($guid) {
 	$params = array(
 		'content' => $content,
 		'sidebar' => $sidebar,
-		'title' => $group->name,
+		'title' => $title,
 	);
 	$body = elgg_view_layout('one_sidebar', $params);
 
-	echo elgg_view_page($group->name, $body);
+	echo elgg_view_page($title, $body);
 }
 
 /**
