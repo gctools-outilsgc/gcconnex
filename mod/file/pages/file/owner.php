@@ -7,14 +7,14 @@
 
 // access check for closed groups
 elgg_group_gatekeeper();
-
+$lang = get_current_language();
 $owner = elgg_get_page_owner_entity();
 if (!$owner) {
 	forward('', '404');
 }
 
 elgg_push_breadcrumb(elgg_echo('file'), "file/all");
-elgg_push_breadcrumb($owner->name);
+elgg_push_breadcrumb(gc_explode_translation($owner->name, $lang));
 
 elgg_register_title_button();
 
@@ -32,7 +32,7 @@ if ($owner->guid == elgg_get_logged_in_user_guid()) {
 	$params['filter'] = '';
 }
 
-$title = elgg_echo("file:user", array($owner->name));
+$title = elgg_echo("file:user", array(gc_explode_translation($owner->name, $lang)));
 
 // List files
 $content = elgg_list_entities(array(

@@ -191,7 +191,7 @@ if( $description_json->en && $description_json->fr ){
 		$tags = "";
 	} else {
 		$file_icon = elgg_view_entity_icon($file, "small");
-		$excerpt = elgg_get_excerpt($file->description);
+		$excerpt = elgg_get_excerpt(gc_explode_translation($file->description,$lang));
 	}
 
     if(elgg_in_context('group_profile') || elgg_in_context('profile')){
