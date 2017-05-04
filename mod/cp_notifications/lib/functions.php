@@ -182,12 +182,16 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 
 		} else {
 			// cyu - TODO: use the gc_explode_translation() (OLD)
+			// limit character length
 			if ($entity->title2) 
 				$content_title = array('en' => $entity->title, 'fr' => $entity->title2);
 			else 
 				$content_title = array('en' => $entity->title, 'fr' => $entity->title);
 			
 		}
+
+		//if (strlen($content_title) > 10)
+   		//	$str = substr($str, 0, 7) . '...';
 
 		$content_array = array(
 			'content_title' => $content_title,
