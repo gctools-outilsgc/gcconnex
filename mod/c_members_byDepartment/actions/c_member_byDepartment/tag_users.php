@@ -7,7 +7,7 @@ $query = "SELECT e.guid, ue.email, ue.username FROM elggentities e, elggusers_en
 
 $db_config = new \Elgg\Database\Config($CONFIG);
 if ($db_config->isDatabaseSplit()) {
-	$read_settings = $db_config->getConnectionConfig(\Elgg\Database\Config::WRITE);
+	$read_settings = $db_config->getConnectionConfig(\Elgg\Database\Config::READ);
 } else {	
 	$read_settings = $db_config->getConnectionConfig(\Elgg\Database\Config::READ_WRITE);
 }

@@ -16,7 +16,7 @@ if ($last_member[0]->getGUID() != $last_member_saved)
 
 	$db_config = new \Elgg\Database\Config($CONFIG);
 	if ($db_config->isDatabaseSplit()) {
-		$read_settings = $db_config->getConnectionConfig(\Elgg\Database\Config::WRITE);
+		$read_settings = $db_config->getConnectionConfig(\Elgg\Database\Config::READ);
 	} else {	
 		$read_settings = $db_config->getConnectionConfig(\Elgg\Database\Config::READ_WRITE);
 	}
