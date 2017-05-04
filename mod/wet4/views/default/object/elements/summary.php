@@ -74,14 +74,6 @@ if ( !$title_link && json_decode($entity->title) ){
 
 if ($title_link) {
     echo "<span class=\"mrgn-bttm-0 summary-title\">$title_link</span>";//put in span because some links would not take classes
-    if (($entity->description) && ($entity->description2)) {
-	    echo " <span class='indicator_summary' title='".elgg_echo('indicator:summary:title')."'>".elgg_echo('indicator:summary')."</span>"; //indicator translation
-	}elseif (elgg_get_context() == 'polls'){
-	    if ((polls_get_choice_array2($entity)) && (polls_get_choice_array($entity))) {
-	    	
-	    	echo " <span class='indicator_summary' title='".elgg_echo('indicator:summary:title')."'>".elgg_echo('indicator:summary')."</span>"; //indicator translation for polls
-	    }
-	}
     echo elgg_in_context($context);
 
 	// identify available content
