@@ -144,6 +144,11 @@ function cp_scan_mentions($cp_object) {
 	return false;
 }
 
+function shorten_text($text, $limit = 15) {
+
+	$new_text = (strlen($text) > 15) ? substr($text, 0, $limit - 1) : $text;
+	return $new_text;
+}
 
 function isJson($string) {
   json_decode($string);
