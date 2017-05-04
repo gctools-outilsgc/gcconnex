@@ -361,8 +361,9 @@ li.link-disabled a {
     left: 0px;
     right: 0px;
     margin: auto;
-    max-width: 50% !important;
+    max-width: 100% !important;
     max-height: 40% !important;
+    width: 45%;
 }
 .mission-skills-popup .modal-header{
     background: #047177;
