@@ -18,14 +18,14 @@ if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gs
     <div id="app-brand">
         <div class="container">
             <div class="row">
-                <section class="col-lg-2 col-md-3 col-xs-8">
+                <section class="col-lg-2 col-md-2 col-xs-8">
                     <div class="app-name">
                     <a href="<?php echo $site_url; ?>">
                         <span><span class="bold-gc">GC</span>connex</span>
                     </a>
                     </div>
                 </section>
-                <section class="col-lg-6 hidden-sm hidden-xs">
+                <section class="col-lg-6 col-md-5 hidden-sm hidden-xs">
                      <ul id="" class="pull-left list-unstyled mrgn-bttm-0">
                         <li class="pull-left tool-link">
                         <a href="<?php echo elgg_echo('wet:gcpediaLink');?>">

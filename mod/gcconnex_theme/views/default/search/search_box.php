@@ -48,7 +48,7 @@ function handleKeyPress(e){
 
 <!-- Basically just moved the search to this file to output the section -->
 
-    <section id="wb-srch" class="col-sm-3 text-right visible-md visible-lg">
+    <section id="wb-srch" class="col-sm-4 col-lg-3 text-right visible-md visible-lg">
         <h2> <?php echo elgg_echo('wet:searchHead'); ?> </h2>
         <div name="cse-search-box" class='form-inline'>
             <div class='form-group'>
