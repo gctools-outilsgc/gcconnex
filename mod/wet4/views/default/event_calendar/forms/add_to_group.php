@@ -7,6 +7,7 @@
 
 $event_id = $vars['event']->guid;
 $event_container = $vars['event']->container_guid;
+$lang = get_current_language();
 
 // get the list of all groups:
 
@@ -44,13 +45,13 @@ foreach ($remove_group as $group) {
 if ($remove_group) {
 	foreach($groups as $group) {
 		if (($group->guid != $event_container) && !in_array($group->guid, $remove_group_ids)) {
-			$add_options[$group->guid] = $group->name;
+			$add_options[$group->guid] = gc_explode_translation($group->name,$lang);
 		}
 	}
 } else {
 	foreach($groups as $group) {
 		if ($group->guid != $event_container && $group->canEdit()) {
-			$add_options[$group->guid] = $group->name;
+			$add_options[$group->guid] = gc_explode_translation($group->name,$lang);
 		}
 	}
 }
