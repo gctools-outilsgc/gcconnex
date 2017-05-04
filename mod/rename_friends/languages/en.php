@@ -202,9 +202,9 @@ Pour consulter son profil, cliquez ici : %s
      * 	Invite Friends
      */
 	
-	'friends:invite' => "Invite {$lplural}",
-	'invitefriends:introduction' => "To invite {$lplural} to join you on this network, enter their email addresses below (one per line):",
-	'invitefriends:success' => "Your {$lplural} were invited.",
+	'friends:invite' => "Invite colleagues",
+	'invitefriends:introduction' => "To invite colleagues to join you on this network, enter their email addresses below (one per line):",
+	'invitefriends:success' => "Your colleagues were invited.",
 	'invitefriends:email' => "
 You have been invited to join %s by %s. They included the following message:
 

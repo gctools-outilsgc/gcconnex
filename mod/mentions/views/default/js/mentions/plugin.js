@@ -187,7 +187,7 @@ CKEDITOR_mentions.prototype.timeout_callback = function (args) {
 			userOptions += '<li class="mention-users" data-name="'+ user.name+'" data-username="' + user.desc + '">' + user.icon + user.name + "</li>";
 		});
 
-    if (rsp) {
+    if (rsp && rsp.length > 0) {
       $('<div class="mention-suggestions"><ul class="list-unstyled mentions-autocomplete">' + userOptions + '</ul></div>').insertAfter(par);
     }
 

@@ -7,15 +7,24 @@ echo '<div id="customWidgets">';
                 $exact_match = elgg_extract('exact_match', $vars, false);
                 $show_access = elgg_extract('show_access', $vars, true);
 
-                
+
                 $owner = elgg_get_page_owner_entity();
+                $lang = get_current_language();
+
+                if($owner->title3){
+                		$groupName = gc_explode_translation($owner->title3, $lang);
+                }else{
+                		$groupName = $owner->name;
+                }
+
+                echo '<h2 class="wb-inv">'.$groupName."'s widgets</h2>";
 
                 elgg_push_context('groups');
                 $widget_types = elgg_get_widget_types();
 
-                
+
                 $context = elgg_get_context();
-                
+
 
                 $widgets = elgg_get_widgets($owner->guid, $context);
 
@@ -27,9 +36,9 @@ echo '<div id="customWidgets">';
                         'exact_match' => $exact_match,
                         'show_access' => $show_access,
                     );
-                    
+
                     echo elgg_view('page/layouts/widgets/add_panel', $params);
-                    
+
                 }
 
                 if (elgg_can_edit_widget_layout($context)) {
@@ -53,21 +62,22 @@ echo '<div id="customWidgets">';
                     } else {
                         $column_widgets = array();
                     }
-                    
+                    elgg_push_context('widgets');
                     echo "<div class=\"$widget_class elgg-widgets col-sm-6 col-xs-12 widget-area-col\" id=\"elgg-widget-col-$column_index\">";
-                    
+
                     if (sizeof($column_widgets) > 0) {
                         foreach ($column_widgets as $widget) {
                             if (array_key_exists($widget->handler, $widget_types)) {
                                 echo elgg_view_entity($widget, array('show_access' => $show_access));
                             }
-                            
+
                         }
                     }
                     echo '</div>';
+                    elgg_pop_context();
                 }
-            echo '</div>'; 
+            echo '</div>';
 
-            
+
 
 elgg_pop_context();

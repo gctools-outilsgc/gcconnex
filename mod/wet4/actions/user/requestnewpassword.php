@@ -25,7 +25,8 @@ if ($user) {
 
 		$message = array( // this is a special case, we will have a function built in cp_notification to generate some keys
 			'cp_msg_type' => 'cp_forgot_password',
-			'cp_user_pass_req_guid' => $user->guid
+			'cp_user_pass_req_guid' => $user->guid,
+			'cp_password_requester' => $user
 		);
 
 		$result = elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);

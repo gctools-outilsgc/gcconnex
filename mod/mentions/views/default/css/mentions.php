@@ -17,8 +17,8 @@
 
 .mentions-user-link {
 	display: inline;
-	padding: 5px;
-	border: 1px solid #eee;
+	padding: 3px;
+	/*border: 1px solid #eee;*/
 	border-radius: 8px;
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
@@ -34,7 +34,7 @@
 }
 
 #mentions-popup .panel-body {
-    padding: 10px;
+    padding: 0;
 }
 
 #mentions-popup .elgg-autocomplete-item {

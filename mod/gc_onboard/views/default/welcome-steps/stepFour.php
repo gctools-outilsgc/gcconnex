@@ -74,7 +74,7 @@
 
     <div class="mrgn-bttm-md mrgn-tp-md pull-right">
 
-        <button type="button" class="btn btn-primary got-it" data-dismiss="modal"><?php echo elgg_echo('groupTour:done'); ?></button>
+        <button style="background:#047177;"  type="button" class="overlay-close btn btn-primary got-it " data-dismiss="modal"><?php echo elgg_echo('groupTour:done'); ?></button>
 
     </div>
 
@@ -82,7 +82,7 @@
 
         //set values so the pop up doesnt come up again
     $('.got-it').on('click', function () {
-
+ $('#fullscreen-fade').removeClass('fullscreen-fade');
         elgg.action("onboard/set_cta", {
             data: {
                 type: 'onboard',

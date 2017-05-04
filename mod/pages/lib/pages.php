@@ -130,12 +130,11 @@ function pages_get_navigation_tree($container) {
 
 			foreach ($children as $child) {
 
-                $child_title = gc_explode_translation($child->title,$lang);
+      $child_title = gc_explode_translation($child->title,$lang);
 
-				
 				$tree[] = array(
 					'guid' => $child->getGUID(),
-					'title' => $child->title,
+					'title' => $child_title,
 					'url' => $child->getURL(),
 					'parent_guid' => $parent->getGUID(),
 					'depth' => $depths[$parent->guid] + 1,

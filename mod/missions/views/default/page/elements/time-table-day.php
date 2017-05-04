@@ -46,7 +46,7 @@ $input_duration = elgg_view('input/text', array(
 
 <div style="display:inline-block;">
 	<div style="text-align:center;">
-		<h4> <?php echo elgg_echo('missions:' . $day); ?> </h4>
+		<div class='h4'> <?php echo elgg_echo('missions:' . $day); ?> </div>
 	</div>
 	<div>
 		<?php echo $input_start; ?>

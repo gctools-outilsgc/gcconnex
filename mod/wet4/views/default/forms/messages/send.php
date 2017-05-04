@@ -15,7 +15,7 @@
 
 
 // if it's from collection, create a list of recipient
-if ($_GET['collection']) { 
+if ($_GET['collection']) {
 	$collection_id = $_GET['collection'];
 	$members = get_members_of_access_collection($collection_id, true);
 
@@ -96,6 +96,7 @@ $content = get_user_access_collections(elgg_get_logged_in_user_guid());
 	<?php echo elgg_view('input/text', array(
 		'name' => 'subject',
         'id' => 'subject',
+    'required' => 'required',
 		'value' => $subject,
 	));
 	?>
@@ -105,6 +106,8 @@ $content = get_user_access_collections(elgg_get_logged_in_user_guid());
 	<?php echo elgg_view("input/longtext", array(
 		'name' => 'body',
         'id' => 'body',
+        'required' => 'required',
+        'class' => 'validate-me',
 		'value' => $body,
 	));
 	?>

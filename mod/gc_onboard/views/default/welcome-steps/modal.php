@@ -3,19 +3,78 @@
  * modal.php
  *
  * Intro to welcome modal. Gives user a choice to not show again, show later (default 1 week later) or start module.
+ *
+ * Nick - Added aria-live so this modal will be focused on when the page loads.
+ * Nick - Changed the whole modal
  */
 
 elgg_load_css('bsTable'); //bootstrap table css
 //elgg_load_css('onboard-css'); //custom css.
 elgg_load_js('bsTablejs'); //bootstraptable
+
 ?>
 
-<button type="button" id="onboardPopup" class="btn btn-primary gcconnex-edit-profile hidden wb-invisible" data-toggle="modal" data-target="#editProfile" data-keyboard="false" data-backdrop="static"  data-colorbox-opts= '{"inline":true, "href":"#editProfile", "innerWidth": 800, "maxHeight": "80%"}'>I do the onboard thing</button>
+<p><a id="onboardPopup" aria-hidden="true" href="#editProfile" aria-controls="mid-screen" class="overlay-lnk wb-invisible" role="button">Onboard Start</a></p>
+
+
+<script>
+    //Open and close new popup
+    $('#onboardPopup').on('click', function(){
+        $('#fullscreen-fade').toggleClass('fullscreen-fade');
+        $('#editProfile').attr('aria-hidden',false);
+        $('#editProfile').focus();
+        $('#fullscreen-fade').on('click', function(){
+            $(this).removeClass('fullscreen-fade');
+            elgg.action("onboard/set_cta", {
+            data: {
+                type: 'onboard',
+                count: <?php echo time(); ?>,
+            },
+            success: function (wrapper) {
+
+            }
+        });
+        });
+        $('.overlay-close').on('click',function(){
+            $('#fullscreen-fade').removeClass('fullscreen-fade');
+            elgg.action("onboard/set_cta", {
+            data: {
+                type: 'onboard',
+                count: <?php echo time(); ?>,
+            },
+            success: function (wrapper) {
+
+            }
+        });
+        });
+        $(document).keyup(function(e){
+            if(e.keyCode ==27){
+                $('#fullscreen-fade').removeClass('fullscreen-fade');
+                elgg.action("onboard/set_cta", {
+                data: {
+                    type: 'onboard',
+                    count: <?php echo time(); ?>,
+                },
+                success: function (wrapper) {
+
+            }
+        });
+            }
+        })
+    });
+
+
+</script>
 <!-- Modal -->
-<div class="modal fade" id="editProfile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="fullscreen-fade"></div>
+<section id="editProfile" class="wb-overlay modal-content overlay-def onboard-popup" aria-live="assertive">
+
+    <header>
+        <h2>Getting Started</h2>
+    </header>
     <div class="modal-dialog modal-lg">
 
-        <div class="panel panel-custom panel-onboard"  id="welcome-step">
+        <div class=""  id="welcome-step" tabindex="-1">
             <?php
             //Nick - Testing for the ?last_step=true to show stepFour view instead
             //?last_step=true is set by the last step of the bootstrap tour
@@ -29,7 +88,7 @@ elgg_load_js('bsTablejs'); //bootstraptable
 
 
             ?>
-            <div class="panel-heading clearfix">
+            <div class="clearfix">
 
                 <!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times fa-lg" aria-hidden="true"></i></button>-->
 
@@ -55,10 +114,10 @@ elgg_load_js('bsTablejs'); //bootstraptable
                         //also so they dont chnage their metadata
                         if(!$helpLaunch){
                             ?>
-                    <button type="button" class="btn btn-default never-again" data-dismiss="modal">
+                    <button type="button" class="btn btn-default never-again overlay-close" data-dismiss="modal">
                         <?php echo elgg_echo('onboard:closeCtaLast'); ?>
                     </button>
-                    <button type="button" class="btn btn-default not-now" data-dismiss="modal">
+                    <button type="button" class="btn btn-default not-now overlay-close" data-dismiss="modal">
                         <?php echo elgg_echo('onboard:welcome:intro:skip'); ?>
                     </button>
                     <?php } ?>
@@ -75,11 +134,40 @@ elgg_load_js('bsTablejs'); //bootstraptable
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
-</div>
+</section>
 <!-- /.modal -->
 <style>
     .modal-open .modal {
         background: rgba(0,0,0,0.4);
+    }
+    .fullscreen-fade{
+        z-index: 1040;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: rgba(0,0,0,0.25);
+    }
+    .onboard-popup{
+        bottom: 0;
+        /*left: 0;
+        right: 0;*/
+        top: 0;
+        margin: auto;
+        width:95%;
+        max-width:1100px !important;
+        max-height:800px !important;
+    }
+    .overlay-def header{
+        padding:10px 45px 2px 1em !important;
+    }
+
+    @media (min-width: 200px) and (max-width: 1200px) {
+      .onboard-popup {
+        left:0;
+        right:0;
+      }
     }
 
 </style>
@@ -90,6 +178,7 @@ elgg_load_js('bsTablejs'); //bootstraptable
             success: function (output) {
 
                 $('#welcome-step').html(output);
+                $('#welcome-step').focus();
 
             }
         });

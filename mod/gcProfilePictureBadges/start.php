@@ -6,7 +6,7 @@
 
 	/* Initialise the theme */
 	function gcProfilePictureBadges_init(){
-		
+
 		//elgg_extend_view('icon/user/default', 'gcProfilePictureBadges/default');
 		elgg_register_action( "avatar/crop", elgg_get_plugins_path() . "gcProfilePictureBadges/actions/avatar/crop.php" );
 
@@ -21,6 +21,10 @@
 
 			 //badge css
 			 elgg_extend_view('css/elgg', 'gcProfilePictureBadges/css');
+
+			 //group control
+			 elgg_extend_view('groups/edit', 'groups/edit/badge_tool', 329);
+			 elgg_register_action('group/enable_badge', elgg_get_plugins_path() . "gcProfilePictureBadges/actions/group/enable_badge.php");
 	}
 
 	// Initialise log browser

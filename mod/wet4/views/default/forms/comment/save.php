@@ -14,16 +14,50 @@
  * Description: Added accessible labels
  * Author: GCTools Team
  */
+?>
+<script>
+
+function join_comment(group_guid, user_guid, status) {
+
+     elgg.action('comment/join', {
+            data: {
+                group_guid: group_guid, user_guid: user_guid
+            },
+            success: function (message) {
+               if (status == 'open') { //joined group
+
+                  elgg.system_message(elgg.echo('groups:join'));
+
+                }else{
+                  elgg.system_message(elgg.echo('groups:joinrequestmade'));
+
+            }
+          }
+        });
+}
+</script>
+
+<?php
+
 if (!elgg_is_logged_in()) {
 	return;
 }
 
 // var for the modal
 $entity = elgg_extract('entity', $vars);
-$container = $entity->getContainerEntity();
-$userentity = elgg_get_logged_in_user_entity();
-
 $comment = elgg_extract('comment', $vars);
+
+if(empty($entity)){
+	$container = $comment->getContainerEntity();
+}else{
+	$container = $entity->getContainerEntity();
+}
+
+$userentity = elgg_get_logged_in_user_entity();
+$group = get_entity($container->guid);
+$user = get_user($userentity->guid);
+
+
 /* @var ElggComment $comment */
 
 $inline = elgg_extract('inline', $vars, false);
@@ -51,7 +85,7 @@ if ($comment && $comment->canEdit()) {
 	$comment_label  = elgg_echo("generic_comments:add");
 
 	if ((elgg_instanceof($container, 'group')) && (!$container->isMember($userentity))){
-	
+
 	$submit_input = elgg_view('input/button', array('value' => elgg_echo('comment'), 'class' => 'mrgn-tp-sm btn btn-primary', 'data-target' => "#notif_comment", 'data-toggle' => "modal"));
 
 	}else{
@@ -73,6 +107,8 @@ if ($inline) {
 	$comment_input = elgg_view('input/text', array(
 		'name' => 'generic_comment',
 		'id' => 'generic_comment',
+    'class' => 'validate-me',
+    'required' => 'required',
 		'value' => $comment_text,
 	));
 
@@ -81,6 +117,8 @@ if ($inline) {
 
 	$comment_input = elgg_view('input/longtext', array(
 		'name' => 'generic_comment',
+    'class' => 'validate-me',
+    'required '=> "required",
 		'value' => $comment_text,
 		'id' => 'generic_comment',
 	));
@@ -105,14 +143,7 @@ FORM;
 }
 
 ?>
-<script>
-function join_comment() {
 
-	document.getElementById('join').click();
-	$('.elgg-system-messages').html("<?php echo elgg_echo('groups:joined'); ?>");
-}
-
-</script>
 
 <!-- Modal -->
 <div class="modal fade" id="notif_comment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -120,7 +151,7 @@ function join_comment() {
     <div class="modal-content modal-content1">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-     <?php   
+     <?php
      echo '<h4 class="modal-title" id="myModalLabel">'.elgg_echo("comment_notif_title",array($container->getDisplayName())).'</h4>
       </div>
       <div class="modal-body">
@@ -128,7 +159,7 @@ function join_comment() {
       </div>
       <div class="modal-footer">';
 
-      	
+
 
          $url = elgg_get_site_url() . "action/groups/join?group_guid={$container->getGUID()}";
               $url = elgg_add_action_tokens_to_url($url);
@@ -151,19 +182,20 @@ function join_comment() {
 
 	if ( $container instanceof ElggGroup ){
      		if ($container->isPublicMembership() || $container->canEdit()) {
-                        echo '<button class="mrgn-tp-sm btn btn-primary" onclick = "join_comment()">'.elgg_echo("groups:join").'</button>';
-			
+                        echo '<button class="mrgn-tp-sm btn btn-primary" onclick = "join_comment('.$group->guid.',\''.$user->guid.'\',\'open\')">'.elgg_echo("groups:join").'</button>';
+
 		} else {
 			// request membership
-                        echo '<button class="mrgn-tp-sm btn btn-primary" onclick = "join_comment()">'.elgg_echo("groups:joinrequest").'</button>';
-			
+                        echo '<button class="mrgn-tp-sm btn btn-primary" onclick = "join_comment('.$group->guid.',\''.$user->guid.'\',\'close\')">'.elgg_echo("groups:joinrequest").'</button>';
+
 		}
 	}
-	 				
+
 	echo elgg_view('input/submit', array('value' => elgg_echo('comment'), 'id' => 'comment_test','class' => 'mrgn-tp-sm btn', ));
-                         
+
       	?>
-      
+
+
       </div>
     </div>
   </div>

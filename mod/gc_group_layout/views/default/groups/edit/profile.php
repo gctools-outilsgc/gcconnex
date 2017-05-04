@@ -95,6 +95,7 @@ echo $btn_language;
 		"name" => "name",
 		"value" => $name,
         'id' => 'name',
+        'required '=> "required",
         'class' => 'ui-autocomplete-input',
 	));
    // }?>
@@ -121,6 +122,7 @@ echo $btn_language;
         "name" => "name2",
         "value" => $name2,
         'id' => 'name2',
+        'required '=> "required",
         'class' => 'ui-autocomplete-input',
     ));
   //  }?>
@@ -136,7 +138,7 @@ echo $btn_language;
         <?php echo elgg_echo('wet:cover_photo_input'); ?>
     </label>
     <div class="timeStamp"><?php echo elgg_echo('wet:cover_photo_dim');?></div>
-   
+
     <?php echo elgg_view("input/file", array("name" => "c_photo", 'id' => 'c_photo')); ?>
     <?php echo elgg_view('input/checkbox', array('name'=>'remove_photo', 'label'=> elgg_echo('wet:cover_photo_remove'), 'value'=>'remove_c_photo',));?>
 </div>
@@ -146,12 +148,12 @@ echo $btn_language;
 /** GCconnex change: character limit, count for Brief discription for Issue #61. **/
 $briefmaxlength = 350;					// Maximum length for brief description character count
 foreach ((array)$group_profile_fields as $shortname => $valtype) {
-    
+
 	if ($valtype == "hidden") {
 		echo elgg_view("input/{$valtype}", array(
 			"name" => $shortname,
 			"value" => elgg_extract($shortname, $vars),
-            
+
 		));
 		continue;
 	}
@@ -246,12 +248,12 @@ jQuery(function(){
 
         jQuery('#btnClickfr').click(function(){
                jQuery('.fr').show();
-               jQuery('.en').hide();  
+               jQuery('.en').hide();
         });
 
           jQuery('#btnClicken').click(function(){
                jQuery('.en').show();
-               jQuery('.fr').hide();  
+               jQuery('.fr').hide();
         });
 });
 </script>

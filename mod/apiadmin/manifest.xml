@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+	<name>API Admin</name>
+	<author>Curverider Ltd and Moodsdesign Ltd</author>
+	<version>1.0</version>
+	<category>development</category>
+	<category>admin</category>
+	<description>A UI to manage Web Service API keys.</description>
+	<website>http://www.elgg.org/</website>
+	<copyright>Curverider Ltd 2011 and Moodsdesign Ltd 2012</copyright>
+	<license>GNU General Public License version 2</license>
+	<requires>
+		<type>elgg_release</type>
+		<version>1.8</version>
+	</requires>
+</plugin_manifest>

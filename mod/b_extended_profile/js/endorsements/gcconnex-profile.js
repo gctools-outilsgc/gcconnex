@@ -161,7 +161,7 @@ $(document).ready(function() {
     $('.save-work-experience').on("click", function(){$('.edit-work-experience').focus()});
     $('.cancel-work-experience').on("click", function(){$('.edit-work-experience').focus()});
 
-    $('.edit-skills').on("click", function () { $('.cancel-skills').focus(); $('.gcconnex-skill-limit').removeClass('hidden');});
+    $('.edit-skills').on("click", function () {  $('.gcconnex-skill-limit').removeClass('hidden');});
     $('.save-skills').on("click", function () { $('.edit-skills').focus(); $('.gcconnex-skill-limit').addClass('hidden'); });
     $('.cancel-skills').on("click", function () { $('.edit-skills').focus(); $('.gcconnex-skill-limit').addClass('hidden'); });
 
@@ -176,14 +176,12 @@ $(document).ready(function() {
     //allow use of keyboard to endorse skills
     $('.skill-container').bind('keypress', function (e) {
 
-        if (e.keyCode == 13) {
+        if (e.keyCode == 13 && elgg.get_page_owner_guid() != elgg.get_logged_in_user_guid()) {
 
             if ($(this).hasClass('gcconnex-endorsement-add')) {
-
                 addEndorsement($(this))
             } else {
                retractEndorsement($(this))
-
             }
         }
 
@@ -245,7 +243,7 @@ function editProfile(event) {
                     $('load-spinner').addClass('hidden');
                     $('.load-spinner').addClass('wb-invisible');
                 });
-            $('.gcconnex-profile-about-me-display').hide();
+            $('.gcconnex-profile-about-me-display').hide().attr('aria-hidden', true);
             break;
         case 'education':
             // Edit the edumacation
@@ -267,7 +265,7 @@ function editProfile(event) {
                     $('load-spinner').addClass('hidden');
                     $('.load-spinner').addClass('wb-invisible');
                 });
-            $('.gcconnex-profile-education-display').hide();
+            $('.gcconnex-profile-education-display').hide().attr('aria-hidden', true);
             break;
         case 'work-experience':
             // Edit the experience for this user
@@ -295,7 +293,7 @@ function editProfile(event) {
                     $('.cancel-' + $section).removeClass('wb-invisible');
 
                     $('load-spinner').addClass('hidden');
-                    $('.load-spinner').addClass('wb-invisible');
+                    $('.load-spinner').addClass('wb-invisible').attr('aria-hidden', true);
                 });
             break;
 
@@ -305,7 +303,7 @@ function editProfile(event) {
                 var christineFix = elgg.echo("gcconnex_profile:gc_skill:add", null, 'en');
                 $('.gcconnex-skills').append('<div class="gcconnex-endorsements-input-wrapper">' +
                 '<input type="text" class="gcconnex-endorsements-input-skill" onkeyup="checkForEnter(event)"/>' +
-                '<button class="btn btn-primary gcconnex-endorsements-add-skill">' + ' + add skill / ajouter des compétences ' + '</button>' +
+                '<button class="btn btn-primary gcconnex-endorsements-add-skill">' + elgg.echo('gcconnex_profile:gc_skill:add') + '</button>' +
                 '</div>');
             }
 
@@ -339,8 +337,8 @@ function editProfile(event) {
             });
 
             // create a "delete this skill" link for each skill
-            $('.gcconnex-endorsements-skill').each(function(){
-                $(this).after('<button class="delete-skill" onclick="deleteEntry(this)" data-type="skill">' + '<i class="fa fa-trash-o delete-skill-img"></i>Delete / Supprimer' + '</button>'); //goes in here i think..
+            $('.gcconnex-endorsements-count').each(function(){
+                $(this).after('<button class="delete-skill" onclick="deleteEntry(this)" data-type="skill">' + '<i class="fa fa-2x icon-unsel fa-trash-o delete-skill-img"><span class="wb-inv">' + elgg.echo('delete') + '</span></i></button>'); //goes in here i think..
             });
             $('.save-' + $section).show();
             $('.save-' + $section).removeClass('hidden');
@@ -397,7 +395,7 @@ function editProfile(event) {
             function(data) {
                 // Output the 'edit portfolio' page somewhere
                 $('.gcconnex-portfolio').append('<div class="gcconnex-portfolio-edit-wrapper">' + data + '</div>');
-                $('.gcconnex-profile-portfolio-display').hide();
+                $('.gcconnex-profile-portfolio-display').hide().attr('aria-hidden', true);
                 $('.save-' + $section).show();
                 $('.save-' + $section).removeClass('hidden');
                 $('.save-' + $section).removeClass('wb-invisible');
@@ -412,6 +410,9 @@ function editProfile(event) {
         default:
             break;
     }
+
+    //focus on loaded content
+    $('#edit-'+$section).attr('aria-live', 'assertive').focus();
 }
 
 function hideLanguage() {
@@ -706,38 +707,6 @@ function saveProfile(event) {
                   }
                 });
 
-            // save the information the user just edited
-            elgg.action('b_extended_profile/edit_profile', {
-                data: {
-                    'guid': elgg.get_page_owner_guid(),
-                    'delete': $delete_guid,
-                    'eguid': $education_guid,
-                    'section': 'education',
-                    'school': $school,
-                    'startdate': $startdate,
-                    'startyear': $startyear,
-                    'enddate': $enddate,
-                    'endyear': $endyear,
-                    'ongoing': $ongoing,
-                    'degree': $degree,
-                    'field': $field,
-                    'access': $access
-                },
-                success: function() {
-                    // fetch and display the information we just saved
-                    $.get(elgg.normalize_url('ajax/view/b_extended_profile/education'),
-                        {
-                            'guid': elgg.get_page_owner_guid()
-                        },
-                        function(data) {
-                            // Output in a DIV with id=somewhere
-                            $('.gcconnex-education-display').remove();
-                            $('.gcconnex-education').append('<div class="gcconnex-education-display">' + data + '</div>');
-                        });
-                }
-            });
-            $('.gcconnex-education-edit-wrapper').remove();
-
                 //field of study field
                 var $field = [];
                 $('.gcconnex-education-field').not(":hidden").each(function() {
@@ -791,36 +760,6 @@ function saveProfile(event) {
                     $('.gcconnex-education-edit-wrapper').remove();
                     $('#edu-error').remove();
 
-            var work_experience = {};
-            var experience = [];
-            work_experience.edit = experience;
-            work_experience.delete_guids = [];
-            var access = $('.gcconnex-work-experience-access').val();
-
-            $('.gcconnex-work-experience-entry').each(function() {
-                if ( $(this).is(":hidden") ) {
-                    work_experience.delete_guids.push($(this).data('guid'));
-                }else {
-                    experience = {
-                        'eguid': $(this).data('guid'),
-                        'organization': $(this).find('.gcconnex-work-experience-organization').val(),
-                        'title': $(this).find('.gcconnex-work-experience-title').val(),
-                        'startdate': $(this).find('.gcconnex-work-experience-startdate').val(),
-                        'startyear': $(this).find('.gcconnex-work-experience-start-year').val(),
-                        'enddate': $(this).find('.gcconnex-work-experience-enddate').val(),
-                        'endyear': $(this).find('.gcconnex-work-experience-end-year').val(),
-                        'ongoing': $(this).find('.gcconnex-work-experience-ongoing').prop('checked'),
-                        'responsibilities': $(this).find('.gcconnex-work-experience-responsibilities').val()
-                    };
-                    experience.colleagues = [];
-                    $(this).find('.gcconnex-avatar-in-list').each(function() {
-                        if ($(this).is(':visible')) {
-                            experience.colleagues.push($(this).data('guid'));
-                        }
-                    });
-                    work_experience.edit.push(experience);
-                }
-            });
                   } else if($('#edu-error').size() < 1) {
                     $('div.save-education').prepend('<section id="edu-error" class="alert alert-danger">'+errorMsg+'</section>');
                   }
@@ -1103,17 +1042,17 @@ function cancelChanges(event) {
         case "about-me":
             // show the about me
             $('.gcconnex-about-me-edit-wrapper').remove();
-            $('.gcconnex-profile-about-me-display').show();
+            $('.gcconnex-profile-about-me-display').show().attr('aria-hidden', false);
             break;
         case "education":
             $('.gcconnex-education-edit-wrapper').remove();
             $('#edu-error').remove();
-            $('.gcconnex-profile-education-display').show();
+            $('.gcconnex-profile-education-display').show().attr('aria-hidden', false);
             break;
         case "work-experience":
             $('.gcconnex-work-experience-edit-wrapper').remove();
             $('#work-error').remove();
-            $('.gcconnex-profile-work-experience-display').show();
+            $('.gcconnex-profile-work-experience-display').show().attr('aria-hidden', false);
             break;
         case "skills":
             $('.gcconnex-endorsements-input-wrapper').remove();
@@ -1121,7 +1060,7 @@ function cancelChanges(event) {
             $('.delete-skill').remove();
             $('.delete-skill-img').remove();
             $('.gcconnex-skills-skill-wrapper').removeClass('endorsements-markedForDelete');
-
+            $('.gcconnex-skill-entry').show();
             $('.gcconnex-skills-skill-wrapper').show();
             $('.temporarily-added').remove();
             break;
@@ -1131,7 +1070,7 @@ function cancelChanges(event) {
             break;
         case 'portfolio':
             $('.gcconnex-portfolio-edit-wrapper').remove();
-            $('.gcconnex-profile-portfolio-display').show();
+            $('.gcconnex-profile-portfolio-display').show().attr('aria-hidden', true);
             break;
         default:
             break;
@@ -1232,19 +1171,21 @@ function addNewSkill(newSkill) {
 
     newSkill = escapeHtml(newSkill);
     // inject HTML for newly added skill
-    $('.gcconnex-skills-skills-list-wrapper').append('<div class="gcconnex-skill-entry temporarily-added" data-skill="' + newSkill + '">' +
-    '<div title="Number of endorsements" class="gcconnex-endorsements-count" data-skill="' + newSkill + '">0</div>' +
+    $('.gcconnex-skills-skills-list-wrapper').append('<div tabindex="-1" class="gcconnex-skill-entry temporarily-added" data-skill="' + newSkill + '">' +
     '<div data-skill="' + newSkill + '" class="gcconnex-endorsements-skill">' + newSkill + '</div>' +
-    '<button class="delete-skill" data-type="skill" onclick="deleteEntry(this)">' + '<i class="fa fa-trash-o delete-skill-img"></i>Delete / Supprimer' + '</button></div>');
+    '<div class="gcconnex-endorsements-count" data-skill="' + newSkill + '">0</div>' +
+    '<button class="delete-skill" data-type="skill" onclick="deleteEntry(this)">' + '<i class="fa fa-2x icon-unsel fa-trash-o delete-skill-img"><span class="wb-inv">' + elgg.echo('delete') + '</span></i></button></div>');
     $('.gcconnex-endorsements-input-skill').val('');                                 // clear the text box
     $('.gcconnex-endorsements-input-skill').typeahead('val', '');                                           // clear the typeahead box
     $('.gcconnex-endorsements-input-skill').hide();                                  // hide the text box
     if ( $('.gcconnex-skill-entry:visible').length < 15 ) {
         $('.gcconnex-endorsements-add-skill').show();                                    // show the 'add a new skill' link
     }
-    $('.add-endorsements-' + newSkill).on('click', addEndorsement);            // bind the addEndoresement function to the '+'
-    $('.retract-endorsements-' + newSkill).on('click', retractEndorsement);    // bind the retractEndorsement function to the '-'
+    //$('.add-endorsements-' + newSkill).on('click', addEndorsement);            // bind the addEndoresement function to the '+'
+  //  $('.retract-endorsements-' + newSkill).on('click', retractEndorsement);    // bind the retractEndorsement function to the '-'
     $('.delete-' + newSkill).on('click', deleteSkill);                        // bind the deleteSkill function to the 'Delete this skill' link
+
+    $('.gcconnex-skill-entry[data-skill="' + newSkill + '"]').focus();
 }
 
 /*
@@ -1262,9 +1203,11 @@ function addEndorsement(identifier) {
     var targetSkill = $(identifier).data('skill');
     var targetSkillDashed = targetSkill.replace(/\s+/g, '-').toLowerCase(); // replace spaces with '-' for css classes
 
-    var endorse_count = $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.gcconnex-endorsements-count').text();
+    var endorse = $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.gcconnex-endorsements-count').text();
+    endorse = endorse.split(" ");
+    var endorse_count = endorse[0];
     endorse_count++;
-    $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.gcconnex-endorsements-count').text(endorse_count);
+    $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.gcconnex-endorsements-count').html(endorse_count+'<span class="wb-invisible">'+elgg.echo('gcconnex_profile:gc_skill:endorsement')+'</span>');
     $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.skill-container').removeClass('gcconnex-endorsement-add').addClass('gcconnex-endorsement-retract');
     $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.skill-container').attr('onclick', 'retractEndorsement(this)');
     $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.skill-container').attr('title', 'Retract');
@@ -1284,9 +1227,11 @@ function retractEndorsement(identifier) {
 
     var targetSkill = $(identifier).data('skill');
     var targetSkillDashed = targetSkill.replace(/\s+/g, '-').toLowerCase(); // replace spaces with '-' for css classes
-    var endorse_count = $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.gcconnex-endorsements-count').text();
+    var endorse = $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.gcconnex-endorsements-count').text();
+    endorse = endorse.split(" ");
+    var endorse_count = endorse[0];
     endorse_count--;
-    $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.gcconnex-endorsements-count').text(endorse_count);
+    $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.gcconnex-endorsements-count').html(endorse_count+'<span class="wb-invisible">'+elgg.echo('gcconnex_profile:gc_skill:endorsement')+'</span>');
     $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.skill-container').removeClass('gcconnex-endorsement-retract').addClass('gcconnex-endorsement-add');
     $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.skill-container').attr('onclick', 'addEndorsement(this)');
     $('.gcconnex-skill-entry[data-guid="' + skill_guid + '"]').find('.skill-container').attr('title', 'Endorse / Valider');
@@ -1317,6 +1262,9 @@ function addMore(identifier) {
                 user_search_init(this);
             });
         }
+
+        //focus on new form
+        $('.gcconnex-'+another+'-entry').last().focus();
     });
 }
 
@@ -1334,16 +1282,29 @@ function deleteEntry(identifier) {
         // mark the entry for deletion and hide it from view
         $(identifier).closest('.gcconnex-' + entryType + '-entry').hide();
     }
-    console.log(entryType);
 
-    //for tabbing users
-    //add additional 's' to skill to grab right class
     if(entryType == 'skill'){
-        $('.cancel-' + entryType + 's').focus();
+
+      if($(identifier).parent().parent().not(':last-child') && $(identifier).parent().parent().next().is(':visible')){
+          $(identifier).parent().parent().next().focus();
+      } else if($(identifier).parent().parent().not(':last-child') && $(identifier).parent().parent().next().not(':visible')){
+          $('.gcconnex-endorsements-add-skill').focus();
+      } else if($(identifier).parent().parent().is(':last-child')){
+          $('.gcconnex-endorsements-add-skill').focus();
+      }
+
     } else {
-        $('.cancel-' + entryType).focus();
+
+      if($(identifier).parent().not(':last-child') && $(identifier).parent().next().is(':visible')){
+          $(identifier).parent().next().focus();
+      } else if($(identifier).parent().not(':last-child') && $(identifier).parent().next().not(':visible')){
+          $('.gcconnex-'+entryType+'-add-another').focus();
+      } else if($(identifier).parent().is(':last-child')){
+          $('.gcconnex-'+entryType+'-add-another').focus();
+      }
 
     }
+
 }
 
 /*

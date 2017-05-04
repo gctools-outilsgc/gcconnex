@@ -3,23 +3,89 @@
 elgg_register_event_handler('init', 'system', 'gc_fedsearch_gsa_init');
 
 function gc_fedsearch_gsa_init() {
+
 	// strip out all the (broken) hyperlink so that the GSA doesn't recursively create indices
 	elgg_register_plugin_hook_handler('view', 'output/longtext', 'entity_url');
 	elgg_register_plugin_hook_handler('view', 'groups/profile/fields', 'group_url');
+
+	// allow gsa result set to display bilingual titles
+	elgg_register_plugin_hook_handler('view', 'page/elements/title', 'entity_title');
+
 	// css layout for pagination
 	$gsa_pagination = elgg_get_plugin_setting('gsa_pagination','gc_fedsearch_gsa');
 	if ($gsa_pagination) elgg_extend_view('css/elgg', 'css/intranet_results_pagination', 1);
 	
-	elgg_extend_view('page/elements/head', 'page/elements/head_gsa', 1);  
+
+	if (((!$gsa_usertest) && strcmp($gsa_agentstring,strtolower($_SERVER['HTTP_USER_AGENT'])) == 0) || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ) {
+		// strip out all the (broken) hyperlink so that the GSA doesn't recursively create indices
+		elgg_extend_view('page/elements/head', 'page/elements/head_gsa', 1);
+		elgg_register_plugin_hook_handler('view', 'output/longtext', 'entity_url');
+		elgg_register_plugin_hook_handler('view', 'groups/profile/fields', 'group_url');
+
+		// these two hook handlers will change and remove the trailing URL (does not include the titles)
+		elgg_register_plugin_hook_handler('entity:url', 'object', 'modify_content_url',1);
+		elgg_register_plugin_hook_handler('entity:url', 'group', 'modify_group_url');
+	}
+}
+
+function entity_title($hook, $type, $return, $params) {
+	if ((!$gsa_usertest) && strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false) {
+
+		$entity_title = new DOMDocument();
+		$entity_title->loadHTML($return);
+
+
+		$filter_entity = array('blog', 'pages', 'discussion', 'file', 'bookmarks');
+		if (!in_array(elgg_get_context(), $filter_entity))
+			return;
+
+		$url = explode('/',$_SERVER['REQUEST_URI']);
+		$entity = get_entity($url[4]);
+
+		// let the gsa index the title of the entity as well
+		foreach ($entity_title->getElementsByTagName('h1')->item(0)->childNodes as $node) 
+			$node->nodeValue = "{$entity->title}  {$entity->title2}";
+		
+		$return = $entity_title->saveXML($entity_title);
+		return $return;
+	}
+	return;
 }
 
 
+function modify_group_url($hook, $type, $url, $params) {
+	$url = explode('/', $_SERVER['REQUEST_URI']);
+	if (strpos($_SERVER['REQUEST_URI'],"/groups/profile/") !== false)
+	{
+		if (sizeof($url) > 4)
+			forward("groups/profile/{$params['entity']->guid}");
+		//return "groups/profile/{$params['entity']->guid}";
+	}
+}
 
+/**
+ * covers: blogs, files, pages
+ * does not cover: bookmarks, missions, images, polls, wire, event
+ */
+function modify_content_url($hook, $type, $url, $params) {
+	$url = explode('/', $_SERVER['REQUEST_URI']);
+	if (strpos($_SERVER['REQUEST_URI'],"/view/") !== false)
+	{
+		$subtype = $params['entity']->getSubtype();
+		if ($subtype === 'groupforumtopic') $subtype = 'discussion';
+		if ($subtype === 'page_top') $subtype = 'pages';
+		if ($subtype === 'idea') $subtype = 'ideas';
+
+		if (sizeof($url) > 4)
+			forward("{$subtype}/view/{$params['entity']->guid}");
+		//return "{$subtype}/view/{$params['entity']->guid}";
+	}
+}
 
 
 function group_url($hook, $type, $return, $params) {
 	$gsa_agentstring = strtolower(elgg_get_plugin_setting('gsa_agentstring','gc_fedsearch_gsa'));
-	if ((!$gsa_usertest) && strcmp($gsa_agentstring,strtolower($_SERVER['HTTP_USER_AGENT'])) == 0)  {
+	if ((!$gsa_usertest) && strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false)  {
 		if (strcmp(get_context(), 'group_profile') == 0) {
 			$params['vars']['entity']->description = "<p>{$params['vars']['entity']->description}</p> <p>{$params['vars']['entity']->description2}</p>";
 			return $params['vars']['entity']->description;
@@ -43,8 +109,15 @@ function entity_url($hook, $type, $return, $params) {
 	$comment = new DOMDocument();
 	$comment->loadHTML($return);
 	$comment_block = $comment->getElementsByTagName('div');
-	$comment_text = $comment_block->item(0)->getAttribute('data-role');
 
+	if (strstr($return, 'data-role="comment-text"') !== false) {
+		return;
+	}
+
+	if (!empty(trim($comment_block)) || $comment_block === null)
+		$comment_text = $comment_block->item(0)->getAttribute('data-role');
+	else
+		$comment_text = "";
 
 	if (( strcmp($comment_text,'comment-text') == 0 || strcmp($comment_text, 'discussion-reply-text') == 0 ))
 		return;

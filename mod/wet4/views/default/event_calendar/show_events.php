@@ -72,13 +72,12 @@ if ($listing_format == 'paged' || $listing_format == 'full') {
 	}else{
 		$new_link = elgg_view('output/url', array(
         'href' => "event_calendar/add",
-        'text' => elgg_echo('event_calendar:new1'),
+        'text' => elgg_echo('event_calendar:new'),
         'class' => 'btn btn-primary pull-right',
     	));
 	}
-	
 
-		 echo'<h3>'.elgg_echo('event_calendar:comming').'</h3>';
+		 echo'<h2 class="h3">'.elgg_echo('event_calendar:comming').'</h2>';
 		 echo $new_link;
 	if (empty($event_list)) {
 		// show the empty calendar
@@ -89,10 +88,6 @@ if ($listing_format == 'paged' || $listing_format == 'full') {
 		echo $event_list;
 		
 	}
-
-	
-
-
 	
 } else {
 ?>

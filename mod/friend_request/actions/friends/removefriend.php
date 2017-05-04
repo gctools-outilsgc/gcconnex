@@ -30,6 +30,11 @@ if (!empty($friend)) {
 				"subject_guid" => $friend->getGUID(),
 				"object_guid" => $user->getGUID()
 			));
+
+			// cyu - remove the relationship (if applicable) for the subscribed to user
+			remove_entity_relationship($user->guid, 'cp_subscribed_to_email',$friend_guid);
+			remove_entity_relationship($user->guid, 'cp_subscribe_to_site_mail',$friend_guid);
+
 		} catch (Exception $e) {
 			// do nothing
 		}

@@ -3,6 +3,154 @@ $site_url = elgg_get_site_url();
 
 return array(
 
+
+    /*
+    More context links - entity/river menus
+    */
+
+    'entity:like:link:page_top' => 'Like the page "%s"',
+    'entity:unlike:link:page_top' => 'Remove like from the page "%s"',
+    'entity:edit:link:page_top' => 'Edit the page "%s"',
+    'entity:delete:link:page_top' => 'Delete the page "%s"',
+    'entity:share:link:page_top' => 'Share the page "%s" on The Wire',
+    'entity:subscribe:link:page_top' => 'Subscribe to the page "%s"',
+    'entity:unsubscribe:link:page_top' => 'Unsubscribe to the page "%s"',
+    'entity:history:link:page_top' => 'View history of the page "%s"',
+
+    'entity:like:link:page' => 'Like the page "%s"',
+    'entity:unlike:link:page' => 'Remove like from the page "%s"',
+    'entity:edit:link:page' => 'Edit the page "%s"',
+    'entity:delete:link:page' => 'Delete the page "%s"',
+    'entity:share:link:page' => 'Share the page "%s" on The Wire',
+    'entity:subscribe:link:page' => 'Subscribe to the page "%s"',
+    'entity:unsubscribe:link:page' => 'Unsubscribe to the page "%s"',
+    'entity:history:link:page' => 'View history of the page "%s"',
+
+    'entity:like:link:thewire' => 'Like the wire post by %s',
+    'entity:unlike:link:thewire' => 'Remove like from the wire post by %s',
+    'entity:delete:link:thewire' => 'Delete the wire post by %s',
+    'entity:share:link:thewire' => 'Share the wire post by %s on The Wire',
+    'entity:subscribe:link:thewire' => 'Subscribe to the wire post by %s',
+    'entity:unsubscribe:link:thewire' => 'Unsubscribe to the wire post by %s',
+    'entity:reply:link:thewire' => 'Reply to the wire post by %s',
+
+    'entity:like:link:blog' => 'Like the blog "%s"',
+    'entity:unlike:link:blog' => 'Remove like from the blog "%s"',
+    'entity:edit:link:blog' => 'Edit the blog "%s"',
+    'entity:delete:link:blog' => 'Delete the blog "%s"',
+    'entity:share:link:blog' => 'Share the blog "%s" on The Wire',
+    'entity:subscribe:link:blog' => 'Subscribe to the blog "%s"',
+    'entity:unsubscribe:link:blog' => 'Unsubscribe to the blog "%s"',
+    'entity:comment:link:blog' => 'Comment on the blog "%s"',
+
+    'entity:like:link:comment' => 'Like the comment by %s',
+    'entity:unlike:link:comment' => 'Remove like from the comment by %s',
+    'entity:edit:link:comment' => 'Edit the comment by %s',
+    'entity:delete:link:comment' => 'Delete the comment by %s',
+
+    'entity:like:link:groupforumtopic' => 'Like the discussion "%s"',
+    'entity:unlike:link:groupforumtopic' => 'Remove like from the discussion "%s"',
+    'entity:edit:link:groupforumtopic' => 'Edit the discussion "%s"',
+    'entity:delete:link:groupforumtopic' => 'Delete the discussion "%s"',
+    'entity:share:link:groupforumtopic' => 'Share the discussion "%s" on The Wire',
+    'entity:subscribe:link:groupforumtopic' => 'Subscribe to the discussion "%s"',
+    'entity:unsubscribe:link:groupforumtopic' => 'Unsubscribe to the discussion "%s"',
+    'entity:lock:link:groupforumtopic' => 'Close the discussion "%s"',
+    'entity:unlock:link:groupforumtopic' => 'Open the discussion "%s"',
+
+    'entity:like:link:discussion_reply' => 'Like the discussion reply by %s',
+    'entity:unlike:link:discussion_reply' => 'Remove like from the discussion reply by %s',
+    'entity:edit:link:discussion_reply' => 'Edit the discussion reply by %s',
+    'entity:delete:link:discussion_reply' => 'Delete the discussion reply by %s',
+
+    'entity:like:link:file' => 'Like the file "%s"',
+    'entity:unlike:link:file' => 'Remove like from the file "%s"',
+    'entity:edit:link:file' => 'Edit the file "%s"',
+    'entity:delete:link:file' => 'Delete the file "%s"',
+    'entity:share:link:file' => 'Share the file "%s" on The Wire',
+    'entity:subscribe:link:file' => 'Subscribe to the file "%s"',
+    'entity:unsubscribe:link:file' => 'Unsubscribe to the file "%s"',
+    'entity:download:link:file' => 'Download the file "%s"',
+
+    'entity:like:link:folder' => 'Like the folder "%s"',
+    'entity:unlike:link:folder' => 'Remove like from the folder "%s"',
+    'entity:edit:link:folder' => 'Edit the folder "%s"',
+    'entity:delete:link:folder' => 'Delete the folder "%s"',
+    'entity:share:link:folder' => 'Share the folder "%s" on The Wire',
+    'entity:subscribe:link:folder' => 'Subscribe to the folder "%s"',
+    'entity:unssubscribe:link:folder' => 'Unsubscribe to the folder "%s"',
+
+    'entity:like:link:event_calendar' => 'Like the event "%s"',
+    'entity:unlike:link:event_calendar' => 'Remove like from the event "%s"',
+    'entity:edit:link:event_calendar' => 'Edit the event "%s"',
+    'entity:delete:link:event_calendar' => 'Delete the event "%s"',
+    'entity:share:link:event_calendar' => 'Share the event "%s" on The Wire',
+    'entity:subscribe:link:event_calendar' => 'Subscribe to the event "%s"',
+    'entity:unsubscribe:link:event_calendar' => 'Unsubscribe to the event "%s"',
+
+    'entity:like:link:bookmarks' => 'Like the bookmark "%s"',
+    'entity:unlike:link:bookmarks' => 'Remove like from the bookmark "%s"',
+    'entity:edit:link:bookmarks' => 'Edit the bookmark "%s"',
+    'entity:delete:link:bookmarks' => 'Delete the bookmark "%s"',
+    'entity:share:link:bookmarks' => 'Share the bookmark "%s" on The Wire',
+    'entity:subscribe:link:bookmarks' => 'Subscribe to the bookmark "%s"',
+    'entity:unsubscribe:link:bookmarks' => 'Unsubscribe to the bookmark "%s"',
+
+    'entity:like:link:poll' => 'Like the poll "%s"',
+    'entity:unlike:link:poll' => 'Remove like from the poll "%s"',
+    'entity:edit:link:poll' => 'Edit the poll "%s"',
+    'entity:delete:link:poll' => 'Delete the poll "%s"',
+    'entity:share:link:poll' => 'Share the poll "%s" on The Wire',
+    'entity:subscribe:link:poll' => 'Subscribe to the poll "%s"',
+    'entity:unsubscribe:link:poll' => 'Unsubscribe to the poll "%s"',
+
+    'entity:like:link:album' => 'Like the image album "%s"',
+    'entity:unlike:link:album' => 'Remove like from the image album "%s"',
+    'entity:edit:link:album' => 'Edit the image album "%s"',
+    'entity:delete:link:album' => 'Delete the image album "%s"',
+    'entity:share:link:album' => 'Share the image album "%s" on The Wire',
+    'entity:subscribe:link:album' => 'Subscribe to the image album "%s"',
+    'entity:unsubscribe:link:album' => 'Unsubscribe to the image album "%s"',
+
+    'entity:like:link:image' => 'Like the image "%s"',
+    'entity:unlike:link:image' => 'Remove like from the image "%s"',
+    'entity:edit:link:image' => 'Edit the image "%s"',
+    'entity:delete:link:image' => 'Delete the image "%s"',
+    'entity:share:link:image' => 'Share the image "%s" on The Wire',
+    'entity:subscribe:link:image' => 'Subscribe the image "%s"',
+    'entity:unsubscribe:link:image' => 'Unsubscribe the image "%s"',
+
+    'entity:like:link:idea' => 'Like the idea "%s"',
+    'entity:unlike:link:idea' => 'Remove like from the idea "%s"',
+    'entity:edit:link:idea' => 'Edit the idea "%s"',
+    'entity:delete:link:idea' => 'Delete the idea "%s"',
+    'entity:share:link:idea' => 'Share the idea "%s" on The Wire',
+    'entity:subscribe:link:idea' => 'Subscribe to the idea "%s"',
+    'entity:unsubscribe:link:idea' => 'Unsubscribe to the idea "%s"',
+    'entity:upvote:link:idea' => 'Upvote the idea "%s"',
+    'entity:downvote:link:idea' => 'Downvote the idea "%s"',
+
+    'entity:like:link:group' => 'Like the group "%s"',
+    'entity:unlike:link:group' => 'Remove like from the group "%s"',
+    'entity:edit:link:group' => 'Edit the group "%s"',
+    'entity:delete:link:group' => 'Delete the group "%s"',
+    'entity:share:link:group' => 'Share the group "%s" on The Wire',
+    'entity:subscribe:link:group' => 'Subscribe to the group "%s"',
+    'entity:unsubscribe:link:group' => 'Unsubscribe to the group "%s"',
+
+    'group:share:link' => 'Share this group on the Wire',
+
+    'friend_request:approve' => 'Accept<span class="wb-inv"> %s\'s friend request</span>',
+    'friend_request:decline' => 'Decline <span class="wb-inv"> %s\'s friend request</span>',
+    'friend_request:revoke' => 'Revoke <span class="wb-inv">sent friend request to %s </span>',
+
+    'group:accept:invitation' => 'Accept<span class="wb-inv">group invite to "%s"</span>',
+    'group:decline:invitation' => 'Decline<span class="wb-inv">group invite to "%s"</span>',
+
+
+
+    ////
+
     'wet:more'=>"More",
   	'breadcrum:home' => 'Home',
 
@@ -108,7 +256,9 @@ return array(
     'userMenu:account' => "Account Settings",
     'userMenu:messages' => "My Messages",
     'userMenu:colleagues' => "My Colleagues",
-    'userMenu:usermenuTitle' =>'User Card - Click here for links to your profile, account settings and logout', /*NEW*/
+    'userMenu:usermenuTitle' =>'User Card - Click here for links to your profile, account settings and logout',
+    'wet:usermenu:helpertext' => "User Menu. Contains Links to Notifications, Profile and Logout",
+    /*NEW*/
 		'wet:dd:expand'=>"Open drop down of most recent messages",
 
 
@@ -148,6 +298,9 @@ return array(
     'profile:viewall:coll' => 'View All Colleagues',
     'profile:viewall:groups' => 'View All Groups',
     'gcforums:enable_group_forums' => 'Enable group forums',
+    'gprofile:contentMenu' => "Group content menu",
+
+    'groups:stats'  => "Group statistics",
 
     /**
   * Group invite
@@ -1447,7 +1600,7 @@ Please do not reply to this email.",
     'contactform:upload' => 'Upload your file',
     'contactform:title:form' => "Contact Us",
     'contactform:required' => 'required',
- 
+
 	'contactform:box:message' => 'Show the information box',
 	'conatactform:fr:name' => 'Name of the link in french',
 	'conatactform:eng:name' => 'Name of the link in english',
@@ -1524,6 +1677,7 @@ Please do not reply to this email.",
     'event_calendar:lang:french'=>"French",
     'event_calendar:lang:english'=>"English",
     'event_calendar:lang:bilingual'=>"Bilingual",
+    'event_calendar:add_recurrence' => "Add recurrence",
 
     /*new for tour*/
 'gcTour:next' => 'Next ',
