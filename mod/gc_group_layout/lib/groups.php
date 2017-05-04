@@ -1,4 +1,4 @@
-é<?php
+<?php
 /**
  * Groups function library
  */
