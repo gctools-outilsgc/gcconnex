@@ -37,9 +37,6 @@ function pages_prepare_form_vars($page = null, $parent_guid = 0, $revision = nul
 		
 	}
 
-//$page->title = gc_implode_translation($page->title,$page->title2);
-//$page->description = gc_implode_translation($page->description,$page->description2);
-
 	if (elgg_is_sticky_form('page')) {
 		$sticky_values = elgg_get_sticky_values('page');
 		foreach ($sticky_values as $key => $value) {
@@ -106,7 +103,7 @@ function pages_get_navigation_tree($container) {
 	$depths = array();
 
 	foreach ($top_pages as $page) {
-		
+
 			$tree[] = array(
 			'guid' => $page->getGUID(),
 			'title' => gc_explode_translation($page->title,$lang),
