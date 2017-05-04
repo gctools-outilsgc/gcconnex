@@ -444,6 +444,7 @@ input:checked + .slider:before {
 				        elgg.action('cp_notify/unsubscribe', {
 			                data: {
 			                	'guid':guid,
+			                	'user_guid': elgg.get_page_owner_guid()
 			                },
 			                success: function(data) {
 			                  $(this_thing).closest('.list-break').fadeOut();
@@ -492,7 +493,8 @@ input:checked + .slider:before {
 			        
 			        elgg.action('cp_notify/unsubscribe', {
 		                data: {
-		                	'guid':guid
+		                	'guid': guid,
+		                	'user_guid': elgg.get_page_owner_guid()
 		                },
 		                success: function(data) {
 		                  $(this_thing).closest('.list-break').fadeOut();

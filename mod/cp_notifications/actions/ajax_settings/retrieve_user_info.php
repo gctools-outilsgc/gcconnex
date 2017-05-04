@@ -44,7 +44,7 @@ if (!$user) {
 		$content_type = ($information->type === 'group' || $information->type === 'user') ? $information->type : $information->subtype;
 
 			
-		$user_info .= "<div id='item_{$information->guid}'> <strong> {$information->guid} </strong> {$content_type} - <a href='{$content_url}'> {$entity_name} </a> <strong><a href='#' id='unsubscribe_link' style='color:red' onClick='onclick_link({$information->guid})'> unsubscribe </a></strong> </div>";
+		$user_info .= "<div id='item_{$information->guid}'> <strong> {$information->guid} </strong> {$content_type} - <a href='{$content_url}'> {$entity_name} </a> <strong><a href='#' id='unsubscribe_link' style='color:red' onClick='onclick_link({$information->guid}, {$information->guid_one})'> unsubscribe </a></strong> </div>";
 	}
 	$user_info .= "</p>";
 
