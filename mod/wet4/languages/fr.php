@@ -306,7 +306,7 @@ return array(
     'gcforums:enable_group_forums' => 'Activé les forums de groupe',
     'gprofile:contentMenu' => "Menu de contenu du groupe",
 
-    'groups:stats'  => "statistiques de groupe",
+    'groups:stats'  => "Statistiques de groupe",
 
         /**
    * Group invite
