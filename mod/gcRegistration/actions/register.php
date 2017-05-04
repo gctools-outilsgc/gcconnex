@@ -105,7 +105,14 @@ $deptNum = get_input('department');
 if (elgg_get_config('allow_registration')) {
 	try {
 		// check if domain exists in database
-		$connection = mysqli_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, $CONFIG->dbname)or die(mysqli_error($connection));
+		$db_config = new \Elgg\Database\Config($CONFIG);
+		if ($db_config->isDatabaseSplit()) {
+			$read_settings = $db_config->getConnectionConfig(\Elgg\Database\Config::READ);
+		} else {	
+			$read_settings = $db_config->getConnectionConfig(\Elgg\Database\Config::READ_WRITE);
+		}
+
+		$connection = mysqli_connect($read_settings["host"], $read_settings["user"], $read_settings["password"], $read_settings["database"])or die(mysqli_error($connection));
 		$emaildomain = explode('@',$email);
 		$query = "SELECT count(*) AS num FROM email_extensions WHERE ext ='".$emaildomain[1]."'";
 		
