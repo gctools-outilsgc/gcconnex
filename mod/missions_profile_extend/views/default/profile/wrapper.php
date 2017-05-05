@@ -50,7 +50,7 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
     <div class="b_extended_profile">
         <?php
 
-        echo '<div role="tabpanel">';
+        echo '<div>';
 /* Old Tab Menu
 
         echo '<ul class="nav nav-tabs" role="tablist">';
@@ -142,6 +142,8 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
             	echo '<div role="tabpanel" class="tab-pane active clearfix" tabindex="-1" id="splashboard">';
             }
 
+                echo '<h2 class="wb-inv">'.$user->name."'s widgets</h2>";
+
                 $num_columns = elgg_extract('num_columns', $vars, 2);
                 $show_add_widgets = elgg_extract('show_add_widgets', $vars, true);
                 $exact_match = elgg_extract('exact_match', $vars, false);
@@ -196,6 +198,7 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
                     }
                     echo '</div>';
                 }
+                elgg_pop_context();
             echo '</div>'; // close div id="splashboard"
 
 
