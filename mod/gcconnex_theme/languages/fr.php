@@ -37,6 +37,7 @@ return array(
     'wet:gcpediaLink' => 'http://www.gcpedia.gc.ca/wiki/?setlang=fr',
     'wet:gcdirectoryLink' => "https://gcannuaire-gcdirectory.gc.ca/fr/GCA/?pgid=002",
     'wet:tutorialLink'=>'https://www.gcpedia.gc.ca/wiki/Aide_%C3%A0_l%27utilisateur/Voir_Tout ',
+    'wet:gccollabLink' => "https://gccollab.ca/",
     'wet:groupLoading'=>'Loading content(translate)',
     'subgroups:parent:need_join' => "Joindre le groupe parent",
     'event_calendar:none' => 'Aucun événement trouvé.',

@@ -1436,8 +1436,7 @@ details.elgg-state-success:before {
 
 #app-brand li a{
    text-decoration: none;
-    color: black;
-    padding: 30px 35px;
+    color:white;
 }
 .app-name{
     font-size: 1.6em;
@@ -1463,6 +1462,12 @@ details.elgg-state-success:before {
 	border-left: 20px solid #055959;
     clear: both;
 }
+    
+@media (min-width: 992px) and (max-width: 1200px) {
+      .app-name:before {
+      left:155px; }   
+}     
+   
 
 .tool-link{
     font-size:16px;
