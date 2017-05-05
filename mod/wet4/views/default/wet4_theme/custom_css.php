@@ -28,7 +28,7 @@ $gsa_pagination = elgg_get_plugin_setting('gsa_pagination','gc_fedsearch_gsa');
     label .error{
         margin-top:2px;
     }
-    
+
 label.error {
     background: #f3e9e8;
     border-left: 5px solid #d3080c;
@@ -51,7 +51,7 @@ textarea.error{
 textarea.error:focus{
      border: 1px solid #d3080c;
     -webkit-box-shadow: inset 0 1px 1px rgba(255,0,0,.075);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075) !important;        
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075) !important;
 }
 
 .elgg-pagination_gsa {
@@ -59,6 +59,12 @@ textarea.error:focus{
   position: relative;
   left:<?php echo "{$gsa_pagination}%"; ?> !important;
 
+}
+
+.elgg-menu-owner-block {
+  margin-left: 12px;
+  z-index: 1;
+  position: relative;
 }
 
 /******************** Changing Bootstraps columns ********************/
