@@ -63,16 +63,18 @@ $count = 1;
 //Limiting how many skills first show up in the array
 $limit_skills = array_slice($user_skills, 0, 4);
 foreach($limit_skills as $skill) {
-    
 	$skill_set .= '<span name="user-skill-' . $count . '" class="mission-skills cut-skill" title="'.$skill->title.'">' . $skill->title . '</span>';
 	$count++;
 }
-
-foreach($user_skills as $skill) {
+if(count($user_skils >4)){
+    $count =1;
+    foreach($user_skills as $skill) {
     
 	$skill_set_more .= '<span name="user-skill-' . $count . '" class="mission-skills" title="'.$skill->title.'">' . $skill->title . '</span>';
 	$count++;
+    }
 }
+
 
 
 // Displays invitation button if the user is opted in to micro missions.
@@ -160,8 +162,6 @@ else {
 	</div>
     </div>
     <div class="user-button-content">
-
-        
         <?php echo $button_content; ?>
     </div>
 </div>

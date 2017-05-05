@@ -427,7 +427,7 @@ color: #055959;
 
 .candidate-panel{
     padding:45px 4px 10px 4px !important;
-    height: 410px;
+    height: 435px;
 
 }
 
@@ -447,7 +447,7 @@ color: #055959;
 
 .candidate-panel .user-info-content{
     top:0;
-    min-height: 370px;
+    min-height: 395px;
 }
 .candidate-panel .user-button-content{
     position: absolute;
