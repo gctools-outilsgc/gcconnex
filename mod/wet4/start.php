@@ -90,7 +90,9 @@ function wet4_theme_init() {
     //datatables css file
 	elgg_extend_view('css/elgg', '//cdn.datatables.net/1.10.10/css/jquery.dataTables.css');
 
-
+	elgg_register_simplecache_view('wet4/validate.js');
+  elgg_require_js('wet4/validate');
+	
 	//elgg_unextend_view('page/elements/header', 'search/header');
 	//elgg_extend_view('page/elements/sidebar', 'search/header', 0);
 

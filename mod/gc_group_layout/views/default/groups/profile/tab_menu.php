@@ -190,6 +190,19 @@ if(elgg_get_context() == 'profile'){
             $('.elgg-menu-item-more').remove();
             //alert('bye bye bubby');
     }
+
+    //focus on tabs when navigating to each panel
+    $('.elgg-menu-owner-block-default a').on('click', function(e){
+      //get id
+      var id = $(this).attr('href');
+
+      //dont do anything if more tab is pressed
+      if(id != ''){
+        //check if one of the first three tabs was pressed
+        $(id).find('h2').attr('tabindex', '-1').focus();
+
+      }
+    });
 });
 
 

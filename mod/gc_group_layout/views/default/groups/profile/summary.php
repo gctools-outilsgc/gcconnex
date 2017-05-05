@@ -32,7 +32,6 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 ?>
 <div class="panel panel-custom clearfix elgg-image-block col-xs-12 <?php echo $c_photo_top_margin; ?>">
    <div class="group-summary-holder clearfix">
-
 	   <div class="col-xs-9">
 
 		   <div class="col-xs-2 col-md-2 mrgn-tp-sm group-profile-image-size">
@@ -86,6 +85,17 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 				echo '<b>' . elgg_echo('groups:members') . ':</b> ' . $all_members_link;
             ?>
 			</div>
+
+            <div class="mrgn-bttm-sm pull-left mrgn-lft-lg">
+            <?php
+                echo elgg_view('output/url', array(
+                    'href' => "http://stats.gctools-outilsgc.ca/gcconnex?filter=".$group->guid,
+                    'text' =>  elgg_echo('groups:stats'),
+                    'is_trusted' => true,
+                    'class' => '',
+                ));
+            ?>
+            </div>
 
 
         </div>

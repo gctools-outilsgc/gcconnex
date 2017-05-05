@@ -60,10 +60,22 @@ $user_skills = elgg_get_entities($options);
 
 $skill_set = '';
 $count = 1;
-foreach($user_skills as $skill) {
-	$skill_set .= '<span name="user-skill-' . $count . '" class="mission-skills">' . $skill->title . '</span>';
+//Limiting how many skills first show up in the array
+$limit_skills = array_slice($user_skills, 0, 4);
+foreach($limit_skills as $skill) {
+	$skill_set .= '<span name="user-skill-' . $count . '" class="mission-skills cut-skill" title="'.$skill->title.'">' . $skill->title . '</span>';
 	$count++;
 }
+if(count($user_skils >4)){
+    $count =1;
+    foreach($user_skills as $skill) {
+    
+	$skill_set_more .= '<span name="user-skill-' . $count . '" class="mission-skills" title="'.$skill->title.'">' . $skill->title . '</span>';
+	$count++;
+    }
+}
+
+
 
 // Displays invitation button if the user is opted in to micro missions.
 $button_content = '';
@@ -85,7 +97,7 @@ if(check_if_opted_in($user)) {
 				$button_content .= elgg_view('output/url', array(
 				        'href' => '',
 				        'text' => elgg_echo('missions:already_invited'),
-				        'class' => 'elgg-button btn btn-default',
+				        'class' => 'elgg-button btn btn-default center-block',
 						'disabled' => true
 			    ));
 			}
@@ -123,15 +135,29 @@ else {
                 'show_badge' => false,
             )); ?>
 		</div>
-		<div class="col-xs-12">
+		<div class="col-xs-12 mrgn-bttm-sm">
 			<h3 name="user-name" class="mrgn-tp-sm"><?php echo $user_link; ?></h3>
 			<div class="user-job-title" name="user-job-title"><?php echo $user->job; ?></div>
 			<div class="user-location timeStamp" name="user-location"><?php echo $user->location; ?></div>
 		</div>
 	
 	<div class="col-xs-12">
-        <div class="">
-            <?php echo $feedback_content; ?>
+       <p class="mrgn-tp-0 mrgn-bttm-0 h4"><?php echo elgg_echo("missions:skills")?></p>
+        <div>
+            <?php echo $skill_set; ?>
+        
+            <?php if(count($user_skills) > 4){?>
+        <p><span class="center-block"><a href="#mid-screen-<?php echo $user->guid;?>" aria-controls="mid-screen-<?php echo $user->guid;?>" class="overlay-lnk" role="button">View All Skills</a></span></p>
+
+        <section id="mid-screen-<?php echo $user->guid?>" class="wb-overlay modal-content overlay-def mission-skills-popup onboard-popup ">
+	       <header class="modal-header" style="background:#047177;">
+		      <h2 class="modal-title">Skills for <?php echo $user->name; ?></h2>
+	       </header>
+	       <div class="modal-body">
+		      <?php echo $skill_set_more; ?>
+	       </div>
+        </section>
+            <?php } ?>
         </div>
 	</div>
     </div>

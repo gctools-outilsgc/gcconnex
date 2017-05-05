@@ -345,6 +345,32 @@ li.link-disabled a {
     margin: 2px;
     font-size: 14px;
     display: inline-block;
+
+}
+
+.cut-skill{
+    max-width: 140px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.mission-skills-popup{
+    bottom: 0px;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    margin: auto;
+    max-width: 100% !important;
+    max-height: 40% !important;
+    width: 45%;
+}
+.mission-skills-popup .modal-header{
+    background: #047177;
+}
+.more-skills-button{
+    position:absolute;
+    padding: 5px;
 }
 
 .opt-in-modal{
@@ -401,7 +427,7 @@ color: #055959;
 
 .candidate-panel{
     padding:45px 4px 10px 4px !important;
-    height: 410px;
+    height: 435px;
 
 }
 
@@ -421,7 +447,7 @@ color: #055959;
 
 .candidate-panel .user-info-content{
     top:0;
-    min-height: 370px;
+    min-height: 395px;
 }
 .candidate-panel .user-button-content{
     position: absolute;
