@@ -40,7 +40,11 @@ if (!$user) {
 
 
 		$entity_name = ($information->type === 'group') ? $information->name : $information->title;
+		
 		$content_url = ($information->type === 'group') ? $site->getURL()."groups/profile/{$information->guid}" : $site->getURL()."{$subtype}/view/{$information->guid}/{$entity_name}";
+
+		$content_url = ($information->subtype === 'groupforumtopic') ? $site->getURL()."discussion/view/{$information->guid}" : $site->getURL()."{$subtype}/view/{$information->guid}/{$entity_name}";
+
 		$content_type = ($information->type === 'group' || $information->type === 'user') ? $information->type : $information->subtype;
 
 			
