@@ -7,7 +7,14 @@ This will populate a drop down that will show up when mousing over "notification
 
 @author: Nick
 */
+?>
+<script>
+$( "li.elgg-menu-item-notifications div.message-dd-holder div.message-dd-block a" ).first().focus(); //add focus on the first link of notifications
 
+$( "li.elgg-menu-item-messages div.message-dd-holder div.message-dd-block a" ).first().focus(); //add focus on the first link of messages
+
+</script>
+<?php
 $info_type = get_input('type');
 $info_count = get_input('count');
 $user = elgg_get_logged_in_user_guid();
@@ -20,7 +27,7 @@ if($info_type == 'msg_dd'){
   $type = 'notif';
   //Nick - add a notifications setting link
   $settings_link = elgg_view('output/url', array(
-    'href'=>elgg_get_site_url().'settings/plugins/'.get_entity($user)->username.'/cp_notifications',
+    'href'=>elgg_get_site_url().'settings/notifications/'.get_entity($user)->username,
     'text'=>'<i class="fa fa-cog fa-lg icon-unsel"><span class="wb-inv">Settings</span></i>',
   ));
   $title = elgg_echo('notifications:subscriptions:changesettings');

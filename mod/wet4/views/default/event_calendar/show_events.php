@@ -77,7 +77,7 @@ if ($listing_format == 'paged' || $listing_format == 'full') {
     	));
 	}
 
-		 echo'<h3>'.elgg_echo('event_calendar:comming').'</h3>';
+		 echo'<h2 class="h3">'.elgg_echo('event_calendar:comming').'</h2>';
 		 echo $new_link;
 	if (empty($event_list)) {
 		// show the empty calendar

@@ -29,12 +29,12 @@ echo $btn_language;
 <div class="tab-content tab-content-border">
 <div class="en">
 	<label for="title"><?php echo elgg_echo('album:title:en'); ?></label>
-	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title, 'id' => 'title', 'class' => 'mrgn-bttm-md',)); ?>
+	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title, 'id' => 'title', 'class' => 'mrgn-bttm-md', 'required' => 'required')); ?>
 </div>
 
 <div class="fr">
 	<label for="title2"><?php echo elgg_echo('album:title:fr'); ?></label>
-	<?php echo elgg_view('input/text', array('name' => 'title2', 'value' => $title2, 'id' => 'title2', 'class' => 'mrgn-bttm-md',)); ?>
+	<?php echo elgg_view('input/text', array('name' => 'title2', 'value' => $title2, 'id' => 'title2', 'class' => 'mrgn-bttm-md', 'required' => 'required')); ?>
 </div>
 <div class="en">
 	<label for="description"><?php echo elgg_echo('album:desc:en'); ?></label>

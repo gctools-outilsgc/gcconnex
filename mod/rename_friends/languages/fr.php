@@ -177,9 +177,9 @@ $french = array(
 		
 // Invite Friends		
 		
-'friends:invite' => "Inviter des {$lplural}",
-'invitefriends:introduction' => "Pour inviter des {$lplural} à vous joindre sur ce réseau, ajoutez  leurs adresses courriel ci-dessous (une par ligne):",
-'invitefriends:success' => "Vos {$lplural} ont été invités.",
+'friends:invite' => "Inviter des collègues",
+'invitefriends:introduction' => "Pour inviter des collègues à vous joindre sur ce réseau, ajoutez  leurs adresses courriel ci-dessous (une par ligne):",
+'invitefriends:success' => "Vos collègues ont été invités.",
 'invitefriends:email' => "Vous avez été invité à joindre %s par %s. Ils vous ont écrit ce message : Pour joindre %s, cliquez sur le lien suivant : Vous serez automatiquement ajouter en tant que {$lsingle} lorsque vous aller créer votre compte.",
 		
 //Rename Groups		

@@ -10,7 +10,7 @@ $form_body = "<div>" . elgg_echo("file_tools:upload:form:zip:info") . "</div>";
 
 $form_body .= "<div>";
 $form_body .= "<label for='zip_file'>" . elgg_echo("file_tools:upload:form:choose") . "</label><br />";
-$form_body .= elgg_view("input/file", array("name" => "zip_file", "id" => "zip_file"));
+$form_body .= elgg_view("input/file", array("name" => "zip_file", "id" => "zip_file", 'required '=> "required"));
 $form_body .= "</div>";
 
 if (file_tools_use_folder_structure()) {

@@ -4285,7 +4285,7 @@ a.thumbnail.active {
 
 .alert {
   padding: 15px;
-  margin-bottom: 23px;
+  margin-bottom: 2px;
   border: 1px solid transparent;
   border-radius: 4px; }
   .alert h4 {
@@ -4623,6 +4623,8 @@ a.list-group-item-danger {
 .elgg-river-summary{
     font-weight:bold;
     font-style: italic;
+    margin: 2px 0 2px 0;
+    font-size: 1em;
 }
 
 .elgg-river-summary a{

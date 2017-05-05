@@ -16,7 +16,7 @@ require.config({
         "datatables": dtpath
     }
 });
-
+/*
 //testing only one-click button elgg-form-groups-edit
 $("input[type=submit]").click(function () {
 
@@ -25,7 +25,7 @@ $("input[type=submit]").click(function () {
         return false;
     });
     return true;
-});
+});*/
 
 
 //User menu mouse over functions
