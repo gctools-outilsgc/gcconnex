@@ -65,3 +65,25 @@
 .groups-info .list-inline li {
 		padding:0 2px;
 }
+
+.group-summary-holder {
+	z-index: 2;
+  position: relative;
+}
+
+@media (max-width: 480px)
+{
+	.group-summary-holder {
+  	z-index: 2;
+    position: relative;
+		width: 100% !important;
+  }
+
+	.group-summary-holder .col-xs-9 {
+		width:100% !important;
+	}
+
+	.group-action-holder {
+		width: 100% !important;
+	}
+}

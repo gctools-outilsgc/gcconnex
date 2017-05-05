@@ -63,6 +63,8 @@ textarea.error:focus{
 
 .elgg-menu-owner-block {
   margin-left: 12px;
+  z-index: 1;
+  position: relative;
 }
 
 /******************** Changing Bootstraps columns ********************/
