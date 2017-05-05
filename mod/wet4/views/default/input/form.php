@@ -15,8 +15,7 @@
  * @uses $vars['class'] Additional class for the form
  */
 
- elgg_register_simplecache_view('wet4/validate.js');
- elgg_require_js('wet4/validate');
+
 
 $defaults = array(
 	'method' => 'post',
