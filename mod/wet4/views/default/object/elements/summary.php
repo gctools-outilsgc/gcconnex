@@ -88,11 +88,17 @@ if ($title_link) {
 $description_json = json_decode($entity->description);
     if (($description_json->en) && ($description_json->fr)) {
 	    echo " <span class='indicator_summary' title='".elgg_echo('indicator:summary:title')."'>".elgg_echo('indicator:summary')."</span>"; //indicator translation
-	}elseif (elgg_get_context() == 'polls'){
-	    if ((polls_get_choice_array2($entity)) && (polls_get_choice_array($entity))) {
-	    	
-	    	echo " <span class='indicator_summary' title='".elgg_echo('indicator:summary:title')."'>".elgg_echo('indicator:summary')."</span>"; //indicator translation for polls
-	    }
+	}elseif (elgg_get_context() == 'polls' || $entity->getSubtype() == 'poll'){
+//if pool, check if the choice is the same in both language, if not, show (en/fr) one time
+		foreach (polls_get_choice_array($entity) as $key ) {
+			$description_json = json_decode($key);
+			
+ 			if ($description_json->en != $description_json->fr) {
+
+	    		echo " <span class='indicator_summary' title='".elgg_echo('indicator:summary:title')."'>".elgg_echo('indicator:summary')."</span>"; //indicator translation for polls
+	    		break;
+			}
+		}    
 	}
 echo elgg_in_context($context);
 

@@ -58,7 +58,7 @@ function polls_get_choices3($poll) {
 }
 
 function polls_get_choice_array($poll) {
-	$choices = polls_get_choices3($poll);
+	$choices = polls_get_choices($poll);
 	$responses = array();
 	if ($choices) {
 		foreach($choices as $choice) {
@@ -337,11 +337,9 @@ function polls_get_page_list($page_type, $container_guid = NULL) {
 		if (!elgg_instanceof($group,'group') || !polls_activated_for_group($group)) {
 			forward();
 		}
-		if(!$group->title3){
-			$crumbs_title = $group->name;
-		}else{
-			$crumbs_title = gc_explode_translation($group->title3, $lang);
-		}
+
+			$crumbs_title = gc_explode_translation($group->title, $lang);
+		
 		
 		$params['title'] = elgg_echo('polls:group_polls:listing:title', array(htmlspecialchars($crumbs_title)));
 		$params['filter'] = "";
