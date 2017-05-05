@@ -36,6 +36,7 @@ return array(
     'wet:gcintranetLink-toolsFoot' => 'http://intranet.canada.ca/index-eng.asp?utm_source=gcconnex&utm_medium=gcconnex-footer&utm_campaign=generic',
     'wet:gcpediaLink' => 'http://www.gcpedia.gc.ca/wiki/?setlang=en',
     'wet:gcdirectoryLink' => 'https://gcdirectory-gcannuaire.gc.ca/en/GCD/?pgid=002',
+    'wet:gccollabLink' => "https://gccollab.ca/",
     'wet:tutorialLink'=>'http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/See_All',
     'wet:groupLoading'=>'Loading content',
     'subgroups:parent:need_join' => "Join Parent Group",
