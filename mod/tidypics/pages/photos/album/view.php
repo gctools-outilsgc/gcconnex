@@ -32,11 +32,7 @@ $title = elgg_echo($album->getTitle());
 elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
 elgg_push_breadcrumb(elgg_echo('tidypics:albums'), 'photos/all');
 
-if($owner->title3){
-	$group_title = gc_explode_translation($owner->title3,$lang);
-}else{
-	$group_title = $owner->name;
-}
+$group_title = gc_explode_translation($owner->title,$lang);
 
 if (elgg_instanceof($owner, 'group')) {
 	elgg_push_breadcrumb($group_title, "photos/group/$owner->guid/all");
@@ -44,11 +40,8 @@ if (elgg_instanceof($owner, 'group')) {
 	elgg_push_breadcrumb($group_title, "photos/owner/$owner->username");
 }
 
-if ($album->title3){
-	elgg_push_breadcrumb(gc_explode_translation($album->title3, $lang));
-}else{
-	elgg_push_breadcrumb($album->getTitle());
-}
+	elgg_push_breadcrumb(gc_explode_translation($album->title, $lang));
+
 
 
 $content = elgg_view_entity($album, array('full_view' => true));
@@ -112,11 +105,8 @@ if (elgg_get_plugin_setting('slideshow', 'tidypics') && $album->getSize() > 0) {
 		'priority' => 300
 	));
 }
-if ($album->title3){
-	$title = gc_explode_translation($album->title3, $lang);
-}else{
-	$title = $album->getTitle();
-}
+
+$title = gc_explode_translation($album->title, $lang);
 
 $body = elgg_view_layout('content', array(
 	'filter' => false,
