@@ -278,6 +278,17 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
             ?>
 			</div>
 
+            <div class="mrgn-bttm-sm pull-left mrgn-lft-lg">
+            <?php
+                echo elgg_view('output/url', array(
+                    'href' => "http://stats.gctools-outilsgc.ca/gcconnex?filter=".$group->guid,
+                    'text' =>  elgg_echo('groups:stats'),
+                    'is_trusted' => true,
+                    'class' => '',
+                ));
+            ?>
+            </div>
+
 
         </div>
 
