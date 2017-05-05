@@ -63,5 +63,5 @@
 }
 
 .groups-info .list-inline li {
-		padding:0;
+		padding:0 2px;
 }
