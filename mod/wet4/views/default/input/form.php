@@ -15,8 +15,6 @@
  * @uses $vars['class'] Additional class for the form
  */
 
-
-
 $defaults = array(
 	'method' => 'post',
 	'disable_security' => FALSE,
@@ -39,8 +37,6 @@ if (!$vars['disable_security']) {
 }
 unset($vars['disable_security']);
 unset($vars['action_name']);
-
-$vars['id'] = 'validate-form';
 
 //$body = '<div id="myErrorContainer"></div>'.$body;
 
