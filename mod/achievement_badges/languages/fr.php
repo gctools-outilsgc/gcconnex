@@ -9,6 +9,7 @@ return array(
 'badge:completed' => 'Tous les objectifs atteints',
 'badge:level' => 'Niveau %s',
 'badge:of' => '%s de %s',
+'badges:tab:header' => 'Votre objectifs atteints',
 
 //Badge Specific
 

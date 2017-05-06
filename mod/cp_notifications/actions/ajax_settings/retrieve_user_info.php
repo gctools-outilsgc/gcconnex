@@ -40,11 +40,15 @@ if (!$user) {
 
 
 		$entity_name = ($information->type === 'group') ? $information->name : $information->title;
+		
 		$content_url = ($information->type === 'group') ? $site->getURL()."groups/profile/{$information->guid}" : $site->getURL()."{$subtype}/view/{$information->guid}/{$entity_name}";
+
+		$content_url = ($information->subtype === 'groupforumtopic') ? $site->getURL()."discussion/view/{$information->guid}" : $site->getURL()."{$subtype}/view/{$information->guid}/{$entity_name}";
+
 		$content_type = ($information->type === 'group' || $information->type === 'user') ? $information->type : $information->subtype;
 
 			
-		$user_info .= "<div id='item_{$information->guid}'> <strong> {$information->guid} </strong> {$content_type} - <a href='{$content_url}'> {$entity_name} </a> <strong><a href='#' id='unsubscribe_link' style='color:red' onClick='onclick_link({$information->guid})'> unsubscribe </a></strong> </div>";
+		$user_info .= "<div id='item_{$information->guid}'> <strong> {$information->guid} </strong> {$content_type} - <a href='{$content_url}'> {$entity_name} </a> <strong><a href='#' id='unsubscribe_link' style='color:red' onClick='onclick_link({$information->guid}, {$information->guid_one})'> unsubscribe </a></strong> </div>";
 	}
 	$user_info .= "</p>";
 

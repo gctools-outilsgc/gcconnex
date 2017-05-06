@@ -72,11 +72,13 @@ foreach($fields as $field){
 
         if(elgg_get_page_owner_entity()->canEdit()){
 
+            echo '<h2 class="wb-invisible" tabindex="-1">'.$title.'</h2>';
+
             //dont display add button on The Wire panel
             if($field == 'Thewire'){
                 //do nothing
             } else {
-                echo '<h3 class="wb-invisible">'.$title.'</h3>';
+
                 //display add button
             echo '<div class="text-right">';
                 $action = strtolower($field) . "/add/" . elgg_get_page_owner_entity()->guid;
@@ -129,7 +131,7 @@ foreach($fields as $field){
 //event calendar tab
 echo '<div role="tabpanel" tabindex="-1" class="tab-pane fade-in" id="events">';
     echo '<div class="clearfix">';
-    echo '<h3 class="wb-invisible">'.elgg_echo('event_calendar:listing_title:mine', array($user_display_name)).'</h3>';
+    echo '<h2 class="wb-invisible" tabindex="-1">'.elgg_echo('event_calendar:listing_title:mine', array($user_display_name)).'</h2>';
     if(elgg_is_active_plugin('event_calendar')){
         $events = event_calendar_get_personal_events_for_user(elgg_get_page_owner_guid(), 5);
     }

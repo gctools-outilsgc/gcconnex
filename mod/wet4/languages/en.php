@@ -300,6 +300,8 @@ return array(
     'gcforums:enable_group_forums' => 'Enable group forums',
     'gprofile:contentMenu' => "Group content menu",
 
+    'groups:stats'  => "Group statistics",
+
     /**
   * Group invite
   */
