@@ -570,7 +570,8 @@ function cp_create_annotation_notification($event, $type, $object) {
 			$author = $current_user;
 			$content_entity = $entity;
 
-			$watchers = get_subscribers($dbprefix, $entity->getOwnerGUID(), $entity->getContainerGUID());
+			//$watchers = get_subscribers($dbprefix, $entity->getOwnerGUID(), $entity->getContainerGUID());
+			$watchers = get_subscribers($dbprefix, $current_user->guid, $entity->guid);
 
 			foreach ($watchers as $watcher) {
 				$message['user_name'] = $watcher->username;
@@ -579,8 +580,9 @@ function cp_create_annotation_notification($event, $type, $object) {
 				$template = elgg_view('cp_notifications/email_template', $message);
 				$recipient_user = get_user($watcher->guid);
 		if (has_access_to_entity($entity, $recipient_user)) {
+			error_log($recipient_user->username);
 				// create the digest if the digest is enabled
-				if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $watcher->guid,'cp_notifications'), 'set_digest_yes') == 0)
+			if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $watcher->guid,'cp_notifications'), 'set_digest_yes') == 0)
 					create_digest($author, $action_type, $content_entity, get_entity($watcher->guid));
 
 				// create the instant notification if digest is not enabled
@@ -753,7 +755,8 @@ function cp_create_annotation_notification($event, $type, $object) {
 		$recipient_user = get_user($to_recipient->guid);
 		if ($liked_by->guid == $entity->getOwnerGUID() && $to_recipient->guid == $liked_by->guid)
 			continue;
-		if (has_access_to_entity($object, $recipient_user)) {
+		if (has_access_to_entity($object, $recipient_user)){
+			
 		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0)
 			create_digest($author, $action_type, $content_entity, $to_recipient);
 
@@ -766,10 +769,8 @@ function cp_create_annotation_notification($event, $type, $object) {
 			else
 				mail($to_recipient->email, $subject, $template,cp_get_headers());
 		}
-	}else{
-		add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_email', $container_entity->getGUID());
-		add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_site_mail', $container_entity->getGUID());
-	}
+		}
+	
 	}
 
 	// send notification out via site
@@ -777,6 +778,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') !== 0)
 			messages_send($subject, $template, $to_recipient->guid, $site->guid, 0, true, false);
 	}
+
 
 } // end of function
 
@@ -1064,6 +1066,7 @@ function cp_create_notification($event, $type, $object) {
 		if ($to_recipient->guid == $author->guid)
 			continue;
 if (has_access_to_entity($object, $recipient_user)) {
+	
 		// send digest
 		if (strcmp($user_setting, "set_digest_yes") == 0)
 			create_digest($author, $object->getSubtype(), $content_entity, get_entity($to_recipient->guid));
@@ -1073,29 +1076,30 @@ if (has_access_to_entity($object, $recipient_user)) {
 
 			$template = elgg_view('cp_notifications/email_template', $message);
 
-				error_log('hello3');
 				if (elgg_is_active_plugin('phpmailer'))
 					phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );
 				else
 					mail($to_recipient->email,$subject,$template,cp_get_headers());
 
 			}
-		}else{
-			add_entity_relationship($to_recipient->guid, 'cp_subscribed_to_email', $object->getGUID());
-			add_entity_relationship($to_recipient->guid, 'cp_subscribed_to_site_mail', $object->getGUID());
 		}
+		
 	}
 
 	foreach ($to_recipients_site as $to_recipient) {
 		$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid, 'cp_notifications');
+		$recipient_user = get_user($to_recipient->guid);
+
 
 		if ($to_recipient->guid == $author->guid)
 			continue;
 
 		if (strcmp($user_setting, "set_digest_yes") == 0)
 			continue;
-
+ if(has_access_to_entity($object, $recipient_user)){ 
+ 	
 		messages_send($subject, $template, $to_recipient->guid, $site->guid, 0, true, false);
+		}
 	}
 }
 
@@ -1118,6 +1122,7 @@ function get_subscribers($dbprefix, $user_guid, $entity_guid = '') {
 
 				FROM {$dbprefix}entity_relationships r LEFT JOIN {$dbprefix}users_entity u ON r.guid_one = u.guid
 				WHERE r.guid_one <> {$user_guid} AND r.relationship = 'cp_subscribed_to_email' AND r.guid_two = {$subscribed_to}";
+				error_log($query);
 	return get_data($query);
 }
 
