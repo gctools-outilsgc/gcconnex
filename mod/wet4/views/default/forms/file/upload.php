@@ -160,4 +160,9 @@ jQuery(function(){
     });
   });
   <?php } ?>
+
+  <?php if($guid){ ?>
+    //remove required on file input if editing file
+    $('#upload').removeAttr('required');
+  <?php } ?>
 </script>
