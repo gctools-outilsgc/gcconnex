@@ -1,4 +1,4 @@
-var dtpath = elgg.normalize_url() + '/mod/wet4/views/default/js/wet4/core';
+var dtpath = elgg.normalize_url() + '/mod/wet4/views/default/js/wet4/jquery.validate.min';
 
 require.config({
     paths: {
@@ -6,6 +6,8 @@ require.config({
         "form-validate": dtpath,
     }
 });
+
+var validExtentions = get_file_tools_settings('single');
 
 requirejs( ["form-validate"], function() {
    $(".elgg-form").each(function(){
@@ -49,6 +51,9 @@ requirejs( ["form-validate"], function() {
       },
        description2: {
          required: true
+       },
+       upload: {
+         extension: validExtentions
        },/*
       password2: {
         required: true,
@@ -109,6 +114,12 @@ requirejs( ["form-validate"], function() {
      	postalCodeCA: "Veuillez fournir un code postal valide."
      } );
    }
+
+   //allows validation of file types
+   $.validator.addMethod( "extension", function( value, element, param ) {
+	param = typeof param === "string" ? param.replace( /,/g, "|" ) : "png|jpe?g|gif";
+	return this.optional( element ) || value.match( new RegExp( "\\.(" + param + ")$", "i" ) );
+  }, $.validator.format( "Please enter a value with a valid extension." ) );
 
  } );
 require(['ckeditor'], function(CKEDITOR) {

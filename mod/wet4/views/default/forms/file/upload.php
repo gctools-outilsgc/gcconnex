@@ -150,9 +150,15 @@ jQuery(function(){
 });
 
 <?php if(elgg_in_context('embed')){ ?>
+  var validExtentions = get_file_tools_settings('single');
   //do form validation here for ajax view
   $(".elgg-form").each(function(){
     $(this).validate({
+      rules: {
+        upload: {
+          extension: validExtentions
+        },
+      },
       submitHandler: function(form) {
         $(form).find('button').prop('disabled', true);
         form.ajaxSubmit();
