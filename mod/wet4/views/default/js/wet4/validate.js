@@ -8,6 +8,7 @@ require.config({
 });
 
 var validExtentions = get_file_tools_settings('single');
+var newExt = validExtentions.replace(/, /g, '|'); //format the extensions for validation
 
 requirejs( ["form-validate"], function() {
    $(".elgg-form").each(function(){
@@ -53,16 +54,13 @@ requirejs( ["form-validate"], function() {
          required: true
        },
        upload: {
-         extension: validExtentions
-       },/*
-      password2: {
-        required: true,
-        equalTo: "#password"
-      },
-      email: {
-        required: true,
-        equalTo: "#email_initial"
-      }*/
+         extension: newExt
+       },
+    },
+    messages: {  //add custom message for file validation
+        upload:{
+            extension:elgg.echo('form:invalid:extensions',[validExtentions])
+        }
     }
    });
  });

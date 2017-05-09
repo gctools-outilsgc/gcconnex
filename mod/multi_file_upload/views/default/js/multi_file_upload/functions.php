@@ -29,7 +29,6 @@ function get_file_tools_settings(type){
     //return array of file extentions
     return fileArray;
   } else {
-    var newExt = fileExtentions.replace(/, /g, '|');
-    return newExt;
+    return fileExtentions;
   }
 }
