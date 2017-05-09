@@ -4,9 +4,6 @@ echo elgg_view('cp_notifications/admin_nav');
 $title = elgg_echo('Troubleshoot Tool');
 
 
-
-
-
 ?>
 
 <script>
@@ -62,3 +59,6 @@ $body .= '</fieldset>';
 
 
 echo elgg_view_module('main', $title, $body);
+
+
+

@@ -59,6 +59,7 @@ function cp_notifications_init() {
 
     elgg_register_action('cp_notifications/subscribe_users_to_group_content',"$actions_base/subscribe_users_to_group_content.php");
     elgg_register_action('cp_notifications/undo_subscribe_users_to_group_content',"$actions_base/undo_subscribe_users_to_group_content.php");
+    elgg_register_action('cp_notifications/fix_forums_subscription',"$actions_base/fix_forums_subscription.php");
 
     elgg_register_action('cp_notifications/usersettings/save', elgg_get_plugins_path() . 'cp_notifications/actions/usersettings/save.php');
 	elgg_register_action('cp_notifications/user_autosubscription',"{$action_path}/user_autosubscription.php");
