@@ -92,7 +92,7 @@ function wet4_theme_init() {
 
 	elgg_register_simplecache_view('wet4/validate.js');
   elgg_require_js('wet4/validate');
-	
+
 	//elgg_unextend_view('page/elements/header', 'search/header');
 	//elgg_extend_view('page/elements/sidebar', 'search/header', 0);
 
@@ -858,7 +858,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
 			$entContext =  proper_subtypes($contentType);//$entity->getSubtype();
 
 			//check to see if entity is one f the entities with a title
-			if(!in_array($entity->getSubtype(), array('comment', 'discussion_reply', 'thewire'))){
+			if(!in_array($entity->getSubtype(), array('comment', 'discussion_reply', 'thewire', 'answer'))){
 
 
 				if($entity->title3){
@@ -1154,7 +1154,7 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params){
 			$entContext =  proper_subtypes($contentType);
 
 			//check to see if entity is one f the entities with a title
-			if(!in_array($object->getSubtype(), array('comment', 'discussion_reply', 'thewire'))){
+			if(!in_array($object->getSubtype(), array('comment', 'discussion_reply', 'thewire', 'answer'))){
 
 
 				if($object->title3){
@@ -1425,6 +1425,11 @@ function my_owner_block_handler($hook, $type, $menu, $params){
                 case 'user_invite_from_profile':
                     $item->setPriority('13');
                     break;
+								case 'questions':
+			              $item->setText(elgg_echo('widget:questions:title'));
+			              $item->setHref('#question');
+			              $item->setPriority('8');
+		                break;
             }
 
         }
@@ -1772,6 +1777,14 @@ function proper_subtypes($type){
         case 'groups':
             $subtype = elgg_echo('group:group');
             break;
+
+				case 'question':
+						$subtype = elgg_echo('questions:edit:question:title');
+						break;
+
+				case 'answer':
+				    $subtype = elgg_echo('questions:search:answer:title');
+				    break;
     }
 
     return $subtype;
