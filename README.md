@@ -34,6 +34,10 @@ use docker-compose to start/create your containers.
 
     docker-compose up
 
+Install the `.htaccess` file in the root of the repo.
+
+    cp ./install/config/htaccess.dist ./.htaccess
+
 Then visit [http://localhost:8080](http://localhost:8080) and follow the
 instructions to complete your installation.  Once the installer is complete,
 refer to [INSTALL.md](INSTALL.md#configure-plugins) to configure the plugins
@@ -97,6 +101,10 @@ Commencez avec le téléchargement du code source de github, ensuite dans ceci
 utilisez `docker-compose` pour démarrer et/ou créer vos conteneurs Docker.
 
     docker-compose up
+
+Installer le fichier `.htaccess` dans le dossier principale.
+
+    cp ./install/config/htaccess.dist ./.htaccess
 
 Ensuite, visitez [http://localhost:8080](http://localhost:8080) et suivre les
 instructions pour compléter votre installation.  Une fois complet, regarder à
