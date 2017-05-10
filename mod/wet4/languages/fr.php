@@ -143,6 +143,20 @@ return array(
   'group:accept:invitation' => 'Accepter <span class="wb-inv">la demande d\'adhésion au groupe "%s"</span>',
   'group:decline:invitation' => 'Rejeter <span class="wb-inv"> la demande d\'adhésion au groupe "%s"</span>',
 
+  'entity:like:link:question' => 'Like the question %s',
+  'entity:unlike:link:question' => 'Remove like from the question %s',
+  'entity:edit:link:question' => 'Edit the question %s',
+  'entity:delete:link:question' => 'Delete the question %s',
+  'entity:share:link:question' => 'Share the question %s on The Wire',
+  'entity:subscribe:link:question' => 'Subscribe to the question %s',
+  'entity:unsubscribe:link:question' => 'Unsubscribe to the question %s',
+
+  'entity:like:link:answer' => 'Like this answer by %s',
+  'entity:unlike:link:answer' => 'Remove like from the answer by %s',
+  'entity:edit:link:answer' => 'Edit this answer by %s',
+  'entity:delete:link:answer' => 'Delete this answer by %s',
+  'entity:share:link:answer' => 'Share this answer by %s to The Wire',
+
       'wet:more' => "Autres",
     'breadcrum:home' => 'Accueil',
 
