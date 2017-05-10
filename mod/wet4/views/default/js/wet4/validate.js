@@ -35,17 +35,21 @@ requirejs( ["form-validate"], function() {
                 }
               }
           },
-     ignore: ':hidden:not(.validate-me)',
+          submitHandler: function(form) {
+            $(form).find('button').prop('disabled', true);
+            form.submit();
+          },
+    ignore: ':hidden:not(.validate-me)',
      rules: {
        generic_comment: {
           required: true
       },
       description: {
-        required: true
+         required: true
       },
-      description2: {
-        required: true
-      },/*
+       description2: {
+         required: true
+       },/*
       password2: {
         required: true,
         equalTo: "#password"
@@ -107,3 +111,21 @@ requirejs( ["form-validate"], function() {
    }
 
  } );
+require(['ckeditor'], function(CKEDITOR) {
+ //deal with copying the ckeditor text into the actual textarea
+    CKEDITOR.on('instanceReady', function () {
+       $.each(CKEDITOR.instances, function (instance) {
+            CKEDITOR.instances[instance].document.on("keyup", CK_jQ);
+            CKEDITOR.instances[instance].document.on("paste", CK_jQ);
+          //  CKEDITOR.instances[instance].document.on("keypress", CK_jQ);
+          //  CKEDITOR.instances[instance].document.on("blur", CK_jQ);
+         //  CKEDITOR.instances[instance].document.on("change", CK_jQ);
+        });
+    });
+
+    function CK_jQ() {
+        for (instance in CKEDITOR.instances) {
+            CKEDITOR.instances[instance].updateElement();
+      }
+    }
+});

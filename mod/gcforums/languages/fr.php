@@ -2,7 +2,7 @@
 
 $french = array(
 
-
+"gcforums:is_sticky" => "Sujet délicat",
 "gcforums:forumpost_saved" => "Votre réponse a été créée avec succès",
 "gcforums:forumtopic_saved" => "Votre sujet de forum '%s' a été créé avec succès",
 "gcforums:forumcategory_saved" => "La catégorie de forum a été créée avec succès",

@@ -102,6 +102,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			);
 			$subject = elgg_echo('cp_notify:subject:invite_new_user',array(),'en') . ' | ' . elgg_echo('cp_notify:subject:invite_new_user',array(),'fr');
 			$template = elgg_view('cp_notifications/email_template', $message);
+			$site_template = elgg_view('cp_notifications/site_template', $message);
 			$user_obj = get_user_by_email($params['cp_to']);
 
 			$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send($params['cp_to'], $params['cp_to'], $subject, $template, NULL,true) : mail($params['cp_to'],$subject,$template,cp_get_headers());
@@ -129,6 +130,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_user_profile' => $params['cp_user_profile'],
 			);
 			$template = elgg_view('cp_notifications/email_template', $message);
+			$site_template = elgg_view('cp_notifications/site_template', $message);
 			$user_obj = get_user_by_email($params['cp_invitee']);
 
 			$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $params['cp_invitee'], $params['cp_invitee'], $subject, $template, NULL, true ) : mail($params['cp_invitee'],$subject,$template,cp_get_headers());
@@ -308,6 +310,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 		case 'cp_group_invite': // group_tools/lib/functions.php
 			$subject = elgg_echo('cp_notify:subject:group_invite_user',array($params['cp_inviter']['name'],$params['cp_invite_to_group']['name']),'en');
 			$subject .= ' | '.elgg_echo('cp_notify:subject:group_invite_user',array($params['cp_inviter']['name'],$params['cp_invite_to_group']['name']),'fr');
+
 			$message = array(
 				'cp_group_invite_from' => $params['cp_invitee'], // user we're inviting
 				'cp_group_invite_to' => $params['cp_inviter'], // user inviting others
@@ -442,8 +445,10 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 		// username for link in footer (both email notification and site notification
 		$message['user_name'] = $to_recipient->username;
 		$message['_user_e-mail'] = $to_recipient->email;	// the links are different if users are from external facing of gcconnex
-		if ($cp_msg_type != 'cp_event_ics')
+		if ($cp_msg_type != 'cp_event_ics') {
 			$template = elgg_view('cp_notifications/email_template', $message);
+			$site_template = elgg_view('cp_notifications/site_template', $message);
+		}
 
 		$newsletter_appropriate = array('cp_wire_share','cp_messageboard','cp_wire_mention','cp_hjpost','cp_hjtopic', 'cp_friend_request', 'cp_friend_approve');
 		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0 && in_array($cp_msg_type, $newsletter_appropriate)) {
@@ -452,7 +457,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 		} else
 			$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template ) : mail($to_recipient->email, $subject, $template, cp_get_headers($event));
 
-		messages_send($subject, $template, $to_recipient->guid, $sender_guid, 0, true, $add_to_sent);
+		messages_send($subject, $site_template, $to_recipient->guid, $sender_guid, 0, true, $add_to_sent);
 	}
 }
 
@@ -556,7 +561,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 		// if we are publishing, or revising blogs then send out notification
 		if (strcmp($object_subtype,'blog_revision') == 0 && strcmp($entity->status,'published') == 0) {
 			$current_user = get_user($entity->getOwnerGUID());
-			$subject = elgg_echo('cp_notify:subject:edit_content',array('The blog',$entity->title, $current_user->username),'en') . ' | ' . elgg_echo('cp_notify:subject:edit_content',array('Le blogue',$entity->title, $current_user->username),'fr');
+			$subject = elgg_echo('cp_notify:subject:edit_content',array('The blog',$entity->title, $current_user->username),'en') . ' | ' . elgg_echo('cp_notify:subject:edit_content:m',array('Le blogue',$entity->title, $current_user->username),'fr');
 			$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
 
 			$message = array(
@@ -575,11 +580,11 @@ function cp_create_annotation_notification($event, $type, $object) {
 			foreach ($watchers as $watcher) {
 				$message['user_name'] = $watcher->username;
 
-				$message['_user_e-mail'] = $watcher->email;	// for P/T users
 				$template = elgg_view('cp_notifications/email_template', $message);
+
 				$recipient_user = get_user($watcher->guid);
 		if (has_access_to_entity($entity, $recipient_user)) {
-			error_log($recipient_user->username);
+
 				// create the digest if the digest is enabled
 			if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $watcher->guid,'cp_notifications'), 'set_digest_yes') == 0)
 					create_digest($author, $action_type, $content_entity, get_entity($watcher->guid));
@@ -588,12 +593,12 @@ function cp_create_annotation_notification($event, $type, $object) {
 				else
 					(elgg_is_active_plugin('phpmailer')) ? phpmailer_send($watcher->email, $watcher->name, $subject, $template, NULL, true) : mail($watcher->email, $subject, $template, cp_get_headers());
 			}
+
+				if (check_entity_relationship($watcher->guid, 'cp_subscribed_to_site_mail', $entity->getContainerGUID())) 
+					messages_send($subject, $template, $watcher->guid, $site->guid, 0, true, false);
+
+				return true;
 			}
-
-			if (check_entity_relationship($watcher->guid, 'cp_subscribed_to_site_mail', $entity->getContainerGUID()))
-				messages_send($subject, $template, $watcher->guid, $site->guid, 0, true, false);
-
-			return true;
 		}
 
 
@@ -601,7 +606,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 		if (strcmp($object_subtype,'page') == 0 || strcmp($object_subtype,'page_top') == 0 || strcmp($object_subtype,'task') == 0 || strcmp($object_subtype,'task_top') == 0) {
 			$current_user = get_user($object->owner_guid);
 			$subject = elgg_echo('cp_notify:subject:edit_content',array('The page', $entity->title, $current_user->username),'en');
-			$subject .= ' | '.elgg_echo('cp_notify:subject:edit_content',array('La page',$entity->title, $current_user->username),'fr');
+			$subject .= ' | '.elgg_echo('cp_notify:subject:edit_content:f',array('La page',$entity->title, $current_user->username),'fr');
 
 			$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
 
@@ -620,7 +625,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 			foreach ($watchers as $watcher) {
 				$message['user_name'] = $watcher->username;
-				$message['_user_e-mail'] = $watcher->email;	// fpr P/T users
+
 				$template = elgg_view('cp_notifications/email_template', $message);
 				$recipient_user = get_user($watcher->guid);
 		if (has_access_to_entity($entity, $recipient_user)) {
@@ -631,16 +636,14 @@ function cp_create_annotation_notification($event, $type, $object) {
 				// create the instant notification if digest is not enabled
 				else
 					(elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $watcher->email, $watcher->name, $subject, $template, NULL, true ) : mail($watcher->email, $subject, $template, cp_get_headers());
-}
+			
+				if (check_entity_relationship($watcher->guid, 'cp_subscribed_to_site_mail', $entity->getContainerGUID())) {
+					$site_template = elgg_view('cp_notifications/site_template', $message);
+					messages_send($subject, $site_template, $watcher->guid, $site->guid, 0, true, false);
+				}
 			}
-			if (check_entity_relationship($watcher->guid, 'cp_subscribed_to_site_mail', $entity->getContainerGUID()))
-				messages_send($subject, $template, $watcher->guid, $site->guid, 0, true, false);
-
 			return true;
 		}
-
-
-
 	} else {
 
 		/// LIKES TO COMMENTS AND DISCUSSION REPLIES
@@ -736,9 +739,9 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 		    		if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $content->getOwnerGUID(),'cp_notifications'),'likes_email') == 0)
 	    				$to_recipients[$content->getOwnerGUID()] = $content->getOwnerEntity();
-	    			if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $content->getOwnerGUID(),'cp_notifications'),'likes_site') == 0)
-	    				$to_recipients_site[$content->getOwnerGUID()] = $content->getOwnerEntity();
 
+	    			if (strcmp(elgg_get_plugin_user_setting('cpn_likes_site', $content->getOwnerGUID(),'cp_notifications'),'likes_site') == 0)
+	    				$to_recipients_site[$content->getOwnerGUID()] = $content->getOwnerEntity();
 		    	}
 	    		break;
 
@@ -750,7 +753,9 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 	// send notification out via email
 	foreach ($to_recipients as $to_recipient_id => $to_recipient) {
+
 		$message['user_name'] = get_user($to_recipient->guid)->username;
+
 		$recipient_user = get_user($to_recipient->guid);
 		if ($liked_by->guid == $entity->getOwnerGUID() && $to_recipient->guid == $liked_by->guid)
 			continue;
@@ -773,8 +778,9 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 	// send notification out via site
 	foreach ($to_recipients_site as $to_recipient_id => $to_recipient) {
+		$site_template = elgg_view('cp_notifications/site_template', $message);
 		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') !== 0)
-			messages_send($subject, $template, $to_recipient->guid, $site->guid, 0, true, false);
+			messages_send($subject, $site_template, $to_recipient->guid, $site->guid, 0, true, false);
 	}
 
 
@@ -813,8 +819,6 @@ function cp_create_notification($event, $type, $object) {
 			$cp_mentioned_users = (elgg_is_active_plugin('mentions') && $object->getSubtype() !== 'messages') ? cp_scan_mentions($object) : "";
 
 			// send mentioned users a notification
-			//foreach ($cp_mentioned_users as $key => $cp_mentioned_user) {
-
 			if (sizeof($cp_mentioned_users) > 0 && is_array($cp_mentioned_users)) {
 				for ($i = 0; $i < sizeof($cp_mentioned_users); $i++) {
 					$cp_mentioned_user = $cp_mentioned_users[$i];
@@ -832,6 +836,7 @@ function cp_create_notification($event, $type, $object) {
 					);
 					$template = elgg_view('cp_notifications/email_template', $message);
 					$user_setting = elgg_get_plugin_user_setting('cpn_mentions_email', $mentioned_user->guid, 'cp_notifications');
+
 					if (strcmp($user_setting, 'mentions_email') == 0) {
 						$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $mentioned_user->guid, 'cp_notifications');
 
@@ -842,29 +847,25 @@ function cp_create_notification($event, $type, $object) {
 						// send email and site notification
 						} else {
 
-
 							if (elgg_is_active_plugin('phpmailer'))
 								phpmailer_send( $mentioned_user->email, $mentioned_user->name, $subject, $template, NULL, true );
 							else
 								mail($mentioned_user->email,$subject,$template,cp_get_headers());
-
-							//messages_send($subject, $template, $mentioned_user->guid, $site->guid, 0, true, false);
 						}
 					}
 
 					$user_setting = elgg_get_plugin_user_setting('cpn_mentions_site', $mentioned_user->guid, 'cp_notifications');
+					$site_template = elgg_view('cp_notifications/site_template', $message);
 					if (strcmp($user_setting, 'mentions_site') == 0)
-						messages_send($subject, $template, $mentioned_user->guid, $site->guid, 0, true, false);
+						messages_send($subject, $site_template, $mentioned_user->guid, $site->guid, 0, true, false);
 				}
 			}
-
 
 			// retrieve all necessary information for notification
 			$container_entity = $object->getContainerEntity();
 
 			$user_comment = get_user($object->owner_guid);
 			$topic_container = $container_entity->getContainerEntity();
-
 
 			// comment or reply in a group
 			if ($topic_container instanceof ElggGroup) {
@@ -896,7 +897,6 @@ function cp_create_notification($event, $type, $object) {
 			// digest information purposes
 			$content_entity = $container_entity;
 			$author = $user_comment;
-
 
 			// the user creating the content is automatically subscribed to it
 			if (elgg_instanceof($container, 'group')) {
@@ -1094,10 +1094,12 @@ if (has_access_to_entity($object, $recipient_user)) {
 
 		if (strcmp($user_setting, "set_digest_yes") == 0)
 			continue;
+
  if(has_access_to_entity($object, $recipient_user)){ 
  	
-		messages_send($subject, $template, $to_recipient->guid, $site->guid, 0, true, false);
-		}
+		$site_template = elgg_view('cp_notifications/site_template', $message);
+		messages_send($subject, $site_template, $to_recipient->guid, $site->guid, 0, true, false);
+
 	}
 }
 
@@ -1113,14 +1115,14 @@ if (has_access_to_entity($object, $recipient_user)) {
  * @return Array <ElggUser>
 
  */
+
 function get_subscribers($dbprefix, $user_guid, $entity_guid = '') {
 	$subscribed_to = ($entity_guid != '') ? $entity_guid : $user_guid;
 
 	$query = "	SELECT DISTINCT u.guid, u.email, u.username, u.name
-
-				FROM {$dbprefix}entity_relationships r LEFT JOIN {$dbprefix}users_entity u ON r.guid_one = u.guid
+				FROM {$dbprefix}entity_relationships r LEFT JOIN {$dbprefix}users_entity u ON r.guid_one = u.guid 
 				WHERE r.guid_one <> {$user_guid} AND r.relationship = 'cp_subscribed_to_email' AND r.guid_two = {$subscribed_to}";
-				error_log($query);
+
 	return get_data($query);
 }
 
@@ -1283,20 +1285,20 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 				$template = elgg_view('cp_notifications/newsletter_template', array('to' => $to, 'newsletter_content' => $newsletter_content));
 			else
 				$template = elgg_view('cp_notifications/newsletter_template_empty', array('to' => $to));
-
+ 
 
 			if (elgg_is_active_plugin('phpmailer'))
 				phpmailer_send($to->email, $to->name, $subject, $template, NULL, true );
 			else
 				mail($to->email, $subject, $template, cp_get_headers());
-
+	
 
 
 			//echo $template;
 			echo "<p>Digest sent to user email: {$to->email} ({$to->guid})</p>";
 
 			//echo "<br/><br/>";
-			//echo $template;
+			echo $template;
 
 			// TODO: authenticate cronjobs - since crons dont have a valid admin login, thhis portion fails
 			// temporarily strip the access

@@ -1,0 +1,165 @@
+Version history
+===============
+
+2.1.2 (2016-09-15):
+
+- fixed: php fatal error when getting answer url
+
+2.1.1 (2016-07-07):
+
+- fixed: deprecated notice of relationship delete
+
+2.1 (2016-05-04):
+
+- added: tags filtering in the widget and listing pages
+- fixed: incorrect type validation
+- fixed: using wrong validable name for widget url
+- fixed: widget title url
+
+2.0.1 (2016-04-14):
+
+- changed: questions listing styling
+- fixed: experts can't correctly edit answers
+- fixed: questions and answers can't be liked
+
+2.0 (2016-03-10):
+
+- added: answers will be search when searching for questions
+- added: daily cron notification to experts about workload
+- added: description on the expert page
+- added: experts page
+- added: group setting to automaticly mark expert answers as the correct answer
+- added: group setting to control who can answer a question
+- added: group todo list
+- added: missing language keys
+- added: notifications to experts on question create
+- added: notification to experts when a question is moved
+- added: notification to question owner on creation of answer
+- added: notification when an answer is marked as correct
+- added: notification when a question is asked
+- added: option to close questions
+- added: option to disable comments on questions
+- added: option to limit asking questions to only group experts
+- added: option to limit questions to groups
+- added: option to move a question to a discussion
+- added: plugin setting to control if group owners can set solution time
+- added: plugin setting to define fixed access settings for personal and group
+- added: profile link and group link is question subtitle
+- added: questions expert role
+- added: row to guid helper function
+- added: solutions time limits
+- added: subtitle in answers
+- added: support for content subscriptions fixed: comment on answer notification content
+- added: title buttons so people can add questions fixed: errors on the ask question page
+- added: widget manager support
+- added categories to full view
+- added checkmark to the correct answer
+- added correct answer on top of the list
+- added correctly answered state text in listing
+- added dutch translation
+- added highlight to solution time indicator
+- added likes requirement
+- added listing options to dashboard widget
+- Added menu class for horizontal aligned items
+- Added menu class for horizontal aligned items
+- added nice title on the checkmark
+- added option to edit answer
+- added poster link to last answered message
+- Added quick feature list to README
+- added river item for answer
+- added solution time to listing view
+- added some top margin to the answers
+- added todo and updated page
+- Adds CONTRIBUTORS file
+- allow experts to move questions to a different place
+- answers are unlimited
+- answers can be marked as the correct answer to a question
+- changed: admins can become experts fixed: expert check
+- changed: closed status indicator icon
+- changed: group tool default off added: container selection only for enabled groups
+- changed: mine page lists all owned questions
+- changed: question description no longer required
+- changed: question description shown in listing
+- changed: updated for Elgg 1.12
+- changed answer order based on likes
+- changed likes requirement to suggestion
+- changed page title and added question to breadcrumb
+- check comment count correctly
+- checkmark now shows in listing if question has a marked answer. Also it now shows highlighted version of checkmark icon
+- comments are now unlimited listed
+- correct check of marked answer state instead of closed state
+- correctly show categories
+- fixed: all tab not always linking to correct page
+- fixed: answer title in river
+- fixed: correct check on question role relationship
+- fixed: filter menu
+- fixed: function redeclaired error
+- fixed: group members can answer questions
+- fixed: incorrect filename for class
+- fixed: invalid time display in daily todo notification
+- fixed: IOException for experts when moving questions to discussions
+- fixed: mine tab incorrectly highlighted
+- fixed: move to discussion
+- fixed: notifications to experts aren't sent
+- fixed: permissions deadloop
+- fixed: setting wrong input name
+- fixed: some users could not be made an expert
+- fixed: sql query errors in some use cases
+- fixed: toggle correct answer link only in questions context
+- fixed: undefined actions
+- fixed: users can't answer on non group question
+- fixed: widget entity listing not in listing mode
+- fixed: wrong answer displayed in listing
+- fixed: wrong backdate entity
+- fixed: wrong saving of solution time
+- fixed: wrong subtitle in question listing
+- fixed correct presentation of river items
+- fixed errors in the entity views
+- fixed missing empty lines at the end of the file and some other fixes
+- fixed searchable questions
+- fixed some coding issues
+- fixed some typos
+- fixed typo
+- fixed wrong query in cron
+- fixed wrong url
+- French language pack
+- improved coding quality
+- language keys
+- listen to the plugin settings that only experts can answer questions
+- loading correct files
+- merge conflict
+- moved and updated css and unused images
+- no need for the image block layout
+- no pagination in a widget
+- now showing comments in full view
+- only add menu item if enabled
+- only show experts tab if experts enabled
+- only show solution time if not marked with a correct answer
+- page handler changes
+- Proper markdown in CONTRIBUTORS.md
+- removed: unsused code
+- removed comment option from question entity menu in listing
+- removed french relation as a lot has changed
+- removed friends filter
+- removed group owner from expert notifications
+- removed repeated language
+- removed unused dbprefix declaration
+- removed unwanted usage of buttons param for layout
+- remove the expert role if the user leaves the site
+- renamed function to better reflect purpose
+- renamed view as old name is deprecated
+- set correct class handlers for questions/answers
+- set correct default access
+- set correct filter_context sot the correct tab is selected
+- show filter menu on owner page
+- standarized group module
+- Update all.php
+- Update CONTRIBUTORS.md
+- updated: Dutch translation
+- Update delete.php
+- Update edit.php
+- Update en.php
+- Update start.php
+- Update view.php
+- when a user leave a group he loses the expert role for that group
+- widget content changed to better comply with pages

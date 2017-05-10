@@ -15,7 +15,7 @@
  *
  * @package wet4
  * @author GCTools Team
- 
+
  2015/10/14-
  Added conditional check to see what page the module is loaded on and what type of module it is
  */
@@ -38,7 +38,7 @@ $attrs = [
     'aria-grabbed' => elgg_extract('aria-grabbed', $vars), //this is for accessible drag and drop
     'draggable' => elgg_extract('draggable', $vars),
     'tabindex' => elgg_extract('tabindex', $vars),
-    
+
 ];
 
 /**
@@ -49,7 +49,7 @@ $attrs = [
  */
 
 if( $type == 'GPmod'){
-  
+
     if ($type) {
         $attrs['class'][] = "elgg-module-$type";
     }
@@ -69,7 +69,7 @@ if( $type == 'GPmod'){
 
 } else if ($checkPage =='gallery'){
     // check to see if the page is a photo gallery to style the photo stuff :)
-    
+
         $attrs['class'][] = 'panel panel-custom hght-inhrt ';
     if ($type) {
         $attrs['class'][] = "elgg-module-$type";
@@ -94,16 +94,52 @@ if( $type == 'GPmod'){
     }
 
     echo elgg_format_element('div', $attrs, $contents);
-    
-    
-}else{ //Normal Style Below
+
+
+}else if(($type == 'tidypics-album-wet' && elgg_in_context('profile')) || ($type == 'tidypics-album-wet' && elgg_in_context('group_profile'))){ //Normal Style Below
 
     if($checkPage =='custom_index_widgets'){
         $attrs['class'][] = 'panel panel-default custom-index-panel';
     }else{
         $attrs['class'][] = 'panel panel-default TEST';
     }
-    
+
+
+    if ($type) {
+        $attrs['class'][] = "elgg-module-$type";
+    }
+
+    $header = elgg_extract('header', $vars);
+    if ($title) {
+        //$header = elgg_format_element('h2', ['class' => 'panel-title'], gc_explode_translation($title,get_current_language()));
+        $header = elgg_format_element('h3', ['class' => 'panel-title'], $title);
+    }
+
+    if ($header !== null) {
+       // $header = elgg_format_element('div', ['class' => 'panel-heading'], $header);
+        $header = elgg_format_element('header', ['class' => 'panel-heading'], $header);
+    }
+    $body = elgg_format_element('div', ['class' => 'panel-body clearfix'], $body);
+    if ($footer) {
+        $footer = elgg_format_element('div', ['class' => 'panel-footer text-right'], $footer);
+    }
+
+    $contents = $header . $body . $footer;
+    if ($show_inner) {
+        $contents = elgg_format_element('div', ['class' => 'elgg-inner'], $contents);
+    }
+
+    echo elgg_format_element('div', $attrs, $contents);
+    //echo $checkPage;
+
+} else { //Normal Style Below
+
+    if($checkPage =='custom_index_widgets'){
+        $attrs['class'][] = 'panel panel-default custom-index-panel';
+    }else{
+        $attrs['class'][] = 'panel panel-default TEST';
+    }
+
 
     if ($type) {
         $attrs['class'][] = "elgg-module-$type";

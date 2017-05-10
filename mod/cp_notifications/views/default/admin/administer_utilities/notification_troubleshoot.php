@@ -30,11 +30,12 @@ $(document).keypress(function(e) {
     }
 });
 
-function onclick_link(guid) {
+function onclick_link(guid, user_guid) {
     var this_thing = $(this);
     elgg.action('cp_notify/unsubscribe', {
         data: {
             'guid' : guid,
+            'user_guid' : user_guid
         },
         success: function(data) {
             $('#item_' + guid).fadeOut();

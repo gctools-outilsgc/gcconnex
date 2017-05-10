@@ -14,6 +14,7 @@ layout
 
 
 echo '<div role="tabpanel" tabindex="-1" class="tab-pane fade-in" id="badgeProgress">';
+    echo '<h2 class="wb-inv">'.elgg_echo('badges:tab:header').'</h2>';
     echo '<div class="clearfix">';
 
     $badges = get_badges();

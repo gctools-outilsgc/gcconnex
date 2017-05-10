@@ -172,4 +172,14 @@ function showfr() {
    document.getElementById('endesc').style.display = "none";
 }
 
+//do form validation here for ajax view
+$(".elgg-form").each(function(){
+  $(this).validate({
+    submitHandler: function(form) {
+      $(form).find('button').prop('disabled', true);
+      form.submit();
+    },
+  });
+});
+
 </script>
