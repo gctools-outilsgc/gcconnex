@@ -1,8 +1,5 @@
 <?php
 
-//elgg_push_breadcrumb('step 1');
-// not getting the group owner guid properly
-elgg_load_library('elgg:gc_notification:functions');
 
 $object = get_entity($vars['forum_guid']);
 $vars['entity'] = $object;
@@ -34,11 +31,16 @@ $gcf_description_input = elgg_view('input/longtext', array(
 ));
 
 
-// cyu - patched that only group owner/moderators/admin can do sticky topics
+// only group owner/moderators/admin can do sticky topics
 $gcf_current_user_guid = elgg_get_logged_in_user_guid();
 $gcf_moderator_users_guid = array();
 
-$gcf_moderator_user[] = get_entity(get_forum_in_group($object->getGUID(),$object->getGUID()))->owner_guid;
+// not getting the group owner guid properly (use library in cp_notification)
+// check if the plugin cp_notification is active before using the function get_forum_in_group
+if (elgg_is_active_plugin('cp_notifications')) {
+	elgg_load_library('elgg:gc_notification:functions');
+	$gcf_moderator_user[] = get_entity(get_forum_in_group($object->getGUID(),$object->getGUID()))->owner_guid;
+}
 
 $group_operators = elgg_get_entities_from_relationship(array(
 	'relationship' => 'operator',
@@ -56,8 +58,7 @@ if (($object->getSubtype() === 'hjforumtopic' && in_array($gcf_current_user_guid
 		'name' => 'gcf_sticky',
 		'id' => 'gcf_sticky',
 		'class' => 'list-unstyled mrgn-tp-sm',
-		'options' => array(
-		$gcf_sticky_topic_label => 1),
+		'options' => array($gcf_sticky_topic_label => 1),
 		'value' => $object->sticky,
 	));
 }
@@ -68,8 +69,7 @@ if ($object->getSubtype() === 'hjforum') {
 		'name' => 'gcf_allow_categories',
 		'id' => 'categories_id',
 		'class' => 'list-unstyled',
-		'options' => array(
-			$gcf_enable_categories_label => 1),
+		'options' => array($gcf_enable_categories_label => 1),
 		'value' => $object->enable_subcategories,
 	));
 
@@ -83,13 +83,10 @@ if ($object->getSubtype() === 'hjforum') {
 		'value' => $object->enable_posting,
 		));
 
-	$query = "SELECT guid_two
+	$query = "	SELECT guid_two
 				FROM {$db_prefix}entity_relationships
 				WHERE guid_one = {$vars['forum_guid']} AND relationship = 'filed_in'";
 	$shelved_in = get_data($query);
-	
-	//echo print_r($shelved_in);
-	//echo " // {$shelved_in[0]->guid_two}";
 
 	// this is forum object then check to see if categories is enabled
 	if ($object->enable_subcategories || get_entity($object->getContainerGUID()) instanceof ElggGroup) {
