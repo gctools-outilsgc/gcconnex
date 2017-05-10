@@ -229,6 +229,7 @@
             success: function (output) {
                // var oldHeight = $('#welcome-step').css('height');
                 $('#welcome-step').html(output);
+                $('#welcome-step').focus();
                // var newHeight = $('#welcome-step').children().css('height');
                 //console.log('new:' + newHeight + ' old:' + oldHeight);
                 //animateStep(oldHeight, newHeight);

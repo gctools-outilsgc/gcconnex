@@ -4,7 +4,7 @@ gatekeeper();
 $gcf_container = $vars['container_guid'];
 $gcf_subtype = get_input('gcf_subtype');
 $gcf_group = get_input('gcf_group');
-
+error_log('hello!');
 
 switch ($gcf_subtype) {
 	case 'hjforumcategory':
@@ -257,9 +257,12 @@ function gcforums_notify_subscribed_users($hjobject, $hjlink) {
 				'cp_topic_title' => $hjobject->title,
 				'cp_msg_type' => 'cp_hjtopic',
 				'cp_subscribers' => $subscribers,
+				'cp_topic' => $hjobject
 			);
 		} else { // post made
 			$message = array(
+
+				'cp_post' => $hjobject,
 				'cp_topic_author' => $hjobject->getOwnerEntity()->name,
 				'cp_topic_author_username' => $hjobject->getOwnerEntity()->username,
 				'cp_topic_description' => $hjobject->description,

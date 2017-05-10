@@ -93,7 +93,7 @@ if ($container instanceof ElggGroup && $container->guid != elgg_get_page_owner_g
     //Nick - Changed "in the group" to just the group link in order to show this is group content. May need some looking at
 	$group_string = $group_link;
     $group_image = elgg_view_entity_icon($container, 'medium');
-
+    $in_the_group = elgg_echo('river:ingroup', array($group_string));
    // $group_testing = elgg_view_image_block($group_image, $group_link);
 
     
@@ -112,8 +112,8 @@ if($group_string /*|| $commentordiscuss*/ && !elgg_in_context('group_activity_ta
 <div class="">
 
 
-<div class="elgg-river-summary mrgn-bttm-sm river-group-link"> $group_string</div>
-<div class="elgg-river-summary"> $summary</div>
+<div aria-hidden="true" class="elgg-river-summary mrgn-bttm-sm river-group-link"> $group_string</div>
+<h3 class="elgg-river-summary"> $summary <span class="wb-invisible">$in_the_group</span></h3>
 <div class="elgg-river-timestamp mrgn-bttm-md timeStamp "><i>$timestamp</i><div class="pull-right">$menu</div></div>
 
 </div>
@@ -132,7 +132,7 @@ RIVER;
     $identify_activity = elgg_echo('friend:river');
     echo <<<RIVER
 
-<div class="elgg-river-summary  mrgn-bttm-sm river-user-heading"> $summary  </div>
+<h3 class="elgg-river-summary  mrgn-bttm-sm river-user-heading"> $summary  </h3>
 
 <div class="elgg-river-timestamp mrgn-bttm-sm timeStamp"><i>$timestamp</i> <div class="pull-right">$menu</div></div>
 

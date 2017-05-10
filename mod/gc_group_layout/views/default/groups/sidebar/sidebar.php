@@ -5,10 +5,16 @@ Group Profile Sidebar
 
 **/
 
+$group = elgg_get_page_owner_entity();
 
 //members widget
 //Nick - we will keep the members in the sidebar
-echo elgg_view('groups/sidebar/group_members', $vars);
+$display_members = $group->getPrivateSetting('group_tools:cleanup:members');
+
+//show group members based on privacy setting
+if($display_members != 'yes'){
+  echo elgg_view('groups/sidebar/group_members', $vars);
+}
 
 //group activity
 echo elgg_view('groups/sidebar/activity', $vars);

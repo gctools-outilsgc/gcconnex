@@ -144,6 +144,7 @@ return array(
     'onboard:profile:finish' 		=> "Terminer",
 
     'onboard:steps' => "Étapes",
+    'onboard:steps:sr' => "Étape %s de %s",
 
     /**Contact Form Links**/
     'onboard:helpHeader'		=> 'Modules des tutoriels',

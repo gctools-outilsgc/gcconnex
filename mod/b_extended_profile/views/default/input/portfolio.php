@@ -9,7 +9,7 @@
 $portfolio = get_entity($vars['guid']); // get the guid of the education entry that is being requested for display
 $guid = ($portfolio != NULL)? $vars['guid'] : "new"; // if the education guid isn't given, this must be a new entry
 
-echo '<div class="gcconnex-portfolio-entry" data-guid="' . $guid . '">'; // education entry wrapper for css styling
+echo '<div tabindex="-1" class="gcconnex-portfolio-entry" data-guid="' . $guid . '">'; // education entry wrapper for css styling
 
     // enter title for portfolio entry
 echo '<label for="portfolioTitle-' . $portfolio->guid .'" class="">';

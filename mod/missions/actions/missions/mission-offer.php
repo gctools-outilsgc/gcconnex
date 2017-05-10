@@ -38,11 +38,11 @@ else {
 			 
 			$finalize_link = elgg_view('output/url', array(
 					'href' => elgg_get_site_url() . 'missions/view/' . $mission->guid,
-					'text' => elgg_echo('missions:accept')
+					'text' => elgg_echo('missions:respond')
 			));
 			 
 			$subject = elgg_echo('missions:offers_you_a_spot', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))), $applicant->language);
-			$body = elgg_echo('missions:offers_you_a_spot_more', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))), $applicant->language) . $finalize_link . '.';
+			$body = elgg_echo('missions:offers_you_a_spot_more', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))), $applicant->language) . " {$finalize_link}" . '.';
 			mm_notify_user($applicant->guid, $mission->guid, $subject, $body);
 		}
 	}

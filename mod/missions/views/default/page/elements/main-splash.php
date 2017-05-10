@@ -61,12 +61,12 @@ $advanced_field = elgg_view('page/elements/hidden-field', array(
 </div> -->
 
 <div class="col-sm-12 clearfix">
-    <h4><?php echo elgg_echo('missions:splash:welcome'); ?></h4>
+    <h2 class='h4'><?php echo elgg_echo('missions:splash:welcome'); ?></h2>
 	<div class="col-sm-8"><?php echo elgg_echo('missions:first_splash_paragraph')?></div>
 </div>
 
 <div class="col-sm-12 clearfix">
-    <h4 class=""><?php echo elgg_echo('missions:splash:how_to_apply'); ?></h4>
+    <h2 class='h4' class=""><?php echo elgg_echo('missions:splash:how_to_apply'); ?></h2>
     <div class="col-sm-8">
         <?php echo elgg_echo('missions:second_splash_paragraph'); ?>
         <div class="col-sm-12 alert alert-info mrgn-tp-sm clearfix">
@@ -95,7 +95,7 @@ $advanced_field = elgg_view('page/elements/hidden-field', array(
         background: rgba(0,0,0,0.4);
     }
 </style>
-<button aria-hidden="true" type="button" id="optinPopup" class="btn btn-primary btn-lg btn-block gcconnex-edit-profile" data-toggle="modal" data-target="#showOptin" data-keyboard="false" data-backdrop="static" data-colorbox-opts='{"inline":true, "href":"#showOptin", "innerWidth": 600, "maxHeight": "80%", "margin-top":"15%"}'><?php echo elgg_echo('missions:opt_in_to_opportunities'); ?></button>
+<button type="button" id="optinPopup" class="btn btn-primary btn-lg btn-block gcconnex-edit-profile" data-toggle="modal" data-target="#showOptin" data-keyboard="false" data-backdrop="static" data-colorbox-opts='{"inline":true, "href":"#showOptin", "innerWidth": 600, "maxHeight": "80%", "margin-top":"15%"}'><?php echo elgg_echo('missions:opt_in_to_opportunities'); ?></button>
     </div>
 
 </div>
@@ -140,7 +140,7 @@ $advanced_field = elgg_view('page/elements/hidden-field', array(
 
 
 <div class="brdr-tp mrgn-tp-md clearfix col-sm-12">
-	<h4><?php echo elgg_echo('missions:splash:missions_right_now') ; ?></h4>
+	<h2 class='h4'><?php echo elgg_echo('missions:splash:missions_right_now') ; ?></h2>
 	<?php 
 		//echo $simple_search_form;
 //Nick - Removing search from splash page as user still needs to opt in

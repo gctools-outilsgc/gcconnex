@@ -212,6 +212,18 @@ function input_livesearch_page_handler($page) {
 	// replace mysql vars with escaped strings
 	$q = str_replace(array('_', '%'), array('\_', '\%'), $q);
 
+// for the group members search: group guid - should be numeric
+	if (!$g = get_input('term', get_input('g'))) {
+		exit;
+	}
+
+	$input_name = get_input('name', 'members');
+
+	$g = sanitise_string($g);
+
+	// replace mysql vars with escaped strings
+	$g = str_replace(array('_', '%'), array('\_', '\%'), $g);
+
 	$match_on = get_input('match_on', 'all');
 
 	if (!is_array($match_on)) {
@@ -338,6 +350,54 @@ function input_livesearch_page_handler($page) {
 					'limit' => $limit,
 					'relationship' => 'friend',
 					'relationship_guid' => $user->getGUID(),
+					'joins' => array("JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid"),
+					'wheres' => array(
+						"ue.banned = 'no'",
+						"(ue.name LIKE '$q%' OR ue.name LIKE '% $q%' OR ue.username LIKE '$q%')"
+					)
+				);
+				
+				$entities = elgg_get_entities_from_relationship($options);
+				if (!empty($entities)) {
+					foreach ($entities as $entity) {
+						
+						$output = elgg_view_list_item($entity, array(
+							'use_hover' => false,
+							'use_link' => false,
+							'class' => 'elgg-autocomplete-item',
+							'title' => $entity->name, // Default title would be a link
+						));
+
+						$icon = elgg_view_entity_icon($entity, 'tiny', array(
+							'use_hover' => false,
+						));
+
+						$result = array(
+							'type' => 'user',
+							'name' => $entity->name,
+							'desc' => $entity->username,
+							'guid' => $entity->guid,
+							'label' => $output,
+							'value' => $entity->username,
+							'icon' => $icon,
+							'url' => $entity->getURL(),
+							'html' => elgg_view('input/userpicker/item', array(
+								'entity' => $entity,
+								'input_name' => $input_name,
+							)),
+						);
+						$results[$entity->name . rand(1, 100)] = $result;
+					}
+				}
+				break;
+
+			case 'groupmems':
+				$options = array(
+					'type' => 'user',
+					'limit' => $limit,
+					'relationship' => 'member',
+					'relationship_guid' => $g,
+					'inverse_relationship' => true,
 					'joins' => array("JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid"),
 					'wheres' => array(
 						"ue.banned = 'no'",

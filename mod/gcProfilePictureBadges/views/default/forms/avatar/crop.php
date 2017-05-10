@@ -43,7 +43,7 @@ if (isset($_POST['action'])) {
         case 'rotation':
             rotation($photo);
             break;
-        
+
     }
 }
 
@@ -59,7 +59,7 @@ function rotation($photo){
      // $imgsrc = $_SERVER['DOCUMENT_ROOT'].'1/'.$photo->guid.'\profile/'.$photo->guid.''.$picture_size[$x].'.jpg';
       $file->setFilename("profile/{$photo->guid}{$picture_size[$x]}.jpg");
       $filepath = $file->getFilenameOnFilestore();
-      
+
       $imgsrc = $filepath;
 
       if (exif_imagetype($imgsrc) == IMAGETYPE_JPEG) {
@@ -74,17 +74,17 @@ function rotation($photo){
                 }
               }else{
                 echo 'Error, Image rotate false. JPEG';
-          
+
               }
-            
+
           }else{
               echo'Error, file not exist. JPEG';
-        
+
           }
               imagedestroy($img);
       imagedestroy($imgRotated);
     }
-  }        
+  }
 }
 
 $image_src = $vars['entity']->getIconUrl('master');
@@ -140,8 +140,13 @@ $content = elgg_get_entities_from_relationship($options);
 
     $options = array( 'none' => '- - - - - - - - - - - -' );
     foreach ( $content as $group ){
-		if ( $initbadges[$group->name] != null )
-			$options[$group->name] = $group->name;
+		if ( $initbadges[$group->name] != null ){
+			$badge = $initbadges[$group->name];
+			//check if group has enabled their badge
+			if($group->getPrivateSetting("group:badge:".$badge) == 'yes'){
+				$options[$group->name] = $group->name;
+			}
+		}
 	}
 
     //get current selected value

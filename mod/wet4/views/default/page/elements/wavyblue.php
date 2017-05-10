@@ -32,7 +32,6 @@ $site_name = elgg_view('output/url', array(
             </div>
 
             <section class="wb-mb-links col-xs-4 col-sm-3 visible-sm visible-xs" id="wb-glb-mn">
-                <h2><?php echo elgg_echo('wet:search');?></h2>
                 <ul class="list-inline text-right chvrn">
                 <li><a href="#mb-pnl" title="<?php echo elgg_echo('wet:search');?>" aria-controls="mb-pnl" class="overlay-lnk" role="button">
                         <span class="glyphicon glyphicon-search">

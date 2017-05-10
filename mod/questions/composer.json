@@ -1,0 +1,18 @@
+{
+	"name": "coldtrick/questions",
+	"description": "Q&A functionality analagous to Quora, Stack Overflow, or Facebook Questions",
+	"type": "elgg-plugin",
+	"keywords": ["elgg", "plugin"],
+	"license": "GPL-2.0",
+	"support": {
+		"source": "https://github.com/ColdTrick/questions",
+		"issues": "https://github.com/ColdTrick/questions/issues"
+	},
+	"require": {
+		"composer/installers": "^1.0.8"
+	},
+	"require-dev": {
+		"coldtrick/sniffs": "dev-master",
+		"coldtrick/releases": "dev-master"
+	}
+}
