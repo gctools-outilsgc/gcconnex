@@ -1,6 +1,8 @@
 <?php
 
 //elgg_push_breadcrumb('step 1');
+// not getting the group owner guid properly
+elgg_load_library('elgg:gc_notification:functions');
 
 $object = get_entity($vars['forum_guid']);
 $vars['entity'] = $object;
@@ -36,7 +38,8 @@ $gcf_description_input = elgg_view('input/longtext', array(
 $gcf_current_user_guid = elgg_get_logged_in_user_guid();
 $gcf_moderator_users_guid = array();
 
-$gcf_moderator_user[] = get_entity($vars['group_guid'])->owner_guid;
+$gcf_moderator_user[] = get_entity(get_forum_in_group($object->getGUID(),$object->getGUID()))->owner_guid;
+
 $group_operators = elgg_get_entities_from_relationship(array(
 	'relationship' => 'operator',
 	'relationship_guid' => $vars['group_guid'],
