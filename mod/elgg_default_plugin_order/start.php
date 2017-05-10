@@ -1,12 +1,35 @@
 <?php
 
+global $elgg_default_plugin_order_generate;
+
+# To regenerate the plugin list, uncomment the next line and activate the
+# Elgg plugin reorder plugin.  (Make sure plugin_config.ini is writable)
+#$elgg_default_plugin_order_generate = true;
+
 function elgg_default_plugin_order(){
-	elgg_default_plugin_order_reorder();
-	elgg_default_plugin_order_set_status();
+  global $elgg_default_plugin_order_generate;
+  if ($elgg_default_plugin_order_generate) {
+    $plugins = elgg_get_plugins('all');
+    $config_file = elgg_get_config('path')."plugin_config.ini";
+    $data =
+      "# GCconnex plugin order.\n".
+      "# See mod/elgg_default_plugin_order/start.php\n\n";
+    foreach ($plugins as $plugin) {
+      $enabled = (is_plugin_enabled($plugin->title)) ? 'enabled' : 'disabled';
+      if ($plugin->title == 'elgg_default_plugin_order') {
+        $enabled = 'disabled';
+      }
+      $data .= "{$plugin->title}={$enabled}\n";
+    }
+    file_put_contents($config_file, $data);
+  } else {
+	  elgg_default_plugin_order_reorder();
+	  elgg_default_plugin_order_set_status();
+  }
+
 	if(is_plugin_enabled('elgg_default_plugin_order')){
 		disable_plugin('elgg_default_plugin_order');
 	}
-
 }
 
 function elgg_default_plugin_order_load_config(){
