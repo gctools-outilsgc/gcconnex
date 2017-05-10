@@ -644,6 +644,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 			}
 			return true;
 		}
+		}
 	} else {
 
 		/// LIKES TO COMMENTS AND DISCUSSION REPLIES
@@ -1095,11 +1096,12 @@ if (has_access_to_entity($object, $recipient_user)) {
 		if (strcmp($user_setting, "set_digest_yes") == 0)
 			continue;
 
- if(has_access_to_entity($object, $recipient_user)){ 
+ 	if(has_access_to_entity($object, $recipient_user)){ 
  	
 		$site_template = elgg_view('cp_notifications/site_template', $message);
 		messages_send($subject, $site_template, $to_recipient->guid, $site->guid, 0, true, false);
 
+		}
 	}
 }
 
