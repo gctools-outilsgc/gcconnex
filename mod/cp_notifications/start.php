@@ -918,14 +918,14 @@ function cp_create_notification($event, $type, $object) {
 
 		// micromissions / opportunities
 		case 'mission':
-
+			$job_type = $object->job_type;		// only need to get this once
 			// get users who want to be notified about new opportunities by site message
 			$op_siteusers = get_data("SELECT id, entity_guid FROM {$dbprefix}private_settings WHERE name = 'plugin:user_setting:cp_notifications:cpn_opportunities_site' AND value = 'opportunities_site'");
 
 			foreach ($op_siteusers as $result) {
 				$userid = $result->entity_guid;
 				$user_obj = get_user($userid);
-				if (userOptedIn($user_obj, $object->job_type)) $to_recipients_site[$userid] = $user_obj;
+				if ( userOptedIn( $user_obj, $job_type ) ) $to_recipients_site[$userid] = $user_obj;
 			}
 
 			// get users who want to be notified about new opportunities by email
@@ -934,8 +934,7 @@ function cp_create_notification($event, $type, $object) {
 			foreach ($op_emailusers as $result) {
 				$userid = $result->entity_guid;
 				$user_obj = get_user($userid);
-				if ( userOptedIn( $user_obj, $object->job_type ) ) $to_recipients[$userid] = $user_obj;
-
+				if ( userOptedIn( $user_obj, $job_type ) ) $to_recipients[$userid] = $user_obj;
 			}
 
 			$message = array(
