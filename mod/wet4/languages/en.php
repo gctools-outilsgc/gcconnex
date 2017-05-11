@@ -149,6 +149,7 @@ return array(
 
     'entity:like:link:question' => 'Like the question %s',
     'entity:unlike:link:question' => 'Remove like from the question %s',
+    'entity:comment:link:question' => 'Comment on the question %s',
     'entity:edit:link:question' => 'Edit the question %s',
     'entity:delete:link:question' => 'Delete the question %s',
     'entity:share:link:question' => 'Share the question %s on The Wire',
@@ -157,6 +158,7 @@ return array(
 
     'entity:like:link:answer' => 'Like this answer by %s',
     'entity:unlike:link:answer' => 'Remove like from the answer by %s',
+    'entity:comment:link:answer' => 'Comment on this answer by %s',
     'entity:edit:link:answer' => 'Edit this answer by %s',
     'entity:delete:link:answer' => 'Delete this answer by %s',
     'entity:share:link:answer' => 'Share this answer by %s to The Wire',

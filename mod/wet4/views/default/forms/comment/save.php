@@ -104,15 +104,16 @@ if ($comment) {
 }
 
 if ($inline) {
-	$comment_input = elgg_view('input/text', array(
+  $label = '<label for="generic_comment_'.$entity->getGUID().'">'.elgg_echo('comment').'</label>';
+	$comment_input = elgg_view('input/longtext', array(
 		'name' => 'generic_comment',
-		'id' => 'generic_comment',
+		'id' => 'generic_comment_'.$entity->getGUID(),
     'class' => 'validate-me',
     'required' => 'required',
 		'value' => $comment_text,
 	));
 
-	echo $comment_input . $entity_guid_input . $comment_guid_input . $submit_input;
+	echo $label . $comment_input . $entity_guid_input . $comment_guid_input . $submit_input;
 } else {
 
 	$comment_input = elgg_view('input/longtext', array(

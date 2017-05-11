@@ -1069,6 +1069,21 @@ if (elgg_instanceof($entity, "object", "groupforumtopic") && $entity->canEdit() 
 
 			}
 
+			//style comment for Questions mod and switch to FA icon
+			if ($entity->canComment()) {
+				if (elgg_extract('full_view', $params, false) || ($entity instanceof ElggAnswer)) {
+					$options = array(
+						'name' => 'comments',
+						"text" => '<span class="fa fa-lg fa-comment icon-unsel"><span class="wb-inv">' . elgg_echo("entity:comment:link:".$entity->getSubtype(), array($entName)) . '</span></span>',
+						"title" => elgg_echo("comment:this") . ' ' . $entContext,
+						'href' => "#comments-add-{$entity->getGUID()}",
+						'priority' => 288,
+						'rel' => 'toggle'
+					);
+					$return[] = \ElggMenuItem::factory($options);
+				}
+			}
+
 	return $return;
 }
 /*
