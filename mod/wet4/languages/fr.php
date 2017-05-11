@@ -159,6 +159,9 @@ return array(
   'entity:delete:link:answer' => 'Delete this answer by %s',
   'entity:share:link:answer' => 'Share this answer by %s to The Wire',
 
+  //questions
+  'questions:answer:checkmark:brief' => "%s marked an answer by %s correct on %s",
+
       'wet:more' => "Autres",
     'breadcrum:home' => 'Accueil',
 

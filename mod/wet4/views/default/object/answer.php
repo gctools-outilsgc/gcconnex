@@ -12,14 +12,18 @@ $image = elgg_view_entity_icon($answer->getOwnerEntity(), 'medium');
 // mark this as the correct answer?
 $correct_answer = $answer->getCorrectAnswerMetadata();
 if ($correct_answer) {
-	$owner = $correct_answer->getOwnerEntity();
+	//grab correct person for correct answer title
+	$owner = $question->getOwnerEntity();
 	$owner_name = htmlspecialchars($owner->name);
 
 	$timestamp = htmlspecialchars(date(elgg_echo('friendlytime:date_format'), $correct_answer->time_created));
 
 	$title = elgg_echo('questions:answer:checkmark:title', [$owner_name, $timestamp]);
 
-	$image .= elgg_format_element('div', ['class' => 'questions-checkmark', 'title' => $title]);
+	$image .= elgg_format_element('div', ['class' => 'fa fa-check fa-3x questions-correct', 'title' => $title]);
+
+	//make variable to store invisible span for screen readers
+	$correct = '<span class="wb-inv">'.$title.'</span>';
 }
 
 // create subtitle
@@ -82,6 +86,6 @@ $params = [
 	'content' => $body,
 ];
 
-$summary = elgg_view('page/components/summary', $params);
+$summary = $correct . elgg_view('page/components/summary', $params);
 
 echo elgg_view_image_block($image, $summary);

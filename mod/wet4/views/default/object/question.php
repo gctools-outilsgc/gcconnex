@@ -115,7 +115,7 @@ if ($full) {
 	];
 	$list_body = elgg_view('object/elements/summary', $params);
 
-	$list_body .= elgg_view('output/longtext', ['value' => $question->description]);
+	$body .= elgg_view('output/longtext', ['value' => $question->description]);
 
 	// show comments?
 	if ($question->comments_enabled !== 'off') {
@@ -132,11 +132,11 @@ if ($full) {
 				"order_by" => "time_created"
 			];
 
-			$list_body .= elgg_format_element('h3', [
+			$comments_body = elgg_format_element('h2', [
 					'class' => ['elgg-river-comments-tab', 'mtm']
 				], elgg_echo('comments')
 			);
-			$list_body .= elgg_list_entities($comment_options);
+			$comments_body .= elgg_list_entities($comment_options);
 		}
 
 		if ($question->canComment()) {
@@ -147,22 +147,31 @@ if ($full) {
 			];
 
 			$form = elgg_view_form('comment/save', [], $body_vars);
-			$list_body .= elgg_format_element('div', [
+			$comments_body .= elgg_format_element('div', [
 					'class' => ['elgg-river-item'],
 					'id' => "comments-add-{$question->getGUID()}",
 					"style" => "display:none;"
 				], $form
 			);
+
+			$comments = elgg_format_element('div', ['class' => 'mrgn-lft-md'], $comments_body);
 		}
 	}
 
 	echo elgg_view_image_block($poster_icon, $list_body);
+	echo elgg_format_element('div', ['class' => ['mrgn-tp-md']], $body.$comments);
 
 } else {
 	// brief view
 	$title_text = '';
 	if ($question->getMarkedAnswer()) {
-		$title_text = elgg_view_icon('checkmark', ['class' => 'mrs question-listing-checkmark']);
+
+		//place checkmark telling user an answer has been marked correct
+		$answer = $question->getMarkedAnswer()->getCorrectAnswerMetadata();
+		$timestamp = htmlspecialchars(date(elgg_echo('friendlytime:date_format'), $answer->time_created));
+		$correcttitle = elgg_echo('questions:answer:checkmark:brief', [$question->getOwnerEntity()->name, $poster->name, $timestamp]);
+
+		$poster_icon .= elgg_format_element('div', ['class' => 'fa fa-check fa-3x questions-correct', 'title' => $correcttitle]);
 	}
 	$title_text .= elgg_get_excerpt($question->title, 100);
 	$title = elgg_view('output/url', [
@@ -184,9 +193,9 @@ if ($full) {
 		'entity' => $question,
 		'title' => $title,
 		'metadata' => $metadata,
-		'subtitle' => implode(' ', $subtitle),
+		'subtitle' => implode(' ', $subtitle) . $answer_text,
 		'tags' => $tags,
-		'content' => $excerpt . $answer_text,
+		'content' => $excerpt,
 	];
 	$list_body = elgg_view('object/elements/summary', $params);
 
