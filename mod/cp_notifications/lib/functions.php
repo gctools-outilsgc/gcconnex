@@ -471,36 +471,42 @@ function cp_translate_subtype($subtype_name, $english = true) {
 /**
  * Helper function for notifications about new opportunities
  *
- * @param ElggUser 	$user_obj
  * @param string 	$mission_type
+ * @param string 	$role_type		offering or seeking
+ *
+ * @return int 		metastring id of the mission opt-in type
  */
-function userOptedIn( $user_obj, $mission_type ) {
-	$typemap = array(
-		'missions:micro_mission' => 'opt_in_missions',
-		'missions:job_swap'	=> 'opt_in_swap',
-		'missions:mentoring' => 'opt_in_mentored',
-		'missions:job_shadowing' => 'opt_in_shadowed',
-		'missions:assignment' => 'opt_in_assignSeek',
-		'missions:deployment' => 'opt_in_deploySeek',
-		'missions:job_rotation'	=> 'opt_in_rotation',
-		'missions:skill_share' => 'opt_in_ssSeek',
-		'missions:peer_coaching' => 'opt_in_pcSeek',
-		'missions:job_share' => 'opt_in_jobshare',
-		);
+function getMissionTypeMetastringid( $mission_type, $role_type ) {
+	if ( $role_type == 'missions:offering' ){
+		$typemap = array(
+			'missions:micro_mission' => 'opt_in_missions',
+			'missions:job_swap'	=> 'opt_in_swap',
+			'missions:mentoring' => 'opt_in_mentored',
+			'missions:job_shadowing' => 'opt_in_shadowed',
+			'missions:assignment' => 'opt_in_assignSeek',
+			'missions:deployment' => 'opt_in_deploySeek',
+			'missions:job_rotation'	=> 'opt_in_rotation',
+			'missions:skill_share' => 'opt_in_ssSeek',
+			'missions:peer_coaching' => 'opt_in_pcSeek',
+			'missions:job_share' => 'opt_in_jobshare',
+			);
+	}
+	else {
+		$typemap = array(
+			'missions:micro-mission' => 'opt_in_missionCreate',
+			'missions:job_swap' => 'opt_in_swap',
+			'missions:mentoring' =>	'opt_in_mentoring',
+			'missions:job_shadowing'	=>	'opt_in_shadowing',
+			'missions:assignment'	=> 'opt_in_assignCreate',
+			'missions:deployment'	=>	'opt_in_deployCreate',
+			'missions:job_rotation'	=>	'opt_in_rotation',
+			'missions:skill_share'	=>	'opt_in_ssCreate',
+			'missions:peer_coaching'	=>	'opt_in_pcCreate',
+			'missions:job_share'	=>	'opt_in_jobshare',
+			);
+	}
 
-	$typemap2 = array(
-		'missions:micro-mission' => 'opt_in_missionCreate',
-		'missions:job_swap' => 'opt_in_swap',
-		'missions:mentoring' =>	'opt_in_mentoring',
-		'missions:job_shadowing'	=>	'opt_in_shadowing',
-		'missions:assignment'	=> 'opt_in_assignCreate',
-		'missions:deployment'	=>	'opt_in_deployCreate',
-		'missions:job_rotation'	=>	'opt_in_rotation',
-		'missions:skill_share'	=>	'opt_in_ssCreate',
-		'missions:peer_coaching'	=>	'opt_in_pcCreate',
-		'missions:job_share'	=>	'opt_in_jobshare',
-		);
-	return $user_obj->$typemap[$mission_type] == 'gcconnex_profile:opt:yes' || $user_obj->$typemap2[$mission_type] == 'gcconnex_profile:opt:yes';
+	return elgg_get_metastring_id( $typemap[$mission_type] );
 }
 
 
