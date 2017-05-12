@@ -161,6 +161,7 @@ return array(
 
   //questions
   'questions:answer:checkmark:brief' => "%s marked an answer by %s correct on %s",
+  'questions:friends' => "Friends' Questions",
 
       'wet:more' => "Autres",
     'breadcrum:home' => 'Accueil',
