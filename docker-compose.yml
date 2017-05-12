@@ -29,6 +29,8 @@ services:
     volumes:
       - .:/var/www/html
       - ./data/data:/data
+      - /var/www/html/mod
+      - /var/www/html/vendor
     depends_on:
       - gcconnex-db
       # - nginx-proxy
