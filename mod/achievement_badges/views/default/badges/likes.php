@@ -41,18 +41,31 @@ $goals[4] = 150;
 $currentGoal = $goals[0];
 
 //current count
-$count = '0';
+$count = 0;
+$likeCount = 0;
 
-$entities = elgg_get_entities(array('owner_guids' => $user->getGUID(), 'limit' => 0));
+//subtypes of content starting with more popular content types
+$subtypes = array('thewire', 'blog', 'comment', 'discussion_reply', 'groupforumtopic', 'file', 'page_top', 'bookmarks', 'poll', 'image', 'album');
 
-if($entities){
+//loop through each entity type individually to limit system load, we can stop the count if the max goal is reached before all content is loaded
+foreach($subtypes as $sub){
 
+  //don't run if reached the max level
+  if($count < $goals[4]){
+
+    //load entities of current subtype
+    $entities = elgg_get_entities(array('owner_guids' => $user->getGUID(), 'type' => 'object', 'subtype' => $sub, 'limit' => 0));
+
+    //now loop through loaded entities to count how many likes
     foreach($entities as $ent){
         $likeCount = $likeCount + $ent->countAnnotations(array('name' => 'likes', 'limit' => 0));
     }
 
     $count = $likeCount;
+
+  }
 }
+
 
 if($count < $goals[0]){ //no badge
 

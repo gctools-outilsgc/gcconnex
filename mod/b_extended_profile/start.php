@@ -13,7 +13,7 @@ function b_extended_profile_init() {
     // Register the endorsements js library
     $url = 'mod/b_extended_profile/js/endorsements/';
     // js file containing code for edit, save, cancel toggles and the events that they trigger, plus more
-    elgg_register_js('gcconnex-profile', $url . "gcconnex-profile.js"); 
+    elgg_register_js('gcconnex-profile', $url . "gcconnex-profile.js");
     // Register vendor js libraries
     $url = 'mod/b_extended_profile/vendors/';
     // elgg_register_js('typeahead', $url . 'typeahead/dist/typeahead.bundle.js'); // developer version typeahead js file !!! COMMENT THIS OuT AND ENABLE MINIFIED VERSIoN IN PRODcd
@@ -141,23 +141,47 @@ function init_ajax_block($title, $section, $user) {
 
     echo '<div class="panel panel-custom">';
         echo '<div class="panel-heading profile-heading clearfix"><h2 class="profile-info-head panel-title pull-left clearfix">' . $title . '</h2>'; // create the profile section title
-    
+
     if ($user->canEdit()) {
         // create the edit/save/cancel toggles for this section
         echo '<span class="gcconnex-profile-edit-controls">';
         echo '<button title="Edit ' . $section . '" class="btn btn-default edit-' . $section . '">' . elgg_echo('gcconnex_profile:edit') . ' <span class="wb-inv">' . $field . '</span></button>';
-        echo '<button title="Cancel ' . $section . '"  class="btn btn-default cancel-control cancel-' . $section . ' hidden wb-invisible">' . elgg_echo('gcconnex_profile:cancel') . ' <span class="wb-inv">' . $field . '</span></button>';
+
         echo '</span>';
     }
     echo '</div>';
      // create the profile section wrapper div for css styling
-    echo '<div id="edit-' . $section . '" class="gcconnex-profile-section-wrapper panel-body gcconnex-' . $section . '">';
+    echo '<div id="edit-' . $section . '" tabindex="-1" class="gcconnex-profile-section-wrapper panel-body gcconnex-' . $section . '">';
 }
 
 function finit_ajax_block($section) {
+
+    switch($section){
+        case 'about-me':
+            $field = elgg_echo('gcconnex_profile:about_me');
+            break;
+        case 'education':
+            $field = elgg_echo('gcconnex_profile:education');
+            break;
+        case 'work-experience':
+            $field = elgg_echo('gcconnex_profile:experience');
+            break;
+        case 'skills':
+            $field = elgg_echo('gcconnex_profile:gc_skills');
+            break;
+        case 'languages':
+            $field = elgg_echo('gcconnex_profile:langs');
+            break;
+        case 'portfolio':
+            $field = elgg_echo('gcconnex_profile:portfolio');
+            break;
+    }
+
     echo '</div>';
-    echo '<div class="panel-footer clearfix save-' . $section . ' hidden wb-invisible"><button title="Save ' . $section . '" class="btn btn-primary gcconnex-profile-edit-controls save-control save-' . $section . ' hidden wb-invisible">' . elgg_echo('gcconnex_profile:save') . ' <span class="wb-inv">' . $field . '</span></button></div>';
-    echo '</div>';
+    echo '<div class="panel-footer text-right clearfix save-' . $section . ' hidden wb-invisible">';
+    echo '<button title="Save ' . $section . '" class="btn btn-primary mrgn-rght-sm save-control save-' . $section . ' hidden wb-invisible">' . elgg_echo('gcconnex_profile:save') . ' <span class="wb-inv">' . $field . '</span></button>';
+    echo '<button title="Cancel ' . $section . '"  class="btn btn-default cancel-control cancel-' . $section . ' hidden wb-invisible">' . elgg_echo('gcconnex_profile:cancel') . ' <span class="wb-inv">' . $field . '</span></button>';
+    echo '</div></div>';
 }
 
 /*
@@ -306,7 +330,7 @@ function has_content($user, $section) {
 function list_avatars($options) {
 
     $list = "";
-    $list .= '<div class="list-avatars clearfix' . $options['class'] . '">';
+    $list .= '<ul class="list-avatars list-unstyled clearfix' . $options['class'] . '">';
 
     if ( $options['limit'] == 0 ) {
         $options['limit'] = 999;
@@ -339,7 +363,7 @@ function list_avatars($options) {
         for ( $i=0; $i<$options['limit']; $i++) {
             if( ($user = get_user($guids[$i])) == true ) {
                 if ( $options['edit_mode'] == true ) {
-                    $list .= '<div class="gcconnex-avatar-in-list" data-guid="' . $guids[$i] . '" onclick="removeColleague(this)">';
+                    $list .= '<li class="gcconnex-avatar-in-list" data-guid="' . $guids[$i] . '" onclick="removeColleague(this)">';
                     $list .= '<div class="remove-colleague-from-list">X';
                     $list .= '</div>'; // close div class="remove-colleague-from-list"
 
@@ -347,15 +371,15 @@ function list_avatars($options) {
                         'use_hover' => $options['use_hover'],
                         'href' => false
                     ));
-                    $list .= '</div>'; // close div class="gcconnex-avatar-in-list"
+                    $list .= '</li>'; // close div class="gcconnex-avatar-in-list"
                 }
                 else {
-                    $list .= '<div class="gcconnex-avatar-in-list" data-guid="' . $guids[$i] . '">';
+                    $list .= '<li class="gcconnex-avatar-in-list" data-guid="' . $guids[$i] . '">';
                     $list .= elgg_view_entity_icon($user, $options['size'], array(
                         'use_hover' => $options['use_hover'],
                     ));
-                    $list .= '</div>'; // close div class="gcconnex-avatar-in-list"
-                            
+                    $list .= '</li>'; // close div class="gcconnex-avatar-in-list"
+
                 }
             }
             else {
@@ -363,10 +387,11 @@ function list_avatars($options) {
             }
         }
     }
-    if($options['id'] && $options['skill_guid']){
-        $list .= '<a class="btn gcconnex-avatars-expand elgg-lightbox" title="Endorsements" href="' . elgg_get_site_url() . 'ajax/view/endorse/endorsement?guid=' . $options['skill_guid'] .'" >...</a>';
+    //$list .= count($guids);
+    if($options['id'] && $options['skill_guid'] && count($guids) > 4){
+        $list .= '<a class="btn gcconnex-avatars-expand elgg-lightbox" title="'.elgg_echo('gcconnex_profile:gc_skill:allendorse').'" href="' . elgg_get_site_url() . 'ajax/view/endorse/endorsement?guid=' . $options['skill_guid'] .'" ><i class="fa fa-flip-vertical mrgn-tp-sm fa-ellipsis-h" aria-hidden="true"><span class="wb-invisible">'.elgg_echo('gcconnex_profile:gc_skill:allendorse').'</span></i></a>';
     }
-    $list .= '</div>'; // close div class="list-avatars"
+    $list .= '</ul>'; // close div class="list-avatars"
     return $list;
 }
 

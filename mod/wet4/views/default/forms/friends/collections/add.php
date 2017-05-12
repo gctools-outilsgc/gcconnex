@@ -26,6 +26,7 @@ echo elgg_view("input/text", array(
 		"name" => "collection_name",
 		"id" => "collection_name",
 		"value" => $title,
+    'required '=> "required",
 	));
 echo "</div>";
 

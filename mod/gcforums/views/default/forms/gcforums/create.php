@@ -54,7 +54,7 @@ if (elgg_is_logged_in() && $group->isMember(elgg_get_logged_in_user_entity())) {
 			$gcf_moderator_user[] = $group_operator->guid;
 
 		// save as sticky topic
-		if ($gcf_subtype === 'hjforumtopic' && in_array($gcf_current_user_guid, $gcf_moderator_user)) {
+		if (($gcf_subtype === 'hjforumtopic' && in_array($gcf_current_user_guid, $gcf_moderator_user)) || elgg_is_admin_logged_in()) {
 			$gcf_sticky_topic_label = elgg_echo('gcforums:sticky_topic');
 			$gcf_sticky_topic_input = elgg_view('input/checkboxes', array(
 				'name' => 'gcf_sticky',

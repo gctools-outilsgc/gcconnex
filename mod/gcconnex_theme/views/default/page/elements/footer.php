@@ -18,16 +18,6 @@ $priv = $site_url .'privacy-confidentialite';
 		<nav role="navigation">
 			<h2>About this site</h2>
             
-            <?php  
-            if(!elgg_is_logged_in()){
-                //Test is the user is logged in and give them links to register in the footer
-                //echo 'You not logged in braj';
-                echo elgg_view('page/elements/footer_register', $vars);
-            }
-            
-            ?>
-
-
 			<div class="row">
 
                 <section class="col-sm-3">
@@ -70,6 +60,8 @@ $priv = $site_url .'privacy-confidentialite';
                         <a href="<?php echo elgg_echo('wet:gcpediaLink');?>">GC<?php echo elgg_echo('wet:barGCpedia');?></a></li>
                     <li>
                         <a href="<?php echo elgg_echo('wet:gcdirectoryLink');?>">GC<?php echo elgg_echo('wet:barDirectory');?></a></li>
+                    <li>
+                        <a href="<?php echo elgg_echo('wet:gccollabLink');?>">GCcollab</a></li>
 	                   </ul>
                 </section>
                 <section class="col-sm-3">

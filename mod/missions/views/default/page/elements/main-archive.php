@@ -14,6 +14,11 @@ if($_SESSION['mission_entities_per_page']) {
 	$entities_per_page = $_SESSION['mission_entities_per_page'];
 }
 
+$_SESSION['mission_search_switch_subtype'] = 'archive';
+
+// Simple search form.
+$simple_search_form = elgg_view_form('missions/search-simple');
+
 $options['type'] = 'object';
 $options['subtype'] = 'mission';
 $options['metadata_name_value_pairs'] = array(array(
@@ -36,7 +41,15 @@ else {
 	$max = elgg_get_plugin_setting('search_result_per_page', 'missions');
 }
 //Nick - Added the type filter session to the sort hook
-$entity_list = mm_sort_mission_decider($_SESSION['missions_sort_field_value'], $_SESSION['missions_order_field_value'], $entity_list,$_SESSION['missions_type_field_value']);
+$entity_list = mm_sort_mission_decider($_SESSION['missions_sort_field_value'], $_SESSION['missions_order_field_value'], $entity_list, $_SESSION['missions_type_field_value'], $_SESSION['missions_role_field_value']);
+$count = count($entity_list);       // count the filtered list
+if ( $offset >= $count )            // reset offset if it no longer makes sense after filtering
+    $offset = 0;
+
+$max_reached = '';
+if(($offset + $max) >= elgg_get_plugin_setting('search_limit', 'missions') && $count >= elgg_get_plugin_setting('search_limit', 'missions')) {
+    $max_reached = '<div class="col-sm-12" style="font-style:italic;">' . elgg_echo('missions:reached_maximum_entities') . '</div>';
+}
 
 $archive_list = elgg_view_entity_list(array_slice($entity_list, $offset, $max), array(
 		'count' => $count,
@@ -65,33 +78,35 @@ $sort_missions_form .= elgg_view_form('missions/sort-missions-form', array(
 
 //Nick - Checking to see if there are any sort filters so we can add a clear button
 $opp_type_field = $_SESSION['missions_type_field_value'];
+$role_type_field = $_SESSION['missions_role_field_value'];
 
-if($opp_type_field){
+if ($opp_type_field || $role_type_field) {
     $clear_link = elgg_view('output/url', array(
-            'text'=>elgg_echo('missions:clear_filter'),
-            'href'=>'action/missions/sort-missions-form?opp_filter=',
-            'is_action' => true,
-            'is_trusted' => true,
-        ));
+        'text' => elgg_echo('missions:clear_filter'),
+        'href' => 'action/missions/sort-missions-form?opp_filter=&role_filter=',
+        'class' => 'mrgn-lft-sm',
+        'is_action' => true,
+        'is_trusted' => true,
+    ));
 }
-
-$sort_field = elgg_view('page/elements/hidden-field', array(
-		'toggle_text' => elgg_echo('missions:sort_options'),
-		'toggle_text_hidden' => elgg_echo('missions:sort_options'),
-		'toggle_id' => 'sort_options',
-		'hidden_content' => $sort_missions_form,
-        'additional_class'=>'btn btn-default',
-        'additional_text'=>$clear_link,
-
-));
 
 ?>
 
 <div class="col-sm-12">
-	<h4><?php echo elgg_echo('missions:archived_opportunities') . ': '; ?></h4>
+    <div class="col-sm-8">
+        <h2 class="h4 mrgn-tp-md mrgn-bttm-0"><?php echo elgg_echo('missions:search_for_archived_opportunities') . ':'; ?></h2>
+        <?php
+            echo $simple_search_form;
+        ?>
+    </div>
 </div>
 <div class="col-sm-12">
-	<?php echo $sort_field; ?>
+    <h2 class="h4"><?php echo elgg_echo('missions:archived_opportunities') . ': '; ?></h2>
+</div>
+
+<div class="col-sm-12">
+	<?php echo $sort_missions_form; echo $clear_link; ?>
+    <?php echo $max_reached; ?>
 </div>
 <div class="col-sm-12">
 	<?php echo $archive_list; ?>

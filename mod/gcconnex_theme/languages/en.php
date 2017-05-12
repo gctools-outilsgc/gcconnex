@@ -17,7 +17,7 @@ return array(
     'wet:searchgctools'=>"Search GCconnex",
 
     'wet:inboxmore'=>"More (archived)",
-    'wet:topicmenu'=>"Topic menu",
+    'wet:topicmenu'=>"Site Navigation Menu",
     'wet:youarehere'=>"You are here:",
     'wet:errmess' => "<h3 class='h3'>The form could not be submitted because errors were found.</h3>",
 
@@ -37,6 +37,7 @@ return array(
     'wet:gcpediaLink' => 'http://www.gcpedia.gc.ca/wiki/?setlang=en',
     'wet:gcdirectoryLink' => 'https://gcdirectory-gcannuaire.gc.ca/en/GCD/?pgid=002',
     'wet:tutorialLink'=>'http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/See_All',
+    'wet:gccollabLink' => "https://gccollab.ca/",
     'wet:groupLoading'=>'Loading content',
     'subgroups:parent:need_join' => "Join Parent Group",
     'event_calendar:none' => "No events found.",

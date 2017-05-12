@@ -67,7 +67,11 @@ if(elgg_instanceof(elgg_get_page_owner_entity(), 'group')){
 
 $feedbackText= elgg_echo('wet:feedbackText');
 $body = <<<__BODY
+<div class="elgg-page-messages container">
+    $messages
+</div> 
     $tabskip
+
 <div class="elgg-page elgg-page-default">
 
 __BODY;
@@ -83,8 +87,8 @@ $body .= <<<__BODY
 
 		<!-- </div>-->
     	<div id="wb-bnr" class="container">
-            $lang
-            $wavyblue
+            
+          
 </div>
 $site_brand
 
@@ -93,14 +97,16 @@ $navbar
 $breadcrumbs
 
 	</header>
-    <div class="elgg-page-messages container">
-		$messages
-	   </div>
+
+       <div class="container">
+       $userMenu
+       </div>
+       
     $group_cover_image
 	<main role="main" property="mainContentOfPage" class="container">
 
         <!--<div class="elgg-inner">-->
-            $userMenu
+            
         <!--<section>-->
 			$content
 <!--</section>

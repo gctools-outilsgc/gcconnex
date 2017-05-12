@@ -345,6 +345,32 @@ li.link-disabled a {
     margin: 2px;
     font-size: 14px;
     display: inline-block;
+
+}
+
+.cut-skill{
+    max-width: 140px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.mission-skills-popup{
+    bottom: 0px;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    margin: auto;
+    max-width: 100% !important;
+    max-height: 40% !important;
+    width: 45%;
+}
+.mission-skills-popup .modal-header{
+    background: #047177;
+}
+.more-skills-button{
+    position:absolute;
+    padding: 5px;
 }
 
 .opt-in-modal{
@@ -397,4 +423,61 @@ color: #055959;
     color:white !important;
     background-color:#d00 !important;
     font-weight:bold !important;
+}
+
+.candidate-panel{
+    padding:45px 4px 10px 4px !important;
+    height: 435px;
+
+}
+
+.candidate-holder .candidate-panel{
+    border-bottom: none !important; 
+}
+
+.candidate-panel .user-avatar{
+    margin-top: -40px;
+}
+
+.candidate-panel .user-avatar .elgg-avatar-medium-wet4{
+    width:40% !important;
+    margin: 0 auto;
+    display:block !important;
+}
+
+.candidate-panel .user-info-content{
+    top:0;
+    min-height: 395px;
+}
+.candidate-panel .user-button-content{
+    position: absolute;
+    bottom: 0;
+    width: 97%;
+    padding: 3%;
+}
+.candidate-panel .user-job-title{
+    font-weight: bold;
+    margin-bottom: 1px;
+    max-width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-x: hidden;
+    display:block;
+}
+
+.candidate-panel .user-location{
+    margin-bottom: 1px;
+    max-width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-x: hidden;
+    display:block;
+}
+
+.candidate-panel .user-found-by{
+    max-width:100%;
+    text-overflow:ellipsis;
+    overflow-x: hidden;
+    display:block;
+    white-space: nowrap;
 }

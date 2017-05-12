@@ -33,7 +33,9 @@ $leftcolumn_widgets_view = custom_index_build_columns($area1widgets,$widgettypes
 $middlecolumn_widgets_view = custom_index_build_columns($area2widgets,$widgettypes);
 $rightcolumn_widgets_view = custom_index_build_columns($area3widgets,$widgettypes);
 
-$content =  elgg_view_layout($ciw_layout, array('area1' => $leftcolumn_widgets_view,'area2' => $middlecolumn_widgets_view,'area3' => $rightcolumn_widgets_view, 'layoutmode' => 'index_mode') );
+//Nick - Adding h1 to newsfeed
+$content = '<h1 class="wb-invisible">'.elgg_echo('newsfeed:menu').'</h1>';
+$content .=  elgg_view_layout($ciw_layout, array('area1' => $leftcolumn_widgets_view,'area2' => $middlecolumn_widgets_view,'area3' => $rightcolumn_widgets_view, 'layoutmode' => 'index_mode') );
 
 if (elgg_is_logged_in() && $ciw_showdashboard=="yes"){
 
@@ -67,7 +69,11 @@ if (elgg_is_logged_in() && $ciw_showdashboard=="yes"){
 
 //EW - Department verification
 if(elgg_is_logged_in()){
-    if((time() - elgg_get_logged_in_user_entity()->last_department_verify) > 15552000)
+
+    //load int value
+    $timestamp = is_array(elgg_get_logged_in_user_entity()->last_department_verify) ? elgg_get_logged_in_user_entity()->last_department_verify[0] : elgg_get_logged_in_user_entity()->last_department_verify;
+
+    if((time() - $timestamp) > 15552000)
     {
         //create hidden link
         $content .= elgg_view('output/url', array(

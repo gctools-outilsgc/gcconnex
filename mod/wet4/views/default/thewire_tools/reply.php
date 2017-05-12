@@ -39,6 +39,16 @@ echo $body;
 
 <script>
 
+//do form validation here for ajax view
+$(".elgg-form").each(function(){
+  $(this).validate({
+    submitHandler: function(form) {
+      $(form).find('button').prop('disabled', true);
+      form.submit();
+    },
+  });
+});
+
     var getCursorPosition = function (el) {
         var pos = 0;
 

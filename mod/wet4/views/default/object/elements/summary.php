@@ -61,7 +61,7 @@ $content = elgg_extract('content', $vars, '');
 $lang = get_current_language();
 
 /*if($entity->excerpt3){
-	
+
 	$entity->excerpt = gc_explode_translation($entity->excerpt3, $lang);
 	}
 */
@@ -81,17 +81,26 @@ $title_link = gc_explode_translation($entity->title3, $lang);
 }
 
 if ($title_link) {
-    echo "<span class=\"mrgn-bttm-0 summary-title\">$title_link</span>";//put in span because some links would not take classes
+    //Nick - putting these titles in headings to make it quicker to navigate for screen readers
+    //Nick - each context of the summary view will have a different heading based on it's parent
+    if(elgg_in_context('widgets')){
+        echo "<h4 class=\"mrgn-bttm-0 summary-title\">$title_link</h4>";
+    }else if(elgg_in_context('profile') || elgg_in_context('group_profile') || elgg_instanceof(elgg_get_page_owner_entity(), "group")){
+        echo "<h3 class=\"mrgn-bttm-0 summary-title\">$title_link</h3>";
+    }else{
+       echo "<h2 class=\"mrgn-bttm-0 summary-title\">$title_link</h2>";
+    }
+
     if (($entity->description) && ($entity->description2)) {
 	    echo " <span class='indicator_summary' title='".elgg_echo('indicator:summary:title')."'>".elgg_echo('indicator:summary')."</span>"; //indicator translation
 	}elseif (elgg_get_context() == 'polls'){
 	    if ((polls_get_choice_array2($entity)) && (polls_get_choice_array($entity))) {
-	    	
+
 	    	echo " <span class='indicator_summary' title='".elgg_echo('indicator:summary:title')."'>".elgg_echo('indicator:summary')."</span>"; //indicator translation for polls
 	    }
 	}
     echo elgg_in_context($context);
-    
+
 }/*else{
         echo "<span class=\"mrgn-bttm-0 summary-title\">$entity->title</span>"; //put in span because some links would not take classes
     echo elgg_in_context($context);
@@ -118,9 +127,9 @@ if($entity->getType() == 'group' ){
     if ($metadata) {
 	   echo '<div class="mrgn-tp-sm"><div class="">' .$metadata . '</div></div>';
 }
-    
-   echo "<div class=\" mrgn-bttm-sm mrgn-tp-sm timeStamp clearfix\">$subtitle</div>"; 
-    
+
+   echo "<div class=\" mrgn-bttm-sm mrgn-tp-sm timeStamp clearfix\">$subtitle</div>";
+
 }else if($checkPage == 'friends' || $checkPage == 'groups_members' || $checkPage == 'members'){
     echo '<div class=""><div class="">' .$metadata . '</div></div>';
 }else{
@@ -134,7 +143,7 @@ if($entity->getType() == 'group' ){
 
         if ($metadata) {
 	        if ($checkPage != 'widgets_calendar'){
-                echo '<div class="col-sm-12 col-xs-12"><div class="mrgn-lft-sm">' .$metadata . '</div></div>';   
+                echo '<div class="col-sm-12 col-xs-12"><div class="mrgn-lft-sm">' .$metadata . '</div></div>';
              }
         }
 
@@ -147,6 +156,6 @@ if($entity->getType() == 'group' ){
     	}
 	}
 
-	echo '</div>';  
+	echo '</div>';
 	}
 }

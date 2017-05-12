@@ -65,16 +65,23 @@ else {
 					$progress_record->save();
 			}
 
-			// Saves time to fill data if this user fills the last spot.
-			if(($relationship_count + 1) == $mission->number) {
-				$mission->time_to_fill = time() - $mission->time_created;
-				$mission->save;
-			}
-			 
 			$mission_link = elgg_view('output/url', array(
 					'href' => $mission->getURL(),
 					'text' => $mission->title
 			));
+
+			// Saves time to fill data if this user fills the last spot.
+			if(($relationship_count + 1) == $mission->number) {
+				$mission->time_to_fill = time() - $mission->time_created;
+				$mission->save;
+
+				// Notify unsuccessfull participants.
+				// WHY: Last available spot for this opportunity has been filled and we don't want to keep remaining participants hanging.
+				$applicant_relationships = get_entity_relationships($mission->guid);
+				$subject = elgg_echo('missions:participating_out', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))));
+				$body = elgg_echo('missions:participating_out_more', array($applicant->name)) . $mission_link . '.';
+				mm_notify_unsuccessfull_participants($mission, $applicant_relationships, $subject, $body);
+			}
 
 			// notify participant
 			$subject = elgg_echo('missions:participating_in', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))));
@@ -96,4 +103,12 @@ if ($err != '') {
 else {
 	system_message(elgg_echo('missions:now_participating_in_mission', array($mission->job_title)));
 	forward($mission->getURL());
+}
+
+function mm_notify_unsuccessfull_participants($mission, $applicants, $subject, $body) {
+	foreach ($applicants as $applicant) {
+		if ($applicant->relationship == 'mission_applied' || $applicant->relationship == 'mission_offered') {
+			mm_notify_user($applicant->guid_two, $mission->guid, $subject, $body);
+		}
+	}
 }

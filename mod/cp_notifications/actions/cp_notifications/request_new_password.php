@@ -61,5 +61,4 @@ function cp_send_new_password($user_guid) {
 	$result = elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
 
 	return $return;
-	//return notify_user($user->guid, elgg_get_site_entity()->guid, $subject, $message, array(), 'email');
 }

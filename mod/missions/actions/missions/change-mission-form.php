@@ -55,6 +55,7 @@ if ($err != '') {
 	$mission->email = $edit_form['email'];
 	$mission->phone = $edit_form['phone'];
 	$mission->job_title = $edit_form['job_title'];
+    $mission->role_type = $edit_form['role_type'];
 	$mission->job_type = $edit_form['job_type'];
 	// Stores the value of program area selected unless it is other.
 	if($edit_form['job_area'] != 'missions:other') {

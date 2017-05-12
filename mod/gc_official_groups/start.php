@@ -25,4 +25,7 @@ function gc_official_group_init(){
     elgg_extend_view('object/elements/summary', 'object/elements/official_badge', 400);
     elgg_extend_view('page/layouts/one_sidebar', 'object/elements/badge_group_profile',400);
     elgg_extend_view('groups/edit', 'page/elements/add_off_edit', 330);
+    
+    //Extend head of the site for search biasing
+    elgg_extend_view('page/elements/head', 'page/elements/off_group_search_head', 400);
 }

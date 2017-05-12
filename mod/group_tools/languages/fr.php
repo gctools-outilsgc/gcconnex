@@ -374,7 +374,7 @@ When a user creates a group he/she gets to choose one of the presets in order to
 		[nom_groupe] : le nom de ce groupe (par exemple : %s)
 		[adresse url] : l'adresse URL de ce groupe (par exemple : %s)",
 		
-'group_tools:action:welcome_message:success' => "Le message d'accrueil a été sauvegardé",		
+'group_tools:action:welcome_message:success' => "Le message d'accueil a été sauvegardé",		
 'group_tools:welcome_message:subject' => "Bienvenue à %s",
 		
 // email invitations		

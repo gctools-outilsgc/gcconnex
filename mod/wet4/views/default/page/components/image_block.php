@@ -142,7 +142,7 @@ HTML;
     $body = "<div class=\"mrgn-tp-sm col-xs-10 noWrap\">$body</div>";
 
 if ($image) {
-	$image = "<div class=\"mrgn-tp-sm col-xs-2\">$image</div>";
+	$image = "<div aria-hidden=\"true\" class=\"mrgn-tp-sm col-xs-2\">$image</div>";
      //$echo = elgg_get_context();
 }
 
@@ -153,13 +153,15 @@ if ($alt_image) {
 
 echo <<<HTML
 
-<div class="$class clearfix mrgn-bttm-sm" $id>
+<article class="$class mrgn-bttm-sm" $id>
 
 	$image$alt_image$body$echo
-    <div class=" elgg-body clearfix edit-comment">
+    <div class="clearfix"></div>
+    <div class=" elgg-body edit-comment">
    
     </div>
-</div>
+</article>
+<div class="clearfix"></div>
 HTML;
 
 }

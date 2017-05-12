@@ -40,7 +40,7 @@ function mentions_get_regex() {
 
 function mentions_get_views() {
 	// allow plugins to add additional views to be processed for usernames
-	$views = array('output/longtext', 'object/elements/summary');
+	$views = array('output/longtext', 'object/elements/summary', 'object/elements/thewire_summary');
 	$views = elgg_trigger_plugin_hook('get_views', 'mentions', null, $views);
 	foreach ($views as $view) {
 		elgg_register_plugin_hook_handler('view', $view, 'mentions_rewrite');

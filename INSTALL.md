@@ -3,11 +3,15 @@
 
 ### Ubuntu 14.04
 #### Install Git, Apache, MySQL, PHP and libs
-    sudo aptitude install git apache2 mysql-server php5 libapache2-mod-php php5-mysql php5-gd
+    sudo aptitude install git apache2 mysql-server php5 libapache2-mod-php5 php5-mysql php5-gd
 When prompted, enter a root password for MySQL.
 
 #### Fork and Clone GCConnex Github Repo
-    git clone -b gcconnex https://github.com/tbs-sct/gcconnex.git
+    git clone -b gcconnex https://github.com/gctools-outilsgc/gcconnex.git
+
+#### Install Composer dependencies
+Setup [Composer](https://getcomposer.org/download/) then install the third-party dependencies
+    composer install
 
 #### Create data directory
     mkdir gcconnex_data
@@ -55,7 +59,11 @@ Goto ```http://localhost/gcconnex```.  Follow instructions.  You will need to en
     chmod 775 gcconnex/engine
 
 #### Configure Plugins
-The final step to getting the GCconnex experience is to reorder and enable/disable plugins in the Administration section of your installation.
+The final step to getting the GCconnex experience is to reorder and
+enable/disable plugins in the Administration section of your installation.
+
+A quick way to sort and activate plugins in the correct order is to activate
+the "Elgg plugin reorder plugin".
 
 ### Elgg Installation Instructions
 http://learn.elgg.org/en/1.x/intro/install.html
