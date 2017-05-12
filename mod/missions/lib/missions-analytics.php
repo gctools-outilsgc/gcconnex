@@ -284,8 +284,12 @@ function mm_analytics_transform_to_date_format($start, $end, $type) {
 * Add the appropriate reports to the supplied mission_set
 */
 function mm_analytics_add_reports_by_dates($start_date, $end_date, $separator, &$mission_set) {
+    //array('posted', 'cancelled', 'completed', 'offered', 'declined', 'inprogress');
 		if ($separator == 'missions:state') {
 				$subtypes = array(
+            'mission-posted',
+            'mission-cancelled',
+            'mission-completed',
 						'mission-wasoffered',
 						'mission-declination'
 				);
@@ -294,6 +298,18 @@ function mm_analytics_add_reports_by_dates($start_date, $end_date, $separator, &
 					$subtypes_ids[] = get_subtype_id('object', $st);
 				};
 
+        // In order to have somewhat useful results prior to this merge, we
+        // keep the old single instance tracking, but make sure to not
+        // duplicate results with the new report style tracking.
+        $originals = array();
+        foreach ($mission_set as $set) {
+          $guids = array();
+          foreach ($set as $object) {
+            $guids[] = $object->guid;
+          }
+          $originals[] = $guids;
+        }
+
 				$q_options = array();
 				$q_options['type'] = 'object';
 				$q_options['created_time_lower'] = $start_date;
@@ -301,7 +317,10 @@ function mm_analytics_add_reports_by_dates($start_date, $end_date, $separator, &
 				$q_options['type_subtype_pairs'] = array('object' => $subtypes);
 				$reports = elgg_get_entities($q_options);
 				foreach ($reports as $report) {
-						$mission_set[array_search($report->subtype, $subtypes_ids)+3][] = $report;
+          if (!in_array($report->mission_guid, $originals[array_search($report->subtype, $subtypes_ids)])) {
+            $mission_set[array_search($report->subtype, $subtypes_ids)][] =
+              $report;
+          }
 				}
 
 				// 'mission-acceptance'  (Requires different query, to find missions "in progress".

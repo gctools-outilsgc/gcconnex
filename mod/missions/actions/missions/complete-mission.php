@@ -47,6 +47,15 @@ $mission->time_to_complete = time() - $mission->time_created;
 $mission->time_closed = time();
 $mission->save;
 
+// Generate an analytics record to track "completed".
+$analytics_record = new ElggObject();
+$analytics_record->subtype = 'mission-completed';
+$analytics_record->title = 'Mission Completed Report';
+$analytics_record->mission_guid = $mission->guid;
+$analytics_record->access_id = ACCESS_LOGGED_IN;
+$analytics_record->save();
+
+
 system_message(elgg_echo('mission:has_been_completed', array($mission->job_title)));
 
 // If the admin tool is calling the action then the user is returned to the admin tool page.
