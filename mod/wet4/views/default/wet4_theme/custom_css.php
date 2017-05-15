@@ -1440,6 +1440,32 @@ details.elgg-state-success:before {
     color: #055959 !important;
 }
 
+/*Styles from intranet footer*/
+    footer .brand a {
+      display: block;
+      height: auto;
+      padding-bottom: 0;
+      position: relative;
+      width: auto; }
+      footer .brand a:after {
+        bottom: 0;
+        content: "";
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0; }
+    footer .brand object,
+    footer .brand img {
+      height: auto;
+      max-height: 40px; }
+	#wb-info .brand img, #wb-info .brand object {
+		cursor: pointer;
+	}
+    footer .brand object,
+    footer .brand img {
+      height: auto;
+      max-height: 2.500em; 
+	}
 #app-brand li a{
    text-decoration: none;
     color:white;
