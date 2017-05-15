@@ -15,7 +15,7 @@
 
 
 /mod/gsa/
-
+/vendor/
 
 # don't ignore bundled plugins
 !/mod/blog/
