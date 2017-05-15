@@ -1466,6 +1466,10 @@ details.elgg-state-success:before {
       height: auto;
       max-height: 2.500em; 
 	}
+    
+#mb-pnl object{
+    display:none !important;
+}
 #app-brand li a{
    text-decoration: none;
     color:white;
