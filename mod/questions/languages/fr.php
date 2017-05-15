@@ -216,4 +216,7 @@ Pour répondre, visitez:
 	'questions:action:toggle_expert:success:remove' => "%s n’est plus un expert en questions pour  %s",
 
 	'questions:action:group_settings:success' => "Les paramètres du groupe ont été sauvegardés",
+
+	'question:action:question:save:success' => 'La question a été crée avec succès',
+	'question:action:answer:save:success' => 'La réponse a été crée avec succès',
 ];

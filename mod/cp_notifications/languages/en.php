@@ -299,6 +299,7 @@ $english = array(
 
 	// +------ cyu - modified : <username> posted a new <item type> entitled <item name>
 	'cp_notify:body_new_content:title' => "<a href='%s'>%s</a> posted a new %s entitled <a href='%s'>%s</a>",
+	'cp_notify:body_new_content:title2' => "<a href='%s'>%s</a> posted a new %s in <a href='%s'>%s</a>",
 	'cp_notify:body_new_content:description' => "The description of the new posting is: <br/>
 		%s <br/>
 		<a href='%s'>View or comment</a> <br/>

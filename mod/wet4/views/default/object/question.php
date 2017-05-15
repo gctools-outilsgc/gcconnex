@@ -115,7 +115,10 @@ if ($full) {
 	];
 	$list_body = elgg_view('object/elements/summary', $params);
 
-	$body .= elgg_view('output/longtext', ['value' => $question->description]);
+	if($question->description3){
+		$question->description = gc_explode_translation($question->description3, get_current_language());
+	}
+	$body .= elgg_view('output/longtext', ['value' => $question->description, 'class' => 'question_details']);
 
 	// show comments?
 	if ($question->comments_enabled !== 'off') {
@@ -158,10 +161,37 @@ if ($full) {
 		}
 	}
 
+	// identify available content
+	$english = gc_explode_translation($question->description3, 'en');
+	$french = gc_explode_translation($question->description3, 'fr');
+
+	if($english != $french){
+		echo'<div id="change_language" class="change_language">';
+		if (get_current_language() == 'fr'){
+
+			?>
+			<span id="indicator_language_en" onclick="change_en('.question_details');"><span id="en_content" class="testClass hidden" ><?php echo clean_up_content($english);?></span><span id="fr_content" class="testClass hidden" ><?php echo clean_up_content($french);?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
+			<?php
+
+		}else{
+
+			?>
+			<span id="indicator_language_fr" onclick="change_fr('.question_details');"><span id="en_content" class="testClass hidden" ><?php echo clean_up_content($english);?></span><span id="fr_content" class="testClass hidden" ><?php echo clean_up_content($french);?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
+			<?php
+		}
+		echo'</div>';
+	}
+
+
 	echo elgg_view_image_block($poster_icon, $list_body);
 	echo elgg_format_element('div', ['class' => ['mrgn-tp-md']], $body.$comments);
 
 } else {
+
+	if($question->title3){
+		$question->title = gc_explode_translation($question->title3, get_current_language());
+	}
+
 	// brief view
 	$title_text = '';
 	$title_text .= elgg_get_excerpt($question->title, 100);
@@ -186,7 +216,12 @@ if ($full) {
 
 
 	$excerpt = '';
-	if (!empty($question->description)) {
+	if (!empty($question->description) || !empty($question->description2)) {
+
+		if($question->description3){
+			$question->description = gc_explode_translation($question->description3, get_current_language());
+		}
+
 		$excerpt = elgg_format_element('div', ['class' => 'mbm'], elgg_get_excerpt($question->description));
 	}
 

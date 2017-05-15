@@ -87,7 +87,9 @@ if ($title_link) {
         echo "<h4 class=\"mrgn-bttm-0 summary-title\">$title_link</h4>";
     }else if(elgg_in_context('profile') || elgg_in_context('group_profile') || elgg_instanceof(elgg_get_page_owner_entity(), "group")){
         echo "<h3 class=\"mrgn-bttm-0 summary-title\">$title_link</h3>";
-    }else{
+    }else if(elgg_extract('metadata', $vars, '') == false){
+			//show nothing
+		}else {
        echo "<h2 class=\"mrgn-bttm-0 summary-title\">$title_link</h2>";
     }
 

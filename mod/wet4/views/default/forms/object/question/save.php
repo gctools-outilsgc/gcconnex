@@ -29,12 +29,27 @@ $title = [
 	'required' => true,
 ];
 
+$title2 = [
+	'name' => 'title2',
+	'id' => 'question_title2',
+	'value' => elgg_get_sticky_value('question', 'title2', $question->title2),
+	'required' => true,
+];
+
 $description = [
 	'name' => 'description',
 	'id' => 'question_description',
 	'required' => 'required',
 	'class' => 'validate-me',
 	'value' => elgg_get_sticky_value('question', 'description', $question->description),
+];
+
+$description2 = [
+	'name' => 'description2',
+	'id' => 'question_description2',
+	'required' => 'required',
+	'class' => 'validate-me',
+	'value' => elgg_get_sticky_value('question', 'description2', $question->description2),
 ];
 
 $tags = [
@@ -75,15 +90,33 @@ $access_id = [
 
 // clear sticky form
 elgg_clear_sticky_form('question');
+
+$btn_language =  '<ul class="nav nav-tabs nav-tabs-language">
+  <li id="btnen"><a href="#" id="btnClicken">'.elgg_echo('lang:english').'</a></li>
+  <li id="btnfr"><a href="#" id="btnClickfr">'.elgg_echo('lang:french').'</a></li>
+</ul>';
+
+echo $btn_language;
 ?>
-<div>
+<div class="tab-content tab-content-border">
+<div class="mrgn-bttm-sm en">
 	<label for='question_title'><?php echo elgg_echo('questions:edit:question:title'); ?></label>
 	<?php echo elgg_view('input/text', $title); ?>
 </div>
-<div>
+<div class="mrgn-bttm-sm fr">
+	<label for='question_title2'><?php echo elgg_echo('questions:edit:question:title'); ?></label>
+	<?php echo elgg_view('input/text', $title2); ?>
+</div>
+
+<div class="mrgn-bttm-sm en">
 	<label for='question_description'><?php echo elgg_echo('questions:edit:question:description'); ?></label>
 	<?php echo elgg_view('input/longtext', $description); ?>
 </div>
+<div class="mrgn-bttm-sm fr">
+	<label for='question_description2'><?php echo elgg_echo('questions:edit:question:description'); ?></label>
+	<?php echo elgg_view('input/longtext', $description2); ?>
+</div>
+
 <div>
 	<label for='question_tags'><?php echo elgg_echo('tags'); ?></label>
 	<?php echo elgg_view('input/tags', $tags); ?>
@@ -194,7 +227,7 @@ if (!$editing || (questions_experts_enabled() && questions_is_expert(elgg_get_pa
 		}
 	}
 }
-
+echo '</div>';
 // end of the form
 $footer = [];
 
@@ -216,3 +249,53 @@ if ($editing && questions_can_move_to_discussions($container)) {
 $footer[] = elgg_view('input/submit', ['value' => elgg_echo('submit')]);
 
 echo elgg_format_element('div', ['class' => 'elgg-foot'], implode('', $footer));
+
+if(get_current_language() == 'fr'){
+?>
+    <script>
+        jQuery('.fr').show();
+        jQuery('.en').hide();
+        jQuery('#btnfr').addClass('active');
+
+        $('#question_description').removeClass('validate-me');
+    </script>
+<?php
+}else{
+?>
+    <script>
+        jQuery('.en').show();
+        jQuery('.fr').hide();
+        jQuery('#btnen').addClass('active');
+
+        $('#question_description2').removeClass('validate-me');
+    </script>
+<?php
+}
+?>
+<script>
+jQuery(function(){
+
+    var selector = '.nav-tabs-language li';
+
+$(selector).on('click', function(){
+    $(selector).removeClass('active');
+    $(this).addClass('active');
+});
+
+        jQuery('#btnClickfr').click(function(){
+               jQuery('.fr').show();
+               jQuery('.en').hide();
+
+               $('#question_description').removeClass('validate-me');
+               $('#question_description2').addClass('validate-me');
+        });
+
+          jQuery('#btnClicken').click(function(){
+               jQuery('.en').show();
+               jQuery('.fr').hide();
+
+               $('#question_description').addClass('validate-me');
+               $('#question_description2').removeClass('validate-me');
+        })
+});
+</script>

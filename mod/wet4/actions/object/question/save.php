@@ -40,12 +40,18 @@ if (questions_limited_to_groups() && ($container_guid == $question->getOwnerGUID
 }
 
 $title = get_input('title');
+$title2 = get_input('title2');
+$title3 = gc_implode_translation($title, $title2);
+
 $description = get_input('description');
+$description2 = get_input('description2');
+$description3 = gc_implode_translation($description, $description2);
+
 $tags = string_to_tag_array(get_input('tags', ''));
 $access_id = (int) get_input('access_id');
 $comments_enabled = get_input('comments_enabled');
 
-if (empty($container_guid) || empty($title)) {
+if (empty($container_guid) || empty($title) && empty($title2)) {
 	register_error(elgg_echo('questions:action:question:save:error:body', [$container_guid, $title]));
 	forward(REFERER);
 }
@@ -54,7 +60,12 @@ if (empty($container_guid) || empty($title)) {
 $access_id = questions_validate_access_id($access_id, $container_guid);
 
 $question->title = $title;
+$question->title2 = $title2;
+$question->title3 = $title3;
+
 $question->description = $description;
+$question->description2 = $description2;
+$question->description3 = $description3;
 
 $question->access_id = $access_id;
 $question->container_guid = $container_guid;
@@ -64,7 +75,7 @@ $question->comments_enabled = $comments_enabled;
 
 try {
 	$question->save();
-	
+
 	if ($adding) {
 		// add river event
 		elgg_create_river_item([
@@ -74,7 +85,7 @@ try {
 			'object_guid' => $question->getGUID(),
 			'access_id' => $question->access_id,
 		]);
-		
+
 		// check for a solution time limit
 		$solution_time = questions_get_solution_time($question->getContainerEntity());
 		if ($solution_time) {
@@ -84,8 +95,6 @@ try {
 	} elseif ($moving) {
 		elgg_trigger_event('move', 'object', $question);
 	}
-
-	system_message(elgg_echo("question:action:question:save:success"));
 } catch (Exception $e) {
 	register_error(elgg_echo('questions:action:question:save:error:save'));
 	register_error($e->getMessage());
@@ -94,12 +103,5 @@ try {
 
 elgg_clear_sticky_form('question');
 
-if (!$adding) {
-	$forward_url = $question->getURL();
-} elseif ($container instanceof ElggUser) {
-	$forward_url = "questions/owner/{$container->username}";
-} else {
-	$forward_url = "questions/group/{$container->getGUID()}/all";
-}
-
-forward($forward_url);
+//forward to the question you just created
+forward($question->getURL());

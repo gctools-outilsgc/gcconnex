@@ -216,4 +216,7 @@ To view the question, click here:
 	'questions:action:toggle_expert:success:remove' => "%s is no longer a questions expert for %s",
 	
 	'questions:action:group_settings:success' => "The group settings were saved",
+
+	'question:action:question:save:success' => 'The question was created',
+	'question:action:answer:save:success' => 'The answer was created',
 ];

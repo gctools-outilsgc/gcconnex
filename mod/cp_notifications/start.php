@@ -962,12 +962,16 @@ function cp_create_notification($event, $type, $object) {
 			}
 
 			// the user creating the content is automatically subscribed to it (with exception that is not a widget, forum, etc..)
-			$cp_whitelist = array('blog', 'bookmarks', 'poll', 'groupforumtopic', 'image', 'idea', 'page', 'page_top', 'thewire', 'task_top');
+			$cp_whitelist = array('blog', 'bookmarks', 'poll', 'groupforumtopic', 'image', 'idea', 'page', 'page_top', 'thewire', 'task_top', 'question', 'answer');
 			if (in_array($object->getSubtype(),$cp_whitelist)) {
+
+				if ($object->getSubtype() == 'answer'){// subcribed to the question
+					add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_email', $object->getContainerGUID());
+					add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_site_mail', $object->getContainerGUID());
+				}
 				add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_email', $object->getGUID());
 				add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_site_mail', $object->getGUID());
             }
-
 
 			$user = get_user($object->owner_guid);
 			$group = $object->getContainerEntity();
@@ -987,8 +991,8 @@ function cp_create_notification($event, $type, $object) {
 				'page_top' => elgg_echo('cp_notify:subject:new_content_fem',array("page",$group->name),'fr'),
 				'task_top' => elgg_echo('cp_notify:subject:new_content_fem',array("task",$group->name),'fr'),
 				'task' => elgg_echo('cp_notify:subject:new_content_fem',array("task",$group->name),'fr'),
+				'question' => elgg_echo('cp_notify:subject:new_content_fem',array("question",$group->name),'fr'),
 			);
-
 
 			// cyu - if there is something missing, we can use a fallback string
 			$subj_gender = ($subtypes_gender_subject[$object->getSubtype()] == '') ? elgg_echo('cp_notify:subject:new_content_mas',array($user->name,$object->getSubtype(),$object->title),'fr') : $subtypes_gender_subject[$object->getSubtype()];
@@ -1026,8 +1030,13 @@ function cp_create_notification($event, $type, $object) {
 				//$to_recipients = get_subscribers($dbprefix, $object->getOwnerGUID(), $object->guid);
 				$author_id = $object->getOwnerGUID();
 				//$content_id = $object->guid;
+				
+				// Get guid of the question
+			if($object->getSubtype = 'answer'){
+					$content_id = $object->getContainerGUID();
+				}
 			}
-
+	
 			// cyu - client wants the html tags stripped from the notifications
 			$object_description = ($object->description != strip_tags($object->description)) ? "" : $object->description;
 
@@ -1112,7 +1121,7 @@ function get_subscribers($dbprefix, $user_guid, $entity_guid = '') {
 	$query = "	SELECT DISTINCT u.guid, u.email, u.username, u.name
 				FROM {$dbprefix}entity_relationships r LEFT JOIN {$dbprefix}users_entity u ON r.guid_one = u.guid 
 				WHERE r.guid_one <> {$user_guid} AND r.relationship = 'cp_subscribed_to_email' AND r.guid_two = {$subscribed_to}";
-  
+
 	return get_data($query);
 }
 

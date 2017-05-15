@@ -61,6 +61,7 @@ function wet4_theme_init() {
     //elgg_register_plugin_hook_handler('register', 'menu:entity', 'wet4_delete_entity_menu', 400);
 
 		//questions modifications
+		elgg_register_action('object/question/save', elgg_get_plugins_path()."wet4/actions/object/question/save.php"); //add english/french toggle
 		elgg_register_page_handler('questions', 'wet_questions_page_handler');
 		elgg_unregister_plugin_hook_handler('register', 'menu:filter', 'questions_filter_menu_handler');
 		elgg_register_plugin_hook_handler('register', 'menu:filter', 'wet_questions_filter_menu_handler');
@@ -1974,7 +1975,7 @@ function wet_questions_page_handler($segments) {
 			break;
 		case 'view':
 			set_input('guid', $segments[1]);
-			include "$pages/view.php";
+			include "$new_page/view.php";
 			break;
 		case 'add':
 			elgg_gatekeeper();

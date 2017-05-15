@@ -9,6 +9,8 @@ elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 
 elgg_register_title_button();
 
+elgg_push_breadcrumb(elgg_echo('questions:friends'));
+
 $owner = elgg_get_page_owner_entity();
 
 // build content
