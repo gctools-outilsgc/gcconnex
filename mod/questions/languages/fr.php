@@ -37,7 +37,7 @@ return [
 	'questions:answered' => 'Répondue dernièrement par %s %s',
 	'questions:answered:correct' => 'Réponse correcte fournie par %s %s',
 
-	'questions:everyone' => 'Tous Questions',
+	'questions:everyone' => 'Toutes les questions du site',
 	'questions:add' => 'Ajoutez une question',
 	'questions:todo' => 'à Faire',
 	'questions:todo:none' => 'Il n’y a rien à faire. Continuer le bon travail!',
