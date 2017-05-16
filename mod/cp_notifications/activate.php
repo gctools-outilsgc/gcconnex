@@ -15,47 +15,71 @@ run_sql_script(__DIR__ . '/install/mysql.sql');
  * start doing a clean up of the old data that is saved in the old data table structure
  */
 
-
 $query = "SELECT * FROM elggobjects_entity WHERE title LIKE 'Newsletter|%'";
 $newsletter_objects = get_data($query);
 
 if (count($newsletter_objects) > 0) {
 
-	error_log("-STARTING-----------------------------------------------------------------------------------------------");
+    // iterate through each newsletter object
+    foreach ($newsletter_objects as $newsletter_object) {
+        
+        $newsletter_title = explode('|', $newsletter_object->title);
 
+        // long term fix for the chracter limit, segregate all the entries into records, retrieve via the user guid
+        $newsletter_descriptions = json_decode($newsletter_object->description, true);
+        foreach ($newsletter_descriptions as $newsletter_header => $newsletter_contents) {
+ 
+            foreach ($newsletter_contents as $content_type => $contents) {
 
-	foreach ($newsletter_objects as $newsletter_object) {
-		
-		$newsletter_title = explode('|', $newsletter_object->title);
-		error_log(">> user guid: {$newsletter_title[1]}");
+                foreach ($contents as $content_id => $content) {
 
+                    // group notifications are different than the rest (the content is saved as an array)
+                    if ($newsletter_header === 'group') {
+                        $group_contents = $content;
+                        
+                        foreach ($group_contents as $group_content_id => $group_content) {
+                            /**
+                             * entity_guid:	$group_content_id
+                             * user id:     $newsletter_title[1]
+                             * entry_tyoe:  $content_id
+                             * group_name:  $content_type
+                             * action_type:	$newsletter_header
+                             * notification_entry: $group_content
+                             */ 
 
-		// long term fix for the chracter limit, segregate all the entries into records, retrieve via the user guid
-		$newsletter_descriptions = json_decode($newsletter_object->description, true);
-		foreach ($newsletter_descriptions as $newsletter_header => $newsletter_contents) {
-			error_log(">>> {$newsletter_header}");
+                            $content_type = base64_encode($content_type);
+                            $query = "INSERT INTO notification_digest ( entity_guid, user_guid, entry_type, group_name, action_type, notification_entry ) VALUES ( {$group_content_id}, {$newsletter_title[1]}, '{$newsletter_header}', '{$content_type}', '{$content_id}', '{$group_content}' )";
+                            $body .= '<br/>'.$query.'<br/>';
+                            $insert_row = insert_data($query);
+                        }
 
-			if ($newsletter_header !== 'group') {
-				foreach ($newsletter_contents as $content_type => $contents) {
+                    } else {
 
-					foreach ($contents as $content) {
-						error_log(">>>> type: {$content_type} // content guid: {$content_guid}  // content: {$content}");
-					}
-				}
-			}
-			//$query = "INSERT INTO notification_digest ( user_guid, entry_type, notification_entry ) VALUES ( {$newsletter_title[1]}, '{$newsletter_header}', 'entry' )";
-			//$insert_row = insert_data($query);
-		}
+                        /**
+                         * entity_guid:	$content_id
+                         * user id:     $newsletter_title[1]
+                         * entry_tyoe:  $content_type
+                         * group_name:  NULL
+                         * action_type:	$newsletter_header 
+                         * notification_entry: $content
+                         */ 
+                        $content_id = preg_replace("/[^0-9,.]/", "", $content_id);
 
+                        $query = "INSERT INTO notification_digest ( entity_guid, user_guid, entry_type, group_name, action_type, notification_entry ) VALUES ( {$content_id}, {$newsletter_title[1]}, '{$newsletter_header}', NULL, '{$content_type}', '{$content}' )";
+                        $insert_row = insert_data($query);
+                    }
+                }
+            }
+        }
 
-		// delete the metadata cpn_newsletter		
-		//$user->cpn_newsletter
-		//$query = "INSERT INTO notification_digest ( user_guid, digest_content ) VALUES ( {$newsletter_title[1]}, {$newsletter_description} )";
-		//$insert_row = insertData();
-	}
+        // remove the cpn_newsletter metadata... we don't need a reference between object entity and the digest metadata
+        $user->deleteMetadata('cpn_newsletter');
 
-	error_log("-FINISH-----------------------------------------------------------------------------------------------");;
-
+        // delete the Newsletter object
+        $object = get_entity($newsletter_title[1];
+        $object->delete();
+    }
 }
 
+///         $body .= base64_decode("PGEgaHJlZj0naHR0cDovLzE5Mi4xNjguMS41MC9nY2Nvbm5leC9ncm91cHMvcHJvZmlsZS8zMzQvZW5nbGlzaC10ZXN0aW5nLWZvcnVtcy1pbi1ncm91cCc+RW5nbGlzaCAvIFRlc3RpbmcgRm9ydW1zIGluIEdyb3VwPC9hPg==");
 

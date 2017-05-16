@@ -153,6 +153,7 @@ function isJson($string) {
 
 /**
  * assembles the digest then encodes the array into JSON to be saved
+ * EDIT (May 16 2017): change to new database structure
  *
  * @param ElggUser 		$invoked_by
  * @param string 		$subtype
@@ -163,12 +164,14 @@ function isJson($string) {
  */
 function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '') {
 
-	elgg_load_library('GCconnex_display_in_language');
-	elgg_load_library('elgg:gc_notification:functions'); // cyu - lol i dont have this in my instance of gcconnex :|
+	if (elgg_is_active_plugin('wet4')) elgg_load_library('GCconnex_display_in_language');
+	elgg_load_library('elgg:gc_notification:functions');
+
 	$digest = get_entity($send_to->cpn_newsletter);
 	$digest_collection = json_decode($digest->description,true);
 
-	$content_title = $entity->title; // default value for title
+	// default title value
+	$content_title = $entity->title;
 
 	if (!$entity->title) $entity = get_entity($entity->guid);
 
@@ -177,11 +180,10 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 
 		if (isJson($entity->title))
 		{
-			// cyu - TODO: use the gc_explode_translation() (NEW)
 			$content_title = json_decode($entity->title, true);
 
 		} else {
-			// cyu - TODO: use the gc_explode_translation() (OLD)
+
 			if ($entity->title2) 
 				$content_title = array('en' => $entity->title, 'fr' => $entity->title2);
 			else 
@@ -208,6 +210,7 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 
 
 
+	/// 
 	switch ($subtype) {
 
 		case 'thewire':
@@ -219,7 +222,12 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 				'content_author_url' => $invoked_by->getURL()
 			);
 
-			$digest_collection['personal']['new_post'][$entity->guid] = json_encode($content_array);
+			$entity_guid = $entity->guid;
+			$user_guid = $send_to->getGUID();
+			$entry_type = 'personal';
+			$group_name = NULL;
+			$action_type = 'new_post';
+			$notification_entry = json_encode($content_array);
 			break;
 
 		case 'mission':
@@ -232,42 +240,82 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 				'deadline' => $entity->deadline
 			);
 
-			$digest_collection['mission']['new_post']["{$entity->guid}{$entity->getSubtype()}"] = json_encode($content_array);
+			$entity_guid = $entity->guid;
+			$user_guid = $send_to->getGUID();
+			$entry_type = 'mission';
+			$group_name = NULL;
+			$action_type = 'new_post';
+			$notification_entry = json_encode($content_array);
 			break;
 
 		case 'comment':
 		case 'discussion_reply':
 
-			if ($entity->getContainerEntity() instanceof ElggGroup) 
-				$digest_collection['group']["<a href='{$entity->getContainerEntity()->getURL()}'>{$entity->getContainerEntity()->name}</a>"]['response'][$entity->guid] = json_encode($content_array);
-			else 
-				$digest_collection['personal']['response'][$entity->guid] = json_encode($content_array);
+
+			if ($entity->getContainerEntity() instanceof ElggGroup) {
+
+				$group_html = "<a href='{$entity->getContainerEntity()->getURL()}'>{$entity->getContainerEntity()->name}</a>";
+				$entity_guid = $entity->guid;
+				$user_guid = $send_to->getGUID();
+				$entry_type = 'group';
+				$group_name = $group_html;
+				$action_type = 'response';
+				$notification_entry = json_encode($content_array);
+
+			} else { 
+
+				$entity_guid = $entity->guid;
+				$user_guid = $send_to->getGUID();
+				$entry_type = 'personal';
+				$group_name = NULL;
+				$action_type = 'response';
+				$notification_entry = json_encode($content_array);
+			}
+
 			break;
 
 
 		case 'cp_friend_request':
-			$digest_collection['personal']['friend_request'][$invoked_by->guid] = json_encode($content_array);
+
+			$entity_guid = $invoked_by->guid;
+			$user_guid = $send_to->getGUID();
+			$entry_type = 'personal';
+			$group_name = NULL;
+			$action_type = 'friend_request';
+			$notification_entry = json_encode($content_array);
 		 	break;
 
 		case 'cp_friend_approve':
-			$digest_collection['personal']['friend_approved'][$invoked_by->guid] = json_encode($content_array);
+
+			$entity_guid = $invoked_by->guid;
+			$user_guid = $send_to->getGUID();
+			$entry_type = 'personal';
+			$group_name = NULL;
+			$action_type = 'friend_approved';
+			$notification_entry = json_encode($content_array);
 			break;
 
+			/// QUESTION: is messageboard enabled?
 		case 'cp_messageboard':
 
 			$digest_collection['personal']['profile_message'][$entity->guid] = "{$invoked_by->username} has left u a msg on your profile => sending to... {$send_to->guid} / {$send_to->username}";
 			break;
 
-
 		case 'cp_hjtopic':
 		case 'cp_hjpost':
 			$group_title = get_entity(get_forum_in_group($entity->guid, $entity->guid))->name;
 			$group_url = get_entity(get_forum_in_group($entity->guid, $entity->guid))->getURL();
+			$group_html = "<a href='{$group_url}'>{$group_title}</a>";
 
 			if ($subtype === 'cp_hjtopic') {
 
-				$digest_collection['group']["<a href='{$group_url}'>{$group_title}</a>"]['forum_topic'][$entity->guid] = json_encode($content_array);
-			
+				$entity_guid = $entity->guid;
+				$user_guid = $send_to->getGUID();
+				$entry_type = 'group';
+				$group_name = $group_html;
+				$action_type = 'forum_topic';
+				$notification_entry = json_encode($content_array);
+
 			} else {
 
 				$content_array = array(
@@ -277,7 +325,13 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 					'content_author' => $entity->getOwnerEntity()->guid
 				);
 
-				$digest_collection['group']["<a href='{$group_url}'>{$group_title}</a>"]['forum_reply'][$entity->guid] = json_encode($content_array);
+				$entity_guid = $entity->guid;
+				$user_guid = $send_to->getGUID();
+				$entry_type = 'group';
+				$group_name = $group_html;
+				$action_type = 'forum_reply';
+				$notification_entry = json_encode($content_array);
+
 			}
 			break;
 
@@ -312,7 +366,7 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 
 				$content_array = array(
 					'content_title' => $entity_title,
-					'content_url' =>  $entity->getURL()."?utm_source=notification_digest&utm_medium=email",//$entity->getContainerEntity()->getURL()."?utm_source=notification_digest&utm_medium=email",
+					'content_url' =>  $entity->getURL()."?utm_source=notification_digest&utm_medium=email",
 					'subtype' => $entity->getSubtype(),
 					'content_author_name' => $invoked_by->name,
 					'content_author_url' => $invoked_by->getURL()
@@ -397,6 +451,18 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 	$digest->description = json_encode($digest_collection);
 	$digest->save();
 	elgg_set_ignore_access($ia);
+
+
+    /**
+     * user id:     $
+     * entry_tyoe:  $content_id
+     * group_name:  $content_type
+     * notification_entry: $group_content
+     */ 
+
+	// save, then transform the information to the database (notification_digest table)
+	$query = "INSERT INTO notification_digest ( user_guid, entry_type, group_name, notification_entry ) VALUES ( {$newsletter_title[1]}, '{$content_id}', '{$content_type}', '{$group_content}' )";
+	$query = "INSERT INTO notification_digest ( user_guid, entry_type, group_name, notification_entry ) VALUES ( {$newsletter_title[1]}, '{$newsletter_header}', NULL, '{$content}' )";
 
 	return true;
 }
