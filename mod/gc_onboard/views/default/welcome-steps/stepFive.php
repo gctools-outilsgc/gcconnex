@@ -15,9 +15,8 @@
     </div>
 </div>
 <div class="panel-body">
-    <div class="clearfix">
 
-        <div class="">
+        <div>
 
         <p class="mrgn-tp-sm"><?php echo elgg_echo('onboard:welcome:profile:sell:text'); ?></p>
 
@@ -51,7 +50,6 @@
         </div>
 
       </div>
-    </div>
 
     <div class="mrgn-bttm-md mrgn-tp-md pull-right">
 
