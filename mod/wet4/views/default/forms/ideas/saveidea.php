@@ -30,19 +30,19 @@ echo $btn_language;
 <div class="tab-content tab-content-border">
 <div class='en'>
     <label for="title"><?php echo elgg_echo('title:en'); ?></label><br />
-    <?php echo elgg_view('input/text', array('name' => 'title', 'id' => 'title', 'value' => $title)); ?>
+    <?php echo elgg_view('input/text', array('name' => 'title', 'id' => 'title', 'value' => $title, 'required '=> "required")); ?>
 </div>
 <div class='fr'>
     <label for="title2"><?php echo elgg_echo('title:fr'); ?></label><br />
-    <?php echo elgg_view('input/text', array('name' => 'title2', 'id' => 'title2', 'value' => $title2)); ?>
+    <?php echo elgg_view('input/text', array('name' => 'title2', 'id' => 'title2', 'value' => $title2, 'required '=> "required")); ?>
 </div>
 <div class='en'>
     <label for="description"><?php echo elgg_echo('description:ideas:en'); ?></label>
-    <?php echo elgg_view('input/longtext', array('name' => 'description', 'id' => 'description', 'value' => $desc)); ?>
+    <?php echo elgg_view('input/longtext', array('name' => 'description', 'id' => 'description', 'value' => $desc, 'required '=> "required", "class" => "validate-me")); ?>
 </div>
 <div class='fr'>
     <label for="description2"><?php echo elgg_echo('description:ideas:fr'); ?></label>
-    <?php echo elgg_view('input/longtext', array('name' => 'description2', 'id' => 'description2', 'value' => $desc2)); ?>
+    <?php echo elgg_view('input/longtext', array('name' => 'description2', 'id' => 'description2', 'value' => $desc2, 'required '=> "required", "class" => "validate-me")); ?>
 </div>
 <div>
 	<label for="tags"><?php echo elgg_echo('tags'); ?></label>
@@ -78,6 +78,7 @@ if(get_current_language() == 'fr'){
         jQuery('.en').hide();
         jQuery('#btnfr').addClass('active');
 
+        jQuery('#description').removeClass('validate-me');
     </script>
 <?php
 }else{
@@ -86,6 +87,8 @@ if(get_current_language() == 'fr'){
         jQuery('.en').show();
         jQuery('.fr').hide();
         jQuery('#btnen').addClass('active');
+
+        jQuery('#description2').removeClass('validate-me');
     </script>
 <?php
 }
@@ -103,11 +106,17 @@ jQuery(function(){
         jQuery('#btnClickfr').click(function(){
                jQuery('.fr').show();
                jQuery('.en').hide();
+
+               jQuery('#description').removeClass('validate-me');
+               jQuery('#description2').addClass('validate-me');
         });
 
           jQuery('#btnClicken').click(function(){
                jQuery('.en').show();
                jQuery('.fr').hide();
+
+               jQuery('#description').addClass('validate-me');
+               jQuery('#description2').removeClass('validate-me');
         });
 });
 </script>

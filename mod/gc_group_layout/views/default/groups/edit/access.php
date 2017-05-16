@@ -93,33 +93,31 @@ if ($entity) {
 <?php
 
 if ($entity && ($owner_guid == elgg_get_logged_in_user_guid() || elgg_is_admin_logged_in())) {
-	$members = array();
-
-	$options = array(
-		"relationship" => "member",
-		"relationship_guid" => $entity->getGUID(),
-		"inverse_relationship" => true,
-		"type" => "user",
-		"limit" => 0,
-	);
-
-	$batch = new ElggBatch("elgg_get_entities_from_relationship", $options);
-	foreach ($batch as $member) {
-		$option_text = "$member->name (@$member->username)";
-		$members[$member->guid] = htmlspecialchars($option_text, ENT_QUOTES, "UTF-8", false);
-	}
+	$members[$owner_guid] = get_entity($owner_guid)->name ."  (@". get_entity($owner_guid)->username .")";
 	?>
 
 	<div>
 		<label for="groups-owner-guid"><?php echo elgg_echo("groups:owner"); ?></label><br />
 		<?php
+			echo elgg_view("input/text", array(
+				"id" => "groups-owner-guid",
+				"value" =>  get_entity($owner_guid)->name,
+			));
+
 			echo elgg_view("input/select", array(
 				"name" => "owner_guid",
-				"id" => "groups-owner-guid",
+				"id" => "groups-owner-guid-select",
 				"value" =>  $owner_guid,
 				"options_values" => $members,
-				"class" => "groups-owner-input",
+				"class" => "groups-owner-input hidden",
 			));
+
+			$vars = array(
+				'class' => 'mentions-popup hidden',
+				'id' => 'groupmems-popup',
+			);
+
+			echo elgg_view_module('popup', '', elgg_view('graphics/ajax_loader', array('hidden' => false)), $vars);
 
 			if ($owner_guid == elgg_get_logged_in_user_guid()) {
 				echo "<span class='elgg-text-help'>" . elgg_echo("groups:owner:warning") . "</span>";

@@ -74,7 +74,7 @@ $input_disclaimer = elgg_view('input/checkbox', array(
 ));
 ?>
 
-<h4><?php echo elgg_echo('missions:first_post_form_title'); ?></h4><br>
+<h2 class='h4'><?php echo elgg_echo('missions:first_post_form_title'); ?></h2><br>
 <div class="form-group">
 	<label for='post-mission-name-text-input' class="col-sm-3 required text-right" aria-required="true">
 		<?php echo elgg_echo('missions:your_name');?>

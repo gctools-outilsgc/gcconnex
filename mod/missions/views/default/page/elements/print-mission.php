@@ -97,7 +97,7 @@ $click_header = elgg_view('output/url', array(
     <div class="mission-card-body clearfix">
         <?php echo $relationship_alert; ?>
         <div style="width:100%;overflow-x:auto;">
-            <h2>
+            <h3 class='h2'>
                 <div style="display:inline; font-weight:normal;" name="mission-job-title">
                     <?php //echo elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'));
                         echo $click_header;
@@ -106,7 +106,7 @@ $click_header = elgg_view('output/url', array(
                 <div style="font-style:italic;font-size:small;display:inline;" name="mission-state">
                     <?php echo $mission_state; ?>
                 </div>
-            </h2>
+            </h3>
         </div>
         <div name="mission-job-type" class="mrgn-bttm-sm">
             <span class="timeStamp">
@@ -120,9 +120,9 @@ $click_header = elgg_view('output/url', array(
 
         <div>
             <div style="display:inline-block;vertical-align:top;">
-                <h5>
+                <h4 class='h5' style="margin:0; display:inline;">
                     <?php echo elgg_echo('missions:date') . ':';?>
-                </h5>
+                </h4>
             </div>
             <div style="display:inline-block;">
                 <div name="mission-start-and-completion-date">
@@ -151,9 +151,9 @@ $click_header = elgg_view('output/url', array(
         </div>
         <div>
             <div style="display:inline-block;">
-                <h5>
+                <h4 class='h5' style="margin:0; display:inline;">
                     <?php echo elgg_echo("missions:posted"). ':';?>
-                </h5>
+                </h4>
             </div>
             <div style="display:inline-block;">
                 <?php echo elgg_get_friendly_time($mission->time_created);?>
@@ -161,9 +161,9 @@ $click_header = elgg_view('output/url', array(
         </div>
         <div>
             <div style="display:inline-block;">
-                <h5>
+                <h4 class='h5' style="margin:0; display:inline;">
                     <?php echo elgg_echo('missions:apply_by') . ':';?>
-                </h5>
+                </h4>
             </div>
             <div style="display:inline-block;" name="mission-deadline">
                 <?php echo $mission->deadline;?>

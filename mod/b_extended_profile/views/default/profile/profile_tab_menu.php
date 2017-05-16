@@ -195,10 +195,10 @@ if(elgg_get_context() == 'profile'){
     $('.elgg-menu-owner-block-default a').on('click', function(e){
       //get id
       var id = $(this).attr('href');
+
       //dont do anything if more tab is pressed
       if(id != ''){
-        //add active class and focus to new tab
-        $('.tab-content').find(id).addClass('active').focus();
+          $(id).find('h2').attr('tabindex', '-1').focus();
       }
     });
 

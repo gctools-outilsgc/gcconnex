@@ -119,4 +119,4 @@ if (elgg_in_context("admin")) {
 	$module_type = "inline";
 }
 
-echo "<div class='elgg-widgets-add-panel hidden wb-invisible'>" . elgg_view_module($module_type, $title, $body, array("id" => "widget_manager_widgets_select")) . "</div>";
+echo "<div class='elgg-widgets-add-panel hidden wb-invisible'>" . elgg_view_module($module_type, '', $body, array("id" => "widget_manager_widgets_select", 'header' => $title, )) . "</div>";

@@ -2,7 +2,7 @@
 $site_url = elgg_get_site_url();
 $english = array(
 
-	"gcforums:is_sticky" => 'Is sticky', 
+	"gcforums:is_sticky" => 'Sticky topic', 
 	"gcforums:forumpost_saved" => "Your reply has been created successfully",
 	"gcforums:forumtopic_saved" => "Your Forum Topic '%s' has been created successfully",
 	"gcforums:forumcategory_saved" => "The Forum Category has been created successfully",

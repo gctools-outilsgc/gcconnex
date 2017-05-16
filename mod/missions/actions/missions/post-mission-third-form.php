@@ -72,7 +72,19 @@ if ($err != '') {
     $mission->phone = $first_form['phone'];
 
     $accounts = get_user_by_email($first_form['email']);
-    $mission->account = array_pop($accounts)->guid;
+//Compare email and username for user with more than one account
+		foreach ($accounts as $key) {
+			if($key->name == $first_form['name']){
+				$guid_account[] = $key;
+			}
+		}
+
+		if($guid_account){
+			    $mission->account = array_pop($guid_account)->guid;
+		}else{
+			    $mission->account = array_pop($accounts)->guid;
+		}
+
 
     $mission->job_title = $second_form['job_title'];
     $mission->role_type = $second_form['role_type'];

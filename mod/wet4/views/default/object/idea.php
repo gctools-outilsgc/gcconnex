@@ -154,22 +154,22 @@ if($container) { // ds - was a weird bug where the container presumably didn't e
     if ( $container->canWriteToContainer($user) ) {
         $url = elgg_add_action_tokens_to_url("action/ideas/rateidea");
 
-        
-        //$vote .= "<span class='idea-likes'>" . count($likes) . "</span>"; 
+
+        //$vote .= "<span class='idea-likes'>" . count($likes) . "</span>";
         if($userVote == 1) {
-            $vote .= "<a href='$url' data-value='1' data-idea='{$idea->guid}'><i class='fa fa-arrow-up fa-lg icon-sel'></i><span class='wb-inv'>Upvote this Idea</span></a>";
+            $vote .= "<a href='$url' data-value='1' data-idea='{$idea->guid}'><i class='fa fa-arrow-up fa-lg icon-sel'></i><span class='wb-inv'>".elgg_echo('entity:upvote:link', array($title))."</span></a>";
         } else {
-            $vote .= "<a href='$url' data-value='1' data-idea='{$idea->guid}'><i class='fa fa-arrow-up fa-lg icon-unsel'></i><span class='wb-inv'>Upvote this Idea</span></a>";
+            $vote .= "<a href='$url' data-value='1' data-idea='{$idea->guid}'><i class='fa fa-arrow-up fa-lg icon-unsel'></i><span class='wb-inv'>".elgg_echo('entity:upvote:link', array($title))."</span></a>";
         }
         $vote .= $points;
 
         if($userVote == -1) {
-            $vote .= "<a href='$url' data-value='-1' data-idea='{$idea->guid}'><i class='fa fa-arrow-down fa-lg icon-sel'></i><span class='wb-inv'>Downvote this Idea</span></a>";
+            $vote .= "<a href='$url' data-value='-1' data-idea='{$idea->guid}'><i class='fa fa-arrow-down fa-lg icon-sel'></i><span class='wb-inv'>".elgg_echo('entity:downvote:link', array($title))."</span></a>";
         } else {
-            $vote .= "<a href='$url' data-value='-1' data-idea='{$idea->guid}'><i class='fa fa-arrow-down fa-lg icon-unsel'></i><span class='wb-inv'>Downvote this Idea</span></a>";
+            $vote .= "<a href='$url' data-value='-1' data-idea='{$idea->guid}'><i class='fa fa-arrow-down fa-lg icon-unsel'></i><span class='wb-inv'>".elgg_echo('entity:downvote:link', array($title))."</span></a>";
         }
         //$vote .= "<span class='idea-dislikes'>" . count($dislikes) . "</span>";
-       
+
 
     } else {
         $vote .= "<div class='idea-vote-counter text-center idea-points'><span class='wb-inv'>Vote count</span>$sum</div>";
@@ -178,7 +178,7 @@ if($container) { // ds - was a weird bug where the container presumably didn't e
     $vote .= "</div>";
 
     // $totals = count($likes) . "<span class='elgg-icon elgg-icon-thumbs-up-alt'></span><span class='elgg-icon elgg-icon-thumbs-down-alt'></span>" . count($dislikes);
-    
+
 }
 $idea_info = elgg_view_image_block($owner_icon, $list_body, array('class' => 'mbs'));
 if ($full == 'full' && !elgg_in_context('gallery')) {
@@ -188,20 +188,20 @@ if ($full == 'full' && !elgg_in_context('gallery')) {
 		echo'<div id="change_language" class="change_language">';
 		if (get_current_language() == 'fr'){
 
-			?>			
+			?>
 			<span id="indicator_language_en" onclick="change_en('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $idea->description1;?></span><span id="fr_content" class="testClass hidden" ><?php echo $idea->description2;?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
 			<?php
 
 		}else{
-					
-			?>			
+
+			?>
 			<span id="indicator_language_fr" onclick="change_fr('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $idea->description1;?></span><span id="fr_content" class="testClass hidden" ><?php echo $idea->description2;?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
-			<?php	
+			<?php
 		}
 		echo'</div>';
 	}
 
-    
+
 	echo <<<HTML
 <div id="elgg-object-{$idea->guid}" class="elgg-item-idea">
 <div class="col-xs-1">  $vote </div>
@@ -209,7 +209,7 @@ if ($full == 'full' && !elgg_in_context('gallery')) {
 		$idea_info
 	</div>
     <div class="col-xs-12"> $description </div>
-	
+
 </div>
 HTML;
     echo elgg_view('wet4_theme/track_page_entity', array('entity' => $idea));
@@ -221,7 +221,7 @@ HTML;
 
 } elseif ($full == 'no_vote') {
     if ($idea->description1){
-     $idea->description = $idea->description1;   
+     $idea->description = $idea->description1;
     }
 
     if($idea->description3){
@@ -274,8 +274,8 @@ HTML;
 
 	// identify available content
 /*	if(($idea->description2) && ($idea->description)){
-			
-		echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';	
+
+		echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';
 	}*/
 
 	// brief view
@@ -290,8 +290,8 @@ HTML;
 <div class="col-xs-11">
 
     $idea_info
-	
-	
+
+
 </div>
 
 HTML;

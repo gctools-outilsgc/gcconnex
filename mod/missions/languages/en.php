@@ -7,6 +7,12 @@
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
 return array(
+    //accessibility context
+    "mission:button:oppurtunity" => '<span class="wb-inv"> the opportunity "%s"</span>',
+    "mission:button:apply" => '<span class="wb-inv"> to the opportunity "%s"</span>',
+    "mission:button:withdraw" => '<span class="wb-inv"> from the opportunity "%s"</span>',
+    "mission:button:find" => '<span class="wb-inv"> canidates for the opportunity "%s"</span>',
+
         // labels
     "item:object:mission" =>     "Opportunities Platform",
     //"missions:first_post:paragraph_one"
@@ -27,8 +33,8 @@ return array(
     "missions:tab:opportunity" =>   "Step 2: Opportunity Details",
     "missions:tab:requirements" =>  "Step 3: Opportunity Requirements",
     "missions:post_opportunity" =>  "Post Opportunity",
-    "missions:micromissions" => "Career ConneXions Opportunities Platform - BETA",
-    "missions:micromissions_menu" => "Opportunities Platform (Beta)",
+    "missions:micromissions" => "Career ConneXions Opportunities Platform",
+    "missions:micromissions_menu" => "Opportunities Platform",
     "missions:homepage" =>  "Home Page",
     "missions:opportunity_role" => "Opportunity role",
     "missions:opportunity_role:offering" => "Create an opportunity for others (offering)",
@@ -46,7 +52,7 @@ return array(
     "missions:opportunity_status" => "Status of opportunity",
     "missions:ideal_start_date" =>  "Ideal start date",
     "missions:ideal_completion_date" => "Ideal completion date",
-    "missions:key_skills_opportunity" =>    "Key skills this opportunity provides",
+    "missions:key_skills_opportunity" =>    "Skills sought in candidate",
     "missions:application_deadline" =>  "Application deadline",
     "missions:opportunity_description" =>   "Bilingual description of opportunity",
     "missions:time_commitment" =>   "Time commitment",

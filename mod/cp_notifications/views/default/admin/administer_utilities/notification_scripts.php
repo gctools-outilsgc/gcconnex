@@ -138,6 +138,36 @@ $body .= '</fieldset>';
 
 
 
+/*
+$body .= "<br/>";
+$body .= '<fieldset class="elgg-fieldset" id="elgg-settings-advanced-system" style="padding-top:5px; padding-bottom:10px;">';
+$body .= "<legend>Run to enable all users on site to use the Notification Digest</legend>";
+$body .= "<div style='padding-top:10px; padding-bottom:10px;'>";
+
+	$str_id = elgg_get_metastring_id('enable site-wide digest', true);
+	$val_id = elgg_get_metastring_id('0');
+
+	$query = "	SELECT COUNT(r1.guid_one) AS num_users
+				FROM {$dbprefix}entity_relationships r1
+				LEFT OUTER JOIN {$dbprefix}entity_relationships r2 ON r1.guid_two = r2.guid_two AND r2.relationship = 'member' AND r1.guid_one = r2.guid_one
+				WHERE
+					r1.guid_one IN (select guid FROM {$dbprefix}users_entity)
+					AND r1.relationship LIKE 'cp_subscribed_to%'
+					AND r1.guid_two IN (select guid FROM {$dbprefix}groups_entity)
+					AND r2.relationship is null";
+
+	$count = get_data_row($query);
+
+	$body .= elgg_view('admin/upgrades/view', array(
+		'count' => $count->num_users,
+		'action' => 'action/cp_notifications/fix_inconsistent_subscription_script',
+	));
+
+$body .= "</div>";
+$body .= '</fieldset>';
+*/
+
+
 echo elgg_view_module('main', $title, $body);
 
 

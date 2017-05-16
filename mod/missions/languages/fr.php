@@ -7,6 +7,11 @@
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
 return array(
+        //accessibility context
+    "mission:button:oppurtunity" => '<span class="wb-inv"> la possibilité "%s"</span>',
+    "mission:button:apply" => '<span class="wb-inv"> à la possibilité "%s"</span>',
+    "mission:button:withdraw" => '<span class="wb-inv"> de la possibilité "%s"</span>',
+    "mission:button:find" => '<span class="wb-inv"> les candidats pour la possibilité "%s"</span>',
 	    // labels
 
     "item:object:mission" =>	"Plateforme de possibilités",
@@ -28,8 +33,8 @@ return array(
     "missions:tab:opportunity" =>	"Étape 2 : Renseignements par rapport à la possibilité",
     "missions:tab:requirements" =>	"Étape 3 : Exigences relatives à la possibilité",
     "missions:post_opportunity" =>	"Publier une possibilité",
-    "missions:micromissions" =>	"Plateforme de possibilités de ConneXions Carrière - BETA",
-    "missions:micromissions_menu" => "Plateforme de possibilités (Beta)",
+    "missions:micromissions" =>	"Plateforme de possibilités de ConneXions Carrière",
+    "missions:micromissions_menu" => "Plateforme de possibilités",
     "missions:homepage" =>	"Page d'accueil",
     "missions:opportunity_role" => "Rôle de la possibilité",
     "missions:opportunity_role:offering" => "Créer une possibilité pour les autres (offre)",
@@ -47,7 +52,7 @@ return array(
     "missions:opportunity_status" => "Statut de la possibilité",
     "missions:ideal_start_date" =>	"Date de début idéale",
     "missions:ideal_completion_date" =>	"Date d'achèvement idéale",
-    "missions:key_skills_opportunity" =>	"Compétences clés offertes par la possibilité",
+    "missions:key_skills_opportunity" =>	"Compétences recherchées chez le/la candidat(e)",
     "missions:application_deadline" =>	"Date limite d'inscription",
     "missions:opportunity_description" =>	"Description de la possibilité",
     "missions:time_commitment" =>"Période d'engagement",

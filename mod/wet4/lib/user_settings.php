@@ -421,46 +421,7 @@ function _elgg_user_settings_menu_prepare($hook, $type, $value, $params) {
  * @return bool
  * @access private
  */
-function _elgg_user_settings_page_handler($page) {
-	global $CONFIG;
 
-	if (!isset($page[0])) {
-		$page[0] = 'user';
-	}
-
-	if (isset($page[1])) {
-		$user = get_user_by_username($page[1]);
-		elgg_set_page_owner_guid($user->guid);
-	} else {
-		$user = elgg_get_logged_in_user_entity();
-		elgg_set_page_owner_guid($user->guid);
-	}
-
-	elgg_push_breadcrumb(elgg_echo('settings'), "settings/user/$user->username");
-
-	switch ($page[0]) {
-		case 'statistics':
-			elgg_push_breadcrumb(elgg_echo('usersettings:statistics:opt:linktext'));
-			$path = $CONFIG->path . "pages/settings/statistics.php";
-			break;
-		case 'plugins':
-			if (isset($page[2])) {
-				set_input("plugin_id", $page[2]);
-				elgg_push_breadcrumb(elgg_echo('usersettings:plugins:opt:linktext'));
-				$path = $CONFIG->path . "pages/settings/tools.php";
-			}
-			break;
-		case 'user':
-			$path = $CONFIG->path . "pages/settings/account.php";
-			break;
-	}
-
-	if (isset($path)) {
-		require $path;
-		return true;
-	}
-	return false;
-}
 
 /**
  * Initialize the user settings library

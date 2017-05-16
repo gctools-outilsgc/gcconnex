@@ -17,6 +17,7 @@
 	<?php echo elgg_view('input/text', array(
 		'name' => 'username',
 		'autofocus' => true,
+		'required' => 'required',
      'id' => 'username1',
 		));
 	?>
