@@ -783,12 +783,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') !== 0)
 			messages_send($subject, $site_template, $to_recipient->guid, $site->guid, 0, true, false);
 	}
-
-
 } // end of function
-
-
-
 
 
 /**
@@ -1065,7 +1060,6 @@ function cp_create_notification($event, $type, $object) {
 		if ($to_recipient->guid == $author->guid)
 			continue;
 if (cp_check_permissions($object, $recipient_user)) {
-
 		// send digest
 		if (strcmp($user_setting, "set_digest_yes") == 0)
 			create_digest($author, $object->getSubtype(), $content_entity, get_entity($to_recipient->guid));
@@ -1096,7 +1090,7 @@ if (cp_check_permissions($object, $recipient_user)) {
 		if (strcmp($user_setting, "set_digest_yes") == 0)
 			continue;
 
- 	if(has_access_to_entity($object, $recipient_user)){
+ 	if(cp_check_permissions($object, $recipient_user)){
 
 		$site_template = elgg_view('cp_notifications/site_template', $message);
 		messages_send($subject, $site_template, $to_recipient->guid, $site->guid, 0, true, false);
