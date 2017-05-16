@@ -88,7 +88,7 @@ return array(
     'onboard:welcome:three:skip' 	=> "Skip tour",
 
 
-    'onboard:welcome:profile:sell:title' => "Start with a great profile!",
+    'onboard:welcome:profile:sell:title' => "Start with building a great profile!",
     'onboard:welcome:profile:sell:text' => "Having a complete profile (with photo!), goes a long way to making you more approachable on GCconnex. By filling out your profile and keeping it up to date, you'll make it easier for others to find you and connect with you. Your profile can also act as your online C.V. and help you get oppurtunities.",
     'onboard:welcome:profile:sell:help' => "Let us help you build your profile now in just a few easy steps!",
     'onboard:welcome:profile:sell:img' => "onboard-user-card.jpg",

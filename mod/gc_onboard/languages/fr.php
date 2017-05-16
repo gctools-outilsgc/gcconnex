@@ -102,13 +102,14 @@ return array(
     'onboard:profile:intro:start' 	=> "Bâtir mon profil",
 
 
-    'onboard:welcome:profile:sell:title' => "But wait there's more!",
-    'onboard:welcome:profile:sell:text' => "GCconnex has profile pages like every other online platform ever.",
-    'onboard:welcome:profile:sell:moveon' => "You can also just get to things and not worry about that stuff right now by clicking done below.",
+    'onboard:welcome:profile:sell:title' => "Commencez par créer un excellent profil!",
+    'onboard:welcome:profile:sell:text' => "Le fait d’avoir un profil complet (avec photo!), vous aidera à être plus abordable dans le cadre de GCconnex. En remplissant votre profil et en le gardant à jour, il sera plus facile pour les autres de vous repérer et de connecter avec vous. Votre profil peut également vous servir de C.V. en ligne et vous aider à obtenir des possibilités.",
+    'onboard:welcome:profile:sell:help' => "Laissez-nous vous aider à créer votre profil maintenant en quelques étapes faciles!",
     'onboard:welcome:profile:sell:img' => "onboard-user-card-fr.jpg",
-    'onboard:welcome:profile:sell:img:alt' => "Accédez à votre profil via le menu utilisateur.",
-    'onboard:welcome:profile:walkthrough' => 'Go to profile walkthrough',
-    'onboard:welcome:profile:visit' => 'Visit your profile',
+    'onboard:welcome:profile:sell:img:alt' => "Reach your profile through the user menu.",
+    'onboard:welcome:profile:walkthrough' => 'Build my profile',
+    'onboard:welcome:profile:visit' => 'Visit my profile page',
+    'onboard:welcome:profile:access' => 'Pour accéder à votre profil, cliquez sur votre avatar et sélectionnez « Mon profil ».',
 
     /*Step 1 - basic information/geds */
     'onboard:profile:one:title' 	=> "Dites-nous qui vous êtes",

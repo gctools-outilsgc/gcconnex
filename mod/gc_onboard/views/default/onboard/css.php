@@ -263,3 +263,15 @@
      border-color: #567784;
 
  }
+
+.wb-overlay {
+  -webkit-background-clip: border-box;
+background-clip: border-box;
+background-color: #fff;
+border: 0;
+border-radius: 0;
+display: none;
+-webkit-transform: translateZ(0);
+transform: inherit;
+z-index: 1050;
+}
