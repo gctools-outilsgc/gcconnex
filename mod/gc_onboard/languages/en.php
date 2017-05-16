@@ -88,13 +88,13 @@ return array(
     'onboard:welcome:three:skip' 	=> "Skip tour",
 
 
-    'onboard:welcome:profile:sell:title' => "But wait there's more!",
+    'onboard:welcome:profile:sell:title' => "Start with a great profile!",
     'onboard:welcome:profile:sell:text' => "Having a complete profile (with photo!), goes a long way to making you more approachable on GCconnex. By filling out your profile and keeping it up to date, you'll make it easier for others to find you and connect with you. Your profile can also act as your online C.V. and help you get oppurtunities.",
-    'onboard:welcome:profile:sell:moveon' => "You can also just get to things and not worry about that stuff right now by clicking done below.",
+    'onboard:welcome:profile:sell:help' => "Let us help you build your profile now in just a few easy steps!",
     'onboard:welcome:profile:sell:img' => "onboard-user-card.jpg",
     'onboard:welcome:profile:sell:img:alt' => "Reach your profile through the user menu.",
-    'onboard:welcome:profile:walkthrough' => 'Go to profile walkthrough',
-    'onboard:welcome:profile:visit' => 'Visit your profile',
+    'onboard:welcome:profile:walkthrough' => 'Build my profile',
+    'onboard:welcome:profile:visit' => 'Visit my profile page',
     'onboard:welcome:profile:access' => 'To access your profile page, click on your avatar and select "My Profile".',
 
     /*Step four - groups*/
