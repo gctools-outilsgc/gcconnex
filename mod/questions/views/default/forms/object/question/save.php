@@ -177,7 +177,7 @@ if (!$editing || (questions_experts_enabled() && questions_is_expert(elgg_get_pa
 			// format select
 			$select_attr = [
 				'name' => 'container_guid',
-				'class' => 'elgg-input-dropdown',
+				'class' => 'elgg-input-dropdown form-control',
 				'id' => 'questions-container-guid',
 			];
 			$select = elgg_format_element('select', $select_attr, implode('', $select_options));
