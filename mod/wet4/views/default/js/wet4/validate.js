@@ -1,4 +1,4 @@
-var dtpath = elgg.normalize_url() + '/mod/wet4/views/default/js/wet4/core';
+var dtpath = elgg.normalize_url() + '/mod/wet4/views/default/js/wet4/jquery.validate.min';
 
 require.config({
     paths: {
@@ -6,6 +6,9 @@ require.config({
         "form-validate": dtpath,
     }
 });
+
+var validExtentions = get_file_tools_settings('single');
+var newExt = validExtentions.replace(/, /g, '|'); //format the extensions for validation
 
 requirejs( ["form-validate"], function() {
    $(".elgg-form").each(function(){
@@ -35,25 +38,29 @@ requirejs( ["form-validate"], function() {
                 }
               }
           },
-     ignore: ':hidden:not(.validate-me)',
+          submitHandler: function(form) {
+            $(form).find('button').prop('disabled', true);
+            form.submit();
+          },
+    ignore: ':hidden:not(.validate-me)',
      rules: {
        generic_comment: {
           required: true
       },
       description: {
-        required: true
+         required: true
       },
-      description2: {
-        required: true
-      },/*
-      password2: {
-        required: true,
-        equalTo: "#password"
-      },
-      email: {
-        required: true,
-        equalTo: "#email_initial"
-      }*/
+       description2: {
+         required: true
+       },
+       upload: {
+         extension: newExt
+       },
+    },
+    messages: {  //add custom message for file validation
+        upload:{
+            extension:elgg.echo('form:invalid:extensions',[validExtentions])
+        }
     }
    });
  });
@@ -106,4 +113,28 @@ requirejs( ["form-validate"], function() {
      } );
    }
 
+   //allows validation of file types
+   $.validator.addMethod( "extension", function( value, element, param ) {
+	param = typeof param === "string" ? param.replace( /,/g, "|" ) : "png|jpe?g|gif";
+	return this.optional( element ) || value.match( new RegExp( "\\.(" + param + ")$", "i" ) );
+  });
+
  } );
+require(['ckeditor'], function(CKEDITOR) {
+ //deal with copying the ckeditor text into the actual textarea
+    CKEDITOR.on('instanceReady', function () {
+       $.each(CKEDITOR.instances, function (instance) {
+            CKEDITOR.instances[instance].document.on("keyup", CK_jQ);
+            CKEDITOR.instances[instance].document.on("paste", CK_jQ);
+          //  CKEDITOR.instances[instance].document.on("keypress", CK_jQ);
+          //  CKEDITOR.instances[instance].document.on("blur", CK_jQ);
+         //  CKEDITOR.instances[instance].document.on("change", CK_jQ);
+        });
+    });
+
+    function CK_jQ() {
+        for (instance in CKEDITOR.instances) {
+            CKEDITOR.instances[instance].updateElement();
+      }
+    }
+});

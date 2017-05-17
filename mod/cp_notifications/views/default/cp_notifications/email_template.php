@@ -7,7 +7,6 @@ $cp_topic_description = $vars['cp_topic_description'];
 $cp_topic_description_discussion = $vars['cp_topic_description_discussion'];
 $cp_topic_description_discussion2 = $vars['cp_topic_description_discussion2'];
 
-//error_log(message)
 $cp_msg_content = $vars['cp_msg_content'];
 $cp_topic_author = get_user($vars['cp_topic_author']);
 $cp_topic_author = get_user($vars['cp_topic_author']);
@@ -339,6 +338,7 @@ switch ($msg_type) {
 		$email_notification_footer_non_user_en = elgg_echo('cp_notify:footer:no_user',array(),'en');
 		$email_notification_footer_non_user_fr = elgg_echo('cp_notify:footer:no_user',array(),'fr');
 
+
 		break;
 
 
@@ -618,15 +618,12 @@ echo <<<___HTML
 		        		<strong> {$cp_notify_msg_title_en} </strong>
 		        	</h4>
 
-
 		        	{$cp_notify_msg_description_en}
 
 		        </div>
                 <div style='margin-top:15px; padding: 5px; color: #6d6d6d; border-bottom: 1px solid #ddd;'>
                     <div>{$email_notification_footer_en}{$email_notification_footer_en2}</div>
                 </div>
-
-
 
 		       	<div width='100%' style='padding:30px 30px 30px 30px; color:#153643; font-family:sans-serif; font-size:16px; line-height:22px;'>
 
@@ -642,9 +639,7 @@ echo <<<___HTML
                    <div>{$email_notification_footer_fr}{$email_notification_footer_fr2}</div>
                 </div>
 
-
 		        <div style='height:1px; background:#bdbdbd; border-bottom:1px solid #ffffff'></div>
-
 
 		        <div align='center' width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 16px; color: #055959'> </div>
 

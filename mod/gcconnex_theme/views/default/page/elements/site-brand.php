@@ -18,34 +18,55 @@ if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gs
     <div id="app-brand">
         <div class="container">
             <div class="row">
-                <div class="col-sm-3 ">
+                <section class="col-lg-2 col-md-2 col-xs-8">
                     <div class="app-name">
                     <a href="<?php echo $site_url; ?>">
                         <span><span class="bold-gc">GC</span>connex</span>
                     </a>
                     </div>
-                </div>
-                <div class="col-sm-6 col-sm-offset-3 hidden-xs">
-                    <?php if (!elgg_get_plugin_setting('ExtTheme', 'wet4')) {?>
-                    <div id="tool-link" class="pull-right">
-                        <div class="pull-left tool-link">
+                </section>
+                <section class="col-lg-6 col-md-5 hidden-sm hidden-xs">
+                     <ul id="" class="pull-left list-unstyled mrgn-bttm-0">
+                        <li class="pull-left tool-link">
                         <a href="<?php echo elgg_echo('wet:gcpediaLink');?>">
-                            <img class="tool-link-icon" src="<?php echo $site_url.'/mod/wet4/graphics/pedia_icon.png';?>" alt="GCpedia" /><span class="bold-gc">GC</span><?php echo elgg_echo('wet:barGCpedia');?>
+                            <span class="bold-gc">GC</span><?php echo elgg_echo('wet:barGCpedia');?>
                         </a>
-                        </div>
-                        <div class="pull-left tool-link">
+                        </li>
+                        <li class="pull-left tool-link">
                         <a href="<?php echo elgg_echo('wet:gcintranetLink-toolsHead');?>">
-                            <img class="tool-link-icon" src="<?php echo $site_url.'/mod/wet4/graphics/intranet_icon.png'?>" alt="GCintranet"/><span class="bold-gc">GC</span>intranet
+                           <span class="bold-gc">GC</span>intranet
                         </a>
-                        </div>
-                        <div class="pull-left tool-link">
+                        </li>
+                        <li class="pull-left tool-link">
                         <a href="<?php echo elgg_echo('wet:gcdirectoryLink');?>">
-                            <img class="tool-link-icon" src="<?php echo $site_url.'/mod/wet4/graphics/directory_icon.png'?>" alt="GCDirectory" /><span class="bold-gc">GC</span><?php echo elgg_echo('wet:barDirectory');?>
+                           <span class="bold-gc">GC</span><?php echo elgg_echo('wet:barDirectory');?>
                         </a>
-                        </div>
-                    </div>
-                   <?php }?>
-                </div>
+                        </li>
+                        <li class="pull-left tool-link">
+                        <a href="<?php echo elgg_echo('wet:gccollabLink');?>">
+                           <span class="bold-gc">GC</span>collab
+                        </a>
+                        </li>
+                    </ul>
+                </section>
+                <?php echo elgg_view('page/elements/chng-lang'); ?>
+                <section class="wb-mb-links col-xs-4 visible-sm visible-xs" id="wb-glb-mn">
+                <h2><?php echo elgg_echo('wet:search');?></h2>
+                <ul class="list-inline text-right chvrn mrgn-bttm-0">
+                <li><a href="#mb-pnl" title="<?php echo elgg_echo('wet:search');?>" aria-controls="mb-pnl" class="overlay-lnk" role="button">
+                        <span class="glyphicon glyphicon-search">
+                            <span class="wb-inv">
+                                <?php echo elgg_echo('wet:search');?>
+                            </span>
+                        </span>
+                    <span class="glyphicon glyphicon-th-list"></span>
+                        </a>
+                    </li>
+                </ul>
+                <div id="mb-pnl"></div>
+                </section>
+
+            <?php echo elgg_view('search/search_box', $vars); ?>
             </div>
         </div>
 

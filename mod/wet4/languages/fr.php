@@ -143,6 +143,10 @@ return array(
   'group:accept:invitation' => 'Accepter <span class="wb-inv">la demande d\'adhésion au groupe "%s"</span>',
   'group:decline:invitation' => 'Rejeter <span class="wb-inv"> la demande d\'adhésion au groupe "%s"</span>',
 
+  //form validation
+
+  'form:invalid:extensions' => "Format de fichier non valide. Extensions de fichier autorisées: %s",
+
       'wet:more' => "Autres",
     'breadcrum:home' => 'Accueil',
 
@@ -305,6 +309,9 @@ return array(
     'photos:none' => 'Aucun album d\'image',
     'gcforums:enable_group_forums' => 'Activé les forums de groupe',
     'gprofile:contentMenu' => "Menu de contenu du groupe",
+
+    'groups:stats'  => "Statistiques de groupe",
+
         /**
    * Group invite
    */

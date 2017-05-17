@@ -39,7 +39,7 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
     <div class="b_extended_profile">
         <?php
 
-        echo '<div role="tabpanel">';
+        echo '<div>';
 
         //add additional tabs
         echo elgg_view('profile/profile_tab_menu');
@@ -89,14 +89,16 @@ $pg = '';
 
             echo '</div>'; //close div id=#profile-display
 
-     if (empty($_GET['pg']))  {
-$pg = '';
-     echo '<div role="tabpanel" tabindex="-1" class="tab-pane clearfix" id="splashboard">';
-}else{
+             if (empty($_GET['pg']))  {
+                $pg = '';
+                     echo '<div role="tabpanel" tabindex="-1" class="tab-pane clearfix" id="splashboard">';
+                }else{
 
-     $pg = $_GET['pg'];
-  echo '<div role="tabpanel" tabindex="-1" class="tab-pane active clearfix" id="splashboard">';
-}
+                     $pg = $_GET['pg'];
+                  echo '<div role="tabpanel" tabindex="-1" class="tab-pane active clearfix" id="splashboard">';
+                }
+
+                echo '<h2 class="wb-inv">'.$user->name."'s widgets</h2>";
 
                 $num_columns = elgg_extract('num_columns', $vars, 2);
                 $show_add_widgets = elgg_extract('show_add_widgets', $vars, true);
@@ -150,6 +152,7 @@ $pg = '';
                     }
                     echo '</div>';
                 }
+            elgg_pop_context();
             echo '</div>'; // close div id="splashboard"
 
             echo '<div role="tabpanel" tabindex="-1" class="tab-pane" id="portfolio">';

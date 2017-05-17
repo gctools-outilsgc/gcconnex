@@ -20,7 +20,7 @@ define(function(require) {
 		    { name: 'colors' },
 		    //{ name: 'about' }
 		    ],
-		removeButtons: 'Subscript,Superscript', // To have Underline back
+		removeButtons: 'Subscript,Superscript,Font', // To have Underline back
 		allowedContent: true,
 		baseHref: elgg.config.wwwroot,
 		removePlugins: 'liststyle,contextmenu,tabletools,resize',

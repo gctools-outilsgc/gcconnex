@@ -106,7 +106,6 @@ if ($guid) {
 
 echo elgg_view('input/submit', array('value' => $submit_label, 'class' => 'btn btn-primary mrgn-tp-md'));
 
-
 echo'</div></div>';
 
 
@@ -149,4 +148,34 @@ jQuery(function(){
                jQuery('.fr').hide();
         });
 });
+
+<?php if(elgg_in_context('embed')){ ?>
+  var validExtentions = get_file_tools_settings('single');
+  var newExt = validExtentions.replace(/, /g, '|'); //format the extensions for validation
+
+  //do form validation here for ajax view
+  $(".elgg-form").each(function(){
+    $(this).validate({
+      rules: {
+        upload: {
+          extension: newExt
+        },
+      },
+      messages: {  //add custom message for file validation
+          upload:{
+              extension:elgg.echo('form:invalid:extensions',[validExtentions])
+          }
+      },
+      submitHandler: function(form) {
+        $(form).find('button').prop('disabled', true);
+        form.ajaxSubmit();
+      },
+    });
+  });
+  <?php } ?>
+
+  <?php if($guid){ ?>
+    //remove required on file input if editing file
+    $('#upload').removeAttr('required');
+  <?php } ?>
 </script>

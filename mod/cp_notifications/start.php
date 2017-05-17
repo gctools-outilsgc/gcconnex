@@ -892,23 +892,27 @@ function cp_create_notification($event, $type, $object) {
 		// micromissions / opportunities
 		case 'mission':
 
-			// get users who want to be notified about new opportunities by site message
-			$op_siteusers = get_data("SELECT id, entity_guid FROM {$dbprefix}private_settings WHERE name = 'plugin:user_setting:cp_notifications:cpn_opportunities_site' AND value = 'opportunities_site'");
+			$job_type = $object->job_type;		// only need to get this once
+			$role_type = $object->role_type;
+			$job_type_ids = getMissionTypeMetastringid($job_type, $role_type);
+			$opt_in_id = elgg_get_metastring_id('gcconnex_profile:opt:yes');
+
+			// get users who want to be notified about new opportunities by site message and have opted in to this type of oppotrunity
+			$op_siteusers = get_data("SELECT ps.id, ps.entity_guid as entity_guid FROM {$dbprefix}private_settings ps JOIN {$dbprefix}metadata md ON ps.entity_guid = md.entity_guid WHERE ps.name = 'plugin:user_setting:cp_notifications:cpn_opportunities_site' AND ps.value = 'opportunities_site' AND md.name_id = {$job_type_ids} AND md.value_id = {$opt_in_id}");
 
 			foreach ($op_siteusers as $result) {
 				$userid = $result->entity_guid;
 				$user_obj = get_user($userid);
-				if (userOptedIn($user_obj, $object->job_type)) $to_recipients_site[$userid] = $user_obj;
+				$to_recipients_site[$userid] = $user_obj;
 			}
 
-			// get users who want to be notified about new opportunities by email
-			$op_emailusers = get_data("SELECT * FROM {$dbprefix}private_settings WHERE name = 'plugin:user_setting:cp_notifications:cpn_opportunities_email' AND value = 'opportunities_email'");
+			// get users who want to be notified about new opportunities by email and have opted in to this type of oppotrunity
+			$op_emailusers = get_data("SELECT ps.id, ps.entity_guid as entity_guid FROM {$dbprefix}private_settings ps JOIN {$dbprefix}metadata md ON ps.entity_guid = md.entity_guid WHERE ps.name = 'plugin:user_setting:cp_notifications:cpn_opportunities_email' AND ps.value = 'opportunities_email' AND md.name_id = {$job_type_ids} AND md.value_id = {$opt_in_id}");
 
 			foreach ($op_emailusers as $result) {
 				$userid = $result->entity_guid;
 				$user_obj = get_user($userid);
-				if ( userOptedIn( $user_obj, $object->job_type ) ) $to_recipients[$userid] = $user_obj;
-
+				$to_recipients[$userid] = $user_obj;
 			}
 
 			$message = array(
