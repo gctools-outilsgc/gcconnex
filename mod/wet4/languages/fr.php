@@ -143,6 +143,7 @@ return array(
   'group:accept:invitation' => 'Accepter <span class="wb-inv">la demande d\'adhésion au groupe "%s"</span>',
   'group:decline:invitation' => 'Rejeter <span class="wb-inv"> la demande d\'adhésion au groupe "%s"</span>',
 
+
   'entity:like:link:question' => 'Aimer la question %s',
   'entity:unlike:link:question' => 'Enlever la mention j\'aime de la question %s',
   'entity:comment:link:question' => 'Ajouter un commentaire à la question %s',
@@ -163,6 +164,11 @@ return array(
   'questions:answer:checkmark:brief' => "%s a indiqué que cette réponse de %s bonne sur %s",
   'questions:friends' => "Les questions de collègues",
   'question:answered' => "<span class='wb-inv'>Répondu</span>",
+
+  //form validation
+
+  'form:invalid:extensions' => "Format de fichier non valide. Extensions de fichier autorisées: %s",
+
 
       'wet:more' => "Autres",
     'breadcrum:home' => 'Accueil',

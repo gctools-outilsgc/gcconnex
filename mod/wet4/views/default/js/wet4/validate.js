@@ -1,4 +1,4 @@
-var dtpath = elgg.normalize_url() + '/mod/wet4/views/default/js/wet4/core';
+var dtpath = elgg.normalize_url() + '/mod/wet4/views/default/js/wet4/jquery.validate.min';
 
 require.config({
     paths: {
@@ -6,6 +6,9 @@ require.config({
         "form-validate": dtpath,
     }
 });
+
+var validExtentions = get_file_tools_settings('single');
+var newExt = validExtentions.replace(/, /g, '|'); //format the extensions for validation
 
 requirejs( ["form-validate"], function() {
    $(".elgg-form").each(function(){
@@ -49,15 +52,15 @@ requirejs( ["form-validate"], function() {
       },
        description2: {
          required: true
-       },/*
-      password2: {
-        required: true,
-        equalTo: "#password"
-      },
-      email: {
-        required: true,
-        equalTo: "#email_initial"
-      }*/
+       },
+       upload: {
+         extension: newExt
+       },
+    },
+    messages: {  //add custom message for file validation
+        upload:{
+            extension:elgg.echo('form:invalid:extensions',[validExtentions])
+        }
     }
    });
  });
@@ -109,6 +112,12 @@ requirejs( ["form-validate"], function() {
      	postalCodeCA: "Veuillez fournir un code postal valide."
      } );
    }
+
+   //allows validation of file types
+   $.validator.addMethod( "extension", function( value, element, param ) {
+	param = typeof param === "string" ? param.replace( /,/g, "|" ) : "png|jpe?g|gif";
+	return this.optional( element ) || value.match( new RegExp( "\\.(" + param + ")$", "i" ) );
+  });
 
  } );
 require(['ckeditor'], function(CKEDITOR) {

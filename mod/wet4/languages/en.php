@@ -147,6 +147,7 @@ return array(
     'group:accept:invitation' => 'Accept<span class="wb-inv">group invite to "%s"</span>',
     'group:decline:invitation' => 'Decline<span class="wb-inv">group invite to "%s"</span>',
 
+
     'entity:like:link:question' => 'Like the question %s',
     'entity:unlike:link:question' => 'Remove like from the question %s',
     'entity:comment:link:question' => 'Comment on the question %s',
@@ -167,6 +168,11 @@ return array(
     'questions:answer:checkmark:brief' => "%s marked an answer by %s correct on %s",
     'questions:friends' => "Friends' Questions",
     'question:answered' => "<span class='wb-inv'>Answered</span>",
+
+    //form validation
+
+    'form:invalid:extensions' => "Invalid file format. Allowed file extensions: %s",
+
 
     ////
 
