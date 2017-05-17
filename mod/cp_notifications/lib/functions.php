@@ -349,6 +349,8 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 					'content_author_name' => $invoked_by->name,
 					'content_author_url' => $invoked_by->getURL()
 				);
+
+
 			} elseif ($entity->getSubtype() === 'thewire') {
 
 				$content_array = array(
@@ -373,20 +375,26 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 				);
 			}
 
-			$digest_collection['personal']['likes']["{$entity->guid}{$author->guid}"] = json_encode($content_array);
+			$entity_guid = $entity->guid;
+			$user_guid = $send_to->getGUID();
+			$entry_type = 'personal';
+			$group_name = NULL;
+			$action_type = 'likes';
+			$notification_entry = json_encode($content_array);
 			break;
 
 
 		case 'content_revision':
-			if (!is_array($digest_collection['personal']['content_revision']))
-				$digest_collection['personal']['content_revision'] = array();
-		
-			$digest_collection['personal']['content_revision'][] = json_encode($content_array);
+
+			$entity_guid = $entity->guid;
+			$user_guid = $send_to->getGUID();
+			$entry_type = 'personal';
+			$group_name = NULL;
+			$action_type = 'content_revision';
+			$notification_entry = json_encode($content_array);
 			break;
 
 		case 'cp_wire_share':
-			if (!is_array($digest_collection['personal']['cp_wire_share']))
-				$digest_collection['personal']['cp_wire_share'] = array();
 
 			$content_title = $entity->title;
 			if (!$entity->title) $content_title = $entity->description;
@@ -399,14 +407,15 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 				'content_author_url' => $invoked_by->getURL()
 			);
 
-			$digest_collection['personal']['cp_wire_share'][] = json_encode($content_array);
-			
+			$entity_guid = $entity->guid;
+			$user_guid = $send_to->getGUID();
+			$entry_type = 'personal';
+			$group_name = NULL;
+			$action_type = 'wire_share';
+			$notification_entry = json_encode($content_array);			
 			break;
 
 		case 'cp_wire_mention':
-			if (!is_array($digest_collection['personal']['cp_mention']))
-				$digest_collection['personal']['cp_mention'] = array();
-
 
 			$content_array = array(
 				'content_url' => $entity->getURL()."?utm_source=notification_digest&utm_medium=email",
@@ -414,7 +423,14 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 				'content_author' => $invoked_by->name,
 				'content_author_url' => $invoked_by->getURL(), 
 			);
-			$digest_collection['personal']['cp_mention'][] = json_encode($content_array);
+
+			$entity_guid = $entity->guid;
+			$user_guid = $send_to->getGUID();
+			$entry_type = 'personal';
+			$group_name = NULL;
+			$action_type = 'mention';
+			$notification_entry = json_encode($content_array);
+
 			break;
 
 		case 'cp_mention':
@@ -427,42 +443,51 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 				'content_author_url' => $invoked_by->getURL()
 			);
 
-			if (!is_array($digest_collection['personal']['cp_mention']))
-				$digest_collection['personal']['cp_mention'] = array();
-
-			$digest_collection['personal']['cp_mention'][] = json_encode($content_array);
-
+			$entity_guid = $entity->guid;
+			$user_guid = $send_to->getGUID();
+			$entry_type = 'personal';
+			$group_name = NULL;
+			$action_type = 'mention';
+			$notification_entry = json_encode($content_array);
 			break;
 
 		default:
 
 			$entity = get_entity($entity->guid);
 			
-			if ($entity->getContainerEntity() instanceof ElggGroup)
-				$digest_collection['group']["<a href='{$entity->getContainerEntity()->getURL()}?utm_source=notification_digest&utm_medium=email'>{$entity->getContainerEntity()->name}</a>"]['new_post'][$entity->guid] = json_encode($content_array);
-			else 
-				$digest_collection['personal']['new_post'][$entity->guid] = json_encode($content_array);
+			if ($entity->getContainerEntity() instanceof ElggGroup) {
+			
+				$entity_guid = $entity->guid;
+				$user_guid = $send_to->getGUID();
+				$entry_type = 'group';
+				$group_name = "<a href='{$entity->getContainerEntity()->getURL()}?utm_source=notification_digest&utm_medium=email'>{$entity->getContainerEntity()->name}</a>";
+				$action_type = 'new_post';
+				$notification_entry = json_encode($content_array);
+
+			}
+			else {
+				$entity_guid = $entity->guid;
+				$user_guid = $send_to->getGUID();
+				$entry_type = 'personal';
+				$group_name = NULL;
+				$action_type = 'new_post';
+				$notification_entry = json_encode($content_array);
+			}
 
 			break;
 	}
 
-	// save the information to the digest object for later access
-	$ia = elgg_set_ignore_access(true);
-	$digest->description = json_encode($digest_collection);
-	$digest->save();
-	elgg_set_ignore_access($ia);
+	$group_name = base64_encode($group_name);
 
+	/// check if record exists already, if not then proceed.
+	$query = "SELECT 1 FROM notification_digest WHERE entity_guid = {$entity_guid} AND user_guid = {$user_guid} AND notification_entry = '{$notification_entry}'  LIMIT 1";
+	$count_row = get_data($query);
 
-    /**
-     * user id:     $
-     * entry_tyoe:  $content_id
-     * group_name:  $content_type
-     * notification_entry: $group_content
-     */ 
-
-	// save, then transform the information to the database (notification_digest table)
-	$query = "INSERT INTO notification_digest ( user_guid, entry_type, group_name, notification_entry ) VALUES ( {$newsletter_title[1]}, '{$content_id}', '{$content_type}', '{$group_content}' )";
-	$query = "INSERT INTO notification_digest ( user_guid, entry_type, group_name, notification_entry ) VALUES ( {$newsletter_title[1]}, '{$newsletter_header}', NULL, '{$content}' )";
+	if (count($count_row) <= 0) {
+		/// save, then transform the information to the database (notification_digest table)
+		$query = "INSERT INTO notification_digest ( entity_guid, user_guid, entry_type, group_name, action_type, notification_entry ) VALUES ( {$entity_guid}, '{$user_guid}', '{$entry_type}', '{$group_name}', '{$action_type}', '{$notification_entry}' )";
+		$insert_row = insert_data($query);
+	}
 
 	return true;
 }

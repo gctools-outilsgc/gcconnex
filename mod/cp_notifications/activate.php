@@ -25,10 +25,19 @@ if (count($newsletter_objects) > 0) {
         
         $newsletter_title = explode('|', $newsletter_object->title);
 
+        // if user does not exist because it was deleted, remove digest then skip
+        if (!(get_user_by_email($newsletter_title[1]) instanceof ElggUser)) 
+        {
+            $object = get_entity($newsletter_object->guid);
+            $object->delete();
+            continue; 
+        }
+
         // long term fix for the chracter limit, segregate all the entries into records, retrieve via the user guid
         $newsletter_descriptions = json_decode($newsletter_object->description, true);
         foreach ($newsletter_descriptions as $newsletter_header => $newsletter_contents) {
- 
+    
+
             foreach ($newsletter_contents as $content_type => $contents) {
 
                 foreach ($contents as $content_id => $content) {
@@ -48,6 +57,7 @@ if (count($newsletter_objects) > 0) {
                              */ 
 
                             $content_type = base64_encode($content_type);
+                            $user_guid = (is_numeric($user_guid)) ? $user_guid : get_user_by_email($newsletter_title[1])->getGUID();
                             $query = "INSERT INTO notification_digest ( entity_guid, user_guid, entry_type, group_name, action_type, notification_entry ) VALUES ( {$group_content_id}, {$newsletter_title[1]}, '{$newsletter_header}', '{$content_type}', '{$content_id}', '{$group_content}' )";
                             $body .= '<br/>'.$query.'<br/>';
                             $insert_row = insert_data($query);
@@ -63,9 +73,12 @@ if (count($newsletter_objects) > 0) {
                          * action_type:	$newsletter_header 
                          * notification_entry: $content
                          */ 
-                        $content_id = preg_replace("/[^0-9,.]/", "", $content_id);
 
-                        $query = "INSERT INTO notification_digest ( entity_guid, user_guid, entry_type, group_name, action_type, notification_entry ) VALUES ( {$content_id}, {$newsletter_title[1]}, '{$newsletter_header}', NULL, '{$content_type}', '{$content}' )";
+
+                        $content_id = preg_replace("/[^0-9,.]/", "", $content_id);
+                        $user_guid = (is_numeric($user_guid)) ? $user_guid : get_user_by_email($newsletter_title[1])->getGUID();
+
+                        $query = "INSERT INTO notification_digest ( entity_guid, user_guid, entry_type, group_name, action_type, notification_entry ) VALUES ( {$content_id}, {$newsletter_title[1]}, '{$newsletter_header}', NULL, '{$content_type}', '{$content_id}', '{$content}' )";
                         $insert_row = insert_data($query);
                     }
                 }
@@ -73,13 +86,11 @@ if (count($newsletter_objects) > 0) {
         }
 
         // remove the cpn_newsletter metadata... we don't need a reference between object entity and the digest metadata
+        $user = get_user($newsletter_title[1]);
         $user->deleteMetadata('cpn_newsletter');
 
         // delete the Newsletter object
-        $object = get_entity($newsletter_title[1];
+        $object = get_entity($newsletter_object->guid);
         $object->delete();
     }
 }
-
-///         $body .= base64_decode("PGEgaHJlZj0naHR0cDovLzE5Mi4xNjguMS41MC9nY2Nvbm5leC9ncm91cHMvcHJvZmlsZS8zMzQvZW5nbGlzaC10ZXN0aW5nLWZvcnVtcy1pbi1ncm91cCc+RW5nbGlzaCAvIFRlc3RpbmcgRm9ydW1zIGluIEdyb3VwPC9hPg==");
-
