@@ -920,8 +920,8 @@ function cp_create_notification($event, $type, $object) {
 		case 'mission':
 
 			$job_type = $object->job_type;		// only need to get this once
-			$job_type = $object->role_type;
-			$job_type_ids = getMissionTypeMetastringid($job_type, $job_type);
+			$role_type = $object->role_type;
+			$job_type_ids = getMissionTypeMetastringid($job_type, $role_type);
 			$opt_in_id = elgg_get_metastring_id('gcconnex_profile:opt:yes');
 
 			// get users who want to be notified about new opportunities by site message and have opted in to this type of oppotrunity
