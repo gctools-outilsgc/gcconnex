@@ -152,8 +152,7 @@ function isJson($string) {
 
 
 /**
- * assembles the digest then encodes the array into JSON to be saved
- * EDIT (May 16 2017): change to new database structure
+ * assembles the digest then encodes the array into JSON to be saved to digest_notification table
  *
  * @param ElggUser 		$invoked_by
  * @param string 		$subtype
