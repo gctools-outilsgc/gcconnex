@@ -147,7 +147,9 @@ return array(
     'group:accept:invitation' => 'Accept<span class="wb-inv">group invite to "%s"</span>',
     'group:decline:invitation' => 'Decline<span class="wb-inv">group invite to "%s"</span>',
 
+    //form validation
 
+    'form:invalid:extensions' => "Invalid file format. Allowed file extensions: %s",
 
     ////
 
