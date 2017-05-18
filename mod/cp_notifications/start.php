@@ -575,24 +575,26 @@ function cp_create_annotation_notification($event, $type, $object) {
 			$author = $current_user;
 			$content_entity = $entity;
 
-			$watchers = get_subscribers($dbprefix, $entity->getOwnerGUID(), $entity->getContainerGUID());
+			$watchers = get_subscribers($dbprefix, $current_user->guid, $entity->guid);
 
 			foreach ($watchers as $watcher) {
 				$message['user_name'] = $watcher->username;
 
 				$template = elgg_view('cp_notifications/email_template', $message);
-				$site_template = elgg_view('cp_notifications/site_template', $message);
+
+				$recipient_user = get_user($watcher->guid);
+		if (has_access_to_entity($entity, $recipient_user)) {
 
 				// create the digest if the digest is enabled
-				if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $watcher->guid,'cp_notifications'), 'set_digest_yes') == 0)
+			if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $watcher->guid,'cp_notifications'), 'set_digest_yes') == 0)
 					create_digest($author, $action_type, $content_entity, get_entity($watcher->guid));
 
 				// create the instant notification if digest is not enabled
 				else
 					(elgg_is_active_plugin('phpmailer')) ? phpmailer_send($watcher->email, $watcher->name, $subject, $template, NULL, true) : mail($watcher->email, $subject, $template, cp_get_headers());
-			
+			}
 
-				if (check_entity_relationship($watcher->guid, 'cp_subscribed_to_site_mail', $entity->getContainerGUID())) 
+				if (check_entity_relationship($watcher->guid, 'cp_subscribed_to_site_mail', $entity->getContainerGUID()))
 					messages_send($subject, $template, $watcher->guid, $site->guid, 0, true, false);
 
 				return true;
@@ -625,7 +627,8 @@ function cp_create_annotation_notification($event, $type, $object) {
 				$message['user_name'] = $watcher->username;
 
 				$template = elgg_view('cp_notifications/email_template', $message);
-
+				$recipient_user = get_user($watcher->guid);
+		if (has_access_to_entity($entity, $recipient_user)) {
 				// create the digest if digest is enabled
 				if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $watcher->guid,'cp_notifications'),'set_digest_yes') == 0)
 					create_digest($author, $action_type, $content_entity, get_entity($watcher->guid));
@@ -634,18 +637,14 @@ function cp_create_annotation_notification($event, $type, $object) {
 				else
 					(elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $watcher->email, $watcher->name, $subject, $template, NULL, true ) : mail($watcher->email, $subject, $template, cp_get_headers());
 
-			
 				if (check_entity_relationship($watcher->guid, 'cp_subscribed_to_site_mail', $entity->getContainerGUID())) {
 					$site_template = elgg_view('cp_notifications/site_template', $message);
 					messages_send($subject, $site_template, $watcher->guid, $site->guid, 0, true, false);
 				}
 			}
-
 			return true;
 		}
-
-
-
+		}
 	} else {
 
 		/// LIKES TO COMMENTS AND DISCUSSION REPLIES
@@ -758,22 +757,23 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 		$message['user_name'] = get_user($to_recipient->guid)->username;
 
-		if ($liked_by->guid == $entity->getOwnerGUID() && $to_recipient->guid == $liked_by->guid)  {
+		$recipient_user = get_user($to_recipient->guid);
+		if ($liked_by->guid == $entity->getOwnerGUID() && $to_recipient->guid == $liked_by->guid)
 			continue;
-		}
-		
-	
+		if (cp_check_permissions($object, $recipient_user)){
 
-		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0) {
-			create_digest($author, $action_type, $content_entity, $to_recipient);
-		} else {
+			if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0)
+				create_digest($author, $action_type, $content_entity, $to_recipient);
 
-			$template = elgg_view('cp_notifications/email_template', $message);
+			else {
 
-			if (elgg_is_active_plugin('phpmailer'))
-				phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );
-			else
-				mail($to_recipient->email, $subject, $template,cp_get_headers());
+				$template = elgg_view('cp_notifications/email_template', $message);
+
+				if (elgg_is_active_plugin('phpmailer'))
+					phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );
+				else
+					mail($to_recipient->email, $subject, $template,cp_get_headers());
+			}
 		}
 	}
 
@@ -783,11 +783,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') !== 0)
 			messages_send($subject, $site_template, $to_recipient->guid, $site->guid, 0, true, false);
 	}
-
 } // end of function
-
-
-
 
 
 /**
@@ -846,7 +842,7 @@ function cp_create_notification($event, $type, $object) {
 
 						// send email and site notification
 						} else {
-							
+
 							if (elgg_is_active_plugin('phpmailer'))
 								phpmailer_send( $mentioned_user->email, $mentioned_user->name, $subject, $template, NULL, true );
 							else
@@ -1062,29 +1058,35 @@ function cp_create_notification($event, $type, $object) {
 	foreach ($to_recipients as $to_recipient)
 	{
 
+		$recipient_user = get_user($to_recipient->guid);
 		$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid, 'cp_notifications');
 
 		if ($to_recipient->guid == $author->guid)
 			continue;
-
+if (cp_check_permissions($object, $recipient_user)) {
 		// send digest
 		if (strcmp($user_setting, "set_digest_yes") == 0)
 			create_digest($author, $object->getSubtype(), $content_entity, get_entity($to_recipient->guid));
 
 		// send email and site notification
 		else {
+
 			$template = elgg_view('cp_notifications/email_template', $message);
 
-			if (elgg_is_active_plugin('phpmailer'))
-				phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );
-			else
-				mail($to_recipient->email,$subject,$template,cp_get_headers());
+				if (elgg_is_active_plugin('phpmailer'))
+					phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );
+				else
+					mail($to_recipient->email,$subject,$template,cp_get_headers());
 
+			}
 		}
+
 	}
 
 	foreach ($to_recipients_site as $to_recipient) {
 		$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid, 'cp_notifications');
+		$recipient_user = get_user($to_recipient->guid);
+
 
 		if ($to_recipient->guid == $author->guid)
 			continue;
@@ -1092,8 +1094,12 @@ function cp_create_notification($event, $type, $object) {
 		if (strcmp($user_setting, "set_digest_yes") == 0)
 			continue;
 
+ 	if(cp_check_permissions($object, $recipient_user)){
+
 		$site_template = elgg_view('cp_notifications/site_template', $message);
 		messages_send($subject, $site_template, $to_recipient->guid, $site->guid, 0, true, false);
+
+		}
 	}
 }
 
@@ -1114,9 +1120,9 @@ function get_subscribers($dbprefix, $user_guid, $entity_guid = '') {
 	$subscribed_to = ($entity_guid != '') ? $entity_guid : $user_guid;
 
 	$query = "	SELECT DISTINCT u.guid, u.email, u.username, u.name
-				FROM {$dbprefix}entity_relationships r LEFT JOIN {$dbprefix}users_entity u ON r.guid_one = u.guid 
+				FROM {$dbprefix}entity_relationships r LEFT JOIN {$dbprefix}users_entity u ON r.guid_one = u.guid
 				WHERE r.guid_one <> {$user_guid} AND r.relationship = 'cp_subscribed_to_email' AND r.guid_two = {$subscribed_to}";
-  
+
 	return get_data($query);
 }
 
@@ -1279,13 +1285,13 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 				$template = elgg_view('cp_notifications/newsletter_template', array('to' => $to, 'newsletter_content' => $newsletter_content));
 			else
 				$template = elgg_view('cp_notifications/newsletter_template_empty', array('to' => $to));
- 
+
 
 			if (elgg_is_active_plugin('phpmailer'))
 				phpmailer_send($to->email, $to->name, $subject, $template, NULL, true );
 			else
 				mail($to->email, $subject, $template, cp_get_headers());
-	
+
 
 
 			//echo $template;
@@ -1333,7 +1339,6 @@ function cp_notification_preparation_send($entity, $to_user, $message, $guid_two
 			}
 
 		} else {
-
 			// check if user has access to the content (DO NOT send if user has no access to this object)
 			if (cp_check_permissions($entity, $to_user->guid)) {
 
