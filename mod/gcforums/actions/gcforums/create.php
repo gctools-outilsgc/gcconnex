@@ -4,7 +4,7 @@ gatekeeper();
 $gcf_container = $vars['container_guid'];
 $gcf_subtype = get_input('gcf_subtype');
 $gcf_group = get_input('gcf_group');
-error_log('hello!');
+
 
 switch ($gcf_subtype) {
 	case 'hjforumcategory':
@@ -219,10 +219,9 @@ function gcforums_notify_subscribed_users($hjobject, $hjlink) {
 	);
 	$users = elgg_get_entities_from_relationship($options);
 
-	// notify_user(to, from, subject, message)
 	$subscribers = array();
 	foreach ($users as $user) {
-		error_log("user->username: {$user->username} // owner {$hjobject->getOwnerEntity()->username}");
+
 		// do not self-notify
 		if (strcmp($hjobject->getOwnerEntity()->username,$user->username) == 0)
 			continue;
@@ -273,7 +272,9 @@ function gcforums_notify_subscribed_users($hjobject, $hjlink) {
 			);
 		}
 
-		$result = elgg_trigger_plugin_hook('cp_overwrite_notification','all',$message);
+		if (strcmp(trim($hjobject->getSubtype()),'hjforumtopic') == 0 || strcmp(trim($hjobject->getSubtype()),'hjforumpost') == 0) {
+			$result = elgg_trigger_plugin_hook('cp_overwrite_notification','all',$message);
+		}
 	} else
 		notify_user($subscribers, $from, $subject, $message);
 }
