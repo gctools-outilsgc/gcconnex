@@ -10,6 +10,13 @@ $site_url = elgg_get_site_url();
 $about = $site_url .'about-a_propos';
 $terms = $site_url .'terms';
 $priv = $site_url .'privacy-confidentialite';
+
+//check lang of current user and change Canada graphic based on language
+if( _elgg_services()->session->get('language') == 'en'){
+    $graphic_lang = 'en';
+}else{
+    $graphic_lang = 'fr';
+}
 ?>
 
 
@@ -83,10 +90,16 @@ $priv = $site_url .'privacy-confidentialite';
     <div class="brand">
         <div class="container">
             <div class="row">
+                <div class="col-md-8 col-xs-12">
+                    <a href="https://www.canada.ca/<?php echo $graphic_lang; ?>.html">
+                     <object type="image/svg+xml" tabindex="-1" data="<?php echo $site_url; ?>/mod/gcconnex_theme/graphics/sig-blk-<?php echo $graphic_lang; ?>.svg"></object>
+                    <span class="wb-inv"><?php echo elgg_echo('wet:gc');?></span>
+                    </a>
+                </div>
                 <div class="col-xs-6 visible-sm visible-xs tofpg">
                     <a href="#wb-cont">Top of Page <span class="glyphicon glyphicon-chevron-up"></span></a>
                 </div>
-                <div class="col-xs-6 col-md-12 text-right">
+                <div class="col-xs-6 col-md-4 text-right">
                     <object type="image/svg+xml" tabindex="-1" role="img" data="<?php echo $site_url; ?>/mod/gcconnex_theme/graphics/wmms-blk.svg" aria-label="Symbol of the Government of Canada"></object>
                 </div>
             </div>
