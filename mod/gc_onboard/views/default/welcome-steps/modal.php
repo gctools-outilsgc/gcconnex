@@ -70,7 +70,7 @@ elgg_load_js('bsTablejs'); //bootstraptable
 <section id="editProfile" class="wb-overlay modal-content overlay-def onboard-popup" aria-live="assertive">
 
     <header>
-        <h2>Getting Started</h2>
+        <h2><?php echo elgg_echo('onboard:gettingstarted');?></h2>
     </header>
     <div class="modal-dialog modal-lg">
 

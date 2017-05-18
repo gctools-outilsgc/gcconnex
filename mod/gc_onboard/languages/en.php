@@ -3,6 +3,7 @@ return array(
     /**
    *
    */
+      'onboard:gettingstarted' => 'Getting Started',
      'profile:strength' 	=> 'Profile Strength',
      'error:nope' 		=> 'Please fill in the missing information or click skip to move on to the next step.',
 

@@ -4,6 +4,7 @@ return array(
 /**
   *
   */
+    'onboard:gettingstarted' => 'Par où commencer',
      'profile:strength' 	=> 'Force du profil',
      'error:nope' 		=> 'Veuillez entrer les renseignements manquants ou cliquez sur sauter pour passer à la prochaine étape.',
 
