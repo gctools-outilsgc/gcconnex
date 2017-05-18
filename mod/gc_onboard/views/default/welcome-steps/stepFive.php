@@ -46,7 +46,7 @@
           <p><?php echo elgg_echo('onboard:welcome:profile:sell:help'); ?></p>
         </div>
         <div class="text-center mrgn-tp-md mrgn-bttm-md">
-          <p><?php echo $tour; ?> or <?php echo $profile; ?></p>
+          <p><?php echo $tour. elgg_echo('onboard:welcome:profile:or') .$profile; ?></p>
         </div>
 
       </div>

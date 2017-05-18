@@ -28,6 +28,7 @@ return array(
      'onboard:img2' => "af_2.jpg",
      'onboard:img3' => "af_3.jpg",
      'onboard:img4' => "af_4.jpg",
+     'onboard:search' => 'Search',
 
      /**The Wire Popup**/
      'onboard:wireTitle'	=> "Welcome to The Wire!",
@@ -92,9 +93,10 @@ return array(
     'onboard:welcome:profile:sell:text' => "Having a complete profile (with photo!), goes a long way to making you more approachable on GCconnex. By filling out your profile and keeping it up to date, you'll make it easier for others to find you and connect with you. Your profile can also act as your online C.V. and help you get oppurtunities.",
     'onboard:welcome:profile:sell:help' => "Let us help you build your profile now in just a few easy steps!",
     'onboard:welcome:profile:sell:img' => "onboard-user-card.jpg",
-    'onboard:welcome:profile:sell:img:alt' => "Reach your profile through the user menu.",
+    'onboard:welcome:profile:sell:img:alt' => "Access your profile through the user menu",
     'onboard:welcome:profile:walkthrough' => 'Build my profile',
     'onboard:welcome:profile:visit' => 'Visit my profile page',
+    'onboard:welcome:profile:or' => ' or ',
     'onboard:welcome:profile:access' => 'To access your profile page, click on your avatar and select "My Profile".',
 
     /*Step four - groups*/

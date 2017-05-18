@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div class="col-sm-12 mrgn-tp-md feature-desc">
-                <h4><?php echo elgg_echo('search');?></h4>
+                <h4><?php echo elgg_echo('onboard:search');?></h4>
                 <?php
                 echo elgg_echo('onboard:feature1');
                     ?>

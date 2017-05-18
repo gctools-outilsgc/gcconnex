@@ -29,6 +29,7 @@ return array(
      'onboard:img2' => "af_fr_2.jpg",
      'onboard:img3' => "af_fr_3.jpg",
      'onboard:img4' => "af_fr_4.jpg",
+     'onboard:search' => 'Recherche',
 
      /**The Wire Popup**/
      'onboard:wireTitle'	=> "Bienvenue sur le fil!",
@@ -106,9 +107,10 @@ return array(
     'onboard:welcome:profile:sell:text' => "Le fait d’avoir un profil complet (avec photo!), vous aidera à être plus abordable dans le cadre de GCconnex. En remplissant votre profil et en le gardant à jour, il sera plus facile pour les autres de vous repérer et de connecter avec vous. Votre profil peut également vous servir de C.V. en ligne et vous aider à obtenir des possibilités.",
     'onboard:welcome:profile:sell:help' => "Laissez-nous vous aider à créer votre profil maintenant en quelques étapes faciles!",
     'onboard:welcome:profile:sell:img' => "onboard-user-card-fr.jpg",
-    'onboard:welcome:profile:sell:img:alt' => "Reach your profile through the user menu.",
-    'onboard:welcome:profile:walkthrough' => 'Build my profile',
-    'onboard:welcome:profile:visit' => 'Visit my profile page',
+    'onboard:welcome:profile:sell:img:alt' => "Accéder votre profile par le biais du menu d'utilisateur",
+    'onboard:welcome:profile:walkthrough' => 'Bâtir mon profil',
+    'onboard:welcome:profile:visit' => 'Visitez ma page de profil',
+    'onboard:welcome:profile:or' => ' ou ',
     'onboard:welcome:profile:access' => 'Pour accéder à votre profil, cliquez sur votre avatar et sélectionnez « Mon profil ».',
 
     /*Step 1 - basic information/geds */
