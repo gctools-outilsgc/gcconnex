@@ -796,7 +796,7 @@ function cp_create_annotation_notification($event, $type, $object) {
  */
 function cp_create_notification($event, $type, $object) {
 
-	$do_not_subscribe_list = array('tidypics_batch', 'hjforumtopic', 'messages', 'hjforumpost', 'site_notification', 'poll_choice','blog_revision','widget','folder','c_photo', 'cp_digest','MySkill', 'education', 'experience', 'poll_choice3');
+	$do_not_subscribe_list = array('tidypics_batch', 'hjforum', 'hjforumcategory','hjforumtopic', 'messages', 'hjforumpost', 'site_notification', 'poll_choice','blog_revision','widget','folder','c_photo', 'cp_digest','MySkill', 'education', 'experience', 'poll_choice3');
 	if (in_array($object->getSubtype(), $do_not_subscribe_list)) return true;
 
 	elgg_load_library('elgg:gc_notification:functions');

@@ -6,6 +6,10 @@
   <description>Replacing hypeFramework and hypeForum (deprecated)</description>
   <website>internalfire5@live.com</website>
   <license>GNU General Public License version 2</license>
+  <suggests>
+    <type>plugin</type>
+    <name>cp_notifications</name>
+  </suggests>
   <requires>
     <type>elgg_release</type>
     <release>1.12</release>

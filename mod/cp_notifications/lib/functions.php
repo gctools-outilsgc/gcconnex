@@ -208,6 +208,8 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 
 
 
+if ($subtype === "hjforumcategory" || $subtype === "hjforum") return true;
+
 	switch ($subtype) {
 
 		case 'thewire':
