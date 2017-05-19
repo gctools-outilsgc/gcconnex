@@ -11,4 +11,4 @@ CREATE TABLE IF NOT EXISTS `notification_digest` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8; 
 
 
-ALTER TABLE `notification_digest` ADD INDEX idx_notification_digest (`entity_guid`, `user_guid`);
+#ALTER TABLE `notification_digest` ADD INDEX idx_notification_digest (`entity_guid`, `user_guid`);
