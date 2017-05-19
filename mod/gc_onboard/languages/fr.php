@@ -4,6 +4,7 @@ return array(
 /**
   *
   */
+    'onboard:gettingstarted' => 'Par où commencer',
      'profile:strength' 	=> 'Force du profil',
      'error:nope' 		=> 'Veuillez entrer les renseignements manquants ou cliquez sur sauter pour passer à la prochaine étape.',
 
@@ -19,7 +20,7 @@ return array(
      'onboard:feature1'		=> "Trouvez des groupes, des discussions, des fichiers de collègues et plus encore à l'aide de l'outil de recherche.",
      'onboard:feature2'		=> "Clavardez automatiquement avec vos collègues qui sont en ligne.",
      'onboard:feature3'		=> "Explorez les possibilités en cliquant sur l'onglet Carrière du menu de navigation principal. ",
-     'onboard:feature4'		=> "Vous voulez en apprendre davantage? Consultez le <a href='http://www.gcpedia.gc.ca/wiki/Help:Centre_d%27aide_pour_les_outils_GC2.0/GCconnex' target='_blank'>Centre d'aide des outilsGC</a> pour accéder à de plus amples documents d'aide et de tutoriels, de même qu'au <a href='http://www.gcpedia.gc.ca/wiki/Infolettre_OutilsGC' target='_blank'>Bulletin d'information ECHO des OutilsGC</a> pour vous tenir au courant des derniers développements",
+     'onboard:feature4'		=> "Vous voulez en apprendre davantage? Consultez le <a href='http://www.gcpedia.gc.ca/wiki/Help:Centre_d%27aide_pour_les_outils_GC2.0/GCconnex' target='_blank'>Centre d'aide des outilsGC</a> pour accéder à de plus amples documents d'aide et tutoriels.",
      'onboard:featureImgAlt1'	=> "Capture d'écran de l'outil de recherche",
      'onboard:featureImgAlt2'	=> "Capture d'écran de la fonctionnalité de clavardage de GCconnex",
      'onboard:featureImgAlt3'	=> "Capture d'écran de l'élément Carrière du menu principal",
@@ -29,6 +30,7 @@ return array(
      'onboard:img2' => "af_fr_2.jpg",
      'onboard:img3' => "af_fr_3.jpg",
      'onboard:img4' => "af_fr_4.jpg",
+     'onboard:search' => 'Recherche',
 
      /**The Wire Popup**/
      'onboard:wireTitle'	=> "Bienvenue sur le fil!",
@@ -101,6 +103,17 @@ return array(
     'onboard:profile:intro:description' => "Votre profil permet aux autres de savoir qui vous êtes et ce que vous faites. Il peut vous aider à tisser des liens solides et sert de CV en ligne. Les renseignements de votre profil peuvent être changés ultérieurement à partir de la page de profil.",
     'onboard:profile:intro:start' 	=> "Bâtir mon profil",
 
+
+    'onboard:welcome:profile:sell:title' => "Commencez par créer un excellent profil!",
+    'onboard:welcome:profile:sell:text' => "Le fait d’avoir un profil complet (avec photo!), vous aidera à être plus abordable dans le cadre de GCconnex. En remplissant votre profil et en le gardant à jour, il sera plus facile pour les autres de vous repérer et de connecter avec vous. Votre profil peut également vous servir de C.V. en ligne et vous aider à obtenir des possibilités.",
+    'onboard:welcome:profile:sell:help' => "Laissez-nous vous aider à créer votre profil maintenant en quelques étapes faciles!",
+    'onboard:welcome:profile:sell:img' => "onboard-user-card-fr.jpg",
+    'onboard:welcome:profile:sell:img:alt' => "Accéder votre profile par le biais du menu d'utilisateur",
+    'onboard:welcome:profile:walkthrough' => 'Bâtir mon profil',
+    'onboard:welcome:profile:visit' => 'Visitez ma page de profil',
+    'onboard:welcome:profile:or' => ' ou ',
+    'onboard:welcome:profile:access' => 'Pour accéder à votre profil, cliquez sur votre avatar et sélectionnez « Mon profil ».',
+
     /*Step 1 - basic information/geds */
     'onboard:profile:one:title' 	=> "Dites-nous qui vous êtes",
 
@@ -122,6 +135,7 @@ return array(
     'onboard:profile:skill:why' 	=> "Nous utiliserons ces renseignements pour ajouter des informations sur vos &ldquo;compétences&rdquo; à votre profil",
     'onboard:profile:recommendation' 	=> "Vous pouvez ajouter 15 compétences au total. Nous recommandons d'en ajouter au moins trois.",
     'onboard:profile:addSkill' 		=> "Cliquez pour ajouter une %s compétence",
+    'onboard:profile:skill:of' 		=> "%s de 15",
 
     'onboard:skills:headsup' 		=> "Attention!",
     'onboard:skills:headsuplimit' 	=> "Vous avez ajouté le nombre maximal de compétences!",
@@ -164,5 +178,5 @@ return array(
     'onboard:groups:trackerButton' 	=> 'Aller au fil de nouvelles',
 
     );
-    
+
     //add_translation("fr", $french);

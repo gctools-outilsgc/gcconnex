@@ -8,11 +8,11 @@
 
 
 <div class="panel-heading clearfix">
-    <h2 class="pull-left">
+    <h3 class="pull-left mrgn-tp-md">
         <?php echo elgg_echo('onboard:welcome:one:title'); ?>
-    </h2>
+    </h3>
     <div class="pull-right">
-        <?php echo elgg_view('page/elements/step_counter', array('current_step'=>2, 'total_steps'=>5));?>
+        <?php echo elgg_view('page/elements/step_counter', array('current_step'=>2, 'total_steps'=>6));?>
 
     </div>
 </div>
@@ -30,8 +30,9 @@
                 <i class="fa fa-info-circle fa-3x alert-gc-icon" aria-hidden="true"></i>
             </div>
             <div style="width:80%;" class="pull-left alert-gc-msg">
-                <h3>
-                    <?php echo elgg_echo("onboard:geds:title"); ?></h3>
+                <h4 class=" mrgn-tp-sm mrgn-bttm-sm">
+                    <?php echo elgg_echo("onboard:geds:title"); ?>
+                </h4>
                 <p>
                     <?php echo elgg_echo("onboard:geds:body"); ?>
                 </p>

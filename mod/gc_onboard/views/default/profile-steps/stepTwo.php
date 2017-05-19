@@ -6,9 +6,9 @@
  */
 ?>
 
-<h1>
-    <?php echo elgg_echo('onboard:profile:two:title'); ?>
-</h1>
+<h2>
+    <?php echo elgg_echo('onboard:profile:two:title'); echo elgg_view('page/elements/step_counter', array('current_step'=>3, 'total_steps'=>6, 'class' => 'mrgn-tp-md wb-inv'));?>
+</h2>
 
 <div class="onboarding-cta-holder">
     <?php echo elgg_echo('onboard:profile:edu:why');?>
@@ -20,17 +20,14 @@
     echo '<div class="clearfix mrgn-tp-md mrgn-bttm-md">'.elgg_view('onboard/input/education').'</div>';
 ?>
     <div class="mrgn-bttm-md pull-right">
-    <a id="skip" class="mrgn-lft-sm btn btn-default" href="#">
+
+    <button type="button" id="skip" class="mrgn-lft-sm btn btn-default">
         <?php echo elgg_echo('onboard:skip'); ?>
-    </a>
-    <?php
-echo elgg_view('output/url', array(
-        'href'=>'#',
-        'text' => elgg_echo('onboard:welcome:next'),
-        'class'=>'btn btn-primary',
-        'id' => 'onboard-edu',
-    ));
-    ?>
+    </button>
+
+    <button type="button" id="onboard-edu" class="btn btn-primary">
+        <?php echo elgg_echo('onboard:welcome:next'); ?>
+    </button>
 
     </div>
 
@@ -62,7 +59,7 @@ echo elgg_view('output/url', array(
                     elgg.get('ajax/view/profile-steps/stepThree', {
                         success: function (output) {
                             changeStepProgress(4);
-                            $('#step').html(output);
+                            $('#step').html(output).focus();
 
                         }
                     });
@@ -113,7 +110,7 @@ echo elgg_view('output/url', array(
         elgg.get('ajax/view/profile-steps/stepThree', {
             success: function (output) {
                 changeStepProgress(4);
-                $('#step').html(output);
+                $('#step').html(output).focus();
 
                 elgg.get('ajax/view/profileStrength/info', {
                     success: function (output) {
