@@ -3,8 +3,6 @@
 elgg_register_event_handler('init','system','cp_notifications_init');
 
 
-
-
 function cp_notifications_init() {
 
 	elgg_register_library('elgg:gc_notification:functions', elgg_get_plugins_path() . 'cp_notifications/lib/functions.php');
@@ -12,22 +10,32 @@ function cp_notifications_init() {
 	elgg_register_css('cp_notifications-css','mod/cp_notifications/css/notifications-table.css');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'notify_entity_menu_setup', 400);
 
-	$actions_base = elgg_get_plugins_path() . 'cp_notifications/actions/cp_notifications';
-	elgg_register_action('cp_notify/subscribe', "$actions_base/subscribe.php");
-	elgg_register_action('cp_notify/unsubscribe', "$actions_base/unsubscribe.php");
-	elgg_register_action('user/requestnewpassword', "$actions_base/request_new_password.php", 'public');
+	$action_base = elgg_get_plugins_path() . 'cp_notifications/actions/cp_notifications';
+	elgg_register_action('cp_notify/subscribe', "$action_base/subscribe.php");
+	elgg_register_action('cp_notify/unsubscribe', "$action_base/unsubscribe.php");
+	elgg_register_action('user/requestnewpassword', "$action_base/request_new_password.php", 'public');
+	elgg_register_action('cp_notifications/set_personal_subscription', "$action_base/set_personal_subscription.php");
+	elgg_register_action('cp_notifications/reset_personal_subscription', "$action_base/reset_personal_subscription.php");
+    elgg_register_action('cp_notifications/subscribe_users_to_group_content',"$action_base/subscribe_users_to_group_content.php");
+    elgg_register_action('cp_notifications/undo_subscribe_users_to_group_content',"$action_base/undo_subscribe_users_to_group_content.php");
+    elgg_register_action('cp_notifications/usersettings/save', elgg_get_plugins_path() . 'cp_notifications/actions/usersettings/save.php');
+	elgg_register_action('cp_notifications/user_autosubscription',"{$action_base}/user_autosubscription.php");
+	elgg_register_action('cp_notifications/fix_inconsistent_subscription_script',"{$action_base}/fix_inconsistent_subscription_script.php");
+	elgg_register_action('useradd',"$action_base/useradd.php",'admin'); // actions/useradd.php (core file)
 
-	elgg_register_action('cp_notify/retrieve_group_contents', elgg_get_plugins_path().'cp_notifications/actions/ajax_usersettings/retrieve_group_contents.php'); // ajaxy
-	elgg_register_action('cp_notify/retrieve_personal_content', elgg_get_plugins_path().'cp_notifications/actions/ajax_usersettings/retrieve_personal_content.php'); // ajaxy
+	// Ajax action files
+	elgg_register_action('cp_notify/retrieve_group_contents', elgg_get_plugins_path().'cp_notifications/actions/ajax_usersettings/retrieve_group_contents.php'); 
+	elgg_register_action('cp_notify/retrieve_personal_content', elgg_get_plugins_path().'cp_notifications/actions/ajax_usersettings/retrieve_personal_content.php'); 
+	elgg_register_action('cp_notify/retrieve_pt_users', elgg_get_plugins_path().'cp_notifications/actions/ajax_usersettings/retrieve_pt_users.php'); 
+	elgg_register_action('cp_notify/retrieve_messages', elgg_get_plugins_path().'cp_notifications/actions/ajax_usersettings/retrieve_messages.php'); 
+	elgg_register_action('cp_notify/retrieve_user_info', elgg_get_plugins_path().'cp_notifications/actions/ajax_settings/retrieve_user_info.php'); 
 
-	elgg_register_action('cp_notify/retrieve_pt_users', elgg_get_plugins_path().'cp_notifications/actions/ajax_usersettings/retrieve_pt_users.php'); // ajaxy
-	elgg_register_action('cp_notify/retrieve_messages', elgg_get_plugins_path().'cp_notifications/actions/ajax_usersettings/retrieve_messages.php'); // ajaxy
-
-	elgg_register_action('cp_notify/retrieve_user_info', elgg_get_plugins_path().'cp_notifications/actions/ajax_settings/retrieve_user_info.php'); // ajaxy
-
-	elgg_register_plugin_hook_handler('email', 'system', 'cpn_email_handler_hook');	// intercepts and blocks emails and notifications to be sent out
-	elgg_register_event_handler('create','object','cp_create_notification');		// send notifications when the action is sent out
-	elgg_register_event_handler('create','annotation','cp_create_annotation_notification');	// likes notification
+	// hooks and events
+	// intercepts and blocks emails and notifications to be sent out
+	elgg_register_plugin_hook_handler('email', 'system', 'cpn_email_handler_hook');
+	// send notifications when the action is sent out
+	elgg_register_event_handler('create','object','cp_create_notification');
+	elgg_register_event_handler('create','annotation','cp_create_annotation_notification');
 
 	elgg_register_event_handler('create', 'membership_request', 'cp_membership_request');
 
@@ -37,47 +45,31 @@ function cp_notifications_init() {
 		elgg_unregister_event_handler('update', 'annotation','mentions_notification_handler');
 	}
 
-	//if (elgg_is_active_plugin('thewire_tools'))
-	//	elgg_unregister_event_handler('create', 'object', 'thewire_tools_create_object_event_handler');
-
 	// since most of the notifications are built within the action file itself, the trigger_plugin_hook was added to respected plugins
 	elgg_register_plugin_hook_handler('cp_overwrite_notification', 'all', 'cp_overwrite_notification_hook');
 
-	elgg_unregister_action('useradd');
-	elgg_register_action('useradd',"$actions_base/useradd.php",'admin');	// cyu - actions/useradd.php (core file)
-
-    elgg_extend_view("js/elgg", "js/notification");							// add some notification js
+    elgg_extend_view("js/elgg", "js/notification"); 
     elgg_extend_view("js/elgg", "js/popup");
-    elgg_extend_view("js/elgg","js/wet4/language_ajax");							// add some notification js
+    elgg_extend_view("js/elgg","js/wet4/language_ajax");
 
     // remove core notification settings portion of the main settings page
     elgg_unextend_view('forms/account/settings', 'core/settings/account/notifications');
 
-    $action_path = elgg_get_plugins_path() . 'cp_notifications/actions/cp_notifications';
-	elgg_register_action('cp_notifications/set_personal_subscription', "$action_path/set_personal_subscription.php");
-	elgg_register_action('cp_notifications/reset_personal_subscription', "$action_path/reset_personal_subscription.php");
-
-    elgg_register_action('cp_notifications/subscribe_users_to_group_content',"$actions_base/subscribe_users_to_group_content.php");
-    elgg_register_action('cp_notifications/undo_subscribe_users_to_group_content',"$actions_base/undo_subscribe_users_to_group_content.php");
-
-    elgg_register_action('cp_notifications/usersettings/save', elgg_get_plugins_path() . 'cp_notifications/actions/usersettings/save.php');
-	elgg_register_action('cp_notifications/user_autosubscription',"{$action_path}/user_autosubscription.php");
-	elgg_register_action('cp_notifications/fix_inconsistent_subscription_script',"{$action_path}/fix_inconsistent_subscription_script.php");
-
 	elgg_register_plugin_hook_handler('cron', 'daily', 'cp_digest_daily_cron_handler');
 	elgg_register_plugin_hook_handler('cron', 'weekly', 'cp_digest_weekly_cron_handler');
+
 }
 
 
 
 
-/*
+/**
  * cp_overwrite_notification_hook
  *
  * This contains all the notifications that are required to be triggered from the original action files. Filepaths
  * are documented beside each case (and in the readme.md file)
  *
- */
+ **/
 
 function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
@@ -220,24 +212,6 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$author = $params['cp_writer'];
 			break;
 
-
-		// case 'cp_content_mention': // mentions/start.php
-		// 	$message = array(
-		// 		'cp_author' => $params['cp_author'],
-		// 		'cp_content' => $params['cp_content'],
-		// 		'cp_link' => $params['cp_link'],
-		// 		'cp_msg_type' => 'cp_mention_type',
-		// 		'cp_content_desc' => $params['cp_content_desc'],
-		// 	);
-		// 	$subject = elgg_echo('cp_notify:subject:mention',array($params['cp_author']),'en') . ' | ' . elgg_echo('cp_notify:subject:mention',array($params['cp_author']),'fr');
-		// 	$to_recipients[] = $params['cp_to_user'];
-
-		// 	$content_entity = $params['cp_content'];
-		// 	$author = $params['cp_author'];
-
-		// 	break;
-
-
 		case 'cp_add_grp_operator': // group_operators/actions/group_operators/add.php (adds group operator)
 			$message = array(
 				'cp_msg_type' => $cp_msg_type,
@@ -327,6 +301,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 
 		case 'cp_group_mail': // group_tools/actions/mail.php
+		
 			$message = array(
 				'cp_group' => $params['cp_group'],
 				'cp_group_subject' => $params['cp_group_subject'],
@@ -334,8 +309,10 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_msg_type' => $cp_msg_type
 			);
 			$subject = elgg_echo('cp_notify:subject:group_mail',array($params['cp_group_subject'],$params['cp_group']['name']),'en') . ' | ' . elgg_echo('cp_notify:subject:group_mail',array($params['cp_group_subject'],$params['cp_group']['name']),'fr');
-			foreach ($params['cp_group_mail_users'] as $to_user)
+			foreach ($params['cp_group_mail_users'] as $to_user) {
 				$to_recipients[$to_user] = get_user($to_user);
+				
+			}
 			break;
 
 
@@ -433,9 +410,6 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 	}
 
 
-
-
-
 	if (empty($subject))
 		return false;
 
@@ -444,7 +418,6 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 	foreach ($to_recipients as $to_recipient) {
 		// username for link in footer (both email notification and site notification
 		$message['user_name'] = $to_recipient->username;
-		$message['_user_e-mail'] = $to_recipient->email;	// the links are different if users are from external facing of gcconnex
 		if ($cp_msg_type != 'cp_event_ics') {
 			$template = elgg_view('cp_notifications/email_template', $message);
 			$site_template = elgg_view('cp_notifications/site_template', $message);
@@ -1147,19 +1120,6 @@ function get_site_subscribers($dbprefix, $user_guid, $entity_guid = '') {
 
 
 /**
- * due to a recent update to the core functionality (for Government of Canada instance of Elgg - GCconnex), the
- * titles are now modified to using json string for ability to change content to preferred language (english/french)
- *
- * @param string 	$string
- * @return boolean 	true/false
- */
-// function isJson($string) {
-// 	json_decode($string);
-// 	return (json_last_error() == JSON_ERROR_NONE);
-// }
-
-
-/**
  * setup crontab either on a daily or weekly basis
  * get users who are subscribed to digest
  * run crontab, retrieve users, send digest, reset timer (update timestamp)
@@ -1173,62 +1133,51 @@ function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $para
 	elgg_load_library('elgg:gc_notification:functions');
 	$dbprefix = elgg_get_config('dbprefix');
 
-	echo "Starting up the cron job for the Notifications (cp_notifications plugin) <br/>";
+	echo "<p>Starting up the cron job for the Notifications (cp_notifications plugin)</p>";
 
-	$options = array(
-		'type' => 'object',
-		'subtype' => 'cp_digest',
-		'limit' => false,
-	);
-	$current_digest = elgg_get_entities($options);
+	// extract all the users who have the digest
+	$query = "SELECT id, entity_guid as guid FROM {$dbprefix}private_settings WHERE name = 'plugin:user_setting:cp_notifications:cpn_set_digest' AND value = 'set_digest_yes'";
+	$users = get_data($query);
 
-	foreach ($current_digest as $digest) {
+	foreach ($users as $user) {
 
-		$newsletter_title = explode('|', $digest->title);
-
-		$userid = $newsletter_title[1];
-		$query = "SELECT guid, email, name, username FROM {$dbprefix}users_entity WHERE guid = '{$userid}'";
-
-
-		$user = get_data($query);
-
-		$to = $user[sizeof($user) - 1];
-		$user = get_entity($to->guid);
-
-		$enable = elgg_get_plugin_user_setting('cpn_set_digest', $user->guid,'cp_notifications');
+		$user = get_entity($user->guid);
 		$frequency = elgg_get_plugin_user_setting('cpn_set_digest_frequency', $user->guid, 'cp_notifications');
 
-		if ($user instanceof ElggUser && strcmp($enable,'set_digest_yes') == 0 && strcmp($frequency,'set_digest_weekly') == 0 ) {
+		if ($user instanceof ElggUser && strcmp($frequency,'set_digest_weekly') == 0 ) {
+			$digest_array = array();
 
-			$newsletter_id = $user->cpn_newsletter;
-			$newsletter_object = get_entity($newsletter_id);
-			$newsletter_content = json_decode($newsletter_object->description, true);
+			$query = "SELECT * FROM notification_digest WHERE user_guid = {$user->guid}";
+			$digest_items = get_data($query);
+
+			$language_preference = (strcmp(elgg_get_plugin_user_setting('cpn_set_digest_language', $to->guid, 'cp_notifications'),'set_digest_en') == 0) ? 'en' : 'fr';
+
+			foreach ($digest_items as $digest_item) {
+
+				if ($digest_item->entry_type === 'group')
+					$digest_array[$digest_item->entry_type][base64_decode($digest_item->group_name)][$digest_item->action_type][$digest_item->entity_guid] = $digest_item->notification_entry;
+				else
+					$digest_array[$digest_item->entry_type][$digest_item->action_type][$digest_item->entity_guid] = $digest_item->notification_entry;
+
+			}
 
 			$subject = elgg_echo('cp_newsletter:subject:weekly',$language_preference);
 
-			if (sizeof($newsletter_content) > 0 || !empty($newsletter_content))
-				$template = elgg_view('cp_notifications/newsletter_template', array('to' => $to, 'newsletter_content' => $newsletter_content));
+			// if the array is empty, send the empty template
+			if (sizeof($digest_array) > 0 || !empty($digest_array))
+				$template = elgg_view('cp_notifications/newsletter_template', array('to' => $user, 'newsletter_content' => $digest_array));
 			else
-				$template = elgg_view('cp_notifications/newsletter_template_empty', array('to' => $to));
-
+				$template = elgg_view('cp_notifications/newsletter_template_empty', array('to' => $user));
 
 			if (elgg_is_active_plugin('phpmailer'))
-				phpmailer_send($to->email, $to->name, $subject,$template, NULL, true );
+				phpmailer_send($to->email, $to->name, $subject, $template, NULL, true );
 			else
-				mail($to->email, $subject, $template, cp_get_headers());
+				mail($user->email, $subject, $template, cp_get_headers());
 
-			echo "<p>Digest sent to user email: {$to->email}</p>";
+			// delete and clean up the notification, already sent so we don't need to keep it anymore
+			$query = "DELETE FROM notification_digest WHERE user_guid = {$user->getGUID()}";
+			$result = delete_data($query);
 
-			// TODO: authenticate cronjobs - since crons dont have a valid admin login, thhis portion fails
-			// temporarily strip the access
-			$ia = elgg_set_ignore_access(true);
-
-			// clean up the newsletter
-			$newsletter_object->description = json_encode(array());
-			$newsletter_object->save();
-
-			// see above comment about access
-			elgg_set_ignore_access($ia);
 		}
 	}
 }
@@ -1249,76 +1198,54 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 	elgg_load_library('elgg:gc_notification:functions');
 	$dbprefix = elgg_get_config('dbprefix');
 
-	echo "Starting up the cron job for the Notifications (cp_notifications plugin) <br/>";
+	echo "<p>Starting up the cron job for the Notifications (cp_notifications plugin)</p>";
 
-	$options = array(
-		'type' => 'object',
-		'subtype' => 'cp_digest',
-		'limit' => false,
-	);
-	$current_digest = elgg_get_entities($options);
+	// extract all the users who have the digest
+	$query = "SELECT id, entity_guid as guid FROM {$dbprefix}private_settings WHERE name = 'plugin:user_setting:cp_notifications:cpn_set_digest' AND value = 'set_digest_yes'";
+	$users = get_data($query);
 
+	foreach ($users as $user) {
 
-	foreach ($current_digest as $digest) {
-
-		$newsletter_title = explode('|', $digest->title);
-		// initially set with a user's email address, but if we need the user information, might as well put the id
-
-		$userid = $newsletter_title[1];
-		$query = "SELECT guid, email, name, username FROM {$dbprefix}users_entity WHERE guid = '{$userid}'";
-		$user = get_data($query);
-
-		$to = $user[sizeof($user) - 1];
-		$user = get_entity($to->guid);
-
-		$enable = elgg_get_plugin_user_setting('cpn_set_digest', $user->guid,'cp_notifications');
+		$user = get_entity($user->guid);
 		$frequency = elgg_get_plugin_user_setting('cpn_set_digest_frequency', $user->guid, 'cp_notifications');
 
-		if ($user instanceof ElggUser && strcmp($enable,'set_digest_yes') == 0 && strcmp($frequency,'set_digest_daily') == 0 ) {
+		if ($user instanceof ElggUser && strcmp($frequency,'set_digest_daily') == 0 ) {
+			$digest_array = array();
 
-			$newsletter_id = $user->cpn_newsletter;
-			$newsletter_object = get_entity($newsletter_id);
-			$newsletter_content = json_decode($newsletter_object->description, true);
+			$query = "SELECT * FROM notification_digest WHERE user_guid = {$user->guid}";
+			$digest_items = get_data($query);
 
-			$language_preference_en = elgg_get_plugin_user_setting('cpn_set_digest_language', $to->guid, 'cp_notifications');
-			if (strcmp($language_preference_en,'set_digest_en') == 0)
-				$language_preference = 'en';
+			$language_preference = (strcmp(elgg_get_plugin_user_setting('cpn_set_digest_language', $to->guid, 'cp_notifications'),'set_digest_en') == 0) ? 'en' : 'fr';
 
-			$language_preference_fr = elgg_get_plugin_user_setting('cpn_set_digest_language', $to->guid, 'cp_notifications');
-			if (strcmp($language_preference_fr,'set_digest_fr') == 0)
-				$language_preference = 'fr';
+			foreach ($digest_items as $digest_item) {
+
+				if ($digest_item->entry_type === 'group')
+					$digest_array[$digest_item->entry_type][base64_decode($digest_item->group_name)][$digest_item->action_type][$digest_item->entity_guid] = $digest_item->notification_entry;
+				else
+					$digest_array[$digest_item->entry_type][$digest_item->action_type][$digest_item->entity_guid] = $digest_item->notification_entry;
+
+			}
 
 			$subject = elgg_echo('cp_newsletter:subject:daily',$language_preference);
 
-			if (sizeof($newsletter_content) > 0 || !empty($newsletter_content))
-				$template = elgg_view('cp_notifications/newsletter_template', array('to' => $to, 'newsletter_content' => $newsletter_content));
+			// if the array is empty, send the empty template
+			if (sizeof($digest_array) > 0 || !empty($digest_array))
+				$template = elgg_view('cp_notifications/newsletter_template', array('to' => $user, 'newsletter_content' => $digest_array));
 			else
-				$template = elgg_view('cp_notifications/newsletter_template_empty', array('to' => $to));
+				$template = elgg_view('cp_notifications/newsletter_template_empty', array('to' => $user));
 
+			//echo $template . "<br/><br/>";
 
 			if (elgg_is_active_plugin('phpmailer'))
 				phpmailer_send($to->email, $to->name, $subject, $template, NULL, true );
 			else
-				mail($to->email, $subject, $template, cp_get_headers());
+				mail($user->email, $subject, $template, cp_get_headers());
 
 
+			// delete and clean up the notification, already sent so we don't need to keep it anymore
+			$query = "DELETE FROM notification_digest WHERE user_guid = {$user->getGUID()}";
+			$result = delete_data($query);
 
-			//echo $template;
-			echo "<p>Digest sent to user email: {$to->email} ({$to->guid})</p>";
-
-			//echo "<br/><br/>";
-			echo $template;
-
-			// TODO: authenticate cronjobs - since crons dont have a valid admin login, thhis portion fails
-			// temporarily strip the access
-			$ia = elgg_set_ignore_access(true);
-
-			// clean up the newsletter
-			$newsletter_object->description = json_encode(array());
-			$newsletter_object->save();
-
-			// see above comment about access
-			elgg_set_ignore_access($ia);
 		}
 	}
 }
@@ -1532,19 +1459,3 @@ function notify_entity_menu_setup($hook, $type, $return, $params) {
 	return $return;
 }
 
-
-/* (WIP) cyu - recursively go through the parents of the wire posts (thread - kind of) */
-function cp_sub_to_wire_thread($wire_id) {
-	$dbprefix = elgg_get_config('dbprefix');
-	$query = "SELECT guid_two FROM {$dbprefix}entity_relationships WHERE relationship = 'parent' AND guid_one = {$wire_id}";
-	$parent_id = get_data($query);
-
-
-	/*
-	if (!$parent_id) {
-
-	} else {
-		$wire_id =
-		cp_sub_to_wire_thread($wire_id);
-	}*/
-}

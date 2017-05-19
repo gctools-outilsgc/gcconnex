@@ -152,7 +152,7 @@ function isJson($string) {
 
 
 /**
- * assembles the digest then encodes the array into JSON to be saved
+ * assembles the digest then encodes the array into JSON to be saved to digest_notification table
  *
  * @param ElggUser 		$invoked_by
  * @param string 		$subtype
@@ -163,12 +163,14 @@ function isJson($string) {
  */
 function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '') {
 
-	elgg_load_library('GCconnex_display_in_language');
-	elgg_load_library('elgg:gc_notification:functions'); // cyu - lol i dont have this in my instance of gcconnex :|
+	if (elgg_is_active_plugin('wet4')) elgg_load_library('GCconnex_display_in_language');
+	elgg_load_library('elgg:gc_notification:functions');
+
 	$digest = get_entity($send_to->cpn_newsletter);
 	$digest_collection = json_decode($digest->description,true);
 
-	$content_title = $entity->title; // default value for title
+	// default title value
+	$content_title = $entity->title;
 
 	if (!$entity->title) $entity = get_entity($entity->guid);
 
@@ -177,11 +179,10 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 
 		if (isJson($entity->title))
 		{
-			// cyu - TODO: use the gc_explode_translation() (NEW)
 			$content_title = json_decode($entity->title, true);
 
 		} else {
-			// cyu - TODO: use the gc_explode_translation() (OLD)
+
 			if ($entity->title2) 
 				$content_title = array('en' => $entity->title, 'fr' => $entity->title2);
 			else 
@@ -208,6 +209,7 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 
 
 
+
 if ($subtype === "hjforumcategory" || $subtype === "hjforum") return true;
 
 	switch ($subtype) {
@@ -221,7 +223,12 @@ if ($subtype === "hjforumcategory" || $subtype === "hjforum") return true;
 				'content_author_url' => $invoked_by->getURL()
 			);
 
-			$digest_collection['personal']['new_post'][$entity->guid] = json_encode($content_array);
+			$entity_guid = $entity->guid;
+			$user_guid = $send_to->getGUID();
+			$entry_type = 'personal';
+			$group_name = NULL;
+			$action_type = 'new_post';
+			$notification_entry = json_encode($content_array);
 			break;
 
 		case 'mission':
@@ -234,42 +241,82 @@ if ($subtype === "hjforumcategory" || $subtype === "hjforum") return true;
 				'deadline' => $entity->deadline
 			);
 
-			$digest_collection['mission']['new_post']["{$entity->guid}{$entity->getSubtype()}"] = json_encode($content_array);
+			$entity_guid = $entity->guid;
+			$user_guid = $send_to->getGUID();
+			$entry_type = 'mission';
+			$group_name = NULL;
+			$action_type = 'new_post';
+			$notification_entry = json_encode($content_array);
 			break;
 
 		case 'comment':
 		case 'discussion_reply':
 
-			if ($entity->getContainerEntity() instanceof ElggGroup) 
-				$digest_collection['group']["<a href='{$entity->getContainerEntity()->getURL()}'>{$entity->getContainerEntity()->name}</a>"]['response'][$entity->guid] = json_encode($content_array);
-			else 
-				$digest_collection['personal']['response'][$entity->guid] = json_encode($content_array);
+
+			if ($entity->getContainerEntity() instanceof ElggGroup) {
+
+				$group_html = "<a href='{$entity->getContainerEntity()->getURL()}'>{$entity->getContainerEntity()->name}</a>";
+				$entity_guid = $entity->guid;
+				$user_guid = $send_to->getGUID();
+				$entry_type = 'group';
+				$group_name = $group_html;
+				$action_type = 'response';
+				$notification_entry = json_encode($content_array);
+
+			} else { 
+
+				$entity_guid = $entity->guid;
+				$user_guid = $send_to->getGUID();
+				$entry_type = 'personal';
+				$group_name = NULL;
+				$action_type = 'response';
+				$notification_entry = json_encode($content_array);
+			}
+
 			break;
 
 
 		case 'cp_friend_request':
-			$digest_collection['personal']['friend_request'][$invoked_by->guid] = json_encode($content_array);
+
+			$entity_guid = $invoked_by->guid;
+			$user_guid = $send_to->getGUID();
+			$entry_type = 'personal';
+			$group_name = NULL;
+			$action_type = 'friend_request';
+			$notification_entry = json_encode($content_array);
 		 	break;
 
 		case 'cp_friend_approve':
-			$digest_collection['personal']['friend_approved'][$invoked_by->guid] = json_encode($content_array);
+
+			$entity_guid = $invoked_by->guid;
+			$user_guid = $send_to->getGUID();
+			$entry_type = 'personal';
+			$group_name = NULL;
+			$action_type = 'friend_approved';
+			$notification_entry = json_encode($content_array);
 			break;
 
+			/// QUESTION: is messageboard enabled?
 		case 'cp_messageboard':
 
 			$digest_collection['personal']['profile_message'][$entity->guid] = "{$invoked_by->username} has left u a msg on your profile => sending to... {$send_to->guid} / {$send_to->username}";
 			break;
 
-
 		case 'cp_hjtopic':
 		case 'cp_hjpost':
 			$group_title = get_entity(get_forum_in_group($entity->guid, $entity->guid))->name;
 			$group_url = get_entity(get_forum_in_group($entity->guid, $entity->guid))->getURL();
+			$group_html = "<a href='{$group_url}'>{$group_title}</a>";
 
 			if ($subtype === 'cp_hjtopic') {
 
-				$digest_collection['group']["<a href='{$group_url}'>{$group_title}</a>"]['forum_topic'][$entity->guid] = json_encode($content_array);
-			
+				$entity_guid = $entity->guid;
+				$user_guid = $send_to->getGUID();
+				$entry_type = 'group';
+				$group_name = $group_html;
+				$action_type = 'forum_topic';
+				$notification_entry = json_encode($content_array);
+
 			} else {
 
 				$content_array = array(
@@ -279,7 +326,13 @@ if ($subtype === "hjforumcategory" || $subtype === "hjforum") return true;
 					'content_author' => $entity->getOwnerEntity()->guid
 				);
 
-				$digest_collection['group']["<a href='{$group_url}'>{$group_title}</a>"]['forum_reply'][$entity->guid] = json_encode($content_array);
+				$entity_guid = $entity->guid;
+				$user_guid = $send_to->getGUID();
+				$entry_type = 'group';
+				$group_name = $group_html;
+				$action_type = 'forum_reply';
+				$notification_entry = json_encode($content_array);
+
 			}
 			break;
 
@@ -289,7 +342,8 @@ if ($subtype === "hjforumcategory" || $subtype === "hjforum") return true;
 		case 'post_likes':
 
 			if ($subtype === "like_comment" || $subtype === "like_reply") {
-				$content_title = array('en' => elgg_echo("cp_newsletter:body:view_comment_reply",'en'), 'fr' => elgg_echo("cp_newsletter:body:view_comment_reply",'fr'));
+				//$content_title = array('en' => elgg_echo("cp_newsletter:body:view_comment_reply",'en'), 'fr' => elgg_echo("cp_newsletter:body:view_comment_reply",'fr'));
+				$content_title = $entity->getContainerEntity()->title;
 				$content_array = array(
 					'content_title' => $content_title,
 					'content_url' =>  $entity->getURL()."?utm_source=notification_digest&utm_medium=email",
@@ -297,6 +351,8 @@ if ($subtype === "hjforumcategory" || $subtype === "hjforum") return true;
 					'content_author_name' => $invoked_by->name,
 					'content_author_url' => $invoked_by->getURL()
 				);
+
+
 			} elseif ($entity->getSubtype() === 'thewire') {
 
 				$content_array = array(
@@ -314,27 +370,33 @@ if ($subtype === "hjforumcategory" || $subtype === "hjforum") return true;
 
 				$content_array = array(
 					'content_title' => $entity_title,
-					'content_url' =>  $entity->getURL()."?utm_source=notification_digest&utm_medium=email",//$entity->getContainerEntity()->getURL()."?utm_source=notification_digest&utm_medium=email",
+					'content_url' =>  $entity->getURL()."?utm_source=notification_digest&utm_medium=email",
 					'subtype' => $entity->getSubtype(),
 					'content_author_name' => $invoked_by->name,
 					'content_author_url' => $invoked_by->getURL()
 				);
 			}
 
-			$digest_collection['personal']['likes']["{$entity->guid}{$author->guid}"] = json_encode($content_array);
+			$entity_guid = $entity->guid;
+			$user_guid = $send_to->getGUID();
+			$entry_type = 'personal';
+			$group_name = NULL;
+			$action_type = 'likes';
+			$notification_entry = json_encode($content_array);
 			break;
 
 
 		case 'content_revision':
-			if (!is_array($digest_collection['personal']['content_revision']))
-				$digest_collection['personal']['content_revision'] = array();
-		
-			$digest_collection['personal']['content_revision'][] = json_encode($content_array);
+
+			$entity_guid = $entity->guid;
+			$user_guid = $send_to->getGUID();
+			$entry_type = 'personal';
+			$group_name = NULL;
+			$action_type = 'content_revision';
+			$notification_entry = json_encode($content_array);
 			break;
 
 		case 'cp_wire_share':
-			if (!is_array($digest_collection['personal']['cp_wire_share']))
-				$digest_collection['personal']['cp_wire_share'] = array();
 
 			$content_title = $entity->title;
 			if (!$entity->title) $content_title = $entity->description;
@@ -347,14 +409,15 @@ if ($subtype === "hjforumcategory" || $subtype === "hjforum") return true;
 				'content_author_url' => $invoked_by->getURL()
 			);
 
-			$digest_collection['personal']['cp_wire_share'][] = json_encode($content_array);
-			
+			$entity_guid = $entity->guid;
+			$user_guid = $send_to->getGUID();
+			$entry_type = 'personal';
+			$group_name = NULL;
+			$action_type = 'wire_share';
+			$notification_entry = json_encode($content_array);			
 			break;
 
 		case 'cp_wire_mention':
-			if (!is_array($digest_collection['personal']['cp_mention']))
-				$digest_collection['personal']['cp_mention'] = array();
-
 
 			$content_array = array(
 				'content_url' => $entity->getURL()."?utm_source=notification_digest&utm_medium=email",
@@ -362,7 +425,14 @@ if ($subtype === "hjforumcategory" || $subtype === "hjforum") return true;
 				'content_author' => $invoked_by->name,
 				'content_author_url' => $invoked_by->getURL(), 
 			);
-			$digest_collection['personal']['cp_mention'][] = json_encode($content_array);
+
+			$entity_guid = $entity->guid;
+			$user_guid = $send_to->getGUID();
+			$entry_type = 'personal';
+			$group_name = NULL;
+			$action_type = 'mention';
+			$notification_entry = json_encode($content_array);
+
 			break;
 
 		case 'cp_mention':
@@ -375,30 +445,51 @@ if ($subtype === "hjforumcategory" || $subtype === "hjforum") return true;
 				'content_author_url' => $invoked_by->getURL()
 			);
 
-			if (!is_array($digest_collection['personal']['cp_mention']))
-				$digest_collection['personal']['cp_mention'] = array();
-
-			$digest_collection['personal']['cp_mention'][] = json_encode($content_array);
-
+			$entity_guid = $entity->guid;
+			$user_guid = $send_to->getGUID();
+			$entry_type = 'personal';
+			$group_name = NULL;
+			$action_type = 'mention';
+			$notification_entry = json_encode($content_array);
 			break;
 
 		default:
 
 			$entity = get_entity($entity->guid);
 			
-			if ($entity->getContainerEntity() instanceof ElggGroup)
-				$digest_collection['group']["<a href='{$entity->getContainerEntity()->getURL()}?utm_source=notification_digest&utm_medium=email'>{$entity->getContainerEntity()->name}</a>"]['new_post'][$entity->guid] = json_encode($content_array);
-			else 
-				$digest_collection['personal']['new_post'][$entity->guid] = json_encode($content_array);
+			if ($entity->getContainerEntity() instanceof ElggGroup) {
+			
+				$entity_guid = $entity->guid;
+				$user_guid = $send_to->getGUID();
+				$entry_type = 'group';
+				$group_name = "<a href='{$entity->getContainerEntity()->getURL()}?utm_source=notification_digest&utm_medium=email'>{$entity->getContainerEntity()->name}</a>";
+				$action_type = 'new_post';
+				$notification_entry = json_encode($content_array);
+
+			}
+			else {
+				$entity_guid = $entity->guid;
+				$user_guid = $send_to->getGUID();
+				$entry_type = 'personal';
+				$group_name = NULL;
+				$action_type = 'new_post';
+				$notification_entry = json_encode($content_array);
+			}
 
 			break;
 	}
 
-	// save the information to the digest object for later access
-	$ia = elgg_set_ignore_access(true);
-	$digest->description = json_encode($digest_collection);
-	$digest->save();
-	elgg_set_ignore_access($ia);
+	$group_name = base64_encode($group_name);
+
+	/// check if record exists already, if not then proceed.
+	$query = "SELECT 1 FROM notification_digest WHERE entity_guid = {$entity_guid} AND user_guid = {$user_guid} AND notification_entry = '{$notification_entry}'  LIMIT 1";
+	$count_row = get_data($query);
+
+	if (count($count_row) <= 0) {
+		/// save, then transform the information to the database (notification_digest table)
+		$query = "INSERT INTO notification_digest ( entity_guid, user_guid, entry_type, group_name, action_type, notification_entry ) VALUES ( {$entity_guid}, '{$user_guid}', '{$entry_type}', '{$group_name}', '{$action_type}', '{$notification_entry}' )";
+		$insert_row = insert_data($query);
+	}
 
 	return true;
 }

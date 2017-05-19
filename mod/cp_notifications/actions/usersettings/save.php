@@ -13,9 +13,6 @@ $user_guid = get_input('user_guid', elgg_get_logged_in_user_guid());
 $plugin = elgg_get_plugin_from_id('cp_notifications');
 $user = get_entity($user_guid);
 
-/// array of subscribed users
-//$old_colleague_list = json_decode($plugin->getUserSetting('subscribe_colleague_picker', $user->guid),true);
-
 /// overwriting the save action for usersettings in notifications, save all the checkboxes
 $plugin_name = $plugin->getManifest()->getName();
 foreach ($params as $k => $v) {
@@ -68,43 +65,13 @@ foreach ($params as $k => $v) {
 	}
 
 	if (!$result) {
-		register_error(elgg_echo('plugins:usersettings:save:fail', array($plugin_name)));
+		register_error(elgg_echo('plugins:usersettings:save:failed', array($plugin_name)));
 		forward(REFERER);
 	}
 }
 
 
-/// create the digest object for the user
-if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->guid,'cp_notifications'),'set_digest_yes') == 0) {
-	if (!$user->cpn_newsletter) {
-
-		$new_digest = new ElggObject();
-		$new_digest->subtype = 'cp_digest';
-		$new_digest->owner_guid = $user->guid;
-		$new_digest->container_guid = $user->guid;
-		//$new_digest->title = "Newsletter|{$user->email}";
-		$new_digest->title = "Newsletter|{$user->guid}";
-		$new_digest->access_id = ACCESS_PUBLIC;
-		$digest_id = $new_digest->save();
-
-		if ($digest_id) { 
-			$user->cpn_newsletter = $digest_id;
-			$result = true;
-		} else {
-			$result = false;
-		}
-	}
-
-} else {
-
-	$digest = get_entity($user->cpn_newsletter);
-	if ($digest) {
-		$digest->delete();
-		$user->deleteMetadata('cpn_newsletter');
-	}
-}
-
-($result) ? system_message('Settings have been saved succesfully') : register_error('Settings did not save successfully');
+($result) ? system_message(elgg_echo('cp_notification:save:success')) : register_error(elgg_echo('cp_notification:save:failed'));
 forward(REFERER);
 
 
