@@ -126,8 +126,10 @@ require(['ckeditor'], function(CKEDITOR) {
        $.each(CKEDITOR.instances, function (instance) {
             CKEDITOR.instances[instance].document.on("keyup", CK_jQ);
             CKEDITOR.instances[instance].document.on("paste", CK_jQ);
-           CKEDITOR.instances[instance].document.on("keypress", CK_jQ);
+            CKEDITOR.instances[instance].document.on("keypress", CK_jQ);
             CKEDITOR.instances[instance].document.on("blur", CK_jQ);
+            //CKEDITOR.instances[instance].document.on("change", CK_jQ);
+            CKEDITOR.instances[instance].on("change", CK_jQ);
            CKEDITOR.instances[instance].on("insertHtml", CK_jQ);
            CKEDITOR.instances[instance].on("afterCommandExec", CK_jQ);
         });
