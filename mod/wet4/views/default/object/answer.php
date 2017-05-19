@@ -7,19 +7,23 @@ if (!($answer instanceof ElggAnswer)) {
 
 $question = $answer->getContainerEntity();
 
-$image = elgg_view_entity_icon($answer->getOwnerEntity(), 'small');
+$image = elgg_view_entity_icon($answer->getOwnerEntity(), 'medium');
 
 // mark this as the correct answer?
 $correct_answer = $answer->getCorrectAnswerMetadata();
 if ($correct_answer) {
-	$owner = $correct_answer->getOwnerEntity();
+	//grab correct person for correct answer title
+	$owner = $question->getOwnerEntity();
 	$owner_name = htmlspecialchars($owner->name);
-	
+
 	$timestamp = htmlspecialchars(date(elgg_echo('friendlytime:date_format'), $correct_answer->time_created));
-	
+
 	$title = elgg_echo('questions:answer:checkmark:title', [$owner_name, $timestamp]);
-	
-	$image .= elgg_format_element('div', ['class' => 'questions-checkmark', 'title' => $title]);
+
+	$image .= elgg_format_element('div', ['class' => 'fa fa-check fa-3x questions-correct', 'title' => $title]);
+
+	//make variable to store invisible span for screen readers
+	$correct = '<span class="wb-inv">'.$title.'</span>';
 }
 
 // create subtitle
@@ -55,12 +59,13 @@ if ($question->comments_enabled !== 'off') {
 			'list_class' => 'elgg-river-comments',
 			'distinct' => false,
 			'full_view' => true,
+			"order_by" => "time_created"
 		];
-		
+
 		$body .= elgg_format_element('h3', ['class' => 'elgg-river-comments-tab mtm'], elgg_echo('comments'));
 		$body .= elgg_list_entities($comment_options);
 	}
-	
+
 	if ($answer->canComment()) {
 		// show a comment form like in the river
 		$body_vars = [
@@ -68,7 +73,7 @@ if ($question->comments_enabled !== 'off') {
 			'inline' => true,
 		];
 		$form = elgg_view_form('comment/save', [], $body_vars);
-		$body .= elgg_format_element('div', ['class' => ['elgg-river-item', 'hidden'], 'id' => "comments-add-{$answer->getGUID()}"], $form);
+		$body .= elgg_format_element('div', ['class' => ['elgg-river-item'], 'id' => "comments-add-{$answer->getGUID()}", "style" => "display:none;"], $form);
 	}
 }
 
@@ -81,6 +86,6 @@ $params = [
 	'content' => $body,
 ];
 
-$summary = elgg_view('page/components/summary', $params);
+$summary = $correct . elgg_view('page/components/summary', $params);
 
 echo elgg_view_image_block($image, $summary);

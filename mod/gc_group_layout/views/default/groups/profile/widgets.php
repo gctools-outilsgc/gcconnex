@@ -130,6 +130,13 @@ $site_url = elgg_get_site_url();
 
         </div>
     </div>
+		<div id="questions" class="tab-pane fade-in ">
+			<h2 class="wb-inv"><?php echo  elgg_echo('questions:owner', array($groupName));?></h2>
+        <div class="wet-ajax-loader" aria-hidden="true">
+            <img src="<?php echo $site_url.'mod/wet4/graphics/loading.gif';?>" alt="loading content" />
+
+        </div>
+    </div>
 
     <?php  // Load other widgets to create tabs
         //Nick - Remove group tools content from echoing to the group page

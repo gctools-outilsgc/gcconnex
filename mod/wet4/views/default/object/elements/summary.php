@@ -60,24 +60,9 @@ $subtitle = elgg_extract('subtitle', $vars, '');
 $content = elgg_extract('content', $vars, '');
 $lang = get_current_language();
 
-/*if($entity->excerpt3){
-
-	$entity->excerpt = gc_explode_translation($entity->excerpt3, $lang);
-	}
-*/
-
 $tags = elgg_extract('tags', $vars, '');
 if ($tags === '') {
 	$tags = elgg_view('output/tags', array('tags' => $entity->tags));
-}
-
-if ((!$title_link)&& ($entity->title && $entity->title2)){
-	if($entity->title1){
-		$entity->title3 = gc_implode_translation($entity->title1,$entity->title2);
-	}else{
-		$entity->title3 = gc_implode_translation($entity->title,$entity->title2);
-	}
-$title_link = gc_explode_translation($entity->title3, $lang);
 }
 
 if ($title_link) {
@@ -86,7 +71,9 @@ if ($title_link) {
     if(elgg_in_context('widgets')){
         echo "<h4 class=\"mrgn-bttm-0 summary-title\">$title_link</h4>";
     }else if(elgg_in_context('profile') || elgg_in_context('group_profile') || elgg_instanceof(elgg_get_page_owner_entity(), "group")){
-        echo "<h3 class=\"mrgn-bttm-0 summary-title\">$title_link</h3>";
+    	if($entity->getSubtype != 'answer'){//if answer in group question
+    		echo "<h3 class=\"mrgn-bttm-0 summary-title\">$title_link</h3>";
+    	}
     }else{
        echo "<h2 class=\"mrgn-bttm-0 summary-title\">$title_link</h2>";
     }
@@ -101,10 +88,8 @@ if ($title_link) {
 	}
     echo elgg_in_context($context);
 
-}/*else{
-        echo "<span class=\"mrgn-bttm-0 summary-title\">$entity->title</span>"; //put in span because some links would not take classes
-    echo elgg_in_context($context);
-}*/
+}
+
 //This tests to see if you are looking at a group list and does't outpout the subtitle variable here, It's called at the end of this file
 if($entity->getType() == 'group'){
    echo '';

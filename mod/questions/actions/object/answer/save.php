@@ -57,6 +57,7 @@ try {
 			'access_id' => $answer->access_id,
 		]);
 	}
+	system_message(elgg_echo("question:action:answer:save:success"));
 } catch (Exception $e) {
 	register_error(elgg_echo('questions:action:answer:save:error:save'));
 	register_error($e->getMessage());

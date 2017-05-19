@@ -188,7 +188,6 @@ function questions_filter_menu_handler($hook, $type, $items, $params) {
  * @return void|ElggMenuItem[]
  */
 function questions_user_hover_menu_handler($hook, $type, $items, $params) {
-	
 	if (empty($params) || !is_array($params)) {
 		return;
 	}
@@ -228,6 +227,7 @@ function questions_user_hover_menu_handler($hook, $type, $items, $params) {
 		'text' => $text,
 		'href' => "action/questions/toggle_expert?user_guid={$user->getGUID()}&guid={$page_owner->getGUID()}",
 		'confirm' => $confirm_text,
+		"section" => "admin",
 	]);
 	
 	return $items;

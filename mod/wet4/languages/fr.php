@@ -143,9 +143,32 @@ return array(
   'group:accept:invitation' => 'Accepter <span class="wb-inv">la demande d\'adhésion au groupe "%s"</span>',
   'group:decline:invitation' => 'Rejeter <span class="wb-inv"> la demande d\'adhésion au groupe "%s"</span>',
 
+
+  'entity:like:link:question' => 'Aimer la question %s',
+  'entity:unlike:link:question' => 'Enlever la mention j\'aime de la question %s',
+  'entity:comment:link:question' => 'Ajouter un commentaire à la question %s',
+  'entity:edit:link:question' => 'Modifier la question %s',
+  'entity:delete:link:question' => 'Supprimer la question %s',
+  'entity:share:link:question' => 'Partager la question %s sur le fil',
+  'entity:subscribe:link:question' => 'Vous abonnez à la question %s',
+  'entity:unsubscribe:link:question' => 'Vous désabonnez de la question %s',
+
+  'entity:like:link:answer' => 'Aimer la réponse de %s',
+  'entity:unlike:link:answer' => 'Enlever la mention j\'aime de la réponse de %s',
+  'entity:comment:link:answer' => 'Ajouter un commentaire à cette réponse de %s',
+  'entity:edit:link:answer' => 'Modifier la réponse de %s',
+  'entity:delete:link:answer' => 'Supprimer la réponse de %s',
+  'entity:share:link:answer' => 'Partager la réponse de %s sur le fil',
+
+  //questions
+  'questions:answer:checkmark:brief' => "%s a indiqué que cette réponse de %s bonne sur %s",
+  'questions:friends' => "Les questions de collègues",
+  'question:answered' => "<span class='wb-inv'>Répondu</span>",
+
   //form validation
 
   'form:invalid:extensions' => "Format de fichier non valide. Extensions de fichier autorisées: %s",
+
 
       'wet:more' => "Autres",
     'breadcrum:home' => 'Accueil',
@@ -1612,10 +1635,10 @@ return array(
 /*Modal from comment(notifaction)*/
 
 'comment_notif_title' => "Vous n’êtes pas membre du groupe %s!",
-/*'comment_notif_description' => "<p>Vous n'êtes pas membre de ce groupe. Joignez-vous au groupe pour être informé lorsque du nouveau contenu est ajouté et pour suivre ce fil. Remarque: Vous pouvez ajuster vos préférences de notification dans vos paramètres de compte de GCconnex.</p>
+'comment_notif_description' => "<p>Vous n'êtes pas membre de ce groupe. Joignez-vous au groupe pour être informé lorsque du nouveau contenu est ajouté et pour suivre ce fil. Remarque: Vous pouvez ajuster vos préférences de notification dans vos paramètres de compte de GCconnex.</p>
 
 <p>Vous n’êtes pas encore prêt à joindre le groupe? Allez-y et affichez votre commentaire, mais n'oubliez pas de revenir vérifier ce fil pour voir les nouveaux commentaires affichés.</p> ",
-*/'not_now' => 'Pas maintenant',
+'not_now' => 'Pas maintenant',
 
 
 /**

@@ -4,7 +4,7 @@
 */
 //generate content tabs
 elgg_push_context('profile');
-$fields = array('File', 'Blog', 'page_top', 'Bookmarks', 'Poll', 'Thewire', 'Album', 'task_top');
+$fields = array('File', 'Blog', 'page_top', 'Bookmarks', 'Poll', 'Thewire', 'Album', 'task_top', 'question');
 $user_display_name = elgg_get_page_owner_entity()->name;
 foreach($fields as $field){
 
@@ -67,6 +67,12 @@ foreach($fields as $field){
                 $add = elgg_echo('photos:add');
                 $message = elgg_echo('tidypics:widget:no_albums');
                 $field = "photos";
+                break;
+            case 'question':
+                $title = elgg_echo('questions:owner', array($user_display_name));
+                $add = elgg_echo('questions:add');
+                $message = elgg_echo('questions:none');
+                $field = 'questions';
                 break;
         }
 
