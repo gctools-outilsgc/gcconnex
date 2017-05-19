@@ -102,7 +102,7 @@ elgg.ajax.handleOptions = function(url, options) {
  * @private
  */
 elgg.ajax.handleAjaxError = function(xhr, status, error) {
-	//elgg.register_error(elgg.echo('ajax:error'));
+	//elgg.register_error(elgg.echo('ajax:error'));			// removed for now to prevent these errors constantly poping up for users
 };
 
 /**
