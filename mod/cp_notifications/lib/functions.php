@@ -342,7 +342,8 @@ if ($subtype === "hjforumcategory" || $subtype === "hjforum") return true;
 		case 'post_likes':
 
 			if ($subtype === "like_comment" || $subtype === "like_reply") {
-				$content_title = array('en' => elgg_echo("cp_newsletter:body:view_comment_reply",'en'), 'fr' => elgg_echo("cp_newsletter:body:view_comment_reply",'fr'));
+				//$content_title = array('en' => elgg_echo("cp_newsletter:body:view_comment_reply",'en'), 'fr' => elgg_echo("cp_newsletter:body:view_comment_reply",'fr'));
+				$content_title = $entity->getContainerEntity()->title;
 				$content_array = array(
 					'content_title' => $content_title,
 					'content_url' =>  $entity->getURL()."?utm_source=notification_digest&utm_medium=email",

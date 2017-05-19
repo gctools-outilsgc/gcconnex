@@ -1223,9 +1223,9 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 			if (sizeof($digest_array) > 0 || !empty($digest_array))
 				$template = elgg_view('cp_notifications/newsletter_template', array('to' => $user, 'newsletter_content' => $digest_array));
 			else
-
 				$template = elgg_view('cp_notifications/newsletter_template_empty', array('to' => $user));
 
+			//echo $template . "<br/><br/>";
 
 			if (elgg_is_active_plugin('phpmailer'))
 				phpmailer_send($to->email, $to->name, $subject, $template, NULL, true );

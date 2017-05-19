@@ -3,7 +3,9 @@
 /**
  * Setup MySQL databases:
  * please note: when enabling the digest functionality, if the site activity is high, there may be chance of exceeding character limit that can be saved in the database
- * upon enabling module, we will create a new table with column data type that allows for more character storage
+ * upon enabling module, we will create a new table with column data type that allows for more character storage.
+ * 
+ * create the indices for specific columns in the table that we just created
  */
 
 run_sql_script(__DIR__ . '/install/mysql.sql');
