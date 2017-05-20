@@ -36,7 +36,15 @@ else {
 	$mission->time_to_cancel = time() - $mission->time_created;
 	$mission->time_closed = time();
 	$mission->save;
-	
+
+  // Generate an analytics record to track "cancelled".
+  $analytics_record = new ElggObject();
+  $analytics_record->subtype = 'mission-cancelled';
+  $analytics_record->title = 'Mission Cancelled Report';
+  $analytics_record->mission_guid = $mission->guid;
+  $analytics_record->access_id = ACCESS_LOGGED_IN;
+  $analytics_record->save();
+
 	system_message(elgg_echo('missions:has_been_cancelled', array($mission->job_title)));
 	
 	// If the admin tool is calling the action then the user is returned to the admin tool page.

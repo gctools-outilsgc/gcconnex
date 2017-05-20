@@ -280,6 +280,81 @@ function mm_analytics_transform_to_date_format($start, $end, $type) {
 	return $returner;
 }
 
+/**
+* Add the appropriate reports to the supplied mission_set
+*/
+function mm_analytics_add_reports_by_dates($start_date, $end_date, $separator, &$mission_set) {
+    //array('posted', 'cancelled', 'completed', 'offered', 'declined', 'inprogress');
+		if ($separator == 'missions:state') {
+				$subtypes = array(
+            'mission-posted',
+            'mission-cancelled',
+            'mission-completed',
+						'mission-wasoffered',
+						'mission-declination'
+				);
+				$subtype_ids = array();
+				foreach ($subtypes as $st) {
+					$subtypes_ids[] = get_subtype_id('object', $st);
+				};
+
+        // In order to have somewhat useful results prior to this merge, we
+        // keep the old single instance tracking, but make sure to not
+        // duplicate results with the new report style tracking.
+        $originals = array();
+        foreach ($mission_set as $set) {
+          $guids = array();
+          foreach ($set as $object) {
+            $guids[] = $object->guid;
+          }
+          $originals[] = $guids;
+        }
+
+				$q_options = array();
+				$q_options['type'] = 'object';
+				$q_options['created_time_lower'] = $start_date;
+				$q_options['created_time_upper'] = $end_date;
+				$q_options['type_subtype_pairs'] = array('object' => $subtypes);
+				$reports = elgg_get_entities($q_options);
+				foreach ($reports as $report) {
+          if (!in_array($report->mission_guid, $originals[array_search($report->subtype, $subtypes_ids)])) {
+            $mission_set[array_search($report->subtype, $subtypes_ids)][] =
+              $report;
+          }
+				}
+
+				// 'mission-acceptance'  (Requires different query, to find missions "in progress".
+				// Finds all missions that meet the following in-progress report criteria:
+				// 1. In-progress report created prior to $end_date, but is still in progress. (completed = 0)
+				// 2. In-progress report created prior to $end_date and completed within $start_date to $end_date.
+
+				$q_options = array();
+				$prefix = elgg_get_config('dbprefix');
+				$q_options['type'] = 'object';
+				$q_options['subtype'] = 'mission-inprogress';
+				$q_options['created_time_upper'] = $end_date;
+				$q_options['metadata_name_value_pairs'] = array(
+						array(
+								'name' => 'mission_guid',
+								'value' => $mission->guid,
+								'operand' => '='
+						),
+						array(
+								'name' => 'completed',
+								'value' => 0,
+								'operand' => '>='
+						)
+				);
+				$q_options['wheres'] = array(
+					  "((msv1.string BETWEEN $start_date AND $end_date) OR msv1.string = 0)"
+				);
+				$in_progress = elgg_get_entities_from_metadata($q_options);
+				foreach ($in_progress as $p) {
+					$mission_set[5][] = $p;
+				}
+		}
+}
+
 /*
  * Gets all the missions in between the start and end dates according to the date they were posted, their ideal start date, or the date they were completed or cancelled.
  */
@@ -413,7 +488,7 @@ function mm_analytics_separate_missions_by_values($mission_set, $separator) {
 		switch($separator) {
 			case 'missions:state':
 				$meta_tag = 'state';
-				$comparison_array = array('posted', 'cancelled', 'completed');
+				$comparison_array = array('posted', 'cancelled', 'completed', 'offered', 'declined', 'inprogress');
 				break;
 			case 'missions:reliability':
 				$meta_tag = 'security';
@@ -474,7 +549,7 @@ function mm_analytics_generate_separation_labels($separator) {
 	$returner = array();
 	switch($separator) {
 		case 'missions:state':
-			$returner = array('missions:posted', 'missions:cancelled', 'missions:completed');
+			$returner = array('missions:posted', 'missions:cancelled', 'missions:completed', 'missions:offered', 'missions:declined', 'missions:inprogress');
 			break;
 		case 'missions:reliability':
 			$returner = explode(',', elgg_get_plugin_setting('security_string', 'missions'));
