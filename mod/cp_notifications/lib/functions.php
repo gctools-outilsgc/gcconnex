@@ -487,6 +487,12 @@ if ($subtype === "hjforumcategory" || $subtype === "hjforum") return true;
 
 	if (count($count_row) <= 0) {
 		/// save, then transform the information to the database (notification_digest table)
+		$user_guid = mysqli_real_escape_string($user_guid);
+		$entry_type = mysqli_real_escape_string($entry_type);
+		$group_name = mysqli_real_escape_string($group_name);
+		$action_type = mysqli_real_escape_string($action_type);
+		$notification_entry = mysqli_real_escape_string($notification_entry);
+		
 		$query = "INSERT INTO notification_digest ( entity_guid, user_guid, entry_type, group_name, action_type, notification_entry ) VALUES ( {$entity_guid}, '{$user_guid}', '{$entry_type}', '{$group_name}', '{$action_type}', '{$notification_entry}' )";
 		$insert_row = insert_data($query);
 	}
