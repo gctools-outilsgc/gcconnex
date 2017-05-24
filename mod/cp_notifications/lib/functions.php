@@ -174,6 +174,7 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 
 	if (!$entity->title) $entity = get_entity($entity->guid);
 
+
 	if ($entity instanceof ElggObject) {
 		$content_url = (!$entity_url) ? $entity->getURL() : $entity_url;
 
@@ -205,6 +206,7 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 			'content_url' => $entity,
 			'subtype' => $subtype
 		);
+
 	}
 
 
@@ -284,6 +286,7 @@ if ($subtype === "hjforumcategory" || $subtype === "hjforum") return true;
 			$group_name = NULL;
 			$action_type = 'friend_request';
 			$notification_entry = json_encode($content_array);
+
 		 	break;
 
 		case 'cp_friend_approve':
@@ -294,6 +297,7 @@ if ($subtype === "hjforumcategory" || $subtype === "hjforum") return true;
 			$group_name = NULL;
 			$action_type = 'friend_approved';
 			$notification_entry = json_encode($content_array);
+
 			break;
 
 			/// QUESTION: is messageboard enabled?
@@ -342,7 +346,6 @@ if ($subtype === "hjforumcategory" || $subtype === "hjforum") return true;
 		case 'post_likes':
 
 			if ($subtype === "like_comment" || $subtype === "like_reply") {
-				//$content_title = array('en' => elgg_echo("cp_newsletter:body:view_comment_reply",'en'), 'fr' => elgg_echo("cp_newsletter:body:view_comment_reply",'fr'));
 				$content_title = $entity->getContainerEntity()->title;
 				$content_array = array(
 					'content_title' => $content_title,
@@ -479,7 +482,9 @@ if ($subtype === "hjforumcategory" || $subtype === "hjforum") return true;
 			break;
 	}
 
+	// this will fix up/sanitize strings that may contain quotes, or any other (reserved) special character
 	$group_name = base64_encode($group_name);
+	$notification_entry = base64_encode($notification_entry);
 
 	/// check if record exists already, if not then proceed.
 	$query = "SELECT 1 FROM notification_digest WHERE entity_guid = {$entity_guid} AND user_guid = {$user_guid} AND notification_entry = '{$notification_entry}'  LIMIT 1";
@@ -487,15 +492,15 @@ if ($subtype === "hjforumcategory" || $subtype === "hjforum") return true;
 
 	if (count($count_row) <= 0) {
 		/// save, then transform the information to the database (notification_digest table)
-		$user_guid = mysqli_real_escape_string($user_guid);
-		$entry_type = mysqli_real_escape_string($entry_type);
-		$group_name = mysqli_real_escape_string($group_name);
-		$action_type = mysqli_real_escape_string($action_type);
-		$notification_entry = mysqli_real_escape_string($notification_entry);
-		
+		$user_guid = mysql_real_escape_string($user_guid);
+		$entry_type = mysql_real_escape_string($entry_type);
+		$action_type = mysql_real_escape_string($action_type);
+
 		$query = "INSERT INTO notification_digest ( entity_guid, user_guid, entry_type, group_name, action_type, notification_entry ) VALUES ( {$entity_guid}, '{$user_guid}', '{$entry_type}', '{$group_name}', '{$action_type}', '{$notification_entry}' )";
+
 		$insert_row = insert_data($query);
 	}
+	
 
 	return true;
 }
