@@ -29,7 +29,13 @@ $emailInput = trim(get_input('args'));
 require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/engine/settings.php');
 
 // Establish MySQL connection link
-$connection = mysqli_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, $CONFIG->dbname);
+$db_config = new \Elgg\Database\Config($CONFIG);
+if ($db_config->isDatabaseSplit()) {
+	$read_settings = $db_config->getConnectionConfig(\Elgg\Database\Config::READ);
+} else {	
+	$read_settings = $db_config->getConnectionConfig(\Elgg\Database\Config::READ_WRITE);
+}
+$connection = mysqli_connect($read_settings["host"], $read_settings["user"], $read_settings["password"], $read_settings["database"]);
 if (mysqli_connect_errno($connection)) 
 {
 	echo elgg_echo('gcRegister:failedMySQLconnection');

@@ -5,7 +5,14 @@ error_log('cyu - tag users action invoked');
 global $CONFIG;
 $query = "SELECT e.guid, ue.email, ue.username FROM elggentities e, elggusers_entity ue WHERE e.type = 'user' AND e.guid = ue.guid AND e.enabled = 'yes'";
 
-$connection = mysqli_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, $CONFIG->dbname);
+$db_config = new \Elgg\Database\Config($CONFIG);
+if ($db_config->isDatabaseSplit()) {
+	$read_settings = $db_config->getConnectionConfig(\Elgg\Database\Config::READ);
+} else {	
+	$read_settings = $db_config->getConnectionConfig(\Elgg\Database\Config::READ_WRITE);
+}
+
+$connection = mysqli_connect($read_settings["host"], $read_settings["user"], $read_settings["password"], $read_settings["database"]);
 if (mysqli_connect_errno($connection)) elgg_log("Failed to connect to MySQL: ".mysqli_connect_errno(), 'NOTICE');
 $result = mysqli_query($connection,$query);
 mysqli_close($connection);
