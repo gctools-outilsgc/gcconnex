@@ -18,7 +18,7 @@ $count = event_calendar_get_users_for_event($vars['entity']->guid, 0, 0, true);
 		echo '<a href="../../../event_calendar/display_users/'.$vars["entity"]->guid.'"> '.$calendar_text.' </a><br><br>';
 
 echo '<b>Organizer:</b> '.$vars['entity']->contact.'<br>';
-echo '<b>Email:</b> '.$vars['entity']->contact_email.'<br>';
+echo '<b>Email:</b> '.'<a href="mailto:'. $vars['entity']->contact_email.'">'.$vars['entity']->contact_email.'</a><br>';
 echo '<b>Phone:</b> '.$vars['entity']->contact_phone.'<br>';
 echo '<b>Fees:</b> '.$vars['entity']->fees.'<br>';
 echo '<b>Language:</b> '.$vars['entity']->language.'<br>';

@@ -133,7 +133,11 @@ function group_owners_block_handler($hook, $type, $menu, $params){
                     $item->setHref('#activity');
                     $item->setPriority('8');
                     break;
-
+                case 'questions':
+                    $item->setText(elgg_echo('widget:questions:title'));
+                    $item->setHref('#questions');
+                    $item->setPriority('8');
+                    break;
             }
 
         }
@@ -221,7 +225,10 @@ function group_owners_block_handler($hook, $type, $menu, $params){
                     $item->setPriority('13');
                     $item->addItemClass('removeMe');
                     break;
-
+                case 'questions':
+                    $item->setText(elgg_echo('widget:questions:title'));
+                    $item->setPriority('8');
+                    break;
             }
 
         }

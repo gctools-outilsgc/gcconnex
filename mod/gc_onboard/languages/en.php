@@ -1,8 +1,9 @@
 <?php
 return array(
     /**
-   * 
+   *
    */
+      'onboard:gettingstarted' => 'Getting Started',
      'profile:strength' 	=> 'Profile Strength',
      'error:nope' 		=> 'Please fill in the missing information or click skip to move on to the next step.',
 
@@ -18,7 +19,7 @@ return array(
      'onboard:feature1'		=> "Search for groups, discussions, colleagues files and much more using the search.",
      'onboard:feature2'		=> "Chat instantly with your colleagues who are online.",
      'onboard:feature3'		=> "Browse opportunities by clicking on the Career tab of the main navigation menu. ",
-     'onboard:feature4'		=> "Want to learn more? Check out the <a href='http://www.gcpedia.gc.ca/wiki/Help:GC2.0_Tools_Help_Centre/GCconnex' target='_blank'>GCTools Help Center</a> for more help material and tutorials and the <a href='http://www.gcpedia.gc.ca/wiki/GCTools_Newsletter' target='_blank'>GCTools ECHO Newsletter</a> to stay up to date with the latest developments",
+     'onboard:feature4'		=> "Want to learn more? Check out the <a href='http://www.gcpedia.gc.ca/wiki/Help:GC2.0_Tools_Help_Centre/GCconnex' target='_blank'>GCTools Help Center</a> for more help material and tutorials.",
      'onboard:featureImgAlt1'	=> "Screenshot of Search",
      'onboard:featureImgAlt2'	=> "Screenshot of the GCconnex Chat Feature",
      'onboard:featureImgAlt3'	=> "Screenshot of the Career main menu item",
@@ -28,6 +29,7 @@ return array(
      'onboard:img2' => "af_2.jpg",
      'onboard:img3' => "af_3.jpg",
      'onboard:img4' => "af_4.jpg",
+     'onboard:search' => 'Search',
 
      /**The Wire Popup**/
      'onboard:wireTitle'	=> "Welcome to The Wire!",
@@ -87,6 +89,17 @@ return array(
     'onboard:welcome:three:tour' 	=> "Take a tour of this group",
     'onboard:welcome:three:skip' 	=> "Skip tour",
 
+
+    'onboard:welcome:profile:sell:title' => "Start with building a great profile!",
+    'onboard:welcome:profile:sell:text' => "Having a complete profile (with photo!), goes a long way to making you more approachable on GCconnex. By filling out your profile and keeping it up to date, you'll make it easier for others to find you and connect with you. Your profile can also act as your online C.V. and help you get oppurtunities.",
+    'onboard:welcome:profile:sell:help' => "Let us help you build your profile now in just a few easy steps!",
+    'onboard:welcome:profile:sell:img' => "onboard-user-card.jpg",
+    'onboard:welcome:profile:sell:img:alt' => "Access your profile through the user menu",
+    'onboard:welcome:profile:walkthrough' => 'Build my profile',
+    'onboard:welcome:profile:visit' => 'Visit my profile page',
+    'onboard:welcome:profile:or' => ' or ',
+    'onboard:welcome:profile:access' => 'To access your profile page, click on your avatar and select "My Profile".',
+
     /*Step four - groups*/
     //'onboard:groupfeature1'		=> 'I am group col 1',
     'onboard:groupfeature2'		=> "Groups let you share useful information and take part in discussions related to specific topics. Join or create groups to share files, post blogs, vote on ideas, and much more!",
@@ -120,6 +133,7 @@ return array(
     'onboard:profile:skill:why' 	=> "We will use this information to add &ldquo;Skills&rdquo; to your profile.",
     'onboard:profile:recommendation' 	=> "You can have a total of 15 skills. We recommend adding at least 3 skills.",
     'onboard:profile:addSkill' 		=> "Click to add %s skill",
+    'onboard:profile:skill:of' 		=> "%s of 15",
 
     'onboard:skills:headsup' 		=> "Heads up!",
     'onboard:skills:headsuplimit' 	=> "You have reached your skill limit!",

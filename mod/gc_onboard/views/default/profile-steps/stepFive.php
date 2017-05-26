@@ -13,9 +13,9 @@ $profile_link = $site_url . 'profile/' . $user;
 <?php echo elgg_view('avatar/upload', array('entity' =>  elgg_get_logged_in_user_entity())); ?>
 
 <div class="mrgn-bttm-md mrgn-tp-md pull-right">
-    <a href="<?php echo $profile_link; ?>" class="btn btn-primary btn-lg mrgn-tp-md mrgn-lft-sm" style="" title="" onclick="">
+    <button type="button" id="onboard-finish" class="btn btn-primary btn-lg mrgn-tp-md mrgn-lft-sm">
         <?php echo elgg_echo('onboard:profile:finish'); ?>
-    </a>
+    </button>
 </div>
 
 <script>
@@ -65,5 +65,9 @@ $profile_link = $site_url . 'profile/' . $user;
         //stop page refresh
         $('#onboard-avatar-upload').on('click', function (e) {
             e.preventDefault();
+        });
+
+        $('#onboard-finish').on('click', function(){
+           window.location.replace("<?php echo $profile_link; ?>")
         });
 </script>

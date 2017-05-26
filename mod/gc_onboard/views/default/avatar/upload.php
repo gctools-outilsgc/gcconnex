@@ -20,9 +20,9 @@ if ($vars['entity']->icontime) {
 ?>
 
 
-<h1>
-    <?php echo elgg_echo('onboard:profile:five:title');?>
-</h1>
+<h2>
+    <?php echo elgg_echo('onboard:profile:five:title'); echo elgg_view('page/elements/step_counter', array('current_step'=>6, 'total_steps'=>6, 'class' => 'mrgn-tp-md wb-inv'));?>
+</h2>
 <div class="mrgn-bttm-md onboarding-cta-holder">
     <?php echo elgg_echo('onboard:profile:avatar:why');?>
 

@@ -37,11 +37,39 @@ else {
 			remove_entity_relationship($mission->guid, 'mission_offered', $applicant->guid);
 			add_entity_relationship($mission->guid, 'mission_accepted', $applicant->guid);
 
+			// Check to see if this mission is already marked in progress.
+			$in_progress = (elgg_get_entities_from_metadata(array(
+				  'count' => true,
+					'type' => 'object',
+					'subtype' => 'mission_inprogress',
+					'metadata_name_value_pairs' => array(
+						  array(
+								  'name' => 'mission_guid',
+									'value' => $mission->guid,
+									'operand' => '='
+							),
+							array(
+								  'name' => 'completed',
+									'value' => 0,
+									'operand' => '='
+							)
+					)
+			)) > 0);
+			if (!$in_progress) {
+					// Create a new in progress record for Analytics
+					$progress_record = new ElggObject();
+					$progress_record->subtype = 'mission-inprogress';
+					$progress_record->title = 'Mission Progress Report';
+					$progress_record->mission_guid = $mission->guid;
+					$progress_record->completed = 0;
+					$progress_record->save();
+			}
+
 			$mission_link = elgg_view('output/url', array(
 					'href' => $mission->getURL(),
 					'text' => $mission->title
 			));
-			
+
 			// Saves time to fill data if this user fills the last spot.
 			if(($relationship_count + 1) == $mission->number) {
 				$mission->time_to_fill = time() - $mission->time_created;

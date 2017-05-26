@@ -29,12 +29,6 @@ if (elgg_is_logged_in() && $group->isMember(elgg_get_logged_in_user_entity())) {
 	if ($gcf_subtype === "hjforumpost")
 		$gcf_container = $gcf_topic_guid;
 
-	// debug error_log (will be displayed above forms) comment-out for production!
-	//if ($gcf_subtype === "hjforumpost")
-	//	echo "create.php :: group: {$gcf_group} / subtype: {$gcf_subtype} / topic_access: {$gcf_topic_access} / topic_guid: {$gcf_topic_guid} / container: {$gcf_container} / title: {$hjforumpost_title}";
-	//else
-	//	echo "create.php :: subtype: {$gcf_subtype} / group: {$gcf_group} / container: {$gcf_container}";
-
 
 	// title, description and access (visible)
 	if ($gcf_subtype === 'hjforum' || $gcf_subtype === 'hjforumcategory' || $gcf_subtype === 'hjforumtopic') {
@@ -54,7 +48,8 @@ if (elgg_is_logged_in() && $group->isMember(elgg_get_logged_in_user_entity())) {
 			$gcf_moderator_user[] = $group_operator->guid;
 
 		// save as sticky topic
-		if (($gcf_subtype === 'hjforumtopic' && in_array($gcf_current_user_guid, $gcf_moderator_user)) || elgg_is_admin_logged_in()) {
+		if (($gcf_subtype === 'hjforumtopic') && ((in_array($gcf_current_user_guid, $gcf_moderator_user)) || elgg_is_admin_logged_in())) {
+
 			$gcf_sticky_topic_label = elgg_echo('gcforums:sticky_topic');
 			$gcf_sticky_topic_input = elgg_view('input/checkboxes', array(
 				'name' => 'gcf_sticky',

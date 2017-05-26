@@ -12,10 +12,7 @@
 
 # ignore Single Signon mods
 
-
-
 /mod/gsa/
-
 
 # don't ignore bundled plugins
 !/mod/blog/
@@ -88,3 +85,9 @@ startup.sh
 
 # Ignore data files
 /data/
+
+
+# Composer files
+/vendor/
+/mod/login_as/
+

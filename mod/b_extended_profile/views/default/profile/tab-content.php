@@ -4,7 +4,7 @@
 */
 //generate content tabs
 elgg_push_context('profile');
-$fields = array('File', 'Blog', 'page_top', 'Bookmarks', 'Poll', 'Thewire', 'Album', 'task_top');
+$fields = array('File', 'Blog', 'page_top', 'Bookmarks', 'Poll', 'Thewire', 'Album', 'task_top', 'question');
 $user_display_name = elgg_get_page_owner_entity()->name;
 foreach($fields as $field){
 
@@ -68,15 +68,23 @@ foreach($fields as $field){
                 $message = elgg_echo('tidypics:widget:no_albums');
                 $field = "photos";
                 break;
+            case 'question':
+                $title = elgg_echo('questions:owner', array($user_display_name));
+                $add = elgg_echo('questions:add');
+                $message = elgg_echo('questions:none');
+                $field = 'questions';
+                break;
         }
 
         if(elgg_get_page_owner_entity()->canEdit()){
+
+            echo '<h2 class="wb-invisible" tabindex="-1">'.$title.'</h2>';
 
             //dont display add button on The Wire panel
             if($field == 'Thewire'){
                 //do nothing
             } else {
-                echo '<h3 class="wb-invisible">'.$title.'</h3>';
+
                 //display add button
             echo '<div class="text-right">';
                 $action = strtolower($field) . "/add/" . elgg_get_page_owner_entity()->guid;
@@ -129,7 +137,7 @@ foreach($fields as $field){
 //event calendar tab
 echo '<div role="tabpanel" tabindex="-1" class="tab-pane fade-in" id="events">';
     echo '<div class="clearfix">';
-    echo '<h3 class="wb-invisible">'.elgg_echo('event_calendar:listing_title:mine', array($user_display_name)).'</h3>';
+    echo '<h2 class="wb-invisible" tabindex="-1">'.elgg_echo('event_calendar:listing_title:mine', array($user_display_name)).'</h2>';
     if(elgg_is_active_plugin('event_calendar')){
         $events = event_calendar_get_personal_events_for_user(elgg_get_page_owner_guid(), 5);
     }

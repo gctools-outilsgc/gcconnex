@@ -6,6 +6,8 @@ $contact_us = "{$site->getURL()}mod/contactform/";
 
 $french = array( 
 	'cp_notifications:name' => "Paramètres de notifications",
+	'cp_notification:save:success' => "Les paramètres ont été enregistrés avec succès",
+	'cp_notification:save:failed' => "Les paramètres n'ont pas été enregistrés avec succès",
 
 	/// SETTINGS PAGE: Newsletter translation texts
 	'cp_newsletter:notice' => "Choisissez le moyen par lequel vous souhaitez recevoir des avis sur les activités de GCconnex qui vous intéressent. Le <strong>résumé des notifications</strong> vous permet de recevoir un courriel quotidien ou hebdomadaire contenant un sommaire des activités auxquelles vous êtes abonné. Vous préférez recevoir un avis instantané? Oubliez le résumé et sélectionnez le contenu pour lequel vous souhaitez recevoir des avis en temps réel. Veuillez noter que les avis par courriel sont envoyés à l’adresse électronique utilisée dans vos <a href='{$site->getURL()}settings/user/?utm_source=notification_digest&utm_medium=email'>paramètres d’utilisateur</a>. Voir: “<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_-_Aide_%C3%A0_l%27utilisateur/Modifier_mes_param%C3%A8tres_de_compte/Comment_puis-je_modifier_mes_param%C3%A8tres_de_notification%3F?utm_source=notification_digest&utm_medium=email'>Comment puis-je modifier mes paramètres de notification</a>?” pour plus d’informaiton.",
@@ -263,15 +265,6 @@ $french = array(
 	'cp_notify:body_likes_user_update:title' => "%s aime votre nouvel avatar ou votre nouvelle connection de collègue",
 	'cp_notify:body_likes_user_update:description' => "La mise à jour de votre avatar ou votre nouvelle connection de collègue a eu une mention j'aime par %s", 
 
-	/*
-	'cp_notify:subject:likes_user_update' => "%s aime votre nouvel avatar", // Please update
-	'cp_notify:body_likes_user_update:title' => "%s aime votre nouvel avatar", // Please update
-	'cp_notify:body_likes_user_update:description' => "La mise à jour de votre avatar a eu une mention j'aime par %s", // Please update
-
-	'cp_notify:subject:likes_user_update' => "%s aime votre nouvelle connection de collègue", // Please update
-	'cp_notify:body_likes_user_update:title' => "%s aime votre nouvelle connection de collègue", // Please update
-	'cp_notify:body_likes_user_update:description' => "Votre récente connection de collègue a eu une mention j'aime par %s", // Please update
-	*/
 
 	'cp_notify:body_likes:description' => "Vous pouvez consulter votre contenu en cliquant sur le lien suivant : %s",
 
@@ -341,6 +334,7 @@ $french = array(
 	'cp_notify:body_new_content:title_m2' => "<a href='%s'>%s</a> a ajouté un nouveau %s intitulé <a href='%s'>%s</a>",
 	'cp_notify:body_new_content:title_m3' => "<a href='%s'>%s</a> a ajouté un nouvel %s intitulé <a href='%s'>%s</a>",
 	'cp_notify:body_new_content:title_f2' => "<a href='%s'>%s</a> a ajouté une nouvelle %s intitulée <a href='%s'>%s</a>",
+	'cp_notify:body_new_content:title_answer' => "<a href='%s'>%s</a> a ajouté une nouvelle %s dans <a href='%s'>%s</a>",
 
 	'cp_notify:body_new_content:description' => "La description de leur nouvelle publication se lit comme suit : <br/> 
 		%s <br/>
@@ -460,7 +454,7 @@ $french = array(
 	// event calendar(request) section
 	'cp_notify:event_request:subject' => "%s veut ajouter %s à son calendrier ",
 	'cp_notify:body_event_request:title' => "Demande d'ajout d'un événement",
-	'cp_notify:body_event_request:description' => '%s a fait une demande pour ajouter %s à son calendrier<br><br>Pour voir la requête, veuillez cliquer ici: <a href="%s">Demande d\'ajout</a>', //  Check URL or link
+	'cp_notify:body_event_request:description' => '%s a fait une demande pour ajouter %s à son calendrier<br><br>Pour voir la requête, veuillez cliquer ici: <a href="%s">Demande d\'ajout</a>',
 
 	// event calendar (update)
 	'cp_notify:event_update:subject' => " L'événement' %s a été mis à jour",
@@ -468,7 +462,7 @@ $french = array(
 	// email notification footer text (1 and 2)	
 
 
-	'cp_notify:footer' => "Apprenez davantage au sujet des <a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Manage_Account_Settings/How_Do_I_Change_My_Notifications_Settings%3F?utm_source=notification&utm_medium=email'>notifications de GCconnex</a>.",// Check URL or link
+	'cp_notify:footer' => "Apprenez davantage au sujet des <a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Manage_Account_Settings/How_Do_I_Change_My_Notifications_Settings%3F?utm_source=notification&utm_medium=email'>notifications de GCconnex</a>.",
 	'cp_notify:footer2' =>  " Besoin d’aide? <a href='".elgg_get_site_url()."mod/contactform/?utm_source=notification&utm_medium=email'>Contactez-nous</a>.<br/>Pour vous désabonner de ces notifications, connectez-vous à GCconnex et modifiez vos <a href='%s'>paramètres de notifications</a>.",
 
 
@@ -476,7 +470,7 @@ $french = array(
 	// texts that will be displayed in the site pages
 	'cp_notifications:usersettings:title' => 'Paramètres des notifications',
 	'label:email' => "Courriel",
-	'label:site' => "Site", // new
+	'label:site' => "Site", 
 
 	'cp_notify:panel_title' => "Paramètres d'abonnement <br> (Modifiez votre %s)",
 	'cp_notify:quicklinks' => 'Liens rapides aux abonnements',

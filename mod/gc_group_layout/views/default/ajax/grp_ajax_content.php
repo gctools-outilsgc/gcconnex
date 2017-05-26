@@ -15,6 +15,8 @@ $sub_type = get_input('sub_type'); // get the subtype through AJAX
 
 $user = elgg_get_logged_in_user_guid();
 
+elgg_push_context('group_profile');
+
 if ($vars['entity']->forum_enable == 'no') {
 	return true;
 }
@@ -50,6 +52,11 @@ switch($sub_type){
 		$sub_type ='album';
 		$all_link_location = '/group/';
 		$photos_class = ' col-sm-3';
+		break;
+	case 'questions':
+		$sub_type = 'question';
+		$sub_type2 = 'questions';
+		$all_link_location = '/group/';
 		break;
 	default:
 		$sub_type2 = $sub_type;
@@ -134,7 +141,6 @@ if(check_entity_relationship($user, 'member', $group)){ //are they a member?
 }
 
 //echo out the module view for the content
-
 echo elgg_view('groups/profile/module', array(
 	'title' => elgg_echo('discussion:group'),
 	'content' => $content,

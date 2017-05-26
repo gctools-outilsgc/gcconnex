@@ -45,7 +45,7 @@ $owner_icon = elgg_view_entity_icon($owner, 'medium');
 }
 
 $owner_link = elgg_view('output/url', array(
-	'href' => "blog/owner/$owner->username",
+	'href' => "profile/$owner->username",
 	'text' => $owner->name,
 ));
 $author_text = elgg_echo('byline', array($owner_link));
@@ -84,6 +84,7 @@ $metadata = elgg_view_menu('entity', array(
 ));
 
 $subtitle = "$author_text $date $categories";
+
 
 // do not show the metadata and controls in widget view
 if (elgg_in_context('widgets')) {

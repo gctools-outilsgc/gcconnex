@@ -6,9 +6,9 @@
  */
 ?>
 
-<h1>
-    <?php echo elgg_echo('onboard:profile:three:title'); ?>
-</h1>
+<h2>
+    <?php echo elgg_echo('onboard:profile:three:title'); echo elgg_view('page/elements/step_counter', array('current_step'=>4, 'total_steps'=>6, 'class' => 'mrgn-tp-md wb-inv'));?>
+</h2>
 
 <div class="onboarding-cta-holder">
     <?php echo elgg_echo('onboard:profile:work:why');?>
@@ -20,17 +20,14 @@ $user = elgg_get_logged_in_user_entity();
 echo '<div class="clearfix mrgn-tp-md mrgn-bttm-md">'.elgg_view('onboard/input/work-experience').'</div>';
 ?>
 <div class="mrgn-bttm-md pull-right">
-    <a id="skip" class="mrgn-lft-sm btn btn-default" href="#">
-        <?php echo elgg_echo('onboard:skip'); ?>
-    </a>
-    <?php
-    echo elgg_view('output/url', array(
-            'href'=>'#',
-            'text' => elgg_echo('onboard:welcome:next'),
-            'class'=>'btn btn-primary',
-            'id' => 'onboard-work',
-        ));
-    ?>
+
+  <button type="button" id="skip" class="mrgn-lft-sm btn btn-default">
+      <?php echo elgg_echo('onboard:skip'); ?>
+  </button>
+
+  <button type="button" id="onboard-work" class="btn btn-primary">
+      <?php echo elgg_echo('onboard:welcome:next'); ?>
+  </button>
 
 </div>
 
@@ -62,7 +59,7 @@ echo '<div class="clearfix mrgn-tp-md mrgn-bttm-md">'.elgg_view('onboard/input/w
                     elgg.get('ajax/view/profile-steps/stepFour', {
                         success: function (output) {
                             changeStepProgress(5);
-                            $('#step').html(output);
+                            $('#step').html(output).focus();
 
                         }
                     });
@@ -113,7 +110,7 @@ echo '<div class="clearfix mrgn-tp-md mrgn-bttm-md">'.elgg_view('onboard/input/w
         elgg.get('ajax/view/profile-steps/stepFour', {
             success: function (output) {
                 changeStepProgress(5);
-                $('#step').html(output);
+                $('#step').html(output).focus();
 
                 elgg.get('ajax/view/profileStrength/info', {
                     success: function (output) {

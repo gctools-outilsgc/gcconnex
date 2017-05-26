@@ -4,7 +4,7 @@
  * This View displays a modal popup when a user visits the wire for the first time.
  * The popup will explain what the wire is used for and all of the feautres
  * When the user clicks the confirm button, an action is run through js that will set metadata
- * 
+ *
  *
  * @version 1.0
  * @author Nick
@@ -13,7 +13,7 @@
  if(elgg_in_context('thewire')){
  //Only show on the Wire and if metadata was not set
      //Once the metadata is set this view will never appear on the DOM
- 
+
 ?>
 <style>
     .modal-open .modal {
@@ -35,12 +35,12 @@
     <a role="button" id="wirePopup" class="overlay-lnk btn btn-default gcconnex-edit-profile pull-right" href="#showWire" aria-controls="mid-screen"><?php echo elgg_echo('onboard:wireButton'); ?></a>
 
 	                <?php if(!elgg_get_logged_in_user_entity()->hasVisitedWire){?>
-                      
+
                 <script>
                     $(document).ready(function () {
                         $('#wirePopup').delay(800).click();
 						$('#wirePopup').on('click', function(){
-							$('#showWire').focus();	
+							$('#showWire').focus();
 						});
                     });
                 </script>
@@ -65,7 +65,7 @@
                             </div>
                         </div>
                         <div class="col-sm-12 mrgn-tp-md feature-desc">
-                            
+
                             <?php
                                 echo elgg_echo('onboard:wire1');
                             ?>
@@ -78,7 +78,7 @@
                             </div>
                         </div>
                         <div class="col-sm-12 mrgn-tp-md feature-desc">
-                            
+
                             <?php
                                 echo elgg_echo('onboard:wire2');
                             ?>
@@ -91,7 +91,7 @@
                             </div>
                         </div>
                         <div class="col-sm-12 mrgn-tp-md feature-desc">
-                           
+
                             <?php
                                 echo elgg_echo('onboard:wire3');
                             ?>
@@ -114,7 +114,7 @@
                         //Open the popup load
                         //$('#wirePopup').delay(800).click();
                         //Clicked the confirm button
-                        $('.close-wire-popup').on('click', function () {
+                        $('.close-wire-popup, .overlay-close').on('click', function () {
                             elgg.action('onboard/set_wire_metadata', {
                                 data: {
                                     visited: 'true',

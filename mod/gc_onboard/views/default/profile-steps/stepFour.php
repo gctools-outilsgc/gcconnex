@@ -6,23 +6,37 @@
  */
 ?>
 
-<h1>
-    <?php echo elgg_echo('onboard:profile:four:title'); ?>
-</h1>
+<h2>
+    <?php echo elgg_echo('onboard:profile:four:title'); echo elgg_view('page/elements/step_counter', array('current_step'=>5, 'total_steps'=>6, 'class' => 'mrgn-tp-md wb-inv'));?>
+</h2>
 
 <div class="mrgn-bttm-md onboarding-cta-holder">
     <?php echo elgg_echo('onboard:profile:skill:why');?>
 
 </div>
+
+<section id="toomany" class="alert alert-info" tabindex="-1">
+    <h3>
+        <?php echo elgg_echo('onboard:skills:headsup');?>
+    </h3>
+    <p>
+        <?php echo elgg_echo('onboard:skills:headsuplimit');?>
+    </p>
+</section>
+
 <div class="panel panel-custom mrgn-lft-xl mrgn-rght-xl">
+
     <div style="min-height:100px;" class="panel-body">
         <p class="mrgn-tp-sm mrgn-bttm-0">
             <strong>
                 <?php echo elgg_echo('onboard:profile:yourskills');?>
-                <span class="skill-count"></span>/15</strong></p>
+                <?php echo elgg_echo('onboard:profile:skill:of', array('<span class="skill-count"></span>'));?>
+            </strong>
+        </p>
         <p class="timeStamp mrgn-tp-0">
             <?php echo elgg_view('onboard:profile:recommendation'); ?>
         </p>
+
     <div class="gcconnex-skills-skills-list-wrapper">
         <?php
         $user = elgg_get_logged_in_user_entity();
@@ -66,14 +80,7 @@
         <?php echo elgg_echo('onboard:profile:add');?>
     </a>
 </div>
-<section id="toomany" class="alert alert-info">
-    <h3>
-        <?php echo elgg_echo('onboard:skills:headsup');?>
-    </h3>
-    <p>
-        <?php echo elgg_echo('onboard:skills:headsuplimit');?>
-    </p>
-</section>
+
 
 <div id="popSkills" class="">
 
@@ -125,17 +132,14 @@
     ?>
 
     <div class="mrgn-bttm-md mrgn-tp-md pull-right">
-    <a id="skip" class="mrgn-lft-sm btn btn-default" href="#">
-        <?php echo elgg_echo('onboard:skip'); ?>
-    </a>
-        <?php
-    echo elgg_view('output/url', array(
-            'href'=>'#',
-            'class'=>'btn btn-primary',
-            'text' => elgg_echo('onboard:welcome:next'),
-            'id' => 'onboard-skills',
-        ));
-        ?>
+
+        <button type="button" id="skip" class="mrgn-lft-sm btn btn-default">
+            <?php echo elgg_echo('onboard:skip'); ?>
+        </button>
+
+        <button type="button" id="onboard-skills" class="btn btn-primary">
+            <?php echo elgg_echo('onboard:welcome:next'); ?>
+        </button>
 
     </div>
     <script src="<?php echo elgg_get_site_url() . 'mod/b_extended_profile/vendors/typeahead/dist/typeahead.bundle.min.js'; ?>"></script>
@@ -147,7 +151,7 @@
         var newSkill = new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
             queryTokenizer: Bloodhound.tokenizers.whitespace,
-            
+
             remote: {
                 url: elgg.get_site_url() + 'mod/b_extended_profile/actions/b_extended_profile/autoskill.php?query=%QUERY'
             }
@@ -292,7 +296,7 @@
 
             if ($('.gcconnex-skill-entry:visible').length >= 15) {
                 $('.gcconnex-endorsements-input-wrapper').hide();
-                $('#toomany').show();
+                $('#toomany').show().focus();
             } else {
                 $('.gcconnex-endorsements-input-wrapper').show();
                 $('#toomany').hide();
@@ -334,7 +338,7 @@
                     elgg.get('ajax/view/profile-steps/stepFive', {
                         success: function (output) {
 
-                            $('#step').html(output);
+                            $('#step').html(output).focus();
 
                         }
                     });
@@ -356,7 +360,7 @@
             elgg.get('ajax/view/profile-steps/stepFive', {
                 success: function (output) {
                     changeStepProgress(6);
-                    $('#step').html(output);
+                    $('#step').html(output).focus();
 
                     elgg.get('ajax/view/profileStrength/info', {
                         success: function (output) {

@@ -48,12 +48,12 @@ function handleKeyPress(e){
 
 <!-- Basically just moved the search to this file to output the section -->
 
-    <section id="wb-srch" class="col-xs-6 text-right visible-md visible-lg">
+    <section id="wb-srch" class="col-sm-4 col-lg-3 text-right visible-md visible-lg">
         <h2> <?php echo elgg_echo('wet:searchHead'); ?> </h2>
-        <div name="cse-search-box" class='form-inline mrgn-bttm-sm'>
+        <div name="cse-search-box" class='form-inline'>
             <div class='form-group'>
                 <label for="wb-srch-q" class="wb-inv"> <?php echo elgg_echo('wet:searchweb'); ?> </label>
-                <input class="wb-srch-q form-control" name="q" onkeypress="handleKeyPress(event)" value="" size="27" maxlength="150" placeholder="<?php echo $placeholder ?>" id="wb-srch-q">
+                <input class="wb-srch-q form-control" name="q" onkeypress="handleKeyPress(event)" value="" size="21" maxlength="150" placeholder="<?php echo $placeholder ?>" id="wb-srch-q">
                 
            
                 <input type="hidden" id="a" name="a"  value="s">
@@ -63,7 +63,7 @@ function handleKeyPress(e){
             </div>
             <div class="form-group submit">
                 <!-- search button -->
-                <button type="button" class="btn btn-primary btn-small" onclick="submit_search_query('<?php echo $selected_language; ?>')" name="wb-srch-sub">
+                <button type="button" class="btn-small" onclick="submit_search_query('<?php echo $selected_language; ?>')" name="wb-srch-sub">
                     <span class="glyphicon-search glyphicon"></span>
                     <span class="wb-inv"> <?php echo elgg_echo('wet:searchHead'); ?> </span>
                 </button>

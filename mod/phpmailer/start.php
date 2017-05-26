@@ -249,11 +249,15 @@ $phpmailer = new PHPMailer(true); //defaults to using php "mail()"; the true par
 	//error_log("Sending email from => " . $phpmailer->FromName );
 	$return = $phpmailer->Send();
 	//error_log("Sent email from => " . $phpmailer->FromName );
-	}catch(phpmailerException $e){
-                error_log($e->errorMessage());}
+	} catch(phpmailerException $e) {
+		error_log($e->errorMessage());
+	}
+	
+
 	if (!$return ) {
 		error_log('PHPMailer error: ' . $phpmailer->ErrorInfo, 'WARNING');
-	}else
+	} else
 		error_log("email sent");
+
 	return $return;
 }
