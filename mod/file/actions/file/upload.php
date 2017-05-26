@@ -112,7 +112,15 @@ if (isset($_FILES['upload']['name']) && !empty($_FILES['upload']['name'])) {
 	$file->close();
 	move_uploaded_file($_FILES['upload']['tmp_name'], $file->getFilenameOnFilestore());
 
+
 	$guid = $file->save();
+	error_log("++++++ saved a file !");
+	/// differentiate between single file upload and multiple files upload
+	/// execute this line of code only if cp_notifications is active
+	if (elgg_is_active_plugin('cp_notifications')) {
+		error_log("++++++ saved a file ! (again)");
+		elgg_trigger_event('single_file_upload', $file->getType(), $file);
+	}
 
 	// if image, we need to create thumbnails (this should be moved into a function)
 	if ($guid && $file->simpletype == "image") {
