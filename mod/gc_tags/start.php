@@ -14,6 +14,9 @@ function tags_and_communities(){
     //Register selectize library
     elgg_require_js("selectize_require");
     elgg_register_js('selectize', 'mod/gc_tags/views/default/js/selectize.min.js');
-    //elgg_extend_view('css/elgg', 'css/selectize-default.css');
     elgg_extend_view('css/elgg', 'css/selectize.bootstrap3.css');
+    
+    //Extend the forms
+    elgg_extend_view('forms/blog/save','gc_tags/community_tags');
+    
 }

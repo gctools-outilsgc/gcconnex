@@ -12,7 +12,6 @@ require.config({
 });
 
 requirejs(["selectize"], function () {
-    $('#blog_status').selectize();
     $('.elgg-input-tags').selectize({
         plugins: ['remove_button'],
         delimiter: ',',

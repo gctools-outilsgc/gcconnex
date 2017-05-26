@@ -143,14 +143,6 @@ $tags_input = elgg_view('input/tags', array(
 	'value' => $vars['tags']
 ));
 
-$categories_input = elgg_view('input/select', array(
-    'name' => 'audience',
-    'id' => 'audience',
-    'options_values' => array('1'=> 'option the first','2'=> 'option the sec', '3'=> 'option the third', '4'=> 'option the four', '5'=> 'option the fif', '6'=> 'option the sic', '7'=> 'option the sev',),
-    'multiple' => 'multiple',
-    'class' => 'audience-select',
-));
-
 $access_label = elgg_echo('access');
 $access_input = elgg_view('input/access', array(
 	'name' => 'access_id',
@@ -245,12 +237,7 @@ $btn_language
 </div>
 
 <div>
-	<label for="blog_tags">$tags_label</label>
 	$tags_input
-</div>
-
-<div>
-$categories_input
 </div>
 
 <div>
