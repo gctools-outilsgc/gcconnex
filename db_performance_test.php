@@ -6,9 +6,15 @@ global $CONFIG;
 // array of queries to be used to test db performance and proper use of indexes
 // each entry needs to be an array containing the query and a critical excecution time in ms that when excceeded whould indicate a failed test
 // example: $test_queries[] = array("sql" => "select * from *", "time" => 0.15, "");
-// time is in milliseconds!
+// time is in seconds!
 $test_queries = array();
-$test_queries[] = array();
+
+$prefix = $CONFIG->dbprefix;	// please use this for table names, different installations will have different prefixes
+$test_queries[] = array("sql" => "select * from {$prefix}users_entity u WHERE 1 ORDER BY last_login asc LIMIT 25", "time" => 0.1);
+$test_queries[] = array("sql" => "select * from {$prefix} users_entity u WHERE 1 ORDER BY last_login asc LIMIT 50", "time" => 0.15);
+$test_queries[] = array("sql" => "select * from {$prefix}users_entity u WHERE 1 ORDER BY last_login asc LIMIT 100", "time" => 1.0);
+$test_queries[] = array("sql" => "select * from {$prefix}entities e WHERE access_id=2 ORDER BY time_created asc LIMIT 25", "time" => 0);
+$test_queries[] = array("sql" => "select * from {$prefix}river r WHERE enabled=1 ORDER BY posted asc LIMIT 25", "time" => 0.001);
 
 $results = array();			// results of the tests defined by $test_queries, string of 1/0/E for pass/fail/error for each db connection
 $fails = array();			// Details about each failed test, grouped by db connection
@@ -40,6 +46,7 @@ if ( count( $connections ) > 0 ){
 	// tests will be run on each connection
 	foreach ($connections as $id => $connection) {
 		echo " \nTests for DB {$id}: \n";
+		$results[$id] = "";			// initialize results string for the connection.	
 		// run all prepared tests using the connection
 		foreach ($test_queries as $test) {
 			// each test contains the test query as well as some relevant data, load it now
@@ -63,7 +70,7 @@ if ( count( $connections ) > 0 ){
 			if ( $t_1 - $t_0 >= $time ){
 				echo "0";
 				$results[$id]	.= "0";
-				$fails[$id][]	= "Following query ran in " . $t_1 - $t_0 . "ms >= {$time}ms: [$sql]"; 
+				$fails[$id][]	= "Following query ran in " . floatval($t_1 - $t_0) . "s >= {$time}s: {$sql}"; 
 			}
 			else{
 				echo "1";
@@ -74,9 +81,29 @@ if ( count( $connections ) > 0 ){
 		$connection->close();		// close the connection now that all tests have finished for it
 	}
 
-	// report the results
-	foreach ($results as $key => $res_string) {
-		echo "Tests for databse $key: $res_string";
+
+	// report any failed tests
+	if ( count($fails) > 0 ){
+		foreach ($fails as $db => $fail_reports) {
+			if ( count($fail_reports) > 0 ){
+				echo "\n\nThe following tests failed for databse $db: \n";	
+				foreach ($fail_reports as $fail) {
+					echo $fail . "\n";
+				}
+			}
+		}
+	}
+
+	// report any errors that occured
+	if ( count($errors) > 0 ){
+		foreach ($errors as $db => $error_reports) {
+			if ( count($error_reports) > 0 ){
+				echo "\n\nThe following tests resulted in errors for databse $db: \n";
+				foreach ($error_reports as $error) {
+					echo $error . "\n";
+				}
+			}
+		}
 	}
 }
 else { echo "No connections loaded"; }
