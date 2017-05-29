@@ -34,7 +34,7 @@ else {
 
 	// now add all the read servers
 	foreach( $CONFIG->db['read'] as $id => $dbread ){
-		$connections['read'.$id] = mysqli_connect( $dbread['dbhost'], $dbread['dbuser'], $dbread['dbpass'], $dbread['dbname'] );
+		$connections['read '.$id] = mysqli_connect( $dbread['dbhost'], $dbread['dbuser'], $dbread['dbpass'], $dbread['dbname'] );
 		// TODO: check for connection errors
 	}
 }
@@ -45,7 +45,7 @@ if ( count( $connections ) > 0 ){
 	echo "Database connection(s) created, preparing tests.";
 	// tests will be run on each connection
 	foreach ($connections as $id => $connection) {
-		echo " \nTests for DB {$id}: \n";
+		echo " \nTests for DB {$id}: \t";
 		$results[$id] = "";			// initialize results string for the connection.	
 		// run all prepared tests using the connection
 		foreach ($test_queries as $test) {
