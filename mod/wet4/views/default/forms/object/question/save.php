@@ -101,7 +101,12 @@ echo $btn_language;
 <div class="tab-content tab-content-border">
 <div class="mrgn-bttm-sm en">
 	<label for='question_title'><?php echo elgg_echo('questions:edit:question:title'); ?></label>
-	<?php echo elgg_view('input/text', $title); ?>
+	<?php
+	if(!$question->guid){
+		echo elgg_view('input/question_autocomplete', $title);
+	} else {
+		echo elgg_view('input/text', $title);
+	} ?>
 </div>
 <div class="mrgn-bttm-sm fr">
 	<label for='question_title2'><?php echo elgg_echo('questions:edit:question:title'); ?></label>
