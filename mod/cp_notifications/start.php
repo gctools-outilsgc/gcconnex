@@ -1,7 +1,7 @@
 <?php
 
 elgg_register_event_handler('init','system','cp_notifications_init');
-
+ 
 
 function cp_notifications_init() {
 
@@ -34,7 +34,7 @@ function cp_notifications_init() {
 	// intercepts and blocks emails and notifications to be sent out
 	elgg_register_plugin_hook_handler('email', 'system', 'cpn_email_handler_hook');
 	// send notifications when the action is sent out
-	elgg_register_event_handler('create','object','cp_create_notification');
+	elgg_register_event_handler('create','object','cp_create_notification',900);
 	elgg_register_event_handler('single_file_upload', 'object', 'cp_create_notification');
 	elgg_register_event_handler('single_zip_file_upload', 'object', 'cp_create_notification');
 	elgg_register_event_handler('multi_file_upload', 'object', 'cp_create_notification');
@@ -64,7 +64,38 @@ function cp_notifications_init() {
 
 
 	/// "minor save" for contents within groups
-	elgg_extend_view('forms/discussion/save', 'forms/minor_save', 100);
+	if (elgg_get_page_owner_entity() instanceof ElggGroup) {
+
+		$plugin_list = elgg_get_plugins('active', 1);
+		foreach ($plugin_list as $plugin_form)
+		{
+			$filepath = elgg_get_plugins_path().$plugin_form['title'].'/views/default/forms/'.$plugin_form['title'];
+			if (file_exists($filepath))
+			{
+				$dir = scandir($filepath);
+				foreach ($dir as $form_file)
+				{
+					if ((strstr($form_file,'edit') || strstr($form_file,'save') || strstr($form_file, 'upload')) && (!strstr($form_file, '.old'))) 
+					{
+						$remove_php = explode('.',$form_file);
+						elgg_extend_view('forms/'.$plugin_form['title'].'/'.$remove_php[0], 'forms/minor_save', 500);
+
+						if ($plugin_form['title'] === 'polls')
+						{
+							elgg_extend_view('forms/'.$plugin_form['title'].'/'.$remove_php[0],'forms/minor_save', 500);
+						}
+					}
+				}
+			}
+		}
+
+		elgg_extend_view('forms/photos/image/save', 'forms/minor_save', 500);
+		elgg_extend_view('forms/photos/batch/edit', 'forms/minor_save', 500);
+		elgg_extend_view('forms/photos/album/save', 'forms/minor_save', 500);
+		elgg_extend_view('forms/discussion/save', 'forms/minor_save', 500);
+		elgg_extend_view('forms/file_tools/upload/multi', 'forms/minor_save', 500);
+		elgg_extend_view('forms/file_tools/upload/zip', 'forms/minor_save', 500);
+	}
 }
 
 
@@ -782,6 +813,7 @@ function cp_create_notification($event, $type, $object) {
 
 	$do_not_subscribe_list = array('file', 'tidypics_batch', 'hjforum', 'hjforumcategory','hjforumtopic', 'messages', 'hjforumpost', 'site_notification', 'poll_choice','blog_revision','widget','folder','c_photo', 'cp_digest','MySkill', 'education', 'experience', 'poll_choice3');
 	
+	error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   {$testing}");
 	// since we implemented the multi file upload, each file uploaded will invoke this hook once to many times (we don't allow subtype file to go through, but check the event)
 	if ($object instanceof ElggObject && $event !== 'single_file_upload') {
 
