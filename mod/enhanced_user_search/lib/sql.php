@@ -69,6 +69,8 @@ class Constants {
         a.guid;
     END;";
 
+    $READY_SQL = "SELECT user_guid from {$tableName} limit 1;";
+
     $SEARCH_SQL = "
     SELECT SQL_CALC_FOUND_ROWS
       user_guid,
@@ -106,7 +108,8 @@ class Constants {
       $BUILD_SQL,
       $INDEX_SQL,
       $REFRESH_PROC,
-      $SEARCH_SQL
+      $SEARCH_SQL,
+      $READY_SQL
     );
   }
 }

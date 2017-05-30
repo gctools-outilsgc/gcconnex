@@ -23,7 +23,8 @@ interface iMemberSearch {
 
   public function initialize();
   public function refresh();
-  public function search($term, $limit);
+  public function search($term, $limit, $offset);
+  public function isReady();
 
 }
 
@@ -41,7 +42,8 @@ class DatabaseSearch implements iMemberSearch {
       $this->BUILD_SQL,
       $this->INDEX_SQL,
       $this->REFRESH_PROC,
-      $this->SEARCH_SQL
+      $this->SEARCH_SQL,
+      $this->READY_SQL
     ) = $c->get();
 
     $db_config = new \Elgg\Database\Config($CONFIG);
@@ -86,6 +88,13 @@ class DatabaseSearch implements iMemberSearch {
       $this->refresh();
     }
     mysqli_free_result($result);
+  }
+
+  public function isReady() {
+    $result = mysqli_query($this->conn, $this->READY_SQL);
+    $ready = $result->num_rows === 1;
+    mysqli_free_result($result);
+    return $ready;
   }
 
   public function refresh() {
@@ -167,6 +176,11 @@ class DatabaseSearch implements iMemberSearch {
 function get() {
   // we could allow configuration of backends here
   return new DatabaseSearch();
+}
+
+function ready() {
+  $s = new DatabaseSearch();
+  return $s->isReady();
 }
 
 
