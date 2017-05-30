@@ -22,13 +22,20 @@ $community_array = array(
     'service'=> elgg_echo('gctags:community:service'),
     'science'=> elgg_echo('gctags:community:science'), 
 );
+
+if (isset($vars['entity'])) {
+	$value = $vars['entity']->audience;
+	unset($vars['entity']);
+}
 //Class audience-select is used with selectize.js
 $communities_input = elgg_view('input/select', array(
     'name' => 'audience',
     'id' => 'audience',
     'options_values' => $community_array,
     'multiple' => 'multiple',
+    'value' => $value,
     'class' => 'audience-select',
 ));
 echo elgg_format_element('label', array('for' => 'audience'), elgg_echo('gctags:label:community'));
 echo $communities_input;
+echo $value;

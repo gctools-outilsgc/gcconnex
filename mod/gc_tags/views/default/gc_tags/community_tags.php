@@ -20,3 +20,21 @@ $tags_input = elgg_view('input/tags', array(
 
 echo elgg_view('input/community', array());
 echo $tags_input;
+
+?>
+
+
+<script>
+$(document).ready(function(){
+    //Declarin' vars
+    var submitBtn = $("button[name='save']");
+    var actionName = $(submitBtn).parents('form').attr('action');
+    actionName = actionName.split('/');
+    actionName = actionName.slice(2);
+    //Click the button I dare ya
+    $(submitBtn).on('click', function(event){
+        event.preventDefault;
+        alert(actionName);
+    });
+});
+</script>
