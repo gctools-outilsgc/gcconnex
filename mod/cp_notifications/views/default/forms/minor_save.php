@@ -10,9 +10,9 @@ $display .= "<section class='alert alert-danger'><h3 class='h3'> New content cre
 
 $display .= "<p>";
 $display .= elgg_view('input/checkbox', array(
-		'name' 		=>	"params[minor_save]",
-		'value' 	=>	0,
-		'default' 	=> 	1,
+		'name' 		=>	"minor_save",
+		'value' 	=>	'yes',
+		'default' 	=> 	'no',
 		'label' 	=>	'Minor Save',
 		'checked' 	=>	false,
 		'id' 		=>	'minor_save',

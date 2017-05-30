@@ -52,6 +52,8 @@ function cp_notifications_init() {
 	// since most of the notifications are built within the action file itself, the trigger_plugin_hook was added to respected plugins
 	elgg_register_plugin_hook_handler('cp_overwrite_notification', 'all', 'cp_overwrite_notification_hook');
 
+
+
     elgg_extend_view("js/elgg", "js/notification"); 
     elgg_extend_view("js/elgg", "js/popup");
     elgg_extend_view("js/elgg","js/wet4/language_ajax");
@@ -96,8 +98,38 @@ function cp_notifications_init() {
 		elgg_extend_view('forms/file_tools/upload/multi', 'forms/minor_save', 500);
 		elgg_extend_view('forms/file_tools/upload/zip', 'forms/minor_save', 500);
 	}
+
+	elgg_register_plugin_hook_handler('action', 'blog/save', 'minor_save_hook_handler', 300);
+
 }
 
+
+/**
+ * catches the minor save, determines whether to cancel or process the event handlers
+ *
+ * @param string $hook    The name of the plugin hook
+ * @param string $type    The type of the plugin hook
+ * @param mixed  $value   The current value of the plugin hook
+ * @param mixed  $params  Data passed from the trigger
+ *
+ * @return mixed if not null, this will be the new value of the plugin hook
+ */
+function minor_save_hook_handler($hook, $type, $value, $params) {
+
+    error_log("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL  ".get_input('minor_save')."    ///////     ".$params['minor_save']." /////    ".get_input('guid'));
+    
+    if (strcmp(get_input('minor_save'), 'yes') === 0) {
+
+	    elgg_unregister_event_handler('create','object','cp_create_notification',900);
+		elgg_unregister_event_handler('single_file_upload', 'object', 'cp_create_notification');
+		elgg_unregister_event_handler('single_zip_file_upload', 'object', 'cp_create_notification');
+		elgg_unregister_event_handler('multi_file_upload', 'object', 'cp_create_notification');
+		elgg_register_event_handler('create','annotation','cp_create_annotation_notification');
+
+	}
+
+    return false;//$params['entity']->getURL();
+}
 
 
 /**
@@ -812,7 +844,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 function cp_create_notification($event, $type, $object) {
 
 	$do_not_subscribe_list = array('file', 'tidypics_batch', 'hjforum', 'hjforumcategory','hjforumtopic', 'messages', 'hjforumpost', 'site_notification', 'poll_choice','blog_revision','widget','folder','c_photo', 'cp_digest','MySkill', 'education', 'experience', 'poll_choice3');
-	
+	$testing = get_input('minor_save');
 	error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   {$testing}");
 	// since we implemented the multi file upload, each file uploaded will invoke this hook once to many times (we don't allow subtype file to go through, but check the event)
 	if ($object instanceof ElggObject && $event !== 'single_file_upload') {
