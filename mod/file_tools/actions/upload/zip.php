@@ -33,8 +33,8 @@ if (!empty($container_guid) && get_uploaded_file("zip_file")) {
 				elgg_trigger_event('single_zip_file_upload', 'object', $forward_entity);
 			}
 			
-			elgg_register_event_handler('single_file_upload', 'object', 'cp_create_notification');
-			elgg_register_event_handler('single_multi_file_upload', 'object', 'cp_create_notification');
+			//elgg_register_event_handler('single_file_upload', 'object', 'cp_create_notification');
+			//elgg_register_event_handler('single_multi_file_upload', 'object', 'cp_create_notification');
 
 			if (elgg_instanceof($container, "group")) {
 				$forward_url = "file/group/" . $container->getGUID() . "/all#" . $parent_guid;

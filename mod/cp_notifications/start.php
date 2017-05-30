@@ -86,7 +86,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 	$add_to_sent = false;
 	$sender_guid = elgg_get_site_entity()->guid;
 
-	switch($cp_msg_type) {
+	switch ($cp_msg_type) {
 
 		/// EMAIL NOTIFICATIONS ONLY (password reset, registration, etc)
 		case 'cp_friend_invite': // invitefriends/actions/invite.php
@@ -780,9 +780,9 @@ function cp_create_notification($event, $type, $object) {
 
 	$do_not_subscribe_list = array('file', 'tidypics_batch', 'hjforum', 'hjforumcategory','hjforumtopic', 'messages', 'hjforumpost', 'site_notification', 'poll_choice','blog_revision','widget','folder','c_photo', 'cp_digest','MySkill', 'education', 'experience', 'poll_choice3');
 	
-	
+	error_log(">>>>>>>>>>>>>>> event happend!");
 	// since we implemented the multi file upload, each file uploaded will invoke this hook once to many times (we don't allow subtype file to go through, but check the event)
-	if ($object instanceof ElggObject) {
+	if ($object instanceof ElggObject && $event !== 'single_file_upload') {
 
 		if (in_array($object->getSubtype(), $do_not_subscribe_list)) 
 			return true;		
@@ -811,8 +811,23 @@ error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>> switch case: {$switch_case}");
 		/// invoked when zipped file upload function is used
 		/// object: user or group guid that the file is uploaded to
 		case 'single_zip_file_upload':
-			error_log(">>>>>>>>>>>>>>>>>>>>>> single zip file upload: ".$object->type);
-			return;
+			error_log(" >>>>>>>>>>>>>>>>> forward to this place: {$object->getGUID()}");
+			$to_recipients = get_subscribers($dbprefix, elgg_get_logged_in_user_guid(), $object->getGUID());
+			$to_recipients_site = get_site_subscribers($dbprefix, elgg_get_logged_in_user_guid(), $object->getGUID());
+
+			$subject = elgg_echo('cp_notify_usr:subject:new_content2', array(elgg_get_logged_in_user_entity()->username, 'file'), 'en');
+			$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content2', array(elgg_get_logged_in_user_entity()->username, 'fichier', false), 'fr');
+
+			$author = elgg_get_logged_in_user_entity();
+			$message = array(
+				'cp_topic' => $object,
+				'cp_msg_type' => 'zipped_file',
+				'cp_topic_description_discussion' => 'Please view the files here',
+				'cp_topic_description_discussion2' => 'SVP voir les fichiers ici',
+			);
+
+error_log(" >>>>>>>>>>>>>>>>> n;ajn;a;lsfdsf   ".print_r($to_recipients,true));
+
 			break;
 
 		/// invoked when multiple file upload function is used
@@ -829,9 +844,24 @@ error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>> switch case: {$switch_case}");
 				$file_forward_url = $entity->getURL();
 			}
 
-			error_log(">>>>>>>>>>>>>>>>>>>>>> multi file upload: {$object['number_files_uploaded']} /// {$object['forward_guid']} /// {$file_forward_url} /// container = {$entity->getContainerGUID()}");
+			$author = elgg_get_logged_in_user_entity();
+			error_log(">>>>>>>>>>>>>>>>>>>>>> multi file upload: {$object['number_files_uploaded']} /// object forward guid: {$object['forward_guid']} /// {$file_forward_url} /// container = {$entity->getContainerGUID()}");
 
-			return;
+			$to_recipients = get_subscribers($dbprefix, elgg_get_logged_in_user_guid(), $object['group_guid']);
+			$to_recipients_site = get_site_subscribers($dbprefix, elgg_get_logged_in_user_guid(), $object['group_guid']);
+
+			$subject = elgg_echo('cp_notify_usr:subject:new_content2', array(elgg_get_logged_in_user_entity()->username, 'file'), 'en');
+			$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content2', array(elgg_get_logged_in_user_entity()->username, 'fichier', false), 'fr');
+			$object = $entity;
+
+			$message = array(
+				'cp_topic' => $object,
+				'cp_msg_type' => 'multiple_file',
+				'cp_topic_description_discussion' => 'Please view the files here',
+				'cp_topic_description_discussion2' => 'SVP voir les fichiers ici',
+			);
+
+
 			break;
 
 
@@ -1093,7 +1123,7 @@ error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>> switch case: {$switch_case}");
 	$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
 
 
-
+error_log(">>>>>>> count: ".count($to_recipients));
 	/// send the email notification
 	if (count($to_recipients) > 0 && is_array($to_recipients)) {
 		foreach ($to_recipients as $to_recipient) {
@@ -1110,14 +1140,14 @@ error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>> switch case: {$switch_case}");
 					create_digest($author, $object->getSubtype(), $content_entity, get_entity($to_recipient->guid));
 
 				} else {
-
+error_log(">>>>>>> user: {$to_recipient->guid}");
 					$template = elgg_view('cp_notifications/email_template', $message);
 
-					/*if (elgg_is_active_plugin('phpmailer'))
+					if (elgg_is_active_plugin('phpmailer'))
 						phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );
 					else
 						mail($to_recipient->email,$subject,$template,cp_get_headers());
-				*/}
+				}
 			}
 		}
 	}
@@ -1210,10 +1240,17 @@ function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $para
 
 			foreach ($digest_items as $digest_item) {
 
-				if ($digest_item->entry_type === 'group')
-					$digest_array[$digest_item->entry_type][base64_decode($digest_item->group_name)][$digest_item->action_type][$digest_item->entity_guid] = $digest_item->notification_entry;
+				// check to make sure that the string is encoded with base 64 or not (legacy)
+				if (isJson($digest_item->notification_entry))
+					$notification_entry = $digest_item->notification_entry;
 				else
-					$digest_array[$digest_item->entry_type][$digest_item->action_type][$digest_item->entity_guid] = $digest_item->notification_entry;
+					$notification_entry = base64_decode($digest_item->notification_entry);
+
+
+				if ($digest_item->entry_type === 'group')
+					$digest_array[$digest_item->entry_type][base64_decode($digest_item->group_name)][$digest_item->action_type][$digest_item->entity_guid] = $notification_entry;
+				else
+					$digest_array[$digest_item->entry_type][$digest_item->action_type][$digest_item->entity_guid] = $notification_entry;
 
 			}
 
@@ -1299,11 +1336,11 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 
 			echo $template . "<br/><br/>";
 
-/*			if (elgg_is_active_plugin('phpmailer'))
+			if (elgg_is_active_plugin('phpmailer'))
 				phpmailer_send($user->email, $user->name, $subject, $template, NULL, true );
 			else
 				mail($user->email, $subject, $template, cp_get_headers());
-*/
+
 
 			// delete and clean up the notification, already sent so we don't need to keep it anymore
 			$query = "DELETE FROM notification_digest WHERE user_guid = {$user->getGUID()}";

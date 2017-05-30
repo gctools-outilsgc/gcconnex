@@ -209,14 +209,21 @@ for ($i = 0; $i < count($_FILES['upload']['name']); $i++) {
 	/// check if the new notifications plugin is active, then trigger the plugin hook, otherwise, trigger event hook
 	/// if cp notification plugin is active, use that for notifications
 	if (elgg_is_active_plugin('cp_notifications')) {
-		/// differentiate between single file upload and multiple files upload
-		$forward_guid = $folder_guid;
-		if ($folder_guid === 0)
+	
+		if ($folder_guid === 0) {
 			$forward_guid = $container_guid;
+			$group_guid = $container_guid;
+		} else {
+			$forward_guid = $folder_guid;
+			$group_guid = get_entity($file->container_guid)->getGUID();
+
+		}
+
 
 		$forward_entity = array(
 			'number_files_uploaded' => $number_of_files_uploaded,
 			'forward_guid' => $forward_guid,
+			'group_guid' => $group_guid,
 		);
 		error_log(">>>>>>>>>>>>>>>>>>>>>  multi file upload.php: {$forward_entity['number_files_uploaded']} ///   {$folder_guid} /// {$container_guid} /// {$forward_guid}");
 		elgg_trigger_event('multi_file_upload', 'object', $forward_entity);

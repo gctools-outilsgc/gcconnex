@@ -178,6 +178,50 @@ switch ($msg_type) {
 
 		break;
 
+	case 'multiple_file':
+		$user = elgg_get_logged_in_user_entity();
+		$group_url = elgg_get_site_entity()->getURL()."file/group/{$vars['cp_topic']->guid}/all#?utm_source=notification&utm_medium=email";
+		$user_url = elgg_get_site_entity()->getURL()."file/owner/{$user->username}#?utm_source=notification&utm_medium=email";
+
+		if ($vars['cp_topic'] instanceof ElggGroup) {
+			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_new_content:title',array($user->getURL().'?utm_source=notification&utm_medium=email', $user->username, 'file', $vars['cp_topic']->getURL(), $vars['cp_topic']->name),'en');
+			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_m3',array($user->getURL().'?utm_source=notification&utm_medium=email', $user->username, 'fichier', $vars['cp_topic']->getURL(), $vars['cp_topic']->name),'en');
+
+			$cp_notify_msg_description_en = elgg_echo('cp_notify:body_new_content:no_description_discussion',array($group_url),'en');
+			$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_new_content:no_description_discussion',array($group_url),'fr');
+
+		} else {
+
+			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_new_content:title3',array($user->getURL().'?utm_source=notification&utm_medium=email', $user->username, 'file'),'en');
+			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title3',array($user->getURL().'?utm_source=notification&utm_medium=email', $user->username, 'fichier'),'fr');
+
+			$cp_notify_msg_description_en = elgg_echo('cp_notify:body_new_content:no_description_discussion',array($user_url),'en');
+			$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_new_content:no_description_discussion',array($user_url),'fr');
+		}
+		break;
+
+	case 'zipped_file':
+		$user = elgg_get_logged_in_user_entity();
+		$group_url = elgg_get_site_entity()->getURL()."file/group/{$vars['cp_topic']->guid}/all#?utm_source=notification&utm_medium=email";
+		$user_url = elgg_get_site_entity()->getURL()."file/owner/{$user->username}#?utm_source=notification&utm_medium=email";
+		
+		if ($vars['cp_topic'] instanceof ElggGroup) {
+			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_new_content:title',array($user->getURL().'?utm_source=notification&utm_medium=email', $user->username, 'file', $vars['cp_topic']->getURL(), $vars['cp_topic']->name),'en');
+			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_m3',array($user->getURL().'?utm_source=notification&utm_medium=email', $user->username, 'fichier', $vars['cp_topic']->getURL(), $vars['cp_topic']->name),'en');
+
+			$cp_notify_msg_description_en = elgg_echo('cp_notify:body_new_content:no_description_discussion',array($group_url),'en');
+			$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_new_content:no_description_discussion',array($group_url),'fr');
+
+		} else {
+
+			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_new_content:title3',array($user->getURL().'?utm_source=notification&utm_medium=email', $user->username, 'file'),'en');
+			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title3',array($user->getURL().'?utm_source=notification&utm_medium=email', $user->username, 'fichier'),'fr');
+
+			$cp_notify_msg_description_en = elgg_echo('cp_notify:body_new_content:no_description_discussion',array($user_url),'en');
+			$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_new_content:no_description_discussion',array($user_url),'fr');
+		}
+
+		break;
 	case 'new_mission':
 	case 'cp_new_type': // new blogs or other entities
 
