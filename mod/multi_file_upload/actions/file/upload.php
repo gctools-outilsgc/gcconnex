@@ -8,21 +8,13 @@
  * @author GCTools
  */
 
-//require_once($_SERVER['DOCUMENT_ROOT'].'/engine/start.php');
-require_once('/var/www/html/gcconnex/engine/start.php');
-
+require_once($_SERVER['DOCUMENT_ROOT'].'/engine/start.php');
 //error_log($_SERVER['DOCUMENT_ROOT']);
 
-
-//$title = htmlspecialchars(get_input('title', '', false), ENT_QUOTES, 'UTF-8');
-//$title2 = htmlspecialchars(get_input('title2', '', false), ENT_QUOTES, 'UTF-8');
-//$desc = get_input("description");
-//$desc2 = get_input("description2");
 $access_id = (int) get_input("access_id");
 $container_guid = (int) get_input('container_guid', 0);
 //$guid = (int) get_input('file_guid');
 $folder_guid = (int) get_input("folder_guid", 0);
-
 
 if ($container_guid == 0) {
 	$container_guid = elgg_get_logged_in_user_guid();
@@ -50,10 +42,7 @@ for ($i = 0; $i < count($_FILES['upload']['name']); $i++) {
 	// check if upload attempted and failed
 	if (!empty($_FILES['upload']['name'][$i]) && $_FILES['upload']['error'][$i] != 0) {
 		$error = elgg_get_friendly_upload_error($_FILES['upload']['error'][$i]);
-
 		register_error($error);
-		//error_log('empty');
-		//forward(REFERER);
 		continue;
 	}
 
@@ -61,8 +50,6 @@ for ($i = 0; $i < count($_FILES['upload']['name']); $i++) {
 	if (empty($_FILES['upload']['name'][$i])) {
 		$error = elgg_echo('file:nofile');
 		register_error($error);
-
-		//forward(REFERER);
 		continue;
 	}
 
@@ -106,9 +93,8 @@ for ($i = 0; $i < count($_FILES['upload']['name']); $i++) {
 
 		$guid = $file->save();
 
-			// keep track of the files that are uploaded successfully
-	$number_of_files_uploaded++;
-	error_log(">>>>>>>>>>>>>>>>>>>>>>   number of files uploaded: {$number_of_files_uploaded}");
+		// keep track of the files that are uploaded successfully
+		$number_of_files_uploaded++;
 
 
 		// if image, we need to create thumbnails (this should be moved into a function)
@@ -168,11 +154,9 @@ for ($i = 0; $i < count($_FILES['upload']['name']); $i++) {
 		}
 
 	} else {
-
 		// not saving a file but still need to save the entity to push attributes to database
 		$file->save();
 	}
-
 
 
 	// file saved so clear sticky form
@@ -198,7 +182,7 @@ for ($i = 0; $i < count($_FILES['upload']['name']); $i++) {
 		$error = elgg_echo("file:uploadfailed");
 		register_error($error);
 
-		//log errors into session variable to display
+		// log errors into session variable to display
 		$failedMessage .= '<li>-'.$_FILES['upload']['name'][$i].'</li>';
 		$_SESSION['multi_file_upload_fail'] = elgg_echo('multi_upload:failed', array($failedMessage));
 		continue;
@@ -219,15 +203,12 @@ for ($i = 0; $i < count($_FILES['upload']['name']); $i++) {
 
 		}
 
-
 		$forward_entity = array(
 			'number_files_uploaded' => $number_of_files_uploaded,
 			'forward_guid' => $forward_guid,
 			'group_guid' => $group_guid,
 		);
-		error_log(">>>>>>>>>>>>>>>>>>>>>  multi file upload.php: {$forward_entity['number_files_uploaded']} ///   {$folder_guid} /// {$container_guid} /// {$forward_guid}");
 		elgg_trigger_event('multi_file_upload', 'object', $forward_entity);
-		
 		elgg_register_event_handler('single_file_upload', 'object', 'cp_create_notification');
 		elgg_register_event_handler('single_zip_file_upload', 'object', 'cp_create_notification');
 	}

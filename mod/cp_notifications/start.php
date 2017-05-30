@@ -62,6 +62,9 @@ function cp_notifications_init() {
 	elgg_register_plugin_hook_handler('cron', 'daily', 'cp_digest_daily_cron_handler');
 	elgg_register_plugin_hook_handler('cron', 'weekly', 'cp_digest_weekly_cron_handler');
 
+
+	/// "minor save" for contents within groups
+	elgg_extend_view('forms/discussion/save', 'forms/minor_save', 100);
 }
 
 
@@ -777,10 +780,8 @@ function cp_create_annotation_notification($event, $type, $object) {
  */
 function cp_create_notification($event, $type, $object) {
 
-
 	$do_not_subscribe_list = array('file', 'tidypics_batch', 'hjforum', 'hjforumcategory','hjforumtopic', 'messages', 'hjforumpost', 'site_notification', 'poll_choice','blog_revision','widget','folder','c_photo', 'cp_digest','MySkill', 'education', 'experience', 'poll_choice3');
 	
-	error_log(">>>>>>>>>>>>>>> event happend!");
 	// since we implemented the multi file upload, each file uploaded will invoke this hook once to many times (we don't allow subtype file to go through, but check the event)
 	if ($object instanceof ElggObject && $event !== 'single_file_upload') {
 
@@ -804,14 +805,11 @@ function cp_create_notification($event, $type, $object) {
 	if ($object instanceof ElggObject)
 		$switch_case = $object->getSubtype();	
 
-error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>> switch case: {$switch_case}");
-
 	switch ($switch_case) {
 
 		/// invoked when zipped file upload function is used
 		/// object: user or group guid that the file is uploaded to
 		case 'single_zip_file_upload':
-			error_log(" >>>>>>>>>>>>>>>>> forward to this place: {$object->getGUID()}");
 			$to_recipients = get_subscribers($dbprefix, elgg_get_logged_in_user_guid(), $object->getGUID());
 			$to_recipients_site = get_site_subscribers($dbprefix, elgg_get_logged_in_user_guid(), $object->getGUID());
 
@@ -825,16 +823,12 @@ error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>> switch case: {$switch_case}");
 				'cp_topic_description_discussion' => 'Please view the files here',
 				'cp_topic_description_discussion2' => 'SVP voir les fichiers ici',
 			);
-
-error_log(" >>>>>>>>>>>>>>>>> n;ajn;a;lsfdsf   ".print_r($to_recipients,true));
-
 			break;
 
 		/// invoked when multiple file upload function is used
 		/// object: array ( number_files_uploaded, forward_guid )
 		case 'multi_file_upload':
-		
-
+	
 			$entity = get_entity($object['forward_guid']);
 			if (elgg_instanceof('group', $entity)) {
 				$file_forward_url = elgg_get_site_entity()->getURL()."file/group/{$object['forward_guid']}/all";
@@ -845,8 +839,6 @@ error_log(" >>>>>>>>>>>>>>>>> n;ajn;a;lsfdsf   ".print_r($to_recipients,true));
 			}
 
 			$author = elgg_get_logged_in_user_entity();
-			error_log(">>>>>>>>>>>>>>>>>>>>>> multi file upload: {$object['number_files_uploaded']} /// object forward guid: {$object['forward_guid']} /// {$file_forward_url} /// container = {$entity->getContainerGUID()}");
-
 			$to_recipients = get_subscribers($dbprefix, elgg_get_logged_in_user_guid(), $object['group_guid']);
 			$to_recipients_site = get_site_subscribers($dbprefix, elgg_get_logged_in_user_guid(), $object['group_guid']);
 
@@ -860,10 +852,7 @@ error_log(" >>>>>>>>>>>>>>>>> n;ajn;a;lsfdsf   ".print_r($to_recipients,true));
 				'cp_topic_description_discussion' => 'Please view the files here',
 				'cp_topic_description_discussion2' => 'SVP voir les fichiers ici',
 			);
-
-
 			break;
-
 
 		case 'discussion_reply':
 		case 'comment':
@@ -1053,7 +1042,7 @@ error_log(" >>>>>>>>>>>>>>>>> n;ajn;a;lsfdsf   ".print_r($to_recipients,true));
 				'question' => elgg_echo('cp_notify:subject:new_content_fem',array("question",$group->name),'fr'),
 			);
 
-			// cyu - if there is something missing, we can use a fallback string
+			// if there is something missing, we can use a fallback string
 			$subj_gender = ($subtypes_gender_subject[$object->getSubtype()] == '') ? elgg_echo('cp_notify:subject:new_content_mas',array($user->name,$object->getSubtype(),$object->title),'fr') : $subtypes_gender_subject[$object->getSubtype()];
 
 			// subscribed to content within a group
@@ -1061,9 +1050,7 @@ error_log(" >>>>>>>>>>>>>>>>> n;ajn;a;lsfdsf   ".print_r($to_recipients,true));
 				$subject = elgg_echo('cp_notify:subject:new_content',array(cp_translate_subtype($object->getSubtype()),$group->name),'en');
 				$subject .= ' | '.$subj_gender;
 
-				//$to_recipients = get_subscribers($dbprefix, $object->getContainerGUID(), $object->guid);
 				$guidone = $object->getContainerGUID();
-
 				$author_id = $object->getOwnerGUID();
 				$content_id = $object->getContainerGUID();
 
@@ -1123,7 +1110,7 @@ error_log(" >>>>>>>>>>>>>>>>> n;ajn;a;lsfdsf   ".print_r($to_recipients,true));
 	$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
 
 
-error_log(">>>>>>> count: ".count($to_recipients));
+
 	/// send the email notification
 	if (count($to_recipients) > 0 && is_array($to_recipients)) {
 		foreach ($to_recipients as $to_recipient) {
@@ -1140,7 +1127,7 @@ error_log(">>>>>>> count: ".count($to_recipients));
 					create_digest($author, $object->getSubtype(), $content_entity, get_entity($to_recipient->guid));
 
 				} else {
-error_log(">>>>>>> user: {$to_recipient->guid}");
+
 					$template = elgg_view('cp_notifications/email_template', $message);
 
 					if (elgg_is_active_plugin('phpmailer'))
