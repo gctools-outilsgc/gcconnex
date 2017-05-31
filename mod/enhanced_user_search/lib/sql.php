@@ -5,6 +5,7 @@ namespace NRC\EUS\SQL;
 class Constants {
   public function get() {
     $dbprefix = elgg_get_config("dbprefix");
+    $dbname = elgg_get_config("dbname");
 
     $tableName = "NRC_EUS_mvMemberSearch";
     $procName = "NRC_EUS_Refresh_MemberSearch";
@@ -102,6 +103,18 @@ class Constants {
     ORDER BY
       relevance DESC
     LIMIT ?, ?;";
+
+    $TABLE_EXISTS_SQL = "
+    SELECT *
+      FROM
+        information_schema.tables
+      WHERE
+        table_schema = '{$dbname}'
+        AND table_name = '{$tableName}'
+      LIMIT 1";
+
+    $PROC_EXISTS_SQL = "SHOW PROCEDURE STATUS WHERE name = \"${procName}\";";
+
     return array(
       $tableName,
       $procName,
@@ -109,7 +122,9 @@ class Constants {
       $INDEX_SQL,
       $REFRESH_PROC,
       $SEARCH_SQL,
-      $READY_SQL
+      $READY_SQL,
+      $TABLE_EXISTS_SQL,
+      $PROC_EXISTS_SQL
     );
   }
 }
