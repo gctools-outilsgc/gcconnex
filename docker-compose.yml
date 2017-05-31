@@ -35,6 +35,16 @@ services:
     environment:
       - VIRTUAL_HOST=gcconnex.local
 
+  gcconnex-cron:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.cron
+    volumes:
+      - .:/var/www/html
+      - ./data/data:/data
+    depends_on:
+      - gcconnex-db
+
   # ###########################################################################
   # Database container for gcconnex, accessible from within gcconnex using the
   # network host "gcconnex-db".

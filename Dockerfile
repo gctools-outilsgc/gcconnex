@@ -2,9 +2,8 @@ FROM ubuntu:14.04
 MAINTAINER Luc Belliveau <luc.belliveau@nrc-cnrc.gc.ca>
 
 # Install dependencies
-RUN echo bla
 RUN apt-get update
-RUN apt-get install -y git apache2 php5 libapache2-mod-php5 php5-mysql php5-gd php5-curl wget
+RUN apt-get install -y git apache2 php5 libapache2-mod-php5 php5-mysql php5-gd php5-curl
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
@@ -12,16 +11,6 @@ RUN a2enmod rewrite
 # Modify Apache config for Elgg
 RUN echo '<Directory /var/www/html>\nOptions Indexes FollowSymLinks MultiViews\nAllowOverride All\nOrder allow,deny\nallow from all\n</Directory>\n' | sed '/^<VirtualHost \*:80>/r /dev/stdin' /etc/apache2/sites-available/000-default.conf > /etc/apache2/sites-available/tmp
 RUN mv /etc/apache2/sites-available/tmp /etc/apache2/sites-available/000-default.conf
-
-# Add a copy of GCconnex to the image
-COPY . /var/www/html
-
-# Install the Elgg crontab
-RUN cp /var/www/html/docs/examples/crontab.example /opt/crontab.example
-RUN sed -i 's/www.example.com/127\.0\.0\.1/' /opt/crontab.example
-RUN sed -i 's/lwp-request/wget/' /opt/crontab.example
-RUN sed -i 's/-m GET -d/--output-document=\/dev\/null --spider/' /opt/crontab.example
-RUN crontab /opt/crontab.example
 
 # Modify Apache config to output access and error log to stdio
 # So we can see the output using `docker-compose logs` or directly with `docker-compose up`)
