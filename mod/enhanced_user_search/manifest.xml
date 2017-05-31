@@ -6,7 +6,9 @@
 	<version>1.0</version>
 	<category>NRC</category>
 	<blurb>User Search</blurb>
-	<description>Provides enhanced search functionality</description>
+	<description>
+    Provides enhanced search functionality for GCconnex
+  </description>
 	<website>http://www.nrc-cnrc.gc.ca</website>
 	<copyright>National Research Council Canada 2017</copyright>
 	<license>GNU General Public License version 2</license>
