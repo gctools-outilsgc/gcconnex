@@ -164,6 +164,7 @@ class DatabaseSearch implements iMemberSearch {
   }
 
   public function refresh() {
+    set_time_limit(500);
     mysqli_query($this->conn, "CALL `{$this->procName}`();");
   }
 
