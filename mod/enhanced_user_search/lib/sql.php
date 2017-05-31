@@ -19,11 +19,29 @@ class Constants {
       gc_skills text,
       portfolio text,
       work text
+    );
+    CREATE TABLE IF NOT EXISTS `{$tableName}_tmp` (
+      user_guid bigint(20) unsigned not null,
+      name text not null,
+      contactemail text,
+      education text,
+      gc_skills text,
+      portfolio text,
+      work text
     );";
 
     $INDEX_SQL = "
     CREATE FULLTEXT INDEX NRC_EUS_MemberSearch ON
-      {$tableName}(
+      `{$tableName}`(
+        name,
+        contactemail,
+        education,
+        gc_skills,
+        portfolio,
+        work
+      );
+    CREATE FULLTEXT INDEX NRC_EUS_MemberSearchTmp ON
+      `{$tableName}_tmp`(
         name,
         contactemail,
         education,
@@ -31,12 +49,13 @@ class Constants {
         portfolio,
         work
       );";
+
     $REFRESH_PROC = "
     CREATE PROCEDURE `{$procName}` ()
     BEGIN
-      TRUNCATE TABLE {$tableName};
+      TRUNCATE TABLE `{$tableName}_tmp`;
 
-      INSERT INTO {$tableName}
+      INSERT INTO `{$tableName}_tmp`
       SELECT
         a.guid as user_guid,
         a.name as name,
@@ -68,6 +87,11 @@ class Constants {
         LEFT JOIN {$dbprefix}objects_entity f4 ON f4.guid = e4.string
       GROUP BY
         a.guid;
+
+      RENAME TABLE `{$tableName}_tmp` TO `{$tableName}_tmpA`,
+                   `{$tableName}` TO `{$tableName}_tmp`,
+                   `{$tableName}_tmpA` TO `{$tableName}`;
+
     END;";
 
     $READY_SQL = "SELECT user_guid from {$tableName} limit 1;";

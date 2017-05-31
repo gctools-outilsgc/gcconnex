@@ -142,8 +142,10 @@ class DatabaseSearch implements iMemberSearch {
   public function initialize() {
     $result = mysqli_query($this->conn, $this->TABLE_EXISTS_SQL);
     if ($result->num_rows === 0) {
-      mysqli_query($this->conn, $this->BUILD_SQL);
-      mysqli_query($this->conn, $this->INDEX_SQL);
+      mysqli_multi_query($this->conn, $this->BUILD_SQL);
+      while (mysqli_next_result($this->conn)) {;}
+      mysqli_multi_query($this->conn, $this->INDEX_SQL);
+      while (mysqli_next_result($this->conn)) {;}
     }
     mysqli_free_result($result);
 

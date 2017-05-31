@@ -26,7 +26,7 @@ function enhanced_user_search_init() {
 
   // Register the cron handler
   elgg_register_plugin_hook_handler(
-    'cron', 'fifteenmin', 'enhanced_user_search_cron', 1
+    'cron', 'minute', 'enhanced_user_search_cron', 1
   );
 
 }
