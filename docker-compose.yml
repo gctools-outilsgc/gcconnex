@@ -35,6 +35,11 @@ services:
     environment:
       - VIRTUAL_HOST=gcconnex.local
 
+  # ###########################################################################
+  # The GCConnex cron container.  This container is responsible for executing
+  # elgg's built in cron based on the recommended settings.
+  # ###########################################################################
+
   gcconnex-cron:
     build:
       context: .
