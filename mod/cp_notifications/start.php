@@ -116,19 +116,17 @@ function cp_notifications_init() {
  */
 function minor_save_hook_handler($hook, $type, $value, $params) {
 
-    error_log("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL  ".get_input('minor_save')."    ///////     ".$params['minor_save']." /////    ".get_input('guid'));
-    
     if (strcmp(get_input('minor_save'), 'yes') === 0) {
 
 	    elgg_unregister_event_handler('create','object','cp_create_notification',900);
 		elgg_unregister_event_handler('single_file_upload', 'object', 'cp_create_notification');
 		elgg_unregister_event_handler('single_zip_file_upload', 'object', 'cp_create_notification');
 		elgg_unregister_event_handler('multi_file_upload', 'object', 'cp_create_notification');
-		elgg_register_event_handler('create','annotation','cp_create_annotation_notification');
+		elgg_unregister_event_handler('create','annotation','cp_create_annotation_notification');
 
 	}
 
-    return false;//$params['entity']->getURL();
+    return true;
 }
 
 
@@ -471,8 +469,9 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$event = $params['cp_event'];
 			$startdate = $params['startdate'];
 			$enddate = $params['enddate'];
-
-		    $subject = $event->title.' - '.elgg_get_logged_in_user_entity()->username; // Add to my Outlook calendar | Ajoutez a mon calendrier d'Outlook
+			
+			// Add to my Outlook calendar | Ajoutez a mon calendrier d'Outlook
+		    $subject = $event->title.' - '.elgg_get_logged_in_user_entity()->username; 
 
 		   	$event = 'event';
 		   	$to_recipients[] = $params['cp_event_send_to_user'];
@@ -844,8 +843,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 function cp_create_notification($event, $type, $object) {
 
 	$do_not_subscribe_list = array('file', 'tidypics_batch', 'hjforum', 'hjforumcategory','hjforumtopic', 'messages', 'hjforumpost', 'site_notification', 'poll_choice','blog_revision','widget','folder','c_photo', 'cp_digest','MySkill', 'education', 'experience', 'poll_choice3');
-	$testing = get_input('minor_save');
-	error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   {$testing}");
+
 	// since we implemented the multi file upload, each file uploaded will invoke this hook once to many times (we don't allow subtype file to go through, but check the event)
 	if ($object instanceof ElggObject && $event !== 'single_file_upload') {
 
@@ -872,7 +870,6 @@ function cp_create_notification($event, $type, $object) {
 	switch ($switch_case) {
 
 		/// invoked when zipped file upload function is used
-		/// object: user or group guid that the file is uploaded to
 		case 'single_zip_file_upload':
 			$to_recipients = get_subscribers($dbprefix, elgg_get_logged_in_user_guid(), $object->getGUID());
 			$to_recipients_site = get_site_subscribers($dbprefix, elgg_get_logged_in_user_guid(), $object->getGUID());
@@ -890,7 +887,6 @@ function cp_create_notification($event, $type, $object) {
 			break;
 
 		/// invoked when multiple file upload function is used
-		/// object: array ( number_files_uploaded, forward_guid )
 		case 'multi_file_upload':
 	
 			$entity = get_entity($object['forward_guid']);
@@ -1147,7 +1143,7 @@ function cp_create_notification($event, $type, $object) {
 				}
 			}
 	
-			// cyu - client wants the html tags stripped from the notifications
+			// client wants the html tags stripped from the notifications
 			$object_description = ($object->description != strip_tags($object->description)) ? "" : $object->description;
 
 
@@ -1459,6 +1455,8 @@ function cp_notification_preparation_send($entity, $to_user, $message, $guid_two
  * This is a mirror image of the core function: /engine/classes/Elgg/PasswordService.php
  *
  * Only need to send an e-mail notification out, no need to send a site-mail
+ *
+ * @param ElggUser 	$user 	user entity
  */
 function cp_send_new_password_request($user) {
 	if (!$user instanceof ElggUser)
@@ -1469,11 +1467,9 @@ function cp_send_new_password_request($user) {
 	$user->setPrivateSetting('passwd_conf_code', $code);
 	$user->setPrivateSetting('passwd_conf_time', time());
 
-	// generate link
 	$link = elgg_get_site_url()."changepassword?u={$user->guid}&c={$code}";
-
-	// generate email
 	$ip_address = _elgg_services()->request->getClientIp();
+
 	// we don't need to check if the plugin (cp_notifications) is enabled here
 	$message = array(
 		'cp_password_request_user' => $user->username,
@@ -1564,25 +1560,25 @@ function notify_entity_menu_setup($hook, $type, $return, $params) {
 	} else if ( $entity->getContainerEntity() instanceof ElggUser )
 		$allow_subscription = true;
 
-		if($entity instanceof ElggGroup){
-			$entType = 'group';
+	if ($entity instanceof ElggGroup) {
+		$entType = 'group';
+		if($entity->title3){
+				$entName = gc_explode_translation($entity->title3, get_current_language());
+		}else{
+				$entName = $entity->name;
+		}
+	} else {
+		if(!in_array($entity->getSubtype(), array('comment', 'discussion_reply', 'thewire'))){
 			if($entity->title3){
 					$entName = gc_explode_translation($entity->title3, get_current_language());
 			}else{
-					$entName = $entity->name;
+					$entName = $entity->title;
 			}
 		} else {
-			if(!in_array($entity->getSubtype(), array('comment', 'discussion_reply', 'thewire'))){
-				if($entity->title3){
-						$entName = gc_explode_translation($entity->title3, get_current_language());
-				}else{
-						$entName = $entity->title;
-				}
-			} else {
-				$entName = $entity->getOwnerEntity()->name;
-			}
-			$entType = $entity->getSubtype();
+			$entName = $entity->getOwnerEntity()->name;
 		}
+		$entType = $entity->getSubtype();
+	}
 
 	if ($allow_subscription && elgg_is_logged_in()) {
 	    if ( check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $entity->getGUID()) || check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $entity->getGUID()) ) {
