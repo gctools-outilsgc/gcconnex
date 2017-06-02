@@ -81,11 +81,6 @@ function cp_notifications_init() {
 					{
 						$remove_php = explode('.',$form_file);
 						elgg_extend_view('forms/'.$plugin_form['title'].'/'.$remove_php[0], 'forms/minor_save', 500);
-
-						if ($plugin_form['title'] === 'polls')
-						{
-							elgg_extend_view('forms/'.$plugin_form['title'].'/'.$remove_php[0],'forms/minor_save', 500);
-						}
 					}
 				}
 			}
@@ -908,6 +903,7 @@ function cp_create_notification($event, $type, $object) {
 
 			$message = array(
 				'cp_topic' => $object,
+
 				'cp_msg_type' => 'multiple_file',
 				'cp_topic_description_discussion' => 'Please view the files here',
 				'cp_topic_description_discussion2' => 'SVP voir les fichiers ici',
