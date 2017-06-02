@@ -71,6 +71,17 @@
   position: relative;
 }
 
+.elgg-menu-group-ddb {
+	padding: 0 !important;
+}
+
+@media (max-width: 990px) and (min-width: 481px)
+{
+	.groups-info .pull-left {
+  	float: none !important;
+  }
+}
+
 @media (max-width: 480px)
 {
 	.group-summary-holder {
