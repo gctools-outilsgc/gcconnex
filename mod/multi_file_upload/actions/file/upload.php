@@ -34,7 +34,7 @@ if ($guid > 0) {
 elgg_unregister_event_handler('single_file_upload', 'object', 'cp_create_notification');
 elgg_unregister_event_handler('single_zip_file_upload', 'object', 'cp_create_notification');
 $number_of_files_uploaded = 0;
-
+$files_uploaded = array();
 
 /// loop through files uploaded
 for ($i = 0; $i < count($_FILES['upload']['name']); $i++) {
@@ -95,6 +95,7 @@ for ($i = 0; $i < count($_FILES['upload']['name']); $i++) {
 
 		// keep track of the files that are uploaded successfully
 		$number_of_files_uploaded++;
+		$files_uploaded[] = $guid;
 
 
 		// if image, we need to create thumbnails (this should be moved into a function)
@@ -205,9 +206,11 @@ for ($i = 0; $i < count($_FILES['upload']['name']); $i++) {
 
 		$forward_entity = array(
 			'number_files_uploaded' => $number_of_files_uploaded,
-			'forward_guid' => $forward_guid,
-			'group_guid' => $group_guid,
+			'forward_guid' 			=> $forward_guid,
+			'group_guid' 			=> $group_guid,
+			'files_uploaded' 		=> $files_uploaded,
 		);
+		
 		elgg_trigger_event('multi_file_upload', 'object', $forward_entity);
 		elgg_register_event_handler('single_file_upload', 'object', 'cp_create_notification');
 		elgg_register_event_handler('single_zip_file_upload', 'object', 'cp_create_notification');
