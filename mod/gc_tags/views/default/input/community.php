@@ -37,5 +37,5 @@ $communities_input = elgg_view('input/select', array(
     'class' => 'audience-select',
 ));
 echo elgg_format_element('label', array('for' => 'audience'), elgg_echo('gctags:label:community'));
+echo elgg_format_element('p', array('class' => 'timeStamp'), elgg_echo('gctags:helpertext:community'));
 echo $communities_input;
-echo $value;

@@ -16,6 +16,8 @@ function tags_and_communities(){
     elgg_register_js('selectize', 'mod/gc_tags/views/default/js/selectize.min.js');
     elgg_extend_view('css/elgg', 'css/selectize.bootstrap3.css');
     
+    elgg_extend_view('css/elgg', 'css/gc_tags.css');
+    
     //override the form actions so we can save community meta data :3
     $action_path = elgg_get_plugins_path() . 'gc_tags/actions';
     //Blog form

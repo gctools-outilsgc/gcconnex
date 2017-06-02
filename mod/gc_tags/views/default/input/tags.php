@@ -17,6 +17,7 @@ $vars['class'] = (array) elgg_extract('class', $vars, []);
 $vars['class'][] = 'elgg-input-tags form-control';
 
 $defaults = array(
+    'id' => 'tags',
 	'value' => '',
 	'disabled' => false,
 	'autocapitalize' => 'off',

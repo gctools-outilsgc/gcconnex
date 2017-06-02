@@ -41,18 +41,30 @@ if (!$vars['guid'] || ($blog && $blog->status != 'published')) {
 	));
 }
 
+$tag_button = elgg_view('input/submit', array(
+    'value' => 'open the modal boi',
+    'name' => 'open_modal',
+    'class' => 'btn btn-primary open-tag-modal',
+    'data-toggle' => 'modal',
+    'data-target' => '#tagsModal',
+    'data-backdrop' => 'static',
+));
+
+/*
 $tag_button = elgg_view('output/url', array(
     'href' => '#',
     'text' => 'Click me to open a broken modal :|',
-    'class' => 'btn btn-primary',
+    'class' => 'btn btn-primary validate',
     'data-toggle' => 'modal',
     'data-target' => '#tagsModal',
+    'data-backdrop' => 'static',
 ));
+*/
 
 $save_button = elgg_view('input/submit', array(
 	'value' => elgg_echo('publish'),
 	'name' => 'save',
-    'class' => 'btn btn-primary',
+    'class' => 'btn btn-primary cancel',
 ));
 $action_buttons = $tag_button . $preview_button . $delete_link;
 
@@ -147,7 +159,6 @@ $comments_input = elgg_view('input/select', array(
 $tags_label = elgg_echo('tags');
 $tags_input = elgg_view('input/tags', array(
 	'name' => 'tags',
-	'id' => 'blog_tags',
 	'value' => $vars['tags']
 ));
 
@@ -281,10 +292,10 @@ $btn_language
 	$action_buttons
 </div>
 
-<div class="modal fade" id="tagsModal" tabindex="-1" rold="dialog" aria-labelledby="Tags and Communities">
+<div class="modal fade tags-modal" id="tagsModal" tabindex="-1" rold="dialog" aria-labelledby="Tags and Communities">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div>
+            <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
@@ -328,6 +339,11 @@ if(get_current_language() == 'fr'){
 <script>
 jQuery(function(){
 
+    jQuery('.open-tag-modal').on('click', function(event){
+        event.preventDefault();
+        $(this).modal();
+        $('form').validate();
+    });
 	var selector = '.nav li';
 
 	$(selector).on('click', function(){

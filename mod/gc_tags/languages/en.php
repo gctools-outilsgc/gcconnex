@@ -20,6 +20,7 @@ return array(
     
     //Input labels, placeholder and helper text
     "gctags:label:community" => "What community does this belong to?",
+    "gctags:helpertext:community" => "Click to add communities. You can add as many that apply",
     "gctags:placeholder:tags" => "Ex. policy, tags, tag,",
     "gctags:helpertext:tags" => "To add type in tag and press ',' or 'enter'",
 );

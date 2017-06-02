@@ -40,7 +40,8 @@ requirejs( ["form-validate"], function() {
           },
           submitHandler: function(form) {
             $(form).find('button').prop('disabled', true);
-            form.submit();
+              alert('sall good boss');
+            //form.submit();
           },
     ignore: ':hidden:not(.validate-me)',
      rules: {
