@@ -179,6 +179,7 @@ switch ($msg_type) {
 		break;
 
 	case 'multiple_file':
+
 		$user = elgg_get_logged_in_user_entity();
 		$group_url = elgg_get_site_entity()->getURL()."file/group/{$vars['cp_topic']->guid}/all#?utm_source=notification&utm_medium=email";
 		$user_url = elgg_get_site_entity()->getURL()."file/owner/{$user->username}#?utm_source=notification&utm_medium=email";
@@ -187,10 +188,27 @@ switch ($msg_type) {
 			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_new_content:title',array($user->getURL().'?utm_source=notification&utm_medium=email', $user->username, 'file', $vars['cp_topic']->getURL(), $vars['cp_topic']->name),'en');
 			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_m3',array($user->getURL().'?utm_source=notification&utm_medium=email', $user->username, 'fichier', $vars['cp_topic']->getURL(), $vars['cp_topic']->name),'en');
 
+
+			$files = $vars['files_uploaded'];
+
+			foreach ($files as $file) {
+				error_log("FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES        ".$file);
+			}
+			$description = "";
+
 			$cp_notify_msg_description_en = elgg_echo('cp_notify:body_new_content:no_description_discussion',array($group_url),'en');
 			$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_new_content:no_description_discussion',array($group_url),'fr');
 
 		} else {
+
+	error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   mulitple file".print_r($vars['files_uploaded'],true));
+
+			$files = $vars['files_uploaded'];
+
+			foreach ($files as $file) {
+				error_log("FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES        ".$file);
+			}
+
 
 			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_new_content:title3',array($user->getURL().'?utm_source=notification&utm_medium=email', $user->username, 'file'),'en');
 			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title3',array($user->getURL().'?utm_source=notification&utm_medium=email', $user->username, 'fichier'),'fr');
@@ -225,11 +243,17 @@ switch ($msg_type) {
 	case 'new_mission':
 	case 'cp_new_type': // new blogs or other entities
 
+
+error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  {$vars['cp_topic']->getSubtype()} //// ");
+
+
 		$entity_m = array(
 			'blog' => 'blogue',
 			'bookmarks' => 'signet',
 			'poll' => 'sondage',
 			'event_calendar' => 'nouvel événement',
+			'file' => 'fichier',
+			'album' => 'album d\'image',
 		);
 		$entity_f = array(
 			'idea' => 'idée',
@@ -239,17 +263,7 @@ switch ($msg_type) {
 			'task' => 'task',
 			'groupforumtopic' => 'discussion',
 			'question' => 'question',
-		);
-
-		$entity_m2 = array(
-			'file' => 'fichier',
-		);
-		$entity_f2 = array(
 			'image' => 'image',
-		);
-
-		$entity_m3 = array(
-			'album' => 'album d\'image',
 		);
 
 		$entity_answer = array(
@@ -267,10 +281,10 @@ switch ($msg_type) {
 			$vars['cp_topic']->title2 = $vars['cp_topic']->title;
 		}
 		if($vars['cp_topic']->getSubtype == 'answer'){
-		$question_guid = $vars['cp_topic']->getContainerGUID();
-		$answer_entity = get_entity($question_guid);
-		$title_answer = $answer_entity->title;
-}
+			$question_guid = $vars['cp_topic']->getContainerGUID();
+			$answer_entity = get_entity($question_guid);
+			$title_answer = $answer_entity->title;
+		}
 
 		if ($vars['cp_topic']->getSubtype == 'answer')
 			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_new_content:title2',array($topic_author->getURL().'?utm_source=notification&utm_medium=email', $topic_author->username, cp_translate_subtype($vars['cp_topic']->getSubtype()), $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $title_answer),'en');
@@ -282,18 +296,19 @@ switch ($msg_type) {
 		else if (array_key_exists($vars['cp_topic']->getSubtype(),$entity_m))
 			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_m',array($topic_author->getURL(), $topic_author->username, $entity_m[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $vars['cp_topic']->title),'fr');
 		else if (array_key_exists($vars['cp_topic']->getSubtype(),$entity_f2))
-			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_f2',array($topic_author->getURL(), $topic_author->username, $entity_f2[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $vars['cp_topic']->title),'fr');
+			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_f2',array($topic_author->getURL(), $topic_author->username, $entity_f[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $vars['cp_topic']->title),'fr');
 		else if (array_key_exists($vars['cp_topic']->getSubtype(),$entity_m3))
-			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_m3',array($topic_author->getURL(), $topic_author->username, $entity_m3[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $vars['cp_topic']->title),'fr');
+			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_m3',array($topic_author->getURL(), $topic_author->username, $entity_m[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $vars['cp_topic']->title),'fr');
 		else if (array_key_exists($vars['cp_topic']->getSubtype(),$entity_answer))
 			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_answer',array($topic_author->getURL(), $topic_author->username, $entity_answer[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $title_answer),'fr');
 		else
-			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_m2',array($topic_author->getURL(), $topic_author->username, $entity_m2[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $vars['cp_topic']->title),'fr');
+			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_m2',array($topic_author->getURL(), $topic_author->username, $entity_m[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $vars['cp_topic']->title),'fr');
 
 
 		if($vars['cp_topic']->description1){
              $cp_topic_description = strip_tags($vars['cp_topic']->description1);
         }
+
 
 		$cp_topic_description_en = $cp_topic_description;
 		$cp_topic_description_fr = $cp_topic_description2;

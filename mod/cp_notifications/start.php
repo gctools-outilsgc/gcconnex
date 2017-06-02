@@ -8,7 +8,16 @@ function cp_notifications_init() {
 	elgg_register_library('elgg:gc_notification:functions', elgg_get_plugins_path() . 'cp_notifications/lib/functions.php');
 
 	elgg_register_css('cp_notifications-css','mod/cp_notifications/css/notifications-table.css');
+
+
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'notify_entity_menu_setup', 400);
+	// since most of the notifications are built within the action file itself, the trigger_plugin_hook was added to respected plugins
+	elgg_register_plugin_hook_handler('cp_overwrite_notification', 'all', 'cp_overwrite_notification_hook');
+	elgg_register_plugin_hook_handler('cron', 'daily', 'cp_digest_daily_cron_handler');
+	elgg_register_plugin_hook_handler('cron', 'weekly', 'cp_digest_weekly_cron_handler');
+	// hooks and events: intercepts and blocks emails and notifications to be sent out
+	elgg_register_plugin_hook_handler('email', 'system', 'cpn_email_handler_hook');
+
 
 	$action_base = elgg_get_plugins_path() . 'cp_notifications/actions/cp_notifications';
 	elgg_register_action('cp_notify/subscribe', "$action_base/subscribe.php");
@@ -23,6 +32,7 @@ function cp_notifications_init() {
 	elgg_register_action('cp_notifications/fix_inconsistent_subscription_script',"{$action_base}/fix_inconsistent_subscription_script.php");
 	elgg_register_action('useradd',"$action_base/useradd.php",'admin'); // actions/useradd.php (core file)
 
+
 	// Ajax action files
 	elgg_register_action('cp_notify/retrieve_group_contents', elgg_get_plugins_path().'cp_notifications/actions/ajax_usersettings/retrieve_group_contents.php'); 
 	elgg_register_action('cp_notify/retrieve_personal_content', elgg_get_plugins_path().'cp_notifications/actions/ajax_usersettings/retrieve_personal_content.php'); 
@@ -30,9 +40,8 @@ function cp_notifications_init() {
 	elgg_register_action('cp_notify/retrieve_messages', elgg_get_plugins_path().'cp_notifications/actions/ajax_usersettings/retrieve_messages.php'); 
 	elgg_register_action('cp_notify/retrieve_user_info', elgg_get_plugins_path().'cp_notifications/actions/ajax_settings/retrieve_user_info.php'); 
 
-	// hooks and events
-	// intercepts and blocks emails and notifications to be sent out
-	elgg_register_plugin_hook_handler('email', 'system', 'cpn_email_handler_hook');
+
+
 	// send notifications when the action is sent out
 	elgg_register_event_handler('create','object','cp_create_notification',900);
 	elgg_register_event_handler('single_file_upload', 'object', 'cp_create_notification');
@@ -40,7 +49,6 @@ function cp_notifications_init() {
 	elgg_register_event_handler('multi_file_upload', 'object', 'cp_create_notification');
 
 	elgg_register_event_handler('create','annotation','cp_create_annotation_notification');
-
 	elgg_register_event_handler('create', 'membership_request', 'cp_membership_request');
 
 	// we need to check if the mention plugin is installed and activated because it does notifications differently...
@@ -49,10 +57,6 @@ function cp_notifications_init() {
 		elgg_unregister_event_handler('update', 'annotation','mentions_notification_handler');
 	}
 
-	// since most of the notifications are built within the action file itself, the trigger_plugin_hook was added to respected plugins
-	elgg_register_plugin_hook_handler('cp_overwrite_notification', 'all', 'cp_overwrite_notification_hook');
-
-
 
     elgg_extend_view("js/elgg", "js/notification"); 
     elgg_extend_view("js/elgg", "js/popup");
@@ -60,9 +64,6 @@ function cp_notifications_init() {
 
     // remove core notification settings portion of the main settings page
     elgg_unextend_view('forms/account/settings', 'core/settings/account/notifications');
-
-	elgg_register_plugin_hook_handler('cron', 'daily', 'cp_digest_daily_cron_handler');
-	elgg_register_plugin_hook_handler('cron', 'weekly', 'cp_digest_weekly_cron_handler');
 
 
 	/// "minor save" for contents within groups
@@ -126,7 +127,6 @@ function minor_save_hook_handler($hook, $type, $value, $params) {
 
 
 /**
- * cp_overwrite_notification_hook
  *
  * This contains all the notifications that are required to be triggered from the original action files. Filepaths
  * are documented beside each case (and in the readme.md file)
@@ -883,7 +883,7 @@ function cp_create_notification($event, $type, $object) {
 
 		/// invoked when multiple file upload function is used
 		case 'multi_file_upload':
-	
+	error_log(" ================================== multiple file uploads....");
 			$entity = get_entity($object['forward_guid']);
 			if (elgg_instanceof('group', $entity)) {
 				$file_forward_url = elgg_get_site_entity()->getURL()."file/group/{$object['forward_guid']}/all";
@@ -902,8 +902,10 @@ function cp_create_notification($event, $type, $object) {
 			$object = $entity;
 
 			$message = array(
-				'cp_topic' => $object,
-
+				'cp_topic' => $object['subtype'],
+				'cp_msg_type' => 'multiple_file',
+				'files_information' => $object,
+				'files_uploaded' => $object['files_uploaded'], 
 				'cp_msg_type' => 'multiple_file',
 				'cp_topic_description_discussion' => 'Please view the files here',
 				'cp_topic_description_discussion2' => 'SVP voir les fichiers ici',
@@ -1129,9 +1131,8 @@ function cp_create_notification($event, $type, $object) {
 				}
 
 				$guidone = $object->getOwnerGUID();
-				//$to_recipients = get_subscribers($dbprefix, $object->getOwnerGUID(), $object->guid);
+
 				$author_id = $object->getOwnerGUID();
-				//$content_id = $object->guid;
 				
 				// Get guid of the question
 			if($object->getSubtype = 'answer'){

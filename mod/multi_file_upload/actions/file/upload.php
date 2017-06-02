@@ -8,8 +8,10 @@
  * @author GCTools
  */
 
-require_once($_SERVER['DOCUMENT_ROOT'].'/engine/start.php');
+	require_once('/var/www/html/gcconnex/engine/start.php');
+//require_once($_SERVER['DOCUMENT_ROOT'].'/engine/start.php');
 //error_log($_SERVER['DOCUMENT_ROOT']);
+
 
 $access_id = (int) get_input("access_id");
 $container_guid = (int) get_input('container_guid', 0);
@@ -204,14 +206,15 @@ for ($i = 0; $i < count($_FILES['upload']['name']); $i++) {
 
 		}
 
-		$forward_entity = array(
+		$files_information = array(
 			'number_files_uploaded' => $number_of_files_uploaded,
 			'forward_guid' 			=> $forward_guid,
 			'group_guid' 			=> $group_guid,
 			'files_uploaded' 		=> $files_uploaded,
+			'subtype'				=> 'file',
 		);
-		
-		elgg_trigger_event('multi_file_upload', 'object', $forward_entity);
+
+		elgg_trigger_event('multi_file_upload', 'object', $files_information);
 		elgg_register_event_handler('single_file_upload', 'object', 'cp_create_notification');
 		elgg_register_event_handler('single_zip_file_upload', 'object', 'cp_create_notification');
 	}

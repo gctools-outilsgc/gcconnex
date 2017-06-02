@@ -17,7 +17,7 @@ $tags = get_input("tags");
 
 /// retrieve information whether this was marked as minor edit or not
 $file_edit = get_input('minor_edit');
-error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   {$file_edit}");
+
 if ($container_guid == 0) {
 	$container_guid = elgg_get_logged_in_user_guid();
 }
