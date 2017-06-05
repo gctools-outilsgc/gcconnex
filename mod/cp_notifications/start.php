@@ -561,7 +561,8 @@ function cp_create_annotation_notification($event, $type, $object) {
 		// if we are publishing, or revising blogs then send out notification
 		if (strcmp($object_subtype,'blog_revision') == 0 && strcmp($entity->status,'published') == 0) {
 			$current_user = get_user($entity->getOwnerGUID());
-			$subject = elgg_echo('cp_notify:subject:edit_content',array('The blog',$entity->title, $current_user->username),'en') . ' | ' . elgg_echo('cp_notify:subject:edit_content:m',array('Le blogue',$entity->title, $current_user->username),'fr');
+			$subject = elgg_echo('cp_notify:subject:edit_content',array('The blog',gc_explode_translation($entity->title,'en'), $current_user->username),'en') . ' | ' . elgg_echo('cp_notify:subject:edit_content:m',array('Le blogue',gc_explode_translation($entity->title,'fr'), $current_user->username),'fr');
+			
 			$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
 
 			$message = array(
@@ -972,21 +973,24 @@ function cp_create_notification($event, $type, $object) {
 			$user = get_user($object->owner_guid);
 			$group = $object->getContainerEntity();
 
+			$group_name = gc_explode_translation($group->name,'en');
+			$group_name2 = gc_explode_translation($group->name,'fr');
+
 			// fem and mas are different (so the subject should be reflected on which subtype is passed)
 			$subtypes_gender_subject = array(
-				'blog' => elgg_echo('cp_notify:subject:new_content_mas',array("blogue",$group->name),'fr'),
-				'bookmarks' => elgg_echo('cp_notify:subject:new_content_mas',array("signet",$group->name),'fr'),
-				'file' => elgg_echo('cp_notify:subject:new_content_mas',array("fichier",$group->name),'fr'),
-				'poll' => elgg_echo('cp_notify:subject:new_content_mas',array("sondage",$group->name),'fr'),
-				'event_calendar' => elgg_echo('cp_notify:subject:new_content_mas',array("nouvel événement",$group->name),'fr'),
-				'album' => elgg_echo('cp_notify:subject:new_content_mas',array("album d'image",$group->name),'fr'),
-				'groupforumtopic' => elgg_echo('cp_notify:subject:new_content_fem',array("discussion",$group->name),'fr'),
-				'image' => elgg_echo('cp_notify:subject:new_content_fem',array("image",$group->name),'fr'),
-				'idea' => elgg_echo('cp_notify:subject:new_content_fem',array("idée",$group->name),'fr'),
-				'page' => elgg_echo('cp_notify:subject:new_content_fem',array("page",$group->name),'fr'),
-				'page_top' => elgg_echo('cp_notify:subject:new_content_fem',array("page",$group->name),'fr'),
-				'task_top' => elgg_echo('cp_notify:subject:new_content_fem',array("task",$group->name),'fr'),
-				'task' => elgg_echo('cp_notify:subject:new_content_fem',array("task",$group->name),'fr'),
+				'blog' => elgg_echo('cp_notify:subject:new_content_mas',array("blogue",$group_name2),'fr'),
+				'bookmarks' => elgg_echo('cp_notify:subject:new_content_mas',array("signet",$group_name2),'fr'),
+				'file' => elgg_echo('cp_notify:subject:new_content_mas',array("fichier",$group_name2),'fr'),
+				'poll' => elgg_echo('cp_notify:subject:new_content_mas',array("sondage",$group_name2),'fr'),
+				'event_calendar' => elgg_echo('cp_notify:subject:new_content_mas',array("nouvel événement",$group_name2),'fr'),
+				'album' => elgg_echo('cp_notify:subject:new_content_mas',array("album d'image",$group_name2),'fr'),
+				'groupforumtopic' => elgg_echo('cp_notify:subject:new_content_fem',array("discussion",$group_name2),'fr'),
+				'image' => elgg_echo('cp_notify:subject:new_content_fem',array("image",$group_name2),'fr'),
+				'idea' => elgg_echo('cp_notify:subject:new_content_fem',array("idée",$group_name2),'fr'),
+				'page' => elgg_echo('cp_notify:subject:new_content_fem',array("page",$group_name2),'fr'),
+				'page_top' => elgg_echo('cp_notify:subject:new_content_fem',array("page",$group_name2),'fr'),
+				'task_top' => elgg_echo('cp_notify:subject:new_content_fem',array("task",$group_name2),'fr'),
+				'task' => elgg_echo('cp_notify:subject:new_content_fem',array("task",$group_name2),'fr'),
 			);
 
 
@@ -995,7 +999,7 @@ function cp_create_notification($event, $type, $object) {
 
 			// subscribed to content within a group
 			if ($object->getContainerEntity() instanceof ElggGroup) {
-				$subject = elgg_echo('cp_notify:subject:new_content',array(cp_translate_subtype($object->getSubtype()),$group->name),'en');
+				$subject = elgg_echo('cp_notify:subject:new_content',array(cp_translate_subtype($object->getSubtype()),$group_name),'en');
 				$subject .= ' | '.$subj_gender;
 
 				//$to_recipients = get_subscribers($dbprefix, $object->getContainerGUID(), $object->guid);
@@ -1069,6 +1073,7 @@ function cp_create_notification($event, $type, $object) {
 
 		// send email and site notification
 		else {
+
 			$template = elgg_view('cp_notifications/email_template', $message);
 
 			if (elgg_is_active_plugin('phpmailer'))
@@ -1080,6 +1085,7 @@ function cp_create_notification($event, $type, $object) {
 	}
 
 	foreach ($to_recipients_site as $to_recipient) {
+
 		$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid, 'cp_notifications');
 
 		if ($to_recipient->guid == $author->guid)
