@@ -88,8 +88,9 @@ if ($title_link) {
 $description_json = json_decode($entity->description);
     if (($description_json->en) && ($description_json->fr)) {
 	    echo " <span class='indicator_summary' title='".elgg_echo('indicator:summary:title')."'>".elgg_echo('indicator:summary')."</span>"; //indicator translation
-	}elseif (elgg_get_context() == 'polls' || $entity->getSubtype() == 'poll'){
-//if pool, check if the choice is the same in both language, if not, show (en/fr) one time
+	}elseif (elgg_get_context() == 'polls'){
+//if poll, check if the choice is the same in both language, if not, show (en/fr) one time
+
 		foreach (polls_get_choice_array($entity) as $key ) {
 			$description_json = json_decode($key);
 			
@@ -98,10 +99,36 @@ $description_json = json_decode($entity->description);
 	    		echo " <span class='indicator_summary' title='".elgg_echo('indicator:summary:title')."'>".elgg_echo('indicator:summary')."</span>"; //indicator translation for polls
 	    		break;
 			}
-		}    
+		}   
+		
+	}elseif ($entity->getSubtype() == 'poll'){
+//if poll, check if the choice is the same in both language, if not, show (en/fr) one time
+		$responses = array();
+
+		$options = array(
+				'relationship' => 'poll_choice',
+				'relationship_guid' => $entity->guid,
+				'inverse_relationship' => TRUE,
+				'order_by_metadata' => array('name'=>'display_order','direction'=>'ASC'),
+				'limit' => 50,
+			);
+		$choices = elgg_get_entities_from_relationship($options);
+
+		if ($choices) {
+			foreach($choices as $choice) {
+				$responses[$choice->text] = $choice->text;
+			}
+		}
+		foreach ($responses as $key ) {
+			$description_json = json_decode($key);
+	 		if ($description_json->en != $description_json->fr) {
+
+			    echo " <span class='indicator_summary' title='".elgg_echo('indicator:summary:title')."'>".elgg_echo('indicator:summary')."</span>"; //indicator translation for polls
+			    break;
+			}
+		}  
 	}
 echo elgg_in_context($context);
-
 
 }/*else{
         echo "<span class=\"mrgn-bttm-0 summary-title\">$entity->title</span>"; //put in span because some links would not take classes

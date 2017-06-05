@@ -1550,7 +1550,7 @@ function event_calendar_get_page_content_edit($page_type, $guid, $start_date='')
 			$group = get_entity($guid);
 			if (elgg_instanceof($group, 'group')) {
 				$body_vars['group_guid'] = $guid;
-				elgg_push_breadcrumb($group->name, 'event_calendar/group/' . $guid);
+				elgg_push_breadcrumb(gc_explode_translation($group->name,$lang), 'event_calendar/group/' . $guid);
 				elgg_push_breadcrumb(elgg_echo('event_calendar:add_event_title'));
 				$body_vars['form_data'] = event_calendar_prepare_edit_form_vars(null, $page_type, $start_date);
 				$content = elgg_view_form('event_calendar/edit', $vars, $body_vars);

@@ -211,7 +211,7 @@ $lang = get_current_language();
 		if (elgg_instanceof($poll,'object','poll')) {
 			$container_guid = $poll->container_guid;
 			elgg_set_page_owner_guid($container_guid);
-			$title = elgg_echo('polls:editpost', array(gc_explode_translation($poll->title3, $lang)));
+			$title = elgg_echo('polls:editpost', array(gc_explode_translation($poll->title, $lang)));
 			
 			$body_vars = array(
 				'fd' => polls_prepare_edit_body_vars($poll),
@@ -228,12 +228,9 @@ $lang = get_current_language();
 			elgg_push_breadcrumb(elgg_echo('item:object:poll'),'polls/all');
 
 			$container = get_entity($container_guid);
-			if($container->title3){
-				$group_title = gc_explode_translation($container->title3,$lang);
-			}else{
-				$group_title = $container->name;
-			}
-
+			
+				$group_title = gc_explode_translation($container->title,$lang);
+	
 			if (elgg_instanceof($container,'group')) {
 				elgg_push_breadcrumb($group_title, 'polls/group/' . $container->getGUID());
 			} else {
@@ -251,7 +248,7 @@ $lang = get_current_language();
 			elgg_set_page_owner_guid($guid);
 			$container = get_entity($guid);
 			
-			elgg_push_breadcrumb($container->name, 'polls/group/' . $container->getGUID());
+			elgg_push_breadcrumb(gc_explode_translation($container->name,$lang), 'polls/group/' . $container->getGUID());
 		} else {
 			$user = elgg_get_logged_in_user_entity();
 			elgg_set_page_owner_guid($user->getGUID());
