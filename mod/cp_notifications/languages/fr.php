@@ -5,6 +5,12 @@ $site_name = $site->name;
 $contact_us = "{$site->getURL()}mod/contactform/";
 
 $french = array( 
+	'minor_save:title' => "Vous ne voulez pas envoyer de notification?",
+	'minor_save:description' => "L'affichage de nouveaux contenus envoie des notifications à ceux qui sont abonné. En tant que propriétaire ou opérateur du groupe, vous pouvez décider de ne pas envoyer de notifications pour le nouveau contenu que vous affichez dans le groupe. Pour ce faire, sélectionnez l'option « Ne pas envoyer de notification » ci-dessous.",
+	'minor_save:checkbox_label' => " Ne pas envoyer de notification",
+
+
+
 	'cp_notifications:name' => "Paramètres de notifications",
 	'cp_notification:save:success' => "Les paramètres ont été enregistrés avec succès",
 	'cp_notification:save:failed' => "Les paramètres n'ont pas été enregistrés avec succès",

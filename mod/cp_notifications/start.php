@@ -78,8 +78,10 @@ function cp_notifications_init() {
 				$dir = scandir($filepath);
 				foreach ($dir as $form_file)
 				{
-					if ((strstr($form_file,'edit') || strstr($form_file,'save') || strstr($form_file, 'upload')) && (!strstr($form_file, '.old'))) 
+					if ((strpos($form_file,'save') !== false || strpos($form_file, 'upload') !== false) && (!strstr($form_file, '.old')))
 					{
+						//$entity = 
+						error_log(">>>>>>>>>>>>>>>  show the form?".'forms/'.$plugin_form['title'].'/'.$remove_php[0]);
 						$remove_php = explode('.',$form_file);
 						elgg_extend_view('forms/'.$plugin_form['title'].'/'.$remove_php[0], 'forms/minor_save', 500);
 					}
@@ -87,17 +89,20 @@ function cp_notifications_init() {
 			}
 		}
 
+
 		elgg_extend_view('forms/photos/image/save', 'forms/minor_save', 500);
 		elgg_extend_view('forms/photos/batch/edit', 'forms/minor_save', 500);
 		elgg_extend_view('forms/photos/album/save', 'forms/minor_save', 500);
 		elgg_extend_view('forms/discussion/save', 'forms/minor_save', 500);
 		elgg_extend_view('forms/file_tools/upload/multi', 'forms/minor_save', 500);
 		elgg_extend_view('forms/file_tools/upload/zip', 'forms/minor_save', 500);
-	}
+	} 
 
 	elgg_register_plugin_hook_handler('action', 'blog/save', 'minor_save_hook_handler', 300);
 
 }
+
+
 
 
 /**

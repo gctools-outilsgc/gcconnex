@@ -6,14 +6,14 @@
  */
 
 $display = "";
-$display .= "<section class='alert alert-danger'><h3 class='h3'> New content creation will send out notification unless you check out the Minor save </h3> Praesent volutpat vel risus ac lacinia. Sed sed orci nisl. Vivamus sagittis mi lorem, et tempor neque gravida ut. Praesent placerat magna at leo tempus, sed sollicitudin lacus maximus. Nullam ornare lorem finibus neque suscipit, tristique luctus lectus pulvinar. Vivamus ac dui porttitor, cursus risus eget, tristique nisl. Pellentesque tempus metus bibendum varius aliquet. Pellentesque lobortis leo nec condimentum pulvinar.";
+$display .= "<section class='alert alert-warning'><h3 class='h3'> ".elgg_echo('minor_save:title')." </h3> ".elgg_echo('minor_save:description');
 
 $display .= "<p>";
 $display .= elgg_view('input/checkbox', array(
 		'name' 		=>	"minor_save",
 		'value' 	=>	'yes',
 		'default' 	=> 	'no',
-		'label' 	=>	'Minor Save',
+		'label' 	=>	elgg_echo('minor_save:checkbox_label'),
 		'checked' 	=>	false,
 		'id' 		=>	'minor_save',
 		'class' 	=>	'chkboxClass',
