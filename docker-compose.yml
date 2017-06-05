@@ -36,6 +36,21 @@ services:
       - VIRTUAL_HOST=gcconnex.local
 
   # ###########################################################################
+  # The GCConnex cron container.  This container is responsible for executing
+  # elgg's built in cron based on the recommended settings.
+  # ###########################################################################
+
+  gcconnex-cron:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.cron
+    volumes:
+      - .:/var/www/html
+      - ./data/data:/data
+    depends_on:
+      - gcconnex-db
+
+  # ###########################################################################
   # Database container for gcconnex, accessible from within gcconnex using the
   # network host "gcconnex-db".
   # ###########################################################################
