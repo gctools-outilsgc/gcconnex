@@ -54,7 +54,7 @@ class Constants {
     CREATE PROCEDURE `{$procName}` ()
     BEGIN
       TRUNCATE TABLE `{$tableName}_tmp`;
-
+      SET group_concat_max_len=15000;
       INSERT INTO `{$tableName}_tmp`
       SELECT
         a.guid as user_guid,
