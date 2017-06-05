@@ -285,9 +285,7 @@ function discussion_prepare_form_vars($topic = NULL) {
 	if ($topic) {
 		foreach (array_keys($values) as $field) {
 			if (isset($topic->$field)) {
-				if($field == 'title' || $field == 'description')
-					$values[$field] = gc_explode_translation($topic->$field,'en');
-				else
+
 					$values[$field] = $topic->$field;
 			}
 		}

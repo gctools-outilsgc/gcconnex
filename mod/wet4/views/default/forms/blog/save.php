@@ -30,13 +30,13 @@ $json_desc = json_decode($vars['description']);
 $json_exc = json_decode($vars['excerpt']);
 
 if ( $json_title ){
-  $title2 = $json_title->fr;
-  $title = $json_title->en;
+  $vars['title2'] = $json_title->fr;
+  $vars['title'] = $json_title->en;
 }
 
 if ( $json_desc ){
-  $desc2 = $json_desc->fr;
-  $desc = $json_desc->en;
+  $vars['description2'] = $json_desc->fr;
+  $vars['description'] = $json_desc->en;
 }
 
 if ( $json_exc ){

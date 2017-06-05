@@ -57,9 +57,6 @@ $topic->status = $status;
 $topic->access_id = $access_id;
 $topic->container_guid = $container_guid;
 
-if(!$topic->title){
-	$topic->title = $topic->title2;
-}
 
 
 $topic->tags = string_to_tag_array($tags);
