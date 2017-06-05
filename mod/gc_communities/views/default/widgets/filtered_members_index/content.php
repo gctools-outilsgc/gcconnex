@@ -16,71 +16,71 @@
 
 	if( !empty($widget_users) ){
 
-		$deptObj = elgg_get_entities(array(
-            'type' => 'object',
-            'subtype' => 'federal_departments',
-        ));
-        $depts = get_entity($deptObj[0]->guid);
-
-        $federal_departments = array();
-        if (get_current_language() == 'en'){
-            $federal_departments = json_decode($depts->federal_departments_en, true);
-        } else {
-            $federal_departments = json_decode($depts->federal_departments_fr, true);
-        }
-
-        $provObj = elgg_get_entities(array(
-            'type' => 'object',
-            'subtype' => 'provinces',
-        ));
-        $provs = get_entity($provObj[0]->guid);
-
-        $provinces = array();
-        if (get_current_language() == 'en'){
-            $provinces = json_decode($provs->provinces_en, true);
-        } else {
-            $provinces = json_decode($provs->provinces_fr, true);
-        }
-
-        $minObj = elgg_get_entities(array(
-            'type' => 'object',
-            'subtype' => 'ministries',
-        ));
-        $mins = get_entity($minObj[0]->guid);
-
-        $ministries = array();
-        if (get_current_language() == 'en'){
-            $ministries = json_decode($mins->ministries_en, true);
-        } else {
-            $ministries = json_decode($mins->ministries_fr, true);
-        }
-
 		foreach($widget_users as $widget_user){
+			
 			$userObj = get_user_by_username($widget_user);
 
 			if( $userObj ){
 
 				$userType = $userObj->user_type;
-			    // if user is public servant
-			    if( $userType == 'federal' ){
+			    
+            	switch( $userType ){
+            		case "federal":
+	                    $deptObj = elgg_get_entities(array(
+	                        'type' => 'object',
+	                        'subtype' => 'federal_departments',
+	                    ));
+	                    $depts = get_entity($deptObj[0]->guid);
 
-			        $department = $federal_departments[$userObj->federal];
+	                    $federal_departments = array();
+	                    if (get_current_language() == 'en'){
+	                        $federal_departments = json_decode($depts->federal_departments_en, true);
+	                    } else {
+	                        $federal_departments = json_decode($depts->federal_departments_fr, true);
+	                    }
 
-			    // otherwise if user is student or academic
-			    } else if( $userType == 'student' || $userType == 'academic' ){
-			        $institution = $userObj->institution;
-			        $department = ($institution == 'university') ? $userObj->university : $userObj->college;
+	                    $department = $federal_departments[$userObj->federal];
+	                    break;
+	                case "student":
+	                case "academic":
+	                    $institution = $userObj->institution;
+	                    $department = ($institution == 'university') ? $userObj->university : $userObj->college;
+	                    break;
+	                case "provincial":
+	                    $provObj = elgg_get_entities(array(
+	                        'type' => 'object',
+	                        'subtype' => 'provinces',
+	                    ));
+	                    $provs = get_entity($provObj[0]->guid);
 
-			    // otherwise if user is provincial employee
-			    } else if( $userType == 'provincial' ){
+	                    $provinces = array();
+	                    if (get_current_language() == 'en'){
+	                        $provinces = json_decode($provs->provinces_en, true);
+	                    } else {
+	                        $provinces = json_decode($provs->provinces_fr, true);
+	                    }
 
-			        $department = $provinces[$userObj->provincial];
-			        if($userObj->ministry && $userObj->ministry !== "default_invalid_value"){ $department .= ' / ' . $ministries[$userObj->provincial][$userObj->ministry]; }
+	                    $minObj = elgg_get_entities(array(
+	                        'type' => 'object',
+	                        'subtype' => 'ministries',
+	                    ));
+	                    $mins = get_entity($minObj[0]->guid);
 
-			    // otherwise show basic info
-			    } else {
-			        $department = $userObj->$userType;
-			    }
+	                    $ministries = array();
+	                    if (get_current_language() == 'en'){
+	                        $ministries = json_decode($mins->ministries_en, true);
+	                    } else {
+	                        $ministries = json_decode($mins->ministries_fr, true);
+	                    }
+
+	                    $department = $provinces[$userObj->provincial];
+	                    if( $userObj->ministry && $userObj->ministry !== "default_invalid_value" ){
+	                        $department .= ' / ' . $ministries[$userObj->provincial][$userObj->ministry];
+	                    }
+	                    break;
+	                default:
+	                    $department = $userObj->$userType;
+            	}
 
 				echo '<div class="col-xs-12 mrgn-tp-sm  clearfix mrgn-bttm-sm">
 				    <div class="mrgn-tp-sm col-xs-2">';

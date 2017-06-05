@@ -22,9 +22,11 @@
         $widgets = $vars['widgets'];
     }
 
-    // Streaming community feeds
-    elgg_require_js("stream_community_feed");
-    elgg_require_js("stream_community_wire");
+    if( !get_input('offset') ){
+        // Streaming community feeds
+        elgg_require_js("stream_community_feed");
+        elgg_require_js("stream_community_wire");
+    }
 ?>
 
 <h1><?php echo $title; ?></h1>
@@ -72,6 +74,7 @@
                                         'context' => $context,
                                         'exact_match' => $exact_match
                                     ));
+                                    break;
                                 }
                             }
                         }

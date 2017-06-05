@@ -7,14 +7,10 @@
     foreach( $communities as $community ){
         if( $community['community_url'] == $community_url ){
             $community_tags = $community['community_tags'];
+            break;
         }
     }
 ?>
-
-<style type="text/css">
-	select, input	{ font: 100% Arial, Helvetica, sans-serif; border: 1px solid #ccc; color: #666; border-radius: 5px; margin-bottom: 8px; }
-	label 			{ display: block; }
-</style>
 
 <script>
 	$(function() {
@@ -29,6 +25,7 @@
 				$.each(communitiesArray, function(key, value){
 					if(value.community_url == community_url){
 						value.community_tags = community_tags;
+						return;
 					}
 				});
 
@@ -53,7 +50,7 @@
 
 <div class="community_tags">
 	<label for="tags" class="required"><?php echo elgg_echo('gc_communities:tags'); ?></label>
-	<input id="tags" name="tags" class="form-control" value="<?php echo $community_tags; ?>" />
+	<input id="tags" name="tags" class="form-control mbm" value="<?php echo $community_tags; ?>" />
 </div>
 
 <?php

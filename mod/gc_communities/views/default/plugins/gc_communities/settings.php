@@ -68,6 +68,7 @@
 						value.community_url = community_url;
 						value.community_tags = community_tags;
 						value.community_animator = community_animator;
+						return;
 					}
 				});
 		    	$("#communities").val(JSON.stringify(communitiesArray));
@@ -87,6 +88,7 @@
 					communitiesArray.splice(key, 1);
 		    		$("#communities").val(JSON.stringify(communitiesArray));
 		    		$(".elgg-foot .elgg-button-submit").click();
+		    		return;
 				}
 			});
 		});

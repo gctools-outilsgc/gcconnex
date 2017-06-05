@@ -19,6 +19,7 @@ foreach( $communities as $community ){
         $community_fr = $community['community_fr'];
         $community_tags = $community['community_tags'];
         $community_animator = $community['community_animator'];
+        break;
     }
 }
 
