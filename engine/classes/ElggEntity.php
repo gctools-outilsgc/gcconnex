@@ -1662,13 +1662,24 @@ abstract class ElggEntity extends \ElggData implements
 				return false;
 			}
 		}
-		
-		$result = $this->getDatabase()->insertData("INSERT into {$CONFIG->dbprefix}entities
-			(type, subtype, owner_guid, site_guid, container_guid,
-				access_id, time_created, time_updated, last_action)
-			values
-			('$type', $subtype_id, $owner_guid, $site_guid, $container_guid,
-				$access_id, $time_created, $now, $now)");
+
+		if ( $type == "object" && $subtype != "widget" ){
+			$duplicate_check = md5( sanitize_string($this->title).sanitize_string($this->description) ) . $owner_guid . $time_created;
+			$result = $this->getDatabase()->insertData("INSERT into {$CONFIG->dbprefix}entities
+				(type, subtype, owner_guid, site_guid, container_guid,
+					access_id, time_created, time_updated, last_action, duplicate_check)
+				values
+				('$type', $subtype_id, $owner_guid, $site_guid, $container_guid,
+					$access_id, $time_created, $now, $now, '$duplicate_check')");
+		}
+		else {
+			$result = $this->getDatabase()->insertData("INSERT into {$CONFIG->dbprefix}entities
+				(type, subtype, owner_guid, site_guid, container_guid,
+					access_id, time_created, time_updated, last_action)
+				values
+				('$type', $subtype_id, $owner_guid, $site_guid, $container_guid,
+					$access_id, $time_created, $now, $now)");
+		}
 
 		if (!$result) {
 			throw new \IOException("Unable to save new object's base entity information!");
