@@ -878,8 +878,18 @@ function cp_create_notification($event, $type, $object) {
 
 	switch ($switch_case) {
 
-		/// invoked when zipped file upload function is used
+		/// invoked when zipped file upload function is used (files_tools/lib/functions.php)
 		case 'single_zip_file_upload':
+
+			$entity = get_entity($object['forward_guid']);
+			if (elgg_instanceof('group', $entity)) {
+				$file_forward_url = elgg_get_site_entity()->getURL()."file/group/{$object['forward_guid']}/all";
+			} elseif (elgg_instanceof('user', $entity)) {
+				$file_forward_url = elgg_get_site_entity()->getURL()."file/owner/{$entity->username}";
+			} else {
+				$file_forward_url = $entity->getURL();
+			}
+
 			$to_recipients = get_subscribers($dbprefix, elgg_get_logged_in_user_guid(), $object->getGUID());
 			$to_recipients_site = get_site_subscribers($dbprefix, elgg_get_logged_in_user_guid(), $object->getGUID());
 
@@ -888,8 +898,9 @@ function cp_create_notification($event, $type, $object) {
 
 			$author = elgg_get_logged_in_user_entity();
 			$message = array(
-				'cp_topic' => $object,
+				'cp_topic' => $entity,
 				'cp_msg_type' => 'zipped_file',
+				'files_uploaded' => $object['files_uploaded'],
 				'cp_topic_description_discussion' => 'Please view the files here',
 				'cp_topic_description_discussion2' => 'SVP voir les fichiers ici',
 			);
@@ -897,12 +908,7 @@ function cp_create_notification($event, $type, $object) {
 
 		/// invoked when multiple file upload function is used
 		case 'multi_file_upload':
-//	error_log(" ================================== OBJECTS JDLFKJSDLFKSDJLFKJDSFLSDK....".print_r($object,true));
 
-
-//		error_log(" ================================== OBJECTS JDLFKJSDLFKSDJLFKJDSFLSDK....".$object['files_uploaded']);
-
-error_log(">>>>>>>>>>>>>>   {$object['forward_guid']}");
 			$entity = get_entity($object['forward_guid']);
 			if (elgg_instanceof('group', $entity)) {
 				$file_forward_url = elgg_get_site_entity()->getURL()."file/group/{$object['forward_guid']}/all";
@@ -918,10 +924,9 @@ error_log(">>>>>>>>>>>>>>   {$object['forward_guid']}");
 
 			$subject = elgg_echo('cp_notify_usr:subject:new_content2', array(elgg_get_logged_in_user_entity()->username, 'file'), 'en');
 			$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content2', array(elgg_get_logged_in_user_entity()->username, 'fichier', false), 'fr');
-			//$object = $entity;
-
+	
 			$message = array(
-				'cp_topic' => $entity,//$object['subtype'],
+				'cp_topic' => $entity,
 				'cp_msg_type' => 'multiple_file',
 				'files_information' => $entity,
 				'files_uploaded' => $object['files_uploaded'], 
@@ -1077,6 +1082,8 @@ error_log(">>>>>>>>>>>>>>   {$object['forward_guid']}");
 			add_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $object->getGUID());
 			break; 
 
+
+
 		case 'single_file_upload':
 
 		default:
@@ -1184,8 +1191,6 @@ error_log(">>>>>>>>>>>>>>   {$object['forward_guid']}");
 	// check for empty subjects or empty content
 	if (empty($subject)) return false;
 	$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
-
-//error_log(print_r($message,true));
 
 	/// send the email notification
 	if (count($to_recipients) > 0 && is_array($to_recipients)) {

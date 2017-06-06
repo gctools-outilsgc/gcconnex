@@ -256,8 +256,7 @@ $phpmailer = new PHPMailer(true); //defaults to using php "mail()"; the true par
 
 	if (!$return ) {
 		error_log('PHPMailer error: ' . $phpmailer->ErrorInfo, 'WARNING');
-	} else
-		error_log("email sent");
-
+	} /* else
+		error_log("email sent"); */
 	return $return;
 }

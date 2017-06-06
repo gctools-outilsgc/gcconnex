@@ -230,6 +230,7 @@ switch ($msg_type) {
 		$group_url = elgg_get_site_entity()->getURL()."file/group/{$vars['cp_topic']->guid}/all#?utm_source=notification&utm_medium=email";
 		$user_url = elgg_get_site_entity()->getURL()."file/owner/{$user->username}#?utm_source=notification&utm_medium=email";
 		
+		/// files uploaded into a group context
 		if ($vars['cp_topic'] instanceof ElggGroup) {
 			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_new_content:title',array($user->getURL().'?utm_source=notification&utm_medium=email', $user->username, 'file', $vars['cp_topic']->getURL(), $vars['cp_topic']->name),'en');
 			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_m3',array($user->getURL().'?utm_source=notification&utm_medium=email', $user->username, 'fichier', $vars['cp_topic']->getURL(), $vars['cp_topic']->name),'en');
@@ -239,6 +240,7 @@ switch ($msg_type) {
 
 		} else {
 
+			/// files uploaded into user's context
 			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_new_content:title3',array($user->getURL().'?utm_source=notification&utm_medium=email', $user->username, 'file'),'en');
 			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title3',array($user->getURL().'?utm_source=notification&utm_medium=email', $user->username, 'fichier'),'fr');
 
@@ -249,10 +251,6 @@ switch ($msg_type) {
 		break;
 	case 'new_mission':
 	case 'cp_new_type': // new blogs or other entities
-
-
-//error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  {$vars['cp_topic']->getSubtype()} //// ");
-
 
 		$entity_m = array(
 			'blog' => 'blogue',
