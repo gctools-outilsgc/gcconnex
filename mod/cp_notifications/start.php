@@ -67,34 +67,44 @@ function cp_notifications_init() {
 
 
 	/// "minor save" for contents within groups (basically put the option for all the forms, then filter via URL)
-	if (elgg_get_page_owner_entity() instanceof ElggGroup) {
+	$group_entity = elgg_get_page_owner_entity();
+	$current_user = elgg_get_logged_in_user_entity();
 
-		$plugin_list = elgg_get_plugins('active', 1);
-		foreach ($plugin_list as $plugin_form)
-		{
-			$filepath = elgg_get_plugins_path().$plugin_form['title'].'/views/default/forms/'.$plugin_form['title'];
-			if (file_exists($filepath))
-			{
-				$dir = scandir($filepath);
-				foreach ($dir as $form_file)
+	if (elgg_is_active_plugin('group_operators'))
+		elgg_load_library('elgg:group_operators');
+
+	if ($group_entity instanceof ElggGroup) {
+
+		// TODO: check to make sure that get_group_operators() is available
+		if (in_array($current_user, get_group_operators($group_entity)) || elgg_is_admin_user($current_user->getGUID())) {
+
+			$url = str_replace(elgg_get_site_url(),"", $_SERVER['REQUEST_URI']);
+			if (strpos($url,'edit') == false) {
+
+				$plugin_list = elgg_get_plugins('active', 1);
+				foreach ($plugin_list as $plugin_form)
 				{
-					if ((strpos($form_file,'save') !== false || strpos($form_file, 'upload') !== false) && (!strstr($form_file, '.old')))
+					$filepath = elgg_get_plugins_path().$plugin_form['title'].'/views/default/forms/'.$plugin_form['title'];
+					if (file_exists($filepath))
 					{
-						$url = str_replace(elgg_get_site_url(),"", $_SERVER['REQUEST_URI']);
-						if (strpos($url,'edit') == false) {
-							$remove_php = explode('.',$form_file);
-							elgg_extend_view('forms/'.$plugin_form['title'].'/'.$remove_php[0], 'forms/minor_save', 500);
+						$dir = scandir($filepath);
+						foreach ($dir as $form_file)
+						{
+							if ((strpos($form_file,'save') !== false || strpos($form_file, 'upload') !== false) && (!strstr($form_file, '.old')))
+							{
+								
+									$remove_php = explode('.',$form_file);
+									elgg_extend_view('forms/'.$plugin_form['title'].'/'.$remove_php[0], 'forms/minor_save', 500);
+								
+							}
 						}
 					}
 				}
+				
+				elgg_extend_view('forms/photos/image/save', 'forms/minor_save', 500);
+				elgg_extend_view('forms/photos/album/save', 'forms/minor_save', 500);
+				elgg_extend_view('forms/discussion/save', 'forms/minor_save', 500);
 			}
-		}
-
-		$url = str_replace(elgg_get_site_url(),"", $_SERVER['REQUEST_URI']);
-		if (strpos($url,'edit') == false) {
-			elgg_extend_view('forms/photos/image/save', 'forms/minor_save', 500);
-			elgg_extend_view('forms/photos/album/save', 'forms/minor_save', 500);
-			elgg_extend_view('forms/discussion/save', 'forms/minor_save', 500);
 		}
 	}
 
