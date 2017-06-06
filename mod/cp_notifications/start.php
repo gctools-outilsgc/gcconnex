@@ -66,7 +66,7 @@ function cp_notifications_init() {
     elgg_unextend_view('forms/account/settings', 'core/settings/account/notifications');
 
 
-	/// "minor save" for contents within groups
+	/// "minor save" for contents within groups (basically put the option for all the forms, then filter via URL)
 	if (elgg_get_page_owner_entity() instanceof ElggGroup) {
 
 		$plugin_list = elgg_get_plugins('active', 1);
@@ -80,23 +80,23 @@ function cp_notifications_init() {
 				{
 					if ((strpos($form_file,'save') !== false || strpos($form_file, 'upload') !== false) && (!strstr($form_file, '.old')))
 					{
-						//$entity = 
-						error_log(">>>>>>>>>>>>>>>  show the form?".'forms/'.$plugin_form['title'].'/'.$remove_php[0]);
-						$remove_php = explode('.',$form_file);
-						elgg_extend_view('forms/'.$plugin_form['title'].'/'.$remove_php[0], 'forms/minor_save', 500);
+						$url = str_replace(elgg_get_site_url(),"", $_SERVER['REQUEST_URI']);
+						if (strpos($url,'edit') == false) {
+							$remove_php = explode('.',$form_file);
+							elgg_extend_view('forms/'.$plugin_form['title'].'/'.$remove_php[0], 'forms/minor_save', 500);
+						}
 					}
 				}
 			}
 		}
 
-
-		elgg_extend_view('forms/photos/image/save', 'forms/minor_save', 500);
-		elgg_extend_view('forms/photos/batch/edit', 'forms/minor_save', 500);
-		elgg_extend_view('forms/photos/album/save', 'forms/minor_save', 500);
-		elgg_extend_view('forms/discussion/save', 'forms/minor_save', 500);
-		elgg_extend_view('forms/file_tools/upload/multi', 'forms/minor_save', 500);
-		elgg_extend_view('forms/file_tools/upload/zip', 'forms/minor_save', 500);
-	} 
+		$url = str_replace(elgg_get_site_url(),"", $_SERVER['REQUEST_URI']);
+		if (strpos($url,'edit') == false) {
+			elgg_extend_view('forms/photos/image/save', 'forms/minor_save', 500);
+			elgg_extend_view('forms/photos/album/save', 'forms/minor_save', 500);
+			elgg_extend_view('forms/discussion/save', 'forms/minor_save', 500);
+		}
+	}
 
 	elgg_register_plugin_hook_handler('action', 'blog/save', 'minor_save_hook_handler', 300);
 
