@@ -15,7 +15,7 @@
 elgg_make_sticky_form('blog');
 
 // save or preview
-$save = (bool)get_input('save');
+$save = (bool)get_input('preview');
 
 // store errors to pass along
 $error = FALSE;
@@ -109,7 +109,7 @@ foreach ($values as $name => $default) {
 }
 
 // if preview, force status to be draft
-if ($save == false) {
+if ($save == true) {
 	$values['status'] = 'draft';
 }
 
@@ -170,7 +170,7 @@ if (!$error) {
 			));
 		}
 
-		if ($blog->status == 'published' || $save == false) {
+		if ($blog->status == 'published' || $save == true) {
 			forward($blog->getURL());
 		} else {
 			forward("blog/edit/$blog->guid");

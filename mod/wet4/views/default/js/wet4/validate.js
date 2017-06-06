@@ -39,8 +39,25 @@ requirejs( ["form-validate"], function() {
               }
           },
           submitHandler: function(form) {
-            $(form).find('button').prop('disabled', true);
-              alert('sall good boss');
+              var formAction = $(form).attr('action');
+              var formActionType = formAction.substring(formAction.lastIndexOf('/') +1);
+              var noTagAction = ['login','register','requestnewpassword','add'];
+            //$(form).find('button').prop('disabled', true);
+              //test to see if this is an action we want to open a tag modal
+              if($.inArray(formActionType, noTagAction) > -1){
+                  form.submit();
+                  consle.log('I am forbidden form');
+              }else{
+                  var submitButton = $(form).find('button.form-submit');
+                
+                  $('#tagsModal').modal({
+                      backdrop: 'static'
+                  });
+                  console.log('modal open!');
+                  $(submitButton).on('click', function(){
+                      form.submit();
+                  })
+              }
             //form.submit();
           },
     ignore: ':hidden:not(.validate-me)',

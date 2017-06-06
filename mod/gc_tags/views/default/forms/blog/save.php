@@ -45,26 +45,23 @@ $tag_button = elgg_view('input/submit', array(
     'value' => 'open the modal boi',
     'name' => 'open_modal',
     'class' => 'btn btn-primary open-tag-modal',
-    'data-toggle' => 'modal',
-    'data-target' => '#tagsModal',
-    'data-backdrop' => 'static',
 ));
 
 /*
-$tag_button = elgg_view('output/url', array(
-    'href' => '#',
-    'text' => 'Click me to open a broken modal :|',
-    'class' => 'btn btn-primary validate',
+$tag_button = elgg_view('input/button', array(
+    'value' => 'Click me to open a broken modal :|',
+    'class' => 'btn btn-primary',
     'data-toggle' => 'modal',
     'data-target' => '#tagsModal',
     'data-backdrop' => 'static',
+
 ));
 */
 
 $save_button = elgg_view('input/submit', array(
 	'value' => elgg_echo('publish'),
 	'name' => 'save',
-    'class' => 'btn btn-primary cancel',
+    'class' => 'btn btn-primary form-submit',
 ));
 $action_buttons = $tag_button . $preview_button . $delete_link;
 
@@ -292,7 +289,7 @@ $btn_language
 	$action_buttons
 </div>
 
-<div class="modal fade tags-modal" id="tagsModal" tabindex="-1" rold="dialog" aria-labelledby="Tags and Communities">
+<div class="modal fade tags-modal" id="tagsModal" tabindex="-1" role="dialog" aria-labelledby="Tags and Communities">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -339,11 +336,38 @@ if(get_current_language() == 'fr'){
 <script>
 jQuery(function(){
 
-    jQuery('.open-tag-modal').on('click', function(event){
-        event.preventDefault();
-        $(this).modal();
-        $('form').validate();
+        $('.open-tag-modal').on('click', function(){
+            //alert('oh you clicked me');
+          $(".elgg-form").each(function(){
+            $(this).validate({
+                    invalidHandler: function(form, validator) {
+              var errors = validator.numberOfInvalids();
+              if (errors) {
+
+                var element = validator.errorList[0].element;
+
+                //check to see if textarea
+                if($(element).is('textarea:hidden')){
+                  for(var i in CKEDITOR.instances){
+                    if(CKEDITOR.instances[i].name == $(element).attr('name') || CKEDITOR.instances[i].name == $(element).attr('id')){
+                      $('#cke_'+$(element).attr('id')).attr('aria-labelledby', $(element).attr('id')+'-error');
+                      CKEDITOR.instances[i].focus();
+                    }
+                  }
+                } else {
+                  validator.errorList[0].element.focus();
+                }
+              }
+          },
+    
+                submitHandler: function(form) {
+                    alert('validating');
+      },
     });
+  });
+  
+    });
+    
 	var selector = '.nav li';
 
 	$(selector).on('click', function(){
