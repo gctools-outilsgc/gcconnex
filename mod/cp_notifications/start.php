@@ -861,9 +861,8 @@ function cp_create_notification($event, $type, $object) {
 			return true;		
 	} else {
 
-		if ('single_zip_file_upload' !== $event && 'multi_file_upload' !== $event && 'single_file_upload' !== $event) {
+		if ('single_zip_file_upload' !== $event && 'multi_file_upload' !== $event && 'single_file_upload' !== $event)
 			return true;
-		}
 	}
 
 	elgg_load_library('elgg:gc_notification:functions');
@@ -898,7 +897,12 @@ function cp_create_notification($event, $type, $object) {
 
 		/// invoked when multiple file upload function is used
 		case 'multi_file_upload':
-	error_log(" ================================== multiple file uploads....");
+//	error_log(" ================================== OBJECTS JDLFKJSDLFKSDJLFKJDSFLSDK....".print_r($object,true));
+
+
+//		error_log(" ================================== OBJECTS JDLFKJSDLFKSDJLFKJDSFLSDK....".$object['files_uploaded']);
+
+error_log(">>>>>>>>>>>>>>   {$object['forward_guid']}");
 			$entity = get_entity($object['forward_guid']);
 			if (elgg_instanceof('group', $entity)) {
 				$file_forward_url = elgg_get_site_entity()->getURL()."file/group/{$object['forward_guid']}/all";
@@ -914,12 +918,12 @@ function cp_create_notification($event, $type, $object) {
 
 			$subject = elgg_echo('cp_notify_usr:subject:new_content2', array(elgg_get_logged_in_user_entity()->username, 'file'), 'en');
 			$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content2', array(elgg_get_logged_in_user_entity()->username, 'fichier', false), 'fr');
-			$object = $entity;
+			//$object = $entity;
 
 			$message = array(
-				'cp_topic' => $object['subtype'],
+				'cp_topic' => $entity,//$object['subtype'],
 				'cp_msg_type' => 'multiple_file',
-				'files_information' => $object,
+				'files_information' => $entity,
 				'files_uploaded' => $object['files_uploaded'], 
 				'cp_msg_type' => 'multiple_file',
 				'cp_topic_description_discussion' => 'Please view the files here',
@@ -1181,7 +1185,7 @@ function cp_create_notification($event, $type, $object) {
 	if (empty($subject)) return false;
 	$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
 
-
+//error_log(print_r($message,true));
 
 	/// send the email notification
 	if (count($to_recipients) > 0 && is_array($to_recipients)) {
@@ -1193,7 +1197,7 @@ function cp_create_notification($event, $type, $object) {
 			if ($to_recipient->guid == $author->guid)
 				continue;
 
-			if (cp_check_permissions($object, $recipient_user)) {
+			//if (cp_check_permissions($object, $recipient_user)) {
 
 				if (strcmp($user_setting, "set_digest_yes") == 0) {
 					create_digest($author, $object->getSubtype(), $content_entity, get_entity($to_recipient->guid));
@@ -1207,7 +1211,7 @@ function cp_create_notification($event, $type, $object) {
 					else
 						mail($to_recipient->email,$subject,$template,cp_get_headers());
 				}
-			}
+			//}
 		}
 	}
 

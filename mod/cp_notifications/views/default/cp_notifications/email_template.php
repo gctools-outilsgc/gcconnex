@@ -184,36 +184,43 @@ switch ($msg_type) {
 		$group_url = elgg_get_site_entity()->getURL()."file/group/{$vars['cp_topic']->guid}/all#?utm_source=notification&utm_medium=email";
 		$user_url = elgg_get_site_entity()->getURL()."file/owner/{$user->username}#?utm_source=notification&utm_medium=email";
 
+		/// Files uploaded within a group context
 		if ($vars['cp_topic'] instanceof ElggGroup) {
 			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_new_content:title',array($user->getURL().'?utm_source=notification&utm_medium=email', $user->username, 'file', $vars['cp_topic']->getURL(), $vars['cp_topic']->name),'en');
 			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_m3',array($user->getURL().'?utm_source=notification&utm_medium=email', $user->username, 'fichier', $vars['cp_topic']->getURL(), $vars['cp_topic']->name),'en');
 
 
-			$files = $vars['files_uploaded'];
-
-			foreach ($files as $file) {
-				error_log("FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES        ".$file);
+			$files = json_decode($vars['files_uploaded'],true);
+			$display_files = "John Doe has uploaded ".count($files)." file(s) in Group Alpha:";
+			$display_files .= "<p><ol>";
+			foreach ($files as $file_num => $file) {
+				$file_entity = get_entity($file);
+				$display_files .= "<li><a href='{$file_entity->getURL()}'>{$file_entity->title}</a></li>";
 			}
-			$description = "";
+			$display_files .= "</ol></p>";
 
-			$cp_notify_msg_description_en = elgg_echo('cp_notify:body_new_content:no_description_discussion',array($group_url),'en');
+
+			$cp_notify_msg_description_en = $display_files;//elgg_echo('cp_notify:body_new_content:no_description_discussion',array($group_url),'en');
 			$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_new_content:no_description_discussion',array($group_url),'fr');
 
+
 		} else {
+			/// Files uploaded within a user's context
 
-	error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   mulitple file".print_r($vars['files_uploaded'],true));
-
-			$files = $vars['files_uploaded'];
-
-			foreach ($files as $file) {
-				error_log("FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES FILES        ".$file);
+			$files = json_decode($vars['files_uploaded'],true);
+			$display_files = "John Doe has uploaded ".count($files)." file(s):";
+			$display_files .= "<p><ol>";
+			foreach ($files as $file_num => $file) {
+				$file_entity = get_entity($file);
+				$display_files .= "<li><a href='{$file_entity->getURL()}'>{$file_entity->title}</a></li>";
 			}
+			$display_files .= "</ol></p>";
 
 
 			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_new_content:title3',array($user->getURL().'?utm_source=notification&utm_medium=email', $user->username, 'file'),'en');
 			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title3',array($user->getURL().'?utm_source=notification&utm_medium=email', $user->username, 'fichier'),'fr');
 
-			$cp_notify_msg_description_en = elgg_echo('cp_notify:body_new_content:no_description_discussion',array($user_url),'en');
+			$cp_notify_msg_description_en = $display_files;//elgg_echo('cp_notify:body_new_content:no_description_discussion',array($user_url),'en');
 			$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_new_content:no_description_discussion',array($user_url),'fr');
 		}
 		break;
@@ -244,7 +251,7 @@ switch ($msg_type) {
 	case 'cp_new_type': // new blogs or other entities
 
 
-error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  {$vars['cp_topic']->getSubtype()} //// ");
+//error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  {$vars['cp_topic']->getSubtype()} //// ");
 
 
 		$entity_m = array(

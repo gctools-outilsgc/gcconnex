@@ -8,9 +8,8 @@
  * @author GCTools
  */
 
-	require_once('/var/www/html/gcconnex/engine/start.php');
-//require_once($_SERVER['DOCUMENT_ROOT'].'/engine/start.php');
-//error_log($_SERVER['DOCUMENT_ROOT']);
+//require_once('/var/www/html/gcconnex/engine/start.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/engine/start.php');
 
 
 $access_id = (int) get_input("access_id");
@@ -97,7 +96,8 @@ for ($i = 0; $i < count($_FILES['upload']['name']); $i++) {
 
 		// keep track of the files that are uploaded successfully
 		$number_of_files_uploaded++;
-		$files_uploaded[] = $guid;
+		// $guid returns a null or empty
+		$files_uploaded[$number_of_files_uploaded] = $file->getGUID();
 
 
 		// if image, we need to create thumbnails (this should be moved into a function)
@@ -196,7 +196,6 @@ for ($i = 0; $i < count($_FILES['upload']['name']); $i++) {
 	/// check if the new notifications plugin is active, then trigger the plugin hook, otherwise, trigger event hook
 	/// if cp notification plugin is active, use that for notifications
 	if (elgg_is_active_plugin('cp_notifications')) {
-	
 		if ($folder_guid === 0) {
 			$forward_guid = $container_guid;
 			$group_guid = $container_guid;
@@ -210,7 +209,7 @@ for ($i = 0; $i < count($_FILES['upload']['name']); $i++) {
 			'number_files_uploaded' => $number_of_files_uploaded,
 			'forward_guid' 			=> $forward_guid,
 			'group_guid' 			=> $group_guid,
-			'files_uploaded' 		=> $files_uploaded,
+			'files_uploaded' 		=> json_encode($files_uploaded),
 			'subtype'				=> 'file',
 		);
 
