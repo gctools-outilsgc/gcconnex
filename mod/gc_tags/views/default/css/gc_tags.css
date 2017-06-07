@@ -8,14 +8,14 @@
 }
 
 .selectize-control.plugin-clear_button .clearAll {
-    font-size: 24px;
+    font-size: 16px;
     position: absolute;
-    right: 40px;
+    right: 1px;
     z-index: 10;
-    top: 1px;
+    top: -25px;
     cursor: pointer;
-    color: #404040;
-    
+    color: #047177;
+    text-decoration: underline;
     &.disabled {
         opacity: .5;
         cursor: default;

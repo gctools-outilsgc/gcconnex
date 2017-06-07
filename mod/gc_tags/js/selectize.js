@@ -3840,7 +3840,7 @@ Selectize.define('clear_button', function (options) {
     };
 
     options = $.extend({
-        label: '&times;',
+        label: 'Remove all',
         title: 'Remove',
         className: 'clearAll',
         append: true,

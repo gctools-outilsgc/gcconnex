@@ -39,12 +39,13 @@ requirejs( ["form-validate"], function() {
               }
           },
           submitHandler: function(form) {
-              var formAction = $(form).attr('action');
-              var formActionType = formAction.substring(formAction.lastIndexOf('/') +1);
-              var noTagAction = ['login','register','requestnewpassword','add'];
-            //$(form).find('button').prop('disabled', true);
+              var formAction = $(form).attr('action').split('/');
+              var formActionType = formAction[formAction.length-2] + '/' +formAction[formAction.length-1];
+              //var formActionType = formAction.substring(formAction.lastIndexOf('/') +1);
+              var noTagAction = ['login','register','requestnewpassword','add','post-mission-first-form'];
+            
               //test to see if this is an action we want to open a tag modal
-              if($.inArray(formActionType, noTagAction) > -1){
+              if(formActionType != 'blog/save'){
                   form.submit();
                   consle.log('I am forbidden form');
               }else{
@@ -53,7 +54,7 @@ requirejs( ["form-validate"], function() {
                   $('#tagsModal').modal({
                       backdrop: 'static'
                   });
-                  console.log('modal open!');
+                  console.log(formActionType);
                   $(submitButton).on('click', function(){
                       form.submit();
                   })
