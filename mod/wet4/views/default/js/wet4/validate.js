@@ -47,14 +47,12 @@ requirejs( ["form-validate"], function() {
               //test to see if this is an action we want to open a tag modal
               if(formActionType != 'blog/save'){
                   form.submit();
-                  consle.log('I am forbidden form');
               }else{
                   var submitButton = $(form).find('button.form-submit');
                 
                   $('#tagsModal').modal({
                       backdrop: 'static'
                   });
-                  console.log(formActionType);
                   $(submitButton).on('click', function(){
                       form.submit();
                   })
