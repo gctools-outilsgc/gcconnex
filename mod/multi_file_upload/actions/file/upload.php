@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * upload.php
  *
  * Manage uploading of files through bootstrap drag and drop upload
@@ -8,8 +8,8 @@
  * @author GCTools
  */
 
-//require_once('/var/www/html/gcconnex/engine/start.php');
-require_once($_SERVER['DOCUMENT_ROOT'].'/engine/start.php');
+require_once('/var/www/html/gcconnex/engine/start.php');
+//require_once($_SERVER['DOCUMENT_ROOT'].'/engine/start.php');
 
 
 $access_id = (int) get_input("access_id");
@@ -95,9 +95,9 @@ for ($i = 0; $i < count($_FILES['upload']['name']); $i++) {
 		$guid = $file->save();
 
 		// keep track of the files that are uploaded successfully
-		$number_of_files_uploaded++;
-		// $guid returns a null or empty
 		$files_uploaded[$number_of_files_uploaded] = $file->getGUID();
+		$number_of_files_uploaded++;
+
 
 
 		// if image, we need to create thumbnails (this should be moved into a function)

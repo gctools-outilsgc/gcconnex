@@ -86,6 +86,13 @@ $french = array(
 
 	'cp_notifications:mail_body:subtype:oppourtunity' => "%s a publié une opportunité (%s): %s",
 
+	/// new texts : require translation
+	'cp_notifications:mail_body:subtype:file_upload:singular' => "% has uploaded %s file:",
+	'cp_notifications:mail_body:subtype:file_upload:plural' => "% has uploaded %s files:",
+	'cp_notifications:mail_body:subtype:file_upload:group:singular' => "% has uploaded %s file in %s:",
+	'cp_notifications:mail_body:subtype:file_upload:group:plural' => "% has uploaded %s files in %s:",
+
+
 	'cp_newsletter:other_content:notice' => "Ces abonnements s'appliquent uniquement au contenu qui ne fait pas partie d'un groupe",
 	
 	'cp_notifications:no_colleagues' => "Vous n'avez aucun collègue",

@@ -172,8 +172,7 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 	// default title value
 	$content_title = $entity->title;
 
-	if (!$entity->title) $entity = get_entity($entity->guid);
-
+	if (!$entity->title && ($subtype !== 'single_zip_file_upload' && $subtype !== 'multi_file_upload')) $entity = get_entity($entity->guid);
 
 	if ($entity instanceof ElggObject) {
 		$content_url = (!$entity_url) ? $entity->getURL() : $entity_url;
@@ -210,11 +209,79 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 	}
 
 
-
-
 if ($subtype === "hjforumcategory" || $subtype === "hjforum") return true;
 
 	switch ($subtype) {
+
+		case 'single_zip_file_upload':
+			$file_entity = get_entity($entity[0]);
+			$container = $file_entity->getContainerEntity();
+
+			$display_files = "<p><ol>";
+			foreach ($entity as $file_num => $file) {
+				$file_entity = get_entity($file);
+				$display_files .= "<li><a href='{$file_entity->getURL()}?utm_source=notification_digest&utm_medium=email'>{$file_entity->title}</a></li>";
+			}
+			$display_files .= "</ol></p>";
+			$content_array = array(
+				'content_title' 		=> $display_files,
+				'subtype' 				=> 'files',
+				'content_author_name' => $invoked_by->name,
+				'content_author_url' => $invoked_by->getURL()
+			);
+
+			if ($container instanceof ElggUser) {
+				$entity_guid = $file_entity->getGUID();
+				$user_guid = $send_to->getGUID();
+				$entry_type = 'personal';
+				$group_name = NULL;
+				$action_type = 'new_post';
+				$notification_entry = json_encode($content_array);
+			} else {
+				$entity_guid = $file_entity->getGUID();
+				$user_guid = $send_to->getGUID();
+				$entry_type = 'group';
+				$group_name = $container->name;
+				$action_type = 'new_post';
+				$notification_entry = json_encode($content_array);
+			}
+			break;
+
+		case 'multi_file_upload':
+
+			$file_entity = get_entity($entity[0]);
+			$container = $file_entity->getContainerEntity();
+
+			$display_files = "<p><ol>";
+			foreach ($entity as $file_num => $file) {
+				$file_entity = get_entity($file);
+				$display_files .= "<li><a href='{$file_entity->getURL()}?utm_source=notification_digest&utm_medium=email'>{$file_entity->title}</a></li>";
+			}
+			$display_files .= "</ol></p>";
+			$content_array = array(
+				'content_title' 		=> $display_files,
+				'subtype' 				=> 'files',
+				'content_author_name' 	=> "John Doe",
+				'content_author_url' 	=> "https://google.ca/"
+			);
+
+			if ($container instanceof ElggUser) {
+				$entity_guid = $file_entity->getGUID();
+				$user_guid = $send_to->getGUID();
+				$entry_type = 'personal';
+				$group_name = NULL;
+				$action_type = 'new_post';
+				$notification_entry = json_encode($content_array);
+			} else {
+				$entity_guid = $file_entity->getGUID();
+				$user_guid = $send_to->getGUID();
+				$entry_type = 'group';
+				$group_name = $container->name;
+				$action_type = 'new_post';
+				$notification_entry = json_encode($content_array);
+			}
+
+			break;
 
 		case 'thewire':
 			$content_array = array(

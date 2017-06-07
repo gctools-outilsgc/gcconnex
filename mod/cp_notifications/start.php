@@ -890,8 +890,8 @@ function cp_create_notification($event, $type, $object) {
 				$file_forward_url = $entity->getURL();
 			}
 
-			$to_recipients = get_subscribers($dbprefix, elgg_get_logged_in_user_guid(), $object->getGUID());
-			$to_recipients_site = get_site_subscribers($dbprefix, elgg_get_logged_in_user_guid(), $object->getGUID());
+			$to_recipients = get_subscribers($dbprefix, elgg_get_logged_in_user_guid(), $entity->getGUID());
+			$to_recipients_site = get_site_subscribers($dbprefix, elgg_get_logged_in_user_guid(), $entity->getGUID());
 
 			$subject = elgg_echo('cp_notify_usr:subject:new_content2', array(elgg_get_logged_in_user_entity()->username, 'file'), 'en');
 			$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content2', array(elgg_get_logged_in_user_entity()->username, 'fichier', false), 'fr');
@@ -904,6 +904,9 @@ function cp_create_notification($event, $type, $object) {
 				'cp_topic_description_discussion' => 'Please view the files here',
 				'cp_topic_description_discussion2' => 'SVP voir les fichiers ici',
 			);
+
+			$content_entity = $object['files_uploaded'];
+			$author = elgg_get_logged_in_user_entity();
 			break;
 
 		/// invoked when multiple file upload function is used
@@ -919,8 +922,8 @@ function cp_create_notification($event, $type, $object) {
 			}
 
 			$author = elgg_get_logged_in_user_entity();
-			$to_recipients = get_subscribers($dbprefix, elgg_get_logged_in_user_guid(), $object['group_guid']);
-			$to_recipients_site = get_site_subscribers($dbprefix, elgg_get_logged_in_user_guid(), $object['group_guid']);
+			$to_recipients = get_subscribers($dbprefix, elgg_get_logged_in_user_guid(), $entity->getGUID());
+			$to_recipients_site = get_site_subscribers($dbprefix, elgg_get_logged_in_user_guid(), $entity->getGUID());
 
 			$subject = elgg_echo('cp_notify_usr:subject:new_content2', array(elgg_get_logged_in_user_entity()->username, 'file'), 'en');
 			$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content2', array(elgg_get_logged_in_user_entity()->username, 'fichier', false), 'fr');
@@ -934,6 +937,10 @@ function cp_create_notification($event, $type, $object) {
 				'cp_topic_description_discussion' => 'Please view the files here',
 				'cp_topic_description_discussion2' => 'SVP voir les fichiers ici',
 			);
+
+
+			$content_entity = json_decode($object['files_uploaded'],true);
+			$author = elgg_get_logged_in_user_entity();
 			break;
 
 		case 'discussion_reply':
@@ -1205,7 +1212,7 @@ function cp_create_notification($event, $type, $object) {
 			//if (cp_check_permissions($object, $recipient_user)) {
 
 				if (strcmp($user_setting, "set_digest_yes") == 0) {
-					create_digest($author, $object->getSubtype(), $content_entity, get_entity($to_recipient->guid));
+					create_digest($author, $switch_case, $content_entity, get_entity($to_recipient->guid));
 
 				} else {
 
@@ -1404,11 +1411,11 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 
 			echo $template . "<br/><br/>";
 
-			if (elgg_is_active_plugin('phpmailer'))
+			/*if (elgg_is_active_plugin('phpmailer'))
 				phpmailer_send($user->email, $user->name, $subject, $template, NULL, true );
 			else
 				mail($user->email, $subject, $template, cp_get_headers());
-
+*/
 
 			// delete and clean up the notification, already sent so we don't need to keep it anymore
 			$query = "DELETE FROM notification_digest WHERE user_guid = {$user->getGUID()}";
