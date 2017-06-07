@@ -18,4 +18,5 @@ return array(
     "gctags:community:security" => "Spécialistes en sécurité",
     "gctags:community:service" => "Spécialistes du service",
     "gctags:community:science" => "Spécialistes en science et en technologie",
+    "gctags:community:allps" => "All Public Servants",
 );

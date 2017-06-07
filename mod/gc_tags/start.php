@@ -13,9 +13,11 @@ elgg_register_event_handler('init', 'system', 'tags_and_communities');
 function tags_and_communities(){
     //Register selectize library
     elgg_require_js("selectize_require");
-    elgg_register_js('selectize', 'mod/gc_tags/views/default/js/selectize.min.js');
+    elgg_register_js('selectize', 'mod/gc_tags/views/default/js/selectize.js');
     elgg_extend_view('css/elgg', 'css/selectize.bootstrap3.css');
     
+    //Custom CSS and JS
+    elgg_extend_view('js/elgg', 'js/gc_tags_js');
     elgg_extend_view('css/elgg', 'css/gc_tags.css');
     
     //Add metadata to the page header

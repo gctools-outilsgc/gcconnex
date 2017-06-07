@@ -6,3 +6,23 @@
 .tags-modal{
     background-color: rgba(0, 0, 0, 0.3);
 }
+
+.selectize-control.plugin-clear_button .clearAll {
+    font-size: 24px;
+    position: absolute;
+    right: 40px;
+    z-index: 10;
+    top: 1px;
+    cursor: pointer;
+    color: #404040;
+    
+    &.disabled {
+        opacity: .5;
+        cursor: default;
+    }
+    
+    &:active,
+    &:focus {
+        outline: 0;
+    }
+}

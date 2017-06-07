@@ -42,27 +42,18 @@ if (!$vars['guid'] || ($blog && $blog->status != 'published')) {
 }
 
 $tag_button = elgg_view('input/submit', array(
-    'value' => 'open the modal boi',
+    'value' => elgg_echo('gctags:button:create'),
     'name' => 'open_modal',
     'class' => 'btn btn-primary open-tag-modal',
 ));
-
-/*
-$tag_button = elgg_view('input/button', array(
-    'value' => 'Click me to open a broken modal :|',
-    'class' => 'btn btn-primary',
-    'data-toggle' => 'modal',
-    'data-target' => '#tagsModal',
-    'data-backdrop' => 'static',
-
-));
-*/
 
 $save_button = elgg_view('input/submit', array(
 	'value' => elgg_echo('publish'),
 	'name' => 'save',
     'class' => 'btn btn-primary form-submit',
 ));
+
+
 $action_buttons = $tag_button . $preview_button . $delete_link;
 
 $btn_language =  '<ul class="nav nav-tabs nav-tabs-language">
@@ -174,6 +165,11 @@ $access_input = elgg_view('input/access', array(
 	'entity_subtype' => 'blog',
 ));
 
+$tags_modal = elgg_view('page/elements/tags_modal',array(
+    'community_btn' => $community_input,
+    'tags_btn' => $tags_input,
+    'save_btn' => $save_button,
+));
 
 
 
@@ -289,22 +285,7 @@ $btn_language
 	$action_buttons
 </div>
 
-<div class="modal fade tags-modal" id="tagsModal" tabindex="-1" role="dialog" aria-labelledby="Tags and Communities">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            </div>
-            <div class="modal-body">
-                $community_input
-                $tags_input
-            </div>
-            <div class="modal-footer">
-                $save_button
-            </div>
-        </div>
-    </div>
-</div>
+    $tags_modal
 
 </div>
 

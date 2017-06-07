@@ -14,9 +14,9 @@ if($my_page_entity->audience){
     //if multiple communities
     if(is_array($audience)){
         foreach($audience as $value){
-            $audience_string .= $value .',';
+             echo '<meta name="dcterms.audience" content="'.$value.'">';
         }
-        echo '<meta name="dcterms.audience" content="'.$audience_string.'">';
+       
     }else{
         echo '<meta name="dcterms.audience" content="'.$audience.'">';
     }

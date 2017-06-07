@@ -3,6 +3,8 @@
 * Community picker
 */
 
+//Testing - using a plugin setting for array, found out you can't save arrays in plugin settings.
+//$community_array = elgg_get_plugin_setting('community_list', 'gc_tags');
 //Communities of practice
 $community_array = array(
     'atip'=> elgg_echo('gctags:community:atip'),
@@ -20,7 +22,8 @@ $community_array = array(
     'regulators'=> elgg_echo('gctags:community:regulators'),
     'security'=> elgg_echo('gctags:community:security'),
     'service'=> elgg_echo('gctags:community:service'),
-    'science'=> elgg_echo('gctags:community:science'), 
+    'science'=> elgg_echo('gctags:community:science'),
+    'allps' => elgg_echo('gctags:community:allps'),
 );
 
 if (isset($vars['entity'])) {
@@ -38,4 +41,5 @@ $communities_input = elgg_view('input/select', array(
 ));
 echo elgg_format_element('label', array('for' => 'audience'), elgg_echo('gctags:label:community'));
 echo elgg_format_element('p', array('class' => 'timeStamp'), elgg_echo('gctags:helpertext:community'));
+echo elgg_format_element('span',array('class' => 'community-info'),'');
 echo $communities_input;

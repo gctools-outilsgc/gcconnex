@@ -17,10 +17,13 @@ return array(
     "gctags:community:security" => "Security Specialists",
     "gctags:community:service" => "Service Specialists",
     "gctags:community:science" => "Science and Technology Specialists",
+    "gctags:community:allps" => "All Public Servants",
     
     //Input labels, placeholder and helper text
     "gctags:label:community" => "What community does this belong to?",
     "gctags:helpertext:community" => "Click to add communities. You can add as many that apply",
     "gctags:placeholder:tags" => "Ex. policy, tags, tag,",
     "gctags:helpertext:tags" => "To add type in tag and press ',' or 'enter'",
+    
+    "gctags:button:create" => "Tag and Create",
 );

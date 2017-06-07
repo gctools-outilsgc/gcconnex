@@ -3,7 +3,7 @@
 *
 */
 
-var selectizePath = elgg.normalize_url() + '/mod/gc_tags/js/selectize.min';
+var selectizePath = elgg.normalize_url() + '/mod/gc_tags/js/selectize';
 
 require.config({
     paths: {
@@ -11,7 +11,7 @@ require.config({
     }
 });
 
-requirejs(["selectize"], function () {
+requirejs(["selectize"], function () {    
     $('.elgg-input-tags').selectize({
         plugins: ['remove_button'],
         delimiter: ',',
@@ -25,6 +25,9 @@ requirejs(["selectize"], function () {
     });
     
     $('.audience-select').selectize({
-        plugins: ['remove_button']
+        plugins: ['remove_button', 'clear_button'],
+
     });
+    
+
 });
