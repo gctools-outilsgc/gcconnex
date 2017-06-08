@@ -1411,11 +1411,11 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 
 			echo $template . "<br/><br/>";
 
-			/*if (elgg_is_active_plugin('phpmailer'))
+			if (elgg_is_active_plugin('phpmailer'))
 				phpmailer_send($user->email, $user->name, $subject, $template, NULL, true );
 			else
 				mail($user->email, $subject, $template, cp_get_headers());
-*/
+
 
 			// delete and clean up the notification, already sent so we don't need to keep it anymore
 			$query = "DELETE FROM notification_digest WHERE user_guid = {$user->getGUID()}";
