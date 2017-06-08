@@ -699,6 +699,7 @@ function getMissionTypeMetastringid( $mission_type, $role_type ) {
     $boolSubtype = ($language_preference === 'fr') ? false : true;
     $subtype = cp_translate_subtype($subtype, $boolSubtype);
 
+
 	if ($heading === 'new_post' && $subtype === 'file_upload') {
 
 
@@ -723,7 +724,7 @@ function getMissionTypeMetastringid( $mission_type, $role_type ) {
 		$rendered_content = elgg_echo("cp_notifications:mail_body:subtype:content_share", array($author, $subtype, $url), $language_preference);
     	
 
-	} elseif ($heading === 'cp_mention') {
+	} elseif ($heading === 'cp_mention' || $heading === 'mention') {
 
 
 		if ($content_array['subtype'] === 'wire_mention') {

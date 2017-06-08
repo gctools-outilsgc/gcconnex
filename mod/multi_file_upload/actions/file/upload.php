@@ -8,8 +8,8 @@
  * @author GCTools
  */
 
-require_once('/var/www/html/gcconnex/engine/start.php');
-//require_once($_SERVER['DOCUMENT_ROOT'].'/engine/start.php');
+//require_once('/var/www/html/gcconnex/engine/start.php');
+require_once($_SERVER['DOCUMENT_ROOT'].'/engine/start.php');
 
 
 $access_id = (int) get_input("access_id");
