@@ -209,7 +209,7 @@ if (elgg_is_active_plugin('cp_notifications')) {
 		'number_files_uploaded' => $number_of_files_uploaded,
 		'forward_guid' 			=> $forward_guid,
 		'group_guid' 			=> $group_guid,
-		'files_uploaded' 		=> json_encode($files_uploaded),
+		'files_uploaded' 		=> $files_uploaded,
 		'subtype'				=> 'file',
 	);
 

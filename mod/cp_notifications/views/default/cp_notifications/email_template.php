@@ -185,13 +185,15 @@ switch ($msg_type) {
 		/// Files uploaded within a group context
 		if ($vars['cp_topic'] instanceof ElggGroup) {
 			$files = $vars['files_uploaded'];
+
 			$files_count = count($files);
-			$files_author_link = "<a href='{$files[0]->getOwnerEntity()->getURL()}'>{$files[0]->getOwnerEntity()->name}</a>";
-			$group_link = "<a href='{$files[0]->getContainerEntity()->getURL()}?utm_source=notification&utm_medium=email'> {$files[0]->getContainerEntity()->name}</a>";
+			$file_entity = get_entity($files[0]);
+			$files_author_link = "<a href='{$file_entity->getOwnerEntity()->getURL()}?utm_source=notification&utm_medium=email'>{$file_entity->getOwnerEntity()->name}</a>";
+			$group_link = "<a href='{$file_entity->getContainerEntity()->getURL()}?utm_source=notification&utm_medium=email'>{$file_entity->getContainerEntity()->name}</a>";
 
 			$singular_or_plural = (count($files) > 1) ? 'plural' : 'singular';
-			$display_files_en = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:singular:{$singular_or_plural}", array($files_author_link, $files_count, $group_link), 'en');
-			$display_files_fr = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:singular:{$singular_or_plural}", array($files_author_link, $files_count, $group_link), 'fr');
+			$display_files_en = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:{$singular_or_plural}", array($files_author_link, $files_count, $group_link), 'en');
+			$display_files_fr = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:{$singular_or_plural}", array($files_author_link, $files_count, $group_link), 'fr');
 
 			$display_files .= "<p><ol>";
 			foreach ($files as $file_num => $file) {
@@ -208,12 +210,12 @@ switch ($msg_type) {
 
 			$files = $vars['files_uploaded'];
 			$files_count = count($files);
-			$files_author_link = "<a href='{$files[0]->getOwnerEntity()->getURL()}'>{$files[0]->getOwnerEntity()->name}</a>";
-			$user_link = "<a href='{$files[0]->getContainerEntity()->getURL()}?utm_source=notification&utm_medium=email'>{$files[0]->getContainerEntity()->name}</a>";
+			$file_entity = get_entity($files[0]);
+			$files_author_link = "<a href='{$file_entity->getOwnerEntity()->getURL()}?utm_source=notification&utm_medium=email'>{$file_entity->getOwnerEntity()->name}</a>";
 
 			$singular_or_plural = (count($files) > 1) ? 'plural' : 'singular';
-			$display_files_en = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:singular:{$singular_or_plural}", array($files_author_link, $files_count, $user_link), 'en');
-			$display_files_fr = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:singular:{$singular_or_plural}", array($files_author_link, $files_count, $user_link), 'fr');
+			$display_files_en = elgg_echo("cp_notifications:mail_body:subtype:file_upload:{$singular_or_plural}", array($files_author_link, $files_count), 'en');
+			$display_files_fr = elgg_echo("cp_notifications:mail_body:subtype:file_upload:{$singular_or_plural}", array($files_author_link, $files_count), 'fr');
 
 			$display_files .= "<p><ol>";
 			foreach ($files as $file_num => $file) {
@@ -236,12 +238,13 @@ switch ($msg_type) {
 
 			$files = $vars['files_uploaded'];
 			$files_count = count($files);
-			$files_author_link = "<a href='{$files[0]->getOwnerEntity()->getURL()}'>{$files[0]->getOwnerEntity()->name}</a>";
-			$group_link = "<a href='{$files[0]->getContainerEntity()->getURL()}?utm_source=notification&utm_medium=email'> {$files[0]->getContainerEntity()->name} </a>";
+			$file_entity = get_entity($files[0]);
+			$files_author_link = "<a href='{$file_entity->getOwnerEntity()->getURL()}?utm_source=notification&utm_medium=email'>{$file_entity->getOwnerEntity()->name}</a>";
+			$group_link = "<a href='{$file_entity->getContainerEntity()->getURL()}?utm_source=notification&utm_medium=email'>{$file_entity->getContainerEntity()->name}</a>";
 
 			$singular_or_plural = (count($files) > 1) ? 'plural' : 'singular';
-			$display_files_en = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:singular:{$singular_or_plural}", array($files_author_link, $files_count, $group_link), 'en');
-			$display_files_fr = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:singular:{$singular_or_plural}", array($files_author_link, $files_count, $group_link), 'fr');
+			$display_files_en = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:{$singular_or_plural}", array($files_author_link, $files_count, $group_link), 'en');
+			$display_files_fr = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:{$singular_or_plural}", array($files_author_link, $files_count, $group_link), 'fr');
 
 			$display_files .= "<p><ol>";
 			foreach ($files as $file_num => $file) {
@@ -258,12 +261,12 @@ switch ($msg_type) {
 
 			$files = $vars['files_uploaded'];
 			$files_count = count($files);
-			$files_author_link = "<a href='{$files[0]->getOwnerEntity()->getURL()}'>{$files[0]->getOwnerEntity()->name}</a>";
-			$user_link = "<a href='{$files[0]->getContainerEntity()->getURL()}?utm_source=notification&utm_medium=email'> {$files[0]->getContainerEntity()->name} </a>";
+			$file_entity = get_entity($files[0]);
+			$files_author_link = "<a href='{$file_entity->getOwnerEntity()->getURL()}?utm_source=notification&utm_medium=email'>{$file_entity->getOwnerEntity()->name}</a>";
 
 			$singular_or_plural = (count($files) > 1) ? 'plural' : 'singular';
-			$display_files_en = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:singular:{$singular_or_plural}", array($files_author_link, $files_count, $user_link), 'en');
-			$display_files_fr = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:singular:{$singular_or_plural}", array($files_author_link, $files_count, $user_link), 'fr');
+			$display_files_en = elgg_echo("cp_notifications:mail_body:subtype:file_upload:{$singular_or_plural}", array($files_author_link, $files_count), 'en');
+			$display_files_fr = elgg_echo("cp_notifications:mail_body:subtype:file_upload:{$singular_or_plural}", array($files_author_link, $files_count), 'fr');
 
 			$display_files .= "<p><ol>";
 			foreach ($files as $file_num => $file) {

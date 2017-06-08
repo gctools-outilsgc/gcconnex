@@ -939,7 +939,7 @@ function cp_create_notification($event, $type, $object) {
 			);
 
 
-			$content_entity = json_decode($object['files_uploaded'],true);
+			$content_entity = $object['files_uploaded'];
 			$author = elgg_get_logged_in_user_entity();
 			break;
 
@@ -1209,7 +1209,7 @@ function cp_create_notification($event, $type, $object) {
 			if ($to_recipient->guid == $author->guid)
 				continue;
 
-			//if (cp_check_permissions($object, $recipient_user)) {
+			if (cp_check_permissions($object, $recipient_user)) {
 
 				if (strcmp($user_setting, "set_digest_yes") == 0) {
 					create_digest($author, $switch_case, $content_entity, get_entity($to_recipient->guid));
@@ -1223,7 +1223,7 @@ function cp_create_notification($event, $type, $object) {
 					else
 						mail($to_recipient->email,$subject,$template,cp_get_headers());
 				}
-			//}
+			}
 		}
 	}
 

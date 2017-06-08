@@ -63,6 +63,7 @@ $english = array(
 	'cp_notifications:mail_body:subtype:blog' => "%s posted a blog: %s", 
 	'cp_notifications:mail_body:subtype:bookmarks' => "%s posted a bookmark: %s", 
 	'cp_notifications:mail_body:subtype:file' => "%s posted a file: %s", 
+
 	'cp_notifications:mail_body:subtype:album' => "%s posted an album: %s", 
 	'cp_notifications:mail_body:subtype:thewire' => "%s posted on the %s",
 	'cp_notifications:mail_body:subtype:poll' => "%s created a poll: %s", 
@@ -71,13 +72,15 @@ $english = array(
 	'cp_notifications:mail_body:subtype:task' => "%s created a task: %s", 
 	'cp_notifications:mail_body:subtype:likes' => "%s liked your post: %s",
 
+	/// new translation require attention
+	'cp_notifications:mail_body:subtype:file_upload' => "%s posted %s file(s): %s", 	
 
 
 	/// new text
-	'cp_notifications:mail_body:subtype:file_upload:singular' => "% has uploaded %s file:",
-	'cp_notifications:mail_body:subtype:file_upload:plural' => "% has uploaded %s files:",
-	'cp_notifications:mail_body:subtype:file_upload:group:singular' => "% has uploaded %s file in %s:",
-	'cp_notifications:mail_body:subtype:file_upload:group:plural' => "% has uploaded %s files in %s:",
+	'cp_notifications:mail_body:subtype:file_upload:singular' => "%s has uploaded %s file:",
+	'cp_notifications:mail_body:subtype:file_upload:plural' => "%s has uploaded %s files:",
+	'cp_notifications:mail_body:subtype:file_upload:group:singular' => "%s has uploaded %s file in %s:",
+	'cp_notifications:mail_body:subtype:file_upload:group:plural' => "%s has uploaded %s files in %s:",
 
 
 
