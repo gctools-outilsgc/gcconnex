@@ -1665,12 +1665,18 @@ abstract class ElggEntity extends \ElggData implements
 
 		if ( $type == "object" && $subtype != "widget" ){
 			$duplicate_check = md5( sanitize_string($this->title).sanitize_string($this->description) ) . $owner_guid . $time_created;
-			$result = $this->getDatabase()->insertData("INSERT into {$CONFIG->dbprefix}entities
-				(type, subtype, owner_guid, site_guid, container_guid,
-					access_id, time_created, time_updated, last_action, duplicate_check)
-				values
-				('$type', $subtype_id, $owner_guid, $site_guid, $container_guid,
-					$access_id, $time_created, $now, $now, '$duplicate_check')");
+			try{
+				$result = $this->getDatabase()->insertData("INSERT into {$CONFIG->dbprefix}entities
+					(type, subtype, owner_guid, site_guid, container_guid,
+						access_id, time_created, time_updated, last_action, enabled, duplicate_check)
+					values
+					('$type', $subtype_id, $owner_guid, $site_guid, $container_guid,
+						$access_id, $time_created, $now, $now, 0, '$duplicate_check')");
+			}
+			catch( DatabaseException $e ){
+				error_log("Duplication prevented: " . $e->getMessage());
+				return null;
+			}
 		}
 		else {
 			$result = $this->getDatabase()->insertData("INSERT into {$CONFIG->dbprefix}entities
