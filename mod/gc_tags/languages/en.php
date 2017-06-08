@@ -26,4 +26,5 @@ return array(
     "gctags:helpertext:tags" => "To add type in tag and press ',' or 'enter'",
     
     "gctags:button:create" => "Tag and Create",
+    "gctags:modal:header" => "Add Tags and Communities",
 );

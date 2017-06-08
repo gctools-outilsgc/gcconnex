@@ -39,7 +39,13 @@ $communities_input = elgg_view('input/select', array(
     'value' => $value,
     'class' => 'audience-select',
 ));
+$help_link = elgg_view('output/url', array(
+    'text' => '[?] <span class="wb-invisible">What are communities?</span>',
+    'href' => '#',
+    'title' => 'What are communities?'
+));
+
 echo elgg_format_element('label', array('for' => 'audience'), elgg_echo('gctags:label:community'));
+echo elgg_format_element('span',array('class' => 'mrgn-lft-sm'),$help_link);
 echo elgg_format_element('p', array('class' => 'timeStamp'), elgg_echo('gctags:helpertext:community'));
-echo elgg_format_element('span',array('class' => 'community-info'),'');
 echo $communities_input;

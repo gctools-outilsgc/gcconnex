@@ -28,4 +28,13 @@ function tags_and_communities(){
     //Blog form
     elgg_unregister_action('blog/save');
 	elgg_register_action('blog/save', "$action_path/blog/save.php");
+    
+    //FAQ / Help Page
+    elgg_register_page_handler('community-help', 'gc_tags_help_page_handler');
+
+}
+
+function gc_tags_help_page_handler(){
+    @include (dirname ( __FILE__ ) . "/pages/gc_tags_help.php");
+    return true;
 }
