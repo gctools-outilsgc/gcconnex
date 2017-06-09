@@ -21,18 +21,30 @@ function gc_elgg_sitemap_init() {
     elgg_register_plugin_hook_handler('view','thewire/sidebar', 'elgg_sidebar_handler');
     elgg_register_plugin_hook_handler('view','photos/sidebar', 'elgg_sidebar_handler');
     elgg_register_plugin_hook_handler('view','file/sidebar', 'elgg_sidebar_handler');
-//group
-    
+	//group link is broken
+
     /// renmove these pages so that it doesn't get crawled
 	elgg_unregister_page_handler('activity');
 	elgg_unregister_page_handler('dashboard');
 	elgg_unregister_menu_item('site', 'activity');
 	elgg_unregister_menu_item('site', 'career');
 	elgg_unregister_menu_item('site', 'Help');
+	elgg_unregister_menu_item('site', 'newsfeed');
 	elgg_unregister_menu_item('topbar', 'dashboard');
+
+	/// list all entities
+	elgg_register_plugin_hook_handler('view_vars','object/elements/summary', 'elgg_entities_list_handler');
 
 }
 
+
+function elgg_entities_list_handler($hook, $type, $value, $params) {
+	//foreach ($value as $value_key => $value_item)
+	//	error_log("+++++++++++++++++++++    {$value_key} /// {$value_item}");
+	
+	error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>     ".print_r($value['items'],true));
+	return "";
+}
 
 function elgg_sidebar_handler($hook, $type, $menu, $params) {
 
