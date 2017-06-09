@@ -22,8 +22,7 @@ $defaults = array(
 	'disabled' => false,
 	'autocapitalize' => 'off',
 	'type' => 'text',
-    'placeholder' => elgg_echo('gctags:placeholder:tags'),
-    'name' => 'tags',
+    'placeholder' => elgg_echo('gctags:placeholder:tags'),  
 );
 
 if (isset($vars['entity'])) {

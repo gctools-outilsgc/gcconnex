@@ -24,9 +24,15 @@ function tags_and_communities(){
     elgg_extend_view('page/elements/head', 'page/elements/tag_metadata');
     
     
-    //Extend the forms
+    //Extend the forms with the tag and community modal
+    //These modals get called in validate.js after the form is valid
     elgg_extend_view('forms/bookmarks/save', 'page/elements/tags_modal');
-    
+    elgg_extend_view('forms/pages/edit', 'page/elements/tags_modal');
+    elgg_extend_view('forms/groups/edit', 'page/elements/tags_modal');
+    elgg_extend_view('forms/file/upload', 'page/elements/tags_modal');
+    elgg_extend_view('forms/discussion/save', 'page/elements/tags_modal');
+    elgg_extend_view('forms/event_calendar/edit', 'page/elements/tags_modal');
+    elgg_extend_view('forms/blog/save', 'page/elements/tags_modal');
     //override the form actions so we can save community meta data :3
     $action_path = elgg_get_plugins_path() . 'gc_tags/actions';
     //Blog form

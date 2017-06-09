@@ -1,12 +1,10 @@
 <?php
 /*
-*
+* Extend save / upload / add forms with the tags and community modal.
+* This removes the tags input that is on most forms, and changes the button text to say "Tag and create"
+* This modal is opened from validate.js (in wet4) when the submit handler is run
 *
 */
-
-//$community_button = $vars['community_btn'];
-//$tags_button = $vars['tags_btn'];
-//$save_button = $vars['save_btn'];
 
 $help_link_main = elgg_view('output/url', array(
     'text' => '[?] <span class="wb-invisible">'.elgg_echo("gctags:help:title").'</span>',
@@ -22,11 +20,17 @@ $help_link_tags = elgg_view('output/url', array(
     'target' => '_blank',
 ));
 
-
 $community_button = elgg_view('input/community',array());
 
-$tags_label =
-$tags_button = elgg_view('input/tags',array());
+//different mods like to call tags other things! neato
+if(elgg_in_context('groups')){
+    $tag_name = 'interests';
+}else{
+    $tag_name ='tags';
+}
+$tags_button = elgg_view('input/tags',array(
+    'name' => $tag_name,
+));
 
 
 $save_button = elgg_view('input/submit', array(
@@ -42,7 +46,7 @@ $save_button = elgg_view('input/submit', array(
 <script>
 $(document).ready(function(){
     $('form .tag-wrapper:first').remove();
-    $('label[for~="tags"]:first').remove();
+    $('label[for~="<?php echo $tag_name; ?>"]:first').remove();
     $('button[type="submit"]:first').text('Tag and Create');
 })
 </script>
