@@ -13,6 +13,7 @@ $user = elgg_get_page_owner_entity();
 $plugin = elgg_extract("entity", $vars);
 $dbprefix = elgg_get_config('dbprefix');
 $site = elgg_get_site_entity();
+$lang = get_current_language();
 elgg_load_library('elgg:gc_notification:functions');
 
 $title = elgg_echo('cp_notifications:heading:page_title');
@@ -40,14 +41,14 @@ if (strcmp($enable_digest, 'yes') == 0) {
 
 	$more_info = information_icon(elgg_echo('cp_newsletter:information:digest_option'), elgg_echo('cp_newsletter:information:digest_option:url'));
 	$content .= "<section id='notificationstable' cellspacing='0' cellpadding='4' width='100%' class='clearfix'>";
-	$content .= '<div class="col-sm-12 clearfix"> <h3 class="well">'.elgg_echo('cp_notifications:heading:newsletter_section').'</h3>'; 
+	$content .= '<div class="col-sm-12 clearfix"> <h3 class="well">'.elgg_echo('cp_notifications:heading:newsletter_section').'</h3>';
 
 	/// Warning for the Digest functionality
 	$content .= "<div class='info_digest_section alert alert-warning col-xs-12' hidden><p>".elgg_echo('cp_newsletter:notice:disable_digest')."</p></div>";
 
 	$content .= '<div class="col-sm-8">'.elgg_echo('cp_newsletter:enable_digest_option').$more_info.'</div>';
 	$content .= "<div class='col-sm-2'>{$chk_email} </div> <div class='col-sm-2'>    </div>";
- 
+
 
 	if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $user->getOwnerGUID(),'cp_notifications'),'set_digest_yes') != 0)
 		$visibility = "hidden";
@@ -65,8 +66,8 @@ if (strcmp($enable_digest, 'yes') == 0) {
 
 		$more_info = information_icon(elgg_echo('cp_newsletter:information:frequency'), elgg_echo('cp_newsletter:information:frequency:url'));
 		$content .= '<div class="col-sm-8">'.elgg_echo('cp_newsletter:set_frequency')."{$more_info}</div>";
-		$content .= "<form> <div class='col-sm-2'>{$chk_occur_daily}</div> <div class='col-sm-2'>{$chk_occur_weekly}</div> </form>";	
-		
+		$content .= "<form> <div class='col-sm-2'>{$chk_occur_daily}</div> <div class='col-sm-2'>{$chk_occur_weekly}</div> </form>";
+
 		/// select language preference
 		$user_option = elgg_get_plugin_user_setting('cpn_set_digest_language', $user->guid, 'cp_notifications');
 		if (strcmp($user_option, 'set_digest_en') == 0 || ( !isset($user_option) && get_language() === 'en' )) {
@@ -107,7 +108,7 @@ $content .= '</div>';
 $content .= '</section>';
 
 
- 
+
 /// SUBSCRIBE TO COLLEAGUE NOTIFICATIONS
 $colleagues = $user->getFriends(array('limit' => false));
 $subscribed_colleagues = elgg_get_plugin_user_setting('subscribe_colleague_picker', $user->getOwnerGUID(),'cp_notifications');
@@ -125,8 +126,8 @@ $subscribed_colleagues = elgg_get_plugin_user_setting('subscribe_colleague_picke
 	}
 
 $colleague_picker = elgg_view('input/friendspicker', array(
-	'entities' => $colleagues, 
-	'name' => 'params[subscribe_colleague_picker]', 
+	'entities' => $colleagues,
+	'name' => 'params[subscribe_colleague_picker]',
 	'value' => $subbed_colleague_guids//json_decode($subscribed_colleagues,true),
 ));
 
@@ -139,9 +140,9 @@ $content .= '				<details style="width:100%; display:inline-block;" >';
 $content .= '					<summary>'.elgg_echo('cp_notifications:pick_colleagues').'</summary>';
 $content .= "					<div style='padding:5px 15px 0px 5px;'> {$colleague_picker} </div>";
 $content .= '				</details>';
-$content .= '			</div>';	
-$content .= '		</div>';		
-$content .= '	</div>';		
+$content .= '			</div>';
+$content .= '		</div>';
+$content .= '	</div>';
 $content .= "</section>";
 
 
@@ -157,7 +158,7 @@ $chk_all_site_mail = create_checkboxes($user->getGUID(), "cpn_group_site_{$user-
 $query = "SELECT g.name, g.guid FROM {$dbprefix}entity_relationships r LEFT JOIN {$dbprefix}groups_entity g ON r.guid_two = g.guid WHERE r.guid_one = {$user->guid} AND r.relationship = 'member' ORDER BY g.name";
 $groups = get_data($query);
 
-/// SUBSCRIBE OR UNSUBSCRIBE TO ALL GROUP AND GROUP CONTENT NOTIFICATIONS 
+/// SUBSCRIBE OR UNSUBSCRIBE TO ALL GROUP AND GROUP CONTENT NOTIFICATIONS
 $content .= "<section id='notificationstable' cellspacing='0' cellpadding='4' width='100%' class='clearfix'>";
 $content .= '	<div class="col-sm-12 group-notification-options"><h3 class="well">'.elgg_echo('cp_notifications:heading:group_section').'</h3>';
 $content .= "		<div style='padding-bottom:50px;'>";
@@ -171,7 +172,7 @@ $content .= "<hr/>";
 
 $content .= "<div id='group_notifications_section'>";
 foreach ($groups as $group) {
-
+$group_title = gc_explode_translation($group->name,$lang);
 	// list all the groups, Update Relationship table as per selection by user
     $group_subscription = check_entity_relationship ($user->guid, 'cp_subscribed_to_email', $group->guid);
     $group_notification_settings = ($group_subscription) ? "sub_{$group->guid}" : "set_notify_off";
@@ -186,7 +187,7 @@ foreach ($groups as $group) {
 	$chk_email_grp = create_checkboxes($user->getGUID(), "cpn_email_{$group->guid}", array("sub_{$group->guid}", "set_notify_off"),  elgg_echo('cp_notifications:chkbox:email'), '', 'group_email');
 	$chk_site_grp = create_checkboxes($user->getGUID(), "cpn_site_mail_{$group->guid}", array("sub_site_{$group->guid}", "set_notify_off"),  elgg_echo('cp_notifications:chkbox:site'), '', 'group_site chkbox_site');
 
-	$content .= "			<div class='namefield col-sm-8'> <strong> <a href='{$group_url}' id='group-{$group->guid}'>{$group->name}</a> </strong> </div>";
+	$content .= "			<div class='namefield col-sm-8'> <strong> <a href='{$group_url}' id='group-{$group->guid}'>{$group_title}</a> </strong> </div>";
     $content .= "			<div class='col-sm-2'>{$chk_email_grp}</div>	<div class='col-sm-2'>{$chk_site_grp}</div>";
 
 	// GROUP CONTENT SUBSCRIPTIONS
@@ -194,18 +195,18 @@ foreach ($groups as $group) {
 	    $content .= '		<div class="accordion col-sm-12 clearfix mrgn-bttm-sm">';
 		$content .= '			<details onClick="return create_group_content_item('.$group->guid.', '.$user->getGUID().')">';
 		$content .= "				<summary >".elgg_echo('cp_notifications:group_content')." ".$subscription_count.'</summary>';
-	    
+
 	    $content .= "				<div id='group-content-{$group->guid}' class='tgl-panel clearfix'></div>";
-	    $content .= '			</details>';	
+	    $content .= '			</details>';
 	    $content .= '		</div> <hr/>';
     } else {
     	$content .= '		<div class="col-sm-12 clearfix mrgn-bttm-sm">';
 		$content .= '			<details">';
 		$content .= "				<summary >".elgg_echo('cp_notifications:no_group_content').'</summary>';
-	    $content .= '			</details>';	
+	    $content .= '			</details>';
 	    $content .= '		</div> <hr/>';
-    }		
-   				
+    }
+
 }
 $content .= "</div>";
 $content .= "</section>";
@@ -258,7 +259,7 @@ echo elgg_view_module('info', $title, $content);
 
 
 
-$submit = elgg_view('input/submit', 
+$submit = elgg_view('input/submit',
 	['value' => elgg_echo('save'), 'class' => 'btn btn-primary']
 );
 echo elgg_format_element('div', ['class' => 'elgg-foot'], $submit);
@@ -276,7 +277,7 @@ echo elgg_format_element('div', ['class' => 'elgg-foot'], $submit);
 
 
 <style>
-	
+
 /* The switch - the box around the slider */
 .switch {
 	position: relative;
@@ -350,9 +351,9 @@ input:checked + .slider:before {
 		//$(".class_chkbox_enable_digest").removeClass('elgg-input-checkbox');
 		//$("#id_chkbox_enable_digest").removeClass('elgg-input-checkbox');
 
-		if ($(".class_chkbox_enable_digest").is(":checked")) 
+		if ($(".class_chkbox_enable_digest").is(":checked"))
 	        $(".chkbox_site").closest("label").css({"color":"gray"});
-	    else 
+	    else
 	        $(".chkbox_site").closest("label").css({"color":"black"});
 
 		// select all groups
@@ -393,10 +394,10 @@ input:checked + .slider:before {
 
 		$(' #digest_frequency').click(function(e) {
 		    $(' #digest_frequency').not(this).prop('checked', false);
-		    
+
 		    if ($("#digest_frequency:checked").length == 0)
 		    	return false;
-		});    
+		});
 
 		$(' #digest_language').click(function(e) {
 		    $(' #digest_language').not(this).prop('checked', false);
@@ -409,9 +410,9 @@ input:checked + .slider:before {
 	});
 
 
-	/// Uses Ajax to dynamically create and display the list of group content that the user has subscribed to 
+	/// Uses Ajax to dynamically create and display the list of group content that the user has subscribed to
 	function create_group_content_item(grp_guid, usr_guid) {
-		
+
 		if ($('#group-content-' + grp_guid).is(':visible')) {
 			// do nothing
 		} else {
@@ -427,7 +428,7 @@ input:checked + .slider:before {
 					user_guid: usr_guid,
 				},
 				success: function (content_arr) {
-					
+
 					$('#group-content-' + grp_guid).children().remove();
 					// create a list of all the content in the group that you are subscribed to
 					for (var item in content_arr.output.text3)
@@ -440,7 +441,7 @@ input:checked + .slider:before {
 				    $('.unsub-button').on('click', function() {
 				        var this_thing = $(this);
 				        var guid = parseInt($(this_thing).attr('id'));
-				       
+
 				        elgg.action('cp_notify/unsubscribe', {
 			                data: {
 			                	'guid':guid,
@@ -449,19 +450,19 @@ input:checked + .slider:before {
 			                success: function(data) {
 			                  $(this_thing).closest('.list-break').fadeOut();
 			                }
-				        }); 
-				    });		
+				        });
+				    });
 				},
 				error:function(xhr, status, error) {
 					alert('Error: ' + status + '\nError Text: ' + error + '\nResponse Text: ' + xhr.responseText);
 				}
-			}); 
-		
+			});
+
 		}
 	}
 
 
-	/// Uses Ajax to dynamically create and display the list of personal content that the user has subscribed to 
+	/// Uses Ajax to dynamically create and display the list of personal content that the user has subscribed to
 	function create_content_item(usr_guid, obj_subtype) {
 		entity_subtype = obj_subtype;
 		// loading indicator
@@ -477,12 +478,12 @@ input:checked + .slider:before {
 				var nothing_text = elgg.echo('cp_notifications:no_personal_subscription');
 
 
-				// assuming this is doing what i think it is doing 
+				// assuming this is doing what i think it is doing
 				$('#personal-content-' + entity_subtype).children().remove();
 				// create a list of all the content in the group that you are subscribed to
 				for (var item in sample_text.output.text3)
 					$('#personal-content-' + entity_subtype).append("<div class='clearfix col-sm-12 list-break'>" + sample_text.output.text3[item] + "<div>");
-				
+
 				if (sample_text.output.text3.length == 0)
 					$('#personal-content-' + entity_subtype).append("<div class='clearfix col-sm-12 list-break'>" + nothing_text + "<div>");
 
@@ -490,7 +491,7 @@ input:checked + .slider:before {
 			    $('.unsub-button').on('click', function() {
 			        var this_thing = $(this);
 			        var guid = parseInt($(this_thing).attr('id'));
-			        
+
 			        elgg.action('cp_notify/unsubscribe', {
 		                data: {
 		                	'guid': guid,
@@ -504,11 +505,9 @@ input:checked + .slider:before {
 			    }); // jquery click
 			} // success for elgg.action
 
-		}); // elgg.action		
+		}); // elgg.action
 	}
 
 </script>
 
 <?php
-
-
