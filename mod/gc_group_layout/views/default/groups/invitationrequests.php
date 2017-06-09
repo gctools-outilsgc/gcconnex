@@ -8,6 +8,7 @@
 $user = elgg_extract("user", $vars);
 $invitations = elgg_extract("invitations", $vars);
 $email_invites = elgg_extract("email_invitations", $vars, false);
+$lang = get_current_language();
 
 if ((!empty($invitations) && is_array($invitations)) || (!empty($email_invites) && is_array($email_invites))) {
 
@@ -21,7 +22,7 @@ if ((!empty($invitations) && is_array($invitations)) || (!empty($email_invites) 
 
 				$group_title = elgg_view("output/url", array(
 					"href" => $group->getURL(),
-					"text" => $group->name,
+					"text" => gc_explode_translation($group->name,$lang),
 					"is_trusted" => true,
 				));
 
@@ -41,9 +42,9 @@ if ((!empty($invitations) && is_array($invitations)) || (!empty($email_invites) 
 					"text" => elgg_echo('group:decline:invitation', array($group->name)),
 					"class" => "elgg-button elgg-button-delete mlm",
 				));
-
+				$group_description = gc_explode_translation($group->briefdescription,$lang);
 				$body = "<div class='col-xs-9'><h2 style='border-bottom: none;'>$group_title</h2>";
-				$body .= "<p class='elgg-subtext'>$group->briefdescription</p></div>";
+				$body .= "<p class='elgg-subtext'>$group_description</p></div>";
 
 				$alt = $accept_button . $delete_button;
 
