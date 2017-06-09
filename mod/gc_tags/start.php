@@ -23,6 +23,10 @@ function tags_and_communities(){
     //Add metadata to the page header
     elgg_extend_view('page/elements/head', 'page/elements/tag_metadata');
     
+    
+    //Extend the forms
+    elgg_extend_view('forms/bookmarks/save', 'page/elements/tags_modal');
+    
     //override the form actions so we can save community meta data :3
     $action_path = elgg_get_plugins_path() . 'gc_tags/actions';
     //Blog form

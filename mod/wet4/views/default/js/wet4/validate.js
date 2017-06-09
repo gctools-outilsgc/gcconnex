@@ -42,12 +42,10 @@ requirejs( ["form-validate"], function() {
               var formAction = $(form).attr('action').split('/');
               var formActionType = formAction[formAction.length-2] + '/' +formAction[formAction.length-1];
               //var formActionType = formAction.substring(formAction.lastIndexOf('/') +1);
-              var noTagAction = ['login','register','requestnewpassword','add','post-mission-first-form'];
+              var createActions = ['blog/save','bookmarks/save'];
             
               //test to see if this is an action we want to open a tag modal
-              if(formActionType != 'blog/save'){
-                  form.submit();
-              }else{
+              if($.inArray(formActionType, createActions) > -1){
                   var submitButton = $(form).find('button.form-submit');
                 
                   $('#tagsModal').modal({
@@ -56,6 +54,9 @@ requirejs( ["form-validate"], function() {
                   $(submitButton).on('click', function(){
                       form.submit();
                   })
+                  
+              }else{
+                form.submit();
               }
             //form.submit();
           },

@@ -23,14 +23,8 @@ $defaults = array(
 	'autocapitalize' => 'off',
 	'type' => 'text',
     'placeholder' => elgg_echo('gctags:placeholder:tags'),
+    'name' => 'tags',
 );
-
-$help_link = elgg_view('output/url', array(
-    'text' => '[?] <span class="wb-invisible">'.elgg_echo("gctags:help:tags").'</span>',
-    'href' => '/community-help#what-are-tags',
-    'title' => elgg_echo("gctags:help:tags"),
-    'target' => '_blank',
-));
 
 if (isset($vars['entity'])) {
 	$defaults['value'] = $vars['entity']->tags;
@@ -52,7 +46,7 @@ if (is_array($vars['value'])) {
 
 	$vars['value'] = implode(", ", $tags);
 }
-echo elgg_format_element('label', array('for' => 'tags'), elgg_echo('tags'));
-echo elgg_format_element('span',array('class' => 'mrgn-lft-sm'),$help_link);
+echo '<div class="tag-wrapper">';
 echo elgg_format_element('div', array('class' => 'timeStamp'), elgg_echo('gctags:helpertext:tags'));
 echo elgg_format_element('input', $vars);
+echo '</div>';
