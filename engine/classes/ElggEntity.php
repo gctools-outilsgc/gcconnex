@@ -1671,7 +1671,7 @@ abstract class ElggEntity extends \ElggData implements
 						access_id, time_created, time_updated, last_action, enabled, duplicate_check)
 					values
 					('$type', $subtype_id, $owner_guid, $site_guid, $container_guid,
-						$access_id, $time_created, $now, $now, 0, '$duplicate_check')");
+						$access_id, $time_created, $now, $now, 'no', '$duplicate_check')");
 			}
 			catch( DatabaseException $e ){
 				error_log("Duplication prevented: " . $e->getMessage());
