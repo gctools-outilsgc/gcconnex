@@ -47,9 +47,9 @@ a#signin-link em {
     font-size: 10px;
     font-style: normal;
     margin-right: 4px;
-    
+
 }
-    
+
 a#signin-link strong {
 text-decoration:none;
 }
@@ -68,7 +68,7 @@ text-decoration:none;
     margin-top: 15px;
     padding:20px;
 }
-    
+
 #signin-dropdown:first-child:after  {
  left: -8px;
   top: 12px;
@@ -157,9 +157,9 @@ form.signin .remb .remember {
 .button:hover {
     background: #ddd;
 }
-    
+
     .login-menu{
-    top:35px;   
+    top:35px;
 }
 
 .login-menu:before{
@@ -172,9 +172,9 @@ form.signin .remb .remember {
     height: 0;
 	border-left: 12px solid transparent;
 	border-right: 12px solid transparent;
-	
+
 	border-bottom: 12px solid #666666;
-    clear: both;    
+    clear: both;
 }
 .login-menu:after{
     content: '';
@@ -186,9 +186,9 @@ form.signin .remb .remember {
     height: 0;
 	border-left: 12px solid transparent;
 	border-right: 12px solid transparent;
-	
+
 	border-bottom: 12px solid #fff ;
-    clear: both;     
+    clear: both;
 }
 </style>
 
@@ -210,25 +210,19 @@ $(document).ready(function () {
         $('#session').removeClass('active');
     });
 
-$('#signin-link').live('keydown', function(e) { 
-    if (keyCode == 13) { 
+$('#signin-link').live('keydown', function(e) {
+    if (keyCode == 13) {
         setTimeout(function(){$('#username').focus();},0);
     }
-});    
+});
 
     $('#signin-link').click(function(){
         setTimeout(function(){$('#username').focus();},0);
     });
-});   
+});
 </script>
 <?php
 /**
- * User Menu
-@@ -10,17 +220,172 @@ echo elgg_view_menu('topbar', array('sort_by' => 'priority', array('elgg-menu-hz
-// elgg tools menu
-// need to echo this empty view for backward compatibility.
-echo elgg_view_deprecated("navigation/topbar_tools", array(), "Extend the topbar menus or the page/elements/topbar view directly", 1.8);
-
  * Elgg login form
  *
  * @package Elgg
@@ -236,171 +230,53 @@ echo elgg_view_deprecated("navigation/topbar_tools", array(), "Extend the topbar
 */
 
 $site_url = elgg_get_site_url();
-    if (empty($_GET['username'])){
-    
-  
+
 ?>
 
 <div id="container">
-<div id="topnav">
-<div class="active-links">
-    <div id="session">
-
-
-    <a id="signin-link" href="#" style='text-decoration:none;'>
-    <strong><span id="login_focus"><?php if (get_context() != 'login'){ echo elgg_echo('login'); ?></span>  |</strong>
-    </a>
-    <strong><a  href=" <?php echo $site_url; ?>register">  <?php echo elgg_echo('register'); ?></a></li></strong>
-    <?php } ?>
-    </div>
-        <div id="signin-dropdown" class='login-menu'>
-    
-     <form method="get" role="form" action="#">
-<div class="form-group">
-	<label for='username'><?php echo elgg_echo('loginusername'); ?></label>
-	<?php echo elgg_view('input/text', array(
-		'name' => 'username',
-        'placeholder' => elgg_echo('loginusername'),
-        'id' => 'username',
-        'class' => 'form-control',
-		));
-	?>
-</div>
-<div class="form-group">
-	<label for='password'><?php echo elgg_echo('password'); ?></label>
-	<?php echo elgg_view('input/password', array('name' => 'password', 'id' => 'password', 'placeholder' => elgg_echo('password'), 'class' => 'form-control')); ?>
-</div>
-
-<?php echo elgg_view('login/extend', $vars); ?>
-
-<div class="checkbox">
-	<label class="mtm">
-		<input type="checkbox" name="persistent" value="true" />
-		<?php echo elgg_echo('user:persistent'); ?>
-	</label>
-         </div>
-	<?php echo elgg_view('input/submit', array('value' => elgg_echo('login'), 'class' => 'btn-custom-cta',)); ?>
-	
-	<?php 
-	if (isset($vars['returntoreferer'])) {
-		echo elgg_view('input/hidden', array('name' => 'returntoreferer', 'value' => 'true'));
-	}
-	?>
-
-	<?php
-    /*
-	echo elgg_view_menu('login', array(
-		'sort_by' => 'priority',
-		'class' => 'elgg-menu-general elgg-menu-hz mtm',
-	));
-    */
-
-    echo '<a href="' . $site_url . 'forgotpassword" class="col-xs-12 mrgn-tp-md">'.elgg_echo('user:forgot').'</a>';
-?>
-</div>
-    </div>
+  <div id="topnav">
+    <div class="active-links">
+        <div id="session">
+          <?php if (get_context() != 'login'){ ?>
+          <a id="signin-link" href="#" style='text-decoration:none;'><strong><span id="login_focus"><?php echo elgg_echo('login'); ?></span>  |</strong></a>
+          <strong><a  href=" <?php echo $site_url; ?>register">  <?php echo elgg_echo('register'); ?></a></li></strong>
+          <?php } ?>
         </div>
-     </div>
-</form>
-<?php
-     }else{
-$session = elgg_get_session();
 
-//EW - removed returning/forwarding code to allow user to stay on same page after login
+        <div id="signin-dropdown" class='login-menu'>
 
-// set forward url
-/*if ($session->has('last_forward_from')) {
-	$forward_url = $session->get('last_forward_from');
-	$forward_source = 'last_forward_from';
-} elseif (get_input('returntoreferer')) {
-	$forward_url = REFERER;
-	$forward_source = 'return_to_referer';
-} else {*/
-	// forward to main index page
-	$forward_url = current_page_url();
-	$forward_source = null;
-//}
+          <form method="post" role="form" action="<?php echo elgg_add_action_tokens_to_url($site_url.'action/login'); ?>">
+            <div class="form-group">
+          	   <label for='username'><?php echo elgg_echo('loginusername'); ?></label>
+          	<?php echo elgg_view('input/text', array(
+          		        'name' => 'username',
+                      'placeholder' => elgg_echo('loginusername'),
+                      'id' => 'username',
+                      'class' => 'form-control',
+          		      ));
+          	?>
+          </div>
+          <div class="form-group">
+          	<label for='password'><?php echo elgg_echo('password'); ?></label>
+          	<?php echo elgg_view('input/password', array('name' => 'password', 'id' => 'password', 'placeholder' => elgg_echo('password'), 'class' => 'form-control')); ?>
+          </div>
 
-$username = get_input('username');
-$password = get_input('password', null, false);
-$persistent = (bool) get_input("persistent");
-$result = false;
+          <?php echo elgg_view('login/extend', $vars); ?>
 
-if (empty($username) || (empty($password))) {
-	register_error(elgg_echo('login:empty'));
-	forward();
-}
+          <div class="checkbox">
+          	<label class="mtm">
+          		<input type="checkbox" name="persistent" value="false" />
+          		<?php echo elgg_echo('user:persistent'); ?>
+          	</label>
+          </div>
+          	<?php
+            echo elgg_view('input/submit', array('value' => elgg_echo('login'), 'class' => 'btn-primary'));
+          	echo elgg_view('input/hidden', array('name' => 'returntoreferer', 'value' => 'true'));
+            echo '<a href="' . $site_url . 'forgotpassword" class="col-xs-12 mrgn-tp-md">'.elgg_echo('user:forgot').'</a>';
+            ?>
+          </form>
 
-// check if logging in with email address
-if (strpos($username, '@') !== false && ($users = get_user_by_email($username))) {
-	$username = $users[0]->username;
-}
-
-$result = elgg_authenticate($username, $password);
-if ($result !== true) {
-	register_error($result);
-	forward(REFERER);
-}
-
-$user = get_user_by_username($username);
-if (!$user) {
-	register_error(elgg_echo('login:baduser'));
-	forward(REFERER);
-}
-
-try {
-	login($user, $persistent);
-	// re-register at least the core language file for users with language other than site default
-	register_translations(dirname(dirname(dirname(dirname(dirname(__FILE__))))) . "/languages/");
-} catch (LoginException $e) {
-	register_error($e->getMessage());
-	forward(REFERER);
-}
-
-// elgg_echo() caches the language and does not provide a way to change the language.
-// @todo we need to use the config object to store this so that the current language
-// can be changed. Refs #4171
-if ($user->language) {
-	$message = elgg_echo('wet:loginok', array($user->name), $user->language);
-} else {
-	$message = elgg_echo('wet:loginok', array($user->name));
-}
-
-// clear after login in case login fails
-$session->remove('last_forward_from');
-
-$params = array('user' => $user, 'source' => $forward_source);
-
-//EW - Remove query strings that have username/password in them after login
-//$forward_url = str_replace('username=' . $username . '&password=' . $password, '', $forward_url);
-$forward_url = strtok($forward_url, '?');
-
-$forward_url = elgg_trigger_plugin_hook('login:forward', 'user', $params, $forward_url);
-
-system_message($message);
-forward($forward_url);
-  
-    }
-/*    
-elgg_register_menu_item('login_menu2', array(
-    'name' => 'Log in',
-    
-    'text' => elgg_view('page/elements/login_card'),
-    'title' => 'Log in',
-    ));
-
-$dropdown = elgg_view_menu('login_menu2',  array('class' => 'dropdown-menu user-menu pull-right subMenu'));
-$caret = elgg_echo('<b class="caret"></b>');
-//create tabs menu
-elgg_register_menu_item('login_menu', array(
-    'name' => 'Profile',
-    'text' =>  elgg_echo('login').$caret. $dropdown ,
-    'title' => elgg_echo('groups:personal'),
-    'item_class' => 'dropdown',
-    'data-toggle' => 'dropdown',
-    'class' => 'dropdown-toggle',
-    'priority' => '10',
-    ));
-
-echo elgg_view_menu('login_menu', array('sort_by' => 'priority', 'id' => 'userMenu', 'class' => 'list-inline visited-link'));*/
-?>
+        </div>
+      </div>
+    </div>
+  </div>
