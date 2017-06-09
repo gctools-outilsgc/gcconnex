@@ -40,9 +40,10 @@ $communities_input = elgg_view('input/select', array(
     'class' => 'audience-select',
 ));
 $help_link = elgg_view('output/url', array(
-    'text' => '[?] <span class="wb-invisible">What are communities?</span>',
-    'href' => '#',
-    'title' => 'What are communities?'
+    'text' => '[?] <span class="wb-invisible">'.elgg_echo("gctags:help:community").'</span>',
+    'href' => '/community-help#what-are-communities',
+    'title' => elgg_echo("gctags:help:community"),
+    'target' => '_blank',
 ));
 
 echo elgg_format_element('label', array('for' => 'audience'), elgg_echo('gctags:label:community'));

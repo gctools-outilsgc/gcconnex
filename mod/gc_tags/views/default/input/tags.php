@@ -26,9 +26,10 @@ $defaults = array(
 );
 
 $help_link = elgg_view('output/url', array(
-    'text' => '[?] <span class="wb-invisible">Tell me about tags?</span>',
-    'href' => '#',
-    'title' => 'Tell me about tags!'
+    'text' => '[?] <span class="wb-invisible">'.elgg_echo("gctags:help:tags").'</span>',
+    'href' => '/community-help#what-are-tags',
+    'title' => elgg_echo("gctags:help:tags"),
+    'target' => '_blank',
 ));
 
 if (isset($vars['entity'])) {
