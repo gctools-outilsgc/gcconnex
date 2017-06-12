@@ -37,7 +37,7 @@ return [
 	'questions:answered' => 'Répondue dernièrement par %s %s',
 	'questions:answered:correct' => 'Réponse correcte fournie par %s %s',
 
-	'questions:everyone' => 'Tous Questions',
+	'questions:everyone' => 'Toutes les questions du site',
 	'questions:add' => 'Ajoutez une question',
 	'questions:todo' => 'à Faire',
 	'questions:todo:none' => 'Il n’y a rien à faire. Continuer le bon travail!',
@@ -216,4 +216,7 @@ Pour répondre, visitez:
 	'questions:action:toggle_expert:success:remove' => "%s n’est plus un expert en questions pour  %s",
 
 	'questions:action:group_settings:success' => "Les paramètres du groupe ont été sauvegardés",
+
+	'question:action:question:save:success' => 'La question a été crée avec succès',
+	'question:action:answer:save:success' => 'La réponse a été crée avec succès',
 ];

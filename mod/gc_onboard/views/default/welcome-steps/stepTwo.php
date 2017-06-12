@@ -7,11 +7,11 @@
 ?>
 
 <div class="panel-heading clearfix">
-    <h2 class="pull-left">
+    <h3 class="pull-left mrgn-tp-md">
         <?php echo elgg_echo('onboard:welcome:two:title'); ?>
-    </h2>
+    </h3>
     <div class="pull-right">
-        <?php echo elgg_view('page/elements/step_counter', array('current_step'=>3, 'total_steps'=>5));?>
+        <?php echo elgg_view('page/elements/step_counter', array('current_step'=>3, 'total_steps'=>6));?>
 
     </div>
 </div>

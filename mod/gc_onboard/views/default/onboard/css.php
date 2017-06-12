@@ -64,7 +64,7 @@
      border: solid 2px #567784;
      border-radius: 50%;
      position:relative;
-  
+
  }
 
  .step-list-item:after{
@@ -106,7 +106,7 @@
  .current-step:after{
          content: "";
      font-family: FontAwesome;
-  
+
  }
 
  .current-step ~ .step-list-item{
@@ -139,7 +139,7 @@
  .current-step ~ .step-list-item:after{
          content: "";
      font-family: FontAwesome;
-  
+
  }
 
  .final-tour-step{
@@ -172,7 +172,7 @@
 
  }
  .feature-image img{
-    
+
      width: 100%;
 
  }
@@ -219,6 +219,8 @@
      margin:6px 0px;
      box-shadow: 1px 1px 4px #CCC;;
      border-radius: 5px;
+     position: relative;
+     z-index: 3;
  }
 
  .onboard-icon{
@@ -255,3 +257,21 @@
      border-color: #567784;
 
  }
+
+ .onboard-cta-buttons .btn-primary:hover{
+     background-color: #3e5862 !important;
+     border-color: #567784;
+
+ }
+
+.wb-overlay {
+  -webkit-background-clip: border-box;
+background-clip: border-box;
+background-color: #fff;
+border: 0;
+border-radius: 0;
+display: none;
+-webkit-transform: translateZ(0);
+transform: inherit;
+z-index: 1050;
+}

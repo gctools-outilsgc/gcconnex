@@ -180,6 +180,14 @@ if ($err != '') {
 
     $mission->save();
 
+    // Generate an analytics record to track "posted".
+    $analytics_record = new ElggObject();
+    $analytics_record->subtype = 'mission-posted';
+    $analytics_record->title = 'Mission Posted Report';
+    $analytics_record->mission_guid = $mission->guid;
+    $analytics_record->access_id = ACCESS_LOGGED_IN;
+    $analytics_record->save();
+
     // Creates a relationships between the user (manager) and the mission.
     add_entity_relationship($mission->account, 'mission_posted', $mission->guid);
 

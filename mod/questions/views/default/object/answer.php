@@ -38,7 +38,7 @@ $entity_menu = elgg_view_menu('entity', [
 	'entity' => $answer,
 	'handler' => 'answers',
 	'sort_by' => 'priority',
-	'class' => 'elgg-menu-hz',
+	'class' => 'elgg-menu-hz list-inline',
 ]);
 
 $body = elgg_view('output/longtext', ['value' => $answer->description]);

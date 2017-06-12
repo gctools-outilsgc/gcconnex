@@ -5,11 +5,11 @@
  * Step one asks users for basic information(job title, location, phone, mobile). Also gives user option to sync with GCdirectory.
  */
 ?>
-
-<div class="col-md-8 clearfix" id="step">
-    <h1>
-        <?php echo elgg_echo('onboard:profile:one:title'); ?>
-    </h1>
+<h1 class="wb-inv"><?php echo elgg_echo('profilemodule:title'); ?></h1>
+<div tabindex="-1" class="col-md-8 clearfix" id="step">
+    <h2>
+        <?php echo elgg_echo('onboard:profile:one:title'); echo elgg_view('page/elements/step_counter', array('current_step'=>2, 'total_steps'=>6, 'class' => 'mrgn-tp-md wb-inv'));?>
+    </h2>
     <?php
         //dont display GEDS interface if the plugin is not active
     if(elgg_is_active_plugin('geds_sync') && elgg_view_exists('welcome-steps/geds/sync')){ ?>
@@ -81,18 +81,14 @@
         ?>
     </div>
     <div class="mrgn-bttm-md mrgn-tp-md pull-right" id="stepOneButtons">
-        <a id="skip" class="mrgn-lft-sm btn btn-default" href="#">
-            <?php echo elgg_echo('onboard:skip'); ?>
-        </a>
-        <?php
-        echo elgg_view('output/url', array(
-                'href'=>'#',
-                'class'=>'btn btn-primary',
-                'text' => elgg_echo('onboard:welcome:next'),
-                'id' => 'onboard-info',
 
-            ));
-        ?>
+        <button type="button" id="skip" class="mrgn-lft-sm btn btn-default">
+            <?php echo elgg_echo('onboard:skip'); ?>
+        </button>
+
+        <button type="button" id="onboard-info" class="btn btn-primary">
+            <?php echo elgg_echo('onboard:welcome:next'); ?>
+        </button>
 
     </div>
     <script>
@@ -119,7 +115,7 @@
                 elgg.get('ajax/view/profile-steps/stepTwo', {
                     success: function (output) {
                         changeStepProgress(3);
-                        $('#step').html(output);
+                        $('#step').html(output).focus();
 
 
                     }
@@ -142,7 +138,7 @@
         elgg.get('ajax/view/profile-steps/stepTwo', {
             success: function (output) {
                 changeStepProgress(3);
-                $('#step').html(output);
+                $('#step').html(output).focus();
 
                 elgg.get('ajax/view/profileStrength/info', {
                     success: function (output) {
@@ -189,7 +185,7 @@
                 <?php echo elgg_echo('onboard:steps'); ?>
             </h2>
         </div>
-        <div class="panel-body" id="step-progress">
+        <div class="panel-body" id="step-progress" aria-hidden="true">
 
                 <?php echo elgg_view('page/elements/step_counter', array('current_step'=>1, 'total_steps'=>6, 'class' => 'mrgn-tp-md'));?>
 

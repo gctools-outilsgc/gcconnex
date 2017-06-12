@@ -14,6 +14,7 @@ $description = elgg_extract("description", $vars);
 $group_profile_fields = elgg_get_config("group");
 $group = elgg_extract("entity", $vars);
 
+
 // decode json into English / French parts
 $json_title = json_decode($name);
 $json_desc = json_decode($description);
@@ -65,6 +66,7 @@ catch (Exception $e)
         gc_err_logging($errMess,$errStack,'Suggested Friends',$errType);
          $connection->close();
 }*/
+
 $btn_language =  '<ul class="nav nav-tabs nav-tabs-language">
   <li id="btnen"><a href="#" id="btnClicken">'.elgg_echo('lang:english').'</a></li>
   <li id="btnfr"><a href="#" id="btnClickfr">'.elgg_echo('lang:french').'</a></li>

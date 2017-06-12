@@ -81,7 +81,7 @@ if (!elgg_in_context('widgets')) {
 		'entity' => $question,
 		'handler' => 'questions',
 		'sort_by' => 'priority',
-		'class' => 'elgg-menu-hz',
+		'class' => 'elgg-menu-hz list-inline',
 		'full_view' => $full,
 	]);
 }

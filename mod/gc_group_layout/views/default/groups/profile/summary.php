@@ -129,7 +129,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 
 						 <div class="groups-info pull-right">
 
-									<ul class="list-inline pull-left mrgn-rght-sm">
+									<ul class="groups-share-links list-inline pull-left mrgn-rght-sm">
 										 <?php
 												 //Nick - Added a link to share the group on the wire
 												 if(elgg_is_logged_in()){
@@ -166,34 +166,29 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 												 echo '<li class="mrgn-tp-sm mrgn-lft-sm">'.elgg_view('output/url', $options).'</li>';
 										 ?>
 
-								 <li class="mrgn-tp-sm">
 										 <?php
 										 //This is the code to add the notification bell to the page to the left of the member button
 										 if ($group->isMember(elgg_get_logged_in_user_entity())) { //Nick - check if user is a member before
 												 // cyu - indicate if user has subscribed to the group or not (must have cp notifications enabled)
 												 if (elgg_is_active_plugin('cp_notifications')) {
 														 if (check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $group->getGUID()) || check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $group->getGUID()))
-																 echo "<a href='".elgg_add_action_tokens_to_url("/action/cp_notify/unsubscribe?guid={$group->getGUID()}")."' title='".elgg_echo('cp_notify:unsubBell')."'><i class='icon-sel fa fa-lg fa-bell'><span class='wb-inv'>".elgg_echo('entity:unsubscribe:link:group', array($group->name))."</span></i></a>";
+																 echo "<li class='mrgn-tp-sm'><a href='".elgg_add_action_tokens_to_url("/action/cp_notify/unsubscribe?guid={$group->getGUID()}")."' title='".elgg_echo('cp_notify:unsubBell')."'><i class='icon-sel fa fa-lg fa-bell'><span class='wb-inv'>".elgg_echo('entity:unsubscribe:link:group', array($group->name))."</span></i></a></li>";
 														 else
-																 echo '<a href="'.elgg_add_action_tokens_to_url("/action/cp_notify/subscribe?guid={$group->getGUID()}").'" title="'.elgg_echo('cp_notify:subBell').'"><i class="icon-unsel fa fa-lg fa-bell-slash-o"><span class="wb-inv">'.elgg_echo('entity:subscribe:link:group', array($group->name)).'</span></i></a>';
+																 echo '<li class="mrgn-tp-sm"><a href="'.elgg_add_action_tokens_to_url("/action/cp_notify/subscribe?guid={$group->getGUID()}").'" title="'.elgg_echo('cp_notify:subBell').'"><i class="icon-unsel fa fa-lg fa-bell-slash-o"><span class="wb-inv">'.elgg_echo('entity:subscribe:link:group', array($group->name)).'</span></i></a></li>';
 												 }
 										 }
 										 ?>
 
-
-
-
-								 </li>
 							 </ul>
 
 
 									<?php
-										 // add group operators menu link to title menu
-										 // Get the page owner entity
-										 $page_owner = elgg_get_page_owner_entity();
+						 // add group operators menu link to title menu
+						 // Get the page owner entity
+						 $page_owner = elgg_get_page_owner_entity();
 						 $actions = array();
 						 // group owners
-						 if ($owner->canEdit()) {
+						 if ($owner->canEdit() || $page_owner->canEdit()) {
 								 // edit and invite
 								 $url = elgg_get_site_url() . "groups/edit/{$group->getGUID()}";
 								 $actions[$url] = 'groups:edit';
@@ -201,7 +196,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 								 $actions[$url] = 'groups:invite';
 						 }
 						 // group members
-						 if ($group->isMember(elgg_get_logged_in_user_entity())) {
+						 if ($group->isMember()) {
 								 if ($owner->getOwnerGUID() != elgg_get_logged_in_user_guid()) {
 										 // leave
 										 $url = elgg_get_site_url() . "action/groups/leave?group_guid={$group->getGUID()}";
@@ -229,18 +224,18 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 										 ));
 								 }
 						 }
-										 if (elgg_in_context('groups')) {
+
 												 if ($page_owner instanceof ElggGroup) {
 														 if (elgg_is_logged_in() && $page_owner->canEdit()) {
 																 $url = elgg_get_site_url() . "group_operators/manage/{$page_owner->getGUID()}";
-												 elgg_register_menu_item('group_ddb', array(
+												 			 	elgg_register_menu_item('group_ddb', array(
 																		 'name' => 'edit',
 																		 'text' => elgg_echo('group_operators:manage'),
 																		 'href' => $url,
 																 ));
 														 }
 												 }
-										 }
+
 										 // Add invitation/request to title menu
 										 // invitation management
 										 if ($page_owner->canEdit()) {
@@ -257,13 +252,13 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 														 $postfix = '<span class="notif-badge">' . $requests . "</span>";
 												 }
 												 if (!$page_owner->isPublicMembership()) {
-										 elgg_register_menu_item("group_ddb", array(
+										 		 		elgg_register_menu_item("group_ddb", array(
 																 "name" => "membership_requests",
 																 "text" => elgg_echo("groups:membershiprequests") . $postfix,
 																 "href" => "groups/requests/" . $page_owner->getGUID(),
 														 ));
 												 } else {
-										 elgg_register_menu_item("group_ddb", array(
+										 		 		elgg_register_menu_item("group_ddb", array(
 																 "name" => "membership_requests",
 																 "text" => elgg_echo("group_tools:menu:invitations") . $postfix,
 																 "href" => "groups/requests/" . $page_owner->getGUID(),
@@ -281,8 +276,23 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 																 "href" => "groups/mail/" . $page_owner->getGUID(),
 														 ));
 												 }
+
+												 //add create subgroup option
+												 if (elgg_is_active_plugin('au_subgroups') && $group->subgroups_enable != 'no') {
+ 													$any_member = ($group->subgroups_members_create_enable != 'no');
+ 										 			if (($group->subgroups_members_create_enable != 'no' || $page_owner->canEdit())) {
+ 										 				elgg_register_menu_item('group_ddb', array(
+ 										 					'name' => 'add_subgroup',
+ 										 					'href' => "groups/subgroups/add/{$group->guid}",
+ 										 					'text' => elgg_echo('au_subgroups:add:subgroup'),
+ 										 					'link_class' => 'elgg-button elgg-button-action',
+ 										          'priority'=>450,
+ 										 				));
+ 										 			}
+ 										 		}
+
 												 //load action buttons in dropdown
-										 $buttons = elgg_view_menu('group_ddb', array(
+										 	 	$buttons = elgg_view_menu('group_ddb', array(
 														 'sort_by' => 'priority',
 														 'class' => 'dropdown-menu pull-right',
 														 'item_class' => ' ',
@@ -308,7 +318,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 														 //if only join group option, display as button not in dropdown
 										 $buttons = elgg_view_menu('group_ddb', array(
 														 'sort_by' => 'priority',
-														 'class' => '',
+														 'class' => 'pull-right',
 														 'item_class' => 'btn btn-primary',
 												 ));
 												 echo $buttons;

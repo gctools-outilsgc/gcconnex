@@ -777,3 +777,38 @@ function check_if_opted_in($current_user) {
 
 	return false;
 }
+
+function mm_complete_mission_inprogress_reports($mission, $if_no_applicants = false) {
+		if ($if_no_applicants) {
+				// Find out how many accepted applicants are on this mission.
+				$relationship_count = elgg_get_entities_from_relationship(array(
+						'relationship' => 'mission_accepted',
+						'relationship_guid' => $mission->guid,
+						'count' => true
+				));
+		}
+		// Complete the mission in progress report if $if_no_applicants is false,
+		// or if the mission no longer has any accepted applicants
+		if (!$if_no_applicants || $relationship_count == 0) {
+				$progress_reports = elgg_get_entities_from_metadata(array(
+					  'type' => 'object',
+						'subtype' => 'mission-inprogress',
+						'metadata_name_value_pairs' => array(
+								array(
+										'name' => 'mission_guid',
+										'value' => $mission->guid,
+										'operand' => '='
+								),
+								array(
+										'name' => 'completed',
+										'value' => 0,
+										'operand' => '='
+								)
+						)
+				));
+				foreach ($progress_reports as $report) {
+						$report->completed = time();
+						$report->save();
+				}
+		}
+}

@@ -61,13 +61,10 @@ switch ($gcf_type) {
 		$forum_object->enable_subcategories = $enable_categories;
 		$forum_object->enable_posting = $enable_posting;
 
-		//error_log("--> file in: {$gcf_file_in_category}");
-
 		$query = "SELECT * FROM {$dbprefix}entity_relationships	WHERE relationship = 'filed_in' AND guid_one = {$gcf_guid}";
 
 		$filed_in = get_data($query);
 		
-		//error_log("this is filed in: ID: {$filed_in[0]->id} / relationship: {$filed_in[0]->relationship}");
 
 		if (delete_relationship($filed_in[0]->id))
 			add_entity_relationship($gcf_guid, 'filed_in', $gcf_file_in_category);
@@ -78,7 +75,6 @@ switch ($gcf_type) {
 		forward($gcf_forward_url);
 		break;
 	case 'hjforumtopic':
-		error_log("Edit Topic");
 
 		$title = get_input('gcf_title');
 		$description = get_input('gcf_description');

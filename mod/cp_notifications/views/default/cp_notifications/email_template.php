@@ -7,7 +7,6 @@ $cp_topic_description = $vars['cp_topic_description'];
 $cp_topic_description_discussion = $vars['cp_topic_description_discussion'];
 $cp_topic_description_discussion2 = $vars['cp_topic_description_discussion2'];
 
-//error_log(message)
 $cp_msg_content = $vars['cp_msg_content'];
 $cp_topic_author = get_user($vars['cp_topic_author']);
 $cp_topic_author = get_user($vars['cp_topic_author']);
@@ -24,7 +23,6 @@ $cp_req_group = $vars['cp_group_req_group'];
 
 $msg_type = $vars['cp_msg_type'];
 
-//$cp_notify_msg_footer = elgg_echo('cp_notify:footer2',array(),'fr') .'  '. elgg_echo('cp_notify:footer2',array(),'en');
 
 $current_username = elgg_get_logged_in_user_entity()->username;
 
@@ -62,21 +60,16 @@ if (strcmp($vars['type_event'],'CANCEL') == 0) {
 	$description_info_fr .= '<h3 style ="font-family:sans-serif;">Nouvel événement dans votre calendrier</h3>';
 }
 
-//$description_info_en .= '<h3 style ="font-family:sans-serif";>Infos</h3>';
-//$description_info_fr .= '<h3 style ="font-family:sans-serif";>Infos</h3>';
 
 foreach ($event_infos as $info_key => $info_val) {
 	if (($info_val != '') && (strcmp('link',$info_key) !== 0)) {//remove the double link in the email
 		$description_info_en .= elgg_echo("cp_notify:body_event:event_{$info_key}", array($info_val), 'en').'<br/>';
 		$description_info_fr .= elgg_echo("cp_notify:body_event:event_{$info_key}", array($info_val), 'fr').'<br/>';
-
-		// cyu - make option so that "add to outlook" can be disabled
-		// note: roundrect... snippets are html buttons for email
 	}
 
 }
 
-$description_info_en .= /*'<b>'.elgg_echo('cp_notify:body_event:event_add_to_outlook', array(), 'en').'</b>:'.*/
+$description_info_en .= 
 				"<v:roundrect xmlns:v='urn:schemas-microsoft-com:vml' xmlns:w='urn:schemas-microsoft-com:office:word' href='{$info_val}' style='height:40px;v-text-anchor:middle;width:125px;' arcsize='10%' strokecolor='#1e3650' fillcolor='#047177'>
 					<w:anchorlock/>
 					<center style='color:#ffffff; font-family:sans-serif;font-size:13px;font-weight:bold;'>".elgg_echo('cp_notify:body_event:event_add_to_outlook', array(), 'en')."</center>
@@ -201,6 +194,7 @@ switch ($msg_type) {
 			'task_top' => 'task',
 			'task' => 'task',
 			'groupforumtopic' => 'discussion',
+			'question' => 'question',
 		);
 
 		$entity_m2 = array(
@@ -214,12 +208,29 @@ switch ($msg_type) {
 			'album' => 'album d\'image',
 		);
 
+		$entity_answer = array(
+			'answer' => 'réponse',
+		);
+
 		// cyu - updated as per required (06-15-2016)
 		$topic_author = get_entity($vars['cp_topic']->owner_guid);
+
 
 		$vars['cp_topic']->title2 = gc_explode_translation($vars['cp_topic']->title,'fr');
 
 		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_new_content:title',array($topic_author->getURL().'?utm_source=notification&utm_medium=email', $topic_author->username, cp_translate_subtype($vars['cp_topic']->getSubtype()), $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', gc_explode_translation($vars['cp_topic']->title,'en')),'en');
+
+		if($vars['cp_topic']->getSubtype == 'answer'){
+		$question_guid = $vars['cp_topic']->getContainerGUID();
+		$answer_entity = get_entity($question_guid);
+		$title_answer = $answer_entity->title;
+}
+
+		if ($vars['cp_topic']->getSubtype == 'answer')
+			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_new_content:title2',array($topic_author->getURL().'?utm_source=notification&utm_medium=email', $topic_author->username, cp_translate_subtype($vars['cp_topic']->getSubtype()), $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $title_answer),'en');
+		else
+			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_new_content:title',array($topic_author->getURL().'?utm_source=notification&utm_medium=email', $topic_author->username, cp_translate_subtype($vars['cp_topic']->getSubtype()), $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $vars['cp_topic']->title),'en');
+
 		if (array_key_exists($vars['cp_topic']->getSubtype(),$entity_f))
 			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_f',array($topic_author->getURL(), $topic_author->username, $entity_f[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $vars['cp_topic']->title2),'fr');
 		else if (array_key_exists($vars['cp_topic']->getSubtype(),$entity_m))
@@ -227,11 +238,14 @@ switch ($msg_type) {
 		else if (array_key_exists($vars['cp_topic']->getSubtype(),$entity_f2))
 			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_f2',array($topic_author->getURL(), $topic_author->username, $entity_f2[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $vars['cp_topic']->title2),'fr');
 		else if (array_key_exists($vars['cp_topic']->getSubtype(),$entity_m3))
+
 			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_m3',array($topic_author->getURL(), $topic_author->username, $entity_m3[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $vars['cp_topic']->title2),'fr');
+		else if (array_key_exists($vars['cp_topic']->getSubtype(),$entity_answer))
+			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_answer',array($topic_author->getURL(), $topic_author->username, $entity_answer[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $title_answer),'fr');
 		else
 			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_m2',array($topic_author->getURL(), $topic_author->username, $entity_m2[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $vars['cp_topic']->title2),'fr');
 
-		//$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title',array($topic_author->getURL(), $topic_author->username, cp_translate_subtype($vars['cp_topic']->getSubtype()), $vars['cp_topic']->getURL(), $vars['cp_topic']->title),'fr');
+
 		if($vars['cp_topic']->description1){
              $cp_topic_description = strip_tags($vars['cp_topic']->description1);
         }
@@ -327,11 +341,10 @@ switch ($msg_type) {
 
 		$cp_notify_msg_description_en .= elgg_echo('cp_notify:body_group_invite_email:description',array($vars['cp_invitation_non_user_url'],'http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Content_Management_and_Collaboration/How_Do_I_Access_and_Join_a_Group%3F'.'?utm_source=notification&utm_medium=email',$vars['cp_invitation_code']),'en');
 		$cp_notify_msg_description_fr .= elgg_echo('cp_notify:body_group_invite_email:description',array($vars['cp_invitation_non_user_url'],'http://www.gcpedia.gc.ca/wiki/GCconnex_-_Aide_%C3%A0_l%27utilisateur/Pour_commencer/Comment_puis-je_acc%C3%A9der_%C3%A0_un_groupe_et_m%E2%80%99y_joindre%3F'.'?utm_source=notification&utm_medium=email',$vars['cp_invitation_code']),'fr');
-		//$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_group_invite_email:description',array($vars['cp_group_invite']->name,$vars['cp_invitation_non_user_url'],$vars['cp_invitation_code'],$vars['cp_invitation_msg']),'fr');
 
 		$email_notification_footer_non_user_en = elgg_echo('cp_notify:footer:no_user',array(),'en');
 		$email_notification_footer_non_user_fr = elgg_echo('cp_notify:footer:no_user',array(),'fr');
-		//$email_notification_footer_non_user_fr = elgg_echo('cp_notify:body_group_invite_email:title',array(),'fr');
+
 
 		break;
 
@@ -543,10 +556,6 @@ $email_notif_footer_msg_en1 = elgg_echo('cp_notify:contactHelpDesk', array(),'en
 $email_notif_footer_msg_en2 = elgg_echo('cp_notify:visitTutorials', array(),'en');
 
 
-//$email_notification_footer_en = elgg_echo('cp_notify:footer',array(),'en');
-//$email_notification_footer_fr = elgg_echo('cp_notify:footer',array(),'fr');
-
-
 
 if (!$vars['user_name']->username) {
 	$username_link = $vars['user_name'];
@@ -592,28 +601,18 @@ echo <<<___HTML
 		<div>
 			<div>
 
-				<!-- email header -->
 		        <div align='center' width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 12px; color: #055959'>
 		        	{$email_notification_header}
 		        </div>
 
-
-				<!-- GCconnex banner -->
 		     	<div width='100%' style='padding: 0 0 0 10px; color:#ffffff; font-family: sans-serif; font-size: 35px; line-height:38px; font-weight: bold; background-color:#047177;'>
 		        	<span style='padding: 0 0 0 3px; font-size: 20px; color: #ffffff; font-family: sans-serif;'>GCconnex</span>
 		        </div>
 
-
-		        <!-- email divider -->
 		        <div style='height:1px; background:#bdbdbd; border-bottom:1px solid #ffffff'></div>
 
-<!-- english -->
-
-		        <!-- main content of the notification (ENGLISH) -->
-		       	<!-- *optional* email message (DO NOT REPLY) -->
 		     	<div width='100%' style='padding:30px 30px 10px 30px; font-size:12px; line-height:22px; font-family:sans-serif;'>
 
-	        		<!-- The French Follows... -->
 	        		<span style='font-size:12px; font-weight: normal;'>{$french_follows}</span><br/>
 
 		        </div>
@@ -621,12 +620,10 @@ echo <<<___HTML
 
 
 		        <div width='100%' style='padding:30px 30px 30px 30px; color:#153643; font-family:sans-serif; font-size:16px; line-height:22px; '>
-		        	<!-- TITLE OF CONTENT -->
+
 		        	<h4 style='padding: 0px 0px 5px 0px; font-family:sans-serif';>
 		        		<strong> {$cp_notify_msg_title_en} </strong>
 		        	</h4>
-
-		        	<!-- BODY OF CONTENT -->
 
 		        	{$cp_notify_msg_description_en}
 
@@ -635,16 +632,13 @@ echo <<<___HTML
                     <div>{$email_notification_footer_en}{$email_notification_footer_en2}</div>
                 </div>
 
-<!-- french -->
-
-		        <!-- main content of the notification (FRENCH) -->
 		       	<div width='100%' style='padding:30px 30px 30px 30px; color:#153643; font-family:sans-serif; font-size:16px; line-height:22px;'>
-		       		<!-- TITLE OF CONTENT -->
+
 		       		<h4 style='padding: 0px 0px 5px 0px; font-family:sans-serif;'>
 		       			<strong> {$cp_notify_msg_title_fr} </strong>
 		       		</h4>
 
-				<!-- BODY OF CONTENT -->
+
 		       		{$cp_notify_msg_description_fr}
 
 		        </div>
@@ -652,10 +646,8 @@ echo <<<___HTML
                    <div>{$email_notification_footer_fr}{$email_notification_footer_fr2}</div>
                 </div>
 
-		        <!-- email divider -->
 		        <div style='height:1px; background:#bdbdbd; border-bottom:1px solid #ffffff'></div>
 
-		        <!-- email footer -->
 		        <div align='center' width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 16px; color: #055959'> </div>
 
 			</div>

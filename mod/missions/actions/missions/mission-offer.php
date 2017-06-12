@@ -35,7 +35,16 @@ else {
 		else {
 			remove_entity_relationship($mission->guid, 'mission_applied', $applicant->guid);
 			add_entity_relationship($mission->guid, 'mission_offered', $applicant->guid);
-			 
+
+			// Create a record of when the mission is offered for Analytics
+			$accept_record = new ElggObject();
+			$accept_record->subtype = 'mission-wasoffered';
+			$accept_record->title = 'Mission Offer Report';
+			$accept_record->access_id = ACCESS_LOGGED_IN;
+			$accept_record->owner_guid = $applicant->guid;
+			$accept_record->mission_guid = $mission->guid;
+			$accept_record->save();
+
 			$finalize_link = elgg_view('output/url', array(
 					'href' => elgg_get_site_url() . 'missions/view/' . $mission->guid,
 					'text' => elgg_echo('missions:respond')

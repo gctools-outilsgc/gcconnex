@@ -31,13 +31,6 @@ if (strcmp($enable_digest, 'yes') == 0) {
 		$content .= $_SERVER["HTTP_USER_AGENT"];
 
 	$chk_email = create_checkboxes($user->getGUID(), 'cpn_set_digest', array('set_digest_yes', 'set_digest_no'), '', 'id_chkbox_enable_digest', 'class_chkbox_enable_digest');
-	/*if (strpos($_SERVER["HTTP_USER_AGENT"],'Edge') !== false || strpos($_SERVER["HTTP_USER_AGENT"],'MSIE') !== false) {
-		// nothing
-	} else {
-		$user_option = elgg_get_plugin_user_setting('cpn_set_digest', $user->guid, 'cp_notifications');
-		$is_checked = (strcmp($user_option, 'set_digest_no') == 0 || strcmp($user_option, 'set_notify_off') == 0 || !$user_option) ? false : true;
-		$chk_email = '<label class="switch"> '.$chk_email.' <div class="slider round"></div> </label>';
-	}*/
 
 	$more_info = information_icon(elgg_echo('cp_newsletter:information:digest_option'), elgg_echo('cp_newsletter:information:digest_option:url'));
 	$content .= "<section id='notificationstable' cellspacing='0' cellpadding='4' width='100%' class='clearfix'>";

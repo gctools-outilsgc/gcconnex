@@ -386,11 +386,11 @@ function groups_entity_menu_setup($hook, $type, $return, $params) {
 	/* @var ElggMenuItem $item */
 	foreach ($return as $index => $item) {
 		if ( get_group_members($entity->guid, 10, 0, 0, true) > 1 )
-			if (in_array($item->getName(), array('access', 'likes', 'unlike', 'edit'/*, 'delete'*/))) {
+			if (in_array($item->getName(), array('access', 'edit'))) {
 				unset($return[$index]);
 		}
 		if ( get_group_members($entity->guid, 10, 0, 0, true) == 1 )
-			if (in_array($item->getName(), array('access', 'likes', 'unlike', 'edit'))) {
+			if (in_array($item->getName(), array('access', 'edit'))) {
 				unset($return[$index]);
 		}
 	}
