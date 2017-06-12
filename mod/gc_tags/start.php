@@ -2,7 +2,7 @@
 /*
 * GC-Elgg Tags and Communities 
 *
-* Users can add community of practice meta data to their content.
+* Users can add community of practice meta data to their content. New inputs for tagging content
 *
 * @author Nick github.com/piet0024
 * @version 1.0
@@ -13,11 +13,9 @@ elgg_register_event_handler('init', 'system', 'tags_and_communities');
 function tags_and_communities(){
     //Register selectize library
     elgg_require_js("selectize_require");
-    elgg_register_js('selectize', 'mod/gc_tags/views/default/js/selectize.js');
     elgg_extend_view('css/elgg', 'css/selectize.bootstrap3.css');
     
-    //Custom CSS and JS
-    elgg_extend_view('js/elgg', 'js/gc_tags_js');
+    //Custom CSS
     elgg_extend_view('css/elgg', 'css/gc_tags.css');
     
     //Add metadata to the page header
@@ -35,7 +33,7 @@ function tags_and_communities(){
     elgg_extend_view('forms/blog/save', 'page/elements/tags_modal');
     
     
-    //Blog preview feature gets in the way a little 
+    //Blog preview feature gets in the way a little so we will only override this action
     $action_path = elgg_get_plugins_path() . 'gc_tags/actions';
     elgg_unregister_action('blog/save');
 	elgg_register_action('blog/save', "$action_path/blog/save.php");
@@ -55,7 +53,7 @@ function gc_tags_help_page_handler(){
 
 
 /*
- * Grabs the audience input and saves the metadata when the object is created
+ * Grabs the audience input and saves the metadata when the object / group is created
  *
  * @param string $event		the name of the event
  * @param string $type		the type of object (eg "user", "group", ...)

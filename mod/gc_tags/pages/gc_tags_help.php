@@ -1,6 +1,8 @@
 <?php
 /*
+* Tag and communities Help page.
 *
+* @author Nick github.com/piet0024
 */
 $content = elgg_view_layout('one_sidebar', array(
     'title' => elgg_echo('gctags:help:title'),

@@ -1,6 +1,8 @@
 <?php
 /*
+* Help Page for finding out what communities and tags are. Links to this page are found in the tagging modal (the [?] links)
 *
+* @author Nick github.com/piet0024
 */
 //community list
 $community_array = array(
@@ -22,7 +24,7 @@ $community_array = array(
     'science'=> elgg_echo('gctags:community:science'),
     'allps' => elgg_echo('gctags:community:allps'),
 );
-
+//format some lists for the communities
 foreach($community_array as $key => $value){
     $com_help_header = elgg_format_element('h4', array('class'=>'h4', 'id'=>'com-type-'.$key,),$value);
     $com_help_body = elgg_format_element('p',array(),elgg_echo('gctags:help:info:'.$key));

@@ -1,4 +1,5 @@
 //Nick - Added modal open for tags and communities on submit handler
+//Nick - This view overrides the existing validate.js view in wet
 var dtpath = elgg.normalize_url() + '/mod/wet4/views/default/js/wet4/jquery.validate.min';
 
 require.config({

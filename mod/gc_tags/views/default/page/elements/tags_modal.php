@@ -4,6 +4,7 @@
 * This removes the tags input that is on most forms, and changes the button text to say "Tag and create"
 * This modal is opened from validate.js (in wet4) when the submit handler is run
 *
+* @author Nick github.com/piet0024
 */
 
 $entity = elgg_extract('entity', $vars, false);
@@ -45,8 +46,6 @@ $save_button = elgg_view('input/submit', array(
 	'name' => 'save',
     'class' => 'btn btn-primary form-submit',
 ));
-
-
 
 ?>
 

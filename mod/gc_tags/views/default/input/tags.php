@@ -9,7 +9,7 @@
  * @uses $vars['entity']   Optional. Entity whose tags are being displayed (metadata ->tags)
  *
  * GC_MODIFICATION
- * Description: Adding wet classes
+ * Description: Adding wet classes, added placeholder text, custom classes for selectize.js, added input label and helper text right to the input
  * Author: GCTools Team
  */
 

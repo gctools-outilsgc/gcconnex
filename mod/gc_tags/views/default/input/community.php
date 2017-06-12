@@ -1,10 +1,13 @@
 <?php
 /*
-* Community picker
+* Community picker. Creates a multiple select input with the class 'audience-select'
+* This class is used to run the selectize.js library
+*
+* TODO grab this array of communities from somewhere else
+*
+* @author Nick github.com/piet0024
 */
 
-//Testing - using a plugin setting for array, found out you can't save arrays in plugin settings.
-//$community_array = elgg_get_plugin_setting('community_list', 'gc_tags');
 //Communities of practice
 $community_array = array(
     'atip'=> elgg_echo('gctags:community:atip'),
@@ -49,5 +52,5 @@ $help_link = elgg_view('output/url', array(
 
 echo elgg_format_element('label', array('for' => 'audience'), elgg_echo('gctags:label:community'));
 echo elgg_format_element('span',array('class' => 'mrgn-lft-sm'),$help_link);
-echo elgg_format_element('p', array('class' => 'timeStamp'), elgg_echo('gctags:helpertext:community') .' + '.$value);
+echo elgg_format_element('p', array('class' => 'timeStamp'), elgg_echo('gctags:helpertext:community'));
 echo $communities_input;
