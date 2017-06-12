@@ -39,26 +39,8 @@ requirejs( ["form-validate"], function() {
               }
           },
           submitHandler: function(form) {
-              var formAction = $(form).attr('action').split('/');
-              var formActionType = formAction[formAction.length-2] + '/' +formAction[formAction.length-1];
-              //array of actions that will open a modal
-              var createActions = ['blog/save','bookmarks/save','pages/edit','groups/edit','file/upload','discussion/save','event_calendar/edit'];
-            
-              //test to see if this is an action we want to open a tag modal
-              if($.inArray(formActionType, createActions) > -1){
-                  var submitButton = $(form).find('button.form-submit');
-                
-                  $('#tagsModal').modal({
-                      backdrop: 'static'
-                  });
-                  $(submitButton).on('click', function(){
-                      form.submit();
-                  })
-                  
-              }else{
-                form.submit();
-              }
-            //form.submit();
+            $(form).find('button').prop('disabled', true);
+            form.submit();
           },
     ignore: ':hidden:not(.validate-me)',
      rules: {
