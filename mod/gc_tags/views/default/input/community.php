@@ -26,9 +26,10 @@ $community_array = array(
     'allps' => elgg_echo('gctags:community:allps'),
 );
 
+
+
 if (isset($vars['entity'])) {
 	$value = $vars['entity']->audience;
-	unset($vars['entity']);
 }
 //Class audience-select is used with selectize.js
 $communities_input = elgg_view('input/select', array(
@@ -48,5 +49,5 @@ $help_link = elgg_view('output/url', array(
 
 echo elgg_format_element('label', array('for' => 'audience'), elgg_echo('gctags:label:community'));
 echo elgg_format_element('span',array('class' => 'mrgn-lft-sm'),$help_link);
-echo elgg_format_element('p', array('class' => 'timeStamp'), elgg_echo('gctags:helpertext:community'));
+echo elgg_format_element('p', array('class' => 'timeStamp'), elgg_echo('gctags:helpertext:community') .' + '.$value);
 echo $communities_input;

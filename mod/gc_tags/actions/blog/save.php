@@ -55,7 +55,6 @@ $values = array(
 	'comments_on' => 'On',
 	'excerpt' => '',
 	'tags' => '',
-    'audience' => '',
 	'container_guid' => (int)get_input('container_guid'),
 );
 

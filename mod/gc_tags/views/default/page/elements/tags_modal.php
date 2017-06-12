@@ -6,6 +6,9 @@
 *
 */
 
+$entity = elgg_extract('entity', $vars, false);
+$audience = elgg_extract('audience', $vars, false);
+
 $help_link_main = elgg_view('output/url', array(
     'text' => '[?] <span class="wb-invisible">'.elgg_echo("gctags:help:title").'</span>',
     'href' => '/community-help',
@@ -20,7 +23,10 @@ $help_link_tags = elgg_view('output/url', array(
     'target' => '_blank',
 ));
 
-$community_button = elgg_view('input/community',array());
+$community_button = elgg_view('input/community',array(
+    'entity' => $entity,
+    'value' => $vars['audience'],
+));
 
 //different mods like to call tags other things! neato
 if(elgg_in_context('groups')){
@@ -30,6 +36,7 @@ if(elgg_in_context('groups')){
 }
 $tags_button = elgg_view('input/tags',array(
     'name' => $tag_name,
+    'value' => $vars['tags'],
 ));
 
 
