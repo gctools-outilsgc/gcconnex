@@ -102,6 +102,7 @@ echo $btn_language;
 <div class="mrgn-bttm-sm en">
 	<label for='question_title'><?php echo elgg_echo('questions:edit:question:title'); ?></label>
 	<?php
+	//add autocomplete on question creation
 	if(!$question->guid){
 		echo elgg_view('input/question_autocomplete', $title);
 	} else {
@@ -110,7 +111,13 @@ echo $btn_language;
 </div>
 <div class="mrgn-bttm-sm fr">
 	<label for='question_title2'><?php echo elgg_echo('questions:edit:question:title'); ?></label>
-	<?php echo elgg_view('input/text', $title2); ?>
+	<?php
+	//add autocomplete on question creation
+	if(!$question->guid){
+		echo elgg_view('input/question_autocomplete', $title2);
+	} else {
+		echo elgg_view('input/text', $title2);
+	}?>
 </div>
 
 <div class="mrgn-bttm-sm en">

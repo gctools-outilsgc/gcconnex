@@ -168,6 +168,8 @@ return array(
     'questions:answer:checkmark:brief' => "%s marked an answer by %s correct on %s",
     'questions:friends' => "Friends' Questions",
     'question:answered' => "<span class='wb-inv'>Answered</span>",
+    'question:suggestion' => '<b>Similiar questions already asked.</b>',
+    'question:suggestion:answered' => 'Answered question.',
 
     //form validation
 

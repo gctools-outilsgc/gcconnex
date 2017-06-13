@@ -164,6 +164,8 @@ return array(
   'questions:answer:checkmark:brief' => "%s a indiqué que cette réponse de %s bonne sur %s",
   'questions:friends' => "Les questions de collègues",
   'question:answered' => "<span class='wb-inv'>Répondu</span>",
+  'question:suggestion' => "<b>Similiar questions already asked.</b>",
+  'question:suggestion:answered' => "Question répondu.",
 
   //form validation
 
