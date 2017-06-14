@@ -564,6 +564,9 @@ function cp_translate_subtype($subtype_name, $english = true) {
 		case 'mission':
 			$label = ($english) ? 'opportunity' : 'un oppourtunite';
 			break;
+		case 'answer':
+			$label = ($english) ? 'answer' : 'réponse';
+			break;
 		default:
 			$label = $subtype_name;
 		break;

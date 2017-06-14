@@ -969,7 +969,7 @@ function cp_create_notification($event, $type, $object) {
 				'page_top' => elgg_echo('cp_notify:subject:new_content_fem',array("page",$group_name2),'fr'),
 				'task_top' => elgg_echo('cp_notify:subject:new_content_fem',array("task",$group_name2),'fr'),
 				'task' => elgg_echo('cp_notify:subject:new_content_fem',array("task",$group_name2),'fr'),
-        'question' => elgg_echo('cp_notify:subject:new_content_fem',array("question",$group_name2),'fr'),
+        		'question' => elgg_echo('cp_notify:subject:new_content_fem',array("question",$group_name2),'fr'),
 
 			);
 
@@ -999,9 +999,17 @@ function cp_create_notification($event, $type, $object) {
 				} else {
 
 					if (strcmp($object->getSubtype(), 'hjforumpost') != 0 || strcmp($object->getSubtype(), 'hjforumtopic') != 0) {
-
+						if ($object->getSubtype() == 'answer'){
+								$question_guid = $object->getContainerGUID();
+								$answer_entity = get_entity($question_guid);
+					
+							$subject = elgg_echo('cp_notify_usr:subject:new_content',array($object->getOwnerEntity()->username, cp_translate_subtype($object->getSubtype()), gc_explode_translation($answer_entity->title,'en')),'en');
+							$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content_f',array($object->getOwnerEntity()->username, cp_translate_subtype($object->getSubtype(), false), gc_explode_translation($answer_entity->title,'fr')),'fr');
+						
+						}else{
 						$subject = elgg_echo('cp_notify_usr:subject:new_content',array($object->getOwnerEntity()->username, cp_translate_subtype($object->getSubtype()), gc_explode_translation($object->title,'en')),'en');
 						$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content',array($object->getOwnerEntity()->username, cp_translate_subtype($object->getSubtype(), false), gc_explode_translation($object->title,'fr')),'fr');
+						}
 					}
 				}
 
