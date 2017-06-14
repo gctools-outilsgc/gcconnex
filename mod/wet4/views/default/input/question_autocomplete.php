@@ -5,7 +5,7 @@ $id = elgg_extract("id", $vars);
 echo elgg_view('input/text', array(
   'name' => $name,
   'id' => $id,
-  'class' => ''
+  'required' => 'required'
 ));
 
 echo '<div id="searchResults-'.$id.'" aria-live="polite" style="display:none;" class="question-auto"><p>'.elgg_echo('question:suggestion').'</p></div>'
