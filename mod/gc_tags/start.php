@@ -43,7 +43,7 @@ function tags_and_communities(){
 
     //Event handler for when objects and groups are created
     elgg_register_event_handler('create','object','gc_tags_add_comm_object');
-    elgg_register_event_handler('create','group','gc_tags_add_comm_group');
+    elgg_register_event_handler('create','group','gc_tags_add_comm_object');
 }
 
 function gc_tags_help_page_handler(){
@@ -60,11 +60,6 @@ function gc_tags_help_page_handler(){
  * @param mixed $object		the object/entity of the event
  */
 function gc_tags_add_comm_object($event, $type, $object){
-    $audience = get_input('audience');
-    $object->audience = $audience;
-}
-
-function gc_tags_add_comm_group($event, $type, $object){
     $audience = get_input('audience');
     $object->audience = $audience;
 }

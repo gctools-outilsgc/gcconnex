@@ -30,13 +30,13 @@ return array(
     
     //Help / FAQ page text
     "gctags:help:title" => "Community and Tag Help/FAQ",
-    "gctags:help:intro" => "intro",
+    "gctags:help:intro" => "Having properly ",
     "gctags:help:contentmenu" => "Content Menu",
     "gctags:help:community" => "What are communities?",
     "gctags:help:communitytypes" => "Community Types",
-    "gctags:help:info:community" => "Something nice about communities",
+    "gctags:help:info:community" => "Communities are collections of public servants who share common work functions and require similar skills. Selecting the right communities for your content will help it get discovered by audiences who will find it useful.",
     "gctags:help:tags" => "What are tags?",
-    "gctags:help:info:tags" => "Something nice about tags, maybe some examples?",
+    "gctags:help:info:tags" => "Tags are keywords or terms that are assigned to web content. Choosing the right tags will let other users know what your content is about and find content based on specific interests.",
     
     //Communities info
     "gctags:help:info:atip" => "The ATIP community is responsible for the application of the Access to Information Act and the Privacy Act. <br>The role of the members of the community is to ensure federal government transparency and to protect the privacy of individuals.",

@@ -59,7 +59,6 @@ requirejs( ["form-validate"], function() {
               }else{
                 form.submit();
               }
-            //form.submit();
           },
     ignore: ':hidden:not(.validate-me)',
      rules: {
