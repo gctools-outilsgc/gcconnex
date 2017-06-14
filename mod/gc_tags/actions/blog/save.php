@@ -49,7 +49,9 @@ $old_status = $blog->status;
 // set defaults and required values.
 $values = array(
 	'title' => '',
+	'title2' =>'',
 	'description' => '',
+	'description2' => '',
 	'status' => 'draft',
 	'access_id' => ACCESS_DEFAULT,
 	'comments_on' => 'On',
@@ -107,6 +109,11 @@ foreach ($values as $name => $default) {
 	}
 }
 
+//implode for tranlation
+$values['title'] = gc_implode_translation($values['title'], $values['title2']);
+$values['excerpt'] = gc_implode_translation($values['excerpt'], $values['excerpt2']);
+$values['description'] =gc_implode_translation($values['description'], $values['description2']);
+
 // if preview, force status to be draft
 if ($save == true) {
 	$values['status'] = 'draft';
@@ -121,7 +128,9 @@ if ($values['status'] == 'draft') {
 // assign values to the entity, stopping on error.
 if (!$error) {
 	foreach ($values as $name => $value) {
+		if (($name != 'title2') && ($name != 'description2') &&  ($name != 'excerpt2')){ // remove input 2 in metastring table
 		$blog->$name = $value;
+		}
 	}
 }
 
