@@ -511,7 +511,6 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			continue;
 		} else
 			$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template ) : mail($to_recipient->email, $subject, $template, cp_get_headers($event));
-
 		messages_send($subject, $site_template, $to_recipient->guid, $sender_guid, 0, true, $add_to_sent);
 	}
 }
@@ -815,7 +814,9 @@ function cp_create_annotation_notification($event, $type, $object) {
 		$recipient_user = get_user($to_recipient->guid);
 		if ($liked_by->guid == $entity->getOwnerGUID() && $to_recipient->guid == $liked_by->guid)
 			continue;
-		if (cp_check_permissions($object, $recipient_user)){
+		
+		//if (cp_check_permissions($object, $recipient_user)){
+		if (has_access_to_entity($object, $recipient_user)) {
 
 			if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0)
 				create_digest($author, $action_type, $content_entity, $to_recipient);
@@ -835,8 +836,14 @@ function cp_create_annotation_notification($event, $type, $object) {
 	// send notification out via site
 	foreach ($to_recipients_site as $to_recipient_id => $to_recipient) {
 		$site_template = elgg_view('cp_notifications/site_template', $message);
-		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') !== 0)
-			messages_send($subject, $site_template, $to_recipient->guid, $site->guid, 0, true, false);
+		$recipient_user = get_user($to_recipient->guid);
+		
+		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') !== 0) {
+
+			if (has_access_to_entity($object, $recipient_user)) {
+				messages_send($subject, $site_template, $to_recipient->guid, $site->guid, 0, true, false);
+			}
+		}
 	}
 } // end of function
 
@@ -905,6 +912,7 @@ function cp_create_notification($event, $type, $object) {
 				'cp_topic_description_discussion2' => 'SVP voir les fichiers ici',
 			);
 
+			$object = $entity;
 			$content_entity = $object['files_uploaded'];
 			$author = elgg_get_logged_in_user_entity();
 			break;
@@ -938,7 +946,7 @@ function cp_create_notification($event, $type, $object) {
 				'cp_topic_description_discussion2' => 'SVP voir les fichiers ici',
 			);
 
-
+			$object = $entity;
 			$content_entity = $object['files_uploaded'];
 			$author = elgg_get_logged_in_user_entity();
 			break;
@@ -1043,8 +1051,6 @@ function cp_create_notification($event, $type, $object) {
 
 			$to_recipients = get_subscribers($dbprefix, $object->getOwnerGUID(), $object->getContainerGUID());
 			$to_recipients_site = get_subscribers($dbprefix, $object->getOwnerGUID(), $object->getContainerGUID());
-
-
 			break;
 
 		// micromissions / opportunities
@@ -1209,7 +1215,8 @@ function cp_create_notification($event, $type, $object) {
 			if ($to_recipient->guid == $author->guid)
 				continue;
 
-			if (cp_check_permissions($object, $recipient_user)) {
+			//if (cp_check_permissions($object, $recipient_user)) {
+			if (has_access_to_entity($object, $recipient_user)) {
 
 				if (strcmp($user_setting, "set_digest_yes") == 0) {
 					create_digest($author, $switch_case, $content_entity, get_entity($to_recipient->guid));
@@ -1238,7 +1245,8 @@ function cp_create_notification($event, $type, $object) {
 			if ($to_recipient->guid == $author->guid || strcmp($user_setting, "set_digest_yes") == 0)
 				continue;
 
-		 	if (cp_check_permissions($object, $recipient_user)) {
+		 	//if (cp_check_permissions($object, $recipient_user)) {
+			if (has_access_to_entity($object, $recipient_user)) {
 				$site_template = elgg_view('cp_notifications/site_template', $message);
 				messages_send($subject, $site_template, $to_recipient->guid, $site->guid, 0, true, false);
 			}
@@ -1451,8 +1459,8 @@ function cp_notification_preparation_send($entity, $to_user, $message, $guid_two
 
 		} else {
 			// check if user has access to the content (DO NOT send if user has no access to this object)
-			if (cp_check_permissions($entity, $to_user->guid)) {
-
+			//if (cp_check_permissions($entity, $to_user->guid)) {
+			if (has_access_to_entity($entity, $recipient_user)) {
 				//  GCCON-175: assemble the email content with correct username (for notification page)
 				$message['user_name'] = $to_user->username;
 
