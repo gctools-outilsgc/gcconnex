@@ -22,7 +22,7 @@ function b_extended_profile_init() {
 
     // Overriding the original javascript file with the modified version.
     // The modified version adds code to the ready, editProfile and saveProfile functions.
-    elgg_register_js('gcconnex-profile', 'mod/missions_profile_extend/js/endorsements/gcconnex-profile.js');
+    elgg_register_js('gcconnex-profile', 'mod/b_extended_profile/js/endorsements/gcconnex-profile.js');
 
     // Register the gcconnex profile css libraries
     $css_url = 'mod/b_extended_profile/css/gcconnex-profile.css';
@@ -73,9 +73,9 @@ function b_extended_profile_init() {
     elgg_register_action('b_extended_profile/user_find', $action_path . 'userfind.php', "public");
     
     // The new action saves the data gathered from the new views.
-    elgg_register_action('b_extended_profile/hide-completed-mission', elgg_get_plugins_path() . 'missions_profile_extend/actions/b_extended_profile/hide-completed-mission.php');
-    elgg_register_action('missions_profile_extend/missions-access-form', elgg_get_plugins_path() . 'missions_profile_extend/actions/b_extended_profile/missions-access-form.php');
-    elgg_register_action('b_extended_profile/show-completed-mission', elgg_get_plugins_path() . 'missions_profile_extend/actions/b_extended_profile/show-completed-mission.php');
+    elgg_register_action('b_extended_profile/hide-completed-mission', elgg_get_plugins_path() . 'b_extended_profile/actions/b_extended_profile/hide-completed-mission.php');
+    elgg_register_action('b_extended_profile/missions-access-form', elgg_get_plugins_path() . 'b_extended_profile/actions/b_extended_profile/missions-access-form.php');
+    elgg_register_action('b_extended_profile/show-completed-mission', elgg_get_plugins_path() . 'b_extended_profile/actions/b_extended_profile/show-completed-mission.php');
 
 
     elgg_register_page_handler('userfind', 'userfind_page_handler');
