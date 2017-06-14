@@ -2,23 +2,22 @@
 global $CONFIG;
 $db_prefix = elgg_get_config('dbprefix');
 
-$name = get_input('name');
-$owner = get_input('owner');
+$name = sanitize_string(get_input('name'));
 $lang = get_current_language();
 
-$params = array(
-  "type" => "object",
-  'subtype' => "question",
-  'metadata_name_value_pairs' => array(
-      'name' => 'title',
-      'value' => '%'.$name.'%',
-      'operand' => 'LIKE',
-      'case_sensitive' => false
-    )
-);
+$params['type'] = 'object';
+$params['limit'] = 8;
 
-//find questions based on Similiar titles
-$questions = elgg_get_entities_from_metadata($params);
+$join = "JOIN {$db_prefix}objects_entity ge ON e.guid = ge.guid";
+$params['joins'] = array($join);
+$fields = array('title');
+$where = "ge.title LIKE '%$name%'";
+$params['wheres'] = array($where);
+
+$params['subtype'] = 'question';
+
+$questions = elgg_get_entities($params);
+
 
 //if found place in list
 if($questions){
