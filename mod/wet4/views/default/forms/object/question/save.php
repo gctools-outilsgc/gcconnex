@@ -22,17 +22,31 @@ if (!$question) {
 
 $container = $question->getContainerEntity();
 
+// decode json into English / French parts
+$json_title = json_decode($question->title);
+$json_desc = json_decode($question->description);
+
+if ( $json_title ){
+  $title2 = $json_title->fr;
+  $title = $json_title->en;
+}
+
+if ( $json_desc ){
+  $desc2 = $json_desc->fr;
+  $desc = $json_desc->en;
+}
+
 $title = [
 	'name' => 'title',
 	'id' => 'question_title',
-	'value' => elgg_get_sticky_value('question', 'title', $question->title),
+	'value' => elgg_get_sticky_value('question', 'title', $title),
 	'required' => true,
 ];
 
 $title2 = [
 	'name' => 'title2',
 	'id' => 'question_title2',
-	'value' => elgg_get_sticky_value('question', 'title2', $question->title2),
+	'value' => elgg_get_sticky_value('question', 'title2', $title2),
 	'required' => true,
 ];
 
@@ -41,7 +55,7 @@ $description = [
 	'id' => 'question_description',
 	'required' => 'required',
 	'class' => 'validate-me',
-	'value' => elgg_get_sticky_value('question', 'description', $question->description),
+	'value' => elgg_get_sticky_value('question', 'description', $desc),
 ];
 
 $description2 = [
@@ -49,7 +63,7 @@ $description2 = [
 	'id' => 'question_description2',
 	'required' => 'required',
 	'class' => 'validate-me',
-	'value' => elgg_get_sticky_value('question', 'description2', $question->description2),
+	'value' => elgg_get_sticky_value('question', 'description2', $desc2),
 ];
 
 $tags = [
