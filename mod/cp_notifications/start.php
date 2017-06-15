@@ -912,8 +912,9 @@ function cp_create_notification($event, $type, $object) {
 				'cp_topic_description_discussion2' => 'SVP voir les fichiers ici',
 			);
 
-			$object = $entity;
+			
 			$content_entity = $object['files_uploaded'];
+			$object = get_entity($object['files_uploaded'][0]);
 			$author = elgg_get_logged_in_user_entity();
 			break;
 
@@ -946,8 +947,9 @@ function cp_create_notification($event, $type, $object) {
 				'cp_topic_description_discussion2' => 'SVP voir les fichiers ici',
 			);
 
-			$object = $entity;
+			
 			$content_entity = $object['files_uploaded'];
+			$object = get_entity($object['files_uploaded'][0]);
 			$author = elgg_get_logged_in_user_entity();
 			break;
 

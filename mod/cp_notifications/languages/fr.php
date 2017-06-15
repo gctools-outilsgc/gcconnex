@@ -57,7 +57,7 @@ $french = array(
 	'cp_notifications:subtype:name:thewire' => "fil",
 
 		/// new translation require attention
-	'cp_notifications:mail_body:subtype:file_upload' => "%s posted %s file(s): %s", 	
+	'cp_notifications:mail_body:subtype:file_upload' => "%s a publié %s fichier(s): %s", 	
 
 
 	'cp_notifications:mail_body:subtype:content_revision' => "%s a on fait un revision pour %s %s",
