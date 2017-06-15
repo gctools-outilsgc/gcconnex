@@ -92,10 +92,8 @@ function cp_notifications_init() {
 						{
 							if ((strpos($form_file,'save') !== false || strpos($form_file, 'upload') !== false) && (!strstr($form_file, '.old')))
 							{
-								
-									$remove_php = explode('.',$form_file);
-									elgg_extend_view('forms/'.$plugin_form['title'].'/'.$remove_php[0], 'forms/minor_save', 500);
-								
+								$remove_php = explode('.',$form_file);
+								elgg_extend_view('forms/'.$plugin_form['title'].'/'.$remove_php[0], 'forms/minor_save', 500);
 							}
 						}
 					}
@@ -1097,8 +1095,6 @@ function cp_create_notification($event, $type, $object) {
 			add_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $object->getGUID());
 			break; 
 
-
-
 		case 'single_file_upload':
 
 		default:
@@ -1217,7 +1213,6 @@ function cp_create_notification($event, $type, $object) {
 			if ($to_recipient->guid == $author->guid)
 				continue;
 
-			//if (cp_check_permissions($object, $recipient_user)) {
 			if (has_access_to_entity($object, $recipient_user)) {
 
 				if (strcmp($user_setting, "set_digest_yes") == 0) {
@@ -1461,7 +1456,7 @@ function cp_notification_preparation_send($entity, $to_user, $message, $guid_two
 
 		} else {
 			// check if user has access to the content (DO NOT send if user has no access to this object)
-			//if (cp_check_permissions($entity, $to_user->guid)) {
+
 			if (has_access_to_entity($entity, $recipient_user)) {
 				//  GCCON-175: assemble the email content with correct username (for notification page)
 				$message['user_name'] = $to_user->username;
