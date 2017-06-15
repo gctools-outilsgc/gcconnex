@@ -53,7 +53,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
             <h1 class="group-title">
                 <?php
                
-                    echo gc_explode_translation($group->title, $lang);
+                    echo gc_explode_translation($group->name, $lang);
 
                 ?>
             </h1>
