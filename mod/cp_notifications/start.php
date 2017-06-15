@@ -14,7 +14,7 @@ function cp_notifications_init() {
 	// since most of the notifications are built within the action file itself, the trigger_plugin_hook was added to respected plugins
 	elgg_register_plugin_hook_handler('cp_overwrite_notification', 'all', 'cp_overwrite_notification_hook');
 	elgg_register_plugin_hook_handler('cron', 'daily', 'cp_digest_daily_cron_handler');
-	elgg_register_plugin_hook_handler('cron', 'weekly', 'cp_digest_weekly_cron_handler');
+	elgg_register_plugin_hook_handler('cron', 'weekly', 'cp_digest_weekly_cron_handler', 100);
 	// hooks and events: intercepts and blocks emails and notifications to be sent out
 	elgg_register_plugin_hook_handler('email', 'system', 'cpn_email_handler_hook');
 
