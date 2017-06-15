@@ -63,11 +63,6 @@ if ($tags === '') {
 }
 
 
-if ( !$title_link && json_decode($entity->title) ){
-	$title_link = gc_explode_translation($entity->title, $lang);
-}
-
-
 if ($title_link) {
 
     //Nick - putting these titles in headings to make it quicker to navigate for screen readers
