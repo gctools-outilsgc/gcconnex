@@ -135,7 +135,12 @@ if ($full) {
 				"order_by" => "time_created"
 			];
 
-			$comments_body = elgg_format_element('h2', [
+			if(elgg_instanceof(elgg_get_page_owner_entity(), "group")){
+				$header = 'h3';
+			} else {
+				$header = 'h2';
+			}
+			$comments_body = elgg_format_element($header, [
 					'class' => ['elgg-river-comments-tab', 'mtm']
 				], elgg_echo('comments')
 			);
