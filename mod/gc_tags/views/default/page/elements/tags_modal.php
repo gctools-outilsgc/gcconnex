@@ -47,13 +47,14 @@ $save_button = elgg_view('input/submit', array(
     'class' => 'btn btn-primary form-submit',
 ));
 
+$buttonText = elgg_echo('gctags:button:create');
 ?>
 
 <script>
 $(document).ready(function(){
     $('form .tag-wrapper:first').remove();
     $('label[for~="<?php echo $tag_name; ?>"]:first').remove();
-    $('button[type="submit"]:first').text('Tag and Create');
+    $('button[type="submit"]:first').text('<?php echo $buttonText; ?>');
 })
 </script>
 <div class="modal fade tags-modal" id="tagsModal" tabindex="-1" role="dialog" aria-labelledby="Tags and Communities">

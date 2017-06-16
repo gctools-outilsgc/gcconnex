@@ -44,6 +44,9 @@ function tags_and_communities(){
     //Event handler for when objects and groups are created
     elgg_register_event_handler('create','object','gc_tags_add_comm_object');
     elgg_register_event_handler('create','group','gc_tags_add_comm_object');
+    //Handler for when objects and groups are updated
+    elgg_register_event_handler('update','object','gc_tags_add_comm_object');
+    elgg_register_event_handler('update','group','gc_tags_add_comm_object');
 }
 
 function gc_tags_help_page_handler(){
@@ -53,7 +56,7 @@ function gc_tags_help_page_handler(){
 
 
 /*
- * Grabs the audience input and saves the metadata when the object / group is created
+ * Grabs the audience input and saves the metadata when the object / group is created / edit
  *
  * @param string $event		the name of the event
  * @param string $type		the type of object (eg "user", "group", ...)

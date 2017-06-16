@@ -24,7 +24,7 @@ return array(
     "gctags:label:community" => "De quelle communauté cela appartient-il?",
     "gctags:helpertext:community" => "Cliquez pour ajouter des communautés. Vous pouvez ajouter autant de ceux qui s'appliquent",
     "gctags:placeholder:tags" => "Ex. policy, tags, tag,",
-    "gctags:helpertext:tags" => "To add type in tag and press <kbd>,</kbd> or <kbd>Enter</kbd>",
+    "gctags:helpertext:tags" => "Pour ajouter les mot-clé appuyez sur <kbd>,</kbd> ou <kbd>Enter</kbd>",
     
     "gctags:button:create" => "Ajouter des mots clés et créer",
     "gctags:modal:header" => "Ajouter des Communautés et des Mots-clés",
