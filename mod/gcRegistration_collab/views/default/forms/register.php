@@ -438,7 +438,6 @@ $(window).on('beforeunload', function(){
 	} else {
 		$municipal = json_decode($municipals->municipal_fr, true);
 	}
-	asort($municipal);
 
 	$municipal_choices = elgg_view('input/text', array(
 		'name' => 'municipal',
@@ -454,6 +453,8 @@ $(window).on('beforeunload', function(){
 					<datalist id="municipal-list">
 						<?php
 							if( !empty($municipal) ){
+								asort($municipal);
+								
 								foreach($municipal as $municipal_name => $value){
 									echo '<option value="' . $municipal_name . '">' . $value . '</option>';
 								}
