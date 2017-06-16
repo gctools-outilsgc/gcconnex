@@ -37,7 +37,7 @@ switch($access_value) {
 $hidden_mission_array = explode(',', get_user(elgg_get_page_owner_guid())->missions_hide_list);
 
 if(elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
-	$access_form .= elgg_view_form('missions_profile_extend/missions-access-form', array(
+	$access_form .= elgg_view_form('b_extended_profile/missions-access-form', array(
 			'class' => 'form-horizontal'
 	));
 }
