@@ -29,6 +29,7 @@ if (!empty($friend)) {
 		// cyu - 04/04/2016: use new notification system hook instead (if activated)
 		if (elgg_is_active_plugin('cp_notifications')) {
 			$message = array(
+				'object' => $user,
 				'cp_request_guid' => $friend->getGUID(),
 				'cp_approver' => $user->name,
 				'cp_approver_profile' => $user->getURL(),

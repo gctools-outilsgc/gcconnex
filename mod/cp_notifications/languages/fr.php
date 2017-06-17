@@ -5,6 +5,12 @@ $site_name = $site->name;
 $contact_us = "{$site->getURL()}mod/contactform/";
 
 $french = array( 
+	'minor_save:title' => "Vous ne voulez pas envoyer de notification?",
+	'minor_save:description' => "L'affichage de nouveaux contenus envoie des notifications à ceux qui sont abonné. En tant que propriétaire ou opérateur du groupe, vous pouvez décider de ne pas envoyer de notifications pour le nouveau contenu que vous affichez dans le groupe. Pour ce faire, sélectionnez l'option « Ne pas envoyer de notification » ci-dessous.",
+	'minor_save:checkbox_label' => " Ne pas envoyer de notification",
+
+
+
 	'cp_notifications:name' => "Paramètres de notifications",
 	'cp_notification:save:success' => "Les paramètres ont été enregistrés avec succès",
 	'cp_notification:save:failed' => "Les paramètres n'ont pas été enregistrés avec succès",
@@ -43,12 +49,15 @@ $french = array(
 	'cp_notifications:subtype:file' => "Fichier",
 	'cp_notifications:subtype:album' => "Album",
 	'cp_notifications:subtype:thewire' => "Fil",
-	'cp_notifications:subtype:poll' => "Sondage", //CHANGE 3
+	'cp_notifications:subtype:poll' => "Sondage", 
 	'cp_notifications:subtype:event_calendar' => "Événement",
 	'cp_notifications:subtype:photo' => "Image",
 	'cp_notifications:subtype:task' => "Tâche",
 
 	'cp_notifications:subtype:name:thewire' => "fil",
+
+		/// new translation require attention
+	'cp_notifications:mail_body:subtype:file_upload' => "%s a publié %s fichier(s): %s", 	
 
 
 	'cp_notifications:mail_body:subtype:content_revision' => "%s a on fait un revision pour %s %s",
@@ -79,6 +88,13 @@ $french = array(
 	'cp_notifications:mail_body:subtype:any' => "%s a publié %s %s : %s", // john doe post un blogue vs john doe posted un blog 
 
 	'cp_notifications:mail_body:subtype:oppourtunity' => "%s a publié une opportunité (%s): %s",
+
+	/// new texts : require translation
+	'cp_notifications:mail_body:subtype:file_upload:singular' => "%s a téléchargé %s fichier :",
+	'cp_notifications:mail_body:subtype:file_upload:plural' => "%s a téléchargé %s fichiers :",
+	'cp_notifications:mail_body:subtype:file_upload:group:singular' => "%s a téléchargé %s fichier dans %s:",
+	'cp_notifications:mail_body:subtype:file_upload:group:plural' => "%s a téléchargé %s fichiers dans %s:",
+
 
 	'cp_newsletter:other_content:notice' => "Ces abonnements s'appliquent uniquement au contenu qui ne fait pas partie d'un groupe",
 	
@@ -333,7 +349,11 @@ $french = array(
 
 	'cp_notify:body_new_content:title_m2' => "<a href='%s'>%s</a> a ajouté un nouveau %s intitulé <a href='%s'>%s</a>",
 	'cp_notify:body_new_content:title_m3' => "<a href='%s'>%s</a> a ajouté un nouvel %s intitulé <a href='%s'>%s</a>",
+	
 	'cp_notify:body_new_content:title_f2' => "<a href='%s'>%s</a> a ajouté une nouvelle %s intitulée <a href='%s'>%s</a>",
+
+	'cp_notify:body_new_content:title3' => "<a href='%s'>%s</a> a ajouté une nouvelle %s",
+
 	'cp_notify:body_new_content:title_answer' => "<a href='%s'>%s</a> a ajouté une nouvelle %s dans <a href='%s'>%s</a>",
 
 	'cp_notify:body_new_content:description' => "La description de leur nouvelle publication se lit comme suit : <br/> 
