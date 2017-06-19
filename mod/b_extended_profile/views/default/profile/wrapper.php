@@ -110,7 +110,7 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
          * MODIFIED CODE
          * Constructs the opt-in section according to the original plugin methodology.
          */
-        if(has_content($user, 'opt-in')) {
+        if(elgg_is_active_plugin('missions') && has_content($user, 'opt-in')) {
             init_ajax_block(elgg_echo('gcconnex_profile:opt:opt-in'), 'opt-in', $user);
             echo elgg_view('b_extended_profile/opt-in');
             finit_ajax_block('opt-in');
