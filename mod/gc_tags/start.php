@@ -29,7 +29,6 @@ function tags_and_communities(){
     elgg_extend_view('forms/groups/edit', 'page/elements/tags_modal');
     elgg_extend_view('forms/file/upload', 'page/elements/tags_modal');
     elgg_extend_view('forms/discussion/save', 'page/elements/tags_modal');
-    elgg_extend_view('forms/event_calendar/edit', 'page/elements/tags_modal');
     elgg_extend_view('forms/blog/save', 'page/elements/tags_modal');
     
     

@@ -9,6 +9,7 @@
 
 $entity = elgg_extract('entity', $vars, false);
 $audience = elgg_extract('audience', $vars, false);
+$guid = elgg_extract('guid', $vars, null);
 
 $help_link_main = elgg_view('output/url', array(
     'text' => '[?] <span class="wb-invisible">'.elgg_echo("gctags:help:title").'</span>',
@@ -27,6 +28,7 @@ $help_link_tags = elgg_view('output/url', array(
 $community_button = elgg_view('input/community',array(
     'entity' => $entity,
     'value' => $vars['audience'],
+    'guid' => $guid,
 ));
 
 //different mods like to call tags other things! neato
@@ -47,16 +49,17 @@ $save_button = elgg_view('input/submit', array(
     'class' => 'btn btn-primary form-submit',
 ));
 
+$cancel_tagging = elgg_view('output/url',array(
+    'text' => elgg_echo('close'),
+    'href' => '#',
+    'class' => 'close-tag-modal',
+    'data-dismiss' => 'modal',
+    'aria-label' => 'Close',
+));
 $buttonText = elgg_echo('gctags:button:create');
 ?>
 
-<script>
-$(document).ready(function(){
-    $('form .tag-wrapper:first').remove();
-    $('label[for~="<?php echo $tag_name; ?>"]:first').remove();
-    $('button[type="submit"]:first').text('<?php echo $buttonText; ?>');
-})
-</script>
+
 <div class="modal fade tags-modal" id="tagsModal" tabindex="-1" role="dialog" aria-labelledby="Tags and Communities">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -77,10 +80,30 @@ $(document).ready(function(){
                 ?>
             </div>
             <div class="modal-footer">
-                <?php echo $save_button; ?>
+                <?php 
+                    echo $cancel_tagging;
+                    echo $save_button; 
+                ?>
             </div>
         </div>
     </div>
 </div>
 
-
+<script>
+$(document).ready(function(){
+    $('form .tag-wrapper:first').remove();
+    $('label[for~="<?php echo $tag_name; ?>"]:first').remove();
+    $('button[type="submit"]:first').text('<?php echo $buttonText; ?>');
+    
+    $('.community-input-toggle').on('click', function(){
+        if($(this).data('commtoggle') == 'caret'){
+            $(this).html('<i class="fa fa-caret-up" aria-hidden="true"></i>');
+            $(this).parent().find('#audience').focus();
+            $(this).data('commtoggle','up');
+        }else{
+            $(this).html('<i class="fa fa-caret-down" aria-hidden="true"></i>');
+            $(this).data('commtoggle','caret');
+        }
+    });
+})
+</script>

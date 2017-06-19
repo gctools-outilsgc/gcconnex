@@ -44,7 +44,7 @@ requirejs( ["form-validate"], function() {
               var formAction = $(form).attr('action').split('/');
               var formActionType = formAction[formAction.length-2] + '/' +formAction[formAction.length-1];
               //array of actions that will open a modal
-              var createActions = ['blog/save','bookmarks/save','pages/edit','groups/edit','file/upload','discussion/save','event_calendar/edit'];
+              var createActions = ['blog/save','bookmarks/save','pages/edit','groups/edit','file/upload','discussion/save'];
             
               //test to see if this is an action we want to open a tag modal
               if($.inArray(formActionType, createActions) > -1){

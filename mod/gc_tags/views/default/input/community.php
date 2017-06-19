@@ -29,10 +29,10 @@ $community_array = array(
     'allps' => elgg_echo('gctags:community:allps'),
 );
 
-
-
-if (isset($vars['entity'])) {
-	$value = $vars['entity']->audience;
+$guid = elgg_extract('guid', $vars, null);
+//get the audiences if they exist (used when editing)
+if ($guid) {
+	$value = get_entity($guid)->audience;
 }
 //Class audience-select is used with selectize.js
 $communities_input = elgg_view('input/select', array(
@@ -43,6 +43,14 @@ $communities_input = elgg_view('input/select', array(
     'value' => $value,
     'class' => 'audience-select',
 ));
+
+$input_toggle_button = elgg_view('output/url',array(
+    'text' => '<i class="fa fa-caret-down" aria-hidden="true"></i>',
+    'href' => 'javascript:void(0)',
+    'class' => 'community-input-toggle',
+    'data-commtoggle' => 'caret',
+));
+
 $help_link = elgg_view('output/url', array(
     'text' => '[?] <span class="wb-invisible">'.elgg_echo("gctags:help:community").'</span>',
     'href' => '/community-help#what-are-communities',
@@ -53,4 +61,5 @@ $help_link = elgg_view('output/url', array(
 echo elgg_format_element('label', array('for' => 'audience'), elgg_echo('gctags:label:community'));
 echo elgg_format_element('span',array('class' => 'mrgn-lft-sm'),$help_link);
 echo elgg_format_element('p', array('class' => 'timeStamp'), elgg_echo('gctags:helpertext:community'));
+echo $input_toggle_button;
 echo $communities_input;
