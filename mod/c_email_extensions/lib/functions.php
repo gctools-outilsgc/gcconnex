@@ -86,3 +86,16 @@ function deleteExtension($id)
 	mysqli_close($connection);
 	return $result;
 }
+
+function editExtension($id, $ext, $dept)
+{
+	global $CONFIG;
+
+	$query = "UPDATE email_extensions SET ext='".$ext."', dept='".$dept."' WHERE id=".$id;
+
+	$connection = mysqli_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, $CONFIG->dbname);
+	if (mysqli_connect_errno($connection)) elgg_log("cyu - Failed to connect to MySQL: ".mysqli_connect_errno(), 'NOTICE');
+	$result = mysqli_query($connection,$query);
+	mysqli_close($connection);
+	return $result;
+}
