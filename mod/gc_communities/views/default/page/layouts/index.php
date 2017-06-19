@@ -39,7 +39,7 @@
                 'subtypes' => $subtypes,
                 'limit' => $newsfeed_limit,
                 'metadata_name' => 'tags',
-                'metadata_values' => explode(',', $community_tags),
+                'metadata_values' => array_map('trim', explode(',', $community_tags)),
                 'full_view' => false,
                 'list_type_toggle' => false,
                 'pagination' => true
@@ -102,7 +102,7 @@
             }
 
             if( strpos($community_tags, ',') !== false ){
-                $community_tags = explode(',', $community_tags);
+                $community_tags = array_map('trim', explode(',', $community_tags));
             }
 
             elgg_set_context('search');

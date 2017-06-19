@@ -16,7 +16,7 @@
 	if ( !isset($widget_groups) ) $widget_groups = ELGG_ENTITIES_ANY_VALUE;
 
 	$widget_tags = trim($widget->widget_tags);
-  	if( $widget_tags ) $widget_tags = explode(',', $widget_tags);
+  	if( $widget_tags ) $widget_tags = array_map('trim', explode(',', $widget_tags));
 	
 	$widget_tag_logic = $widget->widget_tag_logic;
 	$widget_add_button = $widget->widget_add_button;
