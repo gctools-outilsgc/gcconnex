@@ -20,6 +20,10 @@ function b_extended_profile_init() {
     elgg_register_js('fancybox', 'vendors/jquery/fancybox/jquery.fancybox-1.3.4.pack.js');
     elgg_register_js('typeahead', $url . 'typeahead/dist/typeahead.bundle.min.js'); // minified typeahead js file
 
+    // Overriding the original javascript file with the modified version.
+    // The modified version adds code to the ready, editProfile and saveProfile functions.
+    elgg_register_js('gcconnex-profile', 'mod/b_extended_profile/js/endorsements/gcconnex-profile.js');
+
     // Register the gcconnex profile css libraries
     $css_url = 'mod/b_extended_profile/css/gcconnex-profile.css';
     elgg_register_css('gcconnex-css', $css_url);
@@ -57,12 +61,22 @@ function b_extended_profile_init() {
     // auto-complete
     elgg_register_ajax_view('b_extended_profile/edit_basic'); // ajax view for editing the basic profile fields like name, title, department, email, etc.
 
+    // The new views used for the Opt-In section.
+    elgg_register_ajax_view('b_extended_profile/opt-in');
+    elgg_register_ajax_view('b_extended_profile/edit_opt-in');
+
     // register the action for saving profile fields
     $action_path = elgg_get_plugins_path() . 'b_extended_profile/actions/b_extended_profile/';
     elgg_register_action('b_extended_profile/edit_profile', $action_path . 'edit_profile.php');
     elgg_register_action('b_extended_profile/add_endorsement', $action_path . 'add_endorsement.php');
     elgg_register_action('b_extended_profile/retract_endorsement', $action_path . 'retract_endorsement.php');
     elgg_register_action('b_extended_profile/user_find', $action_path . 'userfind.php', "public");
+    
+    // The new action saves the data gathered from the new views.
+    elgg_register_action('b_extended_profile/hide-completed-mission', elgg_get_plugins_path() . 'b_extended_profile/actions/b_extended_profile/hide-completed-mission.php');
+    elgg_register_action('b_extended_profile/missions-access-form', elgg_get_plugins_path() . 'b_extended_profile/actions/b_extended_profile/missions-access-form.php');
+    elgg_register_action('b_extended_profile/show-completed-mission', elgg_get_plugins_path() . 'b_extended_profile/actions/b_extended_profile/show-completed-mission.php');
+
 
     elgg_register_page_handler('userfind', 'userfind_page_handler');
     elgg_register_page_handler('profile', 'extended_profile_page_handler');
