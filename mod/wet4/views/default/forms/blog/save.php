@@ -237,6 +237,7 @@ $btn_language
 </div>
 
 <div>
+    <label for="tags">$tags_label</label>
 	$tags_input
 </div>
 

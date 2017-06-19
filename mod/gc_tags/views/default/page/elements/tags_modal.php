@@ -39,7 +39,7 @@ if(elgg_in_context('groups')){
 }
 $tags_button = elgg_view('input/tags',array(
     'name' => $tag_name,
-    'value' => $vars['tags'],
+    'value' => $vars[$tag_name],
 ));
 
 
