@@ -47,6 +47,7 @@ echo '<div class="gcconnex-education-entry" data-guid="' . $guid . '">'; // educ
             'name' => 'startdate',
             'class' => 'gcconnex-education-startdate',
             'options_values' => array(
+				0 => elgg_echo('gcconnex_profile:month:none'),
                 1 => elgg_echo('gcconnex_profile:month:january'),
                 2 => elgg_echo('gcconnex_profile:month:february'),
                 3 => elgg_echo('gcconnex_profile:month:march'),
@@ -76,6 +77,7 @@ echo '<div class="gcconnex-education-entry" data-guid="' . $guid . '">'; // educ
         'id' => 'enddate-' . $guid,
         'class' => 'gcconnex-education-enddate gcconnex-education-enddate-' . $education->guid,
         'options_values' => array(
+			0 => elgg_echo(''),
             1 => elgg_echo('gcconnex_profile:month:january'),
             2 => elgg_echo('gcconnex_profile:month:february'),
             3 => elgg_echo('gcconnex_profile:month:march'),

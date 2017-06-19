@@ -51,6 +51,7 @@ $english = array(
     'gcconnex_profile:cancel' => 'Cancel',
     'gcconnex_profile:save' => 'Save',
     'gcconnex_profile:present' => 'Present', // for work and education time ranges.. from XX date to Present
+    'gcconnex_profile:unknown' => 'Unknown', // for education time ranges when year is left empty	
     'gcconnex_profile:about_me:empty' => 'Begin entering a description about yourself by clicking "Edit" in the top right corner of this box.',// prompt to add first skill
     'gcconnex_profile:about_me:access' => 'Who can see my description',
 
@@ -69,6 +70,7 @@ $english = array(
     'gcconnex_profile:basic:save' => 'Save',
 
     // MONTHS
+	'gcconnex_profile:month:none' => '',
     'gcconnex_profile:month:january' => 'January',
     'gcconnex_profile:month:february' => 'February',
     'gcconnex_profile:month:march' => 'March',

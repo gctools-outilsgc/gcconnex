@@ -772,18 +772,8 @@ function saveProfile(event) {
             //start year field
             var $startyear = [];
             $('.gcconnex-education-start-year').not(":hidden").each(function() {
-              //check if field is empty
-              if($.trim($(this).val()) == ''){
-                  //report error
-                  $valid_form = false;
-                  //add error style to field
-                  $(this).addClass('input-error').attr('aria-invalid', "true");
-              } else {
-                //remove error style if active
-                $(this).removeClass('input-error').removeAttr('aria-invalid', "true");
-                //push value into array
-                $startyear.push($(this).val());
-              }
+              //push value into array
+              $startyear.push($(this).val());
             });
 
             //end month dropdown
@@ -805,8 +795,8 @@ function saveProfile(event) {
                 $endyear.push($(this).val());
               } else if($ongoing[$entry_count] == false) {
 
-                //check if empty or that end date is not a date before start date
-                if($.trim($(this).val()) == '' || $(this).val() < $startyear[$entry_count]){
+                //check if end date is not a date before start date but don't put error if end date is empty
+                if(($(this).val() < $startyear[$entry_count]) && $(this).val() != '' ){
                     //report error
                     $valid_form = false;
                     //add error style
