@@ -65,13 +65,19 @@ do {
 		// check, migrate title
 		if ( isset($object->title2) ){
 			$new_title = gc_implode_translation( $object->title, $object->title2 );
-			$object->title = $new_title;
+			if ( elgg_instanceof($object, 'group') )
+				$object->name = $new_title;		// Group titles are called names
+			else 
+				$object->title = $new_title;
 			$object->deleteMetadata( "title2" );
 			$object->deleteMetadata( "title3" );
 			$object->save();
 		}
 		else if ( isset($object->title3 ) ){
-			$object->title = gc_implode_translation( old_gc_explode_translation($object->title3, 'en'), old_gc_explode_translation($object->title3, 'fr') );
+			if ( elgg_instanceof($object, 'group') )	// Group titles are called names
+				$object->name = gc_implode_translation( old_gc_explode_translation($object->title3, 'en'), old_gc_explode_translation($object->title3, 'fr') );
+			else
+				$object->title = gc_implode_translation( old_gc_explode_translation($object->title3, 'en'), old_gc_explode_translation($object->title3, 'fr') );
 			$object->deleteMetadata( "title3" );
 			$object->save();
 		}
