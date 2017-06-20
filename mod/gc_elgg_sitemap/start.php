@@ -5,11 +5,11 @@ elgg_register_event_handler('init','system','gc_elgg_sitemap_init');
 
 function gc_elgg_sitemap_init() {
 
-
-	if (strcmp('gsa-crawler',strtolower($_SERVER['HTTP_USER_AGENT'])) == 0) {
-
+	if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false) {
 	    elgg_register_plugin_hook_handler('register', 'menu:site', 'elgg_site_menu_handler');
 	    elgg_register_plugin_hook_handler('register', 'menu:user_menu', 'elgg_user_menu_handler');
+	    elgg_register_plugin_hook_handler('register', 'menu:title', 'elgg_user_menu_handler');
+
 	    elgg_register_plugin_hook_handler('prepare', 'breadcrumbs', 'elgg_breadcrumb_handler');
 
 	    /// remove all the sidebars across the site
@@ -35,21 +35,95 @@ function gc_elgg_sitemap_init() {
 
 		/// list all entities
 		elgg_register_plugin_hook_handler('view_vars','object/elements/summary', 'elgg_entities_list_handler');
+		elgg_register_plugin_hook_handler('members:list', 'newest', 'elgg_members_list_handler');
+		
+		//
+		elgg_register_plugin_hook_handler('view_vars', 'group/elements/summary', 'elgg_entities_list_handler');
+		elgg_register_plugin_hook_handler('view_vars','object/elements/thewire_summary', 'elgg_thewire_list_handler');
+		//elgg_register_plugin_hook_handler('view_vars','page/components/image_block', 'elgg_sidebar_handler');
+		elgg_register_plugin_hook_handler('view_vars', 'object/elements/full', 'elgg_full_entities_view_handler');
 
-		/// groups
+		//elgg_register_plugin_hook_handler('view', 'object/elements/summary', 'elgg_summary_entities_view_handler');
+		elgg_register_plugin_hook_handler('view', 'event_calendar/show_events', 'elgg_event_calendar_list_handler');
+
+		elgg_register_plugin_hook_handler('register', 'menu:filter', 'elgg_entity_menu_handler');
 
 	}
 }
 
+function elgg_event_calendar_list_handler($hook, $type, $value, $params) {
 
-function elgg_entities_list_handler($hook, $type, $value, $params) {
-	echo "<a href='{$value['entity']->getURL()}'>{$value['entity']->name}</a>";
+	$event_list = elgg_list_entities([
+	    'type' => 'object',
+	    'subtype' => 'event_calendar',
+	]);
+
+	return $event_list;
+}
+
+
+function elgg_summary_entities_view_handler($hook, $type, $value, $params) {
+	error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  ");
+	return "";
+}
+
+
+function elgg_entity_menu_handler($hook, $type, $value, $params) {
+	error_log(" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>      blahp.");
 
 	return "";
 }
 
-function elgg_sidebar_handler($hook, $type, $menu, $params) {
+function elgg_full_entities_view_handler($hook, $type, $value, $params) {
+	error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>  sup.");
 
+	return "";
+}
+
+function elgg_members_list_handler($hook, $type, $value, $params) {
+	//$members = elgg_get_entities(array('type' => 'user', 'limit' => false));
+	error_log(" ppppppppppppppppppppppppppppppppppppppppppppppppppppppppp ");
+	//echo print_r($params['options']);
+	//$display = "";
+	//foreach ($members as $member) {
+	//	$display .= "<a href='{$member->getURL()}'>{$member->name}</a> <br/>";
+	//}
+	return "sdfdsfds";
+}
+
+function elgg_thewire_list_handler($hook, $type, $value, $params) {
+	error_log(">>>>>>>>> wire list handler... ".get_context());
+	echo "<a href='{$value['entity']->getURL()}'>{$value['entity']->description}</a>  <br/>";
+	return "";
+}
+
+function elgg_entities_list_handler($hook, $type, $value, $params) {
+	error_log("++++++++++++++  context: ".get_context());
+	error_log("++++++++++++++  user: ".$value['entity']->username);
+	$context = get_context();
+	switch ($context) {
+		case 'groups':
+			//echo print_r($value['entity']);
+			$group_url = elgg_get_site_url()."groups/profile/{$value['entity']->guid}/";
+			echo "<a href='{$group_url}'>{$value['entity']->name}</a>  <br/>";
+			break;
+
+		case 'members':
+			$member_url = elgg_get_site_url()."profile/{$value['entity']->username}/";
+			echo "<a href='{$member_url}'>{$value['entity']->username}</a>  <br/>";
+			break;
+
+		default:
+			error_log(">>>>>>>>>  list handler".get_context()." ... {$value['fullview']}");
+			echo "<a href='{$value['entity']->getURL()}'>{$value['entity']->title}</a>  <br/>";
+		
+	}
+	return "";
+}
+
+function elgg_sidebar_handler($hook, $type, $menu, $params) {
+	error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>  sup.1");
+	//elgg_trigger_plugin_hook('members:list', 'newest', $menu['entity'], null);
 	return "";
 }
 
@@ -57,6 +131,7 @@ function elgg_sidebar_handler($hook, $type, $menu, $params) {
  * hide the breadcrumbs
  */
 function elgg_breadcrumb_handler($hook, $type, $menu, $params) {
+	error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>  sup.2");
 	return "";
 }
 
@@ -66,6 +141,7 @@ function elgg_breadcrumb_handler($hook, $type, $menu, $params) {
  * hide the user menu bar
  */
 function elgg_user_menu_handler($hook, $type, $menu, $params) {
+	error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>  sup.3");
 	return "";
 }
 
