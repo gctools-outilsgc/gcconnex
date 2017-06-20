@@ -1382,7 +1382,7 @@ border:none;
 
 .custom-message{
     position: fixed;
-    width: 100%;
+    width: 95%;
     max-width: 1140px;
     z-index: 1039;
     top: 185px;
