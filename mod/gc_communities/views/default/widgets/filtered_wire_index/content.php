@@ -24,6 +24,7 @@
 
 	if( is_array($widget_hashtag) ){
 		$all_hashtags = implode("|", $widget_hashtag);
+		$all_hashtags = str_replace("'", "''", $all_hashtags);
 		$query .= " AND wi.description REGEXP '{$all_hashtags}'";
 	} else {
 		$query .= " AND wi.description LIKE '%{$widget_hashtag}%'";
