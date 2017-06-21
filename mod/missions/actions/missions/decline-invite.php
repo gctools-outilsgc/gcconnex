@@ -49,6 +49,7 @@ if(check_entity_relationship($mission->guid, 'mission_accepted', $applicant->gui
 }
 
 // Object which stores the reason for declining a mission.
+$ia = elgg_set_ignore_access(true);
 $declination = new ElggObject();
 $declination->subtype = 'mission-declination';
 $declination->title = 'Micro-Mission Declination Report';
@@ -58,6 +59,7 @@ $declination->mission_guid = $mission->guid;
 $declination->applicant_reason = $raw_reason;
 $declination->reason_text = $reason;
 $declination->save();
+elgg_set_ignore_access($ia);
 
 // Notifies the mission manager of the candidates refusal.
 $mission_link = elgg_view('output/url', array(
