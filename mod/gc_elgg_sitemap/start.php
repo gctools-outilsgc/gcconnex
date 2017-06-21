@@ -5,50 +5,78 @@ elgg_register_event_handler('init','system','gc_elgg_sitemap_init');
 
 function gc_elgg_sitemap_init() {
 
+	// display text only if user agent string is gsa-crawler (or whatever is set)
 	if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false) {
+
 	    elgg_register_plugin_hook_handler('register', 'menu:site', 'elgg_site_menu_handler');
 	    elgg_register_plugin_hook_handler('register', 'menu:user_menu', 'elgg_user_menu_handler');
 	    elgg_register_plugin_hook_handler('register', 'menu:title', 'elgg_user_menu_handler');
-
+	    elgg_register_plugin_hook_handler('register', 'menu:filter', 'elgg_entity_menu_handler');
 	    elgg_register_plugin_hook_handler('prepare', 'breadcrumbs', 'elgg_breadcrumb_handler');
 
 	    /// remove all the sidebars across the site
-	    elgg_register_plugin_hook_handler('view','bookmarks/sidebar', 'elgg_sidebar_handler');
-	    elgg_register_plugin_hook_handler('view','blog/sidebar', 'elgg_sidebar_handler');
-	    elgg_register_plugin_hook_handler('view','event_calendar/sidebar', 'elgg_sidebar_handler');
-	    elgg_register_plugin_hook_handler('view','file/sidebar', 'elgg_sidebar_handler');
-	    elgg_register_plugin_hook_handler('view','groups/sidebar', 'elgg_sidebar_handler');
-	    elgg_register_plugin_hook_handler('view','members/sidebar', 'elgg_sidebar_handler');
-	    elgg_register_plugin_hook_handler('view','missiona/sidebar', 'elgg_sidebar_handler');
-	    elgg_register_plugin_hook_handler('view','thewire/sidebar', 'elgg_sidebar_handler');
-	    elgg_register_plugin_hook_handler('view','photos/sidebar', 'elgg_sidebar_handler');
-	    elgg_register_plugin_hook_handler('view','file/sidebar', 'elgg_sidebar_handler');
+	    elgg_register_plugin_hook_handler('view', 'bookmarks/sidebar', 'elgg_sidebar_handler');
+	    elgg_register_plugin_hook_handler('view', 'blog/sidebar', 'elgg_sidebar_handler');
+	    elgg_register_plugin_hook_handler('view', 'event_calendar/sidebar', 'elgg_sidebar_handler');
+	    elgg_register_plugin_hook_handler('view', 'file/sidebar', 'elgg_sidebar_handler');
+	    elgg_register_plugin_hook_handler('view', 'groups/sidebar', 'elgg_sidebar_handler');
+	    elgg_register_plugin_hook_handler('view', 'members/sidebar', 'elgg_sidebar_handler');
+	    elgg_register_plugin_hook_handler('view', 'missiona/sidebar', 'elgg_sidebar_handler');
+	    elgg_register_plugin_hook_handler('view', 'thewire/sidebar', 'elgg_sidebar_handler');
+	    elgg_register_plugin_hook_handler('view', 'photos/sidebar', 'elgg_sidebar_handler');
+	    elgg_register_plugin_hook_handler('view', 'file/sidebar', 'elgg_sidebar_handler');
+		elgg_register_plugin_hook_handler('view', 'input/longtext', 'elgg_comment_view_handler');
+		elgg_register_plugin_hook_handler('view', 'input/submit', 'elgg_comment_view_handler');
+		elgg_register_plugin_hook_handler('view', 'ouptput/url', 'elgg_comment_view_handler');
+		elgg_register_plugin_hook_handler('view', 'event_calendar/show_events', 'elgg_event_calendar_list_handler');
 
 	    /// renmove these pages so that it doesn't get crawled
 		elgg_unregister_page_handler('activity');
 		elgg_unregister_page_handler('dashboard');
+		elgg_unregister_menu_item('topbar', 'dashboard');
 		elgg_unregister_menu_item('site', 'activity');
 		elgg_unregister_menu_item('site', 'career');
 		elgg_unregister_menu_item('site', 'Help');
 		elgg_unregister_menu_item('site', 'newsfeed');
-		elgg_unregister_menu_item('topbar', 'dashboard');
+		elgg_unregister_menu_item('site', 'communities');
 
 		/// list all entities
-		elgg_register_plugin_hook_handler('view_vars','object/elements/summary', 'elgg_entities_list_handler');
-		elgg_register_plugin_hook_handler('members:list', 'newest', 'elgg_members_list_handler');
-		
-		//
-		elgg_register_plugin_hook_handler('view_vars', 'group/elements/summary', 'elgg_entities_list_handler');
-		elgg_register_plugin_hook_handler('view_vars','object/elements/thewire_summary', 'elgg_thewire_list_handler');
-		//elgg_register_plugin_hook_handler('view_vars','page/components/image_block', 'elgg_sidebar_handler');
+		elgg_register_plugin_hook_handler('view_vars', 'object/elements/summary', 'elgg_entities_list_handler');
 		elgg_register_plugin_hook_handler('view_vars', 'object/elements/full', 'elgg_full_entities_view_handler');
+		elgg_register_plugin_hook_handler('view_vars', 'object/elements/thewire_summary', 'elgg_thewire_list_handler');
+		elgg_register_plugin_hook_handler('view_vars', 'group/elements/summary', 'elgg_entities_list_handler');
+		elgg_register_plugin_hook_handler('view_vars', 'page/components/image_block', 'elgg_sidebar_handler');
 
-		//elgg_register_plugin_hook_handler('view', 'object/elements/summary', 'elgg_summary_entities_view_handler');
-		elgg_register_plugin_hook_handler('view', 'event_calendar/show_events', 'elgg_event_calendar_list_handler');
 
-		elgg_register_plugin_hook_handler('register', 'menu:filter', 'elgg_entity_menu_handler');
+		elgg_register_plugin_hook_handler('view', 'members/nav', 'elgg_members_menu_handler');
+		elgg_register_plugin_hook_handler('view', 'event_calendar/filter_menu', 'elgg_members_menu_handler');
 
+		//elgg_register_plugin_hook_handler('view', 'page/default', 'elgg_footer_view_handler');
+		/// TODO
+		/* 1. hide Feedback button and Version number (somewhere in the footer)
+		 * 2. hide New file folder from the menu
+		 * 3. work on photos/images
+		 * 4. oppourtunities
+		 * 5. follow noindex meta tags
+		 */
 	}
+}
+
+
+function elgg_members_menu_handler($hook, $type, $value, $params) {
+	return "";
+}
+
+function elgg_footer_view_handler($hook, $type, $value, $params) {
+	return "";
+}
+
+function elgg_icon_handler($hook, $type, $value, $params) {
+	return "";
+}
+
+function elgg_comment_view_handler($hook, $type, $value, $params) {
+	return "";
 }
 
 function elgg_event_calendar_list_handler($hook, $type, $value, $params) {
@@ -63,47 +91,41 @@ function elgg_event_calendar_list_handler($hook, $type, $value, $params) {
 
 
 function elgg_summary_entities_view_handler($hook, $type, $value, $params) {
-	error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  ");
 	return "";
 }
 
 
 function elgg_entity_menu_handler($hook, $type, $value, $params) {
-	error_log(" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>      blahp.");
-
 	return "";
 }
 
 function elgg_full_entities_view_handler($hook, $type, $value, $params) {
-	error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>  sup.");
-
+	echo $value['body'];
 	return "";
 }
 
-function elgg_members_list_handler($hook, $type, $value, $params) {
-	//$members = elgg_get_entities(array('type' => 'user', 'limit' => false));
-	error_log(" ppppppppppppppppppppppppppppppppppppppppppppppppppppppppp ");
-	//echo print_r($params['options']);
-	//$display = "";
-	//foreach ($members as $member) {
-	//	$display .= "<a href='{$member->getURL()}'>{$member->name}</a> <br/>";
-	//}
-	return "sdfdsfds";
-}
 
 function elgg_thewire_list_handler($hook, $type, $value, $params) {
-	error_log(">>>>>>>>> wire list handler... ".get_context());
 	echo "<a href='{$value['entity']->getURL()}'>{$value['entity']->description}</a>  <br/>";
 	return "";
 }
 
 function elgg_entities_list_handler($hook, $type, $value, $params) {
-	error_log("++++++++++++++  context: ".get_context());
-	error_log("++++++++++++++  user: ".$value['entity']->username);
+	
+//echo "context: ".get_context();
+
+	// brief view: display content (excerpt)
+	// full view: content does not exist (it will display the title link again)
+	if (!$value['content'] && get_context() !== 'members' && get_context() !== 'polls' && get_context() !== 'event_calendar' && get_context() !== 'file' && get_context() !== 'groups') return;
+
+
 	$context = get_context();
 	switch ($context) {
+		case 'file':
+		case 'event_calendar':
+			echo "<a href='{$value['entity']->getURL()}'>{$value['entity']->title}</a>  <br/>";
+			break;
 		case 'groups':
-			//echo print_r($value['entity']);
 			$group_url = elgg_get_site_url()."groups/profile/{$value['entity']->guid}/";
 			echo "<a href='{$group_url}'>{$value['entity']->name}</a>  <br/>";
 			break;
@@ -114,7 +136,6 @@ function elgg_entities_list_handler($hook, $type, $value, $params) {
 			break;
 
 		default:
-			error_log(">>>>>>>>>  list handler".get_context()." ... {$value['fullview']}");
 			echo "<a href='{$value['entity']->getURL()}'>{$value['entity']->title}</a>  <br/>";
 		
 	}
@@ -122,8 +143,7 @@ function elgg_entities_list_handler($hook, $type, $value, $params) {
 }
 
 function elgg_sidebar_handler($hook, $type, $menu, $params) {
-	error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>  sup.1");
-	//elgg_trigger_plugin_hook('members:list', 'newest', $menu['entity'], null);
+	echo $menu['body'];
 	return "";
 }
 
@@ -131,7 +151,6 @@ function elgg_sidebar_handler($hook, $type, $menu, $params) {
  * hide the breadcrumbs
  */
 function elgg_breadcrumb_handler($hook, $type, $menu, $params) {
-	error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>  sup.2");
 	return "";
 }
 
@@ -141,7 +160,6 @@ function elgg_breadcrumb_handler($hook, $type, $menu, $params) {
  * hide the user menu bar
  */
 function elgg_user_menu_handler($hook, $type, $menu, $params) {
-	error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>  sup.3");
 	return "";
 }
 
@@ -150,47 +168,17 @@ function elgg_user_menu_handler($hook, $type, $menu, $params) {
  * xml the links for the site navigation
  */
 function elgg_site_menu_handler($hook, $type, $menu, $params) {
-
-	$display_xml .= "<font style='color:white;'>";
+	$menu_item = "";
 	foreach ($menu as $key => $item) {
-		/// some item menu is not correct
-
-		$display_xml .= "
-		<p>
-		<url>
-			<loc><a href='{$item->getHref()}'> {$item->getName()} </a></loc>
-			<name>(remove) {$item->getName()}</name>
-			<lastmod>2005-01-01</lastmod>
-			<changefreq>monthly</changefreq>
-			<priority>0.8</priority>
-		</url>
-		</p>";
+		if ($item->getName() === 'groups') {
+			$group_url = elgg_get_site_url()."groups/";
+			$menu_item .= " <a style='color:white;' href='{$group_url}'> {$item->getName()}</a> ";
+		}
+		else 
+			$menu_item .= " <a style='color:white;' href='{$item->getHref()}'> {$item->getName()}</a> ";
 	}
-	$display_xml .= "</font>";
-	echo $display_xml;
+	echo $menu_item;
 
 	return true;
 }
 
-
-
-/*
-
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-	<url>
-
-		<loc>http://www.example.com/</loc>
-
-		<lastmod>2005-01-01</lastmod>
-
-		<changefreq>monthly</changefreq>
-
-		<priority>0.8</priority>
-
-	</url>
-
-</urlset>
-
-*/
