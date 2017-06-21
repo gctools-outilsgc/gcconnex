@@ -38,12 +38,14 @@ else {
 	$mission->save;
 
   // Generate an analytics record to track "cancelled".
+  $ia = elgg_set_ignore_access(true);
   $analytics_record = new ElggObject();
   $analytics_record->subtype = 'mission-cancelled';
   $analytics_record->title = 'Mission Cancelled Report';
   $analytics_record->mission_guid = $mission->guid;
   $analytics_record->access_id = ACCESS_LOGGED_IN;
   $analytics_record->save();
+  elgg_set_ignore_access($ia);
 
 	system_message(elgg_echo('missions:has_been_cancelled', array($mission->job_title)));
 	
