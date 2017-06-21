@@ -703,7 +703,8 @@ max-height: 500px;
     }
 
 .dropdown a:focus {
-   outline: 5px auto -webkit-focus-ring-color;;
+   outline: 5px auto -webkit-focus-ring-color;
+    outline: 1px dotted;
     border-radius: 2px;
 }
 
