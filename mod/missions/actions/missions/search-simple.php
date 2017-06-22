@@ -11,9 +11,17 @@ elgg_make_sticky_form('searchsimplefill');
 
 $err = '';
 $search_form = elgg_get_sticky_values('searchsimplefill');
+$clear = $_GET['clear'];
+$search = $_GET['search'];
 
-if(trim($search_form['simple']) == '') {
-	$err .= elgg_echo('missions:error:search_field_empty');
+if ($search_form['simple'] == '') {
+    $search_form['simple'] = $search;
+}
+
+if(trim($search_form['simple']) == '' ) {
+
+    $err .= elgg_echo('missions:error:search_field_empty');
+    
 }
 
 // Currently no error checking is being done for the search form

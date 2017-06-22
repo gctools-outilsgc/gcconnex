@@ -215,6 +215,17 @@ $hidden_input = elgg_view('input/hidden', array(
     'name' => 'hidden_return',
     'value' => $vars['return_to_referer']
 ));
+
+if($advanced_form){
+
+    $clear_link = elgg_view('output/url', array(
+		'text' => elgg_echo('missions:clear_search'),
+		'href' => 'missions/main?clear=true&search='.$advanced_form,
+		'class' => 'mrgn-lft-sm',
+		'is_action' => true,
+		'is_trusted' => true,
+	));
+}
 ?>
 
 <h2 class="h4" style="margin:0;"><?php echo $subtitle . ':'; ?></h2>
@@ -235,6 +246,7 @@ $hidden_input = elgg_view('input/hidden', array(
 				'value' => $button_text,
 				'id' => 'mission-advanced-search-form-submission-button'
 		));
+		echo $clear_link;
 		echo elgg_view('page/elements/one-click-restrictor', array('restricted_element_id' => 'mission-advanced-search-form-submission-button'));
 	?>
 </div>

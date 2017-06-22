@@ -648,6 +648,7 @@ L'approbation de votre superviseur est nécessaire avant que vous soyez en mesur
 "missions:sort_by" =>     "Trier les possibilités par",
 "missions:sort_options" =>     "Filtrer et trier",
 'missions:clear_filter'=>"Enlever le filtre",
+'missions:clear_search'=>"Enlever la recherche",
 "mission:following_order" =>  "Dans l'ordre suivant",
 "missions:sort" =>    "Trier",
 "missions:last_results_have_expired" => "The results of your last search have expired.",  //Missing transltation

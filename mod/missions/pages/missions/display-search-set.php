@@ -149,7 +149,4 @@ $content .= '<div class="col-sm-12">' . elgg_view_form('missions/change-entities
 		'number_per' => $entities_per_page
 )) . '</div>';
 
-
-
 echo elgg_view_page($title, $content);
-elgg_clear_sticky_form('advancedfill');
