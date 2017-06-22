@@ -16,7 +16,7 @@ matrix:
        - composer self-update
        - composer install
       script:
-       - bash .scripts/travis/check_commit_msgs.sh
+#       - bash .scripts/travis/check_commit_msgs.sh
        - composer validate
        
     # Build and test javascript
