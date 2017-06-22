@@ -112,11 +112,6 @@ function cp_notifications_init() {
 }
 
 
-function group_tools_notification($hook, $type, $value, $params) {
-	echo "sdfsdfsdfsd";
-	return "";
-}
-
 /**
  * catches the minor save, determines whether to cancel or process the event handlers
  *
