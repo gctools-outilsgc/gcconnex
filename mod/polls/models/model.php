@@ -48,7 +48,7 @@ function polls_get_choices2($poll) {
 
 function polls_get_choices3($poll) {
 	$options = array(
-		'relationship' => 'poll_choice',
+		'relationship' => 'poll_choice3',
 		'relationship_guid' => $poll->guid,
 		'inverse_relationship' => TRUE,
 		'order_by_metadata' => array('name'=>'display_order','direction'=>'ASC'),
@@ -79,16 +79,16 @@ function polls_get_choice_array2($poll) {
 	return $responses;
 }
 
-/*function polls_get_choice_array3($poll) {
+function polls_get_choice_array3($poll) {
 	$choices = polls_get_choices3($poll);
 	$responses = array();
 	if ($choices) {
 		foreach($choices as $choice) {
-			$responses[$choice->text] = $choice->text3;
+			$responses[$choice->text] = $choice->text;
 		}
 	}
 	return $responses;
-}*/
+}
 
 function polls_add_choices($poll,$choices) {
 	$i = 0;
