@@ -35,6 +35,9 @@ $title3_id = elgg_get_metastring_id('title3', true);
 $name2_id = elgg_get_metastring_id('name2', true);	// get the metastring id, create the metastring if it does not exist
 $name3_id = elgg_get_metastring_id('name3', true);
 
+$question2_id = elgg_get_metastring_id('question2', true);	// get the metastring id, create the metastring if it does not exist
+$question3_id = elgg_get_metastring_id('question3', true);
+
 $description2_id = elgg_get_metastring_id('description2', true);	// get the metastring id, create the metastring if it does not exist
 $description3_id = elgg_get_metastring_id('description3', true);
 
@@ -44,15 +47,15 @@ $briefdescription3_id = elgg_get_metastring_id('briefdescription3', true);
 $excerpt2_id = elgg_get_metastring_id('excerpt2', true);	// get the metastring id, create the metastring if it does not exist
 $excerpt3_id = elgg_get_metastring_id('excerpt3', true);
 
-$poll_choice2_id = elgg_get_metastring_id('poll_choice2', true);	// get the metastring id, create the metastring if it does not exist
-$poll_choice3_id = elgg_get_metastring_id('poll_choice3', true);
+$poll_choice2_id = elgg_get_metastring_id('text2', true);	// get the metastring id, create the metastring if it does not exist
+$poll_choice3_id = elgg_get_metastring_id('text3', true);
 
 $success_count = 0;
 $error_count = 0;
 
 do {
 	$object_guids = get_data("SELECT distinct e.guid as guid from {$db_prefix}entities e LEFT JOIN {$db_prefix}metadata md ON e.guid = md.entity_guid 
-		WHERE md.name_id IN ({$title2_id}, {$title3_id}, {$name2_id}, {$name3_id}, {$description2_id}, {$description3_id}, {$briefdescription2_id}, {$briefdescription3_id}, {$excerpt2_id}, {$excerpt3_id}, {$poll_choice2_id}, {$poll_choice3_id})
+		WHERE md.name_id IN ({$title2_id}, {$title3_id}, {$name2_id}, {$name3_id}, {$question2_id}, {$question3_id}, {$description2_id}, {$description3_id}, {$briefdescription2_id}, {$briefdescription3_id}, {$excerpt2_id}, {$excerpt3_id}, {$poll_choice2_id}, {$poll_choice3_id})
 		ORDER BY e.guid DESC 
 		LIMIT {$offset}, {$limit}");
 
@@ -90,6 +93,20 @@ do {
 		else if ( isset($object->name3 ) ){
 			$object->name = gc_implode_translation( old_gc_explode_translation($object->name3, 'en'), old_gc_explode_translation($object->name3, 'fr') );
 			$object->deleteMetadata( "name3" );
+			$object->save();
+		}
+
+		// check, migrate poll questions, which are also titles...
+		if ( isset($object->question2) ){
+			$new_name = gc_implode_translation( $object->question, $object->question2 );
+			$object->question = $new_name;
+			$object->deleteMetadata( "question2" );
+			$object->deleteMetadata( "question3" );
+			$object->save();
+		}
+		else if ( isset($object->question3 ) ){
+			$object->question = gc_implode_translation( old_gc_explode_translation($object->question3, 'en'), old_gc_explode_translation($object->question3, 'fr') );
+			$object->deleteMetadata( "question3" );
 			$object->save();
 		}
 
@@ -133,15 +150,15 @@ do {
 		}
 
 		// check, migrate poll_choice
-		if ( isset($object->poll_choice2) ){
-			$object->poll_choice = gc_implode_translation( $object->poll_choice, $object->poll_choice2 );
-			$object->deleteMetadata( "poll_choice2" );
-			$object->deleteMetadata( "poll_choice3" );
+		if ( isset($object->text2) ){
+			$object->text = gc_implode_translation( $object->text, $object->text2 );
+			$object->deleteMetadata( "text2" );
+			$object->deleteMetadata( "text3" );
 			$object->save();
 		}
-		else if ( isset($object->poll_choice3 ) ){
-			$object->poll_choice = gc_implode_translation( old_gc_explode_translation($object->poll_choice3, 'en'), old_gc_explode_translation($object->poll_choice3, 'fr') );
-			$object->deleteMetadata( "poll_choice3" );
+		else if ( isset($object->text3) ){
+			$object->text = gc_implode_translation( old_gc_explode_translation($object->text3, 'en'), old_gc_explode_translation($object->text3, 'fr') );
+			$object->deleteMetadata( "text3" );
 			$object->save();
 		}
 
