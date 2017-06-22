@@ -13,7 +13,6 @@
  */
 elgg_load_js('typeahead');
 $advanced_form = elgg_get_sticky_values('advancedfill');
-echo $advanced_form['selection_0'];
 // The arrays are different depending on whether the user is searching for missions or candidates.
 if($_SESSION['mission_search_switch'] == 'candidate') {
     $search_fields = array(
@@ -80,9 +79,6 @@ if ($advanced_form){
     $content .= '<div class="form-group">';
     // Dropdown with a name that is numbered according to its row.
     $content .= '<div class="mission-emphasis-extra col-sm-offset-1 col-sm-4">';
-	   
-	    $content .= $advanced_form['selection_'.$s.'_element'];
-	    $content .= $advanced_form['selection_'.$s.'_operand'];
 	     $content .= elgg_view('input/dropdown', array(
 	        	'name' => 'selection_' . $s,
 	        	'value' => $advanced_form['selection_'.$s],
@@ -124,19 +120,12 @@ $all_values = array(
 <script type="text/javascript">
 var name = "<?php echo 'selection_' . $s; ?>";
 var value = "<?php echo $advanced_form['selection_'.$s]; ?>";
-var value_answer = "<?php echo $advanced_form['selection_'.$s.'_element']; ?>";
-var reading = "<?php echo $advanced_form['selection_'.$s.'_element_lwc']; ?>";
-var writing = "<?php echo $advanced_form['selection_'.$s.'_element_lwe']; ?>";
-var oral = "<?php echo $advanced_form['selection_'.$s.'_element_lop']; ?>";
-var operand = "<?php echo $advanced_form['selection_'.$s.'_operand']; ?>";
-var day = "<?php echo $advanced_form['selection_'.$s.'_element_day']; ?>";
-//var all_values = "<?php echo json_encode($all_values); ?>";
 var all_values= <?php echo json_encode($all_values ); ?>;
 
 
- element_switch2(name, value, value_answer,reading,writing,oral,operand,day,all_values);
+ element_switch2(name, value,all_values);
 
-function element_switch2(name,value,value_answer,reading,writing,oral,operand,day,all_values){
+function element_switch2(name,value,all_values){
 		console.log(value);
   	var name_length = name.length;
 		var name_sub = name.substring(name_length - 8, name_length);
@@ -154,12 +143,6 @@ function element_switch2(name,value,value_answer,reading,writing,oral,operand,da
 				caller_name: name,
 				caller_value: value,
 				caller_second: further,
-				test_value: value_answer,
-				reading: reading,
-				writing: writing,
-				oral: oral,
-				operand: operand,
-				day: day,
 				all_values:all_values
 				
 

@@ -92,17 +92,13 @@ if($_SESSION['missions_from_skill_match']) {
 	unset($_SESSION['missions_from_skill_match']);
 	$content .= '<div>' . elgg_echo('missions:placeholder_e') . '</div>';
 }
-//print_r($advanced_form);
-echo $advanced_form['selection_0'];
-$content .= elgg_view('page/elements/mission-tabs') . $max_reached;
-$class['style'] = 'clear=both'; 
-foreach ($search_form as $key => $value) {
-	if ($key == 'simple'){
 
-		$content .= '<div style="clear:both">'.elgg_view_form('missions/search-simple').'</div>';
-	}
-	
+$content .= elgg_view('page/elements/mission-tabs') . $max_reached;
+
+if ($search_form ) {
+	$content .= '<div style="clear:both">'.elgg_view_form('missions/search-simple').'</div>';
 }
+
  $search_fields = array(
 	        //'' => 'Choose',
 	        '',
@@ -121,46 +117,11 @@ foreach ($search_form as $key => $value) {
 	        elgg_echo('missions:program_area')
     );
 
-
-$x = 0;
-$s = 0;
-?>
-
-<?php
-$content .= '<div style="clear:both">'.elgg_view_form('missions/advanced-search-form', array(
-		'class' => 'form-horizontal'
-)).'</div>';
-foreach ($advanced_form as $key => $value) {
-
-	if ($key == 'selection_'.$x && $value != ''){
-		
-	// Advanced search form which gets hidden.
-
-/*		 $content .= elgg_view('input/dropdown', array(
-        	'name' => 'selection_' . $x,
-        	'value' => $value,
-        	'options' => $search_fields,
-        	'onchange' => 'element_switch(this)',
-        	'onload' => 'element_switch(this)',
-        	'id' => 'search-mission-advanced-selection-' . xi . '-dropdown-input',
-        	'style' => 'width:50%',
-        	'class' => 'col-offset-1 col-sm-4'
-    ));	*/
-			$x++;
-	}
-	if ($key == 'selection_'.$s.'_element' && $value != ''){
-
-		/*$content .= '<div class="mission-emphasis-extra col-sm-6" id="selection_'.$s.'">
-<input value="'.$value.'" type="text" name="selection_'.$s.'_element" class="elgg-input-text form-control"></div>';
-		*/$s++;
-	}
+if ($advanced_form){
+	$content .= '<div style="clear:both">'.elgg_view_form('missions/advanced-search-form', array(
+	'class' => 'form-horizontal'
+	)).'</div>';
 }
-
-		/*$content .= elgg_view('input/submit', array(
-				'value' => elgg_echo('missions:search'),
-				'id' => 'mission-advanced-search-form-submission-button'
-		));*/
-		
 
 // Only displays sort form if the search set is missions.
 if($search_typing == 'mission') {
