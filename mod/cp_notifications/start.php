@@ -76,7 +76,7 @@ function cp_notifications_init() {
 	if ($group_entity instanceof ElggGroup) {
 
 		// TODO: check to make sure that get_group_operators() is available
-		if (elgg_is_logged_in() && (in_array($current_user, get_group_operators($group_entity)) || elgg_is_admin_user($current_user->getGUID()))) {
+		if (elgg_is_logged_in() && (in_array($current_user, get_group_operators($group_entity)) || elgg_is_admin_user($current_user->getGUID()))) { 
 
 			$url = str_replace(elgg_get_site_url(),"", $_SERVER['REQUEST_URI']);
 			if (strpos($url,'edit') == false) {
