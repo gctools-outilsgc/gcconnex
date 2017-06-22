@@ -57,12 +57,14 @@ else {
 			)) > 0);
 			if (!$in_progress) {
 					// Create a new in progress record for Analytics
+          $ia = elgg_set_ignore_access(true);
 					$progress_record = new ElggObject();
 					$progress_record->subtype = 'mission-inprogress';
 					$progress_record->title = 'Mission Progress Report';
 					$progress_record->mission_guid = $mission->guid;
 					$progress_record->completed = 0;
 					$progress_record->save();
+          elgg_set_ignore_access($ia);
 			}
 
 			$mission_link = elgg_view('output/url', array(

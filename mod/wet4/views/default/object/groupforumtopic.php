@@ -26,8 +26,10 @@ if (!$poster) {
 	return;
 }
 
+
 	$excerpt = elgg_get_excerpt(gc_explode_translation($topic->description, $lang));
 	$description = gc_explode_translation($topic->description, $lang);
+
 
 
 $poster_icon = elgg_view_entity_icon($poster, 'medium');

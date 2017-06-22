@@ -73,7 +73,10 @@ echo json_encode(array(
 
 /* helper functions below */
 
-
+/**
+ * @param ElggUser 	$user
+ * updates the timestamp of the subscription
+ */
 function update_timestamp($user) {
 	$dbprefix = elgg_get_config('dbprefix');
 	$str_id = elgg_get_metastring_id('set_personal_subscription');
@@ -81,9 +84,11 @@ function update_timestamp($user) {
 	update_data($query);
 }
 
-/* create_relationship()
+/**
+ * @param 	ElggUser 	$user 		
+ * @param 	ElggEntity 	$content
+ * 
  * creates the relationship for each content created by the user
- * returns bool
  */
 function create_relationship($user, $content) {
 	$result_email = add_entity_relationship($user->guid, 'cp_subscribed_to_email', $content->guid);
@@ -92,16 +97,15 @@ function create_relationship($user, $content) {
 
 
 
-/* get_content()
- * returns the query for all the content that the user is associated with
+/**
+ * @param 	$user_guid user's guid
+ * @return 	query for all the content that the user is associated with
  */
 function get_content($user_guid) {
 	$dbprefix = elgg_get_config('dbprefix');
 	$subscribe_to = array('file','blog','thewire','hjforumtopic','hjforum','poll','groupforumtopic','bookmarks','image','album','event_calendar','page_top','task_top','task',);
-
 	$query_content = "SELECT e.guid, es.subtype FROM {$dbprefix}entities e, {$dbprefix}entity_subtypes es WHERE {$user_guid} = e.owner_guid AND {$user_guid} = e.container_guid AND e.subtype = es.id AND (";
 
-	// cyu - query only those contents that are of concern
 	$count = 0;
 	foreach ($subscribe_to as $subtype_name) {
 		if ($count == 0)
@@ -112,6 +116,5 @@ function get_content($user_guid) {
 	}
 	$query_content .= ")";
 
-	//error_log("query - {$query_content}");
 	return $query_content;
 }

@@ -46,6 +46,7 @@ $entity_menu = elgg_view_menu('entity', [
 ]);
 
 $body = elgg_view('output/longtext', ['value' => $answer->description]);
+$body .= $entity_menu;
 
 // show comments?
 if ($question->comments_enabled !== 'off') {
@@ -81,7 +82,7 @@ if ($question->comments_enabled !== 'off') {
 $params = [
 	'entity' => $answer,
 	'title' => false,
-	'metadata' => $entity_menu,
+	//'metadata' => $entity_menu,
 	'subtitle' => $subtitle,
 	'content' => $body,
 ];

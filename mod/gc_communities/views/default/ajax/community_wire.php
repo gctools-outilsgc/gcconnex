@@ -26,7 +26,7 @@ if( $limit ){
 }
 
 if( strpos($community_tags, ',') !== false ){
-    $community_tags = explode(',', $community_tags);
+    $community_tags = array_map('trim', explode(',', $community_tags));
 }
 
 elgg_set_context('search');

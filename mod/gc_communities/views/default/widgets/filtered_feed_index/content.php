@@ -14,7 +14,7 @@
 	if ( !isset($num_items) ) $num_items = 10;
 
 	$widget_tags = trim($widget->widget_tags);
-  	if( $widget_tags ) $widget_tags = explode(',', $widget_tags);
+  	if( $widget_tags ) $widget_tags = array_map('trim', explode(',', $widget_tags));
 	
 	$widget_tag_logic = $widget->widget_tag_logic;
 

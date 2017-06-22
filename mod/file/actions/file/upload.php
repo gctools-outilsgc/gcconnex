@@ -17,6 +17,9 @@ $container_guid = (int) get_input('container_guid', 0);
 $guid = (int) get_input('file_guid');
 $tags = get_input("tags");
 
+/// retrieve information whether this was marked as minor edit or not
+$file_edit = get_input('minor_edit');
+
 if ($container_guid == 0) {
 	$container_guid = elgg_get_logged_in_user_guid();
 }
@@ -113,6 +116,13 @@ if (isset($_FILES['upload']['name']) && !empty($_FILES['upload']['name'])) {
 	move_uploaded_file($_FILES['upload']['tmp_name'], $file->getFilenameOnFilestore());
 
 	$guid = $file->save();
+
+	/// execute this line of code only if cp_notifications is active and that file is not minor edit
+	if (elgg_is_active_plugin('cp_notifications') && $file_edit != 1)
+		elgg_trigger_event('single_file_upload', $file->getType(), $file);
+	else
+		elgg_unregister_event_handler('create','object','cp_create_notification');
+	
 
 	// if image, we need to create thumbnails (this should be moved into a function)
 	if ($guid && $file->simpletype == "image") {

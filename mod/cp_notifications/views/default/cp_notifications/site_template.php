@@ -7,7 +7,6 @@ $cp_topic_description = $vars['cp_topic_description'];
 $cp_topic_description_discussion = $vars['cp_topic_description_discussion'];
 $cp_topic_description_discussion2 = $vars['cp_topic_description_discussion2'];
 
-//error_log(message)
 $cp_msg_content = $vars['cp_msg_content'];
 $cp_topic_author = get_user($vars['cp_topic_author']);
 $cp_topic_author = get_user($vars['cp_topic_author']);
@@ -23,8 +22,6 @@ $cp_req_user = $vars['cp_group_req_user'];
 $cp_req_group = $vars['cp_group_req_group'];
 
 $msg_type = $vars['cp_msg_type'];
-
-//$cp_notify_msg_footer = elgg_echo('cp_notify:footer2',array(),'fr') .'  '. elgg_echo('cp_notify:footer2',array(),'en');
 
 $current_username = elgg_get_logged_in_user_entity()->username;
 
@@ -55,23 +52,18 @@ if (strcmp($vars['type_event'],'CANCEL') == 0) {
 	$description_info_en .= '<h3 style ="font-family:sans-serif; color:#ff0000;">This event has been cancel!</h3>';
 	$description_info_fr .= '<h3 style ="font-family:sans-serif; color:#ff0000;">Cet événement à été annulé!</h3>';
 } elseif (strcmp($vars['type_event'],'UPDATE') == 0){
-	$description_info_en .= '<h3 style ="font-family:sans-serif;">This event has been updated</h3>';//NEW
-	$description_info_fr .= '<h3 style ="font-family:sans-serif;">Cet événement a été mis à jour.</h3>';//NEW
+	$description_info_en .= '<h3 style ="font-family:sans-serif;">This event has been updated</h3>';
+	$description_info_fr .= '<h3 style ="font-family:sans-serif;">Cet événement a été mis à jour.</h3>';
 }else {
 	$description_info_en .= '<h3 style ="font-family:sans-serif;">New event in your calendar</h3>';
 	$description_info_fr .= '<h3 style ="font-family:sans-serif;">Nouvel événement dans votre calendrier</h3>';
 }
 
-//$description_info_en .= '<h3 style ="font-family:sans-serif";>Infos</h3>';
-//$description_info_fr .= '<h3 style ="font-family:sans-serif";>Infos</h3>';
 
 foreach ($event_infos as $info_key => $info_val) {
 	if (($info_val != '') && (strcmp('link',$info_key) !== 0)) {//remove the double link in the email
 		$description_info_en .= elgg_echo("cp_notify:body_event:event_{$info_key}", array($info_val), 'en').'<br/>';
 		$description_info_fr .= elgg_echo("cp_notify:body_event:event_{$info_key}", array($info_val), 'fr').'<br/>';
-
-		// cyu - make option so that "add to outlook" can be disabled
-		// note: roundrect... snippets are html buttons for email
 	}
 
 }
@@ -156,7 +148,6 @@ switch ($msg_type) {
 			'groupforumtopic' => 'discussion',
 		);
 
-		// cyu - update
 		$cp_comment_txt = strip_tags($vars['cp_comment']->description);
 
 		// GCCON-209: missing description (refer to requirements)
@@ -184,6 +175,115 @@ switch ($msg_type) {
 		}
 
 		break;
+
+
+
+	case 'multiple_file':
+
+		$user = elgg_get_logged_in_user_entity();
+
+		/// Files uploaded within a group context
+		if ($vars['cp_topic'] instanceof ElggGroup) {
+			$files = $vars['files_uploaded'];
+
+			$files_count = count($files);
+			$file_entity = get_entity($files[0]);
+			$files_author_link = "<a href='{$file_entity->getOwnerEntity()->getURL()}?utm_source=notification&utm_medium=site'>{$file_entity->getOwnerEntity()->name}</a>";
+			$group_link = "<a href='{$file_entity->getContainerEntity()->getURL()}?utm_source=notification&utm_medium=site'>{$file_entity->getContainerEntity()->name}</a>";
+
+			$singular_or_plural = (count($files) > 1) ? 'plural' : 'singular';
+			$display_files_en = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:{$singular_or_plural}", array($files_author_link, $files_count, $group_link), 'en');
+			$display_files_fr = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:{$singular_or_plural}", array($files_author_link, $files_count, $group_link), 'fr');
+
+			$display_files .= "<p><ol>";
+			foreach ($files as $file_num => $file) {
+				$file_entity = get_entity($file);
+				$display_files .= "<li><a href='{$file_entity->getURL()}?utm_source=notification&utm_medium=email'>{$file_entity->title}</a></li>";
+			}
+			$display_files .= "</ol></p>";
+
+			$cp_notify_msg_description_en = $display_files_en.$display_files;
+			$cp_notify_msg_description_fr = $display_files_fr.$display_files;
+
+		} else {
+			/// Files uploaded within a user's context
+
+			$files = $vars['files_uploaded'];
+			$files_count = count($files);
+			$file_entity = get_entity($files[0]);
+			$files_author_link = "<a href='{$file_entity->getOwnerEntity()->getURL()}?utm_source=notification&utm_medium=site'>{$file_entity->getOwnerEntity()->name}</a>";
+
+			$singular_or_plural = (count($files) > 1) ? 'plural' : 'singular';
+			$display_files_en = elgg_echo("cp_notifications:mail_body:subtype:file_upload:{$singular_or_plural}", array($files_author_link, $files_count), 'en');
+			$display_files_fr = elgg_echo("cp_notifications:mail_body:subtype:file_upload:{$singular_or_plural}", array($files_author_link, $files_count), 'fr');
+
+			$display_files .= "<p><ol>";
+			foreach ($files as $file_num => $file) {
+				$file_entity = get_entity($file);
+				$display_files .= "<li><a href='{$file_entity->getURL()}?utm_source=notification&utm_medium=site'>{$file_entity->title}</a></li>";
+			}
+			$display_files .= "</ol></p>";
+
+			$cp_notify_msg_description_en = $display_files_en.$display_files;
+			$cp_notify_msg_description_fr = $display_files_fr.$display_files;
+		}
+
+		break;
+
+	case 'zipped_file':
+		$user = elgg_get_logged_in_user_entity();
+
+		/// files uploaded into a group context
+		if ($vars['cp_topic'] instanceof ElggGroup) {
+
+			$files = $vars['files_uploaded'];
+			$files_count = count($files);
+			$file_entity = get_entity($files[0]);
+			$files_author_link = "<a href='{$file_entity->getOwnerEntity()->getURL()}?utm_source=notification&utm_medium=email'>{$file_entity->getOwnerEntity()->name}</a>";
+			$group_link = "<a href='{$file_entity->getContainerEntity()->getURL()}?utm_source=notification&utm_medium=email'>{$file_entity->getContainerEntity()->name}</a>";
+
+			$singular_or_plural = (count($files) > 1) ? 'plural' : 'singular';
+			$display_files_en = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:{$singular_or_plural}", array($files_author_link, $files_count, $group_link), 'en');
+			$display_files_fr = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:{$singular_or_plural}", array($files_author_link, $files_count, $group_link), 'fr');
+
+			$display_files .= "<p><ol>";
+			foreach ($files as $file_num => $file) {
+				$file_entity = get_entity($file);
+				$display_files .= "<li><a href='{$file_entity->getURL()}?utm_source=notification&utm_medium=email'>{$file_entity->title}</a></li>";
+			}
+			$display_files .= "</ol></p>";
+
+			$cp_notify_msg_description_en = $display_files_en.$display_files;
+			$cp_notify_msg_description_fr = $display_files_fr.$display_files;
+
+		} else {
+			/// files uploaded into user's context
+
+			$files = $vars['files_uploaded'];
+			$files_count = count($files);
+			$file_entity = get_entity($files[0]);
+			$files_author_link = "<a href='{$file_entity->getOwnerEntity()->getURL()}?utm_source=notification&utm_medium=email'>{$file_entity->getOwnerEntity()->name}</a>";
+
+			$singular_or_plural = (count($files) > 1) ? 'plural' : 'singular';
+			$display_files_en = elgg_echo("cp_notifications:mail_body:subtype:file_upload:{$singular_or_plural}", array($files_author_link, $files_count), 'en');
+			$display_files_fr = elgg_echo("cp_notifications:mail_body:subtype:file_upload:{$singular_or_plural}", array($files_author_link, $files_count), 'fr');
+
+			$display_files .= "<p><ol>";
+			foreach ($files as $file_num => $file) {
+				$file_entity = get_entity($file);
+				$display_files .= "<li><a href='{$file_entity->getURL()}?utm_source=notification&utm_medium=email'>{$file_entity->title}</a></li>";
+			}
+			$display_files .= "</ol></p>";
+
+			$cp_notify_msg_description_en = $display_files_en.$display_files;
+			$cp_notify_msg_description_fr = $display_files_fr.$display_files;
+		}
+
+		break;
+
+
+
+
 
 	case 'new_mission':
 	case 'cp_new_type': // new blogs or other entities
@@ -247,7 +347,6 @@ switch ($msg_type) {
 		else
 			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_m2',array($topic_author->getURL(), $topic_author->username, $entity_m2[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=site', $vars['cp_topic']->title2),'fr');
 
-		//$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title',array($topic_author->getURL(), $topic_author->username, cp_translate_subtype($vars['cp_topic']->getSubtype()), $vars['cp_topic']->getURL(), $vars['cp_topic']->title),'fr');
 		if($vars['cp_topic']->description1){
              $cp_topic_description = strip_tags($vars['cp_topic']->description1);
         }
@@ -557,12 +656,6 @@ $email_notif_footer_msg_fr1 = elgg_echo('cp_notify:contactHelpDesk', array(),'fr
 $email_notif_footer_msg_fr2 = elgg_echo('cp_notify:visitTutorials', array(),'fr');
 $email_notif_footer_msg_en1 = elgg_echo('cp_notify:contactHelpDesk', array(),'en');
 $email_notif_footer_msg_en2 = elgg_echo('cp_notify:visitTutorials', array(),'en');
-
-
-//$email_notification_footer_en = elgg_echo('cp_notify:footer',array(),'en');
-//$email_notification_footer_fr = elgg_echo('cp_notify:footer',array(),'fr');
-
-
 
 if (!$vars['user_name']->username) {
 	$username_link = $vars['user_name'];
