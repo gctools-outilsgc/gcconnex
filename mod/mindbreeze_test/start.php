@@ -21,7 +21,7 @@ function mindbreeze_route_all($hook, $type, $info) {
     $agent = strtolower($_SERVER['HTTP_USER_AGENT']);
     $set_agent = strtolower(elgg_get_plugin_setting('elgg_mb_agentstring', 'mindbreeze_test'));
 
-    if (strpos($agent, $set_agent) === 0) {
+    if (strpos($agent, $set_agent) !== false) {
   
   		$set_username = strtolower(elgg_get_plugin_setting('elgg_mb_username','mindbreeze_test'));
   		$set_password = strtolower(elgg_get_plugin_setting('elgg_mb_password','mindbreeze_test'));
