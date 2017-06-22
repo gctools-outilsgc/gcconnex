@@ -51,7 +51,7 @@ $hidden_input = elgg_view('input/hidden', array(
 ?>
 
 <?php echo $hidden_input; ?>
-<div class="form-group" style="display:inline-block;margin-right:16px;">
+<div class="form-group" style="display:inline-block;margin-right:16px; clear:both;">
 	<div style="display:inline-block;vertical-align:middle;">
 		<?php echo $input_simple_text; ?> 
 		<input type="hidden" name="offset" value="0">
