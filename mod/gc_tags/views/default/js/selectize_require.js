@@ -26,10 +26,27 @@ requirejs(["selectize"], function () {
         }
     });
     //multi select audience input
-    $('.audience-select').selectize({
+    var comm_selectized = $('.audience-select').selectize({
         plugins: ['remove_button', 'clear_button'],
-
+        onFocus: function(){
+            $('.community-input-toggle').data('commtoggle','up');
+            $('.community-input-toggle').html('<i class="fa fa-caret-up" aria-hidden="true"></i>');
+        },
+        onBlur: function(){
+            $('.community-input-toggle').data('commtoggle','caret');
+            $('.community-input-toggle').html('<i class="fa fa-caret-down" aria-hidden="true"></i>');
+        }
+    });
+    //button for opening and closing the community dropdown
+    $('.community-input-toggle').on('click', function(){
+        if($(this).data('commtoggle') == 'caret'){
+            $(this).html('<i class="fa fa-caret-up" aria-hidden="true"></i>');
+            comm_selectized[0].selectize.focus();
+            $(this).data('commtoggle','up');
+        }else{
+            $(this).html('<i class="fa fa-caret-down" aria-hidden="true"></i>');
+            $(this).data('commtoggle','caret');
+        }
     });
     
-
 });

@@ -95,15 +95,5 @@ $(document).ready(function(){
     $('label[for~="<?php echo $tag_name; ?>"]:first').remove();
     $('button[type="submit"]:first').text('<?php echo $buttonText; ?>');
     
-    $('.community-input-toggle').on('click', function(){
-        if($(this).data('commtoggle') == 'caret'){
-            $(this).html('<i class="fa fa-caret-up" aria-hidden="true"></i>');
-            $(this).parent().find('#audience').focus();
-            $(this).data('commtoggle','up');
-        }else{
-            $(this).html('<i class="fa fa-caret-down" aria-hidden="true"></i>');
-            $(this).data('commtoggle','caret');
-        }
-    });
 })
 </script>

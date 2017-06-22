@@ -49,6 +49,7 @@ $input_toggle_button = elgg_view('output/url',array(
     'href' => 'javascript:void(0)',
     'class' => 'community-input-toggle',
     'data-commtoggle' => 'caret',
+    'tabindex' => '-1',
 ));
 
 $help_link = elgg_view('output/url', array(
