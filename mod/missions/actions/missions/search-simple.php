@@ -81,7 +81,7 @@ if ($err != '') {
         // reset the offset on new search
         $ref = $_SERVER['HTTP_REFERER'];
         $ref = preg_replace('/([?&])offset=[^&]+(&|$)/','$1', $ref);
-        elgg_clear_sticky_form('searchsimplefill');
+      //  elgg_clear_sticky_form('searchsimplefill');
         if($search_form['hidden_return']) {
         	forward($ref);
         }

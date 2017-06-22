@@ -125,7 +125,7 @@ foreach($entity_list as $entity){
 }*/
     ?>
     <div class="col-sm-8">
-	<h2 class="h4 mrgn-tp-md mrgn-bttm-0"><?php echo elgg_echo('missions:search_for_opportunities') . ':'; ?></h2>
+	<h2 class="h4 mrgn-tp-md mrgn-bttm-0"><?php echo elgg_echo('missions:search_for_opportunities1') . ':'; ?></h2>
 	<?php 
 		//echo $simple_search_form;
 		echo $advanced_field;
