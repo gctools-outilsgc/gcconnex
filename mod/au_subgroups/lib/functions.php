@@ -23,7 +23,6 @@ function breadcrumb_override($params) {
 
 			$group_title = gc_explode_translation($group->name,$lang);
 
-
 			$breadcrumbs[] = array(
 				'title' => $group_title,
 				'link' => NULL

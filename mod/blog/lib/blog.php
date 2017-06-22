@@ -85,9 +85,9 @@ function blog_get_page_content_list($container_guid = NULL) {
 		$options['container_guid'] = $container_guid;
 		$container = get_entity($container_guid);
 		
-        $return['title'] = elgg_echo('blog:title:user_blogs', array(gc_explode_translation($container->title, $lang)));
+        $return['title'] = elgg_echo('blog:title:user_blogs', array(gc_explode_translation($container->name, $lang)));
 
-		$crumbs_title = gc_explode_translation($container->title, $lang);
+		$crumbs_title = gc_explode_translation($container->name, $lang);
 		elgg_push_breadcrumb($crumbs_title);
 
 		if ($current_user && ($container_guid == $current_user->guid)) {

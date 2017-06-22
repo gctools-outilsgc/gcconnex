@@ -1414,7 +1414,7 @@ function event_calendar_get_page_content_list($page_type, $container_guid, $star
 		}
 		$group = get_entity($container_guid);
 
-		$group_title = gc_explode_translation($group->title,$lang);
+		$group_title = gc_explode_translation($group->name,$lang);
 
 		elgg_push_breadcrumb($group_title, 'groups/profile/' .$group->guid.'/'. $group->name);
 		elgg_push_context('groups');
@@ -1864,7 +1864,7 @@ $content = elgg_view('event_calendar/show_events', $vars);
 				case 'owner':
 				$lang = get_current_language();
 
-				$title = elgg_echo('event_calendar:listing_title:user', array(gc_explode_translation($container->title, $lang)));
+				$title = elgg_echo('event_calendar:listing_title:user', array(gc_explode_translation($container->name, $lang)));
 		
 					break;
 				default:

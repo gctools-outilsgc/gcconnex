@@ -101,7 +101,7 @@ if (!$draw_page) {
 	// build breadcrumb
 	elgg_push_breadcrumb(elgg_echo("file"), "file/all");
 
-	elgg_push_breadcrumb(gc_explode_translation($page_owner->title,$lang));
+	elgg_push_breadcrumb(gc_explode_translation($page_owner->name,$lang));
 
 	// register title button to add a new file
 	elgg_register_title_button();
