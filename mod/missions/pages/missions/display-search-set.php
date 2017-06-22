@@ -120,10 +120,13 @@ if ($search_form ) {
     );
 
 if ($advanced_form){
-    $content .='Value: ';
+    $content .='<strong>Value:</strong> ';
 	for ($s = 0; $s < $number_of_rows; $s ++) {
         if ($advanced_form['selection_'.$s]){
-           $content .= $advanced_form['selection_'.$s].': '.$advanced_form['selection_'.$s.'_element'].'  ';
+
+        	$value =str_replace('missions:', '', $advanced_form['selection_'.$s.'_element']);
+
+           $content .= '<span class="mrgn-rght-md"><strong>'.$advanced_form['selection_'.$s].':</strong> '.$value.' </span> ';
           
             
         }
