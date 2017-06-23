@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Opportunity Platform API Library
+* NRC Recommendation Platform API Library
 * Copyright (c) 2017 National Research Council Canada
 *
 * Author: Luc Belliveau <luc.belliveau@nrc-cnrc.gc.ca>
@@ -35,10 +35,10 @@ function mm_api_secure() {
     exit;
   }
 
-  # Ensure API has full access via an admin account - but do not allow
-  # this session to persist.
+  # Ensure API has full access
+
   session_destroy();
-  login(get_user(24789157), false);
+  elgg_set_ignore_access(true);
 }
 
 /**
@@ -79,26 +79,28 @@ function mm_api_get_entity_guids($type, $subtype = false, $guid = null) {
   if (isset($_GET['limit']) && is_numeric($_GET['limit'])) {
     $limit = 'LIMIT ' . mysql_escape_string($_GET['limit']);
   }
-
-  $guids = get_data('
-    SELECT
-      a.guid
-    FROM
-      elggentities a
-    WHERE ' . implode(' AND ', $where) . '
-    ORDER BY
-      a.time_updated ASC
-    ' . $limit);
-
-  return array(
-    $guids,
-    mm_api_get_entity_fields(
-      (object) array(
-        'type'=>$type,
-        'subtype'=>$subtype_id
+  try {
+    $guids = get_data('
+      SELECT
+        a.guid
+      FROM
+        elggentities a
+      WHERE ' . implode(' AND ', $where) . '
+      ORDER BY
+        a.time_updated ASC
+      ' . $limit);
+    return array(
+      $guids,
+      mm_api_get_entity_fields(
+        (object) array(
+          'type'=>$type,
+          'subtype'=>$subtype_id
+        )
       )
-    )
-  );
+    );
+  } catch (Exception $e) {
+    return array();
+  }
 }
 
 /**
@@ -216,6 +218,16 @@ function mm_api_load_field($guid) {
 */
 function mm_api_get_entity_fields($entity) {
 
+  $where = array();
+  $where[]  = "b.type = '{$entity->type}'";
+  $where[] = "b.subtype = {$entity->subtype}";
+  if (isset($_GET['since']) && is_numeric($_GET['since'])) {
+    $where[] = 'b.time_updated > ' . mysql_escape_string($_GET['since']);
+  }
+  if (isset($_GET['before']) && is_numeric($_GET['before'])) {
+    $where[] = 'b.time_updated < ' . mysql_escape_string($_GET['before']);
+  }
+
   $field_id_sql = "
     SELECT
       DISTINCT name_id
@@ -223,13 +235,10 @@ function mm_api_get_entity_fields($entity) {
       elggmetadata a
       INNER JOIN elggentities b ON a.entity_guid = b.guid
     WHERE
-      b.type = '{$entity->type}'
-      AND b.subtype = {$entity->subtype}
-  ";
+      ". implode(' AND ', $where);
   $field_ids_res = get_data($field_id_sql);
-  $field_ids = array();
+  $field_ids = array(-1);
   foreach ($field_ids_res as $fir) $field_ids[] = $fir->name_id;
-
   $field_query_sql = "
     SELECT
       a.id,
