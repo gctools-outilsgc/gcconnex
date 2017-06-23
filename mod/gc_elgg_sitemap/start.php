@@ -31,6 +31,8 @@ function gc_elgg_sitemap_init() {
 		elgg_register_plugin_hook_handler('view', 'ouptput/url', 'elgg_comment_view_handler');
 		elgg_register_plugin_hook_handler('view', 'event_calendar/show_events', 'elgg_event_calendar_list_handler');
 
+		elgg_register_plugin_hook_handler('view', 'page/elements/comments', 'elgg_comment_view_handler');
+
 	    /// renmove these pages so that it doesn't get crawled
 		elgg_unregister_page_handler('activity');
 		elgg_unregister_page_handler('dashboard');
@@ -52,20 +54,21 @@ function gc_elgg_sitemap_init() {
 		elgg_register_plugin_hook_handler('view', 'members/nav', 'elgg_members_menu_handler');
 		elgg_register_plugin_hook_handler('view', 'event_calendar/filter_menu', 'elgg_members_menu_handler');
 
-		//elgg_unregister_plugin_hook_handler('members:list', 'newest', 'members_list_newest');
-		//elgg_register_plugin_hook_handler('members:list', 'newest', 'elgg_retrieve_members_list');
-		//elgg_register_plugin_hook_handler('view_vars', 'page/components/list', 'elgg_reorder_list_handler');
+		elgg_register_plugin_hook_handler('view', 'output/url', 'elgg_group_summary_block_handler');
+		elgg_extend_view('groups/profile/summary', 'group_tabs', 600);
 
-
-		//elgg_register_plugin_hook_handler('view', 'page/default', 'elgg_footer_view_handler');
-		/// TODO
-		/* 1. hide Feedback button and Version number (somewhere in the footer) (noindex)
-		 * 2. hide New file folder from the menu (noindex)
-		 * 3. work on photos/images
-		 * 4. oppourtunities
-		 * 5. follow noindex meta tags
-		 */
 	}
+}
+
+function elgg_group_summary_block_handler($hook, $type, $value, $params) {
+
+	//echo "  {$hook} ///  {$type}  ///     ".get_context(). " / /////  ".print_r($params['vars']);
+
+	if (get_context() === 'group_profile') {
+		return "";
+	}
+
+	return $value;
 }
 
 function elgg_reorder_list_handler($hook, $type, $value, $params) {
@@ -98,7 +101,24 @@ function elgg_icon_handler($hook, $type, $value, $params) {
 }
 
 function elgg_comment_view_handler($hook, $type, $value, $params) {
-	return "";
+	//echo "type: {$type} /// hook: {$hook} /// ".print_r($value,true);
+
+	if ($type === 'page/elements/comments') {
+
+		$comments = elgg_list_entities(array(
+			'type' => 'object',
+			'subtype' => 'comment',
+			'container_guid' => $params['vars']['entity']->guid,
+			'reverse_order_by' => true,
+			'full_view' => true,
+			'limit' => 15,
+			'preload_owners' => true,
+			'distinct' => false,
+			'url_fragment' => $attr['id'],
+		));
+	}
+
+	return $comments;
 }
 
 function elgg_event_calendar_list_handler($hook, $type, $value, $params) {
@@ -121,8 +141,43 @@ function elgg_entity_menu_handler($hook, $type, $value, $params) {
 	return "";
 }
 
+/**
+ * checks if string input is json
+ * @param string $string
+ */
+function isJsonString($string) {
+	json_decode($string);
+	return (json_last_error() == JSON_ERROR_NONE);
+}
+
+
 function elgg_full_entities_view_handler($hook, $type, $value, $params) {
-	echo $value['body'];
+//echo "full entities view thing // {$value['entity']->guid} /// ".print_r($value['entity']);
+
+	$description = "";
+
+	switch ($value['entity']->getSubtype()) {
+
+		case 'event_calendar':
+			if (isJsonString($value['entity']->long_description)) {
+				$description_array = json_decode($value['entity']->long_description, true);
+				$description .= "<p> {$description_array[0]} </p> <p> {$description_array[1]} </p>";
+			} else {
+				$description .= "<p> {$value['entity']->long_description} </p> <p> {$value['entity']->long_description2} </p>";
+			}
+			break;
+
+		default:
+			if (isJsonString($value['entity']->description)) {
+				$description_array = json_decode($value['entity']->description, true);
+				$description .= "<p> {$description_array[0]} </p> <p> {$description_array[1]} </p>";
+			} else {
+				$description .= "<p> {$value['entity']->description} </p> <p> {$value['entity']->description2} </p>";
+			}
+	}
+
+	echo $description;
+
 	return "";
 }
 
