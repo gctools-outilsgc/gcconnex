@@ -6,9 +6,10 @@ elgg_register_event_handler('init','system','cp_notifications_init');
 function cp_notifications_init() {
 
 	elgg_register_library('elgg:gc_notification:functions', elgg_get_plugins_path() . 'cp_notifications/lib/functions.php');
-
 	elgg_register_css('cp_notifications-css','mod/cp_notifications/css/notifications-table.css');
 
+	// hide the irrelavent view module from the group
+	elgg_unextend_view("groups/edit", "group_tools/forms/notifications");
 
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'notify_entity_menu_setup', 400);
 	// since most of the notifications are built within the action file itself, the trigger_plugin_hook was added to respected plugins
@@ -76,7 +77,9 @@ function cp_notifications_init() {
 	if ($group_entity instanceof ElggGroup) {
 
 		// TODO: check to make sure that get_group_operators() is available
-		if (elgg_is_logged_in() && (in_array($current_user, get_group_operators($group_entity)) || elgg_is_admin_user($current_user->getGUID()))) {
+
+	if (elgg_is_logged_in() && (in_array($current_user, get_group_operators($group_entity)) || elgg_is_admin_user($current_user->getGUID()))) {
+
 
 			$url = str_replace(elgg_get_site_url(),"", $_SERVER['REQUEST_URI']);
 			if (strpos($url,'edit') == false) {
@@ -109,8 +112,6 @@ function cp_notifications_init() {
 	elgg_register_plugin_hook_handler('action', 'blog/save', 'minor_save_hook_handler', 300);
 
 }
-
-
 
 
 /**
