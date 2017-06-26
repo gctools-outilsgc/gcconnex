@@ -35,8 +35,16 @@ requirejs(["selectize"], function () {
         onBlur: function(){
             $('.community-input-toggle').data('commtoggle','caret');
             $('.community-input-toggle').html('<i class="fa fa-caret-down" aria-hidden="true"></i>');
+        },
+        theme: 'bootstrap',
+        onChange: function(){
+            var changeValue = comm_selectized[0].selectize.getValue();
+            if(changeValue.includes('allps')){
+                comm_selectized[0].selectize.setValue('allps', true);
+            }
         }
     });
+    
     //button for opening and closing the community dropdown
     $('.community-input-toggle').on('click', function(){
         if($(this).data('commtoggle') == 'caret'){
