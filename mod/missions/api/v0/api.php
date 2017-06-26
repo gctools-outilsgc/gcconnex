@@ -61,7 +61,7 @@ function mm_api_get_entity_guids($type, $subtype = false, $guid = null) {
 
   $where = array('a.type = "' . mysql_escape_string($type) . '"');
   if ($subtype !== false) {
-    $subtype_id = get_data("select id from elggentity_subtypes where subtype = '$subtype'")[0]->id;
+    $subtype_id = get_data("select id from ".elgg_get_config('dbprefix')."entity_subtypes where subtype = '$subtype'")[0]->id;
     $where[] = 'a.subtype = ' . $subtype_id;
   } else $subtype_id = 0;
 
@@ -84,7 +84,7 @@ function mm_api_get_entity_guids($type, $subtype = false, $guid = null) {
       SELECT
         a.guid
       FROM
-        elggentities a
+        '.elgg_get_config('dbprefix').'entities a
       WHERE ' . implode(' AND ', $where) . '
       ORDER BY
         a.time_updated ASC
@@ -232,8 +232,8 @@ function mm_api_get_entity_fields($entity) {
     SELECT
       DISTINCT name_id
     FROM
-      elggmetadata a
-      INNER JOIN elggentities b ON a.entity_guid = b.guid
+      ".elgg_get_config('dbprefix')."metadata a
+      INNER JOIN ".elgg_get_config('dbprefix')."entities b ON a.entity_guid = b.guid
     WHERE
       ". implode(' AND ', $where);
   $field_ids_res = get_data($field_id_sql);
@@ -244,7 +244,7 @@ function mm_api_get_entity_fields($entity) {
       a.id,
       a.string
     FROM
-      elggmetastrings a
+      ".elgg_get_config('dbprefix')."metastrings a
     WHERE
       a.id IN (" . implode(',', $field_ids) .")
   ";
@@ -266,6 +266,16 @@ function mm_api_get_entity_type($guid) {
   } else if (elgg_instanceof($e, 'user')) {
     return 'user';
   }
+}
+
+/**
+* Get a list of all object subtypes registered in the system.
+*
+* @return mixed Array of subtypes
+*/
+function mm_api_get_subtypes() {
+    $query = "select subtype from ".elgg_get_config('dbprefix')."entity_subtypes where type = \"object\"";
+    return get_data($query);
 }
 
 // Public key of server authorized to make requests against this API.

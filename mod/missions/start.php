@@ -173,10 +173,15 @@ function missions_main_page_handler($segments)
                 if ($segments[1] == 'v0') {
                   include elgg_get_plugins_path() . 'missions/api/v0/export.php';
                   $object_type = strtolower($segments[2]);
-                  $subtype = ($object_type == 'user') ? false : $segments[3];
-                  $guid = ($object_type == 'user') ? $segments[3] : $segments[4];
-                  $export = new NRC\export($object_type, $subtype, $guid);
-                  $export->getJSON();
+                  if ($object_type == 'subtypes') {
+                    $export = new NRC\subtypeExport();
+                    $export->getJSON();
+                  } else {
+                    $subtype = ($object_type == 'user') ? false : $segments[3];
+                    $guid = ($object_type == 'user') ? $segments[3] : $segments[4];
+                    $export = new NRC\export($object_type, $subtype, $guid);
+                    $export->getJSON();
+                  }
                 }
             }
     }

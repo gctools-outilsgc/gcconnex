@@ -41,4 +41,16 @@
       exit;
     }
   }
+
+  class subtypeExport  {
+    function getJSON() {
+      $subtypes = mm_api_get_subtypes();
+      $simple = array();
+      foreach ($subtypes as $st) {
+        $simple[] = $st->subtype;
+      }
+      echo json_encode($simple);
+      exit;
+    }
+  }
 ?>
