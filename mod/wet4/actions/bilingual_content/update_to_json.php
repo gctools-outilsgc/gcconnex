@@ -32,6 +32,9 @@ $db_prefix = elgg_get_config('dbprefix');
 $title2_id = elgg_get_metastring_id('title2', true);	// get the metastring id, create the metastring if it does not exist
 $title3_id = elgg_get_metastring_id('title3', true);
 
+$name2_id = elgg_get_metastring_id('name2', true);	// get the metastring id, create the metastring if it does not exist
+$name3_id = elgg_get_metastring_id('name3', true);
+
 $description2_id = elgg_get_metastring_id('description2', true);	// get the metastring id, create the metastring if it does not exist
 $description3_id = elgg_get_metastring_id('description3', true);
 
@@ -48,9 +51,9 @@ $success_count = 0;
 $error_count = 0;
 
 do {
-	$object_guids = get_data("SELECT distinct o.guid as guid from {$db_prefix}objects_entity o LEFT JOIN {$db_prefix}metadata md ON o.guid = md.entity_guid 
-		WHERE md.name_id IN ({$title2_id}, {$title3_id}, {$description2_id}, {$description3_id}, {$briefdescription2_id}, {$briefdescription3_id}, {$excerpt2_id}, {$excerpt3_id}, {$poll_choice2_id}, {$poll_choice3_id})
-		ORDER BY o.guid DESC 
+	$object_guids = get_data("SELECT distinct e.guid as guid from {$db_prefix}entities e LEFT JOIN {$db_prefix}metadata md ON e.guid = md.entity_guid 
+		WHERE md.name_id IN ({$title2_id}, {$title3_id}, {$name2_id}, {$name3_id}, {$description2_id}, {$description3_id}, {$briefdescription2_id}, {$briefdescription3_id}, {$excerpt2_id}, {$excerpt3_id}, {$poll_choice2_id}, {$poll_choice3_id})
+		ORDER BY e.guid DESC 
 		LIMIT {$offset}, {$limit}");
 
 	if (!$object_guids) {
@@ -65,20 +68,28 @@ do {
 		// check, migrate title
 		if ( isset($object->title2) ){
 			$new_title = gc_implode_translation( $object->title, $object->title2 );
-			if ( elgg_instanceof($object, 'group') )
-				$object->name = $new_title;		// Group titles are called names
-			else 
-				$object->title = $new_title;
+			$object->title = $new_title;
 			$object->deleteMetadata( "title2" );
 			$object->deleteMetadata( "title3" );
 			$object->save();
 		}
 		else if ( isset($object->title3 ) ){
-			if ( elgg_instanceof($object, 'group') )	// Group titles are called names
-				$object->name = gc_implode_translation( old_gc_explode_translation($object->title3, 'en'), old_gc_explode_translation($object->title3, 'fr') );
-			else
-				$object->title = gc_implode_translation( old_gc_explode_translation($object->title3, 'en'), old_gc_explode_translation($object->title3, 'fr') );
+			$object->title = gc_implode_translation( old_gc_explode_translation($object->title3, 'en'), old_gc_explode_translation($object->title3, 'fr') );
 			$object->deleteMetadata( "title3" );
+			$object->save();
+		}
+
+		// check, migrate group names
+		if ( isset($object->name2) ){
+			$new_name = gc_implode_translation( $object->name, $object->name2 );
+			$object->name = $new_name;
+			$object->deleteMetadata( "name2" );
+			$object->deleteMetadata( "name3" );
+			$object->save();
+		}
+		else if ( isset($object->name3 ) ){
+			$object->name = gc_implode_translation( old_gc_explode_translation($object->name3, 'en'), old_gc_explode_translation($object->name3, 'fr') );
+			$object->deleteMetadata( "name3" );
 			$object->save();
 		}
 
