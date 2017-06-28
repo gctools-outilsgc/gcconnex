@@ -113,6 +113,7 @@
 
             if( is_array($community_tags) ){
                 $all_tags = implode("|", $community_tags);
+                $all_tags = str_replace("'", "''", $all_tags);
                 $query .= " AND wi.description REGEXP '{$all_tags}'";
             } else {
                 $query .= " AND wi.description LIKE '%{$community_tags}%'";
