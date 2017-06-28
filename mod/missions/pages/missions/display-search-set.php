@@ -14,6 +14,7 @@ gatekeeper();
 $search_form = elgg_get_sticky_values('searchsimplefill');
 $search_typing = $_SESSION['mission_search_switch'];
 $advanced_form = elgg_get_sticky_values('advancedfill');
+$number_of_rows = elgg_get_plugin_setting('advanced_element_limit', 'missions');
 
 if($_SESSION[$search_typing . '_entities_per_page']) {
 	$entities_per_page = $_SESSION[$search_typing . '_entities_per_page'];
@@ -96,6 +97,7 @@ if($_SESSION['missions_from_skill_match']) {
 $content .= elgg_view('page/elements/mission-tabs') . $max_reached;
 
 if ($search_form ) {
+    
 	$content .= '<div style="clear:both">'.elgg_view_form('missions/search-simple').'</div>';
 }
 
@@ -118,9 +120,37 @@ if ($search_form ) {
     );
 
 if ($advanced_form){
-	$content .= '<div style="clear:both">'.elgg_view_form('missions/advanced-search-form', array(
+    $content .='Value: ';
+	for ($s = 0; $s < $number_of_rows; $s ++) {
+        if ($advanced_form['selection_'.$s]){
+           $content .= $advanced_form['selection_'.$s].': '.$advanced_form['selection_'.$s.'_element'].'  ';
+          
+            
+        }
+    }
+        $content .= elgg_view('output/url', array(
+		'text' => elgg_echo('missions:clear_search'),
+		'href' => 'missions/main?clear=true&search='.$advanced_form,
+		'class' => 'mrgn-lft-sm',
+		'is_action' => true,
+		'is_trusted' => true,
+	));
+/*	$content .= '<div style="clear:both">'.elgg_view_form('missions/advanced-search-form', array(
 	'class' => 'form-horizontal'
-	)).'</div>';
+	)).'</div>';*/
+    
+    // Advanced search form which gets hidden.
+$advanced_search_form = elgg_view_form('missions/advanced-search-form', array(
+		'class' => 'form-horizontal'
+));
+$content .= '<br>'.elgg_view('page/elements/hidden-field', array(
+		'toggle_text' => elgg_echo('Refine search'),
+		'toggle_text_hidden' => elgg_echo('close'),
+		'toggle_id' => 'advanced-search',
+		'hidden_content' => $advanced_search_form,
+		'hideable_pre_content' => $simple_search_form,
+		'field_bordered' => true
+));
 }
 
 // Only displays sort form if the search set is missions.
