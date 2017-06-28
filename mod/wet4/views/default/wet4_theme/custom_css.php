@@ -1383,9 +1383,10 @@ border:none;
 
 .custom-message{
     position: fixed;
-    width: 1140px;
-    z-index: 9999;
-    top: 185px;
+    width: 95%;
+    max-width: 1140px;
+    z-index: 1039;
+    top: 85px;
 }
 
 .elgg-state-success {
