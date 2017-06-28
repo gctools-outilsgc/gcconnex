@@ -82,13 +82,13 @@ function old_gc_explode_translation($imploded_txt, $lang)
             if(($lang=='fr') && (!$fr)){
        /*         $value=$fr;
             }else{*/
-                $value=$en;
+                $value="";      // for migration we want to maintain these as is
             }
 
              if(($lang=='en') && (!$en)){
       /*          $value=$en;
             }else{*/
-                $value=$fr;
+                $value="";      // for migration we want to maintain these as is
             }
 
         }
