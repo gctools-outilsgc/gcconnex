@@ -153,7 +153,7 @@ $access_input = elgg_view('input/access', array(
 	'entity_subtype' => 'blog',
 ));
 
-$categories_input = elgg_view('input/categories', $vars);
+
 
 
 
@@ -237,11 +237,9 @@ $btn_language
 </div>
 
 <div>
-	<label for="blog_tags">$tags_label</label>
+    <label for="tags">$tags_label</label>
 	$tags_input
 </div>
-
-$categories_input
 
 <div>
 	<label for="blog_comments_on">$comments_label</label>

@@ -1,0 +1,49 @@
+/*
+* Custom styles for gc_tags mod
+* 
+*/
+
+.tags-modal{
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.close-tag-modal{
+    margin-right: 10px;
+    color: #047177;
+}
+.close-tag-modal:visited{
+    color: #047177;
+}
+
+.audience-select .selectize-input{
+    width:94% !important;
+}
+
+.community-input-toggle{
+    float:right;
+    border: 1px solid #cccccc;
+    background-color:#efefef;
+    padding:4px 11px;
+    border-radius: 4px;
+    z-index: 99999;
+    position: relative;
+}
+.selectize-control.plugin-clear_button .clearAll {
+    font-size: 16px;
+    position: absolute;
+    right: 1px;
+    z-index: 10;
+    top: -25px;
+    cursor: pointer;
+    color: #047177;
+    text-decoration: underline;
+    &.disabled {
+        opacity: .5;
+        cursor: default;
+    }
+    
+    &:active,
+    &:focus {
+        outline: 0;
+    }
+}
