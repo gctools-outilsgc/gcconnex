@@ -1385,7 +1385,7 @@ border:none;
     width: 95%;
     max-width: 1140px;
     z-index: 1039;
-    top: 185px;
+    top: 85px;
 }
 
 .elgg-state-success {
