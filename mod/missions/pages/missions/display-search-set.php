@@ -120,7 +120,7 @@ if ($search_form ) {
     );
 
 if ($advanced_form){
-    $content .='<strong>Value:</strong> ';
+    $content .='<strong>'.elgg_echo('missions:search_value').':</strong> ';
 	for ($s = 0; $s < $number_of_rows; $s ++) {
         if ($advanced_form['selection_'.$s]){
 
@@ -147,7 +147,7 @@ $advanced_search_form = elgg_view_form('missions/advanced-search-form', array(
 		'class' => 'form-horizontal'
 ));
 $content .= '<br>'.elgg_view('page/elements/hidden-field', array(
-		'toggle_text' => elgg_echo('Refine search'),
+		'toggle_text' => elgg_echo('missions:search:Refine'),
 		'toggle_text_hidden' => elgg_echo('close'),
 		'toggle_id' => 'advanced-search',
 		'hidden_content' => $advanced_search_form,
