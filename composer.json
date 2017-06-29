@@ -1,6 +1,6 @@
 {
     "name": "elgg/elgg",
-    "version": "1.12.9",
+    "version": "1.12.16",
     "description": "Elgg is an award-winning social networking engine, delivering the building blocks that enable businesses, schools, universities and associations to create their own fully-featured social networks and applications.",
     "license": "GPL-2.0",
     "minimum-stability": "dev",
@@ -22,7 +22,6 @@
     "scripts": {
         "test": "phpunit",
         "lint": [
-            "phpcs --standard=vendor/elgg/sniffs/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib",
             "composer validate"
         ]
     },
@@ -41,8 +40,6 @@
     },
     "require-dev": {
         "phpunit/phpunit": "~4.1",
-        "elgg/sniffs": "dev-master",
-        "squizlabs/php_codesniffer": "~1.5",
         "simpletest/simpletest": "~1.1"
     }
 }
