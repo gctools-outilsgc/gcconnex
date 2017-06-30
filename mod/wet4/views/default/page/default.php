@@ -67,7 +67,7 @@ if(elgg_instanceof(elgg_get_page_owner_entity(), 'group')){
 
 $feedbackText= elgg_echo('wet:feedbackText');
 $body = <<<__BODY
-<div class="elgg-page-messages container">
+<div class="elgg-page-messages">
     $messages
 </div> 
     $tabskip

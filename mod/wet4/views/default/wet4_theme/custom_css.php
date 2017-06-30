@@ -1384,19 +1384,20 @@ border:none;
 .custom-message{
     position: fixed;
     width: 95%;
-    max-width: 1140px;
+    max-width: 600px;
     z-index: 1039;
-    top: 85px;
+    left:2% ;
 }
 
-.elgg-state-success {
+.elgg-state-success, .alert-success {
   background-color: #dff0d8;
   border-color: #d6e9c6;
     position:fixed;
     z-index: 100000;
 
    margin: 0 auto;
-    width: 1140px;
+    width:100%;
+    max-width: 600px;
     border-left: solid 5px #2b542c;
    }
   .elgg-state-success hr {

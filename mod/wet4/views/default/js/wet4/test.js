@@ -27,6 +27,11 @@ $("input[type=submit]").click(function () {
     return true;
 });*/
 
+//System message 
+    $('.elgg-system-messages').find('li').animate({opacity: 1}, 6000);
+    $('.elgg-system-messages').find('li').animate({opacity: 0}, 2000, function(){
+        $(this).addClass('wb-inv');
+    });
 
 //User menu mouse over functions
 
