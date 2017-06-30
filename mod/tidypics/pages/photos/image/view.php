@@ -41,11 +41,9 @@ if (elgg_get_plugin_setting('tagging', 'tidypics')) {
 elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
 elgg_push_breadcrumb(elgg_echo('tidypics:albums'), 'photos/all');
 
-if($owner->title3){
-	$title_group = gc_explode_translation($owner->title3,$lang);
-}else{
-	$title_group = $owner->name;
-}
+
+	$title_group = gc_explode_translation($owner->title,$lang);
+
 
 if (elgg_instanceof($owner, 'group')) {
 	elgg_push_breadcrumb($title_group, "photos/group/$owner->guid/all");
@@ -53,18 +51,13 @@ if (elgg_instanceof($owner, 'group')) {
 	elgg_push_breadcrumb($title_group, "photos/owner/$owner->username");
 }
 
-if($album->title3){
-	$album_title = gc_explode_translation($album->title3,$lang);
-}else{
-	$album_title = $album->title;
-}
+
+	$album_title = gc_explode_translation($album->title,$lang);
 
 elgg_push_breadcrumb($album_title, $album->getURL());
-if($photo->title3){
-    elgg_push_breadcrumb(gc_explode_translation($photo->title3, $lang));
-}else{
- elgg_push_breadcrumb($photo->title);   
-}
+
+    elgg_push_breadcrumb(gc_explode_translation($photo->title,$lang));
+
 
 if (elgg_is_logged_in()) {
 	if ($owner instanceof ElggGroup) {
@@ -97,11 +90,9 @@ if (elgg_get_plugin_setting('download_link', 'tidypics')) {
 }
 
 $content = elgg_view_entity($photo, array('full_view' => true));
-if (empty(gc_explode_translation($photo->title3, $lang))){
-	$title = $photo->title;
-}else{
-$title = gc_explode_translation($photo->title3, $lang);
-}
+
+$title = gc_explode_translation($photo->title, $lang);
+
 $body = elgg_view_layout('content', array(
 	'filter' => false,
 	'content' => $content,

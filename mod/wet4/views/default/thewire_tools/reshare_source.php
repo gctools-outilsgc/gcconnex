@@ -25,11 +25,9 @@ if ($url === elgg_get_site_url()) {
 }
 
 $text = "";
-if(!empty($entity->title3)){
-	$text = gc_explode_translation($entity->title3,$lang);
-} elseif (!empty($entity->title)) {
-	$text = $entity->title;
-} elseif (!empty($entity->name)) {
+if(!empty($entity->title)){
+	$text = gc_explode_translation($entity->title,$lang);
+}elseif (!empty($entity->name)) {
 	$text = $entity->name;
 } elseif (!empty($entity->description)) {
 	$text = elgg_get_excerpt($entity->description, 140);

@@ -7,6 +7,7 @@
  * @package wet4
  * @author GCTools Team
  */
+$lang = get_current_language();
 $entity = $vars['entity'];
 $user = get_user($entity->owner_guid);
 if (!$entity || !$user) {
@@ -16,7 +17,7 @@ if (!$entity || !$user) {
 $user_icon = elgg_view_entity_icon($user, 'small');
 $user_link = "<a href=\"{$user->getURL()}\">$user->name</a>";
 
-$title = $entity->getDisplayName();
+$title = gc_explode_translation($entity->getDisplayName(),$lang);
 if (!$title) {
 	if ($entity->description) {
 		$title = elgg_get_excerpt($entity->description, 30);

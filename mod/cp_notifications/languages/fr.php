@@ -339,6 +339,7 @@ $french = array(
 	// new content posted section
 	'cp_notify_usr:subject:new_content' => "%s a publié un nouveau %s avec le titre '%s'",
 	'cp_notify_usr:subject:new_content2' => "%s a publié un nouveau %s",
+	'cp_notify_usr:subject:new_content_f' => "%s a publié une nouvelle %s avec le titre '%s'",
 	'cp_notify:subject:new_content_mas' => "Un nouveau %s a été affiché dans le groupe %s",
 	'cp_notify:subject:new_content_mas2' => "Un nouvel %s a été affiché dans le groupe %s",
 	'cp_notify:subject:new_content_fem' => "Une nouvelle %s a été affichée dans le groupe %s",

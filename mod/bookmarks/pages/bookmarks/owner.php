@@ -10,13 +10,8 @@ if (!$page_owner) {
 	forward('', '404');
 }
 
-if($page_owner->title3){
-	$title_bookmarks = elgg_echo('bookmarks:owner', array(gc_explode_translation($page_owner->title3, $lang)));
-	$title = elgg_echo(gc_explode_translation($page_owner->title3, $lang));
-}else{
-	$title_bookmarks =  elgg_echo('bookmarks:owner', array($page_owner->name));
-	$title =  elgg_echo($page_owner->name);
-}
+$title_bookmarks = elgg_echo('bookmarks:owner', array(gc_explode_translation($page_owner->title, $lang)));
+$title = elgg_echo(gc_explode_translation($page_owner->title, $lang));
 
 elgg_push_breadcrumb($title);
 

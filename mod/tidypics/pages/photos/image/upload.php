@@ -7,7 +7,7 @@
  */
 
 elgg_gatekeeper();
-
+$lang = get_current_language();
 $album_guid = (int) get_input('guid');
 if (!$album_guid) {
 	// @todo
@@ -32,12 +32,11 @@ $owner = elgg_get_page_owner_entity();
 elgg_group_gatekeeper();
 
 $title = elgg_echo('album:addpix');
-
 // set up breadcrumbs
 elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
 elgg_push_breadcrumb(elgg_echo('tidypics:albums'), 'photos/all');
-elgg_push_breadcrumb($owner->name, "photos/owner/$owner->username");
-elgg_push_breadcrumb($album->getTitle(), $album->getURL());
+elgg_push_breadcrumb(gc_explode_translation($owner->name,$lang), "photos/owner/$owner->username");
+elgg_push_breadcrumb(gc_explode_translation($album->title,$lang), $album->getURL());
 elgg_push_breadcrumb(elgg_echo('album:addpix'));
 
 $uploader = get_input('uploader');

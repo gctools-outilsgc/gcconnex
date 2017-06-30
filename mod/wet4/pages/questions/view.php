@@ -24,11 +24,8 @@ if ($page_owner instanceof ElggGroup) {
 }
 
 //add language toggle
-if($question->title3){
-	$title = gc_explode_translation($question->title3, get_current_language());
-} else {
-	$title = $question->title;
-}
+
+$title = gc_explode_translation($question->title, get_current_language());
 
 elgg_push_breadcrumb($title);
 

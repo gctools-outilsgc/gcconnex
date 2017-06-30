@@ -18,8 +18,8 @@ foreach ($variables as $name => $type) {
 	}
 }
 
-$input['title3'] = gc_implode_translation($input['title'],$input['title2']);
-$input['description3'] = gc_implode_translation($input['description'],$input['description2']);
+$input['title'] = gc_implode_translation($input['title'],$input['title2']);
+$input['description'] = gc_implode_translation($input['description'],$input['description2']);
 
 
 // Get guids

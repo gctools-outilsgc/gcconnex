@@ -173,11 +173,8 @@ function file_tools_build_select_options($folders, $depth = 0) {
 			 */
 			if ($folder = elgg_extract("folder", $level)) {
 
-				if($folder->title3){
-					$folder_title = gc_explode_translation($folder->title3,$lang);
-				}else{
-					$folder_title = $folder->title;
-				}
+				$folder_title = gc_explode_translation($folder->title,$lang);
+	
 				$result[$folder->getGUID()] = str_repeat("-", $depth) . $folder_title;
 			}
 			
@@ -372,11 +369,9 @@ function file_tools_make_menu_items($folders) {
 		
 		foreach ($folders as $index => $level) {
 			if ($folder = elgg_extract("folder", $level)) {
-				if($folder->title3){
-					$folder_title = gc_explode_translation($folder->title3,$lang);
-				}else{
-					$folder_title = $folder->title;
-				}
+
+					$folder_title = gc_explode_translation($folder->title,$lang);
+
 
 				if (empty($folder_title)) {
 					$folder_title = elgg_echo("untitled");
