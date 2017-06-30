@@ -17,7 +17,6 @@
  */
 elgg_make_sticky_form('advancedfill');
 
-echo 'Hello';
 // The maximum amount of possible search fields is set in the Administration panel.
 $element_total = elgg_get_plugin_setting('advanced_element_limit', 'missions');
 

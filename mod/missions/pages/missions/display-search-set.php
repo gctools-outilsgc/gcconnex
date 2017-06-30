@@ -126,7 +126,7 @@ if ($advanced_form){
 
         	$value =str_replace('missions:', '', $advanced_form['selection_'.$s.'_element']);
 
-           $content .= '<span class="mrgn-rght-md"><strong>'.$advanced_form['selection_'.$s].':</strong> '.$value.' </span> ';
+           $content .= '<span class="mrgn-rght-md"><strong>'.$advanced_form['selection_'.$s].':</strong> '.elgg_echo('missions:'.$value).' </span> ';
           
             
         }
@@ -138,9 +138,6 @@ if ($advanced_form){
 		'is_action' => true,
 		'is_trusted' => true,
 	));
-/*	$content .= '<div style="clear:both">'.elgg_view_form('missions/advanced-search-form', array(
-	'class' => 'form-horizontal'
-	)).'</div>';*/
     
     // Advanced search form which gets hidden.
 $advanced_search_form = elgg_view_form('missions/advanced-search-form', array(

@@ -126,7 +126,6 @@ var all_values= <?php echo json_encode($all_values ); ?>;
  element_switch2(name, value,all_values);
 
 function element_switch2(name,value,all_values){
-		console.log(value);
   	var name_length = name.length;
 		var name_sub = name.substring(name_length - 8, name_length);
 		var further = false;
@@ -260,7 +259,6 @@ if($advanced_form){
 		if(name_sub === '_element') {
 			further = true;
 		}
-		console.log(control.value);
 		
 		var section = "#".concat(control.name);
 

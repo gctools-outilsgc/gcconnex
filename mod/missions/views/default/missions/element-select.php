@@ -22,9 +22,6 @@ $oral = $vars['oral'];
 $operand = htmlspecialchars_decode($vars['operand']);
 $day = $vars['day'];
 
-
-error_log($all_values['value_answer']);
-
 $content = '';
 $array_sec = mm_echo_explode_setting_string(elgg_get_plugin_setting('security_string', 'missions'));
 $array_lang = explode(',', elgg_get_plugin_setting('language_string', 'missions'));
