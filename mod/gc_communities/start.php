@@ -90,8 +90,7 @@ function gc_communities_init(){
     // if( elgg_is_active_plugin('thewire') ){
     //     elgg_register_widget_type('filtered_wire_index', elgg_echo('gc_communities:filtered_wire_index'), elgg_echo('gc_communities:filtered_wire_index'), $context, true);
     // }
-
-    elgg_register_widget_type('free_html', elgg_echo("widgets:free_html:title"), elgg_echo("widgets:free_html:description"), $context, true);
+    
 }
 
 function gc_communities_permissions_hook($hook, $entity_type, $returnvalue, $params) {
