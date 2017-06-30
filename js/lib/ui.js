@@ -15,7 +15,6 @@ elgg.ui.init = function () {
 		}
 	});
 
-	$('.elgg-system-messages li').animate({opacity: 0.9}, 6000);
 	$('.elgg-system-messages li.elgg-state-success').fadeOut('slow');
 
 	$('[rel=toggle]').live('click', elgg.ui.toggles);
