@@ -38,6 +38,16 @@ function get_details(){
   return details;
 }
 
+function displayFolder(link){
+  var target = $(link).attr('href');
+  $('#categories-'+"<?php echo get_current_language()?>").fadeOut().parent().find(target).delay(500).fadeIn();
+
+}
+
+function displayCategories(link){
+  $('.folder-display:not(:hidden)').fadeOut().parent().find('#categories-'+"<?php echo get_current_language()?>").delay(500).fadeIn();
+}
+
 
 /** Function that count occurrences of a substring in a string;
  * @param {String} string               The string

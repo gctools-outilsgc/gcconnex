@@ -87,8 +87,8 @@ if(isset($vars['entity']->portal_id)){
   }
 </style>
 
-<div id="results-en"></div>
-<div id="results-fr"></div>
+<div id="results-en"><div id="categories-en"></div></div>
+<div id="results-fr"><div id="categories-fr"></div></div>
 
 <script>
 
@@ -122,7 +122,7 @@ $('#fetch').on('click', function(){
 
         $.each(acceptedCategoriesEN, function (key,value) {
 
-             $('#results-en').append("<div class='article-cat'><a href='#"+ value.id + "-en' data-toggle='collapse' aria-expanded='false' aria-controls='"+ value.id +"-en'><div class=''> <h3 >"  +value.name + "</h3></div></a><div id='" + value.id + "-en' class='collapse'></div> </div></div>");
+             $('#categories-en').append("<div class='category-card'><div class='article-cat'><div class='heading'><h3 >"  +value.name + "</h3></div><div><ul class='folders' id='" + value.id + "-en'></ul> </div></div></div></div>");
 
              $.ajax(
                {
@@ -138,9 +138,10 @@ $('#fetch').on('click', function(){
 
                     $.each(folder, function (key2,value2) {
 
-                      if(value2.visibility == 1){
-                        $('#'+value.id+'-en').append("<div class='folder'><a href='#"+ value2.id + "-en' data-toggle='collapse' aria-expanded='false' aria-controls='"+ value2.id +"-en'><div class=''> <h4 >"  +value2.name + "</h4></div></a><div id='" + value2.id + "-en' class='collapse'></div> </div></div>");
-                      }
+                      //if(value2.visibility == 1){
+                        $('#'+value.id+'-en').append("<li class='folder'><a onclick='displayFolder(this)' href='#"+ value2.id + "-en'><div>"  +value2.name + "</div></a></li>");
+                        $('#results-en').append("<div class='folder-display' id='" + value2.id + "-en'><div class='heading-panel'><a class='icon-unsel' onclick='displayCategories(this)' href='#categories-en'><i class='fa fa-arrow-left fa-lg' aria-hidden='true'></i></a> <div><h3>"+value2.name+"</h3></div></div></div>");
+                      //}
 
                       $.ajax({
 
@@ -154,14 +155,16 @@ $('#fetch').on('click', function(){
                           success: function(data, textStatus, jqXHR) {
                             var article = JSON.parse(JSON.stringify(data));
 
-                              $.each(article, function (key3,value3) {
-                                if(value3.status == 2){
-                                  $('#'+value2.id+"-en").append("<div class='panel help-article'><a class='head-toggle' href='#"+ value3.id + "-en' data-toggle='collapse' aria-expanded='false' aria-controls='"+ value3.id +"-en'><div class='panel-heading'> <h5>" + value3.title + "</h5></div></a><div id='" + value3.id +
-                                  "-en' class='collapse panel-body'><span>"+ value.name+" > " + value2.name +"</span>" + value3.description +
-                                  "<div class='article-feedback'>Did you find this helpful? <a class='mrgn-lft-sm' href='#'>Yes "+value3.thumbs_up+"</a> <a class='mrgn-lft-sm' href='#'>No "+value3.thumbs_down+"</a> </div> </div> </div></div>");
-                                }
+                              $('#'+value2.id+'-en').append("<div class='article-panel'></div>");
+                              var list = "<ul>";
+                              $.each(article, function (key3,value3) {//<span class='collapse-plus fa fa-plus-square-o fa-lg' aria-hidden='true'></span>
+                                //if(value3.status == 2){
+                                  list += "<li class='article-listing'><a class='head-toggle collapsed' href='#"+ value3.id + "-en' data-toggle='collapse' aria-expanded='false' aria-controls='"+ value3.id +"-en'><div><h5><span class='collapse-plus fa fa-minus-square-o fa-lg' aria-hidden='true'></span>" + value3.title + "</h5></div></a><div id='" + value3.id +
+                                  "-en' class='collapse article-content'><span>"+ value.name+" > " + value2.name +"</span>" + value3.description + " </div> </div></li>";
+                                //}
                               });
-
+                              list += '</ul><a onclick="displayCategories(this)" href="#categories-en" class="wb-inv">Back</a>';
+                              $('#'+value2.id+"-en .article-panel").append(list);
                           }
                         });
 
@@ -197,7 +200,7 @@ $('#fetch').on('click', function(){
 
           $.each(acceptedCategoriesFR, function (key,value) {
 
-               $('#results-fr').append("<div class='article-cat'><a href='#"+ value.id + "-fr' data-toggle='collapse' aria-expanded='false' aria-controls='"+ value.id +"-fr'><div class=''> <h3 >"  +value.name + "</h3></div></a><div id='" + value.id + "-fr' class='collapse'></div> </div></div>");
+               $('#categories-fr').append("<div class='category-card'><div class='article-cat'><div class='heading'><h3 >"  +value.name + "</h3></div><div><ul class='folders' id='" + value.id + "-fr'></ul> </div></div></div></div>");
 
                $.ajax(
                  {
@@ -213,9 +216,10 @@ $('#fetch').on('click', function(){
 
                       $.each(folder, function (key2,value2) {
 
-                        if(value2.visibility == 1){
-                          $('#'+value.id+'-fr').append("<div class='folder'><a href='#"+ value2.id + "-fr' data-toggle='collapse' aria-expanded='false' aria-controls='"+ value2.id +"-fr'><div class=''> <h4 >"  +value2.name + "</h4></div></a><div id='" + value2.id + "-fr' class='collapse'></div> </div></div>");
-                        }
+                        //if(value2.visibility == 1){
+                          $('#'+value.id+'-fr').append("<li class='folder'><a onclick='displayFolder(this)' href='#"+ value2.id + "-fr'><div>"  +value2.name + "</div></a></li>");
+                          $('#results-fr').append("<div class='folder-display' id='" + value2.id + "-fr'><div class='heading-panel'><a class='icon-unsel' onclick='displayCategories(this)' href='#categories-fr'><i class='fa fa-arrow-left fa-lg' aria-hidden='true'></i></a> <div><h3>"+value2.name+"</h3></div></div></div>");
+                        //}
 
                         $.ajax({
 
@@ -229,14 +233,16 @@ $('#fetch').on('click', function(){
                             success: function(data, textStatus, jqXHR) {
                               var article = JSON.parse(JSON.stringify(data));
 
-                                $.each(article, function (key3,value3) {
-                                  if(value3.status == 2){
-                                    $('#'+value2.id+"-fr").append("<div class='panel help-article'><a href='#"+ value3.id + "-fr' data-toggle='collapse' aria-expanded='false' aria-controls='"+ value3.id +"-fr'><div class='panel-heading'> <h5>" + value3.title + "</h5></div></a><div id='" + value3.id +
-                                    "-fr' class='collapse panel-body'><span>"+ value.name+" > " + value2.name +"</span>" + value3.description +
-                                    "<div class='article-feedback'>Did you find this helpful? <a class='mrgn-lft-sm' href='#'>Yes "+value3.thumbs_up+"</a> <a class='mrgn-lft-sm' href='#'>No "+value3.thumbs_down+"</a> </div> </div> </div></div>");
-                                  }
+                                $('#'+value2.id+'-fr').append("<div class='article-panel'></div>");
+                                var list = "<ul>";
+                                $.each(article, function (key3,value3) {//<span class='collapse-plus fa fa-plus-square-o fa-lg' aria-hidden='true'></span>
+                                  //if(value3.status == 2){
+                                    list += "<li class='article-listing'><a class='head-toggle collapsed' href='#"+ value3.id + "-fr' data-toggle='collapse' aria-expanded='false' aria-controls='"+ value3.id +"-fr'><div><h5><span class='collapse-plus fa fa-minus-square-o fa-lg' aria-hidden='true'></span>" + value3.title + "</h5></div></a><div id='" + value3.id +
+                                    "-fr' class='collapse article-content'><span>"+ value.name+" > " + value2.name +"</span>" + value3.description + " </div> </div></li>";
+                                  //}
                                 });
-
+                                list += '</ul><a onclick="displayCategories(this)" href="#categories-fr" class="wb-inv">Back</a>';
+                                $('#'+value2.id+"-fr .article-panel").append(list);
                             }
                           });
 
@@ -270,7 +276,7 @@ $('#save').on('click', function(){
           async: false,
           url: elgg.normalize_url('/mod/freshdesk_help/actions/articles/save.php'),
           data: obj,
-          success: function () { $('.article-message').append('Articles Saved'); },
+          success: function () { $('.article-message').append('Articles Saved'); $('#results-en').html(''); $('#results-fr').html(''); },
           failure: function() { $('.article-message').append('Something went wrong'); }
       });
 });

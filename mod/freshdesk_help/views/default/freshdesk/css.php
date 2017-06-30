@@ -2,21 +2,23 @@
 
 <style>
 
-#results{
+#results-en {
   padding:5px;
+  overflow:auto;
+}
+
+#categories {
+  overflow: auto;
+}
+
+#searchResults .article-panel {
+  display:none;
 }
 
 .results-list li {
   display:none;
 }
 
-.help-article .panel-heading {
-  margin-bottom: 0;
-}
-
-.help-article .panel-heading:hover {
-  background: #eee;
-}
 
 .expand-header:hover {
   cursor: pointer;
@@ -29,8 +31,128 @@
 }
 
 .article-cat {
+  background-color: #fff;
+  border-radius: 2px;
+  list-style: none;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
+  margin:5px;
+  min-height:250px;
+  padding: 5px 10px;
+}
+
+.article-cat .heading {
   padding:10px;
-  border-left: 4px solid #ddd;
+  background:white;
+}
+
+.article-cat h3 {
+  margin:5px 0;
+}
+
+.folders {
+  list-style: none;
+}
+
+.folders li {
+  margin-bottom:5px;
+}
+
+.folder-icon {
+  margin-right: 5px;
+}
+
+#results-en {
+  padding:5px;
+  overflow:auto;
+  min-height: 545px;
+}
+
+.folder {
+
+}
+
+.folder .heading {
+
+}
+
+
+.folder h4 {
+  padding:5px;
+  margin:0;
+}
+
+.folder-display {
+  display: none;
+}
+
+.heading-panel {
+  margin:5px;
+}
+
+.heading-panel a {
+  float:left;
+  background-color: #fff;
+  border-radius: 2px;
+  list-style: none;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
+  margin-right: 7px;
+  padding:20px 15px;
+  overflow: auto;
+  width: 63px;
+  height: 63px;
+  text-align: center;
+  color: #919191;
+}
+
+.heading-panel div {
+  background-color: #fff;
+  border-radius: 2px;
+  list-style: none;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
+  margin:0 0 0 70px;
+  padding:20px 15px;
+}
+
+.heading-panel h3 {
+  margin:0;
+}
+
+.collapsed .collapse-plus:before {
+  content:"\f196";
+}
+
+.article-panel {
+  background-color: #fff;
+  border-radius: 2px;
+  list-style: none;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
+  margin:5px;
+  padding: 15px;
+}
+
+.article-panel ul {
+  list-style: none;
+  padding:5px;
+}
+
+.article-panel ul li {
+  border-bottom: 1px solid #eee;
+}
+
+.article-listing h5 {
+  margin: 15px 2px;
+}
+
+.article-listing:last-child {
+  border-bottom: none !important;
+}
+
+.article-content {
+  margin: 0 5px;
+}
+
+.collapse-plus {
+  padding-right: 10px;
 }
 
 #filter-count {
@@ -44,4 +166,18 @@
 .relatedArticles {
   display: none;
   text-align: right;
+}
+
+@media (min-width: 540px){
+  .category-card {
+    float: left;
+    width: 50%;
+  }
+}
+
+@media (min-width: 980px){
+  .category-card {
+    float: left;
+    width: 33.3333333333%;
+  }
 }

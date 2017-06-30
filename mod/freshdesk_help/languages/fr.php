@@ -1,6 +1,6 @@
 <?php
 return array(
-  'freshdesk:ticket:title' = "Submit a ticket",
+  'freshdesk:ticket:title' => "Submit a ticket",
   'freshdesk:ticket:email' => "Email",
   'freshdesk:ticket:subject' => "Subject",
   'freshdesk:ticket:attachment' => "Attachment",
