@@ -35,12 +35,11 @@ if (elgg_is_sticky_form('ticket-submit')) {
 <?php echo elgg_view('input/text', array(
   'name' => 'subject',
   'id' => 'subject',
-  'class' => 'mrgn-bttm-sm',
   'required' => 'required',
   'value' => $subject
 ));
 ?>
-<span class="relatedArticles"><a href="#searchResults"></a></span>
+<span class="relatedArticles btn-primary"><a href="#searchResults"></a></span>
 </div>
 
 <div>

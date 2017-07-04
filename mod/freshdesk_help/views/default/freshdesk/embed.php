@@ -1,22 +1,22 @@
 <?php ?>
 
 <ul class="nav nav-tabs nav-tabs-language">
-  <li class="active"><a data-toggle="tab" href="#article-search-tab"><?php echo elgg_echo('Search knowledge base');?></a></li>
+  <li class="active"><a data-toggle="tab" href="#article-search-tab"><?php echo elgg_echo('freshdesk:knowledge:title');?></a></li>
   <li><a data-toggle="tab" href="#ticket"><?php echo elgg_echo('freshdesk:ticket:title'); ?></a></li>
 </ul>
 
  <div class="tab-content tab-content-border">
  <?php
  echo '<div id="article-search-tab" class="tab-pane active">';
- echo '<label class="h3 mrgn-tp-sm" for="article-search">Search knowledge base</label>';
+ echo '<label class="h3 mrgn-tp-sm" for="article-search">'.elgg_echo('freshdesk:knowledge:search:title').'</label>';
 
 //create search panel
  echo elgg_view('input/text', array(
    'id' => 'article-search',
-   'name' => 'Search Articles',
+   'name' => elgg_echo('freshdesk:knowledge:search:title'),
  ));
 
- echo '<span class="search-info">Search helpdesk articles to find the information you are looking for. For more information vist our <a href="https://gcconnex.gctools-outilsgc.ca/en/support/home">Support Home</a>.</span>';
+ echo '<span class="search-info">'.elgg_echo('freshdesk:knowledge:search:info').'</span>';
  echo '<div aria-live="polite" id="filter-count"></div>';
 
  echo '<div id="searchResults"><div class="article-panel"><ul id="results-listing"></ul></div></div>';
@@ -25,7 +25,7 @@
   $str = file_get_contents(get_site_by_url().'mod/freshdesk_help/actions/articles/articles.json');
   if($str){
     $articles = json_decode($str, true);
-    echo '<h2 class="h3">Explore knowledge base</h2>';
+    echo '<h2 class="h3">'.elgg_echo('freshdesk:knowledge:explore:title').'</h2>';
     echo '<div id="results-en">'.$articles[get_current_language()].'</div>';
   } else {
     echo '<div id="results"><div class="alert alert-info">Add articles by fetching them in the admin settings.</div></div>';
@@ -94,7 +94,7 @@
 
             $('#searchResults .article-panel').show();
             $('.search-info').hide()
-            $("#filter-count").text("Showing "+count+" results.");
+            $("#filter-count").text(elgg.echo('freshdesk:knowledge:search:results', [count]));
           } else {
             $('#searchResults .article-panel').hide();
             $('.search-info').show()
@@ -155,9 +155,9 @@
 
             $('#searchResults .article-panel').show();
             $('.search-info').hide()
-            $("#filter-count").text("Showing "+count+" results.");
+            $("#filter-count").text(elgg.echo('freshdesk:knowledge:search:results', [count]));
             if(count > 0){
-              $('.relatedArticles a').text(count+' matching articles').parent().show();
+              $('.relatedArticles a').text(elgg.echo('freshdesk:ticket:matching', [count])).parent().show();
             } else {
               $('.relatedArticles').hide();
             }
@@ -171,7 +171,7 @@
 
 
 
-//delete me later - code for easy and quick changes
+//delete me later - code for easy and quick changes to UI
 /*
 var yourdomain = <?php echo '"'.elgg_get_plugin_setting("domain", "freshdesk_help").'"'; ?>;
 var api_key = <?php echo  '"'.elgg_get_plugin_setting("apikey", "freshdesk_help").'"'; ?>;

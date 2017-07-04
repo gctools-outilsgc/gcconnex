@@ -165,8 +165,17 @@
 
 .relatedArticles {
   display: none;
-  text-align: right;
+  padding: 5px 10px;
+  border-top: none;
+  border-radius: 8px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  color: white;
+  margin: 1px;
 }
+
 
 @media (min-width: 540px){
   .category-card {
