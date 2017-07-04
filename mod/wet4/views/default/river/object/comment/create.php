@@ -5,7 +5,7 @@
 
 $item = $vars['item'];
 /* @var ElggRiverItem $item */
-
+$lang = get_current_language();
 $comment = $item->getObjectEntity();
 $subject = $item->getSubjectEntity();
 $target = $item->getTargetEntity();
@@ -17,9 +17,11 @@ $subject_link = elgg_view('output/url', array(
 	'is_trusted' => true,
 ));
 
+$title_comment = $target->getDisplayName();
+
 $target_link = elgg_view('output/url', array(
 	'href' => $comment->getURL(),
-	'text' => $target->getDisplayName(),
+	'text' => gc_explode_translation($title_comment,$lang),
 	'class' => 'elgg-river-target',
 	'is_trusted' => true,
 ));
