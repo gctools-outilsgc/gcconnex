@@ -22,12 +22,9 @@ if($_SESSION['mission_search_switch'] == 'candidate') {
 	        elgg_echo('missions:experience'),
 	        elgg_echo('missions:skill'),
 	        elgg_echo('missions:portfolio'),
-    		elgg_echo('missions:user_department')
+    		elgg_echo('missions:user_department'),
+    		elgg_echo('missions:opt_in')
     );
-    
-    if(elgg_is_active_plugin('missions_profile_extend')) {
-    	$search_fields[count($search_fields)] = elgg_echo('missions:opt_in');
-    }
     
     $subtitle = elgg_echo('missions:advanced_find_candidates');
 	$limit_options = array(10,25,50,100);
