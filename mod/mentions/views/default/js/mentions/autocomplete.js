@@ -66,7 +66,7 @@ define(function(require) {
 	var handleResponse = function (json) {
 		var userOptions = '';
 		$(json).each(function(key, user) {
-			userOptions += '<li tabIndex="0" data-username="' + user.desc + '">' + user.icon + user.name + "</li>";
+			userOptions += '<li tabIndex="0" data-username="' + user.desc + '">' + user.icon + user.name +" <i>@" + user.desc + "</i></li>";
 		});
 
 		if (!userOptions) {

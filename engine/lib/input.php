@@ -56,7 +56,7 @@ function filter_tags($var) {
 
 /**
  * Returns the current page's complete URL.
- * 
+ *
  * It uses the configured site URL for the hostname rather than depending on
  * what the server uses to populate $_SERVER.
  *
@@ -212,12 +212,7 @@ function input_livesearch_page_handler($page) {
 	$q = str_replace(array('_', '%'), array('\_', '\%'), $q);
 
 // for the group members search: group guid - should be numeric
-	if (!$g = get_input('term', get_input('g'))) {
-		exit;
-	}
-
-	$input_name = get_input('name', 'members');
-
+	$g = get_input('term', get_input('g'));
 	$g = sanitise_string($g);
 
 	// replace mysql vars with escaped strings
@@ -255,11 +250,11 @@ function input_livesearch_page_handler($page) {
 						"(ue.name LIKE '$q%' OR ue.name LIKE '% $q%' OR ue.username LIKE '$q%')"
 					)
 				);
-				
+
 				$entities = elgg_get_entities($options);
 				if (!empty($entities)) {
 					foreach ($entities as $entity) {
-						
+
 						if (in_array('groups', $match_on)) {
 							$value = $entity->guid;
 						} else {
@@ -301,7 +296,7 @@ function input_livesearch_page_handler($page) {
 				if (!elgg_is_active_plugin('groups')) {
 					continue;
 				}
-				
+
 				$options = array(
 					'type' => 'group',
 					'limit' => $limit,
@@ -311,7 +306,7 @@ function input_livesearch_page_handler($page) {
 						"(ge.name LIKE '$q%' OR ge.name LIKE '% $q%' OR ge.description LIKE '% $q%')"
 					)
 				);
-				
+
 				$entities = elgg_get_entities($options);
 				if (!empty($entities)) {
 					foreach ($entities as $entity) {
@@ -355,11 +350,11 @@ function input_livesearch_page_handler($page) {
 						"(ue.name LIKE '$q%' OR ue.name LIKE '% $q%' OR ue.username LIKE '$q%')"
 					)
 				);
-				
+
 				$entities = elgg_get_entities_from_relationship($options);
 				if (!empty($entities)) {
 					foreach ($entities as $entity) {
-						
+
 						$output = elgg_view_list_item($entity, array(
 							'use_hover' => false,
 							'use_link' => false,
@@ -403,11 +398,11 @@ function input_livesearch_page_handler($page) {
 						"(ue.name LIKE '$q%' OR ue.name LIKE '% $q%' OR ue.username LIKE '$q%')"
 					)
 				);
-				
+
 				$entities = elgg_get_entities_from_relationship($options);
 				if (!empty($entities)) {
 					foreach ($entities as $entity) {
-						
+
 						$output = elgg_view_list_item($entity, array(
 							'use_hover' => false,
 							'use_link' => false,
