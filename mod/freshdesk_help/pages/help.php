@@ -2,7 +2,7 @@
 	// Set context and title
 	elgg_set_context('freshdesk');
 
-	$title = elgg_echo('Freshdesk');
+	$title = elgg_echo('freshdesk:page:title');
 
 	$body = elgg_view_layout('one_column', array(
 		'title' => $title,

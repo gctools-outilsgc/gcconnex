@@ -24,10 +24,6 @@ function unique(list) {
  return result;
 }
 
-function provide_feedback(){
-
-}
-
 function get_details(){
   var details = [];
 
@@ -77,3 +73,126 @@ function occurrences(string, subString, allowOverlapping) {
     }
     return n;
 }
+
+function searchArticles(search){
+ 
+        // Retrieve the input field text and reset the count to zero
+        var filter = $(search).val(), count = 0;
+
+        var gatheredResults = [];
+        //remove previous query
+        $('#searchResults .article-listing').remove();
+
+        //only go if three characters are entered
+        if($(search).val().length >= 3){
+            // Loop through the comment list
+            $("#results-en .article-listing").each(function(){
+     
+                // If the list item does not contain the text
+                if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+     
+                // Show the list item if the phrase matches and increase the count by 1
+                } else {
+
+                    //clone item
+                    var result = $(this).clone();
+                    //retrieve attributes
+                    var href = $(result).find('.head-toggle').attr('href');
+                    var id = $(result).find('.article-content').attr('id');
+                    //change clone to not mess with original
+                    $(result).find('.head-toggle').attr('href', href+'-search');
+                    $(result).find('.head-toggle').attr('aria-controls', id+'-search')
+                    $(result).find('.article-content').attr('id', id+'-search')
+
+                    //add clone and occurrence count to array for sorting
+                    var item = [occurrences($(result).text().toLowerCase(), filter), $(result)];
+
+                    gatheredResults.push(item);
+
+                }
+            });
+     
+            //sort results from most occurrences of query to least amount
+            gatheredResults.sort(function(a, b){ return b[0] - a[0]; });
+
+            //add results
+            $.each(gatheredResults, function (key,value) {
+              $(value[1]).appendTo('#results-listing');
+              //increase count
+              count++;
+            });
+
+            $('#searchResults .article-panel').show();
+            $('.search-info').hide()
+            $("#filter-count").text(elgg.echo('freshdesk:knowledge:search:results', [count]));
+          } else {
+            $('#searchResults .article-panel').hide();
+            $('.search-info').show()
+            $("#filter-count").text("");
+          }
+    }
+
+
+function matchArticles(search){
+ 
+        // Retrieve the input field text and reset the count to zero
+        var filter = $(search).val(), count = 0;
+
+      var gatheredResults = [];
+      //remove previous query
+        $('#searchResults .article-listing').remove();
+
+      //only go if three characters are entered
+      if($(search).val().length >= 3){
+          // Loop through the comment list
+          $("#results-en .article-listing").each(function(){
+   
+              // If the list item does not contain the text
+              if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+   
+              // Show the list item if the phrase matches and increase the count by 1
+              } else {
+
+                  //clone item
+                  var result = $(this).clone();
+                  //retrieve attributes
+                  var href = $(result).find('.head-toggle').attr('href');
+                  var id = $(result).find('.article-content').attr('id');
+                  //change clone to not mess with original
+                  $(result).find('.head-toggle').attr('href', href+'-search');
+                  $(result).find('.head-toggle').attr('aria-controls', id+'-search')
+                  $(result).find('.article-content').attr('id', id+'-search')
+
+                  //add clone and occurrence count to array for sorting
+                  var item = [occurrences($(result).text().toLowerCase(), filter), $(result)];
+
+                  gatheredResults.push(item);
+
+              }
+          });
+   
+          //sort results from most occurrences of query to least amount
+          gatheredResults.sort(function(a, b){ return b[0] - a[0]; });
+
+          //add results
+          $.each(gatheredResults, function (key,value) {
+            $(value[1]).appendTo('#results-listing');
+            //increase count
+            count++;
+          });
+
+          $('#searchResults .article-panel').show();
+          $('.search-info').hide()
+          $("#filter-count").text(elgg.echo('freshdesk:knowledge:search:results', [count]));
+          if(count > 0){
+            $('.relatedArticles a').text(elgg.echo('freshdesk:ticket:matching', [count])).parent().show();
+          } else {
+            $('.relatedArticles').hide();
+          }
+        } else {
+          $('#searchResults .article-panel').hide();
+          $('.search-info').show()
+          $('.relatedArticles').hide();
+          $("#filter-count").text("");
+        }
+    }

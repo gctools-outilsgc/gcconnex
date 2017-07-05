@@ -8,27 +8,30 @@
  <div class="tab-content tab-content-border">
  <?php
  echo '<div id="article-search-tab" class="tab-pane active">';
- echo '<label class="h3 mrgn-tp-sm" for="article-search">'.elgg_echo('freshdesk:knowledge:search:title').'</label>';
-
-//create search panel
- echo elgg_view('input/text', array(
-   'id' => 'article-search',
-   'name' => elgg_echo('freshdesk:knowledge:search:title'),
- ));
-
- echo '<span class="search-info">'.elgg_echo('freshdesk:knowledge:search:info').'</span>';
- echo '<div aria-live="polite" id="filter-count"></div>';
-
- echo '<div id="searchResults"><div class="article-panel"><ul id="results-listing"></ul></div></div>';
-
-//retrieve articles
+ //retrieve articles
   $str = file_get_contents(get_site_by_url().'mod/freshdesk_help/actions/articles/articles.json');
   if($str){
     $articles = json_decode($str, true);
+
+    echo '<label class="h3 mrgn-tp-sm" for="article-search">'.elgg_echo('freshdesk:knowledge:search:title').'</label>';
+
+    //create search panel
+    echo elgg_view('input/text', array(
+      'id' => 'article-search',
+      'name' => elgg_echo('freshdesk:knowledge:search:title'),
+      'onkeyup'  => 'searchArticles(this)'
+    ));
+
+    echo '<span class="search-info">'.elgg_echo('freshdesk:knowledge:search:info').'</span>';
+    echo '<div aria-live="polite" id="filter-count"></div>';
+
+    echo '<div id="searchResults"><div class="article-panel"><ul id="results-listing"></ul></div></div>';
+
+
     echo '<h2 class="h3">'.elgg_echo('freshdesk:knowledge:explore:title').'</h2>';
     echo '<div id="results-en">'.$articles[get_current_language()].'</div>';
   } else {
-    echo '<div id="results"><div class="alert alert-info">Add articles by fetching them in the admin settings.</div></div>';
+    echo '<div id="results"><section class="alert alert-info"><h2>Configure knowledge Base</h2><p>Add articles by fetching them in the admin settings.</p></section></div>';
   }
 
   echo '</div>';
@@ -43,133 +46,6 @@
  </div>
   <script>
    $(document).ready(function(){
-
-    $("#article-search").keyup(function(){
- 
-        // Retrieve the input field text and reset the count to zero
-        var filter = $(this).val(), count = 0;
-
-        var gatheredResults = [];
-        //remove previous query
-        $('#searchResults .article-listing').remove();
-
-        //only go if three characters are entered
-        if($(this).val().length >= 3){
-            // Loop through the comment list
-            $("#results-en .article-listing").each(function(){
-     
-                // If the list item does not contain the text
-                if ($(this).text().search(new RegExp(filter, "i")) < 0) {
-     
-                // Show the list item if the phrase matches and increase the count by 1
-                } else {
-
-                    //clone item
-                    var result = $(this).clone();
-                    //retrieve attributes
-                    var href = $(result).find('.head-toggle').attr('href');
-                    var id = $(result).find('.article-content').attr('id');
-                    //change clone to not mess with original
-                    $(result).find('.head-toggle').attr('href', href+'-search');
-                    $(result).find('.head-toggle').attr('aria-controls', id+'-search')
-                    $(result).find('.article-content').attr('id', id+'-search')
-
-                    //add clone and occurrence count to array for sorting
-                    var item = [occurrences($(result).text().toLowerCase(), filter), $(result)];
-
-                    gatheredResults.push(item);
-
-                }
-            });
-     
-            //sort results from most occurrences of query to least amount
-            gatheredResults.sort(function(a, b){ return b[0] - a[0]; });
-
-            //add results
-            $.each(gatheredResults, function (key,value) {
-              $(value[1]).appendTo('#results-listing');
-              //increase count
-              count++;
-            });
-
-            $('#searchResults .article-panel').show();
-            $('.search-info').hide()
-            $("#filter-count").text(elgg.echo('freshdesk:knowledge:search:results', [count]));
-          } else {
-            $('#searchResults .article-panel').hide();
-            $('.search-info').show()
-            $("#filter-count").text("");
-          }
-    });
-
-
-
-
-  $("#subject").keyup(function(){
- 
-        // Retrieve the input field text and reset the count to zero
-        var filter = $(this).val(), count = 0;
-
-        var gatheredResults = [];
-        //remove previous query
-        $('#searchResults .article-listing').remove();
-
-        //only go if three characters are entered
-        if($(this).val().length >= 3){
-            // Loop through the comment list
-            $("#results-en .article-listing").each(function(){
-     
-                // If the list item does not contain the text
-                if ($(this).text().search(new RegExp(filter, "i")) < 0) {
-     
-                // Show the list item if the phrase matches and increase the count by 1
-                } else {
-
-                    //clone item
-                    var result = $(this).clone();
-                    //retrieve attributes
-                    var href = $(result).find('.head-toggle').attr('href');
-                    var id = $(result).find('.article-content').attr('id');
-                    //change clone to not mess with original
-                    $(result).find('.head-toggle').attr('href', href+'-search');
-                    $(result).find('.head-toggle').attr('aria-controls', id+'-search')
-                    $(result).find('.article-content').attr('id', id+'-search')
-
-                    //add clone and occurrence count to array for sorting
-                    var item = [occurrences($(result).text().toLowerCase(), filter), $(result)];
-
-                    gatheredResults.push(item);
-
-                }
-            });
-     
-            //sort results from most occurrences of query to least amount
-            gatheredResults.sort(function(a, b){ return b[0] - a[0]; });
-
-            //add results
-            $.each(gatheredResults, function (key,value) {
-              $(value[1]).appendTo('#results-listing');
-              //increase count
-              count++;
-            });
-
-            $('#searchResults .article-panel').show();
-            $('.search-info').hide()
-            $("#filter-count").text(elgg.echo('freshdesk:knowledge:search:results', [count]));
-            if(count > 0){
-              $('.relatedArticles a').text(elgg.echo('freshdesk:ticket:matching', [count])).parent().show();
-            } else {
-              $('.relatedArticles').hide();
-            }
-          } else {
-            $('#searchResults .article-panel').hide();
-            $('.search-info').show()
-            $('.relatedArticles').hide();
-            $("#filter-count").text("");
-          }
-    });
-
-
 
 //delete me later - code for easy and quick changes to UI
 /*

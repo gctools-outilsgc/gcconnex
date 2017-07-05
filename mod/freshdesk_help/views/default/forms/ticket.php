@@ -18,7 +18,8 @@ if (elgg_is_sticky_form('ticket-submit')) {
 
  <h3 class="h2 mrgn-lft-sm"><?php echo elgg_echo('freshdesk:ticket:title'); ?></h3>
 <div class="panel-body">
-  <div>
+  
+<div>
 <label for="email"><?php echo elgg_echo('freshdesk:ticket:email'); ?></label>
 <?php echo elgg_view('input/text', array(
   'name' => 'email',
@@ -36,7 +37,8 @@ if (elgg_is_sticky_form('ticket-submit')) {
   'name' => 'subject',
   'id' => 'subject',
   'required' => 'required',
-  'value' => $subject
+  'value' => $subject,
+  'onkeyup' => 'matchArticles(this)'
 ));
 ?>
 <span class="relatedArticles btn-primary"><a href="#searchResults"></a></span>

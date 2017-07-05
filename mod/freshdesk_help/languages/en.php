@@ -1,5 +1,8 @@
 <?php
 return array(
+
+      'freshdesk:page:title' => 'Freshdesk',
+
       //search knowledge base
       'freshdesk:knowledge:title' => "Knowledge base",
       'freshdesk:knowledge:search:title' => "Search knowledge base",
