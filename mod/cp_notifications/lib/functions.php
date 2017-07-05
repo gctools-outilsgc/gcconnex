@@ -206,22 +206,9 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
             'subtype' => $subtype
         );
 
-
-//Translate group title
-        $language_preference = elgg_get_plugin_user_setting('cpn_set_digest_language', $send_to->guid, 'cp_notifications');
-        if (strcmp($language_preference, 'set_digest_en') == 0) {
-            $language_preference = 'en';
-            $entity_title = gc_explode_translation($entity->getContainerEntity()->name, 'en');
-
-        } else {
-            $language_preference = 'fr';
-            $entity_title = gc_explode_translation($entity->getContainerEntity()->name, 'fr');
-        }
-
-
     }
 
-if ($subtype === "hjforumcategory" || $subtype === "hjforum") return true;
+	if ($subtype === "hjforumcategory" || $subtype === "hjforum") return true;
 
 
 	switch ($subtype) {
