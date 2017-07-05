@@ -7,6 +7,7 @@
 	.ext, .dept 		{ font-size: 14px; width: 100%; }
 	input:disabled 		{ background: #ddd; }
 	.edit-message 		{ font-weight: bold; }
+	.elgg-form-settings	{ max-width: none; }
 </style>
 
 <script type="text/javascript">
@@ -124,34 +125,25 @@ $delete_btn = elgg_view('output/confirmlink', array(
 	'text' => elgg_echo('c_ext:delete'),
 	'href' => $delete_from_db));
 
-
-$sort = $_GET['sort'];
-$sort_param = ($sort ? "&sort=" . $sort : "");
-$filter = $_GET['filter'];
-$filter_param = ($filter ? "&filter=" . $filter : "");
-$domains = getExtension($sort,$filter);
-
+$domains = getExtension();
 
 if (count($domains) > 0) {
 
-echo "SORT (departments): <a".getActiveClass('sort', 'asc')." href='?sort=asc".$filter_param."'>A-Z</a> / <a".getActiveClass('sort', 'desc')." href='?sort=desc".$filter_param."'>Z-A</a> <br/>";
-echo "FILTER: <a".getActiveClass('filter', 'university')." href='?filter=university".$sort_param."'>University</a> / <a".getActiveClass('filter', 'department')." href='?filter=department".$sort_param."'>Government Departments</a> / <a".getActiveClass('filter', 'all')." href='?filter=all".$sort_param."'>All</a> <br/>";
-
 	echo "<table name='display_extensions' width='100%' cellpadding='0' cellspacing='0' class='db-table'>";
 	echo '<thead><tr> <th></th> <th width="10%">'.elgg_echo('c_ext:id').'</th> <th>'.elgg_echo('c_ext:ext').'</th> <th>'.elgg_echo('c_ext:dept').'</th> <th width="10%"></th> </tr></thead>';
-	foreach ($domains as $domain) {
-		$delete_from_db = "action/c_email_extensions/delete?id={$domain->id}";
+	while( $domain = $domains->fetch_assoc() ){
+		$delete_from_db = "action/c_email_extensions/delete?id=" . $domain['id'];
 		$delete_btn = elgg_view('output/confirmlink', array(
 			'name' => 'c_delete_from_db',
 			'text' => elgg_echo('c_ext:delete'),
 			'href' => $delete_from_db));
 
 		echo "<tbody><tr>"; 
-		echo "<td> {$delete_btn} </td>";
-		echo "<td> {$domain->id} </td>";
-		echo "<td> <input class='ext' data-id='{$domain->id}' type='text' value='{$domain->ext}' disabled /> </td>";
-		echo "<td> <input class='dept' data-id='{$domain->id}' type='text' value='{$domain->dept}' disabled /> </td>";
-		echo "<td> <a class='edit-extension' data-id='{$domain->id}' href='#'>".elgg_echo('edit')."</a> <a class='cancel-extension hidden elgg-button only-one-click elgg-button-cancel btn btn-default' data-id='{$domain->id}' href='#'>".elgg_echo('cancel')."</a> <a class='save-extension hidden elgg-button only-one-click elgg-button-submit btn btn-primary' data-id='{$domain->id}' href='#'>".elgg_echo('save')."</a> <br> <span class='edit-message' data-id='{$domain->id}'></span> </td>";
+		echo "<td>{$delete_btn}</td>";
+		echo "<td>" . $domain['id'] . "</td>";
+		echo "<td><input class='ext' data-id='" . $domain['id'] . "' type='text' value='" . $domain['ext'] . "' disabled /></td>";
+		echo "<td><input class='dept' data-id='" . $domain['id'] . "' type='text' value='" . $domain['dept'] . "' disabled /></td>";
+		echo "<td><a class='edit-extension' data-id='" . $domain['id'] . "' href='#'>".elgg_echo('edit')."</a> <a class='cancel-extension hidden elgg-button only-one-click elgg-button-cancel btn btn-default' data-id='" . $domain['id'] . "' href='#'>".elgg_echo('cancel')."</a> <a class='save-extension hidden elgg-button only-one-click elgg-button-submit btn btn-primary' data-id='" . $domain['id'] . "' href='#'>".elgg_echo('save')."</a> <br> <span class='edit-message' data-id='" . $domain['id'] . "'></span></td>";
 		echo "</tr></tbody>";
 	}
 	echo "</table>";
