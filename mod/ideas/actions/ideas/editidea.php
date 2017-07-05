@@ -21,8 +21,10 @@ if (is_null( $guid = get_input('guid') )) {
 
 $title = strip_tags(get_input('title'));
 $title2 = strip_tags(get_input('title2'));
+
 if (!$title) $title = $idea->title;
 if (!$title2) $title2 = $idea->title2;
+
 $description = $description1 = get_input('description');
 $description2 = get_input('description2');
 $tags = get_input('tags');
@@ -41,11 +43,7 @@ if($description && $description2){
 }
 
 $idea->title = $title;
-$idea->title2 = $title2;
-$idea->description = $description;
-$idea->description1 = $description1;
-$idea->description2 = $description2;
-$idea->description3 = gc_implode_translation($description1, $description2);
+$idea->description = gc_implode_translation($description1, $description2);
 $idea->access_id =$owner->access_id;
 $idea->tags = string_to_tag_array($tags);
 

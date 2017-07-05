@@ -9,7 +9,7 @@ $user_guid = (int)get_input('user_guid');
 $subtype = strtolower((string)get_input('subtype'));
 elgg_load_library('elgg:gc_notification:functions');
 $dbprefix = elgg_get_config('dbprefix');
-
+$lang = get_current_language();
 
 $query_subtype = " AND es.subtype = '{$subtype}'";
 if ($subtype === 'photo')
@@ -40,7 +40,7 @@ $subscribed_objects = array();
 
 foreach ($personal_contents as $personal_content) {
 	$content_url = create_url($personal_content->subtype, $personal_content->guid, $personal_content->title);
-	$content_title = $personal_content->title;
+	$content_title = gc_explode_translation($personal_content->title,$lang);
 
 	// wire post does not have a title	
 	if ($subtype === 'thewire')
@@ -60,7 +60,6 @@ foreach ($personal_contents as $personal_content) {
 
 	$subscribed_objects[$personal_content->guid] = "{$item_left}{$item_right}";
 }
-
 
 echo json_encode([
 	'text3' => $subscribed_objects,

@@ -12,7 +12,7 @@
 	$num_items = $widget->num_items;
 	$widget_hashtag = $widget->widget_hashtag;
 	if( strpos($widget_hashtag, ',') !== false ){
-		$widget_hashtag = explode(',', $widget_hashtag);
+		$widget_hashtag = array_map('trim', explode(',', $widget_hashtag));
 	}
 
 	if ( !isset($num_items) ) $num_items = 10;
@@ -24,6 +24,7 @@
 
 	if( is_array($widget_hashtag) ){
 		$all_hashtags = implode("|", $widget_hashtag);
+		$all_hashtags = str_replace("'", "''", $all_hashtags);
 		$query .= " AND wi.description REGEXP '{$all_hashtags}'";
 	} else {
 		$query .= " AND wi.description LIKE '%{$widget_hashtag}%'";

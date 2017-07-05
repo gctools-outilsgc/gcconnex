@@ -9,6 +9,7 @@
  *
  * USER 		DATE 			DESCRIPTION
  * MBlondin 	2016-02-14 		Creation of library
+ * Ilia Salem   2017-01-        Reworked for JSON
 
  ***********************************************************************/
  /**
@@ -21,12 +22,41 @@
  */
 function gc_implode_translation($english_txt,$french_txt)
 {
-    $value="[:en]".$english_txt."[:fr]".$french_txt."[:]";
+    $value = json_encode( array( "en" => $english_txt, "fr" => $french_txt ) );
 
     return $value;
 }
 
 function gc_explode_translation($imploded_txt, $lang)
+{
+    $json=json_decode($imploded_txt);
+
+    if( isset($json->en) || isset($json->fr) ){
+        if( $lang == 'en' && trim($json->en) != ''){
+            $value=$json->en;
+        }
+        else if( $lang == 'fr' && trim($json->fr) != ''){
+            $value=$json->fr;
+        }
+        else
+        {
+            if( ($lang=='fr') && trim($json->fr) == '' ){
+                $value=$json->en;
+            }
+            else if( ($lang=='en') && trim($json->en) == '' ){
+                $value=$json->fr;
+            }
+        }
+    }
+    else
+    {
+        $value=$imploded_txt;
+    }
+
+    return $value;
+}
+
+function old_gc_explode_translation($imploded_txt, $lang)
 {
     $text_ar=explode('[:',$imploded_txt);
     $en='';
@@ -52,13 +82,13 @@ function gc_explode_translation($imploded_txt, $lang)
             if(($lang=='fr') && (!$fr)){
        /*         $value=$fr;
             }else{*/
-                $value=$en;
+                $value="";      // for migration we want to maintain these as is
             }
 
              if(($lang=='en') && (!$en)){
       /*          $value=$en;
             }else{*/
-                $value=$fr;
+                $value="";      // for migration we want to maintain these as is
             }
 
         }

@@ -12,7 +12,7 @@
 	if( !isset($display_avatar) ) $display_avatar = 'yes';
 
 	$widget_users = $widget->widget_users;
-	$widget_users = explode(',', $widget_users);
+	$widget_users = array_map('trim', explode(',', $widget_users));
 
 	if( !empty($widget_users) ){
 

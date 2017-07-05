@@ -157,9 +157,13 @@ function wet4_theme_init() {
     elgg_register_action("widgets/delete", elgg_get_plugins_path() . "/wet4/actions/widgets/delete.php");
     elgg_register_action("user/requestnewpassword", elgg_get_plugins_path() . "/wet4/actions/user/requestnewpassword.php", "public");
 		elgg_register_action('logout_as', elgg_get_plugins_path() . '/wet4/actions/logout_as.php'); //login as out
+		elgg_register_action("question/autocomplete", elgg_get_plugins_path() . "/wet4/actions/object/question/autocomplete.php");
 
     //Verify the department action
     elgg_register_action("department/verify_department", elgg_get_plugins_path() . "/wet4/actions/department/verify_department.php");
+
+    // bilingual content upgrade script
+    elgg_register_action("wet4/update_to_json", elgg_get_plugins_path() . "/wet4/actions/bilingual_content/update_to_json.php");
 
 	// non-members do not get visible links to RSS feeds
 	if (!elgg_is_logged_in()) {

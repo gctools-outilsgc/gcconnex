@@ -15,19 +15,20 @@ $lang = get_current_language();
 $image = $photo = $vars['entity'];
 $album = $image->getContainerEntity();
 
-if(($photo->description2) && ($photo->description)){
+$description_json = json_decode($photo->description);
+if( $description_json->en && $description_json->fr ){
 	echo'<div id="change_language" class="change_language">';
 	if (get_current_language() == 'fr'){
 
 		?>			
-		<span id="indicator_language_en" onclick="change_en('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $photo->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $photo->description2;?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
+		<span id="indicator_language_en" onclick="change_en('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $description_json->en;?></span><span id="fr_content" class="testClass hidden" ><?php echo $description_json->fr;?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
 			</span></span>
 		<?php
 
 	}else{
 				
 		?>			
-		<span id="indicator_language_fr" onclick="change_fr('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $photo->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $photo->description2;?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
+		<span id="indicator_language_fr" onclick="change_fr('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $description_json->en;?></span><span id="fr_content" class="testClass hidden" ><?php echo $description_json->fr;?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
 		<?php	
 	}
 	echo'</div>';
@@ -84,22 +85,6 @@ echo elgg_view('photos/tagging/select', $vars);
 
 echo $img;
 
-/*$image_src = elgg_get_site_url().'/photos/thumbnail/'.$image->guid.'/large/'.$image->largethumb;
-
-echo'<button onclick=rotate_ajax("'.$image_src.'")>ROTATION</button>';
-
-
-if (isset($_POST['action'])) {
-    switch ($_POST['action']) {
-        case 'rotation':
-            rotation($image);
-            break;
-        
-    }
-}
-*/
-
-
 echo elgg_view('photos/tagging/tags', $vars);
 echo '</div>';
 
@@ -110,11 +95,9 @@ echo '</div>';
 // }
 
 if ($photo->description) {
-	if (empty(gc_explode_translation($photo->description3, $lang))){
-	$description = $photo->description;
-}else{
-$description = gc_explode_translation($photo->description3, $lang);
-}
+	
+$description = gc_explode_translation($photo->description, $lang);
+
 	echo elgg_view('output/longtext', array(
 		'value' => $description,
 		'class' => 'mbl mrgn-tp-md mrgn-bttm-md',

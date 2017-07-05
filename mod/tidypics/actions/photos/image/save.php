@@ -25,10 +25,11 @@ $image = get_entity($guid);
 
 $image->title = $title;
 $image->title2 = $title2;
-$image->title3 = gc_implode_translation($title,$title2);
+$image->title = gc_implode_translation($title,$title2);
 $image->description = $description;
 $image->description2 = $description2;
-$image->description3 = gc_implode_translation($description,$description2);
+$image->description = gc_implode_translation($description,$description2);
+
 if($tags) {
         $image->tags = string_to_tag_array($tags);
 } else {

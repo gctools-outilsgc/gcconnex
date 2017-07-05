@@ -26,7 +26,17 @@ if($_SESSION['mission_search_switch'] == 'candidate') {
 
 if (elgg_is_sticky_form('searchsimplefill')) {
     extract(elgg_get_sticky_values('searchsimplefill'));
-    elgg_clear_sticky_form('searchsimplefill');
+}
+
+if($simple){
+
+    $clear_link = elgg_view('output/url', array(
+		'text' => elgg_echo('missions:clear_search'),
+		'href' => 'missions/main?clear=true&search='.$simple,
+		'class' => 'mrgn-lft-sm',
+		'is_action' => true,
+		'is_trusted' => true,
+	));
 }
 
 $input_simple_text = elgg_view('input/text', array(
@@ -51,7 +61,7 @@ $hidden_input = elgg_view('input/hidden', array(
 ?>
 
 <?php echo $hidden_input; ?>
-<div class="form-group" style="display:inline-block;margin-right:16px;">
+<div class="form-group" style="display:inline-block;margin-right:16px; clear:both;">
 	<div style="display:inline-block;vertical-align:middle;">
 		<?php echo $input_simple_text; ?> 
 		<input type="hidden" name="offset" value="0">
@@ -64,6 +74,7 @@ $hidden_input = elgg_view('input/hidden', array(
 					'value' => $button_text,
 					'id' => 'mission-simple-search-form-submission-button',
 			));
+			echo $clear_link;
 			echo elgg_view('page/elements/one-click-restrictor', array('restricted_element_id' => 'mission-simple-search-form-submission-button'));
 		?>
 	</div>

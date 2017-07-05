@@ -48,12 +48,14 @@ $mission->time_closed = time();
 $mission->save;
 
 // Generate an analytics record to track "completed".
+$ia = elgg_set_ignore_access(true);
 $analytics_record = new ElggObject();
 $analytics_record->subtype = 'mission-completed';
 $analytics_record->title = 'Mission Completed Report';
 $analytics_record->mission_guid = $mission->guid;
 $analytics_record->access_id = ACCESS_LOGGED_IN;
 $analytics_record->save();
+elgg_set_ignore_access($ia);
 
 
 system_message(elgg_echo('mission:has_been_completed', array($mission->job_title)));

@@ -6,11 +6,11 @@
 // Get variables
 $title = htmlspecialchars(get_input('title', '', false), ENT_QUOTES, 'UTF-8');
 $title2 = htmlspecialchars(get_input('title2', '', false), ENT_QUOTES, 'UTF-8');
-$title3 = gc_implode_translation($title, $title2);
+$title = gc_implode_translation($title, $title2);
 
 $desc = get_input("description");
 $desc2 = get_input("description2");
-$desc3 = gc_implode_translation($desc, $desc2);
+$desc = gc_implode_translation($desc, $desc2);
 $status = get_input("status");
 $access_id = (int) get_input("access_id");
 $container_guid = (int) get_input('container_guid');
@@ -51,17 +51,12 @@ if ($new_topic) {
 
 $topic->title = $title;
 $topic->title2 = $title2;
-$topic->title3 = $title3;
 $topic->description = $desc;
 $topic->description2 = $desc2;
-$topic->description3 = $desc3;
 $topic->status = $status;
 $topic->access_id = $access_id;
 $topic->container_guid = $container_guid;
 
-if(!$topic->title){
-	$topic->title = $topic->title2;
-}
 
 
 $topic->tags = string_to_tag_array($tags);

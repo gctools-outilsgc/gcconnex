@@ -8,8 +8,6 @@ return array(
 	'members:search' => 'Rechercher des utilisateurs',
 	'members:title:search' => 'Recherche de membres pour %s',
 	'members:total' => 'Nombre total de membres: %s',
-	'members:searchname' => "Rechercher des utilisateurs par leur nom.",
-	'members:searchtag' => 'Recherche par mots clé',
 	'members:label:newest' => 'plus récent',
 	'members:label:popular' => 'populaire',
 	'members:title:newest' => 'Nouveaux membres',
@@ -17,5 +15,5 @@ return array(
 	'members:title:searchname' => 'Recherche de membres pour %s',
 	'members:title:searchtag' => 'Membres marqués avec %s',
 	'members:title:online' => 'Membres en ligne',
-	'members:list:popular:none' => 'Aucun membre n\'a d\'amis.',
+	'members:list:popular:none' => 'Aucun membre n\'a de contact.',
 );

@@ -530,9 +530,9 @@ function groups_write_acl_plugin_hook($hook, $entity_type, $returnvalue, $params
 			unset($returnvalue[$access_id]);
 		}
 	}
-
+$lang = get_current_language();
 	// add write access to the group
-	$returnvalue[$page_owner->group_acl] = elgg_echo('groups:acl', array($page_owner->name));
+	$returnvalue[$page_owner->group_acl] = elgg_echo('groups:acl', array(gc_explode_translation($page_owner->name,$lang)));
 
 	return $returnvalue;
 }

@@ -34,7 +34,7 @@ if ($page_type == "edit") {
 		$lang = get_current_language();
 		$vars["entity"] = $blog;
 
-$tilte_blog = gc_explode_translation($blog->title3, $lang);
+$tilte_blog = gc_explode_translation($blog->title, $lang);
 		$title .= ": " . $tilte_blog;
 		
 		if ($revision) {

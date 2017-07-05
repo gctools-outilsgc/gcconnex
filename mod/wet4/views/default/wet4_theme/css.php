@@ -946,12 +946,11 @@ textarea {
 a {
   color: #295376;
   text-decoration: none; }
-  a:hover,
-  a:focus {
+  a:hover{
     color: #047177;
     text-decoration: underline; }
   a:focus {
-    outline: thin dotted;
+    outline: 1px dotted;
     outline: 5px auto -webkit-focus-ring-color;
     outline-offset: -2px; }
 

@@ -5,6 +5,11 @@ $site_name = $site->name;
 $contact_us = "{$site->getURL()}mod/contactform/?utm_source=notification_digest&utm_medium=email";
 
 $english = array(
+
+	'minor_save:title' => "Don’t want to send a notification?",
+	'minor_save:description' => "Posting new content will send out notifications to those who are subscribed. As the group owner or operator, you can decide not to send out notifications about the new content you post in the group. To do so, select the option “Do not send a notification” below.",
+	'minor_save:checkbox_label' => " Do not send a notification",
+
 	'cp_notifications:name' => "Notification Email",
 	'cp_notification:save:success' => "Settings have been saved successfully",
 	'cp_notification:save:failed' => "Settings did not save successfully",
@@ -58,6 +63,7 @@ $english = array(
 	'cp_notifications:mail_body:subtype:blog' => "%s posted a blog: %s", 
 	'cp_notifications:mail_body:subtype:bookmarks' => "%s posted a bookmark: %s", 
 	'cp_notifications:mail_body:subtype:file' => "%s posted a file: %s", 
+
 	'cp_notifications:mail_body:subtype:album' => "%s posted an album: %s", 
 	'cp_notifications:mail_body:subtype:thewire' => "%s posted on the %s",
 	'cp_notifications:mail_body:subtype:poll' => "%s created a poll: %s", 
@@ -65,6 +71,18 @@ $english = array(
 	'cp_notifications:mail_body:subtype:photo' => "%s posted an image: %s", 
 	'cp_notifications:mail_body:subtype:task' => "%s created a task: %s", 
 	'cp_notifications:mail_body:subtype:likes' => "%s liked your post: %s",
+
+	/// new translation require attention
+	'cp_notifications:mail_body:subtype:file_upload' => "%s posted %s file(s): %s", 	
+
+
+	/// new text
+	'cp_notifications:mail_body:subtype:file_upload:singular' => "%s has uploaded %s file:",
+	'cp_notifications:mail_body:subtype:file_upload:plural' => "%s has uploaded %s files:",
+	'cp_notifications:mail_body:subtype:file_upload:group:singular' => "%s has uploaded %s file in %s:",
+	'cp_notifications:mail_body:subtype:file_upload:group:plural' => "%s has uploaded %s files in %s:",
+
+
 
 	'cp_notifications:mail_body:subtype:response' => "%s replied or commented on the post: %s",
 
@@ -297,6 +315,10 @@ $english = array(
 	// +------ cyu - modified : <username> posted a new <item type> entitled <item name>
 	'cp_notify:body_new_content:title' => "<a href='%s'>%s</a> posted a new %s entitled <a href='%s'>%s</a>",
 	'cp_notify:body_new_content:title2' => "<a href='%s'>%s</a> posted a new %s in <a href='%s'>%s</a>",
+	'cp_notify:body_new_content:title3' => "<a href='%s'>%s</a> posted a new %s",
+
+	
+
 	'cp_notify:body_new_content:description' => "The description of the new posting is: <br/>
 		%s <br/>
 		<a href='%s'>View or comment</a> <br/>

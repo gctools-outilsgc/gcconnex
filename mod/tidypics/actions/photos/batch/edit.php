@@ -35,13 +35,14 @@ foreach ($guids as $key => $guid) {
 
 
 		if (($titles[$key]) && ($titles2[$key])){
-			$titles3[$key] = gc_implode_translation($titles[$key],$titles2[$key]);
+			$titles[$key] = gc_implode_translation($titles[$key],$titles2[$key]);
+			$image->title = $titles[$key];
 		}
 
 		// set description appropriately
 		$image->description = $captions[$key];
 		$image->description2 = $captions2[$key];
-		$image->description3 = gc_implode_translation($captions[$key],$captions2[$key]);
+		$image->description = gc_implode_translation($captions[$key],$captions2[$key]);
 		$image->tags = string_to_tag_array($tags[$key]);
 
 		if (!$image->save()) {

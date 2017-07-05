@@ -37,9 +37,10 @@ foreach (elgg_get_config('group') as $shortname => $valuetype) {
 
 $input['name'] = htmlspecialchars(get_input('name', '', false), ENT_QUOTES, 'UTF-8');
 $input['name2'] = htmlspecialchars(get_input('name2', '', false), ENT_QUOTES, 'UTF-8');
-$input['title3'] = gc_implode_translation($input['name'], $input['name2']);
-$input['description3'] = gc_implode_translation($input['description'], $input['description2']);
-$input['briefdescription3'] = gc_implode_translation($input['briefdescription'], $input['briefdescription2']);
+$input['title'] = gc_implode_translation($input['name'], $input['name2']);
+$input['name'] = gc_implode_translation($input['name'], $input['name2']);
+$input['description'] = gc_implode_translation($input['description'], $input['description2']);
+$input['briefdescription'] = gc_implode_translation($input['briefdescription'], $input['briefdescription2']);
 
 $user = elgg_get_logged_in_user_entity();
 
@@ -75,8 +76,9 @@ if (sizeof($input) > 0) {
 				update_data($query);
 			}
 		}
-
-		$group->$shortname = $value;
+		if(($shortname != 'description2') && ($shortname != 'name2') && ($shortname != 'briefdescription2')){
+			$group->$shortname = $value;
+		}
 	}
 	if(!$group->name){
 		$group->name = $group->name2;
