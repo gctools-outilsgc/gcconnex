@@ -33,7 +33,9 @@ if (isset($vars['entity'])) {
 	//get the array of possible responses
 
     $responses = polls_get_choices($vars['entity']);
+    $responses3 = polls_get_choices3($vars['entity']);
 
+    if ( count($responses3) >= count($responses) ) $responses = $responses3;		// when we have an old poll with 'choice3's
 
 	//get the array of user responses to the poll
 	$user_responses = $vars['entity']->getAnnotations('vote',9999,0,'desc');
