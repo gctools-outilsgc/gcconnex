@@ -31,6 +31,9 @@ function cp_notifications_init() {
     elgg_register_action('cp_notifications/usersettings/save', elgg_get_plugins_path() . 'cp_notifications/actions/usersettings/save.php');
 	elgg_register_action('cp_notifications/user_autosubscription',"{$action_base}/user_autosubscription.php");
 	elgg_register_action('cp_notifications/fix_inconsistent_subscription_script',"{$action_base}/fix_inconsistent_subscription_script.php");
+  
+  elgg_register_action('cp_notifications/fix_forums_subscription',"$actions_base/fix_forums_subscription.php");
+  
 	elgg_register_action('useradd',"$action_base/useradd.php",'admin'); // actions/useradd.php (core file)
 
 
@@ -58,7 +61,6 @@ function cp_notifications_init() {
 		elgg_unregister_event_handler('update', 'annotation','mentions_notification_handler');
 	}
 
-
     elgg_extend_view("js/elgg", "js/notification"); 
     elgg_extend_view("js/elgg", "js/popup");
     elgg_extend_view("js/elgg","js/wet4/language_ajax");
@@ -70,6 +72,7 @@ function cp_notifications_init() {
 	/// "minor save" for contents within groups (basically put the option for all the forms, then filter via URL)
 	$group_entity = elgg_get_page_owner_entity();
 	$current_user = elgg_get_logged_in_user_entity();
+
 
 	if (elgg_is_active_plugin('group_operators'))
 		elgg_load_library('elgg:group_operators');
