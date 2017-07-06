@@ -159,7 +159,7 @@ $('#fetch').on('click', function(){
                               var list = "<ul>";
                               $.each(article, function (key3,value3) {//<span class='collapse-plus fa fa-plus-square-o fa-lg' aria-hidden='true'></span>
                                 //if(value3.status == 2){
-                                  list += "<li class='article-listing'><a class='head-toggle collapsed' href='#"+ value3.id + "-en' data-toggle='collapse' aria-expanded='false' aria-controls='"+ value3.id +"-en'><div><h5><span class='collapse-plus fa fa-minus-square-o fa-lg' aria-hidden='true'></span>" + value3.title + "</h5></div></a><div id='" + value3.id +
+                                  list += "<li class='article-listing'><a class='head-toggle collapsed' href='#"+ value3.id + "-en' data-toggle='collapse' aria-expanded='false' aria-controls='"+ value3.id +"-en'><div><p class='list-title h5'><span class='collapse-plus fa fa-minus-square-o fa-lg' aria-hidden='true'></span>" + value3.title + "</div></a></p><div id='" + value3.id +
                                   "-en' class='collapse article-content'>" + value3.description + " </div> </div></li>";
                                 //}
                               });
@@ -237,7 +237,7 @@ $('#fetch').on('click', function(){
                                 var list = "<ul>";
                                 $.each(article, function (key3,value3) {//<span class='collapse-plus fa fa-plus-square-o fa-lg' aria-hidden='true'></span>
                                   //if(value3.status == 2){
-                                    list += "<li class='article-listing'><a class='head-toggle collapsed' href='#"+ value3.id + "-fr' data-toggle='collapse' aria-expanded='false' aria-controls='"+ value3.id +"-fr'><div><h5><span class='collapse-plus fa fa-minus-square-o fa-lg' aria-hidden='true'></span>" + value3.title + "</h5></div></a><div id='" + value3.id +
+                                    list += "<li class='article-listing'><a class='head-toggle collapsed' href='#"+ value3.id + "-fr' data-toggle='collapse' aria-expanded='false' aria-controls='"+ value3.id +"-fr'><div><p class='list-title h5'><span class='collapse-plus fa fa-minus-square-o fa-lg' aria-hidden='true'></span>" + value3.title + "</p></div></a><div id='" + value3.id +
                                     "-fr' class='collapse article-content'>" + value3.description + " </div> </div></li>";
                                   //}
                                 });

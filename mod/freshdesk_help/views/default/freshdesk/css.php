@@ -139,7 +139,7 @@
   border-bottom: 1px solid #eee;
 }
 
-.article-listing h5 {
+.article-listing .list-title {
   margin: 15px 2px;
 }
 

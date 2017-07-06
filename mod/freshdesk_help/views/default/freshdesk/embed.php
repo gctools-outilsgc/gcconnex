@@ -47,6 +47,7 @@
   <script>
    $(document).ready(function(){
 
+
 //delete me later - code for easy and quick changes to UI
 /*
 var yourdomain = <?php echo '"'.elgg_get_plugin_setting("domain", "freshdesk_help").'"'; ?>;
