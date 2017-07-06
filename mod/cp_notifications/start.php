@@ -31,6 +31,9 @@ function cp_notifications_init() {
     elgg_register_action('cp_notifications/usersettings/save', elgg_get_plugins_path() . 'cp_notifications/actions/usersettings/save.php');
 	elgg_register_action('cp_notifications/user_autosubscription',"{$action_base}/user_autosubscription.php");
 	elgg_register_action('cp_notifications/fix_inconsistent_subscription_script',"{$action_base}/fix_inconsistent_subscription_script.php");
+  
+  elgg_register_action('cp_notifications/fix_forums_subscription',"$actions_base/fix_forums_subscription.php");
+  
 	elgg_register_action('useradd',"$action_base/useradd.php",'admin'); // actions/useradd.php (core file)
 
 
@@ -64,6 +67,7 @@ function cp_notifications_init() {
 
     // remove core notification settings portion of the main settings page
     elgg_unextend_view('forms/account/settings', 'core/settings/account/notifications');
+
 
 	/// "minor save" for contents within groups (basically put the option for all the forms, then filter via URL)
 	$group_entity = elgg_get_page_owner_entity();
