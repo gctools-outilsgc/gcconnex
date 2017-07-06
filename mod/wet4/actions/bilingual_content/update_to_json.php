@@ -50,13 +50,15 @@ $excerpt3_id = elgg_get_metastring_id('excerpt3', true);
 $poll_choice2_id = elgg_get_metastring_id('text2', true);	// get the metastring id, create the metastring if it does not exist
 $poll_choice3_id = elgg_get_metastring_id('text3', true);
 
+$update_id = elgg_get_metastring_id('enfr_update_complete', true);
+
 $success_count = 0;
 $error_count = 0;
 
 do {
-	$object_guids = get_data("SELECT distinct e.guid as guid from {$db_prefix}entities e LEFT JOIN {$db_prefix}metadata md ON e.guid = md.entity_guid 
-		WHERE md.name_id IN ({$title2_id}, {$title3_id}, {$name2_id}, {$name3_id}, {$question2_id}, {$question3_id}, {$description2_id}, {$description3_id}, {$briefdescription2_id}, {$briefdescription3_id}, {$excerpt2_id}, {$excerpt3_id}, {$poll_choice2_id}, {$poll_choice3_id})
-		ORDER BY e.guid DESC 
+	$object_guids = get_data("SELECT distinct e.guid as guid from {$db_prefix}entities e LEFT JOIN {$db_prefix}metadata md ON e.guid = md.entity_guid LEFT JOIN (SELECT * FROM {$db_prefix}metadata WHERE name_id = {$update_id}) mdu ON e.guid = mdu.entity_guid
+		WHERE md.name_id IN ({$title2_id}, {$title3_id}, {$name2_id}, {$name3_id}, {$question2_id}, {$question3_id}, {$description2_id}, {$description3_id}, {$briefdescription2_id}, {$briefdescription3_id}, {$excerpt2_id}, {$excerpt3_id}, {$poll_choice2_id}, {$poll_choice3_id}) AND mdu.value_id IS NULL
+		ORDER BY e.guid DESC
 		LIMIT {$offset}, {$limit}");
 
 	if (!$object_guids) {
@@ -64,7 +66,7 @@ do {
 		break;
 	}
 
-	// Subscribe users to all the content in their groups
+	// migrate all old storage style of bilingual content to json strings
 	foreach ( $object_guids as $object_guid ) {
 		$object = get_entity($object_guid->guid);
 
@@ -72,13 +74,12 @@ do {
 		if ( isset($object->title2) ){
 			$new_title = gc_implode_translation( $object->title, $object->title2 );
 			$object->title = $new_title;
-			$object->deleteMetadata( "title2" );
-			$object->deleteMetadata( "title3" );
+			$object->enfr_update_complete = 1;
 			$object->save();
 		}
 		else if ( isset($object->title3 ) ){
 			$object->title = gc_implode_translation( old_gc_explode_translation($object->title3, 'en'), old_gc_explode_translation($object->title3, 'fr') );
-			$object->deleteMetadata( "title3" );
+			$object->enfr_update_complete = 1;
 			$object->save();
 		}
 
@@ -86,13 +87,12 @@ do {
 		if ( isset($object->name2) ){
 			$new_name = gc_implode_translation( $object->name, $object->name2 );
 			$object->name = $new_name;
-			$object->deleteMetadata( "name2" );
-			$object->deleteMetadata( "name3" );
+			$object->enfr_update_complete = 1;
 			$object->save();
 		}
 		else if ( isset($object->name3 ) ){
 			$object->name = gc_implode_translation( old_gc_explode_translation($object->name3, 'en'), old_gc_explode_translation($object->name3, 'fr') );
-			$object->deleteMetadata( "name3" );
+			$object->enfr_update_complete = 1;
 			$object->save();
 		}
 
@@ -100,65 +100,60 @@ do {
 		if ( isset($object->question2) ){
 			$new_name = gc_implode_translation( $object->question, $object->question2 );
 			$object->question = $new_name;
-			$object->deleteMetadata( "question2" );
-			$object->deleteMetadata( "question3" );
+			$object->enfr_update_complete = 1;
 			$object->save();
 		}
 		else if ( isset($object->question3 ) ){
 			$object->question = gc_implode_translation( old_gc_explode_translation($object->question3, 'en'), old_gc_explode_translation($object->question3, 'fr') );
-			$object->deleteMetadata( "question3" );
+			$object->enfr_update_complete = 1;
 			$object->save();
 		}
 
 		// check, migrate description
 		if ( isset($object->description2) ){
 			$object->description = gc_implode_translation( $object->description, $object->description2 );
-			$object->deleteMetadata( "description2" );
-			$object->deleteMetadata( "description3" );
+			$object->enfr_update_complete = 1;
 			$object->save();
 		}
 		else if ( isset($object->description3 ) ){
 			$object->description = gc_implode_translation( old_gc_explode_translation($object->description3, 'en'), old_gc_explode_translation($object->description3, 'fr') );
-			$object->deleteMetadata( "description3" );
+			$object->enfr_update_complete = 1;
 			$object->save();
 		}
 
 		// check, migrate briefdescription
 		if ( isset($object->briefdescription2) ){
 			$object->briefdescription = gc_implode_translation( $object->briefdescription, $object->briefdescription2 );
-			$object->deleteMetadata( "briefdescription2" );
-			$object->deleteMetadata( "briefdescription3" );
+			$object->enfr_update_complete = 1;
 			$object->save();
 		}
 		else if ( isset($object->briefdescription3 ) ){
 			$object->briefdescription = gc_implode_translation( old_gc_explode_translation($object->briefdescription3, 'en'), old_gc_explode_translation($object->briefdescription3, 'fr') );
-			$object->deleteMetadata( "briefdescription3" );
+			$object->enfr_update_complete = 1;
 			$object->save();
 		}
 
 		// check, migrate excerpt
 		if ( isset($object->excerpt2) ){
 			$object->excerpt = gc_implode_translation( $object->excerpt, $object->excerpt2 );
-			$object->deleteMetadata( "excerpt2" );
-			$object->deleteMetadata( "excerpt3" );
+			$object->enfr_update_complete = 1;
 			$object->save();
 		}
 		else if ( isset($object->excerpt3 ) ){
 			$object->excerpt = gc_implode_translation( old_gc_explode_translation($object->excerpt3, 'en'), old_gc_explode_translation($object->excerpt3, 'fr') );
-			$object->deleteMetadata( "excerpt3" );
+			$object->enfr_update_complete = 1;
 			$object->save();
 		}
 
 		// check, migrate poll_choice
 		if ( isset($object->text2) ){
 			$object->text = gc_implode_translation( $object->text, $object->text2 );
-			$object->deleteMetadata( "text2" );
-			$object->deleteMetadata( "text3" );
+			$object->enfr_update_complete = 1;
 			$object->save();
 		}
 		else if ( isset($object->text3) ){
 			$object->text = gc_implode_translation( old_gc_explode_translation($object->text3, 'en'), old_gc_explode_translation($object->text3, 'fr') );
-			$object->deleteMetadata( "text3" );
+			$object->enfr_update_complete = 1;
 			$object->save();
 		}
 
