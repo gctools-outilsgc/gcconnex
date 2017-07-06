@@ -212,11 +212,15 @@ function input_livesearch_page_handler($page) {
 	$q = str_replace(array('_', '%'), array('\_', '\%'), $q);
 
 // for the group members search: group guid - should be numeric
-	$g = get_input('term', get_input('g'));
-	$g = sanitise_string($g);
+	if (!$g = get_input('term', get_input('g'))){
+		$g=0;
+	}
+	else {
+		$g = sanitise_string($g);
 
-	// replace mysql vars with escaped strings
-	$g = str_replace(array('_', '%'), array('\_', '\%'), $g);
+		// replace mysql vars with escaped strings
+		$g = str_replace(array('_', '%'), array('\_', '\%'), $g);
+	}
 
 	$match_on = get_input('match_on', 'all');
 
