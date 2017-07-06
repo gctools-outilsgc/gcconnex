@@ -81,7 +81,7 @@ if($subtype_test == 'comment' || $subtype_test =='discussion_reply'){
 }
 
 
-	$name = gc_explode_translation($container->title,$lang);
+	$name = gc_explode_translation($container->name,$lang);
 
 
 if ($container instanceof ElggGroup && $container->guid != elgg_get_page_owner_guid()) {

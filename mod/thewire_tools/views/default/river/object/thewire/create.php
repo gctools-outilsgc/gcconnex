@@ -10,7 +10,7 @@ $excerpt = thewire_tools_filter($excerpt);
 $subject = $vars["item"]->getSubjectEntity();
 $subject_link = elgg_view("output/url", array(
 	"href" => $subject->getURL(),
-	"text" => $subject->title,
+	"text" => $subject->name,
 	"class" => "elgg-river-subject",
 	"is_trusted" => true,
 ));
