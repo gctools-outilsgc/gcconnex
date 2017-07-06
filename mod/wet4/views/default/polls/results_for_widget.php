@@ -32,8 +32,10 @@ if (isset($vars['entity'])) {
 
 	//get the array of possible responses
 
-    $responses = polls_get_choice_array($vars['entity']);
+    $responses = polls_get_choices($vars['entity']);
+    $responses3 = polls_get_choices3($vars['entity']);
 
+    if ( count($responses3) >= count($responses) ) $responses = $responses3;		// when we have an old poll with 'choice3's
 
 	//get the array of user responses to the poll
 	$user_responses = $vars['entity']->getAnnotations('vote',9999,0,'desc');
@@ -51,7 +53,7 @@ if (isset($vars['entity'])) {
 	{
 		//get count per response
 
-		$response_count = polls_get_response_count($response, $user_responses);
+		$response_count = polls_get_response_count_enfr($response, $user_responses);
 			
 		//calculate %
 		if ($response_count && $user_responses_count) {
@@ -65,7 +67,7 @@ if (isset($vars['entity'])) {
 
 <th class="text-center">
         <?php 
-        $response1 = gc_explode_translation($response, $lang);
+        $response1 = gc_explode_translation($response->text, $lang);
 
         echo $response1;
         
@@ -82,13 +84,13 @@ if (isset($vars['entity'])) {
     	foreach($responses as $response)
 	{
 
-		$response1 = gc_explode_translation($response, $lang);
+		$response1 = gc_explode_translation($response->text, $lang);
             if(empty($response1)){
-            $response1 = $response;
+            $response1 = $response->text;
             }
 
 		//get count per response
-		$response_count = polls_get_response_count($response, $user_responses);
+		$response_count = polls_get_response_count_enfr($response, $user_responses);
 
 		//calculate %
 		if ($response_count && $user_responses_count) {

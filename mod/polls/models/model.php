@@ -489,3 +489,25 @@ function polls_get_response_count($valueToCount, $fromArray) {
 	}
 	return $count;
 }
+
+function polls_get_response_count_enfr($responseToCount, $fromArray) {
+	$count = 0;
+	$toCount = $responseToCount->text;
+	$toCount3 = $responseToCount->text3;
+
+	if(is_array($fromArray))
+	{
+		foreach($fromArray as $item)
+		{
+			if($item->value == $toCount)
+			{
+				$count += 1;
+			}
+			else if($item->value == $toCount3)
+			{
+				$count += 1;
+			}
+		}
+	}
+	return $count;
+}
