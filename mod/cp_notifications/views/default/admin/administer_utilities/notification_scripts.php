@@ -145,9 +145,6 @@ $body .= '<fieldset class="elgg-fieldset" id="elgg-settings-advanced-system" sty
 $body .= "<legend>Fix all the invalid Forum subscriptions</legend>";
 $body .= "<div style='padding-top:10px; padding-bottom:10px;'>";
 			
-	$str_id = elgg_get_metastring_id('fix_forum_subscriptions', true);
-	$val_id = elgg_get_metastring_id('0');
-
 	// get all the forums subscribed by users
 	$query = "  SELECT r1.guid_one, r1.guid_two, e.container_guid, es.subtype, r1.relationship
 	            FROM elggentity_relationships r1 
@@ -159,7 +156,6 @@ $body .= "<div style='padding-top:10px; padding-bottom:10px;'>";
 
 	// contains everything that is related to the forums
 	$forums = get_data($query);
-
 	$invalid_forums = array();
 
 	// find all the invalid forums (users that are not members of a particular group that the forum resides in)
@@ -169,10 +165,15 @@ $body .= "<div style='padding-top:10px; padding-bottom:10px;'>";
 	    
 	    // check if the user is a member of the group indicated
 	    if (!($relationship instanceof ElggRelationship)) {
-	        $invalid_forums[] = $forum->guid_one.'|'.$forum->guid_two;
+	        $invalid_forums[] = "{$forum->guid_one}|{$forum->guid_two}|{$group_id}";
 	    }
 	}
 
+	/*$body .= "<br/><br/>";
+	foreach ($invalid_forums as $key => $value) {
+		$body .= "<p>{$value} </p>";
+	}
+	$body .= "<br/><br/>";*/
 
 	$body .= elgg_view('admin/upgrades/view', array(
 		'count' => count($invalid_forums),
