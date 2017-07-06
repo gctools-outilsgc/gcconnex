@@ -41,7 +41,7 @@ function discussion_handle_all_page() {
  * @param int $guid Group entity GUID
  */
 function discussion_handle_list_page($guid) {
-
+	$lang = get_current_language();
 	elgg_set_page_owner_guid($guid);
 
 	elgg_group_gatekeeper();
@@ -50,7 +50,7 @@ function discussion_handle_list_page($guid) {
 	if (!elgg_instanceof($group, 'group')) {
 		forward('', '404');
 	}
-	elgg_push_breadcrumb($group->name, $group->getURL());
+	elgg_push_breadcrumb(gc_explode_translation($group->name,$lang), $group->getURL());
 	elgg_push_breadcrumb(elgg_echo('item:object:groupforumtopic'));
 
 	elgg_register_title_button();
@@ -107,7 +107,7 @@ function discussion_handle_edit_page($type, $guid) {
 
 		$title = elgg_echo('groups:addtopic');
 
-		elgg_push_breadcrumb($group->name, "discussion/owner/$group->guid");
+		elgg_push_breadcrumb(gc_explode_translation($group->name,$lang), "discussion/owner/$group->guid");
 		elgg_push_breadcrumb($title);
 
 		$body_vars = discussion_prepare_form_vars();
@@ -126,25 +126,14 @@ function discussion_handle_edit_page($type, $guid) {
 
 		$title = elgg_echo('groups:edittopic');
 
-		if($group->title3){
-			elgg_push_breadcrumb(gc_explode_translation($group->title3,$lang), "discussion/owner/$group->guid");
-		}else{
-			elgg_push_breadcrumb($group->name, "discussion/owner/$group->guid");
-		}
-
-		if($group->title3){
-			elgg_push_breadcrumb(gc_explode_translation($topic->title3,$lang), $topic->getURL());
-		}else{
-			elgg_push_breadcrumb($topic->title, $topic->getURL());
-		}
-
-		
-		
+		elgg_push_breadcrumb(gc_explode_translation($group->title,$lang), "discussion/owner/$group->guid");
+		elgg_push_breadcrumb(gc_explode_translation($topic->title,$lang), $topic->getURL());
 		elgg_push_breadcrumb($title);
 
 		$body_vars = discussion_prepare_form_vars($topic);
 		$content = elgg_view_form('discussion/save', array(), $body_vars);
 	}
+
 
 	$params = array(
 		'content' => $content,
@@ -235,18 +224,11 @@ function discussion_handle_view_page($guid) {
 
 	elgg_group_gatekeeper();
 
-	if($group->title3){
-		elgg_push_breadcrumb(gc_explode_translation($group->title3,$lang), "discussion/owner/$group->guid");
-	}else{
-		elgg_push_breadcrumb($group->name, "discussion/owner/$group->guid");
-	}
-
 	
-	if($topic->title3){
-	elgg_push_breadcrumb(gc_explode_translation($topic->title3, $lang));
-    }else{
-      elgg_push_breadcrumb($topic->title);  
-    }
+		elgg_push_breadcrumb(gc_explode_translation($group->title,$lang), "discussion/owner/$group->guid");
+
+	elgg_push_breadcrumb(gc_explode_translation($topic->title, $lang));
+
 
 	$params = array(
 		'topic' => $topic,
@@ -264,11 +246,9 @@ function discussion_handle_view_page($guid) {
 	} else {
 		$content .= elgg_view('discussion/replies', $params);
 	}
-if($topic->title3){
-   $title = gc_explode_translation($topic->title3, $lang);
-}else{
-$title = $topic->title;
-}
+
+   $title = gc_explode_translation($topic->title, $lang);
+
 	$params = array(
 		'content' => $content,
 		'title' =>$title,
@@ -288,6 +268,7 @@ $title = $topic->title;
  */
 function discussion_prepare_form_vars($topic = NULL) {
 	// input names => defaults
+	$lang = get_current_language();
 	$values = array(
 		'title' => '',
 		'title2' => '',
@@ -304,7 +285,8 @@ function discussion_prepare_form_vars($topic = NULL) {
 	if ($topic) {
 		foreach (array_keys($values) as $field) {
 			if (isset($topic->$field)) {
-				$values[$field] = $topic->$field;
+
+					$values[$field] = $topic->$field;
 			}
 		}
 	}

@@ -3,7 +3,6 @@
 /engine/settings-*.php
 /.htaccess
 /cometchat/*
-/composer.lock
 /composer.phar
 /cache
 
@@ -12,10 +11,7 @@
 
 # ignore Single Signon mods
 
-
-
 /mod/gsa/
-
 
 # don't ignore bundled plugins
 !/mod/blog/
@@ -88,3 +84,8 @@ startup.sh
 
 # Ignore data files
 /data/
+
+
+# Composer files
+/vendor/
+

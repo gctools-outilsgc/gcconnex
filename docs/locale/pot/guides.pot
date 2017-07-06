@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg 1.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-06 18:02+0200\n"
+"POT-Creation-Date: 2017-05-10 10:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -156,23 +156,6 @@ msgstr ""
 
 #: ../../guides/actions.rst:12
 msgid ":doc:`i18n`"
-msgstr ""
-
-#: ../../guides/actions.rst:0
-#: ../../guides/database.rst:0
-#: ../../guides/events-list.rst:0
-#: ../../guides/guidelines.rst:0
-#: ../../guides/hooks-list.rst:0
-#: ../../guides/javascript.rst:0
-#: ../../guides/menus.rst:0
-#: ../../guides/notifications.rst:0
-#: ../../guides/plugins/dependencies.rst:0
-#: ../../guides/themes.rst:0
-#: ../../guides/upgrading.rst:0
-#: ../../guides/views.rst:0
-#: ../../guides/web-services.rst:0
-#: ../../guides/widgets.rst:0
-msgid "Contents"
 msgstr ""
 
 #: ../../guides/actions.rst:19
@@ -349,7 +332,7 @@ msgid "``elgg_get_sticky_values($name)`` Returns all sticky values saved for $na
 msgstr ""
 
 #: ../../guides/actions.rst:232
-#: ../../guides/i18n.rst:9
+#: ../../guides/i18n.rst:12
 #: ../../guides/plugins/dependencies.rst:11
 msgid "Overview"
 msgstr ""
@@ -788,6 +771,26 @@ msgstr ""
 
 #: ../../guides/context.rst:11
 msgid "Sometimes a view will return different HTML depending on the context. A plugin can take advantage of that by setting the context before calling ``elgg_view()`` on the view and then setting the context back. This is frequently done with the search context."
+msgstr ""
+
+#: ../../guides/cron.rst:2
+msgid "Cron"
+msgstr ""
+
+#: ../../guides/cron.rst:4
+msgid "If you setup cron correctly as described in :doc:`/admin/cron` special hooks will be triggered so you can register for these hooks from your own code."
+msgstr ""
+
+#: ../../guides/cron.rst:7
+msgid "The example below registers a function for the daily cron."
+msgstr ""
+
+#: ../../guides/cron.rst:16
+msgid "If timing is important in your cron hook be advised that the functions are executed in order of registration. This could mean that your function may start (a lot) later then you may have expected. However the parameters provided in the hook contain the original starting time of the cron, so you can always use that information."
+msgstr ""
+
+#: ../../guides/cron.rst:30
+msgid ":doc:`/design/events` has more information about hooks"
 msgstr ""
 
 #: ../../guides/database.rst:2
@@ -3183,20 +3186,20 @@ msgstr ""
 msgid "If you’d like to contribute translations to Elgg, see :doc:`the contributors' guide </about/contributing>`."
 msgstr ""
 
-#: ../../guides/i18n.rst:11
+#: ../../guides/i18n.rst:8
+msgid "The default language is ``en`` for English. Currently Elgg will always fall back to an English translation, even if the site's language is not English; this is a known bug."
+msgstr ""
+
+#: ../../guides/i18n.rst:14
 msgid "Translations are stored in PHP files in the ``/languages`` directory of your plugin. Each file corresponds to a language. The format is ``/languages/{language-code}.php`` where ``{language-code}`` is the ISO 639-1 short code for the language. For example:"
 msgstr ""
 
-#: ../../guides/i18n.rst:22
-msgid "The default language is “en” for English."
-msgstr ""
-
 #: ../../guides/i18n.rst:24
-msgid "To change the wording of any phrase, provide a new mapping in your plugin’s ``{language}.php`` file for the associated key:"
+msgid "To override an existing translation, include it in your plugin's language file, and make sure your plugin is ordered later on the Admin > Plugins page:"
 msgstr ""
 
-#: ../../guides/i18n.rst:36
-msgid "Unless you are overriding core’s or another plugin’s language strings, it is good practice for the language keys to start with your plugin name. For example: “yourplugin:success,” “yourplugin:title,” etc. This helps avoid conflicts with other language keys."
+#: ../../guides/i18n.rst:37
+msgid "Unless you are overriding core’s or another plugin's language strings, it is good practice for the language keys to start with your plugin name. For example: ``yourplugin:success``, ``yourplugin:title``, etc. This helps avoid conflicts with other language keys."
 msgstr ""
 
 #: ../../guides/i18n.rst:40
@@ -3227,23 +3230,31 @@ msgstr ""
 msgid "To force which language should be used for translation, set the third parameter:"
 msgstr ""
 
-#: ../../guides/i18n.rst:71
+#: ../../guides/i18n.rst:68
+msgid "To first test whether ``elgg_echo()`` can find a translation:"
+msgstr ""
+
+#: ../../guides/i18n.rst:79
+msgid "Some APIs allow creating translations for new keys. Translators should always include an English translation as a fallback. This makes ``elgg_language_key_exists($key)`` a reliable way to predict whether ``elgg_echo($key)`` will succeed."
+msgstr ""
+
+#: ../../guides/i18n.rst:84
 msgid "Javascript API"
 msgstr ""
 
-#: ../../guides/i18n.rst:73
-msgid "``elgg.echo(key, args, language)``"
+#: ../../guides/i18n.rst:86
+msgid "``elgg.echo(key, args)``"
 msgstr ""
 
-#: ../../guides/i18n.rst:75
-msgid "This function is the exact counterpart to ``elgg_echo`` in PHP."
+#: ../../guides/i18n.rst:88
+msgid "This function is like ``elgg_echo`` in PHP."
 msgstr ""
 
-#: ../../guides/i18n.rst:77
+#: ../../guides/i18n.rst:90
 msgid "Client-side translations are loaded asynchronously. Ensure translations are available by requiring the \"elgg\" AMD module:"
 msgstr ""
 
-#: ../../guides/i18n.rst:87
+#: ../../guides/i18n.rst:100
 msgid "Translations are also available after the ``init, system`` JavaScript event."
 msgstr ""
 
@@ -3920,30 +3931,34 @@ msgid "Page ownership"
 msgstr ""
 
 #: ../../guides/page-owner.rst:4
-msgid "One recurring task of any plugin will be to determine the page ownership in order to decide which actions are allowed or not. Elgg has a number of functions related to page ownership and also offers plugin developers flexibility by letting the plugin handle page ownership requests as well. Determining the owner of a page can be determined with ``elgg_get_page_owner_guid()``, which will return the GUID of the owner. Alternatively, ``elgg_get_page_owner_entity()`` will retrieve the whole page owner entity. If the page already knows who the page owner is, but the system doesn't, the it be can set by passing the GUID to ``elgg_set_page_owner_guid($guid)``."
-msgstr ""
-
-#: ../../guides/page-owner.rst:8
-msgid "Custom page owner handlers"
+msgid "One recurring task of any plugin will be to determine the page ownership in order to decide which actions are allowed or not. Elgg has a number of functions related to page ownership and also offers plugin developers flexibility by letting the plugin handle page ownership requests as well. Determining the owner of a page can be determined with ``elgg_get_page_owner_guid()``, which will return the GUID of the owner. Alternatively, ``elgg_get_page_owner_entity()`` will retrieve the whole page owner entity. If the page already knows who the page owner is, but the system doesn't, the page can set the page owner by passing the GUID to ``elgg_set_page_owner_guid($guid)``."
 msgstr ""
 
 #: ../../guides/page-owner.rst:10
-msgid "Plugin developers can create page owner handlers, which could be necessary in certain cases, for example when integrating third party functionality. The handler will be a function which will need to get registered with ``elgg_register_plugin_hook_handler('page_owner', 'system', 'your_page_owner_function_name');`` . The handler will only need to return a value (an integer GUID) when it knows for certain who the page owner is."
+msgid "The page owner entity can be any ``ElggEntity``. If you wish to only apply some setting in case of a user or a group make sure you check that you have the correct entity."
 msgstr ""
 
-#: ../../guides/page-owner.rst:12
-msgid "By default, the system determines the page_owner from the following elements:"
-msgstr ""
-
-#: ../../guides/page-owner.rst:14
-msgid "The ``username`` URL parameter"
+#: ../../guides/page-owner.rst:13
+msgid "Custom page owner handlers"
 msgstr ""
 
 #: ../../guides/page-owner.rst:15
-msgid "The ``owner_guid`` URL parameter"
+msgid "Plugin developers can create page owner handlers, which could be necessary in certain cases, for example when integrating third party functionality. The handler will be a function which will need to get registered with ``elgg_register_plugin_hook_handler('page_owner', 'system', 'your_page_owner_function_name');`` . The handler will only need to return a value (an integer GUID) when it knows for certain who the page owner is."
 msgstr ""
 
 #: ../../guides/page-owner.rst:17
+msgid "By default, the system determines the page_owner from the following elements:"
+msgstr ""
+
+#: ../../guides/page-owner.rst:19
+msgid "The ``username`` URL parameter"
+msgstr ""
+
+#: ../../guides/page-owner.rst:20
+msgid "The ``owner_guid`` URL parameter"
+msgstr ""
+
+#: ../../guides/page-owner.rst:22
 msgid "It then passes off to any page owner handlers defined using the :ref:`plugin hook <design/events#plugin-hooks>`. If no page owner can be determined, the page owner is set to 0, which is the same as the logged out user."
 msgstr ""
 
@@ -4859,87 +4874,91 @@ msgstr ""
 msgid "The site URL (home page) is a special case that produces an empty string identifier and an empty segments array."
 msgstr ""
 
-#: ../../guides/routing.rst:23
+#: ../../guides/routing.rst:21
+msgid "URL identifier/segments should be considered potentially dangerous user input. Elgg uses ``htmlspecialchars`` to escapes HTML entities in them."
+msgstr ""
+
+#: ../../guides/routing.rst:24
 msgid "Page Handler"
 msgstr ""
 
-#: ../../guides/routing.rst:25
+#: ../../guides/routing.rst:26
 msgid "To handle all URLs that begin with a particular identifier, you can register a function to act as a :doc:`/guides/pagehandler`. When the handler is called, the segments array is passed in as the first argument."
 msgstr ""
 
-#: ../../guides/routing.rst:29
+#: ../../guides/routing.rst:30
 msgid "The following code registers a page handler for \"blog\" URLs and shows how one might route the request to a resource view."
 msgstr ""
 
-#: ../../guides/routing.rst:56
+#: ../../guides/routing.rst:57
 msgid "The ``route`` Plugin Hook"
 msgstr ""
 
-#: ../../guides/routing.rst:58
+#: ../../guides/routing.rst:59
 msgid "The ``route`` plugin hook is triggered earlier, before page handlers are called. The URL identifier is given as the type of the hook. This hook can be used to modify the identifier or segments, to take over page rendering completely, or just to add some logic before the request is handled elsewhere."
 msgstr ""
 
-#: ../../guides/routing.rst:63
+#: ../../guides/routing.rst:64
 msgid "Generally devs should use a page handler unless they need to affect a single page or a wider variety of URLs."
 msgstr ""
 
-#: ../../guides/routing.rst:65
+#: ../../guides/routing.rst:66
 msgid "The following code intercepts requests to the page handler for ``customblog`` and internally redirects them to the ``blog`` page handler."
 msgstr ""
 
-#: ../../guides/routing.rst:78
+#: ../../guides/routing.rst:79
 msgid "The following code results in ``/blog/all`` requests being completely handled by the plugin hook handler. For these requests the ``blog`` page handler is never called."
 msgstr ""
 
-#: ../../guides/routing.rst:103
+#: ../../guides/routing.rst:104
 msgid "Routing overview"
 msgstr ""
 
-#: ../../guides/routing.rst:105
+#: ../../guides/routing.rst:106
 msgid "For regular pages, Elgg's program flow is something like this:"
 msgstr ""
 
-#: ../../guides/routing.rst:107
+#: ../../guides/routing.rst:108
 msgid "A user requests ``http://example.com/blog/owner/jane``."
 msgstr ""
 
-#: ../../guides/routing.rst:108
+#: ../../guides/routing.rst:109
 msgid "Plugins are initialized."
 msgstr ""
 
-#: ../../guides/routing.rst:109
+#: ../../guides/routing.rst:110
 msgid "Elgg parses the URL to identifier ``blog`` and segments ``['owner', 'jane']``."
 msgstr ""
 
-#: ../../guides/routing.rst:110
+#: ../../guides/routing.rst:111
 msgid "Elgg triggers the plugin hook ``route, blog`` (see above)."
 msgstr ""
 
-#: ../../guides/routing.rst:111
+#: ../../guides/routing.rst:112
 msgid "Elgg finds a registered page handler (see above) for ``blog``, and calls the function, passing in the segments."
 msgstr ""
 
-#: ../../guides/routing.rst:113
+#: ../../guides/routing.rst:114
 msgid "The page handler function determines it needs to render a single user's blog. It stores the username via ``set_input()`` and calls the view ``resources/blog/owner``."
 msgstr ""
 
-#: ../../guides/routing.rst:115
+#: ../../guides/routing.rst:116
 msgid "The ``resources/blog/owner`` view gets the username via ``get_input()``, and uses many other views and formatting functions like ``elgg_view_layout()`` and ``elgg_view_page()`` to create the entire HTML page."
 msgstr ""
 
-#: ../../guides/routing.rst:117
+#: ../../guides/routing.rst:118
 msgid "The page handler echos the view HTML and returns ``true`` to indicate it handled the request."
 msgstr ""
 
-#: ../../guides/routing.rst:118
+#: ../../guides/routing.rst:119
 msgid "PHP invokes Elgg's shutdown sequence."
 msgstr ""
 
-#: ../../guides/routing.rst:119
+#: ../../guides/routing.rst:120
 msgid "The user receives a fully rendered page."
 msgstr ""
 
-#: ../../guides/routing.rst:121
+#: ../../guides/routing.rst:122
 msgid "Elgg's coding standards suggest a particular URL layout, but there is no syntax enforced."
 msgstr ""
 

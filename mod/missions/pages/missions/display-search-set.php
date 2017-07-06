@@ -11,8 +11,10 @@
  * Page which displays the results of a users search, simple or advanced.
  */
 gatekeeper();
-
+$search_form = elgg_get_sticky_values('searchsimplefill');
 $search_typing = $_SESSION['mission_search_switch'];
+$advanced_form = elgg_get_sticky_values('advancedfill');
+$number_of_rows = elgg_get_plugin_setting('advanced_element_limit', 'missions');
 
 if($_SESSION[$search_typing . '_entities_per_page']) {
 	$entities_per_page = $_SESSION[$search_typing . '_entities_per_page'];
@@ -21,7 +23,6 @@ if($_SESSION[$search_typing . '_entities_per_page']) {
 $sort_missions_form .= elgg_view_form('missions/sort-missions-form', array(
 		'class' => 'form-horizontal'
 ));
-
 
 $opp_type_field = $_SESSION['missions_type_field_value'];
 $role_type_field = $_SESSION['missions_role_field_value'];
@@ -94,6 +95,63 @@ if($_SESSION['missions_from_skill_match']) {
 }
 
 $content .= elgg_view('page/elements/mission-tabs') . $max_reached;
+
+if ($search_form ) {
+    
+	$content .= '<div style="clear:both">'.elgg_view_form('missions/search-simple').'</div>';
+}
+
+ $search_fields = array(
+	        //'' => 'Choose',
+	        '',
+	        elgg_echo('missions:title'),
+	        elgg_echo('missions:type'),
+	        elgg_echo('missions:department'),
+	        elgg_echo('missions:key_skills'),
+	        elgg_echo('missions:security_clearance'),
+	        elgg_echo('missions:location'),
+	        elgg_echo('missions:language'),
+	        elgg_echo('missions:time'),
+	        elgg_echo('missions:period'),
+	        elgg_echo('missions:start_time'),
+	        elgg_echo('missions:duration'),
+	        elgg_echo('missions:work_remotely'),
+	        elgg_echo('missions:program_area')
+    );
+
+if ($advanced_form){
+    $content .='<strong>'.elgg_echo('missions:search_value').':</strong> ';
+	for ($s = 0; $s < $number_of_rows; $s ++) {
+        if ($advanced_form['selection_'.$s]){
+
+        	$value =str_replace('missions:', '', $advanced_form['selection_'.$s.'_element']);
+
+           $content .= '<span class="mrgn-rght-md"><strong>'.$advanced_form['selection_'.$s].':</strong> '.elgg_echo('missions:'.$value).' </span> ';
+          
+            
+        }
+    }
+        $content .= elgg_view('output/url', array(
+		'text' => elgg_echo('missions:clear_search'),
+		'href' => 'missions/main?clear=true&search='.$advanced_form,
+		'class' => 'mrgn-lft-sm',
+		'is_action' => true,
+		'is_trusted' => true,
+	));
+    
+    // Advanced search form which gets hidden.
+$advanced_search_form = elgg_view_form('missions/advanced-search-form', array(
+		'class' => 'form-horizontal'
+));
+$content .= '<br>'.elgg_view('page/elements/hidden-field', array(
+		'toggle_text' => elgg_echo('missions:search:Refine'),
+		'toggle_text_hidden' => elgg_echo('close'),
+		'toggle_id' => 'advanced-search',
+		'hidden_content' => $advanced_search_form,
+		'hideable_pre_content' => $simple_search_form,
+		'field_bordered' => true
+));
+}
 
 // Only displays sort form if the search set is missions.
 if($search_typing == 'mission') {

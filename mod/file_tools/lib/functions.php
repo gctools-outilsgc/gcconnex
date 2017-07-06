@@ -173,11 +173,8 @@ function file_tools_build_select_options($folders, $depth = 0) {
 			 */
 			if ($folder = elgg_extract("folder", $level)) {
 
-				if($folder->title3){
-					$folder_title = gc_explode_translation($folder->title3,$lang);
-				}else{
-					$folder_title = $folder->title;
-				}
+				$folder_title = gc_explode_translation($folder->title,$lang);
+	
 				$result[$folder->getGUID()] = str_repeat("-", $depth) . $folder_title;
 			}
 			
@@ -372,11 +369,9 @@ function file_tools_make_menu_items($folders) {
 		
 		foreach ($folders as $index => $level) {
 			if ($folder = elgg_extract("folder", $level)) {
-				if($folder->title3){
-					$folder_title = gc_explode_translation($folder->title3,$lang);
-				}else{
-					$folder_title = $folder->title;
-				}
+
+					$folder_title = gc_explode_translation($folder->title,$lang);
+
 
 				if (empty($folder_title)) {
 					$folder_title = elgg_echo("untitled");
@@ -875,6 +870,9 @@ function file_tools_create_folders($zip_entry, $container_guid, $parent_guid = 0
 function file_tools_unzip($file, $container_guid, $parent_guid = 0) {
 	$extracted = false;
 	
+	elgg_unregister_event_handler('single_file_upload', 'object', 'cp_create_notification');
+	elgg_unregister_event_handler('single_multi_file_upload', 'object', 'cp_create_notification');
+
 	if (!empty($file) && !empty($container_guid)) {
 		$allowed_extensions = file_tools_allowed_extensions();
 		
@@ -896,6 +894,10 @@ function file_tools_unzip($file, $container_guid, $parent_guid = 0) {
 			}
 		}
 		
+
+		$number_of_uploaded_files = 0;
+		$files_uploaded = array();
+
 		// open the zip file
 		$zip = zip_open($zipfile);
 		while ($zip_entry = zip_read($zip)) {
@@ -1023,7 +1025,10 @@ function file_tools_unzip($file, $container_guid, $parent_guid = 0) {
 							set_input('folder_guid', $parent);
 							
 							$filehandler->save();
-							
+							$files_uploaded[$number_of_uploaded_files] = $filehandler->getGUID();
+							$number_of_uploaded_files++;
+
+
 							$extracted = true;
 							
 							if (!empty($parent)) {
@@ -1040,6 +1045,22 @@ function file_tools_unzip($file, $container_guid, $parent_guid = 0) {
 		zip_close($zip);
 	}
 	
+
+	if ($extracted) {
+		/// execute this line of code only if cp_notifications is active
+		/// differentiate between single file upload and multiple files upload
+		if (elgg_is_active_plugin('cp_notifications')) {
+			$files_uploaded_information = array(
+				'files_uploaded' 			=> $files_uploaded,
+				'number_of_files_uploaded' 	=> $number_of_uploaded_files,
+				'subtype' 					=> 'file',
+				'group_guid' 				=> $container_guid,
+				'forward_guid' 				=> $container_guid
+			);
+			elgg_trigger_event('single_zip_file_upload', 'object', $files_uploaded_information);
+		}
+	}
+
 	return $extracted;
 }
 

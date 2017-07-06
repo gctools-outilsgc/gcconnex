@@ -21,11 +21,9 @@ if (!$file->canEdit()) {
 $title = elgg_echo('file:edit');
 
 elgg_push_breadcrumb(elgg_echo('file'), "file/all");
-if($file->title3){
-	elgg_push_breadcrumb(gc_explode_translation($file->title3,$lang), $file->getURL());
-}else{
-	elgg_push_breadcrumb($file->title3, $file->getURL());
-}
+
+elgg_push_breadcrumb(gc_explode_translation($file->title,$lang), $file->getURL());
+
 
 elgg_push_breadcrumb($title);
 

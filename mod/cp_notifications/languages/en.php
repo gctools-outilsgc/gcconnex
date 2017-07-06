@@ -5,7 +5,14 @@ $site_name = $site->name;
 $contact_us = "{$site->getURL()}mod/contactform/?utm_source=notification_digest&utm_medium=email";
 
 $english = array(
+
+	'minor_save:title' => "Don’t want to send a notification?",
+	'minor_save:description' => "Posting new content will send out notifications to those who are subscribed. As the group owner or operator, you can decide not to send out notifications about the new content you post in the group. To do so, select the option “Do not send a notification” below.",
+	'minor_save:checkbox_label' => " Do not send a notification",
+
 	'cp_notifications:name' => "Notification Email",
+	'cp_notification:save:success' => "Settings have been saved successfully",
+	'cp_notification:save:failed' => "Settings did not save successfully",
 
 	/// SETTINGS PAGE: Newsletter translation texts
 	'cp_newsletter:notice' => "Choose how you want to be notified of GCconnex activities of interest to you. The <strong>notifications digest</strong> can be used to receive a daily or weekly email that provides a summary of the activities to which you are subscribed. Prefer to receive instant notification? Forgo the digest and select the content for which you want to receive notification in real-time. Please note that email notifications are sent to the email address used in your <a href='{$site->getURL()}settings/user/?utm_source=notification_digest&utm_medium=email'>Account Settings</a>. See: “<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Manage_Account_Settings/How_Do_I_Change_My_Notifications_Settings%3F?utm_source=notification_digest&utm_medium=email'>How Do I Change My Notifications Settings</a>?” for more information.",
@@ -56,6 +63,7 @@ $english = array(
 	'cp_notifications:mail_body:subtype:blog' => "%s posted a blog: %s", 
 	'cp_notifications:mail_body:subtype:bookmarks' => "%s posted a bookmark: %s", 
 	'cp_notifications:mail_body:subtype:file' => "%s posted a file: %s", 
+
 	'cp_notifications:mail_body:subtype:album' => "%s posted an album: %s", 
 	'cp_notifications:mail_body:subtype:thewire' => "%s posted on the %s",
 	'cp_notifications:mail_body:subtype:poll' => "%s created a poll: %s", 
@@ -64,8 +72,19 @@ $english = array(
 	'cp_notifications:mail_body:subtype:task' => "%s created a task: %s", 
 	'cp_notifications:mail_body:subtype:likes' => "%s liked your post: %s",
 
+	/// new translation require attention
+	'cp_notifications:mail_body:subtype:file_upload' => "%s posted %s file(s): %s", 	
+
+
+	/// new text
+	'cp_notifications:mail_body:subtype:file_upload:singular' => "%s has uploaded %s file:",
+	'cp_notifications:mail_body:subtype:file_upload:plural' => "%s has uploaded %s files:",
+	'cp_notifications:mail_body:subtype:file_upload:group:singular' => "%s has uploaded %s file in %s:",
+	'cp_notifications:mail_body:subtype:file_upload:group:plural' => "%s has uploaded %s files in %s:",
+
+
+
 	'cp_notifications:mail_body:subtype:response' => "%s replied or commented on the post: %s",
-	//'cp_notifications:mail_body:subtype:response:others' => "%s replied or commented on the post: %s",
 
 	'cp_notifications:mail_body:subtype:any' => "%s posted a%s %s: %s", // john doe posted an idea vs john doe posted a blog
 
@@ -149,13 +168,13 @@ $english = array(
 	'cp_newsletter:heading:notify:likes:plural' => "Likes received on your content", 
 
 	'cp_newsletter:heading:notify:new_post:singular' => "New item has been posted by your colleague", 
-	'cp_newsletter:heading:notify:new_post:plural' => "New items have been posted by your colleagues", //CHANGE
+	'cp_newsletter:heading:notify:new_post:plural' => "New items have been posted by your colleagues",
 	
 	'cp_newsletter:heading:notify:new_post:group:singular' => "New item has been posted",
-	'cp_newsletter:heading:notify:new_post:group:plural' => "New items have been posted", //CHANGE
+	'cp_newsletter:heading:notify:new_post:group:plural' => "New items have been posted",
 
 	'cp_newsletter:heading:notify:content_revision:singular' => "Item has been revised", 
-	'cp_newsletter:heading:notify:content_revision:plural' => "Items have been revised", //CHANGE
+	'cp_newsletter:heading:notify:content_revision:plural' => "Items have been revised", 
 
 	'cp_newsletter:heading:notify:cp_mention:singular' => "Person mentioned you.", 	
 	'cp_newsletter:heading:notify:cp_mention:plural' => "People mentioned you.", 
@@ -193,13 +212,9 @@ $english = array(
 	'cp_new_mission:subject' => "New micromission notification",
 
 
-
 	// content edit section
-	//'cp_notify:subject:edit_content' => "%s has been updated by %s",
-	//'cp_notify:body_edit:title' => "This content has been edited.",
 	'cp_notify:subject:edit_content' => "%s '%s' has been updated by %s",
 	'cp_notify:body_edit:title' => "This %s has been edited.",
-	//'cp_notify:body_edit:description' => "Click here to view <a href='%s'>%s</a>.",
 	'cp_notify:body_edit:description' => "<a href='%s'>View or comment</a> <br/>
 		You can like, share or subscribe to this content directly in GCconnex",
 
@@ -224,7 +239,7 @@ $english = array(
 	
 	'cp_notify:footer:no_user' => 'Learn more about <a href="http://www.gcpedia.gc.ca/wiki/GCTools/GCconnex?utm_source=notification&utm_medium=email">GCconnex</a>, the professional networking and collaborative workspace for the public service.<br/>
 	Need help? <a href="https://gcconnex.gc.ca/mod/contactform/?utm_source=notification&utm_medium=email">Contact us</a>.',
-	//'cp_personalized_message' => 'Personalized message from %s.',
+	
 	'cp_personalized_message' => "<div style='border: 1px solid #047177; padding:5px; margin-bottom:10px;'>Personalized message from %s:<br/><i>%s</i></div>",
 
 
@@ -266,7 +281,7 @@ $english = array(
 
 
 	// posted comment section
-	// +------ cyu - updated email notification content
+
 	'cp_notify:subject:comments' => "A comment was posted in the group %s",
 	'cp_notify:subject:comments_discussion' => "A discussion reply was posted in the group %s",
 
@@ -299,6 +314,11 @@ $english = array(
 
 	// +------ cyu - modified : <username> posted a new <item type> entitled <item name>
 	'cp_notify:body_new_content:title' => "<a href='%s'>%s</a> posted a new %s entitled <a href='%s'>%s</a>",
+	'cp_notify:body_new_content:title2' => "<a href='%s'>%s</a> posted a new %s in <a href='%s'>%s</a>",
+	'cp_notify:body_new_content:title3' => "<a href='%s'>%s</a> posted a new %s",
+
+	
+
 	'cp_notify:body_new_content:description' => "The description of the new posting is: <br/>
 		%s <br/>
 		<a href='%s'>View or comment</a> <br/>
@@ -410,8 +430,8 @@ $english = array(
 	'cp_notify:wireshare:subject' => "%s shared your %s with title '%s'",
 	'cp_notify:body_wireshare:title' => "%s shared your %s with title '%s'",
 	'cp_notify:body_wireshare:title2' => "%s shared your %s",
-	//'cp_notify:body_wireshare:description' => "%s has shared your %s on the wire, to view or reply to this please click on the following link: %s",
-	'cp_notify:body_wireshare:description' => "%s shared your %s on the wire, to view or reply to this please click on the following link: %s", //CHANGE
+
+	'cp_notify:body_wireshare:description' => "%s shared your %s on the wire, to view or reply to this please click on the following link: %s", 
 	'cp_notify:wireshare_thewire:subject' => "%s shared your message on the wire",
 
 	// event calendar section
@@ -445,8 +465,6 @@ $english = array(
 	// email notification footer text (1 and 2)
 	'cp_notify:footer' => "Learn more about <a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Manage_Account_Settings/How_Do_I_Change_My_Notifications_Settings%3F?utm_source=notification&utm_medium=email'>GCconnex notifications</a>. ",
 	'cp_notify:footer2' => "Need help? <a href='".elgg_get_site_url()."contactform/?utm_source=notification&utm_medium=email'>Contact us</a>.<br/>To unsubscribe from these notifications, login to GCconnex and edit your <a href='%s'>notifications' settings</a>.",
-
-//'cp_notify:footer' => "Learn more about <a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Manage_Account_Settings/How_Do_I_Change_My_Notifications_Settings%3F'>GCconnex notifications</a>. %s sent you a site message entitled '%s'",
 
 
 	'cp_notify:quicklinks' => 'Subscription Quick Links',

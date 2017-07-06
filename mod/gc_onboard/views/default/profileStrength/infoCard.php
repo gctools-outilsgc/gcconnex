@@ -1,7 +1,7 @@
 <?php
 $user = elgg_get_logged_in_user_entity();
 echo '<div class="panel-heading">';
-echo '<h2 style="border-bottom:0px;">'.$user->name.'</h2>';
+echo '<h3 class="mrgn-tp-sm" style="border-bottom:0px;">'.$user->name.'</h3>';
 echo '</div>';
 
 

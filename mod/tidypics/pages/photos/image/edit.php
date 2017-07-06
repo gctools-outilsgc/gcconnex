@@ -31,11 +31,7 @@ elgg_group_gatekeeper();
 
 $title = elgg_echo('image:edit');
 
-if($owner->title3){
-	$group_title = gc_explode_translation($owner->title3,$lang);
-}else{
-	$group_title = $owner->title;
-}
+$group_title = gc_explode_translation($owner->title,$lang);
 
 // set up breadcrumbs
 elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
@@ -45,17 +41,9 @@ if (elgg_instanceof($owner, 'user')) {
 	elgg_push_breadcrumb($group_title, "photos/group/$owner->guid/all");
 }
 
-if($album->title3){
-	elgg_push_breadcrumb(gc_explode_translation($album->title3,$lang), $album->getURL());
-}else{
-	elgg_push_breadcrumb($album->getTitle(), $album->getURL());
-}
+elgg_push_breadcrumb(gc_explode_translation($album->title,$lang), $album->getURL());
 
-if($entity->title3){
-	elgg_push_breadcrumb(gc_explode_translation($entity->title3,$lang), $entity->getURL());
-}else{
-	elgg_push_breadcrumb($entity->getTitle(), $entity->getURL());
-}
+elgg_push_breadcrumb(gc_explode_translation($entity->title,$lang), $entity->getURL());
 
 elgg_push_breadcrumb($title);
 

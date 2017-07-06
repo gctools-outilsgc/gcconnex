@@ -3,7 +3,6 @@
 echo elgg_view('cp_notifications/admin_nav');
 $title = elgg_echo('Troubleshoot Tool');
 
-
 ?>
 
 <script>
@@ -16,11 +15,12 @@ $(document).keypress(function(e) {
     		data: {
     			username: user_name
     		},
+
     		success: function (user_information) {
-    			//alert("SUCCESS!");
                 $('.user_info').html(user_information.output.userinfo);
     		},
-    		error: function () {
+    		
+            error: function () {
     			alert("ERROR!");
     		}
     	});
@@ -55,8 +55,6 @@ $body .= "<div class='user_info'></div>";
 
 $body .= "</div>";
 $body .= '</fieldset>';
-
-
 
 echo elgg_view_module('main', $title, $body);
 

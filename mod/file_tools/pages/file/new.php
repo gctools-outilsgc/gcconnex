@@ -1,7 +1,7 @@
 <?php
 
 elgg_gatekeeper();
-
+$lang = get_current_language();
 $page_owner = elgg_get_page_owner_entity();
 if (empty($page_owner)) {
 	forward();
@@ -10,9 +10,9 @@ if (empty($page_owner)) {
 // build breadcrumb
 elgg_push_breadcrumb(elgg_echo("file"), "file/all");
 if (elgg_instanceof($page_owner, "group", null, "ElggGroup")) {
-	elgg_push_breadcrumb($page_owner->name, "file/group/" . $page_owner->getGUID() . "/all");
+	elgg_push_breadcrumb(gc_explode_translation($page_owner->name,$lang), "file/group/" . $page_owner->getGUID() . "/all");
 } else {
-	elgg_push_breadcrumb($page_owner->name, "file/owner/" . $page_owner->username);
+	elgg_push_breadcrumb(gc_explode_translation($page_owner->name,$lang), "file/owner/" . $page_owner->username);
 }
 elgg_push_breadcrumb(elgg_echo("file:upload"));
 

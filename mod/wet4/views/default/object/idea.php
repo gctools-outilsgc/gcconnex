@@ -24,17 +24,12 @@ $container = $idea->getContainerEntity();
 $user_guid = elgg_get_logged_in_user_guid();
 $categories = elgg_view('output/categories', $vars);
 
-if($idea->description3){
-	$description = elgg_view('output/longtext', array('value' => gc_explode_translation($idea->description3,$lang), 'class' => 'pbl'));
-}else{
-	$description = elgg_view('output/longtext', array('value' => $idea->description, 'class' => 'pbl'));
-}
-$lang = get_current_language();
-if($idea->title3){
-	$title = gc_explode_translation($idea->title3, $lang);
-}else{
-	$title = $idea->title;
-}
+
+	$description = elgg_view('output/longtext', array('value' => gc_explode_translation($idea->description,$lang), 'class' => 'pbl'));
+
+
+	$title = gc_explode_translation($idea->title, $lang);
+
 $title_link = elgg_view('output/url', array(
 	'text' => $title,
 	'href' => $idea->getURL(),
@@ -50,11 +45,9 @@ $author_text = elgg_echo('byline', array($owner_link));
 $tags = elgg_view('output/tags', array('tags' => $idea->tags));
 $date = elgg_view_friendly_time($idea->time_created);
 
-if($container->title3){
-    $group_title = gc_explode_translation($container->title3,$lang);
-}else{
-    $group_title = $container->name;
-}
+
+    $group_title = gc_explode_translation($container->title,$lang);
+
 
 if ($show_group && elgg_instanceof($container, 'group')) {
 	$group_link = elgg_view('output/url', array(
@@ -184,22 +177,23 @@ $idea_info = elgg_view_image_block($owner_icon, $list_body, array('class' => 'mb
 if ($full == 'full' && !elgg_in_context('gallery')) {
 
 	//Identify available content
-	if(($idea->description2) && ($idea->description)){
-		echo'<div id="change_language" class="change_language">';
-		if (get_current_language() == 'fr'){
+$description_json = json_decode($idea->description);
+if( $description_json->en && $description_json->fr ){
+	echo'<div id="change_language" class="change_language">';
+	if (get_current_language() == 'fr'){
 
-			?>
-			<span id="indicator_language_en" onclick="change_en('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $idea->description1;?></span><span id="fr_content" class="testClass hidden" ><?php echo $idea->description2;?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
-			<?php
-
-		}else{
-
-			?>
-			<span id="indicator_language_fr" onclick="change_fr('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $idea->description1;?></span><span id="fr_content" class="testClass hidden" ><?php echo $idea->description2;?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
-			<?php
-		}
-		echo'</div>';
+		?>			
+		<span id="indicator_language_en" onclick="change_en('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $description_json->en;?></span><span id="fr_content" class="testClass hidden" ><?php echo $description_json->fr;?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
+			
+		<?php
+	}else{
+		?>		
+			
+		<span id="indicator_language_fr" onclick="change_fr('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $description_json->en;?></span><span id="fr_content" class="testClass hidden" ><?php echo $description_json->fr;?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
+		<?php	
 	}
+	echo'</div>';
+}
 
 
 	echo <<<HTML
@@ -224,11 +218,9 @@ HTML;
      $idea->description = $idea->description1;
     }
 
-    if($idea->description3){
-        $content = elgg_get_excerpt(gc_explode_translation($idea->description3,$lang));
-    }else{
-       $content = elgg_get_excerpt($idea->description);
-    }
+
+        $content = elgg_get_excerpt(gc_explode_translation($idea->description,$lang));
+
 	//$content = elgg_get_excerpt($idea->description);
     $points = "<div class='idea-vote-counter text-center idea-points'><span class='wb-inv'>Vote count</span>$sum</div>";
     $metadata = elgg_view_menu('entity', array(

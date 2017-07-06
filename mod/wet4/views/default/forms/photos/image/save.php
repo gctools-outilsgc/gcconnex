@@ -10,6 +10,20 @@ $title = elgg_extract('title', $vars, '');
 $title2 = elgg_extract('title2', $vars, '');
 $description = elgg_extract('description', $vars, '');
 $description2 = elgg_extract('description2', $vars, '');
+
+// decode json into English / French parts
+ $json_title = json_decode($title);
+ $json_desc = json_decode($description);
+ 
+ if ( $json_title ){
+   $title2 = $json_title->fr;
+   $title = $json_title->en;
+ }
+ 
+ if ( $json_desc ){
+   $description2 = $json_desc->fr;
+   $description = $json_desc->en;
+ }
 $tags = elgg_extract('tags', $vars, '');
 $access_id = elgg_extract('access_id', $vars, get_default_access());
 $container_guid = elgg_extract('container_guid', $vars, elgg_get_page_owner_guid());

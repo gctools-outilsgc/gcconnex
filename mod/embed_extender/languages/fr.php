@@ -14,7 +14,6 @@ $french = array(
 	'embedvideo:novideo'  => "Aucun vidéo",
 	'embedvideo:unrecognized' => "Impossible de reconnaître la source du vidéo",
 	'embedvideo:parseerror' => "Impossible d'analyse l'adresse URL de %s",
-	'embed_extender:custom:views' =>  '<b> Advanced</b> : Display video in custom views.  Enter one view per line.',
-
+	'embed_extender:custom:views' =>  "<b>Avancé</b> : Afficher une vidéo dans des vues personnalisées. Entrez une vue par ligne."
 );
-add_translation("en",$english);
+add_translation("fr",$french);

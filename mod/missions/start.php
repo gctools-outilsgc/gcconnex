@@ -81,6 +81,11 @@ function missions_init()
     elgg_register_entity_type('object', 'mission');
     elgg_register_entity_type('object', 'mission-feedback');
     elgg_register_entity_type('object', 'mission-declination');
+    elgg_register_entity_type('object', 'mission-wasoffered');
+    elgg_register_entity_type('object', 'mission-inprogress');
+    elgg_register_entity_type('object', 'mission-posted');
+    elgg_register_entity_type('object', 'mission-cancelled');
+    elgg_register_entity_type('object', 'mission-completed');
 
     // Register an ajax view for the advanced search page.
     elgg_register_ajax_view('missions/element-select');
@@ -166,17 +171,18 @@ function missions_main_page_handler($segments)
         case 'api':
             if (count($segments) >= 3) {
                 if ($segments[1] == 'v0') {
-                    switch ($segments[2]) {
-                        case 'users':
-                            include elgg_get_plugins_path() . 'missions/api/v0/users.php';
-                            break;
-                        case 'opportunities':
-                            include elgg_get_plugins_path() . 'missions/api/v0/opportunities.php';
-                            break;
-                    }
-
+                  include elgg_get_plugins_path() . 'missions/api/v0/export.php';
+                  $object_type = strtolower($segments[2]);
+                  if ($object_type == 'subtypes') {
+                    $export = new NRC\subtypeExport();
+                    $export->getJSON();
+                  } else {
+                    $subtype = ($object_type == 'user') ? false : $segments[3];
+                    $guid = ($object_type == 'user') ? $segments[3] : $segments[4];
+                    $export = new NRC\export($object_type, $subtype, $guid);
+                    $export->getJSON();
+                  }
                 }
-
             }
     }
 }

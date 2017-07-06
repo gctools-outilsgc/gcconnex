@@ -28,7 +28,7 @@ $gsa_pagination = elgg_get_plugin_setting('gsa_pagination','gc_fedsearch_gsa');
     label .error{
         margin-top:2px;
     }
-    
+
 label.error {
     background: #f3e9e8;
     border-left: 5px solid #d3080c;
@@ -51,7 +51,7 @@ textarea.error{
 textarea.error:focus{
      border: 1px solid #d3080c;
     -webkit-box-shadow: inset 0 1px 1px rgba(255,0,0,.075);
-    box-shadow: inset 0 1px 1px rgba(0,0,0,.075) !important;        
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075) !important;
 }
 
 .elgg-pagination_gsa {
@@ -59,6 +59,50 @@ textarea.error:focus{
   position: relative;
   left:<?php echo "{$gsa_pagination}%"; ?> !important;
 
+}
+
+.elgg-menu-owner-block {
+  margin-left: 12px;
+  z-index: 1;
+  position: relative;
+}
+
+.questions-correct {
+  color: #047177;
+  width: 100%;
+  text-align: center;
+}
+
+#question-answers article {
+  border-left: 3px solid #047177;
+}
+#question-answers ul article {
+  border-left: 0;
+}
+
+.question-auto  {
+  background:white;
+  border: 1px solid #ddd;
+  border-top: none;
+  padding:5px 0;
+}
+
+.question-auto p {
+  margin:5px;
+}
+
+.question-auto ul li {
+  padding: 5px 7px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+}
+
+.question-auto ul li:last-child {
+  border-bottom: none;
+}
+
+.question-auto ul li:hover {
+  background: #eee;
 }
 
 /******************** Changing Bootstraps columns ********************/
@@ -659,7 +703,8 @@ max-height: 500px;
     }
 
 .dropdown a:focus {
-   outline: 5px auto -webkit-focus-ring-color;;
+   outline: 5px auto -webkit-focus-ring-color;
+    outline: 1px dotted;
     border-radius: 2px;
 }
 
@@ -1338,19 +1383,21 @@ border:none;
 
 .custom-message{
     position: fixed;
-    width: 1140px;
-    z-index: 9999;
-    top: 185px;
+    width: 95%;
+    max-width: 600px;
+    z-index: 1039;
+    left:2% ;
 }
 
-.elgg-state-success {
+.elgg-state-success, .alert-success {
   background-color: #dff0d8;
   border-color: #d6e9c6;
     position:fixed;
     z-index: 100000;
 
    margin: 0 auto;
-    width: 1140px;
+    width:100%;
+    max-width: 600px;
     border-left: solid 5px #2b542c;
    }
   .elgg-state-success hr {
@@ -1434,10 +1481,39 @@ details.elgg-state-success:before {
     color: #055959 !important;
 }
 
+/*Styles from intranet footer*/
+    footer .brand a {
+      display: block;
+      height: auto;
+      padding-bottom: 0;
+      position: relative;
+      width: auto; }
+      footer .brand a:after {
+        bottom: 0;
+        content: "";
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0; }
+    footer .brand object,
+    footer .brand img {
+      height: auto;
+      max-height: 40px; }
+	#wb-info .brand img, #wb-info .brand object {
+		cursor: pointer;
+	}
+    footer .brand object,
+    footer .brand img {
+      height: auto;
+      max-height: 2.500em;
+	}
+
+#mb-pnl object{
+    display:none !important;
+}
 #app-brand li a{
    text-decoration: none;
-    color: black;
-    padding: 30px 35px;
+    color:white;
 }
 .app-name{
     font-size: 1.6em;
@@ -1463,6 +1539,12 @@ details.elgg-state-success:before {
 	border-left: 20px solid #055959;
     clear: both;
 }
+
+@media (min-width: 992px) and (max-width: 1200px) {
+      .app-name:before {
+      left:155px; }
+}
+
 
 .tool-link{
     font-size:16px;
@@ -1741,4 +1823,12 @@ figcaption{
 
 .space_event{
   margin-right:5px;
+}
+
+.comment-container ul li {
+    list-style: initial;
+}
+
+.comment-container ol li {
+    list-style: decimal;
 }

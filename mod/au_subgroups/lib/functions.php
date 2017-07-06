@@ -21,11 +21,7 @@ function breadcrumb_override($params) {
 				$breadcrumbs[] = $parentcrumb;
 			}
 
-			if($group->title3){
-				$group_title = gc_explode_translation($group->title3,$lang);
-			}else{
-				$group_title = $group->name;
-			}
+			$group_title = gc_explode_translation($group->name,$lang);
 
 			$breadcrumbs[] = array(
 				'title' => $group_title,
@@ -48,7 +44,7 @@ function breadcrumb_override($params) {
 				$breadcrumbs[] = $parentcrumb;
 			}
 
-			$breadcrumbs[] = array('title' => $group->name, 'link' => $group->getURL());
+			$breadcrumbs[] = array('title' => gc_explode_translation($group->name,$lang), 'link' => $group->getURL());
 			$breadcrumbs[] = array('title' => elgg_echo('groups:edit'), 'link' => NULL);
 			set_input('au_subgroups_breadcrumbs', $breadcrumbs);
 			break;
@@ -190,11 +186,7 @@ function parent_breadcrumbs($group, $push = true) {
 
 	while ($parent = get_parent_group($group)) {
 
-		if($parent->title3){
-			$group_name = gc_explode_translation($parent->title3,$lang);
-		}else{
-			$group_name = $parent->name;
-		}
+		$group_name = gc_explode_translation($parent->title,$lang);
 
 		$parents[] = array('title' => $group_name, 'link' => $parent->getURL());
 		$group = $parent;

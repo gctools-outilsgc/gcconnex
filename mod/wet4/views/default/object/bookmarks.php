@@ -21,11 +21,9 @@ $owner_icon = elgg_view_entity_icon($owner, 'medium');
 $categories = elgg_view('output/categories', $vars);
 
 $link = elgg_view('output/url', array('href' => $bookmark->address));
-if($bookmark->description3){
-    $description = elgg_view('output/longtext', array('value' => gc_explode_translation($bookmark->description3, $lang), 'class' => 'pbl'));
-}else{
-$description = elgg_view('output/longtext', array('value' => $bookmark->description, 'class' => 'pbl'));
-}
+
+$json = json_decode($bookmark->description);
+$description = elgg_view('output/longtext', array('value' => gc_explode_translation( $bookmark->description, $lang ), 'class' => 'pbl'));
 
 $owner_link = elgg_view('output/url', array(
 	'href' => "bookmarks/owner/$owner->username",
@@ -75,19 +73,19 @@ if ($full && !elgg_in_context('gallery')) {
 	$summary = elgg_view('object/elements/summary', $params);
 
 	// identify available content
-	if(($bookmark->description2) && ($bookmark->description)){
+	if(($json->en) && ($json->fr)){
 		echo'<div id="change_language" class="change_language">';
 		
 		if (get_current_language() == 'fr'){
 			
-			?>			
-			<span id="indicator_language_en" onclick="change_en('.pbl');"><span id="en_content" class="testClass hidden" ><?php echo $bookmark->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $bookmark->description2;?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
+			?>
+			<span id="indicator_language_en" onclick="change_en('.pbl');"><span id="en_content" class="testClass hidden" ><?php echo $json->en;?></span><span id="fr_content" class="testClass hidden" ><?php echo $json->fr;?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
 			<?php
 
 		}else{
-					
-			?>			
-			<span id="indicator_language_fr" onclick="change_fr('.pbl');"><span id="en_content" class="testClass hidden" ><?php echo $bookmark->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $bookmark->description2;?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
+			
+			?>
+			<span id="indicator_language_fr" onclick="change_fr('.pbl');"><span id="en_content" class="testClass hidden" ><?php echo $json->en;?></span><span id="fr_content" class="testClass hidden" ><?php echo $json->fr;?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
 			<?php	
 		}
 		echo'</div>';
@@ -111,7 +109,7 @@ HTML;
 } elseif (elgg_in_context('gallery')) {
 	echo <<<HTML
 <div class="bookmarks-gallery-item">
-	<h3>$bookmark->title</h3>
+	<h3>gc_explode_translation( $bookmark->title, $lang )</h3>
 	<p class='subtitle'>$owner_link $date</p>
 </div>
 HTML;
@@ -120,11 +118,7 @@ HTML;
 	$url = $bookmark->address;
 	$display_text = $url;
 	
-	if($bookmark->description3){
-		$excerpt = elgg_get_excerpt(gc_explode_translation($bookmark->description3,$lang));
-	}else{
-		$excerpt = elgg_get_excerpt($bookmark->description);
-	}
+	$excerpt = elgg_get_excerpt( gc_explode_translation($bookmark->description, $lang) );
 	
 	if ($excerpt) {
 		$excerpt = " - $excerpt";

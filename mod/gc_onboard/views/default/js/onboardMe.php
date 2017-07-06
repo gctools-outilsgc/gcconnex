@@ -15,6 +15,7 @@
                     $('#onboard').html(output);
                     changeStepProgress(2);
                     currentStep = 1;
+                    $('#step').focus();
                 }
             });
         });

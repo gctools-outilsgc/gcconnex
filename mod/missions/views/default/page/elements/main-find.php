@@ -16,6 +16,10 @@ if($_SESSION['mission_entities_per_page']) {
 
 $_SESSION['mission_search_switch_subtype'] = 'open';
 
+if($_GET['clear'] == true){
+elgg_clear_sticky_form('searchsimplefill');
+elgg_clear_sticky_form('advancedfill');
+}
 // Simple search form.
 $simple_search_form = elgg_view_form('missions/search-simple');
 

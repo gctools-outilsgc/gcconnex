@@ -13,7 +13,7 @@ if($event_calendar_hide_access == 'yes') {
 	}
 } else {
 	$body .= '<p><label>'.elgg_echo('event_calendar:read_access').'</label>';
-	$body .= elgg_view("input/access", array('name' => 'access_id', 'value' => $fd['access_id']));
+	$body .= elgg_view("input/access", array('name' => 'access_id', 'value' => $fd['access_id'], 'entity' => get_entity($vars['guid'])));
 	$body .= '</p>';
 }
 if (elgg_is_active_plugin('entity_admins')) {

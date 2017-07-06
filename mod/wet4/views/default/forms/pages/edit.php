@@ -16,6 +16,27 @@ $can_change_access = true;
 if ($user && $entity) {
 	$can_change_access = ($user->isAdmin() || $user->getGUID() == $entity->owner_guid);
 }
+
+$title = elgg_extract('title', $vars, '');
+$title2 = elgg_extract('title2', $vars, '');
+$desc = elgg_extract('description', $vars, '');
+$desc2 = elgg_extract('description2', $vars, '');
+
+// decode json into English / French parts
+$json_title = json_decode($title);
+$json_desc = json_decode($desc);
+
+if ( $json_title ){
+  $vars['title2'] = $json_title->fr;
+  $vars['title'] = $json_title->en;
+}
+
+if ( $json_desc ){
+    $vars['description2'] = $json_desc->fr;
+  $vars['description'] = $json_desc->en;
+}
+
+
 $btn_language =  '<ul class="nav nav-tabs nav-tabs-language">
   <li id="btnen"><a href="#" id="btnClicken">'.elgg_echo('lang:english').'</a></li>
   <li id="btnfr"><a href="#" id="btnClickfr">'.elgg_echo('lang:french').'</a></li>

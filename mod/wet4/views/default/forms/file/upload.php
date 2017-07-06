@@ -17,18 +17,38 @@ $desc2 = elgg_extract('description2', $vars, '');
 $tags = elgg_extract('tags', $vars, '');
 $access_id = elgg_extract('access_id', $vars, ACCESS_DEFAULT);
 $container_guid = elgg_extract('container_guid', $vars);
+
+// boolean, indicate whether this is an edit or not
+$edit_file = false;
+
 if (!$container_guid) {
 	$container_guid = elgg_get_logged_in_user_guid();
 }
 $guid = elgg_extract('guid', $vars, null);
 
 if ($guid) {
+	$edit_file = true;
 	$file_label = elgg_echo("file:replace");
 	$submit_label = elgg_echo('save');
 } else {
 	$file_label = elgg_echo("file:file");
 	$submit_label = elgg_echo('upload');
 }
+
+// decode json into English / French parts
+$json_title = json_decode($title);
+$json_desc = json_decode($desc);
+
+if ( $json_title ){
+  $title2 = $json_title->fr;
+  $title = $json_title->en;
+}
+
+if ( $json_desc ){
+  $desc2 = $json_desc->fr;
+  $desc = $json_desc->en;
+}
+
 
 elgg_unregister_menu_item('title', 'new_folder');
 
@@ -106,6 +126,22 @@ if ($guid) {
 
 echo elgg_view('input/submit', array('value' => $submit_label, 'class' => 'btn btn-primary mrgn-tp-md'));
 
+
+/// minor edit functionality (TODO: possibly extend view in the future, for all minor edits)
+if ($edit_file) {
+	echo "<h2>".elgg_echo('cp_notify:minor_edit_header')."</h2>";
+	echo elgg_view('input/checkbox', array(
+		'name' 		=>	"minor_edit",
+		'value' 	=>	1,
+		'default' 	=> 	0,
+		'label' 	=>	elgg_echo('page:minor_edit_label'),
+		'checked' 	=>	false,
+		'id' 		=>	'minor_edit',
+		'class' 	=>	'chkboxClass',
+	));
+}
+
+
 echo'</div></div>';
 
 
@@ -150,14 +186,32 @@ jQuery(function(){
 });
 
 <?php if(elgg_in_context('embed')){ ?>
+  var validExtentions = get_file_tools_settings('single');
+  var newExt = validExtentions.replace(/, /g, '|'); //format the extensions for validation
+
   //do form validation here for ajax view
   $(".elgg-form").each(function(){
     $(this).validate({
+      rules: {
+        upload: {
+          extension: newExt
+        },
+      },
+      messages: {  //add custom message for file validation
+          upload:{
+              extension:elgg.echo('form:invalid:extensions',[validExtentions])
+          }
+      },
       submitHandler: function(form) {
         $(form).find('button').prop('disabled', true);
         form.ajaxSubmit();
       },
     });
   });
+  <?php } ?>
+
+  <?php if($guid){ ?>
+    //remove required on file input if editing file
+    $('#upload').removeAttr('required');
   <?php } ?>
 </script>

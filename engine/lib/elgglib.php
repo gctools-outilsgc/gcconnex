@@ -796,7 +796,7 @@ function elgg_trigger_plugin_hook($hook, $type, $params = null, $returnvalue = n
  */
 function _elgg_php_exception_handler($exception) {
 	$timestamp = time();
-	error_log("Exception #$timestamp: $exception");
+	error_log("Exception at time $timestamp: $exception");
 
 	// Wipe any existing output buffer
 	ob_end_clean();
@@ -851,8 +851,9 @@ function _elgg_php_exception_handler($exception) {
 	} catch (Exception $e) {
 		$timestamp = time();
 		$message = $e->getMessage();
-		echo "Fatal error in exception handler. Check log for Exception #$timestamp";
-		error_log("Exception #$timestamp : fatal error in exception handler : $message");
+		http_response_code(500);
+		echo "Fatal error in exception handler. Check log for Exception at time $timestamp";
+		error_log("Exception at time $timestamp : fatal error in exception handler : $message");
 	}
 }
 
@@ -1253,7 +1254,7 @@ function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset
  * @return mixed
  * @since 1.8.0
  */
-function elgg_extract($key, array $array, $default = null, $strict = true) {
+function elgg_extract($key, $array, $default = null, $strict = true) {
 	if (!is_array($array)) {
 		return $default;
 	}
@@ -1789,6 +1790,9 @@ function _elgg_walled_garden_index() {
  */
 function _elgg_walled_garden_ajax_handler($page) {
 	$view = $page[0];
+	if (!elgg_view_exists("core/walled_garden/$view")) {
+		return false;
+	}
 	$params = array(
 		'content' => elgg_view("core/walled_garden/$view"),
 		'class' => 'elgg-walledgarden-single hidden',

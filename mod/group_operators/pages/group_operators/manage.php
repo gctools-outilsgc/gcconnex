@@ -33,7 +33,7 @@ $title = sprintf(elgg_echo("group_operators:title"), $group->name);
 $content = elgg_view_group_operators_list($group);
 
 $form_vars = array();
-$body_vars = group_operators_prepare_form_vars($group);
+$body_vars = array('entity' => $group); //Removing loading of all group members / variables using group_operators_prepare_form_vars as this can cause the server to time out for very large groups, now manually adding group object var only
 
 $content .= elgg_view_form('group_operators/add', $form_vars, $body_vars);
 

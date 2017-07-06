@@ -27,12 +27,7 @@ $categories = elgg_view('output/categories', $vars);
 
 $subtitle = "$author_text $date $categories";
 
-if($album->title3){
-	$title_album = gc_explode_translation($album->title3, $lang);
-}else{
-	$title_album = $album->title;
-}
-
+$title_album = gc_explode_translation($album->title, $lang);
 
 $title = elgg_view('output/url', array(
 	'text' => $title_album,

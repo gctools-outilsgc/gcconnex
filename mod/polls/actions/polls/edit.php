@@ -12,6 +12,7 @@ elgg_make_sticky_form('polls');
 // Get input data
 $question = get_input('question');
 $question2 = get_input('question2');
+$question3 = gc_implode_translation($question,$question2);
 $number_of_choices = (int) get_input('number_of_choices',0);
 $number_of_choices2 = (int) get_input('number_of_choices2',0);
 $tags = get_input('tags');
@@ -29,17 +30,17 @@ $count3 = 0;
 $new_choices = array();
 $new_choices2 = array();
 $new_choices3 = array();
-if ($number_of_choices) {
+/*if ($number_of_choices) {
 	for($i=0;$i<$number_of_choices;$i++) {
 		$text = get_input('choice_text_'.$i,'');
 		if ($text) {
-			$new_choices[] = $text;
+			$new_choices3[] = $text;
 			$count ++;
 		}
 	}
-}
+}*/
 
-if ($number_of_choices2) {
+/*if ($number_of_choices2) {
 	for($i=0;$i<$number_of_choices2;$i++) {
 		$text2 = get_input('choice_text_f'.$i,'');
 		if ($text2) {
@@ -47,7 +48,7 @@ if ($number_of_choices2) {
 			$count2 ++;
 		}
 	}
-}
+}*/
 
 if ($number_of_choices2>=$number_of_choices ) {
 	for($i=0;$i<$number_of_choices2;$i++) {
@@ -57,7 +58,7 @@ if ($number_of_choices2>=$number_of_choices ) {
 			$text = $text2;
 		}
 		if (($text2) ||($text)) {
-			$new_choices3[] = gc_implode_translation($text,$text2);
+			$new_choices[] = gc_implode_translation($text,$text2);
 			$count3 ++;
 		}
 	}
@@ -71,7 +72,7 @@ for($i=0;$i<$number_of_choices;$i++) {
 			$text2 = $text;
 		}
 		if (($text2) ||($text)){
-				$new_choices3[] = gc_implode_translation($text,$text2);
+				$new_choices[] = gc_implode_translation($text,$text2);
 			$count3 ++;
 		}
 	}
@@ -85,16 +86,16 @@ if ($guid) {
 	if (elgg_instanceof($poll,'object','poll') && $poll->canEdit()) {
 		$container_guid = $poll->container_guid;
 		// Make sure the question / responses aren't blank
-		if  ((($count2 == 0) && ($count == 0)) || ((empty($question)) && (empty($question2)))) {
+		if  (($count3 == 0) || ((empty($question)) && (empty($question2)))) {
 			register_error(elgg_echo("polls:blank"));
 			forward("polls/edit/".$guid);
 			exit;
 			// Otherwise, save the poll
 		} else {
 			$poll->access_id = $access_id;
-			$poll->question = $question;
-			$poll->question2 = $question2;
-			$poll->title3 = gc_implode_translation($question,$question2);
+			$poll->question = $question3;
+			//$poll->question2 = $question2;
+			//$poll->title3 = gc_implode_translation($question,$question2);
 				
 			if (!$poll->save()) {
 				register_error(elgg_echo("polls:error"));
@@ -110,8 +111,8 @@ if ($guid) {
 			polls_delete_choices($poll);
 			polls_delete_choices2($poll);
 			polls_delete_choices3($poll);
-			polls_add_choices3($poll,$new_choices3);
-			polls_add_choices2($poll,$new_choices2);
+			//polls_add_choices3($poll,$new_choices3);
+			//polls_add_choices2($poll,$new_choices2);
 			polls_add_choices($poll,$new_choices);
 			if (is_array($tagarray)) {
 				$poll->tags = $tagarray;
@@ -133,7 +134,7 @@ if ($guid) {
 		}
 	}
 	// Make sure the question / responses aren't blank
-	if ((($count2 == 0) && ($count == 0)) || ((empty($question)) && (empty($question2)))) {
+	if (($count3 == 0) || ((empty($question)) && (empty($question2)))) {
 		register_error(elgg_echo("polls:blank"));
 		if ($container_guid) {
 			forward("polls/add/".$container_guid);
@@ -153,9 +154,9 @@ if ($guid) {
 		$poll->owner_guid = $user->guid;
 		$poll->container_guid = $container_guid;
 		$poll->access_id = $access_id;
-		$poll->question = $question;
-		$poll->question2 = $question2;
-		$poll->title3 = gc_implode_translation($question,$question2);
+		$poll->question = $question3;
+		//$poll->question2 = $question2;
+		$poll->title = $question3;
 		
 		if(!$poll->question){
 			$poll->title = $poll->question2;
@@ -175,8 +176,8 @@ if ($guid) {
 		elgg_clear_sticky_form('polls');
 
 		polls_add_choices($poll,$new_choices);
-		polls_add_choices2($poll,$new_choices2);
-		polls_add_choices3($poll,$new_choices3);
+		//polls_add_choices2($poll,$new_choices2);
+		//polls_add_choices3($poll,$new_choices3);
 	
 		if (is_array($tagarray)) {
 			$poll->tags = $tagarray;

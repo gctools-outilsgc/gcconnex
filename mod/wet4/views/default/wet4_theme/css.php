@@ -946,12 +946,11 @@ textarea {
 a {
   color: #295376;
   text-decoration: none; }
-  a:hover,
-  a:focus {
+  a:hover{
     color: #047177;
     text-decoration: underline; }
   a:focus {
-    outline: thin dotted;
+    outline: 1px dotted;
     outline: 5px auto -webkit-focus-ring-color;
     outline-offset: -2px; }
 
@@ -1219,7 +1218,7 @@ ol {
   padding-left: 0;
   list-style: none; }
 
-.list-unstyled li{
+.list-unstyled li {
     list-style: none;
 }
 
@@ -10129,11 +10128,10 @@ header {
  * Mobile Chevron
  */
 #wb-glb-mn {
-  margin-top: 20px; }
+  margin-top: 0px; }
   #wb-glb-mn ul {
     min-width: 150px; }
     #wb-glb-mn ul.chvrn {
-      background: #055959;
       display: inline-block;
       float: right;
       height: 2.75em; }
@@ -10149,15 +10147,7 @@ header {
         padding-left: 12px;
         top: 0; }
       #wb-glb-mn ul.chvrn:before {
-        border-bottom: 1.375em solid transparent;
-        border-left: 0.6875em solid #f8f8f8;
-        border-top: 1.375em solid transparent;
-        content: " ";
-        display: block;
-        float: left;
-        height: 0;
-        position: relative;
-        width: 0; }
+        }
 
 /* IE Tweaks */
 .lt-ie9 header .brand a {
@@ -10476,7 +10466,7 @@ html[lang='fr'].mediumview .fdbckpromo .accnt-prmry {
  */
 #wb-srch,
 .srchbox {
-  padding-top: 1em; }
+  padding-top: 0.37em; }
   #wb-srch input,
   #wb-srch button,
   .srchbox input,
@@ -10484,32 +10474,35 @@ html[lang='fr'].mediumview .fdbckpromo .accnt-prmry {
     border-radius: 0; }
   #wb-srch button,
   .srchbox button {
-    background-color: #055959;
+    background-color: #ededed;
     border: 0;
-    border-color: #055959;
-    font-size: 17px; }
+      padding: 5px 8px;
+    border-color: #ededed;
+      color: #055959;
+    font-size: 16px; }
     #wb-srch button:hover,
     #wb-srch button:focus,
     #wb-srch button:active,
     .srchbox button:hover,
     .srchbox button:focus,
     .srchbox button:active {
-      background: #047177; }
+      background: #ededed; }
   #wb-srch .glyphicon,
   .srchbox .glyphicon {
     top: auto;
     vertical-align: middle; }
   #wb-srch input,
   .srchbox input {
-    background-color: #e0e0e0;
-    border-color: #e0e0e0;
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
     border-right: 0;
     border-style: solid;
     -webkit-box-shadow: none;
             box-shadow: none;
     color: #555;
     margin-right: -4px;
-    min-width: 246px;
+    min-width: 235px;
+      height:33px;
     position: relative; }
 
 [dir=rtl] #wb-srch {
@@ -11146,7 +11139,7 @@ Carousel
   header .brand a {
     margin-top: 15px; }
   #wb-glb-mn {
-    margin-top: 20px; }
+    margin-top: 0px; }
     #wb-glb-mn ul.chvrn li a {
       font-size: 1.7em; } }
 

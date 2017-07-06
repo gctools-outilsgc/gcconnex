@@ -130,10 +130,14 @@ function entity_url($hook, $type, $return, $params) {
 
 	// do this only for the gsa-crawler (and usertest is empty)
 	if ( ((!$gsa_usertest) && strcmp($gsa_agentstring,strtolower($_SERVER['HTTP_USER_AGENT'])) == 0) || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false )  {
-		
+
+		$json = json_decode($entity->description);
+		$description_en = $json->en;
+		$description_fr = $json->fr;
+
 		// english body text
 		$description = new DOMDocument();
-		$description->loadHTML($entity->description);
+		$description->loadHTML($description_en);
 		$links = $description->getElementsByTagName('a');
 		for ($i = $links->length - 1; $i >= 0; $i--) {
 			$linkNode = $links->item($i);
@@ -145,7 +149,7 @@ function entity_url($hook, $type, $return, $params) {
 
 
 		// french body text
-		$description->loadHTML($entity->description2);
+		$description->loadHTML($description_fr);
 		$links = $description->getElementsByTagName('a');
 		for ($i = $links->length - 1; $i >= 0; $i--) {
 			$linkNode = $links->item($i);

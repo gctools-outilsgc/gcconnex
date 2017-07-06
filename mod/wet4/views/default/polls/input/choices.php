@@ -8,7 +8,7 @@
 
 // TODO: add ability to reorder poll questions?
 $poll = elgg_extract('poll', $vars);
-$test = elgg_extract('test', $vars);
+
 $body = '';
 $i = 0;
 $s = 0;
@@ -19,22 +19,11 @@ if ($poll) {
 	if ($choices) {
 		foreach($choices as $choice) {
 			$body .= '<div id="choice_container_'.$i.'" class="en">';
-			if ($test == 'fr'){
-$body .= elgg_view('input/text',
-				array(	'name'	=>	'choice_text_'.$i,
-						'value' 		=> 	$choice->text,
-						'class'			=> 	'input-poll-choice'
-				)
-			);
-				$body .= '<a href="#" alt="'.elgg_echo('polls:delete_choice').'" title="'.elgg_echo('polls:delete_choice').' id="choice_delete_'.$i.'" onclick="javascript:polls_delete_choice('.$i.'); return false;">';
-			$body .= '<i class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">Delete This</span></i></a>';
-			$body .= '</div>';
-
-			}else{
+					
 
 				$body .= elgg_view('input/text',
 				array(	'name'	=>	'choice_text_'.$i,
-						'value' 		=> 	$choice->text,
+						'value' 		=> 	gc_explode_translation($choice->text,'en'),
 						'class'			=> 	'input-poll-choice'
 				)
 			);
@@ -42,7 +31,7 @@ $body .= elgg_view('input/text',
 				$body .= '<a href="#" alt="'.elgg_echo('polls:delete_choice').'" title="'.elgg_echo('polls:delete_choice').' id="choice_delete_'.$i.'" onclick="javascript:polls_delete_choice('.$i.'); return false;">';
 			$body .= '<i class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">Delete This</span></i></a>';
 			$body .= '</div>';
-			}
+			
 			
 			
 			
@@ -61,16 +50,15 @@ $body .= elgg_view('input/hidden',
 $body .= '<div id="new_choices_area"  class="en"></div>';
 
 if ($poll) {
-//if ($test == 'fr'){
 
-	$choices = polls_get_choice_array2($poll);
+	$choices = polls_get_choice_array($poll);
 	if ($choices) {
 		foreach($choices as $choice) {
 			$body .= '<div id="choice_container_2'.$s.'"  class="fr">';
 			//$body .= $choice;
 			$body .= elgg_view('input/text',
 				array(	'name'	=>	'choice_text_f'.$s,
-						'value' 		=> 	$choice,
+						'value' 		=> 	gc_explode_translation($choice,'fr'),
 						'class'			=> 	'input-poll-choice2'
 				)
 			);
@@ -81,8 +69,6 @@ if ($poll) {
 			$s += 1;
 		}
 	}
-//}
-//print_r($choices);
 
 }	
 $body .= elgg_view('input/hidden',
@@ -93,11 +79,7 @@ $body .= elgg_view('input/hidden',
 	)
 );
 
-
 $body .= '<div id="new_choices_area2"  class="fr"></div>';
-
-
-//if ($test == 'fr'){
 
 $body .= elgg_view('input/button',
 	array(
@@ -107,7 +89,6 @@ $body .= elgg_view('input/button',
 		'class' => 'fr'
 	)
 );
-//}else{
 
 	$body .= elgg_view('input/button',
 	array(
@@ -117,8 +98,6 @@ $body .= elgg_view('input/button',
 		'class' => 'en'
 	)
 );
-//}
-
 
 echo $body;
 ?>

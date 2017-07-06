@@ -38,7 +38,7 @@ $manager_name = $mission->name;
 $manager_icon = elgg_view_entity_icon(get_entity(1), 'small');
 if($manager_account) {
 	$manager_name = elgg_view('output/url', array(
-			'href' => elgg_get_site_url().'profile/'.$manager_name,//$manager_account->getURL(), //Nick changed to profile url
+			'href' => elgg_get_site_url().'profile/'.$manager_account->username,
 			'text' => $manager_name,
 			'class' => 'mission-user-link-' . $mission->owner_guid
 	));

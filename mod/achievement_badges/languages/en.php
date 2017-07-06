@@ -10,6 +10,7 @@ return array(
     'badge:completed' => 'Completed',
     'badge:level' => 'Level %s',
     'badge:of' => '%s of %s',
+    'badges:tab:header' => 'Your badge progress',
 
     //Badge Specific
     'badge:BADGENAME:name' => 'Name',

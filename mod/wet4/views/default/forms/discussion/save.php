@@ -16,6 +16,24 @@ $container_guid = elgg_extract('container_guid', $vars);
 $guid = elgg_extract('guid', $vars, null);
 
 
+
+// decode json into English / French parts
+$json_title = json_decode($title);
+$json_desc = json_decode(elgg_extract('description', $vars, ''));
+
+if ( $json_title ){
+  $title2 = $json_title->fr;
+  $title = $json_title->en;
+
+}
+
+if ( $json_desc ){
+ $desc2 = $json_desc->fr;
+ $desc = $json_desc->en;
+}
+
+
+
 $btn_language =  '<ul class="nav nav-tabs nav-tabs-language">
   <li id="btnen"><a href="#" id="btnClicken">'.elgg_echo('lang:english').'</a></li>
   <li id="btnfr"><a href="#" id="btnClickfr">'.elgg_echo('lang:french').'</a></li>
@@ -143,7 +161,7 @@ $(selector).on('click', function(){
         })
 });
 
-$(".elgg-form").each(function(){
+$(".quick-start-form-tabindex").each(function(){
   $(this).validate({
  invalidHandler: function(form, validator) {
            var errors = validator.numberOfInvalids();
@@ -189,5 +207,23 @@ $(".elgg-form").each(function(){
    }*/
  }
 });
+});
+require(['ckeditor'], function(CKEDITOR) {
+ //deal with copying the ckeditor text into the actual textarea
+    CKEDITOR.on('instanceReady', function () {
+       $.each(CKEDITOR.instances, function (instance) {
+            CKEDITOR.instances[instance].document.on("keyup", CK_jQ);
+            CKEDITOR.instances[instance].document.on("paste", CK_jQ);
+          //  CKEDITOR.instances[instance].document.on("keypress", CK_jQ);
+          //  CKEDITOR.instances[instance].document.on("blur", CK_jQ);
+         //  CKEDITOR.instances[instance].document.on("change", CK_jQ);
+        });
+    });
+
+    function CK_jQ() {
+        for (instance in CKEDITOR.instances) {
+            CKEDITOR.instances[instance].updateElement();
+      }
+    }
 });
 </script>
