@@ -330,7 +330,9 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 
 			if ($entity->getContainerEntity() instanceof ElggGroup) {
 
-				$group_html = "<a href='{$entity->getContainerEntity()->getURL()}'>{$entity_title}</a>";
+				// string that will contain the url and the (json) string name of group
+				$group_html = json_encode(array($entity->getContainerEntity()->getURL(), $entity_title));
+				//$group_html = "<a href='{$entity->getContainerEntity()->getURL()}'>{$entity_title}</a>";
 				$entity_guid = $entity->guid;
 				$user_guid = $send_to->getGUID();
 				$entry_type = 'group';
@@ -535,10 +537,13 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 
 			if ($entity->getContainerEntity() instanceof ElggGroup) {
 			
+				$group_title = $entity->getContainerEntity()->name;
+				$group_html = json_encode(array($entity->getContainerEntity()->getURL(), $group_title));
+
 				$entity_guid = $entity->guid;
 				$user_guid = $send_to->getGUID();
 				$entry_type = 'group';
-				$group_name = "<a href='{$entity->getContainerEntity()->getURL()}?utm_source=notification_digest&utm_medium=email'>{$entity_title}</a>";
+				$group_name = $group_html;//"<a href='{$entity->getContainerEntity()->getURL()}?utm_source=notification_digest&utm_medium=email'>{$group_title}</a>";
 				$action_type = 'new_post';
 				$notification_entry = json_encode($content_array);
 
@@ -863,6 +868,19 @@ function getMissionTypeMetastringid( $mission_type, $role_type ) {
 			break;
 		default:
 			$proper_heading = $heading;
+			//error_log($heading);
+			if (isJSon($proper_heading)) {
+				$group_heading = json_decode($heading, true);
+				$proper_heading = $group_heading[1];
+				//error_log(">>>>>>>>>>>> hey hey: {$proper_heading}");
+				if (isJson($proper_heading)) {
+					//error_log(">>>>>>>>>>>>>>>>>> wut: {$proper_heading}");
+					$proper_heading = json_decode($proper_heading, true);
+					//error_log($proper_heading);
+					$proper_heading = "<a href='{$group_heading[0]}'>$proper_heading[$language]</a>";
+				}
+			}
+			
 			break;
 	}
 
