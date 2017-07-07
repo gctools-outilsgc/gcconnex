@@ -37,13 +37,13 @@ function get_details(){
 function displayFolder(link){
   console.log('clicked display folder');
   var target = $(link).attr('href');
-  $('#categories-'+"<?php echo get_current_language()?>").fadeOut().parent().find(target).delay(500).fadeIn();
+  $('.categories').fadeOut().parent().find(target).delay(500).fadeIn();
   $('#explore-header').fadeOut();
 }
 
 function displayCategories(link){
   console.log('clicked display categories');
-  $('.folder-display:not(:hidden)').fadeOut().parent().find('#categories-'+"<?php echo get_current_language()?>").delay(500).fadeIn();
+  $('.folder-display:not(:hidden)').fadeOut().parent().find('.categories').delay(500).fadeIn();
   $('#explore-header').delay(500).fadeIn();
 }
 

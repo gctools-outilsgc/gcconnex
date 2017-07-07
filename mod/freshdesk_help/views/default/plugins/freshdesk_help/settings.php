@@ -87,8 +87,8 @@ if(isset($vars['entity']->portal_id)){
   }
 </style>
 
-<div id="results-en"><div id="categories-en"></div></div>
-<div id="results-fr"><div id="categories-fr"></div></div>
+<div id="results-en"><div class="categories"></div></div>
+<div id="results-fr"><div class="categories"></div></div>
 
 <script>
 
@@ -122,7 +122,7 @@ $('#fetch').on('click', function(){
 
         $.each(acceptedCategoriesEN, function (key,value) {
 
-             $('#categories-en').append("<div class='category-card'><div class='article-cat'><div class='heading'><h3 >"  +value.name + "</h3></div><div><ul class='folders' id='" + value.id + "-en'></ul> </div></div></div></div>");
+             $('#results-en .categories').append("<div class='category-card'><div class='article-cat'><div class='heading'><h3 >"  +value.name + "</h3></div><div><ul class='folders' id='" + value.id + "-en'></ul> </div></div></div></div>");
 
              $.ajax(
                {
@@ -200,7 +200,7 @@ $('#fetch').on('click', function(){
 
           $.each(acceptedCategoriesFR, function (key,value) {
 
-               $('#categories-fr').append("<div class='category-card'><div class='article-cat'><div class='heading'><h3 >"  +value.name + "</h3></div><div><ul class='folders' id='" + value.id + "-fr'></ul> </div></div></div></div>");
+               $('#results-fr .categories').append("<div class='category-card'><div class='article-cat'><div class='heading'><h3 >"  +value.name + "</h3></div><div><ul class='folders' id='" + value.id + "-fr'></ul> </div></div></div></div>");
 
                $.ajax(
                  {

@@ -7,10 +7,6 @@
   overflow:auto;
 }
 
-#categories {
-  overflow: auto;
-}
-
 #searchResults .article-panel {
   display:none;
 }
