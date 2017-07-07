@@ -708,7 +708,7 @@ function getMissionTypeMetastringid( $mission_type, $role_type ) {
     $boolSubtype = ($language_preference === 'fr') ? false : true;
     $subtype = cp_translate_subtype($subtype, $boolSubtype);
 
-       	if ($language_preference === 'fr'){
+      /* 	if ($language_preference === 'fr'){
     		$content_title = $content_array['content_title']['fr'];
     		if(empty($content_array['content_title']['fr']))
     			$content_title = $content_array['content_title']['en'];		
@@ -716,7 +716,21 @@ function getMissionTypeMetastringid( $mission_type, $role_type ) {
     		$content_title = $content_array['content_title']['en'];
     		if (empty($content_array['content_title']['en']))
     			$content_title = $content_array['content_title']['fr'];
+    	}*/
+
+
+    /// oppourtunities does not take into account for separate bilingual titles (no option for it)
+    if (strpos($content_array['subtype'], 'missions') !== false )
+    	$content_title = $content_array['content_title'];
+    else {
+
+    	/// otherwise, set to opposite language
+    	$content_title = $content_array['content_title'][$language_preference];
+    	if (empty($content_title)) {
+    		$language_preference = ($language_preference === 'en') ? 'fr' : 'en';
+    		$content_title = $content_array['content_title'][$language_preference];
     	}
+    }
 
 	if ($heading === 'new_post' && $subtype === 'file_upload') {
 
