@@ -140,7 +140,7 @@ $('#fetch').on('click', function(){
 
                       //if(value2.visibility == 1){
                         $('#'+value.id+'-en').append("<li class='folder'><a onclick='displayFolder(this)' href='#"+ value2.id + "-en'><div>"  +value2.name + "</div></a></li>");
-                        $('#results-en').append("<div class='folder-display' id='" + value2.id + "-en'><div class='heading-panel'><a class='icon-unsel' onclick='displayCategories(this)' href='#categories-en'><i class='fa fa-arrow-left fa-lg' aria-hidden='true'></i><span class='wb-inv'>"+elgg.echo('freshdesk:knowledge:explore:return')+"</a> <div><h3>"+value2.name+"</h3></div></div></div>");
+                        $('#results-en').append("<div class='folder-display' id='" + value2.id + "-en'><div class='heading-panel'><a class='icon-unsel' onclick='displayCategories(this)' href='#categories-en'><i class='fa fa-arrow-left fa-lg' aria-hidden='true'></i><span class='wb-inv'>"+elgg.echo('freshdesk:knowledge:explore:return')+"</a> <div><h2 class='h3'>"+value2.name+"</h2></div></div></div>");
                       //}
 
                       $.ajax({
@@ -156,7 +156,7 @@ $('#fetch').on('click', function(){
                             var article = JSON.parse(JSON.stringify(data));
 
                               $('#'+value2.id+'-en').append("<div class='article-panel'></div>");
-                              var list = "<ul>";
+                              var list = "<ul class='article-list'>";
                               $.each(article, function (key3,value3) {//<span class='collapse-plus fa fa-plus-square-o fa-lg' aria-hidden='true'></span>
                                 //if(value3.status == 2){
                                   list += "<li class='article-listing'><a class='head-toggle collapsed' href='#"+ value3.id + "-en' data-toggle='collapse' aria-expanded='false' aria-controls='"+ value3.id +"-en'><div><p class='list-title h5'><span class='collapse-plus fa fa-minus-square-o fa-lg' aria-hidden='true'></span>" + value3.title + "</div></a></p><div id='" + value3.id +
@@ -218,7 +218,7 @@ $('#fetch').on('click', function(){
 
                         //if(value2.visibility == 1){
                           $('#'+value.id+'-fr').append("<li class='folder'><a onclick='displayFolder(this)' href='#"+ value2.id + "-fr'><div>"  +value2.name + "</div></a></li>");
-                          $('#results-fr').append("<div class='folder-display' id='" + value2.id + "-fr'><div class='heading-panel'><a class='icon-unsel' onclick='displayCategories(this)' href='#categories-fr'><i class='fa fa-arrow-left fa-lg' aria-hidden='true'></i><span class='wb-inv'>"+elgg.echo('freshdesk:knowledge:explore:return')+"</a> <div><h3>"+value2.name+"</h3></div></div></div>");
+                          $('#results-fr').append("<div class='folder-display' id='" + value2.id + "-fr'><div class='heading-panel'><a class='icon-unsel' onclick='displayCategories(this)' href='#categories-fr'><i class='fa fa-arrow-left fa-lg' aria-hidden='true'></i><span class='wb-inv'>"+elgg.echo('freshdesk:knowledge:explore:return')+"</a> <div><h2 class='h3'>"+value2.name+"</h2></div></div></div>");
                         //}
 
                         $.ajax({
@@ -234,7 +234,7 @@ $('#fetch').on('click', function(){
                               var article = JSON.parse(JSON.stringify(data));
 
                                 $('#'+value2.id+'-fr').append("<div class='article-panel'></div>");
-                                var list = "<ul>";
+                                var list = "<ul class='article-list'>";
                                 $.each(article, function (key3,value3) {//<span class='collapse-plus fa fa-plus-square-o fa-lg' aria-hidden='true'></span>
                                   //if(value3.status == 2){
                                     list += "<li class='article-listing'><a class='head-toggle collapsed' href='#"+ value3.id + "-fr' data-toggle='collapse' aria-expanded='false' aria-controls='"+ value3.id +"-fr'><div><p class='list-title h5'><span class='collapse-plus fa fa-minus-square-o fa-lg' aria-hidden='true'></span>" + value3.title + "</p></div></a><div id='" + value3.id +

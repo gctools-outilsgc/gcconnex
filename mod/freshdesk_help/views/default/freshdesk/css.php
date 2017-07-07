@@ -57,28 +57,10 @@
   margin-bottom:5px;
 }
 
-.folder-icon {
-  margin-right: 5px;
-}
-
 #results-en {
   padding:5px;
   overflow:auto;
   min-height: 545px;
-}
-
-.folder {
-
-}
-
-.folder .heading {
-
-}
-
-
-.folder h4 {
-  padding:5px;
-  margin:0;
 }
 
 .folder-display {
@@ -113,8 +95,9 @@
   padding:20px 15px;
 }
 
-.heading-panel h3 {
+.heading-panel h2 {
   margin:0;
+  border:none;
 }
 
 .collapsed .collapse-plus:before {
@@ -130,12 +113,17 @@
   padding: 15px;
 }
 
-.article-panel ul {
+.article-panel .article-list {
   list-style: none;
   padding:5px;
 }
 
-.article-panel ul li {
+#results-listing {
+  list-style: none;
+  padding:5px;
+}
+
+.article-listing {
   border-bottom: 1px solid #eee;
 }
 

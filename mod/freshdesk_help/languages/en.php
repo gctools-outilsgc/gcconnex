@@ -11,7 +11,7 @@ return array(
 
       'freshdesk:knowledge:explore:title' => 'Explore knowledge base',
 
-      'freshdesk:knowledge:explore:return' => 'Return to top of knowledge base',
+      'freshdesk:knowledge:explore:return' => 'Back to knowledge base categories',
 
       //submit ticket form
       'freshdesk:ticket:title' => "Submit a ticket",

@@ -28,7 +28,7 @@
     echo '<div id="searchResults"><div class="article-panel"><ul id="results-listing"></ul></div></div>';
 
 
-    echo '<h2 class="h3">'.elgg_echo('freshdesk:knowledge:explore:title').'</h2>';
+    echo '<h2 id="explore-header" class="h3">'.elgg_echo('freshdesk:knowledge:explore:title').'</h2>';
     echo '<div id="results-en">'.$articles[get_current_language()].'</div>';
   } else {
     echo '<div id="results"><section class="alert alert-info"><h2>Configure knowledge Base</h2><p>Add articles by fetching them in the admin settings.</p></section></div>';
