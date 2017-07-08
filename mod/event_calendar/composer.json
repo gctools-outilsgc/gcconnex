@@ -1,0 +1,24 @@
+{
+    "name": "iionly/event_calendar",
+    "description": "Adds configurable group and/or site-wide event calendars.",
+    "type": "elgg-plugin",
+    "keywords": [
+        "elgg",
+        "plugin"
+    ],
+    "homepage": "https://github.com/iionly/event_calendar",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "iionly",
+            "homepage": "https://github.com/iionly",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+            "issues": "https://github.com/iionly/event_calendar/issues"
+    },
+    "require": {
+        "composer/installers": ">=1.0.8"
+    }
+}
