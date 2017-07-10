@@ -31,7 +31,7 @@ $formproc = new FGContactForm();
 // and put it here
 $formproc->SetFormRandomKey('CnRrspl1FyEylUj');
 
-$formproc->AddFileUploadField('photo','jpg,jpeg,gif,png,pdf,doc,docx',5120);
+$formproc->AddFileUploadField('photo','jpg,jpeg,gif,png,pdf,doc,docx,rar,zip,',5120);
 // Get post_max_size and upload_max_filesize
 $post_max_size = elgg_get_ini_setting_in_bytes('post_max_size');
 $upload_max_filesize = elgg_get_ini_setting_in_bytes('upload_max_filesize');
