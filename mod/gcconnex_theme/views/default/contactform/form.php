@@ -49,6 +49,24 @@ if(isset($_POST['submitted']))
    // forward(elgg_get_site_url());
    }
 }
+//get value
+if (elgg_is_logged_in() && $formproc->SafeDisplay('name') == ''){
+    $name = $sender_name;
+}else{
+    $name = $formproc->SafeDisplay('name');
+}
+
+if (elgg_is_logged_in() && $formproc->SafeDisplay('email') == ''){
+    $email = $sender_email;
+}else{
+    $email = $formproc->SafeDisplay('email');
+}
+
+if (elgg_is_logged_in() && $formproc->SafeDisplay('depart') == ''){
+    $depart = $sender_depart;
+}else{
+    $depart = $formproc->SafeDisplay('depart');
+}
 
 ?>
 <script type='text/javascript' src='scripts/gen_validatorv31.js'></script>
@@ -82,80 +100,87 @@ if(isset($_POST['submitted']))
                 <input type='hidden' name='<?php echo $formproc->GetFormIDInputName(); ?>' value='<?php echo $formproc->GetFormIDInputValue(); ?>' />
                 <div class='form-group'>
                     <label for='name' class="required"><span class="field-name"><?php echo elgg_echo('contactform:fullname'); ?></span><strong class="required"> (<?php echo elgg_echo('contactform:required'); ?>)</strong></label>
-                        <input type='text' name='name' id='name' class="form-control" value='<?php if (elgg_is_logged_in()){ echo $sender_name;}else{echo $formproc->SafeDisplay('name');} ?>' /><br />
+                        <input type='text' name='name' id='name' class="form-control" value='<?php echo $name; ?>' /><br />
                         <!--<span id='contactus_name_errorloc' class='error'></span>-->
                  </div>
 
                 <div class='form-group'>
                     <label for='email' class="required"><span class="field-name"><?php echo elgg_echo('contactform:email'); ?></span><strong class="required"> (<?php echo elgg_echo('contactform:required'); ?>)</strong></label>
 
-                    <input type='text' name='email' class="form-control" id='email' value='<?php if (elgg_is_logged_in()){ echo $sender_email;}else{echo $formproc->SafeDisplay('email');}  ?>' /><br />
+                    <input type='text' name='email' class="form-control" id='email' value='<?php echo $email; ?>' /><br />
                     <span id='contactus_email_errorloc' class='error'></span>
                 </div>
 
                 <div class='form-group'>
                     <label for='depart' class="required"><span class="field-name"><?php echo elgg_echo('contactform:department'); ?></span><strong class="required"> (<?php echo elgg_echo('contactform:required'); ?>)</strong></label>
 
-                    <input type='text' name='depart' class="form-control" id='depart' value='<?php if (elgg_is_logged_in()){ echo $sender_depart;}else{echo $formproc->SafeDisplay('depart');}  ?>' /><br />
+                    <input type='text' name='depart' class="form-control" id='depart' value='<?php echo $depart; ?>' /><br />
                     <span id='contactus_depart_errorloc' class='error'></span>
                 </div>
 
                 <div class='form-group'>
                     <label for='reason' class="required"><span class="field-name"><?php echo elgg_echo('contactform:select'); ?></span><strong class="required"> (<?php echo elgg_echo('contactform:required'); ?>)</strong></label><br />
-                    <?php
-	global $SESSION;
+<?php
+global $SESSION;
 $dbname = $CONFIG->dbname;
 $host = $CONFIG->dbhost;
 $query="SELECT contact_list FROM {$CONFIG->dbprefix}upgrade ";
 $result=mysql_query($query);
 $db = new PDO("mysql:host=$host;dbname=$dbname", $CONFIG->dbuser, $CONFIG->dbpass);
 $r = $db->query('SELECT * FROM contact_list');
-                    ?>
-                    <select class="form-control" id="reason" name="reason" value='<?php echo $formproc->SafeDisplay('reason'); ?>'>
-                        <option><?php echo elgg_echo('contactform:reason'); ?></option>
-                        <?php
+?>
+<select class="form-control" id="reason" name="reason" value='<?php echo $formproc->SafeDisplay('reason'); ?>'>
+    <option><?php echo elgg_echo('contactform:reason'); ?></option>
+<?php
 foreach ($r as $row) {
     if ($SESSION['language'] == 'fr'){
-       echo "<option value=\"".$row['francais']."$".$row['english']."\">".$row['francais']."</option>\n  ";
-}else{
-   echo "<option value=\"".$row['francais']."$".$row['english']."\">".$row['english']."</option>\n  ";
+        $value = $row['francais']."$".$row['english'];
+//remember value after error validation
+        if ($value === $_POST['reason'] ){
+            echo "<option value=\"".$row['francais']."$".$row['english']."\" selected=selected>".$row['francais']."</option>\n  ";
+        }else{
+            echo "<option value=\"".$row['francais']."$".$row['english']."\">".$row['francais']."</option>\n  ";
+        }
+    }else{
+        $value = $row['francais']."$".$row['english'];
+
+        if ($value === $_POST['reason'] ){
+           echo "<option value=\"".$row['francais']."$".$row['english']."\" selected=selected>".$row['english']."</option>\n  ";
+
+        }else{
+           echo "<option value=\"".$row['francais']."$".$row['english']."\">".$row['english']."</option>\n  ";
+        }
     }
 }
 echo '</select>';
-                        ?>
+?>
+<span id='contactus_text_errorloc' class='error'></span>
+</div>
+<div class='form-group' id='subject' style="display:none;">
+    <label for='subject' class="required"><span class="field-name"><?php echo elgg_echo('contactform:form:subject'); ?></span><strong class="required"> (<?php echo elgg_echo('contactform:required'); ?>)</strong></label><br />
+    <input type='text' name='subject' class="form-control" id='subject' value='<?php echo $formproc->SafeDisplay('subject');  ?>' /><br />
+    <span id='contactus_subject_errorloc' class='error'></span>
+</div>
 
+<div class="mbm elgg-text-help alert alert-info">
+    <?php echo $upload_limit; ?>
+</div>
 
+<div class='form-group'>
+    <label for='photo'><?php echo elgg_echo('contactform:upload'); ?></label><br />
+    <input type="file" name='photo' id='photo' /><br />
+    <span id='contactus_photo_errorloc' class='error'></span>
+</div>
+<div class='form-group'>
+    <label for='message' class="required"><span class="field-name"><?php echo elgg_echo('contactform:message');?></span><strong class="required"> (<?php echo elgg_echo('contactform:required'); ?>)</strong></label>
+    <textarea rows="10" cols="50" name='message' id='message'><?php echo $formproc->SafeDisplay('message') ?></textarea>
+</div>
 
-                        <span id='contactus_text_errorloc' class='error'></span>
-                </div>
-
-                <div class='form-group' id='subject' style="display:none;">
-                    <label for='subject' class="required"><span class="field-name"><?php echo elgg_echo('contactform:form:subject'); ?></span><strong class="required"> (<?php echo elgg_echo('contactform:required'); ?>)</strong></label><br />
-
-                    <input type='text' name='subject' class="form-control" id='subject' value='<?php echo $formproc->SafeDisplay('subject');  ?>' /><br />
-                    <span id='contactus_subject_errorloc' class='error'></span>
-                </div>
-
-                <div class="mbm elgg-text-help alert alert-info">
-                    <?php echo $upload_limit; ?>
-                </div>
-
-                <div class='form-group'>
-                    <label for='photo'><?php echo elgg_echo('contactform:upload'); ?></label><br />
-                    <input type="file" name='photo' id='photo' /><br />
-                    <span id='contactus_photo_errorloc' class='error'></span>
-                </div>
-                <div class='form-group'>
-                    <label for='message' class="required"><span class="field-name"><?php echo elgg_echo('contactform:message');?></span><strong class="required"> (<?php echo elgg_echo('contactform:required'); ?>)</strong></label>
-                   <textarea rows="10" cols="50" name='message' id='message'><?php echo $formproc->SafeDisplay('message') ?></textarea>
-                </div>
-
-                <div class='container pull-right'>
-                    <input type='submit' class="btn btn-primary pull-right" name='Submit' value='<?php echo elgg_echo('send');?>' />
-                </div>
+<div class='container pull-right'>
+    <input type='submit' class="btn btn-primary pull-right" name='Submit' value='<?php echo elgg_echo('send');?>' />
+</div>
 </form>
-        
-    </div>
+</div>
 </section>
     
     <!-- client-side Form Validations:
