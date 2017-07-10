@@ -34,28 +34,31 @@ function check_for_community_feed_items(){
     //What are the posts currently loaded on the page?
     //Get the guid from the post id
     var firstPostOnPage = $('.community-feed-holder ul li').first().attr('id');
-    var postID = firstPostOnPage.split("-");
-    postID = postID.slice(2);
-    
-    // Ping the api to see what the latest community item. This will only grab one post
-    elgg.get('ajax/view/ajax/community_feed', {
-        data: { 'url': window.location.pathname.replace('/', ''), 'limit': 1 },
-        dataType: 'json',
-        success: function(response){
-            //Get the latest post and compare that post to the post that is on the page.
-            //var test_array = response;
-            if( response == postID[0] ){
-                //True - Keep looking for posts
-                setTimeout(community_feed_stream_count, 10000);
-            } else {
-                //False - there is a new post. We can stop looking now.
-                stop_stream_community_feed_count();
+
+    if( firstPostOnPage ){
+        var postID = firstPostOnPage.split("-");
+        postID = postID.slice(2);
+        
+        // Ping the api to see what the latest community item. This will only grab one post
+        elgg.get('ajax/view/ajax/community_feed', {
+            data: { 'url': window.location.pathname.replace('/', ''), 'limit': 1 },
+            dataType: 'json',
+            success: function(response){
+                //Get the latest post and compare that post to the post that is on the page.
+                //var test_array = response;
+                if( response == postID[0] ){
+                    //True - Keep looking for posts
+                    setTimeout(community_feed_stream_count, 10000);
+                } else {
+                    //False - there is a new post. We can stop looking now.
+                    stop_stream_community_feed_count();
+                }
+            },
+            error: function(request, status, error) { 
+               console.log('error');
             }
-        },
-        error: function(request, status, error) { 
-           console.log('error');
-        }
-    });
+        });
+    }
 }
 
 function load_new_community_feed_items(){

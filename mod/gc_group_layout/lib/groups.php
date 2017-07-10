@@ -276,8 +276,8 @@ function groups_handle_edit_page($page, $guid = 0) {
 
 		if (elgg_instanceof($group, 'group') && $group->canEdit()) {
 			elgg_set_page_owner_guid($group->getGUID());
-			elgg_push_breadcrumb($group->name, $group->getURL());
-			elgg_push_breadcrumb($title);
+			//elgg_push_breadcrumb($group->name, $group->getURL());
+			//elgg_push_breadcrumb($title);
 			$content = elgg_view("groups/edit", array('entity' => $group));
 		} else {
 			$content = elgg_echo('groups:noaccess');
@@ -340,6 +340,8 @@ function groups_handle_profile_page($guid) {
 	// turn this into a core function
 	global $autofeed;
 	$autofeed = true;
+	$lang = get_current_language();
+	$title = gc_explode_translation($title,$lang);
 
 	elgg_push_context('group_profile');
 
@@ -347,7 +349,7 @@ function groups_handle_profile_page($guid) {
 
 	$group = get_entity($guid);
 
-	elgg_push_breadcrumb($group->name);
+	elgg_push_breadcrumb($title);
 
 	groups_register_profile_buttons($group);
 
@@ -357,11 +359,11 @@ function groups_handle_profile_page($guid) {
 	$params = array(
 		'content' => $content,
 		'sidebar' => $sidebar,
-		'title' => $group->name,
+		'title' => $title,
 	);
 	$body = elgg_view_layout('one_sidebar', $params);
 
-	echo elgg_view_page($group->name, $body);
+	echo elgg_view_page($title, $body);
 }
 
 /**
@@ -412,16 +414,16 @@ function groups_handle_members_page($guid) {
 
     elgg_push_context('groups_members');
 	elgg_entity_gatekeeper($guid, 'group');
-
+	$lang = get_current_language();
 	$group = get_entity($guid);
 
 	elgg_set_page_owner_guid($guid);
 
 	elgg_group_gatekeeper();
 
-	$title = elgg_echo('groups:members:title', array($group->name));
+	$title = elgg_echo('groups:members:title', array(gc_explode_translation($group->title,$lang)));
 
-	elgg_push_breadcrumb($group->name, $group->getURL());
+	elgg_push_breadcrumb(gc_explode_translation($group->title,$lang), $group->getURL());
 	elgg_push_breadcrumb(elgg_echo('groups:members'));
 
 	$db_prefix = elgg_get_config('dbprefix');
@@ -588,7 +590,6 @@ function groups_prepare_form_vars($group = null) {
 	$values = array(
 		'name' => '',
 		'name2' => '',
-		'title3' => '',
 		'membership' => ACCESS_PUBLIC,
 		'vis' => ACCESS_PUBLIC,
 		'guid' => null,

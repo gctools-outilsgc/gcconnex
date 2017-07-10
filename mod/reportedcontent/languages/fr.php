@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Elgg reported content plugin language pack
- *
- * @package ElggReportedContent
- */
-
 return array(
 	'item:object:reported_content' => 'Éléments rapportés',
 	'admin:administer_utilities:reportedcontent' => 'Éléments rapportés',
@@ -14,7 +8,6 @@ return array(
 	'reportedcontent:this:tooltip' => "Rapport de cette page à l'administrateur",
 	'reportedcontent:none' => "Il n'ya pas de contenu signalé",
 	'reportedcontent:report' => "Signaler à l'admin",
-	'reportedcontent:title' => 'Titre de page',
 	'reportedcontent:deleted' => 'Le contenu signalé a été supprimés',
 	'reportedcontent:notdeleted' => "Nous n'avons pas été capable de supprimer ce rapport",
 	'reportedcontent:delete' => 'effacez le rapport',
@@ -32,7 +25,6 @@ return array(
 	'reportedcontent:failing' => "Votre rapport n'a pas pu être envoyé",
 	'reportedcontent:refresh' => 'Actualiser la liste',
 	'reportedcontent:report' => 'Signaler ce',
-	'reportedcontent:moreinfo' => "Plus d'info",
 	'reportedcontent:instructions' => 'Ce rapport sera envoyé aux administrateurs de ce site.',
 	'reportedcontent:numbertodisplay' => 'Nombre de rapports à afficher',
 	'reportedcontent:widget:description' => 'Afficher contenu signalé',

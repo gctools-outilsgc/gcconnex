@@ -13,9 +13,16 @@
 $user = $vars['user'];
 $group = $vars['group'];
 $access_id = get_entity($group)->group_acl;
+
+$discuss_button = elgg_view("output/url", array(
+	"text" => elgg_echo("discussion:add"),
+	"href" => "discussion/add/" . $group,
+
+	"class" => "elgg-button elgg-button-action btn btn-primary pull-right"
+));
  ?>
 <div class="col-sm-12 clearfix">
-    <a class="btn btn-primary quick-discuss-action-btn pull-right clearfix"><?php echo elgg_echo('discussion:add');?></a>
+    <?php echo $discuss_button; ?>
 </div>
 
  <div style="display:none;" class="quick-start-discussion quick-start-collapse clearfix col-sm-12">

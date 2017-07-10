@@ -26,7 +26,7 @@ if( $limit ){
 }
 
 if( strpos($community_tags, ',') !== false ){
-    $community_tags = explode(',', $community_tags);
+    $community_tags = array_map('trim', explode(',', $community_tags));
 }
 
 elgg_set_context('search');
@@ -37,6 +37,7 @@ $query = "SELECT wi.guid FROM {$dbprefix}objects_entity wi LEFT JOIN {$dbprefix}
 
 if( is_array($community_tags) ){
     $all_tags = implode("|", $community_tags);
+    $all_tags = str_replace("'", "''", $all_tags);
     $query .= " AND wi.description REGEXP '{$all_tags}'";
 } else {
     $query .= " AND wi.description LIKE '%{$community_tags}%'";

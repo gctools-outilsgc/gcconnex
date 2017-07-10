@@ -21,11 +21,9 @@ if($test){
     $excerpt = strip_tags($excerpt);
     $excerpt = elgg_get_excerpt($excerpt);
 } else {
-    if($object->description3){
-        $description = gc_explode_translation($object->description3, $lang);
-    }else{
-        $description = $object->description;
-    }
+
+        $description = gc_explode_translation($object->description, $lang);
+
     $excerpt = strip_tags($description);
     $excerpt = elgg_get_excerpt($excerpt);
 }

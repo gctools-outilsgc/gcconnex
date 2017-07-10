@@ -13,9 +13,7 @@
  */
 $lang = get_current_language();
 $album = elgg_extract('entity', $vars);
-if($album->title3){
-    $album->title = gc_explode_translation($album->title3, $lang);
-}
+$album->title = gc_explode_translation($album->title, $lang);       // get the appropriate-language title if multiple ones are present.
 
 $album_cover = elgg_view_entity_icon($album, 'medium');
 
@@ -34,18 +32,18 @@ $header = elgg_view('output/url', array(
 $container = $album->getContainerEntity();
 if ($container) {
 
-    if($album->getContainerEntity()->title3){
-        $group_title = gc_explode_translation($album->getContainerEntity()->title3,$lang);
+    if($album->getContainerEntity()->title){
+        $group_title = gc_explode_translation( $album->getContainerEntity()->title, $lang );
     }else{
          $group_title = $album->getContainerEntity()->name;
     }
 
-        $footer = '<div class="elgg-subtext brdr-tp">' . elgg_echo('album:created_by') . elgg_view('output/url', array(
-                'text' => $group_title,
-                'href' => $album->getContainerEntity()->getURL(),
-                'is_trusted' => true,
-        ));
-        $footer .= '<br>' . elgg_echo('album:num', array($album->getSize())) . '</div>';
+    $footer = '<div class="elgg-subtext brdr-tp">' . elgg_echo('album:created_by') . elgg_view('output/url', array(
+            'text' => $group_title,
+            'href' => $album->getContainerEntity()->getURL(),
+            'is_trusted' => true,
+    ));
+    $footer .= '<br>' . elgg_echo('album:num', array($album->getSize())) . '</div>';
 } else {
         $footer = '<div class="elgg-subtext">' . elgg_echo('album:created_by') . ' - ';
         $footer .= '<br>' . elgg_echo('album:num', array($album->getSize())) . '</div>';

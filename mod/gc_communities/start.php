@@ -35,7 +35,7 @@ function gc_communities_init(){
             $community_animator = $community['community_animator'];
 
             $text = (get_current_language() == 'fr') ? $community['community_fr'] : $community['community_en'];
-            if( elgg_is_admin_logged_in() || $community_animator == elgg_get_logged_in_user_entity()->username ){
+            if( elgg_is_logged_in() && (elgg_is_admin_logged_in() || $community_animator == elgg_get_logged_in_user_entity()->username) ){
                 $text .= " <span class='elgg-lightbox' data-colorbox-opts='".json_encode(['href'=>elgg_normalize_url('ajax/view/tags/form?community_url='.$url),'width'=>'800px','height'=>'255px'])."'><i class='fa fa-cog fa-lg'><span class='wb-inv'>Customize this Community</span></i></span>";
             }
 
@@ -90,8 +90,6 @@ function gc_communities_init(){
     // if( elgg_is_active_plugin('thewire') ){
     //     elgg_register_widget_type('filtered_wire_index', elgg_echo('gc_communities:filtered_wire_index'), elgg_echo('gc_communities:filtered_wire_index'), $context, true);
     // }
-
-    elgg_register_widget_type('free_html', elgg_echo("widgets:free_html:title"), elgg_echo("widgets:free_html:description"), $context, true);
 }
 
 function gc_communities_permissions_hook($hook, $entity_type, $returnvalue, $params) {

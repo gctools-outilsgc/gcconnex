@@ -102,7 +102,12 @@ elgg.ajax.handleOptions = function(url, options) {
  * @private
  */
 elgg.ajax.handleAjaxError = function(xhr, status, error) {
-	//elgg.register_error(elgg.echo('ajax:error'));			// removed for now to prevent these errors constantly poping up for users
+	if (!xhr.getAllResponseHeaders()) {
+		// user aborts (like refresh or navigate) do not have headers
+		return;
+	}
+	
+	elgg.register_error(elgg.echo('ajax:error'));
 };
 
 /**

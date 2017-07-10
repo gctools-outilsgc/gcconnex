@@ -7,18 +7,12 @@ $lang = get_current_language();
 $object = $vars['item']->getObjectEntity();
 
 if ($object->excerpt){
-	if($object->excerpt3){
-		$excerpt = gc_explode_translation($object->excerpt3,$lang);
-	}else{
-		$excerpt = $object->excerpt;
-	}
-}else{
-	if($object->description3){
-		$excerpt = gc_explode_translation($object->description3,$lang);
-	}else{
-		$excerpt = $object->description;
-	}
 	
+	$excerpt = gc_explode_translation($object->excerpt,$lang);
+
+}else{
+	
+	$excerpt = gc_explode_translation($object->description,$lang);
 }
 
 $excerpt = elgg_get_excerpt($excerpt);

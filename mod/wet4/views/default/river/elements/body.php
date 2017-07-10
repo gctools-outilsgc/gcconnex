@@ -80,11 +80,9 @@ if($subtype_test == 'comment' || $subtype_test =='discussion_reply'){
     $commentordiscuss = false;
 }
 
-if($container->title3){
-	$name = gc_explode_translation($container->title3,$lang);
-}else{
-	$name = $container->name;
-}
+
+	$name = gc_explode_translation($container->name,$lang);
+
 
 if ($container instanceof ElggGroup && $container->guid != elgg_get_page_owner_guid()) {
 	$group_link = elgg_view('output/url', array(

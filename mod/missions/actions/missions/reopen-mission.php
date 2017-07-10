@@ -17,12 +17,14 @@ $from_admin = get_input('MISSION_ADMIN_ACTION_FLAG');
 $mission->state = 'posted';
 $mission->save;
 
+$ia = elgg_set_ignore_access(true);
 $analytics_record = new ElggObject();
 $analytics_record->subtype = 'mission-posted';
 $analytics_record->title = 'Mission Posted Report';
 $analytics_record->mission_guid = $mission->guid;
 $analytics_record->access_id = ACCESS_LOGGED_IN;
 $analytics_record->save();
+$ia = elgg_set_ignore_access($ia);
 
 system_message(elgg_echo('missions:has_been_reopened', array($mission->job_title)));
 

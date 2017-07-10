@@ -7,6 +7,7 @@
  */
 
 $owner = elgg_get_page_owner_entity();
+$lang = get_current_language();
 
 elgg_gatekeeper();
 elgg_group_gatekeeper();
@@ -17,9 +18,9 @@ $title = elgg_echo('photos:add');
 elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
 elgg_push_breadcrumb(elgg_echo('tidypics:albums'), 'photos/all');
 if (elgg_instanceof($owner, 'user')) {
-	elgg_push_breadcrumb($owner->name, "photos/owner/$owner->username");
+	elgg_push_breadcrumb(gc_explode_translation($owner->name,$lang), "photos/owner/$owner->username");
 } else {
-	elgg_push_breadcrumb($owner->name, "photos/group/$owner->guid/all");
+	elgg_push_breadcrumb(gc_explode_translation($owner->name,$lang), "photos/group/$owner->guid/all");
 }
 elgg_push_breadcrumb($title);
 

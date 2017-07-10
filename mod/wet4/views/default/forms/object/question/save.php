@@ -22,18 +22,32 @@ if (!$question) {
 
 $container = $question->getContainerEntity();
 
+// decode json into English / French parts
+$json_title = json_decode($question->title);
+$json_desc = json_decode($question->description);
+
+if ( $json_title ){
+  $title2 = $json_title->fr;
+  $title = $json_title->en;
+}
+
+if ( $json_desc ){
+  $desc2 = $json_desc->fr;
+  $desc = $json_desc->en;
+}
+
 $title = [
 	'name' => 'title',
 	'id' => 'question_title',
-	'value' => elgg_get_sticky_value('question', 'title', $question->title),
-	'required' => true,
+
+	'value' => elgg_get_sticky_value('question', 'title', $title),
 ];
 
 $title2 = [
 	'name' => 'title2',
 	'id' => 'question_title2',
-	'value' => elgg_get_sticky_value('question', 'title2', $question->title2),
-	'required' => true,
+
+	'value' => elgg_get_sticky_value('question', 'title2', $title2),
 ];
 
 $description = [
@@ -41,7 +55,7 @@ $description = [
 	'id' => 'question_description',
 	'required' => 'required',
 	'class' => 'validate-me',
-	'value' => elgg_get_sticky_value('question', 'description', $question->description),
+	'value' => elgg_get_sticky_value('question', 'description', $desc),
 ];
 
 $description2 = [
@@ -49,7 +63,7 @@ $description2 = [
 	'id' => 'question_description2',
 	'required' => 'required',
 	'class' => 'validate-me',
-	'value' => elgg_get_sticky_value('question', 'description2', $question->description2),
+	'value' => elgg_get_sticky_value('question', 'description2', $desc2),
 ];
 
 $tags = [
@@ -101,11 +115,23 @@ echo $btn_language;
 <div class="tab-content tab-content-border">
 <div class="mrgn-bttm-sm en">
 	<label for='question_title'><?php echo elgg_echo('questions:edit:question:title'); ?></label>
-	<?php echo elgg_view('input/text', $title); ?>
+	<?php
+	//add autocomplete on question creation
+	if(!$question->guid){
+		echo elgg_view('input/question_autocomplete', $title);
+	} else {
+		echo elgg_view('input/text', $title);
+	} ?>
 </div>
 <div class="mrgn-bttm-sm fr">
 	<label for='question_title2'><?php echo elgg_echo('questions:edit:question:title'); ?></label>
-	<?php echo elgg_view('input/text', $title2); ?>
+	<?php
+	//add autocomplete on question creation
+	if(!$question->guid){
+		echo elgg_view('input/question_autocomplete', $title2);
+	} else {
+		echo elgg_view('input/text', $title2);
+	}?>
 </div>
 
 <div class="mrgn-bttm-sm en">

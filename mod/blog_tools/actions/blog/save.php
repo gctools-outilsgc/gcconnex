@@ -53,7 +53,7 @@ $old_status = $blog->status;
 $values = array(
 	'title' => '',
 	'title2' => '',
-	'title3' => '',
+	//'title3' => '',
 	'description' => '',
 	'description2' => '',
 	'description3' => '',
@@ -158,13 +158,13 @@ foreach ($values as $name => $default) {
 	}
 }
 
-if (!$values['title']){
+/*if (!$values['title']){
 	$values['title'] = $values['title2'];
-}
+}*/
 //implode for tranlation
-$values['title3'] = gc_implode_translation($values['title'], $values['title2']);
-$values['excerpt3'] = gc_implode_translation($values['excerpt'], $values['excerpt2']);
-$values['description3'] =gc_implode_translation($values['description'], $values['description2']);
+$values['title'] = gc_implode_translation($values['title'], $values['title2']);
+$values['excerpt'] = gc_implode_translation($values['excerpt'], $values['excerpt2']);
+$values['description'] =gc_implode_translation($values['description'], $values['description2']);
 // if preview, force status to be draft
 if ($save == false) {
 	$values['status'] = 'draft';
@@ -179,7 +179,9 @@ if ($values['status'] == 'draft') {
 // assign values to the entity, stopping on error.
 if (!$error) {
 	foreach ($values as $name => $value) {
+		if (($name != 'title2') && ($name != 'description2') &&  ($name != 'excerpt2')){ // remove input 2 in metastring table
 		$blog->$name = $value;
+		}
 	}
 }
 

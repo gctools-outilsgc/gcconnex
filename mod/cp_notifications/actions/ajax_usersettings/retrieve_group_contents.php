@@ -14,6 +14,7 @@ $group_guid = (int)get_input('group_guid');
 $user_guid = (int)get_input('user_guid');
 elgg_load_library('elgg:gc_notification:functions');
 $dbprefix = elgg_get_config('dbprefix');
+$lang = get_current_language();
 
 $options = array(
 	'subtypes' => array(),
@@ -27,8 +28,9 @@ $group = get_entity($group_guid);
 $group_objects = array();
 foreach ($group_contents as $group_content) {
 	if (check_entity_relationship($user_guid, 'cp_subscribed_to_email', $group_content->getGUID())) {
+	    $title = gc_explode_translation($group_content->title,$lang);
 
-		$group_item_content = "<p><a href='{$group_content->getURL()}'>{$group_content->title}</a></p> <sup>".elgg_echo('cp_notifications:subtype:'.$group_content->getSubtype())."</sup>";
+		$group_item_content = "<p><a href='{$group_content->getURL()}'>{$title}</a></p> <sup>".elgg_echo('cp_notifications:subtype:'.$group_content->getSubtype())."</sup>";
 		$group_item_left = "<div class='togglefield col-sm-10'>{$group_item_content}</div>";
 
 

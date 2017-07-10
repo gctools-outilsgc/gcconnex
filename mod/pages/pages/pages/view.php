@@ -22,15 +22,17 @@ $container = elgg_get_page_owner_entity();
 if (!$container) {
 	forward(REFERER);
 }
-if($page->title3){
-	$title = gc_explode_translation($page->title3, $lang);
-}else
-$title = $page->title;
-if($container->title3){
-	$group_title = gc_explode_translation($container->title3, $lang);
+
+	$title = gc_explode_translation($page->title, $lang);
+
+if(!$container->title){
+	$group_title = gc_explode_translation($container->name, $lang);
+
 }else{
-	$group_title = $container->name;
+	$group_title = gc_explode_translation($container->title, $lang);
+
 }
+	
 
 if (elgg_instanceof($container, 'group')) {
 	elgg_push_breadcrumb($group_title, "pages/group/$container->guid/all");

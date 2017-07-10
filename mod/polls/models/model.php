@@ -84,7 +84,7 @@ function polls_get_choice_array3($poll) {
 	$responses = array();
 	if ($choices) {
 		foreach($choices as $choice) {
-			$responses[$choice->text3] = $choice->text3;
+			$responses[$choice->text] = $choice->text;
 		}
 	}
 	return $responses;
@@ -106,7 +106,7 @@ function polls_add_choices($poll,$choices) {
 	}
 }
 
-function polls_add_choices2($poll,$choices) {
+/*function polls_add_choices2($poll,$choices) {
 	$e = 0;
 	if ($choices) {
 		foreach($choices as $choice) {
@@ -127,16 +127,16 @@ function polls_add_choices3($poll,$choices) {
 	if ($choices) {
 		foreach($choices as $choice) {
 			$poll_choice = new ElggObject();
-			$poll_choice->subtype = "poll_choice3";
-			$poll_choice->text3 = $choice;
+			$poll_choice->subtype = "poll_choice";
+			$poll_choice->text = $choice;
 			$poll_choice->display_order = $s*10;
 			$poll_choice->access_id = $poll->access_id;
 			$poll_choice->save();
-			add_entity_relationship($poll_choice->guid, 'poll_choice3', $poll->guid);
+			add_entity_relationship($poll_choice->guid, 'poll_choice', $poll->guid);
 			$s += 1;
 		}
 	}
-}
+}*/
 
 function polls_delete_choices($poll) {
 	$choices = polls_get_choices($poll);
@@ -211,7 +211,7 @@ $lang = get_current_language();
 		if (elgg_instanceof($poll,'object','poll')) {
 			$container_guid = $poll->container_guid;
 			elgg_set_page_owner_guid($container_guid);
-			$title = elgg_echo('polls:editpost', array(gc_explode_translation($poll->title3, $lang)));
+			$title = elgg_echo('polls:editpost', array(gc_explode_translation($poll->title, $lang)));
 			
 			$body_vars = array(
 				'fd' => polls_prepare_edit_body_vars($poll),
@@ -228,12 +228,9 @@ $lang = get_current_language();
 			elgg_push_breadcrumb(elgg_echo('item:object:poll'),'polls/all');
 
 			$container = get_entity($container_guid);
-			if($container->title3){
-				$group_title = gc_explode_translation($container->title3,$lang);
-			}else{
-				$group_title = $container->name;
-			}
-
+			
+				$group_title = gc_explode_translation($container->title,$lang);
+	
 			if (elgg_instanceof($container,'group')) {
 				elgg_push_breadcrumb($group_title, 'polls/group/' . $container->getGUID());
 			} else {
@@ -251,7 +248,7 @@ $lang = get_current_language();
 			elgg_set_page_owner_guid($guid);
 			$container = get_entity($guid);
 			
-			elgg_push_breadcrumb($container->name, 'polls/group/' . $container->getGUID());
+			elgg_push_breadcrumb(gc_explode_translation($container->name,$lang), 'polls/group/' . $container->getGUID());
 		} else {
 			$user = elgg_get_logged_in_user_entity();
 			elgg_set_page_owner_guid($user->getGUID());
@@ -337,11 +334,9 @@ function polls_get_page_list($page_type, $container_guid = NULL) {
 		if (!elgg_instanceof($group,'group') || !polls_activated_for_group($group)) {
 			forward();
 		}
-		if(!$group->title3){
-			$crumbs_title = $group->name;
-		}else{
-			$crumbs_title = gc_explode_translation($group->title3, $lang);
-		}
+
+			$crumbs_title = gc_explode_translation($group->title, $lang);
+		
 		
 		$params['title'] = elgg_echo('polls:group_polls:listing:title', array(htmlspecialchars($crumbs_title)));
 		$params['filter'] = "";
@@ -437,7 +432,7 @@ function polls_get_page_view($guid) {
 		// Set the page owner
 		$page_owner = $poll->getContainerEntity();
 		elgg_set_page_owner_guid($page_owner->guid);
-		$title =  gc_explode_translation($poll->title3, $lang);
+		$title =  gc_explode_translation($poll->title, $lang);
 		$content = elgg_view_entity($poll, array('full_view' => TRUE));
 		//check to see if comments are on
 		if ($poll->comments_on != 'Off') {
@@ -445,12 +440,13 @@ function polls_get_page_view($guid) {
 		}
 		
 		elgg_push_breadcrumb(elgg_echo('item:object:poll'), "polls/all");
+if (!$page_owner->title){
+	$title_group = $page_owner->name;
 
-		if($page_owner->title3){
-			$title_group = gc_explode_translation($page_owner->title3, $lang);
-		}else{
-			$title_group = $page_owner->name;
-		}
+}else{
+	$title_group = gc_explode_translation($page_owner->title, $lang);
+}
+			
 
 		if (elgg_instanceof($page_owner,'user')) {
 			elgg_push_breadcrumb($title_group, "polls/owner/{$page_owner->username}");
@@ -459,11 +455,9 @@ function polls_get_page_view($guid) {
 		}
 		$lang = get_current_language();
 		
-        if($poll->title3){
-            elgg_push_breadcrumb(gc_explode_translation($poll->title3, $lang));
-        }else{
-            elgg_push_breadcrumb($poll->title);
-        }
+
+            elgg_push_breadcrumb(gc_explode_translation($poll->title, $lang));
+
 		
 	} else {			
 		// Display the 'post not found' page instead
@@ -492,6 +486,28 @@ function polls_get_response_count($valueToCount, $fromArray) {
 				$count += 1;
 			}
 		}	
+	}
+	return $count;
+}
+
+function polls_get_response_count_enfr($responseToCount, $fromArray) {
+	$count = 0;
+	$toCount = $responseToCount->text;
+	$toCount3 = $responseToCount->text3;
+
+	if(is_array($fromArray))
+	{
+		foreach($fromArray as $item)
+		{
+			if($item->value == $toCount)
+			{
+				$count += 1;
+			}
+			else if($item->value == $toCount3)
+			{
+				$count += 1;
+			}
+		}
 	}
 	return $count;
 }

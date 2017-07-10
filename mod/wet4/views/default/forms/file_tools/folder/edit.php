@@ -14,6 +14,20 @@ if (!empty($folder)) {
 	$desc = $folder->description;
 	$desc2 = $folder->description2;
 
+  // decode json into English / French parts
+$json_title = json_decode($title);
+$json_desc = json_decode($desc);
+
+if ( $json_title ){
+  $title2 = $json_title->fr;
+  $title= $json_title->en;
+}
+
+if ( $json_desc ){
+    $desc2 = $json_desc->fr;
+  $desc = $json_desc->en;
+}
+
 	if (!empty($folder->parent_guid)) {
 		$parent = $folder->parent_guid;
 	} else {

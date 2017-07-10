@@ -56,7 +56,7 @@ function filter_tags($var) {
 
 /**
  * Returns the current page's complete URL.
- * 
+ *
  * It uses the configured site URL for the hostname rather than depending on
  * what the server uses to populate $_SERVER.
  *
@@ -90,7 +90,7 @@ function is_email_address($address) {
 }
 
 /**
- * Load all the GET and POST variables into the sticky form cache
+ * Save form submission data (all GET and POST vars) into a session cache
  *
  * Call this from an action when you want all your submitted variables
  * available if the submission fails validation and is sent back to the form
@@ -105,7 +105,7 @@ function elgg_make_sticky_form($form_name) {
 }
 
 /**
- * Clear the sticky form cache
+ * Remove form submission data from the session
  *
  * Call this if validation is successful in the action handler or
  * when they sticky values have been used to repopulate the form
@@ -121,7 +121,7 @@ function elgg_clear_sticky_form($form_name) {
 }
 
 /**
- * Has this form been made sticky?
+ * Does form submission data exist for this form?
  *
  * @param string $form_name Form namespace
  *
@@ -133,7 +133,7 @@ function elgg_is_sticky_form($form_name) {
 }
 
 /**
- * Get a specific sticky variable
+ * Get a specific value from cached form submission data
  *
  * @param string  $form_name     The name of the form
  * @param string  $variable      The name of the variable
@@ -147,11 +147,10 @@ function elgg_is_sticky_form($form_name) {
  */
 function elgg_get_sticky_value($form_name, $variable = '', $default = null, $filter_result = true) {
 	return _elgg_services()->stickyForms->getStickyValue($form_name, $variable, $default, $filter_result);
-
 }
 
 /**
- * Get all the values in a sticky form in an array
+ * Get all submission data cached for a form
  *
  * @param string $form_name     The name of the form
  * @param bool   $filter_result Filter for bad input if true
@@ -164,7 +163,7 @@ function elgg_get_sticky_values($form_name, $filter_result = true) {
 }
 
 /**
- * Clear a specific sticky variable
+ * Remove one value of form submission data from the session
  *
  * @param string $form_name The name of the form
  * @param string $variable  The name of the variable to clear
@@ -213,16 +212,15 @@ function input_livesearch_page_handler($page) {
 	$q = str_replace(array('_', '%'), array('\_', '\%'), $q);
 
 // for the group members search: group guid - should be numeric
-	if (!$g = get_input('term', get_input('g'))) {
-		exit;
+	if (!$g = get_input('term', get_input('g'))){
+		$g=0;
 	}
+	else {
+		$g = sanitise_string($g);
 
-	$input_name = get_input('name', 'members');
-
-	$g = sanitise_string($g);
-
-	// replace mysql vars with escaped strings
-	$g = str_replace(array('_', '%'), array('\_', '\%'), $g);
+		// replace mysql vars with escaped strings
+		$g = str_replace(array('_', '%'), array('\_', '\%'), $g);
+	}
 
 	$match_on = get_input('match_on', 'all');
 
@@ -256,11 +254,11 @@ function input_livesearch_page_handler($page) {
 						"(ue.name LIKE '$q%' OR ue.name LIKE '% $q%' OR ue.username LIKE '$q%')"
 					)
 				);
-				
+
 				$entities = elgg_get_entities($options);
 				if (!empty($entities)) {
 					foreach ($entities as $entity) {
-						
+
 						if (in_array('groups', $match_on)) {
 							$value = $entity->guid;
 						} else {
@@ -302,7 +300,7 @@ function input_livesearch_page_handler($page) {
 				if (!elgg_is_active_plugin('groups')) {
 					continue;
 				}
-				
+
 				$options = array(
 					'type' => 'group',
 					'limit' => $limit,
@@ -312,7 +310,7 @@ function input_livesearch_page_handler($page) {
 						"(ge.name LIKE '$q%' OR ge.name LIKE '% $q%' OR ge.description LIKE '% $q%')"
 					)
 				);
-				
+
 				$entities = elgg_get_entities($options);
 				if (!empty($entities)) {
 					foreach ($entities as $entity) {
@@ -356,11 +354,11 @@ function input_livesearch_page_handler($page) {
 						"(ue.name LIKE '$q%' OR ue.name LIKE '% $q%' OR ue.username LIKE '$q%')"
 					)
 				);
-				
+
 				$entities = elgg_get_entities_from_relationship($options);
 				if (!empty($entities)) {
 					foreach ($entities as $entity) {
-						
+
 						$output = elgg_view_list_item($entity, array(
 							'use_hover' => false,
 							'use_link' => false,
@@ -404,11 +402,11 @@ function input_livesearch_page_handler($page) {
 						"(ue.name LIKE '$q%' OR ue.name LIKE '% $q%' OR ue.username LIKE '$q%')"
 					)
 				);
-				
+
 				$entities = elgg_get_entities_from_relationship($options);
 				if (!empty($entities)) {
 					foreach ($entities as $entity) {
-						
+
 						$output = elgg_view_list_item($entity, array(
 							'use_hover' => false,
 							'use_link' => false,

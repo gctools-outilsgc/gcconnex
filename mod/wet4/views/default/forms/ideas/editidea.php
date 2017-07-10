@@ -34,39 +34,28 @@ echo $btn_language;
 <div class='en'>
 	<label><?php echo elgg_echo('title:en'); ?></label><br />
 	<?php
-    if($title1){
-        $title = $title1;
-    }
+	
+		echo gc_explode_translation($title,'en');
 
-    if($desc1){
-        $desc = $desc1;
-    }
-	if (elgg_is_admin_logged_in()) {
-		echo $title;
-	} else {
-		echo $title;
-	}
     ?>
 </div>
 <div class='fr'>
 	<label><?php echo elgg_echo('title:fr'); ?></label><br />
 	<?php
-	if (elgg_is_admin_logged_in()) {
-		echo $title2;
-	} else {
-		echo $title2;
-	}
+	
+		echo gc_explode_translation($title,'fr');
+
     ?>
 </div>
 
 <div class='en'>
     <label for="description"><?php echo elgg_echo('description:ideas:en'); ?></label>
-    <?php echo elgg_view('input/longtext', array('name' => 'description', 'id' => 'description', 'value' => $desc, 'required '=> "required", "class" => "validate-me")); ?>
+    <?php echo elgg_view('input/longtext', array('name' => 'description', 'id' => 'description', 'value' => gc_explode_translation($desc,'en'), 'required '=> "required", "class" => "validate-me")); ?>
 </div>
 
 <div class='fr'>
     <label for="description2"><?php echo elgg_echo('description:ideas:fr'); ?></label>
-    <?php echo elgg_view('input/longtext', array('name' => 'description2', 'id' => 'description2', 'value' => $desc2, 'required '=> "required", "class" => "validate-me")); ?>
+    <?php echo elgg_view('input/longtext', array('name' => 'description2', 'id' => 'description2', 'value' => gc_explode_translation($desc,'fr'), 'required '=> "required", "class" => "validate-me")); ?>
 </div>
 
 <div>

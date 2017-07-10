@@ -27,16 +27,13 @@ $checkPage = elgg_get_context();
 //echo $checkPage;
 
 $entity = $vars['entity'];
+$json_title = json_decode($entity->title);
 $lang = get_current_language();
 $title_link = elgg_extract('title', $vars, '');
 if ($title_link === '') {//add translation
-	if (isset($entity->title) || isset($entity->name)|| isset($entity->title3)) {
-		if($entity->title3){
-			$text = gc_explode_translation($entity->title3, $lang);
-		}elseif($entity->title2){
-			$text = $entity->title2;
-		}elseif($entity->title){
-			$text = $entity->title;
+	if ( isset($entity->title) || isset($entity->name) ) {
+		if( $entity->title ){
+			$text = gc_explode_translation( $entity->title, $lang );
 		}elseif($entity->name){
 			$text = $entity->name;
 		}elseif($entity->name2){
@@ -66,7 +63,9 @@ if ($tags === '') {
 	$tags = elgg_view('output/tags', array('tags' => $entity->tags));
 }
 
+
 if ($title_link) {
+
     //Nick - putting these titles in headings to make it quicker to navigate for screen readers
     //Nick - each context of the summary view will have a different heading based on it's parent
     if(elgg_in_context('widgets')){
@@ -79,15 +78,51 @@ if ($title_link) {
        echo "<h2 class=\"mrgn-bttm-0 summary-title\">$title_link</h2>";
     }
 
-    if (($entity->description) && ($entity->description2)) {
+	// identify available content
+$description_json = json_decode($entity->description);
+    if (($description_json->en) && ($description_json->fr)) {
 	    echo " <span class='indicator_summary' title='".elgg_echo('indicator:summary:title')."'>".elgg_echo('indicator:summary')."</span>"; //indicator translation
 	}elseif (elgg_get_context() == 'polls'){
-	    if ((polls_get_choice_array2($entity)) && (polls_get_choice_array($entity))) {
+//if poll, check if the choice is the same in both language, if not, show (en/fr) one time
 
-	    	echo " <span class='indicator_summary' title='".elgg_echo('indicator:summary:title')."'>".elgg_echo('indicator:summary')."</span>"; //indicator translation for polls
-	    }
+		foreach (polls_get_choice_array($entity) as $key ) {
+			$description_json = json_decode($key);
+			
+ 			if ($description_json->en != $description_json->fr) {
+
+	    		echo " <span class='indicator_summary' title='".elgg_echo('indicator:summary:title')."'>".elgg_echo('indicator:summary')."</span>"; //indicator translation for polls
+	    		break;
+			}
+		}   
+		
+	}elseif ($entity->getSubtype() == 'poll'){
+//if poll, check if the choice is the same in both language, if not, show (en/fr) one time
+		$responses = array();
+
+		$options = array(
+				'relationship' => 'poll_choice',
+				'relationship_guid' => $entity->guid,
+				'inverse_relationship' => TRUE,
+				'order_by_metadata' => array('name'=>'display_order','direction'=>'ASC'),
+				'limit' => 50,
+			);
+		$choices = elgg_get_entities_from_relationship($options);
+
+		if ($choices) {
+			foreach($choices as $choice) {
+				$responses[$choice->text] = $choice->text;
+			}
+		}
+		foreach ($responses as $key ) {
+			$description_json = json_decode($key);
+	 		if ($description_json->en != $description_json->fr) {
+
+			    echo " <span class='indicator_summary' title='".elgg_echo('indicator:summary:title')."'>".elgg_echo('indicator:summary')."</span>"; //indicator translation for polls
+			    break;
+			}
+		}  
 	}
-    echo elgg_in_context($context);
+echo elgg_in_context($context);
 
 }
 

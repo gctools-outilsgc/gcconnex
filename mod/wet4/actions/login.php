@@ -91,7 +91,22 @@ if (strpos($_SERVER['HTTP_REFERER'], elgg_get_site_url()."saml/idp_login")=== fa
 			 if ($gcpuser == NULL || $gcpuser == ""){
 			 	forward("saml_link/link");
 			 }else{
-			 	$forward_url = "http://".$_SERVER[HTTP_HOST]."/simplesaml/saml2/idp/SSOService.php?spentityid=".elgg_get_plugin_setting('gcpedia_url','saml_link')."simplesaml/module.php/saml/sp/metadata.php/elgg-idp&RelayState=".elgg_get_plugin_setting('gcpedia_url','saml_link');
+			 	$refererQuery = parse_url($_SERVER['HTTP_REFERER'],PHP_URL_QUERY);
+			 	$refererQueries = explode('%26', urldecode($refererQuery));
+			 	$relayState = explode('%3D',$refererQueries[count($refererQueries)-1]);
+			 	$relayAddress = rawurldecode($relayState[1]);
+			 	//error_log('relay: -> '.$relayAddress);
+			 	$host = parse_url(rawurldecode($relayAddress));
+			 	//error_log('host -> '.json_encode($host));
+			 	$spentityid = $host['scheme'].'://'.$host['host'];
+			 	if($host['host'] == 'gcdirectory-gcannuaire.itsso.gc.ca' || $host['host'] == 'geds20admin-sage20admin.itsso.gc.ca'){
+			 		$service = 'default-sp';
+			 	}else{
+			 		$service = 'elgg-idp';
+			 	}
+			 	//error_log('here: -> '.explode('&', parse_url($_SERVER['HTTP_REFERER'],PHP_URL_QUERY)));
+			 	//$forward_url = "http://".$_SERVER[HTTP_HOST]."/simplesaml/saml2/idp/SSOService.php?spentityid=".elgg_get_plugin_setting('gcpedia_url','saml_link')."simplesaml/module.php/saml/sp/metadata.php/elgg-idp&RelayState=".urldecode($relayState[1]);
+		 		$forward_url = "http://".$_SERVER[HTTP_HOST]."/simplesaml/saml2/idp/SSOService.php?spentityid=".$spentityid."/simplesaml/module.php/saml/sp/metadata.php/".$service."&RelayState=".urldecode($relayState[1]);
 		 	
 			 }
 	
@@ -99,6 +114,5 @@ if (strpos($_SERVER['HTTP_REFERER'], elgg_get_site_url()."saml/idp_login")=== fa
 
 system_message($message);
 //comment oout for SSO
-
 
 forward($forward_url);

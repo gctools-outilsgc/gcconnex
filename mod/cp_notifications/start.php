@@ -1,14 +1,24 @@
 <?php
 
 elgg_register_event_handler('init','system','cp_notifications_init');
-
+ 
 
 function cp_notifications_init() {
 
 	elgg_register_library('elgg:gc_notification:functions', elgg_get_plugins_path() . 'cp_notifications/lib/functions.php');
-
 	elgg_register_css('cp_notifications-css','mod/cp_notifications/css/notifications-table.css');
+
+	// hide the irrelavent view module from the group
+	elgg_unextend_view("groups/edit", "group_tools/forms/notifications");
+
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'notify_entity_menu_setup', 400);
+	// since most of the notifications are built within the action file itself, the trigger_plugin_hook was added to respected plugins
+	elgg_register_plugin_hook_handler('cp_overwrite_notification', 'all', 'cp_overwrite_notification_hook');
+	elgg_register_plugin_hook_handler('cron', 'daily', 'cp_digest_daily_cron_handler');
+	elgg_register_plugin_hook_handler('cron', 'weekly', 'cp_digest_weekly_cron_handler', 100);
+	// hooks and events: intercepts and blocks emails and notifications to be sent out
+	elgg_register_plugin_hook_handler('email', 'system', 'cpn_email_handler_hook');
+
 
 	$action_base = elgg_get_plugins_path() . 'cp_notifications/actions/cp_notifications';
 	elgg_register_action('cp_notify/subscribe', "$action_base/subscribe.php");
@@ -21,7 +31,11 @@ function cp_notifications_init() {
     elgg_register_action('cp_notifications/usersettings/save', elgg_get_plugins_path() . 'cp_notifications/actions/usersettings/save.php');
 	elgg_register_action('cp_notifications/user_autosubscription',"{$action_base}/user_autosubscription.php");
 	elgg_register_action('cp_notifications/fix_inconsistent_subscription_script',"{$action_base}/fix_inconsistent_subscription_script.php");
+  
+  elgg_register_action('cp_notifications/fix_forums_subscription',"$actions_base/fix_forums_subscription.php");
+  
 	elgg_register_action('useradd',"$action_base/useradd.php",'admin'); // actions/useradd.php (core file)
+
 
 	// Ajax action files
 	elgg_register_action('cp_notify/retrieve_group_contents', elgg_get_plugins_path().'cp_notifications/actions/ajax_usersettings/retrieve_group_contents.php'); 
@@ -30,13 +44,15 @@ function cp_notifications_init() {
 	elgg_register_action('cp_notify/retrieve_messages', elgg_get_plugins_path().'cp_notifications/actions/ajax_usersettings/retrieve_messages.php'); 
 	elgg_register_action('cp_notify/retrieve_user_info', elgg_get_plugins_path().'cp_notifications/actions/ajax_settings/retrieve_user_info.php'); 
 
-	// hooks and events
-	// intercepts and blocks emails and notifications to be sent out
-	elgg_register_plugin_hook_handler('email', 'system', 'cpn_email_handler_hook');
-	// send notifications when the action is sent out
-	elgg_register_event_handler('create','object','cp_create_notification');
-	elgg_register_event_handler('create','annotation','cp_create_annotation_notification');
 
+
+	// send notifications when the action is sent out
+	elgg_register_event_handler('create','object','cp_create_notification',900);
+	elgg_register_event_handler('single_file_upload', 'object', 'cp_create_notification');
+	elgg_register_event_handler('single_zip_file_upload', 'object', 'cp_create_notification');
+	elgg_register_event_handler('multi_file_upload', 'object', 'cp_create_notification');
+
+	elgg_register_event_handler('create','annotation','cp_create_annotation_notification');
 	elgg_register_event_handler('create', 'membership_request', 'cp_membership_request');
 
 	// we need to check if the mention plugin is installed and activated because it does notifications differently...
@@ -45,9 +61,6 @@ function cp_notifications_init() {
 		elgg_unregister_event_handler('update', 'annotation','mentions_notification_handler');
 	}
 
-	// since most of the notifications are built within the action file itself, the trigger_plugin_hook was added to respected plugins
-	elgg_register_plugin_hook_handler('cp_overwrite_notification', 'all', 'cp_overwrite_notification_hook');
-
     elgg_extend_view("js/elgg", "js/notification"); 
     elgg_extend_view("js/elgg", "js/popup");
     elgg_extend_view("js/elgg","js/wet4/language_ajax");
@@ -55,32 +68,101 @@ function cp_notifications_init() {
     // remove core notification settings portion of the main settings page
     elgg_unextend_view('forms/account/settings', 'core/settings/account/notifications');
 
-	elgg_register_plugin_hook_handler('cron', 'daily', 'cp_digest_daily_cron_handler');
-	elgg_register_plugin_hook_handler('cron', 'weekly', 'cp_digest_weekly_cron_handler');
+
+	/// "minor save" for contents within groups (basically put the option for all the forms, then filter via URL)
+	$group_entity = elgg_get_page_owner_entity();
+	$current_user = elgg_get_logged_in_user_entity();
+
+
+	if (elgg_is_active_plugin('group_operators'))
+		elgg_load_library('elgg:group_operators');
+
+	if ($group_entity instanceof ElggGroup) {
+
+		// TODO: check to make sure that get_group_operators() is available
+
+	if (elgg_is_logged_in() && (in_array($current_user, get_group_operators($group_entity)) || elgg_is_admin_user($current_user->getGUID()))) {
+
+
+			$url = str_replace(elgg_get_site_url(),"", $_SERVER['REQUEST_URI']);
+			if (strpos($url,'edit') == false) {
+
+				$plugin_list = elgg_get_plugins('active', 1);
+				foreach ($plugin_list as $plugin_form)
+				{
+					$filepath = elgg_get_plugins_path().$plugin_form['title'].'/views/default/forms/'.$plugin_form['title'];
+					if (file_exists($filepath))
+					{
+						$dir = scandir($filepath);
+						foreach ($dir as $form_file)
+						{
+							if ((strpos($form_file,'save') !== false || strpos($form_file, 'upload') !== false) && (!strstr($form_file, '.old')))
+							{
+								$remove_php = explode('.',$form_file);
+								elgg_extend_view('forms/'.$plugin_form['title'].'/'.$remove_php[0], 'forms/minor_save', 500);
+							}
+						}
+					}
+				}
+				
+				elgg_extend_view('forms/photos/image/save', 'forms/minor_save', 500);
+				elgg_extend_view('forms/photos/album/save', 'forms/minor_save', 500);
+				elgg_extend_view('forms/discussion/save', 'forms/minor_save', 500);
+			}
+		}
+	}
+
+	elgg_register_plugin_hook_handler('action', 'blog/save', 'minor_save_hook_handler', 300);
 
 }
 
 
+/**
+ * catches the minor save, determines whether to cancel or process the event handlers
+ *
+ * @param string $hook    The name of the plugin hook
+ * @param string $type    The type of the plugin hook
+ * @param mixed  $value   The current value of the plugin hook
+ * @param mixed  $params  Data passed from the trigger
+ *
+ * @return mixed if not null, this will be the new value of the plugin hook
+ */
+function minor_save_hook_handler($hook, $type, $value, $params) {
+
+    if (strcmp(get_input('minor_save'), 'yes') === 0) {
+
+	    elgg_unregister_event_handler('create','object','cp_create_notification',900);
+		elgg_unregister_event_handler('single_file_upload', 'object', 'cp_create_notification');
+		elgg_unregister_event_handler('single_zip_file_upload', 'object', 'cp_create_notification');
+		elgg_unregister_event_handler('multi_file_upload', 'object', 'cp_create_notification');
+		elgg_unregister_event_handler('create','annotation','cp_create_annotation_notification');
+
+	}
+
+    return true;
+}
 
 
 /**
- * cp_overwrite_notification_hook
  *
  * This contains all the notifications that are required to be triggered from the original action files. Filepaths
  * are documented beside each case (and in the readme.md file)
  *
- **/
-
+ * @param string $hook    The name of the plugin hook
+ * @param string $type    The type of the plugin hook
+ * @param mixed  $value   The current value of the plugin hook
+ * @param mixed  $params  Data passed from the trigger
+ */
 function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
+	elgg_load_library('elgg:gc_notification:functions');
 	$cp_msg_type = trim($params['cp_msg_type']);
 	$to_recipients = array();
 	$email_only = false;
 	$add_to_sent = false;
 	$sender_guid = elgg_get_site_entity()->guid;
-	elgg_load_library('elgg:gc_notification:functions');
 
-	switch($cp_msg_type) {
+	switch ($cp_msg_type) {
 
 		/// EMAIL NOTIFICATIONS ONLY (password reset, registration, etc)
 		case 'cp_friend_invite': // invitefriends/actions/invite.php
@@ -261,11 +343,12 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_approver' => $params['cp_approver'],
 				'cp_approver_profile' => $params['cp_approver_profile'],
 				'cp_msg_type' => $cp_msg_type,
+
 				);
 			$to_recipients[] = get_user($params['cp_request_guid']);
 
-			$content_entity = $params['cp_approver_profile'];
-			$author = $params['cp_friend_approver'];
+			$content_entity = $params['object'];
+			$author = $params['object'];
 			break;
 
 
@@ -326,7 +409,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$subject = elgg_echo('cp_notify:subject:friend_request',array($params['cp_friend_requester']['name']),'en') . ' | ' . elgg_echo('cp_notify:subject:friend_request',array($params['cp_friend_requester']['name']),'fr');
 			$to_recipients[] = get_user($params['cp_friend_receiver']['guid']);
 
-			$content_entity = $params['cp_friend_invite_url'];
+			$content_entity = $params['cp_relationship'];
 			$author = $params['cp_friend_requester'];
 
 			break;
@@ -398,8 +481,9 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$event = $params['cp_event'];
 			$startdate = $params['startdate'];
 			$enddate = $params['enddate'];
-
-		    $subject = $event->title.' - '.elgg_get_logged_in_user_entity()->username; // Add to my Outlook calendar | Ajoutez a mon calendrier d'Outlook
+			
+			// Add to my Outlook calendar | Ajoutez a mon calendrier d'Outlook
+		    $subject = $event->title.' - '.elgg_get_logged_in_user_entity()->username; 
 
 		   	$event = 'event';
 		   	$to_recipients[] = $params['cp_event_send_to_user'];
@@ -429,13 +513,12 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			continue;
 		} else
 			$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template ) : mail($to_recipient->email, $subject, $template, cp_get_headers($event));
-
 		messages_send($subject, $site_template, $to_recipient->guid, $sender_guid, 0, true, $add_to_sent);
 	}
 }
 
 
-/*
+/**
  * returns the headers for ical
  *
  * @param string 		$type_event
@@ -534,7 +617,8 @@ function cp_create_annotation_notification($event, $type, $object) {
 		// if we are publishing, or revising blogs then send out notification
 		if (strcmp($object_subtype,'blog_revision') == 0 && strcmp($entity->status,'published') == 0) {
 			$current_user = get_user($entity->getOwnerGUID());
-			$subject = elgg_echo('cp_notify:subject:edit_content',array('The blog',$entity->title, $current_user->username),'en') . ' | ' . elgg_echo('cp_notify:subject:edit_content:m',array('Le blogue',$entity->title, $current_user->username),'fr');
+			$subject = elgg_echo('cp_notify:subject:edit_content',array('The blog',gc_explode_translation($entity->title,'en'), $current_user->username),'en') . ' | ' . elgg_echo('cp_notify:subject:edit_content:m',array('Le blogue',gc_explode_translation($entity->title,'fr'), $current_user->username),'fr');
+			
 			$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
 
 			$message = array(
@@ -556,19 +640,18 @@ function cp_create_annotation_notification($event, $type, $object) {
 				$template = elgg_view('cp_notifications/email_template', $message);
 
 				$recipient_user = get_user($watcher->guid);
-		if (has_access_to_entity($entity, $recipient_user)) {
 
-				// create the digest if the digest is enabled
-			if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $watcher->guid,'cp_notifications'), 'set_digest_yes') == 0)
-					create_digest($author, $action_type, $content_entity, get_entity($watcher->guid));
+		
+				if (has_access_to_entity($entity, $recipient_user)) {
 
-				// create the instant notification if digest is not enabled
-				else
-					(elgg_is_active_plugin('phpmailer')) ? phpmailer_send($watcher->email, $watcher->name, $subject, $template, NULL, true) : mail($watcher->email, $subject, $template, cp_get_headers());
-			}
-
-				if (check_entity_relationship($watcher->guid, 'cp_subscribed_to_site_mail', $entity->getContainerGUID()))
-					messages_send($subject, $template, $watcher->guid, $site->guid, 0, true, false);
+					if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $watcher->guid,'cp_notifications'), 'set_digest_yes') == 0)
+						create_digest($author, $action_type, $content_entity, get_entity($watcher->guid));
+					else
+						(elgg_is_active_plugin('phpmailer')) ? phpmailer_send($watcher->email, $watcher->name, $subject, $template, NULL, true) : mail($watcher->email, $subject, $template, cp_get_headers());
+				
+					if (check_entity_relationship($watcher->guid, 'cp_subscribed_to_site_mail', $entity->getContainerGUID()))
+						messages_send($subject, $template, $watcher->guid, $site->guid, 0, true, false);
+				}
 
 				return true;
 			}
@@ -601,23 +684,24 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 				$template = elgg_view('cp_notifications/email_template', $message);
 				$recipient_user = get_user($watcher->guid);
-		if (has_access_to_entity($entity, $recipient_user)) {
-				// create the digest if digest is enabled
-				if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $watcher->guid,'cp_notifications'),'set_digest_yes') == 0)
-					create_digest($author, $action_type, $content_entity, get_entity($watcher->guid));
 
-				// create the instant notification if digest is not enabled
-				else
-					(elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $watcher->email, $watcher->name, $subject, $template, NULL, true ) : mail($watcher->email, $subject, $template, cp_get_headers());
+				if (has_access_to_entity($entity, $recipient_user)) {
 
-				if (check_entity_relationship($watcher->guid, 'cp_subscribed_to_site_mail', $entity->getContainerGUID())) {
-					$site_template = elgg_view('cp_notifications/site_template', $message);
-					messages_send($subject, $site_template, $watcher->guid, $site->guid, 0, true, false);
+					if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $watcher->guid,'cp_notifications'),'set_digest_yes') == 0)
+						create_digest($author, $action_type, $content_entity, get_entity($watcher->guid));
+					else
+						(elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $watcher->email, $watcher->name, $subject, $template, NULL, true ) : mail($watcher->email, $subject, $template, cp_get_headers());
+
+					if (check_entity_relationship($watcher->guid, 'cp_subscribed_to_site_mail', $entity->getContainerGUID())) {
+						$site_template = elgg_view('cp_notifications/site_template', $message);
+						messages_send($subject, $site_template, $watcher->guid, $site->guid, 0, true, false);
+					}
 				}
+			
+				return true;
 			}
-			return true;
 		}
-		}
+		
 	} else {
 
 		/// LIKES TO COMMENTS AND DISCUSSION REPLIES
@@ -733,7 +817,9 @@ function cp_create_annotation_notification($event, $type, $object) {
 		$recipient_user = get_user($to_recipient->guid);
 		if ($liked_by->guid == $entity->getOwnerGUID() && $to_recipient->guid == $liked_by->guid)
 			continue;
-		if (cp_check_permissions($object, $recipient_user)){
+		
+		//if (cp_check_permissions($object, $recipient_user)){
+		if (has_access_to_entity($object, $recipient_user)) {
 
 			if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0)
 				create_digest($author, $action_type, $content_entity, $to_recipient);
@@ -753,10 +839,17 @@ function cp_create_annotation_notification($event, $type, $object) {
 	// send notification out via site
 	foreach ($to_recipients_site as $to_recipient_id => $to_recipient) {
 		$site_template = elgg_view('cp_notifications/site_template', $message);
-		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') !== 0)
-			messages_send($subject, $site_template, $to_recipient->guid, $site->guid, 0, true, false);
+		$recipient_user = get_user($to_recipient->guid);
+		
+		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') !== 0) {
+
+			if (has_access_to_entity($object, $recipient_user)) {
+				messages_send($subject, $site_template, $to_recipient->guid, $site->guid, 0, true, false);
+			}
+		}
 	}
 } // end of function
+
 
 
 /**
@@ -769,8 +862,18 @@ function cp_create_annotation_notification($event, $type, $object) {
  */
 function cp_create_notification($event, $type, $object) {
 
-	$do_not_subscribe_list = array('tidypics_batch', 'hjforum', 'hjforumcategory','hjforumtopic', 'messages', 'hjforumpost', 'site_notification', 'poll_choice','blog_revision','widget','folder','c_photo', 'cp_digest','MySkill', 'education', 'experience', 'poll_choice3');
-	if (in_array($object->getSubtype(), $do_not_subscribe_list)) return true;
+	$do_not_subscribe_list = array('file', 'tidypics_batch', 'hjforum', 'hjforumcategory','hjforumtopic', 'messages', 'hjforumpost', 'site_notification', 'poll_choice','blog_revision','widget','folder','c_photo', 'cp_digest','MySkill', 'education', 'experience', 'poll_choice3');
+
+	// since we implemented the multi file upload, each file uploaded will invoke this hook once to many times (we don't allow subtype file to go through, but check the event)
+	if ($object instanceof ElggObject && $event !== 'single_file_upload') {
+
+		if (in_array($object->getSubtype(), $do_not_subscribe_list)) 
+			return true;		
+	} else {
+
+		if ('single_zip_file_upload' !== $event && 'multi_file_upload' !== $event && 'single_file_upload' !== $event)
+			return true;
+	}
 
 	elgg_load_library('elgg:gc_notification:functions');
 	$dbprefix = elgg_get_config('dbprefix');
@@ -779,7 +882,79 @@ function cp_create_notification($event, $type, $object) {
 	$to_recipients = array();
 	$subject = "";
 
-	switch ($object->getSubtype()) {
+	$switch_case = $event;
+	if ($object instanceof ElggObject)
+		$switch_case = $object->getSubtype();	
+
+	switch ($switch_case) {
+
+		/// invoked when zipped file upload function is used (files_tools/lib/functions.php)
+		case 'single_zip_file_upload':
+
+			$entity = get_entity($object['forward_guid']);
+			if (elgg_instanceof('group', $entity)) {
+				$file_forward_url = elgg_get_site_entity()->getURL()."file/group/{$object['forward_guid']}/all";
+			} elseif (elgg_instanceof('user', $entity)) {
+				$file_forward_url = elgg_get_site_entity()->getURL()."file/owner/{$entity->username}";
+			} else {
+				$file_forward_url = $entity->getURL();
+			}
+
+			$to_recipients = get_subscribers($dbprefix, elgg_get_logged_in_user_guid(), $entity->getGUID());
+			$to_recipients_site = get_site_subscribers($dbprefix, elgg_get_logged_in_user_guid(), $entity->getGUID());
+
+			$subject = elgg_echo('cp_notify_usr:subject:new_content2', array(elgg_get_logged_in_user_entity()->username, 'file'), 'en');
+			$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content2', array(elgg_get_logged_in_user_entity()->username, 'fichier', false), 'fr');
+
+			$author = elgg_get_logged_in_user_entity();
+			$message = array(
+				'cp_topic' => $entity,
+				'cp_msg_type' => 'zipped_file',
+				'files_uploaded' => $object['files_uploaded'],
+				'cp_topic_description_discussion' => 'Please view the files here',
+				'cp_topic_description_discussion2' => 'SVP voir les fichiers ici',
+			);
+
+			
+			$content_entity = $object['files_uploaded'];
+			$object = get_entity($object['files_uploaded'][0]);
+			$author = elgg_get_logged_in_user_entity();
+			break;
+
+		/// invoked when multiple file upload function is used
+		case 'multi_file_upload':
+
+			$entity = get_entity($object['forward_guid']);
+			if (elgg_instanceof('group', $entity)) {
+				$file_forward_url = elgg_get_site_entity()->getURL()."file/group/{$object['forward_guid']}/all";
+			} elseif (elgg_instanceof('user', $entity)) {
+				$file_forward_url = elgg_get_site_entity()->getURL()."file/owner/{$entity->username}";
+			} else {
+				$file_forward_url = $entity->getURL();
+			}
+
+			$author = elgg_get_logged_in_user_entity();
+			$to_recipients = get_subscribers($dbprefix, elgg_get_logged_in_user_guid(), $entity->getGUID());
+			$to_recipients_site = get_site_subscribers($dbprefix, elgg_get_logged_in_user_guid(), $entity->getGUID());
+
+			$subject = elgg_echo('cp_notify_usr:subject:new_content2', array(elgg_get_logged_in_user_entity()->username, 'file'), 'en');
+			$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content2', array(elgg_get_logged_in_user_entity()->username, 'fichier', false), 'fr');
+	
+			$message = array(
+				'cp_topic' => $entity,
+				'cp_msg_type' => 'multiple_file',
+				'files_information' => $entity,
+				'files_uploaded' => $object['files_uploaded'], 
+				'cp_msg_type' => 'multiple_file',
+				'cp_topic_description_discussion' => 'Please view the files here',
+				'cp_topic_description_discussion2' => 'SVP voir les fichiers ici',
+			);
+
+			
+			$content_entity = $object['files_uploaded'];
+			$object = get_entity($object['files_uploaded'][0]);
+			$author = elgg_get_logged_in_user_entity();
+			break;
 
 		case 'discussion_reply':
 		case 'comment':
@@ -881,8 +1056,6 @@ function cp_create_notification($event, $type, $object) {
 
 			$to_recipients = get_subscribers($dbprefix, $object->getOwnerGUID(), $object->getContainerGUID());
 			$to_recipients_site = get_subscribers($dbprefix, $object->getOwnerGUID(), $object->getContainerGUID());
-
-
 			break;
 
 		// micromissions / opportunities
@@ -925,7 +1098,9 @@ function cp_create_notification($event, $type, $object) {
 			// the user creating the content is automatically subscribed to it
 			add_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $object->getGUID());
 			add_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $object->getGUID());
-			break;
+			break; 
+
+		case 'single_file_upload':
 
 		default:
 
@@ -938,7 +1113,7 @@ function cp_create_notification($event, $type, $object) {
 			$cp_whitelist = array('blog', 'bookmarks', 'poll', 'groupforumtopic', 'image', 'idea', 'page', 'page_top', 'thewire', 'task_top', 'question', 'answer');
 			if (in_array($object->getSubtype(),$cp_whitelist)) {
 
-				if ($object->getSubtype() == 'answer'){// subcribed to the question
+				if ($object->getSubtype() == 'answer') {// subcribed to the question
 					add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_email', $object->getContainerGUID());
 					add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_site_mail', $object->getContainerGUID());
 				}
@@ -949,35 +1124,38 @@ function cp_create_notification($event, $type, $object) {
 			$user = get_user($object->owner_guid);
 			$group = $object->getContainerEntity();
 
+			$group_name = gc_explode_translation($group->name,'en');
+			$group_name2 = gc_explode_translation($group->name,'fr');
+
 			// fem and mas are different (so the subject should be reflected on which subtype is passed)
 			$subtypes_gender_subject = array(
-				'blog' => elgg_echo('cp_notify:subject:new_content_mas',array("blogue",$group->name),'fr'),
-				'bookmarks' => elgg_echo('cp_notify:subject:new_content_mas',array("signet",$group->name),'fr'),
-				'file' => elgg_echo('cp_notify:subject:new_content_mas',array("fichier",$group->name),'fr'),
-				'poll' => elgg_echo('cp_notify:subject:new_content_mas',array("sondage",$group->name),'fr'),
-				'event_calendar' => elgg_echo('cp_notify:subject:new_content_mas',array("nouvel événement",$group->name),'fr'),
-				'album' => elgg_echo('cp_notify:subject:new_content_mas',array("album d'image",$group->name),'fr'),
-				'groupforumtopic' => elgg_echo('cp_notify:subject:new_content_fem',array("discussion",$group->name),'fr'),
-				'image' => elgg_echo('cp_notify:subject:new_content_fem',array("image",$group->name),'fr'),
-				'idea' => elgg_echo('cp_notify:subject:new_content_fem',array("idée",$group->name),'fr'),
-				'page' => elgg_echo('cp_notify:subject:new_content_fem',array("page",$group->name),'fr'),
-				'page_top' => elgg_echo('cp_notify:subject:new_content_fem',array("page",$group->name),'fr'),
-				'task_top' => elgg_echo('cp_notify:subject:new_content_fem',array("task",$group->name),'fr'),
-				'task' => elgg_echo('cp_notify:subject:new_content_fem',array("task",$group->name),'fr'),
-				'question' => elgg_echo('cp_notify:subject:new_content_fem',array("question",$group->name),'fr'),
+
+				'blog' => elgg_echo('cp_notify:subject:new_content_mas',array("blogue",$group_name2),'fr'),
+				'bookmarks' => elgg_echo('cp_notify:subject:new_content_mas',array("signet",$group_name2),'fr'),
+				'file' => elgg_echo('cp_notify:subject:new_content_mas',array("fichier",$group_name2),'fr'),
+				'poll' => elgg_echo('cp_notify:subject:new_content_mas',array("sondage",$group_name2),'fr'),
+				'event_calendar' => elgg_echo('cp_notify:subject:new_content_mas',array("nouvel événement",$group_name2),'fr'),
+				'album' => elgg_echo('cp_notify:subject:new_content_mas',array("album d'image",$group_name2),'fr'),
+				'groupforumtopic' => elgg_echo('cp_notify:subject:new_content_fem',array("discussion",$group_name2),'fr'),
+				'image' => elgg_echo('cp_notify:subject:new_content_fem',array("image",$group_name2),'fr'),
+				'idea' => elgg_echo('cp_notify:subject:new_content_fem',array("idée",$group_name2),'fr'),
+				'page' => elgg_echo('cp_notify:subject:new_content_fem',array("page",$group_name2),'fr'),
+				'page_top' => elgg_echo('cp_notify:subject:new_content_fem',array("page",$group_name2),'fr'),
+				'task_top' => elgg_echo('cp_notify:subject:new_content_fem',array("task",$group_name2),'fr'),
+				'task' => elgg_echo('cp_notify:subject:new_content_fem',array("task",$group_name2),'fr'),
+        		'question' => elgg_echo('cp_notify:subject:new_content_fem',array("question",$group_name2),'fr'),
+
 			);
 
-			// cyu - if there is something missing, we can use a fallback string
+			// if there is something missing, we can use a fallback string
 			$subj_gender = ($subtypes_gender_subject[$object->getSubtype()] == '') ? elgg_echo('cp_notify:subject:new_content_mas',array($user->name,$object->getSubtype(),$object->title),'fr') : $subtypes_gender_subject[$object->getSubtype()];
 
 			// subscribed to content within a group
 			if ($object->getContainerEntity() instanceof ElggGroup) {
-				$subject = elgg_echo('cp_notify:subject:new_content',array(cp_translate_subtype($object->getSubtype()),$group->name),'en');
+				$subject = elgg_echo('cp_notify:subject:new_content',array(cp_translate_subtype($object->getSubtype()),$group_name),'en');
 				$subject .= ' | '.$subj_gender;
 
-				//$to_recipients = get_subscribers($dbprefix, $object->getContainerGUID(), $object->guid);
 				$guidone = $object->getContainerGUID();
-
 				$author_id = $object->getOwnerGUID();
 				$content_id = $object->getContainerGUID();
 
@@ -993,16 +1171,23 @@ function cp_create_notification($event, $type, $object) {
 				} else {
 
 					if (strcmp($object->getSubtype(), 'hjforumpost') != 0 || strcmp($object->getSubtype(), 'hjforumtopic') != 0) {
-
-						$subject = elgg_echo('cp_notify_usr:subject:new_content',array($object->getOwnerEntity()->username, cp_translate_subtype($object->getSubtype()), $object->title),'en');
-						$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content',array($object->getOwnerEntity()->username, cp_translate_subtype($object->getSubtype(), false), $object->title),'fr');
+						if ($object->getSubtype() == 'answer'){
+								$question_guid = $object->getContainerGUID();
+								$answer_entity = get_entity($question_guid);
+					
+							$subject = elgg_echo('cp_notify_usr:subject:new_content',array($object->getOwnerEntity()->username, cp_translate_subtype($object->getSubtype()), gc_explode_translation($answer_entity->title,'en')),'en');
+							$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content_f',array($object->getOwnerEntity()->username, cp_translate_subtype($object->getSubtype(), false), gc_explode_translation($answer_entity->title,'fr')),'fr');
+						
+						}else{
+						$subject = elgg_echo('cp_notify_usr:subject:new_content',array($object->getOwnerEntity()->username, cp_translate_subtype($object->getSubtype()), gc_explode_translation($object->title,'en')),'en');
+						$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content',array($object->getOwnerEntity()->username, cp_translate_subtype($object->getSubtype(), false), gc_explode_translation($object->title,'fr')),'fr');
+						}
 					}
 				}
 
 				$guidone = $object->getOwnerGUID();
-				//$to_recipients = get_subscribers($dbprefix, $object->getOwnerGUID(), $object->guid);
+
 				$author_id = $object->getOwnerGUID();
-				//$content_id = $object->guid;
 				
 				// Get guid of the question
 			if($object->getSubtype = 'answer'){
@@ -1010,7 +1195,7 @@ function cp_create_notification($event, $type, $object) {
 				}
 			}
 	
-			// cyu - client wants the html tags stripped from the notifications
+			// client wants the html tags stripped from the notifications
 			$object_description = ($object->description != strip_tags($object->description)) ? "" : $object->description;
 
 
@@ -1036,50 +1221,51 @@ function cp_create_notification($event, $type, $object) {
 	if (empty($subject)) return false;
 	$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
 
+	/// send the email notification
+	if (count($to_recipients) > 0 && is_array($to_recipients)) {
+		foreach ($to_recipients as $to_recipient) {
 
-	foreach ($to_recipients as $to_recipient)
-	{
+			$recipient_user = get_user($to_recipient->guid);
+			$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid, 'cp_notifications');
 
-		$recipient_user = get_user($to_recipient->guid);
-		$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid, 'cp_notifications');
+			if ($to_recipient->guid == $author->guid)
+				continue;
 
-		if ($to_recipient->guid == $author->guid)
-			continue;
-if (cp_check_permissions($object, $recipient_user)) {
-		// send digest
-		if (strcmp($user_setting, "set_digest_yes") == 0)
-			create_digest($author, $object->getSubtype(), $content_entity, get_entity($to_recipient->guid));
+			if (has_access_to_entity($object, $recipient_user)) {
 
-		// send email and site notification
-		else {
+				if (strcmp($user_setting, "set_digest_yes") == 0) {
+					create_digest($author, $switch_case, $content_entity, get_entity($to_recipient->guid));
 
-			$template = elgg_view('cp_notifications/email_template', $message);
+				} else {
 
-				if (elgg_is_active_plugin('phpmailer'))
-					phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );
-				else
-					mail($to_recipient->email,$subject,$template,cp_get_headers());
+					$template = elgg_view('cp_notifications/email_template', $message);
 
+					if (elgg_is_active_plugin('phpmailer'))
+						phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );
+					else
+						mail($to_recipient->email,$subject,$template,cp_get_headers());
+				}
 			}
 		}
-
 	}
 
-	foreach ($to_recipients_site as $to_recipient) {
-		$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid, 'cp_notifications');
-		$recipient_user = get_user($to_recipient->guid);
 
+	/// send site notifications
+	if (count($to_recipients_site) > 0 && is_array($to_recipients_site)) {
+		
+		foreach ($to_recipients_site as $to_recipient) {
+			$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid, 'cp_notifications');
+			$recipient_user = get_user($to_recipient->guid);
 
-		if ($to_recipient->guid == $author->guid)
-			continue;
+			// check to see if the author is the recipient or recipient has the digest enabled
+			if ($to_recipient->guid == $author->guid || strcmp($user_setting, "set_digest_yes") == 0)
+				continue;
 
-		if (strcmp($user_setting, "set_digest_yes") == 0)
-			continue;
-
- 	if(cp_check_permissions($object, $recipient_user)){
-
-		$site_template = elgg_view('cp_notifications/site_template', $message);
-		messages_send($subject, $site_template, $to_recipient->guid, $site->guid, 0, true, false);
+		 	//if (cp_check_permissions($object, $recipient_user)) {
+			if (has_access_to_entity($object, $recipient_user)) {
+				$site_template = elgg_view('cp_notifications/site_template', $message);
+				messages_send($subject, $site_template, $to_recipient->guid, $site->guid, 0, true, false);
+			}
 
 		}
 	}
@@ -1124,10 +1310,10 @@ function get_site_subscribers($dbprefix, $user_guid, $entity_guid = '') {
  * get users who are subscribed to digest
  * run crontab, retrieve users, send digest, reset timer (update timestamp)
  *
- * @param -		$hook
- * @param - 	$entity_type
- * @param - 	$return_value
- * @param - 	$params
+ * @param string $hook    The name of the plugin hook
+ * @param string $type    The type of the plugin hook
+ * @param mixed  $value   The current value of the plugin hook
+ * @param mixed  $params  Data passed from the trigger
  */
 function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $params) {
 	elgg_load_library('elgg:gc_notification:functions');
@@ -1150,18 +1336,25 @@ function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $para
 			$query = "SELECT * FROM notification_digest WHERE user_guid = {$user->guid}";
 			$digest_items = get_data($query);
 
-			$language_preference = (strcmp(elgg_get_plugin_user_setting('cpn_set_digest_language', $to->guid, 'cp_notifications'),'set_digest_en') == 0) ? 'en' : 'fr';
+			$language_preference = (strcmp(elgg_get_plugin_user_setting('cpn_set_digest_language', $user->guid, 'cp_notifications'),'set_digest_en') == 0) ? 'en' : 'fr';
 
 			foreach ($digest_items as $digest_item) {
 
-				if ($digest_item->entry_type === 'group')
-					$digest_array[$digest_item->entry_type][base64_decode($digest_item->group_name)][$digest_item->action_type][$digest_item->entity_guid] = $digest_item->notification_entry;
+				// check to make sure that the string is encoded with base 64 or not (legacy)
+				if (isJson($digest_item->notification_entry))
+					$notification_entry = $digest_item->notification_entry;
 				else
-					$digest_array[$digest_item->entry_type][$digest_item->action_type][$digest_item->entity_guid] = $digest_item->notification_entry;
+					$notification_entry = base64_decode($digest_item->notification_entry);
+
+
+				if ($digest_item->entry_type === 'group')
+					$digest_array[$digest_item->entry_type][base64_decode($digest_item->group_name)][$digest_item->action_type][$digest_item->entity_guid] = $notification_entry;
+				else
+					$digest_array[$digest_item->entry_type][$digest_item->action_type][$digest_item->entity_guid] = $notification_entry;
 
 			}
 
-			$subject = elgg_echo('cp_newsletter:subject:weekly',$language_preference);
+			$subject = elgg_echo('cp_newsletter:subject:weekly', $language_preference);
 
 			// if the array is empty, send the empty template
 			if (sizeof($digest_array) > 0 || !empty($digest_array))
@@ -1170,7 +1363,7 @@ function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $para
 				$template = elgg_view('cp_notifications/newsletter_template_empty', array('to' => $user));
 
 			if (elgg_is_active_plugin('phpmailer'))
-				phpmailer_send($to->email, $to->name, $subject, $template, NULL, true );
+				phpmailer_send($user->email, $user->name, $subject, $template, NULL, true );
 			else
 				mail($user->email, $subject, $template, cp_get_headers());
 
@@ -1189,10 +1382,10 @@ function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $para
  * get users who are subscribed to digest
  * run crontab, retrieve users, send digest, reset timer (update timestamp)
  *
- * @param -		$hook
- * @param - 	$entity_type
- * @param - 	$return_value
- * @param - 	$params
+ * @param string $hook    The name of the plugin hook
+ * @param string $entity_type    The type of the plugin hook
+ * @param mixed  $return_value   The current value of the plugin hook
+ * @param mixed  $params  Data passed from the trigger
  */
 function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $params) {
 	elgg_load_library('elgg:gc_notification:functions');
@@ -1215,14 +1408,21 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 			$query = "SELECT * FROM notification_digest WHERE user_guid = {$user->guid}";
 			$digest_items = get_data($query);
 
-			$language_preference = (strcmp(elgg_get_plugin_user_setting('cpn_set_digest_language', $to->guid, 'cp_notifications'),'set_digest_en') == 0) ? 'en' : 'fr';
+			$language_preference = (strcmp(elgg_get_plugin_user_setting('cpn_set_digest_language', $user->guid, 'cp_notifications'),'set_digest_en') == 0) ? 'en' : 'fr';
 
 			foreach ($digest_items as $digest_item) {
 
-				if ($digest_item->entry_type === 'group')
-					$digest_array[$digest_item->entry_type][base64_decode($digest_item->group_name)][$digest_item->action_type][$digest_item->entity_guid] = $digest_item->notification_entry;
+				// check to make sure that the string is encoded with base 64 or not (legacy)
+				if (isJson($digest_item->notification_entry))
+					$notification_entry = $digest_item->notification_entry;
 				else
-					$digest_array[$digest_item->entry_type][$digest_item->action_type][$digest_item->entity_guid] = $digest_item->notification_entry;
+					$notification_entry = base64_decode($digest_item->notification_entry);
+
+
+				if ($digest_item->entry_type === 'group') 
+					$digest_array[$digest_item->entry_type][base64_decode($digest_item->group_name)][$digest_item->action_type][$digest_item->entity_guid] = $notification_entry;
+				else
+					$digest_array[$digest_item->entry_type][$digest_item->action_type][$digest_item->entity_guid] = $notification_entry;
 
 			}
 
@@ -1234,10 +1434,10 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 			else
 				$template = elgg_view('cp_notifications/newsletter_template_empty', array('to' => $user));
 
-			//echo $template . "<br/><br/>";
+			echo $template . "<br/><br/>";
 
 			if (elgg_is_active_plugin('phpmailer'))
-				phpmailer_send($to->email, $to->name, $subject, $template, NULL, true );
+				phpmailer_send($user->email, $user->name, $subject, $template, NULL, true );
 			else
 				mail($user->email, $subject, $template, cp_get_headers());
 
@@ -1276,8 +1476,8 @@ function cp_notification_preparation_send($entity, $to_user, $message, $guid_two
 
 		} else {
 			// check if user has access to the content (DO NOT send if user has no access to this object)
-			if (cp_check_permissions($entity, $to_user->guid)) {
 
+			if (has_access_to_entity($entity, $recipient_user)) {
 				//  GCCON-175: assemble the email content with correct username (for notification page)
 				$message['user_name'] = $to_user->username;
 
@@ -1308,6 +1508,8 @@ function cp_notification_preparation_send($entity, $to_user, $message, $guid_two
  * This is a mirror image of the core function: /engine/classes/Elgg/PasswordService.php
  *
  * Only need to send an e-mail notification out, no need to send a site-mail
+ *
+ * @param ElggUser 	$user 	user entity
  */
 function cp_send_new_password_request($user) {
 	if (!$user instanceof ElggUser)
@@ -1318,11 +1520,9 @@ function cp_send_new_password_request($user) {
 	$user->setPrivateSetting('passwd_conf_code', $code);
 	$user->setPrivateSetting('passwd_conf_time', time());
 
-	// generate link
 	$link = elgg_get_site_url()."changepassword?u={$user->guid}&c={$code}";
-
-	// generate email
 	$ip_address = _elgg_services()->request->getClientIp();
+
 	// we don't need to check if the plugin (cp_notifications) is enabled here
 	$message = array(
 		'cp_password_request_user' => $user->username,
@@ -1373,9 +1573,13 @@ function cp_membership_request($event, $type, $object) { 	// MUST always be send
 
 
 
-/*
+/**
  * intercepts all email and stops emails from sending
  *
+ * @param string $hook    The name of the plugin hook
+ * @param string $type    The type of the plugin hook
+ * @param mixed  $value   The current value of the plugin hook
+ * @param mixed  $params  Data passed from the trigger
  */
 function cpn_email_handler_hook($hook, $type, $notification, $params) {
 	return false;
@@ -1383,9 +1587,15 @@ function cpn_email_handler_hook($hook, $type, $notification, $params) {
 
 
 /**
- * this is where the bell icon is implemented
+ * implements the icons (likes, in this case) within the context of the entity
+ * TODO: make the likes button act as AJAX
  *
- * @param - 	$hook
+ * @param string $hook    The name of the plugin hook
+ * @param string $type    The type of the plugin hook
+ * @param mixed  $value   The current value of the plugin hook
+ * @param mixed  $params  Data passed from the trigger
+ *
+ * @return mixed if not null, this will be the new value of the plugin hook
  */
 function notify_entity_menu_setup($hook, $type, $return, $params) {
 	$entity = $params['entity'];
@@ -1403,25 +1613,25 @@ function notify_entity_menu_setup($hook, $type, $return, $params) {
 	} else if ( $entity->getContainerEntity() instanceof ElggUser )
 		$allow_subscription = true;
 
-		if($entity instanceof ElggGroup){
-			$entType = 'group';
+	if ($entity instanceof ElggGroup) {
+		$entType = 'group';
+		if($entity->title3){
+				$entName = gc_explode_translation($entity->title3, get_current_language());
+		}else{
+				$entName = $entity->name;
+		}
+	} else {
+		if(!in_array($entity->getSubtype(), array('comment', 'discussion_reply', 'thewire'))){
 			if($entity->title3){
 					$entName = gc_explode_translation($entity->title3, get_current_language());
 			}else{
-					$entName = $entity->name;
+					$entName = $entity->title;
 			}
 		} else {
-			if(!in_array($entity->getSubtype(), array('comment', 'discussion_reply', 'thewire'))){
-				if($entity->title3){
-						$entName = gc_explode_translation($entity->title3, get_current_language());
-				}else{
-						$entName = $entity->title;
-				}
-			} else {
-				$entName = $entity->getOwnerEntity()->name;
-			}
-			$entType = $entity->getSubtype();
+			$entName = $entity->getOwnerEntity()->name;
 		}
+		$entType = $entity->getSubtype();
+	}
 
 	if ($allow_subscription && elgg_is_logged_in()) {
 	    if ( check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $entity->getGUID()) || check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $entity->getGUID()) ) {

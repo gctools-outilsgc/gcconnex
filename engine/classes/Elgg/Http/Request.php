@@ -71,10 +71,15 @@ class Request extends SymfonyRequest {
 	 *
 	 * @see \Elgg\Http\Request::getPathInfo()
 	 *
-	 * @return array
+	 * @param bool $raw If true, the segments will not be HTML escaped
+	 *
+	 * @return string[]
 	 */
-	public function getUrlSegments() {
+	public function getUrlSegments($raw = false) {
 		$path = trim($this->query->get('__elgg_uri'), '/');
+		if (!$raw) {
+			$path = htmlspecialchars($path, ENT_QUOTES, 'UTF-8');
+		}
 		if (!$path) {
 			return array();
 		}
@@ -108,11 +113,22 @@ class Request extends SymfonyRequest {
 			// try one more
 			$ip_addresses = $this->server->get('HTTP_X_REAL_IP');
 			if ($ip_addresses) {
-				return array_pop(explode(',', $ip_addresses));
+				$ip_addresses = explode(',', $ip_addresses);
+				return array_pop($ip_addresses);
 			}
 		}
 
 		return $ip;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function isXmlHttpRequest() {
+		return (strtolower($this->headers->get('X-Requested-With')) === 'xmlhttprequest'
+			|| $this->query->get('X-Requested-With') === 'XMLHttpRequest'
+			|| $this->request->get('X-Requested-With') === 'XMLHttpRequest');
+		// GET/POST check is necessary for jQuery.form and other iframe-based "ajax". #8735
 	}
 
 	/**
