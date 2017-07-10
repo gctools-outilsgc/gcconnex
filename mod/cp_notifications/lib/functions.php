@@ -704,7 +704,6 @@ function getMissionTypeMetastringid( $mission_type, $role_type ) {
 
     // this is specifically for the Micro Missions portion due to extra field
     $subtype = elgg_echo($content_array['subtype']);
-    // error_log(print_r($content_array,true));
     $boolSubtype = ($language_preference === 'fr') ? false : true;
     $subtype = cp_translate_subtype($subtype, $boolSubtype);
 
@@ -882,15 +881,11 @@ function getMissionTypeMetastringid( $mission_type, $role_type ) {
 			break;
 		default:
 			$proper_heading = $heading;
-			//error_log($heading);
 			if (isJSon($proper_heading)) {
 				$group_heading = json_decode($heading, true);
 				$proper_heading = $group_heading[1];
-				//error_log(">>>>>>>>>>>> hey hey: {$proper_heading}");
 				if (isJson($proper_heading)) {
-					//error_log(">>>>>>>>>>>>>>>>>> wut: {$proper_heading}");
 					$proper_heading = json_decode($proper_heading, true);
-					//error_log($proper_heading);
 					$proper_heading = "<a href='{$group_heading[0]}'>$proper_heading[$language]</a>";
 				}
 			}
