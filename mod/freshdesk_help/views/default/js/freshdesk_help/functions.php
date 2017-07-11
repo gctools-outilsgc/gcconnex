@@ -3,6 +3,10 @@
 ?>
 //<script>
 
+/** Function that takes array of categories and removes duplicates
+ *
+ * @param {array} array               Knowledge base categories
+ */
 function uniqueObjects(array){
   for(var a = 0; a < array.length; a++){
     array[a] = JSON.stringify(array[a]);
@@ -24,6 +28,8 @@ function unique(list) {
  return result;
 }
 
+/** Function that gets plugin settings */
+
 function get_details(){
   var details = [];
 
@@ -34,15 +40,17 @@ function get_details(){
   return details;
 }
 
+/** Handle switching to folder */
+
 function displayFolder(link){
-  console.log('clicked display folder');
   var target = $(link).attr('href');
   $('.categories').fadeOut().parent().find(target).delay(500).fadeIn();
   $('#explore-header').fadeOut();
 }
 
+/** Handle switching back to categories */
+
 function displayCategories(link){
-  console.log('clicked display categories');
   $('.folder-display:not(:hidden)').fadeOut().parent().find('.categories').delay(500).fadeIn();
   $('#explore-header').delay(500).fadeIn();
 }
@@ -76,6 +84,10 @@ function occurrences(string, subString, allowOverlapping) {
     }
     return n;
 }
+
+/** Search function on search box
+ * @param {string} search query      Knowledge base article query
+*/
 
 function searchArticles(search){
  
@@ -138,6 +150,9 @@ function searchArticles(search){
           }
     }
 
+/** Search function to match articles in ticket subject
+ * @param {string} search query      Knowledge base article query
+*/
 
 function matchArticles(search){
  

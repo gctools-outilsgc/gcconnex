@@ -55,9 +55,9 @@ echo elgg_view("input/select", array(
 echo '</div>';
 
 if(isset($vars['entity']->portal_id)){
-  echo '<div><p>To add the Freshdesk articles to the system, first press the fetch articles button, then press the save articles button after the articles have loaded.</p>';
-  echo '<a class="article-button" id="fetch" href="#">Fetch Articles</a> <a class="article-button" id="save" href="#">Save Articles</a>';
-  echo'<div class="article-message"></div></div>';
+  echo '<div class="fetch-buttons"><p>To add the Freshdesk articles to the system, first press the fetch articles button, then press the save articles button after the articles have loaded.</p>';
+  echo '<a class="article-button" id="fetch" href="#">Fetch Articles</a> <a class="article-button" id="save" href="#">Save Articles</a></div>';
+  echo'<div class="article-message"></div>';
 }
 
 ?>
@@ -157,7 +157,7 @@ $('#fetch').on('click', function(){
 
                               $('#'+value2.id+'-en').append("<div class='article-panel'></div>");
                               var list = "<ul class='article-list'>";
-                              $.each(article, function (key3,value3) {//<span class='collapse-plus fa fa-plus-square-o fa-lg' aria-hidden='true'></span>
+                              $.each(article, function (key3,value3) {
                                 //if(value3.status == 2){
                                   list += "<li class='article-listing'><a class='head-toggle collapsed' href='#"+ value3.id + "-en' data-toggle='collapse' aria-expanded='false' aria-controls='"+ value3.id +"-en'><div><p class='list-title h5'><span class='collapse-plus fa fa-minus-square-o fa-lg' aria-hidden='true'></span>" + value3.title + "</div></a></p><div id='" + value3.id +
                                   "-en' class='collapse article-content'>" + value3.description + " </div> </div></li>";
@@ -235,7 +235,7 @@ $('#fetch').on('click', function(){
 
                                 $('#'+value2.id+'-fr').append("<div class='article-panel'></div>");
                                 var list = "<ul class='article-list'>";
-                                $.each(article, function (key3,value3) {//<span class='collapse-plus fa fa-plus-square-o fa-lg' aria-hidden='true'></span>
+                                $.each(article, function (key3,value3) {
                                   //if(value3.status == 2){
                                     list += "<li class='article-listing'><a class='head-toggle collapsed' href='#"+ value3.id + "-fr' data-toggle='collapse' aria-expanded='false' aria-controls='"+ value3.id +"-fr'><div><p class='list-title h5'><span class='collapse-plus fa fa-minus-square-o fa-lg' aria-hidden='true'></span>" + value3.title + "</p></div></a><div id='" + value3.id +
                                     "-fr' class='collapse article-content'>" + value3.description + " </div> </div></li>";
@@ -276,7 +276,7 @@ $('#save').on('click', function(){
           async: false,
           url: elgg.normalize_url('/mod/freshdesk_help/actions/articles/save.php'),
           data: obj,
-          success: function () { $('.article-message').append('Articles Saved'); $('#results-en').html(''); $('#results-fr').html(''); },
+          success: function () { $('.article-message').append('Articles Saved'); $('#results-en').html(''); $('#results-fr').html('');   $('.fetch-buttons').hide(); },
           failure: function() { $('.article-message').append('Something went wrong'); }
       });
 });

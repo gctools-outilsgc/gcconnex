@@ -133,6 +133,7 @@
 
 .article-content {
   margin: 0 5px;
+  padding: 10px 5px;
 }
 
 .collapse-plus {
@@ -160,6 +161,16 @@
   margin: 1px;
 }
 
+.form-ticket-panel {
+  background-color: #fff;
+  border-radius: 2px;
+  list-style: none;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
+}
+
+.form-ticket-panel > .panel-body {
+  padding:10px;
+}
 
 @media (min-width: 540px){
   .category-card {
