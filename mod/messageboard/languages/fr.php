@@ -52,6 +52,8 @@ Pour voir vos messages de forum, cliquez sur :
 Pour voir le profil de %s, cliquez sur :
 %s
 
+	%s
+
 Merci de ne pas répondre à cet email.",
 
 	/**

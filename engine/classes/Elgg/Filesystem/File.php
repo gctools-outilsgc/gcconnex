@@ -49,12 +49,29 @@ class File {
 	public function getContents() {
 		return $this->directory->getContents($this->path);
 	}
+
+	/**
+	 * Put content into this file.
+	 *
+	 * @param string $content File content
+	 * @return void
+	 */
+	public function putContents($content) {
+		$this->directory->putContents($this->path, $content);
+	}
 	
 	/**
 	 * @return string The file's extension.
 	 */
 	public function getExtension() {
 		return pathinfo($this->path, PATHINFO_EXTENSION);
+	}
+	
+	/**
+	 * @return string The full path to this file.
+	 */
+	public function getPath() {
+		return $this->directory->getPath($this->path);
 	}
 	
 	/**

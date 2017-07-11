@@ -1,17 +1,9 @@
 <?php
 /**
  * The HTML head
- * 
- * JavaScript load sequence (set in views library and this view)
- * ------------------------
- * 1. Elgg's initialization which is inline because it can change on every page load.
- * 2. RequireJS config. Must be loaded before RequireJS is loaded.
- * 3. RequireJS
- * 4. jQuery
- * 5. jQuery migrate
- * 6. jQueryUI
- * 7. elgg.js
  *
+ * @internal It's dangerous to alter this view.
+ * 
  * @uses $vars['title'] The page title
  * @uses $vars['metas'] Array of meta elements
  * @uses $vars['links'] Array of links
@@ -28,36 +20,20 @@ foreach ($links as $attributes) {
 	echo elgg_format_element('link', $attributes);
 }
 
-$js = elgg_get_loaded_js('head');
-$css = elgg_get_loaded_css();
-$elgg_init = elgg_view('js/initialize_elgg');
+$stylesheets = elgg_get_loaded_css();
 
-$html5shiv_url = elgg_normalize_url('vendors/html5shiv.js');
-$ie_url = elgg_get_simplecache_url('css', 'ie');
-
-?>
-
-	<!--[if lt IE 9]>
-		<script src="<?php echo $html5shiv_url; ?>"></script>
-	<![endif]-->
-
-<?php
-
-foreach ($css as $url) {
+foreach ($stylesheets as $url) {
 	echo elgg_format_element('link', array('rel' => 'stylesheet', 'href' => $url));
 }
 
+// A non-empty script *must* come below the CSS links, otherwise Firefox will exhibit FOUC
+// See https://github.com/Elgg/Elgg/issues/8328
 ?>
-	<!--[if gt IE 8]>
-		<link rel="stylesheet" href="<?php echo $ie_url; ?>" />
-	<![endif]-->
-
-	<script><?php echo $elgg_init; ?></script>
-<?php
-foreach ($js as $url) {
-	echo elgg_format_element('script', array('src' => $url));
-}
-
-echo elgg_view_deprecated('page/elements/shortcut_icon', array(), "Use the 'head', 'page' plugin hook.", 1.9);
-
-echo elgg_view_deprecated('metatags', array(), "Use the 'head', 'page' plugin hook.", 1.8);
+<script>
+	<?php // Do not convert this to a regular function declaration. It gets redefined later. ?>
+	require = function () {
+		// handled in the view "elgg.js"
+		_require_queue.push(arguments);
+	};
+	_require_queue = [];
+</script>

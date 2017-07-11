@@ -4,10 +4,9 @@
  *
  * @package Elgg
  *
- * @uses ElggEntity  $vars['entity']       The entity being commented
- * @uses ElggComment $vars['comment']      The comment being edited
- * @uses bool        $vars['inline']       Show a single line version of the form?
- * @uses bool        $vars['is_edit_page'] Is this form on its own page?
+ * @uses ElggEntity  $vars['entity']  The entity being commented
+ * @uses ElggComment $vars['comment'] The comment being edited
+ * @uses bool        $vars['inline']  Show a single line version of the form?
  */
 
 if (!elgg_is_logged_in()) {
@@ -21,7 +20,6 @@ $comment = elgg_extract('comment', $vars);
 /* @var ElggComment $comment */
 
 $inline = elgg_extract('inline', $vars, false);
-$is_edit_page = elgg_extract('is_edit_page', $vars, false);
 
 $entity_guid_input = '';
 if ($entity) {
@@ -59,6 +57,7 @@ if ($inline) {
 	$comment_input = elgg_view('input/text', array(
 		'name' => 'generic_comment',
 		'value' => $comment_text,
+		'required' => true
 	));
 
 	echo $comment_input . $entity_guid_input . $comment_guid_input . $submit_input;
@@ -67,11 +66,7 @@ if ($inline) {
 	$comment_input = elgg_view('input/longtext', array(
 		'name' => 'generic_comment',
 		'value' => $comment_text,
-	));
-
-	$is_edit_page_input = elgg_view('input/hidden', array(
-		'name' => 'is_edit_page',
-		'value' => (int)$is_edit_page,
+		'required' => true
 	));
 
 	echo <<<FORM
@@ -80,7 +75,6 @@ if ($inline) {
 	$comment_input
 </div>
 <div class="elgg-foot">
-	$is_edit_page_input
 	$comment_guid_input
 	$entity_guid_input
 	$submit_input $cancel_button

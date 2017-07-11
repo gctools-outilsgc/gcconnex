@@ -51,9 +51,14 @@ abstract class ElggExtender extends \ElggData {
 	 * @return void
 	 */
 	public function __set($name, $value) {
+		if ($name === 'access_id' && $this instanceof ElggMetadata && $value != ACCESS_PUBLIC) {
+			elgg_deprecated_notice('Setting ->access_id to a value other than ACCESS_PUBLIC is deprecated. '
+				. 'All metadata will be public in 3.0.', '2.3');
+		}
+
 		$this->attributes[$name] = $value;
 		if ($name == 'value') {
-			$this->attributes['value_type'] = detect_extender_valuetype($value);
+			$this->attributes['value_type'] = self::detectValueType($value);
 		}
 	}
 
@@ -67,7 +72,7 @@ abstract class ElggExtender extends \ElggData {
 	 */
 	public function setValue($value, $value_type = '') {
 		$this->attributes['value'] = $value;
-		$this->attributes['value_type'] = detect_extender_valuetype($value, $value_type);
+		$this->attributes['value_type'] = self::detectValueType($value, $value_type);
 	}
 
 	/**
@@ -142,17 +147,6 @@ abstract class ElggExtender extends \ElggData {
 	}
 
 	/**
-	 * Return the guid of the entity's owner.
-	 *
-	 * @return int The owner GUID
-	 * @deprecated 1.8 Use getOwnerGUID
-	 */
-	public function getOwner() {
-		elgg_deprecated_notice("\ElggExtender::getOwner deprecated for \ElggExtender::getOwnerGUID", 1.8);
-		return $this->getOwnerGUID();
-	}
-
-	/**
 	 * Get the entity that owns this extender
 	 *
 	 * @return \ElggEntity
@@ -193,8 +187,16 @@ abstract class ElggExtender extends \ElggData {
 		$object->value = $this->value;
 		$object->time_created = date('c', $this->getTimeCreated());
 		$object->read_access = $this->access_id;
-		$params = array($this->getSubtype() => $this);
-		return _elgg_services()->hooks->trigger('to:object', $this->getSubtype(), $params, $object);
+		$params = array(
+			$this->getSubtype() => $this, // deprecated use
+			$this->getType() => $this,
+		);
+		if (_elgg_services()->hooks->hasHandler('to:object', $this->getSubtype())) {
+			_elgg_services()->deprecation->sendNotice("Triggering 'to:object' hook by extender name '{$this->getSubtype()}' has been deprecated. "
+			. "Use the generic 'to:object','{$this->getType()}' hook instead.", '2.3');
+			$object = _elgg_services()->hooks->trigger('to:object', $this->getSubtype(), $params, $object);
+		}
+		return _elgg_services()->hooks->trigger('to:object', $this->getType(), $params, $object);
 	}
 
 	/*
@@ -313,4 +315,21 @@ abstract class ElggExtender extends \ElggData {
 		return elgg_normalize_url($url);
 	}
 
+	/**
+	 * Detect the value_type for a value to be stored as metadata or an annotation
+	 *
+	 * @param mixed  $value      The value
+	 * @param string $value_type If specified as "text" or "integer", overrides the detection.
+	 *
+	 * @return string
+	 * @access private
+	 * @internal
+	 */
+	public static function detectValueType($value, $value_type = "") {
+		if ($value_type === 'integer' || $value_type === 'text') {
+			return $value_type;
+		}
+
+		return is_int($value) ? 'integer' : 'text';
+	}
 }

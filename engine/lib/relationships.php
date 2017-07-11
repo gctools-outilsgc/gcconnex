@@ -7,22 +7,6 @@
  */
 
 /**
- * Convert a database row to a new \ElggRelationship
- *
- * @param \stdClass $row Database row from the relationship table
- *
- * @return \ElggRelationship|false
- * @access private
- */
-function row_to_elggrelationship($row) {
-	if ($row instanceof \stdClass) {
-		return new \ElggRelationship($row);
-	}
-
-	return false;
-}
-
-/**
  * Get a relationship by its ID
  *
  * @param int $id The relationship ID
@@ -31,18 +15,6 @@ function row_to_elggrelationship($row) {
  */
 function get_relationship($id) {
 	return _elgg_services()->relationshipsTable->get($id);
-}
-
-/**
- * Get a database row from the relationship table
- *
- * @param int $id The relationship ID
- *
- * @return \stdClass|false False if no row found
- * @access private
- */
-function _elgg_get_relationship_row($id) {
-	return _elgg_services()->relationshipsTable->getRow($id);
 }
 
 /**
@@ -197,7 +169,7 @@ function get_entity_relationships($guid, $inverse_relationship = false) {
  *
  *  inverse_relationship => false|BOOL Are we searching for relationship subjects? By default, the query finds
  *                                     targets of relationships.
- * 
+ *
  *  relationship_join_on => null|STR How the entities relate: guid (default), container_guid, or owner_guid
  *                                   Examples using the relationship 'friend':
  *                                   1. use 'guid' if you want the user's friends
@@ -205,7 +177,7 @@ function get_entity_relationships($guid, $inverse_relationship = false) {
  *                                      (including in groups)
  *                                   3. use 'container_guid' if you want the entities in the user's personal
  *                                      space (non-group)
- *                          
+ *
  * 	relationship_created_time_lower => null|INT Relationship created time lower boundary in epoch time
  *
  * 	relationship_created_time_upper => null|INT Relationship created time upper boundary in epoch time

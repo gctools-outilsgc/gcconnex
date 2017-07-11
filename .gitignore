@@ -1,8 +1,9 @@
 # ignore Elgg configuration
 /engine/settings.php
 /engine/settings-*.php
-/.htaccess
 /cometchat/*
+/elgg-config/settings.php
+/.htaccess
 /composer.phar
 /cache
 
@@ -20,6 +21,7 @@
 !/mod/dashboard/
 !/mod/developers/
 !/mod/diagnostics/
+!/mod/discussions/
 !/mod/embed/
 !/mod/externalpages/
 !/mod/file/
@@ -66,6 +68,7 @@ tmtags
 Thumbs.db
 Desktop.ini
 npm-debug.log
+phpcbf-fixed.diff
 
 # Codio.com
 startup.sh

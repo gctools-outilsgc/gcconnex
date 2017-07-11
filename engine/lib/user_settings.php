@@ -381,9 +381,14 @@ function _elgg_user_settings_menu_setup() {
 	foreach ($active_plugins as $plugin) {
 		$plugin_id = $plugin->getID();
 		if (elgg_view_exists("usersettings/$plugin_id/edit") || elgg_view_exists("plugins/$plugin_id/usersettings")) {
+			if (elgg_language_key_exists($plugin_id . ':usersettings:title')) {
+				$title = elgg_echo($plugin_id . ':usersettings:title');
+			} else {
+				$title = $plugin->getFriendlyName();
+			}
 			$params = array(
 				'name' => $plugin_id,
-				'text' => $plugin->getFriendlyName(),
+				'text' => $title,
 				'href' => "settings/plugins/{$user->username}/$plugin_id",
 				'parent_name' => '1_plugins',
 				'section' => 'configure',
@@ -445,8 +450,6 @@ function _elgg_user_settings_menu_prepare($hook, $type, $value, $params) {
  * @access private
  */
 function _elgg_user_settings_page_handler($page) {
-	global $CONFIG;
-
 	if (!isset($page[0])) {
 		$page[0] = 'user';
 	}
@@ -459,29 +462,24 @@ function _elgg_user_settings_page_handler($page) {
 		elgg_set_page_owner_guid($user->guid);
 	}
 
-	elgg_push_breadcrumb(elgg_echo('settings'), "settings/user/$user->username");
+	$vars['username'] = $user->username;
 
 	switch ($page[0]) {
 		case 'statistics':
-			elgg_push_breadcrumb(elgg_echo('usersettings:statistics:opt:linktext'));
-			$path = $CONFIG->path . "pages/settings/statistics.php";
-			break;
+			echo elgg_view_resource('settings/statistics', $vars);
+			return true;
 		case 'plugins':
 			if (isset($page[2])) {
-				set_input("plugin_id", $page[2]);
-				elgg_push_breadcrumb(elgg_echo('usersettings:plugins:opt:linktext'));
-				$path = $CONFIG->path . "pages/settings/tools.php";
+				$vars['plugin_id'] = $page[2];
+				echo elgg_view_resource('settings/tools', $vars);
+				return true;
 			}
 			break;
 		case 'user':
-			$path = $CONFIG->path . "pages/settings/account.php";
-			break;
+			echo elgg_view_resource("settings/account", $vars);
+			return true;
 	}
 
-	if (isset($path)) {
-		require $path;
-		return true;
-	}
 	return false;
 }
 

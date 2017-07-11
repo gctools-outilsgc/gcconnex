@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Test \ElggEntity
  *
@@ -6,7 +7,7 @@
 class ElggCoreEntityTest extends \ElggCoreUnitTest {
 
 	/**
-	 * @var \ElggEntity
+	 * @var \ElggObject
 	 */
 	protected $entity;
 
@@ -17,6 +18,13 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 		// use \ElggObject since \ElggEntity is an abstract class
 		$this->entity = new \ElggObject();
 		$this->entity->subtype = 'elgg_entity_test_subtype';
+
+		// Add temporary metadata, annotation and private settings
+		// to extend the scope of tests and catch issues with save operations
+		$this->entity->test_metadata = 'bar';
+		$this->entity->annotate('test_annotation', 'baz');
+		$this->entity->setPrivateSetting('test_setting', 'foo');
+
 		$this->entity->save();
 	}
 
@@ -42,7 +50,7 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 		$this->assertIsA($subtype_prop, 'int');
 		$this->assertEqual($subtype_prop, get_subtype_id('object', 'elgg_entity_test_subtype'));
 
-		_elgg_invalidate_cache_for_entity($guid);
+		_elgg_services()->entityCache->remove($guid);
 		$this->entity = null;
 		$this->entity = get_entity($guid);
 
@@ -51,12 +59,90 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 		$this->assertEqual($subtype_prop, get_subtype_id('object', 'elgg_entity_test_subtype'));
 	}
 
+	public function testUnsavedEntitiesDontRecordAttributeSets() {
+		$entity = new \ElggObject();
+		$entity->subtype = 'elgg_entity_test_subtype';
+		$entity->title = 'Foo';
+		$entity->description = 'Bar';
+		$entity->container_guid = elgg_get_logged_in_user_guid();
+
+		$this->assertEqual($entity->getOriginalAttributes(), []);
+	}
+
+	public function testAlreadyPersistedAttributeSetsAreRecorded() {
+		$this->entity->title = 'Foo';
+		$this->entity->description = 'Bar';
+		$this->entity->container_guid = elgg_get_site_entity()->guid;
+
+		$this->assertEqual($this->entity->getOriginalAttributes(), [
+			'title' => null,
+			'description' => null,
+			'container_guid' => elgg_get_logged_in_user_guid(),
+		]);
+	}
+
+	public function testModifiedAttributesAreAvailableDuringUpdateNotAfter() {
+		$this->entity->title = 'Foo';
+		$this->entity->description = 'Bar';
+		$this->entity->container_guid = elgg_get_site_entity()->guid;
+
+		$calls = 0;
+		$handler = function ($event, $type, \ElggObject $object) use (&$calls) {
+			$calls++;
+			$this->assertEqual($object->getOriginalAttributes(), [
+				'title' => null,
+				'description' => null,
+				'container_guid' => elgg_get_logged_in_user_guid(),
+			]);
+		};
+
+		elgg_register_event_handler('update', 'object', $handler);
+		elgg_register_event_handler('update:after', 'object', $handler);
+		$this->entity->save();
+
+		$this->assertEqual($calls, 2);
+
+		elgg_unregister_event_handler('update', 'object', $handler);
+		elgg_unregister_event_handler('update:after', 'object', $handler);
+
+		$this->assertEqual($this->entity->getOriginalAttributes(), []);
+	}
+
+	public function testModifedAttributesSettingEmptyString() {
+		$this->entity->title = '';
+		$this->entity->description = '';
+
+		$this->assertEqual($this->entity->getOriginalAttributes(), []);
+
+		$this->entity->title = '';
+		$this->entity->description = '';
+
+		$this->assertEqual($this->entity->getOriginalAttributes(), []);
+	}
+
+	public function testModifedAttributesSettingIntsAsStrings() {
+		$this->entity->container_guid = elgg_get_logged_in_user_guid();
+		$this->entity->save();
+
+		$this->entity->container_guid = (string) elgg_get_logged_in_user_guid();
+		$this->assertEqual($this->entity->getOriginalAttributes(), []);
+	}
+
+	public function testMultipleAttributeSetsDontOverwriteOriginals() {
+		$this->entity->title = 'Foo';
+		$this->entity->title = 'Bar';
+
+		$this->assertEqual($this->entity->getOriginalAttributes(), [
+			'title' => null,
+		]);
+	}
+
 	public function testGetSubtype() {
 		$guid = $this->entity->guid;
 
 		$this->assertEqual($this->entity->getSubtype(), 'elgg_entity_test_subtype');
 
-		_elgg_invalidate_cache_for_entity($guid);
+		_elgg_services()->entityCache->remove($guid);
 		$this->entity = null;
 		$this->entity = get_entity($guid);
 
@@ -88,8 +174,8 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 		$this->assertEqual($this->entity->countAnnotations('non_existent'), 1);
 
 		// @todo belongs in Annotations API test class
-		$this->assertIdentical($annotations, elgg_get_annotations(array('guid' => $this->entity->getGUID())));
-		$this->assertIdentical($annotations, elgg_get_annotations(array('guid' => $this->entity->getGUID(), 'type' => 'object')));
+		$this->assertIdentical($annotations, elgg_get_annotations(array('guid' => $this->entity->getGUID(), 'annotation_name' => 'non_existent')));
+		$this->assertIdentical($annotations, elgg_get_annotations(array('guid' => $this->entity->getGUID(), 'annotation_name' => 'non_existent', 'type' => 'object')));
 		$this->assertIdentical(false, elgg_get_annotations(array('guid' => $this->entity->getGUID(), 'type' => 'object', 'subtype' => 'fail')));
 
 		//  clear annotation
@@ -100,7 +186,6 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 		$this->assertIdentical(array(), elgg_get_annotations(array('guid' => $this->entity->getGUID())));
 		$this->assertIdentical(array(), elgg_get_annotations(array('guid' => $this->entity->getGUID(), 'type' => 'object')));
 	}
-
 
 	public function testElggEntitySaveAndDelete() {
 		// check attributes populated during create()
@@ -283,79 +368,6 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 		$this->assertEqual($obj->getIconURL(new \stdClass), elgg_normalize_url('medium.jpg'));
 	}
 
-	public function testCanAnnotateDefault() {
-		$object = new \ElggObject();
-		$object->subtype = 'test_1389988642';
-		$object->save();
-
-		$this->assertTrue($object->canAnnotate());
-
-		$user = elgg_get_logged_in_user_entity();
-		elgg_get_session()->removeLoggedInUser();
-		$this->assertFalse($object->canAnnotate());
-
-		elgg_get_session()->setLoggedInUser($user);
-		$object->delete();
-	}
-
-	public function testCanAnnotateCallsSpecificThenGenericHook() {
-		$object = new \ElggObject();
-		$object->subtype = 'test_1389988642';
-		$object->save();
-
-		elgg_register_plugin_hook_handler('permissions_check:annotate:foo', 'object', 'Elgg\Values::getFalse');
-		$this->assertFalse($object->canAnnotate(0, 'foo'));
-
-		// overrides
-		elgg_register_plugin_hook_handler('permissions_check:annotate', 'object', 'Elgg\Values::getTrue');
-		$this->assertTrue($object->canAnnotate());
-
-		elgg_unregister_plugin_hook_handler('permissions_check:annotate:foo', 'object', 'Elgg\Values::getFalse');
-		elgg_unregister_plugin_hook_handler('permissions_check:annotate', 'object', 'Elgg\Values::getTrue');
-
-		$object->delete();
-	}
-
-	public function testCanAnnotateHookParams() {
-		$object = new \ElggObject();
-		$object->subtype = 'test_1389988642';
-		$object->save();
-
-		$call_params = [];
-		$handler = function ($h, $t, $v, $p) use (&$call_params) {
-			$call_params[] = $p;
-		};
-		elgg_register_plugin_hook_handler('permissions_check:annotate:foo', 'object', $handler);
-		elgg_register_plugin_hook_handler('permissions_check:annotate', 'object', $handler);
-
-		$object->canAnnotate(0, 'foo');
-
-		$this->assertSame($call_params[0]['user']->guid, elgg_get_logged_in_user_guid());
-		$this->assertSame($call_params[1]['user']->guid, elgg_get_logged_in_user_guid());
-		$this->assertSame($call_params[0]['entity'], $object);
-		$this->assertSame($call_params[1]['entity'], $object);
-		$this->assertEqual($call_params[0]['annotation_name'], 'foo');
-		$this->assertEqual($call_params[1]['annotation_name'], 'foo');
-
-		elgg_unregister_plugin_hook_handler('permissions_check:annotate:foo', 'object', $handler);
-		elgg_unregister_plugin_hook_handler('permissions_check:annotate', 'object', $handler);
-
-		$object->delete();
-	}
-
-	public function testCanAnnotateDoesntCallSpecificThenGenericHookForEmptyString() {
-		$object = new \ElggObject();
-		$object->subtype = 'test_1389988642';
-		$object->save();
-
-		elgg_register_plugin_hook_handler('permissions_check:annotate:', 'object', 'Elgg\Values::getFalse');
-		$this->assertTrue($object->canAnnotate());
-
-		elgg_unregister_plugin_hook_handler('permissions_check:annotate:', 'object', 'Elgg\Values::getFalse');
-
-		$object->delete();
-	}
-
 	public function testCreateWithContainerGuidEqualsZero() {
 		$user = new \ElggUser();
 		$user->save();
@@ -372,6 +384,174 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 		$this->assertEqual($user->guid, $object->getContainerGUID());
 
 		$user->delete();
-
 	}
+
+	public function testUpdateAbilityDependsOnCanEdit() {
+		$this->entity->access_id = ACCESS_PRIVATE;
+
+		$this->assertTrue($this->entity->save());
+
+		// even owner can't bypass permissions
+		elgg_register_plugin_hook_handler('permissions_check', 'object', [Elgg\Values::class, 'getFalse'], 999);
+		$this->assertFalse($this->entity->save());
+		elgg_unregister_plugin_hook_handler('permissions_check', 'object', [Elgg\Values::class, 'getFalse']);
+
+		$user = new ElggUser();
+		$user->save();
+		$old_user = $this->replaceSession($user);
+
+		$this->assertFalse($this->entity->save());
+
+		elgg_register_plugin_hook_handler('permissions_check', 'object', [Elgg\Values::class, 'getTrue']);
+
+		// even though this user can't look up the entity via the DB, permission allows update.
+		$this->assertFalse(has_access_to_entity($this->entity, $user));
+		$this->assertTrue($this->entity->save());
+
+		elgg_unregister_plugin_hook_handler('permissions_check', 'object', [Elgg\Values::class, 'getTrue']);
+
+		// can save with access ignore
+		$ia = elgg_set_ignore_access();
+		$this->assertTrue($this->entity->save());
+		elgg_set_ignore_access($ia);
+
+		$this->replaceSession($old_user);
+		$user->delete();
+	}
+
+	/**
+	 * Make sure entity is loaded from cache during save operations
+	 * See #10612
+	 */
+	public function testNewObjectLoadedFromCacheDuringSaveOperations() {
+
+		$object = new \ElggObject();
+		$object->subtype = 'elgg_entity_test_subtype';
+
+		// Add temporary metadata, annotation and private settings
+		// to extend the scope of tests and catch issues with save operations
+		$object->test_metadata = 'bar';
+		$object->annotate('test_annotation', 'baz');
+		$object->setPrivateSetting('test_setting', 'foo');
+
+		$metadata_called = false;
+		$metadata_event_handler = function($event, $type, $metadata) use (&$metadata_called) {
+			/* @var $metadata \ElggMetadata */
+			$entity = get_entity($metadata->entity_guid);
+			$this->assertEqual($metadata->entity_guid, $entity->guid);
+			$metadata_called = true;
+		};
+
+		$annotation_called = false;
+		$annotation_event_handler = function($event, $type, $annotation) use (&$annotation_called) {
+			/* @var $metadata \ElggAnnotation */
+			$entity = get_entity($annotation->entity_guid);
+			$this->assertEqual($annotation->entity_guid, $entity->guid);
+			$annotation_called = true;
+		};
+
+		elgg_register_event_handler('create', 'metadata', $metadata_event_handler);
+		elgg_register_event_handler('create', 'annotation', $annotation_event_handler);
+
+		$object->save();
+
+		elgg_unregister_event_handler('create', 'metadata', $metadata_event_handler);
+		elgg_unregister_event_handler('create', 'annotation', $annotation_event_handler);
+
+		$object->delete();
+
+		$this->assertTrue($metadata_called);
+		$this->assertTrue($annotation_called);
+	}
+
+	/**
+	 * Make sure entity is loaded from cache during save operations
+	 * See #10612
+	 */
+	public function testNewUserLoadedFromCacheDuringSaveOperations() {
+
+		$user = new \ElggUser();
+
+		// Add temporary metadata, annotation and private settings
+		// to extend the scope of tests and catch issues with save operations
+		$user->test_metadata = 'bar';
+		$user->annotate('test_annotation', 'baz');
+		$user->setPrivateSetting('test_setting', 'foo');
+
+		$metadata_called = false;
+		$metadata_event_handler = function($event, $type, $metadata) use (&$metadata_called) {
+			/* @var $metadata \ElggMetadata */
+			$entity = get_entity($metadata->entity_guid);
+			$this->assertEqual($metadata->entity_guid, $entity->guid);
+			$metadata_called = true;
+		};
+
+		$annotation_called = false;
+		$annotation_event_handler = function($event, $type, $annotation) use (&$annotation_called) {
+			/* @var $metadata \ElggAnnotation */
+			$entity = get_entity($annotation->entity_guid);
+			$this->assertEqual($annotation->entity_guid, $entity->guid);
+			$annotation_called = true;
+		};
+
+		elgg_register_event_handler('create', 'metadata', $metadata_event_handler);
+		elgg_register_event_handler('create', 'annotation', $annotation_event_handler);
+
+		$user->save();
+
+		elgg_unregister_event_handler('create', 'metadata', $metadata_event_handler);
+		elgg_unregister_event_handler('create', 'annotation', $annotation_event_handler);
+
+		$user->delete();
+
+		$this->assertTrue($metadata_called);
+		$this->assertTrue($annotation_called);
+	}
+
+		/**
+	 * Make sure entity is loaded from cache during save operations
+	 * See #10612
+	 */
+	public function testNewGroupLoadedFromCacheDuringSaveOperations() {
+
+		$group = new \ElggGroup();
+		$group->subtype = 'test_group_subtype';
+		
+		// Add temporary metadata, annotation and private settings
+		// to extend the scope of tests and catch issues with save operations
+		$group->test_metadata = 'bar';
+		$group->annotate('test_annotation', 'baz');
+		$group->setPrivateSetting('test_setting', 'foo');
+
+		$metadata_called = false;
+		$metadata_event_handler = function($event, $type, $metadata) use (&$metadata_called) {
+			/* @var $metadata \ElggMetadata */
+			$entity = get_entity($metadata->entity_guid);
+			$this->assertEqual($metadata->entity_guid, $entity->guid);
+			$metadata_called = true;
+		};
+
+		$annotation_called = false;
+		$annotation_event_handler = function($event, $type, $annotation) use (&$annotation_called) {
+			/* @var $metadata \ElggAnnotation */
+			$entity = get_entity($annotation->entity_guid);
+			$this->assertEqual($annotation->entity_guid, $entity->guid);
+			$annotation_called = true;
+		};
+
+		elgg_register_event_handler('create', 'metadata', $metadata_event_handler);
+		elgg_register_event_handler('create', 'annotation', $annotation_event_handler);
+
+		$group->save();
+
+		elgg_unregister_event_handler('create', 'metadata', $metadata_event_handler);
+		elgg_unregister_event_handler('create', 'annotation', $annotation_event_handler);
+
+		$group->delete();
+
+		$this->assertTrue($metadata_called);
+		$this->assertTrue($annotation_called);
+	}
+
+
 }

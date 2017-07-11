@@ -23,68 +23,69 @@ $username = elgg_extract('username', $values, get_input('u'));
 $email = elgg_extract('email', $values, get_input('e'));
 $name = elgg_extract('name', $values, get_input('n'));
 
-?>
-<div class="mtm form-group">
-	<label for="name"><?php echo elgg_echo('name'); ?></label><br />
-	<?php
-	echo elgg_view('input/text', array(
+$fields = [
+	[
+		'#type' => 'hidden',
+		'name' => 'friend_guid',
+		'value' => elgg_extract('friend_guid', $vars),
+	],
+	[
+		'#type' => 'hidden',
+		'name' => 'invitecode',
+		'value' => elgg_extract('invitecode', $vars),
+	],
+	[
+		'#type' => 'text',
+		'#label' => elgg_echo('name'),
+		'#class' => 'mtm',
 		'name' => 'name',
 		'value' => $name,
 		'autofocus' => true,
-        'id' => 'name',
-	));
-	?>
-</div>
-<div class="form-group">
-	<label for="email"><?php echo elgg_echo('email'); ?></label><br />
-	<?php
-	echo elgg_view('input/text', array(
+		'required' => true,
+	],
+	[
+		'#type' => 'email',
+		'#label' => elgg_echo('email'),
 		'name' => 'email',
 		'value' => $email,
-        'id' => 'email',
-	));
-	?>
-</div>
-<div class="form-group">
-	<label for="username2"><?php echo elgg_echo('username'); ?></label><br />
-	<?php
-	echo elgg_view('input/text', array(
+		'required' => true,
+	],
+	[
+		'#type' => 'text',
+		'#label' => elgg_echo('username'),
 		'name' => 'username',
 		'value' => $username,
-        'id' => 'username2',
-	));
-	?>
-</div>
-<div class="form-group">
-	<label for="password1"><?php echo elgg_echo('password'); ?></label><br />
-	<?php
-	echo elgg_view('input/password', array(
+		'required' => true,
+	],
+	[
+		'#type' => 'password',
+		'#label' => elgg_echo('password'),
 		'name' => 'password',
 		'value' => $password,
-        'id' => 'password1',
-	));
-	?>
-</div>
-<div class="form-group">
-	<label for="password2"><?php echo elgg_echo('passwordagain'); ?></label><br />
-	<?php
-	echo elgg_view('input/password', array(
+		'required' => true,
+	],
+	[
+		'#type' => 'password',
+		'#label' => elgg_echo('passwordagain'),
 		'name' => 'password2',
 		'value' => $password2,
-        'id' => 'password2',
-	));
-	?>
-</div>
+		'required' => true,
+	],
+];
 
-<?php
+foreach ($fields as $field) {
+	echo elgg_view_field($field);
+}
+
 // view to extend to add more fields to the registration form
 echo elgg_view('register/extend', $vars);
 
 // Add captcha hook
 echo elgg_view('input/captcha', $vars);
 
-echo '<div class="elgg-foot">';
-echo elgg_view('input/hidden', array('name' => 'friend_guid', 'value' => $vars['friend_guid']));
-echo elgg_view('input/hidden', array('name' => 'invitecode', 'value' => $vars['invitecode']));
-echo elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('register')));
-echo '</div>';
+$footer = elgg_view_field([
+	'#type' => 'submit',
+	'value' => elgg_echo('register'),
+]);
+
+elgg_set_form_footer($footer);

@@ -27,15 +27,18 @@ function elgg_get_metastring_id($string, $case_sensitive = true) {
 }
 
 /**
- * Add a metastring.
+ * Get a map of strings to their metastring identifiers (case sensitive matches)
  *
- * @warning You should not call this directly. Use elgg_get_metastring_id().
+ * If you need several metastring IDs at once, use this to get a an array of them
+ * instead of calling elgg_get_metastring_id() several times.
  *
- * @param string $string The value to be normalized
- * @return int The identifier for this string
+ * @param string[] $strings Strings to look up
+ *
+ * @return int[] map of [string] => [id]
+ * @since 2.1
  */
-function _elgg_add_metastring($string) {
-	return _elgg_services()->metastringsTable->add($string);
+function elgg_get_metastring_map(array $strings) {
+	return _elgg_services()->metastringsTable->getMap($strings);
 }
 
 /**
@@ -137,12 +140,26 @@ function _elgg_get_metastring_based_objects($options) {
 		'distinct' => true,
 		'preload_owners' => false,
 		'callback' => $callback,
+
+		'batch' => false,
+		'batch_inc_offset' => true,
+		'batch_size' => 25,
 	);
 
 	// @todo Ignore site_guid right now because of #2910
 	$options['site_guid'] = ELGG_ENTITIES_ANY_VALUE;
 
 	$options = array_merge($defaults, $options);
+
+	if ($options['batch'] && !$options['count']) {
+		$batch_size = $options['batch_size'];
+		$batch_inc_offset = $options['batch_inc_offset'];
+
+		// clean batch keys from $options.
+		unset($options['batch'], $options['batch_size'], $options['batch_inc_offset']);
+
+		return new \ElggBatch('_elgg_get_metastring_based_objects', $options, null, $batch_size, $batch_inc_offset);
+	}
 
 	// can't use helper function with type_subtype_pair because
 	// it's already an array...just need to merge it
@@ -179,7 +196,7 @@ function _elgg_get_metastring_based_objects($options) {
 	$wheres = $options['wheres'];
 
 	// entities
-	$wheres[] = _elgg_get_entity_type_subtype_where_sql('e', $options['types'],
+	$wheres[] = _elgg_services()->entityTable->getEntityTypeSubtypeWhereSql('e', $options['types'],
 		$options['subtypes'], $options['type_subtype_pairs']);
 
 	$wheres[] = _elgg_get_guid_based_where_sql('e.guid', $options['guids']);
@@ -326,7 +343,7 @@ function _elgg_get_metastring_based_objects($options) {
 			$offset = sanitise_int($options['offset'], false);
 			$query .= " LIMIT $offset, $limit";
 		}
-
+		
 		$dt = get_data($query, $options['callback']);
 
 		if ($options['preload_owners'] && is_array($dt) && count($dt) > 1) {
@@ -477,14 +494,14 @@ function _elgg_normalize_metastrings_options(array $options = array()) {
 
 	// map the metadata_* options to metastring_* options
 	$map = array(
-		'names'					=>	'metastring_names',
-		'values'				=>	'metastring_values',
-		'case_sensitive'		=>	'metastring_case_sensitive',
-		'owner_guids'			=>	'metastring_owner_guids',
-		'created_time_lower'	=>	'metastring_created_time_lower',
-		'created_time_upper'	=>	'metastring_created_time_upper',
-		'calculation'			=>	'metastring_calculation',
-		'ids'					=>	'metastring_ids',
+		'names'					=> 'metastring_names',
+		'values'				=> 'metastring_values',
+		'case_sensitive'		=> 'metastring_case_sensitive',
+		'owner_guids'			=> 'metastring_owner_guids',
+		'created_time_lower'	=> 'metastring_created_time_lower',
+		'created_time_upper'	=> 'metastring_created_time_upper',
+		'calculation'			=> 'metastring_calculation',
+		'ids'					=> 'metastring_ids',
 	);
 
 	foreach ($prefixes as $prefix) {
@@ -551,7 +568,10 @@ function _elgg_set_metastring_based_object_enabled_by_id($id, $enabled, $type) {
 		if ($object->enabled == $enabled) {
 			$return = false;
 		} elseif ($object->canEdit() && (elgg_trigger_event($event, $type, $object))) {
-			$return = update_data("UPDATE $table SET enabled = '$enabled' where id = $id");
+			$return = update_data("UPDATE $table SET enabled = :enabled where id = :id", [
+				':enabled' => $enabled,
+				':id' => $id,
+			]);
 		}
 	}
 
@@ -641,20 +661,6 @@ function _elgg_delete_metastring_based_object_by_id($id, $type) {
 	$obj = _elgg_get_metastring_based_object_from_id($id, $type);
 
 	if ($obj) {
-		// Tidy up if memcache is enabled.
-		// @todo only metadata is supported
-		if ($type == 'metadata') {
-			static $metabyname_memcache;
-			if ((!$metabyname_memcache) && (is_memcache_available())) {
-				$metabyname_memcache = new \ElggMemcache('metabyname_memcache');
-			}
-
-			if ($metabyname_memcache) {
-				// @todo why name_id? is that even populated?
-				$metabyname_memcache->delete("{$obj->entity_guid}:{$obj->name_id}");
-			}
-		}
-
 		if ($obj->canEdit()) {
 			// bc code for when we triggered 'delete', 'annotations' #4770
 			$result = true;
@@ -666,7 +672,9 @@ function _elgg_delete_metastring_based_object_by_id($id, $type) {
 			}
 
 			if (elgg_trigger_event('delete', $type, $obj) && $result) {
-				return (bool)delete_data("DELETE FROM $table WHERE id = $id");
+				return (bool)delete_data("DELETE FROM $table WHERE id = :id", [
+					':id' => $id,
+				]);
 			}
 		}
 	}

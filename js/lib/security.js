@@ -154,7 +154,7 @@ elgg.security.addToken = function(data) {
  * @private
  */
 elgg.security.init = function() {
-	// elgg.security.interval is set in the js/elgg PHP view.
+	// elgg.security.interval is set in the `elgg.js` view.
 	elgg.security.tokenRefreshTimer = setInterval(elgg.security.refreshToken, elgg.security.interval);
 };
 

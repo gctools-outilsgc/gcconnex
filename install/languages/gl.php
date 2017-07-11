@@ -41,11 +41,11 @@ Se estás listo para continuar, preme o botón de «Seguinte».",
 ',
 	'install:check:php:session.auto_start' => "A opción «session.auto_start» debe estar desactivada para que Elgg funcione. Cambie a configuración do servidor ou engada a directiva ao ficheiro «.htaccess» de Elgg.",
 
-	'install:check:enginedir' => 'O servidor web non ten permisos para crear o ficheiro «settings.php» no cartafol do motor. Ten dúas opcións:
+	'install:check:installdir' => 'Your web server does not have permission to create the settings.php file in your installation directory. You have two choices:
 
-		1. Cambiar os permisos do cartafol do motor.
+		1. Change the permissions on the elgg-config directory of your Elgg installation
 
-		2. Copiar o ficheiro «settings.example.php» a «settings.php» e seguir as instrucións que contén para configurar os parámetros da base de datos.',
+		2. Copy the file %s/settings.example.php to elgg-config/settings.php and follow the instructions in it for setting your database parameters.',
 	'install:check:readsettings' => 'Existe un ficheiro de configuración no cartafol do motor, pero o servidor web non ten permisos de lectura nel. Pode eliminar o ficheiro ou darlle ao servidor permisos de lectura sobre el.',
 
 	'install:check:php:success' => "O PHP do servidor cumpre cos requisitos de Elgg.",
@@ -60,12 +60,14 @@ Se estás listo para continuar, preme o botón de «Seguinte».",
 	'install:database:label:dbname' => 'Base de datos',
 	'install:database:label:dbhost' => 'Servidor',
 	'install:database:label:dbprefix' => 'Prefixo das táboas',
+	'install:database:label:timezone' => "Timezone",
 
 	'install:database:help:dbuser' => 'Usuario que ten todos os permisos posíbeis sobre a base de datos MySQL que creou para Elgg.',
 	'install:database:help:dbpassword' => 'Contrasinal da conta de usuario da base de datos introducida no campo anterior.',
 	'install:database:help:dbname' => 'Nome da base de datos para Elgg.',
 	'install:database:help:dbhost' => 'Enderezo do servidor de MySQL (normalmente é «localhost»).',
 	'install:database:help:dbprefix' => "O prefixo que se lles engade a todas as táboas de Elgg (normalmente é «elgg_»).",
+	'install:database:help:timezone' => "The default timezone in which the site will operate",
 
 	'install:settings:instructions' => 'Necesítase algunha información sobre o sitio durante a configuración de Elgg. Se aínda non <a href="http://learn.elgg.org/en/1.x/intro/install.html#create-a-data-folder" target="_blank">creou un cartafol de datos</a> para Elgg, fágao agora.',
 
@@ -125,8 +127,8 @@ Se estás listo para continuar, preme o botón de «Seguinte».",
 	'install:error:nodatabase' => 'Non foi posíbel usar a base de datos «%s». Pode que non exista.',
 	'install:error:cannotloadtables' => 'Non foi posíbel cargar as táboas da base de datos.',
 	'install:error:tables_exist' => 'A base de datos xa contén táboas de Elgg. Ten que eliminar esas táboas ou reiniciar o instalador e intentar facer uso delas. Para reiniciar o instalador, elimine a parte de «?step=database» do URL na barra do URL do navegador, e prema Intro.',
-	'install:error:readsettingsphp' => 'Non foi posíbel ler o ficheiro «engine/settings.example.php».',
-	'install:error:writesettingphp' => 'Non foi posíbel escribir o ficheiro «engine/settings.php».',
+	'install:error:readsettingsphp' => 'Unable to read /elgg-config/settings.example.php',
+	'install:error:writesettingphp' => 'Unable to write /elgg-config/settings.php',
 	'install:error:requiredfield' => 'Necesítase «%s».',
 	'install:error:relative_path' => 'A ruta «%s» para o cartafol de datos non parece unha ruta absoluta.',
 	'install:error:datadirectoryexists' => 'O cartafol de datos, «%s», non existe.',

@@ -4,19 +4,15 @@
  *
  * Shows a list of plugins that can be sorted and filtered.
  *
- * @package Elgg.Core
- * @subpackage Admin.Plugins
+ * @uses $vars['list_only']
  */
 
-elgg_load_js('lightbox');
-elgg_load_css('lightbox');
+$list_only = (bool)elgg_extract('list_only', $vars);
 
 // @todo this should occur in the controller code
 _elgg_generate_plugin_entities();
 
 $installed_plugins = elgg_get_plugins('any');
-$show_category = get_input('category', 'all');
-$sort = get_input('sort', 'priority');
 
 // Get a list of the all categories
 // and trim down the plugin list if we're not viewing all categories.
@@ -26,42 +22,21 @@ $categories = array();
 foreach ($installed_plugins as $id => $plugin) {
 	if (!$plugin->isValid()) {
 		if ($plugin->isActive()) {
-			// force disable and warn
-			elgg_add_admin_notice('invalid_and_deactivated_' . $plugin->getID(),
-					elgg_echo('ElggPlugin:InvalidAndDeactivated', array($plugin->getId())));
-			$plugin->deactivate();
+			$disable_plugins = elgg_get_config('auto_disable_plugins');
+			if ($disable_plugins === null) {
+				$disable_plugins = true;
+			}
+			if ($disable_plugins) {
+				// force disable and warn
+				elgg_add_admin_notice('invalid_and_deactivated_' . $plugin->getID(),
+						elgg_echo('ElggPlugin:InvalidAndDeactivated', array($plugin->getId())));
+				$plugin->deactivate();
+			}
 		}
 		continue;
 	}
 
 	$plugin_categories = $plugin->getManifest()->getCategories();
-
-	// handle plugins that don't declare categories
-	// unset them here because this is the list we foreach
-	switch ($show_category) {
-		case 'all':
-			break;
-		case 'active':
-			if (!$plugin->isActive()) {
-				unset($installed_plugins[$id]);
-			}
-			break;
-		case 'inactive':
-			if ($plugin->isActive()) {
-				unset($installed_plugins[$id]);
-			}
-			break;
-		case 'nonbundled':
-			if (in_array('bundled', $plugin_categories)) {
-				unset($installed_plugins[$id]);
-			}
-			break;
-		default:
-			if (!in_array($show_category, $plugin_categories)) {
-				unset($installed_plugins[$id]);
-			}
-			break;
-	}
 
 	if (isset($plugin_categories)) {
 		foreach ($plugin_categories as $category) {
@@ -72,38 +47,29 @@ foreach ($installed_plugins as $id => $plugin) {
 	}
 }
 
-$guids = array();
-foreach ($installed_plugins as $plugin) {
-	$guids[] = $plugin->getGUID();
+$list_options = [
+	'limit' => 0,
+	'full_view' => true,
+	'list_type_toggle' => false,
+	'pagination' => false,
+	'display_reordering' => true,
+];
+
+$add_context = !elgg_in_context('admin');
+if ($add_context) {
+	// needed for expected plugin view rendering
+	elgg_push_context('admin');
+}
+$plugins_list = elgg_view_entity_list($installed_plugins, $list_options);
+$plugins_list .= "<div id='elgg-plugin-list-cover'></div>";
+if ($add_context) {
+	elgg_pop_context();
 }
 
-// sort plugins
-switch ($sort) {
-	case 'date':
-		$plugin_list = array();
-		foreach ($installed_plugins as $plugin) {
-			$create_date = $plugin->getTimeCreated();
-			while (isset($plugin_list[$create_date])) {
-				$create_date++;
-			}
-			$plugin_list[$create_date] = $plugin;
-		}
-		krsort($plugin_list);
-		break;
-	case 'alpha':
-		$plugin_list = array();
-		foreach ($installed_plugins as $plugin) {
-			$plugin_list[$plugin->getFriendlyName()] = $plugin;
-		}
-		ksort($plugin_list);
-		break;
-	case 'priority':
-	default:
-		$plugin_list = $installed_plugins;
-		break;
+if ($list_only) {
+	echo $plugins_list;
+	return;
 }
-
-
 
 asort($categories);
 
@@ -111,89 +77,39 @@ asort($categories);
 unset($categories['bundled']);
 unset($categories['nonbundled']);
 
-$common_categories = array(
+$common_categories = [
 	'all' => elgg_echo('admin:plugins:category:all'),
 	'active' => elgg_echo('admin:plugins:category:active'),
 	'inactive' => elgg_echo('admin:plugins:category:inactive'),
 	'bundled' => elgg_echo('admin:plugins:category:bundled'),
 	'nonbundled' => elgg_echo('admin:plugins:category:nonbundled'),
-);
+];
 
 $categories = array_merge($common_categories, $categories);
-// security - only want a defined option
-if (!array_key_exists($show_category, $categories)) {
-	$show_category = reset($categories);
-}
 
-$category_form = elgg_view_form('admin/plugins/filter', array(
-	'action' => 'admin/plugins',
-	'method' => 'get',
-	'disable_security' => true,
-), array(
-	'category' => $show_category,
-	'category_options' => $categories,
-	'sort' => $sort,
-));
+$category_form = elgg_view("admin/plugins/filter", [
+	'category' => "all",
+	'category_options' => $categories
+]);
 
+elgg_register_menu_item('title', [
+	'name' => 'activate-all',
+	'href' => 'action/admin/plugins/activate_all',
+	'text' => elgg_echo('admin:plugins:activate_all'),
+	'link_class' => 'elgg-button elgg-button-submit elgg-plugins-toggle',
+	'data-desired-state' => 'active',
+]);
+elgg_register_menu_item('title', [
+	'name' => 'dactivate-all',
+	'href' => 'action/admin/plugins/deactivate_all',
+	'text' => elgg_echo('admin:plugins:deactivate_all'),
+	'link_class' => 'elgg-button elgg-button-submit elgg-plugins-toggle',
+	'data-desired-state' => 'inactive',
+]);
 
-$sort_options = array(
-	'priority' => elgg_echo('sort:priority'),
-	'alpha' => elgg_echo('sort:alpha'),
-	'date' => elgg_echo('sort:newest'),
+echo $category_form;
+echo elgg_format_element(
+	'div',
+	['id' => 'elgg-plugin-list'],
+	$plugins_list
 );
-// security - only want a defined option
-if (!array_key_exists($sort, $sort_options)) {
-	$sort = reset($sort_options);
-}
-
-$sort_form = elgg_view_form('admin/plugins/sort', array(
-	'action' => 'admin/plugins',
-	'method' => 'get',
-	'disable_security' => true,
-), array(
-	'sort' => $sort,
-	'sort_options' => $sort_options,
-	'category' => $show_category,
-));
-
-$buttons = "<div class=\"clearfix mbm\">";
-$buttons .= elgg_view_form('admin/plugins/change_state', array(
-	'action' => 'action/admin/plugins/activate_all',
-	'class' => 'float',
-), array(
-	'guids' => $guids,
-	'action' => 'activate',
-));
-$buttons .= elgg_view_form('admin/plugins/change_state', array(
-	'action' => 'action/admin/plugins/deactivate_all',
-	'class' => 'float',
-), array(
-	'guids' => $guids,
-	'action' => 'deactivate',
-));
-$buttons .= "</div>";
-
-$buttons .= $category_form . $sort_form;
-
-// construct page header
-?>
-<div id="content_header" class="mbm clearfix">
-	<div class="content-header-options"><?php echo $buttons ?></div>
-</div>
-
-<div id="elgg-plugin-list">
-<?php
-
-$options = array(
-	'limit' => 0,
-	'full_view' => true,
-	'list_type_toggle' => false,
-	'pagination' => false,
-);
-if ($show_category == 'all' && $sort == 'priority') {
-	$options['display_reordering'] = true;
-}
-echo elgg_view_entity_list($plugin_list, $options);
-
-?>
-</div>

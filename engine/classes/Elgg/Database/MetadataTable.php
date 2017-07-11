@@ -19,29 +19,32 @@ use Elgg\Cache\MetadataCache as Cache;
  * @since      1.10.0
  */
 class MetadataTable {
+
+	use \Elgg\TimeUsing;
+
 	/** @var array */
-	private $independents = array();
+	protected $independents = array();
 	
 	/** @var Cache */
-	private $cache;
+	protected $cache;
 	
 	/** @var Database */
-	private $db;
+	protected $db;
 	
 	/** @var EntityTable */
-	private $entityTable;
+	protected $entityTable;
 	
 	/** @var MetastringsTable */
-	private $metastringsTable;
+	protected $metastringsTable;
 	
 	/** @var Events */
-	private $events;
+	protected $events;
 	
 	/** @var Session */
-	private $session;
+	protected $session;
 	
 	/** @var string */
-	private $table;
+	protected $table;
 
 	/**
 	 * Constructor
@@ -66,7 +69,7 @@ class MetadataTable {
 		$this->events = $events;
 		$this->metastringsTable = $metastringsTable;
 		$this->session = $session;
-		$this->table = $this->db->getTablePrefix() . "metadata";
+		$this->table = $this->db->prefix . "metadata";
 	}
 
 	/**
@@ -115,8 +118,8 @@ class MetadataTable {
 
 		$entity_guid = (int)$entity_guid;
 		// name and value are encoded in add_metastring()
-		$value_type = detect_extender_valuetype($value, $this->db->sanitizeString(trim($value_type)));
-		$time = time();
+		$value_type = \ElggExtender::detectValueType($value, trim($value_type));
+		$time = $this->getCurrentTime()->getTimestamp();
 		$owner_guid = (int)$owner_guid;
 		$allow_multiple = (boolean)$allow_multiple;
 	
@@ -128,12 +131,17 @@ class MetadataTable {
 			$owner_guid = $this->session->getLoggedInUserGuid();
 		}
 	
-		$access_id = (int)$access_id;
+		$access_id = (int) $access_id;
 	
-		$query = "SELECT * from {$this->table}"
-			. " WHERE entity_guid = $entity_guid and name_id=" . $this->metastringsTable->getId($name) . " limit 1";
-	
-		$existing = $this->db->getDataRow($query);
+		$query = "SELECT * FROM {$this->table}
+			WHERE entity_guid = :entity_guid and name_id = :name_id LIMIT 1";
+
+		$params = [
+			':entity_guid' => $entity_guid,
+			':name_id' => $this->metastringsTable->getId($name)
+		];
+
+		$existing = $this->db->getDataRow($query, null, $params);
 		if ($existing && !$allow_multiple) {
 			$id = (int)$existing->id;
 			$result = $this->update($id, $name, $value, $value_type, $owner_guid, $access_id);
@@ -159,12 +167,22 @@ class MetadataTable {
 			}
 	
 			// If ok then add it
-			$query = "INSERT into {$this->table}"
-				. " (entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id)"
-				. " VALUES ($entity_guid, '$name_id','$value_id','$value_type', $owner_guid, $time, $access_id)";
-	
-			$id = $this->db->insertData($query);
-	
+			$query = "INSERT INTO {$this->table}
+				(entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id)
+				VALUES (:entity_guid, :name_id, :value_id, :value_type, :owner_guid, :time_created, :access_id)";
+
+			$params = [
+				':entity_guid' => $entity_guid,
+				':name_id' => $name_id,
+				':value_id' => $value_id,
+				':value_type' => $value_type,
+				':owner_guid' => $owner_guid,
+				':time_created' => $time,
+				':access_id' => $access_id,
+			];
+			
+			$id = $this->db->insertData($query, $params);
+			
 			if ($id !== false) {
 				$obj = $this->get($id);
 				if ($this->events->trigger('create', 'metadata', $obj)) {
@@ -203,18 +221,7 @@ class MetadataTable {
 			return false;
 		}
 	
-		// If memcached then we invalidate the cache for this entry
-		static $metabyname_memcache;
-		if ((!$metabyname_memcache) && (is_memcache_available())) {
-			$metabyname_memcache = new \ElggMemcache('metabyname_memcache');
-		}
-	
-		if ($metabyname_memcache) {
-			// @todo fix memcache (name_id is not a property of \ElggMetadata)
-			$metabyname_memcache->delete("{$md->entity_guid}:{$md->name_id}");
-		}
-	
-		$value_type = detect_extender_valuetype($value, $this->db->sanitizeString(trim($value_type)));
+		$value_type = \ElggExtender::detectValueType($value, trim($value_type));
 	
 		$owner_guid = (int)$owner_guid;
 		if ($owner_guid == 0) {
@@ -239,11 +246,25 @@ class MetadataTable {
 		}
 	
 		// If ok then add it
-		$query = "UPDATE {$this->table}"
-			. " set name_id='$name_id', value_id='$value_id', value_type='$value_type', access_id=$access_id,"
-			. " owner_guid=$owner_guid where id=$id";
-	
-		$result = $this->db->updateData($query);
+		$query = "UPDATE {$this->table}
+			SET name_id = :name_id,
+			    value_id = :value_id,
+				value_type = :value_type,
+				access_id = :access_id,
+			    owner_guid = :owner_guid
+			WHERE id = :id";
+
+		$params = [
+			':name_id' => $name_id,
+			':value_id' => $value_id,
+			':value_type' => $value_type,
+			':access_id' => $access_id,
+			':owner_guid' => $owner_guid,
+			':id' => $id,
+		];
+		
+		$result = $this->db->updateData($query, false, $params);
+		
 		if ($result !== false) {
 	
 			$this->cache->clear($md->entity_guid);
@@ -541,7 +562,7 @@ class MetadataTable {
 		);
 	
 		// will always want to join these tables if pulling metastrings.
-		$return['joins'][] = "JOIN {$this->db->getTablePrefix()}{$n_table} n_table on
+		$return['joins'][] = "JOIN {$this->db->prefix}{$n_table} n_table on
 			{$e_table}.guid = n_table.entity_guid";
 	
 		$wheres = array();
@@ -687,7 +708,7 @@ class MetadataTable {
 				$name = $this->db->sanitizeString($pair['name']);
 	
 				// @todo The multiple joins are only needed when the operator is AND
-				$return['joins'][] = "JOIN {$this->db->getTablePrefix()}{$n_table} n_table{$i}
+				$return['joins'][] = "JOIN {$this->db->prefix}{$n_table} n_table{$i}
 					on {$e_table}.guid = n_table{$i}.entity_guid";
 				$return['joins'][] = "JOIN {$this->metastringsTable->getTableName()} msn{$i}
 					on n_table{$i}.name_id = msn{$i}.id";
@@ -734,7 +755,7 @@ class MetadataTable {
 					} else {
 						$direction = 'ASC';
 					}
-					$return['joins'][] = "JOIN {$this->db->getTablePrefix()}{$n_table} n_table{$i}
+					$return['joins'][] = "JOIN {$this->db->prefix}{$n_table} n_table{$i}
 						on {$e_table}.guid = n_table{$i}.entity_guid";
 					$return['joins'][] = "JOIN {$this->metastringsTable->getTableName()} msn{$i}
 						on n_table{$i}.name_id = msn{$i}.id";

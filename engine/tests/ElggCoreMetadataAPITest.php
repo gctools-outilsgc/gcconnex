@@ -47,7 +47,7 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 	}
 
 	public function testElggGetEntitiesFromMetadata() {
-		global $CONFIG, $METASTRINGS_CACHE;
+		global $METASTRINGS_CACHE;
 		$METASTRINGS_CACHE = array();
 
 		$this->object->title = 'Meta Unit Test';
@@ -161,8 +161,7 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 
 		// need to fake different logins.
 		// good times without mocking.
-		$original_user = elgg_get_logged_in_user_entity();
-		$_SESSION['user'] = $u1;
+		$original_user = $this->replaceSession($u1);
 		
 		elgg_set_ignore_access(false);
 
@@ -182,7 +181,7 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 		}
 
 		// add md w/ same name as a different user
-		$_SESSION['user'] = $u2;
+		$this->replaceSession($u2);
 		$md_values2 = array(
 			'four',
 			'five',
@@ -202,7 +201,7 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 			$this->assertEqual('test', $md->name);
 		}
 
-		$_SESSION['user'] = $original_user;
+		$this->replaceSession($original_user);
 
 		$obj->delete();
 		$u1->delete();
@@ -221,7 +220,7 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 		$obj->test_md = [1, 2, 3];
 
 		$time = time();
-		$prefix = _elgg_services()->db->getTablePrefix();
+		$prefix = _elgg_services()->db->prefix;
 
 		// reverse the times
 		$mds = elgg_get_metadata([
@@ -265,6 +264,8 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 	protected function delete_metastrings($string) {
 		global $CONFIG, $METASTRINGS_CACHE;
 		$METASTRINGS_CACHE = array();
+
+		_elgg_get_memcache('metastrings_memcache')->delete(md5($string));
 
 		$string = sanitise_string($string);
 		_elgg_services()->db->deleteData("

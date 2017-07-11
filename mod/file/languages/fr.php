@@ -65,12 +65,12 @@ return array(
 
 	'file:display:number' => "Nombre de fichiers à afficher",
 
-	'river:create:object:file' => '%s a téléchargé le fichier %s',
+	'river:create:object:file' => '%s a chargé le fichier %s',
 	'river:comment:object:file' => '%s a commenté le fichier %s',
 
 	'item:object:file' => 'Fichiers',
 
-	'file:notify:summary' => 'Nouveau fichier nommé %s',
+	'file:notify:summary' => 'Nouveau fichier intitulé %s',
 	'file:notify:subject' => 'Nouveau fichier: %s',
 	'file:notify:body' =>
 	'%s à publié un nouveau fichier: %s

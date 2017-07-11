@@ -11,11 +11,12 @@
  * MessageBoard initialisation
  */
 function messageboard_init() {
-	// js
-	elgg_extend_view('js/elgg', 'messageboard/js');
+	// inline module
+	elgg_extend_view('elgg.js', 'elgg/messageboard.js');
+	elgg_require_js('elgg/messageboard');
 
 	// css
-	elgg_extend_view('css/elgg', 'messageboard/css');
+	elgg_extend_view('elgg.css', 'messageboard/css');
 
 	elgg_register_page_handler('messageboard', 'messageboard_page_handler');
 
@@ -46,35 +47,28 @@ function messageboard_init() {
  */
 function messageboard_page_handler($page) {
 
-	$pages = dirname(__FILE__) . '/pages/messageboard';
-
+	$vars = [];
 	switch ($page[0]) {
 		case 'owner':
 			//@todo if they have the widget disabled, don't allow this.
 			$owner_name = elgg_extract(1, $page);
 			$owner = get_user_by_username($owner_name);
-			set_input('page_owner_guid', $owner->guid);
+			$vars['page_owner_guid'] = $owner->guid;
 			$history = elgg_extract(2, $page);
 			$username = elgg_extract(3, $page);
 
 			if ($history && $username) {
-				set_input('history_username', $username);
+				$vars['history_username'] = $username;
 			}
 
-			include "$pages/owner.php";
-			break;
-
-		case 'add':
-			$container_guid = elgg_extract(1, $page);
-			set_input('container_guid', $container_guid);
-			include "$pages/add.php";
+			echo elgg_view_resource('messageboard/owner', $vars);
 			break;
 
 		case 'group':
 			elgg_group_gatekeeper();
 			$owner_guid = elgg_extract(1, $page);
-			set_input('page_owner_guid', $owner_guid);
-			include "$pages/owner.php";
+			$vars['page_owner_guid'] = $owner_guid;
+			echo elgg_view_resource('messageboard/owner', $vars);
 			break;
 
 		default:
@@ -121,7 +115,11 @@ function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC)
 			$poster->getURL()
 		), $owner->language);
 
-		notify_user($owner->guid, $poster->guid, $subject, $body);
+		$params = [
+			'action' => 'create',
+			'object' => elgg_get_annotation_from_id($result_id),
+		];
+		notify_user($owner->guid, $poster->guid, $subject, $body, $params);
 	}
 
 	return $result_id;

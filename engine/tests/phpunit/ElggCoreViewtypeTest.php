@@ -1,10 +1,16 @@
 <?php
 
-class ElggCoreViewtypeTest extends \PHPUnit_Framework_TestCase {
+class ElggCoreViewtypeTest extends \Elgg\TestCase {
 
 	protected function setUp() {
-		global $CURRENT_SYSTEM_VIEWTYPE;
+		global $CURRENT_SYSTEM_VIEWTYPE, $CONFIG;
 		$CURRENT_SYSTEM_VIEWTYPE = '';
+		set_input('view', '');
+		unset($CONFIG->view);
+	}
+
+	protected function tearDown() {
+		$this->setUp();
 	}
 
 	public function testElggSetViewtype() {
@@ -12,14 +18,37 @@ class ElggCoreViewtypeTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals('test', elgg_get_viewtype());
 	}
 
-	public function testElggGetViewtype() {
+	public function testDefaultViewtype() {
+		$this->assertEquals('default', elgg_get_viewtype());
+	}
+
+	public function testInputSetsInitialViewtype() {
+		set_input('view', 'foo');
+		$this->assertEquals('foo', elgg_get_viewtype());
+	}
+
+	public function testConfigSetsInitialViewtype() {
+		global $CONFIG;
+		$CONFIG->view = 'bar';
+
+		$this->assertEquals('bar', elgg_get_viewtype());
+	}
+
+	public function testSettingInputDoesNotChangeViewtype() {
 		$this->assertEquals('default', elgg_get_viewtype());
 
 		set_input('view', 'foo');
-		$this->assertEquals('foo', elgg_get_viewtype());
-
-		set_input('view', 'a;b');
 		$this->assertEquals('default', elgg_get_viewtype());
+	}
+
+	public function testSettingConfigDoesNotChangeViewtype() {
+		global $CONFIG;
+
+		$this->assertEquals('default', elgg_get_viewtype());
+
+		$CONFIG->view = 'foo';
+		$this->assertEquals('default', elgg_get_viewtype());
+		unset($CONFIG->view);
 	}
 
 	public function testElggIsValidViewtype() {
@@ -32,4 +61,5 @@ class ElggCoreViewtypeTest extends \PHPUnit_Framework_TestCase {
 		$this->assertFalse(_elgg_is_valid_viewtype(123));
 		$this->assertFalse(_elgg_is_valid_viewtype(''));
 	}
+
 }

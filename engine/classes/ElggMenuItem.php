@@ -47,6 +47,9 @@ class ElggMenuItem {
 
 		// array Classes to apply to the anchor tag
 		'linkClass' => array(),
+
+		// array AMD modules required by this menu item
+		'deps' => array()
 	);
 
 	/**
@@ -95,8 +98,12 @@ class ElggMenuItem {
 	 *
 	 *    name        => STR  Menu item identifier (required)
 	 *    text        => STR  Menu item display text as HTML (required)
-	 *    href        => STR  Menu item URL (required) (false for non-links.
-	 *                        @warning If you disable the href the <a> tag will
+	 *    href        => STR  Menu item URL (required)
+	 *                        false = do not create a link.
+	 *                        null = current URL.
+	 *                        "" = current URL.
+	 *                        "/" = site home page.
+	 *                        @warning If href is false, the <a> tag will
 	 *                        not appear, so the link_class will not apply. If you
 	 *                        put <a> tags in manually through the 'text' option
 	 *                        the default CSS selector .elgg-menu-$menu > li > a
@@ -110,12 +117,14 @@ class ElggMenuItem {
 	 *    title       => STR  Menu item tooltip
 	 *    selected    => BOOL Is this menu item currently selected?
 	 *    confirm     => STR  If set, the link will be drawn with the output/confirmlink view instead of output/url.
+	 *    deps        => ARR  AMD modules required by this menu item
 	 *    data        => ARR  Custom attributes stored in the menu item.
 	 *
 	 * @return ElggMenuItem or null on error
 	 */
 	public static function factory($options) {
 		if (!isset($options['name']) || !isset($options['text'])) {
+			elgg_log(__METHOD__ . ': $options "name" and "text" are required.', 'ERROR');
 			return null;
 		}
 		if (!isset($options['href'])) {
@@ -396,6 +405,39 @@ class ElggMenuItem {
 	}
 
 	/**
+	 * Set required AMD modules
+	 *
+	 * @param string[]|string $modules One or more required AMD modules
+	 * @return void
+	 */
+	public function setDeps($modules) {
+		$this->data['deps'] = (array) $modules;
+	}
+
+	/**
+	 * Get required AMD modules
+	 *
+	 * @return string[]
+	 */
+	public function getDeps() {
+		$modules = (array) $this->data['deps'];
+		return array_filter($modules, function($m) {
+			return is_string($m) && !empty($m);
+		});
+	}
+
+	/**
+	 * Add required AMD modules
+	 *
+	 * @param string[]|string $modules One or more required AMD modules
+	 * @return void
+	 */
+	public function addDeps($modules) {
+		$current = $this->getDeps();
+		$this->setDeps($current + (array) $modules);
+	}
+
+	/**
 	 * Set the li classes
 	 *
 	 * @param mixed $class An array of class names, or a single string class name.
@@ -581,7 +623,7 @@ class ElggMenuItem {
 	 * 
 	 * This is reserved for the \ElggMenuBuilder.
 	 *
-	 * @param array $children Array of \ElggMenuItems
+	 * @param ElggMenuItem[] $children Array of items
 	 * @return void
 	 * @access private
 	 */
@@ -594,7 +636,7 @@ class ElggMenuItem {
 	 * 
 	 * This is reserved for the \ElggMenuBuilder.
 	 *
-	 * @return array
+	 * @return ElggMenuItem[]
 	 * @access private
 	 */
 	public function getChildren() {

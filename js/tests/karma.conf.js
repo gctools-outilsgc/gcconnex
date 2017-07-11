@@ -7,26 +7,27 @@ module.exports = function(config) {
 		// base path that will be used to resolve all patterns (eg. files, exclude)
 		basePath: '../..',
 
-
 		// frameworks to use
 		// available frameworks: https://npmjs.org/browse/keyword/karma-adapter
 		frameworks: ['jasmine', 'requirejs'],
 
-
 		// list of files / patterns to load in the browser
 		files: [
-			'vendors/jquery/jquery-1.11.0.min.js',
-			'vendors/jquery/jquery-migrate-1.2.1.min.js',
-			'vendors/sprintf.js',
+			'js/tests/prepare.js',
+
+			'vendor/bower-asset/jquery/dist/jquery.js',
+			'bower_components/sprintf/src/sprintf.js',
 			'js/lib/elgglib.js',
 			'js/lib/hooks.js',
 			'js/classes/*.js',
 			'js/lib/*.js',
 
 			{pattern:'js/tests/*Test.js',included: false},
-			{pattern:'views/default/js/**/*.js',included:false},
+			{pattern:'views/default/**/*.js',included:false},
+			{pattern:'vendor/bower-asset/**/*.js',included:false},
+			{pattern:'node_modules/**/*.js',included:false},
 
-			'js/tests/requirejs.config.js',
+			'js/tests/requirejs.config.js'
 		],
 
 

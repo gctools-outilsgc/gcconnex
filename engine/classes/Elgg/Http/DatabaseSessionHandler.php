@@ -5,7 +5,7 @@ namespace Elgg\Http;
  * Database session handler
  *
  * @access private
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Http
  */
@@ -36,7 +36,7 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 	public function read($session_id) {
 		
 		$id = sanitize_string($session_id);
-		$query = "SELECT * FROM {$this->db->getTablePrefix()}users_sessions WHERE session='$id'";
+		$query = "SELECT * FROM {$this->db->prefix}users_sessions WHERE session='$id'";
 		$result = $this->db->getDataRow($query);
 		if ($result) {
 			return (string) $result->data;
@@ -53,9 +53,10 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 		$time = time();
 		$sess_data_sanitised = sanitize_string($session_data);
 
-		$query = "REPLACE INTO {$this->db->getTablePrefix()}users_sessions
+		$query = "INSERT INTO {$this->db->prefix}users_sessions
 			(session, ts, data) VALUES
-			('$id', '$time', '$sess_data_sanitised')";
+			('$id', '$time', '$sess_data_sanitised')
+			ON DUPLICATE KEY UPDATE ts = '$time', data = '$sess_data_sanitised'";
 
 		if ($this->db->insertData($query) !== false) {
 			return true;
@@ -77,7 +78,7 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 	public function destroy($session_id) {
 		
 		$id = sanitize_string($session_id);
-		$query = "DELETE FROM {$this->db->getTablePrefix()}users_sessions WHERE session='$id'";
+		$query = "DELETE FROM {$this->db->prefix}users_sessions WHERE session='$id'";
 		return (bool) $this->db->deleteData($query);
 	}
 
@@ -87,7 +88,7 @@ class DatabaseSessionHandler implements \SessionHandlerInterface {
 	public function gc($max_lifetime) {
 		
 		$life = time() - $max_lifetime;
-		$query = "DELETE FROM {$this->db->getTablePrefix()}users_sessions WHERE ts < '$life'";
+		$query = "DELETE FROM {$this->db->prefix}users_sessions WHERE ts < '$life'";
 		return (bool) $this->db->deleteData($query);
 	}
 }

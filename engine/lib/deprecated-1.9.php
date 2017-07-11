@@ -821,72 +821,7 @@ $METASTRINGS_DEADNAME_CACHE = array();
  */
 function get_metastring_id($string, $case_sensitive = TRUE) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_get_metastring_id()', 1.9);
-	global $CONFIG, $METASTRINGS_CACHE, $METASTRINGS_DEADNAME_CACHE;
-
-	$string = sanitise_string($string);
-
-	// caching doesn't work for case insensitive searches
-	if ($case_sensitive) {
-		$result = array_search($string, $METASTRINGS_CACHE, true);
-
-		if ($result !== false) {
-			return $result;
-		}
-
-		// See if we have previously looked for this and found nothing
-		if (in_array($string, $METASTRINGS_DEADNAME_CACHE, true)) {
-			return false;
-		}
-
-		// Experimental memcache
-		$msfc = null;
-		static $metastrings_memcache;
-		if ((!$metastrings_memcache) && (is_memcache_available())) {
-			$metastrings_memcache = new \ElggMemcache('metastrings_memcache');
-		}
-		if ($metastrings_memcache) {
-			$msfc = $metastrings_memcache->load($string);
-		}
-		if ($msfc) {
-			return $msfc;
-		}
-	}
-
-	// Case sensitive
-	if ($case_sensitive) {
-		$query = "SELECT * from {$CONFIG->dbprefix}metastrings where string= BINARY '$string' limit 1";
-	} else {
-		$query = "SELECT * from {$CONFIG->dbprefix}metastrings where string = '$string'";
-	}
-
-	$row = FALSE;
-	$metaStrings = get_data($query);
-	if (is_array($metaStrings)) {
-		if (sizeof($metaStrings) > 1) {
-			$ids = array();
-			foreach ($metaStrings as $metaString) {
-				$ids[] = $metaString->id;
-			}
-			return $ids;
-		} else if (isset($metaStrings[0])) {
-			$row = $metaStrings[0];
-		}
-	}
-
-	if ($row) {
-		$METASTRINGS_CACHE[$row->id] = $row->string; // Cache it
-
-		// Attempt to memcache it if memcache is available
-		if ($metastrings_memcache) {
-			$metastrings_memcache->save($row->string, $row->id);
-		}
-
-		return $row->id;
-	} else {
-		$METASTRINGS_DEADNAME_CACHE[$string] = $string;
-	}
-
-	return false;
+	return elgg_get_metastring_id($string, $case_sensitive);
 }
 
 /**
@@ -901,24 +836,7 @@ function get_metastring_id($string, $case_sensitive = TRUE) {
  */
 function add_metastring($string, $case_sensitive = true) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_get_metastring_id()', 1.9);
-	global $CONFIG, $METASTRINGS_CACHE, $METASTRINGS_DEADNAME_CACHE;
-
-	$sanstring = sanitise_string($string);
-
-	$id = get_metastring_id($string, $case_sensitive);
-	if ($id) {
-		return $id;
-	}
-
-	$result = insert_data("INSERT into {$CONFIG->dbprefix}metastrings (string) values ('$sanstring')");
-	if ($result) {
-		$METASTRINGS_CACHE[$result] = $string;
-		if (isset($METASTRINGS_DEADNAME_CACHE[$string])) {
-			unset($METASTRINGS_DEADNAME_CACHE[$string]);
-		}
-	}
-
-	return $result;
+	return elgg_get_metastring_id($string, $case_sensitive);
 }
 
 /**
@@ -1246,24 +1164,6 @@ function setup_db_connections() {
 }
 
 /**
- * Returns (if required, also creates) a database link resource.
- *
- * Database link resources are stored in the {@link $dblink} global.  These
- * resources are created by {@link setup_db_connections()}, which is called if
- * no links exist.
- *
- * @param string $dblinktype The type of link we want: "read", "write" or "readwrite".
- *
- * @return resource Database link
- * @access private
- * @deprecated 1.9
- */
-function get_db_link($dblinktype) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is a private function and should not be used.', 1.9);
-	return _elgg_services()->db->getLink($dblinktype);
-}
-
-/**
  * Optimize a table.
  *
  * Executes an OPTIMIZE TABLE query on $table.  Useful after large DB changes.
@@ -1313,38 +1213,6 @@ function get_db_tables() {
 	}
 
 	return $tables;
-}
-
-/**
- * Get the last database error for a particular database link
- *
- * @param resource $dblink The DB link
- *
- * @return string Database error message
- * @access private
- * @deprecated 1.9
- */
-function get_db_error($dblink) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is a private function and should not be used.', 1.9);
-	return mysql_error($dblink);
-}
-
-/**
- * Queue a query for execution upon shutdown.
- *
- * You can specify a handler function if you care about the result. This function will accept
- * the raw result from {@link mysql_query()}.
- *
- * @param string   $query   The query to execute
- * @param resource $dblink  The database link to use or the link type (read | write)
- * @param string   $handler A callback function to pass the results array to
- *
- * @return boolean Whether successful.
- * @deprecated 1.9 Use execute_delayed_write_query() or execute_delayed_read_query()
- */
-function execute_delayed_query($query, $dblink, $handler = "") {
-	elgg_deprecated_notice("execute_delayed_query() has been deprecated", 1.9);
-	return _elgg_services()->db->registerDelayedQuery($query, $dblink, $handler);
 }
 
 /**
@@ -3095,7 +2963,7 @@ function elgg_view_tree($view_root, $viewtype = "") {
 	}
 
 	// Now examine core
-	$location = $CONFIG->viewpath;
+	$location = _elgg_services()->views->view_path;
 	$viewtype = elgg_get_viewtype();
 	$root = $location . $viewtype . '/' . $view_root;
 

@@ -378,46 +378,83 @@ function elgg_get_user_validation_status($user_guid) {
  */
 function elgg_user_account_page_handler($page_elements, $handler) {
 
-	$base_dir = elgg_get_root_path() . 'pages/account';
 	switch ($handler) {
 		case 'login':
-			require_once("$base_dir/login.php");
+			echo elgg_view_resource("account/login");
 			break;
 		case 'forgotpassword':
-			require_once("$base_dir/forgotten_password.php");
+			echo elgg_view_resource("account/forgotten_password");
 			break;
 		case 'changepassword':
-			require_once("$base_dir/change_password.php");
+			echo elgg_view_resource("account/change_password");
 			break;
 		case 'register':
-			require_once("$base_dir/register.php");
+			echo elgg_view_resource("account/register");
 			break;
 		default:
 			return false;
 	}
+
 	return true;
+}
+
+/**
+ * Returns site's registration URL
+ * Triggers a 'registration_url', 'site' plugin hook that can be used by
+ * plugins to alter the default registration URL and append query elements, such as
+ * an invitation code and inviting user's guid
+ *
+ * @param array  $query    An array of query elements
+ * @param string $fragment Fragment identifier
+ * @return string
+ */
+function elgg_get_registration_url(array $query = [], $fragment = '') {
+	$url = elgg_normalize_url('register');
+	$url = elgg_http_add_url_query_elements($url, $query) . $fragment;
+	return elgg_trigger_plugin_hook('registration_url', 'site', $query, $url);
+}
+
+/**
+ * Returns site's login URL
+ * Triggers a 'login_url', 'site' plugin hook that can be used by
+ * plugins to alter the default login URL
+ *
+ * @param array  $query    An array of query elements
+ * @param string $fragment Fragment identifier (e.g. #login-dropdown-box)
+ * @return string
+ */
+function elgg_get_login_url(array $query = [], $fragment = '') {
+	$url = elgg_normalize_url('login');
+	$url = elgg_http_add_url_query_elements($url, $query) . $fragment;
+	return elgg_trigger_plugin_hook('login_url', 'site', $query, $url);
 }
 
 /**
  * Sets the last action time of the given user to right now.
  *
  * @param int $user_guid The user GUID
- *
  * @return void
  */
 function set_last_action($user_guid) {
-	_elgg_services()->usersTable->setLastAction($user_guid);
+	$user = get_user($user_guid);
+	if (!$user) {
+		return;
+	}
+	_elgg_services()->usersTable->setLastAction($user);
 }
 
 /**
  * Sets the last logon time of the given user to right now.
  *
  * @param int $user_guid The user GUID
- *
  * @return void
  */
 function set_last_login($user_guid) {
-	_elgg_services()->usersTable->setLastLogin($user_guid);
+	$user = get_user($user_guid);
+	if (!$user) {
+		return;
+	}
+	_elgg_services()->usersTable->setLastLogin($user);
 }
 
 /**
@@ -445,14 +482,31 @@ function user_create_hook_add_site_relationship($event, $object_type, $object) {
  * @access private
  */
 function user_avatar_hook($hook, $entity_type, $returnvalue, $params) {
-	$user = $params['entity'];
-	$size = $params['size'];
+	$user = elgg_extract('entity', $params);
+	$size = elgg_extract('size', $params, 'medium');
 
-	if (isset($user->icontime)) {
-		return "avatar/view/$user->username/$size/$user->icontime";
-	} else {
-		return "_graphics/icons/user/default{$size}.gif";
+	if (!$user instanceof ElggUser) {
+		return;
 	}
+
+	$default_url = elgg_get_simplecache_url("icons/user/default{$size}.gif");
+	if (!isset($user->icontime)) {
+		return $default_url;
+	}
+
+	if (_elgg_view_may_be_altered('resources/avatar/view', 'resources/avatar/view.php')) {
+		// For BC with 2.0 if a plugin is suspected of using this view/page handler we need to use it.
+		// /avatar page handler will issue a deprecation notice.
+		return "avatar/view/$user->username/$size/$user->icontime";
+	}
+
+	$filehandler = new ElggFile();
+	$filehandler->owner_guid = $user->guid;
+	$filehandler->setFilename("profile/{$user->guid}{$size}.jpg");
+	$use_cookie = elgg_get_config('walled_garden'); // don't serve avatars with public URLs in a walled garden mode
+	$avatar_url = elgg_get_inline_url($filehandler, $use_cookie);
+
+	return $avatar_url ? : $default_url;
 }
 
 /**
@@ -644,29 +698,27 @@ function elgg_profile_fields_setup() {
  * Avatar page handler
  *
  * /avatar/edit/<username>
- * /avatar/view/<username>/<size>/<icontime>
  *
  * @param array $page
  * @return bool
  * @access private
  */
 function elgg_avatar_page_handler($page) {
-	global $CONFIG;
-
-	$user = get_user_by_username($page[1]);
+	$user = get_user_by_username(elgg_extract(1, $page));
 	if ($user) {
 		elgg_set_page_owner_guid($user->getGUID());
 	}
 
 	if ($page[0] == 'edit') {
-		require_once("{$CONFIG->path}pages/avatar/edit.php");
-		return true;
+		echo elgg_view_resource("avatar/edit");
 	} else {
-		set_input('size', $page[2]);
-		require_once("{$CONFIG->path}pages/avatar/view.php");
-		return true;
+		elgg_deprecated_notice("/avatar/view page handler has been deprecated and will be removed. Use elgg_get_inline_url() instead.", '2.2');
+		echo elgg_view_resource("avatar/view", [
+			'size' => elgg_extract(2, $page),
+		]);
 	}
-	return false;
+
+	return true;
 }
 
 /**
@@ -677,13 +729,11 @@ function elgg_avatar_page_handler($page) {
  * @access private
  */
 function elgg_profile_page_handler($page) {
-	global $CONFIG;
-
 	$user = get_user_by_username($page[0]);
 	elgg_set_page_owner_guid($user->guid);
 
 	if ($page[1] == 'edit') {
-		require_once("{$CONFIG->path}pages/profile/edit.php");
+		echo elgg_view_resource("profile/edit");
 		return true;
 	}
 	return false;
@@ -740,6 +790,26 @@ function users_pagesetup() {
 }
 
 /**
+ * Set user icon file
+ * 
+ * @param string    $hook   "entity:icon:file"
+ * @param string    $type   "user"
+ * @param \ElggIcon $icon   Icon file
+ * @param array     $params Hook params
+ * @return \ElggIcon
+ */
+function _elgg_user_set_icon_file($hook, $type, $icon, $params) {
+
+	$entity = elgg_extract('entity', $params);
+	$size = elgg_extract('size', $params, 'medium');
+
+	$icon->owner_guid = $entity->guid;
+	$icon->setFilename("profile/{$entity->guid}{$size}.jpg");
+	
+	return $icon;
+}
+
+/**
  * Users initialisation function, which establishes the page handler
  *
  * @return void
@@ -774,6 +844,8 @@ function users_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'elgg_users_setup_entity_menu', 501);
 
 	elgg_register_event_handler('create', 'user', 'user_create_hook_add_site_relationship');
+
+	elgg_register_plugin_hook_handler('entity:icon:file', 'user', '_elgg_user_set_icon_file');
 }
 
 /**

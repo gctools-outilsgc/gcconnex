@@ -1,31 +1,43 @@
 <?php
-/**
- * @todo cleanup
- */
-$form_body = "";
 
-foreach (array('sitename','sitedescription', 'siteemail', 'default_limit') as $field) {
-	$form_body .= "<div>";
-	$form_body .= elgg_echo('installation:' . $field) . "<br />";
-	$warning = elgg_echo('installation:warning:' . $field);
-	if ($warning != 'installation:warning:' . $field) {
-		echo "<b>" . $warning . "</b><br />";
-	}
-	$value = elgg_get_config($field);
-	$form_body .= elgg_view("input/text",array('name' => $field, 'value' => $value));
-	$form_body .= "</div>";
-}
+echo elgg_view_field([
+	'#type' => 'text',
+	'name' => 'sitename',
+	'#label' => elgg_echo('installation:sitename'),
+	'value' => elgg_get_config('sitename'),
+]);
 
-$languages = get_installed_translations();
-$form_body .= "<div>" . elgg_echo('installation:language');
-$form_body .= elgg_view("input/select", array(
+echo elgg_view_field([
+	'#type' => 'text',
+	'name' => 'sitedescription',
+	'#label' => elgg_echo('installation:sitedescription'),
+	'value' => elgg_get_config('sitedescription'),
+]);
+
+echo elgg_view_field([
+	'#type' => 'email',
+	'name' => 'siteemail',
+	'#label' => elgg_echo('installation:siteemail'),
+	'value' => elgg_get_site_entity()->email,
+	'class' => 'elgg-input-text',
+]);
+
+echo elgg_view_field([
+	'#type' => 'number',
+	'name' => 'default_limit',
+	'#label' => elgg_echo('installation:default_limit'),
+	'value' => elgg_get_config('default_limit'),
+	'min' => 1,
+	'step' => 1,
+]);
+
+echo elgg_view_field([
+	'#type' => 'select',
 	'name' => 'language',
+	'#label' => elgg_echo('installation:language'),
 	'value' => elgg_get_config('language'),
-	'options_values' => $languages,
-)) . "</div>";
+	'options_values' => get_installed_translations(),
+]);
 
-$form_body .= '<div class="elgg-foot">';
-$form_body .= elgg_view('input/submit', array('value' => elgg_echo("save")));
-$form_body .= '</div>';
-
-echo $form_body;
+$footer = elgg_view('input/submit', ['value' => elgg_echo('save')]);
+elgg_set_form_footer($footer);

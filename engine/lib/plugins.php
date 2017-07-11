@@ -2,10 +2,10 @@
 /**
  * Elgg plugins library
  * Contains functions for managing plugins
- *
- * @package Elgg.Core
- * @subpackage Plugins
  */
+
+use Elgg\Filesystem\Directory;
+
 
 /**
  * Tells \ElggPlugin::start() to include the start.php file.
@@ -47,21 +47,6 @@ define('ELGG_PLUGIN_USER_SETTING_PREFIX', 'plugin:user_setting:');
  */
 define('ELGG_PLUGIN_INTERNAL_PREFIX', 'elgg:internal:');
 
-
-/**
- * Returns a list of plugin directory names from a base directory.
- *
- * @param string $dir A dir to scan for plugins. Defaults to config's plugins_path.
- *                    Must have a trailing slash.
- *
- * @return array Array of directory names (not full paths)
- * @since 1.8.0
- * @access private
- */
-function _elgg_get_plugin_dirs_in_dir($dir = null) {
-	return _elgg_services()->plugins->getDirsInDir($dir);
-}
-
 /**
  * Discovers plugins in the plugins_path setting and creates \ElggPlugin
  * entities for them if they don't exist.  If there are plugins with entities
@@ -78,9 +63,9 @@ function _elgg_generate_plugin_entities() {
 
 /**
  * Cache a reference to this plugin by its ID
- * 
+ *
  * @param \ElggPlugin $plugin
- * 
+ *
  * @access private
  */
 function _elgg_cache_plugin_by_id(\ElggPlugin $plugin) {
@@ -137,21 +122,6 @@ function elgg_is_active_plugin($plugin_id, $site_guid = null) {
 }
 
 /**
- * Loads all active plugins in the order specified in the tool admin panel.
- *
- * @note This is called on every page load. If a plugin is active and problematic, it
- * will be disabled and a visible error emitted. This does not check the deps system because
- * that was too slow.
- *
- * @return bool
- * @since 1.8.0
- * @access private
- */
-function _elgg_load_plugins() {
-	return _elgg_services()->plugins->load();
-}
-
-/**
  * Returns an ordered list of plugins
  *
  * @param string $status    The status of the plugins. active, inactive, or all.
@@ -161,35 +131,6 @@ function _elgg_load_plugins() {
  */
 function elgg_get_plugins($status = 'active', $site_guid = null) {
 	return _elgg_services()->plugins->find($status, $site_guid);
-}
-
-/**
- * Reorder plugins to an order specified by the array.
- * Plugins not included in this array will be appended to the end.
- *
- * @note This doesn't use the \ElggPlugin->setPriority() method because
- *       all plugins are being changed and we don't want it to automatically
- *       reorder plugins.
- *
- * @param array $order An array of plugin ids in the order to set them
- * @return bool
- * @since 1.8.0
- * @access private
- */
-function _elgg_set_plugin_priorities(array $order) {
-	return _elgg_services()->plugins->setPriorities($order);
-}
-
-/**
- * Reindexes all plugin priorities starting at 1.
- *
- * @todo Can this be done in a single sql command?
- * @return bool
- * @since 1.8.0
- * @access private
- */
-function _elgg_reindex_plugin_priorities() {
-	return _elgg_services()->plugins->reindexPriorities();
 }
 
 /**
@@ -212,31 +153,8 @@ function _elgg_namespace_plugin_private_setting($type, $name, $id = null) {
 }
 
 /**
- * Returns an array of all provides from all active plugins.
- *
- * Array in the form array(
- * 	'provide_type' => array(
- * 		'provided_name' => array(
- * 			'version' => '1.8',
- * 			'provided_by' => 'provider_plugin_id'
- *  	)
- *  )
- * )
- *
- * @param string $type The type of provides to return
- * @param string $name A specific provided name to return. Requires $provide_type.
- *
- * @return array
- * @since 1.8.0
- * @access private
- */
-function _elgg_get_plugins_provides($type = null, $name = null) {
-	return _elgg_services()->plugins->getProvides($type, $name);
-}
-
-/**
  * Deletes all cached data on plugins being provided.
- * 
+ *
  * @return boolean
  * @since 1.9.0
  * @access private
@@ -453,49 +371,6 @@ function _elgg_plugins_test($hook, $type, $value, $params) {
 }
 
 /**
- * Checks on deactivate plugin event if disabling it won't create unmet dependencies and blocks disable in such case.
- *
- * @param string $event  deactivate
- * @param string $type   plugin
- * @param array  $params Parameters array containing entry with ELggPlugin instance under 'plugin_entity' key
- * @return bool  false to block plugin deactivation action
- *
- * @access private
- */
-function _plugins_deactivate_dependency_check($event, $type, $params) {
-	$plugin_id = $params['plugin_entity']->getManifest()->getPluginID();
-	$plugin_name = $params['plugin_entity']->getManifest()->getName();
-
-	$active_plugins = elgg_get_plugins();
-
-	$dependents = array();
-	foreach ($active_plugins as $plugin) {
-		$manifest = $plugin->getManifest();
-		$requires = $manifest->getRequires();
-
-		foreach ($requires as $required) {
-			if ($required['type'] == 'plugin' && $required['name'] == $plugin_id) {
-				// there are active dependents
-				$dependents[$manifest->getPluginID()] = $plugin;
-			}
-		}
-	}
-
-	if ($dependents) {
-		$list = '<ul>';
-		// construct error message and prevent disabling
-		foreach ($dependents as $dependent) {
-			$list .= '<li>' . $dependent->getManifest()->getName() . '</li>';
-		}
-		$list .= '</ul>';
-
-		register_error(elgg_echo('ElggPlugin:Dependencies:ActiveDependent', array($plugin_name, $list)));
-
-		return false;
-	}
-}
-
-/**
  * Initialize the plugin system
  *
  * @return void
@@ -505,13 +380,10 @@ function _elgg_plugins_init() {
 
 	if (elgg_is_admin_logged_in()) {
 		elgg_register_ajax_view('object/plugin/full');
+		elgg_register_ajax_view('object/plugin/details');
 	}
 
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_plugins_test');
-
-	// note - plugins are booted by the time this handler is registered
-	// deactivation due to error may have already occurred
-	elgg_register_event_handler('deactivate', 'plugin', '_plugins_deactivate_dependency_check');
 
 	/**
 	 * @see \Elgg\Database\Plugins::invalidateIsActiveCache
@@ -529,8 +401,6 @@ function _elgg_plugins_init() {
 	elgg_register_action('admin/plugins/deactivate_all', '', 'admin');
 
 	elgg_register_action('admin/plugins/set_priority', '', 'admin');
-
-	elgg_register_library('elgg:markdown', elgg_get_root_path() . 'vendors/markdown/markdown.php');
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {

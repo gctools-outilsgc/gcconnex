@@ -31,7 +31,9 @@
  *
  *  annotation_id INT The annotation ID associated with this river entry
  *
- * @return int|bool River ID or false on failure
+ *  return_item => BOOL set to true to return the ElggRiverItem created
+ *
+ * @return int|ElggRiverItem|bool River ID/item or false on failure
  * @since 1.9
  */
 function elgg_create_river_item(array $options = array()) {
@@ -76,6 +78,8 @@ function elgg_create_river_item(array $options = array()) {
 		}
 	}
 
+	$return_item = elgg_extract('return_item', $options, false);
+
 	$values = array(
 		'type' => $object->getType(),
 		'subtype' => $object->getSubtype(),
@@ -110,138 +114,35 @@ function elgg_create_river_item(array $options = array()) {
 
 	$dbprefix = elgg_get_config('dbprefix');
 
-	// escape values array and build INSERT assignments
-	$assignments = array();
-	foreach ($col_types as $name => $type) {
-		$values[$name] = ($type === 'int') ? (int)$values[$name] : sanitize_string($values[$name]);
-		$assignments[] = "$name = '{$values[$name]}'";
+	foreach ($values as $name => $value) {
+		$sql_columns[] = $name;
+		$sql_values[] = ":$name";
+		$query_params[":$name"] = ($col_types[$name] === 'int') ? (int)$value : $value;
 	}
-
-	$id = insert_data("INSERT INTO {$dbprefix}river SET " . implode(',', $assignments));
+	$sql = "
+		INSERT INTO {$dbprefix}river (" . implode(',', $sql_columns) . ")
+		VALUES (" . implode(',', $sql_values) . ")
+	";
+	$id = insert_data($sql, $query_params);
+	if (!$id) {
+		return false;
+	}
 
 	// update the entities which had the action carried out on it
 	// @todo shouldn't this be done elsewhere? Like when an annotation is saved?
-	if ($id) {
-		update_entity_last_action($values['object_guid'], $values['posted']);
+	$object->updateLastAction($values['posted']);
 
-		$river_items = elgg_get_river(array('id' => $id));
-		if ($river_items) {
-			elgg_trigger_event('created', 'river', $river_items[0]);
-		}
-		return $id;
-	} else {
+	$ia = elgg_set_ignore_access(true);
+	$river_items = elgg_get_river(array('id' => $id));
+	elgg_set_ignore_access($ia);
+
+	if (!$river_items) {
 		return false;
 	}
-}
 
-/**
- * Delete river items
- *
- * @warning not checking access (should we?)
- *
- * @param array $options Parameters:
- *   ids                  => INT|ARR River item id(s)
- *   subject_guids        => INT|ARR Subject guid(s)
- *   object_guids         => INT|ARR Object guid(s)
- *   target_guids         => INT|ARR Target guid(s)
- *   annotation_ids       => INT|ARR The identifier of the annotation(s)
- *   action_types         => STR|ARR The river action type(s) identifier
- *   views                => STR|ARR River view(s)
- *
- *   types                => STR|ARR Entity type string(s)
- *   subtypes             => STR|ARR Entity subtype string(s)
- *   type_subtype_pairs   => ARR     Array of type => subtype pairs where subtype
- *                                   can be an array of subtype strings
- *
- *   posted_time_lower    => INT     The lower bound on the time posted
- *   posted_time_upper    => INT     The upper bound on the time posted
- *
- * @return bool
- * @since 1.8.0
- */
-function elgg_delete_river(array $options = array()) {
-	global $CONFIG;
+	elgg_trigger_event('created', 'river', $river_items[0]);
 
-	$defaults = array(
-		'ids'                  => ELGG_ENTITIES_ANY_VALUE,
-
-		'subject_guids'	       => ELGG_ENTITIES_ANY_VALUE,
-		'object_guids'         => ELGG_ENTITIES_ANY_VALUE,
-		'target_guids'         => ELGG_ENTITIES_ANY_VALUE,
-		'annotation_ids'       => ELGG_ENTITIES_ANY_VALUE,
-
-		'views'                => ELGG_ENTITIES_ANY_VALUE,
-		'action_types'         => ELGG_ENTITIES_ANY_VALUE,
-
-		'types'	               => ELGG_ENTITIES_ANY_VALUE,
-		'subtypes'             => ELGG_ENTITIES_ANY_VALUE,
-		'type_subtype_pairs'   => ELGG_ENTITIES_ANY_VALUE,
-
-		'posted_time_lower'	   => ELGG_ENTITIES_ANY_VALUE,
-		'posted_time_upper'	   => ELGG_ENTITIES_ANY_VALUE,
-
-		'wheres'               => array(),
-		'joins'                => array(),
-
-	);
-
-	$options = array_merge($defaults, $options);
-
-	$singulars = array('id', 'subject_guid', 'object_guid', 'target_guid', 'annotation_id', 'action_type', 'view', 'type', 'subtype');
-	$options = _elgg_normalize_plural_options_array($options, $singulars);
-
-	$wheres = $options['wheres'];
-
-	$wheres[] = _elgg_get_guid_based_where_sql('rv.id', $options['ids']);
-	$wheres[] = _elgg_get_guid_based_where_sql('rv.subject_guid', $options['subject_guids']);
-	$wheres[] = _elgg_get_guid_based_where_sql('rv.object_guid', $options['object_guids']);
-	$wheres[] = _elgg_get_guid_based_where_sql('rv.target_guid', $options['target_guids']);
-	$wheres[] = _elgg_get_guid_based_where_sql('rv.annotation_id', $options['annotation_ids']);
-	$wheres[] = _elgg_river_get_action_where_sql($options['action_types']);
-	$wheres[] = _elgg_river_get_view_where_sql($options['views']);
-	$wheres[] = _elgg_get_river_type_subtype_where_sql('rv', $options['types'],
-		$options['subtypes'], $options['type_subtype_pairs']);
-
-	if ($options['posted_time_lower'] && is_int($options['posted_time_lower'])) {
-		$wheres[] = "rv.posted >= {$options['posted_time_lower']}";
-	}
-
-	if ($options['posted_time_upper'] && is_int($options['posted_time_upper'])) {
-		$wheres[] = "rv.posted <= {$options['posted_time_upper']}";
-	}
-
-	// see if any functions failed
-	// remove empty strings on successful functions
-	foreach ($wheres as $i => $where) {
-		if ($where === false) {
-			return false;
-		} elseif (empty($where)) {
-			unset($wheres[$i]);
-		}
-	}
-
-	// remove identical where clauses
-	$wheres = array_unique($wheres);
-
-	$query = "DELETE rv.* FROM {$CONFIG->dbprefix}river rv ";
-
-	// remove identical join clauses
-	$joins = array_unique($options['joins']);
-
-	// add joins
-	foreach ($joins as $j) {
-		$query .= " $j ";
-	}
-
-	// add wheres
-	$query .= ' WHERE ';
-
-	foreach ($wheres as $w) {
-		$query .= " $w AND ";
-	}
-	$query .= "1=1";
-
-	return delete_data($query);
+	return $return_item ? $river_items[0] : $id;
 }
 
 /**
@@ -280,7 +181,17 @@ function elgg_delete_river(array $options = array()) {
  *                                   option without a full understanding of the
  *                                   underlying SQL query Elgg creates. (true)
  *
- * @return array|int
+ *   batch                => BOOL    If set to true, an Elgg\BatchResult object will be returned
+ *                                   instead of an array. (false) Since 2.3.
+ *
+ *   batch_inc_offset     => BOOL    If "batch" is used, this tells the batch to increment the offset
+ *                                   on each fetch. This must be set to false if you delete the batched
+ *                                   results. (true)
+ *
+ *   batch_size           => INT     If "batch" is used, this is the number of entities/rows to pull
+ *                                   in before requesting more. (25)
+ *
+ * @return \ElggRiverItem[]|\Elgg\BatchResult|array|int
  * @since 1.8.0
  */
 function elgg_get_river(array $options = array()) {
@@ -311,6 +222,10 @@ function elgg_get_river(array $options = array()) {
 		'count'                => false,
 		'distinct'             => false,
 
+		'batch'                => false,
+		'batch_inc_offset'     => true,
+		'batch_size'           => 25,
+
 		'order_by'             => 'rv.posted desc',
 		'group_by'             => ELGG_ENTITIES_ANY_VALUE,
 
@@ -318,7 +233,23 @@ function elgg_get_river(array $options = array()) {
 		'joins'                => array(),
 	);
 
+	if (isset($options['view']) || isset($options['views'])) {
+		$msg = __FUNCTION__ . ' does not support the "views" option, though you may specify values for'
+			. ' the "rv.view" column using the "wheres" option.';
+		elgg_log($msg, 'WARNING');
+	}
+
 	$options = array_merge($defaults, $options);
+
+	if ($options['batch'] && !$options['count']) {
+		$batch_size = $options['batch_size'];
+		$batch_inc_offset = $options['batch_inc_offset'];
+
+		// clean batch keys from $options.
+		unset($options['batch'], $options['batch_size'], $options['batch_inc_offset']);
+
+		return new \ElggBatch('elgg_get_river', $options, null, $batch_size, $batch_inc_offset);
+	}
 
 	$singulars = array('id', 'subject_guid', 'object_guid', 'target_guid', 'annotation_id', 'action_type', 'type', 'subtype');
 	$options = _elgg_normalize_plural_options_array($options, $singulars);
@@ -345,8 +276,6 @@ function elgg_get_river(array $options = array()) {
 	if (!access_get_show_hidden_status()) {
 		$wheres[] = "rv.enabled = 'yes'";
 	}
-
-	$joins = $options['joins'];
 
 	$dbprefix = elgg_get_config('dbprefix');
 
@@ -452,13 +381,13 @@ function _elgg_prefetch_river_entities(array $river_items) {
 	// prefetch objects, subjects and targets
 	$guids = array();
 	foreach ($river_items as $item) {
-		if ($item->subject_guid && !_elgg_retrieve_cached_entity($item->subject_guid)) {
+		if ($item->subject_guid && !_elgg_services()->entityCache->get($item->subject_guid)) {
 			$guids[$item->subject_guid] = true;
 		}
-		if ($item->object_guid && !_elgg_retrieve_cached_entity($item->object_guid)) {
+		if ($item->object_guid && !_elgg_services()->entityCache->get($item->object_guid)) {
 			$guids[$item->object_guid] = true;
 		}
-		if ($item->target_guid && !_elgg_retrieve_cached_entity($item->target_guid)) {
+		if ($item->target_guid && !_elgg_services()->entityCache->get($item->target_guid)) {
 			$guids[$item->target_guid] = true;
 		}
 	}
@@ -477,7 +406,7 @@ function _elgg_prefetch_river_entities(array $river_items) {
 	$guids = array();
 	foreach ($river_items as $item) {
 		$object = $item->getObjectEntity();
-		if ($object->container_guid && !_elgg_retrieve_cached_entity($object->container_guid)) {
+		if ($object->container_guid && !_elgg_services()->entityCache->get($object->container_guid)) {
 			$guids[$object->container_guid] = true;
 		}
 	}
@@ -510,8 +439,7 @@ function _elgg_prefetch_river_entities(array $river_items) {
  * @since 1.8.0
  */
 function elgg_list_river(array $options = array()) {
-	global $autofeed;
-	$autofeed = true;
+	elgg_register_rss_link();
 
 	$defaults = array(
 		'offset'     => (int) max(get_input('offset', 0), 0),
@@ -712,47 +640,49 @@ function _elgg_river_get_view_where_sql($views) {
  * @return bool Depending on success
  */
 function update_river_access_by_object($object_guid, $access_id) {
-	// Sanitise
-	$object_guid = (int) $object_guid;
-	$access_id = (int) $access_id;
+	
+	$dbprefix = elgg_get_config('dbprefix');
+	$query = "
+		UPDATE {$dbprefix}river
+		SET access_id = :access_id
+		WHERE object_guid = :object_guid
+	";
 
-	// Load config
-	global $CONFIG;
+	$params = [
+		':access_id' => (int) $access_id,
+		':object_guid' => (int) $object_guid,
+	];
 
-	$query = "UPDATE {$CONFIG->dbprefix}river
-		SET access_id = {$access_id}
-		WHERE object_guid = {$object_guid}";
-	return update_data($query);
+	return update_data($query, $params);
 }
 
 /**
  * Page handler for activity
  *
- * @param array $page
- * @return bool
+ * @param array $segments URL segments
+ * @return \Elgg\Http\ResponseBuilder
  * @access private
  */
-function _elgg_river_page_handler($page) {
-	global $CONFIG;
-
+function _elgg_river_page_handler($segments) {
 	elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 
 	// make a URL segment available in page handler script
-	$page_type = elgg_extract(0, $page, 'all');
+	$page_type = elgg_extract(0, $segments, 'all');
 	$page_type = preg_replace('[\W]', '', $page_type);
+
 	if ($page_type == 'owner') {
 		elgg_gatekeeper();
-		$page_username = elgg_extract(1, $page, '');
+		$page_username = elgg_extract(1, $segments, '');
 		if ($page_username == elgg_get_logged_in_user_entity()->username) {
 			$page_type = 'mine';
 		} else {
-			set_input('subject_username', $page_username);
+			$vars['subject_username'] = $page_username;
 		}
 	}
-	set_input('page_type', $page_type);
 
-	require_once("{$CONFIG->path}pages/river.php");
-	return true;
+	$vars['page_type'] = $page_type;
+
+	return elgg_ok_response(elgg_view_resource("river", $vars));
 }
 
 /**
@@ -835,9 +765,9 @@ QUERY;
 	LEFT JOIN {$dbprefix}entities AS te ON te.guid = rv.target_guid
 	SET rv.enabled = 'yes'
 	WHERE (
-			(se.enabled = 'yes' OR se.guid IS NULL) AND 
+			(se.enabled = 'yes' OR se.guid IS NULL) AND
 			(oe.enabled = 'yes' OR oe.guid IS NULL) AND
-			(te.enabled = 'yes' OR te.guid IS NULL)		
+			(te.enabled = 'yes' OR te.guid IS NULL)
 		)
 		AND oe.guid = {$entity->guid};
 QUERY;
@@ -876,10 +806,16 @@ function _elgg_river_init() {
 	elgg_register_action('river/delete', '', 'admin');
 
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_river_test');
+
+	// For BC, we want required AMD modules to be loaded even if plugins
+	// overwrite these views
+	elgg_extend_view('core/river/filter', 'core/river/filter_deps');
+	elgg_extend_view('forms/comment/save', 'forms/comment/save_deps');
+	
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_river_init');
-	$events->registerHandler('disable:after', 'all', '_elgg_river_disable');
-	$events->registerHandler('enable:after', 'all', '_elgg_river_enable');
+	$events->registerHandler('disable:after', 'all', '_elgg_river_disable', 600);
+	$events->registerHandler('enable:after', 'all', '_elgg_river_enable', 600);
 };

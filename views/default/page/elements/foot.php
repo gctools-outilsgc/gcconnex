@@ -1,11 +1,18 @@
 <?php
 
-echo elgg_view_deprecated('footer/analytics', array(), "Extend page/elements/foot instead", 1.8);
+$elgg_init = elgg_view('initialize_elgg.js');
+echo "<script>$elgg_init</script>";
+
+// TODO(evan): "head" JS and "footer" JS distinction doesn't make sense anymore
+// TODO(evan): Introduce new "async" location for scripts allowed in head?
+$js = elgg_get_loaded_js('head');
+foreach ($js as $url) {
+	echo elgg_format_element('script', array('src' => $url));
+}
 
 $js = elgg_get_loaded_js('footer');
-foreach ($js as $script) { ?>
-	<script src="<?php echo htmlspecialchars($script, ENT_QUOTES, 'UTF-8'); ?>"></script>
-<?php
+foreach ($js as $url) {
+	echo elgg_format_element('script', array('src' => $url));
 }
 
 $deps = _elgg_services()->amdConfig->getDependencies();

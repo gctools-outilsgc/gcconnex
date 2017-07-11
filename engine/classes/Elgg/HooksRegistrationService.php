@@ -3,18 +3,35 @@ namespace Elgg;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- * 
+ *
  * Use the elgg_* versions instead.
- * 
+ *
  * @access private
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Hooks
  * @since      1.9.0
  */
 abstract class HooksRegistrationService {
 
-	private $handlers = array();
+	const REG_KEY_PRIORITY = 0;
+	const REG_KEY_INDEX = 1;
+	const REG_KEY_HANDLER = 2;
+
+	/**
+	 * @var int
+	 */
+	private $next_index = 0;
+
+	/**
+	 * @var array [name][type][] = registration
+	 */
+	private $registrations = [];
+
+	/**
+	 * @var array
+	 */
+	private $backups = [];
 
 	/**
 	 * @var \Elgg\Logger
@@ -44,24 +61,13 @@ abstract class HooksRegistrationService {
 		if (empty($name) || empty($type) || !is_callable($callback, true)) {
 			return false;
 		}
-	
-		if (!isset($this->handlers[$name])) {
-			$this->handlers[$name] = array();
-		}
 		
-		if (!isset($this->handlers[$name][$type])) {
-			$this->handlers[$name][$type] = array();
-		}
-		
-		// Priority cannot be lower than 0
-		$priority = max((int) $priority, 0);
-	
-		while (isset($this->handlers[$name][$type][$priority])) {
-			$priority++;
-		}
-		
-		$this->handlers[$name][$type][$priority] = $callback;
-		ksort($this->handlers[$name][$type]);
+		$this->registrations[$name][$type][] = [
+			self::REG_KEY_PRIORITY => $priority,
+			self::REG_KEY_INDEX => $this->next_index,
+			self::REG_KEY_HANDLER => $callback,
+		];
+		$this->next_index++;
 
 		return true;
 	}
@@ -77,52 +83,89 @@ abstract class HooksRegistrationService {
 	 * @access private
 	 */
 	public function unregisterHandler($name, $type, $callback) {
-		if (isset($this->handlers[$name]) && isset($this->handlers[$name][$type])) {
-			$matcher = $this->getMatcher($callback);
+		if (($name == 'view' || $name == 'view_vars') && $type != 'all') {
+			$type = _elgg_services()->views->canonicalizeViewName($type);
+		}
 
-			foreach ($this->handlers[$name][$type] as $key => $handler) {
-				if ($matcher) {
-					if (!$matcher->matches($handler)) {
-						continue;
-					}
-				} else {
-					if ($handler != $callback) {
-						continue;
-					}
+		if (empty($this->registrations[$name][$type])) {
+			return false;
+		}
+
+		$matcher = $this->getMatcher($callback);
+
+		foreach ($this->registrations[$name][$type] as $i => $registration) {
+
+			if ($matcher) {
+				if (!$matcher->matches($registration[self::REG_KEY_HANDLER])) {
+					continue;
 				}
-
-				unset($this->handlers[$name][$type][$key]);
-				return true;
+			} else {
+				if ($registration[self::REG_KEY_HANDLER] != $callback) {
+					continue;
+				}
 			}
+
+			unset($this->registrations[$name][$type][$i]);
+			return true;
 		}
 
 		return false;
+	}
+	
+	/**
+	 * Clears all handlers for a specific hook
+	 *
+	 * @param string   $name
+	 * @param string   $type
+	 *
+	 * @return void
+	 * @access private
+	 */
+	public function clearHandlers($name, $type) {
+		unset($this->registrations[$name][$type]);
 	}
 
 	/**
 	 * Returns all registered handlers as array(
 	 * $name => array(
 	 *     $type => array(
-	 *         $priority => callback, ...
+	 *         $priority => array(
+	 *             callback,
+	 *             callback,
+	 *         )
 	 *     )
 	 * )
-	 * 
+	 *
 	 * @access private
 	 * @return array
 	 */
 	public function getAllHandlers() {
-		return $this->handlers;
+		$ret = [];
+		foreach ($this->registrations as $name => $types) {
+			foreach ($types as $type => $registrations) {
+				foreach ($registrations as $registration) {
+					$priority = $registration[self::REG_KEY_PRIORITY];
+					$handler = $registration[self::REG_KEY_HANDLER];
+					$ret[$name][$type][$priority][] = $handler;
+				}
+			}
+		}
+
+		return $ret;
 	}
 
 	/**
-	 * Does the hook have a handler?
-	 * 
+	 * Is a handler registered for this specific name and type? "all" handlers are not considered.
+	 *
+	 * If you need to consider "all" handlers, you must check them independently, or use
+	 * (bool)elgg_get_ordered_hook_handlers().
+	 *
 	 * @param string $name The name of the hook
 	 * @param string $type The type of the hook
 	 * @return boolean
 	 */
 	public function hasHandler($name, $type) {
-		return isset($this->handlers[$name][$type]);
+		return !empty($this->registrations[$name][$type]);
 	}
 
 	/**
@@ -130,31 +173,48 @@ abstract class HooksRegistrationService {
 	 *
 	 * @param string $name The name of the hook
 	 * @param string $type The type of the hook
-	 * @return array
+	 * @return callable[]
 	 * @see \Elgg\HooksRegistrationService::getAllHandlers()
 	 *
 	 * @access private
 	 */
 	public function getOrderedHandlers($name, $type) {
-		$handlers = array();
+		$registrations = [];
 		
-		if (isset($this->handlers[$name][$type])) {
-			if ($name != 'all' && $type != 'all') {
-				$handlers = array_merge($handlers, array_values($this->handlers[$name][$type]));
+		if (!empty($this->registrations[$name][$type])) {
+			if ($name !== 'all' && $type !== 'all') {
+				array_splice($registrations, count($registrations), 0, $this->registrations[$name][$type]);
 			}
 		}
-		if (isset($this->handlers['all'][$type])) {
-			if ($type != 'all') {
-				$handlers = array_merge($handlers, array_values($this->handlers['all'][$type]));
+		if (!empty($this->registrations['all'][$type])) {
+			if ($type !== 'all') {
+				array_splice($registrations, count($registrations), 0, $this->registrations['all'][$type]);
 			}
 		}
-		if (isset($this->handlers[$name]['all'])) {
-			if ($name != 'all') {
-				$handlers = array_merge($handlers, array_values($this->handlers[$name]['all']));
+		if (!empty($this->registrations[$name]['all'])) {
+			if ($name !== 'all') {
+				array_splice($registrations, count($registrations), 0, $this->registrations[$name]['all']);
 			}
 		}
-		if (isset($this->handlers['all']['all'])) {
-			$handlers = array_merge($handlers, array_values($this->handlers['all']['all']));
+		if (!empty($this->registrations['all']['all'])) {
+			array_splice($registrations, count($registrations), 0, $this->registrations['all']['all']);
+		}
+
+		usort($registrations, function ($a, $b) {
+			// priority first
+			if ($a[self::REG_KEY_PRIORITY] < $b[self::REG_KEY_PRIORITY]) {
+				return -1;
+			}
+			if ($a[self::REG_KEY_PRIORITY] > $b[self::REG_KEY_PRIORITY]) {
+				return 1;
+			}
+			// then insertion order
+			return ($a[self::REG_KEY_INDEX] < $b[self::REG_KEY_INDEX]) ? -1 : 1;
+		});
+
+		$handlers = [];
+		foreach ($registrations as $registration) {
+			$handlers[] = $registration[self::REG_KEY_HANDLER];
 		}
 
 		return $handlers;
@@ -186,5 +246,37 @@ abstract class HooksRegistrationService {
 		}
 
 		return new MethodMatcher($spec[0], $spec[1]);
+	}
+
+	/**
+	 * Temporarily remove all event/hook registrations (before tests)
+	 *
+	 * Call backup() before your tests and restore() after.
+	 *
+	 * @note This behaves like a stack. You must call restore() for each backup() call.
+	 *
+	 * @return void
+	 * @see restore
+	 * @access private
+	 * @internal
+	 */
+	public function backup() {
+		$this->backups[] = $this->registrations;
+		$this->registrations = [];
+	}
+
+	/**
+	 * Restore backed up event/hook registrations (after tests)
+	 *
+	 * @return void
+	 * @see backup
+	 * @access private
+	 * @internal
+	 */
+	public function restore() {
+		$backup = array_pop($this->backups);
+		if (is_array($backup)) {
+			$this->registrations = $backup;
+		}
 	}
 }

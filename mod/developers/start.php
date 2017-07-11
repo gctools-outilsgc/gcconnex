@@ -11,25 +11,24 @@ elgg_register_event_handler('init', 'system', 'developers_init');
 function developers_init() {
 	elgg_register_event_handler('pagesetup', 'system', 'developers_setup_menu');
 
-	elgg_extend_view('css/admin', 'developers/css');
-	elgg_extend_view('css/elgg', 'developers/css');
+	elgg_extend_view('admin.css', 'developers/css');
+	elgg_extend_view('elgg.css', 'developers/css');
 
 	elgg_register_page_handler('theme_sandbox', 'developers_theme_sandbox_controller');
+	elgg_register_page_handler('developers_ajax_demo', 'developers_ajax_demo_controller');
+
 	elgg_register_external_view('developers/ajax'); // for lightbox in sandbox
-	$sandbox_css = elgg_get_simplecache_url('css', 'theme_sandbox.css');
+	elgg_register_ajax_view('developers/ajax_demo.html');
+	$sandbox_css = elgg_get_simplecache_url('theme_sandbox.css');
 	elgg_register_css('dev.theme_sandbox', $sandbox_css);
 
-	$action_base = elgg_get_plugins_path() . 'developers/actions/developers';
+	$action_base = __DIR__ . '/actions/developers';
 	elgg_register_action('developers/settings', "$action_base/settings.php", 'admin');
+	elgg_register_action('developers/ajax_demo', "$action_base/ajax_demo.php", 'admin');
+	elgg_register_action('developers/entity_explorer_delete', "$action_base/entity_explorer_delete.php", 'admin');
 
-	elgg_define_js('jquery.jstree', array(
-		'src' => '/mod/developers/vendors/jsTree/jquery.jstree.js',
-		'exports' => 'jQuery.fn.jstree',
-		'deps' => array('jquery'),
-	));
-	elgg_register_css('jquery.jstree', '/mod/developers/vendors/jsTree/themes/default/style.css');
-
-	elgg_require_js('elgg/dev');
+	elgg_register_ajax_view('forms/developers/ajax_demo');
+	elgg_register_ajax_view('theme_sandbox/components/tabs/ajax_demo');
 }
 
 function developers_process_settings() {
@@ -52,9 +51,9 @@ function developers_process_settings() {
 	}
 
 	if (!empty($settings['show_strings'])) {
-		// first and last in case a plugin registers a translation in an init method
-		elgg_register_event_handler('init', 'system', 'developers_clear_strings', 1000);
-		elgg_register_event_handler('init', 'system', 'developers_clear_strings', 1);
+		// Beginning and end to make sure both early-rendered and late-loaded translations get included
+		elgg_register_event_handler('init', 'system', 'developers_decorate_all_translations', 1);
+		elgg_register_event_handler('init', 'system', 'developers_decorate_all_translations', 1000);
 	}
 
 	if (!empty($settings['show_modules'])) {
@@ -62,7 +61,7 @@ function developers_process_settings() {
 	}
 
 	if (!empty($settings['wrap_views'])) {
-		elgg_register_plugin_hook_handler('view', 'all', 'developers_wrap_views');
+		elgg_register_plugin_hook_handler('view', 'all', 'developers_wrap_views', 600);
 	}
 
 	if (!empty($settings['log_events'])) {
@@ -72,9 +71,8 @@ function developers_process_settings() {
 
 	if (!empty($settings['show_gear']) && elgg_is_admin_logged_in() && !elgg_in_context('admin')) {
 		elgg_require_js('elgg/dev/gear');
-		elgg_load_js('lightbox');
-		elgg_load_css('lightbox');
 		elgg_register_ajax_view('developers/gear_popup');
+		elgg_register_simplecache_view('elgg/dev/gear.html');
 
 		// TODO use ::class in 2.0
 		$handler = ['Elgg\DevelopersPlugin\Hooks', 'alterMenuSectionVars'];
@@ -86,10 +84,11 @@ function developers_process_settings() {
 }
 
 function developers_setup_menu() {
-	if (elgg_in_context('admin')) {
+	if (elgg_in_context('admin') && elgg_is_admin_logged_in()) {
 		elgg_register_admin_menu_item('develop', 'inspect');
 		elgg_register_admin_menu_item('develop', 'sandbox', 'develop_tools');
 		elgg_register_admin_menu_item('develop', 'unit_tests', 'develop_tools');
+		elgg_register_admin_menu_item('develop', 'entity_explorer', 'develop_tools');
 
 		elgg_register_menu_item('page', array(
 			'name' => 'dev_settings',
@@ -104,7 +103,9 @@ function developers_setup_menu() {
 		foreach ($inspect_options as $key => $value) {
 			elgg_register_menu_item('page', array(
 				'name' => 'dev_inspect_' . elgg_get_friendly_title($key),
-				'href' => "admin/develop_tools/inspect?inspect_type={$key}",
+				'href' => "admin/develop_tools/inspect?" . http_build_query([
+					'inspect_type' => $key,
+				]),
 				'text' => $value,
 				'context' => 'admin',
 				'section' => 'develop',
@@ -115,25 +116,51 @@ function developers_setup_menu() {
 }
 
 /**
+ * Adds debug info to all translatable strings.
+ */
+function developers_decorate_all_translations() {
+	$language = get_current_language();
+	_developers_decorate_translations($language);
+	_developers_decorate_translations('en');
+}
+
+/**
+ * Appends " ($key)" to all strings for the given language.
+ *
+ * This function checks if the suffix has already been added so it is idempotent
+ *
+ * @param string $language Language code like "en"
+ */
+function _developers_decorate_translations($language) {
+	foreach ($GLOBALS['_ELGG']->translations[$language] as $key => &$value) {
+		$needle = " ($key)";
+		
+		// if $value doesn't already end with " ($key)", append it
+		if (substr($value, -strlen($needle)) !== $needle) {
+			$value .= $needle;
+		}
+	}
+}
+
+/**
  * Clear all the strings so the raw descriptor strings are displayed
+ *
+ * @deprecated Superceded by developers_decorate_all_translations
  */
 function developers_clear_strings() {
-	global $CONFIG;
-
-	$language = get_language();
-	$CONFIG->translations[$language] = array();
-	$CONFIG->translations['en'] = array();
+	$language = get_current_language();
+	$GLOBALS['_ELGG']->translations[$language] = array();
+	$GLOBALS['_ELGG']->translations['en'] = array();
 }
 
 /**
  * Post-process a view to add wrapper comments to it
- * 
+ *
  * 1. Only process views served with the 'default' viewtype.
- * 2. Does not wrap views that begin with js/ or css/ as they are not HTML.
- * 3. Does not wrap views that are images (start with icon/). Is this still true?
+ * 2. Does not wrap views that are not HTML.
  * 4. Does not wrap input and output views (why?).
  * 5. Does not wrap html head or the primary page shells
- * 
+ *
  * @warning this will break views in the default viewtype that return non-HTML data
  * that do not match the above restrictions.
  */
@@ -142,7 +169,7 @@ function developers_wrap_views($hook, $type, $result, $params) {
 		return;
 	}
 
-	$excluded_bases = array('css', 'js', 'input', 'output', 'embed', 'icon', 'json', 'xml');
+	$excluded_bases = array('resources', 'input', 'output', 'embed', 'icon', 'json', 'xml');
 
 	$excluded_views = array(
 		'page/default',
@@ -158,6 +185,10 @@ function developers_wrap_views($hook, $type, $result, $params) {
 	}
 
 	if (in_array($view, $excluded_views)) {
+		return;
+	}
+	
+	if ((new \SplFileInfo($view))->getExtension()) {
 		return;
 	}
 
@@ -227,46 +258,20 @@ function developers_theme_sandbox_controller($page) {
 		forward('theme_sandbox/intro');
 	}
 
-	elgg_load_css('dev.theme_sandbox');
+	echo elgg_view_resource('theme_sandbox', [
+		'page' => $page[0],
+	]);
+	return true;
+}
 
-	$pages = array(
-		'buttons',
-		'components',
-		'forms',
-		'grid',
-		'icons',
-		'javascript',
-		'layouts',
-		'modules',
-		'navigation',
-		'typography',
-	);
-	
-	foreach ($pages as $page_name) {
-		elgg_register_menu_item('theme_sandbox', array(
-			'name' => $page_name,
-			'text' => elgg_echo("theme_sandbox:$page_name"),
-			'href' => "theme_sandbox/$page_name",
-		));
-	}
-
-	elgg_require_js('elgg/dev/theme_sandbox');
-
-	$title = elgg_echo("theme_sandbox:{$page[0]}");
-	$body =  elgg_view("theme_sandbox/{$page[0]}");
-
-	$layout = elgg_view_layout('theme_sandbox', array(
-		'title' => $title,
-		'content' => $body,
-	));
-
-	echo elgg_view_page("Theme Sandbox : $title", $layout, 'theme_sandbox');
+function developers_ajax_demo_controller() {
+	echo elgg_view_resource('developers/ajax_demo');
 	return true;
 }
 
 /**
  * Get the available inspect options
- * 
+ *
  * @return array
  */
 function developers_get_inspect_options() {

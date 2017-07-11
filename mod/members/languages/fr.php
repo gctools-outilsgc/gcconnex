@@ -15,5 +15,6 @@ return array(
 	'members:title:searchname' => 'Recherche de membres pour %s',
 	'members:title:searchtag' => 'Membres marqués avec %s',
 	'members:title:online' => 'Membres en ligne',
+	'members:title:alpha' => 'Tous les membres',
 	'members:list:popular:none' => 'Aucun membre n\'a de contact.',
 );

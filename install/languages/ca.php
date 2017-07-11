@@ -1,15 +1,15 @@
 <?php
 return array(
-	'install:title' => 'Instal·lador de l\'Elgg',
-	'install:welcome' => 'Benvingut/da',
+	'install:title' => 'Elgg Install',
+	'install:welcome' => 'Welcome',
 	'install:requirements' => 'Requirements check',
-	'install:database' => 'Instal·lació de la base de dades',
-	'install:settings' => 'Configura el lloc',
-	'install:admin' => 'Crea el compte d\'administrador',
-	'install:complete' => 'Acabat',
+	'install:database' => 'Database installation',
+	'install:settings' => 'Configure site',
+	'install:admin' => 'Create admin account',
+	'install:complete' => 'Finished',
 
-	'install:next' => 'Següent',
-	'install:refresh' => 'Refresca',
+	'install:next' => 'Next',
+	'install:refresh' => 'Refresh',
 
 	'install:welcome:instructions' => "Installing Elgg has 6 simple steps and reading this welcome is the first one!
 
@@ -21,9 +21,9 @@ If you are ready to proceed, click the Next button.",
 	'install:requirements:instructions:warning' => "Your server passed the requirements check, but there is at least one warning. We recommend that you check the install troubleshooting page for more details.",
 
 	'install:require:php' => 'PHP',
-	'install:require:rewrite' => 'Servidor Web',
-	'install:require:settings' => 'Fitxer de configuració',
-	'install:require:database' => 'Base de dades',
+	'install:require:rewrite' => 'Web server',
+	'install:require:settings' => 'Settings file',
+	'install:require:database' => 'Database',
 
 	'install:check:root' => 'Your web server does not have permission to create an .htaccess file in the root directory of Elgg. You have two choices:
 
@@ -32,7 +32,7 @@ If you are ready to proceed, click the Next button.",
 		2. Copy the file htaccess_dist to .htaccess',
 
 	'install:check:php:version' => 'Elgg requires PHP %s or above. This server is using version %s.',
-	'install:check:php:extension' => 'Elgg necessita l\'extensió %s de PHP.',
+	'install:check:php:extension' => 'Elgg requires the PHP extension %s.',
 	'install:check:php:extension:recommend' => 'It is recommended that the PHP extension %s is installed.',
 	'install:check:php:open_basedir' => 'The open_basedir PHP directive may prevent Elgg from saving files to its data directory.',
 	'install:check:php:safe_mode' => 'Running PHP in safe mode is not recommened and may cause problems with Elgg.',
@@ -40,11 +40,11 @@ If you are ready to proceed, click the Next button.",
 	'install:check:php:register_globals' => 'Register globals must be turned off.',
 	'install:check:php:session.auto_start' => "session.auto_start must be off for Elgg to work. Either change the configuration of your server or add this directive to Elgg's .htaccess file.",
 
-	'install:check:enginedir' => 'Your web server does not have permission to create the settings.php file in the engine directory. You have two choices:
+	'install:check:installdir' => 'Your web server does not have permission to create the settings.php file in your installation directory. You have two choices:
 
-		1. Change the permissions on the engine directory
+		1. Change the permissions on the elgg-config directory of your Elgg installation
 
-		2. Copy the file settings.example.php to settings.php and follow the instructions in it for setting your database parameters.',
+		2. Copy the file %s/settings.example.php to elgg-config/settings.php and follow the instructions in it for setting your database parameters.',
 	'install:check:readsettings' => 'A settings file exists in the engine directory, but the web server cannot read it. You can delete the file or change the read permissions on it.',
 
 	'install:check:php:success' => "Your server's PHP satisfies all of Elgg's requirements.",
@@ -56,15 +56,17 @@ If you are ready to proceed, click the Next button.",
 
 	'install:database:label:dbuser' =>  'Database Username',
 	'install:database:label:dbpassword' => 'Database Password',
-	'install:database:label:dbname' => 'Nom de la Base de Dades',
-	'install:database:label:dbhost' => 'Servidor de Base de Dades',
-	'install:database:label:dbprefix' => 'Prefix de les taules de la Base de dades',
+	'install:database:label:dbname' => 'Database Name',
+	'install:database:label:dbhost' => 'Database Host',
+	'install:database:label:dbprefix' => 'Database Table Prefix',
+	'install:database:label:timezone' => "Timezone",
 
 	'install:database:help:dbuser' => 'User that has full privileges to the MySQL database that you created for Elgg',
 	'install:database:help:dbpassword' => 'Password for the above database user account',
 	'install:database:help:dbname' => 'Name of the Elgg database',
 	'install:database:help:dbhost' => 'Hostname of the MySQL server (usually localhost)',
 	'install:database:help:dbprefix' => "The prefix given to all of Elgg's tables (usually elgg_)",
+	'install:database:help:timezone' => "The default timezone in which the site will operate",
 
 	'install:settings:instructions' => 'We need some information about the site as we configure Elgg. If you haven\'t <a href="http://docs.elgg.org/wiki/Data_directory" target="_blank">created a data directory</a> for Elgg, you need to do so now.',
 
@@ -124,8 +126,8 @@ If you are ready to proceed, click the Next button.",
 	'install:error:nodatabase' => 'Unable to use database %s. It may not exist.',
 	'install:error:cannotloadtables' => 'Cannot load the database tables',
 	'install:error:tables_exist' => 'There are already Elgg tables in the database. You need to either drop those tables or restart the installer and we will attempt to use them. To restart the installer, remove \'?step=database\' from the URL in your browser\'s address bar and press Enter.',
-	'install:error:readsettingsphp' => 'Unable to read engine/settings.example.php',
-	'install:error:writesettingphp' => 'Unable to write engine/settings.php',
+	'install:error:readsettingsphp' => 'Unable to read /elgg-config/settings.example.php',
+	'install:error:writesettingphp' => 'Unable to write /elgg-config/settings.php',
 	'install:error:requiredfield' => '%s is required',
 	'install:error:relative_path' => 'We don\'t think "%s" is an absolute path for your data directory',
 	'install:error:datadirectoryexists' => 'Your data directory %s does not exist.',

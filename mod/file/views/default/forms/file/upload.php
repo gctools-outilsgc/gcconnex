@@ -1,10 +1,10 @@
 <?php
+
 /**
  * Elgg file upload/save form
  *
  * @package ElggFile
  */
-
 // once elgg_view stops throwing all sorts of junk into $vars, we can use 
 $title = elgg_extract('title', $vars, '');
 $desc = elgg_extract('description', $vars, '');
@@ -33,54 +33,64 @@ $max_upload = $upload_max_filesize > $post_max_size ? $post_max_size : $upload_m
 
 $upload_limit = elgg_echo('file:upload_limit', array(elgg_format_bytes($max_upload)));
 
-?>
-<div class="mbm elgg-text-help">
-	<?php echo $upload_limit; ?>
-</div>
-<div>
-	<label><?php echo $file_label; ?></label><br />
-	<?php echo elgg_view('input/file', array('name' => 'upload')); ?>
-</div>
-<div>
-	<label><?php echo elgg_echo('title'); ?></label><br />
-	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title)); ?>
-</div>
-<div>
-	<label><?php echo elgg_echo('description'); ?></label>
-	<?php echo elgg_view('input/longtext', array('name' => 'description', 'value' => $desc)); ?>
-</div>
-<div>
-	<label><?php echo elgg_echo('tags'); ?></label>
-	<?php echo elgg_view('input/tags', array('name' => 'tags', 'value' => $tags)); ?>
-</div>
-<?php
+$categories_field = $vars;
+$categories_field['#type'] = 'categories';
 
-$categories = elgg_view('input/categories', $vars);
-if ($categories) {
-	echo $categories;
-}
-
-?>
-<div>
-	<label><?php echo elgg_echo('access'); ?></label><br />
-	<?php echo elgg_view('input/access', array(
+$fields = [
+	[
+		'#type' => 'file',
+		'#label' => $file_label,
+		'#help' => $upload_limit,
+		'name' => 'upload',
+		'value' => ($guid),
+		'required' => (!$guid),
+	],
+	[
+		'#type' => 'text',
+		'#label' => elgg_echo('title'),
+		'name' => 'title',
+		'value' => $title,
+	],
+	[
+		'#type' => 'longtext',
+		'#label' => elgg_echo('description'),
+		'name' => 'description',
+		'value' => $desc,
+	],
+	[
+		'#type' => 'tags',
+		'#label' => elgg_echo('tags'),
+		'name' => 'tags',
+		'value' => $tags,
+	],
+	$categories_field,
+	[
+		'#type' => 'access',
+		'#label' => elgg_echo('access'),
 		'name' => 'access_id',
 		'value' => $access_id,
 		'entity' => get_entity($guid),
 		'entity_type' => 'object',
 		'entity_subtype' => 'file',
-	)); ?>
-</div>
-<div class="elgg-foot">
-<?php
+	],
+	[
+		'#type' => 'hidden',
+		'name' => 'container_guid',
+		'value' => $container_guid,
+	],
+	[
+		'#type' => 'hidden',
+		'name' => 'file_guid',
+		'value' => $guid,
+	],
+];
 
-echo elgg_view('input/hidden', array('name' => 'container_guid', 'value' => $container_guid));
-
-if ($guid) {
-	echo elgg_view('input/hidden', array('name' => 'file_guid', 'value' => $guid));
+foreach ($fields as $field) {
+	echo elgg_view_field($field);
 }
 
-echo elgg_view('input/submit', array('value' => $submit_label));
-
-?>
-</div>
+$footer = elgg_view_field([
+	'#type' => 'submit',
+	'value' => elgg_echo('save'),
+]);
+elgg_set_form_footer($footer);

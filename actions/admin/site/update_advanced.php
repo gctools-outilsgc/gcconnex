@@ -45,6 +45,20 @@ if ('on' === get_input('simplecache_enabled')) {
 	elgg_disable_simplecache();
 }
 
+$cache_symlinked = _elgg_is_cache_symlinked();
+if ('on' === get_input('cache_symlink_enabled') && !$cache_symlinked) {
+	if (!is_dir(elgg_get_root_path() . 'cache/')) {
+		$cache_symlinked = symlink(elgg_get_cache_path() . 'views_simplecache/', elgg_get_root_path() . 'cache/');
+	}
+	if (!_elgg_is_cache_symlinked()) {
+		unlink(elgg_get_root_path() . 'cache/');
+		$cache_symlinked = false;
+	}
+	if (!$cache_symlinked) {
+		register_error(elgg_echo('installation:cache_symlink:error'));
+	}
+}
+
 set_config('simplecache_minify_js', 'on' === get_input('simplecache_minify_js'), $site->getGUID());
 set_config('simplecache_minify_css', 'on' === get_input('simplecache_minify_css'), $site->getGUID());
 
@@ -73,12 +87,6 @@ set_config('allow_registration', $allow_registration, $site->getGUID());
 // setup walled garden
 $walled_garden = ('on' === get_input('walled_garden', false));
 set_config('walled_garden', $walled_garden, $site->getGUID());
-
-if ('on' === get_input('https_login')) {
-	set_config('https_login', 1, $site->getGUID());
-} else {
-	unset_config('https_login', $site->getGUID());
-}
 
 $regenerate_site_secret = get_input('regenerate_site_secret', false);
 if ($regenerate_site_secret) {

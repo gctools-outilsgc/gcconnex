@@ -1,10 +1,12 @@
 <?php
 return array(
 	'admin:users:unvalidated' => 'non validées',
+
 	'email:validate:subject' => "%s s'il vous plaît confirmer votre adresse courriel pour %s!",
 	'email:validate:body' => "%s, Avant que vous puissiez utiliser %s, vous devez confirmer votre adresse de courriel. S'il vous plaît confirmer votre adresse courriel en cliquant sur le lien ci-dessous: %s Si vous ne pouvez pas cliquer sur le lien, copiez-le et collez-le dans votre navigateur manuellement.",
 	'email:confirm:success' => "Vous avez confirmé votre adresse de courriel!",
 	'email:confirm:fail' => "Votre adresse de courriel n'a pas pu être vérifiée...",
+
 	'uservalidationbyemail:emailsent' => "Courriel envoyé à <em>%s</em>",	
 	'uservalidationbyemail:registerok' => "Votre compte a été créé, mais avant de pouvoir ouvrir une session vous devez d'abord vérifier votre adresse courriel. Un message a été envoyé à l'adresse que vous avez fournie. Veuillez suivre les instructions que contient le message pour vérifier votre compte.",
 	'uservalidationbyemail:login:fail' => "Votre compte n'est pas validé donc la tentative de connexion a échoué. Un autre courriel de validation a été envoyé.",
@@ -21,8 +23,7 @@ return array(
 	'uservalidationbyemail:confirm_delete' => 'Supprimer %s?',
 	'uservalidationbyemail:confirm_validate_checked' => 'Valider les utilisateurs vérifiés?',
 	'uservalidationbyemail:confirm_resend_validation_checked' => 'Renvoyer la validation des utilisateurs vérifiés?',
-	'uservalidationbyemail:confirm_delete_checked' => 'Supprimer des utilisateurs vérifiés?',	
-	'uservalidationbyemail:check_all' => 'Tous',
+	'uservalidationbyemail:confirm_delete_checked' => 'Supprimer des utilisateurs vérifiés?',
 
 	'uservalidationbyemail:errors:unknown_users' => 'Utilisateurs inconnus',
 	'uservalidationbyemail:errors:could_not_validate_user' => "N'a pas pu valider l'utilisateur.",
@@ -38,4 +39,5 @@ return array(
 	'uservalidationbyemail:messages:deleted_users' => 'Tous les utilisateurs vérifiés supprimés.',
 	'uservalidationbyemail:messages:resent_validation' => 'Demande de validation renvoyer.',
 	'uservalidationbyemail:messages:resent_validations' => 'Demandes de validation renvoyé à tous les utilisateurs vérifiés.',
+
 );

@@ -20,7 +20,7 @@ elgg_register_event_handler('init', 'system', 'thewire_init');
 function thewire_init() {
 
 	// register the wire's JavaScript
-	$thewire_js = elgg_get_simplecache_url('js', 'thewire');
+	$thewire_js = elgg_get_simplecache_url('thewire.js');
 	elgg_register_js('elgg.thewire', $thewire_js, 'footer');
 
 	elgg_register_ajax_view('thewire/previous');
@@ -36,7 +36,7 @@ function thewire_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'thewire_setup_entity_menu_items');
 	
 	// Extend system CSS with our own styles, which are defined in the thewire/css view
-	elgg_extend_view('css/elgg', 'thewire/css');
+	elgg_extend_view('elgg.css', 'thewire/css');
 
 	// Add a user's latest wire post to profile
 	elgg_extend_view('profile/status', 'thewire/profile_status');
@@ -58,9 +58,12 @@ function thewire_init() {
 	elgg_register_plugin_hook_handler('get', 'subscriptions', 'thewire_add_original_poster');
 
 	// Register actions
-	$action_base = elgg_get_plugins_path() . 'thewire/actions';
+	$action_base = __DIR__ . '/actions';
 	elgg_register_action("thewire/add", "$action_base/add.php");
 	elgg_register_action("thewire/delete", "$action_base/delete.php");
+
+	// allow to be liked
+	elgg_register_plugin_hook_handler('likes:is_likable', 'object:thewire', 'Elgg\Values::getTrue');
 
 	elgg_register_plugin_hook_handler('unit_test', 'system', 'thewire_test');
 
@@ -84,58 +87,51 @@ function thewire_init() {
  */
 function thewire_page_handler($page) {
 
-	$base_dir = elgg_get_plugins_path() . 'thewire/pages/thewire';
-
 	if (!isset($page[0])) {
 		$page = array('all');
 	}
 
 	switch ($page[0]) {
 		case "all":
-			include "$base_dir/everyone.php";
+			echo elgg_view_resource('thewire/everyone');
 			break;
 
 		case "friends":
-			include "$base_dir/friends.php";
+			echo elgg_view_resource('thewire/friends');
 			break;
 
 		case "owner":
-			include "$base_dir/owner.php";
+			echo elgg_view_resource('thewire/owner');
 			break;
 
 		case "view":
-			if (isset($page[1])) {
-				set_input('guid', $page[1]);
-			}
-			include "$base_dir/view.php";
+			echo elgg_view_resource('thewire/view', [
+				'guid' => elgg_extract(1, $page),
+			]);
 			break;
 
 		case "thread":
-			if (isset($page[1])) {
-				set_input('thread_id', $page[1]);
-			}
-			include "$base_dir/thread.php";
+			echo elgg_view_resource('thewire/thread', [
+				'thread_id' => elgg_extract(1, $page),
+			]);
 			break;
 
 		case "reply":
-			if (isset($page[1])) {
-				set_input('guid', $page[1]);
-			}
-			include "$base_dir/reply.php";
+			echo elgg_view_resource('thewire/reply', [
+				'guid' => elgg_extract(1, $page),
+			]);
 			break;
 
 		case "tag":
-			if (isset($page[1])) {
-				set_input('tag', $page[1]);
-			}
-			include "$base_dir/tag.php";
+			echo elgg_view_resource('thewire/tag', [
+				'tag' => elgg_extract(1, $page),
+			]);
 			break;
 
 		case "previous":
-			if (isset($page[1])) {
-				set_input('guid', $page[1]);
-			}
-			include "$base_dir/previous.php";
+			echo elgg_view_resource('thewire/previous', [
+				'guid' => elgg_extract(1, $page),
+			]);
 			break;
 
 		default:

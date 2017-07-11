@@ -11,16 +11,16 @@ elgg_register_event_handler('init', 'system', 'twitter_api_init');
 function twitter_api_init() {
 
 	// require libraries
-	$base = elgg_get_plugins_path() . 'twitter_api';
+	$base = __DIR__;
 	elgg_register_class('TwitterOAuth', "$base/vendors/twitteroauth/twitterOAuth.php");
 	elgg_register_library('twitter_api', "$base/lib/twitter_api.php");
 	elgg_load_library('twitter_api');
 
 	// extend site views
 	//elgg_extend_view('metatags', 'twitter_api/metatags');
-	elgg_extend_view('css/elgg', 'twitter_api/css');
-	elgg_extend_view('css/admin', 'twitter_api/css');
-	elgg_extend_view('js/elgg', 'twitter_api/js');
+	elgg_extend_view('elgg.css', 'twitter_api/css');
+	elgg_extend_view('admin.css', 'twitter_api/css');
+	elgg_extend_view('elgg.js', 'twitter_api/js');
 
 	// sign on with twitter
 	if (twitter_api_allow_sign_on_with_twitter()) {
@@ -92,8 +92,7 @@ function twitter_api_pagehandler($page) {
 				register_error(elgg_echo('twitter_api:invalid_page'));
 				forward();
 			}
-			$pages = dirname(__FILE__) . '/pages/twitter_api';
-			include "$pages/interstitial.php";
+			echo elgg_view_resource('twitter_api/interstitial');
 			break;
 		default:
 			return false;

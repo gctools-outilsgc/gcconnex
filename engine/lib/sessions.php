@@ -354,13 +354,6 @@ function login(\ElggUser $user, $persistent = false) {
 
 	elgg_trigger_after_event('login', 'user', $user);
 
-	// if memcache is enabled, invalidate the user in memcache @see https://github.com/Elgg/Elgg/issues/3143
-	if (is_memcache_available()) {
-		$guid = $user->getGUID();
-		// this needs to happen with a shutdown function because of the timing with set_last_login()
-		register_shutdown_function("_elgg_invalidate_memcache_for_entity", $guid);
-	}
-
 	return true;
 }
 
@@ -406,6 +399,7 @@ function logout() {
  * @access private
  */
 function _elgg_session_boot() {
+	_elgg_services()->timer->begin([__FUNCTION__]);
 
 	elgg_register_action('login', '', 'public');
 	elgg_register_action('logout');
@@ -448,5 +442,6 @@ function _elgg_session_boot() {
 		return false;
 	}
 
+	_elgg_services()->timer->end([__FUNCTION__]);
 	return true;
 }

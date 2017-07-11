@@ -40,11 +40,11 @@ return array(
 	'install:check:php:register_globals' => '全域的註冊必須關閉。',
 	'install:check:php:session.auto_start' => "Elgg 的 session.auto_start 必須關閉才能作用。請變更伺服器的組態，或者將這個指令加入 Elgg 的 .htaccess 檔案。",
 
-	'install:check:enginedir' => '網頁伺服器沒有在引擎目錄中建立 settings.php 檔案的權限。您有兩個選擇：
+	'install:check:installdir' => 'Your web server does not have permission to create the settings.php file in your installation directory. You have two choices:
 
-		1.變更引擎目錄上的權限
+		1. Change the permissions on the elgg-config directory of your Elgg installation
 
-		2.將檔案 settings.example.php 拷貝為 settings.php 並依其中的指示來設定資料庫參數。',
+		2. Copy the file %s/settings.example.php to elgg-config/settings.php and follow the instructions in it for setting your database parameters.',
 	'install:check:readsettings' => '設定值檔案存在於引擎目錄中，但是網頁伺服器無法讀取它。您可以刪除檔案或變更它的讀取權限。',
 
 	'install:check:php:success' => "伺服器上的 PHP 滿足 Elggs 的所有需求。",
@@ -59,12 +59,14 @@ return array(
 	'install:database:label:dbname' => '資料庫名稱',
 	'install:database:label:dbhost' => '資料庫主機',
 	'install:database:label:dbprefix' => '資料表前綴',
+	'install:database:label:timezone' => "Timezone",
 
 	'install:database:help:dbuser' => '擁有您為 Elgg 所建立的 MySQL 資料庫完整權限的使用者',
 	'install:database:help:dbpassword' => '用於以上資料庫的使用者密碼',
 	'install:database:help:dbname' => 'Elgg 資料庫的名稱',
 	'install:database:help:dbhost' => 'MySQL 伺服器的主機名稱 (通常是 localhost)',
 	'install:database:help:dbprefix' => "賦予所有 Elgg 資料表的前綴 (通常是 elgg_)",
+	'install:database:help:timezone' => "The default timezone in which the site will operate",
 
 	'install:settings:instructions' => '當我們組配 Elgg 時，需要一些站臺的相關資訊。如果還沒建立用於 Elgg 的<a href=http://docs.elgg.org/wiki/Data_directory target=_blank>資料目錄</a>，您現在就需要這樣做。',
 
@@ -124,8 +126,8 @@ return array(
 	'install:error:nodatabase' => '無法使用資料庫 %s。它可能不存在。',
 	'install:error:cannotloadtables' => '無法載入資料表格',
 	'install:error:tables_exist' => '在資料庫中已有 Elgg 表格。您需要選擇丟棄那些表格，或是重新啟動安裝程式而我們將試圖去使用它們。如果要重新啟動安裝程式，請自瀏覽器網址列中移除 \'?step=database\' 並按下輸入鍵。',
-	'install:error:readsettingsphp' => '無法讀取 engine/settings.example.php',
-	'install:error:writesettingphp' => '無法寫入 engine/settings.php',
+	'install:error:readsettingsphp' => 'Unable to read /elgg-config/settings.example.php',
+	'install:error:writesettingphp' => 'Unable to write /elgg-config/settings.php',
 	'install:error:requiredfield' => '%s 為必要項目',
 	'install:error:relative_path' => '我們不認為 %s 是資料目錄的絕對路徑',
 	'install:error:datadirectoryexists' => '資料目錄 %s 不存在。',

@@ -32,16 +32,14 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 	 */
 	public function setUp() {
 		// Replace current hook service with new instance for each test
-		$this->original_hooks = _elgg_services()->hooks;
-		_elgg_services()->setValue('hooks', new \Elgg\PluginHooksService());
+		_elgg_services()->hooks->backup();
 	}
 
 	/**
 	 * Called after each test method.
 	 */
 	public function tearDown() {
-		// Restore original hook service
-		_elgg_services()->setValue('hooks', $this->original_hooks);
+		_elgg_services()->hooks->restore();
 	}
 
 	/**
@@ -120,8 +118,13 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 	}
 
 	public function testLoggedOutUser() {
-		$originalSession = _elgg_services()->session;
-		_elgg_services()->setValue('session', \ElggSession::getMock());
+		$sp = _elgg_services();
+		$original_session = $sp->session;
+		$original_access = $sp->accessCollections;
+		$sp->setValue('session', \ElggSession::getMock());
+		$sp->setValue('accessCollections', new \Elgg\Database\AccessCollections(
+			$sp->config, $sp->db, $sp->entityTable, $sp->accessCache, $sp->hooks, $sp->session, $sp->translator
+		));
 
 		$sql = _elgg_get_access_where_sql();
 		$access_clause = $this->getLoggedOutAccessListClause('e');
@@ -129,7 +132,8 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 
 		$this->assertTrue($this->assertSqlEqual($ans, $sql), "$sql does not match $ans");
 
-		_elgg_services()->setValue('session', $originalSession);
+		$sp->setValue('session', $original_session);
+		$sp->setValue('accessCollections', $original_access);
 	}
 
 	public function testAccessPluginHookRemoveEnabled() {

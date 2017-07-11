@@ -68,8 +68,12 @@
  * @param mixed  $menu_item A \ElggMenuItem object or an array of options in format:
  *                          name        => STR  Menu item identifier (required)
  *                          text        => STR  Menu item display text as HTML (required)
- *                          href        => STR  Menu item URL (required) (false for non-links.
- *                                              @warning If you disable the href the <a> tag will
+ *                          href        => STR  Menu item URL (required)
+ *                                              false = do not create a link.
+ *                                              null = current URL.
+ *                                              "" = current URL.
+ *                                              "/" = site home page.
+ *                                              @warning If href is false, the <a> tag will
  *                                              not appear, so the link_class will not apply. If you
  *                                              put <a> tags in manually through the 'text' option
  *                                              the default CSS selector .elgg-menu-$menu > li > a
@@ -81,6 +85,7 @@
  *                          parent_name => STR  Identifier of the parent menu item
  *                          link_class  => STR  A class or classes for the <a> tag
  *                          item_class  => STR  A class or classes for the <li> tag
+ *                          deps     => STR  One or more AMD modules to require
  *
  *                          Additional options that the view output/url takes can be
  *							passed in the array. Custom options can be added by using
@@ -103,7 +108,8 @@ function elgg_register_menu_item($menu_name, $menu_item) {
 	}
 
 	if (!$menu_item instanceof ElggMenuItem) {
-		elgg_log('Second argument of elgg_register_menu_item() must be an instance of ElggMenuItem or an array of menu item factory options', 'ERROR');
+		elgg_log('Second argument of elgg_register_menu_item() must be an instance of '
+			. 'ElggMenuItem or an array of menu item factory options', 'ERROR');
 		return false;
 	}
 
@@ -203,33 +209,34 @@ function elgg_get_menu_item($menu_name, $item_name) {
  *
  * This is used primarily to support adding an add content button
  *
- * @param string $handler The handler to use or null to autodetect from context
- * @param string $name    Name of the button
+ * @param string $handler        The handler to use or null to autodetect from context
+ * @param string $name           Name of the button (defaults to 'add')
+ * @param string $entity_type    Optional entity type to be added (used to verify canWriteToContainer permission)
+ * @param string $entity_subtype Optional entity subtype to be added (used to verify canWriteToContainer permission)
  * @return void
  * @since 1.8.0
  */
-function elgg_register_title_button($handler = null, $name = 'add') {
-	if (elgg_is_logged_in()) {
-
-		if (!$handler) {
-			$handler = elgg_get_context();
-		}
-
-		$owner = elgg_get_page_owner_entity();
-		if (!$owner) {
-			// no owns the page so this is probably an all site list page
-			$owner = elgg_get_logged_in_user_entity();
-		}
-		if ($owner && $owner->canWriteToContainer()) {
-			$guid = $owner->getGUID();
-			elgg_register_menu_item('title', array(
-				'name' => $name,
-				'href' => "$handler/$name/$guid",
-				'text' => elgg_echo("$handler:$name"),
-				'link_class' => 'elgg-button elgg-button-action',
-			));
-		}
+function elgg_register_title_button($handler = null, $name = 'add', $entity_type = 'all', $entity_subtype = 'all') {
+	
+	if (!$handler) {
+		$handler = elgg_get_context();
 	}
+
+	$owner = elgg_get_page_owner_entity();
+	if (!$owner) {
+		// noone owns the page so this is probably an all site list page
+		$owner = elgg_get_logged_in_user_entity();
+	}
+	if (!$owner || !$owner->canWriteToContainer(0, $entity_type, $entity_subtype)) {
+		return;
+	}
+
+	elgg_register_menu_item('title', array(
+		'name' => $name,
+		'href' => "$handler/$name/$owner->guid",
+		'text' => elgg_echo("$handler:$name"),
+		'link_class' => 'elgg-button elgg-button-action',
+	));
 }
 
 /**
@@ -301,8 +308,8 @@ function elgg_get_breadcrumbs() {
 }
 
 /**
- * Hook handler to turn titles into 100-character excerpts. To remove this behavior, unregister this
- * function from the [prepare, breadcrumbs] hook.
+ * Prepare breadcrumbs before display. This turns titles into 100-character excerpts, and also
+ * removes the last crumb if it's not a link.
  *
  * @param string $hook        "prepare"
  * @param string $type        "breadcrumbs"
@@ -313,6 +320,13 @@ function elgg_get_breadcrumbs() {
  * @since 1.11
  */
 function elgg_prepare_breadcrumbs($hook, $type, $breadcrumbs, $params) {
+	// remove last crumb if not a link
+	$last_crumb = end($breadcrumbs);
+	if (empty($last_crumb['link'])) {
+		array_pop($breadcrumbs);
+	}
+
+	// apply excerpt to titles
 	foreach (array_keys($breadcrumbs) as $i) {
 		$breadcrumbs[$i]['title'] = elgg_get_excerpt($breadcrumbs[$i]['title'], 100);
 	}
@@ -421,7 +435,7 @@ function _elgg_river_menu_setup($hook, $type, $return, $params) {
 			if ($object->canComment()) {
 				$options = array(
 					'name' => 'comment',
-					'href' => "#comments-add-$object->guid",
+					'href' => "#comments-add-{$object->guid}-{$item->id}",
 					'text' => elgg_view_icon('speech-bubble'),
 					'title' => elgg_echo('comment:this'),
 					'rel' => 'toggle',
@@ -431,10 +445,10 @@ function _elgg_river_menu_setup($hook, $type, $return, $params) {
 			}
 		}
 		
-		if (elgg_is_admin_logged_in()) {
+		if ($item->canDelete()) {
 			$options = array(
 				'name' => 'delete',
-				'href' => elgg_add_action_tokens_to_url("action/river/delete?id=$item->id"),
+				'href' => elgg_add_action_tokens_to_url("action/river/delete?id={$item->id}"),
 				'text' => elgg_view_icon('delete'),
 				'title' => elgg_echo('river:delete'),
 				'confirm' => elgg_echo('deleteconfirm'),
@@ -482,13 +496,20 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 			'priority' => 200,
 		);
 		$return[] = \ElggMenuItem::factory($options);
+	}
 
+	if ($entity->canDelete() && $handler) {
 		// delete link
+		if (elgg_action_exists("$handler/delete")) {
+			$action = "action/$handler/delete";
+		} else {
+			$action = "action/entity/delete";
+		}
 		$options = array(
 			'name' => 'delete',
 			'text' => elgg_view_icon('delete'),
 			'title' => elgg_echo('delete:this'),
-			'href' => "action/$handler/delete?guid={$entity->getGUID()}",
+			'href' => "$action?guid={$entity->getGUID()}",
 			'confirm' => elgg_echo('deleteconfirm'),
 			'priority' => 300,
 		);
@@ -595,7 +616,7 @@ function _elgg_login_menu_setup($hook, $type, $return, $params) {
 	if (elgg_get_config('allow_registration')) {
 		$return[] = \ElggMenuItem::factory(array(
 			'name' => 'register',
-			'href' => 'register',
+			'href' => elgg_get_registration_url(),
 			'text' => elgg_echo('register'),
 			'link_class' => 'registration_link',
 		));
@@ -636,6 +657,10 @@ function _elgg_nav_init() {
 	)));
 
 	elgg_register_ajax_view('navigation/menu/user_hover/contents');
+
+	// Using a view extension to ensure that themes that have replaced the item view
+	// still load the required AMD modules
+	elgg_extend_view('navigation/menu/elements/item', 'navigation/menu/elements/item_deps');
 }
 
 /**

@@ -25,12 +25,16 @@ class ElggComment extends \ElggObject {
 	 *
 	 * @see \ElggEntity::canComment()
 	 *
-	 * @param int $user_guid User guid (default is logged in user)
-	 * @return bool False
+	 * @param int  $user_guid User guid (default is logged in user)
+	 * @param bool $default   Default permission
+	 * @return bool
 	 * @since 1.9.0
 	 */
-	public function canComment($user_guid = 0) {
-		return false;
+	public function canComment($user_guid = 0, $default = null) {
+		if (!isset($default)) {
+			$default = false;
+		}
+		return parent::canComment($user_guid, $default);
 	}
 
 	/**
@@ -42,7 +46,10 @@ class ElggComment extends \ElggObject {
 	public function save($update_last_action = true) {
 		$result = parent::save();
 		if ($result && $update_last_action) {
-			update_entity_last_action($this->container_guid, $this->time_updated);
+			$container = $this->getContainerEntity();
+			if ($container) {
+				$container->updateLastAction($this->time_updated);
+			}
 		}
 		return $result;
 	}

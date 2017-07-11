@@ -27,7 +27,7 @@ return array(
 	'adminrequired' => "You must be an administrator to view the requested page.",
 	'membershiprequired' => "You must be a member of this group to view the requested page.",
 	'limited_access' => "You do not have permission to view the requested page.",
-
+	'invalid_request_signature' => "The URL of the page you are trying to access is invalid or has expired",
 
 /**
  * Errors
@@ -40,7 +40,7 @@ return array(
 	'actionnotfound' => "The action file for %s was not found.",
 	'actionloggedout' => "Sorry, you cannot perform this action while logged out.",
 	'actionunauthorized' => 'You are unauthorized to perform this action',
-	
+
 	'ajax:error' => 'Unexpected error while performing an AJAX call. Maybe the connection to the server is lost.',
 	'ajax:not_is_xhr' => 'You cannot access AJAX views directly',
 
@@ -59,15 +59,19 @@ return array(
 	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'Its manifest contains an invalid dependency type "%s".',
 	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Its manifest contains an invalid provides type "%s".',
 	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'There is an invalid %s dependency "%s" in plugin %s.  Plugins cannot conflict with or require something they provide!',
+	'ElggPluginPackage:InvalidPlugin:ConflictsWithPlugin' => 'Conflicts with plugin: %s',
+	'ElggPluginPackage:InvalidPlugin:UnreadableConfig' => 'Plugin file "elgg-plugin.php" file is present but unreadable.',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Cannot include %s for plugin %s (guid: %s) at %s.',
+	'ElggPlugin:Exception:IncludeFileThrew' => 'Threw exception including %s for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Cannot open views dir for plugin %s (guid: %s) at %s.',
-	'ElggPlugin:Exception:CannotRegisterLanguages' => 'Cannot register languages for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:NoID' => 'No ID for plugin guid %s!',
 	'PluginException:NoPluginName' => "The plugin name could not be found",
 	'PluginException:ParserError' => 'Error parsing manifest with API version %s in plugin %s.',
 	'PluginException:NoAvailableParser' => 'Cannot find a parser for manifest API version %s in plugin %s.',
 	'PluginException:ParserErrorMissingRequiredAttribute' => "Missing required '%s' attribute in manifest for plugin %s.",
 	'ElggPlugin:InvalidAndDeactivated' => '%s is an invalid plugin and has been deactivated.',
+	'ElggPlugin:activate:BadConfigFormat' => 'Plugin file "elgg-plugin.php" did not return a serializable array.',
+	'ElggPlugin:activate:ConfigSentOutput' => 'Plugin file "elgg-plugin.php" sent output.',
 
 	'ElggPlugin:Dependencies:Requires' => 'Requires',
 	'ElggPlugin:Dependencies:Suggests' => 'Suggests',
@@ -85,7 +89,7 @@ return array(
 	'ElggPlugin:Dependencies:Priority:Before' => 'Before %s',
 	'ElggPlugin:Dependencies:Priority:Uninstalled' => '%s is not installed',
 	'ElggPlugin:Dependencies:Suggests:Unsatisfied' => 'Missing',
-	
+
 	'ElggPlugin:Dependencies:ActiveDependent' => 'There are other plugins that list %s as a dependency.  You must disable the following plugins before disabling this one: %s',
 
 	'ElggMenuBuilder:Trees:NoParents' => 'Menu items found without parents to link them to',
@@ -100,6 +104,8 @@ return array(
 	'LoginException:AccountLocked' => 'Your account has been locked for too many log in failures.',
 	'LoginException:ChangePasswordFailure' => 'Failed current password check.',
 	'LoginException:Unknown' => 'We could not log you in due to an unknown error.',
+
+	'UserFetchFailureException' => 'Cannot check permission for user_guid [%s] as the user does not exist.',
 
 	'deprecatedfunction' => 'Warning: This code uses the deprecated function \'%s\' and is not compatible with this version of Elgg',
 
@@ -130,6 +136,32 @@ return array(
 	'upload:error:extension' => 'Cannot save the uploaded file.',
 	'upload:error:unknown' => 'The file upload failed.',
 
+/**
+ * Table columns
+ */
+	'table_columns:fromView:admin' => 'Admin',
+	'table_columns:fromView:banned' => 'Banned',
+	'table_columns:fromView:container' => 'Container',
+	'table_columns:fromView:excerpt' => 'Description',
+	'table_columns:fromView:link' => 'Name/Title',
+	'table_columns:fromView:icon' => 'Icon',
+	'table_columns:fromView:item' => 'Item',
+	'table_columns:fromView:language' => 'Language',
+	'table_columns:fromView:owner' => 'Owner',
+	'table_columns:fromView:time_created' => 'Time Created',
+	'table_columns:fromView:time_updated' => 'Time Updated',
+	'table_columns:fromView:user' => 'User',
+
+	'table_columns:fromProperty:description' => 'Description',
+	'table_columns:fromProperty:email' => 'Email',
+	'table_columns:fromProperty:name' => 'Name',
+	'table_columns:fromProperty:type' => 'Type',
+	'table_columns:fromProperty:username' => 'Username',
+
+	'table_columns:fromMethod:getSubtype' => 'Subtype',
+	'table_columns:fromMethod:getDisplayName' => 'Name/Title',
+	'table_columns:fromMethod:getMimeType' => 'MIME Type',
+	'table_columns:fromMethod:getSimpleType' => 'Type',
 
 /**
  * User details
@@ -142,6 +174,7 @@ return array(
 	'password' => "GCconnex password",
 	'passwordagain' => "Password (again for verification)",
 	'admin_option' => "Make this user an admin?",
+	'autogen_password_option' => "Automatically generate a secure password?",
 
 /**
  * Access
@@ -333,8 +366,10 @@ return array(
 	'river:none' => 'No activity',
 	'river:update' => 'Update for %s',
 	'river:delete' => 'Remove this activity item',
-	'river:delete:success' => 'River item has been deleted',
-	'river:delete:fail' => 'River item could not be deleted',
+	'river:delete:success' => 'Activity item has been deleted',
+	'river:delete:fail' => 'Activity item could not be deleted',
+	'river:delete:lack_permission' => 'You lack permission to delete this activity item',
+	'river:can_delete:invaliduser' => 'Cannot check canDelete for user_guid [%s] as the user does not exist.',
 	'river:subject:invalid_subject' => 'Invalid user',
 	'activity:owner' => 'View activity',
 
@@ -478,6 +513,9 @@ return array(
 	'admin:cron:period' => 'Cron period',
 	'admin:cron:friendly' => 'Last completed',
 	'admin:cron:date' => 'Date and time',
+	'admin:cron:msg' => 'Message',
+	'admin:cron:started' => 'Cron jobs for "%s" started at %s',
+	'admin:cron:complete' => 'Cron jobs for "%s" completed at %s',
 
 	'admin:appearance' => 'Appearance',
 	'admin:administer_utilities' => 'Utilities',
@@ -607,11 +645,17 @@ three sections:
 	'admin:plugins:description' => "This admin panel allows you to control and configure tools installed on your site.",
 	'admin:plugins:opt:linktext' => "Configure tools...",
 	'admin:plugins:opt:description' => "Configure the tools installed on the site. ",
+	'admin:plugins:label:id' => "ID",
+	'admin:plugins:label:name' => "Name",
 	'admin:plugins:label:author' => "Author",
 	'admin:plugins:label:copyright' => "Copyright",
 	'admin:plugins:label:categories' => 'Categories',
 	'admin:plugins:label:licence' => "License",
 	'admin:plugins:label:website' => "URL",
+	'admin:plugins:label:info' => "Info",
+	'admin:plugins:label:files' => "Files",
+	'admin:plugins:label:resources' => "Resources",
+	'admin:plugins:label:screenshots' => "Screenshots",
 	'admin:plugins:label:repository' => "Code",
 	'admin:plugins:label:bugtracker' => "Report issue",
 	'admin:plugins:label:donate' => "Donate",
@@ -626,11 +670,13 @@ three sections:
 	'admin:plugins:label:contributors:description' => 'Description',
 	'admin:plugins:label:dependencies' => 'Dependencies',
 
-	'admin:plugins:warning:elgg_version_unknown' => 'This plugin uses a legacy manifest file and does not specify a compatible Elgg version. It probably will not work!',
 	'admin:plugins:warning:unmet_dependencies' => 'This plugin has unmet dependencies and cannot be activated. Check dependencies under more info.',
 	'admin:plugins:warning:invalid' => 'This plugin is invalid: %s',
 	'admin:plugins:warning:invalid:check_docs' => 'Check <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">the Elgg documentation</a> for troubleshooting tips.',
 	'admin:plugins:cannot_activate' => 'cannot activate',
+	'admin:plugins:cannot_deactivate' => 'cannot deactivate',
+	'admin:plugins:already:active' => 'The selected plugin(s) are already active.',
+	'admin:plugins:already:inactive' => 'The selected plugin(s) are already inactive.',
 
 	'admin:plugins:set_priority:yes' => "Reordered %s.",
 	'admin:plugins:set_priority:no' => "Could not reorder %s.",
@@ -680,6 +726,11 @@ three sections:
 	'admin:server:label:post_max_size' => 'POST maximum size',
 	'admin:server:label:upload_max_filesize' => 'Upload maximum size',
 	'admin:server:warning:post_max_too_small' => '(Note: post_max_size must be larger than this value to support uploads of this size)',
+	'admin:server:label:memcache' => 'Memcache',
+	'admin:server:memcache:inactive' => '
+		Memcache is not setup on this server or it has not yet been configured in Elgg config.
+		For improved performance, it is recommended that you enable and configure memcache.
+	',
 
 	'admin:user:label:search' => "Find users:",
 	'admin:user:label:searchbutton' => "Search",
@@ -733,12 +784,16 @@ These changes will only affect new users on the site.',
 /**
  * User settings
  */
-		
+
 	'usersettings:description' => "The user settings panel allows you to control all your personal settings, from user management to how plugins behave. Choose an option below to get started.",
 
 	'usersettings:statistics' => "Your statistics",
 	'usersettings:statistics:opt:description' => "View statistical information about users and objects on your site.",
-	'usersettings:statistics:opt:linktext' => "Account Information",
+	'usersettings:statistics:opt:linktext' => "Account statistics",
+	
+	'usersettings:statistics:login_history' => "Login History",
+	'usersettings:statistics:login_history:date' => "Date",
+	'usersettings:statistics:login_history:ip' => "IP Address",
 
 	'usersettings:user' => "%s's settings",
 	'usersettings:user:opt:description' => "This allows you to control user settings.",
@@ -760,7 +815,7 @@ These changes will only affect new users on the site.',
 /**
  * Activity river
  */
-		
+
 	'river:all' => 'All Site Activity',
 	'river:mine' => 'My Activity',
 	'river:owner' => 'Activity of %s',
@@ -787,7 +842,7 @@ These changes will only affect new users on the site.',
 	'icon:size:medium' => "Medium",
 	'icon:size:large' => "Large",
 	'icon:size:master' => "Extra Large",
-		
+
 /**
  * Generic action words
  */
@@ -872,11 +927,11 @@ These changes will only affect new users on the site.',
 
 	'active' => 'Active',
 	'total' => 'Total',
-	
+
 	'ok' => 'OK',
 	'any' => 'Any',
 	'error' => 'Error',
-	
+
 	'other' => 'Other',
 	'options' => 'Options',
 	'advanced' => 'Advanced',
@@ -889,7 +944,7 @@ These changes will only affect new users on the site.',
 	'content:latest:blurb' => 'Alternatively, click here to view the latest content from across the site.',
 
 	'link:text' => 'view link',
-	
+
 /**
  * Generic questions
  */
@@ -917,7 +972,7 @@ These changes will only affect new users on the site.',
 	'sort:popular' => 'Popular',
 	'sort:alpha' => 'Alphabetical',
 	'sort:priority' => 'Priority',
-		
+
 /**
  * Generic data words
  */
@@ -942,7 +997,7 @@ These changes will only affect new users on the site.',
 /**
  * Entity actions
  */
-		
+
 	'edit:this' => 'Edit this',
 	'delete:this' => 'Delete this',
 	'comment:this' => 'Comment on this',
@@ -985,7 +1040,7 @@ Once you have logged in, we highly recommend that you change your password.
 /**
  * Import / export
  */
-		
+
 	'importsuccess' => "Import of data was successful",
 	'importfail' => "OpenDD import of data failed.",
 
@@ -1001,7 +1056,7 @@ Once you have logged in, we highly recommend that you change your password.
 	'friendlytime:days' => "%s days ago",
 	'friendlytime:days:singular' => "yesterday",
 	'friendlytime:date_format' => 'j F Y @ g:ia',
-	
+
 	'friendlytime:future:minutes' => "in %s minutes",
 	'friendlytime:future:minutes:singular' => "in a minute",
 	'friendlytime:future:hours' => "in %s hours",
@@ -1021,6 +1076,19 @@ Once you have logged in, we highly recommend that you change your password.
 	'date:month:10' => 'October %s',
 	'date:month:11' => 'November %s',
 	'date:month:12' => 'December %s',
+	
+	'date:month:short:01' => 'Jan %s',
+	'date:month:short:02' => 'Feb %s',
+	'date:month:short:03' => 'Mar %s',
+	'date:month:short:04' => 'Apr %s',
+	'date:month:short:05' => 'May %s',
+	'date:month:short:06' => 'Jun %s',
+	'date:month:short:07' => 'Jul %s',
+	'date:month:short:08' => 'Aug %s',
+	'date:month:short:09' => 'Sep %s',
+	'date:month:short:10' => 'Oct %s',
+	'date:month:short:11' => 'Nov %s',
+	'date:month:short:12' => 'Dec %s',
 
 	'date:weekday:0' => 'Sunday',
 	'date:weekday:1' => 'Monday',
@@ -1029,7 +1097,15 @@ Once you have logged in, we highly recommend that you change your password.
 	'date:weekday:4' => 'Thursday',
 	'date:weekday:5' => 'Friday',
 	'date:weekday:6' => 'Saturday',
-	
+
+	'date:weekday:short:0' => 'Sun',
+	'date:weekday:short:1' => 'Mon',
+	'date:weekday:short:2' => 'Tue',
+	'date:weekday:short:3' => 'Wed',
+	'date:weekday:short:4' => 'Thu',
+	'date:weekday:short:5' => 'Fri',
+	'date:weekday:short:6' => 'Sat',
+
 	'interval:minute' => 'Every minute',
 	'interval:fiveminute' => 'Every five minutes',
 	'interval:fifteenmin' => 'Every fifteen minutes',
@@ -1067,8 +1143,6 @@ Once you have logged in, we highly recommend that you change your password.
 	'installation:walled_garden:description' => 'Enable this to prevent non-members from viewing the site except for web pages marked as public (such as login and registration).',
 	'installation:walled_garden:label' => 'Restrict pages to logged-in users',
 
-	'installation:httpslogin' => "Enable this to have user logins performed over HTTPS. This requires an HTTPS enabled web server!",
-	'installation:httpslogin:label' => "Enable HTTPS logins",
 	'installation:view' => "Enter the view which will be used as the default for your site or leave this blank for the default view (if in doubt, leave as default):",
 
 	'installation:siteemail' => "Site email address (used when sending system emails):",
@@ -1081,13 +1155,19 @@ Once you have logged in, we highly recommend that you change your password.
 	'installation:simplecache:description' => "The simple cache increases performance by caching static content including some CSS and JavaScript files.",
 	'installation:simplecache:label' => "Use simple cache (recommended)",
 
+	'installation:cache_symlink:description' => "The symbolic link to the simple cache directory allows the server to serve static views bypassing the engine, which considerably improves performance and reduces the server load",
+	'installation:cache_symlink:label' => "Use symbolic link to simple cache directory (recommended)",
+	'installation:cache_symlink:warning' => "Symbolic link has been established. If, for some reason, you want to remove the link, delete the symbolic link directory from your server",
+	'installation:cache_symlink:paths' => 'Correctly configured symbolic link must link <i>%s</i> to <i>%s</i>',
+	'installation:cache_symlink:error' => "Due to your server configuration the symbolic link can not be established automatically. Please refer to the documentation and establish the symbolic link manually.",
+
 	'installation:minify:description' => "The simple cache can also improve performance by compressing JavaScript and CSS files. (Requires that simple cache is enabled.)",
 	'installation:minify_js:label' => "Compress JavaScript (recommended)",
 	'installation:minify_css:label' => "Compress CSS (recommended)",
 
 	'installation:htaccess:needs_upgrade' => "You must update your .htaccess file so that the path is injected into the GET parameter __elgg_uri (you can use install/config/htaccess.dist as a guide).",
 	'installation:htaccess:localhost:connectionfailed' => "Elgg cannot connect to itself to test rewrite rules properly. Check that curl is working and there are no IP restrictions preventing localhost connections.",
-	
+
 	'installation:systemcache:description' => "The system cache decreases the loading time of Elgg by caching data to files.",
 	'installation:systemcache:label' => "Use system cache (recommended)",
 
@@ -1098,7 +1178,6 @@ Once you have logged in, we highly recommend that you change your password.
 	'admin:legend:debug' => 'Debugging and Logging',
 
 	'upgrading' => 'Upgrading...',
-	'upgrade:db' => 'Your database was upgraded.',
 	'upgrade:core' => 'Your Elgg installation was upgraded.',
 	'upgrade:unlock' => 'Unlock upgrade',
 	'upgrade:unlock:confirm' => "The database is locked for another upgrade. Running concurrent upgrades is dangerous. You should only continue if you know there is not another upgrade running. Unlock?",
@@ -1137,18 +1216,9 @@ Once you have logged in, we highly recommend that you change your password.
 	'upgrade:finished' => 'Upgrade finished',
 	'upgrade:finished_with_errors' => '<p>Upgrade finished with errors. Refresh the page and try running the upgrade again.</p></p><br />If the error recurs, check the server error log for possible cause. You can seek help for fixing the error from the <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">Technical support group</a> in the Elgg community.</p>',
 
-	// Strings specific for the comments upgrade
-	'admin:upgrades:comments' => 'Comments upgrade',
-	'upgrade:comment:create_failed' => 'Failed to convert comment id %s to an entity.',
-	'admin:upgrades:commentaccess' => 'Comments Access Upgrade',
-
-	// Strings specific for the datadir upgrade
-	'admin:upgrades:datadirs' => 'Data directory upgrade',
-
-	// Strings specific for the discussion reply upgrade
-	'admin:upgrades:discussion_replies' => 'Discussion reply upgrade',
-	'discussion:upgrade:replies:create_failed' => 'Failed to convert discussion reply id %s to an entity.',
-
+	// Strings specific for the database guid columns reply upgrade
+	'admin:upgrades:database_guid_columns' => 'Align database GUID columns',
+	
 /**
  * Welcome
  */
@@ -1159,12 +1229,12 @@ Once you have logged in, we highly recommend that you change your password.
 /**
  * Emails
  */
-		
+
 	'email:from' => 'From',
 	'email:to' => 'To',
 	'email:subject' => 'Subject',
 	'email:body' => 'Body',
-	
+
 	'email:settings' => "Email settings",
 	'email:address:label' => "Email address",
 
@@ -1256,15 +1326,19 @@ Please do not reply to this email.",
 /**
  * Entities
  */
-	
+
 	'byline' => 'By %s',
+	'byline:ingroup' => 'in the group %s',
 	'entity:default:strapline' => 'Created %s by %s',
 	'entity:default:missingsupport:popup' => 'This entity cannot be displayed correctly. This may be because it requires support provided by a plugin that is no longer installed.',
 
-	'entity:delete:success' => 'Entity %s has been deleted',
-	'entity:delete:fail' => 'Entity %s could not be deleted',
-	
-	'entity:can_delete:invaliduser' => 'Can not check canDelete for user_guid [%s] as the user does not exist.',
+	'entity:delete:item' => 'Item',
+	'entity:delete:item_not_found' => 'Item not found.',
+	'entity:delete:permission_denied' => 'You do not have permissions to delete this item.',
+	'entity:delete:success' => '%s has been deleted.',
+	'entity:delete:fail' => '%s could not be deleted.',
+
+	'entity:can_delete:invaliduser' => 'Cannot check canDelete() for user_guid [%s] as the user does not exist.',
 
 /**
  * Action gatekeeper
@@ -1455,4 +1529,7 @@ Please do not reply to this email.",
 	"zh" => "Chinese",
 	"zh_hans" => "Chinese Simplified",
 	"zu" => "Zulu",
+
+	"field:required" => 'Required',
+
 );

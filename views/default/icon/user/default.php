@@ -17,13 +17,14 @@
 
 $user = elgg_extract('entity', $vars, elgg_get_logged_in_user_entity());
 $size = elgg_extract('size', $vars, 'medium');
-$icon_sizes = elgg_get_config('icon_sizes');
-if (!array_key_exists($size, $icon_sizes)) {
-	$size = 'medium';
-}
 
 if (!($user instanceof ElggUser)) {
 	return;
+}
+
+$icon_sizes = elgg_get_icon_sizes('user');
+if (!array_key_exists($size, $icon_sizes)) {
+	$size = 'medium';
 }
 
 $name = htmlspecialchars($user->name, ENT_QUOTES, 'UTF-8', false);
@@ -46,11 +47,6 @@ if (!$icontime) {
 	$icontime = "default";
 }
 
-$js = elgg_extract('js', $vars, '');
-if ($js) {
-	elgg_deprecated_notice("Passing 'js' to icon views is deprecated.", 1.8, 5);
-}
-
 $img_class = '';
 if (isset($vars['img_class'])) {
 	$img_class = $vars['img_class'];
@@ -58,10 +54,6 @@ if (isset($vars['img_class'])) {
 
 
 $use_hover = elgg_extract('use_hover', $vars, true);
-if (isset($vars['override'])) {
-	elgg_deprecated_notice("Use 'use_hover' rather than 'override' with user avatars", 1.8, 5);
-	$use_hover = false;
-}
 if (isset($vars['hover'])) {
 	// only 1.8.0 was released with 'hover' as the key
 	$use_hover = $vars['hover'];

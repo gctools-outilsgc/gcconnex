@@ -23,40 +23,33 @@ if (!is_array($accesslevel)) {
 	$accesslevel = array();
 }
 
-/**
- * wrapper for recursive array walk decoding
- */
-function profile_array_decoder(&$v) {
-	$v = _elgg_html_decode($v);
-}
-
 $profile_fields = elgg_get_config('profile_fields');
 foreach ($profile_fields as $shortname => $valuetype) {
+	$value = get_input($shortname);
+	
+	if ($value === null) {
+		// only submitted profile fields should be updated
+		continue;
+	}
+	
 	// the decoding is a stop gap to prevent &amp;&amp; showing up in profile fields
 	// because it is escaped on both input (get_input()) and output (view:output/text). see #561 and #1405.
 	// must decode in utf8 or string corruption occurs. see #1567.
-	$value = get_input($shortname);
 	if (is_array($value)) {
-		array_walk_recursive($value, 'profile_array_decoder');
+		array_walk_recursive($value, function(&$v) {
+			$v = elgg_html_decode($v);
+		});
 	} else {
-		$value = _elgg_html_decode($value);
+		$value = elgg_html_decode($value);
 	}
-
-	// limit to reasonable sizes
-	// @todo - throwing away changes due to this is dumb!
-	// ^^ This is a sticky form so changes aren't lost...?
-	if (!is_array($value) && $valuetype != 'longtext' && elgg_strlen($value) > 250) {
-		$error = elgg_echo('profile:field_too_long', array(elgg_echo("profile:{$shortname}")));
-		register_error($error);
-		forward(REFERER);
+	
+	// convert tags fields to array values
+	if ($valuetype == 'tags') {
+		$value = string_to_tag_array($value);
 	}
 
 	if ($value && $valuetype == 'url' && !preg_match('~^https?\://~i', $value)) {
 		$value = "http://$value";
-	}
-
-	if ($valuetype == 'tags') {
-		$value = string_to_tag_array($value);
 	}
 
 	if ($valuetype == 'email' && !empty($value) && !is_email_address($value)) {

@@ -28,28 +28,47 @@ class Logger {
 		400 => 'ERROR',
 	);
 
-	/** @var int $level The logging level */
+	/**
+	 * @var int The logging level
+	 */
 	protected $level = self::ERROR;
 
-	/** @var bool $display Display to user? */
+	/**
+	 * @var bool Display to user?
+	 */
 	protected $display = false;
 
-	/** @var \Elgg\PluginHooksService $hooks */
+	/**
+	 * @var PluginHooksService
+	 */
 	protected $hooks;
 
-	/** @var \stdClass Global Elgg configuration */
-	private $CONFIG;
+	/**
+	 * @var Config
+	 */
+	private $config;
+
+	/**
+	 * @var Context
+	 */
+	private $context;
+
+	/**
+	 * @var array
+	 */
+	private $disabled_stack;
 
 	/**
 	 * Constructor
 	 *
-	 * @param \Elgg\PluginHooksService $hooks Hooks service
+	 * @param PluginHooksService $hooks   Hooks service
+	 * @param Config             $config  Config service
+	 * @param Context            $context Context service
 	 */
-	public function __construct(\Elgg\PluginHooksService $hooks) {
-		global $CONFIG;
-		
-		$this->CONFIG = $CONFIG;
+	public function __construct(PluginHooksService $hooks, Config $config, Context $context) {
+		$this->config = $config;
 		$this->hooks = $hooks;
+		$this->context = $context;
 	}
 
 	/**
@@ -69,7 +88,7 @@ class Logger {
 
 	/**
 	 * Get the current logging level
-	 * 
+	 *
 	 * @return int
 	 */
 	public function getLevel() {
@@ -98,12 +117,27 @@ class Logger {
 	 * @return bool Whether the messages was logged
 	 */
 	public function log($message, $level = self::NOTICE) {
+		if ($this->disabled_stack) {
+			// capture to top of stack
+			end($this->disabled_stack);
+			$key = key($this->disabled_stack);
+			$this->disabled_stack[$key][] = [
+				'message' => $message,
+				'level' => $level,
+			];
+		}
+
 		if ($this->level == self::OFF || $level < $this->level) {
 			return false;
 		}
 
 		if (!array_key_exists($level, self::$levels)) {
 			return false;
+		}
+
+		// when capturing, still use consistent return value
+		if ($this->disabled_stack) {
+			return true;
 		}
 
 		$levelString = self::$levels[$level];
@@ -193,18 +227,18 @@ class Logger {
 		// Do not want to write to screen before page creation has started.
 		// This is not fool-proof but probably fixes 95% of the cases when logging
 		// results in data sent to the browser before the page is begun.
-		if (!isset($this->CONFIG->pagesetupdone)) {
+		if (!isset($GLOBALS['_ELGG']->pagesetupdone)) {
 			$display = false;
 		}
 
 		// Do not want to write to JS or CSS pages
-		if (elgg_in_context('js') || elgg_in_context('css')) {
+		if ($this->context->contains('js') || $this->context->contains('css')) {
 			$display = false;
 		}
 
 		// don't display in simplecache requests
 		$path = substr(current_page_url(), strlen(elgg_get_site_url()));
-		if (preg_match('~^(cache|action)/~', $path)) {
+		if (preg_match('~^(cache|action|serve-file)/~', $path)) {
 			$display = false;
 		}
 
@@ -212,9 +246,50 @@ class Logger {
 			echo '<pre class="elgg-logger-data">';
 			echo htmlspecialchars(print_r($data, true), ENT_QUOTES, 'UTF-8');
 			echo '</pre>';
-		} else {
-			error_log(print_r($data, true));
 		}
+		
+		error_log(print_r($data, true));
+	}
+
+	/**
+	 * Temporarily disable logging and capture logs (before tests)
+	 *
+	 * Call disable() before your tests and enable() after. enable() will return a list of
+	 * calls to log() (and helper methods) that were not acted upon.
+	 *
+	 * @note This behaves like a stack. You must call enable() for each disable() call.
+	 *
+	 * @return void
+	 * @see enable
+	 * @access private
+	 * @internal
+	 */
+	public function disable() {
+		$this->disabled_stack[] = [];
+	}
+
+	/**
+	 * Restore logging and get record of log calls (after tests)
+	 *
+	 * @return array
+	 * @see disable
+	 * @access private
+	 * @internal
+	 */
+	public function enable() {
+		return array_pop($this->disabled_stack);
+	}
+
+	/**
+	 * Reset the hooks service for this instance (testing)
+	 *
+	 * @return void
+	 * @access private
+	 * @internal
+	 */
+	public function setHooks(PluginHooksService $hooks) {
+		$this->hooks = $hooks;
+		$this->hooks->setLogger($this);
 	}
 }
 

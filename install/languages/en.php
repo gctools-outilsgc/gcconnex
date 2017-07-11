@@ -40,12 +40,12 @@ If you are ready to proceed, click the Next button.",
 	'install:check:php:register_globals' => 'Register globals must be turned off.',
 	'install:check:php:session.auto_start' => "session.auto_start must be off for Elgg to work. Either change the configuration of your server or add this directive to Elgg's .htaccess file.",
 
-	'install:check:enginedir' => 'Your web server does not have permission to create the settings.php file in the engine directory. You have two choices:
+	'install:check:installdir' => 'Your web server does not have permission to create the settings.php file in your installation directory. You have two choices:
 
-		1. Change the permissions on the engine directory
+		1. Change the permissions on the elgg-config directory of your Elgg installation
 
-		2. Copy the file settings.example.php to settings.php and follow the instructions in it for setting your database parameters.',
-	'install:check:readsettings' => 'A settings file exists in the engine directory, but the web server cannot read it. You can delete the file or change the read permissions on it.',
+		2. Copy the file %s/settings.example.php to elgg-config/settings.php and follow the instructions in it for setting your database parameters.',
+	'install:check:readsettings' => 'A settings file exists in the installation directory, but the web server cannot read it. You can delete the file or change the read permissions on it.',
 
 	'install:check:php:success' => "Your server's PHP satisfies all of Elgg's requirements.",
 	'install:check:rewrite:success' => 'The test of the rewrite rules was successful.',
@@ -59,12 +59,14 @@ If you are ready to proceed, click the Next button.",
 	'install:database:label:dbname' => 'Database Name',
 	'install:database:label:dbhost' => 'Database Host',
 	'install:database:label:dbprefix' => 'Database Table Prefix',
+	'install:database:label:timezone' => "Timezone",
 
 	'install:database:help:dbuser' => 'User that has full privileges to the MySQL database that you created for Elgg',
 	'install:database:help:dbpassword' => 'Password for the above database user account',
 	'install:database:help:dbname' => 'Name of the Elgg database',
 	'install:database:help:dbhost' => 'Hostname of the MySQL server (usually localhost)',
 	'install:database:help:dbprefix' => "The prefix given to all of Elgg's tables (usually elgg_)",
+	'install:database:help:timezone' => "The default timezone in which the site will operate",
 
 	'install:settings:instructions' => 'We need some information about the site as we configure Elgg. If you haven\'t <a href="http://learn.elgg.org/en/1.x/intro/install.html#create-a-data-folder" target="_blank">created a data directory</a> for Elgg, you need to do so now.',
 
@@ -124,8 +126,8 @@ If you are ready to proceed, click the Next button.",
 	'install:error:nodatabase' => 'Unable to use database %s. It may not exist.',
 	'install:error:cannotloadtables' => 'Cannot load the database tables',
 	'install:error:tables_exist' => 'There are already Elgg tables in the database. You need to either drop those tables or restart the installer and we will attempt to use them. To restart the installer, remove \'?step=database\' from the URL in your browser\'s address bar and press Enter.',
-	'install:error:readsettingsphp' => 'Unable to read engine/settings.example.php',
-	'install:error:writesettingphp' => 'Unable to write engine/settings.php',
+	'install:error:readsettingsphp' => 'Unable to read /elgg-config/settings.example.php',
+	'install:error:writesettingphp' => 'Unable to write /elgg-config/settings.php',
 	'install:error:requiredfield' => '%s is required',
 	'install:error:relative_path' => 'We don\'t think "%s" is an absolute path for your data directory',
 	'install:error:datadirectoryexists' => 'Your data directory %s does not exist.',

@@ -15,14 +15,14 @@ function site_notifications_init() {
 
 	elgg_register_page_handler('site_notifications', 'site_notifications_page_handler');
 
-	elgg_extend_view('css/elgg', 'site_notifications/css');
+	elgg_extend_view('elgg.css', 'site_notifications/css');
 
-	$js = elgg_get_simplecache_url('js', 'site_notifications');
+	$js = elgg_get_simplecache_url('site_notifications.js');
 	elgg_register_js('elgg.site_notifications', $js, 'footer');
 
 	site_notifications_set_topbar();
 
-	$actions_base = elgg_get_plugins_path() . 'site_notifications/actions/site_notifications';
+	$actions_base = __DIR__ . '/actions/site_notifications';
 	elgg_register_action('site_notifications/delete', "$actions_base/delete.php");
 	elgg_register_action('site_notifications/process', "$actions_base/process.php");
 }
@@ -36,8 +36,6 @@ function site_notifications_init() {
  * @return boolean
  */
 function site_notifications_page_handler($segments) {
-	$base = elgg_get_plugins_path() . 'site_notifications/pages/site_notifications';
-
 	elgg_gatekeeper();
 
 	if (!isset($segments[1])) {
@@ -50,9 +48,8 @@ function site_notifications_page_handler($segments) {
 	}
 
 	elgg_set_page_owner_guid($user->guid);
-	elgg_load_js('elgg.site_notifications');
 
-	require "$base/view.php";
+	echo elgg_view_resource('site_notifications/view');
 
 	return true;
 }

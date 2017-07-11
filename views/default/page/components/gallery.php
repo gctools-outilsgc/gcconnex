@@ -24,11 +24,7 @@ $position = elgg_extract('position', $vars, 'after');
 $no_results = elgg_extract('no_results', $vars, '');
 
 if (!$items && $no_results) {
-	if ($no_results instanceof Closure) {
-		echo $no_results();
-		return;
-	}
-	echo "<p class='elgg-no-results'>$no_results</p>";
+	echo elgg_view('page/components/no_results', $vars);
 	return;
 }
 
@@ -50,9 +46,12 @@ if (isset($vars['item_class'])) {
 
 $nav = ($pagination) ? elgg_view('navigation/pagination', $vars) : '';
 
+$index = 0;
 $list_items = '';
 foreach ($items as $item) {
-	$item_view = elgg_view_list_item($item, $vars);
+	$item_view_vars = $vars;
+	$item_view_vars['list_item_index'] = $index;
+	$item_view = elgg_view_list_item($item, $item_view_vars);
 	if (!$item_view) {
 		continue;
 	}
@@ -66,13 +65,19 @@ foreach ($items as $item) {
 	}
 
 	$list_items .= elgg_format_element('li', $li_attrs, $item_view);
+	$index++;
 }
 
 if ($position == 'before' || $position == 'both') {
 	echo $nav;
 }
 
-echo elgg_format_element('ul', ['class' => $list_classes], $list_items);
+if (empty($list_items) && $no_results) {
+	// there are scenarios where item views do not output html. In those cases show the no results info
+	echo elgg_view('page/components/no_results', $vars);
+} else {
+	echo elgg_format_element('ul', ['class' => $list_classes], $list_items);
+}
 
 if ($position == 'after' || $position == 'both') {
 	echo $nav;

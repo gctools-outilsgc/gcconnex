@@ -6,7 +6,7 @@ return array(
 	'install:database' => 'Database-installatie',
 	'install:settings' => 'Configureer site',
 	'install:admin' => 'Maak een adminaccount aan',
-	'install:complete' => 'Beëindigd ',
+	'install:complete' => 'Afgerond',
 
 	'install:next' => 'Volgende',
 	'install:refresh' => 'Vernieuw',
@@ -40,11 +40,12 @@ Klaar om door te gaan? Klik dan op 'Volgende'.",
 	'install:check:php:register_globals' => 'Register globals moet uitgeschakeld zijn.',
 	'install:check:php:session.auto_start' => "session.auto_start moet uitgeschakeld zijn om Elgg te laten werken. Verander de configuratie van je server of voeg deze richtlijn toe aan het .htaccess bestand van Elgg.",
 
-	'install:check:enginedir' => 'Jouw webserver heeft onvoldoende rechten om het settings.php bestand in de engine map aan te maken. Je hebt twee keuzes:
+	'install:check:installdir' => 'Jouw webserver heeft onvoldoende rechten om het settings.php bestand in de engine map aan te maken. Je hebt twee keuzes:
 
-1. Wijzig de bevoegdheden van de engine map
-2. Kopieer het bestand settings.example.php naar settings.php en volg de aanwijzingen in het bestand om je databasegegevens in te stellen',
-	'install:check:readsettings' => 'Er staat een instellingenbestand in de engine map, maar de webserver kan dit niet lezen. Je kunt het bestand verwijderen of de leesbevoegdheden ervan wijzigen.',
+1. Wijzig de bevoegdheden van de elgg-config map
+
+2. Kopieer het bestand %s/settings.example.php naar elgg-config/settings.php en volg de aanwijzingen in het bestand om je databasegegevens in te stellen.',
+	'install:check:readsettings' => 'Er staat een instellingenbestand in de installatie map, maar de webserver kan dit niet lezen. Je kunt het bestand verwijderen of de leesbevoegdheden ervan wijzigen.',
 
 	'install:check:php:success' => "De PHP van jouw webserver voldoet aan de eisen van Elgg.",
 	'install:check:rewrite:success' => 'De test voor de rewrite rules is geslaagd.',
@@ -58,12 +59,14 @@ Klaar om door te gaan? Klik dan op 'Volgende'.",
 	'install:database:label:dbname' => 'Database naam',
 	'install:database:label:dbhost' => 'Database host',
 	'install:database:label:dbprefix' => 'Database table voorvoegsel',
+	'install:database:label:timezone' => "Tijdzone",
 
 	'install:database:help:dbuser' => 'De gebruiker die de volledige bevoegdheid heeft tot de MySQL-database die je aangemaakt hebt voor Elgg',
 	'install:database:help:dbpassword' => 'Wachtwoord voor de databasegebruiker hierboven',
 	'install:database:help:dbname' => 'Naam van de Elgg-database',
 	'install:database:help:dbhost' => 'Hostnaam van de MySQL-server (meestal localhost)',
 	'install:database:help:dbprefix' => "Het voorvoegsel dat voor alle tabellen van Elgg gebruikt wordt (meestal elgg_)",
+	'install:database:help:timezone' => "De standaard tijdzone waarin de site zal werken",
 
 	'install:settings:instructions' => 'We hebben wat informatie nodig over de site terwijl we Elgg configureren. Als je nog geen <a href="http://learn.elgg.org/en/1.x/intro/install.html#create-a-data-folder" target="_blank">datamap hebt aangemaakt</a> voor Elgg, moet je dit nu doen.',
 
@@ -101,7 +104,7 @@ Klaar om door te gaan? Klik dan op 'Volgende'.",
 
 	'install:admin:password:mismatch' => 'Wachtwoorden moeten gelijk zijn',
 	'install:admin:password:empty' => 'Wachtwoord mag niet leeg zijn',
-	'install:admin:password:tooshort' => 'Jouw wachtwoord is te kort',
+	'install:admin:password:tooshort' => 'Het wachtwoord is te kort',
 	'install:admin:cannot_create' => 'Een admin account kon niet aangemaakt worden.',
 
 	'install:complete:instructions' => 'Jouw Elgg site is nu klaar om gebruikt te worden. Klik op de knop hier onder om naar jouw site te gaan.',
@@ -123,12 +126,12 @@ Klaar om door te gaan? Klik dan op 'Volgende'.",
 	'install:error:nodatabase' => 'Niet mogelijk om database %s te gebruiken. Mogelijk bestaat hij niet.',
 	'install:error:cannotloadtables' => 'Kan de database tables niet laden',
 	'install:error:tables_exist' => 'Er bestaan alreeds Elgg tabellen in de database. Je moet eerst deze tabellen verwijderen of herstart de installatie en we zullen proberen deze tabellen te gebruiken. Om de installatie te herstarten verwijder \'?step=database\' uit de URL in de adresbalk van je browser en druk op Enter.',
-	'install:error:readsettingsphp' => 'Unable to read engine/settings.example.php',
-	'install:error:writesettingphp' => 'Unable to write engine/settings.php',
+	'install:error:readsettingsphp' => 'Kan /elgg-config/settings.example.php niet lezen',
+	'install:error:writesettingphp' => 'Kan niet naar /elgg-config/settings.php schrijven',
 	'install:error:requiredfield' => '%s is vereist',
 	'install:error:relative_path' => 'We denken dat "%s" niet een absoluut pad is naar je data map',
 	'install:error:datadirectoryexists' => 'Je data map %s bestaat niet.',
-	'install:error:writedatadirectory' => 'Je data map %s is niet schrijfbaar door de webserver',
+	'install:error:writedatadirectory' => 'Je data map %s is niet schrijfbaar door de webserver.',
 	'install:error:locationdatadirectory' => 'Je data map %s moet buiten je installatie pad staan voor veiligheidsredenen.',
 	'install:error:emailaddress' => '%s is geen geldig e-mailadres',
 	'install:error:createsite' => 'Kan site niet aanmaken',

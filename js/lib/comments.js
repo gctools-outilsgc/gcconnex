@@ -3,11 +3,12 @@ elgg.provide('elgg.comments');
 
 /**
  * @param {Number} guid
+ * @param {jQuery} item
  * @constructor
  */
-elgg.comments.Comment = function (guid) {
+elgg.comments.Comment = function (guid, item) {
 	this.guid = guid;
-	this.$item = $('#elgg-object-' + guid);
+	this.$item = item;
 };
 
 elgg.comments.Comment.prototype = {
@@ -35,27 +36,31 @@ elgg.comments.Comment.prototype = {
 	loadForm: function () {
 		var that = this;
 
-		// Get the form using ajax
-		elgg.ajax('ajax/view/core/ajax/edit_comment?guid=' + this.guid, {
-			success: function(html) {
-				// Add the form to DOM
-				that.$item.find('.elgg-body').first().append(html);
-
-				that.showForm();
-
-				var $form = that.getForm();
-
-				$form.find('.elgg-button-cancel').on('click', function () {
-					that.hideForm();
-					return false;
-				});
-
-				// save
-				$form.on('submit', function () {
-					that.submitForm();
-					return false;
-				});
-			}
+		require(['elgg/Ajax'], function(Ajax) {
+			var ajax = new Ajax();
+			
+			// Get the form using ajax
+			ajax.view('core/ajax/edit_comment?guid=' + that.guid, {
+				success: function(html) {
+					// Add the form to DOM
+					that.$item.find('.elgg-body').first().append(html);
+	
+					that.showForm();
+	
+					var $form = that.getForm();
+	
+					$form.find('.elgg-button-cancel').on('click', function () {
+						that.hideForm();
+						return false;
+					});
+	
+					// save
+					$form.on('submit', function () {
+						that.submitForm();
+						return false;
+					});
+				}
+			});
 		});
 	},
 
@@ -121,7 +126,7 @@ elgg.comments.init = function() {
 			guid;
 		if (!dc) {
 			guid = this.href.split('/').pop();
-			dc = new elgg.comments.Comment(guid);
+			dc = new elgg.comments.Comment(guid, $(this).closest('.elgg-item-object-comment'));
 			$(this).data('Comment', dc);
 		}
 		dc.toggleEdit();

@@ -46,7 +46,8 @@ if (count($plugin_guids) == 1) {
 	}
 	$plugin = get_entity($plugin_guids[0]);
 	$id = preg_replace('/[^a-z0-9-]/i', '-', $plugin->getID());
-	forward("$url#$id");
+	$url = "$url#$id";
+	return elgg_ok_response('', '', $url);
 } else {
 	forward(REFERER);
 }

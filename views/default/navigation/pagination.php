@@ -35,9 +35,6 @@ $url_fragment = elgg_extract('url_fragment', $vars, '');
 // some views pass an empty string for base_url
 if (isset($vars['base_url']) && $vars['base_url']) {
 	$base_url = $vars['base_url'];
-} else if (isset($vars['baseurl']) && $vars['baseurl']) {
-	elgg_deprecated_notice("Use 'base_url' instead of 'baseurl' for the navigation/pagination view", 1.8);
-	$base_url = $vars['baseurl'];
 } elseif (elgg_is_xhr() && !empty($_SERVER['HTTP_REFERER'])) {
 	$base_url = $_SERVER['HTTP_REFERER'];
 } else {

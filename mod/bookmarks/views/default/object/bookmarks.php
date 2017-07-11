@@ -19,14 +19,8 @@ $categories = elgg_view('output/categories', $vars);
 $link = elgg_view('output/url', array('href' => $bookmark->address));
 $description = elgg_view('output/longtext', array('value' => $bookmark->description, 'class' => 'pbl'));
 
-$owner_link = elgg_view('output/url', array(
-	'href' => "bookmarks/owner/$owner->username",
-	'text' => $owner->name,
-	'is_trusted' => true,
-));
-$author_text = elgg_echo('byline', array($owner_link));
-
-$date = elgg_view_friendly_time($bookmark->time_created);
+$vars['owner_url'] = "bookmarks/owner/$owner->username";
+$by_line = elgg_view('page/elements/by_line', $vars);
 
 $comments_count = $bookmark->countComments();
 //only display if there are commments
@@ -41,18 +35,17 @@ if ($comments_count != 0) {
 	$comments_link = '';
 }
 
-$metadata = elgg_view_menu('entity', array(
-	'entity' => $vars['entity'],
-	'handler' => 'bookmarks',
-	'sort_by' => 'priority',
-	'class' => 'elgg-menu-hz',
-));
+$subtitle = "$by_line $comments_link $categories";
 
-$subtitle = "$author_text $date $comments_link $categories";
-
-// do not show the metadata and controls in widget view
-if (elgg_in_context('widgets')) {
-	$metadata = '';
+$metadata = '';
+if (!elgg_in_context('widgets') && !elgg_in_context('gallery')) {
+	// only show entity menu outside of widgets and gallery view
+	$metadata = elgg_view_menu('entity', array(
+		'entity' => $vars['entity'],
+		'handler' => 'bookmarks',
+		'sort_by' => 'priority',
+		'class' => 'elgg-menu-hz',
+	));
 }
 
 if ($full && !elgg_in_context('gallery')) {
@@ -118,9 +111,9 @@ HTML;
 		'metadata' => $metadata,
 		'subtitle' => $subtitle,
 		'content' => $content,
+		'icon' => $owner_icon,
 	);
 	$params = $params + $vars;
-	$body = elgg_view('object/elements/summary', $params);
+	echo elgg_view('object/elements/summary', $params);
 	
-	echo elgg_view_image_block($owner_icon, $body);
 }

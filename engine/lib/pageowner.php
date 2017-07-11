@@ -7,8 +7,12 @@
  * @subpackage PageOwner
  */
 
+use Elgg\Http\Request;
+
 /**
  * Gets the guid of the entity that owns the current page.
+ *
+ * @see default_page_owner_handler Used to guess the page owner if it's not been set.
  *
  * @param int $guid Optional parameter used by elgg_set_page_owner_guid().
  *
@@ -32,6 +36,7 @@ function elgg_get_page_owner_guid($guid = 0) {
 	}
 
 	// return guid of page owner entity
+	// Note: core registers default_page_owner_handler() to handle this hook.
 	$guid = (int)elgg_trigger_plugin_hook('page_owner', 'system', null, 0);
 
 	if ($guid) {
@@ -127,16 +132,8 @@ function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) 
 		}
 	}
 
-	// ignore root and query
-	$uri = current_page_url();
-	$path = str_replace(elgg_get_site_url(), '', $uri);
-	$path = trim($path, "/");
-	if (strpos($path, "?")) {
-		$path = substr($path, 0, strpos($path, "?"));
-	}
-
 	// @todo feels hacky
-	$segments = explode('/', $path);
+	$segments = _elgg_services()->request->getUrlSegments();
 	if (isset($segments[1]) && isset($segments[2])) {
 		switch ($segments[1]) {
 			case 'owner':
@@ -267,23 +264,13 @@ function elgg_set_context_stack(array $stack) {
 }
 
 /**
- * Initializes the page owner functions
+ * Set an initial context if using index.php front controller.
  *
- * @note This is on the 'boot, system' event so that the context is set up quickly.
- *
+ * @param Request $request Elgg HTTP request
  * @return void
  * @access private
  */
-function page_owner_boot() {
-	
-	elgg_register_plugin_hook_handler('page_owner', 'system', 'default_page_owner_handler');
-
-	// Bootstrap the context stack by setting its first entry to the handler.
-	// This is the first segment of the URL and the handler is set by the rewrite rules.
-	// @todo this does not work for actions
-
-	$request = _elgg_services()->request;
-
+function _elgg_set_initial_context(\Elgg\Http\Request $request) {
 	// don't do this for *_handler.php, etc.
 	if (basename($request->server->get('SCRIPT_FILENAME')) === 'index.php') {
 		$context = $request->getFirstUrlSegment();
@@ -291,8 +278,20 @@ function page_owner_boot() {
 			$context = 'main';
 		}
 
-		elgg_set_context($context);
+		_elgg_services()->context->set($context);
 	}
+}
+
+/**
+ * Initializes the page owner functions
+ *
+ * @return void
+ * @access private
+ */
+function page_owner_boot() {
+	elgg_register_plugin_hook_handler('page_owner', 'system', 'default_page_owner_handler');
+
+	_elgg_set_initial_context(_elgg_services()->request);
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
