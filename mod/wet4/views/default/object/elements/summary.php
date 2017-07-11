@@ -95,7 +95,7 @@ $description_json = json_decode($entity->description);
 			}
 		}   
 		
-	}elseif ($entity->getSubtype() == 'poll'){
+	} elseif ($entity instanceof ElggEntity && $entity->getSubtype() == 'poll'){
 //if poll, check if the choice is the same in both language, if not, show (en/fr) one time
 		$responses = array();
 
