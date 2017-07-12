@@ -72,6 +72,37 @@ $input_order_field = elgg_view('input/dropdown', array(
 
 <div class="col-sm-12 panel panel-default mission-sort-panel mrgn-bttm-md">
     <div class="col-sm-11">
+        <strong>Filter by:</strong>
+<?php 
+echo ($opp_type_field)?'<strong>By type: </strong>':'';
+
+    foreach ($opp_type_field as $value) {
+        if ($value != end($opp_type_field)){
+            echo elgg_echo($value).', ';
+        }else{
+            echo elgg_echo($value).' ';
+        }
+    }
+echo ($role_type_field)?'<strong>By role: </strong>':'';
+
+    foreach ($role_type_field as $value) {
+        if ($value != end($role_type_field)){
+            echo elgg_echo($value).', ';
+        }else{
+            echo elgg_echo($value).' ';
+
+        }
+    }
+
+echo '<strong>Sort opportunitues by: </strong>';
+echo elgg_echo($sort_field).' ';
+
+echo '<strong>In the fallowing order: </strong>';
+echo elgg_echo($order_field).' ';
+
+?>
+    </div>
+        <div class="col-sm-11">
         <div class="col-sm-3">
 		  <label for="missions-sort-missions-type-field-text-input" class="mrgn-tp-sm mrgn-lft-sm">
 			 <?php echo elgg_echo('missions:filter:opportunity_type:label') . ': '; ?>

@@ -756,5 +756,5 @@ You can share your opportunity with any employee whether on this list or not. Em
     "missions:gl:group"=>"Group",
     "missions:gl:level"=>"Level",
     "missions:search:Refine" => 'Refine search',
-    "missions:search_value" => 'Values',
+    "missions:search_value" => 'Showing results for',
 );
