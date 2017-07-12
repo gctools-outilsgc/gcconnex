@@ -63,7 +63,7 @@ return array(
 	'exception:contact_admin' => 'Une erreur irrécupérable s\'est produite et a été enregistrée dans le journal. Veuillez SVP contacter l\'administrateur du site avec les informations suivantes :',
 
 	'actionundefined' => "L'action demandée (%s) n'est pas définie dans le système.",
-	'actionnotfound' => "Le fichier d'action pour %s n'a pas été trouvé."
+	'actionnotfound' => "Le fichier d'action pour %s n'a pas été trouvé.",
 	'actionloggedout' => "Désolé, vous ne pouvez pas effectuer cette action sans être connecté.",
 	'actionunauthorized' => "Vous n'êtes pas autorisé à effectuer cette action",
 

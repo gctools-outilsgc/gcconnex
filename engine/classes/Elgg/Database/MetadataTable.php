@@ -485,7 +485,8 @@ class MetadataTable {
 			'metadata_name_value_pairs'          => ELGG_ENTITIES_ANY_VALUE,
 	
 			'metadata_name_value_pairs_operator' => 'AND',
-			'metadata_case_sensitive'            => FALSE,	// cyu - metadata should be case insensitive (for search) (Ilia - migrated from lib/metadata.php due to changes in core update)
+			// cyu - metadata should be case insensitive (for search) (Ilia - migrated from lib/metadata.php due to changes in core update)
+			'metadata_case_sensitive'            => FALSE,
 			'order_by_metadata'                  => array(),
 	
 			'metadata_owner_guids'               => ELGG_ENTITIES_ANY_VALUE,

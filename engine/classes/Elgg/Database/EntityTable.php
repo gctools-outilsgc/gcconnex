@@ -676,7 +676,8 @@ class EntityTable {
 		if ($options['callback'] === 'entity_row_to_elggstar') {
 			// @TODO: update for 2.3 if necessary
 			/*if ( isset($options['wetcustom:messages']) )
-				$results = _elgg_wet_fetch_entities_from_sql($query, $options['__ElggBatch']);      // Patched to allow for much faster message inbox loading with all messages being loaded into a data table
+			     // Patched to allow for much faster message inbox loading with all messages being loaded into a data table
+				$results = _elgg_wet_fetch_entities_from_sql($query, $options['__ElggBatch']);
 			else
 				$results = _elgg_fetch_entities_from_sql($query, $options['__ElggBatch']);*/
 			$results = $this->fetchFromSql($query, $options['__ElggBatch']);
