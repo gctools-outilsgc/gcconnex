@@ -68,15 +68,15 @@ function gc_elgg_sitemap_init() {
 
 
 function redirect_group_url($hook, $type, $url, $params) {
-	// 192.168.xx.xx/gcconnex/groups/profile/1111/group-name
+	// from: 192.168.xx.xx/gcconnex/groups/profile/1111/group-name
+	// to: 192.168.xx.xx/gcconnex/groups/profile/1111/
 	$base_url = elgg_get_site_entity()->getURL();
 	$stripped_url = str_replace($base_url, "", $_SERVER['REQUEST_URI']);
 	$url = explode('/', $stripped_url);
 
 	if (strpos($_SERVER['REQUEST_URI'],"/groups/profile/") !== false)
 	{
-		error_log(">>>>>>>>>>>>>>>>>>>>>>> {$stripped_url} ".count($url));
-		if (sizeof($url) > 4)
+		if (sizeof($url) > 5)
 			forward("groups/profile/{$params['entity']->guid}");
 	}
 }
