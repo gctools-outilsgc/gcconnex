@@ -35,7 +35,6 @@ else {
 	        //'' => 'Choose',
 	        '',
 	        elgg_echo('missions:title'),
-	        elgg_echo('missions:type'),
 	        elgg_echo('missions:department'),
 	        elgg_echo('missions:key_skills'),
 	        elgg_echo('missions:security_clearance'),
