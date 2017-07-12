@@ -74,7 +74,7 @@ $input_order_field = elgg_view('input/dropdown', array(
     <div class="col-sm-11">
         <strong>Filter by:</strong>
 <?php 
-echo ($opp_type_field)?'<strong>By type: </strong>':'';
+echo ($opp_type_field)?'<strong>Type: </strong>':'';
 
     foreach ($opp_type_field as $value) {
         if ($value != end($opp_type_field)){
@@ -83,7 +83,11 @@ echo ($opp_type_field)?'<strong>By type: </strong>':'';
             echo elgg_echo($value).' ';
         }
     }
-echo ($role_type_field)?'<strong>By role: </strong>':'';
+$role = elgg_echo("missions:filter:role");
+$opportunities = elgg_echo('missions:sort_by');
+$order = elgg_echo('mission:following_order');
+
+echo ($role_type_field)?'<strong>'. $role.' </strong>':'';
 
     foreach ($role_type_field as $value) {
         if ($value != end($role_type_field)){
@@ -93,11 +97,10 @@ echo ($role_type_field)?'<strong>By role: </strong>':'';
 
         }
     }
-
-echo '<strong>Sort opportunitues by: </strong>';
+echo ($sort_field)?'<strong>'.$opportunities.': </strong>':'';
 echo elgg_echo($sort_field).' ';
 
-echo '<strong>In the fallowing order: </strong>';
+echo ($order_field)?'<strong>'.$order.': </strong>':'';
 echo elgg_echo($order_field).' ';
 
 ?>
