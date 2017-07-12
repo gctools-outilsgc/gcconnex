@@ -12,7 +12,7 @@
 
 $logged_in_user = elgg_get_logged_in_user_entity();
 
-$user_guids = get_input("user_guid");
+$user_guids = json_decode(get_input("user_guid"));
 if (!empty($user_guids) && !is_array($user_guids)) {
 	$user_guids = array($user_guids);
 }
