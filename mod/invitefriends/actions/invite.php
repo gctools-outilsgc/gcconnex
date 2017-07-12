@@ -15,13 +15,8 @@ if (!elgg_get_config('allow_registration')) {
 
 $site = elgg_get_site_entity();
 
-$emails = get_input('emails');
+$emails = json_decode(get_input('emails'));
 $emailmessage = get_input('emailmessage');
-
-$emails = trim($emails);
-if (strlen($emails) > 0) {
-	$emails = preg_split('/\\s+/', $emails, -1, PREG_SPLIT_NO_EMPTY);
-}
 
 if (!is_array($emails) || count($emails) == 0) {
 	register_error(elgg_echo('invitefriends:noemails'));
