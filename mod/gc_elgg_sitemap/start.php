@@ -62,6 +62,7 @@ function gc_elgg_sitemap_init() {
 		elgg_extend_view('groups/profile/summary', 'group_tabs', 600);
 
 		elgg_register_plugin_hook_handler('entity:url', 'group', 'redirect_group_url');
+		elgg_register_plugin_hook_handler('entity:url', 'object', 'redirect_content_url', 1);
 
 	}
 }
@@ -80,6 +81,27 @@ function redirect_group_url($hook, $type, $url, $params) {
 			forward("groups/profile/{$params['entity']->guid}");
 	}
 }
+
+/**
+ * covers: blogs, files, pages
+ * does not cover: bookmarks, missions, images, polls, wire, event
+ */
+function redirect_content_url($hook, $type, $url, $params) {
+	$base_url = elgg_get_site_entity()->getURL();
+	$stripped_url = str_replace($base_url, "", $_SERVER['REQUEST_URI']);
+	$url = explode('/', $stripped_url);
+	if (strpos($_SERVER['REQUEST_URI'],"/view/") !== false)
+	{
+		$subtype = $params['entity']->getSubtype();
+		if ($subtype === 'groupforumtopic') $subtype = 'discussion';
+		if ($subtype === 'page_top') $subtype = 'pages';
+		if ($subtype === 'idea') $subtype = 'ideas';
+
+		if (sizeof($url) > 5)
+			forward("{$subtype}/view/{$params['entity']->guid}");
+	}
+}
+
 
 function group_navigation_handler($hook, $type, $value, $params) {
 
