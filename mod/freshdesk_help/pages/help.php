@@ -6,7 +6,7 @@
 
 	$body = elgg_view_layout('one_column', array(
 		'title' => $title,
-		'content' => elgg_view('freshdesk/embed')
+		'content' => elgg_view('freshdesk/knowledge')
 	));
 
 	echo elgg_view_page($title, $body);

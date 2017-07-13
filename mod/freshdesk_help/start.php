@@ -6,14 +6,29 @@ function freshdesk_help_init() {
     elgg_register_page_handler('help', 'help_page_handler');
 
     elgg_register_action('submit-ticket', elgg_get_plugins_path() . "/freshdesk_help/actions/ticket/submit.php");
+    elgg_register_action('submit-ticket-pedia', elgg_get_plugins_path() . "/freshdesk_help/actions/ticket/submit-pedia.php");
     elgg_register_action('save-articles', elgg_get_plugins_path() . "/freshdesk_help/actions/articles/save.php");
+    elgg_register_action('save-articles-pedia', elgg_get_plugins_path() . "/freshdesk_help/actions/articles/pedia-save.php");
 
     elgg_extend_view("js/elgg", "js/freshdesk_help/functions");
     elgg_extend_view('css/elgg', 'freshdesk/css');
 
 }
 
-function help_page_handler(){
-    @include (dirname ( __FILE__ ) . "/pages/help.php");
-    return true;
+function help_page_handler($page){
+
+    switch ($page[0]) {
+  		case "knowledge":
+  			include (dirname ( __FILE__ ) . "/pages/help.php");
+  			break;
+
+  		case "embed":
+  			include (dirname ( __FILE__ ) . "/pages/embed.php");
+  			break;
+
+  		default:
+  			return false;
+  	}
+  	return true;
+
 }

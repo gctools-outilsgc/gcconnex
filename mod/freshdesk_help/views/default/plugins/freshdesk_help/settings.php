@@ -1,4 +1,16 @@
 <?php
+$mode = get_input('mode');
+if($mode == 'embed'){
+
+  echo '<ul class="elgg-tabs"><li><a href="freshdesk_help?mode=default">Main</a></li><li class="elgg-state-selected active"><a href="freshdesk_help?mode=embed">GCpedia Widget</a></li></ul>';
+  $portal = 2100008990;
+  $action = 'pedia-save.php';
+
+} else {
+
+echo '<ul class="elgg-tabs"><li class="elgg-state-selected active"><a href="freshdesk_help?mode=default">Main</a></li><li><a href="freshdesk_help?mode=embed">GCpedia Widget</a></li></ul>';
+$action = 'save.php';
+
 //api key
 $params = array(
         'name' => 'params[apikey]',
@@ -54,10 +66,15 @@ echo elgg_view("input/select", array(
         'value' => $vars['entity']->product_id));
 echo '</div>';
 
-if(isset($vars['entity']->portal_id)){
+$portal = $vars['entity']->portal_id;
+}
+
+if(isset($vars['entity']->portal_id) && isset($vars['entity']->apikey) && isset($vars['entity']->domain)){
   echo '<div class="fetch-buttons"><p>To add the Freshdesk articles to the system, first press the fetch articles button, then press the save articles button after the articles have loaded.</p>';
   echo '<a class="article-button" id="fetch" href="#">Fetch Articles</a> <a class="article-button" id="save" href="#">Save Articles</a></div>';
   echo'<div class="article-message"></div>';
+} else {
+  echo '<div><p>Save plugin settings to access fetching articles</p></div>';
 }
 
 ?>
@@ -97,7 +114,7 @@ $('#fetch').on('click', function(){
 
   var yourdomain = <?php echo '"'.$vars['entity']->domain.'"'; ?>;
   var api_key = <?php echo '"'.$vars['entity']->apikey.'"'; ?>;
-  var portal_id = <?php echo $vars['entity']->portal_id; ?>;
+  var portal_id = <?php echo $portal; ?>;
   var acceptedCategoriesEN = [];
   var acceptedCategoriesFR = [];
 
@@ -274,7 +291,7 @@ $('#save').on('click', function(){
           type: "POST",
           dataType : 'json',
           async: false,
-          url: elgg.normalize_url('/mod/freshdesk_help/actions/articles/save.php'),
+          url: elgg.normalize_url('/mod/freshdesk_help/actions/articles/'+'<?php echo $action;?>'),
           data: obj,
           success: function () { $('.article-message').append('Articles Saved'); $('#results-en').html(''); $('#results-fr').html('');   $('.fetch-buttons').hide(); },
           failure: function() { $('.article-message').append('Something went wrong'); }

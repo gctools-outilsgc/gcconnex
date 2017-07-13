@@ -1,5 +1,7 @@
 <?php
 return array(
+
+  'freshdesk:knowledge:search:results' => 'Showing %s french results.',
   'freshdesk:ticket:title' => "Submit a ticket",
   'freshdesk:ticket:email' => "Email",
   'freshdesk:ticket:subject' => "Subject",

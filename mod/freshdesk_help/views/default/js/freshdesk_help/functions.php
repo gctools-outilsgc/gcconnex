@@ -89,7 +89,7 @@ function occurrences(string, subString, allowOverlapping) {
  * @param {string} search query      Knowledge base article query
 */
 
-function searchArticles(search){
+function searchArticles(search, lang){
  
         // Retrieve the input field text and reset the count to zero
         var filter = $(search).val(), count = 0;
@@ -142,7 +142,7 @@ function searchArticles(search){
               $('#searchResults .article-panel').hide();
             }
             $('.search-info').hide()
-            $("#filter-count").text(elgg.echo('freshdesk:knowledge:search:results', [count]));
+            $("#filter-count").text(elgg.echo('freshdesk:knowledge:search:results:'+lang, [count]));
           } else {
             $('#searchResults .article-panel').hide();
             $('.search-info').show()
@@ -154,7 +154,7 @@ function searchArticles(search){
  * @param {string} search query      Knowledge base article query
 */
 
-function matchArticles(search){
+function matchArticles(search, lang){
  
         // Retrieve the input field text and reset the count to zero
         var filter = $(search).val(), count = 0;
@@ -204,9 +204,9 @@ function matchArticles(search){
 
           $('#searchResults .article-panel').show();
           $('.search-info').hide()
-          $("#filter-count").text(elgg.echo('freshdesk:knowledge:search:results', [count]));
+          $("#filter-count").text(elgg.echo('freshdesk:knowledge:search:results:'+lang, [count]));
           if(count > 0){
-            $('.relatedArticles a').text(elgg.echo('freshdesk:ticket:matching', [count])).parent().show();
+            $('.relatedArticles a').text(elgg.echo('freshdesk:ticket:matching:'+lang, [count])).parent().show();
           } else {
             $('.relatedArticles').hide();
           }

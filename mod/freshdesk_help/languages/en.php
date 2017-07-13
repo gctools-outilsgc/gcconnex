@@ -7,7 +7,6 @@ return array(
       'freshdesk:knowledge:title' => "Knowledge base",
       'freshdesk:knowledge:search:title' => "Search knowledge base",
       'freshdesk:knowledge:search:info' => 'Search our knowledge base to find the information you are looking for. For more information vist our <a href="https://gcconnex.gctools-outilsgc.ca/en/support/home">Support Home</a>.',
-      'freshdesk:knowledge:search:results' => 'Showing %s results.',
 
       'freshdesk:knowledge:explore:title' => 'Explore knowledge base',
 
@@ -22,6 +21,12 @@ return array(
       'freshdesk:ticket:submit:confirmed' => "Your ticket has been submitted.",
       'freshdesk:ticket:submit:denied' => "Something went wrong, please try again later.",
 
-      'freshdesk:ticket:matching' => '%s matching articles',
+      'freshdesk:knowledge:search:info:embed' => 'Search our knowledge base to find the information you are looking for. For more information vist our <a href="https://gcpedia.gctools-outilsgc.ca/en/support/home">Support Home</a>.',
 
+      //elgg js doens't work the way it should in this version so loopholing through this thing
+      'freshdesk:knowledge:search:results:en' => 'Showing %s results.',
+      'freshdesk:knowledge:search:results:fr' => 'Showing %s french results.',
+
+      'freshdesk:ticket:matching:en' => '%s matching articles',
+      'freshdesk:ticket:matching:fr' => '%s matching articles french',
     );
