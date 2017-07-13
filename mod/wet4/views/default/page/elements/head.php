@@ -229,6 +229,15 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
         <meta name="dcterms.language" title="ISO639-2" content="<?php echo get_language(); ?>" />
         <meta name="gcctitle" content="<?php echo $vars['title']; ?>" />
         <link href="<?php echo $site_url; ?>mod/wet4/graphics/favicon.ico" rel="icon" type="image/x-icon" />
+
+     <!-- hide the ajax toggle (hide the div) -->
+    <?php if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false) { ?>
+      <style>
+        .change_language {
+          display:none;
+        } 
+      </style>";
+    <?php } ?>
 <!-- Meta data-->
 
 <!--[if lt IE 9]>

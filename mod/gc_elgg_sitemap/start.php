@@ -15,6 +15,8 @@ function gc_elgg_sitemap_init() {
 	    elgg_register_plugin_hook_handler('prepare', 'breadcrumbs', 'elgg_breadcrumb_handler');
 	    elgg_register_plugin_hook_handler('register', 'menu:title2', 'elgg_site_menu_handler');
 
+	    elgg_register_menu_item('site', array('name' => 'pages', 'text' => 'Pages', 'href' => '/pages/all'));
+
 	
 	    /// remove all the sidebars across the site
 	    elgg_register_plugin_hook_handler('view', 'bookmarks/sidebar', 'elgg_sidebar_handler');
@@ -63,9 +65,84 @@ function gc_elgg_sitemap_init() {
 
 		elgg_register_plugin_hook_handler('entity:url', 'group', 'redirect_group_url');
 		elgg_register_plugin_hook_handler('entity:url', 'object', 'redirect_content_url', 1);
+		elgg_register_plugin_hook_handler('view', 'output/longtext', 'strip_content_hyperlinks_handler');
 
 	}
 }
+
+
+function strip_content_hyperlinks_handler($hook, $type, $return, $params) {
+	
+	// pull the user agent string and/or user testing
+	$gsa_agentstring = strtolower(elgg_get_plugin_setting('gsa_agentstring','gc_fedsearch_gsa'));
+	$gsa_usertest = elgg_get_plugin_setting('gsa_test','gc_fedsearch_gsa');
+	if ($gsa_usertest) $current_user = elgg_get_logged_in_user_entity();
+
+	/*blog pages bookmarks file discussion*/
+	$filter_entity = array('blog', 'pages', 'discussion', 'file', 'bookmarks');
+	$context = get_context();
+
+	// only do it for the main content, comments will be left the way it is
+	$comment = new DOMDocument();
+	$comment->loadHTML($return);
+	$comment_block = $comment->getElementsByTagName('div');
+
+	if (strstr($return, 'data-role="comment-text"') !== false) {
+		return;
+	}
+
+	if (!empty(trim($comment_block)) || $comment_block === null)
+		$comment_text = $comment_block->item(0)->getAttribute('data-role');
+	else
+		$comment_text = "";
+
+	if (( strcmp($comment_text,'comment-text') == 0 || strcmp($comment_text, 'discussion-reply-text') == 0 ))
+		return;
+
+	if (!in_array($context, $filter_entity))
+		return;
+
+	$url = explode('/',$_SERVER['REQUEST_URI']);
+	$entity = get_entity($url[4]);
+
+	if (isJsonString($entity->description)) {
+		$json = json_decode($entity->description, true);
+		$description_en = $json['en'];
+		$description_fr = $json['fr'];
+	} else {
+		$description_en = $entity->description;
+		$description_fr = $entity->description2;
+
+	}
+
+	// english body text
+	$description = new DOMDocument();
+	$description->loadHTML($description_en);
+	$links = $description->getElementsByTagName('a');
+	for ($i = $links->length - 1; $i >= 0; $i--) {
+		$linkNode = $links->item($i);
+		$lnkText = $linkNode->textContent;
+		$newTxtNode = $description->createTextNode($lnkText);
+		$linkNode->parentNode->replaceChild($newTxtNode, $linkNode);
+	}
+	$return = $description->textContent."<br/><br/>";
+
+
+	// french body text
+	$description->loadHTML($description_fr);
+	$links = $description->getElementsByTagName('a');
+	for ($i = $links->length - 1; $i >= 0; $i--) {
+		$linkNode = $links->item($i);
+		$lnkText = $linkNode->textContent;
+		$newTxtNode = $description->createTextNode($lnkText);
+		$linkNode->parentNode->replaceChild($newTxtNode, $linkNode);
+	}
+	$return .= $description->textContent;
+
+	return $return;
+}
+
+
 
 
 function redirect_group_url($hook, $type, $url, $params) {
@@ -112,7 +189,7 @@ function group_navigation_handler($hook, $type, $value, $params) {
 
 		foreach ($value as $key => $item) {
 
-			if ($item->getName() === 'activity' || $item->getName() === 'more' || $item->getName() === 'photo_albums' || $item->getName() === 'event_calendar') continue;
+			if ($item->getName() === 'activity' || $item->getName() === 'more' || $item->getName() === 'photo_albums' || $item->getName() === 'event_calendar' || $item->getName() === 'polls') continue;
 
 			if ($item->getName() === 'discussion') {
 				$url = "{$base_url}{$item->getName()}/owner/{$group_id}";
@@ -158,7 +235,6 @@ function elgg_comment_view_handler($hook, $type, $value, $params) {
 			'url_fragment' => $attr['id'],
 		));
 	}
-
 	return $comments;
 }
 
@@ -197,18 +273,22 @@ function elgg_full_entities_view_handler($hook, $type, $value, $params) {
 
 		case 'event_calendar':
 			if (isJsonString($value['entity']->long_description)) {
+				error_log(">>>>>>>>>>>>>>>>>>>   event calendar json");
 				$description_array = json_decode($value['entity']->long_description, true);
 				$description .= "<p> {$description_array['en']} </p> <p> {$description_array['fr']} </p>";
 			} else {
+				error_log(">>>>>>>>>>>>>>>>>>>   event calendar non json");
 				$description .= "<p> {$value['entity']->long_description} </p> <p> {$value['entity']->long_description2} </p>";
 			}
 			break;
 
 		default:
 			if (isJsonString($value['entity']->description)) {
+				error_log(">>>>>>>>>>>>>>>>>>>   other... json");
 				$description_array = json_decode($value['entity']->description, true);
 				$description .= "<p> {$description_array['en']} </p> <p> {$description_array['fr']} </p>";
 			} else {
+				error_log(">>>>>>>>>>>>>>>>>>>   other... non json");
 				$description .= "<p> {$value['entity']->description} </p> <p> {$value['entity']->description2} </p>";
 			}
 	}
