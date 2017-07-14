@@ -121,7 +121,7 @@ if ($search_form ) {
 
 if ($advanced_form){
     
-    $content .='<div class="mrgn-bttm-lg"><strong>'.elgg_echo('missions:search_value').':</strong> ';
+    $content .='<div class="mrgn-bttm-sm"><strong>'.elgg_echo('missions:search_value').':</strong> ';
 	for ($s = 0; $s < $number_of_rows; $s ++) {
         if ($advanced_form['selection_'.$s]){
 
