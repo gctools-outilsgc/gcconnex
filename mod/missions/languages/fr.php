@@ -739,6 +739,8 @@ Vous pouvez inviter n'importe quel employé à votre possibilité, qu'il figure 
     "missions:gl:group"=>"Group",
     "missions:gl:level"=>"Niveau",
     "missions:search:Refine" => 'Redéfinir la recherche',
-    "missions:search_value" => 'Valeurs',
+    "missions:search_value" => 'Valeurs de recherche',
+    "missions:filter" => "Filtrer par:",
+    "missions:filter:role" => "Rôle:"
 );
 
