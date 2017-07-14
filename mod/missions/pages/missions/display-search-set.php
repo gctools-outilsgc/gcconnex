@@ -120,17 +120,17 @@ if ($search_form ) {
     );
 
 if ($advanced_form){
-    $content .='<strong>'.elgg_echo('missions:search_value').':</strong> ';
+    
+    $content .='<div class="mrgn-bttm-lg"><strong>'.elgg_echo('missions:search_value').':</strong> ';
 	for ($s = 0; $s < $number_of_rows; $s ++) {
         if ($advanced_form['selection_'.$s]){
 
-        	$value =str_replace('missions:', '', $advanced_form['selection_'.$s.'_element']);
-
-           $content .= '<span class="mrgn-rght-md"><strong>'.$advanced_form['selection_'.$s].':</strong> '.elgg_echo('missions:'.$value).' </span> ';
-          
+           $content .= '<span class="mrgn-rght-md"><strong>'.elgg_echo($advanced_form['selection_'.$s]).':</strong> '.elgg_echo($advanced_form['selection_'.$s.'_element']).' </span> ';
             
         }
     }
+    
+    $content .= "</div>";
         $content .= elgg_view('output/url', array(
 		'text' => elgg_echo('missions:clear_search'),
 		'href' => 'missions/main?clear=true&search='.$advanced_form,
@@ -155,8 +155,10 @@ $content .= '<br>'.elgg_view('page/elements/hidden-field', array(
 
 // Only displays sort form if the search set is missions.
 if($search_typing == 'mission') {
-	$content .= '<div class="col-sm-12">' . $sort_missions_form . $clear_link . '</div>';
+	$content .= '<div class="col-sm-12 mrgn-tp-lg">' . $sort_missions_form . $clear_link . '</div>';
 }
+
+ 
 
 // Displays the missions as a list with custom class mission-gallery
 $content .= '<div class="col-sm-12 clearfix">' . elgg_view_entity_list(array_slice($search_set, $offset, $max), array(
