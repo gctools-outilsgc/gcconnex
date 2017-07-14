@@ -68,7 +68,6 @@ Changelog
 
 1.8.0 (iionly and Juho Jaakola)
 -------------------------------
->>>>>>> 1.10.3
 
 - Major code cleanup
 - Adds upgrade script to convert old handling of personal events (with annotations) to new implementation (handled by relationships)
