@@ -143,11 +143,10 @@ $input_order_field = elgg_view('input/dropdown', array(
 		
 	</div>
     
-    <div class="col-sm-11 mrgn-tp-lg">
-<!--        <strong><?php echo elgg_echo('missions:filter'); ?></strong>-->
+    
 <?php 
 
-echo ($opp_type_field || $role_type_field || $sort_field || $order_field)?'<strong>'.elgg_echo('missions:filter').'</strong>':'';
+echo ($opp_type_field || $role_type_field || $sort_field || $order_field)?'<div class="col-sm-11 mrgn-tp-lg"><strong>'.elgg_echo('missions:filter').'</strong>':'';
 
 echo ($opp_type_field)?'<strong>Type: </strong>':'';
 
@@ -177,7 +176,8 @@ echo elgg_echo($sort_field).' ';
 
 echo ($order_field)?'<strong>'.$order.': </strong>':'';
 echo elgg_echo($order_field).' ';
+echo ($opp_type_field || $role_type_field || $sort_field || $order_field)?'</div>':'';
 
 ?>
-    </div>
+    
 </div>
