@@ -12,7 +12,7 @@
 
 $logged_in_user = elgg_get_logged_in_user_entity();
 
-$user_guids = json_decode(get_input("user_guid"));
+$user_guids = get_input("user_guid");
 if (!empty($user_guids) && !is_array($user_guids)) {
 	$user_guids = array($user_guids);
 }
@@ -47,6 +47,11 @@ if (elgg_is_admin_logged_in()) {
 $group_guid = (int) get_input("group_guid");
 $text = get_input("comment");
 
+$emails = json_decode(get_input("user_emails"));
+if (!empty($emails) && !is_array($emails)) {
+	$emails = array($emails);
+}
+
 $csv = get_uploaded_file("csv");
 if (get_input("resend") == "yes") {
 	$resend = true;
@@ -70,7 +75,7 @@ $group = get_entity($group_guid);
     $invalid_users = array();
 
 
-if ((!empty($user_guids) || !empty($csv)) && !empty($group)) {
+if ((!empty($user_guids) || !empty($emails) || !empty($csv)) && !empty($group)) {
 	if (($group instanceof ElggGroup) && ($group->canEdit() || group_tools_allow_members_invite($group))) {
 		// show hidden (unvalidated) users
 		$hidden = access_get_show_hidden_status();
@@ -171,8 +176,8 @@ if ((!empty($user_guids) || !empty($csv)) && !empty($group)) {
 		}
 
 		// Invite member by e-mail address
-		if (!empty($user_guids)) {
-			foreach ($user_guids as $email) {
+		if (!empty($emails)) {
+			foreach ($emails as $email) {
 				$invite_result = group_tools_invite_email($group, $email, $text, $resend);
 				if ($invite_result === true) {
 					$invited++;

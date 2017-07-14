@@ -138,7 +138,7 @@ if (in_array("yes", array($invite_site_members, $invite_circle, $invite_email, $
 
 		$form_data .= "<div id='group_tools_group_invite_email' class='hidden wb-invisible mbm'>";
 		$form_data .= "<div><label for='group_tools_group_invite_autocomplete_email_autocomplete'>" . elgg_echo("group_tools:group:invite:email:description") . "</label></div>";
-		$form_data .= elgg_view("input/text", array("name" => "user_guid",
+		$form_data .= elgg_view("input/text", array("name" => "user_emails",
 																			"id" => "group_tools_group_invite_autocomplete_email",
 																			"group_guid" => $group->getGUID(),
 																			"relationship" => "email"));
