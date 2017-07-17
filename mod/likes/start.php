@@ -2,14 +2,22 @@
 /**
  * Likes plugin
  *
+ * To make your content likable, use the likes:is_likable hook to register your type:subtype. E.g.
+ *
+ * <code>
+ * elgg_register_plugin_hook_handler('likes:is_likable', 'object:mysubtype', 'Elgg\Values::getTrue');
+ * </code>
  */
 
 elgg_register_event_handler('init', 'system', 'likes_init');
 
 function likes_init() {
 
-	elgg_extend_view('css/elgg', 'likes/css');
-	elgg_extend_view('js/elgg', 'likes/js');
+	elgg_extend_view('elgg.css', 'likes/css');
+
+	// inline module
+	elgg_extend_view('elgg.js', 'elgg/likes.js');
+	elgg_require_js('elgg/likes');
 
 	// used to preload likes data before rendering river
 	elgg_extend_view('page/components/list', 'likes/before_lists', 1);
@@ -18,8 +26,9 @@ function likes_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:river', 'likes_river_menu_setup', 400);
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'likes_entity_menu_setup', 400);
 	elgg_register_plugin_hook_handler('permissions_check', 'annotation', 'likes_permissions_check');
-
-	$actions_base = elgg_get_plugins_path() . 'likes/actions/likes';
+	elgg_register_plugin_hook_handler('permissions_check:annotate', 'all', 'likes_permissions_check_annotate', 0);
+	
+	$actions_base = __DIR__ . '/actions/likes';
 	elgg_register_action('likes/add', "$actions_base/add.php");
 	elgg_register_action('likes/delete', "$actions_base/delete.php");
 	
@@ -28,12 +37,12 @@ function likes_init() {
 
 /**
  * Only allow annotation owner (or someone who can edit the owner, like an admin) to delete like
- * 
+ *
  * @param string $hook   "permissions_check"
  * @param string $type   "annotation"
  * @param array  $return Current value
  * @param array  $params Hook parameters
- * 
+ *
  * @return bool
  */
 function likes_permissions_check($hook, $type, $return, $params) {
@@ -52,6 +61,34 @@ function likes_permissions_check($hook, $type, $return, $params) {
 }
 
 /**
+ * Sets the default for whether to allow liking/viewing likes on an entity
+ *
+ * @param string $hook   "permissions_check:annotate"
+ * @param string $type   "object"|"user"|"group"|"site"
+ * @param array  $return Current value
+ * @param array  $params Hook parameters
+ *
+ * @return bool
+ */
+function likes_permissions_check_annotate($hook, $type, $return, $params) {
+	if (elgg_extract('annotation_name', $params) !== 'likes') {
+		return;
+	}
+
+	$user = elgg_extract('user', $params);
+	$entity = elgg_extract('entity', $params);
+
+	if (!$user || !$entity instanceof ElggEntity) {
+		return false;
+	}
+
+	$type = $entity->type;
+	$subtype = $entity->getSubtype();
+
+	return (bool)elgg_trigger_plugin_hook('likes:is_likable', "$type:$subtype", [], false);
+}
+
+/**
  * Add likes to entity menu at end of the menu
  */
 function likes_entity_menu_setup($hook, $type, $return, $params) {
@@ -59,8 +96,17 @@ function likes_entity_menu_setup($hook, $type, $return, $params) {
 		return $return;
 	}
 
-	$entity = $params['entity'];
-	/* @var ElggEntity $entity */
+	$entity = elgg_extract('entity', $params);
+	if (!($entity instanceof \ElggEntity)) {
+		return $return;
+	}
+
+	$type = $entity->type;
+	$subtype = $entity->getSubtype();
+	$likable = (bool)elgg_trigger_plugin_hook('likes:is_likable', "$type:$subtype", [], false);
+	if (!$likable) {
+		return $return;
+	}
 
 	if ($entity->canAnnotate(0, 'likes')) {
 		$hasLiked = \Elgg\Likes\DataService::instance()->currentUserLikesEntity($entity->guid);
@@ -112,11 +158,6 @@ function likes_river_menu_setup($hook, $type, $return, $params) {
 
 	// only like group creation #3958
 	if ($item->type == "group" && $item->view != "river/group/create") {
-		return;
-	}
-
-	// don't like users #4116
-	if ($item->type == "user") {
 		return;
 	}
 

@@ -6,6 +6,7 @@ return array(
 	'admin:develop_tools:inspect' => 'Inspect',
 	'admin:inspect' => 'Inspect',
 	'admin:develop_tools:unit_tests' => 'Unit Tests',
+	'admin:develop_tools:entity_explorer' => 'Entity Explorer',
 	'admin:developers' => 'Developers',
 	'admin:developers:settings' => 'Settings',
 
@@ -40,6 +41,16 @@ return array(
 	'developers:debug:notice' => 'Notice',
 	'developers:debug:info' => 'Info',
 	
+	// entity explorer
+	'developers:entity_explorer:help' => 'View information about entities and perform some basic actions on them.',
+	'developers:entity_explorer:guid:label' => 'Enter the guid of the entity to inspect',
+	'developers:entity_explorer:info' => 'Entity Information',
+	'developers:entity_explorer:info:attributes' => 'Attributes',
+	'developers:entity_explorer:info:metadata' => 'Metadata',
+	'developers:entity_explorer:info:relationships' => 'Relationships',
+	'developers:entity_explorer:info:private_settings' => 'Private Settings',
+	'developers:entity_explorer:delete_entity' => 'Remove this entity',
+	
 	// inspection
 	'developers:inspect:help' => 'Inspect configuration of the Elgg framework.',
 	'developers:inspect:actions' => 'Actions',
@@ -49,7 +60,8 @@ return array(
 	'developers:inspect:priority' => 'Priority',
 	'developers:inspect:simplecache' => 'Simple Cache',
 	'developers:inspect:views' => 'Views',
-	'developers:inspect:views:all_filtered' => "<b>Note!</b> All view output is filtered through these Plugin Hooks:",
+	'developers:inspect:views:all_filtered' => "<b>Note!</b> All view input/output is filtered through these Plugin Hooks:",
+	'developers:inspect:views:input_filtered' => "(input filtered by plugin hook: %s)",
 	'developers:inspect:views:filtered' => "(filtered by plugin hook: %s)",
 	'developers:inspect:widgets' => 'Widgets',
 	'developers:inspect:webservices' => 'Webservices',
@@ -58,8 +70,11 @@ return array(
 	'developers:inspect:file_location' => 'File path from Elgg root',
 
 	// event logging
+	'developers:request_stats' => "Request Statistics (does not include the shutdown event)",
 	'developers:event_log_msg' => "%s: '%s, %s' in %s",
-	'developers:log_queries' => "%s DB queries (does not include the shutdown event)",
+	'developers:log_queries' => "DB queries: %s",
+	'developers:boot_cache_rebuilt' => "The boot cache was rebuilt for this request",
+	'developers:elapsed_time' => "Elapsed time (s)",
 
 	// theme sandbox
 	'theme_sandbox:intro' => 'Introduction',
@@ -75,7 +90,7 @@ return array(
 	'theme_sandbox:navigation' => 'Navigation',
 	'theme_sandbox:typography' => 'Typography',
 
-	'theme_sandbox:icons:blurb' => 'Use <em>elgg_view_icon($name)</em> or the class elgg-icon-$name to display icons.',
+	'theme_sandbox:icons:blurb' => 'Use <em>elgg_view_icon($name)</em> to display icons.',
 
 	// unit tests
 	'developers:unit_tests:description' => 'Elgg has unit and integration tests for detecting bugs in its core classes and functions.',

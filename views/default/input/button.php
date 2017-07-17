@@ -9,15 +9,9 @@
  * @uses $vars['class'] Additional CSS class
  */
 
-if (isset($vars['class'])) {
-	$vars['class'] = "elgg-button {$vars['class']}";
-} else {
-	$vars['class'] = "elgg-button";
-}
+$vars['class'] = elgg_extract_class($vars, 'elgg-button');
 
-$defaults = array(
-	'type' => 'button',
-);
+$defaults = ['type' => 'button'];
 
 $vars = array_merge($defaults, $vars);
 
@@ -36,5 +30,5 @@ switch ($vars['type']) {
 if (isset($vars['src']) && strpos($vars['src'], elgg_get_site_url()) === false) {
 	$vars['src'] = "";
 }
-?>
-<input <?php echo elgg_format_attributes($vars); ?> />
+
+echo elgg_format_element('input', $vars);

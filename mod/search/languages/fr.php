@@ -11,7 +11,7 @@ return array(
 	'search:more' => '+%s plus %s',
 	
 	'search_types:tags' => 'Mots clics',
-	
+
 	'search_types:comments' => 'Commentaires',
 	'search:comment_on' => 'Commentaires sur "%s"',
 	'search:comment_by' => 'par',

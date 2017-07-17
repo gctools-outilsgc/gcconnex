@@ -1,39 +1,63 @@
 <?php
 namespace Elgg;
 
+use Elgg\Application\CacheHandler;
+use Elgg\Cache\SystemCache;
+use Elgg\Filesystem\Directory;
+
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
  * Use the elgg_* versions instead.
  *
- * @todo 1.10 remove deprecated view injections
- * @todo inject/remove dependencies: $CONFIG, hooks, site_url
- *
  * @access private
  *
- * @package    Elgg.Core
- * @subpackage Views
- * @since      1.9.0
+ * @since 1.9.0
  */
 class ViewsService {
 
-	protected $config_wrapper;
-	protected $site_url_wrapper;
-	protected $user_wrapper;
-	protected $user_wrapped;
+	const VIEW_HOOK = 'view';
+	const VIEW_VARS_HOOK = 'view_vars';
+	const OUTPUT_KEY = '__view_output';
 
 	/**
-	 * @see \Elgg\ViewsService::fileExists
+	 * @see fileExists
 	 * @var array
 	 */
-	protected $file_exists_cache = array();
+	protected $file_exists_cache = [];
 
 	/**
-	 * Global Elgg configuration
-	 * 
-	 * @var \stdClass
+	 * @var array
+	 *
+	 * [viewtype][view] => '/path/to/views/style.css'
 	 */
-	private $CONFIG;
+	private $locations = [];
+
+	/**
+	 * @var array Tracks location changes for views
+	 *
+	 * [viewtype][view][] => '/path/to/views/style.css'
+	 */
+	private $overrides = [];
+
+	/**
+	 * @var array Simplecache views (view names are keys)
+	 *
+	 * [view] = true
+	 */
+	private $simplecache_views = [];
+
+	/**
+	 * @var array
+	 *
+	 * [view][priority] = extension_view
+	 */
+	private $extensions = [];
+
+	/**
+	 * @var string[] A list of fallback viewtypes
+	 */
+	private $fallbacks = [];
 
 	/**
 	 * @var PluginHooksService
@@ -46,117 +70,137 @@ class ViewsService {
 	private $logger;
 
 	/**
-	 * @var array
+	 * @var SystemCache|null This is set if the views are configured via cache
 	 */
-	private $overriden_locations = array();
+	private $cache;
+	
+	/**
+	 * @var string Absolute path of the views directory
+	 */
+	public $view_path;
 
 	/**
 	 * Constructor
 	 *
-	 * @param \Elgg\PluginHooksService $hooks  The hooks service
-	 * @param \Elgg\Logger             $logger Logger
+	 * @param PluginHooksService $hooks  The hooks service
+	 * @param Logger             $logger Logger
 	 */
-	public function __construct(\Elgg\PluginHooksService $hooks, \Elgg\Logger $logger) {
-		global $CONFIG;
-		$this->CONFIG = $CONFIG;
+	public function __construct(PluginHooksService $hooks, Logger $logger) {
 		$this->hooks = $hooks;
 		$this->logger = $logger;
 	}
-
+	
 	/**
-	 * Get the user object in a wrapper
-	 * 
-	 * @return \Elgg\DeprecationWrapper|null
+	 * Takes a view name and returns the canonical name for that view.
+	 *
+	 * @param string $alias The possibly non-canonical view name.
+	 *
+	 * @return string The canonical view name.
 	 */
-	protected function getUserWrapper() {
-		$user = _elgg_services()->session->getLoggedInUser();
-		if ($user) {
-			if ($user !== $this->user_wrapped) {
-				$warning = 'Use elgg_get_logged_in_user_entity() rather than assuming elgg_view() '
-							. 'populates $vars["user"]';
-				$this->user_wrapper = new \Elgg\DeprecationWrapper($user, $warning, 1.8);
-				$this->user_wrapped = $user;
-			}
-			$user = $this->user_wrapper;
+	public function canonicalizeViewName($alias) {
+		if (!is_string($alias)) {
+			return false;
 		}
-		return $user;
+
+		$canonical = $alias;
+		
+		$extension = pathinfo($canonical, PATHINFO_EXTENSION);
+		$hasValidFileExtension = isset(CacheHandler::$extensions[$extension]);
+
+		if (strpos($canonical, "js/") === 0) {
+			$canonical = substr($canonical, 3);
+			if (!$hasValidFileExtension) {
+				$canonical .= ".js";
+			}
+		} else if (strpos($canonical, "css/") === 0) {
+			$canonical = substr($canonical, 4);
+			if (!$hasValidFileExtension) {
+				$canonical .= ".css";
+			}
+		}
+		
+		return $canonical;
 	}
 
 	/**
 	 * @access private
 	 */
-	public function autoregisterViews($view_base, $folder, $base_location_path, $viewtype) {
+	public function autoregisterViews($view_base, $folder, $viewtype) {
+		$folder = rtrim($folder, '/\\');
+		$view_base = rtrim($view_base, '/\\');
+
 		$handle = opendir($folder);
-		if ($handle) {
-			while ($view = readdir($handle)) {
-				if (!empty($view_base)) {
-					$view_base_new = $view_base . "/";
-				} else {
-					$view_base_new = "";
-				}
-
-				if (substr($view, 0, 1) !== '.') {
-					if (is_dir($folder . "/" . $view)) {
-						$this->autoregisterViews($view_base_new . $view, $folder . "/" . $view,
-							$base_location_path, $viewtype);
-					} else {
-						$this->setViewLocation($view_base_new . basename($view, '.php'),
-							$base_location_path, $viewtype);
-					}
-				}
-			}
-			return true;
+		if (!$handle) {
+			return false;
 		}
-		return false;
-	}
-
-	/**
-	 * @access private
-	 */
-	public function getViewLocation($view, $viewtype = '') {
 		
+		while ($entry = readdir($handle)) {
+			if ($entry[0] === '.') {
+				continue;
+			}
 
-		if (empty($viewtype)) {
-			$viewtype = elgg_get_viewtype();
-		}
+			$path = "$folder/$entry";
 
-		if (!isset($this->CONFIG->views->locations[$viewtype][$view])) {
-			if (!isset($this->CONFIG->viewpath)) {
-				return dirname(dirname(dirname(__FILE__))) . "/views/";
+			if (!empty($view_base)) {
+				$view_base_new = $view_base . "/";
 			} else {
-				return $this->CONFIG->viewpath;
+				$view_base_new = "";
 			}
-		} else {
-			return $this->CONFIG->views->locations[$viewtype][$view];
+
+			if (is_dir($path)) {
+				$this->autoregisterViews($view_base_new . $entry, $path, $viewtype);
+			} else {
+				$view = $view_base_new . basename($entry, '.php');
+				$this->setViewLocation($view, $viewtype, $path);
+			}
 		}
+
+		return true;
 	}
 
 	/**
+	 * Find the view file
+	 *
+	 * @param string $view     View name
+	 * @param string $viewtype Viewtype
+	 *
+	 * @return string Empty string if not found
+	 * @access private
+	 * @internal Plugins should not use this.
+	 */
+	public function findViewFile($view, $viewtype) {
+		if (!isset($this->locations[$viewtype][$view])) {
+			return "";
+		}
+
+		$path = $this->locations[$viewtype][$view];
+		if ($this->fileExists($path)) {
+			return $path;
+		}
+
+		return "";
+	}
+
+	/**
+	 * @param string $view     Name of the view
+	 * @param string $location Full path to the view file
+	 * @param string $viewtype The viewtype to register this under
+	 *
 	 * @access private
 	 */
-	public function setViewLocation($view, $location, $viewtype = '') {
-		
+	public function setViewDir($view, $location, $viewtype = '') {
+		$view = $this->canonicalizeViewName($view);
 
 		if (empty($viewtype)) {
 			$viewtype = 'default';
 		}
 
-		if (!isset($this->CONFIG->views)) {
-			$this->CONFIG->views = new \stdClass;
-		}
+		$location = rtrim($location, '/\\');
 
-		if (!isset($this->CONFIG->views->locations)) {
-			$this->CONFIG->views->locations = array($viewtype => array($view => $location));
-
-		} else if (!isset($this->CONFIG->views->locations[$viewtype])) {
-			$this->CONFIG->views->locations[$viewtype] = array($view => $location);
-
-		} else {
-			if (isset($this->CONFIG->views->locations[$viewtype][$view])) {
-				$this->overriden_locations[$viewtype][$view][] = $this->CONFIG->views->locations[$viewtype][$view];
-			}
-
-			$this->CONFIG->views->locations[$viewtype][$view] = $location;
+		if ($this->fileExists("$location/$viewtype/$view.php")) {
+			$this->setViewLocation($view, $viewtype, "$location/$viewtype/$view.php");
+		} elseif ($this->fileExists("$location/$viewtype/$view")) {
+			$this->setViewLocation($view, $viewtype, "$location/$viewtype/$view");
 		}
 	}
 
@@ -164,30 +208,14 @@ class ViewsService {
 	 * @access private
 	 */
 	public function registerViewtypeFallback($viewtype) {
-		
-
-		if (!isset($this->CONFIG->viewtype)) {
-			$this->CONFIG->viewtype = new \stdClass;
-		}
-
-		if (!isset($this->CONFIG->viewtype->fallback)) {
-			$this->CONFIG->viewtype->fallback = array();
-		}
-
-		$this->CONFIG->viewtype->fallback[] = $viewtype;
+		$this->fallbacks[] = $viewtype;
 	}
 
 	/**
 	 * @access private
 	 */
 	public function doesViewtypeFallback($viewtype) {
-		
-
-		if (isset($this->CONFIG->viewtype) && isset($this->CONFIG->viewtype->fallback)) {
-			return in_array($viewtype, $this->CONFIG->viewtype->fallback);
-		}
-
-		return false;
+		return in_array($viewtype, $this->fallbacks);
 	}
 
 	/**
@@ -204,6 +232,8 @@ class ViewsService {
 	 * @access private
 	 */
 	public function renderDeprecatedView($view, array $vars, $suggestion, $version) {
+		$view = $this->canonicalizeViewName($view);
+
 		$rendered = $this->renderView($view, $vars, false, '', false);
 		if ($rendered) {
 			elgg_deprecated_notice("The $view view has been deprecated. $suggestion", $version, 3);
@@ -212,10 +242,27 @@ class ViewsService {
 	}
 
 	/**
+	 * Get the views, including extensions, used to render a view
+	 *
+	 * Keys returned are view priorities. View existence is not checked.
+	 *
+	 * @param string $view View name
+	 * @return string[]
 	 * @access private
 	 */
-	public function renderView($view, array $vars = array(), $bypass = false, $viewtype = '', $issue_missing_notice = true) {
-		
+	public function getViewList($view) {
+		if (isset($this->extensions[$view])) {
+			return $this->extensions[$view];
+		} else {
+			return [500 => $view];
+		}
+	}
+
+	/**
+	 * @access private
+	 */
+	public function renderView($view, array $vars = [], $ignored = false, $viewtype = '', $issue_missing_notice = true) {
+		$view = $this->canonicalizeViewName($view);
 
 		if (!is_string($view) || !is_string($viewtype)) {
 			$this->logger->log("View and Viewtype in views must be a strings: $view", 'NOTICE');
@@ -242,84 +289,16 @@ class ViewsService {
 			'vars' => $vars,
 			'viewtype' => $viewtype,
 		];
-		$vars = $this->hooks->trigger('view_vars', $view, $vars_hook_params, $vars);
+		$vars = $this->hooks->trigger(self::VIEW_VARS_HOOK, $view, $vars_hook_params, $vars);
+
+		// allow $vars to hijack output
+		if (isset($vars[self::OUTPUT_KEY])) {
+			return (string)$vars[self::OUTPUT_KEY];
+		}
 
 		$view_orig = $view;
 
-		// Trigger the pagesetup event
-		if (!isset($this->CONFIG->pagesetupdone) && $this->CONFIG->boot_complete) {
-			$this->CONFIG->pagesetupdone = true;
-			_elgg_services()->events->trigger('pagesetup', 'system');
-		}
-
-		// @warning - plugin authors: do not expect user, config, and url to be
-		// set by elgg_view() in the future. Instead, use elgg_get_logged_in_user_entity(),
-		// elgg_get_config(), and elgg_get_site_url() in your views.
-		if (!isset($vars['user'])) {
-			$vars['user'] = $this->getUserWrapper();
-		}
-		if (!isset($vars['config'])) {
-			if (!$this->config_wrapper) {
-				$warning = 'Do not rely on $vars["config"] or $CONFIG being available in views';
-				$this->config_wrapper = new \Elgg\DeprecationWrapper($this->CONFIG, $warning, 1.8);
-			}
-			$vars['config'] = $this->config_wrapper;
-		}
-		if (!isset($vars['url'])) {
-			if (!$this->site_url_wrapper) {
-				$warning = 'Do not rely on $vars["url"] being available in views';
-				$this->site_url_wrapper = new \Elgg\DeprecationWrapper(elgg_get_site_url(), $warning, 1.8);
-			}
-			$vars['url'] = $this->site_url_wrapper;
-		}
-
-		// full_view is the new preferred key for full view on entities @see elgg_view_entity()
-		// check if full_view is set because that means we've already rewritten it and this is
-		// coming from another view passing $vars directly.
-		if (isset($vars['full']) && !isset($vars['full_view'])) {
-			elgg_deprecated_notice("Use \$vars['full_view'] instead of \$vars['full']", 1.8, 2);
-			$vars['full_view'] = $vars['full'];
-		}
-		if (isset($vars['full_view'])) {
-			$vars['full'] = $vars['full_view'];
-		}
-
-		// internalname => name (1.8)
-		if (isset($vars['internalname']) && !isset($vars['__ignoreInternalname']) && !isset($vars['name'])) {
-			elgg_deprecated_notice('You should pass $vars[\'name\'] now instead of $vars[\'internalname\']', 1.8, 2);
-			$vars['name'] = $vars['internalname'];
-		} elseif (isset($vars['name'])) {
-			if (!isset($vars['internalname'])) {
-				$vars['__ignoreInternalname'] = '';
-			}
-			$vars['internalname'] = $vars['name'];
-		}
-
-		// internalid => id (1.8)
-		if (isset($vars['internalid']) && !isset($vars['__ignoreInternalid']) && !isset($vars['name'])) {
-			elgg_deprecated_notice('You should pass $vars[\'id\'] now instead of $vars[\'internalid\']', 1.8, 2);
-			$vars['id'] = $vars['internalid'];
-		} elseif (isset($vars['id'])) {
-			if (!isset($vars['internalid'])) {
-				$vars['__ignoreInternalid'] = '';
-			}
-			$vars['internalid'] = $vars['id'];
-		}
-
-		// If it's been requested, pass off to a template handler instead
-		if ($bypass == false && isset($this->CONFIG->template_handler) && !empty($this->CONFIG->template_handler)) {
-			$template_handler = $this->CONFIG->template_handler;
-			if (is_callable($template_handler)) {
-				return call_user_func($template_handler, $view, $vars);
-			}
-		}
-
-		// Set up any extensions to the requested view
-		if (isset($this->CONFIG->views->extensions[$view])) {
-			$viewlist = $this->CONFIG->views->extensions[$view];
-		} else {
-			$viewlist = array(500 => $view);
-		}
+		$viewlist = $this->getViewList($view);
 
 		$content = '';
 		foreach ($viewlist as $view) {
@@ -341,16 +320,12 @@ class ViewsService {
 		}
 
 		// Plugin hook
-		$params = array('view' => $view_orig, 'vars' => $vars, 'viewtype' => $viewtype);
-		$content = $this->hooks->trigger('view', $view_orig, $params, $content);
-
-		// backward compatibility with less granular hook will be gone in 2.0
-		$content_tmp = $this->hooks->trigger('display', 'view', $params, $content);
-
-		if ($content_tmp !== $content) {
-			$content = $content_tmp;
-			elgg_deprecated_notice('The display:view plugin hook is deprecated by view:view_name', 1.8);
-		}
+		$params = [
+			'view' => $view_orig,
+			'vars' => $vars,
+			'viewtype' => $viewtype,
+		];
+		$content = $this->hooks->trigger(self::VIEW_HOOK, $view_orig, $params, $content);
 
 		return $content;
 	}
@@ -371,7 +346,7 @@ class ViewsService {
 
 	/**
 	 * Includes view PHP or static file
-	 * 
+	 *
 	 * @param string $view                 The view name
 	 * @param array  $vars                 Variables passed to view
 	 * @param string $viewtype             The viewtype
@@ -380,31 +355,31 @@ class ViewsService {
 	 * @return string|false output generated by view file inclusion or false
 	 */
 	private function renderViewFile($view, array $vars, $viewtype, $issue_missing_notice) {
-		$view_location = $this->getViewLocation($view, $viewtype);
-
-		// @warning - plugin authors: do not expect $CONFIG to be available in views
-		// in the future. Instead, use elgg_get_config() in your views.
-		// Note: this is intentionally a local var.
-		$CONFIG = $this->config_wrapper;
-
-		if ($this->fileExists("{$view_location}$viewtype/$view.php")) {
-			ob_start();
-			include("{$view_location}$viewtype/$view.php");
-			return ob_get_clean();
-		} else if ($this->fileExists("{$view_location}$viewtype/$view")) {
-			return file_get_contents("{$view_location}$viewtype/$view");
-		} else {
+		$file = $this->findViewFile($view, $viewtype);
+		if (!$file) {
 			if ($issue_missing_notice) {
 				$this->logger->log("$viewtype/$view view does not exist.", 'NOTICE');
 			}
 			return false;
 		}
+
+		if (pathinfo($file, PATHINFO_EXTENSION) === 'php') {
+			ob_start();
+
+			// don't isolate, scripts use the local $vars
+			include $file;
+
+			return ob_get_clean();
+		}
+
+		return file_get_contents($file);
 	}
 
 	/**
 	 * @access private
 	 */
 	public function viewExists($view, $viewtype = '', $recurse = true) {
+		$view = $this->canonicalizeViewName($view);
 		
 		if (empty($view) || !is_string($view)) {
 			return false;
@@ -415,25 +390,16 @@ class ViewsService {
 			$viewtype = elgg_get_viewtype();
 		}
 
-		if (!isset($this->CONFIG->views->locations[$viewtype][$view])) {
-			if (!isset($this->CONFIG->viewpath)) {
-				$location = dirname(dirname(dirname(__FILE__))) . "/views/";
-			} else {
-				$location = $this->CONFIG->viewpath;
-			}
-		} else {
-			$location = $this->CONFIG->views->locations[$viewtype][$view];
-		}
-
-		if ($this->fileExists("{$location}$viewtype/$view.php") ||
-				$this->fileExists("{$location}$viewtype/$view")) {
+		
+		$file = $this->findViewFile($view, $viewtype);
+		if ($file) {
 			return true;
 		}
 
 		// If we got here then check whether this exists as an extension
 		// We optionally recursively check whether the extended view exists also for the viewtype
-		if ($recurse && isset($this->CONFIG->views->extensions[$view])) {
-			foreach ($this->CONFIG->views->extensions[$view] as $view_extension) {
+		if ($recurse && isset($this->extensions[$view])) {
+			foreach ($this->extensions[$view] as $view_extension) {
 				// do not recursively check to stay away from infinite loops
 				if ($this->viewExists($view_extension, $viewtype, false)) {
 					return true;
@@ -453,54 +419,66 @@ class ViewsService {
 	/**
 	 * @access private
 	 */
-	public function extendView($view, $view_extension, $priority = 501, $viewtype = '') {
-		
+	public function extendView($view, $view_extension, $priority = 501) {
+		$view = $this->canonicalizeViewName($view);
+		$view_extension = $this->canonicalizeViewName($view_extension);
 
-		if (!isset($this->CONFIG->views)) {
-			$this->CONFIG->views = (object) array(
-				'extensions' => array(),
-			);
-			$this->CONFIG->views->extensions[$view][500] = (string) $view;
-		} else {
-			if (!isset($this->CONFIG->views->extensions[$view])) {
-				$this->CONFIG->views->extensions[$view][500] = (string) $view;
-			}
+		if (!isset($this->extensions[$view])) {
+			$this->extensions[$view][500] = (string) $view;
 		}
 
 		// raise priority until it doesn't match one already registered
-		while (isset($this->CONFIG->views->extensions[$view][$priority])) {
+		while (isset($this->extensions[$view][$priority])) {
 			$priority++;
 		}
 
-		$this->CONFIG->views->extensions[$view][$priority] = (string) $view_extension;
-		ksort($this->CONFIG->views->extensions[$view]);
+		$this->extensions[$view][$priority] = (string) $view_extension;
+		ksort($this->extensions[$view]);
+	}
 
+	/**
+	 * Is the given view extended?
+	 *
+	 * @param string $view View name
+	 *
+	 * @return bool
+	 * @internal Plugins should not use this
+	 * @access private
+	 */
+	public function viewIsExtended($view) {
+		return count($this->getViewList($view)) > 1;
+	}
+
+	/**
+	 * Do hook handlers exist to modify the view?
+	 *
+	 * @param string $view View name
+	 *
+	 * @return bool
+	 * @internal Plugins should not use this
+	 * @access private
+	 */
+	public function viewHasHookHandlers($view) {
+		return $this->hooks->hasHandler('view', $view) || $this->hooks->hasHandler('view_vars', $view);
 	}
 
 	/**
 	 * @access private
 	 */
 	public function unextendView($view, $view_extension) {
-		
+		$view = $this->canonicalizeViewName($view);
+		$view_extension = $this->canonicalizeViewName($view_extension);
 
-		if (!isset($this->CONFIG->views)) {
+		if (!isset($this->extensions[$view])) {
 			return false;
 		}
 
-		if (!isset($this->CONFIG->views->extensions)) {
-			return false;
-		}
-
-		if (!isset($this->CONFIG->views->extensions[$view])) {
-			return false;
-		}
-
-		$priority = array_search($view_extension, $this->CONFIG->views->extensions[$view]);
+		$priority = array_search($view_extension, $this->extensions[$view]);
 		if ($priority === false) {
 			return false;
 		}
 
-		unset($this->CONFIG->views->extensions[$view][$priority]);
+		unset($this->extensions[$view][$priority]);
 
 		return true;
 	}
@@ -509,54 +487,40 @@ class ViewsService {
 	 * @access private
 	 */
 	public function registerCacheableView($view) {
-		
+		$view = $this->canonicalizeViewName($view);
 
-		if (!isset($this->CONFIG->views)) {
-			$this->CONFIG->views = new \stdClass;
-		}
-
-		if (!isset($this->CONFIG->views->simplecache)) {
-			$this->CONFIG->views->simplecache = array();
-		}
-
-		$this->CONFIG->views->simplecache[$view] = true;
+		$this->simplecache_views[$view] = true;
 	}
 
 	/**
 	 * @access private
 	 */
 	public function isCacheableView($view) {
-		
-
-		if (!isset($this->CONFIG->views)) {
-			$this->CONFIG->views = new \stdClass;
-		}
-
-		if (!isset($this->CONFIG->views->simplecache)) {
-			$this->CONFIG->views->simplecache = array();
-		}
-
-		if (isset($this->CONFIG->views->simplecache[$view])) {
+		$view = $this->canonicalizeViewName($view);
+		if (isset($this->simplecache_views[$view])) {
 			return true;
-		} else {
-			$currentViewtype = elgg_get_viewtype();
-			$viewtypes = array($currentViewtype);
-
-			if ($this->doesViewtypeFallback($currentViewtype) && $currentViewtype != 'default') {
-				$viewtypes[] = 'defaut';
-			}
-
-			// If a static view file is found in any viewtype, it's considered cacheable
-			foreach ($viewtypes as $viewtype) {
-				$view_file = $this->getViewLocation($view, $viewtype) . "$viewtype/$view";
-				if ($this->fileExists($view_file)) {
-					return true;
-				}
-			}
-
-			// Assume not-cacheable by default
-			return false;
 		}
+
+		// build list of viewtypes to check
+		$current_viewtype = elgg_get_viewtype();
+		$viewtypes = array($current_viewtype);
+
+		if ($this->doesViewtypeFallback($current_viewtype) && $current_viewtype != 'default') {
+			$viewtypes[] = 'default';
+		}
+
+		// If a static view file is found in any viewtype, it's considered cacheable
+		foreach ($viewtypes as $viewtype) {
+			$file = $this->findViewFile($view, $viewtype);
+
+			if ($file && pathinfo($file, PATHINFO_EXTENSION) !== 'php') {
+				$this->simplecache_views[$view] = true;
+				return true;
+			}
+		}
+
+		// Assume not-cacheable by default
+		return false;
 	}
 
 	/**
@@ -569,6 +533,7 @@ class ViewsService {
 	 * @access private
 	 */
 	public function registerPluginViews($path, &$failed_dir = '') {
+		$path = rtrim($path, "\\/");
 		$view_dir = "$path/views/";
 
 		// plugins don't have to have views.
@@ -587,7 +552,7 @@ class ViewsService {
 			$view_type_dir = $view_dir . $view_type;
 
 			if ('.' !== substr($view_type, 0, 1) && is_dir($view_type_dir)) {
-				if ($this->autoregisterViews('', $view_type_dir, $view_dir, $view_type)) {
+				if ($this->autoregisterViews('', $view_type_dir, $view_type)) {
 					elgg_register_viewtype($view_type);
 				} else {
 					$failed_dir = $view_type_dir;
@@ -600,25 +565,138 @@ class ViewsService {
 	}
 
 	/**
-	 * Get views overridden by setViewLocation() calls.
+	 * Merge a specification of absolute view paths
+	 *
+	 * @param array $spec Specification
+	 *    viewtype => [
+	 *        view_name => path or array of paths
+	 *    ]
+	 *
+	 * @access private
+	 */
+	public function mergeViewsSpec(array $spec) {
+		foreach ($spec as $viewtype => $list) {
+			foreach ($list as $view => $paths) {
+				if (!is_array($paths)) {
+					$paths = [$paths];
+				}
+
+				foreach ($paths as $path) {
+					if (preg_match('~^([/\\\\]|[a-zA-Z]\:)~', $path)) {
+						// absolute path
+					} else {
+						// relative path
+						$path = Directory\Local::root()->getPath($path);
+					}
+
+					if (substr($view, -1) === '/') {
+						// prefix
+						$this->autoregisterViews($view, $path, $viewtype);
+					} else {
+						$this->setViewLocation($view, $viewtype, $path);
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * List all views in a viewtype
+	 *
+	 * @param string $viewtype Viewtype
+	 *
+	 * @return string[]
+	 *
+	 * @access private
+	 */
+	public function listViews($viewtype = 'default') {
+		if (empty($this->locations[$viewtype])) {
+			return [];
+		}
+		return array_keys($this->locations[$viewtype]);
+	}
+
+	/**
+	 * Get inspector data
 	 *
 	 * @return array
 	 *
 	 * @access private
 	 */
-	public function getOverriddenLocations() {
-		return $this->overriden_locations;
+	public function getInspectorData() {
+		$overrides = $this->overrides;
+
+		if ($this->cache) {
+			$data = $this->cache->load('view_overrides');
+			if ($data) {
+				$overrides = unserialize($data);
+			}
+		}
+
+		return [
+			'locations' => $this->locations,
+			'overrides' => $overrides,
+			'extensions' => $this->extensions,
+			'simplecache' => $this->simplecache_views,
+		];
 	}
 
 	/**
-	 * Set views overridden by setViewLocation() calls.
+	 * Configure locations from the cache
 	 *
-	 * @param array $locations
-	 * @return void
-	 *
+	 * @param SystemCache $cache The system cache
+	 * @return bool
 	 * @access private
 	 */
-	public function setOverriddenLocations(array $locations) {
-		$this->overriden_locations = $locations;
+	public function configureFromCache(SystemCache $cache) {
+		$data = $cache->load('view_locations');
+		if (!is_string($data)) {
+			return false;
+		}
+		// format changed, check version
+		$data = unserialize($data);
+		if (empty($data['version']) || $data['version'] !== '2.0') {
+			return false;
+		}
+		$this->locations = $data['locations'];
+		$this->cache = $cache;
+
+		return true;
+	}
+
+	/**
+	 * Cache the configuration
+	 *
+	 * @param SystemCache $cache The system cache
+	 * @return void
+	 * @access private
+	 */
+	public function cacheConfiguration(SystemCache $cache) {
+		$cache->save('view_locations', serialize([
+			'version' => '2.0',
+			'locations' => $this->locations,
+		]));
+
+		// this is saved just for the inspector and is not loaded in loadAll()
+		$cache->save('view_overrides', serialize($this->overrides));
+	}
+
+	/**
+	 * Update the location of a view file
+	 *
+	 * @param string $view     View name
+	 * @param string $viewtype Viewtype
+	 * @param string $path     File path
+	 *
+	 * @return void
+	 */
+	private function setViewLocation($view, $viewtype, $path) {
+		$view = $this->canonicalizeViewName($view);
+		$path = strtr($path, '\\', '/');
+
+		if (isset($this->locations[$viewtype][$view]) && $path !== $this->locations[$viewtype][$view]) {
+			$this->overrides[$viewtype][$view][] = $this->locations[$viewtype][$view];
+		}
+		$this->locations[$viewtype][$view] = $path;
 	}
 }

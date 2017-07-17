@@ -40,11 +40,11 @@ return array(
 	'install:check:php:register_globals' => 'register globals は off にしてください。',
 	'install:check:php:session.auto_start' => "Elggがうまく動くには、ession.auto_start はoffにしなければいけません。あなたのサーバの設定を変更するか、Elggの「.htaccess」ファイルにこの宣言を加えてください。",
 
-	'install:check:enginedir' => 'あなたのwebサーバは、「engine」ディレクトリに「settings.php」を作成できません。解決する方法が２つあります：
+	'install:check:installdir' => 'あなたの web サーバにはインストールディレクトリに setting.php ファイルを作成する権限はありません。解決するには2つの選択肢がありません:
 
-		1. 「engine」ディレクトリのパーミッションを変更する
+		1. Elgg インストールディレクトリの elgg-config ディレクトリのパーミッションを変更する
 
-		2. 「settings.example.php」ファイルを「settings.php」にコピーします。あなたのデータベースの設定に合わせるため、そのファイルの中に書かれている方法に従ってください。',
+		2. %s/settings.example.php ファイルを elgg-config/settings.php にコピーして、そのファイルの中に書かれている setting your database parameters （データベースパラメータの設定）に従ってください。',
 	'install:check:readsettings' => '設定ファイルはengineディレクトリにあるのですが、Webサーバがそのファイル読むことができませんでした。ファイルを削除するか、ファイルのパーミションを読み込み許可に変更してください。',
 
 	'install:check:php:success' => "あなたのサーバのPHPはElggの全ての必要女権を満たしています。",
@@ -59,12 +59,14 @@ return array(
 	'install:database:label:dbname' => 'データベースの名前',
 	'install:database:label:dbhost' => 'データベースのホスト',
 	'install:database:label:dbprefix' => 'データベースのテーブル名につける接頭辞(Prefix)',
+	'install:database:label:timezone' => "タイムゾーン",
 
 	'install:database:help:dbuser' => 'このユーザはElgg用に作成したMySQLデータベースに対して全ての権限持っていなければいけません。',
 	'install:database:help:dbpassword' => '上のデータベースユーザのアカウントに対するパスワード',
 	'install:database:help:dbname' => 'Elgg用データベースの名前',
 	'install:database:help:dbhost' => 'MySQL serverのあるホスト名(たいていは、localhost)',
 	'install:database:help:dbprefix' => "全てのElgg用テーブル名につける接頭辞(Prefix)(たいていは、elgg_)",
+	'install:database:help:timezone' => "サイトが扱う既定のタイムゾーン",
 
 	'install:settings:instructions' => 'Elggを構築するにあたってこのサイトについてのいくつかの情報が必要です。もし、まだElgg用の<a href="http://learn.elgg.org/en/1.x/intro/install.html#create-a-data-folder" target="_blank">データディレクトリを作成</a>されておられないなら、今作成してください。',
 
@@ -124,8 +126,8 @@ return array(
 	'install:error:nodatabase' => 'データベース %s を使用出来ません。おそらく存在しないものと思われます。',
 	'install:error:cannotloadtables' => 'データベーステーブルを読み込むことができません。',
 	'install:error:tables_exist' => 'ご指定のデータベースにはすでにElggのテーブルが存在しています。これらのテーブルをドロップ（破棄）するか、インストーラーをリスタートする必要があります。リスタートを選択された場合は、その既存のテーブルを使用できないか試みてみます。インストーラーをリスタートするには、あなたのブラウザのアドレスバーに表示されているURLから \'?step=database\' の部分を削除したあと、Enterキーを押してください。',
-	'install:error:readsettingsphp' => 'engine/settings.example.php を読み込めません。',
-	'install:error:writesettingphp' => 'engine/settings.php に書き込めません',
+	'install:error:readsettingsphp' => '/elgg-config/settings.example.php ファイルを読み込めません',
+	'install:error:writesettingphp' => '/elgg-config/settings.php ファイルに書き込めません',
 	'install:error:requiredfield' => '%s が必須です',
 	'install:error:relative_path' => 'データディレクトリ用に指定された「 %s 」は絶対パスでは無いと思われます。',
 	'install:error:datadirectoryexists' => 'データディレクトリ用に指定された「 %s 」は存在しません。',

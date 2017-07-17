@@ -47,11 +47,13 @@ return array(
 	'logoutok' => "La fermeture de session a réussi; vous êtes déconnecté.",
 	'logouterror' => "Nous n'avons pas pu mettre fin à votre session. Essayez de nouveau.",
 	'session_expired' => "Suite à un temps d'inactivité prolongé, votre session de travail a expiré. Veuillez svp recharger la page afin de vous identifier à nouveau.",
+	'session_changed_user' => "You have been logged in as another user. You should <a href='javascript:location.reload(true)'>reload</a> the page.",
 
 	'loggedinrequired' => "Vous devez être connecté pour voir cette page.",
 	'adminrequired' => "Vous devez être administrateur pour voir cette page.",
 	'membershiprequired' => "Vous devez être membre de ce groupe pour voir cette page.",
 	'limited_access' => "Vous n'avez pas la permission de consulter cette page.",
+	'invalid_request_signature' => "The URL of the page you are trying to access is invalid or has expired",
 
 /**
  * Errors
@@ -75,6 +77,7 @@ return array(
 	'PluginException:InvalidManifest' => "Fichier manifest.xml invalide pour le plugin %s",
 	'PluginException:InvalidPlugin' => "%s n'est pas un plugin valide.",
 	'PluginException:InvalidPlugin:Details' => "%s n'est pas valide. plugin : %s",
+	'PluginException:NullInstantiated' => 'ElggPlugin ne peut pas être instancié vide. Vous devez passer un GUID, un ID de plugin, ou un chemin complet.',
 	'ElggPlugin:MissingID' => "Manque l'ID du plugin (guid %s)",
 	'ElggPlugin:NoPluginPackagePackage' => "Manque le paquet d'Elgg 'ElggPluginPackage' du plugin ID %s (guid %s)",
 	'ElggPluginPackage:InvalidPlugin:MissingFile' => "Manque le fichier %s dans le paquet",
@@ -84,7 +87,6 @@ return array(
 	'ElggPluginPackage:InvalidPlugin:CircularDep' =>"%s invalide dans dépendance '%s', dans le plugin %s. Les plugins peuvent pas être en conflit avec, ou avoir besoin de quelque chose, qu'ils contiennent !",
 	'ElggPlugin:Exception:CannotIncludeFile' => "Impossible d'inclure %s pour le plugin %s (guid : %s) ici %s. Vérifiez les autorisations !",
 	'ElggPlugin:Exception:CannotRegisterViews' => "Impossible d'ouvrir la vue dir pour le plugin %s (guid : %s) ici %s. Vérifiez les autorisations !",
-	'ElggPlugin:Exception:CannotRegisterLanguages' => "Impossible d'enregistrer les langues pour le plugin %s (guid : %s) sur %s. Vérifiez les autorisations !",
 	'ElggPlugin:Exception:NoID' => "Aucun ID pour le plugin guid %s !",
 	'PluginException:NoPluginName' => "Le nom du plugin n'a pas pu être trouvé",
 	'PluginException:ParserError' => "Erreur de syntaxe du fichier manifest.xml avec la version %s de l'API du plugin %s.",
@@ -124,6 +126,8 @@ return array(
 	'LoginException:ChangePasswordFailure' => 'Echec vérification mot de passe courant.',
 	'LoginException:Unknown' => 'Nous ne pouvons pas vous connecter à cause d\'une erreur inconnue.',
 
+	'UserFetchFailureException' => 'Impossible de vérifier les permissions pour l\'utilisateur user_guid [%s] car l\'utilisateur n\'existe pas.',
+
 	'deprecatedfunction' => "Attention : Ce code source utilise une fonction périmée '%s'. Il n'est pas compatible avec cette version de Elgg.",
 
 	'pageownerunavailable' => "Attention : La page de l'utilisateur %d n'est pas accessible.",
@@ -140,7 +144,7 @@ return array(
 	'error:400:title' => 'Mauvaise requête',
 	'error:400:content' => 'Désolé, la requête est invalide ou incomplète.',
 	'error:403:title' => 'Interdit',
-	'error:403:content' => 'Désolé, vous n\'avez pas la permission de consulter la page demandée.',
+	'error:403:content' => 'Désolé. Vous n\'avez pas l\'autorisation d\'accdéder à cette page.',
 	'error:404:title' => 'Page non trouvée',
 	'error:404:content' => 'Désolé. Nous n\'arrivons pas à trouver la page que vous demandez.',
 
@@ -148,9 +152,9 @@ return array(
 	'upload:error:form_size' => 'Le fichier que vous avez essayé de télécharger est trop grand.',
 	'upload:error:partial' => 'Le chargement du fichier n\'a pas abouti.',
 	'upload:error:no_file' => 'Aucun fichier n\'a été sélectionné.',
-	'upload:error:no_tmp_dir' => 'Impossible d\'enregistrer le fichier chargé.',
-	'upload:error:cant_write' => 'Impossible d\'enregistrer le fichier chargé.',
-	'upload:error:extension' => 'Impossible d\'enregistrer le fichier chargé.',
+	'upload:error:no_tmp_dir' => 'Impossible d\'enregistrer le fichier chargé (pas de répertoire temporaire).',
+	'upload:error:cant_write' => 'Impossible d\'enregistrer le fichier chargé (écriture impossible).',
+	'upload:error:extension' => 'Impossible d\'enregistrer le fichier chargé (extension).',
 	'upload:error:unknown' => 'Le chargement du fichier a échoué.',
 
 
@@ -165,6 +169,7 @@ return array(
 	'password' => "Mot de passe GCconnex",
 	'passwordagain' => "Confirmation du mot de passe",
 	'admin_option' => "Définir cet utilisateur comme administrateur ?",
+	'autogen_password_option' => "Automatically generate a secure password?",
 
 /**
  * Access
@@ -250,12 +255,12 @@ return array(
 	'friends:of:none' => "Personne n'a encore ajouté ce membre comme contact.",
 	'friends:of:none:you' => "Personne ne vous a encore ajouté comme contact. Commencez par compléter votre page de profil et publiez du contenu pour que les gens vous trouvent !",
 
-	'friends:of:owned' => "Les personnes qui ont %s dans leurs contacts",
+	'friends:of:owned' => "Les personnes qui ont %s comme contact",
 
 	'friends:of' => "Contacts de",
-	'friends:collections' => "Groupement de contacts",
-	'collections:add' => "Nouvelle collection",
-	'friends:collections:add' => "Nouveau groupement de contacts",
+	'friends:collections' => "Liste de contacts",
+	'collections:add' => "Nouvelle liste",
+	'friends:collections:add' => "Nouvelle liste de contacts",
 	'friends:addfriends' => "Sélectionner des contacts",
 	'friends:collectionname' => "Nom du cercle",
 	'friends:collectionfriends' => "Contacts dans le groupement",
@@ -333,7 +338,7 @@ return array(
 /**
  * Feeds
  */
-	'feed:rss' => "S'abonner au fil RSS de cette page",
+	'feed:rss' => 'Fil RSS pour cette page',
 /**
  * Links
  */
@@ -358,6 +363,7 @@ return array(
 	'river:delete' => 'Retirer cet élément du flux d\'activité',
 	'river:delete:success' => 'L\'élément du flux d\'activité a été supprimé',
 	'river:delete:fail' => 'L\'élément du flux d\'activité n\'a pas pu être effacé',
+	'river:delete:lack_permission' => 'You lack permission to delete this activity item',
 	'river:subject:invalid_subject' => 'Utilisateur invalide',
 	'activity:owner' => 'Voir le flux d\'activité',
 	
@@ -396,7 +402,7 @@ return array(
 	'viewtype:list' => "Liste",
 	'viewtype:gallery' => "Galerie",
 
-	'tag:search:startblurb' => "Éléments avec des tags correspondant à \"%s\" :",
+	'tag:search:startblurb' => "Éléments avec le(s) tag(s) \"%s\" :",
 
 	'user:search:startblurb' => "Membres correspondant à \"%s\" :",
 	'user:search:finishblurb' => "Pour en voir plus, cliquez ici.",
@@ -416,7 +422,7 @@ return array(
 	'settings:edit' => 'Modifier les paramètres',
 
 	'register' => "S'enregistrer",
-	'registerok' => "Vous vous êtes bien enregistré(e) sur %s.",
+	'registerok' => "Votre compte a bien été créé sur %s.",
 	'registerbad' => "La création de votre compte a échoué pour une raison inconnue.",
 	'registerdisabled' => "La création de compte a été désactivée par l'administrateur du site.",
 	'register:fields' => 'Tous les champs sont requis',
@@ -451,14 +457,13 @@ return array(
 	'user:password:fail:tooshort' => "Le mot de passe est trop court !",
 	'user:password:fail:incorrect_current_password' => "Le mot de passe actuel entré est incorrect.",
 	'user:resetpassword:unknown_user' => "Utilisateur inconnu.",
-	'user:resetpassword:reset_password_confirm' => "Après réinitialisation de votre mot de passe, celui-ci sera envoyé à votre adresse e-mail.",
 	'user:changepassword:unknown_user' => 'Utilisateur invalide.',
 	'user:changepassword:change_password_confirm' => 'Cela modifiera votre mot de passe.',
 
 	'user:set:language' => "Paramètre de langage",
 	'user:language:label' => "Votre langue",
-	'user:language:success' => "Votre paramètre de langage a été mis à jour.",
-	'user:language:fail' => "Votre paramètre de langage n'a pas pu être sauvegardé.",
+	'user:language:success' => "Votre préférence de langue a bien été enregistré.",
+	'user:language:fail' => "Votre préférence de langue n'a pas pu être enregistré.",
 
 	'user:username:notfound' => "Nom d'utilisateur %s non trouvé.",
 
@@ -503,6 +508,9 @@ return array(
 	'admin:cron:period' => 'Période de la table de planification (cron)',
 	'admin:cron:friendly' => 'Dernière exécution',
 	'admin:cron:date' => 'Date et heure',
+	'admin:cron:msg' => 'Message',
+	'admin:cron:started' => 'Tâches Cron pour "%s" démarrées à %s',
+	'admin:cron:complete' => 'Tâches Cron pour "%s" terminées à %s',
 
 	'admin:appearance' => 'Apparence',
 	'admin:administer_utilities' => 'Utilitaires',
@@ -567,9 +575,9 @@ return array(
 "La navigation dans l'administration se fait à l'aide du menu de droite. Il est organisé en"
 . " 3 sections :
 	<dl>
-		<dt>Administrer</dt><dd>Les tâches quotidiennes comme le suivi du contenu signalé, l'aperçu des utilisateurs en ligne, l'affichage des statistiques...</dd>
-		<dt>Configurer</dt><dd>Les tâches occasionnelles comme le paramétrage du nom du site ou l'activation d'un plugin.</dd>
-		<dt>Développer</dt><dd>Pour les développeurs qui créent des plugins ou conçoient des thèmes. (Nécessite des connaissances en programmation.)</dd>
+	<dt>Administrer</dt><dd>Les tâches de tous les jours comme suivre le contenu signalé, vérifier qui est en ligne, et afficher des statistiques.</dd>
+	<dt>Configurer</dt><dd>Les tâches occasionnelles comme la définition du nom du site ou l'activation d'un plugin.</dd>
+	<dt>Développer</dt><dd>Pour les développeurs qui créent des plugins ou conçoivent des thèmes. (Nécessite le plugin developer.)</dd>
 	</dl>
 	",
 
@@ -632,30 +640,37 @@ return array(
 	'admin:plugins:description' => "Ce menu vous permet de contrôler et de configurer les outils installés sur votre site.",
 	'admin:plugins:opt:linktext' => "Configurer les outils...",
 	'admin:plugins:opt:description' => "Configurer les outils installés sur le site.",
+	'admin:plugins:label:id' => "ID",
+	'admin:plugins:label:name' => "Nom",
 	'admin:plugins:label:author' => "Auteur",
 	'admin:plugins:label:copyright' => "Copyright",
 	'admin:plugins:label:categories' => "Catégories",
 	'admin:plugins:label:licence' => "Licence",
 	'admin:plugins:label:website' => "URL",
+	'admin:plugins:label:info' => "Informations",
+	'admin:plugins:label:files' => "Fichiers",
+	'admin:plugins:label:resources' => "Ressources",
+	'admin:plugins:label:screenshots' => "Captures d'écran",
 	'admin:plugins:label:repository' => "Code",
 	'admin:plugins:label:bugtracker' => "Signaler un problème",
 	'admin:plugins:label:donate' => "Faire un don",
-	'admin:plugins:label:moreinfo' => "Plus d'informations",
-	'admin:plugins:label:version' => "Version",
-	'admin:plugins:label:location' => "Adresse",
+	'admin:plugins:label:moreinfo' => 'plus d\'informations',
+	'admin:plugins:label:version' => 'Version',
+	'admin:plugins:label:location' => 'Adresse',
 	'admin:plugins:label:contributors' => 'Contributeurs',
 	'admin:plugins:label:contributors:name' => 'Nom',
 	'admin:plugins:label:contributors:email' => 'Email',
 	'admin:plugins:label:contributors:website' => 'Site web',
-	'admin:plugins:label:contributors:username' => 'Nom d\'utilisateur',
+	'admin:plugins:label:contributors:username' => 'Identifiant',
 	'admin:plugins:label:contributors:description' => 'Description',
 	'admin:plugins:label:dependencies' => "Dépendances",
 
-	'admin:plugins:warning:elgg_version_unknown' => 'Ce plugin utilise un ancien fichier manifest.xml et ne précise pas une version de Elgg compatible. Il ne fonctionnera probablement pas !',
 	'admin:plugins:warning:unmet_dependencies' => 'Ce plugin a des dépendances non satisfaites et ne peut pas être activé. Vérifiez les dépendances dans la partie "Plus d\'informations".',
 	'admin:plugins:warning:invalid' => 'Ce plugin est invalide : %s',
 	'admin:plugins:warning:invalid:check_docs' => 'Vérifiez <a href="http://learn.elgg.org/fr/stable/appendix/faqs.html">la documentation d\'Elgg</a> pour des astuces de débogage. Vous pouvez également consulter <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">version anglophone</a>, qui peut être plus complète / récente.',
 	'admin:plugins:cannot_activate' => 'impossible d\'activer',
+	'admin:plugins:already:active' => 'Plugin(s) déjà activé(s).',
+	'admin:plugins:already:inactive' => 'Plugin(s) déjà désactivé(s).',
 
 	'admin:plugins:set_priority:yes' => "%s a été réordonné.",
 	'admin:plugins:set_priority:no' => "Impossible de réordonner %s.",
@@ -675,7 +690,7 @@ return array(
 
 	'admin:plugins:dependencies:type' => 'Type',
 	'admin:plugins:dependencies:name' => 'Nom',
-	'admin:plugins:dependencies:expected_value' => 'Valeur attentdue',
+	'admin:plugins:dependencies:expected_value' => 'Valeur attendue',
 	'admin:plugins:dependencies:local_value' => 'Valeur réelle',
 	'admin:plugins:dependencies:comment' => 'Commentaire',
 
@@ -718,7 +733,7 @@ return array(
 	'admin:user:delete:yes' => "L'utilisateur %s a été supprimé",
 	'admin:user:self:delete:no' => "Vous ne pouvez pas supprimer votre propre compte",
 
-	'admin:user:resetpassword:yes' => "Mot de passe réinitialisé, utilisateur notifié.",
+	'admin:user:resetpassword:yes' => "Mot de passe réinitialisé, l'utilisateur a été notifié par e-mail.",
 	'admin:user:resetpassword:no' => "Le mot de passe n'a pas pu être réinitialisé.",
 
 	'admin:user:makeadmin:yes' => "L'utilisateur est maintenant un administrateur.",
@@ -868,15 +883,15 @@ Quand il est activé, seuls les administrateurs peuvent s\'identifier et navigue
 	'remove' => 'Enlever',
 	'revert' => 'Rétablir',
 
-	'site' => "Site",
-	'activity' => "Activité",
-	'members' => "Membres",
+	'site' => 'Site',
+	'activity' => 'Activité',
+	'members' => 'Membres',
 	'menu' => 'Menu',
 
-	'up' => 'Haut',
-	'down' => 'Bas',
-	'top' => 'En haut',
-	'bottom' => 'En bas',
+	'up' => 'Monter',
+	'down' => 'Descendre',
+	'top' => 'Tout en haut',
+	'bottom' => 'Tout en bas',
 	'right' => 'Droite',
 	'left' => 'Gauche',
 	'back' => 'Retour',
@@ -896,7 +911,7 @@ Quand il est activé, seuls les administrateurs peuvent s\'identifier et navigue
 
 	'active' => "Activé",
 	'total' => "Total",
-	
+
 	'ok' => 'OK',
 	'any' => 'N\'importe lequel',
 	'error' => 'Erreur',
@@ -910,7 +925,7 @@ Quand il est activé, seuls les administrateurs peuvent s\'identifier et navigue
 
 	'content' => "contenu",
 	'content:latest' => 'Dernière activité',
-	'content:latest:blurb' => 'Vous pouvez également cliquer ici pour voir les dernières publications du site.',
+	'content:latest:blurb' => 'Vous pouvez également cliquer ici pour voir les dernières publications sur le site.',
 
 	'link:text' => 'voir le lien',
 
@@ -918,7 +933,7 @@ Quand il est activé, seuls les administrateurs peuvent s\'identifier et navigue
  * Generic questions
  */
 
-	'question:areyousure' => "Etês-vous sûr ?",
+	'question:areyousure' => 'Confirmez-vous ?',
 
 /**
  * Status
@@ -941,7 +956,7 @@ Quand il est activé, seuls les administrateurs peuvent s\'identifier et navigue
 	'sort:popular' => 'Popularité',
 	'sort:alpha' => 'Alphabétique',
 	'sort:priority' => 'Priorité',
-		
+
 /**
  * Generic data words
  */
@@ -1010,8 +1025,8 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
  * Import / export
  */
 
-	'importsuccess' => "L'import des données a été réalisée avec succès",
-	'importfail' => "L'import OpenDD des données a échouée.",
+	'importsuccess' => "L'import des données a réussi",
+	'importfail' => "L'import des données OpenDD a échoué.",
 
 /**
  * Time
@@ -1026,7 +1041,6 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
 	'friendlytime:days:singular' => "hier",
 	'friendlytime:date_format' => "j F Y @ g:ia",
 	/*'friendlytime:date_format' => 'j F Y @ G:i',*/
-	
 	'friendlytime:future:minutes' => "dans %s minutes",
 	'friendlytime:future:minutes:singular' => "dans une minute",
 	'friendlytime:future:hours' => "dans %s heures",
@@ -1034,18 +1048,31 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
 	'friendlytime:future:days' => "dans %s jours",
 	'friendlytime:future:days:singular' => "demain",
 
-	'date:month:01' => "Janvier %s",
-	'date:month:02' => "Février %s",
-	'date:month:03' => "Mars %s",
-	'date:month:04' => "Avril %s",
-	'date:month:05' => "Mai %s",
-	'date:month:06' => "Juin %s",
-	'date:month:07' => "Juillet %s",
-	'date:month:08' => "Août %s",
-	'date:month:09' => "Septembre %s",
-	'date:month:10' => "Octobre %s",
-	'date:month:11' => "Novembre %s",
-	'date:month:12' => "Décembre %s",
+	'date:month:01' => 'Janvier %s',
+	'date:month:02' => 'Février %s',
+	'date:month:03' => 'Mars %s',
+	'date:month:04' => 'Avril %s',
+	'date:month:05' => 'Mai %s',
+	'date:month:06' => 'Juin %s',
+	'date:month:07' => 'Juillet %s',
+	'date:month:08' => 'Août %s',
+	'date:month:09' => 'Septembre %s',
+	'date:month:10' => 'Octobre %s',
+	'date:month:11' => 'Novembre %s',
+	'date:month:12' => 'Décembre %s',
+	
+	'date:month:short:01' => 'Jan %s',
+	'date:month:short:02' => 'Fév %s',
+	'date:month:short:03' => 'Mar %s',
+	'date:month:short:04' => 'Avr %s',
+	'date:month:short:05' => 'Mai %s',
+	'date:month:short:06' => 'Jui %s',
+	'date:month:short:07' => 'Jui %s',
+	'date:month:short:08' => 'Aou %s',
+	'date:month:short:09' => 'Sep %s',
+	'date:month:short:10' => 'Oct %s',
+	'date:month:short:11' => 'Nov %s',
+	'date:month:short:12' => 'Déc %s',
 
 	'date:weekday:0' => 'Dimanche',
 	'date:weekday:1' => 'Lundi',
@@ -1054,16 +1081,24 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
 	'date:weekday:4' => 'Jeudi',
 	'date:weekday:5' => 'Vendredi',
 	'date:weekday:6' => 'Samedi',
-	
-	'interval:minute' => 'Chaque minute',
-	'interval:fiveminute' => 'Chaque 5 minutes',
-	'interval:fifteenmin' => 'Chaque 15 minutes',
-	'interval:halfhour' => 'Chaque demi-heure',
-	'interval:hourly' => 'Chaque heure',
-	'interval:daily' => 'Chaque jour',
-	'interval:weekly' => 'Chaque semaine',
-	'interval:monthly' => 'Chaque mois',
-	'interval:yearly' => 'Chaque année',
+
+	'date:weekday:short:0' => 'Dim',
+	'date:weekday:short:1' => 'Lun',
+	'date:weekday:short:2' => 'Mar',
+	'date:weekday:short:3' => 'Mer',
+	'date:weekday:short:4' => 'Jeu',
+	'date:weekday:short:5' => 'Ven',
+	'date:weekday:short:6' => 'Sam',
+
+	'interval:minute' => 'Toutes les minutes',
+	'interval:fiveminute' => 'Toutes les 5 minutes',
+	'interval:fifteenmin' => 'Toutes les 15 minutes',
+	'interval:halfhour' => 'Toutes les demi-heures',
+	'interval:hourly' => 'Toutes les heures',
+	'interval:daily' => 'Tous les jours',
+	'interval:weekly' => 'Toutes les semaines',
+	'interval:monthly' => 'Tous les mois',
+	'interval:yearly' => 'Tous les ans',
 	'interval:reboot' => 'Au redémarrage',
 
 /**
@@ -1092,8 +1127,6 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
 	'installation:walled_garden:description' => 'Activez ceci pour éviter que les non-membres puissent visiter d\'autres pages que celles expressément spécifiées comme publiques (comme par exemple la page de connexion et d\'inscription).',
 	'installation:walled_garden:label' => 'Restreindre l\'accès au site aux membres connectés',
 
-	'installation:httpslogin' => "Activer ceci afin que les utilisateurs puissent se connecter via le protocole HTTPS. Ceci nécessite que votre serveur web supporte HTTPS !",
-	'installation:httpslogin:label' => "Activer les connexions via HTTPS",
 	'installation:view' => "Entrez le nom de la vue qui sera utilisée par défaut pour l'affichage du site, ou laissez vide pour la vue par défaut (en cas de doute, laissez la valeur par défaut) :",
 
 	'installation:siteemail' => "L'adresse email du site (utilisée lors de l'envoi d'emails par le système)",
@@ -1106,28 +1139,32 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
 	'installation:simplecache:description' => "Le cache simple augmente les performances en mettant en cache du contenu statique comme des fichiers CSS et Javascript.",
 	'installation:simplecache:label' => "Utiliser le cache simple (recommandé)",
 
-	'installation:minify:description' => "Le cache peut être amélioré en compressant les fichiers JavaScript et  CSS. (Il est nécessaire que le ache simple soit activé). ",
+	'installation:cache_symlink:description' => "The symbolic link to the simple cache directory allows the server to serve static views bypassing the engine, which considerably improves performance and reduces the server load",
+	'installation:cache_symlink:label' => "Use symbolic link to simple cache directory (recommended)",
+	'installation:cache_symlink:warning' => "Symbolic link has been established. If, for some reason, you want to remove the link, delete the symbolic link directory from your server",
+	'installation:cache_symlink:error' => "Due to your server configuration the symbolic link can not be established automatically. Please refer to the documentation and establish the symbolic link manually.",
+
+	'installation:minify:description' => "Le cache simple peut également améliorer les performances en compressant les fichiers JavaScript et CSS. (Le cache simple doit être activé.)",
 	'installation:minify_js:label' => "Compresser le JavaScript (recommandé)",
 	'installation:minify_css:label' => "Compresser les CSS (recommandé)",
 
 	'installation:htaccess:needs_upgrade' => "Vous devez mettre à jour votre fichier .htaccess afin que le chemin soit injecté dans le paramètre GET __elgg_uri (vous pouvez utiliser le fichier install/config/htaccess_dist comme modèle)",
 	'installation:htaccess:localhost:connectionfailed' => "Elgg ne peut pas se connecter à lui-même pour tester les règles de réécriture correctement. Veuillez vérifier que curl fonctionne, et qu'il n'y a pas de restriction au niveau des IP interdisant les connexions depuis localhost.",
-	
+
 	'installation:systemcache:description' => "Le cache système diminue le temps de chargement du moteur Elgg en mettant en cache les données dans des fichiers.",
 	'installation:systemcache:label' => "Utiliser le cache système (recommandé)",
 
 	'admin:legend:system' => 'Système',
 	'admin:legend:caching' => 'Mise en cache',
-	'admin:legend:content_access' => 'Accès au contenu',
+	'admin:legend:content_access' => 'Niveau d\'accès (nouveaux contenus)',
 	'admin:legend:site_access' => 'Accès au site',
-	'admin:legend:debug' => 'Débugger et s\'identifier',
+	'admin:legend:debug' => 'Débogage et journalisation',
 
-	'upgrading' => "Mise à jour en cours",
-	'upgrade:db' => "Votre base de données a été mise à jour.",
-	'upgrade:core' => "Votre installation de Elgg a été mise à jour",
-	'upgrade:unlock' => 'Déverrouiller la mise à jour',
-	'upgrade:unlock:confirm' => "La base de données est verrouillée par une autre mise à jour. Exécuter des mises à jours concurrentes est dangereux. Vous devriez continuer seulement si vous savez qu'il n'y a pas d'autre mise à jour en cours d'exécution. Déverrouiller ?",
-	'upgrade:locked' => "Impossible de mettre à jour. Une autre mise à jour est en cours. Pour effacer le verrouillage de la mise à jour, visiter la partie administrateur.",
+	'upgrading' => 'Mise à niveau en cours...',
+	'upgrade:core' => 'Votre installation d\'Elgg a été mise à niveau.',
+	'upgrade:unlock' => 'Déverrouiller la mise à niveau',
+	'upgrade:unlock:confirm' => "La base de données est verrouillée par une autre mise à niveau. Exécuter des mises à jours simultanées est dangereux. Vous devriez continuer seulement si vous savez qu'il n'y a pas d'autre mise à jour en cours d'exécution. Déverrouiller ?",
+	'upgrade:locked' => "Impossible de mettre à niveau. Une autre mise à niveau est en cours. Pour supprimer le verrouillage de la mise à jour, visitez la partie administrateur.",
 	'upgrade:unlock:success' => "Mise à niveau débloquée.",
 	'upgrade:unable_to_upgrade' => 'Impossible de mettre à niveau.',
 	'upgrade:unable_to_upgrade_info' =>
@@ -1165,7 +1202,7 @@ Si vous avez besoin d\'instructions détaillées, veuillez visiter la <a href="h
 	'admin:upgrades:datadirs' => 'Répertoire de données mis à jour',
 
 	// Strings specific for the discussion reply upgrade
-	'admin:upgrades:discussion_replies' => 'Réponse à la discussion mise à jour',
+	'admin:upgrades:discussion_replies' => 'Réponses aux discussions mises à jour',
 	'discussion:upgrade:replies:create_failed' => 'Impossible de convertir la réponse à la discussion d\'id %s en une entité.',
 
 /**
@@ -1191,7 +1228,7 @@ Si vous avez besoin d\'instructions détaillées, veuillez visiter la <a href="h
 	'email:save:fail' => "Votre nouvelle adresse email n'a pas pu être enregistrée.",
 
 	'friend:newfriend:subject' => "%s vous a ajouté comme contact !",
-	'friend:newfriend:body' => "%s vous a ajouté comme contact!
+	'friend:newfriend:body' => "%s vous a ajouté comme contact !
 
 Pour voir son profil :
 %s
@@ -1257,7 +1294,7 @@ Sinon ignorez cet e-mail.
 	'generic_comments:latest:posted' => 'a publié un',
 
 	'generic_comment:email:subject' => 'Vous avez un nouveau commentaire !',
-	'generic_comment:email:body' => "Vous avez un nouveau commentaire sur l'élément '%s' de %s. Voici son contenu :
+	'generic_comment:email:body' => "Vous avez un nouveau commentaire de %2\$s sur votre publication \"%1\$s\" :
 
 
 %s
@@ -1274,11 +1311,15 @@ Merci de ne pas répondre à cet e-mail.",
 /**
  * Entities
  */
-	
+
 	'byline' => 'Par %s',
+	'byline:ingroup' => 'dans le groupe %s',
 	'entity:default:strapline' => 'Créé %s par %s',
 	'entity:default:missingsupport:popup' => 'Cette entité ne peut pas être affichée correctement. C\'est peut-être parce qu\'elle a besoin d\'un plugin qui n\'est plus installé ou activé.',
 
+	'entity:delete:item' => 'Objet',
+	'entity:delete:item_not_found' => 'Objet non trouvé.',
+	'entity:delete:permission_denied' => 'Vous n\'avez pas les permissions nécessaires pour supprimer cet objet.',
 	'entity:delete:success' => 'L\'entité %s a été supprimée',
 	'entity:delete:fail' => 'L\'entité %s n\'a pas pu être supprimée',
 	
@@ -1386,7 +1427,7 @@ Merci de ne pas répondre à cet e-mail.",
 	"jw" => "Javanais",
 	"ka" => "Géorgien",
 	"kk" => "Kazakh",
-	"kl" => "Groenlandais",
+	"kl" => "Groenlandais (Kalaallisut)",
 	"km" => "Khmer",
 	"kn" => "Kannara",
 	"ko" => "Coréen",
@@ -1473,4 +1514,7 @@ Merci de ne pas répondre à cet e-mail.",
 	"zh" => "Chinois",
 	"zh_hans" => "Chinois simplifié",
 	"zu" => "Zoulou",
+
+	"field:required" => 'Requis.',
+
 );

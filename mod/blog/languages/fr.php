@@ -16,7 +16,7 @@ return array(
 	'blog:group' => 'Blogues du groupe',
 	'blog:enableblog' => 'Activer le blogue du groupe',
 	'blog:write' => 'Rédiger un billet',
-					
+
 	//Editing
 	'blog:add' => 'Ajouter un blogue',
 	'blog:edit' => 'Modifier un billet',
@@ -26,7 +26,7 @@ return array(
 
 	'blog:revision' => 'Révision',
 	'blog:auto_saved_revision' => 'Révision automatiquement sauvegardée',
-		
+
 	// messages
 	'blog:message:saved' => 'Le billet a été sauvegardé',
 	'blog:error:cannot_save' => "Impossible de sauvegarder le billet.",
@@ -42,22 +42,19 @@ return array(
 	'blog:error:cannot_edit_post' => "Cet billet n'existe pas ou vous n'ayez pas les droits d\'accès pour le modifier.",
 	'blog:error:post_not_found' => 	"Ce billet a été supprimé, n'est pas valide, ou vous n'avez pas la permission de le voir.",
 	'blog:error:revision_not_found' => 	'Impossible de trouver cette révision.',
-					
+
 	// river
 	'river:create:object:blog' => '%s a publié un billet %s',
 	'river:comment:object:blog' => '%s a commenté sur le blogue %s',
-					
+
 	// notifications			
 	'blog:notify:summary' => 'Nouveau billet sur le blogue nommé %s',
 	'blog:notify:subject' => 'Nouveau billet : %s',
 	'blog:notify:body' => '%s a publié un nouveau billet : %s  %s personnes ont vu ou commenté le billet : %s',
-					
+
 	// widget			
 	'blog:widget:description' => 'Ce widget sert à afficher votre plus récent billet',
 	'blog:moreblogs' => 'Plus de billets',
 	'blog:numbertodisplay' => 'Nombre de billets à afficher',
 	'blog:noblogs' => 'Aucun billet ',
-
-	//sidebar
-	'blog:recent' => 'Récents billets',
 );

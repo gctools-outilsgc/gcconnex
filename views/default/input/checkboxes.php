@@ -7,7 +7,7 @@
  * to make sure something is sent to the server.  The default value is 0.
  * If using JS, be specific to avoid selecting the hidden default value:
  * 	$('input[type=checkbox][name=name]')
- * 
+ *
  * @warning Passing integers as labels does not currently work due to a
  * deprecated hack that will be removed in Elgg 1.9. To use integer labels,
  * the labels must be character codes: 1 would be &#0049;
@@ -43,7 +43,7 @@ if (empty($vars['options'])) {
 	return;
 }
 
-$list_class = (array) elgg_extract('class', $vars, []);
+$list_class = elgg_extract_class($vars);
 unset($vars['class']);
 
 $list_class[] = 'elgg-input-checkboxes';
@@ -68,17 +68,11 @@ unset($input_vars['options']);
 
 // include a default value so if nothing is checked 0 will be passed.
 if ($vars['name'] && $vars['default'] !== false) {
-	echo elgg_view('input/hidden', ['name' => $vars['name'], 'value' => $default]);
+	echo elgg_view('input/hidden', ['name' => $vars['name'], 'value' => $vars['default']]);
 }
 
 $checkboxes = '';
 foreach ($vars['options'] as $label => $value) {
-	// @deprecated 1.8 Remove in 1.9
-	if (is_integer($label)) {
-		elgg_deprecated_notice('$vars[\'options\'] must be an associative array in input/checkboxes', 1.8);
-		$label = $value;
-	}
-
 	$input_vars['checked'] = in_array(elgg_strtolower($value), $values);
 	$input_vars['value'] = $value;
 	$input_vars['label'] = $label;

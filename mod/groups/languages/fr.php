@@ -44,7 +44,7 @@ return array(
 	'groups:content_access_mode:membersonly' => "Membres seulement - Les non-membres ne peuvent pas accéder au contenu du groupe",
 	'groups:access' => "Les autorisations d'accès",
 	'groups:owner' => "Propriétaire",
-	'groups:owner:warning' => "Attention: si vous changez cette valeur, vous ne serez plus le propriétaire du groupe.",
+	'groups:owner:warning' => "Attention : si vous faites cette modification vous ne serez plus le propriétaire du groupe.",
 	'groups:widget:num_display' => 'Nombre de groupes à afficher',
 	'groups:widget:membership' => 'Appartenance aux groupes',
 	'groups:widgets:description' => 'Afficher les groupes dont vous faites partie dans votre profil',
@@ -80,24 +80,10 @@ return array(
 	'groups:viagroups' => "par l'intermédiaire de groupes",
 	'groups:group' => "Groupe",
 	'groups:search:tags' => "mot-clic",
-	'groups:notfound' => "Groupe introuvable",
-	'groups:notfound:details' => "Le groupe que vous recherchez n'existe pas, ou vous n'avez pas la permission d'y accéder",
 	'groups:search:title' => "Rechercher des groupes ayant les mots-clics '%s'",
 	'groups:search:none' => "Aucun groupe n’a été trouvé avec ces critères de recherche",
 	'groups:search_in_group' => "Rechercher dans ce groupe",
 	'groups:acl' => "Groupe : %s",
-
-	'discussion:topic:notify:summary' => 'Nouveau sujet de discussion appelé %s',
-	'discussion:topic:notify:subject' => 'Nouveau sujet de discussion: %s',
-	'discussion:topic:notify:body' => '%s a ajouté un nouveau sujet de discussion au groupe %s: Titre : %s %s Afficher et répondre au sujet de discussion: %s',		
-
-	'discussion:reply:notify:summary' => 'Nouvelle réponse au sujet de discussion : %s',
-	'discussion:reply:notify:subject' => 'Nouvelle réponse au sujet de discussion : %s',
-	'discussion:reply:notify:body' => '%s a répondu au sujet de discussion %s dans le groupe %s: %s Voir et répondre à la discussion : %s ',
-
-	'discussion:notification:topic:subject' => 'Nouvelle discussion de groupe', //translate
-	'groups:notification' => '%s a ajouté un nouveau sujet de discussion à %s : %s %s Afficher et répondre à la discussion : %s ',		
-	'discussion:notification:reply:body' => 	'%s a répondu à la question de discussion %s dans le groupe %s : %s Afficher et répondre à la discussion : %s ',
 
 	'groups:activity' => "L'activité du groupe",
 	'groups:enableactivity' => 'Activer le fil d\'activité de groupe',
@@ -106,20 +92,15 @@ return array(
 	'groups:notfound' => "Le groupe n'a pas été trouvé",
 	'groups:notfound:details' => "Le groupe que vous recherchez n'existe pas, ou vous n'avez pas la permission d'y accéder",
 
-	'groups:requests:none' => "Il n'y a actuellement aucune demande d'adhésion en attente.",
+	'groups:requests:none' => 'Personne ne demande à rejoindre le groupe en ce moment.',
 
-	'groups:invitations:none' => 'Il n\'y a pas d\'invitations en attente.',
-
-	'item:object:groupforumtopic' => "Sujets de discussion",
-	'item:object:discussion_reply' => "Réponses à la discussion",
-
-	'groupforumtopic:new' => "Nouvel article de discussion",
+	'groups:invitations:none' => 'Aucune invitation en attente.',
 
 	'groups:count' => "groupes créés",
 	'groups:open' => "groupe ouvert",
 	'groups:closed' => "groupe fermé",
 	'groups:member' => "membres",
-	'groups:searchtag' => "Recherche de groupes par mot-clic",
+	'groups:searchtag' => "Rechercher des groupes par tag",
 
 	'groups:more' => 'Plus de groupes',
 	'groups:none' => 'Aucun groupe',
@@ -140,74 +121,10 @@ return array(
 	/**
 	 * Group tools
 	 */
-	'groups:enableforum' => 'Activer la discussion de groupe',
 	'groups:lastupdated' => 'Dernière mise à jour le %s par %s',
 	'groups:lastcomment' => 'Dernier commentaire %s par %s',
 
-'groups:enablefiles' => 'Activer les fichiers de groupe',
-'groups:enablepages' => 'Activer les pages de groupe',
-
-		
-		
-	/**
-	 * Group discussion
-	 */
-	'discussion' => 'Discussion',
-	'discussion:add' => 'Ajouter un sujet de discussion',
-	'discussion:latest' => 'Dernière discussion',
-	'discussion:group' => 'Discussion de groupe',
-	'discussion:none' => 'Aucune discussion',
-	'discussion:reply:title' => 'Répondre par %s',
-
-	'discussion:topic:created' => 'Le sujet de discussion a été créé.',
-	'discussion:topic:updated' => 'Le sujet de discussion a été mis à jour.',
-	'discussion:topic:deleted' => 'Sujet de discussion a été supprimé.',
-
-	'discussion:topic:notfound' => 'Sujet de discussion introuvable',
-	'discussion:error:notsaved' => "Impossible d'enregistrer ce sujet",
-	'discussion:error:missing' => 'Le titre et le message sont des champs obligatoires',
-	'discussion:error:permissions' => "Vous n'avez pas l'autorisations d'effectuer cette action",
-	'discussion:error:notdeleted' => 'Impossible de supprimer le sujet de discussion',
-
-	'discussion:reply:edit' => 'Modifier la réponse',
-	'discussion:reply:deleted' => 'Réponse de discussion a été supprimée.',
-	'discussion:reply:error:notfound' => 'La réponse à cette discussion n\'a pas été trouvée',
-	'discussion:reply:error:notfound_fallback' => "Désolé, le message n'a pu être trouvé. Vous avez été redirigé vers le sujet de discussion original.",
-	'discussion:reply:error:notdeleted' => 'Impossible de supprimer la réponse de discussion',
-
-	'discussion:search:title' => 'Répondre au sujet: %s',
-
 	'admin:groups' => 'Groupes',
-
-	'reply:this' => 'Répondre à ceci',
-
-	'group:replies' => 'Réponses',
-	'groups:forum:created' => 'Créé %s avec %d commentaires',
-	'groups:forum:created:single' => 	'Créé %s avec %d réponse',
-	'groups:forum' => 'Discussion de groupe',
-	'groups:addtopic' => 'Ajouter un sujet',
-	'groups:forumlatest' => 'Dernière discussion',
-	'groups:latestdiscussion' => 'Dernière discussion',
-	'groupspost:success' => 'La plus récente',
-	'groupspost:failure' => 'Populaire',
-	'groups:alldiscussion' => 'Votre commentaire a été publié avec succès',
-	'groups:edittopic' => 'Modifier la discussion',
-	'groups:topicmessage' => 'Dernière discussion',
-	'groups:topicstatus' => 'Modifier un sujet',
-	'groups:reply' => 'Message relatif au sujet',
-	'groups:topic' => 'État du sujet',
-	'groups:posts' => 'Publier un commentaire',
-	'groups:lastperson' => 'Sujet',
-	'groups:when' => 'Articles',
-	'grouptopic:notcreated' => 'Dernière personne',
-	'groups:topicclosed' => 'Quand',
-	'grouptopic:created' => "Aucun sujet n'a été créé.",
-	'groups:topicsticky' => 'Ouvert',
-	'groups:topicisclosed' => 'Ce sujet est fermé.',
-	'groups:topiccloseddesc' => 'Ce sujet est maintenant fermé. Les commentaires ne sont plus acceptés.',
-	'grouptopic:error' => 'Impossible de créer votre sujet de discussion de groupe. Veuillez réessayer ou communiquer avec un administrateur système.',
-	'groups:forumpost:edited' => "Vous avez modifié l'article de discussion avec succès.",
-	'groups:forumpost:error' => "Un problème est survenu dans la modification de l'article de discussion.",
 
 	'groups:privategroup' => "Ceci est un groupe fermé. Vous devez procéder à une demande d'adhésion pour vous y joindre",
 	'groups:notitle' => 'Les groupes doivent avoir un titre',
@@ -246,9 +163,6 @@ return array(
 
 	'river:create:group:default' => '%s a créé le groupe %s',
 	'river:join:group:default' => '%s s’est joint(e) au groupe %s',
-	'river:create:object:groupforumtopic' => '%s a ajouté un nouveau sujet de discussion %s',
-	'river:reply:object:groupforumtopic' => '%s a répondu sur le sujet de discussion %s',
-	'river:reply:view' => 'afficher la réponse',
 
 	'groups:nowidgets' => "Aucun widget n'a été défini pour ce groupe.",
 
@@ -262,9 +176,8 @@ return array(
 	'groups:widgets:entities:label:displaynum' => "Présenter la liste des objets d'un groupe.",
 	'groups:widgets:entities:label:pleaseedit' => 'Veuillez configurer ce widget.',
 
-	'groups:forumtopic:edited' => 'Sujet de discussion de groupe mis à jour avec succès.',
 
-	'groups:allowhiddengroups' => 'Voulez-vous permettre les groupes privés (invisibles) ?',
+	'groups:allowhiddengroups' => 'Activer les groupes privés (invisibles) ?',
 	'groups:whocancreate' => 'Qui peut créer un nouveau groupe ?',
 		
 		
@@ -275,13 +188,6 @@ return array(
 	'group:notdeleted' => 'Il a été impossible de supprimer le groupe',	
 
 	'group:notfound' => 'Impossible de trouver le groupe',
-	'grouppost:deleted' => 'Publication du groupe supprimée avec succès',
-	'grouppost:notdeleted' => 'Il a été impossible de supprimer le groupe',
-	'groupstopic:deleted' => 'Sujet supprimé',
-	'groupstopic:notdeleted' => 'Sujet non supprimé',
-	'grouptopic:blank' => "Il n'y a pas de sujet de discussion",
-	'grouptopic:notfound' => 'Le sujet n\'a pu être trouvé',
-	'grouppost:nopost' => 'Pas d\'articles',
 	'groups:deletewarning' => "Êtes-vous certain de vouloir supprimer ce groupe? L'opération ne peut être annulée!",
 
 	'groups:invitekilled' => 'L\'invitation a été supprimée',

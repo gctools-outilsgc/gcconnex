@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\BatchResult;
+
 /**
  * test \ElggBatch
  *
@@ -13,7 +15,7 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 			'offset' => 0,
 			'limit' => 11
 		);
-		$batch = new \ElggBatch(array('\ElggBatchTest', 'elgg_batch_callback_test'), $options,
+		$batch = new \ElggBatch([\ElggBatchTest::class, 'elgg_batch_callback_test'], $options,
 				null, 5);
 		$j = 0;
 		foreach ($batch as $e) {
@@ -31,7 +33,7 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 			'offset' => 0,
 			'limit' => 11
 		);
-		$batch = new \ElggBatch(array('\ElggBatchTest', 'elgg_batch_callback_test'), $options,
+		$batch = new \ElggBatch([\ElggBatchTest::class, 'elgg_batch_callback_test'], $options,
 				null, 5);
 		$batch->setIncrementOffset(false);
 
@@ -50,7 +52,7 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 			'offset' => 3,
 			'limit' => 11
 		);
-		$batch = new \ElggBatch(array('\ElggBatchTest', 'elgg_batch_callback_test'), $options,
+		$batch = new \ElggBatch([\ElggBatchTest::class, 'elgg_batch_callback_test'], $options,
 				null, 5);
 		$batch->setIncrementOffset(false);
 
@@ -75,7 +77,7 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 			$entity->access_id = ACCESS_PUBLIC;
 			$entity->save();
 			$guids[] = $entity->guid;
-			_elgg_invalidate_cache_for_entity($entity->guid);
+			_elgg_services()->entityCache->remove($entity->guid);
 		}
 
 		// break entities such that the first fetch has one incomplete
@@ -126,7 +128,7 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 			$entity->access_id = ACCESS_PUBLIC;
 			$entity->save();
 			$guids[] = $entity->guid;
-			_elgg_invalidate_cache_for_entity($entity->guid);
+			_elgg_services()->entityCache->remove($entity->guid);
 		}
 
 		// break entities such that the first fetch has one incomplete
@@ -165,6 +167,44 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 		}
 		delete_data("DELETE FROM {$db_prefix}entities WHERE guid IN (" . implode(',', $guids) . ")");
 		delete_data("DELETE FROM {$db_prefix}objects_entity WHERE guid IN (" . implode(',', $guids) . ")");
+	}
+
+	public function testBatchCanCount() {
+		$getter = function ($options) {
+			if ($options['count']) {
+				return 20;
+			}
+			return false;
+		};
+		$options = [];
+
+		$count1 = count(new ElggBatch($getter, $options));
+		$count2 = $getter($options + ['count' => true]);
+
+		$this->assertEqual($count1, $count2);
+	}
+
+	public function testCanGetBatchFromAnEntityGetter() {
+		$options = [
+			'type' => 'plugin',
+			'limit' => 5,
+			'callback' => function ($row) {
+				return $row->guid;
+			},
+		];
+		$guids1 = elgg_get_entities($options);
+
+		$batch = elgg_get_entities($options + ['batch' => true]);
+
+		$this->assertIsA($batch, BatchResult::class);
+		/* @var ElggBatch $batch */
+
+		$guids2 = [];
+		foreach ($batch as $val) {
+			$guids2[] = $val;
+		}
+
+		$this->assertEqual($guids1, $guids2);
 	}
 
 	public static function elgg_batch_callback_test($options, $reset = false) {

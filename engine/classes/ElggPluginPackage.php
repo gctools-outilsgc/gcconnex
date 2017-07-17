@@ -18,6 +18,8 @@
  */
 class ElggPluginPackage {
 
+	const STATIC_CONFIG_FILENAME = 'elgg-plugin.php';
+
 	/**
 	 * The required files in the package
 	 *
@@ -53,7 +55,7 @@ class ElggPluginPackage {
 	 * @var array
 	 */
 	private $depsSupportedTypes = array(
-		'elgg_version', 'elgg_release', 'php_version', 'php_extension', 'php_ini', 'plugin', 'priority',
+		'elgg_release', 'php_version', 'php_extension', 'php_ini', 'plugin', 'priority',
 	);
 
 	/**
@@ -195,7 +197,32 @@ class ElggPluginPackage {
 			return false;
 		}
 
+		if (!$this->hasReadableConfigFile()) {
+			return false;
+		}
+
 		return true;
+	}
+
+	/**
+	 * Check that, if the plugin has a static config file, it is readable. We wait to read the contents
+	 * because we don't want to risk crashing the whole plugins page.
+	 *
+	 * @return bool
+	 */
+	private function hasReadableConfigFile() {
+		$file = "{$this->path}/" . self::STATIC_CONFIG_FILENAME;
+		if (!is_file($file)) {
+			return true;
+		}
+
+		if (is_readable($file)) {
+			return true;
+		}
+
+		$this->errorMsg =
+			_elgg_services()->translator->translate('ElggPluginPackage:InvalidPlugin:UnreadableConfig');
+		return false;
 	}
 
 	/**
@@ -376,7 +403,14 @@ class ElggPluginPackage {
 					$conflict['name'] = $plugin->getManifest()->getName();
 
 					if (!$full_report && !$result['status']) {
-						$this->errorMsg = "Conflicts with plugin \"{$plugin->getManifest()->getName()}\".";
+						$css_id = preg_replace('/[^a-z0-9-]/i', '-', $plugin->getManifest()->getID());
+						$link = elgg_view('output/url', [
+							'text' => $plugin->getManifest()->getName(),
+							'href' => "#$css_id",
+						]);
+
+						$key = 'ElggPluginPackage:InvalidPlugin:ConflictsWithPlugin';
+						$this->errorMsg = _elgg_services()->translator->translate($key, [$link]);
 						return $result['status'];
 					} else {
 						$report[] = array(
@@ -403,11 +437,6 @@ class ElggPluginPackage {
 
 			foreach (${$dep_type} as $dep) {
 				switch ($dep['type']) {
-					case 'elgg_version':
-						elgg_deprecated_notice("elgg_version in manifest.xml files is deprecated. Use elgg_release", 1.9);
-						$result = $this->checkDepElgg($dep, elgg_get_version(), $inverse);
-						break;
-
 					case 'elgg_release':
 						$result = $this->checkDepElgg($dep, elgg_get_version(true), $inverse);
 						break;

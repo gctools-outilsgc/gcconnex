@@ -1,6 +1,6 @@
 <?php
 
-class ElggExtenderTest extends \PHPUnit_Framework_TestCase {
+class ElggExtenderTest extends \Elgg\TestCase {
 
 	public function testSettingAndGettingAttribute() {
 		$obj = $this->getMockForAbstractClass('\ElggExtender');
@@ -27,6 +27,33 @@ class ElggExtenderTest extends \PHPUnit_Framework_TestCase {
 		$obj = $this->getMockForAbstractClass('\ElggExtender');
 		$obj->setValue('36', 'integer');
 		$this->assertSame(36, $obj->value);
-		$this->assertEquals('integer', $obj->value_type);		
+		$this->assertEquals('integer', $obj->value_type);
+	}
+
+	public function testIntsAreTypedAsInteger() {
+		$this->assertSame('integer', \ElggExtender::detectValueType(-1));
+		$this->assertSame('integer', \ElggExtender::detectValueType(0));
+		$this->assertSame('integer', \ElggExtender::detectValueType(2));
+	}
+
+	public function testFloatsAndNumericsAndStringableObjectsAreTypedAsText() {
+		$this->assertSame('text', \ElggExtender::detectValueType(3.14));
+		$this->assertSame('text', \ElggExtender::detectValueType('3.14'));
+		$this->assertSame('text', \ElggExtender::detectValueType(new ElggExtenderTest_Object));
+	}
+
+	public function testAcceptRecognizedTypes() {
+		$this->assertSame('text', \ElggExtender::detectValueType(123, 'text'));
+		$this->assertSame('integer', \ElggExtender::detectValueType(123, 'invalid'));
+
+		$this->assertSame('integer', \ElggExtender::detectValueType('hello', 'integer'));
+		$this->assertSame('text', \ElggExtender::detectValueType('hello', 'invalid'));
+	}
+
+}
+
+class ElggExtenderTest_Object {
+	function __toString() {
+		return 'oh hey';
 	}
 }

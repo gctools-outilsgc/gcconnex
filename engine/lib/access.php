@@ -154,7 +154,6 @@ $ENTITY_SHOW_HIDDEN_OVERRIDE = false;
  *
  * @param bool $show_hidden Show disabled entities.
  * @return bool
- * @access private
  */
 function access_show_hidden_entities($show_hidden) {
 	global $ENTITY_SHOW_HIDDEN_OVERRIDE;
@@ -167,7 +166,6 @@ function access_show_hidden_entities($show_hidden) {
  * Return current status of showing disabled entities.
  *
  * @return bool
- * @access private
  */
 function access_get_show_hidden_status() {
 	global $ENTITY_SHOW_HIDDEN_OVERRIDE;
@@ -606,8 +604,8 @@ return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hoo
 	$events->registerHandler('ready', 'system', 'access_init');
 
 	// For overrided permissions
-	$hooks->registerHandler('permissions_check', 'all', 'elgg_override_permissions');
-	$hooks->registerHandler('container_permissions_check', 'all', 'elgg_override_permissions');
+	$hooks->registerHandler('permissions_check', 'all', 'elgg_override_permissions', 600);
+	$hooks->registerHandler('container_permissions_check', 'all', 'elgg_override_permissions', 600);
 
 	$hooks->registerHandler('unit_test', 'system', 'access_test');
 };

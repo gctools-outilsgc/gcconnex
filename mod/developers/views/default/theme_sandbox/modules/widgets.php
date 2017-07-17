@@ -7,7 +7,7 @@ $url = current_page_url();
 
 elgg_register_plugin_hook_handler('view', 'widgets/friends/content', 'css_widget_content');
 elgg_register_plugin_hook_handler('view', 'widgets/friends/edit', 'css_widget_content');
-elgg_register_plugin_hook_handler('permissions_check', 'all', 'css_permissions_override');
+elgg_register_plugin_hook_handler('permissions_check', 'all', 'css_permissions_override', 600);
 
 function css_widget_content() {
 	return $ipsum = elgg_view('developers/ipsum');
@@ -52,17 +52,19 @@ echo '</div>';
 
 ?>
 </div>
-<script type="text/javascript">
+<script>
+require(['elgg', 'jquery'], function (elgg, $) {
 	// widgets do not have guids so we override the edit toggle and delete button
 	$(function() {
 		$('.elgg-widget-edit-button').unbind('click');
-		$('.elgg-widget-edit-button').click(function() {
+		$('.elgg-widget-edit-button').on('click', function() {
 			$(this).closest('.elgg-module-widget').find('.elgg-widget-edit').slideToggle('medium');
 			return false;
 		});
-		$('.elgg-widget-delete-button').click(function() {
+		$('.elgg-widget-delete-button').on('click', function() {
 			$(this).closest('.elgg-module-widget').remove();
 			return false;
 		});
 	});
+});
 </script>

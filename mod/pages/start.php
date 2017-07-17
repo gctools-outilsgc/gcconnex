@@ -14,7 +14,7 @@ elgg_register_event_handler('init', 'system', 'pages_init');
 function pages_init() {
 
 	// register a library of helper functions
-	elgg_register_library('elgg:pages', elgg_get_plugins_path() . 'pages/lib/pages.php');
+	elgg_register_library('elgg:pages', __DIR__ . '/lib/pages.php');
 
 	$item = new ElggMenuItem('pages', elgg_echo('pages'), 'pages/all');
 	elgg_unregister_menu_item('site', $item);
@@ -28,13 +28,13 @@ function pages_init() {
 	elgg_register_plugin_hook_handler('extender:url', 'annotation', 'pages_set_revision_url');
 
 	// Register some actions
-	$action_base = elgg_get_plugins_path() . 'pages/actions';
+	$action_base = __DIR__ . '/actions';
 	elgg_register_action("pages/edit", "$action_base/pages/edit.php");
 	elgg_register_action("pages/delete", "$action_base/pages/delete.php");
 	elgg_register_action("annotations/page/delete", "$action_base/annotations/page/delete.php");
 
 	// Extend the main css view
-	elgg_extend_view('css/elgg', 'pages/css');
+	elgg_extend_view('elgg.css', 'pages/css');
 
 	elgg_define_js('jquery.treeview', array(
 		'src' => '/mod/pages/vendors/jquery-treeview/jquery.treeview.min.js',
@@ -92,6 +92,10 @@ function pages_init() {
 
 	// register ecml views to parse
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'pages_ecml_views_hook');
+
+	// allow to be liked
+	elgg_register_plugin_hook_handler('likes:is_likable', 'object:page', 'Elgg\Values::getTrue');
+	elgg_register_plugin_hook_handler('likes:is_likable', 'object:page_top', 'Elgg\Values::getTrue');
 	
 	// prevent public write access
 	elgg_register_plugin_hook_handler('view_vars', 'input/access', 'pages_write_access_vars');
@@ -125,41 +129,50 @@ function pages_page_handler($page) {
 
 	elgg_push_breadcrumb(elgg_echo('pages'), 'pages/all');
 
-	$base_dir = elgg_get_plugins_path() . 'pages/pages/pages';
-
 	$page_type = $page[0];
 	switch ($page_type) {
 		case 'owner':
-			include "$base_dir/owner.php";
+			echo elgg_view_resource('pages/owner');
 			break;
 		case 'friends':
-			include "$base_dir/friends.php";
+			echo elgg_view_resource('pages/friends');
 			break;
 		case 'view':
-			set_input('guid', $page[1]);
-			include "$base_dir/view.php";
+			echo elgg_view_resource('pages/view', [
+				'guid' => $page[1],
+			]);
 			break;
 		case 'add':
-			set_input('guid', $page[1]);
-			include "$base_dir/new.php";
+			echo elgg_view_resource('pages/new', [
+				'guid' => $page[1],
+			]);
 			break;
 		case 'edit':
-			set_input('guid', $page[1]);
-			include "$base_dir/edit.php";
+			echo elgg_view_resource('pages/edit', [
+				'guid' => $page[1],
+			]);
 			break;
 		case 'group':
-			include "$base_dir/owner.php";
+			echo elgg_view_resource('pages/owner');
 			break;
 		case 'history':
-			set_input('guid', $page[1]);
-			include "$base_dir/history.php";
+			echo elgg_view_resource('pages/history', [
+				'guid' => $page[1],
+			]);
 			break;
 		case 'revision':
-			set_input('id', $page[1]);
-			include "$base_dir/revision.php";
+			echo elgg_view_resource('pages/revision', [
+				'id' => $page[1],
+			]);
 			break;
 		case 'all':
-			include "$base_dir/world.php";
+			$dir = __DIR__ . "/views/" . elgg_get_viewtype();
+			if (_elgg_view_may_be_altered('resources/pages/world', "$dir/resources/pages/world.php")) {
+				elgg_deprecated_notice('The view "resources/pages/world" is deprecated. Use "resources/pages/all".', 2.3);
+				echo elgg_view_resource('pages/world', ['__shown_notice' => true]);
+			} else {
+				echo elgg_view_resource('pages/all');
+			}
 			break;
 		default:
 			return false;
@@ -212,10 +225,10 @@ function pages_icon_url_override($hook, $type, $returnvalue, $params) {
 			case 'topbar':
 			case 'tiny':
 			case 'small':
-				return 'mod/pages/images/pages.gif';
+				return elgg_get_simplecache_url('pages/pages.gif');
 				break;
 			default:
-				return 'mod/pages/images/pages_lrg.gif';
+				return elgg_get_simplecache_url('pages/pages_lrg.gif');
 				break;
 		}
 	}
@@ -362,23 +375,39 @@ function pages_write_permission_check($hook, $entity_type, $returnvalue, $params
  * @return bool
  */
 function pages_container_permission_check($hook, $entity_type, $returnvalue, $params) {
-	if (elgg_get_context() != "pages") {
+	$container = elgg_extract('container', $params);
+	$user = elgg_extract('user', $params);
+	$subtype = elgg_extract('subtype', $params);
+
+	// check type/subtype
+	if ($entity_type !== 'object' || !in_array($subtype, ['page', 'page_top'])) {
 		return null;
 	}
-	if (elgg_get_page_owner_guid()
-			&& can_write_to_container(elgg_get_logged_in_user_guid(), elgg_get_page_owner_guid())) {
+
+	// OK if you can write to the container
+	if ($container && $container->canWriteToContainer($user->guid)) {
 		return true;
 	}
+
+	// look up a page object given via input
 	if ($page_guid = get_input('page_guid', 0)) {
-		$entity = get_entity($page_guid);
+		$page = get_entity($page_guid);
 	} elseif ($parent_guid = get_input('parent_guid', 0)) {
-		$entity = get_entity($parent_guid);
+		$page = get_entity($parent_guid);
 	}
-	if (isset($entity) && pages_is_page($entity)) {
-		if (can_write_to_container(elgg_get_logged_in_user_guid(), $entity->container_guid)
-				|| in_array($entity->write_access_id, get_access_list())) {
-			return true;
-		}
+	if (!pages_is_page($page)) {
+		return null;
+	}
+
+	// try the page's container
+	$page_container = $page->getContainerEntity();
+	if ($page_container && $page_container->canWriteToContainer($user->guid)) {
+		return true;
+	}
+
+	// I don't understand this but it's old - mrclay
+	if (in_array($page->write_access_id, get_access_list())) {
+		return true;
 	}
 }
 

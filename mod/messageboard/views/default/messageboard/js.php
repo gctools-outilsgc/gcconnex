@@ -1,9 +1,11 @@
 //<script>
 elgg.provide('elgg.messageboard');
 
+elgg.deprecated_notice('messageboard.js is deprecated. Use the "elgg/messageboard" AMD module', 2.3);
+
 elgg.messageboard.init = function() {
 	var form = $('form[name=elgg-messageboard]');
-	form.find('input[type=submit]').live('click', elgg.messageboard.submit);
+	form.on('click', 'input[type=submit]', elgg.messageboard.submit);
 
 	// remove the default binding for confirmation since we're doing extra stuff.
 	// @todo remove if we add a hook to the requires confirmation callback
@@ -30,7 +32,7 @@ elgg.messageboard.submit = function(e) {
 				form.parent().append(json.output);
 			} else {
 				ul.prepend($(json.output).find('li:first'));
-			};
+			}
 			form.find('textarea').val('');
 		}
 	});

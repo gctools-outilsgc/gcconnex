@@ -1,19 +1,16 @@
 <?php
 /**
  * Runs unit tests.
- *
- * @package Elgg
- * @subpackage Test
  */
 
-require_once(dirname( __FILE__ ) . '/../start.php');
+use Zend\Mail\Transport\InMemory as InMemoryTransport;
 
+require_once __DIR__ . '/../../autoloader.php';
 
-require_once(dirname( __FILE__ ) . '/../../vendor/autoload.php');
-$test_path = "$CONFIG->path/engine/tests";
+\Elgg\Application::start();
 
-require_once("$test_path/ElggCoreUnitTest.php");
-require_once("$test_path/ElggCoreGetEntitiesBaseTest.php");
+require_once __DIR__ . '/ElggCoreUnitTest.php';
+require_once __DIR__ . '/ElggCoreGetEntitiesBaseTest.php';
 
 // plugins that contain unit tests
 $plugins = array(
@@ -27,6 +24,17 @@ $plugins = array(
 if (!TextReporter::inCli()) {
 	elgg_admin_gatekeeper();
 } else {
+
+	$cli_opts = getopt('', [
+		'config::', // path to config file
+	]);
+
+	if (!empty($cli_opts['config']) && file_exists($cli_opts['config'])) {
+		// File with custom config options for the suite
+		require_once $cli_opts['config'];
+		echo "Loaded custom configuration for the suite.\n";
+	}
+
 	$admin = array_shift(elgg_get_admins(array('limit' => 1)));
 	if (!login($admin)) {
 		echo "Failed to login as administrator.";
@@ -43,6 +51,7 @@ if (!TextReporter::inCli()) {
 		$plugin->activate();
 	}
 
+	global $CONFIG;
 	$CONFIG->debug = 'NOTICE';
 }
 
@@ -58,6 +67,9 @@ foreach ($events as $type => $subtypes) {
 		$notifications->unregisterEvent($type, $subtype);
 	}
 }
+
+// disable emails
+_elgg_services()->setValue('mailer', new InMemoryTransport());
 
 // Disable maximum execution time.
 // Tests take a while...

@@ -48,7 +48,6 @@ if ($categories) {
 		'entity_subtype' => 'bookmarks',
 	)); ?>
 </div>
-<div class="elgg-foot">
 <?php
 
 echo elgg_view('input/hidden', array('name' => 'container_guid', 'value' => $container_guid));
@@ -57,7 +56,9 @@ if ($guid) {
 	echo elgg_view('input/hidden', array('name' => 'guid', 'value' => $guid));
 }
 
-echo elgg_view('input/submit', array('value' => elgg_echo("save")));
+$footer = elgg_view_field([
+	'#type' => 'submit',
+	'value' => elgg_echo('save'),
+]);
+elgg_set_form_footer($footer);
 
-?>
-</div>

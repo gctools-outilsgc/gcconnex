@@ -34,7 +34,7 @@ function search_init() {
 	$CONFIG->search_info['max_chars'] = $ft_min_max->max;
 
 	// add in CSS for search elements
-	elgg_extend_view('css/elgg', 'search/css');
+	elgg_extend_view('elgg.css', 'search/css');
 
 	// extend view for elgg topbar search box
 	elgg_extend_view('page/elements/header', 'search/header');
@@ -59,9 +59,7 @@ function search_page_handler($page) {
 		//set_input('search_type', 'tags');
 	}
 
-	$base_dir = elgg_get_plugins_path() . 'search/pages/search';
-
-	include_once("$base_dir/index.php");
+	echo elgg_view_resource('search/index');
 	return true;
 }
 

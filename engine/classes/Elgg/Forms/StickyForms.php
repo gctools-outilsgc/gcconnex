@@ -23,6 +23,7 @@ class StickyForms {
 	 * @return void
 	 */
 	public function makeStickyForm($form_name) {
+		$this->clearStickyForm($form_name);
 
 		$banned_keys = [];
 		// TODO make $banned_keys an argument
@@ -30,8 +31,6 @@ class StickyForms {
 			$banned_keys = ['password', 'password2'];
 		}
 
-		elgg_clear_sticky_form($form_name);
-	
 		$session = _elgg_services()->session;
 		$data = $session->get('sticky_forms', array());
 		$req = _elgg_services()->request;
@@ -142,5 +141,4 @@ class StickyForms {
 		unset($data[$form_name][$variable]);
 		$session->set('sticky_forms', $data);
 	}
-	
 }

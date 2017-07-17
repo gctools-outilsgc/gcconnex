@@ -14,7 +14,7 @@
  *
  * @package    Elgg.Core
  * @subpackage DataModel.Object
- * 
+ *
  * @property string $title       The title, name, or summary of this object
  * @property string $description The body, description, or content of the object
  * @property array  $tags        Tags that describe the object (metadata)
@@ -32,7 +32,6 @@ class ElggObject extends \ElggEntity {
 
 		$this->attributes['type'] = "object";
 		$this->attributes += self::getExternalAttributes();
-		$this->tables_split = 2;
 	}
 
 	/**
@@ -68,28 +67,19 @@ class ElggObject extends \ElggEntity {
 	public function __construct($row = null) {
 		$this->initializeAttributes();
 
-		// compatibility for 1.7 api.
-		$this->initialise_attributes(false);
-
 		if (!empty($row)) {
 			// Is $row is a DB row from the entity table
 			if ($row instanceof \stdClass) {
 				// Load the rest
 				if (!$this->load($row)) {
-					$msg = "Failed to load new " . get_class() . " for GUID: " . $row->guid;
+					$msg = "Failed to load new " . get_class($this) . " for GUID: " . $row->guid;
 					throw new \IOException($msg);
-				}
-			} else if ($row instanceof \ElggObject) {
-				// $row is an \ElggObject so this is a copy constructor
-				elgg_deprecated_notice('This type of usage of the \ElggObject constructor was deprecated. Please use the clone method.', 1.7);
-				foreach ($row->attributes as $key => $value) {
-					$this->attributes[$key] = $value;
 				}
 			} else if (is_numeric($row)) {
 				// $row is a GUID so load
 				elgg_deprecated_notice('Passing a GUID to constructor is deprecated. Use get_entity()', 1.9);
 				if (!$this->load($row)) {
-					throw new \IOException("Failed to load new " . get_class() . " from GUID:" . $row);
+					throw new \IOException("Failed to load new " . get_class($this) . " from GUID:" . $row);
 				}
 			} else {
 				throw new \InvalidParameterException("Unrecognized value passed to constuctor.");
@@ -116,9 +106,8 @@ class ElggObject extends \ElggEntity {
 		}
 
 		$this->attributes = $attrs;
-		$this->tables_loaded = 2;
 		$this->loadAdditionalSelectValues($attr_loader->getAdditionalSelectValues());
-		_elgg_cache_entity($this);
+		_elgg_services()->entityCache->set($this);
 
 		return true;
 	}
@@ -127,7 +116,6 @@ class ElggObject extends \ElggEntity {
 	 * {@inheritdoc}
 	 */
 	protected function create() {
-		global $CONFIG;
 
 		$guid = parent::create();
 		if (!$guid) {
@@ -135,19 +123,26 @@ class ElggObject extends \ElggEntity {
 			// Is returning false the correct thing to do
 			return false;
 		}
-		$title = sanitize_string($this->title);
-		$description = sanitize_string($this->description);
-		
-		$query = "INSERT into {$CONFIG->dbprefix}objects_entity
-			(guid, title, description) values ($guid, '$title', '$description')";
 
-		$result = $this->getDatabase()->insertData($query);
+		$dbprefix = elgg_get_config('dbprefix');
+		$query = "INSERT INTO {$dbprefix}objects_entity
+			(guid, title, description)
+			VALUES
+			(:guid, :title, :description)";
+
+		$params = [
+			':guid' => (int) $guid,
+			':title' => (string) $this->title,
+			':description' => (string) $this->description,
+		];
+
+		$result = $this->getDatabase()->insertData($query, $params);
+
 		if ($result === false) {
 			// TODO(evan): Throw an exception here?
 			return false;
 		}
 
-		$this->enable();
 		return $guid;
 	}
 
@@ -155,20 +150,27 @@ class ElggObject extends \ElggEntity {
 	 * {@inheritdoc}
 	 */
 	protected function update() {
-		global $CONFIG;
 
 		if (!parent::update()) {
 			return false;
 		}
-		
-		$guid = (int)$this->guid;
-		$title = sanitize_string($this->title);
-		$description = sanitize_string($this->description);
 
-		$query = "UPDATE {$CONFIG->dbprefix}objects_entity
-			set title='$title', description='$description' where guid=$guid";
+		$dbprefix = elgg_get_config('dbprefix');
 
-		return $this->getDatabase()->updateData($query) !== false;
+		$query = "
+			UPDATE {$dbprefix}objects_entity
+			SET title = :title,
+				description = :description
+			WHERE guid = :guid
+		";
+
+		$params = [
+			':guid' => $this->guid,
+			':title' => (string) $this->title,
+			':description' => (string) $this->description,
+		];
+
+		return $this->getDatabase()->updateData($query, false, $params) !== false;
 	}
 
 	/**
@@ -183,44 +185,6 @@ class ElggObject extends \ElggEntity {
 	 */
 	public function setDisplayName($displayName) {
 		$this->title = $displayName;
-	}
-
-	/**
-	 * Return sites that this object is a member of
-	 *
-	 * Site membership is determined by relationships and not site_guid.
-	 *
-	 * @todo Moved to \ElggEntity so remove this in 2.0
-	 *
-	 * @param array $options Options array. Used to be $subtype
-	 * @param int   $limit   The number of results to return (deprecated)
-	 * @param int   $offset  Any indexing offset (deprecated)
-	 *
-	 * @return array
-	 */
-	public function getSites($options = "", $limit = 10, $offset = 0) {
-		if (is_string($options)) {
-			elgg_deprecated_notice('\ElggObject::getSites() takes an options array', 1.9);
-			return get_site_objects($this->getGUID(), $options, $limit, $offset);
-		}
-
-		return parent::getSites();
-	}
-
-	/**
-	 * Add this object to a site
-	 *
-	 * @param \ElggSite $site The site to add this object to. This used to be the
-	 *                       the site guid (still supported by deprecated)
-	 * @return bool
-	 */
-	public function addToSite($site) {
-		if (is_numeric($site)) {
-			elgg_deprecated_notice('\ElggObject::addToSite() takes a site entity', 1.9);
-			return add_site_object($site, $this->getGUID());
-		}
-
-		return parent::addToSite($site);
 	}
 
 	/**
@@ -256,12 +220,13 @@ class ElggObject extends \ElggEntity {
 	 *
 	 * @see \ElggEntity::canComment()
 	 *
-	 * @param int $user_guid User guid (default is logged in user)
+	 * @param int  $user_guid User guid (default is logged in user)
+	 * @param bool $default   Default permission
 	 * @return bool
 	 * @since 1.8.0
 	 */
-	public function canComment($user_guid = 0) {
-		$result = parent::canComment($user_guid);
+	public function canComment($user_guid = 0, $default = null) {
+		$result = parent::canComment($user_guid, $default);
 		if ($result !== null) {
 			return $result;
 		}

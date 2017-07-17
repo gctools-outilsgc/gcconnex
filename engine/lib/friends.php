@@ -30,7 +30,7 @@ function _elgg_friends_init() {
 	elgg_register_event_handler('pagesetup', 'system', '_elgg_friends_page_setup');
 	elgg_register_event_handler('pagesetup', 'system', '_elgg_setup_collections_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', '_elgg_friends_setup_user_hover_menu');
-	elgg_register_event_handler('create', 'friend', '_elgg_send_friend_notification');
+	elgg_register_event_handler('create', 'relationship', '_elgg_send_friend_notification');
 }
 
 /**
@@ -128,10 +128,10 @@ function _elgg_friends_page_handler($segments, $handler) {
 
 	switch ($handler) {
 		case 'friends':
-			require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/index.php");
+			echo elgg_view_resource("friends/index");
 			break;
 		case 'friendsof':
-			require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/of.php");
+			echo elgg_view_resource("friends/of");
 			break;
 		default:
 			return false;
@@ -149,24 +149,25 @@ function _elgg_friends_page_handler($segments, $handler) {
  */
 function _elgg_collections_page_handler($page_elements) {
 	elgg_set_context('friends');
-	$base = elgg_get_config('path');
 	if (isset($page_elements[0])) {
 		switch ($page_elements[0]) {
 			case 'add':
 				elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 				
-				require_once "{$base}pages/friends/collections/add.php";
+				echo elgg_view_resource("friends/collections/add");
 				return true;
-				break;
 			case 'owner':
 				$user = get_user_by_username($page_elements[1]);
 				if ($user) {
 					elgg_set_page_owner_guid($user->getGUID());
 					
-					require_once "{$base}pages/friends/collections/view.php";
+					echo elgg_view_resource("friends/collections/view");
 					return true;
 				}
 				break;
+			case 'pickercallback':
+				echo elgg_view_resource('friends/collections/pickercallback');
+				return true;
 		}
 	}
 	return false;
@@ -180,7 +181,7 @@ function _elgg_collections_page_handler($page_elements) {
  */
 function _elgg_setup_collections_menu() {
 	
-	if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
+	if (elgg_is_logged_in() && elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
 		$user = elgg_get_page_owner_entity();
 		
 		elgg_register_menu_item('page', array(
@@ -203,6 +204,10 @@ function _elgg_setup_collections_menu() {
  * @access private
  */
 function _elgg_send_friend_notification($event, $type, $object) {
+	if ($object->relationship != 'friend') {
+		return true;
+	}
+	
 	$user_one = get_entity($object->guid_one);
 	/* @var \ElggUser $user_one */
 
@@ -224,6 +229,7 @@ function _elgg_send_friend_notification($event, $type, $object) {
 	$params = [
 		'action' => 'add_friend',
 		'object' => $user_one,
+		'friend' => $user_two,
 	];
 	
 	return notify_user($user_two->guid, $object->guid_one, $subject, $body, $params);

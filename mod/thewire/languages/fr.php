@@ -14,7 +14,7 @@ return array(
 	'thewire:replying' => "Réponse à %s (@%s) qui a écrit", 
 	'thewire:thread' => "Fil",
 	'thewire:charleft' => "caractères restants",
-	'thewire:tags' => "Messages sur le fil portant le mot-clé : '%s'",
+	'thewire:tags' => "Messages sur le fil portant le mot-clé : \"%s\"",
 	'thewire:noposts' => "Aucun message sur le fil pour l'instant",
 	'item:object:thewire' => "Messages sur le fil",
 	'thewire:by' => 'Message de %s sur le fil',
@@ -52,11 +52,11 @@ return array(
 	/**
 	 * Notifications
 	 */
-	'thewire:notify:summary' => 'Nouveau message sur le fil: %s',
-	'thewire:notify:subject' => "Nouveau message de %s sur le fil",
-	'thewire:notify:reply' => '%s a répondu à %s sur le fil :',
-	'thewire:notify:post' => '%s a publié un message sur le fil:',
-	'thewire:notify:footer' => "Voir et répondre :\n%s",
+	'thewire:notify:summary' => 'Nouveau message sur le Fil : %s',
+	'thewire:notify:subject' => "Nouveau message sur le Fil de %s",
+	'thewire:notify:reply' => '%s a répondu à %s sur le Fil :',
+	'thewire:notify:post' => '%s a publié sur le Fil :',
+	'thewire:notify:footer' => "Voir et répondre:\n%s",
 
 	/**
 	* Settings

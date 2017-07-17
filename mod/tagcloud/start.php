@@ -7,7 +7,7 @@ elgg_register_event_handler('init', 'system', 'tagcloud_init');
 
 function tagcloud_init() {
 	elgg_extend_view('theme_sandbox/components', 'tagcloud/theme_sandbox/component');
-	elgg_extend_view('css/elgg', 'css/elgg/tagcloud.css');
+	elgg_extend_view('elgg.css', 'elgg/tagcloud.css');
 	
 	elgg_register_page_handler('tags', 'tagcloud_tags_page_handler');
 	
@@ -23,21 +23,6 @@ function tagcloud_init() {
  * @return bool
  */
 function tagcloud_tags_page_handler($page) {
-
-	$title = elgg_echo('tagcloud:site_cloud');
-	$options = array(
-		'threshold' => 0,
-		'limit' => 100,
-		'tag_name' => 'tags',
-	);
-
-	$content = elgg_view_tagcloud($options);
-
-	$body = elgg_view_layout('one_sidebar', array(
-		'title' => $title,
-		'content' => $content,
-	));
-
-	echo elgg_view_page($title, $body);
+	echo elgg_view_resource('tagcloud');
 	return true;
 }

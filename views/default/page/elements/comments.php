@@ -7,7 +7,7 @@
  * @uses $vars['id']            Optional id for the div
  * @uses $vars['class']         Optional additional class for the div
  * @uses $vars['limit']         Optional limit value (default is 25)
- * 
+ *
  * @todo look into restructuring this so we are not calling elgg_list_entities()
  * in this view
  */
@@ -21,9 +21,8 @@ if (!$limit) {
 
 $attr = [
 	'id' => elgg_extract('id', $vars, 'comments'),
-	'class' => (array) elgg_extract('class', $vars, []),
+	'class' => elgg_extract_class($vars, 'elgg-comments'),
 ];
-$attr['class'][] = 'elgg-comments';
 
 // work around for deprecation code in elgg_view()
 unset($vars['internalid']);

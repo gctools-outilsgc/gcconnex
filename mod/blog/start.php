@@ -19,7 +19,7 @@ elgg_register_event_handler('init', 'system', 'blog_init');
  */
 function blog_init() {
 
-	elgg_register_library('elgg:blog', elgg_get_plugins_path() . 'blog/lib/blog.php');
+	elgg_register_library('elgg:blog', __DIR__ . '/lib/blog.php');
 
 	// add a site navigation item
 	$item = new ElggMenuItem('blog', elgg_echo('blog:blogs'), 'blog/all');
@@ -27,7 +27,7 @@ function blog_init() {
 	elgg_register_event_handler('upgrade', 'upgrade', 'blog_run_upgrades');
 
 	// add to the main css
-	elgg_extend_view('css/elgg', 'blog/css');
+	elgg_extend_view('elgg.css', 'blog/css');
 
 	// routing of urls
 	elgg_register_page_handler('blog', 'blog_page_handler');
@@ -53,7 +53,7 @@ function blog_init() {
 	elgg_register_widget_type('blog', elgg_echo('blog'), elgg_echo('blog:widget:description'));
 
 	// register actions
-	$action_path = elgg_get_plugins_path() . 'blog/actions/blog';
+	$action_path = __DIR__ . '/actions/blog';
 	elgg_register_action('blog/save', "$action_path/save.php");
 	elgg_register_action('blog/auto_save_revision', "$action_path/auto_save_revision.php");
 	elgg_register_action('blog/delete', "$action_path/delete.php");
@@ -63,6 +63,9 @@ function blog_init() {
 
 	// ecml
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'blog_ecml_views_hook');
+
+	// allow to be liked
+	elgg_register_plugin_hook_handler('likes:is_likable', 'object:blog', 'Elgg\Values::getTrue');
 }
 
 /**
@@ -90,73 +93,62 @@ function blog_page_handler($page) {
 	elgg_load_library('elgg:blog');
 
 	// push all blogs breadcrumb
-	elgg_push_breadcrumb(elgg_echo('blog:blogs'), "blog/all");
+	elgg_push_breadcrumb(elgg_echo('blog:blogs'), 'blog/all');
 
-	if (!isset($page[0])) {
-		$page[0] = 'all';
-	}
+	$page_type = elgg_extract(0, $page, 'all');
+	$resource_vars = [
+		'page_type' => $page_type,
+	];
 
-	$page_type = $page[0];
 	switch ($page_type) {
 		case 'owner':
-			$user = get_user_by_username($page[1]);
-			if (!$user) {
-				forward('', '404');
-			}
-			$params = blog_get_page_content_list($user->guid);
+			$resource_vars['username'] = elgg_extract(1, $page);
+			
+			echo elgg_view_resource('blog/owner', $resource_vars);
 			break;
 		case 'friends':
-			$user = get_user_by_username($page[1]);
-			if (!$user) {
-				forward('', '404');
-			}
-			$params = blog_get_page_content_friends($user->guid);
+			$resource_vars['username'] = elgg_extract(1, $page);
+			
+			echo elgg_view_resource('blog/friends', $resource_vars);
 			break;
 		case 'archive':
-			$user = get_user_by_username($page[1]);
-			if (!$user) {
-				forward('', '404');
-			}
-			$params = blog_get_page_content_archive($user->guid, $page[2], $page[3]);
+			$resource_vars['username'] = elgg_extract(1, $page);
+			$resource_vars['lower'] = elgg_extract(2, $page);
+			$resource_vars['upper'] = elgg_extract(3, $page);
+			
+			echo elgg_view_resource('blog/archive', $resource_vars);
 			break;
 		case 'view':
-			$params = blog_get_page_content_read($page[1]);
+			$resource_vars['guid'] = elgg_extract(1, $page);
+			
+			echo elgg_view_resource('blog/view', $resource_vars);
 			break;
 		case 'add':
-			elgg_gatekeeper();
-			$params = blog_get_page_content_edit($page_type, $page[1]);
+			$resource_vars['guid'] = elgg_extract(1, $page);
+			
+			echo elgg_view_resource('blog/add', $resource_vars);
 			break;
 		case 'edit':
-			elgg_gatekeeper();
-			$params = blog_get_page_content_edit($page_type, $page[1], $page[2]);
+			$resource_vars['guid'] = elgg_extract(1, $page);
+			$resource_vars['revision'] = elgg_extract(2, $page);
+			
+			echo elgg_view_resource('blog/edit', $resource_vars);
 			break;
 		case 'group':
-			$group = get_entity($page[1]);
-			if (!elgg_instanceof($group, 'group')) {
-				forward('', '404');
-			}
-			if (!isset($page[2]) || $page[2] == 'all') {
-				$params = blog_get_page_content_list($page[1]);
-			} else {
-				$params = blog_get_page_content_archive($page[1], $page[3], $page[4]);
-			}
+			$resource_vars['group_guid'] = elgg_extract(1, $page);
+			$resource_vars['subpage'] = elgg_extract(2, $page);
+			$resource_vars['lower'] = elgg_extract(3, $page);
+			$resource_vars['upper'] = elgg_extract(4, $page);
+			
+			echo elgg_view_resource('blog/group', $resource_vars);
 			break;
 		case 'all':
-			$params = blog_get_page_content_list();
+			echo elgg_view_resource('blog/all', $resource_vars);
 			break;
 		default:
 			return false;
 	}
 
-	if (isset($params['sidebar'])) {
-		$params['sidebar'] .= elgg_view('blog/sidebar', array('page' => $page_type));
-	} else {
-		$params['sidebar'] = elgg_view('blog/sidebar', array('page' => $page_type));
-	}
-
-	$body = elgg_view_layout('content', $params);
-
-	echo elgg_view_page($params['title'], $body);
 	return true;
 }
 
@@ -181,15 +173,15 @@ function blog_set_url($hook, $type, $url, $params) {
  * Add a menu item to an ownerblock
  */
 function blog_owner_block_menu($hook, $type, $return, $params) {
-	if (elgg_instanceof($params['entity'], 'user')) {
-		$url = "blog/owner/{$params['entity']->username}";
-		$item = new ElggMenuItem('blog', elgg_echo('blog'), $url);
-		$return[] = $item;
-	} else {
-		if ($params['entity']->blog_enable != "no") {
-			$url = "blog/group/{$params['entity']->guid}/all";
-			$item = new ElggMenuItem('blog', elgg_echo('blog:group'), $url);
-			$return[] = $item;
+	$entity = elgg_extract('entity', $params);
+	if ($entity instanceof ElggUser) {
+		$url = "blog/owner/{$entity->username}";
+		$return[] = new ElggMenuItem('blog', elgg_echo('blog'), $url);
+
+	} elseif ($entity instanceof ElggGroup) {
+		if ($entity->blog_enable != "no") {
+			$url = "blog/group/{$entity->guid}/all";
+			$return[] = new ElggMenuItem('blog', elgg_echo('blog:group'), $url);
 		}
 	}
 	return $return;

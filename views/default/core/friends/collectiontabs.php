@@ -29,13 +29,11 @@ $ownerid = $vars['owner']->getGUID();
 	</li>
 </ul>
 
-<?php //@todo JS 1.8: no ?>
-<script type="text/javascript">
-$(function () {
-
+<script>
+require(['jquery'], function($) {
 	$('a.collectionmembers<?php echo $friendspicker; ?>').click(function () {
 		// load collection members pane
-		$('#friends-picker_placeholder<?php echo $friendspicker; ?>').load('<?php echo elgg_get_site_url(); ?>pages/friends/collections/pickercallback.php?username=<?php echo elgg_get_logged_in_user_entity()->username; ?>&type=list&collection=<?php echo $collectionid; ?>&friendspicker=<?php echo $friendspicker; ?>');
+		$('#friends-picker_placeholder<?php echo $friendspicker; ?>').load('<?php echo elgg_get_site_url(); ?>collections/pickercallback?username=<?php echo elgg_get_logged_in_user_entity()->username; ?>&type=list&collection=<?php echo $collectionid; ?>&friendspicker=<?php echo $friendspicker; ?>');
 
 		// remove selected state from previous tab
 		$(this).parent().parent().find("li.elgg-state-selected").removeClass("elgg-state-selected");
@@ -47,7 +45,7 @@ $(function () {
 
 	$('a.editmembers<?php echo $friendspicker; ?>').click(function () {
 		// load friends picker pane
-		$('#friends-picker_placeholder<?php echo $friendspicker; ?>').load('<?php echo elgg_get_site_url(); ?>pages/friends/collections/pickercallback.php?username=<?php echo elgg_get_logged_in_user_entity()->username; ?>&type=picker&collection=<?php echo $collectionid; ?>&friendspicker=<?php echo $friendspicker; ?>');
+		$('#friends-picker_placeholder<?php echo $friendspicker; ?>').load('<?php echo elgg_get_site_url(); ?>collections/pickercallback?username=<?php echo elgg_get_logged_in_user_entity()->username; ?>&type=picker&collection=<?php echo $collectionid; ?>&friendspicker=<?php echo $friendspicker; ?>');
 
 		// remove selected state from previous tab
 		$(this).parent().parent().find("li.elgg-state-selected").removeClass("elgg-state-selected");
@@ -56,7 +54,5 @@ $(function () {
 
 		return false;
 	});
-
-
 });
 </script>

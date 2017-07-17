@@ -23,7 +23,7 @@ return array(
 
 	'twitter_api:post_to_twitter' => "Envoyer les messages du Fil des utilisateurs vers Twitter?",
 
-	'twitter_api:login' => 'Permettre aux utilisateurs de connecter avec Twitter ?',
+	'twitter_api:login' => 'Permettre aux utilisateurs de connecter avec Twitter?',
 	'twitter_api:new_users' => 'Permettre aux nouveaux utilisateurs de s\'enregistrer en utilisant leur compte Twitter, même si l\'enregistrement manuel est désactivé ?',
 	'twitter_api:login:success' => 'Connexion réussie.',
 	'twitter_api:login:error' => 'Impossible de se connecter avec Twitter.',

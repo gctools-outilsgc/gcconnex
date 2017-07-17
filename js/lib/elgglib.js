@@ -192,17 +192,34 @@ elgg.require = function(pkg) {
  * elgg.package.subpackage = elgg.package.subpackage || {};
  * </pre>
  *
+ * An array package name can be given if any subpackage names need to contain a period.
+ *
+ * <pre>
+ * elgg.provide(['one', 'two.three']);
+ * </pre>
+ *
+ * is equivalent to
+ *
+ * one = one || {};
+ * one['two.three'] = one['two.three'] || {};
+ *
  * @example elgg.provide('elgg.config.translations')
  *
- * @param {string} pkg The package name.
+ * @param {String|Array} pkg The package name. Only use an array if a subpackage name needs to contain a period.
+ *
+ * @param {Object} opt_context The object to extend (defaults to this)
  */
 elgg.provide = function(pkg, opt_context) {
-	elgg.assertTypeOf('string', pkg);
-
-	var parts = pkg.split('.'),
+	var parts,
 		context = opt_context || elgg.global,
 		part, i;
 
+	if (elgg.isArray(pkg)) {
+		parts = pkg;
+	} else {
+		elgg.assertTypeOf('string', pkg);
+		parts = pkg.split('.');
+	}
 
 	for (i = 0; i < parts.length; i += 1) {
 		part = parts[i];
@@ -406,15 +423,27 @@ elgg.deprecated_notice = function(msg, dep_version) {
  * @param {String} url The url to forward to
  */
 elgg.forward = function(url) {
-	location.href = elgg.normalize_url(url);
+	var dest = elgg.normalize_url(url);
+
+	if (dest == location.href) {
+		location.reload();
+	}
+
+	// in case the href set below just changes the hash, we want to reload. There's sadly
+	// no way to force a reload and set a different hash at the same time.
+	$(window).on('hashchange', function () {
+		location.reload();
+	});
+
+	location.href = dest;
 };
 
 /**
  * Parse a URL into its parts. Mimicks http://php.net/parse_url
  *
- * @param {String} url       The URL to parse
- * @param {Int}    component A component to return
- * @param {Bool}   expand    Expand the query into an object? Else it's a string.
+ * @param {String}  url       The URL to parse
+ * @param {Number}  component A component to return
+ * @param {Boolean} expand    Expand the query into an object? Else it's a string.
  *
  * @return {Object} The parsed URL
  */
@@ -552,7 +581,7 @@ elgg.getSelectorFromUrlFragment = function(url) {
  *
  * @param {Object} object The object to add to
  * @param {String} parent The parent array to add to.
- * @param {Mixed}  value  The value
+ * @param {*}      value  The value
  */
 elgg.push_to_object_array = function(object, parent, value) {
 	elgg.assertTypeOf('object', object);
@@ -574,7 +603,7 @@ elgg.push_to_object_array = function(object, parent, value) {
  *
  * @param {Object} object The object to add to
  * @param {String} parent The parent array to add to.
- * @param {Mixed}  value  The value
+ * @param {*}      value  The value
  */
 elgg.is_in_object_array = function(object, parent, value) {
 	elgg.assertTypeOf('object', object);

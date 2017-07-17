@@ -26,11 +26,7 @@ $position = elgg_extract('position', $vars, 'after');
 $no_results = elgg_extract('no_results', $vars, '');
 
 if (!$items && $no_results) {
-	if ($no_results instanceof Closure) {
-		echo $no_results();
-		return;
-	}
-	echo "<p class='elgg-no-results'>$no_results</p>";
+	echo elgg_view('page/components/no_results', $vars);
 	return;
 }
 
@@ -50,9 +46,12 @@ if (isset($vars['item_class'])) {
 
 $nav = ($pagination) ? elgg_view('navigation/pagination', $vars) : '';
 
+$index = 0;
 $list_items = '';
 foreach ($items as $item) {
-	$item_view = elgg_view_list_item($item, $vars);
+	$item_view_vars = $vars;
+	$item_view_vars['list_item_index'] = $index;
+	$item_view = elgg_view_list_item($item, $item_view_vars);
 	if (!$item_view) {
 		continue;
 	}
@@ -60,8 +59,8 @@ foreach ($items as $item) {
 	$li_attrs = ['class' => $item_classes];
 
 	if ($item instanceof \ElggEntity) {
-		$guid = $item->getGUID();
-		$type = $item->getType();
+		$guid = $item->guid;
+		$type = $item->type;
 		$subtype = $item->getSubtype();
 
 		$li_attrs['id'] = "elgg-$type-$guid";
@@ -70,18 +69,26 @@ foreach ($items as $item) {
 		if ($subtype) {
 			$li_attrs['class'][] = "elgg-item-$type-$subtype";
 		}
-	} else if (is_callable(array($item, 'getType'))) {
-		$li_attrs['id'] = "item-{$item->getType()}-{$item->id}";
+	} elseif (is_callable(array($item, 'getType'))) {
+		$type = $item->getType();
+
+		$li_attrs['id'] = "item-$type-{$item->id}";
 	}
 
 	$list_items .= elgg_format_element('li', $li_attrs, $item_view);
+	$index++;
 }
 
 if ($position == 'before' || $position == 'both') {
 	echo $nav;
 }
 
-echo elgg_format_element('ul', ['class' => $list_classes], $list_items);
+if (empty($list_items) && $no_results) {
+	// there are scenarios where item views do not output html. In those cases show the no results info
+	echo elgg_view('page/components/no_results', $vars);
+} else {
+	echo elgg_format_element('ul', ['class' => $list_classes], $list_items);
+}
 
 if ($position == 'after' || $position == 'both') {
 	echo $nav;

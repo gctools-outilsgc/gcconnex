@@ -28,7 +28,6 @@ function elgg_set_processed_upgrades(array $processed_upgrades) {
  * @param string $filename The upgrade filename. No full path.
  * @return int|false
  * @since 1.8.0
- * @access private
  * @todo used by elgg_get_upgrade_files
  */
 function elgg_get_upgrade_file_version($filename) {
@@ -52,7 +51,7 @@ function elgg_get_upgrade_file_version($filename) {
  */
 function elgg_get_upgrade_files($upgrade_path = null) {
 	if (!$upgrade_path) {
-		$upgrade_path = elgg_get_root_path() . 'engine/lib/upgrades/';
+		$upgrade_path = elgg_get_engine_path() . '/lib/upgrades/';
 	}
 	$upgrade_path = sanitise_filepath($upgrade_path);
 	$handle = opendir($upgrade_path);

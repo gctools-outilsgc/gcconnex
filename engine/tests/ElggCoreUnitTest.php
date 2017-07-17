@@ -48,6 +48,23 @@ abstract class ElggCoreUnitTest extends UnitTestCase {
 		return $this->assert(new IdenticalEntityExpectation($first), $second, $message);
 	}
 
+	/**
+	 * Replace the current user session
+	 *
+	 * @param ElggUser $user New user to login as (null to log out)
+	 * @return ElggUser|null Removed session user (or null)
+	 */
+	public function replaceSession(ElggUser $user = null) {
+		$session = elgg_get_session();
+		$old = $session->getLoggedInUser();
+		if ($user) {
+			$session->setLoggedInUser($user);
+		} else {
+			$session->removeLoggedInUser();
+		}
+		return $old;
+	}
+
 }
 
 /**
@@ -89,7 +106,7 @@ class IdenticalEntityExpectation extends EqualExpectation {
 	protected function entityToFilteredArray($entity) {
 		$skippedKeys = array('last_action');
 		$array = (array)$entity;
-		unset($array["\0*\0tables_loaded"]);
+		unset($array["\0*\0volatile"]);
 		foreach ($skippedKeys as $key) {
 			// See: http://www.php.net/manual/en/language.types.array.php#language.types.array.casting
 			$array["\0*\0attributes"][$key] = null;

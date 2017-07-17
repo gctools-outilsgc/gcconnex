@@ -6,16 +6,19 @@
  *
  * @package    Elgg.Core
  * @subpackage DataModel.User
- * 
- * @property      string $name          The display name that the user will be known by in the network
- * @property      string $username      The short, reference name for the user in the network
- * @property      string $email         The email address to which Elgg will send email notifications
- * @property      string $language      The language preference of the user (ISO 639-1 formatted)
- * @property      string $banned        'yes' if the user is banned from the network, 'no' otherwise
- * @property      string $admin         'yes' if the user is an administrator of the network, 'no' otherwise
- * @property-read string $password      The legacy (salted MD5) password hash of the user
- * @property-read string $salt          The salt used to create the legacy password hash
- * @property-read string $password_hash The hashed password of the user
+ *
+ * @property      string $name             The display name that the user will be known by in the network
+ * @property      string $username         The short, reference name for the user in the network
+ * @property      string $email            The email address to which Elgg will send email notifications
+ * @property      string $language         The language preference of the user (ISO 639-1 formatted)
+ * @property      string $banned           'yes' if the user is banned from the network, 'no' otherwise
+ * @property      string $admin            'yes' if the user is an administrator of the network, 'no' otherwise
+ * @property-read string $password         The legacy (salted MD5) password hash of the user
+ * @property-read string $salt             The salt used to create the legacy password hash
+ * @property-read string $password_hash    The hashed password of the user
+ * @property-read int    $prev_last_action A UNIX timestamp of the previous last action
+ * @property-read int    $last_login       A UNIX timestamp of the last login
+ * @property-read int    $prev_last_login  A UNIX timestamp of the previous login
  */
 class ElggUser extends \ElggEntity
 	implements Friendable {
@@ -31,7 +34,6 @@ class ElggUser extends \ElggEntity
 
 		$this->attributes['type'] = "user";
 		$this->attributes += self::getExternalAttributes();
-		$this->tables_split = 2;
 	}
 
 	/**
@@ -72,9 +74,6 @@ class ElggUser extends \ElggEntity
 	public function __construct($row = null) {
 		$this->initializeAttributes();
 
-		// compatibility for 1.7 api.
-		$this->initialise_attributes(false);
-
 		if (!empty($row)) {
 			// Is $row is a DB entity row
 			if ($row instanceof \stdClass) {
@@ -91,12 +90,6 @@ class ElggUser extends \ElggEntity
 					foreach ($user->attributes as $key => $value) {
 						$this->attributes[$key] = $value;
 					}
-				}
-			} else if ($row instanceof \ElggUser) {
-				// $row is an \ElggUser so this is a copy constructor
-				elgg_deprecated_notice('This type of usage of the \ElggUser constructor was deprecated. Please use the clone method.', 1.7);
-				foreach ($row->attributes as $key => $value) {
-					$this->attributes[$key] = $value;
 				}
 			} else if (is_numeric($row)) {
 				// $row is a GUID so load entity
@@ -127,9 +120,8 @@ class ElggUser extends \ElggEntity
 		}
 
 		$this->attributes = $attrs;
-		$this->tables_loaded = 2;
 		$this->loadAdditionalSelectValues($attr_loader->getAdditionalSelectValues());
-		_elgg_cache_entity($this);
+		_elgg_services()->entityCache->set($this);
 
 		return true;
 	}
@@ -159,7 +151,7 @@ class ElggUser extends \ElggEntity
 			// TODO(evan): Throw an exception here?
 			return false;
 		}
-		
+
 		return $guid;
 	}
 	
@@ -188,23 +180,6 @@ class ElggUser extends \ElggEntity
 			WHERE guid = $guid";
 
 		return $this->getDatabase()->updateData($query) !== false;
-	}
-
-	/**
-	 * User specific override of the entity delete method.
-	 *
-	 * @return bool
-	 */
-	public function delete() {
-		global $USERNAME_TO_GUID_MAP_CACHE;
-
-		// clear cache
-		if (isset($USERNAME_TO_GUID_MAP_CACHE[$this->username])) {
-			unset($USERNAME_TO_GUID_MAP_CACHE[$this->username]);
-		}
-
-		// Delete entity
-		return parent::delete();
 	}
 
 	/**
@@ -254,7 +229,6 @@ class ElggUser extends \ElggEntity
 			// setting this not supported
 			case 'password_hash':
 				_elgg_services()->logger->error("password_hash is now an attribute of ElggUser and cannot be set.");
-				return;
 				break;
 
 			default:
@@ -322,6 +296,11 @@ class ElggUser extends \ElggEntity
 	 * @return bool
 	 */
 	public function makeAdmin() {
+		
+		if ($this->isAdmin()) {
+			return true;
+		}
+
 		// If already saved, use the standard function.
 		if ($this->guid && !make_user_admin($this->guid)) {
 			return false;
@@ -339,6 +318,11 @@ class ElggUser extends \ElggEntity
 	 * @return bool
 	 */
 	public function removeAdmin() {
+
+		if (!$this->isAdmin()) {
+			return true;
+		}
+
 		// If already saved, use the standard function.
 		if ($this->guid && !remove_user_admin($this->guid)) {
 			return false;
@@ -348,56 +332,6 @@ class ElggUser extends \ElggEntity
 		$this->attributes['admin'] = 'no';
 
 		return true;
-	}
-
-	/**
-	 * Get sites that this user is a member of
-	 *
-	 * @param array $options Options array. Used to be $subtype
-	 * @param int   $limit   The number of results to return (deprecated)
-	 * @param int   $offset  Any indexing offset (deprecated)
-	 *
-	 * @return array
-	 */
-	public function getSites($options = "", $limit = 10, $offset = 0) {
-		if (is_string($options)) {
-			elgg_deprecated_notice('\ElggUser::getSites() takes an options array', 1.9);
-			return get_user_sites($this->getGUID(), $limit, $offset);
-		}
-
-		return parent::getSites($options);
-	}
-
-	/**
-	 * Add this user to a particular site
-	 *
-	 * @param \ElggSite $site The site to add this user to. This used to be the
-	 *                       the site guid (still supported by deprecated)
-	 * @return bool
-	 */
-	public function addToSite($site) {
-		if (is_numeric($site)) {
-			elgg_deprecated_notice('\ElggUser::addToSite() takes a site entity', 1.9);
-			return add_site_user($site, $this->getGUID());
-		}
-
-		return parent::addToSite($site);
-	}
-
-	/**
-	 * Remove this user from a particular site
-	 *
-	 * @param \ElggSite $site The site to remove the user from. Used to be site GUID
-	 *
-	 * @return bool
-	 */
-	public function removeFromSite($site) {
-		if (is_numeric($site)) {
-			elgg_deprecated_notice('\ElggUser::removeFromSite() takes a site entity', 1.9);
-			return remove_site_user($site, $this->guid);
-		}
-
-		return parent::removeFromSite($site);
 	}
 
 	/**
@@ -547,36 +481,6 @@ class ElggUser extends \ElggEntity
 	}
 
 	/**
-	 * Lists the user's friends
-	 *
-	 * @param string $subtype Optionally, the user subtype (leave blank for all)
-	 * @param int    $limit   The number of users to retrieve
-	 * @param array  $vars    Display variables for the user view
-	 *
-	 * @return string Rendered list of friends
-	 * @since 1.8.0
-	 * @deprecated 1.9 Use elgg_list_entities_from_relationship()
-	 */
-	public function listFriends($subtype = "", $limit = 10, array $vars = array()) {
-		elgg_deprecated_notice('\ElggUser::listFriends() is deprecated. Use elgg_list_entities_from_relationship()', 1.9);
-		$defaults = array(
-			'type' => 'user',
-			'relationship' => 'friend',
-			'relationship_guid' => $this->guid,
-			'limit' => $limit,
-			'full_view' => false,
-		);
-
-		$options = array_merge($defaults, $vars);
-
-		if ($subtype) {
-			$options['subtype'] = $subtype;
-		}
-
-		return elgg_list_entities_from_relationship($options);
-	}
-
-	/**
 	 * Gets the user's groups
 	 *
 	 * @param array $options Options array. Used to be the subtype string.
@@ -607,34 +511,6 @@ class ElggUser extends \ElggEntity
 		}
 
 		return elgg_get_entities_from_relationship($options);
-	}
-
-	/**
-	 * Lists the user's groups
-	 *
-	 * @param string $subtype Optionally, the user subtype (leave blank for all)
-	 * @param int    $limit   The number of users to retrieve
-	 * @param int    $offset  Indexing offset, if any
-	 *
-	 * @return string
-	 * @deprecated 1.9 Use elgg_list_entities_from_relationship()
-	 */
-	public function listGroups($subtype = "", $limit = 10, $offset = 0) {
-		elgg_deprecated_notice('Elgg::listGroups is deprecated. Use elgg_list_entities_from_relationship()', 1.9);
-		$options = array(
-			'type' => 'group',
-			'relationship' => 'member',
-			'relationship_guid' => $this->guid,
-			'limit' => $limit,
-			'offset' => $offset,
-			'full_view' => false,
-		);
-
-		if ($subtype) {
-			$options['subtype'] = $subtype;
-		}
-
-		return elgg_list_entities_from_relationship($options);
 	}
 
 	/**
@@ -707,21 +583,13 @@ class ElggUser extends \ElggEntity
 	 */
 	public function countObjects($subtype = "") {
 		elgg_deprecated_notice("\ElggUser::countObjects() is deprecated. Use elgg_get_entities()", 1.9);
-		return count_user_objects($this->getGUID(), $subtype);
-	}
-
-	/**
-	 * Get the collections associated with a user.
-	 *
-	 * @param string $subtype Optionally, the subtype of result we want to limit to
-	 * @param int    $limit   The number of results to return
-	 * @param int    $offset  Any indexing offset
-	 *
-	 * @return array|false
-	 */
-	public function getCollections($subtype = "", $limit = 10, $offset = 0) {
-		elgg_deprecated_notice("\ElggUser::getCollections() has been deprecated", 1.8);
-		return false;
+		$options = [
+			'count' => true,
+		];
+		if ($subtype) {
+			$options['subtype'] = $subtype;
+		}
+		return (int)$this->getObjects($options);
 	}
 
 	/**
@@ -737,17 +605,6 @@ class ElggUser extends \ElggEntity
 		}
 
 		return $this->owner_guid;
-	}
-
-	/**
-	 * If a user's owner is blank, return its own GUID as the owner
-	 *
-	 * @return int User GUID
-	 * @deprecated 1.8 Use getOwnerGUID()
-	 */
-	public function getOwner() {
-		elgg_deprecated_notice("\ElggUser::getOwner deprecated for \ElggUser::getOwnerGUID", 1.8);
-		$this->getOwnerGUID();
 	}
 
 	/**
@@ -782,13 +639,14 @@ class ElggUser extends \ElggEntity
 	 * Can a user comment on this user?
 	 *
 	 * @see \ElggEntity::canComment()
-	 * 
-	 * @param int $user_guid User guid (default is logged in user)
+	 *
+	 * @param int  $user_guid User guid (default is logged in user)
+	 * @param bool $default   Default permission
 	 * @return bool
 	 * @since 1.8.0
 	 */
-	public function canComment($user_guid = 0) {
-		$result = parent::canComment($user_guid);
+	public function canComment($user_guid = 0, $default = null) {
+		$result = parent::canComment($user_guid, $default);
 		if ($result !== null) {
 			return $result;
 		}
@@ -809,5 +667,41 @@ class ElggUser extends \ElggEntity
 		$this->attributes['salt'] = "";
 		$this->attributes['password'] = "";
 		$this->attributes['password_hash'] = _elgg_services()->passwords->generateHash($password);
+	}
+
+	/**
+	 * Enable or disable a notification delivery method
+	 *
+	 * @param string $method  Method name
+	 * @param bool   $enabled Enabled or disabled
+	 * @return bool
+	 */
+	public function setNotificationSetting($method, $enabled = true) {
+		$this->{"notification:method:$method"} = (int) $enabled;
+		return (bool) $this->save();
+	}
+
+	/**
+	 * Returns users's notification settings
+	 * <code>
+	 *    [
+	 *       'email' => true, // enabled
+	 *       'ajax' => false, // disabled
+	 *    ]
+	 * </code>
+	 * 
+	 * @return array
+	 */
+	public function getNotificationSettings() {
+
+		$settings = [];
+
+		$methods = _elgg_services()->notifications->getMethods();
+		foreach ($methods as $method) {
+			$settings[$method] = (bool) $this->{"notification:method:$method"};
+		}
+
+		return $settings;
+	
 	}
 }

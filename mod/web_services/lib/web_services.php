@@ -64,18 +64,8 @@ function execute_method($method) {
 	}
 
 	// function must be callable
-	$function = null;
-	if (isset($API_METHODS[$method]["function"])) {
-		$function = $API_METHODS[$method]["function"];
-		// allow array version of static callback
-		if (is_array($function)
-				&& isset($function[0], $function[1])
-				&& is_string($function[0])
-				&& is_string($function[1])) {
-			$function = "{$function[0]}::{$function[1]}";
-		}
-	}
-	if (!is_string($function) || !is_callable($function)) {
+	$function = elgg_extract('function', $API_METHODS[$method]);
+	if (!$function || !is_callable($function)) {
 		$msg = elgg_echo('APIException:FunctionDoesNotExist', array($method));
 		throw new APIException($msg);
 	}
@@ -97,9 +87,21 @@ function execute_method($method) {
 	// Execute function: Construct function and calling parameters
 	$serialised_parameters = trim($serialised_parameters, ", ");
 
-	// @todo remove the need for eval()
-	$result = eval("return $function($serialised_parameters);");
+	// Sadly we probably can't get rid of this eval() in 2.x. Doing so would involve
+	// replacing serialise_parameters(), which does a bunch of weird stuff we need to
+	// stay BC with 2.x. There are tests for a lot of these quirks in ElggCoreWebServicesApiTest
+	// particularly in testSerialiseParametersCasting().
+	$arguments = eval("return [$serialised_parameters];");
 
+	if ($API_METHODS[$method]['assoc']) {
+		$argument = array_combine(_elgg_ws_get_parameter_names($method), $arguments);
+		$result = call_user_func($function, $argument);
+	} else {
+		$result = call_user_func_array($function, $arguments);
+	}
+
+	$result = elgg_trigger_plugin_hook('rest:output', $method, $parameters, $result);
+	
 	// Sanity check result
 	// If this function returns an api result itself, just return it
 	if ($result instanceof GenericResult) {
@@ -218,15 +220,40 @@ function verify_parameters($method, $parameters) {
 }
 
 /**
- * Serialize an array of parameters for an API method call
+ * Get the names of a method's parameters
+ *
+ * @param string $method
+ * @return string[]
+ * @access private
+ */
+function _elgg_ws_get_parameter_names($method) {
+	global $API_METHODS;
+
+	if (!isset($API_METHODS[$method]["parameters"])) {
+		return [];
+	}
+
+	return array_keys($API_METHODS[$method]["parameters"]);
+}
+
+/**
+ * Serialize an array of parameters for an API method call, applying transformations
+ * to values depending on the declared parameter type, and returning a string of PHP
+ * code representing the contents of a PHP array literal.
+ *
+ * A leading comma needs to be removed from the output.
+ *
+ * @see \ElggCoreWebServicesApiTest::testSerialiseParametersCasting
  *
  * @param string $method     API method name
  * @param array  $parameters Array of parameters
  *
- * @return string or exception
+ * @return string or exception E.g. ',"foo",2.1'
  * @throws APIException
  * @since 1.7.0
  * @access private
+ *
+ * @todo in 3.0 this should return an array of parameter values instead of a string of code.
  */
 function serialise_parameters($method, $parameters) {
 	global $API_METHODS;
@@ -241,6 +268,7 @@ function serialise_parameters($method, $parameters) {
 
 		// avoid warning on parameters that are not required and not present
 		if (!isset($parameters[$key])) {
+			$serialised_parameters .= ',null';
 			continue;
 		}
 
@@ -264,7 +292,7 @@ function serialise_parameters($method, $parameters) {
 
 				break;
 			case 'string':
-				$serialised_parameters .= ",'" . addcslashes(trim($parameters[$key]), "'") . "'";
+				$serialised_parameters .= ',' . var_export(trim($parameters[$key]), true);
 				break;
 			case 'float':
 				$serialised_parameters .= "," . (float)trim($parameters[$key]);
@@ -279,6 +307,9 @@ function serialise_parameters($method, $parameters) {
 				$array = "array(";
 
 				foreach ($parameters[$key] as $k => $v) {
+					// This is using sanitise_string() to escape characters to be inside a
+					// single-quoted string literal in PHP code. Not sure what we have to do
+					// to keep this safe in 3.0...
 					$k = sanitise_string($k);
 					$v = sanitise_string($v);
 

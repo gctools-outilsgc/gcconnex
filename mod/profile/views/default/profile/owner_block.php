@@ -20,18 +20,13 @@ $icon = elgg_view_entity_icon($user, 'large', array(
 $icon .= '<font style="font-variant:small-caps;">Last logged in:<br/>'.(string)date("Y-m-d H:i:s",$user->last_login).'</font><br/>';
 
 // grab the actions and admin menu items from user hover
-$menu = elgg_trigger_plugin_hook('register', "menu:user_hover", array('entity' => $user), array());
-$builder = new ElggMenuBuilder($menu);
-$menu = $builder->getMenu();
-$menu = elgg_trigger_plugin_hook('prepare', "menu:user_hover", array(
-	'menu' => $menu,
+$menu = elgg()->menus->getMenu('user_hover', [
 	'entity' => $user,
 	'username' => $user->username,
-	'name' => 'user_hover',
-), $menu);
+]);
 
-$actions = elgg_extract('action', $menu, array());
-$admin = elgg_extract('admin', $menu, array());
+$actions = $menu->getSection('action', []);
+$admin = $menu->getSection('admin', []);
 
 $profile_actions = '';
 if (elgg_is_logged_in() && $actions) {
@@ -50,13 +45,13 @@ if (elgg_is_admin_logged_in() && elgg_get_logged_in_user_guid() != elgg_get_page
 
 	$admin_links = '<ul class="profile-admin-menu-wrapper">';
 	$admin_links .= "<li><a rel=\"toggle\" href=\"#profile-menu-admin\">$text&hellip;</a>";
-	$admin_links .= '<ul class="profile-admin-menu" id="profile-menu-admin">';
+	$admin_links .= '<ul class="elgg-menu profile-admin-menu" id="profile-menu-admin">';
 	foreach ($admin as $menu_item) {
 		$admin_links .= elgg_view('navigation/menu/elements/item', array('item' => $menu_item));
 	}
 	$admin_links .= '</ul>';
 	$admin_links .= '</li>';
-	$admin_links .= '</ul>';	
+	$admin_links .= '</ul>';
 }
 
 // content links

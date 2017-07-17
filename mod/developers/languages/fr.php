@@ -50,7 +50,8 @@ Cela peut casser les vues non HTML de l'affichage principal. Voir developers_wra
 	'developers:inspect:priority' => 'Priorité',
 	'developers:inspect:simplecache' => 'Cache simple',
 	'developers:inspect:views' => 'Vues',
-	'developers:inspect:views:all_filtered' => "<strong>Note !</strong> Toutes les sorties des vues sont filtrées par les hooks des plugins suivants :",
+	'developers:inspect:views:all_filtered' => "<b>Note !</b> Toutes les entrées/sorties des vues sont filtrées par les hooks des plugins suivants :",
+	'developers:inspect:views:input_filtered' => "(entrée filtrée par le hook de plugin : %s)",
 	'developers:inspect:views:filtered' => "(filtré par le hook de plugin : %s)",
 	'developers:inspect:widgets' => 'Widgets',
 	'developers:inspect:webservices' => 'Services web',
@@ -59,8 +60,11 @@ Cela peut casser les vues non HTML de l'affichage principal. Voir developers_wra
 	'developers:inspect:file_location' => 'Chemin à partir de la racine Elgg',
 
 	// event logging
+	'developers:request_stats' => "Statistiques des requêtes (n'inclue pas l'événement shutdown)",
 	'developers:event_log_msg' => "%s : \"%s, %s\" dans %s",
-	'developers:log_queries' => "%s requêtes sur la base de données (n'inclue pas l'événement shutdown)",
+	'developers:log_queries' => "Requêtes sur la base de données : %s",
+	'developers:boot_cache_rebuilt' => "Le cache de démarrage a été reconstruit pour cette requête",
+	'developers:elapsed_time' => "Durée (s)",
 
 	// theme sandbox
 	'theme_sandbox:intro' => 'Introduction',

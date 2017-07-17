@@ -4,15 +4,15 @@
  *
  */
 return array(
-	'embed:embed' => 'Intégrer',
-	'embed:media' => 'Intégrer du contenu',
-	'embed:instructions' => "Cliquez sur un fichier pour l'intégrer à votre contenu.",
-	'embed:upload' => 'Téléverser le contenu média',
-	'embed:upload_type' => 'Type de téléversement: ',
+	'embed:embed' => 'Intégrer un contenu',
+	'embed:media' => 'Intégrer un média',
+	'embed:instructions' => 'Cliquez sur l\'élément de votre choix pour l\'intégrer dans le contenu.',
+	'embed:upload' => 'Envoyer un fichier média',
+	'embed:upload_type' => 'Type d\'envoi : ',
 
 	// messages
-	'embed:no_upload_content' => 'Aucun contenu téléversé!',
+	'embed:no_upload_content' => 'Aucun contenu chargé !',
 	'embed:no_section_content' => 'Aucun élément trouvé.',
 
-	'embed:no_sections'	=> "Aucun module d'extension supportés n'a été trouvé. Demandez à l'administrateur du site d\'activer un module d\'extension qui supporte l'intégration.",
+	'embed:no_sections' => 'Aucun plugin gérant l\'intégration de fichier média n\'a été trouvé. Demandez à l\'administrateur du site d\'activer un plugin qui gère l\'intégration de fichier média.',
 );

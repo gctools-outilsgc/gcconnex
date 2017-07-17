@@ -57,7 +57,7 @@ function elgg_unregister_page_handler($identifier) {
  */
 function elgg_gatekeeper() {
 	if (!elgg_is_logged_in()) {
-		_elgg_services()->session->set('last_forward_from', current_page_url());
+		_elgg_services()->redirects->setLastForwardFrom();
 		system_message(elgg_echo('loggedinrequired'));
 		forward('/login', 'login');
 	}
@@ -84,7 +84,7 @@ function elgg_admin_gatekeeper() {
 	elgg_gatekeeper();
 
 	if (!elgg_is_admin_logged_in()) {
-		_elgg_services()->session->set('last_forward_from', current_page_url());
+		_elgg_services()->redirects->setLastForwardFrom();
 		register_error(elgg_echo('adminrequired'));
 		forward('', 'admin');
 	}
@@ -135,7 +135,7 @@ function elgg_group_gatekeeper($forward = true, $group_guid = null) {
 		$forward_url = $group ? $group->getURL() : '';
 
 		if (!elgg_is_logged_in()) {
-			_elgg_services()->session->set('last_forward_from', current_page_url());
+			_elgg_services()->redirects->setLastForwardFrom();
 			$forward_reason = 'login';
 		} else {
 			$forward_reason = 'member';
@@ -179,12 +179,14 @@ function group_gatekeeper($forward = true, $page_owner_guid = null) {
  * @param int    $guid    Entity GUID
  * @param string $type    Optional required entity type
  * @param string $subtype Optional required entity subtype
- * @return void
+ * @param bool   $forward If set to true (default), will forward the page;
+ *                        if set to false, will return true or false.
+ * @return bool Will return if $forward is set to false.
  * @since 1.9.0
  */
-function elgg_entity_gatekeeper($guid, $type = null, $subtype = null) {
+function elgg_entity_gatekeeper($guid, $type = null, $subtype = null, $forward = true) {
 	$entity = get_entity($guid);
-	if (!$entity) {
+	if (!$entity && $forward) {
 		if (!elgg_entity_exists($guid)) {
 			// entity doesn't exist
 			forward('', '404');
@@ -193,22 +195,36 @@ function elgg_entity_gatekeeper($guid, $type = null, $subtype = null) {
 			elgg_gatekeeper();
 		} else {
 			// user is logged in but still does not have access to it
-			if (strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'secmgr') === 0) {
-				header('HTTP/1.1 403 Forbidden');
-				exit();
-			} else {
-				register_error(elgg_echo('limited_access'));
-				forward();
-			}
+			register_error(elgg_echo('limited_access'));
+			forward();
+		}
+	} else if (!$entity) {
+		return false;
+	}
+
+	if ($type && !elgg_instanceof($entity, $type, $subtype)) {
+		// entity is of wrong type/subtype
+		if ($forward) {
+			forward('', '404');
+		} else {
+			return false;
 		}
 	}
 
-	if ($type) {
-		if (!elgg_instanceof($entity, $type, $subtype)) {
-			// entity is of wrong type/subtype
-			forward('', '404');
+	$hook_type = "{$entity->getType()}:{$entity->getSubtype()}";
+	$hook_params = [
+		'entity' => $entity,
+		'forward' => $forward,
+	];
+	if (!elgg_trigger_plugin_hook('gatekeeper', $hook_type, $hook_params, true)) {
+		if ($forward) {
+			forward('', '403');
+		} else {
+			return false;
 		}
 	}
+
+	return true;
 }
 
 /**
@@ -231,27 +247,7 @@ function elgg_ajax_gatekeeper() {
  * @return bool
  */
 function elgg_front_page_handler() {
-
-	if (elgg_is_logged_in()) {
-		forward('activity');
-	}
-
-	$title = elgg_echo('content:latest');
-	$content = elgg_list_river();
-	if (!$content) {
-		$content = elgg_echo('river:none');
-	}
-
-	$login_box = elgg_view('core/account/login_box');
-
-	$params = array(
-			'title' => $title,
-			'content' => $content,
-			'sidebar' => $login_box
-	);
-	$body = elgg_view_layout('one_sidebar', $params);
-	echo elgg_view_page(null, $body);
-	return true;
+	return elgg_ok_response(elgg_view_resource('index'));
 }
 
 /**
@@ -266,41 +262,96 @@ function elgg_front_page_handler() {
  * @param bool   $result The current value of the hook
  * @param array  $params Parameters related to the hook
  * @return void
+ * @deprecated 2.3
  */
 function elgg_error_page_handler($hook, $type, $result, $params) {
-	if (elgg_view_exists("errors/$type")) {
-		$title = elgg_echo("error:$type:title");
-		if ($title == "error:$type:title") {
-			// use default if there is no title for this error type
-			$title = elgg_echo("error:default:title");
-		}
-		
-		$content = elgg_view("errors/$type", $params);
-	} else {
-		$title = elgg_echo("error:default:title");
-		$content = elgg_view("errors/default", $params);
-	}
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Error pages are drawn by resource views without "forward" hook.', '2.3');
 	
-	$httpCodes = array(
-		'400' => 'Bad Request',
-		'401' => 'Unauthorized',
-		'403' => 'Forbidden',
-		'404' => 'Not Found',
-		'407' => 'Proxy Authentication Required',
-		'500' => 'Internal Server Error',
-		'503' => 'Service Unavailable',
-	);
+	// This draws an error page, and sometimes there's another 40* forward() call made during that
+	// process (usually due to the pagesetup event). We want to allow the 2nd call to pass through,
+	// but draw the appropriate page for the first call.
 	
-	if (isset($httpCodes[$type])) {
-		header("HTTP/1.1 $type {$httpCodes[$type]}");
+	static $vars;
+	if ($vars === null) {
+		// keep first vars for error page
+		$vars = [
+			'type' => $type,
+			'params' => $params,
+		];
 	}
 
-	$body = elgg_view_layout('error', array(
-		'title' => $title,
-		'content' => $content,
-	));
-	echo elgg_view_page($title, $body, 'error');
+	static $calls = 0;
+	$calls++;
+	if ($calls < 3) {
+		echo elgg_view_resource('error', $vars);
+		exit;
+	}
+
+	// uh oh, may be infinite loop
+	register_error(elgg_echo('error:404:content'));
+	header('Location: ' . elgg_get_site_url());
 	exit;
+}
+
+/**
+ * Prepares a successful response to be returned by a page or an action handler
+ *
+ * @param mixed  $content     Response content
+ *                            In page handlers, response content should contain an HTML string
+ *                            In action handlers, response content can contain either a JSON string or an array of data
+ * @param string $message     System message visible to the client
+ *                            Can be used by handlers to display a system message
+ * @param string $forward_url Forward URL
+ *                            Can be used by handlers to redirect the client on non-ajax requests
+ * @param int    $status_code HTTP status code
+ *                            Status code of the HTTP response (defaults to 200)
+ * @return \Elgg\Http\OkResponse
+ */
+function elgg_ok_response($content = '', $message = '', $forward_url = null, $status_code = ELGG_HTTP_OK) {
+	if ($message) {
+		system_message($message);
+	}
+	return new \Elgg\Http\OkResponse($content, $status_code, $forward_url);
+	
+}
+
+/**
+ * Prepare an error response to be returned by a page or an action handler
+ *
+ * @param string $error       Error message
+ *                            Can be used by handlers to display an error message
+ *                            For certain requests this error message will also be used as the response body
+ * @param string $forward_url URL to redirect the client to
+ *                            Can be used by handlers to redirect the client on non-ajax requests
+ * @param int    $status_code HTTP status code
+ *                            Status code of the HTTP response
+ *                            For BC reasons and due to the logic in the client-side AJAX API,
+ *                            this defaults to 200. Note that the Router and AJAX API will
+ *                            treat these responses as error in spite of the HTTP code assigned
+ * @return \Elgg\Http\ErrorResponse
+ */
+function elgg_error_response($error = '', $forward_url = REFERRER, $status_code = ELGG_HTTP_OK) {
+	if ($error) {
+		register_error($error);
+	}
+	return new \Elgg\Http\ErrorResponse($error, $status_code, $forward_url);
+}
+
+/**
+ * Prepare a silent redirect response to be returned by a page or an action handler
+ *
+ * @param string $forward_url Redirection URL
+ *                            Relative or absolute URL to redirect the client to
+ * @param int    $status_code HTTP status code
+ *                            Status code of the HTTP response
+ *                            Note that the Router and AJAX API will treat these responses
+ *                            as redirection in spite of the HTTP code assigned
+ *                            Note that non-redirection HTTP codes will throw an exception
+ * @return \Elgg\Http\RedirectResponse
+ * @throws \InvalidArgumentException
+ */
+function elgg_redirect_response($forward_url = REFERRER, $status_code = ELGG_HTTP_FOUND) {
+	return new Elgg\Http\RedirectResponse($forward_url, $status_code);
 }
 
 /**
@@ -311,10 +362,6 @@ function elgg_error_page_handler($hook, $type, $result, $params) {
  */
 function _elgg_page_handler_init() {
 	elgg_register_page_handler('', 'elgg_front_page_handler');
-	// Registered at 600 so that plugins can register at the default 500 and get to run first
-	elgg_register_plugin_hook_handler('forward', '400', 'elgg_error_page_handler', 600);
-	elgg_register_plugin_hook_handler('forward', '403', 'elgg_error_page_handler', 600);
-	elgg_register_plugin_hook_handler('forward', '404', 'elgg_error_page_handler', 600);
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {

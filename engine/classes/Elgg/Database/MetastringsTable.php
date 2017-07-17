@@ -1,9 +1,9 @@
 <?php
+
 namespace Elgg\Database;
 
 use Elgg\Cache\Pool;
 use Elgg\Database;
-
 
 /**
  * Normalization for strings used in metadata and annoations tables.
@@ -21,10 +21,10 @@ use Elgg\Database;
 class MetastringsTable {
 
 	/** @var Pool */
-	private $cache;
+	protected $cache;
 
 	/** @var Database */
-	private $db;
+	protected $db;
 
 	/**
 	 * Constructor
@@ -50,6 +50,8 @@ class MetastringsTable {
 	 *                               If not, there may be more than one result
 	 *
 	 * @return int|array metastring id or array of ids
+	 *
+	 * @see elgg_get_metastring_id
 	 */
 	function getId($string, $case_sensitive = true) {
 		if ($case_sensitive) {
@@ -58,7 +60,47 @@ class MetastringsTable {
 			return $this->getIdCaseInsensitive($string);
 		}
 	}
-	
+
+	/**
+	 * Get a map of strings to their metastring identifiers (case sensitive matches)
+	 *
+	 * @param string[] $string_keys Strings to look up
+	 *
+	 * @return int[] map of [string] => [id]
+	 *
+	 * @see elgg_get_metastring_map
+	 */
+	function getMap(array $string_keys) {
+		if (!$string_keys) {
+			return [];
+		}
+		if (count($string_keys) === 1) {
+			$key = reset($string_keys);
+			return [$key => $this->getIdCaseSensitive($key)];
+		}
+
+		$missing = array_fill_keys($string_keys, true);
+
+		$set_element = array_map(function ($string) {
+			return "BINARY '" . $this->db->sanitizeString($string) . "'";
+		}, $string_keys);
+
+		$set = implode(',', $set_element);
+
+		$query = "SELECT * FROM {$this->getTableName()} WHERE string IN ($set)";
+		$ret = [];
+
+		foreach ($this->db->getData($query) as $row) {
+			$ret[$row->string] = (int) $row->id;
+			unset($missing[$row->string]);
+		}
+		foreach (array_keys($missing) as $string) {
+			$ret[$string] = $this->getIdCaseSensitive($string);
+		}
+
+		return $ret;
+	}
+
 	/**
 	 * Gets the id associated with this string, case-sensitively.
 	 * Will add the string to the table if not present.
@@ -68,19 +110,35 @@ class MetastringsTable {
 	 * @return int
 	 */
 	private function getIdCaseSensitive($string) {
-		$string = (string)$string;
+		$string = (string) $string;
 		return $this->cache->get($string, function() use ($string) {
-			$escaped_string = $this->db->sanitizeString($string);
-			$query = "SELECT * FROM {$this->getTableName()} WHERE string = BINARY '$escaped_string' LIMIT 1";
-			$results = $this->db->getData($query);
-			if (isset($results[0])) {
-				return $results[0]->id;
-			} else {
-				return $this->add($string);
+
+			$memcache = _elgg_get_memcache('metastrings_memcache');
+
+			// Stash can't handle arbitrary keys
+			$result = $memcache->load(md5($string));
+			if ($result !== false) {
+				return $result;
 			}
+
+			$query = "SELECT id FROM {$this->getTableName()} WHERE string = BINARY :string";
+			$params = [
+				':string' => $string,
+			];
+
+			$result = $this->db->getDataRow($query, null, $params);
+			if ($result) {
+				$id = $result->id;
+			} else {
+				$id = $this->add($string);
+			}
+
+			$memcache->save(md5($string), $id);
+
+			return $id;
 		});
 	}
-	
+
 	/**
 	 * Gets all ids associated with this string when taken case-insensitively.
 	 * Will add the string to the table if not present.
@@ -90,11 +148,13 @@ class MetastringsTable {
 	 * @return int[]
 	 */
 	private function getIdCaseInsensitive($string) {
-		$string = (string)$string;
+		$string = (string) $string;
 		// caching doesn't work for case insensitive requests
-		$escaped_string = $this->db->sanitizeString($string);
-		$query = "SELECT * FROM {$this->getTableName()} WHERE string = '$escaped_string'";
-		$results = $this->db->getData($query);
+		$query = "SELECT id FROM {$this->getTableName()} WHERE string = :string";
+		$params = [
+			':string' => $string,
+		];
+		$results = $this->db->getData($query, null, $params);
 		$ids = array();
 		foreach ($results as $result) {
 			$ids[] = $result->id;
@@ -103,8 +163,8 @@ class MetastringsTable {
 			$ids[] = $this->add($string);
 		}
 		return $ids;
-	}	
-	
+	}
+
 	/**
 	 * Add a metastring.
 	 *
@@ -113,18 +173,21 @@ class MetastringsTable {
 	 * @param string $string The value to be normalized
 	 * @return int The identifier for this string
 	 */
-	function add($string) {
-		$escaped_string = $this->db->sanitizeString(trim($string));
-	
-		return $this->db->insertData("INSERT INTO {$this->getTableName()} (string) VALUES ('$escaped_string')");
+	public function add($string) {
+		$sql = "INSERT INTO {$this->getTableName()} (string) VALUES (:string)";
+		$params = [
+			':string' => trim((string) $string),
+		];
+		return $this->db->insertData($sql, $params);
 	}
-	
+
 	/**
 	 * The full name of the metastrings table, including prefix.
 	 * 
 	 * @return string
 	 */
 	public function getTableName() {
-		return $this->db->getTablePrefix() . "metastrings";
+		return $this->db->prefix . "metastrings";
 	}
+
 }

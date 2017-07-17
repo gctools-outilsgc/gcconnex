@@ -25,7 +25,6 @@ class ElggGroup extends \ElggEntity
 
 		$this->attributes['type'] = "group";
 		$this->attributes += self::getExternalAttributes();
-		$this->tables_split = 2;
 	}
 
 	/**
@@ -56,9 +55,6 @@ class ElggGroup extends \ElggEntity
 	public function __construct($row = null) {
 		$this->initializeAttributes();
 
-		// compatibility for 1.7 api.
-		$this->initialise_attributes(false);
-
 		if (!empty($row)) {
 			// Is $guid is a entity table DB row
 			if ($row instanceof \stdClass) {
@@ -66,12 +62,6 @@ class ElggGroup extends \ElggEntity
 				if (!$this->load($row)) {
 					$msg = "Failed to load new " . get_class() . " for GUID:" . $row->guid;
 					throw new \IOException($msg);
-				}
-			} else if ($row instanceof \ElggGroup) {
-				// $row is an \ElggGroup so this is a copy constructor
-				elgg_deprecated_notice('This type of usage of the \ElggGroup constructor was deprecated. Please use the clone method.', 1.7);
-				foreach ($row->attributes as $key => $value) {
-					$this->attributes[$key] = $value;
 				}
 			} else if (is_numeric($row)) {
 				// $row is a GUID so load entity
@@ -256,12 +246,19 @@ class ElggGroup extends \ElggEntity
 	 * @param int    $limit   Limit
 	 * @param int    $offset  Offset
 	 *
-	 * @return bool
+	 * @return int
 	 * @deprecated 1.9 Use \ElggGroup::getMembers()
 	 */
 	public function getFriends($subtype = "", $limit = 10, $offset = 0) {
 		elgg_deprecated_notice("\ElggGroup::getFriends() is deprecated. Use \ElggGroup::getMembers()", 1.9);
-		return get_group_members($this->getGUID(), $limit, $offset);
+		$options = [
+			'limit' => $limit,
+			'offset' => $offset,
+		];
+		if ($subtype) {
+			$options['subtype'] = $subtype;
+		}
+		return $this->getMembers($options);
 	}
 
 	/**
@@ -291,7 +288,16 @@ class ElggGroup extends \ElggEntity
 	 */
 	public function getObjects($subtype = "", $limit = 10, $offset = 0) {
 		elgg_deprecated_notice("\ElggGroup::getObjects() is deprecated. Use elgg_get_entities()", 1.9);
-		return get_objects_in_group($this->getGUID(), $subtype, 0, 0, "", $limit, $offset, false);
+		$options = [
+			'type' => 'object',
+			'container_guid' => $this->guid,
+			'limit' => $limit,
+			'offset' => $offset,
+		];
+		if ($subtype) {
+			$options['subtype'] = $subtype;
+		}
+		return elgg_get_entities($options);
 	}
 
 	/**
@@ -306,7 +312,19 @@ class ElggGroup extends \ElggEntity
 	 */
 	public function getFriendsObjects($subtype = "", $limit = 10, $offset = 0) {
 		elgg_deprecated_notice("\ElggGroup::getFriendsObjects() is deprecated. Use elgg_get_entities()", 1.9);
-		return get_objects_in_group($this->getGUID(), $subtype, 0, 0, "", $limit, $offset, false);
+		$options = [
+			'type' => 'object',
+			'limit' => $limit,
+			'offset' => $offset,
+			'relationship' => 'member',
+			'inverse_relationship' => true,
+			'relationship_guid' => $this->guid,
+			'relationship_join_on' => 'owner_guid',
+		];
+		if ($subtype) {
+			$options['subtype'] = $subtype;
+		}
+		return elgg_get_entities_from_relationship($options);
 	}
 
 	/**
@@ -319,7 +337,15 @@ class ElggGroup extends \ElggEntity
 	 */
 	public function countObjects($subtype = "") {
 		elgg_deprecated_notice("\ElggGroup::countObjects() is deprecated. Use elgg_get_entities()", 1.9);
-		return get_objects_in_group($this->getGUID(), $subtype, 0, 0, "", 10, 0, true);
+		$options = [
+			'count' => true,
+			'type' => 'object',
+			'container_guid' => $this->guid,
+		];
+		if ($subtype) {
+			$options['subtype'] = $subtype;
+		}
+		return elgg_get_entities($options);
 	}
 
 	/**
@@ -400,12 +426,16 @@ class ElggGroup extends \ElggEntity
 	/**
 	 * Set the content access mode used by group_gatekeeper()
 	 *
-	 * @param string $mode One of CONTENT_ACCESS_MODE_* constants
+	 * @param string $mode One of CONTENT_ACCESS_MODE_* constants. If empty string, mode will not be changed.
 	 * @return void
 	 * @access private
 	 * @since 1.9.0
 	 */
 	public function setContentAccessMode($mode) {
+		if (!$mode && $this->content_access_mode) {
+			return;
+		}
+
 		// only support two modes for now
 		if ($mode !== self::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
 			$mode = self::CONTENT_ACCESS_MODE_UNRESTRICTED;
@@ -489,9 +519,8 @@ class ElggGroup extends \ElggEntity
 		}
 
 		$this->attributes = $attrs;
-		$this->tables_loaded = 2;
 		$this->loadAdditionalSelectValues($attr_loader->getAdditionalSelectValues());
-		_elgg_cache_entity($this);
+		_elgg_services()->entityCache->set($this);
 
 		return true;
 	}
@@ -540,7 +569,7 @@ class ElggGroup extends \ElggEntity
 			// TODO(evan): Throw an exception here?
 			return false;
 		}
-		
+
 		return $guid;
 	}
 
@@ -576,12 +605,13 @@ class ElggGroup extends \ElggEntity
 	 *
 	 * @see \ElggEntity::canComment()
 	 *
-	 * @param int $user_guid User guid (default is logged in user)
+	 * @param int  $user_guid User guid (default is logged in user)
+	 * @param bool $default   Default permission
 	 * @return bool
 	 * @since 1.8.0
 	 */
-	public function canComment($user_guid = 0) {
-		$result = parent::canComment($user_guid);
+	public function canComment($user_guid = 0, $default = null) {
+		$result = parent::canComment($user_guid, $default);
 		if ($result !== null) {
 			return $result;
 		}

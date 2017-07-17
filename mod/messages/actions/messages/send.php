@@ -1,41 +1,29 @@
 <?php
 /**
 * Ssend a message action
-* 
+*
 * @package ElggMessages
 */
 
 $subject = strip_tags(get_input('subject'));
 $body = get_input('body');
-
-
-if(get_input('colleagueCircle'))
-	$recipient_username = get_input('messageCollection');
-else
-	$recipient_username = get_input('recipient_username');
-
-
+$recipients = (array) get_input('recipients');
 $original_msg_guid = (int)get_input('original_guid');
 
 elgg_make_sticky_form('messages');
 
-$recipient_username = explode(",",$recipient_username); // create array seperate by ,
-
-foreach ($recipient_username as $member) {
-
-			$recipient_username = $member; // seperate user
-
-if (!$recipient_username) {
+if (empty($recipients)) {
 	register_error(elgg_echo("messages:user:blank"));
 	forward("messages/compose");
 }
 
-if ($recipient_username == elgg_get_logged_in_user_entity()->username) {
+$recipient = (int) elgg_extract(0, $recipients);
+if ($recipient == elgg_get_logged_in_user_guid()) {
 	register_error(elgg_echo("messages:user:self"));
-	forward("messages/compose");	
+	forward("messages/compose");
 }
 
-$user = get_user_by_username($recipient_username);
+$user = get_user($recipient);
 if (!$user) {
 	register_error(elgg_echo("messages:user:nonexist"));
 	forward("messages/compose");

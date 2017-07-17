@@ -9,21 +9,24 @@ elgg.ui.init = function () {
 	elgg.ui.initHoverMenu();
 
 	// if the user clicks a system message (not a link inside one), make it disappear
-	$('.elgg-system-messages li').live('click', function(e) {
+	$(document).on('click', '.elgg-system-messages li', function(e) {
 		if (!$(e.target).is('a')) {
 			$(this).stop().fadeOut('fast');
 		}
 	});
 
+	$('.elgg-system-messages li').animate({opacity: 0.9}, 6000);
 	$('.elgg-system-messages li.elgg-state-success').fadeOut('slow');
 
-	$('[rel=toggle]').live('click', elgg.ui.toggles);
+	$(document).on('click', '[rel=toggle]', elgg.ui.toggles);
 
-	$('[rel=popup]').live('click', elgg.ui.popupOpen);
+	require(['elgg/popup'], function(popup) {
+		popup.bind($('[rel="popup"]'));
+	});
 
-	$('.elgg-menu-page .elgg-menu-parent').live('click', elgg.ui.toggleMenu);
+	$(document).on('click', '.elgg-menu-page .elgg-menu-parent', elgg.ui.toggleMenu);
 
-    $('*[data-confirm], .elgg-requires-confirmation').live('click', elgg.ui.requiresConfirmation);
+    $(document).on('click', '*[data-confirm], .elgg-requires-confirmation', elgg.ui.requiresConfirmation);
     if ($('.elgg-requires-confirmation').length > 0) {
         elgg.deprecated_notice('Use of .elgg-requires-confirmation is deprecated by data-confirm', '1.10');
     }
@@ -38,6 +41,10 @@ elgg.ui.init = function () {
 	// Allow element to be highlighted using CSS if its id is found from the URL
 	var elementId = elgg.getSelectorFromUrlFragment(document.URL);
 	$(elementId).addClass('elgg-state-highlight');
+
+	elgg.ui.initDatePicker();
+
+	elgg.ui.registerTogglableMenuItems('add-friend', 'remove-friend');
 };
 
 /**
@@ -46,8 +53,8 @@ elgg.ui.init = function () {
  * Use rel="toggle" on the toggler element
  * Set the href to target the item you want to toggle (<a rel="toggle" href="#id-of-target">)
  * or use data-toggle-selector="your_jquery_selector" to have an advanced selection method
- * 
- * By default elements perform a slideToggle. 
+ *
+ * By default elements perform a slideToggle.
  * If you want a normal toggle (hide/show) you can add data-toggle-slide="0" on the elements to prevent a slide.
  *
  * @param {Object} event
@@ -56,17 +63,19 @@ elgg.ui.init = function () {
 elgg.ui.toggles = function(event) {
 	event.preventDefault();
 	var $this = $(this),
-		target = $this.data().toggleSelector;
-	
-	if (!target) {
+		selector = $this.data().toggleSelector;
+
+	if (!selector) {
 		// @todo we can switch to elgg.getSelectorFromUrlFragment() in 1.x if
 		// we also extend it to support href=".some-class"
-		target = $this.attr('href');
+		selector = $this.attr('href');
 	}
+
+	var $elements = $(selector);
 
 	$this.toggleClass('elgg-state-active');
 
-	$(target).each(function(index, elem) {
+	$elements.each(function(index, elem) {
 		var $elem = $(elem);
 		if ($elem.data().toggleSlide != false) {
 			$elem.slideToggle('medium');
@@ -74,6 +83,10 @@ elgg.ui.toggles = function(event) {
 			$elem.toggle();
 		}
 	});
+
+	$this.trigger('elgg_ui_toggle', [{
+		$toggled_elements: $elements
+	}]);
 };
 
 /**
@@ -95,85 +108,29 @@ elgg.ui.toggles = function(event) {
  * @return void
  */
 elgg.ui.popupOpen = function(event) {
+
+	elgg.deprecated_notice('elgg.ui.popupOpen() has been deprecated and should not be called directly. Use elgg/popup AMD module instead', '2.2');
+
 	event.preventDefault();
 	event.stopPropagation();
 
-	var target = elgg.getSelectorFromUrlFragment($(this).toggleClass('elgg-state-active').attr('href'));
-	var $target = $(target);
-
-	// emit a hook to allow plugins to position and control popups
-	var params = {
-		targetSelector: target,
-		target: $target,
-		source: $(this)
-	};
-
-	var options = {
-		my: 'center top',
-		at: 'center bottom',
-		of: $(this),
-		collision: 'fit fit'
-	};
-
-	options = elgg.trigger_hook('getOptions', 'ui.popup', params, options);
-
-	// allow plugins to cancel event
-	if (!options) {
-		return;
-	}
-
-	// hide if already open
-	if ($target.is(':visible')) {
-		$target.fadeOut();
-		$('body').die('click', elgg.ui.popupClose);
-		return;
-	}
-
-	$target.appendTo('body')
-		.fadeIn()
-		.position(options);
-
-	$('body')
-		.die('click', elgg.ui.popupClose)
-		.live('click', elgg.ui.popupClose);
+	var $elem = $(this);
+	require(['elgg/popup'], function(popup) {
+		popup.open($elem);
+	});
 };
 
 /**
  * Catches clicks that aren't in a popup and closes all popups.
+ * @deprecated 2.2
  */
 elgg.ui.popupClose = function(event) {
-	$eventTarget = $(event.target);
-	var inTarget = false;
-	var $popups = $('[rel=popup]');
+	
+	elgg.deprecated_notice('elgg.ui.popupClose() has been deprecated and should not be called directly. Use elgg/popup AMD module instead', '2.2');
 
-	// if the click event target isn't in a popup target, fade all of them out.
-	$popups.each(function(i, e) {
-		var target = elgg.getSelectorFromUrlFragment($(e).attr('href')) + ':visible';
-		var $target = $(target);
-
-		if (!$target.is(':visible')) {
-			return;
-		}
-
-		// didn't click inside the target
-		if ($eventTarget.closest(target).length > 0) {
-			inTarget = true;
-			return false;
-		}
+	require(['elgg/popup'], function(popup) {
+		popup.close();
 	});
-
-	if (!inTarget) {
-		$popups.each(function(i, e) {
-			var $e = $(e);
-			var $target = $(elgg.getSelectorFromUrlFragment($e.attr('href')) + ':visible');
-			if ($target.length > 0) {
-				$target.fadeOut();
-				$e.removeClass('elgg-state-active');
-			}
-		});
-
-		$('body').die('click', elgg.ui.popClose);
-	}
 };
 
 /**
@@ -210,7 +167,7 @@ elgg.ui.initHoverMenu = function(parent) {
 		if (!$ul.length) {
 			return;
 		}
-        
+
 		elgg.get('ajax/view/navigation/menu/user_hover/contents', {
 			data: $ul.data('elggMenuData'),
 			success: function(data) {
@@ -218,17 +175,6 @@ elgg.ui.initHoverMenu = function(parent) {
 					// replace all existing placeholders with new menu
 					$all_placeholders.removeClass('elgg-ajax-loader')
 						.html($(data).children());
-                    
-                    
-                    //very dirty fix of hover_menu in new GCconnex theme
-                    $all_placeholders.each(function(){
-                        if($(this).parent().is('body')){
-                            //dont do anything with this menu
-                        } else {
-                            //but hide the rest
-                            $(this).hide();
-                        }
-                    });
 				}
 			}
 		});
@@ -239,62 +185,52 @@ elgg.ui.initHoverMenu = function(parent) {
 	}
 
 	// avatar image menu link
-	$(parent).find(".elgg-avatar").live('mouseover', function() {
+	$(parent).on('mouseover', ".elgg-avatar", function() {
 		$(this).children(".elgg-icon-hover-menu").show();
 	})
-	.live('mouseout', function() {
+	.on('mouseout', '.elgg-avatar', function() {
 		$(this).children(".elgg-icon-hover-menu").hide();
 	});
 
 
 	// avatar contextual menu
-	$(".elgg-avatar > .elgg-icon-hover-menu").live('click', function(e) {
-		var $placeholder = $(this).parent().find(".elgg-menu-hover.elgg-ajax-loader");
+	$(document).on('click', ".elgg-avatar > .elgg-icon-hover-menu", function(e) {
+
+		var $icon = $(this);
+
+		var $placeholder = $icon.parent().find(".elgg-menu-hover.elgg-ajax-loader");
 
 		if ($placeholder.length) {
 			loadMenu($placeholder.attr("rel"));
 		}
 
 		// check if we've attached the menu to this element already
-		var $hovermenu = $(this).data('hovermenu') || null;
+		var $hovermenu = $icon.data('hovermenu') || null;
 
 		if (!$hovermenu) {
-			$hovermenu = $(this).parent().find(".elgg-menu-hover");
-			$(this).data('hovermenu', $hovermenu);
+			$hovermenu = $icon.parent().find(".elgg-menu-hover");
+			$icon.data('hovermenu', $hovermenu);
 		}
 
-		// close hovermenu if arrow is clicked & menu already open
-		if ($hovermenu.css('display') == "block") {
-			$hovermenu.fadeOut();
-		} else {
-			$avatar = $(this).closest(".elgg-avatar");
-
-			// @todo Use jQuery-ui position library instead -- much simpler
-			var offset = $avatar.offset();
-			var top = $avatar.height() + 7 + offset.top + 'px';
-			var left = $avatar.width() - 45 + offset.left + 'px';
-
-			$hovermenu.appendTo('body')
-					.css('position', 'absolute')
-					.css("top", top)
-					.css("left", left)
-					.fadeIn('normal');
-		}
-
-		// hide any other open hover menus
-		$(".elgg-menu-hover:visible").not($hovermenu).fadeOut();
+		require(['elgg/popup'], function(popup) {
+			if ($hovermenu.is(':visible')) {
+				// close hovermenu if arrow is clicked & menu already open
+				popup.close($hovermenu);
+			} else {
+				popup.open($icon, $hovermenu, {
+					'my': 'left top',
+					'at': 'right-15px bottom',
+					'of': $icon.closest(".elgg-avatar"),
+					'collision': 'fit fit'
+				});
+			}
+		});
 	});
 
-	// hide avatar menu when user clicks elsewhere
-	$(document).click(function(event) {
-		if ($(event.target).parents(".elgg-avatar").length === 0) {
-			$(".elgg-menu-hover").fadeOut();
-		}
-	});
 };
 
 /**
- * Calls a confirm() and prevents default if denied.
+ * Calls a confirm() and returns false if denied.
  *
  * @param {Object} e
  * @return void
@@ -302,7 +238,7 @@ elgg.ui.initHoverMenu = function(parent) {
 elgg.ui.requiresConfirmation = function(e) {
 	var confirmText = $(this).data('confirm') || elgg.echo('question:areyousure');
 	if (!confirm(confirmText)) {
-		e.preventDefault();
+		return false;
 	}
 };
 
@@ -337,45 +273,15 @@ elgg.ui.loginHandler = function(hook, type, params, options) {
  * @return void
  * @requires jqueryui.datepicker
  */
-elgg.ui.initDatePicker = function() {
-	function loadDatePicker() {
-		$('.elgg-input-date').datepicker({
-			// ISO-8601
-			dateFormat: 'yy-mm-dd',
-			onSelect: function(dateText) {
-				if ($(this).is('.elgg-input-timestamp')) {
-					// convert to unix timestamp
-					var dateParts = dateText.split("-");
-					var timestamp = Date.UTC(dateParts[0], dateParts[1] - 1, dateParts[2]);
-					timestamp = timestamp / 1000;
-
-					var id = $(this).attr('id');
-					$('input[name="' + id + '"]').val(timestamp);
-				}
-			},
-			nextText: '&#xBB;',
-			prevText: '&#xAB;',
-			changeMonth: true,
-			changeYear: true
-		});
-	}
-
-	if (!$('.elgg-input-date').length) {
+elgg.ui.initDatePicker = function () {
+	var selector = '.elgg-input-date:not([data-datepicker-opts])';
+	if (!$(selector).length) {
 		return;
 	}
-
-	if (elgg.get_language() == 'en') {
-		loadDatePicker();
-	} else {
-		// load language first
-		elgg.get({
-			url: elgg.config.wwwroot + 'vendors/jquery/i18n/jquery.ui.datepicker-'+ elgg.get_language() +'.js',
-			dataType: "script",
-			cache: true,
-			success: loadDatePicker,
-			error: loadDatePicker // english language is already loaded.
-		});
-	}
+	elgg.deprecated_notice('elgg.ui.initDatePicker() has been deprecated. Use input/date AMD module instead', '2.1');
+	require(['input/date'], function (datepicker) {
+		datepicker.init(selector);
+	});
 };
 
 /**
@@ -386,8 +292,10 @@ elgg.ui.initDatePicker = function() {
  * name is remove_friend, you should call this function with "remove-friend" instead.
  */
 elgg.ui.registerTogglableMenuItems = function(menuItemNameA, menuItemNameB) {
+
 	// Handles clicking the first button.
-	$('.elgg-menu-item-' + menuItemNameA + ' a').live('click', function() {
+	$(document).off('click.togglable', '.elgg-menu-item-' + menuItemNameA + ' a')
+			.on('click.togglable', '.elgg-menu-item-' + menuItemNameA + ' a', function() {
 		var $menu = $(this).closest('.elgg-menu');
 
 		// Be optimistic about success
@@ -412,7 +320,8 @@ elgg.ui.registerTogglableMenuItems = function(menuItemNameA, menuItemNameB) {
 	});
 
 	// Handles clicking the second button
-	$('.elgg-menu-item-' + menuItemNameB + ' a').live('click', function() {
+	$(document).off('click.togglable', '.elgg-menu-item-' + menuItemNameB + ' a')
+			.on('click.togglable', '.elgg-menu-item-' + menuItemNameB + ' a', function() {
 		var $menu = $(this).closest('.elgg-menu');
 
 		// Be optimistic about success
@@ -471,7 +380,7 @@ elgg.ui.initAccessInputs = function () {
 			updateMembersonlyNote();
 			$select.change(updateMembersonlyNote);
 		}
-                
+
 		if (commentCount) {
 			$select.change(function(e) {
 				if ($(this).val() != originalValue) {
@@ -485,6 +394,4 @@ elgg.ui.initAccessInputs = function () {
 };
 
 elgg.register_hook_handler('init', 'system', elgg.ui.init);
-elgg.register_hook_handler('init', 'system', elgg.ui.initDatePicker);
 elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.loginHandler);
-elgg.ui.registerTogglableMenuItems('add-friend', 'remove-friend');

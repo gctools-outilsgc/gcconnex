@@ -1,138 +1,9 @@
 <?php
 /**
  * Procedural code for creating, loading, and modifying \ElggEntity objects.
- *
- * @package Elgg.Core
- * @subpackage DataModel.Entities
  */
 
-/**
- * Cache entities in memory once loaded.
- *
- * @global \ElggEntity[] $ENTITY_CACHE
- * @access private
- */
-global $ENTITY_CACHE;
-$ENTITY_CACHE = array();
-
-/**
- * GUIDs of entities banned from the entity cache (during this request)
- *
- * @global array $ENTITY_CACHE_DISABLED_GUIDS
- * @access private
- */
-global $ENTITY_CACHE_DISABLED_GUIDS;
-$ENTITY_CACHE_DISABLED_GUIDS = array();
-
-/**
- * Remove this entity from the entity cache and make sure it is not re-added
- *
- * @param int $guid The entity guid
- *
- * @access private
- * @todo this is a workaround until #5604 can be implemented
- */
-function _elgg_disable_caching_for_entity($guid) {
-	global $ENTITY_CACHE_DISABLED_GUIDS;
-
-	_elgg_invalidate_cache_for_entity($guid);
-	$ENTITY_CACHE_DISABLED_GUIDS[$guid] = true;
-}
-
-/**
- * Allow this entity to be stored in the entity cache
- *
- * @param int $guid The entity guid
- *
- * @access private
- */
-function _elgg_enable_caching_for_entity($guid) {
-	global $ENTITY_CACHE_DISABLED_GUIDS;
-
-	unset($ENTITY_CACHE_DISABLED_GUIDS[$guid]);
-}
-
-/**
- * Invalidate this class's entry in the cache.
- *
- * @param int $guid The entity guid
- *
- * @return void
- * @access private
- */
-function _elgg_invalidate_cache_for_entity($guid) {
-	global $ENTITY_CACHE;
-
-	$guid = (int)$guid;
-
-	if (isset($ENTITY_CACHE[$guid])) {
-		unset($ENTITY_CACHE[$guid]);
-
-		// Purge separate metadata cache. Original idea was to do in entity destructor, but that would
-		// have caused a bunch of unnecessary purges at every shutdown. Doing it this way we have no way
-		// to know that the expunged entity will be GCed (might be another reference living), but that's
-		// OK; the metadata will reload if necessary.
-		_elgg_services()->metadataCache->clear($guid);
-	}
-}
-
-/**
- * Cache an entity.
- *
- * Stores an entity in $ENTITY_CACHE;
- *
- * @param \ElggEntity $entity Entity to cache
- *
- * @return void
- * @see _elgg_retrieve_cached_entity()
- * @see _elgg_invalidate_cache_for_entity()
- * @access private
- * @todo Use an \ElggCache object
- */
-function _elgg_cache_entity(\ElggEntity $entity) {
-	global $ENTITY_CACHE, $ENTITY_CACHE_DISABLED_GUIDS;
-
-	// Don't cache non-plugin entities while access control is off, otherwise they could be
-	// exposed to users who shouldn't see them when control is re-enabled.
-	if (!($entity instanceof \ElggPlugin) && elgg_get_ignore_access()) {
-		return;
-	}
-
-	$guid = $entity->getGUID();
-	if (isset($ENTITY_CACHE_DISABLED_GUIDS[$guid])) {
-		return;
-	}
-
-	// Don't store too many or we'll have memory problems
-	// @todo Pick a less arbitrary limit
-	if (count($ENTITY_CACHE) > 256) {
-		_elgg_invalidate_cache_for_entity(array_rand($ENTITY_CACHE));
-	}
-
-	$ENTITY_CACHE[$guid] = $entity;
-}
-
-/**
- * Retrieve a entity from the cache.
- *
- * @param int $guid The guid
- *
- * @return \ElggEntity|bool false if entity not cached, or not fully loaded
- * @see _elgg_cache_entity()
- * @see _elgg_invalidate_cache_for_entity()
- * @access private
- */
-function _elgg_retrieve_cached_entity($guid) {
-	global $ENTITY_CACHE;
-
-	if (isset($ENTITY_CACHE[$guid])) {
-		if ($ENTITY_CACHE[$guid]->isFullyLoaded()) {
-			return $ENTITY_CACHE[$guid];
-		}
-	}
-
-	return false;
-}
+use Elgg\Database\EntityTable\UserFetchFailureException;
 
 /**
  * Return the id for a given subtype.
@@ -152,7 +23,6 @@ function _elgg_retrieve_cached_entity($guid) {
  *
  * @return int Subtype ID
  * @see get_subtype_from_id()
- * @access private
  */
 function get_subtype_id($type, $subtype) {
 	return _elgg_services()->subtypeTable->getId($type, $subtype);
@@ -171,28 +41,6 @@ function get_subtype_from_id($subtype_id) {
 }
 
 /**
- * Retrieve subtype from the cache.
- *
- * @param string $type
- * @param string $subtype
- * @return \stdClass|null
- *
- * @access private
- */
-function _elgg_retrieve_cached_subtype($type, $subtype) {
-	return _elgg_services()->subtypeTable->retrieveFromCache($type, $subtype);
-}
-
-/**
- * Fetch all suptypes from DB to local cache.
- *
- * @access private
- */
-function _elgg_populate_subtype_cache() {
-	return _elgg_services()->subtypeTable->populateCache();
-}
-
-/**
  * Return the class name for a registered type and subtype.
  *
  * Entities can be registered to always be loaded as a certain class
@@ -205,7 +53,6 @@ function _elgg_populate_subtype_cache() {
  * @return string|null a class name or null
  * @see get_subtype_from_id()
  * @see get_subtype_class_from_id()
- * @access private
  */
 function get_subtype_class($type, $subtype) {
 	return _elgg_services()->subtypeTable->getClass($type, $subtype);
@@ -295,44 +142,19 @@ function update_subtype($type, $subtype, $class = '') {
  * @param string $subtype        The subtype of the entity we want to create (default: 'all')
  *
  * @return bool
+ * @deprecated 2.2
  */
 function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'all', $subtype = 'all') {
-	$container_guid = (int)$container_guid;
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggEntity::canWriteToContainer()', '2.2');
 	if (!$container_guid) {
 		$container_guid = elgg_get_page_owner_guid();
 	}
-
 	$container = get_entity($container_guid);
-
-	$user_guid = (int)$user_guid;
-	if ($user_guid == 0) {
-		$user = elgg_get_logged_in_user_entity();
-		$user_guid = elgg_get_logged_in_user_guid();
-	} else {
-		$user = get_user($user_guid);
-		if (!$user) {
-			return false;
-		}
+	if (!$container) {
+		return false;
 	}
 
-	$return = false;
-	if ($container) {
-		// If the user can edit the container, they can also write to it
-		if ($container->canEdit($user_guid)) {
-			$return = true;
-		}
-	}
-
-	// See if anyone else has anything to say
-	return elgg_trigger_plugin_hook(
-			'container_permissions_check',
-			$type,
-			array(
-				'container' => $container,
-				'user' => $user,
-				'subtype' => $subtype
-			),
-			$return);
+	return $container->canWriteToContainer($user_guid, $type, $subtype);
 }
 
 /**
@@ -483,7 +305,17 @@ function elgg_enable_entity($guid, $recursive = true) {
  *				Avoid setting this option without a full understanding of the underlying
  *				SQL query Elgg creates.
  *
- * @return mixed If count, int. If not count, array. false on errors.
+ *  batch => bool (false) If set to true, an Elgg\BatchResult object will be returned instead of an array.
+ *           Since 2.3
+ *
+ *  batch_inc_offset => bool (true) If "batch" is used, this tells the batch to increment the offset
+ *                      on each fetch. This must be set to false if you delete the batched results.
+ *
+ *  batch_size => int (25) If "batch" is used, this is the number of entities/rows to pull in before
+ *                requesting more.
+ *
+ * @return \ElggEntity[]|int|mixed If count, int. Otherwise an array or an Elgg\BatchResult. false on errors.
+ *
  * @since 1.7.0
  * @see elgg_get_entities_from_metadata()
  * @see elgg_get_entities_from_relationship()
@@ -493,36 +325,6 @@ function elgg_enable_entity($guid, $recursive = true) {
  */
 function elgg_get_entities(array $options = array()) {
 	return _elgg_services()->entityTable->getEntities($options);
-}
-
-/**
- * Return entities from an SQL query generated by elgg_get_entities.
- *
- * @param string    $sql
- * @param \ElggBatch $batch
- * @return \ElggEntity[]
- *
- * @access private
- * @throws LogicException
- */
-function _elgg_fetch_entities_from_sql($sql, \ElggBatch $batch = null) {
-	return _elgg_services()->entityTable->fetchFromSql($sql, $batch);
-}
-
-/**
- * Returns SQL where clause for type and subtype on main entity table
- *
- * @param string     $table    Entity table prefix as defined in SELECT...FROM entities $table
- * @param null|array $types    Array of types or null if none.
- * @param null|array $subtypes Array of subtypes or null if none
- * @param null|array $pairs    Array of pairs of types and subtypes
- *
- * @return false|string
- * @since 1.7.0
- * @access private
- */
-function _elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pairs) {
-	return _elgg_services()->entityTable->getEntityTypeSubtypeWhereSql($table, $types, $subtypes, $pairs);
 }
 
 /**
@@ -574,7 +376,8 @@ function _elgg_get_entity_time_where_sql($table, $time_created_upper = null,
  * @param array    $options Any options from $getter options plus:
  *                   item_view => STR Optional. Alternative view used to render list items
  *                   full_view => BOOL Display full view of entities (default: false)
- *                   list_type => STR 'list' or 'gallery'
+ *                   list_type => STR 'list', 'gallery', or 'table'
+ *                   columns => ARR instances of Elgg\Views\TableColumn if list_type is "table"
  *                   list_type_toggle => BOOL Display gallery / list switch
  *                   pagination => BOOL Display pagination links
  *                   no_results => STR|Closure Message to display when there are no entities
@@ -590,8 +393,7 @@ function _elgg_get_entity_time_where_sql($table, $time_created_upper = null,
 function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entities',
 	$viewer = 'elgg_view_entity_list') {
 
-	global $autofeed;
-	$autofeed = true;
+	elgg_register_rss_link();
 
 	$offset_key = isset($options['offset_key']) ? $options['offset_key'] : 'offset';
 
@@ -853,8 +655,7 @@ function is_registered_entity_type($type, $subtype = null) {
  * @since 1.7.0
  */
 function elgg_list_registered_entities(array $options = array()) {
-	global $autofeed;
-	$autofeed = true;
+	elgg_register_rss_link();
 
 	$defaults = array(
 		'full_view' => false,
@@ -951,11 +752,21 @@ function elgg_instanceof($entity, $type = null, $subtype = null, $class = null) 
  * @param int $guid   Entity annotation|relationship action carried out on
  * @param int $posted Timestamp of last action
  *
- * @return bool
+ * @return int|false Timestamp or false on failure
  * @access private
+ * @deprecated 2.3
  */
 function update_entity_last_action($guid, $posted = null) {
-	return _elgg_services()->entityTable->updateLastAction($guid, $posted);
+	elgg_deprecated_notice(__FUNCTION__ . ' has been deprecated. Refrain from updating last action timestamp manually', '2.3');
+
+	$result = false;
+	$ia = elgg_set_ignore_access(true);
+	$entity = get_entity($guid);
+	if ($entity) {
+		$result = $entity->updateLastAction($posted);
+	}
+	elgg_set_ignore_access($ia);
+	return $result;
 }
 
 /**

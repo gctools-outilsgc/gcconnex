@@ -79,7 +79,7 @@ function pages_prepare_parent_breadcrumbs($page) {
 
 /**
  * Produce the navigation tree
- * 
+ *
  * @param ElggEntity $container Container entity for the pages
  *
  * @return array
@@ -146,7 +146,7 @@ function pages_get_navigation_tree($container) {
 
 /**
  * Register the navigation menu
- * 
+ *
  * @param ElggEntity $container Container entity for the pages
  */
 function pages_register_navigation_tree($container) {
@@ -157,7 +157,7 @@ function pages_register_navigation_tree($container) {
 				'name' => $page['guid'],
 				'text' => $page['title'],
 				'href' => $page['url'],
-				'parent_name' => $page['parent_guid'],
+				'parent_name' => elgg_extract('parent_guid', $page),
 			));
 		}
 	}

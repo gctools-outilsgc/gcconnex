@@ -13,10 +13,9 @@
  * - engine/settings.php (See {@link settings.example.php})
  *
  * Upon system boot, all values in dbprefix_config are read into $CONFIG.
- *
- * @package Elgg.Core
- * @subpackage Configuration
  */
+
+use Elgg\Filesystem\Directory;
 
 /**
  * Get the URL for the current (or specified) site
@@ -50,13 +49,39 @@ function elgg_get_data_path() {
 }
 
 /**
+ * Get the cache directory path for this installation.
+ *
+ * If not set in settings.php, the data path will be returned.
+ *
+ * @return string
+ */
+function elgg_get_cache_path() {
+	return _elgg_services()->config->getCachePath();
+}
+
+/**
  * Get the root directory path for this installation
+ * 
+ * Note: This is not the same as the Elgg root! In the Elgg 1.x series, Elgg
+ * was always at the install root, but as of 2.0, Elgg can be installed as a
+ * composer dependency, so you cannot assume that it the install root anymore.
  *
  * @return string
  * @since 1.8.0
  */
 function elgg_get_root_path() {
-	return _elgg_services()->config->getRootPath();
+	return Directory\Local::root()->getPath('/');
+}
+
+/**
+ * /path/to/elgg/engine
+ * 
+ * No trailing slash
+ * 
+ * @return string
+ */
+function elgg_get_engine_path() {
+	return dirname(__DIR__);
 }
 
 /**
@@ -69,6 +94,14 @@ function elgg_get_root_path() {
  * @since 1.8.0
  */
 function elgg_get_config($name, $site_guid = 0) {
+	if ($name === 'siteemail') {
+		$msg = 'The config value "siteemail" is deprecated. Use elgg_get_site_entity()->email';
+		elgg_deprecated_notice($msg, '2.1');
+	} else if ($name == 'icon_sizes') {
+		$msg = 'The config value "icon_sizes" is deprecated. Use elgg_get_icon_sizes()';
+		elgg_deprecated_notice($msg, '2.2');
+	}
+
 	return _elgg_services()->config->get($name, $site_guid);
 }
 
@@ -237,140 +270,23 @@ function get_config($name, $site_guid = 0) {
 }
 
 /**
- * Loads configuration related to this site
- *
- * This runs on engine boot and loads from the config database table and the 
- * site entity. It runs after the application configuration is loaded by
- * _elgg_load_application_config().
- * 
- * @see _elgg_engine_boot()
- * 
- * @access private
- */
-function _elgg_load_site_config() {
-	global $CONFIG;
-
-	$CONFIG->site_guid = (int) datalist_get('default_site');
-	$CONFIG->site_id = $CONFIG->site_guid;
-	$CONFIG->site = _elgg_services()->entityTable->get($CONFIG->site_guid, 'site');
-	if (!$CONFIG->site) {
-		throw new \InstallationException("Unable to handle this request. This site is not configured or the database is down.");
-	}
-
-	$CONFIG->wwwroot = $CONFIG->site->url;
-	$CONFIG->sitename = $CONFIG->site->name;
-	$CONFIG->sitedescription = $CONFIG->site->description;
-	$CONFIG->siteemail = $CONFIG->site->email;
-	$CONFIG->url = $CONFIG->wwwroot;
-
-	_elgg_services()->configTable->loadAll();
-
-	// gives hint to elgg_get_config function how to approach missing values
-	$CONFIG->site_config_loaded = true;
-
-	if (!empty($CONFIG->debug)) {
-		_elgg_services()->logger->setLevel($CONFIG->debug);
-		_elgg_services()->logger->setDisplay(true);
-	}
-}
-
-/**
- * Loads configuration related to Elgg as an application
- *
- * This runs on the engine boot and loads from the datalists database table.
- * 
- * @see _elgg_engine_boot()
- * 
- * @access private
- */
-function _elgg_load_application_config() {
-	global $CONFIG;
-
-	$install_root = str_replace("\\", "/", dirname(dirname(dirname(__FILE__))));
-	$defaults = array(
-		'path' => "$install_root/",
-		'view_path' => "$install_root/views/",
-		'plugins_path' => "$install_root/mod/",
-		'language' => 'en',
-
-		// compatibility with old names for plugins not using elgg_get_config()
-		'viewpath' => "$install_root/views/",
-		'pluginspath' => "$install_root/mod/",
-	);
-
-	foreach ($defaults as $name => $value) {
-		if (empty($CONFIG->$name)) {
-			$CONFIG->$name = $value;
-		}
-	}
-
-	// set cookie values for session and remember me
-	if (!isset($CONFIG->cookies)) {
-		$CONFIG->cookies = array();
-	}
-	if (!isset($CONFIG->cookies['session'])) {
-		$CONFIG->cookies['session'] = array();
-	}
-	$session_defaults = session_get_cookie_params();
-	$session_defaults['name'] = 'Elgg';
-	$CONFIG->cookies['session'] = array_merge($session_defaults, $CONFIG->cookies['session']);
-	if (!isset($CONFIG->cookies['remember_me'])) {
-		$CONFIG->cookies['remember_me'] = array();
-	}
-	$session_defaults['name'] = 'elggperm';
-	$session_defaults['expire'] = strtotime("+30 days");
-	$CONFIG->cookies['remember_me'] = array_merge($session_defaults, $CONFIG->cookies['remember_me']);
-
-	if (!is_memcache_available()) {
-		_elgg_services()->datalist->loadAll();
-	}
-
-	// allow sites to set dataroot and simplecache_enabled in settings.php
-	if (isset($CONFIG->dataroot)) {
-		$CONFIG->dataroot = sanitise_filepath($CONFIG->dataroot);
-		$CONFIG->dataroot_in_settings = true;
-	} else {
-		$dataroot = datalist_get('dataroot');
-		if (!empty($dataroot)) {
-			$CONFIG->dataroot = $dataroot;
-		}
-		$CONFIG->dataroot_in_settings = false;
-	}
-	if (isset($CONFIG->simplecache_enabled)) {
-		$CONFIG->simplecache_enabled_in_settings = true;
-	} else {
-		$simplecache_enabled = datalist_get('simplecache_enabled');
-		if ($simplecache_enabled !== false) {
-			$CONFIG->simplecache_enabled = $simplecache_enabled;
-		} else {
-			$CONFIG->simplecache_enabled = 1;
-		}
-		$CONFIG->simplecache_enabled_in_settings = false;
-	}
-
-	$system_cache_enabled = datalist_get('system_cache_enabled');
-	if ($system_cache_enabled !== false) {
-		$CONFIG->system_cache_enabled = $system_cache_enabled;
-	} else {
-		$CONFIG->system_cache_enabled = 1;
-	}
-
-	// needs to be set before system, init for links in html head
-	$CONFIG->lastcache = (int)datalist_get("simplecache_lastupdate");
-
-	$CONFIG->i18n_loaded_from_cache = false;
-
-	// this must be synced with the enum for the entities table
-	$CONFIG->entity_types = array('group', 'object', 'site', 'user');
-}
-
-/**
  * @access private
  */
 function _elgg_config_test($hook, $type, $tests) {
-	global $CONFIG;
-	$tests[] = "{$CONFIG->path}engine/tests/ElggCoreConfigTest.php";
+	$tests[] = \Elgg\Application::elggDir()->getPath("engine/tests/ElggCoreConfigTest.php");
 	return $tests;
+}
+
+/**
+ * Returns a configuration array of icon sizes
+ *
+ * @param string $entity_type    Entity type
+ * @param string $entity_subtype Entity subtype
+ * @param string $type           The name of the icon. e.g., 'icon', 'cover_photo'
+ * @return array
+ */
+function elgg_get_icon_sizes($entity_type = null, $entity_subtype = null, $type = 'icon') {
+	return _elgg_services()->iconService->getSizes($entity_type, $entity_subtype, $type);
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
