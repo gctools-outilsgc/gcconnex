@@ -189,7 +189,7 @@ function group_navigation_handler($hook, $type, $value, $params) {
 
 		foreach ($value as $key => $item) {
 
-			if ($item->getName() === 'activity' || $item->getName() === 'more' || $item->getName() === 'photo_albums' || $item->getName() === 'event_calendar' || $item->getName() === 'polls') continue;
+			if ($item->getName() === 'activity' || $item->getName() === 'more' || $item->getName() === 'photo_albums' || $item->getName() === 'event_calendar' || $item->getName() === 'polls' || $item->getName() === 'pages') continue;
 
 			if ($item->getName() === 'discussion') {
 				$url = "{$base_url}{$item->getName()}/owner/{$group_id}";

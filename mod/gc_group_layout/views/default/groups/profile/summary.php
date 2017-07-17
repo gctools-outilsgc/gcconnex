@@ -59,11 +59,19 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
                 	// cyu - check to see if the user is a gsa-crawler, then display in (both) languages
                 	if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false) {
                 		
-                		$json_name = json_decode($group->name,true);
+                		/*$json_name = json_decode($group->name,true);
                 		if (json_last_error() === JSON_ERROR_NONE)
                 			$group_name = "{$json_name['en']} / {$json_name['fr']}";
                 		else
-                			$group_name = $group->name;
+                			$group_name = $group->name;*/
+
+                		$group_name_en = gc_explode_translation($group->name, 'en');
+                		$group_name_fr = gc_explode_translation($group->name, 'fr');
+
+                		if ($group_name_en !== $group_name_fr)
+                			$group_name = "{$group_name_en} / {$group_name_fr}"; 
+                		else
+                			$group_name = $group_name_en;
 
                 	} else {
 
