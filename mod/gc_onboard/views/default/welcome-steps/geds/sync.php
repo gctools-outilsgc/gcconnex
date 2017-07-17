@@ -25,7 +25,7 @@ $loading = elgg_view('output/img', array(
 ?>
 
 <div class="text-center" id="syncError" style="min-height:46px;">
-    <button type="button" id="onboard-info" class="btn btn-primary btn-lg">
+    <button type="button" id="gedsProfile" class="btn btn-primary btn-lg">
         <?php echo elgg_echo("geds:button"); ?>
     </button>
 </div>
