@@ -157,7 +157,7 @@ $('#fetch').on('click', function(){
 
                       //if(value2.visibility == 1){
                         $('#'+value.id+'-en').append("<li class='folder'><a onclick='displayFolder(this)' href='#"+ value2.id + "-en'><div>"  +value2.name + "</div></a></li>");
-                        $('#results-en').append("<div class='folder-display' id='" + value2.id + "-en'><div class='heading-panel'><a class='icon-unsel' onclick='displayCategories(this)' href='#categories-en'><i class='fa fa-arrow-left fa-lg' aria-hidden='true'></i><span class='wb-inv'>"+elgg.echo('freshdesk:knowledge:explore:return')+"</a> <div><h2 class='h3'>"+value2.name+"</h2></div></div></div>");
+                        $('#results-en').append("<div class='folder-display' id='" + value2.id + "-en'><div class='heading-panel'><a class='icon-unsel' onclick='displayCategories(this)' href='#results-en'><i class='fa fa-arrow-left fa-lg' aria-hidden='true'></i><span class='wb-inv'>"+elgg.echo('freshdesk:knowledge:explore:return')+"</a> <div><h2 class='h3'>"+value2.name+"</h2></div></div></div>");
                       //}
 
                       $.ajax({
@@ -180,7 +180,7 @@ $('#fetch').on('click', function(){
                                   "-en' class='collapse article-content'>" + value3.description + " </div> </div></li>";
                                 //}
                               });
-                              list += '</ul><a onclick="displayCategories(this)" href="#categories-en" class="wb-inv">'+elgg.echo('freshdesk:knowledge:explore:return')+'</a>';
+                              list += '</ul><a onclick="displayCategories(this)" href="#results-en" class="wb-inv">'+elgg.echo('freshdesk:knowledge:explore:return')+'</a>';
                               $('#'+value2.id+"-en .article-panel").append(list);
                           }
                         });
@@ -235,7 +235,7 @@ $('#fetch').on('click', function(){
 
                         //if(value2.visibility == 1){
                           $('#'+value.id+'-fr').append("<li class='folder'><a onclick='displayFolder(this)' href='#"+ value2.id + "-fr'><div>"  +value2.name + "</div></a></li>");
-                          $('#results-fr').append("<div class='folder-display' id='" + value2.id + "-fr'><div class='heading-panel'><a class='icon-unsel' onclick='displayCategories(this)' href='#categories-fr'><i class='fa fa-arrow-left fa-lg' aria-hidden='true'></i><span class='wb-inv'>"+elgg.echo('freshdesk:knowledge:explore:return')+"</a> <div><h2 class='h3'>"+value2.name+"</h2></div></div></div>");
+                          $('#results-fr').append("<div class='folder-display' id='" + value2.id + "-fr'><div class='heading-panel'><a class='icon-unsel' onclick='displayCategories(this)' href='#results-en'><i class='fa fa-arrow-left fa-lg' aria-hidden='true'></i><span class='wb-inv'>"+elgg.echo('freshdesk:knowledge:explore:return')+"</a> <div><h2 class='h3'>"+value2.name+"</h2></div></div></div>");
                         //}
 
                         $.ajax({
@@ -258,7 +258,7 @@ $('#fetch').on('click', function(){
                                     "-fr' class='collapse article-content'>" + value3.description + " </div> </div></li>";
                                   //}
                                 });
-                                list += '</ul><a onclick="displayCategories(this)" href="#categories-fr" class="wb-inv">'+elgg.echo('freshdesk:knowledge:explore:return')+'</a>';
+                                list += '</ul><a onclick="displayCategories(this)" href="#results-en" class="wb-inv">'+elgg.echo('freshdesk:knowledge:explore:return')+'</a>';
                                 $('#'+value2.id+"-fr .article-panel").append(list);
                             }
                           });

@@ -52,6 +52,7 @@ function displayFolder(link){
 
 function displayCategories(link){
   $('.folder-display:not(:hidden)').fadeOut().parent().find('.categories').delay(500).fadeIn();
+  $('#results-en').focus();
   $('#explore-header').delay(500).fadeIn();
 }
 

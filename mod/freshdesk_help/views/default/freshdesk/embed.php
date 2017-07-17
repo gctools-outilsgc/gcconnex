@@ -61,6 +61,7 @@ if(!$lang){
  }
  main {
    margin:10px;
+   max-width:1120px;
  }
   main .btn-primary {
     background-color: #1f1f72;

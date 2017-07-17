@@ -13,12 +13,19 @@ function freshdesk_help_init() {
     elgg_extend_view("js/elgg", "js/freshdesk_help/functions");
     elgg_extend_view('css/elgg', 'freshdesk/css');
 
+    elgg_register_menu_item('site', array(
+  		'name' => 'Help',
+          'href' => "help/knowledgebase",
+          'text' => elgg_echo('contactform:help_menu_item'),
+          'priority' => 1000,
+  	));
+
 }
 
 function help_page_handler($page){
 
     switch ($page[0]) {
-  		case "knowledge":
+  		case "knowledgebase":
   			include (dirname ( __FILE__ ) . "/pages/help.php");
   			break;
 

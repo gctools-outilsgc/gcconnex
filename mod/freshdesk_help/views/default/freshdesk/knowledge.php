@@ -22,7 +22,11 @@
       'onkeyup'  => 'searchArticles(this, "'.get_current_language().'")'
     ));
 
-    echo '<span class="search-info">'.elgg_echo('freshdesk:knowledge:search:info').'</span>';
+    if((int) elgg_get_plugin_setting("portal_id", "freshdesk_help") == 2100008988){
+      echo '<span class="search-info">'.elgg_echo('freshdesk:knowledge:search:info:connex').'</span>';
+    } else {
+      echo '<span class="search-info">'.elgg_echo('freshdesk:knowledge:search:info:collab').'</span>';
+    }
     echo '<div aria-live="polite" id="filter-count"></div>';
 
     echo '<div id="searchResults"><div class="article-panel"><ul id="results-listing"></ul></div></div>';
@@ -44,6 +48,13 @@
   ?>
 
  </div>
+
+<?php echo elgg_view('contactform/contactform'); ?>
+
+
+
+
+
   <script>
    $(document).ready(function(){
 

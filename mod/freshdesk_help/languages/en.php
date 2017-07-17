@@ -1,12 +1,13 @@
 <?php
 return array(
 
-      'freshdesk:page:title' => 'Freshdesk',
+      'freshdesk:page:title' => 'Help / Contact Us',
 
       //search knowledge base
       'freshdesk:knowledge:title' => "Knowledge base",
       'freshdesk:knowledge:search:title' => "Search knowledge base",
-      'freshdesk:knowledge:search:info' => 'Search our knowledge base to find the information you are looking for. For more information vist our <a href="https://gcconnex.gctools-outilsgc.ca/en/support/home">Support Home</a>.',
+      'freshdesk:knowledge:search:info:connex' => 'Search our knowledge base to find the information you are looking for. For more information vist our <a href="https://gcconnex.gctools-outilsgc.ca/en/support/home">Support Home</a>.',
+        'freshdesk:knowledge:search:info:collab' => 'Search our knowledge base to find the information you are looking for. For more information vist our <a href="https://gccollab.gctools-outilsgc.ca/en/support/home">Support Home</a>.',
 
       'freshdesk:knowledge:explore:title' => 'Explore knowledge base',
 
@@ -25,8 +26,11 @@ return array(
 
       //elgg js doens't work the way it should in this version so loopholing through this thing
       'freshdesk:knowledge:search:results:en' => 'Showing %s results.',
-      'freshdesk:knowledge:search:results:fr' => 'Showing %s french results.',
+      'freshdesk:knowledge:search:results:fr' => 'Indication du %s des résultats.',
 
       'freshdesk:ticket:matching:en' => '%s matching articles',
-      'freshdesk:ticket:matching:fr' => '%s matching articles french',
+      'freshdesk:ticket:matching:fr' => '%s des articles correspondants',
+
+      //additional info
+      'freshdesk:additionalinfo' => 'Additional Information',
     );
