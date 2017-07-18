@@ -60,7 +60,9 @@ if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false) {
       if (!($page_entity instanceof ElggEntity))
         $page_entity = get_entity($current_url[count($current_url) - 2]);
 
-      $page_title = (gc_explode_translation($page_entity->title, 'en') !== gc_explode_translation($page_entity->title, 'fr')) ? gc_explode_translation($page_entity->title, 'en').' / '.gc_explode_translation($page_entity->title, 'fr') : gc_explode_translation($page_entity->title, 'en');
+      $page_title = (gc_explode_translation($page_entity->title, 'en') !== gc_explode_translation($page_entity->title, 'fr')) 
+        ? gc_explode_translation($page_entity->title, 'en').' / '.gc_explode_translation($page_entity->title, 'fr') 
+        : gc_explode_translation($page_entity->title, 'en');
     }
 
   }
@@ -130,11 +132,13 @@ echo elgg_view_deprecated('metatags', array(), "Use the 'head', 'page' plugin ho
 ?>
 
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> -->
-<link rel="stylesheet" href="<?php echo $site_url ?>mod/wet4/views/default/css/awesome/font-awesome.min.css" type="text/css" />
-<meta charset="utf-8" />
+
 <!-- Web Experience Toolkit (WET) / Boîte à outils de l'expérience Web (BOEW)
 wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licence-fr.html -->
+<meta charset="utf-8" />
 <meta content="width=device-width, initial-scale=1" name="viewport" />
+<link rel="stylesheet" href="<?php echo $site_url ?>mod/wet4/views/default/css/awesome/font-awesome.min.css" type="text/css" />
+
 <!-- Meta data -->
 <?php
 

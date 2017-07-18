@@ -102,8 +102,14 @@ function strip_content_hyperlinks_handler($hook, $type, $return, $params) {
 	if (!in_array($context, $filter_entity))
 		return;
 
-	$url = explode('/',$_SERVER['REQUEST_URI']);
-	$entity = get_entity($url[4]);
+
+	$page_url = get_sanitized_url();
+	// url: /file/view/1102
+	$entity = get_entity($page_url[2]);
+
+	// if $entity is not valid, then just don't do anything, to avoid error
+	if (!($entity instanceof ElggEntity))
+		return;
 
 	if (isJsonString($entity->description)) {
 		$json = json_decode($entity->description, true);
@@ -148,15 +154,22 @@ function strip_content_hyperlinks_handler($hook, $type, $return, $params) {
 function redirect_group_url($hook, $type, $url, $params) {
 	// from: 192.168.xx.xx/gcconnex/groups/profile/1111/group-name
 	// to: 192.168.xx.xx/gcconnex/groups/profile/1111/
-	$base_url = elgg_get_site_entity()->getURL();
-	$stripped_url = str_replace($base_url, "", $_SERVER['REQUEST_URI']);
-	$url = explode('/', $stripped_url);
-
-	if (strpos($_SERVER['REQUEST_URI'],"/groups/profile/") !== false)
+	if (strpos($_SERVER['REQUEST_URI'],"/groups/profile/") !== false && sizeof(get_sanitized_url()) > 3)
 	{
-		if (sizeof($url) > 5)
-			forward("groups/profile/{$params['entity']->guid}");
+		forward("groups/profile/{$params['entity']->guid}");
 	}
+}
+
+
+function get_sanitized_url() {
+
+	$base_site_url = str_replace('/', ' ', elgg_get_site_entity()->getURL());
+	$current_url = str_replace('/', ' ', ((isset($_SERVER['HTTPS']) ? "https" : "http") . "://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}"));
+	$current_url = str_replace($base_site_url, '', $current_url);
+	$current_url = str_replace(' ', '/', $current_url);
+	$current_url = explode("/", $current_url);
+
+	return $current_url;
 }
 
 /**
@@ -164,9 +177,7 @@ function redirect_group_url($hook, $type, $url, $params) {
  * does not cover: bookmarks, missions, images, polls, wire, event
  */
 function redirect_content_url($hook, $type, $url, $params) {
-	$base_url = elgg_get_site_entity()->getURL();
-	$stripped_url = str_replace($base_url, "", $_SERVER['REQUEST_URI']);
-	$url = explode('/', $stripped_url);
+
 	if (strpos($_SERVER['REQUEST_URI'],"/view/") !== false)
 	{
 		$subtype = $params['entity']->getSubtype();
@@ -174,7 +185,7 @@ function redirect_content_url($hook, $type, $url, $params) {
 		if ($subtype === 'page_top') $subtype = 'pages';
 		if ($subtype === 'idea') $subtype = 'ideas';
 
-		if (sizeof($url) > 5)
+		if (sizeof(get_sanitized_url()) > 3)
 			forward("{$subtype}/view/{$params['entity']->guid}");
 	}
 }
@@ -189,7 +200,8 @@ function group_navigation_handler($hook, $type, $value, $params) {
 
 		foreach ($value as $key => $item) {
 
-			if ($item->getName() === 'activity' || $item->getName() === 'more' || $item->getName() === 'photo_albums' || $item->getName() === 'event_calendar' || $item->getName() === 'polls' || $item->getName() === 'pages') continue;
+			if ($item->getName() === 'activity' || $item->getName() === 'more' || $item->getName() === 'photo_albums' || $item->getName() === 'event_calendar' || $item->getName() === 'polls' || $item->getName() === 'pages') 
+				continue;
 
 			if ($item->getName() === 'discussion') {
 				$url = "{$base_url}{$item->getName()}/owner/{$group_id}";
@@ -307,7 +319,8 @@ function elgg_entities_list_handler($hook, $type, $value, $params) {
 	
 	// brief view: display content (excerpt)
 	// full view: content does not exist (it will display the title link again)
-	if (!$value['content'] && get_context() !== 'members' && get_context() !== 'polls' && get_context() !== 'event_calendar' && get_context() !== 'file' && get_context() !== 'groups') return;
+	if (!$value['content'] && get_context() !== 'members' && get_context() !== 'polls' && get_context() !== 'event_calendar' && get_context() !== 'file' && get_context() !== 'groups') 
+		return;
 
 	$context = get_context();
 	switch ($context) {
@@ -361,7 +374,7 @@ function elgg_site_menu_handler($hook, $type, $menu, $params) {
 	$menu_item = "";
 	foreach ($menu as $key => $item) {
 
-		if ($item->getName() === 'translation_editor' || $item->getName() === 'new_folder' || $item->getName() === 'questions')
+		if ($item->getName() === 'translation_editor' || $item->getName() === 'new_folder' || $item->getName() === 'questions' || $item->getName() === 'polls')
 			continue;
 
 		if ($item->getName() === 'groups') {
