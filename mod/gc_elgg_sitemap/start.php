@@ -4,7 +4,7 @@ elgg_register_event_handler('init','system','gc_elgg_sitemap_init');
 
 
 function gc_elgg_sitemap_init() {
-//elgg_register_plugin_hook_handler('register','menu:owner_block','gcforums_owner_block_menu');
+
 	// display text only if user agent string is gsa-crawler (or whatever is set)
 	if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false) {
 
@@ -265,7 +265,6 @@ function isJsonString($string) {
 
 
 function elgg_full_entities_view_handler($hook, $type, $value, $params) {
-//echo "full entities view thing // {$value['entity']->guid} /// ".print_r($value['entity']);
 
 	$description = "";
 
@@ -273,22 +272,22 @@ function elgg_full_entities_view_handler($hook, $type, $value, $params) {
 
 		case 'event_calendar':
 			if (isJsonString($value['entity']->long_description)) {
-				error_log(">>>>>>>>>>>>>>>>>>>   event calendar json");
+				
 				$description_array = json_decode($value['entity']->long_description, true);
 				$description .= "<p> {$description_array['en']} </p> <p> {$description_array['fr']} </p>";
 			} else {
-				error_log(">>>>>>>>>>>>>>>>>>>   event calendar non json");
+				
 				$description .= "<p> {$value['entity']->long_description} </p> <p> {$value['entity']->long_description2} </p>";
 			}
 			break;
 
 		default:
 			if (isJsonString($value['entity']->description)) {
-				error_log(">>>>>>>>>>>>>>>>>>>   other... json");
+				
 				$description_array = json_decode($value['entity']->description, true);
 				$description .= "<p> {$description_array['en']} </p> <p> {$description_array['fr']} </p>";
 			} else {
-				error_log(">>>>>>>>>>>>>>>>>>>   other... non json");
+				
 				$description .= "<p> {$value['entity']->description} </p> <p> {$value['entity']->description2} </p>";
 			}
 	}
@@ -306,7 +305,6 @@ function elgg_thewire_list_handler($hook, $type, $value, $params) {
 
 function elgg_entities_list_handler($hook, $type, $value, $params) {
 	
-//echo "context: ".get_context();
 	// brief view: display content (excerpt)
 	// full view: content does not exist (it will display the title link again)
 	if (!$value['content'] && get_context() !== 'members' && get_context() !== 'polls' && get_context() !== 'event_calendar' && get_context() !== 'file' && get_context() !== 'groups') return;

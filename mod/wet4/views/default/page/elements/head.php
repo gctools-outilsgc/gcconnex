@@ -41,21 +41,42 @@ $gc_language = get_current_language();
 $elgg_entity = $my_page_entity;
 
 
-// check if this is a (user or group) profile
-if ($elgg_entity instanceof ElggUser || $elgg_entity instanceof ElggGroup) {
+if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false) {
+  // check if this is a (user or group) profile
+  if ($elgg_entity instanceof ElggUser || $elgg_entity instanceof ElggGroup) {
 
-  // check if this is a user or a group (TODO: displays the title twice if either language is not present)
-  $page_title = ($elgg_entity instanceof ElggUser) ? $elgg_entity->name : gc_explode_translation($elgg_entity->name, 'en').' / '.gc_explode_translation($elgg_entity->name, 'fr');
+    // check if this is a user or a group (TODO: displays the title twice if either language is not present)
+    $page_title = ($elgg_entity instanceof ElggUser) ? $elgg_entity->name : gc_explode_translation($elgg_entity->name, 'en').' / '.gc_explode_translation($elgg_entity->name, 'fr');
 
-} else { 
+  } else { 
 
-  $page_title = gc_explode_translation($elgg_entity->title, 'en').' / '.gc_explode_translation($elgg_entity->title, 'fr');
-  // if there is no title (meaning only a slash is present)
-  if (trim($page_title) === '/') {
-    $current_url = explode('/', $_SERVER['REQUEST_URI']);
-    $page_entity = get_entity($current_url[count($current_url) - 1]);
+    $page_title = gc_explode_translation($elgg_entity->title, 'en').' / '.gc_explode_translation($elgg_entity->title, 'fr');
+    // if there is no title (meaning only a slash is present) because there is no way to retrieve the entity
+    if (trim($page_title) === '/') {
+      $current_url = explode('/', $_SERVER['REQUEST_URI']);
+      $page_entity = get_entity($current_url[count($current_url) - 1]);
+    
+      // if the entity is still not found
+      if (!($page_entity instanceof ElggEntity))
+        $page_entity = get_entity($current_url[count($current_url) - 2]);
+
+      $page_title = (gc_explode_translation($page_entity->title, 'en') !== gc_explode_translation($page_entity->title, 'fr')) ? gc_explode_translation($page_entity->title, 'en').' / '.gc_explode_translation($page_entity->title, 'fr') : gc_explode_translation($page_entity->title, 'en');
+    }
+
   }
-    error_log(">>>>>>>>>>>>>>>>>    {$elgg_entity->title} /// {$vars['title']} /// {$current_url}");
+} else {
+
+  $current_url = explode('/', $_SERVER['REQUEST_URI']);
+  $page_entity = get_entity($current_url[count($current_url) - 1]);
+
+  if ($elgg_entity instanceof ElggUser || $elgg_entity instanceof ElggGroup) {
+    $page_title = ($elgg_entity instanceof ElggUser) ? $elgg_entity->name : gc_explode_translation($elgg_entity->name, $gc_language);
+  } else {
+
+      if (!($page_entity instanceof ElggEntity))
+        $page_entity = get_entity($current_url[count($current_url) - 2]);
+      $page_title = gc_explode_translation($page_entity->title, $gc_language);
+  }
 
 }
 
@@ -160,7 +181,7 @@ $no_index_array = array(
   'blog/all','blog/owner/','blog/group','blog/friends',
   'bookmarks/all','bookmarks/owner','bookmarks/friends','bookmarks/group',
   'event_calendar/list',
-  'file/all','file/owner','/file/friends',
+  'file/all','file/owner','file/friends', 'file/group',
   'photos/all','photos/owner','photos/friends',
   'members','members/popular','/members/online','members/department',
   'polls/all','polls/owner','polls/friends/',
@@ -178,11 +199,10 @@ $current_url = str_replace($base_site_url, '', $current_url);
 $current_url = str_replace(' ', '/', $current_url);
 $current_url = explode("/", $current_url);
 $current_url = "{$current_url[0]}/{$current_url[1]}";
-error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>    {$current_url}");
+
 // if url is found, dont index
 $can_index = (in_array($current_url, $no_index_array)) ? false : true;
 if (!$can_index) {
-  error_log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>  (1) cannot index!");
   echo '<meta name="robots" content="noindex">';
 }
 
