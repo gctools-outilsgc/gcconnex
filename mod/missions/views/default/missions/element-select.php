@@ -68,33 +68,6 @@ else {
         	
         	break;*/
             
-        case elgg_echo('missions:opt_in'):
-        	$content .= elgg_view('input/dropdown', array(
-        			'name' => $dropdown_name . '_element',
-        			'value' => '',
-        			'options' => array(
-        					'',
-                            elgg_echo("gcconnex_profile:opt:micro_missionseek"),
-        					elgg_echo('gcconnex_profile:opt:micro_mission'),
-                            elgg_echo('gcconnex_profile:opt:assignment_deployment_seek'),
-                            elgg_echo('gcconnex_profile:opt:assignment_deployment_create'),
-                            elgg_echo('gcconnex_profile:opt:deployment_seek'),
-                            elgg_echo('gcconnex_profile:opt:deployment_create'),
-        					elgg_echo('gcconnex_profile:opt:job_swap'),
-                            elgg_echo('gcconnex_profile:opt:job_rotate'),
-        					elgg_echo('gcconnex_profile:opt:mentored'),
-        					elgg_echo('gcconnex_profile:opt:mentoring'),
-        					elgg_echo('gcconnex_profile:opt:shadowed'),
-        					elgg_echo('gcconnex_profile:opt:shadowing'),
-        					elgg_echo('gcconnex_profile:opt:job_sharing'),
-        					elgg_echo('gcconnex_profile:opt:peer_coached'),
-        					elgg_echo('gcconnex_profile:opt:peer_coaching'),
-        					elgg_echo('gcconnex_profile:opt:skill_sharing'),
-                            elgg_echo('gcconnex_profile:opt:skill_sharing_create')
-        			)
-        	));
-        	break;
-            
         case elgg_echo('missions:portfolio'):
             $content .= elgg_view('input/dropdown', array(
                 'name' => $dropdown_name . '_element',
