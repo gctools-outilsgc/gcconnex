@@ -127,6 +127,7 @@ class FGContactForm
 
     function ProcessForm()
     {
+
         if(!isset($_POST['submitted']))
         {
            return false;
@@ -139,7 +140,6 @@ class FGContactForm
         $this->CollectData();
 
         $ret = $this->SendFormSubmission();
-
         return $ret;
     }
 
@@ -719,7 +719,6 @@ class FGContactForm
     {
         $this->name = $this->Sanitize($_POST['name']);
         $this->email = $this->Sanitize($_POST['email']);
-
         /*newline is OK in the message.*/
         $this->message = $this->StripSlashes($_POST['message']);
     }
@@ -730,7 +729,7 @@ class FGContactForm
     }
     function validate_email($email)
     {
-        return eregi("^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$", $email);
+        return eregi("^[_\.0-9a-zA-Z\'_\-\.]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$", $email);
     }
 
     function GetKey()
