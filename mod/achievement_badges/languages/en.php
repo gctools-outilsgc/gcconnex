@@ -53,7 +53,7 @@ return array(
     //Goals
     'badge:discussion:objective:0' => "Start a discussion, get people talking! It's all about creating engagement.",
     'badge:discussion:objective:1' => "Surprise! You've leveled up your Discussion badge! Let's keep the discussions going!",
-    'badge:discussion:objective:2' => "Great ideas come from great discussions. You're contributions are invaluable!",
+    'badge:discussion:objective:2' => "Great ideas come from great discussions. Your contributions are invaluable!",
     'badge:discussion:objective:3' => 'Another level up! Thanks for starting these great discussions. Keep up the good work!',
     'badge:discussion:objective:4' => 'Wow, if you keep leveling up like this, we might just run out of badges to give you!',
     'badge:discussion:objective:5' => "Congratulations! You have unlocked the Discussion badge! You are now an award winning conversationist. Sorry, we can't discuss this.",
