@@ -177,7 +177,7 @@ $('#fetch').on('click', function(){
                               $.each(article, function (key3,value3) {
                                 //if(value3.status == 2){
                                   list += "<li class='article-listing'><a class='head-toggle collapsed' href='#"+ value3.id + "-en' data-toggle='collapse' aria-expanded='false' aria-controls='"+ value3.id +"-en'><div><p class='list-title h5'><span class='collapse-plus fa fa-minus-square-o fa-lg' aria-hidden='true'></span>" + value3.title + "</div></a></p><div id='" + value3.id +
-                                  "-en' class='collapse article-content'>" + value3.description + " </div> </div></li>";
+                                  "-en' class='collapse article-content'>" + "<div class='timeStamp article-hi'>" + value.name + " > " + value2.name + "</div>" + value3.description + " </div> </div></li>";
                                 //}
                               });
                               list += '</ul><a onclick="displayCategories(this)" href="#results-en" class="wb-inv">'+elgg.echo('freshdesk:knowledge:explore:return')+'</a>';
@@ -255,7 +255,7 @@ $('#fetch').on('click', function(){
                                 $.each(article, function (key3,value3) {
                                   //if(value3.status == 2){
                                     list += "<li class='article-listing'><a class='head-toggle collapsed' href='#"+ value3.id + "-fr' data-toggle='collapse' aria-expanded='false' aria-controls='"+ value3.id +"-fr'><div><p class='list-title h5'><span class='collapse-plus fa fa-minus-square-o fa-lg' aria-hidden='true'></span>" + value3.title + "</p></div></a><div id='" + value3.id +
-                                    "-fr' class='collapse article-content'>" + value3.description + " </div> </div></li>";
+                                    "-fr' class='collapse article-content'>" + "<div class='timeStamp article-hi'>" + value.name + " > " + value2.name + "</div>" + value3.description + " </div> </div></li>";
                                   //}
                                 });
                                 list += '</ul><a onclick="displayCategories(this)" href="#results-en" class="wb-inv">'+elgg.echo('freshdesk:knowledge:explore:return')+'</a>';

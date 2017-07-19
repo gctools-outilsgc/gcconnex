@@ -19,14 +19,11 @@
     echo elgg_view('input/text', array(
       'id' => 'article-search',
       'name' => elgg_echo('freshdesk:knowledge:search:title'),
-      'onkeyup'  => 'searchArticles(this, "'.get_current_language().'")'
+      'onkeyup'  => 'searchArticles(this, "'.get_current_language().'")',
     ));
 
-    if((int) elgg_get_plugin_setting("portal_id", "freshdesk_help") == 2100008988){
-      echo '<span class="search-info">'.elgg_echo('freshdesk:knowledge:search:info:connex').'</span>';
-    } else {
-      echo '<span class="search-info">'.elgg_echo('freshdesk:knowledge:search:info:collab').'</span>';
-    }
+    echo '<span class="search-info">'.elgg_echo('freshdesk:knowledge:search:info:'.elgg_get_plugin_setting("portal_id", "freshdesk_help")).'</span>';
+
     echo '<div aria-live="polite" id="filter-count"></div>';
 
     echo '<div id="searchResults"><div class="article-panel"><ul id="results-listing"></ul></div></div>';
@@ -50,102 +47,3 @@
  </div>
 
 <?php echo elgg_view('contactform/contactform'); ?>
-
-
-
-
-
-  <script>
-   $(document).ready(function(){
-
-
-//delete me later - code for easy and quick changes to UI
-/*
-var yourdomain = <?php echo '"'.elgg_get_plugin_setting("domain", "freshdesk_help").'"'; ?>;
-var api_key = <?php echo  '"'.elgg_get_plugin_setting("apikey", "freshdesk_help").'"'; ?>;
-var portal_id = <?php echo  (int) elgg_get_plugin_setting("portal_id", "freshdesk_help"); ?>;
-var acceptedCategoriesEN = [];
-var acceptedCategoriesFR = [];
-
-$.ajax(
-  {
-    url: "https://"+yourdomain+".freshdesk.com/api/v2/solutions/categories/en",
-    type: 'GET',
-    contentType: "application/json; charset=utf-8",
-    dataType: "json",
-    headers: {
-      "Authorization": "Basic " + btoa(api_key + ":x")
-    },
-    success: function(data, textStatus, jqXHR) {
-      var category = JSON.parse(JSON.stringify(data));
-      for (var c = 0; c < category.length; c++){
-        if($.inArray(portal_id, category[c].visible_in_portals) > -1){ //categories that appear on GCconnex
-          acceptedCategoriesEN.push(category[c]);
-        }
-      }
-
-      acceptedCategoriesEN = uniqueObjects(acceptedCategoriesEN); //removed duplicate categories
-
-      $.each(acceptedCategoriesEN, function (key,value) {
-
-           $('#categories').append("<div class='category-card'><div class='article-cat'><div class='heading'><h3 >"  +value.name + "</h3></div><div><ul class='folders' id='" + value.id + "-en'></ul> </div></div></div></div>");
-
-           $.ajax(
-             {
-               url: "https://"+yourdomain+".freshdesk.com/api/v2/solutions/categories/"+value.id+"/folders/en",
-               type: 'GET',
-               contentType: "application/json; charset=utf-8",
-               dataType: "json",
-               headers: {
-                 "Authorization": "Basic " + btoa(api_key + ":x")
-               },
-               success: function(data, textStatus, jqXHR) {
-                 var folder = JSON.parse(JSON.stringify(data));
-
-                  $.each(folder, function (key2,value2) {
-
-                    //if(value2.visibility == 1){
-                      $('#'+value.id+'-en').append("<li class='folder'><a onclick='displayFolder(this)' href='#"+ value2.id + "-en'><div>"  +value2.name + "</div></a></li>");
-                      $('#results-en').append("<div class='folder-display' id='" + value2.id + "-en'><div class='heading-panel'><a class='icon-unsel' onclick='displayCategories(this)' href='#categories'><i class='fa fa-arrow-left fa-lg' aria-hidden='true'></i></a> <div><h3>"+value2.name+"</h3></div></div></div>");
-                    //}
-
-                    $.ajax({
-
-                        url: "https://"+yourdomain+".freshdesk.com/api/v2/solutions/folders/"+value2.id+"/articles/en",
-                        type: 'GET',
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        headers: {
-                          "Authorization": "Basic " + btoa(api_key + ":x")
-                        },
-                        success: function(data, textStatus, jqXHR) {
-                          var article = JSON.parse(JSON.stringify(data));
-
-                            $('#'+value2.id+'-en').append("<div class='article-panel'></div>");
-                            var list = "<ul>";
-                            $.each(article, function (key3,value3) {//<span class='collapse-plus fa fa-plus-square-o fa-lg' aria-hidden='true'></span>
-                              //if(value3.status == 2){
-                                list += "<li class='article-listing'><a class='head-toggle collapsed' href='#"+ value3.id + "-en' data-toggle='collapse' aria-expanded='false' aria-controls='"+ value3.id +"-en'><div><h5><span class='collapse-plus fa fa-minus-square-o fa-lg' aria-hidden='true'></span>" + value3.title + "</h5></div></a><div id='" + value3.id +
-                                "-en' class='collapse article-content'><span>"+ value.name+" > " + value2.name +"</span>" + value3.description + " </div> </div></li>";
-                              //}
-                            });
-                            list += '</ul><a onclick="displayCategories(this)" href="#categories" class="wb-inv">Back</a>';
-                            $('#'+value2.id+"-en .article-panel").append(list);
-                        }
-                      });
-
-                  });
-
-               }
-             }
-
-           );
-
-       });
-    }
-  });*/
-
-
-   });
-
-   </script>

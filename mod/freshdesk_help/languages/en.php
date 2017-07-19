@@ -6,8 +6,8 @@ return array(
       //search knowledge base
       'freshdesk:knowledge:title' => "Knowledge base",
       'freshdesk:knowledge:search:title' => "Search knowledge base",
-      'freshdesk:knowledge:search:info:connex' => 'Search our knowledge base to find the information you are looking for. For more information vist our <a href="https://gcconnex.gctools-outilsgc.ca/en/support/home">Support Home</a>.',
-        'freshdesk:knowledge:search:info:collab' => 'Search our knowledge base to find the information you are looking for. For more information vist our <a href="https://gccollab.gctools-outilsgc.ca/en/support/home">Support Home</a>.',
+      'freshdesk:knowledge:search:info:2100008988' => 'Search our knowledge base to find the information you are looking for. For more information vist our <a href="https://gcconnex.gctools-outilsgc.ca/en/support/home">Support Home</a>.',
+        'freshdesk:knowledge:search:info:2100008989' => 'Search our knowledge base to find the information you are looking for. For more information vist our <a href="https://gccollab.gctools-outilsgc.ca/en/support/home">Support Home</a>.',
 
       'freshdesk:knowledge:explore:title' => 'Explore knowledge base',
 

@@ -133,7 +133,13 @@
 
 .article-content {
   margin: 0 5px;
-  padding: 10px 5px;
+  padding: 0 5px 10px;
+}
+
+.article-hi {
+      margin: 0 0 10px 5px;
+      display:none;
+      font-style: italic;
 }
 
 .collapse-plus {
@@ -146,6 +152,7 @@
 
 .search-info {
   margin: 5px;
+  display: block;
 }
 
 .relatedArticles {

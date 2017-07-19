@@ -117,8 +117,9 @@ function searchArticles(search, lang){
                     var id = $(result).find('.article-content').attr('id');
                     //change clone to not mess with original
                     $(result).find('.head-toggle').attr('href', href+'-search');
-                    $(result).find('.head-toggle').attr('aria-controls', id+'-search')
-                    $(result).find('.article-content').attr('id', id+'-search')
+                    $(result).find('.head-toggle').attr('aria-controls', id+'-search');
+                    $(result).find('.article-content').attr('id', id+'-search');
+                    $(result).find('.article-hi').css('display', 'inherit');
 
                     //add clone and occurrence count to array for sorting
                     var item = [occurrences($(result).text().toLowerCase(), filter), $(result)];
@@ -182,8 +183,9 @@ function matchArticles(search, lang){
                   var id = $(result).find('.article-content').attr('id');
                   //change clone to not mess with original
                   $(result).find('.head-toggle').attr('href', href+'-search');
-                  $(result).find('.head-toggle').attr('aria-controls', id+'-search')
-                  $(result).find('.article-content').attr('id', id+'-search')
+                  $(result).find('.head-toggle').attr('aria-controls', id+'-search');
+                  $(result).find('.article-content').attr('id', id+'-search');
+                  $(result).find('.article-hi').css('display', 'inherit');
 
                   //add clone and occurrence count to array for sorting
                   var item = [occurrences($(result).text().toLowerCase(), filter), $(result)];

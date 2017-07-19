@@ -4,7 +4,7 @@
 	<id>freshdesk_help</id>
 	<author>GCtools Team</author>
 	<version>1.0.0.0</version>
-	<description>Integrates Freshdesk widget to create help page.</description>
+	<description>Creates help page based on content from Freshdesk Customer Support software. Using APIs this plugin creates a knowledge base right on the site so the user doesn't have to navigate between sites.</description>
 	<website></website>
 	<copyright>Her Majesty the Queen in Right of Canada, 2015</copyright>
 	<license>Creative Commons Attribution 3.0 Unported License</license>
@@ -12,6 +12,6 @@
 		<type>elgg_release</type>
 		<version>1.12</version>
 	</requires>
-	
+
 	<activate_on_install>true</activate_on_install>
 </plugin_manifest>

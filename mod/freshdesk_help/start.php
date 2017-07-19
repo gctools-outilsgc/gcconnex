@@ -15,9 +15,9 @@ function freshdesk_help_init() {
 
     elgg_register_menu_item('site', array(
   		'name' => 'Help',
-          'href' => "help/knowledgebase",
-          'text' => elgg_echo('contactform:help_menu_item'),
-          'priority' => 1000,
+      'href' => "help/knowledgebase",
+      'text' => elgg_echo('freshdesk:page:title'),
+      'priority' => 1000,
   	));
 
 }

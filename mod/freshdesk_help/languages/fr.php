@@ -6,8 +6,8 @@ return array(
   //search knowledge base
   'freshdesk:knowledge:title' => "Base de connaissances",
   'freshdesk:knowledge:search:title' => "Recherche dans la base de connaissances",
-  'freshdesk:knowledge:search:info:connex' =>  'Recherche dans notre base de connaissances pour trouver les renseignements que vous cherchez. Pour obtenir de plus amples renseignements, veuillez visiter notre <a href="https://gcconnex.gctools-outilsgc.ca/fr/support/home">Support Accueil</a>.',
-  'freshdesk:knowledge:search:info:collab' => 'Recherche dans notre base de connaissances pour trouver les renseignements que vous cherchez. Pour obtenir de plus amples renseignements, veuillez visiter notre <a href="https://gccollab.gctools-outilsgc.ca/fr/support/home">Support Accueil</a>.',
+  'freshdesk:knowledge:search:info:2100008988' =>  'Recherche dans notre base de connaissances pour trouver les renseignements que vous cherchez. Pour obtenir de plus amples renseignements, veuillez visiter notre <a href="https://gcconnex.gctools-outilsgc.ca/fr/support/home">Support Accueil</a>.',
+  'freshdesk:knowledge:search:info:2100008989' => 'Recherche dans notre base de connaissances pour trouver les renseignements que vous cherchez. Pour obtenir de plus amples renseignements, veuillez visiter notre <a href="https://gccollab.gctools-outilsgc.ca/fr/support/home">Support Accueil</a>.',
 
   'freshdesk:knowledge:explore:title' => 'Survol de la base de connaissances',
 
