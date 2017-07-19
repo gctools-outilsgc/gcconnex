@@ -1,10 +1,10 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 MAINTAINER Luc Belliveau <luc.belliveau@nrc-cnrc.gc.ca>
 
 # Install dependencies
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
-RUN apt-get install -y git apache2 php5 libapache2-mod-php5 php5-mysql php5-gd php5-curl curl
+RUN apt-get install -y git apache2 php libapache2-mod-php php-mysql php-gd php-xml php-curl php-mbstring curl
 RUN curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 
 # Enable Apache mod_rewrite
@@ -27,7 +27,8 @@ WORKDIR /var/www/html
 
 ARG COMPOSER_ALLOW_SUPERUSER=1
 ARG COMPOSER_NO_INTERACTION=1
+RUN composer global require fxp/composer-asset-plugin
 RUN composer install
 
 # Start Apache in foreground mode
-CMD chown www-data /data && rm -f /var/run/apache2/apache2.pid && /usr/sbin/apache2ctl -D FOREGROUND
+CMD chown www-data /data && chown www-data /var/www/html/ && chown www-data /var/www/html/elgg-config && rm -f /var/run/apache2/apache2.pid && /usr/sbin/apache2ctl -D FOREGROUND

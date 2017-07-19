@@ -29,8 +29,6 @@ services:
     volumes:
       - .:/var/www/html
       - ./data/data:/data
-      - /var/www/html/mod
-      - /var/www/html/vendor
     depends_on:
       - gcconnex-db
       # - nginx-proxy
@@ -42,22 +40,22 @@ services:
   # elgg's built in cron based on the recommended settings.
   # ###########################################################################
 
-  gcconnex-cron:
-    build:
-      context: .
-      dockerfile: ./Dockerfile.cron
-    volumes:
-      - .:/var/www/html
-      - ./data/data:/data
-    depends_on:
-      - gcconnex-db
+#  gcconnex-cron:
+#    build:
+#      context: .
+#      dockerfile: ./Dockerfile.cron
+#    volumes:
+#      - .:/var/www/html
+#      - ./data/data:/data
+#    depends_on:
+#      - gcconnex-db
 
   # ###########################################################################
   # Database container for gcconnex, accessible from within gcconnex using the
   # network host "gcconnex-db".
   # ###########################################################################
   gcconnex-db:
-    image: library/mysql:5.6
+    image: library/mariadb:10.3
     environment:
       - MYSQL_ROOT_PASSWORD=gcconnex
       - MYSQL_DATABASE=elgg
