@@ -58,6 +58,7 @@ requirejs( ["form-validate"], function() {
                   })
                   
               }else{
+                  $(form).find('button').prop('disabled', true);
                 form.submit();
               }
           },
