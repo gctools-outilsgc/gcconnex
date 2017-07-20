@@ -4,7 +4,7 @@ MAINTAINER Luc Belliveau <luc.belliveau@nrc-cnrc.gc.ca>
 # Install dependencies
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
-RUN apt-get install -y git apache2 php libapache2-mod-php php-mysql php-gd php-xml php-curl php-mbstring curl
+RUN apt-get install -y git apache2 php libapache2-mod-php php-mysql php-gd php-xml php-curl php-mbstring php-zip curl
 RUN curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 
 # Enable Apache mod_rewrite
