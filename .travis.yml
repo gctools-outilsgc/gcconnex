@@ -21,6 +21,7 @@ matrix:
     # Build and test javascript
     - php: 5.6
       env: VARIA=true
+      dist: precise
       install:
        - npm install
       script:
