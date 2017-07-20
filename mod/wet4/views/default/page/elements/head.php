@@ -24,6 +24,7 @@
  * GC_MODIFICATION
  * Description: Added IE9 check that will load the wet IE9 JS
  * Author: Nick P github.com/piet0024
+ * Modified by Christine Yu (July 14 2017)
  */
 
 $site_url = elgg_get_site_url();
@@ -31,57 +32,64 @@ $site_url = elgg_get_site_url();
 $metas = elgg_extract('metas', $vars, array());
 $links = elgg_extract('links', $vars, array());
 
-//Load in global variable with entity to create metadata tags
+// Load in global variable with entity to create metadata tags
 global $my_page_entity;
 
-// in case the title is not populated
+// in case the title is not populated (this typically comes in the format of -  GCconnex content title : GCconnex)
 $page_title = $vars['title'];
+$gc_language = get_current_language();
+$elgg_entity = $my_page_entity;
 
-// github-685 gcconnex titles in gsa search result
-if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gsa_agentstring,strtolower($_SERVER['HTTP_USER_AGENT'])) == 0) || strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false ) {
 
-  $gc_language = get_current_language();
-
-  $elgg_entity = $my_page_entity;
-
-  // check if this is a profile
+if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false) {
+  // check if this is a (user or group) profile
   if ($elgg_entity instanceof ElggUser || $elgg_entity instanceof ElggGroup) {
 
-    if ($elgg_entity instanceof ElggUser) {
-      $page_title = $elgg_entity->name;
-    } else {
-      $page_title = (!$elgg_entity->name2) ? $elgg_entity->name : $elgg_entity->name.' | '.$elgg_entity->name2;
-    }
+    // check if this is a user or a group (TODO: displays the title twice if either language is not present)
+    $page_title = ($elgg_entity instanceof ElggUser) ? $elgg_entity->name : gc_explode_translation($elgg_entity->name, 'en').' / '.gc_explode_translation($elgg_entity->name, 'fr');
 
-  } else {
+  } else { 
 
-    // condition where there would be a french version only or vice versa for english
-    if ($elgg_entity->title && $elgg_entity->title2) {
-      // if both fields are populated then put both languages as title
-      $page_title = $my_page_entity->title.' | '.$elgg_entity->title2;
-    } else {
+    $page_title = gc_explode_translation($elgg_entity->title, 'en').' / '.gc_explode_translation($elgg_entity->title, 'fr');
+    // if there is no title (meaning only a slash is present) because there is no way to retrieve the entity
+    if (trim($page_title) === '/') {
+      $current_url = explode('/', $_SERVER['REQUEST_URI']);
+      $page_entity = get_entity($current_url[count($current_url) - 1]);
+    
+      // if the entity is still not found
+      if (!($page_entity instanceof ElggEntity))
+        $page_entity = get_entity($current_url[count($current_url) - 2]);
 
-      if ($elgg_entity->title)
-        $page_title = $elgg_entity->title;
-      else
-        $page_title = $elgg_entity->title2;
+      $page_title = (gc_explode_translation($page_entity->title, 'en') !== gc_explode_translation($page_entity->title, 'fr')) 
+        ? gc_explode_translation($page_entity->title, 'en').' / '.gc_explode_translation($page_entity->title, 'fr') 
+        : gc_explode_translation($page_entity->title, 'en');
     }
 
   }
-
-  echo elgg_format_element('title', array(), $page_title, array('encode_text' => true));
-
 } else {
 
-  echo elgg_format_element('title', array(), $page_title, array('encode_text' => true));
+  $current_url = explode('/', $_SERVER['REQUEST_URI']);
+  $page_entity = get_entity($current_url[count($current_url) - 1]);
+
+  if ($elgg_entity instanceof ElggUser || $elgg_entity instanceof ElggGroup) {
+    $page_title = ($elgg_entity instanceof ElggUser) ? $elgg_entity->name : gc_explode_translation($elgg_entity->name, $gc_language);
+  } else {
+
+      if (!($page_entity instanceof ElggEntity))
+        $page_entity = get_entity($current_url[count($current_url) - 2]);
+      $page_title = gc_explode_translation($page_entity->title, $gc_language);
+  }
 
 }
 
+// this populates the title tag
+echo elgg_format_element('title', array(), $page_title, array('encode_text' => true));
 
 
 foreach ($metas as $attributes) {
 	echo elgg_format_element('meta', $attributes);
 }
+
 foreach ($links as $attributes) {
 	echo elgg_format_element('link', $attributes);
 }
@@ -95,149 +103,140 @@ $ie_url = elgg_get_simplecache_url('css', 'ie');
 
 ?>
 
-	<!--[if lt IE 9]>
-		<script src="<?php echo $html5shiv_url; ?>"></script>
-	<![endif]-->
+<!--[if lt IE 9]>
+	<script src="<?php echo $html5shiv_url; ?>"></script>
+<![endif]-->
+
+<!--[if gt IE 8]>
+	<link rel="stylesheet" href="<?php echo $ie_url; ?>" />
+<![endif]-->
+
+<script><?php echo $elgg_init; ?></script>
 
 <?php
 
 foreach ($css as $url) {
-	echo elgg_format_element('link', array('rel' => 'stylesheet', 'href' => $url));
+  echo elgg_format_element('link', array('rel' => 'stylesheet', 'href' => $url));
 }
 
-?>
-	<!--[if gt IE 8]>
-		<link rel="stylesheet" href="<?php echo $ie_url; ?>" />
-	<![endif]-->
-
-	<script><?php echo $elgg_init; ?></script>
-<?php
 foreach ($js as $url) {
-
-    if (strpos($url,'jquery-1.11.0.min.js') !== false) {
-        //$url = 'https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js';
-    }
-
-    if (strpos($url,'require-2.1.10.min.js') !== false) {
-        //$url= str_replace($url,'require-2.1.10.min.js','require-2.1.20.min.js');
-    }
-
 	echo elgg_format_element('script', array('src' => $url));
 }
 
 echo elgg_view_deprecated('page/elements/shortcut_icon', array(), "Use the 'head', 'page' plugin hook.", 1.9);
-
 echo elgg_view_deprecated('metatags', array(), "Use the 'head', 'page' plugin hook.", 1.8);
 
 
-
-
-/*---------------------Web Experience Toolkit 4---------------------*/
+/*--------------------- Web Experience Toolkit 4 ---------------------*/
 
 ?>
 
-<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">-->
-    <link rel="stylesheet" href="<?php echo $site_url ?>mod/wet4/views/default/css/awesome/font-awesome.min.css" type="text/css" />
-    <meta charset="utf-8" />
-		<!-- Web Experience Toolkit (WET) / Boîte à outils de l'expérience Web (BOEW)
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> -->
+
+<!-- Web Experience Toolkit (WET) / Boîte à outils de l'expérience Web (BOEW)
 wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licence-fr.html -->
+<meta charset="utf-8" />
+<meta content="width=device-width, initial-scale=1" name="viewport" />
+<link rel="stylesheet" href="<?php echo $site_url ?>mod/wet4/views/default/css/awesome/font-awesome.min.css" type="text/css" />
 
-
-		<meta content="width=device-width, initial-scale=1" name="viewport" />
 <!-- Meta data -->
 <?php
 
 
-      if($my_page_entity){
-          /*
-          echo elgg_get_excerpt($my_page_entity->title) . '<br>';
-          echo  date ("Y-m-d", elgg_get_excerpt($my_page_entity->time_created)) . '<br>';
-          echo  date ("Y-m-d", elgg_get_excerpt($my_page_entity->time_updated));
-          */
+if ($my_page_entity) {
 
-          if(elgg_instanceof($my_page_entity, 'group')){
-              $desc = elgg_strip_tags(elgg_get_excerpt(gc_explode_translation($my_page_entity->description,get_current_language())));
-              $briefdesc = gc_explode_translation($my_page_entity->briefdescription,get_current_language());
-          } else if(elgg_instanceof($my_page_entity, 'user')) {
-              $desc = elgg_echo('profile:title', array(gc_explode_translation($my_page_entity->name,get_current_language())));
-              $briefdesc = elgg_echo('profile:title', array(gc_explode_translation($my_page_entity->name,get_current_language())));
-          } else {
-              $desc = gc_explode_translation($my_page_entity->title,get_current_language());
-              $briefdesc = gc_explode_translation($my_page_entity->title,get_current_language());
-          }
+  if (elgg_instanceof($my_page_entity, 'group')) {
+      $desc = elgg_strip_tags(elgg_get_excerpt(gc_explode_translation($my_page_entity->description,get_current_language())));
+      $briefdesc = gc_explode_translation($my_page_entity->briefdescription,get_current_language());
+  } else if (elgg_instanceof($my_page_entity, 'user')) {
+      $desc = elgg_echo('profile:title', array(gc_explode_translation($my_page_entity->name,get_current_language())));
+      $briefdesc = elgg_echo('profile:title', array(gc_explode_translation($my_page_entity->name,get_current_language())));
+  } else {
+      $desc = gc_explode_translation($my_page_entity->title,get_current_language());
+      $briefdesc = gc_explode_translation($my_page_entity->title,get_current_language());
+  }
 
-          $pubDate = date ("Y-m-d", elgg_get_excerpt($my_page_entity->time_created));
-          $lastModDate = date ("Y-m-d", elgg_get_excerpt($my_page_entity->time_updated));
+  $pubDate = date ("Y-m-d", elgg_get_excerpt($my_page_entity->time_created));
+  $lastModDate = date ("Y-m-d", elgg_get_excerpt($my_page_entity->time_updated));
 
-          $datemeta = '<meta name="dcterms.issued" title="W3CDTF" content="' . $pubDate . '"/>';
-          $datemeta .= '<meta name="dcterms.modified" title="W3CDTF" content="' . $lastModDate . '" />';
-      } else {
-          $desc = $vars['title'];
-          $briefdesc = $vars['title'];
-      }
+  $datemeta = '<meta name="dcterms.issued" title="W3CDTF" content="' . $pubDate . '"/>';
+  $datemeta .= '<meta name="dcterms.modified" title="W3CDTF" content="' . $lastModDate . '" />';
 
-      $creator = gc_explode_translation(elgg_get_page_owner_entity()->name,get_current_language());
+} else {
 
-      if(!$creator){
-          $creator = 'GCconnex';
-      }
+  $desc = $vars['title'];
+  $briefdesc = $vars['title'];
+
+}
+
+$creator = gc_explode_translation(elgg_get_page_owner_entity()->name, get_current_language());
+if (!$creator) $creator = 'GCconnex';
 
 
-		// cyu - prevent crawler to index unsaved draft
-		if ($my_page_entity instanceof ElggObject) {
-			if ($my_page_entity->getSubtype() === 'blog' && strcmp($my_page_entity->status,'unsaved_draft') == 0)
-				echo '<meta name="robots" content="noindex">';
-		}
+// cyu - prevent crawler to index unsaved draft
+if ($my_page_entity instanceof ElggObject) {
+if ($my_page_entity->getSubtype() === 'blog' && strcmp($my_page_entity->status,'unsaved_draft') == 0)
+	echo '<meta name="robots" content="noindex">';
+}
 
-          $no_index_array = array(
-            'activity','activity/all','/activity/owner','/activity/friends/','/activity_tabs/mydept','/activity_tabs/otherdept',
-            'blog/all','blog/owner/','/blog/group/','/blog/friends/',
-            'bookmarks/all','bookmarks/owner/','/bookmarks/friends/','/bookmarks/group/',
-            'event_calendar/list',
-            'file/all','/file/owner/','/file/friends/',
-            'photos/all','photos/owner','photos/friends/',
-            'members','/members/popular/','/members/online','/members/department',
-            'polls/all','/polls/owner/','/polls/friends/',
-            'groups/all','/groups/owner/','/groups/invitation',
-            'photos/siteimagesowner/',
-            'thewire/all','/thewire/owner/','/thewire/friends/',
-            'file_tools/list', '/newsfeed/',
-          );
+// determine whether to index page depending on the url
+$no_index_array = array(
+  'activity/','activity/all','activity/owner','activity/friends','activity_tabs/mydept','activity_tabs/otherdept',
+  'blog/all','blog/owner/','blog/group','blog/friends',
+  'bookmarks/all','bookmarks/owner','bookmarks/friends','bookmarks/group',
+  'event_calendar/list',
+  'file/all','file/owner','file/friends', 'file/group',
+  'photos/all','photos/owner','photos/friends',
+  'members','members/popular','/members/online','members/department',
+  'polls/all','polls/owner','polls/friends/',
+  'groups/all','groups/owner','groups/invitation',
+  'photos/siteimagesowner', 'photos/siteimagesall',
+  'thewire/all','thewire/owner','thewire/friends',
+  'file_tools/list', 'newsfeed/', 'groups/', 'discussion/owner', 'ideas/group', 'photos/group', 'pages/all', 'missions/main',
+  'pages/history', 
+);
 
-          $can_index = true;
-          foreach ($no_index_array as $partial_url) {
-            // if url is found, dont index
-            if (strpos($_SERVER['REQUEST_URI'],$partial_url) !== false ) {
-              $can_index = false;
-              break;
-            }
-          }
+/// replace the slashes (maybe use regex instead) then remove the base url and then put the slashes in before comparison 
+$base_site_url = str_replace('/', ' ', elgg_get_site_entity()->getURL());
+$current_url = str_replace('/', ' ', ((isset($_SERVER['HTTPS']) ? "https" : "http") . "://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}"));
+$current_url = str_replace($base_site_url, '', $current_url);
+$current_url = str_replace(' ', '/', $current_url);
+$current_url = explode("/", $current_url);
+$current_url = "{$current_url[0]}/{$current_url[1]}";
 
-          if (!$can_index) {
+// if url is found, dont index
+$can_index = (in_array($current_url, $no_index_array)) ? false : true;
+if (!$can_index) {
+  echo '<meta name="robots" content="noindex">';
+}
+
+// TODO closed group - noindex
 ?>
 
-          <!-- cyu - included header meta tags for GSA (limiting pages to index) -->
-          <meta name="robots" content="noindex">
+<meta name="description" content="<?php echo $desc; ?>" />
+<meta name="dcterms.title" content="<?php echo $vars['title']; ?>" />
+<meta name="dcterms.creator" content="<?php echo $creator; ?>" />
+<?php echo $datemeta; ?>
+<meta name="dcterms.subject" title="scheme" content="<?php echo $briefdesc; ?>" />
+<meta name="dcterms.language" title="ISO639-2" content="<?php echo get_language(); ?>" />
+<meta name="gcctitle" content="<?php echo $vars['title']; ?>" />
+<link href="<?php echo $site_url; ?>mod/wet4/graphics/favicon.ico" rel="icon" type="image/x-icon" />
 
-        <?php } ?>
 
-        <meta name="description" content="<?php echo $desc; ?>" />
-        <meta name="dcterms.title" content="<?php echo $vars['title']; ?>" />
-        <meta name="dcterms.creator" content="<?php echo $creator; ?>" />
-        <?php echo $datemeta; ?>
-        <meta name="dcterms.subject" title="scheme" content="<?php echo $briefdesc; ?>" />
-        <meta name="dcterms.language" title="ISO639-2" content="<?php echo get_language(); ?>" />
-        <meta name="gcctitle" content="<?php echo $vars['title']; ?>" />
-        <link href="<?php echo $site_url; ?>mod/wet4/graphics/favicon.ico" rel="icon" type="image/x-icon" />
+<?php // hide the ajax toggle (hide the div)
+if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false) { ?>
+  <style>
+    .change_language {
+      display:none;
+    } 
+  </style>
+<?php } ?>
+
 <!-- Meta data-->
-
 <!--[if lt IE 9]>
-
-        <script src="<?php echo $site_url ?>mod/wet4/views/default/js/ie8-wet-boew.min.js"></script>
-        <![endif]-->
+  <script src="<?php echo $site_url ?>mod/wet4/views/default/js/ie8-wet-boew.min.js"></script>
+  <![endif]-->
 <!--[if lte IE 9]>
-
-
 <![endif]-->
 
-        <noscript><link rel="stylesheet" href="./css/noscript.css" /></noscript>
+<noscript><link rel="stylesheet" href="./css/noscript.css" /></noscript>
