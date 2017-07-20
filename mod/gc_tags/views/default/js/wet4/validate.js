@@ -53,6 +53,7 @@ requirejs( ["form-validate"], function() {
                       backdrop: 'static'
                   });
                   $(submitButton).on('click', function(){
+                      $(form).find('button').prop('disabled', true);
                       form.submit();
                   })
                   
