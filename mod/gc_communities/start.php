@@ -10,7 +10,7 @@ function gc_communities_init(){
 
     $subtypes = elgg_get_plugin_setting('subtypes', 'gc_communities');
     if( !$subtypes ){
-        elgg_set_plugin_setting('subtypes', json_encode(array('blog', 'groupforumtopic', 'event_calendar', 'file')), 'gc_communities');
+        elgg_set_plugin_setting('subtypes', json_encode(array('blog', 'groupforumtopic', 'event_calendar', 'file', 'bookmarks')), 'gc_communities');
     }
 
     // Register ajax save action

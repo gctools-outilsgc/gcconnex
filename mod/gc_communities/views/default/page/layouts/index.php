@@ -36,33 +36,22 @@
     <div class="col-md-8">
         <?php
 
-        $options_a = array(
+        $options = array(
                 'type' => 'object',
                 'subtypes' => $subtypes,
                 'limit' => $newsfeed_limit,
                 'metadata_name' => 'audience',
-                'metadata_values' => $community_audience,
-                'full_view' => false,
-                'list_type_toggle' => false,
-                'pagination' => true
-            );
-        //Adding allps
-        $options_a2 = array(
-                'type' => 'object',
-                'subtypes' => $subtypes,
-                'limit' => $newsfeed_limit,
-                'metadata_name' => 'audience',
-                'metadata_values' => array($community_audience, 'allps'),
+                'metadata_values' => $community_audience, //We can add allps metadata here
                 'full_view' => false,
                 'list_type_toggle' => false,
                 'pagination' => true
             );
 
-            echo '<div class="panel panel-default elgg-module-widget">
+            echo '<div class="panel panel-default elgg-module-widget" data-amd="'.$community_audience.'">
             <header class="panel-heading"><div class="clearfix"><h3 class="elgg-widget-title pull-left">' . elgg_echo('gc_communities:community_newsfeed') . '</h3></div></header>
             <div class="panel-body clearfix">
             <div class="new-community-feed-holder"></div>
-            <div class="elgg-widget-content community-feed-holder">' . elgg_list_entities_from_metadata($options_a) . '</div>
+            <div class="elgg-widget-content community-feed-holder">' . elgg_list_entities_from_metadata($options) . '</div>
             </div>
             </div>';
         ?>
