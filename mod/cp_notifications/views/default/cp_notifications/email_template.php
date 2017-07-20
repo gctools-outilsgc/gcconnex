@@ -53,8 +53,8 @@ if (strcmp($vars['type_event'],'CANCEL') == 0) {
 	$description_info_en .= '<h3 style ="font-family:sans-serif; color:#ff0000;">This event has been cancel!</h3>';
 	$description_info_fr .= '<h3 style ="font-family:sans-serif; color:#ff0000;">Cet événement à été annulé!</h3>';
 } elseif (strcmp($vars['type_event'],'UPDATE') == 0){
-	$description_info_en .= '<h3 style ="font-family:sans-serif;">This event has been updated</h3>';//NEW
-	$description_info_fr .= '<h3 style ="font-family:sans-serif;">Cet événement a été mis à jour.</h3>';//NEW
+	$description_info_en .= '<h3 style ="font-family:sans-serif;">This event has been updated</h3>';
+	$description_info_fr .= '<h3 style ="font-family:sans-serif;">Cet événement a été mis à jour.</h3>';
 }else {
 	$description_info_en .= '<h3 style ="font-family:sans-serif;">New event in your calendar</h3>';
 	$description_info_fr .= '<h3 style ="font-family:sans-serif;">Nouvel événement dans votre calendrier</h3>';
@@ -149,7 +149,7 @@ switch ($msg_type) {
 			'groupforumtopic' => 'discussion',
 		);
 
-		// cyu - update
+
 		$cp_comment_txt = strip_tags($vars['cp_comment']->description);
 
 		// GCCON-209: missing description (refer to requirements)
@@ -161,9 +161,13 @@ switch ($msg_type) {
 			$cp_notify_msg_description_fr = substr($cp_comment_txt, 0, strrpos($cp_comment_txt, ' ')).'... '.elgg_echo('cp_notify:readmore',array($vars['cp_comment']->getURL().'?utm_source=notification&utm_medium=email'),'fr');
 		}
 
+
+		$topic_title_en = gc_explode_translation($vars['cp_topic']->title, 'en');
+		$topic_title_en = gc_explode_translation($vars['cp_topic']->title, 'fr');
+
 		if ($vars['cp_topic']->getSubtype() === 'groupforumtopic') {
-			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_comments:title_discussion', array($vars['cp_user_comment']->getURL().'?utm_source=notification&utm_medium=email', $vars['cp_user_comment']->username, $vars['cp_topic_type'], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $vars['cp_topic']->title),'en');
-			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_comments:title_discussion', array($vars['cp_user_comment']->getURL().'?utm_source=notification&utm_medium=email', $vars['cp_user_comment']->username, $vars['cp_topic_type'], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $vars['cp_topic']->title),'fr');
+			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_comments:title_discussion', array($vars['cp_user_comment']->getURL().'?utm_source=notification&utm_medium=email', $vars['cp_user_comment']->username, $vars['cp_topic_type'], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $topic_title_en),'en');
+			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_comments:title_discussion', array($vars['cp_user_comment']->getURL().'?utm_source=notification&utm_medium=email', $vars['cp_user_comment']->username, $vars['cp_topic_type'], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $topic_title_fr),'fr');
 
 			$cp_notify_msg_description_en = $vars['cp_comment']->description."<br/>".elgg_echo('cp_notify:body_comments:description_discussion',array($vars['cp_comment']->getURL().'?utm_source=notification&utm_medium=email'),'en');
 			$cp_notify_msg_description_fr = $vars['cp_comment']->description."<br/>".elgg_echo('cp_notify:body_comments:description_discussion',array($vars['cp_comment']->getURL().'?utm_source=notification&utm_medium=email'),'fr');
@@ -309,19 +313,17 @@ switch ($msg_type) {
 		// cyu - updated as per required (06-15-2016)
 		$topic_author = get_entity($vars['cp_topic']->owner_guid);
 
-
 		$vars['cp_topic']->title2 = gc_explode_translation($vars['cp_topic']->title,'fr');
 
-		if($vars['cp_topic']->getSubtype == 'answer'){
+		if ($vars['cp_topic']->getSubtype() == 'answer') {
+			$question_guid = $vars['cp_topic']->getContainerGUID();
+			$answer_entity = get_entity($question_guid);
+			$title_answer = gc_explode_translation($answer_entity->title,'en');
+			$title_answer2 = gc_explode_translation($answer_entity->title,'fr');
+		}
 
-		$question_guid = $vars['cp_topic']->getContainerGUID();
-		$answer_entity = get_entity($question_guid);
-		$title_answer = gc_explode_translation($answer_entity->title,'en');
-		$title_answer2 = gc_explode_translation($answer_entity->title,'fr');
-}
 
-
-		if ($vars['cp_topic']->getSubtype == 'answer')
+		if ($vars['cp_topic']->getSubtype() == 'answer')
 			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_new_content:title2',array($topic_author->getURL().'?utm_source=notification&utm_medium=email', $topic_author->username, cp_translate_subtype($vars['cp_topic']->getSubtype()), $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $title_answer),'en');
 		else
 			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_new_content:title',array($topic_author->getURL().'?utm_source=notification&utm_medium=email', $topic_author->username, cp_translate_subtype($vars['cp_topic']->getSubtype()), $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', gc_explode_translation($vars['cp_topic']->title,'en')),'en');
