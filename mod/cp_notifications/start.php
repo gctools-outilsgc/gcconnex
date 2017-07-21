@@ -976,7 +976,8 @@ function cp_create_notification($event, $type, $object) {
 						'cp_msg_type' => 'cp_mention_type',
 						'cp_author' => $object->getOwnerEntity()->name,
 						'cp_content_desc' => $object->description,
-						'cp_cp_link' => $object->getURL()
+						'cp_link' => $object->getURL(),
+						'cp_content' => $object,
 					);
 					$template = elgg_view('cp_notifications/email_template', $message);
 					$user_setting = elgg_get_plugin_user_setting('cpn_mentions_email', $mentioned_user->guid, 'cp_notifications');

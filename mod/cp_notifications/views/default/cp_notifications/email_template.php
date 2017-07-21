@@ -378,8 +378,8 @@ switch ($msg_type) {
 
 
 	case 'cp_mention_type': // mentions
-		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_mention:title',array($vars['cp_author'],$vars['cp_content']),'en');
-		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_mention:title',array($vars['cp_author'],$vars['cp_content']),'fr');
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_mention:title',array($vars['cp_author'],gc_explode_translation($vars['cp_content']->getContainerEntity()->title,'en')),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_mention:title',array($vars['cp_author'],gc_explode_translation($vars['cp_content']->getContainerEntity()->title,'fr')),'fr');
 
 		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_mention:description', array($vars['cp_content_desc'],$vars['cp_link'].'?utm_source=notification&utm_medium=email'),'en');
 		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_mention:description', array($vars['cp_content_desc'],$vars['cp_link'].'?utm_source=notification&utm_medium=email'),'fr');
