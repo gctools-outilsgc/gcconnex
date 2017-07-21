@@ -141,7 +141,7 @@ $communities = json_decode($vars['entity']->communities, true);
 if (count($communities) > 0) {
 
 	echo '<table class="communities"><tbody>';
-	echo '<thead><tr> <th></th> <th>'.elgg_echo('gc_communities:title').' (EN)</th> <th>'.elgg_echo('gc_communities:title').' (FR)</th> <th>'.elgg_echo('gc_communities:url').'</th> <th>'.elgg_echo('gc_communities:tags').'</th> <th>'.elgg_echo('gc_communities:animator').'</th> <th>'.elgg_echo('').'</th><th></th> <th></th> </tr></thead>';
+	echo '<thead><tr> <th></th> <th>'.elgg_echo('gc_communities:title').' (EN)</th> <th>'.elgg_echo('gc_communities:title').' (FR)</th> <th>'.elgg_echo('gc_communities:url').'</th> <th>'.elgg_echo('gc_communities:tags').'</th> <th>'.elgg_echo('gc_communities:animator').'</th> <th>'.elgg_echo('gc_communities:audience').'</th><th></th> <th></th> </tr></thead>';
 	foreach ($communities as $community) {
 		$delete_btn = elgg_view('output/confirmlink', array(
 			'class' => 'delete',
