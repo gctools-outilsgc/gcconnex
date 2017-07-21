@@ -412,21 +412,21 @@ switch ($msg_type) {
 
 
 	case 'cp_group_add': // adding user to group
-		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_group_add:title',array($vars['cp_group']['name']),'en');
-		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_group_add:title',array($vars['cp_group']['name']),'fr');
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_group_add:title',array(gc_explode_translation($vars['cp_group']['name'],'en')),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_group_add:title',array(gc_explode_translation($vars['cp_group']['name'],'fr')),'fr');
 
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_group_add:description',array($vars['cp_group']['name'],$vars['cp_group']->getURL().'?utm_source=notification&utm_medium=email'),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_group_add:description',array($vars['cp_group']['name'],$vars['cp_group']->getURL().'?utm_source=notification&utm_medium=email'),'fr');
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_group_add:description',array(gc_explode_translation($vars['cp_group']['name'],'en'),$vars['cp_group']->getURL().'?utm_source=notification&utm_medium=email'),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_group_add:description',array(gc_explode_translation($vars['cp_group']['name'],'fr'),$vars['cp_group']->getURL().'?utm_source=notification&utm_medium=email'),'fr');
 
 		break;
 
 
 	case 'cp_group_invite':	// inviting user to group
-		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_group_invite:title',array($vars['cp_group_invite_to']['name'],$vars['cp_group']['name']),'en');
-		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_group_invite:title',array($vars['cp_group_invite_to']['name'],$vars['cp_group']['name']),'fr');
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_group_invite:title',array($vars['cp_group_invite_to']['name'],gc_explode_translation($vars['cp_group']['name'],'en')),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_group_invite:title',array($vars['cp_group_invite_to']['name'],gc_explode_translation($vars['cp_group']['name'],'fr')),'fr');
 
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_group_invite:description',array($vars['cp_group']['name'],$vars['cp_invitation_msg'],$vars['cp_invitation_url'].'?utm_source=notification&utm_medium=email'),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_group_invite:description',array($vars['cp_group']['name'],$vars['cp_invitation_msg'],$vars['cp_invitation_url'].'?utm_source=notification&utm_medium=email'),'fr');
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_group_invite:description',array(gc_explode_translation($vars['cp_group']['name'],'en'),$vars['cp_invitation_msg'],$vars['cp_invitation_url'].'?utm_source=notification&utm_medium=email'),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_group_invite:description',array(gc_explode_translation($vars['cp_group']['name'],'fr'),$vars['cp_invitation_msg'],$vars['cp_invitation_url'].'?utm_source=notification&utm_medium=email'),'fr');
 
 		break;
 
@@ -452,8 +452,8 @@ switch ($msg_type) {
 
 
 	case 'cp_group_mail': // sending out group mail to all members
-		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_group_mail:title', array($vars['cp_group']['name'],$vars['cp_group_subject']),'en');
-		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_group_mail:title', array($vars['cp_group']['name'],$vars['cp_group_subject']),'fr');
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_group_mail:title', array(gc_explode_translation($vars['cp_group']['name'],'en'),$vars['cp_group_subject']),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_group_mail:title', array(gc_explode_translation($vars['cp_group']['name'],'fr'),$vars['cp_group_subject']),'fr');
 
 		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_group_mail:description',array($vars['cp_group_message']),'en');
 		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_group_mail:description',array($vars['cp_group_message']),'fr');
