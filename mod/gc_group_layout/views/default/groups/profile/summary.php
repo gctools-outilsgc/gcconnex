@@ -75,7 +75,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 
                 	} else {
 
-		                $group_name = ($group->name) ? gc_explode_translation($group->name, $lang) : $group->name;
+		                $group_name = gc_explode_translation($group->name, $lang);
 		            }
 		            echo $group_name;
                 ?>
