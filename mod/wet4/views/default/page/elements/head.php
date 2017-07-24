@@ -214,7 +214,7 @@ if (!$can_index) {
 ?>
 
 <meta name="description" content="<?php echo $desc; ?>" />
-<meta name="dcterms.title" content="<?php echo $vars['title']; ?>" />
+<meta name="dcterms.title" content="<?php echo $page_title ?>" />
 <meta name="dcterms.creator" content="<?php echo $creator; ?>" />
 <?php echo $datemeta; ?>
 <meta name="dcterms.subject" title="scheme" content="<?php echo $briefdesc; ?>" />
