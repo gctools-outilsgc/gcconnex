@@ -391,7 +391,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_group_message' => $params['cp_group_message'],
 				'cp_msg_type' => $cp_msg_type
 			);
-			$subject = elgg_echo('cp_notify:subject:group_mail',array($params['cp_group_subject'],gc_explode_translation($params['cp_group']['name'],'en')),'en'). ' | ' . elgg_echo('cp_notify:subject:group_mail',array($params['cp_group_subject'],$params['cp_group']['name']),'fr');
+			$subject = elgg_echo('cp_notify:subject:group_mail',array($params['cp_group_subject'],gc_explode_translation($params['cp_group']['name'],'en')),'en'). ' | ' . elgg_echo('cp_notify:subject:group_mail',array($params['cp_group_subject'],gc_explode_translation($params['cp_group']['name'],'fr')),'fr');
 			foreach ($params['cp_group_mail_users'] as $to_user) {
 				$to_recipients[$to_user] = get_user($to_user);
 				

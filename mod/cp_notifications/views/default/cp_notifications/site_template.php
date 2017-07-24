@@ -315,17 +315,16 @@ switch ($msg_type) {
 
 		$vars['cp_topic']->title2 = gc_explode_translation($vars['cp_topic']->title,'fr');
 
-		if ($vars['cp_topic']->getSubtype() == 'answer') {
+
+		if ($vars['cp_topic']->getSubtype() === 'answer') {
+			
 			$question_guid = $vars['cp_topic']->getContainerGUID();
 			$answer_entity = get_entity($question_guid);
 			$title_answer = gc_explode_translation($answer_entity->title,'en');
 			$title_answer2 = gc_explode_translation($answer_entity->title,'fr');
-		}
 
-
-		if ($vars['cp_topic']->getSubtype() == 'answer')
 			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_new_content:title2',array($topic_author->getURL().'?utm_source=notification&utm_medium=site', $topic_author->username, cp_translate_subtype($vars['cp_topic']->getSubtype()), $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=site', $title_answer),'en');
-		else
+		} else
 			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_new_content:title',array($topic_author->getURL().'?utm_source=notification&utm_medium=site', $topic_author->username, cp_translate_subtype($vars['cp_topic']->getSubtype()), $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=site', gc_explode_translation($vars['cp_topic']->title,'en')),'en');
 
 		if (array_key_exists($vars['cp_topic']->getSubtype(),$entity_f))
