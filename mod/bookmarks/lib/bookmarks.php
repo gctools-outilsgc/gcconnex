@@ -21,7 +21,6 @@ function bookmarks_prepare_form_vars($bookmark = null) {
 		'description2' => '',
 		'access_id' => ACCESS_DEFAULT,
 		'tags' => '',
-		'shares' => array(),
 		'container_guid' => elgg_get_page_owner_guid(),
 		'guid' => null,
 		'entity' => $bookmark,

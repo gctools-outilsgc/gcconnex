@@ -34,39 +34,28 @@ echo $btn_language;
 <div class='en'>
 	<label><?php echo elgg_echo('title:en'); ?></label><br />
 	<?php
-    if($title1){
-        $title = $title1;
-    }
+	
+		echo gc_explode_translation($title,'en');
 
-    if($desc1){
-        $desc = $desc1;
-    }
-	if (elgg_is_admin_logged_in()) {
-		echo $title;
-	} else {
-		echo $title;
-	}
     ?>
 </div>
 <div class='fr'>
 	<label><?php echo elgg_echo('title:fr'); ?></label><br />
 	<?php
-	if (elgg_is_admin_logged_in()) {
-		echo $title2;
-	} else {
-		echo $title2;
-	}
+	
+		echo gc_explode_translation($title,'fr');
+
     ?>
 </div>
 
 <div class='en'>
     <label for="description"><?php echo elgg_echo('description:ideas:en'); ?></label>
-    <?php echo elgg_view('input/longtext', array('name' => 'description', 'id' => 'description', 'value' => $desc)); ?>
+    <?php echo elgg_view('input/longtext', array('name' => 'description', 'id' => 'description', 'value' => gc_explode_translation($desc,'en'), 'required '=> "required", "class" => "validate-me")); ?>
 </div>
 
 <div class='fr'>
     <label for="description2"><?php echo elgg_echo('description:ideas:fr'); ?></label>
-    <?php echo elgg_view('input/longtext', array('name' => 'description2', 'id' => 'description2', 'value' => $desc2)); ?>
+    <?php echo elgg_view('input/longtext', array('name' => 'description2', 'id' => 'description2', 'value' => gc_explode_translation($desc,'fr'), 'required '=> "required", "class" => "validate-me")); ?>
 </div>
 
 <div>
@@ -96,41 +85,50 @@ echo'</div></div>';
 
 if(get_current_language() == 'fr'){
 ?>
-    <script>
-        jQuery('.fr').show();
-        jQuery('.en').hide();
-        jQuery('#btnfr').addClass('active');
+<script>
+    jQuery('.fr').show();
+    jQuery('.en').hide();
+    jQuery('#btnfr').addClass('active');
 
-    </script>
+    jQuery('#description').removeClass('validate-me');
+</script>
 <?php
 }else{
 ?>
-    <script>
-        jQuery('.en').show();
-        jQuery('.fr').hide();
-        jQuery('#btnen').addClass('active');
-    </script>
+<script>
+    jQuery('.en').show();
+    jQuery('.fr').hide();
+    jQuery('#btnen').addClass('active');
+
+    jQuery('#description2').removeClass('validate-me');
+</script>
 <?php
 }
 ?>
 <script>
 jQuery(function(){
 
-    var selector = '.nav li';
+var selector = '.nav li';
 
-    $(selector).on('click', function(){
-    $(selector).removeClass('active');
-    $(this).addClass('active');
+$(selector).on('click', function(){
+$(selector).removeClass('active');
+$(this).addClass('active');
 });
 
-        jQuery('#btnClickfr').click(function(){
-               jQuery('.fr').show();
-               jQuery('.en').hide();
-        });
+    jQuery('#btnClickfr').click(function(){
+           jQuery('.fr').show();
+           jQuery('.en').hide();
 
-          jQuery('#btnClicken').click(function(){
-               jQuery('.en').show();
-               jQuery('.fr').hide();
-        });
+           jQuery('#description').removeClass('validate-me');
+           jQuery('#description2').addClass('validate-me');
+    });
+
+      jQuery('#btnClicken').click(function(){
+           jQuery('.en').show();
+           jQuery('.fr').hide();
+
+           jQuery('#description').addClass('validate-me');
+           jQuery('#description2').removeClass('validate-me');
+    });
 });
 </script>

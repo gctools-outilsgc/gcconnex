@@ -20,6 +20,21 @@ $container_guid = elgg_extract('container_guid', $vars);
 $guid = elgg_extract('guid', $vars, null);
 $shares = elgg_extract('shares', $vars, array());
 
+// decode json into English / French parts
+$json_title = json_decode($title);
+$json_desc = json_decode($desc);
+
+if ( $json_title ){
+  $title2 = $json_title->fr;
+  $title = $json_title->en;
+}
+
+if ( $json_desc ){
+  $desc2 = $json_desc->fr;
+  $desc = $json_desc->en;
+}
+
+
 $btn_language =  '<ul class="nav nav-tabs nav-tabs-language">
   <li id="btnen"><a href="#" id="btnClicken">'.elgg_echo('lang:english').'</a></li>
   <li id="btnfr"><a href="#" id="btnClickfr">'.elgg_echo('lang:french').'</a></li>
@@ -31,22 +46,22 @@ echo $btn_language;
 <!-- English -->
 <div class="mrgn-bttm-md en">
 	<label for="title"><?php echo elgg_echo('title:en'); ?></label><br />
-	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title, 'id' => 'title', 'autofocus' => 'true',)); ?>
+	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title, 'id' => 'title', 'autofocus' => 'true', 'required '=> "required",)); ?>
 </div>
 <!-- French -->
 <div class="mrgn-bttm-md fr">
 	<label for="title2"><?php echo elgg_echo('title:fr'); ?></label><br />
-	<?php echo elgg_view('input/text', array('name' => 'title2', 'value' => $title2, 'id' => 'title2')); ?>
+	<?php echo elgg_view('input/text', array('name' => 'title2', 'value' => $title2, 'id' => 'title2', 'required '=> "required")); ?>
 </div>
 
 <div class="mrgn-bttm-md">
 	<label for="address"><?php echo elgg_echo('bookmarks:address'); ?></label><br />
-	<?php echo elgg_view('input/text', array('name' => 'address', 'value' => $address, 'id' =>'address')); ?>
+	<?php echo elgg_view('input/text', array('type' => 'url', 'name' => 'address', 'value' => $address, 'id' =>'address', 'required '=> "required")); ?>
 </div>
 <!-- English -->
 <div class="mrgn-bttm-md en">
 	<label for="description"><?php echo elgg_echo('booksmark:description'); ?></label>
-	<?php echo elgg_view('input/longtext', array('name' => 'description', 'value' => $desc, 'id' => 'description')); ?>
+	<?php echo elgg_view('input/longtext', array('type' => 'url', 'name' => 'description', 'value' => $desc, 'id' => 'description')); ?>
 </div>
 <!-- French -->
 <div class="mrgn-bttm-md fr">

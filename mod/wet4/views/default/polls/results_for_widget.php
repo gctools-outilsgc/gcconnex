@@ -26,21 +26,16 @@ if (isset($vars['entity'])) {
 	//set img src
 	$img_src = $vars['url'] . "mod/polls/graphics/poll.gif";
 
+		$question = gc_explode_translation($vars['entity']->title,$lang);
 
-
-	if($vars['entity']->title3){
-		$question = gc_explode_translation($vars['entity']->title3,$lang);
-	}else{
-		$question = $vars['entity']->question;
-	}
 	
 
 	//get the array of possible responses
-	if(polls_get_choice_array3($vars['entity'])){
-		$responses = polls_get_choice_array3($vars['entity']);
-    }else{
-        $responses = polls_get_choice_array($vars['entity']);
-    }
+
+    $responses = polls_get_choices($vars['entity']);
+    $responses3 = polls_get_choices3($vars['entity']);
+
+    if ( count($responses3) >= count($responses) ) $responses = $responses3;		// when we have an old poll with 'choice3's
 
 	//get the array of user responses to the poll
 	$user_responses = $vars['entity']->getAnnotations('vote',9999,0,'desc');
@@ -57,7 +52,8 @@ if (isset($vars['entity'])) {
 	foreach($responses as $response)
 	{
 		//get count per response
-		$response_count = polls_get_response_count($response, $user_responses);
+
+		$response_count = polls_get_response_count_enfr($response, $user_responses);
 			
 		//calculate %
 		if ($response_count && $user_responses_count) {
@@ -71,19 +67,13 @@ if (isset($vars['entity'])) {
 
 <th class="text-center">
         <?php 
+        $response1 = gc_explode_translation($response->text, $lang);
+
+        echo $response1;
         
-        $response1 = gc_explode_translation($response, $lang);
-        if(empty($response1)){
-           echo $response;
-        }else{
-            echo $response1; 
-        }
         
         ?>
     </th>
-
-
-
 
 
 		<?php
@@ -93,13 +83,14 @@ if (isset($vars['entity'])) {
         echo '<th class="wb-inv">'.$question.'</th>';
     	foreach($responses as $response)
 	{
-		$response1 = gc_explode_translation($response, $lang);
+
+		$response1 = gc_explode_translation($response->text, $lang);
             if(empty($response1)){
-            $response1 = $response;
+            $response1 = $response->text;
             }
 
 		//get count per response
-		$response_count = polls_get_response_count($response, $user_responses);
+		$response_count = polls_get_response_count_enfr($response, $user_responses);
 
 		//calculate %
 		if ($response_count && $user_responses_count) {
@@ -114,7 +105,7 @@ if (isset($vars['entity'])) {
 
 
     <td class="text-center">
-        <?php echo $response_count; ?>
+       <?php echo $response_count; ?>
     </td>
 
     <?php

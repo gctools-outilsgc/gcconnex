@@ -7,11 +7,9 @@
 $page_owner = elgg_get_page_owner_entity();
 $lang = get_current_language();
 
-if($page_owner->title3){
-    $title_breadcrumbs = gc_explode_translation($page_owner->title3, $lang);
-}else{
-    $title_breadcrumbs = $page_owner->name;
-}
+
+    $title_breadcrumbs = gc_explode_translation($page_owner->title, $lang);
+
 
 elgg_push_breadcrumb($title_breadcrumbs);
 elgg_push_breadcrumb(elgg_echo('ideas:filter:new'));
@@ -45,7 +43,7 @@ if (!$content) {
     $content = elgg_echo('ideas:none');
 }
 
-$title = elgg_echo('ideas:owner', array($page_owner->name));
+$title = elgg_echo('ideas:owner', array(gc_explode_translation($page_owner->name,$lang)));
 
 $vars = array(
     'filter_context' => 'all',

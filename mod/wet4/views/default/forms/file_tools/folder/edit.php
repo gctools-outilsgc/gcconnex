@@ -14,6 +14,20 @@ if (!empty($folder)) {
 	$desc = $folder->description;
 	$desc2 = $folder->description2;
 
+  // decode json into English / French parts
+$json_title = json_decode($title);
+$json_desc = json_decode($desc);
+
+if ( $json_title ){
+  $title2 = $json_title->fr;
+  $title= $json_title->en;
+}
+
+if ( $json_desc ){
+    $desc2 = $json_desc->fr;
+  $desc = $json_desc->en;
+}
+
 	if (!empty($folder->parent_guid)) {
 		$parent = $folder->parent_guid;
 	} else {
@@ -57,12 +71,12 @@ $form_data .= elgg_view("input/hidden", array("name" => "page_owner", "value" =>
 
 $form_data .= "<div class='en' id='entitle'>";
 $form_data .= "<label for='title'>" . elgg_echo("title:en") . "</label>";
-$form_data .= elgg_view("input/text", array("name" => "title", "id" => "title", "value" => $title));
+$form_data .= elgg_view("input/text", array("name" => "title", "id" => "title", "value" => $title, 'required '=> "required"));
 $form_data .= "</div>";
 
 $form_data .= "<div class='fr' id='frtitle'>";
 $form_data .= "<label for='title2'>" . elgg_echo("title:fr") . "</label>";
-$form_data .= elgg_view("input/text", array("name" => "title2", "id" => "title2", "value" => $title2));
+$form_data .= elgg_view("input/text", array("name" => "title2", "id" => "title2", "value" => $title2, 'required '=> "required"));
 $form_data .= "</div>";
 
 $form_data .= "<div class='en' id='endesc'>";
@@ -171,5 +185,15 @@ function showfr() {
    document.getElementById('entitle').style.display = "none";
    document.getElementById('endesc').style.display = "none";
 }
+
+//do form validation here for ajax view
+$(".elgg-form").each(function(){
+  $(this).validate({
+    submitHandler: function(form) {
+      $(form).find('button').prop('disabled', true);
+      form.submit();
+    },
+  });
+});
 
 </script>

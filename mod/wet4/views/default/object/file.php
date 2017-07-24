@@ -25,11 +25,8 @@ $owner = $file->getOwnerEntity();
 $tags = elgg_view("output/tags", array("value" => $file->tags));
 $categories = elgg_view('output/categories', $vars);
 
-if($file->title3){
-    $title = gc_explode_translation($file->title3, $lang);
-}else{
-    $title = $file->title;
-}
+$title = gc_explode_translation($file->title, $lang);
+
 $mime = $file->mimetype;
 $base_type = substr($mime, 0, strpos($mime,'/'));
 
@@ -111,11 +108,9 @@ if ($full_view && !elgg_in_context("gallery")) {
 
 		while ($p = array_pop($folders)) {
 
-			if($p->title3){
-				$folder_title = gc_explode_translation($p->title3,$lang);
-			}else{
-				$folder_title = $p->title;
-			}
+		
+				$folder_title = gc_explode_translation($p->title,$lang);
+	
 
 			elgg_push_breadcrumb($folder_title, $p->getURL());
 		}
@@ -139,31 +134,29 @@ if ($full_view && !elgg_in_context("gallery")) {
 	);
 	$params = $params + $vars;
 	$summary = elgg_view("object/elements/summary", $params);
-	if($file->description3){
-		$file_descr = gc_explode_translation($file->description3, $lang);
-	}else{
-		$file_descr = $file->description;
-	}
+	
+		$file_descr = gc_explode_translation($file->description, $lang);
+
 
 
 	$text = elgg_view("output/longtext", array("value" => $file_descr ));
 	$body = "$text $extra";
 
 	// identify available content
-	if(($file->description2) && ($file->description)){
+	$description_json = json_decode($file->description);
+if( $description_json->en && $description_json->fr ){
 	echo'<div id="change_language" class="change_language">';
 		if (get_current_language() == 'fr'){
-
-			?>			
-			<span id="indicator_language_en" onclick="change_en('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $file->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $file->description2;?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
-			<?php
-
-		}else{
-					
-			?>			
-			<span id="indicator_language_fr" onclick="change_fr('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $file->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $file->description2;?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
-			<?php	
-		}
+?>			
+		<span id="indicator_language_en" onclick="change_en('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $description_json->en;?></span><span id="fr_content" class="testClass hidden" ><?php echo $description_json->fr;?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
+			
+		<?php
+	}else{
+		?>		
+			
+		<span id="indicator_language_fr" onclick="change_fr('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $description_json->en;?></span><span id="fr_content" class="testClass hidden" ><?php echo $description_json->fr;?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
+		<?php	
+	}
 	echo'</div>';
 	}
 
@@ -198,7 +191,7 @@ if ($full_view && !elgg_in_context("gallery")) {
 		$tags = "";
 	} else {
 		$file_icon = elgg_view_entity_icon($file, "small");
-		$excerpt = elgg_get_excerpt($file->description);
+		$excerpt = elgg_get_excerpt(gc_explode_translation($file->description,$lang));
 	}
 
     if(elgg_in_context('group_profile') || elgg_in_context('profile')){

@@ -61,3 +61,40 @@
 .elgg-menu-groups-my-status li.elgg-state-selected > a {
 	color: #999;
 }
+
+.groups-info .list-inline li {
+		padding:0 2px;
+}
+
+.group-summary-holder {
+	z-index: 2;
+  position: relative;
+}
+
+.elgg-menu-group-ddb {
+	padding: 0 !important;
+}
+
+@media (max-width: 990px) and (min-width: 481px)
+{
+	.groups-info .pull-left {
+  	float: none !important;
+  }
+}
+
+@media (max-width: 480px)
+{
+	.group-summary-holder {
+  	z-index: 2;
+    position: relative;
+		width: 100% !important;
+  }
+
+	.group-summary-holder .col-xs-9 {
+		width:100% !important;
+	}
+
+	.group-action-holder {
+		width: 100% !important;
+	}
+}

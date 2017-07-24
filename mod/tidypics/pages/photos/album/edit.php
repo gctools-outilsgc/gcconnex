@@ -7,7 +7,7 @@
  */
 
 $guid = (int) get_input('guid');
-
+$lang = get_current_language();
 if (!$entity = get_entity($guid)) {
 	// @todo either deleted or do not have access
 	forward('photos/all');
@@ -30,11 +30,11 @@ $title = elgg_echo('album:edit');
 elgg_push_breadcrumb(elgg_echo('photos'), 'photos/siteimagesall');
 elgg_push_breadcrumb(elgg_echo('tidypics:albums'), 'photos/all');
 if (elgg_instanceof($owner, 'user')) {
-	elgg_push_breadcrumb($owner->name, "photos/owner/$owner->username");
+	elgg_push_breadcrumb(gc_explode_translation($owner->name,$lang), "photos/owner/$owner->username");
 } else {
-	elgg_push_breadcrumb($owner->name, "photos/group/$owner->guid/all");
+	elgg_push_breadcrumb(gc_explode_translation($owner->name,$lang), "photos/group/$owner->guid/all");
 }
-elgg_push_breadcrumb($entity->getTitle(), $entity->getURL());
+elgg_push_breadcrumb(gc_explode_translation($entity->title,$lang), $entity->getURL());
 elgg_push_breadcrumb($title);
 
 $vars = tidypics_prepare_form_vars($entity);

@@ -5,10 +5,18 @@ $site_name = $site->name;
 $contact_us = "{$site->getURL()}mod/contactform/";
 
 $french = array( 
+	'minor_save:title' => "Vous ne voulez pas envoyer de notification?",
+	'minor_save:description' => "L'affichage de nouveaux contenus envoie des notifications à ceux qui sont abonné. En tant que propriétaire ou opérateur du groupe, vous pouvez décider de ne pas envoyer de notifications pour le nouveau contenu que vous affichez dans le groupe. Pour ce faire, sélectionnez l'option « Ne pas envoyer de notification » ci-dessous.",
+	'minor_save:checkbox_label' => " Ne pas envoyer de notification",
+
+
+
 	'cp_notifications:name' => "Paramètres de notifications",
+	'cp_notification:save:success' => "Les paramètres ont été enregistrés avec succès",
+	'cp_notification:save:failed' => "Les paramètres n'ont pas été enregistrés avec succès",
 
 	/// SETTINGS PAGE: Newsletter translation texts
-	'cp_newsletter:notice' => "Choisissez le moyen par lequel vous souhaitez recevoir des avis sur les activités de GCconnex qui vous intéressent. Le <strong>résumé des notifications</strong> vous permet de recevoir un courriel quotidien ou hebdomadaire contenant un sommaire des activités auxquelles vous êtes abonné. Vous préférez recevoir un avis instantané? Oubliez le résumé et sélectionnez le contenu pour lequel vous souhaitez recevoir des avis en temps réel. Veuillez noter que les avis par courriel sont envoyés à l’adresse électronique utilisée dans vos <a href='{$site->getURL()}settings/user/'>paramètres d’utilisateur</a>. Voir: “<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_-_Aide_%C3%A0_l%27utilisateur/Modifier_mes_param%C3%A8tres_de_compte/Comment_puis-je_modifier_mes_param%C3%A8tres_de_notification%3F'>Comment puis-je modifier mes paramètres de notification</a>?” pour plus d’informaiton.",
+	'cp_newsletter:notice' => "Choisissez le moyen par lequel vous souhaitez recevoir des avis sur les activités de GCconnex qui vous intéressent. Le <strong>résumé des notifications</strong> vous permet de recevoir un courriel quotidien ou hebdomadaire contenant un sommaire des activités auxquelles vous êtes abonné. Vous préférez recevoir un avis instantané? Oubliez le résumé et sélectionnez le contenu pour lequel vous souhaitez recevoir des avis en temps réel. Veuillez noter que les avis par courriel sont envoyés à l’adresse électronique utilisée dans vos <a href='{$site->getURL()}settings/user/?utm_source=notification_digest&utm_medium=email'>paramètres d’utilisateur</a>. Voir: “<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_-_Aide_%C3%A0_l%27utilisateur/Modifier_mes_param%C3%A8tres_de_compte/Comment_puis-je_modifier_mes_param%C3%A8tres_de_notification%3F?utm_source=notification_digest&utm_medium=email'>Comment puis-je modifier mes paramètres de notification</a>?” pour plus d’informaiton.",
 	'cp_newsletter:notice:disable_digest' => "Le résumé des avis est maintenant activé; veuillez choisir ci après vos préférences applicables au résumé (fréquence et langue). Le résumé comprendra tout le contenu sélectionné dans la colonne « Courriel », de même que les abonnements dans la section « Autres abonnements de contenu ». Si vous choisissez d’activer le résumé des notifications, vous ne recevrez plus de notifications par courriel ou de site en temps réel (instantanément) au moment où ont lieu les différentes activités de GCconnex (à l’exception des notifications de type administratif).",
 	'cp_newsletter:subject:daily' => "Votre résumé quotidien", 
 	'cp_newsletter:subject:weekly' => "Votre résumé hebdomadaire", 
@@ -41,12 +49,15 @@ $french = array(
 	'cp_notifications:subtype:file' => "Fichier",
 	'cp_notifications:subtype:album' => "Album",
 	'cp_notifications:subtype:thewire' => "Fil",
-	'cp_notifications:subtype:poll' => "Sondage", //CHANGE 3
+	'cp_notifications:subtype:poll' => "Sondage", 
 	'cp_notifications:subtype:event_calendar' => "Événement",
 	'cp_notifications:subtype:photo' => "Image",
 	'cp_notifications:subtype:task' => "Tâche",
 
 	'cp_notifications:subtype:name:thewire' => "fil",
+
+		/// new translation require attention
+	'cp_notifications:mail_body:subtype:file_upload' => "%s a publié %s fichier(s): %s", 	
 
 
 	'cp_notifications:mail_body:subtype:content_revision' => "%s a on fait un revision pour %s %s",
@@ -71,11 +82,19 @@ $french = array(
 	'cp_notifications:mail_body:subtype:photo' => "%s a publié une image : %s", 
 	'cp_notifications:mail_body:subtype:task' => "%s a publié une tâche : %s", 
 	'cp_notifications:mail_body:subtype:likes' => "%s a aimé votre publication: %s", 
-	'cp_notifications:mail_body:subtype:response' => "%s a publié une réponse ou un commentaire sur votre publication: %s", 
+	
+	'cp_notifications:mail_body:subtype:response' => "%s a publié une réponse ou un commentaire sur la publication: %s", 
 
 	'cp_notifications:mail_body:subtype:any' => "%s a publié %s %s : %s", // john doe post un blogue vs john doe posted un blog 
 
 	'cp_notifications:mail_body:subtype:oppourtunity' => "%s a publié une opportunité (%s): %s",
+
+	/// new texts : require translation
+	'cp_notifications:mail_body:subtype:file_upload:singular' => "%s a téléchargé %s fichier :",
+	'cp_notifications:mail_body:subtype:file_upload:plural' => "%s a téléchargé %s fichiers :",
+	'cp_notifications:mail_body:subtype:file_upload:group:singular' => "%s a téléchargé %s fichier dans %s:",
+	'cp_notifications:mail_body:subtype:file_upload:group:plural' => "%s a téléchargé %s fichiers dans %s:",
+
 
 	'cp_newsletter:other_content:notice' => "Ces abonnements s'appliquent uniquement au contenu qui ne fait pas partie d'un groupe",
 	
@@ -113,7 +132,7 @@ $french = array(
 
 
 	'cp_newsletter:title:nothing' => "Votre résumé {$site_name} : Rien à signaler aujourd’hui.",
-	'cp_newsletter:body:nothing' => "Il semble que c'était calme dans votre réseau sur GCconnex. Joignez-vous à des <a href='{$site->getURL()}groups/all?filter=popular'>groupes</a> d'intérêt, partagez des informations et ajoutez des nouveaux <a href='{$site->getURL()}members/popular'>collègues</a> pour rester informé et grandir votre réseau!", //CHANGE
+	'cp_newsletter:body:nothing' => "Il semble que c'était calme dans votre réseau sur GCconnex. Joignez-vous à des <a href='{$site->getURL()}groups/all?filter=popular?utm_source=notification_digest&utm_medium=email'>groupes</a> d'intérêt, partagez des informations et ajoutez des nouveaux <a href='{$site->getURL()}members/popular?utm_source=notification_digest&utm_medium=email'>collègues</a> pour rester informé et grandir votre réseau!", //CHANGE
 	'cp_newsletter:title' => "Votre résumé {$site_name} : De nouvelles activités à signaler!", 
 	'cp_newsletter:greeting' => "Bonjour %s. Voici vos notifications pour le <strong>%s</strong>",
 
@@ -172,9 +191,9 @@ $french = array(
 	'cp_new_mission:subject' => "Nouvelle Plateforme de possibilités",
 
 
-	'cp_newsletter:footer:notification_settings' => "Pour vous désabonner ou gérer ces messages, veuillez vous connecter et visiter votre <a href='{$site->getURL()}settings/notifications/%s'> Paramètres de notification</a>.",
+	'cp_newsletter:footer:notification_settings' => "Pour vous désabonner ou gérer ces messages, veuillez vous connecter et visiter votre <a href='{$site->getURL()}settings/notifications/%s?utm_source=notification_digest&utm_medium=email'> Paramètres de notification</a>.",
 	'cp_newsletter:ending' => "<p>Cordialement,</p> <p>L'équipe des OutilsGC</p>", 
-	'cp_notifications:contact_help_desk'=> "Si vous avez des questions, veuillez soumettre votre demande via le <a href='{$site->getURL()}mod/contactform/'>formulaire Contactez-nous</a>.",
+	'cp_notifications:contact_help_desk'=> "Si vous avez des questions, veuillez soumettre votre demande via le <a href='{$site->getURL()}mod/contactform/?utm_source=notification_digest&utm_medium=email'>formulaire Contactez-nous</a>.",
 
 
 	'cp_newsletter:digest:opportunities:date' => "Date limite : ",
@@ -190,11 +209,12 @@ $french = array(
 	'cp_notify:body_group_add:description' => "Vous avez été ajouté au groupe %s : <br/>",
 
 	// content edit section
-	//'cp_notify:subject:edit_content' => "%s a été mis à jour par %s", // new
-	//'cp_notify:body_edit:title' => "Ce contenu a été modifié.",	// new
-	//'cp_notify:body_edit:description' => "Cliquez ici pour voir le contenu : <a href='%s'>%s</a>", // new
-	'cp_notify:subject:edit_content' => "%s '%s' a été mis à jour par %s",
-	'cp_notify:body_edit:title' => "%s a été modifié.",
+	'cp_notify:subject:edit_content:m' => "%s '%s' a été mis à jour par %s",
+	'cp_notify:subject:edit_content:f' => "%s '%s' a été mise à jour par %s",
+
+	'cp_notify:body_edit:title:m' => "%s a été modifié.",
+	'cp_notify:body_edit:title:f' => "%s a été modifiée.",
+
 	'cp_notify:body_edit:description' => "<a href='%s'>Visualiser ou afficher un commentaire</a> <br/>
 		Vous pouvez aimer, partager et vous abonner à ce contenu dans GCconnex.",
 
@@ -216,8 +236,8 @@ $french = array(
 
 	Vous-êtes déjà sur GCconnex? Votre adresse est peut-être désuète. <a href='https://gcconnex.gc.ca/login'>Connectez-vous</a> et mettez à jour vos paramètres de comptes.<br/> ",
 
-	'cp_notify:footer:no_user' => 'Apprenez davantage au sujet de <a href=http://www.gcpedia.gc.ca/wiki/OutilsGC/GCconnex">GCconnex</a>, l’espace de travail collaboratif pour le réseautage professionnel à l\'ensemble de la fonction publique.<br/>
-	Besoin d\'aide? <a href="https://gcconnex.gc.ca/mod/contactform/">Contactez-nous</a>.',
+	'cp_notify:footer:no_user' => 'Apprenez davantage au sujet de <a href=http://www.gcpedia.gc.ca/wiki/OutilsGC/GCconnex?utm_source=notification&utm_medium=email">GCconnex</a>, l’espace de travail collaboratif pour le réseautage professionnel à l\'ensemble de la fonction publique.<br/>
+	Besoin d\'aide? <a href="https://gcconnex.gc.ca/mod/contactform/?utm_source=notification&utm_medium=email">Contactez-nous</a>.',
 	'cp_personalized_message' => "<div style='border: 1px solid #047177; padding:5px; margin-bottom:10px;'>%s vous a envoyé un message personnalisé:<br/><i>%s</i></div>",
 
 
@@ -261,15 +281,6 @@ $french = array(
 	'cp_notify:body_likes_user_update:title' => "%s aime votre nouvel avatar ou votre nouvelle connection de collègue",
 	'cp_notify:body_likes_user_update:description' => "La mise à jour de votre avatar ou votre nouvelle connection de collègue a eu une mention j'aime par %s", 
 
-	/*
-	'cp_notify:subject:likes_user_update' => "%s aime votre nouvel avatar", // Please update
-	'cp_notify:body_likes_user_update:title' => "%s aime votre nouvel avatar", // Please update
-	'cp_notify:body_likes_user_update:description' => "La mise à jour de votre avatar a eu une mention j'aime par %s", // Please update
-
-	'cp_notify:subject:likes_user_update' => "%s aime votre nouvelle connection de collègue", // Please update
-	'cp_notify:body_likes_user_update:title' => "%s aime votre nouvelle connection de collègue", // Please update
-	'cp_notify:body_likes_user_update:description' => "Votre récente connection de collègue a eu une mention j'aime par %s", // Please update
-	*/
 
 	'cp_notify:body_likes:description' => "Vous pouvez consulter votre contenu en cliquant sur le lien suivant : %s",
 
@@ -328,6 +339,7 @@ $french = array(
 	// new content posted section
 	'cp_notify_usr:subject:new_content' => "%s a publié un nouveau %s avec le titre '%s'",
 	'cp_notify_usr:subject:new_content2' => "%s a publié un nouveau %s",
+	'cp_notify_usr:subject:new_content_f' => "%s a publié une nouvelle %s avec le titre '%s'",
 	'cp_notify:subject:new_content_mas' => "Un nouveau %s a été affiché dans le groupe %s",
 	'cp_notify:subject:new_content_mas2' => "Un nouvel %s a été affiché dans le groupe %s",
 	'cp_notify:subject:new_content_fem' => "Une nouvelle %s a été affichée dans le groupe %s",
@@ -338,7 +350,12 @@ $french = array(
 
 	'cp_notify:body_new_content:title_m2' => "<a href='%s'>%s</a> a ajouté un nouveau %s intitulé <a href='%s'>%s</a>",
 	'cp_notify:body_new_content:title_m3' => "<a href='%s'>%s</a> a ajouté un nouvel %s intitulé <a href='%s'>%s</a>",
+	
 	'cp_notify:body_new_content:title_f2' => "<a href='%s'>%s</a> a ajouté une nouvelle %s intitulée <a href='%s'>%s</a>",
+
+	'cp_notify:body_new_content:title3' => "<a href='%s'>%s</a> a ajouté une nouvelle %s",
+
+	'cp_notify:body_new_content:title_answer' => "<a href='%s'>%s</a> a ajouté une nouvelle %s dans <a href='%s'>%s</a>",
 
 	'cp_notify:body_new_content:description' => "La description de leur nouvelle publication se lit comme suit : <br/> 
 		%s <br/>
@@ -458,7 +475,7 @@ $french = array(
 	// event calendar(request) section
 	'cp_notify:event_request:subject' => "%s veut ajouter %s à son calendrier ",
 	'cp_notify:body_event_request:title' => "Demande d'ajout d'un événement",
-	'cp_notify:body_event_request:description' => '%s a fait une demande pour ajouter %s à son calendrier<br><br>Pour voir la requête, veuillez cliquer ici: <a href="%s">Demande d\'ajout</a>', //  Check URL or link
+	'cp_notify:body_event_request:description' => '%s a fait une demande pour ajouter %s à son calendrier<br><br>Pour voir la requête, veuillez cliquer ici: <a href="%s">Demande d\'ajout</a>',
 
 	// event calendar (update)
 	'cp_notify:event_update:subject' => " L'événement' %s a été mis à jour",
@@ -466,15 +483,15 @@ $french = array(
 	// email notification footer text (1 and 2)	
 
 
-	'cp_notify:footer' => "Apprenez davantage au sujet des <a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Manage_Account_Settings/How_Do_I_Change_My_Notifications_Settings%3F'>notifications de GCconnex</a>.",// Check URL or link
-	'cp_notify:footer2' =>  " Besoin d’aide? <a href='".elgg_get_site_url()."mod/contactform/'>Contactez-nous</a>.<br/>Pour vous désabonner de ces notifications, connectez-vous à GCconnex et modifiez vos <a href='%s'>paramètres de notifications</a>.",
+	'cp_notify:footer' => "Apprenez davantage au sujet des <a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Manage_Account_Settings/How_Do_I_Change_My_Notifications_Settings%3F?utm_source=notification&utm_medium=email'>notifications de GCconnex</a>.",
+	'cp_notify:footer2' =>  " Besoin d’aide? <a href='".elgg_get_site_url()."mod/contactform/?utm_source=notification&utm_medium=email'>Contactez-nous</a>.<br/>Pour vous désabonner de ces notifications, connectez-vous à GCconnex et modifiez vos <a href='%s'>paramètres de notifications</a>.",
 
 
 
 	// texts that will be displayed in the site pages
 	'cp_notifications:usersettings:title' => 'Paramètres des notifications',
 	'label:email' => "Courriel",
-	'label:site' => "Site", // new
+	'label:site' => "Site", 
 
 	'cp_notify:panel_title' => "Paramètres d'abonnement <br> (Modifiez votre %s)",
 	'cp_notify:quicklinks' => 'Liens rapides aux abonnements',

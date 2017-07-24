@@ -38,6 +38,7 @@ echo elgg_view('input/hidden', array(
         'name' => 'subject',
         'id' => 'subject',
 		'value' => $reply_title,
+    'required' => 'required',
 	));
 	?>
 </div>
@@ -47,6 +48,8 @@ echo elgg_view('input/hidden', array(
 		'name' => 'body',
         'id' => 'body',
 		'value' => '',
+    'required' => 'required',
+    'class' => 'validate-me',
 	));
 	?>
 </div>

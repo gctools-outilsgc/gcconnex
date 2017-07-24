@@ -49,10 +49,10 @@ $album->owner_guid = elgg_get_logged_in_user_guid();
 $album->access_id = $access_id;
 $album->title = $title;
 $album->title2 = $title2;
-$album->title3 = gc_implode_translation($title,$title2);
+$album->title = gc_implode_translation($title,$title2);
 $album->description = $description;
 $album->description2 = $description2;
-$album->description3 = gc_implode_translation($description,$description2);
+$album->description = gc_implode_translation($description,$description2);
 
 if($tags) {
         $album->tags = string_to_tag_array($tags);

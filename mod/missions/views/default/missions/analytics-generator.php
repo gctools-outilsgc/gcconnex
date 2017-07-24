@@ -85,6 +85,9 @@ else {
 		// Separates the missions according to the user given separator into different series. These series are later stacked upon each other in the graph.
 		$mission_set = mm_analytics_separate_missions_by_values($mission_set, $separator);
 
+		// Add reports to the mission_set if required
+		mm_analytics_add_reports_by_dates($timescale_array[0], $timescale_array[count($timescale_array) - 1], $separator, $mission_set);
+
 		// Some additional bar options which control bar width and the x-axis label alignment.
 		switch ($time_interval) {
 			case 'missions:year':

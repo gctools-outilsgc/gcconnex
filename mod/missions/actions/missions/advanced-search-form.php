@@ -76,7 +76,7 @@ if ($err != '') {
     if (! $returned) {
         forward(REFERER);
     } else {
-        elgg_clear_sticky_form('advancedfill');
+        //elgg_clear_sticky_form('advancedfill');
         if($advanced_form['hidden_return']) {
         	forward(REFERER);
         }

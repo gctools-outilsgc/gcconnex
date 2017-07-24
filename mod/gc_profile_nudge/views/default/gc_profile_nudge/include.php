@@ -12,6 +12,6 @@ $content = elgg_view('output/url', array(
 ));
 
 //after page is loaded click link
-$content .= '<script> window.onload = function () { document.getElementById("nudge").click(); } </script>';
+$content .= '<script>$(function() { setTimeout(function(){ $("#nudge").click(); }, 2500); });</script>';
 
 echo $content;

@@ -27,24 +27,24 @@ if (isset($vars['object']) && is_array($vars['object']) && sizeof($vars['object'
 
             if($type=='error')
             {
-                echo '<div class="alert alert-'.$type.' clearfix" >'; //elgg-system-messages custom-message
+                echo '<li data-dismiss="alert" class="fade in alert alert-'.$type.' clearfix" >'; //elgg-system-messages custom-message
             }else
             {
-                echo '<div class="elgg-system-messages clearfix custom-message alert alert-'.$type.' ">'; 
+                echo '<li data-dismiss="alert" class="fade in elgg-system-messages clearfix custom-message alert alert-'.$type.' ">';
             }
             echo '<ul class="list-unstyled" >';
-            echo '<a class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></a>';
+            echo '<a href="#" class="close" tabindex="0" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></a>';
         }
 		foreach ($list as $message) {
             $num=$num+1;
-			echo '<li class="col-sm-11" onclick=" event.stopPropagation();">'; //this stops users from clicking system alert
+			echo '<li class="col-sm-11">';
 			echo '<span role="alert">'.elgg_autop($message) .'</span>';
 			echo '</li>';
 		}
 	}
     if($num>0){
         echo '</ul>';
-        echo '</div>';
+        echo '</li>';
     }
 }
 

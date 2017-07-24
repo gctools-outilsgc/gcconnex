@@ -17,8 +17,15 @@ if (elgg_is_logged_in()) {
          
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
+        $db_config = new \Elgg\Database\Config($CONFIG);
+        if ($db_config->isDatabaseSplit()) {
+            $read_settings = $db_config->getConnectionConfig(\Elgg\Database\Config::READ);
+        } else {    
+            $read_settings = $db_config->getConnectionConfig(\Elgg\Database\Config::READ_WRITE);
+        }
+
           //connect to database  , "3306"
-        $connection = mysqli_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, $CONFIG->dbname);
+        $connection = mysqli_connect($read_settings["host"], $read_settings["user"], $read_settings["password"], $read_settings["database"]);
 
           //run the store proc
           //call GET_Completness(152, @total, @SkillsPerc, @BasicProfPerc, @AboutPerc, @EduPerc, @WorkPerc, @AvatarPerc);

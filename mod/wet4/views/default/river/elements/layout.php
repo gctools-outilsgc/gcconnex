@@ -23,7 +23,13 @@ if(intval($_SESSION['Suggested_friends'])==5 && elgg_is_logged_in())
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
         //connect to database  , "3306"
-        $connection = mysqli_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, $CONFIG->dbname);
+        $db_config = new \Elgg\Database\Config($CONFIG);
+        if ($db_config->isDatabaseSplit()) {
+            $read_settings = $db_config->getConnectionConfig(\Elgg\Database\Config::READ);
+        } else {    
+            $read_settings = $db_config->getConnectionConfig(\Elgg\Database\Config::READ_WRITE);
+        }
+        $connection = mysqli_connect($read_settings["host"], $read_settings["user"], $read_settings["password"], $read_settings["database"]);
         $result = mysqli_query($connection, "call GET_suggestedFriends({$user_guid}, 3);");
 
         if(intval($result->num_rows)>0){

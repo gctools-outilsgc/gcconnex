@@ -9,6 +9,10 @@ When prompted, enter a root password for MySQL.
 #### Fork and Clone GCConnex Github Repo
     git clone -b gcconnex https://github.com/gctools-outilsgc/gcconnex.git
 
+#### Install Composer dependencies
+Setup [Composer](https://getcomposer.org/download/) then install the third-party dependencies
+    composer install
+
 #### Create data directory
     mkdir gcconnex_data
 
@@ -59,7 +63,9 @@ The final step to getting the GCconnex experience is to reorder and
 enable/disable plugins in the Administration section of your installation.
 
 A quick way to sort and activate plugins in the correct order is to activate
-the "Elgg plugin reorder plugin".
+the "Plugin Loader" plugin, then open the
+`Configure`->`Utilities`->`Plugin Loader` menu and click on the `Import`
+button.
 
 ### Elgg Installation Instructions
 http://learn.elgg.org/en/1.x/intro/install.html

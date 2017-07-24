@@ -5,6 +5,10 @@
  *
  * License: Creative Commons Attribution 3.0 Unported License
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
+ *
+ *
+ * MODIFICATION
+ * Nick - Modifed search result list / Modified headings
  */
 
 /*
@@ -62,7 +66,7 @@ $advanced_field = elgg_view('page/elements/hidden-field', array(
 ));
 
 if($result_set) {
-	$search_set = '<h4>' . elgg_echo('missions:search_results') . '</h4>';
+	$search_set = '<h2>' . elgg_echo('missions:search_results') . '</h2>';
 	$count = $_SESSION['candidate_count'];
 
 	$max_reached = '';
@@ -71,6 +75,8 @@ if($result_set) {
 	}
 	$search_set .= elgg_view_entity_list(array_slice($result_set, $offset, $entities_per_page), array(
 			'count' => $count,
+            'list_class' => 'clearfix row mrgn-bttm-md candidate-holder',
+            'item_class' => 'col-md-3 col-sm-6 candidate-panel ',
 			'offset' => $offset,
 			'limit' => $entities_per_page,
 			'pagination' => true,
@@ -87,7 +93,7 @@ if($result_set) {
 ?>
 
 <div>
-	<h4><?php echo elgg_echo('missions:find_candidates') . ':'; ?></h4>
+	<h2 class="h4"><?php echo elgg_echo('missions:find_candidates') . ':'; ?></h2>
 	<?php 
 		//echo $simple_search_form;
 		echo $advanced_field;

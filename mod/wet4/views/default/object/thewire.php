@@ -63,7 +63,8 @@ if (elgg_instanceof($container, "group") && ($container->getGUID() != elgg_get_p
 }
 
 // show text different in widgets
-$text = htmlspecialchars_decode($post->description, ENT_QUOTES);
+$text = urldecode(htmlspecialchars_decode($post->description, ENT_QUOTES));
+
 if (elgg_in_context("widgets")) {
 	$text = elgg_get_excerpt($text, 140);
 	

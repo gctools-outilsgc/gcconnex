@@ -24,7 +24,7 @@ if (empty($vars['q'])) {
 }
 else {
   $query = sanitize_string($vars['q']);
-  $options['wheres'][] = "g.name LIKE '{$query}%'";
+  $options['wheres'][] = "g.name LIKE '%{$query}%'";
 }
 
 $groups = elgg_get_entities($options);

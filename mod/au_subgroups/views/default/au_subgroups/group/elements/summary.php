@@ -4,6 +4,7 @@ namespace AU\SubGroups;
 
 $group = $vars['entity'];
 $parent = get_parent_group($group);
+$lang = get_current_language();
 
 if ($parent) {
 	?>
@@ -12,7 +13,7 @@ if ($parent) {
 		<?php
 		$link = elgg_view('output/url', array(
 			'href' => $parent->getURL(),
-			'text' => $parent->name,
+			'text' => gc_explode_translation($parent->title,$lang),
 			'is_trusted' => true
 		));
 

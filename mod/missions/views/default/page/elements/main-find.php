@@ -16,6 +16,10 @@ if($_SESSION['mission_entities_per_page']) {
 
 $_SESSION['mission_search_switch_subtype'] = 'open';
 
+if($_GET['clear'] == true){
+elgg_clear_sticky_form('searchsimplefill');
+elgg_clear_sticky_form('advancedfill');
+}
 // Simple search form.
 $simple_search_form = elgg_view_form('missions/search-simple');
 
@@ -125,7 +129,7 @@ foreach($entity_list as $entity){
 }*/
     ?>
     <div class="col-sm-8">
-	<h4 class="mrgn-tp-md mrgn-bttm-0"><?php echo elgg_echo('missions:search_for_opportunities') . ':'; ?></h4>
+	<h2 class="h4 mrgn-tp-md mrgn-bttm-0"><?php echo elgg_echo('missions:search_for_opportunities') . ':'; ?></h2>
 	<?php 
 		//echo $simple_search_form;
 		echo $advanced_field;
@@ -140,9 +144,9 @@ foreach($entity_list as $entity){
 <div class="col-sm-12 TEST">
     <div class="col-sm-12">
         <div class="">
-            <h4 class="mrgn-tp-sm mrgn-bttm-0">
+            <h2 class="h4 mrgn-tp-sm mrgn-bttm-0">
                  <?php echo elgg_echo('missions:latest_opportunities'); ?>
-            </h4>
+            </h2>
         </div>
         <div class="">
             <div class="mrgn-tp-sm">

@@ -11,7 +11,7 @@ function gc_profile_nudge_init(){
     if( elgg_is_logged_in() && !elgg_is_admin_logged_in() ){
 
     	$reminder_time = elgg_get_plugin_setting('reminder_time', 'gc_profile_nudge');
-		
+
 		if( $reminder_time ){
 	    	$in_days = $reminder_time * 86400; // 1 day = 86400 seconds
 

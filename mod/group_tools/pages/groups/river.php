@@ -55,11 +55,9 @@ if ($type != 'all') {
 // build page elements
 $title = elgg_echo('groups:activity');
 
-if($group->title3){
-	elgg_push_breadcrumb(gc_explode_translation($group->title3,$lang), $group->getURL());
-}else{
-	elgg_push_breadcrumb($group->name, $group->getURL());
-}
+
+	elgg_push_breadcrumb(gc_explode_translation($group->title,$lang), $group->getURL());
+
 
 
 elgg_push_breadcrumb($title);

@@ -260,11 +260,9 @@ function file_tools_folder_breadcrumb_hook($hook, $type, $returnvalue, $params) 
 	if (!empty($folder) && elgg_instanceof($folder, "object", FILE_TOOLS_SUBTYPE)) {
 		$container = $folder->getContainerEntity();
 		
-if($folder->title3){
-	$title = gc_explode_translation($folder->title3,$lang);
-}else{
-	$title = $folder->title;
-}
+
+	$title = gc_explode_translation($folder->title,$lang);
+
 
 		$priority = 9999999;
 		$folder_options = array(

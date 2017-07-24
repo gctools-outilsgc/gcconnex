@@ -156,14 +156,14 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
           */
 
           if(elgg_instanceof($my_page_entity, 'group')){
-              $desc = elgg_strip_tags(elgg_get_excerpt($my_page_entity->description));
-              $briefdesc = $my_page_entity->briefdescription;
+              $desc = elgg_strip_tags(elgg_get_excerpt(gc_explode_translation($my_page_entity->description,get_current_language())));
+              $briefdesc = gc_explode_translation($my_page_entity->briefdescription,get_current_language());
           } else if(elgg_instanceof($my_page_entity, 'user')) {
-              $desc = elgg_echo('profile:title', array($my_page_entity->name));
-              $briefdesc = elgg_echo('profile:title', array($my_page_entity->name));
+              $desc = elgg_echo('profile:title', array(gc_explode_translation($my_page_entity->name,get_current_language())));
+              $briefdesc = elgg_echo('profile:title', array(gc_explode_translation($my_page_entity->name,get_current_language())));
           } else {
-              $desc = $my_page_entity->title;
-              $briefdesc = $my_page_entity->title;
+              $desc = gc_explode_translation($my_page_entity->title,get_current_language());
+              $briefdesc = gc_explode_translation($my_page_entity->title,get_current_language());
           }
 
           $pubDate = date ("Y-m-d", elgg_get_excerpt($my_page_entity->time_created));
@@ -176,7 +176,8 @@ wet-boew.github.io/wet-boew/License-en.html / wet-boew.github.io/wet-boew/Licenc
           $briefdesc = $vars['title'];
       }
 
-      $creator =  elgg_get_page_owner_entity()->name;
+      $creator = gc_explode_translation(elgg_get_page_owner_entity()->name,get_current_language());
+
       if(!$creator){
           $creator = 'GCconnex';
       }

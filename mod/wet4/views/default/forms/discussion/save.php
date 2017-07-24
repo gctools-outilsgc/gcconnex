@@ -16,6 +16,24 @@ $container_guid = elgg_extract('container_guid', $vars);
 $guid = elgg_extract('guid', $vars, null);
 
 
+
+// decode json into English / French parts
+$json_title = json_decode($title);
+$json_desc = json_decode(elgg_extract('description', $vars, ''));
+
+if ( $json_title ){
+  $title2 = $json_title->fr;
+  $title = $json_title->en;
+
+}
+
+if ( $json_desc ){
+ $desc2 = $json_desc->fr;
+ $desc = $json_desc->en;
+}
+
+
+
 $btn_language =  '<ul class="nav nav-tabs nav-tabs-language">
   <li id="btnen"><a href="#" id="btnClicken">'.elgg_echo('lang:english').'</a></li>
   <li id="btnfr"><a href="#" id="btnClickfr">'.elgg_echo('lang:french').'</a></li>
@@ -26,24 +44,24 @@ echo $btn_language;
 <div class="tab-content tab-content-border">
 <div class="mrgn-bttm-md en">
 	<label for="title"><?php echo elgg_echo('title:en'); ?></label><br />
-	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title, 'id' => 'title')); ?>
+	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title, 'id' => 'title', 'required '=> "required")); ?>
 </div>
 
 <div class="mrgn-bttm-md fr">
 	<label for="title2"><?php echo elgg_echo('title:fr'); ?></label><br />
-	<?php echo elgg_view('input/text', array('name' => 'title2', 'value' => $title2, 'id' => 'title2')); ?>
+	<?php echo elgg_view('input/text', array('name' => 'title2', 'value' => $title2, 'id' => 'title2', 'required '=> "required")); ?>
 </div>
 <div class="quick-start-collapse">
 
 
 <div class="mrgn-bttm-md en">
 	<label for="description"><?php echo elgg_echo('groups:topicmessage'); ?></label>
-	<?php echo elgg_view('input/longtext', array('name' => 'description', 'value' => $desc, 'id' => 'description')); ?>
+	<?php echo elgg_view('input/longtext', array('name' => 'description', 'value' => $desc, 'id' => 'description', 'class' => 'validate-me', 'required '=> "required")); ?>
 </div>
 
 <div class="mrgn-bttm-md fr">
 	<label for="description2"><?php echo elgg_echo('groups:topicmessage2'); ?></label>
-	<?php echo elgg_view('input/longtext', array('name' => 'description2', 'value' => $desc2, 'id' => 'description2')); ?>
+	<?php echo elgg_view('input/longtext', array('name' => 'description2', 'value' => $desc2, 'id' => 'description2', 'class' => 'validate-me', 'required '=> "required")); ?>
 </div>
 <div>
 	<label for="tags"><?php echo elgg_echo('tags'); ?></label>
@@ -101,6 +119,7 @@ if(get_current_language() == 'fr'){
         jQuery('.en').hide();
         jQuery('#btnfr').addClass('active');
 
+        $('#description').removeClass('validate-me');
     </script>
 <?php
 }else{
@@ -109,6 +128,8 @@ if(get_current_language() == 'fr'){
         jQuery('.en').show();
         jQuery('.fr').hide();
         jQuery('#btnen').addClass('active');
+
+        $('#description2').removeClass('validate-me');
     </script>
 <?php
 }
@@ -127,12 +148,82 @@ $(selector).on('click', function(){
                jQuery('.fr').show();
                jQuery('.en').hide();
 
+               $('#description').removeClass('validate-me');
+               $('#description2').addClass('validate-me');
         });
 
           jQuery('#btnClicken').click(function(){
                jQuery('.en').show();
                jQuery('.fr').hide();
 
+               $('#description').addClass('validate-me');
+               $('#description2').removeClass('validate-me');
         })
+});
+
+$(".quick-start-form-tabindex").each(function(){
+  $(this).validate({
+ invalidHandler: function(form, validator) {
+           var errors = validator.numberOfInvalids();
+           if (errors) {
+
+             var element = validator.errorList[0].element;
+
+             //check to see if textarea
+             if($(element).is('textarea:hidden')){
+               for(var i in CKEDITOR.instances){
+                 if(CKEDITOR.instances[i].name == $(element).attr('name') || CKEDITOR.instances[i].name == $(element).attr('id')){
+                   $('#cke_'+$(element).attr('id')).attr('aria-labelledby', $(element).attr('id')+'-error');
+                   CKEDITOR.instances[i].focus();
+                 }
+               }
+             } else {
+               validator.errorList[0].element.focus();
+             }
+           }
+       },
+       submitHandler: function(form) {
+         $(form).find('button').prop('disabled', true);
+         form.submit();
+       },
+ ignore: ':hidden:not(.validate-me)',
+  rules: {
+    generic_comment: {
+       required: true
+   },
+   description: {
+      required: true
+   },
+    description2: {
+      required: true
+    },/*
+   password2: {
+     required: true,
+     equalTo: "#password"
+   },
+   email: {
+     required: true,
+     equalTo: "#email_initial"
+   }*/
+ }
+});
+});
+require(['ckeditor'], function(CKEDITOR) {
+ //deal with copying the ckeditor text into the actual textarea
+    CKEDITOR.on('instanceReady', function () {
+       $.each(CKEDITOR.instances, function (instance) {
+            CKEDITOR.instances[instance].document.on("keyup", CK_jQ);
+            CKEDITOR.instances[instance].document.on("paste", CK_jQ);
+          //  CKEDITOR.instances[instance].document.on("keypress", CK_jQ);
+          //  CKEDITOR.instances[instance].document.on("blur", CK_jQ);
+         //  CKEDITOR.instances[instance].document.on("change", CK_jQ);
+        });
+    });
+
+    function CK_jQ() {
+        for (instance in CKEDITOR.instances) {
+            CKEDITOR.instances[instance].updateElement();
+      }
+    }
 });
 </script>

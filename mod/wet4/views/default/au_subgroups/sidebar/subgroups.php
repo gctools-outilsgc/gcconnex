@@ -21,11 +21,9 @@ if (!$subgroups) {
 } else {
 	foreach ($subgroups as $subgroup) {
 
-		if ($subgroup->title3){
-			$subgroup_name = gc_explode_translation( $subgroup->title3, $lang);
-		}else{
-			$subgroup_name = $subgroup->name;
-		}
+		
+			$subgroup_name = gc_explode_translation( $subgroup->title, $lang);
+
 
 		$body .= elgg_view_image_block(
 				elgg_view_entity_icon($subgroup, 'tiny'), elgg_view('output/url', array(

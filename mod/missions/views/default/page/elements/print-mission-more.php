@@ -196,49 +196,49 @@ if(strpos($button_set['button_three'], 'accept-button') !== false) {
 
 	<div>
 		<div>
-			<h4><?php echo elgg_echo('mission:opportunity_details') . ':'; ?></h4>
+			<h3 class='h4' style="margin:0; padding:8px 2px 0 0;"><?php echo elgg_echo('mission:opportunity_details') . ':'; ?></h3>
 		</div>
 		<div class="clearfix">
-			<h5><?php echo elgg_echo('missions:program_area')  . ':';?></h5>
+			<h4 class='h5' style="margin:8px 0 0 0; display:inline-block;"><?php echo elgg_echo('missions:program_area')  . ':';?></h4>
 			<span  name="mission-program-area"><?php echo elgg_echo($mission->program_area);?></span>
 		</div>
     <div class="clearfix">
         <?php echo $print_groupandlevel; ?>
     </div>
 		<div class="clearfix">
-                <h5><?php echo elgg_echo('missions:opportunity_number')  . ':';?></h5>
+                <h4 class='h5' style="margin:8px 0 0 0; display:inline-block;"><?php echo elgg_echo('missions:opportunity_number')  . ':';?></h4>
 			<span name="mission-number"><?php echo $mission->number;?></span>
 		</div>
 		<div class="clearfix">
-                <h5><?php echo elgg_echo('missions:ideal_start_date') . ':';?></h5>
+                <h4 class='h5' style="margin:8px 0 0 0; display:inline-block;"><?php echo elgg_echo('missions:ideal_start_date') . ':';?></h4>
 			<span name="mission-start-date"><?php echo $mission->start_date;?></span>
 		</div>
 		<div class="clearfix">
-                <h5><?php echo elgg_echo('missions:ideal_completion_date') . ':';?></h5>
+                <h4 class='h5' style="margin:8px 0 0 0; display:inline-block;"><?php echo elgg_echo('missions:ideal_completion_date') . ':';?></h4>
 			<span name="mission-completion-date"><?php echo $clean_completion_date;?></span>
 		</div>
 		<div class="clearfix">
-                <h5><?php echo elgg_echo('missions:deadline') . ':';?></h5>
+                <h4 class='h5' style="margin:8px 0 0 0; display:inline-block;"><?php echo elgg_echo('missions:deadline') . ':';?></h4>
 			<span name="mission-deadline"><?php echo $mission->deadline;?></span>
 		</div>
 		<div class="clearfix">
-                <h5><?php echo elgg_echo('missions:work_remotely') . ':';?></h5>
+                <h4 class='h5' style="margin:8px 0 0 0; display:inline-block;"><?php echo elgg_echo('missions:work_remotely') . ':';?></h4>
 			<span name="mission-remotely"><?php echo $clean_remotely;?></span>
 		</div>
 		<div class="clearfix">
-                <h5><?php echo elgg_echo('missions:openess_sentence', array(strtoupper($department_abbr)));?></h5>
+                <h4 class='h5' style="margin:8px 0 0 0; display:inline-block;"><?php echo elgg_echo('missions:openess_sentence', array(strtoupper($department_abbr)));?></h4>
 			<span name="mission-openess"><?php echo $clean_openess;?></span>
 		</div>
 		<div class="clearfix">
-                <h5><?php echo elgg_echo('missions:opportunity_location') . ':';?></h5>
+                <h4 class='h5' style="margin:8px 0 0 0; display:inline-block;"><?php echo elgg_echo('missions:opportunity_location') . ':';?></h4>
 			<span name="mission-location"><?php echo elgg_echo($mission->location);?></span>
 		</div>
 		<div class="clearfix">
-                <h5><?php echo elgg_echo('missions:security_level') . ':';?></h5>
+                <h4 class='h5' style="margin:8px 0 0 0; display:inline-block;"><?php echo elgg_echo('missions:security_level') . ':';?></h4>
 			<span name="mission-security"><?php echo $clean_security;?></span>
 		</div>
 		<div class="clearfix">
-                <h5><?php echo elgg_echo('missions:key_skills_opportunity') . ':';?></h5>
+                <h4 class='h5' style="margin:8px 0 0 0; display:inline-block;"><?php echo elgg_echo('missions:key_skills_opportunity') . ':';?></h4>
 			<span name="mission-skills"><?php echo elgg_get_excerpt($clean_skills, 500);?></span>
 		</div>
 	</div>

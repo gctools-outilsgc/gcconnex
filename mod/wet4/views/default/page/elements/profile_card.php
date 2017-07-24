@@ -32,7 +32,7 @@ $department = elgg_get_logged_in_user_entity()->get('department');
 
 
     <div class="col-xs-8">
-        <h4 class="mrgn-tp-sm mrgn-bttm-0"><?php echo $displayName?></h4>
+        <div class="mrgn-tp-sm mrgn-bttm-0 h4"><?php echo $displayName?></div>
         <div><?php echo  $email ?></div>
         <div><?php echo $department; ?></div>
         <a href="<?php echo  $site_url ?>profile/<?php echo  $user ?>" class="btn btn-primary mrgn-tp-sm" style='color:white;'><?php echo elgg_echo('userMenu:profile') ?></a>

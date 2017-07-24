@@ -15,7 +15,7 @@ if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gs
   
   } else {
 ?>
-    <section id="wb-lng" class="visible-md visible-lg text-right">
+    <section id="wb-lng" class="visible-md visible-lg text-right col-sm-1">
             <h2 class="wb-inv"><?php echo elgg_echo('wet:LangSel')?></h2>
             <div class="row">
                 <div class="col-md-12">

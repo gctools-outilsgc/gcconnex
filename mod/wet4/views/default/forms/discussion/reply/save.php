@@ -65,7 +65,8 @@ FORM;
 	$description_input = elgg_view('input/longtext', array(
 		'name' => 'description',
 		'value' => $value,
-        'class' => '',
+        'class' => 'validate-me',
+				'required '=> "required",
         'id' => 'box-'. $reply->guid,
 	));
 
@@ -74,7 +75,7 @@ echo <<<FORM
 	<div>
 		<label for="box-$reply->guid">$reply_label </label>
 		$description_input
-        
+
 	</div>
 	<div>
 		$reply_guid_input
@@ -84,4 +85,3 @@ echo <<<FORM
 </div>
 FORM;
 }
-

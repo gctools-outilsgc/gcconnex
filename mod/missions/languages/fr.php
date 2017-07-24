@@ -7,6 +7,11 @@
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
 return array(
+        //accessibility context
+    "mission:button:oppurtunity" => '<span class="wb-inv"> la possibilité "%s"</span>',
+    "mission:button:apply" => '<span class="wb-inv"> à la possibilité "%s"</span>',
+    "mission:button:withdraw" => '<span class="wb-inv"> de la possibilité "%s"</span>',
+    "mission:button:find" => '<span class="wb-inv"> les candidats pour la possibilité "%s"</span>',
 	    // labels
 
     "item:object:mission" =>	"Plateforme de possibilités",
@@ -47,7 +52,7 @@ return array(
     "missions:opportunity_status" => "Statut de la possibilité",
     "missions:ideal_start_date" =>	"Date de début idéale",
     "missions:ideal_completion_date" =>	"Date d'achèvement idéale",
-    "missions:key_skills_opportunity" =>	"Compétences clés offertes par la possibilité",
+    "missions:key_skills_opportunity" =>	"Compétences recherchées chez le/la candidat(e)",
     "missions:application_deadline" =>	"Date limite d'inscription",
     "missions:opportunity_description" =>	"Description de la possibilité",
     "missions:time_commitment" =>"Période d'engagement",
@@ -643,6 +648,7 @@ L'approbation de votre superviseur est nécessaire avant que vous soyez en mesur
 "missions:sort_by" =>     "Trier les possibilités par",
 "missions:sort_options" =>     "Filtrer et trier",
 'missions:clear_filter'=>"Enlever le filtre",
+'missions:clear_search'=>"Enlever la recherche",
 "mission:following_order" =>  "Dans l'ordre suivant",
 "missions:sort" =>    "Trier",
 "missions:last_results_have_expired" => "The results of your last search have expired.",  //Missing transltation
@@ -651,6 +657,8 @@ L'approbation de votre superviseur est nécessaire avant que vous soyez en mesur
 "missions:applicant_phone" =>     "Numéro de téléphone du candidat",
 "missions:please_give_reason_for_declination" =>  "Veuillez fournir un motif pour le refus de cette possibilité.",
 "missions:offered" => "Offert",
+"missions:inprogress" => "En cours",
+"missions:declined" => "Refusé",
 "missions:settings:analytics_on" =>   "Afficher l'onglet des analytiques?",
 "missions:cannot_cancel_mission_with_participants" =>     "Veuillez supprimer tout participant actif et tout participant auxquels vous avez envoyé une offre avant la désactivation de cette possibilité.",
 "missions:required" =>    "(requis)",
@@ -697,7 +705,7 @@ Vous pouvez inviter n'importe quel employé à votre possibilité, qu'il figure 
 	"missions:virtual_opportunity" => "Possibilité virtuelle",
 	"missions:limited_by_department" => "Limité par département",
 	"missions:separate_missions_by" => "Possibilités séparées par",
-	"missions:state" => "Publié/Achevé/Annulé",
+	"missions:state" => "Transactions",
 	"missions:posted" => "Publié",
 	"missions:not_declared" => "Non déclaré",
 	"missions:not_virtual_opportunity" => "Pas une possibilité virtuelle",
@@ -730,4 +738,9 @@ Vous pouvez inviter n'importe quel employé à votre possibilité, qu'il figure 
     "missions:groupandlevel"=>"Groupe/ou de classification",
     "missions:gl:group"=>"Group",
     "missions:gl:level"=>"Niveau",
+    "missions:search:Refine" => 'Redéfinir la recherche',
+    "missions:search_value" => 'Valeurs de recherche',
+    "missions:filter" => "Filtrer par:",
+    "missions:filter:role" => "Rôle:"
 );
+

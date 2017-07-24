@@ -61,19 +61,12 @@ if (!empty($reshare)) {
             </div>';
         }
 
-
-
-
-
-	if(!empty($reshare->title3)){
-		$post_value = gc_explode_translation($reshare->title3,$lang);
-	} elseif (!empty($reshare->title)) {
-		$post_value = $reshare->title;
-	} elseif (!empty($reshare->name)) {
-		$post_value = $reshare->name;
-	} elseif (!empty($reshare->description)) {
-		$post_value = elgg_get_excerpt($reshare->description, 140);
-	}
+if(!empty($reshare->title))
+	$post_value = gc_explode_translation($reshare->title,$lang);
+elseif (!empty($reshare->name))
+	$post_value = gc_explode_translation($reshare->name,$lang);
+elseif (!empty($reshare->description))
+	$post_value = gc_explode_translation(elgg_get_excerpt($reshare->description, 140),$lang);
 }
 
 $count_down = "<span>$char_limit</span> $chars_left";
@@ -92,6 +85,7 @@ $post_input = elgg_view("input/plaintext", array(
 	"rows" => $num_lines,
 	"value" => htmlspecialchars_decode($post_value, ENT_QUOTES),
 	"data-max-length" => $char_limit,
+	'required '=> "required",
 ));
 
 $submit_button = elgg_view("input/submit", array(

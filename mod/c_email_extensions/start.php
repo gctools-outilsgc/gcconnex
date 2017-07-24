@@ -10,4 +10,5 @@ function c_email_extensions_init() {
 
 	$action_path = elgg_get_plugins_path() . 'c_email_extensions/actions/c_email_extensions';
 	elgg_register_action('c_email_extensions/delete', "$action_path/delete.php");
+	elgg_register_action('c_email_extensions/edit', "$action_path/edit.php");
 }

@@ -30,11 +30,8 @@ if (!$album) {
 	return true;
 }
 
-if($album->title3){
-	$album_title = gc_explode_translation($album->title3,$lang);
-}else{
-	$album_title = $album->title;
-}
+	$album_title = gc_explode_translation($album->title,$lang);
+
 $album_link = elgg_view('output/url', array(
 	'href' => $album->getURL(),
 	'text' => $album_title,
@@ -75,12 +72,8 @@ if (count($images) == 1) {
 	if ($responses) {
 		$responses = "<div class=\"elgg-river-responses\">$responses</div>";
 	}
-	if($images[0]->title && $images[0]->title2){
-		$image_title3 = gc_implode_translation($images[0]->title, $images[0]->title2);
-		$image_title = gc_explode_translation($image_title3,$lang);
-}else{
-	$image_title = $images[0]->getTitle();
-}
+	$image_title = gc_explode_translation($images[0]->title,$lang);
+
 	$image_link = elgg_view('output/url', array(
 		'href' => $images[0]->getURL(),
 		'text' => $image_title,

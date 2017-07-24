@@ -108,15 +108,12 @@ Accéder à ce fichier et le commenter:
 		/**
 		* Error messages
 		*/
-'file:none' => "No files.",
-'file:uploadfailed' => "Sorry, we could not save your file.",  
-'file:downloadfailed' => "Sorry, this file is not available at this time.",
-'file:deletefailed' => "Your file could not be deleted at this time.",
-'file:noaccess' => "You do not have permissions to change this file.",
-'file:nofile' => "You must select a file.",
+	'file:none' => "No files.",
+	'file:uploadfailed' => "Sorry; we could not save your file.",
+	'file:downloadfailed' => "Sorry; this file is not available at this time.",
+	'file:deletefailed' => "Your file could not be deleted at this time.",
+	'file:noaccess' => "You do not have permissions to change this file",
+	'file:nofile' => "You must select a file",
 
-
-
-	
 );
 

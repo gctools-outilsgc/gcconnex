@@ -28,30 +28,29 @@ if (is_array($profile_fields) && count($profile_fields) > 0) {
 		if ($valtype == 'tags') {
 			$options['tag_names'] = $key;
 		}
-if($group->description3){
-	$description = gc_explode_translation($group->description3,$lang);
-}else{
-	$description = $group->description;
-}
+
+	$description = gc_explode_translation($group->description,$lang);
+
         if($key == 'description'){
 
 				// identify available content
-			if(($group->description2) && ($group->description)){
-				echo'<div id="change_language" class="change_language">';
-				if (get_current_language() == 'fr'){
-					
-					?>			
-					<span id="indicator_language_en" onclick="change_en('.group-desc');"><span id="en_content" class="testClass hidden" ><?php echo $group->description;?></span><span id="en_content" class="testClass hidden" ><?php echo $group->description2;?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
+$description_json = json_decode($group->description);
+if( $description_json->en && $description_json->fr ){
+	echo'<div id="change_language" class="change_language">';
+	if (get_current_language() == 'fr'){
+
+		?>			
+		<span id="indicator_language_en" onclick="change_en('.group-desc');"><span id="en_content" class="testClass hidden" ><?php echo $description_json->en;?></span><span id="fr_content" class="testClass hidden" ><?php echo $description_json->fr;?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
 			
-					<?php
-				}else{
-							
-					?>			
-					<span id="indicator_language_fr" onclick="change_fr('.group-desc');"><span id="en_content" class="testClass hidden" ><?php echo $group->description;?></span><span id="fr_content" class="testClass hidden" ><?php echo $group->description2;?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
-					<?php	
-				}
-				echo'</div>';
-			}
+		<?php
+	}else{
+		?>		
+			
+		<span id="indicator_language_fr" onclick="change_fr('.group-desc');"><span id="en_content" class="testClass hidden" ><?php echo $description_json->en;?></span><span id="fr_content" class="testClass hidden" ><?php echo $description_json->fr;?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
+		<?php	
+	}
+	echo'</div>';
+}
 
             echo "<div class=\"{$even_odd} panel panel-custom\">";
                 echo '<div class="panel-heading clearfix">';

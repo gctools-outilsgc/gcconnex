@@ -86,7 +86,7 @@ requirejs( ["fileinput"], function() {
         allowedPreviewMimeTypes: ['image/jpeg', 'image/jpg', 'image/png', 'image/bmp', 'image/gif', 'text/plain'], //only allow preview for these file types
         language: elgg.get_language(),
         //maxFileSize: 10000,
-        allowedFileExtensions: get_file_tools_settings(),
+        allowedFileExtensions: get_file_tools_settings('multi'),
         maxFileCount: 10,
         uploadUrl: elgg.normalize_url('/mod/multi_file_upload/actions/file/upload.php'),
         maxFilePreviewSize: 10240,

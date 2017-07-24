@@ -70,11 +70,11 @@ else
             echo "<p><li><strong>".render_headers($detailed_header,'',$language_preference, sizeof($detailed_contents))."</strong></li>";
 
           } elseif ($detailed_header === 'friend_request') {
-            echo "<p><li><strong><a href='{$site->getURL()}friend_request/{$to->username}'>".sizeof($detailed_contents).' '.render_headers($detailed_header,'',$language_preference, sizeof($detailed_contents))."</a></strong></li>";
+            echo "<p><li><strong><a href='{$site->getURL()}friend_request/{$to->username}?utm_source=notification_digest&utm_medium=email'>".sizeof($detailed_contents).' '.render_headers($detailed_header,'',$language_preference, sizeof($detailed_contents))."</a></strong></li>";
             break;
 
           } elseif ($detailed_header === 'friend_approved') {
-            echo "<p><li><strong><a href='{$site->getURL()}friends/{$to->username}'>".sizeof($detailed_contents).' '.render_headers($detailed_header,'',$language_preference, sizeof($detailed_contents))."</a></strong></li>";
+            echo "<p><li><strong><a href='{$site->getURL()}friends/{$to->username}?utm_source=notification_digest&utm_medium=email'>".sizeof($detailed_contents).' '.render_headers($detailed_header,'',$language_preference, sizeof($detailed_contents))."</a></strong></li>";
             break;
 
           } elseif ($detailed_header === 'new_post' && $highlevel_header === 'mission') {

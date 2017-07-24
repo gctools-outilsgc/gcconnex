@@ -10,6 +10,20 @@ $title = elgg_extract('title', $vars, '');
 $title2 = elgg_extract('title2', $vars, '');
 $description = elgg_extract('description', $vars, '');
 $description2 = elgg_extract('description2', $vars, '');
+
+// decode json into English / French parts
+ $json_title = json_decode($title);
+ $json_desc = json_decode($description);
+ 
+ if ( $json_title ){
+   $title2 = $json_title->fr;
+   $title = $json_title->en;
+ }
+ 
+ if ( $json_desc ){
+   $description2 = $json_desc->fr;
+   $description = $json_desc->en;
+ }
 $tags = elgg_extract('tags', $vars, '');
 $access_id = elgg_extract('access_id', $vars, get_default_access());
 $container_guid = elgg_extract('container_guid', $vars, elgg_get_page_owner_guid());
@@ -24,7 +38,7 @@ $img = elgg_view_entity_icon($photo, 'large', array(
   'img_class' => 'tidypics-photo',
   'link_class' => 'elgg-lightbox',
   'id' => 'img',
-    
+
 ));
 
 
@@ -34,7 +48,7 @@ $img = elgg_view_entity_icon($photo, 'large', array(
   'img_class' => 'tidypics-photo',
   'link_class' => 'elgg-lightbox',
   'id' => 'img',
-    
+
 ));
 
 echo '<div class="test">';
@@ -45,7 +59,7 @@ if (isset($_POST['action'])) {
         case 'rotation':
             rotation($photo);
             break;
-        
+
     }
 }
 
@@ -76,13 +90,13 @@ function rotation($photo){
               }else{
 
                 echo 'Error, Image rotate false. JPEG';
-          
+
               }
-            
+
           }else{
             register_error(elgg_echo('Error, file not exist. JPEG'));
-            echo "<script>alert(\"la variable est nulle\")</script>"; 
-        
+            echo "<script>alert(\"la variable est nulle\")</script>";
+
           }
               imagedestroy($img);
               imagedestroy($imgRotated);
@@ -101,10 +115,10 @@ function rotation($photo){
               }else{
                 echo 'Error, Image rotate false. PNG';
               }
-            
+
           }else{
                register_error(elgg_echo('Error, file not exist. PNG'));
-               echo "<script>alert(\"la variable est nulle\")</script>"; 
+               echo "<script>alert(\"la variable est nulle\")</script>";
           }
             imagedestroy($img);
             imagedestroy($imgRotated);
@@ -112,7 +126,7 @@ function rotation($photo){
        register_error(elgg_echo('Error, file not exist. PNG'));
        error_log("Base Oracle indisponible !");
 
-  }        
+  }
 }
 
 
@@ -131,11 +145,11 @@ echo $btn_language;
 <div class="tab-content tab-content-border">
 <div class="en">
 	<label for="title"><?php echo elgg_echo('title:en'); ?></label>
-	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title, 'id' =>'title', 'class' => 'mrgn-bttm-md',)); ?>
+	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title, 'id' =>'title', 'class' => 'mrgn-bttm-md', 'required' => 'required')); ?>
 </div>
 <div class="fr">
 	<label for="title2"><?php echo elgg_echo('title:fr'); ?></label>
-	<?php echo elgg_view('input/text', array('name' => 'title2', 'value' => $title2, 'id' =>'title2', 'class' => 'mrgn-bttm-md',)); ?>
+	<?php echo elgg_view('input/text', array('name' => 'title2', 'value' => $title2, 'id' =>'title2', 'class' => 'mrgn-bttm-md', 'required' => 'required')); ?>
 </div>
 <div class="en">
 	<label for="id"><?php echo elgg_echo('img:desc:en'); ?></label>
@@ -202,12 +216,12 @@ jQuery(function(){
 
     jQuery('#btnClickfr').click(function(){
                jQuery('.fr').show();
-               jQuery('.en').hide();  
+               jQuery('.en').hide();
         });
 
           jQuery('#btnClicken').click(function(){
                jQuery('.en').show();
-               jQuery('.fr').hide();  
+               jQuery('.fr').hide();
         });
 });
 </script>

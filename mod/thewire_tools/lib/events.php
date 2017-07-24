@@ -53,7 +53,7 @@ function thewire_tools_create_object_event_handler($event, $type, ElggObject $ob
 		));
 		
 		if (elgg_is_active_plugin('cp_notifications')) {
-			error_log("wire mention : ". $object->getOwnerEntity()->name);
+			//error_log("wire mention : ". $object->getOwnerEntity()->name);
 			$message = array(
 				'cp_mention_by' => $object->getOwnerEntity()->name,
 				'cp_wire_mention_url' => $object->getURL(),

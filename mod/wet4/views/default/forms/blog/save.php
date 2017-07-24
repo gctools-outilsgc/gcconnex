@@ -21,6 +21,30 @@ $action_buttons = '';
 $delete_link = '';
 $preview_button = '';
 
+$title = elgg_extract('title', $vars, '');
+$title2 = elgg_extract('title2', $vars, '');
+
+// decode json into English / French parts
+$json_title = json_decode($vars['title']);
+$json_desc = json_decode($vars['description']);
+$json_exc = json_decode($vars['excerpt']);
+
+if ( $json_title ){
+  $vars['title2'] = $json_title->fr;
+  $vars['title'] = $json_title->en;
+}
+
+if ( $json_desc ){
+  $vars['description2'] = $json_desc->fr;
+  $vars['description'] = $json_desc->en;
+}
+
+if ( $json_exc ){
+  $excerpt2 = $json_desc->fr;
+  $excerpt = $json_desc->en;
+}
+
+
 if ($vars['guid']) {
 	// add a delete button if editing
 	$delete_url = "action/blog/delete?guid={$vars['guid']}";
@@ -57,6 +81,7 @@ $label = elgg_echo('title:en');
 $input = elgg_view('input/text', array(
 	'name' => 'title',
 	'id' => 'blog_title_en',
+  'required' => 'required',
 	'value' => $vars['title'],
     'autofocus' =>'true',
 ));
@@ -65,6 +90,7 @@ $label2 = elgg_echo('title:fr');
 $input2 = elgg_view('input/text', array(
 	'name' => 'title2',
 	'id' => 'blog_title_fr',
+  'required' => 'required',
 	'value' => $vars['title2']
 ));
 
@@ -72,27 +98,29 @@ $excerpt_label = elgg_echo('blog:excerpt:en');
 $excerpt_input = elgg_view('input/text', array(
 	'name' => 'excerpt',
 	'id' => 'blog_excerpt_en',
-	'value' => _elgg_html_decode($vars['excerpt'])
+	'value' => _elgg_html_decode($excerpt)
 ));
 
 $excerpt_label2 = elgg_echo('blog:excerpt:fr');
 $excerpt_input2 = elgg_view('input/text', array(
 	'name' => 'excerpt2',
 	'id' => 'blog_excerpt_fr',
-	'value' => _elgg_html_decode($vars['excerpt2'])
+	'value' => _elgg_html_decode($excerpt2)
 ));
 
 $excerpt_label3 = elgg_echo('blog:excerpt:fr');
 $excerpt_input3 = elgg_view('input/text', array(
 	'name' => 'excerpt3',
 	'id' => 'blog_excerpt3',
-	'value' => _elgg_html_decode($vars['excerpt2'])
+	'value' => _elgg_html_decode($excerpt2)
 ));
 
 $body_label = elgg_echo('blog:body:en');
 $body_input = elgg_view('input/longtext', array(
 	'name' => 'description',
 	'id' => 'blog_description_en',
+      'class' => 'validate-me',
+      'required '=> "required",
 	'value' => $vars['description']
 ));
 
@@ -100,6 +128,8 @@ $body_label2 = elgg_echo('blog:body:fr');
 $body_input2 = elgg_view('input/longtext', array(
 	'name' => 'description2',
 	'id' => 'blog_description_fr',
+      'class' => 'validate-me',
+      'required '=> "required",
 	'value' => $vars['description2']
 ));
 
@@ -147,7 +177,7 @@ $access_input = elgg_view('input/access', array(
 	'entity_subtype' => 'blog',
 ));
 
-$categories_input = elgg_view('input/categories', $vars);
+
 
 
 
@@ -231,11 +261,9 @@ $btn_language
 </div>
 
 <div>
-	<label for="blog_tags">$tags_label</label>
+    <label for="tags">$tags_label</label>
 	$tags_input
 </div>
-
-$categories_input
 
 <div>
 	<label for="blog_comments_on">$comments_label</label>
@@ -279,6 +307,8 @@ if(get_current_language() == 'fr'){
 	    jQuery('.en').hide();
 	    jQuery('#btnfr').addClass('active');
 
+      $('#blog_description_en').removeClass('validate-me');
+
 	</script>
 <?php
 }else{
@@ -287,6 +317,8 @@ if(get_current_language() == 'fr'){
 		jQuery('.en').show();
     	jQuery('.fr').hide();
     	jQuery('#btnen').addClass('active');
+
+      $('#blog_description_fr').removeClass('validate-me');
 	</script>
 <?php
 }
@@ -304,11 +336,17 @@ jQuery(function(){
 		jQuery('#btnClickfr').click(function(){
                jQuery('.fr').show();
                jQuery('.en').hide();
+
+               $('#blog_description_en').removeClass('validate-me');
+               $('#blog_description_fr').addClass('validate-me');
         });
 
           jQuery('#btnClicken').click(function(){
                jQuery('.en').show();
                jQuery('.fr').hide();
+
+               $('#blog_description_fr').removeClass('validate-me');
+               $('#blog_description_en').addClass('validate-me');
         });
 });
 </script>

@@ -9,6 +9,8 @@
 elgg_register_event_handler('init','system','gcforums_init');
 
 function gcforums_init() {
+	elgg_register_library('elgg:gcforums:functions', elgg_get_plugins_path() . 'gcforums/lib/functions.php');
+
 	$action_path = elgg_get_plugins_path().'gcforums/actions/gcforums';
 
 	elgg_register_css('gcforums-css','mod/gcforums/css/gcforums-table.css');						// styling the forums table
@@ -22,8 +24,7 @@ function gcforums_init() {
 	elgg_register_action('gcforums/create',$action_path.'/create.php');
 	elgg_register_action('gcforums/subscribe',$action_path.'/subscribe.php');
 
-	// put a menu item in the site navigation (JMP request)
-    //moved to menu subSite to place in Career dropdown
+	// put a menu item in the site navigation (JMP request), placed in career dropdown
 	elgg_register_menu_item('subSite', array(
 		'name' => 'Forum',
 		'text' => elgg_echo('gcforums:jmp_menu'),
@@ -102,21 +103,6 @@ function gcforums_page_handler($page) {
 	return true;
 }
 
-
-/*
- * TODO: Transferred to Lib Directory
- */
-
-
-/* recursive function */
-// function get_forum_topic_resides($static_guid, $entity_guid) {
-// 	$entity = get_entity($entity_guid);
-// 	if ($entity instanceof ElggGroup) {
-// 		return $forum_guid;
-// 	} else {
-
-// 	}
-// }
 
 /* Display Topic and the corresponding comments
  * @params topic
@@ -231,9 +217,9 @@ function gcforums_topic_content($topic_guid, $group_guid) {
 function get_total_posts($container_guid) {
 	$dbprefix = elgg_get_config('dbprefix');
 	
-	$query = "SELECT r.guid_one, r.relationship, r.guid_two, e.subtype, es.subtype
+	$query = "SELECT r.guid_one, r.relationship, r.guid_two, e.subtype, es.subtype, e.access_id
 			FROM {$dbprefix}entity_relationships r, {$dbprefix}entities e, {$dbprefix}entity_subtypes es
-			WHERE r.guid_one = e.guid AND e.subtype = es.id AND r.guid_two = {$container_guid} AND es.subtype = 'hjforumpost'";
+			WHERE r.guid_one = e.guid AND e.subtype = es.id AND r.guid_two = {$container_guid} AND es.subtype = 'hjforumpost' AND (e.access_id = 1 OR e.access_id = 2)";
 	$num_post = 0;
 	$posts = get_data($query);
 
@@ -245,9 +231,9 @@ function get_total_posts($container_guid) {
 
 function get_total_topics($container_guid) {
 	$dbprefix = elgg_get_config('dbprefix');
-	$query = "SELECT r.guid_one, r.relationship, r.guid_two, e.subtype, es.subtype
+	$query = "SELECT r.guid_one, r.relationship, r.guid_two, e.subtype, es.subtype, e.access_id
 			FROM {$dbprefix}entity_relationships r, {$dbprefix}entities e, {$dbprefix}entity_subtypes es
-			WHERE r.guid_one = e.guid AND e.subtype = es.id AND r.guid_two = {$container_guid} AND es.subtype = 'hjforumtopic'";
+			WHERE r.guid_one = e.guid AND e.subtype = es.id AND r.guid_two = {$container_guid} AND es.subtype = 'hjforumtopic' AND (e.access_id = 1 OR e.access_id = 2)";
 	$num_topic = 0;
 	$topics = get_data($query);
 
