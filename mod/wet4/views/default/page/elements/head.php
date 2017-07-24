@@ -66,13 +66,14 @@ if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false) {
     }
 
   }
+
 } else {
 
   $current_url = explode('/', $_SERVER['REQUEST_URI']);
   $page_entity = get_entity($current_url[count($current_url) - 1]);
 
   if ($elgg_entity instanceof ElggUser || $elgg_entity instanceof ElggGroup) {
-    $page_title = ($elgg_entity instanceof ElggUser) ? $elgg_entity->name : gc_explode_translation($elgg_entity->name, $gc_language);
+    $page_title = ($elgg_entity instanceof ElggUser) ? $vars['title'] : gc_explode_translation($elgg_entity->name, $gc_language) . " : {$vars['title']}";
   } else {
 
       if (!($page_entity instanceof ElggEntity))
@@ -81,6 +82,7 @@ if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false) {
   }
 
 }
+
 
 // this populates the title tag
 echo elgg_format_element('title', array(), $page_title, array('encode_text' => true));
@@ -214,7 +216,7 @@ if (!$can_index) {
 ?>
 
 <meta name="description" content="<?php echo $desc; ?>" />
-<meta name="dcterms.title" content="<?php echo $vars['title']; ?>" />
+<meta name="dcterms.title" content="<?php echo $page_title ?>" />
 <meta name="dcterms.creator" content="<?php echo $creator; ?>" />
 <?php echo $datemeta; ?>
 <meta name="dcterms.subject" title="scheme" content="<?php echo $briefdesc; ?>" />
