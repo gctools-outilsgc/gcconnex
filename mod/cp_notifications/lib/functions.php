@@ -331,8 +331,8 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 			if ($entity->getContainerEntity() instanceof ElggGroup) {
 
 				// string that will contain the url and the (json) string name of group
-				$group_html = json_encode(array($entity->getContainerEntity()->getURL(), $entity_title));
-				//$group_html = "<a href='{$entity->getContainerEntity()->getURL()}'>{$entity_title}</a>";
+				$group_html = json_encode(array($entity->getContainerEntity()->getURL(), $entity->getContainerEntity()->name));
+				//$group_html = "<a href='{$entity->getContainerEntity()->getURL()}'>{$entity->getContainerEntity()->name}</a>";
 				$entity_guid = $entity->guid;
 				$user_guid = $send_to->getGUID();
 				$entry_type = 'group';
@@ -717,7 +717,6 @@ function getMissionTypeMetastringid( $mission_type, $role_type ) {
     			$content_title = $content_array['content_title']['fr'];
     	}*/
 
-
     /// oppourtunities does not take into account for separate bilingual titles (no option for it)
     if (strpos($content_array['subtype'], 'missions') !== false )
     	$content_title = $content_array['content_title'];
@@ -733,16 +732,11 @@ function getMissionTypeMetastringid( $mission_type, $role_type ) {
 
 	if ($heading === 'new_post' && $subtype === 'file_upload') {
 
-
 		$rendered_content = elgg_echo('cp_notifications:mail_body:subtype:file_upload', array($author, count($content_array['file_count']), $content_array['content_title']), $language_preference );
-
-
-      $closing_date = elgg_echo('cp_newsletter:digest:opportunities:date', $language_preference).$content_array['deadline'];
-      $subtype = elgg_echo($content_array['subtype'], $language_preference);
+    	$closing_date = elgg_echo('cp_newsletter:digest:opportunities:date', $language_preference).$content_array['deadline'];
+      	$subtype = elgg_echo($content_array['subtype'], $language_preference);
 
 	} elseif ($content_array['deadline']) {
-
-
 
 		$closing_date = elgg_echo('cp_newsletter:digest:opportunities:date', $language_preference).$content_array['deadline'];
 		$subtype = elgg_echo($content_array['subtype'], $language_preference);
@@ -811,15 +805,12 @@ function getMissionTypeMetastringid( $mission_type, $role_type ) {
 
     } elseif (strcmp($heading, "likes") === 0) {
 
-
       //if (!$content_title) $content_title = elgg_echo('cp_notifications:mail_body:your_wire_post',$language_preference);
-
       $url = "<a href='{$content_array['content_url']}'>{$content_title}</a>";
       $rendered_content = elgg_echo("cp_notifications:mail_body:subtype:{$heading}", array($author, $url), $language_preference);
 
 
     } elseif ($heading === 'response') {
-
 
 		$url = "<a href='{$content_array['content_url']}'>{$content_title}</a>";
 		$rendered_content = elgg_echo("cp_notifications:mail_body:subtype:{$heading}", array($author, $url), $language_preference);
