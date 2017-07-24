@@ -332,7 +332,6 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 
 				// string that will contain the url and the (json) string name of group
 				$group_html = json_encode(array($entity->getContainerEntity()->getURL(), $entity->getContainerEntity()->name));
-				//$group_html = "<a href='{$entity->getContainerEntity()->getURL()}'>{$entity->getContainerEntity()->name}</a>";
 				$entity_guid = $entity->guid;
 				$user_guid = $send_to->getGUID();
 				$entry_type = 'group';
