@@ -43,12 +43,13 @@ if ($title_link === '') {//add translation
 	} else {
 		$text = gc_explode_translation($entity->title3, $lang);
 	}
-
-	$params = array(
-		'text' => elgg_get_excerpt($text, 100),
-		'href' => $entity->getURL(),
-		'is_trusted' => true,
-	);
+	if ($entity instanceof ElggEntity) {
+		$params = array(
+			'text' => elgg_get_excerpt($text, 100),
+			'href' => $entity->getURL(),
+			'is_trusted' => true,
+		);
+	}
 	$title_link = elgg_view('output/url', $params);
 }
 
@@ -94,7 +95,7 @@ $description_json = json_decode($entity->description);
 			}
 		}   
 		
-	}elseif ($entity->getSubtype() == 'poll'){
+	} elseif ($entity instanceof ElggEntity && $entity->getSubtype() == 'poll'){
 //if poll, check if the choice is the same in both language, if not, show (en/fr) one time
 		$responses = array();
 
@@ -126,9 +127,7 @@ echo elgg_in_context($context);
 }
 
 //This tests to see if you are looking at a group list and does't outpout the subtitle variable here, It's called at the end of this file
-
-
-if($entity->getType() == 'group'){
+if($entity instanceof ElggEntity && $entity->getType() == 'group'){
    echo '';
 }else{
   echo "<div class=\" mrgn-bttm-sm mrgn-tp-sm  timeStamp clearfix\">$subtitle</div>";
@@ -144,7 +143,7 @@ if ($content) {
 	echo "<div class=\"elgg-content mrgn-tp-sm mrgn-lft-sm\">$content</div>";
 }
 
-if($entity->getType() == 'group' ){
+if($entity instanceof ElggEntity && $entity->getType() == 'group' ){
 
     if ($metadata) {
 	   echo '<div class="mrgn-tp-sm"><div class="">' .$metadata . '</div></div>';
@@ -156,7 +155,7 @@ if($entity->getType() == 'group' ){
     echo '<div class=""><div class="">' .$metadata . '</div></div>';
 }else{
 
-	if (($entity->getSubtype() == 'event_calendar') && (elgg_get_context() == 'widgets')){
+	if ($entity instanceof ElggEntity && ($entity->getSubtype() == 'event_calendar') && (elgg_get_context() == 'widgets')){
 
         echo '<div class="row mrgn-tp-md">';
 

@@ -80,6 +80,9 @@ __BODY;
 
 $userMenu = elgg_view('page/elements/topbar_wrapper', $vars);
 
+if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false)
+	$feedback_button = "<a href='/mod/contactform/' class='btn btn-primary'><span class='glyphicon glyphicon-comment mrgn-rght-sm'></span>{$feedbackText}</a>";
+
 $body .= <<<__BODY
 	<header role="banner">
     $alert
@@ -119,7 +122,9 @@ $breadcrumbs
 </dl>
 </div>
 <div class="col-xs-6 text-right">
-<a href="/mod/contactform/" class="btn btn-primary"><span class="glyphicon glyphicon-comment mrgn-rght-sm"></span>$feedbackText</a>
+
+$feedback_button
+
 </div>
 </div>
 

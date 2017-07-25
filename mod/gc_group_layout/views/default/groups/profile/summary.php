@@ -6,7 +6,10 @@
  *
  * @uses $vars['group']
  */
-if(elgg_in_context('group_profile') || elgg_instanceof(elgg_get_page_owner_entity(), 'group')){
+
+
+if (elgg_in_context('group_profile') || elgg_instanceof(elgg_get_page_owner_entity(), 'group')) {
+
 //Wrap this view in the context of group profile
 $group = get_entity(elgg_get_page_owner_guid());
 $lang = get_current_language();
@@ -52,26 +55,50 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 		<div class="groups-info col-xs-10 col-md-10 ">
             <h1 class="group-title">
                 <?php
-               
-                    echo gc_explode_translation($group->name, $lang);
 
+                	// cyu - check to see if the user is a gsa-crawler, then display in (both) languages
+                	if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false) {
+                		
+                		/*$json_name = json_decode($group->name,true);
+                		if (json_last_error() === JSON_ERROR_NONE)
+                			$group_name = "{$json_name['en']} / {$json_name['fr']}";
+                		else
+                			$group_name = $group->name;*/
+
+                		$group_name_en = gc_explode_translation($group->name, 'en');
+                		$group_name_fr = gc_explode_translation($group->name, 'fr');
+
+                		if ($group_name_en !== $group_name_fr)
+                			$group_name = "{$group_name_en} / {$group_name_fr}"; 
+                		else
+                			$group_name = $group_name_en;
+
+                	} else {
+
+		                $group_name = gc_explode_translation($group->name, $lang);
+		            }
+		            echo $group_name;
                 ?>
             </h1>
             <div class="clearfix">
             <div class="mrgn-bttm-sm pull-left  mrgn-rght-md">
-				<b><?php echo elgg_echo("groups:owner"); ?>: </b>
 				<?php
-					echo elgg_view('output/url', array(
-						'text' => $owner->name,
-						'value' => $owner->getURL(),
-						'is_trusted' => true,
-					));
+
+					if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false) {
+						echo '<b>'.elgg_echo("groups:owner").'</b>';
+						echo elgg_view('output/url', array(
+							'text' => $owner->name,
+							'value' => $owner->getURL(),
+							'is_trusted' => true,
+						));
+					}
 				?>
 			</div>
 
 
 			<div class="mrgn-bttm-sm pull-left">
 			<?php
+
 				$num_members = $group->getMembers(array('count' => true));
                 $members_link = 'groups/members/' . $group->guid;
                 $all_members_link = elgg_view('output/url', array(
@@ -80,18 +107,22 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 	                'is_trusted' => true,
                     'class' => '',
                 ));
-				echo '<b>' . elgg_echo('groups:members') . ':</b> ' . $all_members_link;
+
+                if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false)
+					echo '<b>' . elgg_echo('groups:members') . ':</b> ' . $all_members_link;
             ?>
 			</div>
 
             <div class="mrgn-bttm-sm pull-left mrgn-lft-lg">
             <?php
-                echo elgg_view('output/url', array(
-                    'href' => "http://stats.gctools-outilsgc.ca/gcconnex?filter=".$group->guid,
-                    'text' =>  elgg_echo('groups:stats'),
-                    'is_trusted' => true,
-                    'class' => '',
-                ));
+            	if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false) {
+	                echo elgg_view('output/url', array(
+	                    'href' => "http://stats.gctools-outilsgc.ca/gcconnex?filter=".$group->guid,
+	                    'text' =>  elgg_echo('groups:stats'),
+	                    'is_trusted' => true,
+	                    'class' => '',
+	                ));
+            	}
             ?>
             </div>
 
@@ -112,9 +143,10 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
             //dont list tag header if no tags
             if(!$tags){
             } else {
-               // echo '<div class="clearfix"><b>' . elgg_echo('profile:field:tags') . '</b>';
-                echo $tags;
-                //echo '</div>';
+
+            	if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false)
+                	echo $tags;
+    
             }
             ?>
 
@@ -124,77 +156,87 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 
 			<div class="btn-group text-right col-xs-3 group-action-holder">
 
+				<div class="groups-stats mrgn-tp-sm mrgn-bttm-sm text-right"></div>
 
-						 <div class="groups-stats mrgn-tp-sm mrgn-bttm-sm text-right"></div>
-
-						 <div class="groups-info pull-right">
+					<div class="groups-info pull-right">
 
 									<ul class="groups-share-links list-inline pull-left mrgn-rght-sm">
-										 <?php
-												 //Nick - Added a link to share the group on the wire
-												 if(elgg_is_logged_in()){
-														 $options = array(
-																 'text' => '<i class="fa fa-share-alt fa-lg icon-unsel"><span class="wb-inv">'.elgg_echo('entity:share:link:group', array($group->name)).'</span></i>',
-																 'title' => elgg_echo('thewire_tools:reshare'),
-																 'href' => 'ajax/view/thewire_tools/reshare?reshare_guid=' . $group->getGUID(),
-																 'class' => 'elgg-lightbox',
-																 'is_trusted' => true,
-														 );
-												 }
-												 echo '<li class="mrgn-tp-sm">'.elgg_view('output/url', $options).'</li>';
-
-												 //Nick - Added a link to like the group!
-												 if(elgg_is_logged_in()){
-														 $hasLiked = \Elgg\Likes\DataService::instance()->currentUserLikesEntity($group->guid);
-															 //Has this user liked this already?
-														 if($hasLiked){
-																 $options = array(
-																	'href' => elgg_add_action_tokens_to_url("/action/likes/delete?guid={$group->guid}"),
-																	'text' => '<i class="fa fa-thumbs-up fa-lg icon-sel"></i><span class="wb-inv">'. elgg_echo('entity:unlike:link:group', array($group->name)).'</span>',
-																	'title' => elgg_echo('likes:remove') . ' ' .elgg_echo('group'),
-
-															 );
-														 }else{
-																$options = array(
-																	'href' => elgg_add_action_tokens_to_url("/action/likes/add?guid={$group->guid}"),
-																	'text' => '<i class="fa fa-thumbs-up fa-lg icon-unsel"></i><span class="wb-inv">'.elgg_echo('entity:like:link:group', array($group->name)).'</span>',
-																	'title' => elgg_echo('likes:likethis') . ' ' . elgg_echo('group'),
-
-															 );
-														 }
-												 }
-												 echo '<li class="mrgn-tp-sm mrgn-lft-sm">'.elgg_view('output/url', $options).'</li>';
-										 ?>
 
 										 <?php
-										 //This is the code to add the notification bell to the page to the left of the member button
-										 if ($group->isMember(elgg_get_logged_in_user_entity())) { //Nick - check if user is a member before
-												 // cyu - indicate if user has subscribed to the group or not (must have cp notifications enabled)
-												 if (elgg_is_active_plugin('cp_notifications')) {
-														 if (check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $group->getGUID()) || check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $group->getGUID()))
-																 echo "<li class='mrgn-tp-sm'><a href='".elgg_add_action_tokens_to_url("/action/cp_notify/unsubscribe?guid={$group->getGUID()}")."' title='".elgg_echo('cp_notify:unsubBell')."'><i class='icon-sel fa fa-lg fa-bell'><span class='wb-inv'>".elgg_echo('entity:unsubscribe:link:group', array($group->name))."</span></i></a></li>";
-														 else
-																 echo '<li class="mrgn-tp-sm"><a href="'.elgg_add_action_tokens_to_url("/action/cp_notify/subscribe?guid={$group->getGUID()}").'" title="'.elgg_echo('cp_notify:subBell').'"><i class="icon-unsel fa fa-lg fa-bell-slash-o"><span class="wb-inv">'.elgg_echo('entity:subscribe:link:group', array($group->name)).'</span></i></a></li>';
-												 }
-										 }
+
+										 	// cyu - check if the gsa crawler is on this page, hide the likes and share if it is (we don't need to crawl them)
+										 	if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false) {
+
+												//Nick - Added a link to share the group on the wire
+												if (elgg_is_logged_in()) {
+													$text = elgg_echo('entity:share:link:group', array($group->name));
+													$options = array(
+														'text' => "<i class='fa fa-share-alt fa-lg icon-unsel'><span class='wb-inv'>{$text}</span></i>",
+														'title' => elgg_echo('thewire_tools:reshare'),
+														'href' => 'ajax/view/thewire_tools/reshare?reshare_guid=' . $group->getGUID(),
+														'class' => 'elgg-lightbox',
+														'is_trusted' => true,
+													);
+												}
+												echo '<li class="mrgn-tp-sm">'.elgg_view('output/url', $options).'</li>';
+
+												//Nick - Added a link to like the group!
+												if (elgg_is_logged_in()) {
+													$hasLiked = \Elgg\Likes\DataService::instance()->currentUserLikesEntity($group->guid);
+
+													//Has this user liked this already?
+													if ($hasLiked) {
+														$options = array(
+															'href' => elgg_add_action_tokens_to_url("/action/likes/delete?guid={$group->guid}"),
+															'text' => '<i class="fa fa-thumbs-up fa-lg icon-sel"></i><span class="wb-inv">'. elgg_echo('entity:unlike:link:group', array($group->name)).'</span>',
+															'title' => elgg_echo('likes:remove') . ' ' .elgg_echo('group'),
+														);
+
+													} else {
+
+														$options = array(
+															'href' => elgg_add_action_tokens_to_url("/action/likes/add?guid={$group->guid}"),
+															'text' => '<i class="fa fa-thumbs-up fa-lg icon-unsel"></i><span class="wb-inv">'.elgg_echo('entity:like:link:group', array($group->name)).'</span>',
+															'title' => elgg_echo('likes:likethis') . ' ' . elgg_echo('group'),
+														);
+													}
+												}
+												echo '<li class="mrgn-tp-sm mrgn-lft-sm">'.elgg_view('output/url', $options).'</li>';
+	
+												// This is the code to add the notification bell to the page to the left of the member button
+												if ($group->isMember(elgg_get_logged_in_user_entity())) { //Nick - check if user is a member before
+												
+													// cyu - indicate if user has subscribed to the group or not (must have cp notifications enabled)
+													if (elgg_is_active_plugin('cp_notifications')) {
+
+														if (check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $group->getGUID()) || check_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $group->getGUID()))
+															echo "<li class='mrgn-tp-sm'><a href='".elgg_add_action_tokens_to_url("/action/cp_notify/unsubscribe?guid={$group->getGUID()}")."' title='".elgg_echo('cp_notify:unsubBell')."'><i class='icon-sel fa fa-lg fa-bell'><span class='wb-inv'>".elgg_echo('entity:unsubscribe:link:group', array($group->name))."</span></i></a></li>";
+														else
+															echo '<li class="mrgn-tp-sm"><a href="'.elgg_add_action_tokens_to_url("/action/cp_notify/subscribe?guid={$group->getGUID()}").'" title="'.elgg_echo('cp_notify:subBell').'"><i class="icon-unsel fa fa-lg fa-bell-slash-o"><span class="wb-inv">'.elgg_echo('entity:subscribe:link:group', array($group->name)).'</span></i></a></li>';
+													}
+												}
+											}
+
 										 ?>
 
 							 </ul>
 
 
-									<?php
-						 // add group operators menu link to title menu
-						 // Get the page owner entity
-						 $page_owner = elgg_get_page_owner_entity();
-						 $actions = array();
-						 // group owners
-						 if ($owner->canEdit() || $page_owner->canEdit()) {
-								 // edit and invite
-								 $url = elgg_get_site_url() . "groups/edit/{$group->getGUID()}";
-								 $actions[$url] = 'groups:edit';
-								 $url = elgg_get_site_url() . "groups/invite/{$group->getGUID()}";
-								 $actions[$url] = 'groups:invite';
-						 }
+						<?php
+
+						// add group operators menu link to title menu
+						$page_owner = elgg_get_page_owner_entity();
+						$actions = array();
+						 
+						// group owners
+						if ($owner->canEdit() || $page_owner->canEdit()) {
+							// edit and invite
+							$url = elgg_get_site_url() . "groups/edit/{$group->getGUID()}";
+							$actions[$url] = 'groups:edit';
+							$url = elgg_get_site_url() . "groups/invite/{$group->getGUID()}";
+							$actions[$url] = 'groups:invite';
+						}
+						
 						 // group members
 						 if ($group->isMember()) {
 								 if ($owner->getOwnerGUID() != elgg_get_logged_in_user_guid()) {
@@ -213,7 +255,11 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 										 // request membership
 										 $actions[$url] = 'groups:joinrequest';
 								 }
-						 }
+						 } 
+
+						 if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false)
+						 	$actions = array();
+
 						 if ($actions) {
 								 foreach ($actions as $url => $text) {
 										 elgg_register_menu_item('group_ddb', array(
@@ -222,7 +268,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 												 'text' => elgg_echo($text),
 												 'link_class' => 'elgg-button elgg-button-action',
 										 ));
-								 }
+								 } 
 						 }
 
 												 if ($page_owner instanceof ElggGroup) {
@@ -321,7 +367,9 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 														 'class' => 'pull-right',
 														 'item_class' => 'btn btn-primary',
 												 ));
-												 echo $buttons;
+
+										 		if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false)
+													echo $buttons;
 										 }
 										 }
 												 ?>

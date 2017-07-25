@@ -22,44 +22,47 @@
  */
 
 $entity = $vars['entity'];
+if ($entity instanceof ElggEntity) {
 
-$title_link = elgg_extract('title', $vars, '');
-if ($title_link === '') {
-	if (isset($entity->title)) {
-		$text = $entity->title;
-	} else {
-		$text = $entity->name;
+	$title_link = elgg_extract('title', $vars, '');
+	if ($title_link === '') {
+		if (isset($entity->title)) {
+			$text = $entity->title;
+		} else {
+			$text = $entity->name;
+		}
+		$params = array(
+			'text' => elgg_get_excerpt($text, 100),
+			'href' => $entity->getURL(),
+			'is_trusted' => true,
+		);
+		$title_link = elgg_view('output/url', $params);
 	}
-	$params = array(
-		'text' => elgg_get_excerpt($text, 100),
-		'href' => $entity->getURL(),
-		'is_trusted' => true,
-	);
-	$title_link = elgg_view('output/url', $params);
-}
 
-$metadata = elgg_extract('metadata', $vars, '');
-$subtitle = elgg_extract('subtitle', $vars, '');
-$content = elgg_extract('content', $vars, '');
+	$metadata = elgg_extract('metadata', $vars, '');
+	$subtitle = elgg_extract('subtitle', $vars, '');
+	$content = elgg_extract('content', $vars, '');
 
-$tags = elgg_extract('tags', $vars, '');
-if ($tags === '') {
-	$tags = elgg_view('output/tags', array('tags' => $entity->tags));
-}
+	$tags = elgg_extract('tags', $vars, '');
+	if ($tags === '') {
+		$tags = elgg_view('output/tags', array('tags' => $entity->tags));
+	}
 
-if ($title_link) {
-	echo "<h3 class=\"mrgn-bttm-0 panel-title\">$title_link</h3>";
-}
+	if ($title_link) {
+		echo "<h3 class=\"mrgn-bttm-0 panel-title\">$title_link</h3>";
+	}
 
-echo "<div class=\"elgg-subtext  mrgn-lft-sm clearfix\">$subtitle</div>";
-echo "<div class=\"tags\">$tags</div>";
+	echo "<div class=\"elgg-subtext  mrgn-lft-sm clearfix\">$subtitle</div>";
+	echo "<div class=\"tags\">$tags</div>";
 
-echo elgg_view('object/summary/extend', $vars);
+	echo elgg_view('object/summary/extend', $vars);
 
-if ($content) {
-	echo "<div class=\"elgg-content mrgn-tp-sm mrgn-lft-sm\">$content</div>";
-}
+	if ($content) {
+		echo "<div class=\"elgg-content mrgn-tp-sm mrgn-lft-sm\">$content</div>";
+	}
 
-if ( $metadata && !(elgg_in_context('widgets')) ) {
-	echo $metadata;
+	if ( $metadata && !(elgg_in_context('widgets')) ) {
+		echo $metadata;
+	}
+
 }

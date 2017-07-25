@@ -43,6 +43,7 @@ matrix:
       env: VARIA=true
       before_install:
         - phpenv config-rm xdebug.ini
+      dist: precise
       install:
        - npm install
        - composer travis:install

@@ -1320,9 +1320,9 @@ function my_site_menu_handler($hook, $type, $menu, $params){
 
                 case 'groups':
                     if(elgg_is_logged_in()){
-                        $item->setHref('groups/all?filter=yours');
+                        $item->setHref(elgg_get_site_url().'groups/all?filter=yours');
                     } else {
-                        $item->setHref('groups/all?filter=popular');
+                        $item->setHref( elgg_get_site_url().'groups/all?filter=popular');
                     }
 
                     break;

@@ -10,7 +10,7 @@ function gc_communities_init(){
 
     $subtypes = elgg_get_plugin_setting('subtypes', 'gc_communities');
     if( !$subtypes ){
-        elgg_set_plugin_setting('subtypes', json_encode(array('blog', 'groupforumtopic', 'event_calendar', 'file')), 'gc_communities');
+        elgg_set_plugin_setting('subtypes', json_encode(array('blog', 'groupforumtopic', 'event_calendar', 'file', 'bookmarks')), 'gc_communities');
     }
 
     // Register ajax save action
@@ -137,6 +137,7 @@ function gc_community_page_handler($page, $url){
             $community_fr = $community['community_fr'];
             $community_tags = $community['community_tags'];
             $community_animator = $community['community_animator'];
+            $community_audience = $community['community_audience'];
             break;
         }
     }
@@ -146,6 +147,7 @@ function gc_community_page_handler($page, $url){
     set_input('community_fr', $community_fr);
     set_input('community_tags', $community_tags);
     set_input('community_animator', $community_animator);
+    set_input('community_audience', $community_audience);
 
     @include (dirname ( __FILE__ ) . "/pages/community.php");
     return true;

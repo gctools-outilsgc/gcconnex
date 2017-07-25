@@ -3,6 +3,7 @@
     $community_en = get_input('community_en');
     $community_fr = get_input('community_fr');
     $community_tags = get_input('community_tags');
+    $community_audience = get_input('community_audience');
     $community_animator = get_input('community_animator');
     
     $title = ( get_current_language() == "fr" ) ? $community_fr : $community_en;
@@ -34,18 +35,19 @@
 <div class="row">
     <div class="col-md-8">
         <?php
-            $options = array(
+
+        $options = array(
                 'type' => 'object',
                 'subtypes' => $subtypes,
                 'limit' => $newsfeed_limit,
-                'metadata_name' => 'tags',
-                'metadata_values' => array_map('trim', explode(',', $community_tags)),
+                'metadata_name' => 'audience',
+                'metadata_values' => $community_audience, //We can add allps metadata here
                 'full_view' => false,
                 'list_type_toggle' => false,
                 'pagination' => true
             );
 
-            echo '<div class="panel panel-default elgg-module-widget">
+            echo '<div class="panel panel-default elgg-module-widget" data-amd="'.$community_audience.'">
             <header class="panel-heading"><div class="clearfix"><h3 class="elgg-widget-title pull-left">' . elgg_echo('gc_communities:community_newsfeed') . '</h3></div></header>
             <div class="panel-body clearfix">
             <div class="new-community-feed-holder"></div>
