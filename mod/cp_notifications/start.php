@@ -32,7 +32,7 @@ function cp_notifications_init() {
 	elgg_register_action('cp_notifications/user_autosubscription',"{$action_base}/user_autosubscription.php");
 	elgg_register_action('cp_notifications/fix_inconsistent_subscription_script',"{$action_base}/fix_inconsistent_subscription_script.php");
   
-  elgg_register_action('cp_notifications/fix_forums_subscription',"$actions_base/fix_forums_subscription.php");
+  	elgg_register_action('cp_notifications/fix_forums_subscription',"$actions_base/fix_forums_subscription.php");
   
 	elgg_register_action('useradd',"$action_base/useradd.php",'admin'); // actions/useradd.php (core file)
 
@@ -303,7 +303,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_who_made_operator' => $params['cp_who_made_operator'],
 				'cp_group_url' => $params['cp_group_url'],
 			);
-			$subject = elgg_echo('cp_notify:subject:add_grp_operator',array($params['cp_group_name']),'en') . ' | ' . elgg_echo('cp_notify:subject:add_grp_operator',array($params['cp_group_name']),'fr');
+			$subject = elgg_echo('cp_notify:subject:add_grp_operator',array(gc_explode_translation($params['cp_group_name']), 'en'),'en') . ' | ' . elgg_echo('cp_notify:subject:add_grp_operator',array(gc_explode_translation($params['cp_group_name'], 'fr')),'fr');
 			$to_recipients[] = $params['cp_to_user'];
 			break;
 
@@ -315,7 +315,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_group_url' => $params['cp_group_url'],
 				'cp_appointer' => $params['cp_appointer']
 			);
-			$subject = elgg_echo('cp_notify:subject:group_admin_transfer',array($params['cp_group_name']),'en') . ' | ' . elgg_echo('cp_notify:subject:group_admin_transfer',array($params['cp_group_name']),'fr');
+			$subject = elgg_echo('cp_notify:subject:group_admin_transfer',array(gc_explode_translation($params['cp_group_name'],'en')),'en') . ' | ' . elgg_echo('cp_notify:subject:group_admin_transfer',array(gc_explode_translation($params['cp_group_name'],'fr')),'fr');
 			$to_recipients[] = $params['cp_new_owner_user'];
 			break;
 
@@ -354,7 +354,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 		case 'cp_group_add':	// group_tools/lib/functions.php OR groups/actions/groups/membership/add.php ????
 			$to_recipients[] = $params['cp_user_added'];
-			$subject = elgg_echo('cp_notify:subject:group_add_user',array($params['cp_group']['name']),'en') . ' | ' . elgg_echo('cp_notify:subject:group_add_user',array($params['cp_group']['name']),'fr');
+			$subject = elgg_echo('cp_notify:subject:group_add_user',array(gc_explode_translation($params['cp_group']['name'],'en')),'en') . ' | ' . elgg_echo('cp_notify:subject:group_add_user',array(gc_explode_translation($params['cp_group']['name'],'fr')),'fr');
 			$message = array(
 				'cp_user_added' => $params['cp_user_added'],
 				'cp_group' => $params['cp_group'],
@@ -365,8 +365,8 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 
 		case 'cp_group_invite': // group_tools/lib/functions.php
-			$subject = elgg_echo('cp_notify:subject:group_invite_user',array($params['cp_inviter']['name'],$params['cp_invite_to_group']['name']),'en');
-			$subject .= ' | '.elgg_echo('cp_notify:subject:group_invite_user',array($params['cp_inviter']['name'],$params['cp_invite_to_group']['name']),'fr');
+			$subject = elgg_echo('cp_notify:subject:group_invite_user',array($params['cp_inviter']['name'],gc_explode_translation($params['cp_invite_to_group']['name'],'en')),'en');
+			$subject .= ' | '.elgg_echo('cp_notify:subject:group_invite_user',array($params['cp_inviter']['name'],gc_explode_translation($params['cp_invite_to_group']['name'],'fr')),'fr');
 
 			$message = array(
 				'cp_group_invite_from' => $params['cp_invitee'], // user we're inviting
@@ -391,7 +391,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_group_message' => $params['cp_group_message'],
 				'cp_msg_type' => $cp_msg_type
 			);
-			$subject = elgg_echo('cp_notify:subject:group_mail',array($params['cp_group_subject'],$params['cp_group']['name']),'en') . ' | ' . elgg_echo('cp_notify:subject:group_mail',array($params['cp_group_subject'],$params['cp_group']['name']),'fr');
+			$subject = elgg_echo('cp_notify:subject:group_mail',array($params['cp_group_subject'],gc_explode_translation($params['cp_group']['name'],'en')),'en'). ' | ' . elgg_echo('cp_notify:subject:group_mail',array($params['cp_group_subject'],gc_explode_translation($params['cp_group']['name'],'fr')),'fr');
 			foreach ($params['cp_group_mail_users'] as $to_user) {
 				$to_recipients[$to_user] = get_user($to_user);
 				
@@ -976,7 +976,8 @@ function cp_create_notification($event, $type, $object) {
 						'cp_msg_type' => 'cp_mention_type',
 						'cp_author' => $object->getOwnerEntity()->name,
 						'cp_content_desc' => $object->description,
-						'cp_cp_link' => $object->getURL()
+						'cp_link' => $object->getURL(),
+						'cp_content' => $object,
 					);
 					$template = elgg_view('cp_notifications/email_template', $message);
 					$user_setting = elgg_get_plugin_user_setting('cpn_mentions_email', $mentioned_user->guid, 'cp_notifications');
@@ -1014,11 +1015,11 @@ function cp_create_notification($event, $type, $object) {
 			// comment or reply in a group
 			if ($topic_container instanceof ElggGroup) {
 				if (strcmp($object->getSubtype(), 'discussion_reply') == 0) {
-					$subject = elgg_echo('cp_notify:subject:comments_discussion',array($topic_container->name),'en');
-					$subject .= ' | '.elgg_echo('cp_notify:subject:comments_discussion',array($topic_container->name),'fr');
+					$subject = elgg_echo('cp_notify:subject:comments_discussion',array(gc_explode_translation($topic_container->name,'en')),'en');
+					$subject .= ' | '.elgg_echo('cp_notify:subject:comments_discussion',array(gc_explode_translation($topic_container->name,'fr')),'fr');
 				} else {
-					$subject = elgg_echo('cp_notify:subject:comments',array($topic_container->name),'en');
-					$subject .= ' | '.elgg_echo('cp_notify:subject:comments',array($topic_container->name),'fr');
+					$subject = elgg_echo('cp_notify:subject:comments',array(gc_explode_translation($topic_container->name,'en')),'en');
+					$subject .= ' | '.elgg_echo('cp_notify:subject:comments',array(gc_explode_translation($topic_container->name,'fr')),'fr');
 				}
 
 			// comment or reply in a user
@@ -1172,8 +1173,8 @@ function cp_create_notification($event, $type, $object) {
 
 					if (strcmp($object->getSubtype(), 'hjforumpost') != 0 || strcmp($object->getSubtype(), 'hjforumtopic') != 0) {
 						if ($object->getSubtype() == 'answer'){
-								$question_guid = $object->getContainerGUID();
-								$answer_entity = get_entity($question_guid);
+							$question_guid = $object->getContainerGUID();
+							$answer_entity = get_entity($question_guid);
 					
 							$subject = elgg_echo('cp_notify_usr:subject:new_content',array($object->getOwnerEntity()->username, cp_translate_subtype($object->getSubtype()), gc_explode_translation($answer_entity->title,'en')),'en');
 							$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content_f',array($object->getOwnerEntity()->username, cp_translate_subtype($object->getSubtype(), false), gc_explode_translation($answer_entity->title,'fr')),'fr');
@@ -1558,8 +1559,8 @@ function cp_membership_request($event, $type, $object) { 	// MUST always be send
 		'cp_msg_type' => 'cp_closed_grp_req_type',
 	);
 	$template = elgg_view('cp_notifications/email_template', $message);
-	$subject = elgg_echo('cp_notify:subject:group_request',array($request_user->name, $group_request->name),'en');
-	$subject .= ' | '.elgg_echo('cp_notify:subject:group_request',array($request_user->name, $group_request->name),'fr');
+	$subject = elgg_echo('cp_notify:subject:group_request',array($request_user->name, gc_explode_translation($group_request->name,'en')),'en');
+	$subject .= ' | '.elgg_echo('cp_notify:subject:group_request',array($request_user->name, gc_explode_translation($group_request->name,'fr')),'fr');
 
 	$to_user = get_user($group_request->owner_guid);
 	if (elgg_is_active_plugin('phpmailer')) {
