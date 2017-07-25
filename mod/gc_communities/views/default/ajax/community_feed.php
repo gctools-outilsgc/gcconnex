@@ -18,6 +18,7 @@ foreach( $communities as $community ){
         $community_en = $community['community_en'];
         $community_fr = $community['community_fr'];
         $community_tags = $community['community_tags'];
+        $community_audience = $community['community_audience'];
         $community_animator = $community['community_animator'];
         break;
     }
@@ -31,8 +32,8 @@ $options = array(
     'type' => 'object',
     'subtypes' => $subtypes,
     'limit' => $newsfeed_limit,
-    'metadata_name' => 'tags',
-    'metadata_values' => array_map('trim', explode(',', $community_tags)),
+    'metadata_name' => 'audience',
+    'metadata_values' => $community_audience,
     'full_view' => false,
     'list_type_toggle' => false,
     'pagination' => true

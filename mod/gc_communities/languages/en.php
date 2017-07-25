@@ -6,7 +6,8 @@ $english = array(
   'gc_communities:animator' => "Community Animator",
   'gc_communities:tags' => "Community Tags",
   'gc_communities:delete' => "Delete Community Page",
-
+    'gc_communities:audience' => 'Audience Metadata',
+    
   'gc_communities:communities' => "Communities",
   'gc_communities:community_newsfeed' => "Community Newsfeed",
   'gc_communities:community_wire' => "Community Wire",
