@@ -39,7 +39,7 @@
 
 //submit ticket panel
  echo '<div id="ticket" class="tab-pane">';
- echo elgg_view_form('ticket', array('action' => 'action/submit-ticket', 'class' => 'form-ticket-panel', 'enctype' => 'multipart/form-data'));
+ echo elgg_view_form('ticket', array('class' => 'form-ticket-panel', 'enctype' => 'multipart/form-data'));
  echo '</div>';
 
   ?>

@@ -33,8 +33,8 @@ function unique(list) {
 function get_details(){
   var details = [];
 
-  details['domain'] =  <?php echo (string) elgg_get_plugin_setting("domain", "freshdesk_help"); ?>;
-  details['api_key'] =  <?php echo (string) elgg_get_plugin_setting("apikey", "freshdesk_help"); ?>;
+  details['domain'] =  <?php echo '"'. elgg_get_plugin_setting("domain", "freshdesk_help").'"'; ?>;
+  details['api_key'] =  <?php echo '"'. elgg_get_plugin_setting("apikey", "freshdesk_help").'"'; ?>;
   details['product_id'] = <?php echo (int) elgg_get_plugin_setting("product_id", "freshdesk_help"); ?>;
 
   return details;

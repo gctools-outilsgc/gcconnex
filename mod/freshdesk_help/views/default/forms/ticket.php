@@ -76,4 +76,51 @@ $('.relatedArticles a').on('click', function(){
 
   $('#article-search').val($('#subject').val()).trigger('keyup');
 });
+
+$('#sendTicket').on('click', function(e){
+  e.preventDefault();
+
+        var details = get_details();
+
+        var yourdomain = details['domain'];
+        var api_key = details['api_key'];
+        var formdata = new FormData();
+        formdata.append('product_id', details['product_id']);
+        formdata.append('description', $('#description').val());
+        formdata.append('email', $('#email').val());
+        formdata.append('subject', $('#subject').val());
+        formdata.append('priority', '1');
+        formdata.append('status', '2');
+        formdata.append('source', '2');
+        if($('#attachment')[0].files[0]){
+          formdata.append('attachments[]', $('#attachment')[0].files[0]);
+        }
+        $.ajax(
+          {
+            url: "https://"+yourdomain+".freshdesk.com/api/v2/tickets",
+            type: 'POST',
+            contentType: false,
+            processData: false,
+            headers: {
+              "Authorization": "Basic " + btoa(api_key + ":x")
+            },
+            data: formdata,
+            success: function(data, textStatus, jqXHR) {
+              $('#result').text('Success');
+              $('#code').text(jqXHR.status);
+              $('#response').html(JSON.stringify(data, null, "<br/>"));
+            },
+            error: function(jqXHR, tranStatus) {
+              $('#result').text('Error');
+              $('#code').text(jqXHR.status);
+              x_request_id = jqXHR.getResponseHeader('X-Request-Id');
+              response_text = jqXHR.responseText;
+              $('#response').html(" Error Message : <b style='color: red'>"+response_text+"</b>.<br/> Your X-Request-Id is : <b>" + x_request_id + "</b>. Please contact support@freshdesk.com with this id for more information.");
+            }
+          }
+        );
+});
 </script>
+<div id="result"></div>
+<div id="code"></div>
+<div id="response"></div>
