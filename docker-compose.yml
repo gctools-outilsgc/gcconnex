@@ -29,6 +29,7 @@ services:
     volumes:
       - .:/var/www/html
       - ./data/data:/data
+      - /var/www/html/vendor
     links:
       - gcconnex-db
     depends_on:
