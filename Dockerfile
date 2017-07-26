@@ -30,4 +30,4 @@ ARG COMPOSER_NO_INTERACTION=1
 RUN composer install
 
 # Start Apache in foreground mode
-CMD chown www-data /data && rm -f /var/run/apache2/apache2.pid && /usr/sbin/apache2ctl -D FOREGROUND
+CMD chown www-data /var/www/html/data && chown www-data /var/www/html/engine && rm -f /var/run/apache2/apache2.pid && /usr/sbin/apache2ctl -D FOREGROUND
