@@ -23,7 +23,7 @@ function gc_profile_nudge_init(){
 				$user->save();
 			}
 
-	    	$last_profile_nudge = $user->last_profile_nudge;
+	    	$last_profile_nudge = intval($user->last_profile_nudge);
 
 	    	// Show nudge if user hasn't seen in XX days
 		    if( (time() - $last_profile_nudge) > $in_days ){
