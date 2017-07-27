@@ -5,7 +5,7 @@ MAINTAINER Luc Belliveau <luc.belliveau@nrc-cnrc.gc.ca>
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
 RUN apt-get install -y git apache2 php5 libapache2-mod-php5 php5-mysql php5-gd php5-curl curl
-RUN curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
@@ -30,4 +30,4 @@ ARG COMPOSER_NO_INTERACTION=1
 RUN composer install
 
 # Start Apache in foreground mode
-CMD chown www-data /data && rm -f /var/run/apache2/apache2.pid && /usr/sbin/apache2ctl -D FOREGROUND
+CMD chown www-data /var/www/html/data && chown www-data /var/www/html/engine && rm -f /var/run/apache2/apache2.pid && /usr/sbin/apache2ctl -D FOREGROUND
