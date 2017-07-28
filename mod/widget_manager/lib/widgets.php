@@ -62,8 +62,8 @@ function widget_manager_widgets_init() {
 	elgg_register_plugin_hook_handler("widget_settings", "twitter_search", "widget_manager_widgets_twitter_search_settings_save_hook");
 	
 	/// cyu - Twitter Widget (updated API)
-	elgg_register_widget_type("twitter_search", elgg_echo("widgets:twitter_search:name"), elgg_echo("widgets:twitter_search:description"), array("profile", "dashboard", "index", "groups"), true);
-	elgg_register_plugin_hook_handler("widget_settings", "twitter_search", "widget_manager_widgets_twitter_search_settings_save_hook");
+	elgg_register_widget_type("twitter_widget", elgg_echo("widgets:twitter_widget:name"), elgg_echo("widgets:twitter_search:description"), array("profile", "dashboard", "index", "groups"), true);
+	//elgg_register_plugin_hook_handler("widget_settings", "twitter_widget", "widget_manager_widgets_twitter_search_settings_save_hook");
 
 
 	// messages
