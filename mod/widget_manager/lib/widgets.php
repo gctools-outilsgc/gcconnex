@@ -63,7 +63,7 @@ function widget_manager_widgets_init() {
 	
 	/// cyu - Twitter Widget (updated API)
 	elgg_register_widget_type("twitter_widget", elgg_echo("widgets:twitter_widget:name"), elgg_echo("widgets:twitter_search:description"), array("profile", "dashboard", "index", "groups"), true);
-	//elgg_register_plugin_hook_handler("widget_settings", "twitter_widget", "widget_manager_widgets_twitter_search_settings_save_hook");
+	elgg_register_plugin_hook_handler("widget_settings", "twitter_widget", "widget_manager_widgets_twitter_widget_settings_save_hook");
 
 
 	// messages
@@ -130,6 +130,28 @@ function widget_manager_widgets_url_hook_handler($hook, $type, $return, $params)
 	}
 		
 	return $result;
+}
+
+
+function widget_manager_widgets_twitter_widget_settings_save_hook($hook, $type, $return, $params) {
+	if (empty($params) || !is_array($params))
+		return;
+$widget = elgg_extract("widget", $params);
+	// get the href url link
+	$embed_code = elgg_extract("embed_code", get_input("params", array(), false)); 
+	$pattern = "/(href=)[\"\'][\S]*[\"\']{1}/";
+	$matches = array();
+
+	//error_log("+++++++++++++++     {$embed_code}");
+	preg_match($pattern, $embed_code, $matches);
+	$matches[0] = str_replace("href=", "", $matches[0]);
+	$matches[0] = str_replace("\"", "", $matches[0]);
+	error_log("+++++++++++++++  (2)  {$matches[0]}");
+
+	$pattern1 = "/>(.*){1}</a>{1}/";
+
+	$widget->embed_url = $matches[0];
+	//$widget->save();
 }
 
 /**
