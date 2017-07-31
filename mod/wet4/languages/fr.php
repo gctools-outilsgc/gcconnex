@@ -1435,6 +1435,7 @@ return array(
 'generic_comments:post' => "Publier un commentaire",
 	'generic_comments:text' => "Commentaire",
 	'generic_comments:latest' => "Derniers commentaires",
+  'generic_comments:latest:event' => "Derniers commentaires sur les événements",
 	'generic_comment:posted' => "Votre commentaire a été publié avec succès.",
 	'generic_comment:updated' => "Le commentaire a été mis à jour.",
 'generic_comment:deleted' => "Le commentaire a été correctement supprimé.",
