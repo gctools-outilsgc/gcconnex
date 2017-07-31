@@ -175,6 +175,10 @@
   box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.2);
 }
 
+.form-ticket-panel h2 {
+  border: none;
+}
+
 .form-ticket-panel > .panel-body {
   padding:10px;
 }

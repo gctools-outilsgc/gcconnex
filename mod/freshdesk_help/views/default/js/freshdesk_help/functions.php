@@ -220,3 +220,53 @@ function matchArticles(search, lang){
           $("#filter-count").text("");
         }
     }
+
+/** Search function to match articles in ticket subject
+ * @param {HTML} form      Submit form
+ * @param {string} lang    current langauge
+ * @param {string} source  Which form this is coming from
+*/
+
+function submitTicket(form, lang, source){
+  //load api details
+  var details = get_details();
+  var yourdomain = details['domain'];
+  var api_key = details['api_key'];
+  var formdata = new FormData();
+
+  //gather inputs
+  formdata.append('product_id', details['product_id']);
+  formdata.append('description', $(form).find('#description').val());
+  formdata.append('email', $(form).find('#email').val());
+  formdata.append('subject', $(form).find('#subject').val());
+  formdata.append('priority', '1');
+  formdata.append('status', '2');
+  formdata.append('source', '2');
+
+  //check if file is attached
+  if($('#attachment')[0].files[0]){
+    formdata.append('attachments[]', $(form).find('#attachment')[0].files[0]);
+  }
+
+  //send api call
+  $.ajax(
+    {
+      url: "https://"+yourdomain+".freshdesk.com/api/v2/tickets",
+      type: 'POST',
+      contentType: false,
+      processData: false,
+      headers: {
+        "Authorization": "Basic " + btoa(api_key + ":x")
+      },
+      data: formdata,
+      success: function(data, textStatus, jqXHR) {
+        elgg.action('ticket/feedback', { data: { language: lang, type: 'success', direct: source }, success: function (wrapper) { location.reload(); } });
+      },
+      error: function(jqXHR, tranStatus) {
+        elgg.action('ticket/feedback', { data: { language: lang, type: 'fail', direct: source, code: jqXHR.status }, success: function (wrapper) { location.reload(); } });
+      }
+    }
+  );
+
+
+}

@@ -26,4 +26,6 @@ return array(
 
   //additional info
   'freshdesk:additionalinfo' => 'Information additionnelle',
+
+  'freshdesk:valid' => "Ce champ est obligatoire."
     );

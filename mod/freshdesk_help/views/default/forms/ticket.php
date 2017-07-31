@@ -1,8 +1,10 @@
 <?php
 $lang = (string) get_input('lang');
+$source = 'embed';
 
 if(!$lang){
   $lang = get_current_language();
+  $source = 'base';
 }
 //populate form with known information
 if(elgg_is_logged_in()){
@@ -21,7 +23,7 @@ if (elgg_is_sticky_form('ticket-submit')) {
 }
  ?>
 
- <h3 class="h2 mrgn-lft-sm"><?php echo elgg_echo('freshdesk:ticket:title', array(), $lang); ?></h3>
+ <h2 class="mrgn-lft-sm"><?php echo elgg_echo('freshdesk:ticket:title', array(), $lang); ?></h2>
 <div class="panel-body">
 
 <div>
@@ -77,50 +79,54 @@ $('.relatedArticles a').on('click', function(){
   $('#article-search').val($('#subject').val()).trigger('keyup');
 });
 
-$('#sendTicket').on('click', function(e){
-  e.preventDefault();
+$(document).ready(function(){
 
-        var details = get_details();
+  //validate form
+  $('#sendTicket').on('click', function(e){
+    e.preventDefault();
 
-        var yourdomain = details['domain'];
-        var api_key = details['api_key'];
-        var formdata = new FormData();
-        formdata.append('product_id', details['product_id']);
-        formdata.append('description', $('#description').val());
-        formdata.append('email', $('#email').val());
-        formdata.append('subject', $('#subject').val());
-        formdata.append('priority', '1');
-        formdata.append('status', '2');
-        formdata.append('source', '2');
-        if($('#attachment')[0].files[0]){
-          formdata.append('attachments[]', $('#attachment')[0].files[0]);
+    var form = $('.elgg-form-ticket');
+
+    var description = form.find('textarea');
+
+    //handle adding error labels amd classes on textarea
+    if($.trim($(description).val()) == '' && $(description).hasClass('error') != true){
+      $(description).addClass('error').parent().append('<label id="description-error" for="cke_'+$(description).attr('name')+'" class="error">'+'<?php echo elgg_echo('freshdesk:valid', array(), $lang) ?>'+'</label>');
+      $('#cke_'+$(description).attr('id')).attr('aria-labelledby', $(description).attr('id')+'-error');
+    } else if($.trim($(description).val()) != ''){
+      $(description).removeClass('error');
+      $('#description-error').remove();
+    }
+
+    var inputs = form.find('input');
+
+    //loop through the input fields
+    inputs.each(function(){
+      if($(this).attr('name') == 'email' || $(this).attr('name') == 'subject'){
+        if($.trim($(this).val()) == '' && $(this).hasClass('error') != true){
+          $(this).addClass('error').parent().append('<label for="'+$(this).attr('name')+'" class="error">'+'<?php echo elgg_echo('freshdesk:valid', array(), $lang) ?>'+'</label>');
         }
-        $.ajax(
-          {
-            url: "https://"+yourdomain+".freshdesk.com/api/v2/tickets",
-            type: 'POST',
-            contentType: false,
-            processData: false,
-            headers: {
-              "Authorization": "Basic " + btoa(api_key + ":x")
-            },
-            data: formdata,
-            success: function(data, textStatus, jqXHR) {
-              $('#result').text('Success');
-              $('#code').text(jqXHR.status);
-              $('#response').html(JSON.stringify(data, null, "<br/>"));
-            },
-            error: function(jqXHR, tranStatus) {
-              $('#result').text('Error');
-              $('#code').text(jqXHR.status);
-              x_request_id = jqXHR.getResponseHeader('X-Request-Id');
-              response_text = jqXHR.responseText;
-              $('#response').html(" Error Message : <b style='color: red'>"+response_text+"</b>.<br/> Your X-Request-Id is : <b>" + x_request_id + "</b>. Please contact support@freshdesk.com with this id for more information.");
-            }
-          }
-        );
+      }
+    });
+
+    var errors = form.find('.error:visible');
+
+    //handle focusing on top error
+    if(errors.length > 0){
+      if(errors.first().is('input')){
+        errors.first().focus();
+      } else {
+        CKEDITOR.instances['description'].focus();
+      }
+    } else {
+      //disable
+      form.find('button').prop('disabled', true);
+      //fire the connons
+      submitTicket(form, "<?php echo $lang;?>", "<?php echo $source;?>");
+    }
+
+  });
 });
+
+
 </script>
-<div id="result"></div>
-<div id="code"></div>
-<div id="response"></div>

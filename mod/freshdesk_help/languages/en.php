@@ -33,4 +33,6 @@ return array(
 
       //additional info
       'freshdesk:additionalinfo' => 'Additional Information',
+
+      'freshdesk:valid' => 'This field is required.'
     );
