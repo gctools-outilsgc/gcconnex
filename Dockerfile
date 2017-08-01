@@ -31,4 +31,4 @@ RUN composer global require fxp/composer-asset-plugin
 RUN composer install
 
 # Start Apache in foreground mode
-CMD chown www-data /data && chown www-data /var/www/html/ && chown www-data /var/www/html/elgg-config && rm -f /var/run/apache2/apache2.pid && /usr/sbin/apache2ctl -D FOREGROUND
+CMD chown www-data /var/www/html/data && chown www-data /var/www/html/ && chown www-data /var/www/html/elgg-config && rm -f /var/run/apache2/apache2.pid && /usr/sbin/apache2ctl -D FOREGROUND
