@@ -132,26 +132,29 @@ function widget_manager_widgets_url_hook_handler($hook, $type, $return, $params)
 	return $result;
 }
 
-
+/*
+ * strips several key elements for widget and saves them
+ * parameters: refer to function widget_manager_widgets_twitter_search_settings_save_hook
+ */
 function widget_manager_widgets_twitter_widget_settings_save_hook($hook, $type, $return, $params) {
 	if (empty($params) || !is_array($params))
 		return;
-$widget = elgg_extract("widget", $params);
+	
+	$widget = elgg_extract("widget", $params);
+	
 	// get the href url link
 	$embed_code = elgg_extract("embed_code", get_input("params", array(), false)); 
-	$pattern = "/(href=)[\"\'][\S]*[\"\']{1}/";
+	
 	$matches = array();
-
-	//error_log("+++++++++++++++     {$embed_code}");
+	$pattern = "/href=[\"\']([\S]*)[\"\']{1}/";
 	preg_match($pattern, $embed_code, $matches);
-	$matches[0] = str_replace("href=", "", $matches[0]);
-	$matches[0] = str_replace("\"", "", $matches[0]);
-	error_log("+++++++++++++++  (2)  {$matches[0]}");
+	$widget->embed_url = $matches[1];
 
-	$pattern1 = "/>(.*){1}</a>{1}/";
+	$matches = array();
+	$pattern = "/>(.*)<\/a>{1}/";
+	preg_match($pattern, $embed_code, $matches);
+	$widget->embed_title = $matches[1];
 
-	$widget->embed_url = $matches[0];
-	//$widget->save();
 }
 
 /**
