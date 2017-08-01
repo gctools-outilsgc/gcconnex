@@ -66,6 +66,19 @@ echo elgg_view("input/select", array(
         'value' => $vars['entity']->product_id));
 echo '</div>';
 
+//embed
+$params = array(
+        'name' => 'params[embed_product_id]',
+        'id' => 'embed_product_id',
+        'class' => 'mrgn-bttm-sm',
+        'value' => $vars['entity']->embed_product_id,
+    );
+
+echo '<div class="basic-profile-field">';
+echo '<label for="embed_product_id">Embed Product ID</label>';
+echo elgg_view("input/text", $params);
+echo '</div>';
+
 $portal = $vars['entity']->portal_id;
 }
 

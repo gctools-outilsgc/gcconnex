@@ -79,4 +79,9 @@ if(!$lang){
   a:hover, a:focus {
     color: #41689c;
   }
+
+  .btn-primary[disabled] {
+    background-color: #1f1f72;
+    border-color: #1f1f72;
+  }
  </style>
