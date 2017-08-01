@@ -2,6 +2,7 @@
 
 <h2 class="h2 mrgn-tp-lg"><?php echo elgg_echo('freshdesk:additionalinfo'); ?></h2>
 
+<div class="additional-info">
 	<h3><?php echo elgg_echo('contactform:useful'); ?></h3>
 	<div class="accordion">
 	<!-- Accordion section 1 -->
@@ -38,3 +39,4 @@
   <div class="mrgn-tp-md">
     <a href= "mailto:GCTools-OutilsGC@tbs-sct.gc.ca?subject=Subscription%20to%20Newsletter%20/%20Abonnement%20à%20l'infolettre&body=Please%20share%20your%20department's%20name%20/%20Veuillez%20partager%20le%20nom%20de%20votre%20ministère"><?php echo elgg_echo('contactform:newsletter'); ?></a>
   </div>
+</div>

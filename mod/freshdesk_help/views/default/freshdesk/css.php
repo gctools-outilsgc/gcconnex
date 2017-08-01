@@ -183,6 +183,10 @@
   padding:10px;
 }
 
+.additional-info {
+  margin: 0 10px;
+}
+
 @media (min-width: 540px){
   .category-card {
     float: left;
