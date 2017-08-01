@@ -141,20 +141,26 @@ function widget_manager_widgets_twitter_widget_settings_save_hook($hook, $type, 
 		return;
 	
 	$widget = elgg_extract("widget", $params);
-	
-	// get the href url link
+	$widget_type = elgg_extract('widget_type', get_input("params", array(), false));
 	$embed_code = elgg_extract("embed_code", get_input("params", array(), false)); 
-	
-	$matches = array();
-	$pattern = "/href=[\"\']([\S]*)[\"\']{1}/";
-	preg_match($pattern, $embed_code, $matches);
-	$widget->embed_url = $matches[1];
 
-	$matches = array();
-	$pattern = "/>(.*)<\/a>{1}/";
-	preg_match($pattern, $embed_code, $matches);
-	$widget->embed_title = $matches[1];
+	if ($widget_type === 'Tweets') {
+		$matches = array();
+		$pattern = "/<blockquote class=\"twitter-tweet\">(.*)<\/blockquote>/";
+		preg_match($pattern, $embed_code, $matches);
+		$widget->embed_url = $matches[1];
 
+	} else {
+		$matches = array();
+		$pattern = "/href=[\"\']([\S]*)[\"\']{1}/";
+		preg_match($pattern, $embed_code, $matches);
+		$widget->embed_url = $matches[1];
+
+		$matches = array();
+		$pattern = "/>(.*)<\/a>{1}/";
+		preg_match($pattern, $embed_code, $matches);
+		$widget->embed_title = $matches[1];
+	}
 }
 
 /**

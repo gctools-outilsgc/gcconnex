@@ -18,7 +18,7 @@ $height = sanitise_int($widget->height, false);
 	<?php // Dropdown for Twitter Widget type 
 		$options = array("Collection", "Tweets", "Profile", "List", "Likes", "Handles", "Hashtags");
 	?>
-	<p> <?php echo elgg_echo("Widget Type"); ?> </p>
+	<p> <?php echo elgg_echo("widgets:twitter_widget:type"); ?> </p>
 	<p> <?php echo elgg_view("input/dropdown", array("name" => "params[widget_type]", "options" => $options)); ?> </p>
 
 	<p> <?php echo elgg_echo("widgets:twitter_search:height"); ?> </p>
