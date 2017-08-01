@@ -119,9 +119,9 @@ $(document).ready(function(){
         CKEDITOR.instances['description'].focus();
       }
     } else {
-      //disable
+      //disable submit button to avoid clicking button twice
       form.find('button').prop('disabled', true);
-      //fire the connons
+      //submit ticket
       submitTicket(form, "<?php echo $lang;?>", "<?php echo $source;?>");
     }
 
