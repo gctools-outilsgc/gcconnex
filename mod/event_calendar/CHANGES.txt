@@ -1,23 +1,67 @@
-GC Changes
+Changelog
+=========
 
- - replace en.php [^] (23,083 bytes) 2012-11-02 12:59 [Delete]
+2.0.0 (iionly)
+--------------
 
- - replace file fr.php [^] (10,169 bytes) 2012-11-02 12:59 [Delete]
+- Updated for Elgg 2.0 (therefore should also work on future Elgg 2.X versions).
 
- - replace file filter_menu.php [^] (2,445 bytes) 2012-11-02 13:01 [Delete]
+1.10.3 (iionly)
+---------------
 
- - replace file icon css.php [^] (5,035 bytes) 2012-11-02 13:01 [Delete]
+- Conversion all JS code to AMD modules,
+- Fix for event calendar's entries on group profile pages (with and without Widget Manager plugin used) to work correctly depending on the state of the corresponding Event Calendar plugin settings for group calendars,
+- Fixed region event filter to work correctly with fullcalendar,
+- Usage of profile images of event creators as event icon in lists and on the activity page instead of generic event icon,
+- Cleanup of unused image files,
+- "Add event" link added in group's event widget (when Widget Manager is used to manage group widgets),
+- Line break added before "Add event" link in group module (when Widget Manager not used) when no group events exist,
+- Cleanup of code used to display event infos in calendar list views to prevent an empty line to be added after the info,
+- New tool ("Administer" - "Utilities" - "Event Calendar") for removal of past events,
+- Code cleanup of plugin settings page.
 
+1.10.2 (iionly and Matt Beckett)
+--------------------------------
 
-== Version history ==
+- iCAL import/export support by integration of the Event Calendar iCal plugin (this feature can be enabled/disabled by a new plugin setting),
+- Fixed: repeating events can no longer be created without selection at least on day of week the repeating event should take place on,
+- Workaround added for the site menu's "More" dropdown being overlayed by parts of the calendar if the full view event listing format is used (the workaround consists of overriding Elgg core's elgg-menu-site class; if your theme plugin or any other plugin ordered below the Event Calendar plugin does also override this class that is defined in views/default/css/elements/navigation.php the workaround is likely to fail),
+- Title in event popup display when using the full view event listing format is now a link forwarding to the event's full view page,
+- Cleanup of edit event form html markup and making the look of the form more "Elggish",
+- Parameters of elgg_view_entity_list() calls adjusted to new form of this function,
+- Parameters of getMembers() calls adjusted to new format of this function,
+- composer.json added.
 
-=== 1.8.1 (iionly and Juho Jaakola) ===
+1.10.1 (iionly and Juho Jaakola)
+--------------------------------
 
-- If event's long description is available, display it on event full view page
 - Cleanup of entity_list view (no longer use deprecated navigation/viewtype view that were unnecessary to be used anyway)
 - Use elgg_is_active_plugin() instead of elgg_plugin_exists() to make sure the helper plugins are enabled before using them
+- Naming of actions on notification sending more user friendly in case someone registers a prepare hook for them
+- Increase width of labels section on event edit page
+- Change usage of input/dropdown to input/select
+- Deliver notifications in recieving user language
+- Improving manage subsribers page: Fixes positioning of the calendar toggle buttons (thanks to Juho)
+- Improving manage subsribers page: Toggles between Add to/remove from calendar buttons when clicked (thanks to Juho)
 
-=== 1.8.0 (iionly and Juho Jaakola) ===
+1.10.0 (iionly and Juho Jaakola)
+--------------------------------
+
+- Requires: Elgg 1.10 or newer
+- Fixed deprecation issue newly introduced with Elgg 1.10 (deprecation of output/confirmlink view).
+
+1.9.0 (iionly and Juho Jaakola)
+-------------------------------
+
+- Requires: Elgg 1.9
+- Updated code for sending of notifications to new notification system introduced with Elgg 1.9
+- UI adjustments for Aalborg theme (still works with default Elgg theme)
+- Code updates to reflect API changes of Elgg 1.9 including fixing of deprecation issues newly introduced by Elgg 1.9
+- Don't show sidebar menu entries for managing event subscriptions and requests if user has no permission to edit the corresponding event
+- Updated to be compatible with Widget Manager plugin for Elgg 1.9
+
+1.8.0 (iionly and Juho Jaakola)
+-------------------------------
 
 - Major code cleanup
 - Adds upgrade script to convert old handling of personal events (with annotations) to new implementation (handled by relationships)
@@ -37,12 +81,14 @@ GC Changes
 - Adds Japanese translations (incomplete)
 - Adds French translations (incomplete)
 
-=== 0.85 ===
+0.85
+----
 
 - Requires: Elgg 1.8 or higher
 - Should be installed in mod/event_calendar
 
-=== 0.84 ===
+0.84
+----
 
 - Fixed tag search so it works for Elgg 1.7.x
 - Added French and Spanish language files provided by UNESCO. These are not quite complete and additions are welcome
@@ -62,13 +108,15 @@ GC Changes
    3. The add users feature provides a magic JavaScript field that allows an event creator to add the event to the personal calendars of other users. This appears on the event edit form. (Requires the separate autocomplete plugin)
 - There is a separate option (turned off by default) to send notifications to users who have events added to their calendars through the add users feature
 
-=== 0.83 ===
+0.83
+----
 
 - Fixed a bug that prevented region filtering with embedded blanks from working properly (thanks Patrick!)
 - Added a new paged view for events (not month specific) that allows adding/removing events to a calendar with one click
 - Fixed some issues with the personal event calendar widget
 
-=== 0.82 ===
+0.82
+----
 
 - Fixed a bug in displaying dates when the start and end date were the same
 - Fixed the form redisplay bug described here: http://community.elgg.org/mod/groups/topicposts.php?topic=423853&group_guid=263011
@@ -77,13 +125,15 @@ GC Changes
 - Added the ability to filter events by regions if the region option is turned on
 - Added security tokens for Elgg 1.7
 
-=== 0.81 ===
+0.81
+----
 
 - Fixed a problem with the group "widget" not displaying when it should
 - Hid the "Today" link as it was not behaving as most people expected
 - Forced the display into Month mode after Prev and Next is clicked
 
-=== 0.8 ===
+0.8
+---
 
 - Removed a debugging message left in the event delete action
 - Sorted events properly by date/time rather than time created
@@ -95,7 +145,8 @@ GC Changes
 - Added an admin toggle for an autogroup function that automatically adds all group events to a user's calendar for all groups that the user is a member of. Group events are also automatically removed if the user leaves the group
 - Added an admin toggle to add a region drop down to the event form and a field to enter the allowable regions
 
-=== 0.7 ===
+0.7
+---
 
 - Reworked design for Elgg 1.5
 - Fixed several bugs, including in the list of people who added an event to their personal calendar (now shows the proper group navigation if this is a group event)
@@ -103,16 +154,19 @@ GC Changes
 - Added numerous configuration options (accessible via event_calendar settings on the admin tools configuration page). This allows, for example, any logged-in user to add events to the site calendar, to remove group calendars, etc.
 - People who create an event now have the event automatically added to their personal event calendar. This behaviour can be configured via the admin event calendar settings
 
-=== 0.6 ===
+0.6
+---
 
 - Fixed a bug that prevented more than one person adding a given event to his/her personal calendar
 - Fixed a bug that made the page owner the person who created the event. This is now the group for group events, otherwise the currently logged in user
 - Added river support
 
-=== 0.51 ===
+0.51
+----
 
 - Fixed event overlap detection
 
-=== 0.5 ===
+0.5
+---
 
 - Initial release

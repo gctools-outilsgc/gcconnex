@@ -47,12 +47,6 @@ td.ui-datepicker-unselectable {
 	background: <?php echo $highlight_colour; ?>;
 }
 
-.river_object_event_calendar_create {
-	background: url(<?php echo elgg_get_site_url(); ?>mod/event_calendar/images/river_icon_event.gif) no-repeat left -1px;
-}
-.river_object_event_calendar_update {
-	background: url(<?php echo elgg_get_site_url(); ?>mod/event_calendar/images/river_icon_event.gif) no-repeat left -1px;
-}
 #event_list {
 	max-width:485px;
 	margin:0;
@@ -179,10 +173,7 @@ li.event-calendar-filter-menu-show-only {
 
 .event-calendar-edit-form-block {
 	width: 98%;
-	<!-- background-color: #DDDDDD; -->
-	<!-- border-width:1px; -->
-	border-style:solid;
-	border-color:#bfbfbf;
+	border-bottom: 1px solid #CCC;
 	padding: 5px;
 	margin-bottom: 10px;
 	clear: both;

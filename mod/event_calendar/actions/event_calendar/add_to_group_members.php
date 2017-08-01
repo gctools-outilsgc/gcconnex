@@ -6,7 +6,7 @@ $event = get_entity($event_guid);
 $group = get_entity($event->container_guid);
 
 if (elgg_instanceof($group, 'group') && elgg_instanceof($event, 'object', 'event_calendar') && $group->canEdit()) {
-	$members = $group->getMembers(0, 0);
+	$members = $group->getMembers(array('limit' => false));
 	foreach($members as $member) {
 		event_calendar_add_personal_event($event->guid, $member->guid);
 	}

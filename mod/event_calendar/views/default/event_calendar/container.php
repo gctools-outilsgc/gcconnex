@@ -29,4 +29,4 @@ if ($vars['container_guid']) {
 } else {
 	$value = 0;
 }
-echo elgg_view('input/dropdown', array('name' => 'group_guid', 'value' => $vars['container_guid'], 'options_values' => $containers));
+echo elgg_view('input/select', array('name' => 'group_guid', 'value' => $vars['container_guid'], 'options_values' => $containers));

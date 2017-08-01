@@ -1,6 +1,6 @@
 <?php
 
-elgg_load_js('elgg.event_calendar');
+elgg_require_js('event_calendar/event_calendar');
 
 $nav = elgg_view('navigation/pagination', array(
 	'base_url' => $_SERVER['SCRIPT_NAME'].'/?'.$_SERVER['QUERY_STRING'],

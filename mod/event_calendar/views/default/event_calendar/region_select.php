@@ -12,10 +12,10 @@ if ($region_list) {
 		$options_values[$region_item] = $region_item;
 	}
 
-	$body .= elgg_echo('event_calendar:region_filter_by_label');
+	$body .= '<div class="mbs">' . elgg_echo('event_calendar:region_filter_by_label') . ' ';
 	$body .= elgg_view('input/hidden', array('id' => 'event-calendar-region-url-start', 'value' => $vars['url_start']));
-	$body .= elgg_view("input/dropdown", array('id' => 'event-calendar-region', 'value' => $vars['region'], 'options_values' => $options_values));
-	$body .= '<br />';
+	$body .= elgg_view("input/select", array('id' => 'event-calendar-region', 'value' => $vars['region'], 'options_values' => $options_values));
+	$body .= '</div>';
 }
 
 echo $body;

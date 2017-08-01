@@ -36,5 +36,15 @@ if (is_array($events) && sizeof($events) > 0) {
 	}
 	echo "</div>";
 } else {
-	echo elgg_echo('event_calendar:no_events_found');
+	echo '<p>' . elgg_echo('event_calendar:no_events_found') . '</p>';
+}
+
+if (elgg_is_logged_in()) {
+	$group = get_entity(elgg_get_page_owner_guid());
+	if ($group->isMember(elgg_get_logged_in_user_entity())) {
+		echo elgg_view('output/url', array(
+			'href' => "event_calendar/add/$group->guid",
+			'text' => elgg_echo('event_calendar:new'),
+		));
+	}
 }

@@ -81,7 +81,7 @@ if ($event) {
 			);			
 			$result = elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
 		}
-		
+
 		system_message(elgg_echo('event_calendar:add_event_response'));
 	}
 
@@ -92,7 +92,7 @@ if ($event) {
 		'object_guid' => $event->guid,
 	));
 
-	if ($event->schedule_type == 'poll')
+	if ($event->schedule_type == 'poll') {
 		forward('event_poll/add/'.$event->guid);
 
 	forward($event->getURL());
