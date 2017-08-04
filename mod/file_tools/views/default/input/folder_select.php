@@ -1,35 +1,33 @@
 <?php
 
-$folder_guid = (int) get_input("folder_guid");
+$folder_guid = (int) get_input('folder_guid');
 
-$container_guid = elgg_extract("container_guid", $vars, elgg_get_page_owner_guid());
-$current_folder	= elgg_extract("folder", $vars, $folder_guid);
-$type = elgg_extract("type", $vars);
+$container_guid = elgg_extract('container_guid', $vars, elgg_get_page_owner_guid());
+$current_folder	= (int) elgg_extract('folder', $vars, $folder_guid);
+$type = elgg_extract('type', $vars);
 
-unset($vars["folder"]);
-unset($vars["type"]);
-unset($vars["container_guid"]);
+unset($vars['folder']);
+unset($vars['type']);
+unset($vars['container_guid']);
 
-if ($type == "folder") {
-	if (!elgg_extract("value", $vars)) {
-		if (!empty($current_folder)) {
-			$vars["value"] = get_entity($current_folder)->parent_guid;
-		}
+$default_value = $current_folder;
+if ($type == 'folder') {
+	if (!empty($current_folder)) {
+		$default_value = get_entity($current_folder)->parent_guid;
 	}
-} elseif (!elgg_extract("value", $vars)) {
-	$vars["value"] = $current_folder;
 }
 
-$folders = file_tools_get_folders($container_guid);
+$vars['value'] = elgg_extract('value', $vars, $default_value);
 
-$options = array(
-	0 => elgg_echo("file_tools:input:folder_select:main")
-);
+$folders = file_tools_get_folders($container_guid);
+$options = [
+	0 => elgg_echo('file_tools:input:folder_select:main')
+];
 
 if (!empty($folders)) {
 	$options = $options + file_tools_build_select_options($folders, 1);
 }
 
-$vars["options_values"] = $options;
+$vars['options_values'] = $options;
 
-echo elgg_view("input/dropdown", $vars);
+echo elgg_view('input/select', $vars);

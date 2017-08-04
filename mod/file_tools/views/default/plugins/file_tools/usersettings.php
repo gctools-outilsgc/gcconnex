@@ -1,26 +1,24 @@
 <?php
 
-$plugin = elgg_extract("entity", $vars);
+$plugin = elgg_extract('entity', $vars);
 
-$options = array(
-	"date" => elgg_echo("file_tools:usersettings:time:date"),
-	"days" => elgg_echo("file_tools:usersettings:time:days")
-);
+$options = [
+	'date' => elgg_echo('file_tools:usersettings:time:date'),
+	'days' => elgg_echo('file_tools:usersettings:time:days'),
+];
 
-$file_tools_time_display_value = $plugin->getUserSetting("file_tools_time_display", elgg_get_page_owner_guid());
+$file_tools_time_display_value = $plugin->getUserSetting('file_tools_time_display', elgg_get_page_owner_guid());
 if (empty($file_tools_time_display_value)) {
-	$file_tools_time_display_value = elgg_get_plugin_setting("file_tools_default_time_display", "file_tools");
+	$file_tools_time_display_value = elgg_get_plugin_setting('file_tools_default_time_display', 'file_tools');
 }
 
-echo "<div>";
-echo elgg_echo("file_tools:usersettings:time:description");
-echo "</div>";
+echo elgg_view('output/longtext', [
+	'value' => elgg_echo('file_tools:usersettings:time:description'),
+]);
 
-echo "<div>";
-echo elgg_echo("file_tools:usersettings:time");
-echo "&nbsp;" . elgg_view("input/dropdown", array(
-	"name" => "params[file_tools_time_display]",
-	"options_values" => $options,
-	"value" => $file_tools_time_display_value
-));
-echo "</div>";
+echo elgg_view_input('select', [
+	'label' => elgg_echo('file_tools:usersettings:time'),
+	'name' => 'params[file_tools_time_display]',
+	'options_values' => $options,
+	'value' => $file_tools_time_display_value,
+]);

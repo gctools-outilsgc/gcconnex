@@ -1,25 +1,30 @@
 <?php
 
+$widget = elgg_extract('entity', $vars);
+
 // get widget settings
-$count = sanitise_int($vars["entity"]->file_count, false);
-if (empty($count)) {
+$count = (int) $widget->file_count;
+if ($count < 1) {
 	$count = 8;
 }
 
-$options = array(
+$files = elgg_list_entities([
 	"type" => "object",
 	"subtype" => "file",
 	"limit" => $count,
 	"full_view" => false,
-	"pagination" => false
-);
+	"pagination" => false,
+]);
 
-if ($files = elgg_list_entities($options)) {
-	echo $files;
-	
-	echo "<span class='elgg-widget-more'>";
-	echo elgg_view("output/url", array("href" => "file/all", "text" => elgg_echo("file:more"), "is_trusted" => true));
-	echo "</span>";
-} else {
+if (empty($files)) {
 	echo elgg_echo("file:none");
+	return;
 }
+
+echo $files;
+
+echo elgg_format_element('div', ['class' => 'elgg-widget-more'], elgg_view("output/url", [
+	"href" => "file/all",
+	"text" => elgg_echo("file:more"),
+	"is_trusted" => true,
+]));

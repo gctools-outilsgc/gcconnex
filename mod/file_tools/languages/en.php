@@ -23,11 +23,11 @@ return array(
 	'file_tools:group_tool_option:structure_management' => "Allow management of folders by members",
 	
 	// views
-
+	
 	// object
 	'file_tools:object:files' => "%s file(s) in this folder",
 	'file_tools:object:no_files' => "No files in this folder",
-
+	
 	// input - folder select
 	'file_tools:input:folder_select:main' => "Main folder",
 
@@ -82,7 +82,6 @@ return array(
 
 	// upload
 	'file_tools:upload:tabs:single' => "Single file",
-	'file_tools:upload:tabs:multi' => "Multi file",
 	'file_tools:upload:tabs:zip' => "Zip file",
 	'file_tools:upload:form:choose' => 'Choose file',
 	'file_tools:upload:form:info' => 'Click browse to upload (multiple) files',
@@ -130,7 +129,8 @@ return array(
 	'file_tools:action:folder:reorder:success' => "Successfully reordered the folder(s)",
 	
 	//settings
-	'file_tools:settings:allowed_extensions' => 'Allowed extensions (comma seperated)',
+	'file_tools:settings:allowed_extensions' => 'Allowed extensions',
+	'file_tools:settings:allowed_extensions:help' => 'Which file extensions are allowed to be uploaded using the ZIP upload. This is a comma separated list.',
 	'file_tools:settings:user_folder_structure' => 'Use folder structure',
 	'file_tools:settings:sort:default' => 'Default folder sorting options',
 	'file_tools:settings:list_length' => 'How many files to show in the listing',
@@ -145,9 +145,11 @@ return array(
 	'widgets:file_tree:description' => "Showcase your File folders",
 	
 	'widgets:file_tree:edit:select' => "Select which folder(s) to display",
-	'widgets:file_tree:edit:show_content' => "Show the content of the folder(s)",
+	'widgets:file_tree:edit:show_content' => "Show the content of the selected folder(s)",
+	'widgets:file_tree:edit:show_content:help' => "Show the files and folders contained in the selected folders.",
+	'widgets:file_tree:edit:toggle_contents' => "Add a link to load the folder contents",
+	'widgets:file_tree:edit:toggle_contents:help' => "Add a link to the folder listing to show the contents of the folder.",
 	'widgets:file_tree:no_folders' => "No folders configured",
-	'widgets:file_tree:no_files' => "No files configured",
 	'widgets:file_tree:more' => "More file folders",
 
 	'widget:file:edit:show_only_featured' => 'Show only featured files',

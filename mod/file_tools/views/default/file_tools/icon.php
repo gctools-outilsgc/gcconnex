@@ -1,29 +1,26 @@
 <?php
 
-$entity = elgg_extract("entity", $vars);
-$size = elgg_extract("size", $vars);
+$entity = elgg_extract('entity', $vars);
+$size = elgg_extract('size', $vars);
+$override = (bool) elgg_extract('override', $vars, false);
 
-if (isset($vars["override"]) && $vars["override"] == true) {
-	$override = true;
-} else {
-	$override = false;
-}
-
-$allowed_sizes = array("tiny", "small", "medium");
+$allowed_sizes = ['tiny', 'small', 'medium'];
 if (!in_array($size, $allowed_sizes)) {
-	$size = "small";
+	$size = 'small';
 }
 
-$icon = elgg_view("output/img", array(
-	"src" => $entity->getIconUrl($size),
-	"alt" => $entity->title,
-	"title" => $entity->title
-));
+$icon = elgg_view('output/img', [
+	'src' => $entity->getIconUrl($size),
+	'alt' => $entity->title,
+	'title' => $entity->title,
+]);
 
 if (!$override) {
-	echo "<a href='" . $entity->getURL() . "' class='icon'>";
-	echo $icon;
-	echo "</a>";
+	echo elgg_view('output/url', [
+		'text' => $icon,
+		'href' => $entity->getURL(),
+		'class' => 'icon',
+	]);
 } else {
 	echo $icon;
 }

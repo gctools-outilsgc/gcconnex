@@ -1,4 +1,32 @@
-= Version History =
+Version history
+===============
+
+3.0.0-rc.3 (2016-12-08):
+
+- fixed: folders can't be reordered
+- fixed: group owners can't create folders
+
+3.0.0-rc.2 (2016-11-28):
+
+- fixed: folder update event to greedy
+- fixed: unable to delete folder
+
+3.0.0-rc.1 (2016-11-22):
+
+- added: French translation file
+- added: Finnish translations file
+- added: folder write access can now be altered with a plugin hook
+- changed: all javascript is now written as AMD modules
+- changed: increased Elgg version requirement
+- changed: rewrite of the plugin for Elgg 2.2
+- changed: temp location for bulk downloads now uses system temp location
+- changed: notification handling
+- changed: updates jsTree from 0.9.9 to 3.2.0 and loads it asynchronously
+- fixed: input for getEntitiesFromRelationship to array as per deprecation message
+- fixed: AJAX response for folder list now respects group sorting settings
+- fixed: group files not working
+- fixed: only allow group folder management if folders is enabled
+- removed: support for IE6/7/8
 
 2.0 (2015-07-08):
 
@@ -16,14 +44,6 @@
 - fixed: mimetype detection in ZIP upload doesn't detect all MS Office types correctly
 - fixed: moving a folder doesn't always correclty refreshed the content
 - changed: small css fixes
-
-
-
-=== GC Changes ===
-
-GC1.0 - Added French Language File
-
-
 
 1.1.2 (2013-04-05):
 
@@ -98,4 +118,5 @@ GC1.0 - Added French Language File
 - fixed: preferred date time notation in folder details
 
 0.2 (2012-01-20):
+
 - initial release

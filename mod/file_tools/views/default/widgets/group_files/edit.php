@@ -1,13 +1,15 @@
 <?php
 
-$file_count = sanitise_int($vars["entity"]->file_count);
-if (empty($file_count)) {
+$widget = elgg_extract('entity', $vars);
+
+$file_count = (int) $widget->file_count;
+if ($file_count < 1) {
 	$file_count = 4;
 }
-?>
-<div>
-	<?php
-		echo elgg_echo("file:num_files");
-		echo elgg_view("input/dropdown", array("name" => "params[file_count]", "options" => range(1, 10), "value" => $file_count));
-	?>
-</div>
+
+echo elgg_view_input('select', [
+	'label' => elgg_echo('file:num_files'),
+	'name' => 'params[file_count]',
+	'options' => range(1, 10),
+	'value' => $file_count,
+]);

@@ -1,67 +1,79 @@
 <?php
 
-$widget = elgg_extract("entity", $vars);
-$site_url = elgg_get_site_url();
+/* @var $widget ElggWidget */
+$widget = elgg_extract('entity', $vars);
 
-if ($folder_guids = $widget->folder_guids) {
-	$show_content = $widget->show_content;
-	
-	if (!is_array($folder_guids)) {
-		$folder_guids = array($folder_guids);
-	}
-	
-	$folder_guids = array_map("sanitise_int", $folder_guids);
-	
-	$folders = "";
-	foreach ($folder_guids as $guid) {
-		if (($folder = get_entity($guid)) && ($folder->getSubtype() == FILE_TOOLS_SUBTYPE)) {
-			if (!empty($show_content)) {
-				// list the files
-				$folders .= elgg_view_entity($folder, array("full_view" => false));
-				
-				// list the content
-				if (!($sub_folders = file_tools_get_sub_folders($folder))) {
-					$sub_folders = array();
-				}
-				
-				$files_options = array(
-					"type" => "object",
-					"subtype" => "file",
-					"limit" => false,
-					"container_guid" => $widget->getOwnerGUID(),
-					"relationship" => FILE_TOOLS_RELATIONSHIP,
-					"relationship_guid" => $folder->getGUID(),
-					"inverse_relationship" => false,
-				);
-				$files = elgg_get_entities_from_relationship($files_options);
-				
-				$entities = array_merge($sub_folders, $files);
-				
-				$folders .= "<div class='mlm'>";
-				$folders .= elgg_view_entity_list($entities, array("full_view" => false, "pagination" => false));
-				$folders .= "</div>";
-			} else {
-				$folders .= elgg_view_entity($folder);
-			}
-		}
-	}
-	
-	if (!empty($folders)) {
-		$owner = $widget->getOwnerEntity();
-		if (elgg_instanceof($owner, "user")) {
-			$more_url = $site_url . "file/owner/" . $owner->username;
-		} else {
-			$more_url = $site_url . "file/group/" . $owner->getGUID() . "/all";
-		}
-		
-		echo $folders;
-		
-		echo "<div class='widget_more_wrapper'>";
-		echo elgg_view("output/url", array("href" => $more_url, "text" => elgg_echo("widgets:file_tree:more")));
-		echo "</div>";
-	} else {
-		echo elgg_echo("notfound");
-	}
-} else {
-	echo elgg_echo("widgets:file_tree:no_folders");
+$folder_guids = $widget->folder_guids;
+if (empty($folder_guids)) {
+	echo elgg_echo('widgets:file_tree:no_folders');
+	return;
 }
+
+$show_content = (bool) $widget->show_content;
+$toggle_contents = (bool) $widget->toggle_contents;
+
+if (!is_array($folder_guids)) {
+	$folder_guids = [$folder_guids];
+}
+
+$folder_guids = array_map('sanitise_int', $folder_guids);
+
+$folder_options = [
+	'type' => 'object',
+	'subtype' => FILE_TOOLS_SUBTYPE,
+	'guids' => $folder_guids,
+	'container_guid' => $widget->getOwnerGUID(),
+	'limit' => false,
+	'full_view' => true,
+	
+	'show_toggle_content' => $toggle_contents,
+];
+
+if ($show_content) {
+	$folder_options['item_view'] = 'object/folder/file_tree';
+}
+
+$folders = elgg_get_entities($folder_options);
+if (empty($folders)) {
+	echo elgg_echo('notfound');
+	return;
+}
+
+if ($toggle_contents) {
+	elgg_require_js('file_tools/file_tree');
+}
+
+$sorted_result = [];
+/* @var $folder ElggObject */
+foreach ($folders as $folder) {
+	$index = array_search($folder->getGUID(), $folder_guids);
+	if ($index === false) {
+		// shouldn't happen
+		continue;
+	}
+	
+	$sorted_result[$index] = $folder;
+}
+
+// actualy sort the resultset
+ksort($sorted_result);
+// show the results
+echo elgg_view_entity_list($sorted_result, $folder_options);
+
+// more link
+$more_url = '';
+$owner = $widget->getOwnerEntity();
+if ($owner instanceof ElggUser) {
+	$more_url = "file/owner/{$owner->username}";
+} elseif ($owner instanceof ElggGroup) {
+	$more_url = "file/group/{$owner->getGUID()}/all";
+}
+
+if (empty($more_url)) {
+	return;
+}
+
+echo elgg_format_element('div', ['class' => 'elgg-widget-more'], elgg_view('output/url', [
+	'href' => $more_url,
+	'text' => elgg_echo('widgets:file_tree:more'),
+]));

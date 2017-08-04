@@ -1,10 +1,10 @@
 <?php
+
 /**
  * Elgg file upload/save form
  *
  * @package ElggFile
  */
-
 // once elgg_view stops throwing all sorts of junk into $vars, we can use
 $title = elgg_extract('title', $vars, '');
 $desc = elgg_extract('description', $vars, '');
@@ -16,71 +16,101 @@ if (!$container_guid) {
 }
 $guid = elgg_extract('guid', $vars, null);
 
+$parent_guid = (int) get_input('folder_guid', 0);
+
 if ($guid) {
 	$file_label = elgg_echo("file:replace");
 	$submit_label = elgg_echo('save');
+	
+	// get current parent_guid
+	$file = get_entity($guid);
+	$folders = $file->getEntitiesFromRelationship([
+		'relationship' => FILE_TOOLS_RELATIONSHIP,
+		'inverse_relationship' => true,
+		'limit' => 1,
+	]);
+	if (!empty($folders)) {
+		$parent_guid = $folders[0]->getGUID();
+	}
 } else {
 	$file_label = elgg_echo("file:file");
 	$submit_label = elgg_echo('upload');
 }
 
-?>
-<div>
-	<label><?php echo $file_label; ?></label><br />
-	<?php echo elgg_view('input/file', array('name' => 'upload')); ?>
-</div>
-<div>
-	<label><?php echo elgg_echo('title'); ?></label><br />
-	<?php echo elgg_view('input/text', array('name' => 'title', 'value' => $title)); ?>
-</div>
-<div>
-	<label><?php echo elgg_echo('description'); ?></label>
-	<?php echo elgg_view('input/longtext', array('name' => 'description', 'value' => $desc)); ?>
-</div>
-<div>
-	<label><?php echo elgg_echo('tags'); ?></label>
-	<?php echo elgg_view('input/tags', array('name' => 'tags', 'value' => $tags)); ?>
-</div>
+// Get post_max_size and upload_max_filesize
+$post_max_size = elgg_get_ini_setting_in_bytes('post_max_size');
+$upload_max_filesize = elgg_get_ini_setting_in_bytes('upload_max_filesize');
 
-<?php
-if (file_tools_use_folder_structure()) {
-	$parent_guid = 0;
-	if ($file = elgg_extract("entity", $vars)) {
-		if ($folders = $file->getEntitiesFromRelationship(FILE_TOOLS_RELATIONSHIP, true, 1)) {
-			$parent_guid = $folders[0]->getGUID();
-		}
+// Determine the correct value
+$max_upload = $upload_max_filesize > $post_max_size ? $post_max_size : $upload_max_filesize;
+
+$upload_limit = elgg_echo('file:upload_limit', array(elgg_format_bytes($max_upload)));
+
+$fields = [
+	[
+		'type' => 'file',
+		'name' => 'upload',
+		'label' => $file_label,
+		'help' => $upload_limit,
+		'value' => ($guid),
+		'required' => (!$guid),
+	],
+	[
+		'type' => 'text',
+		'name' => 'title',
+		'value' => $title,
+		'label' => elgg_echo('title'),
+	],
+	[
+		'type' => 'longtext',
+		'name' => 'description',
+		'value' => $desc,
+		'label' => elgg_echo('description'),
+	],
+	[
+		'type' => 'tags',
+		'name' => 'tags',
+		'value' => $tags,
+		'label' => elgg_echo('tags'),
+	],
+	[
+		'type' => 'folder_select',
+		'name' => 'folder_guid',
+		'value' => $parent_guid,
+		'label' => elgg_echo('file_tools:forms:edit:parent'),
+	],
+	[
+		'type' => 'access',
+		'name' => 'access_id',
+		'value' => $access_id,
+		'entity' => get_entity($guid),
+		'entity_type' => 'object',
+		'entity_subtype' => 'file',
+		'label' => elgg_echo('access'),
+	],
+	[
+		'type' => 'hidden',
+		'name' => 'container_guid',
+		'value' => $container_guid,
+	],
+	[
+		'type' => 'hidden',
+		'name' => 'file_guid',
+		'value' => $guid,
+	],
+	[
+		'type' => 'submit',
+		'value' => $submit_label,
+		'field_class' => 'elgg-foot',
+	]
+];
+
+foreach ($fields as $field) {
+	$type = elgg_extract('type', $field, 'text');
+	unset($field['type']);
+	
+	if ($type == 'folder_select' && !file_tools_use_folder_structure()) {
+		continue;
 	}
-	?>
-	<div>
-		<label><?php echo elgg_echo("file_tools:forms:edit:parent"); ?><br />
-		<?php
-			echo elgg_view("input/folder_select", array("name" => "folder_guid", "value" => $parent_guid));
-		?>
-		</label>
-	</div>
-<?php
+	echo elgg_view_input($type, $field);
 }
-
-$categories = elgg_view('input/categories', $vars);
-if ($categories) {
-	echo $categories;
-}
-
-?>
-<div>
-	<label><?php echo elgg_echo('access'); ?></label><br />
-	<?php echo elgg_view('input/access', array('name' => 'access_id', 'value' => $access_id)); ?>
-</div>
-<div class="elgg-foot">
-<?php
-
-echo elgg_view('input/hidden', array('name' => 'container_guid', 'value' => $container_guid));
-
-if ($guid) {
-	echo elgg_view('input/hidden', array('name' => 'file_guid', 'value' => $guid));
-}
-
-echo elgg_view('input/submit', array('value' => $submit_label));
-
-?>
-</div>

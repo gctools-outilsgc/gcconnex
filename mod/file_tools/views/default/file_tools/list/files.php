@@ -1,18 +1,21 @@
 <?php
 
-$files = elgg_extract("files", $vars, array());
-$folder = elgg_extract("folder", $vars);
-$show_more = (bool) elgg_extract("show_more", $vars, false);
-$limit = (int) elgg_extract("limit", $vars, file_tools_get_list_length());
-$offset = (int) elgg_extract("offset", $vars, 0);
+$files = elgg_extract('files', $vars, []);
+$folder = elgg_extract('folder', $vars);
+$show_more = (bool) elgg_extract('show_more', $vars, false);
+$limit = (int) elgg_extract('limit', $vars, file_tools_get_list_length());
+$offset = (int) elgg_extract('offset', $vars, 0);
 
 // only show the header if offset == 0
-$folder_content = "";
+$folder_content = '';
 if (empty($offset)) {
-	$folder_content = elgg_view("file_tools/breadcrumb", array("entity" => $folder));
+	$folder_content = elgg_view('file_tools/breadcrumb', [
+		'entity' => $folder,
+	]);
 	
-	if (!($sub_folders = file_tools_get_sub_folders($folder))) {
-		$sub_folders = array();
+	$sub_folders = file_tools_get_sub_folders($folder);
+	if (empty($sub_folders)) {
+		$sub_folders = [];
 	}
 	
 	$entities = array_merge($sub_folders, $files);
@@ -20,13 +23,14 @@ if (empty($offset)) {
 	$entities = $files;
 }
 
+$files_content = '';
 if (!empty($entities)) {
-	$params = array(
-		"full_view" => false,
-		"pagination" => false
-	);
+	$params = [
+		'full_view' => false,
+		'pagination' => false,
+	];
 	
-	elgg_push_context("file_tools_selector");
+	elgg_push_context('file_tools_selector');
 	
 	$files_content = elgg_view_entity_list($entities, $params);
 	
@@ -34,63 +38,77 @@ if (!empty($entities)) {
 }
 
 if (empty($files_content)) {
-	$files_content = elgg_echo("file_tools:list:files:none");
+	$files_content = elgg_echo('file_tools:list:files:none');
 } else {
 	if ($show_more) {
-		$files_content .= "<div class='center' id='file-tools-show-more-wrapper'>";
-		$files_content .= elgg_view("input/button", array(
-			"value" => elgg_echo("file_tools:show_more"),
-			"class" => "elgg-button-action",
-			"id" => "file-tools-show-more-files",
-		));
-		$files_content .= elgg_view("input/hidden", array("name" => "offset", "value" => ($limit + $offset)));
+		$more = elgg_view('input/button', [
+			'value' => elgg_echo('file_tools:show_more'),
+			'class' => 'elgg-button-action',
+			'id' => 'file-tools-show-more-files',
+		]);
+		$more .= elgg_view('input/hidden', [
+			'name' => 'offset',
+			'value' => ($limit + $offset),
+		]);
 		if (!empty($folder)) {
-			$files_content .= elgg_view("input/hidden", array("name" => "folder_guid", "value" => $folder->getGUID()));
+			$more .= elgg_view('input/hidden', [
+				'name' => 'folder_guid',
+				'value' => $folder->getGUID(),
+			]);
 		} else {
-			$files_content .= elgg_view("input/hidden", array("name" => "folder_guid", "value" => "0"));
+			$more .= elgg_view('input/hidden', [
+				'name' => 'folder_guid',
+				'value' => '0',
+			]);
 		}
-		$files_content .= "</div>";
+		
+		$files_content .= elgg_format_element('div', [
+			'id' => 'file-tools-show-more-wrapper',
+			'class' => 'center',
+		], $more);
 	}
-	
+
 	// only show selectors on the first load
 	if (empty($offset)) {
-		$files_content .= "<div class='clearfix'>";
+		$selector = '';
 		
 		if (elgg_get_page_owner_entity()->canEdit()) {
-			$files_content .= '<a id="file_tools_action_bulk_delete" href="javascript:void(0);">' . elgg_echo("file_tools:list:delete_selected") . '</a> | ';
+			$selector = elgg_view('output/url', [
+				'id' => 'file_tools_action_bulk_delete',
+				'text' => elgg_echo('file_tools:list:delete_selected'),
+				'href' => 'javascript:void(0);',
+			]);
+			$selector .= ' | ';
 		}
 		
-		$files_content .= "<a id='file_tools_action_bulk_download' href='javascript:void(0);'>" . elgg_echo("file_tools:list:download_selected") . "</a>";
+		$selector .= elgg_view('output/url', [
+			'id' => 'file_tools_action_bulk_download',
+			'text' => elgg_echo('file_tools:list:download_selected'),
+			'href' => 'javascript:void(0);',
+		]);
 		
-		$files_content .= "<a id='file_tools_select_all' class='float-alt' href='javascript:void(0);'>";
-		$files_content .= "<span>" . elgg_echo("file_tools:list:select_all") . "</span>";
-		$files_content .= "<span class='hidden  wb-invisible'>" . elgg_echo("file_tools:list:deselect_all") . "</span>";		// added  wb-invisible class
-		$files_content .= "</a>";
-		
-		$files_content .= "</div>";
+		$selector .= elgg_view('output/url', [
+			'id' => 'file_tools_select_all',
+			'text' => elgg_format_element('span', [], elgg_echo('file_tools:list:select_all')) .
+				elgg_format_element('span', ['class' => 'hidden wb-invisible'], elgg_echo('file_tools:list:deselect_all')),
+			'href' => 'javascript:void(0);',
+			'class' => 'float-alt',
+		]);
+				
+		$files_content .= elgg_format_element('div', ['class' => 'clearfix'], $selector);
 	}
 }
 
 // show the listing
-echo "<div id='file_tools_list_files'>";
-echo "<div id='file_tools_list_files_overlay'></div>";
+echo '<div id="file_tools_list_files">';
+echo '<div id="file_tools_list_files_overlay"></div>';
 echo $folder_content;
 echo $files_content;
-echo elgg_view("graphics/ajax_loader");
-echo "</div>";
+echo elgg_view('graphics/ajax_loader');
+echo '</div>';
 
 $page_owner = elgg_get_page_owner_entity();
 
-if ($page_owner->canEdit() || (elgg_instanceof($page_owner, "group") && $page_owner->isMember())) { ?>
-<script type="text/javascript">
-
-	$(function(){
-		
-		elgg.file_tools.initialize_file_draggable();
-		elgg.file_tools.initialize_folder_droppable();
-		
-	});
-
-</script>
-<?php
+if ($page_owner->canEdit() || (elgg_instanceof($page_owner, 'group') && $page_owner->isMember())) {
+	elgg_require_js('file_tools/site');
 }

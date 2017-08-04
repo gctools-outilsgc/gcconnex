@@ -1,12 +1,16 @@
 <?php
 
-$count = sanitise_int($vars["entity"]->file_count, false);
-if (empty($count)) {
+$widget = elgg_extract('entity', $vars);
+
+$count = (int) $widget->file_count;
+if ($count < 1) {
 	$count = 8;
 }
 
-?>
-<div>
-	<?php echo elgg_echo("file:num_files"); ?><br />
-	<?php echo elgg_view("input/text", array("name" => "params[file_count]", "value" => $count, "size" => "4", "maxlength" => "4")); ?>
-</div>
+echo elgg_view_input('text', [
+	'label' => elgg_echo('file:num_files'),
+	'name' => 'params[file_count]',
+	'value' => $count,
+	'size' => 4,
+	'maxlength' => 4,
+]);

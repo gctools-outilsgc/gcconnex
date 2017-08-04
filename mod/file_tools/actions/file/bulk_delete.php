@@ -1,52 +1,67 @@
 <?php
 
-$file_guids = get_input("file_guids");
-$folder_guids = get_input("folder_guids");
+$file_guids = (array) get_input('file_guids', []);
+$folder_guids = (array) get_input('folder_guids', []);
 
-if (!empty($file_guids) || !empty($folder_guids)) {
-	// remove all files
-	if (!empty($file_guids)) {
-		$file_count = 0;
-		
-		foreach ($file_guids as $guid) {
-			if (($file = get_entity($guid)) && elgg_instanceof($file, "object", "file")) {
-				if ($file->canEdit()) {
-					if ($file->delete()) {
-						$file_count++;
-					}
-				}
-			}
+if (empty($file_guids) && empty($folder_guids)) {
+	register_error(elgg_echo('error:missing_data'));
+	forward(REFERER);
+}
+
+// remove all files
+if (!empty($file_guids)) {
+	$file_count = 0;
+	
+	$files = elgg_get_entities([
+		'type' => 'object',
+		'subtype' => 'file',
+		'guids' => $file_guids,
+		'limit' => false,
+	]);
+	
+	foreach ($files as $file) {
+		if (!$file->canDelete()) {
+			continue;
 		}
 		
-		if (!empty($file_count)) {
-			system_message(elgg_echo("file_tools:action:bulk_delete:success:files", array($file_count)));
-		} else {
-			register_error(elgg_echo("file_tools:action:bulk_delete:error:files"));
+		if ($file->delete()) {
+			$file_count++;
 		}
 	}
 	
-	// remove folders
-	if (!empty($folder_guids)) {
-		$folder_count = 0;
-		
-		foreach ($folder_guids as $guid) {
-			if (($folder = get_entity($guid)) && elgg_instanceof($folder, "object", FILE_TOOLS_SUBTYPE)) {
-				if ($folder->canEdit()) {
-					if ($folder->delete()) {
-						$folder_count++;
-					}
-				}
-			}
+	if (!empty($file_count)) {
+		system_message(elgg_echo('file_tools:action:bulk_delete:success:files', [$file_count]));
+	} else {
+		register_error(elgg_echo('file_tools:action:bulk_delete:error:files'));
+	}
+}
+
+// remove folders
+if (!empty($folder_guids)) {
+	$folder_count = 0;
+	
+	$folders = elgg_get_entities([
+		'type' => 'object',
+		'subtype' => FILE_TOOLS_SUBTYPE,
+		'guids' => $folder_guids,
+		'limit' => false,
+	]);
+	
+	foreach ($folders as $folder) {
+		if ($folder->canDelete()) {
+			continue;
 		}
 		
-		if (!empty($folder_count)) {
-			system_message(elgg_echo("file_tools:action:bulk_delete:success:folders", array($folder_count)));
-		} else {
-			register_error(elgg_echo("file_tools:action:bulk_delete:error:folders"));
+		if ($folder->delete()) {
+			$folder_count++;
 		}
 	}
-} else {
-	register_error(elgg_echo("InvalidParameterException:MissingParameter"));
+	
+	if (!empty($folder_count)) {
+		system_message(elgg_echo('file_tools:action:bulk_delete:success:folders', [$folder_count]));
+	} else {
+		register_error(elgg_echo('file_tools:action:bulk_delete:error:folders'));
+	}
 }
 
 forward(REFERER);
