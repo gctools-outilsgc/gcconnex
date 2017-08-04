@@ -1,5 +1,6 @@
 <?php
-$english = array(
+
+return [
 
 'friend_request' => "Colleague Request",
 'friend_request:menu' => "Colleague Requests",
@@ -12,6 +13,10 @@ $english = array(
 'friend_request:newfriend:subject' => "%s wants to be your colleague! / %s veut être votre collègue!",
 'friend_request:newfriend:body' => "%s wants to be your colleague! But he or she is waiting for you to approve the request... So login now so you can approve the request! <br/>
 You can view your pending colleague requests at:
+
+	// plugins settings
+	'friend_request:settings:add_river' => "Create river entries when a friend request is accepted",
+	
 
 %s <br/>
 <i>Make sure you are logged into the website before clicking on the following link, otherwise you will be redirected to the login page.</i>
@@ -66,6 +71,4 @@ Pour consulter son profil, cliquez ici : %s
 'friend_request:sent:title' => "Sent colleague requests",
 'friend_request:sent:none' => "No sent requests pending approval",
 
-);
-				
-add_translation("en", $english);
+];

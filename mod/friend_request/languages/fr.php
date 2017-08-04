@@ -1,14 +1,16 @@
 <?php
-$language = array (
+return [
+	'friend_request' => "Demande d'ajout à ma liste de collègues",
+	'friend_request:menu' => "Demande d'ajout à ma liste de collègues",
+	'friend_request:title' => "Demandes d'ajout à ma liste de collègues pour : %s",     
+	'friend_request:new' => "Nouvelle demande d'ajout à ma liste de collègues",     
+	'friend_request:friend:add:pending' => "Demande dajout à ma liste de collègues en attente",
 
-'friend_request' => "Demande d'ajout à ma liste de collègues",
-'friend_request:menu' => "Demande d'ajout à ma liste de collègues",
-'friend_request:title' => "Demandes d'ajout à ma liste de collègues pour : %s",     
-'friend_request:new' => "Nouvelle demande d'ajout à ma liste de collègues",     
-'friend_request:friend:add:pending' => "Demande dajout à ma liste de collègues en attente",
-      
-/************* FRIEND REQUEST *************/      
-      
+
+	// plugins settings
+	'friend_request:settings:add_river' => "Ajouter une entrée dans la rivière lorsqu'une demande de contact est acceptée",
+
+	// notifications
 'friend_request:newfriend:subject' => "%s veut être votre collègue! / %s wants to be your colleague! ",
 'friend_request:newfriend:body' => "%s veut être votre collègue! À vous de lui répondre... ouvrez une session dès maintenant pour pouvoir approuver sa demande! <br/>
 Vous pouvez voir ou can view your pending colleague requests at:
@@ -26,7 +28,7 @@ You can view your pending colleague requests at:
 
 To view their profile, click here: %s
 ",
-        
+
 // Actions      
 // Add request      
       
@@ -66,6 +68,5 @@ To view their profile, click here: %s
       
 'friend_request:sent:title' => "Demandes d'ajout à ma liste de collègues envoyées",
 'friend_request:sent:none' => "Aucune demandes envoyées en attente d'approbation",
+];
 
-);
-add_translation("fr", $language);

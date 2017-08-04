@@ -1,46 +1,17 @@
 <?php
 
-/**
-* Friend request
-* 
-* @author ColdTrick IT Solutions
-*/	
-	
-$content = "";
+$user = elgg_get_page_owner_entity();
 
-$entities = elgg_extract("entities", $vars, false);
-if (!empty($entities)) {
-	$content .= "<ul class='elgg-list elgg-list-entity'>";
-	
-	foreach ($entities as $entity) {
-		$icon = elgg_view_entity_icon($entity, "medium");
-		
-		$info = elgg_view("output/url", array(
-			"href" => $entity->getURL(),
-			"text" => $entity->name
-		));
-		$info .= "<br />";
-		$info .= elgg_view("output/url", array(
-			"href" => "action/friend_request/approve?guid=" . $entity->getGUID(),
-			"text" => elgg_echo("friend_request:approve"),
-			"is_action" => true
-		));
-		$info .= "&nbsp;|&nbsp;";
-		$info .= elgg_view("output/url", array(
-			"href" => "action/friend_request/decline?guid=" . $entity->getGUID(),
-			"text" => elgg_echo("friend_request:decline"),
-			"is_action" => true
-		));
-		
-		$content .= "<li class='elgg-item elgg-item-user'>";
-		$content .= elgg_view_image_block($icon, $info);
-		$content .= "</li>";
-	}
-	
-	$content .= "</ul>";
-	
-} else {
-	$content = elgg_echo("friend_request:received:none");
-}
+$options = [
+	'type' => 'user',
+	'relationship' => 'friendrequest',
+	'relationship_guid' => $user->guid,
+	'inverse_relationship' => true,
+	'offset_key' => 'offset_received',
+	'no_results' => elgg_echo('friend_request:received:none'),
+	'item_view' => 'friend_request/item',
+];
 
-echo elgg_view_module("info", elgg_echo("friend_request:received:title"), $content, array("class" => "mbm"));
+$content = elgg_list_entities_from_relationship($options);
+
+echo elgg_view_module('info', elgg_echo('friend_request:received:title'), $content, ['class' => 'mbm']);

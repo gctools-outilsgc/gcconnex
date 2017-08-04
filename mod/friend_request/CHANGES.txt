@@ -1,5 +1,23 @@
-Version History
+Version history
 ===============
+
+5.0 (2016-09-15):
+
+- changed: friend request action can now be performed by admin
+- changed: friendsof pagehandler now forwards to friends page
+- changed: updated minimal Elgg requirement to v2.0
+- feat(pages): move pages to resource views
+- feat(views): rely on core views to render requests and ajaxify actions
+- fixed: notifications are now sent in recipients language
+- fixed: prevent default notifications in Elgg 2.0
+- Typo
+- Updated french translation
+
+4.1 (2015-12-17):
+
+- added: admin option to disable river item creation (fixes #5)
+- added: composer support
+- chore: refactoring for performance and coding style
 
 4.0 (2014-11-10):
 
