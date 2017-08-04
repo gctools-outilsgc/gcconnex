@@ -8,10 +8,6 @@ Analytics
 
 Track the usage of your site by Google Analytics and/or Piwik
 
-**Known issues**
-
-- Action tracking doesn't work in Elgg 1.10+
-
 Contents
 --------
 
