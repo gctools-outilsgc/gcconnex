@@ -1,0 +1,137 @@
+Changelog
+=========
+
+2.3.4
+-----
+
+- Important(!): fixed fetching of old river items to be deleted on editing of existing polls (with version 2.3.3 the updated code that replaced elgg_delete_river() could fetch more and complete unrelated river items that got deleted, too ---> UPDATE!).
+
+2.3.3
+-----
+
+- Increased minimum required Elgg version to 2.3.0,
+- Fixed deprecation issue with $autofeed by using elgg_register_rss_link(),
+- Populate 'entity' attribute on calling object/elements/full view,
+- No longer use deprecated elgg_delete_river(),
+- Prevent duplicate element ids to be used when adding/removing poll choices on editing a poll,
+- Allow for removal of existing poll choices when editing a poll,
+- Display correct closing date in info text in widgets after a poll is closed,
+- Add alt attribute within img tag in widget view (strictly speaking necessary by html standard but as the image is purely decoration it's just been an empty alt attribute value that has been missing...).
+
+2.0.2
+-----
+
+- Finnish translation updated.
+
+2.0.1
+-----
+
+- Feature: multiple-answer polls (users can select more than a single choice on voting). Poll creator can decide on the maximum number of choices selectable (thanks to Beaufort8 and Juho Jaakkola for implementing this feature),
+- Multiple-answer polls can be allowed/prevented by a new poll plugin settings,
+- Fixed: keep access_id of poll choices in sync with access_id of their poll when the poll's access_id is changed (to fix possible discrepancies in existing polls an update script that can be executed via the poll plugin settings page has been added - if the Upgrade button shows up, run the upgrade),
+- Feature: plugin option added to allow for notification of poll creators on new votes made in their polls (the creator will receive notifications depending on his/her user-specific, site-wide notification settings, i.e. email notifications and/or site-notifications or none),
+- Fixed: no longer use the $closing_date variable in the poll object view before intializing it (had resulted in a warning),
+- Fixed: internal poll choice counter on input form counts correctly (by also decrementing removed choices),
+- Rework on plugin settings page layout,
+- French translation added (thanks to Facyla).
+
+2.0.0
+-----
+
+- Updated for Elgg 2.0 (should also work on future Elgg 2.X versions).
+
+1.10.5
+------
+
+- Reset option added (allows removal of all given votes on a poll; permission for resetting is given to admins and optionally also poll owners by a new Poll plugin settings option),
+- Usage of Elgg's default delete icon instead of custom icon,
+- composer.json added.
+
+1.10.4
+------
+
+- Updated version 1.9.4 for Elgg 1.10/1.11.
+
+1.9.4
+------
+
+- Updated version 1.8.4 for Elgg 1.9.
+And:
+- Removal of mod/poll/everyone.php (I believe this file is no longer necessary as a user should be directed to it anymore - if I'm wrong and you get issues by the file missing please tell me),
+- Add remaining inline script element JS code to AMD module.
+
+1.8.4
+-----
+
+- Total reset of votes when editing a poll (adding/removing choices or modifying existing choices). Problem was that users who already voted were unable to re-vote after poll choices had been changed. This could have been quite annoying for them if they wanted to change their vote based on the updated choices (a mischievous person would have even been able to switch the choices to contradict the poll results completely!). The only way to make it fair seemed to me to reset the votes to allow everyone a re-vote. Downside is that even correcting a typo in a poll choice text will reset the poll but his is unavoidable unfortunately,
+- Fixed bug where poll choices of a group poll got lost when poll was edited by the group admin but the poll is owned by another group member,
+- Fixed bug that prevented the description of a poll to be completely removed.
+
+1.10.3
+------
+
+- Updated version 1.9.3 for Elgg 1.9.
+
+1.9.3
+-----
+
+- Updated version 1.8.3 for Elgg 1.9.
+And:
+- Correctly handle polls with more than 10 choices.
+
+1.8.3
+-----
+
+- Fixed: admins can no longer see who voted for which choice if "Allow open polls" plugin setting is set to "No".
+
+1.8.2
+-----
+
+skipped.
+
+1.10.2
+-----
+
+- Based on version 1.9.2,
+- Fix of deprecation issues occuring on Elgg 1.10 (namely changing output/confirmlink view to output/url view).
+
+1.9.2 (thanks to Juho Jaakkola!!!)
+----------------------------------
+
+- Major cleanup / simplification / restructuring / updating / move to more object oriented code,
+- Conversion of javascript code into an AMD module,
+- Finnish translations added.
+
+1.9.1.1
+-------
+
+- Fixed a deprecation issue (with the hopefully soon to be released Widget Manager plugin for Elgg 1.9) with widgets urls (clickable title link).
+
+1.9.1
+-----
+
+- Updated version 1.8.1 for Elgg 1.9.
+
+1.8.1
+-----
+
+- Optional time limitation on polls (poll results are still shown afterwards but voting is no longer possible). Time limitation on polls can be enabled/disabled by plugin setting. Thanks to Jerome Bakker for the inspiration to this feature (and some initial code for implementing it, too),
+- Optionally make a poll an open poll (it's visible who voted for which poll choice). Thanks to tacid for the inspiration to this feature (and most of the code for implementing it, too),
+- Latest comments made on polls in sidebar on "All" and "Mine" poll pages,
+- Consistent display of poll creator, poll creation date, number of votes, number of comments and tags in all widgets, the list view and full view,
+- Removal of files no longer in use (that's why you should remove the plugin folder of any previous version to get rid of them, too).
+
+1.9.0
+-----
+
+- Updated version 1.8.0 for Elgg 1.9.
+
+1.8.0
+-----
+
+- Some general code cleanup,
+- Fix remaining issues of deprecated function usage,
+- Fixed widgets (both with and without usage of Widget Manager plugin),
+- Fixed notification sending,
+- Added (optional) description field,
+- Added convert script for existing polls that have the old response data structure of the original poll plugin.

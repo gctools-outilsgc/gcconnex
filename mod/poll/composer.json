@@ -1,0 +1,24 @@
+{
+    "name": "iionly/poll",
+    "description": "Poll plugin for site-wide and group-specific polls.",
+    "type": "elgg-plugin",
+    "keywords": [
+        "elgg",
+        "plugin"
+    ],
+    "homepage": "https://github.com/iionly/poll",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "iionly",
+            "homepage": "https://github.com/iionly",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+            "issues": "https://github.com/iionly/poll/issues"
+    },
+    "require": {
+        "composer/installers": ">=1.0.8"
+    }
+}
