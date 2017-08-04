@@ -18,33 +18,29 @@ class Widgets {
 	 * @param string $return_value the current widget url
 	 * @param array  $params       supplied params
 	 *
-	 * @return string
+	 * @return void|string
 	 */
 	public static function widgetUrl($hook, $type, $return_value, $params) {
 		
 		if (!empty($return_value)) {
-			return $return_value;
+			return;
 		}
 		
-		if (empty($params) || !is_array($params)) {
-			return $return_value;
-		}
-		
-		$widget = elgg_extract("entity", $params);
-		if (empty($widget) || !elgg_instanceof($widget, "object", "widget")) {
-			return $return_value;
+		$widget = elgg_extract('entity', $params);
+		if (!($widget instanceof \ElggWidget)) {
+			return;
 		}
 		
 		switch ($widget->handler) {
-			case "index_blog":
-				$return_value = "blog/all";
+			case 'index_blog':
+				$return_value = 'blog/all';
 				break;
-			case "blog":
+			case 'blog':
 				$owner = $widget->getOwnerEntity();
-				if (elgg_instanceof($owner, "user")) {
-					$return_value = "blog/owner/" . $owner->username;
-				} elseif (elgg_instanceof($owner, "group")) {
-					$return_value = "blog/group/" . $owner->getGUID() . "/all";
+				if ($owner instanceof \ElggUser) {
+					$return_value = "blog/owner/{$owner->username}";
+				} elseif ($owner instanceof \ElggGroup) {
+					$return_value = "blog/group/{$owner->getGUID()}/all";
 				}
 				break;
 		}
@@ -60,35 +56,25 @@ class Widgets {
 	 * @param array  $return_value current enable/disable widget handlers
 	 * @param array  $params       supplied params
 	 *
-	 * @return array
+	 * @return void|array
 	 */
 	public static function groupTools($hook, $type, $return_value, $params) {
 		
-		if (empty($params) || is_array($params)) {
-			return $return_value;
-		}
-		
-		$entity = elgg_extract("entity", $params);
-		if (empty($entity) || !elgg_instanceof($entity, "group")) {
-			return $return_value;
+		$entity = elgg_extract('entity', $params);
+		if (!($entity instanceof \ElggGroup)) {
+			return;
 		}
 		
 		if (!is_array($return_value)) {
-			$return_value = array();
+			// someone has other ideas
+			return;
 		}
-
-		if (!isset($return_value["enable"])) {
-			$return_value["enable"] = array();
-		}
-		if (!isset($return_value["disable"])) {
-			$return_value["disable"] = array();
-		}
-
+		
 		// check different group tools for which we supply widgets
-		if ($entity->blog_enable == "yes") {
-			$return_value["enable"][] = "blog";
+		if ($entity->blog_enable == 'yes') {
+			$return_value['enable'][] = 'blog';
 		} else {
-			$return_value["disable"][] = "blog";
+			$return_value['disable'][] = 'blog';
 		}
 		
 		return $return_value;

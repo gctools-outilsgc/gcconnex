@@ -12,21 +12,17 @@ class Access {
 	 * @param bool   $returnvalue current return value
 	 * @param array  $params      supplied params
 	 *
-	 * @return bool
+	 * @return void|bool
 	 */
 	public static function blogCanComment($hook, $type, $returnvalue, $params) {
 		
-		if (empty($params) || !is_array($params)) {
-			return $returnvalue;
-		}
-		
 		$entity = elgg_extract('entity', $params);
-		if (empty($entity) || !elgg_instanceof($entity, 'object', 'blog')) {
-			return $returnvalue;
+		if (!($entity instanceof \ElggBlog)) {
+			return;
 		}
 		
 		$returnvalue = false;
-		if ($entity->comments_on != 'Off' && $entity->status == 'published') {
+		if ($entity->comments_on !== 'Off' && $entity->status === 'published') {
 			$returnvalue = true;
 		}
 		

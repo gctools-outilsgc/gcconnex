@@ -7,9 +7,6 @@ return array(
 	'blog_tools:toggle:unfeature' => "Unfeature",
 	'blog_tools:readmore' => "read more",
 	
-	// menu
-	'blog_tools:menu:filter:featured' => "Featured",
-		
 	// widget
 	'blog_tools:widget:featured' => "Show only featured blogs?",
 	
@@ -66,8 +63,6 @@ You can view your blog here:
 	'blog_tools:settings:full:show_full_related:sidebar' => "In the sidebar",
 	
 	'blog_tools:settings:align:none' => "No image",
-	'blog_tools:settings:align:left' => "Left",
-	'blog_tools:settings:align:right' => "Right",
 	
 	'blog_tools:settings:size:tiny' => "Tiny (16x16)",
 	'blog_tools:settings:size:small' => "Small (40x40)",
@@ -78,9 +73,6 @@ You can view your blog here:
 	'blog_tools:settings:listing:strapline' => "Show strapline in listing",
 	'blog_tools:settings:strapline:default' => "Default (owner and tags)",
 	'blog_tools:settings:strapline:time' => "Time only",
-	
-	'blog_tools:settings:advanced_gatekeeper' => "Use advanced blog gatekeeper",
-	'blog_tools:settings:advanced_gatekeeper:description' => "This will help non loggedin users to find their way to a protected blog more easily",
 	
 	'blog_tools:settings:advanced_publication' => "Allow advanced publication options",
 	'blog_tools:settings:advanced_publication:description' => "With this users can select a publication and expiration date for blogs. Requires a working daily CRON.",
@@ -99,4 +91,8 @@ You can view your blog here:
 	'blog_tools:widgets:index_blog:view_mode:preview' => "Preview",
 	'blog_tools:widgets:index_blog:view_mode:slider' => "Slider",
 	'blog_tools:widgets:index_blog:view_mode:simple' => "Simple",
+	
+	// upgrades
+	'admin:upgrades:blog_tools_move_icons' => "Move blog icons",
+	'admin:upgrades:blog_tools_move_icons:description' => "The blog icons need to be stored in a new location, this upgrade will move all the existing icons to the new location. If the blogs currently have no icons, run this upgrade and they will return.",
 );

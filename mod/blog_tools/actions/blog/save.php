@@ -15,10 +15,10 @@
 elgg_make_sticky_form('blog');
 
 // save or preview
-$save = (bool)get_input('save');
+$save = (bool) get_input('save');
 
 // store errors to pass along
-$error = FALSE;
+$error = false;
 $error_forward_url = REFERER;
 $user = elgg_get_logged_in_user_entity();
 
@@ -66,7 +66,7 @@ $values = array(
 	'tags' => '',
 	'publication_date' => '',
 	'expiration_date' => '',
-	'show_owner' => 'no'
+	'show_owner' => 'no',
 );
 
 // fail if a required entity isn't set
@@ -141,7 +141,7 @@ foreach ($values as $name => $default) {
 				if ($new_post) {
 					// new blogs can't expire directly
 					if (strtotime($value) < time()) {
-						$error = elgg_echo("blog_tools:action:save:error:expiration_date");
+						$error = elgg_echo('blog_tools:action:save:error:expiration_date');
 					}
 				} else {
 					// if expiration is passed, set as draft
@@ -166,7 +166,7 @@ $values['title'] = gc_implode_translation($values['title'], $values['title2']);
 $values['excerpt'] = gc_implode_translation($values['excerpt'], $values['excerpt2']);
 $values['description'] =gc_implode_translation($values['description'], $values['description2']);
 // if preview, force status to be draft
-if ($save == false) {
+if ($save === false) {
 	$values['status'] = 'draft';
 }
 
@@ -189,34 +189,11 @@ if (!$error) {
 if (!$error) {
 	if ($blog->save()) {
 		// handle icon upload
-		if (get_input("remove_icon") == "yes") {
+		if (get_input('remove_icon') == 'yes') {
 			// remove existing icons
-			blog_tools_remove_blog_icon($blog);
+			$blog->deleteIcon();
 		} else {
-			$icon_file = get_resized_image_from_uploaded_file("icon", 100, 100);
-			$icon_sizes = elgg_get_config("icon_sizes");
-			
-			if (!empty($icon_file) && !empty($icon_sizes)) {
-				// create icon
-				$prefix = "blogs/" . $blog->getGUID();
-				
-				$fh = new ElggFile();
-				$fh->owner_guid = $blog->getOwnerGUID();
-				
-				foreach ($icon_sizes as $icon_name => $icon_info) {
-					$icon_file = get_resized_image_from_uploaded_file("icon", $icon_info["w"], $icon_info["h"], $icon_info["square"], $icon_info["upscale"]);
-					if (!empty($icon_file)) {
-						$fh->setFilename($prefix . $icon_name . ".jpg");
-						
-						if ($fh->open("write")) {
-							$fh->write($icon_file);
-							$fh->close();
-						}
-					}
-				}
-				
-				$blog->icontime = time();
-			}
+			$blog->saveIconFromUploadedFile('icon');
 		}
 		
 		// remove sticky form entries
@@ -239,7 +216,7 @@ if (!$error) {
 		
 		// add to river if changing status or published, regardless of new post
 		// because we remove it for drafts.
-		if (($new_post || $old_status == 'draft') && $status == 'published') {
+		if (($new_post || $old_status === 'draft') && $status === 'published') {
 			elgg_create_river_item(array(
 				'view' => 'river/object/blog/create',
 				'action_type' => 'create',
@@ -255,14 +232,14 @@ if (!$error) {
 				$blog->time_created = time();
 				$blog->save();
 			}
-		} elseif ($old_status == 'published' && $status == 'draft') {
+		} elseif ($old_status === 'published' && $status === 'draft') {
 			elgg_delete_river(array(
 				'object_guid' => $blog->guid,
 				'action_type' => 'create',
 			));
 		}
 
-		if ($blog->status == 'published' || $save == false) {
+		if ($blog->status === 'published' || $save === false) {
 			forward($blog->getURL());
 		} else {
 			forward("blog/edit/$blog->guid");

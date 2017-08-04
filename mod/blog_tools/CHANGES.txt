@@ -1,7 +1,39 @@
-Version History
+Version history
 ===============
 
-4.0:
+6.1 (2016-11-18):
+
+- changed: moved blog icons to default Elgg location
+- removed: custom icon handling
+
+6.0 (2016-10-06):
+
+- changed: get iconsizes using the new Elgg API
+- fixed: pass blog entity to the full item view
+- fixed: blog icon show when setting say not to
+
+5.0.1 (2016-05-04):
+
+- added: French translation
+- fixed: comments count not clickable
+
+5.0 (2016-03-08):
+
+- changed: featured blogs to resource view
+- changed: increased Elgg requirement to 2.0
+- changed: set blog edit form enctype using hook
+- changed: updated Dutch translation
+- changed: using core language keys
+- removed: advanced blog gatekeeper
+- removed: overrule of owner page
+
+4.1 (2016-03-07):
+
+- added: notification when post published
+- fixed: correctly fallback to default entity icon if no blog icon
+- fixed: unwanted access change when a blog published automatically #30
+
+4.0 (2015-07-08):
 
 - added: canComment hook for consistency
 - added: composer support

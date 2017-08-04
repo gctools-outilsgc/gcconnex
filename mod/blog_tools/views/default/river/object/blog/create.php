@@ -17,16 +17,12 @@ if ($object->excerpt){
 
 $excerpt = elgg_get_excerpt($excerpt);
 
-if ($object->icontime) {
-	$message = "<div class='blog-tools-river-item clearfix'>";
-	$message .= elgg_view_entity_icon($object, "small");
-	$message .= $excerpt;
-	$message .= "</div>";
-} else {
-	$message = $excerpt;
+$message = $excerpt;
+if (!empty($object->icontime)) {
+	$icon = elgg_view_entity_icon($object, 'small');
+	
+	$message = elgg_format_element('div', ['class' => 'blog-tools-river-item clearfix'], $icon . $excerpt);
 }
 
-echo elgg_view("river/elements/layout", array(
-	"item" => $vars["item"],
-	"message" => $message
-));
+$vars['message'] = $message;
+echo elgg_view('river/elements/layout', $vars);

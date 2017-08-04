@@ -12,34 +12,35 @@
  * @return bool
  */
 function blog_tools_remove_blog_icon(ElggBlog $blog) {
-	$result = false;
 	
-	if (!empty($blog) && elgg_instanceof($blog, "object", "blog", "ElggBlog")) {
-		if (!empty($blog->icontime)) {
-			$icon_sizes = elgg_get_config("icon_sizes");
-			if (!empty($icon_sizes)) {
-				$fh = new ElggFile();
-				$fh->owner_guid = $blog->getOwnerGUID();
-				
-				$prefix = "blogs/" . $blog->getGUID();
-				
-				foreach ($icon_sizes as $name => $info) {
-					$fh->setFilename($prefix . $name . ".jpg");
-					
-					if ($fh->exists()) {
-						$fh->delete();
-					}
-				}
-			}
+	if (!($blog instanceof ElggBlog)) {
+		return false;
+	}
+	
+	if (empty($blog->icontime)) {
+		// no icon
+		return true;
+	}
+	
+	$icon_sizes = elgg_get_icon_sizes('object', 'blog');
+	if (!empty($icon_sizes)) {
+		$fh = new ElggFile();
+		$fh->owner_guid = $blog->getOwnerGUID();
+		
+		$prefix = "blogs/{$blog->getGUID()}";
+		
+		foreach ($icon_sizes as $name => $info) {
+			$fh->setFilename("{$prefix}{$name}.jpg");
 			
-			unset($blog->icontime);
-			$result = true;
-		} else {
-			$result = true;
+			if ($fh->exists()) {
+				$fh->delete();
+			}
 		}
 	}
 	
-	return $result;
+	unset($blog->icontime);
+	
+	return true;
 }
 
 /**
@@ -50,13 +51,15 @@ function blog_tools_remove_blog_icon(ElggBlog $blog) {
 function blog_tools_use_advanced_publication_options() {
 	static $result;
 	
-	if (!isset($result)) {
-		$result = false;
-		
-		$setting = elgg_get_plugin_setting("advanced_publication", "blog_tools");
-		if ($setting == "yes") {
-			$result = true;
-		}
+	if (isset($result)) {
+		return $result;
+	}
+	
+	$result = false;
+	
+	$setting = elgg_get_plugin_setting('advanced_publication', 'blog_tools');
+	if ($setting === 'yes') {
+		$result = true;
 	}
 	
 	return $result;
@@ -68,38 +71,39 @@ function blog_tools_use_advanced_publication_options() {
  * @param ElggBlog $entity the blog to relate to
  * @param int      $limit  number of blogs to return
  *
- * @return bool|ElggBlog[]
+ * @return false|ElggBlog[]
  */
 function blog_tools_get_related_blogs(ElggBlog $entity, $limit = 4) {
-	$result = false;
-
+	
 	$limit = sanitise_int($limit, false);
 	
-	if (!empty($entity) && elgg_instanceof($entity, "object", "blog")) {
-		// transform to values
-		$tag_values = $entity->tags;
-
-		if (!empty($tag_values)) {
-			if (!is_array($tag_values)) {
-				$tag_values = array($tag_values);
-			}
-			
-			// find blogs with these metadatavalues
-			$options = array(
-				"type" => "object",
-				"subtype" => "blog",
-				"metadata_name" => "tags",
-				"metadata_values" => $tag_values,
-				"wheres" => array("(e.guid <> " . $entity->getGUID() . ")"),
-				"group_by" => "e.guid",
-				"order_by" => "count(msn.id) DESC",
-				"limit" => $limit
-			);
-	
-			$result = elgg_get_entities_from_metadata($options);
-		}
+	if (!($entity instanceof ElggBlog)) {
+		return false;
 	}
 	
-	return $result;
-}
+	// transform to values
+	$tag_values = $entity->tags;
+	if (empty($tag_values)) {
+		return false;
+	}
 	
+	if (!is_array($tag_values)) {
+		$tag_values = [$tag_values];
+	}
+	
+	// find blogs with these metadatavalues
+	$options = [
+		'type' => 'object',
+		'subtype' => 'blog',
+		'metadata_name' => 'tags',
+		'metadata_values' => $tag_values,
+		'wheres' => [
+			"(e.guid <> {$entity->getGUID()})",
+		],
+		'group_by' => 'e.guid',
+		'order_by' => 'count(msn.id) DESC',
+		'limit' => $limit,
+	];
+	
+	return elgg_get_entities_from_metadata($options);
+}
