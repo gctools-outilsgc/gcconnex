@@ -136,7 +136,7 @@ function tidypics_migrate_user_pics(ElggUser $user) {
 			//echo "Creating new album...\n";
 			$album = new ElggObject();
 			$album->subtype = 'album';
-			$album->new_album = TP_NEW_ALBUM;
+			$album->new_album = 1;
 
 			if ($group_pic) {
 				$album->container_guid = $group_guid;

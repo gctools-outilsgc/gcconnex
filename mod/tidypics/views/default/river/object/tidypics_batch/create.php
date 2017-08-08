@@ -8,8 +8,6 @@
  */
 
 elgg_require_js('tidypics/tidypics');
-elgg_load_js('lightbox');
-elgg_load_css('lightbox');
 $lang = get_current_language();
 
 $batch = $vars['item']->getObjectEntity();

@@ -26,12 +26,6 @@ if (get_subtype_id('object', 'tidypics_batch')) {
 // set default settings
 $plugin = elgg_get_plugin_from_id('tidypics');
 
-$image_sizes = array();
-$image_sizes['large_image_width'] = $image_sizes['large_image_height'] = 600;
-$image_sizes['small_image_width'] = $image_sizes['small_image_height'] = 153;
-$image_sizes['tiny_image_width'] = $image_sizes['tiny_image_height'] = 60;
-$image_sizes = serialize($image_sizes);
-
 $defaults = array(
 	'tagging' => false,
 	'restrict_tagging' => false,
@@ -49,9 +43,12 @@ $defaults = array(
 	'river_comments_thumbnails' => 'none',
 	'river_thumbnails_size' => 'tiny',
 
-	'image_sizes' => $image_sizes,
-
 	'notify_interval' => 60 * 60 * 24,
+
+	'client_resizing' => false,
+	'remove_exif' => false,
+	'client_image_width' => 2000,
+	'client_image_height' => 2000,
 );
 
 foreach ($defaults as $name => $value) {
@@ -59,3 +56,31 @@ foreach ($defaults as $name => $value) {
 		$plugin->setSetting($name, $value);
 	}
 }
+
+// check for existence of thumbnail size configuration and set what is necessary separately
+$image_sizes = elgg_get_plugin_setting('image_sizes', 'tidypics');
+if ($image_sizes) {
+	$image_sizes = unserialize($image_sizes);
+	$image_sizes['tiny_image_width'] = isset($image_sizes['tiny_image_width']) ? $image_sizes['tiny_image_width']: 60;
+	$image_sizes['tiny_image_height'] = isset($image_sizes['tiny_image_height']) ? $image_sizes['tiny_image_height']: 60;
+	$image_sizes['tiny_image_square'] = isset($image_sizes['tiny_image_square']) ? $image_sizes['tiny_image_square']: true;
+	$image_sizes['small_image_width'] = isset($image_sizes['small_image_width']) ? $image_sizes['small_image_width']: 153;
+	$image_sizes['small_image_height'] = isset($image_sizes['small_image_height']) ? $image_sizes['small_image_height']: 153;
+	$image_sizes['small_image_square'] = isset($image_sizes['small_image_square']) ? $image_sizes['small_image_square']: true;
+	$image_sizes['large_image_width'] = isset($image_sizes['large_image_width']) ? $image_sizes['large_image_width']: 600;
+	$image_sizes['large_image_height'] = isset($image_sizes['large_image_height']) ? $image_sizes['large_image_height']: 600;
+	$image_sizes['large_image_square'] = isset($image_sizes['large_image_square']) ? $image_sizes['large_image_square']: false;
+} else {
+	$image_sizes = array();
+	$image_sizes['tiny_image_width'] = 60;
+	$image_sizes['tiny_image_height'] = 60;
+	$image_sizes['tiny_image_square'] = true;
+	$image_sizes['small_image_width'] = 153;
+	$image_sizes['small_image_height'] = 153;
+	$image_sizes['small_image_square'] = true;
+	$image_sizes['large_image_width'] = 600;
+	$image_sizes['large_image_height'] = 600;
+	$image_sizes['large_image_square'] = false;
+}
+$image_sizes = serialize($image_sizes);
+elgg_set_plugin_setting('image_sizes', $image_sizes, 'tidypics');

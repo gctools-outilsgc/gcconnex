@@ -7,8 +7,6 @@
  */
 
 elgg_require_js('tidypics/tidypics');
-elgg_load_js('lightbox');
-elgg_load_css('lightbox');
 
 $subject = $vars['item']->getSubjectEntity();
 $subject_link = elgg_view('output/url', array(

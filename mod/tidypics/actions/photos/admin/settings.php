@@ -20,10 +20,14 @@ foreach ($params as $k => $v) {
 $image_sizes = array();
 $image_sizes['large_image_width'] = get_input('large_image_width');
 $image_sizes['large_image_height'] = get_input('large_image_height');
+$image_sizes['large_image_square'] = (bool)get_input('large_image_square');
 $image_sizes['small_image_width'] = get_input('small_image_width');
 $image_sizes['small_image_height'] = get_input('small_image_height');
+$image_sizes['small_image_square'] = (bool)get_input('small_image_square');
 $image_sizes['tiny_image_width'] = get_input('tiny_image_width');
 $image_sizes['tiny_image_height'] = get_input('tiny_image_height');
+$image_sizes['tiny_image_square'] = (bool)get_input('tiny_image_square');
+
 $plugin->setSetting('image_sizes', serialize($image_sizes));
 
 system_message(elgg_echo('tidypics:settings:save:ok'));

@@ -34,7 +34,7 @@ class TidypicsAlbum extends ElggObject {
 	public function save() {
 
 		if (!isset($this->new_album)) {
-			$this->new_album = true;
+			$this->new_album = 1;
 		}
 
 		if (!isset($this->last_notified)) {
@@ -369,26 +369,26 @@ class TidypicsAlbum extends ElggObject {
 		$tmpfile->write('');
 		$tmpfile->close();
 		$tmpfile->save();
-		$albumdir = eregi_replace('/._tmp_del_tidypics_album_', '', $tmpfile->getFilenameOnFilestore());
+		$albumdir = preg_replace('#/._tmp_del_tidypics_album_#i', '', $tmpfile->getFilenameOnFilestore());
 		$tmpfile->delete();
 
-                // sanity check: must be a directory
-                if (!$handle = opendir($albumdir)) {
-                        return false;
-                }
+		// sanity check: must be a directory
+		if (!$handle = opendir($albumdir)) {
+			return false;
+		}
 
-                // loop through all files that might still remain undeleted in this directory and delete them
-                // note: this does not delete the corresponding image entities from the database
-                while (($file = readdir($handle)) !== false) {
-                        if (in_array($file, array('.', '..'))) {
-                                continue;
-                        }
-                        $path = "$albumdir/$file";
-                        unlink($path);
-                }
+		// loop through all files that might still remain undeleted in this directory and delete them
+		// note: this does not delete the corresponding image entities from the database
+		while (($file = readdir($handle)) !== false) {
+			if (in_array($file, array('.', '..'))) {
+				continue;
+			}
+			$path = "$albumdir/$file";
+			unlink($path);
+		}
 
-                // remove empty directory
-                closedir($handle);
-                return rmdir($albumdir);
+		// remove empty directory
+		closedir($handle);
+		return rmdir($albumdir);
 	}
 }

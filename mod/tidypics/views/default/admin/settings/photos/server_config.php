@@ -4,10 +4,10 @@
  *
  */
 
-elgg_load_library('elgg:markdown');
+use \Michelf\MarkdownExtra;
 
 $faq = elgg_get_plugins_path() . 'tidypics/CONFIG.txt';
-$text = Markdown(file_get_contents($faq));
+$text = MarkdownExtra::defaultTransform(file_get_contents($faq));
 
 $content = "<div class=\"elgg-markdown\">$text</div>";
 

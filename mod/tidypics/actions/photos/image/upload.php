@@ -100,7 +100,7 @@ if (count($uploaded_images)) {
 	$album->prependImageList($uploaded_images);
 
 	// "added images to album" river
-	if ($img_river_view == "batch" && $album->new_album == false) {
+	if ($img_river_view == "batch" && !($album->new_album)) {
 		elgg_create_river_item(array(
 			'view' => 'river/object/tidypics_batch/create',
 			'action_type' => 'create',
@@ -108,7 +108,7 @@ if (count($uploaded_images)) {
 			'object_guid' => $batch->getGUID(),
 			'target_guid' => $album->getGUID(),
 		));
-	} else if ($img_river_view == "1" && $album->new_album == false) {
+	} else if ($img_river_view == "1" && !($album->new_album)) {
 		elgg_create_river_item(array(
 			'view' => 'river/object/tidypics_batch/create_single_image',
 			'action_type' => 'create',
@@ -120,8 +120,8 @@ if (count($uploaded_images)) {
 
 	// "created album" river
 	if ($album->new_album) {
-		$album->new_album = false;
-		$album->first_upload = true;
+		$album->new_album = 0;
+		$album->first_upload = 1;
 
 		$album_river_view = elgg_get_plugin_setting('album_river_view', 'tidypics');
 		if ($album_river_view != "none") {
@@ -144,7 +144,7 @@ if (count($uploaded_images)) {
 	} else {
 		// "added image to album" notifications
 		if ($album->first_upload) {
-			$album->first_upload = false;
+			$album->first_upload = 0;
 		}
 
 		if ($album->shouldNotify()) {

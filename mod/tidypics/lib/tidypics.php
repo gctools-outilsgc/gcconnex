@@ -175,8 +175,7 @@ function tidypics_is_upgrade_available() {
  * @return string
  */
 function tidypics_list_photos(array $options = array()) {
-	global $autofeed;
-	$autofeed = true;
+	elgg_register_rss_link();
 
 	$defaults = array(
 		'offset' => (int) max(get_input('offset', 0), 0),
@@ -256,5 +255,46 @@ function tp_is_person() {
 		}
 	}
 
+	return false;
+}
+
+/**
+ * Check if there are any albums a user can add photos to
+ * or if the user can create a new album
+ *
+ * @param \ElggUser   $user      User (defaults to logged in user)
+ * @param \ElggEntity $container Album container (defaults to page owner)
+ * @return bool
+ */
+function tidypics_can_add_new_photos(\ElggUser $user = null, \ElggEntity $container = null) {
+	if (!isset($user)) {
+		$user = elgg_get_logged_in_user_entity();
+	}
+	if (!elgg_instanceof($user, 'user')) {
+		return false;
+	}
+
+	if (!isset($container)) {
+		$container = elgg_get_page_owner_entity();
+	}
+	if (!elgg_instanceof($container)) {
+		return false;
+	}
+
+	if ($container->canWriteToContainer($user->guid, 'object', 'album')) {
+		return true;
+	}
+
+	$albums = new \ElggBatch('elgg_get_entities', [
+		'type' => 'object',
+		'subtype' => 'album',
+		'container_guid' => $container->guid,
+		'limit' => false,
+	]);
+	foreach ($albums as $album) {
+		if ($album->canWriteToContainer(0, 'object', 'image')) {
+			return true;
+		}
+	}
 	return false;
 }

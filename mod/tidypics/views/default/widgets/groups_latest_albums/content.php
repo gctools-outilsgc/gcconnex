@@ -12,27 +12,27 @@ if(empty($count)){
 	$count = 6;
 }
 
+$group = elgg_get_page_owner_entity();
+$group_guid = $group->getGUID();
+
 $prev_context = elgg_get_context();
 elgg_set_context('groups');
 $image_html = elgg_list_entities(array(
 	'type' => 'object',
 	'subtype' => 'album',
-	'container_guid' => elgg_get_page_owner_guid(),
+	'container_guid' => $group_guid,
 	'limit' => $count,
 	'full_view' => false,
 	'pagination' => false,
 ));
 elgg_set_context($prev_context);
 
-if (elgg_is_logged_in()) {
-	$container = get_entity(elgg_get_page_owner_guid());
-	if ($container->isMember(elgg_get_logged_in_user_entity())) {
-		$image_html .= elgg_view('output/url', array(
-			'href' => "photos/add/" . elgg_get_page_owner_guid(),
-			'text' => elgg_echo('photos:add'),
-			'is_trusted' => true,
-		));
-	}
+if ($group->canWriteToContainer(0, 'object', 'album')) {
+	$image_html .= elgg_view('output/url', array(
+		'href' => "photos/add/" . $group_guid,
+		'text' => elgg_echo('photos:add'),
+		'is_trusted' => true,
+	));
 }
 
 echo $image_html;

@@ -22,9 +22,19 @@ function tp_create_gd_thumbnails($file, $prefix, $filestorename) {
 		// move this out of library
 		register_error(elgg_echo('tidypics:nosettings'));
 		forward(REFERER);
-		return FALSE;
+		return false;
 	}
 	$image_sizes = unserialize($image_sizes);
+	// check if all necessary config variables are set and fall back to default if not
+	$image_sizes['tiny_image_width'] = isset($image_sizes['tiny_image_width']) ? $image_sizes['tiny_image_width']: 60;
+	$image_sizes['tiny_image_height'] = isset($image_sizes['tiny_image_height']) ? $image_sizes['tiny_image_height']: 60;
+	$image_sizes['tiny_image_square'] = isset($image_sizes['tiny_image_square']) ? $image_sizes['tiny_image_square']: true;
+	$image_sizes['small_image_width'] = isset($image_sizes['small_image_width']) ? $image_sizes['small_image_width']: 153;
+	$image_sizes['small_image_height'] = isset($image_sizes['small_image_height']) ? $image_sizes['small_image_height']: 153;
+	$image_sizes['small_image_square'] = isset($image_sizes['small_image_square']) ? $image_sizes['small_image_square']: true;
+	$image_sizes['large_image_width'] = isset($image_sizes['large_image_width']) ? $image_sizes['large_image_width']: 600;
+	$image_sizes['large_image_height'] = isset($image_sizes['large_image_height']) ? $image_sizes['large_image_height']: 600;
+	$image_sizes['large_image_square'] = isset($image_sizes['large_image_square']) ? $image_sizes['large_image_square']: false;
 
 	$thumb = new ElggFile();
 	$thumb->owner_guid = $file->owner_guid;
@@ -33,53 +43,54 @@ function tp_create_gd_thumbnails($file, $prefix, $filestorename) {
 	// tiny thumbail
 	$thumb->setFilename($prefix."thumb".$filestorename);
 	$thumbname = $thumb->getFilenameOnFilestore();
-	if (empty($image_sizes['tiny_image_width'])) {
-		// sites upgraded from 1.6 may not have this set
-		$image_sizes['tiny_image_width'] = $image_sizes['tiny_image_height'] = 60;
-	}
-	$rtn_code = tp_gd_resize(	$file->getFilenameOnFilestore(),
-								$thumbname,
-								FALSE,
-								$image_sizes['tiny_image_width'],
-								$image_sizes['tiny_image_height'],
-								TRUE);
+	$rtn_code = tp_gd_resize(
+		$file->getFilenameOnFilestore(),
+		$thumbname,
+		false,
+		$image_sizes['tiny_image_width'],
+		$image_sizes['tiny_image_height'],
+		$image_sizes['tiny_image_square']
+	);
 	if (!$rtn_code) {
-		return FALSE;
+		return false;
 	}
 	$file->thumbnail = $prefix."thumb".$filestorename;
 
 	// album thumbnail
 	$thumb->setFilename($prefix."smallthumb".$filestorename);
 	$thumbname = $thumb->getFilenameOnFilestore();
-	$rtn_code = tp_gd_resize(	$file->getFilenameOnFilestore(),
-								$thumbname,
-								FALSE,
-								$image_sizes['small_image_width'],
-								$image_sizes['small_image_height'],
-								TRUE);
+	$rtn_code = tp_gd_resize(
+		$file->getFilenameOnFilestore(),
+		$thumbname,
+		false,
+		$image_sizes['small_image_width'],
+		$image_sizes['small_image_height'],
+		$image_sizes['small_image_square']
+	);
 	if (!$rtn_code) {
-		return FALSE;
+		return false;
 	}
 	$file->smallthumb = $prefix."smallthumb".$filestorename;
 
 	// main image
 	$thumb->setFilename($prefix."largethumb".$filestorename);
 	$thumbname = $thumb->getFilenameOnFilestore();
-	$rtn_code = tp_gd_resize(	$file->getFilenameOnFilestore(),
-								$thumbname,
-								TRUE,
-								$image_sizes['large_image_width'],
-								$image_sizes['large_image_height'],
-								FALSE);
+	$rtn_code = tp_gd_resize(
+		$file->getFilenameOnFilestore(),
+		$thumbname,
+		true,
+		$image_sizes['large_image_width'],
+		$image_sizes['large_image_height'],
+		$image_sizes['large_image_square']
+	);
 	if (!$rtn_code) {
-		return FALSE;
+		return false;
 	}
 	$file->largethumb = $prefix."largethumb".$filestorename;
 
-
 	unset($thumb);
 
-	return TRUE;
+	return true;
 }
 
 /**
@@ -94,12 +105,11 @@ function tp_create_gd_thumbnails($file, $prefix, $filestorename) {
  * @param TRUE|FALSE $square If set to TRUE, will take the smallest of maxwidth and maxheight and use it to set the dimensions on all size; the image will be cropped.
  * @return bool TRUE on success or FALSE on failure
  */
-function tp_gd_resize($input_name, $output_name, $watermark, $maxwidth, $maxheight, $square = FALSE, $x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0) {
-
+function tp_gd_resize($input_name, $output_name, $watermark, $maxwidth, $maxheight, $square = false, $x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0) {
 	// Get the size information from the image
 	$imgsizearray = getimagesize($input_name);
 	if (!$imgsizearray) {
-		return FALSE;
+		return false;
 	}
 
 	// Get width and height of image
@@ -108,7 +118,7 @@ function tp_gd_resize($input_name, $output_name, $watermark, $maxwidth, $maxheig
 
 	$params = tp_im_calc_resize_params($width, $height, $maxwidth, $maxheight, $square, $x1, $y1, $x2, $y2);
 	if (!$params) {
-		return FALSE;
+		return false;
 	}
 
 	$new_width = $params['new_width'];
@@ -119,29 +129,29 @@ function tp_gd_resize($input_name, $output_name, $watermark, $maxwidth, $maxheig
 	$heightoffset = $params['height_offset'];
 
 	$accepted_formats = array(
-			'image/jpeg' => 'jpeg',
-			'image/pjpeg' => 'jpeg',
-			'image/png' => 'png',
-			'image/x-png' => 'png',
-			'image/gif' => 'gif'
+		'image/jpeg' => 'jpeg',
+		'image/pjpeg' => 'jpeg',
+		'image/png' => 'png',
+		'image/x-png' => 'png',
+		'image/gif' => 'gif'
 	);
 
 	// make sure the function is available
 	$function = "imagecreatefrom" . $accepted_formats[$imgsizearray['mime']];
 	if (!is_callable($function)) {
-		return FALSE;
+		return false;
 	}
 
 	// load old image
 	$oldimage = $function($input_name);
 	if (!$oldimage) {
-		return FALSE;
+		return false;
 	}
 
 	// allocate the new image
 	$newimage = imagecreatetruecolor($new_width, $new_height);
 	if (!$newimage) {
-		return FALSE;
+		return false;
 	}
 
 	// color transparencies white (default is black)
@@ -149,16 +159,18 @@ function tp_gd_resize($input_name, $output_name, $watermark, $maxwidth, $maxheig
 		$newimage, 0, 0, $new_width, $new_height, imagecolorallocate($newimage, 255, 255, 255)
 	);
 
-	$rtn_code = imagecopyresampled(	$newimage,
-									$oldimage,
-									0,
-									0,
-									$widthoffset,
-									$heightoffset,
-									$new_width,
-									$new_height,
-									$region_width,
-									$region_height);
+	$rtn_code = imagecopyresampled(
+		$newimage,
+		$oldimage,
+		0,
+		0,
+		$widthoffset,
+		$heightoffset,
+		$new_width,
+		$new_height,
+		$region_width,
+		$region_height
+	);
 	if (!$rtn_code) {
 		return $rtn_code;
 	}
@@ -200,9 +212,19 @@ function tp_create_imagick_thumbnails($file, $prefix, $filestorename) {
 	$image_sizes = elgg_get_plugin_setting('image_sizes', 'tidypics');
 	if (!$image_sizes) {
 		register_error(elgg_echo('tidypics:nosettings'));
-		return FALSE;
+		return false;
 	}
 	$image_sizes = unserialize($image_sizes);
+	// check if all necessary config variables are set and fall back to default if not
+	$image_sizes['tiny_image_width'] = isset($image_sizes['tiny_image_width']) ? $image_sizes['tiny_image_width']: 60;
+	$image_sizes['tiny_image_height'] = isset($image_sizes['tiny_image_height']) ? $image_sizes['tiny_image_height']: 60;
+	$image_sizes['tiny_image_square'] = isset($image_sizes['tiny_image_square']) ? $image_sizes['tiny_image_square']: true;
+	$image_sizes['small_image_width'] = isset($image_sizes['small_image_width']) ? $image_sizes['small_image_width']: 153;
+	$image_sizes['small_image_height'] = isset($image_sizes['small_image_height']) ? $image_sizes['small_image_height']: 153;
+	$image_sizes['small_image_square'] = isset($image_sizes['small_image_square']) ? $image_sizes['small_image_square']: true;
+	$image_sizes['large_image_width'] = isset($image_sizes['large_image_width']) ? $image_sizes['large_image_width']: 600;
+	$image_sizes['large_image_height'] = isset($image_sizes['large_image_height']) ? $image_sizes['large_image_height']: 600;
+	$image_sizes['large_image_square'] = isset($image_sizes['large_image_square']) ? $image_sizes['large_image_square']: false;
 
 	$thumb = new ElggFile();
 	$thumb->owner_guid = $file->owner_guid;
@@ -211,43 +233,45 @@ function tp_create_imagick_thumbnails($file, $prefix, $filestorename) {
 	// tiny thumbnail
 	$thumb->setFilename($prefix."thumb".$filestorename);
 	$thumbname = $thumb->getFilenameOnFilestore();
-        if (empty($image_sizes['tiny_image_width'])) {
-                // sites upgraded from 1.6 may not have this set 
-                $image_sizes['tiny_image_width'] = $image_sizes['tiny_image_height'] = 60;
-        }
-	$rtn_code = tp_imagick_resize(	$file->getFilenameOnFilestore(),
-									$thumbname,
-									$image_sizes['tiny_image_width'],
-									$image_sizes['tiny_image_height'],
-									TRUE);
+	$rtn_code = tp_imagick_resize(
+		$file->getFilenameOnFilestore(),
+		$thumbname,
+		$image_sizes['tiny_image_width'],
+		$image_sizes['tiny_image_height'],
+		$image_sizes['tiny_image_square']
+	);
 	if (!$rtn_code) {
-		return FALSE;
+		return false;
 	}
 	$file->thumbnail = $prefix."thumb".$filestorename;
 
 	// album thumbnail
 	$thumb->setFilename($prefix."smallthumb".$filestorename);
 	$thumbname = $thumb->getFilenameOnFilestore();
-	$rtn_code = tp_imagick_resize(	$file->getFilenameOnFilestore(),
-									$thumbname,
-									$image_sizes['small_image_width'],
-									$image_sizes['small_image_height'],
-									TRUE);
+	$rtn_code = tp_imagick_resize(
+		$file->getFilenameOnFilestore(),
+		$thumbname,
+		$image_sizes['small_image_width'],
+		$image_sizes['small_image_height'],
+		$image_sizes['small_image_square']
+	);
 	if (!$rtn_code) {
-		return FALSE;
+		return false;
 	}
 	$file->smallthumb = $prefix."smallthumb".$filestorename;
 
 	// main image
 	$thumb->setFilename($prefix."largethumb".$filestorename);
 	$thumbname = $thumb->getFilenameOnFilestore();
-	$rtn_code = tp_imagick_resize(	$file->getFilenameOnFilestore(),
-									$thumbname,
-									$image_sizes['large_image_width'],
-									$image_sizes['large_image_height'],
-									FALSE);
+	$rtn_code = tp_imagick_resize(
+		$file->getFilenameOnFilestore(),
+		$thumbname,
+		$image_sizes['large_image_width'],
+		$image_sizes['large_image_height'],
+		$image_sizes['large_image_square']
+	);
 	if (!$rtn_code) {
-		return FALSE;
+		return false;
 	}
 	$file->largethumb = $prefix."largethumb".$filestorename;
 
@@ -255,7 +279,7 @@ function tp_create_imagick_thumbnails($file, $prefix, $filestorename) {
 
 	unset($thumb);
 
-	return TRUE;
+	return true;
 }
 
 
@@ -272,12 +296,24 @@ function tp_create_imagick_thumbnails($file, $prefix, $filestorename) {
  * @param TRUE|FALSE $square If set to TRUE, will take the smallest of maxwidth and maxheight and use it to set the dimensions on all size; the image will be cropped.
  * @return bool TRUE on success
  */
-function tp_imagick_resize($input_name, $output_name, $maxwidth, $maxheight, $square = FALSE, $x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0) {
-
+function tp_imagick_resize($input_name, $output_name, $maxwidth, $maxheight, $square = false, $x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0) {
 	// Get the size information from the image
 	$imgsizearray = getimagesize($input_name);
 	if (!$imgsizearray) {
-		return FALSE;
+		return false;
+	}
+
+	$accepted_formats = array(
+		'image/jpeg' => 'jpeg',
+		'image/pjpeg' => 'jpeg',
+		'image/png' => 'png',
+		'image/x-png' => 'png',
+		'image/gif' => 'gif'
+	);
+
+	// If it's a file we can manipulate ...
+	if (!array_key_exists($imgsizearray['mime'], $accepted_formats)) {
+		return false;
 	}
 
 	// Get width and height
@@ -286,7 +322,7 @@ function tp_imagick_resize($input_name, $output_name, $maxwidth, $maxheight, $sq
 
 	$params = tp_im_calc_resize_params($width, $height, $maxwidth, $maxheight, $square, $x1, $y1, $x2, $y2);
 	if (!$params) {
-		return FALSE;
+		return false;
 	}
 
 	$new_width = $params['new_width'];
@@ -299,23 +335,43 @@ function tp_imagick_resize($input_name, $output_name, $maxwidth, $maxheight, $sq
 	try {
 		$img = new Imagick($input_name);
 	} catch (ImagickException $e) {
-		return FALSE;
+		return false;
 	}
 
-	$img->cropImage($region_width, $region_height, $widthoffset, $heightoffset);
+	$format = $img->getImageFormat();
+	if ($format == 'GIF') {
+		$img = $img->coalesceImages();
 
-	// use the default IM filter (windowing filter), I think 1 means default blurring or number of lobes
-	$img->resizeImage($new_width, $new_height, imagick::FILTER_LANCZOS, 1);
-	$img->setImagePage($new_width, $new_height, 0, 0);
+		foreach($img as $frame) {
+			$frame->cropImage($region_width, $region_height, $widthoffset, $heightoffset);
 
-	if ($img->writeImage($output_name) != TRUE) {
-		$img->destroy();
-		return FALSE;
+			// use the default IM filter (windowing filter), I think 1 means default blurring or number of lobes
+			$frame->resizeImage($new_width, $new_height, imagick::FILTER_LANCZOS, 1);
+			$frame->setImagePage($new_width, $new_height, 0, 0);
+		}
+
+		$img = $img->deconstructImages();
+
+		if (!$img->writeImages($output_name, true)) {
+			$img->destroy();
+			return false;
+		}
+	} else {
+		$img->cropImage($region_width, $region_height, $widthoffset, $heightoffset);
+
+		// use the default IM filter (windowing filter), I think 1 means default blurring or number of lobes
+		$img->resizeImage($new_width, $new_height, imagick::FILTER_LANCZOS, 1);
+		$img->setImagePage($new_width, $new_height, 0, 0);
+
+		if (!$img->writeImage($output_name)) {
+			$img->destroy();
+			return false;
+		}
 	}
 
 	$img->destroy();
 
-	return TRUE;
+	return true;
 }
 
 /**
@@ -330,9 +386,20 @@ function tp_create_im_cmdline_thumbnails($file, $prefix, $filestorename) {
 	$image_sizes = elgg_get_plugin_setting('image_sizes', 'tidypics');
 	if (!$image_sizes) {
 		register_error(elgg_echo('tidypics:nosettings'));
-		return FALSE;
+		return false;
 	}
+
 	$image_sizes = unserialize($image_sizes);
+	// check if all necessary config variables are set and fall back to default if not
+	$image_sizes['tiny_image_width'] = isset($image_sizes['tiny_image_width']) ? $image_sizes['tiny_image_width']: 60;
+	$image_sizes['tiny_image_height'] = isset($image_sizes['tiny_image_height']) ? $image_sizes['tiny_image_height']: 60;
+	$image_sizes['tiny_image_square'] = isset($image_sizes['tiny_image_square']) ? $image_sizes['tiny_image_square']: true;
+	$image_sizes['small_image_width'] = isset($image_sizes['small_image_width']) ? $image_sizes['small_image_width']: 153;
+	$image_sizes['small_image_height'] = isset($image_sizes['small_image_height']) ? $image_sizes['small_image_height']: 153;
+	$image_sizes['small_image_square'] = isset($image_sizes['small_image_square']) ? $image_sizes['small_image_square']: true;
+	$image_sizes['large_image_width'] = isset($image_sizes['large_image_width']) ? $image_sizes['large_image_width']: 600;
+	$image_sizes['large_image_height'] = isset($image_sizes['large_image_height']) ? $image_sizes['large_image_height']: 600;
+	$image_sizes['large_image_square'] = isset($image_sizes['large_image_square']) ? $image_sizes['large_image_square']: false;
 
 	$thumb = new ElggFile();
 	$thumb->owner_guid = $file->owner_guid;
@@ -341,53 +408,53 @@ function tp_create_im_cmdline_thumbnails($file, $prefix, $filestorename) {
 	// tiny thumbnail
 	$thumb->setFilename($prefix."thumb".$filestorename);
 	$thumbname = $thumb->getFilenameOnFilestore();
-        if (empty($image_sizes['tiny_image_width'])) {
-                // sites upgraded from 1.6 may not have this set 
-                $image_sizes['tiny_image_width'] = $image_sizes['tiny_image_height'] = 60;
-        }
-	$rtn_code = tp_im_cmdline_resize(	$file->getFilenameOnFilestore(),
-										$thumbname,
-										$image_sizes['tiny_image_width'],
-										$image_sizes['tiny_image_height'],
-										TRUE);
+	$rtn_code = tp_im_cmdline_resize(
+		$file->getFilenameOnFilestore(),
+		$thumbname,
+		$image_sizes['tiny_image_width'],
+		$image_sizes['tiny_image_height'],
+		$image_sizes['tiny_image_square']
+	);
 	if (!$rtn_code) {
-		return FALSE;
+		return false;
 	}
 	$file->thumbnail = $prefix."thumb".$filestorename;
-
 
 	// album thumbnail
 	$thumb->setFilename($prefix."smallthumb".$filestorename);
 	$thumbname = $thumb->getFilenameOnFilestore();
-	$rtn_code = tp_im_cmdline_resize(	$file->getFilenameOnFilestore(),
-										$thumbname,
-										$image_sizes['small_image_width'],
-										$image_sizes['small_image_height'],
-										TRUE);
+	$rtn_code = tp_im_cmdline_resize(
+		$file->getFilenameOnFilestore(),
+		$thumbname,
+		$image_sizes['small_image_width'],
+		$image_sizes['small_image_height'],
+		$image_sizes['small_image_square']
+	);
 	if (!$rtn_code) {
-		return FALSE;
+		return false;
 	}
 	$file->smallthumb = $prefix."smallthumb".$filestorename;
 
 	// main image
 	$thumb->setFilename($prefix."largethumb".$filestorename);
 	$thumbname = $thumb->getFilenameOnFilestore();
-	$rtn_code = tp_im_cmdline_resize(	$file->getFilenameOnFilestore(),
-										$thumbname,
-										$image_sizes['large_image_width'],
-										$image_sizes['large_image_height'],
-										FALSE);
+	$rtn_code = tp_im_cmdline_resize(
+		$file->getFilenameOnFilestore(),
+		$thumbname,
+		$image_sizes['large_image_width'],
+		$image_sizes['large_image_height'],
+		$image_sizes['large_image_square']
+	);
 	if (!$rtn_code) {
-		return FALSE;
+		return false;
 	}
 	$file->largethumb = $prefix."largethumb".$filestorename;
-
 
 	tp_im_cmdline_watermark($thumbname);
 
 	unset($thumb);
 
-	return TRUE;
+	return true;
 }
 
 /**
@@ -401,12 +468,11 @@ function tp_create_im_cmdline_thumbnails($file, $prefix, $filestorename) {
  * @param TRUE|FALSE $square If set to TRUE, will take the smallest of maxwidth and maxheight and use it to set the dimensions on all size; the image will be cropped.
  * @return bool
  */
-function tp_im_cmdline_resize($input_name, $output_name, $maxwidth, $maxheight, $square = FALSE, $x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0) {
-
+function tp_im_cmdline_resize($input_name, $output_name, $maxwidth, $maxheight, $square = false, $x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0) {
 	// Get the size information from the image
 	$imgsizearray = getimagesize($input_name);
 	if (!$imgsizearray) {
-		return FALSE;
+		return false;
 	}
 
 	// Get width and height
@@ -415,23 +481,23 @@ function tp_im_cmdline_resize($input_name, $output_name, $maxwidth, $maxheight, 
 
 	$params = tp_im_calc_resize_params($orig_width, $orig_height, $maxwidth, $maxheight, $square, $x1, $y1, $x2, $y2);
 	if (!$params) {
-		return FALSE;
+		return false;
 	}
 
 	$newwidth = $params['new_width'];
 	$newheight = $params['new_height'];
 
 	$accepted_formats = array(
-			'image/jpeg' => 'jpeg',
-			'image/pjpeg' => 'jpeg',
-			'image/png' => 'png',
-			'image/x-png' => 'png',
-			'image/gif' => 'gif'
+		'image/jpeg' => 'jpeg',
+		'image/pjpeg' => 'jpeg',
+		'image/png' => 'png',
+		'image/x-png' => 'png',
+		'image/gif' => 'gif'
 	);
 
 	// If it's a file we can manipulate ...
-	if (!array_key_exists($imgsizearray['mime'],$accepted_formats)) {
-		return FALSE;
+	if (!array_key_exists($imgsizearray['mime'], $accepted_formats)) {
+		return false;
 	}
 
 	$im_path = elgg_get_plugin_setting('im_path', 'tidypics');
@@ -442,31 +508,33 @@ function tp_im_cmdline_resize($input_name, $output_name, $maxwidth, $maxheight, 
 		$im_path .= "/";
 	}
 
+	$gif_to_convert = ($imgsizearray['mime'] == 'image/gif') ? '-coalesce' : '';
+
 	// see imagemagick web site for explanation of these parameters
 	// the ^ in the resize means those are minimum width and height values
 	$thumbnail_optimized = elgg_get_plugin_setting('thumbnail_optimization', 'tidypics');
 	switch($thumbnail_optimized) {
 		case "complex":
-			$command = $im_path . "convert \"$input_name\" -filter Triangle -define filter:support=2 -thumbnail ".$newwidth."x".$newheight."^ -gravity center -extent ".$newwidth."x".$newheight." -unsharp 0.25x0.25+8+0.065 -dither None -posterize 136 -quality 82 -define jpeg:fancy-upsampling=off -define png:compression-filter=5 -define png:compression-level=9 -define png:compression-strategy=1 -define png:exclude-chunk=all -interlace none -colorspace sRGB -strip \"$output_name\"";
+			$command = $im_path . "convert \"$input_name\" ".$gif_to_convert." -filter Triangle -define filter:support=2 -thumbnail ".$newwidth."x".$newheight."^ -gravity center -extent ".$newwidth."x".$newheight." -unsharp 0.25x0.25+8+0.065 -dither None -posterize 136 -quality 82 -define jpeg:fancy-upsampling=off -define png:compression-filter=5 -define png:compression-level=9 -define png:compression-strategy=1 -define png:exclude-chunk=all -interlace none -colorspace sRGB -strip \"$output_name\"";
 			break;
 		case "simple":
-			$command = $im_path . "convert \"$input_name\"  -quality 87 -filter Lanczos -thumbnail ".$newwidth."x".$newheight."^ -gravity center -extent ".$newwidth."x".$newheight." \"$output_name\"";
+			$command = $im_path . "convert \"$input_name\" ".$gif_to_convert." -quality 87 -filter Lanczos -thumbnail ".$newwidth."x".$newheight."^ -gravity center -extent ".$newwidth."x".$newheight." \"$output_name\"";
 			break;
 		default:
-			$command = $im_path . "convert \"$input_name\" -resize ".$newwidth."x".$newheight."^ -gravity center -extent ".$newwidth."x".$newheight." \"$output_name\"";
+			$command = $im_path . "convert \"$input_name\" ".$gif_to_convert." -resize ".$newwidth."x".$newheight."^ -gravity center -extent ".$newwidth."x".$newheight." \"$output_name\"";
 	}
 	$output = array();
 	$ret = 0;
 	exec($command, $output, $ret);
 	if ($ret == 127) {
 		trigger_error('Tidypics warning: Image Magick convert is not found', E_USER_WARNING);
-		return FALSE;
+		return false;
 	} else if ($ret > 0) {
 		trigger_error('Tidypics warning: Image Magick convert failed', E_USER_WARNING);
-		return FALSE;
+		return false;
 	}
 
-	return TRUE;
+	return true;
 }
 
 /**
@@ -483,11 +551,11 @@ function tp_im_cmdline_resize($input_name, $output_name, $maxwidth, $maxheight, 
  * @param int $y2
  * @return array|FALSE
  */
-function tp_im_calc_resize_params($orig_width, $orig_height, $new_width, $new_height, $square = FALSE, $x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0) {
+function tp_im_calc_resize_params($orig_width, $orig_height, $new_width, $new_height, $square = false, $x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0) {
 	// crop image first?
-	$crop = TRUE;
+	$crop = true;
 	if ($x1 == 0 && $y1 == 0 && $x2 == 0 && $y2 == 0) {
-		$crop = FALSE;
+		$crop = false;
 	}
 
 	// how large a section of the image has been selected
@@ -505,8 +573,8 @@ function tp_im_calc_resize_params($orig_width, $orig_height, $new_width, $new_he
 		// asking for a square image back
 
 		// detect case where someone is passing crop parameters that are not for a square
-		if ($crop == TRUE && $region_width != $region_height) {
-			return FALSE;
+		if ($crop == true && $region_width != $region_height) {
+			return false;
 		}
 
 		// size of the new square image

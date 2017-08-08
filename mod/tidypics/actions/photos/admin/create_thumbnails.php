@@ -18,7 +18,8 @@ if (!$image || !($image instanceof TidypicsImage)) {
 
 $filename = $image->getFilename();
 $container_guid = $image->container_guid;
-if (!$filename || !$container_guid) {
+$album = get_entity($container_guid);
+if (!$filename || !elgg_instanceof($album, 'object', 'album')) {
 	register_error(elgg_echo('tidypics:thumbnail_tool:invalid_image_info'));
 	forward(REFERER);
 }
@@ -54,6 +55,15 @@ if ($image_lib == 'ImageMagick') {
 		register_error(elgg_echo('tidypics:thumbnail_tool:create_failed'));
 		forward(REFERER);
 	}
+}
+
+// check if image is in album's image list and add it as first if not
+$list_album_images = $album->getImageList();
+$key = array_search($guid, $list_album_images);
+if ($key === false) {
+	$image_array = array();
+	array_push($image_array, $guid);
+	$album->prependImageList($image_array);
 }
 
 $url = elgg_normalize_url("photos/thumbnail/$guid/large");

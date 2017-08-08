@@ -32,14 +32,12 @@ if (!$content) {
 }
 
 $new_link = '';
-if (elgg_is_logged_in()) {
-	if ($group->isMember(elgg_get_logged_in_user_entity())) {
-		$new_link = elgg_view('output/url', array(
-			'href' => "photos/add/$group->guid",
-			'text' => elgg_echo('photos:add'),
-			'is_trusted' => true,
-		));
-	}
+if ($group->canWriteToContainer(0, 'object', 'album')) {
+	$new_link = elgg_view('output/url', array(
+		'href' => "photos/add/$group->guid",
+		'text' => elgg_echo('photos:add'),
+		'is_trusted' => true,
+	));
 }
 
 echo elgg_view('groups/profile/module', array(

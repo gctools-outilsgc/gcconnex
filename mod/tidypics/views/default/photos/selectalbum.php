@@ -20,24 +20,38 @@ if (!($owner instanceof ElggUser || $owner instanceof ElggGroup)) {
 
 $action = "action/photos/image/selectalbum";
 
-$albums = elgg_get_entities(array('type' => 'object', 'subtype' => 'album', 'container_guid' => $owner->getGUID(), 'limit' => false));
-
-$album_options = array();
-$album_options[-1] = elgg_echo('album:create');
-if ($albums) {
-	foreach ($albums as $album) {
-
-		$album_title = gc_explode_translation($album->title, $lang);
-		
-		if (strlen($album_title) > 50) {
-			$album_title = substr($album_title, 0, 47).'...';
-		}
-		$album_options[$album->guid] = $album_title;
-	}	
+if (!tidypics_can_add_new_photos(null, $owner)) {
+	echo elgg_format_element('p', [
+			'class' => 'elgg-help-text',
+			'style' => 'width: 400px',
+		],
+		elgg_echo('tidypics:album_select:no_results')
+	);
+	return;
 }
 
-$body = "<div style=\"width:400px;\">".elgg_echo('tidypics:album_select')."<br><br>";
-$body .= elgg_view('input/hidden', array('name' => 'owner_guid','value' => $owner->guid));
+$albums = new \ElggBatch('elgg_get_entities', [
+	'type' => 'object',
+	'subtype' => 'album',
+	'container_guid' => $owner->getGUID(),
+	'limit' => false
+]);
+
+$album_options = array();
+if ($owner->canWriteToContainer(0, 'object', 'album')) {
+	$album_options[-1] = elgg_echo('album:create');
+}
+
+foreach ($albums as $album) {
+	$album_title = gc_explode_translation($album->getTitle(), $lang);
+	if (strlen($album_title) > 50) {
+		$album_title = mb_substr($album_title, 0, 47, "utf-8") . "...";
+	}
+	$album_options[$album->guid] = $album_title;
+}
+
+$body = "<div style=\"width:400px;\">" . elgg_echo('tidypics:album_select') . "<br><br>";
+$body .= elgg_view('input/hidden', array('name' => 'owner_guid', 'value' => $owner->guid));
 $body .= elgg_view('input/select', array(
 	'name' => 'album_guid',
 	'value' => '',
@@ -45,6 +59,6 @@ $body .= elgg_view('input/select', array(
 ));
 $body .= "<br><br>";
 
-$body .= elgg_view('input/submit', array('value' => elgg_echo('tidypics:continue'))).'</div>';
+$body .= elgg_view('input/submit', array('value' => elgg_echo('tidypics:continue'))) . '</div>';
 
 echo elgg_view('input/form', array('action' => $action, 'body' => $body));

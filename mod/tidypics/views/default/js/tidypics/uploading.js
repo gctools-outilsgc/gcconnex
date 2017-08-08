@@ -15,6 +15,24 @@ define(function(require) {
 		
 		var maxfilesize = $("#uploader").data('maxfilesize');
 		var maxfiles = $("#uploader").data('maxnumber');
+		
+		var client_resizing = $("#uploader").data('client-resizing');
+
+		if (client_resizing == true) {
+			var client_width = $("#uploader").data('client-width');
+			var client_height = $("#uploader").data('client-height');
+			var remove_exif = $("#uploader").data('remove-exif');
+			var preserve_exif = !remove_exif;
+
+			var resizing_parameters = {
+					width: client_width,
+					height: client_height,
+					quality: 100,
+					preserve_headers: preserve_exif
+				};
+		} else {
+			var resizing_parameters = false;
+		}
 
 		$("#uploader").plupload({
 			// General settings
@@ -37,6 +55,8 @@ define(function(require) {
 				thumbs: true,
 				active: 'thumbs'
 			},
+			
+			resize : resizing_parameters,
 
 			init : {
 				UploadComplete: function(up, files) {
