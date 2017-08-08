@@ -1,6 +1,32 @@
 Version history
 ===============
 
+6.0 (2017-07-31):
+
+- added: import/export features for custom translations
+- changed: increased Elgg version requirement
+- changed: reformatted form to use new Elgg features
+- changed: rewrote some code into a helper class
+
+5.2 (2016-10-06):
+
+- changed: move pages to resource views
+- fixed: sometimes translations not saved
+
+5.1 (2016-04-14):
+
+- added: upgrade script to cleanup custom translations
+- changed: custom translations can only contain keys present in the original (en) translation
+
+5.0 (2015-12-16):
+
+- rework for Elgg 2.0
+
+4.0.1 (2015-12-15):
+
+- chore: refactored the functions library
+- fixed: unable to make translations with beginning/trailing spaces (fixes #8)
+
 4.0 (2015-07-08):
 
 - changes for Elgg 1.11

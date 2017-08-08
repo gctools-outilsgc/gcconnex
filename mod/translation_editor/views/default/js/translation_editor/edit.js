@@ -40,10 +40,10 @@ elgg.translation_editor.save = function(elem) {
 	});
 };
 
-elgg.translation_editor.init = function() {
+elgg.translation_editor.edit_init = function() {
 	$(document).on("change", ".translation-editor-input", function() {
 		elgg.translation_editor.save(this);
 	});
 };
 
-elgg.register_hook_handler("init", "system", elgg.translation_editor.init);
+elgg.register_hook_handler("init", "system", elgg.translation_editor.edit_init);

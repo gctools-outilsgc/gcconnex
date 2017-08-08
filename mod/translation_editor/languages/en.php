@@ -9,6 +9,9 @@ return array(
 	
 	// menu
 	'translation_editor:menu:title' => "Translation Editor",
+	'translation_editor:menu:title:plugin' => "Translating %s to %s",
+	'translation_editor:show_language_selector' => "Show language selector",
+	'translation_editor:hide_language_selector' => "Hide language selector",
 
 	// views
 	// language selector
@@ -27,8 +30,21 @@ return array(
 	
 	'translation_editor:plugin_list:merge' => "Merge to PHP language file",
 	
+	// export
+	'translation_editor:export' => 'Export custom translations',
+	'translation_editor:export:no_plugins' => 'No exportable translations found.',
+	'translation_editor:export:plugins' => 'Select plugins to export',
+	
+	// import
+	'translation_editor:import' => 'Import custom translations',
+	'translation_editor:import:file' => 'Select importable file from previous export',
+	
+	// cleanup
+	'translation_editor:cleanup:description' => "%d custom translations were cleaned-up. This means they could not be found in the plugin they were part of. You can download the list by clicking on the Download button.
+When you're finished you can %s the file.",
+	
 	// search
-	'translation_editor:search' => "Search results",
+	'translation_editor:search' => "Search results for '%s' in %s",
 	'translation_editor:forms:search:default' => "Find a translation",
 	'translation_editor:search_results:no_results' => "No translation found",
 
@@ -66,11 +82,18 @@ return array(
 	'translation_editor:action:add_language:success' => "Language successfully added",
 	'translation_editor:action:delete_language:success' => "Language successfully removed",
 
+	'translation_editor:action:import:incorrect_language' => "The import does not contain translations for %s",
+	'translation_editor:action:import:no_plugins' => "The import does not contain plugins to be imported",
+	'translation_editor:action:import:success' => "Successfully imported translations",
+
 	'translation_editor:action:add_custom_key:success' => "Custom key successfully added",
 	'translation_editor:action:add_custom_key:file_error' => "Error when saving the custom key to the file",
 	'translation_editor:action:add_custom_key:exists' => "Can't add this key as it already exists. Enter a unique key.",
 	'translation_editor:action:add_custom_key:invalid_chars' => "Key contains invalid characters. Only a-z, 0-9, colon or underscore are allowed.",
 	'translation_editor:action:add_custom_key:key_numeric' => "Key can not contain only numbers",
-	'translation_editor:action:add_custom_key:missing_input' => "Invalid input. Please enter a key and a default (English) translation."
+	'translation_editor:action:add_custom_key:missing_input' => "Invalid input. Please enter a key and a default (English) translation.",
 
+	'translation_editor:action:cleanup:remove:error:no_file' => "The requested file to delete could not be found",
+	'translation_editor:action:cleanup:remove:error:remove' => "An error occured while deleting the file, please try again",
+	'translation_editor:action:cleanup:remove:success' => "The file was deleted",
 );

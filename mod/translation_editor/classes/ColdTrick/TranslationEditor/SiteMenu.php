@@ -18,18 +18,18 @@ class SiteMenu {
 	 * @param \ElggMenuItem[] $return current menu items
 	 * @param array           $params provided params
 	 *
-	 * @return \ElggMenuItem[]
+	 * @return void|\ElggMenuItem[]
 	 */
 	public static function register($hook, $type, $return, $params) {
 		
 		if (!translation_editor_is_translation_editor()) {
-			return $return;
+			return;
 		}
 		
 		$return[] = \ElggMenuItem::factory(array(
-			"name" => "translation_editor",
-			"text" => elgg_echo("translation_editor:menu:title"),
-			"href" => "translation_editor"
+			'name' => 'translation_editor',
+			'text' => elgg_echo('translation_editor:menu:title'),
+			'href' => 'translation_editor'
 		));
 		
 		return $return;

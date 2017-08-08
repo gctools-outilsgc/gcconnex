@@ -3,8 +3,8 @@
  * Delete a custom added language
  */
 
-$language = get_input("language");
-if (empty($language) || ($language === "en")) {
+$language = get_input('language');
+if (empty($language) || ($language === 'en')) {
 	forward(REFERER);
 }
 
@@ -15,7 +15,7 @@ if ($completeness !== (float) 0) {
 }
 
 // get all the custom languages
-$custom_languages = elgg_get_plugin_setting("custom_languages", "translation_editor");
+$custom_languages = elgg_get_plugin_setting('custom_languages', 'translation_editor');
 if (empty($custom_languages)) {
 	forward(REFERER);
 }
@@ -26,10 +26,14 @@ $index = array_search($language, $custom_languages);
 if ($index !== false) {
 	unset($custom_languages[$index]);
 	
-	$code = implode(",", array_unique($custom_languages));
+	$code = implode(',', array_unique($custom_languages));
 
-	elgg_set_plugin_setting("custom_languages", $code, "translation_editor");
-	system_message(elgg_echo("translation_editor:action:delete_language:success"));
+	elgg_set_plugin_setting('custom_languages', $code, 'translation_editor');
+	
+	// invalidate cache
+	elgg_flush_caches();
+	
+	system_message(elgg_echo('translation_editor:action:delete_language:success'));
 }
 
 forward(REFERER);

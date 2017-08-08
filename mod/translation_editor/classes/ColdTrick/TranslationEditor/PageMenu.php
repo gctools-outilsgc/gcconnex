@@ -18,24 +18,24 @@ class PageMenu {
 	 * @param \ElggMenuItem[] $return current menu items
 	 * @param array           $params provided params
 	 *
-	 * @return \ElggMenuItem[]
+	 * @return void|\ElggMenuItem[]
 	 */
 	public static function register($hook, $type, $return, $params) {
 		
 		if (!elgg_is_admin_logged_in()) {
-			return $return;
+			return;
 		}
 		
-		if (!elgg_in_context("admin")) {
-			return $return;
+		if (!elgg_in_context('admin')) {
+			return;
 		}
 		
 		$return[] = \ElggMenuItem::factory(array(
-			"name" => "translation_editor",
-			"href" => "translation_editor",
-			"text" => elgg_echo("translation_editor:menu:title"),
-			"parent_name" => "appearance",
-			"section" => "configure"
+			'name' => 'translation_editor',
+			'href' => 'translation_editor',
+			'text' => elgg_echo('translation_editor:menu:title'),
+			'parent_name' => 'appearance',
+			'section' => 'configure'
 		));
 		
 		return $return;
