@@ -6,20 +6,20 @@
  */
 elgg_load_css('special-saml');
 // where to go after authentication
-$returnTo = get_input("ReturnTo");
+$returnTo = get_input('ReturnTo');
 if (!empty($returnTo)) {
 	if (elgg_is_logged_in()) {
 		forward($returnTo);
 	} else {
-		$_SESSION["last_forward_from"] = $returnTo;
+		simplesaml_store_in_session('last_forward_from', $returnTo);
 	}
 }
 
 // unset some extends
-simplesaml_undo_login_extends();
+simplesaml_unextend_login_form();
 
 // disable registration for this page
-elgg_set_config("allow_registration", false);
+elgg_set_config('allow_registration', false);
 
 // get page elements
 $title_text = elgg_echo("simplesaml:login:title");
@@ -28,10 +28,10 @@ $body .= elgg_echo("simplesaml:login:body:other");
 $body .= elgg_view_form("login");
 $body .= elgg_echo("simplesaml:register-password");
 // make the page
-$page_data = elgg_view_layout("one_column", array(
-	"title" => $title_text,
-	"content" => $body
-));
+$page_data = elgg_view_layout('one_column', [
+	'title' => $title_text,
+	'content' => $body,
+]);
 
 // draw the page
 echo elgg_view_page($title_text, $page_data);

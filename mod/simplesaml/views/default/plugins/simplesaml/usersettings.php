@@ -5,98 +5,106 @@
  */
 
 // prevent crashes in the plugin is not yet configured
-if (!is_callable("simplesaml_get_enabled_sources")) {
-	echo elgg_view("output/longtext", array("value" => elgg_echo("simplesaml:error:not_configured")));
+if (!is_callable('simplesaml_get_enabled_sources')) {
+	echo elgg_view('output/longtext', [
+		'value' => elgg_echo('simplesaml:error:not_configured'),
+	]);
 	return true;
 }
 
-$plugin = elgg_extract("entity", $vars);
+$plugin = elgg_extract('entity', $vars);
 $page_owner = elgg_get_page_owner_entity();
 
 $sources = simplesaml_get_enabled_sources();
 if (empty($sources)) {
-	echo "<div>";
-	echo elgg_echo("simplesaml:usersettings:no_sources");
-	echo "</div>";
+	// no enabled sources
+	echo elgg_format_element('div', [], elgg_echo('simplesaml:usersettings:no_sources'));
 	return;
 }
-	
+
 foreach ($sources as $source) {
 	$label = simplesaml_get_source_label($source);
 	
-	$icon = "";
+	$icon = '';
 	$icon_url = simplesaml_get_source_icon_url($source);
 	if (!empty($icon_url)) {
-		$icon = elgg_view("output/img", array("src" => $icon_url, "alt" => $label));
+		$icon = elgg_view('output/img', [
+			'src' => $icon_url,
+			'alt' => $label,
+		]);
 	}
 	
-	$body = "<div>";
-	$body .= "<label>" . $label . "</label><br />";
+	$body = elgg_format_element('label', [], $label);
+	$body .= '<br />';
 	
-	if ($plugin->getUserSetting($source . "_uid", $page_owner->getGUID())) {
+	if ($plugin->getUserSetting("{$source}_uid", $page_owner->getGUID())) {
 		// user is connected, offer the option to disconnect
-		$body .= "<div>" . elgg_echo("simplesaml:usersettings:connected", array($label)) . "</div>";
+		$body .= elgg_format_element('div', [], elgg_echo('simplesaml:usersettings:connected', [$label]));
 		
-		$body .= "<div>";
-		$body .= elgg_view("output/url", array(
-			"text" => elgg_echo("simplesaml:usersettings:unlink_url"),
-			"confirm" => elgg_echo("simplesaml:usersettings:unlink_confirm", array($label)),
-			"href" => "action/simplesaml/unlink?user_guid=" . $page_owner->getGUID() . "&source=" . $source
-		));
-		$body .= "</div>";
+		$body .= elgg_format_element('div', [], elgg_view('output/url', [
+			'text' => elgg_echo('simplesaml:usersettings:unlink_url'),
+			'confirm' => elgg_echo('simplesaml:usersettings:unlink_confirm', [$label]),
+			'href' => "action/simplesaml/unlink?user_guid={$page_owner->getGUID()}&source={$source}",
+		]));
 		
 		// for an admin show saved attributes
 		if (elgg_is_admin_logged_in()) {
 			$attributes = simplesaml_get_authentication_user_attribute($source, false, $page_owner->getGUID());
 			if (!empty($attributes)) {
-				$body .= "<div class='mtm'>";
-				$body .= elgg_view("output/url", array(
-					"text" => elgg_echo("simplesaml:usersettings:toggle_attributes"),
-					"href" => "#simplesaml-usersettings-" . $source . "-attibutes",
-					"rel" => "toggle"
-				));
-				$body .= "</div>";
+				$body .= elgg_format_element('div', ['class' => 'mtm'], elgg_view('output/url', [
+					'text' => elgg_echo('simplesaml:usersettings:toggle_attributes'),
+					'href' => "#simplesaml-usersettings-{$source}-attibutes",
+					'rel' => 'toggle',
+				]));
 				
-				$body .= "<div id='simplesaml-usersettings-" . $source . "-attibutes' class='hidden mts'>";
-				$body .= "<table class='elgg-table'>";
+				// build table with stored attributes
+				$table = '<table class="elgg-table">';
 				
-				$body .= "<tr>";
-				$body .= "<th>" . elgg_echo("simplesaml:usersettings:attributes:name") . "</th>";
-				$body .= "<th>" . elgg_echo("simplesaml:usersettings:attributes:value") . "</th>";
-				$body .= "</tr>";
+				// header
+				$table .= '<thead>';
+				$table .= '<tr>';
+				$table .= elgg_format_element('th', [], elgg_echo('simplesaml:usersettings:attributes:name'));
+				$table .= elgg_format_element('th', [], elgg_echo('simplesaml:usersettings:attributes:value'));
+				$table .= '</tr>';
+				$table .= '</thead>';
 				
+				// saved fields
+				$table .= '<tbody>';
 				foreach ($attributes as $name => $value) {
-					$body .= "<tr>";
-					$body .= "<td>" . $name . "</td>";
+					$table .= '<tr>';
+					$table .= elgg_format_element('td', [], $name);
 					if (count($value) > 1) {
-						$body .= "<td><ul>";
+						$table .= '<td><ul>';
 						foreach ($value as $v) {
-							$body .= "<li>" . $v . "</li>";
+							$table .= elgg_format_element('li', [], $v);
 						}
-						$body .= "</ul></td>";
+						$table .= '</ul></td>';
 					} else {
-						$body .= "<td>" . $value[0] . "</td>";
+						$table .= elgg_format_element('td', [], $value[0]);
 					}
-					$body .= "</tr>";
+					$table .= '</tr>';
 				}
+				$table .= '</tbody>';
 				
-				$body .= "</table>";
-				$body .= "</div>";
+				$table .= '</table>';
+				
+				$body .= elgg_format_element('div', [
+					'id' => "simplesaml-usersettings-{$source}-attibutes",
+					'class' => 'hidden mts'
+				], $table);
 			}
 		}
 	} else {
 		// user is not connected, offer the option to connect
-		$body .= "<div>" . elgg_echo("simplesaml:usersettings:not_connected", array($label)) . "</div>";
+		$body .= elgg_format_element('div', [], elgg_echo('simplesaml:usersettings:not_connected', [$label]));
 		
 		if ($page_owner->getGUID() == elgg_get_logged_in_user_guid()) {
-			$body .= elgg_view("output/url", array(
-				"text" => elgg_echo("simplesaml:usersettings:link_url"),
-				"href" => "saml/authorize/" . $source
-			));
+			$body .= elgg_view('output/url', [
+				'text' => elgg_echo('simplesaml:usersettings:link_url'),
+				'href' => "saml/authorize/{$source}",
+			]);
 		}
 	}
-	
-	$body .= "</div>";
 	
 	echo elgg_view_image_block($icon, $body);
 }

@@ -4,13 +4,13 @@
  */
 
 if (elgg_is_logged_in()) {
-	register_error(elgg_echo("simplesaml:error:loggedin"));
+	register_error(elgg_echo('simplesaml:error:loggedin'));
 	forward(REFERER);
 }
 
-$source = get_input("saml_source");
+$source = get_input('saml_source');
 if (empty($source)) {
-	register_error(elgg_echo("simplesaml:error:no_source"));
+	register_error(elgg_echo('simplesaml:error:no_source'));
 	forward(REFERER);
 }
 /**
@@ -18,32 +18,33 @@ if (empty($source)) {
  */
 
 if (elgg_is_logged_in()) {
-	register_error(elgg_echo("simplesaml:error:loggedin"));
+	register_error(elgg_echo('simplesaml:error:loggedin'));
 	forward(REFERER);
 }
 
-$source = get_input("saml_source");
+$source = get_input('saml_source');
 if (empty($source)) {
-	register_error(elgg_echo("simplesaml:error:no_source"));
+	register_error(elgg_echo('simplesaml:error:no_source'));
 	forward(REFERER);
 }
 
 $label = simplesaml_get_source_label($source);
 if (!simplesaml_is_enabled_source($source)) {
-	register_error(elgg_echo("simplesaml:error:source_not_enabled", array($label)));
+	register_error(elgg_echo('simplesaml:error:source_not_enabled', [$label]));
 	forward(REFERER);
 }
 
 try {
 	$saml_auth = new SimpleSAML_Auth_Simple($source);
 } catch (Exception $e) {
-	register_error(elgg_echo("simplesaml:error:class", array($e->getMessage())));
+	register_error(elgg_echo('simplesaml:error:class', [$e->getMessage()]));
 	forward(REFERER);
 }
 
 // make sure we can forward you to the correct url
-if (!isset($_SESSION["last_forward_from"])) {
-	$_SESSION["last_forward_from"] = $_SERVER["REFERER"];
+$last_forward = simplesaml_get_from_session('last_forward_from');
+if (!isset($last_forward)) {
+	simplesaml_store_in_session('last_forward_from', $_SERVER['REFERER']);
 }
 
 $forward_url = REFERER;
@@ -59,17 +60,17 @@ if (!$saml_auth->isAuthenticated()) {
 	// check for additional authentication rules
 	if (!simplesaml_validate_authentication_attributes($source, $saml_attributes)) {
 		// not authorized
-		register_error(elgg_echo("simplesaml:error:attribute_validation", array($label)));
+		register_error(elgg_echo('simplesaml:error:attribute_validation', [$label]));
 		
 		// make sure we don't force login
-		$_SESSION["simpleaml_disable_sso"] = true;
+		simplesaml_store_in_session('simplesaml_disable_sso', true);
 		
 		forward();
 	}
 	
 	// save the attributes for further use
-	$_SESSION["saml_attributes"] = $saml_attributes;
-	$_SESSION["saml_source"] = $source;
+	simplesaml_store_in_session('saml_attributes', $saml_attributes);
+	simplesaml_store_in_session('saml_source', $source);
 	
 	// make sure we can find all users (even unvalidated)
 	$hidden = access_get_show_hidden_status();
@@ -81,47 +82,44 @@ if (!$saml_auth->isAuthenticated()) {
 		try {
 			// check for the persistent login plugin setting
 			$persistent = false;
-			if (elgg_get_plugin_setting($source . "_remember_me", "simplesaml")) {
+			if (elgg_get_plugin_setting("{$source}_remember_me", 'simplesaml')) {
 				$persistent = true;
 			}
 			
 			// login the user
 			login($user, $persistent);
 			
-			if (!empty($_SESSION["last_forward_from"])) {
-				$forward_url = $_SESSION["last_forward_from"];
-				unset($_SESSION["last_forward_from"]);
-			} else {
-				$forward_url = "";
-			}
+			// forward to correct place
+			$forward_url = simplesaml_get_from_session('last_forward_from', '');
+			simplesaml_remove_from_session('last_forward_from');
 			
-			system_message(elgg_echo("loginok"));
+			system_message(elgg_echo('loginok'));
 		} catch (Exception $e) {
 			// report the error
 			register_error($e->getMessage());
 			
 			// make sure we don't force login
-			$_SESSION["simpleaml_disable_sso"] = true;
+			simplesaml_store_in_session('simplesaml_disable_sso', true);
 			
 			// forward to front page
-			$forward_url = "";
+			$forward_url = '';
 		}
 		
 		// unset session vars
-		unset($_SESSION["saml_attributes"]);
-		unset($_SESSION["saml_source"]);
+		simplesaml_remove_from_session('saml_attributes');
+		simplesaml_remove_from_session('saml_source');
 		
 	} else {
 		// check if we can automaticly create an account for this user
 		if (simplesaml_check_auto_create_account($source, $saml_attributes)) {
 			// we have enough information to create the account so let's do that
-			$forward_url = "action/simplesaml/register?saml_source=" . $source;
+			$forward_url = "action/simplesaml/register?saml_source={$source}";
 			$forward_url = elgg_add_action_tokens_to_url($forward_url);
 		} else {
 			// no user found, so forward to a different page
-			$forward_url = "saml/no_linked_account/" . $source;
+			$forward_url = "saml/no_linked_account/{$source}";
 			
-			system_message(elgg_echo("simplesaml:login:no_linked_account", array($label)));
+			system_message(elgg_echo('simplesaml:login:no_linked_account', [$label]));
 		}
 	}
 	

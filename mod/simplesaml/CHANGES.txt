@@ -1,5 +1,21 @@
-Version History
+Version history
 ===============
+
+3.0.3 (2016-07-07):
+
+- fixed: deprecated notice for use of admin JS
+
+3.0.2 (2016-04-14):
+
+- fixed: use correct function to get ElggSession
+- fixed: using correct jquery function
+
+3.0.1 (2016-02-16):
+
+- fixed: login forwards to last visited page
+- fixed: scrutinizer issues
+- fixed: setting incorrect settings name
+- fixed: using undeclared variable
 
 3.0 (2015-07-08):
 

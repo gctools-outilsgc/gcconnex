@@ -1,5 +1,8 @@
 <?php
 
+// please fill in the correct path to Elgg (and uncomment the line)
+//require_once(PATH TO ELGG INSTALLATION);
+
 /**
  * Example external authentication source.
  *

@@ -91,8 +91,9 @@ If you want your Elgg site to be the authentication system for some other site, 
 Also see <https://simplesamlphp.org/docs/stable/simplesamlphp-idp>
 
 1. In config/config.php enable 'enable.saml20-idp'
-2. Copy the contents of mod/simplesaml/vendors/simplesaml/modules to the modules directory of your SimpleSAMLPHP directory.
-3. Edit config/authsources.php to configure a new authentication source
+2. Copy the contents of mod/simplesaml/vendors/simplesaml/modules to the modules directory of your SimpleSAMLPHP directory
+3. Edit the file /modules/authelgg/lib/Auth/Source/External.php and fill in the path to your Elgg installation
+4. Edit config/authsources.php to configure a new authentication source
 	- you can use this example:
 	
 		`'elgg-idp' => array(  
@@ -100,7 +101,7 @@ Also see <https://simplesamlphp.org/docs/stable/simplesamlphp-idp>
 			'privatekey'  => '<your private certificate key>',  
 			'certificate' => '<your private certificate>',  
 		),`
-4. Edit metadata/saml20-idp-hosted.php to setup the IDP
+5. Edit metadata/saml20-idp-hosted.php to setup the IDP
 	- you can use this example:
 	
 		`$metadata['__DYNAMIC:1__'] = array(
@@ -109,7 +110,7 @@ Also see <https://simplesamlphp.org/docs/stable/simplesamlphp-idp>
 			'certificate' => '<your private certificate>',
 			'auth' => '<the name you configured above>',
 		);`
-5. For each Service Provider you wish to support you need to include a config in metadata/saml20-sp-remove.php
+6. For each Service Provider you wish to support you need to include a config in metadata/saml20-sp-remove.php
 
 ### Step 3.2: Elgg configuration
 

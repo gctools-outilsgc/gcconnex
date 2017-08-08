@@ -1,49 +1,50 @@
 <?php
 
 if (elgg_is_logged_in()) {
-	register_error(elgg_echo("simplesaml:error:loggedin"));
+	register_error(elgg_echo('simplesaml:error:loggedin'));
 	forward(REFERER);
 }
 
-$source = get_input("saml_source");
-if (empty($source) || empty($_SESSION["saml_source"])) {
-	register_error(elgg_echo("simplesaml:error:no_source"));
+$source = get_input('saml_source');
+$session_source = simplesaml_get_from_session('saml_source');
+if (empty($source) || empty($session_source)) {
+	register_error(elgg_echo('simplesaml:error:no_source'));
 	forward(REFERER);
 }
 
 $label = simplesaml_get_source_label($source);
 if (!simplesaml_is_enabled_source($source)) {
-	register_error(elgg_echo("simplesaml:error:source_not_enabled", array($label)));
+	register_error(elgg_echo('simplesaml:error:source_not_enabled', [$label]));
 	forward(REFERER);
 }
 
-if ($source !== $_SESSION["saml_source"]) {
-	register_error(elgg_echo("simplesaml:error:source_mismatch"));
+if ($source !== $session_source) {
+	register_error(elgg_echo('simplesaml:error:source_mismatch'));
 	forward(REFERER);
 }
 
-$saml_attributes = $_SESSION["saml_attributes"];
+$saml_attributes = simplesaml_get_from_session('saml_attributes');
 if (!simplesaml_validate_authentication_attributes($source, $saml_attributes)) {
 	// not authorized
-	register_error(elgg_echo("simplesaml:error:attribute_validation", array($label)));
+	register_error(elgg_echo('simplesaml:error:attribute_validation', [$label]));
 	forward(REFERER);
 }
 
-$displayname = get_input("displayname");
-$user_email = get_input("email");
+$displayname = get_input('displayname');
+$user_email = get_input('email');
 
 $forward_url = REFERER;
 
 $error = false;
 
 // prepare for registration
-$name = "";
-if (!empty($saml_attributes["elgg:firstname"]) || !empty($saml_attributes["elgg:lastname"])) {
-	$firstname = elgg_extract("elgg:firstname", $saml_attributes);
+$name = '';
+if (!empty($saml_attributes['elgg:firstname']) || !empty($saml_attributes['elgg:lastname'])) {
+	$firstname = elgg_extract('elgg:firstname', $saml_attributes);
 	if (is_array($firstname)) {
 		$firstname = $firstname[0];
 	}
-	$lastname = elgg_extract("elgg:lastname", $saml_attributes);
+	$lastname = elgg_extract('elgg:lastname', $saml_attributes);
 	if (is_array($lastname)) {
 		$lastname = $lastname[0];
 	}
@@ -54,7 +55,7 @@ if (!empty($saml_attributes["elgg:firstname"]) || !empty($saml_attributes["elgg:
 	
 	if (!empty($lastname)) {
 		if (!empty($name)) {
-			$name .= " " . $lastname;
+			$name .= ' ' . $lastname;
 		} else {
 			$name = $lastname;
 		}
@@ -63,13 +64,13 @@ if (!empty($saml_attributes["elgg:firstname"]) || !empty($saml_attributes["elgg:
 	$name = $displayname;
 } else {
 	$error = true;
-	register_error(elgg_echo("simplesaml:action:register:error:displayname"));
+	register_error(elgg_echo('simplesaml:action:register:error:displayname'));
 }
 
-$email = "";
+$email = '';
 $validate = false;
-if (!empty($saml_attributes["elgg:email"])) {
-	$email = elgg_extract("elgg:email", $saml_attributes);
+if (!empty($saml_attributes['elgg:email'])) {
+	$email = elgg_extract('elgg:email', $saml_attributes);
 	
 	if (is_array($email)) {
 		$email = $email[0];
@@ -79,10 +80,10 @@ if (!empty($saml_attributes["elgg:email"])) {
 	$validate = true;
 } else {
 	$error = true;
-	register_error(elgg_echo("registration:emailnotvalid"));
+	register_error(elgg_echo('registration:emailnotvalid'));
 }
 
-$username = elgg_extract("elgg:username", $saml_attributes);
+$username = elgg_extract('elgg:username', $saml_attributes);
 if (is_array($username)) {
 	$username = $username[0];
 }
@@ -100,7 +101,7 @@ if (!empty($user)) {
 	$hidden = access_get_show_hidden_status();
 	access_show_hidden_entities(true);
 	
-	$saml_uid = elgg_extract("elgg:external_id", $saml_attributes);
+	$saml_uid = elgg_extract('elgg:external_id', $saml_attributes);
 	if (!empty($saml_uid)) {
 		if (is_array($saml_uid)) {
 			$saml_uid = $saml_uid[0];
@@ -115,34 +116,31 @@ if (!empty($user)) {
 	access_show_hidden_entities($hidden);
 	
 	// notify user about registration
-	system_message(elgg_echo("registerok", array(elgg_get_site_entity()->name)));
+	system_message(elgg_echo('registerok', [elgg_get_site_entity()->name]));
 	
 	// cleanup session
-	unset($_SESSION["saml_source"]);
-	unset($_SESSION["saml_attributes"]);
+	simplesaml_remove_from_session('saml_source');
+	simplesaml_remove_from_session('saml_attributes');
 	
 	// try to login the user
 	try {
 		// check for the persistent login plugin setting
 		$persistent = false;
-		if (elgg_get_plugin_setting($source . "_remember_me", "simplesaml")) {
+		if (elgg_get_plugin_setting($source . '_remember_me', 'simplesaml')) {
 			$persistent = true;
 		}
 		
 		// login the user
 		login($user);
 		
-		if (!empty($_SESSION["last_forward_from"])) {
-			$forward_url = $_SESSION["last_forward_from"];
-			unset($_SESSION["last_forward_from"]);
-		} else {
-			$forward_url = "";
-		}
-	} catch(Exception $e) {
+		// get forward url
+		$forward_url = simplesaml_get_from_session('last_forward_from', '');
+		simplesaml_remove_from_session('last_forward_from');
+	} catch (Exception $e) {
 		// make sure we don't force login
-		$_SESSION["simpleaml_disable_sso"] = true;
+		simplesaml_store_in_session('simplesaml_disable_sso', true);
 		
-		$forward_url = "";
+		$forward_url = '';
 	}
 }
 
