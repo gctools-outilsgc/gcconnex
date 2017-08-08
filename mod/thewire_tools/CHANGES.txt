@@ -1,6 +1,54 @@
 Version history
 ===============
 
+6.1 (2017-05-30):
+
+- added: support for entity tools migration of group wire threads
+- changed: unaccessable reshared source entity now is always visible
+
+6.0 (2017-03-24):
+
+- changed: increased Elgg requirement to 2.2
+- changed: moved group widget deregistration to plugin hook
+- changed: moved page menu item registration to plugin hook
+
+5.2 (2016-09-01):
+
+- added: option to feature wire posts
+- changed: display of wire posts with longer content
+- changed: do not forward to thread when replying
+- changed: mention urls now point to user profile instead of thewire
+- fixed: always check for valid username replacements
+- fixed: pagination links to parent thread
+
+5.1 (2016-05-26):
+
+- added: plugin hook to influence resharing options
+- changed: all and owner page now listen to default limit
+
+5.0.1 (2016-04-14):
+
+- fixed: incorrect type hint check
+- fixed: removed the deprecated view_type_toggle list_entities var
+- fixed: use correct language key when reporting an error saving a post
+- fixed: using correct jquery function
+
+5.0 (2016-03-02):
+
+- changed: plugin now support Elgg 2.0
+- removed: Elgg 1.7 to 1.8 (or higher) runonce function
+- removed: upgrade script to migrate notification settings
+
+4.0.1 (2016-03-01):
+
+- fixed: added trusted flags to the widget more links
+- fixed: autocomplete now works at any location in the text input
+- fixed: only check for double reshare if it is a wire post
+- fixed: only extend group activity with wire post form if applicable
+- fixed: only show groups sidebar menu if user is member of the group
+- fixed: reshare button visible for logged out users
+- fixed: wrong encoding when resharing quotes
+
 4.0 (2015-07-08):
 
 - Elgg requirement set to 1.10

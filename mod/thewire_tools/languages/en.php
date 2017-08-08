@@ -4,7 +4,8 @@ return array(
 	'thewire_tools' => "The Wire Tools",
 	'thewire_tools:no_result' => "No wire posts were found",
 	'thewire_tools:login_required' => "You need to be logged in to use this feature",
-	'admin:upgrades:thewire_tools_mentions' => "TheWire Tools mentions",
+	'thewire_tools:feature' => "Feature",
+	'thewire_tools:unfeature' => "Unfeature",
 	
 	// menu
 	'thewire_tools:menu:mentions' => "Mentions",
@@ -13,13 +14,10 @@ return array(
 	'thewire_tools:settings:enable_group' => "Enable TheWire for groups",
 	'thewire_tools:settings:extend_widgets' => "Extend TheWire widget with the option to post update directly from the widget",
 	'thewire_tools:settings:extend_activity' => "Extend the activity page with the wire form",
-	'thewire_tools:settings:wire_length' => "Set the max length of a Wire post",
 	'thewire_tools:settings:mention_display' => "How to show mentions in a Wire post",
 	'thewire_tools:settings:mention_display:username' => "@username",
 	'thewire_tools:settings:mention_display:displayname' => "@displayname",
-	
-	'thewire_tools:settings:description' => "Receive a notification when you are mentioned in a Wire post",
-	
+		
 	// notification
 	// mention
 	'thewire_tools:notify:mention:subject' => "You've been mentioned on the wire",
@@ -50,6 +48,12 @@ To view your mentions on the wire click here:
 	'thewire_tools:reshare:source' => "Source",
 	'thewire_tools:reshare:list' => "%s shared this %s",
 	
+	// featured
+	'thewire_tools:sidebar:featured' => "Featured posts",
+	
+	// entity tools
+	'thewire_tools:entity_tools:unable' => "Unable to change",
+	
 	// widget
 	// thewire_groups
 	'widgets:thewire_groups:title' => "Group wire posts",
@@ -66,7 +70,8 @@ To view your mentions on the wire click here:
 	// the wire (default widget)
 	'widgets:thewire:owner' => "Whose wire post to show",
 	'widgets:thewire:filter' => "Filter wire posts (optional)",
-		
+	
+	// action
+	'thewire_tools:action:toggle_feature:unfeatured' => "The post is no longer featured",
+	'thewire_tools:action:toggle_feature:featured' => "The post was successfully featured",
 );
-
-add_translation("en", $english);

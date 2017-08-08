@@ -17,13 +17,14 @@
  */
 function thewire_tools_groups_enabled() {
 	static $result;
-
-	if (!isset($result)) {
-		$result = false;
-
-		if (elgg_get_plugin_setting("enable_group", "thewire_tools") == "yes") {
-			$result = true;
-		}
+	
+	if (isset($result)) {
+		return $result;
+	}
+	$result = false;
+	
+	if (elgg_get_plugin_setting('enable_group', 'thewire_tools') == 'yes') {
+		$result = true;
 	}
 
 	return $result;
@@ -36,16 +37,13 @@ function thewire_tools_groups_enabled() {
  */
 function thewire_tools_get_wire_length() {
 	static $result;
-
-	if (!isset($result)) {
-		$result = 140;
-
-		$setting = (int) elgg_get_plugin_setting("limit", "thewire");
-		if ($setting >= 0) {
-			$result = $setting;
-		}
+	
+	if (isset($result)) {
+		return $result;
 	}
-
+		
+	$result = sanitize_int(elgg_get_plugin_setting('limit', 'thewire', 140), false);
+	
 	return $result;
 }
 
@@ -68,28 +66,26 @@ function thewire_tools_save_post($text, $userid, $access_id, $parent_guid = 0, $
 
 	// check the access id
 	if ($access_id == ACCESS_PRIVATE) {
-		// private wire posts aren"t allowed
+		// private wire posts aren't allowed
 		$access_id = ACCESS_LOGGED_IN;
 	} elseif (thewire_tools_groups_enabled()) {
 		// allow the saving of a wire post in a group (if enabled)
-		if (!in_array($access_id, array(ACCESS_FRIENDS, ACCESS_LOGGED_IN, ACCESS_PUBLIC))) {
+		if (!in_array($access_id, [ACCESS_FRIENDS, ACCESS_LOGGED_IN, ACCESS_PUBLIC])) {
 			// try to find a group with access_id
-			$group_options = array(
-				"type" => "group",
-				"limit" => 1,
-				"metadata_name_value_pairs" => array(
-					"group_acl" => $access_id
-				)
-			);
-
+			$group_options = [
+				'type' => 'group',
+				'limit' => 1,
+				'metadata_name_value_pairs' => ['group_acl' => $access_id],
+			];
+			
 			$groups = elgg_get_entities_from_metadata($group_options);
 			if (!empty($groups)) {
 				$group = $groups[0];
-
-				if ($group->thewire_enable == "no") {
+					
+				if ($group->thewire_enable == 'no') {
 					// not allowed to post in this group
-					register_error(elgg_echo("thewire_tools:groups:error:not_enabled"));
-
+					register_error(elgg_echo('thewire_tools:groups:error:not_enabled'));
+						
 					// let creation of object fail
 					return false;
 				} else {
@@ -102,7 +98,7 @@ function thewire_tools_save_post($text, $userid, $access_id, $parent_guid = 0, $
 	// create the new post
 	$post = new ElggObject();
 
-	$post->subtype = "thewire";
+	$post->subtype = 'thewire';
 	$post->owner_guid = $userid;
 	$post->container_guid = $container_guid;
 	$post->access_id = $access_id;
@@ -114,7 +110,7 @@ function thewire_tools_save_post($text, $userid, $access_id, $parent_guid = 0, $
 	}
 
 	// no html tags allowed so we escape
-	$post->description = htmlspecialchars($text, ENT_NOQUOTES, "UTF-8");
+	$post->description = htmlspecialchars($text, ENT_NOQUOTES, 'UTF-8');
 
 	$post->method = $method; //method: site, email, api, ...
 
@@ -133,8 +129,8 @@ function thewire_tools_save_post($text, $userid, $access_id, $parent_guid = 0, $
 	if ($guid) {
 		// set thread guid
 		if ($parent_guid) {
-			$post->addRelationship($parent_guid, "parent");
-
+			$post->addRelationship($parent_guid, 'parent');
+		
 			// name conversation threads by guid of first post (works even if first post deleted)
 			$parent_post = get_entity($parent_guid);
 			$post->wire_thread = $parent_post->wire_thread;
@@ -145,26 +141,26 @@ function thewire_tools_save_post($text, $userid, $access_id, $parent_guid = 0, $
 
 		// add reshare
 		if ($reshare_guid) {
-			$post->addRelationship($reshare_guid, "reshare");
+			$post->addRelationship($reshare_guid, 'reshare');
 		}
 
 		// add to river
-		elgg_create_river_item(array(
+		elgg_create_river_item([
 			'view' => 'river/object/thewire/create',
 			'action_type' => 'create',
 			'subject_guid' => $post->getOwnerGUID(),
 			'object_guid' => $post->getGUID(),
-		));
-
+		]);
+		
 		// let other plugins know we are setting a user status
-		$params = array(
-			"entity" => $post,
-			"user" => $post->getOwnerEntity(),
-			"message" => $post->description,
-			"url" => $post->getURL(),
-			"origin" => "thewire",
-		);
-		elgg_trigger_plugin_hook("status", "user", $params);
+		$params = [
+			'entity' => $post,
+			'user' => $post->getOwnerEntity(),
+			'message' => $post->description,
+			'url' => $post->getURL(),
+			'origin' => 'thewire',
+		];
+		elgg_trigger_plugin_hook('status', 'user', $params);
 	}
 
 	return $guid;
@@ -184,9 +180,9 @@ function thewire_tools_filter($text) {
 	$site_url = elgg_get_site_url();
 
 	if (!isset($mention_display)) {
-		$mention_display = "username";
-		if (elgg_get_plugin_setting("mention_display", "thewire_tools") == "displayname") {
-			$mention_display = "displayname";
+		$mention_display = 'username';
+		if (elgg_get_plugin_setting('mention_display', 'thewire_tools') == 'displayname') {
+			$mention_display = 'displayname';
 		}
 	}
 
@@ -268,43 +264,41 @@ function thewire_tools_filter($text) {
  */
 function thewire_tools_get_notification_settings($user_guid = 0) {
 
+	$result = [];
+	
 	$user_guid = sanitise_int($user_guid, false);
 	if (empty($user_guid)) {
 		$user_guid = elgg_get_logged_in_user_guid();
 	}
 
 	if (empty($user_guid)) {
-		return array();
+		return $result;
 	}
 
-	if (elgg_is_active_plugin("notifications")) {
-		$saved = elgg_get_plugin_user_setting("notification_settings_saved", $user_guid, "thewire_tools");
+	if (elgg_is_active_plugin('notifications')) {
+		$saved = elgg_get_plugin_user_setting('notification_settings_saved', $user_guid, 'thewire_tools');
 		if (!empty($saved)) {
-			$settings = elgg_get_plugin_user_setting("notification_settings", $user_guid, "thewire_tools");
-
+			$settings = elgg_get_plugin_user_setting('notification_settings', $user_guid, 'thewire_tools');
+				
 			if (!empty($settings)) {
 				return string_to_tag_array($settings);
 			}
-
-			return array();
+				
+			return $result;
 		}
 	}
 
 	// default elgg settings
-	$settings = get_user_notification_settings($user_guid);
-
-	if (!empty($settings)) {
-		$settings = (array) $settings;
-		$res = array();
-
-		foreach ($settings as $method => $value) {
-			if (!empty($value)) {
-				$res[] = $method;
-			}
-		}
-
-		return $res;
+	$settings = (array) get_user_notification_settings($user_guid);
+	if (empty($settings)) {
+		return $result;
 	}
 
-	return array();
+	foreach ($settings as $method => $value) {
+		if (!empty($value)) {
+			$result[] = $method;
+		}
+	}
+
+	return $result;
 }

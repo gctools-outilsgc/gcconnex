@@ -3,23 +3,13 @@
  * Show to what a wire post is linked
  */
 
-$entity = elgg_extract("entity", $vars);
+$entity = elgg_extract('entity', $vars);
 
-if (empty($entity) || !(elgg_instanceof($entity, "object") || elgg_instanceof($entity, "group"))) {
+if (!elgg_instanceof($entity, 'object')) {
 	return true;
 }
 
-$icon = "";
-if ($entity->icontime) {
-	$icon = elgg_view_entity_icon($entity, "tiny");
-}
-
-$url = $entity->getURL();
-if ($url === elgg_get_site_url()) {
-	$url = false;
-}
-
-$text = "";
+$text = '';
 if (!empty($entity->title)) {
 	$text = $entity->title;
 } elseif (!empty($entity->name)) {
@@ -31,19 +21,26 @@ if (!empty($entity->title)) {
 	return true;
 }
 
-$content = "<div class='elgg-subtext'>";
-$content .= elgg_echo("thewire_tools:reshare:source") . ": ";
-if (!empty($url)) {
-	$content .= elgg_view("output/url", array(
-		"href" => $url,
-		"text" => $text,
-		"is_trusted" => true
-	));
-} else {
-	$content .= elgg_view("output/text", array(
-		"value" => $text
-	));
+$icon = '';
+if ($entity->icontime) {
+	$icon = elgg_view_entity_icon($entity, 'tiny');
 }
-$content .= "</div>";
 
-echo elgg_view_image_block($icon, $content, array("class" => "mbn"));
+$url = $entity->getURL();
+if ($url === elgg_get_site_url()) {
+	$url = false;
+}
+
+$content = elgg_echo('thewire_tools:reshare:source') . ': ';
+if (!empty($url)) {
+	$content .= elgg_view('output/url', [
+		'href' => $url,
+		'text' => $text,
+		'is_trusted' => true,
+	]);
+} else {
+	$content .= elgg_view('output/text', ['value' => $text]);
+}
+$content = elgg_format_element('div', ['class' => 'elgg-subtext'], $content);
+
+echo elgg_view_image_block($icon, $content, ['class' => 'mbn']);

@@ -3,4 +3,4 @@
  * Custom search display for wire posts
  */
 
-echo elgg_view("object/thewire", $vars);
+echo elgg_view('object/thewire', $vars);

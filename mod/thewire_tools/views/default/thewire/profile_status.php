@@ -18,7 +18,11 @@ $latest_wire = elgg_get_entities($params);
 
 if ($latest_wire && count($latest_wire) > 0) {
 	$latest_wire = $latest_wire[0];
-	$content = thewire_tools_filter($latest_wire->description);
+	
+	$content = elgg_view('output/longtext', [
+		'value' => thewire_tools_filter($latest_wire->description),
+	]);
+	
 	$time = "<p class='elgg-subtext'>(" . elgg_view_friendly_time($latest_wire->time_created) . ")</p>";
 
 	$button = '';

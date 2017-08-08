@@ -78,7 +78,11 @@ if (empty($error) && !empty($content)) {
 	echo $content;
 	
 	echo "<span class=\"elgg-widget-more\">";
-	echo elgg_view("output/url", array("href" => $more_url, "text" => elgg_echo("thewire:moreposts")));
+	echo elgg_view("output/url", array(
+		"href" => $more_url,
+		"text" => elgg_echo("thewire:moreposts"),
+		'is_trusted' => true,
+	));
 	echo "</span>";
 } else {
 	echo elgg_echo("thewire_tools:no_result");
