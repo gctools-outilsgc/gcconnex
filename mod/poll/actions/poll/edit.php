@@ -12,8 +12,11 @@ elgg_make_sticky_form('poll');
 
 // Get input data
 $question = get_input('question');
+$question2 = get_input('question2');
+$question3 = gc_implode_translation($question,$question2);
 $description = get_input('description');
 $number_of_choices = (int) get_input('number_of_choices', 0);
+$number_of_choices2 = (int) get_input('number_of_choices2',0);
 $max_choice_id = (int) get_input('max_choice_id', 0);
 $front_page = get_input('front_page');
 $close_date = get_input('close_date');
@@ -26,12 +29,34 @@ $guid = get_input('guid');
 
 //get response choices
 $count = 0;
+$count2 = 0;
+$count3 = 0;
 $new_choices = array();
-if ($number_of_choices && $max_choice_id) {
-	for($i=0; $i<$max_choice_id; $i++) {
+$new_choices2 = array();
+$new_choices3 = array();
+
+if ( $number_of_choices2 >= $number_of_choices ) {
+	for($i=0;$i<$number_of_choices2;$i++) {	
 		$text = get_input('choice_text_'.$i,'');
-		if ($text) {
-			$new_choices[] = $text;
+		$text2 = get_input('choice_text_f'.$i,'');
+		if (empty($text)){
+			$text = $text2;
+		}
+		if (($text2) ||($text)) {
+			$new_choices[] = gc_implode_translation($text,$text2);
+			$count ++;
+		}
+	}
+}
+else{
+	for($i=0;$i<$number_of_choices;$i++) {
+		$text = get_input('choice_text_'.$i,'');
+		$text2 = get_input('choice_text_f'.$i,'');
+		if (empty($text2)){
+			$text2 = $text;
+		}
+		if (($text2) ||($text)){
+			$new_choices[] = gc_implode_translation($text,$text2);
 			$count ++;
 		}
 	}
@@ -44,7 +69,7 @@ if ($number_of_choices != $count) {
 }
 
 // Make sure the question and the response options aren't empty
-if (empty($question) || ($count == 0)) {
+if (empty($question) && (empty($question2)) || ($count == 0)) {
 	register_error(elgg_echo("poll:blank"));
 	forward(REFERER);
 }
@@ -109,8 +134,8 @@ if ($guid) {
 }
 
 $poll->access_id = $access_id;
-$poll->question = $question;
-$poll->title = $question;
+$poll->question = $question3;
+$poll->title = $question3;
 $poll->description = $description;
 $poll->open_poll = $open_poll ? 1 : 0;
 $poll->close_date = empty($close_date) ? null : $close_date;

@@ -36,6 +36,7 @@ function poll_can_add_to_group($group, $user = null) {
 function poll_get_page_edit($page_type, $guid = 0) {
 	gatekeeper();
 
+	$lang = get_current_language();
 	$form_vars = array('id' => 'poll-edit-form');
 
 	// Get the post, if it exists
@@ -53,10 +54,11 @@ function poll_get_page_edit($page_type, $guid = 0) {
 		}
 
 		$container = $poll->getContainerEntity();
+		$group_title = gc_explode_translation($container->title,$lang);
 
 		elgg_set_page_owner_guid($container->guid);
 
-		$title = elgg_echo('poll:editpost', array($poll->title));
+		$title = elgg_echo('poll:editpost', array(gc_explode_translation($poll->title, $lang)));
 
 		$body_vars = array(
 			'fd' => poll_prepare_edit_body_vars($poll),
@@ -64,16 +66,16 @@ function poll_get_page_edit($page_type, $guid = 0) {
 		);
 
 		if ($container instanceof ElggGroup) {
-			elgg_push_breadcrumb($container->name, 'poll/group/' . $container->guid);
+			elgg_push_breadcrumb(gc_explode_translation($container->name,$lang), 'poll/group/' . $container->guid);
 		} else {
-			elgg_push_breadcrumb($container->name, 'poll/owner/' . $container->username);
+			elgg_push_breadcrumb($group_title, 'poll/owner/' . $container->username);
 		}
 
 		elgg_push_breadcrumb(elgg_echo("poll:edit"));
 	} else {
 		if ($guid) {
 			$container = get_entity($guid);
-			elgg_push_breadcrumb($container->name, 'poll/group/' . $container->guid);
+			elgg_push_breadcrumb(gc_explode_translation($container->name,$lang), 'poll/group/' . $container->guid);
 		} else {
 			$container = elgg_get_logged_in_user_entity();
 			elgg_push_breadcrumb($container->name, 'poll/owner/' . $container->username);
@@ -117,6 +119,7 @@ function poll_prepare_edit_body_vars($poll = null) {
 	// input names => defaults
 	$values = array(
 		'question' => null,
+		'question2' => NULL,
 		'description' => null,
 		'close_date' => null,
 		'open_poll' => null,
@@ -150,6 +153,7 @@ function poll_prepare_edit_body_vars($poll = null) {
 function poll_get_page_list($page_type, $container_guid = null) {
 	elgg_register_rss_link();
 
+	$lang = get_current_language();
 	$user = elgg_get_logged_in_user_entity();
 	$params = array();
 	$options = array(
@@ -164,7 +168,7 @@ function poll_get_page_list($page_type, $container_guid = null) {
 		if (!elgg_instanceof($group, 'group') || !poll_activated_for_group($group)) {
 			forward();
 		}
-		$crumbs_title = $group->name;
+		$crumbs_title = gc_explode_translation($group->name, $lang);
 		$params['title'] = elgg_echo('poll:group_poll:listing:title', array(htmlspecialchars($crumbs_title)));
 		$params['filter'] = "";
 
@@ -256,12 +260,13 @@ function poll_get_page_list($page_type, $container_guid = null) {
 function poll_get_page_view($guid) {
 	elgg_require_js('elgg/poll/poll');
 
+	$lang = get_current_language();
 	$poll = get_entity($guid);
 	if ($poll instanceof Poll) {
 		// Set the page owner
 		$page_owner = $poll->getContainerEntity();
 		elgg_set_page_owner_guid($page_owner->guid);
-		$title =  $poll->title;
+		$title =  gc_explode_translation($poll->title, $lang);
 		$content = elgg_view_entity($poll, array('full_view' => true));
 
 		$allow_poll_reset = elgg_get_plugin_setting('allow_poll_reset', 'poll');
@@ -284,9 +289,9 @@ function poll_get_page_view($guid) {
 		if (elgg_instanceof($page_owner,'user')) {
 			elgg_push_breadcrumb($page_owner->name, "poll/owner/{$page_owner->username}");
 		} else {
-			elgg_push_breadcrumb($page_owner->name, "poll/group/{$page_owner->guid}");
+			elgg_push_breadcrumb(gc_explode_translation($page_owner->name, $lang), "poll/group/{$page_owner->guid}");
 		}
-		elgg_push_breadcrumb($poll->title);
+		elgg_push_breadcrumb(gc_explode_translation($poll->title, $lang));
 	} else {
 		// Display the 'post not found' page instead
 		$title = elgg_echo("poll:notfound");
@@ -344,4 +349,26 @@ function poll_is_upgrade_available() {
 	} else {
 		return true;
 	}
+}
+
+
+function polls_get_response_count_enfr($responseToCount, $fromArray) {
+	$count = 0;
+	$toCount = $responseToCount->text;
+	$toCount3 = $responseToCount->text3;
+	if(is_array($fromArray))
+	{
+		foreach($fromArray as $item)
+		{
+			if($item->value == $toCount)
+			{
+				$count += 1;
+			}
+			else if($item->value == $toCount3)
+			{
+				$count += 1;
+			}
+		}
+	}
+	return $count;
 }
