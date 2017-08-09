@@ -1,5 +1,10 @@
-Widget Manager [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/ColdTrick/widget_manager/badges/quality-score.png?s=27bafb753e3922cff1a880a3245cd9e6137c58ec)](https://scrutinizer-ci.com/g/ColdTrick/widget_manager/)
+Widget Manager
 ==============
+
+[![Build Status](https://scrutinizer-ci.com/g/ColdTrick/widget_manager/badges/build.png?b=master)](https://scrutinizer-ci.com/g/ColdTrick/widget_manager/build-status/master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ColdTrick/widget_manager/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ColdTrick/widget_manager/?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/coldtrick/widget_manager/v/stable.svg)](https://packagist.org/packages/coldtrick/widget_manager)
+[![License](https://poser.pugx.org/coldtrick/widget_manager/license.svg)](https://packagist.org/packages/coldtrick/widget_manager)
 
 A plugin for Elgg that adds more widget features.
 
@@ -23,7 +28,6 @@ Widgets
  - Twitter widget (paste your widget code)
  - Content (blog, file, pages, bookmarks) by tag
  - rss
- - tagcloud
  - free html
  - messages
  
@@ -32,14 +36,9 @@ Widgets
  - login box
  - members
  - online members
- - bookmarks
  - activity
  - image slider
  - community stats
- 
-### Dashboard widgets
-
- - favorites (favorite community pages)
  
 ### Admin widgets
 

@@ -1,6 +1,7 @@
 <?php
 	
-$entity_guid = get_input("guid");
+$entity_guid = (int) get_input('guid');
+
 if ($entity = get_entity($entity_guid)) {
 	if ($entity instanceof ElggWidget) {
 		$current = $entity->fixed;
@@ -14,5 +15,4 @@ if ($entity = get_entity($entity_guid)) {
 		$entity->save();
 	}
 }
-exit();
 	
