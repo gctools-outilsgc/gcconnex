@@ -30,7 +30,7 @@ return [
 	'questions:menu:filter:experts' => "Experts",
 	
 	'river:create:object:question' => '%s asked question %s',
-	'river:create:object:answer' => '%s provided an answered for the question %s',
+	'river:create:object:answer' => '%s provided an answer for the question %s',
 		
 	'questions' => 'Questions',
 	'questions:asked' => 'Asked by %s',

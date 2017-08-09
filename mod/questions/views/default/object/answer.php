@@ -7,7 +7,7 @@ if (!($answer instanceof ElggAnswer)) {
 
 $question = $answer->getContainerEntity();
 
-$image = elgg_view_entity_icon($answer->getOwnerEntity(), 'small');
+$image = elgg_view_entity_icon($answer->getOwnerEntity(), 'tiny');
 
 // mark this as the correct answer?
 $correct_answer = $answer->getCorrectAnswerMetadata();
@@ -19,19 +19,11 @@ if ($correct_answer) {
 	
 	$title = elgg_echo('questions:answer:checkmark:title', [$owner_name, $timestamp]);
 	
-	$image .= elgg_format_element('div', ['class' => 'questions-checkmark', 'title' => $title]);
+	$image .= elgg_format_element('div', ['class' => 'questions-checkmark', 'title' => $title], elgg_view_icon('checkmark'));
 }
 
 // create subtitle
-$owner = $answer->getOwnerEntity();
-$owner_link = elgg_view('output/url', [
-	'text' => $owner->name,
-	'href' => $owner->getURL(),
-	'is_trusted' => true
-]);
-
-$friendly_time = elgg_view_friendly_time($answer->time_created);
-$subtitle = $owner_link . ' ' . $friendly_time;
+$subtitle = elgg_view('page/elements/by_line', $vars);
 
 // build entity menu
 $entity_menu = elgg_view_menu('entity', [

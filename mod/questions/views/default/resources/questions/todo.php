@@ -11,7 +11,7 @@ if (!questions_is_expert()) {
 }
 
 // check for a group filter
-$group_guid = (int) get_input('group_guid');
+$group_guid = (int) elgg_extract('group_guid', $vars);
 if (!empty($group_guid)) {
 	$group = get_entity($group_guid);
 	if ($group instanceof ElggGroup) {

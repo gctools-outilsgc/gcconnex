@@ -5,12 +5,16 @@
  * @package ElggQuestions
  */
 
-$container = elgg_get_page_owner_entity();
+$group_guid = (int) elgg_extract('group_guid', $vars);
+
+$container = get_entity($group_guid);
 if ($container instanceof ElggGroup) {
 	elgg_push_breadcrumb($container->name, "questions/group/{$container->getGUID()}/all");
 } else {
 	$container = elgg_get_site_entity();
 }
+
+elgg_set_page_owner_guid($container->getGUID());
 
 // build page elements
 $title_text = elgg_echo('questions:experts:title');

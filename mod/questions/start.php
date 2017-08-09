@@ -8,7 +8,6 @@ define('QUESTIONS_EXPERT_ROLE', 'questions_expert');
 require_once(dirname(__FILE__) . '/lib/functions.php');
 require_once(dirname(__FILE__) . '/lib/events.php');
 require_once(dirname(__FILE__) . '/lib/hooks.php');
-require_once(dirname(__FILE__) . '/lib/page_handlers.php');
 
 elgg_register_event_handler('init', 'system', 'questions_init');
 
@@ -20,8 +19,8 @@ elgg_register_event_handler('init', 'system', 'questions_init');
 function questions_init() {
 	
 	// extend CSS/JS
-	elgg_extend_view('css/elgg', 'css/questions/site');
-	elgg_extend_view('js/elgg', 'js/questions/site');
+	elgg_extend_view('css/elgg', 'css/questions/site.css');
+	elgg_extend_view('js/elgg', 'js/questions/site.js');
 	
 	elgg_register_menu_item('site', [
 		'name' => 'questions',
@@ -38,8 +37,8 @@ function questions_init() {
 	elgg_register_widget_type('questions', elgg_echo('widget:questions:title'), elgg_echo('widget:questions:description'), ['index', 'profile', 'dashboard', 'groups'], true);
 	
 	// register page handler for nice urls
-	elgg_register_page_handler('questions', 'questions_page_handler');
-	elgg_register_page_handler('answers', 'answers_page_handler');
+	elgg_register_page_handler('questions', '\ColdTrick\Questions\PageHandler::questions');
+	elgg_register_page_handler('answers', '\ColdTrick\Questions\PageHandler::answers');
 	
 	// register group options
 	add_group_tool_option('questions', elgg_echo('questions:enable'), false);
@@ -56,6 +55,7 @@ function questions_init() {
 	elgg_register_plugin_hook_handler('permissions_check', 'object', 'questions_permissions_handler');
 	elgg_register_plugin_hook_handler('entity:url', 'object', '\ColdTrick\Questions\WidgetManager::widgetURL');
 	elgg_register_plugin_hook_handler('cron', 'daily', 'questions_daily_cron_handler');
+	elgg_register_plugin_hook_handler('cron', 'daily', '\ColdTrick\Questions\Cron::autoCloseQuestions');
 	
 	elgg_register_plugin_hook_handler('index_entity_type_subtypes', 'elasticsearch', '\ColdTrick\Questions\Elasticsearch::indexTypes');
 	
@@ -79,13 +79,19 @@ function questions_init() {
 	elgg_register_event_handler('create', 'object', '\ColdTrick\Questions\ContentSubscriptions::createAnswer');
 	elgg_register_event_handler('create', 'object', '\ColdTrick\Questions\ContentSubscriptions::createCommentOnAnswer');
 	
+	elgg_register_plugin_hook_handler('supported_types', 'entity_tools', '\ColdTrick\Questions\MigrateQuestions::supportedSubtypes');
+	
 	// events
 	elgg_register_event_handler('leave', 'group', 'questions_leave_group_handler');
 	elgg_register_event_handler('delete', 'relationship', 'questions_leave_site_handler');
+	elgg_register_event_handler('update:after', 'object', '\ColdTrick\Questions\Access::updateQuestion');
+	elgg_register_event_handler('upgrade', 'system', '\ColdTrick\Questions\Upgrade::setStatusOnQuestions');
 	
 	// actions
 	elgg_register_action('questions/toggle_expert', dirname(__FILE__) . '/actions/toggle_expert.php');
 	elgg_register_action('questions/group_settings', dirname(__FILE__) . '/actions/group_settings.php');
+	
+	elgg_register_action('questions/upgrades/set_question_status', dirname(__FILE__) . '/actions/upgrades/set_question_status.php', 'admin');
 	
 	// question
 	$actions_base = dirname(__FILE__) . '/actions/object/question';

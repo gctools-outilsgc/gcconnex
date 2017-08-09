@@ -339,7 +339,7 @@ function questions_permissions_handler($hook, $type, $returnvalue, $params) {
 }
 
 /**
- * A plugin hook for the CRON, so we can send out notifications to the experts about there workload
+ * A plugin hook for the CRON, so we can send out notifications to the experts about their workload
  *
  * @param string $hook        the name of the hook
  * @param string $type        the type of the hook
@@ -453,11 +453,11 @@ function questions_daily_cron_handler($hook, $type, $returnvalue, $params) {
 			$message .= elgg_echo('questions:daily:notification:message:overdue', [], get_current_language()) . PHP_EOL;
 			
 			foreach ($questions as $question) {
-				$message .= " - {$question->title} ({$question->getURL()})" . PHP_EOL;
+				$message .= " - {$question->getDisplayName()} ({$question->getURL()})" . PHP_EOL;
 			}
 			
 			$message .= elgg_echo('questions:daily:notification:message:more', [], get_current_language());
-			$message .= " {$site->url}questions/todo" . PHP_EOL . PHP_EOL;
+			$message .= ' ' . elgg_normalize_url('questions/todo') . PHP_EOL . PHP_EOL;
 		}
 		
 		// get due questions
@@ -480,11 +480,11 @@ function questions_daily_cron_handler($hook, $type, $returnvalue, $params) {
 			$message .= elgg_echo('questions:daily:notification:message:due', [], get_current_language()) . PHP_EOL;
 			
 			foreach ($questions as $question) {
-				$message .= " - {$question->title} ({$question->getURL()})" . PHP_EOL;
+				$message .= " - {$question->getDisplayName()} ({$question->getURL()})" . PHP_EOL;
 			}
 			
 			$message .= elgg_echo('questions:daily:notification:message:more', [], get_current_language());
-			$message .= " {$site->url}questions/todo" . PHP_EOL . PHP_EOL;
+			$message .= ' ' . elgg_normalize_url('questions/todo') . PHP_EOL . PHP_EOL;
 		}
 		
 		// get new questions
@@ -500,11 +500,11 @@ function questions_daily_cron_handler($hook, $type, $returnvalue, $params) {
 			$message .= elgg_echo('questions:daily:notification:message:new', [], get_current_language()) . PHP_EOL;
 			
 			foreach ($questions as $question) {
-				$message .= " - {$question->title} ({$question->getURL()})" . PHP_EOL;
+				$message .= " - {$question->getDisplayName()} ({$question->getURL()})" . PHP_EOL;
 			}
 			
 			$message .= elgg_echo('questions:daily:notification:message:more', array(), get_current_language());
-			$message .= " {$site->url}questions/all" . PHP_EOL . PHP_EOL;
+			$message .= ' ' . elgg_normalize_url('questions/all') . PHP_EOL . PHP_EOL;
 		}
 		
 		// is there content in the message

@@ -1,6 +1,36 @@
 Version history
 ===============
 
+5.1 (2017-07-31):
+
+- added: plugin setting to auto close questions
+- added: upgrade script to ensure questions have a status field
+- changed: question edit form to use new Elgg functions
+
+5.0 (2017-01-26):
+
+- changed: increased Elgg version requirement to 2.3
+- fixed: incompatible function declaration
+
+4.1 (2016-12-16):
+
+- changed: replaced checkmark icon with FontAwesome checkmark
+- fixed: question owner not notified when using content subscriptions
+
+4.0 (2016-11-18):
+
+- added: support for entity_tools
+- changed: increased Elgg version requirement
+
+3.0 (2016-10-27):
+
+- changed: don't show answer text in listing
+- changed: icon size of the owner
+- changed: moved pages to resource views
+- fixed: don't show empty answer header in full view
+- fixed: php fatal error when checking canComment on an answer
+- removed: categories support
+
 2.1.2 (2016-09-15):
 
 - fixed: php fatal error when getting answer url

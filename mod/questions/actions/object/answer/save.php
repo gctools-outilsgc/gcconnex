@@ -4,9 +4,15 @@ elgg_make_sticky_form('answer');
 
 $guid = (int) get_input('guid');
 
-$answer = new ElggAnswer($guid);
+$adding = false;
+if (empty($guid)) {
+	$answer = new ElggAnswer();
+	$adding = true;
+} else {
+	elgg_entity_gatekeeper($guid, 'object', 'answer');
+	$answer = get_entity($guid);
+}
 
-$adding = !$answer->guid;
 $editing = !$adding;
 
 if ($editing && !$answer->canEdit()) {

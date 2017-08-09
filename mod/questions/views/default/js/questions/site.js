@@ -1,11 +1,4 @@
-<?php
-/**
- * Javascript file for this plugin. This is added to the global site JS.
- *
- * @package ElggQuestions
- */
-?>
-//<script>
+// Questions JS
 elgg.provide('elgg.questions');
 
 elgg.questions.init = function() {

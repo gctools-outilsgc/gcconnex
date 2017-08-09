@@ -16,7 +16,7 @@ $subtitle = [];
 
 $poster = $question->getOwnerEntity();
 
-$poster_icon = elgg_view_entity_icon($poster, 'small');
+$poster_icon = elgg_view_entity_icon($poster, 'tiny');
 $poster_link = elgg_view('output/url', [
 	'text' => $poster->name,
 	'href' => $poster->getURL(),
@@ -34,8 +34,6 @@ if (($container instanceof ElggGroup) && (elgg_get_page_owner_guid() !== $contai
 	$subtitle[] = elgg_echo('river:ingroup', [$group_link]);
 }
 
-$tags = elgg_view('output/tags', ['tags' => $question->tags]);
-
 $subtitle[] = elgg_view_friendly_time($question->time_created);
 
 $answer_options = [
@@ -49,25 +47,6 @@ $num_answers = elgg_get_entities($answer_options);
 $answer_text = '';
 
 if ($num_answers != 0) {
-	$answer_options['limit'] = 1;
-	$answer_options['count'] = false;
-	
-	$correct_answer = $question->getMarkedAnswer();
-
-	if ($correct_answer) {
-		$poster = $correct_answer->getOwnerEntity();
-		$answer_time = elgg_view_friendly_time($correct_answer->time_created);
-		$answer_link = elgg_view('output/url', ['href' => $poster->getURL(), 'text' => $poster->name]);
-		$answer_text = elgg_echo('questions:answered:correct', [$answer_link, $answer_time]);
-	} else {
-		$last_answer = elgg_get_entities($answer_options);
-		
-		$poster = $last_answer[0]->getOwnerEntity();
-		$answer_time = elgg_view_friendly_time($last_answer[0]->time_created);
-		$answer_link = elgg_view('output/url', ['href' => $poster->getURL(), 'text' => $poster->name]);
-		$answer_text = elgg_echo('questions:answered', [$answer_link, $answer_time]);
-	}
-	
 	$subtitle[] = elgg_view('output/url', [
 		'href' => "{$question->getURL()}#question-answers",
 		'text' => elgg_echo('answers') . " ({$num_answers})",
@@ -102,8 +81,6 @@ if ($solution_time && !$question->getMarkedAnswer()) {
 	$answer_text .= elgg_format_element('span', ['class' => $solution_class], $solution_date);
 }
 
-$subtitle[] = elgg_view('output/categories', $vars);
-
 if ($full) {
 	
 	$params = [
@@ -111,7 +88,6 @@ if ($full) {
 		'title' => false,
 		'metadata' => $metadata,
 		'subtitle' => implode(' ', $subtitle),
-		'tags' => $tags,
 	];
 	$list_body = elgg_view('object/elements/summary', $params);
 	
@@ -162,7 +138,7 @@ if ($full) {
 	if ($question->getMarkedAnswer()) {
 		$title_text = elgg_view_icon('checkmark', ['class' => 'mrs question-listing-checkmark']);
 	}
-	$title_text .= elgg_get_excerpt($question->title, 100);
+	$title_text .= elgg_get_excerpt($question->getDisplayName(), 100);
 	$title = elgg_view('output/url', [
 		'text' => $title_text,
 		'href' => $question->getURL(),
@@ -183,7 +159,6 @@ if ($full) {
 		'title' => $title,
 		'metadata' => $metadata,
 		'subtitle' => implode(' ', $subtitle),
-		'tags' => $tags,
 		'content' => $excerpt . $answer_text,
 	];
 	$list_body = elgg_view('object/elements/summary', $params);

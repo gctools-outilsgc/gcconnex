@@ -5,7 +5,9 @@
  * @package ElggQuestions
  */
 
-$answer_guid = get_input('guid');
+elgg_gatekeeper();
+
+$answer_guid = (int) elgg_extract('guid', $vars);
 elgg_entity_gatekeeper($answer_guid, 'object', ElggAnswer::SUBTYPE);
 
 $answer = get_entity($answer_guid);
@@ -18,7 +20,7 @@ $question = $answer->getContainerEntity();
 
 $title = elgg_echo('questions:answer:edit');
 
-elgg_push_breadcrumb($question->title, $question->getURL());
+elgg_push_breadcrumb($question->getDisplayName(), $question->getURL());
 elgg_push_breadcrumb($title);
 
 $content = elgg_view_form('object/answer/edit', [], ['entity' => $answer]);

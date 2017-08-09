@@ -4,10 +4,14 @@
  */
 
 // register our own classes
-if (!update_subtype('object', 'question', 'ElggQuestion')) {
+if (get_subtype_id('object', 'question')) {
+	update_subtype('object', 'question', 'ElggQuestion');
+} else {
 	add_subtype('object', 'question', 'ElggQuestion');
 }
 
-if (!update_subtype('object', 'answer', 'ElggAnswer')) {
+if (get_subtype_id('object', 'answer')) {
+	update_subtype('object', 'answer', 'ElggAnswer');
+} else {
 	add_subtype('object', 'answer', 'ElggAnswer');
 }

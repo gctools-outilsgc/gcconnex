@@ -22,7 +22,7 @@ $subject_link = elgg_view('output/url', [
 
 $object_link = elgg_view('output/url', [
 	'href' => $question->getURL(),
-	'text' => elgg_get_excerpt($question->title, 100),
+	'text' => elgg_get_excerpt($question->getDisplayName(), 100),
 	'class' => 'elgg-river-object',
 	'is_trusted' => true,
 ]);

@@ -10,8 +10,24 @@ if (!$question->canEdit()) {
 	forward(REFERER);
 }
 
-$owner = $question->getContainerEntity();
+$container = $question->getContainerEntity();
 
-$question->delete();
+$title = $question->getDisplayName();
 
-forward(get_input('forward', "questions/owner/{$owner->getGUID()}"));
+if ($question->delete()) {
+	system_message(elgg_echo('entity:delete:success', [$title]));
+} else {
+	register_error(elgg_echo('entity:delete:fail', [$title]));
+	forward(REFERER);
+}
+
+$forward = get_input('forward');
+if (!empty($forward)) {
+	forward($forward);
+} elseif ($container instanceof ElggUser) {
+	forward("questions/owner/{$container->username}");
+} elseif ($container instanceof ElggGroup) {
+	forward("questions/group/{$container->getGUID()}/all");
+}
+
+forward();

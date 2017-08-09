@@ -1,11 +1,12 @@
-<?php ?>
-
 /* questions css */
+.questions-checkmark .elgg-icon {
+	font-size: 25px;
+	color: #4690D6;
+	margin: 0;
+}
 
-.questions-checkmark {
-	width: 40px;
-	height: 40px;
-	background:transparent url(<?php echo elgg_get_site_url(); ?>mod/questions/_graphics/checkmark.png) no-repeat;
+.questions-checkmark:hover {
+	cursor: help;
 }
 
 .question-solution-time {

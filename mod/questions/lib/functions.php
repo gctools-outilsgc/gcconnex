@@ -454,7 +454,7 @@ function questions_can_ask_question(ElggEntity $container = null, ElggUser $user
 	
 	if (!questions_experts_enabled() || ($container->getPrivateSetting('questions_who_can_ask') !== 'experts')) {
 		// no experts enabled, or not limited to experts
-		return can_write_to_container($user->getGUID(), $container->getGUID(), 'object', ElggQuestion::SUBTYPE);
+		return $container->canWriteToContainer($user->getGUID(), 'object', ElggQuestion::SUBTYPE);
 	}
 	
 	if (!questions_is_expert($container, $user)) {
@@ -462,7 +462,7 @@ function questions_can_ask_question(ElggEntity $container = null, ElggUser $user
 		return false;
 	}
 	
-	return can_write_to_container($user->getGUID(), $container->getGUID(), 'object', ElggQuestion::SUBTYPE);
+	return $container->canWriteToContainer($user->getGUID(), 'object', ElggQuestion::SUBTYPE);
 }
 
 /**
@@ -586,4 +586,45 @@ function questions_auto_mark_answer_correct(ElggEntity $container, ElggUser $use
 	$group_setting = $container->getPrivateSetting('questions_auto_mark_correct');
 	
 	return ($group_setting === 'yes');
+}
+
+/**
+ * Prepare the form vars for the question form
+ *
+ * @param ElggQuestion $question (optional) the question to edit
+ *
+ * @return array
+ */
+function questions_prepare_question_form_vars($question = null) {
+	
+	$defaults = [
+		'title' => '',
+		'description' => '',
+		'tags' => '',
+		'comments_enabled' => 'on',
+		'access_id' => null,
+		'container_guid' => elgg_get_page_owner_guid(),
+	];
+	
+	// load saved values from entity
+	if ($question instanceof ElggQuestion) {
+		
+		foreach ($defaults as $name => $value) {
+			$defaults[$name] = $question->$name;
+		}
+		
+		$defaults['entity'] = $question;
+	}
+	
+	// load sticky form
+	$sticky_values = elgg_get_sticky_values('question');
+	if (!empty($sticky_values)) {
+		foreach ($sticky_values as $name => $value) {
+			$defaults[$name] = $value;
+		}
+		
+		elgg_clear_sticky_form('question');
+	}
+	
+	return $defaults;
 }

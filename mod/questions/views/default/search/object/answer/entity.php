@@ -45,7 +45,7 @@ $answer_link = elgg_view('output/url', [
 	'is_trusted' => true,
 ]);
 $question_link = elgg_view('output/url', [
-	'text' => $question->title,
+	'text' => $question->getDisplayName(),
 	'href' => $question->getURL(),
 	'is_trusted' => true,
 ]);
