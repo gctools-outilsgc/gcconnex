@@ -1,17 +1,17 @@
 <?php
 
-/**
- * Group Tools
- *
- * @author ColdTrick IT Solutions
- * 
- */
+$group = elgg_extract('entity', $vars);
+if (!($group instanceof ElggGroup)) {
+	return;
+}
 
-$group = elgg_extract("entity", $vars);
+$content = elgg_view('input/autocomplete', [
+	'name' => 'guid',
+	'match_on' => 'groups',
+	'placeholder' => elgg_echo('group_tools:related_groups:form:placeholder'),
+]);
+$content .= elgg_view('input/hidden', ['name' => 'group_guid', 'value' => $group->getGUID()]);
+$content .= elgg_view('input/submit', ['value' => elgg_echo('add')]);
+$content .= elgg_format_element('div', ['class' => 'elgg-subtext'], elgg_echo('group_tools:related_groups:form:description'));
 
-echo "<div id='group-tools-related-groups-form'>";
-echo elgg_view("input/autocomplete", array("name" => "guid", "match_on" => "groups", "placeholder" => elgg_echo("group_tools:related_groups:form:placeholder")));
-echo elgg_view("input/hidden", array("name" => "group_guid", "value" => $group->getGUID()));
-echo elgg_view("input/submit", array("value" => elgg_echo("add")));
-echo "<div class='elgg-subtext'>" . elgg_echo("group_tools:related_groups:form:description") . "</div>";
-echo "</div>";
+echo elgg_format_element('div', ['id' => 'group-tools-related-groups-form'], $content);

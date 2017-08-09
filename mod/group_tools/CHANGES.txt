@@ -1,5 +1,147 @@
-Version History
+Version history
 ===============
+
+9.1.1 (2017-07-12):
+
+- fixed: stale group notifcations not sent for non public groups
+
+9.1 (2017-05-11):
+
+- added: hook to change object subtypes for stale group check
+- changed: consolidated admin pages in the same section
+- changed: moved auto join group management to admin section
+- changed: rewritten the auto join logic, now profiles can be created
+- fixed: grouppicker styling issues
+- fixed: stale group notification also includes empty groups in period
+- fixed: use time_updated in cron, same as on group profile page
+
+9.0 (2017-02-28):
+
+- added: notification to group owner when group becomes stale
+- added: option to allow only admins to control hidden groups
+- added: plugin setting for stale groups
+- added: simplified group access for new groups
+- added: simplified group create form setting
+- added: stale information to csv exporter
+- adds Spanish translation
+- changed: increased Elgg version requirement to 2.3
+- fixed: check for logged in user when transferring owner
+
+8.0 (2016-10-06):
+
+- changed: get group tool options using the new helper function
+- changed: group sidebar cleanup reworked
+- changed: moved different autojoin groups to own functions
+- changed: moved unregister widget from ready to init event
+- changed: required Elgg version set to 2.2
+- fixed: check correct plugin setting for group creation
+- fixed: deprecated notice when transfering group ownership
+- fixed: force notification settings don't apply
+- removed: custom icon serving handling
+
+7.3 (2016-09-21):
+
+- added: group mail members allowed for group members
+- added: new groups require admin approval (plugin setting)
+- added: option to disable friends invite tab
+- added: plugin/group setting to require motivation on group join
+- added: plugin setting to disable matching email addresses to users
+- changed: group invites also sent to site notifications
+- fixed: contain status string withing image block body
+- fixed: double encoding in grouppicker
+- fixed: group mail only to verified group members
+- fixed: membership requests don't get removed from the list on decline
+- fixed: my status sidebar has incorrect group join link/text
+- fixed: prevent ENTER in autocomplete from submitting the form
+
+7.2 (2016-05-26):
+
+- added: banned and role column to group member export
+- added: group admins can be exported by CSV Exporter
+- added: option to export the user is an admin of for CSV Exporter
+- added: sorting options to the group listing pages
+- added: styling for the group sort feature
+- fixed: default routing for /groups
+- fixed: exporting names group admin names with special chars
+- fixed: group members listing pagination doesn't jump to top of the list
+- fixed: group owner transfer doesn't move icon
+- fixed: grouppicker now correctly loads js and displays items
+- fixed: missing header column for displayname
+
+7.1 (2016-05-04):
+
+- added: option to allow users to directly change notification settings on group join
+- changed: system message content on group notification toggle
+
+7.0 (2016-04-14):
+
+- changed: layout of group invite autocomplete results
+- changed: moved pagesetup logic to views/hooks
+- fixed: call to private Elgg function
+- fixed: group invites submitted to much data
+- fixed: incorrect namespaced class
+- fixed: php warning in member export
+- fixed: unable to select/unselect all group members on mail page
+- fixed: user actions don't show up in group member listing
+
+7.0-rc.2 (2016-03-17):
+
+- changed: don't use distinct in river query
+- fixed: correctly check for logged in user
+- fixed: group admins can't edit group
+- fixed: group mail now saves subject and body
+- fixed: incorrect header in group thumbnail
+- fixed: replaced .live jquery usage with .on
+
+7.0-rc.1 (2016-03-03):
+
+- changed: Elgg requirement to 2.0
+- changed: moved all group extend to resource view
+- changed: moved gorup_invite_autocomplete to resource view
+- changed: moved group mail page to resource view
+- changed: moved membership request management to resource views
+- changed: moved overrle of group activity page to resource view
+- changed: moved overrule of group search page to resource view
+- changed: moved related groups to resource view
+- changed: moved suggested groups to resource view
+- changed: overrule group invite page by resource view
+- changed: overrule group members page by resource
+- changed: user group invitations page
+- fixed: duplicate breadcrumb
+- fixed: group autocomplete javascript not working
+- fixed: group icon not loading
+- fixed: group listing filter menu
+- fixed: group status indicator javascript errors
+- fixed: styling issue on group invite results
+- removed: discussion object view
+- removed: discussions quick status toggle
+- removed: discussions tool option description
+- removed: discussions widget
+- removed: group_forum_topic widget
+- removed: start_discussion widget
+
+6.0 (2016-03-02):
+
+- added: featured groups can now be selected as a filter tab
+- added: you can now search for group members on the group members page
+- changed: always return user in group invite autocomplete
+- changed: group membership decline from prompt to lightbox
+- changed: offloaded group mail sending #65
+- changed: tool preset button has title
+- fixed: deprecated use of class var in menuitem factory
+- fixed: group default access can be more public than content access
+- fixed: group edit visual flickering on load
+- fixed: group invite all friends button styling
+- fixed: group invite text is now sticky
+- fixed: index widget for groups used wrong url
+- fixed: js module not loading
+- fixed: language key usage
+- fixed: not using variable for group check
+- fixed: syntax errors
+- fixed: user gets notification when removing own group membership request
+- js: refactors a lot of js into amd
+- removed: show widgets on closed groups
+- removed: unused language keys
 
 5.0 (2015-07-08):
 

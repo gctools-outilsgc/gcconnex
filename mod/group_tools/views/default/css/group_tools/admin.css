@@ -1,0 +1,28 @@
+/* Group Tools admin css */
+.elgg-page-admin .elgg-module-inline .elgg-head .elgg-icon {
+	color: white;
+}
+
+.group-tools-auto-join-config .group-tools-auto-join-title a {
+	display: none;
+}
+.group-tools-auto-join-config:hover .group-tools-auto-join-title a {
+	display: inline-block;
+}
+
+.group-tools-auto-join-match-pattern {
+	display: flex;
+}
+.group-tools-auto-join-match-pattern-field {
+	flex: 2;
+}
+.group-tools-auto-join-match-pattern-operand {
+	flex: 1;
+}
+.group-tools-auto-join-match-pattern-value {
+	flex: 3;
+}
+.elgg-form-group-tools-admin-auto-join-default .elgg-input-group-picker,
+.elgg-form-group-tools-admin-auto-join-additional .elgg-input-group-picker {
+	width: 100%;
+}

@@ -1,0 +1,8 @@
+.elgg-group-picker {
+	position: relative;
+}
+
+.elgg-group-picker .ui-autocomplete {
+	max-height: 150px;
+	overflow: auto;
+}

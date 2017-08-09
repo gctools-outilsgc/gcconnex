@@ -8,28 +8,24 @@
 * @author ColdTrick IT Solutions
 */	
 
-$invite_members = get_input("invite_members");
-$group_guid = (int) get_input("group_guid");
+$invite_members = get_input('invite_members');
+$group_guid = (int) get_input('group_guid');
 
-$forward_url = REFERER;
-
-if (!empty($group_guid)) {
-	$group = get_entity($group_guid);
-	
-	if (!empty($group) && $group->canEdit()) {
-		if (elgg_instanceof($group, "group")) {
-			$group->invite_members = $invite_members;
-			
-			$forward_url = $group->getURL();
-			system_message(elgg_echo("group_tools:action:success"));
-		} else {
-			register_error(elgg_echo("ClassException:ClassnameNotClass", array($group_guid, elgg_echo("item:group"))));
-		}
-	} else {
-		register_error(elgg_echo("InvalidParameterException:NoEntityFound"));
-	}
-} else {
-	register_error(elgg_echo("InvalidParameterException:MissingParameter"));
+if (empty($group_guid)) {
+	register_error(elgg_echo('error:missing_data'));
+	forward(REFERER);
 }
 
-forward($forward_url);
+elgg_entity_gatekeeper($group_guid, 'group');
+$group = get_entity($group_guid);
+
+if (!$group->canEdit()) {
+	register_error(elgg_echo('actionunauthorized'));
+	forward(REFERER);
+}
+
+$group->invite_members = $invite_members;
+
+system_message(elgg_echo('admin:configuration:success'));
+
+forward($group->getURL());

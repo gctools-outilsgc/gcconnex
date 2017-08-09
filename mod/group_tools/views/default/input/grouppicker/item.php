@@ -9,6 +9,8 @@
  * @package Elgg
  * @subpackage Core
  *
+ * @todo remove this view (it's the same as in group tools)
+ *
  * @uses $vars['entity'] Group entity
  * @uses $vars['input_name'] Name of the returned data array
  *
@@ -16,20 +18,19 @@
  */
 
 /* @var ElggEntity $entity */
-$entity = $vars['entity'];
-$input_name = $vars['input_name'];
+$entity = elgg_extract('entity', $vars);
+$input_name = elgg_extract('input_name', $vars);
 
+// build elements
+$icon = elgg_view_entity_icon($entity, 'tiny', ['use_hover' => false]);
+$delete_icon = elgg_view_icon('delete-alt', 'elgg-group-picker-remove');
 
-$icon = elgg_view_entity_icon($entity, 'tiny', array('use_hover' => false));
+// list item
+$image_block = elgg_view_image_block($icon, $entity->name, ['image_alt' => $delete_icon]);
 
-$name = $entity->name;
+$input = elgg_view('input/hidden', [
+	'name' => "{$input_name}[]",
+	'value' => $entity->getGUID(),
+]);
 
-?>
-<li data-guid='<?php echo $entity->getGUID() ?>'>
-	<div class='elgg-image-block'>
-		<div class='elgg-image'><?php echo $icon ?></div>
-		<div class='elgg-image-alt'><?php echo elgg_view_icon("delete-alt", "elgg-group-picker-remove"); ?></div>
-		<div class='elgg-body'><?php echo htmlspecialchars($name, ENT_QUOTES, 'UTF-8'); ?></div>
-	</div>
-	<input type="hidden" name="<?php echo htmlspecialchars($input_name, ENT_QUOTES, 'UTF-8'); ?>[]" value="<?php echo $entity->getGUID() ?>" />
-</li>
+echo elgg_format_element('li', ['data-guid' => $entity->getGUID()], $image_block . $input);
