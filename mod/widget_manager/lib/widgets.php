@@ -132,36 +132,27 @@ function widget_manager_widgets_url_hook_handler($hook, $type, $return, $params)
 	return $result;
 }
 
-/*
+/**
  * strips several key elements for widget and saves them
  * parameters: refer to function widget_manager_widgets_twitter_search_settings_save_hook
+ *
+ * @param string $hook   name of the hook
+ * @param string $type   type of the hook
+ * @param string $return current return value
+ * @param array  $params hook parameters
+ *
+ * @return void
  */
 function widget_manager_widgets_twitter_widget_settings_save_hook($hook, $type, $return, $params) {
 	if (empty($params) || !is_array($params))
 		return;
 	
 	$widget = elgg_extract("widget", $params);
-	$widget_type = elgg_extract('widget_type', get_input("params", array(), false));
 	$embed_code = elgg_extract("embed_code", get_input("params", array(), false)); 
 
-	if ($widget_type === 'Tweets') {
-		$matches = array();
-		$pattern = "/<blockquote class=\"twitter-tweet\">(.*)<\/blockquote>/";
-		preg_match($pattern, $embed_code, $matches);
-		$widget->embed_url = $matches[1];
-
-	} else {
-		$matches = array();
-		$pattern = "/href=[\"\']([\S]*)[\"\']{1}/";
-		preg_match($pattern, $embed_code, $matches);
-		$widget->embed_url = $matches[1];
-
-		$matches = array();
-		$pattern = "/>(.*)<\/a>{1}/";
-		preg_match($pattern, $embed_code, $matches);
-		$widget->embed_title = $matches[1];
-	}
+	$widget->embed_url = $embed_code;
 }
+
 
 /**
  * Strips data-widget-id from submitted script code and saves that
