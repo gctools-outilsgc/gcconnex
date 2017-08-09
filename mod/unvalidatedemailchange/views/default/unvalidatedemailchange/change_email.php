@@ -2,7 +2,7 @@
 
 /**
  * Unvalidatedemailchange plugin
- * (c) iionly 2012-2015
+ * (c) iionly 2012
  * Contact: iionly@gmx.de
  * Website: https://github.com/iionly
  * License: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2

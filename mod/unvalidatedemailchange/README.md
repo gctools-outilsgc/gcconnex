@@ -1,8 +1,8 @@
-Unvalidated Email Change plugin for Elgg 1.10 - 1.12 and Elgg 2.X
-=================================================================
+Unvalidated Email Change plugin for Elgg 2.3 and newer Elgg 2.X
+===============================================================
 
-Latest Version: 1.10.3  
-Released: 2015-09-19  
+Latest Version: 2.3.3  
+Released: 2017-02-12  
 Contact: iionly@gmx.de  
 License: GNU General Public License version 2  
 Copyright: (c) iionly

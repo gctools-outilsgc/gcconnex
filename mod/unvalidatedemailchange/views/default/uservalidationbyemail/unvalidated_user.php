@@ -10,9 +10,6 @@
  * @subpackage UserValidationByEmail.Administration
  */
 
-elgg_load_js('lightbox');
-elgg_load_css('lightbox');
-
 $user = elgg_extract('user', $vars);
 
 $checkbox = elgg_view('input/checkbox', array(
