@@ -3,8 +3,7 @@
 	$english = array(
 		
 
-		'widgets:twitter_widget:name' => "Twitter Widget",
-		'widgets:twitter_widget:type' => "Widget Type",
+		'widgets:twitter_widget:name' => "Twitter",
 		
 		// special access level
 		'LOGGED_OUT' => "Logged out users",
@@ -402,8 +401,8 @@ $twitter_search = array(
 	'widgets:twitter_search:name' => "Twitter search",
 	'widgets:twitter_search:description' => "Display a custom search from Twitter",
 
-	'widgets:twitter_search:embed_code' => "Twitter Widget Embed Code",
-	'widgets:twitter_search:embed_code:help' => "Create a widget on Twitter.com and paste your embed code here",
+	'widgets:twitter_search:embed_code' => "Embed Code from Twitter",
+	'widgets:twitter_search:embed_code:help' => "<a href='https://twitter.com/settings/widgets'>Create a widget on Twitter.com</a>, then copy and paste the code below to display the content",
 	'widgets:twitter_search:embed_code:error' => "Could not extract the widget id from the embed code",
 	'widgets:twitter_search:height' => "Widget height (pixels)",
 	'widgets:twitter_search:not_configured' => "This widget is not yet configured",
