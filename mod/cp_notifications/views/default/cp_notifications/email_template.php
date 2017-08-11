@@ -329,19 +329,14 @@ switch ($msg_type) {
 
 		if (array_key_exists($vars['cp_topic']->getSubtype(),$entity_f))
 			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_f',array($topic_author->getURL(), $topic_author->username, $entity_f[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $vars['cp_topic']->title2),'fr');
+
 		else if (array_key_exists($vars['cp_topic']->getSubtype(),$entity_m))
 			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_m',array($topic_author->getURL(), $topic_author->username, $entity_m[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $vars['cp_topic']->title2),'fr');
-		else if (array_key_exists($vars['cp_topic']->getSubtype(),$entity_f2))
-
-			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_f2',array($topic_author->getURL(), $topic_author->username, $entity_f2[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $vars['cp_topic']->title2),'fr');
-		else if (array_key_exists($vars['cp_topic']->getSubtype(),$entity_m3))
-
-			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_m3',array($topic_author->getURL(), $topic_author->username, $entity_m3[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $vars['cp_topic']->title2),'fr');
 
 		else if (array_key_exists($vars['cp_topic']->getSubtype(),$entity_answer))
 			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_answer',array($topic_author->getURL(), $topic_author->username, $entity_answer[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $title_answer2),'fr');
+		
 		else
-
 			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_m2',array($topic_author->getURL(), $topic_author->username, $entity_m2[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $vars['cp_topic']->title2),'fr');
 
 
