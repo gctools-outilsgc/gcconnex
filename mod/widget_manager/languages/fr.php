@@ -2,6 +2,11 @@
 
 	$french = array(
 		
+		'widgets:twitter_search:embed_code:help' => "<a href='https://twitter.com/settings/widgets'>Créez un widget sur Twitter.com</a>, ensuite copier et coller le code ci-dessous pour afficher le contenu",
+		'widgets:twitter_widget:name' => "Twitter",
+		'widgets:twitter_search:embed_code' => "Twitter Widget Intégrer Code",
+
+
 		// special access level			
 					
 		'LOGGED_OUT' => "Utilisateurs dont la session est fermée",

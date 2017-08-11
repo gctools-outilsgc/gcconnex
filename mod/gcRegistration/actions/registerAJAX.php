@@ -150,7 +150,7 @@ function checkInvalidDomain($dom)
 	elgg_load_library('c_ext_lib');
 	$isNotValid = true;
 
-	error_log('cyu - domain:'.$dom);
+	//error_log('cyu - domain:'.$dom);
 	$result = getExtension();
 	if (count($result) > 0)
 	{
