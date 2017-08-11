@@ -417,14 +417,16 @@ function cmpStartDate($foo, $bar)
     $a = get_entity($foo);
     $b = get_entity($bar);
 
-    if ($a->startyear == $b->startyear) {
-        return (0);
-    }
-    else if ($a->startyear > $b->startyear) {
-        return (-1);
-    }
-    else if ($a->startyear < $b->startyear) {
-        return (1);
+    if (($a instanceof ElggEntity) && ($b instanceof ElggEntity)) {
+        if ($a->startyear == $b->startyear) {
+            return (0);
+        }
+        else if ($a->startyear > $b->startyear) {
+            return (-1);
+        }
+        else if ($a->startyear < $b->startyear) {
+            return (1);
+        }
     }
 }
 
@@ -437,25 +439,29 @@ function sortDate($foo, $bar)
     $a = get_entity($foo);
     $b = get_entity($bar);
 
-    if ($a->ongoing == "true" && $b->ongoing == "true") {
-        return (0);
-    }
-    else if ($a->ongoing == "true" && $b->ongoing != "true") {
-        return (-1);
-    }
-    else if ($a->ongoing != "true" && $b->ongoing == "true") {
-        return (1);
-    }
-    else {
-        if ($a->endyear == $b->endyear) {
-            // @todo: sort by enddate entry (months, saved as strings..)
-            return (cmpStartDate($a, $b));
+    // check if $a and $b are both entities object (this will fill up the error log if not checked)
+    if (($a instanceof ElggEntity) && ($b instanceof ElggEntity)) {
+
+        if ($a->ongoing == "true" && $b->ongoing == "true") {
+            return (0);
         }
-        else if ($a->endyear > $b->endyear) {
+        else if ($a->ongoing == "true" && $b->ongoing != "true") {
             return (-1);
         }
-        else if ($a->endyear < $b->endyear) {
+        else if ($a->ongoing != "true" && $b->ongoing == "true") {
             return (1);
+        }
+        else {
+            if ($a->endyear == $b->endyear) {
+                // @todo: sort by enddate entry (months, saved as strings..)
+                return (cmpStartDate($a, $b));
+            }
+            else if ($a->endyear > $b->endyear) {
+                return (-1);
+            }
+            else if ($a->endyear < $b->endyear) {
+                return (1);
+            }
         }
     }
 }
