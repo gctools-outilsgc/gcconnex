@@ -91,7 +91,7 @@ function strip_content_hyperlinks_handler($hook, $type, $return, $params) {
 		return;
 	}
 
-	if (!empty(trim($comment_block)) || $comment_block === null)
+	if (!empty($comment_block) || $comment_block === null)
 		$comment_text = $comment_block->item(0)->getAttribute('data-role');
 	else
 		$comment_text = "";
@@ -135,13 +135,15 @@ function strip_content_hyperlinks_handler($hook, $type, $return, $params) {
 
 
 	// french body text
-	$description->loadHTML($description_fr);
-	$links = $description->getElementsByTagName('a');
-	for ($i = $links->length - 1; $i >= 0; $i--) {
-		$linkNode = $links->item($i);
-		$lnkText = $linkNode->textContent;
-		$newTxtNode = $description->createTextNode($lnkText);
-		$linkNode->parentNode->replaceChild($newTxtNode, $linkNode);
+	if (!empty($description_fr)) {
+		$description->loadHTML($description_fr);
+		$links = $description->getElementsByTagName('a');
+		for ($i = $links->length - 1; $i >= 0; $i--) {
+			$linkNode = $links->item($i);
+			$lnkText = $linkNode->textContent;
+			$newTxtNode = $description->createTextNode($lnkText);
+			$linkNode->parentNode->replaceChild($newTxtNode, $linkNode);
+		}
 	}
 	$return .= $description->textContent;
 
@@ -346,7 +348,8 @@ function elgg_entities_list_handler($hook, $type, $value, $params) {
 }
 
 function elgg_sidebar_handler($hook, $type, $menu, $params) {
-	echo $menu['body'];
+	if (is_array($menu) && $menu['body'])
+		echo $menu['body'];
 	return "";
 }
 
