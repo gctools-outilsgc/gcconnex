@@ -97,19 +97,18 @@ if ($full) {
 } else {
 
 	$time_bit = event_calendar_get_formatted_time($event);
-	$icon = '<img src="'.elgg_view("icon/object/event_calendar/small").'" />';
-	$extras = array($time_bit);
+	$owner = $event->getOwnerEntity();
+	$icon = elgg_view_entity_icon($owner, 'tiny');
+	$info = $time_bit;
+
 	if ($event->description) {
-		$extras[] = $event->description;
+		$info .= "<br>" . $event->description;
 	}
 
 	if ($event_calendar_venue_view = elgg_get_plugin_setting('venue_view', 'event_calendar') == 'yes') {
-		$extras[] = $event->venue;
-	}
-	if ($extras) {
-		$info = "<p>".implode("<br>",$extras)."</p>";
-	} else {
-		$info = '';
+		if ($event->venue) {
+			$info .= "<br>" . $event->venue;
+		}
 	}
 
 	if (elgg_in_context('widgets')) {

@@ -45,7 +45,11 @@ $params = array(
 );
 $list_body = elgg_view('object/elements/summary', $params);
 $summary = elgg_view_image_block($owner_icon, $list_body, $params);
-$title = elgg_view_title($event->title);
+
+$title = elgg_view('output/url', array(
+	'href' => $event->getURL(),
+	'text' => elgg_view_title($event->title),
+));
 
 echo '<div style="max-width:320px;">' . $title . $summary . $info . '</div>';
 echo '<div align="center" class="mtm mbs">' . elgg_view('output/url', array(

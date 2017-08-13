@@ -11,6 +11,8 @@
  *
  */
 
+elgg_require_js('event_calendar/datepicker_inline');
+
 if ($vars['group_guid']) {
 	$link_bit = elgg_get_site_url()."event_calendar/group/{$vars['group_guid']}/%s/{$vars['mode']}";
 } else {
@@ -24,85 +26,10 @@ if ($vars['mode'] == 'week') {
 }
 
 if ($vars['mode']) {
-	$wrapper_class = "event-calendar-filter-period-".$vars['mode'];
+	$wrapper_class = "event-calendar-datepicker-inline event-calendar-filter-period-".$vars['mode'];
 } else {
-	$wrapper_class = "event-calendar-filter-period-month";
+	$wrapper_class = "event-calendar-datepicker-inline event-calendar-filter-period-month";
 }
 
-// TODO - figure out how to move this JavaScript
-?>
-
-<script type="text/javascript">
-	var selectedWeek = "<?php echo $selected_week; ?>";
-
-	var highlightWeek = function(d) {
-		if (!selectedWeek) {
-			return [true,''];
-		}
-
-		var dayOfWeek = d.getUTCDay();
-		var weekNumber = $.datepicker.iso8601Week(d);
-		if (dayOfWeek == 6) {
-			weekNumber += 1;
-		}
-
-		if (selectedWeek == weekNumber) {
-			return [true,'week-highlight'];
-		}
-		return [true,''];
-	}
-
-	$(document).ready(function() {
-		var loadDatePickerInline = function() {
-			var done_loading = false;
-			$("#<?php echo $vars['name']; ?>").datepicker( {
-				onChangeMonthYear: function(year, month, inst) {
-					if(inst.onChangeToday) {
-						day=inst.selectedDay;
-					} else {
-						day=1;
-					}
-					if (done_loading) {
-						// in this case the mode is forced to month
-						document.location.href = "<?php echo $link_bit; ?>".replace('%s', year+'-'+month+'-1');
-					}
-				},
-				onSelect: function(date) {
-					// jump to the new page
-					document.location.href = "<?php echo $link_bit; ?>".replace('%s', date.substring(0,10));
-				},
-				prevText: "<<<",
-				nextText: ">>>",
-				dateFormat: "yy-mm-dd",
-				defaultDate: "<?php echo $vars['start_date'] .' - '.$vars['end_date']; ?>",
-				beforeShowDay: highlightWeek
-			});
-
-			var start_date = $.datepicker.parseDate("yy-mm-dd", "<?php echo $vars['start_date']; ?>");
-			var end_date = $.datepicker.parseDate("yy-mm-dd", "<?php echo $vars['end_date']; ?>");
-			// not sure why this is necessary, but it seems to be
-			if ("<?php echo $vars['mode'] ?>" == "month") {
-				end_date += 1;
-			}
-
-			$("#<?php echo $vars['name']; ?>").datepicker("setDate", start_date, end_date);
-			done_loading = true;
-		};
-
-		if ($("#<?php echo $vars['name']; ?>").length && elgg.get_language() == 'en') {
-			loadDatePickerInline();
-		} else if ($("#<?php echo $vars['name']; ?>").length) {
-			elgg.get({
-				url: elgg.config.wwwroot + 'vendors/jquery/i18n/jquery.ui.datepicker-'+ elgg.get_language() +'.js',
-				dataType: "script",
-				cache: true,
-				success: loadDatePickerInline,
-				error: loadDatePickerInline // english language is already loaded.
-			});
-		}
-	});
-
-</script>
-
-<div style="position:relative;" id="<?php echo $vars['name']; ?>" class="<?php echo $wrapper_class; ?>" ></div>
-<p style="clear: both;"><!-- See day-by-day example for highlighting days code --></p>
+echo '<div class="' . $wrapper_class . '" id="' . $vars['name'] . '" style="position:relative;" data-name="' . $vars['name'] . '" data-selectedweek="'. $selected_week .'" data-linkbit="' . $link_bit . '" data-startdate="' . $vars['start_date'] . '" data-enddate="' . $vars['end_date'] . '" data-mode="' . $vars['mode'] . '"></div>';
+echo '<p style="clear: both;"></p>';
