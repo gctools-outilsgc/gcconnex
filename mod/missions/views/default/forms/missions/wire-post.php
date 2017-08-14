@@ -20,7 +20,7 @@
  */
 
 elgg_load_js("elgg.thewire");
-
+$lang = get_current_language();
 $post = elgg_extract("post", $vars);
 $char_limit = thewire_tools_get_wire_length();
 //Changed to entity_subject as this what was already passed to this view
@@ -51,11 +51,11 @@ if (!empty($reshare)) {
 	$reshare_input .= elgg_view("thewire_tools/reshare_source", array("entity" => $reshare));
 
 	if (!empty($reshare->title)) {
-		$post_value = $reshare->title;
+		$post_value = gc_explode_translation($reshare->title,$lang);
 	} elseif (!empty($reshare->name)) {
-		$post_value = $reshare->name;
+		$post_value = gc_explode_translation($reshare->name,$lang);
 	} elseif (!empty($reshare->description)) {
-		$post_value = elgg_get_excerpt($reshare->description, 140);
+		$post_value = elgg_get_excerpt(gc_explode_translation($reshare->description,$lang), 140);
 	}
 }
 

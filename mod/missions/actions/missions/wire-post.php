@@ -50,6 +50,7 @@ if ($reshare_guid || $reshare_guid > 0) {
 			'cp_recipient' => $entity->getOwnerEntity(),
 			'cp_shared_by' => elgg_get_logged_in_user_entity(),
 			'cp_content' => $entity,
+			'cp_content_reshared' => $entity,
 			'cp_wire_url' => $wire_entity->getURL(),
 		);
 		elgg_trigger_plugin_hook('cp_overwrite_notification','all',$message);

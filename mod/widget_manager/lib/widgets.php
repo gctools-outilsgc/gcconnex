@@ -61,6 +61,11 @@ function widget_manager_widgets_init() {
 	elgg_register_widget_type("twitter_search", elgg_echo("widgets:twitter_search:name"), elgg_echo("widgets:twitter_search:description"), array("profile", "dashboard", "index", "groups"), true);
 	elgg_register_plugin_hook_handler("widget_settings", "twitter_search", "widget_manager_widgets_twitter_search_settings_save_hook");
 	
+	/// cyu - Twitter Widget (updated API)
+	elgg_register_widget_type("twitter_widget", elgg_echo("widgets:twitter_widget:name"), elgg_echo("widgets:twitter_search:description"), array("profile", "dashboard", "index", "groups"), true);
+	elgg_register_plugin_hook_handler("widget_settings", "twitter_widget", "widget_manager_widgets_twitter_widget_settings_save_hook");
+
+
 	// messages
 	if (elgg_is_active_plugin("messages")) {
 		elgg_register_widget_type("messages", elgg_echo("messages"), elgg_echo("widgets:messages:description"), array("dashboard", "index"), false);
@@ -126,6 +131,28 @@ function widget_manager_widgets_url_hook_handler($hook, $type, $return, $params)
 		
 	return $result;
 }
+
+/**
+ * strips several key elements for widget and saves them
+ * parameters: refer to function widget_manager_widgets_twitter_search_settings_save_hook
+ *
+ * @param string $hook   name of the hook
+ * @param string $type   type of the hook
+ * @param string $return current return value
+ * @param array  $params hook parameters
+ *
+ * @return void
+ */
+function widget_manager_widgets_twitter_widget_settings_save_hook($hook, $type, $return, $params) {
+	if (empty($params) || !is_array($params))
+		return;
+	
+	$widget = elgg_extract("widget", $params);
+	$embed_code = elgg_extract("embed_code", get_input("params", array(), false)); 
+
+	$widget->embed_url = $embed_code;
+}
+
 
 /**
  * Strips data-widget-id from submitted script code and saves that

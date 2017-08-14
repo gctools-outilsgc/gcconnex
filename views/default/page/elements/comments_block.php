@@ -65,8 +65,12 @@ if ($subtypes) {
 		$options['wheres'][] = "ce.subtype = $subtype_id";
 	}
 }
-
+if ($subtypes == 'event_calendar'){
+$title = elgg_echo('generic_comments:latest:event');
+}else{
 $title = elgg_echo('generic_comments:latest');
+}
+
 $comments = elgg_get_entities($options);
 if ($comments) {
 	$body = elgg_view('page/components/list', array(
