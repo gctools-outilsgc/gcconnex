@@ -96,12 +96,13 @@ function gc_communities_permissions_hook($hook, $entity_type, $returnvalue, $par
     $communities = json_decode(elgg_get_plugin_setting('communities', 'gc_communities'), true);
     $url = explode('gc_communities-', $params['entity']->context)[1];
 
-    foreach( $communities as $community ){
-        if( $community['community_url'] == $url ){
-            $community_animator = $community['community_animator'];
-            break;
+    if ( $communities )
+        foreach( $communities as $community ){
+            if( $community['community_url'] == $url ){
+                $community_animator = $community['community_animator'];
+                break;
+            }
         }
-    }
 
     if( $community_animator == elgg_get_logged_in_user_entity()->username ){
         $returnvalue = true;
