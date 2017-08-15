@@ -5,13 +5,17 @@ User profile Colleagues
 
 $owner = elgg_get_page_owner_entity();
 
-$friends = $owner->listFriends('', $num, array(
+$friends = elgg_list_entities_from_relationship( array(
         'size' => 'small',
         'pagination' => FALSE,
         'list_type' => 'gallery',
         'gallery_class' => 'elgg-gallery-users',
         'count' => TRUE,
         'limit' => '14',
+        'type' => 'user',
+        'relationship' => 'friend',
+        'relationship_guid' => $owner->guid,
+        'full_view' => false,
         ));
 
 $count2 = $owner->getFriends(array('limit'=>0, 'count'=>true,));
