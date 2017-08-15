@@ -1,24 +1,15 @@
 <?php
-$settings = "";
-$tabs = array();
+$contexts = ['index'];
 
-$selected_context = get_input("widget_context", "profile");
-
-foreach (array("profile", "dashboard", "groups") as $key => $context) {
-	$selected = false;
-	if ($selected_context === $context) {
-		$selected = true;
-	}
-	$tabs_options = array(
-			"title" => elgg_echo($context),
-			"selected" => $selected,
-			"url" => "admin/widgets/manage?widget_context=" . $context
-		);
-	
-	$tabs[] = $tabs_options;
+// Use contexts defined for default widgets
+$list = elgg_trigger_plugin_hook('get_list', 'default_widgets', null, []);
+foreach ($list as $context_opts) {
+	$contexts[] = $context_opts['widget_context'];
 }
 
-$body = elgg_view("navigation/tabs", array("tabs" => $tabs));
-$body .= elgg_view("widget_manager/forms/settings", array("widget_context" => $selected_context));
+$configured_widgets = [];
+foreach ($contexts as $context) {
+	$configured_widgets += elgg_get_widget_types($context);
+}
 
-echo $body;
+echo elgg_view_form('widget_manager/manage_widgets', [], ['widgets' => $configured_widgets, 'contexts' => $contexts]);

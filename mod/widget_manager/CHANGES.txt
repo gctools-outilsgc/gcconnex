@@ -1,6 +1,91 @@
 Version history
 ===============
 
+8.0 (2017-02-27):
+
+- changed: updated min requirements to Elgg 2.3
+
+7.0.1 (2016-10-27):
+
+- fixed: it was not possible to add widgets to extra widgets pages
+- fixed: widget default collapsed state correctly set for logged out user
+
+7.0 (2016-10-06):
+
+- added: new way of widget management with ability to change contexts
+- changed: refactored widget object view
+- fixed: replace usage of deprecated elgg.ui.widgets.add
+- fixed: require correct Elgg version for elgg/widgets AMD module
+- removed: moved multi_dashboard features to own plugin
+- removed: moved widgets to a separate widget_pack plugin
+
+6.2.1 (2016-08-26):
+
+- fixed: php notice when page already routed
+
+6.2 (2016-06-16):
+
+- changed: content_by_tag widget now preloads owners and containers
+- changed: do not include container object in results content_by_tag
+- changed: moved event functions to class files
+- changed: moved pagehandler functions to class functions
+- changed: moved pagesetup actions to separate class functions
+- changed: moved plugin hooks into the init function
+- changed: moved router hooks to class functions
+- changed: moved some more hooks to class functions
+- changed: moved the widget_manager_update_widget registration in init
+- changed: moved various hooks to class functions
+- changed: split widget_manager_init into multiple init functions
+- changed: use translatable short month/day in slim view content_by_tag
+- fixed: correctly get widget collapse state due to event order change
+- fixed: declare elgg/widgets js dependancy to prevent timing issues
+
+6.1 (2016-05-26):
+
+- added: dashboard entity URLs can now be filtered
+- fixed: MultiDashboard::save() no longer sets attributes
+- fixed: only show edit icon if dashboard is editable
+- fixed: do not crash the loader if there are no private settings
+- fixed: moved elgg-widgets sortable modifications to system init event
+
+6.0.1 (2016-05-04):
+
+- fixed: widget cache was not resetting correctly on cache flush
+
+6.0 (2016-04-13):
+
+- added: cached data for cacheable widgets is now reset on cache flush
+- fixed: accidentally deactivated registration cacheable widgets
+- fixed: widget cache clear took too long
+
+6.0-beta (2016-01-26):
+
+- added: support for Elgg 2.0 added
+- removed: no longer provide favorites widget
+- removed: no longer provide index_bookmarks widget
+- removed: no longer provide tagcloud widget
+
+5.2 (2016-01-20):
+
+- added: ability for group owners to update all widgets access level
+- added: content by tag widget now supports static pages
+- added: option to alphabetically sort content in content_by_tag widget
+- added: support for poll and questions in content_by_tag widget
+- added: allow additional contexts based on default widgets config
+- added: use title menu for Add widgets button
+- changed: content_by_tag supported plugins list is now centralized
+- changed: moved favorites extras menu item to a register hook
+- changed: widget add panel contents are fetched on demand
+- changed: convert favorites widgets JS to an AMD module
+- changed: convert site and admin JS to AMD
+- changed: dutch translation
+- fixed: community favorites working again and fixed saving of title
+- fixed: incorrect access options available in specific widgets contexts
+- fixed: more specific selector for widget insert
+- fixed: only output icon if there is any
+- fixed: user search widget content not loaded when search with spaces
+- fixed: wrong composer include
+
 5.1 (2015-07-08):
 
 - added: mechanisme to permanently cache widgets based on their handler

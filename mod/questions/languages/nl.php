@@ -1,10 +1,53 @@
 <?php
 /**
- * This file was created by Translation Editor v4.0.1
- * On 2016-02-26 14:07
+ * This file was created by Translation Editor v5.2
+ * On 2017-02-13 12:56
  */
 
 return array (
+  'questions:notification:auto_close:subject' => 'De vraag \'%s\' is gesloten vanwege inactiviteit',
+  'questions:notification:auto_close:summary' => 'De vraag \'%s\' is gesloten vanwege inactiviteit',
+  'questions:notification:auto_close:message' => 'Beste %s,
+
+Je vraag \'%s\' heeft al meer dan %s dagen geen reactie gehad. Daarom is deze vraag gesloten.
+
+Om de vraag te bekijken, klik hier:
+%s',
+  'admin:upgrades:set_question_status' => 'Stel de status in voor alle vragen',
+  'admin:upgrades:set_question_status:description' => 'Zorg ervoor dat alle vragen een status metadata veld hebben. Oudere vragen hadden dit standaard niet.',
+  'questions:object:answer:title' => 'Antwoord op vraag %s',
+  'questions:notifications:answer:create:subject' => 'Er is een antwoord gegeven op %s',
+  'questions:notifications:answer:create:summary' => 'Er is een antwoord gegeven op %s',
+  'questions:notifications:answer:create:message' => 'Beste %s,
+
+%s heeft een antwoord gegeven op de vraag \'%s\'.
+
+%s
+
+Om het antwoord te bekijken, klik hier:
+%s',
+  'questions:notifications:answer:correct:subject' => 'Een antwoord is gemarkeerd als het correcte antwoord op %s',
+  'questions:notifications:answer:correct:summary' => 'Een antwoord is gemarkeerd als het correcte antwoord op %s',
+  'questions:notifications:answer:correct:message' => 'Beste %s,
+
+%s heeft een antwoord gemarkeerd als het correcte antwoord op de vraag \'%s\'.
+
+%s
+
+Om het antwoord te bekijken, klik hier:
+%s',
+  'questions:notifications:answer:comment:subject' => 'Nieuwe reactie op een antwoord',
+  'questions:notifications:answer:comment:summary' => 'Nieuwe reactie op een antwoord',
+  'questions:notifications:answer:comment:message' => 'Beste %s,
+
+%s reageerde op een antwoord bij de vraag \'%s\'.
+
+%s
+
+Om de reactie te bekijken, klik hier:
+%s',
+  'questions:settings:general:auto_close_time' => 'Sluit vragen automatisch naar een aantal dagen',
+  'questions:settings:general:auto_close_time:description' => 'Vragen welke nog niet zijn gesloten worden na het opgegeven aantal dagen automatisch gesloten. 0 of leeg betekend niet automatisch sluiten.',
   'questions:group_settings:auto_mark_correct' => 'Als een expert een antwoord geeft, deze direct aanmerken als het juiste antwoord',
   'questions:group_settings:who_can_answer' => 'Wie kunnen de vragen beantwoorden in deze groep',
   'questions:group_settings:who_can_answer:experts_only' => 'De site beheerder heeft ingesteld dat alleen experts vragen mogen beantwoorden.',
@@ -99,7 +142,7 @@ Klik hier om de vraag te beantwoorden:
   'widget:questions:title' => 'Vragen',
   'widget:questions:description' => 'Overzicht van vragen',
   'widget:questions:content_type' => 'Welke vragen moeten getoond worden?',
-  'widget:questions:more' => "Meer vragen bekijken",
+  'widget:questions:more' => 'Meer vragen bekijken',
   'questions:action:answer:save:error:container' => 'U heeft geen toestemming om een antwoord te geven op deze vraag',
   'questions:action:answer:save:error:body' => 'Een antwoord is verplicht: %s, %s',
   'questions:action:answer:save:error:save' => 'Er was een probleem met het opslaan van uw antwoord',

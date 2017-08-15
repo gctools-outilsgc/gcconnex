@@ -1,9 +1,16 @@
 Group Tools
 ===========
+
+[![Build Status](https://scrutinizer-ci.com/g/ColdTrick/group_tools/badges/build.png?b=master)](https://scrutinizer-ci.com/g/ColdTrick/group_tools/build-status/master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ColdTrick/group_tools/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ColdTrick/group_tools/?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/coldtrick/group_tools/v/stable.svg)](https://packagist.org/packages/coldtrick/group_tools)
+[![License](https://poser.pugx.org/coldtrick/group_tools/license.svg)](https://packagist.org/packages/coldtrick/group_tools)
+
 Combines different group additions into one plugin
 
 Features
------------
+--------
+
 - group multiple admin
 - group activity (profile,dashboard,index,group widget)
 	- can show more than one group activity
@@ -23,7 +30,8 @@ Features
 	- alfabetical
 
 Group default access
------------------------
+--------------------
+
 As of version 2.3 of this plugin we offer the ability to set a group default access level (like with Site and User), 
 this will however not work if you haven't applied https://github.com/Elgg/Elgg/pull/253 to your Elgg installation.
 

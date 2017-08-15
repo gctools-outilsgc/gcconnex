@@ -1,0 +1,135 @@
+/** Group tools CSS */
+#invite_to_group .ui-helper-hidden-accessible {
+	display: none;
+}
+
+#group_tools_group_invite_autocomplete_autocomplete_results .group_tools_group_invite_autocomplete_autocomplete_result {
+	border: 1px solid transparent;
+	border-radius: 5px;
+}
+
+#group_tools_group_invite_autocomplete_autocomplete_results .group_tools_group_invite_autocomplete_autocomplete_result:hover {
+	border: 1px solid #CCCCCC;
+}
+
+#group_tools_group_invite_autocomplete_autocomplete_results .elgg-avatar {
+	position: static;
+}
+
+.ui-autocomplete .group_tools_group_invite_autocomplete_autocomplete_result .elgg-icon-delete-alt.elgg-discoverable {
+	display: none;
+}
+
+.group_tools_group_invite_autocomplete_autocomplete_result .elgg-icon-delete-alt {
+	cursor: pointer;
+}
+
+.group-tools-status-open {
+	color: green;
+}
+
+.group-tools-status-closed {
+	color: orange;
+}
+
+.group-tools-suggested-groups .elgg-item {
+	width: 33%;
+	text-align: center;
+}
+
+.group-tools-suggested-groups .elgg-item:hover {
+	background: #EFEFEF;
+}
+
+.group-tools-suggested-groups .elgg-item h3 {
+	padding-bottom: 5px;
+}
+.group-tools-suggested-groups .elgg-item > div {
+	padding: 10px;
+}
+
+#group-tools-related-groups-form input.elgg-input-autocomplete {
+	width: 80%;
+}
+
+#group-tools-group-edit-tabbed ~ div {
+	display: none;
+}
+
+.group-tools-group-edit-section > div {
+	margin-bottom: 15px;
+}
+
+/* groups simplified access */
+.group-tools-simplified-access-container,
+.group-tools-simplified-access-container > .elgg-col {
+	display: flex;
+}
+	
+.group-tools-simplified-access-button {
+	background: #f0f0f0;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	color: #333;
+	padding: 20px;
+	margin: 20px;
+	cursor: pointer;
+	width: 100%;
+	
+	border-radius: 3px;
+	box-shadow: inset 0 0 1px rgba(255, 255, 255, 0.6);
+}
+
+.group-tools-simplified-access-button.elgg-state-active {
+	color: #FFF;
+	background: #4787b8;
+}
+.group-tools-simplified-access-button.elgg-state-active h3 {
+	color: inherit;
+}
+
+/* sort menu options */
+.group-tools-group-sort-menu .elgg-menu-item-sorting {
+	float: right;
+	background: none;
+	border-left: 1px solid transparent;
+	border-top: 1px solid transparent;
+	border-right: 1px solid transparent;
+}
+.group-tools-group-sort-menu .elgg-menu-item-sorting > a {
+	top: 0;
+}
+.group-tools-group-sort-menu .elgg-menu-item-sorting > a:hover {
+	background: none;
+}
+.group-tools-group-sort-menu .elgg-menu-item-sorting > .elgg-child-menu {
+	background: white;
+    display: none;
+    position: absolute;
+    right: 0;
+    white-space: nowrap;
+    z-index: 1;
+	border: 1px solid #ccc;
+	border-radius: 0 0 3px 3px;
+	box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.25);
+}
+
+.group-tools-group-sort-menu .elgg-menu-item-sorting:hover > .elgg-child-menu {
+	display: block;
+}
+.group-tools-group-sort-menu .elgg-menu-item-sorting > .elgg-child-menu a {
+	color: #444;
+	padding: 5px 10px;
+	text-decoration: none;
+	white-space: nowrap;
+}
+.group-tools-group-sort-menu .elgg-menu-item-sorting > .elgg-child-menu a:hover {
+	color: #444;
+	background: #f0f0f0;
+}
+.group-tools-group-sort-menu .elgg-menu-item-sorting > .elgg-child-menu li.elgg-state-selected a {
+    font-weight: bold;
+}
+
+#group-tools-stale-message.elgg-message {
+	cursor: default;
+}

@@ -8,50 +8,47 @@ $container_options = false;
 $show_access_options = true;
 $access_setting = false;
 
-if (!$question) {
+if (!($question instanceof ElggQuestion)) {
 	$editing = false;
-	
-	$question = new ElggQuestion();
-	$question->container_guid = elgg_get_page_owner_guid();
-	$question->access_id = get_default_access(null, [
-		'entity_type' => $question->getType(),
-		'entity_subtype' => $question->getSubtype(),
-		'container_guid' => $question->getContainerGUID(),
-	]);
 }
 
-$container = $question->getContainerEntity();
+$container = get_entity(elgg_extract('container_guid', $vars));
 
-$title = [
+// build form elements
+echo elgg_view_field([
+	'#type' => 'text',
+	'#label' => elgg_echo('questions:edit:question:title'),
 	'name' => 'title',
-	'id' => 'question_title',
-	'value' => elgg_get_sticky_value('question', 'title', $question->title),
+	'value' => elgg_extract('title', $vars),
 	'required' => true,
-];
+]);
 
-$description = [
+echo elgg_view_field([
+	'#type' => 'longtext',
+	'#label' => elgg_echo('questions:edit:question:description'),
 	'name' => 'description',
-	'id' => 'question_description',
-	'value' => elgg_get_sticky_value('question', 'description', $question->description),
-];
+	'value' => elgg_extract('description', $vars),
+]);
 
-$tags = [
+echo elgg_view_field([
+	'#type' => 'tags',
+	'#label' => elgg_echo('tags'),
 	'name' => 'tags',
-	'id' => 'question_tags',
-	'value' => elgg_get_sticky_value('question', 'tags', $question->tags),
-];
+	'value' => elgg_extract('tags', $vars),
+]);
 
-$comment_options = [
+echo elgg_view_field([
+	'#type' => 'select',
+	'#label' => elgg_echo('comments'),
 	'name' => 'comments_enabled',
-	'id' => 'questions-comments',
-	'value' => elgg_get_sticky_value('question', 'comments_enabled', $question->comments_enabled),
+	'value' => elgg_extract('comments_enabled', $vars),
 	'options_values' => [
 		'on' => elgg_echo('on'),
 		'off' => elgg_echo('off'),
 	],
-	'class' => 'mls',
-];
+]);
 
+// access options
 if ($container instanceof ElggUser) {
 	$access_setting = questions_get_personal_access_level();
 	if ($access_setting !== false) {
@@ -64,52 +61,27 @@ if ($container instanceof ElggUser) {
 	}
 }
 
-$access_id = [
-	'name' => 'access_id',
-	'id' => 'question_access_id',
-	'value' => (int) elgg_get_sticky_value('question', 'access_id', $question->access_id),
-];
-
-// clear sticky form
-elgg_clear_sticky_form('question');
-?>
-<div>
-	<label for='question_title'><?php echo elgg_echo('questions:edit:question:title'); ?></label>
-	<?php echo elgg_view('input/text', $title); ?>
-</div>
-<div>
-	<label for='question_description'><?php echo elgg_echo('questions:edit:question:description'); ?></label>
-	<?php echo elgg_view('input/longtext', $description); ?>
-</div>
-<div>
-	<label for='question_tags'><?php echo elgg_echo('tags'); ?></label>
-	<?php echo elgg_view('input/tags', $tags); ?>
-</div>
-
-<?php
-// categories support
-if (elgg_view_exists('input/categories')) {
-	echo elgg_view('input/categories', $vars);
-}
-
-// comments
-$comments = elgg_format_element('label', ['for' => 'questions-comments'], elgg_echo('comments'));
-$comments .= elgg_view('input/select', $comment_options);
-echo elgg_format_element('div', [], $comments);
-
-// access options
 if ($show_access_options) {
-	$access = elgg_format_element('label', ['for' => 'question_access_id'], elgg_echo('access'));
-	$access .= '<br />';
-	$access .= elgg_view('input/access', $access_id);
-	
-	echo elgg_format_element('div', [], $access);
+	echo elgg_view_field([
+		'#type' => 'access',
+		'#label' => elgg_echo('access'),
+		'name' => 'access_id',
+		'value' => elgg_extract('access_id', $vars),
+		'entity_type' => 'object',
+		'entity_subtype' => ElggQuestion::SUBTYPE,
+		'entity' => $question,
+		'container_guid' => elgg_extract('container_guid', $vars),
+	]);
 } else {
-	echo elgg_view('input/hidden', ['name' => 'access_id', 'value' => $access_setting]);
+	echo elgg_view_field([
+		'#type' => 'hidden',
+		'name' => 'access_id',
+		'value' => $access_setting,
+	]);
 }
 
 // container selection options
-if (!$editing || (questions_experts_enabled() && questions_is_expert(elgg_get_page_owner_entity()))) {
+if (!$editing || (questions_experts_enabled() && questions_is_expert($container))) {
 	if ($show_group_selector && elgg_is_active_plugin('groups')) {
 		$group_options = [
 			'type' => 'group',
@@ -145,7 +117,7 @@ if (!$editing || (questions_experts_enabled() && questions_is_expert(elgg_get_pa
 			$selected = [
 				'value' => $group->getGUID(),
 			];
-			if ($group->getGUID() == $question->getContainerGUID()) {
+			if ($group->getGUID() === $container->getGUID()) {
 				$selected['selected'] = true;
 			}
 			$group_optgroup[] = elgg_format_element('option', $selected, $group->name);
@@ -159,7 +131,7 @@ if (!$editing || (questions_experts_enabled() && questions_is_expert(elgg_get_pa
 			$selected = [
 				'value' => '',
 			];
-			if ($owner->getGUID() == $question->getContainerGUID()) {
+			if ($owner->getGUID() == $container->getGUID()) {
 				$selected['selected'] = true;
 			}
 			
@@ -183,7 +155,9 @@ if (!$editing || (questions_experts_enabled() && questions_is_expert(elgg_get_pa
 			$select = elgg_format_element('select', $select_attr, implode('', $select_options));
 			
 			// build output
-			$container_selector = elgg_format_element('label', ['for' => 'questions-container-guid'], elgg_echo('questions:edit:question:container'));
+			$container_selector = elgg_format_element('label', [
+				'for' => 'questions-container-guid',
+			], elgg_echo('questions:edit:question:container'));
 			$container_selector .= '<br />';
 			$container_selector .= $select;
 			
@@ -193,15 +167,26 @@ if (!$editing || (questions_experts_enabled() && questions_is_expert(elgg_get_pa
 }
 
 // end of the form
-$footer = [];
+$footer = '';
 
 if (!$container_options) {
-	$footer[] = elgg_view('input/hidden', ['name' => 'container_guid', 'value' => $question->getContainerGUID()]);
+	$footer .= elgg_view_field([
+		'#type' => 'hidden',
+		'name' => 'container_guid',
+		'value' => elgg_extract('container_guid', $vars),
+	]);
 }
-$footer[] = elgg_view('input/hidden', ['name' => 'guid', 'value' => $question->getGUID()]);
+
+if ($editing) {
+	$footer .= elgg_view_field([
+		'#type' => 'hidden',
+		'name' => 'guid',
+		'value' => $question->guid,
+	]);
+}
 
 if ($editing && questions_can_move_to_discussions($container)) {
-	$footer[] = elgg_view('output/url', [
+	$footer .= elgg_view('output/url', [
 		'text' => elgg_echo('questions:edit:question:move_to_discussions'),
 		'href' => false,
 		'class' => 'elgg-button elgg-button-action float-alt',
@@ -210,6 +195,9 @@ if ($editing && questions_can_move_to_discussions($container)) {
 	]);
 }
 
-$footer[] = elgg_view('input/submit', ['value' => elgg_echo('submit')]);
+$footer .= elgg_view_field([
+	'#type' => 'submit',
+	'value' => elgg_echo('submit'),
+]);
 
-echo elgg_format_element('div', ['class' => 'elgg-foot'], implode('', $footer));
+elgg_set_form_footer($footer);

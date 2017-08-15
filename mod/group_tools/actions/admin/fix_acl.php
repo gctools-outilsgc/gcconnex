@@ -12,10 +12,10 @@
 set_time_limit(0);
 
 // what do we need to fix
-$fix = get_input("fix");
+$fix = get_input('fix');
 
 switch ($fix) {
-	case "missing":
+	case 'missing':
 		// users without access to group content
 		$missing_users = group_tools_get_missing_acl_users();
 		if (!empty($missing_users)) {
@@ -36,12 +36,12 @@ switch ($fix) {
 			// restore hidden settings
 			access_show_hidden_entities($hidden);
 			
-			system_message(elgg_echo("group_tools:action:fix_acl:success:missing", array(count($missing_users))));
+			system_message(elgg_echo('group_tools:action:fix_acl:success:missing', [count($missing_users)]));
 		} else {
-			register_error(elgg_echo("group_tools:action:fix_acl:error:missing:nothing"));
+			register_error(elgg_echo('group_tools:action:fix_acl:error:missing:nothing'));
 		}
 		break;
-	case "excess":
+	case 'excess':
 		// users with access to group content, but no longer member
 		$excess_users = group_tools_get_excess_acl_users();
 		if (!empty($excess_users)) {
@@ -55,18 +55,18 @@ switch ($fix) {
 				group_tools_remove_user_from_access_collection($user_data->user_guid, $user_data->acl_id);
 			}
 			
-			system_message(elgg_echo("group_tools:action:fix_acl:success:excess", array(count($excess_users))));
+			system_message(elgg_echo('group_tools:action:fix_acl:success:excess', [count($excess_users)]));
 		} else {
-			register_error(elgg_echo("group_tools:action:fix_acl:error:excess:nothing"));
+			register_error(elgg_echo('group_tools:action:fix_acl:error:excess:nothing'));
 		}
 		break;
-	case "without":
+	case 'without':
 		// groups without acl
 		$groups = group_tools_get_groups_without_acl();
 		if (!empty($groups)) {
 			// create the acl's for each group
 			foreach ($groups as $group) {
-				groups_create_event_listener("create", "group", $group);
+				groups_create_event_listener('create', 'group', $group);
 			}
 			
 			// now add the group members
@@ -90,12 +90,12 @@ switch ($fix) {
 				access_show_hidden_entities($hidden);
 			}
 			
-			system_message(elgg_echo("group_tools:action:fix_acl:success:without", array(count($groups))));
+			system_message(elgg_echo('group_tools:action:fix_acl:success:without', [count($groups)]));
 		} else {
-			register_error(elgg_echo("group_tools:action:fix_acl:error:without:nothing"));
+			register_error(elgg_echo('group_tools:action:fix_acl:error:without:nothing'));
 		}
 		break;
-	case "all":
+	case 'all':
 		// fix all problems
 		
 		// first: groups without acl
@@ -103,10 +103,10 @@ switch ($fix) {
 		if (!empty($groups)) {
 			// create the acl's for each group
 			foreach ($groups as $group) {
-				groups_create_event_listener("create", "group", $group);
+				groups_create_event_listener('create', 'group', $group);
 			}
 			
-			system_message(elgg_echo("group_tools:action:fix_acl:success:without", array(count($groups))));
+			system_message(elgg_echo('group_tools:action:fix_acl:success:without', [count($groups)]));
 		}
 		
 		// now add the group members
@@ -129,7 +129,7 @@ switch ($fix) {
 			// restore hidden settings
 			access_show_hidden_entities($hidden);
 			
-			system_message(elgg_echo("group_tools:action:fix_acl:success:missing", array(count($missing_users))));
+			system_message(elgg_echo('group_tools:action:fix_acl:success:missing', [count($missing_users)]));
 		}
 		
 		// users with access to group content, but no longer member
@@ -145,12 +145,12 @@ switch ($fix) {
 				group_tools_remove_user_from_access_collection($user_data->user_guid, $user_data->acl_id);
 			}
 			
-			system_message(elgg_echo("group_tools:action:fix_acl:success:excess", array(count($excess_users))));
+			system_message(elgg_echo('group_tools:action:fix_acl:success:excess', [count($excess_users)]));
 		}
 		
 		break;
 	default:
-		register_error(elgg_echo("group_tools:action:fix_acl:error:input", array($fix)));
+		register_error(elgg_echo('group_tools:action:fix_acl:error:input', [$fix]));
 		break;
 }
 

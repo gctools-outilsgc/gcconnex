@@ -37,24 +37,24 @@ class ElggAnswer extends ElggObject {
 	 * (non-PHPdoc)
 	 * @see ElggObject::canComment()
 	 */
-	public function canComment($user_guid = 0) {
+	public function canComment($user_guid = 0, $default = null) {
 		
-		return $this->getContainerEntity()->canComment($user_guid);
+		$container = $this->getContainerEntity();
+		if (!($container instanceof ElggQuestion)) {
+			return false;
+		}
+		
+		return $container->canComment($user_guid, $default);
 	}
 	
 	/**
-	 * (non-PHPdoc)
-	 * @see ElggEntity::__get()
+	 * {@inheritDoc}
+	 * @see ElggObject::getDisplayName()
 	 */
-	public function __get($name) {
+	public function getDisplayName() {
+		$question = $this->getContainerEntity();
 		
-		if ($name === 'title') {
-			$question = $this->getContainerEntity();
-			
-			return elgg_echo('questions:object:answer:title', [$question->title]);
-		}
-		
-		return parent::__get($name);
+		return elgg_echo('questions:object:answer:title', [$question->title]);
 	}
 	
 	/**

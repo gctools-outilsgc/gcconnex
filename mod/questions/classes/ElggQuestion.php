@@ -12,6 +12,8 @@ class ElggQuestion extends ElggObject {
 		parent::initializeAttributes();
 		
 		$this->attributes['subtype'] = self::SUBTYPE;
+		
+		$this->status = 'open';
 	}
 	
 	/**
@@ -19,7 +21,7 @@ class ElggQuestion extends ElggObject {
 	 * @see ElggEntity::getURL()
 	 */
 	public function getURL() {
-		$url = "questions/view/{$this->getGUID()}/" . elgg_get_friendly_title($this->title);
+		$url = "questions/view/{$this->getGUID()}/" . elgg_get_friendly_title($this->getDisplayName());
 		
 		return elgg_normalize_url($url);
 	}
@@ -28,13 +30,13 @@ class ElggQuestion extends ElggObject {
 	 * (non-PHPdoc)
 	 * @see ElggObject::canComment()
 	 */
-	public function canComment($user_guid = 0) {
+	public function canComment($user_guid = 0, $default = null) {
 		
 		if ($this->comments_enabled === 'off') {
 			return false;
 		}
 		
-		return parent::canComment($user_guid);
+		return parent::canComment($user_guid, $default);
 	}
 	
 	/**
@@ -44,7 +46,7 @@ class ElggQuestion extends ElggObject {
 	 *
 	 * @return false|int|ElggAnswer[]
 	 */
-	public function getAnswers(array $options = array()) {
+	public function getAnswers(array $options = []) {
 		$defaults = [
 			'order_by' => 'time_created asc',
 		];
@@ -74,7 +76,7 @@ class ElggQuestion extends ElggObject {
 	/**
 	 * Get the answer that was marked as the correct answer.
 	 *
-	 * @return fasle|ElggAnswer
+	 * @return false|ElggAnswer
 	 */
 	public function getMarkedAnswer() {
 		$result = false;
@@ -84,10 +86,10 @@ class ElggQuestion extends ElggObject {
 			'subtype' => ElggAnswer::SUBTYPE,
 			'limit' => 1,
 			'container_guid' => $this->getGUID(),
-			'metadata_name_value_pairs' => array(
+			'metadata_name_value_pairs' => [
 				'name' => 'correct_answer',
-				'value' => true
-			)
+				'value' => true,
+			],
 		];
 		
 		$answers = elgg_get_entities_from_metadata($options);
@@ -126,32 +128,21 @@ class ElggQuestion extends ElggObject {
 	 * @return string the current status
 	 */
 	public function getStatus() {
-		$result = 'open';
+		$result = $this->status;
 		
-		// do we even support status
-		if (questions_close_on_marked_answer()) {
-			// make sure the status is correct
-			switch ($this->status) {
-				case 'open':
-					// is it still open, so no marked answer
-					if ($this->getMarkedAnswer()) {
-						$result = 'closed';
-					}
-					break;
-				case 'closed':
+		// should we check if the status is correct
+		if (!questions_close_on_marked_answer()) {
+			return $result;
+		}
+		
+		// make sure the status is correct
+		switch ($result) {
+			case 'open':
+				// is it still open, so no marked answer
+				if ($this->getMarkedAnswer()) {
 					$result = 'closed';
-					// is it still open, so no marked answer
-					if (!$this->getMarkedAnswer()) {
-						$result = 'open';
-					}
-					break;
-				default:
-					// no setting yet
-					if ($this->getMarkedAnswer()) {
-						$result = 'closed';
-					}
-					break;
-			}
+				}
+				break;
 		}
 		
 		return $result;

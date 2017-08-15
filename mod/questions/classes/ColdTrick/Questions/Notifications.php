@@ -35,7 +35,7 @@ class Notifications {
 		$return_value->summary = elgg_echo('questions:notifications:create:summary', [], $language);
 		$return_value->body = elgg_echo('questions:notifications:create:message', [
 			$recipient->name,
-			$question->title,
+			$question->getDisplayName(),
 			$question->getURL(),
 		], $language);
 		
@@ -73,7 +73,7 @@ class Notifications {
 		$return_value->summary = elgg_echo('questions:notifications:move:summary', [], $language);
 		$return_value->body = elgg_echo('questions:notifications:move:message', [
 			$recipient->name,
-			$question->title,
+			$question->getDisplayName(),
 			$question->getURL(),
 		], $language);
 		
@@ -108,12 +108,12 @@ class Notifications {
 		$answer = $event->getObject();
 		$question = $answer->getContainerEntity();
 		
-		$return_value->subject = elgg_echo('questions:notifications:answer:create:subject', [$question->title], $language);
-		$return_value->summary = elgg_echo('questions:notifications:answer:create:summary', [$question->title], $language);
+		$return_value->subject = elgg_echo('questions:notifications:answer:create:subject', [$question->getDisplayName()], $language);
+		$return_value->summary = elgg_echo('questions:notifications:answer:create:summary', [$question->getDisplayName()], $language);
 		$return_value->body = elgg_echo('questions:notifications:answer:create:message', [
 			$recipient->name,
 			$actor->name,
-			$question->title,
+			$question->getDisplayName(),
 			$answer->description,
 			$answer->getURL(),
 		], $language);
@@ -149,12 +149,12 @@ class Notifications {
 		$answer = $event->getObject();
 		$question = $answer->getContainerEntity();
 		
-		$return_value->subject = elgg_echo('questions:notifications:answer:correct:subject', [$question->title], $language);
-		$return_value->summary = elgg_echo('questions:notifications:answer:correct:summary', [$question->title], $language);
+		$return_value->subject = elgg_echo('questions:notifications:answer:correct:subject', [$question->getDisplayName()], $language);
+		$return_value->summary = elgg_echo('questions:notifications:answer:correct:summary', [$question->getDisplayName()], $language);
 		$return_value->body = elgg_echo('questions:notifications:answer:correct:message', [
 			$recipient->name,
 			$actor->name,
-			$question->title,
+			$question->getDisplayName(),
 			$answer->description,
 			$answer->getURL(),
 		], $language);
@@ -199,7 +199,7 @@ class Notifications {
 		$return_value->body = elgg_echo('questions:notifications:answer:comment:message', [
 			$recipient->name,
 			$actor->name,
-			$question->title,
+			$question->getDisplayName(),
 			$comment->description,
 			$object->getURL(),
 		], $language);
@@ -307,12 +307,25 @@ class Notifications {
 			return;
 		}
 		
-		$answer = $event->getObject();
-		if (!($answer instanceof \ElggAnswer)) {
+		$object = $event->getObject();
+		if (!($object instanceof \ElggObject)) {
 			return;
 		}
 		
-		$question = $answer->getContainerEntity();
+		$question = false;
+		$container = $object->getContainerEntity();
+		if ($object instanceof \ElggAnswer) {
+			$question = $container;
+		} elseif ($container instanceof \ElggAnswer) {
+			// comments on answers
+			$question = $container->getContainerEntity();
+		}
+		
+		if (!($question instanceof \ElggQuestion)) {
+			// something went wrong, maybe access
+			return;
+		}
+		
 		$owner = $question->getOwnerEntity();
 		
 		$methods = get_user_notification_settings($owner->getGUID());

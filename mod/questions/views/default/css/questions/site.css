@@ -1,0 +1,38 @@
+/* questions css */
+.questions-checkmark .elgg-icon {
+	font-size: 25px;
+	color: #4690D6;
+	margin: 0;
+}
+
+.questions-checkmark:hover {
+	cursor: help;
+}
+
+.question-solution-time {
+	border: 1px solid #CCC;
+	padding: 0 5px;
+	
+	font-size: 80%;
+	color: #CCC;
+	
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.question-solution-time-due {
+	border-color: orange;
+	color: orange;
+}
+
+.question-solution-time-late {
+	border-color: red;
+	color: red;
+}
+
+.question-listing-checkmark {
+	background-position: 0 -126px;
+}
+
+/* end questions css*/

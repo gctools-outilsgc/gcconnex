@@ -1,7 +1,7 @@
 /** @module elgg/GroupPicker */
 
-define(['jquery', 'elgg'], function ($, elgg) {
-
+define(['jquery', 'elgg', 'jquery.ui.autocomplete.html'], function ($, elgg) {
+	
 	/**
 	 * @param {HTMLElement} wrapper outer div
 	 * @constructor
@@ -56,7 +56,7 @@ define(['jquery', 'elgg'], function ($, elgg) {
 			}
 		});
 
-		$('.elgg-group-picker-remove', this.$wrapper).live('click', function(event) {
+		this.$wrapper.on('click', '.elgg-group-picker-remove', function(event) {
 			self.removeGroup(event);
 		});
 
