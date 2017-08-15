@@ -136,6 +136,10 @@
   padding: 0 5px 10px;
 }
 
+.article-content img {
+  max-width: 100%;
+}
+
 .article-hi {
       margin: 0 0 10px 5px;
       display:none;

@@ -38,7 +38,7 @@ if(!$lang){
     echo '<h2 id="explore-header" class="h3">'.elgg_echo('freshdesk:knowledge:explore:title', array(), $lang).'</h2>';
     echo '<div id="results-en">'.$articles[$lang].'</div>';
   } else {
-    echo '<div id="results"><section class="alert alert-info"><h2>Configure knowledge Base</h2><p>Add articles by fetching them in the admin settings.</p></section></div>';
+    echo '<div id="results"><section class="alert alert-info"><h2>'.elgg_echo('freshdesk:warning:header').'</h2><p>'.elgg_echo('freshdesk:warning:body').'</p></section></div>';
   }
 
   echo '</div>';

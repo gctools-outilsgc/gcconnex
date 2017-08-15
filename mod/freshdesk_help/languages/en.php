@@ -34,5 +34,8 @@ return array(
       //additional info
       'freshdesk:additionalinfo' => 'Additional Information',
 
-      'freshdesk:valid' => 'This field is required.'
+      'freshdesk:valid' => 'This field is required.',
+
+      'freshdesk:warning:header' => 'Configure knowledge Base',
+      'freshdesk:warning:body' => 'Knowledge base needs to be synced.',
     );
