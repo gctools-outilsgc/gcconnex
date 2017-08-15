@@ -8,12 +8,12 @@ function gc_elgg_sitemap_init() {
 	// display text only if user agent string is gsa-crawler (or whatever is set)
 	if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false) {
 
-	    elgg_register_plugin_hook_handler('register', 'menu:site', 'elgg_site_menu_handler');
-	    elgg_register_plugin_hook_handler('register', 'menu:user_menu', 'elgg_user_menu_handler');
-	    elgg_register_plugin_hook_handler('register', 'menu:title', 'elgg_user_menu_handler');
-	    elgg_register_plugin_hook_handler('register', 'menu:filter', 'elgg_entity_menu_handler');
-	    elgg_register_plugin_hook_handler('prepare', 'breadcrumbs', 'elgg_breadcrumb_handler');
-	    elgg_register_plugin_hook_handler('register', 'menu:title2', 'elgg_site_menu_handler');
+	    elgg_register_plugin_hook_handler('register', 'menu:site', 'elgg_site_menu_handler', array());
+	    elgg_register_plugin_hook_handler('register', 'menu:user_menu', 'elgg_user_menu_handler', array());
+	    elgg_register_plugin_hook_handler('register', 'menu:title', 'elgg_user_menu_handler', array());
+	    elgg_register_plugin_hook_handler('register', 'menu:filter', 'elgg_entity_menu_handler', array());
+	    elgg_register_plugin_hook_handler('prepare', 'breadcrumbs', 'elgg_breadcrumb_handler', array());
+	    elgg_register_plugin_hook_handler('register', 'menu:title2', 'elgg_site_menu_handler', array());
 
 	    elgg_register_menu_item('site', array('name' => 'pages', 'text' => 'Pages', 'href' => '/pages/all'));
 
@@ -50,10 +50,10 @@ function gc_elgg_sitemap_init() {
 		elgg_unregister_menu_item('title2', 'new_folder');
 
 		/// list all entities
-		elgg_register_plugin_hook_handler('view_vars', 'object/elements/summary', 'elgg_entities_list_handler');
+		elgg_register_plugin_hook_handler('view_vars', 'object/elements/summary', 'elgg_entities_list_handler', array());
 		elgg_register_plugin_hook_handler('view_vars', 'object/elements/full', 'elgg_full_entities_view_handler');
 		elgg_register_plugin_hook_handler('view_vars', 'object/elements/thewire_summary', 'elgg_thewire_list_handler');
-		elgg_register_plugin_hook_handler('view_vars', 'group/elements/summary', 'elgg_entities_list_handler');
+		elgg_register_plugin_hook_handler('view_vars', 'group/elements/summary', 'elgg_entities_list_handler', array());
 		elgg_register_plugin_hook_handler('view_vars', 'page/components/image_block', 'elgg_sidebar_handler');
 
 		elgg_register_plugin_hook_handler('view', 'members/nav', 'elgg_members_menu_handler');
@@ -218,16 +218,17 @@ function group_navigation_handler($hook, $type, $value, $params) {
 
 		}
 	}
-	return "";
+	return array();
 }
 
 
-function elgg_members_menu_handler($hook, $type, $value, $params) {
-	return "";
+function elgg_members_menu_handler($hook, $type, $menu, $params) {
+	$menu = array();
+	return $menu;
 }
 
 function elgg_generic_view_handler($hook, $type, $value, $params) {
-	return "";
+	return array();
 }
 
 
@@ -264,8 +265,9 @@ function elgg_event_calendar_list_handler($hook, $type, $value, $params) {
 
 
 
-function elgg_entity_menu_handler($hook, $type, $value, $params) {
-	return "";
+function elgg_entity_menu_handler($hook, $type, $menu, $params) {
+	$menu = array();
+	return $menu;
 }
 
 /**
@@ -308,21 +310,22 @@ function elgg_full_entities_view_handler($hook, $type, $value, $params) {
 
 	echo $description;
 
-	return "";
+	return array();
 }
 
 
 function elgg_thewire_list_handler($hook, $type, $value, $params) {
 	echo "<a href='{$value['entity']->getURL()}'>{$value['entity']->description}</a>  <br/>";
-	return "";
+	return array();
 }
 
 function elgg_entities_list_handler($hook, $type, $value, $params) {
 	
 	// brief view: display content (excerpt)
 	// full view: content does not exist (it will display the title link again)
-	if (!$value['content'] && get_context() !== 'members' && get_context() !== 'polls' && get_context() !== 'event_calendar' && get_context() !== 'file' && get_context() !== 'groups') 
-		return;
+	if (!$value['content'] && get_context() !== 'members' && get_context() !== 'polls' && get_context() !== 'event_calendar' && get_context() !== 'file' && get_context() !== 'groups') {
+		return array();
+	}
 
 	$context = get_context();
 	switch ($context) {
@@ -344,20 +347,21 @@ function elgg_entities_list_handler($hook, $type, $value, $params) {
 			echo "<a href='{$value['entity']->getURL()}'>{$value['entity']->title}</a>  <br/>";
 		
 	}
-	return "";
+
+	return array();
 }
 
 function elgg_sidebar_handler($hook, $type, $menu, $params) {
 	if (is_array($menu) && $menu['body'])
 		echo $menu['body'];
-	return "";
+	return array();
 }
 
 /**
  * hide the breadcrumbs
  */
 function elgg_breadcrumb_handler($hook, $type, $menu, $params) {
-	return "";
+	return array();
 }
 
 
@@ -366,7 +370,8 @@ function elgg_breadcrumb_handler($hook, $type, $menu, $params) {
  * hide the user menu bar
  */
 function elgg_user_menu_handler($hook, $type, $menu, $params) {
-	return "";
+	$menu = array();
+	return $menu;
 }
 
 
@@ -389,6 +394,7 @@ function elgg_site_menu_handler($hook, $type, $menu, $params) {
 	}
 	echo $menu_item;
 
-	return true;
+	$menu = array();
+	return $menu;
 }
 

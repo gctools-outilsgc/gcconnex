@@ -78,11 +78,14 @@ if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false) {
 
       if (!($page_entity instanceof ElggEntity))
         $page_entity = get_entity($current_url[count($current_url) - 2]);
+      // wire post does not have any title!
       $page_title = gc_explode_translation($page_entity->title, $gc_language);
   }
 
 }
 
+// if no title is found, place the default title as the page title
+$page_title = (!$page_title) ? $vars['title'] : $page_title;
 
 // this populates the title tag
 echo elgg_format_element('title', array(), $page_title, array('encode_text' => true));
@@ -177,8 +180,8 @@ if (!$creator) $creator = 'GCconnex';
 
 // cyu - prevent crawler to index unsaved draft
 if ($my_page_entity instanceof ElggObject) {
-if ($my_page_entity->getSubtype() === 'blog' && strcmp($my_page_entity->status,'unsaved_draft') == 0)
-	echo '<meta name="robots" content="noindex">';
+  if ($my_page_entity->getSubtype() === 'blog' && strcmp($my_page_entity->status,'unsaved_draft') == 0)
+  	echo '<meta name="robots" content="noindex, follow">';
 }
 
 // determine whether to index page depending on the url
@@ -209,19 +212,24 @@ $current_url = "{$current_url[0]}/{$current_url[1]}";
 // if url is found, dont index
 $can_index = (in_array($current_url, $no_index_array)) ? false : true;
 if (!$can_index) {
-  echo '<meta name="robots" content="noindex">';
+  echo '<meta name="robots" content="noindex, follow">';
 }
 
 // TODO closed group - noindex
-?>
 
+// the wire posts do not have any title, we'll have the page title as the wire post
+if ($page_entity instanceof ElggEntity && $page_entity->getSubtype() === 'thewire') {
+  $page_title = elgg_echo('thewire:head:title', 'en').' / '.elgg_echo('thewire:head:title', 'fr');
+}
+
+// Meta tags for the page
+?>
 <meta name="description" content="<?php echo $desc; ?>" />
 <meta name="dcterms.title" content="<?php echo $page_title ?>" />
 <meta name="dcterms.creator" content="<?php echo $creator; ?>" />
 <?php echo $datemeta; ?>
 <meta name="dcterms.subject" title="scheme" content="<?php echo $briefdesc; ?>" />
 <meta name="dcterms.language" title="ISO639-2" content="<?php echo get_language(); ?>" />
-<meta name="gcctitle" content="<?php echo $vars['title']; ?>" />
 <link href="<?php echo $site_url; ?>mod/wet4/graphics/favicon.ico" rel="icon" type="image/x-icon" />
 
 

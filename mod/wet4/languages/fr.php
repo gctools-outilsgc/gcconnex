@@ -3,6 +3,7 @@
 
 return array(
 
+  'thewire:head:title' => 'Message sur le fil',
 
   'entity:like:link:page_top' => 'Aimer la page "%s"',
   'entity:unlike:link:page_top' => 'Enlever la mention j\'aime de la page "%s"',
