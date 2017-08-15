@@ -12,8 +12,8 @@
 	<licence></licence>
 	<copyright></copyright>
 	<requires>
-		<type>elgg_version</type>
-		<version>2010030101</version>
+		<type>elgg_release</type>
+		<version>1.9</version>
 	</requires>
 	<activate_on_install>true</activate_on_install>
 	<admin_interface>simple</admin_interface>

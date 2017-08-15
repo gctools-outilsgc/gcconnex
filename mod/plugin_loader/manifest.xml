@@ -10,7 +10,7 @@
 	<license>MIT</license>
 	<website>https://github.com/lucbelliveau/plugin_loader</website>
 	<requires>
-		<type>elgg_version</type>
-		<version>2010030101</version>
+		<type>elgg_release</type>
+		<version>1.9</version>
 	</requires>
 </plugin_manifest>
