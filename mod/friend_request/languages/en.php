@@ -7,16 +7,15 @@ return [
 'friend_request:title' => "Colleague Requests for: %s",	
 'friend_request:new' => "New colleague request",	
 'friend_request:friend:add:pending' => "Colleague request pending",
+
+	// plugins settings
+	'friend_request:settings:add_river' => "Create river entries when a friend request is accepted",
 	
 /************* FRIEND REQUEST *************/	
 	
 'friend_request:newfriend:subject' => "%s wants to be your colleague! / %s veut être votre collègue!",
 'friend_request:newfriend:body' => "%s wants to be your colleague! But he or she is waiting for you to approve the request... So login now so you can approve the request! <br/>
 You can view your pending colleague requests at:
-
-	// plugins settings
-	'friend_request:settings:add_river' => "Create river entries when a friend request is accepted",
-	
 
 %s <br/>
 <i>Make sure you are logged into the website before clicking on the following link, otherwise you will be redirected to the login page.</i>
