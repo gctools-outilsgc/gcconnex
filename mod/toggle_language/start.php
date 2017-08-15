@@ -25,6 +25,6 @@
 		}
 	}
 	// Register actions
-	elgg_register_action("toggle_language/toggle", true, $CONFIG->pluginspath . "toggle_language/actions/toggle.php");
+	elgg_register_action("toggle_language/toggle", $CONFIG->pluginspath . "toggle_language/actions/toggle.php", 'public');
 
     ?>

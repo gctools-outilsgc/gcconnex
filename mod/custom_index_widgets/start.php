@@ -194,6 +194,6 @@ if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gs
 
   elgg_register_event_handler('init','system','custom_index_widgets_init');
   elgg_register_page_handler ( 'custom_index_widgets', 'custom_index_widgets_page_handler'); 
-  elgg_register_action('custom_index_widgets/reset',false,$CONFIG->pluginspath . 'custom_index_widgets/actions/reset.php',true);
+  elgg_register_action('custom_index_widgets/reset',$CONFIG->pluginspath . 'custom_index_widgets/actions/reset.php','admin');
 
 ?>
