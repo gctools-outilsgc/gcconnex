@@ -86,7 +86,7 @@ function modify_content_url($hook, $type, $url, $params) {
 function group_url($hook, $type, $return, $params) {
 	$gsa_agentstring = strtolower(elgg_get_plugin_setting('gsa_agentstring','gc_fedsearch_gsa'));
 	if ((!$gsa_usertest) && strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false)  {
-		if (strcmp(get_context(), 'group_profile') == 0) {
+		if (strcmp(elgg_get_context(), 'group_profile') == 0) {
 			$params['vars']['entity']->description = "<p>{$params['vars']['entity']->description}</p> <p>{$params['vars']['entity']->description2}</p>";
 			return $params['vars']['entity']->description;
 		}
@@ -103,7 +103,7 @@ function entity_url($hook, $type, $return, $params) {
 
 	/*blog pages bookmarks file discussion*/
 	$filter_entity = array('blog', 'pages', 'discussion', 'file', 'bookmarks');
-	$context = get_context();
+	$context = elgg_get_context();
 
 	// only do it for the main content, comments will be left the way it is
 	$comment = new DOMDocument();

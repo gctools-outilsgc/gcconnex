@@ -80,7 +80,7 @@ function strip_content_hyperlinks_handler($hook, $type, $return, $params) {
 
 	/*blog pages bookmarks file discussion*/
 	$filter_entity = array('blog', 'pages', 'discussion', 'file', 'bookmarks');
-	$context = get_context();
+	$context = elgg_get_context();
 
 	// only do it for the main content, comments will be left the way it is
 	$comment = new DOMDocument();
@@ -319,10 +319,10 @@ function elgg_entities_list_handler($hook, $type, $value, $params) {
 	
 	// brief view: display content (excerpt)
 	// full view: content does not exist (it will display the title link again)
-	if (!$value['content'] && get_context() !== 'members' && get_context() !== 'polls' && get_context() !== 'event_calendar' && get_context() !== 'file' && get_context() !== 'groups') 
+	if (!$value['content'] && elgg_get_context() !== 'members' && elgg_get_context() !== 'polls' && elgg_get_context() !== 'event_calendar' && elgg_get_context() !== 'file' && elgg_get_context() !== 'groups') 
 		return;
 
-	$context = get_context();
+	$context = elgg_get_context();
 	switch ($context) {
 		case 'file':
 		case 'event_calendar':
