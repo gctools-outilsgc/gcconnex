@@ -267,10 +267,12 @@ function _elgg_wet_user_settings_page_handler($page) {
         case 'notifications':
             elgg_push_breadcrumb(elgg_echo('cp_notifications:name'));
             $path = elgg_get_plugins_path() . "/cp_notifications/" . "pages/cp_notifications/notification_setting.php";
+            require $path;
             break;
         case 'statistics':
             elgg_push_breadcrumb(elgg_echo('usersettings:statistics:opt:linktext'));
             $path = $CONFIG->path . "pages/settings/statistics.php";
+            echo elgg_view_resource('settings/statistics', $vars);
             break;
         /*case 'plugins':
             if (isset($page[2])) {
@@ -281,13 +283,14 @@ function _elgg_wet_user_settings_page_handler($page) {
             break;*/
         case 'user':
             $path = $CONFIG->path . "pages/settings/account.php";
+            echo elgg_view_resource("settings/account", $vars);
             break;
     }
 
     if (isset($path)) {
-        require $path;
         return true;
     }
+    
     return false;
 }
 
