@@ -1963,19 +1963,17 @@ function wet_questions_page_handler($segments) {
 	$new_page = 'mod/wet4/pages/questions';
 	switch ($segments[0]) {
 		case 'all':
-			include "$pages/all.php";
+			echo elgg_view_resource('questions/all');
 			break;
 		case 'todo':
-			if (isset($segments[1]) && is_numeric($segments[1])) {
-				set_input('group_guid', $segments[1]);
-			}
-			include "$pages/todo.php";
+            $group_guid = (int) elgg_extract(1, $page);
+            if (!empty($group_guid)) {
+                $params['group_guid'] = $group_guid;
+            }
+            echo elgg_view_resource('questions/todo', $params);
 			break;
 		case 'owner':
-			if (isset($segments[1]) && is_numeric($segments[1])) {
-				elgg_set_page_owner_guid($segments[1]);
-			}
-			include "$pages/owner.php";
+            echo elgg_view_resource('questions/owner');
 			break;
 		case 'view':
 			set_input('guid', $segments[1]);
@@ -1983,25 +1981,27 @@ function wet_questions_page_handler($segments) {
 			break;
 		case 'add':
 			elgg_gatekeeper();
-			include "$pages/add.php";
+                echo elgg_view_resource('questions/add');
 			break;
 		case 'edit':
 			elgg_gatekeeper();
-			set_input('guid', $segments[1]);
-			include "$pages/edit.php";
+            $params['guid'] = (int) elgg_extract(1, $page);
+            
+            echo elgg_view_resource('questions/edit', $params);
 			break;
 		case 'group':
 			elgg_group_gatekeeper();
-			include "$pages/owner.php";
+            echo elgg_view_resource('questions/owner');
 			break;
 		case 'friends':
 				include "$new_page/friends.php";
 				break;
 		case 'experts':
-			if (isset($segments[1]) && is_numeric($segments[1])) {
-				elgg_set_page_owner_guid($segments[1]);
-			}
-			include "$pages/experts.php";
+             $group_guid = (int) elgg_extract(1, $page);
+             if (!empty($group_guid)) {
+                 $params['group_guid'] = $group_guid;
+             }
+             echo elgg_view_resource('questions/experts', $params);
 			break;
 		default:
 			forward('questions/all');
