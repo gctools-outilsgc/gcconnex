@@ -51,7 +51,7 @@ On the `Database installation` page, use the following settings:
 | Database Host         | gcconnex-db   |
 | Database Table Prefix | elgg_         |
 
-On the `Configure site` page, set the `Data Directory` to `/data`.
+On the `Configure site` page, set the `Data Directory` to `/var/www/html/data`.
 
 ## Contributing
 
