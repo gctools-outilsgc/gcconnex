@@ -263,6 +263,7 @@ function _elgg_wet_user_settings_page_handler($page) {
 
     elgg_push_breadcrumb(elgg_echo('settings'), "settings/user/$user->username");
 
+    $vars['username'] = $user->username;
     switch ($page[0]) {
         case 'notifications':
             elgg_push_breadcrumb(elgg_echo('cp_notifications:name'));
