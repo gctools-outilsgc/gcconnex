@@ -50,10 +50,12 @@ function gc_elgg_sitemap_init() {
 		elgg_unregister_menu_item('title2', 'new_folder');
 
 		/// list all entities
-		elgg_register_plugin_hook_handler('view_vars', 'object/elements/summary', 'elgg_entities_list_handler', array());
+
+		/* WARNING: "Argument 2 passed to Elgg\\ViewsService::renderView() must be of the type array, null given */
+		elgg_register_plugin_hook_handler('view_vars', 'object/elements/summary', 'elgg_entities_list_handler');
 		elgg_register_plugin_hook_handler('view_vars', 'object/elements/full', 'elgg_full_entities_view_handler');
 		elgg_register_plugin_hook_handler('view_vars', 'object/elements/thewire_summary', 'elgg_thewire_list_handler');
-		elgg_register_plugin_hook_handler('view_vars', 'group/elements/summary', 'elgg_entities_list_handler', array());
+		elgg_register_plugin_hook_handler('view_vars', 'group/elements/summary', 'elgg_entities_list_handler');
 		elgg_register_plugin_hook_handler('view_vars', 'page/components/image_block', 'elgg_sidebar_handler');
 
 		elgg_register_plugin_hook_handler('view', 'members/nav', 'elgg_members_menu_handler');
@@ -67,7 +69,33 @@ function gc_elgg_sitemap_init() {
 		elgg_register_plugin_hook_handler('entity:url', 'object', 'redirect_content_url', 1);
 		elgg_register_plugin_hook_handler('view', 'output/longtext', 'strip_content_hyperlinks_handler');
 
+		// modifying view in the user's profile
+		elgg_register_plugin_hook_handler('view', 'b_extended_profile/portfolio', 'linkedin_profile_handler');
+
 	}
+}
+
+function linkedin_profile_handler($hook, $type, $return, $params) {
+
+	$user = elgg_get_page_owner_entity();
+	$portfolio_guid = $user->portfolio;
+
+	// when no portfolio for user exists
+	if (empty($portfolio_guid) || $portfolio_guid == NULL)
+		return;
+
+	if (!is_array($portfolio_guid))
+		$portfolio_guid = array($portfolio_guid);
+
+	foreach ($portfolio_guid as $guid) {
+		
+		$entry = get_entity($guid);
+		if ($entry instanceof ElggEntity) {
+			echo gc_explode_translation($entry->title, 'en').' / '.gc_explode_translation($entry->title, 'fr');
+		}
+	}
+
+	return "";
 }
 
 
@@ -321,10 +349,11 @@ function elgg_thewire_list_handler($hook, $type, $value, $params) {
 
 function elgg_entities_list_handler($hook, $type, $value, $params) {
 	
+	$empty = array();
 	// brief view: display content (excerpt)
 	// full view: content does not exist (it will display the title link again)
 	if (!$value['content'] && get_context() !== 'members' && get_context() !== 'polls' && get_context() !== 'event_calendar' && get_context() !== 'file' && get_context() !== 'groups') {
-		return array();
+		return $empty;
 	}
 
 	$context = get_context();
@@ -348,7 +377,7 @@ function elgg_entities_list_handler($hook, $type, $value, $params) {
 		
 	}
 
-	return array();
+	return $empty;
 }
 
 function elgg_sidebar_handler($hook, $type, $menu, $params) {
