@@ -217,6 +217,12 @@ if (!$can_index) {
 
 // TODO closed group - noindex
 
+// group profile url with the group name - noindex
+preg_match("/groups\/profile\/[\d]*\/.*\/?/", $_SERVER['REQUEST_URI'], $output_array);
+if (sizeof($output_array) > 0)
+   echo '<meta name="robots" content="noindex, follow">';
+
+
 // the wire posts do not have any title, we'll have the page title as the wire post
 if ($page_entity instanceof ElggEntity && $page_entity->getSubtype() === 'thewire') {
   $page_title = elgg_echo('thewire:head:title', 'en').' / '.elgg_echo('thewire:head:title', 'fr');
