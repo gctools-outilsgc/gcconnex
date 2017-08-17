@@ -4,14 +4,18 @@
   <id>multi_file_upload</id>
   <author>Government of Canada</author>
   <version>1.0</version>
-	<category>social</category>
-  <description>Replaces multi file upload form with bootstrap file upload</description>
+	<category>Enhancements</category>
+  <description>Adds multi-file upload form with Bootstrap drag and drop file upload. Requires Bootstrap framework to display/function correctly. If your website does not use Bootstrap you can enable a modified version of Bootstrap to be loaded in plugin settings. Sourced from: http://plugins.krajee.com/file-input </description>
   <website>http://www.canada.ca</website>
 	<copyright>Her Majesty the Queen in Right of Canada, 2015</copyright>
 	<license>Creative Commons Attribution 3.0 Unported License</license>
   <requires>
     <type>elgg_release</type>
-    <version>1.9</version>
+    <version>2.0</version>
+  </requires>
+  <requires>
+      <type>plugin</type>
+      <name>file_tools</name>
   </requires>
   <requires>
 		<type>priority</type>

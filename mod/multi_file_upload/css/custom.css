@@ -30,13 +30,6 @@
   float: left;
 }
 
-/*Hiding some components - maybe remove indivdual upload or remove all from x
-  -Close input x
-  -Upload file on individual file cards
-.file-footer-buttons .kv-file-upload, .close {
-  display: none;
-  visibility:hidden;
-}*/
 .close {
   display: none;
   visibility:hidden;
@@ -67,4 +60,16 @@
 .file-preview-error {
   opacity:0.85;
   background: #f2dede;
+}
+
+/*Handle large images preview*/
+@media screen and (max-width: 500px) {
+    .kv-file-content img {
+        width: 100% !important;
+        height: auto !important;
+    }
+    
+    .file-preview-frame {
+        width: auto !important;
+    }
 }
