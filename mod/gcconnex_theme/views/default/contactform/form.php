@@ -122,10 +122,7 @@ if (elgg_is_logged_in() && $formproc->SafeDisplay('depart') == ''){
                     <label for='reason' class="required"><span class="field-name"><?php echo elgg_echo('contactform:select'); ?></span><strong class="required"> (<?php echo elgg_echo('contactform:required'); ?>)</strong></label><br />
 <?php
 global $SESSION;
-$dbname = $CONFIG->dbname;
-$host = $CONFIG->dbhost;
-$db = new PDO("mysql:host=$host;dbname=$dbname", $CONFIG->dbuser, $CONFIG->dbpass);
-$r = $db->query('SELECT * FROM contact_list');
+$r = get_data('SELECT * FROM contact_list');
 ?>
 <select class="form-control" id="reason" name="reason" value='<?php echo $formproc->SafeDisplay('reason'); ?>'>
     <option><?php echo elgg_echo('contactform:reason'); ?></option>
