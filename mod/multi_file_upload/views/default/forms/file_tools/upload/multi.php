@@ -13,19 +13,18 @@ $page_owner = elgg_get_page_owner_entity();
 $container_guid = $page_owner->getGUID();
 $site_url = elgg_get_site_url();
 
-if (elgg_instanceof($page_owner, "group", null, "ElggGroup")) {
-	$return_url = $site_url . "file/group/" . $page_owner->getGUID() . "/all";
-} else {
-	$return_url = $site_url . "file/owner/" . $page_owner->username;
+elgg_require_js('multi_file_upload/fileinput');
+
+if(elgg_get_plugin_setting("load_custom_bs", "multi_file_upload")){
+    elgg_load_css("mod-bootstrap-css");
+    elgg_load_js("mod-bootstrap-js");
 }
 
-// load JS
-//elgg_load_js("jquery.uploadify");
-//elgg_load_css("jquery.uploadify");
-
-elgg_load_js("fileinput-fa");
+//elgg_load_css("bootstrap");
 elgg_load_css("bootstrap-fileinput-css");
 elgg_load_css("custom-bootstrap-fileinput");
+
+
 
 ?>
 <script type="text/javascript">
@@ -33,14 +32,7 @@ elgg_load_css("custom-bootstrap-fileinput");
 </script>
 
 
-
 <fieldset>
-	<div>
-
-
-
-
-	</div>
 
 	<?php if (file_tools_use_folder_structure()) { ?>
 	<div>
@@ -58,16 +50,19 @@ elgg_load_css("custom-bootstrap-fileinput");
 			<?php echo elgg_view('input/access', array('name' => 'access_id_file', 'id' => 'file_tools_file_access_id')); ?>
 
 	</div>
-	    <label for="multi-file-upload" class="control-label">Select File</label>
-    	<input id="multi-file-upload" name="upload[]" type="file" multiple class="file-loading">
+
+  <div>
+	    <label for="multi-files-upload" class="control-label">Select File</label>
+    	<input id="multi-files-upload" name="upload[]" type="file" multiple class="file-loading">
     	<div id="errorBlock" class="help-block"></div>
+  </div>
+
 	<div class="elgg-foot">
 		<?php
 			echo elgg_view('input/securitytoken');
 			echo elgg_view("input/hidden", array("name" => "container_guid", "value" => $container_guid));
 			echo elgg_view("input/hidden", array("name" => "PHPSESSID", "value" => session_id()));
 
-			//echo elgg_view("input/submit", array("value" => elgg_echo("upload"), 'class' => 'btn btn-primary'));
 		?>
 	</div>
 </fieldset>
