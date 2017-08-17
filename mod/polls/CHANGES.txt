@@ -1,0 +1,6 @@
+= Version History =
+
+GC Change - French and English Language files updated - CdG Nov 4th, 2013
+
+
+- initial version
