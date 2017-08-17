@@ -1,33 +1,41 @@
 <?php
-
 /**
  * Elgg poll individual post view
- * 
- * @uses $vars['entity'] Optionally, the poll post to view
  *
- * GC_MODIFICATION
- * Description: Added styling 
- * Author: GCTools Team
+ * @uses $vars['entity'] Optionally, the poll post to view
  */
 
 if (isset($vars['entity'])) {
 	$full = $vars['full_view'];
 	$poll = $vars['entity'];
-	//$vars['lang'] = 'fr';
 
 	$owner = $poll->getOwnerEntity();
 	$container = $poll->getContainerEntity();
 	$categories = elgg_view('output/categories', $vars);
-		
+
 	$owner_icon = elgg_view_entity_icon($owner, 'medium');
 	$owner_link = elgg_view('output/url', array(
-				'href' => "polls/owner/$owner->username",
+				'href' => "poll/owner/$owner->username",
 				'text' => $owner->name,
 				'is_trusted' => true,
 	));
 	$author_text = elgg_echo('byline', array($owner_link));
 	$tags = elgg_view('output/tags', array('tags' => $poll->tags));
 	$date = elgg_view_friendly_time($poll->time_created);
+
+	$allow_close_date = elgg_get_plugin_setting('allow_close_date','poll');
+
+	$closing_date = '';
+	if (($allow_close_date == 'yes') && (isset($poll->close_date))) {
+		$date_day = gmdate('j', $poll->close_date);
+		$date_month = gmdate('m', $poll->close_date);
+		$date_year = gmdate('Y', $poll->close_date);
+		$friendly_time = $date_day . '. ' . elgg_echo("poll:month:$date_month") . ' ' . $date_year;
+
+		$poll_state = $poll->isOpen() ? 'open' : 'closed';
+
+		$closing_date .= "<div class='poll_closing-date-{$poll_state}'><b>" . elgg_echo('poll:poll_closing_date', array($friendly_time)) . '</b></div>';
+	}
 
 	// TODO: support comments off
 	// The "on" status changes for comments, so best to check for !Off
@@ -37,9 +45,9 @@ if (isset($vars['entity'])) {
 		if ($comments_count != 0) {
 			$text = elgg_echo("comments") . " ($comments_count)";
 			$comments_link = elgg_view('output/url', array(
-						'href' => $poll->getURL() . '#poll-comments',
-						'text' => $text,
-						'is_trusted' => true,
+				'href' => $poll->getURL() . '#poll-comments',
+				'text' => $text,
+				'is_trusted' => true
 			));
 		} else {
 			$comments_link = '';
@@ -54,26 +62,21 @@ if (isset($vars['entity'])) {
 	} else {
 		$metadata = elgg_view_menu('entity', array(
 					'entity' => $poll,
-					'handler' => 'polls',
+					'handler' => 'poll',
 					'sort_by' => 'priority',
-					'class' => 'elgg-menu-hz list-inline',
+					'class' => 'elgg-menu-hz list-inline'
 		));
 	}
-		
-	$subtitle = "$author_text $date $comments_link $categories";
+
 	if ($full) {
 		$lang = get_current_language();
 
-			$title = gc_explode_translation($poll->title,$lang);
-
-$can_vote = !polls_check_for_previous_vote($poll, $user_guid);
-
 //Identify available content
-		foreach (polls_get_choice_array($poll) as $key ) {
+		foreach (poll_get_choice_array($poll) as $key ) {
 			$description_json = json_decode($key);
 			
  			if ($description_json->en != $description_json->fr) {
-echo '<div class="change_language" id="change_language">';
+				echo '<div class="change_language" id="change_language">';
 	    		if ($can_vote){//put content in different div if can ou can't vote
 					if (get_current_language() == 'fr'){
 
@@ -104,42 +107,46 @@ echo '<div class="change_language" id="change_language">';
 				echo '</div>';
 	    		break;
 			}
-		} 
-	
-	echo'</div>';
+		}
 
-
+		$subtitle = "$closing_date $author_text $date $comments_link $categories";
 		$params = array(
 			'entity' => $poll,
-			'title' => $title,
+			'title' => false,
 			'metadata' => $metadata,
 			'subtitle' => $subtitle,
-			'tags' => $tags,
+			'tags' => $tags
 		);
 		$params = $params + $vars;
 		$summary = elgg_view('object/elements/summary', $params);
 
 		echo elgg_view('object/elements/full', array(
+			'entity' => $poll,
 			'summary' => $summary,
-			'icon' => $owner_icon,
+			'icon' => $owner_icon
 		));
-		
 
-		echo elgg_view('polls/body',$vars);
+		$description = $poll->description;
+		if (!empty($description)) {
+			echo "<br>";
+			echo $description;
+			echo "<br>";
+		}
 
-
-
-        echo elgg_view('wet4_theme/track_page_entity', array('entity' => $poll));
+		echo elgg_view('poll/body', $vars);
 
 	} else {
+		$responses = $poll->countAnnotations('vote');
+		if ($responses == 1) {
+			$noun = elgg_echo('poll:noun_response');
+		} else {
+			$noun = elgg_echo('poll:noun_responses');
+		}
+		$responses = "<div>" . $responses . " " . $noun . "</div>";
+
+		$subtitle = "$closing_date $responses $author_text $date $comments_link $categories";
+
 		// brief view
-	
-	// identify available content
-/*	if((polls_get_choice_array2($poll)) && (polls_get_choice_array($poll))) {
-
-		echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';	
-	}*/
-
 		$params = array(
 			'entity' => $poll,
 			'metadata' => $metadata,
@@ -148,10 +155,11 @@ echo '<div class="change_language" id="change_language">';
 		);
 		$params = $params + $vars;
 		$list_body = elgg_view('object/elements/summary', $params);
-	
+
 		echo elgg_view_image_block($owner_icon, $list_body);
 	}
 }
+
 ?>
 <script>
 function change_language_polls(lang,guid){
@@ -168,7 +176,7 @@ $("#"+guid).html('<div id="loading-image"  class="wet-ajax-loader"><img src="../
         }
     });
 
-	$("#"+guid).load("gcconnex/mod/polls/views/default/polls/results_for_widget?id="+lang+" #"+guid); // load section of this page
+	$("#"+guid).load("gcconnex/mod/poll/views/default/poll/results_for_widget?id="+lang+" #"+guid); // load section of this page
 	if (lang == 'fr'){//change link
 	    change_link_en(guid); 
 	}else{
@@ -196,4 +204,3 @@ function change_link_en(guid){
 
 
 </script>
-
