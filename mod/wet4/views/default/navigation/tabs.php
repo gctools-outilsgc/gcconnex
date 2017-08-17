@@ -18,7 +18,6 @@
  * Description: Added wet and bootstrap classes
  * Author: GCTools Team
  */
-$options = _elgg_clean_vars($vars);
 
 $type = elgg_extract('type', $vars, 'horizontal');
 
@@ -83,3 +82,4 @@ if (isset($vars['tabs']) && is_array($vars['tabs']) && !empty($vars['tabs'])) {
 	</ul>
 	<?php
 }
+

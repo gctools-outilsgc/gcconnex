@@ -263,14 +263,17 @@ function _elgg_wet_user_settings_page_handler($page) {
 
     elgg_push_breadcrumb(elgg_echo('settings'), "settings/user/$user->username");
 
+    $vars['username'] = $user->username;
     switch ($page[0]) {
         case 'notifications':
             elgg_push_breadcrumb(elgg_echo('cp_notifications:name'));
             $path = elgg_get_plugins_path() . "/cp_notifications/" . "pages/cp_notifications/notification_setting.php";
+            require $path;
             break;
         case 'statistics':
             elgg_push_breadcrumb(elgg_echo('usersettings:statistics:opt:linktext'));
             $path = $CONFIG->path . "pages/settings/statistics.php";
+            echo elgg_view_resource('settings/statistics', $vars);
             break;
         /*case 'plugins':
             if (isset($page[2])) {
@@ -281,13 +284,14 @@ function _elgg_wet_user_settings_page_handler($page) {
             break;*/
         case 'user':
             $path = $CONFIG->path . "pages/settings/account.php";
+            echo elgg_view_resource("settings/account", $vars);
             break;
     }
 
     if (isset($path)) {
-        require $path;
         return true;
     }
+    
     return false;
 }
 
@@ -1963,19 +1967,17 @@ function wet_questions_page_handler($segments) {
 	$new_page = 'mod/wet4/pages/questions';
 	switch ($segments[0]) {
 		case 'all':
-			include "$pages/all.php";
+			echo elgg_view_resource('questions/all');
 			break;
 		case 'todo':
-			if (isset($segments[1]) && is_numeric($segments[1])) {
-				set_input('group_guid', $segments[1]);
-			}
-			include "$pages/todo.php";
+            $group_guid = (int) elgg_extract(1, $page);
+            if (!empty($group_guid)) {
+                $params['group_guid'] = $group_guid;
+            }
+            echo elgg_view_resource('questions/todo', $params);
 			break;
 		case 'owner':
-			if (isset($segments[1]) && is_numeric($segments[1])) {
-				elgg_set_page_owner_guid($segments[1]);
-			}
-			include "$pages/owner.php";
+            echo elgg_view_resource('questions/owner');
 			break;
 		case 'view':
 			set_input('guid', $segments[1]);
@@ -1983,25 +1985,27 @@ function wet_questions_page_handler($segments) {
 			break;
 		case 'add':
 			elgg_gatekeeper();
-			include "$pages/add.php";
+                echo elgg_view_resource('questions/add');
 			break;
 		case 'edit':
 			elgg_gatekeeper();
-			set_input('guid', $segments[1]);
-			include "$pages/edit.php";
+            $params['guid'] = (int) elgg_extract(1, $page);
+            
+            echo elgg_view_resource('questions/edit', $params);
 			break;
 		case 'group':
 			elgg_group_gatekeeper();
-			include "$pages/owner.php";
+            echo elgg_view_resource('questions/owner');
 			break;
 		case 'friends':
 				include "$new_page/friends.php";
 				break;
 		case 'experts':
-			if (isset($segments[1]) && is_numeric($segments[1])) {
-				elgg_set_page_owner_guid($segments[1]);
-			}
-			include "$pages/experts.php";
+             $group_guid = (int) elgg_extract(1, $page);
+             if (!empty($group_guid)) {
+                 $params['group_guid'] = $group_guid;
+             }
+             echo elgg_view_resource('questions/experts', $params);
 			break;
 		default:
 			forward('questions/all');
