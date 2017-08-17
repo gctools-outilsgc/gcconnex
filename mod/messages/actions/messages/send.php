@@ -59,7 +59,6 @@ if (!$result) {
 	register_error(elgg_echo("messages:error"));
 	forward("messages/compose");
 }
-}
 elgg_clear_sticky_form('messages');
 	
 system_message(elgg_echo("messages:posted"));
