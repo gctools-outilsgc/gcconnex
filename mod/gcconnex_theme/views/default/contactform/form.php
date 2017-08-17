@@ -124,8 +124,6 @@ if (elgg_is_logged_in() && $formproc->SafeDisplay('depart') == ''){
 global $SESSION;
 $dbname = $CONFIG->dbname;
 $host = $CONFIG->dbhost;
-$query="SELECT contact_list FROM {$CONFIG->dbprefix}upgrade ";
-$result=mysql_query($query);
 $db = new PDO("mysql:host=$host;dbname=$dbname", $CONFIG->dbuser, $CONFIG->dbpass);
 $r = $db->query('SELECT * FROM contact_list');
 ?>
