@@ -3,6 +3,7 @@ $site_url = elgg_get_site_url();
 
 return array(
 
+    'thewire:head:title' => 'Wire post',
 
     /*
     More context links - entity/river menus

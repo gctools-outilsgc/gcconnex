@@ -30,40 +30,43 @@ if (!$user) {
 }
 
 // @todo: create a link to edit the user profile picture
-if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
 
-    $iconimg = '<div class="avatar-hover-edit">' . elgg_echo('gcconnex_profile:profile:edit_avatar') . '</div><img src="';
-    $iconimg .= $user->getIcon('large') . '" class="avatar-profile-page img-responsive ">';
-    $size = 'medium';
+// just dont display anything with icons when gsa hits page
+if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false) {
+    if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
 
-    //Ew - change icon display to show badge if they have one
-    $icon = elgg_view_entity_icon($user, $size, array(
-        'use_hover' => false,
-        'use_link' => false,
-        'class' => 'pro-avatar',
-        'force_size' => true,
-    ));
+        $iconimg = '<div class="avatar-hover-edit">' . elgg_echo('gcconnex_profile:profile:edit_avatar') . '</div><img src="';
+        $iconimg .= $user->getIcon('large') . '" class="avatar-profile-page img-responsive ">';
+        $size = 'medium';
 
-    $iconfinal = elgg_view('output/url', array(
-            'text' => $icon,
-            'href' => 'avatar/edit/' . $user->username,
-            'class' => " img-responsive img-circle",
-            'title' => elgg_echo('gcconnex_profile:profile:edit_avatar')
-        )
-    );
-}else {
+        //Ew - change icon display to show badge if they have one
+        $icon = elgg_view_entity_icon($user, $size, array(
+            'use_hover' => false,
+            'use_link' => false,
+            'class' => 'pro-avatar',
+            'force_size' => true,
+        ));
 
-    $size = 'medium';
+        $iconfinal = elgg_view('output/url', array(
+                'text' => $icon,
+                'href' => 'avatar/edit/' . $user->username,
+                'class' => " img-responsive img-circle",
+                'title' => elgg_echo('gcconnex_profile:profile:edit_avatar')
+            )
+        );
+    }else {
 
-    //Ew - change icon display to show badge if they have one
-    $iconfinal = elgg_view_entity_icon($user, $size, array(
-        'use_hover' => false,
-        'use_link' => false,
-        'class' => 'pro-avatar',
-        'force_size' => true,
-    ));
+        $size = 'medium';
+
+        //Ew - change icon display to show badge if they have one
+        $iconfinal = elgg_view_entity_icon($user, $size, array(
+            'use_hover' => false,
+            'use_link' => false,
+            'class' => 'pro-avatar',
+            'force_size' => true,
+        ));
+    }
 }
-
 //$profile_actions
 echo <<<HTML
 
