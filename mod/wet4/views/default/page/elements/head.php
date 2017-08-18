@@ -32,6 +32,8 @@ $site_url = elgg_get_site_url();
 $metas = elgg_extract('metas', $vars, array());
 $links = elgg_extract('links', $vars, array());
 
+
+
 // Load in global variable with entity to create metadata tags
 global $my_page_entity;
 
@@ -222,6 +224,11 @@ preg_match("/groups\/profile\/[\d]*\/.*\/?/", $_SERVER['REQUEST_URI'], $output_a
 if (sizeof($output_array) > 0)
    echo '<meta name="robots" content="noindex, follow">';
 
+
+// if user profile url has a slash at the end, do not index
+preg_match("/\/profile\/.*\//", $_SERVER['REQUEST_URI'], $output_array);
+if (sizeof($output_array) > 0)
+  echo '<meta name="robots" content="noindex, follow">';
 
 // the wire posts do not have any title, we'll have the page title as the wire post
 if ($page_entity instanceof ElggEntity && $page_entity->getSubtype() === 'thewire') {
