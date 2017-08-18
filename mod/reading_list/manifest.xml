@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+    <name>Reading List</name>
+    <id>reading_list</id>
+    <author>GCTools</author>
+    <version>1.0</version>
+    <category>GC Custom</category>
+	<category>bundled</category>
+	<category>content</category>
+	<category>widget</category>
+    <description>Keeps a list of items to read later</description>
+
+    <requires>
+		<type>elgg_release</type>
+		<version>1.9</version>
+	</requires>
+    <requires>
+		<type>plugin</type>
+		<name>bookmarks</name>
+	</requires>
+    <requires>
+		<type>plugin</type>
+		<name>blog</name>
+	</requires>
+    <requires>
+		<type>priority</type>
+		<plugin>bookmarks</plugin>
+		<priority>after</priority>
+	</requires>
+    <requires>
+		<type>priority</type>
+		<plugin>blog</plugin>
+		<priority>after</priority>
+	</requires>
+</plugin_manifest>
