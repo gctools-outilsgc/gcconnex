@@ -42,7 +42,7 @@ $params = array(
 	'sitename' => 'Docker GCconnex',
 	'siteemail' => 'no_reply@gcconnex.gc.ca',
 	'wwwroot' => 'http://localhost:8080/',
-	'dataroot' => getenv('HOME') . '/data/',
+	'dataroot' => getenv('HOME') . '/data/data/',
 
 	// admin account
 	'displayname' => 'Administrator',
@@ -179,3 +179,5 @@ foreach ($plugins as $key => $id) {
 
 	$plugin->activate();
 }
+
+echo "Elgg CLI plugin install successful. \n";
