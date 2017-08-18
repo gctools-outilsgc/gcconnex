@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="passenger.css">
+<title>
+</title>
+</head>
+
+<body>
+
+	<h1>Search Results</h1>
+	<br>
+	<table id="columnNames";align="center"; style="width:80%;margin: auto;">
+	<tr>
+		<td align="left"><label>Departure</label></td>
+		<td align="left"><label>Destination</label></td>
+		<td align="left"><label>Time</label></td>
+		<td align="center"><label>Starting Date</label></td>
+	</tr>
+	</table>
+	<div id="result" style="width:80%;height:150px;margin: auto; border: 2px solid black; overflow-y: scroll"></div>
+	<br>
+	<div id="map" style="width:80%;height:600px;margin: auto; border: 2px solid black"></div>
+	<br>
+	<button type="button" id="request" name="request">Send Request to Driver</button>
+
+</body>
+
+		<script>
+			function initMap(){
+			    var directionsService = new google.maps.DirectionsService;
+				var directionsDisplay = new google.maps.DirectionsRenderer;
+				var basic = new google.maps.LatLng(45.425821,-75.719821)
+				var map = new google.maps.Map(document.getElementById('map'),{
+					zoom: 15, center: {lat: 45.425821, lng: -75.719821}});
+				var marker = new google.maps.Marker({
+					position: {lat: 45.425821, lng: -75.719821},
+					map: map
+				});
+
+      			  directionsDisplay.setMap(map);
+
+      			  document.getElementById('display').addEventListener('click', function() {
+          			display();
+        		});
+			}
+			function display(){
+				
+			
+			}
+		</script>
+		<script 	
+			 src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyB2AjldRKq1iv_sl951s7uMdFmlDXtbSWI&callback=initMap">
+		</script>
+</html>
