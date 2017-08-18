@@ -5,37 +5,17 @@
 
 $query = get_input("query", get_input("q"));
 
-$options = array(
-	"types" => "object",
-	"subtypes" => "thewire",
-	"pagination" => true
-);
-
 elgg_push_breadcrumb(elgg_echo("thewire"), "thewire/all");
 elgg_push_breadcrumb(elgg_echo("thewire_tools:search:title:no_query"));
 
 if (!empty($query)) {
-	$options["joins"] = array("JOIN " . elgg_get_config("dbprefix") . "objects_entity oe ON e.guid = oe.guid");
-	
-	$where_options = explode(" ", $query);
-	if (!empty($where_options)) {
-		$wheres = array();
-		foreach ($where_options as $wo) {
-			$wheres[] = "oe.description LIKE '%" . sanitise_string($wo) . "%'";
-		}
-		
-		if (!empty($wheres)) {
-			$options["wheres"] = "(" . implode(" AND ", $wheres) . ")";
-		}
-	}
-	
-	$entities_list = elgg_list_entities($options);
+	$entities_list = get_wire_entries_by_query($query);
 	if (!empty($entities_list)) {
 		$result = $entities_list;
 	} else {
 		$result = elgg_echo("notfound");
 	}
-	
+
 	// set title
 	$title_text = elgg_echo("thewire_tools:search:title", array($query));
 } else {
