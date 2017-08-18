@@ -120,6 +120,7 @@ function phpmailer_send($to, $to_name, $subject, $body, array $bcc = NULL, $html
 	// CONFIGURE SERVER INFORMATION defaults
 	$phpmailer->IsSMTP(); // telling the class to use SMTP
 	$phpmailer->Host       = elgg_get_plugin_setting('phpmailer_host', 'phpmailer'); // SMTP server
+	error_log(">>>>>>>> phpmail host: ".elgg_get_plugin_setting('phpmailer_host', 'phpmailer'));
 	$phpmailer->Port       = elgg_get_plugin_setting('ep_phpmailer_port', 'phpmailer'); // SMTP server port
 	$phpmailer->SMTPAuth   = true;
 	$phpmailer->SMTPSecure = "tls";
