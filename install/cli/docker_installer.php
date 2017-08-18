@@ -42,7 +42,7 @@ $params = array(
 	'sitename' => 'Docker GCconnex',
 	'siteemail' => 'no_reply@gcconnex.gc.ca',
 	'wwwroot' => 'http://localhost:8080/',
-	'dataroot' => getenv('HOME') . '/data/data/',
+	'dataroot' => getenv('HOME') . '/data/',
 
 	// admin account
 	'displayname' => 'Administrator',
