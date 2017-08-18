@@ -507,7 +507,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$result = create_digest($author, $cp_msg_type, $content_entity, $to_recipient, $content_url);
 			continue;
 		} else
-			//$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template ) : mail($to_recipient->email, $subject, $template, cp_get_headers($event));
+			$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template ) : mail($to_recipient->email, $subject, $template, cp_get_headers($event));
 		messages_send($subject, $site_template, $to_recipient->guid, $sender_guid, 0, true, $add_to_sent);
 	}
 }
@@ -1236,10 +1236,10 @@ function cp_create_notification($event, $type, $object) {
 
 					$template = elgg_view('cp_notifications/email_template', $message);
 
-					//if (elgg_is_active_plugin('phpmailer'))
-					//	phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );
-					//else
-					//	mail($to_recipient->email,$subject,$template,cp_get_headers());
+					if (elgg_is_active_plugin('phpmailer'))
+						phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );
+					else
+						mail($to_recipient->email,$subject,$template,cp_get_headers());
 				}
 			}
 		}
