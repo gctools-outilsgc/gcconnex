@@ -446,8 +446,8 @@ switch ($msg_type) {
 
 
 	case 'cp_group_mail': // sending out group mail to all members
-		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_group_mail:title', array(gc_explode_translation($vars['cp_group']['name'],'en'),$vars['cp_group_subject']),'en');
-		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_group_mail:title', array(gc_explode_translation($vars['cp_group']['name'],'fr'),$vars['cp_group_subject']),'fr');
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_group_mail:title', array($vars['cp_group_subject'], gc_explode_translation($vars['cp_group']['name'],'en')),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_group_mail:title', array($vars['cp_group_subject'], gc_explode_translation($vars['cp_group']['name'],'fr')),'fr');
 
 		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_group_mail:description',array($vars['cp_group_message']),'en');
 		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_group_mail:description',array($vars['cp_group_message']),'fr');
