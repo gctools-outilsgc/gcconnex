@@ -26,6 +26,11 @@ if (getenv('DBHOST') != '')
 else
 	$dbhost = 'gcconnex-db';
 
+if (getenv('WWWROOT') != '')
+	#wwwroot = getenv('WWWROOT');
+else
+	$wwwroot = 'http://localhost:8080/';
+
 // none of the following may be empty
 $params = array(
 	// database parameters
@@ -36,12 +41,12 @@ $params = array(
 	// We use a wonky dbprefix to catch any cases where folks hardcode "elgg_"
 	// instead of using config->dbprefix
 	'dbprefix' => 'd_elgg_',
-	'dbhost' => 'gcconnex-db',
+	'dbhost' => $dbhost,
 
 	// site settings
 	'sitename' => 'Docker GCconnex',
 	'siteemail' => 'no_reply@gcconnex.gc.ca',
-	'wwwroot' => 'http://localhost:8080/',
+	'wwwroot' => $wwwroot,
 	'dataroot' => getenv('HOME') . '/data/',
 
 	// admin account
