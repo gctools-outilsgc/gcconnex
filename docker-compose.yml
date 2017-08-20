@@ -40,7 +40,7 @@ services:
       - DOCKER=1
       - HOME=/var/www/html
       - DBHOST=gcconnex-db
-      - WWWROOT=''
+#      - WWWROOT=
 
   # ###########################################################################
   # The GCConnex cron container.  This container is responsible for executing
