@@ -27,7 +27,7 @@ else
 	$dbhost = 'gcconnex-db';
 
 if (getenv('WWWROOT') != '')
-	#wwwroot = getenv('WWWROOT');
+	$wwwroot = getenv('WWWROOT');
 else
 	$wwwroot = 'http://localhost:8080/';
 
