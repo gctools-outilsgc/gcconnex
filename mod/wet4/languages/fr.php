@@ -3,6 +3,7 @@
 
 return array(
 
+  'thewire:head:title' => 'Message sur le fil',
 
   'entity:like:link:page_top' => 'Aimer la page "%s"',
   'entity:unlike:link:page_top' => 'Enlever la mention j\'aime de la page "%s"',
@@ -1435,6 +1436,7 @@ return array(
 'generic_comments:post' => "Publier un commentaire",
 	'generic_comments:text' => "Commentaire",
 	'generic_comments:latest' => "Derniers commentaires",
+  'generic_comments:latest:event' => "Derniers commentaires sur les événements",
 	'generic_comment:posted' => "Votre commentaire a été publié avec succès.",
 	'generic_comment:updated' => "Le commentaire a été mis à jour.",
 'generic_comment:deleted' => "Le commentaire a été correctement supprimé.",

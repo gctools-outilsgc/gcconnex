@@ -65,8 +65,10 @@ function c_module_dump_init() {
 	elgg_register_plugin_hook_handler('widget_url', 'widget_manager', "c_widget_manager_widgets_url");
 
 	// cyu - 02/10/2015: override the tasks_page_handler
-	elgg_unregister_page_handler('tasks', 'tasks_page_handler');
-	elgg_register_page_handler('tasks', 'c_tasks_page_handler');
+	if (elgg_is_active_plugin('tasks')) {
+		elgg_unregister_page_handler('tasks', 'tasks_page_handler');
+		elgg_register_page_handler('tasks', 'c_tasks_page_handler');
+	}
 }
 
 

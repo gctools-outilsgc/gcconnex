@@ -172,13 +172,13 @@ $plugins_off = array(
 'gc_official_groups',
 'apiadmin',
 'gc_profile_nudge',
-'enhanced_user_search'
+'enhanced_user_search',
 'GC_profileStrength_collab',
 'b_extended_profile_collab',
 'gcRegistration_collab',
-'gc_onboard_collab'
+'gc_onboard_collab',
 'gc_splash_page_collab',
-'gccollab_theme'
+'gccollab_theme',
 );
 
 // deactivate plugins that are not active in prod, order doesn't matter.
@@ -192,7 +192,7 @@ foreach ($plugins_off as $key => $id) {
 	}
 
 	if (!$plugin->isActive()){
-		unset($plugins[$key]);
+		unset($plugins_off[$key]);
 		continue;
 	}
 

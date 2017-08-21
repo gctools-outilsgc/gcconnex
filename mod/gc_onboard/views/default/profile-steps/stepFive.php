@@ -5,7 +5,7 @@
  * Fifth step of profile module. Avatar upload.
  */
 
-$user = get_loggedin_user()->username;
+$user = elgg_get_logged_in_user_entity()->username;
 $site_url = elgg_get_site_url();
 $profile_link = $site_url . 'profile/' . $user;
 ?>

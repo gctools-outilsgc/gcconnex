@@ -329,14 +329,9 @@ switch ($msg_type) {
 
 		if (array_key_exists($vars['cp_topic']->getSubtype(),$entity_f))
 			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_f',array($topic_author->getURL(), $topic_author->username, $entity_f[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=site', $vars['cp_topic']->title2),'fr');
+		
 		else if (array_key_exists($vars['cp_topic']->getSubtype(),$entity_m))
 			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_m',array($topic_author->getURL(), $topic_author->username, $entity_m[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=site', $vars['cp_topic']->title2),'fr');
-		else if (array_key_exists($vars['cp_topic']->getSubtype(),$entity_f2))
-
-			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_f2',array($topic_author->getURL(), $topic_author->username, $entity_f2[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=site', $vars['cp_topic']->title2),'fr');
-		else if (array_key_exists($vars['cp_topic']->getSubtype(),$entity_m3))
-
-			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_m3',array($topic_author->getURL(), $topic_author->username, $entity_m3[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=site', $vars['cp_topic']->title2),'fr');
 
 		else if (array_key_exists($vars['cp_topic']->getSubtype(),$entity_answer))
 			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_answer',array($topic_author->getURL(), $topic_author->username, $entity_answer[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=site', $title_answer2),'fr');
@@ -451,8 +446,8 @@ switch ($msg_type) {
 
 
 	case 'cp_group_mail': // sending out group mail to all members
-		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_group_mail:title', array(gc_explode_translation($vars['cp_group']['name'],'en'),$vars['cp_group_subject']),'en');
-		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_group_mail:title', array(gc_explode_translation($vars['cp_group']['name'],'fr'),$vars['cp_group_subject']),'fr');
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_group_mail:title', array($vars['cp_group_subject'], gc_explode_translation($vars['cp_group']['name'],'en')),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_group_mail:title', array($vars['cp_group_subject'], gc_explode_translation($vars['cp_group']['name'],'fr')),'fr');
 
 		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_group_mail:description',array($vars['cp_group_message']),'en');
 		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_group_mail:description',array($vars['cp_group_message']),'fr');
