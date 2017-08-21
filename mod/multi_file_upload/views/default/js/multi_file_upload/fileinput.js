@@ -80,7 +80,7 @@ requirejs( ["fileinput"], function() {
         }
     };
 
-    //Initialize 
+    //Initialize
     //More options can be found at http://plugins.krajee.com/file-input#options
     $("#multi-files-upload").fileinput({
         uploadAsync: false,
@@ -88,7 +88,7 @@ requirejs( ["fileinput"], function() {
         allowedPreviewMimeTypes: ['image/jpeg', 'image/jpg', 'image/png', 'image/bmp', 'image/gif', 'text/plain'], //only allow preview for these file types
         language: elgg.get_language(),
         //maxFileSize: 10000,
-        allowedFileExtensions: get_file_tools_settings(),
+        allowedFileExtensions: get_file_tools_settings('multi'),
         maxFileCount: 10,
         uploadUrl: elgg.normalize_url('/mod/multi_file_upload/actions/file/upload.php'),
         maxFilePreviewSize: 10240,
@@ -100,7 +100,7 @@ requirejs( ["fileinput"], function() {
             obj['container_guid'] = elgg.get_page_owner_guid();
             return obj;
         },
-        previewFileIconSettings: { 
+        previewFileIconSettings: {
         'pdf': '<i class="fa fa-file-pdf-o text-danger"></i>',
         'docx': '<i class="fa fa-file-word-o text-primary"></i>',
         'doc': '<i class="fa fa-file-word-o text-primary"></i>',

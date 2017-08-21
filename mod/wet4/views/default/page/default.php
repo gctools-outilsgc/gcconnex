@@ -69,7 +69,7 @@ $feedbackText= elgg_echo('wet:feedbackText');
 $body = <<<__BODY
 <div class="elgg-page-messages">
     $messages
-</div> 
+</div>
     $tabskip
 
 <div class="elgg-page elgg-page-default">
@@ -90,8 +90,8 @@ $body .= <<<__BODY
 
 		<!-- </div>-->
     	<div id="wb-bnr" class="container">
-            
-          
+
+
 </div>
 $site_brand
 
@@ -104,12 +104,12 @@ $breadcrumbs
        <div class="container">
        $userMenu
        </div>
-       
+
     $group_cover_image
 	<main role="main" property="mainContentOfPage" class="container">
 
         <!--<div class="elgg-inner">-->
-            
+
         <!--<section>-->
 			$content
 <!--</section>
@@ -139,8 +139,7 @@ $feedback_button
 
 	</footer>
 
-    <script src="$bootstrap"></script>
-    <script src=" $jsLocation "></script>
+
 
 
 </div>
@@ -149,6 +148,8 @@ __BODY;
 
 
 $body .= elgg_view('page/elements/foot');
+
+$body .= '<script src="'.$bootstrap.'"></script><script src="'.$jsLocation.'"></script>';
 
 $head = elgg_view('page/elements/head', $vars['head']);
 
