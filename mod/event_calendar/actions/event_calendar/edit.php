@@ -94,6 +94,7 @@ if ($event) {
 
 	if ($event->schedule_type == 'poll') {
 		forward('event_poll/add/'.$event->guid);
+	}
 
 	forward($event->getURL());
 
