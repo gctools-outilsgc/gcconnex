@@ -112,7 +112,13 @@ function cp_notifications_init() {
 		}
 	}
 
-	elgg_register_plugin_hook_handler('action', 'blog/save', 'minor_save_hook_handler', 300);
+	$subtype_array = array('blog', 'bookmarks', 'discussion');
+	foreach ($subtype_array as $subtype) 
+		elgg_register_plugin_hook_handler('action', $subtype.'/save', 'minor_save_hook_handler', 300);
+	
+	$subtype_array = array('file/upload', 'ideas/saveidea', 'photos/album/save');
+	foreach ($subtype_array as $subtype) 
+		elgg_register_plugin_hook_handler('action', $subtype, 'minor_save_hook_handler', 300);	
 
 }
 
@@ -128,6 +134,7 @@ function cp_notifications_init() {
  * @return mixed if not null, this will be the new value of the plugin hook
  */
 function minor_save_hook_handler($hook, $type, $value, $params) {
+
 
     if (strcmp(get_input('minor_save'), 'yes') === 0) {
 

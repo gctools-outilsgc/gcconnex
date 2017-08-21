@@ -17,8 +17,8 @@ if ($right || $left) {
 $object = elgg_get_page_owner_entity();
 $lang = get_current_language();
 
-if($object->title3){
-		$groupName = gc_explode_translation($object->title3, $lang);
+if($object->title){
+		$groupName = gc_explode_translation($object->title, $lang);
 }else{
 		$groupName = $object->name;
 }

@@ -3,6 +3,7 @@ $site_url = elgg_get_site_url();
 
 return array(
 
+    'thewire:head:title' => 'Wire post',
 
     /*
     More context links - entity/river menus
@@ -1577,6 +1578,7 @@ If you requested this, click on the link below. Otherwise ignore this email.
 	'generic_comments:post' => "Post comment",
 	'generic_comments:text' => "Comment",
 	'generic_comments:latest' => "Latest comments",
+    'generic_comments:latest:event' => "Latest Comments on Events",
 	'generic_comment:posted' => "Your comment was successfully posted.",
 	'generic_comment:updated' => "The comment was successfully updated.",
 	'generic_comment:deleted' => "The comment was successfully deleted.",
