@@ -84,51 +84,33 @@ if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false) {
 }
 
 
-// this populates the title tag
-echo elgg_format_element('title', array(), $page_title, array('encode_text' => true));
-
-
+echo elgg_format_element('title', array(), $vars['title'], array('encode_text' => true));
 foreach ($metas as $attributes) {
-	echo elgg_format_element('meta', $attributes);
+  echo elgg_format_element('meta', $attributes);
 }
-
 foreach ($links as $attributes) {
-	echo elgg_format_element('link', $attributes);
+  echo elgg_format_element('link', $attributes);
 }
 
-$js = elgg_get_loaded_js('head');
-$css = elgg_get_loaded_css();
-$elgg_init = elgg_view('js/initialize_elgg');
+$stylesheets = elgg_get_loaded_css();
 
-$html5shiv_url = elgg_normalize_url('vendors/html5shiv.js');
-$ie_url = elgg_get_simplecache_url('css', 'ie');
-
-?>
-
-<!--[if lt IE 9]>
-	<script src="<?php echo $html5shiv_url; ?>"></script>
-<![endif]-->
-
-<!--[if gt IE 8]>
-	<link rel="stylesheet" href="<?php echo $ie_url; ?>" />
-<![endif]-->
-
-<script><?php echo $elgg_init; ?></script>
-
-<?php
-
-foreach ($css as $url) {
+foreach ($stylesheets as $url) {
   echo elgg_format_element('link', array('rel' => 'stylesheet', 'href' => $url));
 }
 
-foreach ($js as $url) {
-	echo elgg_format_element('script', array('src' => $url));
-}
+// A non-empty script *must* come below the CSS links, otherwise Firefox will exhibit FOUC
+// See https://github.com/Elgg/Elgg/issues/8328
+?>
+<script>
+  <?php // Do not convert this to a regular function declaration. It gets redefined later. ?>
+  require = function () {
+    // handled in the view "elgg.js"
+    _require_queue.push(arguments);
+  };
+  _require_queue = [];
+</script>
 
-echo elgg_view_deprecated('page/elements/shortcut_icon', array(), "Use the 'head', 'page' plugin hook.", 1.9);
-echo elgg_view_deprecated('metatags', array(), "Use the 'head', 'page' plugin hook.", 1.8);
-
-
+<?php
 /*--------------------- Web Experience Toolkit 4 ---------------------*/
 
 ?>
