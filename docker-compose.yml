@@ -61,6 +61,8 @@ services:
   # ###########################################################################
   gcconnex-db:
     image: library/mysql:5.6
+    volumes:
+      - ./data/db:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=gcconnex
       - MYSQL_DATABASE=elgg
