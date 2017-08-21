@@ -91,13 +91,8 @@ $plugins = array(
 'polls',
 'profile',
 'rename_friends',
-'reportedcontent',
-'search',
-'tagcloud',
-'tasks',
 'members',
 'thewire',
-'twitter',
 'uservalidationbyemail',
 'unvalidatedemailchange',
 'widget_manager',
@@ -105,19 +100,16 @@ $plugins = array(
 'custom_index_widgets',
 'file_tools',
 'event_calendar',
-'login_as',
 'ideas',
-'unvalidated_user_cleanup',
 'pages',
-'twitter_api',
 'analytics',
 'tidypics',
 'translation_editor',
-'sphinx',
 'gcProfilePictureBadges',
 'upload_users',
 'c_email_extensions',
 'gcRegistration',
+'c_module_dump',
 'au_subgroups',
 'widget_manager_accessibility',
 'b_extended_profile',
@@ -125,13 +117,10 @@ $plugins = array(
 'blog_tools',
 'ckeditor',
 'contactform',
-'gc_group_deletion',
 'site_notifications',
 'web_services',
-'missions_profile_extend',
 'missions_organization',
 'missions',
-'custom_error_page',
 'data_views',
 'mt_activity_tabs',
 'geds_sync',
@@ -139,32 +128,76 @@ $plugins = array(
 'achievement_badges',
 'embed_extender',
 'toggle_language',
+'cp_notifications',
+'login_as',
 'thewire_tools',
 'mentions',
 'GoC_dev_banner',
+'questions',
 'wet4',
 'GC_profileStrength',
-'apiadmin',
-'cp_notifications',
 'saml_link',
 'simplesaml',
-'gc_fedsearch_gsa',
-'maintenance',
 'elgg-jsonp',
-'gc_group_layout',
-'gc_official_groups',
 'machine_translation',
-'gc_profile_nudge',
 'phpmailer',
-'gc_onboard',
-'gc_streaming_content',
 'gc_newsfeed',
-'gccollab_stats',
+'gc_onboard',
 'gc_splash_page',
+'gc_group_layout',
+'gcconnex_theme',
+'gc_streaming_content',
 'multi_file_upload',
-'questions',
-'gcconnex_theme'
+'gccollab_stats',
+'gc_communities',
+'gc_tags',
+'gc_elgg_sitemap',
 );
+
+$plugins_off = array(
+'developers',
+'oauth_api',
+'reportedcontent',
+'search',
+'tagcloud',
+'tasks',
+'twitter',
+'unvalidated_user_cleanup',
+'twitter_api',
+'sphinx',
+'gc_group_deletion',
+'custom_error_page',
+'maintenance',
+'gc_fedsearch_gsa',
+'gc_official_groups',
+'apiadmin',
+'gc_profile_nudge',
+'enhanced_user_search'
+'GC_profileStrength_collab',
+'b_extended_profile_collab',
+'gcRegistration_collab',
+'gc_onboard_collab'
+'gc_splash_page_collab',
+'gccollab_theme'
+);
+
+// deactivate plugins that are not active in prod, order doesn't matter.
+// This happens first to ensure we don't run into conflicts when activating mods in the next step
+foreach ($plugins_off as $key => $id) {
+	$plugin = elgg_get_plugin_from_id($id);
+
+	if (!$plugin) {
+		unset($plugins_off[$key]);
+		continue;
+	}
+
+	if (!$plugin->isActive()){
+		unset($plugins[$key]);
+		continue;
+	}
+
+	$plugin->deactivate();
+}
 
 // activate plugins that are not activated on install, arrange those that are
 foreach ($plugins as $key => $id) {
