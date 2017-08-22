@@ -70,7 +70,7 @@ $values = array(
 );
 
 // fail if a required entity isn't set
-//$required = array('title', 'description');
+$required = array('title', 'description');
 $cart = array(); //Create a array to compare if english or french title and description is in.
 foreach ($values as $name => $default) {
 

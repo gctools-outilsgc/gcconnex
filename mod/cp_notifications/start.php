@@ -499,21 +499,31 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 	$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
 
-	foreach ($to_recipients as $to_recipient) {
-		// username for link in footer (both email notification and site notification
-		$message['user_name'] = $to_recipient->username;
-		if ($cp_msg_type != 'cp_event_ics') {
-			$template = elgg_view('cp_notifications/email_template', $message);
-			$site_template = elgg_view('cp_notifications/site_template', $message);
-		}
+	if (is_array($to_recipients)) {
+		foreach ($to_recipients as $to_recipient) {
+			// username for link in footer (both email notification and site notification
+			$message['user_name'] = $to_recipient->username;
+			if ($cp_msg_type != 'cp_event_ics') {
+				$template = elgg_view('cp_notifications/email_template', $message);
+				$site_template = elgg_view('cp_notifications/site_template', $message);
+			}
 
-		$newsletter_appropriate = array('cp_wire_share','cp_messageboard','cp_wire_mention','cp_hjpost','cp_hjtopic', 'cp_friend_request', 'cp_friend_approve');
-		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0 && in_array($cp_msg_type, $newsletter_appropriate)) {
-			$result = create_digest($author, $cp_msg_type, $content_entity, $to_recipient, $content_url);
-			continue;
-		} else
-			$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template ) : mail($to_recipient->email, $subject, $template, cp_get_headers($event));
-		messages_send($subject, $site_template, $to_recipient->guid, $sender_guid, 0, true, $add_to_sent);
+			$newsletter_appropriate = array('cp_wire_share','cp_messageboard','cp_wire_mention','cp_hjpost','cp_hjtopic', 'cp_friend_request', 'cp_friend_approve');
+			if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0 && in_array($cp_msg_type, $newsletter_appropriate)) {
+				$result = create_digest($author, $cp_msg_type, $content_entity, $to_recipient, $content_url);
+				continue;
+
+			} else
+				$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template ) : mail($to_recipient->email, $subject, $template, cp_get_headers($event));
+
+			messages_send($subject, $site_template, $to_recipient->guid, $sender_guid, 0, true, $add_to_sent);
+		}
+	}
+
+		// register the error, if either of the arrays are not populated
+	if (!is_array($to_recipients)) {
+		notification_logging('error: in cp_create_notification(), $to_recipients is not array');
+		system_message(elgg_echo('notifications:did_not_send'));
 	}
 }
 
@@ -602,6 +612,8 @@ function cp_create_annotation_notification($event, $type, $object) {
 	$object_subtype = $object->getSubtype();
 	$liked_content = get_entity($object->entity_guid);
 	$type_of_like = $liked_content->getSubtype();
+	if (!$type_of_like) $type_of_like = $liked_content->getType();
+
 	$action_type = "content_revision";
 	$author = $liked_by;
 
@@ -712,14 +724,47 @@ function cp_create_annotation_notification($event, $type, $object) {
 		$liked_by = get_user($object->owner_guid); 							// get user who liked comment
 
 		$action_type = "post_likes";
+
+		$to_recipients = array();
+		$to_recipients_site = array();
+
 	    switch ($type_of_like) {
-	    	case 'comment':
-	    		$subject = elgg_echo('cp_notify:subject:likes_comment', array($liked_by->name,$content_title),'en');
-	    		$subject .= ' | '.elgg_echo('cp_notify:subject:likes_comment',array($liked_by->name,$content_title),'fr');
+	    	case 'group':
+	    		$group_name_en = gc_explode_translation($content_entity->name, 'en');
+	    		$group_name_fr = gc_explode_translation($content_entity->name, 'fr');
+
+	    		$subject = elgg_echo(elgg_echo('cp_notify:subject:likes_group', array($liked_by->name, $group_name_en), 'en'));
+	    		$subject .= elgg_echo(elgg_echo('cp_notify:subject:likes_group', array($liked_by->name, $group_name_fr), 'fr'));
 
 	    		$message = array(
 	    			'cp_liked_by' => $liked_by->name,
-	    			'cp_comment_from' => "<a href='{$content->getURL()}'>{$content_title}</a>",
+	    			'cp_group' => $content_entity->name,
+	    			'cp_group_link' => $content_entity->getURL(),
+	    			'cp_msg_type' => 'cp_like_group'
+	    		);
+
+	    		$group_owner = $content_entity->getOwnerEntity();
+	    		$action_type = 'like_group';
+
+	    		if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $group_owner->getGUID(),'cp_notifications'),'likes_email') == 0)
+    				$to_recipients[$group_owner->getGUID()] = $group_owner;
+    			if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $group_owner->getGUID(),'cp_notifications'),'likes_site') == 0)
+    				$to_recipients_site[$group_owner->getGUID()] = $group_owner;
+
+	    		break;
+
+	    	case 'comment':
+
+	    		$content_title_en = gc_explode_translation($content_title, 'en');
+	    		$content_title_fr = gc_explode_translation($content_title, 'fr');
+
+	    		$subject = elgg_echo('cp_notify:subject:likes_comment', array($liked_by->name, $content_title_en),'en');
+	    		$subject .= ' | '.elgg_echo('cp_notify:subject:likes_comment',array($liked_by->name, $content_title_fr),'fr');
+
+	    		$message = array(
+	    			'cp_liked_by' => $liked_by->name,
+	    			'cp_comment_from' => $content_title,
+	    			'content_url' => $content->getURL(),
 					'cp_msg_type' => 'cp_likes_comments',
 				);
 
@@ -734,12 +779,16 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 	    	case 'discussion_reply':
 
-	    		$subject = elgg_echo('cp_notify:subject:likes_discussion',array($liked_by->name,$content_title),'en');
-	    		$subject .= ' | '.elgg_echo('cp_notify:subject:likes_discussion',array($liked_by->name,$content_title),'fr');
+	    		$content_title_en = gc_explode_translation($content_title, 'en');
+	    		$content_title_fr = gc_explode_translation($content_title, 'fr');
+
+	    		$subject = elgg_echo('cp_notify:subject:likes_discussion',array($liked_by->name, $content_title_en),'en');
+	    		$subject .= ' | '.elgg_echo('cp_notify:subject:likes_discussion',array($liked_by->name, $content_title_fr),'fr');
 
 				$message = array(
 					'cp_liked_by' => $liked_by->name,
-					'cp_comment_from' => "<a href='{$content->getURL()}'>{$content_title}</a>",
+					'cp_comment_from' => $content_title,
+					'content_url' => $content->getURL(),
 					'cp_msg_type' => 'cp_likes_topic_replies',
 				);
 				$author = $liked_by;
@@ -776,13 +825,17 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 		    		$content_entity = $content;
 		    		$author = $liked_by;
+
+		    		$content_title_en = gc_explode_translation($content->title, 'en');
+		    		$content_title_fr = gc_explode_translation($content->title, 'fr');
+
 		    		// cyu - patching issue #323 (liking wire post)
 		    		if ($content->getSubtype() === 'thewire') {
-		    			$subject = elgg_echo('cp_notify:subject:likes_wire',array($liked_by->name,$content->title),'en') . ' | ' . elgg_echo('cp_notify:subject:likes_wire',array($liked_by->name,$content->title),'fr');
+		    			$subject = elgg_echo('cp_notify:subject:likes_wire',array($liked_by->name, $content_title_en),'en') . ' | ' . elgg_echo('cp_notify:subject:likes_wire',array($liked_by->name, $content_title_fr),'fr');
 		    			$content_subtype = 'thewire';
 
 		    		} else {
-		    			$subject = elgg_echo('cp_notify:subject:likes',array($liked_by->name,$content->title),'en') . ' | ' . elgg_echo('cp_notify:subject:likes',array($liked_by->name,$content->title),'fr');
+		    			$subject = elgg_echo('cp_notify:subject:likes',array($liked_by->name, $content_title_en),'en') . ' | ' . elgg_echo('cp_notify:subject:likes',array($liked_by->name, $content_title_fr),'fr');
 		    			$content_subtype = '';
 		    		}
 
@@ -809,45 +862,55 @@ function cp_create_annotation_notification($event, $type, $object) {
 	$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
 
 
-	// send notification out via email
-	foreach ($to_recipients as $to_recipient_id => $to_recipient) {
-
-		$message['user_name'] = get_user($to_recipient->guid)->username;
-
-		$recipient_user = get_user($to_recipient->guid);
-		if ($liked_by->guid == $entity->getOwnerGUID() && $to_recipient->guid == $liked_by->guid)
-			continue;
+	if (is_array($to_recipients)) {
+		// send notification out via email
+		foreach ($to_recipients as $to_recipient_id => $to_recipient) {
 		
-		//if (cp_check_permissions($object, $recipient_user)){
-		if (has_access_to_entity($object, $recipient_user)) {
+			$message['user_name'] = get_user($to_recipient->guid)->username;
 
-			if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0)
-				create_digest($author, $action_type, $content_entity, $to_recipient);
+			$recipient_user = get_user($to_recipient->guid);
 
-			else {
+			if ($liked_by->guid == $entity->getOwnerGUID() && $to_recipient->guid == $liked_by->guid)
+				continue;
 
-				$template = elgg_view('cp_notifications/email_template', $message);
+			if ($object->access_id == 1 || $object->access_id == 2 || $content_entity->getType() === 'group' || $action_type === 'post_likes') {
 
-				if (elgg_is_active_plugin('phpmailer'))
-					phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );
-				else
-					mail($to_recipient->email, $subject, $template,cp_get_headers());
+				if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0)
+					create_digest($author, $action_type, $content_entity, $to_recipient);
+
+				else {
+					$template = elgg_view('cp_notifications/email_template', $message);
+
+					if (elgg_is_active_plugin('phpmailer'))
+						phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );
+					else
+						mail($to_recipient->email, $subject, $template,cp_get_headers());
+				}
 			}
 		}
 	}
 
-	// send notification out via site
-	foreach ($to_recipients_site as $to_recipient_id => $to_recipient) {
-		$site_template = elgg_view('cp_notifications/site_template', $message);
-		$recipient_user = get_user($to_recipient->guid);
-		
-		if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') !== 0) {
+	if (is_array($to_recipients_site)) {
+		// send notification out via site
+		foreach ($to_recipients_site as $to_recipient_id => $to_recipient) {
+			$site_template = elgg_view('cp_notifications/site_template', $message);
+			$recipient_user = get_user($to_recipient->guid);
+			
+			if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') !== 0) {
 
-			if (has_access_to_entity($object, $recipient_user)) {
-				messages_send($subject, $site_template, $to_recipient->guid, $site->guid, 0, true, false);
+				if (has_access_to_entity($object, $recipient_user)) {
+					messages_send($subject, $site_template, $to_recipient->guid, $site->guid, 0, true, false);
+				}
 			}
 		}
 	}
+
+	// register the error, if either of the arrays are not populated
+	if (!is_array($to_recipients) || !is_array($to_recipients_site)) {
+		notification_logging('error: in cp_create_notification(), $to_recipients or $to_recipients_site is not array');
+		system_message(elgg_echo('notifications:did_not_send'));
+	}
+
 } // end of function
 
 
@@ -1191,14 +1254,13 @@ function cp_create_notification($event, $type, $object) {
 				$author_id = $object->getOwnerGUID();
 				
 				// Get guid of the question
-			if($object->getSubtype = 'answer'){
-					$content_id = $object->getContainerGUID();
+				if($object->getSubtype = 'answer') {
+						$content_id = $object->getContainerGUID();
 				}
 			}
 	
 			// client wants the html tags stripped from the notifications
 			$object_description = ($object->description != strip_tags($object->description)) ? "" : $object->description;
-
 
 			$message = array(
 				'cp_topic' => $object,
@@ -1212,18 +1274,21 @@ function cp_create_notification($event, $type, $object) {
 
 			$to_recipients = get_subscribers($dbprefix, $author_id, $content_id);
 			$to_recipients_site = get_site_subscribers($dbprefix, $author_id, $content_id);
-			$email_only = false;
 			break;
 
 	} // end of switch statement
 
+
+
+    $notification_error_type = "";
 
 	// check for empty subjects or empty content
 	if (empty($subject)) return false;
 	$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
 
 	/// send the email notification
-	if (count($to_recipients) > 0 && is_array($to_recipients)) {
+	if (is_array($to_recipients)) {
+
 		foreach ($to_recipients as $to_recipient) {
 
 			$recipient_user = get_user($to_recipient->guid);
@@ -1248,11 +1313,12 @@ function cp_create_notification($event, $type, $object) {
 				}
 			}
 		}
-	}
+	} else 
+		$notification_error_type = elgg_echo('cp_notifications:chkbox:email');
 
 
 	/// send site notifications
-	if (count($to_recipients_site) > 0 && is_array($to_recipients_site)) {
+	if (is_array($to_recipients_site)) {
 		
 		foreach ($to_recipients_site as $to_recipient) {
 			$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid, 'cp_notifications');
@@ -1269,6 +1335,25 @@ function cp_create_notification($event, $type, $object) {
 			}
 
 		}
+	} else 
+		$notification_error_type .= '& '.elgg_echo('cp_notifications:chkbox:site');
+
+	// register the error, if either of the arrays are not populated
+	if (!is_array($to_recipients) || !is_array($to_recipients_site)) {
+		notification_logging('error: in cp_create_notification(), $to_recipients or $to_recipients_site is not array');
+		system_message(elgg_echo('notifications:did_not_send')." ({$notification_error_type})");
+	}
+
+}
+
+
+function notification_logging($error_message) {
+	// logging mechanism
+	if (elgg_is_active_plugin('wet4')) {
+		elgg_load_library('GCconnex_logging');
+		$errStack = '';
+		$errType = 'custom';
+		gc_err_logging($error_message, $errStack, 'Notifications',$errType);
 	}
 }
 

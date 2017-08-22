@@ -113,14 +113,13 @@ function phpmailer_extract_from_email($from) {
  * @return bool
  */
 function phpmailer_send($to, $to_name, $subject, $body, array $bcc = NULL, $html = true, array $files = NULL, array $params = NULL) {
-	
+
 	require_once elgg_get_plugins_path() . '/phpmailer/vendors/class.phpmailer.php';
 	$phpmailer = new PHPMailer(true); //defaults to using php "mail()"; the true param means it will throw exceptions on errors, which we need to catch
 
 	// CONFIGURE SERVER INFORMATION defaults
 	$phpmailer->IsSMTP(); // telling the class to use SMTP
 	$phpmailer->Host       = elgg_get_plugin_setting('phpmailer_host', 'phpmailer'); // SMTP server
-	error_log(">>>>>>>> phpmail host: ".elgg_get_plugin_setting('phpmailer_host', 'phpmailer'));
 	$phpmailer->Port       = elgg_get_plugin_setting('ep_phpmailer_port', 'phpmailer'); // SMTP server port
 	$phpmailer->SMTPAuth   = true;
 	$phpmailer->SMTPSecure = "tls";
@@ -148,7 +147,7 @@ function phpmailer_send($to, $to_name, $subject, $body, array $bcc = NULL, $html
 	
 	////////////////////////////////////
 	// Format message
-	$phpmailer->SMTPSecure = "tls";
+	//$phpmailer->SMTPSecure = "tls";
 	$phpmailer->SMTPDebug = 0; //Set to 1 for debugging information
 
 	$phpmailer->ClearAllRecipients();
@@ -210,7 +209,7 @@ function phpmailer_send($to, $to_name, $subject, $body, array $bcc = NULL, $html
 
 	$is_ssl    = elgg_get_plugin_setting('ep_phpmailer_ssl', 'phpmailer');
 	$ssl_port  = elgg_get_plugin_setting('ep_phpmailer_port', 'phpmailer');
-	
+
 	try {
 
 		if ($is_smtp && isset($smtp_host)) {
@@ -229,15 +228,36 @@ function phpmailer_send($to, $to_name, $subject, $body, array $bcc = NULL, $html
 		$return = $phpmailer->Send();
 
 	} catch (phpmailerException $e) {
-		error_log($e->errorMessage());
+		//error_log($e->errorMessage());
+		
+		$errMess = $e->getMessage();
+		$errStack = $e->getTraceAsString();
+		$errType = $e->getCode();
+		phpmailer_logging($errMess, $errStack, 'PHPMailer', $errType);
 	}
 	
 
-	if (!$return ) {
-		error_log('PHPMailer error: ' . $phpmailer->ErrorInfo, 'WARNING');
-	} else
-		error_log("email sent");
+
+	if (!$return) {
+		
+		$errMess = $phpmailer->ErrorInfo;
+		$errStack = "";
+		$errType = "custom";
+		phpmailer_logging($errMess, $errStack, 'PHPMailer', $errType);
+
+	} else {
+		//error_log("PHPMailer email sent");
+	}
 
 	return $return;
 }
 
+
+
+function phpmailer_logging($errMess, $errStack, $type, $errType) {
+	// logging mechanism
+	if (elgg_is_active_plugin('wet4')) {
+		elgg_load_library('GCconnex_logging');
+		gc_err_logging($errMess, $errStack, $type, $errType);
+	}
+}
