@@ -35,6 +35,7 @@ return array(
       'freshdesk:additionalinfo' => 'Additional Information',
 
       'freshdesk:valid' => 'This field is required.',
+      'freshdesk:valid:filetypes' => "Invalid file format. Allowed file extensions: txt, gif, jpg, jpeg and png.",
 
       'freshdesk:warning:header' => 'Configure knowledge Base',
       'freshdesk:warning:body' => 'Knowledge base needs to be synced.',

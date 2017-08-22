@@ -106,6 +106,13 @@ $(document).ready(function(){
         if($.trim($(this).val()) == '' && $(this).hasClass('error') != true){
           $(this).addClass('error').parent().append('<label for="'+$(this).attr('name')+'" class="error">'+'<?php echo elgg_echo('freshdesk:valid', array(), $lang) ?>'+'</label>');
         }
+      } else if($(this).attr('name') == 'attachment'){
+        if($(this).val() != '' && $(this).hasClass('error') != true){
+          var ext = $('#attachment').val().split('.').pop().toLowerCase();
+          if($.inArray(ext, ['gif','png','jpg','jpeg','txt']) == -1) {
+            $(this).addClass('error').parent().append('<label for="'+$(this).attr('name')+'" class="error">'+'<?php echo elgg_echo('freshdesk:valid:filetypes', array(), $lang) ?>'+'</label>');
+          }
+        }
       }
     });
 
