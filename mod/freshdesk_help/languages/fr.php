@@ -28,5 +28,5 @@ return array(
   'freshdesk:additionalinfo' => 'Information additionnelle',
 
   'freshdesk:valid' => "Ce champ est obligatoire.",
-  'freshdesk:valid:filetypes' => "Format de fichier non valide. Extensions de fichier autorisées: txt, gif, jpg, jpeg and png.",
+  'freshdesk:valid:filetypes' => "Format de fichier non valide. Extensions de fichiers autorisées: txt, gif, jpg, jpeg and png.",
     );
