@@ -1887,7 +1887,7 @@ $content = elgg_view('event_calendar/show_events', $vars);
 				case 'owner':
 				$lang = get_current_language();
 				if (!$container->title3) {
-					$title = elgg_echo('event_calendar:listing_title:user', array($container->name));
+					$title = elgg_echo('event_calendar:listing_title:user', array(gc_explode_translation($container->name, $lang)));
 				}else{
 					$title = elgg_echo('event_calendar:listing_title:user', array(gc_explode_translation($container->title3, $lang)));
 				}
