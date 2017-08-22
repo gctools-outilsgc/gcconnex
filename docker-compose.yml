@@ -35,6 +35,10 @@ services:
       # - nginx-proxy
     environment:
       - VIRTUAL_HOST=gcconnex.local
+      - DOCKER=1
+      - HOME=/var/www/html
+      - DBHOST=gcconnex-db
+      - WWWROOT=http://localhost:8080/
 
   # ###########################################################################
   # The GCConnex cron container.  This container is responsible for executing
@@ -57,6 +61,8 @@ services:
   # ###########################################################################
   gcconnex-db:
     image: library/mysql:5.6
+    volumes:
+      - ./data/db:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=gcconnex
       - MYSQL_DATABASE=elgg
