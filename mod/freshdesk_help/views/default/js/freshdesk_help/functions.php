@@ -55,6 +55,35 @@ function displayCategories(link){
   $('.folder-display:not(:hidden)').fadeOut().parent().find('.categories').delay(500).fadeIn();
   $('#results-en').focus();
   $('#explore-header').delay(500).fadeIn();
+  setTimeout(function() {
+          equalizeHeights(".article-cat:visible");
+  }, 120);
+}
+
+/** Keep cards equal height */
+
+function equalizeHeights(selector) {
+  var heights = new Array();
+
+  // Loop to get all element heights
+  $(selector).each(function() {
+
+    // Need to let sizes be whatever they want so no overflow on resize
+    $(this).css('min-height', '0');
+    $(this).css('max-height', 'none');
+    $(this).css('height', 'auto');
+
+    // Then add size (no units) to array
+    heights.push($(this).height());
+  });
+
+  // Find max height of all elements
+  var max = Math.max.apply( Math, heights );
+
+  // Set all heights to max height
+  $(selector).each(function() {
+    $(this).css('height', max + 'px');
+  });
 }
 
 
@@ -254,7 +283,7 @@ function submitTicket(form, lang, source){
   if($('#attachment')[0].files[0]){
     formdata.append('attachments[]', $(form).find('#attachment')[0].files[0]);
   }
-  
+
   //send api call
   $.ajax(
     {

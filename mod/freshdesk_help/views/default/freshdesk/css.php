@@ -191,7 +191,7 @@
   margin: 0 10px;
 }
 
-@media (min-width: 540px){
+@media (min-width: 650px){
   .category-card {
     float: left;
     width: 50%;
