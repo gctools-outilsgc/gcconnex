@@ -26,8 +26,8 @@ elgg.ui.widgets.init = function() {
     //All widgets you can edit now have aria attributes to know if they can be draggable. They also have a tabindex so they can be tabbed to.
 	$('.elgg-state-draggable').focus(function () { //focus pokus ;3
 	    //add selecting class
-        
-	    $(this).addClass("ui-selecting", function () { 
+
+	    $(this).addClass("ui-selecting", function () {
 	        $('.ui-selecting').bind('keydown', function (event) {
 	            if (event.which == 13) { //Enter to move it
 	                //alert('Enter');
@@ -61,7 +61,7 @@ elgg.ui.widgets.init = function() {
 
 	                        //YOLO code! You only YOLO once :3
 	                        // This saves the location of the widget
-	                    
+
 	                        keyboardUpdatePosition(thisWidget);
 	                    }
 
@@ -99,7 +99,7 @@ elgg.ui.widgets.init = function() {
 	                //keyboardMove();
 	            };
 	            })
-	                
+
 
 	    $('.elgg-state-draggable').focusout(function () {
 	        $(this).removeClass("ui-selecting"); // when you stop focusing remove the class from DOM
@@ -136,9 +136,9 @@ elgg.ui.widgets.init = function() {
     $('.elgg-widgets-add-panel li.elgg-state-unavailable').click(elgg.ui.widgets.removebtn);
     $('.elgg-widgets-add-panel li.elgg-state-unavailable').children('input.widget-to-add').attr('disabled', "disabled");		// disable add widget button
 
-	$('a.elgg-widget-delete-button').live('click', elgg.ui.widgets.toggleremove);
+	$('a.elgg-widget-delete-button').on('click', elgg.ui.widgets.toggleremove);
 	// don't need to change        $('.elgg-widget-edit > form ').live('submit', elgg.ui.widgets.saveSettings);
-	$('a .elgg-widget-collapse-button').live('click', elgg.ui.widgets.collapseToggle);
+	$('a .elgg-widget-collapse-button').on('click', elgg.ui.widgets.collapseToggle);
 
 
     $('.elgg-widget-multiple').each(function() {
@@ -150,7 +150,7 @@ elgg.ui.widgets.init = function() {
 
     });
 
-   
+
     $('.wet-collapsed').find('.elgg-menu-item-collapse').find('i').addClass('fa-expand');
     $('.wet-open').find('.elgg-menu-item-collapse').find('i').addClass('fa-compress');
 
@@ -177,12 +177,12 @@ elgg.ui.widgets.collapseToggle = function(event) {
     if (expandClass == 'fa fa-lg icon-unsel fa-expand') {
         $(this).find('i').removeClass('fa-expand');
         $(this).find('i').addClass('fa-compress');
- 
+
     }else{
         $(this).find('i').addClass('fa-expand');
         $(this).find('i').removeClass('fa-compress');
-        
-        
+
+
     }
     //alert('im collapsing!');
     //$(this).children('i').addClass('fa-expand');
@@ -195,7 +195,7 @@ elgg.ui.widgets.collapseToggle = function(event) {
             }
 
             var guid = $(this).attr("href").replace("#elgg-widget-content-", "");
-    
+
             elgg.action('widget_manager/widgets/toggle_collapse', {
                 data:{
                     collapsed: collapsed,
@@ -296,7 +296,7 @@ elgg.ui.widgets.removebtn = function(event) {
         $widget = $(this).closest('.widget_manager_widgets_lightbox_wrapper');
         // find the name of the widget
         var name = $(this).data('elgg-widget-type');
-        
+
         $button = $(this);
         $button.addClass('elgg-state-available');
         $button.removeClass('elgg-state-unavailable');

@@ -71,30 +71,30 @@ elgg.ideas.init = function() {
         }
         return;
     }
-    
-    $('.idea-vote-container a').live('click', function(e) {
+
+    $('.idea-vote-container a').on('click', function(e) {
         e.preventDefault();
         var clicked = $(this);
-        // ds - don't know if this does anything 
+        // ds - don't know if this does anything
         if ($.data(this, 'clicked') || $(this).hasClass('checked')) // Prevent double-click
             return false;
         else {
             // ds - don't know if this does anything
             $.data(this, 'clicked', true);
-            
+
             var thisVote = this,
                 thisButton = $(this);
                 value = $(this).data('value'),  // +1 or -1 is stored in the data-value attribute on the thumbs up/dn links
                 idea = $(this).data('idea'), // stored in the data-idea attribute on the thumbs up/dn links
                 ideaURL = $('#elgg-object-' + idea + ' .idea-content h3 a').attr('href'),
                 ideaTitle = $('#elgg-object-' + idea + ' .idea-content h3 a').html();
-            
+
             if ( ideaTitle == null ) ideaTitle = $('.elgg-body h2').html();
-            
+
             // replace current idea points with ajax loader
             var old_points = $('#elgg-object-' + idea + ' .idea-points').html();
             $('#elgg-object-' + idea + ' .idea-points').html('<div class="elgg-ajax-loader"></div>');
-            
+
             // rateurl with tokens are in the href of the vote icon links in object/idea
             var rateurl = $(this).attr("href");
             elgg.action(rateurl, {
@@ -106,27 +106,27 @@ elgg.ideas.init = function() {
                 success: function(json) {
                     // console.log(json);
                     if ( !json.output.errorRate ) {
-                        
+
                         // get current users ideaVoteContainer and sidebar points
                         var ideaVoteContainer = $(this).parent(),
                             sidebarIdea = $('.sidebar-idea-list #elgg-object-' + idea);
-                        
+
                         // set total points on idea points object
                         $('#elgg-object-' + idea + ' .idea-points').html(json.output.sum + "<span>" + ((json.output.sum == 1 || json.output.sum == -1) ? "point" : "points") + "</span>");
-                        
+
                         // update points in sidebar
                         $('#elgg-object-' + idea + ' .sidebar-idea-points').html(json.output.sum);
-                        
+
                         // set likes/dislikes
                         thisButton.closest(".idea-vote-container").find(".idea-likes").html(json.output.likes);
                         thisButton.closest(".idea-vote-container").find(".idea-dislikes").html(json.output.dislikes);
-                        
+
                         // set current users rate buttons
                         ideaVoteContainer.html(getRateButtons(value,clicked));
-                        
-                        
-                        
-                        
+
+
+
+
                         // put the idea into the sidebar if it doesn't exist there already
                         /*
                         if ( !sidebarIdea.length ) {
@@ -146,8 +146,8 @@ elgg.ideas.init = function() {
                         // revert to the old points if there's an error
                         $('#elgg-object-' + idea + ' .idea-points').html(old_points);
                     }
-                    
-                    // not sure 
+
+                    // not sure
                     $.data(thisVote, 'clicked', false);
                 },
                 error: function(e, err){
@@ -197,4 +197,3 @@ elgg.ui.votePopup = function(hook, type, params, options) {
     return options;
 };
 elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.votePopup);
-
