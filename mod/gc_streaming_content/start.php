@@ -14,13 +14,13 @@ elgg_register_event_handler('init', 'system', 'gc_streaming_init');
 function gc_streaming_init(){
     elgg_require_js("stream_wire");
     elgg_require_js("stream_newsfeed");
-    
+
     elgg_extend_view('css/elgg', 'css/css');
-    
+
     elgg_register_ajax_view('ajax/wire_posts');
-    elgg_register_ajax_view('ajax/newsfeed_items');	
+    elgg_register_ajax_view('ajax/newsfeed_items');
     elgg_register_ajax_view('ajax/newsfeed_check');
-    
+
     elgg_register_page_handler('thewire', 'streaming_wire_page');
     // live stream wire widget
     elgg_register_widget_type('stream_wire_index',elgg_echo ('custom_index_widgets:stream_wire_index'),elgg_echo ('custom_index_widgets:stream_wire_index'), array("custom_index_widgets"), true);
@@ -32,13 +32,13 @@ function gc_streaming_init(){
     }
 
     elgg_register_widget_type('stream_newsfeed_index', $newsfeed_title, elgg_echo ('custom_index_widgets:stream_newsfeed_index'), array("custom_index_widgets"), true);
-    
+
 }
 
 function streaming_wire_page($page){
-    
-$base_dir = elgg_get_plugins_path() . 'thewire/pages/thewire';
-    //The wire/all page is overwritten in this theme 
+
+$base_dir = elgg_get_plugins_path() . 'thewire/views/default/resources/thewire';
+    //The wire/all page is overwritten in this theme
 $stream_dir = elgg_get_plugins_path() .'gc_streaming_content/pages/thewire';
 	if (!isset($page[0])) {
 		$page = array('all');
