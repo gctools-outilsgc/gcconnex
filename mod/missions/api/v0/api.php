@@ -59,25 +59,25 @@ function mm_api_secure() {
 */
 function mm_api_get_entity_guids($type, $subtype = false, $guid = null) {
 
-  $where = array('a.type = "' . mysql_escape_string($type) . '"');
+  $where = array('a.type = "' . mysqli_real_escape_string($type) . '"');
   if ($subtype !== false) {
     $subtype_id = get_data("select id from ".elgg_get_config('dbprefix')."entity_subtypes where subtype = '$subtype'")[0]->id;
     $where[] = 'a.subtype = ' . $subtype_id;
   } else $subtype_id = 0;
 
   if (!is_null($guid) && is_numeric($guid)) {
-    $where[] = 'a.guid = ' . mysql_escape_string(intval($guid));
+    $where[] = 'a.guid = ' . mysqli_real_escape_string(intval($guid));
   }
   if (isset($_GET['since']) && is_numeric($_GET['since'])) {
-    $where[] = 'a.time_updated > ' . mysql_escape_string($_GET['since']);
+    $where[] = 'a.time_updated > ' . mysqli_real_escape_string($_GET['since']);
   }
   if (isset($_GET['before']) && is_numeric($_GET['before'])) {
-    $where[] = 'a.time_updated < ' . mysql_escape_string($_GET['before']);
+    $where[] = 'a.time_updated < ' . mysqli_real_escape_string($_GET['before']);
   }
 
   $limit = '';
   if (isset($_GET['limit']) && is_numeric($_GET['limit'])) {
-    $limit = 'LIMIT ' . mysql_escape_string($_GET['limit']);
+    $limit = 'LIMIT ' . mysqli_real_escape_string($_GET['limit']);
   }
   try {
     $guids = get_data('
@@ -222,10 +222,10 @@ function mm_api_get_entity_fields($entity) {
   $where[]  = "b.type = '{$entity->type}'";
   $where[] = "b.subtype = {$entity->subtype}";
   if (isset($_GET['since']) && is_numeric($_GET['since'])) {
-    $where[] = 'b.time_updated > ' . mysql_escape_string($_GET['since']);
+    $where[] = 'b.time_updated > ' . mysqli_real_escape_string($_GET['since']);
   }
   if (isset($_GET['before']) && is_numeric($_GET['before'])) {
-    $where[] = 'b.time_updated < ' . mysql_escape_string($_GET['before']);
+    $where[] = 'b.time_updated < ' . mysqli_real_escape_string($_GET['before']);
   }
 
   $field_id_sql = "

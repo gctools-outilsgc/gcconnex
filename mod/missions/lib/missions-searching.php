@@ -696,7 +696,7 @@ function mm_simple_search_database_for_candidates($query_array, $limit, $offset=
       // TODO: Later versions of ELGG support parameterized queries... DO THAT.
       $ms_search = array(); $s_search = array(); $u_search = array();
       foreach ($query_array as $term) {
-          $t = mysql_escape_string(trim($term)) . '*';
+          $t = mysqli_real_escape_string(trim($term)) . '*';
           $ms_search[] = "(MATCH(a.string) AGAINST(\"$t\" IN BOOLEAN MODE))";
           $s_search[] = "(MATCH(eoe.title) AGAINST(\"$t\" IN BOOLEAN MODE))";
           $u_search[] = "(MATCH(a.name) AGAINST(\"$t\" IN BOOLEAN MODE))";
