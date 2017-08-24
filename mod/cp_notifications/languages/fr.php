@@ -445,12 +445,14 @@ $french = array(
 
 
 	// wire share section
-	'cp_notify:wireshare:subject' => "%s a partagé votre %s avec le titre '%s'",
-	'cp_notify:body_wireshare:title' => "%s a partagé votre %s avec le titre '%s'",
-	'cp_notify:body_wireshare:title2' => "%s a partagé votre %s",
-
-	'cp_notify:body_wireshare:description' => "%s a partagé votre %s sur le fil, pour consulter ou répondre, veuillez cliquer sur le lien suivant : %s",
-	'cp_notify:wireshare_thewire:subject' => "%s a partager votre publication sur le fil",
+	'cp_notify:wireshare:subject' => "%s a partagé votre contenu sur le fil",
+	'cp_notify:body_wireshare:title' => "%s a partagé votre contenu sur le fil",
+ 
+	// (shared your wire post)
+	'cp_notify:body:contentshare:description' => "	<p>%s a partagé votre contenu sur le fil.</p> 
+													<p><i>%s</i></p> <br/>
+													<p><strong>La source :</strong> %s</p> 
+													<p><a href='%s'>Visualiser ou répondre</a> sur GCconnex.</p>",
 
 	// event calendar section
 	'cp_notify:event:subject' => "Calendrier d'événement",

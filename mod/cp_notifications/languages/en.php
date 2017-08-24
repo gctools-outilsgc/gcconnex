@@ -427,12 +427,15 @@ $english = array(
 
 
 	// sharing content on wire section
-	'cp_notify:wireshare:subject' => "%s shared your %s with title '%s'",
-	'cp_notify:body_wireshare:title' => "%s shared your %s with title '%s'",
-	'cp_notify:body_wireshare:title2' => "%s shared your %s",
+	'cp_notify:wireshare:subject' => "%s shared your content on the wire",
+	'cp_notify:body_wireshare:title' => "%s shared your content on the wire",
 
-	'cp_notify:body_wireshare:description' => "%s shared your %s on the wire, to view or reply to this please click on the following link: %s", 
-	'cp_notify:wireshare_thewire:subject' => "%s shared your message on the wire",
+	// (shared your wire post)
+	'cp_notify:body:contentshare:description' => "	<p>%s shared your content on the wire.</p> 
+													<p><i>%s</i></p> <br/>
+													<p><strong>Source:</strong> %s</p> 
+													<p><a href='%s'>View or reply</a> on GCconnex.</p>",
+
 
 	// event calendar section
 	'cp_notify:event:subject' => "Event calendar",

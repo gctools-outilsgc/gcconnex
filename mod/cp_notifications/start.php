@@ -259,6 +259,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 		/// NORMAL NOTIFICATIONS that will send out both email and site notification
 		case 'cp_wire_share': // thewire_tools/actions/add.php
 
+
 			$message = array(
 				'cp_msg_type' => $cp_msg_type,
 				'cp_shared_by' => $params['cp_shared_by'],
@@ -270,15 +271,9 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 			$parent_item = $params['cp_content']->getContainerEntity();
 
-			$type = (strcmp($params['cp_content']->getType(),'group') == 0) ? $params['cp_content']->getType() : cp_translate_subtype($params['cp_content']->getSubtype());
+			$subject = elgg_echo('cp_notify:wireshare:subject',array($params['cp_shared_by']->name),'en').' | ';
+			$subject .= elgg_echo('cp_notify:wireshare:subject',array($params['cp_shared_by']->name),'fr');
 
-			if (strcmp($params['cp_content']->getSubtype(),'thewire') == 0) {
-				$subject = elgg_echo('cp_notify:wireshare_thewire:subject',array($params['cp_shared_by']->name,cp_translate_subtype($params['cp_content']->getSubtype()),'en'));
-				$subject .= ' | '.elgg_echo('cp_notify:wireshare_thewire:subject',array($params['cp_shared_by']->name,cp_translate_subtype($params['cp_content']->getSubtype()),'fr'));
-			} else {
-				$subject = elgg_echo('cp_notify:wireshare:subject',array($params['cp_shared_by']->name,$type,$params['cp_content']->title),'en');
-				$subject .= ' | '.elgg_echo('cp_notify:wireshare:subject',array($params['cp_shared_by']->name,$type,$params['cp_content']->title),'fr');
-			}
 			$to_recipients[] = $params['cp_recipient'];
 
 			$content_entity = $params['cp_content_reshared'];
