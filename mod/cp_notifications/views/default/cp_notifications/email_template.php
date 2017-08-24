@@ -625,11 +625,11 @@ switch ($msg_type) {
 		if (!$vars['cp_content_reshare']->title) {
 
 			/// sharing a wire to the wire
-			$username = "<a href='{$vars['cp_shared_by']->getURL()}?utm_source=notification&utm_medium=site'>{$vars['cp_shared_by']->name}</a>";
+			$username = "<a href='{$vars['cp_shared_by']->getURL()}?utm_source=notification&utm_medium=email'>{$vars['cp_shared_by']->name}</a>";
 			$wire_msg = $vars['cp_content']->description;
-			$source_en = "<a href='{$reshare_content->getURL()}?utm_source=notification&utm_medium=site'>".gc_explode_translation($vars['cp_content_reshare']->description, 'en')."</a>";
-			$source_fr = "<a href='{$reshare_content->getURL()}?utm_source=notification&utm_medium=site'>".gc_explode_translation($vars['cp_content_reshare']->description, 'fr')."</a>";
-			$wire_link = "{$vars['cp_wire_url']}?utm_source=notification&utm_medium=site";
+			$source_en = "<a href='{$reshare_content->getURL()}?utm_source=notification&utm_medium=email'>".gc_explode_translation($vars['cp_content_reshare']->description, 'en')."</a>";
+			$source_fr = "<a href='{$reshare_content->getURL()}?utm_source=notification&utm_medium=email'>".gc_explode_translation($vars['cp_content_reshare']->description, 'fr')."</a>";
+			$wire_link = "{$vars['cp_wire_url']}?utm_source=notification&utm_medium=email";
 
 			$cp_notify_msg_description_en = elgg_echo('cp_notify:body:contentshare:description', array($username, $wire_msg, $source_en, $wire_link, 'en'));
 			$cp_notify_msg_description_fr = elgg_echo('cp_notify:body:contentshare:description', array($username, $wire_msg, $source_fr, $wire_link, 'fr'));
@@ -637,11 +637,11 @@ switch ($msg_type) {
 		} else {
 
 			/// sharing a content to the wire
-			$username = "<a href='{$vars['cp_shared_by']->getURL()}?utm_source=notification&utm_medium=site'>{$vars['cp_shared_by']->name}</a>";
+			$username = "<a href='{$vars['cp_shared_by']->getURL()}?utm_source=notification&utm_medium=email'>{$vars['cp_shared_by']->name}</a>";
 			$wire_msg = $vars['cp_content']->description;
-			$source_en = "<a href='{$reshare_content->getURL()}?utm_source=notification&utm_medium=site'>".gc_explode_translation($vars['cp_content_reshare']->title, 'en')."</a>";
-			$source_fr = "<a href='{$reshare_content->getURL()}?utm_source=notification&utm_medium=site'>".gc_explode_translation($vars['cp_content_reshare']->title, 'fr')."</a>";
-			$wire_link = "{$vars['cp_wire_url']}?utm_source=notification&utm_medium=site";
+			$source_en = "<a href='{$reshare_content->getURL()}?utm_source=notification&utm_medium=email'>".gc_explode_translation($vars['cp_content_reshare']->title, 'en')."</a>";
+			$source_fr = "<a href='{$reshare_content->getURL()}?utm_source=notification&utm_medium=email'>".gc_explode_translation($vars['cp_content_reshare']->title, 'fr')."</a>";
+			$wire_link = "{$vars['cp_wire_url']}?utm_source=notification&utm_medium=email";
 
 			$cp_notify_msg_description_en = elgg_echo('cp_notify:body:contentshare:description', array($username, $wire_msg, $source_en, $wire_link, 'en'));
 			$cp_notify_msg_description_fr = elgg_echo('cp_notify:body:contentshare:description', array($username, $wire_msg, $source_fr, $wire_link, 'fr'));
