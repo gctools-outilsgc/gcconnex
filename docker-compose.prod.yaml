@@ -1,0 +1,40 @@
+version: '2'
+services:
+  # ###########################################################################
+  # The GCConnex container.  Will be accessible at http://localhost:8080, or
+  # via the hostname provided in the VIRTUAL_HOST environment variable if
+  # nginx-proxy is uncommented above.
+  # ###########################################################################
+  gcconnex:
+     build:
+      context: .
+      dockerfile: ./Dockerfile.prod
+    ports:
+      - 8080:80
+    volumes:
+      - .:/var/www/html
+      - ./data/data:/var/www/html/data
+      - /var/www/html/vendor
+    links:
+      - gcconnex-db
+    depends_on:
+      - gcconnex-db
+    environment:
+      - VIRTUAL_HOST=gcconnex.local
+      - DOCKER=1
+      - HOME=/var/www/html
+      - DBHOST=gcconnex-db
+#      - WWWROOT=http://localhost:8080/
+  # ###########################################################################
+  # Database container for gcconnex, accessible from within gcconnex using the
+  # network host "gcconnex-db".
+  # ###########################################################################
+  gcconnex-db:
+    image: library/mysql:5.6
+    volumes:
+      - ./data/db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=gcconnex
+      - MYSQL_DATABASE=elgg
+      - MYSQL_USER=elgg
+      - MYSQL_PASSWORD=gcconnex
