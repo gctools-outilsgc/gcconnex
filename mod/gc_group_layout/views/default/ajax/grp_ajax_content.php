@@ -25,6 +25,7 @@ if ($vars['entity']->forum_enable == 'no') {
 //Nick - Some sub_types and url paths are different from what was passed to this view
 switch($sub_type){
 	case 'groupforumtopic':
+        $sub_type ='discussion';
 		$sub_type2 ='discussion';
     $all_link_location = '/owner/';
 		break;
