@@ -759,6 +759,7 @@ function event_calendar_get_entities_from_metadata_between_related($meta_start_n
 		'relationship' => 'display_on_group',
 		'relationship_guid' => $container_guid,
 		'inverse_relationship' => true,
+		'limit' => 0,
 	));
 	if ($related_events) {
 		foreach ($related_events as $event) {
