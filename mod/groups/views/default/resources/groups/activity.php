@@ -11,7 +11,8 @@ $group = get_entity($guid);
 
 $title = elgg_echo('groups:activity');
 
-elgg_push_breadcrumb($group->name, $group->getURL());
+$lang = get_current_language();
+elgg_push_breadcrumb(gc_explode_translation( $group->name, $lang ), $group->getURL());
 elgg_push_breadcrumb($title);
 
 $db_prefix = elgg_get_config('dbprefix');

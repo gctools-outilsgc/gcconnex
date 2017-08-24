@@ -26,7 +26,8 @@ elgg_set_context('groups');
 
 // set breadcrumb
 elgg_push_breadcrumb(elgg_echo('groups'), 'groups/all');
-elgg_push_breadcrumb($group->name, $group->getURL());
+$lang = get_current_language();
+elgg_push_breadcrumb(gc_explode_translation( $group->name, $lang ), $group->getURL());
 elgg_push_breadcrumb(elgg_echo('group_tools:menu:mail'));
 
 // get members

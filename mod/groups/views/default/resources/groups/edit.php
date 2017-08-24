@@ -10,7 +10,8 @@ $group = get_entity($guid);
 
 if (elgg_instanceof($group, 'group') && $group->canEdit()) {
 	elgg_set_page_owner_guid($group->getGUID());
-	elgg_push_breadcrumb($group->name, $group->getURL());
+	$lang = get_current_language();
+	elgg_push_breadcrumb(gc_explode_translation( $group->name, $lang ), $group->getURL());
 	elgg_push_breadcrumb($title);
 	$content = elgg_view("groups/edit", array('entity' => $group));
 } else {

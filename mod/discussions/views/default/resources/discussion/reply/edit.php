@@ -21,8 +21,10 @@ if (!elgg_instanceof($group, 'group')) {
 
 $title = elgg_echo('discussion:reply:edit');
 
-elgg_push_breadcrumb($group->name, "discussion/owner/$group->guid");
-elgg_push_breadcrumb($topic->title, $topic->getURL());
+
+$lang = get_current_language();
+elgg_push_breadcrumb(gc_explode_translation( $group->name, $lang ), "discussion/owner/$group->guid");
+elgg_push_breadcrumb(gc_explode_translation( $topic->title, $lang ), $topic->getURL());
 elgg_push_breadcrumb($title);
 
 $params = array(

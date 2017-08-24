@@ -12,7 +12,8 @@ $group = get_entity($guid);
 if (!elgg_instanceof($group, 'group')) {
 	forward('', '404');
 }
-elgg_push_breadcrumb($group->name, $group->getURL());
+$lang = get_current_language();
+elgg_push_breadcrumb(gc_explode_translation( $group->name, $lang ), $group->getURL());
 elgg_push_breadcrumb(elgg_echo('item:object:discussion'));
 
 elgg_register_title_button('discussion', 'add', 'object', 'discussion');

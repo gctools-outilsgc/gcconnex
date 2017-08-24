@@ -20,7 +20,8 @@ $content = elgg_view_form('groups/invite', array(
 	'entity' => $group,
 ));
 
-elgg_push_breadcrumb($group->name, $group->getURL());
+$lang = get_current_language();
+elgg_push_breadcrumb(gc_explode_translation( $group->name, $lang ), $group->getURL());
 elgg_push_breadcrumb(elgg_echo('groups:invite'));
 
 $params = array(

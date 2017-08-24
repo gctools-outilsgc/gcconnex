@@ -20,7 +20,8 @@ if ($group->thewire_enable == 'no') {
 }
 
 elgg_push_breadcrumb(elgg_echo('thewire'), 'thewire/all');
-elgg_push_breadcrumb($group->name);
+$lang = get_current_language();
+elgg_push_breadcrumb(gc_explode_translation( $group->name, $lang ));
 
 $result = elgg_list_entities([
 	'types' => 'object',

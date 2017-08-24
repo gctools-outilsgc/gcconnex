@@ -18,7 +18,8 @@ elgg_set_page_owner_guid($guid);
 
 $title = elgg_echo('group_tools:menu:invitations');
 
-elgg_push_breadcrumb($group->name, $group->getURL());
+$lang = get_current_language();
+elgg_push_breadcrumb(gc_explode_translation( $group->name, $lang ), $group->getURL());
 elgg_push_breadcrumb($title);
 
 // additional title menu item

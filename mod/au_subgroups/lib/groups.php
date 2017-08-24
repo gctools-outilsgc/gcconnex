@@ -237,7 +237,8 @@ function groups_handle_edit_page($page, $guid = 0) {
 
 		if (elgg_instanceof($group, 'group') && $group->canEdit()) {
 			elgg_set_page_owner_guid($group->getGUID());
-			elgg_push_breadcrumb($group->name, $group->getURL());
+			$lang = get_current_language();
+			elgg_push_breadcrumb(gc_explode_translation( $group->name, $lang ), $group->getURL());
 			elgg_push_breadcrumb($title);
 			$content = elgg_view("groups/edit", array('entity' => $group));
 		} else {
@@ -290,7 +291,8 @@ function groups_handle_profile_page($guid) {
 	elgg_push_context('group_profile');
 	elgg_entity_gatekeeper($guid, 'group');
 	$group = get_entity($guid);
-	elgg_push_breadcrumb($group->name);
+	$lang = get_current_language();
+	elgg_push_breadcrumb(gc_explode_translation( $group->name, $lang ));
 	groups_register_profile_buttons($group);
 
 	$content = elgg_view('groups/profile/layout', array('entity' => $group));
@@ -346,7 +348,8 @@ function groups_handle_activity_page($guid) {
 	$title = elgg_echo('groups:activity');
 	$db_prefix = elgg_get_config('dbprefix');
 
-	elgg_push_breadcrumb($group->name, $group->getURL());
+	$lang = get_current_language();
+	elgg_push_breadcrumb(gc_explode_translation( $group->name, $lang ), $group->getURL());
 	elgg_push_breadcrumb($title);
 
 	$content = elgg_list_river(array(
@@ -383,7 +386,8 @@ function groups_handle_members_page($guid) {
 	elgg_group_gatekeeper();
 
 	$title = elgg_echo('groups:members:title', array($group->name));
-	elgg_push_breadcrumb($group->name, $group->getURL());
+	$lang = get_current_language();
+	elgg_push_breadcrumb(gc_explode_translation( $group->name, $lang ), $group->getURL());
 	elgg_push_breadcrumb(elgg_echo('groups:members'));
 
 	$db_prefix = elgg_get_config('dbprefix');
@@ -430,7 +434,8 @@ function groups_handle_invite_page($guid) {
 		'entity' => $group,
 	));
 
-	elgg_push_breadcrumb($group->name, $group->getURL());
+	$lang = get_current_language();
+	elgg_push_breadcrumb(gc_explode_translation( $group->name, $lang ), $group->getURL());
 	elgg_push_breadcrumb(elgg_echo('groups:invite'));
 
 	$params = array(
@@ -462,7 +467,8 @@ function groups_handle_requests_page($guid) {
 
 	$title = elgg_echo('groups:membershiprequests');
 
-	elgg_push_breadcrumb($group->name, $group->getURL());
+$lang = get_current_language();
+elgg_push_breadcrumb(gc_explode_translation( $group->name, $lang ), $group->getURL());
 	elgg_push_breadcrumb($title);
 
 	$requests = elgg_get_entities_from_relationship(array(

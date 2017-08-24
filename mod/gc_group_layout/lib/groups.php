@@ -165,7 +165,9 @@ function groups_handle_owned_page() {
 	} else {
 		$title = elgg_echo('groups:owned:user', array($page_owner->name));
 	}
-	elgg_push_breadcrumb($title);
+
+	$lang = get_current_language();
+	elgg_push_breadcrumb(gc_explode_translation( $title, $lang ));
 
 	if (elgg_get_plugin_setting('limited_groups', 'groups') != 'yes' || elgg_is_admin_logged_in()) {
         elgg_push_context('groups');
@@ -383,7 +385,8 @@ function groups_handle_activity_page($guid) {
 
 	$title = elgg_echo('groups:activity');
 
-	elgg_push_breadcrumb($group->name, $group->getURL());
+	$lang = get_current_language();
+	elgg_push_breadcrumb(gc_explode_translation( $group->name, $lang ), $group->getURL());
 	elgg_push_breadcrumb($title);
 
 	$db_prefix = elgg_get_config('dbprefix');
@@ -472,7 +475,8 @@ function groups_handle_invite_page($guid) {
 		'entity' => $group,
 	));
 
-	elgg_push_breadcrumb($group->name, $group->getURL());
+	$lang = get_current_language();
+	elgg_push_breadcrumb(gc_explode_translation( $group->name, $lang ), $group->getURL());
 	elgg_push_breadcrumb(elgg_echo('groups:invite'));
 
 	$params = array(
@@ -504,7 +508,8 @@ function groups_handle_requests_page($guid) {
 
 	$title = elgg_echo('groups:membershiprequests');
 
-	elgg_push_breadcrumb($group->name, $group->getURL());
+	$lang = get_current_language();
+	elgg_push_breadcrumb(gc_explode_translation( $group->name, $lang ), $group->getURL());
 	elgg_push_breadcrumb($title);
 
 	$requests = elgg_get_entities_from_relationship(array(
