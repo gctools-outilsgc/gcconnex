@@ -62,8 +62,12 @@ $feedbackText= elgg_echo('wet:feedbackText');
                     <a href="<?php echo $faq;?>"><?php echo elgg_echo('wet:footFAQ');?></a>
                   </li>
                   <?php if(elgg_is_active_plugin('gc_onboard')){ echo '<li><a href="'.elgg_get_site_url().'tutorials">'.elgg_echo('onboard:footTutorials').'</a></li>'; }?>
-                  <li><a href="<?php echo elgg_get_site_url() . 'mod/contactform/'; ?>"> <?php echo elgg_echo('contactform:help_menu_item'); ?> </a></li>
-                   
+                  <li><?php if(elgg_is_active_plugin('freshdesk_help')){
+                  echo '<a href="'. elgg_get_site_url() . 'help/knowledgebase">'.elgg_echo('freshdesk:page:title').'</a>';
+                } else {
+                  echo '<a href="'. elgg_get_site_url() . 'mod/contactform/">'.elgg_echo('contactform:help_menu_item').'</a>';
+                }?></li>
+
                 </ul>
             </section>
 
