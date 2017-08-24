@@ -28,12 +28,32 @@ services:
       - 8080:80
     volumes:
       - .:/var/www/html
-      - ./data/data:/data
+      - ./data/data:/var/www/html/data
+      - /var/www/html/vendor
     depends_on:
       - gcconnex-db
       # - nginx-proxy
     environment:
       - VIRTUAL_HOST=gcconnex.local
+      - DOCKER=1
+      - HOME=/var/www/html
+      - DBHOST=gcconnex-db
+      - WWWROOT=http://localhost:8080/
+
+  # ###########################################################################
+  # The GCConnex cron container.  This container is responsible for executing
+  # elgg's built in cron based on the recommended settings.
+  # ###########################################################################
+
+#  gcconnex-cron:
+#    build:
+#      context: .
+#      dockerfile: ./Dockerfile.cron
+#    volumes:
+#      - .:/var/www/html
+#      - ./data/data:/data
+#    depends_on:
+#      - gcconnex-db
 
   # ###########################################################################
   # Database container for gcconnex, accessible from within gcconnex using the
@@ -41,6 +61,8 @@ services:
   # ###########################################################################
   gcconnex-db:
     image: library/mysql:5.6
+    volumes:
+      - ./data/db:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=gcconnex
       - MYSQL_DATABASE=elgg

@@ -18,7 +18,6 @@ return array(
 	'messages:title' => "Subject",
 	'messages:to:help' => "Write recipient's username here.",
 	'messages:replying' => "Message replying to",
-	'messages:inbox' => "Inbox",
 	'messages:sendmessage' => "Send a message",
 	'messages:add' => "Compose a message",
 	'messages:sentmessages' => "Sent messages",
@@ -85,8 +84,8 @@ return array(
 
 	'messages:deleted_sender' => 'Gcconnex',
 
-	'colleague_circle_checkbox' => 'Your colleagues circles',//NEW
-	'collections_circle_selection' => "Select a colleague circle",//NEW
-	'collections_circle_send' => "Send message to",//NEW
+	'colleague_circle_checkbox' => 'Your colleagues circles',
+	'collections_circle_selection' => "Select a colleague circle",
+	'collections_circle_send' => "Send message to",
 
 );

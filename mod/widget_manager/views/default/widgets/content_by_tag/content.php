@@ -2,7 +2,7 @@
 
 $widget = elgg_extract("entity", $vars);
 $result = "";
-
+$lang = get_current_language();
 $dbprefix = elgg_get_config("dbprefix");
 
 // get widget settings
@@ -217,10 +217,10 @@ if (in_array($display_option, array("slim","simple"))) {
 						$icon = elgg_view_entity_icon($entity->getOwnerEntity(), "small");
 					}
 
-					$text = elgg_view("output/url", array("href" => $entity_url, "text" => $entity->title, "target" => $target));
+					$text = elgg_view("output/url", array("href" => $entity_url, "text" => gc_explode_translation($entity->title,$lang), "target" => $target));
 					$text .= "<br />";
 
-					$description = elgg_get_excerpt($entity->description, 170);
+					$description = elgg_get_excerpt(gc_explode_translation($entity->description,$lang), 170);
 					
 					if ($show_timestamp) {
 						$text .= "<span title='" . date("r", $entity->time_created) . "'>" . substr(date("r", $entity->time_created),0,16) . "</span>";
@@ -240,7 +240,7 @@ if (in_array($display_option, array("slim","simple"))) {
 					if ($show_timestamp) {
 						$result .= "<span title='" . strftime("%c", $entity->time_created) . "'>" . strftime("%d %b", $entity->time_created) . "</span> - ";
 					}
-					$result .= "<a href='" . $entity_url . "'>" . $entity->title . "</a>";
+					$result .= "<a href='" . $entity_url . "'>" . gc_explode_translation($entity->title,$lang) . "</a>";
 					$result .= "</div>";
 				}
 			} else {
@@ -252,7 +252,7 @@ if (in_array($display_option, array("slim","simple"))) {
 					$icon = elgg_view_entity_icon($owner, "small");
 				}
 
-				$text = elgg_view("output/url", array("href" => $entity_url, "text" => $entity->title));
+				$text = elgg_view("output/url", array("href" => $entity_url, "text" => gc_explode_translation($entity->title,$lang)));
 				$text .= "<br />";
 				$text .= "<a href='" . $owner->getURL() . "'>" . $owner->name . "</a>";
 

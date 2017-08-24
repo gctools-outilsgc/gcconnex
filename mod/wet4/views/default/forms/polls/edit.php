@@ -24,6 +24,22 @@ $question2 = $vars['fd']['question2'];
 $tags = $vars['fd']['tags'];
 $access_id = $vars['fd']['access_id'];
 
+
+// decode json into English / French parts
+$json_question = json_decode($question);
+//$json_desc = json_decode($desc);
+
+if ( $json_question ){
+  $question2 = $json_question->fr;
+  $question = $json_question->en;
+}
+
+/*if ( $json_desc ){
+  $desc2 = $json_desc->fr;
+  $desc = $json_desc->en;
+}*/
+
+
 $question_label = elgg_echo('polls:questionen');
 $question_textbox = elgg_view('input/text', array('name' => 'question', 'id' => 'question', 'value' => $question, 'required' => 'required'));
 

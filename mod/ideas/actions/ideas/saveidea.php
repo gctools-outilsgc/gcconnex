@@ -65,14 +65,14 @@ if($description && $description2){
 	$description = $description2;
 }
 
-$idea->title = $title;
-$idea->title1 = $title1;
-$idea->title2 = $title2;
-$idea->title3 = gc_implode_translation($title1, $title2);
-$idea->description = $description;
-$idea->description1 = $description1;
-$idea->description2 = $description2;
-$idea->description3 = gc_implode_translation($description1, $description2);
+//$idea->title = $title;
+//$idea->title1 = $title1;
+//$idea->title2 = $title2;
+$idea->title = gc_implode_translation($title1, $title2);
+//$idea->description = $description;
+//$idea->description1 = $description1;
+//$idea->description2 = $description2;
+$idea->description = gc_implode_translation($description1, $description2);
 $tagarray = string_to_tag_array($tags);
 $idea->access_id = $owner->access_id;
 $idea->tags = $tagarray;

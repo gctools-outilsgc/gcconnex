@@ -13,11 +13,9 @@ if (!elgg_instanceof($idea, 'object', 'idea') || !$idea->canEdit()) {
 	forward(REFERRER);
 }
 
-if($idea->title3){
-	elgg_push_breadcrumb(gc_explode_translation($idea->title3,$lang), $idea->getURL());
-}else{
-	elgg_push_breadcrumb($idea->title, $idea->getURL());
-}
+
+	elgg_push_breadcrumb(gc_explode_translation($idea->title,$lang), $idea->getURL());
+
 elgg_push_breadcrumb(elgg_echo('ideas:edit'));
 
 $vars = ideas_prepare_form_vars($idea);

@@ -157,9 +157,13 @@ function wet4_theme_init() {
     elgg_register_action("widgets/delete", elgg_get_plugins_path() . "/wet4/actions/widgets/delete.php");
     elgg_register_action("user/requestnewpassword", elgg_get_plugins_path() . "/wet4/actions/user/requestnewpassword.php", "public");
 		elgg_register_action('logout_as', elgg_get_plugins_path() . '/wet4/actions/logout_as.php'); //login as out
+		elgg_register_action("question/autocomplete", elgg_get_plugins_path() . "/wet4/actions/object/question/autocomplete.php");
 
     //Verify the department action
     elgg_register_action("department/verify_department", elgg_get_plugins_path() . "/wet4/actions/department/verify_department.php");
+
+    // bilingual content upgrade script
+    elgg_register_action("wet4/update_to_json", elgg_get_plugins_path() . "/wet4/actions/bilingual_content/update_to_json.php");
 
 	// non-members do not get visible links to RSS feeds
 	if (!elgg_is_logged_in()) {
@@ -425,7 +429,7 @@ function wet4_theme_pagesetup() {
             $user = elgg_get_logged_in_user_guid();
         }
 
-        if ($page_owner->guid == $user) {
+        if ($page_owner instanceof ElggUser && $page_owner->guid == $user) {
             // Show menu link in the correct context
             if (in_array($context, array("friends", "friendsof", "collections"))) {
                 $options = array(
@@ -495,14 +499,16 @@ function wet4_theme_pagesetup() {
     // Settings notifications tab in the User's setting page
     // cyu - allow site administrators to view user notification settings page
 	elgg_unregister_menu_item('page', '2_a_user_notify');
-    $params = array(
-        "name" => "2_a_user_notify",
-        "href" => "/settings/notifications/{$page_owner->username}",
-        "text" =>  elgg_echo('notifications:subscriptions:changesettings'),
-        'section' => 'configure',
-        'priority' => '100',
-        'context' => 'settings',
-    );
+    if ($page_owner instanceof ElggUser) {
+        $params = array(
+            "name" => "2_a_user_notify",
+            "href" => "/settings/notifications/{$page_owner->username}",
+            "text" =>  elgg_echo('notifications:subscriptions:changesettings'),
+            'section' => 'configure',
+            'priority' => '100',
+            'context' => 'settings',
+        );
+    }
 
 
     elgg_register_menu_item("page", $params);
@@ -1310,22 +1316,14 @@ function my_filter_menu_handler($hook, $type, $menu, $params){
  * Set href of groups link depending if a logged in user is using site
  */
 function my_site_menu_handler($hook, $type, $menu, $params){
-    foreach ($menu as $key => $item){
 
-            switch ($item->getName()) {
+    if (!is_array($menu))
+        return;
 
-                case 'groups':
-                    if(elgg_is_logged_in()){
-                        $item->setHref('groups/all?filter=yours');
-                    } else {
-                        $item->setHref('groups/all?filter=popular');
-                    }
-
-                    break;
-
-            }
-        }
-
+    foreach ($menu as $key => $item) {
+        if ($item->getName() === 'groups') 
+            (elgg_is_logged_in()) ? $item->setHref(elgg_get_site_url().'groups/all?filter=yours') : $item->setHref( elgg_get_site_url().'groups/all?filter=popular');
+    }
 }
 
 /*
@@ -1333,21 +1331,19 @@ function my_site_menu_handler($hook, $type, $menu, $params){
  * Add styles to phot album title menu
  */
 function my_title_menu_handler($hook, $type, $menu, $params){
-    foreach ($menu as $key => $item){
-        switch ($item->getName()) {
+    
+    if (!is_array($menu))
+        return;
 
-            case 'slideshow':
-                $item->setText(elgg_echo('album:slideshow'));
+    foreach ($menu as $key => $item) {
 
-
-                break;
-            case 'addphotos':
-                $item->setItemClass('mrgn-rght-sm');
-
-
-                break;
-        }
+        if ($item->getName() === 'slideshow') 
+            $item->setText(elgg_echo('album:slideshow'));
+        elseif ($item->getName() === 'addphotos') 
+            $item->setItemClass('mrgn-rght-sm');
+    
     }
+    
 }
 
 /*
@@ -1483,7 +1479,7 @@ function wet4_dashboard_page_handler() {
 	$title = elgg_echo('dashboard');
 
 	// wrap intro message in a div
-	$intro_message = elgg_view('dashboard/blurb');
+	$intro_message = elgg_view('dashboard/blurb', array());
 
 	$params = array(
 		'content' => $intro_message,

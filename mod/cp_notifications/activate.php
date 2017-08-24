@@ -16,8 +16,8 @@ run_sql_script(__DIR__ . '/install/mysql.sql');
  * and make sure that the information is migrated to and using the right tables then
  * start doing a clean up of the old data that is saved in the old data table structure
  */
-
-$query = "SELECT * FROM elggobjects_entity WHERE title LIKE 'Newsletter|%'";
+$db_prefix = elgg_get_config('dbprefix');
+$query = "SELECT * FROM {$db_prefix}objects_entity WHERE title LIKE 'Newsletter|%'";
 $newsletter_objects = get_data($query);
 
 if (count($newsletter_objects) > 0) {

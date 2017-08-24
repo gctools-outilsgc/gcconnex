@@ -217,9 +217,9 @@ function gcforums_topic_content($topic_guid, $group_guid) {
 function get_total_posts($container_guid) {
 	$dbprefix = elgg_get_config('dbprefix');
 	
-	$query = "SELECT r.guid_one, r.relationship, r.guid_two, e.subtype, es.subtype
+	$query = "SELECT r.guid_one, r.relationship, r.guid_two, e.subtype, es.subtype, e.access_id
 			FROM {$dbprefix}entity_relationships r, {$dbprefix}entities e, {$dbprefix}entity_subtypes es
-			WHERE r.guid_one = e.guid AND e.subtype = es.id AND r.guid_two = {$container_guid} AND es.subtype = 'hjforumpost'";
+			WHERE r.guid_one = e.guid AND e.subtype = es.id AND r.guid_two = {$container_guid} AND es.subtype = 'hjforumpost' AND (e.access_id = 1 OR e.access_id = 2)";
 	$num_post = 0;
 	$posts = get_data($query);
 
@@ -231,9 +231,9 @@ function get_total_posts($container_guid) {
 
 function get_total_topics($container_guid) {
 	$dbprefix = elgg_get_config('dbprefix');
-	$query = "SELECT r.guid_one, r.relationship, r.guid_two, e.subtype, es.subtype
+	$query = "SELECT r.guid_one, r.relationship, r.guid_two, e.subtype, es.subtype, e.access_id
 			FROM {$dbprefix}entity_relationships r, {$dbprefix}entities e, {$dbprefix}entity_subtypes es
-			WHERE r.guid_one = e.guid AND e.subtype = es.id AND r.guid_two = {$container_guid} AND es.subtype = 'hjforumtopic'";
+			WHERE r.guid_one = e.guid AND e.subtype = es.id AND r.guid_two = {$container_guid} AND es.subtype = 'hjforumtopic' AND (e.access_id = 1 OR e.access_id = 2)";
 	$num_topic = 0;
 	$topics = get_data($query);
 

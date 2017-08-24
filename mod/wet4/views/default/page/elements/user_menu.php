@@ -85,6 +85,7 @@ elgg_register_menu_item('user_menu', array(
     'text' => elgg_echo('userMenu:profile'),
     'href' => 'profile/'.elgg_get_logged_in_user_entity()->username,
     'item_class' => 'wb-invisible sr_menu_item',
+    'tabindex' => '-1',
 ));
 
 elgg_register_menu_item('user_menu', array(
@@ -92,6 +93,7 @@ elgg_register_menu_item('user_menu', array(
     'text' => elgg_echo('userMenu:account'),
     'href' => 'settings/user/'.elgg_get_logged_in_user_entity()->username,
     'item_class' => 'wb-invisible sr_menu_item',
+    'tabindex' => '-1',
 ));
 
 elgg_register_menu_item('user_menu', array(
@@ -99,6 +101,7 @@ elgg_register_menu_item('user_menu', array(
     'text' => elgg_echo('logout'),
     'href' => 'action/logout',
     'item_class' => 'wb-invisible sr_menu_item',
+    'tabindex' => '-1',
 ));
 
 

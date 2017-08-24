@@ -728,6 +728,7 @@ You can share your opportunity with any employee whether on this list or not. Em
         "missions:job_shadowing" => "Job Shadowing",
         "missions:sort_options" => "Filter and Sort",
         'missions:clear_filter'=>"Clear Filter",
+        'missions:clear_search'=>"Clear Search",
         "missions:stacked_graph" => "Stacked graph",
         "missions:histogram" => "Histogram",
         "missions:number_of_intervals" => "Number of intervals",
@@ -754,4 +755,8 @@ You can share your opportunity with any employee whether on this list or not. Em
     "missions:groupandlevel"=>"Group/Classification",
     "missions:gl:group"=>"Group",
     "missions:gl:level"=>"Level",
+    "missions:search:Refine" => 'Refine search',
+    "missions:search_value" => 'Showing results for',
+    "missions:filter" => "Filter by:",
+    "missions:filter:role" => "Role:"
 );

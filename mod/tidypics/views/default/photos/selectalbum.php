@@ -27,11 +27,7 @@ $album_options[-1] = elgg_echo('album:create');
 if ($albums) {
 	foreach ($albums as $album) {
 
-		if($album->title3){
-			$album_title = gc_explode_translation($album->title3, $lang);
-		}else{
-			$album_title = $album->title;
-		}
+		$album_title = gc_explode_translation($album->title, $lang);
 		
 		if (strlen($album_title) > 50) {
 			$album_title = substr($album_title, 0, 47).'...';

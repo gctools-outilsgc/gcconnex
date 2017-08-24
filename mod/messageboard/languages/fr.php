@@ -26,14 +26,14 @@ return array(
 	/**
 	 * Message board widget river
 	 */
-	'river:messageboard:user:default' => "%s a envoyé un message sur le forum de %s",
+	'river:messageboard:user:default' => "%s a écrit dans le forum de %s",
 
 	/**
 	 * Status messages
 	 */
 
-	'messageboard:posted' => "Votre message a bien été envoyé sur le forum.",
-	'messageboard:deleted' => "Votre message a bien été supprimé.",
+	'messageboard:posted' => "Votre message a bien été publié dans le forum.",
+	'messageboard:deleted' => "Vous avez bien supprimé le message.",
 
 	/**
 	 * Email messages
@@ -47,24 +47,22 @@ return array(
 
 
 Pour voir vos messages de forum, cliquez sur :
-
-	%s
+%s
 
 Pour voir le profil de %s, cliquez sur :
+%s
 
-	%s
-
-Vous ne pouvez pas répondre à cet email.",
+Merci de ne pas répondre à cet email.",
 
 	/**
 	 * Error messages
 	 */
 
 	'messageboard:blank' => "Désolé, vous devez écrire quelque chose dans le corps du message avant de pouvoir l'enregistrer.",
-	'messageboard:notfound' => "Désolé, l'élément spécifié n'a pu être trouvé.",
-	'messageboard:notdeleted' => "Désolé, ce message n'a pu être effacé.",
+	'messageboard:notfound' => "Désolé, l'élément spécifié n'a pas pu être trouvé.",
+	'messageboard:notdeleted' => "Désolé, ce message n'a pu être supprimé.",
 	'messageboard:somethingwentwrong' => "Quelque chose a tourné court lors de l'enregistrement de votre message, veuillez vérifier que vous avez bien écrit un message.",
 
-	'messageboard:failure' => "Une erreur imprévue s'est produite lors de l'ajout de votre message. Veuillez réeessayer.",
+	'messageboard:failure' => "Une erreur imprévue s'est produite lors de l'ajout de votre message. Veuillez réessayer.",
 
 );

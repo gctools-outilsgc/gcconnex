@@ -12,7 +12,7 @@ $tabs = array(
 	),
 	"yours" => array(
 		"text" => elgg_echo("groups:yours"),
-		"href" => "groups/all?filter=yours",
+		"href" => "/groups/all?filter=yours",
 		"priority" => 250,
 	),
 	"popular" => array(

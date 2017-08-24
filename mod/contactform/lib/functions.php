@@ -4,7 +4,14 @@ function requirements_check2()
 {
 	global $CONFIG;
 
-	$connection = mysqli_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, $CONFIG->dbname);
+	$db_config = new \Elgg\Database\Config($CONFIG);
+	if ($db_config->isDatabaseSplit()) {
+		$read_settings = $db_config->getConnectionConfig(\Elgg\Database\Config::WRITE);
+	} else {	
+		$read_settings = $db_config->getConnectionConfig(\Elgg\Database\Config::READ_WRITE);
+	}
+
+	$connection = mysqli_connect($read_settings["host"], $read_settings["user"], $read_settings["password"], $read_settings["database"]);
 	if (mysqli_connect_errno($connection)) elgg_log("cyu - Failed to connect to MySQL: ".mysqli_connect_errno(), 'NOTICE');
     
     $query = "SELECT * FROM contact_list";
@@ -41,9 +48,16 @@ function getExtension2()
 {
 	global $CONFIG;
 
+	$db_config = new \Elgg\Database\Config($CONFIG);
+	if ($db_config->isDatabaseSplit()) {
+		$read_settings = $db_config->getConnectionConfig(\Elgg\Database\Config::READ);
+	} else {	
+		$read_settings = $db_config->getConnectionConfig(\Elgg\Database\Config::READ_WRITE);
+	}
+
 	$query = "SELECT * FROM contact_list";
 
-	$connection = mysqli_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, $CONFIG->dbname);
+	$connection = mysqli_connect($read_settings["host"], $read_settings["user"], $read_settings["password"], $read_settings["database"]);
 	if (mysqli_connect_errno($connection)) elgg_log("cyu - Failed to connect to MySQL: ".mysqli_connect_errno(), 'NOTICE');
 	$result = mysqli_query($connection,$query);
 	mysqli_close($connection);
@@ -53,13 +67,20 @@ function getExtension2()
 function addExtension2($english, $french)
 {
 	global $CONFIG;
+
+	$db_config = new \Elgg\Database\Config($CONFIG);
+	if ($db_config->isDatabaseSplit()) {
+		$read_settings = $db_config->getConnectionConfig(\Elgg\Database\Config::WRITE);
+	} else {	
+		$read_settings = $db_config->getConnectionConfig(\Elgg\Database\Config::READ_WRITE);
+	}
     
     $eng = mysql_real_escape_string($english);
     $fr = mysql_real_escape_string($french);
 
 	$query = "INSERT INTO contact_list (english, francais) VALUES ('".$eng."','".$fr."')";
 
-	$connection = mysqli_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, $CONFIG->dbname);
+	$connection = mysqli_connect($read_settings["host"], $read_settings["user"], $read_settings["password"], $read_settings["database"]);
 	if (mysqli_connect_errno($connection)) elgg_log("cyu - Failed to connect to MySQL: ".mysqli_connect_errno(), 'NOTICE');
 	$result = mysqli_query($connection,$query);
 	mysqli_close($connection);
@@ -70,9 +91,16 @@ function deleteExtension2($id)
 {
 	global $CONFIG;
 
+	$db_config = new \Elgg\Database\Config($CONFIG);
+	if ($db_config->isDatabaseSplit()) {
+		$read_settings = $db_config->getConnectionConfig(\Elgg\Database\Config::WRITE);
+	} else {	
+		$read_settings = $db_config->getConnectionConfig(\Elgg\Database\Config::READ_WRITE);
+	}
+
 	$query = "DELETE FROM contact_list WHERE id=".$id;
 
-	$connection = mysqli_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, $CONFIG->dbname);
+	$connection = mysqli_connect($read_settings["host"], $read_settings["user"], $read_settings["password"], $read_settings["database"]);
 	if (mysqli_connect_errno($connection)) elgg_log("cyu - Failed to connect to MySQL: ".mysqli_connect_errno(), 'NOTICE');
 	$result = mysqli_query($connection,$query);
 	mysqli_close($connection);

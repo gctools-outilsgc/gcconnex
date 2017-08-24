@@ -67,7 +67,7 @@ if(elgg_instanceof(elgg_get_page_owner_entity(), 'group')){
 
 $feedbackText= elgg_echo('wet:feedbackText');
 $body = <<<__BODY
-<div class="elgg-page-messages container">
+<div class="elgg-page-messages">
     $messages
 </div> 
     $tabskip
@@ -79,6 +79,9 @@ __BODY;
 //$body .= elgg_view('page/elements/topbar_wrapper', $vars);
 
 $userMenu = elgg_view('page/elements/topbar_wrapper', $vars);
+
+if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false)
+	$feedback_button = "<a href='/mod/contactform/' class='btn btn-primary'><span class='glyphicon glyphicon-comment mrgn-rght-sm'></span>{$feedbackText}</a>";
 
 $body .= <<<__BODY
 	<header role="banner">
@@ -119,7 +122,9 @@ $breadcrumbs
 </dl>
 </div>
 <div class="col-xs-6 text-right">
-<a href="/mod/contactform/" class="btn btn-primary"><span class="glyphicon glyphicon-comment mrgn-rght-sm"></span>$feedbackText</a>
+
+$feedback_button
+
 </div>
 </div>
 

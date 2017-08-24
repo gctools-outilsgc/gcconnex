@@ -57,3 +57,6 @@ $body .= "</div>";
 $body .= '</fieldset>';
 
 echo elgg_view_module('main', $title, $body);
+
+
+

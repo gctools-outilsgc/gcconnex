@@ -100,26 +100,17 @@ if (!$draw_page) {
 } else {
 	// build breadcrumb
 	elgg_push_breadcrumb(elgg_echo("file"), "file/all");
-	if($page_owner->title3){
-		elgg_push_breadcrumb(gc_explode_translation($page_owner->title3,$lang));
-	}else{
-		elgg_push_breadcrumb($page_owner->name);
-	}
-	
+
+	elgg_push_breadcrumb(gc_explode_translation($page_owner->name,$lang));
+
 	// register title button to add a new file
 	elgg_register_title_button();
 	
 	// get data for tree
 	$folders = file_tools_get_folders($page_owner->getGUID());
 
-	// build page elements
-	if($page_owner->title3){
-		$title_text = elgg_echo("file:user", array(gc_explode_translation($page_owner->title3, $lang)));	
-	}else{
-		$title_text = elgg_echo("file:user", array($page_owner->name));
-	}
-	
-	
+	// build page element
+		$title_text = elgg_echo("file:user", array(gc_explode_translation($page_owner->title, $lang)));		
 	$body = "<div id='file_tools_list_files_container' class='elgg-content'>" . elgg_view("graphics/ajax_loader", array("hidden" => false)) . "</div>";
 	
 	// make sidebar

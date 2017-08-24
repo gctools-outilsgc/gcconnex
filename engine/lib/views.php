@@ -485,7 +485,11 @@ function _elgg_views_prepare_head($title) {
 
 	if (empty($title)) {
 		$params['title'] = elgg_get_config('sitename');
-	} else {
+	} else if ( elgg_is_active_plugin('wet4') ) {
+		//add translation
+		$params['title'] = gc_explode_translation($title,get_current_language()) . ' : ' . elgg_get_config('sitename');
+	}else {
+		//add translation
 		$params['title'] = $title . ' : ' . elgg_get_config('sitename');
 	}
 

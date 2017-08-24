@@ -5443,11 +5443,29 @@ function DayEventRenderer() {
 				) +
 				"</span>";
 		}
+//Version of gc_explode_translation for toggle language
+var title = JSON.parse(event.title);
+var lang = elgg.get_language();
+
+if(lang == 'fr'){
+	if(title.fr == ''){
+		event_title = title.en;
+	}else{
+	event_title = title.fr;
+	}
+}else{
+	if(title.en == ''){
+		event_title = title.fr;
+	}else{
+	event_title = title.en;
+	}
+}
 		html +=
 			"<span class='fc-event-title'>" +
-			htmlEscape(event.title || '') +
+			htmlEscape(event_title || '') +
 			"</span>" +
 			"</div>";
+
 		if (segment.isEnd && isEventResizable(event)) {
 			html +=
 				"<div class='ui-resizable-handle ui-resizable-" + (isRTL ? 'w' : 'e') + "'>" +

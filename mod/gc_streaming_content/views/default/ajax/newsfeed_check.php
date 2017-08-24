@@ -4,7 +4,7 @@ $db_prefix = elgg_get_config('dbprefix');
 $result = 0;
 $userid = get_input('userid');
 $user = get_entity($userid);
-error_log("user: " .$user->username);
+//error_log("user: " .$user->username);
 if ($user) {
     //check if user exists and has friends or groups
     $hasfriends = $user->getFriends();

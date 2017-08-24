@@ -17,13 +17,11 @@ $lang = get_current_language();
 
 elgg_group_gatekeeper();
 
-if($page_owner->title3){
-	$crumbs_title = gc_explode_translation($page_owner->title3, $lang);
-}else{
+if (!$page_owner->title){
 	$crumbs_title = $page_owner->name;
+}else{	
+	$crumbs_title = gc_explode_translation($page_owner->title, $lang);
 }
-
-
 
 if (elgg_instanceof($page_owner, 'group')) {
 	elgg_push_breadcrumb($crumbs_title, "bookmarks/group/$page_owner->guid/all");
@@ -31,7 +29,7 @@ if (elgg_instanceof($page_owner, 'group')) {
 	elgg_push_breadcrumb($crumbs_title, "bookmarks/owner/$page_owner->username");
 }
 
-$title = gc_explode_translation($bookmark->title3,$lang);
+$title = gc_explode_translation($bookmark->title,$lang);
 
 elgg_push_breadcrumb($title);
 

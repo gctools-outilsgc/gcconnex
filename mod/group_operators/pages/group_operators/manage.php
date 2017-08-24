@@ -9,7 +9,7 @@
  */
 
 elgg_load_library('elgg:group_operators');
-
+$lang = get_current_language();
 $group_guid = (int) get_input('group_guid');
 $group = new ElggGroup($group_guid);
 if (!$group) {
@@ -25,10 +25,10 @@ elgg_set_page_owner_guid($group->guid);
 elgg_set_context('groups');
 
 elgg_push_breadcrumb(elgg_echo('group'), "groups/all");
-elgg_push_breadcrumb($group->name, $group->getURL());
+elgg_push_breadcrumb(gc_explode_translation($group->name,$lang), $group->getURL());
 elgg_push_breadcrumb(elgg_echo("group_operators:operators"));
 
-$title = sprintf(elgg_echo("group_operators:title"), $group->name);
+$title = sprintf(elgg_echo("group_operators:title"), gc_explode_translation($group->name,$lang));
 
 $content = elgg_view_group_operators_list($group);
 

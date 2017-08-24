@@ -41,11 +41,11 @@ if (questions_limited_to_groups() && ($container_guid == $question->getOwnerGUID
 
 $title = get_input('title');
 $title2 = get_input('title2');
-$title3 = gc_implode_translation($title, $title2);
+$title = gc_implode_translation($title, $title2);
 
 $description = get_input('description');
 $description2 = get_input('description2');
-$description3 = gc_implode_translation($description, $description2);
+$description = gc_implode_translation($description, $description2);
 
 $tags = string_to_tag_array(get_input('tags', ''));
 $access_id = (int) get_input('access_id');
@@ -61,11 +61,9 @@ $access_id = questions_validate_access_id($access_id, $container_guid);
 
 $question->title = $title;
 $question->title2 = $title2;
-$question->title3 = $title3;
 
 $question->description = $description;
 $question->description2 = $description2;
-$question->description3 = $description3;
 
 $question->access_id = $access_id;
 $question->container_guid = $container_guid;

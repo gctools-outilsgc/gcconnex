@@ -138,6 +138,52 @@ $body .= '</fieldset>';
 
 
 
+elgg_load_library('elgg:gc_notification:functions');
+
+$body .= "<br/>";
+$body .= '<fieldset class="elgg-fieldset" id="elgg-settings-advanced-system" style="padding-top:5px; padding-bottom:10px;">';
+$body .= "<legend>Fix all the invalid Forum subscriptions</legend>";
+$body .= "<div style='padding-top:10px; padding-bottom:10px;'>";
+			
+	// get all the forums subscribed by users
+	$query = "  SELECT r1.guid_one, r1.guid_two, e.container_guid, es.subtype, r1.relationship
+	            FROM elggentity_relationships r1 
+	                LEFT JOIN elggentities e ON r1.guid_two = e.guid
+	                LEFT JOIN elggentity_subtypes es ON es.id = e.subtype
+	                LEFT JOIN elggusers_entity ue ON ue.guid = r1.guid_one
+	            WHERE r1.relationship like 'cp_subscribed_to%' AND es.subtype like 'hj%'
+	            GROUP BY r1.guid_one, r1.guid_two";
+
+	// contains everything that is related to the forums
+	$forums = get_data($query);
+	$invalid_forums = array();
+
+	// find all the invalid forums (users that are not members of a particular group that the forum resides in)
+	foreach ($forums as $forum) {
+	    $group_id = get_forum_in_group($forum->guid_two, $forum->guid_two);
+	    $relationship = check_entity_relationship($forum->guid_one, 'member', $group_id);
+	    
+	    // check if the user is a member of the group indicated
+	    if (!($relationship instanceof ElggRelationship)) {
+	        $invalid_forums[] = "{$forum->guid_one}|{$forum->guid_two}|{$group_id}";
+	    }
+	}
+
+	/*$body .= "<br/><br/>";
+	foreach ($invalid_forums as $key => $value) {
+		$body .= "<p>{$value} </p>";
+	}
+	$body .= "<br/><br/>";*/
+
+	$body .= elgg_view('admin/upgrades/view', array(
+		'count' => count($invalid_forums),
+		'action' => 'action/cp_notifications/fix_forums_subscription',
+	));
+
+$body .= "</div>";
+$body .= '</fieldset>';
+
+
 /*
 $body .= "<br/>";
 $body .= '<fieldset class="elgg-fieldset" id="elgg-settings-advanced-system" style="padding-top:5px; padding-bottom:10px;">';
