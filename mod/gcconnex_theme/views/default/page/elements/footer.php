@@ -1,7 +1,7 @@
 <?php
 /**
  * WET 4 Footer
- * 
+ *
  */
 
 // footer
@@ -24,7 +24,7 @@ if( _elgg_services()->session->get('language') == 'en'){
     <div class="container">
 		<nav role="navigation">
 			<h2>About this site</h2>
-            
+
 			<div class="row">
 
                 <section class="col-sm-3">
@@ -33,10 +33,10 @@ if( _elgg_services()->session->get('language') == 'en'){
                 </h3>
                 <ul class="list-unstyled">
 		                  <li><a href="<?php echo $about;?>"><?php echo elgg_echo('wet:footAbout');?></a></li>
-                          
+
                            <li><a href="<?php echo $priv;?>"><?php echo elgg_echo('wet:footPrivacy');?></a></li>
                            <li><a href="<?php echo $terms;?>"><?php echo elgg_echo('wet:footTerms');?></a></li>
-                           
+
 	                   </ul>
                 </section>
             <section class="col-sm-3">
@@ -50,9 +50,12 @@ if( _elgg_services()->session->get('language') == 'en'){
                         </a>
                     </li>
                     <li>
-                        <a href="<?php echo elgg_get_site_url() . 'mod/contactform/'; ?>">
-                            <?php echo elgg_echo('contactform:help_menu_item'); ?>
-                        </a>
+                        <?php if(elgg_is_active_plugin('freshdesk_help')){
+                        echo '<a href="'. elgg_get_site_url() . 'help/knowledgebase">'.elgg_echo('freshdesk:page:title').'</a>';
+                      } else {
+                        echo '<a href="'. elgg_get_site_url() . 'mod/contactform/">'.elgg_echo('contactform:help_menu_item').'</a>';
+                      }
+                        ?>
                     </li>
                 </ul>
             </section>
@@ -83,9 +86,9 @@ if( _elgg_services()->session->get('language') == 'en'){
 			</div>
 		</nav>
 	</div>
-    
-    
-    
+
+
+
     <!-- GC Info that will be at the bottom of the footer -->
     <div class="brand">
         <div class="container">
