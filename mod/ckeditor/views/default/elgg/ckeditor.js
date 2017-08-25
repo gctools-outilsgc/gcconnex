@@ -5,7 +5,7 @@
  *	      editor.bind('textarea');
  *	  });
  * </code>
- * 
+ *
  * @module elgg/ckeditor
  */
 define(function (require) {
@@ -55,6 +55,7 @@ define(function (require) {
 		registerHandlers: function () {
 			elgg.register_hook_handler('prepare', 'ckeditor', function (hook, type, params, CKEDITOR) {
 				CKEDITOR.plugins.addExternal('blockimagepaste', elgg.get_simplecache_url('elgg/ckeditor/blockimagepaste.js'), '');
+				CKEDITOR.plugins.addExternal('mentions',elgg.get_site_url() + '/mod/mentions/views/default/js/mentions/', 'plugin.js');
 				CKEDITOR.on('instanceReady', elggCKEditor.fixImageAttributes);
 				return CKEDITOR;
 			});

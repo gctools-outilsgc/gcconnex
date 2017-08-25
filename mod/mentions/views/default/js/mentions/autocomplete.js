@@ -21,32 +21,6 @@ define(function(require) {
 	var $ = require('jquery');
 	var elgg = require('elgg');
 
-
-	if (require.specified('ckeditor')) {
-
-		require(['ckeditor'], function(CKEDITOR) {
-
-			//tell ckeditor to load mentions plugin
-			CKEDITOR.plugins.addExternal('mentions',elgg.normalize_url('/mod/mentions/views/default/js/mentions/'), 'plugin.js');
-
-			/* OLD CODE
-			CKEDITOR.on('instanceCreated', function (e) {
-				e.editor.on('contentDom', function(ev) {
-					var editable = ev.editor.editable();
-					editable.attachListener(editable, 'keyup', function() {
-						textarea = e.editor;
-						mentionsEditor = 'ckeditor';
-						content = e.editor.document.getBody().getText();
-						position = ev.editor.getSelection().getRanges()[0].startOffset;
-						autocomplete(content, position);
-					});
-				});
-			});
-			*/
-		});
-
-	};
-
 	var getCursorPosition = function(el) {
 		var pos = 0;
 
