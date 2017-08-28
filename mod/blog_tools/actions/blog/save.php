@@ -250,6 +250,7 @@ if (!$error) {
 			// we only want notifications sent when post published
 			elgg_trigger_event('publish', 'object', $blog);
 			
+
 			// reset the creation time for posts that move from draft to published
 			if ($guid) {
 				$blog->time_created = time();

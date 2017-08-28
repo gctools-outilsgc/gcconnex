@@ -55,6 +55,8 @@ function cp_notifications_init() {
 	elgg_register_event_handler('create','annotation','cp_create_annotation_notification');
 	elgg_register_event_handler('create', 'membership_request', 'cp_membership_request');
 
+	elgg_register_event_handler('publish', 'object', 'publish_blog_post_handler');
+
 	// we need to check if the mention plugin is installed and activated because it does notifications differently...
 	if (elgg_is_active_plugin('mentions')) {
 		elgg_unregister_event_handler('create', 'object','mentions_notification_handler');
@@ -117,6 +119,12 @@ function cp_notifications_init() {
 }
 
 
+function publish_blog_post_handler($event, $type, $object) {
+
+	error_log(">>>>>>>>>>>>> publishing blog post handler .... ... . . .. . {$object->getSubtype()}");
+	elgg_trigger_event('create', 'object', $object);
+}
+
 /**
  * catches the minor save, determines whether to cancel or process the event handlers
  *
@@ -154,7 +162,7 @@ function minor_save_hook_handler($hook, $type, $value, $params) {
  * @param mixed  $params  Data passed from the trigger
  */
 function cp_overwrite_notification_hook($hook, $type, $value, $params) {
-
+error_log(">>>>>>   overwriting notification hook    {$params['cp_msg_type']}");
 	elgg_load_library('elgg:gc_notification:functions');
 	$cp_msg_type = trim($params['cp_msg_type']);
 	$to_recipients = array();
@@ -303,7 +311,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_who_made_operator' => $params['cp_who_made_operator'],
 				'cp_group_url' => $params['cp_group_url'],
 			);
-			$subject = elgg_echo('cp_notify:subject:add_grp_operator',array(gc_explode_translation($params['cp_group_name']), 'en'),'en') . ' | ' . elgg_echo('cp_notify:subject:add_grp_operator',array(gc_explode_translation($params['cp_group_name'], 'fr')),'fr');
+			$subject = elgg_echo('cp_notify:subject:add_grp_operator',array(gc_explode_translation($params['cp_group_name'], 'en')),'en') . ' | ' . elgg_echo('cp_notify:subject:add_grp_operator',array(gc_explode_translation($params['cp_group_name'], 'fr')),'fr');
 			$to_recipients[] = $params['cp_to_user'];
 			break;
 
@@ -518,12 +526,14 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 			messages_send($subject, $site_template, $to_recipient->guid, $sender_guid, 0, true, $add_to_sent);
 		}
+	} else {
+		$notification_error_type = elgg_echo('cp_notifications:chkbox:email');
 	}
 
 		// register the error, if either of the arrays are not populated
 	if (!is_array($to_recipients)) {
 		notification_logging('error: in cp_create_notification(), $to_recipients is not array');
-		system_message(elgg_echo('notifications:did_not_send'));
+		system_message(elgg_echo('notifications:did_not_send')." ({$notification_error_type})");
 	}
 }
 
@@ -616,6 +626,8 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 	$action_type = "content_revision";
 	$author = $liked_by;
+
+error_log("annotation >>>>>    {$object->getSubtype()}");
 
 	/// EDITS TO BLOGS AND PAGES, THEY ARE CONSIDERED ANNOTATION DUE TO REVISIONS AND MULTIPLE COPIES OF SAME CONTENT
 	if (strcmp($object_subtype,'likes') != 0) {
@@ -860,6 +872,9 @@ function cp_create_annotation_notification($event, $type, $object) {
 	}
 
 	$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
+error_log('************* '.print_r($to_recipients, true));
+
+error_log('_____________  '.print_r($to_recipients_site, true));
 
 
 	if (is_array($to_recipients)) {
@@ -888,6 +903,8 @@ function cp_create_annotation_notification($event, $type, $object) {
 				}
 			}
 		}
+	} else {
+		$notification_error_type = elgg_echo('cp_notifications:chkbox:email');
 	}
 
 	if (is_array($to_recipients_site)) {
@@ -903,12 +920,14 @@ function cp_create_annotation_notification($event, $type, $object) {
 				}
 			}
 		}
+	} else {
+		$notification_error_type .= ' & '.elgg_echo('cp_notifications:chkbox:site');
 	}
 
 	// register the error, if either of the arrays are not populated
 	if (!is_array($to_recipients) || !is_array($to_recipients_site)) {
 		notification_logging('error: in cp_create_notification(), $to_recipients or $to_recipients_site is not array');
-		system_message(elgg_echo('notifications:did_not_send'));
+		system_message(elgg_echo('notifications:did_not_send')." ({$notification_error_type})".$content->subtype);
 	}
 
 } // end of function
@@ -924,8 +943,8 @@ function cp_create_annotation_notification($event, $type, $object) {
  * @param mixed $object		the object/entity of the event
  */
 function cp_create_notification($event, $type, $object) {
-
-	$do_not_subscribe_list = array('file', 'tidypics_batch', 'hjforum', 'hjforumcategory','hjforumtopic', 'messages', 'hjforumpost', 'site_notification', 'poll_choice','blog_revision','widget','folder','c_photo', 'cp_digest','MySkill', 'education', 'experience', 'poll_choice3');
+error_log("create notification >>>>>>>>   {$object->getGUID()} /// {$object->getSubtype()} /// {$object->status}");
+	$do_not_subscribe_list = array('mission-posted', 'file', 'tidypics_batch', 'hjforum', 'hjforumcategory','hjforumtopic', 'messages', 'hjforumpost', 'site_notification', 'poll_choice','blog_revision','widget','folder','c_photo', 'cp_digest','MySkill', 'education', 'experience', 'poll_choice3');
 
 	// since we implemented the multi file upload, each file uploaded will invoke this hook once to many times (we don't allow subtype file to go through, but check the event)
 	if ($object instanceof ElggObject && $event !== 'single_file_upload') {
@@ -1167,7 +1186,7 @@ function cp_create_notification($event, $type, $object) {
 		case 'single_file_upload':
 
 		default:
-
+error_log(" blog >>>>>    {$object->status}");
 			// cyu - there is an issue with regards to auto-saving drafts
 			if (strcmp($object->getSubtype(),'blog') == 0) {
 				if (strcmp($object->status,'draft') == 0 || strcmp($object->status,'unsaved_draft') == 0) return;
@@ -1250,7 +1269,6 @@ function cp_create_notification($event, $type, $object) {
 				}
 
 				$guidone = $object->getOwnerGUID();
-
 				$author_id = $object->getOwnerGUID();
 				
 				// Get guid of the question
