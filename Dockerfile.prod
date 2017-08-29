@@ -4,8 +4,7 @@ MAINTAINER Ilia Salem <ilia.salem@tbs-sct.gc.ca>
 # Install dependencies
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update
-RUN apt-get install -y git apache2 php5 libapache2-mod-php5 php5-mysql php5-xml php5-gd php5-curl php5-mbstring php5-zip  curl
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN apt-get install -y git apache2 php5 libapache2-mod-php5 php5-mysql php5-gd php5-curl curl
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
@@ -21,12 +20,6 @@ RUN sed -i '/ErrorLog ${APACHE_LOG_DIR}\/error.log/c\ErrorLog \/dev\/stderr' /et
 
 COPY . /var/www/html
 WORKDIR /var/www/html
-
-
-ARG COMPOSER_ALLOW_SUPERUSER=1
-ARG COMPOSER_NO_INTERACTION=1
-RUN composer global require fxp/composer-asset-plugin
-RUN composer install
 
 # Start Apache in foreground mode
 CMD chown www-data /var/www/html/data && chown www-data /var/www/html/ && chown www-data /var/www/html/elgg-config && rm -f /var/run/apache2/apache2.pid && /usr/sbin/apache2ctl -D FOREGROUND
