@@ -6,9 +6,9 @@ services:
   # nginx-proxy is uncommented above.
   # ###########################################################################
   gcconnex:
-     build:
+    build:
       context: .
-      dockerfile: ./Dockerfile.prod
+      dockerfile: Dockerfile.prod
     ports:
       - 8080:80
     volumes:
@@ -24,7 +24,7 @@ services:
       - DOCKER=1
       - HOME=/var/www/html
       - DBHOST=gcconnex-db
-#      - WWWROOT=http://localhost:8080/
+      - WWWROOT=http://localhost:8080/
   # ###########################################################################
   # Database container for gcconnex, accessible from within gcconnex using the
   # network host "gcconnex-db".
