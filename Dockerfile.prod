@@ -22,10 +22,8 @@ RUN sed -i '/ErrorLog ${APACHE_LOG_DIR}\/error.log/c\ErrorLog \/dev\/stderr' /et
 COPY . /var/www/html
 WORKDIR /var/www/html
 
-RUN 
 
-USER www-data
-
+ARG COMPOSER_ALLOW_SUPERUSER=1
 ARG COMPOSER_NO_INTERACTION=1
 RUN composer global require fxp/composer-asset-plugin
 RUN composer install
