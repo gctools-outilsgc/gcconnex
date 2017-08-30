@@ -78,9 +78,7 @@ function group_content_routing_handler($hook, $type, $info) {
     $group_entity = get_entity($group_guid);
 
     if ($group_entity instanceof ElggGroup && !(get_entity($entity_guid))) {
-            register_error(elgg_echo('limited_access'));
-            forward("groups/profile/{$group_guid}");
-        }
-    }
-    
+        register_error(elgg_echo('limited_access'));
+        forward("groups/profile/{$group_guid}");
+    }    
 }
