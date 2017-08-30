@@ -69,7 +69,6 @@ function career_menu_hander($hook, $type, $menu, $params){
  * @param array $info
  */
 function group_content_routing_handler($hook, $type, $info) {
-    $agent = strtolower($_SERVER['HTTP_USER_AGENT']);
     $entity_guid = (int)$info['segments'][1];
     
     $query = "SELECT guid, container_guid FROM elggentities WHERE guid = {$entity_guid} LIMIT 1";
@@ -78,8 +77,7 @@ function group_content_routing_handler($hook, $type, $info) {
     $group_guid = $entity_information[0]->container_guid;
     $group_entity = get_entity($group_guid);
 
-    if ($group_entity instanceof ElggGroup) {
-        if (!get_entity($entity_guid)) {
+    if ($group_entity instanceof ElggGroup && !(get_entity($entity_guid))) {
             register_error(elgg_echo('limited_access'));
             forward("groups/profile/{$group_guid}");
         }
