@@ -62,7 +62,7 @@ function career_menu_hander($hook, $type, $menu, $params){
 }
 
 /**
- * handler that takes care of the page routes (#1419)
+ * handler that takes care of the page routes (#1195)
  * redirects user (who do not have access to group content) to the group profile
  * @param string $hook
  * @param string $type
