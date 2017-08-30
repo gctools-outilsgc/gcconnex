@@ -527,7 +527,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 		}
 	}
 
-		// register the error, if either of the arrays are not populated
+	// register the error, if either of the arrays are not populated
 	if (!is_array($to_recipients)) {
 		notification_logging('error: in cp_create_notification(), $to_recipients is not array');
 	}
@@ -1283,7 +1283,7 @@ function cp_create_notification($event, $type, $object) {
 
 
 
-    $notification_error_type = "";
+	$notification_error_type = "";
 
 	// check for empty subjects or empty content
 	if (empty($subject)) return false;
