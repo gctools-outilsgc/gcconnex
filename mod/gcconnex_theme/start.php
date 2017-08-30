@@ -29,6 +29,10 @@ function gcconnex_theme_init() {
     		'href' => '#career_menu',
     		'text' => elgg_echo('career') . '<span class="expicon glyphicon glyphicon-chevron-down"></span>'
     ));
+
+
+    // this will take care of the redirect only for groups
+    elgg_register_plugin_hook_handler('route', 'all', 'group_content_routing_handler', 10);
 }
 
 
@@ -55,4 +59,26 @@ function career_menu_hander($hook, $type, $menu, $params){
                 break;
         }
     }
+}
+
+/**
+ * handler that takes care of the page routes (#1195)
+ * redirects user (who do not have access to group content) to the group profile
+ * @param string $hook
+ * @param string $type
+ * @param array $info
+ */
+function group_content_routing_handler($hook, $type, $info) {
+    $entity_guid = (int)$info['segments'][1];
+    
+    $query = "SELECT guid, container_guid FROM elggentities WHERE guid = {$entity_guid} LIMIT 1";
+    $entity_information = get_data($query);
+    
+    $group_guid = $entity_information[0]->container_guid;
+    $group_entity = get_entity($group_guid);
+
+    if ($group_entity instanceof ElggGroup && !(get_entity($entity_guid))) {
+        register_error(elgg_echo('limited_access'));
+        forward("groups/profile/{$group_guid}");
+    }    
 }
