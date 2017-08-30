@@ -147,8 +147,7 @@ function phpmailer_send($to, $to_name, $subject, $body, array $bcc = NULL, $html
 	
 	////////////////////////////////////
 	// Format message
-	//$phpmailer->SMTPSecure = "tls";
-	$phpmailer->SMTPDebug = 0; //Set to 1 for debugging information
+	$phpmailer->SMTPDebug = 0; // Set to 1 for debugging information
 
 	$phpmailer->ClearAllRecipients();
 	$phpmailer->ClearAttachments();
@@ -228,7 +227,6 @@ function phpmailer_send($to, $to_name, $subject, $body, array $bcc = NULL, $html
 		$return = $phpmailer->Send();
 
 	} catch (phpmailerException $e) {
-		//error_log($e->errorMessage());
 		
 		$errMess = $e->getMessage();
 		$errStack = $e->getTraceAsString();
@@ -244,9 +242,6 @@ function phpmailer_send($to, $to_name, $subject, $body, array $bcc = NULL, $html
 		$errStack = "";
 		$errType = "custom";
 		phpmailer_logging($errMess, $errStack, 'PHPMailer', $errType);
-
-	} else {
-		//error_log("PHPMailer email sent");
 	}
 
 	return $return;
