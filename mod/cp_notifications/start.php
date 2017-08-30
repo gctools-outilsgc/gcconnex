@@ -525,14 +525,11 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 			messages_send($subject, $site_template, $to_recipient->guid, $sender_guid, 0, true, $add_to_sent);
 		}
-	} else {
-		$notification_error_type = elgg_echo('cp_notifications:chkbox:email');
 	}
 
 		// register the error, if either of the arrays are not populated
 	if (!is_array($to_recipients)) {
 		notification_logging('error: in cp_create_notification(), $to_recipients is not array');
-		system_message(elgg_echo('notifications:did_not_send')." ({$notification_error_type})");
 	}
 }
 
@@ -896,8 +893,6 @@ function cp_create_annotation_notification($event, $type, $object) {
 				}
 			}
 		}
-	} else {
-		$notification_error_type = elgg_echo('cp_notifications:chkbox:email');
 	}
 
 	if (is_array($to_recipients_site)) {
@@ -913,14 +908,11 @@ function cp_create_annotation_notification($event, $type, $object) {
 				}
 			}
 		}
-	} else {
-		$notification_error_type = ($notification_error_type === '') ? elgg_echo('cp_notifications:chkbox:site') : ' & ' . elgg_echo('cp_notifications:chkbox:site');
 	}
 
 	// register the error, if either of the arrays are not populated
 	if (!is_array($to_recipients) || !is_array($to_recipients_site)) {
 		notification_logging('error: in cp_create_notification(), $to_recipients or $to_recipients_site is not array');
-		system_message(elgg_echo('notifications:did_not_send')." ({$notification_error_type})".$content->subtype);
 	}
 
 } // end of function
@@ -1324,9 +1316,7 @@ function cp_create_notification($event, $type, $object) {
 				}
 			}
 		}
-	} else 
-		$notification_error_type = elgg_echo('cp_notifications:chkbox:email');
-
+	}
 
 	/// send site notifications
 	if (is_array($to_recipients_site)) {
@@ -1344,16 +1334,12 @@ function cp_create_notification($event, $type, $object) {
 				$site_template = elgg_view('cp_notifications/site_template', $message);
 				messages_send($subject, $site_template, $to_recipient->guid, $site->guid, 0, true, false);
 			}
-
 		}
-	} else {
-		$notification_error_type = ($notification_error_type === '') ? elgg_echo('cp_notifications:chkbox:site') : ' & ' . elgg_echo('cp_notifications:chkbox:site');
 	}
 
 	// register the error, if either of the arrays are not populated
 	if (!is_array($to_recipients) || !is_array($to_recipients_site)) {
 		notification_logging('error: in cp_create_notification(), $to_recipients or $to_recipients_site is not array');
-		system_message(elgg_echo('notifications:did_not_send')." ({$notification_error_type})");
 	}
 
 }
