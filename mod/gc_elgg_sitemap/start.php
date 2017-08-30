@@ -35,8 +35,8 @@ function gc_elgg_sitemap_init() {
 		elgg_register_plugin_hook_handler('view', 'event_calendar/show_events', 'elgg_event_calendar_list_handler');
 
 		elgg_register_plugin_hook_handler('view', 'groups/profile/widget_area', 'elgg_generic_view_handler');
-
 		elgg_register_plugin_hook_handler('view', 'page/elements/comments', 'elgg_comment_view_handler');
+		elgg_register_plugin_hook_handler('view', 'page/elements/topbar_wrapper', 'elgg_view_topbar_handler');
 
 	    /// renmove these pages so that it doesn't get crawled
 		elgg_unregister_page_handler('activity');
@@ -71,8 +71,13 @@ function gc_elgg_sitemap_init() {
 
 		// modifying view in the user's profile
 		elgg_register_plugin_hook_handler('view', 'b_extended_profile/portfolio', 'linkedin_profile_handler');
+		elgg_register_plugin_hook_handler('view', 'b_extended_profile/skills', 'elgg_view_topbar_handler');
 
 	}
+}
+
+function elgg_view_topbar_handler($hook, $type, $return, $params) {
+	return "";
 }
 
 function linkedin_profile_handler($hook, $type, $return, $params) {
@@ -251,8 +256,7 @@ function group_navigation_handler($hook, $type, $value, $params) {
 
 
 function elgg_members_menu_handler($hook, $type, $menu, $params) {
-	$menu = array();
-	return $menu;
+	return "";
 }
 
 function elgg_generic_view_handler($hook, $type, $value, $params) {
@@ -294,8 +298,7 @@ function elgg_event_calendar_list_handler($hook, $type, $value, $params) {
 
 
 function elgg_entity_menu_handler($hook, $type, $menu, $params) {
-	$menu = array();
-	return $menu;
+	return array();
 }
 
 /**
@@ -399,8 +402,7 @@ function elgg_breadcrumb_handler($hook, $type, $menu, $params) {
  * hide the user menu bar
  */
 function elgg_user_menu_handler($hook, $type, $menu, $params) {
-	$menu = array();
-	return $menu;
+	return array();
 }
 
 
@@ -423,7 +425,6 @@ function elgg_site_menu_handler($hook, $type, $menu, $params) {
 	}
 	echo $menu_item;
 
-	$menu = array();
-	return $menu;
+	return array();
 }
 
