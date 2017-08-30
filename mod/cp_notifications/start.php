@@ -1290,7 +1290,7 @@ function cp_create_notification($event, $type, $object) {
 	} // end of switch statement
 
 
-$to_recipients_site = null;
+
     $notification_error_type = "";
 
 	// check for empty subjects or empty content
