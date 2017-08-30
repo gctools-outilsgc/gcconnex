@@ -222,6 +222,23 @@ function wet4_theme_init() {
         'target' => '_blank',
     ));
 
+		//newsfeed-like department pages
+		if(elgg_is_logged_in() && elgg_get_plugin_setting('deptActivity', 'wet4')){
+
+			elgg_register_ajax_view('ajax/deptactivity_check');
+			elgg_register_ajax_view('ajax/deptactivity_items');
+
+			$dept = elgg_get_logged_in_user_entity()->department;
+			$dept = explode("/", $dept);
+
+			elgg_register_page_handler('department', 'department_page_handler');
+
+			elgg_register_menu_item('site', array(
+					'name' => 'department-activity',
+					'text' => $dept[0],
+					'href' => 'department',
+			));
+		}
 
 
 }
@@ -232,6 +249,11 @@ $dbprefix = elgg_get_config('dbprefix');
     if ($CONFIG->remove_logged_in) {
     $query = "UPDATE {$dbprefix}entities SET access_id = 2 WHERE access_id = 1";//change access logged in to public
     update_data($query);
+}
+
+function department_page_handler() {
+    require_once elgg_get_plugins_path() . 'wet4/pages/department/activity.php';
+    return true;
 }
 
  /*
@@ -1321,7 +1343,7 @@ function my_site_menu_handler($hook, $type, $menu, $params){
         return;
 
     foreach ($menu as $key => $item) {
-        if ($item->getName() === 'groups') 
+        if ($item->getName() === 'groups')
             (elgg_is_logged_in()) ? $item->setHref(elgg_get_site_url().'groups/all?filter=yours') : $item->setHref( elgg_get_site_url().'groups/all?filter=popular');
     }
 }
@@ -1331,19 +1353,19 @@ function my_site_menu_handler($hook, $type, $menu, $params){
  * Add styles to phot album title menu
  */
 function my_title_menu_handler($hook, $type, $menu, $params){
-    
+
     if (!is_array($menu))
         return;
 
     foreach ($menu as $key => $item) {
 
-        if ($item->getName() === 'slideshow') 
+        if ($item->getName() === 'slideshow')
             $item->setText(elgg_echo('album:slideshow'));
-        elseif ($item->getName() === 'addphotos') 
+        elseif ($item->getName() === 'addphotos')
             $item->setItemClass('mrgn-rght-sm');
-    
+
     }
-    
+
 }
 
 /*
