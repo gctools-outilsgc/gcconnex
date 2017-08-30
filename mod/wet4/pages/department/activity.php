@@ -4,7 +4,7 @@ if(elgg_is_active_plugin('gc_streaming_content')){
   elgg_require_js("stream_dept_activity");
 }
 
-$title = 'Your department\'s activity';
+$title = elgg_echo('new:dept:activity:title');
 
 //get the department we are working with
 $dept = elgg_get_logged_in_user_entity()->department;

@@ -179,6 +179,9 @@ return array(
 
     ////
 
+    'new:dept:activity:title' => "Your department's activity",
+
+
     'wet:more'=>"More",
   	'breadcrum:home' => 'Home',
 
