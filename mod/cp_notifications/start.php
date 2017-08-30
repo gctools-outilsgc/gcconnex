@@ -36,6 +36,9 @@ function cp_notifications_init() {
   
 	elgg_register_action('useradd',"$action_base/useradd.php",'admin'); // actions/useradd.php (core file)
 
+	// this plugin must now be placed after "group_tools" plugin
+	elgg_register_action('group_tools/mail', "{$action_base}/group_mail.php"); 
+
 
 	// Ajax action files
 	elgg_register_action('cp_notify/retrieve_group_contents', elgg_get_plugins_path().'cp_notifications/actions/ajax_usersettings/retrieve_group_contents.php'); 
