@@ -2,6 +2,8 @@
 
 $french = array(
 
+'admin:administer_utilities:debugging_forums' => 'Forums Debug Tool',
+
 "gcforums:is_sticky" => "Sujet délicat",
 "gcforums:forumpost_saved" => "Votre réponse a été créée avec succès",
 "gcforums:forumtopic_saved" => "Votre sujet de forum '%s' a été créé avec succès",

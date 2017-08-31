@@ -88,8 +88,11 @@ if ($object->getSubtype() === 'hjforum') {
 				WHERE guid_one = {$vars['forum_guid']} AND relationship = 'filed_in'";
 	$shelved_in = get_data($query);
 
-	// this is forum object then check to see if categories is enabled
-	if ($object->enable_subcategories || get_entity($object->getContainerGUID()) instanceof ElggGroup) {
+
+echo ">>>>>>>>>>>>>>>  blahblahblah   {$object->guid}   //  {$object->getcontainerEntity()->enable_subcategories}";
+	
+	// check if forumB that is filed under forumA has subcategory enabled
+	if ($object->getContainerEntity()->enable_subcategories || $object->getContainerEntity() instanceof ElggGroup) {
 		
 		if ($vars['forum_guid'] && $vars['forum_guid'] != 0) { // this is within the nested forums
 			$query = "SELECT  oe.guid, oe.title

@@ -30,6 +30,9 @@ function gcforums_init() {
 		'text' => elgg_echo('gcforums:jmp_menu'),
 		'href' => elgg_echo('gcforums:jmp_url'),
 	));
+
+
+	elgg_register_admin_menu_item("administer", "debugging_forums", "administer_utilities");
 }
 
 function gcforums_owner_block_menu($hook,$type,$return,$params) {
@@ -432,6 +435,7 @@ if ($relationship[0]->max_forum_guid != $forum_guid)
 /* Categoried Forums
  */
 function gcforums_category_content($guid, $group_guid, $forums=false) {
+	error_log(">>>>>> category forums thing");
 	elgg_load_css('gcforums-css');
 
 	// * get all the categories
@@ -455,7 +459,7 @@ function gcforums_category_content($guid, $group_guid, $forums=false) {
     // * forum header stuff
     $t_forum_category .= "<table class='gcforums-table'>
     					<tr class='gcforums-tr'>
-    						<th class='gcforums-th' width='60%'>".elgg_echo('gcforums:forum_title')."</th>
+    						<th class='gcforums-th' width='60%'>".elgg_echo('Category')."</th>
     						<th class='gcforums-th'>".elgg_echo('gcforums:topics')."</th>
     						<th class='gcforums-th'>".elgg_echo('gcforums:posts')."</th>
     						<th class='gcforums-th'>".elgg_echo('gcforums:latest')."</th>
@@ -498,6 +502,9 @@ function gcforums_category_content($guid, $group_guid, $forums=false) {
 					</tr>";
 			} else {
 
+								$t_forum_category .= "<tr class='gcforums-th'>
+						<th colspan='5' class='gcforums-td-forums'>".elgg_echo('Forums')."</th>
+					</tr>";
 				// display the forum in the category
 				foreach ($forums as $forum) {
 					$url = "<strong><a href='".elgg_get_site_url()."gcforums/group/{$group_guid}/{$forum->guid}'>{$forum->title}</a></strong>";
@@ -517,6 +524,19 @@ function gcforums_category_content($guid, $group_guid, $forums=false) {
 
 	$t_forum_category .= "</table>";
     //putting the table together with the category out of the table - nick
+
+
+
+	if (elgg_is_admin_logged_in()) {
+
+		// connectionless forums (admin only)
+		$t_forum_category .= "<p>blahblahblah - Please note that only admins can see this section</p>";
+
+		$t_forum_category .= gcforums_forum_list($guid, $group_guid);
+
+		$t_forum_category .= "<p>end -- blahblahbah</p>";
+	}
+
 	return $t_forum_category;
 }
 
