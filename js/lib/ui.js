@@ -125,7 +125,7 @@ elgg.ui.popupOpen = function(event) {
  * @deprecated 2.2
  */
 elgg.ui.popupClose = function(event) {
-	
+
 	elgg.deprecated_notice('elgg.ui.popupClose() has been deprecated and should not be called directly. Use elgg/popup AMD module instead', '2.2');
 
 	require(['elgg/popup'], function(popup) {
@@ -175,6 +175,16 @@ elgg.ui.initHoverMenu = function(parent) {
 					// replace all existing placeholders with new menu
 					$all_placeholders.removeClass('elgg-ajax-loader')
 						.html($(data).children());
+
+						$all_placeholders.each(function(){
+
+	            if($(this).parent().is('body')){
+	                //dont do anything with this menu
+	            } else {
+	              //but hide the rest
+	              $(this).hide();
+	            }
+	          });
 				}
 			}
 		});
@@ -218,7 +228,7 @@ elgg.ui.initHoverMenu = function(parent) {
 				popup.close($hovermenu);
 			} else {
 				popup.open($icon, $hovermenu, {
-					'my': 'left top',
+					'my': 'left-30px top20px',
 					'at': 'right-15px bottom',
 					'of': $icon.closest(".elgg-avatar"),
 					'collision': 'fit fit'
