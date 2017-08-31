@@ -1516,6 +1516,7 @@ class PHPMailer
      */
     public function getSMTPInstance()
     {
+        require_once elgg_get_plugins_path() . '/phpmailer/vendors/class.smtp.php';
         if (!is_object($this->smtp)) {
             $this->smtp = new SMTP;
         }

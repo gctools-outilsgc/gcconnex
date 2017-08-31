@@ -70,7 +70,7 @@ $values = array(
 );
 
 // fail if a required entity isn't set
-//$required = array('title', 'description');
+$required = array('title', 'description');
 $cart = array(); //Create a array to compare if english or french title and description is in.
 foreach ($values as $name => $default) {
 
@@ -250,6 +250,7 @@ if (!$error) {
 			// we only want notifications sent when post published
 			elgg_trigger_event('publish', 'object', $blog);
 			
+
 			// reset the creation time for posts that move from draft to published
 			if ($guid) {
 				$blog->time_created = time();
