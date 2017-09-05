@@ -489,7 +489,7 @@ add_translation("en", $entity_statistics);
 
 $messages = array(
 	// messages widget
-	"widgets:messages:description" => "Shows your latest messages",
+	"widgets:messages:description" => "Shows your latest site notifications",
 	"widgets:messages:not_logged_in" => "You need to be logged in to use this widget",
 	"widgets:messages:settings:only_unread" => "Only show unread messages",
 );
