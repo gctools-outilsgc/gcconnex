@@ -6,7 +6,7 @@
  */
 
 $guid = (int) get_input('guid');
-
+$lang = get_current_language();
 elgg_entity_gatekeeper($guid, 'object', 'question');
 $question = get_entity($guid);
 
@@ -15,7 +15,8 @@ elgg_set_page_owner_guid($question->getContainerGUID());
 $page_owner = $question->getContainerEntity();
 
 // set breadcrumb
-$crumbs_title = $page_owner->name;
+$crumbs_title = gc_explode_translation($page_owner->name,$lang);
+
 
 if ($page_owner instanceof ElggGroup) {
 	elgg_push_breadcrumb($crumbs_title, "questions/group/{$page_owner->guid}");

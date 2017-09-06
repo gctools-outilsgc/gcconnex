@@ -1984,7 +1984,7 @@ function wet_questions_page_handler($segments) {
 			break;
 		case 'group':
 			elgg_group_gatekeeper();
-			include "$pages/owner.php";
+			include "$new_page/owner.php";
 			break;
 		case 'friends':
 				include "$new_page/friends.php";
