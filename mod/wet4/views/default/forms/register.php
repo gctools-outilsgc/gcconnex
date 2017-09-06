@@ -296,13 +296,13 @@ var enDepartments = {};//new Array();
 </header>
 <div class="panel-body mrgn-lft-md">
 <div class="form-group">
-    <label for="email_initial" class="required"><span class="field-name"><?php echo elgg_echo('gcRegister:email_initial'); ?></span><strong class="required">(required)</strong></label>
+    <label for="email_initial" class="required"><span class="field-name"><?php echo elgg_echo('gcRegister:email_initial'); ?></span><strong class="required">(<?php echo elgg_echo('gcRegister:required'); ?>)</strong></label>
     <font id="email_initial_error" color="red"></font><br />
     <input type="email" name="email_initial" id="email_initial" value='<?php echo $email ?>' class="form-control" required="required"/>
 </div>
 
 <div class="form-group">
-	<label for="email" class="required"><span class="field-name"><?php echo elgg_echo('gcRegister:email_secondary'); ?></span><strong class="required">(required)</strong></label>
+	<label for="email" class="required"><span class="field-name"><?php echo elgg_echo('gcRegister:email_secondary'); ?></span><strong class="required">(<?php echo elgg_echo('gcRegister:required'); ?>)</strong></label>
     <font id="email_secondary_error" color="red"></font><br />
 	<input id="email" class="form-control" type="email" value='<?php echo $email ?>' name="email" onBlur="" required="required"/>
     <script>
@@ -343,7 +343,7 @@ var enDepartments = {};//new Array();
 
     </div>
 <div class="form-group">
-	<label for="department" class="required"><span class="field-name"><?php echo elgg_echo('gcRegister:department'); ?></span><strong class="required">(required)</strong></label>
+	<label for="department" class="required"><span class="field-name"><?php echo elgg_echo('gcRegister:department'); ?></span><strong class="required">(<?php echo elgg_echo('gcRegister:required'); ?>)</strong></label>
 	<?php
 	$obj = elgg_get_entities(array(
    		'type' => 'object',
@@ -398,7 +398,7 @@ var enDepartments = {};//new Array();
 	?>
 </div>
 <div class="form-group">
-	<label for="username" class="required"><span class="field-name"><?php echo elgg_echo('gcRegister:username'); ?></span><strong class="required">(required)</strong></label>
+	<label for="username" class="required"><span class="field-name"><?php echo elgg_echo('gcRegister:username'); ?></span><strong class="required">(<?php echo elgg_echo('gcRegister:required'); ?>)</strong></label>
     <div class="already-registered-message mrgn-bttm-sm"><span class="label label-danger tags mrgn-bttm-sm"></span></div>
 	<?php
 	echo elgg_view('input/text', array(
@@ -413,7 +413,7 @@ var enDepartments = {};//new Array();
 </div>
 
 <div class="form-group">
-	<label for="password" class="required"><span class="field-name"><span class="field-name"><?php echo elgg_echo('gcRegister:password_initial'); ?></span><strong class="required">(required)</strong></label>
+	<label for="password" class="required"><span class="field-name"><span class="field-name"><?php echo elgg_echo('gcRegister:password_initial'); ?></span><strong class="required">(<?php echo elgg_echo('gcRegister:required'); ?>)</strong></label>
 	<font id="password_initial_error" color="red"></font><br />
 	<?php
 	echo elgg_view('input/password', array(
@@ -427,7 +427,7 @@ var enDepartments = {};//new Array();
 </div>
 
 <div class="form-group">
-	<label for="password2" class="required"><span class="field-name"><?php echo elgg_echo('gcRegister:password_secondary'); ?></span><strong class="required">(required)</strong></label>
+	<label for="password2" class="required"><span class="field-name"><?php echo elgg_echo('gcRegister:password_secondary'); ?></span><strong class="required">(<?php echo elgg_echo('gcRegister:required'); ?>)</strong></label>
     <font id="password_secondary_error" color="red"></font><br />
 	<?php
 	echo elgg_view('input/password', array(
@@ -442,7 +442,7 @@ var enDepartments = {};//new Array();
 
 
 <div class="form-group">
-	<label for="name" class="required"><span class="field-name"><?php echo elgg_echo('gcRegister:display_name'); ?></span><strong class="required">(required)</strong> </label>
+	<label for="name" class="required"><span class="field-name"><?php echo elgg_echo('gcRegister:display_name'); ?></span><strong class="required">(<?php echo elgg_echo('gcRegister:required'); ?>)</strong> </label>
 	<?php
 	echo elgg_view('input/text', array(
 		'name' => 'name',
