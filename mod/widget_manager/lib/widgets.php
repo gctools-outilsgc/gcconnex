@@ -68,7 +68,7 @@ function widget_manager_widgets_init() {
 
 	// messages
 	if (elgg_is_active_plugin("messages")) {
-		elgg_register_widget_type("messages", elgg_echo("Notifications"), elgg_echo("widgets:messages:description"), array("dashboard", "index"), false);
+		elgg_register_widget_type("messages", elgg_echo("widget:messages:notification"), elgg_echo("widgets:messages:description"), array("dashboard", "index"), false);
 	}
 	
 	// index_members_online
