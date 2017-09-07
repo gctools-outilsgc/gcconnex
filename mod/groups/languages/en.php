@@ -1,6 +1,13 @@
 <?php
 return array(
 
+	// Gcconnex
+
+	'groups:owned'	=> "Groups I own",
+	'groups:yours' => "My groups",
+	'groups:add' => "Create a new group",
+	'groups:latestdiscussion' => 'Latest discussion',
+
 	/**
 	 * Menu items and titles
 	 */

@@ -7,6 +7,17 @@
 
 
 $photo = $vars['entity'];
+
+//rotate
+if (isset($_POST['action'])) {
+    switch ($_POST['action']) {
+        case 'rotation':
+            rotation($photo);
+            break;
+
+    }
+}
+
 elgg_load_js('jquery.imgareaselect');
 elgg_load_js('elgg.avatar_cropper');
 elgg_load_css('jquery.imgareaselect');
@@ -37,15 +48,7 @@ echo '<div class="rotate2"></div>';
 
 <?php
 
-//rotate
-if (isset($_POST['action'])) {
-    switch ($_POST['action']) {
-        case 'rotation':
-            rotation($photo);
-            break;
 
-    }
-}
 
 //function to rotate image
 function rotation($photo){
@@ -71,6 +74,7 @@ function rotation($photo){
 
                 if ($imgRotated !== false) {
                     imagejpeg($imgRotated,$imgsrc,100);
+                    echo elgg_get_inline_url($photo->getIcon('master'));
                 }
               }else{
                 echo 'Error, Image rotate false. JPEG';
@@ -81,7 +85,7 @@ function rotation($photo){
               echo'Error, file not exist. JPEG';
 
           }
-              imagedestroy($img);
+      imagedestroy($img);
       imagedestroy($imgRotated);
     }
   }

@@ -1,6 +1,10 @@
 <?php
 return array(
 
+	// gcconnex
+
+	'groups:latestdiscussion' => 'Dernière discussion',
+
 	/**
 	 * Menu items and titles
 	 */
