@@ -476,9 +476,10 @@
 	
 	$messages = array(
 		// messages widget
-		'widgets:messages:description' => "Ce widget sert à afficher vos derniers messages",
+		'widgets:messages:description' => "Ce widget sert à afficher vos dernières notifications",
 		'widgets:messages:not_logged_in' => "Vous devez ouvrir une session pour utiliser ce widget",
 		'widgets:messages:settings:only_unread' => "Ne montrer que les messages non lus",
+		'widget:messages:notification' => "Notifications",
 
 	);
 	add_translation("fr", $messages);
