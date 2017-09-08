@@ -44,7 +44,8 @@ if (!empty($members_search)) {
 	$options['wheres'][] = "(ms.name LIKE '%{$members_search}%' OR ms.username LIKE '%{$members_search}%')";
 }
 
-$title = elgg_echo('groups:members:title', array($group->name));
+$lang = get_current_language();
+$title = elgg_echo('groups:members:title', array(gc_explode_translation($group->title,$lang)));
 
 $tabs = elgg_view_menu('groups_members', [
 	'entity' => $group,
