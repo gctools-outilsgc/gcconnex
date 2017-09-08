@@ -133,12 +133,23 @@ if (in_array("yes", array($invite_site_members, $invite_circle, $invite_email, $
 			"onclick" => "group_tools_group_invite_switch_tab(\"email\");"
 		);
 
+		elgg_load_css('multiple-emails');
+		elgg_load_js('multiple-emails');
+
 		$form_data .= "<div id='group_tools_group_invite_email' class='hidden wb-invisible mbm'>";
 		$form_data .= "<div><label for='group_tools_group_invite_autocomplete_email_autocomplete'>" . elgg_echo("group_tools:group:invite:email:description") . "</label></div>";
-		$form_data .= elgg_view("input/group_invite_autocomplete", array("name" => "user_guid",
+		$form_data .= elgg_view("input/text", array("name" => "user_emails",
 																			"id" => "group_tools_group_invite_autocomplete_email",
 																			"group_guid" => $group->getGUID(),
 																			"relationship" => "email"));
+
+		$form_data .= "<script>
+			$('#group_tools_group_invite_autocomplete_email').multiple_emails();
+			$('.elgg-form-groups-invite').keydown(function(e){
+				if( $(e.target).hasClass('multiple_emails-input') && e.keyCode == 13 ){ e.preventDefault(); }
+			});
+		</script>";
+		
 		$form_data .= "</div>";
 
     }
