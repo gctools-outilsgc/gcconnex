@@ -71,7 +71,8 @@ function career_menu_hander($hook, $type, $menu, $params){
 function group_content_routing_handler($hook, $type, $info) {
     $entity_guid = (int)$info['segments'][1];
     
-    $query = "SELECT guid, container_guid FROM elggentities WHERE guid = {$entity_guid} LIMIT 1";
+    $db = _elgg_services()->db;
+    $query = "SELECT guid, container_guid FROM {$db->prefix}entities WHERE guid = {$entity_guid} LIMIT 1";
     $entity_information = get_data($query);
     
     $group_guid = $entity_information[0]->container_guid;
