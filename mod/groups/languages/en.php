@@ -7,6 +7,7 @@ return array(
 	'groups:yours' => "My groups",
 	'groups:add' => "Create a new group",
 	'groups:latestdiscussion' => 'Latest discussion',
+	'groups:user' => "%s's groups",
 
 	/**
 	 * Menu items and titles
