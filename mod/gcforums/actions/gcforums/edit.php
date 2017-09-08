@@ -1,4 +1,14 @@
 <?php
+$test = get_input('gcf_guid');
+error_log(":::::::   {$test}");
+
+
+$entity_guid = get_input('entity_guid');
+$entity = get_entity($entity_guid);
+
+
+
+return;
 
 $gcf_type = get_input('gcf_type');
 $gcf_forward_url = str_replace("amp;","",get_input('gcf_forward_url'));

@@ -2,6 +2,8 @@
 $site_url = elgg_get_site_url();
 $english = array(
 
+	'admin:administer_utilities:debugging_forums' => 'Forums Debug Tool',
+
 	"gcforums:is_sticky" => 'Sticky topic', 
 	"gcforums:forumpost_saved" => "Your reply has been created successfully",
 	"gcforums:forumtopic_saved" => "Your Forum Topic '%s' has been created successfully",

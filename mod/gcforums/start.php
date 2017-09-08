@@ -30,6 +30,9 @@ function gcforums_init() {
 		'text' => elgg_echo('gcforums:jmp_menu'),
 		'href' => elgg_echo('gcforums:jmp_url'),
 	));
+
+
+	elgg_register_admin_menu_item("administer", "debugging_forums", "administer_utilities");
 }
 
 function gcforums_owner_block_menu($hook,$type,$return,$params) {
@@ -48,9 +51,6 @@ function gcforums_owner_block_menu($hook,$type,$return,$params) {
 function gcforums_page_handler($page) {
 	$vars = array();
 
-	//elgg_push_breadcrumb('GCforums', "gcforums/group/151");
-	//elgg_push_breadcrumb($crumbs_title, "blog/group/$container->guid/all");
-
 	switch($page[0]) {
 		case 'create':
 			gatekeeper();	// group members and admins only
@@ -67,41 +67,164 @@ function gcforums_page_handler($page) {
 			echo elgg_view_page($title,$body);
 
 			break;
+
 		case 'edit':
-			gatekeeper();	// group members and admins only
-			$vars['forum_guid'] = $page[1];
-			$entity = get_entity($page[1]);
-			$title = $entity->title;
-			$content = elgg_view_form('gcforums/edit', array(),$vars);	
-			$body = elgg_view_layout('forum-full',array(
-				'content' => $content,
-				'title' => $entity->title,
-				'filter' => '',					
-				));
-			echo elgg_view_page($entity->title,$body);
-
+			/// make sure that only post owners, group admin and site admin have access
+			gatekeeper();
+			$params = render_edit_forms($page[1]);
 			break;
+
+		case 'view':
+			$params = render_forums($page[1]);
+			break;
+
 		case 'group':
-			$vars['forum_guid'] = $page[2];
-			$vars['topic'] = $page[3];
-			$entity = get_entity($page[2]);
-			$title = $entity->title;
-
-			$content = elgg_view('gcforums/gcforums_content', $vars);
-			$body = elgg_view_layout('forum-full',array(
-				'content' => $content,
-				'title' => $title,
-				'filter' => '',
-				));
-			echo elgg_view_page($title,$body);
-
+			$params = render_forums($page[1]);
 			break;
+
 		default:
 			return false;
 	}
 
-	return true;
+	$body = elgg_view_layout('forum-content', $params);
+	echo elgg_view_page($params['title'], $body);
+
 }
+
+
+
+function render_edit_forms($entity_guid) {
+	$entity = get_entity($entity_guid);
+	elgg_set_page_owner_guid(334);
+	$vars['entity_guid'] = $entity_guid;
+
+	$content = elgg_view_form('gcforums/edit', array(), $vars);
+
+	$return['filter'] = '';
+	$return['title'] = "title of the content";
+	$return['content'] = $content;
+	return $return;
+}
+
+
+function render_forums($forum_guid) {
+	elgg_load_css('gcforums-css');
+	$entity = get_entity($forum_guid);
+
+	/// set the breadcrumb trail
+	if ($entity instanceof ElggGroup) {
+		elgg_set_page_owner_guid($entity->getGUID());
+
+		elgg_push_breadcrumb($entity->name, $entity->getURL());
+		elgg_push_breadcrumb('Group Forums');
+	} else {
+
+		$breadcrumb_array = array();
+		$breadcrumb_array = assemble_nested_forums(array(), $forum_guid, $forum_guid);
+		$breadcrumb_array = array_reverse($breadcrumb_array);
+		foreach ($breadcrumb_array as $trail_id => $trail) {
+			elgg_push_breadcrumb($trail);
+		}
+	}
+
+	// forums will always remain as content within a group
+	elgg_set_page_owner_guid(334);
+	$return = array();
+
+	/// display the categories if the forum has this enabled
+	if ($entity->enable_subcategories || $entity instanceof ElggGroup) {
+		$categories = elgg_get_entities(array(
+			'types' => 'object',
+			'subtypes' => 'hjforumcategory',
+			'limit' => false,
+			'container_guid' => $forum_guid
+		));
+
+
+
+		$content .= "<table class='gcforums-table'>
+						<tr class='gcforums-tr'>
+							<th class='gcforums-th' width='60%'>".elgg_echo('gcforums:forum_title')."</th>
+							<th class='gcforums-th'>".elgg_echo('gcforums:topics')."</th>
+							<th class='gcforums-th'>".elgg_echo('gcforums:posts')."</th>
+							<th class='gcforums-th'>".elgg_echo('gcforums:latest_posts')."</th>
+							<th class='gcforums-th'>".elgg_echo('gcforums:edit')."</th>
+						</tr>";
+
+
+		foreach ($categories as $category) {
+			$content .= "<tr class='category-space'> <td colspan='5' class='gcforums-th-category'> <h1>{$category->title}</h1> <span class='forum-category-desc'>{$category->description}</span</td></tr>";
+
+			$forums = elgg_get_entities_from_relationship(array(
+				'relationship' => 'filed_in',
+				'relationship_guid' => $category->getGUID(),
+				'container_guid' => $entity->getGUID(),
+				'inverse_relationship' => true,
+				'limit' => false
+			));
+		
+
+			/// forums
+			foreach ($forums as $forum) {
+				$hyperlink = "<a href='http://192.168.1.18/gcconnex/gcforums/view/{$forum->getGUID()}'>{$forum->title}</a>";
+
+				$content .= "	<tr class='gcforums-tr'>
+									<th class='gcforums-td-forums'>{$hyperlink}</th>
+									<th class='gcforums-td'>".get_total_topics($forum->guid)."</th>
+									<th class='gcforums-td'>".get_total_posts($forum->guid)."</th>
+									<th class='gcforums-td'>".get_recent_post($forum->guid)."</th>
+									<th class='gcforums-td'>".gcforums_forums_edit_options($entity->guid, $entity->getGUID())."</th>
+								</tr>";
+			}
+		}
+
+
+	} else {
+
+		$forums = elgg_get_entities_from_relationship(array(
+				'relationship' => 'descendant',
+				'subtypes' => array('hjforum'),
+				'relationship_guid' => $forum_guid,
+				'inverse_relationship' => true,
+				'types' => 'object',
+				'limit' => 0,
+			));
+
+		$content .= "<table class='gcforums-table'>
+							<tr class='gcforums-tr'>
+								<th class='gcforums-th' width='60%'>".elgg_echo('gcforums:forum_title')."</th>
+								<th class='gcforums-th'>".elgg_echo('gcforums:topics')."</th>
+								<th class='gcforums-th'>".elgg_echo('gcforums:posts')."</th>
+								<th class='gcforums-th'>".elgg_echo('gcforums:latest_posts')."</th>
+								<th class='gcforums-th'>".elgg_echo('gcforums:edit')."</th>
+							</tr>";
+
+		/// forums
+		foreach ($forums as $forum) {
+			$hyperlink = "<a href='http://192.168.1.18/gcconnex/gcforums/view/{$forum->getGUID()}'>{$forum->title}</a>";
+
+			$content .= "
+							<tr class='gcforums-tr'>
+								<th class='gcforums-td-forums'>{$hyperlink}</th>
+								<th class='gcforums-td'>".get_total_topics($forum->guid)."</th>
+								<th class='gcforums-td'>".get_total_posts($forum->guid)."</th>
+								<th class='gcforums-td'>".get_recent_post($forum->guid)."</th>
+								<th class='gcforums-td'>"."000"."</th>
+							</tr>";
+		}
+	}
+	$content .= "</table>";
+
+
+	$return['filter'] = '';
+	$return['title'] = "title of the content";
+	$return['content'] = $content;
+	return $return;
+}
+
+
+
+
 
 
 /* Display Topic and the corresponding comments
@@ -429,9 +552,43 @@ if ($relationship[0]->max_forum_guid != $forum_guid)
 }
 
 
-/* Categoried Forums
+
+
+/// recursively go through the nested forums to create the breadcrumb
+function assemble_nested_forums($breadcrumb, $forum_guid, $recurse_forum_guid) {
+	$entity = get_entity($recurse_forum_guid);
+	if ($entity instanceof ElggGroup) {
+		if ($entity->guid != $forum_guid) {	
+			$breadcrumb[$entity->getGUID()] = $entity->name;
+			return $breadcrumb;			
+		}
+	} else {
+		$breadcrumb[$entity->getGUID()] = $entity->title;	
+		return assemble_nested_forums($breadcrumb, $forum_guid, $entity->getContainerGUID());
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * renders forums that have categories enabled
+ * @param int $guid 		the current guid of the forum
+ * @param int $group_guid 	the group guid
+ * @param mixed array/boolean $forums 	checks if this is a forum
  */
 function gcforums_category_content($guid, $group_guid, $forums=false) {
+	error_log(">>>>>> category forums thing");
 	elgg_load_css('gcforums-css');
 
 	// * get all the categories
@@ -455,7 +612,7 @@ function gcforums_category_content($guid, $group_guid, $forums=false) {
     // * forum header stuff
     $t_forum_category .= "<table class='gcforums-table'>
     					<tr class='gcforums-tr'>
-    						<th class='gcforums-th' width='60%'>".elgg_echo('gcforums:forum_title')."</th>
+    						<th class='gcforums-th' width='60%'>".elgg_echo('Category')."</th>
     						<th class='gcforums-th'>".elgg_echo('gcforums:topics')."</th>
     						<th class='gcforums-th'>".elgg_echo('gcforums:posts')."</th>
     						<th class='gcforums-th'>".elgg_echo('gcforums:latest')."</th>
@@ -498,6 +655,9 @@ function gcforums_category_content($guid, $group_guid, $forums=false) {
 					</tr>";
 			} else {
 
+								$t_forum_category .= "<tr class='gcforums-th'>
+						<th colspan='5' class='gcforums-td-forums'>".elgg_echo('Forums')."</th>
+					</tr>";
 				// display the forum in the category
 				foreach ($forums as $forum) {
 					$url = "<strong><a href='".elgg_get_site_url()."gcforums/group/{$group_guid}/{$forum->guid}'>{$forum->title}</a></strong>";
@@ -517,6 +677,19 @@ function gcforums_category_content($guid, $group_guid, $forums=false) {
 
 	$t_forum_category .= "</table>";
     //putting the table together with the category out of the table - nick
+
+
+
+	if (elgg_is_admin_logged_in()) {
+
+		// connectionless forums (admin only)
+		$t_forum_category .= "<p>blahblahblah - Please note that only admins can see this section</p>";
+
+		$t_forum_category .= gcforums_forum_list($guid, $group_guid);
+
+		$t_forum_category .= "<p>end -- blahblahbah</p>";
+	}
+
 	return $t_forum_category;
 }
 
