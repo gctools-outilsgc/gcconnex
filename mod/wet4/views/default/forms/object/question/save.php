@@ -2,7 +2,7 @@
 
 $question = elgg_extract('entity', $vars);
 $show_group_selector = (bool) elgg_extract('show_group_selector', $vars, true);
-
+$lang = get_current_language();
 $editing = true;
 $container_options = false;
 $show_access_options = true;
@@ -210,7 +210,7 @@ if (!$editing || (questions_experts_enabled() && questions_is_expert(elgg_get_pa
 			if ($group->getGUID() == $question->getContainerGUID()) {
 				$selected['selected'] = true;
 			}
-			$group_optgroup[] = elgg_format_element('option', $selected, $group->name);
+			$group_optgroup[] = elgg_format_element('option', $selected, gc_explode_translation($group->name,$lang));
 		}
 
 		if (!empty($group_optgroup)) {
