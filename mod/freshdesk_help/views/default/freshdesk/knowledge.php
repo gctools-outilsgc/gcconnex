@@ -13,7 +13,7 @@
   if($str){
     $articles = json_decode($str, true);
 
-    echo '<label class="h3 mrgn-tp-sm" for="article-search">'.elgg_echo('freshdesk:knowledge:search:title').'</label>';
+    echo '<h2 class="mrgn-tp-sm h3"><label class="mrgn-tp-sm" for="article-search">'.elgg_echo('freshdesk:knowledge:search:title').'</label></h2>';
 
     //create search panel
     echo elgg_view('input/text', array(
@@ -22,7 +22,7 @@
       'onkeyup'  => 'searchArticles(this, "'.get_current_language().'")',
     ));
 
-    echo '<span class="search-info">'.elgg_echo('freshdesk:knowledge:search:info:'.elgg_get_plugin_setting("portal_id", "freshdesk_help")).'</span>';
+    echo '<span class="search-info">'.elgg_echo('freshdesk:knowledge:search:info').'</span>';
 
     echo '<div aria-live="polite" id="filter-count"></div>';
 

@@ -257,18 +257,12 @@ function matchArticles(search, lang){
  * @param {string} source  Which form this is coming from
 */
 
-function submitTicket(form, lang, source){
+function submitTicket(form, lang, source, product){
   //load api details
   var details = get_details();
   var yourdomain = details['domain'];
   var api_key = details['api_key'];
   var formdata = new FormData();
-
-  if(source == 'embed'){
-    var product = details['embed_product_id'];
-  } else {
-    var product = details['product_id'];
-  }
 
   //gather inputs
   formdata.append('product_id', product);
@@ -303,6 +297,5 @@ function submitTicket(form, lang, source){
       }
     }
   );
-
 
 }
