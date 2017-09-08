@@ -1980,7 +1980,7 @@ function wet_questions_page_handler($segments) {
 		case 'edit':
 			elgg_gatekeeper();
 			set_input('guid', $segments[1]);
-			include "$pages/edit.php";
+			include "$new_page/edit.php";
 			break;
 		case 'group':
 			elgg_group_gatekeeper();
