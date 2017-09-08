@@ -23,6 +23,9 @@ $filter_context = elgg_extract('filter_context', array(), 'all');
 		);
 		elgg_register_menu_item('page', $params);
 	}
+
+    elgg_register_js("multiple-emails", "mod/invitefriends/scripts/multiple-emails.js");
+    elgg_register_css("multiple-emails", "mod/invitefriends/css/multiple-emails.css");
 }
 
 /**

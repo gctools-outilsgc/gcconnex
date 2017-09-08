@@ -35,8 +35,9 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
         if ($latest_wire && count($latest_wire) > 0) {
             //echo '<img class="profile-icons double-quotes" src="' . elgg_get_site_url() . 'mod/b_extended_profile/img/double-quotes.png">';
             //echo elgg_view("profile/status", array("entity" => $user));
-        }
-        ?>
+        } ?>
+
+
     </div>
 
    <?php //echo elgg_get_context();
@@ -54,14 +55,17 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
         echo elgg_view('profile/profile_tab_menu');
 
         echo '<div class="tab-content">';
-        if (empty($_GET['pg']))  {
+
+        if (empty($_GET['pg'])) {
             $pg = '';
             echo '<div role="tabpanel" class="tab-pane active" tabindex="-1" id="profile-display">';
-        }
-        else{
+        
+        } else {
             $pg = $_GET['pg'];
             echo '<div role="tabpanel" class="tab-pane " tabindex="-1" id="profile-display">';
+        
         }
+
 
         if ( has_content($user, 'description') ) {
             init_ajax_block(elgg_echo('gcconnex_profile:about_me'), 'about-me', $user);
@@ -81,26 +85,27 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
             finit_ajax_block('work-experience');
         }
 
-        //if(elgg_is_logged_in()){
-            if ( has_content($user, 'gc_skills') ) {
-                init_ajax_block(elgg_echo('gcconnex_profile:gc_skills'), 'skills', $user);
-                echo elgg_view('b_extended_profile/skills');
-                finit_ajax_block('skills');
-            }
-        //}
+        if ( has_content($user, 'gc_skills') && strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false ) {
+            init_ajax_block(elgg_echo('gcconnex_profile:gc_skills'), 'skills', $user);
+            echo elgg_view('b_extended_profile/skills');
+            finit_ajax_block('skills');
+        }
+
 
         /*
          * MODIFIED CODE
          * Constructs the opt-in section according to the original plugin methodology.
          */
-        if(elgg_is_active_plugin('missions') && $user->opt_in_missions == 'gcconnex_profile:opt:yes') {
+        if (elgg_is_active_plugin('missions') && $user->opt_in_missions == 'gcconnex_profile:opt:yes' 
+            && strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false) {
+
             echo elgg_view('missions/completed-missions');
         }
         /*
          * END MODIFIED CODE
          */
 
-        if ( has_content($user, 'english') || has_content($user, 'french') ) {
+        if ( (has_content($user, 'english') || has_content($user, 'french')) && stristr($_SERVER['HTTP_USER_AGENT'], 'gsa-crawler') === false ) {
             init_ajax_block(elgg_echo('gcconnex_profile:sle'), 'languages', $user);
             echo elgg_view('b_extended_profile/languages');
             finit_ajax_block('languages');
@@ -110,7 +115,7 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
          * MODIFIED CODE
          * Constructs the opt-in section according to the original plugin methodology.
          */
-        if(elgg_is_active_plugin('missions') && has_content($user, 'opt-in')) {
+        if (elgg_is_active_plugin('missions') && has_content($user, 'opt-in') && stristr($_SERVER['HTTP_USER_AGENT'], 'gsa-crawler') === false ) {
             init_ajax_block(elgg_echo('gcconnex_profile:opt:opt-in'), 'opt-in', $user);
             echo elgg_view('b_extended_profile/opt-in');
             finit_ajax_block('opt-in');
@@ -121,89 +126,99 @@ elgg_load_js('basic-profile'); // load js file to init the lightbox overlay (set
 
         // create the div wrappers and edit/save/cancel toggles for each profile section
 
-            echo '</div>'; //close div id=#profile-display
+        echo '</div>'; //close div id=#profile-display
 
-            if (empty($_GET['pg']))  {
-                $pg = '';
-                echo '<div role="tabpanel" class="tab-pane clearfix" tabindex="-1" id="splashboard">';
+        if (empty($_GET['pg']))  {
+            $pg = '';
+            echo '<div role="tabpanel" class="tab-pane clearfix" tabindex="-1" id="splashboard">';
+        
+        } else {
+            $pg = $_GET['pg'];
+            echo '<div role="tabpanel" class="tab-pane active clearfix" tabindex="-1" id="splashboard">';
+
+        }
+
+        // don't let the crawler index the widget board of the profile
+        if (stristr($_SERVER['HTTP_USER_AGENT'], 'gsa-crawler') === false) {
+            echo '<h2 class="wb-inv">'.$user->name."'s widgets</h2>";
+
+            $num_columns = elgg_extract('num_columns', $vars, 2);
+            $show_add_widgets = elgg_extract('show_add_widgets', $vars, true);
+            $exact_match = elgg_extract('exact_match', $vars, false);
+            $show_access = elgg_extract('show_access', $vars, true);
+
+            $owner = elgg_get_page_owner_entity();
+            $widget_types = elgg_get_widget_types();
+            $context = elgg_get_context();
+            elgg_push_context('widgets');
+            $widgets = elgg_get_widgets($owner->guid, $context);
+
+
+
+            if (elgg_can_edit_widget_layout($context)) {
+
+                $params = array(
+                    'widgets' => $widgets,
+                    'context' => $context,
+                    'exact_match' => $exact_match,
+                    'show_access' => $show_access,
+                );
+                echo elgg_view('page/layouts/widgets/add_panel', $params);
             }
-            else{
-                $pg = $_GET['pg'];
-                echo '<div role="tabpanel" class="tab-pane active clearfix" tabindex="-1" id="splashboard">';
+
+
+            if (elgg_can_edit_widget_layout($context)) {
+                if ($show_add_widgets) {
+                    echo elgg_view('page/layouts/widgets/add_button');
+                }
+
+                $params = array(
+                    'widgets' => $widgets,
+                    'context' => $context,
+                    'exact_match' => $exact_match,
+                );
+                echo elgg_view('page/layouts/widgets/add_panel', $params);
             }
+            $widget_class = "elgg-col-1of{$num_columns}";
+            
+            for ($column_index = 1; $column_index <= $num_columns; $column_index++) {
+                if (isset($widgets[$column_index])) {
+                    $column_widgets = $widgets[$column_index];
 
-                echo '<h2 class="wb-inv">'.$user->name."'s widgets</h2>";
+                } else {
+                    $column_widgets = array();
 
-                $num_columns = elgg_extract('num_columns', $vars, 2);
-                $show_add_widgets = elgg_extract('show_add_widgets', $vars, true);
-                $exact_match = elgg_extract('exact_match', $vars, false);
-                $show_access = elgg_extract('show_access', $vars, true);
-
-                $owner = elgg_get_page_owner_entity();
-
-                $widget_types = elgg_get_widget_types();
-
-                $context = elgg_get_context();
-                elgg_push_context('widgets');
-
-                $widgets = elgg_get_widgets($owner->guid, $context);
-
-                if (elgg_can_edit_widget_layout($context)) {
-
-                    $params = array(
-                        'widgets' => $widgets,
-                        'context' => $context,
-                        'exact_match' => $exact_match,
-                        'show_access' => $show_access,
-                    );
-                    echo elgg_view('page/layouts/widgets/add_panel', $params);
                 }
-                if (elgg_can_edit_widget_layout($context)) {
-                    if ($show_add_widgets) {
-                        echo elgg_view('page/layouts/widgets/add_button');
-                    }
 
-                    $params = array(
-                        'widgets' => $widgets,
-                        'context' => $context,
-                        'exact_match' => $exact_match,
-                    );
-                    echo elgg_view('page/layouts/widgets/add_panel', $params);
-                }
-                $widget_class = "elgg-col-1of{$num_columns}";
-                for ($column_index = 1; $column_index <= $num_columns; $column_index++) {
-                    if (isset($widgets[$column_index])) {
-                        $column_widgets = $widgets[$column_index];
-                    } else {
-                        $column_widgets = array();
-                    }
-
-                    echo "<div class=\"$widget_class elgg-widgets col-sm-6 col-xs-12 widget-area-col\" id=\"elgg-widget-col-$column_index\">";
-                    if (sizeof($column_widgets) > 0) {
-                        foreach ($column_widgets as $widget) {
-                            if (array_key_exists($widget->handler, $widget_types)) {
-                                echo elgg_view_entity($widget, array('show_access' => $show_access));
-                            }
+                echo "<div class=\"$widget_class elgg-widgets col-sm-6 col-xs-12 widget-area-col\" id=\"elgg-widget-col-$column_index\">";
+                if (sizeof($column_widgets) > 0) {
+                    foreach ($column_widgets as $widget) {
+                        if (array_key_exists($widget->handler, $widget_types)) {
+                            echo elgg_view_entity($widget, array('show_access' => $show_access));
                         }
                     }
-                    echo '</div>';
                 }
-                elgg_pop_context();
+                echo '</div>';
+            }
+            elgg_pop_context();
+
             echo '</div>'; // close div id="splashboard"
 
+        }
 
-            echo '<div role="tabpanel" class="tab-pane" tabindex="-1" id="portfolio">';
+        echo '<div role="tabpanel" class="tab-pane" tabindex="-1" id="portfolio">';
+        init_ajax_block(elgg_echo('gcconnex_profile:portfolio'), 'portfolio', $user);
+        echo elgg_view('b_extended_profile/portfolio'); // call the proper view for the section
+        finit_ajax_block('portfolio');
+        echo '</div>'; // close div id="#portfolio"
 
-                init_ajax_block(elgg_echo('gcconnex_profile:portfolio'), 'portfolio', $user);
-                echo elgg_view('b_extended_profile/portfolio'); // call the proper view for the section
-                finit_ajax_block('portfolio');
-            echo '</div>'; // close div id="#portfolio"
-
-            //add tab panels with preview content
-            echo elgg_view('profile/tab-content');
-
-            echo '</div>'; // close div class="tab-content'
+        //add tab panels with preview content
+        echo elgg_view('profile/tab-content');
+        echo '</div>'; // close div class="tab-content'
         echo '</div>'; // close div role="tabpanel"
+
         ?>
+
+
     </div>
 </div>

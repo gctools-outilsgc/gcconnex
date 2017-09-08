@@ -22,27 +22,37 @@ $emails_textarea = elgg_view('input/plaintext', array(
 	'name' => 'emails',
 	'value' => $emails,
 	'rows' => 4,
-		));
+));
+
 $message_textarea = elgg_view('input/plaintext', array(
 	'id' => 'invitefriends-emailmessage',
 	'name' => 'emailmessage',
 	'value' => $message,
-		));
+));
 
 $action_button = elgg_view('input/submit', array('value' => elgg_echo('send'), 'class' => 'mrgn-tp-sm btn btn-primary'));
 
+elgg_load_css('multiple-emails');
+elgg_load_js('multiple-emails');
+
 echo <<< HTML
 <p class="mbm elgg-text-help">$introduction</p>
-<div>
+<div class="form-group">
 	<label for="invitefriends-emails">$emails_label</label>
 	$emails_textarea
 </div>
-<div>
+<div class="form-group">
 	<label for="invitefriends-emailmessage">$message_label</label>
 	$message_textarea
 </div>
 <div class="elgg-foot">
 	$action_button
 </div>
-HTML;
 
+<script>
+	$('#invitefriends-emails').multiple_emails();
+	$('.elgg-form-invitefriends-invite').keydown(function(e){
+		if( $(e.target).hasClass('multiple_emails-input') && e.keyCode == 13 ){ e.preventDefault(); }
+	});
+</script>
+HTML;

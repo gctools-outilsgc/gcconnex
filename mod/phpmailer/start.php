@@ -45,12 +45,9 @@ function phpmailer_notify_handler(ElggEntity $from, ElggUser $to, $subject, $mes
 		throw new NotificationException(sprintf(elgg_echo('NotificationException:NoEmailAddress'), $to->guid));
 	}
 
-
 	$from_email = phpmailer_extract_from_email($from);
-
 	$site = elgg_get_site_entity();
 	$from_name = $site->name;
-
 
 	return phpmailer_send($from_email, $from_name, $to->email, '', $subject, $message);
 }
@@ -116,32 +113,19 @@ function phpmailer_extract_from_email($from) {
  * @return bool
  */
 function phpmailer_send($to, $to_name, $subject, $body, array $bcc = NULL, $html = true, array $files = NULL, array $params = NULL) {
-	
-	
-require_once elgg_get_plugins_path() . '/phpmailer/vendors/class.phpmailer.php';
 
- 
+	require_once elgg_get_plugins_path() . '/phpmailer/vendors/class.phpmailer.php';
+	$phpmailer = new PHPMailer(true); //defaults to using php "mail()"; the true param means it will throw exceptions on errors, which we need to catch
 
-$phpmailer = new PHPMailer(true); //defaults to using php "mail()"; the true param means it will throw exceptions on errors, which we need to catch
-
- 
-  // CONFIGURE SERVER INFORMATION defaults
-
-  $phpmailer->IsSMTP(); // telling the class to use SMTP
-
-  $phpmailer->Host       = elgg_get_plugin_setting('phpmailer_host', 'phpmailer'); // SMTP server
-
-  $phpmailer->Port       = elgg_get_plugin_setting('ep_phpmailer_port', 'phpmailer'); // SMTP server port
-
-  $phpmailer->SMTPAuth   = true;
-
-  $phpmailer->SMTPSecure = "tls";
-
-  $phpmailer->Username = elgg_get_plugin_setting('phpmailer_username', 'phpmailer');
-
-  $phpmailer->Password = elgg_get_plugin_setting('phpmailer_password', 'phpmailer');
-
-  $phpmailer->SetFrom( elgg_get_plugin_setting('phpmailer_from_email', 'phpmailer'), elgg_get_plugin_setting('phpmailer_from_name', 'phpmailer') );
+	// CONFIGURE SERVER INFORMATION defaults
+	$phpmailer->IsSMTP(); // telling the class to use SMTP
+	$phpmailer->Host       = elgg_get_plugin_setting('phpmailer_host', 'phpmailer'); // SMTP server
+	$phpmailer->Port       = elgg_get_plugin_setting('ep_phpmailer_port', 'phpmailer'); // SMTP server port
+	$phpmailer->SMTPAuth   = true;
+	$phpmailer->SMTPSecure = "tls";
+	$phpmailer->Username = elgg_get_plugin_setting('phpmailer_username', 'phpmailer');
+	$phpmailer->Password = elgg_get_plugin_setting('phpmailer_password', 'phpmailer');
+	$phpmailer->SetFrom( elgg_get_plugin_setting('phpmailer_from_email', 'phpmailer'), elgg_get_plugin_setting('phpmailer_from_name', 'phpmailer') );
 
 	/*if (!$from) {
 		throw new NotificationException(sprintf(elgg_echo('NotificationException:MissingParameter'), 'from'));
@@ -156,16 +140,14 @@ $phpmailer = new PHPMailer(true); //defaults to using php "mail()"; the true par
 	}
 
 	// set line ending if admin selected \n (if admin did not change setting, null is returned)
-	if (elgg_get_plugin_setting('nonstd_mta', 'phpmailer')) {
+	if (elgg_get_plugin_setting('nonstd_mta', 'phpmailer'))
 		$phpmailer->LE = "\n";
-	} else {
+	else
 		$phpmailer->LE = "\r\n";
-	}
-
+	
 	////////////////////////////////////
 	// Format message
-	$phpmailer->SMTPSecure = "tls";
-	$phpmailer->SMTPDebug = 0; //Set to 1 for debugging information
+	$phpmailer->SMTPDebug = 0; // Set to 1 for debugging information
 
 	$phpmailer->ClearAllRecipients();
 	$phpmailer->ClearAttachments();
@@ -203,8 +185,9 @@ $phpmailer = new PHPMailer(true); //defaults to using php "mail()"; the true par
 		$body = strip_tags($source);
 
 		$phpmailer->Body = $body;
-	}
-	else {
+	
+	} else {
+	
 		//$phpmailer->IsHTML(true);
 		$phpmailer->CharSet = 'utf-8';
 		$phpmailer->MsgHTML($body);
@@ -214,9 +197,8 @@ $phpmailer = new PHPMailer(true); //defaults to using php "mail()"; the true par
 
 	if ($files && is_array($files)) {
 		foreach ($files as $file) {
-			if (isset($file['path'])) {
+			if (isset($file['path']))
 				$phpmailer->AddAttachment($file['path'], $file['name']);
-			}
 		}
 	}
 
@@ -226,37 +208,51 @@ $phpmailer = new PHPMailer(true); //defaults to using php "mail()"; the true par
 
 	$is_ssl    = elgg_get_plugin_setting('ep_phpmailer_ssl', 'phpmailer');
 	$ssl_port  = elgg_get_plugin_setting('ep_phpmailer_port', 'phpmailer');
-	try{
-	if ($is_smtp && isset($smtp_host)) {
-		//$phpmailer->IsSMTP();
-		//$phpmailer->Host = $smtp_host;
-		//$phpmailer->SMTPAuth = false;
-		if ($smtp_auth) {
-			//$phpmailer->SMTPAuth = true;
-			//$phpmailer->Username = elgg_get_plugin_setting('phpmailer_username', 'phpmailer');
-			//$phpmailer->Password = elgg_get_plugin_setting('phpmailer_password', 'phpmailer');
 
-			if ($is_ssl) {
+	try {
+
+		if ($is_smtp && isset($smtp_host)) {
+
+			if ($smtp_auth && $is_ssl) {
+
 				$phpmailer->SMTPSecure = "tls";
 				$phpmailer->Port = $ssl_port;
+				
 			}
+		} else {
+			// use php's mail
+			$phpmailer->IsMail();
 		}
-	}
-	else {
-		// use php's mail
-		$phpmailer->IsMail();
-	}
-	//error_log("Sending email from => " . $phpmailer->FromName );
-	$return = $phpmailer->Send();
-	//error_log("Sent email from => " . $phpmailer->FromName );
-	} catch(phpmailerException $e) {
-		error_log($e->errorMessage());
+	
+		$return = $phpmailer->Send();
+
+	} catch (phpmailerException $e) {
+		
+		$errMess = $e->getMessage();
+		$errStack = $e->getTraceAsString();
+		$errType = $e->getCode();
+		phpmailer_logging($errMess, $errStack, 'PHPMailer', $errType);
 	}
 	
 
-	if (!$return ) {
-		error_log('PHPMailer error: ' . $phpmailer->ErrorInfo, 'WARNING');
-	} /* else
-		error_log("email sent"); */
+
+	if (!$return) {
+		
+		$errMess = $phpmailer->ErrorInfo;
+		$errStack = "";
+		$errType = "custom";
+		phpmailer_logging($errMess, $errStack, 'PHPMailer', $errType);
+	}
+
 	return $return;
+}
+
+
+
+function phpmailer_logging($errMess, $errStack, $type, $errType) {
+	// logging mechanism
+	if (elgg_is_active_plugin('wet4')) {
+		elgg_load_library('GCconnex_logging');
+		gc_err_logging($errMess, $errStack, $type, $errType);
+	}
 }

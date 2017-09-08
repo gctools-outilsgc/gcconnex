@@ -116,11 +116,17 @@ switch ($msg_type) {
 	case 'cp_likes_type': // likes
 
 		if ($vars['cp_subtype'] === 'thewire') {
-			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_likes_wire:title',array($vars['cp_liked_by'],$vars['cp_description']),'en');
-			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_likes_wire:title',array($vars['cp_liked_by'],$vars['cp_description']),'fr');
+			$content_title_en = gc_explode_translation($vars['cp_description'], 'en');
+			$content_title_fr = gc_explode_translation($vars['cp_description'], 'fr');
+
+			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_likes_wire:title',array($vars['cp_liked_by'], $content_title_en),'en');
+			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_likes_wire:title',array($vars['cp_liked_by'], $content_title_fr),'fr');
 		} else {
-			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_likes:title',array($vars['cp_liked_by'],$vars['cp_comment_from']),'en');
-			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_likes:title',array($vars['cp_liked_by'],$vars['cp_comment_from']),'fr');
+			$content_title_en = gc_explode_translation($vars['cp_comment_from'], 'en');
+			$content_title_fr = gc_explode_translation($vars['cp_comment_from'], 'fr');
+
+			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_likes:title',array($vars['cp_liked_by'], $content_title_en),'en');
+			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_likes:title',array($vars['cp_liked_by'], $content_title_fr),'fr');
 		}
 
 		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_likes:description',array($vars['cp_content_url'].'?utm_source=notification&utm_medium=email'),'en');
@@ -347,10 +353,10 @@ switch ($msg_type) {
 
 
 		$cp_topic_description_en = $cp_topic_description;
-		$cp_topic_description_fr = $cp_topic_description2;
+		$cp_topic_description_fr = $cp_topic_description;
 
 		$cp_topic_description_discussion_en = gc_explode_translation($cp_topic_description_discussion,'en');
-		$cp_topic_description_discussion_fr = gc_explode_translation($cp_topic_description_discussion2,'fr');
+		$cp_topic_description_discussion_fr = gc_explode_translation($cp_topic_description_discussion,'fr');
 
 		if (strlen($cp_topic_description) > 200) {
 			$cp_topic_description = substr($cp_topic_description, 0, 200);
@@ -483,24 +489,45 @@ switch ($msg_type) {
 		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_validate_user:description',array($vars['cp_validate_user']['email'],$vars['cp_validate_url'].'&utm_source=notification&utm_medium=email'),'fr');
 		break;
 
+	case 'cp_like_group': // like a group
+		$group_name_en = gc_explode_translation($vars['cp_group'], 'en');
+		$group_name_fr = gc_explode_translation($vars['cp_group'], 'fr');
+
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_likes_group:title', array($vars['cp_liked_by'], $group_name_en), 'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_likes_group:title', array($vars['cp_liked_by'], $group_name_fr), 'fr');
+
+		$group_text_en = "<a href='{$vars['cp_group_link']}?utm_source=notification&utm_medium=email'>{$group_name_en}</a>";
+		$group_text_fr = "<a href='{$vars['cp_group_link']}?utm_source=notification&utm_medium=email'>{$group_name_fr}</a>";
+
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_likes_group:description', array($group_text_en), 'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_likes_group:description', array($group_text_fr), 'fr');
+		break;
+
 
 	case 'cp_likes_comments':
-		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_likes_comment:title',array($vars['cp_liked_by'],$vars['cp_comment_from']),'en');
-		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_likes_comment:title',array($vars['cp_liked_by'],$vars['cp_comment_from']),'fr');
 
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_likes_comment:description',array($vars['cp_comment_from'],$vars['cp_liked_by']),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_likes_comment:description',array($vars['cp_comment_from'],$vars['cp_liked_by']),'fr');
+		$content_title_en = gc_explode_translation($vars['cp_comment_from_en'], 'en');
+		$content_title_fr = gc_explode_translation($vars['cp_comment_from_fr'], 'fr');
+
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_likes_comment:title',array($vars['cp_liked_by'], "<a href='{$vars['content_url']}?utm_source=notification&utm_medium=email'>{$content_title_en}</a>"),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_likes_comment:title',array($vars['cp_liked_by'], "<a href='{$vars['content_url']}?utm_source=notification&utm_medium=email'>{$content_title_fr}</a>"),'fr');
+
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_likes_comment:description',array($content_title_en, $vars['cp_liked_by']),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_likes_comment:description',array($content_title_fr, $vars['cp_liked_by']),'fr');
 
 		break;
 
 
 	case 'cp_likes_topic_replies': // discussion replies
 
-		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_likes_discussion_reply:title',array($vars['cp_liked_by'],$vars['cp_comment_from']),'en');
-		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_likes_discussion_reply:title',array($vars['cp_liked_by'],$vars['cp_comment_from']),'fr');
+		$content_title_en = gc_explode_translation($vars['cp_comment_from_en'], 'en');
+		$content_title_fr = gc_explode_translation($vars['cp_comment_from_fr'], 'fr');
 
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_likes_discussion_reply:description',array($vars['cp_comment_from'],$vars['cp_liked_by']),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_likes_discussion_reply:description',array($vars['cp_comment_from'],$vars['cp_liked_by']),'fr');
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_likes_discussion_reply:title',array($vars['cp_liked_by'], "<a href='{$vars['content_url']}?utm_source=notification&utm_medium=email'>$content_title_en</a>"),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_likes_discussion_reply:title',array($vars['cp_liked_by'], "<a href='{$vars['content_url']}?utm_source=notification&utm_medium=email'>$content_title_fr</a>"),'fr');
+
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_likes_discussion_reply:description',array($content_title_en, $vars['cp_liked_by']),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_likes_discussion_reply:description',array($content_title_fr, $vars['cp_liked_by']),'fr');
 
 		break;
 
@@ -618,20 +645,34 @@ switch ($msg_type) {
 
 	case 'cp_wire_share':
 
-		if (!$vars['cp_content']->title) {
-			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_wireshare:title2',array($vars['cp_shared_by']->name,cp_translate_subtype($vars['cp_content']->getSubtype())),'en');
-			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_wireshare:title2',array($vars['cp_shared_by']->name,cp_translate_subtype($vars['cp_content']->getSubtype())),'fr');
-		} else {
-			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_wireshare:title',array($vars['cp_shared_by']->name,cp_translate_subtype($vars['cp_content']->getSubtype()),$vars['cp_content']->title),'en');
-			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_wireshare:title',array($vars['cp_shared_by']->name,cp_translate_subtype($vars['cp_content']->getSubtype()),$vars['cp_content']->title),'fr');
-		}
-
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_wireshare:title', array($vars['cp_shared_by']->name),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_wireshare:title', array($vars['cp_shared_by']->name),'fr');
 		$reshare_content = $vars['cp_content_reshare'];
-		$current_post = $vars['cp_content'];
 
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_wireshare:description',array($vars['cp_shared_by']->name,cp_translate_subtype($vars['cp_content']->getSubtype()),$vars['cp_wire_url'].'?utm_source=notification&utm_medium=email'),'en').$reshare_content->description;
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_wireshare:description',array($vars['cp_shared_by']->name,cp_translate_subtype($vars['cp_content']->getSubtype()),$vars['cp_wire_url'].'?utm_source=notification&utm_medium=email'),'fr').$reshare_content->description;
+		if (!$vars['cp_content_reshare']->title) {
 
+			/// sharing a wire to the wire
+			$username = "<a href='{$vars['cp_shared_by']->getURL()}?utm_source=notification&utm_medium=email'>{$vars['cp_shared_by']->name}</a>";
+			$wire_msg = $vars['cp_content']->description;
+			$source_en = "<a href='{$reshare_content->getURL()}?utm_source=notification&utm_medium=email'>".gc_explode_translation($vars['cp_content_reshare']->description, 'en')."</a>";
+			$source_fr = "<a href='{$reshare_content->getURL()}?utm_source=notification&utm_medium=email'>".gc_explode_translation($vars['cp_content_reshare']->description, 'fr')."</a>";
+			$wire_link = "{$vars['cp_wire_url']}?utm_source=notification&utm_medium=email";
+
+			$cp_notify_msg_description_en = elgg_echo('cp_notify:body:contentshare:description', array($username, $wire_msg, $source_en, $wire_link, 'en'));
+			$cp_notify_msg_description_fr = elgg_echo('cp_notify:body:contentshare:description', array($username, $wire_msg, $source_fr, $wire_link, 'fr'));
+
+		} else {
+
+			/// sharing a content to the wire
+			$username = "<a href='{$vars['cp_shared_by']->getURL()}?utm_source=notification&utm_medium=email'>{$vars['cp_shared_by']->name}</a>";
+			$wire_msg = $vars['cp_content']->description;
+			$source_en = "<a href='{$reshare_content->getURL()}?utm_source=notification&utm_medium=email'>".gc_explode_translation($vars['cp_content_reshare']->title, 'en')."</a>";
+			$source_fr = "<a href='{$reshare_content->getURL()}?utm_source=notification&utm_medium=email'>".gc_explode_translation($vars['cp_content_reshare']->title, 'fr')."</a>";
+			$wire_link = "{$vars['cp_wire_url']}?utm_source=notification&utm_medium=email";
+
+			$cp_notify_msg_description_en = elgg_echo('cp_notify:body:contentshare:description', array($username, $wire_msg, $source_en, $wire_link, 'en'));
+			$cp_notify_msg_description_fr = elgg_echo('cp_notify:body:contentshare:description', array($username, $wire_msg, $source_fr, $wire_link, 'fr'));
+		}
 		break;
 
 	default:

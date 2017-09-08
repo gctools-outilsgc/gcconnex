@@ -6,6 +6,8 @@ $contact_us = "{$site->getURL()}mod/contactform/?utm_source=notification_digest&
 
 $english = array(
 
+	'notifications:did_not_send' => "Notifications did not send",
+
 	'minor_save:title' => "Don’t want to send a notification?",
 	'minor_save:description' => "Posting new content will send out notifications to those who are subscribed. As the group owner or operator, you can decide not to send out notifications about the new content you post in the group. To do so, select the option “Do not send a notification” below.",
 	'minor_save:checkbox_label' => " Do not send a notification",
@@ -259,6 +261,10 @@ $english = array(
 
 
 	// likes section
+	'cp_notify:subject:likes_group' => "%s liked your group '%s'",
+	'cp_notify:body_likes_group:title' => "%s liked your group '%s'",
+	'cp_notify:body_likes_group:description' => "View your group: %s",
+
 	'cp_notify:subject:likes' => "%s liked your post '%s'",
 	'cp_notify:body_likes:title' => "%s liked your post '%s'",
 
@@ -427,12 +433,15 @@ $english = array(
 
 
 	// sharing content on wire section
-	'cp_notify:wireshare:subject' => "%s shared your %s with title '%s'",
-	'cp_notify:body_wireshare:title' => "%s shared your %s with title '%s'",
-	'cp_notify:body_wireshare:title2' => "%s shared your %s",
+	'cp_notify:wireshare:subject' => "%s shared your content on the wire",
+	'cp_notify:body_wireshare:title' => "%s shared your content on the wire",
 
-	'cp_notify:body_wireshare:description' => "%s shared your %s on the wire, to view or reply to this please click on the following link: %s", 
-	'cp_notify:wireshare_thewire:subject' => "%s shared your message on the wire",
+	// (shared your wire post)
+	'cp_notify:body:contentshare:description' => "	<p>%s shared your content on the wire.</p> 
+													<p><i>%s</i></p> <br/>
+													<p><strong>Source:</strong> %s</p> 
+													<p><a href='%s'>View or reply</a> on GCconnex.</p>",
+
 
 	// event calendar section
 	'cp_notify:event:subject' => "Event calendar",

@@ -47,7 +47,7 @@ if (elgg_is_admin_logged_in()) {
 $group_guid = (int) get_input("group_guid");
 $text = get_input("comment");
 
-$emails = get_input("user_guid_email");
+$emails = json_decode(get_input("user_emails"));
 if (!empty($emails) && !is_array($emails)) {
 	$emails = array($emails);
 }

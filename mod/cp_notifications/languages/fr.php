@@ -5,11 +5,12 @@ $site_name = $site->name;
 $contact_us = "{$site->getURL()}mod/contactform/";
 
 $french = array( 
+
+	'notifications:did_not_send' => "Les notifications n'ont pas envoyé",
+
 	'minor_save:title' => "Vous ne voulez pas envoyer de notification?",
 	'minor_save:description' => "L'affichage de nouveaux contenus envoie des notifications à ceux qui sont abonné. En tant que propriétaire ou opérateur du groupe, vous pouvez décider de ne pas envoyer de notifications pour le nouveau contenu que vous affichez dans le groupe. Pour ce faire, sélectionnez l'option « Ne pas envoyer de notification » ci-dessous.",
 	'minor_save:checkbox_label' => " Ne pas envoyer de notification",
-
-
 
 	'cp_notifications:name' => "Paramètres de notifications",
 	'cp_notification:save:success' => "Les paramètres ont été enregistrés avec succès",
@@ -263,6 +264,11 @@ $french = array(
 
 
 	// likes section
+
+	'cp_notify:subject:likes_group' => "%s a aimé votre groupe '%s'",
+	'cp_notify:body_likes_group:title' => "%s a aimé votre groupe '%s'",
+	'cp_notify:body_likes_group:description' => "Voir votre groupe: %s",
+
 	'cp_notify:subject:likes' => "%s a aimé votre publication '%s'",
 	'cp_notify:body_likes:title' => "%s a aimé votre publication '%s'",
 
@@ -445,12 +451,14 @@ $french = array(
 
 
 	// wire share section
-	'cp_notify:wireshare:subject' => "%s a partagé votre %s avec le titre '%s'",
-	'cp_notify:body_wireshare:title' => "%s a partagé votre %s avec le titre '%s'",
-	'cp_notify:body_wireshare:title2' => "%s a partagé votre %s",
-
-	'cp_notify:body_wireshare:description' => "%s a partagé votre %s sur le fil, pour consulter ou répondre, veuillez cliquer sur le lien suivant : %s",
-	'cp_notify:wireshare_thewire:subject' => "%s a partager votre publication sur le fil",
+	'cp_notify:wireshare:subject' => "%s a partagé votre contenu sur le fil",
+	'cp_notify:body_wireshare:title' => "%s a partagé votre contenu sur le fil",
+ 
+	// (shared your wire post)
+	'cp_notify:body:contentshare:description' => "	<p>%s a partagé votre contenu sur le fil.</p> 
+													<p><i>%s</i></p> <br/>
+													<p><strong>La source :</strong> %s</p> 
+													<p><a href='%s'>Visualiser ou répondre</a> sur GCconnex.</p>",
 
 	// event calendar section
 	'cp_notify:event:subject' => "Calendrier d'événement",

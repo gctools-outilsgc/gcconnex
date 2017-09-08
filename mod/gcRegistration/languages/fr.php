@@ -41,6 +41,7 @@ $french = array(
 
     'registration:userexists' => 'That username already exists. <a href=forgotpassword>Retrieve your password</a>(translate me)',
     'gcRegister:department' => 'Ministère',
+    'gcRegister:required' => 'Obligatoires',
 );
  
 add_translation("fr", $french);

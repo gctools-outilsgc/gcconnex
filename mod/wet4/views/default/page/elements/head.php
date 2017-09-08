@@ -200,7 +200,7 @@ $no_index_array = array(
   'photos/siteimagesowner', 'photos/siteimagesall',
   'thewire/all','thewire/owner','thewire/friends',
   'file_tools/list', 'newsfeed/', 'groups/', 'discussion/owner', 'ideas/group', 'photos/group', 'pages/all', 'missions/main',
-  'pages/history', 
+  'pages/history', 'splash/', '/mod', 'login/', 'file/all'
 );
 
 /// replace the slashes (maybe use regex instead) then remove the base url and then put the slashes in before comparison 
@@ -208,8 +208,11 @@ $base_site_url = str_replace('/', ' ', elgg_get_site_entity()->getURL());
 $current_url = str_replace('/', ' ', ((isset($_SERVER['HTTPS']) ? "https" : "http") . "://{$_SERVER['HTTP_HOST']}{$_SERVER['REQUEST_URI']}"));
 $current_url = str_replace($base_site_url, '', $current_url);
 $current_url = str_replace(' ', '/', $current_url);
+$current_url = explode("?", $current_url);
+$current_url = $current_url[0];
 $current_url = explode("/", $current_url);
 $current_url = "{$current_url[0]}/{$current_url[1]}";
+
 
 // if url is found, dont index
 $can_index = (in_array($current_url, $no_index_array)) ? false : true;
