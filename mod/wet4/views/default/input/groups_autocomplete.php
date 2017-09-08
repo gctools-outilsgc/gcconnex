@@ -19,19 +19,24 @@
 	elgg_load_css("group_tools.autocomplete");
 	
 	$site_url = elgg_get_site_url();
-?>
+
+	$type = elgg_extract("type", $vars);
+
+ if ($type === 'en'){ ?><!-- If english tab -->
 	<input type="text" name="name" id="<?php echo $id; ?>_autocomplete" class="elgg-input elgg-input-autocomplete" />
+	<?php } else {?><!-- If french tab -->
+	<input type="text" name="name2" id="<?php echo $id; ?>_autocomplete2" class="elgg-input elgg-input-autocomplete" />
+
+	<?php } ?>
 	
 	<div id="<?php echo $destination; ?>"></div>
-		
 	<div class="clearfloat"></div>
-	
 	<script type="text/javascript">
         $(document).ready(function() {
-
-
-
-            $("#<?php echo $id; ?>_autocomplete").each(function(){
+/*If english tab*/
+ <?php if ($type =='en'){ ?> $("#<?php echo $id; ?>_autocomplete").each(function(){ <?php } else { ?>
+/*If french tab*/
+	$("#<?php echo $id; ?>_autocomplete2").each(function(){ <?php  } ?>
 				$(this)
 				// don't navigate away from the field on tab when selecting an item
 				.bind( "keydown", function( event ) {
@@ -52,19 +57,19 @@
 					source: function( request, response ) {
 						$.getJSON( "<?php echo $site_url; ?>groups_autocomplete", {
 							q: request.term,
-							'groups_guids': function() {
-								var result = "";
+							 'groups_guids': function() {
+							 	var result = "";
 
-								$("#<?php echo $destination; ?> input[name='<?php echo $name; ?>[]']").each(function(index, elem){
-									if(result == ""){
+
+							 	$("#<?php echo $destination; ?> input[name='<?php echo $name; ?>[]']").each(function(index, elem){
+							 		if(result == ""){
 										result = $(this).val();
 									} else {
 										result += "," + $(this).val();
-									}
-								});
-
-								return result;
-							}
+							 		}
+							 	});
+							 	return result;
+							 }
 							<?php
 							if(!empty($relationship)){
 								echo ", 'relationship' : '" . $relationship . "'";
@@ -92,7 +97,6 @@
 				    var list_body = "";
 
 				    list_body = item.content;
-
 				    if((item.content).length){
 				        $('#suggestedText').html(' <?php echo elgg_echo('groups:suggestedGroups'); ?> ');
 				    } else {
@@ -103,7 +107,6 @@
 					.data( "item.autocomplete", item )
 					.append( "<a>" + list_body + "</a>" )
 					.appendTo( ul );
-
 				};
         });
 
@@ -113,7 +116,6 @@
                 $('#suggestedText').html(' ');
             }
         });
-
 
         $('#<?php echo $destination; ?> .elgg-icon-delete-alt').live("click", function(){
 				$(this).parent('div').remove();
