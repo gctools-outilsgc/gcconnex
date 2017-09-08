@@ -1,10 +1,12 @@
 <?php
 $lang = (string) get_input('lang');
 $source = 'embed';
+$product_id  = (int) elgg_get_plugin_setting("embed_product_id", "freshdesk_help");
 
 if(!$lang){
   $lang = get_current_language();
   $source = 'base';
+  $product_id  = (int) elgg_get_plugin_setting("product_id", "freshdesk_help");
 }
 //populate form with known information
 if(elgg_is_logged_in()){
@@ -23,10 +25,15 @@ if (elgg_is_sticky_form('ticket-submit')) {
 }
  ?>
 
- <h2 class="mrgn-lft-sm"><?php echo elgg_echo('freshdesk:ticket:title', array(), $lang); ?></h2>
-<div class="panel-body">
 
-<div>
+<div class="panel-body">
+<h2><?php echo elgg_echo('freshdesk:ticket:title', array(), $lang); ?></h2>
+<div class="mrgn-tp-sm">
+  <p><?php echo elgg_echo('freshdesk:ticket:information', array(), $lang); ?></p>
+  <p><?php echo elgg_echo('freshdesk:ticket:information:note', array(), $lang); ?></p>
+</div>
+
+<div class="mrgn-tp-md">
 <label for="email"><?php echo elgg_echo('freshdesk:ticket:email', array(), $lang); ?></label>
 <?php echo elgg_view('input/text', array(
   'name' => 'email',
@@ -129,7 +136,7 @@ $(document).ready(function(){
       //disable submit button to avoid clicking button twice
       form.find('button').prop('disabled', true);
       //submit ticket
-      submitTicket(form, "<?php echo $lang;?>", "<?php echo $source;?>");
+      submitTicket(form, "<?php echo $lang;?>", "<?php echo $source;?>", <?php echo $product_id; ?>);
     }
 
   });

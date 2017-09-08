@@ -20,7 +20,7 @@ if(!$lang){
   if($str){
     $articles = json_decode($str, true);
 
-    echo '<label class="h3 mrgn-tp-sm" for="article-search">'.elgg_echo('freshdesk:knowledge:search:title', array(), $lang).'</label>';
+    echo '<h2 class="mrgn-tp-sm h3"><label class="h3 mrgn-tp-sm" for="article-search">'.elgg_echo('freshdesk:knowledge:search:title', array(), $lang).'</label></h2>';
 
     //create search panel
     echo elgg_view('input/text', array(
@@ -29,7 +29,7 @@ if(!$lang){
       'onkeyup'  => 'searchArticles(this, "'.$lang.'")'
     ));
 
-    echo '<span class="search-info">'.elgg_echo('freshdesk:knowledge:search:info:embed', array(), $lang).'</span>';
+    echo '<span class="search-info">'.elgg_echo('freshdesk:knowledge:search:info', array(), $lang).'</span>';
     echo '<div aria-live="polite" id="filter-count"></div>';
 
     echo '<div id="searchResults"><div class="article-panel"><ul id="results-listing"></ul></div></div>';
@@ -91,6 +91,10 @@ if(!$lang){
   .btn-primary:hover {
     background-color: #1C507F;
     border-color: #1C507F;
+  }
+
+  .btn-primary:active {
+    background-color: #1C507F;
   }
 
   a {
