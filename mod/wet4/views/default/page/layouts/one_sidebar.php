@@ -36,12 +36,11 @@
         echo elgg_view_menu('page', array('sort_by' => 'priority'));
 
     // @todo deprecated so remove in Elgg 2.0
-	if (isset($vars['area1']))
-	   echo $vars['area1'];
+	if (isset($vars['area1'])) echo $vars['area1'];
 			
-	if (isset($vars['content']) && $context !== 'group_profile') {
+	if (isset($vars['content'])) {
         
-        if (elgg_is_logged_in()) {
+        if (elgg_is_logged_in() && $context !== 'group_profile') {
 
             $buttons = elgg_view_menu('title', array(
                'sort_by' => 'priority',
@@ -58,12 +57,20 @@
             echo "<div class='clearfix'>{$buttons} {$buttons2}</div>";
             
         }
-		echo $vars['content'];
+        echo $vars['content'];
+		
 	}
+    
 
     echo elgg_view('page/layouts/elements/footer', $vars);
-
 ?>
+    </section>
 
+    <section class="col-md-4 pull-right">
+
+<?php // On smaller screens, blocks are stacked in left to right order: content, sidebar.      
+   echo elgg_view('page/elements/sidebar', $vars);      
+?>      
+  
 	</section>
 </div>

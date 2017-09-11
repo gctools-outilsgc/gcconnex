@@ -1,20 +1,46 @@
 <?php
-$test = get_input('gcf_guid');
-error_log(":::::::   {$test}");
 
+$dbprefix = elgg_get_config('dbprefix');
 
 $entity_guid = get_input('entity_guid');
 $entity = get_entity($entity_guid);
+$forward_url = get_input('hidden_forward_url');
 
 
+$subtype = $entity->getSubtype();
+switch ($subtype) {
+	case 'hjforumcategory':
+		$entity->title = get_input('txtTitle');
+		$entity->description = get_input('txtDescription');
+		$entity->access_id = get_input('ddAccess');
+		break;
 
-return;
+	case 'hjforum':
+		$entity->title = get_input('txtTitle');
+		$entity->description = get_input('txtDescription');
+		$entity->access_id = get_input('ddAccess');
 
-$gcf_type = get_input('gcf_type');
-$gcf_forward_url = str_replace("amp;","",get_input('gcf_forward_url'));
-$object = get_entity($gcf_guid);
-$gcf_group = get_input('gcf_group');
-$dbprefix = elgg_get_config('dbprefix');
+		//$entity->enable_subcategories = $enable_categories;
+		//$entity->enable_posting = $enable_posting;
+		break;
+
+	case 'hjforumtopic':
+		$entity->title = get_input('txtTitle');
+		$entity->description = get_input('txtDescription');
+		$entity->access_id = get_input('ddAccess');
+		//$entity->sticky = $gcf_sticky;
+		$entity->save();
+		break;
+
+	case 'hjforumpost':
+		$entity->description = $description;
+		break;
+
+	default:
+}
+
+$entity->save();
+forward($forward_url);
 
 switch ($gcf_type) {
 	case 'hjforumcategory':
