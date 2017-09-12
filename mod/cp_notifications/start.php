@@ -1532,8 +1532,8 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 
 
 			// delete and clean up the notification, already sent so we don't need to keep it anymore
-			$query = "DELETE FROM notification_digest WHERE user_guid = {$user->getGUID()}";
-			$result = delete_data($query);
+			//$query = "DELETE FROM notification_digest WHERE user_guid = {$user->getGUID()}";
+			//$result = delete_data($query);
 
 		}
 	}
