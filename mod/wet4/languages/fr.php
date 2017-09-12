@@ -173,6 +173,12 @@ return array(
   'form:invalid:extensions' => "Format de fichier non valide. Extensions de fichier autorisées: %s",
 
   'new:dept:activity:title' => "Your department's activity",
+  'dept:activity:show' => "Show colleague connections",
+  'dept:activity:hide' => "Hide colleague connections",
+  'dept:activity:do' => "Colleague connections will no longer display in your department activity.",
+  'dept:activity:undo' => "Colleague connections will now display in your department activity.",
+  'dept:activity:filter:title' => "Department activity settings",
+
 
       'wet:more' => "Autres",
     'breadcrum:home' => 'Accueil',

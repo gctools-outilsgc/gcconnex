@@ -158,6 +158,7 @@ function wet4_theme_init() {
     elgg_register_action("user/requestnewpassword", elgg_get_plugins_path() . "/wet4/actions/user/requestnewpassword.php", "public");
 		elgg_register_action('logout_as', elgg_get_plugins_path() . '/wet4/actions/logout_as.php'); //login as out
 		elgg_register_action("question/autocomplete", elgg_get_plugins_path() . "/wet4/actions/object/question/autocomplete.php");
+		elgg_register_action("deptactivity/filter", elgg_get_plugins_path() . "/wet4/actions/deptactivity/filter.php");
 
     //Verify the department action
     elgg_register_action("department/verify_department", elgg_get_plugins_path() . "/wet4/actions/department/verify_department.php");
