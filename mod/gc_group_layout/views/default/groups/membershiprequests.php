@@ -5,7 +5,9 @@
  * @uses $vars['entity']   ElggGroup
  * @uses $vars['requests'] Array of ElggUsers
  */
-
+$count = $vars['count'];
+$offset = $vars['offset'];
+$limit = $vars['limit'];
 if (!empty($vars['requests']) && is_array($vars['requests'])) {
 	echo '<ul class="elgg-list">';
 	foreach ($vars['requests'] as $user) {
@@ -44,6 +46,11 @@ if (!empty($vars['requests']) && is_array($vars['requests'])) {
 		echo '</li>';
 	}
 	echo '</ul>';
+    echo elgg_view('navigation/pagination', array(
+        'count' => $count,
+        'offset' => $offset,
+        'limit' => $limit,
+    ));
 } else {
 	echo '<p class="mtm">' . elgg_echo('groups:requests:none') . '</p>';
 }
