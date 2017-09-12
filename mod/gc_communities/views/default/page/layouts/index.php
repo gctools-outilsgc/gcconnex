@@ -46,12 +46,43 @@
                 'list_type_toggle' => false,
                 'pagination' => true
             );
-
+        
+        $options2 = array(
+            'type' => 'object',
+            'subtypes' => $subtypes,
+            'limit' => $newsfeed_limit,
+            'full_view' => false,
+            'list_type_toggle' => false,
+            'pagination' => true
+            
+        );
+        $tags_values ='';
+        if( strpos($community_tags, ',') !== false ){ // if multiple tags
+                $community_tags = array_map('trim', explode(',', $community_tags));
+            foreach($community_tags as $tag_val){
+                $tags_value = elgg_get_metastring_id($tag_val);
+                $tags_values .= ' OR md.value_id = '.$tags_value;
+            }
+        }else{
+           $tags_values = ' OR md.value_id = ' .elgg_get_metastring_id($community_tags); 
+        }
+        
+        $audience_name = elgg_get_metastring_id('audience');
+        $audience_value = elgg_get_metastring_id($community_audience);
+        $tags_name = elgg_get_metastring_id('tags');
+        //Grabs content with audience or tags
+        $dbprefix = elgg_get_config('dbprefix');
+        $options2['joins'][] ="JOIN {$dbprefix}metadata md ON (e.guid = md.entity_guid)";
+        $options2['joins'][] ="JOIN {$dbprefix}metastrings ms ON (ms.id = md.value_id)";
+        $options2['joins'][] ="JOIN {$dbprefix}metastrings ms1 ON (ms1.id = md.name_id)";
+        $options2['wheres'][] = "(md.name_id = {$audience_name} OR md.name_id = {$tags_name}) 
+        AND (md.value_id = {$audience_value}{$tags_values})";
+        
             echo '<div class="panel panel-default elgg-module-widget" data-amd="'.$community_audience.'">
             <header class="panel-heading"><div class="clearfix"><h3 class="elgg-widget-title pull-left">' . elgg_echo('gc_communities:community_newsfeed') . '</h3></div></header>
             <div class="panel-body clearfix">
             <div class="new-community-feed-holder"></div>
-            <div class="elgg-widget-content community-feed-holder">' . elgg_list_entities_from_metadata($options) . '</div>
+            <div class="elgg-widget-content community-feed-holder">'. elgg_list_entities_from_metadata($options2) . '</div>
             </div>
             </div>';
         ?>
