@@ -46,6 +46,9 @@ function newsfeed_init(){
     elgg_register_ajax_view("ajax/newsfeed_filter");
     elgg_register_action("newsfeed/filter", elgg_get_plugins_path() . "/gc_newsfeed/actions/newsfeed/filter.php");
 
+    elgg_extend_view('widgets/stream_newsfeed_index/content', 'newsfeed/filter', 450);
+    elgg_extend_view('widgets/newsfeed/content', 'newsfeed/filter', 450);
+
 }
 
 //Custom Newsfeed Page

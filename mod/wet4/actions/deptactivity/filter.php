@@ -13,4 +13,4 @@ if(!isset($user->DAconnections) || $user->DAconnections == ''){ //turn off colle
     $user->DAconnections = '';
     system_message(elgg_echo('dept:activity:undo'));
 }
-    ?>
+?>

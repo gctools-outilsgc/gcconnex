@@ -18,7 +18,7 @@ if(!isset(elgg_get_logged_in_user_entity()->DAconnections) || elgg_get_logged_in
   ));
 }
 
-$filter_form = '<a href="#" style="position:absolute; top:15px; right:10px;" title="'.elgg_echo('dept:activity:filter:title').'" class="dropdown  pull-right mrgn-rght-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-v fa-2x icon-unsel " aria-hidden="true"></i></a><ul style="top:45px; right: 0px;" class="dropdown-menu pull-right act-filter" aria-labelledby="dropdownMenu2"><li id="filter_form">'.$filter_link.'</li></ul>';
+$filter_form = '<a href="#" style="position:absolute; top:15px; right:10px;" title="'.elgg_echo('dept:activity:filter:title').'" class="dropdown  pull-right mrgn-rght-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-v fa-2x icon-unsel"><span class="wb-inv">'.elgg_echo('dept:activity:filter:title').'</span></i></a><ul style="top:45px; right: 0px;" class="dropdown-menu pull-right act-filter" aria-labelledby="dropdownMenu2"><li id="filter_form">'.$filter_link.'</li></ul>';
 
 //get the department we are working with
 $dept = elgg_get_logged_in_user_entity()->department;
