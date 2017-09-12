@@ -205,8 +205,16 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			return true;
 
 		case 'cp_group_invite_email':	// group_tools/lib/functions.php (returns user's email, so return after mail is sent out)
-			$subject = elgg_echo('cp_notify:subject:group_invite_email',array($params['cp_inviter']['name'],$params['cp_group_invite']['name']),'en') . ' | ' . elgg_echo('cp_notify:subject:group_invite_email',array($params['cp_inviter']['name'],$params['cp_group_invite']['name']),'fr');
-			$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
+			$group_name = $params['cp_group_invite']['name'];
+			if (elgg_is_active_plugin('wet4')) {
+				$group_name_en = gc_explode_translation($group_name, 'en');
+				$group_name_fr = gc_explode_translation($group_name, 'fr');
+			}
+
+			$subject = elgg_echo('cp_notify:subject:group_invite_email',array($params['cp_inviter']['name'], $group_name_en),'en') . ' | ' . elgg_echo('cp_notify:subject:group_invite_email',array($params['cp_inviter']['name'], $group_name_fr),'fr');
+			$subject = htmlspecialchars_decode($subject, ENT_QUOTES);
+
+
 			$message = array(
 				'cp_email_invited' => $params['cp_invitee'],
 				'cp_email_invited_by' => $params['cp_inviter'],
@@ -377,6 +385,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 
 		case 'cp_group_invite': // group_tools/lib/functions.php
+
 			$subject = elgg_echo('cp_notify:subject:group_invite_user',array($params['cp_inviter']['name'],gc_explode_translation($params['cp_invite_to_group']['name'],'en')),'en');
 			$subject .= ' | '.elgg_echo('cp_notify:subject:group_invite_user',array($params['cp_inviter']['name'],gc_explode_translation($params['cp_invite_to_group']['name'],'fr')),'fr');
 
@@ -1251,9 +1260,9 @@ function cp_create_notification($event, $type, $object) {
 							$subject = elgg_echo('cp_notify_usr:subject:new_content',array($object->getOwnerEntity()->username, cp_translate_subtype($object->getSubtype()), gc_explode_translation($answer_entity->title,'en')),'en');
 							$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content_f',array($object->getOwnerEntity()->username, cp_translate_subtype($object->getSubtype(), false), gc_explode_translation($answer_entity->title,'fr')),'fr');
 						
-						}else{
-						$subject = elgg_echo('cp_notify_usr:subject:new_content',array($object->getOwnerEntity()->username, cp_translate_subtype($object->getSubtype()), gc_explode_translation($object->title,'en')),'en');
-						$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content',array($object->getOwnerEntity()->username, cp_translate_subtype($object->getSubtype(), false), gc_explode_translation($object->title,'fr')),'fr');
+						} else {
+							$subject = elgg_echo('cp_notify_usr:subject:new_content',array($object->getOwnerEntity()->username, cp_translate_subtype($object->getSubtype()), gc_explode_translation($object->title,'en')),'en');
+							$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content',array($object->getOwnerEntity()->username, cp_translate_subtype($object->getSubtype(), false), gc_explode_translation($object->title,'fr')),'fr');
 						}
 					}
 				}
@@ -1532,8 +1541,8 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 
 
 			// delete and clean up the notification, already sent so we don't need to keep it anymore
-			//$query = "DELETE FROM notification_digest WHERE user_guid = {$user->getGUID()}";
-			//$result = delete_data($query);
+			$query = "DELETE FROM notification_digest WHERE user_guid = {$user->getGUID()}";
+			$result = delete_data($query);
 
 		}
 	}
