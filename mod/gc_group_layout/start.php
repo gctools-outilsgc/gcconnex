@@ -26,7 +26,7 @@ function gc_group_layout_init(){
     elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'group_owners_block_handler');
 
     elgg_register_ajax_view('ajax/grp_ajax_content');
-    elgg_extend_view("js/elgg", "js/group_ajax");
+    //elgg_extend_view("js/elgg", "js/group_ajax");
 
     // group invitation
 	elgg_register_action("groups/invite", dirname(__FILE__) . "/actions/groups/invite.php");
@@ -40,7 +40,7 @@ function gc_group_layout_init(){
 function group_owners_block_handler($hook, $type, $menu, $params){
 /***TEMP ***/
 
-
+/*
     //rearrange menu items
     if(elgg_get_context() == 'group_profile'){
 
@@ -144,10 +144,10 @@ function group_owners_block_handler($hook, $type, $menu, $params){
 
 
     }
-
+*/
 
     //rearrange menu items
-    if(elgg_get_context() == 'groupSubPage'){
+    if(elgg_get_context() == 'groupSubPage' || elgg_in_context('group_profile')){
 
         elgg_unregister_menu_item('owner_block', 'activity');
 
