@@ -58,7 +58,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 
                 	// cyu - check to see if the user is a gsa-crawler, then display in (both) languages
                 	if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false) {
-                		
+
                 		/*$json_name = json_decode($group->name,true);
                 		if (json_last_error() === JSON_ERROR_NONE)
                 			$group_name = "{$json_name['en']} / {$json_name['fr']}";
@@ -69,7 +69,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
                 		$group_name_fr = gc_explode_translation($group->name, 'fr');
 
                 		if ($group_name_en !== $group_name_fr)
-                			$group_name = "{$group_name_en} / {$group_name_fr}"; 
+                			$group_name = "{$group_name_en} / {$group_name_fr}";
                 		else
                 			$group_name = $group_name_en;
 
@@ -90,6 +90,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 							'text' => $owner->name,
 							'value' => $owner->getURL(),
 							'is_trusted' => true,
+							'class' => 'mrgn-lft-sm'
 						));
 					}
 				?>
@@ -146,7 +147,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 
             	if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false)
                 	echo $tags;
-    
+
             }
             ?>
 
@@ -202,10 +203,10 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 													}
 												}
 												echo '<li class="mrgn-tp-sm mrgn-lft-sm">'.elgg_view('output/url', $options).'</li>';
-	
+
 												// This is the code to add the notification bell to the page to the left of the member button
 												if ($group->isMember(elgg_get_logged_in_user_entity())) { //Nick - check if user is a member before
-												
+
 													// cyu - indicate if user has subscribed to the group or not (must have cp notifications enabled)
 													if (elgg_is_active_plugin('cp_notifications')) {
 
@@ -227,7 +228,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 						// add group operators menu link to title menu
 						$page_owner = elgg_get_page_owner_entity();
 						$actions = array();
-						 
+
 						// group owners
 						if ($owner->canEdit() || $page_owner->canEdit()) {
 							// edit and invite
@@ -236,7 +237,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 							$url = elgg_get_site_url() . "groups/invite/{$group->getGUID()}";
 							$actions[$url] = 'groups:invite';
 						}
-						
+
 						 // group members
 						 if ($group->isMember()) {
 								 if ($owner->getOwnerGUID() != elgg_get_logged_in_user_guid()) {
@@ -255,7 +256,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 										 // request membership
 										 $actions[$url] = 'groups:joinrequest';
 								 }
-						 } 
+						 }
 
 						 if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') !== false)
 						 	$actions = array();
@@ -268,7 +269,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 												 'text' => elgg_echo($text),
 												 'link_class' => 'elgg-button elgg-button-action',
 										 ));
-								 } 
+								 }
 						 }
 
 												 if ($page_owner instanceof ElggGroup) {

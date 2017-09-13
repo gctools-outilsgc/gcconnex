@@ -291,7 +291,7 @@ function _elgg_wet_user_settings_page_handler($page) {
     if (isset($path)) {
         return true;
     }
-    
+
     return false;
 }
 
@@ -1325,7 +1325,7 @@ function my_site_menu_handler($hook, $type, $menu, $params){
         return;
 
     foreach ($menu as $key => $item) {
-        if ($item->getName() === 'groups') 
+        if ($item->getName() === 'groups')
             (elgg_is_logged_in()) ? $item->setHref(elgg_get_site_url().'groups/all?filter=yours') : $item->setHref( elgg_get_site_url().'groups/all?filter=popular');
     }
 }
@@ -1335,19 +1335,19 @@ function my_site_menu_handler($hook, $type, $menu, $params){
  * Add styles to phot album title menu
  */
 function my_title_menu_handler($hook, $type, $menu, $params){
-    
+
     if (!is_array($menu))
         return;
 
     foreach ($menu as $key => $item) {
 
-        if ($item->getName() === 'slideshow') 
+        if ($item->getName() === 'slideshow')
             $item->setText(elgg_echo('album:slideshow'));
-        elseif ($item->getName() === 'addphotos') 
+        elseif ($item->getName() === 'addphotos')
             $item->setItemClass('mrgn-rght-sm');
-    
+
     }
-    
+
 }
 
 /*
@@ -1403,7 +1403,7 @@ function my_owner_block_handler($hook, $type, $menu, $params){
                     $item->setHref('#bookmarks');
                     $item->setPriority('8');
                     break;
-                case 'polls':
+                case 'poll':
                     $item->setText(elgg_echo('gprofile:polls'));
                     $item->setHref('#poll');
                     $item->setPriority('9');
@@ -1982,7 +1982,7 @@ function wet_questions_page_handler($segments) {
 		case 'edit':
 			elgg_gatekeeper();
             $params['guid'] = (int) elgg_extract(1, $page);
-            
+
             echo elgg_view_resource('questions/edit', $params);
 			break;
 		case 'group':

@@ -14,7 +14,7 @@ elgg.au_subgroups.init = function() {
 };
 
 elgg.au_subgroups.search = function() {
-    $('.au-subgroups-search').live('keyup', function() {
+    $('.au-subgroups-search').on('keyup', function() {
         var query = $(this).val();
         var results = $('.au-subgroups-search-results');
         var subgroup_guid = elgg.page_owner.guid;
@@ -60,7 +60,7 @@ elgg.au_subgroups.search = function() {
 
 
 elgg.au_subgroups.select = function() {
-    $('.au-subgroups-parentable, .au-subgroups-non-parentable').live('click', function(e) {
+    $('.au-subgroups-parentable, .au-subgroups-non-parentable').on('click', function(e) {
         e.preventDefault();
 
         if ($(this).hasClass('au-subgroups-non-parentable')) {

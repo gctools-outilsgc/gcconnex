@@ -29,7 +29,7 @@ echo "</div>";
 */
 
 // build the group tools options
-echo "<div id='group-tools-group-edit-tools' class='group-tools-group-edit-section'>";
+echo "<div id='group-tools-group-edit-tools' class='group-tools-group-edit-section' style='display:none;'>";
 echo elgg_view("groups/edit/tools", $vars);
 echo "</div>";
 

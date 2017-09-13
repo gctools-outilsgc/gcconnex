@@ -3,6 +3,9 @@
  * Show tabs on the group edit form
  */
 
+ // load js
+ elgg_require_js('group_tools/group_edit_tabbed');
+
 $tabs = array(
 	"profile" => array(
 		"text" => elgg_echo("group_tools:group:edit:profile"),
@@ -30,7 +33,7 @@ if (!empty($vars["entity"])) {
 
 foreach ($tabs as $name => $tab) {
 	$tab["name"] = $name;
-	
+
 	elgg_register_menu_item("filter", $tab);
 }
 

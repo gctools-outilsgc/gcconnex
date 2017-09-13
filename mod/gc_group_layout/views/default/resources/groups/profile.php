@@ -16,10 +16,7 @@ $content = elgg_view('groups/profile/layout', array('entity' => $group));
 $sidebar = '';
 
 if (elgg_group_gatekeeper(false)) {
-	if (elgg_is_active_plugin('search')) {
-		$sidebar .= elgg_view('groups/sidebar/search', array('entity' => $group));
-	}
-	$sidebar .= elgg_view('groups/sidebar/members', array('entity' => $group));
+	$sidebar .= elgg_view('groups/sidebar/sidebar', array('entity' => $group));
 
 	$subscribed = false;
 	if (elgg_is_active_plugin('notifications')) {
@@ -34,11 +31,6 @@ if (elgg_group_gatekeeper(false)) {
 			}
 		}
 	}
-
-	$sidebar .= elgg_view('groups/sidebar/my_status', array(
-		'entity' => $group,
-		'subscribed' => $subscribed
-	));
 }
 
 $params = array(

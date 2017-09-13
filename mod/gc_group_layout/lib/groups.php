@@ -357,7 +357,7 @@ function groups_handle_profile_page($guid) {
 
 	$content = elgg_view('groups/profile/layout', array('entity' => $group));
 	$sidebar = elgg_view('groups/sidebar/sidebar', array('entity' => $group));
-    
+
 	$params = array(
 		'content' => $content,
 		'sidebar' => $sidebar,

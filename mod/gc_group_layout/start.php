@@ -100,7 +100,7 @@ function group_owners_block_handler($hook, $type, $menu, $params){
                 case 'polls':
                     $item->setText(elgg_echo('gprofile:polls'));
                     $item->setHref('#polls');
-                    $item->setPriority('14');
+                    $item->setPriority('10');
                     break;
                 case 'tasks':
                     $item->setText(elgg_echo('gprofile:tasks'));
