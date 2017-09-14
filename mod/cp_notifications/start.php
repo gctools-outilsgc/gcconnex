@@ -148,7 +148,7 @@ function minor_save_hook_handler($hook, $type, $value, $params) {
 
     if (strcmp(get_input('minor_save'), 'yes') === 0) {
 
-	    elgg_unregister_event_handler('create','object','cp_create_notification',900);
+	    elgg_unregister_event_handler('create','object','cp_create_notification', 900);
 		elgg_unregister_event_handler('single_file_upload', 'object', 'cp_create_notification');
 		elgg_unregister_event_handler('single_zip_file_upload', 'object', 'cp_create_notification');
 		elgg_unregister_event_handler('multi_file_upload', 'object', 'cp_create_notification');
@@ -171,7 +171,7 @@ function minor_save_hook_handler($hook, $type, $value, $params) {
  * @param mixed  $params  Data passed from the trigger
  */
 function cp_overwrite_notification_hook($hook, $type, $value, $params) {
-
+error_log("{$hook}  /// {$type}  ///  {$value}");
 	elgg_load_library('elgg:gc_notification:functions');
 	$cp_msg_type = trim($params['cp_msg_type']);
 	$to_recipients = array();
@@ -636,9 +636,9 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 	$action_type = "content_revision";
 	$author = $liked_by;
-
+error_log(">>>>>>>>    {$object_subtype}");
 	/// EDITS TO BLOGS AND PAGES, THEY ARE CONSIDERED ANNOTATION DUE TO REVISIONS AND MULTIPLE COPIES OF SAME CONTENT
-	if (strcmp($object_subtype,'likes') != 0) {
+	if (strcmp($object_subtype, 'likes') != 0) {
 
 		$content = get_entity($object->entity_guid);
 
@@ -747,7 +747,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 		$to_recipients = array();
 		$to_recipients_site = array();
-
+error_log(" L:LL  LSDKFLSDKFSD      {$type_of_like}");
 	    switch ($type_of_like) {
 	    	case 'group':
 	    		$group_name_en = gc_explode_translation($content_entity->name, 'en');
@@ -765,10 +765,11 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 	    		$group_owner = $content_entity->getOwnerEntity();
 	    		$action_type = 'like_group';
-
+error_log(">>>>>>>    {$content->getOwnerGUID()} // {$content->getOwnerEntity()->username} ///  ". elgg_get_plugin_user_setting('cpn_likes_site', $content->getOwnerGUID(),'cp_notifications'));
 	    		if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $group_owner->getGUID(),'cp_notifications'),'likes_email') == 0)
     				$to_recipients[$group_owner->getGUID()] = $group_owner;
-    			if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $group_owner->getGUID(),'cp_notifications'),'likes_site') == 0)
+
+    			if (strcmp(elgg_get_plugin_user_setting('cpn_likes_site', $group_owner->getGUID(),'cp_notifications'),'likes_site') == 0)
     				$to_recipients_site[$group_owner->getGUID()] = $group_owner;
 
 	    		break;
@@ -793,7 +794,8 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 	    		if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $comment_author->getGUID(),'cp_notifications'),'likes_email') == 0)
     				$to_recipients[$comment_author->getGUID()] = $comment_author;
-    			if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $comment_author->getGUID(),'cp_notifications'),'likes_site') == 0)
+
+    			if (strcmp(elgg_get_plugin_user_setting('cpn_likes_site', $comment_author->getGUID(),'cp_notifications'),'likes_site') == 0)
     				$to_recipients_site[$comment_author->getGUID()] = $comment_author;
 	    		break;
 
@@ -816,7 +818,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 	    		if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $comment_author->getGUID(),'cp_notifications'),'likes_email') == 0)
     				$to_recipients[$comment_author->getGUID()] = $comment_author;
-    			if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $comment_author->getGUID(),'cp_notifications'),'likes_site') == 0)
+    			if (strcmp(elgg_get_plugin_user_setting('cpn_likes_site', $comment_author->getGUID(),'cp_notifications'),'likes_site') == 0)
     				$to_recipients_site[$comment_author->getGUID()] = $comment_author;
 	    		break;
 
@@ -824,7 +826,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 	    	default:
 	    		$type_of_like = 'user_update';
 		    	if ($liked_content instanceof ElggUser) {
-
+error_log("fdjglkjdflgkjdflgkjf     liked content is a user update");
 					// cyu - there doesn't seem to be any differentiation between updated avatar and colleague connection
 		    		$liked_by = get_user($object->owner_guid); // get user who liked comment
 
@@ -838,7 +840,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 
 		    	} else {
-
+error_log("fdjglkjdflgkjdflgkjf     liked content is an object");
 		    		$type_of_like = 'content';
 		    		$liked_by = get_user($object->owner_guid); // get user who liked content
 		    		$content = get_entity($object->entity_guid);
@@ -851,11 +853,11 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 		    		// cyu - patching issue #323 (liking wire post)
 		    		if ($content->getSubtype() === 'thewire') {
-		    			$subject = elgg_echo('cp_notify:subject:likes_wire',array($liked_by->name, $content_title_en),'en') . ' | ' . elgg_echo('cp_notify:subject:likes_wire',array($liked_by->name, $content_title_fr),'fr');
+		    			$subject = elgg_echo('cp_notify:subject:likes_wire',array($liked_by->name, $content_title_en),'en') . ' | ' . elgg_echo('cp_notify:subject:likes_wire',array($liked_by->name, $content_title_fr), 'fr');
 		    			$content_subtype = 'thewire';
 
 		    		} else {
-		    			$subject = elgg_echo('cp_notify:subject:likes',array($liked_by->name, $content_title_en),'en') . ' | ' . elgg_echo('cp_notify:subject:likes',array($liked_by->name, $content_title_fr),'fr');
+		    			$subject = elgg_echo('cp_notify:subject:likes',array($liked_by->name, $content_title_en),'en') . ' | ' . elgg_echo('cp_notify:subject:likes',array($liked_by->name, $content_title_fr), 'fr');
 		    			$content_subtype = '';
 		    		}
 
@@ -867,11 +869,11 @@ function cp_create_annotation_notification($event, $type, $object) {
 						'cp_description' => $content->description,
 						'cp_content_url' => $content->getURL(),
 					);
-
-		    		if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $content->getOwnerGUID(),'cp_notifications'),'likes_email') == 0)
+error_log(">>>>>>>    {$content->getOwnerGUID()} // {$content->getOwnerEntity()->username} ///  ". elgg_get_plugin_user_setting('cpn_likes_site', $content->getOwnerGUID(),'cp_notifications'));
+		    		if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $content->getOwnerGUID(),'cp_notifications'), 'likes_email') == 0)
 	    				$to_recipients[$content->getOwnerGUID()] = $content->getOwnerEntity();
 
-	    			if (strcmp(elgg_get_plugin_user_setting('cpn_likes_site', $content->getOwnerGUID(),'cp_notifications'),'likes_site') == 0)
+	    			if (strcmp(elgg_get_plugin_user_setting('cpn_likes_site', $content->getOwnerGUID(),'cp_notifications'), 'likes_site') == 0)
 	    				$to_recipients_site[$content->getOwnerGUID()] = $content->getOwnerEntity();
 		    	}
 	    		break;
@@ -900,10 +902,12 @@ function cp_create_annotation_notification($event, $type, $object) {
 				else {
 					$template = elgg_view('cp_notifications/email_template', $message);
 
-					if (elgg_is_active_plugin('phpmailer'))
+					if (elgg_is_active_plugin('phpmailer')) {
+						error_log(">>>>>>  send.... email... ");
 						phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );
+					}
 					else
-						mail($to_recipient->email, $subject, $template,cp_get_headers());
+						mail($to_recipient->email, $subject, $template, cp_get_headers());
 				}
 			}
 		}
@@ -914,13 +918,16 @@ function cp_create_annotation_notification($event, $type, $object) {
 		foreach ($to_recipients_site as $to_recipient_id => $to_recipient) {
 			$site_template = elgg_view('cp_notifications/site_template', $message);
 			$recipient_user = get_user($to_recipient->guid);
-			
-			if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') !== 0) {
+			error_log("kjlkpppppp      {$content_entity->getType()}");
 
-				if (has_access_to_entity($object, $recipient_user)) {
+			if ($object->access_id == 1 || $object->access_id == 2 || $content_entity->getType() === 'group' || $action_type === 'post_likes') {
+
+				if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') !== 0) {
+					error_log(">>>>>>  send.... site ... ");
 					messages_send($subject, $site_template, $to_recipient->guid, $site->guid, 0, true, false);
 				}
 			}
+
 		}
 	}
 
@@ -966,6 +973,8 @@ function cp_create_notification($event, $type, $object) {
 	$switch_case = $event;
 	if ($object instanceof ElggObject)
 		$switch_case = $object->getSubtype();	
+
+
 
 	switch ($switch_case) {
 
@@ -1261,6 +1270,7 @@ function cp_create_notification($event, $type, $object) {
 							$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content_f',array($object->getOwnerEntity()->username, cp_translate_subtype($object->getSubtype(), false), gc_explode_translation($answer_entity->title,'fr')),'fr');
 						
 						} else {
+							
 							$subject = elgg_echo('cp_notify_usr:subject:new_content',array($object->getOwnerEntity()->username, cp_translate_subtype($object->getSubtype()), gc_explode_translation($object->title,'en')),'en');
 							$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content',array($object->getOwnerEntity()->username, cp_translate_subtype($object->getSubtype(), false), gc_explode_translation($object->title,'fr')),'fr');
 						}
@@ -1343,8 +1353,8 @@ function cp_create_notification($event, $type, $object) {
 			if ($to_recipient->guid == $author->guid || strcmp($user_setting, "set_digest_yes") == 0)
 				continue;
 
-		 	//if (cp_check_permissions($object, $recipient_user)) {
 			if (has_access_to_entity($object, $recipient_user)) {
+error_log("this called again????  / ///     ".print_r($object,true));
 				$site_template = elgg_view('cp_notifications/site_template', $message);
 				messages_send($subject, $site_template, $to_recipient->guid, $site->guid, 0, true, false);
 			}

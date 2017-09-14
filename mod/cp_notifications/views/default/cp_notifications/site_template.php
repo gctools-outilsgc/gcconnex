@@ -169,7 +169,7 @@ switch ($msg_type) {
 
 
 		$topic_title_en = gc_explode_translation($vars['cp_topic']->title, 'en');
-		$topic_title_en = gc_explode_translation($vars['cp_topic']->title, 'fr');
+		$topic_title_fr = gc_explode_translation($vars['cp_topic']->title, 'fr');
 
 		if ($vars['cp_topic']->getSubtype() === 'groupforumtopic') {
 			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_comments:title_discussion', array($vars['cp_user_comment']->getURL().'?utm_source=notification&utm_medium=site', $vars['cp_user_comment']->username, $vars['cp_topic_type'], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=site', $topic_title_en),'en');
@@ -178,12 +178,12 @@ switch ($msg_type) {
 			$cp_notify_msg_description_en = $vars['cp_comment']->description."<br/>".elgg_echo('cp_notify:body_comments:description_discussion',array($vars['cp_comment']->getURL().'?utm_source=notification&utm_medium=site'),'en');
 			$cp_notify_msg_description_fr = $vars['cp_comment']->description."<br/>".elgg_echo('cp_notify:body_comments:description_discussion',array($vars['cp_comment']->getURL().'?utm_source=notification&utm_medium=site'),'fr');
 		} else {
-			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_comments:title', array($vars['cp_user_comment']->getURL().'?utm_source=notification&utm_medium=site', $vars['cp_user_comment']->username, $vars['cp_topic_type'], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=site', $vars['cp_topic']->title),'en');
+			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_comments:title', array($vars['cp_user_comment']->getURL().'?utm_source=notification&utm_medium=site', $vars['cp_user_comment']->username, $vars['cp_topic_type'], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=site', $topic_title_en),'en');
 
 			if (array_key_exists($vars['cp_topic_type'], $entity_f))
-				$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_comments:title_f', array($vars['cp_user_comment']->getURL().'?utm_source=notification&utm_medium=site', $vars['cp_user_comment']->username, $vars['cp_topic_type'], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=site', $vars['cp_topic']->title),'fr');
+				$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_comments:title_f', array($vars['cp_user_comment']->getURL().'?utm_source=notification&utm_medium=site', $vars['cp_user_comment']->username, $vars['cp_topic_type'], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=site', $topic_title_fr),'fr');
 			else
-				$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_comments:title_m', array($vars['cp_user_comment']->getURL().'?utm_source=notification&utm_medium=site', $vars['cp_user_comment']->username, $vars['cp_topic_type'], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=site', $vars['cp_topic']->title),'fr');
+				$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_comments:title_m', array($vars['cp_user_comment']->getURL().'?utm_source=notification&utm_medium=site', $vars['cp_user_comment']->username, $vars['cp_topic_type'], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=site', $topic_title_fr),'fr');
 		}
 
 		break;
@@ -515,8 +515,8 @@ switch ($msg_type) {
 
 	case 'cp_likes_comments':
 
-		$content_title_en = gc_explode_translation($vars['cp_comment_from_en'], 'en');
-		$content_title_fr = gc_explode_translation($vars['cp_comment_from_fr'], 'fr');
+		$content_title_en = gc_explode_translation($vars['cp_comment_from'], 'en');
+		$content_title_fr = gc_explode_translation($vars['cp_comment_from'], 'fr');
 
 		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_likes_comment:title',array($vars['cp_liked_by'], "<a href='{$vars['content_url']}?utm_source=notification&utm_medium=site'>{$content_title_en}</a>"),'en');
 		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_likes_comment:title',array($vars['cp_liked_by'], "<a href='{$vars['content_url']}?utm_source=notification&utm_medium=site'>{$content_title_fr}</a>"),'fr');
@@ -529,8 +529,8 @@ switch ($msg_type) {
 
 	case 'cp_likes_topic_replies': // discussion replies
 
-		$content_title_en = gc_explode_translation($vars['cp_comment_from_en'], 'en');
-		$content_title_fr = gc_explode_translation($vars['cp_comment_from_fr'], 'fr');
+		$content_title_en = gc_explode_translation($vars['cp_comment_from'], 'en');
+		$content_title_fr = gc_explode_translation($vars['cp_comment_from'], 'fr');
 
 		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_likes_discussion_reply:title',array($vars['cp_liked_by'], "<a href='{$vars['content_url']}?utm_source=notification&utm_medium=site'>$content_title_en</a>"),'en');
 		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_likes_discussion_reply:title',array($vars['cp_liked_by'], "<a href='{$vars['content_url']}?utm_source=notification&utm_medium=site'>$content_title_fr</a>"),'fr');
