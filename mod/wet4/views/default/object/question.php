@@ -4,7 +4,7 @@
  *
  * @package Questions
 */
-
+$lang = get_current_language();
 $question = elgg_extract('entity', $vars, false);
 if (!($question instanceof ElggQuestion)) {
 	return true;
@@ -27,7 +27,7 @@ $subtitle[] = elgg_echo('questions:asked', [$poster_link]);
 $container = $question->getContainerEntity();
 if (($container instanceof ElggGroup) && (elgg_get_page_owner_guid() !== $container->getGUID())) {
 	$group_link = elgg_view('output/url', [
-		'text' => $container->name,
+		'text' => gc_explode_translation($container->name,$lang),
 		'href' => "questions/group/{$container->getGUID()}/all",
 		'is_trusted' => true
 	]);

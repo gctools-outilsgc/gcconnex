@@ -14,7 +14,6 @@ $description = elgg_extract("description", $vars);
 $group_profile_fields = elgg_get_config("group");
 $group = elgg_extract("entity", $vars);
 
-
 // decode json into English / French parts
 $json_title = json_decode($name);
 $json_desc = json_decode($description);
@@ -84,13 +83,14 @@ echo $btn_language;
     <br />
     <div id="suggestedText"></div>
     <?php
-   /*     //if creating a group
+        //if creating a group
     if(empty($group)){
         echo elgg_view("input/groups_autocomplete", array(
 				'name' => 'name',
 				'value' => elgg_extract('name', $vars),
+                'type' => 'en',
 		));
-    } else {*/
+    } else {
     ?>
 
 	<?php echo elgg_view("input/text", array(
@@ -100,7 +100,7 @@ echo $btn_language;
         'required '=> "required",
         'class' => 'ui-autocomplete-input',
 	));
-   // }?>
+    }?>
 </div>
 
 <!-- title fr -->
@@ -111,13 +111,14 @@ echo $btn_language;
     <br />
     <div id="suggestedText2"></div>
     <?php
-   /*     //if creating a group
+      //if creating a group
     if(empty($group)){
         echo elgg_view("input/groups_autocomplete", array(
-                'name' => 'name2',
-                'value' => elgg_extract('name2', $vars),
+                'name' => 'name',
+                'value' => elgg_extract('name', $vars),
+                'type' => 'fr',
         ));
-    } else {*/
+    } else {
     ?>
 
     <?php echo elgg_view("input/text", array(
@@ -127,7 +128,7 @@ echo $btn_language;
         'required '=> "required",
         'class' => 'ui-autocomplete-input',
     ));
-  //  }?>
+    }?>
 </div>
 
 <div>

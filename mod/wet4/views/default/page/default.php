@@ -70,7 +70,7 @@ $feedbackText = elgg_echo('wet:feedbackText');
 $body = <<<__BODY
 <div class="elgg-page-messages">
     $messages
-</div> 
+</div>
     $tabskip
 
 <div class="elgg-page elgg-page-default">
@@ -82,7 +82,13 @@ __BODY;
 $userMenu = elgg_view('page/elements/topbar_wrapper', $vars);
 
 if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false) {
-	$feedback_button = "<a href='/mod/contactform/' class='btn btn-primary'><span class='glyphicon glyphicon-comment mrgn-rght-sm'></span>{$feedbackText}</a>";
+	if(elgg_is_active_plugin('freshdesk_help')){
+		$feedback_link = elgg_get_site_url().'/help/knowledgebase';
+	} else {
+		$feedback_link = elgg_get_site_url().'/mod/contactform';
+	}
+
+	$feedback_button = "<a href='{$feedback_link}' class='btn btn-primary'><span class='glyphicon glyphicon-comment mrgn-rght-sm'></span>{$feedbackText}</a>";
 	$footer_version = "	<div class='col-sm-6 col-xs-6 datemod'>
 						<dl id='wb-dtmd'>
 						<dt>Version</dt>
@@ -98,8 +104,8 @@ $body .= <<<__BODY
 
 		<!-- </div>-->
     	<div id="wb-bnr" class="container">
-            
-          
+
+
 </div>
 $site_brand
 
@@ -112,12 +118,12 @@ $breadcrumbs
        <div class="container">
        $userMenu
        </div>
-       
+
     $group_cover_image
 	<main role="main" property="mainContentOfPage" class="container">
 
         <!--<div class="elgg-inner">-->
-            
+
         <!--<section>-->
 			$content
 <!--</section>
