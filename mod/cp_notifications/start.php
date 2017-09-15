@@ -58,7 +58,7 @@ function cp_notifications_init() {
 	elgg_register_event_handler('create','annotation','cp_create_annotation_notification');
 	elgg_register_event_handler('create', 'membership_request', 'cp_membership_request');
 
-	elgg_register_event_handler('publish', 'object', 'publish_blog_post_handler');
+	//elgg_register_event_handler('publish', 'object', 'publish_blog_post_handler');
 
 	// we need to check if the mention plugin is installed and activated because it does notifications differently...
 	if (elgg_is_active_plugin('mentions')) {
@@ -84,7 +84,7 @@ function cp_notifications_init() {
 
 	if ($group_entity instanceof ElggGroup) {
 
-		// TODO: check to make sure that get_group_operators() is available
+	// TODO: check to make sure that get_group_operators() is available
 
 	if (elgg_is_logged_in() && (in_array($current_user, get_group_operators($group_entity)) || elgg_is_admin_user($current_user->getGUID()))) {
 
@@ -171,7 +171,7 @@ function minor_save_hook_handler($hook, $type, $value, $params) {
  * @param mixed  $params  Data passed from the trigger
  */
 function cp_overwrite_notification_hook($hook, $type, $value, $params) {
-error_log("{$hook}  /// {$type}  ///  {$value}");
+
 	elgg_load_library('elgg:gc_notification:functions');
 	$cp_msg_type = trim($params['cp_msg_type']);
 	$to_recipients = array();
@@ -636,7 +636,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 	$action_type = "content_revision";
 	$author = $liked_by;
-error_log(">>>>>>>>    {$object_subtype}");
+
 	/// EDITS TO BLOGS AND PAGES, THEY ARE CONSIDERED ANNOTATION DUE TO REVISIONS AND MULTIPLE COPIES OF SAME CONTENT
 	if (strcmp($object_subtype, 'likes') != 0) {
 
@@ -747,7 +747,7 @@ error_log(">>>>>>>>    {$object_subtype}");
 
 		$to_recipients = array();
 		$to_recipients_site = array();
-error_log(" L:LL  LSDKFLSDKFSD      {$type_of_like}");
+
 	    switch ($type_of_like) {
 	    	case 'group':
 	    		$group_name_en = gc_explode_translation($content_entity->name, 'en');
@@ -765,7 +765,7 @@ error_log(" L:LL  LSDKFLSDKFSD      {$type_of_like}");
 
 	    		$group_owner = $content_entity->getOwnerEntity();
 	    		$action_type = 'like_group';
-error_log(">>>>>>>    {$content->getOwnerGUID()} // {$content->getOwnerEntity()->username} ///  ". elgg_get_plugin_user_setting('cpn_likes_site', $content->getOwnerGUID(),'cp_notifications'));
+
 	    		if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $group_owner->getGUID(),'cp_notifications'),'likes_email') == 0)
     				$to_recipients[$group_owner->getGUID()] = $group_owner;
 
@@ -826,7 +826,7 @@ error_log(">>>>>>>    {$content->getOwnerGUID()} // {$content->getOwnerEntity()-
 	    	default:
 	    		$type_of_like = 'user_update';
 		    	if ($liked_content instanceof ElggUser) {
-error_log("fdjglkjdflgkjdflgkjf     liked content is a user update");
+
 					// cyu - there doesn't seem to be any differentiation between updated avatar and colleague connection
 		    		$liked_by = get_user($object->owner_guid); // get user who liked comment
 
@@ -840,7 +840,7 @@ error_log("fdjglkjdflgkjdflgkjf     liked content is a user update");
 
 
 		    	} else {
-error_log("fdjglkjdflgkjdflgkjf     liked content is an object");
+
 		    		$type_of_like = 'content';
 		    		$liked_by = get_user($object->owner_guid); // get user who liked content
 		    		$content = get_entity($object->entity_guid);
@@ -869,7 +869,7 @@ error_log("fdjglkjdflgkjdflgkjf     liked content is an object");
 						'cp_description' => $content->description,
 						'cp_content_url' => $content->getURL(),
 					);
-error_log(">>>>>>>    {$content->getOwnerGUID()} // {$content->getOwnerEntity()->username} ///  ". elgg_get_plugin_user_setting('cpn_likes_site', $content->getOwnerGUID(),'cp_notifications'));
+
 		    		if (strcmp(elgg_get_plugin_user_setting('cpn_likes_email', $content->getOwnerGUID(),'cp_notifications'), 'likes_email') == 0)
 	    				$to_recipients[$content->getOwnerGUID()] = $content->getOwnerEntity();
 
@@ -903,7 +903,7 @@ error_log(">>>>>>>    {$content->getOwnerGUID()} // {$content->getOwnerEntity()-
 					$template = elgg_view('cp_notifications/email_template', $message);
 
 					if (elgg_is_active_plugin('phpmailer')) {
-						error_log(">>>>>>  send.... email... ");
+
 						phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );
 					}
 					else
@@ -918,12 +918,11 @@ error_log(">>>>>>>    {$content->getOwnerGUID()} // {$content->getOwnerEntity()-
 		foreach ($to_recipients_site as $to_recipient_id => $to_recipient) {
 			$site_template = elgg_view('cp_notifications/site_template', $message);
 			$recipient_user = get_user($to_recipient->guid);
-			error_log("kjlkpppppp      {$content_entity->getType()}");
 
 			if ($object->access_id == 1 || $object->access_id == 2 || $content_entity->getType() === 'group' || $action_type === 'post_likes') {
 
 				if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') !== 0) {
-					error_log(">>>>>>  send.... site ... ");
+
 					messages_send($subject, $site_template, $to_recipient->guid, $site->guid, 0, true, false);
 				}
 			}
@@ -1354,7 +1353,7 @@ function cp_create_notification($event, $type, $object) {
 				continue;
 
 			if (has_access_to_entity($object, $recipient_user)) {
-error_log("this called again????  / ///     ".print_r($object,true));
+
 				$site_template = elgg_view('cp_notifications/site_template', $message);
 				messages_send($subject, $site_template, $to_recipient->guid, $site->guid, 0, true, false);
 			}

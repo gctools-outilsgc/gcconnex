@@ -750,7 +750,7 @@ function getMissionTypeMetastringid( $mission_type, $role_type ) {
 
 	   	  	$author = $content_array['content_author'];
 
-	   	  	$content_title = gc_explode_translation($content_array['content_title'], $language_preference);
+			$content_title = gc_explode_translation($content_array['content_title'], $language_preference);
 			$author = $content_array['content_author'];
 
 			$url = "<a href='{$content_array['content_url']}'>{$content_title}</a>";
@@ -762,7 +762,7 @@ function getMissionTypeMetastringid( $mission_type, $role_type ) {
 	} elseif ($heading === 'forum_reply') {
 
 
-   	  $author = get_entity($content_array['content_author']);
+		$author = get_entity($content_array['content_author']);
 
 
 		$url = "<a href='{$content_array['content_url']}'>{$content_title}</a>";
@@ -770,7 +770,6 @@ function getMissionTypeMetastringid( $mission_type, $role_type ) {
 
 
 	} elseif (strcmp($heading, "content_revision") == 0) {
-
 
 		$url = "<a href='{$content_array['content_url']}'>{$content_title}</a>";
 		$rendered_content = elgg_echo("cp_notifications:mail_body:subtype:{$heading}", array($author, $subtype, $url), $language_preference);
