@@ -172,12 +172,12 @@ return array(
 
   'form:invalid:extensions' => "Format de fichier non valide. Extensions de fichier autorisées: %s",
 
-  'new:dept:activity:title' => "Your department's activity",
-  'dept:activity:show' => "Show colleague connections",
-  'dept:activity:hide' => "Hide colleague connections",
-  'dept:activity:do' => "Colleague connections will no longer display in your department activity.",
-  'dept:activity:undo' => "Colleague connections will now display in your department activity.",
-  'dept:activity:filter:title' => "Department activity settings",
+  'new:dept:activity:title' => "Fil d’activités de votre ministère",
+  'dept:activity:show' => "Montrer les connexions de collègue",
+  'dept:activity:hide' => "Cacher les connexions de collègue",
+  'dept:activity:do' => " Les connexions de collègue ne seront plus affichées dans le fil d'activités de votre ministère.",
+  'dept:activity:undo' => " Les connexions de collègue s’afficheront maintenant dans le fil d’activité de votre ministère. ",
+  'dept:activity:filter:title' => "Paramètres du fil d’activités de votre ministère",
 
 
       'wet:more' => "Autres",

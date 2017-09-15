@@ -179,12 +179,12 @@ return array(
 
     ////
 
-    'new:dept:activity:title' => "Your department's activity",
+    'new:dept:activity:title' => "Your department's activity feed",
     'dept:activity:show' => "Show colleague connections",
     'dept:activity:hide' => "Hide colleague connections",
-    'dept:activity:do' => "Colleague connections will no longer display in your department activity.",
-    'dept:activity:undo' => "Colleague connections will now display in your department activity.",
-    'dept:activity:filter:title' => "Department activity settings",
+    'dept:activity:do' => "Colleague connections will no longer display in your department’s activity feed.",
+    'dept:activity:undo' => "Colleague connections will now display in your department’s activity feed.",
+    'dept:activity:filter:title' => "Your department’s activity feed settings",
 
     'wet:more'=>"More",
   	'breadcrum:home' => 'Home',

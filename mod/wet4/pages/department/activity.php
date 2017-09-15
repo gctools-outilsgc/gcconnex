@@ -49,6 +49,7 @@ $deptCount = elgg_get_entities_from_metadata(array(
     'types' => 'user',
     'metadata_names' => array('department'),
     'metadata_values' => array($depart1, $depart2),
+    'limit' => 0,
     ));
 
 $deptUsers = array();
