@@ -36,6 +36,8 @@
 		
 		// Finally, we change the owner
 		$mygroup->owner_guid = $who_guid;
+        $mygroup->container_guid = $who_guid;
+
 		$mygroup->save();
 
 		if (elgg_is_active_plugin('cp_notifications')) {
