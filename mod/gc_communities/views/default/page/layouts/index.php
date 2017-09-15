@@ -64,8 +64,6 @@
         //Query grabs content with audience or tags
         $dbprefix = elgg_get_config('dbprefix');
         $options['joins'][] ="JOIN {$dbprefix}metadata md ON (e.guid = md.entity_guid)";
-        $options['joins'][] ="JOIN {$dbprefix}metastrings ms ON (ms.id = md.value_id)";
-        $options['joins'][] ="JOIN {$dbprefix}metastrings ms1 ON (ms1.id = md.name_id)";
         $options['wheres'][] = "(md.name_id = {$audience_name} OR md.name_id = {$tags_name}) 
         AND (md.value_id = {$audience_value}{$tags_values})";
         
