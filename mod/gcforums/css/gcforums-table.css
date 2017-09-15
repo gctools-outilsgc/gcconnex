@@ -19,12 +19,31 @@
 
 .forum-options {
     text-align: left;
-    
+    width: 15%;
+    float:right;
+    vertical-align: middle;
+    text-align: center;
 }
+
+.forum-options-edit {
+    text-align: left;
+    width: 15%;
+    float:right;
+}
+
+/*
+.forum-options {
+    padding: 5px 5px 5px 15px;
+    vertical-align: middle;
+    float: right;
+}
+*/
 
 .forum-information {
     float: right;
     width: 15%;
+    vertical-align: middle;
+    text-align: center;
 }
 
 .category-description {
@@ -37,12 +56,13 @@
 
 .forum-main-box {
     border: 1px solid #dddddd;
+    background: #e6e6e6;
     vertical-align: middle;
     width:100%;
 }
 
 .forum-header {
-    border: 1px solid #dddddd;
+    border: 1px solid #e6e6e6;
     padding: 5px 5px 5px 15px;
     background-color: #e6e6e6;
     vertical-align: middle;
@@ -51,21 +71,29 @@
 
 }
 
+.forum-info-header {
+    border: 1px solid #e6e6e6;
+    padding: 5px 5px 5px 15px;
+    background-color: #ffffff;
+    vertical-align: middle;
+    overflow: auto;
+    vertical-align: middle;
+
+}
+
 .forum-description {
     vertical-align: middle;
     float: left;
-    width:60%;
+    width:40%;
     padding: 5px 5px 5px 15px;
 }
 
-.forum-options {
+.forum-description-text {
     padding: 5px 5px 5px 15px;
-    vertical-align: middle;
-    float: right;
 }
 
 
-
+///
 
 .gcforums-table {
     border-collapse: collapse;

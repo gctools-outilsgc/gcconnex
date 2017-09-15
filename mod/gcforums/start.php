@@ -106,7 +106,10 @@ function render_edit_forms($entity_guid) {
 }
 
 
+
+
 function render_forums($forum_guid) {
+
 	elgg_load_css('gcforums-css');
 	$entity = get_entity($forum_guid);
 
@@ -116,15 +119,19 @@ function render_forums($forum_guid) {
 	if ($entity instanceof ElggGroup) {
 		elgg_set_page_owner_guid($entity->getGUID());
 
+
 		elgg_push_breadcrumb($entity->name, $entity->getURL());
 		elgg_push_breadcrumb('Group Forums');
+
 	} else {
 
 		$breadcrumb_array = array();
 		$breadcrumb_array = assemble_nested_forums(array(), $forum_guid, $forum_guid);
 		$breadcrumb_array = array_reverse($breadcrumb_array);
+
 		foreach ($breadcrumb_array as $trail_id => $trail) {
-			elgg_push_breadcrumb($trail);
+			error_log(">>> trail: {$trail_id} /// {$trail[0]} // {$trail[1]}");
+			elgg_push_breadcrumb($trail[1], "{$base_url}gcforums/view/{$trail[0]}");
 		}
 	}
 
@@ -143,7 +150,7 @@ function render_forums($forum_guid) {
 		));
 
 
-
+		/// category
 		foreach ($categories as $category) {
 			$options = gcforums_category_edit_options($category->guid);
 			$content .= "
@@ -169,117 +176,39 @@ function render_forums($forum_guid) {
 			}
 
 			$content .= "<div class='forum-main-box'>
-							<div class='forum-header'>Forum
-
-							<div class='forum-information'>abc</div>
-							<div class='forum-information'>abc</div>
-							<div class='forum-information'>abc</div>
-							<div class='forum-information'>abc</div>
-
-							</div>
-
-
-	
-
-
-							";
+							<div style='background: #e6e6e6; width:100%;' >
+								<div class='forum-header'>Forum
+									<div class='forum-information'>options</div>
+									<div class='forum-information'>total topics</div>
+									<div class='forum-information'>total posts</div>
+									<div class='forum-information'>recently posted</div>
+								</div>";
 
 
 			/// forums
 			foreach ($forums as $forum) {
-				$hyperlink = "<a href='{$base_url}gcforums/view/{$forum->getGUID()}'>{$forum->title}</a>";
-				$options = gcforums_forums_edit_options( $forum->getGUID(), $forum->getGUID());
+				$total_topics = get_total_topics($forum->guid);
+				$total_posts = get_total_posts($forum->guid);
+				$recent_post = get_recent_post($forum->guid);
+				$options = gcforums_forums_edit_options($forum->getGUID(), $forum->getGUID());
 
-				$content .= "<div style='overflow:hidden; border: 1px solid #dddddd;'>
-								<div class='forum-description'>{$forum->title} ({$forum->guid})</div>
-								<div class='forum-options'>{$options}</div>
+				$hyperlink = "<a href='{$base_url}gcforums/view/{$forum->getGUID()}'><strong>{$forum->title}</strong></a>";
+
+				$content .= "<div class='forum-info-header'>
+								<div class='forum-description'>{$hyperlink} (guid:{$forum->guid})
+									<div class='forum-description-text'>{$forum->description}</div>
+								</div>
+								<div class='forum-options-edit'>{$options}</div>
+								<div class='forum-options'>{$total_topics}</div>
+								<div class='forum-options'>{$total_posts}</div>
+								<div class='forum-options'>{$recent_post}</div>
 							</div>";
-
-
-				/*$content .= "	<tr class='gcforums-tr'>
-									<th class='gcforums-td-forums'>{$hyperlink}</th>
-									<th class='gcforums-td'>".get_total_topics($forum->guid)."</th>
-									<th class='gcforums-td'>".get_total_posts($forum->guid)."</th>
-									<th class='gcforums-td'>".get_recent_post($forum->guid)."</th>
-									<th class='gcforums-td'>".gcforums_forums_edit_options( $forum->getGUID(), $forum->getGUID())."</th>
-								</tr>";*/
-
 			}
-			$content .= "</div> </p>";
+			$content .= "	</div> 
+						</div> 
+					</p> <br/>";
 
 		}
-
-		
-
-
-$content .= "<br/>--------";
-
-
-
-
-
-
-
-
-		foreach ($categories as $category) {
-			$content .= "<p><div class='main-category'><h1>{$category->title} // {$category->getGUID()}</h1> </div>";
-			$content .= "<p><div class='category-description'><h1>{$category->title} // {$category->getGUID()}</h1> </div>";
-
-			$content .= "<table class='gcforums-table'>
-				<tr class='gcforums-tr'>
-					<th class='gcforums-th' width='100%'>".elgg_echo("Category")."</th>
-					<th class='gcforums-th'>".elgg_echo('gcforums:edit')."</th>
-				</tr>";
-
-			$options = gcforums_category_edit_options($category->guid);
-			$content .= "<tr class='category-space'> 
-							<td class='gcforums-th-category'> 
-								<h1>{$category->title} // {$category->getGUID()}</h1> 
-								<span class='forum-category-desc'>{$category->description}</span>
-							</td>
-							<td class='gcforums-th-category'> 
-								{$options} // {$category->getGUID()}
-							</td>
-						</tr>";
-
-			$forums = elgg_get_entities_from_relationship(array(
-				'relationship' => 'filed_in',
-				'relationship_guid' => $category->getGUID(),
-				'container_guid' => $entity->getGUID(),
-				'inverse_relationship' => true,
-				'limit' => false
-			));
-		
-
-			/// forums
-			foreach ($forums as $forum) {
-				$hyperlink = "<a href='http://192.168.1.18/gcconnex/gcforums/view/{$forum->getGUID()}'>{$forum->title}</a>";
-
-
-				$content .= "
-						<tr class='gcforums-tr'>
-							<th class='gcforums-th' width='60%'>".elgg_echo('gcforums:forum_title')."</th>
-							<th class='gcforums-th'>".elgg_echo('gcforums:topics')."</th>
-							<th class='gcforums-th'>".elgg_echo('gcforums:posts')."</th>
-							<th class='gcforums-th'>".elgg_echo('gcforums:latest_posts')."</th>
-							<th class='gcforums-th'>".elgg_echo('gcforums:edit')."</th>
-						</tr>
-						";
-				$content .= "	<tr class='gcforums-tr'>
-									<th class='gcforums-td-forums'>{$hyperlink}</th>
-									<th class='gcforums-td'>".get_total_topics($forum->guid)."</th>
-									<th class='gcforums-td'>".get_total_posts($forum->guid)."</th>
-									<th class='gcforums-td'>".get_recent_post($forum->guid)."</th>
-									<th class='gcforums-td'>".gcforums_forums_edit_options( $forum->getGUID(), $forum->getGUID())."</th>
-								</tr>";
-			}
-			$content .= "</table>";
-			$content .= "</p> ";
-		}
-
-		
-		
-
 
 	} else {
 
@@ -292,31 +221,37 @@ $content .= "<br/>--------";
 				'limit' => 0,
 			));
 
-		$content .= "<table class='gcforums-table'>
-							<tr class='gcforums-tr'>
-								<th class='gcforums-th' width='60%'>".elgg_echo('gcforums:forum_title')."</th>
-								<th class='gcforums-th'>".elgg_echo('gcforums:topics')."</th>
-								<th class='gcforums-th'>".elgg_echo('gcforums:posts')."</th>
-								<th class='gcforums-th'>".elgg_echo('gcforums:latest_posts')."</th>
-								<th class='gcforums-th'>".elgg_echo('gcforums:edit')."</th>
-							</tr>";
+		$content .= "<div class='forum-main-box'>
+						<div style='background: #e6e6e6; width:100%;' >
+							<div class='forum-header'>Forum
+								<div class='forum-information'>options</div>
+								<div class='forum-information'>total topics</div>
+								<div class='forum-information'>total posts</div>
+								<div class='forum-information'>recently posted</div>
+							</div>";
 
-		/// forums
 		foreach ($forums as $forum) {
-			$hyperlink = "<a href='http://192.168.1.18/gcconnex/gcforums/view/{$forum->getGUID()}'>{$forum->title}</a>";
+				$total_topics = get_total_topics($forum->guid);
+				$total_posts = get_total_posts($forum->guid);
+				$recent_post = get_recent_post($forum->guid);
+				$options = gcforums_forums_edit_options($forum->getGUID(), $forum->getGUID());
 
-			$content .= "
-							<tr class='gcforums-tr'>
-								<th class='gcforums-td-forums'>{$hyperlink}</th>
-								<th class='gcforums-td'>".get_total_topics($forum->guid)."</th>
-								<th class='gcforums-td'>".get_total_posts($forum->guid)."</th>
-								<th class='gcforums-td'>".get_recent_post($forum->guid)."</th>
-								<th class='gcforums-td'>"."000"."</th>
-							</tr>";
+				$hyperlink = "<a href='{$base_url}gcforums/view/{$forum->getGUID()}'><strong>{$forum->title}</strong></a>";
+
+				$content .= "<div class='forum-info-header'>
+								<div class='forum-description'>{$hyperlink} (guid:{$forum->guid})
+									<div class='forum-description-text'>{$forum->description}</div>
+								</div>
+								<div class='forum-options-edit'>{$options}</div>
+								<div class='forum-options'>{$total_topics}</div>
+								<div class='forum-options'>{$total_posts}</div>
+								<div class='forum-options'>{$recent_post}</div>
+							</div>";
 		}
-	}
-	$content .= "</table>";
-
+			$content .= "	</div> 
+						</div> 
+					</p> <br/>";
+	}		
 
 	$return['filter'] = '';
 	$return['title'] = "title of the content";
@@ -666,7 +601,7 @@ function assemble_nested_forums($breadcrumb, $forum_guid, $recurse_forum_guid) {
 			return $breadcrumb;			
 		}
 	} else {
-		$breadcrumb[$entity->getGUID()] = $entity->title;	
+		$breadcrumb[$entity->guid] = array($entity->guid, $entity->title);	
 		return assemble_nested_forums($breadcrumb, $forum_guid, $entity->getContainerGUID());
 	}
 }
@@ -852,15 +787,14 @@ $options = array();
 	$url = elgg_add_action_tokens_to_url(elgg_get_site_url()."action/gcforums/subscribe?guid={$object_guid}");
 	$options['subscription'] = "<a href='{$url}'>{$subscribe_text}</a>";
 	
-	$edit_options = "<div class='forum-options'>";
+	//$edit_options = "<div class='forum-options'>";
 	foreach ($options as $key => $option) {
 		error_log($key);
 		$edit_options .="<p>";
-		
 		$edit_options .= $option;
 		$edit_options .="</p>";
 	}
-	$edit_options .= "</div>";
+	//$edit_options .= "</div>";
 
 
 	return $edit_options;
