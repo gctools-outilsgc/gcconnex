@@ -47,8 +47,6 @@ function cp_notifications_init() {
 	elgg_register_action('cp_notify/retrieve_messages', elgg_get_plugins_path().'cp_notifications/actions/ajax_usersettings/retrieve_messages.php'); 
 	elgg_register_action('cp_notify/retrieve_user_info', elgg_get_plugins_path().'cp_notifications/actions/ajax_settings/retrieve_user_info.php'); 
 
-
-
 	// send notifications when the action is sent out
 	elgg_register_event_handler('create','object','cp_create_notification',900);
 	elgg_register_event_handler('single_file_upload', 'object', 'cp_create_notification');
@@ -57,8 +55,6 @@ function cp_notifications_init() {
 
 	elgg_register_event_handler('create','annotation','cp_create_annotation_notification');
 	elgg_register_event_handler('create', 'membership_request', 'cp_membership_request');
-
-	//elgg_register_event_handler('publish', 'object', 'publish_blog_post_handler');
 
 	// we need to check if the mention plugin is installed and activated because it does notifications differently...
 	if (elgg_is_active_plugin('mentions')) {
@@ -127,11 +123,6 @@ function cp_notifications_init() {
 
 }
 
-
-function publish_blog_post_handler($event, $type, $object) {
-
-	elgg_trigger_event('create', 'object', $object);
-}
 
 /**
  * catches the minor save, determines whether to cancel or process the event handlers
@@ -919,12 +910,10 @@ function cp_create_annotation_notification($event, $type, $object) {
 			$site_template = elgg_view('cp_notifications/site_template', $message);
 			$recipient_user = get_user($to_recipient->guid);
 
-			if ($object->access_id == 1 || $object->access_id == 2 || $content_entity->getType() === 'group' || $action_type === 'post_likes') {
+			if (($object->access_id == 1 || $object->access_id == 2 || $content_entity->getType() === 'group' || $action_type === 'post_likes')  && 
+				(strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') !== 0)) {
 
-				if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') !== 0) {
-
-					messages_send($subject, $site_template, $to_recipient->guid, $site->guid, 0, true, false);
-				}
+				messages_send($subject, $site_template, $to_recipient->guid, $site->guid, 0, true, false);
 			}
 
 		}
