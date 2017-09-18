@@ -4,6 +4,8 @@ if(elgg_is_active_plugin('gc_streaming_content')){
   elgg_require_js("stream_dept_activity");
 }
 
+elgg_set_context('dept_activity');
+
 $title = elgg_echo('new:dept:activity:title');
 
 if(!isset(elgg_get_logged_in_user_entity()->DAconnections) || elgg_get_logged_in_user_entity()->DAconnections == ''){
@@ -17,6 +19,8 @@ if(!isset(elgg_get_logged_in_user_entity()->DAconnections) || elgg_get_logged_in
     'href' => elgg_add_action_tokens_to_url(elgg_get_site_url().'action/deptactivity/filter')
   ));
 }
+
+$tabs = elgg_view('dept_activity/tabs');
 
 $filter_form = '<a href="#" style="position:absolute; top:15px; right:10px;" title="'.elgg_echo('dept:activity:filter:title').'" class="dropdown  pull-right mrgn-rght-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-v fa-2x icon-unsel"><span class="wb-inv">'.elgg_echo('dept:activity:filter:title').'</span></i></a><ul style="top:45px; right: 0px;" class="dropdown-menu pull-right act-filter" aria-labelledby="dropdownMenu2"><li id="filter_form">'.$filter_link.'</li></ul>';
 
@@ -69,7 +73,7 @@ $sidebar = elgg_view_module('sidebar', elgg_echo('item:object:thewire'), $wire_p
 
 //put it all together
 $params = array(
-  'content' => $filter_form.'<div class="new-newsfeed-holder"><div class="newsfeed-posts-holder"></div></div>'.$activity,
+  'content' => $tabs.$filter_form.'<div class="new-newsfeed-holder"><div class="newsfeed-posts-holder"></div></div>'.$activity,
   'title' => $title,
   "sidebar" => $sidebar,
   'filter' => false
@@ -78,3 +82,5 @@ $params = array(
 $body = elgg_view_layout('content',  $params);
 
 echo elgg_view_page($title, $body);
+
+elgg_pop_context();

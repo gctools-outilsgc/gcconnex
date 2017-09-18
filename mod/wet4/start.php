@@ -229,16 +229,12 @@ function wet4_theme_init() {
 			elgg_register_ajax_view('ajax/deptactivity_check');
 			elgg_register_ajax_view('ajax/deptactivity_items');
 
-			$dept = elgg_get_logged_in_user_entity()->department;
-			$dept = explode("/", $dept);
-
 			elgg_register_page_handler('department', 'department_page_handler');
 
-			elgg_register_menu_item('site', array(
-					'name' => 'department-activity',
-					'text' => $dept[0],
-					'href' => 'department',
-			));
+			if(elgg_is_active_plugin('gc_newsfeed')){
+				elgg_extend_view('widgets/stream_newsfeed_index/content', 'dept_activity/tabs', 451);
+		    elgg_extend_view('widgets/newsfeed/content', 'dept_activity/tabs', 451);
+			}
 		}
 
 

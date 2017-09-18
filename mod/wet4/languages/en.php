@@ -185,6 +185,7 @@ return array(
     'dept:activity:do' => "Colleague connections will no longer display in your department’s activity feed.",
     'dept:activity:undo' => "Colleague connections will now display in your department’s activity feed.",
     'dept:activity:filter:title' => "Your department’s activity feed settings",
+    'dept:activity:groupsandcolleagues' => "Groups and colleagues",
 
     'wet:more'=>"More",
   	'breadcrum:home' => 'Home',
