@@ -33,7 +33,7 @@ if (!empty($group_guid) && !empty($body) && !empty($user_guids)) {
 				$message = array(
 					'cp_group' => $group,
 					'cp_group_subject' => $subject,
-					'cp_group_message' => "<p>{$body}</p> <p>{$group->getURL()}</p>",
+					'cp_group_message' => "<p>".get_input('description')."</p>",
 					'cp_group_mail_users' => $user_guids,
 					'cp_msg_type' => 'cp_group_mail',
 				);
