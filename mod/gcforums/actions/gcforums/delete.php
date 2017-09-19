@@ -3,6 +3,10 @@
 	$hjforum_guid = get_input('guid');
 	$hjforum_entity = get_entity($hjforum_guid);
 
+	$value = elgg_trigger_plugin_hook('gcforums/delete', 'object', array(), 'poop');
+
+	return false;
+
 	if ($hjforum_entity->canEdit()) {
 		if ($hjforum_entity->delete()) {
 			system_message(elgg_echo("Entity entitled '{$hjforum_entity->title}' has been deleted"));

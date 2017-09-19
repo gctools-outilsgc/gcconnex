@@ -32,7 +32,9 @@ function gcforums_init() {
 	));
 
 	elgg_register_admin_menu_item("administer", "debugging_forums", "administer_utilities");
+
 }
+
 
 function gcforums_owner_block_menu($hook,$type,$return,$params) {
 	$entity = elgg_extract('entity', $params);
@@ -98,7 +100,7 @@ function gcforums_page_handler($page) {
 
 function render_edit_forms($entity_guid) {
 	$entity = get_entity($entity_guid);
-	elgg_set_page_owner_guid(892);
+	elgg_set_page_owner_guid(334);
 	$vars['entity_guid'] = $entity_guid;
 
 	$content = elgg_view_form('gcforums/edit', array(), $vars);
@@ -142,18 +144,14 @@ function render_forum_topics($topic_guid) {
 		$content .= "
 		<div class='topic-owner-information-content'>
 			<div class='topic-information-options'>Access | Edit Delete Subscribe (guid: {$topic->getGUID()})</div>
-
 			<div class='topic-owner-icon'>{$owner_icon}</div>
 			<div class='topic-owner-information'><b>Name (username):</b> {$owner->name} ({$owner->username})</div>
 			<div class='topic-owner-information'><b>Email:</b> {$owner->email}</div>
 			<div class='topic-owner-information'><b>Posting:</b> {$timestamp}</div>
 		</div>";
 
-
 		$content .= "<div class='topic-content'>{$topic->description}</div>";
-
 		$content .= "<h3>Comments</h3>";
-
 		$comments = elgg_get_entities(array(
 			'types' => 'object',
 			'container_guids' => $topic->guid,
@@ -174,7 +172,7 @@ function render_forum_topics($topic_guid) {
 		}
 		$content .= "</div>";
 
-		$vars['group_guid'] = 892;
+		$vars['group_guid'] = 334;
 		$vars['topic_guid'] = $topic->guid;
 		$vars['topic_access'] = $topic->access_id;
 		$vars['subtype'] = 'hjforumpost';
@@ -193,9 +191,8 @@ function render_forum_topics($topic_guid) {
 
 function assemble_forum_breadcrumb($entity) {
 	$forum_guid = $entity->guid;
-		if ($entity instanceof ElggGroup) {
+	if ($entity instanceof ElggGroup) {
 		elgg_set_page_owner_guid($entity->getGUID());
-
 		elgg_push_breadcrumb($entity->name, $entity->getURL());
 		elgg_push_breadcrumb('Group Forums');
 
@@ -206,8 +203,7 @@ function assemble_forum_breadcrumb($entity) {
 		$breadcrumb_array = array_reverse($breadcrumb_array);
 
 		foreach ($breadcrumb_array as $trail_id => $trail) {
-			$hyperlink = "{$base_url}gcforums/view/{$trail[0]}";
-			elgg_push_breadcrumb($trail[1], $hyperlink);
+			elgg_push_breadcrumb($trail[1], $trail[2]);
 		}
 	}
 }
@@ -223,22 +219,13 @@ function render_forums($forum_guid) {
 	assemble_forum_breadcrumb($entity);
 
 	// forums will always remain as content within a group
-	elgg_set_page_owner_guid(892);
+	elgg_set_page_owner_guid(334);
 	$return = array();
 
 
-	$topics = elgg_get_entities_from_relationship(array(
-			'relationship' => 'descendant',
-			'subtypes' => array('hjforumtopic'),
-			'relationship_guid' => $forum_guid,
-			'inverse_relationship' => true,
-			'types' => array('object'),
-			//'metadata_names' => array('sticky'),
-			//'metadata_values' => array(''),
-			//'metadata_values' => null,
-			//'metadata_values' => array(0),
-			'limit' => 0,
-			));
+	$query = "SELECT * FROM elggentities WHERE container_guid = {$forum_guid} AND subtype = 19";
+
+	$topics = get_data($query);
 
 
 	$content .= "
@@ -254,7 +241,8 @@ function render_forums($forum_guid) {
 
 	/// topic
 	foreach ($topics as $topic) {
-		$hyperlink = "<a href='{$base_url}gcforums/topic/view/{$topic->getGUID()}'><strong>{$topic->title}</strong></a>";
+		$topic = get_entity($topic->guid);
+		$hyperlink = "<a href='{$base_url}gcforums/topic/view/{$topic->guid}'><strong>{$topic->title}</strong></a>";
 
 		$replies = get_data("SELECT e.guid, ue.username, e.time_created
 					FROM {$dbprefix}entities e, {$dbprefix}users_entity ue
@@ -262,9 +250,9 @@ function render_forums($forum_guid) {
 
 		$total_replies = count($replies);
 		$topic_starter = get_user($topic->owner_guid)->username;
-		$time_posted = $replies[$num_replies-1]->time_created;
+		$time_posted = $replies[count($num_replies) - 1]->time_created;
 
-		$time_posted = date('Y-m-d H:i:s',$time_posted);
+		$time_posted = date('Y-m-d H:i:s', $time_posted);
 		$options = gcforums_forums_edit_options($topic->getGUID(), $topic->getGUID());
 
 		$last_post = "{$replies[$num_replies-1]->username} / {$time_posted}";
@@ -529,10 +517,13 @@ $options = array();
 		}
 
 		// delete link
-		elgg_view('output/url', array('is_action' => TRUE));
-		elgg_view('input/securitytoken');
-		$url = elgg_add_action_tokens_to_url(elgg_get_site_url()."action/gcforums/delete?guid={$object_guid}");
-		$options['delete'] = "<a href='{$url}'>Delete</a>";
+
+		$delete = "<button type='button' class='btn btn-link'>Delete</button>";
+
+		//elgg_view('output/url', array('is_action' => TRUE));
+		//elgg_view('input/securitytoken');
+		//$url = elgg_add_action_tokens_to_url(elgg_get_site_url()."action/gcforums/delete?guid={$object_guid}");
+		//$options['delete'] = "<a href='{$url}'>Delete</a>";
 	}
 
 	// subscription functionality... users will get notified if any action occurs		
@@ -566,6 +557,11 @@ $options = array();
 		$edit_options .="</p>";
 	}
 	//$edit_options .= "</div>";
+
+
+echo  elgg_view('gcforums/alerts');
+$edit_options  = $delete . ' | ' .elgg_view('alerts/delete') . ' ! ';
+
 
 
 	return $edit_options;
