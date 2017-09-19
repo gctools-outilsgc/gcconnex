@@ -137,14 +137,8 @@ echo '<h2 class="wb-invisible">'.elgg_echo('gprofile:contentMenu').'</h2>';
 echo elgg_view_menu('owner_block', array('entity' => $owner, 'class' => 'nav nav-tabs tabMenuGroup clearfix ' .$group_only_class, 'sort_by' => 'priority',));
 echo '</nav>';
 //}
-//condition for page
-//see what page we are on for proper js
-if(elgg_get_context() == 'group_profile'){
-    $num = 1;
-} else {
-    $num = 2;
-}
 
+$num = 1;
 //display more items on user profile page
 if(elgg_get_context() == 'profile'){
     $itemNum = 6;
@@ -160,7 +154,7 @@ if(elgg_get_context() == 'profile'){
     //place additional group tools in dropdown menu
     $(document).ready( function(){
 
-    <?php if(elgg_get_context() == 'group_profile' || elgg_get_context() == 'profile'){ ?>
+    <?php if(elgg_get_context() == 'profile'){ ?>
         //add tab data to li's
         $('.tabMenuGroup .elgg-menu-content').attr('data-toggle', 'tab');
         //add collapse to search
