@@ -1011,22 +1011,18 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
             }
 		// delete link
 
-
-
-		$options = array(
-			'name' => 'delete',
-			'text' => '<i class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['delete'].'</span></i>',
-			'title' => elgg_echo('delete:this') . ' ' . $entContext,
-			'href' => "action/$handler/delete?guid={$entity->getGUID()}",
-			'confirm' => elgg_echo('deleteconfirm'),
-			'priority' => 300,
-		);
-		$return[] = \ElggMenuItem::factory($options);
-
+            if (elgg_is_logged_in()){
+        		$options = array(
+        			'name' => 'delete',
+        			'text' => '<i class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['delete'].'</span></i>',
+        			'title' => elgg_echo('delete:this') . ' ' . $entContext,
+        			'href' => "action/$handler/delete?guid={$entity->getGUID()}",
+        			'confirm' => elgg_echo('deleteconfirm'),
+        			'priority' => 300,
+        		);
+        		$return[] = \ElggMenuItem::factory($options);
+            }
         }
-
-
-
 	}
 
 
