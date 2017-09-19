@@ -14,6 +14,8 @@
 	$user = elgg_get_logged_in_user_entity();
 	$lang = get_current_language();
 
+	error_log('call autocomplete page');
+
 	if(!empty($q)){
 		$db_prefix = elgg_get_config('dbprefix');
 		$params['type'] = 'group';
