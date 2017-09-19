@@ -279,9 +279,8 @@ ___HTML;
 	$gcf_forward_url_input
 	$gcf_owner_input
 
-<div class="mrgn-tp-md">
-	$gcf_submit_button
-</div>
+<br/>
+<div class="mrgn-tp-md"> $gcf_submit_button </div>
 
 ___HTML;
 

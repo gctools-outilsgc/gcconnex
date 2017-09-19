@@ -17,7 +17,7 @@
     margin: 0;*/
 }
 
-.forum-options {
+.forum-options, .topic-options {
     text-align: left;
     width: 15%;
     float:right;
@@ -25,7 +25,7 @@
     text-align: center;
 }
 
-.forum-options-edit {
+.forum-options-edit, .topic-options-edit {
     text-align: left;
     width: 15%;
     float:right;
@@ -39,7 +39,7 @@
 }
 */
 
-.forum-information {
+.forum-information, .topic-information {
     float: right;
     width: 15%;
     vertical-align: middle;
@@ -54,14 +54,14 @@
 } 
 
 
-.forum-main-box {
+.forum-main-box, .topic-main-box {
     border: 1px solid #dddddd;
     background: #e6e6e6;
     vertical-align: middle;
     width:100%;
 }
 
-.forum-header {
+.forum-header, .topic-header {
     border: 1px solid #e6e6e6;
     padding: 5px 5px 5px 15px;
     background-color: #e6e6e6;
@@ -71,7 +71,7 @@
 
 }
 
-.forum-info-header {
+.forum-info-header, .topic-info-header {
     border: 1px solid #e6e6e6;
     padding: 5px 5px 5px 15px;
     background-color: #ffffff;
@@ -81,7 +81,7 @@
 
 }
 
-.forum-description {
+.forum-description, .topic-description {
     vertical-align: middle;
     float: left;
     width:40%;
@@ -92,6 +92,74 @@
     padding: 5px 5px 5px 15px;
 }
 
+
+.topic-content {
+    padding: 15px 15px 15px 15px;
+    background-color: #ffffff;
+}
+
+.comment-owner-information-content {
+    padding: 5px 5px 5px 5px;
+    border-bottom: 1px solid #dddddd;
+    width: 100%;
+    display: inline-block;
+    margin: 0;
+}
+
+.topic-owner-information-content {
+    padding: 15px 15px 15px 15px;
+    border-bottom: 1px solid #dddddd;
+    width: 100%;
+    display: inline-block;
+    margin: 0;
+}
+
+.topic-owner-information, .comment-owner-information {
+    float: right;
+    overflow: hidden;
+    width: 70%;
+}
+
+.topic-owner-icon, .comment-owner-icon {
+    display: inline-block;
+    float: left;
+    overflow: hidden;
+    width: 30%;
+}
+
+.topic-information-options, .topic-comment-options {
+    display: inline-block;
+    float: right;
+    overflow: hidden;
+    width: 30%;
+}
+
+.topic-main-comments {
+    padding: 15px 15px 15px 15px;
+}
+
+.topic-comments {
+    padding: 10px 10px 10px 10px;
+    border: 1px solid #dddddd;
+}
+
+.topic-comment-content {
+    padding: 15px 15px 15px 15px;
+    background-color: #ffffff;
+}
+
+
+.topic-comment-options {
+
+}
+
+.forum-empty {
+    border: 1px solid #e6e6e6;
+    padding: 5px 5px 5px 15px;
+    background-color: #ffffff;
+    vertical-align: middle;
+    overflow: auto; 
+}
 
 ///
 
