@@ -68,17 +68,17 @@ if ($num_replies != 0) {
 	}
 
 	$poster = $last_reply->getOwnerEntity();
-    
-    
+
+
     //added to get link of person who replied
     $poster_reply_link = elgg_view('output/url', array(
         'href' => $poster->getURL(),
         'text' => $poster->name,
         'is_trusted' => true,
     ));
-    
+
 	$reply_time = elgg_view_friendly_time($last_reply->time_created);
-	$reply_text = elgg_echo('groups:updated', array($poster_reply_link, $reply_time));
+	$reply_text = elgg_echo('discussion:updated', array($poster_reply_link, $reply_time));
 
 
 	$replies_link = elgg_view('output/url', array(
@@ -88,7 +88,7 @@ if ($num_replies != 0) {
 	));
 }
 
-// We are showing the meta data and the ability to share and like from the widget view 
+// We are showing the meta data and the ability to share and like from the widget view
 if (elgg_in_context('widgets')) {
 	$metadata = elgg_view_menu('entity', array(
 		'entity' => $vars['entity'],
@@ -118,15 +118,15 @@ if( $description_json->en && $description_json->fr ){
 	echo'<div id="change_language" class="change_language">';
 	if (get_current_language() == 'fr'){
 
-		?>			
+		?>
 
 		<span id="indicator_language_en" onclick="change_en('.content_desc');"><span id="en_content" class="testClass hidden" ><?php echo $description_json->en;?></span><span id="fr_content" class="testClass hidden" ><?php echo $description_json->fr;?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
 		<?php
 	}else{
-				
-		?>			
+
+		?>
 		<span id="indicator_language_fr" onclick="change_fr('.content_desc');"><span id="en_content" class="testClass hidden" ><?php echo $description_json->en;?></span><span id="fr_content" class="testClass hidden" ><?php echo $description_json->fr;?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
-		<?php	
+		<?php
 	}
 	echo'</div>';
 }
@@ -147,7 +147,7 @@ if( $description_json->en && $description_json->fr ){
 		'value' => $description,
 		'class' => 'clearfix mrgn-lft-sm mrgn-rght-sm mrgn-tp-md content_desc',
 	));
-    
+
     $repliesFoot = '<div class="col-xs-12 text-right">' . $replies_link . '</div>';
 
 	echo <<<HTML
@@ -164,7 +164,7 @@ HTML;
 
 	// identify available content
 /*	if(($topic->description2) && ($topic->description)){
-			
+
 		echo'<span class="col-md-1 col-md-offset-11"><i class="fa fa-language fa-lg mrgn-rght-sm"></i>' . '<span class="wb-inv">Content available in both language</span></span>';
 	}*/
 

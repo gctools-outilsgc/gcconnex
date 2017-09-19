@@ -22,7 +22,7 @@ if ($container instanceof ElggGroup) {
 	$owner_url = "discussion/owner/$container->guid";
 }
 
-elgg_push_breadcrumb($container->getDisplayName(), $owner_url);
+elgg_push_breadcrumb(gc_explode_translation($container->getDisplayName(), get_current_language()), $owner_url);
 elgg_push_breadcrumb($topic->title);
 
 $params = array(

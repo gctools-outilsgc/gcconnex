@@ -76,7 +76,7 @@ if (!elgg_in_context('widgets')) {
 		'entity' => $vars['entity'],
 		'handler' => 'discussion',
 		'sort_by' => 'priority',
-		'class' => 'elgg-menu-hz',
+		'class' => 'elgg-menu-hz list-inline',
 	));
 }
 
@@ -118,5 +118,5 @@ HTML;
 	);
 	$params = $params + $vars;
 	echo elgg_view('object/elements/summary', $params);
-	
+
 }

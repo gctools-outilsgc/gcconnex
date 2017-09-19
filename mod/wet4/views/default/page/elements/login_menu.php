@@ -210,7 +210,7 @@ $(document).ready(function () {
         $('#session').removeClass('active');
     });
 
-$('#signin-link').live('keydown', function(e) {
+$('#signin-link').on('keydown', function(e) {
     if (keyCode == 13) {
         setTimeout(function(){$('#username').focus();},0);
     }

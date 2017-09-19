@@ -33,7 +33,7 @@ $reply_link = elgg_view('output/url', array(
 	'is_trusted' => true,
 ));
 
-$summary = elgg_echo('river:reply:object:groupforumtopic', array($subject_link, $target_link));
+$summary = elgg_echo('river:reply:object:discussion', array($subject_link, $target_link));
 
 echo elgg_view('river/elements/layout', array(
 	'item' => $item,
