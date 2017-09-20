@@ -58,8 +58,13 @@ foreach($tags as $tag) {
 	if (is_string($tag) && strlen($tag) > 0) {
 		//$value_text = $tag;
         //Adding GSA query to tags
+        if(get_current_language() == 'en'){
+            $lang_string ='eng';
+        }else{
+           $lang_string = 'fra';
+        }
         $query = '?q='.$tag.'&a=s&s=3&chk4=on';
-        $url = "http://intranet.canada.ca/search-recherche/query-recherche-" .get_current_language(). ".aspx" .$query;
+        $url = "http://intranet.canada.ca/search-recherche/query-recherche-" .$lang_string. ".aspx" .$query;
 		$list_items .= "<li class=\"$item_class\">";
 		$list_items .= '<a href="'.$url.'">'.$tag.'</a>';
 		$list_items .= '</li>';
