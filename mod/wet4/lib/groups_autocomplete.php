@@ -14,8 +14,6 @@
 	$user = elgg_get_logged_in_user_entity();
 	$lang = get_current_language();
 
-	error_log('call autocomplete page');
-
 	if(!empty($q)){
 		$db_prefix = elgg_get_config('dbprefix');
 		$params['type'] = 'group';
@@ -28,6 +26,7 @@
 		$join = "JOIN {$db_prefix}groups_entity ge ON e.guid = ge.guid";
 		$params['joins'] = array($join);
 		$fields = array('name', 'description');
+		$where = "ge.name LIKE '%$q%'";
 		$params['wheres'] = array($where);
 		// override subtype -- All groups should be returned regardless of subtype.
 		$params['subtype'] = ELGG_ENTITIES_ANY_VALUE;
