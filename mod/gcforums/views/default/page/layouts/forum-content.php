@@ -18,9 +18,6 @@
 $context = elgg_extract('context', $vars, elgg_get_context());
 
 
-error_log(">>>>>>>>> content: {$vars['class']}");
-
-
 $vars['title'] = elgg_extract('title', $vars, '');
 if (!$vars['title'] && $vars['title'] !== false) {
 	$vars['title'] = elgg_echo($context);

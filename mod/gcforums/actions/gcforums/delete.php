@@ -5,6 +5,8 @@
 
 	$value = elgg_trigger_plugin_hook('gcforums/delete', 'object', array(), 'poop');
 
+	system_message(elgg_echo('gcforums:delete:success', array($hjforum_entity->title)));
+
 	return false;
 
 	if ($hjforum_entity->canEdit()) {

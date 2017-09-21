@@ -6,6 +6,28 @@ $gcf_subtype = get_input('gcf_subtype');
 $gcf_group = get_input('gcf_group');
 
 
+
+
+
+/*
+ * GCFORUMS
+ *
+ *
+ */
+
+$dbprefix = elgg_get_config('dbprefix');
+
+$entity_guid = get_input('entity_guid');
+$entity = get_entity($entity_guid);
+
+/// generic information
+$title = get_input('txtTitle');
+$description = get_input('txtDescription');
+$access = get_input('ddAccess');
+
+
+
+
 switch ($gcf_subtype) {
 	case 'hjforumcategory':
 

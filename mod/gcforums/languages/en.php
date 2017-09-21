@@ -11,6 +11,11 @@ $english = array(
 	'gcforums:edit:new_forum:heading' => "New %s",
 	'gcforums:edit:edit_forum:heading' => "Edit %s",
 
+	'gcforums:delete:success' => "'%s' has been deleted successfully",
+
+	'gcforums:translate:subscribe' => "Subscribe",
+	'gcforums:translate:unsubscribe' => "Unsubscribe",
+
 	'gcforums:translate:hjforumcategory' => "Category",
 	'gcforums:translate:hjforum' => "Forum",
 	'gcforums:translate:hjforumtopic' => "Topic",
@@ -28,7 +33,7 @@ $english = array(
 
 	"gcforums:translate:topic_starter" => "Topic Starter",
 	"gcforums:translate:replies" => "Replies",
-	"gcforums:translate:last_posted" => "Last Posted",
+	"gcforums:translate:last_posted" => "Last post",
 
 
 	"gcforums:translate:total_topics" => "Total Topics",
