@@ -1,0 +1,29 @@
+Changelog
+=========
+
+1.9.2
+-----
+
+- Tested to make sure that it works on Elgg 2.0 (that means it should also work on any future Elgg 2.X version),
+- composer.json added.
+
+1.9.1
+-----
+
+ - Fix for the autosubscription to work also in case of restricted group or for groups with restricted visibility (anything else than "public").
+
+1.9.0
+-----
+
+ - Upgraded for Elgg 1.9,
+ - German translation added.
+
+1.8.0
+-----
+
+ - Upgraded for Elgg 1.8 (by iionly)
+
+1.0
+---
+
+ - Initial release by RONNEL Jérémy (http://www.elbee.fr/)

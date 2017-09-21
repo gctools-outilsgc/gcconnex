@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+	<name>GC - Mobile API</name>
+	<author>Mark Wooff</author>
+	<version>1.0</version>
+	<description>Exposes API endpoints for use with Mobile app</description>
+	<website>http://www.canada.ca</website>
+	<copyright>Her Majesty the Queen in Right of Canada, 2017</copyright>
+	<license>GNU General Public License version 2</license>
+	<requires>
+		<type>elgg_release</type>
+		<version>1.8</version>
+	</requires>
+	<requires>
+    	<type>plugin</type>
+    	<name>web_services</name>
+  	</requires>
+</plugin_manifest>

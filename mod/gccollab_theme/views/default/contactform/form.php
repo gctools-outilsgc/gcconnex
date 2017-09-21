@@ -76,19 +76,6 @@ $email = elgg_get_plugin_setting('email','contactform');
             ?>
             </div>
 
-            <!-- department -->
-            <div class='form-group'>
-                <label for='depart' class="required"><span class="field-name"><?php echo elgg_echo('contactform:department'); ?></span></label>
-            <?php
-                echo elgg_view('input/text', array(
-                    'name' => 'depart',
-                    'id' => 'depart',
-                    'value' => $user_department,
-                    'required' => true
-                ));
-            ?>
-            </div>
-
             <!-- category -->
             <div class='form-group'>
                 <label for='reason' class="required"><span class="field-name"><?php echo elgg_echo('contactform:select'); ?></span></label>
@@ -127,13 +114,6 @@ $email = elgg_get_plugin_setting('email','contactform');
                     'id' => 'message',
                     'required' => true
                 ));
-            ?>
-            </div>
-
-            <!-- captcha -->
-            <div class='form-group'>
-            <?php
-                echo elgg_view('input/recaptcha', $vars);
             ?>
             </div>
 

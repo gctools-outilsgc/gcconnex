@@ -5,7 +5,7 @@
 	<version>1.0.0</version>
 	<category>GC Custom</category>
 	<blurb>GCcollab Registration Elgg plugin</blurb>
-	<description>Usernames generated from display name</description>
+	<description>Customized registration module for GCcollab.</description>
 	<website>http://www.canada.ca/</website>
 	<license>GNU General Public License version 2</license>
 	<requires>

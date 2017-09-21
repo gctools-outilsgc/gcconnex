@@ -90,6 +90,16 @@ echo elgg_view('input/checkbox', array(
 ));
 echo ' ' . elgg_echo('phpmailer:ssl') . '<br/>';
 
+echo elgg_echo('phpmailer:protocol') . ':';
+echo elgg_view('input/radio', array(
+	'name' => 'params[ep_phpmailer_protocol]',
+	'value' => $vars['entity']->ep_phpmailer_protocol,
+	'options' => array(
+		'SSL' => 'ssl',
+		'TLS' => 'tls'
+    )
+));
+
 echo elgg_echo('phpmailer:port') . ':';
 echo elgg_view('input/text', array(
 	'name' => 'params[ep_phpmailer_port]',
@@ -111,6 +121,56 @@ echo elgg_view('input/checkbox', array(
 ));
 echo ' ' . elgg_echo('phpmailer:nonstd_mta');
 echo '</div>';
+
+echo '<hr style="margin: 25px 0;" />';
+
+// add bcc: field to all emails
+echo '<div>';
+$checked = $vars['entity']->phpmailer_bcc == 'enabled' ? 'checked' : false;
+echo elgg_view('input/checkbox', array(
+	'name' => 'params[phpmailer_bcc]',
+	'value' => 'enabled',
+	'checked' => $checked,
+	'default' => 'disabled',
+));
+echo ' ' . elgg_echo('phpmailer:bcc') . '</div>';
+
+echo '<fieldset class="elgg-border-plain mbm pas">';
+echo '<div>';
+
+echo elgg_echo('phpmailer:bcc_emails') . ':';
+echo elgg_view('input/text', array(
+	'name' => 'params[phpmailer_bcc_emails]',
+	'value' => $vars['entity']->phpmailer_bcc_emails,
+	'class' => 'phpmailer-smtp phpmailer-ssl elgg-input-natural',
+));
+echo '</div>';
+echo '</fieldset>';
+
+echo '<hr style="margin: 25px 0;" />';
+
+// override to: field for testing
+echo '<div>';
+$checked = $vars['entity']->phpmailer_testing == 'enabled' ? 'checked' : false;
+echo elgg_view('input/checkbox', array(
+	'name' => 'params[phpmailer_testing]',
+	'value' => 'enabled',
+	'checked' => $checked,
+	'default' => 'disabled',
+));
+echo ' ' . elgg_echo('phpmailer:testing') . '</div>';
+
+echo '<fieldset class="elgg-border-plain mbm pas">';
+echo '<div>';
+
+echo elgg_echo('phpmailer:testing_email') . ':';
+echo elgg_view('input/text', array(
+	'name' => 'params[phpmailer_testing_email]',
+	'value' => $vars['entity']->phpmailer_testing_email,
+	'class' => 'phpmailer-smtp phpmailer-ssl elgg-input-natural',
+));
+echo '</div>';
+echo '</fieldset>';
 
 ?>
 

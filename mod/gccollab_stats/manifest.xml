@@ -5,11 +5,11 @@
 	<version>1.0.0</version>
 	<category>GC Custom</category>
 	<description>Displays stats of GCcollab users</description>
-	<website>http://www.elgg.org/</website>
+	<website>http://www.canada.ca/</website>
 	<copyright>See COPYRIGHT.txt</copyright>
 	<license>GNU General Public License version 2</license>
 	<requires>
 		<type>elgg_release</type>
-		<version>1.8.16</version>
+		<version>1.8</version>
 	</requires>
 </plugin_manifest>

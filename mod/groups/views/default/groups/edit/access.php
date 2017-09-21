@@ -16,8 +16,8 @@ $owner_guid = elgg_extract("owner_guid", $vars);
 $content_access_mode = elgg_extract("content_access_mode", $vars);
 
 ?>
-<div>
-	<label for="groups-membership"><?php echo elgg_echo("groups:membership"); ?></label><br />
+<div class="form-group">
+	<label for="groups-membership"><?php echo elgg_echo("groups:membership"); ?></label>
 	<?php echo elgg_view("input/select", array(
 		"name" => "membership",
 		"id" => "groups-membership",
@@ -31,8 +31,8 @@ $content_access_mode = elgg_extract("content_access_mode", $vars);
 </div>
 
 <?php if (elgg_get_plugin_setting("hidden_groups", "groups") == "yes"): ?>
-	<div>
-		<label for="groups-vis"><?php echo elgg_echo("groups:visibility"); ?></label><br />
+	<div class="form-group">
+		<label for="groups-vis"><?php echo elgg_echo("groups:visibility"); ?></label>
 		<?php
 		$visibility_options =  array(
 			ACCESS_PRIVATE => elgg_echo("groups:access:group"),
@@ -76,8 +76,8 @@ if ($entity) {
 	}
 }
 ?>
-<div>
-	<label for="groups-content-access-mode"><?php echo elgg_echo("groups:content_access_mode"); ?></label><br />
+<div class="form-group">
+	<label for="groups-content-access-mode"><?php echo elgg_echo("groups:content_access_mode"); ?></label>
 	<?php
 		echo elgg_view("input/select", $access_mode_params);
 
@@ -110,8 +110,8 @@ if ($entity && ($owner_guid == elgg_get_logged_in_user_guid() || elgg_is_admin_l
 	}
 	?>
 
-	<div>
-		<label for="groups-owner-guid"><?php echo elgg_echo("groups:owner"); ?></label><br />
+	<div class="form-group">
+		<label for="groups-owner-guid"><?php echo elgg_echo("groups:owner"); ?></label>
 		<?php
 			echo elgg_view("input/select", array(
 				"name" => "owner_guid",

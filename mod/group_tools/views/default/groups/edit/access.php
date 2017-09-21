@@ -21,8 +21,8 @@ $content_access_mode = elgg_extract("content_access_mode", $vars);
 $default_access = elgg_extract("group_default_access", $vars, ACCESS_DEFAULT);
 
 ?>
-<div>
-	<label for="groups-membership"><?php echo elgg_echo("groups:membership"); ?></label><br />
+<div class="form-group">
+	<label for="groups-membership"><?php echo elgg_echo("groups:membership"); ?></label>
 	<?php echo elgg_view("input/select", array(
 		"name" => "membership",
 		"id" => "groups-membership",
@@ -36,8 +36,8 @@ $default_access = elgg_extract("group_default_access", $vars, ACCESS_DEFAULT);
 </div>
 
 <?php if (elgg_get_plugin_setting("hidden_groups", "groups") == "yes") { ?>
-	<div>
-		<label for="groups-vis"><?php echo elgg_echo("groups:visibility"); ?></label><br />
+	<div class="form-group">
+		<label for="groups-vis"><?php echo elgg_echo("groups:visibility"); ?></label>
 		<?php
 		$vis_options = array(
 			ACCESS_PRIVATE => elgg_echo("groups:access:group"),
@@ -80,8 +80,8 @@ if ($entity) {
 	}
 }
 ?>
-<div>
-	<label for="groups-content-access-mode"><?php echo elgg_echo("groups:content_access_mode"); ?></label><br />
+<div class="form-group">
+	<label for="groups-content-access-mode"><?php echo elgg_echo("groups:content_access_mode"); ?></label>
 	<?php
 		echo elgg_view("input/select", $access_mode_params);
 
@@ -104,8 +104,8 @@ if ($entity && ($default_access === ACCESS_DEFAULT)) {
 }
 
 ?>
-<div>
-	<label for="groups-default-access"><?php echo elgg_echo("group_tools:default_access:title"); ?></label><br />
+<div class="form-group">
+	<label for="groups-default-access"><?php echo elgg_echo("group_tools:default_access:title"); ?></label>
 	<?php
 		// make sure the full list can be shown
 		$ga = false;

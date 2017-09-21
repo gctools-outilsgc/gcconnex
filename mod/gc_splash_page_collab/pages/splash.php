@@ -8,14 +8,20 @@ $jsLocation = $site_url . "mod/wet4/views/default/js/wet-boew.js";
 $termsLink = $site_url .'terms';
 $frenchLink = $site_url .'login';
 $toggle_lang = $site_url .'mod/toggle_language/action/toggle_language/toggle';
-$CONFIG->splashLanguage ="false";
 $gccollab_text = elgg_echo('wet:login_welcome');
+
+if( _elgg_services()->session->get('language') == 'fr'){
+    $graphic_lang = 'fr';
+} else {
+    $graphic_lang = 'en';
+}
+
 //Create The body of the splash
 //Add the toggle language JS to the page to set lang
 //Page forwards to login with users selected language
 $body .= <<<__BODY
 <div class="splash">
-<div id="bg">
+<div id="bg" style="background: url($site_url/mod/gc_splash_page_collab/graphics/Peyto_Lake-Banff_NP-Canada.jpg) no-repeat center center fixed; background-size: cover;">
 </div>
 <main role="main">
 	<script type="text/javascript">
@@ -90,7 +96,7 @@ if (language_selected == "English")
 <h1 property="name" class="wb-inv">$gccollab_text</h1>
 <div class="row">
 <div class="col-xs-11 col-md-8">
-<object type="image/svg+xml" tabindex="-1" role="img" data="$site_url/mod/wet4/graphics/sig-blk-en.svg" width="283" aria-label="Government of Canada / Gouvernement du Canada"></object>
+<object type="image/svg+xml" tabindex="-1" role="img" data="$site_url/mod/wet4_collab/graphics/sig-blk-$graphic_lang.svg" width="283" aria-label="Government of Canada / Gouvernement du Canada"></object>
 </div>
 </div>
 <div class="row">
@@ -127,24 +133,23 @@ if (language_selected == "English")
 </main>
 <div>
 
-
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<script src=" $jsLocation "></script>
-
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="$jsLocation"></script>
 
 </div>
 __BODY;
+
 $body .= elgg_view('page/elements/foot');
-$headparams = array(
+
+$head = elgg_view('page/elements/head', array(
     'title' => 'GCcollab',
-    );
-$head = elgg_view('page/elements/head', $headparams);
+));
 
 $params = array(
-
 	'head' => $head,
 	'body' => $body,
 );
+
 //Create Page
 echo elgg_view("page/elements/html", $params);
 ?>

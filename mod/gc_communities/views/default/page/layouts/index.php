@@ -42,38 +42,39 @@
             'full_view' => false,
             'list_type_toggle' => false,
             'pagination' => true
-            
         );
-        $tags_values ='';
-        $tags_display ='';
+
+        $tags_values = '';
+        $tags_display = '';
+        $tag_colour = (strpos(elgg_get_site_entity()->name, 'collab') !== false) ? "#46246A" : "#055959";
         if( strpos($community_tags, ',') !== false ){ // if multiple tags
-                $community_tags = array_map('trim', explode(',', $community_tags));
-            foreach($community_tags as $tag_val){
-                $tags_value = elgg_get_metastring_id($tag_val);
-                $tags_values .= ' OR md.value_id = '.$tags_value;
-                $tags_display .= ' <span class="elgg-tag" style="color:#055959; font-size:12px; padding:3px 8px;">'.$tag_val.'</span>';
+            $community_tags_array = array_map('trim', explode(',', $community_tags));
+            foreach($community_tags_array as $tag_val){
+                $tags_values .= ' OR md.value_id = ' . elgg_get_metastring_id($tag_val);
+                $tags_display .= ' <span class="elgg-tag" style="color:'.$tag_colour.'; font-size:12px; padding:3px 8px;">'.$tag_val.'</span>';
             }
-        }else{
-           $tags_values = ' OR md.value_id = ' .elgg_get_metastring_id($community_tags);
-            $tags_display = '<span class="elgg-tag" style="color:#055959; font-size:12px; padding:3px 8px;">' .$community_tags .'</span>';
+        } else {
+            $tags_values = ' OR md.value_id = ' .elgg_get_metastring_id($community_tags);
+            $tags_display = '<span class="elgg-tag" style="color:'.$tag_colour.'; font-size:12px; padding:3px 8px;">' .$community_tags .'</span>';
         }
+
         //get the metastring id
         $audience_name = elgg_get_metastring_id('audience');
         $audience_value = elgg_get_metastring_id($community_audience);
         $tags_name = elgg_get_metastring_id('tags');
+
         //Query grabs content with audience or tags
         $dbprefix = elgg_get_config('dbprefix');
-        $options['joins'][] ="JOIN {$dbprefix}metadata md ON (e.guid = md.entity_guid)";
-        $options['wheres'][] = "(md.name_id = {$audience_name} OR md.name_id = {$tags_name}) 
-        AND (md.value_id = {$audience_value}{$tags_values})";
+        $options['joins'][] = "JOIN {$dbprefix}metadata md ON (e.guid = md.entity_guid)";
+        $options['wheres'][] = "(md.name_id = {$audience_name} OR md.name_id = {$tags_name}) AND (md.value_id = {$audience_value}{$tags_values})";
         
-            echo '<div class="panel panel-default elgg-module-widget" data-amd="'.$community_audience.'">
-            <header class="panel-heading"><div class="clearfix"><h3 class="elgg-widget-title pull-left">' . elgg_echo('gc_communities:community_newsfeed') . '</h3></div><p>'.elgg_echo('gc_communities:showing_content',array($tags_display, elgg_echo('gctags:community:'.$community_audience))).'</p></header>
-            <div class="panel-body clearfix">
-            <div class="new-community-feed-holder"></div>
-            <div class="elgg-widget-content community-feed-holder">'. elgg_list_entities_from_metadata($options) . '</div>
-            </div>
-            </div>';
+        echo '<div class="panel panel-default elgg-module-widget" data-amd="'.$community_audience.'">
+        <header class="panel-heading"><div class="clearfix"><h3 class="elgg-widget-title pull-left">' . elgg_echo('gc_communities:community_newsfeed') . '</h3></div><p>'.elgg_echo('gc_communities:showing_content',array($tags_display, elgg_echo('gctags:community:'.$community_audience))).'</p></header>
+        <div class="panel-body clearfix">
+        <div class="new-community-feed-holder"></div>
+        <div class="elgg-widget-content community-feed-holder">'. elgg_list_entities_from_metadata($options) . '</div>
+        </div>
+        </div>';
         ?>
     </div>
     <div class="col-md-4">

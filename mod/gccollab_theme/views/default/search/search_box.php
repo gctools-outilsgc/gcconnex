@@ -1,5 +1,4 @@
 <?php
-
 /**
  * This view displays and renders the Search box on the top of every page on GCconnex
  *
@@ -7,68 +6,27 @@
  * @uses $vars['class'] Additional class
  */
 
-$value = "";
-if (array_key_exists('value', $vars)) {
-	$value = $vars['value'];
-} elseif ($value = get_input('q', get_input('tag', NULL))) {
-	$value = $value;
-}
-
-$class = "elgg-search";
-if (isset($vars['class'])) $class = "$class {$vars['class']}";
-
 $placeholder = elgg_echo('wet:searchgctools');
-$gc_language = $_COOKIE['connex_lang'];
-$selected_language = ($gc_language === '' || $gc_language === 'en' || !$gc_language) ? 'eng' : 'fra';
-
 ?>
 
-
-<script>
-
-/// using javascript function to send the query and params to the intranet (gsa) to resolve the encoding issue
-function submit_search_query(selected_language) {
-
-    var url = "<?php echo elgg_get_site_url(); ?>search";
-    // var url = "http://intranet.canada.ca/search-recherche/query-recherche-" + selected_language + ".aspx";
-    //var url = "http://192.168.1.80/gcconnex/blog/view/1077";
-    var encode_url = url + "?" + "q=" + escape(document.getElementById('wb-srch-q').value) + "&a=" + document.getElementById('a').value + "&s=" + document.getElementById('s').value + "&chk4=" + document.getElementById('chk4').value;
-    document.location.href = encode_url;
-}
-
-/// this will handle the enter key pressed when user does a search
-function handleKeyPress(e){
-    var key = e.keyCode || e.which;
-    if (key == 13) {
-        submit_search_query('<?php echo $selected_language; ?>');
-    }
-}
-
-
-</script>
-
 <!-- Basically just moved the search to this file to output the section -->
-
-    <section id="wb-srch" class="text-right visible-md visible-lg">
-        <h2> <?php echo elgg_echo('wet:searchHead'); ?> </h2>
-        <div name="cse-search-box" class='form-inline'>
-            <div class='form-group'>
-                <label for="wb-srch-q" class="wb-inv"> <?php echo elgg_echo('wet:searchweb'); ?> </label>
-                <input class="wb-srch-q form-control" name="q" onkeypress="handleKeyPress(event)" value="" size="21" maxlength="150" placeholder="<?php echo $placeholder ?>" id="wb-srch-q">
-                
-           
-                <input type="hidden" id="a" name="a"  value="s">
-                <input type="hidden" id="s" name="s"  value="3">
-                <input type="hidden" id="chk4" name="chk4"  value="on">
-             
-            </div>
-            <div class="form-group submit">
-                <!-- search button -->
-                <button type="button" class="btn btn-primary btn-small" onclick="submit_search_query('<?php echo $selected_language; ?>')" name="wb-srch-sub">
-                    <span class="glyphicon-search glyphicon"></span>
-                    <span class="wb-inv"> <?php echo elgg_echo('wet:searchHead'); ?> </span>
-                </button>
-            </div>
+<section id="wb-srch" class="text-right visible-md visible-lg">
+    <h2> <?php echo elgg_echo('wet:searchHead'); ?> </h2>
+    <form action="<?php echo elgg_get_site_url(); ?>search" name="cse-search-box" class="form-inline">
+        <div class='form-group'>
+            <label for="wb-srch-q" class="wb-inv"> <?php echo elgg_echo('wet:searchweb'); ?> </label>
+            <input type="text" class="wb-srch-q form-control" name="q" value="" size="21" maxlength="150" placeholder="<?php echo $placeholder ?>" id="wb-srch-q">
+            
+            <input type="hidden" id="a" name="a"  value="s">
+            <input type="hidden" id="s" name="s"  value="3">
+            <input type="hidden" id="chk4" name="chk4"  value="on">
         </div>
-        
-    </section>
+        <div class="form-group submit">
+            <!-- search button -->
+            <button type="submit" class="btn btn-primary btn-small" name="wb-srch-sub">
+                <span class="glyphicon-search glyphicon"></span>
+                <span class="wb-inv"> <?php echo elgg_echo('wet:searchHead'); ?> </span>
+            </button>
+        </div>
+    </form>
+</section>

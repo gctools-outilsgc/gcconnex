@@ -19,10 +19,32 @@
  * MWooff 		Jan 18 2017		Re-built for GCcollab-specific functions	
  ***********************************************************************/
 
+function replaceAccents2( $str ){
+	$a = array('À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ð', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', 'Ø', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'ß', 'à', 'á', 'â', 'ã', 'ä', 'å', 'æ', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', 'ø', 'ù', 'ú', 'û', 'ü', 'ý', 'ÿ', 'Ā', 'ā', 'Ă', 'ă', 'Ą', 'ą', 'Ć', 'ć', 'Ĉ', 'ĉ', 'Ċ', 'ċ', 'Č', 'č', 'Ď', 'ď', 'Đ', 'đ', 'Ē', 'ē', 'Ĕ', 'ĕ', 'Ė', 'ė', 'Ę', 'ę', 'Ě', 'ě', 'Ĝ', 'ĝ', 'Ğ', 'ğ', 'Ġ', 'ġ', 'Ģ', 'ģ', 'Ĥ', 'ĥ', 'Ħ', 'ħ', 'Ĩ', 'ĩ', 'Ī', 'ī', 'Ĭ', 'ĭ', 'Į', 'į', 'İ', 'ı', 'Ĳ', 'ĳ', 'Ĵ', 'ĵ', 'Ķ', 'ķ', 'Ĺ', 'ĺ', 'Ļ', 'ļ', 'Ľ', 'ľ', 'Ŀ', 'ŀ', 'Ł', 'ł', 'Ń', 'ń', 'Ņ', 'ņ', 'Ň', 'ň', 'ŉ', 'Ō', 'ō', 'Ŏ', 'ŏ', 'Ő', 'ő', 'Œ', 'œ', 'Ŕ', 'ŕ', 'Ŗ', 'ŗ', 'Ř', 'ř', 'Ś', 'ś', 'Ŝ', 'ŝ', 'Ş', 'ş', 'Š', 'š', 'Ţ', 'ţ', 'Ť', 'ť', 'Ŧ', 'ŧ', 'Ũ', 'ũ', 'Ū', 'ū', 'Ŭ', 'ŭ', 'Ů', 'ů', 'Ű', 'ű', 'Ų', 'ų', 'Ŵ', 'ŵ', 'Ŷ', 'ŷ', 'Ÿ', 'Ź', 'ź', 'Ż', 'ż', 'Ž', 'ž', 'ſ', 'ƒ', 'Ơ', 'ơ', 'Ư', 'ư', 'Ǎ', 'ǎ', 'Ǐ', 'ǐ', 'Ǒ', 'ǒ', 'Ǔ', 'ǔ', 'Ǖ', 'ǖ', 'Ǘ', 'ǘ', 'Ǚ', 'ǚ', 'Ǜ', 'ǜ', 'Ǻ', 'ǻ', 'Ǽ', 'ǽ', 'Ǿ', 'ǿ');
+	$b = array('A', 'A', 'A', 'A', 'A', 'A', 'AE', 'C', 'E', 'E', 'E', 'E', 'I', 'I', 'I', 'I', 'D', 'N', 'O', 'O', 'O', 'O', 'O', 'O', 'U', 'U', 'U', 'U', 'Y', 's', 'a', 'a', 'a', 'a', 'a', 'a', 'ae', 'c', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'n', 'o', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'u', 'y', 'y', 'A', 'a', 'A', 'a', 'A', 'a', 'C', 'c', 'C', 'c', 'C', 'c', 'C', 'c', 'D', 'd', 'D', 'd', 'E', 'e', 'E', 'e', 'E', 'e', 'E', 'e', 'E', 'e', 'G', 'g', 'G', 'g', 'G', 'g', 'G', 'g', 'H', 'h', 'H', 'h', 'I', 'i', 'I', 'i', 'I', 'i', 'I', 'i', 'I', 'i', 'IJ', 'ij', 'J', 'j', 'K', 'k', 'L', 'l', 'L', 'l', 'L', 'l', 'L', 'l', 'l', 'l', 'N', 'n', 'N', 'n', 'N', 'n', 'n', 'O', 'o', 'O', 'o', 'O', 'o', 'OE', 'oe', 'R', 'r', 'R', 'r', 'R', 'r', 'S', 's', 'S', 's', 'S', 's', 'S', 's', 'T', 't', 'T', 't', 'T', 't', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'W', 'w', 'Y', 'y', 'Y', 'Z', 'z', 'Z', 'z', 'Z', 'z', 's', 'f', 'O', 'o', 'U', 'u', 'A', 'a', 'I', 'i', 'O', 'o', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'U', 'u', 'A', 'a', 'AE', 'ae', 'O', 'o');
+	return str_replace($a, $b, $str);
+}
+
+function usernameize2( $str, $a_char = array("'", "-", ".") ){
+	$string = replaceAccents2(mb_strtolower(strtok( $str, '@' )));
+	foreach ($a_char as $temp){
+		$pos = strpos($string,$temp);
+		if ($pos){
+			$mend = '';
+			$a_split = explode($temp,$string);
+			foreach ($a_split as $temp2){
+				$mend .= ucfirst($temp2).$temp;
+			}
+			$string = substr($mend,0,-1);
+		}
+	}
+	return ucfirst($string);
+}
+
 elgg_make_sticky_form('register');
 global $CONFIG;
 // default code (core)
-$username = get_input('username');
+$username = "";
 $email = strtolower(trim(get_input('email')));
 $email2 = strtolower(trim(get_input('email2')));
 $password = get_input('password', null, false);
@@ -41,31 +63,15 @@ foreach($meta_fields as $field){
 // check form (incompleteness & validity)
 if (elgg_get_config('allow_registration')) {
 	try {
-		// check if domain exists in database
-		$db_config = new \Elgg\Database\Config($CONFIG);
-		if ($db_config->isDatabaseSplit()) {
-			$read_settings = $db_config->getConnectionConfig(\Elgg\Database\Config::READ);
-		} else {	
-			$read_settings = $db_config->getConnectionConfig(\Elgg\Database\Config::READ_WRITE);
-		}
-
-		$connection = mysqli_connect($read_settings["host"], $read_settings["user"], $read_settings["password"], $read_settings["database"])or die(mysqli_error($connection));
 		$emaildomain = explode('@',$email);
-		$query = "SELECT count(*) AS num FROM email_extensions WHERE ext ='".$emaildomain[1]."'";
-		
-		$result = mysqli_query($connection, $query)or die(mysqli_error($connection));
-		$result = mysqli_fetch_array($result);
-		
 		$emailgc = explode('.',$emaildomain[1]);
 		$gcca = $emailgc[count($emailgc) - 2] .".".$emailgc[count($emailgc) - 1];
 		
-		mysqli_close($connection);
-		
 		$resulting_error = "";
-
 		$validemail = false;
+
 		// if domain doesn't exist in database, check if it's a gc.ca domain
-		if ($dept_exist[0]->num > 0 && strcmp($gcca, 'gc.ca') == 0){
+		if (strcmp($gcca, 'gc.ca') == 0){
 			$validemail = true;
 		}
 
@@ -182,6 +188,47 @@ if (elgg_get_config('allow_registration')) {
 		if (!empty($resulting_error))
 			throw new RegistrationException($resulting_error);
 
+
+		/*** Username Generation ***/
+		$temp_name = str_replace(" ", ".", $name);
+		$usrname = str_replace("'", "", usernameize2($temp_name));
+
+		// Troy - fix for usernames generated with "-" in them; better solution may present itself.
+		while( strpos($usrname,'-')!==false ){
+			$usrname = substr_replace($usrname, ".", strpos($usrname,'-'),1);
+		}
+
+		if( rtrim($usrname, "0..9") != "" ){
+			$usrname = rtrim($usrname, "0..9");
+		}
+
+		// select matching usernames
+		$query1 = "SELECT count(*) as num FROM elggusers_entity WHERE username = '". $usrname ."'";
+		$result1 = get_data($query1);
+
+		// check if username exists and increment it
+		if ( $result1[0]->num > 0 ){
+			$unamePostfix = 0;
+			$usrnameQuery = $usrname;
+			
+			do {
+				$unamePostfix++;
+				$tmpUsrnameQuery = $usrnameQuery . $unamePostfix;
+				
+				$query = "SELECT count(*) as num FROM elggusers_entity WHERE username = '". $tmpUsrnameQuery ."'";
+				$tmpResult = get_data($query);
+				
+				$uname = $tmpUsrnameQuery;
+			} while ( $tmpResult[0]->num > 0);
+		} else {
+			// username is available
+			$uname = $usrname;
+		}
+		// username output
+		$username = $uname;
+		/*** End Username Generation ***/
+
+
 		$guid = register_user($username, $password, $name, $email, false, $friend_guid, $invitecode);
 
 		if ($guid) {
@@ -198,7 +245,7 @@ if (elgg_get_config('allow_registration')) {
 				'user' => $new_user,
 				'password' => $password,
 				'friend_guid' => $friend_guid,
-				'invitecode' => $invitecode,
+				'invitecode' => $invitecode
 			);
 
 			// @todo should registration be allowed no matter what the plugins return?
@@ -209,6 +256,7 @@ if (elgg_get_config('allow_registration')) {
 				// @todo this is a generic messages. We could have plugins
 				// throw a RegistrationException, but that is very odd
 				// for the plugin hooks system.
+				error_log('registerbad with params: ' . json_encode(array($username, $name, $email, $friend_guid, $invitecode)) . "\n");
 				throw new RegistrationException(elgg_echo('registerbad'));
 			}
 
@@ -218,7 +266,6 @@ if (elgg_get_config('allow_registration')) {
 			}
 
 			elgg_clear_sticky_form('register');
-			// system_message(elgg_echo("registerok", array(elgg_get_site_entity()->name)));
 
 			// if exception thrown, this probably means there is a validation
 			// plugin that has disabled the user
@@ -237,6 +284,7 @@ if (elgg_get_config('allow_registration')) {
 			// Forward on success, assume everything else is an error...
 			forward();
 		} else {
+			error_log('registerbad with username: ' . json_encode(array($username, $name, $email, $friend_guid, $invitecode)) . "\n");
 			register_error(elgg_echo("registerbad"));
 		}
 	} catch (RegistrationException $r) {

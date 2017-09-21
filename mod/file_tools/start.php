@@ -81,6 +81,7 @@ function file_tools_init() {
 	elgg_register_action("file_tools/folder/delete", dirname(__FILE__) . "/actions/folder/delete.php");
 	elgg_register_action("file_tools/folder/reorder", dirname(__FILE__) . "/actions/folder/reorder.php");
 	elgg_register_action("file_tools/upload/zip", dirname(__FILE__) . "/actions/upload/zip.php");
+	elgg_register_action("file_tools/upload/googledoc", dirname(__FILE__) . "/actions/upload/googledoc.php");
 	elgg_register_action("file_tools/folder/delete", dirname(__FILE__) . "/actions/folder/delete.php");
 	elgg_register_action("file_tools/file/hide", dirname(__FILE__) . "/actions/file/hide.php");
 	

@@ -1,0 +1,80 @@
+Changelog
+=========
+
+1.9.8
+-----
+
+- Adjustments in default allowed pages for Loginrequired to work both on Elgg 1.9 - 1.12 and Elgg 2.0 (therefore should work on any Elgg 2.X version),
+- composer.json added to allow for composer based installs.
+
+1.9.7
+-----
+
+- No longer use global $CONFIG variable but elgg_get_config() instead.
+
+1.9.6
+-----
+
+- Changes of version 1.8.6 ported to Elgg 1.9 version.
+
+1.8.6
+-----
+
+- Fix in loginrequired_index() function parameter name to match variable name later used (though this error shouldn't have mattered as the loginrequired index page should be served with highest priority anyway),
+- The pages allowed to be visited when logged out by default by the Loginrequired plugin now include all pages also defined as public pages by Elgg's walled_garden mode (almost all apart from some specific pages were already included anyway),
+- Some minor code cleanup.
+
+1.9.5
+-----
+
+- Changes of version 1.8.5 ported to Elgg 1.9 version.
+
+1.8.5
+-----
+
+- Change site's default access level to "logged-in" in case it's "public",
+- Remove "public" option from access level selection when creating / editing content,
+- Remove "public" option from visibility selection on group edit page.
+
+1.9.4
+-----
+
+- Changes of version 1.8.4 ported to Elgg 1.9 version.
+
+1.8.4
+-----
+
+- Added "/login" page to allowed pages to avoid a possible redirect loop,
+- Code cleanup.
+
+1.9.3
+-----
+
+- Updated for Elgg 1.9.
+
+1.8.3
+-----
+
+- Code cleanup.
+
+1.8.2
+-----
+
+- Added cache urls for css and js to allowed urls (thanks Hector),
+- fixed a deprecated function issue I had missed in start.php.
+
+r3
+--
+
+- Upgraded for Elgg 1.8.1.
+
+r2
+--
+
+- Separate index page when not logged in that only shows the login widget,
+- No site menu and search box when not logged in.
+
+r1
+--
+
+- Initial release.

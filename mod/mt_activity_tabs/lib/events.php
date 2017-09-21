@@ -107,23 +107,25 @@ function pagesetup() {
 		elgg_register_menu_item('filter', $tab);
 	}
 
-	$tab = array(
-		'name' => "mydept:$user->department",
-		'text' => elgg_echo('activity_tabs:mydepartment'),
-		'href' => "activity_tabs/mydept/",
-		'selected' => $filter_context == 'mydept_',
-		'priority' => $priority + (int) $tabs['dept']["$user->department"]['priority'],
-	);
-	elgg_register_menu_item('filter', $tab);
+	if( strpos(elgg_get_site_entity()->name, 'collab') == false ){
+		$tab = array(
+			'name' => "mydept:$user->department",
+			'text' => elgg_echo('activity_tabs:mydepartment'),
+			'href' => "activity_tabs/mydept/",
+			'selected' => $filter_context == 'mydept_',
+			'priority' => $priority + (int) $tabs['dept']["$user->department"]['priority'],
+		);
+		elgg_register_menu_item('filter', $tab);
 
-	$tab = array(
-		'name' => "otherdept:$user->department",
-		'text' => elgg_echo('activity_tabs:otherdepartments'),
-		'href' => "activity_tabs/otherdept/",
-		'selected' => $filter_context == 'otherdept_',
-		'priority' => $priority + (int) $tabs['otherdept']["$user->department"]['priority'],
-	);
-	elgg_register_menu_item('filter', $tab);
+		$tab = array(
+			'name' => "otherdept:$user->department",
+			'text' => elgg_echo('activity_tabs:otherdepartments'),
+			'href' => "activity_tabs/otherdept/",
+			'selected' => $filter_context == 'otherdept_',
+			'priority' => $priority + (int) $tabs['otherdept']["$user->department"]['priority'],
+		);
+		elgg_register_menu_item('filter', $tab);
+	}
 
 	// register menu item for configuring tabs
 	$link = array(

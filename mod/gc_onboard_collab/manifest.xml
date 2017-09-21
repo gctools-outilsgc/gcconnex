@@ -4,7 +4,7 @@
 	<id>gc_onboard_collab</id>
 	<author>Government of Canada</author>
 	<version>1.0.0.0</version>
-	<description>Onboarding module for GCcollab. Welcomes user with small step by step process that allows them to complete a little of their profile, add a few colleagues and join a few groups.</description>
+	<description>Customized onboarding module for GCcollab.</description>
 	<website>http://www.canada.ca</website>
 	<copyright>Her Majesty the Queen in Right of Canada, 2015</copyright>
 	<license>Creative Commons Attribution 3.0 Unported License</license>

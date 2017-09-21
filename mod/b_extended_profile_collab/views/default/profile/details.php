@@ -579,7 +579,7 @@ if(strcmp($user->user_type, 'federal') == 0 ) {
 // otherwise if user is student or academic
 } else if (strcmp($user->user_type, 'student') == 0 || strcmp($user->user_type, 'academic') == 0 ) {
     echo '<h3 class="mrgn-tp-0">'.elgg_echo("gcconnex-profile-card:{$user->user_type}", array($user->user_type)).'</h3>';
-    $institution = ($user->institution == "university") ? $user->university : $user->college;
+    $institution = ($user->institution == 'university') ? $user->university : ($user->institution == 'college' ? $user->college : $user->highschool);
     $job = ($user->job != "") ? $user->job : "";
     echo '<div class="gcconnex-profile-dept">' . ($institution != "default_invalid_value" ? $institution : $job) . '</div>';
 

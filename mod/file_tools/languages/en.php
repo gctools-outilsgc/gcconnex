@@ -84,9 +84,11 @@ return array(
 	'file_tools:upload:tabs:single' => "Single file",
 	'file_tools:upload:tabs:multi' => "Multi file",
 	'file_tools:upload:tabs:zip' => "Zip file",
+	'file_tools:upload:tabs:googledoc' => "Google Doc",
 	'file_tools:upload:form:choose' => 'Choose file',
 	'file_tools:upload:form:info' => 'Click browse to upload (multiple) files',
 	'file_tools:upload:form:zip:info' => "You can upload a zip file. It will be extracted and each file will be separately imported. Also if you have folders in your zip they will be imported into each specific folder. File types that are not allowed will be skipped.",
+	'file_tools:upload:form:googledoc:info' => "Provide the link to a Google Doc to share with others.",
 	
 	// actions
 	// edit
@@ -135,9 +137,12 @@ return array(
 	'file_tools:settings:sort:default' => 'Default folder sorting options',
 	'file_tools:settings:list_length' => 'How many files to show in the listing',
 	'file_tools:settings:list_length:unlimited' => 'Unlimited',
+	'file_tools:settings:googledoc' => 'Allow Google Doc link uploads',
 
 	'file:type:application' => 'Application',
 	'file:type:text' => 'Text',
+
+	'file_tools:invalidurl' => 'Invalid link',
 
 	// widgets
 	// file tree

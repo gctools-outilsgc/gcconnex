@@ -77,9 +77,11 @@
 		'file_tools:upload:tabs:single' => "Fichier unique",
 		'file_tools:upload:tabs:multi' => "Fichiers multiples", 
 		'file_tools:upload:tabs:zip' => "Fichier zip",
+		'file_tools:upload:tabs:googledoc' => "Google Doc",
 		'file_tools:upload:form:choose' => 'Sélectionner un fichier',
 		'file_tools:upload:form:info' => 'Cliquer sur Parcourir pour téléverser des fichiers (multiples)',
 		'file_tools:upload:form:zip:info' => "Vous pouvez téléverser un fichier zip. Il sera extrait et chaque fichier sera importé séparément. De plus, si vous avez des dossiers dans votre fichier zip, ils seront importés dans chaque dossier précis. Les types de fichiers non autorisés seront ignorés.",
+		'file_tools:upload:form:googledoc:info' => "Provide the link to a Google Doc to share with others. (FR)",
 		
 		// actions		
 		// edit		
@@ -124,9 +126,12 @@
 		//settings		
 		'file_tools:settings:allowed_extensions' => 'Extensions autorisées (séparées par des virgules)',
 		'file_tools:settings:user_folder_structure' => 'Utiliser la structure de dossiers',
-		'file_tools:settings:sort:default' => 'Options de tri de dossiers par défaut',		
+		'file_tools:settings:sort:default' => 'Options de tri de dossiers par défaut',	
+		'file_tools:settings:googledoc' => 'Autoriser les téléchargements de Google Doc',	
 		'file:type:application' => 'Application',
 		'file:type:text' => 'Texte',
+
+		'file_tools:invalidurl' => 'Lien invalide',
 		
 		// widgets		
 		// file tree		

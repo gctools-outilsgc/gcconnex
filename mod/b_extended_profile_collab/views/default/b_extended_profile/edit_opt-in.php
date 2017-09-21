@@ -155,7 +155,7 @@ foreach($opt_in_set as $k => $v){
                 	<li class="clearfix pull-left mrgn-lft-md">
 		                <?php
 		                	echo elgg_view("input/checkbox", array(
-						        'name' => 'casualseeking_check',
+						        'name' => 'casualseek_check',
 						        'checked' => $opt_in_set[17],
 						        'id' => 'gcconnex-opt-in-casualseek-check',
 			                    'label' => elgg_echo('gcconnex_profile:opt:seeking') 
@@ -165,7 +165,7 @@ foreach($opt_in_set as $k => $v){
 	                <li class="clearfix pull-left mrgn-lft-md">
 		                <?php
 		                	echo elgg_view("input/checkbox", array(
-						        'name' => 'casualoffering_check',
+						        'name' => 'casualcreate_check',
 						        'checked' => $opt_in_set[18],
 						        'id' => 'gcconnex-opt-in-casualcreate-check',
 			                    'label' => elgg_echo('gcconnex_profile:opt:offering')
@@ -180,7 +180,7 @@ foreach($opt_in_set as $k => $v){
                 	<li class="clearfix pull-left mrgn-lft-md">
 		                <?php
 		                	echo elgg_view("input/checkbox", array(
-						        'name' => 'studentseeking_check',
+						        'name' => 'studentseek_check',
 						        'checked' => $opt_in_set[19],
 						        'id' => 'gcconnex-opt-in-studentseek-check',
 			                    'label' => elgg_echo('gcconnex_profile:opt:seeking') 
@@ -190,7 +190,7 @@ foreach($opt_in_set as $k => $v){
 	                <li class="clearfix pull-left mrgn-lft-md">
 		                <?php
 		                	echo elgg_view("input/checkbox", array(
-						        'name' => 'studentoffering_check',
+						        'name' => 'studentcreate_check',
 						        'checked' => $opt_in_set[20],
 						        'id' => 'gcconnex-opt-in-studentcreate-check',
 			                    'label' => elgg_echo('gcconnex_profile:opt:offering')

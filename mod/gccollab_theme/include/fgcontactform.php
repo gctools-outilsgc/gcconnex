@@ -286,7 +286,7 @@ class FGContactForm
       <div>
 
         <!-- email header -->
-            <div align="center" width="100%" style="background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 12px; color: #055959">
+            <div align="center" width="100%" style="background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 12px; color: #46246A">
               Thank you for contacting the GCconnex Help desk. This is a copy of your request.<br/><br/> Merci d\'avoir communiqué avec le bureau de soutien de GCconnex. Ceci est une copie de votre requête.
             </div>
         
@@ -350,7 +350,7 @@ class FGContactForm
             <div style="height:1px; background:#bdbdbd; border-bottom:1px solid #ffffff"></div>
 
             <!-- email footer -->
-            <div align="center" width="100%" style="background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 16px; color: #055959">
+            <div align="center" width="100%" style="background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 16px; color: #46246A">
             Please do not reply to this message | Veuillez ne pas répondre à ce message
             </div>
 

@@ -24,4 +24,13 @@ $tabs[] = array(
 	"selected" => ($selected_tab == "zip") ? true : false
 );
 
+if( elgg_get_plugin_setting('googledoc', 'file_tools') ){
+	$tabs[] = array(
+		"text" => elgg_echo("file_tools:upload:tabs:googledoc"),
+		"href" => "file/add/" . $page_owner_guid . "?upload_type=googledoc",
+		"link_id" => "file-tools-googledoc-form-link",
+		"selected" => ($selected_tab == "googledoc") ? true : false
+	);
+}
+
 echo elgg_view("navigation/tabs", array("tabs" => $tabs, "id" => "file-tools-upload-tabs"));

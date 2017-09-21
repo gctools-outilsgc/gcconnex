@@ -37,6 +37,8 @@ $list_length_options = array(
 );
 $list_length_options += array_combine(range(10, 200, 10), range(10, 200, 10));
 
+$googledoc = $plugin->googledoc;
+
 // get settings
 $allowed_extensions = file_tools_allowed_extensions();
 
@@ -91,5 +93,15 @@ echo "&nbsp;" . elgg_view("input/dropdown", array(
 	"name" => "params[list_length]",
 	"value" => $list_length,
 	"options_values" => $list_length_options
+));
+echo "</div>";
+
+// allow Google Doc link uploads
+echo "<div>";
+echo "<label>" . elgg_echo("file_tools:settings:googledoc") . "</label>";
+echo "&nbsp;" . elgg_view("input/checkbox", array(
+	"name" => "params[googledoc]",
+	"value" => "true",
+	"checked" => ($googledoc == true)
 ));
 echo "</div>";

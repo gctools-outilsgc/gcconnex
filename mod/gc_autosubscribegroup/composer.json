@@ -1,0 +1,24 @@
+{
+    "name": "iionly/autosubscribegroup",
+    "description": "This plugin allows new users to get joined to groups automatically when they register.",
+    "type": "elgg-plugin",
+    "keywords": [
+        "elgg",
+        "plugin"
+    ],
+    "homepage": "https://github.com/iionly/autosubscribegroup",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "iionly",
+            "homepage": "https://github.com/iionly",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+            "issues": "https://github.com/iionly/autosubscribegroup/issues"
+    },
+    "require": {
+        "composer/installers": ">=1.0.8"
+    }
+}
