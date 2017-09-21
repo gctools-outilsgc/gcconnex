@@ -22,7 +22,7 @@ if(!isset(elgg_get_logged_in_user_entity()->DAconnections) || elgg_get_logged_in
 
 $tabs = elgg_view('dept_activity/tabs');
 
-$filter_form = '<a href="#" style="position:absolute; top:15px; right:10px;" title="'.elgg_echo('dept:activity:filter:title').'" class="dropdown  pull-right mrgn-rght-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-v fa-2x icon-unsel"><span class="wb-inv">'.elgg_echo('dept:activity:filter:title').'</span></i></a><ul style="top:45px; right: 0px;" class="dropdown-menu pull-right act-filter" aria-labelledby="dropdownMenu2"><li id="filter_form">'.$filter_link.'</li></ul>';
+$filter_form = '<a href="#" style="position:absolute; top:10px; right:20px;" title="'.elgg_echo('dept:activity:filter:title').'" class="dropdown  pull-right mrgn-rght-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-ellipsis-v fa-2x icon-unsel"><span class="wb-inv">'.elgg_echo('dept:activity:filter:title').'</span></i></a><ul style="top:45px; right: 8px;" class="dropdown-menu pull-right act-filter" aria-labelledby="dropdownMenu2"><li id="filter_form">'.$filter_link.'</li></ul>';
 
 //get the department we are working with
 $dept = elgg_get_logged_in_user_entity()->department;
@@ -71,15 +71,17 @@ $wire_post = elgg_list_entities(array(
 
 $sidebar = elgg_view_module('sidebar', elgg_echo('item:object:thewire'), $wire_post);
 
+$content = '<div class="panel-body">'.$tabs.$filter_form.'<div class="new-newsfeed-holder"><div class="newsfeed-posts-holder"></div></div>'.$activity.'</div>';
+
 //put it all together
 $params = array(
-  'content' => $tabs.$filter_form.'<div class="new-newsfeed-holder"><div class="newsfeed-posts-holder"></div></div>'.$activity,
+  'content' => $content,
   'title' => $title,
   "sidebar" => $sidebar,
   'filter' => false
 );
 
-$body = elgg_view_layout('content',  $params);
+$body = elgg_view_layout('one_sidebar',  $params);
 
 echo elgg_view_page($title, $body);
 

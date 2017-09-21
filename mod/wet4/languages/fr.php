@@ -178,7 +178,7 @@ return array(
   'dept:activity:do' => " Les connexions de collègue ne seront plus affichées dans le fil d'activités de votre ministère.",
   'dept:activity:undo' => " Les connexions de collègue s’afficheront maintenant dans le fil d’activité de votre ministère. ",
   'dept:activity:filter:title' => "Paramètres du fil d’activités de votre ministère",
-  'dept:activity:groupsandcolleagues' => "Groups and colleagues",
+  'dept:activity:groupsandcolleagues' => "Groupes et collègues",
 
 
       'wet:more' => "Autres",
