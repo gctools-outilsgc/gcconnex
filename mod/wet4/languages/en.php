@@ -179,13 +179,13 @@ return array(
 
     ////
 
-    'new:dept:activity:title' => "Your department's activity feed",
+    'new:dept:activity:title' => "My department's news feed",
     'dept:activity:show' => "Show colleague connections",
     'dept:activity:hide' => "Hide colleague connections",
-    'dept:activity:do' => "Colleague connections will no longer display in your department’s activity feed.",
-    'dept:activity:undo' => "Colleague connections will now display in your department’s activity feed.",
-    'dept:activity:filter:title' => "Your department’s activity feed settings",
-    'dept:activity:groupsandcolleagues' => "Groups and colleagues",
+    'dept:activity:do' => "Colleague connections will no longer display in your department’s news feed.",
+    'dept:activity:undo' => "Colleague connections will now display in your department’s news feed.",
+    'dept:activity:filter:title' => "News Feed settings",
+    'dept:activity:groupsandcolleagues' => "My groups and colleagues",
 
     'wet:more'=>"More",
   	'breadcrum:home' => 'Home',
