@@ -55,7 +55,6 @@ $list_items = '';
 
 foreach($tags as $tag) {
 	if (is_string($tag) && strlen($tag) > 0) {
-		//$value_text = $tag;
         //Adding GSA query to tags
         if(get_current_language() == 'en'){
             $lang_string ='eng';
