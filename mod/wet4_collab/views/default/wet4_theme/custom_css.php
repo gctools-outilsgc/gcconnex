@@ -1830,3 +1830,6 @@ figcaption{
 .group-cover-photo{
   background-color: #46246A !important;
 }
+.bar .progress-bar {
+  background-color: #46246A !important;
+}

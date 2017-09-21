@@ -59,7 +59,7 @@ function gccollab_theme_init() {
     // add footer links
     expages_collab_setup_footer_menu();
 
-    elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'collab_group_owners_block_handler');
+    elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'collab_menu_block_handler');
 
     elgg_register_plugin_hook_handler('members:list', 'type', "members_list_type");
     elgg_register_plugin_hook_handler('members:config', 'tabs', "members_nav_type");
@@ -185,7 +185,7 @@ function career_menu_hander($hook, $type, $menu, $params){
     }
 }
 
-function collab_group_owners_block_handler($hook, $type, $menu, $params){
+function collab_menu_block_handler($hook, $type, $menu, $params){
     //rearrange menu items
     if(elgg_get_context() == 'groupSubPage' || elgg_in_context('group_profile')){
 
@@ -257,6 +257,96 @@ function collab_group_owners_block_handler($hook, $type, $menu, $params){
                     break;
                 case 'related_groups':
                     $item->setPriority('15');
+                    break;
+            }
+        }
+    }
+
+    if(elgg_get_context() == 'profile'){
+
+        elgg_unregister_menu_item('owner_block', 'activity');
+
+        //turn owner_block  menu into tabs
+        foreach ($menu as $key => $item){
+            switch ($item->getName()) {
+                case 'discussion':
+                    $item->setText(elgg_echo('gprofile:discussion'));
+                    $item->setPriority('1');
+                    break;
+                case 'file':
+                    $item->setText(elgg_echo('gprofile:files'));
+                    $item->setHref('#file');
+                    $item->setPriority('2');
+                    break;
+                case 'blog':
+                    $item->setText(elgg_echo('gprofile:blogs'));
+                    $item->setHref('#blog');
+                    $item->setPriority('3');
+                    break;
+                case 'event_calendar':
+                    $item->setText(elgg_echo('gprofile:events'));
+                    $item->setHref('#events');
+                    $item->setPriority('4');
+                    break;
+                case 'thewire':
+                    //$item->setText(elgg_echo('The Wire'));
+                    $item->setHref('#thewire');
+                    $item->setPriority('5');
+                    break;
+                case 'etherpad':
+                    $item->setHref('#etherpad');
+                    $item->setPriority('6');
+                    break;
+                case 'pages':
+                    $item->setText(elgg_echo('gprofile:pages'));
+                    $item->setHref('#page_top');
+                    $item->setPriority('7');
+                    break;
+                case 'questions':
+                    $item->setText(elgg_echo('widget:questions:title'));
+                    $item->setHref('#question');
+                    $item->setPriority('8');
+                    break;
+                case 'bookmarks':
+                    $item->setText(elgg_echo('gprofile:bookmarks'));
+                    $item->setHref('#bookmarks');
+                    $item->setPriority('9');
+                    break;
+                case 'polls':
+                    $item->setText(elgg_echo('gprofile:polls'));
+                    $item->setHref('#poll');
+                    $item->setPriority('10');
+                    break;
+                case 'tasks':
+                    $item->setText(elgg_echo('gprofile:tasks'));
+                    $item->setHref('#task_top');
+                    $item->setPriority('11');
+                    break;
+                case 'photos':
+                    $item->setText(elgg_echo('gprofile:photos'));
+                    $item->addItemClass('removeMe');
+                    $item->setPriority('12');
+                    break;
+                case 'photo_albums':
+                    $item->setText(elgg_echo('gprofile:albumsCatch'));
+                    $item->setHref('#album');
+                    $item->setPriority('13');
+                    break;
+                case 'ideas':
+                    $item->setText(elgg_echo('gprofile:ideas'));
+                    $item->addItemClass('removeMe');
+                    $item->setPriority('14');
+                    break;
+                case 'orgs':
+                    $item->setPriority('15');
+                    break;
+                case 'activity':
+                    $item->setText('Activity');
+                    $item->setPriority('16');
+                    $item->addItemClass('removeMe');
+                    break;
+                case 'user_invite_from_profile':
+                    $item->setPriority('17');
                     break;
             }
         }
