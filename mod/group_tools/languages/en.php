@@ -387,7 +387,7 @@ When a user creates a group he/she gets to choose one of the presets in order to
 'group_tools:action:domain_based:success' => "The new e-mail domains were saved",
 	
 // related groups	
-'groups_tools:related_groups:tool_option' => "Show related groups",	
+'groups_tools:related_groups:tool_option' => "Show related groups in the sidebar",	
 'groups_tools:related_groups:widget:title' => "Related groups",
 'groups_tools:related_groups:widget:description' => "Display a list of groups you added as related to this group.",	
 'groups_tools:related_groups:none' => "No related groups found.",

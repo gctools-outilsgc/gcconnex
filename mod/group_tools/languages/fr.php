@@ -388,7 +388,7 @@ When a user creates a group he/she gets to choose one of the presets in order to
 'group_tools:action:domain_based:success' => "Le nouveau domaine de courriel a été sauvegardé",
 		
 // related groups		
-'groups_tools:related_groups:tool_option' => "Afficher les groupes connexes",
+'groups_tools:related_groups:tool_option' => "Afficher les groupes connexes dans la barre latérale",
 'groups_tools:related_groups:widget:title' =>  "Groupes connexes",
 'groups_tools:related_groups:widget:description' => "Afficher une liste des groupes connexes que vous avez ajouté à ce groupe",	
 'groups_tools:related_groups:none' => "Aucun groupe connexe n’a été trouvé",
