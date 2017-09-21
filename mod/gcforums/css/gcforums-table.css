@@ -23,12 +23,19 @@
     float:right;
     vertical-align: middle;
     text-align: center;
+    height: 100%;
+    //border-left: solid #e6e6e6 2px;
+    display: inline-block;
+    padding-left: 3px;
+    padding-right: 3px;
 }
 
 .forum-options-edit, .topic-options-edit {
     text-align: left;
     width: 15%;
     float:right;
+    height: 100%;
+    display:inline-block;
 }
 
 .edit-options-hjforum {
@@ -105,6 +112,8 @@
     float: left;
     width:40%;
     padding: 5px 5px 5px 15px;
+    height: 100%;
+    display:inline-block;
 }
 
 .forum-description-text {

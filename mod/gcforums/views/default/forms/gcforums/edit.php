@@ -1,32 +1,99 @@
 <?php
 
 $object = get_entity($vars['entity_guid']);
- //TODO: sticky topic
+
+$current_entity = get_entity($vars['current_entity']);
+$entity_type = $vars['entity_type'];
+
+
+/// main code
+
+$subtype = ($object) ? $object->getSubtype() : $entity_type;
+
+if (!$object) {
+	$object = new ElggObject();
+	$object->save(); 
+}
+
+switch($subtype) {
+
+	case 'hjforumcategory':
+	$content = general_information_form($object);
+	break;
+
+	case 'hjforum':
+	$content = array_merge(general_information_form($object), forums_information_form($object));
+	break;
+
+	case 'hjforumtopic':
+	$content = array_merge(general_information_form($object), forums_topic_form($object));
+	break;
+
+	case 'hjforumpost':
+	$content = general_information_form($object);
+	break;
+
+	default:
+}
+
+
+$labels = array('title', 'description', 'category_filing', 'sticky', 'enable_category', 'enable_posting', 'is_sticky', 'access');
+
+echo "<div class='tab-content tab-content-border'>";
+foreach ($labels as $label) {
+	if (!is_array($content[$label])) continue;
+
+	$form_input = ($label === 'enable_posting' || $label === 'enable_category' || $label === 'is_sticky') 
+		? "<p>{$content[$label][1]}</p>"
+		: "<p><label> {$content[$label][0]} </label> {$content[$label][1]}</p>";
+	
+	echo $form_input;
+}
+
+
+/// hidden forms to pass additional information to the action
+$hidden_forms = hidden_information_form($object);
+foreach ($hidden_forms as $form) echo $form;
+
+/// save button
+$btnSave = elgg_view('input/submit', array(
+	'value' => elgg_echo('gcforums:save_button'),
+	'name' => 'save'
+));
+
+echo "<p>$btnSave</p>";
+
+echo "</div>";
+
+
+
 
 /// title, description, and access
-function general_information_form($object) {
-
+function general_information_form($object = null) {
+	$title = ($object == null) ? '' : $object->title;
 	if ($object->getSubtype() !== 'hjforumpost') {
 		$lblTitle = elgg_echo('gforums:title_label');
 		$txtTitle = elgg_view('input/text', array(
 			'name' => 'txtTitle',
-			'value' => $object->title,
+			'value' => $title,
 			'required' => true
 		));
 		$sub_return = array('title' => array($lblTitle, $txtTitle));
 	}
 
+	$description = ($object == null) ? '' : $object->description;
 	$lblDescription = elgg_echo('gforums:description_label');
 	$txtDescription = elgg_view('input/longtext', array(
 		'name' => 'txtDescription',
-		'value' => $object->description,
+		'value' => $description,
 		'required' => true
 	));
 
+	$access_id = ($object == null) ? '' : $object->access_id;
 	$lblAccess = elgg_echo('gcforums:access_label');
 	$ddAccess = elgg_view('input/access', array(
 		'name' => 'ddAccess',
-		'value' => $object->access_id
+		'value' => $access_id
 	));
 
 
@@ -40,24 +107,45 @@ function general_information_form($object) {
 	return $return;
 }
 
+function forums_topic_form($object) {
+	$is_sticky = ($object == null) ? '' : $object->is_sticky;
+	$lblIsSticky = elgg_echo('gcforums:is_sticky');
+	$chkIsSticky = elgg_view('input/checkboxes', array(
+		'name' => 'chkIsSticky',
+		'class' => 'list-unstyled',
+		'options' => array($lblIsSticky => 1),
+		'value' => $is_sticky,
+	));
+
+	$return = array(
+		'is_sticky' => array($lblIsSticky, $chkIsSticky),
+	);
+
+	return $return;
+}
+
 /// category filing, enable subcategories, and disable posting
 function forums_information_form($object) {
+
+	/// todo: identify if this object is new or not
 	$dbprefix = elgg_get_config('dbprefix');
 
+	$enable_subcategories = ($object == null) ? '' : $object->enable_subcategories;
 	$lblEnableCategory = elgg_echo('gcforums:enable_categories_label');
-	$chkEnablePost = elgg_view('input/checkboxes', array(
+	$chkEnableCategory = elgg_view('input/checkboxes', array(
 		'name' => 'chkEnableCategory',
 		'class' => 'list-unstyled',
 		'options' => array($lblEnableCategory => 1),
-		'value' => $object->enable_subcategories,
+		'value' => $enable_subcategories,
 	));
 
+	$enable_posting = ($object == null) ? '' : $object->enable_posting;
 	$lblEnablePost = elgg_echo('gcforums:enable_posting_label');
 	$chkEnablePost = elgg_view('input/checkboxes', array(
 		'name' => 'chkEnablePost',
 		'class' => 'list-unstyled',
 		'options' => array($lblEnablePost => 1),
-		'value' => $object->enable_posting,
+		'value' => $enable_posting,
 	));
 
 	// category option only available if the subcategory is enabled or first level forum in group
@@ -81,11 +169,12 @@ function forums_information_form($object) {
 		$query = "	SELECT guid_two FROM {$dbprefix}entity_relationships WHERE guid_one = {$object->getGUID()} AND relationship = 'filed_in'";
 		$currently_filed_under = get_data($query);
 
+		$category_filing = ($object == null) ? '' : $currently_filed_under[0]->guid_two;
 		$lblCategoryFiling = elgg_echo('gcforums:file_under_category_label');
 		$ddCategoryFiling = elgg_view('input/dropdown', array(
 			'options_values' => $category_list,
 			'name' => 'ddCategoryFiling',
-			'value' => $currently_filed_under[0]->guid_two,
+			'value' => $category_filing,
 		));
 
 		$sub_return = array('category_filing' => array($lblCategoryFiling, $ddCategoryFiling));
@@ -123,50 +212,5 @@ function hidden_information_form($object) {
 	return $return;
 }
 
-$subtype = $object->getSubtype();
-switch($subtype) {
-
-	case 'hjforumcategory':
-	$content = general_information_form($object);
-	break;
-
-	case 'hjforum':
-	$content = array_merge(general_information_form($object), forums_information_form($object));
-	break;
-
-	case 'hjforumtopic':
-	$content = general_information_form($object);
-	break;
-
-	case 'hjforumpost':
-	$content = general_information_form($object);
-	break;
-
-	default:
-}
-
-
-$labels = array('title', 'description', 'category_filing', 'sticky', 'enable_category', 'enable_posting', 'access');
-
-echo "<div class='tab-content tab-content-border'>";
-foreach ($labels as $label) {
-	if (!is_array($content[$label])) continue;
-	echo "<p><label> {$content[$label][0]} </label> {$content[$label][1]}</p>";
-}
-
-
-/// hidden forms to pass additional information to the action
-$hidden_forms = hidden_information_form($object);
-foreach ($hidden_forms as $form) echo $form;
-
-/// save button
-$btnSave = elgg_view('input/submit', array(
-	'value' => elgg_echo('gcforums:save_button'),
-	'name' => 'save'
-));
-
-echo "<p>$btnSave</p>";
-
-echo "</div>";
 
 

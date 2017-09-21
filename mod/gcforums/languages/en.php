@@ -4,6 +4,37 @@ $english = array(
 
 	'admin:administer_utilities:debugging_forums' => 'Forums Debug Tool',
 
+	'gcforums:delete:heading' => "Deletion confirmation",
+	'gcforums:delete:body' => "Are you sure you want to delete the %s",
+	'gcforums:delete:cancel' => "Cancel",
+	'gcforums:delete:delete' => "Delete",
+	'gcforums:edit:new_forum:heading' => "New %s",
+	'gcforums:edit:edit_forum:heading' => "Edit %s",
+
+	'gcforums:translate:hjforumcategory' => "Category",
+	'gcforums:translate:hjforum' => "Forum",
+	'gcforums:translate:hjforumtopic' => "Topic",
+	'gcforums:translate:hjforumpost' => "Post",
+
+	'gcforums:translate:edit' => "Edit",
+	'gcforums:translate:delete' => "Delete",
+	'gcforums:translate:new_topic' => "New forum topic",
+	'gcforums:translate:new_subforum' => "New subforum",
+
+	"gcforums:translate:topics" => "Topics",
+	"gcforums:translate:forums" => "Forums",
+	"gcforums:translate:posts" => "Posts",
+	"gcforums:translate:latest" => "Latest",
+
+	"gcforums:translate:topic_starter" => "Topic Starter",
+	"gcforums:translate:replies" => "Replies",
+	"gcforums:translate:last_posted" => "Last Posted",
+
+
+	"gcforums:translate:total_topics" => "Total Topics",
+	"gcforums:translate:total_posts" => "Total Posts",
+	"gcforums:translate:latest_posts" => "Latest Posts",
+
 	"gcforums:is_sticky" => 'Sticky topic', 
 	"gcforums:forumpost_saved" => "Your reply has been created successfully",
 	"gcforums:forumtopic_saved" => "Your Forum Topic '%s' has been created successfully",
@@ -31,14 +62,9 @@ $english = array(
 
 	"gcforums:submit" => "Submit",
 
-	"gcforums:topics" => "Topics",
-	"gcforums:forums" => "Forums",
-	"gcforums:posts" => "Posts",
-	"gcforums:latest" => "Latest",
 
-	"gcforums:topic_starter" => "Topic Starter",
-	"gcforums:replies" => "Replies",
-	"gcforums:last_posted" => "Last Posted",
+
+
 
 	
 	// this was a mistake, (posting is inverse)
@@ -60,9 +86,6 @@ $english = array(
 	"gcforums:delete_hjforumtopic" => "Delete Forum",
 
 
-	"gcforums:total_topics" => "Total Topics",
-	"gcforums:total_posts" => "Total Posts",
-	"gcforums:latest_posts" => "Latest Posts",
 
 	"gcforums:no_posts" => "None",
 	"gcforums:sticky_topic" => "Sticky Topics",
@@ -81,7 +104,8 @@ $english = array(
 
 	"gcforums:notification_subject_post" => "New forum post",
 	"gcforums:notification_body_post" => "%s made a reply in the Forum Topic '%s' with the following content... <br/> %s <br/> You can view this item here: %s <br/>",
-    'gcforums:time'=>'on',
+    
+
 
     //edit page
 
@@ -93,6 +117,7 @@ $english = array(
 	'gcforums:unsubscribe' => 'Unsubscribe',
 
 	'gcforums:missing_description' => 'Missing Description', // NEW
-	);
+
+);
 
 add_translation("en", $english);

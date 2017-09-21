@@ -8,6 +8,10 @@
 
 elgg_register_event_handler('init','system','gcforums_init');
 
+define("TOTAL_POST", 1);
+define("TOTAL_TOPICS", 2);
+define("RECENT_POST", 3);
+
 function gcforums_init() {
 	elgg_register_library('elgg:gcforums:functions', elgg_get_plugins_path() . 'gcforums/lib/functions.php');
 
@@ -32,7 +36,6 @@ function gcforums_init() {
 	));
 
 	elgg_register_admin_menu_item("administer", "debugging_forums", "administer_utilities");
-
 }
 
 
@@ -54,23 +57,11 @@ function gcforums_page_handler($page) {
 
 	switch($page[0]) {
 		case 'create':
-			gatekeeper();	// group members and admins only
-			$vars['subtype'] = $page[1];
-			$vars['group_guid'] = $page[2];
-			$vars['container_guid'] = $page[3]; // when we're not in the main page for the forums in the group
-			$title = elgg_echo("gcforums:new_{$page[1]}");
-			$content = elgg_view_form('gcforums/create', array(), $vars); // pass some variables to the form (2nd param is empty)
-			$body = elgg_view_layout('forum-full',array(
-				'content' => $content,
-				'title' => $title,
-				'filter' => '',	// removes the owner, mine, friends tabs
-				));
-			echo elgg_view_page($title,$body);
-
+			gatekeeper();
+			$params = render_create_forms($page[2], $page[1]);
 			break;
 
 		case 'edit':
-			/// make sure that only post owners, group admin and site admin have access
 			gatekeeper();
 			$params = render_edit_forms($page[1]);
 			break;
@@ -97,22 +88,53 @@ function gcforums_page_handler($page) {
 }
 
 
+function render_create_forms($entity_guid, $entity_type = '') {
 
-function render_edit_forms($entity_guid) {
 	$entity = get_entity($entity_guid);
-	$group_guid = gcforums_get_forum_in_group($entity->getGUID(), $entity->getGUID());
-	elgg_set_page_owner_guid($group_guid);
+
+
+	elgg_set_page_owner_guid(gcforums_get_forum_in_group($entity->getGUID(), $entity->getGUID()));
+	$vars['current_entity'] = $entity_guid;
+	$vars['entity_type'] = $entity_type;
+
+	$content = elgg_view_form('gcforums/edit', array(), $vars);
+	$title = elgg_echo('gcforums:edit:new_forum:heading', array(elgg_echo("gcforums:translate:{$entity_type}")));
+
+
+	$return['filter'] = '';
+	$return['title'] = $title;
+	$return['content'] = $content;
+	return $return;
+
+}
+
+function render_edit_forms($entity_guid, $entity_type = '') {
+
+	$entity = get_entity($entity_guid);
+
+	elgg_set_page_owner_guid(gcforums_get_forum_in_group($entity->getGUID(), $entity->getGUID()));
 	$vars['entity_guid'] = $entity_guid;
 
 	$content = elgg_view_form('gcforums/edit', array(), $vars);
+	$title = elgg_echo('gcforums:edit:edit_forum:heading', array(elgg_echo("gcforums:translate:{$entity_type}")));
 
+	
 	$return['filter'] = '';
-	$return['title'] = "title of the content";
+	$return['title'] = $title;
 	$return['content'] = $content;
 	return $return;
+
 }
 
-
+/// recursively go through the forums and return group entity
+function gcforums_get_forum_in_group($entity_guid_static, $entity_guid) {
+	$entity = get_entity($entity_guid);
+	// (base) stop recursing when we reach group guid
+	if ($entity instanceof ElggGroup)  
+		return $entity_guid;
+	else 
+		return gcforums_get_forum_in_group($entity_guid_static, $entity->getContainerGUID());
+}
 
 
 function render_forum_topics($topic_guid) {
@@ -176,9 +198,7 @@ function render_forum_topics($topic_guid) {
 		}
 		$content .= "</div>";
 
-		$group_guid = gcforums_get_forum_in_group($topic->getGUID(), $topic->getGUID());
-
-		$vars['group_guid'] = $group_guid;
+		$vars['group_guid'] = 334;
 		$vars['topic_guid'] = $topic->guid;
 		$vars['topic_access'] = $topic->access_id;
 		$vars['subtype'] = 'hjforumpost';
@@ -203,7 +223,7 @@ function assemble_forum_breadcrumb($entity) {
 		elgg_push_breadcrumb('Group Forums');
 
 	} else {
-
+		elgg_set_page_owner_guid(gcforums_get_forum_in_group($entity->getGUID(), $entity->getGUID()));
 		$breadcrumb_array = array();
 		$breadcrumb_array = assemble_nested_forums(array(), $forum_guid, $forum_guid);
 		$breadcrumb_array = array_reverse($breadcrumb_array);
@@ -227,19 +247,19 @@ function render_forums($forum_guid) {
 	$dbprefix = elgg_get_config('dbprefix');
 	$base_url = elgg_get_site_entity()->getURL();
 
+	$group_entity = get_entity(gcforums_get_forum_in_group($entity->getGUID(), $entity->getGUID()));
 	// set the breadcrumb trail
 	assemble_forum_breadcrumb($entity);
-	$group_guid = gcforums_get_forum_in_group($forum_guid, $forum_guid);
 
 	// forums will always remain as content within a group
-	elgg_set_page_owner_guid($group_guid);
+	elgg_set_page_owner_guid($group_entity->getGUID());
 	$return = array();
 
 
 	$query = "SELECT * FROM elggentities WHERE container_guid = {$forum_guid} AND subtype = 19";
 	$topics = get_data($query);
 
-	$content .= "<div class='forums-menu-buttons'>".gcforums_menu_buttons(3614, 334)."</div> ";
+	$content .= "<div class='forums-menu-buttons'>".gcforums_menu_buttons($entity->getGUID(), $group_entity->getGUID())."</div> ";
 
 	if (count($topics) > 0) {
 		$content .= "
@@ -247,7 +267,7 @@ function render_forums($forum_guid) {
 				<div style='background: #e6e6e6; width:100%;' >
 					<div class='topic-header'>Topic
 						<div class='topic-information'>options</div>
-						<div class='topic-information'>last post</div>
+						<div class='topic-information'>".elgg_echo('gcforums:translate:last_posted')."</div>
 						<div class='topic-information'>total replies</div>
 						<div class='topic-information'>topic starter</div>
 					</div>";
@@ -331,9 +351,9 @@ function render_forums($forum_guid) {
 
 				/// forums
 				foreach ($forums as $forum) {
-					$total_topics = get_total_topics($forum->guid);
-					$total_posts = get_total_posts($forum->guid);
-					$recent_post = get_recent_post($forum->guid);
+					$total_topics = get_forums_statistics_information($forum->guid, TOTAL_TOPICS);
+					$total_posts = get_forums_statistics_information($forum->guid, TOTAL_POST);
+					$recent_post = get_forums_statistics_information($forum->guid, RECENT_POST);
 					$options = render_edit_options($forum->getGUID(), $forum->getGUID());
 
 					$hyperlink = "<a href='{$base_url}gcforums/view/{$forum->getGUID()}'><strong>{$forum->title}</strong></a>";
@@ -380,9 +400,9 @@ function render_forums($forum_guid) {
 						</div>";
 
 			foreach ($forums as $forum) {
-					$total_topics = get_total_topics($forum->guid);
-					$total_posts = get_total_posts($forum->guid);
-					$recent_post = get_recent_post($forum->guid);
+					$total_topics = get_forums_statistics_information($forum->guid, TOTAL_TOPICS);
+					$total_posts = get_forums_statistics_information($forum->guid, TOTAL_POST);
+					$recent_post = get_forums_statistics_information($forum->guid, RECENT_POST);
 					$options = render_edit_options($forum->getGUID(), $forum->getGUID());
 
 					$hyperlink = "<a href='{$base_url}gcforums/view/{$forum->getGUID()}'><strong>{$forum->title}</strong></a>";
@@ -414,55 +434,58 @@ function render_forums($forum_guid) {
 }
 
 
-
-function get_total_posts($container_guid) {
+/**
+ * TOTAL_POST : 1
+ * TOTAL_TOPICS : 2
+ * RECENT_POST : 3
+ */
+function get_forums_statistics_information($container_guid, $type) {
 	$dbprefix = elgg_get_config('dbprefix');
 	
-	$query = "SELECT r.guid_one, r.relationship, r.guid_two, e.subtype, es.subtype, e.access_id
-			FROM {$dbprefix}entity_relationships r, {$dbprefix}entities e, {$dbprefix}entity_subtypes es
-			WHERE r.guid_one = e.guid AND e.subtype = es.id AND r.guid_two = {$container_guid} AND es.subtype = 'hjforumpost' AND (e.access_id = 1 OR e.access_id = 2)";
-	$num_post = 0;
-	$posts = get_data($query);
+	switch($type) {
+		case 1:
+			//$query = "SELECT r.guid_one, r.relationship, r.guid_two, e.subtype, es.subtype, e.access_id
+			//FROM {$dbprefix}entity_relationships r, {$dbprefix}entities e, {$dbprefix}entity_subtypes es
+			//WHERE r.guid_one = e.guid AND e.subtype = es.id AND r.guid_two = {$container_guid} AND es.subtype = 'hjforumpost' AND (e.access_id = 1 OR e.access_id = 2)";
 
-	foreach ($posts as $post)
-		$num_post++;
+			$query = "SELECT COUNT(r.guid_one) AS total
+				FROM {$dbprefix}entity_relationships r, {$dbprefix}entities e, {$dbprefix}entity_subtypes es
+				WHERE r.guid_one = e.guid AND e.subtype = es.id AND r.guid_two = {$container_guid} AND es.subtype = 'hjforumpost' AND (e.access_id = 1 OR e.access_id = 2)";
+			break;
 
-	return $num_post;
-}
+		case 2:
+			$query = "SELECT COUNT(r.guid_one) AS total
+				FROM {$dbprefix}entity_relationships r, {$dbprefix}entities e, {$dbprefix}entity_subtypes es
+				WHERE r.guid_one = e.guid AND e.subtype = es.id AND r.guid_two = {$container_guid} AND es.subtype = 'hjforumtopic' AND (e.access_id = 1 OR e.access_id = 2)";
+				break;
+		
+		case 3:
+			$query = "SELECT r.guid_one, r.relationship, r.guid_two, e.subtype, es.subtype, max(e.time_created) AS time_created, ue.email, ue.username, ue.name
+				FROM {$dbprefix}entity_relationships r, {$dbprefix}entities e, {$dbprefix}entity_subtypes es, {$dbprefix}users_entity ue
+				WHERE r.guid_one = e.guid AND e.subtype = es.id AND r.guid_two = {$container_guid} AND es.subtype = 'hjforumtopic' AND ue.guid = e.owner_guid LIMIT 1";
 
-function get_total_topics($container_guid) {
-	$dbprefix = elgg_get_config('dbprefix');
-	$query = "SELECT r.guid_one, r.relationship, r.guid_two, e.subtype, es.subtype, e.access_id
-			FROM {$dbprefix}entity_relationships r, {$dbprefix}entities e, {$dbprefix}entity_subtypes es
-			WHERE r.guid_one = e.guid AND e.subtype = es.id AND r.guid_two = {$container_guid} AND es.subtype = 'hjforumtopic' AND (e.access_id = 1 OR e.access_id = 2)";
-	$num_topic = 0;
-	$topics = get_data($query);
-
-	foreach ($topics as $topic)
-		$num_topic++;
-
-	return $num_topic;
-}
-
-function get_recent_post($container_guid) {//also grabbed display name - Nick
-	$dbprefix = elgg_get_config('dbprefix');
-	$query = "SELECT r.guid_one, r.relationship, r.guid_two, e.subtype, es.subtype, max(e.time_created) AS time_created, ue.email, ue.username, ue.name
-			FROM {$dbprefix}entity_relationships r, {$dbprefix}entities e, {$dbprefix}entity_subtypes es, {$dbprefix}users_entity ue
-			WHERE r.guid_one = e.guid AND e.subtype = es.id AND r.guid_two = {$container_guid} AND es.subtype = 'hjforumtopic' AND ue.guid = e.owner_guid";
-	$post = get_data($query);
-
-	$recent_poster = elgg_echo("gcforums:no_posts");
-	if ($post[0]->email) {
-		$timestamp = date('Y-m-d',$post[0]->time_created);
-		$recent_poster = "{$post[0]->name} ". elgg_echo('gcforums:time')." {$timestamp}"; //Output display name - nick
+			$post = get_data($query);
+			$recent_poster = elgg_echo("gcforums:no_posts");
+			if ($post[0]->email) {
+				$timestamp = date('Y-m-d',$post[0]->time_created);
+				// Output display name - nick
+				$recent_poster = "<div>{$post[0]->username}</div> <div>{$timestamp}</div>"; 
+			}
+			return $recent_poster;
+			break; // will never reach this break statement
+		
+		default:
 	}
-	return $recent_poster;
+
+	$total = get_data($query);
+	$total = $total[0]->total;
+
+	return $total;
 }
 
 
 /// recursively go through the nested forums to create the breadcrumb
 function assemble_nested_forums($breadcrumb, $forum_guid, $recurse_forum_guid) {
-	error_log(" ++++    {$recurse_forum_guid}");
 	$entity = get_entity($recurse_forum_guid);
 	if ($entity instanceof ElggGroup && $entity->guid != $forum_guid) {
 		$breadcrumb[$entity->getGUID()] = array($entity->guid, $entity->name, "profile/{$entity->guid}");
@@ -474,15 +497,6 @@ function assemble_nested_forums($breadcrumb, $forum_guid, $recurse_forum_guid) {
 	}
 }
 
-/// recursively go through the forums and return group entity
-function gcforums_get_forum_in_group($entity_guid_static, $entity_guid) {
-	$entity = get_entity($entity_guid);
-	// (base) stop recursing when we reach group guid
-	if ($entity instanceof ElggGroup)  
-		return $entity_guid;
-	else 
-		return gcforums_get_forum_in_group($entity_guid_static, $entity->getContainerGUID());
-}
 
 
 /**
@@ -509,14 +523,15 @@ function render_edit_options($object_guid, $group_guid) {
 	if (elgg_is_admin_logged_in() || $group_entity->getOwnerGUID() == $current_user->guid || check_entity_relationship($current_user->getGUID(), 'operator', $group_entity->getGUID())) {
 
 		/// todo: use icons
-		$object_menu_items = ($entity->getSubtype() === 'hjforum') ? array("new_subforum", "new_post", "edit") : array('edit', 'delete');
+		$object_menu_items = ($entity->getSubtype() === 'hjforum') ? array("new_subforum", "new_topic", "edit") : array('edit', 'delete');
 		
 		foreach ($object_menu_items as $menu_item) {
 			if ($menu_item === 'New Posting' && $entity->enable_posting) { // check if new posting link and it is disabled (enabled == disabled)
 
 			} else {
 				$url = elgg_get_site_url()."gcforums/edit/{$object_guid}";
-				$options[$menu_item] = "<a href='{$url}'>{$menu_item}</a>";
+				$menu_label = elgg_echo("gcforums:translate:{$menu_item}");
+				$options[$menu_item] = "<a href='{$url}'>{$menu_label}</a>";
 			}
 		}
 	}
@@ -535,7 +550,7 @@ function render_edit_options($object_guid, $group_guid) {
 		$edit_options .= "<div class='edit-options-{$entity_type}'>{$option}</div>";
 
 
-	if ($entity->getSubtype() !== 'hjforumpost' && $entity->getSubtype() !== 'hjforumtopic') {
+	if ($entity->getSubtype() !== 'hjforumpost' && $entity->getSubtype() !== 'hjforumtopic' && $entity->getSubtype() !== 'hjforumcategory') {
 		elgg_view('output/url', array('is_action' => TRUE));
 		elgg_view('input/securitytoken');
 		$url = elgg_add_action_tokens_to_url(elgg_get_site_url()."action/gcforums/subscribe?guid={$object_guid}");
@@ -550,8 +565,6 @@ function render_edit_options($object_guid, $group_guid) {
 
 
 
-
-
 function gcforums_menu_buttons($forum_guid, $group_guid, $is_topic=false) { // main page if forum_guid is not present
 
 	elgg_load_css('gcforums-css');
@@ -561,6 +574,8 @@ function gcforums_menu_buttons($forum_guid, $group_guid, $is_topic=false) { // m
 	$user = $current_user;
 	$entity = get_entity($forum_guid);
 	$entity_type = $entity->getSubtype();
+
+	$current_entity_guid = get_entity($forum_guid);
 
 	gatekeeper();
 	// todo: check if it is a topic
@@ -580,18 +595,20 @@ function gcforums_menu_buttons($forum_guid, $group_guid, $is_topic=false) { // m
 		if (($current_user->isAdmin() || $isOperator) && !$is_topic) {
 
 			$button_class = "elgg-button elgg-button-action btn btn-default";
+			$gcforum_types = array('hjforumcategory', 'hjforumtopic', 'hjforum');
 
-			// new category
-			$url = "gcforums/create/hjforumcategory/{$group_guid}/{$forum_guid}";
-			$new_category_button = ($entity->enable_subcategories || !$forum_guid) ? elgg_view('output/url', array("text" => elgg_echo('gcforums:new_hjforumcategory'), "href" => $url, 'class' => $button_class)) : "";
-			
-			// new topic
-			$url = "gcforums/create/hjforumtopic/{$group_guid}/{$forum_guid}";
-			$new_forum_topic_button = (!$forum_object->enable_posting && $forum_guid) ? elgg_view('output/url', array("text" => elgg_echo('gcforums:new_hjforumtopic'), "href" => $url, 'class' => $button_class)) : "";
-			
-			// new current forum
-			$url = "gcforums/create/hjforum/{$group_guid}/{$forum_guid}"; 
-			$new_forum_button = elgg_view('output/url', array("text" => elgg_echo('gcforums:new_hjforum'), "href" => $url, 'class' => $button_class));
+			$button_array = array();
+			foreach ($gcforum_types as $gcforum_type) {
+				$url = "gcforums/create/{$gcforum_type}/{$forum_guid}";
+				if ($gcforum_type === 'hjforumcategory')
+					$button_array[$gcforum_type] = ($entity->enable_subcategories || !$forum_guid) ? elgg_view('output/url', array("text" => elgg_echo('gcforums:new_hjforumcategory'), "href" => $url, 'class' => $button_class)) : "";
+				
+				if ($gcforum_type === 'hjforumtopic')
+					$button_array[$gcforum_type] = (!$forum_object->enable_posting && $forum_guid) ? elgg_view('output/url', array("text" => elgg_echo('gcforums:new_hjforumtopic'), "href" => $url, 'class' => $button_class)) : "";
+
+				if ($gcforum_type === 'hjforum')
+					$button_array[$gcforum_type] = elgg_view('output/url', array("text" => elgg_echo('gcforums:new_hjforum'), "href" => $url, 'class' => $button_class));
+			}
 			
 			if ($forum_guid != 0) {
 
@@ -599,18 +616,16 @@ function gcforums_menu_buttons($forum_guid, $group_guid, $is_topic=false) { // m
 				$url = "gcforums/edit/{$forum_guid}";
 				$edit_forum_button = elgg_view('output/url', array("text" => elgg_echo('gcforums:edit_hjforum'), "href" => $url, 'class' => $button_class));
 				
-				// delete current forum
-				/*elgg_view('output/url', array('is_action' => TRUE));
-				elgg_view('input/securitytoken');
-				$url = elgg_add_action_tokens_to_url(elgg_get_site_url()."action/gcforums/delete?guid={$forum_guid}");
-				$delete_forum_button = elgg_view('output/url', array("text" => elgg_echo('gcforums:forum_delete'), "href" => $url, 'class' => 'elgg-button elgg-button-action btn btn-default'));
-				*/
-				$separator = "  ";
-			}
-			return "<div> {$new_category_button} {$new_forum_button} {$new_forum_topic_button} {$separator} {$edit_forum_button} {$delete_forum_button}</div>  " . elgg_view('alerts/delete', array('entity' => $entity));
+				$button_array['delete'] = elgg_view('alerts/delete', array('entity' => $entity, 'is_menu_buttons' => true));
 
+			}
+
+			foreach ($button_array as $key => $value)
+				$menu_buttons .= " {$value} ";
+			
+			return "<div>{$menu_buttons}</div>";
 		}
-		return "{$go_back_link} <div class='gcforums-menu'>{$new_forum_topic_button}</div>";
+		return "<div class='gcforums-menu'>{$new_forum_topic_button}</div>";
 	}
 }
 
