@@ -100,7 +100,8 @@ function gcforums_page_handler($page) {
 
 function render_edit_forms($entity_guid) {
 	$entity = get_entity($entity_guid);
-	elgg_set_page_owner_guid(334);
+	$group_guid = gcforums_get_forum_in_group($entity->getGUID(), $entity->getGUID());
+	elgg_set_page_owner_guid($group_guid);
 	$vars['entity_guid'] = $entity_guid;
 
 	$content = elgg_view_form('gcforums/edit', array(), $vars);
@@ -172,7 +173,9 @@ function render_forum_topics($topic_guid) {
 		}
 		$content .= "</div>";
 
-		$vars['group_guid'] = 334;
+		$group_guid = gcforums_get_forum_in_group($topic->getGUID(), $topic->getGUID());
+
+		$vars['group_guid'] = $group_guid;
 		$vars['topic_guid'] = $topic->guid;
 		$vars['topic_access'] = $topic->access_id;
 		$vars['subtype'] = 'hjforumpost';
@@ -217,9 +220,10 @@ function render_forums($forum_guid) {
 
 	// set the breadcrumb trail
 	assemble_forum_breadcrumb($entity);
+	$group_guid = gcforums_get_forum_in_group($forum_guid, $forum_guid);
 
 	// forums will always remain as content within a group
-	elgg_set_page_owner_guid(334);
+	elgg_set_page_owner_guid($group_guid);
 	$return = array();
 
 
@@ -480,6 +484,7 @@ function gcforums_display_user($user_information) {
 
 /// recursively go through the nested forums to create the breadcrumb
 function assemble_nested_forums($breadcrumb, $forum_guid, $recurse_forum_guid) {
+	error_log(" ++++    {$recurse_forum_guid}");
 	$entity = get_entity($recurse_forum_guid);
 	if ($entity instanceof ElggGroup && $entity->guid != $forum_guid) {
 		$breadcrumb[$entity->getGUID()] = array($entity->guid, $entity->name, "profile/{$entity->guid}");
@@ -491,6 +496,15 @@ function assemble_nested_forums($breadcrumb, $forum_guid, $recurse_forum_guid) {
 	}
 }
 
+/// recursively go through the forums and return group entity
+function gcforums_get_forum_in_group($entity_guid_static, $entity_guid) {
+	$entity = get_entity($entity_guid);
+	// (base) stop recursing when we reach group guid
+	if ($entity instanceof ElggGroup)  
+		return $entity_guid;
+	else 
+		return gcforums_get_forum_in_group($entity_guid_static, $entity->getContainerGUID());
+}
 
 
 /* Create list of options to modify forums
