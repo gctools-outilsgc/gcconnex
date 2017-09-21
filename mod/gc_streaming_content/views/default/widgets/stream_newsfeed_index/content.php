@@ -1,9 +1,9 @@
 <?php
 /**
  * Newsfeed Activity Widget
- * 
+ *
  * This will display Friend and Group activity based on the relationships of the logged in user
- * 
+ *
  *
  * @version 1.0
  * @author Nick Pietrantonio    github.com/piet0024
@@ -22,31 +22,6 @@ if(elgg_is_logged_in()){
 <script>
     $(document).ready(function () {
         $('.elgg-list-river').parent().parent().attr('id', 'activity');
-
-        //add newsfeed settings link
-        $('#activity .panel-heading').prepend('<a href="#" title="<?php echo elgg_echo('newsfeed:filter:title'); ?>" class="dropdown  pull-right mrgn-rght-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-caret-down fa-2x icon-unsel " aria-hidden="true"></i></a><ul class="dropdown-menu pull-right newsfeed-filter panel-default" aria-labelledby="dropdownMenu2"><li class="panel-body" id="filter_form"></li></ul>');
-
-        //load in form when settings is pressed
-        $('#activity .dropdown').on('click', function () {
-            //check if form has already been loaded
-            if ($('#filter_form').html() == '') {
-
-                //place loading spinner
-                $('#filter_form').html('<div class="text-center" style="margin: 10px auto 0;display:block;"><?php echo $loading; ?></div>');
-                //load form
-                elgg.get('ajax/view/ajax/newsfeed_filter', {
-                    success: function (output) {
-                        $('#filter_form').html(output);
-                    }
-                });
-
-            }
-        });
-
-        //stop dropdown form from toggling while interacting with form
-        $('.dropdown-menu').click(function (e) {
-            e.stopPropagation();
-        });
     });
 </script>
 <?PHP
@@ -91,7 +66,7 @@ if(elgg_is_logged_in()){
     }else if(!$hasfriends && $hasgroups){
         //if no friends but groups
         $guids_in = implode(',', array_unique(array_filter($group_guids)));
-        
+
         //display created content and replies and comments
         $optionsg['wheres'] = array("( oe.container_guid IN({$guids_in})
          OR te.container_guid IN({$guids_in}) )");
@@ -108,7 +83,7 @@ if(elgg_is_logged_in()){
         $optionsfg['action_types'] = array_diff( $actionTypes, $filteredItems);
 
         $guids_in = implode(',', array_unique(array_filter($group_guids)));
-        
+
         //Groups + Friends activity query
         //This query grabs new created content and comments and replies in the groups the user is a member of *** te.container_guid grabs comments and replies
         $optionsfg['wheres'] = array(
