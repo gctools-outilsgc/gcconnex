@@ -11,7 +11,7 @@
  */
  /*
  * GC_MODIFICATION
- * Description: Added font awesome icon for start of tags list. Custom styling to tags
+ * Description: Added font awesome icon for start of tags list. Custom styling to tags. Tags now link to the GSA
  * Author: GCTools Team
  */
 if (isset($vars['entity'])) {
@@ -53,7 +53,6 @@ unset($vars['icon_class']);
 
 $list_items = '';
 
-$params = $vars;
 foreach($tags as $tag) {
 	if (is_string($tag) && strlen($tag) > 0) {
 		//$value_text = $tag;
@@ -71,13 +70,9 @@ foreach($tags as $tag) {
 	}
 }
 
-if (empty($list_items)) {
-	return;
-}
-
 $icon = "<span class=\"fa fa-tags fa-lg\"></span>";
 
-$list = <<<___HTML
+echo <<<___HTML
 	<div class="clearfix">
 		<ul class="$list_class">
 			<li>$icon</li>
@@ -86,4 +81,3 @@ $list = <<<___HTML
 	</div>
 ___HTML;
 
-echo $list;
