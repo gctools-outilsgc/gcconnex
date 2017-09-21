@@ -28,16 +28,37 @@ if( $limit ){
 	$newsfeed_limit = $limit;
 }
 
-$options = array(
-    'type' => 'object',
-    'subtypes' => $subtypes,
-    'limit' => $newsfeed_limit,
-    'metadata_name' => 'audience',
-    'metadata_values' => $community_audience,
-    'full_view' => false,
-    'list_type_toggle' => false,
-    'pagination' => true
-);
+        $options = array(
+            'type' => 'object',
+            'subtypes' => $subtypes,
+            'limit' => $newsfeed_limit,
+            'full_view' => false,
+            'list_type_toggle' => false,
+            'pagination' => true
+            
+        );
+        $tags_values ='';
+        $tags_display ='';
+        if( strpos($community_tags, ',') !== false ){ // if multiple tags
+                $community_tags = array_map('trim', explode(',', $community_tags));
+            foreach($community_tags as $tag_val){
+                $tags_value = elgg_get_metastring_id($tag_val);
+                $tags_values .= ' OR md.value_id = '.$tags_value;
+                $tags_display .= ' <span class="elgg-tag" style="color:#055959; font-size:12px; padding:3px 8px;">'.$tag_val.'</span>';
+            }
+        }else{
+           $tags_values = ' OR md.value_id = ' .elgg_get_metastring_id($community_tags);
+            $tags_display = '<span class="elgg-tag" style="color:#055959; font-size:12px; padding:3px 8px;">' .$community_tags .'</span>';
+        }
+        //get the metastring id
+        $audience_name = elgg_get_metastring_id('audience');
+        $audience_value = elgg_get_metastring_id($community_audience);
+        $tags_name = elgg_get_metastring_id('tags');
+        //Query grabs content with audience or tags
+        $dbprefix = elgg_get_config('dbprefix');
+        $options['joins'][] ="JOIN {$dbprefix}metadata md ON (e.guid = md.entity_guid)";
+        $options['wheres'][] = "(md.name_id = {$audience_name} OR md.name_id = {$tags_name}) 
+        AND (md.value_id = {$audience_value}{$tags_values})";
 
 if( $latest ){
 	$options['wheres'] = array("e.guid > {$latest}");

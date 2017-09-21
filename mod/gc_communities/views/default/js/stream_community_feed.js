@@ -55,7 +55,7 @@ function check_for_community_feed_items(){
                 }
             },
             error: function(request, status, error) { 
-               console.log('error');
+               console.log(error);
             }
         });
     }
