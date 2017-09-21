@@ -66,16 +66,6 @@ return array(
   'wet4:homenotice' => 'Welcome to GCcollab, the Government of Canada&#39;s professional social networking platform. ',
   'wet_mygroups:my_groups' => "My Groups",
   'wet_mygroups:my_groups_nolog' => "New Groups",
-
-  /**
-   * Newsfeed
-   */
-  'newsfeed:menu' => 'Home',
-  'newsfeed:filter' => "Filter your News Feed",
-  'newsfeed:label' => "Show colleague connections on your News Feed",
-  'newsfeed:do' => "Colleague connections will no longer display on your News Feed.",
-  'newsfeed:undo' => "Colleague connections will now display on your News Feed.",
-  'newsfeed:filter:title' => "News Feed settings",
   
   /**
    * Notice
@@ -227,6 +217,7 @@ Hope to chat more soon!",
   /**
    * Misc.
    */
+  'newsfeed:menu' => 'Home',
   'breadcrum:home' => 'Home',
   'subgroups:parent:need_join' => "Join Parent Group",
   'event_calendar:none' => "No events found.",

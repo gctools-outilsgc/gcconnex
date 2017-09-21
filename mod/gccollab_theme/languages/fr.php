@@ -66,16 +66,6 @@ return array(
   'wet4:homenotice' => 'Bienvenue sur GCcollab, la plateforme de réseautage social professionnelle du gouvernement du Canada. GCcollab, c\'est un outil qui permet aux fonctionnaires de tisser des liens et de collaborer selon leurs connaissances, leurs expériences et leurs intérêts communs. GCcollab devrait être réservé aux activités professionnelles et ne devrait pas servir à remplacer les réseaux sociaux personnels (comme Facebook).',
 
   /**
-   * Newsfeed
-   */
-  'newsfeed:menu' => 'Accueil',
-  'newsfeed:filter' => "Filtrer votre fil de nouvelles",
-  'newsfeed:label' => "Afficher les connexions faites avec vos collègues dans votre fil de nouvelles",
-  'newsfeed:do' => "Les connexions faites avec vos collègues n'apparaîtront plus dans votre fil de nouvelles.",
-  'newsfeed:undo' => "Les connexions faites avec vos collègues apparaîtront dans votre fil de nouvelles.",
-  'newsfeed:filter:title' => "Configuration de votre fil de nouvelles",
-
-  /**
    * Notice
    */
   'notice:title' => 'GCcollab... ré-imaginé pour vous! ',
@@ -212,6 +202,7 @@ J'espère d'avoir l'occasion de discuter avec vous bientôt!",
   /**
    * Misc.
    */
+  'newsfeed:menu' => 'Accueil',
   'breadcrum:home' => 'Accueil',
   'subgroups:parent:need_join' => "Joindre le groupe parent",
   'event_calendar:none' => 'Aucun événement trouvé.',
