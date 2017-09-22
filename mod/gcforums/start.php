@@ -88,15 +88,17 @@ function gcforums_page_handler($page) {
 }
 
 
-function render_create_forms($entity_guid, $entity_type = '') {
+function render_create_forms($entity_guid, $entity_type) {
 
+	// this is the current form (new forum will be placed in this forum)
 	$entity = get_entity($entity_guid);
-
 	assemble_forum_breadcrumb($entity);
-	
-	elgg_set_page_owner_guid(gcforums_get_forum_in_group($entity->getGUID(), $entity->getGUID()));
+	$group_guid = gcforums_get_forum_in_group($entity->getGUID(), $entity->getGUID());
+	elgg_set_page_owner_guid();
+	$group_entity = get_entity($group_guid);
 	$vars['current_entity'] = $entity_guid;
 	$vars['entity_type'] = $entity_type;
+	$vars['group_guid'] = $group_guid;
 
 	$content = elgg_view_form('gcforums/create', array(), $vars);
 	$title = elgg_echo('gcforums:edit:new_forum:heading', array(elgg_echo("gcforums:translate:{$entity_type}")));
@@ -141,6 +143,7 @@ function render_forum_topics($topic_guid) {
 	$entity = get_entity($topic_guid);
 	$dbprefix = elgg_get_config('dbprefix');
 	$base_url = elgg_get_site_entity()->getURL();
+	$group_guid = gcforums_get_forum_in_group($topic_guid, $topic_guid);
 
 	// set the breadcrumb trail
 	assemble_forum_breadcrumb($entity);
@@ -197,10 +200,11 @@ function render_forum_topics($topic_guid) {
 		}
 		$content .= "</div>";
 
-		$vars['group_guid'] = 334;
+		$vars['group_guid'] = $group_guid;
 		$vars['topic_guid'] = $topic->guid;
+		$vars['current_entity'] = $topic->guid;
 		$vars['topic_access'] = $topic->access_id;
-		$vars['subtype'] = 'hjforumpost';
+		$vars['entity_type'] = 'hjforumpost';
 		$topic_content .= elgg_view_form('gcforums/create', array(), $vars);
 		$content .= $topic_content;
 
@@ -255,7 +259,7 @@ function render_forums($forum_guid) {
 	$return = array();
 
 
-	$query = "SELECT * FROM elggentities WHERE container_guid = {$forum_guid} AND subtype = 19";
+	$query = "SELECT * FROM elggentities e, elggentity_subtypes es WHERE e.subtype = es.id AND e.container_guid = {$forum_guid} AND es.subtype = 'hjforumtopic'";
 	$topics = get_data($query);
 
 	$content .= "<div class='forums-menu-buttons'>".gcforums_menu_buttons($entity->getGUID(), $group_entity->getGUID())."</div> ";
@@ -505,6 +509,8 @@ function assemble_nested_forums($breadcrumb, $forum_guid, $recurse_forum_guid) {
  */
 function render_edit_options($object_guid, $group_guid) {
 
+	gatekeeper();
+error_log(">>>>>>   {$group_guid}");
 	$options = array();
 	$group_entity = get_entity($group_guid);
 	$entity = $group_entity;
@@ -533,7 +539,7 @@ function render_edit_options($object_guid, $group_guid) {
 	}
 
 	// checks if user is admin, group owner, or moderator
-	if (elgg_is_admin_logged_in() || $group_entity->getOwnerGUID() == $current_user->guid || check_entity_relationship($current_user->getGUID(), 'operator', $group_entity->getGUID())) {
+	if (elgg_is_admin_logged_in() || $entity->getOwnerGUID() == $current_user->guid /*|| check_entity_relationship($current_user->getGUID(), 'operator', $group_entity->getGUID())*/) {
 
 		/// todo: use icons
 		$object_menu_items = ($entity->getSubtype() === 'hjforum') ? array("new_subforum", "new_topic", "edit") : array('edit', 'delete');
@@ -601,7 +607,7 @@ function gcforums_menu_buttons($forum_guid, $group_guid, $is_topic=false) { // m
 			foreach ($gcforum_types as $gcforum_type) {
 				$url = "gcforums/create/{$gcforum_type}/{$forum_guid}";
 				if ($gcforum_type === 'hjforumcategory')
-					$button_array[$gcforum_type] = ($entity->enable_subcategories || !$forum_guid) ? elgg_view('output/url', array("text" => elgg_echo('gcforums:new_hjforumcategory'), "href" => $url, 'class' => $button_class)) : "";
+					$button_array[$gcforum_type] = ($entity->enable_subcategories || $forum_guid == $group_guid) ? elgg_view('output/url', array("text" => elgg_echo('gcforums:new_hjforumcategory'), "href" => $url, 'class' => $button_class)) : "";
 				
 				if ($gcforum_type === 'hjforumtopic')
 					$button_array[$gcforum_type] = (!$forum_object->enable_posting && $forum_guid) ? elgg_view('output/url', array("text" => elgg_echo('gcforums:new_hjforumtopic'), "href" => $url, 'class' => $button_class)) : "";

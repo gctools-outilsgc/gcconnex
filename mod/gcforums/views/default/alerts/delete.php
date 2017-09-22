@@ -8,21 +8,17 @@ $delete_button = elgg_echo('gcforums:delete:delete');
 $cancel_button = elgg_echo('gcforums:delete:cancel');
 
 $url = elgg_add_action_tokens_to_url(elgg_get_site_url()."action/gcforums/delete?guid={$entity->getGUID()}");
-$delete = "<a href='{$url}'>{$delete_button}</a>";
+$delete = "<a style='color:white; text-decoration:none;' href='{$url}'>{$delete_button}</a>";
 
 $button_size = ($is_menu_buttons) ? "" : "btn-sm";
 
 ?>
 
-
-<!-- Trigger the modal with a button -->
 <button type="button" class="btn btn-danger <?php echo $button_size; ?>" data-toggle="modal" data-target="#myModal"><?php echo $delete_button; ?></button>
 
-<!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 
-		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
 		    	<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -42,7 +38,9 @@ $button_size = ($is_menu_buttons) ? "" : "btn-sm";
 
 <style>
 
-
+.modal-footer {
+	text-align: center;
+}
 .modal {
 	display: none; /* Hidden by default */
 	position: fixed; /* Stay in place */
