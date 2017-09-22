@@ -26,7 +26,7 @@
 		$join = "JOIN {$db_prefix}groups_entity ge ON e.guid = ge.guid";
 		$params['joins'] = array($join);
 		$fields = array('name', 'description');
-		$where = search_get_where_sql('ge', $fields, $params,FALSE);
+		$where = "ge.name LIKE '%$q%'";
 		$params['wheres'] = array($where);
 		// override subtype -- All groups should be returned regardless of subtype.
 		$params['subtype'] = ELGG_ENTITIES_ANY_VALUE;
