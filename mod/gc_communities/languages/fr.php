@@ -24,6 +24,7 @@ $french = array(
   'gc_communities:enable_widgets' => "Activer les widgets sur les pages de la communauté?",
   'gc_communities:newsfeed_shown' => "Fil de nouvelles affichés :",
   'gc_communities:wires_shown' => "Les fils sont affichés :",
+    'gc_communities:showing_content' => 'Showing content tagged with: %s and the "Audience tag" %s',
 );
 
 $communities = json_decode(elgg_get_plugin_setting('communities', 'gc_communities'));

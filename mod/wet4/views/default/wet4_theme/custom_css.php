@@ -1022,6 +1022,38 @@ border:none;
     clear: both;
 }
 
+.act-filter {
+  margin: 0;
+}
+
+.act-filter:after{
+   content: '';
+   display: block;
+   position: absolute;
+   right:3%;
+   top: -12px;
+   width: 0;
+   height: 0;
+   border-left: 12px solid transparent;
+   border-right: 12px solid transparent;
+   border-bottom: 12px solid #fff;
+   clear: both;
+}
+
+.act-filter:before{
+   content: '';
+   display: block;
+   position: absolute;
+   right: 3%;
+   top: -14px;
+   width: 0;
+   height: 0;
+   border-left: 12px solid transparent;
+   border-right: 12px solid transparent;
+   border-bottom: 12px solid rgba(0, 0, 0, 0.15) ;
+   clear: both;
+}
+
     .newsfeed-filter-gear {
         font-size: 1.75em !important;
         margin-top: 3px;

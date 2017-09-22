@@ -39,6 +39,10 @@ requirejs( ["form-validate"], function() {
               }
           },
           submitHandler: function(form) {
+            for(var i in CKEDITOR.instances){
+              CKEDITOR.instances[i].updateElement();
+            }
+
             $(form).find('button').prop('disabled', true);
             form.submit();
           },

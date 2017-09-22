@@ -71,7 +71,7 @@ if ($title_link) {
     if(elgg_in_context('widgets')){
         echo "<h4 class=\"mrgn-bttm-0 summary-title\">$title_link</h4>";
     }else if(elgg_in_context('profile') || elgg_in_context('group_profile') || elgg_instanceof(elgg_get_page_owner_entity(), "group")){
-    	if($entity->getSubtype() != 'answer'){//if answer in group question
+    	if($entity instanceof ElggEntity && $entity->getSubtype() != 'answer'){//if answer in group question
     		echo "<h3 class=\"mrgn-bttm-0 summary-title\">$title_link</h3>";
     	}
     }else{

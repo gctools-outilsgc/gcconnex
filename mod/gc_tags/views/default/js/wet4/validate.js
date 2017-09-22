@@ -45,7 +45,7 @@ requirejs( ["form-validate"], function() {
               var formActionType = formAction[formAction.length-2] + '/' +formAction[formAction.length-1];
               //array of actions that will open a modal
               var createActions = ['blog/save','bookmarks/save','pages/edit','groups/edit','file/upload','discussion/save'];
-            
+
               //test to see if this is an action we want to open a tag modal
               if($.inArray(formActionType, createActions) > -1){
                   var submitButton = $(form).find('button.form-submit');
@@ -56,9 +56,13 @@ requirejs( ["form-validate"], function() {
                       $(form).find('button').prop('disabled', true);
                       form.submit();
                   })
-                  
+
               }else{
-                  $(form).find('button').prop('disabled', true);
+                for(var i in CKEDITOR.instances){
+                  CKEDITOR.instances[i].updateElement();
+                }
+
+                $(form).find('button').prop('disabled', true);
                 form.submit();
               }
           },

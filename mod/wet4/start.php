@@ -158,6 +158,7 @@ function wet4_theme_init() {
     elgg_register_action("user/requestnewpassword", elgg_get_plugins_path() . "/wet4/actions/user/requestnewpassword.php", "public");
 		elgg_register_action('logout_as', elgg_get_plugins_path() . '/wet4/actions/logout_as.php'); //login as out
 		elgg_register_action("question/autocomplete", elgg_get_plugins_path() . "/wet4/actions/object/question/autocomplete.php");
+		elgg_register_action("deptactivity/filter", elgg_get_plugins_path() . "/wet4/actions/deptactivity/filter.php");
 
     //Verify the department action
     elgg_register_action("department/verify_department", elgg_get_plugins_path() . "/wet4/actions/department/verify_department.php");
@@ -222,6 +223,19 @@ function wet4_theme_init() {
         'target' => '_blank',
     ));
 
+		//newsfeed-like department pages
+		if(elgg_is_logged_in() && elgg_get_plugin_setting('deptActivity', 'wet4')){
+
+			elgg_register_ajax_view('ajax/deptactivity_check');
+			elgg_register_ajax_view('ajax/deptactivity_items');
+
+			elgg_register_page_handler('department', 'department_page_handler');
+
+			if(elgg_is_active_plugin('gc_newsfeed')){
+				elgg_extend_view('widgets/stream_newsfeed_index/content', 'dept_activity/tabs', 451);
+		    elgg_extend_view('widgets/newsfeed/content', 'dept_activity/tabs', 451);
+			}
+		}
 
 
 }
@@ -232,6 +246,11 @@ $dbprefix = elgg_get_config('dbprefix');
     if ($CONFIG->remove_logged_in) {
     $query = "UPDATE {$dbprefix}entities SET access_id = 2 WHERE access_id = 1";//change access logged in to public
     update_data($query);
+}
+
+function department_page_handler() {
+    require_once elgg_get_plugins_path() . 'wet4/pages/department/activity.php';
+    return true;
 }
 
  /*
@@ -1011,22 +1030,18 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
             }
 		// delete link
 
-
-
-		$options = array(
-			'name' => 'delete',
-			'text' => '<i class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['delete'].'</span></i>',
-			'title' => elgg_echo('delete:this') . ' ' . $entContext,
-			'href' => "action/$handler/delete?guid={$entity->getGUID()}",
-			'confirm' => elgg_echo('deleteconfirm'),
-			'priority' => 300,
-		);
-		$return[] = \ElggMenuItem::factory($options);
-
+            if (elgg_is_logged_in()){
+        		$options = array(
+        			'name' => 'delete',
+        			'text' => '<i class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['delete'].'</span></i>',
+        			'title' => elgg_echo('delete:this') . ' ' . $entContext,
+        			'href' => "action/$handler/delete?guid={$entity->getGUID()}",
+        			'confirm' => elgg_echo('deleteconfirm'),
+        			'priority' => 300,
+        		);
+        		$return[] = \ElggMenuItem::factory($options);
+            }
         }
-
-
-
 	}
 
 
@@ -1321,7 +1336,7 @@ function my_site_menu_handler($hook, $type, $menu, $params){
         return;
 
     foreach ($menu as $key => $item) {
-        if ($item->getName() === 'groups') 
+        if ($item->getName() === 'groups')
             (elgg_is_logged_in()) ? $item->setHref(elgg_get_site_url().'groups/all?filter=yours') : $item->setHref( elgg_get_site_url().'groups/all?filter=popular');
     }
 }
@@ -1331,19 +1346,19 @@ function my_site_menu_handler($hook, $type, $menu, $params){
  * Add styles to phot album title menu
  */
 function my_title_menu_handler($hook, $type, $menu, $params){
-    
+
     if (!is_array($menu))
         return;
 
     foreach ($menu as $key => $item) {
 
-        if ($item->getName() === 'slideshow') 
+        if ($item->getName() === 'slideshow')
             $item->setText(elgg_echo('album:slideshow'));
-        elseif ($item->getName() === 'addphotos') 
+        elseif ($item->getName() === 'addphotos')
             $item->setItemClass('mrgn-rght-sm');
-    
+
     }
-    
+
 }
 
 /*

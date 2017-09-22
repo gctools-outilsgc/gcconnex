@@ -483,16 +483,18 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 		);
 		$return[] = \ElggMenuItem::factory($options);
 
-		// delete link
-		$options = array(
-			'name' => 'delete',
-			'text' => elgg_view_icon('delete'),
-			'title' => elgg_echo('delete:this'),
-			'href' => "action/$handler/delete?guid={$entity->getGUID()}",
-			'confirm' => elgg_echo('deleteconfirm'),
-			'priority' => 300,
-		);
-		$return[] = \ElggMenuItem::factory($options);
+		if(elgg_is_logged_in()){
+			// delete link
+			$options = array(
+				'name' => 'delete',
+				'text' => elgg_view_icon('delete'),
+				'title' => elgg_echo('delete:this'),
+				'href' => "action/$handler/delete?guid={$entity->getGUID()}",
+				'confirm' => elgg_echo('deleteconfirm'),
+				'priority' => 300,
+			);
+			$return[] = \ElggMenuItem::factory($options);
+		}
 	}
 
 	return $return;
