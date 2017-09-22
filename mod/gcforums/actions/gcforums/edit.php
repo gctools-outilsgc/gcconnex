@@ -36,20 +36,17 @@ switch ($subtype) {
 
 		$enable_category = get_input('chkEnableCategory');
 		$enable_posting = get_input('chkEnablePost');
+		$filed_in_category = get_input('ddCategoryFiling');
 
 		$entity->enable_subcategories  = $enable_category[0];
 		$entity->enable_posting = $enable_posting[0];
 		$entity->save();
 
-		/// TODO: check if parent forum has category
-
-		/*
-		$query = "SELECT * FROM {$dbprefix}entity_relationships	WHERE relationship = 'filed_in' AND guid_one = {$gcf_guid}";
+		$query = "SELECT * FROM {$dbprefix}entity_relationships	WHERE relationship = 'filed_in' AND guid_one = {$entity->getGUID()}";
 		$filed_in = get_data($query);
 		
 		if (delete_relationship($filed_in[0]->id))
-			add_entity_relationship($gcf_guid, 'filed_in', $gcf_file_in_category);
-		*/
+			add_entity_relationship($entity->getGUID(), 'filed_in', $filed_in_category);
 		break;
 
 
@@ -73,7 +70,7 @@ switch ($subtype) {
 		return false;
 }
 
-
+system_message(elgg_echo("gcforums:saved:success", array($entity->title)));
 // TODO: fix this
 forward(get_input('hidden_forward_url'));
 

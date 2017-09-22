@@ -12,6 +12,8 @@ $english = array(
 	'gcforums:edit:edit_forum:heading' => "Edit %s",
 
 	'gcforums:delete:success' => "'%s' has been deleted successfully",
+	'gcforums:delete:nosuccess' => "'%s' could not be deleted",
+	'gcforums:saved:success' => "'%s' has been saved successfully",
 
 	'gcforums:translate:subscribe' => "Subscribe",
 	'gcforums:translate:unsubscribe' => "Unsubscribe",
@@ -25,6 +27,8 @@ $english = array(
 	'gcforums:translate:delete' => "Delete",
 	'gcforums:translate:new_topic' => "New forum topic",
 	'gcforums:translate:new_subforum' => "New subforum",
+
+	'gcforums:label:title' => "Title",
 
 	"gcforums:translate:topics" => "Topics",
 	"gcforums:translate:forums" => "Forums",

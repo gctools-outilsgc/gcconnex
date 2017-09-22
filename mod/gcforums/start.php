@@ -249,8 +249,8 @@ function render_forums($forum_guid) {
 	$entity = get_entity($forum_guid);
 	$dbprefix = elgg_get_config('dbprefix');
 	$base_url = elgg_get_site_entity()->getURL();
-
 	$group_entity = get_entity(gcforums_get_forum_in_group($entity->getGUID(), $entity->getGUID()));
+	$current_user = elgg_get_logged_in_user_entity();
 	// set the breadcrumb trail
 	assemble_forum_breadcrumb($entity);
 
@@ -292,13 +292,13 @@ function render_forums($forum_guid) {
 			$time_posted = $replies[count($total_replies) - 1]->time_created;
 			$time_posted = date('Y-m-d H:i:s', $time_posted);
 
-			$options = render_edit_options($topic->guid, $topic->guid);
-
+			$options = render_edit_options($topic->guid, $group_entity->guid);
+			$admin_only = (elgg_is_admin_logged_in()) ? "(guid:{$topic->guid})" : "";
 			$last_post = ($total_replies <= 0) ? $last_post = elgg_echo('gcforums:no_posts') : "<div>{$replies[$total_replies - 1]->username}</div> <div>{$time_posted}</div>";
 
 					$content .= "
 					<div class='topic-info-header'>
-						<div class='topic-description'>{$hyperlink} (guid:{$topic->guid})</div>
+						<div class='topic-description'>{$hyperlink} {$admin_only}</div>
 						<div class='topic-options-edit'>{$options}</div>
 						<div class='topic-options'>{$last_post}</div>
 						<div class='topic-options'>{$total_replies}</div>
@@ -323,11 +323,12 @@ function render_forums($forum_guid) {
 
 		/// category
 		foreach ($categories as $category) {
-			$options = render_edit_options($category->guid, 334);
+			$options = render_edit_options($category->guid, $group_entity->getGUID());
+			$admin_only = (elgg_is_admin_logged_in()) ? "(guid:{$category->guid})" : "";
 			$content .= "
 			<p>
 				<div class='category-main-box'>
-					<div class='category-options'>{$options} (guid:{$category->getGUID()})</div>
+					<div class='category-options'>{$options} {$admin_only}</div>
 					<h1>{$category->title}</h1>
 					<div class='category-description'>{$category->description}</div>
 				</div>";
@@ -357,12 +358,14 @@ function render_forums($forum_guid) {
 					$total_topics = get_forums_statistics_information($forum->guid, TOTAL_TOPICS);
 					$total_posts = get_forums_statistics_information($forum->guid, TOTAL_POST);
 					$recent_post = get_forums_statistics_information($forum->guid, RECENT_POST);
-					$options = render_edit_options($forum->getGUID(), $forum->getGUID());
+					$options = render_edit_options($forum->getGUID(), $group_entity->getGUID());
+
+					$admin_only = (elgg_is_admin_logged_in()) ? "(guid:{$forum->guid})" : "";
 
 					$hyperlink = "<a href='{$base_url}gcforums/view/{$forum->getGUID()}'><strong>{$forum->title}</strong></a>";
 
 					$content .= "<div class='forum-info-header'>
-									<div class='forum-description'>{$hyperlink} (guid:{$forum->guid})
+									<div class='forum-description'>{$hyperlink} {$admin_only}
 										<div class='forum-description-text'>{$forum->description}</div>
 									</div>
 									<div class='forum-options-edit'>{$options}</div>
@@ -377,6 +380,69 @@ function render_forums($forum_guid) {
 				$content .= "<div class='forum-empty'>No Forums created</div>";
 			}
 		}
+
+
+		if (elgg_is_admin_logged_in() || $group_entity->getOwnerGUID() == $current_user->guid /*|| check_entity_relationship($current_user->getGUID(), 'operator', $group_entity->getGUID())*/) {
+
+			/// there are the problem where user creates forum in the existing forum with categories enabled, show the forums without categories
+			$forums = elgg_get_entities_from_relationship(array(
+					'relationship' => 'descendant',
+					'subtypes' => array('hjforum'),
+					'relationship_guid' => $forum_guid,
+					'inverse_relationship' => true,
+					'types' => 'object',
+					'limit' => 0,
+				));
+
+			if (sizeof($forums) > 0) {
+					
+				$content .= "
+				<div class='forum-category-issue-notice'>
+					<section class='alert alert-danger'>
+					These forums require categories to be filed in, this only shows up for (group) administrators
+					</section>
+					<div class='forum-main-box'>
+						<div style='background: #e6e6e6; width:100%;' >
+							<div class='forum-header'>Forum
+								<div class='forum-information'>options</div>
+								<div class='forum-information'>total topics</div>
+								<div class='forum-information'>total posts</div>
+								<div class='forum-information'>recently posted</div>
+							</div>";
+
+				foreach ($forums as $forum) {
+
+						$query = "SELECT COUNT(guid_one) AS total FROM elggentity_relationships WHERE guid_one = '{$forum->guid}' AND relationship = 'filed_in' AND guid_two = 0";
+						$is_filed_in_category = get_data($query);
+
+						if ($is_filed_in_category[0]->total == 1) {
+
+							$total_topics = get_forums_statistics_information($forum->guid, TOTAL_TOPICS);
+							$total_posts = get_forums_statistics_information($forum->guid, TOTAL_POST);
+							$recent_post = get_forums_statistics_information($forum->guid, RECENT_POST);
+							$options = render_edit_options($forum->getGUID(), $group_entity->getGUID());
+
+							$admin_only = (elgg_is_admin_logged_in()) ? "(guid:{$forum->guid})" : "";
+							$hyperlink = "<a href='{$base_url}gcforums/view/{$forum->getGUID()}'><strong>{$forum->title}</strong></a>";
+
+							$content .= "
+								<div class='forum-info-header'>
+									<div class='forum-description'>{$hyperlink} {$admin_only}
+										<div class='forum-description-text'>{$forum->description}</div>
+									</div>
+									<div class='forum-options-edit'>{$options}</div>
+									<div class='forum-options'>{$total_topics}</div>
+									<div class='forum-options'>{$total_posts}</div>
+									<div class='forum-options'>{$recent_post}</div>
+								</div>";
+						}
+				}
+
+				$content .= "</div> </div> </div> </p> <br/>";
+			}
+		}
+
+
 
 	} else {
 
@@ -406,13 +472,14 @@ function render_forums($forum_guid) {
 					$total_topics = get_forums_statistics_information($forum->guid, TOTAL_TOPICS);
 					$total_posts = get_forums_statistics_information($forum->guid, TOTAL_POST);
 					$recent_post = get_forums_statistics_information($forum->guid, RECENT_POST);
-					$options = render_edit_options($forum->getGUID(), $forum->getGUID());
+					$options = render_edit_options($forum->getGUID(), $group_entity->getGUID());
 
 					$hyperlink = "<a href='{$base_url}gcforums/view/{$forum->getGUID()}'><strong>{$forum->title}</strong></a>";
+					$admin_only = (elgg_is_admin_logged_in()) ? "(guid:{$forum->guid})" : "";
 
 					$content .= "
 						<div class='forum-info-header'>
-							<div class='forum-description'>{$hyperlink} (guid:{$forum->guid})
+							<div class='forum-description'>{$hyperlink} {$admin_only}
 								<div class='forum-description-text'>{$forum->description}</div>
 							</div>
 							<div class='forum-options-edit'>{$options}</div>
@@ -510,10 +577,9 @@ function assemble_nested_forums($breadcrumb, $forum_guid, $recurse_forum_guid) {
 function render_edit_options($object_guid, $group_guid) {
 
 	gatekeeper();
-error_log(">>>>>>   {$group_guid}");
+
 	$options = array();
 	$group_entity = get_entity($group_guid);
-	$entity = $group_entity;
 	$current_user = elgg_get_logged_in_user_entity();
 	$user = $current_user;
 	$entity = get_entity($object_guid);
@@ -541,15 +607,29 @@ error_log(">>>>>>   {$group_guid}");
 	// checks if user is admin, group owner, or moderator
 	if (elgg_is_admin_logged_in() || $entity->getOwnerGUID() == $current_user->guid /*|| check_entity_relationship($current_user->getGUID(), 'operator', $group_entity->getGUID())*/) {
 
-		/// todo: use icons
 		$object_menu_items = ($entity->getSubtype() === 'hjforum') ? array("new_subforum", "new_topic", "edit") : array('edit', 'delete');
-		
 		foreach ($object_menu_items as $menu_item) {
+			$url = "";
 			// check if new posting link and it is disabled (enabled == disabled)
-			if ($menu_item === 'new_topic' && $entity->enable_posting) {
-
-			} else {
-				$url = elgg_get_site_url()."gcforums/edit/{$object_guid}";
+			switch($menu_item) {
+				case 'new_subforum':
+					$url = elgg_get_site_url()."gcforums/create/hjforum/{$object_guid}";
+					break;
+				case 'new_topic':
+					if ($entity->enable_posting) {
+						$url = elgg_get_site_url()."gcforums/create/hjforumtopic/{$object_guid}";
+					} else {
+						continue;
+					}
+					break;
+				case 'edit':
+					$url = elgg_get_site_url()."gcforums/edit/{$object_guid}";
+					break;
+				case 'delete':
+					$url = elgg_add_action_tokens_to_url(elgg_get_site_url()."action/gcforums/delete?guid={$entity->getGUID()}");
+					break;
+			}
+			if ($url !== "") {
 				$menu_label = elgg_echo("gcforums:translate:{$menu_item}");
 				$options[$menu_item] = "<a href='{$url}'>{$menu_label}</a>";
 			}
@@ -575,7 +655,6 @@ function gcforums_menu_buttons($forum_guid, $group_guid, $is_topic=false) { // m
 
 	elgg_load_css('gcforums-css');
 	$group_entity = get_entity($group_guid);
-	$entity = $group_entity;
 	$current_user = elgg_get_logged_in_user_entity();
 	$user = $current_user;
 	$entity = get_entity($forum_guid);

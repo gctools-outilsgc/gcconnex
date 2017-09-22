@@ -169,7 +169,7 @@ function forums_information_form($object) {
 		$query = "	SELECT guid_two FROM {$dbprefix}entity_relationships WHERE guid_one = {$object->getGUID()} AND relationship = 'filed_in'";
 		$currently_filed_under = get_data($query);
 
-		$category_filing = ($object == null) ? '' : $currently_filed_under[0]->guid_two;
+		$category_filing = $currently_filed_under[0]->guid_two;
 		$lblCategoryFiling = elgg_echo('gcforums:file_under_category_label');
 		$ddCategoryFiling = elgg_view('input/dropdown', array(
 			'options_values' => $category_list,

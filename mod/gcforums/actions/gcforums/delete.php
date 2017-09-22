@@ -1,16 +1,14 @@
 <?php
 
-	$hjforum_guid = get_input('guid');
-	$hjforum_entity = get_entity($hjforum_guid);
+	$entity_guid = get_input('guid');
+	$entity = get_entity($entity_guid);
 
-	$value = elgg_trigger_plugin_hook('gcforums/delete', 'object', array(), 'poop');
+	$container_guid = $entity->getContainerGUID();
 
+	$message = ($entity->canEdit() && $entity->delete()) 
+	 	? elgg_echo('gcforums:delete:success', array($entity->title)) 
+	 	: elgg_echo('gcforums:delete:success', array($entity->title));
 
-	if ($hjforum_entity->canEdit()) {
-		if ($hjforum_entity->delete()) {
-			system_message(system_message(elgg_echo('gcforums:delete:success', array($hjforum_entity->title)));
-			forward(REFERER);
-		} else {
-			system_message(elgg_echo("Entity entitled '{$hjforum_entity->title}' could not be deleted"));
-		}
-	}
+	system_message($message);
+
+	forward("http://192.168.1.18/gcconnex/gcforums/view/{$container_guid}");

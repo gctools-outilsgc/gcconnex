@@ -149,7 +149,7 @@ function forums_information_form($object) {
 
 	// category option only available if the subcategory is enabled or first level forum in group
 	if ($object->enable_subcategories || $object instanceof ElggGroup) {
-
+		
 		// retrieve a list of available categories
 		$query = "	SELECT  oe.guid, oe.title
 					FROM {$dbprefix}entities e, {$dbprefix}entity_relationships r, {$dbprefix}objects_entity oe, {$dbprefix}entity_subtypes es
@@ -157,15 +157,9 @@ function forums_information_form($object) {
 
 		
 		$categories = get_data($query);
-
 		$category_list = array();
 	 	foreach ($categories as $category)
 	 		$category_list[$category->guid] = $category->title;
-
-
-		// retrieve the current category that the forum is listed under
-		$query = "	SELECT guid_two FROM {$dbprefix}entity_relationships WHERE guid_one = {$object->getGUID()} AND relationship = 'filed_in'";
-		$currently_filed_under = get_data($query);
 
 		$lblCategoryFiling = elgg_echo('gcforums:file_under_category_label');
 		$ddCategoryFiling = elgg_view('input/dropdown', array(
