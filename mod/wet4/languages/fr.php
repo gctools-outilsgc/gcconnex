@@ -346,6 +346,7 @@ return array(
 
     'groups:stats'  => "Statistiques de groupe",
 
+
         /**
    * Group invite
    */
@@ -548,6 +549,7 @@ return array(
 'groups:feature' => 'En vedette',
     'groups:popular' => 'Populaire',
     'groups:suggested' => 'Suggestion',
+'groups_tools:related_groups:tool_option' => "Activer les groupes connexes",
 
 
 /**

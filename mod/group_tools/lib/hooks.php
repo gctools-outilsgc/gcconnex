@@ -743,12 +743,14 @@ function group_tools_register_owner_block_menu_handler($hook, $type, $return_val
 		$entity = elgg_extract("entity", $params);
 		
 		if (!empty($entity) && elgg_instanceof($entity, "group")) {
-			$result[] = ElggMenuItem::factory(array(
-				"name" => "related_groups",
-				"text" => elgg_echo("group_tools:related_groups:title"),
-				"href" => "groups/related/" . $entity->getGUID(),
-				"is_trusted" => true
-			));
+			if ($entity->related_groups_enable == "yes") {
+				$result[] = ElggMenuItem::factory(array(
+					"name" => "related_groups",
+					"text" => elgg_echo("group_tools:related_groups:title"),
+					"href" => "groups/related/" . $entity->getGUID(),
+					"is_trusted" => true
+				));
+			}
 		}
 	}
 	
