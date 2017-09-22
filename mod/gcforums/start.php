@@ -492,7 +492,7 @@ function render_forums($forum_guid) {
 		}
 	}
 
-
+	$title = $entity->title;
 	if (!$title) $title = elgg_echo('gcforum:heading:default_title');
 
 	$return['filter'] = '';
@@ -628,6 +628,7 @@ function render_edit_options($object_guid, $group_guid) {
 					$style = "style='font-weight:bold; color:#d84e2f;'";
 					break;
 			}
+
 			if ($url !== "") {
 				$menu_label = elgg_echo("gcforums:translate:{$menu_item}");
 				$options[$menu_item] = "<a {$style} href='{$url}'>{$menu_label}</a>";
@@ -635,17 +636,15 @@ function render_edit_options($object_guid, $group_guid) {
 		}
 	}
 
+	if (elgg_is_logged_in() && check_entity_relationship($current_user->guid, 'member', $group_entity->guid)) {
+		$url = elgg_get_site_url()."gcforums/create/hjforumtopic/{$object_guid}";
+		$menu_label = elgg_echo("gcforums:translate:new_topic");
+		$options['new_topic'] = "<a {$style} href='{$url}'>{$menu_label}</a>";
+	}
+
 		
 	foreach ($options as $key => $option) 
 		$edit_options .= "<div class='edit-options-{$entity_type}'>{$option}</div>";
-
-
-	if ($entity->getSubtype() !== 'hjforumpost' && $entity->getSubtype() !== 'hjforumtopic' && $entity->getSubtype() !== 'hjforumcategory') {
-		$edit_options  .= elgg_view('alerts/delete', array('entity' => $entity));
-	}
-
-	return $edit_options;
-
 }
 
 
@@ -674,10 +673,11 @@ function gcforums_menu_buttons($forum_guid, $group_guid, $is_topic=false) { // m
 		}
 
 		$isOperator = check_entity_relationship($current_user->getGUID(), 'operator', $group_entity->getGUID());
+		$button_class = "elgg-button elgg-button-action btn btn-default";
+		
 		// do not display the button menu if the object is a forum topic
 		if (($current_user->isAdmin() || $isOperator) && !$is_topic) {
 
-			$button_class = "elgg-button elgg-button-action btn btn-default";
 			$gcforum_types = array('hjforumcategory', 'hjforumtopic', 'hjforum');
 
 			$button_array = array();
@@ -708,7 +708,14 @@ function gcforums_menu_buttons($forum_guid, $group_guid, $is_topic=false) { // m
 			
 			return "<div>{$menu_buttons}</div>";
 		}
-		return "<div class='gcforums-menu'>{$new_forum_topic_button}</div>";
+
+		if (elgg_is_logged_in() && check_entity_relationship($current_user->guid, 'member', $group_entity->guid)) {
+			$url = "gcforums/create/hjforumtopic/{$forum_guid}";
+			$new_forum_topic_button = (!$forum_object->enable_posting && $forum_guid) ? elgg_view('output/url', array("text" => elgg_echo('gcforums:new_hjforumtopic'), "href" => $url, 'class' => $button_class)) : "";
+		}
+
+
+		return "<div>{$new_forum_topic_button}</div>";
 	}
 }
 
