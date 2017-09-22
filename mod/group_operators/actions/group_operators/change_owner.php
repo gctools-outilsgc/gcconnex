@@ -44,9 +44,7 @@
 
             if ($metadata){
 
-                foreach ($metadata as $data){
-					update_data("UPDATE {$db_prefix}metadata SET owner_guid = '$who_guid' where id = $data->id");
-                }
+				update_data("UPDATE {$db_prefix}metadata SET owner_guid = '$who_guid' where entity_guid = $mygroup_guid");
             }
 
 		$mygroup->save();
