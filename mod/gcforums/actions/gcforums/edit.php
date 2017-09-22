@@ -15,7 +15,7 @@ $entity = get_entity($entity_guid);
 $title = get_input('txtTitle');
 $description = get_input('txtDescription');
 $access = get_input('ddAccess');
-
+error_log("access: {$access}");
 
 // TODO return system msg
 
@@ -44,9 +44,10 @@ switch ($subtype) {
 
 		$query = "SELECT * FROM {$dbprefix}entity_relationships	WHERE relationship = 'filed_in' AND guid_one = {$entity->getGUID()}";
 		$filed_in = get_data($query);
-		
-		if (delete_relationship($filed_in[0]->id))
-			add_entity_relationship($entity->getGUID(), 'filed_in', $filed_in_category);
+		error_log(">>>>>>>  {$query}");
+		delete_relationship($filed_in[0]->id);
+		add_entity_relationship($entity->getGUID(), 'filed_in', $filed_in_category);
+
 		break;
 
 

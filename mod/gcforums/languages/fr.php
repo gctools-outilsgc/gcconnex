@@ -4,7 +4,7 @@ $french = array(
 
 	'admin:administer_utilities:debugging_forums' => 'Forums Debug Tool',
 
-	'gcforums:delete:heading' => "confirmation de suppression ",
+	'gcforums:delete:heading' => "Confirmation de suppression ",
 	'gcforums:delete:body' => "Êtes-vous certain de vouloir supprimer le %s",
 	'gcforums:delete:cancel' => "Annuler",
 	'gcforums:delete:delete' => "Supprimer",

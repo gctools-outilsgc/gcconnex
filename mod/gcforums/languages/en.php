@@ -30,10 +30,12 @@ $english = array(
 
 	'gcforums:label:title' => "Title",
 
-	"gcforums:translate:topics" => "Topics",
-	"gcforums:translate:forums" => "Forums",
-	"gcforums:translate:posts" => "Posts",
-	"gcforums:translate:latest" => "Latest",
+	'gcforum:heading:default_title' => "Group Forums",
+
+	"gcforums:translate:topics" => "topics",
+	"gcforums:translate:forums" => "forums",
+	"gcforums:translate:posts" => "posts",
+	"gcforums:translate:latest" => "latest",
 
 	"gcforums:translate:topic_starter" => "Topic Starter",
 	"gcforums:translate:replies" => "Replies",

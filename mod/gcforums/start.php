@@ -34,8 +34,6 @@ function gcforums_init() {
 		'text' => elgg_echo('gcforums:jmp_menu'),
 		'href' => elgg_echo('gcforums:jmp_url'),
 	));
-
-	elgg_register_admin_menu_item("administer", "debugging_forums", "administer_utilities");
 }
 
 
@@ -262,7 +260,8 @@ function render_forums($forum_guid) {
 	$query = "SELECT * FROM elggentities e, elggentity_subtypes es WHERE e.subtype = es.id AND e.container_guid = {$forum_guid} AND es.subtype = 'hjforumtopic'";
 	$topics = get_data($query);
 
-	$content .= "<div class='forums-menu-buttons'>".gcforums_menu_buttons($entity->getGUID(), $group_entity->getGUID())."</div> ";
+	if ($forum_guid !== $group_entity->guid)
+		$content .= "<div class='forums-menu-buttons'>".gcforums_menu_buttons($entity->getGUID(), $group_entity->getGUID())."</div> ";
 
 	if (count($topics) > 0) {
 		$content .= "
@@ -415,7 +414,7 @@ function render_forums($forum_guid) {
 						$query = "SELECT COUNT(guid_one) AS total FROM elggentity_relationships WHERE guid_one = '{$forum->guid}' AND relationship = 'filed_in' AND guid_two = 0";
 						$is_filed_in_category = get_data($query);
 
-						if ($is_filed_in_category[0]->total == 1) {
+						//if ($is_filed_in_category[0]->total == 1) {
 
 							$total_topics = get_forums_statistics_information($forum->guid, TOTAL_TOPICS);
 							$total_posts = get_forums_statistics_information($forum->guid, TOTAL_POST);
@@ -435,7 +434,7 @@ function render_forums($forum_guid) {
 									<div class='forum-options'>{$total_posts}</div>
 									<div class='forum-options'>{$recent_post}</div>
 								</div>";
-						}
+						//}
 				}
 
 				$content .= "</div> </div> </div> </p> <br/>";
@@ -494,11 +493,10 @@ function render_forums($forum_guid) {
 	}
 
 
-	if (!$title) $title = $entity->title;
+	if (!$title) $title = elgg_echo('gcforum:heading:default_title');
 
-	$title_heading = $title;
 	$return['filter'] = '';
-	$return['title'] = $title_heading;
+	$return['title'] = $title;
 	$return['content'] = $content;
 	return $return;
 }
@@ -576,8 +574,6 @@ function assemble_nested_forums($breadcrumb, $forum_guid, $recurse_forum_guid) {
  */
 function render_edit_options($object_guid, $group_guid) {
 
-	gatekeeper();
-
 	$options = array();
 	$group_entity = get_entity($group_guid);
 	$current_user = elgg_get_logged_in_user_entity();
@@ -589,14 +585,16 @@ function render_edit_options($object_guid, $group_guid) {
 		$options['access'] = '<strong>' . get_readable_access_level($entity->access_id) . '</strong>';
  
  	// subscription
-	if (elgg_is_active_plugin('cp_notifications')) {
-		$email_subscription = check_entity_relationship($current_user->getGUID(), 'cp_subscribed_to_email', $entity->getGUID());
-		$site_subscription = check_entity_relationship($current_user->getGUID(), 'cp_subscribed_to_site_mail', $entity->getGUID());
-		$btnSubscribe = ($email_subscription || $site_subscription) ? elgg_echo('gcforums:translate:unsubscribe') : elgg_echo('gcforums:translate:subscribe');
+ 	if (elgg_is_logged_in()) {
+		if (elgg_is_active_plugin('cp_notifications')) {
+			$email_subscription = check_entity_relationship($current_user->getGUID(), 'cp_subscribed_to_email', $entity->getGUID());
+			$site_subscription = check_entity_relationship($current_user->getGUID(), 'cp_subscribed_to_site_mail', $entity->getGUID());
+			$btnSubscribe = ($email_subscription || $site_subscription) ? elgg_echo('gcforums:translate:unsubscribe') : elgg_echo('gcforums:translate:subscribe');
 
-	} else {
-		$subscription = check_entity_relationship($user->guid, 'subscribed', $object_guid);
-		$btnSubscribe = ($subscription) ? elgg_echo('gcforums:translate:unsubscribe') : elgg_echo('gcforums:translate:subscribe');
+		} else {
+			$subscription = check_entity_relationship($user->guid, 'subscribed', $object_guid);
+			$btnSubscribe = ($subscription) ? elgg_echo('gcforums:translate:unsubscribe') : elgg_echo('gcforums:translate:subscribe');
+		}
 	}
 
 	if ($entity->getSubtype() !== 'hjforumcategory') {
@@ -627,11 +625,12 @@ function render_edit_options($object_guid, $group_guid) {
 					break;
 				case 'delete':
 					$url = elgg_add_action_tokens_to_url(elgg_get_site_url()."action/gcforums/delete?guid={$entity->getGUID()}");
+					$style = "style='font-weight:bold; color:#d84e2f;'";
 					break;
 			}
 			if ($url !== "") {
 				$menu_label = elgg_echo("gcforums:translate:{$menu_item}");
-				$options[$menu_item] = "<a href='{$url}'>{$menu_label}</a>";
+				$options[$menu_item] = "<a {$style} href='{$url}'>{$menu_label}</a>";
 			}
 		}
 	}
@@ -662,9 +661,8 @@ function gcforums_menu_buttons($forum_guid, $group_guid, $is_topic=false) { // m
 
 	$current_entity_guid = get_entity($forum_guid);
 
-	gatekeeper();
 	// todo: check if it is a topic
-	if (check_entity_relationship($current_user->getGUID(), 'member', $group_entity->getGUID())) {
+	if (elgg_is_admin_logged_in() || check_entity_relationship($current_user->getGUID(), 'member', $group_entity->getGUID())) {
 
 		// check if postings is enabled and this is not the main first page of forum in group
 		if (!$forum_object->enable_posting && $forum_guid) { 
