@@ -37,15 +37,10 @@
 		
 		// Finally, we change the owner
 		$mygroup->owner_guid = $who_guid;
-        $mygroup->container_guid = $who_guid;
+		$mygroup->container_guid = $who_guid;
 
-        //Update metadata owner guid is case user creator is delete
- 		$metadata = get_data("SELECT * FROM {$db_prefix}metadata WHERE entity_guid =$mygroup_guid");
-
-            if ($metadata){
-
-				update_data("UPDATE {$db_prefix}metadata SET owner_guid = '$who_guid' where entity_guid = $mygroup_guid");
-            }
+		//Update metadata owner guid is case user creator is delete
+		update_data("UPDATE {$db_prefix}metadata SET owner_guid = '$who_guid' where entity_guid = $mygroup_guid");
 
 		$mygroup->save();
 
