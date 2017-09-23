@@ -162,12 +162,12 @@ function render_forum_topics($topic_guid) {
 		);
 
 		$summary = elgg_view('object/elements/summary', $params);
-
+		$admin_only = (elgg_is_admin_logged_in()) ? "(guid:{$topic->guid})" : "";
 		$owner_icon = elgg_view_entity_icon($topic->getOwnerEntity(), 'medium');
 
 		$content .= "
 		<div class='topic-owner-information-content'>
-			<div class='topic-information-options'>{$options} (guid: {$topic->getGUID()})</div>
+			<div class='topic-information-options'>{$options} {$admin_only}</div>
 			<div class='topic-owner-icon'>{$owner_icon}</div>
 			<div class='topic-owner-information'><b>Name (username):</b> {$owner->name} ({$owner->username})</div>
 			<div class='topic-owner-information'><b>Email:</b> {$owner->email}</div>
@@ -186,10 +186,11 @@ function render_forum_topics($topic_guid) {
 		$content .= "<div class='topic-main-comments'>";
 		foreach ($comments as $comment) {
 			$options = render_edit_options($comment->getGUID(), $comment->getGUID());
+			$admin_only = (elgg_is_admin_logged_in()) ? "(guid:{$comment->guid})" : "";
 			$owner_icon = elgg_view_entity_icon($topic->getOwnerEntity(), 'small');
 			$content .= "
 			<div class='topic-comments'>
-				<div class='topic-comment-options'>{$options} (guid: {$comment->getGUID()})</div>
+				<div class='topic-comment-options'>{$options} {$admin_only}</div>
 				<div class='comment-owner-information-content'>
 					<div class='comment-owner-icon'>{$owner_icon} {$comment->getOwnerEntity()->email}</div>
 				</div>
@@ -203,8 +204,11 @@ function render_forum_topics($topic_guid) {
 		$vars['current_entity'] = $topic->guid;
 		$vars['topic_access'] = $topic->access_id;
 		$vars['entity_type'] = 'hjforumpost';
-		$topic_content .= elgg_view_form('gcforums/create', array(), $vars);
-		$content .= $topic_content;
+
+		if (elgg_is_logged_in() && check_entity_relationship(elgg_get_logged_in_user_entity()->getGUID(), 'member', $group_guid)) {
+			$topic_content .= elgg_view_form('gcforums/create', array(), $vars);
+			$content .= $topic_content;
+		}
 
 		$return['filter'] = '';
 		$return['title'] = $title;
@@ -612,6 +616,7 @@ function render_edit_options($object_guid, $group_guid) {
 	if (elgg_is_admin_logged_in() || $group_entity->getOwnerGUID() == $current_user->guid /*|| check_entity_relationship($current_user->getGUID(), 'operator', $group_entity->getGUID())*/) {
 
 		$object_menu_items = ($entity->getSubtype() === 'hjforum') ? array("new_subcategory", "new_subforum", "new_topic", "edit") : array('edit', 'delete');
+		if ($entity->getSubtype() === 'hjforumpost') $object_menu_items = array("delete");
 		foreach ($object_menu_items as $menu_item) {
 			$url = "";
 			
@@ -646,7 +651,7 @@ function render_edit_options($object_guid, $group_guid) {
 		$edit_options .= "<div class='edit-options-{$entity_type}'>{$option}</div>";
 
 
-	if ($entity->getSubtype() !== 'hjforumpost' && $entity->getSubtype() !== 'hjforumtopic' && $entity->getSubtype() !== 'hjforumcategory') {		
+	if (($current_user->isAdmin() || $group_entity->getOwnerGUID() == $current_user->guid) && $entity->getSubtype() !== 'hjforumpost' && $entity->getSubtype() !== 'hjforumtopic' && $entity->getSubtype() !== 'hjforumcategory') {		
 		$edit_options  .= elgg_view('alerts/delete', array('entity' => $entity));		
 	}	
 
@@ -701,7 +706,7 @@ function gcforums_menu_buttons($forum_guid, $group_guid, $is_topic=false) {
 			}
 			
 			/// edit or delete current forum
-			if ($forum_guid != $group_guid) {
+			if ($forum_guid != $group_guid && ($current_user->isAdmin() || $group_entity->getOwnerGUID() == $current_user->guid)) {
 
 				$url = "gcforums/edit/{$forum_guid}";
 				$edit_forum_button = 
