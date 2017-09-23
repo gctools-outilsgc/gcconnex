@@ -12,6 +12,7 @@
 	$who_guid = get_input('who');
 	$mygroup = get_entity($mygroup_guid);
 	$who = get_entity($who_guid);
+	$db_prefix = elgg_get_config('dbprefix');
 	if ($mygroup instanceof ElggGroup && ($mygroup->owner_guid == elgg_get_logged_in_user_guid() || elgg_is_admin_logged_in())) {
 		
 		// Owner is now a simple operator
@@ -36,6 +37,11 @@
 		
 		// Finally, we change the owner
 		$mygroup->owner_guid = $who_guid;
+		$mygroup->container_guid = $who_guid;
+
+		//Update metadata owner guid is case user creator is delete
+		update_data("UPDATE {$db_prefix}metadata SET owner_guid = '$who_guid' where entity_guid = $mygroup_guid");
+
 		$mygroup->save();
 
 		if (elgg_is_active_plugin('cp_notifications')) {
