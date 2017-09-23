@@ -402,7 +402,8 @@ function render_forums($forum_guid) {
 				$content .= "
 				<div class='forum-category-issue-notice'>
 					<section class='alert alert-danger'>
-					These forums require categories to be filed in, this only shows up for (group) administrators
+					<strong>This only shows up for (group) administrators</strong>.
+					If you don't see a specific forum appearing above, you can correct that by editing the forums below. 
 					</section>
 					<div class='forum-main-box'>
 						<div style='background: #e6e6e6; width:100%;' >

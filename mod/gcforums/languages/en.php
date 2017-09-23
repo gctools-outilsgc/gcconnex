@@ -42,12 +42,12 @@ $english = array(
 
 	"gcforums:translate:topic_starter" => "Topic Starter",
 	"gcforums:translate:replies" => "Replies",
-	"gcforums:translate:last_posted" => "Last post",
+	"gcforums:translate:last_post" => "Last post",
 
 
 	"gcforums:translate:total_topics" => "Total topics",
-	"gcforums:translate:total_posts" => "Total replies",
-	"gcforums:translate:latest_posts" => "Latest posts",
+	"gcforums:translate:total_replies" => "Total replies",
+	"gcforums:translate:latest_posts" => "Latest post",
 
 	"gcforums:is_sticky" => 'Sticky topic', 
 	"gcforums:forumpost_saved" => "Your reply has been created successfully",

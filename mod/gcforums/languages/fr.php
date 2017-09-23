@@ -38,11 +38,11 @@ $french = array(
 
 	"gcforums:translate:topic_starter" => "Auteur",
 	"gcforums:translate:replies" => "Réponses",
-	"gcforums:translate:last_posted" => "Dernière publication",
+	"gcforums:translate:last_post" => "Dernière publication",
 
 
 	"gcforums:translate:total_topics" => "Nombre total des sujets",
-	"gcforums:translate:total_posts" => "Nombre des messages",
+	"gcforums:translate:total_replies" => "Nombre des messages",
 	"gcforums:translate:latest_posts" => "Derniers messages",
 	
 
