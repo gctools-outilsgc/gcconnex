@@ -63,6 +63,9 @@ function gccollab_theme_init() {
 
     elgg_register_plugin_hook_handler('members:list', 'type', "members_list_type");
     elgg_register_plugin_hook_handler('members:config', 'tabs', "members_nav_type");
+
+    elgg_register_widget_type('poll',elgg_echo('polls:my_widget_title'),elgg_echo('polls:my_widget_description'), array("profile", "dashboard", "index", "groups"), true);
+    elgg_register_widget_type('poll_individual',elgg_echo('polls:individual'),elgg_echo('poll_individual_group:widget:description'), array("profile", "dashboard", "index", "groups"), true);   
 }
 
 /**
