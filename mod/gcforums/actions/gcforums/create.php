@@ -1,150 +1,85 @@
 <?php
 
 gatekeeper();
-$gcf_container = $vars['container_guid'];
-$gcf_subtype = get_input('gcf_subtype');
-$gcf_group = get_input('gcf_group');
+$dbprefix = elgg_get_config('dbprefix');
+$site = elgg_get_site_entity();
+/// generic information
+$title = get_input('txtTitle');
+$description = get_input('txtDescription');
+$access = get_input('ddAccess');
 
+$container_guid = get_input('entity_guid');
+$group_guid = get_input('group_guid');
+$subtype = get_input('subtype');
+$type = 'object';
 
-switch ($gcf_subtype) {
+switch ($subtype) {
 	case 'hjforumcategory':
 
-		$gcf_container = get_input('gcf_container');
-		$gcf_title = get_input('gcf_title');
-		$gcf_type = get_input('gcf_type');
-		$gcf_access = get_input('gcf_access');
-		$gcf_subtype = get_input('gcf_subtype');
-		$gcf_forward_url = get_input('gcf_forward_url');
-		$gcf_description = get_input('gcf_description');
-		if (!$gcf_description) {
-			register_error(elgg_echo('gcforums:missing_description'));
-			return false;
-		}
-
-		$gcf_owner = get_input('gcf_owner');
-
-		$gcf_new_category = new ElggObject();
-		$gcf_new_category->container_guid = $gcf_container;
-		$gcf_new_category->title = $gcf_title;
-		$gcf_new_category->type = $gcf_type;
-		$gcf_new_category->access_id = $gcf_access;
-		$gcf_new_category->subtype = $gcf_subtype;
-		$gcf_new_category->description = $gcf_description;
-		$gcf_new_category->owner_guid = $gcf_owner;
-
-		if ($new_category_guid = $gcf_new_category->save())
-			system_message(elgg_echo("gcforums:forumcategory_saved"));
-
-		add_entity_relationship($new_category_guid, 'descendant', $gcf_container);
-
-		forward($gcf_forward_url);
-		$forward_url = elgg_get_site_url()."gcforums/group/{$gcf_group}/{$gcf_container}";
-		forward($forward_url);
-
+		$entity = new ElggObject();
+		$entity->container_guid = $container_guid;
+		$entity->title = $title;
+		$entity->type = $type;
+		$entity->access_id = $ddAccess;
+		$entity->subtype = $subtype;
+		$entity->description = $description;
+		$entity_guid = $entity->save();
+		add_entity_relationship($entity_guid, 'descendant', $container_guid);
 		break;
+
 	case 'hjforum':
 
-		$gcf_container = get_input('gcf_container');
-		$gcf_title = get_input('gcf_title');
-		$gcf_type = get_input('gcf_type');
-		$gcf_access = get_input('gcf_access');
-		$gcf_subtype = get_input('gcf_subtype');
-		$gcf_forward_url = get_input('gcf_forward_url');
-		$gcf_description = get_input('gcf_description');
+		$category_filing = get_input('ddCategoryFiling');
+		$enable_subcategories = get_input('chkEnableCategory');
+		$enable_postings = get_input('chkEnablePost');
 
-		if (!$gcf_description) {
-			register_error(elgg_echo('gcforums:missing_description'));
-			return false;
-		}
+		$entity = new ElggObject();
+		$entity->container_guid = $container_guid;
+		$entity->title = $title;
+		$entity->type = $type;
+		$entity->access_id = $access;
+		$entity->subtype = $subtype;
+		$entity->description = $description;
+		$entity->enable_subcategories = $enable_subcategories;
+		$entity->enable_posting = $enable_posting;
 
-		$gcf_owner = get_input('gcf_owner');
-		$gcf_enable_category = get_input('gcf_allow_categories');
-		$gcf_enable_posting = get_input('gcf_allow_posting');
+		$entity_guid = $entity->save();
 
-		$gcf_file_in_category = get_input('gcf_file_in_category');
-
-		$gcf_new_forum = new ElggObject();
-		$gcf_new_forum->container_guid = $gcf_container;
-		$gcf_new_forum->title = $gcf_title;
-		$gcf_new_forum->type = $gcf_type;
-		$gcf_new_forum->access_id = $gcf_access;
-		$gcf_new_forum->subtype = $gcf_subtype;
-		$gcf_new_forum->description = $gcf_description;
-		$gcf_new_forum->owner_guid = $gcf_owner;
-		$gcf_new_forum->enable_subcategories = $gcf_enable_category;
-		$gcf_new_forum->enable_posting = $gcf_enable_posting;
-
-		if ($new_forum_guid = $gcf_new_forum->save()) {
-
-			add_entity_relationship($new_forum_guid, 'filed_in', $gcf_file_in_category);
-			add_entity_relationship($new_forum_guid, 'descendant', $gcf_container);
-			system_message(elgg_echo("gcforums:forum_saved"));
-		} else
-			system_message("gcforums:forum_failed");
-
-		forward($gcf_forward_url.'/'.$new_forum_guid);
-
+		add_entity_relationship($entity_guid, 'filed_in', $category_filing);
+		add_entity_relationship($entity_guid, 'descendant', $container_guid);
 		break;
+
 	case 'hjforumtopic':
 
 		// cyu - this is a hack job
 		$old_access = elgg_get_ignore_access();
 		elgg_set_ignore_access(true);
 
-		$gcf_container = get_input('gcf_container');
-		$gcf_title = get_input('gcf_title');
-		$gcf_type = get_input('gcf_type');
-		$gcf_access = get_input('gcf_access');
-		$gcf_subtype = get_input('gcf_subtype');
-		$gcf_forward_url = get_input('gcf_forward_url');
-		$gcf_description = get_input('gcf_description');
-
-		if (!$gcf_description) {
-			register_error(elgg_echo('gcforums:missing_description'));
-			return false;
-		}
-
-		// cyu - Zube#316 (sticky forum topic non-functional)
-		$gcf_owner = get_input('gcf_owner');
-		$gcf_sticky = get_input('gcf_sticky');
-		if (!$gcf_sticky[0]) $gcf_sticky = 0;
-
-
-		$gcf_new_topic = new ElggObject();
-		$gcf_new_topic->title = trim($gcf_title);
-		$gcf_new_topic->type = trim($gcf_type);
-		$gcf_new_topic->description = $gcf_description;
-		$gcf_new_topic->subtype = trim('hjforumtopic');
-		$gcf_new_topic->access_id = $gcf_access;
-		$gcf_new_topic->container_guid = $gcf_container;
-
-		$gcf_new_topic->sticky = $gcf_sticky[0];
-		$the_guid = $gcf_new_topic->save();
+		$sticky = get_input('gcf_sticky');
+		if (!$sticky[0]) $sticky = 0;
+		
+		$entity = new ElggObject();
+		$entity->title = $title;
+		$entity->type = $type;
+		$entity->description = $description;
+		$entity->subtype = $subtype;
+		$entity->access_id = $access;
+		$entity->container_guid = $container_guid;
+		$entity->sticky = $sticky;
+		$entity_guid = $entity->save();
 
 		elgg_set_ignore_access($old_access);
 
-		if ($the_guid) {
-			$new_guid = $the_guid;
+		add_entity_relationship($entity_guid, 'descendant', $container_guid);
 
-			system_message(elgg_echo("gcforums:forumtopic_saved", array($gcf_new_topic->title)));
+		gcforums_notify_subscribed_users($entity, "{$site}gcforums/topic/view/{$entity->getGUID()}");
+		create_hjforumtopic_relationships($entity_guid, $entity_guid);
 
-			add_entity_relationship($new_guid, 'descendant', $gcf_container);
-
-			$forward_url = elgg_get_site_url()."gcforums/group/{$gcf_group}/{$new_guid}/hjforumtopic";
-
-			gcforums_notify_subscribed_users($gcf_new_topic, $forward_url);
-			create_hjforumtopic_relationships($new_guid, $new_guid);
-
-			// cyu - auto subscribe when user create the topic
-			if (elgg_is_active_plugin('cp_notifications')) {
-				add_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $the_guid);
-				add_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $the_guid);
-			}
-
-			forward($forward_url);
-		} else
-			system_message(elgg_echo("gcforums:forumtopic_failed",array($gcf_new_topic->title)));
-
+		// cyu - auto subscribe when user create the topic
+		if (elgg_is_active_plugin('cp_notifications')) {
+			add_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $entity_guid);
+			add_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $entity_guid);
+		}
 		break;
 
 	case 'hjforumpost':
@@ -152,45 +87,30 @@ switch ($gcf_subtype) {
 		$old_access = elgg_get_ignore_access();
 		elgg_set_ignore_access(true);
 
-		$gcf_container = get_input('gcf_container');
-		$gcf_title = get_input('gcf_title');
-		$gcf_type = get_input('gcf_type');
-		$gcf_access = get_input('gcf_access');
-		$gcf_subtype = get_input('gcf_subtype');
-		$gcf_forward_url = get_input('gcf_forward_url');
-		$gcf_description = get_input('gcf_description');
-
-		if (!$gcf_description) {
-			register_error(elgg_echo('gcforums:missing_description'));
-			return false;
-		}
-
-		$gcf_owner = get_input('gcf_owner');
-
-		$gcf_new_post = new ElggObject();
-		$gcf_new_post->container_guid = $gcf_container;
-		$gcf_new_post->title = $gcf_title;
-		$gcf_new_post->type = $gcf_type;
-		$gcf_new_post->access_id = $gcf_access;
-		$gcf_new_post->subtype = $gcf_subtype;
-		$gcf_new_post->description = $gcf_description;
-		$gcf_new_post->owner_guid = $gcf_owner;
-
-
-		if ($new_guid = $gcf_new_post->save())
-			system_message(elgg_echo("gcforums:forumpost_saved"));
+		$entity = new ElggObject();
+		$entity->container_guid = $container_guid;
+		$entity->title = $title;
+		$entity->type = $type;
+		$entity->access_id = $access;
+		$entity->subtype = $subtype;
+		$entity->description = $description;
+		$entity_guid = $entity->save();
 
 		elgg_set_ignore_access($old_access);
 
-		create_hjforumtopic_relationships($new_guid, $new_guid);
-		$forward_url = elgg_get_site_url()."gcforums/group/{$gcf_group}/{$gcf_container}/hjforumtopic";
-
-		gcforums_notify_subscribed_users($gcf_new_post, $forward_url);
-
+		create_hjforumtopic_relationships($entity_guid, $entity_guid);
+		gcforums_notify_subscribed_users($entity, "{$site}gcforums/topic/view/{$entity->getContainerGUID()}");
 		break;
+
 	default:
 		return false;
 }
+system_message(elgg_echo("gcforums:saved:success", array($entity->title)));
+if ($subtype === 'hjforumpost')
+	forward("{$site}gcforums/topic/view/{$entity->getContainerGUID()}");
+else
+	forward("{$site}gcforums/view/{$entity->getContainerGUID()}");
+
 
 
 // TODO: move to lib directory
@@ -278,6 +198,8 @@ function gcforums_notify_subscribed_users($hjobject, $hjlink) {
 	} else
 		notify_user($subscribers, $from, $subject, $message);
 }
+
+
 
 // new entity guid / container guid
 function create_hjforumtopic_relationships($static_guid, $e_guid) {

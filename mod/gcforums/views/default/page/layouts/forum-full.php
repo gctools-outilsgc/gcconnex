@@ -11,6 +11,8 @@
  * Creates a layout which contains the body of the page, its title and a bar at the top with multiple tabs.
  * These tabs are created with the file under missions/views/default/page/elements/tab.
  */
+
+/// TODO: delete this
 $class = 'elgg-layout elgg-layout-one-tabbar clearfix forum-clear';
 if (isset($vars['class'])) {
     $class = "$class {$vars['class']}";

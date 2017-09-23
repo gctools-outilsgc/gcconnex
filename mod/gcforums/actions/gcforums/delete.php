@@ -1,13 +1,15 @@
 <?php
 
-	$hjforum_guid = get_input('guid');
-	$hjforum_entity = get_entity($hjforum_guid);
+	$entity_guid = get_input('guid');
+	$entity = get_entity($entity_guid);
+	$base_url = elgg_get_site_entity();
 
-	if ($hjforum_entity->canEdit()) {
-		if ($hjforum_entity->delete()) {
-			system_message(elgg_echo("Entity entitled '{$hjforum_entity->title}' has been deleted"));
-			forward(REFERER);
-		} else {
-			system_message(elgg_echo("Entity entitled '{$hjforum_entity->title}' could not be deleted"));
-		}
-	}
+	$container_guid = $entity->getContainerGUID();
+
+	$message = ($entity->delete()) 
+	 	? elgg_echo('gcforums:delete:success', array($entity->title)) 
+	 	: elgg_echo('gcforums:delete:unsuccess', array($entity->title));
+
+	system_message($message);
+
+	forward("{$base_url}gcforums/view/{$container_guid}");

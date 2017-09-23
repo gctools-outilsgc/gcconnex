@@ -1,195 +1,216 @@
 <?php
 
+$object = get_entity($vars['entity_guid']);
 
-$object = get_entity($vars['forum_guid']);
-$vars['entity'] = $object;
-$db_prefix = elgg_get_config('dbprefix');
+$current_entity = get_entity($vars['current_entity']);
+$entity_type = $vars['entity_type'];
 
-// category | topic
-if ($object->getSubtype() !== 'hjforumpost') {
-	$gcf_title_label = elgg_echo('gforums:title_label');
-	$gcf_title_input = elgg_view('input/text', array(
-		'name' => 'gcf_title',
-		'value' => $object->title,
-		'required' => true
-	));
 
-	$gcf_access_label = elgg_echo('gcforums:access_label');
-	$gcf_access_input = elgg_view('input/access', array(
-		'name' => 'gcf_access_id',
-		'id' => 'gcf_access_id',
-		'value' => $object->access_id
-	));
+/// main code
+
+$subtype = ($object) ? $object->getSubtype() : $entity_type;
+
+if (!$object) {
+	$object = new ElggObject();
+	$object->save(); 
 }
 
-$gcf_description_label = elgg_echo('gforums:description_label');
-$gcf_description_input = elgg_view('input/longtext', array(
-	'name' => 'gcf_description',
-	'id' => 'blog_description',
-	'value' => $object->description,
-	'required' => true
-));
+switch($subtype) {
 
+	case 'hjforumcategory':
+		$content = general_information_form($object);
+		break;
 
-// only group owner/moderators/admin can do sticky topics
-$gcf_current_user_guid = elgg_get_logged_in_user_guid();
-$gcf_moderator_users_guid = array();
+	case 'hjforum':
+		$content = array_merge(general_information_form($object), forums_information_form($object));
+		break;
 
-// not getting the group owner guid properly (use library in cp_notification)
-// check if the plugin cp_notification is active before using the function get_forum_in_group
-if (elgg_is_active_plugin('cp_notifications')) {
-	elgg_load_library('elgg:gc_notification:functions');
-	$gcf_moderator_user[] = get_entity(get_forum_in_group($object->getGUID(),$object->getGUID()))->owner_guid;
+	case 'hjforumtopic':
+		$content = array_merge(general_information_form($object), forums_topic_form($object));
+		break;
+
+	case 'hjforumpost':
+		$content = general_information_form($object);
+		break;
+
+	default:
 }
 
-$group_operators = elgg_get_entities_from_relationship(array(
-	'relationship' => 'operator',
-	'relationship_guid' => $vars['group_guid'],
-	'inverse_relationship' => true
-));
 
-foreach ($group_operators as $group_operator)
-	$gcf_moderator_user[] = $group_operator->guid;
+$labels = array('title', 'description', 'category_filing', 'sticky', 'enable_category', 'enable_posting', 'is_sticky', 'access');
 
-if (elgg_is_logged_in() && ($object->getSubtype() === 'hjforumtopic' && in_array($gcf_current_user_guid, $gcf_moderator_user)) || elgg_is_admin_logged_in()) {
+echo "<div class='tab-content tab-content-border'>";
+foreach ($labels as $label) {
+	if (!is_array($content[$label])) continue;
 
-	$gcf_sticky_topic_label = elgg_echo('gcforums:is_sticky');
-	$gcf_sticky_topic_input = elgg_view('input/checkboxes', array(
-		'name' => 'gcf_sticky',
-		'id' => 'gcf_sticky',
-		'class' => 'list-unstyled mrgn-tp-sm',
-		'options' => array($gcf_sticky_topic_label => 1),
-		'value' => $object->sticky,
-	));
+	$form_input = ($label === 'enable_posting' || $label === 'enable_category' || $label === 'is_sticky') 
+		? "<p>{$content[$label][1]}</p>"
+		: "<p><label> {$content[$label][0]} </label> {$content[$label][1]}</p>";
+	
+	echo $form_input;
 }
 
-if ($object->getSubtype() === 'hjforum') {
-	$gcf_enable_categories_label = elgg_echo('gcforums:enable_categories_label');
-	$gcf_enable_categories_input = elgg_view('input/checkboxes', array(
-		'name' => 'gcf_allow_categories',
-		'id' => 'categories_id',
-		'class' => 'list-unstyled',
-		'options' => array($gcf_enable_categories_label => 1),
-		'value' => $object->enable_subcategories,
-	));
 
-	$gcf_enable_posting_label = elgg_echo('gcforums:enable_posting_label');
-	$gcf_enable_posting_input = elgg_view('input/checkboxes', array(
-		'name' => 'gcf_allow_posting',
-		'id' => 'posting_id',
-		'class' => 'list-unstyled',
-		'options' => array(
-			$gcf_enable_posting_label => 1),
-		'value' => $object->enable_posting,
-		));
+/// hidden forms to pass additional information to the action
+$hidden_forms = hidden_information_form($object);
+foreach ($hidden_forms as $form) echo $form;
 
-	$query = "	SELECT guid_two
-				FROM {$db_prefix}entity_relationships
-				WHERE guid_one = {$vars['forum_guid']} AND relationship = 'filed_in'";
-	$shelved_in = get_data($query);
-
-	// this is forum object then check to see if categories is enabled
-	if ($object->enable_subcategories || get_entity($object->getContainerGUID()) instanceof ElggGroup) {
-		
-		if ($vars['forum_guid'] && $vars['forum_guid'] != 0) { // this is within the nested forums
-			$query = "SELECT  oe.guid, oe.title
-					FROM {$db_prefix}entities e, {$db_prefix}entity_relationships r, {$db_prefix}objects_entity oe, {$db_prefix}entity_subtypes es
-					WHERE e.subtype = es.id AND es.subtype = 'hjforumcategory' AND e.guid = r.guid_one AND e.container_guid = {$object->getContainerGUID()} AND e.guid = oe.guid";
-		}
-
-	 	$categories = get_data($query);
-
-	 	$category_list = array();
-	 	foreach ($categories as $category)
-	 		$category_list[$category->guid] = $category->title;
-
-		$gcf_file_under_category_label = elgg_echo('gcforums:file_under_category_label');
-		$gcf_file_under_category_input = elgg_view('input/dropdown', array(
-			'options_values' => $category_list,
-			'name' => 'gcf_file_in_category',
-			'value' => $shelved_in[0]->guid_two,
-		));
-	}
-}
-
-// hidden field for guid
-$gcf_guid_input = elgg_view('input/hidden', array(
-	'name' => 'gcf_guid',
-	'value' => $object->getGUID(),
-	));
-// hidden field for category guid
-$gcf_container_input = elgg_view('input/hidden', array(
-	'name' => 'gcf_container',
-	'value' => $object->getContainerGUID(),
-	));
-// hidden field for subtype
-$gcf_type_input = elgg_view('input/hidden', array(
-	'name' => 'gcf_type',
-	'value' => $object->getSubtype()
-	));
-
-// hidden field for group guid
-$gcf_group_input = elgg_view('input/hidden', array(
-	'name' => 'gcf_group',
-	'value' => $gcf_group
-	));
-
-// hidden field for forward url
-$gcf_forward = trim($_SERVER['HTTP_REFERER']);
-$gcf_forward_url_input = elgg_view('input/hidden', array(
-	'name' => 'gcf_forward_url',
-	'value' => str_replace('amp;','',$gcf_forward),
-	));
-
-$gcf_save_button = elgg_view('input/submit', array(
+/// save button
+$btnSave = elgg_view('input/submit', array(
 	'value' => elgg_echo('gcforums:save_button'),
 	'name' => 'save'
 ));
 
+echo "<p>$btnSave</p>";
 
-echo <<<___HTML
+echo "</div>";
 
-<div>
-	<label for="gcf_title_input">$gcf_title_label</label>
-	$gcf_title_input
-</div>
 
-<div>
-	<label for="gcf_description_input">$gcf_description_label</label>
-	$gcf_description_input
-</div>
-<div>
- 	<label for="gcf_file_under_category_input">$gcf_file_under_category_label</label>
- 	$gcf_file_under_category_input
-</div>
 
-<div>
-	$gcf_sticky_topic_input
-</div>
 
-<div>
-	$gcf_enable_categories_input
-</div>
+/// title, description, and access
+function general_information_form($object = null) {
+	$title = ($object == null) ? '' : $object->title;
+	if ($object->getSubtype() !== 'hjforumpost') {
+		$lblTitle = elgg_echo('gforums:title_label');
+		$txtTitle = elgg_view('input/text', array(
+			'name' => 'txtTitle',
+			'value' => $title,
+			'required' => true
+		));
+		$sub_return = array('title' => array($lblTitle, $txtTitle));
+	}
 
-<div>
-	$gcf_enable_posting_input
-</div>
+	$description = ($object == null) ? '' : $object->description;
+	$lblDescription = elgg_echo('gforums:description_label');
+	$txtDescription = elgg_view('input/longtext', array(
+		'name' => 'txtDescription',
+		'value' => $description,
+		'required' => true
+	));
 
-<div>
-	<label for="gcf_blog_description">$gcf_access_label</label>
-	$gcf_access_input
-</div>
+	$access_id = ($object == null) ? '' : $object->access_id;
+	$lblAccess = elgg_echo('gcforums:access_label');
+	$ddAccess = elgg_view('input/access', array(
+		'name' => 'ddAccess',
+		'value' => $access_id
+	));
 
-	<!-- hidden input fields -->
-	$gcf_group_input
-	$gcf_guid_input
-	$gcf_container_input
-	$gcf_type_input
-	$gcf_forward_url_input
 
-<div class="mrgn-tp-md">
-	$gcf_save_button
-</div>
+	$return = array( 
+		'description' => array($lblDescription, $txtDescription),
+		'access' => array($lblAccess, $ddAccess)
+	);
 
-___HTML;
+	if ($sub_return) $return = array_merge($return, $sub_return);
+
+	return $return;
+}
+
+function forums_topic_form($object) {
+	$is_sticky = ($object == null) ? '' : $object->is_sticky;
+	$lblIsSticky = elgg_echo('gcforums:is_sticky');
+	$chkIsSticky = elgg_view('input/checkboxes', array(
+		'name' => 'chkIsSticky',
+		'class' => 'list-unstyled',
+		'options' => array($lblIsSticky => 1),
+		'value' => $is_sticky,
+	));
+
+	$return = array(
+		'is_sticky' => array($lblIsSticky, $chkIsSticky),
+	);
+
+	return $return;
+}
+
+/// category filing, enable subcategories, and disable posting
+function forums_information_form($object) {
+
+	/// todo: identify if this object is new or not
+	$dbprefix = elgg_get_config('dbprefix');
+
+	$enable_subcategories = ($object == null) ? 0 : $object->enable_subcategories;
+	$lblEnableCategory = elgg_echo('gcforums:enable_categories_label');
+	$chkEnableCategory = elgg_view('input/checkboxes', array(
+		'name' => 'chkEnableCategory',
+		'class' => 'list-unstyled',
+		'options' => array($lblEnableCategory => 1),
+		'value' => $enable_subcategories,
+	));
+
+	$enable_posting = ($object == null) ? 0 : $object->enable_posting;
+	$lblEnablePost = elgg_echo('gcforums:enable_posting_label');
+	$chkEnablePost = elgg_view('input/checkboxes', array(
+		'name' => 'chkEnablePost',
+		'class' => 'list-unstyled',
+		'options' => array($lblEnablePost => 1),
+		'value' => $enable_posting,
+	));
+
+	// category option only available if the subcategory is enabled or first level forum in group
+	if ($object->getContainerEntity()->enable_subcategories || $object->getContainerEntity() instanceof ElggGroup) {
+
+		// retrieve a list of available categories
+		if ($object->getGUID() && $object->getGUID() !== 0) { 
+			$query = "	SELECT  oe.guid, oe.title
+						FROM {$dbprefix}entities e, {$dbprefix}entity_relationships r, {$dbprefix}objects_entity oe, {$dbprefix}entity_subtypes es
+						WHERE e.subtype = es.id AND es.subtype = 'hjforumcategory' AND e.guid = r.guid_one AND e.container_guid = {$object->getContainerGUID()} AND e.guid = oe.guid";
+
+		}
+		$categories = get_data($query);
+
+		$category_list = array();
+	 	foreach ($categories as $category)
+	 		$category_list[$category->guid] = $category->title;
+
+
+		// retrieve the current category that the forum is listed under
+		$query = "	SELECT guid_two FROM {$dbprefix}entity_relationships WHERE guid_one = {$object->getGUID()} AND relationship = 'filed_in'";
+		$currently_filed_under = get_data($query);
+
+		$category_filing = $currently_filed_under[0]->guid_two;
+		$lblCategoryFiling = elgg_echo('gcforums:file_under_category_label');
+		$ddCategoryFiling = elgg_view('input/dropdown', array(
+			'options_values' => $category_list,
+			'name' => 'ddCategoryFiling',
+			'value' => $category_filing,
+		));
+
+		$sub_return = array('category_filing' => array($lblCategoryFiling, $ddCategoryFiling));
+	}
+
+	$return = array(
+		'enable_category' => array($lblEnableCategory, $chkEnableCategory),
+		'enable_posting' => array($lblEnablePost, $chkEnablePost),
+	);
+
+	if ($sub_return) $return = array_merge($return, $sub_return);
+
+	return $return;
+}
+
+function hidden_information_form($object) {
+
+	// hidden field for guid
+	$hidden_object = elgg_view('input/hidden', array(
+		'name' => 'entity_guid',
+		'value' => $object->getGUID(),
+	));
+
+	$base_url = elgg_get_site_entity()->getURL();
+
+	// hidden field for forward url
+	$forward_url = "{$base_url}gcforums/view/{$object->getGUID()}"; 
+	$hidden_forward_url = elgg_view('input/hidden', array(
+		'name' => 'hidden_forward_url',
+		'value' => str_replace('amp;','',$forward_url),
+	));
+
+	$return = array('entity_guid' => $hidden_object, 'forward_url' => $hidden_forward_url);
+
+	return $return;
+}
+
+
 

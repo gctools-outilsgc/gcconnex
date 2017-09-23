@@ -2,6 +2,53 @@
 $site_url = elgg_get_site_url();
 $english = array(
 
+	'gcforums:delete:heading' => "Deletion confirmation",
+	'gcforums:delete:body' => "Are you sure you want to delete the %s",
+	'gcforums:delete:cancel' => "Cancel",
+	'gcforums:delete:delete' => "Delete",
+	'gcforums:edit:new_forum:heading' => "New %s",
+	'gcforums:edit:edit_forum:heading' => "Edit %s",
+
+	'gcforums:user:name' => "Name (username):",
+	'gcforums:user:email' => "Email:",
+	'gcforums:user:posting' => "Posting:",
+
+	'gcforums:delete:success' => "'%s' has been deleted successfully",
+	'gcforums:delete:nosuccess' => "'%s' could not be deleted",
+	'gcforums:saved:success' => "'%s' has been saved successfully",
+
+	'gcforums:translate:subscribe' => "Subscribe",
+	'gcforums:translate:unsubscribe' => "Unsubscribe",
+
+	'gcforums:translate:hjforumcategory' => "Category",
+	'gcforums:translate:hjforum' => "Forum",
+	'gcforums:translate:hjforumtopic' => "Topic",
+	'gcforums:translate:hjforumpost' => "Post",
+
+	'gcforums:translate:edit' => "Edit",
+	'gcforums:translate:delete' => "Delete",
+	'gcforums:translate:new_topic' => "New forum topic",
+	'gcforums:translate:new_subforum' => "New subforum",
+	'gcforums:translate:new_subcategory' => "New category",
+
+	'gcforums:label:title' => "Title",
+
+	'gcforum:heading:default_title' => "Group Forums",
+
+	"gcforums:translate:topics" => "topics",
+	"gcforums:translate:forums" => "forums",
+	"gcforums:translate:posts" => "posts",
+	"gcforums:translate:latest" => "latest",
+
+	"gcforums:translate:topic_starter" => "Topic Starter",
+	"gcforums:translate:replies" => "Replies",
+	"gcforums:translate:last_post" => "Last post",
+
+
+	"gcforums:translate:total_topics" => "Total topics",
+	"gcforums:translate:total_replies" => "Total replies",
+	"gcforums:translate:latest_posts" => "Latest post",
+
 	"gcforums:is_sticky" => 'Sticky topic', 
 	"gcforums:forumpost_saved" => "Your reply has been created successfully",
 	"gcforums:forumtopic_saved" => "Your Forum Topic '%s' has been created successfully",
@@ -29,14 +76,9 @@ $english = array(
 
 	"gcforums:submit" => "Submit",
 
-	"gcforums:topics" => "Topics",
-	"gcforums:forums" => "Forums",
-	"gcforums:posts" => "Posts",
-	"gcforums:latest" => "Latest",
 
-	"gcforums:topic_starter" => "Topic Starter",
-	"gcforums:replies" => "Replies",
-	"gcforums:last_posted" => "Last Posted",
+
+
 
 	
 	// this was a mistake, (posting is inverse)
@@ -58,9 +100,6 @@ $english = array(
 	"gcforums:delete_hjforumtopic" => "Delete Forum",
 
 
-	"gcforums:total_topics" => "Total Topics",
-	"gcforums:total_posts" => "Total Posts",
-	"gcforums:latest_posts" => "Latest Posts",
 
 	"gcforums:no_posts" => "None",
 	"gcforums:sticky_topic" => "Sticky Topics",
@@ -79,7 +118,8 @@ $english = array(
 
 	"gcforums:notification_subject_post" => "New forum post",
 	"gcforums:notification_body_post" => "%s made a reply in the Forum Topic '%s' with the following content... <br/> %s <br/> You can view this item here: %s <br/>",
-    'gcforums:time'=>'on',
+    
+
 
     //edit page
 
@@ -91,6 +131,7 @@ $english = array(
 	'gcforums:unsubscribe' => 'Unsubscribe',
 
 	'gcforums:missing_description' => 'Missing Description', // NEW
-	);
+
+);
 
 add_translation("en", $english);

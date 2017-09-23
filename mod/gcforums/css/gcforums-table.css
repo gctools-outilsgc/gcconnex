@@ -1,3 +1,199 @@
+
+
+.category-main-box {
+
+    border: 1px solid #ddd;
+    padding:15px;
+    background-color: #f5f5f5;
+    margin: 0;
+} 
+
+.category-options {
+    text-align: right;
+   /* border: 1px solid #ddd;
+    vertical-align: middle;
+    padding:15px;
+    background-color: #f5f5f5;
+    margin: 0;*/
+}
+
+.forum-options, .topic-options {
+    text-align: left;
+    width: 15%;
+    float:right;
+    vertical-align: middle;
+    text-align: center;
+    height: 100%;
+    //border-left: solid #e6e6e6 2px;
+    display: inline-block;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+.forum-options-edit, .topic-options-edit {
+    text-align: left;
+    width: 15%;
+    float:right;
+    height: 100%;
+    display:inline-block;
+}
+
+.edit-options-hjforum {
+
+}
+
+.edit-options-hjforumcategory, .edit-options-hjforumtopic, .edit-options-hjforumpost {
+    display: inline-block;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+
+
+.forums-menu-buttons {
+    display: block;
+    width: 100%;
+    text-align: right;
+    padding-bottom: 5px;
+}
+
+.forum-category-issue-notice {
+    padding-top: 25px;
+}
+/*
+.forum-options {
+    padding: 5px 5px 5px 15px;
+    vertical-align: middle;
+    float: right;
+}
+*/
+
+.forum-information, .topic-information {
+    float: right;
+    width: 15%;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.category-description {
+    vertical-align: middle;
+    padding: 10px 10px 10px 20px;
+    background-color: #f5f5f5;
+    margin: 0;
+} 
+
+
+.forum-main-box, .topic-main-box {
+    border: 1px solid #dddddd;
+    background: #e6e6e6;
+    vertical-align: middle;
+    width:100%;
+}
+
+.forum-header, .topic-header {
+    border: 1px solid #e6e6e6;
+    padding: 5px 5px 5px 15px;
+    background-color: #e6e6e6;
+    vertical-align: middle;
+    font-weight:bold;
+    overflow: auto;
+
+}
+
+.forum-info-header, .topic-info-header {
+    border: 1px solid #e6e6e6;
+    padding: 5px 5px 5px 15px;
+    background-color: #ffffff;
+    vertical-align: middle;
+    overflow: auto;
+    vertical-align: middle;
+
+}
+
+.forum-description, .topic-description {
+    vertical-align: middle;
+    float: left;
+    width:40%;
+    padding: 5px 5px 5px 15px;
+    height: 100%;
+    display:inline-block;
+}
+
+.forum-description-text {
+    padding: 5px 5px 5px 15px;
+}
+
+
+.topic-content {
+    padding: 15px 15px 15px 15px;
+    background-color: #ffffff;
+}
+
+.comment-owner-information-content {
+    padding: 5px 5px 5px 5px;
+    border-bottom: 1px solid #dddddd;
+    width: 100%;
+    display: inline-block;
+    margin: 0;
+}
+
+.topic-owner-information-content {
+    padding: 15px 15px 15px 15px;
+    border-bottom: 1px solid #dddddd;
+    width: 100%;
+    display: inline-block;
+    margin: 0;
+}
+
+.topic-owner-information, .comment-owner-information {
+    float: right;
+    overflow: hidden;
+    width: 70%;
+}
+
+.topic-owner-icon, .comment-owner-icon {
+    display: inline-block;
+    float: left;
+    overflow: hidden;
+    width: 30%;
+}
+
+.topic-information-options, .topic-comment-options {
+    display: inline-block;
+    float: right;
+    overflow: hidden;
+    width: 30%;
+}
+
+.topic-main-comments {
+    padding: 15px 15px 15px 15px;
+}
+
+.topic-comments {
+    padding: 10px 10px 10px 10px;
+    border: 1px solid #dddddd;
+}
+
+.topic-comment-content {
+    padding: 15px 15px 15px 15px;
+    background-color: #ffffff;
+}
+
+
+.topic-comment-options {
+
+}
+
+.forum-empty {
+    border: 1px solid #e6e6e6;
+    padding: 5px 5px 5px 15px;
+    background-color: #ffffff;
+    vertical-align: middle;
+    overflow: auto; 
+}
+
+///
+
 .gcforums-table {
     border-collapse: collapse;
     border: 1px solid #dddddd;
@@ -64,23 +260,20 @@
 }
 
 .forum-category-desc p{
-    padding-left:8px;
+    padding-left: 50px;
     padding-top: 5px;
+    background-color: #f5f5f5;
 }
 
 .gcforums-th-category h1{
     border: none;
     padding:15px;
-        background-color: #f5f5f5;
-            border-bottom: 1px solid transparent;
+    background-color: #f5f5f5;
     margin: 0;
-    
-    border-bottom: 1px solid #ddd;
 }
 
 .gcforums-th-category-options, .gcforums-th-topic-options {
     border-left: hidden;
-    
     text-align: right;
 }
 

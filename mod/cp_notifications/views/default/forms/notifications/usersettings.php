@@ -165,7 +165,9 @@ $content .= "<hr/>";
 
 $content .= "<div id='group_notifications_section'>";
 foreach ($groups as $group) {
-$group_title = gc_explode_translation($group->name,$lang);
+	if (!$group->guid) continue;
+
+	$group_title = gc_explode_translation($group->name,$lang);
 	// list all the groups, Update Relationship table as per selection by user
     $group_subscription = check_entity_relationship ($user->guid, 'cp_subscribed_to_email', $group->guid);
     $group_notification_settings = ($group_subscription) ? "sub_{$group->guid}" : "set_notify_off";
