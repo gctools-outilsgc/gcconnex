@@ -44,7 +44,7 @@ switch ($subtype) {
 
 		$query = "SELECT * FROM {$dbprefix}entity_relationships	WHERE relationship = 'filed_in' AND guid_one = {$entity->getGUID()}";
 		$filed_in = get_data($query);
-		error_log(">>>>>>>  {$query}");
+		error_log(">>>>>>>  {$filed_in_category}");
 		delete_relationship($filed_in[0]->id);
 		add_entity_relationship($entity->getGUID(), 'filed_in', $filed_in_category);
 

@@ -2,8 +2,6 @@
 $site_url = elgg_get_site_url();
 $english = array(
 
-	'admin:administer_utilities:debugging_forums' => 'Forums Debug Tool',
-
 	'gcforums:delete:heading' => "Deletion confirmation",
 	'gcforums:delete:body' => "Are you sure you want to delete the %s",
 	'gcforums:delete:cancel' => "Cancel",
@@ -27,6 +25,7 @@ $english = array(
 	'gcforums:translate:delete' => "Delete",
 	'gcforums:translate:new_topic' => "New forum topic",
 	'gcforums:translate:new_subforum' => "New subforum",
+	'gcforums:translate:new_subcategory' => "New category",
 
 	'gcforums:label:title' => "Title",
 

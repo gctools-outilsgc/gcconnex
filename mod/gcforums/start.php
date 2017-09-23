@@ -160,7 +160,7 @@ function render_forum_topics($topic_guid) {
 			'entity' => $topic,
 			'title' => false,
 		);
-		$params = $params;
+
 		$summary = elgg_view('object/elements/summary', $params);
 
 		$owner_icon = elgg_view_entity_icon($topic->getOwnerEntity(), 'medium');
@@ -514,13 +514,13 @@ function get_forums_statistics_information($container_guid, $type) {
 		case 1:
 			$query = "SELECT COUNT(r.guid_one) AS total
 				FROM {$dbprefix}entity_relationships r, {$dbprefix}entities e, {$dbprefix}entity_subtypes es
-				WHERE r.guid_one = e.guid AND e.subtype = es.id AND r.guid_two = {$container_guid} AND es.subtype = 'hjforumpost' AND (e.access_id = 1 OR e.access_id = 2)";
+				WHERE r.guid_one = e.guid AND e.subtype = es.id AND r.guid_two = {$container_guid} AND es.subtype = 'hjforumpost' AND e.access_id IN (1, 2)";
 			break;
 
 		case 2:
 			$query = "SELECT COUNT(r.guid_one) AS total
 				FROM {$dbprefix}entity_relationships r, {$dbprefix}entities e, {$dbprefix}entity_subtypes es
-				WHERE r.guid_one = e.guid AND e.subtype = es.id AND r.guid_two = {$container_guid} AND es.subtype = 'hjforumtopic' AND (e.access_id = 1 OR e.access_id = 2)";
+				WHERE r.guid_one = e.guid AND e.subtype = es.id AND r.guid_two = {$container_guid} AND es.subtype = 'hjforumtopic' AND e.access_id IN (1, 2)";
 				break;
 		
 		case 3:
@@ -581,7 +581,7 @@ function render_edit_options($object_guid, $group_guid) {
 	$entity = get_entity($object_guid);
 	$entity_type = $entity->getSubtype();
 
-	if ($entity->getSubtype() !== 'hjforumpost')
+	if ($entity->getSubtype() !== 'hjforumpost' && elgg_is_admin_logged_in())
 		$options['access'] = '<strong>' . get_readable_access_level($entity->access_id) . '</strong>';
  
  	// subscription
@@ -602,23 +602,29 @@ function render_edit_options($object_guid, $group_guid) {
 	 	$options['subscription'] = "<div class='edit-options-{$entity_type}'><a href='{$url}'>{$btnSubscribe}</a></div>";
 	}
 
-	// checks if user is admin, group owner, or moderator
-	if (elgg_is_admin_logged_in() || $entity->getOwnerGUID() == $current_user->guid /*|| check_entity_relationship($current_user->getGUID(), 'operator', $group_entity->getGUID())*/) {
+	if (elgg_is_logged_in() && check_entity_relationship($current_user->guid, 'member', $group_entity->guid) && $entity->getSubtype() === 'hjforum') {
+		$url = elgg_get_site_url()."gcforums/create/hjforumtopic/{$object_guid}";
+		$menu_label = elgg_echo("gcforums:translate:new_topic");
+		$options['new_topic'] = "<a href='{$url}'>{$menu_label}</a>";
+	}
 
-		$object_menu_items = ($entity->getSubtype() === 'hjforum') ? array("new_subforum", "new_topic", "edit") : array('edit', 'delete');
+	// checks if user is admin, group owner, or moderator
+	if (elgg_is_admin_logged_in() || $group_entity->getOwnerGUID() == $current_user->guid /*|| check_entity_relationship($current_user->getGUID(), 'operator', $group_entity->getGUID())*/) {
+
+		$object_menu_items = ($entity->getSubtype() === 'hjforum') ? array("new_subcategory", "new_subforum", "new_topic", "edit") : array('edit', 'delete');
 		foreach ($object_menu_items as $menu_item) {
 			$url = "";
+			
 			// check if new posting link and it is disabled (enabled == disabled)
 			switch($menu_item) {
+				case 'new_subcategory':
+					$url = ($entity->enable_subcategories) ? elgg_get_site_url()."gcforums/create/hjforumcategory/{$object_guid}" : "";
+					break;
 				case 'new_subforum':
 					$url = elgg_get_site_url()."gcforums/create/hjforum/{$object_guid}";
 					break;
 				case 'new_topic':
-					if ($entity->enable_posting) {
-						$url = elgg_get_site_url()."gcforums/create/hjforumtopic/{$object_guid}";
-					} else {
-						continue;
-					}
+					$url = ($entity->enable_posting && $entity->getSubtype() !== 'hjforumcategory') ? elgg_get_site_url()."gcforums/create/hjforumtopic/{$object_guid}" : "";
 					break;
 				case 'edit':
 					$url = elgg_get_site_url()."gcforums/edit/{$object_guid}";
@@ -634,23 +640,24 @@ function render_edit_options($object_guid, $group_guid) {
 				$options[$menu_item] = "<a {$style} href='{$url}'>{$menu_label}</a>";
 			}
 		}
-	}
-
-	if (elgg_is_logged_in() && check_entity_relationship($current_user->guid, 'member', $group_entity->guid)) {
-		$url = elgg_get_site_url()."gcforums/create/hjforumtopic/{$object_guid}";
-		$menu_label = elgg_echo("gcforums:translate:new_topic");
-		$options['new_topic'] = "<a {$style} href='{$url}'>{$menu_label}</a>";
-	}
-
+	}	
 		
 	foreach ($options as $key => $option) 
 		$edit_options .= "<div class='edit-options-{$entity_type}'>{$option}</div>";
+
+
+	if ($entity->getSubtype() !== 'hjforumpost' && $entity->getSubtype() !== 'hjforumtopic' && $entity->getSubtype() !== 'hjforumcategory') {		
+		$edit_options  .= elgg_view('alerts/delete', array('entity' => $entity));		
+	}	
+
+
+	return $edit_options;
 }
 
 
 
-function gcforums_menu_buttons($forum_guid, $group_guid, $is_topic=false) { // main page if forum_guid is not present
-
+function gcforums_menu_buttons($forum_guid, $group_guid, $is_topic=false) { 
+	// main page if forum_guid is not present
 	elgg_load_css('gcforums-css');
 	$group_entity = get_entity($group_guid);
 	$current_user = elgg_get_logged_in_user_entity();
@@ -664,7 +671,7 @@ function gcforums_menu_buttons($forum_guid, $group_guid, $is_topic=false) { // m
 	if (elgg_is_admin_logged_in() || check_entity_relationship($current_user->getGUID(), 'member', $group_entity->getGUID())) {
 
 		// check if postings is enabled and this is not the main first page of forum in group
-		if (!$forum_object->enable_posting && $forum_guid) { 
+		if (!$forum_object->enable_posting || $entity->getGUID() !== $group_entity->getGUID()) { 
 			$btnNewForumTopic = elgg_view('output/url', array(
 				"text" => elgg_echo('gcforums:new_hjforumtopic'), 
 				"href" => "gcforums/create/hjforumtopic/{$group_guid}/{$forum_guid}", 
@@ -686,7 +693,7 @@ function gcforums_menu_buttons($forum_guid, $group_guid, $is_topic=false) { // m
 				if ($gcforum_type === 'hjforumcategory')
 					$button_array[$gcforum_type] = ($entity->enable_subcategories || $forum_guid == $group_guid) ? elgg_view('output/url', array("text" => elgg_echo('gcforums:new_hjforumcategory'), "href" => $url, 'class' => $button_class)) : "";
 				
-				if ($gcforum_type === 'hjforumtopic')
+				if ($gcforum_type === 'hjforumtopic' && $entity->getGUID() !== $group_entity->getGUID())
 					$button_array[$gcforum_type] = (!$forum_object->enable_posting && $forum_guid) ? elgg_view('output/url', array("text" => elgg_echo('gcforums:new_hjforumtopic'), "href" => $url, 'class' => $button_class)) : "";
 
 				if ($gcforum_type === 'hjforum')
@@ -709,7 +716,7 @@ function gcforums_menu_buttons($forum_guid, $group_guid, $is_topic=false) { // m
 			return "<div>{$menu_buttons}</div>";
 		}
 
-		if (elgg_is_logged_in() && check_entity_relationship($current_user->guid, 'member', $group_entity->guid)) {
+		if (elgg_is_logged_in() && check_entity_relationship($current_user->guid, 'member', $group_entity->guid) && $group_entity->getGUID() !== $entity->getGUID()) {
 			$url = "gcforums/create/hjforumtopic/{$forum_guid}";
 			$new_forum_topic_button = (!$forum_object->enable_posting && $forum_guid) ? elgg_view('output/url', array("text" => elgg_echo('gcforums:new_hjforumtopic'), "href" => $url, 'class' => $button_class)) : "";
 		}
