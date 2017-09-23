@@ -169,9 +169,9 @@ function render_forum_topics($topic_guid) {
 		<div class='topic-owner-information-content'>
 			<div class='topic-information-options'>{$options} {$admin_only}</div>
 			<div class='topic-owner-icon'>{$owner_icon}</div>
-			<div class='topic-owner-information'><b>Name (username):</b> {$owner->name} ({$owner->username})</div>
-			<div class='topic-owner-information'><b>Email:</b> {$owner->email}</div>
-			<div class='topic-owner-information'><b>Posting:</b> {$timestamp}</div>
+			<div class='topic-owner-information'><b>".elgg_echo('gcforums:user:name')."</b> {$owner->name} ({$owner->username})</div>
+			<div class='topic-owner-information'><b>".elgg_echo('gcforums:user:email')."</b> {$owner->email}</div>
+			<div class='topic-owner-information'><b>".elgg_echo('gcforums:user:posting')."</b> {$timestamp}</div>
 		</div>";
 
 		$content .= "<div class='topic-content'>{$topic->description}</div>";
@@ -274,8 +274,8 @@ function render_forums($forum_guid) {
 					<div class='topic-header'>Topic
 						<div class='topic-information'>options</div>
 						<div class='topic-information'>".elgg_echo('gcforums:translate:last_posted')."</div>
-						<div class='topic-information'>total replies</div>
-						<div class='topic-information'>topic starter</div>
+						<div class='topic-information'>".elgg_echo('gcforums:translate:replies')."</div>
+						<div class='topic-information'>".elgg_echo('gcforums:translate:topic_starter')."</div>
 					</div>";
 
 
@@ -299,14 +299,14 @@ function render_forums($forum_guid) {
 			$admin_only = (elgg_is_admin_logged_in()) ? "(guid:{$topic->guid})" : "";
 			$last_post = ($total_replies <= 0) ? $last_post = elgg_echo('gcforums:no_posts') : "<div>{$replies[$total_replies - 1]->username}</div> <div>{$time_posted}</div>";
 
-					$content .= "
-					<div class='topic-info-header'>
-						<div class='topic-description'>{$hyperlink} {$admin_only}</div>
-						<div class='topic-options-edit'>{$options}</div>
-						<div class='topic-options'>{$last_post}</div>
-						<div class='topic-options'>{$total_replies}</div>
-						<div class='topic-options'>{$topic_starter}</div>
-					</div>";
+			$content .= "
+			<div class='topic-info-header'>
+				<div class='topic-description'>{$hyperlink} {$admin_only}</div>
+				<div class='topic-options-edit'>{$options}</div>
+				<div class='topic-options'>{$last_post}</div>
+				<div class='topic-options'>{$total_replies}</div>
+				<div class='topic-options'>{$topic_starter}</div>
+			</div>";
 		}
 
 		$content .= "</div> </div> </p> <br/>";
@@ -351,9 +351,9 @@ function render_forums($forum_guid) {
 								<div style='background: #e6e6e6; width:100%;' >
 									<div class='forum-header'>Forum
 										<div class='forum-information'>options</div>
-										<div class='forum-information'>total topics</div>
-										<div class='forum-information'>total posts</div>
-										<div class='forum-information'>recently posted</div>
+										<div class='forum-information'>".elgg_echo('gcforums:translate:total_topics')."</div>
+										<div class='forum-information'>".elgg_echo('gcforums:translate:total_replies')."</div>
+										<div class='forum-information'>".elgg_echo('gcforums:translate:last_post')."</div>
 									</div>";
 
 				/// forums
@@ -408,9 +408,9 @@ function render_forums($forum_guid) {
 						<div style='background: #e6e6e6; width:100%;' >
 							<div class='forum-header'>Forum
 								<div class='forum-information'>options</div>
-								<div class='forum-information'>total topics</div>
-								<div class='forum-information'>total posts</div>
-								<div class='forum-information'>recently posted</div>
+								<div class='forum-information'>".elgg_echo('gcforums:translate:total_topics')."</div>
+								<div class='forum-information'>".elgg_echo('gcforums:translate:total_replies')."</div>
+								<div class='forum-information'>".elgg_echo('gcforums:translate:last_post')."</div>
 							</div>";
 
 				foreach ($forums as $forum) {
@@ -466,9 +466,9 @@ function render_forums($forum_guid) {
 					<div style='background: #e6e6e6; width:100%;' >
 						<div class='forum-header'>Forum
 							<div class='forum-information'>options</div>
-							<div class='forum-information'>total topics</div>
-							<div class='forum-information'>total posts</div>
-							<div class='forum-information'>recently posted</div>
+							<div class='forum-information'>".elgg_echo('gcforums:translate:total_topics')."</div>
+							<div class='forum-information'>".elgg_echo('gcforums:translate:total_replies')."</div>
+							<div class='forum-information'>".elgg_echo('gcforums:translate:last_post')."</div>
 						</div>";
 
 			foreach ($forums as $forum) {

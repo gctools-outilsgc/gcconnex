@@ -2,7 +2,7 @@
 
 gatekeeper();
 $dbprefix = elgg_get_config('dbprefix');
-
+$site = elgg_get_site_entity();
 /// generic information
 $title = get_input('txtTitle');
 $description = get_input('txtDescription');
@@ -72,7 +72,7 @@ switch ($subtype) {
 
 		add_entity_relationship($entity_guid, 'descendant', $container_guid);
 
-		gcforums_notify_subscribed_users($entity, "#");
+		gcforums_notify_subscribed_users($entity, "{$site}gcforums/topic/view/{$entity->getGUID()}");
 		create_hjforumtopic_relationships($entity_guid, $entity_guid);
 
 		// cyu - auto subscribe when user create the topic
@@ -99,14 +99,17 @@ switch ($subtype) {
 		elgg_set_ignore_access($old_access);
 
 		create_hjforumtopic_relationships($entity_guid, $entity_guid);
-		gcforums_notify_subscribed_users($entity, "");
+		gcforums_notify_subscribed_users($entity, "{$site}gcforums/topic/view/{$entity->getContainerGUID()}");
 		break;
 
 	default:
 		return false;
 }
-
-
+system_message(elgg_echo("gcforums:saved:success", array($entity->title)));
+if ($subtype === 'hjforumpost')
+	forward("{$site}gcforums/topic/view/{$entity->getContainerGUID()}");
+else
+	forward("{$site}gcforums/view/{$entity->getContainerGUID()}");
 
 
 

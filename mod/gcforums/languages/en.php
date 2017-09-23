@@ -9,6 +9,10 @@ $english = array(
 	'gcforums:edit:new_forum:heading' => "New %s",
 	'gcforums:edit:edit_forum:heading' => "Edit %s",
 
+	'gcforums:user:name' => "Name (username):",
+	'gcforums:user:email' => "Email:",
+	'gcforums:user:posting' => "Posting:",
+
 	'gcforums:delete:success' => "'%s' has been deleted successfully",
 	'gcforums:delete:nosuccess' => "'%s' could not be deleted",
 	'gcforums:saved:success' => "'%s' has been saved successfully",
@@ -41,9 +45,9 @@ $english = array(
 	"gcforums:translate:last_posted" => "Last post",
 
 
-	"gcforums:translate:total_topics" => "Total Topics",
-	"gcforums:translate:total_posts" => "Total Posts",
-	"gcforums:translate:latest_posts" => "Latest Posts",
+	"gcforums:translate:total_topics" => "Total topics",
+	"gcforums:translate:total_posts" => "Total replies",
+	"gcforums:translate:latest_posts" => "Latest posts",
 
 	"gcforums:is_sticky" => 'Sticky topic', 
 	"gcforums:forumpost_saved" => "Your reply has been created successfully",

@@ -2,7 +2,49 @@
 
 $french = array(
 
-	'admin:administer_utilities:debugging_forums' => 'Forums Debug Tool',
+	'gcforums:edit:new_forum:heading' => "Nouveau %s",
+	'gcforums:edit:edit_forum:heading' => "Modifiez %s",
+
+	'gcforums:user:name' => "Nom (utilisateur) : ",
+	'gcforums:user:email' => "Courriel : ",
+	'gcforums:user:posting' => "Posting : ",
+
+	'gcforums:delete:success' => "'%s' a été supprimé avec succès",
+	'gcforums:delete:nosuccess' => "'%s' n'a pas pu être supprimé",
+	'gcforums:saved:success' => "'%s' a été enregistré avec succès",
+
+	'gcforums:translate:subscribe' => "S'abonner",
+	'gcforums:translate:unsubscribe' => "Se désabonner",
+
+	'gcforums:translate:hjforumcategory' => "La catégorie",
+	'gcforums:translate:hjforum' => "Le forum",
+	'gcforums:translate:hjforumtopic' => "Les sujets",
+	'gcforums:translate:hjforumpost' => "Les publications",
+
+	'gcforums:translate:edit' => "Modifier",
+	'gcforums:translate:delete' => "Supprimer",
+	'gcforums:translate:new_topic' => "Le sujet du nouveau forum",
+	'gcforums:translate:new_subforum' => "Nouveau forum",
+	'gcforums:translate:new_subcategory' => "Nouvelle catégorie",
+
+	'gcforums:label:title' => "Titre",
+
+	'gcforum:heading:default_title' => "Forum du groupe",
+
+	"gcforums:translate:topics" => "les sujets",
+	"gcforums:translate:forums" => "le forum",
+	"gcforums:translate:posts" => "les sujets",
+	"gcforums:translate:latest" => "récent",
+
+	"gcforums:translate:topic_starter" => "Auteur",
+	"gcforums:translate:replies" => "Réponses",
+	"gcforums:translate:last_posted" => "Dernière publication",
+
+
+	"gcforums:translate:total_topics" => "Nombre total des sujets",
+	"gcforums:translate:total_posts" => "Nombre des messages",
+	"gcforums:translate:latest_posts" => "Derniers messages",
+	
 
 	'gcforums:delete:heading' => "Confirmation de suppression ",
 	'gcforums:delete:body' => "Êtes-vous certain de vouloir supprimer le %s",
