@@ -6,7 +6,7 @@ return array(
       //search knowledge base
       'freshdesk:knowledge:title' => "Help Content",
       'freshdesk:knowledge:search:title' => "How can we help you today?",
-      'freshdesk:knowledge:search:info' => 'Need help? Search our help content to find information and tutorials that will guide you! <br><b>Note:</b> The help content is hosted on a FreshDesk, a third-party tool that allows you to easily search help content articles, as well as submit and track help desk tickets. As you navigate through some of the help content below, you may be redirected to the FreshDesk website. ',
+      'freshdesk:knowledge:search:info' => 'Need help? Search our help content to find information and tutorials that will guide you!<br><br><b>Note:</b> The help content is hosted on Freshdesk, a third-party support tool that allows you to easily search articles, as well as submit and track help desk tickets. As you navigate through the help content below, you may be redirected to the Freshdesk website. ',
 
       'freshdesk:knowledge:explore:title' => 'Explore our help content',
 
@@ -39,6 +39,6 @@ return array(
       'freshdesk:warning:header' => 'Configure knowledge Base',
       'freshdesk:warning:body' => 'Knowledge base needs to be synced.',
 
-      'freshdesk:ticket:information' => "Before submitting a ticket, search the help content for information on the most common questions. Can't find an answer? Submit a ticket using the form below. Please be clear when describing your issue and provide screenshots if possible. A help desk agent will get back to you within 2 business days.",
-      'freshdesk:ticket:information:note' => "<b>Note:</b> We are now using FreshDesk as a third-party tool to manage help desk activities. After submitting a ticket, you should receive a confirmation email with a link to your ticket."
+      'freshdesk:ticket:information' => "Before submitting a ticket, search the help content for information on the most common questions. Can't find an answer? Submit a ticket using the form below. Please be clear when describing your issue and provide a screenshot, if possible. A help desk agent will get back to you within 2 business days.",
+      'freshdesk:ticket:information:note' => "<b>Note:</b> We are now using Freshdesk as a third-party tool to manage help desk activities. After submitting a ticket, you should receive a confirmation email with a link to your ticket."
     );
