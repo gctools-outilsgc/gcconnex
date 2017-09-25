@@ -12,7 +12,7 @@
         <?php echo elgg_echo('onboard:welcome:one:title'); ?>
     </h2>
     <div class="pull-right">
-        <?php echo elgg_view('page/elements/step_counter', array('current_step'=>2, 'total_steps'=>5));?>
+        <?php echo elgg_view('page/elements/step_counter', array('current_step'=>2, 'total_steps'=>6));?>
 
     </div>
 </div>
@@ -331,6 +331,20 @@
               }
           });
 
+          var obj = {
+                    section: 'welcome',
+                    eguid: 'new',
+                    school: $('.gcconnex-education-school').val(),
+                    field: $('.gcconnex-education-field').val(),
+                    degree: $('.gcconnex-education-degree').val(),
+                    skillsadded:$skills_added,
+                    skillsremoved: $delete_guid,
+                    organization:$('.gcconnex-work-org').val(),
+                    title: $('.gcconnex-job-title').val(),
+                    access: $('.gcconnex-access').val()
+                };
+            console.log(obj);
+
             elgg.action('onboard/update-profile', {
                 data: {
                     section: 'welcome',
@@ -345,6 +359,7 @@
                     access: $('.gcconnex-access').val()
                 },
                 success: function (wrapper) {
+                    console.log(wrapper);
                     if (wrapper.output) {
                         //alert(wrapper.output.sum);
                     } else {

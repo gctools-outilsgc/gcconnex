@@ -12,5 +12,9 @@
 		<type>elgg_release</type>
 		<version>1.12</version>
 	</requires>
+    <conflicts>
+        <type>plugin</type>
+        <name>gccollab_theme</name>
+    </conflicts>
 	<activate_on_install>true</activate_on_install>
 </plugin_manifest>

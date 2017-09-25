@@ -32,15 +32,33 @@ $options = array(
     'type' => 'object',
     'subtypes' => $subtypes,
     'limit' => $newsfeed_limit,
-    'metadata_name' => 'audience',
-    'metadata_values' => $community_audience,
     'full_view' => false,
     'list_type_toggle' => false,
     'pagination' => true
 );
 
+$tags_values = '';
+if( strpos($community_tags, ',') !== false ){ // if multiple tags
+    $community_tags_array = array_map('trim', explode(',', $community_tags));
+    foreach($community_tags_array as $tag_val){
+        $tags_values .= ' OR md.value_id = ' . elgg_get_metastring_id($tag_val);
+    }
+} else {
+   $tags_values = ' OR md.value_id = ' .elgg_get_metastring_id($community_tags);
+}
+
+//get the metastring id
+$audience_name = elgg_get_metastring_id('audience');
+$audience_value = elgg_get_metastring_id($community_audience);
+$tags_name = elgg_get_metastring_id('tags');
+
+//Query grabs content with audience or tags
+$dbprefix = elgg_get_config('dbprefix');
+$options['joins'][] = "JOIN {$dbprefix}metadata md ON (e.guid = md.entity_guid)";
+$options['wheres'][] = "(md.name_id = {$audience_name} OR md.name_id = {$tags_name}) AND (md.value_id = {$audience_value}{$tags_values})";
+
 if( $latest ){
-	$options['wheres'] = array("e.guid > {$latest}");
+	$options['wheres'][] = "e.guid > {$latest}";
 }
 
 if( $limit ){

@@ -110,7 +110,7 @@ if (!$draw_page) {
 	$folders = file_tools_get_folders($page_owner->getGUID());
 
 	// build page element
-		$title_text = elgg_echo("file:user", array(gc_explode_translation($page_owner->title, $lang)));		
+		$title_text = elgg_echo("file:user", array(gc_explode_translation($page_owner->name, $lang)));		
 	$body = "<div id='file_tools_list_files_container' class='elgg-content'>" . elgg_view("graphics/ajax_loader", array("hidden" => false)) . "</div>";
 	
 	// make sidebar

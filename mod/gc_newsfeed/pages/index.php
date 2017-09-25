@@ -26,7 +26,7 @@
     
 }
 else{
-    if(elgg_is_active_plugin('gc_splash_page')){
+    if(elgg_is_active_plugin('gc_splash_page') || elgg_is_active_plugin('gc_splash_page_collab')){
             //if not logged in go to splash
         $url = elgg_get_site_url()."splash/";
         forward($url);

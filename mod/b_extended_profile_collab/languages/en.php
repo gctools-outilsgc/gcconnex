@@ -87,11 +87,6 @@ $english = array(
     'gcconnex_profile:portfolio:publication_date' => 'Published on: ',
     'gcconnex_profile:portfolio:description' => 'Description: ',
 
-    'missions:mentoring' => 'Mentoring',
-    'missions:shadowing' => 'Shadowing',
-    'missions:casual' => 'Casual Work',
-    'missions:student' => 'Student Integration',
-
     'gcconnex_profile:opt:career' => 'Career Opportunities',
     'gcconnex_profile:opt:mentored' => 'Mentee',
     'gcconnex_profile:opt:mentoring' => 'Mentor',
@@ -104,6 +99,18 @@ $english = array(
 
     'gcconnex_profile:opt:casual_tooltip' => 'Casual workers are hired for specified periods that may not exceed 90 working days in one calendar year, in a department or in an agency to which the Public Service Commission (PSC) has exclusive authority to make appointments. The period of casual employment may be for one or more than one term, but is not to exceed 90 working days in a department or agency in a calendar year.',
     'gcconnex_profile:opt:student_tooltip' => 'Any graduate of a post-secondary program who worked as a student employee for the Federal Public Service, via FSEWP, COOP, or RAP, may be considered for integration.',
+
+    'email_change_confirmation:request' => "In order to complete your email address change, please check the inbox of your %s account",
+
+    'email_change_confirmation:error:user' => "You're not the user for whom this request was made",
+    'email_change_confirmation:error:request' => "There is no pending email address change",
+    'email_change_confirmation:error:code' => "The supplied validation code is incorrect, please check your email message",
+
+    'email_change_confirmation:request:subject' => "Email address change request for %s",
+    'email_change_confirmation:request:message' => "Hi %s,<br/><br/>You requested to change your email address on %s to this email address. In order to complete the request click on this link:<br/><br/>%s",
+
+    'email_change_confirmation:success:subject' => "Email address changed for %s",
+    'email_change_confirmation:success:message' => "Hi %s,<br/><br/>Your email address on %s has been changed. If you didn't do this or request this, please contact a site administrator."
 );
 
 add_translation("en", $english);

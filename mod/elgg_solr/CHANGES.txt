@@ -1,0 +1,149 @@
+== Version History ==
+
+x.x (mm/dd/yyyy):
+
+1.10.1 (04/07/2016):
+ - fix groups not indexed on full reindex action
+ - chore: packagist composer.json info
+ - add id to manifest for 1.9+
+
+1.10 (08/12/2015):
+ - add schema.solr5.xml for solr 5+
+ - update solarium to 3.4.1 to support solr 5+
+
+1.9.6 (08/10/2015):
+ - prevent infinite loop if entity is updated by plugin during index event
+ - refactor 1.8 check in case elgg_get_version is defined by another plugin
+
+1.9.5 (08/07/2015):
+ - override access while indexing to prevent missing index data due to viewer permissions
+
+1.9.4 (08/06/2015):
+ - better checking for deferable solr writes, write immediately if not able to defer
+
+1.9.3 ():
+ - fix duplicate name in user results
+
+1.9.2 (05/15/2015):
+ - adds configurable highlighted snippet length
+ - adds highlight snippet length override in search hooks ('fragsize') parameter
+
+1.9.1 (05/14/2015):
+ - adds default limit to searches if one isn't passed to the hook
+
+1.9.0 (05/14/2015):
+ - smaller query string for access (reported by Steve Clay)
+ - search hooks now accept 'hlfields' parameter for custom highlighting matches
+ - fix highlighting of multi-term searches
+ - fix issue with comment indexing for 1.8 - reindex comments on upgrade
+
+1.8.3 (03/29/2015):
+ - fixed fixed wsod on comment search due to variable typo
+
+1.8.2 (03/29/2015):
+ - fixed merging of select parameters in search hooks
+ - purify html from highlighted snippets
+
+1.8.1 (03/15/2015):
+ - fix some deprecation errors in 1.9+
+ - fix some notices in error logs
+
+1.8.0 (03/13/2015):
+ - ensure all exceptions are caught when trying to contact solr
+ - cache missed delete events and try again on daily cron
+ - added individual tag name indexing as "tag_{$tagname}_ss" multi-valued string
+ - removed superfluous schema fields in favor of dynamic fields
+ - upgrade to solarium 3.3.0
+ - added core selecting dropdown on settings when host/port/path are set
+ - allow plugins to prevent the index of an entity - return false in 'solr:index', <type> plugin hook
+ - ability to pass override query fields to search hooks in $params['qf']
+ - ability to pass override select vars to search hooks in $params['select']
+ - better handling of subtype-less entities
+
+1.7.1 (12/18/2014):
+ - fix issue with entities not being deleted from solr index
+
+1.7 (12/05/2014):
+ - performance fix for mysql with large offsets
+ - visual feedback of reindex progress
+ - added 'banned' field for user entities
+ - added additional generic fields
+ - controls to stop/restart reindex threads
+ - compatibility layer for Elgg 1.8 and 1.9
+
+1.6 (10/16/2014):
+ - remove comments specific code no longer required for 1.9
+ - defer all solr interactions to shutdown for more graceful handling with vroom
+ - now index all entities even if disabled
+ - new enabled field in schema (requires schema update)
+ - searches aware of access_show_hidden_entities() status
+ - new generic schema fields elgg_string1 - elgg_string10, elgg_text1 - elgg_text10 (for custom filter queries)
+ - added plugin hooks for 'elgg_solr:index', <type> when indexing an entity
+
+1.5.1 (06/16/2014):
+ - fix comment index deletion
+ - add plugin setting for admin viewing of relevancy scores
+ - reindex resolution reduced to the second
+ - fix search query for ACCESS_PRIVATE
+
+1.5 (05/10/2014):
+ - enables wildcard search with *
+ - configurable search highlight wrappers
+ - fix highlighting for wildcard searches
+ - strip tags prior to indexing
+ - downgrade vroom to suggestion instead of required
+
+1.4.1 (05/08/2014):
+ - remove from index on entity disable
+ - add back to index on entity enable
+ - fix extract handler (may require reindex of files)
+
+1.4 (05/04/2014):
+ - fixes memory issue on access control
+ - use dismax query handler for better relevance results
+ - configurable title/description boosts
+ - configurable time_created boosts
+
+1.3.1 (05/03/2014):
+ - allow reindex to skip over unindexable items instead of throwing exception
+ - revert changes to empty subtype filterquery
+
+1.3 (05/03/2014):
+ - plugin setting to fall back to Elgg Search (useful while rebuilding indexes)
+ - fix entity guid storage for comment indexes (requires reindex of comments)
+ - fix empty subtype filterquery
+ - append username to display name to show username highlighted results
+ - performance boost, gets elgg results in a single query
+ - selective deletion of solr index by type/subtype and time
+
+1.2.2 (04/28/2014):
+ - strip tags from highlighted results prior to highlighting (sometimes was breaking views)
+ - fix adapter options structure for solarium 3.2.0
+
+1.2.1 (04/27/14):
+ - search order by time_created desc (after relevance)
+ - fix typo in commit command (can now reindex again)
+
+1.2 (04/26/14):
+ - no longer requires hourly cron, real-time metadata triggers index
+ - adds type/subtype index statistics
+ - restructure admin UI - controls separate from settings
+ - granular reindex based on type/subtype
+ - granular reindex down to hourly resolution
+ - daily optimization of index (requires daily cron)
+ - fix filterquery for ELGG_ENTITIES_NO_VALUE
+ - update to Solarium 3.2.0 - @note - requires PHP 5.3.3
+ - composer.json for vendor management
+ - use solarium for everything
+
+1.1 (04/21/2014):
+ - correct special char escaping
+ - fix incorrect tag match (forces exact match for tags)
+ - fix determination for friends access
+ - fix highlighted strings in comment search
+ - added count of indexed/indexable items
+ - better xml character escaping for indexing
+Note - schema has been updated for this release
+
+1.0 (04/18/2014):
+ - initial release

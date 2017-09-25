@@ -82,7 +82,7 @@ elgg_load_js('bsTablejs'); //bootstraptable
             $helpLaunch = get_input('welcome');
 
             if($is_last_step){
-                echo elgg_view('welcome-steps/stepFour');
+                echo elgg_view('welcome-steps/stepFive');
                 echo '</div>';
             }else{
 
@@ -94,7 +94,7 @@ elgg_load_js('bsTablejs'); //bootstraptable
 
                 <h3 class="pull-left mrgn-tp-md"> <?php echo elgg_echo('onboard:welcome:intro:title'); ?></h3>
                 <div class="pull-right">
-                    <?php echo elgg_view('page/elements/step_counter', array('current_step'=>1, 'total_steps'=>5));?>
+                    <?php echo elgg_view('page/elements/step_counter', array('current_step'=>1, 'total_steps'=>6));?>
 
                 </div>
 

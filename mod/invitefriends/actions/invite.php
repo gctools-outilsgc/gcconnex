@@ -25,6 +25,11 @@ if (!is_array($emails) || count($emails) == 0) {
 
 $current_user = elgg_get_logged_in_user_entity();
 
+if (elgg_is_active_plugin('gcRegistration_invitation')) {
+	$data = array('inviter' => $current_user->guid, 'emails' => $emails);
+	elgg_trigger_plugin_hook('gcRegistration_email_invitation', 'all', $data);
+}
+
 $error = FALSE;
 $bad_emails = array();
 $already_members = array();

@@ -1,0 +1,27 @@
+{
+    "name": "arckinteractive/elgg_solr",
+    "type": "elgg-plugin",
+    "description": "Basic solr integration to replace elgg search",
+    "homepage": "http://arckinteractive.com",
+    "keywords": [
+        "elgg", "plugin", "search", "solr", "scalability"
+    ],
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Matt Beckett",
+            "name": "Billy Gunn"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "": "classes/"
+        }
+    },
+    "require": {
+        "php": ">=5.4",
+        "composer/installers": "1.0.*",
+        "solarium/solarium": "3.4.1",
+        "ezyang/htmlpurifier": "4.6.0"
+    }
+}

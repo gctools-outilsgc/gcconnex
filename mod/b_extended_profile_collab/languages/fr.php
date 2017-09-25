@@ -91,11 +91,6 @@ $french = array(
     'gcconnex_profile:portfolio:publication_date' => 'Date de publication : ',
     'gcconnex_profile:portfolio:description' => 'Description : ',
 
-    'missions:mentoring' => 'Mentorat',
-    'missions:shadowing' => 'Observation au poste de travail',
-    'missions:casual' => 'Emploi occasionnel',
-    'missions:student' => 'Intégration des étudiants',
-
     'gcconnex_profile:opt:career' => 'Possibilités de carrière',
     'gcconnex_profile:opt:mentored' => 'Mentoré',
     'gcconnex_profile:opt:mentoring' => 'Mentor',
@@ -108,6 +103,18 @@ $french = array(
 
     'gcconnex_profile:opt:casual_tooltip' => 'Les employés occasionnels sont des travailleurs embauchés pour une période déterminée ne dépassant pas 90 jours ouvrables par année civile dans un ministère ou organisme pour lequel la Commission de la fonction publique (CFP) a le pouvoir exclusif de faire des nominations. La période d\'emploi temporaire peut être pour une ou plusieurs périodes déterminées, mais elle ne doit pas dépasser 90 jours ouvrables dans un ministère ou organisme par année civile.',
     'gcconnex_profile:opt:student_tooltip' => 'Tout diplômé d\'un programme postsecondaire qui a travaillé comme étudiant salarié à la fonction publique fédérale, via PFETE, COOP ou PAR, peut être considéré pour intégration.',
+
+    'email_change_confirmation:request' => "Pour terminer la modification de votre adresse de courriel, veuillez vérifier les mails de votre votre compte %s",
+
+    'email_change_confirmation:error:user' => "Vous n'êtes pas le membre pour lequel cette demande a été faite",
+    'email_change_confirmation:error:request' => "Aucune demande de changement d'adresse de courriel en attente",
+    'email_change_confirmation:error:code' => "Le code de confirmation fourni est incorrect, veuillez vérifier le courriel reçu",
+
+    'email_change_confirmation:request:subject' => "Demande de changement d'adresse de courriel pour %s",
+    'email_change_confirmation:request:message' => "Bonjour %s,<br/><br/>Vous avez demandé le changement de votre adresse de courriel sur %s vers cette adresse de courriel. Pour confirmer et terminer le changement, veuillez cliquer sur le lien suivant :<br/><br/>%s",
+
+    'email_change_confirmation:success:subject' => "Adresse de courriel changée pour %s",
+    'email_change_confirmation:success:message' => "Bonjour %s,<br/><br/>Votre adresse de courriel sur %s a été changée. Si vous n'êtes pas à l'origine de ce changement ou ne l'avez pas demandé, veuillez contacter l'un des administrateurs du site."
 );
 
 add_translation("fr", $french);

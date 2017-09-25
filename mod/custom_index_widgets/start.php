@@ -84,6 +84,15 @@ if (elgg_is_active_plugin('gc_fedsearch_gsa') && ((!$gsa_usertest) && strcmp($gs
 				elgg_register_widget_type('feed_reader_index', elgg_echo('simplepie:widget'),elgg_echo('simplepie:description'),array("custom_index_widgets"), true);
 			
 			elgg_register_page_handler('', 'custom_index_widgets');
+			
+
+			// image slider
+			elgg_extend_view("css/elgg", "widgets/spotlight_index/css");
+			elgg_register_widget_type("spotlight_index", elgg_echo("widget_manager:widgets:image_slider:name"), elgg_echo("widget_manager:widgets:image_slider:description"), array("custom_index_widgets"), true);
+
+			// latest events
+			//elgg_extend_view("css/elgg", "widgets/events_index/css");
+			elgg_register_widget_type("events_index", elgg_echo("custom_index_widgets:events_index:name"), elgg_echo("custom_index_widgets:events_index:name"), array("custom_index_widgets"), true);
 		}
     }
     

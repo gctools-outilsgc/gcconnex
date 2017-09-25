@@ -56,7 +56,6 @@
 #results-en {
   padding:5px;
   overflow:auto;
-  min-height: 545px;
 }
 
 .folder-display {

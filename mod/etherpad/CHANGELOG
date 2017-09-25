@@ -1,0 +1,36 @@
+0.8.1
+fixed forwarded links. forwards to owners/groups pages when integration is enabled, or pads when not. 
+Changed river message, "created a new collaborative pad" as it works for both pads and collab pages.
+History button now only appears when pages integration is enabled.   
+Fixed fullscreen button, works again and only appears if pages integration is disabled. 
+
+0.8.0 (Big thanks to Sem)
+Pages integration 
+Group pads.
+Lots of refactoring.
+Bug fixes.
+Plugin name changed from 'elggpad-lite' to 'elggpad'. 
+Changed 'Etherpads' to 'Pads' for consistency. 
+
+0.6.0
+Fixed Etherpad Lite authentication.
+Pads now support elgg permissions (private, logged in users only, friends, public)
+Pads can no longer be directly accessed without logging into elgg. (unless public)
+
+0.5.4
+Added spanish translation file, languages/es.php, thanks Antonio Arebalo
+	for translating. 
+Better translation support. 
+Added pad description to etherpad page.
+
+0.5.3
+Fixed widget settings, max display actually works now.
+Added changelog, todo, and license.
+
+0.5.2
+Fixed permissions broken in 0.5.1
+
+0.5.1
+Added etherpad lites beta api info as default host address/api key.
+Updated README to include more details about installion and configuration.
+Fixed a few minor bugs and tidied up code (a little). 

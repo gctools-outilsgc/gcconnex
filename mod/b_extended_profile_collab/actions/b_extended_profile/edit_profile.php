@@ -78,11 +78,11 @@ if (elgg_is_xhr()) {  //This is an Ajax call!
                     }
 
                     if (!$isValid) {
-                        register_error($error_message);
-                        return true;
+                        prepare_email_change($user_guid, $v);
+                        // register_error($error_message);
+                    } else {
+                        $user->set($f, $v);
                     }
-
-                    $user->set($f, $v);
                 } else if($f == 'location' && $v) {
 
                     //check to see if addressString exists

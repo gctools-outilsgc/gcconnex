@@ -388,6 +388,7 @@ function file_set_icon_url($hook, $type, $url, $params) {
 			'audio' => 'music',
 			'text' => 'text',
 			'video' => 'video',
+			'googledoc' => 'googledoc',
 		);
 
 		$mime = $file->mimetype;

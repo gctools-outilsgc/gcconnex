@@ -1,0 +1,16 @@
+== Version History ==
+
+1.1.1 (01/14/2015):
+ - prevent caching from setting the captcha language
+ - allow rendering of captcha on ajax load
+ - update settings language strings to match recaptcha settings page
+
+1.1.0 (10/26/2015):
+ - add fallback when js is disabled
+ - add platform/browser settings to force no-js fallback for problem browsers
+
+1.0.1 (09/20/2015):
+ - fix js to properly render custom recaptcha
+
+1.0.0 (09/20/2015):
+ - initial release

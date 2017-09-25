@@ -17,6 +17,8 @@ elgg_register_event_handler('init', 'system', 'onboard_ME_collab');
 function onboard_ME_collab() {
     elgg_register_library('elgg:onboarding', elgg_get_plugins_path() . 'gc_onboard_collab/lib/functions.php');
 
+    elgg_register_action("onboard/update-profile", elgg_get_plugins_path() . "/gc_onboard_collab/actions/update-profile.php");
+
     elgg_register_page_handler('profileonboard', 'profileonboard_collab_page_handler');
     elgg_register_page_handler('groupsonboard', 'groupsonboard_collab_page_handler');
     elgg_register_page_handler('tutorials', 'tutorials_page_handler');
@@ -26,6 +28,7 @@ function onboard_ME_collab() {
     elgg_register_ajax_view('welcome-steps/stepTwo');
     elgg_register_ajax_view('welcome-steps/stepThree');
     elgg_register_ajax_view('welcome-steps/stepFour');
+    elgg_register_ajax_view('welcome-steps/stepFive');
 
     elgg_extend_view('contactform/form', 'onboard/module_links');
 

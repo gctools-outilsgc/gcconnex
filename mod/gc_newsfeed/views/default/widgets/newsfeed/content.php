@@ -1,9 +1,9 @@
 <?php
 /**
  * Newsfeed Activity Widget
- *
+ * 
  * This will display Friend and Group activity based on the relationships of the logged in user
- *
+ * 
  *
  * @version 1.0
  * @author Nick Pietrantonio    github.com/piet0024
@@ -66,7 +66,7 @@ if(elgg_is_logged_in()){
     }else if(!$hasfriends && $hasgroups){
         //if no friends but groups
         $guids_in = implode(',', array_unique(array_filter($group_guids)));
-
+        
         //display created content and replies and comments
         $optionsg['wheres'] = array("( oe.container_guid IN({$guids_in})
          OR te.container_guid IN({$guids_in}) )");
@@ -83,7 +83,7 @@ if(elgg_is_logged_in()){
         $optionsfg['action_types'] = array_diff( $actionTypes, $filteredItems);
 
         $guids_in = implode(',', array_unique(array_filter($group_guids)));
-
+        
         //Groups + Friends activity query
         //This query grabs new created content and comments and replies in the groups the user is a member of *** te.container_guid grabs comments and replies
         $optionsfg['wheres'] = array(

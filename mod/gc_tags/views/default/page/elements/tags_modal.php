@@ -93,7 +93,7 @@ $buttonText = elgg_echo('gctags:button:create');
 $(document).ready(function(){
     $('form .tag-wrapper:first').remove();
     $('label[for~="<?php echo $tag_name; ?>"]:first').remove();
-    $('button[type="submit"]:first').text('<?php echo $buttonText; ?>');
+    $('main button[type="submit"]:first').text('<?php echo $buttonText; ?>');
     
 })
 </script>

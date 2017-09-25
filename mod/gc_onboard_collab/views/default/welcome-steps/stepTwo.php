@@ -13,7 +13,7 @@
         <?php echo elgg_echo('onboard:welcome:two:title'); ?>
     </h2>
     <div class="pull-right">
-        <?php echo elgg_view('page/elements/step_counter', array('current_step'=>3, 'total_steps'=>5));?>
+        <?php echo elgg_view('page/elements/step_counter', array('current_step'=>3, 'total_steps'=>6));?>
 
     </div>
 </div>
@@ -33,9 +33,9 @@
         /////STUDENTS
         if($userType == 'student'){
 
-          if($user->institution == "university" || $user->institution == "college"){
+          if($user->institution == "university" || $user->institution == "college" || $user->institution == "highschool"){
             $institution = $user->institution;
-            $institution_value = ($institution == "university") ? $user->university : $user->college;
+            $institution_value = ($institution == 'university') ? $user->university : ($institution == 'college' ? $user->college : $user->highschool);
 
             ///OPTION 1///
 
@@ -195,7 +195,7 @@
 
           if($user->institution == "university" || $user->institution == "college"){
             $institution = $user->institution;
-            $institution_value = ($institution == "university") ? $user->university : $user->college;
+            $institution_value = ($institution == 'university') ? $user->university : ($institution == 'college' ? $user->college : $user->highschool);
 
             ///OPTION 1///
 

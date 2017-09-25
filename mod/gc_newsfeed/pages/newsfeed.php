@@ -68,7 +68,7 @@ if (elgg_is_logged_in() && $ciw_showdashboard=="yes"){
 }
 
 //EW - Department verification
-if(elgg_is_logged_in()){
+if(elgg_is_logged_in() && (strpos(elgg_get_site_entity()->name, 'collab') == false)){
 
     //load int value
     $timestamp = is_array(elgg_get_logged_in_user_entity()->last_department_verify) ? elgg_get_logged_in_user_entity()->last_department_verify[0] : elgg_get_logged_in_user_entity()->last_department_verify;

@@ -4,7 +4,7 @@
 	<id>GC_profileStrength_collab</id>
 	<author>Government of Canada</author>
 	<version>1.0.0.0</version>
-	<description>Adds Profile Strength widget to user profile.</description>
+	<description>Customized profile strength module for GCcollab.</description>
 	<website>http://www.canada.ca</website>
 	<copyright>Her Majesty the Queen in Right of Canada, 2015</copyright>
 	<license>Creative Commons Attribution 3.0 Unported License</license>

@@ -284,7 +284,7 @@
  .tt-suggestion.tt-is-under-cursor,
  .tt-suggestion.tt-cursor { /* UPDATE: newer versions use .tt-suggestion.tt-cursor */
      color: #fff;
-     background-color: #055959;
+     background-color: #46246A;
  }
 
  .picked-skill {
@@ -304,7 +304,7 @@
      border-right: 1px solid lightgrey;
      color: #335075;
     /* color: white;
-     background: #055959;*/
+     background: #46246A;*/
      padding: 3px 10px 3px 10px;
      border-radius: 5px;
      /* box-shadow: 5px 3px 5px #888888; */
@@ -326,7 +326,7 @@
      border: 1px solid #46246A;
      color: #46246A;
     /* color: white;
-     background: #055959;*/
+     background: #46246A;*/
      padding: 3px 10px 3px 10px;
      border-radius: 10px;
      /* box-shadow: 5px 3px 5px #888888; */
@@ -337,7 +337,7 @@
  .pop-skill:hover {
 
      cursor: pointer;
-     background: ##46246A;
+     background: #46246A;
      color: white;
  }
 

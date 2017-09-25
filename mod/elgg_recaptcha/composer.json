@@ -1,0 +1,21 @@
+{
+    "name": "beck24/elgg_recaptcha",
+    "type": "elgg-plugin",
+    "description": "Provides recaptcha protection for forms",
+    "homepage": "https://github.com/beck24/elgg_recaptcha",
+    "keywords": ["elgg", "plugin", "spam", "captcha", "recaptcha"],
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Matt Beckett"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/beck24/elgg_recaptcha/issues"
+    },
+    "require": {
+        "php": ">=5.4",
+        "composer/installers": ">=1.0.8",
+        "google/recaptcha": "~1.1"
+    }
+}

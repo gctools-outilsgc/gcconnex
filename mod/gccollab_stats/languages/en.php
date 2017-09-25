@@ -1,24 +1,33 @@
 <?php
 $english = array(
-    'gccollab_stats:title' => "GCconnex Statistics",
+    'gccollab_stats:title' => "GCcollab Statistics",
+    'gcconnex_stats:title' => "GCconnex Statistics",
     'gccollab_stats:unknown' => "Unknown",
     'gccollab_stats:membercount' => "Registered Members",
     'gccollab_stats:loading' => "Loading data...",
     
     'gccollab_stats:registration:title' => "Member Registration",
+    'gccollab_stats:types:select' => "Select Member Type:",
     'gccollab_stats:types:title' => "Member Types",
     'gccollab_stats:federal:title' => "Federal",
-    'gccollab_stats:provincial:title' => "Provincial/Territorial",
     'gccollab_stats:student:title' => "Student",
     'gccollab_stats:academic:title' => "Academic",
+    'gccollab_stats:provincial:title' => "Provincial/Territorial",
+    'gccollab_stats:municipal:title' => "Municipal Government",
+    'gccollab_stats:international:title' => "International/Foreign Government",
+    'gccollab_stats:ngo:title' => "Non-Governmental Organization",
+    'gccollab_stats:community:title' => "Community/Non-profit",
+    'gccollab_stats:business:title' => "Business",
+    'gccollab_stats:media:title' => "Media",
+    'gccollab_stats:retired:title' => "Retired Public Servants",
     'gccollab_stats:other:title' => "Other",
 
+    'gccollab_stats:organization' => "Organization",
     'gccollab_stats:membertype' => "Member Type",
-    'gccollab_stats:other' => "Other Member",
     'gccollab_stats:date' => "Date:",
     'gccollab_stats:signups' => "Signups:",
     'gccollab_stats:total' => "Total:",
-    'gccollab_stats:users' => "users",
+    'gccollab_stats:users' => "user(s)",
     'gccollab_stats:department' => "Department",
     'gccollab_stats:province' => "Province/Territory",
 
@@ -38,6 +47,8 @@ $english = array(
     'gccollab_stats:likes:amount' => "Amount of Likes",
     'gccollab_stats:messages:title' => "Messages",
     'gccollab_stats:messages:amount' => "Amount of Messages",
+    'gccollab_stats:optins:title' => "Opt Ins",
+    'gccollab_stats:optins:amount' => "Amount of Opt Ins",
 
     'gccollab_stats:ministrymessage' => "Click the columns to view the ministries within the province/territory",
     'gccollab_stats:schoolmessage' => "Click the columns to view the various schools",
@@ -46,4 +57,3 @@ $english = array(
 );
 
 add_translation("en", $english);
-    

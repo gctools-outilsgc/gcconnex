@@ -16,7 +16,9 @@ if (!elgg_instanceof($file, 'object', 'file')) {
 }
 
 $mime = $file->getMimeType();
-if (!$mime) {
+if( $mime == "googledoc" ){
+	header("Location: " . $file->url);
+} else if (!$mime) {
 	$mime = "application/octet-stream";
 }
 

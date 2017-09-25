@@ -22,18 +22,22 @@ if (!is_array($entities) || !count($entities)) {
 	return FALSE;
 }
 
-$query = http_build_query(
-	array(
-		'q' => $vars['params']['query'],
-		'entity_type' => $vars['params']['type'],
-		'entity_subtype' => $vars['params']['subtype'],
-		'limit' => $vars['params']['limit'],
-		'offset' => $vars['params']['offset'],
-		'search_type' => $vars['params']['search_type'],
-		'container_guid' => $vars['params']['container_guid'],
-	//@todo include vars for sorting, order, and friend-only.
-	)
+//@todo include vars for sorting, order, and friend-only.
+$options = array(
+	'q' => $vars['params']['query'],
+	'entity_type' => $vars['params']['type'],
+	'entity_subtype' => $vars['params']['subtype'],
+	'limit' => $vars['params']['limit'],
+	'offset' => $vars['params']['offset'],
+	'search_type' => $vars['params']['search_type'],
+	'container_guid' => $vars['params']['container_guid'],
 );
+
+if( $vars['params']['user_type'] ){
+	$options['user_type'] = $vars['params']['user_type'];
+}
+
+$query = http_build_query($options);
 
 $url = elgg_get_site_url() . "search?$query";
 

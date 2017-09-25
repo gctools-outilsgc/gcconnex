@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+	<name>LinkedIn Profile Importer</name>
+	<author>Mark Wooff</author>
+	<version>1.0.0</version>
+	<category>authentication</category>
+	<category>users</category>
+	<description>Imports LinkedIn profiles via HybridAuth providers</description>
+	<website>mark.wooff@tbs-sct.gc.ca</website>
+	<copyright>See COPYRIGHT.txt</copyright>
+	<license>GNU General Public License version 2</license>
+	<requires>
+		<type>elgg_release</type>
+		<version>1.8</version>
+	</requires>
+	<requires>
+		<type>php_extension</type>
+		<name>curl</name>
+	</requires>
+	<conflicts>
+		<type>plugin</type>
+		<name>elgg_social_login</name>
+	</conflicts>
+	<conflicts>
+		<type>plugin</type>
+		<name>social_connect</name>
+	</conflicts>
+</plugin_manifest>

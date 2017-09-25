@@ -2,7 +2,7 @@
 /*
  * stepThree.php - Welcome
  *
- * Third step of welcome module. Gives user option to tour welcome to gcconnex group.
+ * Third step of welcome module. Gives user option to tour welcome to GCcollab group.
  */
 
 //Nick - Change guid based on the group (1171 is my test group).
@@ -21,7 +21,7 @@ $group_entity = get_entity($welcomeGroup_guid);
         <?php echo elgg_echo('onboard:welcome:three:title'); ?>
     </h2>
     <div class="pull-right">
-        <?php echo elgg_view('page/elements/step_counter', array('current_step'=>4, 'total_steps'=>5));?>
+        <?php echo elgg_view('page/elements/step_counter', array('current_step'=>4, 'total_steps'=>6));?>
 
     </div>
 </div>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+	<name>Login Required</name>
+	<id>loginrequired</id>
+	<author>iionly (for Elgg 1.8 and newer) / Khaled Afiouni</author>
+	<version>1.9.8</version>
+	<category>enhancement</category>
+	<description>Requires site visitors to be logged in to view the site. The only pages accessible without being logged in are the starting page, registration and forgotten password pages and the external pages (About, Terms, Privacy).</description>
+	<website>https://github.com/iionly/</website>
+	<copyright>(C) iionly 2011, (C) skinju.com 2010</copyright>
+	<license>GNU General Public License version 2</license>
+	<requires>
+		<type>elgg_release</type>
+		<version>1.9</version>
+	</requires>
+</plugin_manifest>
