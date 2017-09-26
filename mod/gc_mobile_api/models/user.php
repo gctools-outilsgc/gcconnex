@@ -668,7 +668,10 @@ function get_user_posts( $user, $type, $limit, $offset, $lang ){
 
 				$group = get_entity($blog->container_guid);
 				$blog->group = gc_explode_translation($group->name, $lang);
-				$blog->groupURL = $group->getURL();
+
+				if( is_callable(array($group, 'getURL')) ){
+					$blog->groupURL = $group->getURL();
+				}
 			}
 	        break;
 	    case "wire":
@@ -894,13 +897,19 @@ function get_user_posts( $user, $type, $limit, $offset, $lang ){
 					$event->object['type'] = 'group';
 					$event->object['name'] = gc_explode_translation($object->name, $lang);
 					$event->object['description'] = gc_explode_translation($object->name, $lang);
-					$event->object['url'] = $object->getURL();
+					
+					if( is_callable(array($object, 'getURL')) ){
+						$event->object['url'] = $object->getURL();
+					}
 				} else if( $object instanceof ElggDiscussionReply ){
 					$event->object['type'] = 'discussion-reply';
 					$original_discussion = get_entity($object->container_guid);
 					$event->object['name'] = gc_explode_translation($original_discussion->title, $lang);
 					$event->object['description'] = gc_explode_translation($object->description, $lang);
-					$event->object['url'] = $original_discussion->getURL();
+					
+					if( is_callable(array($original_discussion, 'getURL')) ){
+						$event->object['url'] = $original_discussion->getURL();
+					}
 				} else if( $object instanceof ElggFile ){
 					$event->object['type'] = 'file';
 					$event->object['name'] = gc_explode_translation($object->title, $lang);
@@ -915,7 +924,10 @@ function get_user_posts( $user, $type, $limit, $offset, $lang ){
 						$name = ( $otherEntity->title ) ? $otherEntity->title : $otherEntity->name;
 					}
 					$event->object['name'] = $name;
-					$event->object['url'] = $object->getURL();
+					
+					if( is_callable(array($object, 'getURL')) ){
+						$event->object['url'] = $object->getURL();
+					}
 
 					$event->object['description'] = gc_explode_translation($object->description, $lang);
 
@@ -944,7 +956,10 @@ function get_user_posts( $user, $type, $limit, $offset, $lang ){
 					} else {
 						$event->object['description'] = $object->description;
 					}
-					$event->object['url'] = $object->getURL();
+					
+					if( is_callable(array($object, 'getURL')) ){
+						$event->object['url'] = $object->getURL();
+					}
 				}
 			}
 

@@ -633,6 +633,9 @@ function cp_translate_subtype($subtype_name, $english = true) {
 		case 'answer':
 			$label = ($english) ? 'answer' : 'réponse';
 			break;
+		case 'etherpad':
+			$label = ($english) ? 'Doc' : 'Doc';
+			break;
 		default:
 			$label = $subtype_name;
 		break;
