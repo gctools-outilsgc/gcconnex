@@ -154,7 +154,7 @@ $(document).ready(function(){
 
     //handle focusing on top error
     if(errors.length > 0){
-      if(errors.first().is('input')){
+      if(errors.first().is('input') || errors.first().is('select')){
         errors.first().focus();
       } else {
         CKEDITOR.instances['description'].focus();
