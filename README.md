@@ -3,6 +3,7 @@
 
 [![Build Status](https://secure.travis-ci.org/gctools-outilsgc/gcconnex.svg?branch=gcconnex)](https://travis-ci.org/gctools-outilsgc/gcconnex)
 [![Join the chat at https://gitter.im/gctools-outilsgc/gcconnex](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/gctools-outilsgc/general?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![codecov](https://codecov.io/gh/gctools-outilsgc/gcconnex/branch/gcconnex/graph/badge.svg)](https://codecov.io/gh/gctools-outilsgc/gcconnex)
 
 GCconnex is a professional networking and collaborative workspace for all Canadian public service, allowing people to connect and share information, leveraging the power of networking towards a more effective and efficient public service.
 
