@@ -74,7 +74,10 @@ function get_blogpost( $user, $guid, $lang ){
 
 	$group = get_entity($blog_post->container_guid);
 	$blog_post->group = gc_explode_translation($group->name, $lang);
-	$blog_post->groupURL = $group->getURL();
+
+	if( is_callable(array($group, 'getURL')) ){
+		$blog_post->groupURL = $group->getURL();
+	}
 
 	return $blog_post;
 }
@@ -138,7 +141,10 @@ function get_blogposts( $user, $limit, $offset, $filters, $lang ){
 
 		$group = get_entity($blog_post->container_guid);
 		$blog_post->group = gc_explode_translation($group->name, $lang);
-		$blog_post->groupURL = $group->getURL();
+		
+		if( is_callable(array($group, 'getURL')) ){
+			$blog_post->groupURL = $group->getURL();
+		}
 	}
 
 	return $blog_posts;
