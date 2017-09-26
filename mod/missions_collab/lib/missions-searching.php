@@ -200,6 +200,12 @@ function mm_analyze_advanced_search_element($place, $array)
                     case elgg_echo('gcconnex_profile:opt:student_create');
                         $name_option = 'opt_in_student_create';
                         break;
+                    case elgg_echo('gcconnex_profile:opt:collaboration_seek');
+                        $name_option = 'opt_in_collaboration_seek';
+                        break;
+                    case elgg_echo('gcconnex_profile:opt:collaboration_create');
+                        $name_option = 'opt_in_collaboration_create';
+                        break;
                 }
                 $returner['name'] = $name_option;
                 $returner['operand'] = '=';
