@@ -43,8 +43,9 @@ matrix:
        - curl -o - http://localhost:8888/ | grep "<title>Elgg Travis Site</title>"
        - phpunit --coverage-clover=coverage.xml
       after_script:
-       # Report unit test coverage metrics to codecov.io:
-       - bash <(curl -s https://codecov.io/bash)
+       # Report unit test coverage metrics to scrutinizer
+       - wget https://scrutinizer-ci.com/ocular.phar
+       - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
 
 services:
  - mysql
