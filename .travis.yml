@@ -41,7 +41,7 @@ matrix:
        - sleep 3 # give Web server some time to bind to sockets, etc
       script:
        - curl -o - http://localhost:8888/ | grep "<title>Elgg Travis Site</title>"
-       - phpunit --coverage-clover=coverage.xml
+       - phpunit --coverage-clover=coverage.clover
       after_script:
        # Report unit test coverage metrics to scrutinizer
        - wget https://scrutinizer-ci.com/ocular.phar
