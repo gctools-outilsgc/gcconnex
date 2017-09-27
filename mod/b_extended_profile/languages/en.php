@@ -191,6 +191,13 @@ $english = array(
         "gcconnex_profile:opt:shadowed" => "Job Shadowing Opportunity Creator",
         "gcconnex_profile:opt:mentored" => "Mentee",
         "gcconnex_profile:opt:mentoring" => "Mentor",
+        'gcconnex_profile:opt:seeking' => 'Seeking',
+        'gcconnex_profile:opt:offering' => 'Offering',
+        'gcconnex_profile:opt:casual_seek' => 'Casual Work Seeker',
+        'gcconnex_profile:opt:casual_create' => 'Casual Work Opportunity Creator',
+        'gcconnex_profile:opt:student_seek' => 'Student Integration Seeker',
+        'gcconnex_profile:opt:student_create' => 'Student Integration Opportunity Creator',
+    
         "gcconnex_profile:opt:job_sharing" => "Job Sharing",
         "gcconnex_profile:opt:peer_coached" => "Peer Coaching Seeker",
         "gcconnex_profile:opt:peer_coaching" => "Peer Coach",

@@ -56,38 +56,67 @@ else {
         case '':
             break;
         
-        /*case 'missions:user_department':
-        	
-        	break;*/
-            
+        case elgg_echo('missions:user_department'):
+			$obj = elgg_get_entities(array(
+                'type' => 'object',
+                'subtype' => 'dept_list',
+                'owner_guid' => 0
+            ));
+			if (get_current_language()=='en'){
+				$departments = $obj[0]->deptsEn;
+				$departments = json_decode($departments, true);
+				$provinces['pov-alb'] = 'Government of Alberta';
+				$provinces['pov-bc'] = 'Government of British Columbia';
+				$provinces['pov-man'] = 'Government of Manitoba';
+				$provinces['pov-nb'] = 'Government of New Brunswick';
+				$provinces['pov-nfl'] = 'Government of Newfoundland and Labrador';
+				$provinces['pov-ns'] = 'Government of Nova Scotia';
+				$provinces['pov-nwt'] = 'Government of Northwest Territories';
+				$provinces['pov-nun'] = 'Government of Nunavut';
+				$provinces['pov-ont'] = 'Government of Ontario';
+				$provinces['pov-pei'] = 'Government of Prince Edward Island';
+				$provinces['pov-que'] = 'Government of Quebec';
+				$provinces['pov-sask'] = 'Government of Saskatchewan';
+				$provinces['pov-yuk'] = 'Government of Yukon';
+				$departments = array_merge($departments, $provinces);
+			} else {
+				$departments = $obj[0]->deptsFr;
+				$departments = json_decode($departments, true);
+				$provinces['pov-alb'] = "Gouvernement de l'Alberta";
+				$provinces['pov-bc'] = 'Gouvernement de la Colombie-Britannique';
+				$provinces['pov-man'] = 'Gouvernement du Manitoba';
+				$provinces['pov-nb'] = 'Gouvernement du Nouveau-Brunswick';
+				$provinces['pov-nfl'] = 'Gouvernement de Terre-Neuve-et-Labrador';
+				$provinces['pov-ns'] = 'Gouvernement de la Nouvelle-Écosse';
+				$provinces['pov-nwt'] = 'Gouvernement du Territoires du Nord-Ouest';
+				$provinces['pov-nun'] = 'Gouvernement du Nunavut';
+				$provinces['pov-ont'] = "Gouvernement de l'Ontario";
+				$provinces['pov-pei'] = "Gouvernement de l'Île-du-Prince-Édouard";
+				$provinces['pov-que'] = 'Gouvernement du Québec';
+				$provinces['pov-sask'] = 'Gouvernement de Saskatchewan';
+				$provinces['pov-yuk'] = 'Gouvernement du Yukon';
+				$departments = array_merge($departments, $provinces);
+            }
+            $content .= elgg_view('input/dropdown', array(
+                'name' => $dropdown_name . '_element',
+                'value' => '',
+                'options' => $departments
+            ));
+            break;
+                    
         case elgg_echo('missions:opt_in'):
         	$content .= elgg_view('input/dropdown', array(
-        			'name' => $dropdown_name . '_element',
-        			'value' => '',
-        			'options' => array(
-        					'',
-                            /*elgg_echo("gcconnex_profile:opt:micro_missionseek"),
-                            elgg_echo('gcconnex_profile:opt:micro_mission'),
-                            elgg_echo('gcconnex_profile:opt:assignment_deployment_seek'),
-                            elgg_echo('gcconnex_profile:opt:assignment_deployment_create'),
-                            elgg_echo('gcconnex_profile:opt:deployment_seek'),
-                            elgg_echo('gcconnex_profile:opt:deployment_create'),
-                            elgg_echo('gcconnex_profile:opt:job_swap'),
-                            elgg_echo('gcconnex_profile:opt:job_rotate'),*/
-                            elgg_echo('gcconnex_profile:opt:mentored'),
-                            elgg_echo('gcconnex_profile:opt:mentoring'),
-                            /*elgg_echo('gcconnex_profile:opt:shadowed'),
-                            elgg_echo('gcconnex_profile:opt:shadowing'),
-                            elgg_echo('gcconnex_profile:opt:job_sharing'),
-                            elgg_echo('gcconnex_profile:opt:peer_coached'),
-                            elgg_echo('gcconnex_profile:opt:peer_coaching'),
-                            elgg_echo('gcconnex_profile:opt:skill_sharing'),
-                            elgg_echo('gcconnex_profile:opt:skill_sharing_create'),*/
-                            elgg_echo('gcconnex_profile:opt:casual_seek'),
-                            elgg_echo('gcconnex_profile:opt:casual_create'),
-                            elgg_echo('gcconnex_profile:opt:student_seek'),
-                            elgg_echo('gcconnex_profile:opt:student_create')
-        			)
+                'name' => $dropdown_name . '_element',
+                'value' => '',
+                'options' => array(
+                    '',
+                    elgg_echo('gcconnex_profile:opt:mentored'),
+                    elgg_echo('gcconnex_profile:opt:mentoring'),
+                    elgg_echo('gcconnex_profile:opt:casual_seek'),
+                    elgg_echo('gcconnex_profile:opt:casual_create'),
+                    elgg_echo('gcconnex_profile:opt:student_seek'),
+                    elgg_echo('gcconnex_profile:opt:student_create')
+                )
         	));
         	break;
             
