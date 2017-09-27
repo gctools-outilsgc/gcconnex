@@ -226,16 +226,16 @@ function register_new_user( $userdata, $lang ){
 		);
 
 		// @todo should registration be allowed no matter what the plugins return?
-		if (!elgg_trigger_plugin_hook('register', 'user', $params, TRUE)) {
-			$ia = elgg_set_ignore_access(true);
-			$new_user->delete();
-			elgg_set_ignore_access($ia);
-			// @todo this is a generic messages. We could have plugins
-			// throw a RegistrationException, but that is very odd
-			// for the plugin hooks system.
-			error_log('registerbad with params: ' . json_encode($params) . "\n");
-			return elgg_echo('registerbad');
-		}
+		// if (!elgg_trigger_plugin_hook('register', 'user', $params, TRUE)) {
+		// 	$ia = elgg_set_ignore_access(true);
+		// 	$new_user->delete();
+		// 	elgg_set_ignore_access($ia);
+		// 	// @todo this is a generic messages. We could have plugins
+		// 	// throw a RegistrationException, but that is very odd
+		// 	// for the plugin hooks system.
+		// 	error_log('registerbad with params: ' . json_encode($params) . "\n");
+		// 	return elgg_echo('registerbad');
+		// }
 
 		if ($invitecode && elgg_is_active_plugin('gcRegistration_invitation')) {
 			$data = array('invitee' => $guid, 'email' => $new_user->email);
@@ -247,6 +247,19 @@ function register_new_user( $userdata, $lang ){
 			$new_user->set($field, $$field);
 		}
         $new_user->last_department_verify = time();
+
+        /*** Activate User ***/
+        $access = access_get_show_hidden_status();
+		access_show_hidden_entities(true);
+		$holder = elgg_set_ignore_access(true);
+
+        // only validate if not validated
+		elgg_set_user_validation_status($guid, true, 'mobileapp');
+        $new_user->enable();
+		
+		elgg_set_ignore_access($holder);
+		access_show_hidden_entities($access);
+		/*** End Activate User ***/
 		
 		return true;
 	} else {

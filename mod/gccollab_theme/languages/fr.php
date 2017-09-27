@@ -64,6 +64,7 @@ return array(
   'wet:loginok' => "Bienvenue à GCcollab %s.", /*NEW*/
   'wet4:noticetitle' => 'Avis',
   'wet4:homenotice' => 'Bienvenue sur GCcollab, la plateforme de réseautage social professionnelle du gouvernement du Canada. GCcollab, c\'est un outil qui permet aux fonctionnaires de tisser des liens et de collaborer selon leurs connaissances, leurs expériences et leurs intérêts communs. GCcollab devrait être réservé aux activités professionnelles et ne devrait pas servir à remplacer les réseaux sociaux personnels (comme Facebook).',
+  'wet:gcconnexLink' => "https://gcconnex.gc.ca",
 
   /**
    * Notice

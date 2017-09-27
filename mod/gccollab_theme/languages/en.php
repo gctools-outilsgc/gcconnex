@@ -66,6 +66,7 @@ return array(
   'wet4:homenotice' => 'Welcome to GCcollab, the Government of Canada&#39;s professional social networking platform. ',
   'wet_mygroups:my_groups' => "My Groups",
   'wet_mygroups:my_groups_nolog' => "New Groups",
+  'wet:gcconnexLink' => "https://gcconnex.gc.ca",
   
   /**
    * Notice
