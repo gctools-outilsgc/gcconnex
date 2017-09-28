@@ -4,6 +4,7 @@
  */
 
 $fr = array(
+	'thewire_image:upload_image' => 'Téléverser une image :',
 	'thewire_image:invalid_image' => 'Image invalide.',
 	'thewire_image:could_not_save_image' => 'Impossible d\'enregistrer l\'image sur le fil.',
 	'thewire_image:invalid_section' => 'Section invalide'
