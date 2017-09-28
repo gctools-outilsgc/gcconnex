@@ -225,6 +225,9 @@ function register_new_user( $userdata, $lang ){
 			'invitecode' => $invitecode
 		);
 
+		// *************************
+		// ***TEMPORARILY REMOVED***
+		// *************************
 		// @todo should registration be allowed no matter what the plugins return?
 		// if (!elgg_trigger_plugin_hook('register', 'user', $params, TRUE)) {
 		// 	$ia = elgg_set_ignore_access(true);
