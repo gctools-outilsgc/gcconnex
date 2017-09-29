@@ -31,8 +31,8 @@ function mm_api_secure() {
       || (!openssl_public_decrypt(base64_decode($_SERVER['HTTP_X_CUSTOM_AUTHORIZATION']), $decrypted, PUBLIC_KEY))
       || ($decrypted !== '-- NRC -- LPSS -- GCTools -- Sig -- dsaj9843uj80w7IJHYS&UHSJY(*IOIJHY*')
     ) {
-    // header('HTTP/1.0 403 Forbidden');
-    // exit;
+    header('HTTP/1.0 403 Forbidden');
+    exit;
   }
 
   # Ensure API has full access
