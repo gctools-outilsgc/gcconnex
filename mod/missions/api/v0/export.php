@@ -25,7 +25,7 @@
       $this->resume = $resume;
       $this->sort = $sort;
     }
-    // TODO: chunk mode and resume_from
+
     function getJSON() {
       while (@ob_end_flush());
       $guids = mm_api_get_entity_guids(
