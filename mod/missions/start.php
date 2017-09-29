@@ -169,24 +169,43 @@ function missions_main_page_handler($segments)
         	break;
 
         case 'api':
-            if (count($segments) >= 3) {
-                if ($segments[1] == 'v0') {
-                  include elgg_get_plugins_path() . 'missions/api/v0/export.php';
-                  $object_type = strtolower($segments[2]);
-                  if ($object_type == 'subtypes') {
-                    $export = new NRC\subtypeExport();
-                    $export->getJSON();
-                  } else {
-                    $subtype = ($object_type == 'user') ? false : $segments[3];
-                    $guid = ($object_type == 'user') ? $segments[3] : $segments[4];
-                    $export = new NRC\export($object_type, $subtype, $guid);
-                    $export->getJSON();
-                  }
+          if (count($segments) >= 3) {
+            if ($segments[1] == 'v0') {
+              include elgg_get_plugins_path() . 'missions/api/v0/export.php';
+              $object_type = strtolower($segments[2]);
+              $subtype = false;
+              $guid = null;
+              if (count($segments) === 4) {
+                if (is_numeric($segments[3])) {
+                  $guid = $segments[3];
+                } else {
+                  $subtype = $segments[3];
                 }
+              } else if (count($segments) === 5) {
+                $subtype = $segments[3];
+                $guid = $segments[4];
+              }
+              $before = $_GET['before'];
+              $since = $_GET['since'];
+              $limit = $_GET['limit'];
+              $resume = $_GET['resume'];
+              $sort = isset($_GET['sort']);
+              $export = new NRC\export(
+                $object_type,
+                $subtype,
+                $guid,
+                $since,
+                $before,
+                $limit,
+                $resume,
+                $sort
+              );
+              $export->getJSON();
             }
+          }
+          break;
     }
 }
-
 
 /**
  * Adds this plugin's unit tests when unit test hook is triggered
