@@ -40,6 +40,10 @@ instructions to complete your installation.  Once the installer is complete,
 refer to [INSTALL.md](INSTALL.md#configure-plugins) to configure the plugins
 required by GCconnex.
 
+Alternatively, you can use the automated install script which will run the regular install as well as installing and rearanging the gcconnex mods:
+
+    docker exec -it gcconnex_gcconnex_1 php install/cli/docker_installer.php
+
 ### Docker specific configuration
 
 On the `Database installation` page, use the following settings:
