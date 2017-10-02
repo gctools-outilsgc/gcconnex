@@ -689,7 +689,7 @@ function gcforums_menu_buttons($forum_guid, $group_guid, $is_topic=false) {
 		$button_class = "elgg-button elgg-button-action btn btn-default";
 		
 		// do not display the button menu if the object is a forum topic
-		if (($current_user->isAdmin() || $isOperator) && !$is_topic) {
+		if (($current_user->isAdmin() || $isOperator || $group_entity->getOwnerGUID() === $current_user->getGUID()) && !$is_topic) {
 
 			$gcforum_types = array('hjforumcategory', 'hjforumtopic', 'hjforum');
 
