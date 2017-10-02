@@ -335,11 +335,6 @@ function mm_analytics_add_reports_by_dates($start_date, $end_date, $separator, &
 				$q_options['created_time_upper'] = $end_date;
 				$q_options['metadata_name_value_pairs'] = array(
 						array(
-								'name' => 'mission_guid',
-								'value' => $mission->guid,
-								'operand' => '='
-						),
-						array(
 								'name' => 'completed',
 								'value' => 0,
 								'operand' => '>='
@@ -347,8 +342,12 @@ function mm_analytics_add_reports_by_dates($start_date, $end_date, $separator, &
 				);
 				$q_options['wheres'] = array(
 					  "((msv1.string BETWEEN $start_date AND $end_date) OR msv1.string = 0)"
-				);
-				$in_progress = elgg_get_entities_from_metadata($q_options);
+        );
+
+        $ia = elgg_set_ignore_access(true);
+        $in_progress = elgg_get_entities_from_metadata($q_options);
+        elgg_set_ignore_access($ia);
+
 				foreach ($in_progress as $p) {
 					$mission_set[5][] = $p;
 				}
@@ -387,7 +386,9 @@ function mm_analytics_get_missions_by_dates($start_date, $end_date, $date_type) 
 		);
 		$options['metadata_name_value_pairs_operator'] = 'AND';
 
-		$missions = elgg_get_entities_from_metadata($options);
+    $ia = elgg_set_ignore_access(true);
+    $missions = elgg_get_entities_from_metadata($options);
+    elgg_set_ignore_access($ia);
 	}
 
 	return $missions;
@@ -412,9 +413,13 @@ function mm_analytics_get_missions_by_posting_and_closure($start_date, $end_date
 			'name' => 'time_closed', 'operand' => '>=', 'value' => $start_date,
 			'name' => 'time_closed', 'operand' => '=', 'value' => null
 	));
-	$options['metadata_name_value_pairs_operator'] = 'OR';
+  $options['metadata_name_value_pairs_operator'] = 'OR';
 
-	return elgg_get_entities_from_metadata($options);
+  $ia = elgg_set_ignore_access(true);
+  $data = elgg_get_entities_from_metadata($options);
+  elgg_set_ignore_access($ia);
+
+	return $data;
 }
 
 /*
@@ -681,7 +686,9 @@ function mm_analytics_get_missions_by_value($target_value) {
 	}
 
 	if($options['metadata_name_value_pairs'] != 'INVALID_TARGET') {
-		$mission_set = elgg_get_entities_from_metadata($options);
+    $ia = elgg_set_ignore_access(true);
+    $mission_set = elgg_get_entities_from_metadata($options);
+    elgg_set_ignore_access($ia);
 	}
 	return $mission_set;
 }
