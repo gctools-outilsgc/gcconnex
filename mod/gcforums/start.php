@@ -226,7 +226,7 @@ function assemble_forum_breadcrumb($entity) {
 	$forum_guid = $entity->guid;
 	if ($entity instanceof ElggGroup) {
 		elgg_set_page_owner_guid($entity->getGUID());
-		elgg_push_breadcrumb($entity->name, $entity->getURL());
+		elgg_push_breadcrumb(gc_explode_translation($entity->name, get_current_language()), $entity->getURL());
 		elgg_push_breadcrumb('Group Forums');
 
 	} else {
@@ -509,8 +509,9 @@ function render_forums($forum_guid) {
 	$title = $entity->title;
 	if (!$title) $title = elgg_echo('gcforum:heading:default_title');
 
+
 	$return['filter'] = '';
-	$return['title'] = $title;
+	$return['title'] = gc_explode_translation($title, get_current_language());
 	$return['content'] = $content;
 	return $return;
 }
