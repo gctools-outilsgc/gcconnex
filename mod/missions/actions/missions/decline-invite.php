@@ -15,11 +15,10 @@ $mission = get_entity(get_input('hidden_mission_guid'));
 
 // Processes the reason given by the declining user whether it's from the dropdown menu or the free text entry.
 $reason = get_input('reason');
-
+error_log($reason);
 if($reason == 'missions:other') {
 	$raw_reason = $reason;
-	$reasonEn = get_input('other_text');
-	$reasonFr = get_input('other_text');
+	$reason = get_input('other_text');
 }
 else {
 	$raw_reason = $reason;

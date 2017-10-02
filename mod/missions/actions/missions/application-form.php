@@ -19,7 +19,6 @@ $manager_email = get_input('email');
 $mission = get_entity($mid);
 $applicant = elgg_get_logged_in_user_entity();
 $mmdep = trim( explode('/', $mission->department_path_english)[0] );
-$email_notification_header = elgg_echo('cp_notification:email_header',array(),'en') . ' | ' . elgg_echo('cp_notification:email_header',array(),'fr');
 $french_follows = elgg_echo('cp_notify:french_follows',array());
 $email_notification_footer_en = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/notifications/{$username_link}".'?utm_source=notification&utm_medium=site'),'en');
 $email_notification_footer_fr = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/notifications/{$username_link}".'?utm_source=notification&utm_medium=site'),'fr');
@@ -277,6 +276,10 @@ $message = "<html>
 	    	'href' => elgg_get_site_url() . 'missions/mission-offer/' . $mission->guid . '/' . $applicant->guid,
 	    	'text' => '<br>'.elgg_echo('missions:offer','fr')
 	));
+
+	
+	$email_notification_header = elgg_echo('cp_notification:email_header',array(),'en') . ' | ' . elgg_echo('cp_notification:email_header',array(),'fr');
+	
 
 $body = "<html>
 <body>

@@ -51,66 +51,9 @@ else {
 					'href' => elgg_get_site_url() . 'missions/view/' . $mission->guid,
 					'text' => elgg_echo('missions:respond')
 			));
-			
-			$email_notification_header = elgg_echo('cp_notification:email_header',array(),'en') . ' | ' . elgg_echo('cp_notification:email_header',array(),'fr');
-			$french_follows = elgg_echo('cp_notify:french_follows',array());
-			$email_notification_footer_en = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/notifications/{$username_link}".'?utm_source=notification&utm_medium=site'),'en');
-			$email_notification_footer_fr = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/notifications/{$username_link}".'?utm_source=notification&utm_medium=site'),'fr');
-			$subject = elgg_echo('missions:offers_you_a_spot', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))),'en', $applicant->language) .' | '.elgg_echo('missions:offers_you_a_spot', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))),'fr', $applicant->language);
-			$offer_en = elgg_echo('missions:offers_you_a_spot_more', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))),'en', $applicant->language) . " {$finalize_link}" . '.';
-			$offer_fr = elgg_echo('missions:offers_you_a_spot_more', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))),'fr', $applicant->language) . " {$finalize_link}" . '.';
-			
-			$body = "<html>
-<body>
-	<!-- beginning of email template -->
-	<div width='100%' bgcolor='#fcfcfc'>
-		<div>
-			<div>
-
-		        <div align='center' width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 12px; color: #055959'>
-		        	{$email_notification_header}
-		        </div>
-
-		     	<div width='100%' style='padding: 0 0 0 10px; color:#ffffff; font-family: sans-serif; font-size: 35px; line-height:38px; font-weight: bold; background-color:#047177;'>
-		        	<span style='padding: 0 0 0 3px; font-size: 20px; color: #ffffff; font-family: sans-serif;'>GCconnex</span>
-		        </div>
-
-		        <div style='height:1px; background:#bdbdbd; border-bottom:1px solid #ffffff'></div>
-
-		     	<div width='100%' style='padding:30px 30px 10px 30px; font-size:12px; line-height:22px; font-family:sans-serif;'>
-
-	        		<span style='font-size:12px; font-weight: normal;'>{$french_follows}</span><br/>
-
-		        </div>
-
-		        <div width='100%' style='padding:30px 30px 30px 30px; color:#153643; font-family:sans-serif; font-size:16px; line-height:22px; '>
-
-		        	{$offer_en}
-
-		        </div>
-                <div style='margin-top:15px; padding: 5px; color: #6d6d6d; border-bottom: 1px solid #ddd;'>
-                    <div>{$email_notification_footer_en}</div>
-                </div>
-
-		       	<div width='100%' style='padding:30px 30px 30px 30px; color:#153643; font-family:sans-serif; font-size:16px; line-height:22px;'>
-
-		       		{$offer_fr}
-
-		        </div>
-                    <div style='margin-top:15px; padding: 5px; color: #6d6d6d;'>
-                   <div>{$email_notification_footer_fr}</div>
-                </div>
-
-		        <div style='height:1px; background:#bdbdbd; border-bottom:1px solid #ffffff'></div>
-
-		        <div align='center' width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 16px; color: #055959'> </div>
-
-			</div>
-		</div>
-	</div>
-</body>
-</html>";
-
+			 
+			$subject = elgg_echo('missions:offers_you_a_spot', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))), $applicant->language);
+			$body = elgg_echo('missions:offers_you_a_spot_more', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))), $applicant->language) . " {$finalize_link}" . '.';
 			mm_notify_user($applicant->guid, $mission->guid, $subject, $body);
 		}
 	}
