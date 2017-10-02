@@ -48,7 +48,7 @@ if (elgg_is_xhr) {
 	}*/
     
     
-                $opt_in_set = array($user->opt_in_missions, $user->opt_in_swap, $user->opt_in_mentored, $user->opt_in_mentoring, $user->opt_in_shadowed, $user->opt_in_shadowing, $user->opt_in_jobshare, $user->opt_in_pcSeek, $user->opt_in_pcCreate, $user->opt_in_ssSeek, $user->opt_in_ssCreate, $user->opt_in_rotation, $user->opt_in_assignSeek, $user->opt_in_assignCreate, $user->opt_in_deploySeek, $user->opt_in_deployCreate, $user->opt_in_missionCreate, $user->opt_in_casual_seek, $user->opt_in_casual_create, $user->opt_in_student_seek, $user->opt_in_student_create);
+                $opt_in_set = array($user->opt_in_missions, $user->opt_in_swap, $user->opt_in_mentored, $user->opt_in_mentoring, $user->opt_in_shadowed, $user->opt_in_shadowing, $user->opt_in_jobshare, $user->opt_in_pcSeek, $user->opt_in_pcCreate, $user->opt_in_ssSeek, $user->opt_in_ssCreate, $user->opt_in_rotation, $user->opt_in_assignSeek, $user->opt_in_assignCreate, $user->opt_in_deploySeek, $user->opt_in_deployCreate, $user->opt_in_missionCreate, $user->opt_in_casual_seek, $user->opt_in_casual_create, $user->opt_in_student_seek, $user->opt_in_student_create, $user->opt_in_collaboration_seek, $user->opt_in_collaboration_create);
     //Nick - Loop through array of selected things and change their value to match the meta data        
 foreach($opt_in_set as $k => $v){
     if($v == 'gcconnex_profile:opt:yes'){
@@ -351,6 +351,34 @@ foreach($opt_in_set as $k => $v){
 								'checked' => $opt_in_set[3],
 								'id' => 'gcconnex-opt-in-mentoring-check',
 								'label' => elgg_echo('gcconnex_profile:opt:mentoring'),
+							));
+		                ?>
+		            </li>
+                </ul>
+            </li>
+
+            <li class="clearfix">
+                <?php echo elgg_echo('missions:collaboration');?>
+                
+                <ul class="clearfix brdr-lft mrgn-lft-md list-unstyled">
+	                <li class="clearfix pull-left mrgn-lft-md">
+		                <?php
+							echo elgg_view("input/checkbox", array(
+								'name' => 'collaborationseek_check',
+								'checked' => $opt_in_set[21],
+								'id' => 'gcconnex-opt-in-collaborationseek-check',
+								'label' => elgg_echo('gcconnex_profile:opt:collaboration_seek'),
+							));
+		                ?>
+		            </li>
+
+		            <li class="clearfix pull-left mrgn-lft-md">
+		                <?php
+							echo elgg_view("input/checkbox", array(
+								'name' => 'collaborationcreate_check',
+								'checked' => $opt_in_set[22],
+								'id' => 'gcconnex-opt-in-collaborationcreate-check',
+								'label' => elgg_echo('gcconnex_profile:opt:collaboration_create'),
 							));
 		                ?>
 		            </li>

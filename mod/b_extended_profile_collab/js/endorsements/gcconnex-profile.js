@@ -1196,6 +1196,8 @@ function saveProfile(event) {
             opt_in_set[18] = $options.find('#gcconnex-opt-in-casualcreate-check').is(':checked');
             opt_in_set[19] = $options.find('#gcconnex-opt-in-studentseek-check').is(':checked');
             opt_in_set[20] = $options.find('#gcconnex-opt-in-studentcreate-check').is(':checked');
+            opt_in_set[21] = $options.find('#gcconnex-opt-in-collaborationseek-check').is(':checked');
+            opt_in_set[22] = $options.find('#gcconnex-opt-in-collaborationcreate-check').is(':checked');
 
             /*opt_in_set[6] = $options.find('#gcconnex-opt-in-peer-coached-check').is(':checked');
             opt_in_set[7] = $options.find('#gcconnex-opt-in-peer-coaching-check').is(':checked');

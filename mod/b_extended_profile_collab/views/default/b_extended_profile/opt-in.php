@@ -80,6 +80,11 @@
 				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_mentored) . '</span></li>';
 				echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:mentoring');
 				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_mentoring) . '</span></li>';
+
+				echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:collaboration_seek');
+				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_collaboration_seek) . '</span></li>';
+				echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:collaboration_create');
+				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_collaboration_create) . '</span></li>';
 			/* MW - Changed for GCcollab version of Opp Platform
 				echo '<li class="left-col">' . elgg_echo('gcconnex_profile:opt:shadowed');
 				echo '<span class="mrgn-lft-md">' . elgg_echo($user->opt_in_shadowed) . '</span></li>';
