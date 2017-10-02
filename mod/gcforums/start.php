@@ -149,6 +149,7 @@ function render_forum_topics($topic_guid) {
 	if ($entity->getSubtype() === 'hjforumtopic') {
 
 		$options = render_edit_options($entity->getGUID(), $entity->getGUID());
+		if ($options == '') $options = '-';
 		$topic = get_entity($topic_guid);
 		$title = $topic->title;
 		$description = $topic->description;
@@ -186,6 +187,7 @@ function render_forum_topics($topic_guid) {
 		$content .= "<div class='topic-main-comments'>";
 		foreach ($comments as $comment) {
 			$options = render_edit_options($comment->getGUID(), $comment->getGUID());
+			if ($options == '') $options = '-';
 			$admin_only = (elgg_is_admin_logged_in()) ? "(guid:{$comment->guid})" : "";
 			$owner_icon = elgg_view_entity_icon($topic->getOwnerEntity(), 'small');
 			$content .= "
@@ -281,9 +283,10 @@ function render_forums($forum_guid) {
 
 		/// topic
 		foreach ($topics as $topic) {
+			
 			$topic = get_entity($topic->guid);
 			$hyperlink = "<a href='{$base_url}gcforums/topic/view/{$topic->guid}'><strong>{$topic->title}</strong></a>";
-
+			if (!$topic->guid) continue;
 			$query = "SELECT e.guid, ue.username, e.time_created
 						FROM {$dbprefix}entities e, {$dbprefix}users_entity ue
 						WHERE e.container_guid = {$topic->guid} AND e.owner_guid = ue.guid";
@@ -296,6 +299,7 @@ function render_forums($forum_guid) {
 			$time_posted = date('Y-m-d H:i:s', $time_posted);
 
 			$options = render_edit_options($topic->guid, $group_entity->guid);
+			if ($options == '') $options = '-';
 			$admin_only = (elgg_is_admin_logged_in()) ? "(guid:{$topic->guid})" : "";
 			$last_post = ($total_replies <= 0) ? $last_post = elgg_echo('gcforums:no_posts') : "<div>{$replies[$total_replies - 1]->username}</div> <div>{$time_posted}</div>";
 
@@ -327,6 +331,7 @@ function render_forums($forum_guid) {
 		/// category
 		foreach ($categories as $category) {
 			$options = render_edit_options($category->guid, $group_entity->getGUID());
+			if ($options == '') $options = '-';
 			$admin_only = (elgg_is_admin_logged_in()) ? "(guid:{$category->guid})" : "";
 			$content .= "
 			<p>
@@ -385,11 +390,12 @@ function render_forums($forum_guid) {
 		}
 
 
-		if (elgg_is_admin_logged_in() || $group_entity->getOwnerGUID() == $current_user->guid /*|| check_entity_relationship($current_user->getGUID(), 'operator', $group_entity->getGUID())*/) {
+		if (elgg_is_admin_logged_in() /*|| $group_entity->getOwnerGUID() == $current_user->guid || check_entity_relationship($current_user->getGUID(), 'operator', $group_entity->getGUID())*/) {
 
 			/// there are the problem where user creates forum in the existing forum with categories enabled, show the forums without categories
 			$forums = elgg_get_entities_from_relationship(array(
 					'relationship' => 'descendant',
+					'container_guid' => $forum_guid,
 					'subtypes' => array('hjforum'),
 					'relationship_guid' => $forum_guid,
 					'inverse_relationship' => true,
@@ -425,7 +431,7 @@ function render_forums($forum_guid) {
 							$total_posts = get_forums_statistics_information($forum->guid, TOTAL_POST);
 							$recent_post = get_forums_statistics_information($forum->guid, RECENT_POST);
 							$options = render_edit_options($forum->getGUID(), $group_entity->getGUID());
-
+							if ($options == '') $options = '-';
 							$admin_only = (elgg_is_admin_logged_in()) ? "(guid:{$forum->guid})" : "";
 							$hyperlink = "<a href='{$base_url}gcforums/view/{$forum->getGUID()}'><strong>{$forum->title}</strong></a>";
 
@@ -473,11 +479,14 @@ function render_forums($forum_guid) {
 						</div>";
 
 			foreach ($forums as $forum) {
+				
+					if ($forum->getContainerGUID() != $entity->getGUID()) continue;
+					
 					$total_topics = get_forums_statistics_information($forum->guid, TOTAL_TOPICS);
 					$total_posts = get_forums_statistics_information($forum->guid, TOTAL_POST);
 					$recent_post = get_forums_statistics_information($forum->guid, RECENT_POST);
 					$options = render_edit_options($forum->getGUID(), $group_entity->getGUID());
-
+					if ($options == '') $options = '-';
 					$hyperlink = "<a href='{$base_url}gcforums/view/{$forum->getGUID()}'><strong>{$forum->title}</strong></a>";
 					$admin_only = (elgg_is_admin_logged_in()) ? "(guid:{$forum->guid})" : "";
 
@@ -652,7 +661,7 @@ function render_edit_options($object_guid, $group_guid) {
 		$edit_options .= "<div class='edit-options-{$entity_type}'>{$option}</div>";
 
 
-	if (($current_user->isAdmin() || $group_entity->getOwnerGUID() == $current_user->guid) && $entity->getSubtype() !== 'hjforumpost' && $entity->getSubtype() !== 'hjforumtopic' && $entity->getSubtype() !== 'hjforumcategory') {		
+	if (elgg_is_logged_in() && ($current_user->isAdmin() || $group_entity->getOwnerGUID() == $current_user->guid) && $entity->getSubtype() !== 'hjforumpost' && $entity->getSubtype() !== 'hjforumtopic' && $entity->getSubtype() !== 'hjforumcategory') {		
 		$edit_options  .= elgg_view('alerts/delete', array('entity' => $entity));		
 	}	
 
@@ -673,8 +682,9 @@ function gcforums_menu_buttons($forum_guid, $group_guid, $is_topic=false) {
 
 	$current_entity_guid = get_entity($forum_guid);
 
+
 	// todo: check if it is a topic
-	if (elgg_is_admin_logged_in() || check_entity_relationship($current_user->getGUID(), 'member', $group_entity->getGUID())) {
+	if (elgg_is_logged_in() && (elgg_is_admin_logged_in() || check_entity_relationship($current_user->getGUID(), 'member', $group_entity->getGUID()))) {
 
 		// check if postings is enabled and this is not the main first page of forum in group
 		if (!$forum_object->enable_posting || $entity->getGUID() !== $group_entity->getGUID()) { 
