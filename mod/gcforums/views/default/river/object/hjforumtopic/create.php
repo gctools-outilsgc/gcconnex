@@ -5,7 +5,7 @@
 
 $item = $vars['item'];
 /* @var ElggRiverItem $item */
-error_log(">>>>>>>>>>>>>>>>>>>>>>>   item:   {$item}");
+
 $object = $item->getObjectEntity();
 $excerpt = $object->excerpt ? $object->excerpt : $object->description;
 $excerpt = strip_tags($excerpt);
