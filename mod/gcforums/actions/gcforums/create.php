@@ -80,6 +80,14 @@ switch ($subtype) {
 			add_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $entity_guid);
 			add_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $entity_guid);
 		}
+
+		elgg_create_river_item(array(
+			'view' => 'river/object/hjforumtopic/create',
+			'action_type' => 'create',
+			'subject_guid' => $entity->getOwnerGUID(),
+			'object_guid' => $entity->getGUID()
+		));
+
 		break;
 
 	case 'hjforumpost':
@@ -106,6 +114,8 @@ switch ($subtype) {
 		return false;
 }
 system_message(elgg_echo("gcforums:saved:success", array($entity->title)));
+
+
 if ($subtype === 'hjforumpost')
 	forward("{$site}gcforums/topic/view/{$entity->getContainerGUID()}");
 else

@@ -2,6 +2,7 @@
 
 $french = array(
 
+	'river:create:object:hjforumtopic' => "%s created a forum topic %s",
 	'gcforums:edit:new_forum:heading' => "Nouveau %s",
 	'gcforums:edit:edit_forum:heading' => "Modifiez %s",
 

@@ -629,7 +629,7 @@ function render_edit_options($object_guid, $group_guid) {
 	if (elgg_is_admin_logged_in() || $group_entity->getOwnerGUID() == $current_user->guid /*|| check_entity_relationship($current_user->getGUID(), 'operator', $group_entity->getGUID())*/) {
 
 		$object_menu_items = ($entity->getSubtype() === 'hjforum') ? array("new_subcategory", "new_subforum", "edit") : array('edit', 'delete');
-		
+
 		if ($entity->getSubtype() === 'hjforumpost') $object_menu_items = array("delete");
 		foreach ($object_menu_items as $menu_item) {
 			$url = "";
