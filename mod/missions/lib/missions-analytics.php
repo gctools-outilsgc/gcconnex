@@ -314,8 +314,10 @@ function mm_analytics_add_reports_by_dates($start_date, $end_date, $separator, &
 				$q_options['type'] = 'object';
 				$q_options['created_time_lower'] = $start_date;
 				$q_options['created_time_upper'] = $end_date;
-				$q_options['type_subtype_pairs'] = array('object' => $subtypes);
-				$reports = elgg_get_entities($q_options);
+        $q_options['type_subtype_pairs'] = array('object' => $subtypes);
+        $ia = elgg_set_ignore_access(true);
+        $reports = elgg_get_entities($q_options);
+        elgg_set_ignore_access($ia);
 				foreach ($reports as $report) {
           if (!in_array($report->mission_guid, $originals[array_search($report->subtype, $subtypes_ids)])) {
             $mission_set[array_search($report->subtype, $subtypes_ids)][] =
@@ -376,8 +378,9 @@ function mm_analytics_get_missions_by_dates($start_date, $end_date, $date_type) 
 	if($metadata == 'time_created') {
 		$options['created_time_lower'] = $start;
 		$options['created_time_upper'] = $end;
-
-		$missions = elgg_get_entities($options);
+    $ia = elgg_set_ignore_access(true);
+    $missions = elgg_get_entities($options);
+    elgg_set_ignore_access($ia);
 	}
 	else {
 		$options['metadata_name_value_pairs'] = array(
@@ -399,9 +402,13 @@ function mm_analytics_get_declinations_by_dates($start_date, $end_date) {
 	$options['subtype'] = 'mission-declination';
 	$options['limit'] = 0;
 	$options['created_time_lower'] = $start_date;
-	$options['created_time_upper'] = $end_date;
+  $options['created_time_upper'] = $end_date;
 
-	return elgg_get_entities($options);
+  $ia = elgg_set_ignore_access(true);
+  $data = elgg_get_entities($options);
+  elgg_set_ignore_access($ia);
+
+	return $data;
 }
 
 function mm_analytics_get_missions_by_posting_and_closure($start_date, $end_date) {
@@ -442,7 +449,7 @@ function mm_analytics_cull_missions_by_department($mission_set, $department) {
  */
 function mm_analytics_cull_missions_by_role_type($mission_set, $role_type) {
 	$mission_set_copy = $mission_set;
-	foreach($mission_set_copy as $key => $mission) {		
+	foreach($mission_set_copy as $key => $mission) {
 		if($mission->role_type != $role_type) {
 			unset($mission_set_copy[$key]);
 		}
@@ -456,7 +463,7 @@ function mm_analytics_cull_missions_by_role_type($mission_set, $role_type) {
  */
 function mm_analytics_cull_missions_by_job_type($mission_set, $job_type) {
 	$mission_set_copy = $mission_set;
-	foreach($mission_set_copy as $key => $mission) {		
+	foreach($mission_set_copy as $key => $mission) {
 		if($mission->job_type != $job_type) {
 			unset($mission_set_copy[$key]);
 		}
@@ -471,7 +478,7 @@ function mm_analytics_cull_missions_by_job_type($mission_set, $job_type) {
 function mm_analytics_cull_missions_by_status($mission_set, $status) {
 
 	$mission_set_copy = $mission_set;
-	foreach($mission_set_copy as $key => $mission) {		
+	foreach($mission_set_copy as $key => $mission) {
 		if($mission->state != strtolower(elgg_echo($status, [], 'en'))) {
 			unset($mission_set_copy[$key]);
 		}
