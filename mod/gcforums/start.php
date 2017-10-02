@@ -610,27 +610,29 @@ function render_edit_options($object_guid, $group_guid) {
 			$subscription = check_entity_relationship($user->guid, 'subscribed', $object_guid);
 			$btnSubscribe = ($subscription) ? elgg_echo('gcforums:translate:unsubscribe') : elgg_echo('gcforums:translate:subscribe');
 		}
-	}
+	
 
-	if ($entity->getSubtype() !== 'hjforumcategory') {
-	 	$url = elgg_add_action_tokens_to_url(elgg_get_site_url()."action/gcforums/subscribe?guid={$entity->getGUID()}");
-	 	$options['subscription'] = "<div class='edit-options-{$entity_type}'><a href='{$url}'>{$btnSubscribe}</a></div>";
-	}
+		if ($entity->getSubtype() !== 'hjforumcategory') {
+		 	$url = elgg_add_action_tokens_to_url(elgg_get_site_url()."action/gcforums/subscribe?guid={$entity->getGUID()}");
+		 	$options['subscription'] = "<div class='edit-options-{$entity_type}'><a href='{$url}'>{$btnSubscribe}</a></div>";
+		}
 
-	if (elgg_is_logged_in() && check_entity_relationship($current_user->guid, 'member', $group_entity->guid) && $entity->getSubtype() === 'hjforum') {
-		$url = elgg_get_site_url()."gcforums/create/hjforumtopic/{$object_guid}";
-		$menu_label = elgg_echo("gcforums:translate:new_topic");
-		$options['new_topic'] = "<a href='{$url}'>{$menu_label}</a>";
+
+		if (!$entity->enable_posting && check_entity_relationship($current_user->guid, 'member', $group_entity->guid) && $entity->getSubtype() === 'hjforum') {
+			$url = elgg_get_site_url()."gcforums/create/hjforumtopic/{$object_guid}";
+			$menu_label = elgg_echo("gcforums:translate:new_topic");
+			$options['new_topic'] = "<a href='{$url}'>{$menu_label}</a>";
+		}
 	}
 
 	// checks if user is admin, group owner, or moderator
 	if (elgg_is_admin_logged_in() || $group_entity->getOwnerGUID() == $current_user->guid /*|| check_entity_relationship($current_user->getGUID(), 'operator', $group_entity->getGUID())*/) {
 
-		$object_menu_items = ($entity->getSubtype() === 'hjforum') ? array("new_subcategory", "new_subforum", "new_topic", "edit") : array('edit', 'delete');
+		$object_menu_items = ($entity->getSubtype() === 'hjforum') ? array("new_subcategory", "new_subforum", "edit") : array('edit', 'delete');
+		
 		if ($entity->getSubtype() === 'hjforumpost') $object_menu_items = array("delete");
 		foreach ($object_menu_items as $menu_item) {
 			$url = "";
-			
 			// check if new posting link and it is disabled (enabled == disabled)
 			switch($menu_item) {
 				case 'new_subcategory':
@@ -638,9 +640,6 @@ function render_edit_options($object_guid, $group_guid) {
 					break;
 				case 'new_subforum':
 					$url = elgg_get_site_url()."gcforums/create/hjforum/{$object_guid}";
-					break;
-				case 'new_topic':
-					$url = ($entity->enable_posting && $entity->getSubtype() !== 'hjforumcategory') ? elgg_get_site_url()."gcforums/create/hjforumtopic/{$object_guid}" : "";
 					break;
 				case 'edit':
 					$url = elgg_get_site_url()."gcforums/edit/{$object_guid}";
@@ -658,7 +657,7 @@ function render_edit_options($object_guid, $group_guid) {
 		}
 	}	
 		
-	foreach ($options as $key => $option) 
+	foreach ($options as $key => $option)
 		$edit_options .= "<div class='edit-options-{$entity_type}'>{$option}</div>";
 
 
