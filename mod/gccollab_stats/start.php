@@ -474,7 +474,9 @@ function get_site_data($type, $lang) {
 			"opt_in_casual_seek" => "missions:casual",
 			"opt_in_casual_create" => "missions:casual",
 			"opt_in_student_seek" => "missions:student",
-			"opt_in_student_create" => "missions:student"
+			"opt_in_student_create" => "missions:student",
+			"opt_in_collaboration_seek" => "missions:collaboration",
+			"opt_in_collaboration_create" => "missions:collaboration"
 		);
 
 		$yes = elgg_get_metastring_id('gcconnex_profile:opt:yes');
