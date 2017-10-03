@@ -71,8 +71,7 @@ switch ($subtype) {
 		elgg_set_ignore_access($old_access);
 
 		add_entity_relationship($entity_guid, 'descendant', $container_guid);
-
-		gcforums_notify_subscribed_users($entity, "{$site}gcforums/topic/view/{$entity->getGUID()}");
+		gcforums_notify_subscribed_users($entity, "{$site->getURL()}gcforums/topic/view/{$entity->getGUID()}");
 		create_hjforumtopic_relationships($entity_guid, $entity_guid);
 
 		// cyu - auto subscribe when user create the topic
