@@ -22,6 +22,7 @@ $mmdep = trim( explode('/', $mission->department_path_english)[0] );
 $french_follows = elgg_echo('cp_notify:french_follows',array());
 $email_notification_footer_en = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/notifications/{$username_link}".'?utm_source=notification&utm_medium=site'),'en');
 $email_notification_footer_fr = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/notifications/{$username_link}".'?utm_source=notification&utm_medium=site'),'fr');
+$email_notification_header = elgg_echo('cp_notification:email_header',array(),'en') . ' | ' . elgg_echo('cp_notification:email_header',array(),'fr');
 
 $cal_month = array(
                     1 => elgg_echo('gcconnex_profile:month:january','fr'),
@@ -277,10 +278,6 @@ $message = "<html>
 	    	'text' => '<br>'.elgg_echo('missions:offer','fr')
 	));
 
-	
-	$email_notification_header = elgg_echo('cp_notification:email_header',array(),'en') . ' | ' . elgg_echo('cp_notification:email_header',array(),'fr');
-	
-
 $body = "<html>
 <body>
 	<!-- beginning of email template -->
@@ -343,7 +340,7 @@ $body = "<html>
 </body>
 </html>";
 	
-	mm_notify_user($mission->guid, $applicant->guid, $subject, $body);
+	mm_notify_user($mission->guid, $applicant->guid, $subject,$title_applicant_en,$title_applicant_fr, $content_applicant_en, $content_applicant_fr);
 	
 	// Creates an applied relationship between user and mission if there is no relationship there already.
 	if(!check_entity_relationship($mission->guid, 'mission_accepted', $applicant->guid) && !check_entity_relationship($mission->guid, 'mission_tentative', $applicant->guid)) {

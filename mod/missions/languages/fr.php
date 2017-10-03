@@ -198,7 +198,7 @@ return array(
     "missions:remove" =>	"Supprimer",
     "missions:error:no_applicant_to_remove" =>	"Il n'y a aucun candidat ici à supprimer.",
     "missions:removed_from_mission" =>	"Supprimé de la possibilité '%s'",
-    "missions:removed_from_mission" =>  "Merci de votre intérêt pour cette opportunité. Malheureusement, votre application n’a pas été retenue. Gardez l’œil ouvert pour une autre bonne opportunité!",
+    "missions:removed_from_mission_body" =>  "Merci de votre intérêt pour cette opportunité. Malheureusement, votre application n’a pas été retenue. Gardez l’œil ouvert pour une autre bonne opportunité!",
     "missions:error:does_not exist" =>	" n'existe pas.",
     "missions:managed_by" =>	"Géré par",
     "missions:invited_you" =>	" vous a invité à la possibilité suivante : ",

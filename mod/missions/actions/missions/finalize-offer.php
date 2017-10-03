@@ -86,14 +86,18 @@ else {
 			}
 
 			// notify participant
-			$subject = elgg_echo('missions:participating_in', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))));
-			$body = elgg_echo('missions:participating_in_more', array($applicant->name)) . $mission_link . '.';
-			mm_notify_user($applicant->guid, $mission->guid, $subject, $body);
+			$subject = elgg_echo('missions:participating_in', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))),'en').' | '.elgg_echo('missions:participating_in', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))),'fr');
+			$message_en = elgg_echo('missions:participating_in_more', array($applicant->name),'en') . $mission_link . '.';
+			$message_fr = elgg_echo('missions:participating_in_more', array($applicant->name),'fr') . $mission_link . '.';
+
+			mm_notify_user($applicant->guid, $mission->guid, $subject, '','',$message_en,$message_fr);
 
 			// notify owner
-			$subject = elgg_echo( 'missions:participating_in2', array($applicant->name));
-			$body = elgg_echo('missions:participating_in2_more', array($applicant->name)) . $mission_link . '.';
-			mm_notify_user($mission->guid, $applicant->guid, $subject, $body);
+			$subject = elgg_echo( 'missions:participating_in2', array($applicant->name),'en').' | '.elgg_echo( 'missions:participating_in2', array($applicant->name),'fr');
+			$message_en = elgg_echo('missions:participating_in2_more', array($applicant->name),'en') . $mission_link . '.';
+			$message_fr = elgg_echo('missions:participating_in2_more', array($applicant->name),'fr') . $mission_link . '.';
+
+			mm_notify_user($mission->guid, $applicant->guid, $subject, '','',$message_en,$message_fr);
 		}
 	}
 }

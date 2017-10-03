@@ -15,10 +15,10 @@ $mission = get_entity(get_input('hidden_mission_guid'));
 
 // Processes the reason given by the declining user whether it's from the dropdown menu or the free text entry.
 $reason = get_input('reason');
-error_log($reason);
 if($reason == 'missions:other') {
 	$raw_reason = $reason;
-	$reason = get_input('other_text');
+	$reasonEn = get_input('other_text');
+	$reasonFr = get_input('other_text');
 }
 else {
 	$raw_reason = $reason;
@@ -71,11 +71,6 @@ $mission_link = elgg_view('output/url', array(
 ));
 
 $subject = elgg_echo('missions:applicant_leaves', array($applicant->name),'en')." | ". elgg_echo('missions:applicant_leaves', array($applicant->name),'fr');
-$email_notification_header = elgg_echo('cp_notification:email_header',array(),'en') . ' | ' . elgg_echo('cp_notification:email_header',array(),'fr');
-$french_follows = elgg_echo('cp_notify:french_follows',array());
-$email_notification_footer_en = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/notifications/{$username_link}".'?utm_source=notification&utm_medium=site'),'en');
-$email_notification_footer_fr = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/notifications/{$username_link}".'?utm_source=notification&utm_medium=site'),'fr');
-
 
 $withdrawnEn .= elgg_echo('missions:applicant_leaves_more', array($applicant->name),'en') . $mission_link . '.' . "\n";
 ($reasonFr ? $withdrawnReasonEn .= elgg_echo('missions:reason_given', array($reasonEn),'en') : elgg_echo('missions:reason_given', array($reason),'en'));
@@ -83,70 +78,7 @@ $withdrawnEn .= elgg_echo('missions:applicant_leaves_more', array($applicant->na
 $withdrawnFr .= elgg_echo('missions:applicant_leaves_more', array($applicant->name),'fr') . $mission_link . '.' . "\n";
 ($reasonFr ? $withdrawnReasonFr .= elgg_echo('missions:reason_given', array($reasonFr),'fr') : elgg_echo('missions:reason_given', array($reason),'fr'));
 
-
-$body = "<html>
-<body>
-	<!-- beginning of email template -->
-	<div width='100%' bgcolor='#fcfcfc'>
-		<div>
-			<div>
-
-		        <div align='center' width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 12px; color: #055959'>
-		        	{$email_notification_header}
-		        </div>
-
-		     	<div width='100%' style='padding: 0 0 0 10px; color:#ffffff; font-family: sans-serif; font-size: 35px; line-height:38px; font-weight: bold; background-color:#047177;'>
-		        	<span style='padding: 0 0 0 3px; font-size: 20px; color: #ffffff; font-family: sans-serif;'>GCconnex</span>
-		        </div>
-
-		        <div style='height:1px; background:#bdbdbd; border-bottom:1px solid #ffffff'></div>
-
-		     	<div width='100%' style='padding:30px 30px 10px 30px; font-size:12px; line-height:22px; font-family:sans-serif;'>
-
-	        		<span style='font-size:12px; font-weight: normal;'>{$french_follows}</span><br/>
-
-		        </div>
-
-
-
-		        <div width='100%' style='padding:30px 30px 30px 30px; color:#153643; font-family:sans-serif; font-size:16px; line-height:22px; '>
-
-		        	<h4 style='padding: 0px 0px 5px 0px; font-family:sans-serif';>
-		        		<strong> {$withdrawnEn} </strong>
-		        	</h4>
-
-		        	{$withdrawnReasonEn}
-
-		        </div>
-                <div style='margin-top:15px; padding: 5px; color: #6d6d6d; border-bottom: 1px solid #ddd;'>
-                    <div>{$email_notification_footer_en}</div>
-                </div>
-
-		       	<div width='100%' style='padding:30px 30px 30px 30px; color:#153643; font-family:sans-serif; font-size:16px; line-height:22px;'>
-
-		       		<h4 style='padding: 0px 0px 5px 0px; font-family:sans-serif;'>
-		       			<strong> {$withdrawnFr} </strong>
-		       		</h4>
-
-
-		       		{$withdrawnReasonFr}
-
-		        </div>
-                    <div style='margin-top:15px; padding: 5px; color: #6d6d6d;'>
-                   <div>{$email_notification_footer_fr}</div>
-                </div>
-
-		        <div style='height:1px; background:#bdbdbd; border-bottom:1px solid #ffffff'></div>
-
-		        <div align='center' width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 16px; color: #055959'> </div>
-
-			</div>
-		</div>
-	</div>
-</body>
-</html>";
-
-mm_notify_user($mission->guid, $applicant->guid, $subject, $body);
+mm_notify_user($mission->guid, $applicant->guid, $subject, $withdrawnEn, $withdrawnFr,$reasonEn ,$reasonFr );
 
 system_message(elgg_echo($message_return, array($mission->job_title)));
 forward(elgg_get_site_url() . 'missions/main');
