@@ -611,6 +611,7 @@ L'approbation de votre superviseur est nécessaire avant que vous soyez en mesur
 "missions:find_display" =>   "Rechercher l'affichage",
 "missions:search_display" => "Rechercher l'affichage",
 "missions:find_candidates" =>     "Rechercher des candidats",
+"missions:search_total_found" => "Il y a %s entrées correspondant à vos critères de recherche.",
 "missions:advanced_find_candidates" =>    "Recherche avancée de candidats",
 "missions:advanced_find" =>   "Recherche avancée",
 "missions:simple_find" => "Recherche simple",

@@ -65,14 +65,14 @@ $advanced_field = elgg_view('page/elements/hidden-field', array(
 		'field_bordered' => true
 ));
 
+$total_records_found = '';
+
 if($result_set) {
 	$search_set = '<h2>' . elgg_echo('missions:search_results') . '</h2>';
 	$count = $_SESSION['candidate_count'];
 
-	$max_reached = '';
-	if(($offset + $entities_per_page) >= elgg_get_plugin_setting('search_limit', 'missions') && $count >= elgg_get_plugin_setting('search_limit', 'missions')) {
-		$max_reached = '<div class="col-sm-12" style="font-style:italic;">' . elgg_echo('missions:reached_maximum_entities') . '</div>';
-	}
+	$total_records_found = elgg_echo('missions:search_total_found', array($count));
+	
 	$search_set .= elgg_view_entity_list(array_slice($result_set, $offset, $entities_per_page), array(
 			'count' => $count,
             'list_class' => 'clearfix row mrgn-bttm-md candidate-holder',
@@ -99,7 +99,7 @@ if($result_set) {
 		echo $advanced_field;
 	?>
 </div>
-<?php echo $max_reached; ?>
+<?php echo $total_records_found; ?>
 <div class="col-sm-12">
     
 	<?php echo $search_set; ?>

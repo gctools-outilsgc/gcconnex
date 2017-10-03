@@ -612,6 +612,7 @@ The approval of your supervisor will be required before an offer for any type of
 "missions:find" =>  "Find",
 "missions:find_display" =>   "Find display",
 "missions:search_display" => "Search display",
+"missions:search_total_found" => "There are %s entries that matched your search criteria.",
 "missions:find_candidates" =>   "Find Candidates",
 "missions:advanced_find_candidates" =>  "Advanced Find Candidates",
 "missions:advanced_find" => "Advanced find",
