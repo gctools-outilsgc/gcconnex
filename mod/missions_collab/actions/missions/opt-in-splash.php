@@ -24,10 +24,12 @@ $user = elgg_get_logged_in_user_entity();
             $opt_in_casual_create = get_input('casualcreate_check');
             $opt_in_student_seek = get_input('studentseek_check');
             $opt_in_student_create = get_input('studentcreate_check');
+            $opt_in_collaboration_seek = get_input('collaborationseek_check');
+            $opt_in_collaboration_create = get_input('collaborationcreate_check');
 
             $access = get_input('access');
             
-            $opt_in_inputs = array($opt_in_mission, $opt_in_swap, $opt_in_mentored, $opt_in_shadowed, $opt_in_mentoring, $opt_in_shadowing, $opt_in_jobshare, $opt_in_pcSeek, $opt_in_pcCreate, $opt_in_ssSeek, $opt_in_ssCreate, $opt_in_rotation, $opt_in_assignSeek, $opt_in_assignCreate, $opt_in_deploySeek, $opt_in_deployCreate, $opt_in_missionCreate, $opt_in_casual_seek, $opt_in_casual_create, $opt_in_student_seek, $opt_in_student_create);
+            $opt_in_inputs = array($opt_in_mission, $opt_in_swap, $opt_in_mentored, $opt_in_shadowed, $opt_in_mentoring, $opt_in_shadowing, $opt_in_jobshare, $opt_in_pcSeek, $opt_in_pcCreate, $opt_in_ssSeek, $opt_in_ssCreate, $opt_in_rotation, $opt_in_assignSeek, $opt_in_assignCreate, $opt_in_deploySeek, $opt_in_deployCreate, $opt_in_missionCreate, $opt_in_casual_seek, $opt_in_casual_create, $opt_in_student_seek, $opt_in_student_create, $opt_in_collaboration_seek, $opt_in_collaboration_create);
     //Nick - Loop through array of selected things and change their value to match the meta data        
 foreach($opt_in_inputs as $k => $v){
     if($v == 'on'){
@@ -60,6 +62,8 @@ foreach($opt_in_inputs as $k => $v){
             $user->opt_in_casual_create = $opt_in_inputs[18];
             $user->opt_in_student_seek = $opt_in_inputs[19];
             $user->opt_in_student_create = $opt_in_inputs[20];
+            $user->opt_in_collaboration_seek = $opt_in_inputs[21];
+            $user->opt_in_collaboration_create = $opt_in_inputs[22];
 
             /*$user->opt_in_peer_coached = $opt_in_set[6];
             $user->opt_in_peer_coaching = $opt_in_set[7];

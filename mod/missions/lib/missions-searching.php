@@ -138,22 +138,22 @@ function mm_analyze_advanced_search_element($place, $array)
                     case elgg_echo('gcconnex_profile:opt:micro_mission'):
                         $name_option = 'opt_in_missionCreate';
                         break;
-                    case elgg_echo('gcconnex_profile:opt:assignment_deployment_seek');
+                    case elgg_echo('gcconnex_profile:opt:assignment_deployment_seek'):
                         $name_option = 'opt_in_assignSeek';
                         break;
-                    case elgg_echo('gcconnex_profile:opt:assignment_deployment_create');
+                    case elgg_echo('gcconnex_profile:opt:assignment_deployment_create'):
                         $name_option = 'opt_in_assignCreate';
                         break;
-                    case elgg_echo('gcconnex_profile:opt:deployment_seek');
+                    case elgg_echo('gcconnex_profile:opt:deployment_seek'):
                         $name_option = 'opt_in_deploySeek';
                         break;
-                    case elgg_echo('gcconnex_profile:opt:deployment_create');
+                    case elgg_echo('gcconnex_profile:opt:deployment_create'):
                         $name_option = 'opt_in_deployCreate';
                         break;
                     case elgg_echo('gcconnex_profile:opt:job_swap'):
                         $name_option = 'opt_in_swap';
                         break;
-                    case elgg_echo('gcconnex_profile:opt:job_rotate');
+                    case elgg_echo('gcconnex_profile:opt:job_rotate'):
                         $name_option = 'opt_in_rotation';
                         break;
 
@@ -183,7 +183,7 @@ function mm_analyze_advanced_search_element($place, $array)
                     case elgg_echo('gcconnex_profile:opt:skill_sharing'):
                         $name_option = 'opt_in_ssSeek';
                         break;
-                    case elgg_echo('gcconnex_profile:opt:skill_sharing_create');
+                    case elgg_echo('gcconnex_profile:opt:skill_sharing_create'):
                         $name_option = 'opt_in_ssCreate';
                         break;
                 }
