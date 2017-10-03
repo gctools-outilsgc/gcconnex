@@ -20,6 +20,7 @@ if (elgg_is_sticky_form('ticket-submit')) {
   $email = $sticky_values['email'];
   $description = $sticky_values['description'];
   $subject = $sticky_values['subject'];
+  $type = $sticky_values['type'];
 
   elgg_clear_sticky_form('ticket-submit');
 }
@@ -56,6 +57,28 @@ if (elgg_is_sticky_form('ticket-submit')) {
 ));
 ?>
 <span class="relatedArticles btn-primary"><a href="#searchResults"></a></span>
+</div>
+
+<div>
+<label for="type"><?php echo elgg_echo('freshdesk:ticket:type', array(), $lang); ?></label>
+<?php echo elgg_view('input/select', array(
+  'name' => 'type',
+  'id' => 'type',
+  'required' => 'required',
+  'value' => $type,
+  'options_values' => [
+		'None' => elgg_echo('freshdesk:ticket:types:none', array(), $lang),
+		'Log in credentials' => elgg_echo('freshdesk:ticket:types:login', array(), $lang),
+    'Bugs/Errors' => elgg_echo('freshdesk:ticket:types:bugs', array(), $lang),
+    'Group-related' => elgg_echo('freshdesk:ticket:types:group', array(), $lang),
+    'Training' => elgg_echo('freshdesk:ticket:types:training', array(), $lang),
+    'Jobs Marketplace' => elgg_echo('freshdesk:ticket:types:jobs', array(), $lang),
+    'Enhancement' => elgg_echo('freshdesk:ticket:types:enhancement', array(), $lang),
+    'Flag content or behaviour' => elgg_echo('freshdesk:ticket:types:flag', array(), $lang),
+    'Other' => elgg_echo('freshdesk:ticket:types:other', array(), $lang),
+	],
+));
+?>
 </div>
 
 <div>
@@ -105,6 +128,10 @@ $(document).ready(function(){
       $('#description-error').remove();
     }
 
+    if($('#type option:selected').val() == 'None' && $('#type').hasClass('error') != true){
+      $('#type').addClass('error').parent().append('<label for="'+$('#type').attr('name')+'" class="error">'+'<?php echo elgg_echo('freshdesk:valid', array(), $lang) ?>'+'</label>');
+    }
+
     var inputs = form.find('input');
 
     //loop through the input fields
@@ -127,7 +154,7 @@ $(document).ready(function(){
 
     //handle focusing on top error
     if(errors.length > 0){
-      if(errors.first().is('input')){
+      if(errors.first().is('input') || errors.first().is('select')){
         errors.first().focus();
       } else {
         CKEDITOR.instances['description'].focus();
