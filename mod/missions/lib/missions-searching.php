@@ -19,10 +19,6 @@ function mm_search_database_for_missions($query_array, $query_operand, $limit, $
     $missions = '';
     $filtered_array = array_filter($query_array);
     $dbprefix = elgg_get_config("dbprefix");
-    print_r($filtered_array);
-    echo "lala";
-
-
 
     if(empty($filtered_array)) {
         register_error(elgg_echo('missions:error:no_search_values'));
@@ -39,12 +35,10 @@ function mm_search_database_for_missions($query_array, $query_operand, $limit, $
         $options['metadata_name_value_pairs_operator'] = $query_operand;
         $options['metadata_case_sensitive'] = false;
         $options['limit'] = $limit;
-        // $options['wheres'][] = 'e.guid IN (SELECT "guid FROM '.$dbprefix.'users_entity user WHERE user.name ")';
-        $options['wheres'][] = 'e.owner_guid IN (SELECT guid from '.$dbprefix.'users_entity user where user.name like "' . mysql_escape_string($filtered_array[0]['value']) . '")';
+        $options['wheres'][] = 'e.owner_guid IN (SELECT guid FROM '.$dbprefix.'users_entity user WHERE user.name LIKE "' . mysql_escape_string($filtered_array[0]['value']) . '")';
 
         $all_missions = elgg_get_entities_from_metadata($options);
         array_pop($options['wheres']);
-
 
         // split the search into separate queries to prevent slowdown from 10+ join queries using 'OR'
         foreach ($filtered_array as $array) {
