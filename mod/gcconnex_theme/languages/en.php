@@ -52,7 +52,7 @@ return array(
     'wet:login_engage_3'=>'Promote government-wide GC activities.',
     'wet:login_welcome'=>'Welcome to GCconnex',
   	'wet:jobs:link' => 'jobs.gc.ca <i class="fa fa-external-link mrgn-lft-sm"></i>',
-  	'wet:jobs:href' => "http://jobs-emplois.gc.ca/index-eng.htm",
+  	'wet:jobs:href' => "https://www.canada.ca/en/services/jobs/opportunities/government.html",
 
 	'loginok' => "Welcome to GCconnex %s.", /*NEW but doesn't work :3*/
     'wet:login:departments'=>"<span class=\"login-big-num\">174</span> Organizations across Canada",
