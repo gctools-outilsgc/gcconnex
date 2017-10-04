@@ -19,6 +19,7 @@ function init() {
 	elgg_register_action("selfdelete", __DIR__ . "/actions/delete.php");
 	elgg_register_action('selfdelete/feedback/delete', __DIR__ . '/actions/feedback/delete.php', 'admin');
 
+    elgg_register_action('selfdelete/changegroupowner', __DIR__ . '/actions/changegroupowner.php');
 	elgg_register_event_handler('pagesetup', 'system', __NAMESPACE__ . '\\pagesetup');
 
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', __NAMESPACE__ . '\\hover_menu', 1000);

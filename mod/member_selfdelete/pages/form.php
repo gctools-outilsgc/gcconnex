@@ -6,6 +6,7 @@ $content = "<div style=\"padding: 25px;\">";
 
 // create the form
 // parameters for form generation - enctype must be 'multipart/form-data' for file uploads 
+$content .= elgg_view('member_selfdelete/group_owner_change');
 $content .=  elgg_view_form('selfdelete');
 
 $content .= "</div>";
