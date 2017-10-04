@@ -264,6 +264,11 @@ function render_forums($forum_guid) {
 	$query = "SELECT * FROM elggentities e, elggentity_subtypes es WHERE e.subtype = es.id AND e.container_guid = {$forum_guid} AND es.subtype = 'hjforumtopic'";
 	$topics = get_data($query);
 
+	// sort
+	usort($topics, function($a, $b) {
+	    return $b->guid - $a->guid;
+	});
+
 	if ($forum_guid !== $group_entity->guid)
 		$content .= "<div class='forums-menu-buttons'>".gcforums_menu_buttons($entity->getGUID(), $group_entity->getGUID())."</div> ";
 
