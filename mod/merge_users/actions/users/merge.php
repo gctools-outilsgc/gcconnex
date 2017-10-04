@@ -22,8 +22,19 @@ if(!$old_user || !$new_user){
 $oldGUID = $old_user->guid;
 $newGUID = $new_user->guid;
 
+//grab profile information entities subtypes
+$edu = get_subtype_id('object', 'education');
+$work = get_subtype_id('object', 'experience');
+$skill = get_subtype_id('object', 'MySkill');
+
+$transfer_profile = get_input('profile');
+
+//ignore these subtypes if not transfering profile
+if(!$transfer_profile){
+  $avoid = " AND subtype NOT IN ( $edu, $work, $skill )";
+}
 //transfering all object entities to new account
-$data = get_data("SELECT * FROM {$db_prefix}entities WHERE owner_guid = {$oldGUID} AND type='object'");
+$data = get_data("SELECT * FROM {$db_prefix}entities WHERE owner_guid = {$oldGUID} AND type='object'".$avoid);
 
 foreach($data as $object){
 
@@ -31,6 +42,56 @@ foreach($data as $object){
     update_data("UPDATE {$db_prefix}entities SET owner_guid = '$newGUID' where guid = '$object->guid'");
   } else {
     update_data("UPDATE {$db_prefix}entities SET owner_guid = '$newGUID', container_guid = '$newGUID' where guid = '$object->guid'");
+
+    //handle transfering profile info entities to new user
+    if($transfer_profile){
+      switch($object->subtype){
+        //education
+        case $edu:
+          $education = $new_user->education;
+
+          if($education == NULL){
+            $new_user->education = $object->guid;
+          } else if(is_array($education)){
+            array_push($education, $object->guid);
+            $new_user->education = $education;
+          } else if(!is_array($education)){
+            $new_user->education = array($education, $object->guid);
+          }
+
+          break;
+        //work experience
+        case $work:
+          $experience = $new_user->work;
+
+          if($experience == NULL){
+            $new_user->work = $object->guid;
+          } else if(is_array($experience)){
+            array_push($experience, $object->guid);
+            $new_user->work = $experience;
+          } else if(!is_array($experience)){
+            $new_user->work = array($experience, $object->guid);
+          }
+
+          break;
+        //skills
+        case $skill:
+          $skills = $new_user->gc_skills;
+
+          if($skills == NULL){
+            $new_user->gc_skills = $object->guid;
+          } else if(is_array($skills)){
+            if(count($skills) < 15){ //max 15 skill
+              array_push($skills, $object->guid);
+              $new_user->gc_skills = $skills;
+            }
+          } else if(!is_array($skills)){
+            $new_user->gc_skills = array($skills, $object->guid);
+          }
+
+          break;
+      }
+    }
   }
 }
 
@@ -72,11 +133,27 @@ foreach($dataGroups as $group){
   //metadata
   update_data("UPDATE {$db_prefix}metadata SET owner_guid = '$newGUID' where entity_guid = $groupGUID");
 
-
-
 }
 
-system_message('All content and groups has been transfered to '.$new_user->name.' and the account '.$old_user->name.' has been deleted');
+//now time to do colleagues
 
-$old_user->delete();
+$transfer_friends = get_input('friends');
+
+if($transfer_friends){
+  $old_friends = $old_user->getFriends(array('limit' => 0));
+
+  foreach($old_friends as $friend){
+    //check if friends
+    if(!$friend->isFriendOf($newGUID) && $friend != $new_user){
+      //have to add relationhip to both of them
+      add_entity_relationship($friend->guid, 'friend', $newGUID);
+      add_entity_relationship($newGUID, 'friend', $friend->guid);
+    }
+
+  }
+}
+
+system_message('All content and groups has been transfered to '.$new_user->name.' and the account '.$old_user->name.' has been deleted '.$true);
+
+//$old_user->delete();
 ?>

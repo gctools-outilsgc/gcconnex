@@ -19,6 +19,7 @@ echo '<p>This will merge the account <span class="old">'.$old_user->username.'</
       echo '<p>@'.$old_user->username.'</p>';
       echo '<p>'.$old_user->email.'</p>';
       echo '<p>'.$old_user->department.'</p>';
+       echo $old_user->gc_skills;
 
       $objects = elgg_get_entities(array(
         'limit' => 0,
@@ -52,6 +53,7 @@ echo '<p>This will merge the account <span class="old">'.$old_user->username.'</
       echo '<p>@'.$new_user->username.'</p>';
       echo '<p>'.$new_user->username.'</p>';
       echo '<p>'.$new_user->department.'</p>';
+      echo $new_user->gc_skills;
     }
     ?>
   </div>
@@ -64,12 +66,19 @@ if(!$new_user || !$old_user){
 } else if($old_user == $new_user){
   echo '<p>Cannot merge same user account.</p>';
 } else {
- echo elgg_view('input/submit', array('value' => "Merge and delete", 'class' => 'btn btn-submit mrgn-tp-md'));
+  echo '<div class="options-input">'.elgg_view('input/checkbox', array('name'=>'profile', 'label'=> 'Transfer profile (education, work experience and skills)', 'value'=>'profile',)).'</div>';
+  echo '<div class="options-input">'.elgg_view('input/checkbox', array('name'=>'friends', 'label'=> 'Transfer colleagues', 'value'=>'friends',)).'</div>';
+  echo elgg_view('input/submit', array('value' => "Merge and delete", 'class' => 'btn btn-submit mrgn-tp-md', 'data-confirm' => 'Are you sure?'));
 }
  ?>
 </div>
 
 <style>
+  .options-input {
+    width: 100%;
+    margin-top:5px;
+  }
+
   .elgg-avatar {
     width:125px;
     margin:10px;

@@ -12,6 +12,7 @@ function merge_users_init() {
         'href' => elgg_get_site_url() . 'admin/merge_users/merge',
         'text' => 'Merge users',
         'section' => 'administer',
+        'context' => 'admin'
     ));
 
 }
