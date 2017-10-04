@@ -273,7 +273,7 @@ function render_forums($forum_guid) {
 		$content .= "
 			<div class='topic-main-box'>
 				<div style='background: #e6e6e6; width:100%;' >
-					<div class='topic-header'>Topic
+					<div class='topic-header'>".elgg_echo('gcforums:translate:hjforumtopic')."
 						<div class='topic-information'>options</div>
 						<div class='topic-information'>".elgg_echo('gcforums:translate:last_posted')."</div>
 						<div class='topic-information'>".elgg_echo('gcforums:translate:replies')."</div>
@@ -385,7 +385,7 @@ function render_forums($forum_guid) {
 				$content .= "</div> </div> </p> <br/>";
 
 			} else {
-				$content .= "<div class='forum-empty'>No Forums created</div>";
+				$content .= "<div class='forum-empty'>".elgg_echo('gcforums:forums_not_available')."</div>";
 			}
 		}
 

@@ -2,7 +2,7 @@
 
 $french = array(
 
-	'river:create:object:hjforumtopic' => "%s created a forum topic %s",
+	'river:create:object:hjforumtopic' => "%s a créé un nouveau suget de forum %s",
 	'gcforums:edit:new_forum:heading' => "Nouveau %s",
 	'gcforums:edit:edit_forum:heading' => "Modifiez %s",
 
@@ -39,7 +39,7 @@ $french = array(
 
 	"gcforums:translate:topic_starter" => "Auteur",
 	"gcforums:translate:replies" => "Réponses",
-	"gcforums:translate:last_post" => "Dernière publication",
+	"gcforums:translate:last_posted" => "Dernière publication",
 
 
 	"gcforums:translate:total_topics" => "Nombre total des sujets",

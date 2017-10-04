@@ -43,7 +43,7 @@ $english = array(
 
 	"gcforums:translate:topic_starter" => "Topic Starter",
 	"gcforums:translate:replies" => "Replies",
-	"gcforums:translate:last_post" => "Last post",
+	"gcforums:translate:last_posted" => "Last post",
 
 
 	"gcforums:translate:total_topics" => "Total topics",
