@@ -135,8 +135,22 @@ foreach($dataGroups as $group){
 
 }
 
-//now time to do colleagues
+//lets also do group membership
+$transfer_membership = get_input('membership');
 
+if($transfer_membership){
+  $old_groups = get_data("SELECT * FROM {$db_prefix}entity_relationships WHERE guid_one = {$oldGUID} AND relationship='member'");
+
+  foreach($old_groups as $group){
+    $groupEnt = get_entity($group->guid_two);
+
+    if(!$groupEnt->isMember($new_user)){
+      $groupEnt->join($new_user);
+    }
+  }
+}
+
+//now time to do colleagues
 $transfer_friends = get_input('friends');
 
 if($transfer_friends){
@@ -149,11 +163,12 @@ if($transfer_friends){
       add_entity_relationship($friend->guid, 'friend', $newGUID);
       add_entity_relationship($newGUID, 'friend', $friend->guid);
     }
-
   }
+
 }
 
 system_message('All content and groups has been transfered to '.$new_user->name.' and the account '.$old_user->name.' has been deleted '.$true);
 
+//lets say goodbye to this old user
 //$old_user->delete();
 ?>

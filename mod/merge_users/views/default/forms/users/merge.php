@@ -136,7 +136,7 @@ echo '<a href="#" id="confirm" class="btn btn-primary btn-lg">'.elgg_echo('confi
 }
 
 #popup header {
-  background:#055959;
+  background:black;
   padding:15px;
   font-size: 26px;
   color:white;
@@ -167,7 +167,7 @@ echo '<a href="#" id="confirm" class="btn btn-primary btn-lg">'.elgg_echo('confi
   float:left;
   width:48%;
   margin:5px;
-  min-height:25px;
+  min-height:175px;
   box-shadow: 0 0 0 1px rgba(0,0,0,.1);
 }
 .display {

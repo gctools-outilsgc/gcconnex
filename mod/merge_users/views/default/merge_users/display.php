@@ -5,7 +5,8 @@ $new = get_input("new");
 $old_user = get_user_by_username($old);
 $new_user = get_user_by_username($new);
 
-echo '<p>This will merge the account <span class="old">'.$old_user->username.'</span> into <span class="new">'.$new_user->username.'</span> and delete the <span class="old">'.$old_user->username.'</span>\'s profile. Look below to confirm both profiles.</p>';
+echo '<p>This will merge the account <span class="old">'.$old_user->username.'</span> into <span class="new">'.$new_user->username.'</span> and delete <span class="old">'.$old_user->username.'</span>\'s profile. Look below to confirm both profiles and choose which content is transferred.</p>';
+
 ?>
 <div class="user-display" id="user-old">
   <span class="info-header">Old Account</span>
@@ -19,7 +20,6 @@ echo '<p>This will merge the account <span class="old">'.$old_user->username.'</
       echo '<p>@'.$old_user->username.'</p>';
       echo '<p>'.$old_user->email.'</p>';
       echo '<p>'.$old_user->department.'</p>';
-       echo $old_user->gc_skills;
 
       $objects = elgg_get_entities(array(
         'limit' => 0,
@@ -53,7 +53,6 @@ echo '<p>This will merge the account <span class="old">'.$old_user->username.'</
       echo '<p>@'.$new_user->username.'</p>';
       echo '<p>'.$new_user->username.'</p>';
       echo '<p>'.$new_user->department.'</p>';
-      echo $new_user->gc_skills;
     }
     ?>
   </div>
@@ -68,6 +67,7 @@ if(!$new_user || !$old_user){
 } else {
   echo '<div class="options-input">'.elgg_view('input/checkbox', array('name'=>'profile', 'label'=> 'Transfer profile (education, work experience and skills)', 'value'=>'profile',)).'</div>';
   echo '<div class="options-input">'.elgg_view('input/checkbox', array('name'=>'friends', 'label'=> 'Transfer colleagues', 'value'=>'friends',)).'</div>';
+  echo '<div class="options-input">'.elgg_view('input/checkbox', array('name'=>'membership', 'label'=> 'Transfer group membership', 'value'=>'membership',)).'</div>';
   echo elgg_view('input/submit', array('value' => "Merge and delete", 'class' => 'btn btn-submit mrgn-tp-md', 'data-confirm' => 'Are you sure?'));
 }
  ?>
