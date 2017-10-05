@@ -10,7 +10,7 @@ function merge_users_init() {
     elgg_register_menu_item('page', array(
         'name' => 'users:merge',
         'href' => elgg_get_site_url() . 'admin/merge_users/merge',
-        'text' => 'Merge users',
+        'text' => 'Merge user accounts',
         'section' => 'administer',
         'context' => 'admin'
     ));

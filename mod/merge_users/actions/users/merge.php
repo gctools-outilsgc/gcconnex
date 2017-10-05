@@ -175,4 +175,6 @@ $delete = get_input('delete');
 if($delete){
   $old_user->delete();
 }
+
+elgg_trigger_plugin_hook('action', 'admin/site/flush_cache', null, true);
 ?>
