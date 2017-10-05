@@ -891,8 +891,8 @@ function has_group_subscriptions($group_guid, $user_guid) {
 		$forums = get_data($query);
 
 		foreach ($forums as $forum) {
-			$forum_entity = get_entity($forum->entity_guid);
 			if (!$forum->entity_guid) continue;
+			$forum_entity = get_entity($forum->entity_guid);
 			$forum_group_guid = get_forum_in_group($forum_entity->getGUID(), $forum_entity->getGUID());
 
 			if ($forum_group_guid == $group_guid)
