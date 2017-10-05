@@ -170,5 +170,9 @@ if($transfer_friends){
 system_message('All content and groups has been transfered to '.$new_user->name.' and the account '.$old_user->name.' has been deleted '.$true);
 
 //lets say goodbye to this old user
-//$old_user->delete();
+$delete = get_input('delete');
+
+if($delete){
+  $old_user->delete();
+}
 ?>

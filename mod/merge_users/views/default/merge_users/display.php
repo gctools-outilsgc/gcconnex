@@ -68,6 +68,7 @@ if(!$new_user || !$old_user){
   echo '<div class="options-input">'.elgg_view('input/checkbox', array('name'=>'profile', 'label'=> 'Transfer profile (education, work experience and skills)', 'value'=>'profile',)).'</div>';
   echo '<div class="options-input">'.elgg_view('input/checkbox', array('name'=>'friends', 'label'=> 'Transfer colleagues', 'value'=>'friends',)).'</div>';
   echo '<div class="options-input">'.elgg_view('input/checkbox', array('name'=>'membership', 'label'=> 'Transfer group membership', 'value'=>'membership',)).'</div>';
+  echo '<div class="options-input">'.elgg_view('input/checkbox', array('name'=>'delete', 'label'=> 'Delete user', 'value'=>'delete',)).'</div>';
   echo elgg_view('input/submit', array('value' => "Merge and delete", 'class' => 'btn btn-submit mrgn-tp-md', 'data-confirm' => 'Are you sure?'));
 }
  ?>
