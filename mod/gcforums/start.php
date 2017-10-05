@@ -692,7 +692,7 @@ function gcforums_menu_buttons($forum_guid, $group_guid, $is_topic=false) {
 	if (elgg_is_logged_in() && (elgg_is_admin_logged_in() || check_entity_relationship($current_user->getGUID(), 'member', $group_entity->getGUID()))) {
 
 		// check if postings is enabled and this is not the main first page of forum in group
-		if (!$forum_object->enable_posting || $entity->getGUID() !== $group_entity->getGUID()) { 
+		if (!$entity->enable_posting || $entity->getGUID() !== $group_entity->getGUID()) { 
 			$btnNewForumTopic = elgg_view('output/url', array(
 				"text" => elgg_echo('gcforums:new_hjforumtopic'), 
 				"href" => "gcforums/create/hjforumtopic/{$group_guid}/{$forum_guid}", 
@@ -715,7 +715,7 @@ function gcforums_menu_buttons($forum_guid, $group_guid, $is_topic=false) {
 					$button_array[$gcforum_type] = ($entity->enable_subcategories || $forum_guid == $group_guid) ? elgg_view('output/url', array("text" => elgg_echo('gcforums:new_hjforumcategory'), "href" => $url, 'class' => $button_class)) : "";
 				
 				if ($gcforum_type === 'hjforumtopic' && $entity->getGUID() !== $group_entity->getGUID())
-					$button_array[$gcforum_type] = (!$forum_object->enable_posting && $forum_guid) ? elgg_view('output/url', array("text" => elgg_echo('gcforums:new_hjforumtopic'), "href" => $url, 'class' => $button_class)) : "";
+					$button_array[$gcforum_type] = (!$entity->enable_posting && $forum_guid) ? elgg_view('output/url', array("text" => elgg_echo('gcforums:new_hjforumtopic'), "href" => $url, 'class' => $button_class)) : "";
 
 				if ($gcforum_type === 'hjforum')
 					$button_array[$gcforum_type] = elgg_view('output/url', array("text" => elgg_echo('gcforums:new_hjforum'), "href" => $url, 'class' => $button_class));
@@ -737,9 +737,9 @@ function gcforums_menu_buttons($forum_guid, $group_guid, $is_topic=false) {
 			return "<div>{$menu_buttons}</div>";
 		}
 
-		if (elgg_is_logged_in() && check_entity_relationship($current_user->guid, 'member', $group_entity->guid) && $group_entity->getGUID() !== $entity->getGUID()) {
+		if (elgg_is_logged_in() && check_entity_relationship($current_user->guid, 'member', $group_entity->guid) && $group_entity->getGUID() !== $entity->getGUID() && !$entity->enable_posting) {
 			$url = "gcforums/create/hjforumtopic/{$forum_guid}";
-			$new_forum_topic_button = (!$forum_object->enable_posting && $forum_guid) ? elgg_view('output/url', array("text" => elgg_echo('gcforums:new_hjforumtopic'), "href" => $url, 'class' => $button_class)) : "";
+			$new_forum_topic_button = ($forum_guid) ? elgg_view('output/url', array("text" => elgg_echo('gcforums:new_hjforumtopic'), "href" => $url, 'class' => $button_class)) : "";
 		}
 
 

@@ -31,7 +31,7 @@ switch ($subtype) {
 
 		$category_filing = get_input('ddCategoryFiling');
 		$enable_subcategories = get_input('chkEnableCategory');
-		$enable_postings = get_input('chkEnablePost');
+		$enable_posting = get_input('chkEnablePost');
 
 		$entity = new ElggObject();
 		$entity->container_guid = $container_guid;
