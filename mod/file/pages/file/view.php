@@ -36,7 +36,6 @@ if (elgg_instanceof($owner, 'group')) {
 
 
 	$title = gc_explode_translation($file->title, $lang);
-	$file->title = gc_explode_translation($file->title, $lang);
 
 elgg_push_breadcrumb($crumbs_title);
 

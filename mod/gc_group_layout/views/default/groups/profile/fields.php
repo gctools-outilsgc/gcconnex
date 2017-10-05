@@ -36,8 +36,6 @@ if (is_array($profile_fields) && count($profile_fields) > 0) {
 				// identify available content
 $description_json = json_decode($group->description);
 $title_json = json_decode($group->name);
-error_log($title_json->fr);
-error_log($title_json->en);
 
 if( $description_json->en && $description_json->fr ){
 	echo'<div id="change_language" class="change_language">';
