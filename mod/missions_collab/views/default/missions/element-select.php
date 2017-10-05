@@ -54,54 +54,7 @@ else {
 	// This section handles first javascript type selection.
     switch ($dropdown_value) {
         case '':
-            break;
-        
         case elgg_echo('missions:user_department'):
-			$obj = elgg_get_entities(array(
-                'type' => 'object',
-                'subtype' => 'dept_list',
-                'owner_guid' => 0
-            ));
-			if (get_current_language()=='en'){
-				$departments = $obj[0]->deptsEn;
-				$departments = json_decode($departments, true);
-				$provinces['pov-alb'] = 'Government of Alberta';
-				$provinces['pov-bc'] = 'Government of British Columbia';
-				$provinces['pov-man'] = 'Government of Manitoba';
-				$provinces['pov-nb'] = 'Government of New Brunswick';
-				$provinces['pov-nfl'] = 'Government of Newfoundland and Labrador';
-				$provinces['pov-ns'] = 'Government of Nova Scotia';
-				$provinces['pov-nwt'] = 'Government of Northwest Territories';
-				$provinces['pov-nun'] = 'Government of Nunavut';
-				$provinces['pov-ont'] = 'Government of Ontario';
-				$provinces['pov-pei'] = 'Government of Prince Edward Island';
-				$provinces['pov-que'] = 'Government of Quebec';
-				$provinces['pov-sask'] = 'Government of Saskatchewan';
-				$provinces['pov-yuk'] = 'Government of Yukon';
-				$departments = array_merge($departments, $provinces);
-			} else {
-				$departments = $obj[0]->deptsFr;
-				$departments = json_decode($departments, true);
-				$provinces['pov-alb'] = "Gouvernement de l'Alberta";
-				$provinces['pov-bc'] = 'Gouvernement de la Colombie-Britannique';
-				$provinces['pov-man'] = 'Gouvernement du Manitoba';
-				$provinces['pov-nb'] = 'Gouvernement du Nouveau-Brunswick';
-				$provinces['pov-nfl'] = 'Gouvernement de Terre-Neuve-et-Labrador';
-				$provinces['pov-ns'] = 'Gouvernement de la Nouvelle-Écosse';
-				$provinces['pov-nwt'] = 'Gouvernement du Territoires du Nord-Ouest';
-				$provinces['pov-nun'] = 'Gouvernement du Nunavut';
-				$provinces['pov-ont'] = "Gouvernement de l'Ontario";
-				$provinces['pov-pei'] = "Gouvernement de l'Île-du-Prince-Édouard";
-				$provinces['pov-que'] = 'Gouvernement du Québec';
-				$provinces['pov-sask'] = 'Gouvernement de Saskatchewan';
-				$provinces['pov-yuk'] = 'Gouvernement du Yukon';
-				$departments = array_merge($departments, $provinces);
-            }
-            $content .= elgg_view('input/dropdown', array(
-                'name' => $dropdown_name . '_element',
-                'value' => '',
-                'options' => $departments
-            ));
             break;
                     
         case elgg_echo('missions:opt_in'):
@@ -115,7 +68,9 @@ else {
                     elgg_echo('gcconnex_profile:opt:casual_seek'),
                     elgg_echo('gcconnex_profile:opt:casual_create'),
                     elgg_echo('gcconnex_profile:opt:student_seek'),
-                    elgg_echo('gcconnex_profile:opt:student_create')
+                    elgg_echo('gcconnex_profile:opt:student_create'),
+                    elgg_echo('gcconnex_profile:opt:collaboration_seek'),
+                    elgg_echo('gcconnex_profile:opt:collaboration_create')
                 )
         	));
         	break;
