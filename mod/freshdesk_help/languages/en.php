@@ -16,10 +16,21 @@ return array(
       'freshdesk:ticket:title' => "Submit a ticket",
       'freshdesk:ticket:email' => "Email",
       'freshdesk:ticket:subject' => "Subject",
+      'freshdesk:ticket:type' => "Type",
       'freshdesk:ticket:attachment' => "Attachment",
       'freshdesk:ticket:description' => "Description",
       'freshdesk:ticket:submit:confirmed' => "Your ticket has been submitted.",
       'freshdesk:ticket:submit:denied' => "Something went wrong, please try again later.",
+
+      'freshdesk:ticket:types:none' => "...",
+      'freshdesk:ticket:types:login' => "Log in credentials",
+      'freshdesk:ticket:types:bugs' => "Bugs/Errors",
+      'freshdesk:ticket:types:group' => "Group-related",
+      'freshdesk:ticket:types:training' => "Training",
+      'freshdesk:ticket:types:jobs' => "Jobs Marketplace",
+      'freshdesk:ticket:types:enhancement' => "Enhancement",
+      'freshdesk:ticket:types:flag' => "Flag content or behaviour",
+      'freshdesk:ticket:types:other' => "Other",
 
       'freshdesk:knowledge:search:info:embed' => 'Search our knowledge base to find the information you are looking for. For more information vist our <a href="https://gcpedia.gctools-outilsgc.ca/en/support/home">Support Home</a>.',
 

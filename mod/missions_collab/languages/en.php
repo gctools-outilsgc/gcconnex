@@ -11,6 +11,7 @@ return array(
     "missions:shadowing" => "Shadowing",
     "missions:casual" => "Casual Work",
     "missions:student" => "Student Integration",
+    "missions:collaboration" => "Collaboration",
     
     "missions:your_department" =>   "Your organization, agency or department",
     "missions:application_paragraph" => "Please write out the message you wish to send to this opportunity creator. Note that the public portions of your GCcollab profile will be included in the email to the opportunity creator.",
