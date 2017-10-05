@@ -20,7 +20,7 @@ switch ($subtype) {
 		$entity->container_guid = $container_guid;
 		$entity->title = $title;
 		$entity->type = $type;
-		$entity->access_id = $ddAccess;
+		$entity->access_id = $access;
 		$entity->subtype = $subtype;
 		$entity->description = $description;
 		$entity_guid = $entity->save();

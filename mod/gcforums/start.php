@@ -363,7 +363,7 @@ function render_forums($forum_guid) {
 										<div class='forum-information'>options</div>
 										<div class='forum-information'>".elgg_echo('gcforums:translate:total_topics')."</div>
 										<div class='forum-information'>".elgg_echo('gcforums:translate:total_replies')."</div>
-										<div class='forum-information'>".elgg_echo('gcforums:translate:last_post')."</div>
+										<div class='forum-information'>".elgg_echo('gcforums:translate:last_posted')."</div>
 									</div>";
 
 				/// forums
@@ -422,7 +422,7 @@ function render_forums($forum_guid) {
 								<div class='forum-information'>options</div>
 								<div class='forum-information'>".elgg_echo('gcforums:translate:total_topics')."</div>
 								<div class='forum-information'>".elgg_echo('gcforums:translate:total_replies')."</div>
-								<div class='forum-information'>".elgg_echo('gcforums:translate:last_post')."</div>
+								<div class='forum-information'>".elgg_echo('gcforums:translate:last_posted')."</div>
 							</div>";
 
 				foreach ($forums as $forum) {
@@ -480,7 +480,7 @@ function render_forums($forum_guid) {
 							<div class='forum-information'>options</div>
 							<div class='forum-information'>".elgg_echo('gcforums:translate:total_topics')."</div>
 							<div class='forum-information'>".elgg_echo('gcforums:translate:total_replies')."</div>
-							<div class='forum-information'>".elgg_echo('gcforums:translate:last_post')."</div>
+							<div class='forum-information'>".elgg_echo('gcforums:translate:last_posted')."</div>
 						</div>";
 
 			foreach ($forums as $forum) {
