@@ -29,9 +29,9 @@ var e_title = spanen_title.innerHTML || spanen_title.textContent;
 
 
 
-    $(d).html('<div id="loading-image"  class="wet-ajax-loader"><img src="../../../mod/wet4/graphics/loading.gif" alt="loading content"/></div>');
-    $(t).html('<div id="loading-image"  class="wet-ajax-loader"><img src="../../../mod/wet4/graphics/loading.gif" alt="loading content"/></div>');
-
+    $(d).html('<div id="loading-image"  class="wet-ajax-loader"><img src="' + elgg.get_site_url() + 'mod/wet4/graphics/loading.gif" /></div>');
+    $(t).html('<div id="loading-image"  class="wet-ajax-loader"><img src= "' + elgg.get_site_url() + 'mod/wet4/graphics/loading.gif"/></div>');
+console.log( 'test' +elgg.get_site_url());
 
     $.ajax(
     {
@@ -66,9 +66,9 @@ var spanen_title = document.getElementById('en_title');
 var e_title = spanen_title.innerHTML || spanen_title.textContent;
 
 
-    $(d).html('<div id="loading-image"  class="wet-ajax-loader"><img src="../../../mod/wet4/graphics/loading.gif" alt="loading content"/></div>');
-    $(t).html('<div id="loading-image"  class="wet-ajax-loader"><img src="../../../mod/wet4/graphics/loading.gif" alt="loading content"/></div>');
-
+    $(d).html('<div id="loading-image"  class="wet-ajax-loader"><img src= "' + elgg.get_site_url() + 'mod/wet4/graphics/loading.gif" alt="loading content"/></div>');
+    $(t).html('<div id="loading-image"  class="wet-ajax-loader"><img src= "' + elgg.get_site_url() + 'mod/wet4/graphics/loading.gif" alt="loading content"/></div>');
+console.log( 'test' +elgg.get_site_url()+ "mod/wet4/graphics/loading.gif");
 
     $.ajax(
     {
