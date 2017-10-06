@@ -66,8 +66,6 @@ function gc_elgg_sitemap_init() {
 		elgg_extend_view('groups/profile/summary', 'group_tabs', 600);
 
 		elgg_register_plugin_hook_handler('entity:url', 'group', 'redirect_group_url');
-		elgg_register_plugin_hook_handler('entity:url', 'user', 'redirect_user_url');
-
 		elgg_register_plugin_hook_handler('entity:url', 'object', 'redirect_content_url', 1);
 		elgg_register_plugin_hook_handler('view', 'output/longtext', 'strip_content_hyperlinks_handler');
 
@@ -183,12 +181,6 @@ function strip_content_hyperlinks_handler($hook, $type, $return, $params) {
 	$return .= $description->textContent;
 
 	return $return;
-}
-
-
-function redirect_user_url($hook, $type, $url, $params) {
-	if (strpos($_SERVER['REQUEST_URI'],"/profile/") !== false && sizeof(get_sanitized_url()) > 2)
-		forward("profile/{$params['entity']->username}");
 }
 
 
@@ -375,7 +367,7 @@ function elgg_entities_list_handler($hook, $type, $value, $params) {
 			break;
 
 		case 'members':
-			$member_url = elgg_get_site_url()."profile/{$value['entity']->username}/";
+			$member_url = elgg_get_site_url()."profile/{$value['entity']->username}";
 			echo "<a href='{$member_url}'>{$value['entity']->username}</a>  <br/>";
 			break;
 
