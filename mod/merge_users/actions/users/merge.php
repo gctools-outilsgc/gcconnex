@@ -95,6 +95,13 @@ foreach($data as $object){
   }
 }
 
+//unset from old account so entities are not deleted as well
+if($transfer_profile){
+  $old_user->education == '';
+  $old_user->work == '';
+  $old_user->gc_skills == '';
+}
+
 //transfering group ownership and making sure new account is a member of the group they are now the owner of
 $dataGroups = get_data("SELECT * FROM {$db_prefix}entities WHERE owner_guid = {$oldGUID} AND type='group'");
 
@@ -116,7 +123,7 @@ foreach($dataGroups as $group){
   }
 
   group_tools_transfer_group_ownership($groupEnt, $new_user);
-  
+
   //metadata
   update_data("UPDATE {$db_prefix}metadata SET owner_guid = '$newGUID' where entity_guid = $groupGUID");
 
