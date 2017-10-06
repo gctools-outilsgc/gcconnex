@@ -43,16 +43,16 @@ else {
     	$target = $mission->guid;
     	$sender = $aid;
         $subject = elgg_echo('missions:withdrew_from_mission', array($user->name, $mission->title),'en', $user->language).' | '.elgg_echo('missions:withdrew_from_mission', array($user->name, $mission->title),'fr', $user->language);
-        $remove_en = elgg_echo('missions:withdrew_from_mission_body', array($user->name),'en', $user->language);
-        $remove_fr = elgg_echo('missions:withdrew_from_mission_body', array($user->name),'fr', $user->language);
+        $remove_en = elgg_echo('missions:withdrew_from_mission_body', array($user->name),'en');
+        $remove_fr = elgg_echo('missions:withdrew_from_mission_body', array($user->name),'fr');
     }
     // Notifies the candidate that they were removed from the mission.
     else {
     	$target = $aid;
     	$sender = $mission->guid;
     	$subject = elgg_echo('missions:removed_from_mission', array($mission->title),'en', $user->language).' | '.elgg_echo('missions:removed_from_mission', array($mission->title),'fr', $user->language);
-        $remove_en = elgg_echo('missions:removed_from_mission_body', array(),'en', $user->language);
-        $remove_fr = elgg_echo('missions:removed_from_mission_body', array(),'fr', $user->language);
+        $remove_en = elgg_echo('missions:removed_from_mission_body', array(),'en');
+        $remove_fr = elgg_echo('missions:removed_from_mission_body', array(),'fr');
     }
         
     mm_notify_user($target, $sender, $subject,'','', $remove_en,$remove_fr);
