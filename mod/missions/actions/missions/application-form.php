@@ -13,13 +13,31 @@
 $mid = $_SESSION['mid_act'];
 unset($_SESSION['mid_act']);
 $mission_email_body = get_input('mission_email_body');
-//$manager_permission = get_input('manager_permission');
 $manager_permission = true;
 $email_manager = get_input('email_manager');
 $manager_email = get_input('email');
 $mission = get_entity($mid);
 $applicant = elgg_get_logged_in_user_entity();
 $mmdep = trim( explode('/', $mission->department_path_english)[0] );
+$french_follows = elgg_echo('cp_notify:french_follows',array());
+$email_notification_footer_en = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/notifications/{$username_link}".'?utm_source=notification&utm_medium=site'),'en');
+$email_notification_footer_fr = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/notifications/{$username_link}".'?utm_source=notification&utm_medium=site'),'fr');
+$email_notification_header = elgg_echo('cp_notification:email_header',array(),'en') . ' | ' . elgg_echo('cp_notification:email_header',array(),'fr');
+
+$cal_month = array(
+                    1 => elgg_echo('gcconnex_profile:month:january','fr'),
+                    2 => elgg_echo('gcconnex_profile:month:february','fr'),
+                    3 => elgg_echo('gcconnex_profile:month:march','fr'),
+                    4 => elgg_echo('gcconnex_profile:month:april','fr'),
+                    5 => elgg_echo('gcconnex_profile:month:may','fr'),
+                    6 => elgg_echo('gcconnex_profile:month:june','fr'),
+                    7 => elgg_echo('gcconnex_profile:month:july','fr'),
+                    8 => elgg_echo('gcconnex_profile:month:august','fr'),
+                    9 => elgg_echo('gcconnex_profile:month:september','fr'),
+                    10 => elgg_echo('gcconnex_profile:month:october','fr'),
+                    11 => elgg_echo('gcconnex_profile:month:november','fr'),
+                    12 => elgg_echo('gcconnex_profile:month:december','fr')
+                );
 
 if(!$manager_permission) {
 	register_error(elgg_echo('missions:error:please_obtain_permission'));
@@ -39,59 +57,146 @@ else {
 		}
 		else {
 			// Sends a premade email.
-			$subject = elgg_echo('missions:notify_supervisor');
+			$subject = elgg_echo('missions:notify_supervisor','en').' | '.elgg_echo('missions:notify_supervisor','fr');
 			
-			$message .= elgg_echo('missions:supervisor_notice_sentence', array($applicant->name, $mission->job_title)) . '<br><br>';
-			$message .= elgg_echo('missions:applicant_name') . ': ' . $applicant->name . '<br>';
-			$message .= elgg_echo('missions:department') . ': ' . $applicant->department . '<br>';
-			$message .= elgg_echo('missions:location') . ': ' . $applicant->location . '<br>';
-			$message .= elgg_echo('missions:applicant_phone') . ': ' . $applicant->phone . '<br><br>';
+			$supervisor_en .= elgg_echo('missions:supervisor_notice_sentence', array($applicant->name, $mission->job_title),'en') . '<br><br>';
+			$supervisor_fr .= elgg_echo('missions:supervisor_notice_sentence', array($applicant->name, $mission->job_title),'fr') . '<br><br>';
+
+			$body_en .= '<b>'.elgg_echo('missions:applicant_name','en') . '</b>: ' . $applicant->name . '<br>';
+			$body_en .= '<b>'.elgg_echo('missions:department','en') . '</b>: ' . $applicant->department . '<br>';
+			$body_en .= '<b>'.elgg_echo('missions:location','en') . '</b>: ' . $applicant->location . '<br>';
+			$body_en .= '<b>'.elgg_echo('missions:applicant_phone','en') . '</b>: ' . $applicant->phone . '<br><br>';
 			
-			$message .= elgg_echo('missions:opportunity_title') . ': ' . $mission->job_title . '<br>';
-			$message .= elgg_echo('missions:opportunity_type') . ': ' . elgg_echo($mission->job_type) . '<br>';
-			$message .= elgg_echo('missions:manager_name') . ': ' . $mission->name . '<br>';
-			$message .= elgg_echo('missions:manager_email') . ': ' . $mission->email . '<br>';
-			$message .= elgg_echo('missions:ideal_start_date') . ': ' . $mission->start_date . '<br>';
-			$message .= elgg_echo('missions:ideal_completion_date') . ': ' . $mission->completion_date . '<br>';
-			$message .= elgg_echo('missions:time_commitment') . ': ' . $mission->time_commitment . ' ' . elgg_echo($mission->time_interval) . '<br>';
-			$message .= elgg_echo('missions:opportunity_description') . ': ' . $mission->descriptor . '<br>';
+			$body_en .= '<b>'.elgg_echo('missions:opportunity_title','en') . '</b>: ' . $mission->job_title . '<br>';
+			$body_en .= '<b>'.elgg_echo('missions:opportunity_type','en') . '</b>: ' . elgg_echo($mission->job_type) . '<br>';
+			$body_en .= '<b>'.elgg_echo('missions:manager_name','en') . '</b>: ' . $mission->name . '<br>';
+			$body_en .= '<b>'.elgg_echo('missions:manager_email','en') . '</b>: ' . $mission->email . '<br>';
+			$body_en .= '<b>'.elgg_echo('missions:ideal_start_date','en') . '</b>: ' . $mission->start_date . '<br>';
+			$body_en .= '<b>'.elgg_echo('missions:ideal_completion_date','en') . '</b>: ' . $mission->completion_date . '<br>';
+			$body_en .= '<b>'.elgg_echo('missions:time_commitment','en') . '</b>: ' . $mission->time_commitment . ' ' . elgg_echo($mission->time_interval) . '<br>';
+			$body_en .= '<b>'.elgg_echo('missions:opportunity_description','en') . '</b>: ' . $mission->descriptor . '<br>';
+
+			$body_fr .= '<b>'.elgg_echo('missions:applicant_name','fr') . '</b>: ' . $applicant->name . '<br>';
+			$body_fr .= '<b>'.elgg_echo('missions:department','fr') . '</b>: ' . $applicant->department . '<br>';
+			$body_fr .= '<b>'.elgg_echo('missions:location','fr') . '</b>: ' . $applicant->location . '<br>';
+			$body_fr .= '<b>'.elgg_echo('missions:applicant_phone','fr') . '</b>: ' . $applicant->phone . '<br><br>';
+			
+			$body_fr .= '<b>'.elgg_echo('missions:opportunity_title','fr') . '</b>: ' . $mission->job_title . '<br>';
+			$body_fr .= '<b>'.elgg_echo('missions:opportunity_type','fr') . '</b>: ' . elgg_echo($mission->job_type) . '<br>';
+			$body_fr .= '<b>'.elgg_echo('missions:manager_name','fr') . '</b>: ' . $mission->name . '<br>';
+			$body_fr .= '<b>'.elgg_echo('missions:manager_email','fr') . '</b>: ' . $mission->email . '<br>';
+			$body_fr .= '<b>'.elgg_echo('missions:ideal_start_date','fr') . '</b>: ' . $mission->start_date . '<br>';
+			$body_fr .= '<b>'.elgg_echo('missions:ideal_completion_date','fr') . '</b>: ' . $mission->completion_date . '<br>';
+			$body_fr .= '<b>'.elgg_echo('missions:time_commitment','fr') . '</b>: ' . $mission->time_commitment . ' ' . elgg_echo($mission->time_interval) . '<br>';
+			$body_fr .= '<b>'.elgg_echo('missions:opportunity_description','fr') . '</b>: ' . $mission->descriptor . '<br>';
 			
 			$headers = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
 			$headers .= 'From: ' . $applicant->email . "\r\n";
+
+
+$message = "<html>
+<body>
+	<!-- beginning of email template -->
+	<div width='100%' background-color='#fcfcfc'>
+		<div>
+			<div>
+
+		        <div align='center' width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 12px; color: #055959'>
+		        	{$email_notification_header}
+		        </div>
+
+		     	<div width='100%' style='padding: 0 0 0 10px; color:#ffffff; font-family: sans-serif; font-size: 35px; line-height:38px; font-weight: bold; background-color:#047177;'>
+		        	<span style='padding: 0 0 0 3px; font-size: 20px; color: #ffffff; font-family: sans-serif;'>GCconnex</span>
+		        </div>
+
+		        <div style='height:1px; background-color:#bdbdbd; border-bottom:1px solid #ffffff'></div>
+
+		     	<div width='100%' style='padding:30px 30px 10px 30px; font-size:12px; line-height:22px; font-family:sans-serif;'>
+
+	        		<span style='font-size:12px; font-weight: normal;'>{$french_follows}</span><br/>
+
+		        </div>
+
+
+
+		        <div width='100%' style='padding:30px 30px 30px 30px; color:#153643; font-family:sans-serif; font-size:16px; line-height:22px; '>
+
+		        	<h4 style='padding: 0px 0px 5px 0px; font-family:sans-serif';>
+		        		<strong> {$supervisor_en} </strong>
+		        	</h4>
+
+		        	{$body_en}
+
+		        </div>
+                <div style='margin-top:15px; padding: 5px; color: #6d6d6d; border-bottom: 1px solid #ddd;'>
+                    <div>{$email_notification_footer_en}</div>
+                </div>
+
+		       	<div width='100%' style='padding:30px 30px 30px 30px; color:#153643; font-family:sans-serif; font-size:16px; line-height:22px;'>
+
+		       		<h4 style='padding: 0px 0px 5px 0px; font-family:sans-serif;'>
+		       			<strong> {$supervisor_fr} </strong>
+		       		</h4>
+
+		       		{$body_fr}
+		       		
+
+		        </div>
+                    <div style='margin-top:15px; padding: 5px; color: #6d6d6d;'>
+                   <div>{$email_notification_footer_fr}</div>
+                </div>
+
+		        <div style='height:1px; background:#bdbdbd; border-bottom:1px solid #ffffff'></div>
+
+		        <div align='center' width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 16px; color: #055959'> </div>
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>";
+
 			
 			mail($manager_email, $subject, $message, $headers);
 		}
 	}
 	
-	// To separate different sections of the email.
-	$divider = '--------------------------------------------------' . "<br>";
-	
 	// Setting up the email head.
-	$subject = elgg_echo('missions:application_to') . $mission->job_title;
-	
+	$subject = elgg_echo('missions:application_to','en') . $mission->job_title.' | '.elgg_echo('missions:application_to','fr') . $mission->job_title;
 	$body = '';
 	
-	$body .= elgg_echo('missions:application_notice_sentence', array($applicant->name, $mission->job_title)) . '<br>';
-	$body .= $divider;
+	$title_applicant_en .= elgg_echo('missions:application_notice_sentence_title', array($applicant->name, $mission->job_title),'en') ;
+	$title_applicant_fr .= elgg_echo('missions:application_notice_sentence_title', array($applicant->name, $mission->job_title),'fr') ;
+
+	$content_applicant_en .= elgg_echo('missions:application_notice_sentence', 'en') . '<br>';
+	$content_applicant_fr .= elgg_echo('missions:application_notice_sentence', 'fr') . '<br>';
 	
-	$body .= elgg_echo('missions:see_full_profile') . ': '; 
-	$body .= elgg_view('output/url', array(
+	$content_applicant_en .= '<br>'.elgg_echo('missions:see_full_profile','en') . ': '; 
+	$content_applicant_fr .= '<br>'.elgg_echo('missions:see_full_profile','fr') . ': '; 
+
+	$username = elgg_view('output/url', array(
 	    'href' => $applicant->getURL(),
 	    'text' => $applicant->username
 	)) . "<br>";
+
+	$content_applicant_en .= $username;
+	$content_applicant_fr .= $username;
 	
-	$body .= elgg_echo('missions:see_full_mission') . ': '; 
-	$body .= elgg_view('output/url', array(
+	$content_applicant_en .= elgg_echo('missions:see_full_mission','en') . ': '; 
+	$content_applicant_fr .= elgg_echo('missions:see_full_mission','fr') . ': '; 
+
+	$mission_title = elgg_view('output/url', array(
 	    'href' => $mission->getURL(),
 	    'text' => $mission->title
 	)) . "<br>";
+
+	$content_applicant_en .= $mission_title;
+	$content_applicant_fr .= $mission_title;
 	
-	$body .= $divider;
-	
-	$body .= $mission_email_body . '<br>';
-	$body .= $divider;
-	
+	$content_applicant_en .=  '<br>'.elgg_echo('missions:from_message',array($applicant->username),'en').'<br><span style="font-style: italic;">'.$mission_email_body . '</span><br>';
+	$content_applicant_fr .=  '<br>'.elgg_echo('missions:from_message',array($applicant->username),'fr').'<br><span style="font-style: italic;">'.$mission_email_body . '</span><br>';
+
 	// Lists all educations of the applicant.
 	$education_list = $applicant->education;
 	if(!is_array($education_list)) {
@@ -100,18 +205,26 @@ else {
 	if(!empty($education_list)) {
 	    foreach ($education_list as $education) {
 	        $education = get_entity($education);
-	        $education_ending = date("F", mktime(null, null, null, $education->enddate)) . ', ' . $education->endyear;
+	        $education_ending_en = date("F", mktime(null, null, null, $education->enddate)) . ', ' . $education->endyear;
+	        $education_ending_fr = $cal_month[$education->enddate] . ', ' . $education->endyear;
+
 	        if ($education->ongoing == 'true') {
-	            $education_ending = 'Present';
+	            $education_ending_en = 'Present';
+	            $education_ending_fr = 'Présent';
 	        }
-	        $education_beginning = date("F", mktime(null, null, null, $education->startdate)) . ', ' . $education->startyear;
-	        
+
+	        $education_beginning_en = date("F", mktime(null, null, null, $education->startdate)) . ', ' . $education->startyear;
+	        $education_beginning_fr = $cal_month[$education->startdate] . ', ' . $education->startyear;
+ 
 	        // TODO: This section should be in the language files eventually.
-	        $body .= '<b><font size="4">' . $education->school . ':</font></b>' . "<br>";
-	        $body .= $education_beginning . ' - ' . $education_ending . "<br>";
-	        $body .= '<b>' . $education->degree . ':</b> ' . $education->field . "<br>";
+	        $content_applicant_en .= '<br><b><font size="4">' . $education->school . ':</font></b>' . "<br>";
+	        $content_applicant_en .=  $education_beginning_en . ' - ' . $education_ending_en . "<br>";
+	        $content_applicant_en .= '<b>' . $education->degree . ':</b> ' . $education->field . "<br>";
+
+	        $content_applicant_fr .= '<br><b><font size="4">' . $education->school . ':</font></b>' . "<br>";
+	        $content_applicant_fr .=  $education_beginning_fr . ' - ' . $education_ending_fr . "<br>";
+	        $content_applicant_fr .= '<b>' . $education->degree . ':</b> ' . $education->field . "<br>";
 	    }
-	    $body .= $divider;
 	}
 	
 	//Lists all work experiences of the applicant.
@@ -122,19 +235,26 @@ else {
 	if(!empty($experience_list)) {
 	    foreach ($experience_list as $experience) {
 	        $experience = get_entity($experience);
-	        $experience_ending = date("F", mktime(null, null, null, $experience->enddate)) . ', ' . $experience->endyear;
+	        $experience_ending_en = date("F", mktime(null, null, null, $experience->enddate)) . ', ' . $experience->endyear;
+	        $experience_ending_fr = $cal_month[$experience->enddate] . ', ' . $experience->endyear;
 	        if ($experience->ongoing == 'true') {
-	            $experience_ending = 'Present';
+	            $experience_ending_en = 'Present';
+	            $experience_ending_fr = 'Présent';
 	        }
-	        $experience_beginning = date("F", mktime(null, null, null, $experience->startdate)) . ', ' . $experience->startyear;
+	        $experience_beginning_en = date("F", mktime(null, null, null, $experience->startdate)) . ', ' . $experience->startyear;
+	        $experience_beginning_fr =  $cal_month[$experience->startdate] . ', ' . $experience->startyear;
 	        
 	        // TODO: This section should be in the language files eventually.
-	        $body .= '<b><font size="4">' . $experience->organization . ':</font></b>' . "<br>";
-	        $body .= $experience_beginning . ' - ' . $experience_ending . "<br>";
-	        $body .= '<b>' . $experience->title . '</b>' . "<br>";
-	        $body .= $experience->responsibilities . "<br>";
+	        $content_applicant_en .= '<br><b><font size="4">' . $experience->organization . ':</font></b>' . "<br>";
+	        $content_applicant_en .= $experience_beginning_en . ' - ' . $experience_ending_en . "<br>";
+	        $content_applicant_en .= '<b>' . $experience->title . '</b>' . "<br>";
+	        $content_applicant_en .= $experience->responsibilities . "<br><br>";
+
+	        $content_applicant_fr .= '<br><b><font size="4">' . $experience->organization . ':</font></b>' . "<br>";
+	        $content_applicant_fr .= $experience_beginning_fr . ' - ' . $experience_ending_fr . "<br>";
+	        $content_applicant_fr .= '<b>' . $experience->title . '</b>' . "<br>";
+	        $content_applicant_fr .= $experience->responsibilities . "<br><br>";
 	    }
-	    $body .= $divider;
 	}
 	
 	// Lists all skills of the applicant.
@@ -145,34 +265,85 @@ else {
 	if(!empty($skill_list)) {
 	    foreach ($skill_list as $skill) {
 	        $skill = get_entity($skill);
-	        $body .= '<b>' . $skill->title . '</b>' . "<br>";
+	        $content_applicant_en .= '<b>' . $skill->title . '</b>' . "<br>";
+	        $content_applicant_fr .= '<b>' . $skill->title . '</b>' . "<br>";
 	    }
-	    $body .= $divider;
-	}
-	
-	// Lists all language proficiencies of the applicant.
-	$english_skills = $applicant->english;
-	$french_skills = $applicant->french;
-	if(!empty($english_skills)) {
-	    $body .= '<b><font size="4">' . elgg_echo('missions:english') . ':</font></b>' . "<br>";
-	    $body .= elgg_echo('missions:written_comprehension') . '(' . $english_skills[0] . ') ';
-	    $body .= elgg_echo('missions:written_expression') . '(' . $english_skills[1] . ') ';
-	    $body .= elgg_echo('missions:oral_proficiency') . '(' . $english_skills[2] . ') ';
-	}
-	if(!empty($french_skills)) {
-	    $body .= "<br>" . '<b><font size="4">' . elgg_echo('missions:french') . ':</font></b>' . "<br>";
-	    $body .= elgg_echo('missions:written_comprehension') . '(' . $french_skills[0] . ') ';
-	    $body .= elgg_echo('missions:written_expression') . '(' . $french_skills[1] . ') ';
-	    $body .= elgg_echo('missions:oral_proficiency') . '(' . $french_skills[2] . ') ';
 	}
 	
 	// Sends the application via email and notification.
-	$body .= elgg_view('output/url', array(
+	$content_applicant_en .= elgg_view('output/url', array(
 	    	'href' => elgg_get_site_url() . 'missions/mission-offer/' . $mission->guid . '/' . $applicant->guid,
-	    	'text' => elgg_echo('missions:offer')
+	    	'text' => '<br>'.elgg_echo('missions:offer','en')
 	));
+
+	$content_applicant_fr .= elgg_view('output/url', array(
+	    	'href' => elgg_get_site_url() . 'missions/mission-offer/' . $mission->guid . '/' . $applicant->guid,
+	    	'text' => '<br>'.elgg_echo('missions:offer','fr')
+	));
+
+$body = "<html>
+<body>
+	<!-- beginning of email template -->
+	<div width='100%' background-color='#fcfcfc'>
+		<div>
+			<div>
+
+		        <div align='center' width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 12px; color: #055959'>
+		        	{$email_notification_header}
+		        </div>
+
+		     	<div width='100%' style='padding: 0 0 0 10px; color:#ffffff; font-family: sans-serif; font-size: 35px; line-height:38px; font-weight: bold; background-color:#047177;'>
+		        	<span style='padding: 0 0 0 3px; font-size: 20px; color: #ffffff; font-family: sans-serif;'>GCconnex</span>
+		        </div>
+
+		        <div style='height:1px; background-color:#bdbdbd; border-bottom:1px solid #ffffff'></div>
+
+		     	<div width='100%' style='padding:30px 30px 10px 30px; font-size:12px; line-height:22px; font-family:sans-serif;'>
+
+	        		<span style='font-size:12px; font-weight: normal;'>{$french_follows}</span><br/>
+
+		        </div>
+
+
+
+		        <div width='100%' style='padding:30px 30px 30px 30px; color:#153643; font-family:sans-serif; font-size:16px; line-height:22px; '>
+
+		        	<h4 style='padding: 0px 0px 5px 0px; font-family:sans-serif';>
+		        		<strong> {$title_applicant_en} </strong>
+		        	</h4>
+
+		        	{$content_applicant_en}
+
+		        </div>
+                <div style='margin-top:15px; padding: 5px; color: #6d6d6d; border-bottom: 1px solid #ddd;'>
+                    <div>{$email_notification_footer_en}</div>
+                </div>
+
+		       	<div width='100%' style='padding:30px 30px 30px 30px; color:#153643; font-family:sans-serif; font-size:16px; line-height:22px;'>
+
+		       		<h4 style='padding: 0px 0px 5px 0px; font-family:sans-serif;'>
+		       			<strong> {$title_applicant_fr} </strong>
+		       		</h4>
+
+		       		{$content_applicant_fr}
+		       		
+
+		        </div>
+                    <div style='margin-top:15px; padding: 5px; color: #6d6d6d;'>
+                   <div>{$email_notification_footer_fr}</div>
+                </div>
+
+		        <div style='height:1px; background:#bdbdbd; border-bottom:1px solid #ffffff'></div>
+
+		        <div align='center' width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 16px; color: #055959'> </div>
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>";
 	
-	mm_notify_user($mission->guid, $applicant->guid, $subject, $body);
+	mm_notify_user($mission->guid, $applicant->guid, $subject,$title_applicant_en,$title_applicant_fr, $content_applicant_en, $content_applicant_fr);
 	
 	// Creates an applied relationship between user and mission if there is no relationship there already.
 	if(!check_entity_relationship($mission->guid, 'mission_accepted', $applicant->guid) && !check_entity_relationship($mission->guid, 'mission_tentative', $applicant->guid)) {
