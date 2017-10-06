@@ -66,6 +66,8 @@ function gc_elgg_sitemap_init() {
 		elgg_extend_view('groups/profile/summary', 'group_tabs', 600);
 
 		elgg_register_plugin_hook_handler('entity:url', 'group', 'redirect_group_url');
+		elgg_register_plugin_hook_handler('entity:url', 'user', 'redirect_user_url');
+
 		elgg_register_plugin_hook_handler('entity:url', 'object', 'redirect_content_url', 1);
 		elgg_register_plugin_hook_handler('view', 'output/longtext', 'strip_content_hyperlinks_handler');
 
@@ -184,15 +186,17 @@ function strip_content_hyperlinks_handler($hook, $type, $return, $params) {
 }
 
 
+function redirect_user_url($hook, $type, $url, $params) {
+	if (strpos($_SERVER['REQUEST_URI'],"/profile/") !== false && sizeof(get_sanitized_url()) > 2)
+		forward("profile/{$params['entity']->username}");
+}
 
 
 function redirect_group_url($hook, $type, $url, $params) {
 	// from: 192.168.xx.xx/gcconnex/groups/profile/1111/group-name
 	// to: 192.168.xx.xx/gcconnex/groups/profile/1111/
 	if (strpos($_SERVER['REQUEST_URI'],"/groups/profile/") !== false && sizeof(get_sanitized_url()) > 3)
-	{
 		forward("groups/profile/{$params['entity']->guid}");
-	}
 }
 
 
