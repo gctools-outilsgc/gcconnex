@@ -75,6 +75,49 @@ elgg_ws_expose_function(
 	false
 );
 
+elgg_ws_expose_function(
+	"get.colleaguerequests",
+	"get_colleague_requests",
+	array(
+		"user" => array('type' => 'string', 'required' => true),
+		"limit" => array('type' => 'int', 'required' => false, 'default' => 10),
+		"offset" => array('type' => 'int', 'required' => false, 'default' => 0),
+		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+	),
+	'Retrieves a user\'s colleague requests based on user id',
+	'POST',
+	true,
+	false
+);
+
+elgg_ws_expose_function(
+	"add.colleague",
+	"add_colleague",
+	array(
+		"profileemail" => array('type' => 'string', 'required' => true),
+		"user" => array('type' => 'string', 'required' => true),
+		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+	),
+	'Adds a colleague for a user based on user ids',
+	'POST',
+	true,
+	false
+);
+
+elgg_ws_expose_function(
+	"remove.colleague",
+	"remove_colleague",
+	array(
+		"profileemail" => array('type' => 'string', 'required' => true),
+		"user" => array('type' => 'string', 'required' => true),
+		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+	),
+	'Removes a colleague for a user based on user ids',
+	'POST',
+	true,
+	false
+);
+
 function build_date($month, $year){
 	switch($month){
 		case 1:
@@ -476,7 +519,7 @@ function get_user_activity( $profileemail, $user, $limit, $offset, $lang ){
 	return $activity;
 }
 
-function get_user_groups( $profileemail, $user, $lang ){ 
+function get_user_groups( $profileemail, $user, $lang ){
 	$user_entity = is_numeric($profileemail) ? get_user($profileemail) : ( strpos($profileemail, '@') !== FALSE ? get_user_by_email($profileemail)[0] : get_user_by_username($profileemail) );
  	if( !$user_entity ) return "User was not found. Please try a different GUID, username, or email address";
 	if( !$user_entity instanceof ElggUser ) return "Invalid user. Please try a different GUID, username, or email address";
@@ -700,4 +743,155 @@ function get_newsfeed( $user, $limit, $offset, $lang ){
 	}
 
 	return $activity;
+}
+
+function get_colleague_requests( $user, $limit, $offset, $lang ){
+	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
+ 	if( !$user_entity ) return "User was not found. Please try a different GUID, username, or email address";
+	if( !$user_entity instanceof ElggUser ) return "Invalid user. Please try a different GUID, username, or email address";
+	
+	if( !elgg_is_logged_in() )
+		login($user_entity);
+
+	$friendrequests = elgg_list_entities_from_relationship(array(
+		"type" => "user",
+		"relationship" => "friendrequest",
+		"relationship_guid" => $user_entity->getGUID(),
+		"inverse_relationship" => true,
+		"limit" => $limit,
+		"offset" => $offset
+	));
+	$friendrequests = json_decode($friendrequests);
+
+	return $friendrequests;
+}
+
+function add_colleague( $profileemail, $user, $lang ){
+	$friend = is_numeric($profileemail) ? get_user($profileemail) : ( strpos($profileemail, '@') !== FALSE ? get_user_by_email($profileemail)[0] : get_user_by_username($profileemail) );
+ 	if( !$friend ) return "User was not found. Please try a different GUID, username, or email address";
+	if( !$friend instanceof ElggUser ) return "Invalid user. Please try a different GUID, username, or email address";
+
+	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
+ 	if( !$user_entity ) return "Viewer user was not found. Please try a different GUID, username, or email address";
+	if( !$user_entity instanceof ElggUser ) return "Invalid viewer user. Please try a different GUID, username, or email address";
+
+	if( !elgg_is_logged_in() )
+		login($user_entity);
+
+	//Now we need to attempt to create the relationship
+	if (empty($user_entity) || empty($friend)) {
+		return elgg_echo("friend_request:add:failure");
+	} else {
+		//New for v1.1 - If the other user is already a friend (fan) of this user we should auto-approve the friend request...
+		if (check_entity_relationship($friend->getGUID(), "friend", $user_entity->getGUID())) {
+			try {
+				$user_entity->addFriend($friend->getGUID());
+				return true;
+			} catch (Exception $e) {
+				return elgg_echo("friends:add:failure", array($friend->name));
+			}
+		} else if (check_entity_relationship($friend->getGUID(), "friendrequest", $user_entity->getGUID())) {
+			// Check if your potential friend already invited you, if so make friends
+			if (remove_entity_relationship($friend->getGUID(), "friendrequest", $user_entity->getGUID())) {
+				
+				// Friends mean reciprical...
+				$user_entity->addFriend($friend->getGUID());
+				$friend->addFriend($user_entity->getGUID());
+
+				$n_result = notify_user(
+					$friend->guid,
+					$user_entity->guid,
+					elgg_echo('friend:newfriend:subject', array(
+						$user_entity->name,
+						$user_entity->name,				
+					)),
+					elgg_echo("friend:newfriend:body", array(
+						$user_entity->name, 
+						$user_entity->getURL(),
+						elgg_get_site_url().'notifications/personal/',
+						
+						$user_entity->name, 
+						$user_entity->getURL(),
+						elgg_get_site_url().'notifications/personal/',
+					))
+				);
+				
+				// add to river
+				elgg_create_river_item(array(
+					"view" => "river/relationship/friend/create",
+					"action_type" => "friend",
+					"subject_guid" => $user_entity->getGUID(),
+					"object_guid" => $friend->getGUID(),
+				));
+				elgg_create_river_item(array(
+					"view" => "river/relationship/friend/create",
+					"action_type" => "friend",
+					"subject_guid" => $friend->getGUID(),
+					"object_guid" => $user_entity->getGUID(),
+				));
+
+				return true;
+			} else {
+				return elgg_echo("friend_request:approve:fail", array($friend->name));
+			}
+		} else {
+			try {
+				if (!add_entity_relationship($user_entity->getGUID(), "friendrequest", $friend->getGUID())) {
+					return elgg_echo("friend_request:add:exists", array($friend->name));
+				}
+			} catch (Exception $e) {	//register_error calls insert_data which CAN raise Exceptions.
+				return elgg_echo("friend_request:add:exists", array($friend->name));
+			}
+		}
+	}
+}
+
+function remove_colleague( $profileemail, $user, $lang ){
+	$friend = is_numeric($profileemail) ? get_user($profileemail) : ( strpos($profileemail, '@') !== FALSE ? get_user_by_email($profileemail)[0] : get_user_by_username($profileemail) );
+ 	if( !$friend ) return "User was not found. Please try a different GUID, username, or email address";
+	if( !$friend instanceof ElggUser ) return "Invalid user. Please try a different GUID, username, or email address";
+
+	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
+ 	if( !$user_entity ) return "Viewer user was not found. Please try a different GUID, username, or email address";
+	if( !$user_entity instanceof ElggUser ) return "Invalid viewer user. Please try a different GUID, username, or email address";
+
+	if( !elgg_is_logged_in() )
+		login($user_entity);
+
+	if (!empty($friend)) {
+		try{
+			$user_entity->removeFriend($friend->getGUID());
+			
+			// remove river items
+			elgg_delete_river(array(
+				"view" => "river/relationship/friend/create",
+				"subject_guid" => $user_entity->getGUID(),
+				"object_guid" => $friend->getGUID()
+			));
+			
+			try {
+				//V1.1 - Old relationships might not have the 2 as friends...
+				$friend->removeFriend($user_entity->getGUID());
+				
+				// remove river items
+				elgg_delete_river(array(
+					"view" => "river/relationship/friend/create",
+					"subject_guid" => $friend->getGUID(),
+					"object_guid" => $user_entity->getGUID()
+				));
+
+				// cyu - remove the relationship (if applicable) for the subscribed to user
+				remove_entity_relationship($user_entity->guid, 'cp_subscribed_to_email',$friend_guid);
+				remove_entity_relationship($user_entity->guid, 'cp_subscribe_to_site_mail',$friend_guid);
+
+				return true;
+			} catch (Exception $e) {
+				// do nothing
+			}
+		} catch (Exception $e) {
+			return elgg_echo("friends:remove:failure", array($friend->name));
+		}
+	} else {
+		return elgg_echo("friends:remove:failure", array($friend_guid));
+	}
 }

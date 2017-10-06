@@ -33,6 +33,19 @@ elgg_ws_expose_function(
 );
 
 elgg_ws_expose_function(
+	"get.messagescount",
+	"get_messages_count",
+	array(
+		"user" => array('type' => 'string', 'required' => true),
+		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+	),
+	'Retrieves a user\'s unread message count based on user id',
+	'POST',
+	true,
+	false
+);
+
+elgg_ws_expose_function(
 	"get.sentmessages",
 	"get_sent_messages",
 	array(
@@ -48,6 +61,20 @@ elgg_ws_expose_function(
 );
 
 elgg_ws_expose_function(
+	"get.sentmessagescount",
+	"get_sent_messages_count",
+	array(
+		"user" => array('type' => 'string', 'required' => true),
+		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+	),
+	'Retrieves a user\'s unread sent messages count based on user id',
+	'POST',
+	true,
+	false
+);
+
+
+elgg_ws_expose_function(
 	"get.notifications",
 	"get_notifications",
 	array(
@@ -57,6 +84,19 @@ elgg_ws_expose_function(
 		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
 	),
 	'Retrieves a user\'s notification messages based on user id',
+	'POST',
+	true,
+	false
+);
+
+elgg_ws_expose_function(
+	"get.notificationscount",
+	"get_notifications_count",
+	array(
+		"user" => array('type' => 'string', 'required' => true),
+		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+	),
+	'Retrieves a user\'s unread notification message count based on user id',
 	'POST',
 	true,
 	false
@@ -170,6 +210,35 @@ function get_messages( $user, $limit, $offset, $lang ){
 	return $messages;
 }
 
+function get_messages_count( $user, $lang ){
+	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
+ 	if( !$user_entity ) return "User was not found. Please try a different GUID, username, or email address";
+	if( !$user_entity instanceof ElggUser ) return "Invalid user. Please try a different GUID, username, or email address";
+
+	if( !elgg_is_logged_in() )
+		login($user_entity);
+
+	$messages = elgg_list_entities_from_metadata(array(
+		"type" => "object",
+		"subtype" => "messages",
+		'metadata_name_value_pair' => array( 
+			array('name' => 'toId', 'value' => $user_entity->guid,  'operand' => '='),
+			array('name' => 'fromId', 'value' => 1,  'operand' => '!=')
+		)
+	));
+	$messages = json_decode($messages);
+
+	$unread_count = 0;
+
+	foreach($messages as $object){
+		if( $object->read ){
+			$unread_count++;
+		}
+	}
+
+	return $unread_count;
+}
+
 function get_sent_messages( $user, $limit, $offset, $lang ){
 	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
  	if( !$user_entity ) return "User was not found. Please try a different GUID, username, or email address";
@@ -201,6 +270,34 @@ function get_sent_messages( $user, $limit, $offset, $lang ){
 	}
 
 	return $messages;
+}
+
+function get_sent_messages_count( $user, $lang ){
+	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
+ 	if( !$user_entity ) return "User was not found. Please try a different GUID, username, or email address";
+	if( !$user_entity instanceof ElggUser ) return "Invalid user. Please try a different GUID, username, or email address";
+
+	if( !elgg_is_logged_in() )
+		login($user_entity);
+	
+	$messages = elgg_list_entities_from_metadata(array(
+		"type" => "object",
+		"subtype" => "messages",
+		"metadata_name" => "fromId",
+		"metadata_value" => $user_entity->guid,
+		"owner_guid" => $user_entity->guid
+	));
+	$messages = json_decode($messages);
+
+	$unread_count = 0;
+
+	foreach($messages as $object){
+		if( $object->read ){
+			$unread_count++;
+		}
+	}
+
+	return $unread_count;
 }
 
 function get_notifications( $user, $limit, $offset, $lang ){
@@ -235,6 +332,35 @@ function get_notifications( $user, $limit, $offset, $lang ){
 	}
 
 	return $messages;
+}
+
+function get_notifications_count( $user, $lang ){
+	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
+ 	if( !$user_entity ) return "User was not found. Please try a different GUID, username, or email address";
+	if( !$user_entity instanceof ElggUser ) return "Invalid user. Please try a different GUID, username, or email address";
+
+	if( !elgg_is_logged_in() )
+		login($user_entity);
+	
+	$messages = elgg_list_entities_from_metadata(array(
+		"type" => "object",
+		"subtype" => "messages",
+		'metadata_name_value_pair' => array( 
+			array('name' => 'toId', 'value' => $user_entity->guid,  'operand' => '='),
+			array('name' => 'fromId', 'value' => 1,  'operand' => '=')
+		)
+	));
+	$messages = json_decode($messages);
+
+	$unread_count = 0;
+
+	foreach($messages as $object){
+		if( $object->read ){
+			$unread_count++;
+		}
+	}
+
+	return $unread_count;
 }
 
 function send_message( $fromuser, $touser, $subject, $message, $lang ){
