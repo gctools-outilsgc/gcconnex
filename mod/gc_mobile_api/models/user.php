@@ -753,7 +753,7 @@ function get_colleague_requests( $user, $limit, $offset, $lang ){
 	if( !elgg_is_logged_in() )
 		login($user_entity);
 
-	$friendrequests = elgg_list_entities_from_relationship(array(
+	$friendrequests = elgg_get_entities_from_relationship(array(
 		"type" => "user",
 		"relationship" => "friendrequest",
 		"relationship_guid" => $user_entity->getGUID(),
@@ -761,9 +761,23 @@ function get_colleague_requests( $user, $limit, $offset, $lang ){
 		"limit" => $limit,
 		"offset" => $offset
 	));
-	$friendrequests = json_decode($friendrequests);
 
-	return $friendrequests;
+	$data = array();
+	foreach($friendrequests as $member){
+		$member_obj = get_user($member->guid);
+		$member_data = get_user_block($member->guid, $lang);
+
+		$about = "";
+		if( $member_obj->description ){
+			$about = strip_tags($member_obj->description, '<p>');
+			$about = str_replace("<p>&nbsp;</p>", '', $about);
+		}
+
+		$member_data['about'] = $about;
+		$data[] = $member_data;
+	}
+
+	return $data;
 }
 
 function add_colleague( $profileemail, $user, $lang ){
