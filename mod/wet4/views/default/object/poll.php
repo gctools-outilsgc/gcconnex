@@ -78,26 +78,26 @@ echo '<div class="change_language" id="change_language">';
 					if (get_current_language() == 'fr'){
 
 					?>			
-						<span id="indicator_language_en"><?php echo elgg_echo('box:indicator:en') ?><a href="#" onclick="change_language_polls('en','poll-vote-form-container-<?php echo $poll->guid; ?>','.summary-title','.title','<?php echo $title_json->en; ?>');" id="activities"><?php echo elgg_echo('indicator:click:en') ?></a></span>
+						<span id="indicator_language_en" onclick="change_language_polls('en','poll-vote-form-container-<?php echo $poll->guid; ?>','.summary-title','.title','<?php echo $title_json->en; ?>');" id="activities"><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
 					<?php
 
 					}else{
 					
 					?>			
-						<span id="indicator_language_fr" ><?php echo elgg_echo('box:indicator:fr') ?><a href="#" onclick="change_language_polls('fr','poll-vote-form-container-<?php echo $poll->guid; ?>','.summary-title','.title','<?php echo $title_json->fr; ?>');" id="activities"><?php echo elgg_echo('indicator:click:fr') ?></a></span>
+						<span id="indicator_language_fr"  onclick="change_language_polls('fr','poll-vote-form-container-<?php echo $poll->guid; ?>','.summary-title','.title','<?php echo $title_json->fr; ?>');" id="activities"><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
 					<?php	
 					}		
 				}else{
 					if (get_current_language() == 'fr'){
 
 					?>			
-						<span id="indicator_language_en"><?php echo elgg_echo('box:indicator:en') ?><a href="#" onclick="change_language_polls('en','poll-container-<?php echo $poll->guid; ?>','.summary-title','.title','<?php echo $title_json->en; ?>');" id="activities"><?php echo elgg_echo('indicator:click:en') ?></a></span>
+						<span id="indicator_language_en" onclick="change_language_polls('en','poll-container-<?php echo $poll->guid; ?>','.summary-title','.title','<?php echo $title_json->en; ?>');" id="activities"><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
 					<?php
 
 					}else{
 					
 					?>			
-						<span id="indicator_language_fr" ><?php echo elgg_echo('box:indicator:fr') ?><a href="#" onclick="change_language_polls('fr','poll-container-<?php echo $poll->guid; ?>','.summary-title','.title','<?php echo $title_json->fr; ?>');" id="activities"><?php echo elgg_echo('indicator:click:fr') ?></a></span>
+						<span id="indicator_language_fr" onclick="change_language_polls('fr','poll-container-<?php echo $poll->guid; ?>','.summary-title','.title','<?php echo $title_json->fr; ?>');" id="activities"><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
 					<?php	
 					}
 				}
