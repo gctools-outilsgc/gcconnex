@@ -108,28 +108,15 @@ foreach($dataGroups as $group){
     $groupEnt->join($new_user);
   }
 
-  // We also change icons owner
-	$old_filehandler = new ElggFile();
-	$old_filehandler->owner_guid = $groupEnt->owner_guid;
-	$old_filehandler->setFilename('groups');
-	$old_path = $old_filehandler->getFilenameOnFilestore();
 
-	$new_filehandler = new ElggFile();
-	$new_filehandler->owner_guid = $newGUID;
-	$new_filehandler->setFilename('groups');
-	$new_path = $new_filehandler->getFilenameOnFilestore();
-
-	foreach(array('', 'tiny', 'small', 'medium', 'large') as $size) {
-		rename("$old_path/{$groupGUID}{$size}.jpg", "$new_path/{$groupGUID}{$size}.jpg");
-	}
 
   //cover photo
   if(elgg_is_active_plugin('gc_group_layout')){
     gc_group_layout_transfer_coverphoto($groupEnt, $new_user);
   }
 
-  //transfer ownership
-  update_data("UPDATE {$db_prefix}entities SET owner_guid = '$newGUID', container_guid = '$newGUID' where guid = '$groupGUID'");
+  group_tools_transfer_group_ownership($groupEnt, $new_user);
+  
   //metadata
   update_data("UPDATE {$db_prefix}metadata SET owner_guid = '$newGUID' where entity_guid = $groupGUID");
 
