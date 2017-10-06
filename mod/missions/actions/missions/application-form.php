@@ -62,33 +62,33 @@ else {
 			$supervisor_en .= elgg_echo('missions:supervisor_notice_sentence', array($applicant->name, $mission->job_title),'en') . '<br><br>';
 			$supervisor_fr .= elgg_echo('missions:supervisor_notice_sentence', array($applicant->name, $mission->job_title),'fr') . '<br><br>';
 
-			$body_en .= elgg_echo('missions:applicant_name','en') . ': ' . $applicant->name . '<br>';
-			$body_en .= elgg_echo('missions:department','en') . ': ' . $applicant->department . '<br>';
-			$body_en .= elgg_echo('missions:location','en') . ': ' . $applicant->location . '<br>';
-			$body_en .= elgg_echo('missions:applicant_phone','en') . ': ' . $applicant->phone . '<br><br>';
+			$body_en .= '<b><font size="4">'.elgg_echo('missions:applicant_name','en') . '</font></b>: ' . $applicant->name . '<br>';
+			$body_en .= '<b><font size="4">'.elgg_echo('missions:department','en') . '</font></b>: ' . $applicant->department . '<br>';
+			$body_en .= '<b><font size="4">'.elgg_echo('missions:location','en') . '</font></b>: ' . $applicant->location . '<br>';
+			$body_en .= '<b><font size="4">'.elgg_echo('missions:applicant_phone','en') . '</font></b>: ' . $applicant->phone . '<br><br>';
 			
-			$body_en .= elgg_echo('missions:opportunity_title','en') . ': ' . $mission->job_title . '<br>';
-			$body_en .= elgg_echo('missions:opportunity_type','en') . ': ' . elgg_echo($mission->job_type) . '<br>';
-			$body_en .= elgg_echo('missions:manager_name','en') . ': ' . $mission->name . '<br>';
-			$body_en .= elgg_echo('missions:manager_email','en') . ': ' . $mission->email . '<br>';
-			$body_en .= elgg_echo('missions:ideal_start_date','en') . ': ' . $mission->start_date . '<br>';
-			$body_en .= elgg_echo('missions:ideal_completion_date','en') . ': ' . $mission->completion_date . '<br>';
-			$body_en .= elgg_echo('missions:time_commitment','en') . ': ' . $mission->time_commitment . ' ' . elgg_echo($mission->time_interval) . '<br>';
-			$body_en .= elgg_echo('missions:opportunity_description','en') . ': ' . $mission->descriptor . '<br>';
+			$body_en .= '<b><font size="4">'.elgg_echo('missions:opportunity_title','en') . '</font></b>: ' . $mission->job_title . '<br>';
+			$body_en .= '<b><font size="4">'.elgg_echo('missions:opportunity_type','en') . '</font></b>: ' . elgg_echo($mission->job_type) . '<br>';
+			$body_en .= '<b><font size="4">'.elgg_echo('missions:manager_name','en') . '</font></b>: ' . $mission->name . '<br>';
+			$body_en .= '<b><font size="4">'.elgg_echo('missions:manager_email','en') . '</font></b>: ' . $mission->email . '<br>';
+			$body_en .= '<b><font size="4">'.elgg_echo('missions:ideal_start_date','en') . '</font></b>: ' . $mission->start_date . '<br>';
+			$body_en .= '<b><font size="4">'.elgg_echo('missions:ideal_completion_date','en') . '</font></b>: ' . $mission->completion_date . '<br>';
+			$body_en .= '<b><font size="4">'.elgg_echo('missions:time_commitment','en') . '</font></b>: ' . $mission->time_commitment . ' ' . elgg_echo($mission->time_interval) . '<br>';
+			$body_en .= '<b><font size="4">'.elgg_echo('missions:opportunity_description','en') . '</font></b>: ' . $mission->descriptor . '<br>';
 
-			$body_fr .= elgg_echo('missions:applicant_name','fr') . ': ' . $applicant->name . '<br>';
-			$body_fr .= elgg_echo('missions:department','fr') . ': ' . $applicant->department . '<br>';
-			$body_fr .= elgg_echo('missions:location','fr') . ': ' . $applicant->location . '<br>';
-			$body_fr .= elgg_echo('missions:applicant_phone','fr') . ': ' . $applicant->phone . '<br><br>';
+			$body_fr .= '<b><font size="4">'.elgg_echo('missions:applicant_name','fr') . '</font></b>: ' . $applicant->name . '<br>';
+			$body_fr .= '<b><font size="4">'.elgg_echo('missions:department','fr') . '</font></b>: ' . $applicant->department . '<br>';
+			$body_fr .= '<b><font size="4">'.elgg_echo('missions:location','fr') . '</font></b>: ' . $applicant->location . '<br>';
+			$body_fr .= '<b><font size="4">'.elgg_echo('missions:applicant_phone','fr') . '</font></b>: ' . $applicant->phone . '<br><br>';
 			
-			$body_fr .= elgg_echo('missions:opportunity_title','fr') . ': ' . $mission->job_title . '<br>';
-			$body_fr .= elgg_echo('missions:opportunity_type','fr') . ': ' . elgg_echo($mission->job_type) . '<br>';
-			$body_fr .= elgg_echo('missions:manager_name','fr') . ': ' . $mission->name . '<br>';
-			$body_fr .= elgg_echo('missions:manager_email','fr') . ': ' . $mission->email . '<br>';
-			$body_fr .= elgg_echo('missions:ideal_start_date','fr') . ': ' . $mission->start_date . '<br>';
-			$body_fr .= elgg_echo('missions:ideal_completion_date','fr') . ': ' . $mission->completion_date . '<br>';
-			$body_fr .= elgg_echo('missions:time_commitment','fr') . ': ' . $mission->time_commitment . ' ' . elgg_echo($mission->time_interval) . '<br>';
-			$body_fr .= elgg_echo('missions:opportunity_description','fr') . ': ' . $mission->descriptor . '<br>';
+			$body_fr .= '<b><font size="4">'.elgg_echo('missions:opportunity_title','fr') . '</font></b>: ' . $mission->job_title . '<br>';
+			$body_fr .= '<b><font size="4">'.elgg_echo('missions:opportunity_type','fr') . '</font></b>: ' . elgg_echo($mission->job_type) . '<br>';
+			$body_fr .= '<b><font size="4">'.elgg_echo('missions:manager_name','fr') . '</font></b>: ' . $mission->name . '<br>';
+			$body_fr .= '<b><font size="4">'.elgg_echo('missions:manager_email','fr') . '</font></b>: ' . $mission->email . '<br>';
+			$body_fr .= '<b><font size="4">'.elgg_echo('missions:ideal_start_date','fr') . '</font></b>: ' . $mission->start_date . '<br>';
+			$body_fr .= '<b><font size="4">'.elgg_echo('missions:ideal_completion_date','fr') . '</font></b>: ' . $mission->completion_date . '<br>';
+			$body_fr .= '<b><font size="4">'.elgg_echo('missions:time_commitment','fr') . '</font></b>: ' . $mission->time_commitment . ' ' . elgg_echo($mission->time_interval) . '<br>';
+			$body_fr .= '<b><font size="4">'.elgg_echo('missions:opportunity_description','fr') . '</font></b>: ' . $mission->descriptor . '<br>';
 			
 			$headers = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
@@ -166,11 +166,14 @@ $message = "<html>
 	$subject = elgg_echo('missions:application_to','en') . $mission->job_title.' | '.elgg_echo('missions:application_to','fr') . $mission->job_title;
 	$body = '';
 	
-	$title_applicant_en .= elgg_echo('missions:application_notice_sentence', array($applicant->name, $mission->job_title),'en') . '<br>';
-	$title_applicant_fr .= elgg_echo('missions:application_notice_sentence', array($applicant->name, $mission->job_title),'fr') . '<br>';
+	$title_applicant_en .= elgg_echo('missions:application_notice_sentence_title', array($applicant->name, $mission->job_title),'en') ;
+	$title_applicant_fr .= elgg_echo('missions:application_notice_sentence_title', array($applicant->name, $mission->job_title),'fr') ;
+
+	$content_applicant_en .= elgg_echo('missions:application_notice_sentence', 'en') . '<br>';
+	$content_applicant_fr .= elgg_echo('missions:application_notice_sentence', 'fr') . '<br>';
 	
-	$content_applicant_en .= elgg_echo('missions:see_full_profile','en') . ': '; 
-	$content_applicant_fr .= elgg_echo('missions:see_full_profile','fr') . ': '; 
+	$content_applicant_en .= '<br>'.elgg_echo('missions:see_full_profile','en') . ': '; 
+	$content_applicant_fr .= '<br>'.elgg_echo('missions:see_full_profile','fr') . ': '; 
 
 	$username = elgg_view('output/url', array(
 	    'href' => $applicant->getURL(),
@@ -191,8 +194,8 @@ $message = "<html>
 	$content_applicant_en .= $mission_title;
 	$content_applicant_fr .= $mission_title;
 	
-	$content_applicant_en .=  '<br>'.$mission_email_body . '<br>';
-	$content_applicant_fr .=  '<br>'.$mission_email_body . '<br>';
+	$content_applicant_en .=  '<br>'.elgg_echo('missions:from_message',array($applicant->username),'en').'<br><span style="font-style: italic;">'.$mission_email_body . '</span><br>';
+	$content_applicant_fr .=  '<br>'.elgg_echo('missions:from_message',array($applicant->username),'fr').'<br><span style="font-style: italic;">'.$mission_email_body . '</span><br>';
 
 	// Lists all educations of the applicant.
 	$education_list = $applicant->education;

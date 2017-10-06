@@ -222,7 +222,7 @@ return array(
     "missions:publication_date" =>  "Publication date",
     "missions:tentative" => "Tentative",
     "missions:see_full_profile" =>  "See full user profile",
-    "missions:see_full_mission" =>  "See full Opportunity poster",
+    "missions:see_full_mission" =>  "See opportunity’s page",
     "missions:paragraph:fill_mission" =>    "You can share this opportunity with GCconnex users by entering their usernames in the fields below.",
     "missions:search_results_display" =>    "Search results display",
     "missions:settings:search_result_per_page" =>   "How many search results per page?",
@@ -697,8 +697,9 @@ Employees are encouraged to &rsquo;opt in&rsquo; to the professional development
 You can share your opportunity with any employee whether on this list or not. Employees who do not appear on this list are also welcome to express interest in your opportunity.",
 "missions:confirm:remove_applicant" =>    "This action will remove the corresponding user from the list of applicants for this opportunity." ,
 "missions:confirm:remove_participant" =>   "This action will remove the corresponding user from the list of participants and applicants for this opportunity.",
-"missions:supervisor_notice_sentence" =>  "%s is notifying you that they have applied to the opportunity '%s'.",
-"missions:application_notice_sentence" =>     "%s has applied to your opportunity '%s'. Below you will find an extract of their GCconnex profile. Go to your opportunity to offer it to the candidate of your choice.",
+"missions:supervisor_notice_sentence" =>  "%s is notifying you that have applied to the opportunity: '%s'.",
+"missions:application_notice_sentence_title" =>     "%s has applied to your opportunity: '%s'",
+"missions:application_notice_sentence" =>     "Below you will find an extract of the applicant’s GCconnex profile. You can offer the opportunity to the candidate of your choice from the opportunity’s page.",
 "missions:reason_to_decline_invite" =>    "Reason to decline applying to opportunity '%s'.",
 "missions:reason_to_decline_offer" =>     "Reason to decline the offer to participate in opportunity '%s'.",
 "missions:reason_to_withdraw_application" =>  "Reason to withdraw your application to '%s'.",
@@ -758,5 +759,6 @@ You can share your opportunity with any employee whether on this list or not. Em
     "missions:search:Refine" => 'Refine search',
     "missions:search_value" => 'Showing results for',
     "missions:filter" => "Filter by:",
-    "missions:filter:role" => "Role:"
+    "missions:filter:role" => "Role:",
+    "missions:from_message" => "Message from %s",
 );
