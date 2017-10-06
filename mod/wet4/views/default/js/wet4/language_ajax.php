@@ -11,7 +11,7 @@
 ?>
 
 // d = id of the div where the content will be -->
-function change_fr(d,t){
+function change_fr(d,t,s){
 
 // f = french content -->
 var spanfr = document.getElementById('fr_content');
@@ -31,6 +31,7 @@ var e_title = spanen_title.innerHTML || spanen_title.textContent;
 
     $(d).html('<div id="loading-image"  class="wet-ajax-loader"><img src="' + elgg.get_site_url() + 'mod/wet4/graphics/loading.gif" /></div>');
     $(t).html('<div id="loading-image"  class="wet-ajax-loader"><img src= "' + elgg.get_site_url() + 'mod/wet4/graphics/loading.gif"/></div>');
+    $(s).html('<div id="loading-image"  class="wet-ajax-loader"><img src= "' + elgg.get_site_url() + 'mod/wet4/graphics/loading.gif"/></div>');
 
     $.ajax(
     {
@@ -41,16 +42,17 @@ var e_title = spanen_title.innerHTML || spanen_title.textContent;
         {
             $(d).html(f);
             $(t).html(f_title);
+            $(s).html(f_title);
 
         },
         complete: function(){
         $('#loading-image').hide(); 
       }
     });
-    change_title_en(e,e_title,f_title,f,d,t);
+    change_title_en(e,e_title,f_title,f,d,t,s);
 };
 
-function change_en(d,t){
+function change_en(d,t,s){
 
 var spanfr = document.getElementById('fr_content');
 var f = spanfr.innerHTML || spanfr.textContent;
@@ -67,7 +69,7 @@ var e_title = spanen_title.innerHTML || spanen_title.textContent;
 
     $(d).html('<div id="loading-image"  class="wet-ajax-loader"><img src= "' + elgg.get_site_url() + 'mod/wet4/graphics/loading.gif" alt="loading content"/></div>');
     $(t).html('<div id="loading-image"  class="wet-ajax-loader"><img src= "' + elgg.get_site_url() + 'mod/wet4/graphics/loading.gif" alt="loading content"/></div>');
-console.log( 'test' +elgg.get_site_url()+ "mod/wet4/graphics/loading.gif");
+    $(s).html('<div id="loading-image"  class="wet-ajax-loader"><img src= "' + elgg.get_site_url() + 'mod/wet4/graphics/loading.gif" alt="loading content"/></div>');
 
     $.ajax(
     {
@@ -78,26 +80,27 @@ console.log( 'test' +elgg.get_site_url()+ "mod/wet4/graphics/loading.gif");
         {
             $(d).html(e);
             $(t).html(e_title);
+            $(s).html(e_title);
 
         },
         complete: function(){
         $('#loading-image').hide(); 
       }
     });
-    change_title_fr(e,e_title,f_title,f,d,t);
+    change_title_fr(e,e_title,f_title,f,d,t,s);
 };
 
-function change_title_fr(e,e_title,f_title,f,d,t){
+function change_title_fr(e,e_title,f_title,f,d,t,s){
 
-      var link_available ='<span id="indicator_language_fr" onclick=\"change_fr(\'' + d + '\',\'' + t + '\');\"><span id="en_title" class="testClass hidden" >'+e_title+'</span><span id="fr_title" class="testClass hidden" >'+f_title+'</span><span id="en_content" class="testClass hidden" >'+e+'</span><span id="fr_content" class="testClass hidden" >'+f+'</span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>';
+      var link_available ='<span id="indicator_language_fr" onclick=\"change_fr(\'' + d + '\',\'' + t + '\',\'' + s + '\');\"><span id="en_title" class="testClass hidden" >'+e_title+'</span><span id="fr_title" class="testClass hidden" >'+f_title+'</span><span id="en_content" class="testClass hidden" >'+e+'</span><span id="fr_content" class="testClass hidden" >'+f+'</span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>';
         
       
     $("#change_language").html(link_available)
 }
 
-function change_title_en(e,e_title,f_title,f,d,t){
+function change_title_en(e,e_title,f_title,f,d,t,s){
 
-    var link_available ='<span id="indicator_language_en" onclick=\"change_en(\'' + d + '\',\'' + t + '\');\"><span id="en_title" class="testClass hidden" >'+e_title+'</span><span id="fr_title" class="testClass hidden" >'+f_title+'</span><span id="en_content" class="testClass hidden" >'+e+'</span><span id="fr_content" class="testClass hidden" >'+f+'</span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>';
+    var link_available ='<span id="indicator_language_en" onclick=\"change_en(\'' + d + '\',\'' + t + '\',\'' + s + '\');\"><span id="en_title" class="testClass hidden" >'+e_title+'</span><span id="fr_title" class="testClass hidden" >'+f_title+'</span><span id="en_content" class="testClass hidden" >'+e+'</span><span id="fr_content" class="testClass hidden" >'+f+'</span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>';
 
     $("#change_language").html(link_available)
 }
