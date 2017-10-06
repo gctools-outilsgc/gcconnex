@@ -25,6 +25,7 @@ namespace Beck24\MemberSelfDelete;
 		'name' => 'params[method]',
 		'value' => $vars['entity']->method ? $vars['entity']->method : "delete",
 		'options' => array(
+			elgg_echo('deactivate') => 'deactivate',
 			elgg_echo('member_selfdelete:option:delete') => 'delete',
 			elgg_echo('member_selfdelete:option:ban') => 'ban',
 			elgg_echo('member_selfdelete:option:anonymize') => 'anonymize',

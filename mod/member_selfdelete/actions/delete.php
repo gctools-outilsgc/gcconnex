@@ -14,7 +14,7 @@ $reason = get_input('reason');
 
 if (elgg_get_plugin_setting('method', PLUGIN_ID) == "choose") {
 	$method = get_input('method', 'delete');
-	if (!in_array($method, array('delete', 'ban', 'transfer'))) {
+	if (!in_array($method, array('delete', 'ban', 'transfer','deactivate'))) {
 		$method = "delete"; // no valid method selected, somethings wrong, delete them for hacking! hehe
 	}
 } else {
@@ -51,6 +51,18 @@ switch ($method) {
 		session_regenerate_id(true);
 
 		system_message(elgg_echo('member_selfdelete:action:banned'));
+		break;
+	case "deactivate":
+		//GCTools user deactivate
+		$user->gcdeactivate = 'true';
+
+		system_message('you have been deactivated! + ' .$user->gcdeactivate);
+		//logout();
+		forward(REFERER);
+		//session_regenerate_id(true);
+		//remove notification relationships
+		remove_entity_relationships($user->guid,'cp_subscribed_to_email');
+		remove_entity_relationships($user->guid,'cp_subscribed_to_site_mail');
 		break;
 	case "anonymize":
 		// rename display name to inactive
