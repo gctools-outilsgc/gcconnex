@@ -50,14 +50,21 @@ else {
 				'text' => $mission->title
 			));
 	    
-			$subject =  elgg_echo('missions:accepts_invitation', array($applicant->name)/*, $manager->language*/);
-			$body = elgg_echo('missions:accepts_invitation_more', array($applicant->name)/*, $manager->language*/) . $mission_link . '.';
-			$body .= "<br>" . elgg_echo('missions:finalize_offer', array()/*, $manager->language*/) . "<br>";
-			$body .= elgg_view('output/url', array(
+			$subject =  elgg_echo('missions:accepts_invitation', array($applicant->name),'en').' | '.elgg_echo('missions:accepts_invitation', array($applicant->name),'fr');
+			$body_en = elgg_echo('missions:accepts_invitation_more', array($applicant->name),'en') . $mission_link . '.';
+			$body_en .= "<br>" . elgg_echo('missions:finalize_offer', array(),'en') . "<br>";
+			$body_en .= elgg_view('output/url', array(
 			    	'href' => elgg_get_site_url() . 'missions/mission-offer/' . $mission->guid . '/' . $applicant->guid,
-			    	'text' => elgg_echo('missions:offer')
-			));;
-			mm_notify_user($mission->guid, $applicant->guid, $subject, $body);
+			    	'text' => elgg_echo('missions:offer','en')
+			));
+
+			$body_fr = elgg_echo('missions:accepts_invitation_more', array($applicant->name),'fr') . $mission_link . '.';
+			$body_fr .= "<br>" . elgg_echo('missions:finalize_offer', array(), 'fr') . "<br>";
+			$body_fr .= elgg_view('output/url', array(
+			    	'href' => elgg_get_site_url() . 'missions/mission-offer/' . $mission->guid . '/' . $applicant->guid,
+			    	'text' => elgg_echo('missions:offer','fr')
+			));
+			mm_notify_user($mission->guid, $applicant->guid, $subject,'','' $body_en, $body_fr);
 			
 			// Opts in the candidate if they are not opted in already.
 			if(!check_if_opted_in($applicant)) {

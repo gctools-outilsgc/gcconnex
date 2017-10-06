@@ -81,8 +81,9 @@ else {
 				// WHY: Last available spot for this opportunity has been filled and we don't want to keep remaining participants hanging.
 				$applicant_relationships = get_entity_relationships($mission->guid);
 				$subject = elgg_echo('missions:participating_out', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))));
-				$body = elgg_echo('missions:participating_out_more', array($applicant->name)) . $mission_link . '.';
-				mm_notify_unsuccessfull_participants($mission, $applicant_relationships, $subject, $body);
+				$body_en = elgg_echo('missions:participating_out_more', array($applicant->name),'en') . $mission_link . '.';
+				$body_fr = elgg_echo('missions:participating_out_more', array($applicant->name),'fr') . $mission_link . '.';
+				mm_notify_unsuccessfull_participants($mission, $applicant_relationships, $subject, $body_en,$body_fr);
 			}
 
 			// notify participant
@@ -111,10 +112,10 @@ else {
 	forward($mission->getURL());
 }
 
-function mm_notify_unsuccessfull_participants($mission, $applicants, $subject, $body) {
+function mm_notify_unsuccessfull_participants($mission, $applicants, $subject, $body_en,$body_fr) {
 	foreach ($applicants as $applicant) {
 		if ($applicant->relationship == 'mission_applied' || $applicant->relationship == 'mission_offered') {
-			mm_notify_user($applicant->guid_two, $mission->guid, $subject, $body);
+			mm_notify_user($applicant->guid_two, $mission->guid, $subject,'','', $body_en, $body_fr);
 		}
 	}
 }

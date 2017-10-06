@@ -52,9 +52,9 @@ else {
 					'text' => elgg_echo('missions:respond')
 			));
 			
-			$subject = elgg_echo('missions:offers_you_a_spot', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))),'en', $applicant->language) .' | '.elgg_echo('missions:offers_you_a_spot', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))),'fr', $applicant->language);
-			$offer_en = elgg_echo('missions:offers_you_a_spot_more', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))),'en', $applicant->language) . " {$finalize_link}" . '.';
-			$offer_fr = elgg_echo('missions:offers_you_a_spot_more', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))),'fr', $applicant->language) . " {$finalize_link}" . '.';
+			$subject = elgg_echo('missions:offers_you_a_spot', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))),'en') .' | '.elgg_echo('missions:offers_you_a_spot', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))),'fr', $applicant->language);
+			$offer_en = elgg_echo('missions:offers_you_a_spot_more', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))),'en') . " {$finalize_link}" . '.';
+			$offer_fr = elgg_echo('missions:offers_you_a_spot_more', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))),'fr') . " {$finalize_link}" . '.';
 	
 			mm_notify_user($applicant->guid, $mission->guid, $subject, '','',$offer_en, $offer_fr);
 		}
