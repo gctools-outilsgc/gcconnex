@@ -676,8 +676,8 @@ Vous pouvez inviter n'importe quel employé à votre possibilité, qu'il figure 
 "missions:confirm:remove_applicant" =>    "Cette mesure supprimera l'utilisateur qui correspond de la liste des candidats pour cette possibilité." ,
 "missions:confirm:remove_participant" =>   "Cette mesure supprimera l'utilisateur qui correspond de la liste des participants pour cette possibilité." ,
 "missions:supervisor_notice_sentence" =>  "%s vous avise qu'il a postulé à la possibilité'%s'.",
-"missions:application_notice_sentence_title" =>     "%s postule à votre possibilité:'%s'",
-"missions:application_notice_sentence" =>     "Vous trouverez ci-dessous un extrait du profile GCconnex de l’appliquant. Vous pouvez offrir l’opportunité au candidat de votre choix à partir de la page de l’opportunité. ",
+"missions:application_notice_sentence_title" =>     "%s a postulé à votre possibilité:'%s'",
+"missions:application_notice_sentence" =>     "Vous trouverez ci-dessous un extrait du profile GCconnex de l’appliquant. Vous pouvez offrir l’opportunité au candidat de votre choix à partir de la page de la possibilité. ",
 "missions:reason_to_decline_invite" =>    "Raison pour refuser de postuler à la possibilité'%s'",
 "missions:reason_to_decline_offer" =>     "Raison pour refuser l'offre de participation à la possibilité'%s'.",
 "missions:reason_to_withdraw_application" =>  "Raison pour le retrait de vote candidature pour '%s'.",
@@ -743,6 +743,6 @@ Vous pouvez inviter n'importe quel employé à votre possibilité, qu'il figure 
     "missions:search_value" => 'Valeurs de recherche',
     "missions:filter" => "Filtrer par:",
     "missions:filter:role" => "Rôle:",
-    "missions:from_message" => "Message de %s",
+    "missions:from_message" => "Message de %s:",
 );
 

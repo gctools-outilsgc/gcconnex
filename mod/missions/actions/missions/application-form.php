@@ -62,33 +62,33 @@ else {
 			$supervisor_en .= elgg_echo('missions:supervisor_notice_sentence', array($applicant->name, $mission->job_title),'en') . '<br><br>';
 			$supervisor_fr .= elgg_echo('missions:supervisor_notice_sentence', array($applicant->name, $mission->job_title),'fr') . '<br><br>';
 
-			$body_en .= '<b><font size="4">'.elgg_echo('missions:applicant_name','en') . '</font></b>: ' . $applicant->name . '<br>';
-			$body_en .= '<b><font size="4">'.elgg_echo('missions:department','en') . '</font></b>: ' . $applicant->department . '<br>';
-			$body_en .= '<b><font size="4">'.elgg_echo('missions:location','en') . '</font></b>: ' . $applicant->location . '<br>';
-			$body_en .= '<b><font size="4">'.elgg_echo('missions:applicant_phone','en') . '</font></b>: ' . $applicant->phone . '<br><br>';
+			$body_en .= '<b>'.elgg_echo('missions:applicant_name','en') . '</b>: ' . $applicant->name . '<br>';
+			$body_en .= '<b>'.elgg_echo('missions:department','en') . '</b>: ' . $applicant->department . '<br>';
+			$body_en .= '<b>'.elgg_echo('missions:location','en') . '</b>: ' . $applicant->location . '<br>';
+			$body_en .= '<b>'.elgg_echo('missions:applicant_phone','en') . '</b>: ' . $applicant->phone . '<br><br>';
 			
-			$body_en .= '<b><font size="4">'.elgg_echo('missions:opportunity_title','en') . '</font></b>: ' . $mission->job_title . '<br>';
-			$body_en .= '<b><font size="4">'.elgg_echo('missions:opportunity_type','en') . '</font></b>: ' . elgg_echo($mission->job_type) . '<br>';
-			$body_en .= '<b><font size="4">'.elgg_echo('missions:manager_name','en') . '</font></b>: ' . $mission->name . '<br>';
-			$body_en .= '<b><font size="4">'.elgg_echo('missions:manager_email','en') . '</font></b>: ' . $mission->email . '<br>';
-			$body_en .= '<b><font size="4">'.elgg_echo('missions:ideal_start_date','en') . '</font></b>: ' . $mission->start_date . '<br>';
-			$body_en .= '<b><font size="4">'.elgg_echo('missions:ideal_completion_date','en') . '</font></b>: ' . $mission->completion_date . '<br>';
-			$body_en .= '<b><font size="4">'.elgg_echo('missions:time_commitment','en') . '</font></b>: ' . $mission->time_commitment . ' ' . elgg_echo($mission->time_interval) . '<br>';
-			$body_en .= '<b><font size="4">'.elgg_echo('missions:opportunity_description','en') . '</font></b>: ' . $mission->descriptor . '<br>';
+			$body_en .= '<b>'.elgg_echo('missions:opportunity_title','en') . '</b>: ' . $mission->job_title . '<br>';
+			$body_en .= '<b>'.elgg_echo('missions:opportunity_type','en') . '</b>: ' . elgg_echo($mission->job_type) . '<br>';
+			$body_en .= '<b>'.elgg_echo('missions:manager_name','en') . '</b>: ' . $mission->name . '<br>';
+			$body_en .= '<b>'.elgg_echo('missions:manager_email','en') . '</b>: ' . $mission->email . '<br>';
+			$body_en .= '<b>'.elgg_echo('missions:ideal_start_date','en') . '</b>: ' . $mission->start_date . '<br>';
+			$body_en .= '<b>'.elgg_echo('missions:ideal_completion_date','en') . '</b>: ' . $mission->completion_date . '<br>';
+			$body_en .= '<b>'.elgg_echo('missions:time_commitment','en') . '</b>: ' . $mission->time_commitment . ' ' . elgg_echo($mission->time_interval) . '<br>';
+			$body_en .= '<b>'.elgg_echo('missions:opportunity_description','en') . '</b>: ' . $mission->descriptor . '<br>';
 
-			$body_fr .= '<b><font size="4">'.elgg_echo('missions:applicant_name','fr') . '</font></b>: ' . $applicant->name . '<br>';
-			$body_fr .= '<b><font size="4">'.elgg_echo('missions:department','fr') . '</font></b>: ' . $applicant->department . '<br>';
-			$body_fr .= '<b><font size="4">'.elgg_echo('missions:location','fr') . '</font></b>: ' . $applicant->location . '<br>';
-			$body_fr .= '<b><font size="4">'.elgg_echo('missions:applicant_phone','fr') . '</font></b>: ' . $applicant->phone . '<br><br>';
+			$body_fr .= '<b>'.elgg_echo('missions:applicant_name','fr') . '</b>: ' . $applicant->name . '<br>';
+			$body_fr .= '<b>'.elgg_echo('missions:department','fr') . '</b>: ' . $applicant->department . '<br>';
+			$body_fr .= '<b>'.elgg_echo('missions:location','fr') . '</b>: ' . $applicant->location . '<br>';
+			$body_fr .= '<b>'.elgg_echo('missions:applicant_phone','fr') . '</b>: ' . $applicant->phone . '<br><br>';
 			
-			$body_fr .= '<b><font size="4">'.elgg_echo('missions:opportunity_title','fr') . '</font></b>: ' . $mission->job_title . '<br>';
-			$body_fr .= '<b><font size="4">'.elgg_echo('missions:opportunity_type','fr') . '</font></b>: ' . elgg_echo($mission->job_type) . '<br>';
-			$body_fr .= '<b><font size="4">'.elgg_echo('missions:manager_name','fr') . '</font></b>: ' . $mission->name . '<br>';
-			$body_fr .= '<b><font size="4">'.elgg_echo('missions:manager_email','fr') . '</font></b>: ' . $mission->email . '<br>';
-			$body_fr .= '<b><font size="4">'.elgg_echo('missions:ideal_start_date','fr') . '</font></b>: ' . $mission->start_date . '<br>';
-			$body_fr .= '<b><font size="4">'.elgg_echo('missions:ideal_completion_date','fr') . '</font></b>: ' . $mission->completion_date . '<br>';
-			$body_fr .= '<b><font size="4">'.elgg_echo('missions:time_commitment','fr') . '</font></b>: ' . $mission->time_commitment . ' ' . elgg_echo($mission->time_interval) . '<br>';
-			$body_fr .= '<b><font size="4">'.elgg_echo('missions:opportunity_description','fr') . '</font></b>: ' . $mission->descriptor . '<br>';
+			$body_fr .= '<b>'.elgg_echo('missions:opportunity_title','fr') . '</b>: ' . $mission->job_title . '<br>';
+			$body_fr .= '<b>'.elgg_echo('missions:opportunity_type','fr') . '</b>: ' . elgg_echo($mission->job_type) . '<br>';
+			$body_fr .= '<b>'.elgg_echo('missions:manager_name','fr') . '</b>: ' . $mission->name . '<br>';
+			$body_fr .= '<b>'.elgg_echo('missions:manager_email','fr') . '</b>: ' . $mission->email . '<br>';
+			$body_fr .= '<b>'.elgg_echo('missions:ideal_start_date','fr') . '</b>: ' . $mission->start_date . '<br>';
+			$body_fr .= '<b>'.elgg_echo('missions:ideal_completion_date','fr') . '</b>: ' . $mission->completion_date . '<br>';
+			$body_fr .= '<b>'.elgg_echo('missions:time_commitment','fr') . '</b>: ' . $mission->time_commitment . ' ' . elgg_echo($mission->time_interval) . '<br>';
+			$body_fr .= '<b>'.elgg_echo('missions:opportunity_description','fr') . '</b>: ' . $mission->descriptor . '<br>';
 			
 			$headers = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'Content-type: text/html; charset=utf-8' . "\r\n";
