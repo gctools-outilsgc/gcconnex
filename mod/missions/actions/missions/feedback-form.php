@@ -37,7 +37,7 @@ if($feedback_body) {
 		system_message(elgg_echo('missions:feedback_sent_to_participant', array($mission->job_title, $target->name)));
 	}
 	else {
-		mm_notify_user($mission->guid, elgg_get_logged_in_user_guid(), $mission->job_title . ' ' . elgg_echo('missions:feedback')'','',$feedback_body,$feedback_body);
+		mm_notify_user($mission->guid, elgg_get_logged_in_user_guid(), $mission->job_title . ' ' . elgg_echo('missions:feedback'),'','',$feedback_body,$feedback_body);
 		system_message(elgg_echo('missions:feedback_sent_to_manager', array($mission->job_title)));
 	}
 	$feedback->message = 'sent';

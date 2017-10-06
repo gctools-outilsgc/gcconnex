@@ -34,7 +34,7 @@ foreach($mission_relation_list as $relation) {
 		$subject = $mission->job_title . ' ' . elgg_echo('missions:feedback','en').' | '.$mission->job_title . ' ' . elgg_echo('missions:feedback','fr');
 		$body_en = $mission->job_title . ' ' . elgg_echo('missions:feedback_message','en') . "\n" . $feedback_link_en;
 		$body_fr = $mission->job_title . ' ' . elgg_echo('missions:feedback_message','fr') . "\n" . $feedback_link_fr;
-		mm_notify_user($relation->guid_two, $mission->guid, $subject,'','' $body_en,$body_fr);
+		mm_notify_user($relation->guid_two, $mission->guid, $subject,'','', $body_en,$body_fr);
 		
 		$count++;
 	}
