@@ -118,6 +118,48 @@ elgg_ws_expose_function(
 	false
 );
 
+elgg_ws_expose_function(
+	"approve.colleague",
+	"approve_colleague",
+	array(
+		"profileemail" => array('type' => 'string', 'required' => true),
+		"user" => array('type' => 'string', 'required' => true),
+		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+	),
+	'Approves a colleague request for a user based on user ids',
+	'POST',
+	true,
+	false
+);
+
+elgg_ws_expose_function(
+	"decline.colleague",
+	"decline_colleague",
+	array(
+		"profileemail" => array('type' => 'string', 'required' => true),
+		"user" => array('type' => 'string', 'required' => true),
+		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+	),
+	'Declines a colleague request for a user based on user ids',
+	'POST',
+	true,
+	false
+);
+
+elgg_ws_expose_function(
+	"revoke.colleague",
+	"revoke_colleague",
+	array(
+		"profileemail" => array('type' => 'string', 'required' => true),
+		"user" => array('type' => 'string', 'required' => true),
+		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+	),
+	'Revokes a colleague request for a user based on user ids',
+	'POST',
+	true,
+	false
+);
+
 function build_date($month, $year){
 	switch($month){
 		case 1:
@@ -907,5 +949,112 @@ function remove_colleague( $profileemail, $user, $lang ){
 		}
 	} else {
 		return elgg_echo("friends:remove:failure", array($friend_guid));
+	}
+}
+
+function approve_colleague( $profileemail, $user, $lang ){
+	$friend = is_numeric($profileemail) ? get_user($profileemail) : ( strpos($profileemail, '@') !== FALSE ? get_user_by_email($profileemail)[0] : get_user_by_username($profileemail) );
+ 	if( !$friend ) return "User was not found. Please try a different GUID, username, or email address";
+	if( !$friend instanceof ElggUser ) return "Invalid user. Please try a different GUID, username, or email address";
+
+	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
+ 	if( !$user_entity ) return "Viewer user was not found. Please try a different GUID, username, or email address";
+	if( !$user_entity instanceof ElggUser ) return "Invalid viewer user. Please try a different GUID, username, or email address";
+
+	if( !elgg_is_logged_in() )
+		login($user_entity);
+
+	if (!empty($friend)) {
+		if (remove_entity_relationship($friend->getGUID(), "friendrequest", $user_entity->getGUID())) {
+			
+			$user_entity->addFriend($friend->getGUID());
+			$friend->addFriend($user_entity->getGUID());			//Friends mean reciprical...
+			
+			// notify the user about the acceptance
+			$subject = elgg_echo("friend_request:approve:subject", array($user_entity->name, $user_entity->name));
+			$message = elgg_echo("friend_request:approve:message", array($user_entity->name, $user_entity->getURL(), $user_entity->name, $user_entity->getURL()));
+			
+			$params = array(
+				"action" => "add_friend",
+				"object" => $user_entity
+			);
+
+			// cyu - 04/04/2016: use new notification system hook instead (if activated)
+			if (elgg_is_active_plugin('cp_notifications')) {
+				$message = array(
+					'object' => $user_entity,
+					'cp_request_guid' => $friend->getGUID(),
+					'cp_approver' => $user_entity->name,
+					'cp_approver_profile' => $user_entity->getURL(),
+					'cp_msg_type' => 'cp_friend_approve'
+				);
+				$result = elgg_trigger_plugin_hook('cp_overwrite_notification','all',$message);
+			} else {
+				notify_user($friend->getGUID(), $user_entity->getGUID(), $subject, $message, $params);
+			}
+			
+			// add to river
+			elgg_create_river_item(array(
+				"view" => "river/relationship/friend/create",
+				"action_type" => "friend",
+				"subject_guid" => $user_entity->getGUID(),
+				"object_guid" => $friend->getGUID(),
+			));
+			elgg_create_river_item(array(
+				"view" => "river/relationship/friend/create",
+				"action_type" => "friend",
+				"subject_guid" => $friend->getGUID(),
+				"object_guid" => $user_entity->getGUID(),
+			));
+
+			return elgg_echo("friend_request:approve:successful", array($friend->name));
+		} else {
+			return elgg_echo("friend_request:approve:fail", array($friend->name));
+		}
+	}
+}
+
+function decline_colleague( $profileemail, $user, $lang ){
+	$friend = is_numeric($profileemail) ? get_user($profileemail) : ( strpos($profileemail, '@') !== FALSE ? get_user_by_email($profileemail)[0] : get_user_by_username($profileemail) );
+ 	if( !$friend ) return "User was not found. Please try a different GUID, username, or email address";
+	if( !$friend instanceof ElggUser ) return "Invalid user. Please try a different GUID, username, or email address";
+
+	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
+ 	if( !$user_entity ) return "Viewer user was not found. Please try a different GUID, username, or email address";
+	if( !$user_entity instanceof ElggUser ) return "Invalid viewer user. Please try a different GUID, username, or email address";
+
+	if( !elgg_is_logged_in() )
+		login($user_entity);
+
+	if (!empty($friend)) {
+		if (remove_entity_relationship($friend->getGUID(), "friendrequest", $user_entity->getGUID())) {
+			$subject = elgg_echo("friend_request:decline:subject", array($user_entity->name));
+			$message = elgg_echo("friend_request:decline:message", array($friend->name, $user_entity->name));
+			
+			return elgg_echo("friend_request:decline:success");
+		} else {
+			return elgg_echo("friend_request:decline:fail");
+		}
+	}
+}
+
+function revoke_colleague( $profileemail, $user, $lang ){
+	$friend = is_numeric($profileemail) ? get_user($profileemail) : ( strpos($profileemail, '@') !== FALSE ? get_user_by_email($profileemail)[0] : get_user_by_username($profileemail) );
+ 	if( !$friend ) return "User was not found. Please try a different GUID, username, or email address";
+	if( !$friend instanceof ElggUser ) return "Invalid user. Please try a different GUID, username, or email address";
+
+	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
+ 	if( !$user_entity ) return "Viewer user was not found. Please try a different GUID, username, or email address";
+	if( !$user_entity instanceof ElggUser ) return "Invalid viewer user. Please try a different GUID, username, or email address";
+
+	if( !elgg_is_logged_in() )
+		login($user_entity);
+
+	if (!empty($friend)) {
+		if (remove_entity_relationship($user_entity->getGUID(), "friendrequest", $friend->getGUID())) {
+			return elgg_echo("friend_request:revoke:success");
+		} else {
+			return elgg_echo("friend_request:revoke:fail");
+		}
 	}
 }
