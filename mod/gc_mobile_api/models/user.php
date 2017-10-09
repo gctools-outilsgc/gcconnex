@@ -1013,8 +1013,8 @@ function remove_colleague($profileemail, $user, $lang)
 				));
 
 				// cyu - remove the relationship (if applicable) for the subscribed to user
-				remove_entity_relationship($user_entity->guid, 'cp_subscribed_to_email', $friend_guid);
-				remove_entity_relationship($user_entity->guid, 'cp_subscribe_to_site_mail', $friend_guid);
+				remove_entity_relationship($user_entity->guid, 'cp_subscribed_to_email', $friend->getGUID());
+				remove_entity_relationship($user_entity->guid, 'cp_subscribe_to_site_mail', $friend->getGUID());
 
 				return true;
 			} catch (Exception $e) {
@@ -1024,7 +1024,7 @@ function remove_colleague($profileemail, $user, $lang)
 			return elgg_echo("friends:remove:failure", array($friend->name));
 		}
 	} else {
-		return elgg_echo("friends:remove:failure", array($friend_guid));
+		return elgg_echo("friends:remove:failure", array($friend->getGUID()));
 	}
 }
 
