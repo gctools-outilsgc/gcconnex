@@ -162,6 +162,7 @@ elgg_ws_expose_function(
 
 function build_date($month, $year)
 {
+	$string = "01/";
 	switch ($month) {
 		case 1:
 			$string = "01/";
