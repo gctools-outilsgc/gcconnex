@@ -21,7 +21,7 @@ function get_user_block($userid, $lang = "en")
 	$user['displayName'] = $user_entity->name;
 	$user['email'] = $user_entity->email;
 	$user['profileURL'] = $user_entity->getURL();
-	$user['iconURL'] = $user_entity->geticon();
+	$user['iconURL'] = $user_entity->getIconURL();
 	$user['dateJoined'] = date("Y-m-d H:i:s", $user_entity->time_created);
 
 	$userType = $user_entity->user_type;

@@ -240,7 +240,7 @@ function get_user_data($profileemail, $user, $lang)
 	$user['displayName'] = $user_entity->name;
 	$user['email'] = $user_entity->email;
 	$user['profileURL'] = $user_entity->getURL();
-	$user['iconURL'] = $user_entity->geticon();
+	$user['iconURL'] = $user_entity->getIconURL();
 	$user['jobTitle'] = $user_entity->job;
 
 	switch ($user_entity->user_type) {
@@ -365,7 +365,7 @@ function get_user_data($profileemail, $user, $lang)
 					$user['experience']['item_'.$i]['colleagues']['colleague_'.$j]["profileURL"] = $friendEntity->getURL();
 
 					//get and store URL of profile avatar
-					$user['experience']['item_'.$i]['colleagues']['colleague_'.$j]["iconURL"] = $friendEntity->geticon();
+					$user['experience']['item_'.$i]['colleagues']['colleague_'.$j]["iconURL"] = $friendEntity->getIconURL();
 					$j++;
 				}
 			} elseif (!is_null($job->colleagues)) {
@@ -380,7 +380,7 @@ function get_user_data($profileemail, $user, $lang)
 				$user['experience']['item_'.$i]['colleagues']['colleague_'.$j]["profileURL"] = $friendEntity->getURL();
 
 				//get and store URL of profile avatar
-				$user['experience']['item_'.$i]['colleagues']['colleague_'.$j]["iconURL"] = $friendEntity->geticon();
+				$user['experience']['item_'.$i]['colleagues']['colleague_'.$j]["iconURL"] = $friendEntity->getIconURL();
 			}
 			$i++;
 		}
@@ -408,7 +408,7 @@ function get_user_data($profileemail, $user, $lang)
 					$user['skills']['item_'.$i]['endorsements']["user_".$j]["username"] = $friendEntity->username;
 					$user['skills']['item_'.$i]['endorsements']["user_".$j]["displayName"] = $friendEntity->name;
 					$user['skills']['item_'.$i]['endorsements']["user_".$j]["profileURL"] = $friendEntity->getURL();
-					$user['skills']['item_'.$i]['endorsements']["user_".$j]["iconURL"] = $friendEntity->geticon();
+					$user['skills']['item_'.$i]['endorsements']["user_".$j]["iconURL"] = $friendEntity->getIconURL();
 				}
 				$j++;
 			}
@@ -418,7 +418,7 @@ function get_user_data($profileemail, $user, $lang)
 			$user['skills']['item_'.$i]['endorsements']["user_".$j]["username"] = $friendEntity->username;
 			$user['skills']['item_'.$i]['endorsements']["user_".$j]["displayName"] = $friendEntity->name;
 			$user['skills']['item_'.$i]['endorsements']["user_".$j]["profileURL"] = $friendEntity->getURL();
-			$user['skills']['item_'.$i]['endorsements']["user_".$j]["iconURL"] = $friendEntity->geticon();
+			$user['skills']['item_'.$i]['endorsements']["user_".$j]["iconURL"] = $friendEntity->getIconURL();
 		}
 		$i++;
 	}
@@ -627,7 +627,7 @@ function get_user_groups($profileemail, $user, $lang)
 	foreach ($groups as $group) {
 		$groupObj = get_entity($group->guid);
 		$group->name = gc_explode_translation($group->name, $lang);
-		$group->iconURL = $groupObj->geticon();
+		$group->iconURL = $groupObj->getIconURL();
 		$group->count = $groupObj->getMembers(array('count' => true));
 		$group->description = clean_text(gc_explode_translation($group->description, $lang));
 	}

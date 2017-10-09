@@ -153,7 +153,7 @@ function get_opportunities($user, $limit, $offset, $filters, $lang)
 
 		$opportunityObj = get_entity($opportunity->guid);
 		$opportunity->owner = ($opportunityObj->getOwnerEntity() == $user_entity);
-		$opportunity->iconURL = $opportunityObj->geticon();
+		$opportunity->iconURL = $opportunityObj->getIconURL();
 
 		$opportunity->userDetails = get_user_block($opportunity->owner_guid, $lang);
 		$opportunity->description = clean_text(gc_explode_translation($opportunity->description, $lang));

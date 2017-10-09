@@ -145,7 +145,7 @@ function get_docs($user, $limit, $offset, $filters, $lang)
 
 		$docObj = new ElggPad($doc->guid);
 		$doc->owner = ($docObj->getOwnerEntity() == $user_entity);
-		$doc->iconURL = $docObj->geticon();
+		$doc->iconURL = $docObj->getIconURL();
 		$doc->url = $docObj->getPadPath();
 
 		$doc->userDetails = get_user_block($doc->owner_guid, $lang);
