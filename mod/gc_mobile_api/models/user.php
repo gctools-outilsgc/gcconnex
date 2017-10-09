@@ -668,6 +668,7 @@ function get_newsfeed($user, $limit, $offset, $lang)
 	} else {
 		$hasfriends = false;
 		$hasgroups = false;
+		$group_guids = array();
 	}
 
 	$actionTypes = array('comment', 'create', 'join', 'update', 'friend', 'reply');
@@ -678,6 +679,7 @@ function get_newsfeed($user, $limit, $offset, $lang)
 			$activity = '';
 		} else {
 			// has friends but no groups
+			$optionsf = array();
 			$optionsf['relationship_guid'] = $user_entity->guid;
 			$optionsf['relationship'] = 'friend';
 			$optionsf['pagination'] = true;
@@ -696,6 +698,7 @@ function get_newsfeed($user, $limit, $offset, $lang)
 		$guids_in = implode(',', array_unique(array_filter($group_guids)));
 
 		// display created content and replies and comments
+		$optionsg = array();
 		$optionsg['wheres'] = array("( oe.container_guid IN({$guids_in}) OR te.container_guid IN({$guids_in}) )");
 		$optionsg['pagination'] = true;
 		$activity = json_decode(newsfeed_list_river($optionsg));
@@ -706,6 +709,7 @@ function get_newsfeed($user, $limit, $offset, $lang)
 		// load user's preference
 		$filteredItems = array($user_entity->colleagueNotif);
 		// filter out preference
+		$optionsfg = array();
 		$optionsfg['action_types'] = array_diff($actionTypes, $filteredItems);
 
 		$guids_in = implode(',', array_unique(array_filter($group_guids)));
