@@ -85,9 +85,9 @@ $userMenu = "";
 
 if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false) {
 	if(elgg_is_active_plugin('freshdesk_help')){
-		$feedback_link = elgg_get_site_url().'/help/knowledgebase';
+		$feedback_link = elgg_get_site_url().'help/knowledgebase/';
 	} else {
-		$feedback_link = elgg_get_site_url().'/mod/contactform';
+		$feedback_link = elgg_get_site_url().'mod/contactform/';
 	}
 
 	$feedback_button = "<a href='{$feedback_link}' class='btn btn-primary'><span class='glyphicon glyphicon-comment mrgn-rght-sm'></span>{$feedbackText}</a>";

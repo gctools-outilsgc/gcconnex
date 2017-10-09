@@ -49,7 +49,7 @@ return array(
   'wet:login_engage_3'=>"Promouvoir les activités GC à l'échelle du gouvernement.",
   'wet:login_welcome'=>'Welcome to GCcollab',
   'wet:jobs:link' => 'emplois.gc.ca <i class="fa fa-external-link mrgn-lft-sm"></i>',
-  'wet:jobs:href' => "http://jobs-emplois.gc.ca/index-fra.htm",
+  'wet:jobs:href' => "https://www.canada.ca/fr/services/emplois/opportunites/gouvernement.html",
   'wet:marketplace:link' => "Carrefour d'emploi",
   'wet:marketplace:href' => elgg_get_site_url() . "groups/profile/6161",
   'wet:login:departments'=>"<span class=\"login-big-num\">174</span> Organizations de toutes les regions du Canada",
