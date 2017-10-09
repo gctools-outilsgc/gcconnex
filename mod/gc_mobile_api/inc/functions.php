@@ -15,6 +15,7 @@ function get_user_block($userid, $lang = "en")
 		return "";
 	}
 
+	$user = array();
 	$user['user_id'] = $user_entity->guid;
 	$user['username'] = $user_entity->username;
 	$user['displayName'] = $user_entity->name;
