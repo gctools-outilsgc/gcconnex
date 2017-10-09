@@ -96,6 +96,7 @@ function get_entity_comments($guid)
 {
 	$entity = get_entity($guid);
 
+	$comments = array();
 	$comments['count'] = $entity->countComments();
 	$commentEntites = elgg_get_entities(array(
 		'type' => 'object',
