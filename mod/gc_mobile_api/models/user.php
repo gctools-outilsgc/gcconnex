@@ -665,28 +665,33 @@ function get_newsfeed($user, $limit, $offset, $lang)
 				$group_guids[] = $group->getGUID();
 			}
 		}
+	} else {
+		$hasfriends = false;
+		$hasgroups = false;
 	}
 
 	$actionTypes = array('comment', 'create', 'join', 'update', 'friend', 'reply');
 
-	if (!$hasgroups && !$hasfriends) {
-		// no friends and no groups :(
-		$activity = '';
-	} elseif (!$hasgroups && $hasfriends) {
-		// has friends but no groups
-		$optionsf['relationship_guid'] = $user_entity->guid;
-		$optionsf['relationship'] = 'friend';
-		$optionsf['pagination'] = true;
+	if (!$hasgroups) {
+	 	if(!$hasfriends) {
+			// no friends and no groups :(
+			$activity = '';
+		} else {
+			// has friends but no groups
+			$optionsf['relationship_guid'] = $user_entity->guid;
+			$optionsf['relationship'] = 'friend';
+			$optionsf['pagination'] = true;
 
-		// turn off friend connections
-		// remove friend connections from action types
-		// load user's preference
-		$filteredItems = array($user_entity->colleagueNotif);
-		// filter out preference
-		$optionsf['action_types'] = array_diff($actionTypes, $filteredItems);
+			// turn off friend connections
+			// remove friend connections from action types
+			// load user's preference
+			$filteredItems = array($user_entity->colleagueNotif);
+			// filter out preference
+			$optionsf['action_types'] = array_diff($actionTypes, $filteredItems);
 
-		$activity = json_decode(newsfeed_list_river($optionsf));
-	} elseif (!$hasfriends && $hasgroups) {
+			$activity = json_decode(newsfeed_list_river($optionsf));
+		}
+	} elseif (!$hasfriends) {
 		// if no friends but groups
 		$guids_in = implode(',', array_unique(array_filter($group_guids)));
 
