@@ -224,16 +224,15 @@ function get_user_data($profileemail, $user, $lang)
 		}
 
 		$friends = $viewer->isFriendsWith($user_entity->guid);
+
+		if (!elgg_is_logged_in()) {
+			login($viewer);
+		}
 	} else {
 		$friends = false;
 	}
 
-	if (!elgg_is_logged_in()) {
-		login($viewer);
-	}
-
 	$user = array();
-
 	$user['id'] = $user_entity->guid;
 	$user['friend'] = $friends;
 	$user['user_type'] = $user_entity->user_type;
