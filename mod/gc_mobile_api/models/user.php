@@ -395,33 +395,34 @@ function get_user_data($profileemail, $user, $lang)
 			'type' => 'object',
 			'limit' => 0
 		));
-	}
-	$i=0;
-	foreach ($skillsEntity as $skill) {
-		$user['skills']['item_'.$i]['skill'] = $skill->title;
 
-		$j = 0;
-		if (is_array($skill->endorsements)) {
-			foreach ($skill->endorsements as $friend) {
-				$friendEntity = get_user($friend);
-				if ($friendEntity instanceof ElggUser) {
-					$user['skills']['item_'.$i]['endorsements']["user_".$j]["id"] = $friendEntity->guid;
-					$user['skills']['item_'.$i]['endorsements']["user_".$j]["username"] = $friendEntity->username;
-					$user['skills']['item_'.$i]['endorsements']["user_".$j]["displayName"] = $friendEntity->name;
-					$user['skills']['item_'.$i]['endorsements']["user_".$j]["profileURL"] = $friendEntity->getURL();
-					$user['skills']['item_'.$i]['endorsements']["user_".$j]["iconURL"] = $friendEntity->getIconURL();
+		$i=0;
+		foreach ($skillsEntity as $skill) {
+			$user['skills']['item_'.$i]['skill'] = $skill->title;
+
+			$j = 0;
+			if (is_array($skill->endorsements)) {
+				foreach ($skill->endorsements as $friend) {
+					$friendEntity = get_user($friend);
+					if ($friendEntity instanceof ElggUser) {
+						$user['skills']['item_'.$i]['endorsements']["user_".$j]["id"] = $friendEntity->guid;
+						$user['skills']['item_'.$i]['endorsements']["user_".$j]["username"] = $friendEntity->username;
+						$user['skills']['item_'.$i]['endorsements']["user_".$j]["displayName"] = $friendEntity->name;
+						$user['skills']['item_'.$i]['endorsements']["user_".$j]["profileURL"] = $friendEntity->getURL();
+						$user['skills']['item_'.$i]['endorsements']["user_".$j]["iconURL"] = $friendEntity->getIconURL();
+					}
+					$j++;
 				}
-				$j++;
+			} elseif (!is_null($skill->endorsements)) {
+				$friendEntity = get_user($skill->endorsements);
+				$user['skills']['item_'.$i]['endorsements']["user_".$j]["id"] = $friendEntity->guid;
+				$user['skills']['item_'.$i]['endorsements']["user_".$j]["username"] = $friendEntity->username;
+				$user['skills']['item_'.$i]['endorsements']["user_".$j]["displayName"] = $friendEntity->name;
+				$user['skills']['item_'.$i]['endorsements']["user_".$j]["profileURL"] = $friendEntity->getURL();
+				$user['skills']['item_'.$i]['endorsements']["user_".$j]["iconURL"] = $friendEntity->getIconURL();
 			}
-		} elseif (!is_null($skill->endorsements)) {
-			$friendEntity = get_user($skill->endorsements);
-			$user['skills']['item_'.$i]['endorsements']["user_".$j]["id"] = $friendEntity->guid;
-			$user['skills']['item_'.$i]['endorsements']["user_".$j]["username"] = $friendEntity->username;
-			$user['skills']['item_'.$i]['endorsements']["user_".$j]["displayName"] = $friendEntity->name;
-			$user['skills']['item_'.$i]['endorsements']["user_".$j]["profileURL"] = $friendEntity->getURL();
-			$user['skills']['item_'.$i]['endorsements']["user_".$j]["iconURL"] = $friendEntity->getIconURL();
+			$i++;
 		}
-		$i++;
 	}
 
 	// Portfolio
