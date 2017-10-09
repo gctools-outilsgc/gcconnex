@@ -25,7 +25,7 @@ function get_user_block($userid, $lang = "en")
 	$user['dateJoined'] = date("Y-m-d H:i:s", $user_entity->time_created);
 
 	$userType = $user_entity->user_type;
-	$user['user_type'] = elgg_echo("gcRegister:occupation:{$userType}", $lang);
+	$user['user_type'] = elgg_echo("gcRegister:occupation:{$userType}", [], $lang);
 	$department = "";
 
 	if ($userType == 'federal') {
