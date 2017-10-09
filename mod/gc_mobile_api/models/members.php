@@ -117,30 +117,32 @@ function get_members_colleague($profileemail, $user, $limit, $offset, $filters, 
 		login($user_entity);
 	}
 
+	$defaults = array(
+		'type' => 'user',
+		'relationship' => 'friend',
+		'relationship_guid' => $user_entity->getGUID(),
+		'limit' => $limit,
+		'offset' => $offset,
+		'full_view' => false,
+	);
+
+	$vars = array();
 	$filter_data = json_decode($filters);
 	if (!empty($filter_data)) {
-		$params = array(
-			'limit' => $limit,
-			'offset' => $offset
-		);
-
 		if ($filter_data->type) {
-			$params['metadata_name'] = 'user_type';
-			$params['metadata_value'] = $filter_data->type;
+			$vars['metadata_name'] = 'user_type';
+			$vars['metadata_value'] = $filter_data->type;
 		}
 		if ($filter_data->name) {
 			$db_prefix = elgg_get_config('dbprefix');
-			$params['joins'] = array("JOIN {$db_prefix}users_entity ue ON e.guid = ue.guid");
-			$params['wheres'] = array("(ue.username LIKE '%" . $filter_data->name . "%' OR ue.name LIKE '%" . $filter_data->name . "%')");
+			$vars['joins'] = array("JOIN {$db_prefix}users_entity ue ON e.guid = ue.guid");
+			$vars['wheres'] = array("(ue.username LIKE '%" . $filter_data->name . "%' OR ue.name LIKE '%" . $filter_data->name . "%')");
 		}
-
-		$members = $user_entity->listFriends('', $limit, $params);
-	} else {
-		$members = $user_entity->listFriends('', $limit, array(
-			'limit' => $limit,
-			'offset' => $offset
-		));
 	}
+
+	$options = array_merge($defaults, $vars);
+
+	$members = elgg_list_entities_from_relationship($options);
 	$members = json_decode($members);
 
 	$data = array();
