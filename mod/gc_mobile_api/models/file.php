@@ -17,20 +17,30 @@ elgg_ws_expose_function(
 	false
 );
 
-function get_file( $user, $guid, $lang ){
-	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
- 	if( !$user_entity ) return "User was not found. Please try a different GUID, username, or email address";
-	if( !$user_entity instanceof ElggUser ) return "Invalid user. Please try a different GUID, username, or email address";
+function get_file($user, $guid, $lang)
+{
+	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+	if (!$user_entity) {
+		return "User was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$user_entity instanceof ElggUser) {
+		return "Invalid user. Please try a different GUID, username, or email address";
+	}
 
-	$entity = get_entity( $guid );
-	if( !$entity ) return "File was not found. Please try a different GUID";
-	if( !$entity instanceof ElggFile ) return "Invalid file. Please try a different GUID";
+	$entity = get_entity($guid);
+	if (!$entity) {
+		return "File was not found. Please try a different GUID";
+	}
+	if (!$entity instanceof ElggFile) {
+		return "Invalid file. Please try a different GUID";
+	}
 
-	if( !elgg_is_logged_in() )
+	if (!elgg_is_logged_in()) {
 		login($user_entity);
-	
+	}
+
 	$files = elgg_list_entities(array(
-	    'type' => 'object',
+		'type' => 'object',
 		'subtype' => 'file',
 		'guid' => $guid
 	));
@@ -50,7 +60,7 @@ function get_file( $user, $guid, $lang ){
 	$file->liked = count($liked) > 0;
 
 	$file->comments = get_entity_comments($file->guid);
-	
+
 	$file->userDetails = get_user_block($file->owner_guid, $lang);
 
 	return $file;
