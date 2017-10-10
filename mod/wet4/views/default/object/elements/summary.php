@@ -75,7 +75,7 @@ if ($title_link) {
     		echo "<h3 class=\"mrgn-bttm-0 summary-title\">$title_link</h3>";
     	}
     	if($entity instanceof ElggEntity && $entity->getSubtype() == 'folder'){
-    		echo "<h3 class=\"mrgn-bttm-0 summary-title folder\">$title_link</h3>";
+    		echo "<h3 class=\"mrgn-bttm-0 summary-title folder-$entity->guid\">$title_link</h3>";
     	}
     }else{
        echo "<h2 class=\"mrgn-bttm-0 summary-title\">$title_link</h2>";
