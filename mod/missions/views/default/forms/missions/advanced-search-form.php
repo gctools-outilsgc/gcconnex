@@ -213,9 +213,14 @@ $hidden_input = elgg_view('input/hidden', array(
 
 if($advanced_form){
 
+	if($_SESSION['mission_search_switch'] == 'candidate'){
+		$page = 'members';
+	}else{
+		$page = 'find';
+	}
+
     $clear_link = elgg_view('output/url', array(
 		'text' => elgg_echo('missions:clear_search'),
-		'href' => 'missions/main?clear=true&search='.$advanced_form,
 		'class' => 'mrgn-lft-sm',
 		'is_action' => true,
 		'is_trusted' => true,
