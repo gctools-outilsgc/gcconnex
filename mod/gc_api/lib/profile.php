@@ -139,13 +139,7 @@ function get_api_profile($id)
 	usort($experienceEntity, "sortDate");
 	$i=0;
 	foreach ($experienceEntity as $job) {
-		//$user['job'.$i++] = "test";
 		if ($job->access_id == 2) {
-			$jobMetadata = elgg_get_metadata(array(
-				'guid' => $job->guid,
-				'limit' => 0
-			));
-
 			$user['experience']['item_'.$i]['job_title'] = $job->title;
 			$user['experience']['item_'.$i]['organization'] = $job->organization;
 			$user['experience']['item_'.$i]['start_date'] = buildDate($job->startdate, $job->startyear);
@@ -239,7 +233,7 @@ function get_api_profile($id)
 	));
 	$i=0;
 	foreach ($portfolioEntity as $portfolio) {
-		if ($grade->access_id == 2) {
+		if ($portfolio->access_id == 2) {
 			$user['portfolio']['item_'.$i]['title'] = $portfolio->title;
 			$user['portfolio']['item_'.$i]['link'] = $portfolio->link;
 			if ($portfolio->datestamped == "on") {
