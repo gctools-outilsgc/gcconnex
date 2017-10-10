@@ -3,7 +3,7 @@
  * file name: login.php
  * Author: Troy T. Lawson Troy.Lawson@tbs-sct.gc.ca; lawson.troy@gmail.com,
  * 			based on template produced by Nicholas Pietrantonio
- * 
+ *
  * purpose: Alternate login page for use with share button widget.
  */
  //load custom css for share form
@@ -20,8 +20,8 @@ $body.= '<div class="share-form-holder">'.$share_header. $share_form.'</div>';
 $body .= elgg_view('page/elements/foot');
 //build header info
 $headparams = array(
-    'title' => 'Share',
-    );
+	'title' => 'Share',
+);
 $head = elgg_view('page/elements/head', $headparams);
 
 $params = array(
