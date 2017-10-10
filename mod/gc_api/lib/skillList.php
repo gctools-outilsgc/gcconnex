@@ -18,7 +18,6 @@ elgg_ws_expose_function(
 function get_api_skillList($isCount)
 {
 	$skills = array();
-	$data = array();
 	if ($isCount!= 'true' && $isCount!= 'false') {
 		$isCount = 'false';
 	}

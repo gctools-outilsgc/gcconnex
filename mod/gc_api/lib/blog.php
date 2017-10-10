@@ -77,8 +77,6 @@ function get_blog($entity)
 	//get userblock info
 	$blog['userBlock'] = get_userBlock($entity->getOwner());
 
-	$comments = $entity->getAnnotations();
-
 	$blog['comments_blocks'] = get_comments($entity);
 	//return constructed blog api info
 	return $blog;

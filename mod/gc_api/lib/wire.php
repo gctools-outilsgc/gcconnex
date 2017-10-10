@@ -57,9 +57,7 @@ function get_wire_posts($query, $limit)
 		);
 		$wire_posts = elgg_get_entities($options);
 	}
-	if (!$wireposts) {
-		//return 'no wire posts with with #'.$query." tags. For usernames, please add '@' to front of query string";
-	}
+
 	$i = 0;
 	foreach ($wire_posts as $wp) {
 		//Nick - added guid to the api
