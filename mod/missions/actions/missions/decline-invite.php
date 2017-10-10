@@ -17,11 +17,14 @@ $mission = get_entity(get_input('hidden_mission_guid'));
 $reason = get_input('reason');
 if($reason == 'missions:other') {
 	$raw_reason = $reason;
-	$reason = get_input('other_text');
+	$reasonEn = get_input('other_text');
+	$reasonFr = get_input('other_text');
 }
 else {
 	$raw_reason = $reason;
-	$reason = elgg_echo($reason);
+	$reasonEn = elgg_echo($reason,'en');
+	$reasonFr = elgg_echo($reason,'fr');
+
 }
 
 if(trim($reason) == '') {
@@ -67,10 +70,15 @@ $mission_link = elgg_view('output/url', array(
     'text' => elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))
 ));
 
-$subject = elgg_echo('missions:applicant_leaves', array($applicant->name));
-$body = elgg_echo('missions:applicant_leaves_more', array($applicant->name)) . $mission_link . '.' . "\n";
-$body .= elgg_echo('missions:reason_given', array($reason));
-mm_notify_user($mission->guid, $applicant->guid, $subject, nl2br($body));
+$subject = elgg_echo('missions:applicant_leaves', array($applicant->name),'en')." | ". elgg_echo('missions:applicant_leaves', array($applicant->name),'fr');
+
+$withdrawnEn .= elgg_echo('missions:applicant_leaves_more', array($applicant->name),'en') . $mission_link . '.' . "\n";
+($reasonFr ? $withdrawnReasonEn .= elgg_echo('missions:reason_given', array($reasonEn),'en') : elgg_echo('missions:reason_given', array($reason),'en'));
+
+$withdrawnFr .= elgg_echo('missions:applicant_leaves_more', array($applicant->name),'fr') . $mission_link . '.' . "\n";
+($reasonFr ? $withdrawnReasonFr .= elgg_echo('missions:reason_given', array($reasonFr),'fr') : elgg_echo('missions:reason_given', array($reason),'fr'));
+
+mm_notify_user($mission->guid, $applicant->guid, $subject, $withdrawnEn, $withdrawnFr,$reasonEn ,$reasonFr );
 
 system_message(elgg_echo($message_return, array($mission->job_title)));
 forward(elgg_get_site_url() . 'missions/main');

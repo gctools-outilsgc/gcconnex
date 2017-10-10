@@ -35,7 +35,7 @@ else {
 			}
 			else {
 				$count++;
-				mm_notify_user($user->guid, elgg_get_logged_in_user_guid(), $subject, nl2br($body));
+				mm_notify_user($user->guid, elgg_get_logged_in_user_guid(), $subject,'','', $body,$body);
 			}
 		}
 	}

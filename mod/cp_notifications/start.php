@@ -1223,7 +1223,7 @@ function cp_create_notification($event, $type, $object) {
 				'task_top' => elgg_echo('cp_notify:subject:new_content_fem',array("task",$group_name2),'fr'),
 				'task' => elgg_echo('cp_notify:subject:new_content_fem',array("task",$group_name2),'fr'),
         		'question' => elgg_echo('cp_notify:subject:new_content_fem',array("question",$group_name2),'fr'),
-
+        		'etherpad' => elgg_echo('cp_notify:subject:new_content_fem',array(elgg_echo('etherpad:single'),$group_name2),'fr')
 			);
 
 			// if there is something missing, we can use a fallback string
@@ -1257,6 +1257,9 @@ function cp_create_notification($event, $type, $object) {
 							$subject = elgg_echo('cp_notify_usr:subject:new_content',array($object->getOwnerEntity()->username, cp_translate_subtype($object->getSubtype()), gc_explode_translation($answer_entity->title,'en')),'en');
 							$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content_f',array($object->getOwnerEntity()->username, cp_translate_subtype($object->getSubtype(), false), gc_explode_translation($answer_entity->title,'fr')),'fr');
 						
+						} else if ($object->getSubtype() == 'etherpad'){
+							$subject = elgg_echo('cp_notify_usr:subject:new_content',array($object->getOwnerEntity()->username, elgg_echo('etherpad:single'), gc_explode_translation($object->title,'en')),'en');
+							$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content_f',array($object->getOwnerEntity()->username, elgg_echo('etherpad:single'), gc_explode_translation($object->title,'fr')),'fr');
 						} else {
 							
 							$subject = elgg_echo('cp_notify_usr:subject:new_content',array($object->getOwnerEntity()->username, cp_translate_subtype($object->getSubtype()), gc_explode_translation($object->title,'en')),'en');

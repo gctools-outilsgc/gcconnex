@@ -58,6 +58,7 @@ switch ($subtype) {
 		// TODO: form for sticky
 		$entity->sticky = 0;
 		$entity->save();
+
 		break;
 
 	case 'hjforumpost':

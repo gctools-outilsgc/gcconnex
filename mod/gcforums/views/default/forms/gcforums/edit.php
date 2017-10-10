@@ -81,7 +81,7 @@ function general_information_form($object = null) {
 		$sub_return = array('title' => array($lblTitle, $txtTitle));
 	}
 
-	$description = ($object == null) ? '' : $object->description;
+	$description = ($object === null) ? '' : $object->description;
 	$lblDescription = elgg_echo('gforums:description_label');
 	$txtDescription = elgg_view('input/longtext', array(
 		'name' => 'txtDescription',
@@ -89,11 +89,10 @@ function general_information_form($object = null) {
 		'required' => true
 	));
 
-	$access_id = ($object == null) ? '' : $object->access_id;
 	$lblAccess = elgg_echo('gcforums:access_label');
 	$ddAccess = elgg_view('input/access', array(
 		'name' => 'ddAccess',
-		'value' => $access_id
+		'entity' => $object,
 	));
 
 
@@ -108,7 +107,7 @@ function general_information_form($object = null) {
 }
 
 function forums_topic_form($object) {
-	$is_sticky = ($object == null) ? '' : $object->is_sticky;
+	$is_sticky = ($object === null) ? '' : $object->is_sticky;
 	$lblIsSticky = elgg_echo('gcforums:is_sticky');
 	$chkIsSticky = elgg_view('input/checkboxes', array(
 		'name' => 'chkIsSticky',
@@ -166,7 +165,7 @@ function forums_information_form($object) {
 
 
 		// retrieve the current category that the forum is listed under
-		$query = "	SELECT guid_two FROM {$dbprefix}entity_relationships WHERE guid_one = {$object->getGUID()} AND relationship = 'filed_in'";
+		$query = "SELECT guid_two FROM {$dbprefix}entity_relationships WHERE guid_one = {$object->getGUID()} AND relationship = 'filed_in'";
 		$currently_filed_under = get_data($query);
 
 		$category_filing = $currently_filed_under[0]->guid_two;

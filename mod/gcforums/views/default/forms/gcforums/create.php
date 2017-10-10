@@ -80,7 +80,7 @@ function general_information_form($object = null) {
 		));
 		$sub_return = array('title' => array($lblTitle, $txtTitle));
 
-		$access_id = 2;
+		$access_id = (!$object->access_id) ? ACCESS_DEFAULT : $object->access_id;
 		$lblAccess = elgg_echo('gcforums:access_label');
 		$ddAccess = elgg_view('input/access', array(
 			'name' => 'ddAccess',

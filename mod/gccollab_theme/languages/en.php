@@ -49,7 +49,7 @@ return array(
   'wet:login_engage_3'=>'Promote government-wide GC activities.',
   'wet:login_welcome'=>'Welcome to GCcollab',
   'wet:jobs:link' => 'jobs.gc.ca <i class="fa fa-external-link mrgn-lft-sm"></i>',
-  'wet:jobs:href' => "http://jobs-emplois.gc.ca/index-eng.htm",
+  'wet:jobs:href' => "https://www.canada.ca/en/services/jobs/opportunities/government.html",
   'wet:marketplace:link' => "Jobs Marketplace",
   'wet:marketplace:href' => elgg_get_site_url() . "groups/profile/6161",
   'wet:login:departments' => "<span class=\"login-big-num\">174</span> Organizations across Canada",
@@ -223,4 +223,5 @@ Hope to chat more soon!",
   'event_calendar:none' => "No events found.",
   'msg:change_access' => "Not all users have access to your content. Since GCcollab wants to be as open as possible, are you sure you need to restrict the access to this content?", //NEW
   'c_sensitive_info_msg:friendly_reminder' => '<section class="alert alert-info"><h3 class="h3">Friendly reminder:</h3>As per the <a href="/terms">Terms and Conditions of use of GCcollab</a>, sensitive or confidential content is not to be posted on GCcollab. This means that only "unprotected", "unclassified" or "Protected A" document should be posted. The <a href="http://www.tbs-sct.gc.ca/pol/doc-eng.aspx?id=1245">Policy on Access to Information</a> applies to all information posted on GCcollab.</section>',
+  'comment_notif_description' => "<p>You are not a member of this group. Join the group to be notified when new content is added and to follow this thread. Note: You can adjust your notification preferences in your GCcollab account settings.</p><p>Don’t want to join the group yet? Go ahead and post your comment, but remember to check back to see any new comments posted in this thread.</p>"
 );

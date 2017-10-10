@@ -633,6 +633,9 @@ function cp_translate_subtype($subtype_name, $english = true) {
 		case 'answer':
 			$label = ($english) ? 'answer' : 'réponse';
 			break;
+		case 'etherpad':
+			$label = ($english) ? 'Doc' : 'Doc';
+			break;
 		default:
 			$label = $subtype_name;
 		break;
@@ -875,13 +878,12 @@ function information_icon($text, $url) {
 
 function has_group_subscriptions($group_guid, $user_guid) {
 	$dbprefix = elgg_get_config('dbprefix');
-
 	// normal objects
 	$query = "SELECT r.guid_one, r.relationship, r.guid_two  FROM {$dbprefix}entity_relationships r LEFT JOIN {$dbprefix}entities e ON r.guid_two = e.guid LEFT JOIN (SELECT guid FROM {$dbprefix}groups_entity WHERE guid = {$group_guid}) g ON e.container_guid = g.guid WHERE r.relationship LIKE 'cp_subscribed_to_%' AND e.type = 'object' AND e.container_guid = {$group_guid} AND r.guid_one = {$user_guid} LIMIT 1";
 
 	$subscriptions = get_data($query);
-
 	if (sizeof($subscriptions) == 0) {
+
 		// forums
 		$query = "SELECT elgg_subtype.entity_guid, elgg_subtype.entity_subtype
 		FROM {$dbprefix}entity_relationships r
@@ -892,15 +894,13 @@ function has_group_subscriptions($group_guid, $user_guid) {
 		$forums = get_data($query);
 
 		foreach ($forums as $forum) {
-			if (!empty($group_content->entity_guid) && $group_content->entity_guid > 0) {
-		    	$content = get_entity($group_content->entity_guid);
+			if (!$forum->entity_guid) continue;
+			$forum_entity = get_entity($forum->entity_guid);
+			$forum_group_guid = get_forum_in_group($forum_entity->getGUID(), $forum_entity->getGUID());
 
-				// we want the forum topic that resides in the group
-		    	$container_id = (strcmp($content->getSubtype(), 'hjforumtopic') == 0) ? $content->getContainerGUID() : $container_id = $content->getGUID();
-		    	
-		    	if (get_forum_in_group($container_id,$container_id) == $group_guid)
-		    		return 1;
-		    }
+			if ($forum_group_guid == $group_guid)
+				return 1;
+
 		}
 		return 0;
 	}
