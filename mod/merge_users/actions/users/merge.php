@@ -95,13 +95,6 @@ foreach($data as $object){
   }
 }
 
-//unset from old account so entities are not deleted as well
-if($transfer_profile){
-  $old_user->education == '';
-  $old_user->work == '';
-  $old_user->gc_skills == '';
-}
-
 //transfering group ownership and making sure new account is a member of the group they are now the owner of
 $dataGroups = get_data("SELECT * FROM {$db_prefix}entities WHERE owner_guid = {$oldGUID} AND type='group'");
 
@@ -162,6 +155,13 @@ if($transfer_friends){
 }
 
 system_message('All content and groups has been transfered to '.$new_user->name.' and the account '.$old_user->name.' has been deleted '.$true);
+
+//unset from old account so entities are not deleted as well
+if($transfer_profile){
+  unset($old_user->education);
+  unset($old_user->work);
+  unset($old_user->gc_skills);
+}
 
 //lets say goodbye to this old user
 $delete = get_input('delete');
