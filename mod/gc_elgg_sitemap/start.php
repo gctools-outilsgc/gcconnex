@@ -184,15 +184,11 @@ function strip_content_hyperlinks_handler($hook, $type, $return, $params) {
 }
 
 
-
-
 function redirect_group_url($hook, $type, $url, $params) {
 	// from: 192.168.xx.xx/gcconnex/groups/profile/1111/group-name
 	// to: 192.168.xx.xx/gcconnex/groups/profile/1111/
 	if (strpos($_SERVER['REQUEST_URI'],"/groups/profile/") !== false && sizeof(get_sanitized_url()) > 3)
-	{
 		forward("groups/profile/{$params['entity']->guid}");
-	}
 }
 
 
@@ -371,7 +367,7 @@ function elgg_entities_list_handler($hook, $type, $value, $params) {
 			break;
 
 		case 'members':
-			$member_url = elgg_get_site_url()."profile/{$value['entity']->username}/";
+			$member_url = elgg_get_site_url()."profile/{$value['entity']->username}";
 			echo "<a href='{$member_url}'>{$value['entity']->username}</a>  <br/>";
 			break;
 
