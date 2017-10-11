@@ -221,6 +221,7 @@ if($advanced_form){
 
     $clear_link = elgg_view('output/url', array(
 		'text' => elgg_echo('missions:clear_search'),
+		'href' => 'missions/main/'.$page.'?clear=true&search='.$advanced_form,
 		'class' => 'mrgn-lft-sm',
 		'is_action' => true,
 		'is_trusted' => true,
