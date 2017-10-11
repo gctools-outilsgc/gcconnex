@@ -10,9 +10,9 @@
 /*
  * This element creates a formatted list of missions that the user posted that they can invite the candidate to.
  */
- 
+
  // Target candidates guid.
-$user_guid = $vars['candidate_guid']; 
+$user_guid = $vars['candidate_guid'];
 
 $entity_list = elgg_get_entities_from_relationship(array(
 		'relationship' => 'mission_posted',
@@ -20,22 +20,22 @@ $entity_list = elgg_get_entities_from_relationship(array(
 ));
 
 $count = 0;
-foreach($entity_list as $entity) {
+foreach ($entity_list as $entity) {
 	$candidates = elgg_get_entities_from_relationship(array(
 			'relationship' => 'mission_accepted',
 			'relationship_guid' => $entity->guid
 	));
 	$number_of_candidates = count($candidates);
-	
+
 	$not_invited_already = true;
-	foreach($candidates as $candidate) {
-		if($candidate->guid == $user_guid) {
+	foreach ($candidates as $candidate) {
+		if ($candidate->guid == $user_guid) {
 			$not_invited_already = false;
 		}
 	}
 
 	// Does not display missions which have filled all the available spots.
-	if($number_of_candidates < $entity->number && $not_invited_already) {
+	if ($number_of_candidates < $entity->number && $not_invited_already) {
 		echo '<div class="col-sm-12">';
 		echo '<div class="col-sm-5">' . elgg_view('output/url', array(
 				'href' => $entity->getURL(),
@@ -53,7 +53,7 @@ foreach($entity_list as $entity) {
 				'id' => 'mission-invitation-link-' . $entity->guid
 		)) . '</div>';
 		echo '</div>';
-		
+
 		$count++;
 	}
 }

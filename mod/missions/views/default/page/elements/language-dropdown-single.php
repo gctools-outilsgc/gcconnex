@@ -18,59 +18,64 @@ $language_written_expression = get_input('ilwe');
 $language_oral_proficiency = get_input('ilop');
 
 if (elgg_is_sticky_form('lsdropfill')) {
-    extract(elgg_get_sticky_values('lsdropfill'));
-    // elgg_clear_sticky_form('thirdfill');
+	extract(elgg_get_sticky_values('lsdropfill'));
 }
 
 $input_written_comprehension = elgg_view('input/dropdown', array(
-    'name' => 'lwc',
-    'value' => $language_written_comprehension,
-    'options' => $array,
-    'class' => 'language-dropdown',
-    'id' => 'single-language-written-comprehension-dropdown-input'
+	'name' => 'lwc',
+	'value' => $language_written_comprehension,
+	'options' => $array,
+	'class' => 'language-dropdown',
+	'id' => 'single-language-written-comprehension-dropdown-input'
 ));
 $input_written_expression = elgg_view('input/dropdown', array(
-    'name' => 'lwe',
-    'value' => $language_written_expression,
-    'options' => $array,
-    'class' => 'language-dropdown',
-    'id' => 'single-language-written-expression-dropdown-input'
+	'name' => 'lwe',
+	'value' => $language_written_expression,
+	'options' => $array,
+	'class' => 'language-dropdown',
+	'id' => 'single-language-written-expression-dropdown-input'
 ));
 $input_oral_proficiency = elgg_view('input/dropdown', array(
-    'name' => 'lop',
-    'value' => $language_oral_proficiency,
-    'options' => $array,
-    'class' => 'language-dropdown',
-    'id' => 'single-language-oral-proficiency-dropdown-input'
+	'name' => 'lop',
+	'value' => $language_oral_proficiency,
+	'options' => $array,
+	'class' => 'language-dropdown',
+	'id' => 'single-language-oral-proficiency-dropdown-input'
 ));
 ?>
 
 <table class="mission-post-table-two">
 	<tr>
-		<td class="mission-post-table-lefty"><label for='single-language-written-comprehension-dropdown-input'><?php echo elgg_echo('missions:written_comprehension') . ':';?></label><br />
+		<td class="mission-post-table-lefty">
+			<label for='single-language-written-comprehension-dropdown-input'><?php echo elgg_echo('missions:written_comprehension') . ':';?></label>
+			<br />
 		</td>
 		<td class="mission-post-table-center">
 			<div>
-			<?php echo '<span class="missions-inline-drop">' . $input_written_comprehension . '</span>'; ?>
-		</div>
+				<?php echo '<span class="missions-inline-drop">' . $input_written_comprehension . '</span>'; ?>
+			</div>
 		</td>
 	</tr>
 	<tr>
-		<td class="mission-post-table-lefty"><label for='single-language-written-expression-dropdown-input'><?php echo elgg_echo('missions:written_expression') . ':';?></label><br />
+		<td class="mission-post-table-lefty">
+			<label for='single-language-written-expression-dropdown-input'><?php echo elgg_echo('missions:written_expression') . ':';?></label>
+			<br />
 		</td>
 		<td class="mission-post-table-center">
 			<div>
-			<?php echo '<span class="missions-inline-drop">' . $input_written_expression . '</span>'; ?>
-		</div>
+				<?php echo '<span class="missions-inline-drop">' . $input_written_expression . '</span>'; ?>
+			</div>
 		</td>
 	</tr>
 	<tr>
-		<td class="mission-post-table-lefty"><label for='single-language-oral-proficiency-dropdown-input'><?php echo elgg_echo('missions:oral_proficiency') . ':';?></label><br />
+		<td class="mission-post-table-lefty">
+			<label for='single-language-oral-proficiency-dropdown-input'><?php echo elgg_echo('missions:oral_proficiency') . ':';?></label>
+			<br />
 		</td>
 		<td class="mission-post-table-center">
 			<div>
-			<?php echo '<span class="missions-inline-drop">' . $input_oral_proficiency . '</span>'; ?>
-		</div>
+				<?php echo '<span class="missions-inline-drop">' . $input_oral_proficiency . '</span>'; ?>
+			</div>
 		</td>
 	</tr>
 </table>

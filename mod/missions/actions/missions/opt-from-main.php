@@ -12,10 +12,9 @@
  */
 $current_user = elgg_get_logged_in_user_entity();
 
-if($current_user->opt_in_missions == 'gcconnex_profile:opt:yes') {
+if ($current_user->opt_in_missions == 'gcconnex_profile:opt:yes') {
 	$current_user->opt_in_missions = 'gcconnex_profile:opt:no';
-}
-else {
+} else {
 	$current_user->opt_in_missions = 'gcconnex_profile:opt:yes';
 }
 

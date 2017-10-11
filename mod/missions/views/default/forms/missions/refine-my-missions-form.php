@@ -11,7 +11,7 @@
  * Form which allows or disallows completed/cancelled missions to be displayed in My Opportunities.
  */
 $check = false;
-if(elgg_get_logged_in_user_entity()->show_closed_missions) {
+if (elgg_get_logged_in_user_entity()->show_closed_missions) {
 	$checked = true;
 }
 
@@ -29,10 +29,10 @@ $input_closed = elgg_view('input/checkbox', array(
 	<p style="display:inline;">
 		<?php echo elgg_echo('missions:show_closed_missions'); ?>
 	</p>
-	
+
 </div>
 
-<div style="display:inline-block;margin-left:23px;"> 
+<div style="display:inline-block;margin-left:23px;">
 	<?php
 		echo elgg_view('input/submit', array(
 				'value' => elgg_echo('missions:save'),
@@ -40,5 +40,5 @@ $input_closed = elgg_view('input/checkbox', array(
 				'id' => 'mission-refine-form-submission-button'
 		));
 		echo elgg_view('page/elements/one-click-restrictor', array('restricted_element_id' => 'mission-refine-form-submission-button'));
-	?> 
+	?>
 </div>

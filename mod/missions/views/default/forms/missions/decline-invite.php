@@ -15,19 +15,16 @@ $applicant_guid = $vars['applicant'];
 
 $button_text = '';
 $label_text = '';
-if(check_entity_relationship($mission->guid, 'mission_tentative', $applicant_guid)) {
+if (check_entity_relationship($mission->guid, 'mission_tentative', $applicant_guid)) {
 	$button_text = elgg_echo('missions:decline');
 	$label_text = 'missions:reason_to_decline_invite';
-}
-else if(check_entity_relationship($mission->guid, 'mission_offered', $applicant_guid)) {
+} elseif (check_entity_relationship($mission->guid, 'mission_offered', $applicant_guid)) {
 	$button_text = elgg_echo('missions:decline');
 	$label_text = 'missions:reason_to_decline_offer';
-}
-else if(check_entity_relationship($mission->guid, 'mission_applied', $applicant_guid)) {
+} elseif (check_entity_relationship($mission->guid, 'mission_applied', $applicant_guid)) {
 	$button_text = elgg_echo('missions:withdraw');
 	$label_text = 'missions:reason_to_withdraw_application';
-}
-else if(check_entity_relationship($mission->guid, 'mission_accepted', $applicant_guid)) {
+} elseif (check_entity_relationship($mission->guid, 'mission_accepted', $applicant_guid)) {
 	$button_text = elgg_echo('missions:withdraw');
 	$label_text = 'missions:reason_to_withdraw_participation';
 }
@@ -62,17 +59,17 @@ $hidden_applicant_input = elgg_view('input/hidden', array(
 		<?php echo elgg_echo($label_text, array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions')))) . ':'; ?>
 	</label>
 	<div style="max-width:400px;">
-		<?php echo $input_reason; ?> 
+		<?php echo $input_reason; ?>
 	</div>
 </div>
 <?php echo $input_other_reason; ?>
 <div>
-	<?php 
+	<?php
 		echo elgg_view('input/submit', array(
 				'value' => $button_text,
 				'id' => 'mission-reason-to-decline-form-submission-button',
 				'style' => 'margin-top:8px;'
-		)); 
+		));
 		echo elgg_view('page/elements/one-click-restrictor', array('restricted_element_id' => 'mission-reason-to-decline-form-submission-button'));
 	?>
 </div>

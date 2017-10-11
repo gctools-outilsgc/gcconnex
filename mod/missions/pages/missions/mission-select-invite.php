@@ -6,7 +6,7 @@
  * License: Creative Commons Attribution 3.0 Unported License
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
- 
+
 /*
  * Page which allows a manager to select the mission a candidate will be invited to.
  * This is meant to be a follow up to inviting a candidate from the candidate search.

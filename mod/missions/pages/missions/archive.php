@@ -6,7 +6,7 @@
  * License: Creative Commons Attribution 3.0 Unported License
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
- 
+
 gatekeeper();
 
 $title = elgg_echo('missions:mission_archive');

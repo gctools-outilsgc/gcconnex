@@ -15,7 +15,7 @@ $opt_form = elgg_get_sticky_values('useroptfill');
 $option = $opt_form['opt_in_option'];
 
 $name_option = '';
-switch($option) {
+switch ($option) {
 	case elgg_echo('gcconnex_profile:opt:micro_mission'):
 		$name_option = 'opt_in_missions';
 		break;
@@ -47,7 +47,7 @@ switch($option) {
 		$name_option = 'opt_in_job_sharing';
 		break;
 }
-	
+
 $options_attribute['type'] = 'user';
 $options_metadata['metadata_name_value_pairs'] = array(array('name' => $name_option, 'value' => 'gcconnex_profile:opt:yes'));
 $options_metadata['limit'] = elgg_get_plugin_setting('search_limit', 'missions');

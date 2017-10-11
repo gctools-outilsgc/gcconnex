@@ -13,7 +13,7 @@
  */
 $feedback = get_entity(get_input('fid'));
 
-if(get_subtype_from_id($feedback->subtype) == 'mission-feedback') {
+if (get_subtype_from_id($feedback->subtype) == 'mission-feedback') {
 	$feedback->endorsement = 'on';
 	$feedback->save();
 	system_message(elgg_echo('mission:endorsed_recipient', array(get_user($feedback->recipient)->name, get_entity($feedback->mission)->job_title)));

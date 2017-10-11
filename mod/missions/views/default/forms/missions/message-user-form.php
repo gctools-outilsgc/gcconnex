@@ -57,8 +57,8 @@ $body_input = elgg_view('input/plaintext', array(
 		<?php echo $body_input; ?>
 	</div>
 </div>
-<div> 
-	<?php 
+<div>
+	<?php
 		echo elgg_view('input/submit', array(
 				'value' => elgg_echo('missions:send'),
 				'class' => 'elgg-button btn btn-primary',
@@ -66,5 +66,5 @@ $body_input = elgg_view('input/plaintext', array(
 				'id' => 'mission-message-user-form-submission-button'
 		));
 		echo elgg_view('page/elements/one-click-restrictor', array('restricted_element_id' => 'mission-message-user-form-submission-button'));
-	?> 
+	?>
 </div>

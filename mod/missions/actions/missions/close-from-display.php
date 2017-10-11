@@ -19,8 +19,8 @@ $mission_set = $_SESSION['mission_search_set'];
 $key = '';
 // If the element is in a currently saved search set then we remove it from the set.
 if (($key = array_search($mission, $mission_set)) !== false) {
-    unset($mission_set[$key]);
-    $mission_count --;
+	unset($mission_set[$key]);
+	$mission_count --;
 }
 
 $_SESSION['mission_count'] = $mission_count;

@@ -20,7 +20,7 @@ $first_form = elgg_get_sticky_values('firstfill');
 // Error checking function.
 $err .= mm_first_post_error_check($first_form);
 
-if(!$first_form['disclaimer']) {
+if (!$first_form['disclaimer']) {
 	$err .= elgg_echo('missions:error:dislcaimer_needs_to_be_checked');
 }
 
@@ -28,8 +28,8 @@ if(!$first_form['disclaimer']) {
 // If not then the next page will be loaded
 if ($err == '') {
 	$_SESSION['missions_pass_department_to_second_form'] = mo_get_last_input_node($first_form);
-    forward(elgg_get_site_url() . 'missions/mission-post/step-two');
+	forward(elgg_get_site_url() . 'missions/mission-post/step-two');
 } else {
-    register_error($err);
-    forward(REFERER);
+	register_error($err);
+	forward(REFERER);
 }

@@ -22,173 +22,174 @@ $ancestor_array = mo_get_all_ancestors($department_string);
 $progenitor = get_entity($ancestor_array[0]);
 
 $department_abbr = $progenitor->abbr;
-if(get_current_language() == 'fr') {
+if (get_current_language() == 'fr') {
 	$department_abbr = $progenitor->abbr_french;
 }
 
 $remotely = false;
-if($mission->remotely == 'on') {
+if ($mission->remotely == 'on') {
 	$remotely = true;
 }
 $openess = false;
-if($mission->openess == 'on') {
+if ($mission->openess == 'on') {
 	$openess = true;
 }
 
 $max_applicants = elgg_get_plugin_setting('mission_max_applicants', 'missions');
 $max_array = array();
-for($i=1;$i<=$max_applicants;$i++) {
+for ($i=1;$i<=$max_applicants;$i++) {
 	$max_array[$i-1] = $i;
 }
 
 $input_name = elgg_view('input/text', array(
-	    'name' => 'name',
-	    'value' => $mission->name,
-	    'id' => 'edit-mission-name-text-input'
+	'name' => 'name',
+	'value' => $mission->name,
+	'id' => 'edit-mission-name-text-input'
 ));
 
 $input_department = elgg_view('page/elements/organization-input', array(
-		'organization_string' => $mission->department
+	'organization_string' => $mission->department
 ));
 
 $input_email = elgg_view('input/text', array(
-	    'name' => 'email',
-	    'value' => $mission->email,
-	    'id' => 'edit-mission-email-text-input'
+	'name' => 'email',
+	'value' => $mission->email,
+	'id' => 'edit-mission-email-text-input'
 ));
 
 $input_phone = elgg_view('input/text', array(
-    	'name' => 'phone',
-	    'value' => $mission->phone,
-	    'id' => 'edit-mission-phone-text-input'
+	'name' => 'phone',
+	'value' => $mission->phone,
+	'id' => 'edit-mission-phone-text-input'
 ));
 
 $input_title = elgg_view('input/text', array(
-		'name' => 'job_title',
-		'value' => $mission->job_title,
-		'id' => 'edit-mission-title-text-input'
+	'name' => 'job_title',
+	'value' => $mission->job_title,
+	'id' => 'edit-mission-title-text-input'
 ));
 
-$input_role = elgg_view('input/radio', array(
-	'name' => 'role_type',
-	'id' => 'post-mission-role-radio-input',
-	'value' => $mission->role_type,
-	'options' => array(
-		'<span style="font-weight:normal;"> '.elgg_echo('missions:opportunity_role:offering').'</span>' => 'missions:offering',
-		'<span style="font-weight:normal;"> '.elgg_echo('missions:opportunity_role:seeking').'</span>' => 'missions:seeking'
-    	)
- 	)
+$input_role = elgg_view(
+	'input/radio',
+	array(
+		'name' => 'role_type',
+		'id' => 'post-mission-role-radio-input',
+		'value' => $mission->role_type,
+		'options' => array(
+			'<span style="font-weight:normal;"> '.elgg_echo('missions:opportunity_role:offering').'</span>' => 'missions:offering',
+			'<span style="font-weight:normal;"> '.elgg_echo('missions:opportunity_role:seeking').'</span>' => 'missions:seeking'
+		)
+	)
 );
 
 $input_type = elgg_view('input/dropdown', array(
-		'name' => 'job_type',
-		'value' => $mission->job_type,
-		'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('opportunity_type_string', 'missions')),
-		'id' => 'edit-mission-type-dropdown-input'
+	'name' => 'job_type',
+	'value' => $mission->job_type,
+	'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('opportunity_type_string', 'missions')),
+	'id' => 'edit-mission-type-dropdown-input'
 ));
 
 $sort_areas = mm_echo_explode_setting_string(elgg_get_plugin_setting('program_area_string', 'missions'));
 asort($sort_areas);
 $sort_areas['missions:other'] = elgg_echo('missions:other');
-if(array_key_exists($mission->program_area, $sort_areas)) {
+if (array_key_exists($mission->program_area, $sort_areas)) {
 	$initial_value = $mission->program_area;
 	$other_value = '';
-}
-else {
+} else {
 	$initial_value = 'missions:other';
 	$other_value = $mission->program_area;
 }
 $input_area = elgg_view('input/dropdown', array(
-	    'name' => 'job_area',
-	    'value' => $initial_value,
-		'options_values' => $sort_areas,
-	    'id' => 'edit-mission-area-dropdown-input'
+	'name' => 'job_area',
+	'value' => $initial_value,
+	'options_values' => $sort_areas,
+	'id' => 'edit-mission-area-dropdown-input'
 ));
 $input_other_area = elgg_view('page/elements/other-text-input', array(
-		'parent_id' => 'edit-mission-area-dropdown-input',
-		'value_override' => $other_value
+	'parent_id' => 'edit-mission-area-dropdown-input',
+	'value_override' => $other_value
 ));
 
 $input_number_of = elgg_view('input/dropdown', array(
-		'name' => 'number',
-		'value' => $mission->number,
-		'options' => $max_array,
-		'id' => 'edit-mission-number-dropdown-input'
+	'name' => 'number',
+	'value' => $mission->number,
+	'options' => $max_array,
+	'id' => 'edit-mission-number-dropdown-input'
 ));
 
 $input_start_date = elgg_view('input/date', array(
-		'name' => 'start_date',
-		'value' => $mission->start_date,
-		'id' => 'edit-mission-start-date-input',
-		'placeholder' => 'yyyy-mm-dd'
+	'name' => 'start_date',
+	'value' => $mission->start_date,
+	'id' => 'edit-mission-start-date-input',
+	'placeholder' => 'yyyy-mm-dd'
 ));
 
 $input_completion_date = elgg_view('input/date', array(
-		'name' => 'completion_date',
-		'value' => $mission->completion_date,
-		'id' => 'edit-mission-completion-date-input',
-		'placeholder' => 'yyyy-mm-dd'
+	'name' => 'completion_date',
+	'value' => $mission->completion_date,
+	'id' => 'edit-mission-completion-date-input',
+	'placeholder' => 'yyyy-mm-dd'
 ));
 
 $input_deadline = elgg_view('input/date', array(
-		'name' => 'deadline',
-		'value' => $mission->deadline,
-		'id' => 'edit-mission-deadline-date-input',
-		'placeholder' => 'yyyy-mm-dd'
+	'name' => 'deadline',
+	'value' => $mission->deadline,
+	'id' => 'edit-mission-deadline-date-input',
+	'placeholder' => 'yyyy-mm-dd'
 ));
 
 $input_description = elgg_view('input/longtext', array(
-		'name' => 'description',
-		'value' => $mission->description,
-		'id' => 'edit-mission-description-plaintext-input'
+	'name' => 'description',
+	'value' => $mission->description,
+	'id' => 'edit-mission-description-plaintext-input'
 ));
 
 $input_openess = elgg_view('input/checkbox', array(
-	    'name' => 'openess',
-	    'checked' => $openess,
-	    'id' => 'edit-mission-openess-checkbox-input'
+	'name' => 'openess',
+	'checked' => $openess,
+	'id' => 'edit-mission-openess-checkbox-input'
 ));
 
 $input_remotely = elgg_view('input/checkbox', array(
-		'name' => 'remotely',
-		'checked' => $remotely,
-		'id' => 'edit-mission-remotely-checkbox-input'
+	'name' => 'remotely',
+	'checked' => $remotely,
+	'id' => 'edit-mission-remotely-checkbox-input'
 ));
 
 $input_location = elgg_view('input/dropdown', array(
-		'name' => 'location',
-		'value' => $mission->location,
-	    'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('province_string', 'missions')),
-		'id' => 'edit-mission-location-dropdown-input'
+	'name' => 'location',
+	'value' => $mission->location,
+	'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('province_string', 'missions')),
+	'id' => 'edit-mission-location-dropdown-input'
 ));
 
 $input_security = elgg_view('input/dropdown', array(
-		'name' => 'security',
-		'value' => $mission->security,
-		'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('security_string', 'missions')),
-		'id' => 'edit-mission-security-dropdown-input'
+	'name' => 'security',
+	'value' => $mission->security,
+	'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('security_string', 'missions')),
+	'id' => 'edit-mission-security-dropdown-input'
 ));
 
 $input_timezone = elgg_view('input/dropdown', array(
-		'name' => 'timezone',
-		'value' => $mission->timezone,
-		'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('timezone_string', 'missions')),
-		'id' => 'edit-mission-timezone-dropdown-input'
+	'name' => 'timezone',
+	'value' => $mission->timezone,
+	'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('timezone_string', 'missions')),
+	'id' => 'edit-mission-timezone-dropdown-input'
 ));
 
 $input_time_commit = elgg_view('input/text', array(
-		'name' => 'time_commitment',
-		'value' => $mission->time_commitment,
-		'id' => 'edit-mission-time-commitment-text-input',
-		'style' => 'display:inline-block;max-width:75px;'
+	'name' => 'time_commitment',
+	'value' => $mission->time_commitment,
+	'id' => 'edit-mission-time-commitment-text-input',
+	'style' => 'display:inline-block;max-width:75px;'
 ));
 
 $input_time_interval = elgg_view('input/dropdown', array(
-		'name' => 'time_interval',
-		'value' => $mission->time_interval,
-		'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('time_rate_string', 'missions')),
-		'id' => 'edit-mission-time-interval-dropdown-input',
-		'style' => 'display:inline-block;margin-left:4px;'
+	'name' => 'time_interval',
+	'value' => $mission->time_interval,
+	'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('time_rate_string', 'missions')),
+	'id' => 'edit-mission-time-interval-dropdown-input',
+	'style' => 'display:inline-block;margin-left:4px;'
 ));
 
 //Nick - adding group and level to the edit
@@ -202,31 +203,30 @@ $input_gl_group = elgg_view('input/dropdown', array(
 
 $skill_set = '';
 $skill_array = explode(', ', $mission->key_skills);
-foreach($skill_array as $skill) {
+foreach ($skill_array as $skill) {
 	$skill_set .= elgg_view('missions/add-skill', array('value' => $skill));
 }
 
 $add_skill_button = elgg_view('output/url', array(
-		'text' => ' ' . elgg_echo('missions:add'),
-		'class' => 'elgg-button btn fa fa-plus-circle',
-		'id' => 'add-skill-button',
-		'onclick' => 'add_skill_field()'
+	'text' => ' ' . elgg_echo('missions:add'),
+	'class' => 'elgg-button btn fa fa-plus-circle',
+	'id' => 'add-skill-button',
+	'onclick' => 'add_skill_field()'
 ));
 
 $languages = elgg_view('page/elements/language-dropdown', $vars);
 
 $time_content = elgg_view('page/elements/time-table', $vars);
 
-if($department_abbr) {
+if ($department_abbr) {
 	$openess_string = elgg_echo('missions:openess_sentence', array(strtoupper($department_abbr)));
-}
-else {
+} else {
 	$openess_string = elgg_echo('missions:openess_sentence_generic');
 }
 
 $hidden_guid = elgg_view('input/hidden', array(
-    'name' => 'hidden_guid',
-    'value' => $mission->guid
+	'name' => 'hidden_guid',
+	'value' => $mission->guid
 ));
 
 $button_set = mm_create_button_set_full($mission);
@@ -345,9 +345,9 @@ $button_set = mm_create_button_set_full($mission);
 
 			</div>
 			<script>
-					$('#post-mission-gl-group').change(function(){
-						$('#numeric1').val('1');
-					})
+				$('#post-mission-gl-group').change(function(){
+					$('#numeric1').val('1');
+				})
 			</script>
 		</div>
 
@@ -446,7 +446,7 @@ $button_set = mm_create_button_set_full($mission);
 			</label>
 			<div class="col-sm-9">
 				<div id="mission-skill-container" style="display:inline-block;">
-				<?php echo $skill_set; ?>
+					<?php echo $skill_set; ?>
 				</div>
 				<div>
 					<?php echo $add_skill_button; ?>
@@ -526,7 +526,8 @@ $button_set = mm_create_button_set_full($mission);
 		if (typeof(CKEDITOR) !== 'undefined' && Object.keys(CKEDITOR.instances).length > 0) {
 			$.each(CKEDITOR.instances, function($k, $v) {
 				$v.on('change', function() {
-					$v.updateElement() });
+					$v.updateElement()
+				});
 			});
 		} else {
 			setTimeout(init_ckeditors, 10);

@@ -10,7 +10,6 @@
 gatekeeper();
 
 $result_set = $_SESSION['missions_user_by_opt_in_results'];
-//unset($_SESSION['missions_user_by_opt_in_results']);
 
 $title = elgg_echo('missions:users_by_opt_in');
 
@@ -23,13 +22,13 @@ $content .= elgg_view('page/elements/mission-tabs');
 
 $content .= elgg_view_form('missions/users-by-opt-in-form', array(
 		'class' => 'form-horizontal'
-)) . '<br>';
+	)) . '<br>';
 
-if($result_set) {
+if ($result_set) {
 	$count = count($result_set);
 	$offset = (int) get_input('offset', 0);
 	$max = elgg_get_plugin_setting('search_result_per_page', 'missions');
-	
+
 	$content .= elgg_view_entity_list(array_slice($result_set, $offset, $max), array(
 			'count' => $count,
 			'offset' => $offset,

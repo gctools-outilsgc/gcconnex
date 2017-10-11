@@ -39,7 +39,7 @@ if ($reshare_guid || $reshare_guid > 0) {
 	$entity = get_entity($reshare_guid);
 	$wire_entity = get_entity($guid);
 
-	if ($entity->getType() == 'group'){
+	if ($entity->getType() == 'group') {
 		$entity->title = $entity->name;
 	}
 
@@ -53,7 +53,7 @@ if ($reshare_guid || $reshare_guid > 0) {
 			'cp_content_reshared' => $entity,
 			'cp_wire_url' => $wire_entity->getURL(),
 		);
-		elgg_trigger_plugin_hook('cp_overwrite_notification','all',$message);
+		elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
 	}
 }
 

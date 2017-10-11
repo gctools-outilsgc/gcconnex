@@ -21,35 +21,30 @@ $mission = get_entity($mid);
 $number_of = $mission->number;
 
 if ($err != '') {
-    register_error($err);
-    forward(REFERER);
-} 
-else {
-    $applicant_array = array();
-    
-    // Retrieves a user for each input field. If the field is empty or invalid then the corresponding array entry will be null.
-    for ($i = 0; $i < $number_of; $i ++) {
-        if($fill_form['applicant_' . $i] != '') {
-            $applicant = get_user_by_username($fill_form['applicant_' . $i]);
-            if ($applicant->guid != '') {
-            	// Candidate must be opted in to micro missions to receive an invitation.
-                if($applicant->opt_in_missions == 'gcconnex_profile:opt:yes') {
-                    mm_send_notification_invite($applicant, $mission);
-                    // This works!
-                    //elgg_send_email($applicant->email, $mission->email, "Email Test", "Test");
-                }
-                else {
-                    $err .= $applicant->name . elgg_echo('missions:error:not_participating_in_missions');
-                }
-            }
-            else {
-                $err .= $fill_form['applicant_' . $i] . elgg_echo('missions:error:does_not exist') . "\n";
-            }
-        }
-    }
-    
-    if ($err != '') {
-        register_error($err);
-    }
-    forward($mission->getURL());
+	register_error($err);
+	forward(REFERER);
+} else {
+	$applicant_array = array();
+
+	// Retrieves a user for each input field. If the field is empty or invalid then the corresponding array entry will be null.
+	for ($i = 0; $i < $number_of; $i ++) {
+		if ($fill_form['applicant_' . $i] != '') {
+			$applicant = get_user_by_username($fill_form['applicant_' . $i]);
+			if ($applicant->guid != '') {
+				// Candidate must be opted in to micro missions to receive an invitation.
+				if ($applicant->opt_in_missions == 'gcconnex_profile:opt:yes') {
+					mm_send_notification_invite($applicant, $mission);
+				} else {
+					$err .= $applicant->name . elgg_echo('missions:error:not_participating_in_missions');
+				}
+			} else {
+				$err .= $fill_form['applicant_' . $i] . elgg_echo('missions:error:does_not exist') . "\n";
+			}
+		}
+	}
+
+	if ($err != '') {
+		register_error($err);
+	}
+	forward($mission->getURL());
 }

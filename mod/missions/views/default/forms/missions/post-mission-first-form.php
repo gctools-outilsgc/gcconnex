@@ -14,42 +14,41 @@ $email = get_input('fe');
 $phone = get_input('fp');
 $disclaimer = get_input('fd');
 
-if(elgg_is_sticky_form('firstfill')) {
+if (elgg_is_sticky_form('firstfill')) {
 	$temp_form = elgg_get_sticky_values('firstfill');
 	$extracted_org = mo_get_last_input_node($temp_form);
-    extract($temp_form);
+	extract($temp_form);
 }
 
-if($disclaimer == 'YES' && !$disclaimer_uncheck) {
+if ($disclaimer == 'YES' && !$disclaimer_uncheck) {
 	$disclaimer = true;
-}
-else {
+} else {
 	$disclaimer = false;
 }
 
-if(!elgg_is_sticky_form('firstfill')) {
+if (!elgg_is_sticky_form('firstfill')) {
 	$user = get_entity(elgg_get_logged_in_user_guid());
-	if(!$name) {
+	if (!$name) {
 		$name = $user->name;
 	}
-	if(!$extracted_org) {
+	if (!$extracted_org) {
 		$exploded_department = explode('/', $user->department);
 		$department_name = trim($exploded_department[0]);
 		$extracted_org = mo_format_input_node(mo_get_department_next_to_root($department_name));
 	}
-	if(!$email) {
+	if (!$email) {
 		$email = $user->email;
 	}
-	if(!$phone) {
+	if (!$phone) {
 		$phone = $user->phone;
 	}
 }
 
 
 $input_name = elgg_view('input/text', array(
-    'name' => 'name',
-    'value' => $name,
-    'id' => 'post-mission-name-text-input'
+	'name' => 'name',
+	'value' => $name,
+	'id' => 'post-mission-name-text-input'
 ));
 
 $input_department = elgg_view('page/elements/organization-input', array(
@@ -57,14 +56,14 @@ $input_department = elgg_view('page/elements/organization-input', array(
 ));
 
 $input_email = elgg_view('input/text', array(
-    'name' => 'email',
-    'value' => $email,
-    'id' => 'post-mission-email-text-input'
+	'name' => 'email',
+	'value' => $email,
+	'id' => 'post-mission-email-text-input'
 ));
 $input_phone = elgg_view('input/text', array(
-    'name' => 'phone',
-    'value' => $phone,
-    'id' => 'post-mission-phone-text-input'
+	'name' => 'phone',
+	'value' => $phone,
+	'id' => 'post-mission-phone-text-input'
 ));
 $input_disclaimer = elgg_view('input/checkbox', array(
 		'name' => 'disclaimer',
@@ -118,9 +117,6 @@ $input_disclaimer = elgg_view('input/checkbox', array(
 	</label>
 	<div class="col-sm-4">
 		<?php echo $input_phone; ?>
-		<p style="font-style:italic;">
-			<?php //echo elgg_echo('missions:post_contact_disclaimer')?>
-		</p>
 	</div>
 </div>
 <div class="form-group">
@@ -131,7 +127,7 @@ $input_disclaimer = elgg_view('input/checkbox', array(
 			<strong class="required" aria-required="true">
 				<?php echo elgg_echo('missions:required'); ?>
 			</strong>
-		</label>		
+		</label>
 	</div>
 </div>
 <div>

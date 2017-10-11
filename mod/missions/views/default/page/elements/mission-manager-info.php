@@ -7,9 +7,6 @@
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
 
-/*
- *
- */
 $mission = $vars['mission'];
 $container_class = $vars['container_class'];
 $grid_number = $vars['grid_number'];
@@ -18,25 +15,25 @@ $email = $mission->email;
 $accounts = get_user_by_email($email);
 //Compare email and username for user with more than one account
 foreach ($accounts as $key) {
-	if($key->name == $mission->name){
+	if ($key->name == $mission->name) {
 		$guid_account = $key->guid;
 	}
 }
 
-if($guid_account){
+if ($guid_account) {
 	$manager_account = get_user($guid_account);
-}else{
+} else {
 	$manager_account = get_user($mission->account); //Nick changed to owner_guid then back to account
 }
 
-if(!$manager_account) {
+if (!$manager_account) {
 	$manager_account_by_email = get_user_by_email($mission->email);
 	$manager_account = array_pop($manager_account_by_email);
 }
 
 $manager_name = $mission->name;
 $manager_icon = elgg_view_entity_icon(get_entity(1), 'small');
-if($manager_account) {
+if ($manager_account) {
 	$manager_name = elgg_view('output/url', array(
 			'href' => elgg_get_site_url().'profile/'.$manager_account->username,
 			'text' => $manager_name,
@@ -47,18 +44,17 @@ if($manager_account) {
 }
 
 $department_node = get_entity(mo_extract_node_guid($mission->department));
-if($department_node == '') {
+if ($department_node == '') {
 	$department = $mission->department;
-}
-else {
+} else {
 	$department = $department_node->name;
-	if(get_current_language() == 'fr') {
+	if (get_current_language() == 'fr') {
 		$department = $department_node->name_french;
 	}
 }
 
 $department_other = mo_extract_other_input($mission->department);
-if($department_other) {
+if ($department_other) {
 	$department = $department_other;
 }
 
@@ -66,20 +62,18 @@ $job_title = $manager_account->job;
 ?>
 
 <div class="<?php echo $container_class; ?>">
-
-
 	<div class="col-xs-<?php echo $grid_number; ?>">
 		<?php echo $manager_icon;?>
 	</div>
-	<div class="col-xs-<?php echo (12 - $grid_number); ?>" name="mission-manager" style="text-align:left;">
+	<div class="col-xs-<?php echo(12 - $grid_number); ?>" name="mission-manager" style="text-align:left;">
 		<div>
 			<span name="mission-manager-name"><?php echo $manager_name;?></span>
 		</div>
 		<div>
 			<span name="mission-manager-department">
-            <?php //echo ucwords(strtolower($department));
-            echo $job_title;
-            ?></span>
+            <?php
+				echo $job_title;
+			?></span>
 		</div>
 	</div>
 </div>

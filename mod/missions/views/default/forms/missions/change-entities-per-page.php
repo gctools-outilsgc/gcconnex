@@ -12,36 +12,35 @@
  */
 $entity_type = $vars['entity_type'];
 $number_per = $vars['number_per'];
-if($entity_type == 'candidate') {
+if ($entity_type == 'candidate') {
 	$number_array = array(10,25,50,100);
-}
-else {
+} else {
 	$number_array = array(9,18,30,60,120);
 }
 
 $input_per_page = elgg_view('input/dropdown', array(
-		'name' => 'number_per',
-		'value' => $number_per,
-		'options' => $number_array,
-		'id' => 'change-entities-per-page-dropdown-input',
-		'onchange' => 'this.form.submit()'
+	'name' => 'number_per',
+	'value' => $number_per,
+	'options' => $number_array,
+	'id' => 'change-entities-per-page-dropdown-input',
+	'onchange' => 'this.form.submit()'
 ));
 
 $hidden_type = elgg_view('input/hidden', array(
-		'name' => 'hidden_type',
-		'value' => $entity_type
+	'name' => 'hidden_type',
+	'value' => $entity_type
 ));
 ?>
 
 <?php echo $hidden_type; ?>
 <div class="col-sm-12">
 	<label for="change-entities-per-page-dropdown-input"><?php echo elgg_echo('missions:entities_per_page') . ':'; ?></label>
-	<div style="display:inline-block;">	
+	<div style="display:inline-block;">
 		<?php echo $input_per_page; ?>
 	</div>
 	<noscript>
 		<div style="display:inline-block;">
-			<?php 
+			<?php
 				echo elgg_view('input/submit', array(
 						'value' => elgg_echo('missions:change'),
 						'id' => 'change-entities-per-page-submission-button'

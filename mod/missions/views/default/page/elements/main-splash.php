@@ -34,9 +34,8 @@ $entity_list = elgg_view_entity_list(array_slice($entity_list, $offset, $max), a
 		'limit' => $max,
 		'pagination' => true,
 		'list_type' => 'gallery',
-        'gallery_class'=>'wb-eqht',
-        'item_class'=>'col-sm-6 col-md-4 ',
-
+		'gallery_class'=>'wb-eqht',
+		'item_class'=>'col-sm-6 col-md-4 ',
 		'mission_full_view' => false
 ), $offset, $max);
 
@@ -56,98 +55,67 @@ $advanced_field = elgg_view('page/elements/hidden-field', array(
 		'field_bordered' => true
 ));
 ?>
-<!--<div class="panel panel-default mission-info-card">
-	<?php /*echo elgg_echo('missions:placeholder_a');*/ ?>
-</div> -->
 
 <div class="col-sm-12 clearfix">
-    <h2 class='h4'><?php echo elgg_echo('missions:splash:welcome'); ?></h2>
-	<div class="col-sm-8"><?php echo elgg_echo('missions:first_splash_paragraph')?></div>
+	<h2 class='h4'><?php echo elgg_echo('missions:splash:welcome'); ?></h2>
+	<div class="col-sm-8">
+		<?php echo elgg_echo('missions:first_splash_paragraph')?>
+	</div>
 </div>
 
 <div class="col-sm-12 clearfix">
-    <h2 class='h4' class=""><?php echo elgg_echo('missions:splash:how_to_apply'); ?></h2>
-    <div class="col-sm-8">
-        <?php echo elgg_echo('missions:second_splash_paragraph'); ?>
-        <div class="col-sm-12 alert alert-info mrgn-tp-sm clearfix">
-            <p>
-                <?php echo elgg_echo('missions:splash:missions_help_message'); ?>
-            </p>
-        </div>
-    </div>
-	
+	<h2 class='h4' class=""><?php echo elgg_echo('missions:splash:how_to_apply'); ?></h2>
+	<div class="col-sm-8">
+		<?php echo elgg_echo('missions:second_splash_paragraph'); ?>
+		<div class="col-sm-12 alert alert-info mrgn-tp-sm clearfix">
+			<p>
+				<?php echo elgg_echo('missions:splash:missions_help_message'); ?>
+			</p>
+		</div>
+	</div>
+
 </div>
 
-
-
-
-
-<div>
-	<?php 
-//Nick - moving the opt in button and changing it to function with a lightbox
-
-	?>
-</div>
 <div class="clearfix col-sm-12 mrgn-bttm-md">
-    <div class="col-sm-offset-4 col-sm-4">
-        <style>
-    .modal-open .modal {
-        background: rgba(0,0,0,0.4);
-    }
-</style>
-<button type="button" id="optinPopup" class="btn btn-primary btn-lg btn-block gcconnex-edit-profile" data-toggle="modal" data-target="#showOptin" data-keyboard="false" data-backdrop="static" data-colorbox-opts='{"inline":true, "href":"#showOptin", "innerWidth": 600, "maxHeight": "80%", "margin-top":"15%"}'><?php echo elgg_echo('missions:opt_in_to_opportunities'); ?></button>
-    </div>
+	<div class="col-sm-offset-4 col-sm-4">
+		<style>
+			.modal-open .modal {
+				background: rgba(0, 0, 0, 0.4);
+			}
+		</style>
+		<button type="button" id="optinPopup" class="btn btn-primary btn-lg btn-block gcconnex-edit-profile" data-toggle="modal" data-target="#showOptin" data-keyboard="false" data-backdrop="static" data-colorbox-opts='{"inline":true, "href":"#showOptin", "innerWidth": 600, "maxHeight": "80%", "margin-top":"15%"}'><?php echo elgg_echo('missions:opt_in_to_opportunities'); ?></button>
+	</div>
 
 </div>
 
 <div class="modal fade" id="showOptin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg opt-in-modal" style="margin-top:10%;">
-        <div class="panel panel-custom" id="welcome-step">
-            
-            <div class="panel-body">
-                <div class="clearfix">
-                     <div class="pull-right clearfix">
-
-                    <a href ="#" type="button" class="" data-dismiss="modal"><i class="fa fa-times fa-lg" aria-hidden="true"></i><span class="wb-inv"><?php echo elgg_echo('close');?></span></a>
-
-                    </div>
-                    <div>
-                        <h3 class="mrgn-tp-md"><?php echo elgg_echo('missions:splash:popup_title'); ?></h3>
-                        <p class="timeStamp"><?php echo elgg_echo('missions:splash:popup_instruction'); ?></p>
-                    </div>
-
-
-                </div>
-
-               
-                <div>
-                    <?php
-                        echo elgg_view_form('missions/opt-in-splash');
-                        
-                        
-                    ?>
-                </div>
-
-
-            </div>
-
-        </div>
-
-    </div>
-
+	<div class="modal-dialog modal-lg opt-in-modal" style="margin-top:10%;">
+		<div class="panel panel-custom" id="welcome-step">
+			<div class="panel-body">
+				<div class="clearfix">
+					<div class="pull-right clearfix">
+						<a href="#" type="button" class="" data-dismiss="modal"><i class="fa fa-times fa-lg" aria-hidden="true"></i><span class="wb-inv"><?php echo elgg_echo('close');?></span></a>
+					</div>
+					<div>
+						<h3 class="mrgn-tp-md"><?php echo elgg_echo('missions:splash:popup_title'); ?></h3>
+						<p class="timeStamp">
+							<?php echo elgg_echo('missions:splash:popup_instruction'); ?>
+						</p>
+					</div>
+				</div>
+				<div>
+					<?php
+						echo elgg_view_form('missions/opt-in-splash');
+					?>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-
-
 
 <div class="brdr-tp mrgn-tp-md clearfix col-sm-12">
 	<h2 class='h4'><?php echo elgg_echo('missions:splash:missions_right_now') ; ?></h2>
-	<?php 
-		//echo $simple_search_form;
-//Nick - Removing search from splash page as user still needs to opt in
-		//echo $advanced_field;
-	?>
 </div>
 <div class="col-sm-12">
 	<?php echo $entity_list; ?>
 </div>
-

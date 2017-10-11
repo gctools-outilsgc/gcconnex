@@ -11,7 +11,7 @@
  * Form which allows users to add a department to the analytics graph.
  */
 $state_array = array('Open');
-if($vars['state_array']) {
+if ($vars['state_array']) {
 	$state_array = $vars['state_array'];
 }
 $state_array = implode(',', $state_array);
@@ -20,7 +20,6 @@ if (elgg_is_sticky_form('graphdatafill')) {
 	$temp_form = elgg_get_sticky_values('graphdatafill');
 	$extracted_org = mo_get_last_input_node($temp_form);
 	extract($temp_form);
-	// elgg_clear_sticky_form('firstfill');
 }
 
 $input_department = elgg_view('page/elements/organization-input', array(
@@ -43,8 +42,8 @@ $current_count = count($_SESSION['mission_graph_data_array']);
 		<?php echo $input_department; ?>
 	</div>
 </div>
-<div> 
-	<?php 
+<div>
+	<?php
 		echo elgg_view('input/submit', array(
 				'value' => elgg_echo('missions:add_department'),
 				'class' => 'elgg-button btn btn-primary',

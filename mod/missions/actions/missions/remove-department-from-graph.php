@@ -19,7 +19,7 @@ unset($data_array[$position]);
 $data_array = array_values($data_array);
 $_SESSION['mission_graph_data_array'] = $data_array;
 
-for($i=1;$i<=$state_number;$i++) {
+for ($i=1;$i<=$state_number;$i++) {
 	$num_temp = $state_number * ($position - 1) + $i;
 	unset($name_array[$num_temp]);
 }

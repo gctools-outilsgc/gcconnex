@@ -27,32 +27,31 @@ $relationship_count += elgg_get_entities_from_relationship(array(
 ));
 
 // Does not allow the misssion to be cancelled if the count is not zero.
-if($relationship_count > 0) {
+if ($relationship_count > 0) {
 	register_error(elgg_echo('missions:cannot_cancel_mission_with_participants'));
 	forward(REFERER);
-}
-else {
+} else {
 	$mission->state = 'cancelled';
 	$mission->time_to_cancel = time() - $mission->time_created;
 	$mission->time_closed = time();
 	$mission->save;
 
-  // Generate an analytics record to track "cancelled".
-  $ia = elgg_set_ignore_access(true);
-  $analytics_record = new ElggObject();
-  $analytics_record->subtype = 'mission-cancelled';
-  $analytics_record->title = 'Mission Cancelled Report';
-  $analytics_record->mission_guid = $mission->guid;
-  $analytics_record->access_id = ACCESS_LOGGED_IN;
-  $analytics_record->save();
-  elgg_set_ignore_access($ia);
+	// Generate an analytics record to track "cancelled".
+	$ia = elgg_set_ignore_access(true);
+	$analytics_record = new ElggObject();
+	$analytics_record->subtype = 'mission-cancelled';
+	$analytics_record->title = 'Mission Cancelled Report';
+	$analytics_record->mission_guid = $mission->guid;
+	$analytics_record->access_id = ACCESS_LOGGED_IN;
+	$analytics_record->save();
+	elgg_set_ignore_access($ia);
 
 	system_message(elgg_echo('missions:has_been_cancelled', array($mission->job_title)));
-	
+
 	// If the admin tool is calling the action then the user is returned to the admin tool page.
-	if($from_admin) {
+	if ($from_admin) {
 		forward(REFERER);
 	}
-	
+
 	forward(elgg_get_site_url() . 'missions/main');
 }

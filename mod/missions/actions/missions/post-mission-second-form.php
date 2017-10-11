@@ -22,8 +22,8 @@ $err .= mm_first_post_error_check($first_form);
 $err .= mm_second_post_error_check($second_form);
 
 if ($err == '') {
-    forward(elgg_get_site_url() . 'missions/mission-post/step-three');
+	forward(elgg_get_site_url() . 'missions/mission-post/step-three');
 } else {
-    register_error($err);
-    forward(REFERER);
+	register_error($err);
+	forward(REFERER);
 }

@@ -12,7 +12,6 @@
  * There is no equivalent form for this action. It is called directly by a link.
  * This action displays all the latest missions chronologically.
  */
-//$_SESSION['mission_search_switch_override'] = 'mission'; 
 
 $options['type'] = 'object';
 $options['subtype'] = 'mission';

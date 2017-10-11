@@ -11,19 +11,11 @@
  * View which displays 28 dropdown fields. These are for the start times and duration of every day of the week.
  * Values in the dropdown fields are extracted from the hour_string and minute_string found in settings.
  */
-/*$hourarray = explode(',', elgg_get_plugin_setting('hour_string', 'missions'));
-$minarray = explode(',', elgg_get_plugin_setting('minute_string', 'missions'));
-$durationarray = explode(',', elgg_get_plugin_setting('duration_string', 'missions'));
-
-$metadata = array();
-$metadata = $vars['mission_metadata'];
-$_SESSION['mm_metadata_array'] = $metadata;*/
 
 $mission = $vars['entity'];
 
 if (elgg_is_sticky_form('tdropfill')) {
-    extract(elgg_get_sticky_values('tdropfill'));
-    // elgg_clear_sticky_form('thirdfill');
+	extract(elgg_get_sticky_values('tdropfill'));
 }
 
 $monday = elgg_view('page/elements/time-table-day', array(
@@ -31,25 +23,25 @@ $monday = elgg_view('page/elements/time-table-day', array(
 		'start' => $mission->mon_start,
 		'duration' => $mission->mon_duration
 ));
-	
+
 $tuesday = elgg_view('page/elements/time-table-day', array(
 		'day' => 'tue',
 		'start' => $mission->tue_start,
 		'duration' => $mission->tue_duration
 ));
-	
+
 $wednesday = elgg_view('page/elements/time-table-day', array(
 		'day' => 'wed',
 		'start' => $mission->wed_start,
 		'duration' => $mission->wed_duration
 ));
-	
+
 $thursday = elgg_view('page/elements/time-table-day', array(
 		'day' => 'thu',
 		'start' => $mission->thu_start,
 		'duration' => $mission->thu_duration
 ));
-	
+
 $friday = elgg_view('page/elements/time-table-day', array(
 		'day' => 'fri',
 		'start' => $mission->fri_start,
@@ -73,11 +65,11 @@ $sunday = elgg_view('page/elements/time-table-day', array(
 	<div style="height:35px;">
 	</div>
 	<div style="font-weight:bold;height:37px;">
-    	<?php echo elgg_echo('missions:start_time'); ?>
-    </div>
-    <div style="font-weight:bold;height:37px;">
-    	<?php echo elgg_echo('missions:duration'); ?>
-    </div>
+		<?php echo elgg_echo('missions:start_time'); ?>
+	</div>
+	<div style="font-weight:bold;height:37px;">
+		<?php echo elgg_echo('missions:duration'); ?>
+	</div>
 </div>
 
 <?php echo $monday; ?>

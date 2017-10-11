@@ -21,17 +21,16 @@ $content .= '<h3>' . elgg_echo('missions:search_for') . ':</h3>' . "\n";
 $content .= $switch_buttons['mission_button'] . $switch_buttons['candidate_button'];
 
 $content .= elgg_view_form('missions/search-simple', array(
-    'class' => 'mission-form'
+	'class' => 'mission-form'
 ));
 
 $sidebar = elgg_view_menu('mission_main', array(
-    'sort_by' => 'priority'
+	'sort_by' => 'priority'
 ));
-// $sidebar .= elgg_view_menu('mission_browse', array('sort_by' => 'priority'));
 
 $body = elgg_view_layout('one_sidebar', array(
-    'content' => $content,
-    'sidebar' => $sidebar
+	'content' => $content,
+	'sidebar' => $sidebar
 ));
 
 echo elgg_view_page($title, $body);

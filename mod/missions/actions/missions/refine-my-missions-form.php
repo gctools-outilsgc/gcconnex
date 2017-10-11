@@ -12,11 +12,10 @@
  */
 $check_closed = get_input('check_closed');
 $user = elgg_get_logged_in_user_entity();
-if($check_closed == 'on') {
+if ($check_closed == 'on') {
 	$user->show_closed_missions = true;
 	system_message(elgg_echo('missions:displaying_closed_missions'));
-}
-else {
+} else {
 	$user->show_closed_missions = false;
 	system_message(elgg_echo('missions:not_displaying_closed_missions'));
 }

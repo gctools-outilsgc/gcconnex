@@ -22,57 +22,56 @@ $language_oral_proficiency_english = $vars['mission_metadata']['lop_english'];
 $language_oral_proficiency_french = $vars['mission_metadata']['lop_french'];
 
 if (elgg_is_sticky_form('ldropfill')) {
-    extract(elgg_get_sticky_values('ldropfill'));
-    // elgg_clear_sticky_form('thirdfill');
+	extract(elgg_get_sticky_values('ldropfill'));
 }
 
 $input_english_written_comprehension = elgg_view('input/dropdown', array(
-    'name' => 'lwc_english',
-    'value' => $language_written_comprehension_english,
-    'options' => $array,
+	'name' => 'lwc_english',
+	'value' => $language_written_comprehension_english,
+	'options' => $array,
 	'style' => 'min-width:63px;margin:auto;',
-    'id' => 'english-language-written-comprehension-dropdown-input'
+	'id' => 'english-language-written-comprehension-dropdown-input'
 ));
 $input_french_written_comprehension = elgg_view('input/dropdown', array(
-    'name' => 'lwc_french',
-    'value' => $language_written_comprehension_french,
-    'options' => $array,
+	'name' => 'lwc_french',
+	'value' => $language_written_comprehension_french,
+	'options' => $array,
 	'style' => 'min-width:63px;margin:auto;',
-    'id' => 'french-language-written-comprehension-dropdown-input'
+	'id' => 'french-language-written-comprehension-dropdown-input'
 ));
 $input_english_written_expression = elgg_view('input/dropdown', array(
-    'name' => 'lwe_english',
-    'value' => $language_written_expression_english,
-    'options' => $array,
+	'name' => 'lwe_english',
+	'value' => $language_written_expression_english,
+	'options' => $array,
 	'style' => 'min-width:63px;margin:auto;',
-    'id' => 'english-language-written-expression-dropdown-input'
+	'id' => 'english-language-written-expression-dropdown-input'
 ));
 $input_french_written_expression = elgg_view('input/dropdown', array(
-    'name' => 'lwe_french',
-    'value' => $language_written_expression_french,
-    'options' => $array,
+	'name' => 'lwe_french',
+	'value' => $language_written_expression_french,
+	'options' => $array,
 	'style' => 'min-width:63px;margin:auto;',
-    'id' => 'french-language-written-expression-dropdown-input'
+	'id' => 'french-language-written-expression-dropdown-input'
 ));
 $input_english_oral_proficiency = elgg_view('input/dropdown', array(
-    'name' => 'lop_english',
-    'value' => $language_oral_proficiency_english,
-    'options' => $array,
+	'name' => 'lop_english',
+	'value' => $language_oral_proficiency_english,
+	'options' => $array,
 	'style' => 'min-width:63px;margin:auto;',
-    'id' => 'english-language-oral-proficiency-dropdown-input'
+	'id' => 'english-language-oral-proficiency-dropdown-input'
 ));
 $input_french_oral_proficiency = elgg_view('input/dropdown', array(
-    'name' => 'lop_french',
-    'value' => $language_oral_proficiency_french,
-    'options' => $array,
+	'name' => 'lop_french',
+	'value' => $language_oral_proficiency_french,
+	'options' => $array,
 	'style' => 'min-width:63px;margin:auto;',
-    'id' => 'french-language-oral-proficiency-dropdown-input'
+	'id' => 'french-language-oral-proficiency-dropdown-input'
 ));
 ?>
 
 <div class="form-group">
 	<div class="col-sm-3" style="text-align:right;font-weight:bold;display:inline-block;">
-		
+
 	</div>
 	<div class="col-sm-1" style="font-weight:bold;display:inline-block;text-align:center;">
 		<?php echo elgg_echo('missions:english');?>

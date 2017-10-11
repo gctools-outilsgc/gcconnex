@@ -16,11 +16,11 @@ $title = elgg_echo('missions:fill_mission');
 $content = elgg_view_title($title);
 $content .= elgg_echo('missions:paragraph:fill_mission') . "\n";
 $content .= elgg_view_form('missions/fill-form', array(
-    'class' => 'mission-form'
+	'class' => 'mission-form'
 ));
 
 $body = elgg_view_layout('one_sidebar', array(
-    'content' => $content
+	'content' => $content
 ));
 
 echo elgg_view_page($title, $body);

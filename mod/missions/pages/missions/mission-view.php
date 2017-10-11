@@ -6,7 +6,7 @@
  * License: Creative Commons Attribution 3.0 Unported License
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
- 
+
 /*
  * The page for displaying the mission.
  */

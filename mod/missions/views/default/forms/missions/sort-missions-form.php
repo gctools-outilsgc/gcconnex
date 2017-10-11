@@ -15,41 +15,41 @@ $order_field = $_SESSION['missions_order_field_value'];
 $opp_type_field = $_SESSION['missions_type_field_value'];
 $role_type_field = $_SESSION['missions_role_field_value'];
 $options_array = array(
-		'missions:date_posted' => elgg_echo('missions:date_posted'),
-		'missions:deadline' => elgg_echo('missions:deadline'),
-		'missions:opportunity_type' => elgg_echo('missions:opportunity_type')
+	'missions:date_posted' => elgg_echo('missions:date_posted'),
+	'missions:deadline' => elgg_echo('missions:deadline'),
+	'missions:opportunity_type' => elgg_echo('missions:opportunity_type')
 );
-if($vars['mission_sort_archive']) {
+if ($vars['mission_sort_archive']) {
 	$options_array = array(
-			'missions:date_closed' => elgg_echo('missions:date_closed'),
-			'missions:opportunity_type' => elgg_echo('missions:opportunity_type')
+		'missions:date_closed' => elgg_echo('missions:date_closed'),
+		'missions:opportunity_type' => elgg_echo('missions:opportunity_type')
 	);
 }
 
-$opp_types = explode(',',elgg_get_plugin_setting('opportunity_type_string', 'missions'));
-foreach($opp_types as $k => $v){
-    //Nick - Put the things in an elgg echo
-     $opp_types2[elgg_echo($v)] = $opp_types[$k];   
+$opp_types = explode(',', elgg_get_plugin_setting('opportunity_type_string', 'missions'));
+foreach ($opp_types as $k => $v) {
+	//Nick - Put the things in an elgg echo
+	$opp_types2[elgg_echo($v)] = $opp_types[$k];
 }
 
 $input_opp_types_filter = elgg_view('input/checkboxes', array(
-    'name'=>'opp_filter',
-    'value'=>$opp_type_field,
-    'options'=> $opp_types2,
-    'class'=>' list-unstyled filter-opp-type-list',
-    'multiple'=>true,
-    'checked'=>false,
-    'id' => 'missions-sort-missions-type-field-text-input'
+	'name'=>'opp_filter',
+	'value'=>$opp_type_field,
+	'options'=> $opp_types2,
+	'class'=>' list-unstyled filter-opp-type-list',
+	'multiple'=>true,
+	'checked'=>false,
+	'id' => 'missions-sort-missions-type-field-text-input'
 ));
 
 $input_role_types_filter = elgg_view('input/checkboxes', array(
-    'name' => 'role_filter',
-    'value' => $role_type_field,
-    'options' => [elgg_echo('missions:filter:opportunity_role:offering') => 'missions:offering', elgg_echo('missions:filter:opportunity_role:seeking') => 'missions:seeking'],
-    'class' =>' list-unstyled filter-opp-type-list',
-    'multiple' => true,
-    'checked' => false,
-    'id' => 'missions-sort-missions-role-field-text-input'
+	'name' => 'role_filter',
+	'value' => $role_type_field,
+	'options' => [elgg_echo('missions:filter:opportunity_role:offering') => 'missions:offering', elgg_echo('missions:filter:opportunity_role:seeking') => 'missions:seeking'],
+	'class' =>' list-unstyled filter-opp-type-list',
+	'multiple' => true,
+	'checked' => false,
+	'id' => 'missions-sort-missions-role-field-text-input'
 ));
 
 $input_sort_field = elgg_view('input/dropdown', array(
@@ -71,67 +71,64 @@ $input_order_field = elgg_view('input/dropdown', array(
 ?>
 
 <div class="col-sm-12 panel panel-default mission-sort-panel mrgn-bttm-md">
-    
-        <div class="col-sm-11">
-        <div class="col-sm-3">
+	<div class="col-sm-11">
+		<div class="col-sm-3">
 		  <label for="missions-sort-missions-type-field-text-input" class="mrgn-tp-sm mrgn-lft-sm">
 			 <?php echo elgg_echo('missions:filter:opportunity_type:label') . ': '; ?>
 		  </label>
 		  <div class="" style="margin:4px;">
 			<div class="dropdown">
-                <button id="missions-sort-missions-type-field-text-input" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="form-control">
-            <?php echo elgg_echo('missions:type');?>
-                <span class="caret"></span>
-                </button>
-                <div class="dropdown-menu " aria-labelledby="missions-sort-missions-type-field-text-input">
-                    <?php
-                        echo $input_opp_types_filter;
-                        //echo $opp_types2;
-                        //echo $opp_types;
-                    ?>
-                </div>
-              </div>
-		  </div>		
-	    </div>
-        <div class="col-sm-3">
-          <label for="missions-sort-missions-role-field-text-input" class="mrgn-tp-sm mrgn-lft-sm">
-             <?php echo elgg_echo('missions:filter:opportunity_role:label') . ': '; ?>
-          </label>
-          <div class="" style="margin:4px;">
-            <div class="dropdown">
-                <button id="missions-sort-missions-role-field-text-input" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="form-control">
-            <?php echo elgg_echo('missions:filter:opportunity_role:title'); ?>
-                <span class="caret"></span>
-                </button>
-                <div class="dropdown-menu " aria-labelledby="missions-sort-missions-role-field-text-input">
-                    <?php
-                        echo $input_role_types_filter;
-                    ?>
-                </div>
-              </div>
-          </div>        
-        </div>
-        <div class="col-sm-3">
-    		<label for="missions-sort-missions-sort-field-text-input" class="mrgn-tp-sm mrgn-lft-sm">
-    			<?php echo elgg_echo('missions:sort_by') . ': '; ?>
-    		</label>
-    		<div class="" style="margin:4px;">
-    			<?php echo $input_sort_field; ?>
-    		</div>		
+				<button id="missions-sort-missions-type-field-text-input" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="form-control">
+			<?php echo elgg_echo('missions:type');?>
+				<span class="caret"></span>
+				</button>
+				<div class="dropdown-menu " aria-labelledby="missions-sort-missions-type-field-text-input">
+					<?php
+						echo $input_opp_types_filter;
+					?>
+				</div>
+			  </div>
+		  </div>
+		</div>
+		<div class="col-sm-3">
+		  <label for="missions-sort-missions-role-field-text-input" class="mrgn-tp-sm mrgn-lft-sm">
+			 <?php echo elgg_echo('missions:filter:opportunity_role:label') . ': '; ?>
+		  </label>
+		  <div class="" style="margin:4px;">
+			<div class="dropdown">
+				<button id="missions-sort-missions-role-field-text-input" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="form-control">
+			<?php echo elgg_echo('missions:filter:opportunity_role:title'); ?>
+				<span class="caret"></span>
+				</button>
+				<div class="dropdown-menu " aria-labelledby="missions-sort-missions-role-field-text-input">
+					<?php
+						echo $input_role_types_filter;
+					?>
+				</div>
+			  </div>
+		  </div>
+		</div>
+		<div class="col-sm-3">
+			<label for="missions-sort-missions-sort-field-text-input" class="mrgn-tp-sm mrgn-lft-sm">
+				<?php echo elgg_echo('missions:sort_by') . ': '; ?>
+			</label>
+			<div class="" style="margin:4px;">
+				<?php echo $input_sort_field; ?>
+			</div>
 	   </div>
-    	<div class="col-sm-3">
-    		<label for="missions-sort-missions-order-field-text-input" class="mrgn-tp-sm mrgn-lft-sm">
-    			<?php echo elgg_echo('mission:following_order') . ': '; ?>
-    		</label>
-    		<div class="" style="margin:4px;">
-    			<?php echo $input_order_field; ?>
-    		</div>
-    	</div>    
-    </div>
-	
+		<div class="col-sm-3">
+			<label for="missions-sort-missions-order-field-text-input" class="mrgn-tp-sm mrgn-lft-sm">
+				<?php echo elgg_echo('mission:following_order') . ': '; ?>
+			</label>
+			<div class="" style="margin:4px;">
+				<?php echo $input_order_field; ?>
+			</div>
+		</div>
+	</div>
+
 	<div class="col-sm-1">
-        <div class="mrgn-tp-md mission-sort-btn clearfix">
-        <?php 
+		<div class="mrgn-tp-md mission-sort-btn clearfix">
+		<?php
 			echo elgg_view('input/submit', array(
 					'value' => elgg_echo('missions:sort'),
 					'class' => 'elgg-button btn btn-default',
@@ -139,38 +136,37 @@ $input_order_field = elgg_view('input/dropdown', array(
 					'style' => 'margin:8px;float:right;'
 			));
 		?>
-        </div>
-		
+		</div>
+
 	</div>
-    
-    
-<?php 
+
+
+<?php
 
 echo ($opp_type_field || $role_type_field || $sort_field || $order_field)?'<div class="col-sm-11 mrgn-tp-lg"><strong>'.elgg_echo('missions:filter').'</strong>':'';
 
 echo ($opp_type_field)?'<strong>Type: </strong>':'';
 
-    foreach ($opp_type_field as $value) {
-        if ($value != end($opp_type_field)){
-            echo elgg_echo($value).', ';
-        }else{
-            echo elgg_echo($value).' ';
-        }
-    }
+foreach ($opp_type_field as $value) {
+	if ($value != end($opp_type_field)) {
+		echo elgg_echo($value).', ';
+	} else {
+		echo elgg_echo($value).' ';
+	}
+}
 $role = elgg_echo("missions:filter:role");
 $opportunities = elgg_echo('missions:sort_by');
 $order = elgg_echo('mission:following_order');
 
 echo ($role_type_field)?'<strong>'. $role.' </strong>':'';
 
-    foreach ($role_type_field as $value) {
-        if ($value != end($role_type_field)){
-            echo elgg_echo($value).', ';
-        }else{
-            echo elgg_echo($value).' ';
-
-        }
-    }
+foreach ($role_type_field as $value) {
+	if ($value != end($role_type_field)) {
+		echo elgg_echo($value).', ';
+	} else {
+		echo elgg_echo($value).' ';
+	}
+}
 echo ($sort_field)?'<strong>'.$opportunities.': </strong>':'';
 echo elgg_echo($sort_field).' ';
 
@@ -179,5 +175,5 @@ echo elgg_echo($order_field).' ';
 echo ($opp_type_field || $role_type_field || $sort_field || $order_field)?'</div>':'';
 
 ?>
-    
+
 </div>

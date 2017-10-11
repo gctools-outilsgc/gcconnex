@@ -18,29 +18,29 @@ $from_admin = get_input('MISSION_ADMIN_ACTION_FLAG');
 $mission_relation_list = get_entity_relationships($mission->guid);
 
 $count = 0;
-foreach($mission_relation_list as $relation) {
+foreach ($mission_relation_list as $relation) {
 	// Messages all mission participants that the mission is completed.
-	if($relation->relationship == 'mission_accepted') {
+	if ($relation->relationship == 'mission_accepted') {
 		$feedback_link_en = elgg_view('output/url', array(
-	 			'href' => elgg_get_site_url() . 'missions/mission-feedback/' . $mission_guid,
-	 			'text' => elgg_echo('missions:mission_feedback','en')
-	 	));
+				'href' => elgg_get_site_url() . 'missions/mission-feedback/' . $mission_guid,
+				'text' => elgg_echo('missions:mission_feedback', 'en')
+		));
 
-	 	$feedback_link_fr = elgg_view('output/url', array(
-	 			'href' => elgg_get_site_url() . 'missions/mission-feedback/' . $mission_guid,
-	 			'text' => elgg_echo('missions:mission_feedback','fr')
-	 	));
-		
-		$subject = $mission->job_title . ' ' . elgg_echo('missions:feedback','en').' | '.$mission->job_title . ' ' . elgg_echo('missions:feedback','fr');
-		$body_en = $mission->job_title . ' ' . elgg_echo('missions:feedback_message','en') . "\n" . $feedback_link_en;
-		$body_fr = $mission->job_title . ' ' . elgg_echo('missions:feedback_message','fr') . "\n" . $feedback_link_fr;
-		mm_notify_user($relation->guid_two, $mission->guid, $subject,'','', $body_en,$body_fr);
-		
+		$feedback_link_fr = elgg_view('output/url', array(
+				'href' => elgg_get_site_url() . 'missions/mission-feedback/' . $mission_guid,
+				'text' => elgg_echo('missions:mission_feedback', 'fr')
+		));
+
+		$subject = $mission->job_title . ' ' . elgg_echo('missions:feedback', 'en').' | '.$mission->job_title . ' ' . elgg_echo('missions:feedback', 'fr');
+		$body_en = $mission->job_title . ' ' . elgg_echo('missions:feedback_message', 'en') . "\n" . $feedback_link_en;
+		$body_fr = $mission->job_title . ' ' . elgg_echo('missions:feedback_message', 'fr') . "\n" . $feedback_link_fr;
+		mm_notify_user($relation->guid_two, $mission->guid, $subject, '', '', $body_en, $body_fr);
+
 		$count++;
 	}
 }
 
-if($count == 0) {
+if ($count == 0) {
 	register_error(elgg_echo('missions:error:cannot_complete_mission_no_participants'));
 	forward(REFERER);
 }
@@ -67,7 +67,7 @@ elgg_set_ignore_access($ia);
 system_message(elgg_echo('mission:has_been_completed', array($mission->job_title)));
 
 // If the admin tool is calling the action then the user is returned to the admin tool page.
-if($from_admin) {
+if ($from_admin) {
 	forward(REFERER);
 }
 
