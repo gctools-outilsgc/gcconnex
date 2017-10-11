@@ -269,6 +269,7 @@ function submitTicket(form, lang, source, product){
   formdata.append('description', $(form).find('#description').val());
   formdata.append('email', $(form).find('#email').val());
   formdata.append('subject', $(form).find('#subject').val());
+  formdata.append('custom_fields', { "department" : $(form).find('#department').val() });
   formdata.append('type', $('#type').val());
   formdata.append('priority', '1');
   formdata.append('status', '2');

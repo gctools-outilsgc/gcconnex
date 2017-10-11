@@ -16,6 +16,7 @@ return array(
   'freshdesk:ticket:title' => "Soumettre un billet",
   'freshdesk:ticket:email' => "Courriel",
   'freshdesk:ticket:subject' => "Objet",
+  'freshdesk:ticket:department' => "Ministère",
   'freshdesk:ticket:type' => "Type",
   'freshdesk:ticket:attachment' => "Pièce jointe",
   'freshdesk:ticket:description' => "Description",

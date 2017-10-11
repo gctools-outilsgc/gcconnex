@@ -34,7 +34,7 @@ if (elgg_is_sticky_form('ticket-submit')) {
   <p><?php echo elgg_echo('freshdesk:ticket:information:note', array(), $lang); ?></p>
 </div>
 
-<div class="mrgn-tp-md">
+<div class="mrgn-tp-sm">
 <label for="email"><?php echo elgg_echo('freshdesk:ticket:email', array(), $lang); ?></label>
 <?php echo elgg_view('input/text', array(
   'name' => 'email',
@@ -46,7 +46,12 @@ if (elgg_is_sticky_form('ticket-submit')) {
 ?>
 </div>
 
-<div>
+<div class="mrgn-tp-sm">
+	<label for="department"><?php echo elgg_echo('freshdesk:ticket:department'); ?></label>
+	<?php echo elgg_view('input/department_field'); ?>
+</div>
+
+<div class="mrgn-tp-sm">
 <label for="subject"><?php echo elgg_echo('freshdesk:ticket:subject', array(), $lang); ?></label>
 <?php echo elgg_view('input/text', array(
   'name' => 'subject',
@@ -59,7 +64,7 @@ if (elgg_is_sticky_form('ticket-submit')) {
 <span class="relatedArticles btn-primary"><a href="#searchResults"></a></span>
 </div>
 
-<div>
+<div class="mrgn-tp-sm">
 <label for="type"><?php echo elgg_echo('freshdesk:ticket:type', array(), $lang); ?></label>
 <?php echo elgg_view('input/select', array(
   'name' => 'type',
@@ -81,12 +86,12 @@ if (elgg_is_sticky_form('ticket-submit')) {
 ?>
 </div>
 
-<div>
+<div class="mrgn-tp-sm">
 <label for="attachment"><?php echo elgg_echo('freshdesk:ticket:attachment', array(), $lang); ?></label>
 <?php echo elgg_view('input/file', array('name' => 'attachment', 'id' => 'attachment', 'class' => 'mrgn-bttm-sm')); ?>
 </div>
 
-<div>
+<div class="mrgn-tp-sm">
 <label for="description"><?php echo elgg_echo('freshdesk:ticket:description', array(), $lang); ?></label>
 <?php echo elgg_view('input/longtext', array(
   'name' => 'description',
@@ -130,6 +135,10 @@ $(document).ready(function(){
 
     if($('#type option:selected').val() == 'None' && $('#type').hasClass('error') != true){
       $('#type').addClass('error').parent().append('<label for="'+$('#type').attr('name')+'" class="error">'+'<?php echo elgg_echo('freshdesk:valid', array(), $lang) ?>'+'</label>');
+    }
+
+    if($('#department option:selected').val() == 'None' && $('#department').hasClass('error') != true){
+      $('#department').addClass('error').parent().append('<label for="'+$('#department').attr('name')+'" class="error">'+'<?php echo elgg_echo('freshdesk:valid', array(), $lang) ?>'+'</label>');
     }
 
     var inputs = form.find('input');

@@ -16,6 +16,7 @@ return array(
       'freshdesk:ticket:title' => "Submit a ticket",
       'freshdesk:ticket:email' => "Email",
       'freshdesk:ticket:subject' => "Subject",
+      'freshdesk:ticket:department' => "Department",
       'freshdesk:ticket:type' => "Type",
       'freshdesk:ticket:attachment' => "Attachment",
       'freshdesk:ticket:description' => "Description",
