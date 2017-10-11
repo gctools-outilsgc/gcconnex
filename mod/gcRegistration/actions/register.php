@@ -131,7 +131,7 @@ if (elgg_get_config('allow_registration')) {
 			//throw new RegistrationException(elgg_echo('gcRegister:toc_error'));
 			$resulting_error .= elgg_echo('gcRegister:toc_error').'<br/>';
 		}
-		error_log('num - '.is_null($result));
+
 		// if domain doesn't exist in database, check if it's a gc.ca domain
 		if ($result['num'][0] <= 0) 
 		{
