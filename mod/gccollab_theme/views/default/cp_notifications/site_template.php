@@ -692,6 +692,12 @@ switch ($msg_type) {
 		break;
 
 	default:
+	
+		$cp_notify_msg_title_en = $vars['cp_msg_title_en'];
+		$cp_notify_msg_title_fr = $vars['cp_msg_title_fr'];
+		$cp_notify_msg_description_en = $vars['cp_msg_description_en'];
+		$cp_notify_msg_description_fr = $vars['cp_msg_description_fr'];
+
 		break;
 }
 

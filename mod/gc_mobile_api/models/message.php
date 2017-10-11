@@ -9,6 +9,7 @@ elgg_ws_expose_function(
 	array(
 		"user" => array('type' => 'string', 'required' => true),
 		"guid" => array('type' => 'int', 'required' => true),
+		"thread" => array('type' => 'int', 'required' => false, 'default' => 0),
 		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
 	),
 	'Retrieves a message based on user id and message id',
@@ -106,8 +107,9 @@ elgg_ws_expose_function(
 	"send.message",
 	"send_message",
 	array(
-		"fromuser" => array('type' => 'string', 'required' => true),
+		"user" => array('type' => 'string', 'required' => true),
 		"touser" => array('type' => 'string', 'required' => true),
+		"subject" => array('type' => 'string', 'required' => true),
 		"message" => array('type' => 'string', 'required' => true),
 		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
 	),
@@ -132,7 +134,21 @@ elgg_ws_expose_function(
 	false
 );
 
-function get_message( $user, $guid, $lang ){
+elgg_ws_expose_function(
+	"read.message",
+	"read_message",
+	array(
+		"user" => array('type' => 'string', 'required' => true),
+		"guid" => array('type' => 'int', 'required' => false, 'default' => 0),
+		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+	),
+	'Marks a message as read based on user id and message id',
+	'POST',
+	true,
+	false
+);
+
+function get_message( $user, $guid, $thread, $lang ){
 	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
  	if( !$user_entity ) return "User was not found. Please try a different GUID, username, or email address";
 	if( !$user_entity instanceof ElggUser ) return "Invalid user. Please try a different GUID, username, or email address";
@@ -140,40 +156,70 @@ function get_message( $user, $guid, $lang ){
 	if( !elgg_is_logged_in() )
 		login($user_entity);
 	
-	$messages = elgg_list_entities(array(
-	    'type' => 'object',
-		'subtype' => 'messages',
-		'guid' => $guid
-	));
-	$message = json_decode($messages)[0];
-	if( !$message ) return "Message was not found. Please try a different GUID";
-	if( $message->subtype !== "messages" ) return "Invalid message. Please try a different GUID";
+	if( $thread ){
+		$message = elgg_list_entities(array(
+		    'type' => 'object',
+			'subtype' => 'messages',
+			'guid' => $guid
+		));
+		$the_message = json_decode($message)[0];
+		if( !$the_message ) return "Message was not found. Please try a different GUID";
+		if( $the_message->subtype !== "messages" ) return "Invalid message. Please try a different GUID";
+
+		$db_prefix = elgg_get_config('dbprefix');
+		$without_re = str_replace("RE: ", "", $the_message->title);
+		$all_messages = elgg_list_entities(array(
+			"types" => "object",
+			"subtype" => "messages",
+			"limit" => 0,
+			// "metadata_name_value_pairs" => array(
+			// 	array("name" => "fromId", "value" => $user_entity->guid, "operand" => "<>")
+			// ),
+			"preload_owners" => true,
+			"joins" => array("JOIN {$db_prefix}objects_entity oe ON e.guid = oe.guid"),
+			"wheres" => array("oe.title = '".$the_message->title."' OR oe.title = 'RE: ".$the_message->title."' OR oe.title = '".$without_re."'"),
+			'order_by' => 'e.time_created ASC'
+		));
+		$messages = json_decode($all_messages);
+
+		foreach($messages as $key => $message){
+			$messageObj = get_entity($message->guid);
+			$message->read = intval($messageObj->readYet);
+
+			if( $messageObj->fromId && $messageObj->toId ){
+				$message->fromUserDetails = get_user_block($messageObj->fromId, $lang);
+				$message->toUserDetails = get_user_block($messageObj->toId, $lang);
+			} else {
+				unset($messages[$key]);
+				continue;
+			}
+
+			$message->description = utf8_decode($message->description);
+			$message->description = str_replace(array("<html>", "</html>", "<body>", "</body>", "<p>&nbsp;</p>", "<br>", "<br/>", "<br />"), "", $message->description);
+		}
+
+		return array_values($messages);
+	} else {
+		$message = elgg_list_entities(array(
+		    'type' => 'object',
+			'subtype' => 'messages',
+			'guid' => $guid
+		));
+		$the_message = json_decode($message)[0];
+		if( !$the_message ) return "Message was not found. Please try a different GUID";
+		if( $the_message->subtype !== "messages" ) return "Invalid message. Please try a different GUID";
+
+		$messageObj = get_entity($the_message->guid);
+		$the_message->read = intval($messageObj->readYet);
+
+		$the_message->fromUserDetails = get_user_block($messageObj->fromId, $lang);
+		$the_message->toUserDetails = get_user_block($messageObj->toId, $lang);
+
+		$the_message->description = utf8_decode($the_message->description);
+		$the_message->description = str_replace(array("<html>", "</html>", "<body>", "</body>", "<p>&nbsp;</p>", "<br>", "<br/>", "<br />"), "", $the_message->description);
 	
-	$likes = elgg_get_annotations(array(
-		'guid' => $message->guid,
-		'annotation_name' => 'likes'
-	));
-	$message->likes = count($likes);
-
-	$liked = elgg_get_annotations(array(
-		'guid' => $message->guid,
-		'annotation_owner_guid' => $user_entity->guid,
-		'annotation_name' => 'likes'
-	));
-	$message->liked = count($liked) > 0;
-
-	$messageObj = get_entity($message->guid);
-	$message->read = intval($messageObj->readYet);
-
-	$message->fromUserDetails = get_user_block($messageObj->fromId, $lang);
-	$message->toUserDetails = get_user_block($messageObj->toId, $lang);
-
-	$message->description = utf8_decode($message->description);
-	$message->description = str_replace(array("<html>", "</html>", "<body>", "</body>"), "", $message->description);
-
-	// $message->description2 = strip_tags(utf8_decode($message->description));
-
-	return $message;
+		return $the_message;
+	}
 }
 
 function get_messages( $user, $limit, $offset, $lang ){
@@ -196,15 +242,15 @@ function get_messages( $user, $limit, $offset, $lang ){
 	));
 	$messages = json_decode($messages);
 
-	foreach($messages as $object){
-		$messageObj = get_entity($object->guid);
-		$object->read = intval($messageObj->readYet);
+	foreach($messages as $the_message){
+		$messageObj = get_entity($the_message->guid);
+		$the_message->read = intval($messageObj->readYet);
 
-		$object->fromUserDetails = get_user_block($messageObj->fromId, $lang);
-		$object->toUserDetails = get_user_block($messageObj->toId, $lang);
+		$the_message->fromUserDetails = get_user_block($messageObj->fromId, $lang);
+		$the_message->toUserDetails = get_user_block($messageObj->toId, $lang);
 
-		$object->description = utf8_decode($object->description);
-		$object->description = str_replace(array("<html>", "</html>", "<body>", "</body>"), "", $object->description);
+		$the_message->description = utf8_decode($the_message->description);
+		$the_message->description = str_replace(array("<html>", "</html>", "<body>", "</body>", "<p>&nbsp;</p>", "<br>", "<br/>", "<br />"), "", $the_message->description);
 	}
 
 	return $messages;
@@ -230,8 +276,8 @@ function get_messages_count( $user, $lang ){
 
 	$unread_count = 0;
 
-	foreach($messages as $object){
-		if( $object->read ){
+	foreach($messages as $the_message){
+		if( $the_message->read ){
 			$unread_count++;
 		}
 	}
@@ -258,15 +304,15 @@ function get_sent_messages( $user, $limit, $offset, $lang ){
 	));
 	$messages = json_decode($messages);
 
-	foreach($messages as $object){
-		$messageObj = get_entity($object->guid);
-		$object->read = intval($messageObj->readYet);
+	foreach($messages as $the_message){
+		$messageObj = get_entity($the_message->guid);
+		$the_message->read = intval($messageObj->readYet);
 
-		$object->fromUserDetails = get_user_block($messageObj->fromId, $lang);
-		$object->toUserDetails = get_user_block($messageObj->toId, $lang);
+		$the_message->fromUserDetails = get_user_block($messageObj->fromId, $lang);
+		$the_message->toUserDetails = get_user_block($messageObj->toId, $lang);
 
-		$object->description = utf8_decode($object->description);
-		$object->description = str_replace(array("<html>", "</html>", "<body>", "</body>"), "", $object->description);
+		$the_message->description = utf8_decode($the_message->description);
+		$the_message->description = str_replace(array("<html>", "</html>", "<body>", "</body>", "<p>&nbsp;</p>", "<br>", "<br/>", "<br />"), "", $the_message->description);
 	}
 
 	return $messages;
@@ -291,8 +337,8 @@ function get_sent_messages_count( $user, $lang ){
 
 	$unread_count = 0;
 
-	foreach($messages as $object){
-		if( $object->read ){
+	foreach($messages as $the_message){
+		if( $the_message->read ){
 			$unread_count++;
 		}
 	}
@@ -320,15 +366,15 @@ function get_notifications( $user, $limit, $offset, $lang ){
 	));
 	$messages = json_decode($messages);
 
-	foreach($messages as $object){
-		$messageObj = get_entity($object->guid);
-		$object->read = intval($messageObj->readYet);
+	foreach($messages as $the_message){
+		$messageObj = get_entity($the_message->guid);
+		$the_message->read = intval($messageObj->readYet);
 
-		$object->fromUserDetails = get_user_block($messageObj->fromId, $lang);
-		$object->toUserDetails = get_user_block($messageObj->toId, $lang);
+		$the_message->fromUserDetails = get_user_block($messageObj->fromId, $lang);
+		$the_message->toUserDetails = get_user_block($messageObj->toId, $lang);
 
-		$object->description = utf8_decode($object->description);
-		$object->description = str_replace(array("<html>", "</html>", "<body>", "</body>"), "", $object->description);
+		$the_message->description = utf8_decode($the_message->description);
+		$the_message->description = str_replace(array("<html>", "</html>", "<body>", "</body>", "<p>&nbsp;</p>", "<br>", "<br/>", "<br />"), "", $the_message->description);
 	}
 
 	return $messages;
@@ -354,8 +400,8 @@ function get_notifications_count( $user, $lang ){
 
 	$unread_count = 0;
 
-	foreach($messages as $object){
-		if( $object->read ){
+	foreach($messages as $the_message){
+		if( $the_message->read ){
 			$unread_count++;
 		}
 	}
@@ -363,8 +409,8 @@ function get_notifications_count( $user, $lang ){
 	return $unread_count;
 }
 
-function send_message( $fromuser, $touser, $subject, $message, $lang ){
-	$from_user_entity = is_numeric($fromuser) ? get_user($fromuser) : ( strpos($fromuser, '@') !== FALSE ? get_user_by_email($fromuser)[0] : get_user_by_username($fromuser) );
+function send_message( $user, $touser, $subject, $message, $lang ){
+	$from_user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
  	if( !$from_user_entity ) return "\"From\" User was not found. Please try a different GUID, username, or email address";
 	if( !$from_user_entity instanceof ElggUser ) return "Invalid \"from\" user. Please try a different GUID, username, or email address";
 
@@ -375,6 +421,7 @@ function send_message( $fromuser, $touser, $subject, $message, $lang ){
 	if( trim($subject) == "" ) return "A subject must be provided to send a message";
 	if( trim($message) == "" ) return "A message must be provided to send a message";
 
+	/*
 	if( elgg_is_active_plugin('cp_notifications') ){
 		$messageData = array(
 			'cp_from' => $from_user_entity,
@@ -389,6 +436,9 @@ function send_message( $fromuser, $touser, $subject, $message, $lang ){
 	} else {
 		$result = messages_send($subject, $message, $to_user_entity->guid, $from_user_entity->guid);
 	}
+	*/
+
+	$result = messages_send($subject, $message, $to_user_entity->guid, $from_user_entity->guid);
 
 	if( !$result ) return elgg_echo("messages:error");
 
@@ -396,23 +446,36 @@ function send_message( $fromuser, $touser, $subject, $message, $lang ){
 }
 
 function reply_message( $user, $message, $guid, $lang ){
-	$from_user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
- 	if( !$from_user_entity ) return "User was not found. Please try a different GUID, username, or email address";
-	if( !$from_user_entity instanceof ElggUser ) return "Invalid user. Please try a different GUID, username, or email address";
+	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
+ 	if( !$user_entity ) return "User was not found. Please try a different GUID, username, or email address";
+	if( !$user_entity instanceof ElggUser ) return "Invalid user. Please try a different GUID, username, or email address";
 
-	$entity = get_entity( $guid );
-	if( !$entity ) return "Message was not found. Please try a different GUID";
-	if( !$entity->subtype !== "messages" ) return "Invalid message. Please try a different GUID";
+	if( !elgg_is_logged_in() )
+		login($user_entity);
+	
+	$messages = elgg_list_entities(array(
+	    'type' => 'object',
+		'subtype' => 'messages',
+		'guid' => $guid
+	));
+	$the_message = json_decode($messages)[0];
+	if( !$the_message ) return "Message was not found. Please try a different GUID";
+	if( $the_message->subtype !== "messages" ) return "Invalid message. Please try a different GUID";
 
-	$to_user_entity = get_user( $entity->fromId );
+	$messageObj = get_entity($the_message->guid);
+
+	$to_user_entity = get_user( $messageObj->fromId );
+ 	if( !$to_user_entity ) return "User was not found. Please try a different GUID, username, or email address";
+	if( !$to_user_entity instanceof ElggUser ) return "Invalid user. Please try a different GUID, username, or email address";
 
 	if( trim($message) == "" ) return "A message must be provided to send a message";
 
+	/*
 	if( elgg_is_active_plugin('cp_notifications') ){
 		$messageData = array(
-			'cp_from' => $from_user_entity,
+			'cp_from' => $user_entity,
 			'cp_to' => $to_user_entity,
-			'cp_topic_title' => $entity->title,
+			'cp_topic_title' => $messageObj->title,
 			'cp_topic_description' => $message,
 			'cp_msg_type' => 'cp_site_msg_type',
 			'cp_topic_url' => elgg_get_site_url() . '/messages/inbox/',
@@ -420,10 +483,37 @@ function reply_message( $user, $message, $guid, $lang ){
 		$result = elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $messageData);
 		$result = true;
 	} else {
-		$result = messages_send($entity->title, $message, $to_user_entity->guid, $from_user_entity->guid, $guid);
+		$result = messages_send($messageObj->title, $message, $to_user_entity->guid, $user_entity->guid, $guid);
 	}
+	*/
 
+	$result = messages_send($messageObj->title, $message, $to_user_entity->guid, $user_entity->guid, $guid);
+	
 	if( !$result ) return elgg_echo("messages:error");
 
 	return elgg_echo("messages:posted");
+}
+
+function read_message( $user, $guid, $lang ){
+	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
+ 	if( !$user_entity ) return "User was not found. Please try a different GUID, username, or email address";
+	if( !$user_entity instanceof ElggUser ) return "Invalid user. Please try a different GUID, username, or email address";
+
+	if( !elgg_is_logged_in() )
+		login($user_entity);
+	
+	$messages = elgg_list_entities(array(
+	    'type' => 'object',
+		'subtype' => 'messages',
+		'guid' => $guid
+	));
+	$the_message = json_decode($messages)[0];
+	if( !$the_message ) return "Message was not found. Please try a different GUID";
+	if( $the_message->subtype !== "messages" ) return "Invalid message. Please try a different GUID";
+
+	$messageObj = get_entity($the_message->guid);
+	$messageObj->readYet = true;
+	$result = $messageObj->save();
+
+	return $result;
 }
