@@ -39,7 +39,6 @@ function cp_notifications_init() {
 	// this plugin must now be placed after "group_tools" plugin
 	elgg_register_action('group_tools/mail', "{$action_base}/group_mail.php"); 
 
-
 	// Ajax action files
 	elgg_register_action('cp_notify/retrieve_group_contents', elgg_get_plugins_path().'cp_notifications/actions/ajax_usersettings/retrieve_group_contents.php'); 
 	elgg_register_action('cp_notify/retrieve_personal_content', elgg_get_plugins_path().'cp_notifications/actions/ajax_usersettings/retrieve_personal_content.php'); 
@@ -74,44 +73,42 @@ function cp_notifications_init() {
 	$group_entity = elgg_get_page_owner_entity();
 	$current_user = elgg_get_logged_in_user_entity();
 
-
-	if (elgg_is_active_plugin('group_operators'))
+	$is_group_operator = true;
+	if (elgg_is_active_plugin('group_operators')) {
 		elgg_load_library('elgg:group_operators');
+		$is_group_operator = in_array($current_user, get_group_operators($group_entity));
+	}
 
-	if ($group_entity instanceof ElggGroup) {
+	if ($group_entity instanceof ElggGroup && elgg_is_logged_in() && $is_group_operator || elgg_is_admin_user($current_user->getGUID())) {
 
-	// TODO: check to make sure that get_group_operators() is available
+		$url = str_replace(elgg_get_site_url(),"", $_SERVER['REQUEST_URI']);
+		
+		if (strpos($url,'edit') == false) {
 
-	if (elgg_is_logged_in() && (in_array($current_user, get_group_operators($group_entity)) || elgg_is_admin_user($current_user->getGUID()))) {
-
-
-			$url = str_replace(elgg_get_site_url(),"", $_SERVER['REQUEST_URI']);
-			if (strpos($url,'edit') == false) {
-
-				$plugin_list = elgg_get_plugins('active', 1);
-				foreach ($plugin_list as $plugin_form)
+			$plugin_list = elgg_get_plugins('active', 1);
+			foreach ($plugin_list as $plugin_form)
+			{
+				$filepath = elgg_get_plugins_path().$plugin_form['title'].'/views/default/forms/'.$plugin_form['title'];
+				if (file_exists($filepath))
 				{
-					$filepath = elgg_get_plugins_path().$plugin_form['title'].'/views/default/forms/'.$plugin_form['title'];
-					if (file_exists($filepath))
+					$dir = scandir($filepath);
+					foreach ($dir as $form_file)
 					{
-						$dir = scandir($filepath);
-						foreach ($dir as $form_file)
+						if ((strpos($form_file,'save') !== false || strpos($form_file, 'upload') !== false) && (!strstr($form_file, '.old')))
 						{
-							if ((strpos($form_file,'save') !== false || strpos($form_file, 'upload') !== false) && (!strstr($form_file, '.old')))
-							{
-								$remove_php = explode('.',$form_file);
-								elgg_extend_view('forms/'.$plugin_form['title'].'/'.$remove_php[0], 'forms/minor_save', 500);
-							}
+							$remove_php = explode('.',$form_file);
+							elgg_extend_view('forms/'.$plugin_form['title'].'/'.$remove_php[0], 'forms/minor_save', 500);
 						}
 					}
 				}
-				
-				elgg_extend_view('forms/photos/image/save', 'forms/minor_save', 500);
-				elgg_extend_view('forms/photos/album/save', 'forms/minor_save', 500);
-				elgg_extend_view('forms/discussion/save', 'forms/minor_save', 500);
 			}
+			
+			elgg_extend_view('forms/photos/image/save', 'forms/minor_save', 500);
+			elgg_extend_view('forms/photos/album/save', 'forms/minor_save', 500);
+			elgg_extend_view('forms/discussion/save', 'forms/minor_save', 500);
 		}
 	}
+	
 
 	$subtype_array = array('blog', 'bookmarks', 'discussion');
 	foreach ($subtype_array as $subtype) 
@@ -136,7 +133,6 @@ function cp_notifications_init() {
  */
 function minor_save_hook_handler($hook, $type, $value, $params) {
 
-
     if (strcmp(get_input('minor_save'), 'yes') === 0) {
 
 	    elgg_unregister_event_handler('create','object','cp_create_notification', 900);
@@ -146,7 +142,6 @@ function minor_save_hook_handler($hook, $type, $value, $params) {
 		elgg_unregister_event_handler('create','annotation','cp_create_annotation_notification');
 
 	}
-
     return true;
 }
 
@@ -540,68 +535,6 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 
 /**
- * returns the headers for ical
- *
- * @param string 		$type_event
- * @param ElggObject 	$event
- * @param string 		$start_date
- * @param string 		$end_date
- */
-function cp_ical_headers($event_type, $event, $start_date, $end_date) {
-
-	$end_date = date("Ymd\THis", strtotime($end_date));
-	$start_date = date("Ymd\THis", strtotime($startdate));
-	$current_date = date("Ymd\TGis");
-
-	$ical = "
-	BEGIN:VCALENDAR \r\n
-    PRODID:-//Microsoft Corporation//Outlook 10.0 MIMEDIR//EN \r\n
-    VERSION:2.0 \r\n
-    METHOD: {$type_event} \r\n
-    BEGIN:VTIMEZONE \r\n
-    TZID:Eastern Time \r\n
-    BEGIN:STANDARD \r\n
-    DTSTART:20091101T020000 \r\n
-    RRULE:FREQ=YEARLY;INTERVAL=1;BYDAY=1SU;BYMONTH=11 \r\n
-    TZOFFSETFROM:-0400 \r\n
-    TZOFFSETTO:-0500 \r\n
-    TZNAME:EST \r\n
-    END:STANDARD \r\n
-    BEGIN:DAYLIGHT \r\n
-    DTSTART:20090301T020000 \r\n
-    RRULE:FREQ=YEARLY;INTERVAL=1;BYDAY=2SU;BYMONTH=3 \r\n
-    TZOFFSETFROM:-0500 \r\n
-    TZOFFSETTO:-0400 \r\n
-    TZNAME:EDST \r\n
-    END:DAYLIGHT \r\n
-    END:VTIMEZONE \r\n
-    BEGIN:VEVENT \r\n
-    LAST-MODIFIED: {$current_date} \r\n
-    UID: {$event->guid} \r\n
-    DTSTAMP:  \r\n
-    DTSTART;TZID='Eastern Time': {$start_date} \r\n
-    DTEND;TZID='Eastern Time': {$end_date} \r\n
-    TRANSP:OPAQUE \r\n
-    SEQUENCE:1 \r\n
-	SUMMARY: {$event->title} \r\n
-	LOCATION: {$event->venue} \r\n
-    CLASS:PUBLIC \r\n
-    PRIORITY:5 \r\n
-    BEGIN:VALARM \r\n
-    TRIGGER:-PT15M \r\n
-    ACTION:DISPLAY \r\n
-    DESCRIPTION:Reminder \r\n
-    END:VALARM \r\n
-    END:VEVENT \r\n
-    END:VCALENDAR \r\n";
-
-	return $ical;
-}
-
-
-
-
-/**
  * cp_create_annotation_notification is an event handler, invokes everytime a user likes something, edit something, etc
  *
  * This contains the likes and the comments that get posted. we also filter out the
@@ -684,8 +617,11 @@ function cp_create_annotation_notification($event, $type, $object) {
 		// checks for condition if the content being modified is a page or task
 		if (strcmp($object_subtype,'page') == 0 || strcmp($object_subtype,'page_top') == 0 || strcmp($object_subtype,'task') == 0 || strcmp($object_subtype,'task_top') == 0) {
 			$current_user = get_user($object->owner_guid);
-			$subject = elgg_echo('cp_notify:subject:edit_content',array('The page', $entity->title, $current_user->username),'en');
-			$subject .= ' | '.elgg_echo('cp_notify:subject:edit_content:f',array('La page',$entity->title, $current_user->username),'fr');
+			$page_title_en = gc_explode_translation($entity->title, 'en');
+			$page_title_fr = gc_explode_translation($entity->title, 'fr');
+
+			$subject = elgg_echo('cp_notify:subject:edit_content',array('The page', $page_title_en, $current_user->username),'en');
+			$subject .= ' | '.elgg_echo('cp_notify:subject:edit_content:f',array('La page', $page_title_fr, $current_user->username),'fr');
 
 			$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
 
