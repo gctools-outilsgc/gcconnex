@@ -20,7 +20,7 @@ switch ($subtype) {
 		$entity->container_guid = $container_guid;
 		$entity->title = $title;
 		$entity->type = $type;
-		$entity->access_id = $ddAccess;
+		$entity->access_id = $access;
 		$entity->subtype = $subtype;
 		$entity->description = $description;
 		$entity_guid = $entity->save();
@@ -31,7 +31,7 @@ switch ($subtype) {
 
 		$category_filing = get_input('ddCategoryFiling');
 		$enable_subcategories = get_input('chkEnableCategory');
-		$enable_postings = get_input('chkEnablePost');
+		$enable_posting = get_input('chkEnablePost');
 
 		$entity = new ElggObject();
 		$entity->container_guid = $container_guid;
@@ -71,8 +71,7 @@ switch ($subtype) {
 		elgg_set_ignore_access($old_access);
 
 		add_entity_relationship($entity_guid, 'descendant', $container_guid);
-
-		gcforums_notify_subscribed_users($entity, "{$site}gcforums/topic/view/{$entity->getGUID()}");
+		gcforums_notify_subscribed_users($entity, "{$site->getURL()}gcforums/topic/view/{$entity->getGUID()}");
 		create_hjforumtopic_relationships($entity_guid, $entity_guid);
 
 		// cyu - auto subscribe when user create the topic
@@ -80,6 +79,14 @@ switch ($subtype) {
 			add_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_email', $entity_guid);
 			add_entity_relationship(elgg_get_logged_in_user_guid(), 'cp_subscribed_to_site_mail', $entity_guid);
 		}
+
+		elgg_create_river_item(array(
+			'view' => 'river/object/hjforumtopic/create',
+			'action_type' => 'create',
+			'subject_guid' => $entity->getOwnerGUID(),
+			'object_guid' => $entity->getGUID()
+		));
+
 		break;
 
 	case 'hjforumpost':
@@ -106,6 +113,8 @@ switch ($subtype) {
 		return false;
 }
 system_message(elgg_echo("gcforums:saved:success", array($entity->title)));
+
+
 if ($subtype === 'hjforumpost')
 	forward("{$site}gcforums/topic/view/{$entity->getContainerGUID()}");
 else

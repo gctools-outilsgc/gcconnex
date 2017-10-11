@@ -17,8 +17,9 @@ function mm_search_database_for_missions($query_array, $query_operand, $limit, $
     $options = array();
     $mission_count = '';
     $missions = '';
-
     $filtered_array = array_filter($query_array);
+    $dbprefix = elgg_get_config("dbprefix");
+
     if(empty($filtered_array)) {
         register_error(elgg_echo('missions:error:no_search_values'));
         return false;
@@ -34,9 +35,12 @@ function mm_search_database_for_missions($query_array, $query_operand, $limit, $
         $options['metadata_name_value_pairs_operator'] = $query_operand;
         $options['metadata_case_sensitive'] = false;
         $options['limit'] = $limit;
+        $options['wheres'][] = 'e.owner_guid IN (SELECT guid FROM '.$dbprefix.'users_entity user WHERE user.name LIKE "' . mysql_escape_string($filtered_array[0]['value']) . '")';
+
+        $all_missions = elgg_get_entities_from_metadata($options);
+        array_pop($options['wheres']);
 
         // split the search into separate queries to prevent slowdown from 10+ join queries using 'OR'
-        $all_missions = array();
         foreach ($filtered_array as $array) {
             $options['metadata_name_value_pairs'] = array($array);
             $some_missions = elgg_get_entities_from_metadata($options);
@@ -71,7 +75,6 @@ function mm_search_database_for_missions($query_array, $query_operand, $limit, $
         $options['metadata_case_sensitive'] = false;
         $options['limit'] = $limit;
         $missions = elgg_get_entities_from_metadata($options);
-
 
         foreach($missions as $key => $mission) {
             if($mission->state != 'posted') {
@@ -138,22 +141,22 @@ function mm_analyze_advanced_search_element($place, $array)
                     case elgg_echo('gcconnex_profile:opt:micro_mission'):
                         $name_option = 'opt_in_missionCreate';
                         break;
-                    case elgg_echo('gcconnex_profile:opt:assignment_deployment_seek');
+                    case elgg_echo('gcconnex_profile:opt:assignment_deployment_seek'):
                         $name_option = 'opt_in_assignSeek';
                         break;
-                    case elgg_echo('gcconnex_profile:opt:assignment_deployment_create');
+                    case elgg_echo('gcconnex_profile:opt:assignment_deployment_create'):
                         $name_option = 'opt_in_assignCreate';
                         break;
-                    case elgg_echo('gcconnex_profile:opt:deployment_seek');
+                    case elgg_echo('gcconnex_profile:opt:deployment_seek'):
                         $name_option = 'opt_in_deploySeek';
                         break;
-                    case elgg_echo('gcconnex_profile:opt:deployment_create');
+                    case elgg_echo('gcconnex_profile:opt:deployment_create'):
                         $name_option = 'opt_in_deployCreate';
                         break;
                     case elgg_echo('gcconnex_profile:opt:job_swap'):
                         $name_option = 'opt_in_swap';
                         break;
-                    case elgg_echo('gcconnex_profile:opt:job_rotate');
+                    case elgg_echo('gcconnex_profile:opt:job_rotate'):
                         $name_option = 'opt_in_rotation';
                         break;
 
@@ -183,7 +186,7 @@ function mm_analyze_advanced_search_element($place, $array)
                     case elgg_echo('gcconnex_profile:opt:skill_sharing'):
                         $name_option = 'opt_in_ssSeek';
                         break;
-                    case elgg_echo('gcconnex_profile:opt:skill_sharing_create');
+                    case elgg_echo('gcconnex_profile:opt:skill_sharing_create'):
                         $name_option = 'opt_in_ssCreate';
                         break;
                 }

@@ -22,6 +22,47 @@ $oral = $vars['oral'];
 $operand = htmlspecialchars_decode($vars['operand']);
 $day = $vars['day'];
 
+ $obj = elgg_get_entities(array(
+            'type' => 'object',
+            'subtype' => 'dept_list',
+            'owner_guid' => 0
+        ));
+
+$provinces = array();
+if (get_current_language()=='en'){
+
+    $departments = $obj[0]->deptsEn;
+    $provinces['pov-alb'] = 'Government of Alberta';
+    $provinces['pov-bc'] = 'Government of British Columbia';
+    $provinces['pov-man'] = 'Government of Manitoba';
+    $provinces['pov-nb'] = 'Government of New Brunswick';
+    $provinces['pov-nfl'] = 'Government of Newfoundland and Labrador';
+    $provinces['pov-ns'] = 'Government of Nova Scotia';
+    $provinces['pov-nwt'] = 'Government of Northwest Territories';
+    $provinces['pov-nun'] = 'Government of Nunavut';
+    $provinces['pov-ont'] = 'Government of Ontario';
+    $provinces['pov-pei'] = 'Government of Prince Edward Island';
+    $provinces['pov-que'] = 'Government of Quebec';
+    $provinces['pov-sask'] = 'Government of Saskatchewan';
+    $provinces['pov-yuk'] = 'Government of Yukon';
+}else{
+    $departments = $obj[0]->deptsFr;
+    $provinces['pov-alb'] = "Gouvernement de l'Alberta";
+    $provinces['pov-bc'] = 'Gouvernement de la Colombie-Britannique';
+    $provinces['pov-man'] = 'Gouvernement du Manitoba';
+    $provinces['pov-nb'] = 'Gouvernement du Nouveau-Brunswick';
+    $provinces['pov-nfl'] = 'Gouvernement de Terre-Neuve-et-Labrador';
+    $provinces['pov-ns'] = 'Gouvernement de la Nouvelle-Écosse';
+    $provinces['pov-nwt'] = 'Gouvernement du Territoires du Nord-Ouest';
+    $provinces['pov-nun'] = 'Gouvernement du Nunavut';
+    $provinces['pov-ont'] = "Gouvernement de l'Ontario";
+    $provinces['pov-pei'] = "Gouvernement de l'Île-du-Prince-Édouard";
+    $provinces['pov-que'] = 'Gouvernement du Québec';
+    $provinces['pov-sask'] = 'Gouvernement de Saskatchewan';
+    $provinces['pov-yuk'] = 'Gouvernement du Yukon';
+}
+$departments = json_decode($departments, true);
+
 $content = '';
 $array_sec = mm_echo_explode_setting_string(elgg_get_plugin_setting('security_string', 'missions'));
 $array_lang = explode(',', elgg_get_plugin_setting('language_string', 'missions'));
@@ -64,9 +105,16 @@ else {
         case '':
             break;
         
-        /*case 'missions:user_department':
-        	
-        	break;*/
+        case elgg_echo('missions:department'):
+
+             $content .= elgg_view('input/dropdown', array(
+                'name' => $dropdown_name . '_element',
+                'id' => 'department',
+                'value' => '',
+                'class' => 'department_test form-control',
+                'options' => array_merge($departments,$provinces),
+            ));
+        	break;
             
         case elgg_echo('missions:portfolio'):
             $content .= elgg_view('input/dropdown', array(

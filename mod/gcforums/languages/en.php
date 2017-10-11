@@ -2,6 +2,7 @@
 $site_url = elgg_get_site_url();
 $english = array(
 
+	'river:create:object:hjforumtopic' => "%s created a forum topic %s",
 	'gcforums:delete:heading' => "Deletion confirmation",
 	'gcforums:delete:body' => "Are you sure you want to delete the %s",
 	'gcforums:delete:cancel' => "Cancel",
@@ -42,7 +43,7 @@ $english = array(
 
 	"gcforums:translate:topic_starter" => "Topic Starter",
 	"gcforums:translate:replies" => "Replies",
-	"gcforums:translate:last_post" => "Last post",
+	"gcforums:translate:last_posted" => "Last post",
 
 
 	"gcforums:translate:total_topics" => "Total topics",

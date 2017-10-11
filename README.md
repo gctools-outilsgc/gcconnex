@@ -3,6 +3,7 @@
 
 [![Build Status](https://secure.travis-ci.org/gctools-outilsgc/gcconnex.svg?branch=gcconnex)](https://travis-ci.org/gctools-outilsgc/gcconnex)
 [![Join the chat at https://gitter.im/gctools-outilsgc/gcconnex](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/gctools-outilsgc/general?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Code Coverage](https://scrutinizer-ci.com/g/gctools-outilsgc/gcconnex/badges/coverage.png?b=gcconnex)](https://scrutinizer-ci.com/g/gctools-outilsgc/gcconnex/?branch=gcconnex)
 
 GCconnex is a professional networking and collaborative workspace for all Canadian public service, allowing people to connect and share information, leveraging the power of networking towards a more effective and efficient public service.
 
@@ -38,6 +39,10 @@ Then visit [http://localhost:8080](http://localhost:8080) and follow the
 instructions to complete your installation.  Once the installer is complete,
 refer to [INSTALL.md](INSTALL.md#configure-plugins) to configure the plugins
 required by GCconnex.
+
+Alternatively, you can use the automated install script which will run the regular install as well as installing and rearanging the gcconnex mods:
+
+    docker exec -it gcconnex_gcconnex_1 php install/cli/docker_installer.php
 
 ### Docker specific configuration
 
