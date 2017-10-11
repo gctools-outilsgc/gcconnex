@@ -28,6 +28,7 @@ function gcforums_init() {
 	elgg_register_action('gcforums/create', $action_path.'/create.php');
 	elgg_register_action('gcforums/subscribe', $action_path.'/subscribe.php');
 
+	elgg_register_action('gcforums/move_topic', $action_path.'/move_topic.php');
 	// put a menu item in the site navigation (JMP request), placed in career dropdown
 	elgg_register_menu_item('subSite', array(
 		'name' => 'Forum',
@@ -263,6 +264,15 @@ function render_forums($forum_guid) {
 	$return = array();
 
 
+	if ($forum_guid !== $group_entity->guid)
+		$content .= "<div class='forums-menu-buttons'>".gcforums_menu_buttons($entity->getGUID(), $group_entity->getGUID())."</div> ";
+
+
+	// administrative only tool to fix up all the topics that were misplaced
+	if (elgg_is_admin_logged_in()) {
+		$content .= elgg_view_form('gcforums/move_topic');
+	}
+
 	$query = "SELECT * FROM elggentities e, elggentity_subtypes es WHERE e.subtype = es.id AND e.container_guid = {$forum_guid} AND es.subtype = 'hjforumtopic'";
 	$topics = get_data($query);
 
@@ -271,10 +281,7 @@ function render_forums($forum_guid) {
 	    return $b->guid - $a->guid;
 	});
 
-	if ($forum_guid !== $group_entity->guid)
-		$content .= "<div class='forums-menu-buttons'>".gcforums_menu_buttons($entity->getGUID(), $group_entity->getGUID())."</div> ";
-
-	if (count($topics) > 0) {
+	if (count($topics) > 0 && !$entity->enable_posting) {
 		$content .= "
 			<div class='topic-main-box'>
 				<div style='background: #e6e6e6; width:100%;' >
@@ -413,7 +420,7 @@ function render_forums($forum_guid) {
 				$content .= "
 				<div class='forum-category-issue-notice'>
 					<section class='alert alert-danger'>
-					<strong>This only shows up for (group) administrators</strong>.
+					<strong>This only shows up for administrators</strong>.
 					If you don't see a specific forum appearing above, you can correct that by editing the forums below. 
 					</section>
 					<div class='forum-main-box'>
@@ -665,11 +672,10 @@ function render_edit_options($object_guid, $group_guid) {
 	foreach ($options as $key => $option)
 		$edit_options .= "<div class='edit-options-{$entity_type}'>{$option}</div>";
 
-
-	if (elgg_is_logged_in() && ($current_user->isAdmin() || $group_entity->getOwnerGUID() == $current_user->guid) && $entity->getSubtype() !== 'hjforumpost' && $entity->getSubtype() !== 'hjforumtopic' && $entity->getSubtype() !== 'hjforumcategory') {		
+	if (elgg_is_logged_in() && ($current_user->isAdmin() || $group_entity->getOwnerGUID() == $current_user->guid) 
+		&& $entity->getSubtype() !== 'hjforumpost' && $entity->getSubtype() !== 'hjforumtopic' && $entity->getSubtype() !== 'hjforumcategory') {		
 		$edit_options  .= elgg_view('alerts/delete', array('entity' => $entity));		
-	}	
-
+	}
 
 	return $edit_options;
 }
