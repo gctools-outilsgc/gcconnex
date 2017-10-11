@@ -24,6 +24,8 @@ function init() {
 
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', __NAMESPACE__ . '\\hover_menu', 1000);
 	elgg_register_plugin_hook_handler('email', 'system', __NAMESPACE__ . '\\email_system', 0);
+
+	elgg_register_event_handler("create", "friendrequest", "friend_request_deactivated_user");
 }
 
 function selfdelete_page_handler($page) {
@@ -31,4 +33,14 @@ function selfdelete_page_handler($page) {
 		return FALSE;
 	}
 	return TRUE;
+}
+
+function friend_request_deactivated_user($event, $object_type, $object){
+	if (($object instanceof ElggRelationship)) {
+		$user = get_user($object->guid_two);
+		if($user->gcdeactivated = 'true'){
+			system_message('this user is also deactivated');
+		}
+		system_message('is this even doing anything?');
+	}
 }

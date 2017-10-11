@@ -34,6 +34,21 @@ if (elgg_get_plugin_setting('feedback', PLUGIN_ID) == "yes") {
 }
 
 echo '<div class="pvs">';
+echo '<label>'.elgg_echo('member_selfdelete:gc:reasonforleave').'</label>';
+echo elgg_view('input/radio',array(
+	'name'=>'gcreason',
+	'options' =>array(
+		elgg_echo('member_selfdelete:gc:reason:temp') => "temp",
+		elgg_echo('member_selfdelete:gc:reason:retire') => "retire",
+		elgg_echo('member_selfdelete:gc:reason:understand') => "understand",
+		elgg_echo('member_selfdelete:gc:reason:notifs') => "notifs",
+		elgg_echo('member_selfdelete:gc:reason:useful') => "useful",
+		elgg_echo('member_selfdelete:gc:reason:time') => "time",
+		elgg_echo('member_selfdelete:gc:reason:hacked') => "hacked",
+		elgg_echo('member_selfdelete:gc:reason:other'). elgg_view('input/text',array('name'=>'gcreason_oth')) => "other",
+	),
+	'class'=> '',
+));
 echo "<label>" . elgg_echo('member_selfdelete:label:confirmation') . '</label>';
 echo elgg_view('input/password', array(
 	'name' => 'confirmation'
@@ -45,3 +60,16 @@ echo elgg_view('input/submit', array('value' => elgg_echo('member_selfdelete:sub
 echo '</div>';
 
 elgg_clear_sticky_form('member_selfdelete');
+//scripts below 
+?>
+
+<script>
+$(document).ready(function(){
+	var formCount = $('.self-deactivate-memember-form');
+	formCount = formCount.length;
+	if(formCount>=1){
+		$('.elgg-form-selfdelete').find('.elgg-button-submit').prop('disabled', true);
+		$('.elgg-form-selfdelete').append('Please fix your groups man cmon');
+	}
+});
+</script>

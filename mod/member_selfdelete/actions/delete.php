@@ -11,6 +11,8 @@ if (elgg_is_admin_logged_in()) {
 
 $confirmation = get_input('confirmation');
 $reason = get_input('reason');
+$gcreason = get_input('gcreason');
+$gcreason_oth = get_input('gcreason_oth');
 
 if (elgg_get_plugin_setting('method', PLUGIN_ID) == "choose") {
 	$method = get_input('method', 'delete');
@@ -54,9 +56,12 @@ switch ($method) {
 		break;
 	case "deactivate":
 		//GCTools user deactivate
-		$user->gcdeactivate = 'true';
-
-		system_message('you have been deactivated! + ' .$user->gcdeactivate);
+		$user->gcdeactivate = true;
+		if($gcreason == 'other'){
+			$gcreason = $gcreason_oth;
+		}
+		$user->gcdeactivatereason = $gcreason;
+		system_message('you have been deactivated! + ' .$user->gcdeactivate . ' reason: '.$gcreason);
 		//logout();
 		forward(REFERER);
 		//session_regenerate_id(true);

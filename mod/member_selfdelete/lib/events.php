@@ -19,4 +19,6 @@ function pagesetup() {
 			'contexts' => array('settings')
 		));
 	}
+	//GCTools - list deactivated users
+	elgg_register_admin_menu_item('administer', 'member_selfdelete/deactivated_users', 'users');
 }
