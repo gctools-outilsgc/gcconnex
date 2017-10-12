@@ -61,25 +61,27 @@ elgg_ws_expose_function(
 	false
 );
 
-function login_user( $user, $password, $lang ){
-	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
+function login_user($user, $password, $lang)
+{
+	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 	$username = $user_entity->username;
 	$access = elgg_authenticate($username, $password);
 
-	if( true === $access ){
+	if (true === $access) {
 		return true;
 	} else {
 		return "Invalid user.";
 	}
 }
 
-function login_user_for_chat( $user, $key, $lang ){
-	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
+function login_user_for_chat($user, $key, $lang)
+{
+	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 
 	$response = file_get_contents('https://api.gctools.ca/login.ashx?action=login&email=' . $user . '&key=' . $key);
 	$json = json_decode($response);
 
-	if( $json->GCcollabAccess ){
+	if ($json->GCcollabAccess) {
 		login($user_entity);
 		forward('cometchat/cometchat_embedded.php');
 	} else {
@@ -87,13 +89,14 @@ function login_user_for_chat( $user, $key, $lang ){
 	}
 }
 
-function login_user_for_docs( $user, $key, $guid, $lang ){
-	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
+function login_user_for_docs($user, $key, $guid, $lang)
+{
+	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 
 	$response = file_get_contents('https://api.gctools.ca/login.ashx?action=login&email=' . $user . '&key=' . $key);
 	$json = json_decode($response);
 
-	if( $json->GCcollabAccess ){
+	if ($json->GCcollabAccess) {
 		login($user_entity);
 		$docObj = new ElggPad($guid);
 		forward($docObj->getPadPath());
@@ -102,13 +105,14 @@ function login_user_for_docs( $user, $key, $guid, $lang ){
 	}
 }
 
-function login_user_for_url( $user, $key, $url, $lang ){
-	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
-	
+function login_user_for_url($user, $key, $url, $lang)
+{
+	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+
 	$response = file_get_contents('https://api.gctools.ca/login.ashx?action=login&email=' . $user . '&key=' . $key);
 	$json = json_decode($response);
 
-	if( $json->GCcollabAccess ){
+	if ($json->GCcollabAccess) {
 		login($email);
 		forward($url);
 	} else {
