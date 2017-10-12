@@ -9,7 +9,7 @@ $english = array(
     'gccollab_stats:opportunitycount' => "Opportunities Created",
     'gccollab_stats:loading' => "Loading data...",
     
-    'gccollab_stats:time:title' => "Entities Over Time",
+    'gccollab_stats:time:title' => "Timeline",
     'gccollab_stats:types:select' => "Select Member Type:",
     'gccollab_stats:types:title' => "Member Types",
     'gccollab_stats:federal:title' => "Federal",
