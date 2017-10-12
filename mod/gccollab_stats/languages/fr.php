@@ -9,7 +9,7 @@ $french = array(
     'gccollab_stats:opportunitycount' => "Opportunités créées",
     'gccollab_stats:loading' => "Chargement des données...",
     
-    'gccollab_stats:time:title' => "Fil du temps",
+    'gccollab_stats:time:title' => "Ligne du temps",
     'gccollab_stats:types:select' => "Sélectionner le type de membre :",
     'gccollab_stats:types:title' => "Types de membres",
     'gccollab_stats:federal:title' => "Gouvernement fédéral",
