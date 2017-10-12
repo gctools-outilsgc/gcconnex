@@ -34,74 +34,87 @@ if (elgg_is_sticky_form('ticket-submit')) {
   <p><?php echo elgg_echo('freshdesk:ticket:information:note', array(), $lang); ?></p>
 </div>
 
-<div class="mrgn-tp-sm">
-<label for="email"><?php echo elgg_echo('freshdesk:ticket:email', array(), $lang); ?></label>
-<?php echo elgg_view('input/text', array(
-  'name' => 'email',
-  'id' => 'email',
-  'value' => $email,
-  'class' => 'mrgn-bttm-sm',
-  'required' => 'required'
-));
-?>
-</div>
+<fieldset class="user-info">
+  <legend>Your information</legend>
+  <div>
+  <label for="email"><?php echo elgg_echo('freshdesk:ticket:email', array(), $lang); ?></label>
+  <?php echo elgg_view('input/text', array(
+    'name' => 'email',
+    'id' => 'email',
+    'value' => $email,
+    'class' => 'mrgn-bttm-sm',
+    'required' => 'required'
+  ));
+  ?>
+  </div>
 
-<div class="mrgn-tp-sm">
-	<label for="department"><?php echo elgg_echo('freshdesk:ticket:department'); ?></label>
-	<?php echo elgg_view('input/department_field'); ?>
-</div>
+  <div class="mrgn-tp-sm">
+    <?php
+    if(  $product_id != 2100000290){
+    	echo '<label for="department">'.elgg_echo('freshdesk:ticket:department').'</label>';
+    	echo elgg_view('input/department_field');
+    } else {
+      echo elgg_view('input/user_type_field');
+    }
+    ?>
+  </div>
+</fieldset>
 
-<div class="mrgn-tp-sm">
-<label for="subject"><?php echo elgg_echo('freshdesk:ticket:subject', array(), $lang); ?></label>
-<?php echo elgg_view('input/text', array(
-  'name' => 'subject',
-  'id' => 'subject',
-  'required' => 'required',
-  'value' => $subject,
-  'onkeyup' => 'matchArticles(this, "'.$lang.'")'
-));
-?>
-<span class="relatedArticles btn-primary"><a href="#searchResults"></a></span>
-</div>
+<fieldset class="user-info">
+  <legend>Ticket information</legend>
+  <div>
+  <label for="subject"><?php echo elgg_echo('freshdesk:ticket:subject', array(), $lang); ?></label>
+  <?php echo elgg_view('input/text', array(
+    'name' => 'subject',
+    'id' => 'subject',
+    'required' => 'required',
+    'value' => $subject,
+    'onkeyup' => 'matchArticles(this, "'.$lang.'")'
+  ));
+  ?>
+  <span class="relatedArticles btn-primary"><a href="#searchResults"></a></span>
+  </div>
 
-<div class="mrgn-tp-sm">
-<label for="type"><?php echo elgg_echo('freshdesk:ticket:type', array(), $lang); ?></label>
-<?php echo elgg_view('input/select', array(
-  'name' => 'type',
-  'id' => 'type',
-  'required' => 'required',
-  'value' => $type,
-  'options_values' => [
-		'None' => elgg_echo('freshdesk:ticket:types:none', array(), $lang),
-		'Log in credentials' => elgg_echo('freshdesk:ticket:types:login', array(), $lang),
-    'Bugs/Errors' => elgg_echo('freshdesk:ticket:types:bugs', array(), $lang),
-    'Group-related' => elgg_echo('freshdesk:ticket:types:group', array(), $lang),
-    'Training' => elgg_echo('freshdesk:ticket:types:training', array(), $lang),
-    'Jobs Marketplace' => elgg_echo('freshdesk:ticket:types:jobs', array(), $lang),
-    'Enhancement' => elgg_echo('freshdesk:ticket:types:enhancement', array(), $lang),
-    'Flag content or behaviour' => elgg_echo('freshdesk:ticket:types:flag', array(), $lang),
-    'Other' => elgg_echo('freshdesk:ticket:types:other', array(), $lang),
-	],
-));
-?>
-</div>
+  <div class="mrgn-tp-sm">
+  <label for="type"><?php echo elgg_echo('freshdesk:ticket:type', array(), $lang); ?></label>
+  <?php echo elgg_view('input/select', array(
+    'name' => 'type',
+    'id' => 'type',
+    'required' => 'required',
+    'value' => $type,
+    'options_values' => [
+  		'None' => elgg_echo('freshdesk:ticket:types:none', array(), $lang),
+  		'Log in credentials' => elgg_echo('freshdesk:ticket:types:login', array(), $lang),
+      'Bugs/Errors' => elgg_echo('freshdesk:ticket:types:bugs', array(), $lang),
+      'Group-related' => elgg_echo('freshdesk:ticket:types:group', array(), $lang),
+      'Training' => elgg_echo('freshdesk:ticket:types:training', array(), $lang),
+      'Jobs Marketplace' => elgg_echo('freshdesk:ticket:types:jobs', array(), $lang),
+      'Enhancement' => elgg_echo('freshdesk:ticket:types:enhancement', array(), $lang),
+      'Flag content or behaviour' => elgg_echo('freshdesk:ticket:types:flag', array(), $lang),
+      'Other' => elgg_echo('freshdesk:ticket:types:other', array(), $lang),
+  	],
+  ));
+  ?>
+  </div>
 
-<div class="mrgn-tp-sm">
-<label for="attachment"><?php echo elgg_echo('freshdesk:ticket:attachment', array(), $lang); ?></label>
-<?php echo elgg_view('input/file', array('name' => 'attachment', 'id' => 'attachment', 'class' => 'mrgn-bttm-sm')); ?>
-</div>
+  <div class="mrgn-tp-sm">
+  <label for="attachment"><?php echo elgg_echo('freshdesk:ticket:attachment', array(), $lang); ?></label>
+  <?php echo elgg_view('input/file', array('name' => 'attachment', 'id' => 'attachment', 'class' => 'mrgn-bttm-sm')); ?>
+  </div>
 
-<div class="mrgn-tp-sm">
-<label for="description"><?php echo elgg_echo('freshdesk:ticket:description', array(), $lang); ?></label>
-<?php echo elgg_view('input/longtext', array(
-  'name' => 'description',
-  'id' => 'description',
-  'class' => 'mrgn-bttm-sm validate-me',
-  'required' => 'required',
-  'value' => $description
-));
-?>
-</div>
+  <div class="mrgn-tp-sm">
+  <label for="description"><?php echo elgg_echo('freshdesk:ticket:description', array(), $lang); ?></label>
+  <?php echo elgg_view('input/longtext', array(
+    'name' => 'description',
+    'id' => 'description',
+    'class' => 'mrgn-bttm-sm validate-me',
+    'required' => 'required',
+    'value' => $description
+  ));
+  ?>
+  </div>
+</fieldset>
+
 <?php echo elgg_view('input/hidden', array('name' => 'lang', 'value' => $lang)); ?>
 <?php echo elgg_view('input/submit', array('value' => elgg_echo('submit', array(), $lang), 'id' => 'sendTicket', 'class' => 'btn-primary btn-lg mrgn-tp-md'));?>
 </div>
