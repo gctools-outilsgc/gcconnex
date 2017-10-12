@@ -12,13 +12,13 @@ if($new_owner->getGUID() != $group->getOwnerGUID()){
 		gc_group_layout_transfer_coverphoto($group, $new_owner);
 		// transfer the group to the new owner
 		group_tools_transfer_group_ownership($group, $new_owner);
-        system_message('success');
+        system_message('member_selfdelete:gc:change:owner');
         forward(REFERER);
     }else{
-        register_error('this user is not a member of this group, try again');
+        register_error('member_selfdelete:gc:change:not:member');
         forward(REFERER);
     }
 }else{
-    register_error('you didnt change this');
+    register_error('member_selfdelete:gc:change:error');
     forward(REFERER);
 }

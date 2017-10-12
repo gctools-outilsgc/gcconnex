@@ -60,14 +60,16 @@ switch ($method) {
 		if($gcreason == 'other'){
 			$gcreason = $gcreason_oth;
 		}
+		//save reason to user
 		$user->gcdeactivatereason = $gcreason;
-		system_message('you have been deactivated! + ' .$user->gcdeactivate . ' reason: '.$gcreason);
-		//logout();
-		forward(REFERER);
-		//session_regenerate_id(true);
+		system_message('member_selfdelete:gc:deactivate:success');
+		
 		//remove notification relationships
 		remove_entity_relationships($user->guid,'cp_subscribed_to_email');
 		remove_entity_relationships($user->guid,'cp_subscribed_to_site_mail');
+		logout();
+		forward('login');
+		session_regenerate_id(true);
 		break;
 	case "anonymize":
 		// rename display name to inactive

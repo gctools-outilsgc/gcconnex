@@ -1,5 +1,7 @@
 <?php
+/*
 
+*/
 
 $dbprefix = elgg_get_config('dbprefix');
 $owned_groups = elgg_get_entities(array(
@@ -12,8 +14,10 @@ $owned_groups = elgg_get_entities(array(
 		'distinct' => false,
 ));
 
+
 if($owned_groups){
     echo '<div class="row clearfix">';
+    echo elgg_format_element('div',array(), elgg_echo('member_selfdelete:gc:group:owner:change'));
     foreach($owned_groups as $group){
 
         echo '<div class="list-break clearfix">';
