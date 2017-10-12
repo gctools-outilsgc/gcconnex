@@ -174,8 +174,10 @@ elgg_ws_expose_function(
 	false
 );
 
-function build_date($month, $year){
-	switch($month){
+function build_date($month, $year)
+{
+	$string = "01/";
+	switch ($month) {
 		case 1:
 			$string = "01/";
 			break;
@@ -212,30 +214,39 @@ function build_date($month, $year){
 		case 12:
 			$string = "12/";
 			break;
-	}	
+	}
 	return $string . $year;
 }
 
-function get_user_data( $profileemail, $user, $lang ){
-	$user_entity = is_numeric($profileemail) ? get_user($profileemail) : ( strpos($profileemail, '@') !== FALSE ? get_user_by_email($profileemail)[0] : get_user_by_username($profileemail) );
- 	if( !$user_entity ) return "User was not found. Please try a different GUID, username, or email address";
-	if( !$user_entity instanceof ElggUser ) return "Invalid user. Please try a different GUID, username, or email address";
+function get_user_data($profileemail, $user, $lang)
+{
+	$user_entity = is_numeric($profileemail) ? get_user($profileemail) : (strpos($profileemail, '@') !== false ? get_user_by_email($profileemail)[0] : get_user_by_username($profileemail));
+	if (!$user_entity) {
+		return "User was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$user_entity instanceof ElggUser) {
+		return "Invalid user. Please try a different GUID, username, or email address";
+	}
 
-	if( $user ){
-		$viewer = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
-	 	if( !$viewer ) return "Viewer user was not found. Please try a different GUID, username, or email address";
-		if( !$viewer instanceof ElggUser ) return "Invalid viewer user. Please try a different GUID, username, or email address";
-		
+	if ($user) {
+		$viewer = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+		if (!$viewer) {
+			return "Viewer user was not found. Please try a different GUID, username, or email address";
+		}
+		if (!$viewer instanceof ElggUser) {
+			return "Invalid viewer user. Please try a different GUID, username, or email address";
+		}
+
 		$friends = $viewer->isFriendsWith($user_entity->guid);
+
+		if (!elgg_is_logged_in()) {
+			login($viewer);
+		}
 	} else {
 		$friends = false;
 	}
 
-	if( !elgg_is_logged_in() )
-		login($viewer);
-
 	$user = array();
-
 	$user['id'] = $user_entity->guid;
 	$user['friend'] = $friends;
 	$user['user_type'] = $user_entity->user_type;
@@ -243,7 +254,7 @@ function get_user_data( $profileemail, $user, $lang ){
 	$user['displayName'] = $user_entity->name;
 	$user['email'] = $user_entity->email;
 	$user['profileURL'] = $user_entity->getURL();
-	$user['iconURL'] = $user_entity->geticon();
+	$user['iconURL'] = $user_entity->getIconURL();
 	$user['jobTitle'] = $user_entity->job;
 
 	switch ($user_entity->user_type) {
@@ -253,7 +264,7 @@ function get_user_data( $profileemail, $user, $lang ){
 		case "student":
 		case "academic":
 			$institution = $user_entity->institution;
-		    $user['department'] = ($institution == 'university') ? $user_entity->university : ($institution == 'college' ? $user_entity->college : $user_entity->highschool);
+			$user['department'] = ($institution == 'university') ? $user_entity->university : ($institution == 'college' ? $user_entity->college : $user_entity->highschool);
 			break;
 		case "provincial":
 			$user['department'] = $user_entity->provincial . ' / ' . $user_entity->ministry;
@@ -267,32 +278,42 @@ function get_user_data( $profileemail, $user, $lang ){
 	$user['mobile'] = $user_entity->mobile;
 	$user['website'] = $user_entity->website;
 
-	if( $user_entity->facebook )
+	if ($user_entity->facebook) {
 		$user['links']['facebook'] = "http://www.facebook.com/".$user_entity->facebook;
-	if( $user_entity->google )
+	}
+	if ($user_entity->google) {
 		$user['links']['google'] = "http://www.google.com/".$user_entity->google;
-	if( $user_entity->github )
+	}
+	if ($user_entity->github) {
 		$user['links']['github'] = "https://github.com/".$user_entity->github;
-	if( $user_entity->twitter )
+	}
+	if ($user_entity->twitter) {
 		$user['links']['twitter'] = "https://twitter.com/".$user_entity->twitter;
-	if( $user_entity->linkedin )
+	}
+	if ($user_entity->linkedin) {
 		$user['links']['linkedin'] = "http://ca.linkedin.com/in/".$user_entity->linkedin;
-	if( $user_entity->pinterest )
+	}
+	if ($user_entity->pinterest) {
 		$user['links']['pinterest'] = "http://www.pinterest.com/".$user_entity->pinterest;
-	if( $user_entity->tumblr )
+	}
+	if ($user_entity->tumblr) {
 		$user['links']['tumblr'] = "https://www.tumblr.com/blog/".$user_entity->tumblr;
-	if( $user_entity->instagram )
+	}
+	if ($user_entity->instagram) {
 		$user['links']['instagram'] = "http://instagram.com/".$user_entity->instagram;
-	if( $user_entity->flickr )
+	}
+	if ($user_entity->flickr) {
 		$user['links']['flickr'] = "http://flickr.com/".$user_entity->flickr;
-	if( $user_entity->youtube )
+	}
+	if ($user_entity->youtube) {
 		$user['links']['youtube'] = "http://www.youtube.com/".$user_entity->youtube;
+	}
 
 	// About Me
 	$about_me = strip_tags($user_entity->description, '<p>');
 	$about_me = str_replace("<p>&nbsp;</p>", '', $about_me);
 	$user['about_me'] = $about_me;
-	
+
 	// Education
 	$educationEntity = elgg_get_entities(array(
 		'owner_guid'=>$user['id'],
@@ -301,15 +322,15 @@ function get_user_data( $profileemail, $user, $lang ){
 		'limit' => 0
 	));
 	$i = 0;
-	foreach( $educationEntity as $school ){
-		if( $school->access_id == ACCESS_PUBLIC || $school->access_id == ACCESS_LOGGED_IN || ($friends && $school->access_id == ACCESS_FRIENDS) ){
+	foreach ($educationEntity as $school) {
+		if ($school->access_id == ACCESS_PUBLIC || $school->access_id == ACCESS_LOGGED_IN || ($friends && $school->access_id == ACCESS_FRIENDS)) {
 			$user['education']['item_'.$i]['school_name'] = $school->school;
-			
+
 			$user['education']['item_'.$i]['start_date'] = build_date($school->startdate, $school->startyear);
-			
-			if($school->ongoing == "false"){
-				$user['education']['item_'.$i]['end_date'] = build_date($school->enddate,$school->endyear);
-			}else{
+
+			if ($school->ongoing == "false") {
+				$user['education']['item_'.$i]['end_date'] = build_date($school->enddate, $school->endyear);
+			} else {
 				$user['education']['item_'.$i]['end_date'] = "present/actuel";
 			}
 			$user['education']['item_'.$i]['degree'] = $school->degree;
@@ -327,96 +348,94 @@ function get_user_data( $profileemail, $user, $lang ){
 	));
 	usort($experienceEntity, "sortDate");
 	$i = 0;
-	foreach( $experienceEntity as $job ){
-		if( $job->access_id == ACCESS_PUBLIC || $job->access_id == ACCESS_LOGGED_IN || ($friends && $job->access_id == ACCESS_FRIENDS) ){
+	foreach ($experienceEntity as $job) {
+		if ($job->access_id == ACCESS_PUBLIC || $job->access_id == ACCESS_LOGGED_IN || ($friends && $job->access_id == ACCESS_FRIENDS)) {
 			$jobMetadata = elgg_get_metadata(array(
 				'guid' => $job->guid,
 				'limit' => 0
 			));
-			//foreach ($jobMetadata as $data)
-			//	$user['job'][$i++][$data->name] = $data->value;
 
 			$user['experience']['item_'.$i]['job_title'] = $job->title;
 			$user['experience']['item_'.$i]['organization'] = $job->organization;
 			$user['experience']['item_'.$i]['start_date'] = build_date($job->startdate, $job->startyear);
-			if ($job->ongoing == "false"){
+			if ($job->ongoing == "false") {
 				$user['experience']['item_'.$i]['end_date'] = build_date($job->enddate, $job->endyear);
-			}else{
+			} else {
 				$user['experience']['item_'.$i]['end_date'] = "present/actuel";
 			}
 			$user['experience']['item_'.$i]['responsibilities'] = $job->responsibilities;
-			//$user['experience']['item_'.$i]['colleagues'] = $job->colleagues;
+
 			$j = 0;
-			if( is_array($job->colleagues) ){
-				foreach( $job->colleagues as $friend ){
+			if (is_array($job->colleagues)) {
+				foreach ($job->colleagues as $friend) {
 					$friendEntity = get_user($friend);
 					$user['experience']['item_'.$i]['colleagues']['colleague_'.$j]["id"] = $friendEntity->guid;
 					$user['experience']['item_'.$i]['colleagues']['colleague_'.$j]["username"] = $friendEntity->username;
-	
+
 					//get and store user display name
 					$user['experience']['item_'.$i]['colleagues']['colleague_'.$j]["displayName"] = $friendEntity->name;
-	
+
 					//get and store URL for profile
 					$user['experience']['item_'.$i]['colleagues']['colleague_'.$j]["profileURL"] = $friendEntity->getURL();
-	
+
 					//get and store URL of profile avatar
-					$user['experience']['item_'.$i]['colleagues']['colleague_'.$j]["iconURL"] = $friendEntity->geticon();
+					$user['experience']['item_'.$i]['colleagues']['colleague_'.$j]["iconURL"] = $friendEntity->getIconURL();
 					$j++;
 				}
-			} else if( !is_null($job->colleagues) ){
+			} elseif (!is_null($job->colleagues)) {
 				$friendEntity = get_user($job->colleagues);
 				$user['experience']['item_'.$i]['colleagues']['colleague_'.$j]["id"] = $friendEntity->guid;
 				$user['experience']['item_'.$i]['colleagues']['colleague_'.$j]["username"] = $friendEntity->username;
-	
+
 				//get and store user display name
 				$user['experience']['item_'.$i]['colleagues']['colleague_'.$j]["displayName"] = $friendEntity->name;
-		
+
 				//get and store URL for profile
 				$user['experience']['item_'.$i]['colleagues']['colleague_'.$j]["profileURL"] = $friendEntity->getURL();
-	
+
 				//get and store URL of profile avatar
-				$user['experience']['item_'.$i]['colleagues']['colleague_'.$j]["iconURL"] = $friendEntity->geticon();
-					
+				$user['experience']['item_'.$i]['colleagues']['colleague_'.$j]["iconURL"] = $friendEntity->getIconURL();
 			}
 			$i++;
 		}
 	}
 
 	// Skills
-	if( $user_entity->skill_access == ACCESS_PUBLIC || $user_entity->skill_access == ACCESS_LOGGED_IN || ($friends && $user_entity->skill_access == ACCESS_FRIENDS) ){
+	if ($user_entity->skill_access == ACCESS_PUBLIC || $user_entity->skill_access == ACCESS_LOGGED_IN || ($friends && $user_entity->skill_access == ACCESS_FRIENDS)) {
 		$skillsEntity = elgg_get_entities(array(
 			'owner_guid'=>$user['id'],
 			'subtype'=>'MySkill',
 			'type' => 'object',
 			'limit' => 0
 		));
-	}
-	$i=0;
-	foreach($skillsEntity as $skill){
-		$user['skills']['item_'.$i]['skill'] = $skill->title;
-		//$user['skills']['item_'.$i]['endorsements'] = $skill->endorsements;
-		$j = 0;
-		if( is_array($skill->endorsements) ){
-			foreach( $skill->endorsements as $friend ){
-				$friendEntity = get_user($friend);
-				if( $friendEntity instanceof ElggUser ){
-					$user['skills']['item_'.$i]['endorsements']["user_".$j]["id"] = $friendEntity->guid; 
-					$user['skills']['item_'.$i]['endorsements']["user_".$j]["username"] = $friendEntity->username;
-					$user['skills']['item_'.$i]['endorsements']["user_".$j]["displayName"] = $friendEntity->name;
-					$user['skills']['item_'.$i]['endorsements']["user_".$j]["profileURL"] = $friendEntity->getURL();
-					$user['skills']['item_'.$i]['endorsements']["user_".$j]["iconURL"] = $friendEntity->geticon();
+
+		$i=0;
+		foreach ($skillsEntity as $skill) {
+			$user['skills']['item_'.$i]['skill'] = $skill->title;
+
+			$j = 0;
+			if (is_array($skill->endorsements)) {
+				foreach ($skill->endorsements as $friend) {
+					$friendEntity = get_user($friend);
+					if ($friendEntity instanceof ElggUser) {
+						$user['skills']['item_'.$i]['endorsements']["user_".$j]["id"] = $friendEntity->guid;
+						$user['skills']['item_'.$i]['endorsements']["user_".$j]["username"] = $friendEntity->username;
+						$user['skills']['item_'.$i]['endorsements']["user_".$j]["displayName"] = $friendEntity->name;
+						$user['skills']['item_'.$i]['endorsements']["user_".$j]["profileURL"] = $friendEntity->getURL();
+						$user['skills']['item_'.$i]['endorsements']["user_".$j]["iconURL"] = $friendEntity->getIconURL();
+					}
+					$j++;
 				}
-				$j++;
+			} elseif (!is_null($skill->endorsements)) {
+				$friendEntity = get_user($skill->endorsements);
+				$user['skills']['item_'.$i]['endorsements']["user_".$j]["id"] = $friendEntity->guid;
+				$user['skills']['item_'.$i]['endorsements']["user_".$j]["username"] = $friendEntity->username;
+				$user['skills']['item_'.$i]['endorsements']["user_".$j]["displayName"] = $friendEntity->name;
+				$user['skills']['item_'.$i]['endorsements']["user_".$j]["profileURL"] = $friendEntity->getURL();
+				$user['skills']['item_'.$i]['endorsements']["user_".$j]["iconURL"] = $friendEntity->getIconURL();
 			}
-		} else if( !is_null($skill->endorsements) ){
-			$friendEntity = get_user($skill->endorsements);
-			$user['skills']['item_'.$i]['endorsements']["user_".$j]["id"] = $friendEntity->guid; 
-			$user['skills']['item_'.$i]['endorsements']["user_".$j]["username"] = $friendEntity->username;
-			$user['skills']['item_'.$i]['endorsements']["user_".$j]["displayName"] = $friendEntity->name;
-			$user['skills']['item_'.$i]['endorsements']["user_".$j]["profileURL"] = $friendEntity->getURL();
-			$user['skills']['item_'.$i]['endorsements']["user_".$j]["iconURL"] = $friendEntity->geticon();
+			$i++;
 		}
-		$i++;
 	}
 
 	// Portfolio
@@ -427,12 +446,13 @@ function get_user_data( $profileemail, $user, $lang ){
 		'limit' => 0
 	));
 	$i = 0;
-	foreach( $portfolioEntity as $portfolio ){
-		if( $portfolio->access_id == ACCESS_PUBLIC || $portfolio->access_id == ACCESS_LOGGED_IN || ($friends && $portfolio->access_id == ACCESS_FRIENDS) ){
+	foreach ($portfolioEntity as $portfolio) {
+		if ($portfolio->access_id == ACCESS_PUBLIC || $portfolio->access_id == ACCESS_LOGGED_IN || ($friends && $portfolio->access_id == ACCESS_FRIENDS)) {
 			$user['portfolio']['item_'.$i]['title'] = $portfolio->title;
 			$user['portfolio']['item_'.$i]['link'] = $portfolio->link;
-			if($portfolio->datestamped == "on")
+			if ($portfolio->datestamped == "on") {
 				$user['portfolio']['item_'.$i]['date'] = $portfolio->publishdate;
+			}
 			$user['portfolio']['item_'.$i]['description'] = $portfolio->description;
 		}
 	}
@@ -465,13 +485,14 @@ function get_user_data( $profileemail, $user, $lang ){
 	return $user;
 }
 
-function get_user_exists( $user, $lang ){
-	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
+function get_user_exists($user, $lang)
+{
+	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 
 	$valid = false;
-	if( $user_entity instanceof ElggUser ){
+	if ($user_entity instanceof ElggUser) {
 		$is_validated = elgg_get_user_validation_status($user->guid);
-		if( $is_validated ){
+		if ($is_validated) {
 			$valid = true;
 		}
 	}
@@ -479,18 +500,28 @@ function get_user_exists( $user, $lang ){
 	return $valid;
 }
 
-function get_user_activity( $profileemail, $user, $limit, $offset, $lang ){
-	$user_entity = is_numeric($profileemail) ? get_user($profileemail) : ( strpos($profileemail, '@') !== FALSE ? get_user_by_email($profileemail)[0] : get_user_by_username($profileemail) );
- 	if( !$user_entity ) return "User was not found. Please try a different GUID, username, or email address";
-	if( !$user_entity instanceof ElggUser ) return "Invalid user. Please try a different GUID, username, or email address";
+function get_user_activity($profileemail, $user, $limit, $offset, $lang)
+{
+	$user_entity = is_numeric($profileemail) ? get_user($profileemail) : (strpos($profileemail, '@') !== false ? get_user_by_email($profileemail)[0] : get_user_by_username($profileemail));
+	if (!$user_entity) {
+		return "User was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$user_entity instanceof ElggUser) {
+		return "Invalid user. Please try a different GUID, username, or email address";
+	}
 
-	$viewer = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
- 	if( !$viewer ) return "Viewer user was not found. Please try a different GUID, username, or email address";
-	if( !$viewer instanceof ElggUser ) return "Invalid viewer user. Please try a different GUID, username, or email address";
+	$viewer = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+	if (!$viewer) {
+		return "Viewer user was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$viewer instanceof ElggUser) {
+		return "Invalid viewer user. Please try a different GUID, username, or email address";
+	}
 
-	if( !elgg_is_logged_in() )
+	if (!elgg_is_logged_in()) {
 		login($viewer);
-	
+	}
+
 	$all_activity = elgg_list_river(array(
 		'subject_guid' => $user_entity->guid,
 		'distinct' => false,
@@ -499,62 +530,64 @@ function get_user_activity( $profileemail, $user, $limit, $offset, $lang ){
 	));
 
 	$activity = json_decode($all_activity);
-	foreach( $activity as $event ){
+	foreach ($activity as $event) {
 		$subject = get_user($event->subject_guid);
 		$object = get_entity($event->object_guid);
 		$event->userDetails = get_user_block($event->subject_guid, $lang);
 
-		if( $object instanceof ElggUser ){
+		if ($object instanceof ElggUser) {
 			$event->object = get_user_block($event->object_guid, $lang);
 			$event->object['type'] = 'user';
-		} else if( $object instanceof ElggWire ){
+		} elseif ($object instanceof ElggWire) {
 			$event->object['type'] = 'wire';
 			$event->object['wire'] = wire_filter($object->description);
-					
+
 			$thread_id = $object->wire_thread;
 			$reshare = $object->getEntitiesFromRelationship(array("relationship" => "reshare", "limit" => 1))[0];
 
 			$url = "";
-			if( !empty( $reshare ) ){
+			if (!empty($reshare)) {
 				$url = $reshare->getURL();
 			}
 
 			$text = "";
-			if ( !empty($reshare->title) ) {
+			if (!empty($reshare->title)) {
 				$text = $reshare->title;
-			} else if ( !empty($reshare->name) ) {
+			} elseif (!empty($reshare->name)) {
 				$text = $reshare->name;
-			} else if ( !empty($reshare->description) ) {
+			} elseif (!empty($reshare->description)) {
 				$text = elgg_get_excerpt($reshare->description, 140);
 			}
 
 			$event->shareURL = $url;
 			$event->shareText = gc_explode_translation($text, $lang);
-		} else if( $object instanceof ElggGroup ){
+		} elseif ($object instanceof ElggGroup) {
 			$event->object['type'] = 'group';
 			$event->object['name'] = gc_explode_translation($object->name, $lang);
-		} else if( $object instanceof ElggDiscussionReply ){
+		} elseif ($object instanceof ElggDiscussionReply) {
 			$event->object['type'] = 'discussion-reply';
 			$original_discussion = get_entity($object->container_guid);
 			$event->object['name'] = $original_discussion->title;
 			$event->object['description'] = $object->description;
-		} else if( $object instanceof ElggFile ){
+		} elseif ($object instanceof ElggFile) {
 			$event->object['type'] = 'file';
 			$event->object['name'] = $object->title;
 			$event->object['description'] = $object->description;
-		} else if( $object instanceof ElggObject ){
+		} elseif ($object instanceof ElggObject) {
 			$event->object['type'] = 'discussion-add';
-			$event->object['name'] = ( $object->title ) ? $object->title : $object->name;
+			$event->object['name'] = ($object->title) ? $object->title : $object->name;
 			$event->object['description'] = $object->description;
 
 			$other = get_entity($event->object_guid);
 			$parent = get_entity($other->container_guid);
-			if( $parent instanceof ElggGroup ){
-				if( !isset($event->object['name']) )
-					$event->object['name'] = ( $parent->title ) ? $parent->title : $parent->name;
+			if ($parent instanceof ElggGroup) {
+				if (!isset($event->object['name'])) {
+					$event->object['name'] = ($parent->title) ? $parent->title : $parent->name;
+				}
 			} else {
-				if( !isset($event->object['name']) )
-					$event->object['name'] = ( $parent->title ) ? $parent->title : $parent->name;
+				if (!isset($event->object['name'])) {
+					$event->object['name'] = ($parent->title) ? $parent->title : $parent->name;
+				}
 			}
 		} else {
 			//@TODO handle any unknown events
@@ -575,31 +608,41 @@ function get_user_activity( $profileemail, $user, $limit, $offset, $lang ){
 	return $activity;
 }
 
-function get_user_groups( $profileemail, $user, $lang ){
-	$user_entity = is_numeric($profileemail) ? get_user($profileemail) : ( strpos($profileemail, '@') !== FALSE ? get_user_by_email($profileemail)[0] : get_user_by_username($profileemail) );
- 	if( !$user_entity ) return "User was not found. Please try a different GUID, username, or email address";
-	if( !$user_entity instanceof ElggUser ) return "Invalid user. Please try a different GUID, username, or email address";
+function get_user_groups($profileemail, $user, $lang)
+{
+	$user_entity = is_numeric($profileemail) ? get_user($profileemail) : (strpos($profileemail, '@') !== false ? get_user_by_email($profileemail)[0] : get_user_by_username($profileemail));
+	if (!$user_entity) {
+		return "User was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$user_entity instanceof ElggUser) {
+		return "Invalid user. Please try a different GUID, username, or email address";
+	}
 
-	$viewer = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
- 	if( !$viewer ) return "Viewer user was not found. Please try a different GUID, username, or email address";
-	if( !$viewer instanceof ElggUser ) return "Invalid viewer user. Please try a different GUID, username, or email address";
+	$viewer = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+	if (!$viewer) {
+		return "Viewer user was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$viewer instanceof ElggUser) {
+		return "Invalid viewer user. Please try a different GUID, username, or email address";
+	}
 
-	if( !elgg_is_logged_in() )
+	if (!elgg_is_logged_in()) {
 		login($viewer);
+	}
 
 	$all_groups = elgg_list_entities_from_relationship(array(
-	    'relationship' => 'member', 
-	    'relationship_guid' => $user_entity->guid, 
-	    'inverse_relationship' => FALSE, 
-	    'type' => 'group', 
-	    'limit' => 0
+		'relationship' => 'member',
+		'relationship_guid' => $user_entity->guid,
+		'inverse_relationship' => false,
+		'type' => 'group',
+		'limit' => 0
 	));
 
 	$groups = json_decode($all_groups);
-	foreach($groups as $group){
+	foreach ($groups as $group) {
 		$groupObj = get_entity($group->guid);
 		$group->name = gc_explode_translation($group->name, $lang);
-		$group->iconURL = $groupObj->geticon();
+		$group->iconURL = $groupObj->getIconURL();
 		$group->count = $groupObj->getMembers(array('count' => true));
 		$group->description = clean_text(gc_explode_translation($group->description, $lang));
 	}
@@ -607,80 +650,95 @@ function get_user_groups( $profileemail, $user, $lang ){
 	return $groups;
 }
 
-function get_newsfeed( $user, $limit, $offset, $lang ){
-	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
- 	if( !$user_entity ) return "User was not found. Please try a different GUID, username, or email address";
-	if( !$user_entity instanceof ElggUser ) return "Invalid user. Please try a different GUID, username, or email address";
-	
-	if( !elgg_is_logged_in() )
+function get_newsfeed($user, $limit, $offset, $lang)
+{
+	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+	if (!$user_entity) {
+		return "User was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$user_entity instanceof ElggUser) {
+		return "Invalid user. Please try a different GUID, username, or email address";
+	}
+
+	if (!elgg_is_logged_in()) {
 		login($user_entity);
+	}
 
 	$db_prefix = elgg_get_config('dbprefix');
-    
-    if( $user_entity ){
-        // check if user exists and has friends or groups
-        $hasfriends = $user_entity->getFriends();
-        $hasgroups = $user_entity->getGroups();
-        if( $hasgroups ){
-            // loop through group guids
-            $groups = $user_entity->getGroups(array('limit'=>0));
-            $group_guids = array();
-            foreach( $groups as $group ){
-                $group_guids[] = $group->getGUID();
-            }
-        }
-    }
 
-    $actionTypes = array('comment', 'create', 'join', 'update', 'friend', 'reply');
+	if ($user_entity) {
+		// check if user exists and has friends or groups
+		$hasfriends = $user_entity->getFriends();
+		$hasgroups = $user_entity->getGroups();
+		if ($hasgroups) {
+			// loop through group guids
+			$groups = $user_entity->getGroups(array('limit'=>0));
+			$group_guids = array();
+			foreach ($groups as $group) {
+				$group_guids[] = $group->getGUID();
+			}
+		}
+	} else {
+		$hasfriends = false;
+		$hasgroups = false;
+		$group_guids = array();
+	}
 
-    if( !$hasgroups && !$hasfriends ){
-        // no friends and no groups :(
-        $activity = '';
-    } else if( !$hasgroups && $hasfriends ){
-        // has friends but no groups
-        $optionsf['relationship_guid'] = $user_entity->guid;
-        $optionsf['relationship'] = 'friend';
-        $optionsf['pagination'] = true;
+	$actionTypes = array('comment', 'create', 'join', 'update', 'friend', 'reply');
 
-        // turn off friend connections
-        // remove friend connections from action types
-        // load user's preference
-        $filteredItems = array($user_entity->colleagueNotif);
-        // filter out preference
-        $optionsf['action_types'] = array_diff( $actionTypes, $filteredItems );
+	if (!$hasgroups) {
+	 	if(!$hasfriends) {
+			// no friends and no groups :(
+			$activity = '';
+		} else {
+			// has friends but no groups
+			$optionsf = array();
+			$optionsf['relationship_guid'] = $user_entity->guid;
+			$optionsf['relationship'] = 'friend';
+			$optionsf['pagination'] = true;
 
-        $activity = json_decode(newsfeed_list_river($optionsf));
-    } else if( !$hasfriends && $hasgroups ){
-        // if no friends but groups
-        $guids_in = implode(',', array_unique(array_filter($group_guids)));
-        
-        // display created content and replies and comments
-        $optionsg['wheres'] = array("( oe.container_guid IN({$guids_in}) OR te.container_guid IN({$guids_in}) )");
-        $optionsg['pagination'] = true;
-        $activity = json_decode(newsfeed_list_river($optionsg));
-    } else {
-        // if friends and groups :3
-        // turn off friend connections
-        // remove friend connections from action types
-        // load user's preference
-        $filteredItems = array($user_entity->colleagueNotif);
-        // filter out preference
-        $optionsfg['action_types'] = array_diff( $actionTypes, $filteredItems );
+			// turn off friend connections
+			// remove friend connections from action types
+			// load user's preference
+			$filteredItems = array($user_entity->colleagueNotif);
+			// filter out preference
+			$optionsf['action_types'] = array_diff($actionTypes, $filteredItems);
 
-        $guids_in = implode(',', array_unique(array_filter($group_guids)));
+			$activity = json_decode(newsfeed_list_river($optionsf));
+		}
+	} elseif (!$hasfriends) {
+		// if no friends but groups
+		$guids_in = implode(',', array_unique(array_filter($group_guids)));
 
-        // Groups + Friends activity query
-        // This query grabs new created content and comments and replies in the groups the user is a member of *** te.container_guid grabs comments and replies
-        $optionsfg['wheres'] = array(
-    		"( oe.container_guid IN({$guids_in})
+		// display created content and replies and comments
+		$optionsg = array();
+		$optionsg['wheres'] = array("( oe.container_guid IN({$guids_in}) OR te.container_guid IN({$guids_in}) )");
+		$optionsg['pagination'] = true;
+		$activity = json_decode(newsfeed_list_river($optionsg));
+	} else {
+		// if friends and groups :3
+		// turn off friend connections
+		// remove friend connections from action types
+		// load user's preference
+		$filteredItems = array($user_entity->colleagueNotif);
+		// filter out preference
+		$optionsfg = array();
+		$optionsfg['action_types'] = array_diff($actionTypes, $filteredItems);
+
+		$guids_in = implode(',', array_unique(array_filter($group_guids)));
+
+		// Groups + Friends activity query
+		// This query grabs new created content and comments and replies in the groups the user is a member of *** te.container_guid grabs comments and replies
+		$optionsfg['wheres'] = array(
+			"( oe.container_guid IN({$guids_in})
          	OR te.container_guid IN({$guids_in}) )
         	OR rv.subject_guid IN (SELECT guid_two FROM {$db_prefix}entity_relationships WHERE guid_one=$user_entity->guid AND relationship='friend')"
-        );
-        $optionsfg['pagination'] = true;
-        $activity = json_decode(newsfeed_list_river($optionsfg));
-    }
+		);
+		$optionsfg['pagination'] = true;
+		$activity = json_decode(newsfeed_list_river($optionsfg));
+	}
 
-    foreach( $activity as $event ){
+	foreach ($activity as $event) {
 		$subject = get_user($event->subject_guid);
 		$object = get_entity($event->object_guid);
 		$event->userDetails = get_user_block($event->subject_guid, $lang);
@@ -698,81 +756,83 @@ function get_newsfeed( $user, $limit, $offset, $lang ){
 		));
 		$event->liked = count($liked) > 0;
 
-		if($object->description){
+		if ($object->description) {
 			$object->description = str_replace("<p>&nbsp;</p>", '', $object->description);
 		}
 
-		if( $object instanceof ElggUser ){
+		if ($object instanceof ElggUser) {
 			$event->object = get_user_block($event->object_guid, $lang);
 			$event->object['type'] = 'user';
-		} else if( $object instanceof ElggWire ){
+		} elseif ($object instanceof ElggWire) {
 			$event->object['type'] = 'wire';
 			$event->object['wire'] = wire_filter($object->description);
-			
+
 			$thread_id = $object->wire_thread;
 			$reshare = $object->getEntitiesFromRelationship(array("relationship" => "reshare", "limit" => 1))[0];
 
 			$url = "";
-			if( !empty( $reshare ) ){
+			if (!empty($reshare)) {
 				$url = $reshare->getURL();
 			}
 
 			$text = "";
-			if ( !empty($reshare->title) ) {
+			if (!empty($reshare->title)) {
 				$text = $reshare->title;
-			} else if ( !empty($reshare->name) ) {
+			} elseif (!empty($reshare->name)) {
 				$text = $reshare->name;
-			} else if ( !empty($reshare->description) ) {
+			} elseif (!empty($reshare->description)) {
 				$text = elgg_get_excerpt($reshare->description, 140);
 			}
 
 			$event->shareURL = $url;
 			$event->shareText = gc_explode_translation($text, $lang);
-		} else if( $object instanceof ElggGroup ){
+		} elseif ($object instanceof ElggGroup) {
 			$event->object['type'] = 'group';
 			$event->object['name'] = gc_explode_translation($object->name, $lang);
 			$event->object['description'] = gc_explode_translation($object->name, $lang);
-			
-			if( is_callable(array($object, 'getURL')) ){
+
+			if (is_callable(array($object, 'getURL'))) {
 				$event->object['url'] = $object->getURL();
 			}
-		} else if( $object instanceof ElggDiscussionReply ){
+		} elseif ($object instanceof ElggDiscussionReply) {
 			$event->object['type'] = 'discussion-reply';
 			$original_discussion = get_entity($object->container_guid);
 			$event->object['name'] = gc_explode_translation($original_discussion->title, $lang);
 			$event->object['description'] = gc_explode_translation($object->description, $lang);
-			
-			if( is_callable(array($original_discussion, 'getURL')) ){
+
+			if (is_callable(array($original_discussion, 'getURL'))) {
 				$event->object['url'] = $original_discussion->getURL();
 			}
-		} else if( $object instanceof ElggFile ){
+		} elseif ($object instanceof ElggFile) {
 			$event->object['type'] = 'file';
 			$event->object['name'] = gc_explode_translation($object->title, $lang);
 			$event->object['description'] = gc_explode_translation($object->description, $lang);
 			$event->object['url'] = $object->getURL();
-		} else if( $object instanceof ElggObject ){
+		} elseif ($object instanceof ElggObject) {
 			$event->object['type'] = 'discussion-add';
 
-			$name = ( $object->title ) ? $object->title : $object->name;
-			if( empty(trim($name)) ){
+			$name = ($object->title) ? $object->title : $object->name;
+			if (empty(trim($name))) {
 				$otherEntity = get_entity($object->container_guid);
-				$name = ( $otherEntity->title ) ? $otherEntity->title : $otherEntity->name;
+				$name = ($otherEntity->title) ? $otherEntity->title : $otherEntity->name;
 			}
 			$event->object['name'] = $name;
-			
-			if( is_callable(array($object, 'getURL')) ){
+
+			if (is_callable(array($object, 'getURL'))) {
 				$event->object['url'] = $object->getURL();
 			}
 
 			$event->object['description'] = gc_explode_translation($object->description, $lang);
 
 			$other = get_entity($object->container_guid);
-			if( $other instanceof ElggGroup ){
-				if( !isset($event->object['type']) )
-					$event->object['name'] = ( $other->title ) ? $other->title : $other->name;
+			if ($other instanceof ElggGroup) {
+				if (!isset($event->object['type'])) {
+					$event->object['name'] = ($other->title) ? $other->title : $other->name;
+				}
 			} else {
-				if( !isset($event->object['type']) )
-					$event->object['name'] = ( $other->title ) ? $other->title : $other->name;
+				if (!isset($event->object['type'])) {
+					$event->object['name'] = ($other->title) ? $other->title : $other->name;
+				}
 			}
 
 			if (strpos($event->object['name'], '"en":') !== false) {
@@ -791,8 +851,8 @@ function get_newsfeed( $user, $limit, $offset, $lang ){
 			} else {
 				$event->object['description'] = $object->description;
 			}
-			
-			if( is_callable(array($object, 'getURL')) ){
+
+			if (is_callable(array($object, 'getURL'))) {
 				$event->object['url'] = $object->getURL();
 			}
 		}
@@ -801,13 +861,19 @@ function get_newsfeed( $user, $limit, $offset, $lang ){
 	return $activity;
 }
 
-function get_colleague_requests( $user, $limit, $offset, $lang ){
-	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
- 	if( !$user_entity ) return "User was not found. Please try a different GUID, username, or email address";
-	if( !$user_entity instanceof ElggUser ) return "Invalid user. Please try a different GUID, username, or email address";
-	
-	if( !elgg_is_logged_in() )
+function get_colleague_requests($user, $limit, $offset, $lang)
+{
+	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+	if (!$user_entity) {
+		return "User was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$user_entity instanceof ElggUser) {
+		return "Invalid user. Please try a different GUID, username, or email address";
+	}
+
+	if (!elgg_is_logged_in()) {
 		login($user_entity);
+	}
 
 	$friendrequests = elgg_get_entities_from_relationship(array(
 		"type" => "user",
@@ -819,12 +885,12 @@ function get_colleague_requests( $user, $limit, $offset, $lang ){
 	));
 
 	$data = array();
-	foreach($friendrequests as $member){
+	foreach ($friendrequests as $member) {
 		$member_obj = get_user($member->guid);
 		$member_data = get_user_block($member->guid, $lang);
 
 		$about = "";
-		if( $member_obj->description ){
+		if ($member_obj->description) {
 			$about = strip_tags($member_obj->description, '<p>');
 			$about = str_replace("<p>&nbsp;</p>", '', $about);
 		}
@@ -836,17 +902,27 @@ function get_colleague_requests( $user, $limit, $offset, $lang ){
 	return $data;
 }
 
-function add_colleague( $profileemail, $user, $lang ){
-	$friend = is_numeric($profileemail) ? get_user($profileemail) : ( strpos($profileemail, '@') !== FALSE ? get_user_by_email($profileemail)[0] : get_user_by_username($profileemail) );
- 	if( !$friend ) return "User was not found. Please try a different GUID, username, or email address";
-	if( !$friend instanceof ElggUser ) return "Invalid user. Please try a different GUID, username, or email address";
+function add_colleague($profileemail, $user, $lang)
+{
+	$friend = is_numeric($profileemail) ? get_user($profileemail) : (strpos($profileemail, '@') !== false ? get_user_by_email($profileemail)[0] : get_user_by_username($profileemail));
+	if (!$friend) {
+		return "User was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$friend instanceof ElggUser) {
+		return "Invalid user. Please try a different GUID, username, or email address";
+	}
 
-	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
- 	if( !$user_entity ) return "Viewer user was not found. Please try a different GUID, username, or email address";
-	if( !$user_entity instanceof ElggUser ) return "Invalid viewer user. Please try a different GUID, username, or email address";
+	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+	if (!$user_entity) {
+		return "Viewer user was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$user_entity instanceof ElggUser) {
+		return "Invalid viewer user. Please try a different GUID, username, or email address";
+	}
 
-	if( !elgg_is_logged_in() )
+	if (!elgg_is_logged_in()) {
 		login($user_entity);
+	}
 
 	//Now we need to attempt to create the relationship
 	if (empty($user_entity) || empty($friend)) {
@@ -860,10 +936,10 @@ function add_colleague( $profileemail, $user, $lang ){
 			} catch (Exception $e) {
 				return elgg_echo("friends:add:failure", array($friend->name));
 			}
-		} else if (check_entity_relationship($friend->getGUID(), "friendrequest", $user_entity->getGUID())) {
+		} elseif (check_entity_relationship($friend->getGUID(), "friendrequest", $user_entity->getGUID())) {
 			// Check if your potential friend already invited you, if so make friends
 			if (remove_entity_relationship($friend->getGUID(), "friendrequest", $user_entity->getGUID())) {
-				
+
 				// Friends mean reciprical...
 				$user_entity->addFriend($friend->getGUID());
 				$friend->addFriend($user_entity->getGUID());
@@ -873,19 +949,19 @@ function add_colleague( $profileemail, $user, $lang ){
 					$user_entity->guid,
 					elgg_echo('friend:newfriend:subject', array(
 						$user_entity->name,
-						$user_entity->name,				
+						$user_entity->name,
 					)),
 					elgg_echo("friend:newfriend:body", array(
-						$user_entity->name, 
+						$user_entity->name,
 						$user_entity->getURL(),
 						elgg_get_site_url().'notifications/personal/',
-						
-						$user_entity->name, 
+
+						$user_entity->name,
 						$user_entity->getURL(),
 						elgg_get_site_url().'notifications/personal/',
 					))
 				);
-				
+
 				// add to river
 				elgg_create_river_item(array(
 					"view" => "river/relationship/friend/create",
@@ -916,33 +992,43 @@ function add_colleague( $profileemail, $user, $lang ){
 	}
 }
 
-function remove_colleague( $profileemail, $user, $lang ){
-	$friend = is_numeric($profileemail) ? get_user($profileemail) : ( strpos($profileemail, '@') !== FALSE ? get_user_by_email($profileemail)[0] : get_user_by_username($profileemail) );
- 	if( !$friend ) return "User was not found. Please try a different GUID, username, or email address";
-	if( !$friend instanceof ElggUser ) return "Invalid user. Please try a different GUID, username, or email address";
+function remove_colleague($profileemail, $user, $lang)
+{
+	$friend = is_numeric($profileemail) ? get_user($profileemail) : (strpos($profileemail, '@') !== false ? get_user_by_email($profileemail)[0] : get_user_by_username($profileemail));
+	if (!$friend) {
+		return "User was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$friend instanceof ElggUser) {
+		return "Invalid user. Please try a different GUID, username, or email address";
+	}
 
-	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
- 	if( !$user_entity ) return "Viewer user was not found. Please try a different GUID, username, or email address";
-	if( !$user_entity instanceof ElggUser ) return "Invalid viewer user. Please try a different GUID, username, or email address";
+	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+	if (!$user_entity) {
+		return "Viewer user was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$user_entity instanceof ElggUser) {
+		return "Invalid viewer user. Please try a different GUID, username, or email address";
+	}
 
-	if( !elgg_is_logged_in() )
+	if (!elgg_is_logged_in()) {
 		login($user_entity);
+	}
 
 	if (!empty($friend)) {
-		try{
+		try {
 			$user_entity->removeFriend($friend->getGUID());
-			
+
 			// remove river items
 			elgg_delete_river(array(
 				"view" => "river/relationship/friend/create",
 				"subject_guid" => $user_entity->getGUID(),
 				"object_guid" => $friend->getGUID()
 			));
-			
+
 			try {
 				//V1.1 - Old relationships might not have the 2 as friends...
 				$friend->removeFriend($user_entity->getGUID());
-				
+
 				// remove river items
 				elgg_delete_river(array(
 					"view" => "river/relationship/friend/create",
@@ -951,8 +1037,8 @@ function remove_colleague( $profileemail, $user, $lang ){
 				));
 
 				// cyu - remove the relationship (if applicable) for the subscribed to user
-				remove_entity_relationship($user_entity->guid, 'cp_subscribed_to_email',$friend_guid);
-				remove_entity_relationship($user_entity->guid, 'cp_subscribe_to_site_mail',$friend_guid);
+				remove_entity_relationship($user_entity->guid, 'cp_subscribed_to_email', $friend->getGUID());
+				remove_entity_relationship($user_entity->guid, 'cp_subscribe_to_site_mail', $friend->getGUID());
 
 				return true;
 			} catch (Exception $e) {
@@ -962,32 +1048,41 @@ function remove_colleague( $profileemail, $user, $lang ){
 			return elgg_echo("friends:remove:failure", array($friend->name));
 		}
 	} else {
-		return elgg_echo("friends:remove:failure", array($friend_guid));
+		return elgg_echo("friends:remove:failure", array($friend->getGUID()));
 	}
 }
 
-function approve_colleague( $profileemail, $user, $lang ){
-	$friend = is_numeric($profileemail) ? get_user($profileemail) : ( strpos($profileemail, '@') !== FALSE ? get_user_by_email($profileemail)[0] : get_user_by_username($profileemail) );
- 	if( !$friend ) return "User was not found. Please try a different GUID, username, or email address";
-	if( !$friend instanceof ElggUser ) return "Invalid user. Please try a different GUID, username, or email address";
+function approve_colleague($profileemail, $user, $lang)
+{
+	$friend = is_numeric($profileemail) ? get_user($profileemail) : (strpos($profileemail, '@') !== false ? get_user_by_email($profileemail)[0] : get_user_by_username($profileemail));
+	if (!$friend) {
+		return "User was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$friend instanceof ElggUser) {
+		return "Invalid user. Please try a different GUID, username, or email address";
+	}
 
-	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
- 	if( !$user_entity ) return "Viewer user was not found. Please try a different GUID, username, or email address";
-	if( !$user_entity instanceof ElggUser ) return "Invalid viewer user. Please try a different GUID, username, or email address";
+	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+	if (!$user_entity) {
+		return "Viewer user was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$user_entity instanceof ElggUser) {
+		return "Invalid viewer user. Please try a different GUID, username, or email address";
+	}
 
-	if( !elgg_is_logged_in() )
+	if (!elgg_is_logged_in()) {
 		login($user_entity);
+	}
 
 	if (!empty($friend)) {
 		if (remove_entity_relationship($friend->getGUID(), "friendrequest", $user_entity->getGUID())) {
-			
 			$user_entity->addFriend($friend->getGUID());
 			$friend->addFriend($user_entity->getGUID());			//Friends mean reciprical...
-			
+
 			// notify the user about the acceptance
 			$subject = elgg_echo("friend_request:approve:subject", array($user_entity->name, $user_entity->name));
 			$message = elgg_echo("friend_request:approve:message", array($user_entity->name, $user_entity->getURL(), $user_entity->name, $user_entity->getURL()));
-			
+
 			$params = array(
 				"action" => "add_friend",
 				"object" => $user_entity
@@ -1002,11 +1097,11 @@ function approve_colleague( $profileemail, $user, $lang ){
 					'cp_approver_profile' => $user_entity->getURL(),
 					'cp_msg_type' => 'cp_friend_approve'
 				);
-				$result = elgg_trigger_plugin_hook('cp_overwrite_notification','all',$message);
+				$result = elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
 			} else {
 				notify_user($friend->getGUID(), $user_entity->getGUID(), $subject, $message, $params);
 			}
-			
+
 			// add to river
 			elgg_create_river_item(array(
 				"view" => "river/relationship/friend/create",
@@ -1028,23 +1123,33 @@ function approve_colleague( $profileemail, $user, $lang ){
 	}
 }
 
-function decline_colleague( $profileemail, $user, $lang ){
-	$friend = is_numeric($profileemail) ? get_user($profileemail) : ( strpos($profileemail, '@') !== FALSE ? get_user_by_email($profileemail)[0] : get_user_by_username($profileemail) );
- 	if( !$friend ) return "User was not found. Please try a different GUID, username, or email address";
-	if( !$friend instanceof ElggUser ) return "Invalid user. Please try a different GUID, username, or email address";
+function decline_colleague($profileemail, $user, $lang)
+{
+	$friend = is_numeric($profileemail) ? get_user($profileemail) : (strpos($profileemail, '@') !== false ? get_user_by_email($profileemail)[0] : get_user_by_username($profileemail));
+	if (!$friend) {
+		return "User was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$friend instanceof ElggUser) {
+		return "Invalid user. Please try a different GUID, username, or email address";
+	}
 
-	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
- 	if( !$user_entity ) return "Viewer user was not found. Please try a different GUID, username, or email address";
-	if( !$user_entity instanceof ElggUser ) return "Invalid viewer user. Please try a different GUID, username, or email address";
+	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+	if (!$user_entity) {
+		return "Viewer user was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$user_entity instanceof ElggUser) {
+		return "Invalid viewer user. Please try a different GUID, username, or email address";
+	}
 
-	if( !elgg_is_logged_in() )
+	if (!elgg_is_logged_in()) {
 		login($user_entity);
+	}
 
 	if (!empty($friend)) {
 		if (remove_entity_relationship($friend->getGUID(), "friendrequest", $user_entity->getGUID())) {
 			$subject = elgg_echo("friend_request:decline:subject", array($user_entity->name));
 			$message = elgg_echo("friend_request:decline:message", array($friend->name, $user_entity->name));
-			
+
 			return elgg_echo("friend_request:decline:success");
 		} else {
 			return elgg_echo("friend_request:decline:fail");
@@ -1052,17 +1157,27 @@ function decline_colleague( $profileemail, $user, $lang ){
 	}
 }
 
-function revoke_colleague( $profileemail, $user, $lang ){
-	$friend = is_numeric($profileemail) ? get_user($profileemail) : ( strpos($profileemail, '@') !== FALSE ? get_user_by_email($profileemail)[0] : get_user_by_username($profileemail) );
- 	if( !$friend ) return "User was not found. Please try a different GUID, username, or email address";
-	if( !$friend instanceof ElggUser ) return "Invalid user. Please try a different GUID, username, or email address";
+function revoke_colleague($profileemail, $user, $lang)
+{
+	$friend = is_numeric($profileemail) ? get_user($profileemail) : (strpos($profileemail, '@') !== false ? get_user_by_email($profileemail)[0] : get_user_by_username($profileemail));
+	if (!$friend) {
+		return "User was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$friend instanceof ElggUser) {
+		return "Invalid user. Please try a different GUID, username, or email address";
+	}
 
-	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
- 	if( !$user_entity ) return "Viewer user was not found. Please try a different GUID, username, or email address";
-	if( !$user_entity instanceof ElggUser ) return "Invalid viewer user. Please try a different GUID, username, or email address";
+	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+	if (!$user_entity) {
+		return "Viewer user was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$user_entity instanceof ElggUser) {
+		return "Invalid viewer user. Please try a different GUID, username, or email address";
+	}
 
-	if( !elgg_is_logged_in() )
+	if (!elgg_is_logged_in()) {
 		login($user_entity);
+	}
 
 	if (!empty($friend)) {
 		if (remove_entity_relationship($user_entity->getGUID(), "friendrequest", $friend->getGUID())) {
@@ -1073,17 +1188,23 @@ function revoke_colleague( $profileemail, $user, $lang ){
 	}
 }
 
-function delete_post( $user, $guid, $lang ){
-	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
- 	if( !$user_entity ) return "User was not found. Please try a different GUID, username, or email address";
-	if( !$user_entity instanceof ElggUser ) return "Invalid user. Please try a different GUID, username, or email address";
+function delete_post($user, $guid, $lang)
+{
+	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user));
+ 	if (!$user_entity) {
+ 		return "User was not found. Please try a different GUID, username, or email address";
+ 	}
+	if (!$user_entity instanceof ElggUser) {
+		return "Invalid user. Please try a different GUID, username, or email address";
+	}
 
-	if( !elgg_is_logged_in() )
+	if (!elgg_is_logged_in()) {
 		login($user_entity);
+	}
 
 	$entity = get_entity($guid);
-	if( elgg_instanceof($entity, 'object') && $entity->canEdit() ){
-		if( $entity->delete() ){
+	if (elgg_instanceof($entity, 'object') && $entity->canEdit()) {
+		if ($entity->delete()) {
 			return elgg_echo('blog:message:deleted_post');
 		} else {
 			return elgg_echo('blog:error:cannot_delete_post');
