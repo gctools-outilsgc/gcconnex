@@ -13,20 +13,11 @@
  * This view displays a form which allows the user to edit their opt-in choices.
  * This view is inside a section wrapper as described in wrapper.php.
  */
-if (elgg_is_xhr) {
-	echo elgg_echo ( 'gcconnex_profile:opt:opt_in_access' );
-	
+if (elgg_is_xhr) {	
 	$user_guid = elgg_get_logged_in_user_guid();
 	$user = get_user ( $user_guid );
-	
-	$access_id = $user->optaccess;
-	$params = array (
-			'name' => "accesslevel['optaccess']",
-			'value' => $access_id,
-			'class' => 'gcconnex-opt-in-access' 
-	);
-	echo elgg_view ( 'input/access', $params );
-	
+
+	echo elgg_format_element('div',array('class'=> 'mrgn-bttm-sm mrgn-tp-sm alert alert-info'),elgg_echo('missions:profile:optin:access'));
 	// Decides whether or not the checkbox should start checked.
 	/*if($user->opt_in_missions == 'gcconnex_profile:opt:yes') {
 	    $opt_in_set[0] = true;
