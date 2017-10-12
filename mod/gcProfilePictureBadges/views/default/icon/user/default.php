@@ -53,7 +53,7 @@ if ($user->isBanned()) {
 	$banned_text = elgg_echo('banned');
 	$name .= " ($banned_text)";
 }
-if($user->gcdeactivate == 'true'){
+if($user->gcdeactivate == true){
 	$class .= ' elgg-state-banned';
 	$gcdeactive_text = elgg_echo('gcdeactivated');
 	$name .= " ($gcdeactive_text)";

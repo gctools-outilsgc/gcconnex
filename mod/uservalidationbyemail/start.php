@@ -253,6 +253,12 @@ function uservalidationbyemail_check_manual_login($event, $type, $user) {
 		// throw error so we get a nice error message
 		throw new LoginException(elgg_echo('uservalidationbyemail:login:fail'));
 	}
-
+	//GCTools - check if the user has deactivated their account, my event hook won't work :(
+	if(elgg_is_active_plugin('member_selfdelete')){
+		if(($user instanceof ElggUser) && $user->gcdeactivate == true){
+			throw new LoginException(elgg_echo('member_selfdelete:gc:youaredeactivated'));
+		}
+	}
+	
 	access_show_hidden_entities($access_status);
 }

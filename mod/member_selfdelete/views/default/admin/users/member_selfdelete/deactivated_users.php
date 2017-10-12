@@ -22,7 +22,7 @@ foreach ($users as $user){
         echo '<td>No reason given</td>';
     }
     echo '<td>' .elgg_echo('member_selfdelete:gc:admin:state:'.$user->gcdeactivate) . '</td>';
-    echo '<td>'.elgg_view('output/url',array('text'=>'Toggle State','href'=>'#')).'</td>';
+    echo '<td>'.elgg_view('output/url',array('text'=>'Toggle State','href'=>'action/selfdelete/reactivate_toggle?guid='.$user->guid,'is_action'=>true,)).'</td>';
     echo '</tr>';
 }
 echo '</table>';

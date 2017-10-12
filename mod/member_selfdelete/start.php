@@ -19,6 +19,7 @@ function init() {
 	elgg_register_action("selfdelete", __DIR__ . "/actions/delete.php");
 	elgg_register_action('selfdelete/feedback/delete', __DIR__ . '/actions/feedback/delete.php', 'admin');
 
+	elgg_register_action('selfdelete/reactivate_toggle', __DIR__ .'/actions/reactivate_toggle.php');
     elgg_register_action('selfdelete/changegroupowner', __DIR__ . '/actions/changegroupowner.php');
 	elgg_register_event_handler('pagesetup', 'system', __NAMESPACE__ . '\\pagesetup');
 
@@ -26,6 +27,8 @@ function init() {
 	elgg_register_plugin_hook_handler('email', 'system', __NAMESPACE__ . '\\email_system', 0);
 
 	elgg_register_event_handler("create", "friendrequest", "friend_request_deactivated_user");
+
+	elgg_register_event_handler('login:before', 'user', 'gc_deactivated_login', 501);
 }
 
 function selfdelete_page_handler($page) {
@@ -38,9 +41,20 @@ function selfdelete_page_handler($page) {
 function friend_request_deactivated_user($event, $object_type, $object){
 	if (($object instanceof ElggRelationship)) {
 		$user = get_user($object->guid_two);
-		if($user->gcdeactivated = 'true'){
+		if($user->gcdeactivated = true){
 			system_message('this user is also deactivated');
 		}
 		system_message('is this even doing anything?');
 	}
+}
+function gc_deactivated_login($event, $type, $user){
+	if(($user instanceof ElggUser) && $user->gcdeactivate == true){
+		return FALSE;
+		throw new LoginException(elgg_echo('uservalidationbyemail:login:fail'));
+	
+	}
+	//return TRUE;
+	throw new LoginException(elgg_echo('uservalidationbyemail:login:fail'));
+	return FALSE;
+
 }
