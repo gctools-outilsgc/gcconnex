@@ -146,19 +146,19 @@ $(document).ready(function(){
       $('#description-error').remove();
     }
 
-    if($('#type option:selected').val() == 'None' && $('#type').hasClass('error') != true){
-      $('#type').addClass('error').parent().append('<label for="'+$('#type').attr('name')+'" class="error">'+'<?php echo elgg_echo('freshdesk:valid', array(), $lang) ?>'+'</label>');
-    }
+    var selects = form.find('select:visible')
 
-    if($('#department option:selected').val() == 'None' && $('#department').hasClass('error') != true){
-      $('#department').addClass('error').parent().append('<label for="'+$('#department').attr('name')+'" class="error">'+'<?php echo elgg_echo('freshdesk:valid', array(), $lang) ?>'+'</label>');
-    }
+    selects.each(function(){
+      if($(this).val() == 'None' && $(this).hasClass('error') != true){
+          $(this).addClass('error').parent().append('<label for="'+$(this).attr('name')+'" class="error">'+'<?php echo elgg_echo('freshdesk:valid', array(), $lang) ?>'+'</label>');
+      }
+    });
 
-    var inputs = form.find('input');
+    var inputs = form.find('input:visible');
 
     //loop through the input fields
     inputs.each(function(){
-      if($(this).attr('name') == 'email' || $(this).attr('name') == 'subject'){
+      if($(this).attr('name') != 'attachment'){
         if($.trim($(this).val()) == '' && $(this).hasClass('error') != true){
           $(this).addClass('error').parent().append('<label for="'+$(this).attr('name')+'" class="error">'+'<?php echo elgg_echo('freshdesk:valid', array(), $lang) ?>'+'</label>');
         }
@@ -193,3 +193,45 @@ $(document).ready(function(){
 
 
 </script>
+
+<style>
+.user_type {
+  width:35%;
+  display: inline-block;
+  vertical-align:top;
+}
+
+#institution-wrapper, #other-wrapper, #retired-wrapper, #media-wrapper, #business-wrapper, #ngo-wrapper, #provincial-wrapper, #federal-wrapper, #municipal-wrapper, #international-wrapper, #community-wrapper {
+  width:65%;
+  display:inline-block;
+  vertical-align:top;
+}
+
+fieldset.user-info {
+  border: 1px solid #e5e5e5;
+  padding:5px 10px;
+  margin-top:10px;
+}
+.user-info legend {
+  position:relative;
+  top:0;
+  float:none;
+  width:auto;
+  margin-bottom: 0;
+}
+
+@media screen and (max-width: 600px) {
+  .user_type {
+    width:100%;
+    display: inline-block;
+    vertical-align:top;
+  }
+
+  #institution-wrapper, #other-wrapper, #retired-wrapper, #media-wrapper, #business-wrapper, #ngo-wrapper, #provincial-wrapper, #federal-wrapper, #municipal-wrapper, #international-wrapper, #community-wrapper {
+    width:100%;
+    display:inline-block;
+    vertical-align:top;
+  }
+}
+
+</style>
