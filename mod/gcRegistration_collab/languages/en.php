@@ -28,6 +28,7 @@ $english = array(
 	'gcRegister:highschool' => 'High School',
 	'gcRegister:province' => 'Province/Territory',
 	'gcRegister:ministry' => 'Ministry',
+	'gcRegister:city' => 'City',
 
 	// labels
     'gcRegister:form' => 'Registration form',

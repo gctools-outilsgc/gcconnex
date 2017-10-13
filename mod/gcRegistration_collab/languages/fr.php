@@ -28,6 +28,7 @@ $french = array(
 	'gcRegister:highschool' => 'École secondaire',
 	'gcRegister:province' => 'Province / territoire',
 	'gcRegister:ministry' => 'Ministère',
+	'gcRegister:city' => 'Ville',
 
 	// labels
 	'gcRegister:form' => "Formulaire d'inscription",
