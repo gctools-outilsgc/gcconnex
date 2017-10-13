@@ -187,8 +187,6 @@ class FGContactForm
 		$depart = $_POST['depart'];
 		$reason = $_POST['reason'];
 		$option = explode("$", $_POST['reason']);
-		$french = $option[0];
-		$english = $option[1];
 		if (empty($_POST['subject'])) {
 			$subject = $categoryen." - ".$depart. " - $this->name  / ".$categoryfr." - ".$depart. " - $this->name";
 		} else {
