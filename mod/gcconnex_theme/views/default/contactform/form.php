@@ -35,12 +35,11 @@ $upload_max_filesize = elgg_get_ini_setting_in_bytes('upload_max_filesize');
 $max_upload = $upload_max_filesize > $post_max_size ? $post_max_size : $upload_max_filesize;
 $upload_limit = elgg_echo('file:upload_limit', array(elgg_format_bytes($max_upload)));
 
-if (isset($_POST['submitted'])) {
-	if ($formproc->ProcessForm()) {
-		system_messages(elgg_echo('contactform:thankyoumsg'));
-		forward("mod/contactform");
-	}
+if (isset($_POST['submitted']) && $formproc->ProcessForm()) {
+	system_messages(elgg_echo('contactform:thankyoumsg'));
+	forward("mod/contactform");
 }
+
 //get value
 if (elgg_is_logged_in() && $formproc->SafeDisplay('name') == '') {
 	$name = $sender_name;
@@ -59,7 +58,6 @@ if (elgg_is_logged_in() && $formproc->SafeDisplay('depart') == '') {
 } else {
 	$depart = $formproc->SafeDisplay('depart');
 }
-
 ?>
 <script type='text/javascript' src='scripts/gen_validatorv31.js'></script>
 
