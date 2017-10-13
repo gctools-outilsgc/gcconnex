@@ -105,20 +105,15 @@ if( !empty($type) && !empty($key) && !empty($dept_en) && !empty($dept_fr) ){
 		   	'subtype' => 'municipal',
 		));
 		$municipals = get_entity($munObj[0]->guid);
-
-		$municipals_en = json_decode($municipals->municipal_en, true);
-		$municipals_fr = json_decode($municipals->municipal_fr, true);
+		$municipals_province = json_decode($municipals->get($province), true);
 
 		if( isset($id) ){
-			$municipals_en[$id] = $dept_en;
-			$municipals_fr[$id] = $dept_fr;
+			$municipals_province[$id] = $dept_en;
 		} else {
-			$municipals_en[$key] = $dept_en;
-			$municipals_fr[$key] = $dept_fr;
+			$municipals_province[$key] = $dept_en;
 		}
 
-		$municipals->set('municipal_en', json_encode($municipals_en));
-		$municipals->set('municipal_fr', json_encode($municipals_fr));
+		$municipals->set($province, json_encode($municipals_province));
 		$municipals->save();
 
 		echo true;

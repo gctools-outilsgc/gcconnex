@@ -291,13 +291,6 @@ function _elgg_wet_user_settings_page_handler($page) {
             elgg_push_breadcrumb(elgg_echo('usersettings:statistics:opt:linktext'));
             $path = $CONFIG->path . "pages/settings/statistics.php";
             break;
-        /*case 'plugins':
-            if (isset($page[2])) {
-                set_input("plugin_id", $page[2]);
-                elgg_push_breadcrumb(elgg_echo('usersettings:plugins:opt:linktext'));
-                $path = $CONFIG->path . "pages/settings/tools.php";
-            }
-            break;*/
         case 'user':
             $path = $CONFIG->path . "pages/settings/account.php";
             break;
@@ -771,21 +764,7 @@ function wet4_elgg_page_menu_setup($hook, $type, $return, $params) {
 
         $dropdown .= '</ul>';
 
-        $options = array(
-                   'name' => 'plugin_tools',
-                   'text' => elgg_echo('usersettings:plugins:opt:linktext') . '<b class="caret"></b>' . $dropdown,
-                   'priority' => 150,
-                   'section' => 'configure',
-                   'item_class' => 'dropdown',
-                   'data-toggle' => 'dropdown',
-                   'aria-expanded' => 'false',
-                   'class' => 'dropdown-toggle  dropdownToggle',
-               );
-        $return[] = \ElggMenuItem::factory($options);
-
-
         return $return;
-
     }
 
 }
