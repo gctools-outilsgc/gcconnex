@@ -12,5 +12,5 @@ if ($user->member_selfdelete == "anonymized"){
 	register_error(elgg_echo('member_selfdelete:profile_view'));
 	forward(REFERRER);
 }elseif($user->gcdeactivate == true){
-	echo elgg_format_element('div',array('class'=>'alert alert-warning clearfix col-sm-12'),'<i class="fa fa-exclamation" aria-hidden="true"></i> '.elgg_echo('member_selfdelete:profile_view'));
+	echo elgg_format_element('div',array('class'=>'alert alert-warning clearfix col-sm-12'),'<i class="fa fa-exclamation" aria-hidden="true"></i> '.elgg_echo('member_selfdelete:gc:deactivate:profile'));
 }

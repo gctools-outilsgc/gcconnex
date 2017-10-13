@@ -15,6 +15,7 @@ function init() {
 	elgg_extend_view('profile/details', 'member_selfdelete/pre_userdetails', 0);
 
 	elgg_register_page_handler('selfdelete', __NAMESPACE__ . '\\selfdelete_page_handler');
+	elgg_register_page_handler('gcreactivate',__NAMESPACE__ . '\\gcreactivate_page_handler');
 
 	elgg_register_action("selfdelete", __DIR__ . "/actions/delete.php");
 	elgg_register_action('selfdelete/feedback/delete', __DIR__ . '/actions/feedback/delete.php', 'admin');
@@ -33,6 +34,12 @@ function init() {
 
 function selfdelete_page_handler($page) {
 	if (!include(elgg_get_plugins_path() . "member_selfdelete/pages/form.php")) {
+		return FALSE;
+	}
+	return TRUE;
+}
+function gcreactivate_page_handler($page) {
+	if (!include(elgg_get_plugins_path() . "member_selfdelete/pages/reactivate.php")) {
 		return FALSE;
 	}
 	return TRUE;

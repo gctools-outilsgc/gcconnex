@@ -17,7 +17,7 @@ foreach ($users as $user){
     echo '<td>' .$user->username . '</td>';
     echo '<td>' .$user->email . '</td>';
     if($user->gcdeactivatereason){
-        echo '<td>' .$user->gcdeactivatereason. '</td>';
+        echo '<td>' .elgg_echo('member_selfdelete:gc:reason:' . $user->gcdeactivatereason). '</td>';
     }else{
         echo '<td>No reason given</td>';
     }
