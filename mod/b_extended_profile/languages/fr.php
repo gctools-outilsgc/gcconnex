@@ -54,7 +54,7 @@ $french = array(
     'gcconnex_profile:present' => 'Maintenant',
     'gcconnex_profile:about_me:empty' => 'Ajoutez des précisions à votre sujet en cliquant sur « Modifier » dans le coin supérieur droit de cette section.',
     'gcconnex_profile:about_me:access' => 'Accès aux renseignements à mon sujet ',
-    'missions:profile:optin:access' => 'This information will be used by the Opportunities Platform and will not be visible to users browsing your profile.(FR)',
+    'gcconnex_profile:optin:access' => "Ces informations seront utilisées pour la Plateforme de possibilités et ne seront pas visibles par les utilisateurs qui naviguent sur votre profil.",
 
     // BASIC PROFILE FORM
     'gcconnex_profile:basic:header' => 'Modifier le profil de base',

@@ -13,33 +13,14 @@
  * This view displays a form which allows the user to edit their opt-in choices.
  * This view is inside a section wrapper as described in wrapper.php.
  */
-if (elgg_is_xhr) {	
+if (elgg_is_xhr) {
 	$user_guid = elgg_get_logged_in_user_guid();
 	$user = get_user ( $user_guid );
 
-	echo elgg_format_element('div',array('class'=> 'mrgn-bttm-sm mrgn-tp-sm alert alert-info'),elgg_echo('missions:profile:optin:access'));
-	// Decides whether or not the checkbox should start checked.
-	/*if($user->opt_in_missions == 'gcconnex_profile:opt:yes') {
-	    $opt_in_set[0] = true;
-	}
-	if($user->opt_in_swap == 'gcconnex_profile:opt:yes') {
-	    $opt_in_set[1] = true;
-	}
-	if($user->opt_in_mentored == 'gcconnex_profile:opt:yes') {
-	    $opt_in_set[2] = true;
-	}
-	if($user->opt_in_mentoring == 'gcconnex_profile:opt:yes') {
-	    $opt_in_set[3] = true;
-	}
-	if($user->opt_in_shadowed == 'gcconnex_profile:opt:yes') {
-	    $opt_in_set[4] = true;
-	}
-	if($user->opt_in_shadowing == 'gcconnex_profile:opt:yes') {
-	    $opt_in_set[5] = true;
-	}*/
-    
-    
-                $opt_in_set = array($user->opt_in_missions, $user->opt_in_swap, $user->opt_in_mentored, $user->opt_in_mentoring, $user->opt_in_shadowed, $user->opt_in_shadowing, $user->opt_in_jobshare, $user->opt_in_pcSeek, $user->opt_in_pcCreate, $user->opt_in_ssSeek, $user->opt_in_ssCreate, $user->opt_in_rotation, $user->opt_in_assignSeek, $user->opt_in_assignCreate, $user->opt_in_deploySeek, $user->opt_in_deployCreate, $user->opt_in_missionCreate);
+	echo elgg_format_element('div',array('class'=> 'mrgn-bttm-sm mrgn-tp-sm alert alert-info'),elgg_echo('gcconnex_profile:optin:access'));
+
+
+	 $opt_in_set = array($user->opt_in_missions, $user->opt_in_swap, $user->opt_in_mentored, $user->opt_in_mentoring, $user->opt_in_shadowed, $user->opt_in_shadowing, $user->opt_in_jobshare, $user->opt_in_pcSeek, $user->opt_in_pcCreate, $user->opt_in_ssSeek, $user->opt_in_ssCreate, $user->opt_in_rotation, $user->opt_in_assignSeek, $user->opt_in_assignCreate, $user->opt_in_deploySeek, $user->opt_in_deployCreate, $user->opt_in_missionCreate);
     //Nick - Loop through array of selected things and change their value to match the meta data        
 foreach($opt_in_set as $k => $v){
     if($v == 'gcconnex_profile:opt:yes'){
