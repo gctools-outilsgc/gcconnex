@@ -79,7 +79,7 @@ function cp_notifications_init() {
 		$is_group_operator = in_array($current_user, get_group_operators($group_entity));
 	}
 
-	if ($group_entity instanceof ElggGroup && elgg_is_logged_in() && $is_group_operator || elgg_is_admin_user($current_user->getGUID())) {
+	if ($group_entity instanceof ElggGroup && elgg_is_logged_in() && ($is_group_operator || elgg_is_admin_user($current_user->getGUID()))) {
 
 		$url = str_replace(elgg_get_site_url(),"", $_SERVER['REQUEST_URI']);
 		
