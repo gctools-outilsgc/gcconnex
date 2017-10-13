@@ -41,6 +41,21 @@ if( !empty($type) && !empty($key) ){
 		$ministries->save();
 
 		echo true;
+	} else if($type == 'municipal'){
+		$munObj = elgg_get_entities(array(
+		   	'type' => 'object',
+		   	'subtype' => 'ministries',
+		));
+		$municipals = get_entity($munObj[0]->guid);
+		$municipals_province = json_decode($municipals->get($province), true);
+
+		unset($municipals_province[$key]);
+		unset($municipals_province[$key]);
+
+		$municipals->set($province, json_encode($municipals_province));
+		$municipals->save();
+
+		echo true;
 	} else if($type == 'universities'){
 		$uniObj = elgg_get_entities(array(
 		   	'type' => 'object',
