@@ -1,7 +1,6 @@
 <?php
 $site_url = elgg_get_site_url();
 $english = array(
-
 	'river:create:object:hjforumtopic' => "%s created a forum topic %s",
 	'gcforums:delete:heading' => "Deletion confirmation",
 	'gcforums:delete:body' => "Are you sure you want to delete the %s",
@@ -45,12 +44,11 @@ $english = array(
 	"gcforums:translate:replies" => "Replies",
 	"gcforums:translate:last_posted" => "Last post",
 
-
 	"gcforums:translate:total_topics" => "Total topics",
 	"gcforums:translate:total_replies" => "Total replies",
 	"gcforums:translate:latest_posts" => "Latest post",
 
-	"gcforums:is_sticky" => 'Sticky topic', 
+	"gcforums:is_sticky" => 'Sticky topic',
 	"gcforums:forumpost_saved" => "Your reply has been created successfully",
 	"gcforums:forumtopic_saved" => "Your Forum Topic '%s' has been created successfully",
 	"gcforums:forumcategory_saved" => "The Forum Category has been created successfully",
@@ -77,11 +75,6 @@ $english = array(
 
 	"gcforums:submit" => "Submit",
 
-
-
-
-
-	
 	// this was a mistake, (posting is inverse)
 	"gcforums:enable_posting_label" => "Disable Posting",
 
@@ -100,8 +93,6 @@ $english = array(
 	"gcforums:edit_hjforum" => "Edit Forum",
 	"gcforums:delete_hjforumtopic" => "Delete Forum",
 
-
-
 	"gcforums:no_posts" => "None",
 	"gcforums:sticky_topic" => "Sticky Topics",
 
@@ -111,28 +102,24 @@ $english = array(
 	"gcforums:categories_not_available" => "<i>Currently No Categories Available</i>",
 
 	"gcforums:jmp_menu" => "Jobs Marketplace",
-	//"gcforums:jmp_url" => "http://jmp.com",
-    "gcforums:jmp_url" => $site_url . "groups/profile/7617072",
+	"gcforums:jmp_url" => $site_url . "groups/profile/7617072",
 
 	"gcforums:notification_subject_topic" => "New forum topic",
 	"gcforums:notification_body_topic" => "%s has started a New Forum Topic '%s' with the following content... <br/> %s <br/> You can view this item here: %s <br/>",
 
 	"gcforums:notification_subject_post" => "New forum post",
 	"gcforums:notification_body_post" => "%s made a reply in the Forum Topic '%s' with the following content... <br/> %s <br/> You can view this item here: %s <br/>",
-    
 
+	//edit page
 
-    //edit page
-
-    'gforums:title_label' => "Forum Name",
-    'gforums:description_label' => "Description",
-    'gcforums:save_button' => "Save",
+	'gforums:title_label' => "Forum Name",
+	'gforums:description_label' => "Description",
+	'gcforums:save_button' => "Save",
 
 	'gcforums:subscribe' => 'Subscribe',
 	'gcforums:unsubscribe' => 'Unsubscribe',
 
-	'gcforums:missing_description' => 'Missing Description', // NEW
-
+	'gcforums:missing_description' => 'Missing Description',
 );
 
 add_translation("en", $english);

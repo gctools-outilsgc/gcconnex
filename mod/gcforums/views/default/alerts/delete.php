@@ -17,21 +17,21 @@ $button_size = ($is_menu_buttons) ? "" : "btn-sm";
 
 <div id="myModal-<?php echo $entity->guid; ?>" class="modal fade" role="dialog">
 	<div class="modal-dialog">
-
 		<div class="modal-content">
 			<div class="modal-header">
-		    	<button type="button" class="close" data-dismiss="modal">&times;</button>
-		    	<h4 class="modal-title"><?php echo $delete_title; ?></h4>
-		    </div>
-		  	<div class="modal-body">
-			    <p><?php echo $delete_content . " '{$entity->title}'"; ?></p>
-		    </div>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title"><?php echo $delete_title; ?></h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					<?php echo $delete_content . " '{$entity->title}'"; ?>
+				</p>
+			</div>
 			<div class="modal-footer">
 				<button id="btnDeleteEntity" type="button" class="btn btn-danger <?php echo $button_size; ?>" data-toggle="modal" data-target="#myModal"><?php echo $delete; ?></button>
 				<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $cancel_button; ?></button>
 			</div>
 		</div>
-
 	</div>
 </div>
 
@@ -54,5 +54,3 @@ $button_size = ($is_menu_buttons) ? "" : "btn-sm";
 	text-align: center;
 }
 </style>
-
-
