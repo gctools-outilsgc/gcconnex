@@ -56,7 +56,7 @@ function gcforums_owner_block_menu($hook, $type, $return, $params)
  */
 function gcforums_page_handler($page)
 {
-	$vars = array();
+	$params = array();
 
 	switch ($page[0]) {
 		case 'create':
@@ -97,7 +97,6 @@ function render_create_forms($entity_guid, $entity_type)
 	assemble_forum_breadcrumb($entity);
 	$group_guid = gcforums_get_forum_in_group($entity->getGUID(), $entity->getGUID());
 	elgg_set_page_owner_guid();
-	$group_entity = get_entity($group_guid);
 	$vars['current_entity'] = $entity_guid;
 	$vars['entity_type'] = $entity_type;
 	$vars['group_guid'] = $group_guid;
@@ -158,7 +157,6 @@ function render_forum_topics($topic_guid)
 		}
 		$topic = get_entity($topic_guid);
 		$title = $topic->title;
-		$description = $topic->description;
 
 		/// owner information
 		$owner = $topic->getOwnerEntity();
@@ -168,7 +166,6 @@ function render_forum_topics($topic_guid)
 			'title' => false,
 		);
 
-		$summary = elgg_view('object/elements/summary', $params);
 		$admin_only = (elgg_is_admin_logged_in()) ? "(guid:{$topic->guid})" : "";
 		$owner_icon = elgg_view_entity_icon($topic->getOwnerEntity(), 'medium');
 
@@ -261,7 +258,6 @@ function render_forums($forum_guid)
 	$dbprefix = elgg_get_config('dbprefix');
 	$base_url = elgg_get_site_entity()->getURL();
 	$group_entity = get_entity(gcforums_get_forum_in_group($entity->getGUID(), $entity->getGUID()));
-	$current_user = elgg_get_logged_in_user_entity();
 	// set the breadcrumb trail
 	assemble_forum_breadcrumb($entity);
 
@@ -432,9 +428,6 @@ function render_forums($forum_guid)
 							</div>";
 
 				foreach ($forums as $forum) {
-					$query = "SELECT COUNT(guid_one) AS total FROM elggentity_relationships WHERE guid_one = '{$forum->guid}' AND relationship = 'filed_in' AND guid_two = 0";
-					$is_filed_in_category = get_data($query);
-
 					$total_topics = get_forums_statistics_information($forum->guid, TOTAL_TOPICS);
 					$total_posts = get_forums_statistics_information($forum->guid, TOTAL_POST);
 					$recent_post = get_forums_statistics_information($forum->guid, RECENT_POST);
@@ -685,7 +678,6 @@ function gcforums_menu_buttons($forum_guid, $group_guid, $is_topic=false)
 	elgg_load_css('gcforums-css');
 	$group_entity = get_entity($group_guid);
 	$current_user = elgg_get_logged_in_user_entity();
-	$user = $current_user;
 	$entity = get_entity($forum_guid);
 	$entity_type = $entity->getSubtype();
 
@@ -694,16 +686,6 @@ function gcforums_menu_buttons($forum_guid, $group_guid, $is_topic=false)
 
 	// @TODO: check if it is a topic
 	if (elgg_is_logged_in() && (elgg_is_admin_logged_in() || check_entity_relationship($current_user->getGUID(), 'member', $group_entity->getGUID()))) {
-
-		// check if postings is enabled and this is not the main first page of forum in group
-		if (!$entity->enable_posting || $entity->getGUID() !== $group_entity->getGUID()) {
-			$btnNewForumTopic = elgg_view('output/url', array(
-				"text" => elgg_echo('gcforums:new_hjforumtopic'),
-				"href" => "gcforums/create/hjforumtopic/{$group_guid}/{$forum_guid}",
-				'class' => 'elgg-button elgg-button-action btn btn-default'
-			));
-		}
-
 		$isOperator = check_entity_relationship($current_user->getGUID(), 'operator', $group_entity->getGUID());
 		$button_class = "elgg-button elgg-button-action btn btn-default";
 
@@ -730,7 +712,6 @@ function gcforums_menu_buttons($forum_guid, $group_guid, $is_topic=false)
 			/// edit or delete current forum
 			if ($forum_guid != $group_guid && ($current_user->isAdmin() || $group_entity->getOwnerGUID() == $current_user->guid)) {
 				$url = "gcforums/edit/{$forum_guid}";
-				$edit_forum_button =
 				$button_array['edit_forum'] = elgg_view('output/url', array("text" => elgg_echo('gcforums:edit_hjforum'), "href" => $url, 'class' => $button_class));
 				$button_array['delete'] = elgg_view('alerts/delete', array('entity' => $entity, 'is_menu_buttons' => true));
 			}
