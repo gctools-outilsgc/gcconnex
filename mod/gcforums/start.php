@@ -126,7 +126,10 @@ function render_edit_forms($entity_guid, $entity_type = '')
 	return $return;
 }
 
-/// recursively go through the forums and return group entity
+/**
+ * recursively go through the forums and return group entity
+ * @return integer
+ */
 function gcforums_get_forum_in_group($entity_guid_static, $entity_guid)
 {
 	$entity = get_entity($entity_guid);
@@ -226,6 +229,9 @@ function render_forum_topics($topic_guid)
 
 
 
+/**
+ * @param ElggEntity $entity
+ */
 function assemble_forum_breadcrumb($entity)
 {
 	$forum_guid = $entity->guid;
@@ -523,6 +529,7 @@ function render_forums($forum_guid)
  * TOTAL_POST : 1
  * TOTAL_TOPICS : 2
  * RECENT_POST : 3
+ * @param integer $type
  */
 function get_forums_statistics_information($container_guid, $type)
 {
@@ -672,6 +679,10 @@ function render_edit_options($object_guid, $group_guid)
 
 
 
+/**
+ * @param integer|null $forum_guid
+ * @param integer|null $group_guid
+ */
 function gcforums_menu_buttons($forum_guid, $group_guid, $is_topic=false)
 {
 	// main page if forum_guid is not present
