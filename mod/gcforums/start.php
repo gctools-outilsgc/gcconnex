@@ -708,11 +708,21 @@ function gcforums_menu_buttons($forum_guid, $group_guid, $is_topic=false)
 			foreach ($gcforum_types as $gcforum_type) {
 				$url = "gcforums/create/{$gcforum_type}/{$forum_guid}";
 				if ($gcforum_type === 'hjforumcategory') {
-					$button_array[$gcforum_type] = ($entity->enable_subcategories || $forum_guid == $group_guid) ? elgg_view('output/url', array("text" => elgg_echo('gcforums:new_hjforumcategory'), "href" => $url, 'class' => $button_class)) : "";
+					$button_array[$gcforum_type] = ($entity->enable_subcategories || $forum_guid == $group_guid)
+						? elgg_view('output/url', array(
+							"text" => elgg_echo('gcforums:new_hjforumcategory'),
+							"href" => $url,
+							'class' => $button_class))
+						: "";
 				}
 
 				if ($gcforum_type === 'hjforumtopic' && $entity->getGUID() !== $group_entity->getGUID()) {
-					$button_array[$gcforum_type] = (!$entity->enable_posting && $forum_guid) ? elgg_view('output/url', array("text" => elgg_echo('gcforums:new_hjforumtopic'), "href" => $url, 'class' => $button_class)) : "";
+					$button_array[$gcforum_type] = (!$entity->enable_posting && $forum_guid !== null)
+						? elgg_view('output/url', array(
+							"text" => elgg_echo('gcforums:new_hjforumtopic'),
+							"href" => $url,
+							'class' => $button_class))
+						: "";
 				}
 
 				if ($gcforum_type === 'hjforum') {
