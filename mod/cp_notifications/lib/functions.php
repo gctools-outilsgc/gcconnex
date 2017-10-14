@@ -180,7 +180,6 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 	elgg_load_library('elgg:gc_notification:functions');
 
 	$digest = get_entity($send_to->cpn_newsletter);
-	$digest_collection = json_decode($digest->description, true);
 
 	// default title value
 	$content_title = $entity->title;
@@ -555,7 +554,7 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 
 		$query = "INSERT INTO notification_digest ( entity_guid, user_guid, entry_type, group_name, action_type, notification_entry ) VALUES ( {$entity_guid}, '{$user_guid}', '{$entry_type}', '{$group_name}', '{$action_type}', '{$notification_entry}' )";
 
-		$insert_row = insert_data($query);
+		insert_data($query);
 	}
 
 

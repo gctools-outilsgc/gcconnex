@@ -48,16 +48,6 @@ function cp_send_new_password($user_guid)
 
 	// generate email
 	$ip_address = _elgg_services()->request->getClientIp();
-	$message = _elgg_services()->translator->translate(
-		'email:changereq:body',
-		array($user->name, $ip_address, $link),
-		$user->language
-	);
-	$subject = _elgg_services()->translator->translate(
-		'email:changereq:subject',
-		array(),
-		$user->language
-	);
 
 	$message = array(
 		'cp_password_requester' => $user,
@@ -65,7 +55,8 @@ function cp_send_new_password($user_guid)
 		'cp_password_request_url' => $link,
 		'cp_msg_type' => 'cp_forgot_password'
 	);
+
 	$result = elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
 
-	return $return;
+	return $result;
 }
