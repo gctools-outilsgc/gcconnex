@@ -73,6 +73,7 @@ echo "</div>";
 /// title, description, and access
 function general_information_form($object = null)
 {
+	$sub_return = array();
 	if ($object) {
 		$lblTitle = elgg_echo('gforums:title_label');
 		$txtTitle = elgg_view('input/text', array(
@@ -103,9 +104,7 @@ function general_information_form($object = null)
 		'access' => array($lblAccess, $ddAccess)
 	);
 
-	if ($sub_return) {
-		$return = array_merge($return, $sub_return);
-	}
+	$return = array_merge($return, $sub_return);
 
 	return $return;
 }
@@ -134,6 +133,7 @@ function forums_information_form($object)
 	/// todo: identify if this object is new or not
 	$dbprefix = elgg_get_config('dbprefix');
 
+	$sub_return = array();
 	$enable_subcategories = 0;
 	$lblEnableCategory = elgg_echo('gcforums:enable_categories_label');
 	$chkEnableCategory = elgg_view('input/checkboxes', array(
@@ -180,9 +180,7 @@ function forums_information_form($object)
 		'enable_posting' => array($lblEnablePost, $chkEnablePost),
 	);
 
-	if ($sub_return) {
-		$return = array_merge($return, $sub_return);
-	}
+	$return = array_merge($return, $sub_return);
 
 	return $return;
 }
