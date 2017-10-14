@@ -20,8 +20,8 @@ $english = array(
 	'cp_newsletter:notice' => "Choose how you want to be notified of GCconnex activities of interest to you. The <strong>notifications digest</strong> can be used to receive a daily or weekly email that provides a summary of the activities to which you are subscribed. Prefer to receive instant notification? Forgo the digest and select the content for which you want to receive notification in real-time. Please note that email notifications are sent to the email address used in your <a href='{$site->getURL()}settings/user/?utm_source=notification_digest&utm_medium=email'>Account Settings</a>. See: “<a href='http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Manage_Account_Settings/How_Do_I_Change_My_Notifications_Settings%3F?utm_source=notification_digest&utm_medium=email'>How Do I Change My Notifications Settings</a>?” for more information.",
 	'cp_newsletter:notice:disable_digest' => "The notifications digest is now enabled; please select your digest preferences below (frequency and language preference). The digest will include all content selected in the 'Email' column below, as well the subscriptions in the 'Other content subscriptions' section. If you choose to enable the notifications digest, you will no longer receive real-time (instant) notifications by email and/or on the site, about activities happening on GCconnex (with the exception of administrative-type notifications).",
 
-	'cp_newsletter:subject:daily' => 'Your Daily Digest', 
-	'cp_newsletter:subject:weekly' => 'Your Weekly Digest', 
+	'cp_newsletter:subject:daily' => 'Your Daily Digest',
+	'cp_newsletter:subject:weekly' => 'Your Weekly Digest',
 	'cp_newsletter:enable_digest_option' => "Enable your notifications digest",
 	'cp_newsletter:label:english' => "English",
 	'cp_newsletter:label:french' => "French",
@@ -57,25 +57,25 @@ $english = array(
 	'cp_notifications:subtype:task' => "Task",
 
 
-	'cp_notifications:mail_body:subtype:groupforumtopic' => "% posted a discussions: %s", 
-	'cp_notifications:mail_body:subtype:hjforumtopic' => "%s posted a forum topic: %s", 
-	'cp_notifications:mail_body:subtype:hjforumpost' => "%s posted a topic reply to: %s", 
-	'cp_notifications:mail_body:subtype:page' => "%s posted a page: %s", 
-	'cp_notifications:mail_body:subtype:page_top' => "%s posted a page: %s", 
-	'cp_notifications:mail_body:subtype:blog' => "%s posted a blog: %s", 
-	'cp_notifications:mail_body:subtype:bookmarks' => "%s posted a bookmark: %s", 
-	'cp_notifications:mail_body:subtype:file' => "%s posted a file: %s", 
+	'cp_notifications:mail_body:subtype:groupforumtopic' => "% posted a discussions: %s",
+	'cp_notifications:mail_body:subtype:hjforumtopic' => "%s posted a forum topic: %s",
+	'cp_notifications:mail_body:subtype:hjforumpost' => "%s posted a topic reply to: %s",
+	'cp_notifications:mail_body:subtype:page' => "%s posted a page: %s",
+	'cp_notifications:mail_body:subtype:page_top' => "%s posted a page: %s",
+	'cp_notifications:mail_body:subtype:blog' => "%s posted a blog: %s",
+	'cp_notifications:mail_body:subtype:bookmarks' => "%s posted a bookmark: %s",
+	'cp_notifications:mail_body:subtype:file' => "%s posted a file: %s",
 
-	'cp_notifications:mail_body:subtype:album' => "%s posted an album: %s", 
+	'cp_notifications:mail_body:subtype:album' => "%s posted an album: %s",
 	'cp_notifications:mail_body:subtype:thewire' => "%s posted on the %s",
-	'cp_notifications:mail_body:subtype:poll' => "%s created a poll: %s", 
-	'cp_notifications:mail_body:subtype:event_calendar' => "%s posted an event: %s", 
-	'cp_notifications:mail_body:subtype:photo' => "%s posted an image: %s", 
-	'cp_notifications:mail_body:subtype:task' => "%s created a task: %s", 
+	'cp_notifications:mail_body:subtype:poll' => "%s created a poll: %s",
+	'cp_notifications:mail_body:subtype:event_calendar' => "%s posted an event: %s",
+	'cp_notifications:mail_body:subtype:photo' => "%s posted an image: %s",
+	'cp_notifications:mail_body:subtype:task' => "%s created a task: %s",
 	'cp_notifications:mail_body:subtype:likes' => "%s liked your post: %s",
 
 	/// new translation require attention
-	'cp_notifications:mail_body:subtype:file_upload' => "%s posted %s file(s): %s", 	
+	'cp_notifications:mail_body:subtype:file_upload' => "%s posted %s file(s): %s",
 
 
 	/// new text
@@ -92,39 +92,39 @@ $english = array(
 
 	'cp_notifications:mail_body:subtype:oppourtunity' => "%s posted an opportunity (%s): %s",
 
-	'cp_notifications:mail_body:subtype:content_revision' => "%s revised the %s: %s", 
-	'cp_notifications:mail_body:subtype:mention' => "%s mentioned you in the %s: %s", 
+	'cp_notifications:mail_body:subtype:content_revision' => "%s revised the %s: %s",
+	'cp_notifications:mail_body:subtype:mention' => "%s mentioned you in the %s: %s",
 
 	'cp_notifications:mail_body:subtype:wire_mention' => "%s mentioned you on the %s",
 
-	'cp_notifications:mail_body:subtype:content_share' => "%s shared your %s: %s", 
+	'cp_notifications:mail_body:subtype:content_share' => "%s shared your %s: %s",
 	'cp_notifications:mail_body:subtype:content_share:wire' => "%s shared your %s",
 	'cp_notifications:mail_body:your_wire_post' => "Wire post",
 
-	'cp_newsletter:other_content:notice' => "These subscriptions are only for content items that are not part of a group", 
+	'cp_newsletter:other_content:notice' => "These subscriptions are only for content items that are not part of a group",
 
 	'cp_notifications:subtype:name:thewire' => "wire",
 
 	'cp_notifications:no_colleagues' => "You do not have any colleagues",
-    'cp_notifications:chkbox:email' => "Email",
-    'cp_notifications:chkbox:site' => "Site",
+	'cp_notifications:chkbox:email' => "Email",
+	'cp_notifications:chkbox:site' => "Site",
 	'cp_notifications:unsubscribe' => 'Unsubscribe',
 	'cp_notifications:not_subscribed' => 'Not Subscribed',
 	'cp_notifications:pick_colleagues' => 'Subscribe to your colleagues',
-	'cp_notifications:group_content'=>'Group Content',
+	'cp_notifications:group_content' => 'Group Content',
 
-    'cp_notifications:no_group_subscription' => "Nothing to load",
- 	'cp_notifications:no_personal_subscription' => "No content subscription",
+	'cp_notifications:no_group_subscription' => "Nothing to load",
+	'cp_notifications:no_personal_subscription' => "No content subscription",
 
- 	'cp_notifications:loading' => 'Loading...',
+	'cp_notifications:loading' => 'Loading...',
 	'cp_notifications:subscribe_all_label' => "<a href='%s'>Subscribe</a> or <a href='%s'> Unsubscribe</a> to all groups and their content",
 	'cp_notifications:chkbox:select_all_group_for_notification' => "Select all groups (this will not select the group content)",
-    'cp_notify:personal_bulk_notifications' => 'Enable Notifications Digest',
+	'cp_notify:personal_bulk_notifications' => 'Enable Notifications Digest',
 
-    'cp_notifications:personal_likes' => 'Notify me when someone likes my content',
-    'cp_notifications:personal_mentions' => 'Notify me when someone @mentions me',
-    'cp_notifications:personal_content' => 'Notify me when something happens on content I create',
-    'cp_notifications:personal_colleagues' => 'Notify me when my colleagues create content',
+	'cp_notifications:personal_likes' => 'Notify me when someone likes my content',
+	'cp_notifications:personal_mentions' => 'Notify me when someone @mentions me',
+	'cp_notifications:personal_content' => 'Notify me when something happens on content I create',
+	'cp_notifications:personal_colleagues' => 'Notify me when my colleagues create content',
 	'cp_notifications:personal_opportunities' => "Notify me when a new opportunity I have opted in for is created in the Career ConneXions Opportunities Platform",
 
 	'cp_notifications:no_group_content' => "(No group content subscription)",
@@ -133,63 +133,63 @@ $english = array(
 	'cp_notifications:heading:page_title' => 'Your Subscriptions',
 	'cp_notifications:your_email' => "your email",
 	'cp_notifications:heading:newsletter_section' => "Notifications Digest",
- 	'cp_notifications:heading:personal_section'=>'Personal Notifications',
-    'cp_notifications:heading:colleague_section'=>'Colleague Notifications',
-    'cp_notifications:heading:group_section' => 'Group Notifications',
- 	'cp_notifications:heading:nonGroup_section' => 'Other Content Subscriptions',
+	'cp_notifications:heading:personal_section' => 'Personal Notifications',
+	'cp_notifications:heading:colleague_section' => 'Colleague Notifications',
+	'cp_notifications:heading:group_section' => 'Group Notifications',
+	'cp_notifications:heading:nonGroup_section' => 'Other Content Subscriptions',
 
 	'cp_notifications:subtype:name:thewire' => "Wire",
-	
+
 	/// (NEWSLETTER) THROUGH EMAIL SERVER, EMAIL CONTENT: Newsletter email notifications
 	'cp_newsletter:title:nothing' => "Your {$site_name} Digest: Nothing to report today",
 	'cp_newsletter:body:nothing' => "It seems it was quiet in your network on GCconnex. Join <a href='{$site->getURL()}groups/all?filter=popular?utm_source=notification_digest&utm_medium=email'>groups</a> of interest, share information and add new <a href='{$site->getURL()}members/popular?utm_source=notification_digest&utm_medium=email'>colleagues</a> to stay informed and grow your network!",
-	'cp_newsletter:title' => "Your {$site_name} Digest: New activities to report!", 
+	'cp_newsletter:title' => "Your {$site_name} Digest: New activities to report!",
 	'cp_newsletter:greeting' => "Good morning %s. Here are your notifications for <strong>%s</strong>",
 
 
 	/// NEWSLETTER HEADINGS
-	'cp_newsletter:heading:notify:personal:singular' => "Personal notification", 	
-	'cp_newsletter:heading:notify:personal:plural' => "Personal notifications", 
-	
-	'cp_newsletter:heading:notify:mission:singular' => "Opportunities Platform notification", 	
-	'cp_newsletter:heading:notify:mission:plural' => "Opportunities Platform notifications", 
-	
-	'cp_newsletter:heading:notify:group:singular' => "Group notification", 	
-	'cp_newsletter:heading:notify:group:plural' => "Group notifications", 
-	
-	'cp_newsletter:heading:notify:cp_wire_share:singular' => "Shared content.",  	
-	'cp_newsletter:heading:notify:cp_wire_share:plural' => "Shared content.", 
-	
-	'cp_newsletter:heading:notify:friend_request:singular' => "New colleague request", 
-	'cp_newsletter:heading:notify:friend_request:plural' => "New colleague requests", 
+	'cp_newsletter:heading:notify:personal:singular' => "Personal notification",
+	'cp_newsletter:heading:notify:personal:plural' => "Personal notifications",
 
-	'cp_newsletter:heading:notify:friend_approved:singular' => "%s user approved your colleague request", 	
-	'cp_newsletter:heading:notify:friend_approved:plural' => "%s users approved your colleague request", 
+	'cp_newsletter:heading:notify:mission:singular' => "Opportunities Platform notification",
+	'cp_newsletter:heading:notify:mission:plural' => "Opportunities Platform notifications",
 
-	'cp_newsletter:heading:notify:likes:singular' => "Like received on your content", 
-	'cp_newsletter:heading:notify:likes:plural' => "Likes received on your content", 
+	'cp_newsletter:heading:notify:group:singular' => "Group notification",
+	'cp_newsletter:heading:notify:group:plural' => "Group notifications",
 
-	'cp_newsletter:heading:notify:new_post:singular' => "New item has been posted by your colleague", 
+	'cp_newsletter:heading:notify:cp_wire_share:singular' => "Shared content.",
+	'cp_newsletter:heading:notify:cp_wire_share:plural' => "Shared content.",
+
+	'cp_newsletter:heading:notify:friend_request:singular' => "New colleague request",
+	'cp_newsletter:heading:notify:friend_request:plural' => "New colleague requests",
+
+	'cp_newsletter:heading:notify:friend_approved:singular' => "%s user approved your colleague request",
+	'cp_newsletter:heading:notify:friend_approved:plural' => "%s users approved your colleague request",
+
+	'cp_newsletter:heading:notify:likes:singular' => "Like received on your content",
+	'cp_newsletter:heading:notify:likes:plural' => "Likes received on your content",
+
+	'cp_newsletter:heading:notify:new_post:singular' => "New item has been posted by your colleague",
 	'cp_newsletter:heading:notify:new_post:plural' => "New items have been posted by your colleagues",
-	
+
 	'cp_newsletter:heading:notify:new_post:group:singular' => "New item has been posted",
 	'cp_newsletter:heading:notify:new_post:group:plural' => "New items have been posted",
 
-	'cp_newsletter:heading:notify:content_revision:singular' => "Item has been revised", 
-	'cp_newsletter:heading:notify:content_revision:plural' => "Items have been revised", 
+	'cp_newsletter:heading:notify:content_revision:singular' => "Item has been revised",
+	'cp_newsletter:heading:notify:content_revision:plural' => "Items have been revised",
 
-	'cp_newsletter:heading:notify:cp_mention:singular' => "Person mentioned you.", 	
-	'cp_newsletter:heading:notify:cp_mention:plural' => "People mentioned you.", 
+	'cp_newsletter:heading:notify:cp_mention:singular' => "Person mentioned you.",
+	'cp_newsletter:heading:notify:cp_mention:plural' => "People mentioned you.",
 
-	'cp_newsletter:heading:notify:forum_topic:singular' => "New forum topic", 	
-	'cp_newsletter:heading:notify:forum_topic:plural' => "New forum topics", 
-	
-	'cp_newsletter:heading:notify:forum_reply:singular' => "Reply to forum topic", 	
-	'cp_newsletter:heading:notify:forum_reply:plural' => "Replies to forum topics", 
-	
-	'cp_newsletter:heading:notify:response:singular' => "Response to other content subscriptions", 	
-	'cp_newsletter:heading:notify:response:plural' => "Responses to other content subscriptions", 
-	
+	'cp_newsletter:heading:notify:forum_topic:singular' => "New forum topic",
+	'cp_newsletter:heading:notify:forum_topic:plural' => "New forum topics",
+
+	'cp_newsletter:heading:notify:forum_reply:singular' => "Reply to forum topic",
+	'cp_newsletter:heading:notify:forum_reply:plural' => "Replies to forum topics",
+
+	'cp_newsletter:heading:notify:response:singular' => "Response to other content subscriptions",
+	'cp_newsletter:heading:notify:response:plural' => "Responses to other content subscriptions",
+
 
 	'cp_newsletter:digest:opportunities:date' => "Closing date: ",
 
@@ -197,12 +197,12 @@ $english = array(
 	'cp_newsletter:footer:notification_settings' => "To unsubscribe or manage these messages, please login and visit your <a href='{$site->getURL()}settings/notifications/%s?utm_source=notification_digest&utm_medium=email'> Notification Settings</a>.",
 	'cp_newsletter:ending' => "<p>Regards,</p> <p>The GCTools Team</p>",
 
-    'cp_notifications:contact_help_desk'=> "Should you have any concerns, please use the <a href='{$site->getURL()}mod/contactform/?utm_source=notification_digest&utm_medium=email'>Contact us form</a>.",
+	'cp_notifications:contact_help_desk' => "Should you have any concerns, please use the <a href='{$site->getURL()}mod/contactform/?utm_source=notification_digest&utm_medium=email'>Contact us form</a>.",
 
 
 	/// notification header
 	'cp_notification:email_header' => 'This is a system-generated message from GCconnex. Please do not reply to this message',
-	'cp_notification:email_header_msg' => "",	
+	'cp_notification:email_header_msg' => "",
 
 	// add user to group section
 	'cp_notify:subject:group_add_user' => "You have been added the group '%s'",
@@ -236,12 +236,12 @@ $english = array(
 	'cp_notify:body_group_invite_email:description' => "<a href='%s'>Register now</a> and be automatically added to the group.<br/><br/>
 
 	If you would like to register at a later time using the <a href='https://gcconnex.gc.ca/register'>Registration form</a> on GCconnex, you can join the group by using the following code on your <a href='%s'>group invitations</a> page: %s .<br/><br/>
- 
+
 	Already on GCconnex? Your email address may out of date. <a href='https://gcconnex.gc.ca/login'>Login</a> and update your account settings.<br/> ",
-	
+
 	'cp_notify:footer:no_user' => 'Learn more about <a href="http://www.gcpedia.gc.ca/wiki/GCTools/GCconnex?utm_source=notification&utm_medium=email">GCconnex</a>, the professional networking and collaborative workspace for the public service.<br/>
 	Need help? <a href="https://gcconnex.gc.ca/mod/contactform/?utm_source=notification&utm_medium=email">Contact us</a>.',
-	
+
 	'cp_personalized_message' => "<div style='border: 1px solid #047177; padding:5px; margin-bottom:10px;'>Personalized message from %s:<br/><i>%s</i></div>",
 
 
@@ -272,16 +272,16 @@ $english = array(
 	'cp_notify:body_likes_wire:title' => "%s liked your wire post '%s'",
 
 	'cp_notify:subject:likes_comment' => "%s liked your comment from '%s'",
-	'cp_notify:body_likes_comment:title' => "%s liked your comment from '%s'", 
-	'cp_notify:body_likes_comment:description' => "Your comment from '%s' was liked by %s", 
+	'cp_notify:body_likes_comment:title' => "%s liked your comment from '%s'",
+	'cp_notify:body_likes_comment:description' => "Your comment from '%s' was liked by %s",
 
 	'cp_notify:subject:likes_discussion' => "%s liked your reply to '%s'",
-	'cp_notify:body_likes_discussion_reply:title' => "%s liked your reply to '%s'", 
+	'cp_notify:body_likes_discussion_reply:title' => "%s liked your reply to '%s'",
 	'cp_notify:body_likes_discussion_reply:description' => "Your reply to '%s' was liked by %s",
 
 	'cp_notify:subject:likes_user_update' => "%s liked your your updated avatar or your new colleague connection",
 	'cp_notify:body_likes_user_update:title' => "%s liked your your updated avatar or your new colleague connection",
-	'cp_notify:body_likes_user_update:description' => "Your recent avatar update or your new colleague connection was liked by %s", 
+	'cp_notify:body_likes_user_update:description' => "Your recent avatar update or your new colleague connection was liked by %s",
 
 	'cp_notify:body_likes:description' => "You can view your content by clicking on this link: %s",
 
@@ -295,7 +295,7 @@ $english = array(
 
 	'cp_notify:body_comments:title' => "<a href='%s'>%s</a> posted a new comment on the %s, <a href='%s'>%s</a>",
 	'cp_notify:body_comments:title_discussion' => "<a href='%s'>%s</a> posted a new reply on the %s, <a href='%s'>%s</a>",
-	
+
 	'cp_notify:body_comments:description' => "<a href='%s'>View or comment</a>",
 	'cp_notify:body_comments:description_discussion' => "<a href='%s'>View or reply</a>",
 
@@ -323,7 +323,7 @@ $english = array(
 	'cp_notify:body_new_content:title2' => "<a href='%s'>%s</a> posted a new %s in <a href='%s'>%s</a>",
 	'cp_notify:body_new_content:title3' => "<a href='%s'>%s</a> posted a new %s",
 
-	
+
 
 	'cp_notify:body_new_content:description' => "The description of the new posting is: <br/>
 		%s <br/>
@@ -379,20 +379,20 @@ $english = array(
 	'cp_notify:subject:add_new_user' => "You have been added as a new user in GCconnex",
 	'cp_notify:body_add_new_user:title' => "You have been added as a new user in GCconnex",
 	'cp_notify:body_add_new_user:description' => "You can now log in using the following credentials <br/>
-		Username: %s  and Password: %s",
+		Username: %s and Password: %s",
 
 
 	// invited to join GCconnex section
 	'cp_notify:subject:invite_new_user' => "You have been invited to join GCconnex",
 	'cp_notify:body_invite_new_user:title' => "You have been invited to join GCconnex by %s",
-	'cp_notify:body_invite_new_user:description' => "Join the professionnal networking and collaborative workspace for all public service. You can proceed to your GCconnex registration through this link %s", 
+	'cp_notify:body_invite_new_user:description' => "Join the professionnal networking and collaborative workspace for all public service. You can proceed to your GCconnex registration through this link %s",
 
 
 	// transfer admin
-	'cp_notify:subject:group_admin_transfer' => "You are now the owner of the group '%s'", 
+	'cp_notify:subject:group_admin_transfer' => "You are now the owner of the group '%s'",
 	'cp_notify:body_group_admin_transfer:title' => "You are now the owner of the group '%s'",
 	'cp_notify:body_group_admin_transfer:description' => "%s has transfered you the ownership of the group '%s'.<br/><br/>
-		To visit the group, please click on the following link: <br/> 
+		To visit the group, please click on the following link: <br/>
 		%s",
 
 
@@ -400,25 +400,25 @@ $english = array(
 	'cp_notify:subject:add_grp_operator' => "The owner of the group '%s' delegated operator rights to you",
 	'cp_notify:body_add_grp_operator:title' => "The owner of the group '%s' delegated operator rights to you",
 	'cp_notify:body_add_grp_operator:description' => "%s has delegated you as an operator of the group '%s'.<br/><br/>
-		To visit the group, please click on the following link: <br/> 
+		To visit the group, please click on the following link: <br/>
 		%s", // translate
-	
+
 
 	// friend request section
 	'cp_notify:subject:friend_request' => "%s wants to be your colleague!",
 	'cp_notify:body_friend_req:title' => '%s wants to be your colleague!',
 	'cp_notify:body_friend_req:description' => "%s wants to be your colleague and is waiting for you to approve the request... So login now to approve the request!<br/>
 		You can view your pending colleague requests : %s",
-	
 
-	// forgot password 
+
+	// forgot password
 	'cp_notify:subject:forgot_password' => "You have requested a password reset",
 	'cp_notify:body_forgot_password:title' => "There was a password reset request from this IP address: <code> %s </code>",
 	'cp_notify:body_forgot_password:description' => "There was a request to have a password reset from this user's IP address:<code> %s </code> <br/>
 		Please click on this link to have the password reset for %s's account: %s",
-		
 
-	// validate user 
+
+	// validate user
 	'cp_notify:subject:validate_user' => "Please validate account for %s",
 	'cp_notify:body_validate_user:title' => "Please validate your new account for %s",
 	'cp_notify:body_validate_user:description' => "Welcome to GCconnex, to complete your registration, please validate the account registered under %s by clicking on this link: %s",
@@ -437,9 +437,9 @@ $english = array(
 	'cp_notify:body_wireshare:title' => "%s shared your content on the wire",
 
 	// (shared your wire post)
-	'cp_notify:body:contentshare:description' => "	<p>%s shared your content on the wire.</p> 
+	'cp_notify:body:contentshare:description' => "	<p>%s shared your content on the wire.</p>
 													<p><i>%s</i></p> <br/>
-													<p><strong>Source:</strong> %s</p> 
+													<p><strong>Source:</strong> %s</p>
 													<p><a href='%s'>View or reply</a> on GCconnex.</p>",
 
 
@@ -489,30 +489,30 @@ $english = array(
 	"cp_notify:sidebar:no_subscriptions" => "<i>No Subscriptions Available</i>",
 	"cp_notify:sidebar:group_title" => "Group you are member of",
 	"cp_notify:sidebar:subs_title" => "Personal Subscriptions",
-    
 
-    'cp_notify:visitTutorials'=>'To learn more about GCconnex and its features visit the <a href="http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/See_All">GCconnex User Help</a>.<br/>
-	                             Thank you',
+
+	'cp_notify:visitTutorials' => 'To learn more about GCconnex and its features visit the <a href="http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/See_All">GCconnex User Help</a>.<br/>
+								 Thank you',
 
 	// cyu - new message in place for email content revamp
 	'cp_notify:french_follows' => "<i>(Le fran&ccedil;ais suit)</i>",
 	'cp_notify:readmore' => "<a href='%s'>Read more</a>",
 
-	
-    'cp_notify:emailsForGroup'=>'Select All',
+
+	'cp_notify:emailsForGroup' => 'Select All',
 
 
-    'cp_notify:notifNewContent'=>'Notify me when new content is created (Discussion, Files, etc.)',
-    'cp_notify:notifComments'=>'Notify me when comments are created',
-    
-    'cp_notify:siteForGroup'=>'Select All',
-    'cp_notify:unsubBell'=>'You are subscribed to this content. Click to unsubscribe.',
-    'cp_notify:subBell'=>'You are not subscribed to this content. Click to subscribe and recieve notifications about this content.',
-    'cp_notify:comingSoon'=>'Coming soon!',
-   
+	'cp_notify:notifNewContent' => 'Notify me when new content is created (Discussion, Files, etc.)',
+	'cp_notify:notifComments' => 'Notify me when comments are created',
 
-    'cp_notify:start_subscribe' => 'Start Subscription',
-    'cp_notify:stop_subscribe' => 'Stop Subscription',
+	'cp_notify:siteForGroup' => 'Select All',
+	'cp_notify:unsubBell' => 'You are subscribed to this content. Click to unsubscribe.',
+	'cp_notify:subBell' => 'You are not subscribed to this content. Click to subscribe and recieve notifications about this content.',
+	'cp_notify:comingSoon' => 'Coming soon!',
+
+
+	'cp_notify:start_subscribe' => 'Start Subscription',
+	'cp_notify:stop_subscribe' => 'Stop Subscription',
 
 
 	'cp_notify:minor_edit' => 'Minor Edit',

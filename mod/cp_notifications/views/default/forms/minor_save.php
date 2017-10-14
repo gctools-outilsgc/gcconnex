@@ -10,17 +10,16 @@ $display .= "<section class='alert alert-warning'><h3 class='h3'> ".elgg_echo('m
 
 $display .= "<p>";
 $display .= elgg_view('input/checkbox', array(
-		'name' 		=>	"minor_save",
-		'value' 	=>	'yes',
-		'default' 	=> 	'no',
-		'label' 	=>	elgg_echo('minor_save:checkbox_label'),
-		'checked' 	=>	false,
-		'id' 		=>	'minor_save',
-		'class' 	=>	'chkboxClass',
+		'name'		=>	"minor_save",
+		'value'	=>	'yes',
+		'default'	=>	'no',
+		'label'	=>	elgg_echo('minor_save:checkbox_label'),
+		'checked'	=>	false,
+		'id'		=>	'minor_save',
+		'class'	=>	'chkboxClass',
 	));
 $display .= "</p>";
 $display .= "</section>";
 
 
 echo $display;
-

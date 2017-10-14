@@ -18,4 +18,3 @@ echo elgg_view_form('notifications/usersettings', array(
 	'class' => 'elgg-form-alt',
 	'action' => $action_url,
 ));
-

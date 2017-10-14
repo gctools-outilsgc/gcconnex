@@ -22,11 +22,10 @@ $list = elgg_list_entities_from_metadata(array(
 	'owner_guid' => elgg_get_page_owner_guid(),
 	'full_view' => false,
 	'limit' => $limit,
-    'pagination' => true,
+	'pagination' => true,
 	'preload_owners' => true,
 	'bulk_actions' => true,
 	'offset' => $offset,
-	//'wetcustom:messages' => false
 ));
 
 

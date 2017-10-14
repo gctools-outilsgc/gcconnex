@@ -5,23 +5,29 @@ echo elgg_view('cp_notifications/admin_nav');
 $title = elgg_echo('Notifications Administrative Settings');
 
 // pre defined values, if not set
-if (!isset($vars['entity']->cp_notifications_email_addr))
+if (!isset($vars['entity']->cp_notifications_email_addr)) {
 	$vars['entity']->cp_notifications_email_addr = 'admin.gcconnex@tbs-sct.gc.ca';
+}
 
-if (!isset($vars['entity']->cp_notifications_display))
+if (!isset($vars['entity']->cp_notifications_display)) {
 	$vars['entity']->cp_notifications_display = '1';
+}
 
-if (!isset($vars['entity']->cp_notifications_opt_out))
+if (!isset($vars['entity']->cp_notifications_opt_out)) {
 	$vars['entity']->cp_notifications_opt_out = 'no';
+}
 
-if (!isset($vars['entity']->cp_notifications_enable_bulk))
+if (!isset($vars['entity']->cp_notifications_enable_bulk)) {
 	$vars['entity']->cp_notifications_enable_bulk = 'no';
+}
 
-if (!isset($vars['entity']->cp_notifications_sidebar))
+if (!isset($vars['entity']->cp_notifications_sidebar)) {
 	$vars['entity']->cp_notifications_sidebar = 'no';
+}
 
-if (!isset($vars['entity']->cp_enable_minor_edit))
+if (!isset($vars['entity']->cp_enable_minor_edit)) {
 	$vars['entity']->cp_enable_minor_edit = 'no';
+}
 
 
 $body = "<br/>";
@@ -109,4 +115,3 @@ $body .= '</fieldset>';
 
 
 echo elgg_view_module('main', $title, $body);
-

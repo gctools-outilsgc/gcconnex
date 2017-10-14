@@ -33,7 +33,7 @@ do {
 
 	// get all the forums subscribed by users
 	$query = "	SELECT r1.guid_one, r1.guid_two, e.container_guid, es.subtype, r1.relationship
-				FROM elggentity_relationships r1 
+				FROM elggentity_relationships r1
 				    LEFT JOIN elggentities e ON r1.guid_two = e.guid
 				    LEFT JOIN elggentity_subtypes es ON es.id = e.subtype
 				    LEFT JOIN elggusers_entity ue ON ue.guid = r1.guid_one
@@ -48,7 +48,7 @@ do {
 	foreach ($forums as $forum) {
 		$group_id = get_forum_in_group($forum->guid_two, $forum->guid_two);
 		$relationship = check_entity_relationship($forum->guid_one, 'member', $group_id);
-		
+
 		// check if the user is a member of the group indicated
 		if (!($relationship instanceof ElggRelationship)) {
 			$invalid_forums[] = "{$forum->guid_one}|{$forum->guid_two}|{$group_id}";
@@ -56,8 +56,9 @@ do {
 	}
 
 	// this condition will break the while loop, it means everything has been fixed
-	if (count($invalid_forums) <= 0 || !$invalid_forums) 
+	if (count($invalid_forums) <= 0 || !$invalid_forums) {
 		break;
+	}
 
 	foreach ($invalid_forums as $invalid_forum) {
 		$item = explode('|', $invalid_forum);
@@ -66,8 +67,6 @@ do {
 
 		$success_count++;
 	}
- 
-
 } while ((microtime(true) - $START_MICROTIME) < $batch_run_time_in_secs);
 
 
@@ -83,4 +82,3 @@ echo json_encode(array(
 	'numSuccess' => $success_count,
 	'numErrors' => $error_count,
 ));
-

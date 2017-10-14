@@ -1,7 +1,7 @@
 <?php
 /**
  * Enable all users' group content subscriptions
- * 
+ *
  * Run for 2 seconds per request as set by $batch_run_time_in_secs. This includes
  * the engine loading time.
  */
@@ -36,9 +36,9 @@ $error_count = 0;
 $plugin = elgg_get_plugin_from_id('cp_notifications');
 
 do {
-	$user_guids = get_data("SELECT guid from {$db_prefix}users_entity u LEFT JOIN ( SELECT entity_guid, value_id from {$db_prefix}metadata WHERE name_id = {$str_id} ) md ON u.guid = md.entity_guid 
+	$user_guids = get_data("SELECT guid from {$db_prefix}users_entity u LEFT JOIN ( SELECT entity_guid, value_id from {$db_prefix}metadata WHERE name_id = {$str_id} ) md ON u.guid = md.entity_guid
 		WHERE md.value_id IS NULL
-		ORDER BY u.guid DESC 
+		ORDER BY u.guid DESC
 		LIMIT {$offset}, {$limit}");
 
 	if (!$user_guids) {
@@ -47,19 +47,19 @@ do {
 	}
 
 	// Subscribe users to all the content in their groups
-	foreach ( $user_guids as $user_guid ) {
+	foreach ($user_guids as $user_guid) {
 		$guid = $user_guid->guid;
 
 		$email_notify = get_data("SELECT e.guid as guid FROM {$db_prefix}entity_relationships r LEFT JOIN {$db_prefix}entities e ON r.guid_two = e.guid WHERE r.guid_one = {$guid} AND r.relationship = 'notifyemail' AND e.type='group'");
 		$site_notify = get_data("SELECT e.guid as guid FROM {$db_prefix}entity_relationships r LEFT JOIN {$db_prefix}entities e ON r.guid_two = e.guid WHERE r.guid_one = {$guid} AND r.relationship = 'notifysite' AND e.type='group'");
-		if ( $email_notify ){
+		if ($email_notify) {
 			foreach ($email_notify as $group_email) {
 				// subscribe to the group by email
 				$status = add_entity_relationship($guid, 'cp_subscribed_to_email', $group_email->guid);
 				$plugin->setUserSetting("cpn_email_{$group_email->guid}", 'sub_'.$group_email->guid, $guid);
 			}
 		}
-		if ( $site_notify ){
+		if ($site_notify) {
 			foreach ($site_notify as $group_site) {
 				// subscribe to the group by email
 				add_entity_relationship($guid, 'cp_subscribed_to_site_mail', $group_site->guid);
@@ -67,7 +67,7 @@ do {
 			}
 		}
 
-		$user = get_user( $user_guid->guid );
+		$user = get_user($user_guid->guid);
 		$user->subscribed_to_all_group_content = 1;
 		$success_count++;
 	}
@@ -85,8 +85,7 @@ if (!$user_guids) {
 		'numErrors' => $error_count,
 		'processComplete' => true,
 	));
-}
-else{
+} else {
 	// Give some feedback for the UI
 	echo json_encode(array(
 		'numSuccess' => $success_count,

@@ -16,8 +16,7 @@ $group_content_arr = array('blog','bookmark','groupforumtopic','event_calendar',
 
 
 foreach ($groups as $group) {
-
-	if (strcmp($subscription,'sub') == 0) {
+	if (strcmp($subscription, 'sub') == 0) {
 		// subscribe to the group if not already
 		add_entity_relationship($current_user->guid, 'cp_subscribed_to_email', $group->grp_id);
 		add_entity_relationship($current_user->guid, 'cp_subscribed_to_site_mail', $group->grp_id);
@@ -27,15 +26,16 @@ foreach ($groups as $group) {
 	}
 
 	$query = "SELECT o.guid as content_id, o.title FROM {$dbprefix}objects_entity o, {$dbprefix}entities e, {$dbprefix}entity_subtypes es WHERE o.title <> '' AND o.guid = e.guid AND e.container_guid = {$group->grp_id} AND es.id = e.subtype AND ( es.subtype = 'poll'";
-	foreach ($group_content_arr as $grp_content_subtype)
+	foreach ($group_content_arr as $grp_content_subtype) {
 		$query .= " OR es.subtype = '{$grp_content_subtype}'";
+	}
 	$query .= " )";
 
 	$group_contents = get_data($query);
 
 	// subscribe to group content if not already
 	foreach ($group_contents as $group_content) {
-		if (strcmp($subscription,'sub') == 0) {
+		if (strcmp($subscription, 'sub') == 0) {
 			add_entity_relationship($current_user->guid, 'cp_subscribed_to_email', $group_content->content_id);
 			add_entity_relationship($current_user->guid, 'cp_subscribed_to_site_mail', $group_content->content_id);
 		} else {
@@ -49,4 +49,3 @@ foreach ($groups as $group) {
 $query = "SELECT e.guid, o.title
 FROM {$dbprefix}entities e, {$dbprefix}objects_entity o, {$dbprefix}entity_subtypes es
 WHERE e.guid = o.guid AND es.id = e.subtype AND e.owner_guid = {$current_user->getGUID()} AND ( es.subtype = 'hjforumtopic' OR es.subtype = 'hjforum' )";
-

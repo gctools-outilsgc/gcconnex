@@ -38,8 +38,9 @@ do {
 
 	$users = get_data($query);
 
-	if (count($users) <= 0 || !$users)
+	if (count($users) <= 0 || !$users) {
 		break;
+	}
 
 	foreach ($users as $user) {
 		// remove the group notifications
@@ -54,7 +55,6 @@ do {
 		}
 		$success_count++;
 	}
-
 } while ((microtime(true) - $START_MICROTIME) < $batch_run_time_in_secs);	// do the update while it's less than 2 seconds
 
 access_show_hidden_entities($access_status);
@@ -75,7 +75,8 @@ echo json_encode(array(
 /* get_content()
  * returns the query for all the content that the user is associated with
  */
-function get_group_content($group_id) {
+function get_group_content($group_id)
+{
 	$dbprefix = elgg_get_config('dbprefix');
 	$subscribe_to = array('file','blog','poll','groupforumtopic','bookmarks','image','album','event_calendar','page_top','task_top','task',);
 
@@ -84,10 +85,11 @@ function get_group_content($group_id) {
 	// cyu - query only those contents that are of concern
 	$count = 0;
 	foreach ($subscribe_to as $subtype_name) {
-		if ($count == 0)
+		if ($count == 0) {
 			$query_content .= "es.subtype = '{$subtype_name}' ";
-		else
+		} else {
 			$query_content .= "OR es.subtype = '{$subtype_name}' ";
+		}
 		$count++;
 	}
 	$query_content .= ")";

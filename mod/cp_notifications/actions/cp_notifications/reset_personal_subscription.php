@@ -26,12 +26,12 @@ $dbprefix = elgg_get_config('dbprefix');
 
 
 do {
-
 	$query = "SELECT guid FROM {$dbprefix}users_entity u LEFT JOIN (SELECT * FROM {$dbprefix}metadata WHERE name_id = {$str_id}) md ON u.guid = md.entity_guid WHERE md.value_id IS NULL OR md.value_id = {$val_id} ORDER BY u.guid DESC LIMIT {$limit}";
 	$users = get_data($query);
 
-	if (count($users) <= 0)
+	if (count($users) <= 0) {
 		break;
+	}
 
 	foreach ($users as $user) {
 		$query = "SELECT time_created FROM {$dbprefix}metadata WHERE name_id = {$str_id} AND entity_guid = {$user->guid}";
@@ -42,13 +42,13 @@ do {
 		$relationships = get_data(get_content($user->guid, $start_ts, $end_ts));
 
 		// each user go through their user-generated content
-		foreach ($relationships as $relationship)
- 			remove_relationship($user->guid, $relationship->guid_two);
+		foreach ($relationships as $relationship) {
+			remove_relationship($user->guid, $relationship->guid_two);
+		}
 
-	 	create_metadata($user->guid, 'set_personal_subscription', false);
-	 	$success_count++;
+		create_metadata($user->guid, 'set_personal_subscription', false);
+		$success_count++;
 	}
-
 } while ((microtime(true) - $START_MICROTIME) < $batch_run_time_in_secs);	// do the update while it's less than 2 seconds
 
 
@@ -66,12 +66,8 @@ echo json_encode(array(
 ));
 
 
-
-
-/*
- * 
- */
-function get_relationship_ts($user, $content) {
+function get_relationship_ts($user, $content)
+{
 	$dbprefix = elgg_get_config('dbprefix');
 	$query = "SELECT time_created FROM {$dbprefix}entity_relationships WHERE guid_one = {$user->guid} AND (relationship = 'cp_subscribed_to_site_mail' OR relationship = 'cp_subscribed_to_email') AND guid_two = {$content->guid}";
 	$relationship_obj = get_data($query);
@@ -83,7 +79,8 @@ function get_relationship_ts($user, $content) {
  * creates the relationship for each content created by the user
  * returns bool
  */
-function remove_relationship($user_guid, $content_guid) {
+function remove_relationship($user_guid, $content_guid)
+{
 	remove_entity_relationship($user_guid, 'cp_subscribed_to_email', $content_guid);
 	remove_entity_relationship($user_guid, 'cp_subscribed_to_site_mail', $content_guid);
 }
@@ -93,22 +90,20 @@ function remove_relationship($user_guid, $content_guid) {
 /* get_content()
  * returns the query for all the content that the user is associated with
  */
-function get_content($user_guid, $start_ts, $end_ts) {
-
-
-
+function get_content($user_guid, $start_ts, $end_ts)
+{
 	$dbprefix = elgg_get_config('dbprefix');
-	
+
 	$query_content = "
 			SELECT *
 			 FROM {$dbprefix}entity_relationships
-			 WHERE guid_one = {$user_guid} 
+			 WHERE guid_one = {$user_guid}
 				 AND (relationship = 'cp_subscribed_to_email' OR relationship = 'cp_subscribed_to_site_mail')
 				 AND (time_created > {$start_ts} AND time_created <= {$end_ts})";
-	
+
 	$query_content = str_replace("\n", "", $query_content);
 	$query_content = str_replace("\r", "", $query_content);
 	$query_content = str_replace("\t", "", $query_content);
-	
+
 	return $query_content;
 }
