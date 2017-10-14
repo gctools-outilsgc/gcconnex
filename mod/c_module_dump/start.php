@@ -7,7 +7,6 @@ function c_module_dump_init()
 {
 	elgg_unregister_page_handler('messages', 'messages_page_handler');
 	elgg_register_page_handler('messages', 'messages_page_handler_2');
-	$action_path = elgg_get_plugins_path() . 'c_module_dump/actions/';
 
 	elgg_register_js('jquery-c_stats-min', 'mod/c_module_dump/vendors/jquery/jquery-1.7.1.min.js');
 	elgg_register_js('jquery-c_stats', 'mod/c_module_dump/vendors/jquery/jquery-1.7.1.js');
@@ -44,9 +43,6 @@ function c_module_dump_init()
 	elgg_extend_view('forms/discussion/save', 'forms/save2', 900);
 	elgg_extend_view('forms/file_tools/upload/multi', 'forms/save2', 900);
 	elgg_extend_view('forms/file_tools/upload/zip', 'forms/save2', 900);
-
-	// cyu - 02/12/2015: fixes to the group visibility
-	$action_base = elgg_get_plugins_path().'c_module_dump/actions/groups';
 
 	// cyu - 01-20-2015 modified: enhancement for the widget manager module, default URL will point to the users profile instead
 	elgg_unregister_plugin_hook_handler('widget_url', 'widget_manager', "widget_manager_widgets_url");
