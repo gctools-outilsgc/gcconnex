@@ -51,8 +51,10 @@ echo <<< HTML
 
 <script>
 	$('#invitefriends-emails').multiple_emails();
-	$('.elgg-form-invitefriends-invite').keydown(function(e){
-		if( $(e.target).hasClass('multiple_emails-input') && e.keyCode == 13 ){ e.preventDefault(); }
+	$('.elgg-form-invitefriends-invite').keydown(function(e) {
+		if ($(e.target).hasClass('multiple_emails-input') && e.keyCode == 13) {
+			e.preventDefault();
+		}
 	});
 </script>
 HTML;

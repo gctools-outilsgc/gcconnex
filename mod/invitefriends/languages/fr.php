@@ -18,6 +18,6 @@ return array(
 
 	'invitefriends:message:default' => 'Bonjour, je vous invite à vous joindre à mon réseau, ici, sur %s.',
 
-	'invitefriends:email' => 'Vous avez été invité à rejoindre %s par %s. Le message suivant a été ajouté pour vous: %s Pour vous y joindre, cliquez sur le lien suivant : %s P.S.  Vous serez automatiquement ajouté(e) comme collègue lorsque vous créerez votre compte.',
-	
+	'invitefriends:email' => 'Vous avez été invité à rejoindre %s par %s. Le message suivant a été ajouté pour vous: %s Pour vous y joindre, cliquez sur le lien suivant : %s P.S. Vous serez automatiquement ajouté(e) comme collègue lorsque vous créerez votre compte.',
+
 );
