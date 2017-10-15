@@ -704,11 +704,11 @@ function render_contents($content_array, $heading = '', $language_preference = '
 
 	if ($heading === 'new_post' && $subtype === 'file_upload') {
 		$rendered_content = elgg_echo('cp_notifications:mail_body:subtype:file_upload', array($author, count($content_array['file_count']), $content_array['content_title']), $language_preference);
-		$closing_date = elgg_echo('cp_newsletter:digest:opportunities:date', $language_preference).$content_array['deadline'];
-		$subtype = elgg_echo($content_array['subtype'], $language_preference);
+		$closing_date = elgg_echo('cp_newsletter:digest:opportunities:date', array(), $language_preference).$content_array['deadline'];
+		$subtype = elgg_echo($content_array['subtype'], array(), $language_preference);
 	} elseif ($content_array['deadline']) {
-		$closing_date = elgg_echo('cp_newsletter:digest:opportunities:date', $language_preference).$content_array['deadline'];
-		$subtype = elgg_echo($content_array['subtype'], $language_preference);
+		$closing_date = elgg_echo('cp_newsletter:digest:opportunities:date', array(), $language_preference).$content_array['deadline'];
+		$subtype = elgg_echo($content_array['subtype'], array(), $language_preference);
 
 		$url = "<a href='{$content_array['content_url']}'>{$content_title}</a>";
 		$rendered_content = elgg_echo("cp_notifications:mail_body:subtype:oppourtunity", array($author, $subtype, $url), $language_preference)." - ".$closing_date;
@@ -716,12 +716,12 @@ function render_contents($content_array, $heading = '', $language_preference = '
 		$content_title = gc_explode_translation($content_array['content_title'], $language_preference);
 		$url = "<a href='{$content_array['content_url']}'>{$content_title}</a>";
 		if ($subtype === 'The Wire') {
-			$subtype = elgg_echo('cp_notifications:mail_body:your_wire_post', $language_preference);
+			$subtype = elgg_echo('cp_notifications:mail_body:your_wire_post', array(), $language_preference);
 		}
 		$rendered_content = elgg_echo("cp_notifications:mail_body:subtype:content_share", array($author, $subtype, $url), $language_preference);
 	} elseif ($heading === 'cp_mention' || $heading === 'mention') {
 		if ($content_array['subtype'] === 'wire_mention') {
-			$content_title = elgg_echo("cp_notifications:subtype:name:thewire", $language_preference);
+			$content_title = elgg_echo("cp_notifications:subtype:name:thewire", array(), $language_preference);
 			$author = $content_array['content_author'];
 
 			$url = "<a href='{$content_array['content_url']}'>{$content_title}</a>";
@@ -745,7 +745,7 @@ function render_contents($content_array, $heading = '', $language_preference = '
 		$url = "<a href='{$content_array['content_url']}'>{$content_title}</a>";
 		$rendered_content = elgg_echo("cp_notifications:mail_body:subtype:{$heading}", array($author, $subtype, $url), $language_preference);
 	} elseif ($content_array['subtype'] === 'thewire' && $heading !== 'likes') {
-		$url = elgg_echo('cp_notifications:subtype:name:thewire', $language_preference)." : <a href='{$content_array['content_url']}'>".$content_array['content_description']."</a>";
+		$url = elgg_echo('cp_notifications:subtype:name:thewire', array(), $language_preference)." : <a href='{$content_array['content_url']}'>".$content_array['content_description']."</a>";
 		$rendered_content = elgg_echo("cp_notifications:mail_body:subtype:{$content_array['subtype']}", array($author, $url), $language_preference);
 	} elseif (strcmp($heading, "likes") === 0) {
 		$url = "<a href='{$content_array['content_url']}'>{$content_title}</a>";

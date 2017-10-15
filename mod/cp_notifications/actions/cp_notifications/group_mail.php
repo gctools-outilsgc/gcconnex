@@ -41,7 +41,7 @@ if (!empty($group_guid) && !empty($body) && !empty($user_guids)) {
 
 				// send notification...
 				foreach ($user_guids as $guid) {
-					notify_user($guid, $group->getGUID(), $subject, $body, null, "email");
+					notify_user($guid, $group->getGUID(), $subject, $body, array(), "email");
 				}
 			}
 
