@@ -1,7 +1,7 @@
 <?php
 /**
  * Enable all users' group content subscriptions
- * 
+ *
  * Run for 2 seconds per request as set by $batch_run_time_in_secs. This includes
  * the engine loading time.
  */
@@ -35,7 +35,7 @@ $error_count = 0;
 do {
 	$user_guids = get_data("SELECT u.guid as guid, md.id as mid, md.time_created as m_time from {$db_prefix}users_entity u LEFT JOIN {$db_prefix}metadata md ON u.guid = md.entity_guid
 		WHERE md.name_id = {$str_id}
-		ORDER BY u.guid DESC 
+		ORDER BY u.guid DESC
 		LIMIT {$offset}, {$limit}");
 
 	if (!$user_guids) {
@@ -44,30 +44,28 @@ do {
 	}
 
 	// Subscribe users to all the content in their groups
-	foreach ( $user_guids as $user_guid ) {
-		$user = get_user( $user_guid->guid );
+	foreach ($user_guids as $user_guid) {
+		$user = get_user($user_guid->guid);
 
 		// get upper and lower bounds on when this user was processed by the original script
 		$time_upper = $user_guid->m_time;
 		$time_lower = $time_upper - 2;
 
 		// get subscription relationships created for this user within this time range
-		$relationships = get_data( "SELECT id FROM {$db_prefix}entity_relationships 
+		$relationships = get_data("SELECT id FROM {$db_prefix}entity_relationships
 			WHERE guid_one = {$user_guid->guid} AND ( relationship = 'cp_subscribed_to_email' OR relationship = 'cp_subscribed_to_site_mail' )
-			AND time_created > {$time_lower} AND time_created <= {$time_upper}" );
-		
-		foreach ( $relationships as $relationship ) {
+			AND time_created > {$time_lower} AND time_created <= {$time_upper}");
+
+		foreach ($relationships as $relationship) {
 			$id = $relationship->id;
 			if ($id) {
 				delete_relationship($id);
-			}
-
-			else {
-				register_error( "error processing subscription to a group for user " . $user->getGUID() );
+			} else {
+				register_error("error processing subscription to a group for user " . $user->getGUID());
 				$error_count++;
 			}
 		}
-		
+
 		elgg_delete_metadata_by_id($user_guid->mid);
 		$success_count++;
 	}
@@ -85,8 +83,7 @@ if (!$user_guids) {
 		'numErrors' => $error_count,
 		'processComplete' => true,
 	));
-}
-else{
+} else {
 	// Give some feedback for the UI
 	echo json_encode(array(
 		'numSuccess' => $success_count,

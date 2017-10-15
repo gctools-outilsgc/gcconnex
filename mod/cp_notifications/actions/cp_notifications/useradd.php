@@ -33,7 +33,7 @@ if (strcmp($password, $password2) != 0) {
 
 // For now, just try and register the user
 try {
-	$guid = register_user($username, $password, $name, $email, TRUE);
+	$guid = register_user($username, $password, $name, $email, true);
 
 	if ($guid) {
 		$new_user = get_entity($guid);
@@ -43,8 +43,8 @@ try {
 
 		elgg_clear_sticky_form('useradd');
 
-		$new_user->admin_created = TRUE;
-		// @todo ugh, saving a guid as metadata!
+		$new_user->admin_created = true;
+		// @TODO ugh, saving a guid as metadata!
 		$new_user->created_by_guid = elgg_get_logged_in_user_guid();
 
 		$subject = elgg_echo('useradd:subject', array(), $new_user->language);
@@ -65,9 +65,9 @@ try {
 				'cp_site_url' => elgg_get_site_entity()->url,
 				'cp_username' => $username,
 				'cp_password' => $password,
-				'cp_user' => $new_user, 
+				'cp_user' => $new_user,
 			);
-			$result = elgg_trigger_plugin_hook('cp_overwrite_notification','all',$message);
+			$result = elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
 		} else {
 			notify_user($new_user->guid, elgg_get_site_entity()->guid, $subject, $body);
 		}

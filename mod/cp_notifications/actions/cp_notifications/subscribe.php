@@ -3,7 +3,7 @@
 /*
  * .../actions/cp_notifications/subscribe.php
  *
- * subscription action file, allows users to subscribe to a specific content 
+ * subscription action file, allows users to subscribe to a specific content
  *
  */
 

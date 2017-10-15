@@ -1,14 +1,12 @@
-<?php
-
 /*
  * CSS styles for the tables in the Notifications settings in User Settings page
  */
 
-?>
-
-
-.cpn_notify_table_email {
-    border-collapse: collapse;
-    border: 1px solid black;
+.cpn_notify_table_email
+{
     width: 100%;
+
+    border-collapse: collapse;
+
+    border: 1px solid black;
 }
