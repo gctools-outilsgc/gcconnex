@@ -92,8 +92,8 @@ function create_relationship($user, $content)
 
 
 /**
- * @param 	$user_guid user's guid
- * @return 	query for all the content that the user is associated with
+ * @param	string 	$user_guid user's guid
+ * @return	string 	query for all the content that the user is associated with
  */
 function get_content($user_guid)
 {

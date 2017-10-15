@@ -125,7 +125,7 @@ function cp_notifications_init()
  * @param mixed  $value   The current value of the plugin hook
  * @param mixed  $params  Data passed from the trigger
  *
- * @return mixed if not null, this will be the new value of the plugin hook
+ * @return boolean if not null, this will be the new value of the plugin hook
  */
 function minor_save_hook_handler($hook, $type, $value, $params)
 {
@@ -525,7 +525,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params)
 /**
  * returns the headers for ical
  *
- * @param string 		$type_event
+ * @param string 		$event_type
  * @param ElggObject 	$event
  * @param string 		$start_date
  * @param string 		$end_date
@@ -538,45 +538,45 @@ function cp_ical_headers($event_type, $event, $start_date, $end_date)
 
 	$ical = "
 	BEGIN:VCALENDAR \r\n
-    PRODID:-//Microsoft Corporation//Outlook 10.0 MIMEDIR//EN \r\n
-    VERSION:2.0 \r\n
-    METHOD: {$type_event} \r\n
-    BEGIN:VTIMEZONE \r\n
-    TZID:Eastern Time \r\n
-    BEGIN:STANDARD \r\n
-    DTSTART:20091101T020000 \r\n
-    RRULE:FREQ=YEARLY;INTERVAL=1;BYDAY=1SU;BYMONTH=11 \r\n
-    TZOFFSETFROM:-0400 \r\n
-    TZOFFSETTO:-0500 \r\n
-    TZNAME:EST \r\n
-    END:STANDARD \r\n
-    BEGIN:DAYLIGHT \r\n
-    DTSTART:20090301T020000 \r\n
-    RRULE:FREQ=YEARLY;INTERVAL=1;BYDAY=2SU;BYMONTH=3 \r\n
-    TZOFFSETFROM:-0500 \r\n
-    TZOFFSETTO:-0400 \r\n
-    TZNAME:EDST \r\n
-    END:DAYLIGHT \r\n
-    END:VTIMEZONE \r\n
-    BEGIN:VEVENT \r\n
-    LAST-MODIFIED: {$current_date} \r\n
-    UID: {$event->guid} \r\n
-    DTSTAMP:  \r\n
-    DTSTART;TZID='Eastern Time': {$start_date} \r\n
-    DTEND;TZID='Eastern Time': {$end_date} \r\n
-    TRANSP:OPAQUE \r\n
-    SEQUENCE:1 \r\n
+	PRODID:-//Microsoft Corporation//Outlook 10.0 MIMEDIR//EN \r\n
+	VERSION:2.0 \r\n
+	METHOD: {$event_type} \r\n
+	BEGIN:VTIMEZONE \r\n
+	TZID:Eastern Time \r\n
+	BEGIN:STANDARD \r\n
+	DTSTART:20091101T020000 \r\n
+	RRULE:FREQ=YEARLY;INTERVAL=1;BYDAY=1SU;BYMONTH=11 \r\n
+	TZOFFSETFROM:-0400 \r\n
+	TZOFFSETTO:-0500 \r\n
+	TZNAME:EST \r\n
+	END:STANDARD \r\n
+	BEGIN:DAYLIGHT \r\n
+	DTSTART:20090301T020000 \r\n
+	RRULE:FREQ=YEARLY;INTERVAL=1;BYDAY=2SU;BYMONTH=3 \r\n
+	TZOFFSETFROM:-0500 \r\n
+	TZOFFSETTO:-0400 \r\n
+	TZNAME:EDST \r\n
+	END:DAYLIGHT \r\n
+	END:VTIMEZONE \r\n
+	BEGIN:VEVENT \r\n
+	LAST-MODIFIED: {$current_date} \r\n
+	UID: {$event->guid} \r\n
+	DTSTAMP:  \r\n
+	DTSTART;TZID='Eastern Time': {$start_date} \r\n
+	DTEND;TZID='Eastern Time': {$end_date} \r\n
+	TRANSP:OPAQUE \r\n
+	SEQUENCE:1 \r\n
 	SUMMARY: {$event->title} \r\n
 	LOCATION: {$event->venue} \r\n
-    CLASS:PUBLIC \r\n
-    PRIORITY:5 \r\n
-    BEGIN:VALARM \r\n
-    TRIGGER:-PT15M \r\n
-    ACTION:DISPLAY \r\n
-    DESCRIPTION:Reminder \r\n
-    END:VALARM \r\n
-    END:VEVENT \r\n
-    END:VCALENDAR \r\n";
+	CLASS:PUBLIC \r\n
+	PRIORITY:5 \r\n
+	BEGIN:VALARM \r\n
+	TRIGGER:-PT15M \r\n
+	ACTION:DISPLAY \r\n
+	DESCRIPTION:Reminder \r\n
+	END:VALARM \r\n
+	END:VEVENT \r\n
+	END:VCALENDAR \r\n";
 
 	return $ical;
 }
@@ -1337,6 +1337,9 @@ function cp_create_notification($event, $type, $object)
 }
 
 
+/**
+ * @param string $error_message
+ */
 function notification_logging($error_message)
 {
 	// logging mechanism
@@ -1388,10 +1391,10 @@ function get_site_subscribers($dbprefix, $user_guid, $entity_guid = '')
  * get users who are subscribed to digest
  * run crontab, retrieve users, send digest, reset timer (update timestamp)
  *
- * @param string $hook    The name of the plugin hook
- * @param string $type    The type of the plugin hook
- * @param mixed  $value   The current value of the plugin hook
- * @param mixed  $params  Data passed from the trigger
+ * @param string	$hook			The name of the plugin hook
+ * @param string	$entity_type	The type of the plugin hook
+ * @param mixed		$return_value	The current value of the plugin hook
+ * @param mixed		$params 		Data passed from the trigger
  */
 function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $params)
 {
@@ -1660,10 +1663,10 @@ function cp_membership_request($event, $type, $object)
 /**
  * intercepts all email and stops emails from sending
  *
- * @param string $hook    The name of the plugin hook
- * @param string $type    The type of the plugin hook
- * @param mixed  $value   The current value of the plugin hook
- * @param mixed  $params  Data passed from the trigger
+ * @param string	$hook			The name of the plugin hook
+ * @param string	$type			The type of the plugin hook
+ * @param mixed		$notification	The current value of the plugin hook
+ * @param mixed		$params			Data passed from the trigger
  */
 function cpn_email_handler_hook($hook, $type, $notification, $params)
 {
@@ -1675,10 +1678,10 @@ function cpn_email_handler_hook($hook, $type, $notification, $params)
  * implements the icons (likes, in this case) within the context of the entity
  * TODO: make the likes button act as AJAX
  *
- * @param string $hook    The name of the plugin hook
- * @param string $type    The type of the plugin hook
- * @param mixed  $value   The current value of the plugin hook
- * @param mixed  $params  Data passed from the trigger
+ * @param string	$hook	The name of the plugin hook
+ * @param string	$type	The type of the plugin hook
+ * @param mixed		$return	The current value of the plugin hook
+ * @param mixed		$params	Data passed from the trigger
  *
  * @return mixed if not null, this will be the new value of the plugin hook
  */

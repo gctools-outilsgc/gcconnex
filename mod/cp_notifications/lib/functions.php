@@ -6,6 +6,7 @@
  * @param integer 	$entity_guid_static
  * @param integer 	$entity_guid
  *
+ * @return integer
  */
 function get_forum_in_group($entity_guid_static, $entity_guid)
 {
@@ -165,12 +166,12 @@ function isJson($string)
 /**
  * assembles the digest then encodes the array into JSON to be saved to digest_notification table
  *
- * @param ElggUser 		$invoked_by
- * @param string 		$subtype
- * @param ElggEntity 	$entity
- * @param ElggUser 		$send_to
- * @param string 		$entity_url (default value empty)
- * @return Success 		true/false
+ * @param	ElggUser 	$invoked_by
+ * @param	string 		$subtype
+ * @param	ElggEntity 	$entity
+ * @param	ElggUser 	$send_to
+ * @param	string 		$entity_url (default value empty)
+ * @return	boolean 	Sucess
  */
 function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '')
 {
