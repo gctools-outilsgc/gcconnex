@@ -85,6 +85,7 @@ if ($title_link) {
     	if( $entity->getSubtype() == 'file'){
        echo "<h2 class=\"mrgn-bttm-0 summary-title file-$entity->guid\">$title_link</h2>";
 
+    	}elseif( $entity->getSubtype() == 'folder'){
        echo "<h2 class=\"mrgn-bttm-0 summary-title folder-$entity->guid\">$title_link</h2>";
 
     	}else{
