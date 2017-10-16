@@ -48,7 +48,6 @@ if($info['http_code'] == 201) {
   system_message(elgg_echo('freshdesk:ticket:submit:confirmed'));
   elgg_clear_sticky_form('ticket-submit');
 } else {
-  error_log('freshdesk debug -> '.$response);
   register_error(elgg_echo('freshdesk:ticket:submit:denied').$info['http_code']);
 }
 

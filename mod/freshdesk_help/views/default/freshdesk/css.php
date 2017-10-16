@@ -45,6 +45,10 @@
   margin:5px 0;
 }
 
+select.error {
+    border: 1px solid #d3080c;
+}
+
 .folders {
   list-style: none;
 }

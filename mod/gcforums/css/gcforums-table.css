@@ -1,5 +1,10 @@
 
 
+.administrative-topic-tool {
+    border: 2px solid #ff0000;
+    padding: 12px 5px 12px 5px;
+}
+
 .category-main-box {
 
     border: 1px solid #ddd;

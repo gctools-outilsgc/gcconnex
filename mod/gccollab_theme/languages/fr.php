@@ -49,7 +49,7 @@ return array(
   'wet:login_engage_3'=>"Promouvoir les activités GC à l'échelle du gouvernement.",
   'wet:login_welcome'=>'Welcome to GCcollab',
   'wet:jobs:link' => 'emplois.gc.ca <i class="fa fa-external-link mrgn-lft-sm"></i>',
-  'wet:jobs:href' => "http://jobs-emplois.gc.ca/index-fra.htm",
+  'wet:jobs:href' => "https://www.canada.ca/fr/services/emplois/opportunites/gouvernement.html",
   'wet:marketplace:link' => "Carrefour d'emploi",
   'wet:marketplace:href' => elgg_get_site_url() . "groups/profile/6161",
   'wet:login:departments'=>"<span class=\"login-big-num\">174</span> Organizations de toutes les regions du Canada",
@@ -212,4 +212,5 @@ J'espère d'avoir l'occasion de discuter avec vous bientôt!",
   'img:desc:en' => 'Description de l\'image en anglais',
   'description:ideas:en' => 'Description de l\'idée en anglais',
   'description:ideas:fr' => 'Description de l\'idée en français',
+  'comment_notif_description' => "<p>Vous n'êtes pas membre de ce groupe. Joignez-vous au groupe pour être informé lorsque du nouveau contenu est ajouté et pour suivre ce fil. Remarque: Vous pouvez ajuster vos préférences de notification dans vos paramètres de compte de GCcollab.</p><p>Vous n’êtes pas encore prêt à joindre le groupe? Allez-y et affichez votre commentaire, mais n'oubliez pas de revenir vérifier ce fil pour voir les nouveaux commentaires affichés.</p>"
 );

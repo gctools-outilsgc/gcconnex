@@ -555,6 +555,7 @@ return array(
     'groups:feature' => 'Featured',
     'groups:popular' => 'Popular',
     'groups:suggested' => 'Suggested',
+    'groups_tools:related_groups:tool_option' => "Enable related groups", 
 /**
  * Users
  */

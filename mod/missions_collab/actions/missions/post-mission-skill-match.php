@@ -52,6 +52,7 @@ $typemap = array(
     /* MW - Added for GCcollab only */
 	'missions:casual'	=>	'opt_in_casual_seek',
 	'missions:student'	=>	'opt_in_student_seek',
+	'missions:collaboration'	=>	'opt_in_collaboration_seek',
 );
 
 $dbprefix = elgg_get_config('dbprefix');

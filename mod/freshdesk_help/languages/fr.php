@@ -16,10 +16,21 @@ return array(
   'freshdesk:ticket:title' => "Soumettre un billet",
   'freshdesk:ticket:email' => "Courriel",
   'freshdesk:ticket:subject' => "Objet",
+  'freshdesk:ticket:type' => "Type",
   'freshdesk:ticket:attachment' => "Pièce jointe",
   'freshdesk:ticket:description' => "Description",
   'freshdesk:ticket:submit:confirmed' => "Votre billet a été soumis.",
   'freshdesk:ticket:submit:denied' => "Un problème est survenu; veuillez réessayer plus tard.",
+
+  'freshdesk:ticket:types:null' => "...",
+  'freshdesk:ticket:types:login' => "Identifiants de connexions",
+  'freshdesk:ticket:types:bugs' => "Bogues/erreurs",
+  'freshdesk:ticket:types:group' => "Relatif aux groupes",
+  'freshdesk:ticket:types:training' => "Formation",
+  'freshdesk:ticket:types:jobs' => "Carrefour d'emploi",
+  'freshdesk:ticket:types:enhancement' => "Amélioration",
+  'freshdesk:ticket:types:flag' => "Signaler un contenu ou comportement",
+  'freshdesk:ticket:types:other' => "Autres",
 
   'freshdesk:knowledge:search:info:embed' => 'Recherche dans notre base de connaissances pour trouver les renseignements que vous cherchez. Pour obtenir de plus amples renseignements, veuillez visiter notre <a href="https://gcpedia.gctools-outilsgc.ca/fr/support/home">Support Accueil</a>.',
 

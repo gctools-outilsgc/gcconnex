@@ -11,6 +11,7 @@ return array(
     "missions:shadowing" => "Observation au poste de travail",
     "missions:casual" => "Emploi occasionnel",
     "missions:student" => "Intégration des étudiants",
+    "missions:collaboration" => "Collaboration",
     
     "missions:your_department" =>	"Votre organisation, agence ou département",
     "missions:application_paragraph" =>	"Veuillez rédiger le message que vous souhaitez envoyer à ce créateur de possibilités.",

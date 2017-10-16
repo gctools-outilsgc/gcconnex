@@ -36,30 +36,32 @@ function mm_api_secure() {
   }
 
   # Ensure API has full access
-
   session_destroy();
   elgg_set_ignore_access(true);
+
+  # Increase the script timeout value
+  set_time_limit(14400);
 }
 
 /**
-* Based on the URL of the API call, collect the GUIDs of all interesting
-* entities.
-*
-* Supported query parameters:
-* - int since: Fetch objects that have been modified since the specified time*.
-* - int before: Fetch obhects that have been modified before the specified time*.
-* - int limit: Fetch at most X entities.
-* * times are expressed as UNIX timestamps.
+* Generator that finds the GUIDs of the entities defined by the search critera.
 *
 * @param str $type Desired entity type.  (object, user)
 * @param str $subtype Desired subtype.  (mission)
 * @param int $guid GUID of single object, for single entity fetch.
+* @param int $since: Fetch objects that have been modified since the specified time
+* @param int $before: Fetch obhects that have been modified before the specified time
+* @param int $limit: Fetch at most X entities.
+* @param int $resume: Resume starting at the specified GUID.
 *
-* @return mixed[] Returns array with guids at index 0 and fields at index 1.
+* @return Generator[] Guid iterable
 */
-function mm_api_get_entity_guids($type, $subtype = false, $guid = null) {
-
-  $where = array('a.type = "' . mysql_escape_string($type) . '"');
+function mm_api_get_entity_guids($type, $subtype = false, $guid = null,
+$since = null, $before = null, $limit = null, $resume = null, $sort = false) {
+  $where = ['a.enabled = "yes"'];
+  if ($type !== 'export') {
+    $where[] = 'a.type = "' . mysql_escape_string($type) . '"';
+  }
   if ($subtype !== false) {
     $subtype_id = get_data("select id from ".elgg_get_config('dbprefix')."entity_subtypes where subtype = '$subtype'")[0]->id;
     $where[] = 'a.subtype = ' . $subtype_id;
@@ -68,38 +70,49 @@ function mm_api_get_entity_guids($type, $subtype = false, $guid = null) {
   if (!is_null($guid) && is_numeric($guid)) {
     $where[] = 'a.guid = ' . mysql_escape_string(intval($guid));
   }
-  if (isset($_GET['since']) && is_numeric($_GET['since'])) {
-    $where[] = 'a.time_updated > ' . mysql_escape_string($_GET['since']);
+  if (is_numeric($since)) {
+    $where[] = 'a.time_updated > ' . mysql_escape_string($since);
   }
-  if (isset($_GET['before']) && is_numeric($_GET['before'])) {
-    $where[] = 'a.time_updated < ' . mysql_escape_string($_GET['before']);
+  if (is_numeric($before)) {
+    $where[] = 'a.time_updated < ' . mysql_escape_string($before);
   }
 
-  $limit = '';
-  if (isset($_GET['limit']) && is_numeric($_GET['limit'])) {
-    $limit = 'LIMIT ' . mysql_escape_string($_GET['limit']);
+  $limit_sql = '';
+  if (is_numeric($limit)) {
+    $limit_sql = 'LIMIT ' . mysql_escape_string($limit);
+  }
+  $where_sql = '';
+  if (count($where) > 0) {
+    $where_sql = 'WHERE ' . implode(' AND ', $where);
+  }
+  if ($sort) {
+    $sort_sql = 'ORDER BY a.time_updated ASC';
   }
   try {
-    $guids = get_data('
-      SELECT
-        a.guid
-      FROM
-        '.elgg_get_config('dbprefix').'entities a
-      WHERE ' . implode(' AND ', $where) . '
-      ORDER BY
-        a.time_updated ASC
-      ' . $limit);
-    return array(
-      $guids,
-      mm_api_get_entity_fields(
-        (object) array(
-          'type'=>$type,
-          'subtype'=>$subtype_id
-        )
-      )
-    );
+    $sql = '
+    SELECT
+      a.guid
+    FROM
+      '.elgg_get_config('dbprefix').'entities a
+    ' . $where_sql . '
+    ' . $sort_sql . '
+    ' . $limit_sql;
+
+    $result = mysql_query($sql, _elgg_services()->db->getLink('read'));
+    yield mysql_num_rows($result);
+    $emit = !is_numeric($resume);
+    while ($row = mysql_fetch_object($result)) {
+      if ($emit) {
+        yield $row->guid;
+      }
+      if (!$emit) {
+        if ($row->guid == $resume) {
+          $emit = true;
+        }
+      }
+    }
   } catch (Exception $e) {
-    return array();
+    //
   }
 }
 
@@ -107,175 +120,85 @@ function mm_api_get_entity_guids($type, $subtype = false, $guid = null) {
 * Iterate over list of GUIDs and yields the complete object as a row.
 *
 * @param mixed $entity_guids Array of entity GUIDs
-* @param mixed $fields Array of entity fields to query
-* @param int $limit Maximum amount of entities to process.
 */
-function mm_api_entity_export($entity_guids, $fields, $limit) {
-  global $meta_fields;
-  $c = 0;
+function mm_api_entity_export($entity_guids) {
+  function exportEntity($entity_or_guid) {
+    if (is_object($entity_or_guid)) {
+      $entity = $entity_or_guid;
+    } else {
+      $entity = get_entity($entity_or_guid);
+      if (!is_object($entity)) {
+        $ret = new \stdClass;
+        $ret->guid = $entity_or_guid;
+        $ret->__error__ = 'Not found';
+        return $ret;
+      }
+    }
+    $ret = new \stdClass;
+    $exportable_values = $entity->getExportableValues();
+    foreach ($exportable_values as $v) {
+      $ret->$v = $entity->$v;
+    }
+    $ret->url = $entity->getURL();
+    $ret->subtype_name = $entity->getSubtype();
+    return $ret;
+  }
+
+  $skipped_counter = false;
   foreach ($entity_guids as $uguid) {
-    $c++;
-    if ($c > $limit) break;
-    if ($object = get_entity($uguid->guid)) {
-      $u = [];
-      foreach ($object as $key=>$value) {
-        if (!in_array($key, array('password', 'password_hash', 'salt'))) {
-          $u[$key] = $value;
+    if (!$skipped_counter) {
+      $skipped_counter = true;
+      continue;
+    }
+    if ($object = get_entity($uguid)) {
+      $options = array(
+        'guid' => $object->guid,
+        'limit' => 0
+      );
+
+      $metadata = elgg_get_metadata($options);
+      $annotations = elgg_get_annotations($options);
+      $relationships = get_entity_relationships($object->guid);
+      $relationships2 = get_entity_relationships($object->guid, true);
+
+      $data = exportEntity($object);
+
+      if ($metadata) {
+        foreach ($metadata as $v) {
+          $prop = $v->name;
+          $data->$prop = $v->value;
         }
       }
-      foreach ($fields as $field) {
-        $f = $field->string;
-        if (in_array($f, $meta_fields)) {
-          $u[$f] = mm_api_get_field_value($object->$f);
-        } else {
-          $u[$f] = $object->$f;
+      if ($annotations) {
+        foreach ($annotations as $v) {
+          $data->annotations[$v->name] = $v->value;
         }
       }
-    }
-    $u['relationships'] = array();
-    $relationships = get_entity_relationships($u['guid']);
-    foreach ($relationships as $rel) {
-      if ($entity_name = mm_api_get_entity_type($rel->guid_two)) {
-        $u['relationships'][] = array(
-          'direction' => 'OUT',
-          'time_created' => $rel->time_created,
-          'id' => $rel->id,
-          $entity_name => $rel->guid_two,
-          'relationship' => $rel->relationship,
-        );
+      if ($relationships) {
+        foreach ($relationships as $v) {
+          $data->relationships[] = array(
+            'direction' => 'OUT',
+            'time_created' => $v->time_created,
+            'id' => $v->id,
+            'entity' => exportEntity($v->guid_two),
+            'relationship' => $v->relationship,
+          );
+        }
       }
-    }
-    $relationships = get_entity_relationships($u['guid'], true);
-    foreach ($relationships as $rel) {
-      if ($entity_name = mm_api_get_entity_type($rel->guid_one)) {
-        $u['relationships'][] = array(
-          'direction' => 'IN',
-          'time_created' => $rel->time_created,
-          'id' => $rel->id,
-          $entity_name => $rel->guid_one,
-          'relationship' => $rel->relationship,
-        );
+      if ($relationships2) {
+        foreach ($relationships2 as $v) {
+          $data->relationships[] = array(
+            'direction' => 'IN',
+            'time_created' => $v->time_created,
+            'id' => $v->id,
+            'entity' => exportEntity($v->guid_one),
+            'relationship' => $v->relationship,
+          );
+        }
       }
+      yield [ 'object' => $object, 'export' => $data ];
     }
-    yield array($u, ($c < $limit));
- }
-}
-
-/**
-* Convert the supplied $value to a format suitable for export.
-*
-* @param mixed $value Value to process
-* @return mixed Scalar or array of data processed by mm_api_load_field
-*/
-function mm_api_get_field_value($value) {
-  if (is_array($value)) {
-    $ret = array();
-    foreach ($value as $v) {
-      $ret[] = mm_api_load_field($v);
-    }
-    return $ret;
-  } else {
-    return mm_api_load_field($value);
   }
-}
-
-/**
-* If the supplied string is a GUID, return an entity representation, otherwise
-* return as-is.
-*
-* @param mixed $guid Scalar value representing either another entity, or not.
-* @return mixed Returns either an entity representation of $guid, or $guid.
-*/
-function mm_api_load_field($guid) {
-  global $meta_fields;
-
-  if (!is_numeric($guid)) return $guid;
-
-  if ($obj = get_entity($guid)) {
-    $ret = [];
-    foreach ($obj as $key=>$value) {
-      $ret[$key] = $value;
-    }
-    $objfields = mm_api_get_entity_fields($obj);
-    foreach ($objfields as $field) {
-      $f = $field->string;
-      if (in_array($f, $meta_fields)) {
-        $ret[$f] = mm_api_get_field_value($obj->$f);
-      } else {
-        $ret[$f] = $obj->$f;
-      }
-    }
-    return $ret;
-  }
-  return $guid;
-}
-
-/**
-* Determine all field names available for given entity.
-*
-* @param object $entity Elgg entity object
-* @return mixed Array of field names
-*/
-function mm_api_get_entity_fields($entity) {
-
-  $where = array();
-  $where[]  = "b.type = '{$entity->type}'";
-  $where[] = "b.subtype = {$entity->subtype}";
-  if (isset($_GET['since']) && is_numeric($_GET['since'])) {
-    $where[] = 'b.time_updated > ' . mysql_escape_string($_GET['since']);
-  }
-  if (isset($_GET['before']) && is_numeric($_GET['before'])) {
-    $where[] = 'b.time_updated < ' . mysql_escape_string($_GET['before']);
-  }
-
-  $field_id_sql = "
-    SELECT
-      DISTINCT name_id
-    FROM
-      ".elgg_get_config('dbprefix')."metadata a
-      INNER JOIN ".elgg_get_config('dbprefix')."entities b ON a.entity_guid = b.guid
-    WHERE
-      ". implode(' AND ', $where);
-  $field_ids_res = get_data($field_id_sql);
-  $field_ids = array(-1);
-  foreach ($field_ids_res as $fir) $field_ids[] = $fir->name_id;
-  $field_query_sql = "
-    SELECT
-      a.id,
-      a.string
-    FROM
-      ".elgg_get_config('dbprefix')."metastrings a
-    WHERE
-      a.id IN (" . implode(',', $field_ids) .")
-  ";
-
-  $fields = get_data($field_query_sql);
-  return $fields;
-}
-
-/**
-* Determines if the supplied guid is an opportunity or a user.
-*
-* @param int $guid
-* @return str 'opportunity', 'user' or null
-*/
-function mm_api_get_entity_type($guid) {
-  $e = get_entity($guid);
-  if (elgg_instanceof($e, 'object', 'mission')) {
-    return 'opportunity';
-  } else if (elgg_instanceof($e, 'user')) {
-    return 'user';
-  }
-}
-
-/**
-* Get a list of all object subtypes registered in the system.
-*
-* @return mixed Array of subtypes
-*/
-function mm_api_get_subtypes() {
-    $query = "select subtype from ".elgg_get_config('dbprefix')."entity_subtypes where type = \"object\"";
-    return get_data($query);
 }
 
 // Public key of server authorized to make requests against this API.

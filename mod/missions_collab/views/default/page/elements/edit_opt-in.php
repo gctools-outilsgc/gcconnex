@@ -244,6 +244,31 @@ if (elgg_is_xhr) {
                     </li>
                 </ul>
             </li>
+            <li class="clearfix">
+                <?php echo elgg_echo('missions:collaboration'); ?>
+                <ul class="brdr-lft clearfix mrgn-lft-md list-unstyled">
+                    <li class="clearfix pull-left mrgn-lft-md">
+                        <?php
+                            echo elgg_view("input/checkbox", array(
+                                'name' => 'collaborationseek_check',
+                                'checked' => true,
+                                'id' => 'gcconnex-opt-in-collaborationseek-check',
+                                'label' => elgg_echo('gcconnex_profile:opt:seeking') 
+                            ));
+                        ?>
+                    </li>
+                    <li class="clearfix pull-left mrgn-lft-md">
+                        <?php
+                            echo elgg_view("input/checkbox", array(
+                                'name' => 'collaborationcreate_check',
+                                'checked' => true,
+                                'id' => 'gcconnex-opt-in-collaborationcreate-check',
+                                'label' => elgg_echo('gcconnex_profile:opt:offering')
+                            ));
+                        ?>
+                    </li>
+                </ul>
+            </li>
 
             <?php /* MW - Changed for GCcollab version of Opp Platform
             <li class="clearfix">

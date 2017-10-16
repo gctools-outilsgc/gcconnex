@@ -320,13 +320,7 @@ function _elgg_user_settings_menu_setup() {
 		'section' => 'configure',
 	);
 	elgg_register_menu_item('page', $params);
-	$params = array(
-		'name' => '1_plugins',
-		'text' => elgg_echo('usersettings:plugins:opt:linktext'),
-		'href' => '#',
-		'section' => 'configure',
-	);
-	elgg_register_menu_item('page', $params);
+
 	$params = array(
 		'name' => '1_statistics',
 		'text' => elgg_echo('usersettings:statistics:opt:linktext'),

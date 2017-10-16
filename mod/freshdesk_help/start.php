@@ -2,6 +2,7 @@
 elgg_register_event_handler('init', 'system', 'freshdesk_help_init');
 
 function freshdesk_help_init() {
+    elgg_unregister_plugin_hook_handler('output:before', 'page', '_elgg_views_send_header_x_frame_options');
 
     elgg_register_page_handler('help', 'help_page_handler');
 

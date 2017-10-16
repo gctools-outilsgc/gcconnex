@@ -86,7 +86,9 @@ else {
                             elgg_echo('gcconnex_profile:opt:casual_seek'),
                             elgg_echo('gcconnex_profile:opt:casual_create'),
                             elgg_echo('gcconnex_profile:opt:student_seek'),
-                            elgg_echo('gcconnex_profile:opt:student_create')
+                            elgg_echo('gcconnex_profile:opt:student_create'),
+                            elgg_echo('gcconnex_profile:opt:collaboration_seek'),
+                            elgg_echo('gcconnex_profile:opt:collaboration_create')
         			)
         	));
         	break;

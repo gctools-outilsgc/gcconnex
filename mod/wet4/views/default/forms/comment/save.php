@@ -153,7 +153,7 @@ FORM;
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
      <?php
-     echo '<h4 class="modal-title" id="myModalLabel">'.elgg_echo("comment_notif_title",array($container->getDisplayName())).'</h4>
+     echo '<h4 class="modal-title" id="myModalLabel">'.elgg_echo("comment_notif_title",array(gc_explode_translation($container->getDisplayName(), get_current_language()))).'</h4>
       </div>
       <div class="modal-body">
      '.elgg_echo("comment_notif_description").'

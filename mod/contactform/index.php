@@ -1,7 +1,9 @@
 <?php
 // Load Elgg engine
 include_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
-
+if(elgg_is_active_plugin('freshdesk_help')){
+  forward('help/knowledgebase');
+}
 // make sure only logged in users can see this page, if configured
 $loginreq=elgg_get_plugin_setting('loginreq','contactform');
 if( $loginreq == "yes" ) { gatekeeper(); }

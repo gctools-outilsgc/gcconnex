@@ -43,7 +43,7 @@ $english = array(
     'gcconnex_profile:basic:college' => 'College: ',
     'gcconnex_profile:basic:highschool' => 'High School: ',
     'gcconnex_profile:basic:provincial' => 'Province/Territory: ',
-    'gcconnex_profile:basic:municipal' => 'Organization: ',
+    'gcconnex_profile:basic:municipal' => 'City: ',
     'gcconnex_profile:basic:international' => 'Organization: ',
     'gcconnex_profile:basic:ngo' => 'Organization: ',
     'gcconnex_profile:basic:community' => 'Organization: ',
@@ -96,6 +96,8 @@ $english = array(
     'gcconnex_profile:opt:casual_create' => 'Casual Work Opportunity Creator',
     'gcconnex_profile:opt:student_seek' => 'Student Integration Seeker',
     'gcconnex_profile:opt:student_create' => 'Student Integration Opportunity Creator',
+    'gcconnex_profile:opt:collaboration_seek' => 'Collaboration Seeker',
+    'gcconnex_profile:opt:collaboration_create' => 'Collaboration Opportunity Creator',
 
     'gcconnex_profile:opt:casual_tooltip' => 'Casual workers are hired for specified periods that may not exceed 90 working days in one calendar year, in a department or in an agency to which the Public Service Commission (PSC) has exclusive authority to make appointments. The period of casual employment may be for one or more than one term, but is not to exceed 90 working days in a department or agency in a calendar year.',
     'gcconnex_profile:opt:student_tooltip' => 'Any graduate of a post-secondary program who worked as a student employee for the Federal Public Service, via FSEWP, COOP, or RAP, may be considered for integration.',
