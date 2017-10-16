@@ -7,13 +7,13 @@
 
 elgg_register_event_handler('init', 'system', 'invitefriends_init');
 
-function invitefriends_init() {
+function invitefriends_init()
+{
 	elgg_register_page_handler('invite', 'invitefriends_page_handler');
 
 	elgg_register_action('invitefriends/invite', elgg_get_plugins_path() . 'invitefriends/actions/invite.php');
 
 	elgg_register_plugin_hook_handler('register', 'user', 'invitefriends_add_friends');
-$filter_context = elgg_extract('filter_context', array(), 'all');
 	if (elgg_is_logged_in() && elgg_get_config('allow_registration')) {
 		$params = array(
 			'name' => 'invite',
@@ -24,26 +24,24 @@ $filter_context = elgg_extract('filter_context', array(), 'all');
 		elgg_register_menu_item('page', $params);
 	}
 
-    elgg_register_js("multiple-emails", "mod/invitefriends/scripts/multiple-emails.js");
-    elgg_register_css("multiple-emails", "mod/invitefriends/css/multiple-emails.css");
+	elgg_register_js("multiple-emails", "mod/invitefriends/scripts/multiple-emails.js");
+	elgg_register_css("multiple-emails", "mod/invitefriends/css/multiple-emails.css");
 }
 
 /**
  * Page handler function
- * 
+ *
  * @param array $page Page URL segments
  * @return bool
  */
-function invitefriends_page_handler($page) {
+function invitefriends_page_handler($page)
+{
 	elgg_gatekeeper();
-	
-	// GCchange - Ilia: fix colleague circles link in menu not appearing on this page
-	//collections_submenu_items();
 
 	if (!elgg_get_config('allow_registration')) {
 		return false;
 	}
-	
+
 	elgg_set_context('friends');
 	elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 
@@ -70,9 +68,9 @@ function invitefriends_page_handler($page) {
  * @param array  $params Hook params
  * @return void
  */
-function invitefriends_add_friends($hook, $type, $result, $params) {
+function invitefriends_add_friends($hook, $type, $result, $params)
+{
 	$user = $params['user'];
-	/* @var ElggUser $user */
 	$friend_guid = $params['friend_guid'];
 	$invite_code = $params['invitecode'];
 

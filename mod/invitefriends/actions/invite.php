@@ -30,12 +30,11 @@ if (elgg_is_active_plugin('gcRegistration_invitation')) {
 	elgg_trigger_plugin_hook('gcRegistration_email_invitation', 'all', $data);
 }
 
-$error = FALSE;
+$error = false;
 $bad_emails = array();
 $already_members = array();
 $sent_total = 0;
 foreach ($emails as $email) {
-
 	$email = trim($email);
 	if (empty($email)) {
 		continue;
@@ -43,13 +42,13 @@ foreach ($emails as $email) {
 
 	// send out other email addresses
 	if (!is_email_address($email)) {
-		$error = TRUE;
+		$error = true;
 		$bad_emails[] = $email;
 		continue;
 	}
 
 	if (get_user_by_email($email)) {
-		$error = TRUE;
+		$error = true;
 		$already_members[] = $email;
 		continue;
 	}
@@ -101,7 +100,6 @@ if ($error) {
 	if (count($already_members) > 0) {
 		register_error(elgg_echo('invitefriends:already_members', array(implode(', ', $already_members))));
 	}
-
 } else {
 	elgg_clear_sticky_form('invitefriends');
 	system_message(elgg_echo('invitefriends:success'));
