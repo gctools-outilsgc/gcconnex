@@ -54,7 +54,7 @@ if ($user->isBanned()) {
 	$name .= " ($banned_text)";
 }
 if($user->gcdeactivate == true){
-	$class .= ' elgg-state-banned';
+	$class .= ' gc-deactivated-avatar';
 	$gcdeactive_text = elgg_echo('member_selfdelete:gc:deactivate:avatar');
 	$name .= " ($gcdeactive_text)";
 }
