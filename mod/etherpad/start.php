@@ -35,7 +35,7 @@ function etherpad_init() {
 	elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'etherpad_container_permission_check');
 	
 	//Widget
-	elgg_register_widget_type('etherpad', elgg_echo('etherpad'), elgg_echo('etherpad:profile:widgetdesc'));
+	elgg_register_widget_type('etherpad', elgg_echo('etherpad'), elgg_echo('etherpad:profile:widgetdesc'), array("dashboard", "profile", "groups"));
 	
 	// icon url override
 	elgg_register_plugin_hook_handler('entity:icon:url', 'object', 'etherpad_icon_url_override');

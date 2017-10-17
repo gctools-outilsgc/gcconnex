@@ -16,14 +16,6 @@ elgg_register_event_handler('init', 'system', 'missions_collab_init');
  */
 function missions_collab_init()
 {
-    // Register the custom library of methods for use in the plugin
-    elgg_register_library('elgg:missions', elgg_get_plugins_path() . 'missions_collab/lib/missions.php');
-    elgg_register_library('elgg:missions-searching', elgg_get_plugins_path() . 'missions_collab/lib/missions-searching.php');
-    elgg_register_library('elgg:missions-errors', elgg_get_plugins_path() . 'missions_collab/lib/missions-errors.php');
-    elgg_load_library('elgg:missions');
-    elgg_load_library('elgg:missions-searching');
-    elgg_load_library('elgg:missions-errors');
-
     // Register a handler for page navigation.
     elgg_register_page_handler('missions', 'missions_collab_main_page_handler');
 

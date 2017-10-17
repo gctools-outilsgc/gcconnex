@@ -439,6 +439,9 @@ function mm_notify_user($recipient, $sender, $subject, $title_en,$title_fr,$body
     $email_notification_footer_en = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/notifications/{$username_link}".'?utm_source=notification&utm_medium=site'),'en');
     $email_notification_footer_fr = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/notifications/{$username_link}".'?utm_source=notification&utm_medium=site'),'fr');
 
+	$bg_color = ( strpos(elgg_get_site_entity()->name, 'collab') !== false ) ? "46246A" : "047177";
+	$accent_color = ( strpos(elgg_get_site_entity()->name, 'collab') !== false ) ? "79579D" : "055959";
+
 	$body = "<html>
 <body>
     <!-- beginning of email template -->
@@ -446,11 +449,11 @@ function mm_notify_user($recipient, $sender, $subject, $title_en,$title_fr,$body
         <div>
             <div>
 
-                <div align='center' width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 12px; color: #055959'>
+                <div align='center' width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 12px; color: {$accent_color}'>
                     {$email_notification_header}
                 </div>
 
-                <div width='100%' style='padding: 0 0 0 10px; color:#ffffff; font-family: sans-serif; font-size: 35px; line-height:38px; font-weight: bold; background-color:#047177;'>
+                <div width='100%' style='padding: 0 0 0 10px; color:#ffffff; font-family: sans-serif; font-size: 35px; line-height:38px; font-weight: bold; background-color:{$bg_color};'>
                     <span style='padding: 0 0 0 3px; font-size: 20px; color: #ffffff; font-family: sans-serif;'>GCconnex</span>
                 </div>
 
@@ -486,7 +489,7 @@ function mm_notify_user($recipient, $sender, $subject, $title_en,$title_fr,$body
 
                 <div style='height:1px; background:#bdbdbd; border-bottom:1px solid #ffffff'></div>
 
-                <div align='center' width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 16px; color: #055959'> </div>
+                <div align='center' width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 16px; color: {$accent_color}'> </div>
 
             </div>
         </div>
@@ -834,6 +837,28 @@ function check_if_opted_in($current_user) {
 	}
     if($current_user->opt_in_deployCreate == 'gcconnex_profile:opt:yes') {
 		return true;
+	}
+
+	/* MW - Added for GCcollab only */
+	if( strpos(elgg_get_site_entity()->name, 'collab') !== false ){
+		if($current_user->opt_in_casual_seek == 'gcconnex_profile:opt:yes') {
+			return true;
+		}
+		if($current_user->opt_in_casual_create == 'gcconnex_profile:opt:yes') {
+			return true;
+		}
+	    if($current_user->opt_in_student_seek == 'gcconnex_profile:opt:yes') {
+			return true;
+		}
+		if($current_user->opt_in_student_create == 'gcconnex_profile:opt:yes') {
+			return true;
+		}
+		if($current_user->opt_in_collaboration_seek == 'gcconnex_profile:opt:yes') {
+			return true;
+		}
+		if($current_user->opt_in_collaboration_create == 'gcconnex_profile:opt:yes') {
+			return true;
+		}
 	}
 
 	return false;
