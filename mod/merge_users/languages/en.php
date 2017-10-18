@@ -1,5 +1,5 @@
 <?php
 return array(
       'admin:merge_users' => "Users",
-      'admin:merge_users:merge' => "Merge",
+      'admin:users:merge_users' => "Merge",
     );

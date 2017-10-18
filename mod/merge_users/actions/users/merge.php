@@ -58,7 +58,7 @@ foreach($data as $object){
           } else if(!is_array($education)){
             $new_user->education = array($education, $object->guid);
           }
-
+          update_data("UPDATE {$db_prefix}metadata SET owner_guid = '$newGUID' where entity_guid = '$object->guid'");
           break;
         //work experience
         case $work:
@@ -72,7 +72,7 @@ foreach($data as $object){
           } else if(!is_array($experience)){
             $new_user->work = array($experience, $object->guid);
           }
-
+          update_data("UPDATE {$db_prefix}metadata SET owner_guid = '$newGUID' where entity_guid = '$object->guid'");
           break;
         //skills
         case $skill:
@@ -154,7 +154,7 @@ if($transfer_friends){
 
 }
 
-system_message('All content and groups has been transfered to '.$new_user->name.' and the account '.$old_user->name.' has been deleted '.$true);
+system_message('All content and groups has been transfered to '.$new_user->name.' and the account '.$old_user->name);
 
 //unset from old account so entities are not deleted as well
 if($transfer_profile){
