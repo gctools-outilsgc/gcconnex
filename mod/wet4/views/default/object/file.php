@@ -115,7 +115,7 @@ if ($full_view && !elgg_in_context("gallery")) {
 			elgg_push_breadcrumb($folder_title, $p->getURL());
 		}
 
-		elgg_push_breadcrumb($file->title);
+		elgg_push_breadcrumb(gc_explode_translation($file->title,$lang));
 	}
 
 	$extra = "";
@@ -139,22 +139,38 @@ if ($full_view && !elgg_in_context("gallery")) {
 
 
 
-	$text = elgg_view("output/longtext", array("value" => $file_descr ));
+	$text = elgg_view("output/longtext", array("class"=>"file","value" => $file_descr ));
 	$body = "$text $extra";
 
 	// identify available content
+	$title_json = json_decode($file->title);
 	$description_json = json_decode($file->description);
+
+
+$params_en = array(
+	'text' => elgg_get_excerpt($title_json->en, 100),
+	'href' => $file->getURL(),
+	'is_trusted' => true,
+);
+
+$params_fr = array(
+	'text' => elgg_get_excerpt($title_json->fr, 100),
+	'href' => $file->getURL(),
+	'is_trusted' => true,
+);
+
+$title_en = elgg_view('output/url', $params_en);
+$title_fr = elgg_view('output/url', $params_fr);
+
 if( $description_json->en && $description_json->fr ){
 	echo'<div id="change_language" class="change_language">';
 		if (get_current_language() == 'fr'){
 ?>			
-		<span id="indicator_language_en" onclick="change_en('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $description_json->en;?></span><span id="fr_content" class="testClass hidden" ><?php echo $description_json->fr;?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
-			
+		<span id="indicator_language_en" onclick="change_en('.file', '.title','.file-<?php echo $file->guid;?>');"><span id="fr_title" class="testClass hidden" ><?php echo $title_fr;?></span><span id="en_title" class="testClass hidden" ><?php echo $title_en;?></span><span id="en_content" class="testClass hidden" ><?php echo $description_json->en;?></span><span id="fr_content" class="testClass hidden" ><?php echo $description_json->fr;?></span><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
 		<?php
 	}else{
 		?>		
-			
-		<span id="indicator_language_fr" onclick="change_fr('.elgg-output');"><span id="en_content" class="testClass hidden" ><?php echo $description_json->en;?></span><span id="fr_content" class="testClass hidden" ><?php echo $description_json->fr;?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
+		<span id="indicator_language_fr" onclick="change_fr('.file','.title','.file-<?php echo $file->guid;?>');"><span id="fr_title" class="testClass hidden" ><?php echo $title_fr;?></span><span id="en_title" class="testClass hidden" ><?php echo $title_en;?></span><span id="en_content" class="testClass hidden" ><?php echo $description_json->en;?></span><span id="fr_content" class="testClass hidden" ><?php echo $description_json->fr;?></span><?php echo elgg_echo('box:indicator:fr') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
 		<?php	
 	}
 	echo'</div>';

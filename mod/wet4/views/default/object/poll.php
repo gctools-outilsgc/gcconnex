@@ -67,7 +67,7 @@ if (isset($vars['entity'])) {
 			$title = gc_explode_translation($poll->title,$lang);
 
 $can_vote = !polls_check_for_previous_vote($poll, $user_guid);
-
+$title_json = json_decode($poll->question);
 //Identify available content
 		foreach (polls_get_choice_array($poll) as $key ) {
 			$description_json = json_decode($key);
@@ -78,26 +78,26 @@ echo '<div class="change_language" id="change_language">';
 					if (get_current_language() == 'fr'){
 
 					?>			
-						<span id="indicator_language_en"><?php echo elgg_echo('box:indicator:en') ?><a href="#" onclick="change_language_polls('en','poll-vote-form-container-<?php echo $poll->guid; ?>');" id="activities"><?php echo elgg_echo('indicator:click:en') ?></a></span>
+						<span id="indicator_language_en" onclick="change_language_polls('en','poll-vote-form-container-<?php echo $poll->guid; ?>','.summary-title','.title','<?php echo $title_json->en; ?>');" id="activities"><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
 					<?php
 
 					}else{
 					
 					?>			
-						<span id="indicator_language_fr" ><?php echo elgg_echo('box:indicator:fr') ?><a href="#" onclick="change_language_polls('fr','poll-vote-form-container-<?php echo $poll->guid; ?>');" id="activities"><?php echo elgg_echo('indicator:click:fr') ?></a></span>
+						<span id="indicator_language_fr"  onclick="change_language_polls('fr','poll-vote-form-container-<?php echo $poll->guid; ?>','.summary-title','.title','<?php echo $title_json->fr; ?>');" id="activities"><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
 					<?php	
 					}		
 				}else{
 					if (get_current_language() == 'fr'){
 
 					?>			
-						<span id="indicator_language_en"><?php echo elgg_echo('box:indicator:en') ?><a href="#" onclick="change_language_polls('en','poll-container-<?php echo $poll->guid; ?>');" id="activities"><?php echo elgg_echo('indicator:click:en') ?></a></span>
+						<span id="indicator_language_en" onclick="change_language_polls('en','poll-container-<?php echo $poll->guid; ?>','.summary-title','.title','<?php echo $title_json->en; ?>');" id="activities"><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:en') ?></span></span>
 					<?php
 
 					}else{
 					
 					?>			
-						<span id="indicator_language_fr" ><?php echo elgg_echo('box:indicator:fr') ?><a href="#" onclick="change_language_polls('fr','poll-container-<?php echo $poll->guid; ?>');" id="activities"><?php echo elgg_echo('indicator:click:fr') ?></a></span>
+						<span id="indicator_language_fr" onclick="change_language_polls('fr','poll-container-<?php echo $poll->guid; ?>','.summary-title','.title','<?php echo $title_json->fr; ?>');" id="activities"><?php echo elgg_echo('box:indicator:en') ?><span class="fake-link" id="fake-link-1"><?php echo elgg_echo('indicator:click:fr') ?></span></span>
 					<?php	
 					}
 				}
@@ -154,13 +154,28 @@ echo '<div class="change_language" id="change_language">';
 }
 ?>
 <script>
-function change_language_polls(lang,guid){
+function change_language_polls(lang,guid,title_location,main_title,title){
 	var lang = lang; //get lang
 	var guid = guid; // get guid for div
+	//var lang_title = JSON.parse(title);
 
 $("#"+guid).html('<div id="loading-image"  class="wet-ajax-loader"><img src="../../../mod/wet4/graphics/loading.gif" alt="loading content"/></div>');
+$(title_location).html('<div id="loading-image"  class="wet-ajax-loader"><img src="../../../mod/wet4/graphics/loading.gif" alt="loading content"/></div>');
+$(main_title).html('<div id="loading-image"  class="wet-ajax-loader"><img src="../../../mod/wet4/graphics/loading.gif" alt="loading content"/></div>');
 
-	 $.ajaxSetup({
+
+
+	 $.ajax(
+    {
+        type : "post",
+        dataType: "html",
+        cache: false,
+        success : function(response)
+        {
+          $(title_location).html(title);
+          $(main_title).html(title);
+
+        },
 
         complete: function() {
             // TODO: hide spinner
@@ -169,6 +184,7 @@ $("#"+guid).html('<div id="loading-image"  class="wet-ajax-loader"><img src="../
     });
 
 	$("#"+guid).load("gcconnex/mod/polls/views/default/polls/results_for_widget?id="+lang+" #"+guid); // load section of this page
+	
 	if (lang == 'fr'){//change link
 	    change_link_en(guid); 
 	}else{
@@ -179,13 +195,13 @@ $("#"+guid).html('<div id="loading-image"  class="wet-ajax-loader"><img src="../
 
 function change_link_fr(guid){
 	var guid= guid
-    var link_available ='<span id="indicator_language_en"><?php echo elgg_echo("box:indicator:fr") ?><a href="#" onclick="change_language_polls(\'fr\',\''+guid+'\');" id="activities"><?php echo elgg_echo("indicator:click:fr") ?></a></span>';
+    var link_available ='<span id="indicator_language_en"><?php echo elgg_echo("box:indicator:fr") ?><a href="#" onclick="change_language_polls(\'fr\',\''+guid+'\',\'.summary-title\',\'.title\',\'<?php echo $title_json->fr ?>\');" id="activities"><?php echo elgg_echo("indicator:click:fr") ?></a></span>';
     
     $("#change_language").html(link_available)
 }
 function change_link_en(guid){
 	var guid = guid
-    var link_available ='<span id="indicator_language_en"><?php echo elgg_echo("box:indicator:en") ?><a href="#" onclick="change_language_polls(\'en\',\''+guid+'\');" id="activities"><?php echo elgg_echo("indicator:click:en") ?></a></span>';
+    var link_available ='<span id="indicator_language_en"><?php echo elgg_echo("box:indicator:en") ?><a href="#" onclick="change_language_polls(\'en\',\''+guid+'\',\'.summary-title\',\'.title\',\'<?php echo $title_json->en ?>\');" id="activities"><?php echo elgg_echo("indicator:click:en") ?></a></span>';
     
     $("#change_language").html(link_available)
 }
