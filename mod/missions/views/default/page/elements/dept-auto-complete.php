@@ -10,7 +10,7 @@
 /*
  * Creates an input field with autocomplete feature for departments.
  */
-elgg_load_js('typeahead'); 
+elgg_load_js('typeahead');
 
 $add_department_field = elgg_view('input/text', array(
 		'name' => 'department',
@@ -25,20 +25,20 @@ echo $add_department_field;
 <script>
 	$(document).ready(function() {
 		var departments = new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: elgg.get_site_url() + 'mod/b_extended_profile/actions/b_extended_profile/autodept.php?query=%QUERY'
-            }
-        });
+			datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+			queryTokenizer: Bloodhound.tokenizers.whitespace,
+			remote: {
+				url: elgg.get_site_url() + 'mod/b_extended_profile/actions/b_extended_profile/autodept.php?query=%QUERY'
+			}
+		});
 
-        departments.initialize();
+		departments.initialize();
 
-        $('#mission-department-auto-complete-text-input').typeahead(null, {
-            name: 'department',
-            displayKey: 'value',
-            limit: 10,
-            source: departments.ttAdapter()
-        });
+		$('#mission-department-auto-complete-text-input').typeahead(null, {
+			name: 'department',
+			displayKey: 'value',
+			limit: 10,
+			source: departments.ttAdapter()
+		});
 	});
 </script>

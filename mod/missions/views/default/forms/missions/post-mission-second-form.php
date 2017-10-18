@@ -12,7 +12,7 @@ $ancestor_array = mo_get_all_ancestors($department_string);
 $progenitor = get_entity($ancestor_array[0]);
 
 $department_abbr = $progenitor->abbr;
-if(get_current_language() == 'fr') {
+if (get_current_language() == 'fr') {
 	$department_abbr = $progenitor->abbr_french;
 }
 
@@ -29,24 +29,23 @@ $description = get_input('sdesc');
 $openess = get_input('so');
 
 if (elgg_is_sticky_form('secondfill')) {
-    extract(elgg_get_sticky_values('secondfill'));
+	extract(elgg_get_sticky_values('secondfill'));
 }
 
-if($openess == 'on') {
+if ($openess == 'on') {
 	$openess = true;
-}
-else {
+} else {
 	$openess = false;
 }
 
 $max_applicants = elgg_get_plugin_setting('mission_max_applicants', 'missions');
 $max_array = array();
-for($i=1;$i<=$max_applicants;$i++) {
+for ($i=1;$i<=$max_applicants;$i++) {
 	$max_array[$i-1] = $i;
 }
 
 $duplicating_entity = get_entity($_SESSION['mission_duplication_id']);
-if(get_subtype_from_id($duplicating_entity->subtype) == 'mission' && !$_SESSION['mission_duplicating_override_second']) {
+if (get_subtype_from_id($duplicating_entity->subtype) == 'mission' && !$_SESSION['mission_duplicating_override_second']) {
 	$job_title = $duplicating_entity->job_title;
 	$job_type = $duplicating_entity->job_type;
 	$job_area = $duplicating_entity->program_area;
@@ -60,45 +59,46 @@ if(get_subtype_from_id($duplicating_entity->subtype) == 'mission' && !$_SESSION[
 }
 
 $input_title = elgg_view('input/text', array(
-	    'name' => 'job_title',
-	    'value' => $job_title,
-	    'id' => 'post-mission-title-text-input'
+		'name' => 'job_title',
+		'value' => $job_title,
+		'id' => 'post-mission-title-text-input'
 ));
 
-$input_role = elgg_view('input/radio', array(
+$input_role = elgg_view(
+	'input/radio',
+	array(
 	'name' => 'role_type',
 	'id' => 'post-mission-role-radio-input',
 	'value' => $role_type,
 	'options' => array(
 		'<span style="font-weight:normal;"> '.elgg_echo('missions:opportunity_role:offering').'</span>' => 'missions:offering',
 		'<span style="font-weight:normal;"> '.elgg_echo('missions:opportunity_role:seeking').'</span>' => 'missions:seeking'
-    	)
- 	)
+		)
+	)
 );
 
 $input_type = elgg_view('input/dropdown', array(
-	    'name' => 'job_type',
-	    'value' => $job_type,
+		'name' => 'job_type',
+		'value' => $job_type,
 		'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('opportunity_type_string', 'missions')),
-	    'id' => 'post-mission-type-dropdown-input'
+		'id' => 'post-mission-type-dropdown-input'
 ));
 
 $sort_areas = mm_echo_explode_setting_string(elgg_get_plugin_setting('program_area_string', 'missions'));
 asort($sort_areas);
 $sort_areas['missions:other'] = elgg_echo('missions:other');
-if(array_key_exists($job_area, $sort_areas)) {
+if (array_key_exists($job_area, $sort_areas)) {
 	$initial_value = $job_area;
 	$other_value = '';
-}
-else {
+} else {
 	$initial_value = 'missions:other';
 	$other_value = $other_text;
 }
 $input_area = elgg_view('input/dropdown', array(
-	    'name' => 'job_area',
-	    'value' => $initial_value,
+		'name' => 'job_area',
+		'value' => $initial_value,
 		'options_values' => $sort_areas,
-	    'id' => 'post-mission-area-dropdown-input'
+		'id' => 'post-mission-area-dropdown-input'
 ));
 $input_other_area = elgg_view('page/elements/other-text-input', array(
 		'parent_id' => 'post-mission-area-dropdown-input',
@@ -106,49 +106,48 @@ $input_other_area = elgg_view('page/elements/other-text-input', array(
 ));
 
 $input_number_of = elgg_view('input/dropdown', array(
-	    'name' => 'number',
-	    'value' => $number,
-	    'options' => $max_array,
-	    'id' => 'post-mission-number-dropdown-input'
+		'name' => 'number',
+		'value' => $number,
+		'options' => $max_array,
+		'id' => 'post-mission-number-dropdown-input'
 ));
 
 $input_start_date = elgg_view('input/date', array(
-	    'name' => 'start_date',
-	    'value' => $start_date,
-	    'id' => 'post-mission-start-date-input',
+		'name' => 'start_date',
+		'value' => $start_date,
+		'id' => 'post-mission-start-date-input',
 		'placeholder' => 'yyyy-mm-dd'
 ));
 
 $input_completion_date = elgg_view('input/date', array(
-	    'name' => 'completion_date',
-	    'value' => $completion_date,
-	    'id' => 'post-mission-completion-date-input',
+		'name' => 'completion_date',
+		'value' => $completion_date,
+		'id' => 'post-mission-completion-date-input',
 		'placeholder' => 'yyyy-mm-dd'
 ));
 
 $input_deadline = elgg_view('input/date', array(
-	    'name' => 'deadline',
-	    'value' => $deadline,
-	    'id' => 'post-mission-deadline-date-input',
+		'name' => 'deadline',
+		'value' => $deadline,
+		'id' => 'post-mission-deadline-date-input',
 		'placeholder' => 'yyyy-mm-dd'
 ));
 
 $input_description = elgg_view('input/longtext', array(
-	    'name' => 'description',
-	    'value' => $description,
-	    'id' => 'post-mission-description-plaintext-input'
+		'name' => 'description',
+		'value' => $description,
+		'id' => 'post-mission-description-plaintext-input'
 ));
 
 $input_openess = elgg_view('input/checkbox', array(
-	    'name' => 'openess',
-	    'checked' => $openess,
-	    'id' => 'post-mission-openess-checkbox-input'
+		'name' => 'openess',
+		'checked' => $openess,
+		'id' => 'post-mission-openess-checkbox-input'
 ));
 
-if($department_abbr) {
+if ($department_abbr) {
 	$openess_string = elgg_echo('missions:openess_sentence', array(strtoupper($department_abbr)));
-}
-else {
+} else {
 	$openess_string = elgg_echo('missions:openess_sentence_generic');
 }
 
@@ -161,7 +160,7 @@ $input_gl_group = elgg_view('input/dropdown', array(
 	'options'=> mm_echo_explode_setting_string(elgg_get_plugin_setting('gl_group_string', 'missions')),
 	'id'=>'post-mission-gl-group',
 	'class'=>'',
-    'disabled'=>true,
+	'disabled'=>true,
 
 ));
 
@@ -227,24 +226,23 @@ $input_gl_group = elgg_view('input/dropdown', array(
 
 	</div>
 	<script>
-        $('#post-mission-type-dropdown-input').change(function () {
-            //Nick - this makes it so micromissions cannot have a group and level 
-            var value = $(this).val();
-            if (value !== 'missions:micro_mission') {
-                $('#post-mission-gl-group').removeAttr('disabled');
-                $('#numeric1').removeAttr('disabled');
-            } else {//Deactivate and clear the group and level inputs
-                $('#post-mission-gl-group').attr('disabled', true);
-                $('#post-mission-gl-group').val('');
-                $('#numeric1').attr('disabled', true);
-                $('#numeric1').val('');
-
-            }
+        $('#post-mission-type-dropdown-input').change(function() {
+        	//Nick - this makes it so micromissions cannot have a group and level
+        	var value = $(this).val();
+        	if (value !== 'missions:micro_mission') {
+        		$('#post-mission-gl-group').removeAttr('disabled');
+        		$('#numeric1').removeAttr('disabled');
+        	} else { //Deactivate and clear the group and level inputs
+        		$('#post-mission-gl-group').attr('disabled', true);
+        		$('#post-mission-gl-group').val('');
+        		$('#numeric1').attr('disabled', true);
+        		$('#numeric1').val('');
+        	}
         });
 
-			$('#post-mission-gl-group').change(function(){
-				$('#numeric1').val('1');
-			})
+        $('#post-mission-gl-group').change(function() {
+        	$('#numeric1').val('1');
+        })
 	</script>
 </div>
 

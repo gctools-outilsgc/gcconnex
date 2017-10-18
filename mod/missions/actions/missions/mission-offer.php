@@ -15,29 +15,26 @@ $mission = get_entity(get_input('mid'));
 
 $err = '';
 
-if($mission == '') {
+if ($mission == '') {
 	$err .= elgg_echo('missions:error:entity_does_not_exist');
-}
-else {
-	if(!check_entity_relationship($mission->guid, 'mission_applied', $applicant->guid)) {
+} else {
+	if (!check_entity_relationship($mission->guid, 'mission_applied', $applicant->guid)) {
 		$err .= elgg_echo('missions:error:applicant_not_applied_to_mission', array($applicant->name));
-	}
-	else {
+	} else {
 		$relationship_count = elgg_get_entities_from_relationship(array(
 				'relationship' => 'mission_accepted',
 				'relationship_guid' => $mission->guid,
 				'count' => true
 		));
-	    
-		if($relationship_count >= $mission->number) {
+
+		if ($relationship_count >= $mission->number) {
 			$err .= elgg_echo('missions:error:mission_full');
-		}
-		else {
+		} else {
 			remove_entity_relationship($mission->guid, 'mission_applied', $applicant->guid);
 			add_entity_relationship($mission->guid, 'mission_offered', $applicant->guid);
 
 			// Create a record of when the mission is offered for Analytics
-      $ia = elgg_set_ignore_access(true);
+			$ia = elgg_set_ignore_access(true);
 			$accept_record = new ElggObject();
 			$accept_record->subtype = 'mission-wasoffered';
 			$accept_record->title = 'Mission Offer Report';
@@ -45,18 +42,18 @@ else {
 			$accept_record->owner_guid = $applicant->guid;
 			$accept_record->mission_guid = $mission->guid;
 			$accept_record->save();
-      elgg_set_ignore_access($ia);
+			elgg_set_ignore_access($ia);
 
 			$finalize_link = elgg_view('output/url', array(
 					'href' => elgg_get_site_url() . 'missions/view/' . $mission->guid,
 					'text' => elgg_echo('missions:respond')
 			));
-			
-			$subject = elgg_echo('missions:offers_you_a_spot', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))),'en') .' | '.elgg_echo('missions:offers_you_a_spot', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))),'fr', $applicant->language);
-			$offer_en = elgg_echo('missions:offers_you_a_spot_more', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))),'en') . " {$finalize_link}" . '.';
-			$offer_fr = elgg_echo('missions:offers_you_a_spot_more', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))),'fr') . " {$finalize_link}" . '.';
-	
-			mm_notify_user($applicant->guid, $mission->guid, $subject, '','',$offer_en, $offer_fr);
+
+			$subject = elgg_echo('missions:offers_you_a_spot', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))), 'en') .' | '.elgg_echo('missions:offers_you_a_spot', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))), 'fr', $applicant->language);
+			$offer_en = elgg_echo('missions:offers_you_a_spot_more', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))), 'en') . " {$finalize_link}" . '.';
+			$offer_fr = elgg_echo('missions:offers_you_a_spot_more', array(elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))), 'fr') . " {$finalize_link}" . '.';
+
+			mm_notify_user($applicant->guid, $mission->guid, $subject, '', '', $offer_en, $offer_fr);
 		}
 	}
 }
@@ -64,8 +61,7 @@ else {
 if ($err != '') {
 	register_error($err);
 	forward(REFERER);
-}
-else {
+} else {
 	system_message(elgg_echo('missions:offered_user_position', array($applicant->name, $mission->job_title)));
 	forward($mission->getURL());
 }

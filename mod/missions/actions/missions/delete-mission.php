@@ -19,8 +19,8 @@ $from_admin = get_input('MISSION_ADMIN_ACTION_FLAG');
 $key = '';
 // If the element is in a currently saved search set then we remove it from the set.
 if (($key = array_search($mission, $mission_set)) !== false) {
-    unset($mission_set[$key]);
-    $mission_count --;
+	unset($mission_set[$key]);
+	$mission_count --;
 }
 
 $_SESSION['mission_count'] = $mission_count;
@@ -31,7 +31,7 @@ system_message(elgg_echo('missions:has_been_deleted', array($mission->job_title)
 $mission->delete();
 
 // If the admin tool is calling the action then the user is returned to the admin tool page.
-if($from_admin) {
+if ($from_admin) {
 	forward(REFERER);
 }
 

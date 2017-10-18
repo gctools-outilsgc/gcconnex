@@ -12,7 +12,7 @@
 */
 gatekeeper();
 
-if(elgg_get_logged_in_user_entity()->opt_in_missions != 'gcconnex_profile:opt:yes') {
+if (elgg_get_logged_in_user_entity()->opt_in_missions != 'gcconnex_profile:opt:yes') {
 	forward(elgg_get_site_url() . 'missions/main');
 }
 
@@ -24,21 +24,20 @@ $mission = get_entity(array_pop($blast_radius));
 $err = '';
 
 // Error checking to make sure that the applicant, manager, and relationship between mission and candidate are correct
-if($applicant->type != 'user') {
+if ($applicant->type != 'user') {
 	$err .= elgg_echo('missions:error:entity_not_a_user');
 }
-if(elgg_get_logged_in_user_guid() != $applicant->guid) {
+if (elgg_get_logged_in_user_guid() != $applicant->guid) {
 	$err .= elgg_echo('missions:error:you_are_not_the_applicant', array($applicant->name));
 }
-if(!check_entity_relationship($mission->guid, 'mission_offered', $applicant->guid)) {
+if (!check_entity_relationship($mission->guid, 'mission_offered', $applicant->guid)) {
 	$err .= elgg_echo('missions:error:applicant_not_offered_this_mission', array($mission->job_title));
 }
 
-if($err != '') {
+if ($err != '') {
 	register_error($err);
 	forward(elgg_get_site_url() . 'missions/main');
-}
-else {
+} else {
 	$title = elgg_echo('missions:mission_finalize_acceptance_for', array($applicant->name));
 
 	elgg_push_breadcrumb(elgg_echo('missions:micromissions'), elgg_get_site_url() . 'missions/main');

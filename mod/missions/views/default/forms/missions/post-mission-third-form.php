@@ -19,27 +19,25 @@ $key_skills = get_input('tks');
 
 if (elgg_is_sticky_form('thirdfill')) {
 	$temp_array = elgg_get_sticky_values('thirdfill');
-    extract($temp_array);
-    // elgg_clear_sticky_form('thirdfill');
-    
-    foreach($temp_array as $key => $value) {
-    	if(!(strpos($key, 'key_skills') === false)) {
-    		$key_skills .= $value . ', ';
-    	}
-    }
-    $key_skills = substr($key_skills, 0, -2);
+	extract($temp_array);
+
+	foreach ($temp_array as $key => $value) {
+		if (!(strpos($key, 'key_skills') === false)) {
+			$key_skills .= $value . ', ';
+		}
+	}
+	$key_skills = substr($key_skills, 0, -2);
 }
 
 // Determines whether the remote work checkbox is checked or not.
-if($remotely == 'on') {
+if ($remotely == 'on') {
 	$remotely = true;
-}
-else {
+} else {
 	$remotely = false;
 }
 
 $duplicating_entity = get_entity($_SESSION['mission_duplication_id']);
-if(get_subtype_from_id($duplicating_entity->subtype) == 'mission' && !$_SESSION['mission_duplicating_override_third']) {
+if (get_subtype_from_id($duplicating_entity->subtype) == 'mission' && !$_SESSION['mission_duplicating_override_third']) {
 	$key_skills = $duplicating_entity->key_skills;
 	$time_commitment = $duplicating_entity->time_commitment;
 	$time_interval = $duplicating_entity->time_interval;
@@ -47,7 +45,7 @@ if(get_subtype_from_id($duplicating_entity->subtype) == 'mission' && !$_SESSION[
 	$security = $duplicating_entity->security;
 	$location = $duplicating_entity->location;
 	$timezone = $duplicating_entity->timezone;
-	
+
 	$unpacked = mm_unpack_mission($duplicating_entity);
 	$vars['mission_metadata'] = $unpacked;
 	$vars['entity'] = $duplicating_entity;
@@ -55,31 +53,31 @@ if(get_subtype_from_id($duplicating_entity->subtype) == 'mission' && !$_SESSION[
 
 $skill_set = '';
 $skill_array = explode(', ', $key_skills);
-foreach($skill_array as $skill) {
+foreach ($skill_array as $skill) {
 	$skill_set .= elgg_view('missions/add-skill', array('value' => $skill));
 }
 $input_remotely = elgg_view('input/checkbox', array(
-	    'name' => 'remotely',
-	    'checked' => $remotely,
-	    'id' => 'post-mission-remotely-checkbox-input'
+		'name' => 'remotely',
+		'checked' => $remotely,
+		'id' => 'post-mission-remotely-checkbox-input'
 ));
 $input_location = elgg_view('input/dropdown', array(
-	    'name' => 'location',
-	    'value' => $location,
-	    'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('province_string', 'missions')),
-	    'id' => 'post-mission-location-text-input'
+		'name' => 'location',
+		'value' => $location,
+		'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('province_string', 'missions')),
+		'id' => 'post-mission-location-text-input'
 ));
 $input_security = elgg_view('input/dropdown', array(
-	    'name' => 'security',
-	    'value' => $security,
-	    'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('security_string', 'missions')),
-	    'id' => 'post-mission-security-dropdown-input'
+		'name' => 'security',
+		'value' => $security,
+		'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('security_string', 'missions')),
+		'id' => 'post-mission-security-dropdown-input'
 ));
 $input_timezone = elgg_view('input/dropdown', array(
-	    'name' => 'timezone',
-	    'value' => $timezone,
-	    'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('timezone_string', 'missions')),
-	    'id' => 'post-mission-timezone-dropdown-input'
+		'name' => 'timezone',
+		'value' => $timezone,
+		'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('timezone_string', 'missions')),
+		'id' => 'post-mission-timezone-dropdown-input'
 ));
 $input_time_commit = elgg_view('input/text', array(
 		'name' => 'time_commitment',
@@ -127,7 +125,7 @@ $add_skill_button = elgg_view('output/url', array(
 ));
 
 $skill_match_override = $_SESSION['mission_skill_match_is_interlude'];
-if($skill_match_override) {
+if ($skill_match_override) {
 	unset($_SESSION['mission_skill_match_is_interlude']);
 	echo elgg_view('page/elements/skill-match-interlude', array('submit_button_id' => 'mission-post-opportunity-third-form-submission-button'));
 }
@@ -138,7 +136,8 @@ if($skill_match_override) {
 		<input name="hidden_java_state" value="noscript" type="hidden">
 	</div>
 </noscript>
-<h2 class='h4'><?php echo elgg_echo('missions:third_post_form_title'); ?></h2><br>
+<h2 class='h4'><?php echo elgg_echo('missions:third_post_form_title'); ?></h2>
+<br>
 <div class="form-group">
 	<label class="col-sm-3" style="text-align:right;">
 		<?php echo elgg_echo('missions:skills') . ':';?>
@@ -203,7 +202,7 @@ if($skill_match_override) {
 	<?php echo $language_field; ?>
 </div>
 
-<div> 
+<div>
 	<?php
 		echo elgg_view('output/url', array(
 				'href' => elgg_get_site_url() . 'missions/mission-post/step-two',
@@ -218,7 +217,7 @@ if($skill_match_override) {
 				'id' => 'mission-post-opportunity-third-form-submission-button'
 		));
 		echo elgg_view('page/elements/one-click-restrictor', array('restricted_element_id' => 'mission-post-opportunity-third-form-submission-button'));
-	?> 
+	?>
 </div>
 
 <script>

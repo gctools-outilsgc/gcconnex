@@ -74,7 +74,8 @@ function mm_is_guid_number($num)
  * ab:ss
  * 2300
  */
-function mm_is_valid_time($time) {
+function mm_is_valid_time($time)
+{
 	$regex = '/[0-2][0-9][:][0-6][0-9]$/';
 
 	return preg_match($regex, $time) === 1;
@@ -83,7 +84,8 @@ function mm_is_valid_time($time) {
 /*
  * A regex which checks the date format.
  */
-function mm_is_valid_date($date) {
+function mm_is_valid_date($date)
+{
 	$regex = '/^((19|20)\d\d)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/';
 	return preg_match($regex, $date) === 1;
 }
@@ -112,60 +114,25 @@ function mm_validate_time_all(&$input_array)
  */
 function mm_validate_time($day, $input_array)
 {
-	/*$start_hour = $input_array[$day . '_start_hour'];
-	$start_min = $input_array[$day . '_start_min'];
-	$duration_hour = $input_array[$day . '_duration_hour'];
-	$duration_min = $input_array[$day . '_duration_min'];
-	$day_full = elgg_echo('missions:' . $day);
-	$err = '';
-
-	if ($_SESSION['language'] == 'fr') {
-		$day_full = strtolower($day_full);
-	}
-
-	// If one hour value is not empty then the other cannot be empty and the associated minute value cannot be NULL.
-	if (! empty($start_hour)) {
-		if (empty($duration_hour) && empty($duration_min)) {
-			$err .= elgg_echo('missions:duration_must_be_set') . $day_full . ".\n";
-		}
-		if (empty($start_min)) {
-			$input_array[$day . '_start_min'] = '00';
-			$start_min = '00';
-		}
-	}
-	if (! empty($duration_hour) || ! empty($duration_min)) {
-		if (empty($start_hour)) {
-			$err .= elgg_echo('missions:start_hour_must_be_set') . $day_full . ".\n";
-		}
-		if (empty($duration_hour)) {
-			$input_array[$day . '_duration_hour'] = '0';
-			$duration_hour = '0';
-		}
-		if (empty($duration_min)) {
-			$input_array[$day . '_duration_min'] = '00';
-			$duration_min = '00';
-		}
-	}*/
-
 	$err = '';
 	$day_full = elgg_echo('missions:' . $day);
 	$start = $input_array[$day . '_start'];
 	$duration = $input_array[$day . '_duration'];
 
-	if(!mm_is_valid_time($start) && $start) {
+	if (!mm_is_valid_time($start) && $start) {
 		$err .= elgg_echo('missions:invalid_start_time_format') . $day_full . ".\n";
 	}
-	if(substr($start, 0, 1) == '2' && substr($start, 1, 1) >= 4) {
+	if (substr($start, 0, 1) == '2' && substr($start, 1, 1) >= 4) {
 		$err .= elgg_echo('missions:hours_exceeded', array($day_full)) . "\n";
 	}
-	if(!$duration && $start) {
+	if (!$duration && $start) {
 		$err .= elgg_echo('missions:duration_must_be_set') . $day_full . ".\n";
 	}
 
-	if(!mm_is_valid_time($duration) && $duration) {
+	if (!mm_is_valid_time($duration) && $duration) {
 		$err .= elgg_echo('missions:invalid_duration_time_format') . $day_full . ".\n";
 	}
-	if(!$start && $duration) {
+	if (!$start && $duration) {
 		$err .= elgg_echo('missions:start_time_must_be_set') . $day_full . ".\n";
 	}
 
@@ -175,7 +142,8 @@ function mm_validate_time($day, $input_array)
 /*
  * Error checks the input values found in the first post mission form.
  */
- function mm_first_post_error_check($input_array) {
+ function mm_first_post_error_check($input_array)
+ {
  	$err = '';
 
  	$name_and_email_limit = 100;
@@ -184,15 +152,10 @@ function mm_validate_time($day, $input_array)
  	if (trim($input_array['name']) == '') {
  		$err .= elgg_echo('missions:error:name_needs_input') . "\n";
 
- 		if(strlen($input_array['name']) > $name_and_email_limit) {
+ 		if (strlen($input_array['name']) > $name_and_email_limit) {
  			$err .= elgg_echo('missions:error:exceeds_string_length', array(elgg_echo('missions:your_name'), $name_and_email_limit)) . "\n";
  		}
  	}
- 	/*else {
- 		if (!mm_is_valid_person_name($input_array['name'])) {
- 			$err .= elgg_echo('missions:error:name_no_numbers') . "\n";
- 		}
- 	}*/
 
  	// Checks if the department is empty.
  	if (!mo_get_last_input_node($input_array) && !$input_array['department']) {
@@ -200,29 +163,26 @@ function mm_validate_time($day, $input_array)
  	}
 
  	// Checks if the email a valid email address according to a function defined above.
- 	if($input_array['email'] == '') {
+ 	if ($input_array['email'] == '') {
  		$err .= elgg_echo('missions:error:email_needs_input') . "\n";
- 	}
- 	else {
-	 	if (!filter_var($input_array['email'], FILTER_VALIDATE_EMAIL)) {
-	 		$err .= elgg_echo('missions:error:email_invalid') . "\n";
-	 	}
-	 	else {
-	 		if(strlen($input_array['email']) > $name_and_email_limit) {
-		 		$err .= elgg_echo('missions:error:exceeds_string_length', array(elgg_echo('missions:your_email'), $name_and_email_limit)) . "\n";
-		 	}
-		 	else {
-		 		$returned_users = get_user_by_email($input_array['email']);
-			 	if(count($returned_users) == 0) {
-			 		$err .= elgg_echo('missions:error:email_not_on_gcconnex', array($input_array['email'])) . "\n";
-			 	}
-		 	}
-	 	}
+ 	} else {
+ 		if (!filter_var($input_array['email'], FILTER_VALIDATE_EMAIL)) {
+ 			$err .= elgg_echo('missions:error:email_invalid') . "\n";
+ 		} else {
+ 			if (strlen($input_array['email']) > $name_and_email_limit) {
+ 				$err .= elgg_echo('missions:error:exceeds_string_length', array(elgg_echo('missions:your_email'), $name_and_email_limit)) . "\n";
+ 			} else {
+ 				$returned_users = get_user_by_email($input_array['email']);
+ 				if (count($returned_users) == 0) {
+ 					$err .= elgg_echo('missions:error:email_not_on_gcconnex', array($input_array['email'])) . "\n";
+ 				}
+ 			}
+ 		}
 
-	 	// Checks if the phone number is a valid phone number according to a function defined above.
-	 	if (!mm_is_valid_phone_number($input_array['phone']) && !empty($input_array['phone'])) {
-	 		$err .= elgg_echo('missions:error:phone_invalid') . "\n";
-	 	}
+ 		// Checks if the phone number is a valid phone number according to a function defined above.
+ 		if (!mm_is_valid_phone_number($input_array['phone']) && !empty($input_array['phone'])) {
+ 			$err .= elgg_echo('missions:error:phone_invalid') . "\n";
+ 		}
  	}
 
  	return $err;
@@ -231,7 +191,8 @@ function mm_validate_time($day, $input_array)
  /*
   * Error checks the input values found in the second post mission form.
   */
- function mm_second_post_error_check($input_array) {
+ function mm_second_post_error_check($input_array)
+ {
  	$err = '';
 
  	// Checks to see if these input fields are empty.
@@ -240,7 +201,7 @@ function mm_validate_time($day, $input_array)
  	}
 
  	$job_title_limit = 200;
- 	if(strlen($input_array['job_title']) > $job_title_limit) {
+ 	if (strlen($input_array['job_title']) > $job_title_limit) {
  		$err .= elgg_echo('missions:error:exceeds_string_length', array(elgg_echo('missions:opportunity_title'), $job_title_limit)) . "\n";
  	}
 
@@ -253,23 +214,21 @@ function mm_validate_time($day, $input_array)
  	}
 
  	$date_type_array = array('start_date', 'completion_date', 'deadline');
- 	foreach($date_type_array as $date_type) {
+ 	foreach ($date_type_array as $date_type) {
  		if (trim($input_array[$date_type]) == '' && $date_type != 'completion_date') {
  			$err .= elgg_echo('missions:error:' . $date_type . '_needs_input') . "\n";
- 		}
- 		else {
+ 		} else {
  			$date_before = $input_array[$date_type];
- 			if($date_before != '') {
-	 			if(!mm_is_valid_date($date_before)) {
-		 			$err .= elgg_echo('missions:error:' . $date_type . '_not_formatted_properly') . "\n";
-	 			}
-	 			else {
-		 			$timestamp = strtotime($date_before);
-		 			$date_after = date('Y-m-d', $timestamp);
-		 			if(!$timestamp || $date_after != $date_before) {
-		 				$err .= elgg_echo('missions:error:' . $date_type . '_not_date') . "\n";
-		 			}
-	 			}
+ 			if ($date_before != '') {
+ 				if (!mm_is_valid_date($date_before)) {
+ 					$err .= elgg_echo('missions:error:' . $date_type . '_not_formatted_properly') . "\n";
+ 				} else {
+ 					$timestamp = strtotime($date_before);
+ 					$date_after = date('Y-m-d', $timestamp);
+ 					if (!$timestamp || $date_after != $date_before) {
+ 						$err .= elgg_echo('missions:error:' . $date_type . '_not_date') . "\n";
+ 					}
+ 				}
  			}
  		}
  	}
@@ -279,18 +238,18 @@ function mm_validate_time($day, $input_array)
  	$date_end = strtotime($input_array['completion_date']);
  	$date_dead = strtotime($input_array['deadline']);
 
- 	if(trim($date_end) != '') {
-	 	if ($date_end < $date_start) {
-	 		$err .= elgg_echo('missions:error:start_after_end') . "\n";
-	 	}
+ 	if (trim($date_end) != '') {
+ 		if ($date_end < $date_start) {
+ 			$err .= elgg_echo('missions:error:start_after_end') . "\n";
+ 		}
 
-	 	if ($date_end < $date_dead) {
-	 		$err .= elgg_echo('missions:error:deadline_after_end') . "\n";
-	 	}
+ 		if ($date_end < $date_dead) {
+ 			$err .= elgg_echo('missions:error:deadline_after_end') . "\n";
+ 		}
  	}
  	//Nick - Increasing limit from 2k to 5k as per JIRA 239
  	$description_limit = 12000;
- 	if(strlen($input_array['description']) > $description_limit) {
+ 	if (strlen($input_array['description']) > $description_limit) {
  		$err .= elgg_echo('missions:error:exceeds_string_length', array(elgg_echo('missions:opportunity_description'), $description_limit)) . "\n";
  	}
 
@@ -300,9 +259,9 @@ function mm_validate_time($day, $input_array)
  /*
   * Error checks the input values found in the Third post mission form.
   */
- function mm_third_post_error_check($input_array) {
+ function mm_third_post_error_check($input_array)
+ {
  	$err = '';
-
 
  	// Checks to see if location is empty.
  	if (empty($input_array['location'])) {
@@ -312,19 +271,17 @@ function mm_validate_time($day, $input_array)
  	// Checks to see if time commitment is empty.
  	if (trim($input_array['time_commitment']) == '') {
  		$err .= elgg_echo('missions:error:time_commitment_needs_input') . "\n";
- 	}
- 	else {
- 		if(!is_numeric($input_array['time_commitment'])) {
-	 		$err .= elgg_echo('missions:error:time_commitment_not_number') . "\n";
-	 	}
-	 	else {
-		 	if($input_array['time_commitment'] >= 100) {
-		 		$err .= elgg_echo('missions:error:excessive_time_commitment') . "\n";
-		 	}
-		 	if($input_array['time_commitment'] <= 0) {
-		 		$err .= elgg_echo('missions:error:negative_time_commitment') . "\n";
-		 	}
-	 	}
+ 	} else {
+ 		if (!is_numeric($input_array['time_commitment'])) {
+ 			$err .= elgg_echo('missions:error:time_commitment_not_number') . "\n";
+ 		} else {
+ 			if ($input_array['time_commitment'] >= 100) {
+ 				$err .= elgg_echo('missions:error:excessive_time_commitment') . "\n";
+ 			}
+ 			if ($input_array['time_commitment'] <= 0) {
+ 				$err .= elgg_echo('missions:error:negative_time_commitment') . "\n";
+ 			}
+ 		}
  	}
 
  	return $err;
@@ -333,35 +290,48 @@ function mm_validate_time($day, $input_array)
  /*
   * Checks that any day start or duration values are present in the input array.
   */
- function mm_check_days_for_start_or_duration($input) {
+ function mm_check_days_for_start_or_duration($input)
+ {
  	$input_type = '';
- 	$days_values = array('mon_start','mon_duration','tue_start','tue_duration','wed_start','wed_duration',
- 			'thu_start','thu_duration','fri_start','fri_duration','sat_start','sat_duration','sun_start','sun_duration');
+ 	$days_values = array(
+		'mon_start',
+		'mon_duration',
+		'tue_start',
+		'tue_duration',
+		'wed_start',
+		'wed_duration',
+		'thu_start',
+		'thu_duration',
+		'fri_start',
+		'fri_duration',
+		'sat_start',
+		'sat_duration',
+		'sun_start',
+		'sun_duration'
+	);
 
- 	if(is_array($input)) {
+ 	if (is_array($input)) {
  		$input_type = 'array';
  	}
 
- 	if(elgg_instanceof($input, 'object', 'mission')) {
+ 	if (elgg_instanceof($input, 'object', 'mission')) {
  		$input_type = 'mission';
  	}
 
- 	if($input_type == '') {
+ 	if ($input_type == '') {
  		return false;
- 	}
- 	else {
-	 	foreach($days_values as $day_value) {
-	 		if($input_type == 'array') {
-	 			if($input[$day_value] != '') {
-	 				return true;
-	 			}
-	 		}
-	 		else if($input_type == 'mission') {
-	 			if($input->$day_value != '') {
-	 				return true;
-	 			}
-	 		}
-	 	}
+ 	} else {
+ 		foreach ($days_values as $day_value) {
+ 			if ($input_type == 'array') {
+ 				if ($input[$day_value] != '') {
+ 					return true;
+ 				}
+ 			} elseif ($input_type == 'mission') {
+ 				if ($input->$day_value != '') {
+ 					return true;
+ 				}
+ 			}
+ 		}
  	}
 
  	return false;
@@ -371,14 +341,15 @@ function mm_validate_time($day, $input_array)
   * An extra check that runs if a days start or duration values are not empty.
   * The timezone cannot be empty in that case.
   */
- function mm_third_post_special_error_check($input_array) {
+ function mm_third_post_special_error_check($input_array)
+ {
  	$err = '';
  	$days = array('mon','tue','wed','thu','fri','sat','sun');
 
  	$timezone_needed = mm_check_days_for_start_or_duration($input_array);
 
- 	if($timezone_needed) {
- 		if(trim($input_array['timezone']) == '') {
+ 	if ($timezone_needed) {
+ 		if (trim($input_array['timezone']) == '') {
  			$err .= elgg_echo('missions:error:timezone_needs_input') . "\n";
  		}
  	}

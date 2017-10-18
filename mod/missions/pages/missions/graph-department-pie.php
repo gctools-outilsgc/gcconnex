@@ -9,7 +9,7 @@
 
 gatekeeper();
 
-if(elgg_get_logged_in_user_entity()->opt_in_missions != 'gcconnex_profile:opt:yes') {
+if (elgg_get_logged_in_user_entity()->opt_in_missions != 'gcconnex_profile:opt:yes') {
 	forward(elgg_get_site_url() . 'missions/main');
 }
 
@@ -29,14 +29,14 @@ $results = $data_array[$department_index];
 
 $state_number = count($results[0]);
 $states = array();
-for($i=0;$i<$state_number;$i++) {
+for ($i=0;$i<$state_number;$i++) {
 	$states[$i] = $name_array[$department_index * $state_number - $i];
 }
 $states = array_reverse($states);
 
 $title = elgg_echo('missions:department_pie');
 $content = elgg_view_title($title);
-	
+
 $content .= elgg_view('page/elements/mission-tabs', array(
 		'highlight_five' => true
 ));

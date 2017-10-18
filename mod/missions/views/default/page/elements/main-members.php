@@ -27,7 +27,9 @@ if ((count($_SESSION['candidate_search_set']) < ($offset + $entities_per_page)) 
 	$fetch_offset =  count($_SESSION['candidate_search_set']);
 
 	mm_simple_search_database_for_candidates(
-		$_SESSION['candidate_search_query_array'], $fetch_limit, $fetch_offset
+		$_SESSION['candidate_search_query_array'],
+		$fetch_limit,
+		$fetch_offset
 	);
 	$_SESSION['candidate_search_set'] = array_merge(
 		$old_results,
@@ -35,13 +37,12 @@ if ((count($_SESSION['candidate_search_set']) < ($offset + $entities_per_page)) 
 	);
 }
 
-if(time() > ($_SESSION['candidate_search_set_timestamp'] + elgg_get_plugin_setting('mission_session_variable_timeout', 'missions'))
+if (time() > ($_SESSION['candidate_search_set_timestamp'] + elgg_get_plugin_setting('mission_session_variable_timeout', 'missions'))
 		&& $_SESSION['candidate_search_set_timestamp'] != '') {
 	system_message(elgg_echo('missions:last_results_have_expired'));
 	unset($_SESSION['candidate_search_set']);
 	unset($_SESSION['candidate_search_set_timestamp']);
-}
-else {
+} else {
 	$result_set = $_SESSION['candidate_search_set'];
 }
 
@@ -65,18 +66,18 @@ $advanced_field = elgg_view('page/elements/hidden-field', array(
 		'field_bordered' => true
 ));
 
-if($result_set) {
+if ($result_set) {
 	$search_set = '<h2>' . elgg_echo('missions:search_results') . '</h2>';
 	$count = $_SESSION['candidate_count'];
 
 	$max_reached = '';
-	if(($offset + $entities_per_page) >= elgg_get_plugin_setting('search_limit', 'missions') && $count >= elgg_get_plugin_setting('search_limit', 'missions')) {
+	if (($offset + $entities_per_page) >= elgg_get_plugin_setting('search_limit', 'missions') && $count >= elgg_get_plugin_setting('search_limit', 'missions')) {
 		$max_reached = '<div class="col-sm-12" style="font-style:italic;">' . elgg_echo('missions:reached_maximum_entities') . '</div>';
 	}
 	$search_set .= elgg_view_entity_list(array_slice($result_set, $offset, $entities_per_page), array(
 			'count' => $count,
-            'list_class' => 'clearfix row mrgn-bttm-md candidate-holder',
-            'item_class' => 'col-md-3 col-sm-6 candidate-panel ',
+			'list_class' => 'clearfix row mrgn-bttm-md candidate-holder',
+			'item_class' => 'col-md-3 col-sm-6 candidate-panel ',
 			'offset' => $offset,
 			'limit' => $entities_per_page,
 			'pagination' => true,
@@ -94,26 +95,23 @@ if($result_set) {
 
 <div>
 	<h2 class="h4"><?php echo elgg_echo('missions:find_candidates') . ':'; ?></h2>
-	<?php 
-		//echo $simple_search_form;
+	<?php
 		echo $advanced_field;
 	?>
 </div>
 <?php echo $max_reached; ?>
 <div class="col-sm-12">
-    
 	<?php echo $search_set; ?>
 </div>
 <div class="col-sm-12">
-   
 	<?php echo $change_entities_per_page_form; ?>
 </div>
 
 <script>
-  $(document).ready(function() {
+	$(document).ready(function() {
 		// Change the invite forms to fire asynchronously
 		require(['mission-invite/ajax'], function(invite_ajax) {
 			invite_ajax();
 		});
-  });
+	});
 </script>

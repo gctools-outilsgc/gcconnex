@@ -14,20 +14,20 @@
  */
 $tabs = '';
 if (isset($vars['tab_bar'])) {
-    $tabs = $vars['tab_bar'];
+	$tabs = $vars['tab_bar'];
 }
 
 echo '<table class="missions-tab-bar-table"><tr>';
 foreach ($tabs as $value) {
-    if ($value[1] != '') {
-        echo '<td>' . elgg_view('output/url', array(
-            'href' => $value[1],
-            'text' => $value[0],
-            'class' => '',
-            'is_trusted' => true
-        )) . '</td>';
-    } else {
-        echo '<td class="elgg-tabbar-table-element">' . $value[0] . '</td>';
-    }
+	if ($value[1] != '') {
+		echo '<td>' . elgg_view('output/url', array(
+			'href' => $value[1],
+			'text' => $value[0],
+			'class' => '',
+			'is_trusted' => true
+		)) . '</td>';
+	} else {
+		echo '<td class="elgg-tabbar-table-element">' . $value[0] . '</td>';
+	}
 }
 echo "</tr></table>";

@@ -6,7 +6,7 @@
  * License: Creative Commons Attribution 3.0 Unported License
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
- 
+
 /*
  * Form which allows users to post a message to The Wire about the subject mission entity.
  */
@@ -51,11 +51,11 @@ if (!empty($reshare)) {
 	$reshare_input .= elgg_view("thewire_tools/reshare_source", array("entity" => $reshare));
 
 	if (!empty($reshare->title)) {
-		$post_value = gc_explode_translation($reshare->title,$lang);
+		$post_value = gc_explode_translation($reshare->title, $lang);
 	} elseif (!empty($reshare->name)) {
-		$post_value = gc_explode_translation($reshare->name,$lang);
+		$post_value = gc_explode_translation($reshare->name, $lang);
 	} elseif (!empty($reshare->description)) {
-		$post_value = elgg_get_excerpt(gc_explode_translation($reshare->description,$lang), 140);
+		$post_value = elgg_get_excerpt(gc_explode_translation($reshare->description, $lang), 140);
 	}
 }
 
@@ -64,7 +64,7 @@ $num_lines = 2;
 if ($char_limit == 0) {
 	$num_lines = 3;
 	$count_down = "";
-} else if ($char_limit > 140) {
+} elseif ($char_limit > 140) {
 	$num_lines = 3;
 }
 
@@ -102,12 +102,10 @@ HTML;
 if (elgg_is_xhr()) {
 ?>
 <script type="text/javascript">
-		$("#thewire-tools-reshare-wrapper").find('.elgg-form-thewire-add textarea[name="body"]').each(function(i) {
-			elgg.thewire_tools.init_autocomplete(this);
-		});
+	$("#thewire-tools-reshare-wrapper").find('.elgg-form-thewire-add textarea[name="body"]').each(function(i) {
+		elgg.thewire_tools.init_autocomplete(this);
+	});
 </script>
 <?php
 }
-
-
 ?>

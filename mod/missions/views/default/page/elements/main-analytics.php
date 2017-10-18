@@ -16,10 +16,10 @@ $input_graph_type = elgg_view('input/dropdown', array(
 		'name' => 'graph_type',
 		'value' => $graph_type,
 		'options_values' => array(
-				'' => '',
-				'missions:stacked_graph' => elgg_echo('missions:stacked_graph'),
-				'missions:histogram' => elgg_echo('missions:histogram'),
-				'missions:top_skills'	=>	elgg_echo('missions:skills'),
+			'' => '',
+			'missions:stacked_graph' => elgg_echo('missions:stacked_graph'),
+			'missions:histogram' => elgg_echo('missions:histogram'),
+			'missions:top_skills'	=>	elgg_echo('missions:skills'),
 		),
 		'id' => 'data-analytics-graph-type-dropdown-input',
 		'onchange' => 'generate_inputs(this); wipe_away_graph();'
@@ -32,24 +32,24 @@ $input_department = elgg_view('page/elements/organization-input', array(
 ));
 
 $input_role = elgg_view('input/dropdown', array(
-	    'name' => 'job_role',
-	    'value' => '',
+		'name' => 'job_role',
+		'value' => '',
 		'options_values' => array('' => '') + mm_echo_explode_setting_string(elgg_get_plugin_setting('opportunity_role_string', 'missions')),
-	    'id' => 'data-analytics-role-dropdown-input'
+		'id' => 'data-analytics-role-dropdown-input'
 ));
 
 $input_type = elgg_view('input/dropdown', array(
-	    'name' => 'job_type',
-	    'value' => '',
+		'name' => 'job_type',
+		'value' => '',
 		'options_values' => array('' => '') + mm_echo_explode_setting_string(elgg_get_plugin_setting('opportunity_type_string', 'missions')),
-	    'id' => 'data-analytics-type-dropdown-input'
+		'id' => 'data-analytics-type-dropdown-input'
 ));
 
 $input_status = elgg_view('input/dropdown', array(
-	    'name' => 'status',
-	    'value' => '',
+		'name' => 'status',
+		'value' => '',
 		'options_values' => array('' => '') + mm_echo_explode_setting_string(elgg_get_plugin_setting('opportunity_status_string', 'missions')),
-	    'id' => 'data-analytics-status-dropdown-input'
+		'id' => 'data-analytics-status-dropdown-input'
 ));
 
 $graph_generate_button = elgg_view('output/url', array(
@@ -170,7 +170,9 @@ $graph_hide_table_button = elgg_view('output/url', array(
 	function generate_inputs(control) {
 		var type = control.value;
 		elgg.get('ajax/view/missions/analytics-inputs', {
-			data: { graph_type: type },
+			data: {
+				graph_type: type
+			},
 			success: function(result, success, xhr) {
 				$('#graph-type-inputs').html(result);
 				if (type == 'missions:top_skills') {
@@ -203,16 +205,16 @@ $graph_hide_table_button = elgg_view('output/url', array(
 	function showTooltip(x, y, content) {
 		$('<div id="graph_tooltip">' + content + '</div>').css({
 			position: 'absolute',
-	        display: 'none',
-	        top: y - 40,
-	        left: x - 120,
-	        border: '4px solid',
-	        color: '#fff',
-	        padding: '6px',
-	        'font-size': '14px',
-	        'border-radius': '12px',
-	        'background-color': '#047177',
-	        opacity: 0.9
+			display: 'none',
+			top: y - 40,
+			left: x - 120,
+			border: '4px solid',
+			color: '#fff',
+			padding: '6px',
+			'font-size': '14px',
+			'border-radius': '12px',
+			'background-color': '#047177',
+			opacity: 0.9
 		}).appendTo('body').fadeIn(200);
 	}
 
@@ -223,15 +225,14 @@ $graph_hide_table_button = elgg_view('output/url', array(
 		content += '<caption>' + caption + '</caption>';
 
 		content += '<tr><td></td>';
-		if(graph_graph_type == 'missions:stacked_graph') {
-			for(var i=0; i < ticks.length; i++) {
+		if (graph_graph_type == 'missions:stacked_graph') {
+			for (var i = 0; i < ticks.length; i++) {
 				content += '<th style="text-align:center;white-space:nowrap;padding:10px;">' + ticks[i][1] + '</th>';
 			}
-		}
-		else {
-			for(var i=0; i < (ticks.length - 1); i++) {
-				var first_number = ticks[i][1].substr(0,ticks[i][1].indexOf(' '));
-				var second_number = ticks[i+1][1].substr(0,ticks[i+1][1].indexOf(' '));
+		} else {
+			for (var i = 0; i < (ticks.length - 1); i++) {
+				var first_number = ticks[i][1].substr(0, ticks[i][1].indexOf(' '));
+				var second_number = ticks[i + 1][1].substr(0, ticks[i + 1][1].indexOf(' '));
 				var unit = ticks[i][1].substr(ticks[i][1].indexOf(' '));
 
 				content += '<th style="text-align:center;">' + first_number + '-' + second_number + unit + '</th>';
@@ -239,10 +240,10 @@ $graph_hide_table_button = elgg_view('output/url', array(
 		}
 		content += '</tr>';
 
-		for(var i=0;i<dataset.length;i++) {
+		for (var i = 0; i < dataset.length; i++) {
 			content += '<tr>';
 			content += '<th>' + dataset[i].label + '</th>';
-			for(var j=0;j<dataset[i].data.length;j++) {
+			for (var j = 0; j < dataset[i].data.length; j++) {
 				content += '<td style="text-align:center;">' + dataset[i].data[j][1] + '</td>';
 			}
 			content += '</tr>';
@@ -272,7 +273,7 @@ $graph_hide_table_button = elgg_view('output/url', array(
 			return $('#' + this.id).val();
 		});
 		var department_guid = array_of_department_values[array_of_department_values.length - 1];
-		if(department_guid == 0 && array_of_department_values.length > 1) {
+		if (department_guid == 0 && array_of_department_values.length > 1) {
 			department_guid = array_of_department_values[array_of_department_values.length - 2];
 		}
 
@@ -280,7 +281,7 @@ $graph_hide_table_button = elgg_view('output/url', array(
 			return $('#' + this.id).val();
 		});
 		var role_type = array_of_role_type_values[array_of_role_type_values.length - 1];
-		if(role_type == 0 && array_of_role_type_values.length > 1) {
+		if (role_type == 0 && array_of_role_type_values.length > 1) {
 			role_type = array_of_role_type_values[array_of_role_type_values.length - 2];
 		}
 
@@ -288,7 +289,7 @@ $graph_hide_table_button = elgg_view('output/url', array(
 			return $('#' + this.id).val();
 		});
 		var job_type = array_of_job_type_values[array_of_job_type_values.length - 1];
-		if(job_type == 0 && array_of_job_type_values.length > 1) {
+		if (job_type == 0 && array_of_job_type_values.length > 1) {
 			job_type = array_of_job_type_values[array_of_job_type_values.length - 2];
 		}
 
@@ -296,7 +297,7 @@ $graph_hide_table_button = elgg_view('output/url', array(
 			return $('#' + this.id).val();
 		});
 		var status = array_of_status_values[array_of_status_values.length - 1];
-		if(status == 0 && array_of_status_values.length > 1) {
+		if (status == 0 && array_of_status_values.length > 1) {
 			status = array_of_status_values[array_of_status_values.length - 2];
 		}
 
@@ -317,11 +318,10 @@ $graph_hide_table_button = elgg_view('output/url', array(
 				target_value: graph_target_value
 			},
 			success: function(result, success, xhr) {
-				if(result != '') {
-					if(result.error_returned == '') {
-						//$("#generated-graph-parent").css("overflow-x", "scroll");
+				if (result != '') {
+					if (result.error_returned == '') {
 						$("#generated-graph-container").css("height", "600px");
-						if($("#data-analytics-hide-table-graph-button").css("display") == "none") {
+						if ($("#data-analytics-hide-table-graph-button").css("display") == "none") {
 							$("#data-analytics-show-table-graph-button").css("display", "block");
 						}
 						$("#hidden-graph-table-container").html('');
@@ -352,35 +352,38 @@ $graph_hide_table_button = elgg_view('output/url', array(
 								$("#zoom_controls_container").css('display', '');
 
 								$('#data-analytics-zoom-reset-btn')
-									.click(function (event) {
+									.click(function(event) {
 										event.preventDefault();
 										generate_chart();
 									});
 
 								$('#data-analytics-zoom-in-btn')
-									.click(function (event) {
+									.click(function(event) {
 										event.preventDefault();
 										plot.zoom();
 									});
 
 								$('#data-analytics-zoom-out-btn')
-									.click(function (event) {
+									.click(function(event) {
 										event.preventDefault();
 										plot.zoomOut();
 									});
 
 								$('#data-analytics-pan-left-btn')
-									.click(function (e) {
+									.click(function(e) {
 										e.preventDefault();
-										plot.pan({ left: -100 });
+										plot.pan({
+											left: -100
+										});
 									});
 
-									$('#data-analytics-pan-right-btn')
-										.click(function (e) {
-											e.preventDefault();
-											plot.pan({ left: 100 });
+								$('#data-analytics-pan-right-btn')
+									.click(function(e) {
+										e.preventDefault();
+										plot.pan({
+											left: 100
 										});
-
+									});
 							}
 						}
 
@@ -392,40 +395,39 @@ $graph_hide_table_button = elgg_view('output/url', array(
 						});
 
 						// Function which handles the user mousing over a bar in the graph.
-						var previous_hover = [0,0,0];
+						var previous_hover = [0, 0, 0];
 						$('#generated-graph-container')
-						.bind('plothover', function(event, pos, item) {
-							if(item) {
-								if(previous_hover[0] != item.datapoint[0] || previous_hover[1] != item.datapoint[1] || previous_hover[2] != item.datapoint[2]) {
-									previous_hover = item.datapoint;
+							.bind('plothover', function(event, pos, item) {
+								if (item) {
+									if (previous_hover[0] != item.datapoint[0] || previous_hover[1] != item.datapoint[1] || previous_hover[2] != item.datapoint[2]) {
+										previous_hover = item.datapoint;
 
-									$('#graph_tooltip').remove();
-									var x = item.datapoint[0];
-									var y = item.datapoint[1] - item.datapoint[2];
-									var label = item.series.label;
+										$('#graph_tooltip').remove();
+										var x = item.datapoint[0];
+										var y = item.datapoint[1] - item.datapoint[2];
+										var label = item.series.label;
 
-									var perc_set = JSON.parse($('#hidden-percentages-for-hover').html());
-									var total = perc_set[label][x][0];
-									var perc = perc_set[label][x][1];
+										var perc_set = JSON.parse($('#hidden-percentages-for-hover').html());
+										var total = perc_set[label][x][0];
+										var perc = perc_set[label][x][1];
 
-									// Displays the y value of the bar.
-									var tool_string = label + ': ' + y;
-									// If that value is not 100% of the bar then the total y value and percentage is displayed.
-									if(perc < 100) {
-										tool_string = tool_string + '/' + total + ' (' + perc + '%)';
+										// Displays the y value of the bar.
+										var tool_string = label + ': ' + y;
+										// If that value is not 100% of the bar then the total y value and percentage is displayed.
+										if (perc < 100) {
+											tool_string = tool_string + '/' + total + ' (' + perc + '%)';
+										}
+
+										showTooltip(item.pageX, item.pageY, tool_string);
 									}
-
-									showTooltip(item.pageX, item.pageY, tool_string);
+								} else {
+									$('#graph_tooltip').remove();
+									previous_hover = [0, 0, 0];
 								}
-							}
-							else {
-								$('#graph_tooltip').remove();
-								previous_hover = [0,0,0];
-							}
-		      	});
+							});
 					} else {
 						elgg.register_error(result.error_returned);
-						setTimeout(function () {
+						setTimeout(function() {
 							$(".elgg-state-error").fadeOut(500);
 						}, 180000);
 					}
@@ -453,17 +455,16 @@ $graph_hide_table_button = elgg_view('output/url', array(
 	}
 
 	function disable_target_date() {
-		if($('#data-analytics-separator-dropdown-input').val() == 'missions:reason_to_decline' || $('#data-analytics-separator-dropdown-input').val() == 'missions:average_number_of_applicants') {
+		if ($('#data-analytics-separator-dropdown-input').val() == 'missions:reason_to_decline' || $('#data-analytics-separator-dropdown-input').val() == 'missions:average_number_of_applicants') {
 			$('#data-analytics-target-mission-date-dropdown-input').val('missions:date_posted');
 			$('#data-analytics-target-mission-date-dropdown-input').prop('disabled', true);
-			if($('#data-analytics-separator-dropdown-input').val() == 'missions:reason_to_decline') {
+			if ($('#data-analytics-separator-dropdown-input').val() == 'missions:reason_to_decline') {
 				$('#department-input-row').hide();
 				$('#role-input-row').hide();
 				$('#type-input-row').hide();
 				$('#status-input-row').hide();
 			}
-		}
-		else {
+		} else {
 			$('#data-analytics-target-mission-date-dropdown-input').prop('disabled', false);
 			$('#department-input-row').show();
 			$('#role-input-row').show();

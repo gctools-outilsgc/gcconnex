@@ -1,9 +1,38 @@
-.elgg-tabbar { background-color: #00008B; border-style: solid;
-border-color: #00008B; border-radius: 6px; width: auto; padding: 15px
-10px 0px; margin-bottom: 12px; box-shadow: 1px 1px 5px #CCC; }
+.elgg-tabbar
+{
+	width: auto;
+	margin-bottom: 12px;
+	padding: 15px 10px 0;
+	border-style: solid;
+    border-color: #00008b;
+	border-radius: 6px;
+    background-color: #00008b;
+	box-shadow: 1px 1px 5px #ccc;
+}
 
-.elgg-tabbar-table { border-spacing: 6px 0px; border-collapse: separate;
-} .elgg-tabbar-table td { background-color: #4690D6; font-size: 18px;
-font-weight: bold; border-style: solid; border-color: #4690D6;
-border-radius: 6px; padding: 5px; } .elgg-tabbar-table a { color: white;
-} input { height: initial; }
+.elgg-tabbar-table
+{
+    border-spacing: 6px 0;
+	border-collapse: separate;
+}
+
+.elgg-tabbar-table td
+{
+	font-size: 18px;
+    font-weight: bold;
+	padding: 5px;
+	border-style: solid;
+	border-color: #4690d6;
+    border-radius: 6px;
+    background-color: #4690d6;
+}
+
+.elgg-tabbar-table a
+{
+    color: white;
+}
+
+input
+{
+    height: initial;
+}

@@ -6,7 +6,7 @@
  * License: Creative Commons Attribution 3.0 Unported License
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
- 
+
 /*
  * Page for posting missions.
  */
@@ -16,11 +16,11 @@ gatekeeper();
 
 $disclaimer_uncheck = $_SESSION['mission_uncheck_post_mission_disclaimer'];
 
-if(!check_if_opted_in(elgg_get_logged_in_user_entity())) {
+if (!check_if_opted_in(elgg_get_logged_in_user_entity())) {
 	forward(elgg_get_site_url() . 'missions/main');
 }
 
-if($_SESSION['mission_creation_begin_timestamp'] == '') {
+if ($_SESSION['mission_creation_begin_timestamp'] == '') {
 	$_SESSION['mission_creation_begin_timestamp'] = time();
 }
 
@@ -35,7 +35,7 @@ $highlight_three = false;
 
 $form_choice = '';
 // The last segment of the url informs the form choice and the tab context.
-switch($last_segment) {
+switch ($last_segment) {
 	case 'step-two':
 		if ($_SESSION['tab_context'] == 'firstpost') {
 			$_SESSION['tab_context'] = 'secondpost';
@@ -55,7 +55,8 @@ switch($last_segment) {
 			$_SESSION['tab_context'] = 'firstpost';
 		}
 		$highlight_one = true;
-		$form_choice = elgg_view_form('missions/post-mission-first-form', 
+		$form_choice = elgg_view_form(
+			'missions/post-mission-first-form',
 				array('class' => 'form-horizontal'),
 				array('disclaimer_uncheck' => $disclaimer_uncheck)
 		);
@@ -64,7 +65,7 @@ switch($last_segment) {
 // Decides which tabs are enabled and disabled.
 $tab_two_is_disabled = '';
 $tab_three_is_disabled = '';
-switch($_SESSION['tab_context']) {
+switch ($_SESSION['tab_context']) {
 	case 'firstpost':
 		$tab_two_is_disabled = 'link-disabled';
 		$tab_three_is_disabled = 'link-disabled';
@@ -75,23 +76,23 @@ switch($_SESSION['tab_context']) {
 }
 
 $navigation_tabs = array(
-		array(
-				'text' => elgg_echo('missions:step_one'),
-				'href' => elgg_get_site_url() . 'missions/mission-post/step-one',
-				'selected' => $highlight_one
-		),
-		array(
-				'text' => elgg_echo('missions:step_two'),
-				'href' => elgg_get_site_url() . 'missions/mission-post/step-two',
-				'selected' => $highlight_two,
-				'class' => $tab_two_is_disabled
-		),
-		array(
-				'text' => elgg_echo('missions:step_three'),
-				'href' => elgg_get_site_url() . 'missions/mission-post/step-three',
-				'selected' => $highlight_three,
-				'class' => $tab_three_is_disabled
-		)
+	array(
+		'text' => elgg_echo('missions:step_one'),
+		'href' => elgg_get_site_url() . 'missions/mission-post/step-one',
+		'selected' => $highlight_one
+	),
+	array(
+		'text' => elgg_echo('missions:step_two'),
+		'href' => elgg_get_site_url() . 'missions/mission-post/step-two',
+		'selected' => $highlight_two,
+		'class' => $tab_two_is_disabled
+	),
+	array(
+		'text' => elgg_echo('missions:step_three'),
+		'href' => elgg_get_site_url() . 'missions/mission-post/step-three',
+		'selected' => $highlight_three,
+		'class' => $tab_three_is_disabled
+	)
 );
 
 $title = elgg_echo('missions:create_opportunity');

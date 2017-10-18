@@ -12,7 +12,7 @@
  */
 $graph_type = $vars['graph_type'];
 
-switch($graph_type) {
+switch ($graph_type) {
 	case 'missions:stacked_graph':
 		echo elgg_view('page/elements/stacked-graph-inputs');
 		break;

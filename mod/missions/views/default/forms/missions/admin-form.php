@@ -32,20 +32,20 @@ $input_action_taken = elgg_view('input/dropdown', array(
 <div class="form-group">
 	<label for="admin-mission-guid-text-input"><?php echo elgg_echo('missions:mission_guid') . ':'; ?></label>
 	<div style="display:inline-block;">
-		<?php echo $input_mission_guid; ?> 
+		<?php echo $input_mission_guid; ?>
 	</div>
 </div>
 <div class="form-group">
 	<label for="admin-mission-action-taken-dropdown-input" style="display:inline-block;"><?php echo elgg_echo('missions:action_taken') . ': '; ?></label>
 	<div style="display:inline-block;"><?php echo $input_action_taken; ?></div>
 	<div style="display:inline-block;vertical-align:middle;">
-		<?php 
+		<?php
 			echo elgg_view('input/submit', array(
 					'value' => elgg_echo('missions:act'),
 					'id' => 'admin-mission-action-taken-form-submission-button',
 					'confirm' => elgg_echo('missions:correct_action_and_guid')
 			));
-		echo elgg_view('page/elements/one-click-restrictor', array('restricted_element_id' => 'admin-mission-action-taken-form-submission-button'));
+			echo elgg_view('page/elements/one-click-restrictor', array('restricted_element_id' => 'admin-mission-action-taken-form-submission-button'));
 		?>
 	</div>
 </div>

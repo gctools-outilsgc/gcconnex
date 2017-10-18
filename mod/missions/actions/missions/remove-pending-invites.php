@@ -14,10 +14,10 @@ $mid = get_input('mission_guid');
 
 $relationships = get_entity_relationships($mid);
 
-foreach($relationships as $relationship) {
-    if($relationship->relationship == 'mission_tentative') {
-        remove_entity_relationship($relationship->guid_one, 'mission_tentative', $relationship->guid_two);
-    }
+foreach ($relationships as $relationship) {
+	if ($relationship->relationship == 'mission_tentative') {
+		remove_entity_relationship($relationship->guid_one, 'mission_tentative', $relationship->guid_two);
+	}
 }
 
 return(REFERER);

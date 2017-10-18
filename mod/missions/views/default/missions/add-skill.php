@@ -10,14 +10,14 @@
 /*
  * Adds a skill text input with autocomplete.
  */
-elgg_load_js('typeahead'); 
+elgg_load_js('typeahead');
 
 $no_delete = $vars['no_delete'];
 
 $numerator = $_SESSION['mission_skill_input_number'];
 
 $name = 'key_skills_' . $numerator;
-if($vars['name_override']) {
+if ($vars['name_override']) {
 	$name = $vars['name_override'];
 }
 
@@ -29,7 +29,7 @@ $add_skill_field = elgg_view('input/text', array(
 		'style' => 'display:inline;'
 ));
 
-if(!$no_delete) {
+if (!$no_delete) {
 	$delete_skill_button = elgg_view('output/url', array(
 			'text' => ' ' . elgg_echo('missions:delete'),
 			'class' => 'elgg-button btn fa fa-times-circle',
@@ -38,7 +38,7 @@ if(!$no_delete) {
 			'style' => 'display:inline;'
 	));
 }
-	
+
 echo '<div id="missions-skills-division-' . $numerator . '">' . $add_skill_field . $delete_skill_button . '</div>';
 
 $_SESSION['mission_skill_input_number'] = $numerator + 1;
@@ -48,28 +48,28 @@ $_SESSION['mission_skill_input_number'] = $numerator + 1;
 	$(document).ready(function() {
 		var numerator = <?php echo $numerator ?>;
 		var ident = '#mission-skills-text-input-' + numerator;
-		
+
 		var newSkill = new Bloodhound({
-            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-            queryTokenizer: Bloodhound.tokenizers.whitespace,
-            remote: {
-                url: elgg.get_site_url() + 'mod/b_extended_profile/actions/b_extended_profile/autoskill.php?query=%QUERY'
-            }
-        });
+			datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+			queryTokenizer: Bloodhound.tokenizers.whitespace,
+			remote: {
+				url: elgg.get_site_url() + 'mod/b_extended_profile/actions/b_extended_profile/autoskill.php?query=%QUERY'
+			}
+		});
 
-        newSkill.initialize();
+		newSkill.initialize();
 
-        $(ident).typeahead(null, {
-            name: 'newSkill',
-            displayKey: 'value',
-            limit: 10,
-            source: newSkill.ttAdapter()
-        });
+		$(ident).typeahead(null, {
+			name: 'newSkill',
+			displayKey: 'value',
+			limit: 10,
+			source: newSkill.ttAdapter()
+		});
 	});
 
 	function delete_skill_field(button) {
 		var splitter = button.id.split("-");
 		var ident = '#missions-skills-division-' + splitter.pop();
 		$(ident).remove();
-	}	
+	}
 </script>

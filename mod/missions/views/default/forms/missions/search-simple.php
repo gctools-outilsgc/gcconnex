@@ -6,7 +6,7 @@
  * License: Creative Commons Attribution 3.0 Unported License
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
- 
+
 /*
  * Form with a single text input for a simple search.
  */
@@ -17,7 +17,7 @@ $limit_options = array(9,18,30,60,120);
 $placeholder = elgg_echo('missions:mission_simple_search_placeholder');
 $button_text = elgg_echo('missions:search');
 
-if($_SESSION['mission_search_switch'] == 'candidate') {
+if ($_SESSION['mission_search_switch'] == 'candidate') {
 	$label = elgg_echo('missions:find_candidates');
 	$limit_options = array(10,25,50,100);
 	$placeholder = elgg_echo('missions:candidate_simple_search_placeholder');
@@ -25,12 +25,11 @@ if($_SESSION['mission_search_switch'] == 'candidate') {
 }
 
 if (elgg_is_sticky_form('searchsimplefill')) {
-    extract(elgg_get_sticky_values('searchsimplefill'));
+	extract(elgg_get_sticky_values('searchsimplefill'));
 }
 
-if($simple){
-
-    $clear_link = elgg_view('output/url', array(
+if ($simple) {
+	$clear_link = elgg_view('output/url', array(
 		'text' => elgg_echo('missions:clear_search'),
 		'href' => 'missions/main?clear=true&search='.$simple,
 		'class' => 'mrgn-lft-sm',
@@ -40,9 +39,9 @@ if($simple){
 }
 
 $input_simple_text = elgg_view('input/text', array(
-	    'name' => 'simple',
-	    'value' => $simple,
-	    'id' => 'search-mission-simple-text-input',
+		'name' => 'simple',
+		'value' => $simple,
+		'id' => 'search-mission-simple-text-input',
 		'placeholder' => $placeholder,
 		'style' => 'width:400px;'
 ));
@@ -63,13 +62,11 @@ $hidden_input = elgg_view('input/hidden', array(
 <?php echo $hidden_input; ?>
 <div class="form-group" style="display:inline-block;margin-right:16px; clear:both;">
 	<div style="display:inline-block;vertical-align:middle;">
-		<?php echo $input_simple_text; ?> 
+		<?php echo $input_simple_text; ?>
 		<input type="hidden" name="offset" value="0">
 	</div>
-	<!-- <label for="search-mission-limit-dropdown-input" style="display:inline-block;"><?php //echo elgg_echo('missions:search_limit') . ': '; ?></label>
-	<div style="display:inline-block;"><?php //echo $input_simple_limit; ?></div> -->
 	<div style="display:inline-block;vertical-align:middle;">
-		<?php 
+		<?php
 			echo elgg_view('input/submit', array(
 					'value' => $button_text,
 					'id' => 'mission-simple-search-form-submission-button',

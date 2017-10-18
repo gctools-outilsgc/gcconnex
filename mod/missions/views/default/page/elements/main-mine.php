@@ -8,10 +8,10 @@
  */
 
 /*
- * Page content related to the user's missions. 
+ * Page content related to the user's missions.
  */
 $user = elgg_get_logged_in_user_entity();
-if($_SESSION['mission_entities_per_page']) {
+if ($_SESSION['mission_entities_per_page']) {
 	$entities_per_page = $_SESSION['mission_entities_per_page'];
 }
 
@@ -30,9 +30,9 @@ $temp_array_two = elgg_get_entities_from_relationship(array(
 $entity_list = array_merge($temp_array_one, $temp_array_two);
 $entity_list_original = $entity_list;
 
-if(!$user->show_closed_missions) {
-	foreach($entity_list as $key => $entity) {
-		if($entity->state == 'completed' || $entity->state == 'cancelled') {
+if (!$user->show_closed_missions) {
+	foreach ($entity_list as $key => $entity) {
+		if ($entity->state == 'completed' || $entity->state == 'cancelled') {
 			unset($entity_list[$key]);
 		}
 	}
@@ -42,23 +42,21 @@ usort($entity_list, 'mm_cmp_by_updated');
 
 $count = count($entity_list);
 $offset = (int) get_input('offset', 0);
-if($entities_per_page) {
+if ($entities_per_page) {
 	$max = $entities_per_page;
-}
-else {
+} else {
 	$max = elgg_get_plugin_setting('search_result_per_page', 'missions');
 }
 
 // Displays the list of mission entities.
 $missions_list = '<div style="display:block;">' . elgg_view_entity_list(array_slice($entity_list, $offset, $max), array(
-				'count' => $count,
+		'count' => $count,
 		'offset' => $offset,
 		'limit' => $max,
 		'pagination' => true,
 		'list_type' => 'gallery',
-        'gallery_class'=>'wb-eqht',
-        'item_class'=>'col-sm-6 col-md-4 ',
-
+		'gallery_class'=>'wb-eqht',
+		'item_class'=>'col-sm-6 col-md-4 ',
 		'mission_full_view' => false
 ), $offset, $max) . '</div>';
 
@@ -92,7 +90,9 @@ $change_entities_per_page_form = elgg_view_form('missions/change-entities-per-pa
 <div class="col-sm-12">
 	<?php echo $refine_missions_form; ?>
 </div>
-<div hidden name="mission-total-count"><?php echo $count; ?></div>
+<div hidden name="mission-total-count">
+	<?php echo $count; ?>
+</div>
 <div class="col-sm-12">
 	<?php echo $change_entities_per_page_form; ?>
 </div>

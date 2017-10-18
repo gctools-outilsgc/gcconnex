@@ -6,7 +6,7 @@
  * License: Creative Commons Attribution 3.0 Unported License
  * Copyright: Her Majesty the Queen in Right of Canada, 2015
  */
- 
+
 /*
  * Form which allows the user to generate feedback for the mission via plaintext input.
  */
@@ -26,31 +26,31 @@ $feedback = $feedback_search[0];
 
 $feedback_body = $feedback->message;
 $checked = false;
-if($feedback->endorsement == 'on') {
+if ($feedback->endorsement == 'on') {
 	$checked = true;
 }
 
 // User icon.
 $feedback_pic = elgg_view_entity_icon($feedback_target, 'tiny');
-	
+
 // User name linked to the user's profile.
 $feedback_head = elgg_view('output/url', array(
 		'href' => $feedback_target->getURL(),
 		'text' => $feedback_target->name
 ));
-	
+
 if (elgg_is_sticky_form('applicationfill')) {
-    extract(elgg_get_sticky_values('feedbackfill'));
-    elgg_clear_sticky_form('feedbackfill');
+	extract(elgg_get_sticky_values('feedbackfill'));
+	elgg_clear_sticky_form('feedbackfill');
 }
-	
+
 // If a message has been sent then a second message cannot be sent.
 $feedback_body .=  elgg_view('input/plaintext', array(
-	    'name' => 'feedback_body',
-	    'value' => $feedback_body,
-	    'id' => 'mission-feedback-body-text-input-' . $feedback_target->guid
+		'name' => 'feedback_body',
+		'value' => $feedback_body,
+		'id' => 'mission-feedback-body-text-input-' . $feedback_target->guid
 ));
-	
+
 $input_feedback_rating = elgg_view('input/checkbox', array(
 		'name' => 'feedback_rating',
 		'checked' => $checked,
@@ -91,13 +91,13 @@ echo elgg_view('input/hidden', array(
 	</div>
 </div>
 <div>
- 	<?php 
+ 	<?php
 		echo elgg_view('input/submit', array(
 				'value' => elgg_echo('missions:submit'),
 				'class' => 'elgg-button btn btn-primary',
 				'style' => 'float:right;',
 				'id' => 'mission-feedback-form-submission-button-' . $feedback_target->guid
-		)); 
+		));
 		echo elgg_view('page/elements/one-click-restrictor', array('restricted_element_id' => 'mission-feedback-form-submission-button-' . $feedback_target->guid));
-	?> 
+	?>
 </div>

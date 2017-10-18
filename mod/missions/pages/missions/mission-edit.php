@@ -12,7 +12,7 @@
  */
 gatekeeper();
 
-if(!check_if_opted_in(elgg_get_logged_in_user_entity())) {
+if (!check_if_opted_in(elgg_get_logged_in_user_entity())) {
 	forward(elgg_get_site_url() . 'missions/main');
 }
 
@@ -31,9 +31,9 @@ $content = elgg_view_title($title);
 $content .= elgg_view('page/elements/mission-tabs');
 
 $content .= elgg_view_form('missions/change-mission-form', array(
-    'class' => 'form-horizontal col-sm-12 clearfix'
+	'class' => 'form-horizontal col-sm-12 clearfix'
 ), array(
-    'entity' => $mission
+	'entity' => $mission
 ));
 
 $content .= elgg_view('page/elements/related-candidates', array(

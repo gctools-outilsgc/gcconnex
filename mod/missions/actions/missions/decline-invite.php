@@ -15,40 +15,38 @@ $mission = get_entity(get_input('hidden_mission_guid'));
 
 // Processes the reason given by the declining user whether it's from the dropdown menu or the free text entry.
 $reason = get_input('reason');
-if($reason == 'missions:other') {
+if ($reason == 'missions:other') {
 	$raw_reason = $reason;
 	$reasonEn = get_input('other_text');
 	$reasonFr = get_input('other_text');
-}
-else {
+} else {
 	$raw_reason = $reason;
-	$reasonEn = elgg_echo($reason,'en');
-	$reasonFr = elgg_echo($reason,'fr');
-
+	$reasonEn = elgg_echo($reason, 'en');
+	$reasonFr = elgg_echo($reason, 'fr');
 }
 
-if(trim($reason) == '') {
+if (trim($reason) == '') {
 	register_error(elgg_echo('missions:please_give_reason_for_declination'));
 	forward(REFERER);
 }
 
 // Deletes the tentative relationship between mission and applicant.
-if(check_entity_relationship($mission->guid, 'mission_tentative', $applicant->guid)) {
+if (check_entity_relationship($mission->guid, 'mission_tentative', $applicant->guid)) {
 	$message_return = 'missions:declination_has_been_sent';
 	remove_entity_relationship($mission->guid, 'mission_tentative', $applicant->guid);
 }
-if(check_entity_relationship($mission->guid, 'mission_applied', $applicant->guid)) {
+if (check_entity_relationship($mission->guid, 'mission_applied', $applicant->guid)) {
 	$message_return = 'missions:withdrawal_has_been_sent';
 	remove_entity_relationship($mission->guid, 'mission_applied', $applicant->guid);
 }
-if(check_entity_relationship($mission->guid, 'mission_offered', $applicant->guid)) {
+if (check_entity_relationship($mission->guid, 'mission_offered', $applicant->guid)) {
 	$message_return = 'missions:declination_has_been_sent';
 	remove_entity_relationship($mission->guid, 'mission_offered', $applicant->guid);
 }
-if(check_entity_relationship($mission->guid, 'mission_accepted', $applicant->guid)) {
+if (check_entity_relationship($mission->guid, 'mission_accepted', $applicant->guid)) {
 	$message_return = 'missions:withdrawal_has_been_sent';
 	remove_entity_relationship($mission->guid, 'mission_accepted', $applicant->guid);
-  mm_complete_mission_inprogress_reports($mission, true);
+	mm_complete_mission_inprogress_reports($mission, true);
 }
 
 // Object which stores the reason for declining a mission.
@@ -66,19 +64,19 @@ elgg_set_ignore_access($ia);
 
 // Notifies the mission manager of the candidates refusal.
 $mission_link = elgg_view('output/url', array(
-    'href' => $mission->getURL(),
-    'text' => elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))
+	'href' => $mission->getURL(),
+	'text' => elgg_get_excerpt($mission->job_title, elgg_get_plugin_setting('mission_job_title_card_cutoff', 'missions'))
 ));
 
-$subject = elgg_echo('missions:applicant_leaves', array($applicant->name),'en')." | ". elgg_echo('missions:applicant_leaves', array($applicant->name),'fr');
+$subject = elgg_echo('missions:applicant_leaves', array($applicant->name), 'en')." | ". elgg_echo('missions:applicant_leaves', array($applicant->name), 'fr');
 
-$withdrawnEn .= elgg_echo('missions:applicant_leaves_more', array($applicant->name),'en') . $mission_link . '.' . "\n";
-($reasonFr ? $withdrawnReasonEn .= elgg_echo('missions:reason_given', array($reasonEn),'en') : elgg_echo('missions:reason_given', array($reason),'en'));
+$withdrawnEn .= elgg_echo('missions:applicant_leaves_more', array($applicant->name), 'en') . $mission_link . '.' . "\n";
+($reasonFr ? $withdrawnReasonEn .= elgg_echo('missions:reason_given', array($reasonEn), 'en') : elgg_echo('missions:reason_given', array($reason), 'en'));
 
-$withdrawnFr .= elgg_echo('missions:applicant_leaves_more', array($applicant->name),'fr') . $mission_link . '.' . "\n";
-($reasonFr ? $withdrawnReasonFr .= elgg_echo('missions:reason_given', array($reasonFr),'fr') : elgg_echo('missions:reason_given', array($reason),'fr'));
+$withdrawnFr .= elgg_echo('missions:applicant_leaves_more', array($applicant->name), 'fr') . $mission_link . '.' . "\n";
+($reasonFr ? $withdrawnReasonFr .= elgg_echo('missions:reason_given', array($reasonFr), 'fr') : elgg_echo('missions:reason_given', array($reason), 'fr'));
 
-mm_notify_user($mission->guid, $applicant->guid, $subject, $withdrawnEn, $withdrawnFr,$reasonEn ,$reasonFr );
+mm_notify_user($mission->guid, $applicant->guid, $subject, $withdrawnEn, $withdrawnFr, $reasonEn, $reasonFr);
 
 system_message(elgg_echo($message_return, array($mission->job_title)));
 forward(elgg_get_site_url() . 'missions/main');

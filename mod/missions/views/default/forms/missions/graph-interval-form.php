@@ -18,15 +18,15 @@ $end_year = get_input('giey');
 $graph = get_input('gig');
 
 if (elgg_is_sticky_form('intervalfill')) {
-    extract(elgg_get_sticky_values('intervalfill'));
-    elgg_clear_sticky_form('intervalfill');
+	extract(elgg_get_sticky_values('intervalfill'));
+	elgg_clear_sticky_form('intervalfill');
 }
 
-if(!$end_month) {
+if (!$end_month) {
 	$end_month = date('m');
 }
 
-if(!$end_year) {
+if (!$end_year) {
 	$end_year = date('Y');
 }
 
@@ -37,32 +37,19 @@ $input_time_period = elgg_view('input/dropdown', array(
 		'id' => 'missions-graph-interval-time-period-input'
 ));
 
-/*$input_date = elgg_view('input/date', array(
-		'name' => 'date',
-		'value' => $date,
-		'id' => 'missions-graph-interval-date-input'
-));
-
-$input_time_interval = elgg_view('input/dropdown', array(
-		'name' => 'time_interval',
-		'value' => $time_interval,
-		'options' => array(elgg_echo('missions:monthly'), elgg_echo('missions:weekly')),
-		'id' => 'missions-graph-interval-time-interval-input'
-));*/
-
 $month_values = array(
-		'01' => elgg_echo('missions:january'),
-		'02' => elgg_echo('missions:february'),
-		'03' => elgg_echo('missions:march'),
-		'04' => elgg_echo('missions:april'),
-		'05' => elgg_echo('missions:may'),
-		'06' => elgg_echo('missions:june'),
-		'07' => elgg_echo('missions:july'),
-		'08' => elgg_echo('missions:august'),
-		'09' => elgg_echo('missions:september'),
-		'10' => elgg_echo('missions:october'),
-		'11' => elgg_echo('missions:november'),
-		'12' => elgg_echo('missions:december'),
+	'01' => elgg_echo('missions:january'),
+	'02' => elgg_echo('missions:february'),
+	'03' => elgg_echo('missions:march'),
+	'04' => elgg_echo('missions:april'),
+	'05' => elgg_echo('missions:may'),
+	'06' => elgg_echo('missions:june'),
+	'07' => elgg_echo('missions:july'),
+	'08' => elgg_echo('missions:august'),
+	'09' => elgg_echo('missions:september'),
+	'10' => elgg_echo('missions:october'),
+	'11' => elgg_echo('missions:november'),
+	'12' => elgg_echo('missions:december'),
 );
 
 $input_start_month = elgg_view('input/dropdown', array(
@@ -82,7 +69,7 @@ $input_end_month = elgg_view('input/dropdown', array(
 $years = array();
 $current_year = date('Y');
 $count = 0;
-for($i=$current_year;$i>=2000;$i--) {
+for ($i=$current_year;$i>=2000;$i--) {
 	$years[$count] = $i;
 	$count++;
 }
@@ -146,7 +133,7 @@ $input_graph_type = elgg_view('input/dropdown', array(
 	</div>
 </div>
 <div style="min-height:150px;">
-	<?php 
+	<?php
 		echo elgg_view('input/submit', array(
 				'value' => elgg_echo('missions:graph'),
 				'class' => 'elgg-button btn btn-primary',
@@ -158,14 +145,13 @@ $input_graph_type = elgg_view('input/dropdown', array(
 </div>
 
 <script>
-function graph_typing(input) {
-	var value = input.value;
-	var division = document.getElementById('graph-time-interval-inputs');
-	if(value == 'pie') {
-		division.style.display = 'none';
+	function graph_typing(input) {
+		var value = input.value;
+		var division = document.getElementById('graph-time-interval-inputs');
+		if (value == 'pie') {
+			division.style.display = 'none';
+		} else {
+			division.style.display = 'inline-block';
+		}
 	}
-	else {
-		division.style.display = 'inline-block';
-	}
-}
 </script>

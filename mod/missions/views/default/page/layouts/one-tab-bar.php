@@ -13,7 +13,7 @@
  */
 $class = 'elgg-layout elgg-layout-one-tabbar clearfix';
 if (isset($vars['class'])) {
-    $class = "$class {$vars['class']}";
+	$class = "$class {$vars['class']}";
 }
 ?>
 
@@ -26,10 +26,9 @@ if (isset($vars['class'])) {
 	</div>
 	<div class="elgg-main elgg-body">
 		<?php
-// echo $nav;
-if (isset($vars['content'])) {
-    echo $vars['content'];
-}
-?>
+		if (isset($vars['content'])) {
+			echo $vars['content'];
+		}
+		?>
 	</div>
 </div>
