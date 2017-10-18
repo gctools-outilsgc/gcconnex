@@ -31,6 +31,10 @@ class ComposerStaticInit2b70da73ce4a602ee05b9f5e99595350
             'Symfony\\Component\\HttpFoundation\\' => 33,
             'Stash\\' => 6,
         ),
+        'R' => 
+        array (
+            'ReCaptcha\\' => 10,
+        ),
         'P' => 
         array (
             'Psr\\Cache\\' => 10,
@@ -79,6 +83,10 @@ class ComposerStaticInit2b70da73ce4a602ee05b9f5e99595350
         'Stash\\' => 
         array (
             0 => __DIR__ . '/..' . '/tedivm/stash/src/Stash',
+        ),
+        'ReCaptcha\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/google/recaptcha/src/ReCaptcha',
         ),
         'Psr\\Cache\\' => 
         array (

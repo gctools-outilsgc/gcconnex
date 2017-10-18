@@ -20,7 +20,8 @@
         "elgg/login_as": "~1.9",
         "elgg/apiadmin": "dev-master",
         "coldtrick/analytics": "^3.1",
-        "elgg/data_views": "^1.0"
+        "elgg/data_views": "^1.0",
+        "beck24/elgg_recaptcha": "^1.1"
     },
     "scripts": {
         "test": "phpunit",
