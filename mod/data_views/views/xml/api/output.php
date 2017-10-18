@@ -11,4 +11,4 @@
 $result = $vars['result'];
 $export = $result->export();
 
-echo serialise_object_to_xml($export, "elgg");
+echo data_views_object_to_xml($export, "elgg");

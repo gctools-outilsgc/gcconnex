@@ -19,7 +19,8 @@
         "ircmaxell/password-compat": "~1.0",
         "elgg/login_as": "~1.9",
         "elgg/apiadmin": "dev-master",
-        "coldtrick/analytics": "^3.1"
+        "coldtrick/analytics": "^3.1",
+        "elgg/data_views": "^1.0"
     },
     "scripts": {
         "test": "phpunit",

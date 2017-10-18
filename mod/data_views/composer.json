@@ -1,0 +1,10 @@
+{
+  "name": "elgg/data_views",
+  "type": "elgg-plugin",
+  "description": "Elgg plugin that provides views for web services.",
+  "license": "GPL-2.0",
+  "keywords": ["elgg", "plugin"],
+  "require": {
+    "composer/installers": ">=1.0.8"
+  }
+}
