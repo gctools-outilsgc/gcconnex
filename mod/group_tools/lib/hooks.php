@@ -151,7 +151,9 @@ function group_tools_route_groups_handler($hook, $type, $return_value, $params) 
 						$ia = elgg_set_ignore_access(true);
 						
 						$group = get_entity($page[1]);
-						if (!empty($group) && elgg_instanceof($group, "group")) {
+						if( check_entity_relationship($group->getGUID(), "invited", elgg_get_logged_in_user_entity()->getGUID()) ){
+							forward('/groups/invitations/' . elgg_get_logged_in_user_entity()->username);
+						} else if (!empty($group) && elgg_instanceof($group, "group")) {
 							// report to the user
 							if (!elgg_is_logged_in()) {
 								$_SESSION["last_forward_from"] = current_page_url();
