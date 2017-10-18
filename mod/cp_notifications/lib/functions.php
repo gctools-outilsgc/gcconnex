@@ -374,9 +374,8 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 
 		case 'cp_hjtopic':
 		case 'cp_hjpost':
-			$group_title = get_entity(get_forum_in_group($entity->guid, $entity->guid))->name;
-			$group_url = get_entity(get_forum_in_group($entity->guid, $entity->guid))->getURL();
-			$group_html = "<a href='{$group_url}'>{$group_title}</a>";
+
+			$group_html = json_encode(array(get_entity(get_forum_in_group($entity->guid, $entity->guid))->getURL(), get_entity(get_forum_in_group($entity->guid, $entity->guid))->name));
 
 			if ($subtype === 'cp_hjtopic') {
 
