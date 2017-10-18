@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "37fb23137f0dc638ab261bd225029f28",
-    "content-hash": "c51f68ebbc8e925d76f81ec78a59425d",
+    "content-hash": "2af6ef00ddc34810d4fc13cdf9daf248",
     "packages": [
         {
             "name": "composer/installers",
@@ -119,7 +118,31 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2017-04-24 06:37:16"
+            "time": "2017-04-24T06:37:16+00:00"
+        },
+        {
+            "name": "elgg/apiadmin",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Elgg/apiadmin.git",
+                "reference": "e0ee5e0f15de40f2fcda43148f631b4d43829d68"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Elgg/apiadmin/zipball/e0ee5e0f15de40f2fcda43148f631b4d43829d68",
+                "reference": "e0ee5e0f15de40f2fcda43148f631b4d43829d68",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": ">=1.0.8"
+            },
+            "type": "elgg-plugin",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0"
+            ],
+            "time": "2016-01-12T15:49:12+00:00"
         },
         {
             "name": "elgg/login_as",
@@ -154,7 +177,7 @@
                 "elgg",
                 "plugin"
             ],
-            "time": "2015-09-03 12:18:17"
+            "time": "2015-09-03T12:18:17+00:00"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -196,7 +219,7 @@
                 "hashing",
                 "password"
             ],
-            "time": "2014-11-20 16:49:30"
+            "time": "2014-11-20T16:49:30+00:00"
         },
         {
             "name": "knplabs/gaufrette",
@@ -280,7 +303,7 @@
                 "filesystem",
                 "media"
             ],
-            "time": "2015-03-09 08:06:57"
+            "time": "2015-03-09T08:06:57+00:00"
         },
         {
             "name": "mrclay/minify",
@@ -325,7 +348,7 @@
             ],
             "description": "Minify is a PHP5 app that helps you follow several rules for client-side performance. It combines multiple CSS or Javascript files, removes unnecessary whitespace and comments, and serves them with gzip encoding and optimal client-side cache headers",
             "homepage": "http://code.google.com/p/minify/",
-            "time": "2017-06-08 17:49:34"
+            "time": "2017-06-08T17:49:34+00:00"
         },
         {
             "name": "psr/cache",
@@ -371,7 +394,7 @@
                 "psr",
                 "psr-6"
             ],
-            "time": "2016-08-06 20:24:11"
+            "time": "2016-08-06T20:24:11+00:00"
         },
         {
             "name": "symfony/http-foundation",
@@ -426,7 +449,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "time": "2017-06-20 23:27:56"
+            "time": "2017-06-20T23:27:56+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -485,7 +508,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2017-06-09 14:24:12"
+            "time": "2017-06-09T14:24:12+00:00"
         },
         {
             "name": "symfony/polyfill-php54",
@@ -543,7 +566,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2017-06-09 08:25:21"
+            "time": "2017-06-09T08:25:21+00:00"
         },
         {
             "name": "symfony/polyfill-php55",
@@ -599,7 +622,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2017-06-09 08:25:21"
+            "time": "2017-06-09T08:25:21+00:00"
         },
         {
             "name": "tedivm/stash",
@@ -659,7 +682,7 @@
                 "redis",
                 "sessions"
             ],
-            "time": "2017-04-23 17:16:57"
+            "time": "2017-04-23T17:16:57+00:00"
         }
     ],
     "packages-dev": [
@@ -715,7 +738,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2015-06-14 21:17:01"
+            "time": "2015-06-14T21:17:01+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -769,7 +792,7 @@
                 "reflection",
                 "static analysis"
             ],
-            "time": "2015-12-27 11:43:31"
+            "time": "2015-12-27T11:43:31+00:00"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -814,7 +837,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2016-09-30 07:12:33"
+            "time": "2016-09-30T07:12:33+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -861,7 +884,7 @@
                     "email": "me@mikevanriel.com"
                 }
             ],
-            "time": "2016-11-25 06:54:22"
+            "time": "2016-11-25T06:54:22+00:00"
         },
         {
             "name": "phpspec/prophecy",
@@ -924,7 +947,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2017-03-02 20:05:34"
+            "time": "2017-03-02T20:05:34+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -986,7 +1009,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2015-10-06 15:47:00"
+            "time": "2015-10-06T15:47:00+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -1033,7 +1056,7 @@
                 "filesystem",
                 "iterator"
             ],
-            "time": "2016-10-03 07:40:28"
+            "time": "2016-10-03T07:40:28+00:00"
         },
         {
             "name": "phpunit/php-text-template",
@@ -1074,7 +1097,7 @@
             "keywords": [
                 "template"
             ],
-            "time": "2015-06-21 13:50:34"
+            "time": "2015-06-21T13:50:34+00:00"
         },
         {
             "name": "phpunit/php-timer",
@@ -1123,7 +1146,7 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2017-02-26 11:10:40"
+            "time": "2017-02-26T11:10:40+00:00"
         },
         {
             "name": "phpunit/php-token-stream",
@@ -1172,7 +1195,7 @@
             "keywords": [
                 "tokenizer"
             ],
-            "time": "2017-02-27 10:12:30"
+            "time": "2017-02-27T10:12:30+00:00"
         },
         {
             "name": "phpunit/phpunit",
@@ -1244,7 +1267,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-06-21 08:07:12"
+            "time": "2017-06-21T08:07:12+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -1300,7 +1323,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2015-10-02 06:51:40"
+            "time": "2015-10-02T06:51:40+00:00"
         },
         {
             "name": "sebastian/comparator",
@@ -1364,7 +1387,7 @@
                 "compare",
                 "equality"
             ],
-            "time": "2017-01-29 09:50:25"
+            "time": "2017-01-29T09:50:25+00:00"
         },
         {
             "name": "sebastian/diff",
@@ -1416,7 +1439,7 @@
             "keywords": [
                 "diff"
             ],
-            "time": "2017-05-22 07:24:03"
+            "time": "2017-05-22T07:24:03+00:00"
         },
         {
             "name": "sebastian/environment",
@@ -1466,7 +1489,7 @@
                 "environment",
                 "hhvm"
             ],
-            "time": "2016-08-18 05:49:44"
+            "time": "2016-08-18T05:49:44+00:00"
         },
         {
             "name": "sebastian/exporter",
@@ -1533,7 +1556,7 @@
                 "export",
                 "exporter"
             ],
-            "time": "2016-06-17 09:04:28"
+            "time": "2016-06-17T09:04:28+00:00"
         },
         {
             "name": "sebastian/global-state",
@@ -1584,7 +1607,7 @@
             "keywords": [
                 "global state"
             ],
-            "time": "2015-10-12 03:26:01"
+            "time": "2015-10-12T03:26:01+00:00"
         },
         {
             "name": "sebastian/recursion-context",
@@ -1637,7 +1660,7 @@
             ],
             "description": "Provides functionality to recursively process PHP variables",
             "homepage": "http://www.github.com/sebastianbergmann/recursion-context",
-            "time": "2016-10-03 07:41:43"
+            "time": "2016-10-03T07:41:43+00:00"
         },
         {
             "name": "sebastian/version",
@@ -1672,7 +1695,7 @@
             ],
             "description": "Library that helps with managing the version number of Git-hosted PHP projects",
             "homepage": "https://github.com/sebastianbergmann/version",
-            "time": "2015-06-21 13:59:46"
+            "time": "2015-06-21T13:59:46+00:00"
         },
         {
             "name": "simpletest/simpletest",
@@ -1745,7 +1768,7 @@
                 "testing",
                 "unit-test"
             ],
-            "time": "2015-09-21 18:19:52"
+            "time": "2015-09-21T18:19:52+00:00"
         },
         {
             "name": "symfony/yaml",
@@ -1800,7 +1823,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-06-15 12:58:50"
+            "time": "2017-06-15T12:58:50+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -1850,12 +1873,14 @@
                 "check",
                 "validate"
             ],
-            "time": "2016-11-23 20:04:58"
+            "time": "2016-11-23T20:04:58+00:00"
         }
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "elgg/apiadmin": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
