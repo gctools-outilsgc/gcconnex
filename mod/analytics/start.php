@@ -35,5 +35,6 @@ function analytics_init() {
 	
 	// register plugin hooks
 	elgg_register_plugin_hook_handler('action', 'all', '\ColdTrick\Analytics\Tracker::actions');
+	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', '\ColdTrick\Analytics\Site::publicPages');
 	
 }

@@ -4,8 +4,45 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2af6ef00ddc34810d4fc13cdf9daf248",
+    "content-hash": "eac8236b6983080cf0a6644238acb08f",
     "packages": [
+        {
+            "name": "coldtrick/analytics",
+            "version": "v3.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ColdTrick/analytics.git",
+                "reference": "b4f2b6b7fa8fd1c187de5ec51a9d94ee03437ffb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ColdTrick/analytics/zipball/b4f2b6b7fa8fd1c187de5ec51a9d94ee03437ffb",
+                "reference": "b4f2b6b7fa8fd1c187de5ec51a9d94ee03437ffb",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "^1.0.8"
+            },
+            "conflict": {
+                "elgg/elgg": "<1.9"
+            },
+            "require-dev": {
+                "coldtrick/releases": "dev-master",
+                "coldtrick/sniffs": "dev-master"
+            },
+            "type": "elgg-plugin",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0"
+            ],
+            "description": "Adds analytics tracking code (by Google or Piwik) to all Elgg pages",
+            "keywords": [
+                "analytics",
+                "elgg",
+                "plugin"
+            ],
+            "time": "2016-11-22T14:05:16+00:00"
+        },
         {
             "name": "composer/installers",
             "version": "v1.3.0",
