@@ -35,7 +35,7 @@ if (elgg_is_sticky_form('ticket-submit')) {
 </div>
 
 <fieldset class="user-info">
-  <legend>Your information</legend>
+  <legend><?php echo elgg_echo('freshdesk:ticket:legend:yourinfo'); ?></legend>
   <div>
   <label for="email"><?php echo elgg_echo('freshdesk:ticket:email', array(), $lang); ?></label>
   <?php echo elgg_view('input/text', array(
@@ -61,7 +61,7 @@ if (elgg_is_sticky_form('ticket-submit')) {
 </fieldset>
 
 <fieldset class="user-info">
-  <legend>Ticket information</legend>
+  <legend><?php echo elgg_echo('freshdesk:ticket:legend:ticketinfo'); ?></legend>
   <div>
   <label for="subject"><?php echo elgg_echo('freshdesk:ticket:subject', array(), $lang); ?></label>
   <?php echo elgg_view('input/text', array(
@@ -209,7 +209,7 @@ $(document).ready(function(){
 
 fieldset.user-info {
   border: 1px solid #e5e5e5;
-  padding:5px 10px;
+  padding:5px 10px 10px;
   margin-top:10px;
 }
 .user-info legend {

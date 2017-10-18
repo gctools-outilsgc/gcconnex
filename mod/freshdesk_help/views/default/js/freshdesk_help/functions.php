@@ -264,12 +264,39 @@ function submitTicket(form, lang, source, product){
   var api_key = details['api_key'];
   var formdata = new FormData();
 
+  //create organization field entry from the form
+  if(product == 2100000290){
+    var user_type = $("#user_type").val();
+
+    if (user_type == 'federal') {
+        var org = $('#'+user_type).val();
+    } else if (user_type == 'academic' || user_type == 'student') {
+
+        var institution = $('#institution').val();
+        var school = $('#' + institution).val();
+
+        var org = school+' - '+institution+' - '+user_type;
+    } else if (user_type == 'provincial') {
+        var province = $('#provincial').val();
+        var provinceOptions = $('#provincial').val();
+        provinceOptions = province.replace(/\s+/g, '-').toLowerCase();
+        var ministry = $('#' + provinceOptions+'-choices').val();
+
+        var org = ministry+' - '+province+' - '+user_type;
+    } else {
+        var org = $('#' + user_type).val()+' - '+ user_type;
+    }
+
+  } else {
+    var org = $(form).find('#department').val();
+  }
+
   //gather inputs
   formdata.append('product_id', product);
   formdata.append('description', $(form).find('#description').val());
   formdata.append('email', $(form).find('#email').val());
   formdata.append('subject', $(form).find('#subject').val());
-  formdata.append('custom_fields', { "department" : $(form).find('#department').val() });
+  formdata.append('custom_fields[cf_organization]', org);
   formdata.append('type', $('#type').val());
   formdata.append('priority', '1');
   formdata.append('status', '2');
