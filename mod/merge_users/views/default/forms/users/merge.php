@@ -130,7 +130,7 @@ echo '<a href="#" id="confirm" class="btn btn-primary btn-lg">'.elgg_echo('confi
   z-index: 1050;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
   max-width: 900px;
-  max-height:600px;
+  
   width:100%;
   display:none;
 }
