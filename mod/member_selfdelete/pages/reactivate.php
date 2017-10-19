@@ -10,6 +10,6 @@ $content .= elgg_view('member_selfdelete/reactivate');
 $content .= "</div>";
 
 // place the form into the elgg layout
-$body = elgg_view_layout('one_column', array('content' => $content));
+$body = elgg_view_layout('one_column', array('title'=>elgg_echo('memeber_selfdelete:gc:reactivate:title'),'content' => $content));
 
 echo elgg_view_page(elgg_echo('welcome back bb'), $body);

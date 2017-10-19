@@ -16,7 +16,7 @@ $owned_groups = elgg_get_entities(array(
 
 
 if($owned_groups){
-    echo '<div class="row clearfix">';
+    echo '<div class="row clearfix deactivate-group-holder">';
     echo elgg_format_element('div',array(), elgg_echo('member_selfdelete:gc:group:owner:change'));
     foreach($owned_groups as $group){
 

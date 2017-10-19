@@ -2,7 +2,8 @@
 
 return array(
     //GC langs
-
+	'member_selfdelete:delete:account' => "Deactivate My Account",
+	
 	//Form
 	'member_selfdelete:explain:deactivate' => "This is what it means to deactivate...",
 	'member_selfdelete:gc:group:owner:change' => "You need to change ownership of these groups pls",

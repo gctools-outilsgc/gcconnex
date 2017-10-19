@@ -6,7 +6,7 @@ return array(
 	'member_selfdelete:invalid:confirmation' => "Invalid confirmation - you must type your password in the confirmation box to delete your account",
 	'member_selfdelete:DELETE' => "DELETE",
 	'member_selfdelete:error:delete:admin' => "Admins cannot delete themselves",
-	'member_selfdelete:delete:account' => "Delete My Account",
+	'member_selfdelete:delete:account' => "Deactivate My Account",
 	'member_selfdelete:deleted' => "Your account has been deleted",
 	'member_selfdelete:action:anonymized' => "Your account has been anonymized.",
 	'member_selfdelete:action:banned' => "Your account has been disabled",
@@ -57,18 +57,22 @@ return array(
 	'member_selfdelete:gc:change:error' => "Please change select a new owner",
 
 	//Reasons
-	'member_selfdelete:gc:reasonforleave' => "WHY ARE YOU DEACTIVATING YOUR ACCOUNT?",
-	'member_selfdelete:gc:reason:temp' => "This is temporary, I will be back. (mat leave, sick leave)",
-	'member_selfdelete:gc:reason:retire' => "I am retiring.",
-	'member_selfdelete:gc:reason:understand' => "I don’t understand how to use GCconnex/collab.",
+	'member_selfdelete:gc:reasonforleave' => "Please tell us why you would like to deactivate your account:",
+	'member_selfdelete:gc:reason:tempandknow' => "I am leaving the public service temporarily (e.g. sick leave, mat leave etc.) but I'll be back.",
+	'member_selfdelete:gc:reason:tempnotknow' => "I am leaving the public service and I don't know if/when I'll return.",
+	'member_selfdelete:gc:reason:retire' => "I am retiring from the public service.",
+	'member_selfdelete:gc:reason:understand' => "I find GCconnex confusing.",
 	'member_selfdelete:gc:reason:notifs' => "I get too many notifications.",
-	'member_selfdelete:gc:reason:useful' => "I don’t find GCconnex/collab useful.",
+	'member_selfdelete:gc:reason:useful' => "I don’t find GCconnex useful for my work.",
 	'member_selfdelete:gc:reason:time' => "I spend too much time using GCconnex/collab.",
 	'member_selfdelete:gc:reason:hacked' => "My account was hacked.",
 	'member_selfdelete:gc:reason:other' => "Other, please explain further:",
 
 	'member_selfdelete:gc:deactivate:success' => "Smell ya later",
-	'member_selfdelete:gc:youaredeactivated' =>"Welcome Back! Your account is currently inactive. Contact the help desk to re-activate your account and start collaborating.",
+	'member_selfdelete:gc:youaredeactivated' =>"We're happy to have you back on GCconnex. It looks like your account was deactivated. Please contact our Help Desk to reactivate your account.",
+	'memeber_selfdelete:gc:reactivate:title' => "Welcome Back!",
+	'member_selfdelete:gc:reactivate:action' => "Contact Help Desk to Reactivate",
+	'member_selfdelete:gc:reactivate:browse' => "Browse without login",
 
 	//Admin
 	'admin:users:member_selfdelete:deactivated_users' => 'GC Deactivated Users',

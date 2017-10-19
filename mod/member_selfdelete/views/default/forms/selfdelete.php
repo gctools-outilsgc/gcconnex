@@ -2,11 +2,6 @@
 
 namespace Beck24\MemberSelfDelete;
 
-$explanation = elgg_echo('member_selfdelete:explain:' . elgg_get_plugin_setting('method', PLUGIN_ID));
-echo elgg_view('output/longtext', array(
-	'value' => $explanation
-));
-
 
 if (elgg_get_plugin_setting('method', PLUGIN_ID) == "choose") {
 	$value = elgg_get_sticky_value('member_selfdelete', 'method', 'delete');
@@ -34,28 +29,29 @@ if (elgg_get_plugin_setting('feedback', PLUGIN_ID) == "yes") {
 }
 
 echo '<div class="pvs">';
-echo '<label>'.elgg_echo('member_selfdelete:gc:reasonforleave').'</label>';
+echo '<p class="mrgn-bttm-sm">'.elgg_echo('member_selfdelete:gc:reasonforleave').'</p>';
 echo elgg_view('input/radio',array(
 	'name'=>'gcreason',
 	'options' =>array(
-		elgg_echo('member_selfdelete:gc:reason:temp') => "temp",
+		elgg_echo('member_selfdelete:gc:reason:tempandknow') => "tempandknow",
 		elgg_echo('member_selfdelete:gc:reason:retire') => "retire",
-		elgg_echo('member_selfdelete:gc:reason:understand') => "understand",
+		elgg_echo('member_selfdelete:gc:reason:tempnotknow') => "tempnotknow",
 		elgg_echo('member_selfdelete:gc:reason:notifs') => "notifs",
 		elgg_echo('member_selfdelete:gc:reason:useful') => "useful",
-		elgg_echo('member_selfdelete:gc:reason:time') => "time",
-		elgg_echo('member_selfdelete:gc:reason:hacked') => "hacked",
+		elgg_echo('member_selfdelete:gc:reason:understand') => "understand",
 		elgg_echo('member_selfdelete:gc:reason:other'). elgg_view('input/text',array('name'=>'gcreason_oth')) => "other",
 	),
-	'class'=> '',
+	'class'=> 'deactivate-radios',
 ));
 echo "<label>" . elgg_echo('member_selfdelete:label:confirmation') . '</label>';
 echo elgg_view('input/password', array(
-	'name' => 'confirmation'
+	'name' => 'confirmation',
+	'class' => 'deactivate-password',
 ));
 echo '</div>';
 
 echo '<div class="elgg-foot">';
+echo '<div class="error deactivate-error"></div>';
 echo elgg_view('input/submit', array('value' => elgg_echo('member_selfdelete:submit')));
 echo '</div>';
 
@@ -69,7 +65,40 @@ $(document).ready(function(){
 	formCount = formCount.length;
 	if(formCount>=1){
 		$('.elgg-form-selfdelete').find('.elgg-button-submit').prop('disabled', true);
-		$('.elgg-form-selfdelete').append('Please fix your groups man cmon');
+		$('.elgg-form-selfdelete').find('.elgg-button-submit').addClass('deactivate-submit');
+		$('.elgg-form-selfdelete .deactivate-error').append(<?php echo "'<span>" .elgg_echo('member_selfdelete:gc:error:group') ."</span>'";?>);
 	}
 });
 </script>
+<style>
+	.deactivate-radios input{
+		margin:0px 5px;
+	}
+	.deactivate-password{
+		width:250px;
+	}
+	.deactivate-error span{
+		background: #f3e9e8;
+		padding: 2px 6px;
+		margin: 3px 0px;
+		font-weight: bold;
+		display:inline-block;
+		border-left: 5px solid #d3080c;
+	}
+	.deactivate-submit{
+		display:block;
+	}
+	.deactivate-group-holder{
+		border-bottom: 1px #ddd solid;
+		margin-bottom:8px;
+	}
+	.self-deactivate-memember-form .elgg-input-text{
+		width:75%;
+		display: inline-block;
+	}
+	.self-deactivate-memember-form .elgg-button-submit{
+		width:25%;
+		display:inline-block;
+	}
+
+</style>

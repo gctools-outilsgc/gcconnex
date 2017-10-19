@@ -62,7 +62,7 @@ switch ($method) {
 		}
 		//save reason to user
 		$user->gcdeactivatereason = $gcreason;
-		system_message('member_selfdelete:gc:deactivate:success');
+		system_message(elgg_echo('member_selfdelete:gc:deactivate:success'));
 		
 		//remove notification relationships
 		remove_entity_relationships($user->guid,'cp_subscribed_to_email');
