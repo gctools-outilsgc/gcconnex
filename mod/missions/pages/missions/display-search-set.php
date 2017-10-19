@@ -74,6 +74,9 @@ if($search_typing == 'mission') {
     $list_typing = 'gallery';
     $list_class = 'mission-gallery wb-eqht clearfix';
     $item_class = 'col-sm-4';
+}else{
+	$list_class = 'candidate-holder clearfix';
+	$item_class = "col-sm-3 candidate-panel";
 }
 
 // Function which sorts the search set according to a given value in ascending or descending order.

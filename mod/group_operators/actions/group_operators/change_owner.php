@@ -1,6 +1,6 @@
 <?php
 /**
- * group_operator/change_owner.php 
+ * group_operator/change_owner.php
  *
  * Change owner
  *
@@ -14,35 +14,19 @@
 	$who = get_entity($who_guid);
 	$db_prefix = elgg_get_config('dbprefix');
 	if ($mygroup instanceof ElggGroup && ($mygroup->owner_guid == elgg_get_logged_in_user_guid() || elgg_is_admin_logged_in())) {
-		
+
 		// Owner is now a simple operator
 		if (!check_entity_relationship($mygroup->owner_guid, 'operator', $mygroup_guid)) {
 			add_entity_relationship($mygroup->owner_guid, 'operator', $mygroup_guid);
 		}
-		
-		// We also change icons owner
-		$old_filehandler = new ElggFile();
-		$old_filehandler->owner_guid = $group->owner_guid;
-		$old_filehandler->setFilename('groups');
-		$old_path = $old_filehandler->getFilenameOnFilestore();
-		
-		$new_filehandler = new ElggFile();
-		$new_filehandler->owner_guid = $who_guid;
-		$new_filehandler->setFilename('groups');
-		$new_path = $new_filehandler->getFilenameOnFilestore();
-		
-		foreach(array('', 'tiny', 'small', 'medium', 'large') as $size) {
-			rename("$old_path/{$mygroup_guid}{$size}.jpg", "$new_path/{$mygroup_guid}{$size}.jpg");
-		}
-		
-		// Finally, we change the owner
-		$mygroup->owner_guid = $who_guid;
-		$mygroup->container_guid = $who_guid;
+
+		//transfer cover photo to new owner
+		gc_group_layout_transfer_coverphoto($mygroup, $who);
+		// transfer the group to the new owner
+		group_tools_transfer_group_ownership($mygroup, $who);
 
 		//Update metadata owner guid is case user creator is delete
 		update_data("UPDATE {$db_prefix}metadata SET owner_guid = '$who_guid' where entity_guid = $mygroup_guid");
-
-		$mygroup->save();
 
 		if (elgg_is_active_plugin('cp_notifications')) {
 			$message = array(
@@ -55,7 +39,7 @@
 			);
 			$result = elgg_trigger_plugin_hook('cp_overwrite_notification','all',$message);
 		}
-		
+
 		system_message(elgg_echo('group_operators:owner_changed', array($who->name)));
 	} else {
 		register_error(elgg_echo('group_operators:change_owner:error'));
