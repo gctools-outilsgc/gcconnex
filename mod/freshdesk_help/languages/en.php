@@ -30,6 +30,8 @@ return array(
       'freshdesk:ticket:types:jobs' => "Jobs Marketplace",
       'freshdesk:ticket:types:enhancement' => "Enhancement",
       'freshdesk:ticket:types:flag' => "Flag content or behaviour",
+      'freshdesk:ticket:types:account' => "Account creation",
+      'freshdesk:ticket:types:wiki' => "Wiki coding",
       'freshdesk:ticket:types:other' => "Other",
 
       'freshdesk:knowledge:search:info:embed' => 'Search our knowledge base to find the information you are looking for. For more information vist our <a href="https://gcpedia.gctools-outilsgc.ca/en/support/home">Support Home</a>.',
