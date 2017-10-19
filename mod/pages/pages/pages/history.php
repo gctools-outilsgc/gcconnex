@@ -37,7 +37,7 @@ $content = elgg_list_annotations(array(
 	'limit' => max(20, elgg_get_config('default_limit')),
 	'order_by' => "n_table.time_created desc",
 ));
-error_log($content);
+
 $body = elgg_view_layout('content', array(
 	'filter' => '',
 	'content' => $content,
