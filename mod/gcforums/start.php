@@ -577,13 +577,14 @@ function get_forums_statistics_information($container_guid, $type) {
 
 /// recursively go through the nested forums to create the breadcrumb
 function assemble_nested_forums($breadcrumb, $forum_guid, $recurse_forum_guid) {
+	$lang = get_current_language();
 	$entity = get_entity($recurse_forum_guid);
 	if ($entity instanceof ElggGroup && $entity->guid != $forum_guid) {
-		$breadcrumb[$entity->getGUID()] = array($entity->guid, $entity->name, "profile/{$entity->guid}");
+		$breadcrumb[$entity->getGUID()] = array($entity->guid, gc_explode_translation($entity->name,$lang), "profile/{$entity->guid}");
 		return $breadcrumb;
 
 	} else {
-		$breadcrumb[$entity->guid] = array($entity->guid, $entity->title, "gcforums/view/{$entity->guid}");	
+		$breadcrumb[$entity->guid] = array($entity->guid, gc_explode_translation($entity->title,$lang), "gcforums/view/{$entity->guid}");	
 		return assemble_nested_forums($breadcrumb, $forum_guid, $entity->getContainerGUID());
 	}
 }
