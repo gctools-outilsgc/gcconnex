@@ -5,26 +5,26 @@ $product_id  = (int) elgg_get_plugin_setting("embed_product_id", "freshdesk_help
 
 $types = array();
 $types['None'] = elgg_echo('freshdesk:ticket:types:none', array(), $lang);
-$types['Account creation'] = elgg_echo('freshdesk:ticket:types:account', array(), $lang);
-$types['Log in credentials'] = elgg_echo('freshdesk:ticket:types:login', array(), $lang);
-$types['Bugs/Errors'] = elgg_echo('freshdesk:ticket:types:bugs', array(), $lang);
-$types['Group-related'] = elgg_echo('freshdesk:ticket:types:group', array(), $lang);
-$types['Training'] = elgg_echo('freshdesk:ticket:types:training', array(), $lang);
-$types['Jobs Marketplace'] = elgg_echo('freshdesk:ticket:types:jobs', array(), $lang);
-$types['Enhancement'] = elgg_echo('freshdesk:ticket:types:enhancement', array(), $lang);
-$types['Wiki coding'] = elgg_echo('freshdesk:ticket:types:wiki', array(), $lang);
-$types['Flag content or behaviour'] = elgg_echo('freshdesk:ticket:types:flag', array(), $lang);
-$types['Other'] = elgg_echo('freshdesk:ticket:types:other', array(), $lang);
+$types['Account creation | Création de compte'] = elgg_echo('freshdesk:ticket:types:account', array(), $lang);
+$types['Log in credentials | Identifiants de connexions'] = elgg_echo('freshdesk:ticket:types:login', array(), $lang);
+$types['Bugs/Errors | Bogues/erreurs'] = elgg_echo('freshdesk:ticket:types:bugs', array(), $lang);
+$types['Group-related | Relatif aux groupes'] = elgg_echo('freshdesk:ticket:types:group', array(), $lang);
+$types['Training | Formation'] = elgg_echo('freshdesk:ticket:types:training', array(), $lang);
+$types["Jobs Marketplace | Carrefour d'emploi"] = elgg_echo('freshdesk:ticket:types:jobs', array(), $lang);
+$types['Enhancement | Amélioration'] = elgg_echo('freshdesk:ticket:types:enhancement', array(), $lang);
+$types['Wiki coding | Codage wiki'] = elgg_echo('freshdesk:ticket:types:wiki', array(), $lang);
+$types['Flag content or behaviour | Signaler un contenu ou comportement'] = elgg_echo('freshdesk:ticket:types:flag', array(), $lang);
+$types['Other | Autres'] = elgg_echo('freshdesk:ticket:types:other', array(), $lang);
 
 if(!$lang){
   $lang = get_current_language();
   $source = 'base';
   $product_id  = (int) elgg_get_plugin_setting("product_id", "freshdesk_help");
-  unset($types['Wiki coding']);
+  unset($types['Wiki coding | Codage wiki']);
 } else {
-  unset($types['Group-related']);
-  unset($types['Jobs Marketplace']);
-  unset($types['Enhancement']);
+  unset($types['Group-related | Relatif aux groupes']);
+  unset($types["Jobs Marketplace | Carrefour d'emploi"]);
+  unset($types['Enhancement | Amélioration']);
 }
 //populate form with known information
 if(elgg_is_logged_in()){
