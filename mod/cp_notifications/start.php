@@ -1464,6 +1464,8 @@ function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $para
 			else
 				$template = elgg_view('cp_notifications/newsletter_template_empty', array('to' => $user));
 
+			$template = str_replace("<", "\r\n<", $template);
+			
 			if (elgg_is_active_plugin('phpmailer'))
 				phpmailer_send($user->email, $user->name, $subject, $template, NULL, true );
 			else
@@ -1535,6 +1537,11 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 				$template = elgg_view('cp_notifications/newsletter_template', array('to' => $user, 'newsletter_content' => $digest_array));
 			else
 				$template = elgg_view('cp_notifications/newsletter_template_empty', array('to' => $user));
+
+
+			/// e-mail providers can potentially break html codes because it exceeds a limit (set by the inbox)
+			/// REFERENCE: https://stackoverflow.com/questions/12216228/html-email-annoying-line-breaking
+			$template = str_replace("<", "\r\n<", $template);
 
 			echo $template . "<br/><br/>";
 
