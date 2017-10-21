@@ -51,7 +51,11 @@ return array(
   'freshdesk:ticket:types:jobs' => "Carrefour d'emploi",
   'freshdesk:ticket:types:enhancement' => "Amélioration",
   'freshdesk:ticket:types:flag' => "Signaler un contenu ou comportement",
+  'freshdesk:ticket:types:account' => "Création de compte",
+  'freshdesk:ticket:types:wiki' => "Codage wiki",
   'freshdesk:ticket:types:other' => "Autres",
+
+
 
   'freshdesk:knowledge:search:info:embed' => 'Recherche dans notre base de connaissances pour trouver les renseignements que vous cherchez. Pour obtenir de plus amples renseignements, veuillez visiter notre <a href="https://gcpedia.gctools-outilsgc.ca/fr/support/home">Support Accueil</a>.',
 
