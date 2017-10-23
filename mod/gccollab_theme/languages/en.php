@@ -37,7 +37,7 @@ return array(
   'wet:gcdirectoryLink' => 'https://gcdirectory-gcannuaire.gc.ca/en/GCD/?pgid=002',
   'wet:tutorialLink'=>'http://www.gcpedia.gc.ca/wiki/GCcollab_User_Help/See_All',
   'wet:gccollabLink' => "https://gccollab.ca/",
-  'wet:GCcollabLink' => "https://GCcollab.gc.ca/",
+  'wet:gcconnexLink' => "https://gcconnex.gc.ca/",
   'wet:groupLoading'=>'Loading content',
   'wet:cover_photo_remove'=>'Remove current group cover image',
   'wet:cover_photo_input'=>'Add a Cover Image to your group',
