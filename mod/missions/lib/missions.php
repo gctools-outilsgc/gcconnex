@@ -439,8 +439,8 @@ function mm_notify_user($recipient, $sender, $subject, $title_en,$title_fr,$body
     $email_notification_footer_en = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/notifications/{$username_link}".'?utm_source=notification&utm_medium=site'),'en');
     $email_notification_footer_fr = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/notifications/{$username_link}".'?utm_source=notification&utm_medium=site'),'fr');
 
-	$bg_color = ( strpos(elgg_get_site_entity()->name, 'collab') !== false ) ? "46246A" : "047177";
-	$accent_color = ( strpos(elgg_get_site_entity()->name, 'collab') !== false ) ? "79579D" : "055959";
+	$bg_color = ( strpos(elgg_get_site_entity()->name, 'collab') !== false ) ? "#46246A" : "#047177";
+	$accent_color = ( strpos(elgg_get_site_entity()->name, 'collab') !== false ) ? "#79579D" : "#055959";
 
 	$body = "<html>
 <body>
