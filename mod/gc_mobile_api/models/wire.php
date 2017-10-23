@@ -253,7 +253,7 @@ function get_wirepost($user, $guid, $thread, $lang)
 	return $wire_posts;
 }
 
-function get_wireposts($user, $limit, $filters, $offset, $lang)
+function get_wireposts($user, $limit, $offset, $filters, $lang)
 {
 	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 	if (!$user_entity) {

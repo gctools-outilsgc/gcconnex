@@ -575,8 +575,26 @@ function get_user_activity($profileemail, $user, $limit, $offset, $lang)
 			$event->object['description'] = $object->description;
 		} elseif ($object instanceof ElggObject) {
 			$event->object['type'] = 'discussion-add';
-			$event->object['name'] = ($object->title) ? $object->title : $object->name;
-			$event->object['description'] = $object->description;
+
+			if($object->title){
+				if (strpos($object->title, '"en":') !== false) {
+					$event->object['name'] = gc_explode_translation($object->title, $lang);
+				} else {
+					$event->object['name'] = $object->title;
+				}
+			} else if($object->name){
+				if (strpos($object->name, '"en":') !== false) {
+					$event->object['name'] = gc_explode_translation($object->name, $lang);
+				} else {
+					$event->object['name'] = $object->name;
+				}
+			}
+
+			if (strpos($object->description, '"en":') !== false) {
+				$event->object['description'] = gc_explode_translation($object->description, $lang);
+			} else {
+				$event->object['description'] = $object->description;
+			}
 
 			$other = get_entity($event->object_guid);
 			$parent = get_entity($other->container_guid);
