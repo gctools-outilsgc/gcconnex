@@ -15,7 +15,7 @@ module.exports = function(config) {
 
 		// list of files / patterns to load in the browser
 		files: [
-			'vendors/jquery/jquery-1.11.0.min.js',
+			'vendors/jquery/jquery-1.11.1.min.js',
 			'vendors/jquery/jquery-migrate-1.2.1.min.js',
 			'vendors/sprintf.js',
 			'js/lib/elgglib.js',
