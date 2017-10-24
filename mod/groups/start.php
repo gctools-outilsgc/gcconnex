@@ -280,6 +280,9 @@ function groups_page_handler($page) {
 		case 'requests':
 			groups_handle_requests_page($page[1]);
 			break;
+		case 'stats':
+			groups_handle_stats_page($page[1]);
+			break;
 		default:
 			return false;
 	}

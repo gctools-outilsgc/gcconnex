@@ -190,11 +190,13 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 						 $actions = array();
 						 // group owners
 						 if ($owner->canEdit() || $page_owner->canEdit()) {
-								 // edit and invite
-								 $url = elgg_get_site_url() . "groups/edit/{$group->getGUID()}";
-								 $actions[$url] = 'groups:edit';
-								 $url = elgg_get_site_url() . "groups/invite/{$group->getGUID()}";
-								 $actions[$url] = 'groups:invite';
+								// edit and invite
+								$url = elgg_get_site_url() . "groups/edit/{$group->getGUID()}";
+								$actions[$url] = 'groups:edit';
+								$url = elgg_get_site_url() . "groups/invite/{$group->getGUID()}";
+								$actions[$url] = 'groups:invite';
+								$url = elgg_get_site_url() . "groups/stats/{$group->getGUID()}";
+								$actions[$url] = 'groups:stats';
 						 }
 						 // group members
 						 if ($group->isMember()) {
