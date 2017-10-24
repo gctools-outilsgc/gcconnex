@@ -892,6 +892,7 @@ function groups_handle_stats_page($guid) {
 		'filter' => '',
 	);
 	$body = elgg_view_layout('content', $params);
+	$body = str_replace('col-md-8', 'col-md-12', $body);
 
 	echo elgg_view_page($title, $body);
 }
