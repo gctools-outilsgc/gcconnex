@@ -338,13 +338,11 @@ function _elgg_set_landing_page()
 			$user->landingpage = $page;
 			if ($user->save()) {
 				return true;
-			} else {
 			}
 		} else {
 			// no change
 			return null;
 		}
-	} else {
 	}
 	return false;
 }
@@ -439,9 +437,6 @@ function wet4_theme_pagesetup()
 				$count = elgg_get_entities_from_relationship($options);
 				$extra = "";
 				if (!empty($count)) {
-					if ($count >= 10) {
-						//$count = '9+';
-					}
 					$extra = '<span aria-hidden="true" class="notif-badge">' . $count . '</span>';
 				}
 
@@ -626,9 +621,6 @@ function wet4_theme_setup_head($hook, $type, $data)
 function wet4_likes_entity_menu_setup($hook, $type, $return, $params)
 {
 	// make the widget view produce the same entity menu as the other objects
-	if (elgg_in_context('widgets')) {
-		//return $return;
-	}
 
 	$entity = $params['entity'];
 	$lang = get_current_language();
@@ -803,9 +795,6 @@ function wet4_blog_entity_menu($hook, $entity_type, $returnvalue, $params)
 function wet4_elgg_entity_menu_setup($hook, $type, $return, $params)
 {
 	//Have widgets show the same entity menu
-	if (elgg_in_context('widgets')) {
-		//return $return;
-	}
 
 	$entity = $params['entity'];
 	$lang = get_current_language();
