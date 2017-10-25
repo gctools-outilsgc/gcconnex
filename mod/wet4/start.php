@@ -1615,14 +1615,14 @@ function enhanced_friendly_time_hook($hook, $type, $return, $params)
 	return "<time $attrs>$friendly_time</time>";
 }
 
-/*
+/**
  * proper_subtypes
  *
  * Takes the subtypes and turns them into the plain language version of the subtype for menu items.
  *
- * @author Ethan Wallace<your.name@example.com>
- * @param [string] [type] [<Entity subtype.>]
- * @return [string] [<Subtype>]
+ * @author Ethan Wallace
+ * @param string $type Entity subtype
+ * @return string Subtype
  */
 function proper_subtypes($type)
 {
@@ -1703,14 +1703,14 @@ function proper_subtypes($type)
 	return $subtype;
 }
 
-/*
+/**
  * generate_hidden_text
  *
  * Takes the type and entity name to generate hidden text for entity/river menus
  *
- * @author Ethan Wallace<your.name@example.com>
- * @param [string] [type] [<Entity subtype.>]
- * @return [array] [<Contains different text for each menu item>]
+ * @author Ethan Wallace
+ * @param string $type Entity subtype.
+ * @return array Contains different text for each menu item
  */
 function generate_hidden_text($type, $name)
 {
@@ -1786,14 +1786,14 @@ function generate_hidden_text($type, $name)
 	return $hiddenText;
 }
 
-/*
+/**
  * embed_discussion_river
  *
  * Searches preview text of discussions to find video url to embed that video.
  *
- * @author Ethan Wallace<your.name@example.com>
- * @param [string] [desc] [<Preview text from the discussion.>]
- * @return [string] [<HTML to create embeded video>]
+ * @author Ethan Wallace
+ * @param string $desc Preview text from the discussion.
+ * @return string HTML to create embeded video
  */
 function embed_discussion_river($desc)
 {
