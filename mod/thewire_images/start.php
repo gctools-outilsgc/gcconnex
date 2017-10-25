@@ -15,9 +15,8 @@ elgg_register_event_handler('init', 'system', 'thewire_image');
 function thewire_image() {
 	$plugin_root = dirname(__FILE__);
 	elgg_register_library('thewire_image', "$plugin_root/lib/thewire_image.php");
-	
-	// we're prepending the form view. Note the -1 priority.
-	elgg_extend_view('forms/thewire/add', 'thewire_image/form_extension', -1);
+	elgg_register_js('dropzone', 'mod/thewire_images/js/dropzone.js');
+	elgg_register_css('dropzone', 'mod/thewire_images/css/dropzone.css');
 	
 	elgg_extend_view('object/summary/extend', 'thewire_image/image');
 	elgg_extend_view('js/elgg', 'js/thewire_image');
@@ -53,6 +52,7 @@ function thewire_image_check_attachments($event, $type, $object) {
 		$file_obj->setMimeType($file['type']);
 		$file_obj->original_filename = $file['name'];
 		$file_obj->simpletype = file_get_simple_type($file['type']);
+		$file_obj->access_id = ACCESS_PUBLIC;
 
 		$file_obj->open("write");
 		$file_obj->write(get_uploaded_file('thewire_image_file'));

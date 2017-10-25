@@ -14,7 +14,7 @@ if (!elgg_instanceof($post, 'object', 'thewire')) {
 $attachment = thewire_image_get_attachments($post->getGUID());
 
 if ($attachment) {
-	echo "<div class='elgg-content mrgn-tp-sm mrgn-lft-sm mrgn-bttm-md'>";
+	echo "<div class='elgg-content mrgn-tp-sm mrgn-lft-sm mrgn-bttm-sm'>";
 	echo "<a class='elgg-lightbox' href='" . elgg_get_site_url() . 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename . "'>";
 	echo elgg_view('output/img', array(
 		'src' => 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename,
