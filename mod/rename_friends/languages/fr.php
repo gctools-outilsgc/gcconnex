@@ -184,7 +184,7 @@ $french = array(
 		
 //Rename Groups		
 		
-'groups:invite' => "Invitez les {$lplural}",
+'groups:invite' => "Invitez des utilisateurs au groupe",
 'groups:invite:title' => "Invitez les {$lplural} à ce {$glsingle}",
 'groups:inviteto' => "Invitez les {$lplural} à '%s'",
 'groups:nofriends' => "Il ne vous reste pu de {$lplural} à inviter à ce {$glsingle}.",
