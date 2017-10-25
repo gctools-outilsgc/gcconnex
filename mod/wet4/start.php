@@ -165,6 +165,11 @@ function wet4_theme_init()
 	elgg_register_widget_type('suggested_friends', elgg_echo('sf:suggcolleagues'), elgg_echo('sf:suggcolleagues'), array('custom_index_widgets'), false);
 	elgg_register_widget_type('feature_tour', 'feature_tour', 'feature_tour', array('custom_index_widgets'), false);
 
+	if (elgg_is_logged_in()) {//for my the my groups widget on the home page
+		$mygroups_title = elgg_echo('wet_mygroups:my_groups');
+	} else {
+		$mygroups_title = elgg_echo('wet_mygroups:my_groups_nolog');
+	}
 	//WET my groups widget
 	elgg_register_widget_type('wet_mygroups_index', $mygroups_title, 'My Groups Index', array('custom_index_widgets'), true);
 	elgg_register_widget_type('most_liked', elgg_echo('activity:module:weekly_likes'), elgg_echo('activity:module:weekly_likes'), array('dashboard','custom_index_widgets'), true);
