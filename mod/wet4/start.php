@@ -1714,6 +1714,7 @@ function proper_subtypes($type)
  */
 function generate_hidden_text($type, $name)
 {
+	$hiddenText = array();
 
 	//create all unique menu items
 	switch ($type) {
