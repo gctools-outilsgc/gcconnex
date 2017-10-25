@@ -1087,8 +1087,6 @@ function wet4_elgg_river_menu_setup($hook, $type, $return, $params)
 		foreach ($return as $key => $item) {
 			switch ($item->getName()) {
 				case 'comment':
-					unset($return[$key]);
-					break;
 				case 'reply':
 					unset($return[$key]);
 					break;
@@ -1291,6 +1289,10 @@ function my_owner_block_handler($hook, $type, $menu, $params)
 					$item->setHref('#blog');
 					$item->setPriority('3');
 					break;
+				case 'thewire':
+					$item->setHref('#thewire');
+					$item->setPriority('5');
+					break;
 				case 'event_calendar':
 					$item->setText(elgg_echo('gprofile:events'));
 					$item->setHref('#events');
@@ -1304,6 +1306,11 @@ function my_owner_block_handler($hook, $type, $menu, $params)
 				case 'bookmarks':
 					$item->setText(elgg_echo('gprofile:bookmarks'));
 					$item->setHref('#bookmarks');
+					$item->setPriority('8');
+					break;
+				case 'questions':
+					$item->setText(elgg_echo('widget:questions:title'));
+					$item->setHref('#question');
 					$item->setPriority('8');
 					break;
 				case 'polls':
@@ -1331,26 +1338,14 @@ function my_owner_block_handler($hook, $type, $menu, $params)
 					$item->addItemClass('removeMe');
 					$item->setPriority('12');
 					break;
-
-				case 'orgs':
-					$item->setPriority('13');
-					break;
-				case 'thewire':
-					$item->setHref('#thewire');
-					$item->setPriority('5');
-					break;
 				case 'activity':
 					$item->setText('Activity');
 					$item->setPriority('13');
 					$item->addItemClass('removeMe');
 					break;
 				case 'user_invite_from_profile':
+				case 'orgs':
 					$item->setPriority('13');
-					break;
-				case 'questions':
-					$item->setText(elgg_echo('widget:questions:title'));
-					$item->setHref('#question');
-					$item->setPriority('8');
 					break;
 			}
 		}
@@ -1628,79 +1623,59 @@ function proper_subtypes($type)
 {
 	switch ($type) {
 		case 'page_top':
-			$subtype = elgg_echo('page');
-			break;
-
 		case 'page':
-			$subtype = elgg_echo('page');
-			break;
+			return elgg_echo('page');
 
 		case 'thewire':
-			$subtype = elgg_echo('wire:post');
-			break;
+			return elgg_echo('wire:post');
 
 		case 'blog':
-			$subtype = elgg_echo('blog:blog');
-			break;
+			return elgg_echo('blog:blog');
 
 		case 'comment':
-			$subtype = elgg_echo('comment');
-			break;
+			return elgg_echo('comment');
 
 		case 'groupforumtopic':
-			$subtype = elgg_echo('discussion');
-			break;
+			return elgg_echo('discussion');
 
 		case 'discussion_reply':
-			$subtype = elgg_echo('group:replyitem');
-			break;
+			return elgg_echo('group:replyitem');
 
 		case 'file':
-			$subtype = elgg_echo('file:file');
-			break;
+			return elgg_echo('file:file');
 
 		case 'folder':
-			$subtype = elgg_echo('item:object:folder');
-			break;
+			return elgg_echo('item:object:folder');
 
 		case 'event_calendar':
-			$subtype = elgg_echo('event_calendar:agenda:column:session');
-			break;
+			return elgg_echo('event_calendar:agenda:column:session');
 
 		case 'bookmarks':
-			$subtype = elgg_echo('bookmark');
-			break;
+			return elgg_echo('bookmark');
 
 		case 'poll':
-			$subtype = elgg_echo('poll');
-			break;
+			return elgg_echo('poll');
 
 		case 'album':
-			$subtype = elgg_echo('album');
-			break;
+			return elgg_echo('album');
 
 		case 'image':
-			$subtype = elgg_echo('image');
-			break;
+			return elgg_echo('image');
 
 		case 'idea':
-			$subtype = elgg_echo('item:object:idea');
-			break;
+			return elgg_echo('item:object:idea');
 
 		case 'groups':
-			$subtype = elgg_echo('group:group');
-			break;
+			return elgg_echo('group:group');
 
 		case 'question':
-			$subtype = elgg_echo('questions:edit:question:title');
-			break;
+			return elgg_echo('questions:edit:question:title');
 
 		case 'answer':
-			$subtype = elgg_echo('questions:search:answer:title');
-			break;
+			return elgg_echo('questions:search:answer:title');
 	}
 
-	return $subtype;
+	return '';
 }
 
 /**
@@ -1719,18 +1694,12 @@ function generate_hidden_text($type, $name)
 	//create all unique menu items
 	switch ($type) {
 		case 'page_top':
-			$hiddenText['history'] = elgg_echo('entity:history:link:'.$type, array($name));
-			break;
-
 		case 'page':
 			$hiddenText['history'] = elgg_echo('entity:history:link:'.$type, array($name));
 			break;
 
 		case 'thewire':
 			$hiddenText['reply'] = elgg_echo('entity:reply:link:'.$type, array($name));
-			break;
-
-		case 'blog':
 			break;
 
 		case 'comment':
@@ -1742,37 +1711,13 @@ function generate_hidden_text($type, $name)
 			$hiddenText['unlock'] = elgg_echo('entity:unlock:link:'.$type, array($name));
 			break;
 
-		case 'discussion_reply':
-			break;
-
 		case 'file':
 			$hiddenText['download'] = elgg_echo('entity:download:link:'.$type, array($name));
-			break;
-
-		case 'folder':
-			break;
-
-		case 'event_calendar':
-			break;
-
-		case 'bookmarks':
-			break;
-
-		case 'poll':
-			break;
-
-		case 'album':
-			break;
-
-		case 'image':
 			break;
 
 		case 'idea':
 			$hiddenText['upvote'] = elgg_echo('entity:upvote:link:'.$type, array($name));
 			$hiddenText['downvote'] = elgg_echo('entity:downvote:link:'.$type, array($name));
-			break;
-
-		case 'groups':
 			break;
 	}
 
@@ -1876,8 +1821,8 @@ function wet_questions_page_handler($segments)
 			include "$new_page/owner.php";
 			break;
 		case 'friends':
-				include "$new_page/friends.php";
-				break;
+			include "$new_page/friends.php";
+			break;
 		case 'experts':
 			if (isset($segments[1]) && is_numeric($segments[1])) {
 				elgg_set_page_owner_guid($segments[1]);
