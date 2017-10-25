@@ -18,11 +18,14 @@ function thewire_image() {
 	elgg_register_js('dropzone', 'mod/thewire_images/js/dropzone.js');
 	elgg_register_css('dropzone', 'mod/thewire_images/css/dropzone.css');
 	
-	elgg_extend_view('object/summary/extend', 'thewire_image/image');
 	elgg_extend_view('js/elgg', 'js/thewire_image');
 
 	elgg_register_event_handler('create', 'object', 'thewire_image_check_attachments');
 	elgg_register_event_handler('delete', 'object', 'thewire_image_delete_attached_files');
+
+	// overrule default save action
+	elgg_unregister_action("thewire/add");
+	elgg_register_action("thewire/add", "$plugin_root/actions/thewire/add.php");
 
 	// downloads are served through pages instead of actions so the download link can be shared.
 	// action tokens prevent sharing action links.

@@ -13,6 +13,7 @@ $post = elgg_extract("post", $vars);
 $char_limit = thewire_tools_get_wire_length();
 $reshare = elgg_extract("reshare", $vars); // for reshare functionality
 $lang = get_current_language();
+$count = 1;
 
 $text = elgg_echo("post");
 if ($post) {
@@ -26,6 +27,7 @@ if ($post) {
 		"name" => "parent_guid",
 		"value" => $post->guid,
 	));
+	$count++;
 }
 
 $reshare_input = "";
@@ -35,6 +37,7 @@ if (!empty($reshare)) {
 		"name" => "reshare_guid",
 		"value" => $reshare->getGUID()
 	));
+	$count++;
 
     //display warning to user if resharing content that is not public on the wire
 	$reshare_input .= elgg_view("thewire_tools/reshare_source", array("entity" => $reshare));
@@ -82,17 +85,18 @@ if ($char_limit == 0) {
 
 $post_input = elgg_view("input/plaintext", array(
 	"name" => "body",
-    "id"=>"wire-body",
-	"class" => "mtm thewire-textarea form-control",
+    "id" => "wire-body",
+	"class" => "mts mbs thewire-textarea form-control",
 	"rows" => $num_lines,
 	"value" => htmlspecialchars_decode($post_value, ENT_QUOTES),
 	"data-max-length" => $char_limit,
-	'required '=> "required",
+	"required" => "required",
+	"placeholder" => elgg_echo('thewire_image:form:default')
 ));
 
 $submit_button = elgg_view("input/submit", array(
 	"value" => $text,
-	"class" => "btn btn-primary",
+	"class" => "btn btn-primary mls",
 ));
 
 $mentions = "";
@@ -129,13 +133,14 @@ echo <<<HTML
 	$reshare_input
     <label for="wire-body">$createWire</label>
 	$post_input
-<div class="thewire-characters-remaining">
-	$count_down
-</div>
-$mentions
+	$mentions
 <div class="elgg-foot mts">
+	<div id="dz-preview" class="pull-left"></div>
+	<div class="thewire-characters-remaining pull-right">
+		$count_down
+		$submit_button
+	</div>
 	$parent_input
-	$submit_button
 	$access_input
 </div>
 HTML;
@@ -144,15 +149,19 @@ HTML;
 <script type="text/javascript">
 $(document).ready(function() {
 	Dropzone.autoDiscover = false;
-	$('.elgg-form-thewire-add').addClass('dropzone');
+	var count = parseInt("<?php echo $count; ?>");
+	var instance = $('.elgg-form-thewire-add').get(count-1);
+	$(instance).addClass('dropzone dropzone-' + count);
 
-	var defaultMessage = (elgg.get_language() == 'fr') ? "Glissez et déposez une image ici pour télécharger." : "Drag & drop an image here to upload.";
-	var removeFile = (elgg.get_language() == 'fr') ? "Supprimer l'image" : "Remove image";
-	var maxFilesExceeded = (elgg.get_language() == 'fr') ? "Vous ne pouvez télécharger qu'une seule image." : "You can only upload one image.";
-	var invalidFileType = (elgg.get_language() == 'fr') ? "Vous ne pouvez pas télécharger de fichiers de ce type." : "You can't upload files of this type.";
-	var fileTooBig = (elgg.get_language() == 'fr') ? "Le fichier est trop gros ({{filesize}} MiB). Max taille du fichier: {{maxFilesize}} MiB." : "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.";
+	var defaultMessage = "<?php echo elgg_echo('thewire_image:form:default'); ?>";
+	var removeFile = "<?php echo elgg_echo('thewire_image:form:removefile'); ?>";
+	var maxFilesExceeded = "<?php echo elgg_echo('thewire_image:form:maxfilesexceeded'); ?>";
+	var invalidFileType = "<?php echo elgg_echo('thewire_image:form:invalidfile'); ?>";
+	var fileTooBig = "<?php echo elgg_echo('thewire_image:form:filetoobig'); ?>";
+	var maxFileSize = 2; // Set in MB
 
-	var myDropzone = new Dropzone($('.dropzone').get(0), {
+
+	var myDropzone = new Dropzone(instance, {
 		addRemoveLinks: true,
 		autoProcessQueue: false,
 		dictDefaultMessage: defaultMessage,
@@ -161,8 +170,12 @@ $(document).ready(function() {
 		dictRemoveFile: removeFile,
 		dictMaxFilesExceeded: maxFilesExceeded,
 		maxFiles: 1,
-		maxFilesize: 2, // MB
+		maxFilesize: maxFileSize,
 		paramName: "thewire_image_file",
+		uploadMultiple: false,
+		previewsContainer: "#dz-preview",
+		hiddenInputContainer:"#wire-body",
+        clickable: "#dz-preview",
 	    init: function () {
 	        this.on("addedfile", function(file) {
     			$(".dz-progress").remove();
@@ -170,6 +183,7 @@ $(document).ready(function() {
 	        this.on("success", function(file, xhr) {
     			if( xhr.system_messages.success[0] ){
 	    			elgg.system_message(xhr.system_messages.success[0]);
+	    			setTimeout(function() { window.location.reload(); }, 2000);
     			} else if( xhr.system_messages.error[0] ){
 	    			elgg.register_error(xhr.system_messages.error[0]);
     			}
@@ -181,7 +195,6 @@ $(document).ready(function() {
     	e.preventDefault();
     	if(myDropzone.files.length > 0){
 	    	myDropzone.processQueue();
-	    	setTimeout(function() { window.location.reload(); }, 1500);
 	    } else {
 	    	$('.elgg-form-thewire-add').submit();
 	    }

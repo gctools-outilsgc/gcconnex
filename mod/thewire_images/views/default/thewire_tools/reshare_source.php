@@ -34,7 +34,6 @@ if (!empty($entity->title)) {
 }
 
 $attachment = thewire_image_get_attachments($entity->getGUID());
-
 if ($attachment) {
 	echo "<div class='elgg-content mrgn-tp-sm mrgn-lft-sm mrgn-bttm-sm'>";
 	echo "<a class='elgg-lightbox' href='" . elgg_get_site_url() . 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename . "'>";
