@@ -1,0 +1,45 @@
+<?php 
+
+/**
+ * Retrieves all the members of a group
+ * Functionality that replaces the Friend Picker in the Send Email to (all) group members
+ * Author: Christine Yu (GitHub @Pandurx)
+ * Date created: October 25, 2017
+ **/
+
+if (!elgg_is_xhr()) {
+	register_error('Sorry, Ajax only!');
+	forward();
+}
+
+$group_guid = (int)get_input('group_guid');
+//$group_members = get_input('group_members');
+$page_selected = (int)get_input('page_selected');
+//$number_of_members_displayed = (int)get_input('number_of_members_displayed');
+
+$query = "SELECT ue.name, r.guid_one FROM elggentity_relationships r, elggusers_entity ue WHERE r.guid_one = ue.guid AND r.relationship = 'member' AND r.guid_two = {$group_guid}";
+
+
+$group_members = get_data($query);
+$group_members = array_slice($group_members, $page_selected, 2);
+$display_members = array();
+
+foreach ($group_members as $member) {
+	//error_log(">>> {$member->guid_one}");
+
+	$checkbox = elgg_view('input/checkbox', array(
+	'name' => 'chkMember',
+	'value' => 	$member->guid_one,
+	'label' =>	'labelling'));
+
+	$display_members[$member->guid_one] = $checkbox . $member->name;
+}
+
+error_log("action invoked! {$group_guid} /// {$page_selected}");
+
+
+echo json_encode([
+	'display_members' => $display_members,
+]);
+
+
