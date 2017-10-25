@@ -12,7 +12,7 @@ return array(
 'simplesaml:settings:sources:configuration:auto_link' => "Automaticly link existing accounts based on profile information (optional)",
 'simplesaml:usersettings:link_url' => "Click here to link both accounts",
 'simplesaml:widget:logged_in' => "<b>%s</b> welcome on the <b>%s</b> community",
-'simplesaml:login:title' => "GC2.0 Tools Log in Portal",
+'simplesaml:login:title' => "GCTools Log in Portal",
 'simplesaml:login:body' => "Use your GCconnex account information to log in.</br>",
 'simplesaml:login:body:other' => "Don't have a GCconnex account? Create one by clicking the \"Register\" link below.</br>",
 'simplesaml:register-password' => "<a href ='".elgg_get_site_url()."register'>Register</a> | <a href ='".elgg_get_site_url()."forgotpassword'>Lost password</a>",
