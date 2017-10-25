@@ -747,6 +747,8 @@ function wet4_blog_entity_menu($hook, $entity_type, $returnvalue, $params)
 		return $returnvalue;
 	}
 
+	$lang = get_current_language();
+
 	$entity = elgg_extract("entity", $params);
 	if (empty($entity) || !elgg_instanceof($entity, "object", "blog")) {
 		return $returnvalue;
