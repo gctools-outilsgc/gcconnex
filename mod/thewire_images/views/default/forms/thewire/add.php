@@ -91,7 +91,7 @@ $post_input = elgg_view("input/plaintext", array(
 	"value" => htmlspecialchars_decode($post_value, ENT_QUOTES),
 	"data-max-length" => $char_limit,
 	"required" => "required",
-	"placeholder" => elgg_echo('thewire_image:form:default')
+	"placeholder" => elgg_echo('thewire_image:form:dragdrop')
 ));
 
 $submit_button = elgg_view("input/submit", array(
@@ -164,6 +164,7 @@ $(document).ready(function() {
 	var myDropzone = new Dropzone(instance, {
 		addRemoveLinks: true,
 		autoProcessQueue: false,
+        clickable: true,
 		dictDefaultMessage: defaultMessage,
 		dictFileTooBig: fileTooBig,
 		dictInvalidFileType: invalidFileType,
@@ -175,7 +176,6 @@ $(document).ready(function() {
 		uploadMultiple: false,
 		previewsContainer: "#dz-preview",
 		hiddenInputContainer:"#wire-body",
-        clickable: "#dz-preview",
 	    init: function () {
 	        this.on("addedfile", function(file) {
     			$(".dz-progress").remove();

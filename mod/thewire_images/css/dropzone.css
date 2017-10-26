@@ -192,8 +192,7 @@
     border-style: solid; }
     .dropzone.dz-drag-hover .dz-message {
       opacity: 0.5; }
-  .dropzone .dz-message {
-    display: none; }
+  .dropzone .dz-message { }
   .dropzone .dz-preview {
     position: relative;
     display: inline-block;
