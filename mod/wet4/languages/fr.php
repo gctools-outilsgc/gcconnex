@@ -172,6 +172,12 @@ return array(
 
 	'form:invalid:extensions' => "Format de fichier non valide. Extensions de fichier autorisées: %s",
 
+	//group invite
+
+	'group:invite:user:moreinfo' => "Users will not appear in drop down list if already a member of the group.",
+
+	////
+
 	'new:dept:activity:title' => "Fil de nouvelles de mon ministère",
 	'dept:activity:show' => "Montrer les connexions de collègue",
 	'dept:activity:hide' => "Cacher les connexions de collègue",
