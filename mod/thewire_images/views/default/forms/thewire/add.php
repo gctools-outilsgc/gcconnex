@@ -5,6 +5,11 @@
  * @uses $vars["post"]
  */
 
+if( elgg_is_xhr() ){
+	echo '<script type="text/javascript" src="/mod/thewire_images/js/dropzone.js"></script>';
+	echo '<link rel="stylesheet" type="text/css" href="/mod/thewire_images/css/dropzone.css">';
+}
+
 elgg_load_js("elgg.thewire");
 elgg_load_js("dropzone");
 elgg_load_css("dropzone");
@@ -160,7 +165,6 @@ $(document).ready(function() {
 	var fileTooBig = "<?php echo elgg_echo('thewire_image:form:filetoobig'); ?>";
 	var maxFileSize = 2; // Set in MB
 
-
 	var myDropzone = new Dropzone(instance, {
 		addRemoveLinks: true,
 		autoProcessQueue: false,
@@ -178,7 +182,12 @@ $(document).ready(function() {
 		hiddenInputContainer:"#wire-body",
 	    init: function () {
 	        this.on("addedfile", function(file) {
-    			$(".dz-progress").remove();
+    			$(instance).find(".dz-progress").toggle();
+    			$(instance).find(".dz-message").toggle();
+	        });
+	        this.on("removedfile", function(file) {
+    			$(instance).find(".dz-progress").toggle();
+    			$(instance).find(".dz-message").toggle();
 	        });
 	        this.on("success", function(file, xhr) {
     			if( xhr.system_messages.success[0] ){
