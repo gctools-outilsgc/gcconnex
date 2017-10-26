@@ -13,33 +13,35 @@ if (!elgg_is_xhr()) {
 }
 
 $group_guid = (int)get_input('group_guid');
-//$group_members = get_input('group_members');
 $page_selected = (int)get_input('page_selected');
-//$number_of_members_displayed = (int)get_input('number_of_members_displayed');
+$number_of_members_per_page = (int)get_input('number_of_members_per_page');
+$save_selected = get_input('save_selected');
 
+$save_selected_array = explode(',', $save_selected);
+
+
+$offset = $number_of_members_per_page * $page_selected;
 $query = "SELECT ue.name, r.guid_one FROM elggentity_relationships r, elggusers_entity ue WHERE r.guid_one = ue.guid AND r.relationship = 'member' AND r.guid_two = {$group_guid}";
-
-
 $group_members = get_data($query);
-$group_members = array_slice($group_members, $page_selected, 2);
+
+$group_members = array_slice($group_members, $offset, 3);
 $display_members = array();
 
 foreach ($group_members as $member) {
-	//error_log(">>> {$member->guid_one}");
+	$member = get_entity($member->guid_one);
+	$checked = (in_array($member->getGUID(), $save_selected_array)) ? true : false;
+	$member_icon = "<img class='img-circle' src='{$member->getIconURL(array('size' => 'small'))}'/>";
 
 	$checkbox = elgg_view('input/checkbox', array(
-	'name' => 'chkMember',
-	'value' => 	$member->guid_one,
-	'label' =>	'labelling'));
-
-	$display_members[$member->guid_one] = $checkbox . $member->name;
+		'name' => 'chkMember',
+		'value' => 	$member->getGUID(),
+		'checked' => $checked,
+	));
+	$display_members[$member->getGUID()] =  "<div style='border-bottom:1px solid black; padding:5px 2px 2px 2px;'> {$checkbox} {$member_icon} {$member->name} ( {$member->getGUID()} ) </div>";
 }
-
-error_log("action invoked! {$group_guid} /// {$page_selected}");
 
 
 echo json_encode([
 	'display_members' => $display_members,
 ]);
-
 

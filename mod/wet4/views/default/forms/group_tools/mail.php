@@ -14,25 +14,43 @@ $members = $vars["members"];
 // CYu: https://elgg.org/discussion/view/2551792/kill-the-friendspicker
 // CYu: Friendspicker input form creates heavy performance load (either server or client side)
 
+$query = "SELECT ue.name, r.guid_one FROM elggentity_relationships r, elggusers_entity ue WHERE r.guid_one = ue.guid AND r.relationship = 'member' AND r.guid_two = {$group->getGUID()}";
+$members = get_data($query);
+
 $form_data = "";
 
-$member_count = count($members);
+$number_of_members_per_page = 3;
 
-$members = array_slice($members, 0, 3);
+$member_count = count($members);
+$members = array_slice($members, 0, $number_of_members_per_page);
+
+$number_of_pages = floor($member_count / $number_of_members_per_page);
+
+/// pagination
+$pagination = "<ul class='elgg-pagination pagination'>";
+for ($x = 0; $x <= $number_of_pages; $x++) {
+	$page_number = $x + 1;
+	$pagination .= "<li> <a class='myLink' data-key='{
+											\"group_guid\":\"{$group->getGUID()}\",
+											\"page_selected\":\"{$x}\",
+											\"number_of_members_per_page\":\"{$number_of_members_per_page}\"
+											}'>{$page_number}</a> </li>";
+}
+$pagination .= "</ul>";
 
 $textbox = elgg_view('input/text', array('id'=> 'txtSaveChk'));
 
 foreach ($members as $member) {
+	$member = get_entity($member->guid_one);
+	$member_icon = "<img class='img-circle' src='{$member->getIconURL(array('size' => 'small'))}'/>";
 	$checkbox = elgg_view('input/checkbox', array(
 		'name' => 	'chkMember',
 		'value' => 	$member->getGUID(),
-		'label' =>	'labelling'));
-	$member_icon = "<img class='img-circle' src='{$member->getIconURL(array('size' => 'small'))}'/>";
-	$display_members .= "<div style='border-bottom:1px solid black; padding:5px 2px 2px 2px;'> {$checkbox} {$member_icon} {$member->getGUID()} / {$member->name}</div>";
+	));
+	$display_members .= "<div style='border-bottom:1px solid black; padding:5px 2px 2px 2px;'> {$checkbox} {$member_icon} {$member->name} ( {$member->getGUID()} ) </div>";
 }
 
 $form_data .= " {$textbox}";
-$pagination = "<a id='myLink' href='#' data-key='{\"group_guid\":\"".$group->getGUID()."\", \"page_selected\":\"2\"}'>see page</a>";
 
 $form_data .= "<section>";
 $form_data .= "<label>Currently displaying {$member_count} group members</label> ";
@@ -45,8 +63,10 @@ $form_data .= "
 		{$display_members}
 
 	</div>
-	{$pagination}
 </div>
+
+	{$pagination}
+
 <br/>
 
 </section>
@@ -76,26 +96,32 @@ echo $form_data;
 
 <script>
 
+/// keeps track of the selected group members for group mailing
 $(document).on('click', 'input[name="chkMember"]',function() {
-	    var checkbox = $('input[name="chkMember"]');
+	var checkbox = $(this);
+	var txtSaveChk = $('#txtSaveChk');
 
-    $('#txtSaveChk').val(checkbox.val());
+	if (checkbox.is(":checked")) {
+		console.log(" CHECKED ! ");
+		var txtSaveChkVal = txtSaveChk.val();
+		if (txtSaveChkVal == '') {
+			$('#txtSaveChk').val(checkbox.val());
+		} else {
+			$('#txtSaveChk').val(txtSaveChkVal + ',' + checkbox.val());
+		}
+	} else {
+		console.log(" UNCHECKED ! ");
+		var txtSaveChkValArr = txtSaveChk.val().split(',');
+		var index = txtSaveChkValArr.indexOf(checkbox.val());
+		txtSaveChkValArr.splice(index, 1);
+		$('#txtSaveChk').val(txtSaveChkValArr.join());
+		
+	}
 });
 
-var checkboxes = $('input[name="chkMember"]');
-
-checkboxes.on("click", function () {
-//console.log(">>>> checked!!!");
-    // var $checked = checkboxes.filter(":checked"),
-    //     checkedValues = $checked.map(function () {
-    //         return this.value;
-    //     }).get();
-    // $('#txtSaveChk').val(checkedValues);
-});
 
 
-
-$('#myLink').click(function() {
+$('.myLink').click(function() {
 
 	console.log("hey there");
 	var me = $(this),
@@ -107,11 +133,13 @@ $('#myLink').click(function() {
 			data: {
 				'group_guid':data.group_guid,
 				'page_selected':data.page_selected,
+				'number_of_members_per_page':data.number_of_members_per_page,
+				'save_selected':$('#txtSaveChk').val()
 			},
 			success: function(members) {
+				$('#display-group-members').empty();
 
 				for (var item in members.output.display_members){
-					console.log(">>>> " + members.output.display_members[item]);
 					$('#display-group-members').append("<div>"+members.output.display_members[item]+"</div>");
 				}
 
