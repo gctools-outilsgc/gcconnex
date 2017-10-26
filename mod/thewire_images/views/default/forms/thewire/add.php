@@ -18,7 +18,6 @@ $post = elgg_extract("post", $vars);
 $char_limit = thewire_tools_get_wire_length();
 $reshare = elgg_extract("reshare", $vars); // for reshare functionality
 $lang = get_current_language();
-$count = 1;
 
 $text = elgg_echo("post");
 if ($post) {
@@ -32,7 +31,6 @@ if ($post) {
 		"name" => "parent_guid",
 		"value" => $post->guid,
 	));
-	$count++;
 }
 
 $reshare_input = "";
@@ -42,7 +40,6 @@ if (!empty($reshare)) {
 		"name" => "reshare_guid",
 		"value" => $reshare->getGUID()
 	));
-	$count++;
 
     //display warning to user if resharing content that is not public on the wire
 	$reshare_input .= elgg_view("thewire_tools/reshare_source", array("entity" => $reshare));
@@ -154,9 +151,7 @@ HTML;
 <script type="text/javascript">
 $(document).ready(function() {
 	Dropzone.autoDiscover = false;
-	var count = parseInt("<?php echo $count; ?>");
-	var instance = $('.elgg-form-thewire-add').get(count-1);
-	$(instance).addClass('dropzone dropzone-' + count);
+	var instance = $(".elgg-form-thewire-add:not(.dropzone)").addClass('dropzone').get(0);
 
 	var defaultMessage = "<?php echo elgg_echo('thewire_image:form:default'); ?>";
 	var removeFile = "<?php echo elgg_echo('thewire_image:form:removefile'); ?>";
