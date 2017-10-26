@@ -6,7 +6,7 @@ return array(
 	'member_selfdelete:invalid:confirmation' => "Invalid confirmation - you must type your password in the confirmation box to delete your account",
 	'member_selfdelete:DELETE' => "DELETE",
 	'member_selfdelete:error:delete:admin' => "Admins cannot delete themselves",
-	'member_selfdelete:delete:account' => "Deactivate My Account",
+	'member_selfdelete:delete:account' => "Deactivate my account",
 	'member_selfdelete:deleted' => "Your account has been deleted",
 	'member_selfdelete:action:anonymized' => "Your account has been anonymized.",
 	'member_selfdelete:action:banned' => "Your account has been disabled",
@@ -43,18 +43,22 @@ return array(
 	'member_selfdelete:select:feedback' => "Select whether user feedback should be collected",
 	'member_selfdelete:select:method' => "Select the method of deletion",
 	'member_selfdelete:self:banned' => "Self-deleted user",
-	'member_selfdelete:submit' => "Submit",
+	'member_selfdelete:submit' => "Deactivate my account",
 	'admin:users:member_selfdelete/reasons' => "Deleted User Feedback",
 	'admin:users:member_selfdelete:reasons' => "Deleted User Feedback",
 
 	//GC langs
 
 	//Form
+	'member_selfdelete:explain' => "If you need to put your GCconnex/GCcollab activity on hold, you can deactivate your account. Deactivating disables your account, meaning you can’t login, post content nor receive any notifications. All of your information, including your profile and contributions will remain on the tool and will still be visible to others. You can reactivate your account anytime by contacting the help desk. <a href='help/knowledgebase'>Learn more</a>",
 	'member_selfdelete:explain:deactivate' => "This is what it means to deactivate...",
-	'member_selfdelete:gc:group:owner:change' => "You need to change ownership of these groups pls",
-	'member_selfdelete:gc:change:owner' => "Owner changed",
+	'member_selfdelete:gc:group:owner:change' => "Wait! Before deactivating, you need to transfer ownership of your group(s). Add the name of the group member you want to make owner of the group.",
+	'member_selfdelete:gc:change:owner' => "Group ownership was successfully transferred.",
 	'member_selfdelete:gc:change:not:member' => "This user is not a member of this group, please choose another user",
 	'member_selfdelete:gc:change:error' => "Please change select a new owner",
+	'member_selfdelete:gc:group:submit' => "Transfer",
+	'member_selfdelete:gc:change:not:member' => "The user must be a member of the group to transfer ownership to him/her",
+	'member_selfdelete:gc:error:group' => "You need to transfer your group ownership before deactivating your account.",
 
 	//Reasons
 	'member_selfdelete:gc:reasonforleave' => "Please tell us why you would like to deactivate your account:",
@@ -68,10 +72,10 @@ return array(
 	'member_selfdelete:gc:reason:hacked' => "My account was hacked.",
 	'member_selfdelete:gc:reason:other' => "Other, please explain further:",
 
-	'member_selfdelete:gc:deactivate:success' => "Smell ya later",
+	'member_selfdelete:gc:deactivate:success' => "Your account has been deactivated. Hope to see you back soon!",
 	'member_selfdelete:gc:youaredeactivated' =>"We're happy to have you back on GCconnex. It looks like your account was deactivated. Please contact our Help Desk to reactivate your account.",
 	'memeber_selfdelete:gc:reactivate:title' => "Welcome Back!",
-	'member_selfdelete:gc:reactivate:action' => "Contact Help Desk to Reactivate",
+	'member_selfdelete:gc:reactivate:action' => "Contact help desk to reactivate",
 	'member_selfdelete:gc:reactivate:browse' => "Browse without login",
 
 	//Admin
@@ -82,5 +86,5 @@ return array(
 
 	//User and Profile
 	'member_selfdelete:gc:deactivate:profile' => "This user has deactivated their account",
-	'member_selfdelete:gc:deactivate:avatar' => "Deactivated User",
+	'member_selfdelete:gc:deactivate:avatar' => "Deactivated user",
 );

@@ -100,5 +100,9 @@ $(document).ready(function(){
 		width:25%;
 		display:inline-block;
 	}
+	.self-groupmems-popup{
+		position:absolute;
+		width:73%;
+	}
 
 </style>

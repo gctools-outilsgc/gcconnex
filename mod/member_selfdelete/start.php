@@ -14,6 +14,8 @@ function init() {
 	// prevent people from seeing the profile of disabled users
 	elgg_extend_view('profile/details', 'member_selfdelete/pre_userdetails', 0);
 
+	elgg_extend_view('forms/account/settings','member_selfdelete/deactivate_settings');
+
 	elgg_register_page_handler('selfdelete', __NAMESPACE__ . '\\selfdelete_page_handler');
 	elgg_register_page_handler('gcreactivate',__NAMESPACE__ . '\\gcreactivate_page_handler');
 
@@ -46,13 +48,11 @@ function gcreactivate_page_handler($page) {
 }
 
 function friend_request_deactivated_user($event, $object_type, $object){
-	if (($object instanceof ElggRelationship)) {
 		$user = get_user($object->guid_two);
 		if($user->gcdeactivated = true){
 			system_message('this user is also deactivated');
 		}
 		system_message('is this even doing anything?');
-	}
 }
 function gc_deactivated_login($event, $type, $user){
 	if(($user instanceof ElggUser) && $user->gcdeactivate == true){

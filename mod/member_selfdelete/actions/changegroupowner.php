@@ -12,10 +12,10 @@ if($new_owner->getGUID() != $group->getOwnerGUID()){
 		gc_group_layout_transfer_coverphoto($group, $new_owner);
 		// transfer the group to the new owner
 		group_tools_transfer_group_ownership($group, $new_owner);
-        system_message('member_selfdelete:gc:change:owner');
+        system_message(elgg_echo('member_selfdelete:gc:change:owner'));
         forward(REFERER);
     }else{
-        register_error('member_selfdelete:gc:change:not:member');
+        register_error(elgg_echo('member_selfdelete:gc:change:not:member'));
         forward(REFERER);
     }
 }else{

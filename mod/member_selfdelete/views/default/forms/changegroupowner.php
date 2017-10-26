@@ -30,6 +30,6 @@ $vars = array(
 );
 
 echo elgg_view_module('popup', '', elgg_view('graphics/ajax_loader', array('hidden' => false)), $vars);
-echo elgg_view('input/submit', array('value' => elgg_echo('member_selfdelete:submit')));
+echo elgg_view('input/submit', array('value' => elgg_echo('member_selfdelete:gc:group:submit')));
         
   echo '</form>';          
