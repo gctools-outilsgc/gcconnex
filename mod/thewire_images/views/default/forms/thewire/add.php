@@ -166,6 +166,7 @@ $(document).ready(function() {
 	var maxFileSize = 2; // Set in MB
 
 	var myDropzone = new Dropzone(instance, {
+		acceptedFiles: "image/jpeg,image/png,image/gif",
 		addRemoveLinks: true,
 		autoProcessQueue: false,
         clickable: true,
