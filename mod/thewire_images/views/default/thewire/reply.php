@@ -28,4 +28,6 @@ if ($attachment) {
 	echo "</div>";
 }
 
-echo $post->description;
+if( $post->description != "" ){
+	echo "<blockquote>" . $post->description . "</blockquote>";
+}
