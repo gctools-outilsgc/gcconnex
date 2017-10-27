@@ -378,7 +378,7 @@ return array(
 	'loggedinrequired' => "You must be logged in to view the requested page.",
 	'adminrequired' => "You must be an administrator to view the requested page.",
 	'membershiprequired' => "You must be a member of this group to view the requested page.",
-	'limited_access' => "You do not have permission to view the requested page.",
+	'limited_access' => "You do not have permission to view the requested page. Make sure you are logged in, are a member of the group (if applicable) and that you have the rights to access that page.",
 
 
 /**
