@@ -13,13 +13,13 @@ $members = $vars["members"];
 
 // CYu: https://elgg.org/discussion/view/2551792/kill-the-friendspicker
 // CYu: Friendspicker input form creates heavy performance load (either server or client side)
-
+// TODO: make sure that cp_notification is also turned on
 $query = "SELECT ue.name, r.guid_one FROM elggentity_relationships r, elggusers_entity ue WHERE r.guid_one = ue.guid AND r.relationship = 'member' AND r.guid_two = {$group->getGUID()}";
 $members = get_data($query);
 
 $form_data = "";
 
-$number_of_members_per_page = 3;
+$number_of_members_per_page = 10;
 
 $member_count = count($members);
 $members = array_slice($members, 0, $number_of_members_per_page);
@@ -39,7 +39,7 @@ for ($x = 0; $x <= $number_of_pages; $x++) {
 $pagination .= "</ul>";
 
 
-$textbox = elgg_view('input/text', array('id'=> 'txtSaveChk', 'name' => 'txtSaveChk', 'value' => ''));
+$textbox = elgg_view('input/hidden', array('id'=> 'txtSaveChk', 'name' => 'txtSaveChk', 'value' => ''));
 
 foreach ($members as $member) {
 	$member = get_entity($member->guid_one);
@@ -48,7 +48,10 @@ foreach ($members as $member) {
 		'name' => 	'chkMember',
 		'value' => 	$member->getGUID(),
 	));
-	$display_members .= "<div style='border-bottom:1px solid #ddd; padding:5px 2px 2px 2px;'> {$checkbox} {$member_icon} {$member->name} ( {$member->getGUID()} ) </div>";
+	if (elgg_is_admin_logged_in()) {
+		$show_user_id = "( {$member->getGUID()} )";
+	}
+	$display_members .= "<div style='border-bottom:1px solid #ddd; padding:5px 2px 2px 2px;'> {$checkbox} {$member_icon} {$member->name} {$show_user_id} </div>";
 }
 
 $chkMailAll = elgg_view('input/checkbox', array(

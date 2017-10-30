@@ -32,13 +32,13 @@ elgg.group_tools.mail_clear_members = function() {
 	elgg.group_tools.mail_update_recipients();
 }
 
-/*elgg.group_tools.mail_all_members = function() {
+elgg.group_tools.mail_all_members = function() {
 	$('#group_tools_mail_member_selection input[name="user_guids[]"]').each(function() {
 		$(this).attr('checked', 'checked');
 	});
 
 	elgg.group_tools.mail_update_recipients();
-}*/
+}
 
 elgg.group_tools.mail_update_recipients = function() {
 	var count = $('#group_tools_mail_member_selection input[name="user_guids[]"]:checked').length;

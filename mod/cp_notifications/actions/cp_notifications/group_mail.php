@@ -16,12 +16,13 @@ $body = get_input("description");
 $user_guids = explode(',', get_input('txtSaveChk'));
 $mail_to_all_members = get_input('chkMailToAll');
 
-
 $forward_url = REFERER;
 
 $user_guids = group_tools_retrieve_members($group_guid, $user_guids);
 
-if (!empty($group_guid) && !empty($body) && !empty($user_guids) && !empty($mail_to_all_members)) {
+
+/// make sure that either "mail to all members" and "user selected" are populated and set
+if (!empty($group_guid) && !empty($body) && (!empty($user_guids) || !empty($mail_to_all_members))) {
 	$group = get_entity($group_guid);
 	
 	if (!empty($group) && ($group instanceof ElggGroup)) {
@@ -33,6 +34,15 @@ if (!empty($group_guid) && !empty($body) && !empty($user_guids) && !empty($mail_
 			
 			// cyu - 03/07/2016: we need to use the cp_notifications module to handle the improved notifications
 			if (elgg_is_active_plugin('cp_notifications')) {
+
+				if ($mail_to_all_members) {
+					/// array[userid] = userid
+					$query = "SELECT ue.name, r.guid_one FROM elggentity_relationships r, elggusers_entity ue WHERE r.guid_one = ue.guid AND r.relationship = 'member' AND r.guid_two = {$group->getGUID()}";
+					$members = get_data($query);
+					foreach ($members as $member) {
+						$user_guids[$member->guid_one] = $member->guid_one;
+					}
+				}
 
 				$message = array(
 					'cp_group' => $group,

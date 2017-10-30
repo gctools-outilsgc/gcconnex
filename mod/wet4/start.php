@@ -237,7 +237,7 @@ function wet4_theme_init() {
 	}
 
     /// replacing friend-picker in email to group members
-    elgg_register_action('wet4/group_tools/retrieve_group_members', elgg_get_plugins_path().'/wet4/actions/group_tools/retrieve_group_members');
+    elgg_register_action('wet4/group_tools/retrieve_group_members', elgg_get_plugins_path().'/wet4/actions/group_tools/retrieve_group_members.php');
     elgg_register_js('cluster-js-min', 'mod/wet4/vendors/clusterize.js/clusterize.min.js');
     elgg_register_js('cluster-js', 'mod/wet4/vendors/clusterize.js/clusterize.js');
 
