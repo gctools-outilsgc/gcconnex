@@ -38,7 +38,8 @@ for ($x = 0; $x <= $number_of_pages; $x++) {
 }
 $pagination .= "</ul>";
 
-$textbox = elgg_view('input/text', array('id'=> 'txtSaveChk'));
+
+$textbox = elgg_view('input/text', array('id'=> 'txtSaveChk', 'name' => 'txtSaveChk', 'value' => ''));
 
 foreach ($members as $member) {
 	$member = get_entity($member->guid_one);
@@ -47,29 +48,36 @@ foreach ($members as $member) {
 		'name' => 	'chkMember',
 		'value' => 	$member->getGUID(),
 	));
-	$display_members .= "<div style='border-bottom:1px solid black; padding:5px 2px 2px 2px;'> {$checkbox} {$member_icon} {$member->name} ( {$member->getGUID()} ) </div>";
+	$display_members .= "<div style='border-bottom:1px solid #ddd; padding:5px 2px 2px 2px;'> {$checkbox} {$member_icon} {$member->name} ( {$member->getGUID()} ) </div>";
 }
+
+$chkMailAll = elgg_view('input/checkbox', array(
+	'name' => 	'chkMailToAll',
+	'value' => 	'1',
+	'label' => 'Mail to all members',
+));
 
 $form_data .= " {$textbox}";
 
-$form_data .= "<section>";
-$form_data .= "<label>Currently displaying {$member_count} group members</label> ";
 
 $form_data .= "
-<br/>
-<div style='border:1px gray solid;'>
-	<div id='display-group-members' style='overflow-y:scroll; height:400px;'>
 
-		{$display_members}
-
+<div style='width:100%;'> 
+	<div>
+		<label class='btn btn-primary active'> {$chkMailAll} </label>
 	</div>
+	<section id='section-mail-members'>
+		<label>Currently displaying {$member_count} group members</label> 
+		<div style='border-top:2px solid #ddd; border-bottom:2px solid #ddd; border-left:2px solid #ddd'>
+			<div id='display-group-members' style='overflow-y:scroll; height:400px;'>
+				{$display_members}
+			</div>
+		</div>
+		{$pagination}
+	</section>
 </div>
-
-	{$pagination}
-
 <br/>
 
-</section>
 ";
 
 
@@ -102,7 +110,6 @@ $(document).on('click', 'input[name="chkMember"]',function() {
 	var txtSaveChk = $('#txtSaveChk');
 
 	if (checkbox.is(":checked")) {
-		console.log(" CHECKED ! ");
 		var txtSaveChkVal = txtSaveChk.val();
 		if (txtSaveChkVal == '') {
 			$('#txtSaveChk').val(checkbox.val());
@@ -110,7 +117,6 @@ $(document).on('click', 'input[name="chkMember"]',function() {
 			$('#txtSaveChk').val(txtSaveChkVal + ',' + checkbox.val());
 		}
 	} else {
-		console.log(" UNCHECKED ! ");
 		var txtSaveChkValArr = txtSaveChk.val().split(',');
 		var index = txtSaveChkValArr.indexOf(checkbox.val());
 		txtSaveChkValArr.splice(index, 1);
@@ -120,34 +126,36 @@ $(document).on('click', 'input[name="chkMember"]',function() {
 });
 
 
+$(document).on('click', 'input[name="chkMailToAll"]',function() {
+	var checkbox = $(this);			
+
+	if (checkbox.attr('checked')) {
+		$('#section-mail-members').hide();
+	} else {
+		$('#section-mail-members').show();
+	}
+});
+
+
 
 $('.myLink').click(function() {
-
-	console.log("hey there");
 	var me = $(this),
-		data = me.data('key');
+	data = me.data('key');
+	elgg.action('wet4/group_tools/retrieve_group_members', {
+		data: {
+			'group_guid':data.group_guid,
+			'page_selected':data.page_selected,
+			'number_of_members_per_page':data.number_of_members_per_page,
+			'save_selected':$('#txtSaveChk').val()
+		},
+		success: function(members) {
+			$('#display-group-members').empty();
 
-		console.log(data);
-
-		elgg.action('wet4/group_tools/retrieve_group_members', {
-			data: {
-				'group_guid':data.group_guid,
-				'page_selected':data.page_selected,
-				'number_of_members_per_page':data.number_of_members_per_page,
-				'save_selected':$('#txtSaveChk').val()
-			},
-			success: function(members) {
-				$('#display-group-members').empty();
-
-				for (var item in members.output.display_members){
-					$('#display-group-members').append("<div>"+members.output.display_members[item]+"</div>");
-				}
-
-				console.log("yay!" + JSON.stringify(members));
+			for (var item in members.output.display_members){
+				$('#display-group-members').append("<div>"+members.output.display_members[item]+"</div>");
 			}
-		});
-
-
+		}
+	});
 });
 
 
