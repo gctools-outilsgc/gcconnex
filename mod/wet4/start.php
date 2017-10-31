@@ -994,9 +994,15 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
             }
 	if ($entity->canEdit() && $handler) {
 		// edit link
+        $group = elgg_get_page_owner_entity();
+        
+        $operators = elgg_get_entities_from_relationship(
+			array('types'=>'user', 'limit'=>0, 'relationship_guid'=>$group->guid, 'relationship'=>'operator', 'inverse_relationship'=>true));
+
+       print_r( $operators);
 
         //checks so the edit icon is not placed on incorrect entities
-        if($handler != 'group_operators'){
+       // if($handler != 'group_operators'){
             if($entity->getSubtype() != 'thewire'){
                 $options = array(
                     'name' => 'edit',
@@ -1020,7 +1026,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
         		);
         		$return[] = \ElggMenuItem::factory($options);
             }
-        }
+       // }
 	}
 
 
