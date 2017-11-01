@@ -195,8 +195,10 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			cp_send_new_password_request($params['cp_password_requester']);
 			return true;
 
-		case 'cp_group_invite_email':	// group_tools/lib/functions.php (returns user's email, so return after mail is sent out)
-			$group_name = $params['cp_group_invite']['name'];
+		case 'cp_group_invite_email':
+		case 'cp_group_invite':	// group_tools/lib/functions.php (returns user's email, so return after mail is sent out)
+
+			$group_name = $params['cp_invite_to_group']['name'];
 			if (elgg_is_active_plugin('wet4')) {
 				$group_name_en = gc_explode_translation($group_name, 'en');
 				$group_name_fr = gc_explode_translation($group_name, 'fr');
@@ -209,7 +211,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$message = array(
 				'cp_email_invited' => $params['cp_invitee'],
 				'cp_email_invited_by' => $params['cp_inviter'],
-				'cp_group_invite' => $params['cp_group_invite'],
+				'cp_group_invite' => $params['cp_invite_to_group'],
 				'cp_invitation_non_user_url' => $params['cp_invitation_nonuser_url'],
 				'cp_invitation_url' => $params['cp_invitation_url'],
 				'cp_invitation_code' => $params['cp_invitation_code'],
@@ -223,7 +225,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$site_template = elgg_view('cp_notifications/site_template', $message);
 			$user_obj = get_user_by_email($params['cp_invitee']);
 
-			$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $params['cp_invitee'], $params['cp_invitee'], $subject, $template, NULL, true ) : mail($params['cp_invitee'],$subject,$template,cp_get_headers());
+			$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $params['cp_invitee']->email, $params['cp_invitee']->name, $subject, $template, NULL, true ) : mail($params['cp_invitee']->email,$subject,$template,cp_get_headers());
 			return true;
 
 		case 'cp_useradd': // cp_notifications/actions/useradd.php

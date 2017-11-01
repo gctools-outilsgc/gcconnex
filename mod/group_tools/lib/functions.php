@@ -101,7 +101,7 @@ function group_tools_invite_user(ElggGroup $group, ElggUser $user, $text = "", $
 				$url
 			));
 			
-	if(!$group->name){
+			if (!$group->name) {
 				$group->name = $group->name2;
 			}
 
