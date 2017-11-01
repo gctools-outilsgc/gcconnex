@@ -711,7 +711,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 				$template = elgg_view('cp_notifications/email_template', $message);
 				$recipient_user = get_user($watcher->guid);
 
-				if (has_access_to_entity($entity, $recipient_user) $object->access_id != 0) {
+				if (has_access_to_entity($entity, $recipient_user) && $object->access_id != 0) {
 
 					if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $watcher->guid,'cp_notifications'),'set_digest_yes') == 0)
 						create_digest($author, $action_type, $content_entity, get_entity($watcher->guid));
