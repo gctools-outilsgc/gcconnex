@@ -1,6 +1,6 @@
 <?php
 /*
-
+If this user is the owner of any group we would like them to transfer ownership before they deactivate
 */
 
 $dbprefix = elgg_get_config('dbprefix');

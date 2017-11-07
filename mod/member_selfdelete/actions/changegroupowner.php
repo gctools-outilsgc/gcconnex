@@ -2,6 +2,7 @@
 /*
 Action handles changing group ownership if user is a group owner
 */
+elgg_make_sticky_form('member_selfdelete');
 
 $group = get_entity(get_input('group_guid'));
 $new_owner = get_entity(get_input('owner_guid'));

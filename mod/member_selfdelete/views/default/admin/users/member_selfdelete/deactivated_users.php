@@ -1,6 +1,6 @@
 <?php
 /*
-Displays a list of users who have deactivated their accounts at some point
+Displays a list of users who have deactivated their accounts at some point - Admin only view
 */
 
 $params = array(
@@ -11,7 +11,7 @@ $params = array(
 
 $users = elgg_get_entities_from_metadata($params);
 echo '<table class="elgg-table">';
-echo '<tr><th>Username</th><th>Email</th><th>Reason</th><th>State</th><th>Time Deactivated</th><th>Toggle</th></tr>';
+echo '<tr><th>Username</th><th>Email</th><th>Reason</th><th>State</th><th>Date Deactivated</th><th>Toggle</th></tr>';
 foreach ($users as $user){
     echo '<tr>';
     echo '<td>' .$user->username . '</td>';

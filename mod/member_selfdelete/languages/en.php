@@ -2,7 +2,7 @@
 
 return array(
 	'member_selfdelete' => "Member Self-Delete",
-	'member_selfdelete:account:delete' => "Delete Account",
+	'member_selfdelete:account:delete' => "Deactivate Account",
 	'member_selfdelete:invalid:confirmation' => "Invalid confirmation - you must type your password in the confirmation box to delete your account",
 	'member_selfdelete:DELETE' => "DELETE",
 	'member_selfdelete:error:delete:admin' => "Admins cannot delete themselves",
@@ -51,7 +51,7 @@ return array(
 
 	//Form
 	'member_selfdelete:explain' => "If you need to put your GCconnex/GCcollab activity on hold, you can deactivate your account. Deactivating disables your account, meaning you can’t login, post content nor receive any notifications. All of your information, including your profile and contributions will remain on the tool and will still be visible to others. You can reactivate your account anytime by contacting the help desk. <a href='help/knowledgebase'>Learn more</a>",
-	'member_selfdelete:explain:deactivate' => "This is what it means to deactivate...",
+	'member_selfdelete:explain:deactivate' => "If you need to put your GCconnex/GCcollab activity on hold, you can deactivate your account. Deactivating disables your account, meaning you can’t login, post content nor receive any notifications. All of your information, including your profile and contributions will remain on the tool and will still be visible to others. You can reactivate your account anytime by contacting the help desk. <a href='help/knowledgebase'>Learn more</a>",
 	'member_selfdelete:gc:group:owner:change' => "Wait! Before deactivating, you need to transfer ownership of your group(s). Add the name of the group member you want to make owner of the group.",
 	'member_selfdelete:gc:change:owner' => "Group ownership was successfully transferred.",
 	'member_selfdelete:gc:change:not:member' => "This user is not a member of this group, please choose another user",

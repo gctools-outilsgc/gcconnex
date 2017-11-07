@@ -43,12 +43,12 @@ echo elgg_view('input/radio',array(
 	),
 	'class'=> 'deactivate-radios',
 ));
-echo "<label>" . elgg_echo('member_selfdelete:label:confirmation') . '</label>';
+echo "<label>" . elgg_echo('member_selfdelete:label:confirmation');
 echo elgg_view('input/password', array(
 	'name' => 'confirmation',
 	'class' => 'deactivate-password',
 ));
-echo '</div>';
+echo '</label></div>';
 
 echo '<div class="elgg-foot">';
 echo '<div class="error deactivate-error"></div>';
@@ -56,7 +56,7 @@ echo elgg_view('input/submit', array('value' => elgg_echo('member_selfdelete:sub
 echo '</div>';
 
 elgg_clear_sticky_form('member_selfdelete');
-//scripts below 
+//scripts below handle form states like if a user has group ownership
 ?>
 
 <script>
