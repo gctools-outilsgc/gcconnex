@@ -663,7 +663,7 @@ function saveProfile(event) {
             profile.institution = $(".gcconnex-basic-institution").is(":visible") ? $(".gcconnex-basic-institution").val() : "";
             profile.university = $(".gcconnex-basic-university").is(":visible") ? $(".gcconnex-basic-university").val() : "";
             profile.college = $(".gcconnex-basic-college").is(":visible") ? $(".gcconnex-basic-college").val() : "";
-            
+
             profile.provincial = $(".gcconnex-basic-provincial").is(":visible") ? $(".gcconnex-basic-provincial").val() : "";
             profile.ministry = $(".gcconnex-basic-ministry").is(":visible") ? $(".gcconnex-basic-ministry:visible").val() : "";
 
@@ -675,7 +675,7 @@ function saveProfile(event) {
             profile.media = $(".gcconnex-basic-media").is(":visible") ? $(".gcconnex-basic-media:visible").val() : "";
             profile.retired = $(".gcconnex-basic-retired").is(":visible") ? $(".gcconnex-basic-retired:visible").val() : "";
             profile.other = $(".gcconnex-basic-other").is(":visible") ? $(".gcconnex-basic-other:visible").val() : "";
-            
+
             profile.location = $(".gcconnex-basic-location").val();
             profile.phone = $(".gcconnex-basic-phone").val();
             profile.mobile = $(".gcconnex-basic-mobile").val();
@@ -830,9 +830,13 @@ function saveProfile(event) {
                     $valid_form = false;
                     //add error style
                     $(this).addClass('input-error').attr('aria-invalid', "true");
+                } else if($startyear[$entry_count] == $(this).val() && parseInt($enddate[$entry_count]) < parseInt($startdate[$entry_count])){
+                  $valid_form = false;
+                  $(this).parent().find('.gcconnex-education-enddate').addClass('input-error').attr('aria-invalid', "true");
                 } else {
                   //remove error classes if field has them
                   $(this).removeClass('input-error').removeAttr('aria-invalid', "true");
+                  $(this).parent().find('.gcconnex-education-enddate').removeClass('input-error').removeAttr('aria-invalid', "true");
                   //push the field info into array
                   $endyear.push($(this).val());
                 }
@@ -988,8 +992,12 @@ function saveProfile(event) {
                     } else if($.trim(experience['endyear']) == '' || experience['endyear'] < experience['startyear']){
                       $(this).find('.gcconnex-work-experience-end-year').addClass('input-error').attr('aria-invalid', "true");
                       $valid_form = false;
+                    } else if(experience['startyear'] == experience['endyear'] && parseInt(experience['enddate']) < parseInt(experience['startdate'])){
+                      $valid_form = false;
+                      $(this).parent().find('.gcconnex-work-experience-enddate').addClass('input-error').attr('aria-invalid', "true");
                     } else {
                       $(this).find('.gcconnex-work-experience-end-year').removeClass('input-error').removeAttr('aria-invalid', "true");
+                      $(this).parent().find('.gcconnex-work-experience-enddate').removeClass('input-error').removeAttr('aria-invalid', "true");
                     }
 
                     work_experience.edit.push(experience);

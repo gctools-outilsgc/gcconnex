@@ -422,11 +422,11 @@ switch ($msg_type) {
 
 
 	case 'cp_group_invite':	// inviting user to group
-		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_group_invite:title',array($vars['cp_group_invite_to']['name'],gc_explode_translation($vars['cp_group']['name'],'en')),'en');
-		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_group_invite:title',array($vars['cp_group_invite_to']['name'],gc_explode_translation($vars['cp_group']['name'],'fr')),'fr');
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_group_invite:title',array($vars['cp_email_invited_by']['name'],gc_explode_translation($vars['cp_group_invite']['name'],'en')),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_group_invite:title',array($vars['cp_email_invited_by']['name'],gc_explode_translation($vars['cp_group_invite']['name'],'fr')),'fr');
 
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_group_invite:description',array(gc_explode_translation($vars['cp_group']['name'],'en'),$vars['cp_invitation_msg'],$vars['cp_invitation_url'].'?utm_source=notification&utm_medium=email'),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_group_invite:description',array(gc_explode_translation($vars['cp_group']['name'],'fr'),$vars['cp_invitation_msg'],$vars['cp_invitation_url'].'?utm_source=notification&utm_medium=email'),'fr');
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_group_invite:description',array(gc_explode_translation($vars['cp_group_invite']['name'],'en'),$vars['cp_invitation_msg'],$vars['cp_invitation_url'].'?utm_source=notification&utm_medium=email'),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_group_invite:description',array(gc_explode_translation($vars['cp_group_invite']['name'],'fr'),$vars['cp_invitation_msg'],$vars['cp_invitation_url'].'?utm_source=notification&utm_medium=email'),'fr');
 
 		break;
 

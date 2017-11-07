@@ -195,8 +195,10 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			cp_send_new_password_request($params['cp_password_requester']);
 			return true;
 
-		case 'cp_group_invite_email':	// group_tools/lib/functions.php (returns user's email, so return after mail is sent out)
-			$group_name = $params['cp_group_invite']['name'];
+		case 'cp_group_invite_email':
+		case 'cp_group_invite':	// group_tools/lib/functions.php (returns user's email, so return after mail is sent out)
+
+			$group_name = $params['cp_invite_to_group']['name'];
 			if (elgg_is_active_plugin('wet4')) {
 				$group_name_en = gc_explode_translation($group_name, 'en');
 				$group_name_fr = gc_explode_translation($group_name, 'fr');
@@ -209,7 +211,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$message = array(
 				'cp_email_invited' => $params['cp_invitee'],
 				'cp_email_invited_by' => $params['cp_inviter'],
-				'cp_group_invite' => $params['cp_group_invite'],
+				'cp_group_invite' => $params['cp_invite_to_group'],
 				'cp_invitation_non_user_url' => $params['cp_invitation_nonuser_url'],
 				'cp_invitation_url' => $params['cp_invitation_url'],
 				'cp_invitation_code' => $params['cp_invitation_code'],
@@ -223,7 +225,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$site_template = elgg_view('cp_notifications/site_template', $message);
 			$user_obj = get_user_by_email($params['cp_invitee']);
 
-			$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $params['cp_invitee'], $params['cp_invitee'], $subject, $template, NULL, true ) : mail($params['cp_invitee'],$subject,$template,cp_get_headers());
+			$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $params['cp_invitee']->email, $params['cp_invitee']->name, $subject, $template, NULL, true ) : mail($params['cp_invitee']->email,$subject,$template,cp_get_headers());
 			return true;
 
 		case 'cp_useradd': // cp_notifications/actions/useradd.php
@@ -668,7 +670,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 				$recipient_user = get_user($watcher->guid);
 
 		
-				if (has_access_to_entity($entity, $recipient_user)) {
+				if (has_access_to_entity($entity, $recipient_user) && $object->access_id != 0) {
 
 					if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $watcher->guid,'cp_notifications'), 'set_digest_yes') == 0)
 						create_digest($author, $action_type, $content_entity, get_entity($watcher->guid));
@@ -711,7 +713,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 				$template = elgg_view('cp_notifications/email_template', $message);
 				$recipient_user = get_user($watcher->guid);
 
-				if (has_access_to_entity($entity, $recipient_user)) {
+				if (has_access_to_entity($entity, $recipient_user) && $object->access_id != 0) {
 
 					if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $watcher->guid,'cp_notifications'),'set_digest_yes') == 0)
 						create_digest($author, $action_type, $content_entity, get_entity($watcher->guid));
@@ -1318,7 +1320,7 @@ function cp_create_notification($event, $type, $object) {
 			if ($to_recipient->guid == $author->guid)
 				continue;
 
-			if (has_access_to_entity($object, $recipient_user)) {
+			if (has_access_to_entity($object, $recipient_user) && $object->access_id != 0) {
 
 				if (strcmp($user_setting, "set_digest_yes") == 0) {
 					create_digest($author, $switch_case, $content_entity, get_entity($to_recipient->guid));
@@ -1347,7 +1349,7 @@ function cp_create_notification($event, $type, $object) {
 			if ($to_recipient->guid == $author->guid || strcmp($user_setting, "set_digest_yes") == 0)
 				continue;
 
-			if (has_access_to_entity($object, $recipient_user)) {
+			if (has_access_to_entity($object, $recipient_user) && $object->access_id != 0) {
 
 				$site_template = elgg_view('cp_notifications/site_template', $message);
 				messages_send($subject, $site_template, $to_recipient->guid, $site->guid, 0, true, false);
@@ -1586,7 +1588,7 @@ function cp_notification_preparation_send($entity, $to_user, $message, $guid_two
 		} else {
 			// check if user has access to the content (DO NOT send if user has no access to this object)
 
-			if (has_access_to_entity($entity, $recipient_user)) {
+			if (has_access_to_entity($entity, $recipient_user) && $object->access_id != 0) {
 				//  GCCON-175: assemble the email content with correct username (for notification page)
 				$message['user_name'] = $to_user->username;
 

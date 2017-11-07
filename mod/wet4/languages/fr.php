@@ -384,7 +384,7 @@ return array(
 	'loggedinrequired' => "Vous devez ouvrir une session pour voir cette page.",
 	'adminrequired' => "Vous devez être administrateur pour voir cette page.",
 	'membershiprequired' => "Vous devez être membre de ce groupe pour voir cette page.",
-	'limited_access' => "Vous n'avez pas la permission de consulter la page demandée.",
+	'limited_access' => "Vous n'avez pas la permission de consulter la page demandé. Assurez-vous d'être connecté, d'être membre du groupe (le cas échéant) et que vous avez les droits pour accèder à cette page.",
 
 
 
