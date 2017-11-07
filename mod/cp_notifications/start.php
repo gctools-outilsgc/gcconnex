@@ -668,7 +668,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 				$recipient_user = get_user($watcher->guid);
 
 		
-				if (has_access_to_entity($entity, $recipient_user)) {
+				if (has_access_to_entity($entity, $recipient_user) && $object->access_id != 0) {
 
 					if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $watcher->guid,'cp_notifications'), 'set_digest_yes') == 0)
 						create_digest($author, $action_type, $content_entity, get_entity($watcher->guid));
@@ -711,7 +711,7 @@ function cp_create_annotation_notification($event, $type, $object) {
 				$template = elgg_view('cp_notifications/email_template', $message);
 				$recipient_user = get_user($watcher->guid);
 
-				if (has_access_to_entity($entity, $recipient_user)) {
+				if (has_access_to_entity($entity, $recipient_user) && $object->access_id != 0) {
 
 					if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $watcher->guid,'cp_notifications'),'set_digest_yes') == 0)
 						create_digest($author, $action_type, $content_entity, get_entity($watcher->guid));
@@ -1318,7 +1318,7 @@ function cp_create_notification($event, $type, $object) {
 			if ($to_recipient->guid == $author->guid)
 				continue;
 
-			if (has_access_to_entity($object, $recipient_user)) {
+			if (has_access_to_entity($object, $recipient_user) && $object->access_id != 0) {
 
 				if (strcmp($user_setting, "set_digest_yes") == 0) {
 					create_digest($author, $switch_case, $content_entity, get_entity($to_recipient->guid));
@@ -1347,7 +1347,7 @@ function cp_create_notification($event, $type, $object) {
 			if ($to_recipient->guid == $author->guid || strcmp($user_setting, "set_digest_yes") == 0)
 				continue;
 
-			if (has_access_to_entity($object, $recipient_user)) {
+			if (has_access_to_entity($object, $recipient_user) && $object->access_id != 0) {
 
 				$site_template = elgg_view('cp_notifications/site_template', $message);
 				messages_send($subject, $site_template, $to_recipient->guid, $site->guid, 0, true, false);
@@ -1586,7 +1586,7 @@ function cp_notification_preparation_send($entity, $to_user, $message, $guid_two
 		} else {
 			// check if user has access to the content (DO NOT send if user has no access to this object)
 
-			if (has_access_to_entity($entity, $recipient_user)) {
+			if (has_access_to_entity($entity, $recipient_user) && $object->access_id != 0) {
 				//  GCCON-175: assemble the email content with correct username (for notification page)
 				$message['user_name'] = $to_user->username;
 
