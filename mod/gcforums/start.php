@@ -237,7 +237,7 @@ function assemble_forum_breadcrumb($entity) {
 		$breadcrumb_array = array_reverse($breadcrumb_array);
 
 		foreach ($breadcrumb_array as $trail_id => $trail) {
-			elgg_push_breadcrumb($trail[1], $trail[2]);
+			elgg_push_breadcrumb(gc_explode_translation($trail[1], get_current_language()), $trail[2]);
 		}
 	}
 }
