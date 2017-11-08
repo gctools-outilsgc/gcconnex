@@ -193,6 +193,9 @@ $(document).ready(function() {
 	    			elgg.register_error(xhr.system_messages.error[0]);
     			}
 	        });
+	        this.on("maxfilesexceeded", function(file) {
+			    this.removeFile(file);
+			});
 	    }
 	});
 
