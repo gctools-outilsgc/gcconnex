@@ -992,14 +992,9 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
                 );
                 $return[] = ElggMenuItem::factory($options);
             }
+    $user = elgg_get_logged_in_user_entity();
 	if ($entity->canEdit() && $handler) {
-		// edit link
-        $group = elgg_get_page_owner_entity();
-        
-        $operators = elgg_get_entities_from_relationship(
-			array('types'=>'user', 'limit'=>0, 'relationship_guid'=>$group->guid, 'relationship'=>'operator', 'inverse_relationship'=>true));
-
-       print_r( $operators);
+         if ($entity['owner_guid'] == $user['guid'] || elgg_is_admin_logged_in()){
 
         //checks so the edit icon is not placed on incorrect entities
        // if($handler != 'group_operators'){
@@ -1028,7 +1023,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
             }
        // }
 	}
-
+}
 
     if($entity->getSubType() == 'file'){
         // download link
