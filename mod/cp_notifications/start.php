@@ -1246,12 +1246,15 @@ function cp_create_notification($event, $type, $object) {
 			// subscribed to users or friends
 			} else {
 
-				if (!$object->title) {
-					if (strstr($object->getSubtype(),"poll_choice") !== false)
+				if (trim($object->title) === '') {
+
+					/// check if poll_choice is found in the subtype
+					if (strpos($object->getSubtype(), "poll_choice") !== false)
 						return true;
 
 					$subject = elgg_echo('cp_notify_usr:subject:new_content2',array($object->getOwnerEntity()->username,cp_translate_subtype($object->getSubtype())),'en');
 					$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content2',array($object->getOwnerEntity()->username,cp_translate_subtype($object->getSubtype(), false)),'fr');
+
 				} else {
 
 					if (strcmp($object->getSubtype(), 'hjforumpost') != 0 || strcmp($object->getSubtype(), 'hjforumtopic') != 0) {

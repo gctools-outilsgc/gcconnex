@@ -333,6 +333,7 @@ switch ($msg_type) {
 		} else
 			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_new_content:title',array($topic_author->getURL().'?utm_source=notification&utm_medium=email', $topic_author->username, cp_translate_subtype($vars['cp_topic']->getSubtype()), $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', gc_explode_translation($vars['cp_topic']->title,'en')),'en');
 
+
 		if (array_key_exists($vars['cp_topic']->getSubtype(),$entity_f))
 			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_f',array($topic_author->getURL(), $topic_author->username, $entity_f[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $vars['cp_topic']->title2),'fr');
 
@@ -346,8 +347,7 @@ switch ($msg_type) {
 			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title_m2',array($topic_author->getURL(), $topic_author->username, $entity_m2[$vars['cp_topic']->getSubtype()], $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $vars['cp_topic']->title2),'fr');
 
 
-
-		if($vars['cp_topic']->description1){
+		if ($vars['cp_topic']->description1) {
              $cp_topic_description = strip_tags($vars['cp_topic']->description1);
         }
 
@@ -357,6 +357,14 @@ switch ($msg_type) {
 
 		$cp_topic_description_discussion_en = gc_explode_translation($cp_topic_description_discussion,'en');
 		$cp_topic_description_discussion_fr = gc_explode_translation($cp_topic_description_discussion,'fr');
+
+
+		if ($vars['cp_topic']->getSubtype() === 'thewire') {
+			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_new_content:title3', array($vars['cp_topic']->getOwnerEntity()->getURL(), $vars['cp_topic']->getOwnerEntity()->name, cp_translate_subtype($vars['cp_topic']->getSubtype())), 'en');
+			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title3', array($vars['cp_topic']->getOwnerEntity()->getURL(), $vars['cp_topic']->getOwnerEntity()->name, cp_translate_subtype($vars['cp_topic']->getSubtype()), false), 'en');
+			$wire_post_message = "<p>{$vars['cp_topic']->description}</p>";
+		}
+
 
 		if (strlen($cp_topic_description) > 200) {
 			$cp_topic_description = substr($cp_topic_description, 0, 200);
@@ -763,7 +771,7 @@ echo <<<___HTML
 		        	<h4 style='padding: 0px 0px 5px 0px; font-family:sans-serif';>
 		        		<strong> {$cp_notify_msg_title_en} </strong>
 		        	</h4>
-
+		        	{$wire_post_message}
 		        	{$cp_notify_msg_description_en}
 
 		        </div>
@@ -777,7 +785,7 @@ echo <<<___HTML
 		       			<strong> {$cp_notify_msg_title_fr} </strong>
 		       		</h4>
 
-
+		       		{$wire_post_message}
 		       		{$cp_notify_msg_description_fr}
 
 		        </div>
