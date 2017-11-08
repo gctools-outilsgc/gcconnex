@@ -361,7 +361,7 @@ switch ($msg_type) {
 
 		if ($vars['cp_topic']->getSubtype() === 'thewire') {
 			$cp_notify_msg_title_en = elgg_echo('cp_notify:body_new_content:title3', array($vars['cp_topic']->getOwnerEntity()->getURL(), $vars['cp_topic']->getOwnerEntity()->name, cp_translate_subtype($vars['cp_topic']->getSubtype())), 'en');
-			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title3', array($vars['cp_topic']->getOwnerEntity()->getURL(), $vars['cp_topic']->getOwnerEntity()->name, cp_translate_subtype($vars['cp_topic']->getSubtype()), false), 'en');
+			$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_new_content:title3', array($vars['cp_topic']->getOwnerEntity()->getURL(), $vars['cp_topic']->getOwnerEntity()->name, cp_translate_subtype($vars['cp_topic']->getSubtype()), false), 'fr');
 			$wire_post_message = "<p>{$vars['cp_topic']->description}</p>";
 		}
 
