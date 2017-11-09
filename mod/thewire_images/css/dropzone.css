@@ -178,6 +178,8 @@
   border-radius: 5px;
   padding: 8px 14px;
   margin-top: 5px; }
+.dropzone.gcconnex {
+  background: rgba(4, 113, 119, 0.075); }
   .dropzone textarea {
   border-radius: 5px; }
   .dropzone.dz-clickable {

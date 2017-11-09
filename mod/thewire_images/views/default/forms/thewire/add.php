@@ -146,12 +146,14 @@ echo <<<HTML
 	$access_input
 </div>
 HTML;
+
+$site = strtolower(elgg_get_site_entity()->name);
 ?>
 
 <script type="text/javascript">
 $(document).ready(function() {
 	Dropzone.autoDiscover = false;
-	var instance = $(".elgg-form-thewire-add:not(.dropzone)").addClass('dropzone').get(0);
+	var instance = $(".elgg-form-thewire-add:not(.dropzone)").addClass('dropzone <?php echo $site; ?>').get(0);
 
 	var defaultMessage = "<?php echo elgg_echo('thewire_image:form:default'); ?>";
 	var removeFile = "<?php echo elgg_echo('thewire_image:form:removefile'); ?>";
