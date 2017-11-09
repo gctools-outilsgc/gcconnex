@@ -33,20 +33,6 @@ if (!empty($entity->title)) {
 	return true;
 }
 
-$attachment = thewire_image_get_attachments($entity->getGUID());
-if ($attachment) {
-	echo "<div class='elgg-content mrgn-tp-sm mrgn-lft-sm mrgn-bttm-sm'>";
-	echo "<a class='elgg-lightbox' href='" . elgg_get_site_url() . 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename . "'>";
-	echo elgg_view('output/img', array(
-		'src' => 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename,
-		'alt' => $attachment->original_filename,
-		'class' => 'img-thumbnail',
-		'style' => "height: 120px; width: auto;"
-	));
-	echo "</a>";
-	echo "</div>";
-}
-
 $content = "<div class='elgg-subtext'>";
 $content .= elgg_echo("thewire_tools:reshare:source") . ": ";
 if (!empty($url)) {
@@ -60,6 +46,21 @@ if (!empty($url)) {
 		"value" => $text
 	));
 }
+
+$attachment = thewire_image_get_attachments($entity->getGUID());
+if ($attachment) {
+	$content .= "<div class='elgg-content mrgn-tp-sm mrgn-lft-sm mrgn-bttm-sm'>";
+	$content .= "<a class='elgg-lightbox' href='" . elgg_get_site_url() . 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename . "'>";
+	$content .= elgg_view('output/img', array(
+		'src' => 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename,
+		'alt' => $attachment->original_filename,
+		'class' => 'img-thumbnail',
+		'style' => "height: 120px; width: auto;"
+	));
+	$content .= "</a>";
+	$content .= "</div>";
+}
+
 $content .= "</div>";
 
 echo elgg_view_image_block($icon, $content, array("class" => "mbn"));

@@ -82,6 +82,20 @@ if (elgg_in_context("widgets")) {
 
 $content = thewire_tools_filter($text);
 
+$attachment = thewire_image_get_attachments($post->getGUID());
+if ($attachment) {
+	$content .= "<div class='elgg-content mrgn-tp-sm mrgn-lft-sm mrgn-bttm-sm'>";
+	$content .= "<a class='elgg-lightbox' href='" . elgg_get_site_url() . 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename . "'>";
+	$content .= elgg_view('output/img', array(
+		'src' => 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename,
+		'alt' => $attachment->original_filename,
+		'class' => 'img-thumbnail',
+		'style' => "height: 120px; width: auto;"
+	));
+	$content .= "</a>";
+	$content .= "</div>";
+}
+
 // check for reshare entity
 $reshare = $post->getEntitiesFromRelationship(array("relationship" => "reshare", "limit" => 1));
 if (!empty($reshare)) {
@@ -101,20 +115,6 @@ if (elgg_is_logged_in() && !elgg_in_context("thewire_tools_thread")) {
 $author_text = elgg_echo($owner_link);
 $date = elgg_view_friendly_time($post->time_created);
 $subtitle = "$author_text <i class=\"timeStamp\">$date</i>";
-
-$attachment = thewire_image_get_attachments($post->getGUID());
-if ($attachment) {
-	$content .= "<div class='elgg-content mrgn-tp-sm mrgn-lft-sm mrgn-bttm-sm'>";
-	$content .= "<a class='elgg-lightbox' href='" . elgg_get_site_url() . 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename . "'>";
-	$content .= elgg_view('output/img', array(
-		'src' => 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename,
-		'alt' => $attachment->original_filename,
-		'class' => 'img-thumbnail',
-		'style' => "height: 120px; width: auto;"
-	));
-	$content .= "</a>";
-	$content .= "</div>";
-}
 
 $params = array(
 	"entity" => $post,
