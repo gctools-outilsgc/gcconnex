@@ -174,19 +174,21 @@ $(document).ready(function() {
 		maxFilesize: maxFileSize,
 		paramName: "thewire_image_file",
 		uploadMultiple: false,
-		previewsContainer: "#dz-preview",
 		hiddenInputContainer:"#wire-body",
 	    init: function () {
 	        this.on("addedfile", function(file) {
-    			$(instance).find(".dz-progress").toggle();
-    			$(instance).find(".dz-message").toggle();
+				$(instance).find(".dz-progress").toggle();
+    			$(instance).find(".dz-message").show();
 	        });
 	        this.on("removedfile", function(file) {
     			$(instance).find(".dz-progress").toggle();
-    			$(instance).find(".dz-message").toggle();
+    			$(instance).find(".dz-message").show();
 	        });
 	        this.on("success", function(file, xhr) {
     			if( xhr.system_messages.success[0] ){
+					file.previewTemplate = $(this.options.previewTemplate);
+	    			$(instance).find(".dz-preview").html(file.previewTemplate);
+
 	    			elgg.system_message(xhr.system_messages.success[0]);
 	    			setTimeout(function() { window.location.reload(); }, 2000);
     			} else if( xhr.system_messages.error[0] ){
