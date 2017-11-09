@@ -215,7 +215,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_invitation_non_user_url' => $params['cp_invitation_nonuser_url'],
 				'cp_invitation_url' => $params['cp_invitation_url'],
 				'cp_invitation_code' => $params['cp_invitation_code'],
-				'cp_invitation_msg' => $params['cp_invitation_msg'],
+				'cp_invitation_msg' => $params['cp_invite_msg'],
 				'cp_msg_type' => $cp_msg_type,
 				'_user_e-mail' => $params['cp_invitee'],
 				'group_link' => $params['group_link'],
