@@ -1255,21 +1255,23 @@ function discussion_reply_menu_setup($hook, $type, $return, $params) {
 
 	// Allow discussion topic owner, group owner and admins to edit and delete
 	if ($reply->canEdit() && !elgg_in_context('activity')) {
-		$return[] = ElggMenuItem::factory(array(
-			'name' => 'edit',
-			'text' => elgg_echo('edit'),
-			'href' => "discussion/reply/edit/{$reply->guid}",
-			'priority' => 150,
-		));
+		if ($entity['owner_guid'] == $user['guid'] || elgg_is_admin_logged_in()){
+			$return[] = ElggMenuItem::factory(array(
+				'name' => 'edit',
+				'text' => elgg_echo('edit'),
+				'href' => "discussion/reply/edit/{$reply->guid}",
+				'priority' => 150,
+			));
 
-		$return[] = ElggMenuItem::factory(array(
-			'name' => 'delete',
-			'text' => elgg_view_icon('delete'),
-			'href' => "action/discussion/reply/delete?guid={$reply->guid}",
-			'priority' => 150,
-			'is_action' => true,
-			'confirm' => elgg_echo('deleteconfirm'),
-		));
+			$return[] = ElggMenuItem::factory(array(
+				'name' => 'delete',
+				'text' => elgg_view_icon('delete'),
+				'href' => "action/discussion/reply/delete?guid={$reply->guid}",
+				'priority' => 150,
+				'is_action' => true,
+				'confirm' => elgg_echo('deleteconfirm'),
+			));
+		}
 	} else {
 		// Edit and delete links can be removed from all other users
 		$remove[] = 'edit';
