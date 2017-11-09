@@ -6,6 +6,14 @@ $contact_us = "{$site->getURL()}mod/contactform/";
 
 $french = array( 
 
+	'cp_notification:group_invite' => "<p>%s</p><p>Cliquez le lien suivant pour consulter votre invitation (vous devez être connecté pour voir cette page) : %s</p>
+	<p>Besoin d'aide? Voir l’article « <a href='%s'>Comment joindre un group</a>' » ou <a href='%s'>contactez-nous</a></p>",
+
+	'cp_notification:group_invite_email' => "<p><b>Join us on %s!</b> Create a %s account using this link to be automatically added to the group.</p>
+	<p>If you decide to create your account at a later time using the Registration form on %s, you can join this group by entering the following code on your Group Invitations page: %s</p>
+	<p><b>Already a member of %s?</b> Login and go to your Group Invitations page to accespt (or decline) the invitation.</p>",
+
+
 	'notifications:did_not_send' => "Les notifications n'ont pas envoyé",
 
 	'minor_save:title' => "Vous ne voulez pas envoyer de notification?",

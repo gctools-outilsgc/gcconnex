@@ -1,5 +1,7 @@
 
 <?php
+$site = elgg_get_site_entity();
+
 
 $cp_topic_title = $vars['cp_topic_title'];
 $cp_msg_title = $vars['cp_msg_title'];
