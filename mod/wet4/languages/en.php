@@ -177,6 +177,10 @@ return array(
     'form:invalid:extensions' => "Invalid file format. Allowed file extensions: %s",
 
 
+    //group invite
+
+    'group:invite:user:moreinfo' => "Users will not appear in drop down list if already a member of the group.",
+
     ////
 
     'new:dept:activity:title' => "My department's news feed",
@@ -555,7 +559,7 @@ return array(
     'groups:feature' => 'Featured',
     'groups:popular' => 'Popular',
     'groups:suggested' => 'Suggested',
-    'groups_tools:related_groups:tool_option' => "Enable related groups", 
+    'groups_tools:related_groups:tool_option' => "Enable related groups",
 /**
  * Users
  */
