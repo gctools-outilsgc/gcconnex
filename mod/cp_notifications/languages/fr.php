@@ -359,7 +359,7 @@ $french = array(
 	
 	'cp_notify:body_new_content:title_f2' => "<a href='%s'>%s</a> a ajouté une nouvelle %s intitulée <a href='%s'>%s</a>",
 
-	'cp_notify:body_new_content:title3' => "<a href='%s'>%s</a> a ajouté une nouvelle %s",
+	'cp_notify:body_new_content:title3' => "<a href='%s'>%s</a> a ajouté une nouveau message sur le %s intitulé",
 
 	'cp_notify:body_new_content:title_answer' => "<a href='%s'>%s</a> a ajouté une nouvelle %s dans <a href='%s'>%s</a>",
 
