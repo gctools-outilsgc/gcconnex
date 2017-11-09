@@ -174,7 +174,7 @@ return array(
 
 	//group invite
 
-	'group:invite:user:moreinfo' => "Users will not appear in drop down list if already a member of the group.",
+	'group:invite:user:moreinfo' => "Les utilisateurs n'apparaitront pas dans la liste déroulante s'ils sont déjà membres du groupe.",
 
 	////
 
