@@ -713,7 +713,14 @@ if (!$vars['user_name']->username) {
 if ($email_notification_footer_non_user_en || $email_notification_footer_non_user_fr){
 	$email_notification_footer_en2 = $email_notification_footer_non_user_en;
 	$email_notification_footer_fr2 = $email_notification_footer_non_user_fr;
-}else{
+
+} else if ($msg_type === 'cp_group_invite' || $msg_type === 'cp_group_invite_email') {
+	$cp_notify_msg_title_en = '';
+	$cp_notify_msg_title_fr = '';
+	$email_notification_footer_en2 = '';
+	$email_notification_footer_fr2 = '';
+
+} else {
 	$email_notification_footer_en2 = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/notifications/{$username_link}".'?utm_source=notification&utm_medium=site'),'en');
 	$email_notification_footer_fr2 = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/notifications/{$username_link}".'?utm_source=notification&utm_medium=site'),'fr');
 }

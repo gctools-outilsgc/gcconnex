@@ -1,6 +1,8 @@
 
 <?php
 
+$site = elgg_get_site_entity();
+
 $cp_topic_title = $vars['cp_topic_title'];
 $cp_msg_title = $vars['cp_msg_title'];
 $cp_topic_description = $vars['cp_topic_description'];
@@ -425,8 +427,12 @@ switch ($msg_type) {
 		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_group_invite:title',array($vars['cp_email_invited_by']['name'],gc_explode_translation($vars['cp_group_invite']['name'],'en')),'en');
 		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_group_invite:title',array($vars['cp_email_invited_by']['name'],gc_explode_translation($vars['cp_group_invite']['name'],'fr')),'fr');
 
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_group_invite:description',array(gc_explode_translation($vars['cp_group_invite']['name'],'en'),$vars['cp_invitation_msg'],$vars['cp_invitation_url'].'?utm_source=notification&utm_medium=email'),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_group_invite:description',array(gc_explode_translation($vars['cp_group_invite']['name'],'fr'),$vars['cp_invitation_msg'],$vars['cp_invitation_url'].'?utm_source=notification&utm_medium=email'),'fr');
+		$view_invitation = "{$vars['cp_invitation_url']}?utm_source=notification&utm_medium=email";
+
+		$article_link = (strpos($site->getURL(), 'gcconnex') !== false) ? "https://gcconnex.gctools-outilsgc.ca/en/support/solutions/articles/2100030466-how-do-i-join-a-group-" : "https://gccollab.gctools-outilsgc.ca/en/support/solutions/articles/2100028400-how-do-i-find-and-join-a-group-";
+		$help_link = (strpos($site->getURL(), 'gcconnex') !== false) ? "https://gcconnex.gc.ca/contactform/?utm_source=notification&utm_medium=email" : "https://gccollab.ca/help/knowledgebase/?utm_source=notification&utm_medium=email";
+		$cp_notify_msg_description_en = elgg_echo('cp_notification:group_invite', array($vars['cp_invitation_msg'], $view_invitation, $article_link, $help_link), 'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notification:group_invite', array($vars['cp_invitation_msg'], $view_invitation, $article_link, $help_link), 'fr');
 
 		break;
 
@@ -710,10 +716,17 @@ if (!$vars['user_name']->username) {
 	$username_link = $vars['user_name']->username;
 }
 
+/// group inviting users to join does not need a "to subscribe ..."
 if ($email_notification_footer_non_user_en || $email_notification_footer_non_user_fr){
 	$email_notification_footer_en2 = $email_notification_footer_non_user_en;
 	$email_notification_footer_fr2 = $email_notification_footer_non_user_fr;
-}else{
+
+} else if ($msg_type === 'cp_group_invite' || $msg_type === 'cp_group_invite_email') {
+	$email_notification_footer_en2 = '';
+	$email_notification_footer_fr2 = '';
+
+} else {
+
 	$email_notification_footer_en2 = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/notifications/{$username_link}".'?utm_source=notification&utm_medium=email'),'en');
 	$email_notification_footer_fr2 = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/notifications/{$username_link}".'?utm_source=notification&utm_medium=email'),'fr');
 }
@@ -767,9 +780,12 @@ echo <<<___HTML
 		        	{$cp_notify_msg_description_en}
 
 		        </div>
-                <div style='margin-top:15px; padding: 5px; color: #6d6d6d; border-bottom: 1px solid #ddd;'>
+                <div style='margin-top:15px; padding: 5px; color: #6d6d6d;'>
                     <div>{$email_notification_footer_en}{$email_notification_footer_en2}</div>
                 </div>
+
+
+                <p><center>***************************************</center></p>
 
 		       	<div width='100%' style='padding:30px 30px 30px 30px; color:#153643; font-family:sans-serif; font-size:16px; line-height:22px;'>
 
