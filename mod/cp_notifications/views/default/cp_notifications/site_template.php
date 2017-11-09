@@ -715,6 +715,8 @@ if ($email_notification_footer_non_user_en || $email_notification_footer_non_use
 	$email_notification_footer_fr2 = $email_notification_footer_non_user_fr;
 
 } else if ($msg_type === 'cp_group_invite' || $msg_type === 'cp_group_invite_email') {
+	$cp_notify_msg_title_en = '';
+	$cp_notify_msg_title_fr = '';
 	$email_notification_footer_en2 = '';
 	$email_notification_footer_fr2 = '';
 
