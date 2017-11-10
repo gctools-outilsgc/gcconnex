@@ -9,9 +9,10 @@ $french = array(
 	'cp_notification:group_invite' => "<p>%s</p><p>Cliquez le lien suivant pour consulter votre invitation (vous devez être connecté pour voir cette page) : %s</p>
 	<p>Besoin d'aide? Voir l’article « <a href='%s'>Comment joindre un group</a>' » ou <a href='%s'>contactez-nous</a></p>",
 
-	'cp_notification:group_invite_email' => "<p><b>Join us on %s!</b> Create a %s account using this link to be automatically added to the group.</p>
-	<p>If you decide to create your account at a later time using the Registration form on %s, you can join this group by entering the following code on your Group Invitations page: %s</p>
-	<p><b>Already a member of %s?</b> Login and go to your Group Invitations page to accespt (or decline) the invitation.</p>",
+	'cp_notification:group_invite_email' => "<p>%s</p><p><b>Joignez-vous à %s!</b></p> <p><a href='%s'>Créez votre compte en utilisant ce lien</a> pour être automatiquement ajouté au groupe.</p>
+	 <p>Si vous désirez créer votre compte à une date ultérieure en utilisant le <a href='%s'>formulaire d’inscription</a> sur %s, vous pouvez vous joindre au groupe en utilisant le code suivant sur votre page d'Invitation de groupe : %s.</p> 
+	 <p><b>Déjà membre de %s?</b> <a href='%s'>Connectez-vous</a> et allez sur votre page d’invitation de groupe pour accepter (ou rejeter) l’invitation.</p>
+	 <p>Besoin d'aide? Voir l’article « <a href='%s'>Comment joindre un group</a>' » ou <a href='%s'>contactez-nous</a></p>",
 
 
 	'notifications:did_not_send' => "Les notifications n'ont pas envoyé",
