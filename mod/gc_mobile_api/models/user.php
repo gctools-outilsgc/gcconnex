@@ -160,6 +160,20 @@ elgg_ws_expose_function(
 	false
 );
 
+elgg_ws_expose_function(
+	"delete.post",
+	"delete_post",
+	array(
+		"user" => array('type' => 'string', 'required' => true),
+		"guid" => array('type' => 'string', 'required' => true),
+		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+	),
+	'Deletes a user-owned object based on user id and post id',
+	'POST',
+	true,
+	false
+);
+
 function build_date($month, $year)
 {
 	$string = "01/";
@@ -561,8 +575,26 @@ function get_user_activity($profileemail, $user, $limit, $offset, $lang)
 			$event->object['description'] = $object->description;
 		} elseif ($object instanceof ElggObject) {
 			$event->object['type'] = 'discussion-add';
-			$event->object['name'] = ($object->title) ? $object->title : $object->name;
-			$event->object['description'] = $object->description;
+
+			if($object->title){
+				if (strpos($object->title, '"en":') !== false) {
+					$event->object['name'] = gc_explode_translation($object->title, $lang);
+				} else {
+					$event->object['name'] = $object->title;
+				}
+			} else if($object->name){
+				if (strpos($object->name, '"en":') !== false) {
+					$event->object['name'] = gc_explode_translation($object->name, $lang);
+				} else {
+					$event->object['name'] = $object->name;
+				}
+			}
+
+			if (strpos($object->description, '"en":') !== false) {
+				$event->object['description'] = gc_explode_translation($object->description, $lang);
+			} else {
+				$event->object['description'] = $object->description;
+			}
 
 			$other = get_entity($event->object_guid);
 			$parent = get_entity($other->container_guid);
@@ -1171,5 +1203,31 @@ function revoke_colleague($profileemail, $user, $lang)
 		} else {
 			return elgg_echo("friend_request:revoke:fail");
 		}
+	}
+}
+
+function delete_post($user, $guid, $lang)
+{
+	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user));
+ 	if (!$user_entity) {
+ 		return "User was not found. Please try a different GUID, username, or email address";
+ 	}
+	if (!$user_entity instanceof ElggUser) {
+		return "Invalid user. Please try a different GUID, username, or email address";
+	}
+
+	if (!elgg_is_logged_in()) {
+		login($user_entity);
+	}
+
+	$entity = get_entity($guid);
+	if (elgg_instanceof($entity, 'object') && $entity->canEdit()) {
+		if ($entity->delete()) {
+			return elgg_echo('blog:message:deleted_post');
+		} else {
+			return elgg_echo('blog:error:cannot_delete_post');
+		}
+	} else {
+		return elgg_echo('blog:error:post_not_found');
 	}
 }

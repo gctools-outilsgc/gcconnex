@@ -3,10 +3,28 @@ $lang = (string) get_input('lang');
 $source = 'embed';
 $product_id  = (int) elgg_get_plugin_setting("embed_product_id", "freshdesk_help");
 
+$types = array();
+$types['None'] = elgg_echo('freshdesk:ticket:types:none', array(), $lang);
+$types['Account creation | Création de compte'] = elgg_echo('freshdesk:ticket:types:account', array(), $lang);
+$types['Log in credentials | Identifiants de connexions'] = elgg_echo('freshdesk:ticket:types:login', array(), $lang);
+$types['Bugs/Errors | Bogues/erreurs'] = elgg_echo('freshdesk:ticket:types:bugs', array(), $lang);
+$types['Group-related | Relatif aux groupes'] = elgg_echo('freshdesk:ticket:types:group', array(), $lang);
+$types['Training | Formation'] = elgg_echo('freshdesk:ticket:types:training', array(), $lang);
+$types["Jobs Marketplace | Carrefour d'emploi"] = elgg_echo('freshdesk:ticket:types:jobs', array(), $lang);
+$types['Enhancement | Amélioration'] = elgg_echo('freshdesk:ticket:types:enhancement', array(), $lang);
+$types['Wiki coding | Codage wiki'] = elgg_echo('freshdesk:ticket:types:wiki', array(), $lang);
+$types['Flag content or behaviour | Signaler un contenu ou comportement'] = elgg_echo('freshdesk:ticket:types:flag', array(), $lang);
+$types['Other | Autres'] = elgg_echo('freshdesk:ticket:types:other', array(), $lang);
+
 if(!$lang){
   $lang = get_current_language();
   $source = 'base';
   $product_id  = (int) elgg_get_plugin_setting("product_id", "freshdesk_help");
+  unset($types['Wiki coding | Codage wiki']);
+} else {
+  unset($types['Group-related | Relatif aux groupes']);
+  unset($types["Jobs Marketplace | Carrefour d'emploi"]);
+  unset($types['Enhancement | Amélioration']);
 }
 //populate form with known information
 if(elgg_is_logged_in()){
@@ -34,69 +52,77 @@ if (elgg_is_sticky_form('ticket-submit')) {
   <p><?php echo elgg_echo('freshdesk:ticket:information:note', array(), $lang); ?></p>
 </div>
 
-<div class="mrgn-tp-md">
-<label for="email"><?php echo elgg_echo('freshdesk:ticket:email', array(), $lang); ?></label>
-<?php echo elgg_view('input/text', array(
-  'name' => 'email',
-  'id' => 'email',
-  'value' => $email,
-  'class' => 'mrgn-bttm-sm',
-  'required' => 'required'
-));
-?>
-</div>
+<fieldset class="user-info">
+  <legend><?php echo elgg_echo('freshdesk:ticket:legend:yourinfo'); ?></legend>
+  <div>
+  <label for="email"><?php echo elgg_echo('freshdesk:ticket:email', array(), $lang); ?></label>
+  <?php echo elgg_view('input/text', array(
+    'name' => 'email',
+    'id' => 'email',
+    'value' => $email,
+    'class' => 'mrgn-bttm-sm',
+    'required' => 'required'
+  ));
+  ?>
+  </div>
 
-<div>
-<label for="subject"><?php echo elgg_echo('freshdesk:ticket:subject', array(), $lang); ?></label>
-<?php echo elgg_view('input/text', array(
-  'name' => 'subject',
-  'id' => 'subject',
-  'required' => 'required',
-  'value' => $subject,
-  'onkeyup' => 'matchArticles(this, "'.$lang.'")'
-));
-?>
-<span class="relatedArticles btn-primary"><a href="#searchResults"></a></span>
-</div>
+  <div class="mrgn-tp-sm">
+    <?php
+    if(  $product_id != 2100000290){
+    	echo '<label for="department">'.elgg_echo('freshdesk:ticket:department').'</label>';
+    	echo elgg_view('input/department_field');
+    } else {
+      echo elgg_view('input/user_type_field');
+    }
+    ?>
+  </div>
+</fieldset>
 
-<div>
-<label for="type"><?php echo elgg_echo('freshdesk:ticket:type', array(), $lang); ?></label>
-<?php echo elgg_view('input/select', array(
-  'name' => 'type',
-  'id' => 'type',
-  'required' => 'required',
-  'value' => $type,
-  'options_values' => [
-		'None' => elgg_echo('freshdesk:ticket:types:none', array(), $lang),
-		'Log in credentials' => elgg_echo('freshdesk:ticket:types:login', array(), $lang),
-    'Bugs/Errors' => elgg_echo('freshdesk:ticket:types:bugs', array(), $lang),
-    'Group-related' => elgg_echo('freshdesk:ticket:types:group', array(), $lang),
-    'Training' => elgg_echo('freshdesk:ticket:types:training', array(), $lang),
-    'Jobs Marketplace' => elgg_echo('freshdesk:ticket:types:jobs', array(), $lang),
-    'Enhancement' => elgg_echo('freshdesk:ticket:types:enhancement', array(), $lang),
-    'Flag content or behaviour' => elgg_echo('freshdesk:ticket:types:flag', array(), $lang),
-    'Other' => elgg_echo('freshdesk:ticket:types:other', array(), $lang),
-	],
-));
-?>
-</div>
+<fieldset class="user-info">
+  <legend><?php echo elgg_echo('freshdesk:ticket:legend:ticketinfo'); ?></legend>
+  <div>
+  <label for="subject"><?php echo elgg_echo('freshdesk:ticket:subject', array(), $lang); ?></label>
+  <?php echo elgg_view('input/text', array(
+    'name' => 'subject',
+    'id' => 'subject',
+    'required' => 'required',
+    'value' => $subject,
+    'onkeyup' => 'matchArticles(this, "'.$lang.'")'
+  ));
+  ?>
+  <span class="relatedArticles btn-primary"><a href="#searchResults"></a></span>
+  </div>
 
-<div>
-<label for="attachment"><?php echo elgg_echo('freshdesk:ticket:attachment', array(), $lang); ?></label>
-<?php echo elgg_view('input/file', array('name' => 'attachment', 'id' => 'attachment', 'class' => 'mrgn-bttm-sm')); ?>
-</div>
+  <div>
+  <label for="type"><?php echo elgg_echo('freshdesk:ticket:type', array(), $lang); ?></label>
+  <?php echo elgg_view('input/select', array(
+    'name' => 'type',
+    'id' => 'type',
+    'required' => 'required',
+    'value' => $type,
+    'options_values' => $types,
+  ));
+  ?>
+  </div>
 
-<div>
-<label for="description"><?php echo elgg_echo('freshdesk:ticket:description', array(), $lang); ?></label>
-<?php echo elgg_view('input/longtext', array(
-  'name' => 'description',
-  'id' => 'description',
-  'class' => 'mrgn-bttm-sm validate-me',
-  'required' => 'required',
-  'value' => $description
-));
-?>
-</div>
+  <div class="mrgn-tp-sm">
+  <label for="attachment"><?php echo elgg_echo('freshdesk:ticket:attachment', array(), $lang); ?></label>
+  <?php echo elgg_view('input/file', array('name' => 'attachment', 'id' => 'attachment', 'class' => 'mrgn-bttm-sm')); ?>
+  </div>
+
+  <div class="mrgn-tp-sm">
+  <label for="description"><?php echo elgg_echo('freshdesk:ticket:description', array(), $lang); ?></label>
+  <?php echo elgg_view('input/longtext', array(
+    'name' => 'description',
+    'id' => 'description',
+    'class' => 'mrgn-bttm-sm validate-me',
+    'required' => 'required',
+    'value' => $description
+  ));
+  ?>
+  </div>
+</fieldset>
+
 <?php echo elgg_view('input/hidden', array('name' => 'lang', 'value' => $lang)); ?>
 <?php echo elgg_view('input/submit', array('value' => elgg_echo('submit', array(), $lang), 'id' => 'sendTicket', 'class' => 'btn-primary btn-lg mrgn-tp-md'));?>
 </div>
@@ -128,15 +154,19 @@ $(document).ready(function(){
       $('#description-error').remove();
     }
 
-    if($('#type option:selected').val() == 'None' && $('#type').hasClass('error') != true){
-      $('#type').addClass('error').parent().append('<label for="'+$('#type').attr('name')+'" class="error">'+'<?php echo elgg_echo('freshdesk:valid', array(), $lang) ?>'+'</label>');
-    }
+    var selects = form.find('select:visible')
 
-    var inputs = form.find('input');
+    selects.each(function(){
+      if($(this).val() == 'None' && $(this).hasClass('error') != true){
+          $(this).addClass('error').parent().append('<label for="'+$(this).attr('name')+'" class="error">'+'<?php echo elgg_echo('freshdesk:valid', array(), $lang) ?>'+'</label>');
+      }
+    });
+
+    var inputs = form.find('input:visible');
 
     //loop through the input fields
     inputs.each(function(){
-      if($(this).attr('name') == 'email' || $(this).attr('name') == 'subject'){
+      if($(this).attr('name') != 'attachment'){
         if($.trim($(this).val()) == '' && $(this).hasClass('error') != true){
           $(this).addClass('error').parent().append('<label for="'+$(this).attr('name')+'" class="error">'+'<?php echo elgg_echo('freshdesk:valid', array(), $lang) ?>'+'</label>');
         }
@@ -171,3 +201,45 @@ $(document).ready(function(){
 
 
 </script>
+
+<style>
+.user_type {
+  width:35%;
+  display: inline-block;
+  vertical-align:top;
+}
+
+#institution-wrapper, #other-wrapper, #retired-wrapper, #media-wrapper, #business-wrapper, #ngo-wrapper, #provincial-wrapper, #federal-wrapper, #municipal-wrapper, #international-wrapper, #community-wrapper {
+  width:65%;
+  display:inline-block;
+  vertical-align:top;
+}
+
+fieldset.user-info {
+  border: 1px solid #e5e5e5;
+  padding:5px 10px 10px;
+  margin-top:10px;
+}
+.user-info legend {
+  position:relative;
+  top:0;
+  float:none;
+  width:auto;
+  margin-bottom: 0;
+}
+
+@media screen and (max-width: 600px) {
+  .user_type {
+    width:100%;
+    display: inline-block;
+    vertical-align:top;
+  }
+
+  #institution-wrapper, #other-wrapper, #retired-wrapper, #media-wrapper, #business-wrapper, #ngo-wrapper, #provincial-wrapper, #federal-wrapper, #municipal-wrapper, #international-wrapper, #community-wrapper {
+    width:100%;
+    display:inline-block;
+    vertical-align:top;
+  }
+}
+
+</style>

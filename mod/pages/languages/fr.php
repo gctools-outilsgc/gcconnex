@@ -19,7 +19,7 @@ return array(
 	'pages:delete' => "Supprimer cette page",
 	'pages:history' => "Historique",
 	'pages:view' => "Afficher la page",
-	'pages:revision' => "Revision",
+	'pages:revision' => "Révision",
 	'pages:current_revision' => "La Version Courante",
 	'pages:revert' => "Revenir",
 

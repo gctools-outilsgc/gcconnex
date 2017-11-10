@@ -16,11 +16,32 @@ return array(
   'freshdesk:ticket:title' => "Soumettre un billet",
   'freshdesk:ticket:email' => "Courriel",
   'freshdesk:ticket:subject' => "Objet",
+  'freshdesk:ticket:department' => "Ministère",
   'freshdesk:ticket:type' => "Type",
   'freshdesk:ticket:attachment' => "Pièce jointe",
   'freshdesk:ticket:description' => "Description",
   'freshdesk:ticket:submit:confirmed' => "Votre billet a été soumis.",
   'freshdesk:ticket:submit:denied' => "Un problème est survenu; veuillez réessayer plus tard.",
+
+  'freshdesk:ticket:basic:user_type' => "Occupation",
+  'freshdesk:ticket:basic:federal' => 'Organisation',
+  'freshdesk:ticket:basic:ministry' => 'Ministère',
+  'freshdesk:ticket:basic:university' => 'Université',
+  'freshdesk:ticket:basic:college' => 'Collège',
+  'freshdesk:ticket:basic:highschool' => 'École secondaire',
+  'freshdesk:ticket:basic:provincial' => 'Province / territoire',
+  'freshdesk:ticket:basic:municipal' => 'Organisation',
+  'freshdesk:ticket:basic:international' => 'Organisation',
+  'freshdesk:ticket:basic:ngo' => 'Organisation',
+  'freshdesk:ticket:basic:community' => 'Organisation',
+  'freshdesk:ticket:basic:business' => 'Organisation',
+  'freshdesk:ticket:basic:media' => 'Organisation',
+  'freshdesk:ticket:basic:retired' => 'Organisation',
+  'freshdesk:ticket:basic:other' => 'Organisation',
+  'freshdesk:ticket:basic:institution' => "Institution",
+
+  'freshdesk:ticket:legend:yourinfo' => "Vos informations",
+  'freshdesk:ticket:legend:ticketinfo' => "Informations sur le billet",
 
   'freshdesk:ticket:types:null' => "...",
   'freshdesk:ticket:types:login' => "Identifiants de connexions",
@@ -30,7 +51,11 @@ return array(
   'freshdesk:ticket:types:jobs' => "Carrefour d'emploi",
   'freshdesk:ticket:types:enhancement' => "Amélioration",
   'freshdesk:ticket:types:flag' => "Signaler un contenu ou comportement",
+  'freshdesk:ticket:types:account' => "Création de compte",
+  'freshdesk:ticket:types:wiki' => "Codage wiki",
   'freshdesk:ticket:types:other' => "Autres",
+
+
 
   'freshdesk:knowledge:search:info:embed' => 'Recherche dans notre base de connaissances pour trouver les renseignements que vous cherchez. Pour obtenir de plus amples renseignements, veuillez visiter notre <a href="https://gcpedia.gctools-outilsgc.ca/fr/support/home">Support Accueil</a>.',
 

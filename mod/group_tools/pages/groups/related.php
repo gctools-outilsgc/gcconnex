@@ -10,6 +10,7 @@
 */
 
 $group_guid = (int) get_input("group_guid");
+$lang = get_current_language();
 $group = get_entity($group_guid);
 if (empty($group) || !elgg_instanceof($group, "group")) {
 	register_error(elgg_echo("groups:notfound:details"));
@@ -21,7 +22,7 @@ elgg_set_page_owner_guid($group->getGUID());
 
 // build breadcrumb
 elgg_push_breadcrumb(elgg_echo("groups"), "groups/all");
-elgg_push_breadcrumb($group->name, $group->getURL());
+elgg_push_breadcrumb(gc_explode_translation($group->name,$lang), $group->getURL());
 
 $title_text = elgg_echo("group_tools:related_groups:title");
 elgg_push_breadcrumb($title_text);

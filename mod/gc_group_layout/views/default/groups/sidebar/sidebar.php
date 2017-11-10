@@ -16,8 +16,10 @@ if($display_members != 'yes'){
   echo elgg_view('groups/sidebar/group_members', $vars);
 }
 
-//group activity
-echo elgg_view('groups/sidebar/activity', $vars);
+if (elgg_group_gatekeeper(false)) {
+    //group activity
+    echo elgg_view('groups/sidebar/activity', $vars);
+}
 
 //subgroups
 //I'll have to test if the user has sub groups and related groups active

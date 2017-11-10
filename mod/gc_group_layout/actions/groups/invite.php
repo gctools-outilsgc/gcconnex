@@ -24,6 +24,31 @@ $string_users = implode(",", $array_users);
 $array_users2  = $string_users;
 $user_guids = explode(",", $array_users2);
 
+//fix to provide users with better feedback when not using this feature properly
+$user_name = get_input("group_tools_user_invite");
+if($user_name){
+	//get user entity form username
+	$lost_user = get_user_by_username($user_name);
+
+	if(!$lost_user){
+		//if they used display name, find user based on that
+		$db_prefix = elgg_get_config('dbprefix');
+		$lost = get_data("SELECT * FROM {$db_prefix}users_entity WHERE name = '{$user_name}'");
+		foreach($lost as $u){
+			$member = get_entity($u->guid);
+			$groupEnt = get_entity((int) get_input("group_guid"));
+
+			if($groupEnt->isMember($member)){
+				//add user guid to array to provide feedback
+				array_push($user_guids, $member->guid);
+			}
+		}
+	} else {
+		//add user guid to array to provide feedback
+		array_push($user_guids, $lost_user->guid);
+	}
+}
+
 $adding = false;
 if (elgg_is_admin_logged_in()) {
 	// add all users?
