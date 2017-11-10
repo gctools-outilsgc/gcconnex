@@ -35,7 +35,7 @@ if (!empty($group) && ($group instanceof ElggGroup)) {
 		}
 		
 		elgg_push_breadcrumb(elgg_echo("groups"), "groups/all");
-		elgg_push_breadcrumb(gc_explode_translation($group->name,true), $group->getURL());
+		elgg_push_breadcrumb(gc_explode_translation($group->name,$lang), $group->getURL());
 		elgg_push_breadcrumb($breadcrumb);
 	
 		$content = elgg_view_form("groups/invite", array(
