@@ -1255,7 +1255,7 @@ function discussion_reply_menu_setup($hook, $type, $return, $params) {
 
 	// Allow discussion topic owner, group owner and admins to edit and delete
 	if ($reply->canEdit() && !elgg_in_context('activity')) {
-		if ($entity['owner_guid'] == $user['guid'] || elgg_is_admin_logged_in()){
+		if ($reply['owner_guid'] == $user['guid'] || elgg_is_admin_logged_in()){
 			$return[] = ElggMenuItem::factory(array(
 				'name' => 'edit',
 				'text' => elgg_echo('edit'),
