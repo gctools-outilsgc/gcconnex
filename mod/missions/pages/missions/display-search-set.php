@@ -123,18 +123,18 @@ if ($search_form ) {
     );
 
 if ($advanced_form){
-    
-    $content .='<div class="mrgn-bttm-sm"><strong>'.elgg_echo('missions:search_value').':</strong> ';
+	$form_name = $_SESSION['mission_search_switch'];
+	$content .='<div class="mrgn-bttm-sm"><strong>'.elgg_echo('missions:search_value').':</strong> ';
 	for ($s = 0; $s < $number_of_rows; $s ++) {
-        if ($advanced_form['selection_'.$s]){
+		if ($advanced_form[$form_name.'_'.$s]){
 
-           $content .= '<span class="mrgn-rght-md"><strong>'.elgg_echo($advanced_form['selection_'.$s]).':</strong> '.elgg_echo($advanced_form['selection_'.$s.'_element']).' </span> ';
-            
-        }
-    }
-    
-    $content .= "</div>";
-        $content .= elgg_view('output/url', array(
+			$content .= '<span class="mrgn-rght-md"><strong>'.elgg_echo($advanced_form[$form_name.'_'.$s]).':</strong> '.elgg_echo($advanced_form[$form_name.'_'.$s.'_element']).'</span>';
+
+		}
+	}
+
+	$content .= "</div>";
+	$content .= elgg_view('output/url', array(
 		'text' => elgg_echo('missions:clear_search'),
 		'href' => 'missions/main?clear=true&search='.$advanced_form,
 		'class' => 'mrgn-lft-sm',
@@ -142,18 +142,18 @@ if ($advanced_form){
 		'is_trusted' => true,
 	));
     
-    // Advanced search form which gets hidden.
-$advanced_search_form = elgg_view_form('missions/advanced-search-form', array(
+	// Advanced search form which gets hidden.
+	$advanced_search_form = elgg_view_form('missions/advanced-search-form', array(
 		'class' => 'form-horizontal'
-));
-$content .= '<br>'.elgg_view('page/elements/hidden-field', array(
+	));
+	$content .= '<br>'.elgg_view('page/elements/hidden-field', array(
 		'toggle_text' => elgg_echo('missions:search:Refine'),
 		'toggle_text_hidden' => elgg_echo('close'),
 		'toggle_id' => 'advanced-search',
 		'hidden_content' => $advanced_search_form,
 		'hideable_pre_content' => $simple_search_form,
 		'field_bordered' => true
-));
+	));
 }
 
 // Only displays sort form if the search set is missions.
