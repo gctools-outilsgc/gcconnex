@@ -997,7 +997,7 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
          if ($entity['owner_guid'] == $user['guid'] || elgg_is_admin_logged_in()){
 
         //checks so the edit icon is not placed on incorrect entities
-       // if($handler != 'group_operators'){
+     
             if($entity->getSubtype() != 'thewire'){
                 $options = array(
                     'name' => 'edit',
@@ -1021,7 +1021,6 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
         		);
         		$return[] = \ElggMenuItem::factory($options);
             }
-       // }
 	}
 }
 
