@@ -169,7 +169,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 	$email_only = false;
 	$add_to_sent = false;
 	$sender_guid = elgg_get_site_entity()->guid;
-
+error_log("<<<<<<<<<<<<<<<     {$cp_msg_type}");
 	switch ($cp_msg_type) {
 
 		/// EMAIL NOTIFICATIONS ONLY (password reset, registration, etc)
@@ -268,6 +268,19 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			break;
 
 		/// NORMAL NOTIFICATIONS that will send out both email and site notification
+
+		case 'cp_wire_image':
+error_log(">>>>>>     wire image ----");
+			/// assume that the wire-image plugin is enabled
+			elgg_load_library('thewire_image');
+			/// the function thewire_image_get_attachments will return an entity
+			$message = array(
+				'cp_msg_type' => $params['cp_msg_type'],
+				'wire_entity' => $params['cp_content'],
+				'image_entity' => thewire_image_get_attachments($params['cp_content'])
+			);
+			$to_recipients[] = get_entity(96);
+			break;
 		case 'cp_wire_share': // thewire_tools/actions/add.php
 
 
@@ -943,7 +956,7 @@ function cp_create_annotation_notification($event, $type, $object) {
  */
 function cp_create_notification($event, $type, $object) {
 
-	$do_not_subscribe_list = array('mission-posted', 'file', 'tidypics_batch', 'hjforum', 'hjforumcategory','hjforumtopic', 'messages', 'hjforumpost', 'site_notification', 'poll_choice','blog_revision','widget','folder','c_photo', 'cp_digest','MySkill', 'education', 'experience', 'poll_choice3', 'thewire_image');
+	$do_not_subscribe_list = array('mission-posted', 'file', 'tidypics_batch', 'hjforum', 'hjforumcategory','hjforumtopic', 'messages', 'hjforumpost', 'site_notification', 'poll_choice','blog_revision','widget','folder','c_photo', 'cp_digest','MySkill', 'education', 'experience', 'poll_choice3');
 
 	// since we implemented the multi file upload, each file uploaded will invoke this hook once to many times (we don't allow subtype file to go through, but check the event)
 	if ($object instanceof ElggObject && $event !== 'single_file_upload') {
@@ -967,7 +980,7 @@ function cp_create_notification($event, $type, $object) {
 	if ($object instanceof ElggObject)
 		$switch_case = $object->getSubtype();	
 
-
+error_log(">>>>>>>>>>    {$switch_case}");
 
 	switch ($switch_case) {
 
