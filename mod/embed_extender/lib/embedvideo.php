@@ -106,7 +106,8 @@ function videoembed_add_object($type, $url, $guid, $width, $height) {
 	// could move these into an array and use sprintf
 	switch ($type) {
 		case 'youtube':
-			$videodiv .= "<object width=\"$width\" height=\"$height\"><param name=\"movie\" value=\"https://{$url}&hl=en&fs=1&showinfo=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><embed src=\"https://{$url}&hl=en&fs=1&showinfo=0\" type=\"application/x-shockwave-flash\" allowfullscreen=\"true\" width=\"$width\" height=\"$height\"></embed></object>";
+			//$videodiv .= "<object width=\"$width\" height=\"$height\"><param name=\"movie\" value=\"https://{$url}&hl=en&fs=1&showinfo=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><embed src=\"https://{$url}&hl=en&fs=1&showinfo=0\" type=\"application/x-shockwave-flash\" allowfullscreen=\"true\" width=\"$width\" height=\"$height\"></embed></object>";
+			$videodiv .= "<iframe width=\"$width\" height=\"$height\" src=\"https://$url\" frameborder=\"0\" allowfullscreen></iframe>";
 			break;
 		case 'google':
 			$videodiv .= "<embed id=\"VideoPlayback\" src=\"https://video.google.com/googleplayer.swf?docid={$url}&hl=en&fs=true\" style=\"width:{$width}px;height:{$height}px\" allowFullScreen=\"true\" allowScriptAccess=\"always\" type=\"application/x-shockwave-flash\"> </embed>";
@@ -285,7 +286,7 @@ function videoembed_youtube_handler($url, $guid, $videowidth) {
  * parse youtube url
  *
  * @param string $url
- * @return string subdomain.youtube.com/v/hash
+ * @return string subdomain.youtube.com/embed/hash
  */
 function videoembed_youtube_parse_url($url) {
 
@@ -307,18 +308,18 @@ function videoembed_youtube_parse_url($url) {
 	parse_str($parts['query'], $vars);
 	$hash = $vars['v'];
 
-	return $domain . 'v/' . $hash;
+	return $domain . 'embed/' . $hash;
 }
 
 /**
  * parse youtu.be url
  *
  * @param string $url
- * @return string youtube.com/v/hash
+ * @return string youtube.com/embed/hash
  */
 function videoembed_youtube_shortener_parse_url($url, $guid, $videowidth) {
 	$path = parse_url($url, PHP_URL_PATH);
-	$videourl = 'youtube.com/v' . $path;
+	$videourl = 'youtube.com/embed' . $path;
 
 	videoembed_calc_size($videowidth, $videoheight, 425/320, 24);
 
