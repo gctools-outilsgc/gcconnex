@@ -89,10 +89,11 @@ switch ($msg_type) {
 		$cp_notify_msg_title_en = "";
 		$cp_notify_msg_title_fr = "";
 
-		$image = file_get_contents("http://192.168.245.130/gcconnex/thewire_image/download/1234/snapshot.jpg");
+		$image = file_get_contents("http://192.168.1.18/gcconnex/testing-image.JPG");
 		$image_data = base64_encode($image);
-		$cp_notify_msg_description_en = '<img alt="My Image" src="data:image/jpeg;base64,'.$image_data.'" />';
-		$cp_notify_msg_description_fr = "hello world ...";
+		//$cp_notify_msg_description_en = '<img alt="My Image" src="data:image/jpeg;base64,'.$image_data.'" />';
+		$cp_notify_msg_description_en = "hi ..";
+		$cp_notify_msg_description_fr = "hello world ... <img src='cid:Testing-Image' />";
 		break;
 
 	case 'cp_content_edit': // blog vs page (edits)

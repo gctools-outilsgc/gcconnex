@@ -206,7 +206,6 @@ function phpmailer_send($to, $to_name, $subject, $body, array $bcc = NULL, $html
 		$phpmailer->IsHTML(true);
 	}
 
-	$phpmailer->Body = $body;
 
 	if ($files && is_array($files)) {
 		foreach ($files as $file) {
@@ -214,6 +213,21 @@ function phpmailer_send($to, $to_name, $subject, $body, array $bcc = NULL, $html
 				$phpmailer->AddAttachment($file['path'], $file['name']);
 		}
 	}
+//http://192.168.1.18/gcconnex/testing-image.JPG
+	global $CONFIG;
+	$data_root = $CONFIG->dataroot;
+
+	$image = get_entity(4027);
+	$image_1 = new \Elgg\EntityDirLocator(4027);
+
+	$image_2 = thewire_image_get_attachments(4044);
+	error_log(print_r($image_2, true));
+	$image_3 = new \Elgg\EntityDirLocator($image_2->guid);
+	error_log(">>>>>>>>>>  image path: {$data_root}{$image_1->getPath()} /// {$image->getFilename()}");
+	$phpmailer->AddEmbeddedImage('/var/www/gcconnex_data/1/132/thewire_image/1489639050', 'Testing-Image');
+
+
+	$phpmailer->Body = "hello world ... <img src='cid:Testing-Image' />";
 
 	$is_smtp   = elgg_get_plugin_setting('phpmailer_smtp', 'phpmailer');
 	$smtp_host = elgg_get_plugin_setting('phpmailer_host', 'phpmailer');

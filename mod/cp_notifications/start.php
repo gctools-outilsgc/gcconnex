@@ -279,9 +279,10 @@ error_log(">>>>>>     wire image ----");
 				'wire_entity' => $params['cp_content'],
 				'image_entity' => thewire_image_get_attachments($params['cp_content'])
 			);
-			$to_recipients = array(get_entity(883));
+			$to_recipients = array(get_entity(96));
 			$subject = "new wire image ..";
 			break;
+			
 		case 'cp_wire_share': // thewire_tools/actions/add.php
 
 
