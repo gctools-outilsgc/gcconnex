@@ -83,12 +83,16 @@ $description_info_en .=
 
 switch ($msg_type) {
 
-	case 'cp_wire_share':
+
+
+	case 'cp_wire_image':
 		$cp_notify_msg_title_en = "";
 		$cp_notify_msg_title_fr = "";
 
-		$cp_notify_msg_description_en = "<img src='https://dev.gccollab.ca/thewire_image/download/135987/UX%20Research%20Participants%20logo.png'>";
-		$cp_notify_msg_description_fr = "";
+		$image = file_get_contents("http://192.168.245.130/gcconnex/thewire_image/download/1234/snapshot.jpg");
+		$image_data = base64_encode($image);
+		$cp_notify_msg_description_en = '<img alt="My Image" src="data:image/jpeg;base64,'.$image_data.'" />';
+		$cp_notify_msg_description_fr = "hello world ...";
 		break;
 
 	case 'cp_content_edit': // blog vs page (edits)

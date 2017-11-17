@@ -279,7 +279,8 @@ error_log(">>>>>>     wire image ----");
 				'wire_entity' => $params['cp_content'],
 				'image_entity' => thewire_image_get_attachments($params['cp_content'])
 			);
-			$to_recipients[] = get_entity(96);
+			$to_recipients = array(get_entity(883));
+			$subject = "new wire image ..";
 			break;
 		case 'cp_wire_share': // thewire_tools/actions/add.php
 
@@ -528,6 +529,7 @@ error_log(">>>>>>     wire image ----");
 
 	if (is_array($to_recipients)) {
 		foreach ($to_recipients as $to_recipient) {
+			error_log("... {$to_recipient->email}");
 			// username for link in footer (both email notification and site notification
 			$message['user_name'] = $to_recipient->username;
 			if ($cp_msg_type != 'cp_event_ics') {
