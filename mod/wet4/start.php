@@ -996,12 +996,13 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
                 );
                 $return[] = ElggMenuItem::factory($options);
             }
+    $list = str_replace(array('(',')'), '',get_access_list());// clean result
+    $list_access = explode(',', $list); // put it in an array
     $user = elgg_get_logged_in_user_entity();
 	if ($entity->canEdit() && $handler) {
-         if ($entity['owner_guid'] == $user['guid'] || elgg_is_admin_logged_in()){
+         if ($entity['owner_guid'] == $user['guid'] || elgg_is_admin_logged_in() || $entity->getSubtype() == 'page_top' && in_array($entity->write_access_id, $list_access)){
 
         //checks so the edit icon is not placed on incorrect entities
-     
             if($entity->getSubtype() != 'thewire'){
                 $options = array(
                     'name' => 'edit',
