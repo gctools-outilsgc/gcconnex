@@ -131,7 +131,7 @@ return array(
     "missions:prereq_refine" => "Refine by prerequisites",
     "missions:language_refine" =>   "Refine by language",
     "missions:time_refine" =>   "Refine by schedule",
-    "missions:settings:search_limit" => "What is the limit to the number of opportunities searched?",
+    "missions:settings:search_limit" => "Maximum number of search results to consider?",
     "missions:simple_search" => "Simple search",
     "missions:browse_missions" =>   "Browse latest",
     "missions:see_this_mission" =>  "See this opportunity",

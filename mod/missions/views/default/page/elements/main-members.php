@@ -70,9 +70,11 @@ if($result_set) {
 	$count = $_SESSION['candidate_count'];
 
 	$max_reached = '';
-	if(($offset + $entities_per_page) >= elgg_get_plugin_setting('search_limit', 'missions') && $count >= elgg_get_plugin_setting('search_limit', 'missions')) {
-		$max_reached = '<div class="col-sm-12" style="font-style:italic;">' . elgg_echo('missions:reached_maximum_entities') . '</div>';
-	}
+  if (elgg_get_plugin_setting('search_limit', 'missions') !== '-1') {
+    if(($offset + $entities_per_page) >= elgg_get_plugin_setting('search_limit', 'missions') && $count >= elgg_get_plugin_setting('search_limit', 'missions')) {
+      $max_reached = '<div class="col-sm-12" style="font-style:italic;">' . elgg_echo('missions:reached_maximum_entities') . '</div>';
+    }
+  }
 	$search_set .= elgg_view_entity_list(array_slice($result_set, $offset, $entities_per_page), array(
 			'count' => $count,
             'list_class' => 'clearfix row mrgn-bttm-md candidate-holder',

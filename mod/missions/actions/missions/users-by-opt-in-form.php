@@ -50,7 +50,9 @@ switch($option) {
 	
 $options_attribute['type'] = 'user';
 $options_metadata['metadata_name_value_pairs'] = array(array('name' => $name_option, 'value' => 'gcconnex_profile:opt:yes'));
-$options_metadata['limit'] = elgg_get_plugin_setting('search_limit', 'missions');
+if (elgg_get_plugin_setting('search_limit', 'missions') !== '-1') {
+  $options_metadata['limit'] = elgg_get_plugin_setting('search_limit', 'missions');
+}
 $options_metadata['metadata_case_sensitive'] = false;
 $entities = elgg_get_entities_from_metadata($options_metadata);
 
