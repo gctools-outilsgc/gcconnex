@@ -112,35 +112,17 @@ function phpmailer_extract_from_email($from) {
  * @param array  $params     Additional parameters
  * @return bool
  */
-function phpmailer_send($to, $to_name, $subject, $body, array $bcc = NULL, $html = true, array $files = NULL, array $params = NULL) {
+function phpmailer_send($to, $to_name, $subject, $body, array $bcc = NULL, $html = true, array $files = NULL, array $params = NULL, $image = NULL) {
 
 	require_once elgg_get_plugins_path() . '/phpmailer/vendors/class.phpmailer.php';
 	$phpmailer = new PHPMailer(true); //defaults to using php "mail()"; the true param means it will throw exceptions on errors, which we need to catch
-
-	// add bcc: field to all emails
-	if (elgg_get_plugin_setting('phpmailer_bcc', 'phpmailer') != 'disabled') {
-		if(elgg_get_plugin_setting('phpmailer_bcc_emails', 'phpmailer')){
-			$bcc_input = elgg_get_plugin_setting('phpmailer_bcc_emails', 'phpmailer');
-			if (strpos($bcc_input, ',') !== FALSE){
-				$bcc = explode(',', $bcc_input);
-			} else {
-				$bcc = array($bcc_input);
-			}
-		}
-	}
-
-	// override to: field for testing
-	if (elgg_get_plugin_setting('phpmailer_testing', 'phpmailer') != 'disabled') {
-		$to_name = elgg_get_site_entity()->name . " Testing";
-		if(elgg_get_plugin_setting('phpmailer_testing_email', 'phpmailer')){
-			$to = elgg_get_plugin_setting('phpmailer_testing_email', 'phpmailer');
-		}
-	}
 
 	// CONFIGURE SERVER INFORMATION defaults
 	$phpmailer->IsSMTP(); // telling the class to use SMTP
 	$phpmailer->Host       = elgg_get_plugin_setting('phpmailer_host', 'phpmailer'); // SMTP server
 	$phpmailer->Port       = elgg_get_plugin_setting('ep_phpmailer_port', 'phpmailer'); // SMTP server port
+	$phpmailer->SMTPAuth   = true;
+	$phpmailer->SMTPSecure = "tls";
 	$phpmailer->Username = elgg_get_plugin_setting('phpmailer_username', 'phpmailer');
 	$phpmailer->Password = elgg_get_plugin_setting('phpmailer_password', 'phpmailer');
 	$phpmailer->SetFrom( elgg_get_plugin_setting('phpmailer_from_email', 'phpmailer'), elgg_get_plugin_setting('phpmailer_from_name', 'phpmailer') );
@@ -162,7 +144,7 @@ function phpmailer_send($to, $to_name, $subject, $body, array $bcc = NULL, $html
 		$phpmailer->LE = "\n";
 	else
 		$phpmailer->LE = "\r\n";
-
+	
 	////////////////////////////////////
 	// Format message
 	$phpmailer->SMTPDebug = 0; // Set to 1 for debugging information
@@ -186,9 +168,12 @@ function phpmailer_send($to, $to_name, $subject, $body, array $bcc = NULL, $html
 	}
 
 	$phpmailer->Subject = $subject;
-	$phpmailer->CharSet = 'utf-8';
+	
+	if ($image)
+		$phpmailer->AddEmbeddedImage($image, 'wire_image');
 
 	if (!$html) {
+		$phpmailer->CharSet = 'utf-8';
 		$phpmailer->IsHTML(false);
 		if ($params && array_key_exists('altbody', $params)) {
 			$phpmailer->AltBody = $params['altbody'];
@@ -201,9 +186,14 @@ function phpmailer_send($to, $to_name, $subject, $body, array $bcc = NULL, $html
 		}
 		$source = strtr($body, $ttr);
 		$body = strip_tags($source);
+
+		$phpmailer->Body = $body;
 	
 	} else {
-		$phpmailer->IsHTML(true);
+	
+		//$phpmailer->IsHTML(true);
+		$phpmailer->CharSet = 'utf-8';
+		$phpmailer->MsgHTML($body);
 	}
 
 
@@ -213,53 +203,29 @@ function phpmailer_send($to, $to_name, $subject, $body, array $bcc = NULL, $html
 				$phpmailer->AddAttachment($file['path'], $file['name']);
 		}
 	}
-//http://192.168.1.18/gcconnex/testing-image.JPG
-	global $CONFIG;
-	$data_root = $CONFIG->dataroot;
-
-	$image = get_entity(4027);
-	$image_1 = new \Elgg\EntityDirLocator(4027);
-
-	$image_2 = thewire_image_get_attachments(4044);
-	error_log(print_r($image_2, true));
-	$image_3 = new \Elgg\EntityDirLocator($image_2->guid);
-	error_log(">>>>>>>>>>  image path: {$data_root}{$image_1->getPath()} /// {$image->getFilename()}");
-	$phpmailer->AddEmbeddedImage('/var/www/gcconnex_data/1/132/thewire_image/1489639050', 'Testing-Image');
-
-
-	$phpmailer->Body = "hello world ... <img src='cid:Testing-Image' />";
 
 	$is_smtp   = elgg_get_plugin_setting('phpmailer_smtp', 'phpmailer');
 	$smtp_host = elgg_get_plugin_setting('phpmailer_host', 'phpmailer');
 	$smtp_auth = elgg_get_plugin_setting('phpmailer_smtp_auth', 'phpmailer');
 
 	$is_ssl    = elgg_get_plugin_setting('ep_phpmailer_ssl', 'phpmailer');
-	$protocol  = elgg_get_plugin_setting('ep_phpmailer_protocol', 'phpmailer');
 	$ssl_port  = elgg_get_plugin_setting('ep_phpmailer_port', 'phpmailer');
-
 
 	try {
 
 		if ($is_smtp && isset($smtp_host)) {
-			$phpmailer->SMTPAuth = false;
-			if ($smtp_auth) {
-				$phpmailer->SMTPAuth = true;
-				$phpmailer->Username = elgg_get_plugin_setting('phpmailer_username', 'phpmailer');
-				$phpmailer->Password = elgg_get_plugin_setting('phpmailer_password', 'phpmailer');
 
-				if ($is_ssl) {
-					if ($protocol == "ssl"){
-						$phpmailer->SMTPSecure = "ssl";
-					} else {
-						$phpmailer->SMTPSecure = "tls";
-					}
-				}
+			if ($smtp_auth && $is_ssl) {
+
+				$phpmailer->SMTPSecure = "tls";
+				$phpmailer->Port = $ssl_port;
+				
 			}
 		} else {
 			// use php's mail
 			$phpmailer->IsMail();
 		}
-
+	
 		$return = $phpmailer->Send();
 
 	} catch (phpmailerException $e) {
