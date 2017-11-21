@@ -23,8 +23,6 @@ if($entity_type == 'candidate') {
 }
 else {
 	$number_array = array(
-    '9'=>'9',
-    '18'=>'18',
     '30'=>'30',
     '60'=>'60',
     '120' => '120'
