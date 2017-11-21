@@ -233,13 +233,28 @@ preg_match("/\/profile\/.*\//", $_SERVER['REQUEST_URI'], $output_array);
 if (sizeof($output_array) > 0)
   echo '<meta name="robots" content="noindex, follow">';
 
+
+$pg_title_en = gc_explode_translation($page_entity->title, 'en');
+$pg_title_fr = gc_explode_translation($page_entity->title, 'fr');
+
 // the wire posts do not have any title, we'll have the page title as the wire post
 if ($page_entity instanceof ElggEntity && $page_entity->getSubtype() === 'thewire') {
   $page_title = elgg_echo('thewire:head:title', 'en').' / '.elgg_echo('thewire:head:title', 'fr');
+  $pg_title_en = $page_title;
+  $pg_title_fr = $page_title;
+}
+
+if (!$pg_title_en && !$pg_title_fr) {
+  $pg_title_en = elgg_get_site_entity()->name;
+  $pg_title_fr = $pg_title_en;
 }
 
 // Meta tags for the page
+
 ?>
+<meta name="gcconnex_title_en" content="<?php echo $pg_title_en; ?>"/>
+<meta name="gcconnex_title_fr" content="<?php echo $pg_title_fr; ?>"/>
+
 <meta name="description" content="<?php echo $desc; ?>" />
 <meta name="dcterms.title" content="<?php echo $page_title ?>" />
 <meta name="dcterms.creator" content="<?php echo $creator; ?>" />
@@ -247,6 +262,7 @@ if ($page_entity instanceof ElggEntity && $page_entity->getSubtype() === 'thewir
 <meta name="dcterms.subject" title="scheme" content="<?php echo $briefdesc; ?>" />
 <meta name="dcterms.language" title="ISO639-2" content="<?php echo get_language(); ?>" />
 <link href="<?php echo $site_url; ?>mod/wet4/graphics/favicon.ico" rel="icon" type="image/x-icon" />
+
 
 
 <?php // hide the ajax toggle (hide the div)
