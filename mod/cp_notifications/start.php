@@ -207,6 +207,8 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$subject = elgg_echo('cp_notify:subject:group_invite_email',array($params['cp_inviter']['name'], $group_name_en),'en') . ' | ' . elgg_echo('cp_notify:subject:group_invite_email',array($params['cp_inviter']['name'], $group_name_fr),'fr');
 			$subject = htmlspecialchars_decode($subject, ENT_QUOTES);
 
+			$user_email = $params['cp_invitee'];
+
 
 			$message = array(
 				'cp_email_invited' => $params['cp_invitee'],
@@ -222,10 +224,17 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_user_profile' => $params['cp_user_profile'],
 			);
 			$template = elgg_view('cp_notifications/email_template', $message);
-			$site_template = elgg_view('cp_notifications/site_template', $message);
-			$user_obj = get_user_by_email($params['cp_invitee']);
 
-			$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $params['cp_invitee']->email, $params['cp_invitee']->name, $subject, $template, NULL, true ) : mail($params['cp_invitee']->email,$subject,$template,cp_get_headers());
+			// invitation through email, user might not exist
+			if ($cp_msg_type === 'cp_group_invite') {
+				$site_template = elgg_view('cp_notifications/site_template', $message);
+				if ($params['cp_invitee'] instanceof ElggUser)
+					$send_to_user = get_user_by_email($params['cp_invitee']);
+				else 
+					$send_to_user = $params['cp_invitee'];
+			} 
+
+			$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $user_email, $send_to_user->name, $subject, $template, NULL, true ) : mail($user_email, $subject, $template, cp_get_headers());
 			return true;
 
 		case 'cp_useradd': // cp_notifications/actions/useradd.php

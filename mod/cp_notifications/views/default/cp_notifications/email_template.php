@@ -438,6 +438,7 @@ switch ($msg_type) {
 
 
 	case 'cp_group_invite_email':	// inviting non user to group
+
 		$group_name = $vars['cp_group_invite']->name;
 		$group_name_en = gc_explode_translation($group_name, 'en');
 		$group_name_fr = gc_explode_translation($group_name, 'fr');
@@ -456,9 +457,15 @@ switch ($msg_type) {
 		$cp_notify_msg_description_en .= elgg_echo('cp_notify:body_group_invite_email:description', array($vars['cp_invitation_non_user_url'], $vars['cp_invitation_url'], $vars['cp_invitation_code']), 'en');
 		$cp_notify_msg_description_fr .= elgg_echo('cp_notify:body_group_invite_email:description', array($vars['cp_invitation_non_user_url'], $vars['cp_invitation_url'], $vars['cp_invitation_code']), 'fr');
 
-		$email_notification_footer_non_user_en = elgg_echo('cp_notify:footer:no_user',array(),'en');
-		$email_notification_footer_non_user_fr = elgg_echo('cp_notify:footer:no_user',array(),'fr');
 
+		$invitation_link = "{$vars['cp_invitation_non_user_url']}?utm_source=notification&utm_medium=email";
+		$registration_link = "{$site->getURL()}register";
+		$article_link = (strpos($site->getURL(), 'gcconnex') !== false) ? "https://gcconnex.gctools-outilsgc.ca/en/support/solutions/articles/2100030466-how-do-i-join-a-group-" : "https://gccollab.gctools-outilsgc.ca/en/support/solutions/articles/2100028400-how-do-i-find-and-join-a-group-";
+		$help_link = (strpos($site->getURL(), 'gcconnex') !== false) ? "https://gcconnex.gc.ca/contactform/?utm_source=notification&utm_medium=email" : "https://gccollab.ca/help/knowledgebase/?utm_source=notification&utm_medium=email";
+		$login_link = "{$site->getURL()}login";
+
+		$cp_notify_msg_description_en = elgg_echo('cp_notification:group_invite_email', array($vars['cp_invitation_msg'], $site->name, $invitation_link, $site->name, $registration_link, $site->name, $vars['cp_invitation_code'], $site->name, $login_link, $article_link, $help_link), 'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notification:group_invite_email', array($vars['cp_invitation_msg'], $site->name, $invitation_link, $site->name, $registration_link, $site->name, $vars['cp_invitation_code'], $site->name, $login_link, $article_link, $help_link), 'fr');
 
 		break;
 
