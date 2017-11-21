@@ -233,8 +233,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				else 
 					$send_to_user = $params['cp_invitee'];
 			} 
-
-			$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $user_email, $send_to_user->name, $subject, $template, NULL, true ) : mail($user_email, $subject, $template, cp_get_headers());
+			$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $params['cp_invitee']->email, $params['cp_invitee']->name, $subject, $template, NULL, true ) : mail($send_to_user->email, $subject, $template, cp_get_headers());
 			return true;
 
 		case 'cp_useradd': // cp_notifications/actions/useradd.php
