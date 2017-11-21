@@ -287,7 +287,7 @@ function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend 
 				if (elgg_is_active_plugin('cp_notifications')) {
 					
 					$message = array(
-						'cp_invitee' => $email,
+						'cp_invitee' => (object) array("email" => $email, "name" => $email),
 						'cp_inviter' => $loggedin_user,
 						'cp_group_invite' => $group,
 						'group_link' => elgg_get_site_url().'groups/profile/'.$group->guid.'/'.$group->name,

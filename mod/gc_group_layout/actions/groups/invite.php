@@ -15,14 +15,14 @@ $logged_in_user = elgg_get_logged_in_user_entity();
 $user_guids = get_input("user_guid");
 if (!empty($user_guids) && !is_array($user_guids)) {
 	$user_guids = array($user_guids);
+
+	// This fix a problem with array of colleague cercle
+	$array_users = $user_guids;
+	$string_users = implode(",", $array_users);
+
+	$array_users2  = $string_users;
+	$user_guids = explode(",", $array_users2);
 }
-
-// This fix a problem with array of colleague cercle
-$array_users = $user_guids;
-$string_users = implode(",", $array_users);
-
-$array_users2  = $string_users;
-$user_guids = explode(",", $array_users2);
 
 //fix to provide users with better feedback when not using this feature properly
 $user_name = get_input("group_tools_user_invite");
