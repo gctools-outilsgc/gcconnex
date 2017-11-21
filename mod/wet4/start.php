@@ -996,11 +996,12 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
                 );
                 $return[] = ElggMenuItem::factory($options);
             }
+    $user = elgg_get_logged_in_user_entity();
 	if ($entity->canEdit() && $handler) {
-		// edit link
+         if ($entity['owner_guid'] == $user['guid'] || elgg_is_admin_logged_in()){
 
         //checks so the edit icon is not placed on incorrect entities
-        if($handler != 'group_operators'){
+     
             if($entity->getSubtype() != 'thewire'){
                 $options = array(
                     'name' => 'edit',
@@ -1024,9 +1025,8 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
         		);
         		$return[] = \ElggMenuItem::factory($options);
             }
-        }
 	}
-
+}
 
     if($entity->getSubType() == 'file'){
         // download link

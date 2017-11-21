@@ -30,13 +30,16 @@ var textarea;
         });
 
         $('#groups-owner-guid-select').html(userSelectOptions);        // update select options
-
+        $(textarea).parent().find('.self-groups-owner-guid-select').html(userSelectOptions);
         if (!userOptions) {
             $('#groupmems-popup > .panel-body').html('<div class="elgg-ajax-loader"></div>');
             $('#groupmems-popup').addClass('hidden');
+             $(textarea).parent().find('.self-groupmems-popup > .panel-body').html('<div class="elgg-ajax-loader"></div>');
+            $(textarea).parent().find('.self-groupmems-popup').addClass('hidden');
             return;
         }
 
+        $(textarea).parent().find('.self-groupmems-popup  > .panel-body').html('<ul class="mentions-autocomplete list-unstyled mrgn-bttm-0">' + userOptions + "</ul>");
         $('#groupmems-popup > .panel-body').html('<ul class="mentions-autocomplete list-unstyled mrgn-bttm-0">' + userOptions + "</ul>");
         $('.mentions-autocomplete .elgg-avatar a').attr('tabindex', '-1');
         $('#groupmems-popup').removeClass('hidden');
@@ -58,9 +61,10 @@ var textarea;
             // Set new content for the textarea
                 $(textarea).val(newContent);
                 $('#groups-owner-guid-select').val(guid);
-
+                $(textarea).parent().first('.self-groups-owner-guid-select').val(guid);
             // Hide the autocomplete popup
             $('#groupmems-popup').addClass('hidden');
+            $(textarea).parent().find('.self-groupmems-popup').addClass('hidden');
         });
 
 
@@ -85,6 +89,7 @@ var textarea;
 
                 // Hide the autocomplete popup
                 $('#groupmems-popup').addClass('hidden');
+                    $(textarea).parent().find('.self-groupmems-popup').addClass('hidden');
             }
             });
 
@@ -97,7 +102,7 @@ var textarea;
         if (current.length > 1) {
             current = current.replace('@', '');
             $('#groupmems-popup').removeClass('hidden');
-
+            $(textarea).parent().find('.self-groupmems-popup').removeClass('hidden');
             var options = {success: handleResponse_groupmem};
 
             elgg.get(elgg.config.wwwroot + 'livesearch?q=' + current + '&g=' + elgg.get_page_owner_guid() + '&match_on=groupmems', options);
@@ -126,6 +131,18 @@ var textarea;
                 autocomplete_groupmem(content, position);
             }
         });
+        
+        $('.self-groups-owner-guid').bind('keyup', function(e){
+                        if (e.which == 8 || e.which == 13) {
+                $(this).parent().find('.self-groupmems-popup > .panel-body').html('<div class="elgg-ajax-loader"></div>');
+                $('.self-groupmems-popup').addClass('hidden');
+            } else {
+                textarea = $(this);
+                content = $(this).val();
+                position = getCursorPosition(this);
+                autocomplete_groupmem(content, position);
+            }
+        })
     };
 
     elgg.register_hook_handler('init', 'system', init_groupmem, 9999);

@@ -46,3 +46,10 @@
     .ambBorder2 {
         border: 2px solid #f5db84;
     }
+    .gc-deactivated-avatar{
+        border: 5px solid darkgray;
+        border-radius: 50%;
+    }
+    .gc-deactivated-avatar img{
+        opacity: 0.5;
+    }

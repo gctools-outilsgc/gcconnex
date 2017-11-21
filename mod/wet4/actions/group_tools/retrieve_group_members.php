@@ -24,7 +24,7 @@ $offset = $number_of_members_per_page * $page_selected;
 $query = "SELECT ue.name, r.guid_one FROM elggentity_relationships r, elggusers_entity ue WHERE r.guid_one = ue.guid AND r.relationship = 'member' AND r.guid_two = {$group_guid}";
 $group_members = get_data($query);
 
-$group_members = array_slice($group_members, $offset, 3);
+$group_members = array_slice($group_members, $offset, $number_of_members_per_page);
 $display_members = array();
 
 foreach ($group_members as $member) {
