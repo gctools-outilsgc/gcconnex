@@ -1838,3 +1838,8 @@ figcaption{
 .elgg-list-river .elgg-item .elgg-river-attachments img.elgg-photo {
   width: 100%;
 }
+
+.userMenuAvatar img {
+  width: 40px;
+  height: auto;
+}

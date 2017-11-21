@@ -91,7 +91,7 @@ $french = array(
 		<li>Les fonctionnaires canadiens (fédéraux, provinciaux et territoriaux) peuvent s'inscrire en se servant de leurs adresses courriel gouvernementales.</li>
 		<li>Les universitaires et les étudiants de toutes les universités et collèges canadiens peuvent s'inscrire en utilisant les adresses courriel de leur institution.</li>
 	</ul>
-	<p>Vous ne faites pas partie de ces groupes? Les Canadiens peuvent se joindre à GCcollab par invitation! Les membres existants de GCcollab peuvent inviter leurs intervenants et partenaires à se joindre à GCcollab, ce qui en fait un environnement véritablement collaboratif.</p>
+	<p><strong>Vous ne faites pas partie de ces groupes?</strong> Les Canadiens peuvent se joindre à GCcollab par invitation! Les membres existants de GCcollab peuvent inviter leurs intervenants et partenaires à se joindre à GCcollab, ce qui en fait un environnement véritablement collaboratif.</p>
 	<p class='ptm pbm'><strong>Inscrivez-vous et validez votre compte!</strong></p>
 	<p>Une fois que vous aurez rempli le formulaire d'inscription, vous recevrez un courriel de validation. Cliquez sur le lien (ou copiez-le dans la barre d'adresse) pour activer votre compte. Si vous ne recevez pas de courriel, veuillez communiquer avec le <a href='" . elgg_get_site_url() . "mod/contactform/'>bureau d’aide de GCcollab</a>.</p>",
 	

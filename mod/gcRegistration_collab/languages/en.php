@@ -91,7 +91,7 @@ $english = array(
 		<li>Canadian public servants (federal, provincial and territorial) can register by using their government email addresses.</li>
 		<li>Academics and students of all Canadian universities and colleges can register using their institution email addresses.</li>
 	</ul>
-	<p>Not part of these groups? Canadians are able to join GCcollab by invitation! Existing GCcollab members can invite their stakeholders and partners on to GCcollab, making it a truly collaborative environment.</p>
+	<p><strong>Not part of these groups?</strong> Canadians are able to join GCcollab by invitation! Existing GCcollab members can invite their stakeholders and partners on to GCcollab, making it a truly collaborative environment.</p>
 	<p class='ptm pbm'><strong>Register and validate your account!</strong></p>
 	<p>After completing the registration form, you will receive a validation email. Click on the link (or copy paste it in the address bar) to activate your account. If you do not receive the email, please contact the <a href='" . elgg_get_site_url() . "mod/contactform/'>GCcollab help desk</a>.</p>",
 

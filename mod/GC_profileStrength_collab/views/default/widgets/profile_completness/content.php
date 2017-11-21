@@ -134,29 +134,47 @@ if($userEnt->profilestrength != 100){
     echo '</div>';
 
     if($userEnt->opt_in_missions == 'gcconnex_profile:opt:yes') {
-	    $OptedIn = true;
-	}
-	if($userEnt->opt_in_swap == 'gcconnex_profile:opt:yes') {
-	    $OptedIn = true;
-	}
-	if($userEnt->opt_in_mentored == 'gcconnex_profile:opt:yes') {
-	    $OptedIn = true;
-	}
-	if($userEnt->opt_in_mentoring == 'gcconnex_profile:opt:yes') {
         $OptedIn = true;
-	}
-	if($userEnt->opt_in_shadowed == 'gcconnex_profile:opt:yes') {
-	    $OptedIn = true;
-	}
-	if($userEnt->opt_in_shadowing == 'gcconnex_profile:opt:yes') {
+    }
+    if($userEnt->opt_in_swap == 'gcconnex_profile:opt:yes') {
         $OptedIn = true;
-	}
-	if($userEnt->opt_in_peer_coached == 'gcconnex_profile:opt:yes') {
-	    $OptedIn = true;
-	}
-	if($userEnt->opt_in_peer_coaching == 'gcconnex_profile:opt:yes') {
-	    $OptedIn = true;
-	}
+    }
+    if($userEnt->opt_in_mentored == 'gcconnex_profile:opt:yes') {
+        $OptedIn = true;
+    }
+    if($userEnt->opt_in_mentoring == 'gcconnex_profile:opt:yes') {
+        $OptedIn = true;
+    }
+    if($userEnt->opt_in_shadowed == 'gcconnex_profile:opt:yes') {
+        $OptedIn = true;
+    }
+    if($userEnt->opt_in_shadowing == 'gcconnex_profile:opt:yes') {
+        $OptedIn = true;
+    }
+    if($userEnt->opt_in_peer_coached == 'gcconnex_profile:opt:yes') {
+        $OptedIn = true;
+    }
+    if($userEnt->opt_in_peer_coaching == 'gcconnex_profile:opt:yes') {
+        $OptedIn = true;
+    }
+    if($userEnt->opt_in_casual_seek == 'gcconnex_profile:opt:yes') {
+        $OptedIn = true;
+    }
+    if($userEnt->opt_in_casual_create == 'gcconnex_profile:opt:yes') {
+        $OptedIn = true;
+    }
+    if($userEnt->opt_in_student_seek == 'gcconnex_profile:opt:yes') {
+        $OptedIn = true;
+    }
+    if($userEnt->opt_in_student_create == 'gcconnex_profile:opt:yes') {
+        $OptedIn = true;
+    }
+    if($userEnt->opt_in_collaboration_seek == 'gcconnex_profile:opt:yes') {
+        $OptedIn = true;
+    }
+    if($userEnt->opt_in_collaboration_create == 'gcconnex_profile:opt:yes') {
+        $OptedIn = true;
+    }
 
     //focus onto the micromission section
     if(elgg_plugin_exists('missions') && elgg_is_active_plugin('missions') && $OptedIn==false){

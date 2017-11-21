@@ -24,10 +24,10 @@ $lang = get_current_language();
 
 $attrs = " vocab='https://schema.org/' typeof='WebPage'";
 if (isset($vars['body_attrs'])) {
-	$attrs = elgg_format_attributes($vars['body_attrs']);
-	if ($attrs) {
-		$attrs = " $attrs";
-	}
+    $attrs = elgg_format_attributes($vars['body_attrs']);
+    if ($attrs) {
+        $attrs = " $attrs";
+    }
 }
 ?>
 <!DOCTYPE html><!--[if lt IE 9]><html class="no-js lt-ie9" lang="<?php echo $lang; ?>" dir="ltr"><![endif]--><!--[if gt IE 8]><!-->
@@ -38,9 +38,7 @@ if (isset($vars['body_attrs'])) {
     <link type="text/css" href="/cometchat/cometchatcss.php" rel="stylesheet" charset="utf-8">
     <script type="text/javascript" src="/cometchat/cometchatjs.php" charset="utf-8"></script>
     <?php
-    	$head = $vars["head"];
-    	$head = str_replace("_graphics/favicon", "_graphics/favicon-collab", $vars["head"]);
-    	echo $head;
+        echo str_replace("_graphics/favicon", "_graphics/favicon-collab", $vars["head"]);
     ?>
 </head>
 <body<?php echo $attrs ?>>
