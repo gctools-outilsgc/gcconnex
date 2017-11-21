@@ -471,9 +471,8 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 		);
 		$return[] = \ElggMenuItem::factory($options);
 	}
-	$user = elgg_get_logged_in_user_entity();
+	
 	if ($entity->canEdit() && $handler) {
-		if ($entity['owner_guid'] == $user['guid'] || elgg_is_admin_logged_in()){
 			// edit link
 			$options = array(
 				'name' => 'edit',
@@ -496,7 +495,6 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 				);
 				$return[] = \ElggMenuItem::factory($options);
 			}
-		}
 	}
 
 
