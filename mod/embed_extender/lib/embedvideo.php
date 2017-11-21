@@ -115,7 +115,7 @@ function videoembed_add_object($type, $url, $guid, $width, $height) {
 			$videodiv .= "<iframe width=\"$width\" height=\"$height\" src=\"https://player.vimeo.com/video/{$url}?portrait=0\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>";	
 			break;
 		case 'metacafe':
-			$videodiv .= "<embed src=\"http://www.metacafe.com/fplayer/{$url}.swf\" width=\"$width\" height=\"$height\" wmode=\"transparent\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\"></embed>";
+			$videodiv .= "<iframe width=\"$width\" height=\"$height\" src=\"http://www.metacafe.com/embed/{$url}\" frameborder=\"0\" allowfullscreen></iframe>";
 			break;
 		case 'veoh':
 			$videodiv .= "<embed src=\"http://www.veoh.com/veohplayer.swf?permalinkId={$url}&player=videodetailsembedded&videoAutoPlay=0\" allowFullScreen=\"true\" width=\"$width\" height=\"$height\" bgcolor=\"#FFFFFF\" type=\"application/x-shockwave-flash\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\"></embed>";
