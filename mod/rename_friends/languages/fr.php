@@ -67,7 +67,7 @@ if(elgg_is_active_plugin('rename_groups')){
 
   $guplural = $first_letter . $rest_of_word;
 
-  $plurial = elgg_echo('collègues');
+  $plurial = 'collègues';
  
 $french = array(
 	//
