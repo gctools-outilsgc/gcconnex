@@ -51,7 +51,7 @@ function thewire_image_check_attachments($event, $type, $object) {
 	if ($file) {
 		$file_obj = new TheWireImage();
 
-		$file_obj->setFilename('thewire_image/' . rand());
+		$file_obj->setFilename('thewire_image/' . rand().".jpg");
 		$file_obj->setMimeType($file['type']);
 		$file_obj->original_filename = $file['name'];
 		$file_obj->simpletype = file_get_simple_type($file['type']);
@@ -62,7 +62,7 @@ function thewire_image_check_attachments($event, $type, $object) {
 		$file_obj->close();
 
 		if ($file_obj->save()) {
-			$file_obj->addRelationship($object->getGuid(), 'is_attachment');
+			$file_obj->addRelationship($object->getGUID(), 'is_attachment');
 		} else {
 			register_error(elgg_echo('thewire_image:could_not_save_image'));
 		}

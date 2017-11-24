@@ -83,16 +83,13 @@ $description_info_en .=
 
 switch ($msg_type) {
 
-
-
 	case 'cp_wire_image':
-		$cp_notify_msg_title_en = "";
-		$cp_notify_msg_title_fr = "";
+		$wire_entity = $vars['wire_entity'];
+		$cp_notify_msg_title_en = elgg_echo('cp_notifications:mail_body:subtype:thewire', array($vars['author']->name, "<a href='{$wire_entity->getURL()}'>fil</a>"), 'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notifications:mail_body:subtype:thewire', array($vars['author']->name, "<a href='{$wire_entity->getURL()}'>wire</a>"), 'fr');
 
-		$image = file_get_contents("http://192.168.245.130/gcconnex/thewire_image/download/1234/snapshot.jpg");
-		$image_data = base64_encode($image);
-		$cp_notify_msg_description_en = '<img alt="My Image" src="data:image/jpeg;base64,'.$image_data.'" />';
-		$cp_notify_msg_description_fr = "hello world ...";
+		$cp_notify_msg_description_en = "<p>{$vars['wire_entity']->description}</p> <br/> <p><img  width=\"320\" src=\"cid:wire_image\"/> </p>";
+		$cp_notify_msg_description_fr = "<p>{$vars['wire_entity']->description}</p> <br/> <p><img  width=\"320\" src=\"cid:wire_image\"/> </p>";
 		break;
 
 	case 'cp_content_edit': // blog vs page (edits)
@@ -735,9 +732,8 @@ switch ($msg_type) {
 }
 
 
-
-
-if ($msg_type !== 'cp_site_msg_type' && $msg_type !== 'cp_group_mail') {	// if this was a message sent from a user, this is not system generated
+// if this was a message sent from a user, this is not system generated
+if ($msg_type !== 'cp_site_msg_type' && $msg_type !== 'cp_group_mail') {	
 	$email_notification_header = elgg_echo('cp_notification:email_header',array(),'en') . ' | ' . elgg_echo('cp_notification:email_header',array(),'fr');
 }
 
