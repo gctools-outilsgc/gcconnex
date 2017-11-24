@@ -5,9 +5,11 @@
  * @uses $vars["post"]
  */
 
+$site = elgg_get_site_entity();
+
 if( elgg_is_xhr() ){
-	echo '<script type="text/javascript" src="/mod/thewire_images/js/dropzone.js"></script>';
-	echo '<link rel="stylesheet" type="text/css" href="/mod/thewire_images/css/dropzone.css">';
+	echo '<script type="text/javascript" src="'.$site->getURL().'mod/thewire_images/js/dropzone.js"></script>';
+	echo '<link rel="stylesheet" type="text/css" href="'.$site->getURL().'mod/thewire_images/css/dropzone.css">';
 }
 
 elgg_load_js("elgg.thewire");
