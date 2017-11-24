@@ -20,7 +20,7 @@ return array(
 	'member_selfdelete:feedback:thanks' => "We're sad to see you go, but thank you for leaving us feedback.",
 	'member_selfdelete:inactive:user' => "Inactive User",
 	'member_selfdelete:label:reason' => "Optional: Please tell us the reason you are deleting your account",
-	'member_selfdelete:label:confirmation' => "To confirm your intent to delete your account please enter your password",
+	'member_selfdelete:label:confirmation' => "To confirm your intent to deactivate your account please enter your password",
 	'member_selfdelete:option:anonymize' => "Anonymize",
 	'member_selfdelete:option:ban' => "Ban",
 	'member_selfdelete:option:choose' => "Choose",
