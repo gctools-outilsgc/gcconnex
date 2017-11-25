@@ -79,7 +79,7 @@ return array(
   /**
    * Register
    */
-  'gcconnex:registerText' => "<h3>Bienvenue à GCcollab!</h3><p>Un espace de collaboration et de réseautage ouvert à tous les fonctionnaires canadiens (fédéraux, provinciaux et territoriaux), universitaires et étudiants, ainsi qu'à tous les Canadiens et à toutes les Canadiennes, par invitation. Prenez part à la conversation!</p>",
+  'gcconnex:registerText' => "<h3>Bienvenue à GCcollab!</h3><p>Un espace de collaboration et de réseautage ouvert à tous les fonctionnaires canadiens (fédéraux, provinciaux, territoriaux et municipaux), universitaires et étudiants, ainsi qu'à tous les Canadiens et à toutes les Canadiennes, par invitation. Prenez part à la conversation!</p>",
 
   /**
    * Contact / FAQ
@@ -177,7 +177,7 @@ J'espère d'avoir l'occasion de discuter avec vous bientôt!",
   'cp_notify:body_add_new_user:title' => "Vous avez été ajouté en tant que nouvel utilisateur sur GCcollab",
   'cp_notify:subject:invite_new_user' => "Vous avez été invité(e) à joindre GCcollab",
   'cp_notify:body_invite_new_user:title' => "Vous avez été invité(e) à joindre GCcollab par %s",
-  'cp_notify:body_invite_new_user:description' => "<p>Joignez-vous à GCcollab, un espace de collaboration et de réseautage hébergé par le gouvernement du Canada, ouvert aux fonctionnaires canadiens (fédéraux, provinciaux et territoriaux), aux universitaires, aux étudiants et à leurs partenaires partout au Canada.</p>
+  'cp_notify:body_invite_new_user:description' => "<p>Joignez-vous à GCcollab, un espace de collaboration et de réseautage hébergé par le gouvernement du Canada, ouvert aux fonctionnaires canadiens (fédéraux, provinciaux, territoriaux et municipaux), aux universitaires, aux étudiants et à leurs partenaires partout au Canada.</p>
 
 <p>Une fois que vous êtes membre, vous pouvez également inviter toute autre personne avec qui vous souhaitez travailler, à partir de la fonctionnalité « Collègues ». (Cette option est disponible en sélectionnant l'icône des trois silhouettes qui figure au-dessus du menu de navigation.</p>
 
