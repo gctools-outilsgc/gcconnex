@@ -1251,11 +1251,13 @@ function discussion_reply_menu_setup($hook, $type, $return, $params) {
 	// Reply has the same access as the topic so no need to view it
 	$remove = array('access');
 
-	$user = elgg_get_logged_in_user_entity();
-
 	// Allow discussion topic owner, group owner and admins to edit and delete
 	if ($reply->canEdit() && !elgg_in_context('activity')) {
-		if ($reply['owner_guid'] == $user['guid'] || elgg_is_admin_logged_in()){
+
+	$user = elgg_get_logged_in_user_entity();
+    $page_owner = elgg_get_page_owner_entity();
+		if($entity->owner_guid == $user['guid'] || elgg_is_admin_logged_in() || ($page_owner instanceof ElggGroup && $page_owner->getOwnerGUID() == $user['guid']) || $page_owner->canEdit()){
+                    
 			$return[] = ElggMenuItem::factory(array(
 				'name' => 'edit',
 				'text' => elgg_echo('edit'),
@@ -1272,6 +1274,7 @@ function discussion_reply_menu_setup($hook, $type, $return, $params) {
 				'confirm' => elgg_echo('deleteconfirm'),
 			));
 		}
+		
 	} else {
 		// Edit and delete links can be removed from all other users
 		$remove[] = 'edit';

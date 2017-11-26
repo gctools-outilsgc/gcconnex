@@ -996,13 +996,11 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
                 );
                 $return[] = ElggMenuItem::factory($options);
             }
-    $user = elgg_get_logged_in_user_entity();
+  
 	if ($entity->canEdit() && $handler) {
-         if ($entity['owner_guid'] == $user['guid'] || elgg_is_admin_logged_in()){
-
         //checks so the edit icon is not placed on incorrect entities
-     
-            if($entity->getSubtype() != 'thewire'){
+      if($handler != 'group_operators'){
+            if($entity->getSubtype() != 'thewire' && $entity->getSubtype() != 'discussion_reply'){
                 $options = array(
                     'name' => 'edit',
                     'text' => '<i class="fa fa-edit fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['edit'].'</span></i>',
@@ -1014,19 +1012,46 @@ function wet4_elgg_entity_menu_setup($hook, $type, $return, $params) {
             }
 		// delete link
 
+            if (elgg_is_logged_in() && $entity->getSubtype() != 'discussion_reply'){
+            		$options = array(
+            			'name' => 'delete',
+            			'text' => '<i class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['delete'].'</span></i>',
+            			'title' => elgg_echo('delete:this') . ' ' . $entContext,
+            			'href' => "action/$handler/delete?guid={$entity->getGUID()}",
+            			'confirm' => elgg_echo('deleteconfirm'),
+            			'priority' => 300,
+            		);
+            		$return[] = \ElggMenuItem::factory($options);
+                    }
+
             if (elgg_is_logged_in()){
-        		$options = array(
-        			'name' => 'delete',
-        			'text' => '<i class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['delete'].'</span></i>',
-        			'title' => elgg_echo('delete:this') . ' ' . $entContext,
-        			'href' => "action/$handler/delete?guid={$entity->getGUID()}",
-        			'confirm' => elgg_echo('deleteconfirm'),
-        			'priority' => 300,
-        		);
-        		$return[] = \ElggMenuItem::factory($options);
+                $user = elgg_get_logged_in_user_entity();
+                $page_owner = elgg_get_page_owner_entity();
+                if($entity->getSubtype() == 'discussion_reply' ){
+                    if($entity->owner_guid == $user['guid'] || elgg_is_admin_logged_in() || ($page_owner instanceof ElggGroup && $page_owner->getOwnerGUID() == $user['guid']) || $page_owner->canEdit()){
+                    $options = array(
+                    'name' => 'edit',
+                    'text' => '<i class="fa fa-edit fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['edit'].'</span></i>',
+                    'title' => elgg_echo('edit:this') . ' ' . $entContext,
+                    'href' => "$handler/edit/{$entity->getGUID()}",
+                    'priority' => 299,
+                );
+                $return[] = \ElggMenuItem::factory($options);
+
+                    $options = array(
+                        'name' => 'delete',
+                        'text' => '<i class="fa fa-trash-o fa-lg icon-unsel"><span class="wb-inv">'.$hiddenText['delete'].'</span></i>',
+                        'title' => elgg_echo('delete:this') . ' ' . $entContext,
+                        'href' => "action/$handler/delete?guid={$entity->getGUID()}",
+                        'confirm' => elgg_echo('deleteconfirm'),
+                        'priority' => 300,
+                    );
+                    $return[] = \ElggMenuItem::factory($options);
+                    }
+                }
             }
-	}
-}
+        }
+    }
 
     if($entity->getSubType() == 'file'){
         // download link
