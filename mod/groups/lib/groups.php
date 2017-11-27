@@ -632,7 +632,7 @@ function groups_handle_stats_page($guid) {
 	elgg_set_page_owner_guid($guid);
 
 	$group = get_entity($guid);
-	if (!elgg_instanceof($group, 'group')) {
+	if (!elgg_instanceof($group, 'group') || strpos(elgg_get_site_entity()->name, 'collab') == false) {
 		register_error(elgg_echo('groups:noaccess'));
 		forward(REFERER);
 	}
