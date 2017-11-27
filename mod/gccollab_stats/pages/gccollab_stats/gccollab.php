@@ -13,7 +13,6 @@
 
         ob_start(); ?>
 
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="//code.highcharts.com/highcharts.js"></script>
         <script src="//code.highcharts.com/modules/exporting.js"></script>
         <script src="//code.highcharts.com/modules/data.js"></script>
