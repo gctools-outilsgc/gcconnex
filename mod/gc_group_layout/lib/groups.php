@@ -545,11 +545,6 @@ function groups_register_profile_buttons($group) {
 		$actions[$url] = 'groups:edit';
 		$url = elgg_get_site_url() . "groups/invite/{$group->getGUID()}";
 		$actions[$url] = 'groups:invite';
-		
-		if( strpos(elgg_get_site_entity()->name, 'collab') !== false ){
-			$url = elgg_get_site_url() . "groups/stats/{$group->getGUID()}";
-			$actions[$url] = 'groups:stats';
-		}
 	}
 
 	// group members
@@ -570,6 +565,11 @@ function groups_register_profile_buttons($group) {
 			// request membership
 			$actions[$url] = 'groups:joinrequest';
 		}
+	}
+		
+	if( strpos(elgg_get_site_entity()->name, 'collab') !== false ){
+		$url = elgg_get_site_url() . "groups/stats/{$group->getGUID()}";
+		$actions[$url] = 'groups:stats';
 	}
 
 	if ($actions) {
@@ -668,7 +668,7 @@ function groups_handle_stats_page($guid) {
 	elgg_set_page_owner_guid($guid);
 
 	$group = get_entity($guid);
-	if (!elgg_instanceof($group, 'group') || !$group->canEdit()) {
+	if (!elgg_instanceof($group, 'group')) {
 		register_error(elgg_echo('groups:noaccess'));
 		forward(REFERER);
 	}

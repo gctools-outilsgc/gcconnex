@@ -195,8 +195,6 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 								$actions[$url] = 'groups:edit';
 								$url = elgg_get_site_url() . "groups/invite/{$group->getGUID()}";
 								$actions[$url] = 'groups:invite';
-								$url = elgg_get_site_url() . "groups/stats/{$group->getGUID()}";
-								$actions[$url] = 'groups:stats';
 						 }
 						 // group members
 						 if ($group->isMember()) {
@@ -217,6 +215,10 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 										 $actions[$url] = 'groups:joinrequest';
 								 }
 						 }
+
+						$url = elgg_get_site_url() . "groups/stats/{$group->getGUID()}";
+						$actions[$url] = 'groups:stats';
+						
 						 if ($actions) {
 								 foreach ($actions as $url => $text) {
 										 elgg_register_menu_item('group_ddb', array(
