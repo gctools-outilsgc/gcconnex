@@ -221,7 +221,7 @@ You will automatically add them as a {$lsingle} when you create your account.",
  * 	Rename Groups
  */
 
-'groups:invite' => "Invite {$lplural}",
+'groups:invite' => "Invite users to the group",
 'groups:invite:title' => "Invite {$lplural} to this {$glsingle}",
 'groups:inviteto' => "Invite {$lplural} to '%s'",
 'groups:nofriends' => "You have no {$lplural} left who have not been invited to this {$glsingle}.",

@@ -34,7 +34,6 @@ $rest_of_word = substr($plural, 1);
 $uplural = $first_letter . $rest_of_word;
 
 
-
 // get variables for groups 
 $singular = '';
 $plural = '';
@@ -67,6 +66,8 @@ if(elgg_is_active_plugin('rename_groups')){
   $rest_of_word = substr($plural, 1);
 
   $guplural = $first_letter . $rest_of_word;
+
+  $plurial = 'collègues';
  
 $french = array(
 	//
@@ -91,14 +92,14 @@ $french = array(
 //'access:friends:label' => "$uplural",
 'friends' => "$uplural",
 'friends:yours' => "Vos {$lplural}",
-'friends:owned' => "%s' {$lplural}",
+'friends:owned' => "Les {$plurial} de %s",
 'friend:add' => "Ajouter un {$lsingle}",
 'friend:remove' => "Supprimer {$lsingle}",
 'friends:add:successful' => "Vous avez ajouté %s avec succès en tant que  {$lsingle}.",
 'friends:add:failure' => "Il nous a été impossible d'ajouter %s en tant que  {$lsingle}. Veuillez essayer à nouveau.",
 'friends:remove:successful' => "Vous avez réuss à supprimé %s de votre liste de  {$lplural}.",
 'friends:remove:failure' => "Il nous a été impossible de supprimer %s de votre liste de  {$lplural}. Veuillez essayer à nouveau.",
-'friends:none' => "Cet utilisateur n'a pas encore ajouter de  {$lplural} à ce jour.", 
+'friends:none' => "Cet utilisateur n'a pas encore ajouter de {$plurial} à ce jour.", 
 'friends:none:you' => "Vous n'avez pas encore de {$lplural}.",
 'friends:none:found' => "Aucun  {$lplural} n'a été trouvé.",
 'friends:of:none' => "Personne n'a ajouté cet utilisateur en tant que {$lsingle} à ce jour.",
@@ -134,7 +135,7 @@ $french = array(
 //Friend Request		
 				
 'friend_request' => "Demande de {$usingle}",
-'friend_request:menu' => "Demandes de {$lsingle}",
+'friend_request:menu' => "Demandes de {$plurial}",
 'friend_request:title' => "Demande de {$lsingle} pour : %s",
 'friend_request:new' => "Nouvelle demande de {$lsingle}",
 'friend_request:friend:add:pending' => "Demande de {$lsingle} en attente",
@@ -184,7 +185,7 @@ $french = array(
 		
 //Rename Groups		
 		
-'groups:invite' => "Invitez les {$lplural}",
+'groups:invite' => "Invitez des utilisateurs au groupe",
 'groups:invite:title' => "Invitez les {$lplural} à ce {$glsingle}",
 'groups:inviteto' => "Invitez les {$lplural} à '%s'",
 'groups:nofriends' => "Il ne vous reste pu de {$lplural} à inviter à ce {$glsingle}.",

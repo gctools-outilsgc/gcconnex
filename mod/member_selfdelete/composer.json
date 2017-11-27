@@ -1,0 +1,20 @@
+{
+    "name": "beck24/member_selfdelete",
+    "type": "elgg-plugin",
+    "description": "Allows members to delete their account, and submit an optional reason for deleting their account",
+    "homepage": "https://github.com/beck24/member_selfdelete",
+    "keywords": ["elgg", "plugin", "member selfdelete", "user delete"],
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Matt Beckett"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/beck24/member_selfdelete/issues"
+    },
+    "require": {
+        "php": ">=5.4",
+        "composer/installers": ">=1.0.8"
+    }
+}

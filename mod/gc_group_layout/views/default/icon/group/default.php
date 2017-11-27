@@ -15,7 +15,7 @@ namespace AU\SubGroups;
  * @uses $vars['link_class'] Optional CSS class for the link
  */
 $entity = $vars['entity'];
-
+$lang = get_current_language();
 $sizes = array('small', 'medium', 'large', 'tiny', 'master', 'topbar');
 // Get size
 if (!in_array($vars['size'], $sizes)) {
@@ -39,7 +39,7 @@ if (isset($entity->name)) {
 } else {
 	$title = $entity->title;
 }
-$title = htmlspecialchars($title, ENT_QUOTES, 'UTF-8', false);
+//$title = htmlspecialchars($title, ENT_QUOTES, 'UTF-8', false);
 
 $url = $entity->getURL();
 if (isset($vars['href'])) {
@@ -85,7 +85,7 @@ if($imginfo){
 $img = '<div class="au_subgroups_group_icon au_subgroups_group_icon-' . $vars['size'] . '-wet4">';
 $img .= elgg_view('output/img', array(
 	'src' => $entity->getIconURL($vars['size']),
-	'alt' => $title,
+	'alt' => gc_explode_translation($title,$lang),
 	'class' => $class . 'img-responsive img-circle',
 	'width' => $img_width,
 	'height' => $img_height,

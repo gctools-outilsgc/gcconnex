@@ -31,7 +31,7 @@ if ($user && ($group instanceof ElggGroup)) {
 			// cyu - remove all the relationships when a user leaves a group
 			if (elgg_is_active_plugin('cp_notifications')) {
 
-				$group_content_arr = array('blog','bookmark','groupforumtopic','event_calendar','file',/*'hjforumtopic','hjforum',*/'photo','album','task','page','page_top','task_top','idea');
+				$group_content_arr = array('blog','bookmark','groupforumtopic','event_calendar','file','photo','album','task','page','page_top','task_top','idea');
 				$dbprefix = elgg_get_config('dbprefix');
 
 				$query = "SELECT o.guid as content_id, o.title FROM {$dbprefix}entity_relationships r, {$dbprefix}objects_entity o, {$dbprefix}entities e, {$dbprefix}entity_subtypes es WHERE r.guid_one = {$user->getGUID()} AND r.guid_two = o.guid AND o.title <> '' AND o.guid = e.guid AND e.container_guid = {$group_guid} AND es.id = e.subtype AND ( es.subtype = 'poll'";
@@ -48,6 +48,19 @@ if ($user && ($group instanceof ElggGroup)) {
 				foreach ($group_contents as $group_content) {
 					remove_entity_relationship($user->getGUID(), 'cp_subscribed_to_email', $group_content->content_id);
 					remove_entity_relationship($user->getGUID(), 'cp_subscribed_to_site_mail', $group_content->content_id);
+				}
+
+				
+				/// remove forum related subscriptions
+				$query = "SELECT r.guid_one, r.guid_two as content_id
+				FROM {$dbprefix}entities e, {$dbprefix}entity_subtypes es, {$dbprefix}entity_relationships r
+				WHERE e.guid = r.guid_two AND e.subtype = es.id AND r.guid_one = '{$user->getGUID()}' AND es.subtype LIKE 'hj%'";
+				$forum_contents = get_data($query);
+
+				// unsubscribe to group forums (& topic) if not already
+				foreach ($forum_contents as $forum_content) {
+					remove_entity_relationship($user->getGUID(), 'cp_subscribed_to_email', $forum_content->content_id);
+					remove_entity_relationship($user->getGUID(), 'cp_subscribed_to_site_mail', $forum_content->content_id);	
 				}
 
 			}

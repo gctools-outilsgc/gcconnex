@@ -13,7 +13,7 @@
  * This view displays a form which allows the user to edit their opt-in choices.
  * This view is inside a section wrapper as described in wrapper.php.
  */
-if (elgg_is_xhr) {
+if (elgg_is_xhr()) {
 	$user_guid = elgg_get_logged_in_user_guid();
 	$user = get_user ( $user_guid );
 
