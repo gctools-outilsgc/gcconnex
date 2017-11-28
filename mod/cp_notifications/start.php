@@ -511,6 +511,20 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 		   	$to_recipients[] = $params['cp_event_send_to_user'];
 			break;
 
+			case 'cp_welcome_message':	// messages/actions/messages/send.php
+			$add_to_sent = true;
+			$sender_guid = $params['cp_from']['guid'];
+			$to_recipients[] = get_user($params['cp_to']['guid']);
+			$subject = $params['cp_topic_title'];
+			$message = array(
+				'cp_msg_title' => $params['cp_topic_title'],
+				'cp_msg_content' => $params['cp_topic_description'],
+				'cp_sender' => $params['cp_from']['name'],
+				'cp_msg_url' => $params['cp_topic_url'],
+				'cp_msg_type' => 'cp_welcome_message',
+			);
+			break;
+
 		default:
 			break;
 	}

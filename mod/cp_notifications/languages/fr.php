@@ -350,6 +350,11 @@ $french = array(
 		%s <br/> 
 		Vous pouvez le consulter ou y répondre en cliquant sur le lien suivant: %s",
 
+	// welcome message
+	'cp_notify:body_welcome_msg:title' => '%s vous a envoyé un message d\'accueil',
+	'cp_notify:body_welcome_msg:description' => "Le contenu du message est le suivant : <br/> 
+		%s <br/> ",
+
 
 	// new content posted section
 	'cp_notify_usr:subject:new_content' => "%s a publié un nouveau %s avec le titre '%s'",

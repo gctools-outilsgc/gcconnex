@@ -320,6 +320,11 @@ $english = array(
 		%s <br/>
 		You can view or reply to this by clicking on this link: %s",
 
+	// welcome message
+	'cp_notify:body_welcome_msg:title' => '%s sent you a welcome message',
+	'cp_notify:body_welcome_msg:description' => "The content of the message is : <br/> 
+		%s <br/> ",
+
 
 	// new content posted section
 	'cp_notify_usr:subject:new_content' => "%s posted a new %s with the title '%s'",
