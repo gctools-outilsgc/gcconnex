@@ -5,9 +5,15 @@
  * @uses $vars["post"]
  */
 
+$previewContainer = ".preview-zone";
+
 if( elgg_is_xhr() ){
+	/*
 	echo '<script type="text/javascript" src="/mod/thewire_images/js/dropzone.js"></script>';
-	echo '<link rel="stylesheet" type="text/css" href="/mod/thewire_images/css/dropzone.css">';
+	echo '<link rel="stylesheet" type="text/css" href="/mod/thewire_images/css/dropzone.css">';*/
+
+	$previewContainer = "#previewZone";
+	$previewID = 'previewZone';
 }
 
 elgg_load_js("elgg.thewire");
@@ -88,7 +94,7 @@ if ($char_limit == 0) {
 $post_input = elgg_view("input/plaintext", array(
 	"name" => "body",
     "id" => "wire-body",
-	"class" => "mts mbs thewire-textarea form-control",
+	"class" => "mts thewire-textarea form-control",
 	"rows" => $num_lines,
 	"value" => htmlspecialchars_decode($post_value, ENT_QUOTES),
 	"data-max-length" => $char_limit,
@@ -137,9 +143,12 @@ echo <<<HTML
 	$post_input
 	$mentions
 <div class="elgg-foot mts">
-	<div id="dz-preview" class="pull-left"></div>
-	<div class="thewire-characters-remaining pull-right">
+	<div class="add-image pull-left"></div>
+	<div class="thewire-characters-remaining">
 		$count_down
+	</div>
+	<div id="$previewID" class="preview-zone mrgn-tp-sm dropzone-previews" aria-live="polite"></div>
+	<div class="text-right">
 		$submit_button
 	</div>
 	$parent_input
@@ -161,6 +170,7 @@ $(document).ready(function() {
 	var invalidFileType = "<?php echo elgg_echo('thewire_image:form:invalidfile'); ?>";
 	var fileTooBig = "<?php echo elgg_echo('thewire_image:form:filetoobig'); ?>";
 	var maxFileSize = 2; // Set in MB
+	var previewContainer = "<?php echo $previewContainer; ?>";
 
 	var myDropzone = new Dropzone(instance, {
 		acceptedFiles: "image/jpeg,image/png,image/gif",
@@ -175,8 +185,8 @@ $(document).ready(function() {
 		maxFiles: 1,
 		maxFilesize: maxFileSize,
 		paramName: "thewire_image_file",
+		previewsContainer: previewContainer,
 		uploadMultiple: false,
-		hiddenInputContainer:"#wire-body",
 	    init: function () {
 	        this.on("addedfile", function(file) {
 				$(instance).find(".dz-progress").toggle();

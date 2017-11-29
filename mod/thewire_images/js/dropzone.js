@@ -1188,7 +1188,7 @@ var Dropzone = function (_Emitter) {
       }
 
       if (this.element.classList.contains("dropzone") && !this.element.querySelector(".dz-message")) {
-        this.element.querySelector('.elgg-foot').appendChild(Dropzone.createElement("<div class=\"dz-default dz-message\"><span>" + this.options.dictDefaultMessage + "</span></div>"));
+        this.element.querySelector('.add-image').appendChild(Dropzone.createElement("<div class=\"dz-default dz-message\"><a href='#'>" + this.options.dictDefaultMessage + "</a></div>"));
       }
 
       if (this.clickableElements.length) {
@@ -1652,7 +1652,12 @@ var Dropzone = function (_Emitter) {
     value: function handleFiles(files) {
       var _this5 = this;
 
-      return files.map(function (file) {
+      var files_array = [];
+      for(var i=0; i<files.length; i++) {
+        files_array.push(files[i]);
+      }
+
+      return files_array.map(function (file) {
         return _this5.addFile(file);
       });
     }
