@@ -200,12 +200,15 @@ switch ($msg_type) {
 
 			$files_count = count($files);
 			$file_entity = get_entity($files[0]);
+			$group_name_en = gc_explode_translation($file_entity->getContainerEntity()->name,'en');
+			$group_name_fr = gc_explode_translation($file_entity->getContainerEntity()->name,'fr');
 			$files_author_link = "<a href='{$file_entity->getOwnerEntity()->getURL()}?utm_source=notification&utm_medium=email'>{$file_entity->getOwnerEntity()->name}</a>";
-			$group_link = "<a href='{$file_entity->getContainerEntity()->getURL()}?utm_source=notification&utm_medium=email'>{$file_entity->getContainerEntity()->name}</a>";
+			$group_link_en = "<a href='{$file_entity->getContainerEntity()->getURL()}?utm_source=notification&utm_medium=email'>{$group_name_en}</a>";
+			$group_link_fr = "<a href='{$file_entity->getContainerEntity()->getURL()}?utm_source=notification&utm_medium=email'>{$group_name_fr}</a>";
 
 			$singular_or_plural = (count($files) > 1) ? 'plural' : 'singular';
-			$display_files_en = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:{$singular_or_plural}", array($files_author_link, $files_count, $group_link), 'en');
-			$display_files_fr = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:{$singular_or_plural}", array($files_author_link, $files_count, $group_link), 'fr');
+			$display_files_en = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:{$singular_or_plural}", array($files_author_link, $files_count, $group_link_en), 'en');
+			$display_files_fr = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:{$singular_or_plural}", array($files_author_link, $files_count, $group_link_fr), 'fr');
 
 			$display_files .= "<p><ol>";
 			foreach ($files as $file_num => $file) {
@@ -251,12 +254,15 @@ switch ($msg_type) {
 			$files = $vars['files_uploaded'];
 			$files_count = count($files);
 			$file_entity = get_entity($files[0]);
+			$group_name_en = gc_explode_translation($file_entity->getContainerEntity()->name,'en');
+			$group_name_fr = gc_explode_translation($file_entity->getContainerEntity()->name,'fr');
 			$files_author_link = "<a href='{$file_entity->getOwnerEntity()->getURL()}?utm_source=notification&utm_medium=email'>{$file_entity->getOwnerEntity()->name}</a>";
-			$group_link = "<a href='{$file_entity->getContainerEntity()->getURL()}?utm_source=notification&utm_medium=email'>{$file_entity->getContainerEntity()->name}</a>";
+			$group_link_en = "<a href='{$file_entity->getContainerEntity()->getURL()}?utm_source=notification&utm_medium=email'>{$group_name_en}</a>";
+			$group_link_fr = "<a href='{$file_entity->getContainerEntity()->getURL()}?utm_source=notification&utm_medium=email'>{$group_name_fr}</a>";
 
 			$singular_or_plural = (count($files) > 1) ? 'plural' : 'singular';
-			$display_files_en = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:{$singular_or_plural}", array($files_author_link, $files_count, $group_link), 'en');
-			$display_files_fr = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:{$singular_or_plural}", array($files_author_link, $files_count, $group_link), 'fr');
+			$display_files_en = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:{$singular_or_plural}", array($files_author_link, $files_count, $group_link_en), 'en');
+			$display_files_fr = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:{$singular_or_plural}", array($files_author_link, $files_count, $group_link_fr), 'fr');
 
 			$display_files .= "<p><ol>";
 			foreach ($files as $file_num => $file) {
