@@ -519,6 +519,9 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			$message = array(
 				'cp_msg_title' => $params['cp_topic_title'],
 				'cp_msg_content' => $params['cp_topic_description'],
+				'cp_msg_content_fr' => $params['cp_topic_description_fr'],
+				'cp_msg_content_en' => $params['cp_topic_description_en'],
+
 				'cp_sender' => $params['cp_from']['name'],
 				'cp_msg_url' => $params['cp_topic_url'],
 				'cp_msg_type' => 'cp_welcome_message',
