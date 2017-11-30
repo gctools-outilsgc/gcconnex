@@ -686,6 +686,16 @@ switch ($msg_type) {
 		}
 		break;
 
+
+	case 'cp_welcome_message': // new messages
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_welcome_msg:title',array(gc_explode_translation($vars['cp_sender'],'en')),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_welcome_msg:title',array(gc_explode_translation($vars['cp_sender'],'fr')),'fr');
+
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_welcome_msg:description',array($vars['cp_msg_content_en']),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_welcome_msg:description',array($vars['cp_msg_content_fr']),'fr');
+
+		break;
+
 	default:
 		break;
 }
