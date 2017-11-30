@@ -82,7 +82,7 @@ elseif (!empty($reshare->description))
 	$post_value = gc_explode_translation(elgg_get_excerpt($reshare->description, 140),$lang);
 }
 
-$count_down = "<span>$char_limit</span> $chars_left";
+$count_down = "<p><span>$char_limit</span> $chars_left</p>";
 $num_lines = 2;
 if ($char_limit == 0) {
 	$num_lines = 3;
@@ -98,13 +98,14 @@ $post_input = elgg_view("input/plaintext", array(
 	"rows" => $num_lines,
 	"value" => htmlspecialchars_decode($post_value, ENT_QUOTES),
 	"data-max-length" => $char_limit,
+	"aria-describedby" => 'charCount',
 	"required" => "required",
 	"placeholder" => elgg_echo('thewire_image:form:dragdrop')
 ));
 
 $submit_button = elgg_view("input/submit", array(
 	"value" => $text,
-	"class" => "btn btn-primary mls",
+	"class" => "btn btn-primary mls thewire-submit-button",
 ));
 
 $mentions = "";
@@ -143,12 +144,13 @@ echo <<<HTML
 	$post_input
 	$mentions
 <div class="elgg-foot mts">
-	<div class="add-image pull-left"></div>
-	<div class="thewire-characters-remaining">
+	<div id="charCount" class="pull-right thewire-characters-remaining">
 		$count_down
 	</div>
-	<div id="$previewID" class="preview-zone mrgn-tp-sm dropzone-previews" aria-live="polite"></div>
-	<div class="text-right">
+	<div class="add-image pull-left"></div>
+
+	<div id="$previewID" class="preview-zone col-xs-12 mrgn-tp-sm dropzone-previews"></div>
+	<div class="text-right col-xs-12">
 		$submit_button
 	</div>
 	$parent_input
