@@ -88,6 +88,8 @@ function get_member_data($type, $lang) {
 			'limit' => 0
 		));
 
+		$data['total'] = count($users);
+
 		if ($lang == 'fr'){
 			$users_types = array('federal' => 'féderal', 'academic' => 'milieu universitaire', 'student' => 'étudiant', 'provincial' => 'provincial', 'municipal' => 'municipale', 'international' => 'international', 'ngo' => 'ngo', 'community' => 'collectivité', 'business' => 'entreprise', 'media' => 'média', 'retired' => 'retraité(e)', 'other' => 'autre');
 
