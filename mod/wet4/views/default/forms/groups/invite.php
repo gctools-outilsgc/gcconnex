@@ -66,11 +66,13 @@ if (in_array("yes", array($invite_site_members, $invite_circle, $invite_email, $
 		);
 
 		$form_data .= "<div id='group_tools_group_invite_users' class='mbm'>";
-		$form_data .= "<div><label for='group_tools_group_invite_autocomplete_autocomplete'>" . elgg_echo("group_tools:group:invite:users:description") . "</label></div>";
+		$form_data .= "<div><label aria-describedby='invite-users-clarify' for='group_tools_group_invite_autocomplete_autocomplete'>" . elgg_echo("group_tools:group:invite:users:description") . "</label></div>";
 		$form_data .= elgg_view("input/group_invite_autocomplete", array("name" => "user_guid",
 																			"id" => "group_tools_group_invite_autocomplete",
+																			"backup_name" => "group_tools_user_invite",
 																			"group_guid" => $group->getGUID(),
 																			"relationship" => "site"));
+		$form_data .= '<p id="invite-users-clarify">'.elgg_echo('group:invite:user:moreinfo').'</p>';
 		if (elgg_is_admin_logged_in()) {
 			$form_data .= elgg_view("input/checkbox", array("name" => "all_users", "id" => "all_users", "value" => "yes"));
 			$form_data .= '<label for="all_users">'.elgg_echo("group_tools:group:invite:users:all").'</label>';
@@ -149,7 +151,7 @@ if (in_array("yes", array($invite_site_members, $invite_circle, $invite_email, $
 				if( $(e.target).hasClass('multiple_emails-input') && e.keyCode == 13 ){ e.preventDefault(); }
 			});
 		</script>";
-		
+
 		$form_data .= "</div>";
 
     }

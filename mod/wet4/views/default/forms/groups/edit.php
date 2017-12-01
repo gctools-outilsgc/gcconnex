@@ -50,15 +50,18 @@ if ($entity) {
 } else {
     echo elgg_view("input/submit", array("value" => elgg_echo("gprofile:create"), 'class' => 'btn btn-primary',));
 }
-
+$user = elgg_get_logged_in_user_entity();
 if ($entity) {
-	$delete_url = "action/groups/delete?guid=" . $entity->getGUID();
-	echo elgg_view("output/url", array(
-		"text" => elgg_echo("groups:delete"),
-		"href" => $delete_url,
-		"confirm" => elgg_echo("groups:deletewarning"),
-		"class" => "elgg-button elgg-button-delete float-alt",
-	));
+
+	if($user['guid'] ==  $entity['owner_guid'] || elgg_is_admin_logged_in()){
+		$delete_url = "action/groups/delete?guid=" . $entity->getGUID();
+		echo elgg_view("output/url", array(
+			"text" => elgg_echo("groups:delete"),
+			"href" => $delete_url,
+			"confirm" => elgg_echo("groups:deletewarning"),
+			"class" => "elgg-button elgg-button-delete float-alt",
+		));
+	}
 }
 
 elgg_pop_context();

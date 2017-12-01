@@ -82,7 +82,7 @@ return array(
   /**
    * Register
    */
-  'gcconnex:registerText' => "<h3>Welcome to GCcollab!</h3><p>A collaborative and networking space open to all Canadian public servants (federal, provincial and territorial), academics and students, as well as to all Canadians by invitation. Join the conversation!</p>",
+  'gcconnex:registerText' => "<h3>Welcome to GCcollab!</h3><p>A collaborative and networking space open to all Canadian public servants (federal, provincial, territorial and municipal), academics and students, as well as to all Canadians by invitation. Join the conversation!</p>",
 
   /**
    * Contact / FAQ
@@ -192,7 +192,7 @@ Hope to chat more soon!",
   'cp_notify:body_add_new_user:title' => "You have been added as a new user in GCcollab",
   'cp_notify:subject:invite_new_user' => "You have been invited to join GCcollab",
   'cp_notify:body_invite_new_user:title' => "You have been invited to join GCcollab by %s",
-  'cp_notify:body_invite_new_user:description' => "<p>Join GCcollab, a collaborative and networking space, hosted by the Government of Canada, open to Canadian public servants (federal, provincial and territorial), academics, students and their partners across Canada and beyond.</p>
+  'cp_notify:body_invite_new_user:description' => "<p>Join GCcollab, a collaborative and networking space, hosted by the Government of Canada, open to Canadian public servants (federal, provincial, territorial and municipal), academics, students and their partners across Canada and beyond.</p>
 
 <p>Once you're a member, you can also invite anyone else you need to work with using the Colleagues functionality. (This option is available by selecting the icon of 3 silhouettes that appears above the main navigation bar).</p>
 

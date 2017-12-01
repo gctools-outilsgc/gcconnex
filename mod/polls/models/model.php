@@ -211,7 +211,7 @@ $lang = get_current_language();
 		if (elgg_instanceof($poll,'object','poll')) {
 			$container_guid = $poll->container_guid;
 			elgg_set_page_owner_guid($container_guid);
-			$title = elgg_echo('polls:editpost', array(gc_explode_translation($poll->title, $lang)));
+			$title = elgg_echo('polls:editpost', array(gc_explode_translation($poll->question, $lang)));
 			
 			$body_vars = array(
 				'fd' => polls_prepare_edit_body_vars($poll),
@@ -229,7 +229,7 @@ $lang = get_current_language();
 
 			$container = get_entity($container_guid);
 			
-				$group_title = gc_explode_translation($container->title,$lang);
+				$group_title = gc_explode_translation($container->name,$lang);
 	
 			if (elgg_instanceof($container,'group')) {
 				elgg_push_breadcrumb($group_title, 'polls/group/' . $container->getGUID());
@@ -432,7 +432,7 @@ function polls_get_page_view($guid) {
 		// Set the page owner
 		$page_owner = $poll->getContainerEntity();
 		elgg_set_page_owner_guid($page_owner->guid);
-		$title =  gc_explode_translation($poll->title, $lang);
+		$title =  gc_explode_translation($poll->question, $lang);
 		$content = elgg_view_entity($poll, array('full_view' => TRUE));
 		//check to see if comments are on
 		if ($poll->comments_on != 'Off') {
@@ -456,7 +456,7 @@ if (!$page_owner->title){
 		$lang = get_current_language();
 		
 
-            elgg_push_breadcrumb(gc_explode_translation($poll->title, $lang));
+            elgg_push_breadcrumb(gc_explode_translation($poll->question, $lang));
 
 		
 	} else {			

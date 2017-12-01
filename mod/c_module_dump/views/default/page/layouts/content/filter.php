@@ -45,7 +45,7 @@ if (elgg_is_active_plugin('tasks')) {
 				'priority' => 400,
 			),
 		);
-		
+
 		// cyu - 02/06/2015: overrides the view for the main user page, added my tasks
 		if ($context === 'tasks') {
 			$tabs['task_assigned'] = array(

@@ -794,6 +794,7 @@ function saveProfile(event) {
 
             //end year field
             var $endyear = [];
+
             //count which entity we are on to compare start/end date
             var $entry_count = 0;
             $('.gcconnex-education-end-year').not(":hidden").each(function() {
@@ -811,15 +812,19 @@ function saveProfile(event) {
                     $valid_form = false;
                     //add error style
                     $(this).addClass('input-error').attr('aria-invalid', "true");
+                } else if($startyear[$entry_count] == $(this).val() && parseInt($enddate[$entry_count]) < parseInt($startdate[$entry_count])){
+                  $valid_form = false;
+                  $(this).parent().find('.gcconnex-education-enddate').addClass('input-error').attr('aria-invalid', "true");
                 } else {
+
                   //remove error classes if field has them
                   $(this).removeClass('input-error').removeAttr('aria-invalid', "true");
+                  $(this).parent().find('.gcconnex-education-enddate').removeClass('input-error').removeAttr('aria-invalid', "true");
                   //push the field info into array
                   $endyear.push($(this).val());
                 }
 
               }
-
                 //increase count
                 $entry_count++;
             });
@@ -965,8 +970,12 @@ function saveProfile(event) {
                     } else if($.trim(experience['endyear']) == '' || experience['endyear'] < experience['startyear']){
                       $(this).find('.gcconnex-work-experience-end-year').addClass('input-error').attr('aria-invalid', "true");
                       $valid_form = false;
+                    } else if(experience['startyear'] == experience['endyear'] && parseInt(experience['enddate']) < parseInt(experience['startdate'])){
+                      $valid_form = false;
+                      $(this).parent().find('.gcconnex-work-experience-enddate').addClass('input-error').attr('aria-invalid', "true");
                     } else {
                       $(this).find('.gcconnex-work-experience-end-year').removeClass('input-error').removeAttr('aria-invalid', "true");
+                      $(this).parent().find('.gcconnex-work-experience-enddate').removeClass('input-error').removeAttr('aria-invalid', "true");
                     }
 
                     work_experience.edit.push(experience);

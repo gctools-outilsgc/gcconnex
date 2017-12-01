@@ -13,7 +13,6 @@
 
         ob_start(); ?>
 
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="//code.highcharts.com/highcharts.js"></script>
         <script src="//code.highcharts.com/modules/exporting.js"></script>
         <script src="//code.highcharts.com/modules/data.js"></script>
@@ -274,7 +273,7 @@
                     var allMembers = [];
                     var allMembersCount = 0, unknownCount = 0;
                     $.each(data.result, function(key, value) {
-                        if(key != 'public_servant' && key != ''){
+                        if(key != 'public_servant' && key != 'total' && key != ''){
                             allMembers.push([key.capitalizeFirstLetter(), value]);
                         } else {
                             unknownCount += value;

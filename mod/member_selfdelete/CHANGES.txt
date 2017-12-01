@@ -1,0 +1,24 @@
+== Version History ==
+
+2.0.0 (10/12/2015):
+ - upgrade for Elgg 1.9+
+ - general code cleanup
+ - require password to delete account
+ - prevent administrators from deleting themselves
+ - allow admin to delete feedback
+
+1.4 (07/04/2012):
+
+ - Removed deprecation notice
+
+1.3 (04/20/2012):
+
+ - Replace deprecated event hook registration
+
+1.2 (04/07/2012):
+
+ - Fix issue with white screen during activation on some systems
+
+1.0 (02/20/2012):
+
+ - Initial Release

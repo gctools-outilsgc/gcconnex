@@ -66,7 +66,9 @@ function checkProfileStrength(){
     //basic profile
     $basicCount = 0;
 
-    if($userEnt->department){
+    if( strpos(elgg_get_site_entity()->name, 'collab') !== false && ($userEnt->university || $userEnt->college || $userEnt->highschool || $userEnt->federal || $userEnt->ministry || $userEnt->municipal || $userEnt->international || $userEnt->ngo || $userEnt->community || $userEnt->business || $userEnt->media || $userEnt->retired || $userEnt->other) ){
+        $basicCount += 20;
+    } else if($userEnt->department){
         $basicCount += 20;
     }
     if($userEnt->job){
