@@ -34,6 +34,7 @@ $dropdownType = elgg_view('input/dropdown', $params);
 <div>
 	<?php echo elgg_echo('ideas:numbertodisplay'); ?>:
 	<?php echo $dropdown; ?>
-	<?php echo '<br/>' . elgg_echo('ideas:typetodisplay'); ?>:
+	<br/>
+	<?php echo elgg_echo('ideas:typetodisplay'); ?>:
 	<?php echo $dropdownType; ?>
 </div>
