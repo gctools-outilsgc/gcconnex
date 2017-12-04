@@ -30,7 +30,8 @@ if ($album) {
 $owner = elgg_get_page_owner_entity();
 elgg_group_gatekeeper();
 
-$photo->addView();
+//Testing for preprod
+//$photo->addView();
 
 if (elgg_get_plugin_setting('tagging', 'tidypics')) {
 	elgg_load_js('jquery.imgareaselect');
