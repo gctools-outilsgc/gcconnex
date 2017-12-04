@@ -20,6 +20,7 @@ echo '<p>This will merge the account <span class="old">'.$old_user->username.'</
       echo '<p>@'.$old_user->username.'</p>';
       echo '<p>'.$old_user->email.'</p>';
       echo '<p>'.$old_user->department.'</p>';
+      echo '<p>GUID:'.$old_user->guid.'</p>';
 
       $objects = elgg_get_entities(array(
         'limit' => 0,
@@ -53,6 +54,7 @@ echo '<p>This will merge the account <span class="old">'.$old_user->username.'</
       echo '<p>@'.$new_user->username.'</p>';
       echo '<p>'.$new_user->username.'</p>';
       echo '<p>'.$new_user->department.'</p>';
+      echo '<p>GUID:'.$new_user->guid.'</p>';
     }
     ?>
   </div>

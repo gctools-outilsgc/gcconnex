@@ -36,11 +36,22 @@ if(!$transfer_profile){
 //transfering all object entities to new account
 $data = get_data("SELECT * FROM {$db_prefix}entities WHERE owner_guid = {$oldGUID} AND type='object'".$avoid);
 
+$event = get_subtype_id('object', 'event_calendar');
+
 foreach($data as $object){
 
-  if($object->container_guid != $oldGUID){
+  if($object->container_guid != $oldGUID){ //entities in a group
     update_data("UPDATE {$db_prefix}entities SET owner_guid = '$newGUID' where guid = '$object->guid'");
-  } else {
+
+    //handle different entitites a certain way
+    switch($object->subtype){
+      case $event:
+        add_entity_relationship($newGUID,'personal_event', $object->guid);
+      break;
+      default:
+    }
+
+  } else { //entities under the user
     update_data("UPDATE {$db_prefix}entities SET owner_guid = '$newGUID', container_guid = '$newGUID' where guid = '$object->guid'");
 
     //handle transfering profile info entities to new user
@@ -92,6 +103,14 @@ foreach($data as $object){
           break;
       }
     }
+  }
+
+  //handle different entitites a certain way
+  switch($object->subtype){
+    case $event:
+      add_entity_relationship($newGUID,'personal_event', $object->guid);
+    break;
+    default:
   }
 }
 
@@ -154,7 +173,7 @@ if($transfer_friends){
 
 }
 
-system_message('All content and groups has been transfered to '.$new_user->name.' and the account '.$old_user->name);
+system_message('All content and groups has been transfered to <b>'.$new_user->name.'</b> from the account <b>'.$old_user->name.'</b>.');
 
 //unset from old account so entities are not deleted as well
 if($transfer_profile){
