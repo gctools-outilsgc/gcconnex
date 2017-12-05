@@ -1220,7 +1220,7 @@ function cp_create_notification($event, $type, $object) {
 
 			// the user creating the content is automatically subscribed to it (with exception that is not a widget, forum, etc..)
 			$cp_whitelist = array('blog', 'bookmarks', 'poll', 'groupforumtopic', 'image', 'idea', 'page', 'page_top', 'thewire', 'task_top', 'question', 'answer');
-			if (in_array($object->getSubtype(),$cp_whitelist)) {
+			if (in_array($object->getSubtype(), $cp_whitelist)) {
 
 				if ($object->getSubtype() == 'answer') {// subcribed to the question
 					add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_email', $object->getContainerGUID());
