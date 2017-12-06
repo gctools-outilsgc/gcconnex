@@ -8,9 +8,9 @@
 $previewContainer = ".preview-zone";
 
 if( elgg_is_xhr() ){
-	/*
+	
 	echo '<script type="text/javascript" src="/mod/thewire_images/js/dropzone.js"></script>';
-	echo '<link rel="stylesheet" type="text/css" href="/mod/thewire_images/css/dropzone.css">';*/
+	echo '<link rel="stylesheet" type="text/css" href="/mod/thewire_images/css/dropzone.css">';
 
 	$previewContainer = "#previewZone";
 	$previewID = 'previewZone';
