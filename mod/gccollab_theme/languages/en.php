@@ -159,6 +159,8 @@ Hope to chat more soon!",
   'expages:qfp' => "QFP",
   'expages:participating_organizations' => "List of Participating Organizations",
   'expages:organismes_participants' => "Ministères et organismes participants",
+  'expages:partners' => "Partners",
+  'expages:partenaires' => "Partenaires",
 
   /**
    * Notifications

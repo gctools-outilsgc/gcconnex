@@ -143,6 +143,8 @@ J'espère d'avoir l'occasion de discuter avec vous bientôt!",
   'expages:qfp' => "QFP",
   'expages:participating_organizations' => "List of Participating Organizations",
   'expages:organismes_participants' => "Ministères et organismes participants",
+  'expages:partners' => "Partners",
+  'expages:partenaires' => "Partenaires",
   
   /**
    * Notifications

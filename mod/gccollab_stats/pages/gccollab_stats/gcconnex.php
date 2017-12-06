@@ -799,6 +799,61 @@
         </script>
         </div>
 
+        <div role="tabpanel" class="tab-pane" id="optins">
+
+        <div class="chart" id="optinsChart" style="min-height: 350px;"><span class="loading"><?php echo elgg_echo("gccollab_stats:loading"); ?></span></div>
+
+        <script>
+            $(function () {
+                $.getJSON(siteUrl + 'services/api/rest/json/?method=site.stats&type=optins&lang=' + lang, function (data) {
+                    var optins = [];
+                    $.each(data.result, function(key, value){
+                        optins.push([key, value]);
+                    });
+                    optins.sort();
+
+                    Highcharts.chart('optinsChart', {
+                        chart: {
+                            type: 'bar'
+                        },
+                        title: {
+                            text: '<?php echo elgg_echo("gccollab_stats:optins:title"); ?>'
+                        },
+                        xAxis: {
+                            type: 'category'
+                        },
+                        yAxis: {
+                            title: {
+                                text: '<?php echo elgg_echo("gccollab_stats:optins:amount"); ?>'
+                            }
+                        },
+                        legend: {
+                            enabled: false
+                        },
+                        plotOptions: {
+                            series: {
+                                borderWidth: 0,
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '{point.y}'
+                                }
+                            }
+                        },
+                        tooltip: {
+                            headerFormat: '<span style=\"font-size:11px\">{series.name}</span><br>',
+                            pointFormat: '<span style=\"color:{point.color}\">{point.name}</span>: <b>{point.y}</b> <?php echo elgg_echo("gccollab_stats:users"); ?><br/>'
+                        },
+                        series: [{
+                            name: '<?php echo elgg_echo("gccollab_stats:optins:title"); ?>',
+                            colorByPoint: true,
+                            data: optins
+                        }]
+                    });
+                });
+            });
+        </script>
+        </div>
+
     </div>
 
     <script>
@@ -812,6 +867,7 @@
                     $("#groupsjoinedChart").highcharts().reflow();
                     $("#likesChart").highcharts().reflow();
                     $("#messagesChart").highcharts().reflow();
+                    $("#optinsChart").highcharts().reflow();
                 }, 5);
             });
         });
