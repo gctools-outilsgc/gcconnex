@@ -179,7 +179,8 @@ class TidypicsImage extends ElggFile {
 
 		if ($viewer_guid != $this->owner_guid && tp_is_person()) {
 			error_log("add view guid = " .$viewer_guid);
-			create_annotation($this->getGUID(), "tp_view", "1", "integer", (int) $viewer_guid, ACCESS_PUBLIC);
+			settype($viewer_guid, "integer");
+			create_annotation($this->getGUID(), "tp_view", "1", "integer", $viewer_guid, ACCESS_PUBLIC);
 			
 		}
 	}
