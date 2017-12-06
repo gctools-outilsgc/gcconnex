@@ -37,6 +37,7 @@ if(!$transfer_profile){
 $data = get_data("SELECT * FROM {$db_prefix}entities WHERE owner_guid = {$oldGUID} AND type='object'".$avoid);
 
 $event = get_subtype_id('object', 'event_calendar');
+$file = get_subtype_id('object', 'file');
 
 foreach($data as $object){
 
@@ -52,66 +53,72 @@ foreach($data as $object){
     }
 
   } else { //entities under the user
-    update_data("UPDATE {$db_prefix}entities SET owner_guid = '$newGUID', container_guid = '$newGUID' where guid = '$object->guid'");
 
-    //handle transfering profile info entities to new user
-    if($transfer_profile){
-      switch($object->subtype){
-        //education
-        case $edu:
-          $education = $new_user->education;
+    //handle different entitites a certain way
+    switch($object->subtype){
+      case $file:
+        transfer_file_to_new_user($object, $newGUID, $oldGUID);
+      break;
+      case $event:
+        add_entity_relationship($newGUID,'personal_event', $object->guid);
+      default:
+        update_data("UPDATE {$db_prefix}entities SET owner_guid = '$newGUID', container_guid = '$newGUID' where guid = '$object->guid'");
 
-          if($education == NULL){
-            $new_user->education = $object->guid;
-          } else if(is_array($education)){
-            array_push($education, $object->guid);
-            $new_user->education = $education;
-          } else if(!is_array($education)){
-            $new_user->education = array($education, $object->guid);
-          }
-          update_data("UPDATE {$db_prefix}metadata SET owner_guid = '$newGUID' where entity_guid = '$object->guid'");
-          break;
-        //work experience
-        case $work:
-          $experience = $new_user->work;
 
-          if($experience == NULL){
-            $new_user->work = $object->guid;
-          } else if(is_array($experience)){
-            array_push($experience, $object->guid);
-            $new_user->work = $experience;
-          } else if(!is_array($experience)){
-            $new_user->work = array($experience, $object->guid);
-          }
-          update_data("UPDATE {$db_prefix}metadata SET owner_guid = '$newGUID' where entity_guid = '$object->guid'");
-          break;
-        //skills
-        case $skill:
-          $skills = $new_user->gc_skills;
 
-          if($skills == NULL){
-            $new_user->gc_skills = $object->guid;
-          } else if(is_array($skills)){
-            if(count($skills) < 15){ //max 15 skill
-              array_push($skills, $object->guid);
-              $new_user->gc_skills = $skills;
+      //handle transfering profile info entities to new user
+      if($transfer_profile){
+        switch($object->subtype){
+          //education
+          case $edu:
+            $education = $new_user->education;
+
+            if($education == NULL){
+              $new_user->education = $object->guid;
+            } else if(is_array($education)){
+              array_push($education, $object->guid);
+              $new_user->education = $education;
+            } else if(!is_array($education)){
+              $new_user->education = array($education, $object->guid);
             }
-          } else if(!is_array($skills)){
-            $new_user->gc_skills = array($skills, $object->guid);
-          }
+            update_data("UPDATE {$db_prefix}metadata SET owner_guid = '$newGUID' where entity_guid = '$object->guid'");
+            break;
+          //work experience
+          case $work:
+            $experience = $new_user->work;
 
-          break;
+            if($experience == NULL){
+              $new_user->work = $object->guid;
+            } else if(is_array($experience)){
+              array_push($experience, $object->guid);
+              $new_user->work = $experience;
+            } else if(!is_array($experience)){
+              $new_user->work = array($experience, $object->guid);
+            }
+            update_data("UPDATE {$db_prefix}metadata SET owner_guid = '$newGUID' where entity_guid = '$object->guid'");
+            break;
+          //skills
+          case $skill:
+            $skills = $new_user->gc_skills;
+
+            if($skills == NULL){
+              $new_user->gc_skills = $object->guid;
+            } else if(is_array($skills)){
+              if(count($skills) < 15){ //max 15 skill
+                array_push($skills, $object->guid);
+                $new_user->gc_skills = $skills;
+              }
+            } else if(!is_array($skills)){
+              $new_user->gc_skills = array($skills, $object->guid);
+            }
+
+            break;
+        }
       }
     }
   }
 
-  //handle different entitites a certain way
-  switch($object->subtype){
-    case $event:
-      add_entity_relationship($newGUID,'personal_event', $object->guid);
-    break;
-    default:
-  }
+
 }
 
 //transfering group ownership and making sure new account is a member of the group they are now the owner of
