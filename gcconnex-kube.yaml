@@ -1,0 +1,53 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: gcconnex-deployment
+  namespace: gctools-test
+spec:
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  template: # create pods using pod definition in this template
+    metadata:
+      labels:
+        app: gcconnex
+    spec:
+      containers:
+      - name: gcconnex
+        image: localhost:5000/gctools-outilsgc/gcconnex:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name: "DOCKER"
+          value: "1"
+        - name: "HOME"
+          value: "/var/www/html"
+        - name: "DBHOST"
+          value: "gcconnex-db"
+        - name: "WWWROOT"
+          value: "http://localhost:8080/"
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: gcconnexdb-deployment
+  namespace: gctools-test
+spec:
+  replicas: 1 # tells deployment to run 1 pod matching the template
+  template: # create pods using pod definition in this template
+    metadata:
+      labels:
+        app: gcconnex-db
+    spec:
+      containers:
+      - name: mysql
+        image: localhost:5000/mysql:5.6
+        ports:
+        - containerPort: 3306
+        env:
+        - name: "MYSQL_ROOT_PASSWORD"
+          value: "gcconnex"
+        - name: "MYSQL_DATABASE"
+          value: "elgg"
+        - name: "MYSQL_USER"
+          value: "elgg"
+        - name: "MYSQL_PASSWORD"
+          value: "gcconnex"
