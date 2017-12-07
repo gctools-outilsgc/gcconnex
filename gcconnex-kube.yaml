@@ -1,3 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gcconnex
+  namespace: gctools-test
+spec:
+  ports:
+    - protocol: TCP
+      port: 80
+  selector: 
+    app: GCconnex
+---
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
@@ -8,7 +20,7 @@ spec:
   template: # create pods using pod definition in this template
     metadata:
       labels:
-        app: gcconnex
+        app: GCconnex
     spec:
       containers:
       - name: gcconnex
@@ -25,17 +37,30 @@ spec:
         - name: "WWWROOT"
           value: "http://localhost:8080/"
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gcconnex-db
+  namespace: gctools-test
+spec:
+  clusterIP: None
+  ports: 
+    - protocol: TCP
+      port: 3306
+  selector:
+    app: GCconnex-db
+---
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: gcconnexdb-deployment
+  name: gcconnex-db-deployment
   namespace: gctools-test
 spec:
   replicas: 1 # tells deployment to run 1 pod matching the template
   template: # create pods using pod definition in this template
     metadata:
       labels:
-        app: gcconnex-db
+        app: GCconnex-db
     spec:
       containers:
       - name: mysql
