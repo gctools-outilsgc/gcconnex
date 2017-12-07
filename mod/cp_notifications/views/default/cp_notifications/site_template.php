@@ -1,5 +1,7 @@
 
 <?php
+$site = elgg_get_site_entity();
+
 
 $cp_topic_title = $vars['cp_topic_title'];
 $cp_msg_title = $vars['cp_msg_title'];
@@ -219,12 +221,15 @@ switch ($msg_type) {
 
 			$files_count = count($files);
 			$file_entity = get_entity($files[0]);
+			$group_name_en = gc_explode_translation($file_entity->getContainerEntity()->name,'en');
+			$group_name_fr = gc_explode_translation($file_entity->getContainerEntity()->name,'fr');
 			$files_author_link = "<a href='{$file_entity->getOwnerEntity()->getURL()}?utm_source=notification&utm_medium=site'>{$file_entity->getOwnerEntity()->name}</a>";
-			$group_link = "<a href='{$file_entity->getContainerEntity()->getURL()}?utm_source=notification&utm_medium=site'>{$file_entity->getContainerEntity()->name}</a>";
+			$group_link_en = "<a href='{$file_entity->getContainerEntity()->getURL()}?utm_source=notification&utm_medium=email'>{$group_name_en}</a>";
+			$group_link_fr = "<a href='{$file_entity->getContainerEntity()->getURL()}?utm_source=notification&utm_medium=email'>{$group_name_fr}</a>";
 
 			$singular_or_plural = (count($files) > 1) ? 'plural' : 'singular';
-			$display_files_en = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:{$singular_or_plural}", array($files_author_link, $files_count, $group_link), 'en');
-			$display_files_fr = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:{$singular_or_plural}", array($files_author_link, $files_count, $group_link), 'fr');
+			$display_files_en = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:{$singular_or_plural}", array($files_author_link, $files_count, $group_link_en), 'en');
+			$display_files_fr = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:{$singular_or_plural}", array($files_author_link, $files_count, $group_link_fr), 'fr');
 
 			$display_files .= "<p><ol>";
 			foreach ($files as $file_num => $file) {
@@ -270,12 +275,15 @@ switch ($msg_type) {
 			$files = $vars['files_uploaded'];
 			$files_count = count($files);
 			$file_entity = get_entity($files[0]);
+			$group_name_en = gc_explode_translation($file_entity->getContainerEntity()->name,'en');
+			$group_name_fr = gc_explode_translation($file_entity->getContainerEntity()->name,'fr');
 			$files_author_link = "<a href='{$file_entity->getOwnerEntity()->getURL()}?utm_source=notification&utm_medium=site'>{$file_entity->getOwnerEntity()->name}</a>";
-			$group_link = "<a href='{$file_entity->getContainerEntity()->getURL()}?utm_source=notification&utm_medium=site'>{$file_entity->getContainerEntity()->name}</a>";
+			$group_link_en = "<a href='{$file_entity->getContainerEntity()->getURL()}?utm_source=notification&utm_medium=email'>{$group_name_en}</a>";
+			$group_link_fr = "<a href='{$file_entity->getContainerEntity()->getURL()}?utm_source=notification&utm_medium=email'>{$group_name_fr}</a>";
 
 			$singular_or_plural = (count($files) > 1) ? 'plural' : 'singular';
-			$display_files_en = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:{$singular_or_plural}", array($files_author_link, $files_count, $group_link), 'en');
-			$display_files_fr = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:{$singular_or_plural}", array($files_author_link, $files_count, $group_link), 'fr');
+			$display_files_en = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:{$singular_or_plural}", array($files_author_link, $files_count, $group_link_en), 'en');
+			$display_files_fr = elgg_echo("cp_notifications:mail_body:subtype:file_upload:group:{$singular_or_plural}", array($files_author_link, $files_count, $group_link_fr), 'fr');
 
 			$display_files .= "<p><ol>";
 			foreach ($files as $file_num => $file) {
@@ -480,8 +488,8 @@ switch ($msg_type) {
 		$help_url_link_en = "http://www.gcpedia.gc.ca/wiki/GCconnex_User_Help/Content_Management_and_Collaboration/How_Do_I_Access_and_Join_a_Group%3F?utm_source=notification&utm_medium=site";
 		$help_url_link_fr = "http://www.gcpedia.gc.ca/wiki/GCconnex_-_Aide_%C3%A0_l%27utilisateur/Pour_commencer/Comment_puis-je_acc%C3%A9der_%C3%A0_un_groupe_et_m%E2%80%99y_joindre%3F?utm_source=notification&utm_medium=site";
 
-		$cp_notify_msg_description_en .= elgg_echo('cp_notify:body_group_invite_email:description', array($vars['cp_invitation_non_user_url'], $help_url_link_en, $vars['cp_invitation_code']), 'en');
-		$cp_notify_msg_description_fr .= elgg_echo('cp_notify:body_group_invite_email:description', array($vars['cp_invitation_non_user_url'], $help_url_link_fr, $vars['cp_invitation_code']), 'fr');
+		$cp_notify_msg_description_en .= elgg_echo('cp_notify:body_group_invite_email:description', array($vars['cp_invitation_non_user_url'], $vars['cp_invitation_url'], $vars['cp_invitation_code']), 'en');
+		$cp_notify_msg_description_fr .= elgg_echo('cp_notify:body_group_invite_email:description', array($vars['cp_invitation_non_user_url'], $vars['cp_invitation_url'], $vars['cp_invitation_code']), 'fr');
 
 		$email_notification_footer_non_user_en = elgg_echo('cp_notify:footer:no_user',array(),'en');
 		$email_notification_footer_non_user_fr = elgg_echo('cp_notify:footer:no_user',array(),'fr');
@@ -717,6 +725,16 @@ switch ($msg_type) {
 		}
 		break;
 
+		case 'cp_welcome_message': // new messages
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_welcome_msg:title',array($vars['cp_sender']),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_welcome_msg:title',array($vars['cp_sender']),'fr');
+
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_welcome_msg:description',array($cp_msg_content),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_welcome_msg:description',array($cp_msg_content),'fr');
+
+		break;
+
+
 	default:
 		break;
 }
@@ -746,7 +764,14 @@ if (!$vars['user_name']->username) {
 if ($email_notification_footer_non_user_en || $email_notification_footer_non_user_fr){
 	$email_notification_footer_en2 = $email_notification_footer_non_user_en;
 	$email_notification_footer_fr2 = $email_notification_footer_non_user_fr;
-}else{
+
+} else if ($msg_type === 'cp_group_invite' || $msg_type === 'cp_group_invite_email') {
+	$cp_notify_msg_title_en = '';
+	$cp_notify_msg_title_fr = '';
+	$email_notification_footer_en2 = '';
+	$email_notification_footer_fr2 = '';
+
+} else {
 	$email_notification_footer_en2 = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/notifications/{$username_link}".'?utm_source=notification&utm_medium=site'),'en');
 	$email_notification_footer_fr2 = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/notifications/{$username_link}".'?utm_source=notification&utm_medium=site'),'fr');
 }

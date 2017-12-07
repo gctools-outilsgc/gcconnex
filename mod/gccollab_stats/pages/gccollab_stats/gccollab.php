@@ -13,7 +13,6 @@
 
         ob_start(); ?>
 
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="//code.highcharts.com/highcharts.js"></script>
         <script src="//code.highcharts.com/modules/exporting.js"></script>
         <script src="//code.highcharts.com/modules/data.js"></script>
@@ -124,25 +123,28 @@
                 var opportunities = [];
                 var opportunitiesCount = 0;
 
+                var date = new Date();
+                var userTimezoneOffset = date.getTimezoneOffset() * 60000;
+
                 $.when(
                     $.getJSON(siteUrl + 'services/api/rest/json/?method=time.stats&type=members&lang=' + lang, function (data) {
                         $.each(data.result, function(key, value) {
                             registrationsCount += parseInt(value.count);
-                            registrations.push([parseInt(value.time) * 1000, registrationsCount, parseInt(value.count)]);
+                            registrations.push([(parseInt(value.time) * 1000) + userTimezoneOffset, registrationsCount, parseInt(value.count)]);
                         });
                         registrations.sort(SortRegistrations);
                     }),
                     $.getJSON(siteUrl + 'services/api/rest/json/?method=time.stats&type=groups&lang=' + lang, function (data) {
                         $.each(data.result, function(key, value) {
                             groupsCount += parseInt(value.count);
-                            groups.push([parseInt(value.time) * 1000, groupsCount, parseInt(value.count)]);
+                            groups.push([(parseInt(value.time) * 1000) + userTimezoneOffset, groupsCount, parseInt(value.count)]);
                         });
                         groups.sort(SortRegistrations);
                     }),
                     $.getJSON(siteUrl + 'services/api/rest/json/?method=time.stats&type=opportunities&lang=' + lang, function (data) {
                         $.each(data.result, function(key, value) {
                             opportunitiesCount += parseInt(value.count);
-                            opportunities.push([parseInt(value.time) * 1000, opportunitiesCount, parseInt(value.count)]);
+                            opportunities.push([(parseInt(value.time) * 1000) + userTimezoneOffset, opportunitiesCount, parseInt(value.count)]);
                         });
                         opportunities.sort(SortRegistrations);
                     })
@@ -274,6 +276,7 @@
                     var allMembers = [];
                     var allMembersCount = 0, unknownCount = 0;
                     $.each(data.result, function(key, value) {
+                        if(key == 'total') { return; }
                         if(key != 'public_servant' && key != ''){
                             allMembers.push([key.capitalizeFirstLetter(), value]);
                         } else {

@@ -106,22 +106,22 @@ function videoembed_add_object($type, $url, $guid, $width, $height) {
 	// could move these into an array and use sprintf
 	switch ($type) {
 		case 'youtube':
-			$videodiv .= "<object width=\"$width\" height=\"$height\"><param name=\"movie\" value=\"https://{$url}&hl=en&fs=1&showinfo=0\"></param><param name=\"allowFullScreen\" value=\"true\"></param><embed src=\"https://{$url}&hl=en&fs=1&showinfo=0\" type=\"application/x-shockwave-flash\" allowfullscreen=\"true\" width=\"$width\" height=\"$height\"></embed></object>";
+			$videodiv .= "<iframe width=\"$width\" height=\"$height\" src=\"https://$url\" frameborder=\"0\" allowfullscreen></iframe>";
 			break;
 		case 'google':
 			$videodiv .= "<embed id=\"VideoPlayback\" src=\"https://video.google.com/googleplayer.swf?docid={$url}&hl=en&fs=true\" style=\"width:{$width}px;height:{$height}px\" allowFullScreen=\"true\" allowScriptAccess=\"always\" type=\"application/x-shockwave-flash\"> </embed>";
 			break;
 		case 'vimeo':
-			$videodiv .= "<object width=\"$width\" height=\"$height\"><param name=\"allowfullscreen\" value=\"true\" /><param name=\"allowscriptaccess\" value=\"always\" /><param name=\"movie\" value=\"https://vimeo.com/moogaloop.swf?clip_id={$url}&amp;server=vimeo.com&amp;show_title=0&amp;show_byline=0&amp;show_portrait=0&amp;color=&amp;fullscreen=1\" /><embed src=\"http://vimeo.com/moogaloop.swf?clip_id={$url}&amp;server=vimeo.com&amp;show_title=0&amp;show_byline=0&amp;show_portrait=0&amp;color=&amp;fullscreen=1\" type=\"application/x-shockwave-flash\" allowfullscreen=\"true\" allowscriptaccess=\"always\" width=\"$width\" height=\"$height\"></embed></object>";
+			$videodiv .= "<iframe width=\"$width\" height=\"$height\" src=\"https://player.vimeo.com/video/{$url}?portrait=0\" frameborder=\"0\" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>";	
 			break;
 		case 'metacafe':
-			$videodiv .= "<embed src=\"http://www.metacafe.com/fplayer/{$url}.swf\" width=\"$width\" height=\"$height\" wmode=\"transparent\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\"></embed>";
+			$videodiv .= "<iframe width=\"$width\" height=\"$height\" src=\"http://www.metacafe.com/embed/{$url}\" frameborder=\"0\" allowfullscreen></iframe>";
 			break;
 		case 'veoh':
 			$videodiv .= "<embed src=\"http://www.veoh.com/veohplayer.swf?permalinkId={$url}&player=videodetailsembedded&videoAutoPlay=0\" allowFullScreen=\"true\" width=\"$width\" height=\"$height\" bgcolor=\"#FFFFFF\" type=\"application/x-shockwave-flash\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\"></embed>";
 			break;
 		case 'dm':
-			$videodiv .= "<object width=\"$width\" height=\"$height\"><param name=\"movie\" value=\"https://www.dailymotion.com/swf/{$url}\"></param><param name=\"allowFullScreen\" value=\"true\"></param><param name=\"allowScriptAccess\" value=\"always\"></param><embed src=\"http://www.dailymotion.com/swf/{$url}\" type=\"application/x-shockwave-flash\" width=\"$width\" height=\"$height\" allowFullScreen=\"true\" allowScriptAccess=\"always\"></embed></object>";
+			$videodiv .= "<iframe width=\"$width\" height=\"$height\" src=\"https://www.dailymotion.com/embed/video/{$url}\" frameborder=\"0\" allowfullscreen></iframe>";	
 			break;
 		case 'blip':
 			$videodiv .= "<embed src=\"http://blip.tv/play/{$url}\" type=\"application/x-shockwave-flash\" width=\"$width\" height=\"$height\" allowscriptaccess=\"always\" allowfullscreen=\"true\"></embed>";
@@ -285,7 +285,7 @@ function videoembed_youtube_handler($url, $guid, $videowidth) {
  * parse youtube url
  *
  * @param string $url
- * @return string subdomain.youtube.com/v/hash
+ * @return string subdomain.youtube.com/embed/hash
  */
 function videoembed_youtube_parse_url($url) {
 
@@ -307,18 +307,18 @@ function videoembed_youtube_parse_url($url) {
 	parse_str($parts['query'], $vars);
 	$hash = $vars['v'];
 
-	return $domain . 'v/' . $hash;
+	return $domain . 'embed/' . $hash;
 }
 
 /**
  * parse youtu.be url
  *
  * @param string $url
- * @return string youtube.com/v/hash
+ * @return string youtube.com/embed/hash
  */
 function videoembed_youtube_shortener_parse_url($url, $guid, $videowidth) {
 	$path = parse_url($url, PHP_URL_PATH);
-	$videourl = 'youtube.com/v' . $path;
+	$videourl = 'youtube.com/embed' . $path;
 
 	videoembed_calc_size($videowidth, $videoheight, 425/320, 24);
 
