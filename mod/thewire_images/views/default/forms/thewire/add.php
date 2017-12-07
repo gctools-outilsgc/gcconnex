@@ -5,23 +5,15 @@
  * @uses $vars["post"]
  */
 
-<<<<<<< HEAD
+
 
 if( elgg_is_xhr() ){
 	$site = elgg_get_site_entity();
 	echo '<script type="text/javascript" src="'.$site->getURL().'mod/thewire_images/js/dropzone.js"></script>';
-	echo '<link rel="stylesheet" type="text/css" href="'.$site->getURL().'mod/thewire_images/css/dropzone.css">';
-=======
-$previewContainer = ".preview-zone";
-
-if( elgg_is_xhr() ){
-	
-	echo '<script type="text/javascript" src="/mod/thewire_images/js/dropzone.js"></script>';
 	echo '<link rel="stylesheet" type="text/css" href="/mod/thewire_images/css/dropzone.css">';
 
 	$previewContainer = "#previewZone";
 	$previewID = 'previewZone';
->>>>>>> b06d7e1c7d4b1eee3231fe39287cecaf92aebef7
 }
 
 elgg_load_js("elgg.thewire");
