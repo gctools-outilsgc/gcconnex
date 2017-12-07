@@ -15,7 +15,7 @@ elgg_gatekeeper();
 
 $post = get_entity(get_input('guid'));
 
-$title = elgg_echo('reply');
+$title = '<h2 style="border-bottom:0">'.elgg_echo('reply').'</h2>';
 
 //elgg_push_breadcrumb(elgg_echo('thewire'), 'thewire/all');
 //elgg_push_breadcrumb($title);
@@ -26,14 +26,9 @@ $content .= elgg_view_form('thewire/add', $form_vars, array('post' => $post));
 $content .= elgg_view('input/urlshortener');
 
 
-$body = elgg_view_layout('one_column', array(
-	'filter' => false,
-	'content' => $content,
-	'title' => $title,
-));
+$body = $title.$content;
 
 echo $body;
-//echo elgg_view_page($title, $body);
 
 ?>
 

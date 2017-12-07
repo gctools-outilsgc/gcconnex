@@ -59,7 +59,7 @@ if (elgg_instanceof($container, "group") && ($container->getGUID() != elgg_get_p
 		"text" => $container->name,
 		"class" => "thewire_tools_object_link"
 	));
-	
+
 	//$subtitle[] = elgg_echo("river:ingroup", array($group_link));
 }
 
@@ -68,7 +68,7 @@ $text = urldecode(htmlspecialchars_decode($post->description, ENT_QUOTES));
 
 if (elgg_in_context("widgets")) {
 	$text = elgg_get_excerpt($text, 140);
-	
+
 	// show more link?
 	if (substr($text, -3) == "...") {
 		$text .= elgg_view("output/url", array(
@@ -84,7 +84,7 @@ $content = thewire_tools_filter($text);
 
 $attachment = thewire_image_get_attachments($post->getGUID());
 if ($attachment) {
-	$content .= "<div class='elgg-content mrgn-tp-sm mrgn-lft-sm mrgn-bttm-sm'>";
+	$content .= "<div class='mrgn-tp-sm mrgn-lft-sm mrgn-bttm-sm'>";
 	$content .= "<a class='elgg-lightbox' href='" . elgg_get_site_url() . 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename . "'>";
 	$content .= elgg_view('output/img', array(
 		'src' => 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename,

@@ -5,11 +5,23 @@
  * @uses $vars["post"]
  */
 
+<<<<<<< HEAD
 
 if( elgg_is_xhr() ){
 	$site = elgg_get_site_entity();
 	echo '<script type="text/javascript" src="'.$site->getURL().'mod/thewire_images/js/dropzone.js"></script>';
 	echo '<link rel="stylesheet" type="text/css" href="'.$site->getURL().'mod/thewire_images/css/dropzone.css">';
+=======
+$previewContainer = ".preview-zone";
+
+if( elgg_is_xhr() ){
+	
+	echo '<script type="text/javascript" src="/mod/thewire_images/js/dropzone.js"></script>';
+	echo '<link rel="stylesheet" type="text/css" href="/mod/thewire_images/css/dropzone.css">';
+
+	$previewContainer = "#previewZone";
+	$previewID = 'previewZone';
+>>>>>>> b06d7e1c7d4b1eee3231fe39287cecaf92aebef7
 }
 
 elgg_load_js("elgg.thewire");
@@ -78,7 +90,7 @@ elseif (!empty($reshare->description))
 	$post_value = gc_explode_translation(elgg_get_excerpt($reshare->description, 140),$lang);
 }
 
-$count_down = "<span>$char_limit</span> $chars_left";
+$count_down = "<p><span>$char_limit</span> $chars_left</p>";
 $num_lines = 2;
 if ($char_limit == 0) {
 	$num_lines = 3;
@@ -90,17 +102,18 @@ if ($char_limit == 0) {
 $post_input = elgg_view("input/plaintext", array(
 	"name" => "body",
     "id" => "wire-body",
-	"class" => "mts mbs thewire-textarea form-control",
+	"class" => "mts thewire-textarea form-control",
 	"rows" => $num_lines,
 	"value" => htmlspecialchars_decode($post_value, ENT_QUOTES),
 	"data-max-length" => $char_limit,
+	"aria-describedby" => 'charCount',
 	"required" => "required",
 	"placeholder" => elgg_echo('thewire_image:form:dragdrop')
 ));
 
 $submit_button = elgg_view("input/submit", array(
 	"value" => $text,
-	"class" => "btn btn-primary mls",
+	"class" => "btn btn-primary mls thewire-submit-button",
 ));
 
 $mentions = "";
@@ -139,9 +152,13 @@ echo <<<HTML
 	$post_input
 	$mentions
 <div class="elgg-foot mts">
-	<div id="dz-preview" class="pull-left"></div>
-	<div class="thewire-characters-remaining pull-right">
+	<div id="charCount" class="pull-right thewire-characters-remaining">
 		$count_down
+	</div>
+	<div class="add-image pull-left"></div>
+
+	<div id="$previewID" class="preview-zone col-xs-12 mrgn-tp-sm dropzone-previews"></div>
+	<div class="text-right col-xs-12">
 		$submit_button
 	</div>
 	$parent_input
@@ -163,6 +180,7 @@ $(document).ready(function() {
 	var invalidFileType = "<?php echo elgg_echo('thewire_image:form:invalidfile'); ?>";
 	var fileTooBig = "<?php echo elgg_echo('thewire_image:form:filetoobig'); ?>";
 	var maxFileSize = 2; // Set in MB
+	var previewContainer = "<?php echo $previewContainer; ?>";
 
 	var myDropzone = new Dropzone(instance, {
 		acceptedFiles: "image/jpeg,image/png,image/gif",
@@ -177,8 +195,8 @@ $(document).ready(function() {
 		maxFiles: 1,
 		maxFilesize: maxFileSize,
 		paramName: "thewire_image_file",
+		previewsContainer: previewContainer,
 		uploadMultiple: false,
-		hiddenInputContainer:"#wire-body",
 	    init: function () {
 	        this.on("addedfile", function(file) {
 				$(instance).find(".dz-progress").toggle();

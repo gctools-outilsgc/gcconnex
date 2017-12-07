@@ -9,7 +9,7 @@ $fr = array(
 	'thewire_image:could_not_save_image' => 'Impossible d\'enregistrer l\'image sur le fil.',
 	'thewire_image:invalid_section' => 'Section invalide',
 
-	'thewire_image:form:default' => '<i class=\'fa fa-file-image-o fa-lg\'></i> ou cliquez ici',
+	'thewire_image:form:default' => "attacher l'image",
 	'thewire_image:form:dragdrop' => 'Glissez et déposez une image ici pour la télécharger.',
 	'thewire_image:form:removefile' => 'Supprimer l\'image',
 	'thewire_image:form:maxfilesexceeded' => 'Vous ne pouvez télécharger qu\'une seule image.',
