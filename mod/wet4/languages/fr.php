@@ -287,7 +287,7 @@ return array(
  * The Wire
  */
 	'wire:post' => 'le message sur le fil',
-	'thewire:post' => "Créer un article sur le fil",
+	'thewire:post' => "Créer un message sur le fil",
 	'thewire:share'	=> ' Partage',
 	'thewire:shares' => ' Partages',
 	'thewire:contentwarning' => 'Il est possible que les utilisateurs ne puissent pas tous voir ce contenu en raison des permissions d\'accès.',
