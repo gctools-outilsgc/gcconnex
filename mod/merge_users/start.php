@@ -45,6 +45,6 @@ function transfer_file_to_new_user($object, $NU_guid, $OLD_guid) {
   $file->close();
   $nfh->close();
 
-  $nfh->save();
+  //$nfh->save();
   //$file->delete();
 }

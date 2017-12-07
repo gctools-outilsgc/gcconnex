@@ -62,9 +62,9 @@ foreach($data as $object){
       case $event:
         add_entity_relationship($newGUID,'personal_event', $object->guid);
       default:
-        update_data("UPDATE {$db_prefix}entities SET owner_guid = '$newGUID', container_guid = '$newGUID' where guid = '$object->guid'");
+    }
 
-
+    update_data("UPDATE {$db_prefix}entities SET owner_guid = '$newGUID', container_guid = '$newGUID' where guid = '$object->guid'");
 
       //handle transfering profile info entities to new user
       if($transfer_profile){
@@ -115,7 +115,7 @@ foreach($data as $object){
             break;
         }
       }
-    }
+
   }
 
 
