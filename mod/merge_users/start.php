@@ -41,6 +41,45 @@ function transfer_file_to_new_user($object, $NU_guid, $OLD_guid) {
 
   $nfh->write($file->grabFile());
 
+  $thumb = new ElggFile();
+	$thumb->owner_guid = $nfh->owner_guid;
+
+	$sizes = [
+		'small' => [
+			'w' => 60,
+			'h' => 60,
+			'square' => true,
+			'metadata_name' => 'thumbnail',
+			'filename_prefix' => 'thumb',
+		],
+		'medium' => [
+			'w' => 153,
+			'h' => 153,
+			'square' => true,
+			'metadata_name' => 'smallthumb',
+			'filename_prefix' => 'smallthumb',
+		],
+		'large' => [
+			'w' => 600,
+			'h' => 600,
+			'square' => false,
+			'metadata_name' => 'largethumb',
+			'filename_prefix' => 'largethumb',
+		],
+	];
+
+  foreach ($sizes as $size => $data) {
+    $image_bytes = get_resized_image_from_existing_file($nfh->getFilenameOnFilestore(), $data['w'], $data['h'], $data['square']);
+
+    $filename2 = "{$prefix}{$data['filename_prefix']}{$name}";
+    $thumb->setFilename($filename2);
+    $thumb->open("write");
+    $thumb->write($image_bytes);
+    $thumb->close();
+    unset($image_bytes);
+
+  }
+
   // close file
   $file->close();
   $nfh->close();
