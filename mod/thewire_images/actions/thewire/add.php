@@ -65,7 +65,13 @@ if ($to_recipients->guid != get_loggedin_user()->guid) {
 	// if cp notification plugin is active, use that for notifications
 	if (elgg_is_active_plugin('cp_notifications')) {
 
-
+		global $CONFIG;
+		elgg_load_library('thewire_image');
+		$image = thewire_image_get_attachments($wire_entity->getGUID());
+		
+		if ($image instanceof ElggEntity)
+			$image_location = "{$CONFIG->dataroot}1/{$wire_entity->getOwnerGUID()}/{$image->getFilename()}";
+			
 		if ($reshare_guid) {
 			$message = array(
 				'cp_msg_type' => 'cp_wire_share',
@@ -74,15 +80,10 @@ if ($to_recipients->guid != get_loggedin_user()->guid) {
 				'cp_content_reshared' => $entity,
 				'cp_content' => $wire_entity,
 				'cp_wire_url' => $wire_entity->getURL(),
+				'wire_imagedata_loc' => $image_location,
 			);
 
 		} else {
-			global $CONFIG;
-			elgg_load_library('thewire_image');
-			$image = thewire_image_get_attachments($wire_entity->getGUID());
-			
-			if ($image instanceof ElggEntity)
-				$image_location = "{$CONFIG->dataroot}1/{$wire_entity->getOwnerGUID()}/{$image->getFilename()}";
 
 			$message = array(
 				'cp_msg_type' => 'cp_wire_image',

@@ -312,6 +312,8 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'cp_content' => $params['cp_content'],
 				'cp_recipient' => $params['cp_recipient'],
 				'cp_wire_url' => $params['cp_wire_url'],
+				
+				'imagedata_location' => $params['wire_imagedata_loc'],
 			);
 
 			$parent_item = $params['cp_content']->getContainerEntity();
