@@ -51,6 +51,9 @@ function gccollab_theme_init() {
     elgg_register_page_handler('participating_organizations', 'expages_collab_page_handler');
     elgg_register_page_handler('organismes_participants', 'expages_collab_page_handler');
 
+    elgg_register_page_handler('partners', 'expages_collab_page_handler');
+    elgg_register_page_handler('partenaires', 'expages_collab_page_handler');
+
     // Register public external pages
     elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'expages_collab_public');
 
@@ -154,7 +157,7 @@ function expages_collab_page_handler($page, $handler) {
 function expages_collab_menu_register_hook($hook, $type, $return, $params) {
     $type = elgg_extract('type', $params);
         
-    $pages = array('about', 'a_propos', 'terms', 'termes', 'privacy', 'confidentialite', 'faq', 'qfp', 'participating_organizations', 'organismes_participants');
+    $pages = array('about', 'a_propos', 'terms', 'termes', 'privacy', 'confidentialite', 'faq', 'qfp', 'participating_organizations', 'organismes_participants', 'partners', 'partenaires');
     foreach ($pages as $page) {
         $return[] = ElggMenuItem::factory(array(
             'name' => $page,

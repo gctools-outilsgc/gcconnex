@@ -204,6 +204,9 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 										 $url = elgg_add_action_tokens_to_url($url);
 										 $actions[$url] = 'groups:leave';
 								 }
+
+								$url = elgg_get_site_url() . "groups/stats/{$group->getGUID()}";
+								$actions[$url] = 'groups:stats';
 						 } elseif (elgg_is_logged_in()) {
 								 // join - admins can always join.
 								 $url = elgg_get_site_url() . "action/groups/join?group_guid={$group->getGUID()}";
@@ -215,9 +218,6 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 										 $actions[$url] = 'groups:joinrequest';
 								 }
 						 }
-
-						$url = elgg_get_site_url() . "groups/stats/{$group->getGUID()}";
-						$actions[$url] = 'groups:stats';
 						
 						 if ($actions) {
 								 foreach ($actions as $url => $text) {
