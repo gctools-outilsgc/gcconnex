@@ -322,13 +322,13 @@ function render_forums($forum_guid) {
 
 				$total_replies = count($replies);
 				$topic_starter = get_user($topic->owner_guid)->username;
-				$time_posted = $replies[count($total_replies) - 1]->time_created;
+				$time_posted = $replies[$total_replies - 1]->time_created;
 				$time_posted = date('Y-m-d H:i:s', $time_posted);
 
 				$options = render_edit_options($topic->guid, $group_entity->guid);
 				if ($options == '') $options = '-';
 				$admin_only = (elgg_is_admin_logged_in()) ? "(guid:{$topic->guid})" : "";
-				$last_post = ($total_replies <= 0) ? $last_post = elgg_echo('gcforums:no_posts') : "<div>{$replies[$total_replies - 1]->username}</div> <div>{$time_posted}</div>";
+				$last_post = ($total_replies <= 0) ? elgg_echo('gcforums:no_posts') : "<div>{$replies[$total_replies - 1]->username}</div> <div>{$time_posted}</div>";
 
 				$content .= "
 				<div class='topic-info-header'>
