@@ -176,10 +176,9 @@ $french = array(
 	'cp_newsletter:heading:notify:response:plural' => "Réponses aux contenus auxquels vous êtes abonné", 
 
 	'cp_notifications:mail_body:subtype:content_share' => "%s a partagé votre %s: %s",
-
 	'cp_notifications:mail_body:subtype:content_share:wire' => "%s a partagé votre %s",
 	'cp_notifications:mail_body:your_wire_post' => "fil",
-
+	'cp_notifications:mail_body:wire_has_image' => " avec une image",
 
 	'cp_newsletter:heading:notify:likes:singular' => "Item a été aimé.", 
 	'cp_newsletter:heading:notify:likes:plural' => "Items ont été aimés.", 
@@ -283,6 +282,7 @@ $french = array(
 
 	'cp_notify:subject:likes_wire' => "%s a aimé votre message sur le fil",
 	'cp_notify:body_likes_wire:title' => "%s a aimé votre message sur le fil '%s'",
+	'cp_notify:body_likes_image_wire:title' => "%s a aimé votre message avec une image sur le fil",
 
 	'cp_notify:subject:likes_comment' => "%s a aimé votre commentaire sur '%s'",
 	'cp_notify:body_likes_comment:title' => "%s a aimé votre commentaire sur '%s'",

@@ -108,6 +108,7 @@ $english = array(
 	'cp_notifications:mail_body:subtype:content_share' => "%s shared your %s: %s", 
 	'cp_notifications:mail_body:subtype:content_share:wire' => "%s shared your %s",
 	'cp_notifications:mail_body:your_wire_post' => "Wire post",
+	'cp_notifications:mail_body:wire_has_image' => " with an image",
 
 	'cp_newsletter:other_content:notice' => "These subscriptions are only for content items that are not part of a group", 
 
@@ -278,6 +279,7 @@ $english = array(
 
 	'cp_notify:subject:likes_wire' => "%s liked your wire post",
 	'cp_notify:body_likes_wire:title' => "%s liked your wire post '%s'",
+	'cp_notify:body_likes_image_wire:title' => "%s liked your wire post with an image'",
 
 	'cp_notify:subject:likes_comment' => "%s liked your comment from '%s'",
 	'cp_notify:body_likes_comment:title' => "%s liked your comment from '%s'", 
