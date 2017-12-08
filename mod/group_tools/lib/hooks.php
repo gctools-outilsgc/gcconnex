@@ -854,10 +854,11 @@ function group_tools_route_livesearch_handler($hook, $type, $return_value, $para
 		"joins" => array("JOIN " . elgg_get_config("dbprefix") . "groups_entity ge ON e.guid = ge.guid"),
 		"wheres" => array("(ge.name LIKE '%" . $q . "%' OR ge.description LIKE '%" . $q . "%')")
 	);
-	
+	$lang = get_current_language();
 	$entities = elgg_get_entities($options);
 	if (!empty($entities)) {
 		foreach ($entities as $entity) {
+			$entity->name = gc_explode_translation($entity->name,$lang);
 			$output = elgg_view_list_item($entity, array(
 				"use_hover" => false,
 				"class" => "elgg-autocomplete-item",
