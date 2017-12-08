@@ -168,6 +168,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 	$to_recipients = array();
 	$email_only = false;
 	$add_to_sent = false;
+	$embed_image = NULL;
 	$sender_guid = elgg_get_site_entity()->guid;
 
 	switch ($cp_msg_type) {
@@ -276,6 +277,31 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			break;
 
 		/// NORMAL NOTIFICATIONS that will send out both email and site notification
+
+		case 'cp_wire_image':
+
+			/// the function thewire_image_get_attachments will return an entity
+			$embed_image = $params['wire_imagedata_loc'];
+			$author = elgg_get_logged_in_user_entity();
+			$message = array(
+				'cp_msg_type' => $params['cp_msg_type'],
+				'wire_entity' => $params['wire_entity'],
+				'imagedata_location' => $params['wire_imagedata_loc'],
+				'author' => $author,
+			);
+
+			$subject = elgg_echo('cp_notifications:mail_body:subtype:thewire', array($author->name, 'fil intitulé'), 'en').' | ';
+			$subject .= elgg_echo('cp_notifications:mail_body:subtype:thewire',array($author->name, 'wire entitled'),'fr');
+
+			$query = "SELECT * FROM elggentity_relationships WHERE relationship = 'cp_subscribed_to_email' AND guid_two = {$author->getGUID()}";
+			$users = get_data($query);
+
+			foreach ($users as $user) {
+				$to_recipients[$user->guid_one] = get_entity($user->guid_one);
+			}
+			
+			break;
+
 		case 'cp_wire_share': // thewire_tools/actions/add.php
 
 
@@ -540,6 +566,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 	if (is_array($to_recipients)) {
 		foreach ($to_recipients as $to_recipient) {
+
 			// username for link in footer (both email notification and site notification
 			$message['user_name'] = $to_recipient->username;
 			if ($cp_msg_type != 'cp_event_ics') {
@@ -548,13 +575,13 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 			}
 
 			$newsletter_appropriate = array('cp_wire_share','cp_messageboard','cp_wire_mention','cp_hjpost','cp_hjtopic', 'cp_friend_request', 'cp_friend_approve');
-			if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid,'cp_notifications'),'set_digest_yes') == 0 && in_array($cp_msg_type, $newsletter_appropriate)) {
+			if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid, 'cp_notifications'),'set_digest_yes') == 0 && in_array($cp_msg_type, $newsletter_appropriate)) {
 				$result = create_digest($author, $cp_msg_type, $content_entity, $to_recipient, $content_url);
 				continue;
 
 			} else {
 				
-				$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template ) : mail($to_recipient->email, $subject, $template, cp_get_headers($event));
+				$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true, NULL, NULL, $embed_image ) : mail($to_recipient->email, $subject, $template, cp_get_headers($event));
 			}
 
 			if (!$email_only)
@@ -992,8 +1019,6 @@ function cp_create_notification($event, $type, $object) {
 	if ($object instanceof ElggObject)
 		$switch_case = $object->getSubtype();	
 
-
-
 	switch ($switch_case) {
 
 		/// invoked when zipped file upload function is used (files_tools/lib/functions.php)
@@ -1220,7 +1245,7 @@ function cp_create_notification($event, $type, $object) {
 
 			// the user creating the content is automatically subscribed to it (with exception that is not a widget, forum, etc..)
 			$cp_whitelist = array('blog', 'bookmarks', 'poll', 'groupforumtopic', 'image', 'idea', 'page', 'page_top', 'thewire', 'task_top', 'question', 'answer');
-			if (in_array($object->getSubtype(),$cp_whitelist)) {
+			if (in_array($object->getSubtype(), $cp_whitelist)) {
 
 				if ($object->getSubtype() == 'answer') {// subcribed to the question
 					add_entity_relationship($object->getOwnerGUID(), 'cp_subscribed_to_email', $object->getContainerGUID());
@@ -1271,12 +1296,15 @@ function cp_create_notification($event, $type, $object) {
 			// subscribed to users or friends
 			} else {
 
-				if (!$object->title) {
-					if (strstr($object->getSubtype(),"poll_choice") !== false)
+				if (trim($object->title) === '') {
+
+					/// check if poll_choice is found in the subtype
+					if (strpos($object->getSubtype(), "poll_choice") !== false)
 						return true;
 
 					$subject = elgg_echo('cp_notify_usr:subject:new_content2',array($object->getOwnerEntity()->username,cp_translate_subtype($object->getSubtype())),'en');
 					$subject .= ' | '.elgg_echo('cp_notify_usr:subject:new_content2',array($object->getOwnerEntity()->username,cp_translate_subtype($object->getSubtype(), false)),'fr');
+
 				} else {
 
 					if (strcmp($object->getSubtype(), 'hjforumpost') != 0 || strcmp($object->getSubtype(), 'hjforumtopic') != 0) {
