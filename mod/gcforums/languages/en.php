@@ -2,6 +2,8 @@
 $site_url = elgg_get_site_url();
 $english = array(
 
+	'gcforums:notfound' => "Page not found",
+
 	'river:create:object:hjforumtopic' => "%s created a forum topic %s",
 	'gcforums:delete:heading' => "Deletion confirmation",
 	'gcforums:delete:body' => "Are you sure you want to delete the %s",
