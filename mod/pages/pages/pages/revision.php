@@ -6,6 +6,7 @@
  */
 
 $id = get_input('id');
+$lang = get_current_language();
 $annotation = elgg_get_annotation_from_id($id);
 if (!$annotation) {
 	forward();
@@ -25,15 +26,15 @@ if (!$container) {
 	forward(REFERER);
 }
 
-$title = $page->title . ": " . elgg_echo('pages:revision');
+$title = gc_explode_translation($page->title,$lang) . ": " . elgg_echo('pages:revision');
 
 if (elgg_instanceof($container, 'group')) {
-	elgg_push_breadcrumb($container->name, "pages/group/$container->guid/all");
+	elgg_push_breadcrumb(gc_explode_translation($container->name,$lang), "pages/group/$container->guid/all");
 } else {
-	elgg_push_breadcrumb($container->name, "pages/owner/$container->username");
+	elgg_push_breadcrumb(gc_explode_translation($container->name,$lang), "pages/owner/$container->username");
 }
 pages_prepare_parent_breadcrumbs($page);
-elgg_push_breadcrumb($page->title, $page->getURL());
+elgg_push_breadcrumb(gc_explode_translation($page->title,$lang), $page->getURL());
 elgg_push_breadcrumb(elgg_echo('pages:revision'));
 
 $content = elgg_view('object/page_top', array(

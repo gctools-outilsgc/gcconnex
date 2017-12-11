@@ -177,6 +177,10 @@ return array(
     'form:invalid:extensions' => "Invalid file format. Allowed file extensions: %s",
 
 
+    //group invite
+
+    'group:invite:user:moreinfo' => "Users will not appear in drop down list if already a member of the group.",
+
     ////
 
     'new:dept:activity:title' => "My department's news feed",
@@ -378,7 +382,7 @@ return array(
 	'loggedinrequired' => "You must be logged in to view the requested page.",
 	'adminrequired' => "You must be an administrator to view the requested page.",
 	'membershiprequired' => "You must be a member of this group to view the requested page.",
-	'limited_access' => "You do not have permission to view the requested page.",
+	'limited_access' => "You do not have permission to view the requested page. Make sure you are logged in, are a member of the group (if applicable) and that you have the rights to access that page.",
 
 
 /**
@@ -555,7 +559,7 @@ return array(
     'groups:feature' => 'Featured',
     'groups:popular' => 'Popular',
     'groups:suggested' => 'Suggested',
-    'groups_tools:related_groups:tool_option' => "Enable related groups", 
+    'groups_tools:related_groups:tool_option' => "Enable related groups",
 /**
  * Users
  */

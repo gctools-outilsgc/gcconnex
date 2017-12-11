@@ -16,7 +16,7 @@
 
 ?>
 <div class="row">
-    <div class="col-md-8" id="wb-cont">
+    <div class="col-md-8 index-main" id="wb-cont">
         <?php custom_index_show_widget_area($area1widgets) ?>
     </div>
 

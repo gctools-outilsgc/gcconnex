@@ -28,6 +28,7 @@ $english = array(
 	'gcRegister:highschool' => 'High School',
 	'gcRegister:province' => 'Province/Territory',
 	'gcRegister:ministry' => 'Ministry',
+	'gcRegister:city' => 'City',
 
 	// labels
     'gcRegister:form' => 'Registration form',
@@ -36,7 +37,7 @@ $english = array(
 	'gcRegister:username' => 'Your username (auto-generated)',
 	'gcRegister:password_initial' => 'Password',
 	'gcRegister:password_secondary' => 'Confirm your password',
-	'gcRegister:display_name' => 'Display Name',
+	'gcRegister:display_name' => 'Full Name',
 	'gcRegister:display_name_notice' => 'Please enter your first and last name, as you are known in the workplace/school. As per the Terms and Conditions, your display name must reflect your real name. Pseudonyms are not allowed.',
 	'gcRegister:please_enter_email' => 'Please enter email',
 	'gcRegister:please_enter_name' => 'Please enter display name',
@@ -87,14 +88,15 @@ $english = array(
 	'gcRegister:welcome_message' => "<p>GCcollab, hosted by the Government of Canada, facilitates collaboration between academics, students, Canadian public servants, as well as other key communities.</p>
 	<p class='ptm pbm'><strong>Who can register?</strong></p>
 	<ul>
-		<li>Canadian public servants (federal, provincial and territorial) can register by using their government email addresses.</li>
+		<li>Canadian public servants (federal, provincial, territorial and municipal) can register by using their government email addresses.</li>
 		<li>Academics and students of all Canadian universities and colleges can register using their institution email addresses.</li>
 	</ul>
-	<p>Not part of these groups? Canadians are able to join GCcollab by invitation! Existing GCcollab members can invite their stakeholders and partners on to GCcollab, making it a truly collaborative environment.</p>
+	<p><strong>Not part of these groups?</strong> Canadians are able to join GCcollab by invitation! Existing GCcollab members can invite their stakeholders and partners on to GCcollab, making it a truly collaborative environment.</p>
 	<p class='ptm pbm'><strong>Register and validate your account!</strong></p>
 	<p>After completing the registration form, you will receive a validation email. Click on the link (or copy paste it in the address bar) to activate your account. If you do not receive the email, please contact the <a href='" . elgg_get_site_url() . "mod/contactform/'>GCcollab help desk</a>.</p>",
 
 	'gcRegister:required' => 'required',
+	'gcRegister:organization_notice' => 'Individuals from this occupation need to be invited by an existing GCcollab member to register for an account. After receiving your invitation, register using the same email address that was used to invite you.',
 );
 
 add_translation("en", $english);

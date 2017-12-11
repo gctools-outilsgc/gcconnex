@@ -49,7 +49,7 @@ return array(
   'wet:login_engage_3'=>"Promouvoir les activités GC à l'échelle du gouvernement.",
   'wet:login_welcome'=>'Welcome to GCcollab',
   'wet:jobs:link' => 'emplois.gc.ca <i class="fa fa-external-link mrgn-lft-sm"></i>',
-  'wet:jobs:href' => "http://jobs-emplois.gc.ca/index-fra.htm",
+  'wet:jobs:href' => "https://www.canada.ca/fr/services/emplois/opportunites/gouvernement.html",
   'wet:marketplace:link' => "Carrefour d'emploi",
   'wet:marketplace:href' => elgg_get_site_url() . "groups/profile/6161",
   'wet:login:departments'=>"<span class=\"login-big-num\">174</span> Organizations de toutes les regions du Canada",
@@ -79,7 +79,7 @@ return array(
   /**
    * Register
    */
-  'gcconnex:registerText' => "<h3>Bienvenue à GCcollab!</h3><p>Un espace de collaboration et de réseautage ouvert à tous les fonctionnaires canadiens (fédéraux, provinciaux et territoriaux), universitaires et étudiants, ainsi qu'à tous les Canadiens et à toutes les Canadiennes, par invitation. Prenez part à la conversation!</p>",
+  'gcconnex:registerText' => "<h3>Bienvenue à GCcollab!</h3><p>Un espace de collaboration et de réseautage ouvert à tous les fonctionnaires canadiens (fédéraux, provinciaux, territoriaux et municipaux), universitaires et étudiants, ainsi qu'à tous les Canadiens et à toutes les Canadiennes, par invitation. Prenez part à la conversation!</p>",
 
   /**
    * Contact / FAQ
@@ -143,6 +143,8 @@ J'espère d'avoir l'occasion de discuter avec vous bientôt!",
   'expages:qfp' => "QFP",
   'expages:participating_organizations' => "List of Participating Organizations",
   'expages:organismes_participants' => "Ministères et organismes participants",
+  'expages:partners' => "Partners",
+  'expages:partenaires' => "Partenaires",
   
   /**
    * Notifications
@@ -177,7 +179,7 @@ J'espère d'avoir l'occasion de discuter avec vous bientôt!",
   'cp_notify:body_add_new_user:title' => "Vous avez été ajouté en tant que nouvel utilisateur sur GCcollab",
   'cp_notify:subject:invite_new_user' => "Vous avez été invité(e) à joindre GCcollab",
   'cp_notify:body_invite_new_user:title' => "Vous avez été invité(e) à joindre GCcollab par %s",
-  'cp_notify:body_invite_new_user:description' => "<p>Joignez-vous à GCcollab, un espace de collaboration et de réseautage hébergé par le gouvernement du Canada, ouvert aux fonctionnaires canadiens (fédéraux, provinciaux et territoriaux), aux universitaires, aux étudiants et à leurs partenaires partout au Canada.</p>
+  'cp_notify:body_invite_new_user:description' => "<p>Joignez-vous à GCcollab, un espace de collaboration et de réseautage hébergé par le gouvernement du Canada, ouvert aux fonctionnaires canadiens (fédéraux, provinciaux, territoriaux et municipaux), aux universitaires, aux étudiants et à leurs partenaires partout au Canada.</p>
 
 <p>Une fois que vous êtes membre, vous pouvez également inviter toute autre personne avec qui vous souhaitez travailler, à partir de la fonctionnalité « Collègues ». (Cette option est disponible en sélectionnant l'icône des trois silhouettes qui figure au-dessus du menu de navigation.</p>
 

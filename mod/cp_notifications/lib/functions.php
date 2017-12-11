@@ -262,6 +262,7 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 				$file_entity = get_entity($file);
 				$display_files .= "<li><a href='{$file_entity->getURL()}?utm_source=notification_digest&utm_medium=email'>{$file_entity->title}</a></li>";
 			}
+
 			$display_files .= "</ol></p>";
 			$content_array = array(
 				'file_count'			=> $file_count,
@@ -373,9 +374,8 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 
 		case 'cp_hjtopic':
 		case 'cp_hjpost':
-			$group_title = get_entity(get_forum_in_group($entity->guid, $entity->guid))->name;
-			$group_url = get_entity(get_forum_in_group($entity->guid, $entity->guid))->getURL();
-			$group_html = "<a href='{$group_url}'>{$group_title}</a>";
+
+			$group_html = json_encode(array(get_entity(get_forum_in_group($entity->guid, $entity->guid))->getURL(), get_entity(get_forum_in_group($entity->guid, $entity->guid))->name));
 
 			if ($subtype === 'cp_hjtopic') {
 
@@ -633,6 +633,9 @@ function cp_translate_subtype($subtype_name, $english = true) {
 		case 'answer':
 			$label = ($english) ? 'answer' : 'réponse';
 			break;
+		case 'etherpad':
+			$label = ($english) ? 'Doc' : 'Doc';
+			break;
 		default:
 			$label = $subtype_name;
 		break;
@@ -712,7 +715,7 @@ function getMissionTypeMetastringid( $mission_type, $role_type ) {
 
 	if ($heading === 'new_post' && $subtype === 'file_upload') {
 
-		$rendered_content = elgg_echo('cp_notifications:mail_body:subtype:file_upload', array($author, count($content_array['file_count']), $content_array['content_title']), $language_preference );
+		$rendered_content = elgg_echo('cp_notifications:mail_body:subtype:file_upload', array($author, $content_array['file_count'], $content_array['content_title']), $language_preference );
     	$closing_date = elgg_echo('cp_newsletter:digest:opportunities:date', $language_preference).$content_array['deadline'];
       	$subtype = elgg_echo($content_array['subtype'], $language_preference);
 

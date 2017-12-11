@@ -10,7 +10,8 @@ elgg_make_sticky_form('groups');
 /**
  * wrapper for recursive array walk decoding
  */
-function profile_array_decoder(&$v) {
+function profile_array_decoder(&$v)
+{
 	$v = _elgg_html_decode($v);
 }
 
@@ -19,7 +20,7 @@ $input = array();
 foreach (elgg_get_config('group') as $shortname => $valuetype) {
 	$input[$shortname] = get_input($shortname);
 
-	// @todo treat profile fields as unescaped: don't filter, encode on output
+	// @TODO treat profile fields as unescaped: don't filter, encode on output
 	if (is_array($input[$shortname])) {
 		array_walk_recursive($input[$shortname], 'profile_array_decoder');
 	} else {
@@ -53,16 +54,16 @@ if ($group_guid && !$group->canEdit()) {
 
 // Assume we can edit or this is a new group
 if (sizeof($input) > 0) {
-	foreach($input as $shortname => $value) {
+	foreach ($input as $shortname => $value) {
 		// update access collection name if group name changes
 		if (!$is_new_group && $shortname == 'name' && $value != $group->name) {
 			$group_name = html_entity_decode($value, ENT_QUOTES, 'UTF-8');
 			$ac_name = sanitize_string(elgg_echo('groups:group') . ": " . $group_name);
 			$acl = get_access_collection($group->group_acl);
 			if ($acl) {
-				// @todo Elgg api does not support updating access collection name
+				// @TODO Elgg api does not support updating access collection name
 				$db_prefix = elgg_get_config('dbprefix');
-				$query = "UPDATE {$db_prefix}access_collections SET name = '$ac_name' 
+				$query = "UPDATE {$db_prefix}access_collections SET name = '$ac_name'
 					WHERE id = $group->group_acl";
 				update_data($query);
 			}
@@ -121,7 +122,7 @@ if (!$is_new_group && $new_owner_guid && $new_owner_guid != $old_owner_guid) {
 			}
 		}
 
-		// @todo Remove this when #4683 fixed
+		// @TODO Remove this when #4683 fixed
 		$owner_has_changed = true;
 		$old_icontime = $group->icontime;
 	}
@@ -137,7 +138,7 @@ $group->save();
 // in the action or the visibility moves to a plugin hook
 if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 	$visibility = (int)get_input('vis', '', false);
-	
+
 	if ($visibility != ACCESS_PUBLIC && $visibility != ACCESS_LOGGED_IN) {
 		$visibility = $group->group_acl;
 	}
@@ -145,10 +146,6 @@ if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 	// cyu - set access id to option that user chose
 	$group->access_id = $visibility;
 	$group->vis = $visibility;
-	/*error_log('cyu - accessid:'.$group->access_id.' +++ acl'.$group->group_acl);
-	if ($group->access_id != $visibility) {
-		$group->access_id = $visibility;
-	}*/
 }
 
 $group->save();
@@ -159,7 +156,7 @@ elgg_clear_sticky_form('groups');
 // group creator needs to be member of new group and river entry created
 if ($is_new_group) {
 
-	// @todo this should not be necessary...
+	// @TODO this should not be necessary...
 	elgg_set_page_owner_guid($group->guid);
 
 	$group->join($user);
@@ -169,7 +166,6 @@ if ($is_new_group) {
 $has_uploaded_icon = (!empty($_FILES['icon']['type']) && substr_count($_FILES['icon']['type'], 'image/'));
 
 if ($has_uploaded_icon) {
-
 	$icon_sizes = elgg_get_config('icon_sizes');
 
 	$prefix = "groups/" . $group->guid;
@@ -210,7 +206,7 @@ if ($has_uploaded_icon) {
 	}
 }
 
-// @todo Remove this when #4683 fixed
+// @TODO Remove this when #4683 fixed
 if ($must_move_icons) {
 	$filehandler = new ElggFile();
 	$filehandler->setFilename('groups');

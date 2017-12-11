@@ -1833,3 +1833,13 @@ figcaption{
 .bar .progress-bar {
   background-color: #46246A !important;
 }
+
+.elgg-list-entity .elgg-item-object-thewire .elgg-divide-left img.elgg-photo,
+.elgg-list-river .elgg-item .elgg-river-attachments img.elgg-photo {
+  width: 100%;
+}
+
+.userMenuAvatar img {
+  width: 40px;
+  height: auto;
+}

@@ -39,7 +39,7 @@ if ((!empty($invitations) && is_array($invitations)) || (!empty($email_invites) 
 				$delete_button = elgg_view("output/url", array(
 					"href" => $url,
 					"confirm" => elgg_echo("groups:invite:remove:check"),
-					"text" => elgg_echo('group:decline:invitation', array($group->name)),
+					"text" => elgg_echo('group:decline:invitation', array(gc_explode_translation($group->name,$lang))),
 					"class" => "elgg-button elgg-button-delete mlm",
 				));
 				$group_description = gc_explode_translation($group->briefdescription,$lang);
@@ -64,14 +64,14 @@ if ((!empty($invitations) && is_array($invitations)) || (!empty($email_invites) 
 
 			$group_title = elgg_view("output/url", array(
 				"href" => $group->getURL(),
-				"text" => $group->name,
+				"text" => gc_explode_translation($group->name,$lang),
 				"is_trusted" => true,
 			));
 
 			$url = "action/groups/email_invitation?invitecode=" . group_tools_generate_email_invite_code($group->getGUID(), $user->email);
 			$accept_button = elgg_view("output/url", array(
 				"href" => $url,
-				"text" => elgg_echo("accept"),
+				"text" => elgg_echo('group:accept:invitation', array(gc_explode_translation($group->name,$lang))),
 				"class" => "elgg-button elgg-button-submit",
 				"is_trusted" => true,
 				"is_action" => true
@@ -81,16 +81,16 @@ if ((!empty($invitations) && is_array($invitations)) || (!empty($email_invites) 
 			$delete_button = elgg_view("output/url", array(
 				"href" => $url,
 				"confirm" => elgg_echo("groups:invite:remove:check"),
-				"text" => elgg_echo("delete"),
+				"text" => elgg_echo('group:decline:invitation', array(gc_explode_translation($group->name,$lang))),
 				"class" => "elgg-button elgg-button-delete mlm",
 			));
 
-			$body = "<div class='col-xs-9'><h4>$group_title</h4>";
-			$body .= "<p class='elgg-subtext'>$group->briefdescription</p></div>";
+			$body = "<div class='col-xs-9'><h2 style='border-bottom: none;'>$group_title</h2>";
+			$body .= "<p class='elgg-subtext'>".gc_explode_translation($group->briefdescription,$lang)."</p></div>";
 
 			$alt = $accept_button . $delete_button;
 
-            $body .= "<div class='col-xs-3'>" . $alt . "</div>";
+            $body .= "<div class='col-xs-3 text-right'>" . $alt . "</div>";
 
 			echo "<li class='pvs'>";
 			echo elgg_view_image_block($icon, $body, array());

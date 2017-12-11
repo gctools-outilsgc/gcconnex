@@ -101,7 +101,7 @@ function group_tools_invite_user(ElggGroup $group, ElggUser $user, $text = "", $
 				$url
 			));
 			
-	if(!$group->name){
+			if (!$group->name) {
 				$group->name = $group->name2;
 			}
 
@@ -223,6 +223,7 @@ function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend 
 		
 		if (!empty($invite_code)) {
 			$found_group = group_tools_check_group_email_invitation($invite_code, $group->getGUID());
+			
 			if (empty($found_group) || $resend) {
 				// make site email
 				$site = elgg_get_site_entity();
@@ -232,6 +233,7 @@ function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend 
 					} else {
 						$site_from = $site->email;
 					}
+
 				} else {
 					// no site email, so make one up
 					if (!empty($site->name)) {
@@ -256,7 +258,7 @@ function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend 
 					$site->name,
 					$text,
 					$site->name,
-					elgg_get_site_url() . "register?group_invitecode=" . $invite_code,
+					elgg_get_site_url() . "register?friend_guid=" . $loggedin_user->guid . "&group_invitecode=" . $invite_code,
 					elgg_get_site_url() . "groups/invitations/?invitecode=" . $invite_code,
 					$invite_code
 				));
@@ -267,26 +269,24 @@ function group_tools_invite_email(ElggGroup $group, $email, $text = "", $resend 
 					"invitee" => $email
 				);
 
-								if(!$group->name){
-				$group->name = $group->name2;
-			}
+				if (!$group->name) {
+					$group->name = $group->name2;
+				}
 				$body = elgg_trigger_plugin_hook("invite_notification", "group_tools", $params, $body);
 
-	/*			if($text){
-					$text2 .="<div style='border: 1px solid #047177; padding:5px'><br/>";
-					$text2 .= $text;
-					$text2 .= "</div>";
-				}*/
+				if (elgg_is_active_plugin('gcRegistration_invitation')) {
+					$data = array('inviter' => $loggedin_user->guid, 'emails' => array($email));
+					elgg_trigger_plugin_hook('gcRegistration_email_invitation', 'all', $data);
+				}
 
 				// cyu - 03/07/2016: modified to improve notifications
 				if (elgg_is_active_plugin('cp_notifications')) {
-					
 					$message = array(
-						'cp_invitee' => $email,
+						'cp_invitee' => (object) array("email" => $email, "name" => $email),
 						'cp_inviter' => $loggedin_user,
-						'cp_group_invite' => $group,
+						'cp_invite_to_group' => $group,
 						'group_link' => elgg_get_site_url().'groups/profile/'.$group->guid.'/'.$group->name,
-						'cp_invitation_nonuser_url' => elgg_get_site_url()."register?group_invitecode={$invite_code}",
+						'cp_invitation_nonuser_url' => elgg_get_site_url()."register?friend_guid={$loggedin_user->guid}&group_invitecode={$invite_code}",
 						'cp_invitation_url' => elgg_get_site_url()."groups/invitations/?invitecode={$invite_code}",
 						'cp_invitation_code' => $invite_code,
 						'cp_invitation_msg' => $text,

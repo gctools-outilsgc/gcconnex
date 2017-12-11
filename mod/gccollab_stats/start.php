@@ -33,6 +33,33 @@ function gccollab_stats_init() {
         false,
         false
 	);
+
+	elgg_ws_expose_function(
+        "time.stats",
+        "get_time_data",
+        array(
+        	"type" => array('type' => 'string', 'required' => true),
+        	"lang" => array('type' => 'string', 'required' => false, 'default' => 'en')
+        ),
+        'Exposes entity data over time for use with dashboard',
+        'GET',
+        false,
+        false
+	);
+
+	elgg_ws_expose_function(
+        "group.stats",
+        "get_group_data",
+        array(
+        	"type" => array('type' => 'string', 'required' => true),
+        	"group" => array('type' => 'int', 'required' => true),
+        	"lang" => array('type' => 'string', 'required' => false, 'default' => 'en')
+        ),
+        'Exposes group data for use with dashboard',
+        'GET',
+        false,
+        false
+	);
 }
 
 function gccollab_stats_public_page($hook, $handler, $return, $params){
@@ -51,12 +78,17 @@ function get_member_data($type, $lang) {
 	$data = array();
 	ini_set("memory_limit", -1);
 	elgg_set_ignore_access(true);
+	$dbprefix = elgg_get_config('dbprefix');
 
-	if ($type === 'all') {
+	switch($type) {
+
+	case 'all':
 		$users = elgg_get_entities(array(
 			'type' => 'user',
 			'limit' => 0
 		));
+
+		$data['total'] = count($users);
 
 		if ($lang == 'fr'){
 			$users_types = array('federal' => 'féderal', 'academic' => 'milieu universitaire', 'student' => 'étudiant', 'provincial' => 'provincial', 'municipal' => 'municipale', 'international' => 'international', 'ngo' => 'ngo', 'community' => 'collectivité', 'business' => 'entreprise', 'media' => 'média', 'retired' => 'retraité(e)', 'other' => 'autre');
@@ -69,7 +101,9 @@ function get_member_data($type, $lang) {
 				$data[$obj->user_type] = isset( $data[$obj->user_type] ) ? $data[$obj->user_type] + 1 : 1;
 			}
 		}
-	} else if ($type === 'federal') {
+		break;
+
+	case 'federal':
 		$users = elgg_get_entities_from_metadata(array(
 			'type' => 'user',
 			'metadata_name_value_pairs' => array(
@@ -94,7 +128,9 @@ function get_member_data($type, $lang) {
 				$data[$obj->federal] = isset( $data[$obj->federal] ) ? $data[$obj->federal] + 1 : 1;
 			}
 		}
-	} else if ($type === 'academic') {
+		break;
+
+	case 'academic':
 		$users = elgg_get_entities_from_metadata(array(
 			'type' => 'user',
 			'metadata_name_value_pairs' => array(
@@ -111,7 +147,9 @@ function get_member_data($type, $lang) {
 				$data[$obj->institution][$obj->college] = isset( $data[$obj->institution][$obj->college] ) ? $data[$obj->institution][$obj->college] + 1 : 1;
 			}
 		}
-	} else if ($type === 'student') {
+		break;
+
+	case 'student':
 		$users = elgg_get_entities_from_metadata(array(
 			'type' => 'user',
 			'metadata_name_value_pairs' => array(
@@ -131,7 +169,9 @@ function get_member_data($type, $lang) {
 				$data[$obj->institution][$obj->highschool] = isset( $data[$obj->institution][$obj->highschool] ) ? $data[$obj->institution][$obj->highschool] + 1 : 1;
 			}
 		}
-	} else if ($type === 'university') {
+		break;
+
+	case 'university':
 		$users = elgg_get_entities_from_metadata(array(
 			'type' => 'user',
 			'metadata_name_value_pairs' => array(
@@ -144,7 +184,9 @@ function get_member_data($type, $lang) {
 			$data['total'] = isset( $data['total'] ) ? $data['total'] + 1 : 1;
 			$data[$obj->university] = isset( $data[$obj->university] ) ? $data[$obj->university] + 1 : 1;
 		}
-	} else if ($type === 'college') {
+		break;
+
+	case 'college':
 		$users = elgg_get_entities_from_metadata(array(
 			'type' => 'user',
 			'metadata_name_value_pairs' => array(
@@ -157,7 +199,9 @@ function get_member_data($type, $lang) {
 			$data['total'] = isset( $data['total'] ) ? $data['total'] + 1 : 1;
 			$data[$obj->college] = isset( $data[$obj->college] ) ? $data[$obj->college] + 1 : 1;
 		}
-	}  else if ($type === 'highschool') {
+		break;
+
+	case 'highschool':
 		$users = elgg_get_entities_from_metadata(array(
 			'type' => 'user',
 			'metadata_name_value_pairs' => array(
@@ -170,7 +214,9 @@ function get_member_data($type, $lang) {
 			$data['total'] = isset( $data['total'] ) ? $data['total'] + 1 : 1;
 			$data[$obj->highschool] = isset( $data[$obj->highschool] ) ? $data[$obj->highschool] + 1 : 1;
 		}
-	} else if ($type === 'provincial') {
+		break;
+
+	case 'provincial':
 		$users = elgg_get_entities_from_metadata(array(
 			'type' => 'user',
 			'metadata_name_value_pairs' => array(
@@ -204,7 +250,9 @@ function get_member_data($type, $lang) {
 				$data[$obj->provincial][$obj->ministry] = isset( $data[$obj->provincial][$obj->ministry] ) ? $data[$obj->provincial][$obj->ministry] + 1 : 1;
 			}
 		}
-	} else if ($type === 'municipal') {
+		break;
+
+	case 'municipal':
 		$users = elgg_get_entities_from_metadata(array(
 			'type' => 'user',
 			'metadata_name_value_pairs' => array(
@@ -216,7 +264,9 @@ function get_member_data($type, $lang) {
 			$data['total'] = isset( $data['total'] ) ? $data['total'] + 1 : 1;
 			$data[$obj->municipal] = isset( $data[$obj->municipal] ) ? $data[$obj->municipal] + 1 : 1;
 		}
-	} else if ($type === 'international') {
+		break;
+
+	case 'international':
 		$users = elgg_get_entities_from_metadata(array(
 			'type' => 'user',
 			'metadata_name_value_pairs' => array(
@@ -228,7 +278,9 @@ function get_member_data($type, $lang) {
 			$data['total'] = isset( $data['total'] ) ? $data['total'] + 1 : 1;
 			$data[$obj->international] = isset( $data[$obj->international] ) ? $data[$obj->international] + 1 : 1;
 		}
-	} else if ($type === 'ngo') {
+		break;
+
+	case 'ngo':
 		$users = elgg_get_entities_from_metadata(array(
 			'type' => 'user',
 			'metadata_name_value_pairs' => array(
@@ -240,7 +292,9 @@ function get_member_data($type, $lang) {
 			$data['total'] = isset( $data['total'] ) ? $data['total'] + 1 : 1;
 			$data[$obj->ngo] = isset( $data[$obj->ngo] ) ? $data[$obj->ngo] + 1 : 1;
 		}
-	} else if ($type === 'community') {
+		break;
+
+	case 'community':
 		$users = elgg_get_entities_from_metadata(array(
 			'type' => 'user',
 			'metadata_name_value_pairs' => array(
@@ -252,7 +306,9 @@ function get_member_data($type, $lang) {
 			$data['total'] = isset( $data['total'] ) ? $data['total'] + 1 : 1;
 			$data[$obj->community] = isset( $data[$obj->community] ) ? $data[$obj->community] + 1 : 1;
 		}
-	} else if ($type === 'business') {
+		break;
+
+	case 'business':
 		$users = elgg_get_entities_from_metadata(array(
 			'type' => 'user',
 			'metadata_name_value_pairs' => array(
@@ -264,7 +320,9 @@ function get_member_data($type, $lang) {
 			$data['total'] = isset( $data['total'] ) ? $data['total'] + 1 : 1;
 			$data[$obj->business] = isset( $data[$obj->business] ) ? $data[$obj->business] + 1 : 1;
 		}
-	} else if ($type === 'media') {
+		break;
+
+	case 'media':
 		$users = elgg_get_entities_from_metadata(array(
 			'type' => 'user',
 			'metadata_name_value_pairs' => array(
@@ -276,7 +334,9 @@ function get_member_data($type, $lang) {
 			$data['total'] = isset( $data['total'] ) ? $data['total'] + 1 : 1;
 			$data[$obj->media] = isset( $data[$obj->media] ) ? $data[$obj->media] + 1 : 1;
 		}
-	} else if ($type === 'retired') {
+		break;
+
+	case 'retired':
 		$users = elgg_get_entities_from_metadata(array(
 			'type' => 'user',
 			'metadata_name_value_pairs' => array(
@@ -288,7 +348,9 @@ function get_member_data($type, $lang) {
 			$data['total'] = isset( $data['total'] ) ? $data['total'] + 1 : 1;
 			$data[$obj->retired] = isset( $data[$obj->retired] ) ? $data[$obj->retired] + 1 : 1;
 		}
-	} else if ($type === 'other') {
+		break;
+
+	case 'other':
 		$users = elgg_get_entities_from_metadata(array(
 			'type' => 'user',
 			'metadata_name_value_pairs' => array(
@@ -300,18 +362,21 @@ function get_member_data($type, $lang) {
 			$data['total'] = isset( $data['total'] ) ? $data['total'] + 1 : 1;
 			$data[$obj->other] = isset( $data[$obj->other] ) ? $data[$obj->other] + 1 : 1;
 		}
-	} else if ($type === 'time') {
-		$dbprefix = elgg_get_config('dbprefix');
-		$query = "SELECT DISTINCT e.time_created AS time, count(*) AS count, date_format(from_unixtime(e.time_created),'%Y-%m-%d') AS date FROM {$dbprefix}entities e JOIN {$dbprefix}users_entity st ON e.guid = st.guid WHERE e.type = 'user' AND e.enabled = 'yes' GROUP BY date ORDER BY time;";
-		$data = get_data($query);
-	} else if ($type === 'gcconnex') {
-		$dbprefix = elgg_get_config('dbprefix');
+		break;
+
+	case 'gcconnex':
 	    $query = "SELECT msv.string as department, count(*) as count FROM {$dbprefix}users_entity u LEFT JOIN {$dbprefix}metadata md ON u.guid = md.entity_guid LEFT JOIN {$dbprefix}metastrings msn ON md.name_id = msn.id LEFT JOIN {$dbprefix}metastrings msv ON md.value_id = msv.id WHERE msn.string = 'department' GROUP BY department ORDER BY count DESC LIMIT 25";
 		$departments = get_data($query);
 
 		foreach($departments as $key => $obj){
 			$data[$obj->department] = (int)$obj->count;
 		}
+		break;
+
+	default:
+		$data = "Please use one of the following `type` parameters: all, federal, academic, student, university, college, highschool, provincial, municipal, international, ngo, community, business, media, retired, other, gcconnex";
+		break;
+
 	}
 
     return $data;
@@ -323,7 +388,9 @@ function get_site_data($type, $lang) {
 	elgg_set_ignore_access(true);
 	$dbprefix = elgg_get_config('dbprefix');
 
-	if ($type === 'wireposts') {
+	switch($type) {
+
+	case 'wireposts':
 		$typeid = get_subtype_id('object', 'thewire');
 
 		$query = "SELECT guid, time_created, owner_guid FROM {$dbprefix}entities WHERE type = 'object' AND subtype = {$typeid} AND enabled = 'yes'";
@@ -332,7 +399,9 @@ function get_site_data($type, $lang) {
 		foreach($wireposts as $key => $obj){
 			$data[] = array($obj->time_created, "", $obj->owner_guid);
 		}
-	} else if ($type === 'blogposts') {
+		break;
+
+	case 'blogposts':
 		$typeid = get_subtype_id('object', 'blog');
 
 		$query = "SELECT guid, time_created, owner_guid FROM {$dbprefix}entities WHERE type = 'object' AND subtype = {$typeid} AND enabled = 'yes'";
@@ -341,7 +410,9 @@ function get_site_data($type, $lang) {
 		foreach($blogposts as $key => $obj){
 			$data[] = array($obj->time_created, "", "", $obj->owner_guid);
 		}
-	} else if ($type === 'comments') {
+		break;
+
+	case 'comments':
 		$typeid = get_subtype_id('object', 'comment');
 
 		$query = "SELECT guid, time_created, owner_guid FROM {$dbprefix}entities WHERE type = 'object' AND subtype = {$typeid} AND enabled = 'yes'";
@@ -350,14 +421,18 @@ function get_site_data($type, $lang) {
 		foreach($comments as $key => $obj){
 			$data[] = array($obj->time_created, "", $obj->owner_guid);
 		}
-	} else if ($type === 'groupscreated') {
+		break;
+
+	case 'groupscreated':
 		$query = "SELECT guid, time_created, owner_guid FROM {$dbprefix}entities WHERE type = 'group' AND enabled = 'yes'";
 		$groupscreated = get_data($query);
 
 		foreach($groupscreated as $key => $obj){
 			$data[] = array($obj->time_created, "", "", $obj->owner_guid);
 		}
-	} else if ($type === 'groupsjoined') {
+		break;
+
+	case 'groupsjoined':
 		$query = "SELECT * FROM {$dbprefix}entity_relationships WHERE relationship = 'member'";
 		$groupsjoined = get_data($query);
 
@@ -366,7 +441,9 @@ function get_site_data($type, $lang) {
 				$data[] = array($obj->time_created, $obj->guid_one, $obj->guid_two);
 			}
 		}
-	} else if ($type === 'likes') {
+		break;
+
+	case 'likes':
 		$likesID = elgg_get_metastring_id("likes");
 
 		$query = "SELECT * FROM {$dbprefix}annotations WHERE name_id = $likesID";
@@ -375,7 +452,9 @@ function get_site_data($type, $lang) {
 		foreach($likes as $key => $obj){
 			$data[] = array($obj->time_created, $obj->owner_guid, "");
 		}
-	} else if ($type === 'messages') {
+		break;
+
+	case 'messages':
 		$name_id = elgg_get_metastring_id("fromId");
 
 		$query = "SELECT md.time_created as time_created, ms.string as sender_guid FROM {$dbprefix}metadata md 
@@ -387,7 +466,9 @@ function get_site_data($type, $lang) {
 		foreach($messages as $key => $obj){
 			$data[] = array($obj->time_created, "", $obj->sender_guid);
 		}
-	} else if ($type === 'optins') {
+		break;
+
+	case 'optins':
 		$optin_types = array(
 			"opt_in_missions" => "missions:micro_mission",
 			"opt_in_missionCreate" => "missions:micro_mission",
@@ -409,7 +490,9 @@ function get_site_data($type, $lang) {
 			"opt_in_casual_seek" => "missions:casual",
 			"opt_in_casual_create" => "missions:casual",
 			"opt_in_student_seek" => "missions:student",
-			"opt_in_student_create" => "missions:student"
+			"opt_in_student_create" => "missions:student",
+			"opt_in_collaboration_seek" => "missions:collaboration",
+			"opt_in_collaboration_create" => "missions:collaboration"
 		);
 
 		$yes = elgg_get_metastring_id('gcconnex_profile:opt:yes');
@@ -442,6 +525,100 @@ function get_site_data($type, $lang) {
 				$data[$string] = $count;
 			}
 		}
+		break;
+
+	default:
+		$data = "Please use one of the following `type` parameters: wireposts, blogposts, comments, groupscreated, groupsjoined, likes, messages, optins";
+		break;
+
 	}
+
+    return $data;
+}
+
+function get_time_data($type, $lang) {
+	$data = array();
+	ini_set("memory_limit", -1);
+	elgg_set_ignore_access(true);
+	$dbprefix = elgg_get_config('dbprefix');
+
+	switch($type) {
+
+	case 'members':
+		$query = "SELECT DISTINCT e.time_created AS time, count(*) AS count, date_format(from_unixtime(e.time_created),'%Y-%m-%d') AS date FROM {$dbprefix}entities e JOIN {$dbprefix}users_entity st ON e.guid = st.guid WHERE e.type = 'user' AND e.enabled = 'yes' GROUP BY date ORDER BY time";
+		$data = get_data($query);
+		break;
+
+	case 'groups':
+		$query = "SELECT DISTINCT e.time_created as time, count(*) as count, date_format(from_unixtime(e.time_created),'%Y-%m-%d') AS date FROM {$dbprefix}entities e WHERE type = 'group' AND e.enabled = 'yes' GROUP BY date ORDER BY time";
+		$data = get_data($query);
+		break;
+
+	case 'opportunities':
+		$typeid = get_subtype_id('object', 'mission');
+
+		$query = "SELECT DISTINCT e.time_created AS time, count(*) AS count, date_format(from_unixtime(e.time_created),'%Y-%m-%d') AS date FROM {$dbprefix}entities e WHERE e.type = 'object' AND e.subtype = {$typeid} AND e.enabled = 'yes' GROUP BY date ORDER BY time";
+		$data = get_data($query);
+		break;
+
+	default:
+		$data = "Please use one of the following `type` parameters: members, groups, opportunities";
+		break;
+
+	}
+
+	return $data;
+}
+
+function get_group_data($type, $group, $lang) {
+	$data = array();
+	ini_set("memory_limit", -1);
+	elgg_set_ignore_access(true);
+	$dbprefix = elgg_get_config('dbprefix');
+
+	switch($type) {
+
+	case 'groupsjoined':
+		$query = "SELECT * FROM {$dbprefix}entity_relationships WHERE relationship = 'member' AND guid_two = '" . $group . "'";
+		$groupsjoined = get_data($query);
+
+		foreach($groupsjoined as $key => $obj){
+			if ( $obj->time_created ){
+				$user = get_user($obj->guid_one);
+				if($user->username){
+					$data[] = array($obj->time_created, $user->username);
+				}
+			}
+		}
+		break;
+
+	case 'users':
+		$users = elgg_get_entities_from_relationship(array(
+			'relationship' => 'member',
+			'relationship_guid' => $group,
+			'inverse_relationship' => true,
+			'type' => 'user',
+			'limit' => 0
+		));
+
+		if ($lang == 'fr'){
+			$users_types = array('federal' => 'féderal', 'academic' => 'milieu universitaire', 'student' => 'étudiant', 'provincial' => 'provincial', 'municipal' => 'municipale', 'international' => 'international', 'ngo' => 'ngo', 'community' => 'collectivité', 'business' => 'entreprise', 'media' => 'média', 'retired' => 'retraité(e)', 'other' => 'autre');
+
+			foreach($users as $key => $obj){
+				$data[$users_types[$obj->user_type]] = isset( $data[$users_types[$obj->user_type]] ) ? $data[$users_types[$obj->user_type]] + 1 : 1;
+			}
+		} else {
+			foreach($users as $key => $obj){
+				$data[$obj->user_type] = isset( $data[$obj->user_type] ) ? $data[$obj->user_type] + 1 : 1;
+			}
+		}
+		break;
+
+	default:
+		$data = "Please use one of the following `type` parameters: groupsjoined, users";
+		break;
+
+	}
+	
     return $data;
 }

@@ -190,11 +190,11 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 						 $actions = array();
 						 // group owners
 						 if ($owner->canEdit() || $page_owner->canEdit()) {
-								 // edit and invite
-								 $url = elgg_get_site_url() . "groups/edit/{$group->getGUID()}";
-								 $actions[$url] = 'groups:edit';
-								 $url = elgg_get_site_url() . "groups/invite/{$group->getGUID()}";
-								 $actions[$url] = 'groups:invite';
+								// edit and invite
+								$url = elgg_get_site_url() . "groups/edit/{$group->getGUID()}";
+								$actions[$url] = 'groups:edit';
+								$url = elgg_get_site_url() . "groups/invite/{$group->getGUID()}";
+								$actions[$url] = 'groups:invite';
 						 }
 						 // group members
 						 if ($group->isMember()) {
@@ -204,6 +204,9 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 										 $url = elgg_add_action_tokens_to_url($url);
 										 $actions[$url] = 'groups:leave';
 								 }
+
+								$url = elgg_get_site_url() . "groups/stats/{$group->getGUID()}";
+								$actions[$url] = 'groups:stats';
 						 } elseif (elgg_is_logged_in()) {
 								 // join - admins can always join.
 								 $url = elgg_get_site_url() . "action/groups/join?group_guid={$group->getGUID()}";
@@ -215,6 +218,7 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 										 $actions[$url] = 'groups:joinrequest';
 								 }
 						 }
+						
 						 if ($actions) {
 								 foreach ($actions as $url => $text) {
 										 elgg_register_menu_item('group_ddb', array(

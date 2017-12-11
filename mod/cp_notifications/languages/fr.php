@@ -6,6 +6,15 @@ $contact_us = "{$site->getURL()}mod/contactform/";
 
 $french = array( 
 
+	'cp_notification:group_invite' => "<p>%s</p><p>Cliquez le lien suivant pour consulter votre invitation (vous devez être connecté pour voir cette page) : %s</p>
+	<p>Besoin d'aide? Voir l’article « <a href='%s'>Comment joindre un group</a>' » ou <a href='%s'>contactez-nous</a></p>",
+
+	'cp_notification:group_invite_email' => "<p>%s</p><p><b>Joignez-vous à %s!</b></p> <p><a href='%s'>Créez votre %s compte en utilisant ce lien</a> pour être automatiquement ajouté au groupe.</p>
+	 <p>Si vous désirez créer votre compte à une date ultérieure en utilisant le <a href='%s'>formulaire d’inscription</a> sur %s, vous pouvez vous joindre au groupe en utilisant le code suivant sur votre page d'Invitation de groupe : %s.</p> 
+	 <p><b>Déjà membre de %s?</b> <a href='%s'>Connectez-vous</a> et allez sur votre page d’invitation de groupe pour accepter (ou rejeter) l’invitation.</p>
+	 <p>Besoin d'aide? Voir l’article « <a href='%s'>Comment joindre un group</a>' » ou <a href='%s'>contactez-nous</a></p>",
+
+
 	'notifications:did_not_send' => "Les notifications n'ont pas envoyé",
 
 	'minor_save:title' => "Vous ne voulez pas envoyer de notification?",
@@ -167,10 +176,9 @@ $french = array(
 	'cp_newsletter:heading:notify:response:plural' => "Réponses aux contenus auxquels vous êtes abonné", 
 
 	'cp_notifications:mail_body:subtype:content_share' => "%s a partagé votre %s: %s",
-
 	'cp_notifications:mail_body:subtype:content_share:wire' => "%s a partagé votre %s",
 	'cp_notifications:mail_body:your_wire_post' => "fil",
-
+	'cp_notifications:mail_body:wire_has_image' => " avec une image",
 
 	'cp_newsletter:heading:notify:likes:singular' => "Item a été aimé.", 
 	'cp_newsletter:heading:notify:likes:plural' => "Items ont été aimés.", 
@@ -274,6 +282,7 @@ $french = array(
 
 	'cp_notify:subject:likes_wire' => "%s a aimé votre message sur le fil",
 	'cp_notify:body_likes_wire:title' => "%s a aimé votre message sur le fil '%s'",
+	'cp_notify:body_likes_image_wire:title' => "%s a aimé votre message avec une image sur le fil",
 
 	'cp_notify:subject:likes_comment' => "%s a aimé votre commentaire sur '%s'",
 	'cp_notify:body_likes_comment:title' => "%s a aimé votre commentaire sur '%s'",
@@ -340,6 +349,11 @@ $french = array(
 	'cp_notify:body_site_msg:description' => "Le contenu du message est le suivant : <br/> 
 		%s <br/> 
 		Vous pouvez le consulter ou y répondre en cliquant sur le lien suivant: %s",
+
+	// welcome message
+	'cp_notify:body_welcome_msg:title' => '%s vous a envoyé un message d\'accueil',
+	'cp_notify:body_welcome_msg:description' => "Le contenu du message est le suivant : <br/> 
+		%s <br/> ",
 
 
 	// new content posted section

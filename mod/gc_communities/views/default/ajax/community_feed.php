@@ -13,38 +13,38 @@ $limit = get_input('limit');
 $latest = get_input('latest');
 
 $url = get_input('url');
-foreach( $communities as $community ){
-    if( $community['community_url'] == $url ){
-        $community_en = $community['community_en'];
-        $community_fr = $community['community_fr'];
-        $community_tags = $community['community_tags'];
-        $community_audience = $community['community_audience'];
-        $community_animator = $community['community_animator'];
-        break;
-    }
+foreach ($communities as $community) {
+	if ($community['community_url'] == $url) {
+		$community_en = $community['community_en'];
+		$community_fr = $community['community_fr'];
+		$community_tags = $community['community_tags'];
+		$community_audience = $community['community_audience'];
+		$community_animator = $community['community_animator'];
+		break;
+	}
 }
 
-if( $limit ){
+if ($limit) {
 	$newsfeed_limit = $limit;
 }
 
 $options = array(
-    'type' => 'object',
-    'subtypes' => $subtypes,
-    'limit' => $newsfeed_limit,
-    'full_view' => false,
-    'list_type_toggle' => false,
-    'pagination' => true
+	'type' => 'object',
+	'subtypes' => $subtypes,
+	'limit' => $newsfeed_limit,
+	'full_view' => false,
+	'list_type_toggle' => false,
+	'pagination' => true
 );
 
 $tags_values = '';
-if( strpos($community_tags, ',') !== false ){ // if multiple tags
-    $community_tags_array = array_map('trim', explode(',', $community_tags));
-    foreach($community_tags_array as $tag_val){
-        $tags_values .= ' OR md.value_id = ' . elgg_get_metastring_id($tag_val);
-    }
+if (strpos($community_tags, ',') !== false) { // if multiple tags
+	$community_tags_array = array_map('trim', explode(',', $community_tags));
+	foreach ($community_tags_array as $tag_val) {
+		$tags_values .= ' OR md.value_id = ' . elgg_get_metastring_id($tag_val);
+	}
 } else {
-   $tags_values = ' OR md.value_id = ' .elgg_get_metastring_id($community_tags);
+	$tags_values = ' OR md.value_id = ' .elgg_get_metastring_id($community_tags);
 }
 
 //get the metastring id
@@ -57,14 +57,12 @@ $dbprefix = elgg_get_config('dbprefix');
 $options['joins'][] = "JOIN {$dbprefix}metadata md ON (e.guid = md.entity_guid)";
 $options['wheres'][] = "(md.name_id = {$audience_name} OR md.name_id = {$tags_name}) AND (md.value_id = {$audience_value}{$tags_values})";
 
-if( $latest ){
+if ($latest) {
 	$options['wheres'][] = "e.guid > {$latest}";
 }
 
-if( $limit ){
+if ($limit) {
 	echo json_encode(elgg_get_entities_from_metadata($options)[0]->guid);
 } else {
 	echo elgg_list_entities_from_metadata($options);
 }
-
-?>

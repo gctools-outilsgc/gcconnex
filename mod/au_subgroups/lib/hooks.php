@@ -7,7 +7,8 @@ namespace AU\SubGroups;
  * Check if there are subgroups and sort out what happens them and content
  */
 
-function delete_group($hook, $type, $return, $params) {
+function delete_group($hook, $type, $return, $params)
+{
 	$guid = get_input('guid');
 	if (!$guid) {
 		$guid = get_input('group_guid');
@@ -29,12 +30,12 @@ function delete_group($hook, $type, $return, $params) {
 			if (!$content_policy) {
 				forward(elgg_get_site_url() . "groups/subgroups/delete/{$group->guid}");
 			}
-
 		}
 	}
 }
 
-function group_canedit($hook, $type, $return, $params) {
+function group_canedit($hook, $type, $return, $params)
+{
 	$group = $params['entity'];
 	$user = $params['user'];
 	$parent = get_parent_group($group);
@@ -47,7 +48,8 @@ function group_canedit($hook, $type, $return, $params) {
 }
 
  // prevent users from being invited to subgroups they can't join
-function group_invite($hook, $type, $return, $params) {
+function group_invite($hook, $type, $return, $params)
+{
 	$user_guid = get_input('user_guid');
 	$group_guid = get_input('group_guid');
 	$group = get_entity($group_guid);
@@ -82,7 +84,8 @@ function group_invite($hook, $type, $return, $params) {
 }
 
  //re/routes some urls that go through the groups handler
-function groups_router($hook, $type, $return, $params) {
+function groups_router($hook, $type, $return, $params)
+{
 	breadcrumb_override($return);
 
 	// subgroup options
@@ -106,9 +109,8 @@ function groups_router($hook, $type, $return, $params) {
 						$group->guid
 					)
 				);
-				
+
 				return $return;
-				break;
 
 			case 'delete':
 				$return = array(
@@ -119,9 +121,8 @@ function groups_router($hook, $type, $return, $params) {
 						$group->guid
 					)
 				);
-				
+
 				return $return;
-				break;
 
 			case 'list':
 				$return = array(
@@ -132,9 +133,8 @@ function groups_router($hook, $type, $return, $params) {
 						$group->guid
 					)
 				);
-				
+
 				return $return;
-				break;
 		}
 	}
 
@@ -156,13 +156,14 @@ function groups_router($hook, $type, $return, $params) {
 						$filter
 					)
 				);
-				
+
 			return $return;
 		}
 	}
 }
 
-function river_permissions($hook, $type, $return, $params) {
+function river_permissions($hook, $type, $return, $params)
+{
 	$group = get_entity($return['object_guid']);
 	$parent = get_parent_group($group);
 
@@ -174,7 +175,8 @@ function river_permissions($hook, $type, $return, $params) {
 	return $return;
 }
 
-function titlemenu($h, $t, $r, $p) {
+function titlemenu($h, $t, $r, $p)
+{
 	if (in_array(elgg_get_context(), array('group_profile', 'groups'))) {
 		$group = elgg_get_page_owner_entity();
 

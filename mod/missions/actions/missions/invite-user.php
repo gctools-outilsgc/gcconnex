@@ -53,15 +53,19 @@ if(!check_if_opted_in($applicant)) {
 }
 
 if($err == '') {
-	$invitation_link = elgg_view('output/url', array(
+	$invitation_link_en = elgg_view('output/url', array(
 			'href' => elgg_get_site_url() . 'missions/view/' . $mission->guid,
-			'text' => elgg_echo('missions:mission_invitation')
+			'text' => elgg_echo('missions:mission_invitation','en')
+	));
+
+	$invitation_link_fr = elgg_view('output/url', array(
+			'href' => elgg_get_site_url() . 'missions/view/' . $mission->guid,
+			'text' => elgg_echo('missions:mission_invitation','fr')
 	));
 	
 	$subject = $mission->name . elgg_echo('missions:invited_you', array(), $applicant->language) . $mission->title;
-	$body = $invitation_link;
 	
-	mm_notify_user($applicant->guid, $mission->guid, $subject, $body);
+	mm_notify_user($applicant->guid, $mission->guid, $subject, '','',$invitation_link_en,$invitation_link_fr);
 	
 	//add_entity_relationship($mission->guid, 'mission_tentative', $applicant->guid);
 	

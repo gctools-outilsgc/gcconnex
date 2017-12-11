@@ -73,16 +73,44 @@ function group_tools_join_group_event($event, $type, $params) {
 			}
 			
 			// welcome message
-			$welcome_message = $group->getPrivateSetting("group_tools:welcome_message");
-			$check_message = trim(strip_tags($welcome_message));
-			if (!empty($check_message)) {
+			$welcome_message_en = $welcome_message_fr = $group->getPrivateSetting("group_tools:welcome_message");
+
+			$check_message_en = trim(strip_tags($welcome_message_en));
+			$check_message_fr = trim(strip_tags($welcome_message_fr));
+
+			if (!empty($check_message_en) || !empty($check_message_fr)) {
+
+				$group_name_en = gc_explode_translation($group->name,'en');
+				$group_name_fr = gc_explode_translation($group->name,'fr');
+
 				// replace the place holders
-				$welcome_message = str_ireplace("[name]", $user->name, $welcome_message);
-				$welcome_message = str_ireplace("[group_name]", $group->name, $welcome_message);
-				$welcome_message = str_ireplace("[group_url]", $group->getURL(), $welcome_message);
+				$welcome_message_en = str_ireplace("[name]", $user->name, $welcome_message_en);
+				$welcome_message_fr = str_ireplace("[name]", $user->name, $welcome_message_fr);
+				$welcome_message_en = str_ireplace("[group_name]", $group_name_en, $welcome_message_en);
+				$welcome_message_fr = str_ireplace("[group_name]", $group_name_fr, $welcome_message_fr);
+				$welcome_message_en = str_ireplace("[group_url]", $group->getURL(), $welcome_message_en);
+				$welcome_message_fr = str_ireplace("[group_url]", $group->getURL(), $welcome_message_fr);
 				
 				// notify the user
-				notify_user($user->getGUID(), $group->getGUID(), elgg_echo("group_tools:welcome_message:subject", array($group->name)), $welcome_message);
+
+				if (elgg_is_active_plugin('cp_notifications')) {
+					$from_user = elgg_get_logged_in_user_entity();
+					$subject = elgg_echo("group_tools:welcome_message:subject", array(gc_explode_translation($group->name,'en')),'en'). ' | ' .elgg_echo("group_tools:welcome_message:subject", array(gc_explode_translation($group->name,'fr')),'fr');
+					$message = array(
+						'cp_from' => $group,
+						'cp_to' => $user,
+						'cp_topic_title' => $subject,
+						'cp_topic_description_en' => $welcome_message_en,
+						'cp_topic_description_fr' => $welcome_message_fr,
+
+						'cp_msg_type' => 'cp_welcome_message',
+						);
+					$result = elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
+					$result = true;
+				} else 
+					// Otherwise, 'send' the message 
+					$result = messages_send($subject, $welcome_message, $user->guid, 0);
+
 			}
 		}
 	}

@@ -13,7 +13,6 @@
 
         ob_start(); ?>
 
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="//code.highcharts.com/highcharts.js"></script>
         <script src="//code.highcharts.com/modules/exporting.js"></script>
         <script src="//code.highcharts.com/modules/data.js"></script>
@@ -117,15 +116,39 @@
 
         <script>
             $(function () {
-                $.getJSON(siteUrl + 'services/api/rest/json/?method=member.stats&type=time&lang=' + lang, function (data) {
-                    var registrations = [];
-                    var registrationsCount = 0;
-                    $.each(data.result, function(key, value) {
-                        registrationsCount += parseInt(value.count);
-                        registrations.push([parseInt(value.time) * 1000, registrationsCount, parseInt(value.count)]);
-                    });
-                    registrations.sort(SortRegistrations);
+                var registrations = [];
+                var registrationsCount = 0;
+                var groups = [];
+                var groupsCount = 0;
+                var opportunities = [];
+                var opportunitiesCount = 0;
 
+                var date = new Date();
+                var userTimezoneOffset = date.getTimezoneOffset() * 60000;
+
+                $.when(
+                    $.getJSON(siteUrl + 'services/api/rest/json/?method=time.stats&type=members&lang=' + lang, function (data) {
+                        $.each(data.result, function(key, value) {
+                            registrationsCount += parseInt(value.count);
+                            registrations.push([(parseInt(value.time) * 1000) + userTimezoneOffset, registrationsCount, parseInt(value.count)]);
+                        });
+                        registrations.sort(SortRegistrations);
+                    }),
+                    $.getJSON(siteUrl + 'services/api/rest/json/?method=time.stats&type=groups&lang=' + lang, function (data) {
+                        $.each(data.result, function(key, value) {
+                            groupsCount += parseInt(value.count);
+                            groups.push([(parseInt(value.time) * 1000) + userTimezoneOffset, groupsCount, parseInt(value.count)]);
+                        });
+                        groups.sort(SortRegistrations);
+                    }),
+                    $.getJSON(siteUrl + 'services/api/rest/json/?method=time.stats&type=opportunities&lang=' + lang, function (data) {
+                        $.each(data.result, function(key, value) {
+                            opportunitiesCount += parseInt(value.count);
+                            opportunities.push([(parseInt(value.time) * 1000) + userTimezoneOffset, opportunitiesCount, parseInt(value.count)]);
+                        });
+                        opportunities.sort(SortRegistrations);
+                    })
+                ).then(function() {
                     Highcharts.chart('registrations', {
                         chart: {
                             zoomType: 'x',
@@ -138,7 +161,7 @@
                             }
                         },
                         title: {
-                            text: '<?php echo elgg_echo("gccollab_stats:registration:title"); ?> (' + registrationsCount + ')'
+                            text: '<?php echo elgg_echo("gccollab_stats:time:title"); ?>'
                         },
                         subtitle: {
                             text: document.ontouchstart === undefined ? '<?php echo elgg_echo("gccollab_stats:zoommessage"); ?>' : '<?php echo elgg_echo("gccollab_stats:pinchmessage"); ?>'
@@ -148,12 +171,12 @@
                         },
                         yAxis: {
                             title: {
-                                text: '<?php echo elgg_echo("gccollab_stats:membercount"); ?>'
+                                text: '<?php echo elgg_echo("gccollab_stats:amount"); ?>'
                             },
                             min: 0
                         },
                         legend: {
-                            enabled: false
+                            enabled: true
                         },
                         plotOptions: {
                             area: {
@@ -183,15 +206,40 @@
                         },
                         tooltip: {
                             formatter: function() {
-                                return '<b><?php echo elgg_echo("gccollab_stats:date"); ?></b> ' + new Date(registrations[this.series.data.indexOf(this.point)][0]).niceDate()
-                                	+ '<br /><b><?php echo elgg_echo("gccollab_stats:signups"); ?></b> ' + registrations[this.series.data.indexOf(this.point)][2]
+                                var text = "";
+                                if(this.series.userOptions.id == 'opportunities') {
+                                    text = '<b><?php echo elgg_echo("gccollab_stats:date"); ?></b> ' + new Date(opportunities[this.series.data.indexOf(this.point)][0]).niceDate()
+                                    + '<br /><b><?php echo elgg_echo("gccollab_stats:onthisday"); ?></b> ' + opportunities[this.series.data.indexOf(this.point)][2]
+                                    + '<br /><b><?php echo elgg_echo("gccollab_stats:total"); ?></b> ' + opportunities[this.series.data.indexOf(this.point)][1];
+                                } else if(this.series.userOptions.id == 'groups') {
+                                    text = '<b><?php echo elgg_echo("gccollab_stats:date"); ?></b> ' + new Date(groups[this.series.data.indexOf(this.point)][0]).niceDate()
+                                    + '<br /><b><?php echo elgg_echo("gccollab_stats:onthisday"); ?></b> ' + groups[this.series.data.indexOf(this.point)][2]
+                                    + '<br /><b><?php echo elgg_echo("gccollab_stats:total"); ?></b> ' + groups[this.series.data.indexOf(this.point)][1];
+                                } else if(this.series.userOptions.id == 'members') {
+                                    text = '<b><?php echo elgg_echo("gccollab_stats:date"); ?></b> ' + new Date(registrations[this.series.data.indexOf(this.point)][0]).niceDate()
+                                	+ '<br /><b><?php echo elgg_echo("gccollab_stats:onthisday"); ?></b> ' + registrations[this.series.data.indexOf(this.point)][2]
                                 	+ '<br /><b><?php echo elgg_echo("gccollab_stats:total"); ?></b> ' + registrations[this.series.data.indexOf(this.point)][1];
+                                }
+                                return text;
                             }
                         },
                         series: [{
                             type: 'area',
-                            name: '<?php echo elgg_echo("gccollab_stats:membercount"); ?>',
+                            id: 'members',
+                            name: '<?php echo elgg_echo("gccollab_stats:membercount"); ?> (' + registrationsCount + ')',
                             data: registrations
+                        }, {
+                            type: 'area',
+                            id: 'groups',
+                            name: '<?php echo elgg_echo("gccollab_stats:groupcount"); ?> (' + groupsCount + ')',
+                            data: groups,
+                            visible: false
+                        }, {
+                            type: 'area',
+                            id: 'opportunities',
+                            name: '<?php echo elgg_echo("gccollab_stats:opportunitycount"); ?> (' + opportunitiesCount + ')',
+                            data: opportunities,
+                            visible: false
                         }]
                     });
                 });
@@ -228,6 +276,7 @@
                     var allMembers = [];
                     var allMembersCount = 0, unknownCount = 0;
                     $.each(data.result, function(key, value) {
+                        if(key == 'total') { return; }
                         if(key != 'public_servant' && key != ''){
                             allMembers.push([key.capitalizeFirstLetter(), value]);
                         } else {

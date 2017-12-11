@@ -429,11 +429,75 @@ function mm_echo_explode_setting_string($string, $language_override = '') {
  * Notify user function which uses messages_send() to send on site notifications and mail() to send e-mail.
  * This is here because notify_user() is currently not working.
  */
-function mm_notify_user($recipient, $sender, $subject, $body) {
+function mm_notify_user($recipient, $sender, $subject, $title_en,$title_fr,$body_en, $body_fr) {
 	//notify_user($recipient, $sender, $subject, $body, array(), 'email');
 
 	$recipient_entity = get_entity($recipient);
 	$sender_entity = get_entity($sender);
+	$email_notification_header = elgg_echo('cp_notification:email_header',array(),'en') . ' | ' . elgg_echo('cp_notification:email_header',array(),'fr');
+    $french_follows = elgg_echo('cp_notify:french_follows',array());
+    $email_notification_footer_en = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/notifications/{$username_link}".'?utm_source=notification&utm_medium=site'),'en');
+    $email_notification_footer_fr = elgg_echo('cp_notify:footer2',array(elgg_get_site_url()."settings/notifications/{$username_link}".'?utm_source=notification&utm_medium=site'),'fr');
+
+	$bg_color = ( strpos(elgg_get_site_entity()->name, 'collab') !== false ) ? "#46246A" : "#047177";
+	$accent_color = ( strpos(elgg_get_site_entity()->name, 'collab') !== false ) ? "#79579D" : "#055959";
+
+	$body = "<html>
+<body>
+    <!-- beginning of email template -->
+    <div width='100%' bgcolor='#fcfcfc'>
+        <div>
+            <div>
+
+                <div align='center' width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 12px; color: {$accent_color}'>
+                    {$email_notification_header}
+                </div>
+
+                <div width='100%' style='padding: 0 0 0 10px; color:#ffffff; font-family: sans-serif; font-size: 35px; line-height:38px; font-weight: bold; background-color:{$bg_color};'>
+                    <span style='padding: 0 0 0 3px; font-size: 20px; color: #ffffff; font-family: sans-serif;'>GCconnex</span>
+                </div>
+
+                <div style='height:1px; background:#bdbdbd; border-bottom:1px solid #ffffff'></div>
+
+                <div width='100%' style='padding:30px 30px 10px 30px; font-size:12px; line-height:22px; font-family:sans-serif;'>
+
+                    <span style='font-size:12px; font-weight: normal;'>{$french_follows}</span><br/>
+
+                </div>
+
+                <div width='100%' style='padding:30px 30px 30px 30px; color:#153643; font-family:sans-serif; font-size:16px; line-height:22px; '>
+					<h4 style='padding: 0px 0px 5px 0px; font-family:sans-serif';>
+		        		<strong> {$title_en} </strong>
+		        	</h4>
+                    {$body_en}
+
+                </div>
+                <div style='margin-top:15px; padding: 5px; color: #6d6d6d; border-bottom: 1px solid #ddd;'>
+                    <div>{$email_notification_footer_en}</div>
+                </div>
+
+                <div width='100%' style='padding:30px 30px 30px 30px; color:#153643; font-family:sans-serif; font-size:16px; line-height:22px;'>
+					<h4 style='padding: 0px 0px 5px 0px; font-family:sans-serif';>
+		        		<strong> {$title_fr} </strong>
+		        	</h4>
+                    {$body_fr}
+
+                </div>
+                    <div style='margin-top:15px; padding: 5px; color: #6d6d6d;'>
+                   <div>{$email_notification_footer_fr}</div>
+                </div>
+
+                <div style='height:1px; background:#bdbdbd; border-bottom:1px solid #ffffff'></div>
+
+                <div align='center' width='100%' style='background-color:#f5f5f5; padding:20px 30px 15px 30px; font-family: sans-serif; font-size: 16px; color: {$accent_color}'> </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>";
+
+
 
 	$headers = 'MIME-Version: 1.0' . "\r\n";
 	$headers .= 'Content-type: text/html; charset=UTF-8' . "\r\n";
@@ -773,6 +837,28 @@ function check_if_opted_in($current_user) {
 	}
     if($current_user->opt_in_deployCreate == 'gcconnex_profile:opt:yes') {
 		return true;
+	}
+
+	/* MW - Added for GCcollab only */
+	if( strpos(elgg_get_site_entity()->name, 'collab') !== false ){
+		if($current_user->opt_in_casual_seek == 'gcconnex_profile:opt:yes') {
+			return true;
+		}
+		if($current_user->opt_in_casual_create == 'gcconnex_profile:opt:yes') {
+			return true;
+		}
+	    if($current_user->opt_in_student_seek == 'gcconnex_profile:opt:yes') {
+			return true;
+		}
+		if($current_user->opt_in_student_create == 'gcconnex_profile:opt:yes') {
+			return true;
+		}
+		if($current_user->opt_in_collaboration_seek == 'gcconnex_profile:opt:yes') {
+			return true;
+		}
+		if($current_user->opt_in_collaboration_create == 'gcconnex_profile:opt:yes') {
+			return true;
+		}
 	}
 
 	return false;

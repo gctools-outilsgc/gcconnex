@@ -33,20 +33,27 @@ elgg_ws_expose_function(
 	false
 );
 
-function get_blogpost( $user, $guid, $lang ){
-	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
- 	if( !$user_entity ) return "User was not found. Please try a different GUID, username, or email address";
-	if( !$user_entity instanceof ElggUser ) return "Invalid user. Please try a different GUID, username, or email address";
+function get_blogpost($user, $guid, $lang)
+{
+	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+	if (!$user_entity) {
+		return "User was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$user_entity instanceof ElggUser) {
+		return "Invalid user. Please try a different GUID, username, or email address";
+	}
 
-	$entity = get_entity( $guid );
-	if( !isset($entity) ) return "Blog was not found. Please try a different GUID";
-	// if( !$entity instanceof ElggBlog ) return "Invalid blog. Please try a different GUID";
+	$entity = get_entity($guid);
+	if (!isset($entity)) {
+		return "Blog was not found. Please try a different GUID";
+	}
 
-	if( !elgg_is_logged_in() )
+	if (!elgg_is_logged_in()) {
 		login($user_entity);
-	
+	}
+
 	$blog_posts = elgg_list_entities(array(
-	    'type' => 'object',
+		'type' => 'object',
 		'subtype' => 'blog',
 		'guid' => $guid
 	));
@@ -74,48 +81,56 @@ function get_blogpost( $user, $guid, $lang ){
 
 	$group = get_entity($blog_post->container_guid);
 	$blog_post->group = gc_explode_translation($group->name, $lang);
-	$blog_post->groupURL = $group->getURL();
+
+	if (is_callable(array($group, 'getURL'))) {
+		$blog_post->groupURL = $group->getURL();
+	}
 
 	return $blog_post;
 }
 
-function get_blogposts( $user, $limit, $offset, $filters, $lang ){
-	$user_entity = is_numeric($user) ? get_user($user) : ( strpos($user, '@') !== FALSE ? get_user_by_email($user)[0] : get_user_by_username($user) );
- 	if( !$user_entity ) return "User was not found. Please try a different GUID, username, or email address";
-	if( !$user_entity instanceof ElggUser ) return "Invalid user. Please try a different GUID, username, or email address";
+function get_blogposts($user, $limit, $offset, $filters, $lang)
+{
+	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
+	if (!$user_entity) {
+		return "User was not found. Please try a different GUID, username, or email address";
+	}
+	if (!$user_entity instanceof ElggUser) {
+		return "Invalid user. Please try a different GUID, username, or email address";
+	}
 
-	if( !elgg_is_logged_in() )
+	if (!elgg_is_logged_in()) {
 		login($user_entity);
+	}
 
 	$filter_data = json_decode($filters);
-	if( !empty($filter_data) ){
+	if (!empty($filter_data)) {
 		$params = array(
-	        'type' => 'object',
-	        'subtype' => 'blog',
+			'type' => 'object',
+			'subtype' => 'blog',
 			'limit' => $limit,
-	        'offset' => $offset
+			'offset' => $offset
 		);
 
-		if( $filter_data->name ){
+		if ($filter_data->name) {
 			$db_prefix = elgg_get_config('dbprefix');
-        	$params['joins'] = array("JOIN {$db_prefix}objects_entity oe ON e.guid = oe.guid");
+			$params['joins'] = array("JOIN {$db_prefix}objects_entity oe ON e.guid = oe.guid");
 			$params['wheres'] = array("(oe.title LIKE '%" . $filter_data->name . "%' OR oe.description LIKE '%" . $filter_data->name . "%')");
-        }
+		}
 
-        $all_blog_posts = elgg_list_entities_from_metadata($params);
+		$all_blog_posts = elgg_list_entities_from_metadata($params);
 	} else {
 		$all_blog_posts = elgg_list_entities(array(
-	        'type' => 'object',
-	        'subtype' => 'blog',
-	        'limit' => $limit,
-	        'offset' => $offset
-	    ));
+			'type' => 'object',
+			'subtype' => 'blog',
+			'limit' => $limit,
+			'offset' => $offset
+		));
 	}
 
 	$blog_posts = json_decode($all_blog_posts);
 
-	foreach($blog_posts as $blog_post){
-
+	foreach ($blog_posts as $blog_post) {
 		$blog_post->title = gc_explode_translation($blog_post->title, $lang);
 		$blog_post->description = gc_explode_translation($blog_post->description, $lang);
 
@@ -138,7 +153,10 @@ function get_blogposts( $user, $limit, $offset, $filters, $lang ){
 
 		$group = get_entity($blog_post->container_guid);
 		$blog_post->group = gc_explode_translation($group->name, $lang);
-		$blog_post->groupURL = $group->getURL();
+
+		if (is_callable(array($group, 'getURL'))) {
+			$blog_post->groupURL = $group->getURL();
+		}
 	}
 
 	return $blog_posts;

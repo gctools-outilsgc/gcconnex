@@ -167,11 +167,14 @@ $tags_input = elgg_view('input/tags', array(
 	'value' => $vars['tags']
 ));
 
+$group = get_entity(elgg_get_page_owner_guid());
+$access = ($vars['access_id'] >= 0) ? $vars['access_id'] : $group->group_acl;
+
 $access_label = elgg_echo('access');
 $access_input = elgg_view('input/access', array(
 	'name' => 'access_id',
 	'id' => 'blog_access_id',
-	'value' => $vars['access_id'],
+	'value' => $access,
 	'entity' => $vars['entity'],
 	'entity_type' => 'object',
 	'entity_subtype' => 'blog',

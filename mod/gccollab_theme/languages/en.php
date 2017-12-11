@@ -37,7 +37,7 @@ return array(
   'wet:gcdirectoryLink' => 'https://gcdirectory-gcannuaire.gc.ca/en/GCD/?pgid=002',
   'wet:tutorialLink'=>'http://www.gcpedia.gc.ca/wiki/GCcollab_User_Help/See_All',
   'wet:gccollabLink' => "https://gccollab.ca/",
-  'wet:GCcollabLink' => "https://GCcollab.gc.ca/",
+  'wet:gcconnexLink' => "https://gcconnex.gc.ca/",
   'wet:groupLoading'=>'Loading content',
   'wet:cover_photo_remove'=>'Remove current group cover image',
   'wet:cover_photo_input'=>'Add a Cover Image to your group',
@@ -49,7 +49,7 @@ return array(
   'wet:login_engage_3'=>'Promote government-wide GC activities.',
   'wet:login_welcome'=>'Welcome to GCcollab',
   'wet:jobs:link' => 'jobs.gc.ca <i class="fa fa-external-link mrgn-lft-sm"></i>',
-  'wet:jobs:href' => "http://jobs-emplois.gc.ca/index-eng.htm",
+  'wet:jobs:href' => "https://www.canada.ca/en/services/jobs/opportunities/government.html",
   'wet:marketplace:link' => "Jobs Marketplace",
   'wet:marketplace:href' => elgg_get_site_url() . "groups/profile/6161",
   'wet:login:departments' => "<span class=\"login-big-num\">174</span> Organizations across Canada",
@@ -82,7 +82,7 @@ return array(
   /**
    * Register
    */
-  'gcconnex:registerText' => "<h3>Welcome to GCcollab!</h3><p>A collaborative and networking space open to all Canadian public servants (federal, provincial and territorial), academics and students, as well as to all Canadians by invitation. Join the conversation!</p>",
+  'gcconnex:registerText' => "<h3>Welcome to GCcollab!</h3><p>A collaborative and networking space open to all Canadian public servants (federal, provincial, territorial and municipal), academics and students, as well as to all Canadians by invitation. Join the conversation!</p>",
 
   /**
    * Contact / FAQ
@@ -159,6 +159,8 @@ Hope to chat more soon!",
   'expages:qfp' => "QFP",
   'expages:participating_organizations' => "List of Participating Organizations",
   'expages:organismes_participants' => "Ministères et organismes participants",
+  'expages:partners' => "Partners",
+  'expages:partenaires' => "Partenaires",
 
   /**
    * Notifications
@@ -192,7 +194,7 @@ Hope to chat more soon!",
   'cp_notify:body_add_new_user:title' => "You have been added as a new user in GCcollab",
   'cp_notify:subject:invite_new_user' => "You have been invited to join GCcollab",
   'cp_notify:body_invite_new_user:title' => "You have been invited to join GCcollab by %s",
-  'cp_notify:body_invite_new_user:description' => "<p>Join GCcollab, a collaborative and networking space, hosted by the Government of Canada, open to Canadian public servants (federal, provincial and territorial), academics, students and their partners across Canada and beyond.</p>
+  'cp_notify:body_invite_new_user:description' => "<p>Join GCcollab, a collaborative and networking space, hosted by the Government of Canada, open to Canadian public servants (federal, provincial, territorial and municipal), academics, students and their partners across Canada and beyond.</p>
 
 <p>Once you're a member, you can also invite anyone else you need to work with using the Colleagues functionality. (This option is available by selecting the icon of 3 silhouettes that appears above the main navigation bar).</p>
 

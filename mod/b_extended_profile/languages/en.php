@@ -53,6 +53,7 @@ $english = array(
     'gcconnex_profile:present' => 'Present', // for work and education time ranges.. from XX date to Present
     'gcconnex_profile:about_me:empty' => 'Begin entering a description about yourself by clicking "Edit" in the top right corner of this box.',// prompt to add first skill
     'gcconnex_profile:about_me:access' => 'Who can see my description',
+    'gcconnex_profile:optin:access' => 'This information will be used by the Opportunities Platform and will not be visible to users browsing your profile.',
 
     // BASIC INFORMATION PROFILE FORM
     'gcconnex_profile:basic:header' => 'Edit Basic Profile',
