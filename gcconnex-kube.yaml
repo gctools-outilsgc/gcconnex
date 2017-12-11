@@ -33,9 +33,9 @@ spec:
         - name: "HOME"
           value: "/var/www/html"
         - name: "DBHOST"
-          value: "gcconnex-db"
+          value: "gcconnex-db.gctools-test"
         - name: "WWWROOT"
-          value: "http://localhost:8080/"
+          value: "http://gcconnex.dev/"
 ---
 apiVersion: v1
 kind: Service
