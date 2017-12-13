@@ -11,7 +11,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN a2enmod rewrite
 
 # Modify Apache config for Elgg
-RUN echo '<Directory /var/www/html>\nOptions Indexes FollowSymLinks MultiViews\nAllowOverride All\nOrder allow,deny\nallow from all\n</Directory>\n' | sed '/^<VirtualHost \*:80>/r /dev/stdin' /etc/apache2/sites-available/000-default.conf > /etc/apache2/sites-available/tmp
+RUN echo '<Directory /var/www/html>\nDirectoryIndex index.php\nOptions FollowSymLinks MultiViews\nAllowOverride All\nOrder allow,deny\nallow from all\n</Directory>\n' | sed '/^<VirtualHost \*:80>/r /dev/stdin' /etc/apache2/sites-available/000-default.conf > /etc/apache2/sites-available/tmp
 RUN mv /etc/apache2/sites-available/tmp /etc/apache2/sites-available/000-default.conf
 
 # Modify Apache config to output access and error log to stdio
