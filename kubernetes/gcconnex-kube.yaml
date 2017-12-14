@@ -41,6 +41,19 @@ spec:
           value: "gcconnex-db.gctools-test"
         - name: "WWWROOT"
           value: "http://gcconnex.lpss.me/"
+        volumeMounts:
+        - mountPath: /var/www/html/data
+          name: gcconnex-data-volume
+        - mountPath: /var/www/html/engine/settings.php
+          subPath: settings.php
+          name: gcconnex-settings
+      volumes:
+      - name: gcconnex-data-volume
+        persistentVolumeClaim:
+          claimName: gcconnex-data-volume-claim
+      - name: gcconnex-settings
+        configMap:
+          name: gcconnex-config
 ---
 apiVersion: v1
 kind: Service
@@ -81,3 +94,10 @@ spec:
           value: "elgg"
         - name: "MYSQL_PASSWORD"
           value: "gcconnex"
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: gcconnex-db-volume
+      volumes:
+      - name: gcconnex-db-volume
+        persistentVolumeClaim:
+          claimName: gcconnex-db-volume-claim
