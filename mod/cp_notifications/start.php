@@ -1341,11 +1341,12 @@ function cp_create_notification($event, $type, $object) {
 
 			$recipient_user = get_user($to_recipient->guid);
 			//Nick - GCdeactivate - don't send notification
-			if(!$recipient_user->gcdeactivate == true){
+			if ($to_recipient->guid == $author->guid || $recipient_user->gcdeactivate)
+				continue;
+
 				$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid, 'cp_notifications');
 				
-				if ($to_recipient->guid == $author->guid)
-					continue;
+
 				
 					if (has_access_to_entity($object, $recipient_user) && $object->access_id != 0) {
 				
@@ -1362,7 +1363,7 @@ function cp_create_notification($event, $type, $object) {
 							mail($to_recipient->email,$subject,$template,cp_get_headers());
 					}
 				}
-			}
+			
 
 		}
 	}
