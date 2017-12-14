@@ -47,6 +47,9 @@ spec:
         - mountPath: /var/www/html/engine/settings.php
           subPath: settings.php
           name: gcconnex-settings
+        - mountPath: /var/www/html/.htaccess
+          subPath: .htaccess
+          name: gcconnex-settings
       volumes:
       - name: gcconnex-data-volume
         persistentVolumeClaim:
