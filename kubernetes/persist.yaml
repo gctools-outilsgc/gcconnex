@@ -5,7 +5,7 @@ metadata:
   name: gcconnex-db-volume
 spec:
   capacity:
-    storage: 2Gi
+    storage: 200Gi
   persistentVolumeReclaimPolicy: "Retain"
   storageClassName: gctools-test-gcconnex-db
   accessModes:
@@ -25,7 +25,7 @@ spec:
   storageClassName: gctools-test-gcconnex-db
   resources:
     requests:
-storage: 2Gi
+storage: 200Gi
 ---
 kind: PersistentVolume
 apiVersion: v1
