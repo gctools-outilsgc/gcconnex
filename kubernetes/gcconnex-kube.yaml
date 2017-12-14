@@ -6,7 +6,7 @@ metadata:
   labels:
     app: GCconnex
   annotations:
-    VIRTUAL_HOST: "gcconnex.lpss.me"
+    VIRTUAL_HOST: "gcconnex.gctools.nrc.ca"
     VIRTUAL_PORT: "80"
 spec:
   ports:
