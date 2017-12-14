@@ -1340,26 +1340,30 @@ function cp_create_notification($event, $type, $object) {
 		foreach ($to_recipients as $to_recipient) {
 
 			$recipient_user = get_user($to_recipient->guid);
-			$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid, 'cp_notifications');
-
-			if ($to_recipient->guid == $author->guid)
-				continue;
-
-			if (has_access_to_entity($object, $recipient_user) && $object->access_id != 0) {
-
-				if (strcmp($user_setting, "set_digest_yes") == 0) {
-					create_digest($author, $switch_case, $content_entity, get_entity($to_recipient->guid));
-
-				} else {
-
-					$template = elgg_view('cp_notifications/email_template', $message);
-
-					if (elgg_is_active_plugin('phpmailer'))
-						phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );
-					else
-						mail($to_recipient->email,$subject,$template,cp_get_headers());
+			//Nick - GCdeactivate - don't send notification
+			if(!$recipient_user->gcdeactivate == true){
+				$user_setting = elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid, 'cp_notifications');
+				
+				if ($to_recipient->guid == $author->guid)
+					continue;
+				
+					if (has_access_to_entity($object, $recipient_user) && $object->access_id != 0) {
+				
+					if (strcmp($user_setting, "set_digest_yes") == 0) {
+						create_digest($author, $switch_case, $content_entity, get_entity($to_recipient->guid));
+				
+					} else {
+				
+						$template = elgg_view('cp_notifications/email_template', $message);
+				
+						if (elgg_is_active_plugin('phpmailer'))
+							phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true );
+						else
+							mail($to_recipient->email,$subject,$template,cp_get_headers());
+					}
 				}
 			}
+
 		}
 	}
 
