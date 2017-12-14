@@ -25,7 +25,7 @@ spec:
   storageClassName: gctools-test-gcconnex-db
   resources:
     requests:
-storage: 200Gi
+      storage: 200Gi
 ---
 kind: PersistentVolume
 apiVersion: v1
@@ -53,4 +53,5 @@ spec:
   storageClassName: gctools-test-gcconnex-data
   resources:
     requests:
-storage: 2Gi
+      storage: 2Gi
+---
