@@ -1,0 +1,56 @@
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: gcconnex-db-volume
+spec:
+  capacity:
+    storage: 2Gi
+  persistentVolumeReclaimPolicy: "Retain"
+  storageClassName: gctools-test-gcconnex-db
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    server: 167.37.33.21
+    path: "/home/nfs/gcconnex-db"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: gcconnex-db-volume-claim
+  namespace: gctools-test
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: gctools-test-gcconnex-db
+  resources:
+    requests:
+storage: 2Gi
+---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: gcconnex-data-volume
+spec:
+  capacity:
+    storage: 2Gi
+  persistentVolumeReclaimPolicy: "Retain"
+  storageClassName: gctools-test-gcconnex-data
+  accessModes:
+    - ReadWriteOnce
+  nfs:
+    server: 167.37.33.21
+    path: "/home/nfs/gcconnex-data"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: gcconnex-data-volume-claim
+  namespace: gctools-test
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: gctools-test-gcconnex-data
+  resources:
+    requests:
+storage: 2Gi
