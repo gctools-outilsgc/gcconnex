@@ -34,10 +34,10 @@ RUN \
     php5-mysql \
     php5-xml \
   && mkdir -p /var/www/html/vendor \
-  && mkdir -p /var/www/html/data \
+  && mkdir -p /data \
   && mkdir -p /var/www/html/engine \
   && mkdir -p /run/apache2 \
-  && chown apache /var/www/html/data \
+  && chown apache /data \
   && chown apache /var/www/html/engine \
   && ln -s /dev/stderr /var/log/apache2/error.log \
   && ln -s /dev/stdout /var/log/apache2/access.log \
