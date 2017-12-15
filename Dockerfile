@@ -1,6 +1,6 @@
 # First stage, install composer and its dependencies and fetch vendor files
 FROM alpine:latest
-RUN mkdir /app && apk --no-cache add \
+RUN apk --no-cache add \
   php5 \
   php5-dom \
   php5-phar \
@@ -11,7 +11,7 @@ RUN mkdir /app && apk --no-cache add \
   php5-xml \
   php5-zlib \
   curl
-RUN curl -sS https://getcomposer.org/installer | php5 -- --install-dir=/usr/local/bin --filename=composer
+RUN mkdir /app && curl -sS https://getcomposer.org/installer | php5 -- --install-dir=/usr/local/bin --filename=composer
 RUN ln -s /usr/bin/php5 /usr/bin/php
 WORKDIR /app
 COPY composer.json composer.json /app/
@@ -34,10 +34,8 @@ RUN \
     php5-xml \
   && mkdir -p /var/www/html/vendor \
   && mkdir -p /data \
-  && mkdir -p /var/www/html/engine \
   && mkdir -p /run/apache2 \
   && chown apache /data \
-  && chown apache /var/www/html/engine \
   && ln -s /dev/stderr /var/log/apache2/error.log \
   && ln -s /dev/stdout /var/log/apache2/access.log \
   && sed -i '/#LoadModule rewrite_module modules\/mod_rewrite.so/c\LoadModule rewrite_module modules\/mod_rewrite.so' /etc/apache2/httpd.conf \
@@ -49,7 +47,7 @@ RUN \
 
 COPY ./install/config/htaccess.dist /var/www/html/.htaccess
 COPY --from=0 /app/vendor/ /var/www/html/vendor/
-COPY . /var/www/html
+COPY --chown=apache . /var/www/html
 
 WORKDIR /var/www/html
 EXPOSE 80
