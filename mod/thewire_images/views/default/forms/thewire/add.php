@@ -10,6 +10,7 @@
 if( elgg_is_xhr() ){
 	$site = elgg_get_site_entity();
 	echo '<script type="text/javascript" src="'.$site->getURL().'mod/thewire_images/js/dropzone.js"></script>';
+
 	echo '<link rel="stylesheet" type="text/css" href="/mod/thewire_images/css/dropzone.css">';
 
 	$previewContainer = "#previewZone";

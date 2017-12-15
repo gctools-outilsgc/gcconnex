@@ -134,21 +134,14 @@ switch ($msg_type) {
 	case 'cp_likes_type': // likes
 
 		if ($vars['cp_subtype'] === 'thewire') {
-			elgg_load_library('thewire_image');
+
 
 			$content_title_en = gc_explode_translation($vars['cp_description'], 'en');
 			$content_title_fr = gc_explode_translation($vars['cp_description'], 'fr');
 
 			$trimmedURL = strtok($vars['cp_content_url'], "?");
 			$wire_id = explode("/thewire/view/", $trimmedURL)[1];
-			$attachment = thewire_image_get_attachments($wire_id);
-			if ($attachment) {
-				$cp_notify_msg_title_en = elgg_echo('cp_notify:body_likes_image_wire:title',array($vars['cp_liked_by']),'en');
-				$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_likes_image_wire:title',array($vars['cp_liked_by']),'fr');
-			} else {
-				$cp_notify_msg_title_en = elgg_echo('cp_notify:body_likes_wire:title',array($vars['cp_liked_by'], $content_title_en),'en');
-				$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_likes_wire:title',array($vars['cp_liked_by'], $content_title_fr),'fr');
-			}
+
 		} else {
 			$content_title_en = gc_explode_translation($vars['cp_comment_from'], 'en');
 			$content_title_fr = gc_explode_translation($vars['cp_comment_from'], 'fr');
@@ -669,11 +662,11 @@ switch ($msg_type) {
 
 
 	case 'cp_grp_admin_transfer':
-		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_group_admin_transfer:title',array($vars['cp_group_name']),'en');
-		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_group_admin_transfer:title',array($vars['cp_group_name']),'fr');
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_group_admin_transfer:title',array(gc_explode_translation($vars['cp_group_name'],'en')),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_group_admin_transfer:title',array(gc_explode_translation($vars['cp_group_name'],'fr')),'fr');
 
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_group_admin_transfer:description',array($vars['cp_appointer'],$vars['cp_group_name'],$vars['cp_group_url'].'?utm_source=notification&utm_medium=site'),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_group_admin_transfer:description',array($vars['cp_appointer'],$vars['cp_group_name'],$vars['cp_group_url'].'?utm_source=notification&utm_medium=site'),'fr');
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_group_admin_transfer:description',array($vars['cp_appointer'],gc_explode_translation($vars['cp_group_name'],'en'),$vars['cp_group_url'].'?utm_source=notification&utm_medium=site'),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_group_admin_transfer:description',array($vars['cp_appointer'],gc_explode_translation($vars['cp_group_name'],'fr'),$vars['cp_group_url'].'?utm_source=notification&utm_medium=site'),'fr');
 
 		break;
 

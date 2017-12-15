@@ -19,9 +19,11 @@ if (empty($body) && empty($_FILES)) {
 	forward(REFERER);
 }
 
+
 /// we want to trigger our custom event handler
 elgg_unregister_event_handler('create','object','cp_create_notification');
 elgg_unregister_event_handler('create','object','thewire_tools_create_object_event_handler');
+
 
 $guid = thewire_tools_save_post($body, elgg_get_logged_in_user_guid(), $access_id, $parent_guid, $method, $reshare_guid);
 if (!$guid) {
@@ -36,17 +38,21 @@ if ($parent_guid) {
 }
 
 system_message(elgg_echo("thewire:posted"));
+
 $wire_entity = get_entity($guid);
+
 // send notifications when a user shares your content on the wire
 if ($reshare_guid || $reshare_guid > 0) {
 	$content_owner = get_entity($reshare_guid)->getOwnerEntity();
 	$entity = get_entity($reshare_guid);
+
 
 	if ($entity->getType() == 'group'){
 		$entity->title = $entity->name;
 	}
 
 	$to_recipients = $entity->getOwnerEntity();
+
 			
 }
 
@@ -73,6 +79,7 @@ if ($to_recipients->guid != get_loggedin_user()->guid) {
 			$image_location = "{$CONFIG->dataroot}1/{$wire_entity->getOwnerGUID()}/{$image->getFilename()}";
 			
 		if ($reshare_guid) {
+
 			$message = array(
 				'cp_msg_type' => 'cp_wire_share',
 				'cp_recipient' => $entity->getOwnerEntity(),
@@ -93,6 +100,7 @@ if ($to_recipients->guid != get_loggedin_user()->guid) {
 			);
 		}
 		elgg_trigger_plugin_hook('cp_overwrite_notification', 'all', $message);
+
 
 	}
 }
