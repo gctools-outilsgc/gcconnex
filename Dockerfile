@@ -32,6 +32,8 @@ RUN \
     php5-json \
     php5-mysql \
     php5-xml \
+  && apk update \
+  && apk --no-cache add php5-mysqli=5.6.32-r2 \
   && mkdir -p /var/www/html/vendor \
   && mkdir -p /data \
   && mkdir -p /run/apache2 \
