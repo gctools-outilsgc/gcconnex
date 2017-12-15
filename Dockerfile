@@ -1,5 +1,5 @@
 # First stage, install composer and its dependencies and fetch vendor files
-FROM alpine:latest
+FROM alpine:3.7
 RUN apk --no-cache add \
   php5 \
   php5-dom \
@@ -20,7 +20,7 @@ ARG COMPOSER_NO_INTERACTION=1
 RUN composer install
 
 # Second stage, build usable container
-FROM alpine:latest
+FROM alpine:3.7
 LABEL maintainer="Luc Belliveau <luc.belliveau@nrc-cnrc.gc.ca>"
 RUN \
   apk --no-cache add \
