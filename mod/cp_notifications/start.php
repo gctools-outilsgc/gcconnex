@@ -912,6 +912,9 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 			$recipient_user = get_user($to_recipient->guid);
 
+			if($recipient_user->gcdeactivate)
+				continue;
+
 			if ($liked_by->guid == $entity->getOwnerGUID() && $to_recipient->guid == $liked_by->guid)
 				continue;
 
@@ -1462,6 +1465,8 @@ function cp_digest_weekly_cron_handler($hook, $entity_type, $return_value, $para
 	foreach ($users as $user) {
 
 		$user = get_entity($user->guid);
+		if($user->gcdeactivate)
+			continue;
 		$frequency = elgg_get_plugin_user_setting('cpn_set_digest_frequency', $user->guid, 'cp_notifications');
 
 		if ($user instanceof ElggUser && strcmp($frequency,'set_digest_weekly') == 0 ) {
@@ -1536,6 +1541,8 @@ function cp_digest_daily_cron_handler($hook, $entity_type, $return_value, $param
 	foreach ($users as $user) {
 
 		$user = get_entity($user->guid);
+		if($user->gcdeactivate)
+			continue;
 		$frequency = elgg_get_plugin_user_setting('cpn_set_digest_frequency', $user->guid, 'cp_notifications');
 
 		if ($user instanceof ElggUser && strcmp($frequency,'set_digest_daily') == 0 ) {
