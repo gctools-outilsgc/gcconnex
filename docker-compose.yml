@@ -27,8 +27,8 @@ services:
     ports:
       - 8080:80
     volumes:
-      - .:/var/www/html
-      - ./data/data:/var/www/html/data
+      - ./mod:/var/www/html/mod
+      - ./data/data:/data
       - /var/www/html/vendor
     depends_on:
       - gcconnex-db
