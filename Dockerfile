@@ -25,7 +25,6 @@ LABEL maintainer="Luc Belliveau <luc.belliveau@nrc-cnrc.gc.ca>"
 RUN \
   apk --no-cache add \
     apache2 \
-    apache2-utils \
     php5-apache2 \
     php5-curl \
     php5-dom \
@@ -56,5 +55,5 @@ WORKDIR /var/www/html
 EXPOSE 80
 
 # Start Apache in foreground mode
-CMD rm -f /run/apache2/httpd.pid && /usr/sbin/apachectl -D FOREGROUND
+CMD rm -f /run/apache2/httpd.pid && /usr/sbin/httpd -D FOREGROUND
 
