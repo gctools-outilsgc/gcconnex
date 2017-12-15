@@ -1,33 +1,60 @@
-FROM ubuntu:14.04
-MAINTAINER Luc Belliveau <luc.belliveau@nrc-cnrc.gc.ca>
-
-# Install dependencies
-ARG DEBIAN_FRONTEND=noninteractive
-RUN apt-get update
-RUN apt-get install -y git apache2 php5 libapache2-mod-php5 php5-mysql php5-gd php5-curl curl
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-# Enable Apache mod_rewrite
-RUN a2enmod rewrite
-
-# Modify Apache config for Elgg
-RUN echo '<Directory /var/www/html>\nDirectoryIndex index.php\nOptions FollowSymLinks MultiViews\nAllowOverride All\nOrder allow,deny\nallow from all\n</Directory>\n' | sed '/^<VirtualHost \*:80>/r /dev/stdin' /etc/apache2/sites-available/000-default.conf > /etc/apache2/sites-available/tmp
-RUN mv /etc/apache2/sites-available/tmp /etc/apache2/sites-available/000-default.conf
-
-# Modify Apache config to output access and error log to stdio
-# So we can see the output using `docker-compose logs` or directly with `docker-compose up`)
-RUN sed -i '/ErrorLog ${APACHE_LOG_DIR}\/error.log/c\ErrorLog \/dev\/stderr' /etc/apache2/apache2.conf
-RUN sed -i '/ErrorLog ${APACHE_LOG_DIR}\/error.log/c\ErrorLog \/dev\/stderr' /etc/apache2/sites-available/000-default.conf
-
-# Uncomment to also see access log (rebuild with docker-compose up --build)
-# RUN sed -i '/CustomLog ${APACHE_LOG_DIR}\/access.log combined/c\CustomLog \/dev\/stdout combined' /etc/apache2/sites-available/000-default.conf
-
-COPY . /var/www/html
-WORKDIR /var/www/html
-
+# First stage, install composer and its dependencies and fetch vendor files
+FROM alpine:latest
+RUN mkdir /app && apk --no-cache add \
+  php5 \
+  php5-dom \
+  php5-phar \
+  php5-gd \
+  php5-json \
+  php5-mysql \
+  php5-openssl \
+  php5-xml \
+  php5-zlib \
+  curl
+RUN curl -sS https://getcomposer.org/installer | php5 -- --install-dir=/usr/local/bin --filename=composer
+RUN ln -s /usr/bin/php5 /usr/bin/php
+WORKDIR /app
+COPY composer.json composer.json /app/
 ARG COMPOSER_ALLOW_SUPERUSER=1
 ARG COMPOSER_NO_INTERACTION=1
 RUN composer install
 
+# Second stage, build usable container
+FROM alpine:latest
+LABEL maintainer="Luc Belliveau <luc.belliveau@nrc-cnrc.gc.ca>"
+RUN \
+  apk --no-cache add \
+    apache2 \
+    apache2-utils \
+    php5-apache2 \
+    php5-curl \
+    php5-dom \
+    php5-gd \
+    php5-json \
+    php5-mysql \
+    php5-xml \
+  && mkdir -p /var/www/html/vendor \
+  && mkdir -p /var/www/html/data \
+  && mkdir -p /var/www/html/engine \
+  && mkdir -p /run/apache2 \
+  && chown apache /var/www/html/data \
+  && chown apache /var/www/html/engine \
+  && ln -s /dev/stderr /var/log/apache2/error.log \
+  && ln -s /dev/stdout /var/log/apache2/access.log \
+  && sed -i '/#LoadModule rewrite_module modules\/mod_rewrite.so/c\LoadModule rewrite_module modules\/mod_rewrite.so' /etc/apache2/httpd.conf \
+  && sed -i '/DocumentRoot "\/var\/www\/localhost\/htdocs"/c\DocumentRoot "\/var\/www\/html"' /etc/apache2/httpd.conf \
+  && sed -i '/Options Indexes FollowSymLinks/c\\' /etc/apache2/httpd.conf \
+  && sed -i '/AllowOverride None/c\\' /etc/apache2/httpd.conf \
+  && sed -i '/Options Indexes FollowSymLinks/c\\' /etc/apache2/httpd.conf \
+  && sed -i '/<Directory "\/var\/www\/localhost\/htdocs">/c\<Directory "\/var\/www\/html">\nDirectoryIndex index.php\nOptions FollowSymLinks MultiViews\nAllowOverride All\nOrder allow,deny\nallow from all\n' /etc/apache2/httpd.conf
+
+COPY ./install/config/htaccess.dist /var/www/html/.htaccess
+COPY --from=0 /app/vendor/ /var/www/html/vendor/
+COPY . /var/www/html
+
+WORKDIR /var/www/html
+EXPOSE 80
+
 # Start Apache in foreground mode
-CMD chown www-data /var/www/html/data && chown www-data /var/www/html/engine && rm -f /var/run/apache2/apache2.pid && /usr/sbin/apache2ctl -D FOREGROUND
+CMD rm -f /run/apache2/httpd.pid && /usr/sbin/apachectl -D FOREGROUND
+
