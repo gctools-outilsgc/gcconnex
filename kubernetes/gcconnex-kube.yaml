@@ -40,7 +40,7 @@ spec:
         - name: "DBHOST"
           value: "gcconnex-db.gctools-test"
         - name: "WWWROOT"
-          value: "http://gcconnex.lpss.me/"
+          value: "http://gcconnex.gctools.nrc.ca/"
         volumeMounts:
         - mountPath: /var/www/html/data
           name: gcconnex-data-volume
