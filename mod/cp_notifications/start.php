@@ -1079,7 +1079,7 @@ function cp_create_notification($event, $type, $object) {
 					$cp_mentioned_user = $cp_mentioned_users[$i];
 					$mentioned_user = get_user_by_username(substr($cp_mentioned_user, 1));
 
-					if (!$mentioned_user)
+					if (!$mentioned_user || $mentioned_user->gcdeactivate)
 						break;
 
 					$subject = elgg_echo('cp_notify:subject:mention',array($object->getOwnerEntity()->name), 'en') .' | ' . elgg_echo('cp_notify:subject:mention',array($object->getOwnerEntity()->name), 'fr');
