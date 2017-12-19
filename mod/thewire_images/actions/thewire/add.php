@@ -87,7 +87,7 @@ if ($to_recipients->guid != get_loggedin_user()->guid) {
 				'cp_content_reshared' => $entity,
 				'cp_content' => $wire_entity,
 				'cp_wire_url' => $wire_entity->getURL(),
-				'wire_imagedata_loc' => $image_location,
+				'wire_entity' => $wire_entity,
 			);
 
 		} else {
