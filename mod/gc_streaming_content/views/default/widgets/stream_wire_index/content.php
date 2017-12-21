@@ -8,6 +8,16 @@
 * Author: GCTools Team
 */
 
+  echo '<div class="pam">' . elgg_view('output/url', [
+    'text' => elgg_echo('thewire:post'),
+    'href' => 'ajax/view/thewire/add',
+    'class' => 'elgg-lightbox btn btn-primary btn-block',
+    'data-colorbox-opts' => json_encode([
+      'width' => '650px',
+      'height' => '375px',
+    ])
+  ]) . '</div>';
+
 echo '<div class="new-wire-holder"><div class="posts-holder"></div></div>';
 	$num_items = $vars['entity']->num_items;
 	if (!isset($num_items)) $num_items = 15;
