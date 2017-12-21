@@ -292,7 +292,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 			$subject = elgg_echo('cp_notifications:mail_body:subtype:thewire', array($author->name, 'fil'), 'en').' | ';
 			$subject .= elgg_echo('cp_notifications:mail_body:subtype:thewire',array($author->name, 'wire'),'fr');
-
+			$content_entity = $params['wire_entity'];
 			$query = "SELECT * FROM elggentity_relationships WHERE relationship = 'cp_subscribed_to_email' AND guid_two = {$author->getGUID()}";
 			$users = get_data($query);
 
@@ -576,7 +576,7 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				$site_template = elgg_view('cp_notifications/site_template', $message);
 			}
 
-			$newsletter_appropriate = array('cp_wire_share','cp_messageboard','cp_wire_mention','cp_hjpost','cp_hjtopic', 'cp_friend_request', 'cp_friend_approve');
+			$newsletter_appropriate = array('cp_wire_share','cp_wire_image','cp_messageboard','cp_wire_mention','cp_hjpost','cp_hjtopic', 'cp_friend_request', 'cp_friend_approve');
 			if (strcmp(elgg_get_plugin_user_setting('cpn_set_digest', $to_recipient->guid, 'cp_notifications'),'set_digest_yes') == 0 && in_array($cp_msg_type, $newsletter_appropriate)) {
 				$result = create_digest($author, $cp_msg_type, $content_entity, $to_recipient, $content_url);
 				continue;
@@ -996,8 +996,8 @@ function cp_create_annotation_notification($event, $type, $object) {
  * @param mixed $object		the object/entity of the event
  */
 function cp_create_notification($event, $type, $object) {
-
-	$do_not_subscribe_list = array('mission-posted', 'file', 'tidypics_batch', 'hjforum', 'hjforumcategory','hjforumtopic', 'messages', 'hjforumpost', 'site_notification', 'poll_choice','blog_revision','widget','folder','c_photo', 'cp_digest','MySkill', 'education', 'experience', 'poll_choice3', 'thewire_image');
+error_log('subtype'.$object->getSubtype());
+	$do_not_subscribe_list = array('mission-posted', 'file', 'tidypics_batch', 'hjforum', 'hjforumcategory','hjforumtopic', 'messages', 'hjforumpost', 'site_notification', 'poll_choice','blog_revision','widget','folder','c_photo', 'cp_digest','MySkill', 'education', 'experience', 'poll_choice3');
 
 	// since we implemented the multi file upload, each file uploaded will invoke this hook once to many times (we don't allow subtype file to go through, but check the event)
 	if ($object instanceof ElggObject && $event !== 'single_file_upload') {
@@ -1022,6 +1022,7 @@ function cp_create_notification($event, $type, $object) {
 		$switch_case = $object->getSubtype();	
 
 	switch ($switch_case) {
+
 
 		/// invoked when zipped file upload function is used (files_tools/lib/functions.php)
 		case 'single_zip_file_upload':
@@ -1246,7 +1247,7 @@ function cp_create_notification($event, $type, $object) {
 			}
 
 			// the user creating the content is automatically subscribed to it (with exception that is not a widget, forum, etc..)
-			$cp_whitelist = array('blog', 'bookmarks', 'poll', 'groupforumtopic', 'image', 'idea', 'page', 'page_top', 'thewire', 'task_top', 'question', 'answer');
+			$cp_whitelist = array('blog', 'bookmarks', 'poll', 'groupforumtopic', 'image', 'idea', 'page', 'page_top', 'thewire', 'task_top', 'question', 'answer', 'cp_wire_image');
 			if (in_array($object->getSubtype(), $cp_whitelist)) {
 
 				if ($object->getSubtype() == 'answer') {// subcribed to the question
