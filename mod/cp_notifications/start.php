@@ -290,8 +290,8 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 				'author' => $author,
 			);
 
-			$subject = elgg_echo('cp_notifications:mail_body:subtype:thewire', array($author->name, 'fil'), 'en').' | ';
-			$subject .= elgg_echo('cp_notifications:mail_body:subtype:thewire',array($author->name, 'wire'),'fr');
+			$subject = elgg_echo('cp_notifications:mail_body:subtype:thewireSubj', array($author->name, 'Wire'), 'en').' | ';
+			$subject .= elgg_echo('cp_notifications:mail_body:subtype:thewireSubj',array($author->name, 'Fil'),'fr');
 			$content_entity = $params['wire_entity'];
 			$query = "SELECT * FROM elggentity_relationships WHERE relationship = 'cp_subscribed_to_email' AND guid_two = {$author->getGUID()}";
 			$users = get_data($query);
