@@ -86,10 +86,14 @@ $french = array(
 	'cp_notifications:mail_body:subtype:file' => "%s a publié un fichier : %s", 
 	'cp_notifications:mail_body:subtype:album' => "%s a publié un album : %s", 
 	'cp_notifications:mail_body:subtype:thewire' => "%s a ajouté un nouveau message sur le %s intitulé:",
+	'cp_notifications:mail_body:subtype:thewire_digest' => "%s a ajouté un nouveau message sur le %s intitulé: %s",
+	
 	'cp_notifications:mail_body:subtype:thewireSubj' => "%s a ajouté un nouveau message sur le %s",
 	
 	'cp_notifications:mail_body:subtype:thewireImage' => "%s a ajouté un nouveau message sur le fil:", 
-	
+
+	'cp_notification_wire_image_only' => "Voir l’image du message sur le Fil",
+	'cp_notification_wire_image' => " (Voir le message sur le Fil pour visionner l’image)",	
 
 	'cp_notifications:mail_body:subtype:poll' => "%s a créé un sondage :", 
 	'cp_notifications:mail_body:subtype:event_calendar' => "%s a publié un événement : %s", 

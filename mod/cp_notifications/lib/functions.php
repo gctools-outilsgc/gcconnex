@@ -296,7 +296,8 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 				'content_url' => $content_url."?utm_source=notification_digest&utm_medium=email",
 				'subtype' => $entity->getSubtype(),
 				'content_author_name' => $invoked_by->name,
-				'content_author_url' => $invoked_by->getURL()
+				'content_author_url' => $invoked_by->getURL(),
+				'entity' => $entity
 			);
 
 			$entity_guid = $entity->guid;
@@ -492,7 +493,8 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 				'content_url' => $content_url."?utm_source=notification_digest&utm_medium=email",
 				'subtype' => $entity->getSubtype(),
 				'content_author_name' => $invoked_by->name,
-				'content_author_url' => $invoked_by->getURL()
+				'content_author_url' => $invoked_by->getURL(),
+				'wire_image' => thewire_image_get_attachments($entity->guid),
 			);
 
 			$entity_guid = $entity->guid;
@@ -797,13 +799,20 @@ function getMissionTypeMetastringid( $mission_type, $role_type ) {
 
     } elseif ($content_array['subtype'] === 'thewire' && $heading !== 'likes') {
 
-    	if($content_array['content_description'] == ''){
-				$content_array['content_description'] = 'Image';
-    	}
+    	if($content_array['content_description'] && (is_array($content_array['wire_image']))){
+			$content_array['content_description'] .= elgg_echo('cp_notification_wire_image', $language_preference);
+    	}elseif($content_array['content_description'] == '' ){
+			$content_array['content_description'] = elgg_echo('cp_notification_wire_image_only', $language_preference);
+		}
+// error_log(print_r($content_array,true));
+// error_log('print array '.print_r($content_array['wire_image'],true));
 
+//  if(is_array($content_array['wire_image'])){
+//  	error_log('isset');
+//  }else{error_log('not isset');}
 		$url = " <a href='{$content_array['content_url']}'>".$content_array['content_description']."</a>";
 		$wire_fil = elgg_echo('cp_notifications:subtype:name:thewire', $language_preference);
-		$rendered_content = elgg_echo("cp_notifications:mail_body:subtype:{$content_array['subtype']}", array($author,$wire_fil, $url), $language_preference);
+		$rendered_content = elgg_echo("cp_notifications:mail_body:subtype:{$content_array['subtype']}_digest", array($author,$wire_fil, $url), $language_preference);
 
 
     } elseif (strcmp($heading, "likes") === 0) {
