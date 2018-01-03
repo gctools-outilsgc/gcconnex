@@ -26,6 +26,7 @@ RUN \
   apk --no-cache add \
     apache2 \
     php5-apache2 \
+    php5-ctype \
     php5-curl \
     php5-dom \
     php5-gd \
