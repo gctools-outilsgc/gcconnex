@@ -641,10 +641,12 @@ function wet4_theme_setup_head($hook, $type, $data) {
 		'content' => 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0',
 	);
 
-	$data['links']['apple-touch-icon'] = array(
-		'rel' => 'apple-touch-icon',
-		'href' => elgg_normalize_url('mod/wet4_theme/graphics/homescreen.png'),
-	);
+    if( file_exists('mod/wet4_theme/graphics/homescreen.png') ){
+    	$data['links']['apple-touch-icon'] = array(
+    		'rel' => 'apple-touch-icon',
+    		'href' => elgg_normalize_url('mod/wet4_theme/graphics/homescreen.png'),
+    	);
+    }
 
 	return $data;
 }
