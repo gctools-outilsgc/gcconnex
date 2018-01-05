@@ -49,7 +49,9 @@ array_merge($departmentsFr, $provincesFr);
 
 //create better options_values
 $options = array();
-if(get_current_language() == 'en'){
+$lang = get_input('lang');
+if(!$lang){ $lang = get_current_language();}
+if($lang == 'en'){
   foreach($departmentsEn as $k => $v){
     $options[$departmentsEn[$k].' / '.$departmentsFr[$k]] = $departmentsEn[$k];
   }
