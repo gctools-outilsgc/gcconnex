@@ -75,7 +75,17 @@ $english = array(
 	'cp_notifications:mail_body:subtype:file' => "%s posted a file: %s", 
 
 	'cp_notifications:mail_body:subtype:album' => "%s posted an album: %s", 
-	'cp_notifications:mail_body:subtype:thewire' => "%s posted a new %s message entitled",
+	'cp_notifications:mail_body:subtype:thewire' => "%s posted a new %s message entitled:",
+	'cp_notifications:mail_body:subtype:thewire_digest' => "%s posted a new %s message entitled: %s",
+	
+	'cp_notifications:mail_body:subtype:thewireSubj' => "%s posted a new %s message",
+	
+	'cp_notifications:mail_body:subtype:thewireImage' => "%s posted a new message on the Wire:",
+	'cp_notification_wire_image_only' => 'See Wire post image on the Wire',
+	'cp_notification_wire_image' => '(See the Wire post to view the image)',
+	
+	
+	
 	'cp_notifications:mail_body:subtype:poll' => "%s created a poll: %s", 
 	'cp_notifications:mail_body:subtype:event_calendar' => "%s posted an event: %s", 
 	'cp_notifications:mail_body:subtype:photo' => "%s posted an image: %s", 

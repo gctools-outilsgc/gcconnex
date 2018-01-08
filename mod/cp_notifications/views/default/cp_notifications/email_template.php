@@ -88,19 +88,23 @@ switch ($msg_type) {
 	case 'cp_wire_image':
 		$wire_entity = $vars['wire_entity'];
 		$wire_image = thewire_image_get_attachments($wire_entity->getGUID());
+		if ($wire_image){//if image in the wire notification
+			$cp_notify_msg_title_en = elgg_echo('cp_notifications:mail_body:subtype:thewireImage', array($vars['author']->name), 'en');
+			$cp_notify_msg_title_fr = elgg_echo('cp_notifications:mail_body:subtype:thewireImage', array($vars['author']->name), 'fr');
+			
+			$cp_notify_msg_description_en = "<p><a href='{$vars['wire_entity']->getURL()}'>{$wire_entity->description}</a></p>";
+			$cp_notify_msg_description_fr = "<p><a href='{$vars['wire_entity']->getURL()}'>{$wire_entity->description}</a></p>";
+	
+			$cp_notify_msg_description_en .= "<a href='{$vars['wire_entity']->getURL()}'><img  width=\"320\" src='".elgg_get_site_url().'thewire_image/download/'.$wire_image->getGUID().'/'.$wire_image->original_filename."'/> </a>";
+			$cp_notify_msg_description_fr .= "<a href='{$vars['wire_entity']->getURL()}'><img  width=\"320\" src='".elgg_get_site_url().'thewire_image/download/'.$wire_image->getGUID().'/'.$wire_image->original_filename."'/> </a>";
+		}else{//if no image in the wire notification
+			$cp_notify_msg_title_en = elgg_echo('cp_notifications:mail_body:subtype:thewire', array($vars['author']->name, 'Wire'), 'en');
+			$cp_notify_msg_title_fr = elgg_echo('cp_notifications:mail_body:subtype:thewire', array($vars['author']->name, 'Fil'), 'fr');
 
-		$cp_notify_msg_title_en = elgg_echo('cp_notifications:mail_body:subtype:thewire', array($vars['author']->name, 'fil'), 'en');
-		$cp_notify_msg_title_fr = elgg_echo('cp_notifications:mail_body:subtype:thewire', array($vars['author']->name, 'wire'), 'fr');
-		
-		$cp_notify_msg_description_en = "<p>{$wire_entity->description}</p>";
-		$cp_notify_msg_description_fr = "<p>{$wire_entity->description}</p>";
-
-		if ($wire_image){
-			$cp_notify_msg_description_en .= "<p><img  width=\"320\" src='".elgg_get_site_url().'thewire_image/download/'.$wire_image->getGUID().'/'.$wire_image->original_filename."'/> </p>";
-			$cp_notify_msg_description_fr .= "<p><img  width=\"320\" src='".elgg_get_site_url().'thewire_image/download/'.$wire_image->getGUID().'/'.$wire_image->original_filename."'/> </p>";
+			$cp_notify_msg_description_en = "<p><a href='{$vars['wire_entity']->getURL()}'>{$wire_entity->description}</a></p>";
+			$cp_notify_msg_description_fr = "<p><a href='{$vars['wire_entity']->getURL()}'>{$wire_entity->description}</a></p>";
 		}
-		$cp_notify_msg_description_en .= elgg_echo('cp_notify:body_comments:description_discussion',array($wire_entity->getURL().'?utm_source=notification&utm_medium=site'),'en');
-		$cp_notify_msg_description_fr .= elgg_echo('cp_notify:body_comments:description_discussion',array($wire_entity->getURL().'?utm_source=notification&utm_medium=site'),'fr');
+		
 		break;
 
 	case 'cp_content_edit': // blog vs page (edits)
@@ -136,21 +140,12 @@ switch ($msg_type) {
 	case 'cp_likes_type': // likes
 
 		if ($vars['cp_subtype'] === 'thewire') {
-			//elgg_load_library('thewire_image');
-
 			$content_title_en = gc_explode_translation($vars['cp_description'], 'en');
 			$content_title_fr = gc_explode_translation($vars['cp_description'], 'fr');
 
 			$trimmedURL = strtok($vars['cp_content_url'], "?");
 			$wire_id = explode("/thewire/view/", $trimmedURL)[1];
-			//$attachment = thewire_image_get_attachments($wire_id);
-			if ($attachment) {
-				$cp_notify_msg_title_en = elgg_echo('cp_notify:body_likes_image_wire:title',array($vars['cp_liked_by']),'en');
-				$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_likes_image_wire:title',array($vars['cp_liked_by']),'fr');
-			} else {
-				$cp_notify_msg_title_en = elgg_echo('cp_notify:body_likes_wire:title',array($vars['cp_liked_by'], $content_title_en),'en');
-				$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_likes_wire:title',array($vars['cp_liked_by'], $content_title_fr),'fr');
-			}
+
 		} else {
 			$content_title_en = gc_explode_translation($vars['cp_comment_from'], 'en');
 			$content_title_fr = gc_explode_translation($vars['cp_comment_from'], 'fr');
@@ -412,13 +407,22 @@ switch ($msg_type) {
 			$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_new_content:description',array("<i>{$cp_topic_description_fr}</i><br/>", $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email'),'fr');
 		}
 
-		if ($vars['cp_topic']->getSubtype() === 'thewire'){
 
-			$user_hyperlink = "<a href='{$topic_author->getURL()}?utm_source=notification&utm_medium=email'>{$topic_author->name}</a>";
-			$cp_notify_msg_title_en = elgg_echo('cp_notifications:mail_body:subtype:thewire',array($user_hyperlink, 'wire'),'en');
-			$cp_notify_msg_title_fr = elgg_echo('cp_notifications:mail_body:subtype:thewire',array($user_hyperlink, 'fil'),'fr');
-			$cp_notify_msg_description_en = "<a href='{$vars['cp_topic']->getURL()}'>{$vars['cp_topic']->description}</a>";
-			$cp_notify_msg_description_fr = "<a href='{$vars['cp_topic']->getURL()}'>{$vars['cp_topic']->description}</a>";
+		if( $vars['cp_topic']->getSubtype() === 'thewire' ){
+			if ( elgg_is_active_plugin('thewire_images') )
+				elgg_load_library('thewire_image');
+
+			$cp_notify_msg_title_en = elgg_echo('cp_notifications:mail_body:subtype:thewire',array($topic_author->getURL().'?utm_source=notification&utm_medium=email', $topic_author->username, $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', cp_translate_subtype($vars['cp_topic']->getSubtype())),'en');
+			$cp_notify_msg_title_fr = elgg_echo('cp_notifications:mail_body:subtype:thewire',array($topic_author->getURL().'?utm_source=notification&utm_medium=email', $topic_author->username, $vars['cp_topic']->getURL().'?utm_source=notification&utm_medium=email', $entity_m[cp_translate_subtype($vars['cp_topic']->getSubtype())]),'fr');
+			$cp_notify_msg_description_en = $vars['cp_topic']->description;
+			$cp_notify_msg_description_fr = $vars['cp_topic']->description;
+
+			if ( elgg_is_active_plugin('thewire_images') )
+				$attachment = thewire_image_get_attachments($vars['cp_topic']->getGUID());
+			if ($attachment) {
+				$cp_notify_msg_title_en .= elgg_echo('cp_notifications:mail_body:wire_has_image', '', 'en');
+				$cp_notify_msg_title_fr .= elgg_echo('cp_notifications:mail_body:wire_has_image', '', 'fr');
+			}
 
 		}
 
@@ -671,11 +675,11 @@ switch ($msg_type) {
 
 
 	case 'cp_grp_admin_transfer':
-		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_group_admin_transfer:title',array($vars['cp_group_name']),'en');
-		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_group_admin_transfer:title',array($vars['cp_group_name']),'fr');
+		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_group_admin_transfer:title',array(gc_explode_translation($vars['cp_group_name'],'en')),'en');
+		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_group_admin_transfer:title',array(gc_explode_translation($vars['cp_group_name'],'fr')),'fr');
 
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_group_admin_transfer:description',array($vars['cp_appointer'],$vars['cp_group_name'],$vars['cp_group_url'].'?utm_source=notification&utm_medium=email'),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_group_admin_transfer:description',array($vars['cp_appointer'],$vars['cp_group_name'],$vars['cp_group_url'].'?utm_source=notification&utm_medium=email'),'fr');
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_group_admin_transfer:description',array($vars['cp_appointer'],gc_explode_translation($vars['cp_group_name'],'en'),$vars['cp_group_url'].'?utm_source=notification&utm_medium=email'),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_group_admin_transfer:description',array($vars['cp_appointer'],gc_explode_translation($vars['cp_group_name'],'fr'),$vars['cp_group_url'].'?utm_source=notification&utm_medium=email'),'fr');
 
 		break;
 
@@ -705,18 +709,24 @@ switch ($msg_type) {
 		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_wireshare:title', array($vars['cp_shared_by']->name),'en');
 		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_wireshare:title', array($vars['cp_shared_by']->name),'fr');
 		$reshare_content = $vars['cp_content_reshare'];
+		$wire_entity = $vars['cp_content'];
+		$wire_image = thewire_image_get_attachments($wire_entity->getGUID());
 
 		if (!$vars['cp_content_reshare']->title) {
 
 			/// sharing a wire to the wire
 			$username = "<a href='{$vars['cp_shared_by']->getURL()}?utm_source=notification&utm_medium=email'>{$vars['cp_shared_by']->name}</a>";
 			$wire_msg = $vars['cp_content']->description;
-			$source_en = "<a href='{$reshare_content->getURL()}?utm_source=notification&utm_medium=email'>".gc_explode_translation($vars['cp_content_reshare']->description, 'en')."</a>";
-			$source_fr = "<a href='{$reshare_content->getURL()}?utm_source=notification&utm_medium=email'>".gc_explode_translation($vars['cp_content_reshare']->description, 'fr')."</a>";
-			$wire_link = "{$vars['cp_wire_url']}?utm_source=notification&utm_medium=email";
+			$source_en = "<a href='{$reshare_content->getURL()}?utm_source=notification&utm_medium=email'>".gc_explode_translation($vars['cp_content_reshare']->description, 'en')."source</a>";
+			$source_fr = "<a href='{$reshare_content->getURL()}?utm_source=notification&utm_medium=email'>".gc_explode_translation($vars['cp_content_reshare']->description, 'fr')."source</a>";
 
-			$cp_notify_msg_description_en = elgg_echo('cp_notify:body:contentshare:description', array($username, $wire_msg, $source_en, $wire_link, 'en'));
-			$cp_notify_msg_description_fr = elgg_echo('cp_notify:body:contentshare:description', array($username, $wire_msg, $source_fr, $wire_link, 'fr'));
+			if ($wire_image){
+				$cp_notify_msg_description_en .= "<p><img  width=\"320\" src='".elgg_get_site_url().'thewire_image/download/'.$wire_image->getGUID().'/'.$wire_image->original_filename."'/> </p>";
+				$cp_notify_msg_description_fr .= "<p><img  width=\"320\" src='".elgg_get_site_url().'thewire_image/download/'.$wire_image->getGUID().'/'.$wire_image->original_filename."'/> </p>";
+			}
+			
+			$cp_notify_msg_description_en .= elgg_echo('cp_notify:body:contentshare:description', array($username, $wire_msg, $source_en, 'en'));
+			$cp_notify_msg_description_fr .= elgg_echo('cp_notify:body:contentshare:description', array($username, $wire_msg, $source_fr,  'fr'));
 
 		} else {
 
@@ -727,8 +737,13 @@ switch ($msg_type) {
 			$source_fr = "<a href='{$reshare_content->getURL()}?utm_source=notification&utm_medium=email'>".gc_explode_translation($vars['cp_content_reshare']->title, 'fr')."</a>";
 			$wire_link = "{$vars['cp_wire_url']}?utm_source=notification&utm_medium=email";
 
-			$cp_notify_msg_description_en = elgg_echo('cp_notify:body:contentshare:description', array($username, $wire_msg, $source_en, $wire_link, 'en'));
-			$cp_notify_msg_description_fr = elgg_echo('cp_notify:body:contentshare:description', array($username, $wire_msg, $source_fr, $wire_link, 'fr'));
+			if ($wire_image){
+				$cp_notify_msg_description_en .= "<p><img  width=\"320\" src='".elgg_get_site_url().'thewire_image/download/'.$wire_image->getGUID().'/'.$wire_image->original_filename."'/> </p>";
+				$cp_notify_msg_description_fr .= "<p><img  width=\"320\" src='".elgg_get_site_url().'thewire_image/download/'.$wire_image->getGUID().'/'.$wire_image->original_filename."'/> </p>";
+			}
+
+			$cp_notify_msg_description_en = elgg_echo('cp_notify:body:contentshare:description', array($username, $wire_msg, $source_en, $wire_link,$wire_link,'en'));
+			$cp_notify_msg_description_fr = elgg_echo('cp_notify:body:contentshare:description', array($username, $wire_msg, $source_fr, $wire_link,$wire_link,'fr'));
 		}
 		break;
 

@@ -8,6 +8,7 @@
  * @package ElggGroups
 */
 
+$lang = get_current_language();
 elgg_gatekeeper();
 
 $guid = (int) get_input("group_guid");
@@ -30,7 +31,7 @@ if ($group->isPublicMembership()) {
 }
 
 elgg_push_breadcrumb(elgg_echo("groups"), "groups/all");
-elgg_push_breadcrumb($group->name, $group->getURL());
+elgg_push_breadcrumb(gc_explode_translation($group->name,$lang), $group->getURL());
 elgg_push_breadcrumb($title);
 
 elgg_register_menu_item("title", array(
