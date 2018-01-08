@@ -142,22 +142,6 @@ else {
                 'options' => array_merge($departments,$provinces),
             ));
         	break;
-            
-        case elgg_echo('missions:opt_in'):
-        	$content .= elgg_view('input/dropdown', array(
-                'name' => $dropdown_name . '_element',
-                'value' => '',
-                'options' => array(
-                    '',
-                    elgg_echo('gcconnex_profile:opt:mentored'),
-                    elgg_echo('gcconnex_profile:opt:mentoring'),
-                    elgg_echo('gcconnex_profile:opt:casual_seek'),
-                    elgg_echo('gcconnex_profile:opt:casual_create'),
-                    elgg_echo('gcconnex_profile:opt:student_seek'),
-                    elgg_echo('gcconnex_profile:opt:student_create')
-                )
-        	));
-            break;
         
         case elgg_echo('missions:portfolio'):
             $content .= elgg_view('input/dropdown', array(
