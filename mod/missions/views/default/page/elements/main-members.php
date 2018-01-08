@@ -65,10 +65,14 @@ $advanced_field = elgg_view('page/elements/hidden-field', array(
 		'field_bordered' => true
 ));
 
+$total_records_found = '';
+
 if($result_set) {
 	$search_set = '<h2>' . elgg_echo('missions:search_results') . '</h2>';
 	$count = $_SESSION['candidate_count'];
 
+	$total_records_found = elgg_echo('missions:search_total_found', array($count));
+	
 	$max_reached = '';
   if (elgg_get_plugin_setting('search_limit', 'missions') !== '-1') {
     if(($offset + $entities_per_page) >= elgg_get_plugin_setting('search_limit', 'missions') && $count >= elgg_get_plugin_setting('search_limit', 'missions')) {
@@ -101,7 +105,7 @@ if($result_set) {
 		echo $advanced_field;
 	?>
 </div>
-<?php echo $max_reached; ?>
+<?php echo $total_records_found . "  " . $max_reached; ?>
 <div class="col-sm-12">
     
 	<?php echo $search_set; ?>
