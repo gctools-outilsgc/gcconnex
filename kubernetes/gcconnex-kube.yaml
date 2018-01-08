@@ -1,0 +1,103 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gcconnex
+  namespace: gctools-test
+  labels:
+    app: GCconnex
+  annotations:
+    VIRTUAL_HOST: "gcconnex.gctools.nrc.ca"
+    VIRTUAL_PORT: "80"
+spec:
+  ports:
+    - protocol: TCP
+      port: 80
+  selector: 
+    app: GCconnex
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: gcconnex-deployment
+  namespace: gctools-test
+spec:
+  replicas: 1
+  template: # create pods using pod definition in this template
+    metadata:
+      labels:
+        app: GCconnex
+    spec:
+      containers:
+      - name: gcconnex
+        image: localhost:5000/gctools-outilsgc/gcconnex:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name: "DOCKER"
+          value: "1"
+        - name: "HOME"
+          value: "/var/www/html"
+        - name: "DBHOST"
+          value: "gcconnex-db.gctools-test"
+        - name: "WWWROOT"
+          value: "http://gcconnex.gctools.nrc.ca/"
+        volumeMounts:
+        - mountPath: /var/www/html/data
+          name: gcconnex-data-volume
+        - mountPath: /var/www/html/engine/settings.php
+          subPath: settings.php
+          name: gcconnex-settings
+      volumes:
+      - name: gcconnex-data-volume
+        persistentVolumeClaim:
+          claimName: gcconnex-data-volume-claim
+      - name: gcconnex-settings
+        configMap:
+          name: gcconnex-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gcconnex-db
+  namespace: gctools-test
+spec:
+  clusterIP: None
+  ports: 
+    - protocol: TCP
+      port: 3306
+  selector:
+    app: GCconnex-db
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: gcconnex-db-deployment
+  namespace: gctools-test
+spec:
+  replicas: 1 # tells deployment to run 1 pod matching the template
+  template: # create pods using pod definition in this template
+    metadata:
+      labels:
+        app: GCconnex-db
+    spec:
+      containers:
+      - name: mysql
+        image: localhost:5000/mysql:5.6
+        ports:
+        - containerPort: 3306
+        env:
+        - name: "MYSQL_ROOT_PASSWORD"
+          value: "gcconnex"
+        - name: "MYSQL_DATABASE"
+          value: "elgg"
+        - name: "MYSQL_USER"
+          value: "elgg"
+        - name: "MYSQL_PASSWORD"
+          value: "gcconnex"
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: gcconnex-db-volume
+      volumes:
+      - name: gcconnex-db-volume
+        persistentVolumeClaim:
+          claimName: gcconnex-db-volume-claim

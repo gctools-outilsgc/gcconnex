@@ -9,6 +9,7 @@ $types['Account creation | Création de compte'] = elgg_echo('freshdesk:ticket:t
 $types['Log in credentials | Identifiants de connexions'] = elgg_echo('freshdesk:ticket:types:login', array(), $lang);
 $types['Bugs/Errors | Bogues/erreurs'] = elgg_echo('freshdesk:ticket:types:bugs', array(), $lang);
 $types['Group-related | Relatif aux groupes'] = elgg_echo('freshdesk:ticket:types:group', array(), $lang);
+$types['Data Request | Demande de données']  = elgg_echo('freshdesk:ticket:types:data', array(), $lang);
 $types['Training | Formation'] = elgg_echo('freshdesk:ticket:types:training', array(), $lang);
 $types["Jobs Marketplace | Carrefour d'emploi"] = elgg_echo('freshdesk:ticket:types:jobs', array(), $lang);
 $types['Enhancement | Amélioration'] = elgg_echo('freshdesk:ticket:types:enhancement', array(), $lang);
@@ -53,7 +54,7 @@ if (elgg_is_sticky_form('ticket-submit')) {
 </div>
 
 <fieldset class="user-info">
-  <legend><?php echo elgg_echo('freshdesk:ticket:legend:yourinfo'); ?></legend>
+  <legend><?php echo elgg_echo('freshdesk:ticket:legend:yourinfo', array(), $lang); ?></legend>
   <div>
   <label for="email"><?php echo elgg_echo('freshdesk:ticket:email', array(), $lang); ?></label>
   <?php echo elgg_view('input/text', array(
@@ -79,7 +80,7 @@ if (elgg_is_sticky_form('ticket-submit')) {
 </fieldset>
 
 <fieldset class="user-info">
-  <legend><?php echo elgg_echo('freshdesk:ticket:legend:ticketinfo'); ?></legend>
+  <legend><?php echo elgg_echo('freshdesk:ticket:legend:ticketinfo', array(), $lang); ?></legend>
   <div>
   <label for="subject"><?php echo elgg_echo('freshdesk:ticket:subject', array(), $lang); ?></label>
   <?php echo elgg_view('input/text', array(

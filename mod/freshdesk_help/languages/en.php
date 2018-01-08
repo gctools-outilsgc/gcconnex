@@ -47,6 +47,7 @@ return array(
       'freshdesk:ticket:types:login' => "Log in credentials",
       'freshdesk:ticket:types:bugs' => "Bugs/Errors",
       'freshdesk:ticket:types:group' => "Group-related",
+      'freshdesk:ticket:types:data' => "Data request",
       'freshdesk:ticket:types:training' => "Training",
       'freshdesk:ticket:types:jobs' => "Jobs Marketplace",
       'freshdesk:ticket:types:enhancement' => "Enhancement",

@@ -34,9 +34,8 @@ function mm_search_database_for_missions($query_array, $query_operand, $limit, $
         $options['subtype'] = 'mission';
         $options['metadata_name_value_pairs_operator'] = $query_operand;
         $options['metadata_case_sensitive'] = false;
-        $options['limit'] = $limit;
+        if ($limit > 0) $options['limit'] = $limit;
         $options['wheres'][] = 'e.owner_guid IN (SELECT guid FROM '.$dbprefix.'users_entity user WHERE user.name LIKE "' . mysql_escape_string($filtered_array[0]['value']) . '")';
-
         $all_missions = elgg_get_entities_from_metadata($options);
         array_pop($options['wheres']);
 
@@ -800,7 +799,11 @@ function mm_simple_search_database_for_candidates($query_array, $limit, $offset=
       $results = get_data($search_wrapper);
       $total_users = get_data('SELECT FOUND_ROWS() as total_users;')[0]->total_users;
 
-      $candidate_count = min(elgg_get_plugin_setting('search_limit', 'missions'), $total_users);
+      if (elgg_get_plugin_setting('search_limit', 'missions') !== '-1') {
+        $candidate_count = min(elgg_get_plugin_setting('search_limit', 'missions'), $total_users);
+      } else {
+        $candidate_count = $total_users;
+      }
 
       if (count($results) > 0) {
           $search_feedback = array();
@@ -900,7 +903,7 @@ function mm_advanced_search_database_for_candidates($query_array, $query_operand
             $options_attribute['subtypes'] = $array['extra_option'];
             $options_attribute['joins'] = array('INNER JOIN ' . elgg_get_config('dbprefix') . 'objects_entity g ON (g.guid = e.guid)');
             $options_attribute['wheres'] = array("g." . $array['name'] . " " . $array['operand'] . " '" . $array['value'] . "'");
-            $options_attribute['limit'] = $limit;
+            if ($limit > 0) $options_attribute['limit'] = $limit;
             $entities = elgg_get_entities($options_attribute);
 
             $entity_owners = array();
