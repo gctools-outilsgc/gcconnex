@@ -64,6 +64,8 @@ $(document).ready(function() {
 			province = province.replace(/\s+/g, '-').toLowerCase();
 			$('#municipal').attr('list', 'municipal-'+province+'-list');
 			$('#municipal-wrapper').fadeIn();
+		} else if (type == 'federal') {
+			$('#' + type + '-wrapper').fadeIn();
 		} else {
 			$('#' + type + '-wrapper').fadeIn();
 			$('#organization_notice').show();
