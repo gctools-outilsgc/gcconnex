@@ -98,18 +98,24 @@ if($group->cover_photo =='nope' || $group->cover_photo ==''){
 
 			<div class="mrgn-bttm-sm pull-left">
 			<?php
-
+				$display_members = $group->getPrivateSetting('group_tools:cleanup:members');
 				$num_members = $group->getMembers(array('count' => true));
-                $members_link = 'groups/members/' . $group->guid;
-                $all_members_link = elgg_view('output/url', array(
-	                'href' => $members_link,
-	                'text' =>  $num_members,
-	                'is_trusted' => true,
-                    'class' => '',
-                ));
 
-                if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false)
-					echo '<b>' . elgg_echo('groups:members') . ':</b> ' . $all_members_link;
+				if($display_members != 'yes'){
+	                $members_link = 'groups/members/' . $group->guid;
+	                $all_members_link = elgg_view('output/url', array(
+		                'href' => $members_link,
+		                'text' =>  $num_members,
+		                'is_trusted' => true,
+	                    'class' => '',
+	                ));
+
+	                if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false)
+						echo '<b>' . elgg_echo('groups:members') . ':</b> ' . $all_members_link;
+				} else {
+					if (strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'gsa-crawler') === false)
+						echo '<b>' . elgg_echo('groups:members') . ':</b> ' . $num_members;
+				}
             ?>
 			</div>
 
