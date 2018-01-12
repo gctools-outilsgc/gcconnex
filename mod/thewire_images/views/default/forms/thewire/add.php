@@ -5,11 +5,12 @@
  * @uses $vars["post"]
  */
 
-$previewContainer = ".preview-zone";
+
 
 if( elgg_is_xhr() ){
-	
-	echo '<script type="text/javascript" src="/mod/thewire_images/js/dropzone.js"></script>';
+	$site = elgg_get_site_entity();
+	echo '<script type="text/javascript" src="'.$site->getURL().'mod/thewire_images/js/dropzone.js"></script>';
+
 	echo '<link rel="stylesheet" type="text/css" href="/mod/thewire_images/css/dropzone.css">';
 
 	$previewContainer = "#previewZone";
@@ -199,11 +200,11 @@ $(document).ready(function() {
     			$(instance).find(".dz-message").show();
 	        });
 	        this.on("success", function(file, xhr) {
-    			if( xhr.system_messages.success[0] ){
+    			if( xhr.system_messages.success[0] || file.accepted ){
 					file.previewTemplate = $(this.options.previewTemplate);
 	    			$(instance).find(".dz-preview").html(file.previewTemplate);
 
-	    			elgg.system_message(xhr.system_messages.success[0]);
+	    			elgg.system_message(elgg.echo('thewire:posted'));
 	    			setTimeout(function() { window.location.reload(); }, 2000);
     			} else if( xhr.system_messages.error[0] ){
 	    			elgg.register_error(xhr.system_messages.error[0]);

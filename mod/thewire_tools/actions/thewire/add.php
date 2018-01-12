@@ -18,6 +18,12 @@ if (empty($body)) {
 	forward(REFERER);
 }
 
+/// we want to trigger our custom event handler
+if (elgg_is_active_plugin('thewire_images')) {
+	elgg_unregister_event_handler('create','object','cp_create_notification');
+	elgg_unregister_event_handler('create','object','thewire_tools_create_object_event_handler');
+}
+
 $guid = thewire_tools_save_post($body, elgg_get_logged_in_user_guid(), $access_id, $parent_guid, $method, $reshare_guid);
 if (!$guid) {
 	register_error(elgg_echo("thewire:error"));
@@ -49,6 +55,7 @@ if ($reshare_guid || $reshare_guid > 0) {
 
 		// if cp notification plugin is active, use that for notifications
 		if (elgg_is_active_plugin('cp_notifications')) {
+
 			$message = array(
 				'cp_msg_type' => 'cp_wire_share',
 				'cp_recipient' => $entity->getOwnerEntity(),

@@ -85,7 +85,15 @@ $french = array(
 	'cp_notifications:mail_body:subtype:bookmarks' => "%s a publié un signet : %s", 	
 	'cp_notifications:mail_body:subtype:file' => "%s a publié un fichier : %s", 
 	'cp_notifications:mail_body:subtype:album' => "%s a publié un album : %s", 
-	'cp_notifications:mail_body:subtype:thewire' => "%s a publié sur le %s", 
+	'cp_notifications:mail_body:subtype:thewire' => "%s a ajouté un nouveau message sur le %s intitulé:",
+	'cp_notifications:mail_body:subtype:thewire_digest' => "%s a ajouté un nouveau message sur le %s intitulé: %s",
+	
+	'cp_notifications:mail_body:subtype:thewireSubj' => "%s a ajouté un nouveau message sur le %s",
+	
+	'cp_notifications:mail_body:subtype:thewireImage' => "%s a ajouté un nouveau message sur le fil:", 
+
+	'cp_notification_wire_image_only' => "Voir l’image du message sur le Fil",
+	'cp_notification_wire_image' => " (Voir le message sur le Fil pour visionner l’image)",	
 
 	'cp_notifications:mail_body:subtype:poll' => "%s a créé un sondage :", 
 	'cp_notifications:mail_body:subtype:event_calendar' => "%s a publié un événement : %s", 
@@ -175,7 +183,8 @@ $french = array(
 	'cp_newsletter:heading:notify:response:singular' => "Réponse au contenu auquel vous êtes abonné", 
 	'cp_newsletter:heading:notify:response:plural' => "Réponses aux contenus auxquels vous êtes abonné", 
 
-	'cp_notifications:mail_body:subtype:content_share' => "%s a partagé votre %s: %s",
+	'cp_notifications:mail_body:subtype:content_share' => "%s a partagé votre %s",
+
 	'cp_notifications:mail_body:subtype:content_share:wire' => "%s a partagé votre %s",
 	'cp_notifications:mail_body:your_wire_post' => "fil",
 	'cp_notifications:mail_body:wire_has_image' => " avec une image",
@@ -373,7 +382,7 @@ $french = array(
 	
 	'cp_notify:body_new_content:title_f2' => "<a href='%s'>%s</a> a ajouté une nouvelle %s intitulée <a href='%s'>%s</a>",
 
-	'cp_notify:body_new_content:title3' => "<a href='%s'>%s</a> a ajouté une nouvelle %s",
+	'cp_notify:body_new_content:title3' => "<a href='%s'>%s</a> a ajouté une nouveau message sur le %s intitulé",
 
 	'cp_notify:body_new_content:title_answer' => "<a href='%s'>%s</a> a ajouté une nouvelle %s dans <a href='%s'>%s</a>",
 
@@ -467,6 +476,7 @@ $french = array(
 	// wire share section
 	'cp_notify:wireshare:subject' => "%s a partagé votre contenu sur le fil",
 	'cp_notify:body_wireshare:title' => "%s a partagé votre contenu sur le fil",
+
  
 	// (shared your wire post)
 	'cp_notify:body:contentshare:description' => "	<p>%s a partagé votre contenu sur le fil.</p> 

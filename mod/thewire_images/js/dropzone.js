@@ -773,7 +773,9 @@ var Dropzone = function (_Emitter) {
             }
 
             if (this.options.addRemoveLinks) {
+
               file._removeLink = Dropzone.createElement("<a class=\"dz-remove\" href=\"javascript:undefined;\" onclick=\"$(this).parent().parent().parent().find('.add-image a').focus();\" data-dz-remove>" + this.options.dictRemoveFile + "</a>");
+
               file.previewElement.appendChild(file._removeLink);
             }
 

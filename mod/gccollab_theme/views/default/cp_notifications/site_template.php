@@ -116,6 +116,7 @@ switch ($msg_type) {
 	case 'cp_likes_type': // likes
 
 		if ($vars['cp_subtype'] === 'thewire') {
+
 			if ( elgg_is_active_plugin('thewire_images') )
 				elgg_load_library('thewire_image');
 
@@ -124,8 +125,10 @@ switch ($msg_type) {
 
 			$trimmedURL = strtok($vars['cp_content_url'], "?");
 			$wire_id = explode("/thewire/view/", $trimmedURL)[1];
+
 			if ( elgg_is_active_plugin('thewire_images') )
 				$attachment = thewire_image_get_attachments($wire_id);
+
 			if ($attachment) {
 				$cp_notify_msg_title_en = elgg_echo('cp_notify:body_likes_image_wire:title',array($vars['cp_liked_by']),'en');
 				$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_likes_image_wire:title',array($vars['cp_liked_by']),'fr');
