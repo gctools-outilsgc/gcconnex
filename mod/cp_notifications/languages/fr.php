@@ -373,7 +373,7 @@ $french = array(
 	'cp_notify:subject:new_content_mas2' => "Un nouvel %s a été affiché dans le groupe %s",
 	'cp_notify:subject:new_content_fem' => "Une nouvelle %s a été affichée dans le groupe %s",
 
-	// +------ cyu <User name> posted a new <item type> entitled <item name>
+	// +------ cyu <User name> posted a new <item type> titled <item name>
 	'cp_notify:body_new_content:title_m' => "<a href='%s'>%s</a> a affiché un nouveau %s intitulé <a href='%s'>%s</a>",
 	'cp_notify:body_new_content:title_f' => "<a href='%s'>%s</a> a affiché une nouvelle %s intitulée <a href='%s'>%s</a>",
 
