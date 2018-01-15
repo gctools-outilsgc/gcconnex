@@ -242,6 +242,7 @@ function wet4_theme_init() {
     elgg_register_js('cluster-js-min', 'mod/wet4/vendors/clusterize.js/clusterize.min.js');
     elgg_register_js('cluster-js', 'mod/wet4/vendors/clusterize.js/clusterize.js');
 
+    register_plugin_hook('format', 'friendly:title', 'wet_seo_friendly_urls');
 }
 
 global $CONFIG;
@@ -2105,4 +2106,37 @@ function wet_questions_filter_menu_handler($hook, $type, $items, $params) {
 	}
 
 	return $items;
+}
+
+function wet_seo_friendly_urls($hook, $entity_type, $returnvalue, $params) {
+    $separator = "dash";
+    $lowercase = true;
+
+    if ($entity_type == 'friendly:title') {
+        $title = $params['title'];
+
+        $special = array('{"en":"', '","fr":""}', '","fr":"', '"}', '\u2019', '"', "'", 'u2019', '–', 'u00e0', 'u2013', '\u00fb', '\u00e9', '\u00e8', '\u00f4', "l'", "d'", "m'", "n'");
+        $regular = array('', '', '-', '', '', '', '', '', '', '', '', 'u', 'e', 'e', 'o', "l", "d", "m", "n");
+        $title = str_replace($special, $regular, $title);
+
+        $title = strip_tags($title);
+        $title = preg_replace("`\[.*\]`U","",$title);
+        $title = preg_replace('`&(amp;)?#?[a-z0-9]+;`i','-',$title);
+        $title = htmlentities($title, ENT_COMPAT, 'utf-8');
+        $title = preg_replace( "`&([a-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron|lig|quot|rsquo);`i","\\1", $title );
+        $title = preg_replace( array("`[^a-z0-9]`i","`[-]+`") , "-", $title);
+
+        if ($lowercase === true) {
+            $title = strtolower($title);
+        }
+
+        if($separator != 'dash') {
+            $title = str_replace('-', '_', $title);
+            $separator = '_';
+        } else {
+            $separator = '-';
+        }
+
+        return trim($title, $separator);
+    }
 }
