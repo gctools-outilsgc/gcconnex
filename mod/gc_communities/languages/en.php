@@ -24,7 +24,7 @@ $english = array(
 	'gc_communities:enable_widgets' => "Enable widgets on community pages?",
 	'gc_communities:newsfeed_shown' => "Newsfeed items shown:",
 	'gc_communities:wires_shown' => "Wire posts shown:",
-	'gc_communities:showing_content' => 'Showing content tagged with: %s and the "Audience tag" %s',
+	'gc_communities:showing_content' => 'This news feed shows content tagged with %s and was identified as useful for the following communities: %s',
 );
 
 $communities = json_decode(elgg_get_plugin_setting('communities', 'gc_communities'));
