@@ -355,9 +355,11 @@ $french = array(
 	// site message
 	'cp_notify:subject:site_message' => "%s vous a envoyé un nouveau message '%s'",
 	'cp_notify:body_site_msg:title' => "%s vous a envoyé un message intitulé '%s'",
-	'cp_notify:body_site_msg:description' => "Le contenu du message est le suivant : <br/> 
-		%s <br/> 
-		Vous pouvez le consulter ou y répondre en cliquant sur le lien suivant: %s",
+	'cp_notify:body_site_msg:description_email' => "Le contenu du message est le suivant : <br/> 
+	%s <br/> 
+	Vous pouvez le consulter ou y répondre en cliquant sur le lien suivant: %s",
+	'cp_notify:body_site_msg:description_site' => "Le contenu du message est le suivant : <br/> 
+		%s",
 
 	// welcome message
 	'cp_notify:body_welcome_msg:title' => '%s vous a envoyé un message d\'accueil',

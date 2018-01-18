@@ -443,8 +443,8 @@ switch ($msg_type) {
 		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_site_msg:title',array($vars['cp_sender'],$cp_msg_title),'en');
 		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_site_msg:title',array($vars['cp_sender'],$cp_msg_title),'fr');
 
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_site_msg:description',array($cp_msg_content,$cp_msg_url.'?utm_source=notification&utm_medium=email'),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_site_msg:description',array($cp_msg_content,$cp_msg_url.'?utm_source=notification&utm_medium=email'),'fr');
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_site_msg:description_email',array($cp_msg_content,$cp_msg_url.'?utm_source=notification&utm_medium=email'),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_site_msg:description_email',array($cp_msg_content,$cp_msg_url.'?utm_source=notification&utm_medium=email'),'fr');
 
 		break;
 

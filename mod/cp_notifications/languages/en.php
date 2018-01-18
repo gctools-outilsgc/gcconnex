@@ -328,7 +328,10 @@ $english = array(
 	// site message section
 	'cp_notify:subject:site_message' => "%s sent you a new message '%s'",
 	'cp_notify:body_site_msg:title' => "%s sent you a site message entitled '%s'",
-	'cp_notify:body_site_msg:description' => "The content of the message is: <br/>
+	'cp_notify:body_site_msg:description_site' => "The content of the message is: <br/>
+		%s",
+
+	'cp_notify:body_site_msg:description_email' => "The content of the message is: <br/>
 		%s <br/>
 		You can view or reply to this by clicking on this link: %s",
 
