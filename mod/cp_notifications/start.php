@@ -585,8 +585,8 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 			} else {
 				
-				$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true, NULL, NULL, $embed_image ) : mail($to_recipient->email, $subject, $template, cp_get_headers($event));
-			}
+					$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true, NULL, NULL, $embed_image ) : mail($to_recipient->email, $subject, $template, cp_get_headers($event));
+				}
 
 			if (!$email_only)
 				messages_send($subject, $site_template, $to_recipient->guid, $sender_guid, 0, true, $add_to_sent);
@@ -1252,7 +1252,7 @@ error_log('subtype'.$object->getSubtype());
 			}
 
 			// the user creating the content is automatically subscribed to it (with exception that is not a widget, forum, etc..)
-			$cp_whitelist = array('blog', 'bookmarks', 'poll', 'groupforumtopic', 'image', 'idea', 'page', 'page_top', 'thewire', 'task_top', 'question', 'answer', 'cp_wire_image');
+			$cp_whitelist = array('blog', 'bookmarks', 'poll', 'groupforumtopic', 'image', 'idea', 'page', 'page_top', 'thewire', 'task_top', 'question', 'answer', 'cp_wire_image','event_calendar');
 			if (in_array($object->getSubtype(), $cp_whitelist)) {
 
 				if ($object->getSubtype() == 'answer') {// subcribed to the question
