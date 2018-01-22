@@ -6,6 +6,7 @@
 elgg_load_library('thewire_image');
 
 $entity = elgg_extract("entity", $vars);
+$lang = get_current_language();
 
 if (empty($entity) || !(elgg_instanceof($entity, "object") || elgg_instanceof($entity, "group"))) {
 	return true;
@@ -13,7 +14,7 @@ if (empty($entity) || !(elgg_instanceof($entity, "object") || elgg_instanceof($e
 
 $icon = "";
 if ($entity->icontime) {
-	$icon = elgg_view_entity_icon($entity, "tiny");
+	$icon = elgg_view_entity_icon($entity, "medium");
 }
 
 $url = $entity->getURL();
@@ -23,9 +24,9 @@ if ($url === elgg_get_site_url()) {
 
 $text = "";
 if (!empty($entity->title)) {
-	$text = $entity->title;
+	$text = gc_explode_translation($entity->title, $lang);
 } elseif (!empty($entity->name)) {
-	$text = $entity->name;
+	$text = gc_explode_translation($entity->name, $lang);
 } elseif (!empty($entity->description)) {
 	$text = elgg_get_excerpt($entity->description, 140);
 } else {
@@ -34,7 +35,9 @@ if (!empty($entity->title)) {
 }
 
 $content = "<div class='elgg-subtext'>";
-$content .= elgg_echo("thewire_tools:reshare:source") . ": ";
+if(!elgg_instanceof($entity, 'group')){
+    $content .= elgg_echo("thewire_tools:reshare:source") . ": ";
+}
 if (!empty($url)) {
 	$content .= elgg_view("output/url", array(
 		"href" => $url,
