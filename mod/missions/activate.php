@@ -8,7 +8,7 @@ elgg_set_plugin_setting('search_limit', '100', 'missions');
 elgg_set_plugin_setting('river_message_limit', '100', 'missions');
 elgg_set_plugin_setting('advanced_element_limit', 6, 'missions');
 elgg_set_plugin_setting('river_element_limit', 10, 'missions');
-elgg_set_plugin_setting('search_result_per_page', 9, 'missions');
+elgg_set_plugin_setting('search_result_per_page', 30, 'missions');
 elgg_set_plugin_setting('mission_developer_tools_on', 'NO', 'missions');
 elgg_set_plugin_setting('mission_analytics_on', 'YES', 'missions');
 elgg_set_plugin_setting('mission_front_page_limit', 3, 'missions');
