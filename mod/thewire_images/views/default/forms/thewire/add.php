@@ -5,7 +5,7 @@
  * @uses $vars["post"]
  */
 
-
+$previewContainer = ".preview-zone";
 
 if( elgg_is_xhr() ){
 	$site = elgg_get_site_entity();
