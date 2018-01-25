@@ -1422,20 +1422,10 @@ error_log('subtype'.$object->getSubtype());
 			}
 		}
 	}
-$list = array( 'foo', 'bar', 'baz' );
-$test = implode( ", ", $list );
-
-function convert_multi_array($array) {
-  $out = implode("&",array_map(function($a) {return implode("~",$a);},$array));
-  $test_array = $out;
-  notification_logging($test_array);
-}
-
-convert_multi_array($object);
 
 	// register the error, if either of the arrays are not populated
 	if (!is_array($to_recipients) || !is_array($to_recipients_site)) {
-		notification_logging('error: in cp_create_notification(), $to_recipients or $to_recipients_site is not array<br>'.$test_array);
+		notification_logging('error: in cp_create_notification(), $to_recipients or $to_recipients_site is not array<br>');
 	}
 
 }
