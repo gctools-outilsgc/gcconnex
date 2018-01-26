@@ -982,10 +982,11 @@ function cp_create_annotation_notification($event, $type, $object) {
 
 		}
 	}
-$error_message = "error: in cp_create_notification(), \$to_recipients or \$to_recipients_site is not array"."\r\n"."Author_id = ".$object->getOwnerGUID()."\r\n"."Content_id = ".$object->getContainerGUID()."\r\n"."Content_id = ".$object->getContainerGUID();
+	$error_message = "error: in cp_create_notification(), \$to_recipients or \$to_recipients_site is not array"."\r\n"."Author_id = ".($object->getOwnerGUID())?$object->getOwnerGUID() : 'N/A'."\r\n"."Content_id = ".($object->getContainerGUID())?$object->getContainerGUID() : 'N/A'."\r\n"."Content_id = ".$object->getContainerGUID();
 
 	// register the error, if either of the arrays are not populated
 	if (!is_array($to_recipients) || !is_array($to_recipients_site)) {
+
 		notification_logging($error_message);
 	}
 
@@ -1423,8 +1424,8 @@ error_log('subtype'.$object->getSubtype());
 			}
 		}
 	}
-	
-$error_message = "error: in cp_create_notification(), \$to_recipients or \$to_recipients_site is not array"."\r\n"."Author_id = ".$object->getOwnerGUID()."\r\n"."Content_id = ".$object->getContainerGUID()."\r\n"."Content_id = ".$object->getContainerGUID();
+
+	$error_message = "error: in cp_create_notification(), \$to_recipients or \$to_recipients_site is not array"."\r\n"."Author_id = ".($object->getOwnerGUID())?$object->getOwnerGUID() : 'N/A'."\r\n"."Content_id = ".($object->getContainerGUID())?$object->getContainerGUID() : 'N/A'."\r\n"."Content_id = ".$object->getContainerGUID();
 
 	// register the error, if either of the arrays are not populated
 	if (!is_array($to_recipients) || !is_array($to_recipients_site)) {
