@@ -6,6 +6,7 @@
 
 // don"t filter since we strip and filter escapes some characters
 $body = get_input("body", "", false);
+$body = strip_tags($body);
 $image = get_input("thewire_image_file");
 
 $access_id = (int) get_input("access_id", ACCESS_PUBLIC);
