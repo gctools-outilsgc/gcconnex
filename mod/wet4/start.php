@@ -2109,34 +2109,42 @@ function wet_questions_filter_menu_handler($hook, $type, $items, $params) {
 }
 
 function wet_seo_friendly_urls($hook, $entity_type, $returnvalue, $params) {
-    $separator = "dash";
-    $lowercase = true;
+    $separator = "-";
 
     if ($entity_type == 'friendly:title') {
         $title = $params['title'];
 
-        $special = array('{"en":"', '","fr":""}', '","fr":"', '"}', '\u2019', '"', "'", 'u2019', '–', 'u00e0', 'u2013', '\u00fb', '\u00e9', '\u00e8', '\u00f4', "l'", "d'", "m'", "n'");
-        $regular = array('', '', '-', '', '', '', '', '', '', '', '', 'u', 'e', 'e', 'o', "l", "d", "m", "n");
-        $title = str_replace($special, $regular, $title);
+        // Pull in EN & FR titles
+        $title_en = gc_explode_translation($title, 'en');
+        $title_fr = gc_explode_translation($title, 'fr');
 
+        // Combine EN & FR titles for URL (if exists)
+        if ($title_en !== "" && $title_fr !== "") {
+            if ($title_en !== $title_fr) {
+                $title = $title_en . $separator . $title_fr;
+            } else {
+                $title = $title_en;
+            }
+        } elseif ($title_en !== "") {
+            $title = $title_en;
+        } elseif ($title_fr !== "") {
+            $title = $title_fr;
+        }
+
+        // Convert accented characters with regular equivalent
+        setlocale(LC_ALL, 'en_US.utf8');
+        $title = iconv('UTF-8', 'ASCII//TRANSLIT', $title);
+
+        // Strip out special characters
         $title = strip_tags($title);
-        $title = preg_replace("`\[.*\]`U","",$title);
-        $title = preg_replace('`&(amp;)?#?[a-z0-9]+;`i','-',$title);
-        $title = htmlentities($title, ENT_COMPAT, 'utf-8');
-        $title = preg_replace( "`&([a-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron|lig|quot|rsquo);`i","\\1", $title );
-        $title = preg_replace( array("`[^a-z0-9]`i","`[-]+`") , "-", $title);
+        $title = str_replace("'", "", $title);
+        $title = str_replace('"', "", $title);
+        $title = preg_replace('`\[.*\]`U', '', $title);
+        $title = preg_replace('`&(amp;)?#?[a-z0-9]+;`i', '', $title);
 
-        if ($lowercase === true) {
-            $title = strtolower($title);
-        }
+        // Add separator between words in URL string
+        $title = preg_replace(array("`[^a-z0-9]`i","`[-]+`") , $separator, $title);
 
-        if($separator != 'dash') {
-            $title = str_replace('-', '_', $title);
-            $separator = '_';
-        } else {
-            $separator = '-';
-        }
-
-        return trim($title, $separator);
+        return trim(strtolower($title), $separator);
     }
 }
