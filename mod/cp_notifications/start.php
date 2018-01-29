@@ -745,8 +745,8 @@ function cp_create_annotation_notification($event, $type, $object) {
 		// checks for condition if the content being modified is a page or task
 		if (strcmp($object_subtype,'page') == 0 || strcmp($object_subtype,'page_top') == 0 || strcmp($object_subtype,'task') == 0 || strcmp($object_subtype,'task_top') == 0) {
 			$current_user = get_user($object->owner_guid);
-			$subject = elgg_echo('cp_notify:subject:edit_content',array('The page', $entity->title, $current_user->username),'en');
-			$subject .= ' | '.elgg_echo('cp_notify:subject:edit_content:f',array('La page',$entity->title, $current_user->username),'fr');
+			$subject = elgg_echo('cp_notify:subject:edit_content',array('The page', gc_explode_translation($entity->title,'en'), $current_user->username),'en');
+			$subject .= ' | '.elgg_echo('cp_notify:subject:edit_content:f',array('La page', gc_explode_translation($entity->title,'fr'), $current_user->username),'fr');
 
 			$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
 
@@ -1425,7 +1425,7 @@ error_log('subtype'.$object->getSubtype());
 
 	// register the error, if either of the arrays are not populated
 	if (!is_array($to_recipients) || !is_array($to_recipients_site)) {
-		notification_logging('error: in cp_create_notification(), $to_recipients or $to_recipients_site is not array');
+		notification_logging('error: in cp_create_notification(), $to_recipients or $to_recipients_site is not array<br>');
 	}
 
 }
