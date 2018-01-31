@@ -1184,6 +1184,8 @@ error_log('subtype'.$object->getSubtype());
 			$content_entity = $container_entity;
 			$author = $user_comment;
 
+			$container = get_entity($container_entity->container_guid);
+
 			// the user creating the content is automatically subscribed to it
 			if (elgg_instanceof($container, 'group')) {
 	 			if($container->isMember($user_comment)){
