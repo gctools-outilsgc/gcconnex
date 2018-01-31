@@ -1001,7 +1001,7 @@ function cp_create_annotation_notification($event, $type, $object) {
  * @param mixed $object		the object/entity of the event
  */
 function cp_create_notification($event, $type, $object) {
-error_log('subtype'.$object->getSubtype());
+
 	$do_not_subscribe_list = array('mission-posted', 'file', 'tidypics_batch', 'hjforum', 'hjforumcategory','hjforumtopic', 'messages', 'hjforumpost', 'site_notification', 'poll_choice','blog_revision','widget','folder','c_photo', 'cp_digest','MySkill', 'education', 'experience', 'poll_choice3');
 
 	// since we implemented the multi file upload, each file uploaded will invoke this hook once to many times (we don't allow subtype file to go through, but check the event)
