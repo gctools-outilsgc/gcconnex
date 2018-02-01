@@ -22,7 +22,7 @@ $mission_guid = array_pop($exploded_uri);
 $mission = get_entity($mission_guid);
 
 if(!($mission->owner_guid == elgg_get_logged_in_user_guid() || $mission->account == elgg_get_logged_in_user_guid() || elgg_is_admin_logged_in())
-				|| $mission->state != 'completed' || $mission->state != 'cancelled') {
+				|| $mission->state == 'completed' || $mission->state == 'cancelled') {
     register_error(elgg_echo('limited_access'));
     forward();
 }
