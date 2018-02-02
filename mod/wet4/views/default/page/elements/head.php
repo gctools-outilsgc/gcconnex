@@ -220,6 +220,9 @@ if (!$can_index) {
   echo '<meta name="robots" content="noindex, follow">';
 }
 
+if (get_input('language') != 'en' || get_input('language') != 'fr') {
+  echo '<meta name="robots" content="noindex, follow">';
+}
 // TODO closed group - noindex
 
 // group profile url with the group name - noindex
