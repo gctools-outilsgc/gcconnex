@@ -22,7 +22,7 @@ if ($attachment) {
 		'src' => 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename,
 		'alt' => $attachment->original_filename,
 		'class' => 'img-thumbnail',
-		'style' => "height: 120px; width: auto;"
+		'style' => "max-height: 120px; width: auto;"
 	));
 	echo "</a>";
 	echo "</div>";

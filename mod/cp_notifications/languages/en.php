@@ -11,7 +11,7 @@ $english = array(
 
 	'cp_notification:group_invite_email' => "<p>%s</p><p><b>Join us on %s!</b> <a href='%s'>Create a %s account using this link</a> to be automatically added to the group.</p>
 	<p>If you decide to create your account at a later time using the <a href='%s'>Registration form</a> on %s, you can join this group by entering the following code on your Group Invitations page: %s</p>
-	<p><b>Already a member of %s?</b> <a href='%s'>Login</a> and go to your Group Invitations page to accespt (or decline) the invitation.</p>
+	<p><b>Already a member of %s?</b> <a href='%s'>Login</a> and go to your Group Invitations page to accept (or decline) the invitation.</p>
 	<p>Need help? See the article '<a href='%s'>How to join a group?</a>' or <a href='%s'>contact us</a></p>",
 
 	'notifications:did_not_send' => "Notifications did not send",

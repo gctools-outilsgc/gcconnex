@@ -21,6 +21,11 @@ $exploded_uri = explode('/', $current_uri);
 $mission_guid = array_pop($exploded_uri);
 $mission = get_entity($mission_guid);
 
+if (!elgg_is_admin_logged_in() && elgg_get_logged_in_user_entity()->guid != $mission->owner_guid) {
+	register_error(elgg_echo('noaccess'));
+	forward(elgg_get_site_url() . 'missions/main');
+}
+
 $title = elgg_echo('missions:edit_mission');
 
 elgg_push_breadcrumb(elgg_echo('missions:micromissions'), elgg_get_site_url() . 'missions/main');

@@ -585,8 +585,8 @@ function cp_overwrite_notification_hook($hook, $type, $value, $params) {
 
 			} else {
 				
-				$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true, NULL, NULL, $embed_image ) : mail($to_recipient->email, $subject, $template, cp_get_headers($event));
-			}
+					$result = (elgg_is_active_plugin('phpmailer')) ? phpmailer_send( $to_recipient->email, $to_recipient->name, $subject, $template, NULL, true, NULL, NULL, $embed_image ) : mail($to_recipient->email, $subject, $template, cp_get_headers($event));
+				}
 
 			if (!$email_only)
 				messages_send($subject, $site_template, $to_recipient->guid, $sender_guid, 0, true, $add_to_sent);
@@ -745,8 +745,8 @@ function cp_create_annotation_notification($event, $type, $object) {
 		// checks for condition if the content being modified is a page or task
 		if (strcmp($object_subtype,'page') == 0 || strcmp($object_subtype,'page_top') == 0 || strcmp($object_subtype,'task') == 0 || strcmp($object_subtype,'task_top') == 0) {
 			$current_user = get_user($object->owner_guid);
-			$subject = elgg_echo('cp_notify:subject:edit_content',array('The page', $entity->title, $current_user->username),'en');
-			$subject .= ' | '.elgg_echo('cp_notify:subject:edit_content:f',array('La page',$entity->title, $current_user->username),'fr');
+			$subject = elgg_echo('cp_notify:subject:edit_content',array('The page', gc_explode_translation($entity->title,'en'), $current_user->username),'en');
+			$subject .= ' | '.elgg_echo('cp_notify:subject:edit_content:f',array('La page', gc_explode_translation($entity->title,'fr'), $current_user->username),'fr');
 
 			$subject = htmlspecialchars_decode($subject,ENT_QUOTES);
 
@@ -1186,6 +1186,8 @@ function cp_create_notification($event, $type, $object) {
 			$content_entity = $container_entity;
 			$author = $user_comment;
 
+			$container = get_entity($container_entity->container_guid);
+
 			// the user creating the content is automatically subscribed to it
 			if (elgg_instanceof($container, 'group')) {
 	 			if($container->isMember($user_comment)){
@@ -1254,7 +1256,7 @@ function cp_create_notification($event, $type, $object) {
 			}
 
 			// the user creating the content is automatically subscribed to it (with exception that is not a widget, forum, etc..)
-			$cp_whitelist = array('blog', 'bookmarks', 'poll', 'groupforumtopic', 'image', 'idea', 'page', 'page_top', 'thewire', 'task_top', 'question', 'answer', 'cp_wire_image');
+			$cp_whitelist = array('blog', 'bookmarks', 'poll', 'groupforumtopic', 'image', 'idea', 'page', 'page_top', 'thewire', 'task_top', 'question', 'answer', 'cp_wire_image','event_calendar');
 			if (in_array($object->getSubtype(), $cp_whitelist)) {
 
 				if ($object->getSubtype() == 'answer') {// subcribed to the question
@@ -1430,6 +1432,7 @@ function cp_create_notification($event, $type, $object) {
 		$error_message = "error: in cp_create_notification(), \$to_recipients or \$to_recipients_site is not array"."\r\n"."Author_id = ".($object->owner_guid?$object->owner_guid : 'N/A')."\r\n"."Content_id = ".($object->container_guid?$object->container_guid : 'N/A')."\r\n"."Content_id = ".$object->getContainerGUID();
 
 		notification_logging($error_message);
+
 	}
 
 }
