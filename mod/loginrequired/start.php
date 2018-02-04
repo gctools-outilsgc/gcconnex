@@ -72,6 +72,7 @@ function loginrequired_init() {
 	$allow[] = 'services/.*';
 	$allow[] = 'splash';
 	$allow[] = 'mod/contactform/';
+	$allow[] = 'thewire_image/download/.*';
 
 
 	// Allow other plugin developers to edit the array values
@@ -134,6 +135,7 @@ function login_required_default_allowed_list($hook, $type, $return, $params) {
 	$add[] = 'privacy';
 	$add[] = 'about';
 	$add[] = 'mod/contactform/';
+	$add[] = 'thewire_image/download/.*';
 
 	return $add;
 }
