@@ -224,7 +224,7 @@ if (!$can_index) {
 // group profile url with the group name - noindex will be displayed if group is only accessible to group members
 preg_match("/groups\/profile\/[\d]*\/.*\/?/", $_SERVER['REQUEST_URI'], $output_array);
 if (sizeof($output_array) > 0) {
-  if ($my_page_entity instanceof ElggGroup && $my_page_entity->getContentAccessMode() === "unrestricted") {
+  if ($my_page_entity instanceof ElggGroup && $my_page_entity->getContentAccessMode() !== "unrestricted") {
     echo '<meta name="robots" content="noindex, follow">';
   }
 
