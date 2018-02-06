@@ -419,8 +419,8 @@ switch ($msg_type) {
 		$cp_notify_msg_title_en = elgg_echo('cp_notify:body_site_msg:title',array($vars['cp_sender'],$cp_msg_title),'en');
 		$cp_notify_msg_title_fr = elgg_echo('cp_notify:body_site_msg:title',array($vars['cp_sender'],$cp_msg_title),'fr');
 
-		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_site_msg:description',array($cp_msg_content,$cp_msg_url.'?utm_source=notification&utm_medium=site'),'en');
-		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_site_msg:description',array($cp_msg_content,$cp_msg_url.'?utm_source=notification&utm_medium=site'),'fr');
+		$cp_notify_msg_description_en = elgg_echo('cp_notify:body_site_msg:description_site',array($cp_msg_content),'en');
+		$cp_notify_msg_description_fr = elgg_echo('cp_notify:body_site_msg:description_site',array($cp_msg_content),'fr');
 
 		break;
 

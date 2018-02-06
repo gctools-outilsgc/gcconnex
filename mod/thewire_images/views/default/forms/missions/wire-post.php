@@ -1,4 +1,18 @@
 <?php
+/*
+ * Author: National Research Council Canada
+ * Website: http://www.nrc-cnrc.gc.ca/eng/rd/ict/
+ *
+ * License: Creative Commons Attribution 3.0 Unported License
+ * Copyright: Her Majesty the Queen in Right of Canada, 2015
+ */
+ 
+/*
+ * Form which allows users to post a message to The Wire about the subject mission entity.
+ */
+
+//Nick - cutting up the orginal share on wire form to keep consistancy on the site
+//Cleaned up some of this file as it will only deal with mission opportunities
 /**
  * Wire add form body
  *
@@ -21,10 +35,11 @@ elgg_load_js("elgg.thewire");
 elgg_load_js("dropzone");
 elgg_load_css("dropzone");
 
+$lang = get_current_language();
 $post = elgg_extract("post", $vars);
 $char_limit = thewire_tools_get_wire_length();
-$reshare = elgg_extract("reshare", $vars); // for reshare functionality
-$lang = get_current_language();
+//Changed to entity_subject as this what was already passed to this view
+$reshare = elgg_extract("entity_subject", $vars); // for reshare functionality
 
 $text = elgg_echo("post");
 if ($post) {
@@ -159,13 +174,23 @@ echo <<<HTML
 </div>
 HTML;
 
+if (elgg_is_xhr()) {
+?>
+<script type="text/javascript">
+		$("#thewire-tools-reshare-wrapper").find('.elgg-form-thewire-add textarea[name="body"]').each(function(i) {
+			elgg.thewire_tools.init_autocomplete(this);
+		});
+</script>
+<?php
+}
+
 $site = strtolower(elgg_get_site_entity()->name);
 ?>
 
 <script type="text/javascript">
 $(document).ready(function() {
 	Dropzone.autoDiscover = false;
-	var instance = $(".elgg-form-thewire-add:not(.dropzone)").addClass('dropzone <?php echo $site; ?>').get(0);
+	var instance = $(".elgg-form-missions-wire-post:not(.dropzone)").addClass('dropzone <?php echo $site; ?>').get(0);
 
 	var defaultMessage = "<?php echo elgg_echo('thewire_image:form:default'); ?>";
 	var removeFile = "<?php echo elgg_echo('thewire_image:form:removefile'); ?>";

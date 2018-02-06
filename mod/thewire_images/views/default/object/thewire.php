@@ -64,7 +64,7 @@ if (elgg_instanceof($container, "group") && ($container->getGUID() != elgg_get_p
 }
 
 // show text different in widgets
-$text = urldecode(htmlspecialchars_decode($post->description, ENT_QUOTES));
+$text = htmlspecialchars_decode($post->description, ENT_QUOTES);
 
 if (elgg_in_context("widgets")) {
 	$text = elgg_get_excerpt($text, 140);
@@ -90,7 +90,7 @@ if ($attachment) {
 		'src' => 'thewire_image/download/' . $attachment->getGUID() . '/' . $attachment->original_filename,
 		'alt' => $attachment->original_filename,
 		'class' => 'img-thumbnail',
-		'style' => "height: 120px; width: auto;"
+		'style' => "max-height: 120px; width: auto;"
 	));
 	$content .= "</a>";
 	$content .= "</div>";

@@ -3,6 +3,7 @@
 namespace Beck24\MemberSelfDelete;
 
 elgg_make_sticky_form('member_selfdelete');
+$plugin = elgg_get_plugin_from_id('cp_notifications');
 
 if (elgg_is_admin_logged_in()) {
 	register_error(elgg_echo('member_selfdelete:error:delete:admin'));
@@ -68,6 +69,11 @@ switch ($method) {
 		//remove notification relationships
 		remove_entity_relationships($user->guid,'cp_subscribed_to_email');
 		remove_entity_relationships($user->guid,'cp_subscribed_to_site_mail');
+		
+		//remove notification from opportunity platform
+		$result = $plugin->setUserSetting('cpn_opportunities_email', 'set_notify_off', $user->guid);
+		$result = $plugin->setUserSetting('cpn_opportunities_site', 'set_notify_off', $user->guid);
+
 		logout();
 		forward('login');
 		session_regenerate_id(true);

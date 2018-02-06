@@ -242,6 +242,7 @@ function wet4_theme_init() {
     elgg_register_js('cluster-js-min', 'mod/wet4/vendors/clusterize.js/clusterize.min.js');
     elgg_register_js('cluster-js', 'mod/wet4/vendors/clusterize.js/clusterize.js');
 
+    register_plugin_hook('format', 'friendly:title', 'wet_seo_friendly_urls');
 }
 
 global $CONFIG;
@@ -2105,4 +2106,45 @@ function wet_questions_filter_menu_handler($hook, $type, $items, $params) {
 	}
 
 	return $items;
+}
+
+function wet_seo_friendly_urls($hook, $entity_type, $returnvalue, $params) {
+    $separator = "-";
+
+    if ($entity_type == 'friendly:title') {
+        $title = $params['title'];
+
+        // Pull in EN & FR titles
+        $title_en = gc_explode_translation($title, 'en');
+        $title_fr = gc_explode_translation($title, 'fr');
+
+        // Combine EN & FR titles for URL (if exists)
+        if ($title_en !== "" && $title_fr !== "") {
+            if ($title_en !== $title_fr) {
+                $title = $title_en . $separator . $title_fr;
+            } else {
+                $title = $title_en;
+            }
+        } elseif ($title_en !== "") {
+            $title = $title_en;
+        } elseif ($title_fr !== "") {
+            $title = $title_fr;
+        }
+
+        // Convert accented characters with regular equivalent
+        setlocale(LC_ALL, 'en_US.utf8');
+        $title = iconv('UTF-8', 'ASCII//TRANSLIT', $title);
+
+        // Strip out special characters
+        $title = strip_tags($title);
+        $title = str_replace("'", "", $title);
+        $title = str_replace('"', "", $title);
+        $title = preg_replace('`\[.*\]`U', '', $title);
+        $title = preg_replace('`&(amp;)?#?[a-z0-9]+;`i', '', $title);
+
+        // Add separator between words in URL string
+        $title = preg_replace(array("`[^a-z0-9]`i","`[-]+`") , $separator, $title);
+
+        return trim(strtolower($title), $separator);
+    }
 }

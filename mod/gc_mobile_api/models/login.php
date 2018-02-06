@@ -113,7 +113,7 @@ function login_user_for_url($user, $key, $url, $lang)
 	$json = json_decode($response);
 
 	if ($json->GCcollabAccess) {
-		login($email);
+		login($user_entity);
 		forward($url);
 	} else {
 		return "Invalid user key.";

@@ -1,39 +1,47 @@
 <?php
-
 /**
-* Friend request
-*
-* @author ColdTrick IT Solutions
-*/
+ * Sent Friend Request User Display - referenced from Elgg user display
+ *
+ * @uses $vars['entity'] ElggUser entity
+ * @uses $vars['title']  Optional override for the title
+ *
+ * @author BMRGould - Brandon Gould
+ *
+ * Todo: Still pulls the "My Colleagues" title for pagination.
+ *
+ */
 
-$content = "";
+$entity = $vars['entity'];
+$icon = elgg_view_entity_icon($entity, "medium");
+$name = elgg_extract('title', $vars);
+$revoke = elgg_view("output/url", array(
+	"href" => "action/friend_request/revoke?guid=" . $entity->getGUID(),
+	"text" => elgg_echo("friend_request:revoke", array($entity->name)),
+	"is_action" => true
+));
 
-$entities = elgg_extract("entities", $vars, false);
-if (!empty($entities)) {
-	$content .= "<ul class='elgg-list elgg-list-entity'>";
-
-	foreach ($entities as $entity) {
-		$icon = elgg_view_entity_icon($entity, "medium");
-
-		$info = elgg_view("output/url", array(
-			"href" => $entity->getURL(),
-			"text" => $entity->name
-		));
-		$info .= "<br />";
-		$info .= elgg_view("output/url", array(
-			"href" => "action/friend_request/revoke?guid=" . $entity->getGUID(),
-			"text" => elgg_echo("friend_request:revoke", array($entity->name)),
-			"is_action" => true
-		));
-
-		$content .= "<li class='elgg-item elgg-item-user'>";
-		$content .= elgg_view_image_block($icon, $info);
-		$content .= "</li>";
-	}
-
-	$content .= "</ul>";
-} else {
-	$content = elgg_echo("friend_request:sent:none");
+if (!$name) {
+	$link_params = array(
+		'href' => $entity->getUrl(),
+		'text' => $entity->name,
+	);
+	$name = elgg_view('output/url', $link_params);
 }
 
-echo elgg_view_module("info", elgg_echo("friend_request:sent:title"), $content, array("class" => "mbm"));
+if ($entity->isBanned()) {
+	$banned = elgg_echo('banned');
+	$params = array(
+		'entity' => $entity,
+		'title' => $name,
+	);
+} else {
+	$params = array(
+		'entity' => $entity,
+		'title' => $name,
+		'subtitle' => $entity->job,
+		'content' => $revoke
+	);
+}
+$list_body = elgg_view('user/elements/summary', $params);
+echo elgg_view_image_block($icon, $list_body, $vars);
+
