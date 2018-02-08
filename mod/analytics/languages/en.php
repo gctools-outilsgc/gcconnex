@@ -25,5 +25,6 @@ return [
 	'analytics:settings:piwik:url' => "The URL to the Piwik installation",
 	'analytics:settings:piwik:url:description' => "This includes http:// or https:// and a trailing /",
 	'analytics:settings:piwik:site_id' => "The Site ID use for tracking",
+	'analytics:settings:piwik:guid' => "Track user GUID?",
 	'' => "",
 ];

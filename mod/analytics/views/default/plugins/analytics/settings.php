@@ -117,4 +117,14 @@ $piwik .= elgg_view('input/text', [
 ]);
 $piwik .= '</div>';
 
+$piwik .= '<div class="mbs">';
+$piwik .= elgg_echo('analytics:settings:piwik:guid');
+$piwik .= elgg_view('input/checkbox', [
+	'name' => 'params[piwik_guid]',
+	'value' => 'true',
+	'checked' => ($plugin->piwik_guid == true),
+	'class' => 'mls',
+]);
+$piwik .= '</div>';
+
 echo elgg_view_module('inline', elgg_echo('analytics:settings:piwik'), $piwik);
