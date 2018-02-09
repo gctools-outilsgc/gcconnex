@@ -46,3 +46,28 @@ function hover_menu($hook, $type, $return, $params) {
 
 	return $return;
 }
+
+// ...
+function suspended_user_profile_handler($hook, $type, $returnvalue, $params) {
+
+	if (!elgg_is_admin_logged_in()) {
+		$returnvalue = preg_replace("/<div class=\"pull-right clearfix\">(.*)<\/div>/is", "<div class='pull-right clearfix'></div>", $returnvalue);
+	}
+
+	return $returnvalue;
+
+}
+
+// ...
+function send_to_suspended_user_handler($hook, $type, $returnvalue, $params) {
+
+	$recipient_username = (get_input('colleagueCircle')) ? get_input('messageCollection') : get_input('recipient_username');
+	$user = get_user_by_username($recipient_username);
+
+	if (get_user_by_username($recipient_username)->gcdeactivate == true) {
+		// TODO: translate this
+		register_error('this user is also deactivated');
+		return false;
+	}
+
+}

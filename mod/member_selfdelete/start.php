@@ -11,6 +11,7 @@ elgg_register_event_handler('init', 'system', __NAMESPACE__ . '\\init');
 
 function init() {
 
+
 	// prevent people from seeing the profile of disabled users
 	elgg_extend_view('profile/details', 'member_selfdelete/pre_userdetails', 0);
 
@@ -29,10 +30,17 @@ function init() {
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', __NAMESPACE__ . '\\hover_menu', 1000);
 	elgg_register_plugin_hook_handler('email', 'system', __NAMESPACE__ . '\\email_system', 0);
 
+	// remove the functionality to interact with the user that is currently suspended
+	elgg_register_plugin_hook_handler('view', 'profile/details', __NAMESPACE__ . '\\suspended_user_profile_handler');
+	//elgg_register_event_handler('messages/send', 'object', 'send_to_suspended_user_handler');
+	elgg_register_plugin_hook_handler('action', 'messages/send', __NAMESPACE__ . '\\send_to_suspended_user_handler');
+
 	elgg_register_event_handler("create", "friendrequest", "friend_request_deactivated_user");
 
 	elgg_register_event_handler('login:before', 'user', 'gc_deactivated_login', 501);
 }
+
+
 
 function selfdelete_page_handler($page) {
 	if (!include(elgg_get_plugins_path() . "member_selfdelete/pages/form.php")) {
