@@ -1460,7 +1460,7 @@ function my_owner_block_handler($hook, $type, $menu, $params){
                     $item->setPriority('5');
                     break;
                 case 'activity':
-                    $item->setText('Activity');
+                    $item->setText(elgg_echo('activity'));
 
                     $item->setPriority('13');
                     $item->addItemClass('removeMe');
