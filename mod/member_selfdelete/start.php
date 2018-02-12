@@ -31,8 +31,7 @@ function init() {
 	elgg_register_plugin_hook_handler('email', 'system', __NAMESPACE__ . '\\email_system', 0);
 
 	// remove the functionality to interact with the user that is currently suspended
-	elgg_register_plugin_hook_handler('view', 'profile/details', __NAMESPACE__ . '\\suspended_user_profile_handler');
-	//elgg_register_event_handler('messages/send', 'object', 'send_to_suspended_user_handler');
+	//elgg_register_plugin_hook_handler('view', 'profile/details', __NAMESPACE__ . '\\suspended_user_profile_handler');
 	elgg_register_plugin_hook_handler('action', 'messages/send', __NAMESPACE__ . '\\send_to_suspended_user_handler');
 
 	elgg_register_event_handler("create", "friendrequest", "friend_request_deactivated_user");
