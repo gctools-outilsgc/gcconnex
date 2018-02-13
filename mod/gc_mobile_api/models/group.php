@@ -546,6 +546,8 @@ function get_group_discussions($user, $guid, $limit, $offset, $lang)
 	}
 
 	$discussion->userDetails = get_user_block($discussion->owner_guid, $lang);
+	$discussion->description = clean_text(gc_explode_translation($discussion->description, $lang));
+	$discussion->name = gc_explode_translation($discussion->name, $lang);
 	
 	$discussions = elgg_list_entities(array(
 		'type' => 'object',
