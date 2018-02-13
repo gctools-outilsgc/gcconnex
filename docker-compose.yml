@@ -30,6 +30,7 @@ services:
       - .:/var/www/html
       - ./data/data:/data
       - /var/www/html/vendor
+      - /var/www/html/docker
     depends_on:
       - gcconnex-db
       # - nginx-proxy

@@ -25,6 +25,7 @@ LABEL maintainer="Luc Belliveau <luc.belliveau@nrc-cnrc.gc.ca>"
 RUN \
   apk --no-cache add \
     apache2 \
+    php5 \
     php5-apache2 \
     php5-ctype \
     php5-curl \
