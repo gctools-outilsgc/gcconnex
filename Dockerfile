@@ -54,7 +54,12 @@ COPY --chown=apache . /var/www/html
 
 WORKDIR /var/www/html
 EXPOSE 80
+EXPOSE 443
+
+RUN chmod +x docker/start.sh
 
 # Start Apache in foreground mode
-CMD rm -f /run/apache2/httpd.pid && /usr/sbin/httpd -D FOREGROUND
+RUN rm -f /run/apache2/httpd.pid
+ENTRYPOINT [ "docker/start.sh" ]
+CMD  ["/usr/sbin/httpd -D FOREGROUND"]
 

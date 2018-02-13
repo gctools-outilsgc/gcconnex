@@ -25,9 +25,9 @@ services:
   gcconnex:
     build: .
     ports:
-      - 8080:80
+      - 80:80
     volumes:
-      - ./mod:/var/www/html/mod
+      - .:/var/www/html
       - ./data/data:/data
       - /var/www/html/vendor
     depends_on:
@@ -38,7 +38,7 @@ services:
       - DOCKER=1
       - HOME=/var/www/html
       - DBHOST=gcconnex-db
-      - WWWROOT=http://localhost:8080/
+      - WWWROOT=http://gcconnex.local/
 
   # ###########################################################################
   # The GCConnex cron container.  This container is responsible for executing
