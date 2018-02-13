@@ -34,7 +34,7 @@ RUN \
     php5-mysql \
     php5-xml \
   && apk update \
-  && apk --no-cache add php5-mysqli=5.6.32-r2 \
+  && apk --no-cache add php5-mysqli \
   && mkdir -p /var/www/html/vendor \
   && mkdir -p /data \
   && mkdir -p /run/apache2 \
@@ -50,7 +50,8 @@ RUN \
 
 COPY ./install/config/htaccess.dist /var/www/html/.htaccess
 COPY --from=0 /app/vendor/ /var/www/html/vendor/
-COPY --chown=apache . /var/www/html
+COPY . /var/www/html
+RUN chown apache:apache /var/www/html
 
 WORKDIR /var/www/html
 EXPOSE 80
