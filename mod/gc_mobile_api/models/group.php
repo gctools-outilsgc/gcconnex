@@ -545,6 +545,8 @@ function get_group_discussions($user, $guid, $limit, $offset, $lang)
 		login($user_entity);
 	}
 
+	$discussion->userDetails = get_user_block($discussion->owner_guid, $lang);
+	
 	$discussions = elgg_list_entities(array(
 		'type' => 'object',
 		'subtype' => 'groupforumtopic',
