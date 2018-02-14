@@ -545,10 +545,6 @@ function get_group_discussions($user, $guid, $limit, $offset, $lang)
 		login($user_entity);
 	}
 
-	$discussion->userDetails = get_user_block($discussion->owner_guid, $lang);
-	$discussion->description = clean_text(gc_explode_translation($discussion->description, $lang));
-	$discussion->name = gc_explode_translation($discussion->name, $lang);
-	
 	$discussions = elgg_list_entities(array(
 		'type' => 'object',
 		'subtype' => 'groupforumtopic',
@@ -558,6 +554,10 @@ function get_group_discussions($user, $guid, $limit, $offset, $lang)
 		'order_by' => 'e.last_action desc'
 	));
 
+	$discussion->userDetails = get_user_block($discussion->owner_guid, $lang);
+	$discussion->description = clean_text(gc_explode_translation($discussion->description, $lang));
+	$discussion->name = gc_explode_translation($discussion->name, $lang);
+	
 	return json_decode($discussions);
 }
 
