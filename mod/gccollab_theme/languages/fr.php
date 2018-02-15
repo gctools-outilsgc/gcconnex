@@ -209,7 +209,7 @@ J'espère d'avoir l'occasion de discuter avec vous bientôt!",
   'subgroups:parent:need_join' => "Joindre le groupe parent",
   'event_calendar:none' => 'Aucun événement trouvé.',
   'msg:change_access' => "Ce n’est pas tous les utilisateurs qui ont accès à votre contenu. Puisque GCcollab désire être le plus ouvert possible, êtes-vous certain de vouloir restreindre l’accès à ce contenu?", //NEW
-  'c_sensitive_info_msg:friendly_reminder' => '<section class="alert alert-info"><h3 class="h3">Rappel amical :</h3>Conform&eacute;ment aux <a href="/termes">Conditions d&rsquo;utilisation de GCcollab</a>, aucun contenu de nature sensible ou confidentielle  ne peut &ecirc;tre publi&eacute; sur les Outils GC2.0. Cela signifie que seuls des documents &laquo;&nbsp;non prot&eacute;g&eacute;s&nbsp;&raquo;, &laquo;&nbsp;non classifi&eacute;s&nbsp;&raquo; ou &laquo;&nbsp;Prot&eacute;g&eacute; A&nbsp;&raquo; peuvent &ecirc;tre affich&eacute;s.&nbsp;</section>',
+  'c_sensitive_info_msg:friendly_reminder' => '<section class="alert alert-info"><h3 class="h3">Rappel amical :</h3>Conformément aux <a href="/termes">Conditions d\'utilisation de GCcollab</a>, aucun contenu de nature sensible ou confidentielle ne peut être publié sur les Outils GC2.0. Cela signifie que seuls des documents non classifiés peuvent être affichés.</section>',
   'img:desc:fr' => 'Description de l\'image en français',
   'img:desc:en' => 'Description de l\'image en anglais',
   'description:ideas:en' => 'Description de l\'idée en anglais',
