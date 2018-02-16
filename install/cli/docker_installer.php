@@ -8,7 +8,7 @@
 $enabled = getenv('DOCKER') != ''; //are we in a Docker container?
 
 if (!$enabled) {
-	echo "This script should be run only in a Docker container environment.\n";
+	echo "This script should be run only in a properly configured Docker container environment.\n";
 	exit(1);
 }
 
