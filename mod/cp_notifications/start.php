@@ -986,7 +986,12 @@ function cp_create_annotation_notification($event, $type, $object) {
 	// register the error, if either of the arrays are not populated
 	if (!is_array($to_recipients) || !is_array($to_recipients_site)) {
 		$error_message = "error: in cp_create_notification(), \$to_recipients or \$to_recipients_site is not array"."\r\n"."Owner_entity = ".($content->getOwnerEntity()?print_r($content->getOwnerEntity(),true) : 'N/A');
-
+		if ($comment_author) {
+			$error_message .= 'Comment author= '. print_r($comment_author, true);
+		}
+		if ($group_owner) {
+			$error_message .= 'Group owner= ' . print_r($group_owner, true);
+		}
 		notification_logging($error_message);
 	}
 
