@@ -15,7 +15,6 @@
 			<directory suffix=".php">/vendor</directory>
 			<directory suffix=".php">/vendors</directory>
 			<directory suffix=".php">/docs</directory>
-			<file>/mod/missions_organization/tests/phpunit/MissionsOrganizationDepartmentParseTest.php</file>
 		</blacklist>
 
 		<whitelist addUncoveredFilesFromWhitelist="true">
