@@ -42,4 +42,4 @@ if (isset($vars['body_attrs'])) {
 	$params['body_attrs'] = $vars['body_attrs'];
 }
 
-echo elgg_view("page/elements/html", $params);
+echo elgg_view("page/freshdesk-html", $params);

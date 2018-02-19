@@ -520,6 +520,11 @@ function groups_register_profile_buttons($group) {
 			$url = elgg_add_action_tokens_to_url($url);
 			$actions[$url] = 'groups:leave';
 		}
+		
+		if( strpos(elgg_get_site_entity()->name, 'collab') !== false ){
+			$url = elgg_get_site_url() . "groups/stats/{$group->getGUID()}";
+			$actions[$url] = 'groups:stats';
+		}
 	} elseif (elgg_is_logged_in()) {
 		// join - admins can always join.
 		$url = elgg_get_site_url() . "action/groups/join?group_guid={$group->getGUID()}";
@@ -530,11 +535,6 @@ function groups_register_profile_buttons($group) {
 			// request membership
 			$actions[$url] = 'groups:joinrequest';
 		}
-	}
-		
-	if( strpos(elgg_get_site_entity()->name, 'collab') !== false ){
-		$url = elgg_get_site_url() . "groups/stats/{$group->getGUID()}";
-		$actions[$url] = 'groups:stats';
 	}
 
 	if ($actions) {

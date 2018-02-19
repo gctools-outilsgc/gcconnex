@@ -28,8 +28,10 @@ if($vars['mission_sort_archive']) {
 
 $opp_types = explode(',',elgg_get_plugin_setting('opportunity_type_string', 'missions'));
 foreach($opp_types as $k => $v){
-    //Nick - Put the things in an elgg echo
-     $opp_types2[elgg_echo($v)] = $opp_types[$k];   
+    if($v !== ""){
+        //Nick - Put the things in an elgg echo
+        $opp_types2[elgg_echo($v)] = $opp_types[$k];
+    }
 }
 
 $input_opp_types_filter = elgg_view('input/checkboxes', array(

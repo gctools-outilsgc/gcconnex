@@ -1864,3 +1864,7 @@ figcaption{
 .comment-container ol li {
     list-style: decimal;
 }
+
+.full-width {
+  width: 100%;
+}

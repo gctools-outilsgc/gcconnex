@@ -100,7 +100,8 @@ $input_area = elgg_view('input/dropdown', array(
 	    'name' => 'job_area',
 	    'value' => $initial_value,
 		'options_values' => $sort_areas,
-	    'id' => 'post-mission-area-dropdown-input'
+	    'id' => 'post-mission-area-dropdown-input',
+	    'required' => true
 ));
 $input_other_area = elgg_view('page/elements/other-text-input', array(
 		'parent_id' => 'post-mission-area-dropdown-input',
@@ -208,8 +209,11 @@ $input_gl_group = elgg_view('input/dropdown', array(
 	</div>
 </div>
 <div class="form-group">
-	<label for='post-mission-area-dropdown-input' class="col-sm-3 text-right">
+	<label for='post-mission-area-dropdown-input' class="col-sm-3 required text-right">
 		<?php echo elgg_echo('missions:program_area') . ':';?>
+		<strong class="required" >
+			<?php echo elgg_echo('missions:required'); ?>
+		</strong>
 	</label>
 	<div class="col-sm-3">
 		<?php echo $input_area; ?>

@@ -18,7 +18,7 @@ elgg_entity_gatekeeper($guid, 'object', 'messages');
 $message = get_entity($guid);
 $from_user = get_user($message->fromId);
 $to_user = get_user($message->toId);
-
+$page_title = utf8_decode($message->title);
 // mark the message as read
 $message->readYet = true;
 
@@ -44,7 +44,7 @@ elgg_push_breadcrumb($title);
 	//$from_user->name = utf8_encode($from_user->name);
 //}
 
-$message->title = utf8_encode($message->title);
+//$title = utf8_encode($message->title);
 
 $content = elgg_view_entity($message, array('full_view' => true));
 
@@ -74,4 +74,4 @@ $body = elgg_view_layout('one_column', array(
 	'filter' => '',
 ));
 
-echo elgg_view_page($title, $body);
+echo elgg_view_page($page_title, $body);

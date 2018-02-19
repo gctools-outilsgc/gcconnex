@@ -7,7 +7,7 @@ $options['wheres'] = array("msn.string = \"department\" AND msv.string LIKE \"{$
 //remove friend connections from action types
 $actionTypes = array('comment', 'create', 'join', 'update', 'friend', 'reply');
 //load user's preference
-$filteredItems = array(elgg_get_logged_in_user()->DAconnections);
+$filteredItems = array(elgg_get_logged_in_user_entity()->DAconnections);
 //filter out preference
 $options['action_types'] = array_diff( $actionTypes, $filteredItems);
 

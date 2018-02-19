@@ -11,7 +11,7 @@ $english = array(
 
 	'cp_notification:group_invite_email' => "<p>%s</p><p><b>Join us on %s!</b> <a href='%s'>Create a %s account using this link</a> to be automatically added to the group.</p>
 	<p>If you decide to create your account at a later time using the <a href='%s'>Registration form</a> on %s, you can join this group by entering the following code on your Group Invitations page: %s</p>
-	<p><b>Already a member of %s?</b> <a href='%s'>Login</a> and go to your Group Invitations page to accespt (or decline) the invitation.</p>
+	<p><b>Already a member of %s?</b> <a href='%s'>Login</a> and go to your Group Invitations page to accept (or decline) the invitation.</p>
 	<p>Need help? See the article '<a href='%s'>How to join a group?</a>' or <a href='%s'>contact us</a></p>",
 
 	'notifications:did_not_send' => "Notifications did not send",
@@ -75,7 +75,17 @@ $english = array(
 	'cp_notifications:mail_body:subtype:file' => "%s posted a file: %s", 
 
 	'cp_notifications:mail_body:subtype:album' => "%s posted an album: %s", 
-	'cp_notifications:mail_body:subtype:thewire' => "%s posted on the %s",
+	'cp_notifications:mail_body:subtype:thewire' => "%s posted a new %s message entitled:",
+	'cp_notifications:mail_body:subtype:thewire_digest' => "%s posted a new %s message entitled: %s",
+	
+	'cp_notifications:mail_body:subtype:thewireSubj' => "%s posted a new %s message",
+	
+	'cp_notifications:mail_body:subtype:thewireImage' => "%s posted a new message on the Wire:",
+	'cp_notification_wire_image_only' => 'See Wire post image on the Wire',
+	'cp_notification_wire_image' => '(See the Wire post to view the image)',
+	
+	
+	
 	'cp_notifications:mail_body:subtype:poll' => "%s created a poll: %s", 
 	'cp_notifications:mail_body:subtype:event_calendar' => "%s posted an event: %s", 
 	'cp_notifications:mail_body:subtype:photo' => "%s posted an image: %s", 
@@ -108,6 +118,7 @@ $english = array(
 	'cp_notifications:mail_body:subtype:content_share' => "%s shared your %s: %s", 
 	'cp_notifications:mail_body:subtype:content_share:wire' => "%s shared your %s",
 	'cp_notifications:mail_body:your_wire_post' => "Wire post",
+	'cp_notifications:mail_body:wire_has_image' => " with an image",
 
 	'cp_newsletter:other_content:notice' => "These subscriptions are only for content items that are not part of a group", 
 
@@ -278,6 +289,7 @@ $english = array(
 
 	'cp_notify:subject:likes_wire' => "%s liked your wire post",
 	'cp_notify:body_likes_wire:title' => "%s liked your wire post '%s'",
+	'cp_notify:body_likes_image_wire:title' => "%s liked your wire post with an image'",
 
 	'cp_notify:subject:likes_comment' => "%s liked your comment from '%s'",
 	'cp_notify:body_likes_comment:title' => "%s liked your comment from '%s'", 
@@ -316,7 +328,10 @@ $english = array(
 	// site message section
 	'cp_notify:subject:site_message' => "%s sent you a new message '%s'",
 	'cp_notify:body_site_msg:title' => "%s sent you a site message entitled '%s'",
-	'cp_notify:body_site_msg:description' => "The content of the message is: <br/>
+	'cp_notify:body_site_msg:description_site' => "The content of the message is: <br/>
+		%s",
+
+	'cp_notify:body_site_msg:description_email' => "The content of the message is: <br/>
 		%s <br/>
 		You can view or reply to this by clicking on this link: %s",
 
@@ -334,7 +349,7 @@ $english = array(
 	// +------ cyu - modified : <username> posted a new <item type> entitled <item name>
 	'cp_notify:body_new_content:title' => "<a href='%s'>%s</a> posted a new %s entitled <a href='%s'>%s</a>",
 	'cp_notify:body_new_content:title2' => "<a href='%s'>%s</a> posted a new %s in <a href='%s'>%s</a>",
-	'cp_notify:body_new_content:title3' => "<a href='%s'>%s</a> posted a new %s",
+	'cp_notify:body_new_content:title3' => "<a href='%s'>%s</a> posted a new %s message entitled",
 
 	
 
