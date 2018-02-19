@@ -41,7 +41,8 @@ elgg_ws_expose_function(
 		"guid" => array('type' => 'int', 'required' => true),
 		"limit" => array('type' => 'int', 'required' => false, 'default' => 10),
 		"offset" => array('type' => 'int', 'required' => false, 'default' => 0),
-		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+		"lang" => array('type' => 'string', 'required' => false, 'default' => "en"),
+		"api_version" => array('type' => 'float', 'required' => false, 'default' => 0)
 	),
 	'Retrieves a group\'s activity based on user id and group id',
 	'POST',
@@ -359,7 +360,7 @@ function get_groups($user, $limit, $offset, $filters, $lang)
 	return $groups;
 }
 
-function get_group_activity($user, $guid, $limit, $offset, $lang)
+function get_group_activity($user, $guid, $limit, $offset, $lang, $api_version)
 {
 	$user_entity = is_numeric($user) ? get_user($user) : (strpos($user, '@') !== false ? get_user_by_email($user)[0] : get_user_by_username($user));
 	if (!$user_entity) {
@@ -428,14 +429,24 @@ function get_group_activity($user, $guid, $limit, $offset, $lang)
 			$event->object['type'] = 'group';
 			$event->object['name'] = gc_explode_translation($object->name, $lang);
 		} elseif ($object instanceof ElggDiscussionReply) {
-			$event->object['type'] = 'discussion-reply';
-			$original_discussion = get_entity($object->container_guid);
-			$event->object['name'] = $original_discussion->title;
-			$event->object['description'] = $object->description;
+			if ($api_version == 0.9){
+				$event->object['type'] = 'discussion-reply';
+				$original_discussion = get_entity($object->container_guid);
+				$event->object['name'] = gc_explode_translation($original_discussion->title, $lang);
+			} else {
+				$event->object['type'] = 'discussion-reply';
+				$original_discussion = get_entity($object->container_guid);
+				$event->object['name'] = $original_discussion->title;
+				$event->object['description'] = $object->description;
+			}
 		} elseif ($object instanceof ElggFile) {
 			$event->object['type'] = 'file';
-			$event->object['name'] = $object->title;
-			$event->object['description'] = $object->description;
+			if ($api_version == 0.9){
+				$event->object['name'] = gc_explode_translation($object->title, $lang);
+			} else {
+				$event->object['name'] = $object->title;
+				$event->object['description'] = $object->description;
+			}
 		} elseif ($object instanceof ElggObject) {
 			$event->object['type'] = 'discussion-add';
 
@@ -792,7 +803,7 @@ function join_group_function($user, $guid, $lang)
 				'action' => 'membership_request',
 				'object' => $group,
 			];
-			
+
 			// Notify group owner
 			if (notify_user($owner->guid, $user_entity->getGUID(), $subject, $body, $params)) {
 				return elgg_echo("groups:joinrequestmade");
@@ -931,7 +942,7 @@ function invite_group_member($profileemail, $user, $guid, $lang)
 		$group->name,
 		$url,
 	), $invitee->language);
-	
+
 	$params = [
 		'action' => 'invite',
 		'object' => $group,
@@ -1006,7 +1017,7 @@ function invite_group_members($profileemail, $user, $guid, $lang)
 				$group->name,
 				$url,
 			), $invitee->language);
-			
+
 			$params = [
 				'action' => 'invite',
 				'object' => $group,

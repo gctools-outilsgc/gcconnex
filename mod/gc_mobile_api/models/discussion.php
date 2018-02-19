@@ -9,7 +9,7 @@ elgg_ws_expose_function(
 	array(
 		"user" => array('type' => 'string', 'required' => true),
 		"guid" => array('type' => 'int', 'required' => true),
-		"thread" => array('type' => 'int', 'required' => false, 'default' => 0),
+		"thread" => array('type' => 'int', 'required' => false, 'default' => 1),
 		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
 	),
 	'Retrieves a discussion & all replies based on user id and discussion id',
@@ -44,6 +44,10 @@ function get_discussion($user, $guid, $thread, $lang)
 		return "Invalid user. Please try a different GUID, username, or email address";
 	}
 
+	if (!elgg_is_logged_in()) {
+		login($user_entity);
+	}
+
 	$entity = get_entity($guid);
 	if (!$entity) {
 		return "Discussion was not found. Please try a different GUID";
@@ -52,9 +56,7 @@ function get_discussion($user, $guid, $thread, $lang)
 		return "Invalid discussion. Please try a different GUID";
 	}
 
-	if (!elgg_is_logged_in()) {
-		login($user_entity);
-	}
+
 
 	$discussions = elgg_list_entities(array(
 		'type' => 'object',

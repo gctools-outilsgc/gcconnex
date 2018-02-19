@@ -38,7 +38,8 @@ elgg_ws_expose_function(
 		"user" => array('type' => 'string', 'required' => true),
 		"limit" => array('type' => 'int', 'required' => false, 'default' => 10),
 		"offset" => array('type' => 'int', 'required' => false, 'default' => 0),
-		"lang" => array('type' => 'string', 'required' => false, 'default' => "en")
+		"lang" => array('type' => 'string', 'required' => false, 'default' => "en"),
+		"api_version" => array('type' => 'float', 'required' => false, 'default' => 0)
 	),
 	'Retrieves a user\'s activity information based on user id',
 	'POST',
@@ -479,8 +480,12 @@ function get_user_data($profileemail, $user, $lang)
 	$blogs = elgg_get_entities($options);
 	$user['blogs'] = count($blogs);
 
-	$colleagues = $user_entity->getFriends(array('limit' => 0));
-	$user['colleagues'] = count($colleagues);
+	$colleagues = $user_entity->getFriends(array('limit' => 2000));
+	$plus = "";
+	if(count($colleagues) == 2000)
+		$plus = "+";
+
+	$user['colleagues'] = count($colleagues).''.$plus;
 
 	return $user;
 }
@@ -500,7 +505,7 @@ function get_user_exists($user, $lang)
 	return $valid;
 }
 
-function get_user_activity($profileemail, $user, $limit, $offset, $lang)
+function get_user_activity($profileemail, $user, $limit, $offset, $lang, $api_version)
 {
 	$user_entity = is_numeric($profileemail) ? get_user($profileemail) : (strpos($profileemail, '@') !== false ? get_user_by_email($profileemail)[0] : get_user_by_username($profileemail));
 	if (!$user_entity) {
@@ -567,12 +572,12 @@ function get_user_activity($profileemail, $user, $limit, $offset, $lang)
 		} elseif ($object instanceof ElggDiscussionReply) {
 			$event->object['type'] = 'discussion-reply';
 			$original_discussion = get_entity($object->container_guid);
-			$event->object['name'] = $original_discussion->title;
-			$event->object['description'] = $object->description;
+			$event->object['name'] = gc_explode_translation($original_discussion->title, $lang);
+			$event->object['description'] = gc_explode_translation($object->description, $lang);
 		} elseif ($object instanceof ElggFile) {
 			$event->object['type'] = 'file';
-			$event->object['name'] = $object->title;
-			$event->object['description'] = $object->description;
+			$event->object['name'] = gc_explode_translation($object->title, $lang);
+			$event->object['description'] = gc_explode_translation($object->description, $lang);
 		} elseif ($object instanceof ElggObject) {
 			$event->object['type'] = 'discussion-add';
 
