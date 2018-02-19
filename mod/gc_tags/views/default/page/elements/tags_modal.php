@@ -34,8 +34,10 @@ $community_button = elgg_view('input/community',array(
 //different mods like to call tags other things! neato
 if(elgg_in_context('groups')){
     $tag_name = 'interests';
+    $buttonText = elgg_echo('save');
 }else{
     $tag_name ='tags';
+    $buttonText = elgg_echo('gctags:button:create');
 }
 $tags_button = elgg_view('input/tags',array(
     'name' => $tag_name,
@@ -56,7 +58,6 @@ $cancel_tagging = elgg_view('output/url',array(
     'data-dismiss' => 'modal',
     'aria-label' => 'Close',
 ));
-$buttonText = elgg_echo('gctags:button:create');
 ?>
 
 
