@@ -37,14 +37,9 @@ use docker-compose to start/create your containers.
 
     docker-compose up
 
-Then visit [http://localhost:8080](http://localhost:8080) and follow the
-instructions to complete your installation.  Once the installer is complete,
-refer to [INSTALL.md](INSTALL.md#configure-plugins) to configure the plugins
-required by GCconnex.
+and add an entry for ```<host ip> gcconnex.local``` in your hosts file.
+Then visit [http://gcconnex.local](http://gcconnex.local) which should by now be a fully set up dev environment.
 
-Alternatively, you can use the automated install script which will run the regular install as well as installing and rearanging the gcconnex mods:
-
-    docker exec -it gcconnex_gcconnex_1 php install/cli/docker_installer.php
 
 ### Docker specific configuration
 
@@ -105,9 +100,8 @@ utilisez `docker-compose` pour démarrer et/ou créer vos conteneurs Docker.
 
     docker-compose up
 
-Ensuite, visitez [http://localhost:8080](http://localhost:8080) et suivre les
-instructions pour compléter votre installation.  Une fois complet, regarder à
-[INSTALL.md](INSTALL.md#configure-plugins) et suivez les étapes additionnels.
+et ajouter un ligne ```<host ip> gcconnex.local``` a votre ficher "hosts".
+Ensuite, visitez [http://gcconnex.local](http://gcconnex.local).
 
 ### Configuration spécifique avec Docker
 
