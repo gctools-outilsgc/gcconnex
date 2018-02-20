@@ -65,9 +65,9 @@ $display_name = $user->name;
 setcookie('connex_lang', $user->language, time()+(1000 * 60 * 60 * 24), '/');
 if ($user->language) {
 //give user a custom welcome message
-	$message = elgg_echo('wet:loginok', array($display_name));
+	$message = elgg_echo('wet:loginok', array($display_name)) . ' - ' . $forward_url . ' + ' . $forward_source;
 } else {
-	$message = elgg_echo('wet:loginok', array($display_name));
+	$message = elgg_echo('wet:loginok', array($display_name)) . ' - ' . $forward_url . ' + ' . $forward_source;
 }
 
 // clear after login in case login fails
