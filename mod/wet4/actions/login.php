@@ -99,7 +99,7 @@ if (strpos($_SERVER['HTTP_REFERER'], elgg_get_site_url()."saml/idp_login")=== fa
 			 	$host = parse_url(rawurldecode($relayAddress));
 			 	//error_log('host -> '.json_encode($host));
 			 	$spentityid = $host['scheme'].'://'.$host['host'];
-			 	if($host['host'] == 'gcdirectory-gcannuaire.itsso.gc.ca' || $host['host'] == 'geds20admin-sage20admin.itsso.gc.ca'){
+			 	if($host['host'] == 'gcdirectory-gcannuaire.itsso.gc.ca' || $host['host'] == 'geds20admin-sage20admin.itsso.gc.ca' || $host['host'] == 'gcdirectory-gcannuaire.ssc-spc.gc.ca' || $host['host'] == 'geds20admin-sage20admin.ssc-spc.gc.ca'){
 			 		$service = 'default-sp';
 			 	}else{
 			 		$service = 'elgg-idp';

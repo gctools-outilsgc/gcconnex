@@ -47,6 +47,7 @@ return array(
   'freshdesk:ticket:types:login' => "Identifiants de connexions",
   'freshdesk:ticket:types:bugs' => "Bogues/erreurs",
   'freshdesk:ticket:types:group' => "Relatif aux groupes",
+  'freshdesk:ticket:types:data' => "Demande de données",
   'freshdesk:ticket:types:training' => "Formation",
   'freshdesk:ticket:types:jobs' => "Carrefour d'emploi",
   'freshdesk:ticket:types:enhancement' => "Amélioration",

@@ -46,6 +46,20 @@ function gccollab_stats_init() {
         false,
         false
 	);
+
+	elgg_ws_expose_function(
+        "group.stats",
+        "get_group_data",
+        array(
+        	"type" => array('type' => 'string', 'required' => true),
+        	"group" => array('type' => 'int', 'required' => true),
+        	"lang" => array('type' => 'string', 'required' => false, 'default' => 'en')
+        ),
+        'Exposes group data for use with dashboard',
+        'GET',
+        false,
+        false
+	);
 }
 
 function gccollab_stats_public_page($hook, $handler, $return, $params){
@@ -73,6 +87,8 @@ function get_member_data($type, $lang) {
 			'type' => 'user',
 			'limit' => 0
 		));
+
+		$data['total'] = count($users);
 
 		if ($lang == 'fr'){
 			$users_types = array('federal' => 'féderal', 'academic' => 'milieu universitaire', 'student' => 'étudiant', 'provincial' => 'provincial', 'municipal' => 'municipale', 'international' => 'international', 'ngo' => 'ngo', 'community' => 'collectivité', 'business' => 'entreprise', 'media' => 'média', 'retired' => 'retraité(e)', 'other' => 'autre');
@@ -552,4 +568,57 @@ function get_time_data($type, $lang) {
 	}
 
 	return $data;
+}
+
+function get_group_data($type, $group, $lang) {
+	$data = array();
+	ini_set("memory_limit", -1);
+	elgg_set_ignore_access(true);
+	$dbprefix = elgg_get_config('dbprefix');
+
+	switch($type) {
+
+	case 'groupsjoined':
+		$query = "SELECT * FROM {$dbprefix}entity_relationships WHERE relationship = 'member' AND guid_two = '" . $group . "'";
+		$groupsjoined = get_data($query);
+
+		foreach($groupsjoined as $key => $obj){
+			if ( $obj->time_created ){
+				$user = get_user($obj->guid_one);
+				if($user->username){
+					$data[] = array($obj->time_created, $user->username);
+				}
+			}
+		}
+		break;
+
+	case 'users':
+		$users = elgg_get_entities_from_relationship(array(
+			'relationship' => 'member',
+			'relationship_guid' => $group,
+			'inverse_relationship' => true,
+			'type' => 'user',
+			'limit' => 0
+		));
+
+		if ($lang == 'fr'){
+			$users_types = array('federal' => 'féderal', 'academic' => 'milieu universitaire', 'student' => 'étudiant', 'provincial' => 'provincial', 'municipal' => 'municipale', 'international' => 'international', 'ngo' => 'ngo', 'community' => 'collectivité', 'business' => 'entreprise', 'media' => 'média', 'retired' => 'retraité(e)', 'other' => 'autre');
+
+			foreach($users as $key => $obj){
+				$data[$users_types[$obj->user_type]] = isset( $data[$users_types[$obj->user_type]] ) ? $data[$users_types[$obj->user_type]] + 1 : 1;
+			}
+		} else {
+			foreach($users as $key => $obj){
+				$data[$obj->user_type] = isset( $data[$obj->user_type] ) ? $data[$obj->user_type] + 1 : 1;
+			}
+		}
+		break;
+
+	default:
+		$data = "Please use one of the following `type` parameters: groupsjoined, users";
+		break;
+
+	}
+	
+    return $data;
 }

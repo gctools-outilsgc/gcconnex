@@ -161,9 +161,11 @@ if(!empty($entity->key_skills)){
 		$content .= '<div>' . elgg_echo('missions:placeholder_e') . '</div>';
 	}
 
-	if(($offset + $max) >= elgg_get_plugin_setting('search_limit', 'missions') && $count >= elgg_get_plugin_setting('search_limit', 'missions')) {
-		$content .= '<div class="col-sm-12" style="font-style:italic;">' . elgg_echo('missions:reached_maximum_entities') . '</div>';
-	}
+  if (elgg_get_plugin_setting('search_limit', 'missions') !== '-1') {
+    if(($offset + $max) >= elgg_get_plugin_setting('search_limit', 'missions') && $count >= elgg_get_plugin_setting('search_limit', 'missions')) {
+      $content .= '<div class="col-sm-12" style="font-style:italic;">' . elgg_echo('missions:reached_maximum_entities') . '</div>';
+    }
+  }
 
 	// Displays the missions as a list with custom class mission-gallery
 	$content .= '<div class="col-sm-12 clearfix">' . elgg_view_entity_list(array_slice($search_set, $offset, $max), array(

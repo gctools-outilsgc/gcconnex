@@ -555,6 +555,11 @@ function groups_register_profile_buttons($group) {
 			$url = elgg_add_action_tokens_to_url($url);
 			$actions[$url] = 'groups:leave';
 		}
+		
+		if( strpos(elgg_get_site_entity()->name, 'collab') !== false ){
+			$url = elgg_get_site_url() . "groups/stats/{$group->getGUID()}";
+			$actions[$url] = 'groups:stats';
+		}
 	} elseif (elgg_is_logged_in()) {
 		// join - admins can always join.
 		$url = elgg_get_site_url() . "action/groups/join?group_guid={$group->getGUID()}";
@@ -649,4 +654,295 @@ function groups_prepare_form_vars($group = null) {
 	elgg_clear_sticky_form('groups');
 
 	return $values;
+}
+
+/**
+ * View stats for a group
+ *
+ * @param int $guid Group entity GUID
+ */
+function groups_handle_stats_page($guid) {
+
+	elgg_gatekeeper();
+
+	elgg_set_page_owner_guid($guid);
+
+	$group = get_entity($guid);
+	if (!elgg_instanceof($group, 'group') || strpos(elgg_get_site_entity()->name, 'collab') == false) {
+		register_error(elgg_echo('groups:noaccess'));
+		forward(REFERER);
+	}
+
+	$title = elgg_echo('groups:stats');
+	$lang = get_current_language();
+
+	elgg_push_breadcrumb(gc_explode_translation($group->name, $lang), $group->getURL());
+	elgg_push_breadcrumb($title);
+
+	ob_start(); ?>
+
+    <script src="//code.highcharts.com/highcharts.js"></script>
+    <script src="//code.highcharts.com/modules/exporting.js"></script>
+    <script src="//code.highcharts.com/modules/data.js"></script>
+    <script src="//code.highcharts.com/modules/drilldown.js"></script>
+    <script src="//highcharts.github.io/export-csv/export-csv.js"></script>
+    <script>var lang = '<?php echo get_current_language(); ?>';</script>
+    <script>var siteUrl = '<?php echo elgg_get_site_url(); ?>';</script>
+    <script>var group = '<?php echo $guid; ?>';</script>
+    <script>
+        Date.prototype.niceDate = function() {
+            if(lang == "fr"){
+                var months = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+                var mm = this.getMonth();
+                var dd = this.getDate();
+                var yy = this.getFullYear();
+                return dd + ' ' + months[mm] + ' ' + yy;
+            } else {
+                var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                var mm = this.getMonth();
+                var dd = this.getDate();
+                var yy = this.getFullYear();
+                return months[mm] + ' ' + dd + ', ' + yy;
+            }
+        };
+
+        String.prototype.capitalizeFirstLetter = function() {
+            return this.charAt(0).toUpperCase() + this.slice(1);
+        }
+
+        function SortRegistrations(a, b){
+            return (a[0] - b[0]);
+        }
+
+        function SortByCount(a, b){
+            return (b[1] - a[1]);
+        }
+
+        function SortByName(a, b){
+            var one = (a.name != null) ? a.name.toLowerCase().replace(/é/g, 'e').replace(/è/g, 'e').replace(/î/g, 'i') : "";
+            var two = (b.name != null) ? b.name.toLowerCase().replace(/é/g, 'e').replace(/è/g, 'e').replace(/î/g, 'i') : "";
+            if(one < two) return -1;
+            if(one > two) return 1;
+            return 0;
+        }
+
+        function SortInstitutionByName(a, b){
+            var one = (a[0] != null) ? a[0].toLowerCase().replace(/é/g, 'e').replace(/è/g, 'e').replace(/î/g, 'i') : "";
+            var two = (b[0] != null) ? b[0].toLowerCase().replace(/é/g, 'e').replace(/è/g, 'e').replace(/î/g, 'i') : "";
+            if(one < two) return -1;
+            if(one > two) return 1;
+            return 0;
+        }
+    </script>
+<?php if(get_current_language() == "fr"): ?>
+    <script>
+        Highcharts.setOptions({
+            lang: {
+                months: ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'],
+                weekdays: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+                shortMonths: ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aout', 'Sept', 'Oct', 'Nov', 'Déc'],
+                decimalPoint: ',',
+                downloadPNG: 'Télécharger en image PNG',
+                downloadJPEG: 'Télécharger en image JPEG',
+                downloadPDF: 'Télécharger en document PDF',
+                downloadSVG: 'Télécharger en document Vectoriel',
+                exportButtonTitle: 'Export du graphique',
+                loading: 'Chargement en cours...',
+                printButtonTitle: 'Imprimer le graphique',
+                resetZoom: 'Réinitialiser le zoom',
+                resetZoomTitle: 'Réinitialiser le zoom au niveau 1:1',
+                thousandsSep: ' ',
+                decimalPoint: ',',
+                printChart: 'Imprimer le graphique',
+                downloadCSV: 'Télécharger en CSV',
+                downloadXLS: 'Télécharger en XLS',
+                viewData: 'Afficher la table des données'
+            }
+        });
+    </script>
+<?php endif; ?>
+    <style>
+    .chart {
+        width: 100%;
+        min-width: 100%; 
+        max-width: 100%; 
+        margin: 0 auto;
+    }
+    .chart .loading {
+        padding-top: 10%;
+        display: block;
+        font-size: 2em;
+        text-align: center;
+    }
+    @media (max-width: 480px) { 
+        .nav-tabs > li {
+            float:none;
+        }
+    }
+    </style>
+
+	<div class="chart" id="groupsjoinedChart" style="min-height: 350px;"><span class="loading"><?php echo elgg_echo("gccollab_stats:loading"); ?></span></div>
+
+    <script>
+        $(function () {
+            $.getJSON(siteUrl + 'services/api/rest/json/?method=group.stats&type=groupsjoined&group=' + group + '&lang=' + lang, function (data) {
+            	var dates = {};
+                var users = {};
+                var groupsjoined = [];
+                $.each(data.result, function(key, value){
+                    var date = new Date(value[0] * 1000);
+                    date.setHours(0, 0, 0, 0);
+                    var dateString = date.getTime();
+                    dates[dateString] = (dates[dateString] ? dates[dateString] + 1 : 1);
+                    if( users[dateString] ){
+                    	users[dateString] = users[dateString] + value[1] + "<br>";
+                    } else {
+                    	users[dateString] = "";
+                    	users[dateString] = users[dateString] + value[1] + "<br>";
+                    }
+                });
+                $.each(dates, function(key, value){
+                    key = parseInt(key);
+                    groupsjoined.push([key, value, new Date(key).niceDate(), users[key]]);
+                });
+                groupsjoined.sort();
+
+                Highcharts.chart('groupsjoinedChart', {
+                    chart: {
+                        zoomType: 'x'
+                    },
+                    title: {
+                        text: '<?php echo elgg_echo("gccollab_stats:usersjoined:title"); ?>'
+                    },
+                    subtitle: {
+                        text: document.ontouchstart === undefined ? '<?php echo elgg_echo("gccollab_stats:zoommessage"); ?>' : '<?php echo elgg_echo("gccollab_stats:pinchmessage"); ?>'
+                    },
+                    xAxis: {
+                        type: 'datetime'
+                    },
+                    yAxis: {
+                        title: {
+                            text: '<?php echo elgg_echo("gccollab_stats:usersjoined:amount"); ?>'
+                        },
+                        min: 0
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    plotOptions: {
+                        area: {
+                            fillColor: {
+                                linearGradient: {
+                                    x1: 0,
+                                    y1: 0,
+                                    x2: 0,
+                                    y2: 1
+                                },
+                                stops: [
+                                    [0, Highcharts.getOptions().colors[0]],
+                                    [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                                ]
+                            },
+                            marker: {
+                                radius: 2
+                            },
+                            lineWidth: 1,
+                            states: {
+                                hover: {
+                                    lineWidth: 1
+                                }
+                            },
+                            threshold: null
+                        }
+                    },
+                    tooltip: {
+                        formatter: function() {
+                            return '<b><?php echo elgg_echo("gccollab_stats:date"); ?></b> ' + groupsjoined[this.series.data.indexOf(this.point)][2] + '<br /><b><?php echo elgg_echo("gccollab_stats:total"); ?></b> ' + groupsjoined[this.series.data.indexOf(this.point)][1]+ '<br /><b><?php echo elgg_echo("gccollab_stats:users:title"); ?></b> ' + groupsjoined[this.series.data.indexOf(this.point)][3];
+                        }
+                    },
+                    series: [{
+                        type: 'area',
+                        name: '<?php echo elgg_echo("gccollab_stats:groupsjoined:title"); ?>',
+                        data: groupsjoined
+                    }]
+                });
+        	});
+        });
+    </script>
+
+    <br>
+
+    <div class="chart" id="allMembers" style="min-height: 350px;"><span class="loading"><?php echo elgg_echo("gccollab_stats:loading"); ?></span></div>
+
+    <script>
+        $(function () {
+            $.getJSON(siteUrl + 'services/api/rest/json/?method=group.stats&group=' + group + '&type=users&lang=' + lang, function (data) {
+                var allMembers = [];
+                var allMembersCount = 0, unknownCount = 0;
+                $.each(data.result, function(key, value) {
+                    if(key != 'public_servant' && key != ''){
+                        allMembers.push([key.capitalizeFirstLetter(), value]);
+                    } else {
+                        unknownCount += value;
+                    }
+                    allMembersCount += value;
+                });
+                if(unknownCount > 0){ allMembers.push(['<?php echo elgg_echo('gccollab_stats:unknown'); ?>', unknownCount]); }
+                allMembers.sort(SortByCount);
+
+                Highcharts.chart('allMembers', {
+                    chart: {
+                        type: 'bar'
+                    },
+                    title: {
+                        text: '<?php echo elgg_echo("gccollab_stats:types:title"); ?> (' + allMembersCount + ')'
+                    },
+                    xAxis: {
+                        type: 'category'
+                    },
+                    yAxis: {
+                        title: {
+                            text: '<?php echo elgg_echo("gccollab_stats:membercount"); ?>'
+                        }
+
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    plotOptions: {
+                        series: {
+                            borderWidth: 0,
+                            dataLabels: {
+                                enabled: true,
+                                format: '{point.y}'
+                            }
+                        }
+                    },
+                    tooltip: {
+                        headerFormat: '<span style=\"font-size:11px\">{series.name}</span><br>',
+                        pointFormat: '<span style=\"color:{point.color}\">{point.name}</span>: <b>{point.y}</b> <?php echo elgg_echo("gccollab_stats:users"); ?><br/>'
+                    },
+                    series: [{
+                        name: '<?php echo elgg_echo("gccollab_stats:membertype"); ?>',
+                        colorByPoint: true,
+                        data: allMembers
+                    }]
+                });
+            });
+        });
+    </script>
+
+    <?php
+
+    $content = ob_get_clean();
+
+	$params = array(
+		'content' => $content,
+		'title' => $title,
+		'filter' => '',
+	);
+	$body = elgg_view_layout('content', $params);
+	$body = str_replace('col-md-8', 'col-md-12', $body);
+
+	echo elgg_view_page($title, $body);
 }

@@ -123,6 +123,8 @@ $since = null, $before = null, $limit = null, $resume = null, $sort = false) {
 */
 function mm_api_entity_export($entity_guids) {
   function exportEntity($entity_or_guid) {
+    // List of fields not to include in any export
+    $omit = array('password', 'password_hash', 'salt');
     if (is_object($entity_or_guid)) {
       $entity = $entity_or_guid;
     } else {
@@ -138,6 +140,11 @@ function mm_api_entity_export($entity_guids) {
     $exportable_values = $entity->getExportableValues();
     foreach ($exportable_values as $v) {
       $ret->$v = $entity->$v;
+    }
+    foreach ($entity as $field=>$value) {
+      if (!in_array($field, $exportable_values) && !in_array($field, $omit)) {
+        $ret->$field = $value;
+      }
     }
     $ret->url = $entity->getURL();
     $ret->subtype_name = $entity->getSubtype();

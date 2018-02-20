@@ -13,16 +13,26 @@
 $entity_type = $vars['entity_type'];
 $number_per = $vars['number_per'];
 if($entity_type == 'candidate') {
-	$number_array = array(10,25,50,100);
+	$number_array = array(
+    '10'=>'10',
+    '25'=>'25',
+    '50'=>'50',
+    '100'=>'100',
+    '-1' => elgg_echo('missions:all')
+  );
 }
 else {
-	$number_array = array(9,18,30,60,120);
+	$number_array = array(
+    '30'=>'30',
+    '60'=>'60',
+    '120' => '120'
+  );
 }
 
 $input_per_page = elgg_view('input/dropdown', array(
 		'name' => 'number_per',
 		'value' => $number_per,
-		'options' => $number_array,
+		'options_values' => $number_array,
 		'id' => 'change-entities-per-page-dropdown-input',
 		'onchange' => 'this.form.submit()'
 ));

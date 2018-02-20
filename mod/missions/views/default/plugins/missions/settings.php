@@ -94,7 +94,23 @@ elgg_set_plugin_setting('duration_string', $duration_string, 'missions');*/
 	<?php
 		echo elgg_view('input/dropdown', array(
     			'name' => 'params[search_limit]',
-    			'options' => array('20','40','60','80','100','120','140','160','180','200'),
+          'options_values' => array(
+            '20'=>'20',
+            '40'=>'40',
+            '60'=>'60',
+            '80'=>'80',
+            '100'=>'100',
+            '120'=>'120',
+            '140'=>'140',
+            '160'=>'160',
+            '180'=>'180',
+            '200'=>'200',
+            '400'=>'400',
+            '800'=>'800',
+            '1000'=>'1000',
+            '10000'=>'10000',
+            '-1'=>elgg_echo('missions:all')
+          ),
     			'value' => $search_limit
 		));
 	?>

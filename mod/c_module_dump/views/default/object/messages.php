@@ -12,31 +12,29 @@ if (!$message) {
 if ($message->toId == elgg_get_page_owner_guid()) {
 	// received
 	$user = get_entity($message->fromId);
-	
+
 	if ($user) {
 
 		// cyu - 01-20-2015: will link to user profile instead
 		$icon = elgg_view_entity_icon($user, 'tiny');
 
 		// cyu - 01-20-2015: check if this is a user
-		if ($user instanceof ElggUser)
-		{
+		if ($user instanceof ElggUser) {
 			$user_link = elgg_view('output/url', array(
 				'href' => "profile/$user->username",
 				'text' => $user->name,
 				'is_trusted' => true,
 			));
 
-		// cyu - 01-20-2015: check if this is a group
+			// cyu - 01-20-2015: check if this is a group
 		} elseif ($user instanceof ElggGroup) {
-
 			$user_link = elgg_view('output/url', array(
 				'href' => "groups/profile/$user->guid/$user->name",
 				'text' => $user->name,
 				'is_trusted' => true,
 			));
 
-		// cyu - 01-20-2015: i assume that if it is not a user or group, then it is site
+			// cyu - 01-20-2015: i assume that if it is not a user or group, then it is site
 		} else {
 			$user_link = elgg_view('output/url', array(
 				'href' => "/",
@@ -44,8 +42,6 @@ if ($message->toId == elgg_get_page_owner_guid()) {
 				'is_trusted' => true,
 			));
 		}
-
-
 	} else {
 		$icon = '';
 		$user_link = elgg_echo('messages:deleted_sender');
@@ -56,7 +52,6 @@ if ($message->toId == elgg_get_page_owner_guid()) {
 	} else {
 		$class = 'message unread';
 	}
-
 } else {
 	// sent
 	$user = get_entity($message->toId);

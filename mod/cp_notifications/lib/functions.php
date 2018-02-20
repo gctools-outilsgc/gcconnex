@@ -296,7 +296,8 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 				'content_url' => $content_url."?utm_source=notification_digest&utm_medium=email",
 				'subtype' => $entity->getSubtype(),
 				'content_author_name' => $invoked_by->name,
-				'content_author_url' => $invoked_by->getURL()
+				'content_author_url' => $invoked_by->getURL(),
+				'entity' => $entity
 			);
 
 			$entity_guid = $entity->guid;
@@ -481,8 +482,27 @@ function create_digest($invoked_by, $subtype, $entity, $send_to, $entity_url = '
 			$user_guid = $send_to->getGUID();
 			$entry_type = 'personal';
 			$group_name = NULL;
-			$action_type = 'wire_share';
+			$action_type = 'cp_wire_share';
 			$notification_entry = json_encode($content_array);			
+			break;
+
+		case 'cp_wire_image':
+
+			$content_array = array(
+				'content_description' => $entity->description,
+				'content_url' => $content_url."?utm_source=notification_digest&utm_medium=email",
+				'subtype' => $entity->getSubtype(),
+				'content_author_name' => $invoked_by->name,
+				'content_author_url' => $invoked_by->getURL(),
+				'wire_image' => thewire_image_get_attachments($entity->guid),
+			);
+
+			$entity_guid = $entity->guid;
+			$user_guid = $send_to->getGUID();
+			$entry_type = 'personal';
+			$group_name = NULL;
+			$action_type = 'new_post';
+			$notification_entry = json_encode($content_array);
 			break;
 
 		case 'cp_wire_mention':
@@ -692,7 +712,6 @@ function getMissionTypeMetastringid( $mission_type, $role_type ) {
    * @param Array <string> $heading
    */
   function render_contents($content_array, $heading = '', $language_preference = 'en') {
-
     $author = $content_array['content_author_name'];
 
     // this is specifically for the Micro Missions portion due to extra field
@@ -733,12 +752,12 @@ function getMissionTypeMetastringid( $mission_type, $role_type ) {
 
 		$content_title = gc_explode_translation($content_array['content_title'],$language_preference);
 		$url = "<a href='{$content_array['content_url']}'>{$content_title}</a>";
-		if ($subtype === 'The Wire') $subtype = elgg_echo('cp_notifications:mail_body:your_wire_post', $language_preference);
-		$rendered_content = elgg_echo("cp_notifications:mail_body:subtype:content_share", array($author, $subtype, $url), $language_preference);
+		if ($subtype === 'The Wire') $subtype = "<a href='{$content_array['content_url']}'>".elgg_echo('cp_notifications:mail_body:your_wire_post', $language_preference)."</a>";
+		$rendered_content = elgg_echo("cp_notifications:mail_body:subtype:content_share:wire", array($author, $subtype), $language_preference);
 
     	
 
-	} elseif ($heading === 'cp_mention' || $heading === 'mention') {
+	}elseif ($heading === 'cp_mention' || $heading === 'mention') {
 
 
 		if ($content_array['subtype'] === 'wire_mention') {
@@ -780,8 +799,20 @@ function getMissionTypeMetastringid( $mission_type, $role_type ) {
 
     } elseif ($content_array['subtype'] === 'thewire' && $heading !== 'likes') {
 
-		$url = elgg_echo('cp_notifications:subtype:name:thewire', $language_preference)." : <a href='{$content_array['content_url']}'>".$content_array['content_description']."</a>";
-		$rendered_content = elgg_echo("cp_notifications:mail_body:subtype:{$content_array['subtype']}", array($author, $url), $language_preference);
+    	if($content_array['content_description'] && (is_array($content_array['wire_image']))){
+			$content_array['content_description'] .= elgg_echo('cp_notification_wire_image', $language_preference);
+    	}elseif($content_array['content_description'] == '' ){
+			$content_array['content_description'] = elgg_echo('cp_notification_wire_image_only', $language_preference);
+		}
+// error_log(print_r($content_array,true));
+// error_log('print array '.print_r($content_array['wire_image'],true));
+
+//  if(is_array($content_array['wire_image'])){
+//  	error_log('isset');
+//  }else{error_log('not isset');}
+		$url = " <a href='{$content_array['content_url']}'>".$content_array['content_description']."</a>";
+		$wire_fil = elgg_echo('cp_notifications:subtype:name:thewire', $language_preference);
+		$rendered_content = elgg_echo("cp_notifications:mail_body:subtype:{$content_array['subtype']}_digest", array($author,$wire_fil, $url), $language_preference);
 
 
     } elseif (strcmp($heading, "likes") === 0) {
@@ -832,6 +863,8 @@ function getMissionTypeMetastringid( $mission_type, $role_type ) {
 		case 'group':
 		case 'new_post':
 		case 'cp_wire_share':
+		case 'wire_share':
+		case 'cp_wire_image':
 		case 'likes':
 		case 'friend_request':
 		case 'content_revision':

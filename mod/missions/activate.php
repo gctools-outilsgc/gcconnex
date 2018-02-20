@@ -8,7 +8,7 @@ elgg_set_plugin_setting('search_limit', '100', 'missions');
 elgg_set_plugin_setting('river_message_limit', '100', 'missions');
 elgg_set_plugin_setting('advanced_element_limit', 6, 'missions');
 elgg_set_plugin_setting('river_element_limit', 10, 'missions');
-elgg_set_plugin_setting('search_result_per_page', 9, 'missions');
+elgg_set_plugin_setting('search_result_per_page', 30, 'missions');
 elgg_set_plugin_setting('mission_developer_tools_on', 'NO', 'missions');
 elgg_set_plugin_setting('mission_analytics_on', 'YES', 'missions');
 elgg_set_plugin_setting('mission_front_page_limit', 3, 'missions');
@@ -53,7 +53,7 @@ elgg_set_plugin_setting('opportunity_role_string', $opportunity_role_string, 'mi
 /*$opportunity_type_string = 'missions:micro_mission' . ',' . 'missions:job_swap' . ',' . 'missions:mentoring' . ','
 		. 'missions:shadowing' . ',' . 'missions:peer_coaching' . ',' . 'missions:skill_sharing' . ','
 				. 'missions:job_sharing';*/
-$opportunity_type_string = 'missions:micro_mission' . ',' . 'missions:mentoring' . ',' . 'missions:job_swap' . ',' . 'missions:job_shadowing' .','. 'missions:assignment' .','. 'missions:deployment' .','. 'missions:job_rotation' .','. 'missions:skill_share' .','. 'missions:peer_coaching' .','. 'missions:job_share';
+$opportunity_type_string = ',' . 'missions:micro_mission' . ',' . 'missions:mentoring' . ',' . 'missions:job_swap' . ',' . 'missions:job_shadowing' .','. 'missions:assignment' .','. 'missions:deployment' .','. 'missions:job_rotation' .','. 'missions:skill_share' .','. 'missions:peer_coaching' .','. 'missions:job_share';
 elgg_set_plugin_setting('opportunity_type_string', $opportunity_type_string, 'missions');
 
 $opportunity_status_string = 'missions:posted' . ',' .'missions:completed' . ',' . 'missions:cancelled';

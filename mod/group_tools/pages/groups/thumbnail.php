@@ -85,7 +85,7 @@ if (isset($data_root)) {
 		$filename = $entity_path . "groups/{$group_guid}medium.jpg";
 		$filecontents = @file_get_contents($filename);
 	}
-	
+
 	if ($filecontents) {
 		$filesize = strlen($filecontents);
 		

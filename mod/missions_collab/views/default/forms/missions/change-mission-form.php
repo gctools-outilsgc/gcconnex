@@ -38,7 +38,7 @@ if($mission->openess == 'on') {
 $max_applicants = elgg_get_plugin_setting('mission_max_applicants', 'missions');
 $max_array = array();
 for($i=1;$i<=$max_applicants;$i++) {
-	$max_array[$i-1] = $i;
+	$max_array[$i] = $i;
 }
 $max_array[999] = elgg_echo('missions:max_applicants_unlimited');
 

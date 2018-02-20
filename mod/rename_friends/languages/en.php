@@ -9,8 +9,8 @@ $singular = elgg_get_plugin_setting($singularvar, 'rename_friends');
 $plural = elgg_get_plugin_setting($pluralvar, 'rename_friends');
 
 // set defaults if setting can't be found
-if(empty($singular)){ $singular = elgg_echo('friend'); }
-if(empty($plural)){ $plural = elgg_echo('friends'); }
+if(empty($singular)){ $singular = elgg_echo('colleague'); }
+if(empty($plural)){ $plural = elgg_echo('colleagues'); }
 
 // get first letter of each, and register variables for starting with uppercase and lowercase first letter
 // $usingle = uppercase singluar eg. Friend
@@ -32,8 +32,6 @@ $first_letter = strtoupper($plural[0]);
 $rest_of_word = substr($plural, 1);
 
 $uplural = $first_letter . $rest_of_word;
-
-
 
 // get variables for groups 
 $singular = '';
@@ -146,8 +144,8 @@ You cannot reply to this email.",
 	'friend_request:friend:add:pending' => "{$usingle} request pending",
 	'friend_request:newfriend:subject' => "%s wants to be your {$lsingle}!",
 	'friend_request:newfriend:body' => "
-%s wants to be your colleague! But he or she is waiting for you to approve the request... So login now so you can approve the request! <br/>
-You can view your pending colleague requests at:
+%s wants to be your {$lsingle}! But he or she is waiting for you to approve the request... So login now so you can approve the request! <br/>
+You can view your pending {$lsingle} requests at:
 
 %s <br/>
 <i>Make sure you are logged into the website before clicking on the following link, otherwise you will be redirected to the login page.</i>
@@ -202,9 +200,9 @@ Pour consulter son profil, cliquez ici : %s
      * 	Invite Friends
      */
 	
-	'friends:invite' => "Invite colleagues",
-	'invitefriends:introduction' => "To invite colleagues to join you on this network, enter their email addresses below (one per line):",
-	'invitefriends:success' => "Your colleagues were invited.",
+	'friends:invite' => "Invite {$lplural}",
+	'invitefriends:introduction' => "To invite {$lplural} to join you on this network, enter their email addresses below (one per line):",
+	'invitefriends:success' => "Your {$lplural} were invited.",
 	'invitefriends:email' => "
 You have been invited to join %s by %s. They included the following message:
 
@@ -221,7 +219,7 @@ You will automatically add them as a {$lsingle} when you create your account.",
  * 	Rename Groups
  */
 
-'groups:invite' => "Invite {$lplural}",
+'groups:invite' => "Invite users to the group",
 'groups:invite:title' => "Invite {$lplural} to this {$glsingle}",
 'groups:inviteto' => "Invite {$lplural} to '%s'",
 'groups:nofriends' => "You have no {$lplural} left who have not been invited to this {$glsingle}.",

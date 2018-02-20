@@ -4,20 +4,22 @@
  * Community page widgets
  */
 
- 	$widget = $vars['entity'];
- 	
+	$widget = $vars['entity'];
+	
 	$num_items = $widget->num_items;
-	if ( !isset($num_items) ) $num_items = 5;
+	if (!isset($num_items)) {
+		$num_items = 5;
+	}
 	
 	$widget_title_en = $widget->widget_title_en;
- 	$widget_title_fr = $widget->widget_title_fr;
+	$widget_title_fr = $widget->widget_title_fr;
 	$widget_hashtag = $widget->widget_hashtag;
 ?>
 <p>
 	<?php echo elgg_echo('widget_manager:widgets:edit:custom_title'); ?> (EN):
 	<?php
 		echo elgg_view('input/text', array(
-			'name' => 'params[widget_title_en]',                       
+			'name' => 'params[widget_title_en]',
 			'value' => $widget_title_en
 		));
 	?>
@@ -26,7 +28,7 @@
 	<?php echo elgg_echo('widget_manager:widgets:edit:custom_title'); ?> (FR):
 	<?php
 		echo elgg_view('input/text', array(
-			'name' => 'params[widget_title_fr]',                       
+			'name' => 'params[widget_title_fr]',
 			'value' => $widget_title_fr
 		));
 	?>
@@ -45,7 +47,7 @@
 	<?php echo elgg_echo('Hashtag/Keyword'); ?>:
 	<?php
 		echo elgg_view('input/text', array(
-			'name' => 'params[widget_hashtag]',                        
+			'name' => 'params[widget_hashtag]',
 			'value' => $widget_hashtag
 		));
 	?>

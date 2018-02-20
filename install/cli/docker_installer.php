@@ -8,7 +8,7 @@
 $enabled = getenv('DOCKER') != ''; //are we in a Docker container?
 
 if (!$enabled) {
-	echo "This script should be run only in a Docker container environment.\n";
+	echo "This script should be run only in a properly configured Docker container environment.\n";
 	exit(1);
 }
 
@@ -57,6 +57,20 @@ $params = array(
 	'username' => 'admin',
 	'password' => 'adminpassword',
 );
+
+// wait for db to be ready
+echo "Connecting to database..";
+$etmp = error_reporting(E_ERROR);     // don't need all the connection errors...
+
+do{
+  echo ".";
+  sleep(1); // wait for the db container
+  $dbconnect = mysqli_connect($dbhost, $params['dbuser'], $params['dbpassword']);
+}while(!$dbconnect);
+
+echo "Connected!";
+mysqli_close($dbconnect);
+error_reporting($etmp);     // revert error reporting to default
 
 // install and create the .htaccess file
 $installer->batchInstall($params, TRUE);
