@@ -3,6 +3,7 @@
  * special autocomplete input
  */
 $name = elgg_extract("name", $vars); // input name of the selected user
+$backup = elgg_extract("backup_name", $vars); // input name of the selected user
 $id = elgg_extract("id", $vars);
 $relationship = elgg_extract("relationship", $vars);
 
@@ -14,7 +15,7 @@ if ($minChars < 1) {
 }
 
 ?>
-<input type="text" id="<?php echo $id; ?>_autocomplete" class="elgg-input elgg-input-autocomplete" />
+<input name="<?php echo $backup; ?>" type="text" id="<?php echo $id; ?>_autocomplete" class="elgg-input elgg-input-autocomplete" />
 
 <div id="<?php echo $destination; ?>" class="mtm clearfloat"></div>
 
@@ -36,7 +37,7 @@ if ($minChars < 1) {
 						q: request.term,
 						'user_guids': function() {
 							var result = "";
-							
+
 							$("#<?php echo $destination; ?> input[name='<?php echo $name; ?>[]']").each(function(index, elem) {
 								if (result == "") {
 									result = $(this).val();
@@ -44,7 +45,7 @@ if ($minChars < 1) {
 									result += "," + $(this).val();
 								}
 							});
-		
+
 							return result;
 						},
 						'group_guid' : <?php echo $vars["group_guid"]; ?>
@@ -66,9 +67,9 @@ if ($minChars < 1) {
 				select: function(event, ui) {
 					this.value = "";
 					var result = "";
-					
+
 					result += "<div class='group_tools_group_invite_autocomplete_autocomplete_result elgg-discover_result elgg-discover'>";
-					
+
 					if (ui.item.type == "user") {
 						result += "<input type='hidden' value='" + ui.item.value + "' name='<?php echo $name; ?>[]' />";
 					} else if (ui.item.type == "email") {
@@ -78,7 +79,7 @@ if ($minChars < 1) {
 
 					result += "<?php echo addslashes('<i class="fa fa-trash-o fa-lg icon-unsel mrgn-lft-sm elgg-icon-delete-alt"><span class="wb-inv">' . elgg_echo('delete:this') . '</span></i>'); ?>";
 					result += "</div>";
-					
+
 					$('#<?php echo $destination; ?>').append(result);
 					return false;
 				},
@@ -90,7 +91,7 @@ if ($minChars < 1) {
 			}).data("ui-autocomplete")._renderItem = function(ul, item) {
 				var list_body = "";
 				list_body = item.content;
-				
+
 					return $( "<li></li>" )
 					.data( "item.autocomplete", item )
 					.append("<a>" + list_body + " -  <?php echo elgg_echo('group:invite:clicktoadd') ?></a>")
@@ -102,5 +103,5 @@ if ($minChars < 1) {
 			$(this).parent('div').remove();
 		});
 	});
-	
+
 </script>

@@ -24,6 +24,7 @@ $english = array(
     'gccollab_stats:media:title' => "Media",
     'gccollab_stats:retired:title' => "Retired Public Servants",
     'gccollab_stats:other:title' => "Other",
+    'gccollab_stats:users:title' => "User(s):",
 
     'gccollab_stats:organization' => "Organization",
     'gccollab_stats:membertype' => "Member Type",
@@ -46,6 +47,8 @@ $english = array(
     'gccollab_stats:groupscreated:amount' => "Amount of Groups Created",
     'gccollab_stats:groupsjoined:title' => "Groups Joined",
     'gccollab_stats:groupsjoined:amount' => "Amount of Groups Joined",
+    'gccollab_stats:usersjoined:title' => "Users Joined",
+    'gccollab_stats:usersjoined:amount' => "Amount of Users Joined",
     'gccollab_stats:likes:title' => "Likes",
     'gccollab_stats:likes:amount' => "Amount of Likes",
     'gccollab_stats:messages:title' => "Messages",

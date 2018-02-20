@@ -11,7 +11,7 @@ return array(
 	'thewire:everyone' => "Tous les messages sur le fil",
 	'thewire:user' => "Fil de %s",
 	'thewire:friends' => 'Vos collègues sur le fil',
-	'thewire:replying' => "Réponse à %s (@%s) qui a écrit", 
+	'thewire:replying' => "Réponse à %s (@%s) qui a écrit :", 
 	'thewire:thread' => "Fil",
 	'thewire:charleft' => "caractères restants",
 	'thewire:tags' => "Messages sur le fil portant le mot-clé : '%s'",

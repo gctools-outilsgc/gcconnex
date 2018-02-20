@@ -12,11 +12,13 @@
  * There is no equivalent form for this action. It is called directly by a link.
  * This action displays all the latest missions chronologically.
  */
-//$_SESSION['mission_search_switch_override'] = 'mission'; 
+//$_SESSION['mission_search_switch_override'] = 'mission';
 
 $options['type'] = 'object';
 $options['subtype'] = 'mission';
-$options['limit'] = elgg_get_plugin_setting('search_limit', 'missions');
+if (elgg_get_plugin_setting('search_limit', 'missions') !== '-1') {
+  $options['limit'] = elgg_get_plugin_setting('search_limit', 'missions');
+}
 
 $missions = elgg_get_entities($options);
 $mission_count = count($missions);

@@ -4,15 +4,16 @@
  */
 ?>
 <style>
-.c_table { 
-	border:1px solid #ccc;
-	background-color:;
+.c_table
+{
+    border: 1px solid #ccc;
 }
 
-.table th,td {
-	padding:10px;
+.table th,
+td
+{
+    padding: 10px;
 }
-
 </style>
 
 <?php
@@ -21,7 +22,7 @@ $user = elgg_get_page_owner_entity();
 if (!$user) {
 	// no user so we quit view
 	echo elgg_echo('viewfailure', array(__FILE__));
-	return TRUE;
+	return true;
 }
 
 $icon = elgg_view_entity_icon($user, 'large', array(
@@ -29,7 +30,7 @@ $icon = elgg_view_entity_icon($user, 'large', array(
 	'use_link' => false,
 ));
 
-$user_information = $user->name.'<br/>'.$user->email.'<br/>'.(string)date("Y-m-d H:i:s",$user->last_login);
+$user_information = $user->name.'<br/>'.$user->email.'<br/>'.(string)date("Y-m-d H:i:s", $user->last_login);
 $icon .= '<table class="c_table" style="width:100%"><tr><td><font style="font-size:12px;">'.$user_information.'</font></td></tr></table>';
 
 // grab the actions and admin menu items from user hover
@@ -61,7 +62,7 @@ if (elgg_is_admin_logged_in() && elgg_get_logged_in_user_guid() != elgg_get_page
 	}
 	$admin_links .= '</ul>';
 	$admin_links .= '</li>';
-	$admin_links .= '</ul>';	
+	$admin_links .= '</ul>';
 }
 
 // content links
@@ -69,7 +70,6 @@ $content_menu = elgg_view_menu('owner_block', array(
 	'entity' => elgg_get_page_owner_entity(),
 	'class' => 'profile-content-menu',
 ));
-
 
 echo <<<HTML
 

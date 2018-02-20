@@ -2,6 +2,9 @@
 
 $site_url = elgg_get_site_url();
 $french = array(
+
+	'gcforums:notfound' => "page non trouvée",
+
 	'river:create:object:hjforumtopic' => "%s a créé un nouveau suget de forum %s",
 	'gcforums:edit:new_forum:heading' => "Nouveau %s",
 	'gcforums:edit:edit_forum:heading' => "Modifiez %s",

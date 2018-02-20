@@ -2,6 +2,8 @@
 
 require_once($CONFIG->pluginspath.'event_calendar/models/model.php');
 
+$day = array("dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"); 
+$month = array("", "janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre");
 
 $event_list = elgg_get_entities_from_metadata(array(
 	'subtype' => 'event_calendar',
@@ -11,6 +13,10 @@ $event_list = elgg_get_entities_from_metadata(array(
 ));
 
 $today = date("F j, Y, g:i a");
+
+if( get_current_language() == 'fr' ){
+	$today = "le " . $day[date("w")] . " " . date("j") . " " . $month[date("n")] . " " . date("Y, g") . " h " . date("i");
+}
 
 echo "<div style='overflow-y:auto; height:200px;'>";
 echo '<h4 class="mtm">'.elgg_echo('index_widget:event:today',array($today)).'</h4>';

@@ -22,5 +22,6 @@ function multi_file_init(){
   //custom css for bootstrap fileinput
   elgg_register_css('custom-bootstrap-fileinput', 'mod/multi_file_upload/css/custom.css');
 
-  elgg_register_action("multi_file/upload", elgg_get_plugins_path() . "/multi_file_upload/actions/file/upload.php");
+  elgg_register_action("multi_file/upload", elgg_get_plugins_path() . "multi_file_upload/actions/file/upload.php");
+
 }

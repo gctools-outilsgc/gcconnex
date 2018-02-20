@@ -473,29 +473,61 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 	}
 	
 	if ($entity->canEdit() && $handler) {
-		// edit link
-		$options = array(
-			'name' => 'edit',
-			'text' => elgg_echo('edit'),
-			'title' => elgg_echo('edit:this'),
-			'href' => "$handler/edit/{$entity->getGUID()}",
-			'priority' => 200,
-		);
-		$return[] = \ElggMenuItem::factory($options);
 
-		if(elgg_is_logged_in()){
-			// delete link
-			$options = array(
-				'name' => 'delete',
-				'text' => elgg_view_icon('delete'),
-				'title' => elgg_echo('delete:this'),
-				'href' => "action/$handler/delete?guid={$entity->getGUID()}",
-				'confirm' => elgg_echo('deleteconfirm'),
-				'priority' => 300,
-			);
-			$return[] = \ElggMenuItem::factory($options);
+			// edit link
+		$user = elgg_get_logged_in_user_entity();
+        $page_owner = elgg_get_page_owner_entity();
+            if($entity->getSubtype() == 'discussion_reply' ){
+                if($entity->owner_guid == $user['guid'] || elgg_is_admin_logged_in() || ($page_owner instanceof ElggGroup && $page_owner->getOwnerGUID() == $user['guid']) || $page_owner->canEdit()){
+					$options = array(
+						'name' => 'edit',
+						'text' => elgg_echo('edit'),
+						'title' => elgg_echo('edit:this'),
+						'href' => "$handler/edit/{$entity->getGUID()}",
+						'priority' => 200,
+					);
+					$return[] = \ElggMenuItem::factory($options);
+
+					if(elgg_is_logged_in()){
+
+						// delete link
+						$options = array(
+							'name' => 'delete',
+							'text' => elgg_view_icon('delete'),
+							'title' => elgg_echo('delete:this'),
+							'href' => "action/$handler/delete?guid={$entity->getGUID()}",
+							'confirm' => elgg_echo('deleteconfirm'),
+							'priority' => 300,
+						);
+						$return[] = \ElggMenuItem::factory($options);
+					}
+				}
+			}else{
+
+				$options = array(
+					'name' => 'edit',
+					'text' => elgg_echo('edit'),
+					'title' => elgg_echo('edit:this'),
+					'href' => "$handler/edit/{$entity->getGUID()}",
+					'priority' => 200,
+				);
+				$return[] = \ElggMenuItem::factory($options);
+
+				if(elgg_is_logged_in()){
+
+					// delete link
+					$options = array(
+						'name' => 'delete',
+						'text' => elgg_view_icon('delete'),
+						'title' => elgg_echo('delete:this'),
+						'href' => "action/$handler/delete?guid={$entity->getGUID()}",
+						'confirm' => elgg_echo('deleteconfirm'),
+						'priority' => 300,
+					);
+					$return[] = \ElggMenuItem::factory($options);
+				}
+			}
 		}
-	}
 
 	return $return;
 }

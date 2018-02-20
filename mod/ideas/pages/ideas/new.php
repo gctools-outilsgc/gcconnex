@@ -43,7 +43,7 @@ if (!$content) {
 	$content = elgg_echo('ideas:none');
 }
 
-$title = elgg_echo('ideas:owner', array($page_owner->name));
+$title = elgg_echo('ideas:owner', array(gc_explode_translation($page_owner->name,$lang)));
 
 $vars = array(
 	'filter_context' => 'new',

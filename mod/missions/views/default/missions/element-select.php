@@ -104,6 +104,33 @@ else {
     switch ($dropdown_value) {
         case '':
             break;
+
+        case elgg_echo('missions:opt_in'):
+            $content .= elgg_view('input/dropdown', array(
+                    'name' => $dropdown_name . '_element',
+                    'value' => '',
+                    'options' => array(
+                            '',
+                            elgg_echo("gcconnex_profile:opt:micro_missionseek"),
+                            elgg_echo('gcconnex_profile:opt:micro_mission'),
+                            elgg_echo('gcconnex_profile:opt:mentored'),
+                            elgg_echo('gcconnex_profile:opt:mentoring'),
+                            elgg_echo('gcconnex_profile:opt:job_swap'),
+                            elgg_echo('gcconnex_profile:opt:shadowed'),
+                            elgg_echo('gcconnex_profile:opt:shadowing'),
+                            elgg_echo('gcconnex_profile:opt:assignment_deployment_seek'),
+                            elgg_echo('gcconnex_profile:opt:assignment_deployment_create'),
+                            elgg_echo('gcconnex_profile:opt:deployment_seek'),
+                            elgg_echo('gcconnex_profile:opt:deployment_create'),
+                            elgg_echo('gcconnex_profile:opt:job_rotate'),
+                            elgg_echo('gcconnex_profile:opt:skill_sharing'),
+                            elgg_echo('gcconnex_profile:opt:skill_sharing_create'),
+                            elgg_echo('gcconnex_profile:opt:peer_coached'),
+                            elgg_echo('gcconnex_profile:opt:peer_coaching'),
+                            elgg_echo('gcconnex_profile:opt:job_sharing'),
+                    )
+            ));
+            break;
         
         case elgg_echo('missions:department'):
 
@@ -115,7 +142,7 @@ else {
                 'options' => array_merge($departments,$provinces),
             ));
         	break;
-            
+        
         case elgg_echo('missions:portfolio'):
             $content .= elgg_view('input/dropdown', array(
                 'name' => $dropdown_name . '_element',
@@ -146,46 +173,46 @@ else {
         case elgg_echo('missions:duration'):
         case elgg_echo('missions:start_time'):
         	$content .= elgg_view('input/dropdown', array(
-        			'name' => $dropdown_name . '_operand',
-        			'value' => htmlspecialchars_decode($all_values['operand']),
-        			'options' => array('=', '>=', '<='),
-        			'style' => 'display:inline-block'
+                'name' => $dropdown_name . '_operand',
+                'value' => htmlspecialchars_decode($all_values['operand']),
+                'options' => array('=', '>=', '<='),
+                'style' => 'display:inline-block'
         	));
         	
             $content .= elgg_view('input/text', array(
-                	'name' => $dropdown_name . '_element',
-                	'value' => $all_values['value_answer'],
-                	'placeholder' => 'HH:mm',
-        			'style' => 'display:inline-block'
+                'name' => $dropdown_name . '_element',
+                'value' => $all_values['value_answer'],
+                'placeholder' => 'HH:mm',
+                'style' => 'display:inline-block'
             ));
             
             $content .= elgg_view('input/dropdown', array(
-            		'name' => $dropdown_name . '_element_day',
-            		'value' => $all_values['day'],
-            		'options' => $array_day
+                'name' => $dropdown_name . '_element_day',
+                'value' => $all_values['day'],
+                'options' => $array_day
             ));
             break;
             
         case elgg_echo('missions:time'):
         	$content .= elgg_view('input/dropdown', array(
-        			'name' => $dropdown_name . '_operand',
-        			'value' => htmlspecialchars_decode($all_values['operand']),
-        			'options' => array('=', '>=', '<='),
-        			'style' => 'display:inline-block'
+                'name' => $dropdown_name . '_operand',
+                'value' => htmlspecialchars_decode($all_values['operand']),
+                'options' => array('=', '>=', '<='),
+                'style' => 'display:inline-block'
         	));
         	 
         	$content .= elgg_view('input/text', array(
-        			'name' => $dropdown_name . '_element',
-        			'value' => $all_values['value_answer'],
-        			'style' => 'display:inline-block'
+                'name' => $dropdown_name . '_element',
+                'value' => $all_values['value_answer'],
+                'style' => 'display:inline-block'
         	));
         	break;
         	
         case elgg_echo('missions:period'):
         	$content .= elgg_view('input/dropdown', array(
-        			'name' => $dropdown_name . '_element',
-        			'value' => $all_values['value_answer'],
-        			'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('time_rate_string', 'missions'))
+                'name' => $dropdown_name . '_element',
+                'value' => $all_values['value_answer'],
+                'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('time_rate_string', 'missions'))
         	));
         	break;
         
@@ -229,50 +256,50 @@ else {
             
         case elgg_echo('missions:type'):
         	$content .= elgg_view('input/dropdown', array(
-        			'name' => $dropdown_name . '_element',
-        			'value' => '',
-        			'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('opportunity_type_string', 'missions'))
+                'name' => $dropdown_name . '_element',
+                'value' => '',
+                'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('opportunity_type_string', 'missions'))
         	));
         	break;
             
         case elgg_echo('missions:program_area'):
         	$content .= elgg_view('input/dropdown', array(
-        			'name' => $dropdown_name . '_element',
-        			'value' => $all_values['value_answer'],
-        			'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('program_area_string', 'missions'))
+                'name' => $dropdown_name . '_element',
+                'value' => $all_values['value_answer'],
+                'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('program_area_string', 'missions'))
         	));
         	break;
             
         case elgg_echo('missions:work_remotely'):
-        if ($all_values['value_answer'] == 'on')
-            $checked = 'checked';
-        
-        	$content .= elgg_view('input/checkbox', array(
-        			'name' => $dropdown_name . '_element',
+            if ($all_values['value_answer'] == 'on')
+                $checked = 'checked';
+
+                $content .= elgg_view('input/checkbox', array(
+                    'name' => $dropdown_name . '_element',
                     'checked' => $checked
-        	));
+                ));
         	break;
             
         case elgg_echo('missions:location'):
         	$content .= elgg_view('input/dropdown', array(
-        			'name' => $dropdown_name . '_element',
-				    'value' => $all_values['value_answer'],
-				    'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('province_string', 'missions')),
+                'name' => $dropdown_name . '_element',
+                'value' => $all_values['value_answer'],
+                'options_values' => mm_echo_explode_setting_string(elgg_get_plugin_setting('province_string', 'missions')),
         	));
         	break;
             
         case elgg_echo('missions:skill'):
         case elgg_echo('missions:key_skills'):
         	$content .= elgg_view('missions/add-skill', array(
-        			'name_override' => $dropdown_name . '_element',
-        			'no_delete' => true,
-                    'value' => $all_values['value_answer'],
+                'name_override' => $dropdown_name . '_element',
+                'no_delete' => true,
+                'value' => $all_values['value_answer'],
         	));
         	break;
         
         default:
 
-            $content .= elgg_view('input/text', array(
+        $content .= elgg_view('input/text', array(
                 'name' => $dropdown_name . '_element',
                 'value' => $all_values['value_answer'],
             ));

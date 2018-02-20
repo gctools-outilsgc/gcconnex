@@ -14340,6 +14340,7 @@
 				var attach = function( container, buttons ) {
 					var i, ien, node, button;
 					var clickHandler = function ( e ) {
+						e.preventDefault();
 						_fnPageChange( settings, e.data.action, true );
 					};
 	

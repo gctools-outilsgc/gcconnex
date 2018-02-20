@@ -2,7 +2,7 @@ elgg.provide("elgg.group_tools");
 
 
 
-elgg.group_tools.mail_form_submit = function() {
+/*elgg.group_tools.mail_form_submit = function() {
 	var result = false;
 	var error_msg = "";
 	var error_count = 0;
@@ -24,7 +24,7 @@ elgg.group_tools.mail_form_submit = function() {
 	}
 
 	return result;
-}
+}*/
 
 elgg.group_tools.mail_clear_members = function() {
 	$('#group_tools_mail_member_selection input[name="user_guids[]"]:checked').each(function() {

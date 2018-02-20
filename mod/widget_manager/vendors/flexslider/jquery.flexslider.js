@@ -25,7 +25,7 @@
       slider.currentSlide = slider.vars.slideToStart;
       slider.animatingTo = slider.currentSlide;
       slider.atEnd = (slider.currentSlide == 0) ? true : false;
-      slider.eventType = ('ontouchstart' in document.documentElement) ? 'touchstart' : 'click';
+      slider.eventType = 'click touchend MSPointerUp';
       slider.cloneCount = 0;
       slider.cloneOffset = 0;
       slider.manualPause = false;

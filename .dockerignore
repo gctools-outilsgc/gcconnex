@@ -1,0 +1,10 @@
+data
+vendor
+kubernetes
+Dockerfile
+docker-compose.yml
+.git
+.gitignore
+.dockerignore
+Dockerfile.cron
+

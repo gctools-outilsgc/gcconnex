@@ -162,7 +162,7 @@ return array(
 'groups:addtopic' => 'Add a topic',
 'groups:forumlatest' => 'Latest discussion',
 'groups:latestdiscussion' => 'Latest discussion',
-'groupspost:success' => 'Your reply was succesfully posted',
+'groupspost:success' => 'Your reply was successfully posted',
 'groupspost:failure' => 'There was problem while posting your reply',
 'groups:alldiscussion' => 'Latest discussion',
 'groups:edittopic' => 'Edit topic',

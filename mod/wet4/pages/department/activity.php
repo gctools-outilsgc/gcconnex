@@ -69,7 +69,17 @@ $wire_post = elgg_list_entities(array(
   'limit' => 15,
 ));
 
-$sidebar = elgg_view_module('sidebar', elgg_echo('item:object:thewire'), $wire_post);
+$wire_post_button =	'<div class="pam">' . elgg_view('output/url', [
+  'text' => elgg_echo('thewire:post'),
+  'href' => 'ajax/view/thewire/add',
+  'class' => 'elgg-lightbox btn btn-primary btn-block',
+  'data-colorbox-opts' => json_encode([
+    'width' => '650px',
+    'height' => '375px',
+  ])
+]) . '</div>';
+
+$sidebar = elgg_view_module('sidebar', elgg_echo('item:object:thewire'), $wire_post_button . $wire_post);
 
 $content = '<div class="panel-body">'.$tabs.$filter_form.'<div class="new-newsfeed-holder"><div class="newsfeed-posts-holder"></div></div>'.$activity.'</div>';
 

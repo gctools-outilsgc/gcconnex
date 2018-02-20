@@ -2,7 +2,7 @@
 
 $widget = $vars["entity"];
 
-$max_slider_options = 5;
+$max_slider_options = 6;
 
 $seconds_per_slide = sanitise_int($widget->seconds_per_slide);
 if (empty($seconds_per_slide) || !is_int($seconds_per_slide)) {

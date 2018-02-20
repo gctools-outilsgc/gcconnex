@@ -3,6 +3,7 @@
 // Piwik tracking
 $piwik_url = elgg_get_plugin_setting('piwik_url', 'analytics');
 $piwik_site_id = (int) elgg_get_plugin_setting('piwik_site_id', 'analytics');
+$piwik_guid = elgg_get_plugin_setting('piwik_guid', 'analytics');
 if (empty($piwik_url) || empty($piwik_site_id)) {
 	return;
 }
@@ -21,6 +22,9 @@ if (((stripos($piwik_url, 'https://') !== 0) && (stripos($piwik_url, 'http://') 
 		var u = '<?php echo $piwik_url; ?>';
 		_paq.push(['setSiteId', <?php echo $piwik_site_id; ?>]);
 		_paq.push(['setTrackerUrl', u + 'piwik.php']);
+<?php if ($piwik_guid): ?>
+		_paq.push(['setCustomVariable', 1, 'guid', elgg.get_logged_in_user_guid(), 'visit']);
+<?php endif; ?>
 		_paq.push(['trackPageView']);
 		_paq.push(['enableLinkTracking']);
 

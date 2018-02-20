@@ -72,7 +72,7 @@ if(trim($department_path) == '') {
 
 //Nick - Adding group and level to the mission view
 if(!empty($mission->gl_group)){
-  $print_groupandlevel = '<h4 class="h5" style="margin:8px 0 0 0; display:inline-block;">'.elgg_echo('missions:groupandlevel').':</h4> <span>'.$mission->gl_group.'-'.$mission->gl_level.'</span>';
+  $print_groupandlevel = '<h5>'.elgg_echo('missions:groupandlevel').': </h5><span>'.$mission->gl_group.'-'.$mission->gl_level.'</span>';
 }
 // Unpacks all language and time metadata attached to the mission.
 $unpacked_array = mm_unpack_mission($mission);
@@ -209,7 +209,7 @@ if(strpos($button_set['button_three'], 'accept-button') !== false) {
     <?php endif; ?>
 		<div class="clearfix">
                 <h4 class='h5' style="margin:8px 0 0 0; display:inline-block;"><?php echo elgg_echo('missions:opportunity_number')  . ':';?></h4>
-			<span name="mission-number"><?php echo $mission->number;?></span>
+			<span name="mission-number"><?php echo ($mission->number == 999 ? elgg_echo('missions:max_applicants_unlimited') : $mission->number);?></span>
 		</div>
 		<div class="clearfix">
                 <h4 class='h5' style="margin:8px 0 0 0; display:inline-block;"><?php echo elgg_echo('missions:ideal_start_date') . ':';?></h4>
@@ -314,33 +314,14 @@ if(strpos($button_set['button_three'], 'accept-button') !== false) {
                 ?>
 
             </div>
-        <?php if($department_path): ?>
             <div class="">
                 <h5>
                     <?php echo elgg_echo('missions:department')  . ':';?>
                 </h5>
                 <span name="mission-department-path">
-                    <?php
-                        $obj = elgg_get_entities(array(
-                            'type' => 'object',
-                            'subtype' => 'federal_departments',
-                        ));
-                        $departments = get_entity($obj[0]->guid);
-                        
-                        $federal_departments = array();
-                        if (get_current_language() == 'en'){
-                            $federal_departments = json_decode($departments->federal_departments_en, true);
-                        } else {
-                            $federal_departments = json_decode($departments->federal_departments_fr, true);
-                        }
-
-                        $department = isset($federal_departments[$department_path]) ? $federal_departments[$department_path] : $department_path;
-
-                        echo elgg_get_excerpt($department, 500);
-                    ?>
+                    <?php echo elgg_get_excerpt($department_path, 500);?>
                 </span>
             </div>
-        <?php endif; ?>
             <div class="">
                 <h5>
                     <?php echo elgg_echo('missions:email') . ':';?>
