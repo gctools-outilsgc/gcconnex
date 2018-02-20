@@ -206,7 +206,7 @@ $french = array(
 	'cp_newsletter:heading:notify:cp_mention:plural' => "Personnes vous ont mentionné!", 
 
 
-	'cp_new_mission:subject' => "Nouvelle Plateforme de possibilités",
+	'cp_new_mission:subject' => "Une nouvelle possibilité a été affichée sur la Plateforme de possibilités",
 
 
 	'cp_newsletter:footer:notification_settings' => "Pour vous désabonner ou gérer ces messages, veuillez vous connecter et visiter votre <a href='{$site->getURL()}settings/notifications/%s?utm_source=notification_digest&utm_medium=email'> Paramètres de notification</a>.",
