@@ -7,12 +7,12 @@ $contact_us = "{$site->getURL()}mod/contactform/";
 $french = array( 
 
 	'cp_notification:group_invite' => "<p>%s</p><p>Cliquez le lien suivant pour consulter votre invitation (vous devez être connecté pour voir cette page) : %s</p>
-	<p>Besoin d'aide? Voir l’article « <a href='%s'>Comment joindre un group</a>' » ou <a href='%s'>contactez-nous</a></p>",
+	<p>Besoin d'aide? Voir l’article « <a href='%s'>Comment joindre un group</a> » ou <a href='%s'>contactez-nous</a></p>",
 
-	'cp_notification:group_invite_email' => "<p>%s</p><p><b>Joignez-vous à %s!</b></p> <p><a href='%s'>Créez votre %s compte en utilisant ce lien</a> pour être automatiquement ajouté au groupe.</p>
+	'cp_notification:group_invite_email' => "<p>%s</p><p><b>Joignez-vous à %s!</b></p> <p><a href='%s'>Créez votre compte %s en utilisant ce lien</a> pour être automatiquement ajouté au groupe.</p>
 	 <p>Si vous désirez créer votre compte à une date ultérieure en utilisant le <a href='%s'>formulaire d’inscription</a> sur %s, vous pouvez vous joindre au groupe en utilisant le code suivant sur votre page d'Invitation de groupe : %s.</p> 
 	 <p><b>Déjà membre de %s?</b> <a href='%s'>Connectez-vous</a> et allez sur votre page d’invitation de groupe pour accepter (ou rejeter) l’invitation.</p>
-	 <p>Besoin d'aide? Voir l’article « <a href='%s'>Comment joindre un group</a>' » ou <a href='%s'>contactez-nous</a></p>",
+	 <p>Besoin d'aide? Voir l’article « <a href='%s'>Comment joindre un group</a> » ou <a href='%s'>contactez-nous</a></p>",
 
 
 	'notifications:did_not_send' => "Les notifications n'ont pas envoyé",
@@ -85,7 +85,15 @@ $french = array(
 	'cp_notifications:mail_body:subtype:bookmarks' => "%s a publié un signet : %s", 	
 	'cp_notifications:mail_body:subtype:file' => "%s a publié un fichier : %s", 
 	'cp_notifications:mail_body:subtype:album' => "%s a publié un album : %s", 
-	'cp_notifications:mail_body:subtype:thewire' => "%s a publié sur le %s", 
+	'cp_notifications:mail_body:subtype:thewire' => "%s a ajouté un nouveau message sur le %s intitulé:",
+	'cp_notifications:mail_body:subtype:thewire_digest' => "%s a ajouté un nouveau message sur le %s intitulé: %s",
+	
+	'cp_notifications:mail_body:subtype:thewireSubj' => "%s a ajouté un nouveau message sur le %s",
+	
+	'cp_notifications:mail_body:subtype:thewireImage' => "%s a ajouté un nouveau message sur le fil:", 
+
+	'cp_notification_wire_image_only' => "Voir l’image du message sur le Fil",
+	'cp_notification_wire_image' => " (Voir le message sur le Fil pour visionner l’image)",	
 
 	'cp_notifications:mail_body:subtype:poll' => "%s a créé un sondage :", 
 	'cp_notifications:mail_body:subtype:event_calendar' => "%s a publié un événement : %s", 
@@ -175,11 +183,11 @@ $french = array(
 	'cp_newsletter:heading:notify:response:singular' => "Réponse au contenu auquel vous êtes abonné", 
 	'cp_newsletter:heading:notify:response:plural' => "Réponses aux contenus auxquels vous êtes abonné", 
 
-	'cp_notifications:mail_body:subtype:content_share' => "%s a partagé votre %s: %s",
+	'cp_notifications:mail_body:subtype:content_share' => "%s a partagé votre %s",
 
 	'cp_notifications:mail_body:subtype:content_share:wire' => "%s a partagé votre %s",
 	'cp_notifications:mail_body:your_wire_post' => "fil",
-
+	'cp_notifications:mail_body:wire_has_image' => " avec une image",
 
 	'cp_newsletter:heading:notify:likes:singular' => "Item a été aimé.", 
 	'cp_newsletter:heading:notify:likes:plural' => "Items ont été aimés.", 
@@ -283,6 +291,7 @@ $french = array(
 
 	'cp_notify:subject:likes_wire' => "%s a aimé votre message sur le fil",
 	'cp_notify:body_likes_wire:title' => "%s a aimé votre message sur le fil '%s'",
+	'cp_notify:body_likes_image_wire:title' => "%s a aimé votre message avec une image sur le fil",
 
 	'cp_notify:subject:likes_comment' => "%s a aimé votre commentaire sur '%s'",
 	'cp_notify:body_likes_comment:title' => "%s a aimé votre commentaire sur '%s'",
@@ -346,9 +355,11 @@ $french = array(
 	// site message
 	'cp_notify:subject:site_message' => "%s vous a envoyé un nouveau message '%s'",
 	'cp_notify:body_site_msg:title' => "%s vous a envoyé un message intitulé '%s'",
-	'cp_notify:body_site_msg:description' => "Le contenu du message est le suivant : <br/> 
-		%s <br/> 
-		Vous pouvez le consulter ou y répondre en cliquant sur le lien suivant: %s",
+	'cp_notify:body_site_msg:description_email' => "Le contenu du message est le suivant : <br/> 
+	%s <br/> 
+	Vous pouvez le consulter ou y répondre en cliquant sur le lien suivant: %s",
+	'cp_notify:body_site_msg:description_site' => "Le contenu du message est le suivant : <br/> 
+		%s",
 
 	// welcome message
 	'cp_notify:body_welcome_msg:title' => '%s vous a envoyé un message d\'accueil',
@@ -364,7 +375,7 @@ $french = array(
 	'cp_notify:subject:new_content_mas2' => "Un nouvel %s a été affiché dans le groupe %s",
 	'cp_notify:subject:new_content_fem' => "Une nouvelle %s a été affichée dans le groupe %s",
 
-	// +------ cyu <User name> posted a new <item type> entitled <item name>
+	// +------ cyu <User name> posted a new <item type> titled <item name>
 	'cp_notify:body_new_content:title_m' => "<a href='%s'>%s</a> a affiché un nouveau %s intitulé <a href='%s'>%s</a>",
 	'cp_notify:body_new_content:title_f' => "<a href='%s'>%s</a> a affiché une nouvelle %s intitulée <a href='%s'>%s</a>",
 
@@ -373,7 +384,7 @@ $french = array(
 	
 	'cp_notify:body_new_content:title_f2' => "<a href='%s'>%s</a> a ajouté une nouvelle %s intitulée <a href='%s'>%s</a>",
 
-	'cp_notify:body_new_content:title3' => "<a href='%s'>%s</a> a ajouté une nouvelle %s",
+	'cp_notify:body_new_content:title3' => "<a href='%s'>%s</a> a ajouté une nouveau message sur le %s intitulé",
 
 	'cp_notify:body_new_content:title_answer' => "<a href='%s'>%s</a> a ajouté une nouvelle %s dans <a href='%s'>%s</a>",
 
@@ -467,6 +478,7 @@ $french = array(
 	// wire share section
 	'cp_notify:wireshare:subject' => "%s a partagé votre contenu sur le fil",
 	'cp_notify:body_wireshare:title' => "%s a partagé votre contenu sur le fil",
+
  
 	// (shared your wire post)
 	'cp_notify:body:contentshare:description' => "	<p>%s a partagé votre contenu sur le fil.</p> 

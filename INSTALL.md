@@ -2,6 +2,9 @@
 **Note: GCconnex does not work with PHP7 - GCconnex ne fonctionne pas avec PHP7**
 
 ### Ubuntu 14.04
+#### Install Aptitude
+    sudo apt-get update
+    sudo apt-get install aptitude
 #### Install Git, Apache, MySQL, PHP and libs
     sudo aptitude install git apache2 mysql-server php5 libapache2-mod-php5 php5-mysql php5-gd
 When prompted, enter a root password for MySQL.
@@ -9,12 +12,23 @@ When prompted, enter a root password for MySQL.
 #### Fork and Clone GCConnex Github Repo
     git clone -b gcconnex https://github.com/gctools-outilsgc/gcconnex.git
 
-#### Install Composer dependencies
-Setup [Composer](https://getcomposer.org/download/) then install the third-party dependencies
+#### Install Composer 
+Setup [Composer](https://getcomposer.org/download/): 
+Download the install off the site. Default name of the file is "installer"
+Go into the directory the file was downloaded to (Example: cd /home/username/Downloads).
+
+    sudo php installer --install-dir=/bin --filename=composer
+    
+#### Composer Dependencies
+Go into your gcconnex directory. (Example: cd /home/username/gcconnex)
+
     composer install
 
 #### Create data directory
+Create a data directory, not in the gcconnex directory!
+
     mkdir gcconnex_data
+Example Location: /home/username/gcconnex_data
 
 #### Set permissions
     chmod 777 gcconnex
@@ -24,7 +38,7 @@ Setup [Composer](https://getcomposer.org/download/) then install the third-party
 
 #### Create link to gcconnex in /var/www/html folder
     cd /var/www/html/
-    sudo ln -s /path/to/gcconnex gcconnex
+    sudo ln -s /EXAMPLE/PATH/TO/gcconnex gcconnex
 
 #### Create a database and a user for the database
     mysql -u root -p
@@ -63,9 +77,12 @@ The final step to getting the GCconnex experience is to reorder and
 enable/disable plugins in the Administration section of your installation.
 
 A quick way to sort and activate plugins in the correct order is to activate
-the "Plugin Loader" plugin, then open the
+the "Plugin Loader" plugin. Do this by going into `Configure`-> `Plugins` -> ctrl+f `Plugin Loader` -> `Activate`
+Then go to
 `Configure`->`Utilities`->`Plugin Loader` menu and click on the `Import`
 button.
+
+The plugin_config file has `friend_request` as enabled, but for an unknown reason does not activate it properly. So go into `Configure` -> `Plugins` and ctrl+f for `Friend Request` and activate `Friend request 4.0`
 
 ### Elgg Installation Instructions
 http://learn.elgg.org/en/1.x/intro/install.html

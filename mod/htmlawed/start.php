@@ -120,7 +120,7 @@ function htmlawed_tag_post_processor($element, $attributes = false) {
 	);
 
 	$allowed_classes = array(
-		'table', 'row', 'wb-tables', 'table-striped', 'table-hover', 'bordered', 'btn', 'btn-default', 'btn-primary', 'btn-danger', 'btn-info', 'btn-success', 'btn-warning', 'btn-lg', 'btn-sm', 'btn-xs'
+		'table', 'row', 'wb-tables', 'table-striped', 'table-hover', 'bordered', 'btn', 'btn-default', 'btn-primary', 'btn-danger', 'btn-info', 'btn-success', 'btn-warning', 'btn-lg', 'btn-sm', 'btn-xs', 'full-width'
 	);
 
 	$params = array('tag' => $element);

@@ -66,8 +66,6 @@ if(elgg_is_active_plugin('rename_groups')){
   $rest_of_word = substr($plural, 1);
 
   $guplural = $first_letter . $rest_of_word;
-
-  $plurial = 'collègues';
  
 $french = array(
 	//
@@ -92,19 +90,19 @@ $french = array(
 //'access:friends:label' => "$uplural",
 'friends' => "$uplural",
 'friends:yours' => "Vos {$lplural}",
-'friends:owned' => "Les {$plurial} de %s",
+'friends:owned' => "Les {$lplural} de %s",
 'friend:add' => "Ajouter un {$lsingle}",
 'friend:remove' => "Supprimer {$lsingle}",
 'friends:add:successful' => "Vous avez ajouté %s avec succès en tant que  {$lsingle}.",
 'friends:add:failure' => "Il nous a été impossible d'ajouter %s en tant que  {$lsingle}. Veuillez essayer à nouveau.",
 'friends:remove:successful' => "Vous avez réuss à supprimé %s de votre liste de  {$lplural}.",
 'friends:remove:failure' => "Il nous a été impossible de supprimer %s de votre liste de  {$lplural}. Veuillez essayer à nouveau.",
-'friends:none' => "Cet utilisateur n'a pas encore ajouter de {$plurial} à ce jour.", 
+'friends:none' => "Cet utilisateur n'a pas encore ajouté de {$lplural} à ce jour.", 
 'friends:none:you' => "Vous n'avez pas encore de {$lplural}.",
 'friends:none:found' => "Aucun  {$lplural} n'a été trouvé.",
 'friends:of:none' => "Personne n'a ajouté cet utilisateur en tant que {$lsingle} à ce jour.",
-'friends:of:none:you' => "Personne ne vous encore ajouter en tant que collègue  {$lsingle} jusqu'à maintenant. Commencez à remplir votre profil afin que les gens puissent vous trouver!", 
-'friends:of:owned' => "Les gens qui ont ajouté %s en tant que collègue {$lsingle}",
+'friends:of:none:you' => "Personne ne vous encore ajouté en tant que {$lsingle} jusqu'à maintenant. Commencez à remplir votre profil afin que les gens puissent vous trouver!", 
+'friends:of:owned' => "Les gens qui ont ajouté %s en tant que {$lsingle}",
 'friends:of' => "Les {$lplural} de",
 'friends:collections' => "Cercles de {$lplural}",
 'collections:add' => "Nouveau cercle de {$lplural}",
@@ -118,8 +116,8 @@ $french = array(
 'river:friends' => "Activité des {$lplural}",
 'friends:widget:description' => "Afficher certains de vos {$lplural}.",
 'friends:num_display' => "Nombre de {$lplural} à afficher",
-'friend:newfriend:subject' => "%s vous à ajouter en tant que {$lsingle}!",
-'friend:newfriend:body' => "%svous à ajouter en tant que {$lsingle}! Pour consulter son profil, cliquez ici : %s Vous ne pouvez pas répondre à ce courriel..",
+'friend:newfriend:subject' => "%s vous a ajouté en tant que {$lsingle}!",
+'friend:newfriend:body' => "%svous a ajouté en tant que {$lsingle}! Pour consulter son profil, cliquez ici : %s Vous ne pouvez pas répondre à ce courriel..",
 'friends:nocollections' => "Vous n'avez pas encore de cercle de {$lplural}.",
 'friends:collectiondeleted' => "Votre cercle de {$lplural} a été supprimé.",
 'friends:collectiondeletefailed' => "Le cercle de {$lplural} n'a pas été supprimé. Vous n'avez pas suffisamment de droits pour effectuer cette tâche.",
@@ -135,12 +133,12 @@ $french = array(
 //Friend Request		
 				
 'friend_request' => "Demande de {$usingle}",
-'friend_request:menu' => "Demandes de {$plurial}",
+'friend_request:menu' => "Demandes de {$lplural}",
 'friend_request:title' => "Demande de {$lsingle} pour : %s",
 'friend_request:new' => "Nouvelle demande de {$lsingle}",
 'friend_request:friend:add:pending' => "Demande de {$lsingle} en attente",
 'friend_request:newfriend:subject' => "%s veut être votre {$lsingle}!",
-'friend_request:newfriend:body' =>  "%s wants to be your colleague! But he or she is waiting for you to approve the request... So login now so you can approve the request! <br/> You can view your pending colleague requests at: %s <br/> <i> Make sure you are logged into the website before clicking on the following link, otherwise you will be redirected to the login page.</i> To view their profile, click here: %s <div> style 'border-top: 1px dotted #999999;' &nbsp;</div> %s souhaite être votre collègue! Il ou elle attend que vous approuviez sa demande... Connectez-vous pour approuver cette demande! <br/> Vous pouvez afficher les demandes de collègue qui sont en attente : %s <br/> <i> Assurez-vous d'être connecté(e) au site avant de cliquer sur le lien suivant. Si vous n'êtes pas connecté(e), vous serez redirigé(e) vers la page d'ouverture de session.</i> Pour consulter son profil, cliquez ici : %s",
+'friend_request:newfriend:body' =>  "%s wants to be your colleague! But he or she is waiting for you to approve the request... So login now so you can approve the request! <br/> You can view your pending colleague requests at: %s <br/> <i> Make sure you are logged into the website before clicking on the following link, otherwise you will be redirected to the login page.</i> To view their profile, click here: %s <div> style 'border-top: 1px dotted #999999;' &nbsp;</div> %s souhaite être votre {$lsingle}! Il ou elle attend que vous approuviez sa demande... Connectez-vous pour approuver cette demande! <br/> Vous pouvez afficher les demandes de {$lsingle} qui sont en attente : %s <br/> <i> Assurez-vous d'être connecté(e) au site avant de cliquer sur le lien suivant. Si vous n'êtes pas connecté(e), vous serez redirigé(e) vers la page d'ouverture de session.</i> Pour consulter son profil, cliquez ici : %s",
 		
 	// Actions		// Actions
 	// Add request		// Add request
@@ -178,10 +176,10 @@ $french = array(
 		
 // Invite Friends		
 		
-'friends:invite' => "Inviter des collègues",
-'invitefriends:introduction' => "Pour inviter des collègues à vous joindre sur ce réseau, ajoutez  leurs adresses courriel ci-dessous (une par ligne):",
-'invitefriends:success' => "Vos collègues ont été invités.",
-'invitefriends:email' => "Vous avez été invité à joindre %s par %s. Ils vous ont écrit ce message : Pour joindre %s, cliquez sur le lien suivant : Vous serez automatiquement ajouter en tant que {$lsingle} lorsque vous aller créer votre compte.",
+'friends:invite' => "Inviter des {$lplural}",
+'invitefriends:introduction' => "Pour inviter des {$lplural} à vous joindre sur ce réseau, ajoutez  leurs adresses courriel ci-dessous (une par ligne):",
+'invitefriends:success' => "Vos {$lplural} ont été invités.",
+'invitefriends:email' => "Vous avez été invité à joindre %s par %s. Ils vous ont écrit ce message : Pour joindre %s, cliquez sur le lien suivant : Vous serez automatiquement ajouté en tant que {$lsingle} lorsque vous aller créer votre compte.",
 		
 //Rename Groups		
 		

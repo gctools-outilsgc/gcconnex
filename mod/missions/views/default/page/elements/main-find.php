@@ -9,7 +9,7 @@
 
 /*
  * Page content for finding missions and a link to create them.
- */ 
+ */
 if($_SESSION['mission_entities_per_page']) {
 	$entities_per_page = $_SESSION['mission_entities_per_page'];
 }
@@ -45,7 +45,9 @@ $options['metadata_name_value_pairs'] = array(array(
 		'value' => 'posted'
 ));
 $options['metadata_name_value_pairs_operator'] = 'AND';
-$options['limit'] = elgg_get_plugin_setting('search_limit', 'missions');
+if (elgg_get_plugin_setting('search_limit', 'missions') !== '-1') {
+  $options['limit'] = elgg_get_plugin_setting('search_limit', 'missions');
+}
 
 $entity_list = elgg_get_entities_from_metadata($options);
 
@@ -63,10 +65,11 @@ if ( $offset >= $count )			// reset offset if it no longer makes sense after fil
 	$offset = 0;
 
 $max_reached = '';
-if(($offset + $max) >= elgg_get_plugin_setting('search_limit', 'missions') && $count >= elgg_get_plugin_setting('search_limit', 'missions')) {
-	$max_reached = '<div class="col-sm-12" style="font-style:italic;">' . elgg_echo('missions:reached_maximum_entities') . '</div>';
+if (elgg_get_plugin_setting('search_limit', 'missions') !== '-1') {
+  if(($offset + $max) >= elgg_get_plugin_setting('search_limit', 'missions') && $count >= elgg_get_plugin_setting('search_limit', 'missions')) {
+    $max_reached = '<div class="col-sm-12" style="font-style:italic;">' . elgg_echo('missions:reached_maximum_entities') . '</div>';
+  }
 }
-
 // Displays the list of mission entities.
 $latest_missions = elgg_view_entity_list(array_slice($entity_list, $offset, $max), array(
 		'count' => $count,
@@ -76,7 +79,7 @@ $latest_missions = elgg_view_entity_list(array_slice($entity_list, $offset, $max
 		'list_type' => 'gallery',
         'gallery_class'=>'wb-eqht clearfix',
         'item_class'=>'col-sm-6 col-md-4 hght-inhrt',
-		
+
 		'mission_full_view' => false
 ), $offset, $max);
 
@@ -125,12 +128,12 @@ $create_button .= elgg_view('output/url', array(
     <?php
     /* Nick - just testing what the job type actually outputs
 foreach($entity_list as $entity){
-    echo $entity->job_type . ' - ';  
+    echo $entity->job_type . ' - ';
 }*/
     ?>
     <div class="col-sm-8">
 	<h2 class="h4 mrgn-tp-md mrgn-bttm-0"><?php echo elgg_echo('missions:search_for_opportunities') . ':'; ?></h2>
-	<?php 
+	<?php
 		//echo $simple_search_form;
 		echo $advanced_field;
     ?>
@@ -151,13 +154,13 @@ foreach($entity_list as $entity){
         <div class="">
             <div class="mrgn-tp-sm">
                 <?php echo $sort_missions_form; echo $clear_link; ?>
-            </div>                
+            </div>
         </div>
 
         <?php echo $max_reached; ?>
     </div>
     <div class="col-sm-12">
-		
+
 		<?php echo $latest_missions; ?>
 	</div>
 </div>

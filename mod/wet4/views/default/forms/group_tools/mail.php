@@ -43,15 +43,17 @@ $textbox = elgg_view('input/hidden', array('id'=> 'txtSaveChk', 'name' => 'txtSa
 
 foreach ($members as $member) {
 	$member = get_entity($member->guid_one);
-	$member_icon = "<img class='img-circle' src='{$member->getIconURL(array('size' => 'small'))}'/>";
-	$checkbox = elgg_view('input/checkbox', array(
-		'name' => 	'chkMember',
-		'value' => 	$member->getGUID(),
-	));
-	if (elgg_is_admin_logged_in()) {
-		$show_user_id = "( {$member->getGUID()} )";
+	if ($member instanceof ElggUser) {
+		$member_icon = "<img class='img-circle' src='{$member->getIconURL(array('size' => 'small'))}'/>";
+		$checkbox = elgg_view('input/checkbox', array(
+			'name' => 	'chkMember',
+			'value' => 	$member->getGUID(),
+		));
+		if (elgg_is_admin_logged_in()) {
+			$show_user_id = "( {$member->getGUID()} )";
+		}
+		$display_members .= "<div style='border-bottom:1px solid #ddd; padding:5px 2px 2px 2px;'> {$checkbox} {$member_icon} {$member->name} {$show_user_id} </div>";
 	}
-	$display_members .= "<div style='border-bottom:1px solid #ddd; padding:5px 2px 2px 2px;'> {$checkbox} {$member_icon} {$member->name} {$show_user_id} </div>";
 }
 
 $chkMailAll = elgg_view('input/checkbox', array(

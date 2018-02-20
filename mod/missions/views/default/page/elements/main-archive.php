@@ -47,8 +47,10 @@ if ( $offset >= $count )            // reset offset if it no longer makes sense 
     $offset = 0;
 
 $max_reached = '';
-if(($offset + $max) >= elgg_get_plugin_setting('search_limit', 'missions') && $count >= elgg_get_plugin_setting('search_limit', 'missions')) {
-    $max_reached = '<div class="col-sm-12" style="font-style:italic;">' . elgg_echo('missions:reached_maximum_entities') . '</div>';
+if (elgg_get_plugin_setting('search_limit', 'missions') !== '-1') {
+  if(($offset + $max) >= elgg_get_plugin_setting('search_limit', 'missions') && $count >= elgg_get_plugin_setting('search_limit', 'missions')) {
+      $max_reached = '<div class="col-sm-12" style="font-style:italic;">' . elgg_echo('missions:reached_maximum_entities') . '</div>';
+  }
 }
 
 $archive_list = elgg_view_entity_list(array_slice($entity_list, $offset, $max), array(

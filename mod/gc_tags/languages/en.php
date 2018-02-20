@@ -30,7 +30,7 @@ return array(
     
     //Help / FAQ page text
     "gctags:help:title" => "Community and Tag Help/FAQ",
-    "gctags:help:intro" => "Having properly ",
+    "gctags:help:intro" => "Coming soon!",
     "gctags:help:contentmenu" => "Content Menu",
     "gctags:help:community" => "What are communities?",
     "gctags:help:communitytypes" => "Community Types",
@@ -55,6 +55,6 @@ return array(
     "gctags:help:info:security" => "As a Security Functional Specialist, you are responsible for ensuring that federal government programs and services, along with the people, information and assets that support them are protected.",
     "gctags:help:info:service" => "Coming soon!",
     "gctags:help:info:science" => "The federal science and technology community is made up of employees actively engaged in science and technology; most of whom work within science-based departments and agencies.",
-    "gctags:help:info:allps" => "EVERYONE!",
+    "gctags:help:info:allps" => "Everyone!",
     
 );

@@ -382,7 +382,7 @@ function get_user_data($profileemail, $user, $lang)
 					$user['experience']['item_'.$i]['colleagues']['colleague_'.$j]["iconURL"] = $friendEntity->getIconURL();
 					$j++;
 				}
-			} elseif (!is_null($job->colleagues)) {
+			} elseif (!is_null($job->colleagues) && !empty(trim($job->colleagues))) {
 				$friendEntity = get_user($job->colleagues);
 				$user['experience']['item_'.$i]['colleagues']['colleague_'.$j]["id"] = $friendEntity->guid;
 				$user['experience']['item_'.$i]['colleagues']['colleague_'.$j]["username"] = $friendEntity->username;
